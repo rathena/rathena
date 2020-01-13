@@ -322,7 +322,7 @@ struct script_reg_state {
 
 struct script_reg_num {
 	struct script_reg_state flag;
-	int value;
+	int64 value;
 };
 
 struct script_reg_str {

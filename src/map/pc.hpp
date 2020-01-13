@@ -1181,14 +1181,14 @@ void pc_changelook(struct map_session_data *,int,int);
 void pc_equiplookall(struct map_session_data *sd);
 void pc_set_costume_view(struct map_session_data *sd);
 
-int pc_readparam(struct map_session_data *sd, int type);
-bool pc_setparam(struct map_session_data *sd, int type, int val);
-int pc_readreg(struct map_session_data *sd, int64 reg);
-bool pc_setreg(struct map_session_data *sd, int64 reg, int val);
+int64 pc_readparam(struct map_session_data *sd, int64 type);
+bool pc_setparam(struct map_session_data *sd, int64 type, int64 val);
+int64 pc_readreg(struct map_session_data *sd, int64 reg);
+bool pc_setreg(struct map_session_data *sd, int64 reg, int64 val);
 char *pc_readregstr(struct map_session_data *sd, int64 reg);
 bool pc_setregstr(struct map_session_data *sd, int64 reg, const char *str);
-int pc_readregistry(struct map_session_data *sd, int64 reg);
-int pc_setregistry(struct map_session_data *sd, int64 reg, int val);
+int64 pc_readregistry(struct map_session_data *sd, int64 reg);
+int pc_setregistry(struct map_session_data *sd, int64 reg, int64 val);
 char *pc_readregistry_str(struct map_session_data *sd, int64 reg);
 int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val);
 
@@ -1205,8 +1205,8 @@ int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val);
 #define pc_readaccountreg2str(sd,reg) pc_readregistry_str(sd,reg)
 #define pc_setaccountreg2str(sd,reg,val) pc_setregistry_str(sd,reg,val)
 
-bool pc_setreg2(struct map_session_data *sd, const char *reg, int val);
-int pc_readreg2(struct map_session_data *sd, const char *reg);
+bool pc_setreg2(struct map_session_data *sd, const char *reg, int64 val);
+int64 pc_readreg2(struct map_session_data *sd, const char *reg);
 
 bool pc_addeventtimer(struct map_session_data *sd,int tick,const char *name);
 bool pc_deleventtimer(struct map_session_data *sd,const char *name);

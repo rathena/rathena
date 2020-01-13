@@ -9259,7 +9259,8 @@ ACMD_FUNC(accinfo) {
 */
 ACMD_FUNC(set) {
 	char reg[46], val[128], name[32];
-	int toset = 0, len, index;
+	int toset = 0, len;
+	uint32 index;
 	bool is_str = false;
 	int64 uid;
 
@@ -9281,7 +9282,7 @@ ACMD_FUNC(set) {
 	}
 
 	// Check if the user wanted to set an array
-	if( sscanf( reg, "%31[^[][%11d]", name, &index ) < 2 ){
+	if( sscanf( reg, "%31[^[][%" PRIu32 "]", name, &index ) < 2 ){
 		// The user did not specify array brackets, so we set the index to zero
 		index = 0;
 	}
@@ -9297,7 +9298,11 @@ ACMD_FUNC(set) {
 
 	// Only set the variable if there is a value for it
 	if( toset >= 2 ){
-		setd_sub( NULL, sd, name, index, is_str ? (void*)val : (void*)__64BPRTSIZE((atoi(val))), NULL );
+		if( is_str ){
+			setd_sub_str( NULL, sd, name, index, val, NULL );
+		}else{
+			setd_sub_num( NULL, sd, name, index, strtoll( val, NULL, 10 ), NULL );
+		}
 	}
 
 	uid = reference_uid( add_str( name ), index );
@@ -9326,10 +9331,10 @@ ACMD_FUNC(set) {
 		if( value == NULL || *value == '\0' ){// empty string
 			sprintf(atcmd_output,msg_txt(sd,1375),reg); // %s is empty
 		}else{
-			sprintf(atcmd_output,msg_txt(sd,1374),reg,value); // %s value is now :%s
+			sprintf(atcmd_output,msg_txt(sd,1374),reg,value); // %s value is now: %s
 		}
 	} else {// integer variable
-		int value;
+		int64 value;
 
 		switch( reg[0] ) {
 			case '@':
@@ -9349,7 +9354,7 @@ ACMD_FUNC(set) {
 				break;
 		}
 
-		sprintf(atcmd_output,msg_txt(sd,1373),reg,value); // %s value is now :%d
+		sprintf(atcmd_output,msg_txt(sd,1373),reg,value); // %s value is now: %lld
 	}
 
 	clif_displaymessage(fd, atcmd_output);

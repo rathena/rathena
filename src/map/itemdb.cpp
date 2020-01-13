@@ -634,8 +634,14 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	if( ISDIGIT(str[0][0]) ){
 		group_id = atoi(str[0]);
 	}else{
+		int64 group_tmp;
+
 		// Try to parse group id as constant
-		script_get_constant(str[0], &group_id);
+		if (!script_get_constant(str[0], &group_tmp)) {
+			ShowError("itemdb_read_group: Unknown group constant \"%s\".\n", str[0]);
+			return false;
+		}
+		group_id = static_cast<int>(group_tmp);
 	}
 
 	// Check the group id
@@ -830,7 +836,7 @@ static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
 	else if( ISDIGIT(str[2][0]) )
 		id->delay_sc = atoi(str[2]);
 	else{ // Try read sc group id from const db
-		int constant;
+		int64 constant;
 
 		if( !script_get_constant(trim(str[2]), &constant) ){
 			ShowWarning("itemdb_read_itemdelay: Invalid sc group \"%s\" for item id %hu.\n", str[2], nameid);
@@ -1707,7 +1713,13 @@ static bool itemdb_read_randomopt(const char* basedir, bool silent) {
 				id = atoi(str[0]);
 			}
 			else {
-				script_get_constant(str[0], &id);
+				int64 id_tmp;
+
+				if (!script_get_constant(str[0], &id_tmp)) {
+					ShowError("itemdb_read_randopt: Unknown random option constant \"%s\".\n", str[0]);
+					continue;
+				}
+				id = static_cast<int>(id_tmp);
 			}
 
 			if (id < 0) {
@@ -1769,14 +1781,18 @@ struct s_random_opt_group *itemdb_randomopt_group_exists(int id) {
  * @author [Cydh]
  **/
 static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
-	int id = 0, i;
+	int64 id_tmp;
+	int id = 0;
+	int i;
 	unsigned short rate = (unsigned short)strtoul(str[1], NULL, 10);
 	struct s_random_opt_group *g = NULL;
 
-	if (!script_get_constant(str[0], &id)) {
+	if (!script_get_constant(str[0], &id_tmp)) {
 		ShowError("itemdb_read_randomopt_group: Invalid ID for Random Option Group '%s'.\n", str[0]);
 		return false;
 	}
+
+	id = static_cast<int>(id_tmp);
 
 	if ((columns-2)%3 != 0) {
 		ShowError("itemdb_read_randomopt_group: Invalid column entries '%d'.\n", columns);
@@ -1797,8 +1813,10 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 		int j, k;
 		memset(&g->entries[i].option, 0, sizeof(g->entries[i].option));
 		for (j = 0, k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k+=3) {
+			int64 randid_tmp;
 			int randid = 0;
-			if (!script_get_constant(str[k], &randid) || !itemdb_randomopt_exists(randid)) {
+
+			if (!script_get_constant(str[k], &randid_tmp) || ((randid = static_cast<int>(randid_tmp)) && !itemdb_randomopt_exists(randid))) {
 				ShowError("itemdb_read_randomopt_group: Invalid random group id '%s' in column %d!\n", str[k], k+1);
 				continue;
 			}

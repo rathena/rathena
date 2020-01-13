@@ -80,7 +80,7 @@ std::unordered_map<uint16, std::string> aegis_itemnames;
 std::unordered_map<uint16, uint16> aegis_itemviewid;
 std::unordered_map<uint16, std::string> aegis_mobnames;
 std::unordered_map<uint16, std::string> aegis_skillnames;
-std::unordered_map<const char*, int32> constants;
+std::unordered_map<const char*, int64> constants;
 
 // Forward declaration of constant loading functions
 static bool parse_item_constants( const char* path );
@@ -93,7 +93,7 @@ bool askConfirmation( const char* fmt, ... );
 YAML::Emitter body;
 
 // Implement the function instead of including the original version by linking
-void script_set_constant_( const char* name, int value, const char* constant_name, bool isparameter, bool deprecated ){
+void script_set_constant_( const char* name, int64 value, const char* constant_name, bool isparameter, bool deprecated ){
 	constants[name] = value;
 }
 
