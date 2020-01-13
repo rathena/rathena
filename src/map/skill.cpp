@@ -266,7 +266,7 @@ int skill_get_splash( uint16 skill_id , uint16 skill_lv ) {
 }
 
 bool skill_get_nk_(uint16 skill_id, std::vector<e_skill_nk> nk) {
-	if( !skill_id ){
+	if( skill_id == 0 ){
 		return false;
 	}
 
@@ -284,7 +284,7 @@ bool skill_get_nk_(uint16 skill_id, std::vector<e_skill_nk> nk) {
 }
 
 bool skill_get_inf2_(uint16 skill_id, std::vector<e_skill_inf2> inf2) {
-	if( !skill_id ){
+	if( skill_id == 0 ){
 		return false;
 	}
 
@@ -302,7 +302,7 @@ bool skill_get_inf2_(uint16 skill_id, std::vector<e_skill_inf2> inf2) {
 }
 
 bool skill_get_unit_flag_(uint16 skill_id, std::vector<e_skill_unit_flag> unit) {
-	if( !skill_id ){
+	if( skill_id == 0 ){
 		return false;
 	}
 
@@ -16495,16 +16495,20 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 		}
 		if (req_opt & SKILL_REQ_STATE)
 			req.state = ST_NONE;
-		if (req_opt & SKILL_REQ_STATUS)
+		if (req_opt & SKILL_REQ_STATUS) {
 			req.status.clear();
+			req.status.shrink_to_fit();
+		}
 		if (req_opt & SKILL_REQ_SPIRITSPHERECOST)
 			req.spiritball = 0;
 		if (req_opt & SKILL_REQ_ITEMCOST) {
 			memset(req.itemid, 0, sizeof(req.itemid));
 			memset(req.amount, 0, sizeof(req.amount));
 		}
-		if (req_opt & SKILL_REQ_EQUIPMENT)
+		if (req_opt & SKILL_REQ_EQUIPMENT) {
 			req.eqItem.clear();
+			req.eqItem.shrink_to_fit();
+		}
 	}
 
 	return req;
@@ -21081,13 +21085,6 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Name", name))
 			return 0;
 
-		//int constant;
-
-		//if (!script_get_constant(name.c_str(), &constant)) { // TODO
-		//	this->invalidWarning(node["Name"], "Name %s is invalid.\n", name.c_str());
-		//	return 0;
-		//}
-
 		name.resize(SKILL_NAME_LENGTH);
 		memcpy(skill->name, name.c_str(), sizeof(skill->name));
 	}
@@ -21729,7 +21726,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asBool(statusNode, status, active))
 					return 0;
 
-				auto status_exists = std::find(skill->require.status.begin(), skill->require.status.end(), constant);
+				auto status_exists = util::vector_get(skill->require.status, static_cast<sc_type>(constant));
 
 				if (active && status_exists == skill->require.status.end())
 					skill->require.status.push_back(static_cast<sc_type>(constant));
@@ -21793,7 +21790,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asBool(equipNode, item_name, active))
 					return 0;
 
-				auto equip_exists = std::find(skill->require.eqItem.begin(), skill->require.eqItem.end(), item->nameid);
+				auto equip_exists = util::vector_get(skill->require.eqItem, static_cast<int32>(item->nameid));
 
 				if (active && equip_exists == skill->require.eqItem.end())
 					skill->require.eqItem.push_back(item->nameid);
