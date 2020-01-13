@@ -28,7 +28,7 @@ dicastes01,189,191,5	script	Traveler Ichack#info	481,2,2,{
 	mes "What would you like to know?";
 	F_Navi("[Traveler Ichack]");
 	next;
-	switch(select("Dicastes Diel:Residential Area:Training Room:Factory:Pub:Cat Hand Caravan")) {
+	switch(select("Dicastes Diel:Residential Area:Training Room:Factory:Pub:Cat Paw Caravan")) {
 	case 1:
 		mes "[Traveler Ichack]";
 		mes "Ah~ That's a beautiful building.";

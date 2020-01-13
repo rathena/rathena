@@ -190,6 +190,10 @@ yuno_in05,47,186,0	script	#yun75	45,1,1,{
 yuno_in05,31,167,0	warp	yun76	1,1,yuno_in05,50,85
 yuno_in05,50,88,0	warp	yun77	1,1,yuno_in02,85,14
 
+// Juno In04 (Destination - Room) ----------------------------------------------
+yuno,195,87,0	warp	yun78 	1,1,yuno_in04,189,28
+yuno_in04,192,28,0	warp	yun79	1,1,yuno,198,87
+
 // Juno Government Buildings ---------------------------------------------------
 yuno_pre,52,22,0	warp	yungvn01	1,1,yuno_pre,37,23
 yuno_pre,87,22,0	warp	yungvn02	1,1,yuno_pre,102,22

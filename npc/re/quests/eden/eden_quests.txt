@@ -2849,7 +2849,7 @@ S_Quest89100:
 		next;
 		mes "[Instructor Ur]";
 		mes "Then, should I send you somewhere farther this time?";
-		mes "There is a cat hand agent here.";
+		mes "There is a Cat Paw Agent here.";
 		mes "Do you see him over there?";
 		next;
 		mes "[Instructor Ur]";
