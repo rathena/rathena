@@ -362,7 +362,18 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 	if( ((d_tbl && check_distance_bl(target, d_tbl, sc->data[SC_DEVOTION]->val3)) || e_tbl) &&
 		damage > 0 && skill_id != PA_PRESSURE && skill_id != CR_REFLECTSHIELD )
 		damage = 0;
+	{
+		if(target->type == BL_PC){ //gamingmagic sitting bug fixes
+			struct map_session_data *sd;
+			sd = BL_CAST(BL_PC,target);
+			if( pc_issit(sd)){
+				pc_setstand(sd, true);
+				skill_sit(sd,0);
+			}
+		}
+ 		damage = 0;
 
+	}
 	if ( !battle_config.delay_battle_damage || amotion <= 1 ) {
 		//Deal damage
 		battle_damage(src, target, damage, ddelay, skill_lv, skill_id, dmg_lv, attack_type, additional_effects, gettick(), isspdamage);
