@@ -15276,7 +15276,7 @@ BUILDIN_FUNC(mapid2name)
 	uint16 m = script_getnum(st, 2);
 
 	if (m < 0) {
-		script_pushconststr(st, "Unknown");
+		script_pushconststr(st, "");
 		return SCRIPT_CMD_FAILURE;
 	}
 

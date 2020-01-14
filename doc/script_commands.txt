@@ -3114,7 +3114,7 @@ Notice that NPC objects disabled with 'disablenpc' will still be located.
 
 *mapid2name(<map ID>)
 
-Returns the map name of the given map ID. Returns "Unknown" if the given
+Returns the map name of the given map ID. Returns an empty string if given
 map ID doesn't exist.
 
 ---------------------------------------
