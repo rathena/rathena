@@ -2869,7 +2869,8 @@ const char* get_val2_str( struct script_state* st, int64 uid, struct reg_db* ref
 		value = data->u.str;
 	}
 
-	script_removetop( st, -1, 0 );
+	// Do NOT remove the value from stack here, the pointer is returned here and will be used by the caller [Lemongrass]
+	// script_removetop( st, -1, 0 );
 
 	return value;
 }
@@ -2913,6 +2914,8 @@ void script_array_ensure_zero(struct script_state *st, struct map_session_data *
 			const char* str = get_val2_str( st, uid, ref );
 			if( str && *str )
 				insert = true;
+			// Remove stack entry from get_val2_str
+			script_removetop( st, -1, 0 );
 		} else {
 			int64 num = get_val2_num( st, uid, ref );
 			if( num )
@@ -6315,6 +6318,8 @@ BUILDIN_FUNC(copyarray)
 			if( is_string ){
 				const char* value = get_val2_str( st, reference_uid( id2, idx2 + i ), reference_getref( data2 ) );
 				set_reg_str( st, sd, reference_uid( id1, idx1 + i ), name1, value, reference_getref( data1 ) );
+				// Remove stack entry from get_val2_str
+				script_removetop( st, -1, 0 );
 			}else{
 				int64 value = get_val2_num( st, reference_uid( id2, idx2 + i ), reference_getref( data2 ) );
 				set_reg_num( st, sd, reference_uid( id1, idx1 + i ), name1, value, reference_getref( data1 ) );
@@ -6327,6 +6332,8 @@ BUILDIN_FUNC(copyarray)
 				if( is_string ){
 					const char* value = get_val2_str( st, reference_uid( id2, idx2 + i ), reference_getref( data2 ) );
 					set_reg_str( st, sd, reference_uid( id1, idx1 + i ), name1, value, reference_getref( data1 ) );
+					// Remove stack entry from get_val2_str
+					script_removetop( st, -1, 0 );
 				}else{
 					int64 value = get_val2_num( st, reference_uid( id2, idx2 + i ), reference_getref( data2 ) );
 					set_reg_num( st, sd, reference_uid( id1, idx1 + i ), name1, value, reference_getref( data1 ) );
@@ -6442,6 +6449,8 @@ BUILDIN_FUNC(deletearray)
 				if( is_string ){
 					const char* value = get_val2_str( st, reference_uid( id, start + count ), reference_getref( data ) );
 					set_reg_str( st, sd, reference_uid( id, start ), name, value, reference_getref( data ) );
+					// Remove stack entry from get_val2_str
+					script_removetop( st, -1, 0 );
 				}else{
 					int64 value = get_val2_num( st, reference_uid( id, start + count ), reference_getref( data ) );
 					set_reg_num( st, sd, reference_uid( id, start ), name, value, reference_getref( data ) );
@@ -6470,6 +6479,8 @@ BUILDIN_FUNC(deletearray)
 				if( is_string ){
 					const char* value = get_val2_str( st, reference_uid( id, list[i] ), reference_getref( data ) );
 					set_reg_str( st, sd, reference_uid( id, list[i] - count ), name, value, reference_getref( data ) );
+					// Remove stack entry from get_val2_str
+					script_removetop( st, -1, 0 );
 				}else{
 					int64 value = get_val2_num( st, reference_uid( id, list[i] ), reference_getref( data ) );
 					set_reg_num( st, sd, reference_uid( id, list[i] - count ), name, value, reference_getref( data ) );
@@ -6580,9 +6591,14 @@ BUILDIN_FUNC(inarray)
 			const char* temp = get_val2_str( st, reference_uid( id, i ), ref );
 
 			if( !strcmp( temp, value ) ){
+				// Remove stack entry from get_val2_str
+				script_removetop( st, -1, 0 );
 				script_pushint( st, i );
 				return SCRIPT_CMD_SUCCESS;
 			}
+
+			// Remove stack entry from get_val2_str
+			script_removetop( st, -1, 0 );
 		}
 	}else{
 		int64 value = script_getnum64( st, 3 );
@@ -6675,7 +6691,13 @@ BUILDIN_FUNC(countinarray)
 				if( !strcmp( temp1, temp2 ) ){
 					case_count++;
 				}
+
+				// Remove stack entry from get_val2_str
+				script_removetop( st, -1, 0 );
 			}
+
+			// Remove stack entry from get_val2_str
+			script_removetop( st, -1, 0 );
 		}
 	}else if( !is_string_variable( name1 ) && !is_string_variable( name2 ) ){
 		for( ; i <= array_size1; ++i ){
@@ -16103,6 +16125,8 @@ BUILDIN_FUNC(implode)
 		for(i = 0; i <= array_size; ++i) {
 			temp = get_val2_str( st, reference_uid( id, i ), reference_getref( data ) );
 			len += strlen(temp);
+			// Remove stack entry from get_val2_str
+			script_removetop( st, -1, 0 );
 		}
 
 		//allocate mem
@@ -16119,6 +16143,8 @@ BUILDIN_FUNC(implode)
 			len = strlen(temp);
 			memcpy(&output[k], temp, len);
 			k += len;
+			// Remove stack entry from get_val2_str
+			script_removetop( st, -1, 0 );
 
 			if(glue_len != 0) {
 				memcpy(&output[k], glue, glue_len);
@@ -16131,6 +16157,8 @@ BUILDIN_FUNC(implode)
 		memcpy(&output[k], temp, len);
 		k += len;
 		output[k] = '\0';
+		// Remove stack entry from get_val2_str
+		script_removetop( st, -1, 0 );
 	}
 
 	script_pushstr(st, output);
