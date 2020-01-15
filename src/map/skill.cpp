@@ -21175,9 +21175,9 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (active)
-				skill->nk.set(constant);
+				skill->nk.set(static_cast<uint8>(constant));
 			else
-				skill->nk.reset(constant);
+				skill->nk.reset(static_cast<uint8>(constant));
 		}
 	}
 
@@ -21199,9 +21199,9 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (active)
-				skill->inf2.set(constant);
+				skill->inf2.set(static_cast<uint8>(constant));
 			else
-				skill->inf2.reset(constant);
+				skill->inf2.reset(static_cast<uint8>(constant));
 		}
 	}
 
@@ -21819,7 +21819,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 			}
 
-			skill->unit_id = constant;
+			skill->unit_id = static_cast<uint16>(constant);
 		} else {
 			this->invalidWarning(unitNode["Id"], "Unit requires an Id.\n");
 			return 0;
@@ -21913,9 +21913,9 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 					return 0;
 
 				if (active)
-					skill->unit_flag.set(constant);
+					skill->unit_flag.set(static_cast<uint8>(constant));
 				else
-					skill->unit_flag.reset(constant);
+					skill->unit_flag.reset(static_cast<uint8>(constant));
 			}
 		} else {
 			if (!exists)
