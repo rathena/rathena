@@ -8917,19 +8917,19 @@ BUILDIN_FUNC(uniqueid_getiteminfo)
 	struct item *it = &sd->inventory.u.items_inventory[i];
 	int s = 0;
 
-	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->nameid), ref);
-	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->refine), ref);
-	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->identify), ref);
-	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->attribute), ref);
+	set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->nameid, ref);
+	set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->refine, ref);
+	set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->identify, ref);
+	set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->attribute, ref);
 	for (int k = 0; k < MAX_SLOTS; k++)
-		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->card[k]), ref);
-	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->expire_time), ref);
-	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->bound), ref);
+		set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->card[k], ref);
+	set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->expire_time, ref);
+	set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->bound, ref);
 
 	for (int k = 0; k < MAX_ITEM_RDM_OPT; k++) {
-		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->option[k].id), ref);
-		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->option[k].value), ref);
-		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->option[k].param), ref);
+		set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->option[k].id, ref);
+		set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->option[k].value, ref);
+		set_reg_num(st, sd, reference_uid(id, idx + s++), name, it->option[k].param, ref);
 	}
 
 	script_pushint(st, true);
