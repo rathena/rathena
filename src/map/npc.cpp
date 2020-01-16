@@ -2006,7 +2006,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 	script_cleararray_pc( sd, "@sold_refine" );
 	script_cleararray_pc( sd, "@sold_attribute" );
 	script_cleararray_pc( sd, "@sold_identify" );
-	script_cleararray_pc( sd, "@sold_uniqueid$" );
+	script_cleararray_pc( sd, "@sold_uniqueid" );
 
 	for( j = 0; j < MAX_SLOTS; j++ )
 	{// clear each of the card slot entries
@@ -2039,11 +2039,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 			script_setarray_pc( sd, "@sold_refine", i, sd->inventory.u.items_inventory[idx].refine, &key_refine );
 			script_setarray_pc( sd, "@sold_attribute", i, sd->inventory.u.items_inventory[idx].attribute, &key_attribute );
 			script_setarray_pc( sd, "@sold_identify", i, sd->inventory.u.items_inventory[idx].identify, &key_identify );
-
-			char* buf = (char*)aMalloc(255 * sizeof(char));
-			snprintf(buf, 255, "%llu", (unsigned long long)sd->inventory.u.items_inventory[idx].unique_id);
-			script_setarray_pc(sd, "@sold_uniqueid$", i, (void*)(intptr_t)buf, &key_uniqueid);
-			aFree(buf);
+			script_setarray_pc( sd, "@sold_uniqueid", i, sd->inventory.u.items_inventory[idx].unique_id, &key_uniqueid );
 
 			for( j = 0; j < MAX_SLOTS; j++ )
 			{// store each of the cards from the equipment in the array

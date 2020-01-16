@@ -8868,10 +8868,10 @@ BUILDIN_FUNC(uniqueid_getiteminfo)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	unsigned long long item_uniqueid = strtoull(script_getstr(st, 2), NULL, 10);
+	int64 item_uniqueid = script_getnum64(st, 2);
 
 	if (!item_uniqueid) {
-		ShowError("buildin_uniqueid_getiteminfo: unknown item (unique_id=%s).\n", script_getstr(st, 2));
+		ShowError("buildin_uniqueid_getiteminfo: unknown item (unique_id=%llu).\n", script_getnum64(st, 2));
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -8950,10 +8950,10 @@ BUILDIN_FUNC(uniqueid_delitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	unsigned long long item_uniqueid = strtoull(script_getstr(st, 2), NULL, 10);
+	int64 item_uniqueid = script_getnum64(st, 2);
 
 	if (!item_uniqueid) {
-		ShowError("buildin_uniqueid_delitem: unknown item (unique_id=%s).\n", script_getstr(st, 2));
+		ShowError("buildin_uniqueid_delitem: unknown item (unique_id=%llu).\n", script_getnum64(st, 2));
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -14157,8 +14157,7 @@ BUILDIN_FUNC(getinventorylist)
 {
 	TBL_PC *sd;
 	char card_var[NAME_LENGTH], randopt_var[50];
-	int i,j=0,k, maxlen = 256;
-	char* buf = (char*)aMalloc(maxlen * sizeof(char));
+	int i,j=0,k;
 
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
@@ -14178,9 +14177,7 @@ BUILDIN_FUNC(getinventorylist)
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_expire"), j),sd->inventory.u.items_inventory[i].expire_time);
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_bound"), j),sd->inventory.u.items_inventory[i].bound);
 			if (sd->inventory.u.items_inventory[i].unique_id) {
-				memset(buf, 0, maxlen);
-				snprintf(buf, maxlen - 1, "%llu", (unsigned long long)sd->inventory.u.items_inventory[i].unique_id);
-				pc_setregstr(sd, reference_uid(add_str("@inventorylist_unique_id$"), j), buf);
+				pc_setreg(sd, reference_uid(add_str("@inventorylist_unique_id"), j), sd->inventory.u.items_inventory[i].unique_id);
 			}
 			for (k = 0; k < MAX_ITEM_RDM_OPT; k++)
 			{
@@ -14195,7 +14192,6 @@ BUILDIN_FUNC(getinventorylist)
 		}
 	}
 	pc_setreg(sd,add_str("@inventorylist_count"),j);
-	aFree(buf);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -24768,8 +24764,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(strnpcinfo,"i"),
 	BUILDIN_DEF(getequipid,"??"),
 	BUILDIN_DEF(getequipuniqueid,"i?"),
-	BUILDIN_DEF(uniqueid_getiteminfo, "sr?"),
-	BUILDIN_DEF(uniqueid_delitem, "s?"),
+	BUILDIN_DEF(uniqueid_getiteminfo, "ir?"),
+	BUILDIN_DEF(uniqueid_delitem, "i?"),
 	BUILDIN_DEF(getequipname,"i?"),
 	BUILDIN_DEF(getbrokenid,"i?"), // [Valaris]
 	BUILDIN_DEF(repair,"i?"), // [Valaris]
