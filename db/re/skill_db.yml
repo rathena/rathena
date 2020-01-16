@@ -32259,8 +32259,6 @@ Body:
       IgnoreDex: true
       IgnoreStatus: true
       IgnoreItemBonus: true
-    Requires:
-      {}
   - Id: 5072
     Name: AB_VITUPERATUM
     Description: Vituperatum

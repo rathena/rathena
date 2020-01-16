@@ -134,11 +134,11 @@ const char* constant_lookup( int32 value, const char* prefix ){
 	return nullptr;
 }
 
-int32 constant_lookup_int(const char* constant) {
+int64 constant_lookup_int(const char* constant) {
 	nullpo_retr(-100, constant);
 
 	for (auto const &pair : constants) {
-		if (strncasecmp(pair.first, constant, strlen(constant)) == 0) {
+		if (strlen(pair.first) == strlen(constant) && strncasecmp(pair.first, constant, strlen(constant)) == 0) {
 			return pair.second;
 		}
 	}
@@ -546,12 +546,12 @@ int skill_split_atoi(char *str, int *val) {
  * @param max: Maximum number that can be allocated
  * @return count: Number of success
  */
-uint8 skill_split_atoi2(char *str, int *val, const char *delim, int min_value, uint16 max) {
+uint8 skill_split_atoi2(char *str, int64 *val, const char *delim, int min_value, uint16 max) {
 	uint8 i = 0;
 	char *p = strtok(str, delim);
 
 	while (p != NULL) {
-		int n = min_value;
+		int64 n = min_value;
 
 		trim(p);
 
@@ -1203,7 +1203,8 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 
 	trim(split[11]);
 	if (split[11][0] != '\0' || atoi(split[11])) {
-		int require[MAX_SKILL_STATUS_REQUIRE], count;
+		int64 require[MAX_SKILL_STATUS_REQUIRE];
+		int32 count;
 
 		if ((count = skill_split_atoi2(split[11], require, ":", SC_STONE, ARRAYLENGTH(require)))) {
 			for (int i = 0; i < count; i++) {
@@ -1231,12 +1232,13 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 
 	trim(split[33]);
 	if (split[33][0] != '\0' || atoi(split[33])) {
-		int require[MAX_SKILL_EQUIP_REQUIRE], count;
+		int64 require[MAX_SKILL_EQUIP_REQUIRE];
+		int32 count;
 
 		if ((count = skill_split_atoi2(split[33], require, ":", 500, ARRAYLENGTH(require)))) {
 			for (int i = 0; i < count; i++) {
 				if (require[i] > 0)
-					entry.eqItem.push_back(require[i]);
+					entry.eqItem.push_back(static_cast<int32>(require[i]));
 			}
 		}
 	}

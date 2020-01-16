@@ -29553,7 +29553,6 @@ Body:
     DamageFlags:
       NoDamage: true
     Cooldown: 10000
-    FixedCastTime: 60
     CastTimeFlags:
       IgnoreDex: true
       IgnoreStatus: true
@@ -29562,8 +29561,6 @@ Body:
       IgnoreDex: true
       IgnoreStatus: true
       IgnoreItemBonus: true
-    Requires:
-      {}
   - Id: 5072
     Name: AB_VITUPERATUM
     Description: Vituperatum
