@@ -2001,7 +2001,6 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 	int key_option_id[MAX_ITEM_RDM_OPT], key_option_val[MAX_ITEM_RDM_OPT], key_option_param[MAX_ITEM_RDM_OPT];
 
 	// discard old contents
-
 	script_cleararray_pc( sd, "@sold_nameid" );
 	script_cleararray_pc( sd, "@sold_quantity" );
 	script_cleararray_pc( sd, "@sold_refine" );
