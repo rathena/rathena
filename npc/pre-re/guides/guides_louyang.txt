@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Louyang Guides
+//= Luoyang Guides
 //===== By: ==================================================
 //= jAthena/Tsuyuki; L0ne_W0lf
 //===== Current Version: =====================================
@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
-//= Guides for the City of Louyang
+//= Guides for the City of Luoyang
 //===== Additional Comments: =================================
 //= 0.5 Added first, Japanese version [Tsuyuki]
 //= 1.0 Translated to English from iRO NPC Dialogue (100% Official) [Tsuyuki]
@@ -17,7 +17,7 @@
 
 louyang,213,213,3	script	Soldier#BA::LouGuide	825,{
 	mes "[Soldier]";
-	mes "Welcome to Louyang,";
+	mes "Welcome to Luoyang,";
 	mes "a city with a long";
 	mes "and colorful history.";
 	next;
@@ -28,12 +28,12 @@ louyang,213,213,3	script	Soldier#BA::LouGuide	825,{
 	mes "foreign nations.";
 	next;
 	mes "[Soldier]";
-	mes "Louyang is well-known for various specialties in addition to its rich history. Here you can find many things unique to our land.";
+	mes "Luoyang is well-known for various specialties in addition to its rich history. Here you can find many things unique to our land.";
 	next;
 	mes "[Soldier]";
 	mes "Please take your time";
 	mes "and we invite you to enjoy";
-	mes "your trip here in Louyang.";
+	mes "your trip here in Luoyang.";
 	next;
 	switch(select("Ask Building Locations.:Remove all marks from mini-map.:Cancel.")) {
 	case 1:
@@ -78,7 +78,7 @@ louyang,213,213,3	script	Soldier#BA::LouGuide	825,{
 			mes "You will see";
 			mes "marvelous weapons forged";
 			mes "by the well-experienced";
-			mes "blacksmiths of Louyang.";
+			mes "blacksmiths of Luoyang.";
 			viewpoint 1,145,174,5,0x55FF33;
 			break;
 		case 5:
@@ -129,7 +129,7 @@ louyang,160,175,3	duplicate(LouGuide)	Soldier#BB	825
 
 louyang,224,104,3	script	Representative#lou	818,{
 	mes "[Representative]";
-	mes "Welcome to Louyang,";
+	mes "Welcome to Luoyang,";
 	mes "an ancient land with";
 	mes "a history full of tales";
 	mes "of bravery.";
@@ -138,7 +138,7 @@ louyang,224,104,3	script	Representative#lou	818,{
 	mes "We now provide an ocean lane to accomodate foreign travelers and intercultural exchange from which all can benefit.";
 	next;
 	mes "[Representative]";
-	mes "Louyang is famous for";
+	mes "Luoyang is famous for";
 	mes "its elaborate history, as well as specialties that are unique to this nation. Please take your time and enjoy your stay.";
 	next;
 	switch(select("Ask Building Locations.:Remove all marks from mini-map.:Cancel.")) {
@@ -185,7 +185,7 @@ louyang,224,104,3	script	Representative#lou	818,{
 			mes "You will see";
 			mes "marvelous weapons forged";
 			mes "by the well-experienced";
-			mes "blacksmiths of Louyang.";
+			mes "blacksmiths of Luoyang.";
 			viewpoint 1,145,174,5,0xFF55FF;
 			break;
 		case 5:
@@ -225,7 +225,7 @@ louyang,224,104,3	script	Representative#lou	818,{
 		break;
 	case 3:
 		mes "[Representative]";
-		mes "I understand that you want to explore Louyang and see the";
+		mes "I understand that you want to explore Luoyang and see the";
 		mes "sights for yourself. Alright then, take care!";
 		break;
 	}

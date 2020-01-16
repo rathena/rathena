@@ -212,6 +212,9 @@ static enum e_storage_add storage_canAddItem(struct s_storage *stor, int idx, st
 	if (amount < 1 || amount > items[idx].amount)
 		return STORAGE_ADD_INVALID;
 
+	if (itemdb_ishatched_egg(&items[idx]))
+		return STORAGE_ADD_INVALID;
+
 	if (!stor->state.put)
 		return STORAGE_ADD_NOACCESS;
 

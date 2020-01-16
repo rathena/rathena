@@ -861,6 +861,9 @@ struct item_data
 	struct item_combo **combos;
 	unsigned char combos_count;
 	short delay_sc; ///< Use delay group if any instead using player's item_delay data [Cydh]
+
+	bool isStackable();
+	int inventorySlotNeeded(int quantity);
 };
 
 // Struct for item random option [Secret]
@@ -913,7 +916,6 @@ struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_dropeffect(n) (itemdb_search(n)->flag.dropEffect)
 const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (enum e_item_ammo ammo);
-bool itemdb_is_spellbook2(unsigned short nameid);
 
 struct s_item_group_entry *itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group);
 unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
@@ -932,6 +934,7 @@ bool itemdb_canguildstore_sub(struct item_data *itd, int gmlv, int unused);
 bool itemdb_canmail_sub(struct item_data *itd, int gmlv, int unused);
 bool itemdb_canauction_sub(struct item_data *itd, int gmlv, int unused);
 bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(struct item_data*, int, int));
+bool itemdb_ishatched_egg(struct item* item);
 #define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
 #define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)
 #define itemdb_canpartnertrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_canpartnertrade_sub)

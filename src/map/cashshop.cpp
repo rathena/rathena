@@ -471,6 +471,7 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 	uint32 totalcash = 0;
 	uint32 totalweight = 0;
 	int i,new_;
+	item_data *id;
 #if PACKETVER_SUPPORTS_SALES
 	struct sale_item_data* sale = NULL;
 #endif
@@ -504,13 +505,11 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 		}
 
 		nameid = *( item_list + i * 5 ) = cash_shop_items[tab].item[j]->nameid; //item_avail replacement
+		id = itemdb_exists(nameid);
 
-		if( !itemdb_exists( nameid ) ){
+		if( !id ){
 			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKONWN_ITEM );
 			return false;
-		}else if( !itemdb_isstackable( nameid ) && quantity > 1 ){
-			/* ShowWarning( "Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable cash item %hu!\n", sd->status.name, sd->status.account_id, sd->status.char_id, quantity, nameid ); */
-			quantity = *( item_list + i * 5 + 2 ) = 1;
 		}
 
 		if( quantity > 99 ){
@@ -544,7 +543,7 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 				break;
 
 			case CHKADDITEM_NEW:
-				new_++;
+				new_ += id->inventorySlotNeeded(quantity);
 				break;
 
 			case CHKADDITEM_OVERAMOUNT:
@@ -580,13 +579,10 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 		if (!id)
 			continue;
 
-		if (!itemdb_isstackable2(id) && quantity > 1)
-			quantity = 1;
-
 		if (!pet_create_egg(sd, nameid)) {
 			unsigned short get_amt = quantity, j;
 
-			if (id->flag.guid)
+			if (id->flag.guid || !itemdb_isstackable2(id))
 				get_amt = 1;
 
 			for (j = 0; j < quantity; j += get_amt) {

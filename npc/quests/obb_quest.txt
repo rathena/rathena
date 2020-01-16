@@ -18,7 +18,7 @@
 //===== Additional Comments: ================================= 
 //= 1.7 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.8 Added missing checkweights. [L0ne_W0lf]
-//= 1.9 Moved Morroc NPCs to Morroc Ruins. [L0ne_W0lf]
+//= 1.9 Moved Morocc NPCs to Morocc Ruins. [L0ne_W0lf]
 //= 2.0 Removed unused "name" variable. [L0ne_W0lf]
 //============================================================ 
 
@@ -90,7 +90,7 @@ alberta,43,244,0	script	Tourist#thai	99,{
 				mes "I wanted to give my girlfriend";
 				mes "some well baked cookies.";
 				mes "Sadly, in my hometown of";
-				mes "Morroc, we don't have fancy";
+				mes "Morocc, we don't have fancy";
 				mes "foods like that.";
 				next;
 				mes "[Tourist]";
@@ -141,7 +141,7 @@ alberta,43,244,0	script	Tourist#thai	99,{
 				mes "I wanted to give my girlfriend";
 				mes "some well baked cookies.";
 				mes "Sadly, in my hometown of";
-				mes "Morroc, we don't have fancy";
+				mes "Morocc, we don't have fancy";
 				mes "foods like that.";
 				next;
 				mes "[Tourist]";
@@ -381,7 +381,7 @@ alberta,43,244,0	script	Tourist#thai	99,{
 				mes "[Tourist]";
 				mes "Hmm, there is still one problem";
 				mes "left for me though...How do I";
-				mes "get back home to Morroc??";
+				mes "get back home to Morocc??";
 				mes "Well, if it can make my girl";
 				mes "happy...";
 				next;
@@ -421,7 +421,7 @@ alberta,43,244,0	script	Tourist#thai	99,{
 			next;
 			mes "[Tourist]";
 			mes "Visit my pal ^649664Jacob^000000 in";
-			mes "Morroc. Tell him that I";
+			mes "Morocc. Tell him that I";
 			mes "introduced you. He knows";
 			mes "about a wise man...";
 			mes "Though, he isn't one";
@@ -491,7 +491,7 @@ alberta,43,244,0	script	Tourist#thai	99,{
 			mes "[Tourist]";
 			mes "Hey, thanks a bunch for your";
 			mes "help....I ain't sure if I";
-			mes "can make it back to Morroc";
+			mes "can make it back to Morocc";
 			mes "in one piece...";
 			next;
 			mes "[Tourist]";
@@ -504,7 +504,7 @@ alberta,43,244,0	script	Tourist#thai	99,{
 		case 3:
 			mes "[Tourist]";
 			mes "Hey, thanks a bunch for your";
-			mes "help. Man...Morroc is a long";
+			mes "help. Man...Morocc is a long";
 			mes "way off, isn't it? Aw nuts...";
 			mes "I guess if I was crazy";
 			mes "enough to come here because";
@@ -512,7 +512,7 @@ alberta,43,244,0	script	Tourist#thai	99,{
 			next;
 			mes "[Tourist]";
 			mes "I'm crazy enough to walk all";
-			mes "way back to Morroc...";
+			mes "way back to Morocc...";
 			mes "...";
 			mes "...unless...";
 			mes "You'll gimme a piggy-back ride?";
@@ -981,7 +981,7 @@ moc_ruins,105,62,4	script	Jacob#thai	50,{
 				mes "I have something to tell you.";
 				next;
 				mes "[Jacob]";
-				mes "When you go west from Morroc, and";
+				mes "When you go west from Morocc, and";
 				mes "pass through a cave, you will";
 				mes "arrive at a town called Comodo.";
 				next;

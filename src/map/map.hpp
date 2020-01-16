@@ -18,6 +18,8 @@
 #include "../common/timer.hpp"
 #include "../config/core.hpp"
 
+#include "script.hpp"
+
 struct npc_data;
 struct item_data;
 struct Channel;
@@ -202,20 +204,20 @@ enum e_mapid {
 	MAPID_SHADOW_CHASER_T,
 //Baby 3-1 Jobs
 	MAPID_SUPER_BABY_E = JOBL_THIRD|MAPID_SUPER_BABY,
-	MAPID_BABY_RUNE,
+	MAPID_BABY_RUNE_KNIGHT,
 	MAPID_BABY_WARLOCK,
 	MAPID_BABY_RANGER,
-	MAPID_BABY_BISHOP,
+	MAPID_BABY_ARCH_BISHOP,
 	MAPID_BABY_MECHANIC,
-	MAPID_BABY_CROSS,
+	MAPID_BABY_GUILLOTINE_CROSS,
 	MAPID_BABY_STAR_EMPEROR,
 //Baby 3-2 Jobs
-	MAPID_BABY_GUARD = JOBL_THIRD|MAPID_BABY_CRUSADER,
+	MAPID_BABY_ROYAL_GUARD = JOBL_THIRD|MAPID_BABY_CRUSADER,
 	MAPID_BABY_SORCERER,
 	MAPID_BABY_MINSTRELWANDERER,
 	MAPID_BABY_SURA,
 	MAPID_BABY_GENETIC,
-	MAPID_BABY_CHASER,
+	MAPID_BABY_SHADOW_CHASER,
 	MAPID_BABY_SOUL_REAPER,
 };
 
@@ -312,6 +314,12 @@ enum e_race2 : uint8{
 	RC2_BIO5_ACOLYTE_MERCHANT,
 	RC2_BIO5_MAGE_ARCHER,
 	RC2_BIO5_MVP,
+	RC2_CLOCKTOWER,
+	RC2_THANATOS,
+	RC2_FACEWORM,
+	RC2_HEARTHUNTER,
+	RC2_ROCKRIDGE,
+	RC2_WERNER_LAB,
 	RC2_MAX
 };
 
@@ -430,6 +438,7 @@ enum _sp {
 	SP_ROULETTE_GOLD = 130,
 	SP_CASHPOINTS, SP_KAFRAPOINTS,
 	SP_PCDIECOUNTER, SP_COOKMASTERY,
+	SP_ACHIEVEMENT_LEVEL,
 
 	// Mercenaries
 	SP_MERCFLEE=165, SP_MERCKILLS=189, SP_MERCFAITH=190,
@@ -485,7 +494,8 @@ enum _sp {
 	SP_HP_VANISH_RACE_RATE, SP_SP_VANISH_RACE_RATE, SP_ABSORB_DMG_MAXHP, SP_SUB_SKILL, SP_SUBDEF_ELE, // 2074-2078
 	SP_STATE_NORECOVER_RACE, SP_CRITICAL_RANGEATK, SP_MAGIC_ADDRACE2, SP_IGNORE_MDEF_RACE2_RATE, // 2079-2082
 	SP_WEAPON_ATK_RATE, SP_WEAPON_MATK_RATE, SP_DROP_ADDRACE, SP_DROP_ADDCLASS, SP_NO_MADO_FUEL, // 2083-2087
-	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, SP_SKILL_DELAY, SP_NO_WALK_DELAY //2088-2093
+	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, SP_SKILL_DELAY, SP_NO_WALK_DELAY, //2088-2093
+	SP_LONG_SP_GAIN_VALUE, SP_LONG_HP_GAIN_VALUE // 2094-2095
 };
 
 enum _look {
@@ -698,22 +708,11 @@ struct iwall_data {
 	bool shootable;
 };
 
-struct questinfo_req {
-	unsigned int quest_id;
-	unsigned state : 2; // 0: Doesn't have, 1: Inactive, 2: Active, 3: Complete //! TODO: CONFIRM ME!!
-};
-
-struct questinfo {
+struct s_questinfo {
 	struct npc_data *nd;
-	unsigned short icon;
-	unsigned char color;
-	int quest_id;
-	unsigned short min_level,
-		max_level;
-	uint8 req_count;
-	uint8 jobid_count;
-	struct questinfo_req *req;
-	unsigned short *jobid;
+	e_questinfo_types icon;
+	e_questinfo_markcolor color;
+	struct script_code* condition;
 };
 
 struct map_data {
@@ -753,9 +752,8 @@ struct map_data {
 	struct Channel *channel;
 
 	/* ShowEvent Data Cache */
-	struct questinfo *qi_data;
-	unsigned short qi_count;
-	
+	std::vector<s_questinfo> qi_data;
+
 	/* speeds up clif_updatestatus processing by causing hpmeter to run only when someone with the permission can view it */
 	unsigned short hpmeter_visible;
 };
@@ -962,8 +960,6 @@ inline bool map_flag_gvg2_no_te(int16 m) {
 }
 
 extern char motd_txt[];
-extern char help_txt[];
-extern char help2_txt[];
 extern char charhelp_txt[];
 extern char channel_conf[];
 
@@ -1081,9 +1077,7 @@ struct mob_data * map_id2boss(int id);
 // reload config file looking only for npcs
 void map_reloadnpc(bool clear);
 
-struct questinfo *map_add_questinfo(int m, struct questinfo *qi);
-bool map_remove_questinfo(int m, struct npc_data *nd);
-struct questinfo *map_has_questinfo(int m, struct npc_data *nd, int quest_id);
+void map_remove_questinfo(int m, struct npc_data *nd);
 
 /// Bitfield of flags for the iterator.
 enum e_mapitflags
