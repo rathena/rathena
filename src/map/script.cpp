@@ -8857,7 +8857,7 @@ BUILDIN_FUNC(getequipuniqueid)
   * Get the item information with the specified unique id
   * and assign it to the given variable
   * Return true on success or false otherwise
-  * uniqueid_getiteminfo(<"item_unique_id">,<array_variable>{,<char_id>})
+  * uniqueid_getiteminfo(<item_unique_id>,<array_variable>{,<char_id>})
   *------------------------------------------*/
 BUILDIN_FUNC(uniqueid_getiteminfo)
 {
@@ -8939,7 +8939,7 @@ BUILDIN_FUNC(uniqueid_getiteminfo)
 /*==========================================
  * Delete the item with the specified unique id
  * Return true on success or false otherwise
- * uniqueid_delitem(<"item_unique_id">{,<char_id>})
+ * uniqueid_delitem(<item_unique_id>{,<char_id>})
  *------------------------------------------*/
 BUILDIN_FUNC(uniqueid_delitem)
 {
