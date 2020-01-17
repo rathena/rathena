@@ -21101,16 +21101,20 @@ uint8 skill_split_atoi2(char *str, int *val, const char *delim, int min_value, u
 	char *p = strtok(str, delim);
 
 	while (p != NULL) {
+		int64 n_tmp;
 		int n = min_value;
 
 		trim(p);
 
 		if (ISDIGIT(p[0])) // If using numeric
 			n = atoi(p);
-		else if (!script_get_constant(p, &n)) { // If using constant value
-			ShowError("skill_split_atoi2: Invalid value: '%s'\n", p);
-			p = strtok(NULL, delim);
-			continue;
+		else {
+			if (!script_get_constant(p, &n_tmp)) { // If using constant value
+				ShowError("skill_split_atoi2: Invalid value: '%s'\n", p);
+				p = strtok(NULL, delim);
+				continue;
+			}
+			n = static_cast<int>(n_tmp);
 		}
 
 		if (n > min_value) {
@@ -21802,6 +21806,7 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
  */
 static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 {
+	int64 caster_tmp;
 	uint16 id = 0;
 	int caster;
 
@@ -21818,10 +21823,11 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 	if (ISDIGIT(split[1][0]))
 		caster = atoi(split[1]);
 	else { // Try to parse caster as constant
-		if (!script_get_constant(split[1], &caster)) {
+		if (!script_get_constant(split[1], &caster_tmp)) {
 			ShowError("skill_parse_row_skilldamage: Invalid caster constant given for skill %d. Skipping.", id);
 			return false;
 		}
+		caster = static_cast<int>(caster_tmp);
 	}
 	skill_db[id]->damage.caster |= caster;
 	skill_db[id]->damage.map |= atoi(split[2]);

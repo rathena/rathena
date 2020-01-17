@@ -148,6 +148,10 @@ namespace rathena {
 				vector.erase(vector.begin() + index);
       vector.shrink_to_fit();
 		}
+
+		bool safe_addition( int64 a, int64 b, int64& result );
+		bool safe_substraction( int64 a, int64 b, int64& result );
+		bool safe_multiplication( int64 a, int64 b, int64& result );
 	}
 }
 

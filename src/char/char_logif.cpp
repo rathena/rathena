@@ -178,7 +178,7 @@ void chlogif_prepsend_global_accreg(void) {
 	}
 }
 
-void chlogif_send_global_accreg(const char *key, unsigned int index, intptr_t val, bool is_string) {
+void chlogif_send_global_accreg(const char *key, unsigned int index, int64 int_value, const char* string_value, bool is_string) {
 	int nlen = WFIFOW(login_fd, 2);
 	size_t len;
 
@@ -197,26 +197,25 @@ void chlogif_send_global_accreg(const char *key, unsigned int index, intptr_t va
 	nlen += 4;
 
 	if( is_string ) {
-		WFIFOB(login_fd, nlen) = val ? 2 : 3;
+		WFIFOB(login_fd, nlen) = string_value ? 2 : 3;
 		nlen += 1;
 
-		if( val ) {
-			char *sval = (char*)val;
-			len = strlen(sval)+1;
+		if( string_value ) {
+			len = strlen(string_value)+1;
 
 			WFIFOB(login_fd, nlen) = (unsigned char)len; // won't be higher; the column size is 254
 			nlen += 1;
 
-			safestrncpy(WFIFOCP(login_fd,nlen), sval, len);
+			safestrncpy(WFIFOCP(login_fd,nlen), string_value, len);
 			nlen += len;
 		}
 	} else {
-		WFIFOB(login_fd, nlen) = val ? 0 : 1;
+		WFIFOB(login_fd, nlen) = int_value ? 0 : 1;
 		nlen += 1;
 
-		if( val ) {
-			WFIFOL(login_fd, nlen) = (int)val;
-			nlen += 4;
+		if( int_value ) {
+			WFIFOQ(login_fd, nlen) = int_value;
+			nlen += 8;
 		}
 	}
 
