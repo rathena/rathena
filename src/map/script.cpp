@@ -20085,8 +20085,8 @@ BUILDIN_FUNC(bg_info)
 			size_t i;
 
 			for (i = 0; i < bg->maps.size(); i++)
-				setd_sub(st, nullptr, ".@bgmaps$", i, (void *)__64BPRTSIZE(map_mapid2mapname(bg->maps[i].mapid)), nullptr);
-			setd_sub(st, nullptr, ".@bgmapscount", 0, (void *)__64BPRTSIZE(i), nullptr);
+				setd_sub_str(st, nullptr, ".@bgmaps$", i, map_mapid2mapname(bg->maps[i].mapid), nullptr);
+			setd_sub_num(st, nullptr, ".@bgmapscount", 0, i, nullptr);
 			script_pushint(st, i);
 			break;
 		}
