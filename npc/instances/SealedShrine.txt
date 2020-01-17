@@ -965,7 +965,7 @@ OnTimer3100000:
 	end;
 
 OnTimer3500000:
-	instance_warpall "monk_test",310,150;
+	instance_warpall "monk_test",310,150, instance_id();
 	stopnpctimer;
 	end;
 }

@@ -17,6 +17,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "achievement.hpp"
@@ -43,6 +44,8 @@
 #include "script.hpp"
 #include "status.hpp"
 #include "unit.hpp"
+
+using namespace rathena;
 
 #define SKILLUNITTIMER_INTERVAL	100
 #define TIMERSKILL_INTERVAL	150
@@ -87,15 +90,11 @@ static unsigned short skill_produce_count;
 struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 static unsigned short skill_arrow_count;
 
-struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
-unsigned short skill_abra_count;
+AbraDatabase abra_db;
 
-struct s_skill_improvise_db {
-	uint16 skill_id;
-	unsigned short per;//1-10000
-};
-struct s_skill_improvise_db skill_improvise_db[MAX_SKILL_IMPROVISE_DB];
-static unsigned short skill_improvise_count;
+ImprovisedSongDatabase improvised_song_db;
+
+ReadingSpellbookDatabase reading_spellbook_db;
 
 #define MAX_SKILL_CHANGEMATERIAL_DB 75
 #define MAX_SKILL_CHANGEMATERIAL_SET 3
@@ -108,13 +107,8 @@ struct s_skill_changematerial_db {
 struct s_skill_changematerial_db skill_changematerial_db[MAX_SKILL_CHANGEMATERIAL_DB];
 static unsigned short skill_changematerial_count;
 
-//Warlock
-struct s_skill_spellbook_db skill_spellbook_db[MAX_SKILL_SPELLBOOK_DB];
-unsigned short skill_spellbook_count;
 
-//Guillotine Cross
-struct s_skill_magicmushroom_db skill_magicmushroom_db[MAX_SKILL_MAGICMUSHROOM_DB];
-unsigned short skill_magicmushroom_count;
+MagicMushroomDatabase magic_mushroom_db;
 
 struct s_skill_unit_layout skill_unit_layout[MAX_SKILL_UNIT_LAYOUT];
 int firewall_unit_pos;
@@ -430,6 +424,8 @@ unsigned short skill_dummy2skill_id(unsigned short skill_id) {
 			return SU_SV_ROOTTWIST;
 		case SU_LUNATICCARROTBEAT2:
 			return SU_LUNATICCARROTBEAT;
+		case NPC_REVERBERATION_ATK:
+			return NPC_REVERBERATION;
 	}
 	return skill_id;
 }
@@ -488,8 +484,11 @@ bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 s
  * @return modified heal value
  */
 int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv, bool heal) {
-	int skill, hp = 0, hp_bonus = 0;
+	int skill, hp = 0;
+#ifdef RENEWAL
+	int hp_bonus = 0;
 	double global_bonus = 1;
+#endif
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct map_session_data *tsd = BL_CAST(BL_PC, target);
 	struct status_change *sc, *tsc;
@@ -514,10 +513,15 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 			hp = (skill_lv > 6) ? 666 : skill_lv * 100;
 			break;
 		case AB_HIGHNESSHEAL:
+#ifdef RENEWAL
 			hp = ((status_get_int(src) + status_get_lv(src)) / 5) * 30;
 
 			if (sd && ((skill = pc_checkskill(sd, HP_MEDITATIO)) > 0))
 				hp_bonus += skill * 2;
+#else
+			hp = ((status_get_lv(src) + status_get_int(src)) / 8) * (4 + ((sd ? pc_checkskill(sd, AL_HEAL) : 1) * 8));
+			hp = (hp * (17 + 3 * skill_lv)) / 10;
+#endif
 			break;
 		case SU_FRESHSHRIMP:
 			hp = (status_get_lv(src) + status_get_int(src)) / 5 * 6;
@@ -537,11 +541,20 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 #else
 			hp = (status_get_lv(src) + status_get_int(src)) / 8 * (4 + (skill_lv * 8));
 #endif
-			if( sd && ((skill = pc_checkskill(sd, HP_MEDITATIO)) > 0) )
+
+			if (sd && ((skill = pc_checkskill(sd, HP_MEDITATIO)) > 0))
+#ifdef RENEWAL
 				hp_bonus += skill * 2;
+#else
+				hp += hp * skill * 2 / 100;
+#endif
 			else if (src->type == BL_HOM && (skill = hom_checkskill(((TBL_HOM*)src), HLIF_BRAIN)) > 0)
+#ifdef RENEWAL
 				hp_bonus += skill * 2;
-			if( sd && tsd && sd->status.partner_id == tsd->status.char_id && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.sex == 0 )
+#else
+				hp += hp * skill * 2 / 100;
+#endif
+			if (sd && tsd && sd->status.partner_id == tsd->status.char_id && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.sex == 0)
 				hp *= 2;
 			break;
 	}
@@ -550,40 +563,78 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 		hp >>= 1;
 
 	if (sd && ((skill = pc_checkskill(sd, SU_POWEROFSEA)) > 0)) {
+#ifdef RENEWAL
 		hp_bonus += 10;
+#else
+		hp += hp * 10 / 100;
+#endif
 
 		if (pc_checkskill(sd, SU_TUNABELLY) == 5 && pc_checkskill(sd, SU_TUNAPARTY) == 5 && pc_checkskill(sd, SU_BUNCHOFSHRIMP) == 5 && pc_checkskill(sd, SU_FRESHSHRIMP) == 5)
+#ifdef RENEWAL
 			hp_bonus += 20;
+#else
+			hp += hp * 20 / 100;
+#endif
 	}
 
-	if( sd && (skill = pc_skillheal_bonus(sd, skill_id)) )
+	if (sd && (skill = pc_skillheal_bonus(sd, skill_id)))
+#ifdef RENEWAL
 		hp_bonus += skill;
+#else
+		hp += hp * skill / 100;
+#endif
 
-	if( tsd && (skill = pc_skillheal2_bonus(tsd, skill_id)) )
+	if (tsd && (skill = pc_skillheal2_bonus(tsd, skill_id)))
+#ifdef RENEWAL
 		hp_bonus += skill;
+#else
+		hp += hp * skill / 100;
+#endif
 
 	if (sc && sc->count) {
 		if (sc->data[SC_OFFERTORIUM] && (skill_id == AB_HIGHNESSHEAL || skill_id == AB_CHEAL || skill_id == PR_SANCTUARY || skill_id == AL_HEAL))
+#ifdef RENEWAL
 			hp_bonus += sc->data[SC_OFFERTORIUM]->val2;
+#else
+			hp += hp * sc->data[SC_OFFERTORIUM]->val2 / 100;
+#endif
 		if (sc->data[SC_GLASTHEIM_HEAL] && skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN)
+#ifdef RENEWAL
 			hp_bonus += sc->data[SC_GLASTHEIM_HEAL]->val1;
+#else
+			hp += hp * sc->data[SC_GLASTHEIM_HEAL]->val1 / 100;
+#endif
 	}
 
 	if (tsc && tsc->count) {
 		if (skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN) {
 			if (tsc->data[SC_INCHEALRATE])
+#ifdef RENEWAL
 				hp_bonus += tsc->data[SC_INCHEALRATE]->val1; //Only affects Heal, Sanctuary and PotionPitcher.(like bHealPower) [Inkfish]
+#else
+				hp += hp * tsc->data[SC_INCHEALRATE]->val1 / 100;
+#endif
 			if (tsc->data[SC_GLASTHEIM_HEAL])
+#ifdef RENEWAL
 				hp_bonus += tsc->data[SC_GLASTHEIM_HEAL]->val2;
+#else
+				hp += hp * tsc->data[SC_GLASTHEIM_HEAL]->val2 / 100;
+#endif
 			if (tsc->data[SC_ANCILLA])
+#ifdef RENEWAL
 				hp_bonus += tsc->data[SC_ANCILLA]->val1;
+#else
+				hp += hp * tsc->data[SC_ANCILLA]->val1 / 100;
+			if (tsc->data[SC_WATER_INSIGNIA] && tsc->data[SC_WATER_INSIGNIA]->val1 == 2)
+				hp += hp / 10;
+#endif
 		}
 	}
 
+#ifdef RENEWAL
 	if (hp_bonus)
 		hp += hp * hp_bonus / 100;
 
-#ifdef RENEWAL
 	// MATK part of the RE heal formula [malufett]
 	// Note: in this part matk bonuses from items or skills are not applied
 	switch( skill_id ) {
@@ -620,7 +671,6 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 					hp += min;
 			}
 	}
-#endif
 
 	// Global multipliers are applied after the MATK is applied
 	if (tsc && tsc->count) {
@@ -632,6 +682,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 
 	if (skill_id == AB_HIGHNESSHEAL)
 		global_bonus *= 2 + 0.3f * (skill_lv - 1);
+#endif
 
 	if (heal && tsc && tsc->count) {
 		uint8 penalty = 0;
@@ -643,14 +694,22 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 		if (tsc->data[SC_NORECOVER_STATE])
 			penalty = 100;
 		if (penalty > 0) {
+#ifdef RENEWAL
 			penalty = cap_value(penalty, 1, 100);
 			global_bonus *= (100 - penalty) / 100.f;
+#else
+			hp -= hp * penalty / 100;
+#endif
 		}
 	}
 
+#ifdef RENEWAL
 	hp = (int)(hp * global_bonus);
 
 	return (heal) ? max(1, hp) : hp;
+#else
+	return hp;
+#endif
 }
 
 /**
@@ -675,7 +734,7 @@ static int8 skill_isCopyable(struct map_session_data *sd, uint16 skill_idx) {
 			if (job_allowed&0x04 && sd->status.class_ == JOB_SHADOW_CHASER) break;
 			if (job_allowed&0x08 && sd->status.class_ == JOB_SHADOW_CHASER_T) break;
 			if (job_allowed&0x10 && sd->status.class_ == JOB_BABY_ROGUE) break;
-			if (job_allowed&0x20 && sd->status.class_ == JOB_BABY_CHASER) break;
+			if (job_allowed&0x20 && sd->status.class_ == JOB_BABY_SHADOW_CHASER) break;
 			return 0;
 		}
 	}
@@ -752,7 +811,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 		(skill_nocast&4 && mapdata_flag_gvg2_no_te(mapdata)) ||
 		(skill_nocast&8 && mapdata->flag[MF_BATTLEGROUND]) ||
 		(skill_nocast&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(mapdata->zone && skill_nocast&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]) ){
+		(mapdata->zone && skill_nocast&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]) ){
 			clif_msg(sd, SKILL_CANT_USE_AREA); // This skill cannot be used within this area
 			return true;
 	}
@@ -1092,7 +1151,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	struct mob_data *md, *dstmd;
 	struct status_data *sstatus, *tstatus;
 	struct status_change *sc, *tsc;
-	enum sc_type status;
 	int skill;
 	int rate;
 
@@ -1509,13 +1567,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			sc_start2(src,bl, SC_BLEEDING,50, skill_lv, src->id, skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case LK_JOINTBEAT:
-		status = status_skill2sc(skill_id);
-		if (tsc->jb_flag) {
-			sc_start4(src,bl,status,(5*skill_lv+5),skill_lv,tsc->jb_flag&BREAK_FLAGS,src->id,0,skill_get_time2(skill_id,skill_lv));
-			tsc->jb_flag = 0;
-		}
-		break;
 	case ASC_METEORASSAULT:
 		//Any enemies hit by this skill will receive Stun, Darkness, or external bleeding status ailment with a 5%+5*skill_lv% chance.
 		switch(rnd()%3) {
@@ -1729,6 +1780,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 	case SR_EARTHSHAKER:
 		sc_start(src,bl,SC_STUN, 25 + 5 * skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
+		sc_start(src, bl, SC_EARTHSHAKER, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		status_change_end(bl, SC_SV_ROOTTWIST, INVALID_TIMER);
 		break;
 	case SR_HOWLINGOFLION:
@@ -2390,6 +2442,10 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			sp += sd->sp_gain_race[status_get_race(bl)] + sd->sp_gain_race[RC_ALL];
 			hp += sd->bonus.hp_gain_value;
 		}
+		if( (attack_type&(BF_WEAPON|BF_LONG)) == (BF_WEAPON|BF_LONG) ) {
+			sp += sd->bonus.long_sp_gain_value;
+			hp += sd->bonus.long_hp_gain_value;
+		}
 		if( attack_type&BF_MAGIC ) {
 			sp += sd->bonus.magic_sp_gain_value;
 			hp += sd->bonus.magic_hp_gain_value;
@@ -2678,10 +2734,10 @@ bool skill_strip_equip(struct block_list *src, struct block_list *target, uint16
 				time = skill_get_time(skill_id, skill_lv);
 
 			if (target->type == BL_PC)
-				time += skill_lv + 500 * (sstatus->dex - tstatus->dex);
+				time += max(1, skill_lv + 500 * (sstatus->dex - tstatus->dex));
 			else {
 				time += 15000;
-				time += skill_lv + 500 * (sstatus->dex - tstatus->dex);
+				time += max(1, skill_lv + 500 * (sstatus->dex - tstatus->dex));
 			}
 			break;
 	}
@@ -3463,7 +3519,9 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case WL_COMET:
 		case NPC_COMET:
 		case KO_MUCHANAGE:
+#ifndef RENEWAL
 		case NJ_HUUMA:
+#endif
 			dmg.dmotion = clif_skill_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,skill_id,skill_lv,DMG_MULTI_HIT);
 			break;
 		case WL_CHAINLIGHTNING_ATK:
@@ -3692,9 +3750,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			case WM_METALICSOUND:
 				status_zap(bl, 0, damage*100/(100*(110-((sd) ? pc_checkskill(sd,WM_LESSON) : skill_get_max(WM_LESSON))*10)));
 				break;
-			case SR_TIGERCANNON:
-				status_zap(bl, 0, damage * 10 / 100);
-				break;
 		}
 		if( sd )
 			skill_onskillusage(sd, bl, skill_id, tick);
@@ -3812,6 +3867,7 @@ static int skill_check_unit_range_sub(struct block_list *bl, va_list ap)
 		case RA_ICEBOUNDTRAP:
 		case SC_DIMENSIONDOOR:
 		case SC_BLOODYLUST:
+		case NPC_REVERBERATION:
 		case WM_REVERBERATION:
 		case GN_THORNS_TRAP:
 		case GN_HELLS_PLANT:
@@ -4239,6 +4295,7 @@ static TIMER_FUNC(skill_timerskill){
 						}
 					}
 					break;
+				case NPC_REVERBERATION_ATK:
 				case WM_REVERBERATION_MELEE:
 				case WM_REVERBERATION_MAGIC:
 					skill_castend_damage_id(src,target,skl->skill_id,skl->skill_lv,tick,skl->flag|SD_LEVEL|SD_ANIMATION);
@@ -4415,7 +4472,7 @@ static int skill_active_reverberation(struct block_list *bl, va_list ap) {
 
 	if (bl->type != BL_SKILL)
 		return 0;
-	if (su->alive && (sg = su->group) && sg->skill_id == WM_REVERBERATION) {
+	if (su->alive && (sg = su->group) && (sg->skill_id == WM_REVERBERATION || sg->skill_id == NPC_REVERBERATION)) {
 		map_foreachinallrange(skill_trap_splash, bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, bl, gettick());
 		su->limit = DIFF_TICK(gettick(), sg->tick);
 		sg->unit_id = UNT_USED_TRAPS;
@@ -4770,19 +4827,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag|SD_ANIMATION);
 		break;
 
-	case LK_JOINTBEAT: // decide the ailment first (affects attack damage and effect)
-		switch( rnd()%6 ){
-		case 0: flag |= BREAK_ANKLE; break;
-		case 1: flag |= BREAK_WRIST; break;
-		case 2: flag |= BREAK_KNEE; break;
-		case 3: flag |= BREAK_SHOULDER; break;
-		case 4: flag |= BREAK_WAIST; break;
-		case 5: flag |= BREAK_NECK; break;
-		}
-		//TODO: is there really no cleaner way to do this?
-		sc = status_get_sc(bl);
-		if (sc) sc->jb_flag = flag;
-		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
+	case LK_JOINTBEAT:
+		flag = 1 << rnd() % 6;
+		if (flag != BREAK_NECK && tsc && tsc->data[SC_JOINTBEAT] && tsc->data[SC_JOINTBEAT]->val2 & BREAK_NECK)
+			flag = BREAK_NECK; // Target should always receive double damage if neck is already broken
+		if (skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag))
+			sc_start4(src, bl, SC_JOINTBEAT, 50 + (skill_lv + 1), skill_lv, flag&BREAK_FLAGS, src->id, 0, skill_get_time2(skill_id, skill_lv));
 		break;
 
 	case MO_COMBOFINISH:
@@ -4992,6 +5042,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NPC_VAMPIRE_GIFT:
 	case NPC_MAXPAIN_ATK:
 	case NPC_JACKFROST:
+	case NPC_REVERBERATION_ATK:
 	case NPC_ARROWSTORM:
 	case RK_IGNITIONBREAK:
 	case AB_JUDEX:
@@ -5046,12 +5097,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			if( skill_area_temp[1] != bl->id && !(skill_get_inf2(skill_id)&INF2_NPC_SKILL) )
 				sflag |= SD_ANIMATION; // original target gets no animation (as well as all NPC skills)
 
-			switch(skill_id) {
-				case SR_SKYNETBLOW:
-					if (flag&8)
-						sflag |= 8; // Give Combo state bonus damage (if active) to all targets in splash
-					break;
-			}
 			heal = (int)skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, sflag);
 			if( skill_id == NPC_VAMPIRE_GIFT && heal > 0 ) {
 				clif_skill_nodamage(NULL, src, AL_HEAL, heal, 1);
@@ -5072,6 +5117,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case SU_SCRATCH:
 					clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 					break;
+#ifdef RENEWAL
+				case NJ_HUUMA:
+#endif
 				case LG_MOONSLASHER:
 				case MH_XENO_SLASHER:
 					clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SKILL);
@@ -5079,6 +5127,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case NPC_EARTHQUAKE: //FIXME: Isn't EarthQuake a ground skill after all?
 					skill_addtimerskill(src,tick+250,src->id,0,0,skill_id,skill_lv,2,flag|BCT_ENEMY|SD_SPLASH|1);
 					break;
+				case NPC_REVERBERATION_ATK:
 				case WM_REVERBERATION_MELEE:
 				case WM_REVERBERATION_MAGIC:
 				case NC_ARMSCANNON:
@@ -6358,19 +6407,23 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case SA_ABRACADABRA:
-		if (!skill_abra_count) {
+		if (abra_db.empty()) {
 			clif_skill_nodamage (src, bl, skill_id, skill_lv, 1);
 			break;
 		}
 		else {
-			int abra_skill_id = 0, abra_skill_lv, checked = 0, checked_max = MAX_SKILL_ABRA_DB * 3;
+			int abra_skill_id = 0, abra_skill_lv, checked = 0, checked_max = abra_db.size() * 3;
+
 			do {
-				i = rnd() % MAX_SKILL_ABRA_DB;
-				abra_skill_id = skill_abra_db[i].skill_id;
+				auto abra_spell = abra_db.random();
+
+				abra_skill_id = abra_spell->skill_id;
 				abra_skill_lv = min(skill_lv, skill_get_max(abra_skill_id));
-			} while ( checked++ < checked_max &&
-				(abra_skill_id == 0 ||
-				rnd()%10000 >= skill_abra_db[i].per[max(skill_lv-1,0)]) );
+
+				if( rnd() % 10000 < abra_spell->per[max(skill_lv - 1, 0)] ){
+					break;
+				}
+			} while (checked++ < checked_max);
 
 			if (!skill_get_index(abra_skill_id))
 				break;
@@ -6590,9 +6643,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case ITEM_ENCHANTARMS:
-		clif_skill_nodamage(src,bl,skill_id,skill_lv,
-			sc_start2(src,bl,type,100,skill_lv,
-				skill_get_ele(skill_id,skill_lv), skill_get_time(skill_id,skill_lv)));
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_get_ele(skill_id, skill_lv), skill_get_time(skill_id, skill_lv)));
 		break;
 
 	case TK_SEVENWIND:
@@ -6629,10 +6680,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage (src,src,skill_id,skill_lv,1);
 		// Initiate 20% of your damage becomes fire element.
 		sc_start4(src,src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skill_id, skill_lv));
-		if( sd )
-			skill_blockpc_start(sd, skill_id, skill_get_time(skill_id, skill_lv));
-		else if( bl->type == BL_MER )
-			skill_blockmerc_start((TBL_MER*)bl, skill_id, skill_get_time(skill_id, skill_lv));
 		break;
 
 	case TK_JUMPKICK:
@@ -6705,6 +6752,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_DEFENDER:
 	case NPC_MAGICMIRROR:
 	case ST_PRESERVE:
+	case NPC_KEEPING:
+	case NPC_BARRIER:
 	case NPC_INVINCIBLE:
 	case NPC_INVINCIBLEOFF:
 	case MER_INVINCIBLEOFF2:
@@ -7096,8 +7145,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		struct status_change *sc = status_get_sc(src);
 		int starget = BL_CHAR|BL_SKILL;
 
-		if (skill_id == SR_SKYNETBLOW && sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_DRAGONCOMBO)
-			flag |= 8;
 		if (skill_id == SR_HOWLINGOFLION)
 			starget = splash_target(src);
 		skill_area_temp[1] = 0;
@@ -8175,21 +8222,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_PROVOCATION:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		if (md) mob_unlocktarget(md, tick);
-		break;
-
-	case NPC_KEEPING:
-	case NPC_BARRIER:
-		{
-			int skill_time = skill_get_time(skill_id,skill_lv);
-			struct unit_data *ud = unit_bl2ud(bl);
-			if (clif_skill_nodamage(src,bl,skill_id,skill_lv,
-					sc_start(src,bl,type,100,skill_lv,skill_time))
-			&& ud) {	//Disable attacking/acting/moving for skill's duration.
-				ud->attackabletime =
-				ud->canact_tick =
-				ud->canmove_tick = tick + skill_time;
-			}
-		}
 		break;
 
 	case NPC_REBIRTH:
@@ -10179,16 +10211,22 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case WM_RANDOMIZESPELL:
-		if (!skill_improvise_count) {
+		if (improvised_song_db.empty()) {
 			clif_skill_nodamage (src, bl, skill_id, skill_lv, 1);
 			break;
 		}
 		else {
-			int improv_skill_id = 0, improv_skill_lv, checked = 0, checked_max = MAX_SKILL_IMPROVISE_DB*3;
+			int improv_skill_id = 0, improv_skill_lv, checked = 0, checked_max = improvised_song_db.size() * 3;
+
 			do {
-				i = rnd() % MAX_SKILL_IMPROVISE_DB;
-				improv_skill_id = skill_improvise_db[i].skill_id;
-			} while( checked++ < checked_max && (improv_skill_id == 0 || rnd()%10000 >= skill_improvise_db[i].per) );
+				auto improvise_spell = improvised_song_db.random();
+
+				improv_skill_id = improvise_spell->skill_id;
+
+				if( rnd() % 10000 >= improvise_spell->per ){
+					break;
+				}
+			} while (checked++ < checked_max);
 
 			if (!skill_get_index(improv_skill_id)) {
 				if (sd)
@@ -10196,7 +10234,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 			}
 
-			improv_skill_lv = 4 + skill_lv;
+			improv_skill_lv = min(4 + skill_lv, skill_get_max(improv_skill_id));
 			clif_skill_nodamage (src, bl, skill_id, skill_lv, 1);
 
 			if( sd ) {
@@ -11827,13 +11865,11 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case NJ_HYOUSYOURAKU:
 	case NJ_RAIGEKISAI:
 	case NJ_KAMAITACHI:
-#ifdef RENEWAL
-	case NJ_HUUMA:
-#endif
 	case NPC_EVILLAND:
 	case NPC_VENOMFOG:
 	case NPC_ICEMINE:
 	case NPC_FLAMECROSS:
+	case NPC_REVERBERATION:
 	case RA_ELECTRICSHOCKER:
 	case RA_CLUSTERBOMB:
 	case RA_MAGENTATRAP:
@@ -12285,7 +12321,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 
 	case SC_ESCAPE:
 		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
-		skill_blown(src, src, skill_get_blewcount(skill_id, skill_lv), unit_getdir(src), BLOWN_NONE);
+		skill_blown(src, src, skill_get_blewcount(skill_id, skill_lv), unit_getdir(src), BLOWN_IGNORE_NO_KNOCKBACK); // Don't stop the caster from backsliding if special_state.no_knockback is active
 		clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 		flag |= 1;
 		break;
@@ -13028,7 +13064,7 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 			else if (ele == -1) {
 				val1 = status->rhw.ele;
 				if (sc && sc->data[SC_ENCHANTARMS])
-					val1 = sc->data[SC_ENCHANTARMS]->val2;
+					val1 = sc->data[SC_ENCHANTARMS]->val1;
 			}
 
 			switch (val1) {
@@ -13231,6 +13267,7 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 				if (unit_val1 < 1) unit_val1 = 1;
 				unit_val2 = 0;
 				break;
+			case NPC_REVERBERATION:
 			case WM_REVERBERATION:
 				unit_val1 = 1 + skill_lv;
 				break;
@@ -14253,9 +14290,9 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 			if (tsc && (tsc->data[SC_HALLUCINATIONWALK] || tsc->data[SC_HOVERING] || tsc->data[SC_VACUUM_EXTREME] ||
 				(tsc->data[SC_VACUUM_EXTREME_POSTDELAY] && tsc->data[SC_VACUUM_EXTREME_POSTDELAY]->val2 == sg->group_id))) // Ignore post delay from other vacuum (this will make stack effect enabled)
 				return 0;
-			else
-				// Apply effect and suck targets one-by-one each n seconds
-				sc_start4(ss, bl, SC_VACUUM_EXTREME, 100, sg->skill_lv, sg->group_id, (sg->val1<<16)|(sg->val2), ++sg->val3*500, (sg->limit - DIFF_TICK(tick, sg->tick)));
+
+			if (unit_bl2ud(bl)->walktimer == INVALID_TIMER) // Apply effect and suck non-walking targets one-by-one each n seconds
+				sc_start4(ss, bl, type, 100, sg->skill_lv, sg->group_id, (sg->val1<<16)|(sg->val2), ++sg->val3*500, (sg->limit - DIFF_TICK(tick, sg->tick)));
 			break;
 
 		case UNT_BANDING:
@@ -15096,7 +15133,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			break;
 		case MO_FINGEROFFENSIVE:
 		case GS_FLING:
-		case SR_RAMPAGEBLASTER:
 		case SR_RIDEINLIGHTNING:
 			if( sd->spiritball > 0 && sd->spiritball < require.spiritball )
 				sd->spiritball_old = require.spiritball = sd->spiritball;
@@ -16204,7 +16240,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 
 	for (auto &it : sd->skillusesprate) {
 		if (it.id == skill_id) {
-			sp_skill_rate_bonus += it.val;
+			sp_skill_rate_bonus -= it.val;
 			break;
 		}
 	}
@@ -16409,9 +16445,6 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 					req.spiritball = sd->spiritball; // must consume all regardless of the amount required
 			}
 			break;
-		case SR_RAMPAGEBLASTER:
-			req.spiritball = sd->spiritball?sd->spiritball:15;
-			break;
 		case LG_RAGEBURST:
 			req.spiritball = sd->spiritball?sd->spiritball:1;
 			break;
@@ -16484,12 +16517,22 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 
 		// Calculate cast time reduced by item/card bonuses
 		if (sd) {
-			if (!(flag&4) && sd->castrate != 100)
-				reduce_cast_rate += 100 - sd->castrate;
+			if (!(flag&4)) {
+				if (sd->castrate != 100)
+					reduce_cast_rate += 100 - sd->castrate;
+				if (sd->bonus.add_varcast != 0)
+					time += sd->bonus.add_varcast; // bonus bVariableCast
+			}
 			// Skill-specific reductions work regardless of flag
 			for (const auto &it : sd->skillcastrate) {
 				if (it.id == skill_id) {
 					time += time * it.val / 100;
+					break;
+				}
+			}
+			for (const auto &it : sd->skillvarcast) {
+				if (it.id == skill_id) { // bonus2 bSkillVariableCast
+					time += it.val;
 					break;
 				}
 			}
@@ -16594,12 +16637,13 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 	if (bl->type == BL_MOB || bl->type == BL_NPC)
 		return (int)time;
 
-	if (fixed < 0 || !battle_config.default_fixed_castrate) // no fixed cast time
+	if (fixed < 0) // no fixed cast time
 		fixed = 0;
 	else if (fixed == 0) {
 		fixed = (int)time * battle_config.default_fixed_castrate / 100; // fixed time
 		time = time * (100 - battle_config.default_fixed_castrate) / 100; // variable time
 	}
+	// Else, use fixed cast time from database (when default_fixed_castrate is set to 0)
 
 	// Additive Variable Cast bonus adjustments by items
 	if (sd && !(flag&4)) {
@@ -17645,8 +17689,12 @@ static int skill_trap_splash(struct block_list *bl, va_list ap)
 			}
 			break;
 		case UNT_REVERBERATION: // For proper skill delay animation when used with Dominion Impulse
-			skill_addtimerskill(ss, tick + status_get_amotion(ss), bl->id, 0, 0, WM_REVERBERATION_MELEE, sg->skill_lv, BF_WEAPON, 0);
-			skill_addtimerskill(ss, tick + status_get_amotion(ss) * 2, bl->id, 0, 0, WM_REVERBERATION_MAGIC, sg->skill_lv, BF_MAGIC, 0);
+			if (ss->type != BL_PC)
+				skill_addtimerskill(ss, tick + 50, bl->id, 0, 0, NPC_REVERBERATION_ATK, sg->skill_lv, BF_WEAPON, 0);
+			else {
+				skill_addtimerskill(ss, tick + status_get_amotion(ss), bl->id, 0, 0, WM_REVERBERATION_MELEE, sg->skill_lv, BF_WEAPON, 0);
+				skill_addtimerskill(ss, tick + status_get_amotion(ss) * 2, bl->id, 0, 0, WM_REVERBERATION_MAGIC, sg->skill_lv, BF_MAGIC, 0);
+			}
 			break;
 		case UNT_FIRINGTRAP:
 		case UNT_ICEBOUNDTRAP:
@@ -17737,7 +17785,7 @@ int skill_maelstrom_suction(struct block_list *bl, va_list ap)
 void skill_enchant_elemental_end(struct block_list *bl, int type)
 {
 	struct status_change *sc;
-	const enum sc_type scs[] = { SC_ENCPOISON, SC_ASPERSIO, SC_FIREWEAPON, SC_WATERWEAPON, SC_WINDWEAPON, SC_EARTHWEAPON, SC_SHADOWWEAPON, SC_GHOSTWEAPON, SC_ENCHANTARMS };
+	const enum sc_type scs[] = { SC_ENCPOISON, SC_ASPERSIO, SC_FIREWEAPON, SC_WATERWEAPON, SC_WINDWEAPON, SC_EARTHWEAPON, SC_SHADOWWEAPON, SC_GHOSTWEAPON };
 	int i;
 
 	nullpo_retv(bl);
@@ -17746,6 +17794,7 @@ void skill_enchant_elemental_end(struct block_list *bl, int type)
 	if (!sc->count)
 		return;
 
+	status_change_end(bl, SC_ENCHANTARMS, INVALID_TIMER); // Should always end
 	for (i = 0; i < ARRAYLENGTH(scs); i++)
 		if (type != scs[i] && sc->data[scs[i]])
 			status_change_end(bl, scs[i], INVALID_TIMER);
@@ -19432,10 +19481,10 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 		make_per += pc_checkskill(sd,skill_id)*500; // Smithing skills bonus: +5/+10/+15
 		make_per += pc_checkskill(sd,BS_WEAPONRESEARCH)*100 +((wlv >= 3)? pc_checkskill(sd,BS_ORIDEOCON)*100:0); // Weaponry Research bonus: +1/+2/+3/+4/+5/+6/+7/+8/+9/+10, Oridecon Research bonus (custom): +1/+2/+3/+4/+5
 		make_per -= (ele?2000:0) + sc*1500 + (wlv>1?wlv*1000:0); // Element Stone: -20%, Star Crumb: -15% each, Weapon level malus: -0/-20/-30
-		if      (pc_search_inventory(sd,ITEMID_EMPERIUM_ANVIL) > 0) make_per+= 1000; // Emperium Anvil: +10
-		else if (pc_search_inventory(sd,ITEMID_GOLDEN_ANVIL) > 0)   make_per+= 500; // Golden Anvil: +5
-		else if (pc_search_inventory(sd,ITEMID_ORIDECON_ANVIL) > 0) make_per+= 300; // Oridecon Anvil: +3
-		else if (pc_search_inventory(sd,ITEMID_ANVIL) > 0)          make_per+= 0; // Anvil: +0?
+		if      (pc_search_inventory(sd,ITEMID_EMPERIUM_ANVIL) > -1) make_per+= 1000; // Emperium Anvil: +10
+		else if (pc_search_inventory(sd,ITEMID_GOLDEN_ANVIL) > -1)   make_per+= 500; // Golden Anvil: +5
+		else if (pc_search_inventory(sd,ITEMID_ORIDECON_ANVIL) > -1) make_per+= 300; // Oridecon Anvil: +3
+		else if (pc_search_inventory(sd,ITEMID_ANVIL) > -1)          make_per+= 0; // Anvil: +0?
 		if (battle_config.wp_rate != 100)
 			make_per = make_per * battle_config.wp_rate / 100;
 	}
@@ -19866,16 +19915,23 @@ int skill_magicdecoy(struct map_session_data *sd, unsigned short nameid) {
 
 // Warlock Spellbooks. [LimitLine/3CeAM]
 void skill_spellbook(struct map_session_data *sd, unsigned short nameid) {
-	int i, max_preserve, skill_id, point;
-	struct status_change *sc;
-
 	nullpo_retv(sd);
 
-	sc = status_get_sc(&sd->bl);
+	if (reading_spellbook_db.empty())
+		return;
+
+	int i;
+	struct status_change *sc = status_get_sc(&sd->bl);
+
 	status_change_end(&sd->bl, SC_STOP, INVALID_TIMER);
 
 	for (i = SC_SPELLBOOK1; i <= SC_MAXSPELLBOOK; i++) {
-		if( sc && !sc->data[i] )
+		// No further checks needed
+		if( !sc ){
+			break;
+		}
+
+		if( !sc->data[i] )
 			break;
 	}
 
@@ -19884,41 +19940,40 @@ void skill_spellbook(struct map_session_data *sd, unsigned short nameid) {
 		return;
 	}
 
-	if (!skill_spellbook_count)
+	std::shared_ptr<s_skill_spellbook_db> spell = reading_spellbook_db.findBook(nameid);
+
+	if (spell == nullptr)
 		return;
 
-	ARR_FIND(0,MAX_SKILL_SPELLBOOK_DB,i,skill_spellbook_db[i].nameid == nameid); // Search for information of this item
-	if( i == MAX_SKILL_SPELLBOOK_DB )
-		return;
+	uint16 skill_id = spell->skill_id, skill_lv = pc_checkskill(sd, skill_id);
 
-	if( !pc_checkskill(sd, (skill_id = skill_spellbook_db[i].skill_id)) ) { // User don't know the skill
-		sc_start(&sd->bl,&sd->bl, SC_SLEEP, 100, 1, skill_get_time(WL_READING_SB, pc_checkskill(sd,WL_READING_SB)));
+	if (!skill_lv) { // Caster hasn't learned the skill
+		sc_start(&sd->bl,&sd->bl, SC_SLEEP, 100, 1, skill_get_time(WL_READING_SB, pc_checkskill(sd, WL_READING_SB)));
 		clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_DIFFICULT_SLEEP, 0);
 		return;
 	}
 
-	max_preserve = 4 * pc_checkskill(sd, WL_FREEZE_SP) + status_get_int(&sd->bl) / 10 + sd->status.base_level / 10;
-	point = skill_spellbook_db[i].point;
+	int points = spell->points;
 
-	if( sc && sc->data[SC_FREEZE_SP] ) {
-		if( (sc->data[SC_FREEZE_SP]->val2 + point) > max_preserve ) {
+	if (sc && sc->data[SC_FREEZE_SP]) {
+		if ((sc->data[SC_FREEZE_SP]->val2 + points) > 4 * pc_checkskill(sd, WL_FREEZE_SP) + status_get_int(&sd->bl) / 10 + sd->status.base_level / 10) {
 			clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_PRESERVATION_POINT, 0);
 			return;
 		}
-		for(i = SC_MAXSPELLBOOK; i >= SC_SPELLBOOK1; i--){ // This is how official saves spellbook. [malufett]
-			if( !sc->data[i] ){
-				sc->data[SC_FREEZE_SP]->val2 += point; // increase points
-				sc_start4(&sd->bl,&sd->bl, (sc_type)i, 100, skill_id, pc_checkskill(sd,skill_id), point, 0, INFINITE_TICK);
+		for (i = SC_MAXSPELLBOOK; i >= SC_SPELLBOOK1; i--) { // This is how official saves spellbook. [malufett]
+			if (!sc->data[i]) {
+				sc->data[SC_FREEZE_SP]->val2 += points; // increase points
+				sc_start4(&sd->bl,&sd->bl, (sc_type)i, 100, skill_id, skill_lv, points, 0, INFINITE_TICK);
 				break;
 			}
 		}
 	} else {
-		sc_start2(&sd->bl,&sd->bl, SC_FREEZE_SP, 100, 0, point, INFINITE_TICK);
-		sc_start4(&sd->bl,&sd->bl, SC_MAXSPELLBOOK, 100, skill_id, pc_checkskill(sd,skill_id), point, 0, INFINITE_TICK);
+		sc_start2(&sd->bl, &sd->bl, SC_FREEZE_SP, 100, 0, points, INFINITE_TICK);
+		sc_start4(&sd->bl, &sd->bl, SC_MAXSPELLBOOK, 100, skill_id, skill_lv, points, 0, INFINITE_TICK);
 	}
 
 	// Reading Spell Book SP cost same as the sealed spell.
-	status_zap(&sd->bl, 0, skill_get_sp(skill_id, pc_checkskill(sd, skill_id)));
+	status_zap(&sd->bl, 0, skill_get_sp(skill_id, skill_lv));
 }
 
 int skill_select_menu(struct map_session_data *sd,uint16 skill_id) {
@@ -21000,7 +21055,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 	skill_db[idx]->hit = atoi(split[2]);
 	skill_db[idx]->inf = atoi(split[3]);
 	skill_split_atoi(split[4],skill_db[idx]->element);
-	skill_db[idx]->nk = (uint8)strtol(split[5], NULL, 0);
+	skill_db[idx]->nk = static_cast<uint16>(strtol(split[5], NULL, 0));
 	skill_split_atoi(split[6],skill_db[idx]->splash);
 	skill_db[idx]->max = atoi(split[7]);
 	skill_split_atoi(split[8],skill_db[idx]->num);
@@ -21043,16 +21098,20 @@ uint8 skill_split_atoi2(char *str, int *val, const char *delim, int min_value, u
 	char *p = strtok(str, delim);
 
 	while (p != NULL) {
+		int64 n_tmp;
 		int n = min_value;
 
 		trim(p);
 
 		if (ISDIGIT(p[0])) // If using numeric
 			n = atoi(p);
-		else if (!script_get_constant(p, &n)) { // If using constant value
-			ShowError("skill_split_atoi2: Invalid value: '%s'\n", p);
-			p = strtok(NULL, delim);
-			continue;
+		else {
+			if (!script_get_constant(p, &n_tmp)) { // If using constant value
+				ShowError("skill_split_atoi2: Invalid value: '%s'\n", p);
+				p = strtok(NULL, delim);
+				continue;
+			}
+			n = static_cast<int>(n_tmp);
 		}
 
 		if (n > min_value) {
@@ -21371,113 +21430,183 @@ static bool skill_parse_row_createarrowdb(char* split[], int columns, int curren
 	return true;
 }
 
-/** Reads Spell book db
- * Structure: SkillID,PreservePoints,RequiredBook
- */
-static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
-{
-	unsigned short skill_id = atoi(split[0]), points = atoi(split[1]), nameid = atoi(split[2]);
-
-	if (!skill_get_index(skill_id) || !skill_get_max(skill_id))
-		ShowError("skill_parse_row_spellbookdb: Invalid skill ID %d\n", skill_id);
-	if (!skill_get_inf(skill_id))
-		ShowError("skill_parse_row_spellbookdb: Passive skills cannot be memorized (%d/%s)\n", skill_id, skill_get_name(skill_id));
-	else {
-		unsigned short i;
-
-		ARR_FIND(0, skill_spellbook_count, i, skill_spellbook_db[i].skill_id == skill_id);
-		if (i >= ARRAYLENGTH(skill_spellbook_db)) {
-			ShowError("skill_parse_row_spellbookdb: Maximum db entries reached.\n");
-			return false;
-		}
-		// Import just for clearing/disabling from original data
-		if (points == 0) {
-			memset(&skill_spellbook_db[i], 0, sizeof(skill_spellbook_db[i]));
-			//ShowInfo("skill_parse_row_spellbookdb: Skill %d removed from list.\n", skill_id);
-			return true;
-		}
-
-		skill_spellbook_db[i].skill_id = skill_id;
-		skill_spellbook_db[i].point = points;
-		skill_spellbook_db[i].nameid = nameid;
-
-		if (i == skill_spellbook_count)
-			skill_spellbook_count++;
-		return true;
-	}
-
-	return false;
+const std::string ReadingSpellbookDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/spellbook_db.yml";
 }
-
-/** Reads improvise db
- * Structure: SkillID,Rate
+/**
+ * Reads and parses an entry from the spellbook_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
  */
-static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
-{
-	unsigned short skill_id = atoi(split[0]), per = atoi(split[1]), i;
+uint64 ReadingSpellbookDatabase::parseBodyNode(const YAML::Node &node) {
+	std::string skill_name;
 
-	if( !skill_get_index(skill_id) || !skill_get_max(skill_id) ) {
-		ShowError("skill_parse_row_improvisedb: Invalid skill ID %d\n", skill_id);
-		return false;
-	}
-	if ( !skill_get_inf(skill_id) ) {
-		ShowError("skill_parse_row_improvisedb: Passive skills cannot be casted (%d/%s)\n", skill_id, skill_get_name(skill_id));
-		return false;
-	}
-	ARR_FIND(0, skill_improvise_count, i, skill_improvise_db[i].skill_id == skill_id);
-	if (i >= ARRAYLENGTH(skill_improvise_db)) {
-		ShowError("skill_parse_row_improvisedb: Maximum amount of entries reached (%d), increase MAX_SKILL_IMPROVISE_DB\n",MAX_SKILL_IMPROVISE_DB);
-		return false;
-	}
-	// Import just for clearing/disabling from original data
-	if (per == 0) {
-		memset(&skill_improvise_db[i], 0, sizeof(skill_improvise_db[i]));
-		//ShowInfo("skill_parse_row_improvisedb: Skill %d removed from list.\n", skill_id);
-		return true;
+	if (!this->asString(node, "Skill", skill_name))
+		return 0;
+
+	uint16 skill_id = skill_name2id(skill_name.c_str());
+
+	if (skill_id == 0) {
+		this->invalidWarning(node["Skill"], "Invalid skill name \"%s\", skipping.\n", skill_name.c_str());
+		return 0;
 	}
 
-	skill_improvise_db[i].skill_id = skill_id;
-	skill_improvise_db[i].per = per; // Still need confirm it.
-
-	if (i == skill_improvise_count)
-		skill_improvise_count++;
-
-	return true;
-}
-
-/** Reads Magic mushroom db
- * Structure: SkillID
- */
-static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current)
-{
-	unsigned short i, skill_id = atoi(split[0]);
-	bool rem = (atoi(split[1]) == 1 ? true : false);
-
-	if (!skill_get_index(skill_id) || !skill_get_max(skill_id)) {
-		ShowError("skill_parse_row_magicmushroomdb: Invalid skill ID %d\n", skill_id);
-		return false;
-	}
 	if (!skill_get_inf(skill_id)) {
-		ShowError("skill_parse_row_magicmushroomdb: Passive skills cannot be casted (%d/%s)\n", skill_id, skill_get_name(skill_id));
-		return false;
-	}
-	ARR_FIND(0, skill_magicmushroom_count, i, skill_magicmushroom_db[i].skill_id==skill_id);
-	if (i >= ARRAYLENGTH(skill_magicmushroom_db)) {
-		ShowError("skill_parse_row_magicmushroomdb: Maximum db entries reached.\n");
-		return false;
-	}
-	// Import just for clearing/disabling from original data
-	if (rem) {
-		memset(&skill_magicmushroom_db[i], 0, sizeof(skill_magicmushroom_db[i]));
-		//ShowInfo("skill_parse_row_magicmushroomdb: Skill %d removed from list.\n", skill_id);
-		return true;
+		this->invalidWarning(node["Skill"], "Passive skill %s cannot be memorized in a Spell Book.\n", skill_name.c_str());
+		return 0;
 	}
 
-	skill_magicmushroom_db[i].skill_id = skill_id;	
-	if (i == skill_magicmushroom_count)
-		skill_magicmushroom_count++;
+	std::shared_ptr<s_skill_spellbook_db> spell = this->find(skill_id);
+	bool exists = spell != nullptr;
 
-	return true;
+	if (!exists) {
+		if (!this->nodesExist(node, { "Book", "PreservePoints" }))
+			return 0;
+
+		spell = std::make_shared<s_skill_spellbook_db>();
+		spell->skill_id = skill_id;
+	}
+
+	if (this->nodeExists(node, "Book")) {
+		std::string book_name;
+
+		if (!this->asString(node, "Book", book_name))
+			return 0;
+
+		struct item_data *item = itemdb_search_aegisname(book_name.c_str());
+
+		if (item == nullptr) {
+			this->invalidWarning(node["Book"], "Book item %s does not exist.\n", book_name.c_str());
+			return 0;
+		}
+
+		spell->nameid = item->nameid;
+	}
+
+	if (this->nodeExists(node, "PreservePoints")) {
+		uint16 points;
+
+		if (!this->asUInt16(node, "PreservePoints", points))
+			return 0;
+
+		spell->points = points;
+	}
+
+	if (!exists)
+		this->put(skill_id, spell);
+
+	return 1;
+}
+
+/**
+ * Check if the specified item is available in the spellbook_db or not
+ * @param nameid: Book Item ID
+ * @return Spell data or nullptr otherwise
+ */
+std::shared_ptr<s_skill_spellbook_db> ReadingSpellbookDatabase::findBook(int32 nameid) {
+	if (nameid < 1 || !itemdb_exists(nameid) || reading_spellbook_db.size() == 0)
+		return nullptr;
+
+	for (const auto &spell : reading_spellbook_db) {
+		if (spell.second->nameid == nameid)
+			return spell.second;
+	}
+
+	return nullptr;
+}
+
+
+const std::string ImprovisedSongDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/improvise_db.yml";
+}
+
+/**
+* Reads and parses an entry from the improvise_db.
+* @param node: YAML node containing the entry.
+* @return count of successfully parsed rows
+*/
+uint64 ImprovisedSongDatabase::parseBodyNode(const YAML::Node &node) {
+	std::string skill_name;
+
+	if (!this->asString(node, "Skill", skill_name))
+		return 0;
+
+	uint16 skill_id = skill_name2id(skill_name.c_str());
+
+	if (!skill_id) {
+		this->invalidWarning(node["Skill"], "Invalid Improvised Song skill name \"%s\", skipping.\n", skill_name.c_str());
+		return 0;
+	}
+
+	if (!skill_get_inf(skill_id)) {
+		this->invalidWarning(node["Skill"], "Passive skill %s cannot be casted by Improvised Song.\n", skill_name.c_str());
+		return 0;
+	}
+
+	std::shared_ptr<s_skill_improvise_db> improvise = this->find(skill_id);
+	bool exists = improvise != nullptr;
+
+	if (!exists) {
+		if (!this->nodesExist(node, { "Probability" }))
+			return 0;
+
+		improvise = std::make_shared<s_skill_improvise_db>();
+		improvise->skill_id = skill_id;
+	}
+
+	if (this->nodeExists(node, "Probability")) {
+		uint16 probability;
+
+		if (!this->asUInt16Rate(node, "Probability", probability))
+			return 0;
+
+		improvise->per = probability;
+	}
+
+	if (!exists)
+		this->put(skill_id, improvise);
+
+	return 1;
+}
+
+const std::string MagicMushroomDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/magicmushroom_db.yml";
+}
+
+/**
+ * Reads and parses an entry from the magicmushroom_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 MagicMushroomDatabase::parseBodyNode(const YAML::Node &node) {
+	std::string skill_name;
+
+	if (!this->asString(node, "Skill", skill_name))
+		return 0;
+
+	uint16 skill_id = skill_name2id(skill_name.c_str());
+
+	if (!skill_id) {
+		this->invalidWarning(node["Skill"], "Invalid Magic Mushroom skill name \"%s\", skipping.\n", skill_name.c_str());
+		return 0;
+	}
+
+	if (!skill_get_inf(skill_id)) {
+		this->invalidWarning(node["Skill"], "Passive skill %s cannot be casted by Magic Mushroom.\n", skill_name.c_str());
+		return 0;
+	}
+
+	std::shared_ptr<s_skill_magicmushroom_db> mushroom = this->find(skill_id);
+	bool exists = mushroom != nullptr;
+
+	if (!exists) {
+		mushroom = std::make_shared<s_skill_magicmushroom_db>();
+		mushroom->skill_id = skill_id;
+
+		this->put(skill_id, mushroom);
+	}
+
+	return 1;
 }
 
 /** Reads db of copyable skill
@@ -21537,40 +21666,80 @@ static bool skill_parse_row_nonearnpcrangedb(char* split[], int column, int curr
 	return true;
 }
 
-/** Reads skill chance by Abracadabra/Hocus Pocus spell
- * Structure: SkillID,DummyName,RatePerLvl
+
+const std::string AbraDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/abra_db.yml";
+}
+
+/**
+ * Reads and parses an entry from the abra_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
  */
-static bool skill_parse_row_abradb(char* split[], int columns, int current)
-{
-	unsigned short i, skill_id = atoi(split[0]);
-	if (!skill_get_index(skill_id) || !skill_get_max(skill_id)) {
-		ShowError("skill_parse_row_abradb: Invalid skill ID %d\n", skill_id);
-		return false;
+uint64 AbraDatabase::parseBodyNode(const YAML::Node &node) {
+	std::string skill_name;
+
+	if (!this->asString(node, "Skill", skill_name))
+		return 0;
+
+	uint16 skill_id = skill_name2id(skill_name.c_str());
+
+	if (!skill_id) {
+		this->invalidWarning(node["Skill"], "Invalid Abra skill name \"%s\", skipping.\n", skill_name.c_str());
+		return 0;
 	}
+
 	if (!skill_get_inf(skill_id)) {
-		ShowError("skill_parse_row_abradb: Passive skills cannot be casted (%d/%s)\n", skill_id, skill_get_name(skill_id));
-		return false;
+		this->invalidWarning(node["Skill"], "Passive skill %s cannot be casted by Abra.\n", skill_name.c_str());
+		return 0;
 	}
 
-	ARR_FIND(0, skill_abra_count, i, skill_abra_db[i].skill_id==skill_id);
-	if (i >= ARRAYLENGTH(skill_abra_db)) {
-		ShowError("skill_parse_row_abradb: Maximum db entries reached.\n");
-		return false;
-	}
-	// Import just for clearing/disabling from original data
-	if (strcmp(split[1],"clear") == 0) {
-		memset(&skill_abra_db[i], 0, sizeof(skill_abra_db[i]));
-		//ShowInfo("skill_parse_row_abradb: Skill %d removed from list.\n", skill_id);
-		return true;
+	std::shared_ptr<s_skill_abra_db> abra = this->find(skill_id);
+	bool exists = abra != nullptr;
+
+	if (!exists) {
+		abra = std::make_shared<s_skill_abra_db>();
+		abra->skill_id = skill_id;
 	}
 
-	skill_abra_db[i].skill_id = skill_id;
-	safestrncpy(skill_abra_db[i].name, trim(split[1]), sizeof(skill_abra_db[i].name)); //store dummyname
-	skill_split_atoi(split[2],skill_abra_db[i].per);
-	if (i == skill_abra_count)
-		skill_abra_count++;
+	if (this->nodeExists(node, "Probability")) {
+		const YAML::Node probNode = node["Probability"];
+		uint16 probability;
 
-	return true;
+		if (probNode.IsScalar()) {
+			if (!this->asUInt16Rate(probNode, "Probability", probability))
+				return 0;
+
+			abra->per.fill(probability);
+		} else {
+			abra->per.fill(0);
+
+			for (const YAML::Node &it : probNode) {
+				uint16 skill_lv;
+
+				if (!this->asUInt16(it, "Level", skill_lv))
+					continue;
+
+				if (skill_lv > MAX_SKILL_LEVEL) {
+					this->invalidWarning(it["Level"], "Probability Level exceeds the maximum skill level of %d, skipping.\n", MAX_SKILL_LEVEL);
+					return 0;
+				}
+
+				if (!this->asUInt16Rate(it, "Probability", probability))
+					continue;
+
+				abra->per[skill_lv - 1] = probability;
+			}
+		}
+	} else {
+		if (!exists)
+			abra->per.fill(500);
+	}
+
+	if (!exists)
+		this->put(skill_id, abra);
+
+	return 1;
 }
 
 /** Reads change material db
@@ -21634,6 +21803,7 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
  */
 static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 {
+	int64 caster_tmp;
 	uint16 id = 0;
 	int caster;
 
@@ -21650,10 +21820,11 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 	if (ISDIGIT(split[1][0]))
 		caster = atoi(split[1]);
 	else { // Try to parse caster as constant
-		if (!script_get_constant(split[1], &caster)) {
+		if (!script_get_constant(split[1], &caster_tmp)) {
 			ShowError("skill_parse_row_skilldamage: Invalid caster constant given for skill %d. Skipping.", id);
 			return false;
 		}
+		caster = static_cast<int>(caster_tmp);
 	}
 	skill_db[id]->damage.caster |= caster;
 	skill_db[id]->damage.map |= atoi(split[2]);
@@ -21714,7 +21885,6 @@ static void skill_db_destroy(void) {
  * skill_unit_db.txt
  * produce_db.txt
  * create_arrow_db.txt
- * abra_db.txt
  *------------------------------*/
 static void skill_readdb(void)
 {
@@ -21734,12 +21904,8 @@ static void skill_readdb(void)
 
 	memset(skill_produce_db,0,sizeof(skill_produce_db));
 	memset(skill_arrow_db,0,sizeof(skill_arrow_db));
-	memset(skill_abra_db,0,sizeof(skill_abra_db));
-	memset(skill_spellbook_db,0,sizeof(skill_spellbook_db));
-	memset(skill_magicmushroom_db,0,sizeof(skill_magicmushroom_db));
 	memset(skill_changematerial_db,0,sizeof(skill_changematerial_db));
-	skill_produce_count = skill_arrow_count = skill_abra_count = skill_improvise_count =
-		skill_changematerial_count = skill_spellbook_count = skill_magicmushroom_count = 0;
+	skill_produce_count = skill_arrow_count = skill_changematerial_count = 0;
 
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		size_t n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
@@ -21764,11 +21930,7 @@ static void skill_readdb(void)
 
 		sv_readdb(dbsubpath2, "produce_db.txt"        , ',',   5,  5+2*MAX_PRODUCE_RESOURCE, MAX_SKILL_PRODUCE_DB, skill_parse_row_producedb, i > 0);
 		sv_readdb(dbsubpath1, "create_arrow_db.txt"   , ',', 1+2,  1+2*MAX_ARROW_RESULT, MAX_SKILL_ARROW_DB, skill_parse_row_createarrowdb, i > 0);
-		sv_readdb(dbsubpath1, "abra_db.txt"           , ',',   3,  3, MAX_SKILL_ABRA_DB, skill_parse_row_abradb, i > 0);
-		sv_readdb(dbsubpath1, "spellbook_db.txt"      , ',',   3,  3, MAX_SKILL_SPELLBOOK_DB, skill_parse_row_spellbookdb, i > 0);
-		sv_readdb(dbsubpath1, "magicmushroom_db.txt"  , ',',   1,  2, MAX_SKILL_MAGICMUSHROOM_DB, skill_parse_row_magicmushroomdb, i > 0);
 		sv_readdb(dbsubpath1, "skill_copyable_db.txt"       , ',',   2,  4, -1, skill_parse_row_copyabledb, i > 0);
-		sv_readdb(dbsubpath1, "skill_improvise_db.txt"      , ',',   2,  2, MAX_SKILL_IMPROVISE_DB, skill_parse_row_improvisedb, i > 0);
 		sv_readdb(dbsubpath1, "skill_changematerial_db.txt" , ',',   5,  5+2*MAX_SKILL_CHANGEMATERIAL_SET, MAX_SKILL_CHANGEMATERIAL_DB, skill_parse_row_changematerialdb, i > 0);
 		sv_readdb(dbsubpath1, "skill_nonearnpc_db.txt"      , ',',   2,  3, -1, skill_parse_row_nonearnpcrangedb, i > 0);
 		sv_readdb(dbsubpath1, "skill_damage_db.txt"         , ',',   4,  3+SKILLDMG_MAX, -1, skill_parse_row_skilldamage, i > 0);
@@ -21776,6 +21938,11 @@ static void skill_readdb(void)
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
+
+	abra_db.load();
+	improvised_song_db.load();
+	magic_mushroom_db.load();
+	reading_spellbook_db.load();
 	
 	skill_init_unit_layout();
 	skill_init_nounit_layout();

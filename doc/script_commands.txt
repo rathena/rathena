@@ -477,7 +477,8 @@ nothing  - A permanent variable attached to the character, the default variable
            ('return .@var;' returns a value, not a reference).
 "'"      - An instance variable.
            These are used with the instancing system and are unique to each
-           instance type.
+           instance type. Can be accessed from inside the instance or by calling
+           'getvariableofinstance'.
 "#"      - A permanent local account variable.
            They are stored by char-server in the `acc_reg_num` table and
            `acc_reg_str`.
@@ -2337,6 +2338,22 @@ returned when requesting that information.
 
 ---------------------------------------
 
+*convertpcinfo(<char_id>,<type>)
+*convertpcinfo(<account_id>,<type>)
+*convertpcinfo(<player_name>,<type>)
+
+This function will return the information <type> for the
+specified character. Whatever it returns is determined by type.
+
+ CPC_NAME    - Character's name.
+ CPC_CHAR    - Character ID.
+ CPC_ACCOUNT - Account ID.
+
+If a character is not found (or not online) when requesting that information,
+an empty string will be returned for CPC_NAME, 0 for other <type>.
+
+---------------------------------------
+
 *strnpcinfo(<type>)
 
 This function will return the various parts of the name of the calling NPC.
@@ -3609,7 +3626,7 @@ You can see the full list of available effect types you can possibly inflict in
 ========================
 |3.- Checking commands.|
 ========================
--------------------------
+---------------------------------------
 
 *playerattached()
 
@@ -3938,7 +3955,7 @@ The renewal feature to check is determined by type.
 \\
 ---------------------------------------
 
-*isequipped(<id>{,<id>{,<id>{,<id>}}})
+*isequipped(<id>{,<id>{,..}})
 
 This function will return 1 if the invoking character has all of the item
 IDs given equipped (if card IDs are passed, then it checks if the cards are
@@ -3956,15 +3973,14 @@ in February 2005, but it will work just fine in normal NPC scripts.
 
 ---------------------------------------
 
-*isequippedcnt(<card id>{,<card id>{,<card id>{,<card id>}}})
+*isequippedcnt(<id>{,<id>{,..}})
 
 This function is similar to 'isequipped', but instead of 1 or 0, it will return
-the number of cards in the list given that were found on the invoking character.
+the amount of item/card equipped that were found on the invoking character from the given list.
 
-If a given parameter is not a card, the function returns the amount of that
-item equipped on the invoking character.
-
-    if (isequippedcnt(4001,4005,4033,4196) == 4) mes "Finally got all four poring cards?";
+Example:
+    if (isequippedcnt(4001,4005,4033,4196) == 5)
+		mes "Finally got 5 cards from poring monsters type?";
 
 ---------------------------------------
 
@@ -3983,7 +3999,7 @@ not.
 ==============================
 |4.- Player-related commands.|
 ==============================
--------------------------
+---------------------------------------
 
 *attachrid(<account ID>{,force})
 *detachrid;
@@ -4001,7 +4017,7 @@ even if he is currently attached to another script. Since this is not always the
 desired behavior you can also specify false to the command and it will only return 
 true if the player is online and was not attached to another script.
 
--------------------------
+---------------------------------------
 
 *addrid(<type>{,<flag>{,<parameters>}});
 
@@ -4941,8 +4957,8 @@ If player is not in a guild or storage is open, 'guildstoragedelitem2' will retu
 
 ---------------------------------------
 
-*countitem(<item id>)
-*countitem("<item name>")
+*countitem(<item id>{,<accountID>})
+*countitem("<item name>"{,<accountID>})
 
 This function will return the number of items for the specified item ID that the
 invoking character has in the inventory.
@@ -4978,10 +4994,10 @@ If player is not in a guild or storage is open, 'guildstoragecountitem' will ret
 
 ---------------------------------------
 
-*countitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*countitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
-*countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
+*countitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*countitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+*countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
 
 Expanded version of 'countitem' function, used for created/carded/forged items.
 
@@ -7488,7 +7504,7 @@ rand(2,5) would result in 2,3,4 or 5
 
 ---------------------------------------
 
-*viewpoint <action>,<x>,<y>,<point number>,<color>;
+*viewpoint <action>,<x>,<y>,<point number>,<color>{,<Char ID>};
 
 This command will mark places on the mini map in the client connected to the
 invoking character. It uses the normal X and Y coordinates from the main map.
@@ -7963,6 +7979,8 @@ Parameters (indexes) for monsters are:
 	UMOB_ADELAY
 	UMOB_DMOTION
 	UMOB_TARGETID
+	UMOB_ROBE
+	UMOB_BODY2
 
 -----
 
@@ -8136,7 +8154,6 @@ Parameter (indexes) for elementals are:
 -----
 
 Parameter (indexes) for NPCs are:
-	UNPC_DISPLAY
 	UNPC_LEVEL
 	UNPC_HP
 	UNPC_MAXHP
@@ -8169,6 +8186,19 @@ Parameter (indexes) for NPCs are:
 	UNPC_AMOTION
 	UNPC_ADELAY
 	UNPC_DMOTION
+	UNPC_SEX
+	UNPC_CLASS
+	UNPC_HAIRSTYLE
+	UNPC_HAIRCOLOR
+	UNPC_HEADBOTTOM
+	UNPC_HEADMIDDLE
+	UNPC_HEADTOP
+	UNPC_CLOTHCOLOR
+	UNPC_SHIELD
+	UNPC_WEAPON
+	UNPC_ROBE
+	UNPC_BODY2
+	UNPC_DEADSIT
 
 *Notes:
 		- *_SIZE: small (0); medium (1); large (2)
@@ -8185,12 +8215,14 @@ Parameter (indexes) for NPCs are:
 		- *_AMOTION: see doc/mob_db.txt
 		- *_ADELAY: see doc/mob_db.txt
 		- *_DMOTION: see doc/mob_db.txt
+		- *_BODY2: enable (1) the alternate display, or disable (0)
 
 		- UMOB_AI: none (0); attack (1); marine sphere (2); flora (3); zanzou (4); legion (5); faw (6)
 		- UMOB_SCOPTION: see the 'Variables' section at the top of this document
 		- UMOB_SLAVECPYMSTRMD: make the slave copy the master's mode (1), or not (0)
 
-		- UNPC_PLUSALLSTAT: same as 'bAllStats'; increases/decreses all stats by given amount
+		- UNPC_PLUSALLSTAT: same as 'bAllStats'; increases/decreases all stats by given amount
+		- UNPC_DEADSIT: stand (0), dead (1), sit (2)
 
 Example:
 	// Spawn some Porings and save the Game ID.
@@ -8897,18 +8929,17 @@ The command returns the instance ID upon success, and these values upon failure:
 *instance_destroy {<instance id>};
 
 Destroys instance with the ID <instance id>. If no ID is specified, the instance
-the script is attached to is used. If the script is not attached to an instance,
-the instance of the currently attached player is used (if it is a character, party,
-guild or clan mode). If it is not owned by anyone, no player needs to be attached. If
-that fails, the script will come to a halt. This will also trigger the "OnInstanceDestroy"
-label in all NPCs inside the instance.
+the script is attached to is used. If that fails, the script will come to a halt.
+This will also trigger the "OnInstanceDestroy" label in all NPCs inside the instance.
 
 ---------------------------------------
 
 *instance_enter("<instance name>",{<x>,<y>,<char_id>,<instance id>});
 
-Warps player to the specified instance after the script terminates. The map and
-coordinates are located in 'db/(pre-)re/instance_db.txt'.
+Warps the attached player to the specified <instance id>. If no ID is specified,
+the IM_PARTY instance the invoking player is attached to is used.
+
+The map and coordinates are located in 'db/(pre-)re/instance_db.txt'.
 
 The command returns IE_OK upon success, and these values upon failure:
  IE_NOMEMBER:	Party/Guild/Clan not found (for party/guild/clan modes).
@@ -8922,49 +8953,46 @@ Put -1 for x and y if want to warp player with default entrance coordinates.
 *instance_npcname("<npc name>"{,<instance id>})
 
 Returns the unique name of the instanced script. If no ID is specified,
-the instance the script is attached to is used. If the script is not attached to
-an instance, the instance of the currently attached NPC, player, party, guild
-or clan is used. If that fails, the script will come to a halt.
+the instance the script is attached to is used. If that fails, the script
+will come to a halt.
 
 ---------------------------------------
 
 *instance_mapname("<map name>"{,<instance id>})
 
 Returns the unique name of the instanced map. If no instance ID is specified,
-the instance the script is attached to is used. If the script is not attached to
-an instance, the instance of the currently attached player is used (if it is a
-character, party, guild or clan mode). If it is not owned by anyone, no player needs
-to be attached. If that fails, the command returns an empty string instead.
+the instance the script is attached to is used. If that fails, the command
+returns an empty string instead.
 
 ---------------------------------------
 
-*instance_id()
+*instance_id({<instance mode>})
 
-Returns the unique instance id of the attached script. If the script is not
-attached to an instance, the instance of the currently attached player is
-used (if it is a character, party, guild or clan mode). If it is not owned by anyone, no
-player needs to be attached. If that fails, the function will return 0.
+Returns the unique instance ID of the given mode. By default it returns the
+attached script instance. If <instance mode> is provided then the instance
+of the currently attached player is used. If that fails, the function will return 0.
+
+Instance Mode options:
+ IM_CHAR:	Attached to character.
+ IM_PARTY:	Attached to character's party.
+ IM_GUILD:	Attached to character's guild.
+ IM_CLAN:	Attached to character's clan.
 
 ---------------------------------------
 
 *instance_warpall "<map name>",<x>,<y>{,<instance id>};
 
-Warps all players in the instance <instance id> to <map name> at given
-coordinates. If no ID is specified, the instance the script is attached to
-is used. If the script is not attached to an instance, the instance of the
-currently attached player is used (if it is a character, party, guild or clan
-mode). If it is not owned by anyone, no player needs to be attached. If that
-fails, the script will come to a halt.
+Warps all players in the <instance id> to <map name> to the given coordinates.
+If no ID is specified, the IM_PARTY instance the invoking player is attached
+to is used. If that fails, the script will come to a halt.
 
 ---------------------------------------
 
 *instance_announce <instance id>,"<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
 
-Broadcasts a message to all players in the instance <instance id> currently
-residing on an instance map. If 0 is specified for <instance id>, the instance
-the script is attached to is used. If the script is not attached to an instance,
-the instance of the currently attached player is used (if it is a character,
-party, guild or clan mode). If it is not owned by anyone, no player needs to be attached.
+Broadcasts a message to all players in the <instance id> currently residing on
+an instance map. If 0 is specified for <instance id>, the instance the script
+is attached to is used.
 
 For details on the other parameters, see 'announce'.
 
@@ -9060,18 +9088,61 @@ mes .@name$ + " will be destroyed if no one is in the instance for " + instance_
 
 ---------------------------------------
 
+*instance_live_info(<info type>{,<instance id>});
+
+Returns the specified <info type> of instance attached to the npc or, if
+an instance ID is specified, of that instance.
+
+Valid <info type>:
+ILI_NAME	- Instance Name
+			  Return the name of the instance or "" if that fails.
+ILI_MODE	- Instance Mode
+			  Return IM_NONE, IM_CHAR, IM_PARTY, IM_GUILD, IM_CLAN or -1 if that fails.
+ILI_OWNER	- Owner ID
+			  Return an ID according to the instance mode of the instance attached/specified or -1 if that fails.
+			  When the instance mode is IM_NONE, ILI_OWNER will return the npc ID that created the instance,
+			  IM_CHAR	- the owner char ID
+			  IM_PARTY	- the party ID
+			  IM_GUILD	- the guild ID
+			  IM_CLAN	- the clan ID
+
+Examples:
+	// Return the instance name of the instance attached to the npc.
+	.@instance_name$ = instance_live_info(ILI_NAME);
+
+	// Return the guild owner ID of the given instance ID.
+	.@owner = instance_live_info(ILI_OWNER, instance_id(IM_GUILD));
+
+---------------------------------------
+
+*getvariableofinstance(<variable>,<instance id>);
+
+Returns a reference to an instance variable (' prefix) of the specific instance ID.
+This can only be used to get ' variables.
+
+Examples:
+	// This will set the .@s variable to the value of 'var variable of the specific instance ID.
+	set .@s, getvariableofinstance('var, instance_id(IM_PARTY));
+
+	// This will set the 'var variable of the specific instance ID to 1.
+	set getvariableofinstance('var, instance_id(IM_GUILD)), 1;
+
+---------------------------------------
+
 =========================
 |8.- Quest Log commands.|
 =========================
 ---------------------------------------
 
-*questinfo <Quest ID>,<Icon>{,<Map Mark Color>{,<Job Class>}};
+*questinfo <Icon>{,<Map Mark Color>{,"<condition>"}};
 
-This is esentially a combination of checkquest and showevent. Use this only
-in an OnInit label. For the Quest ID, specify the quest ID that you want
-checked if it has been started yet.
+This command should only be used in an OnInit label.
+Show an emotion on top of a NPC, and optionally, a colored mark in the mini-map like "viewpoint".
+When a user is doing some action, each NPC is checked for questinfo that has been set on the map.
+If questinfo is present, it will check if the player fulfill the condition.
+If he/she does or no condition has been set, the bubble will appear.
 
-For Icon, use one of the following:
+Available <Icon>:
 
 No Icon			: QTYPE_NONE
 ! Quest Icon	: QTYPE_QUEST
@@ -9088,59 +9159,46 @@ Daily Quest		: QTYPE_DAILYQUEST (Only for packetver >= 20170315)
 Job Quest		: QTYPE_JOBQUEST (Only for packetver >= 20170315)
 Jumping Poring	: QTYPE_JUMPING_PORING (Only for packetver >= 20170315)
 
-Map Mark Color, when used, creates a mark in the user's mini map on the position of the NPC,
+<Map Mark Color>, when used, creates a mark in the user's mini map on the position of the NPC,
 the available color values are:
 
-0 - No Marker (default)
-1 - Yellow Marker
-2 - Green Marker
-3 - Purple Marker
+QMARK_NONE   - No Marker (default)
+QMARK_YELLOW - Yellow Marker
+QMARK_GREEN  - Green Marker
+QMARK_PURPLE - Purple Marker
 
-When a user shows up on a map, each NPC is checked for questinfo that has been set.
-If questinfo is present, it will check if the quest has been started, if it has not, the bubble will appear.
+<condition> can be any expression similarly to the <condition> in the 'if' command.
 
-Optionally, you can also specify a Job Class if the quest bubble should only appear for a certain class.
+List of the player's actions to trigger the questinfo condition:
+-	Item added to/removed from player inventory
+-	Base/Job level change
+-	Job change
+-	Quest given/erased/completed
+-	Quest objective updated (character killed a monster quest target)
+-	Warp
 
-Example
+
+Example:
 izlude,100,100,4	script	Test	844,{
 	mes "[Test]";
 	mes "Hello World.";
 	close;
 
-	OnInit:
-		questinfo 1001, QTYPE_QUEST, 0, Job_Novice;
-		end;
+OnInit:
+	// Display an icon if the player has completed the given hunting quest and his/her variable 'unknown_var' is above 0
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "checkquest(1001,HUNTING) == 2 && unknown_var > 0";
+
+	//.. or display an icon if the player didn't start the given quest and he/she has one red potion in inventory
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(1001) && countitem(501) == 1";
+	end;
 }
 
 ---------------------------------------
 
-*setquestinfo_level <quest_id>,<min_level>,<max_level>;
+*questinfo_refresh {<char_id>};
 
-Add level range criteria for quest info with quest id 'quest_id'.
-
-This command must be used after 'questinfo'.
-
----------------------------------------
-
-*setquestinfo_req <quest_id>,<req_quest_id>,<state>{,<req_quest_id>,<state>,...};
-
-Add 'req_quest_id' as requirement for quest info with quest id 'quest_id'.
-
-Value os 'state' are:
-    0: Player doesn't started 'req_quest_id'.
-    1: Player has 'req_quest_id' (state is either "inactive" or "active").
-    2: Player has 'req_quest_id' completed
-
-This command must be used after 'questinfo'.
-
----------------------------------------
-
-*setquestinfo_job <quest_id>,<job_id>{,<job_id>...};
-
-Add job criteria for quest info with quest id 'quest_id'.
-The job criteria may more than one job_id.
-
-This command must be used after 'questinfo'.
+This command refreshes each quest bubble that has been set on the map according
+to the questinfo condition for the attached/given player.
 
 ---------------------------------------
 
@@ -9222,10 +9280,10 @@ Warg			: QTYPE_WARG
 Warg Face		: QTYPE_WARG2 (Only for packetver >= 20120410)
 
 Mark Color:
-0 - No Mark
-1 - Yellow Mark
-2 - Green Mark
-3 - Purple Mark
+QMARK_NONE   - No Marker (default)
+QMARK_YELLOW - Yellow Marker
+QMARK_GREEN  - Green Marker
+QMARK_PURPLE - Purple Marker
 
 ---------------------------------------
 
@@ -10309,7 +10367,7 @@ Returns true on success and false on failure.
 *achievementexists(<achievement id>{,<char id>});
 
 This function will return if the achievement exists on the player or the supplied
-<char id>.
+<char id> and is completed.
 Returns true on success and false on failure.
 
 ---------------------------------------

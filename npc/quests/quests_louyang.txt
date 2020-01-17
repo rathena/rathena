@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-//= Quest NPCs related to Louyang
+//= Quest NPCs related to Luoyang
 //===== By: ================================================== 
 //= Evera and The rAthena Dev Team
 //===== Current Version: ===================================== 
@@ -121,7 +121,7 @@ lou_in02,76,181,3	script	Employee#2	822,2,2,{
 		mes "Sorry for making you wait. If you wish to rest, please go upstairs.";
 		next;
 		mes "[Huang Jia Xian]";
-		mes "Recently, many tourists are visiting Louyang and although business is great, we're now";
+		mes "Recently, many tourists are visiting Luoyang and although business is great, we're now";
 		mes "busier than ever.";
 		next;
 		mes "[Huang Jia Xian]";
@@ -310,7 +310,7 @@ lou_in02,62,183,3	script	Chef#1-2	820,2,2,{
 		mes "My family has served food to Lord Bai Long for a long time. This restaurant is own by my family and I am the successor.";
 		next;
 		mes "[Wang Shi Long]";
-		mes "Every dish my family cooks is counted among the most delicious food in Louyang.";
+		mes "Every dish my family cooks is counted among the most delicious food in Luoyang.";
 		next;
 		mes "[Wang Shi Long]";
 		mes "Our Dragon Soup won especially high praise from our Lord Bai Long.";
@@ -319,7 +319,7 @@ lou_in02,62,183,3	script	Chef#1-2	820,2,2,{
 		mes "I'm also proud to tell you that my family only uses the freshest, highest quality ingredients for our dishes.";
 		next;
 		mes "[Wang Shi Long]";
-		mes "We have been popular in Louyang for hundreds and hundreds of years because of the quality of our gourmet food.";
+		mes "We have been popular in Luoyang for hundreds and hundreds of years because of the quality of our gourmet food.";
 		next;
 		mes "[Wang Shi Long]";
 		mes "Recently, though, I've had a bad feeling that someone is trying to take over our restaurant...";
@@ -360,7 +360,7 @@ lou_in02,62,183,3	script	Chef#1-2	820,2,2,{
 	mes "I'm also proud to say that we cook with only the freshest and highest quality ingredients.";
 	next;
 	mes "[Wang Shi Long]";
-	mes "We've always been popular in Louyang for hundreds and hundreds of years because of our high quality gourmet cuisine.";
+	mes "We've always been popular in Luoyang for hundreds and hundreds of years because of our high quality gourmet cuisine.";
 	next;
 	mes "[Wang Shi Long]";
 	mes "In this dry and hot weather,";
@@ -456,7 +456,7 @@ lou_fild01,195,177,5	script	Jiu Lian Bu#1-1	819,{
 		next;
 		mes "[Jiu Lian Bu]";
 		mes "No offense, but I'm upset";
-		mes "at the sheer number of tourists coming over to Louyang. Sure, I can understand that our town is attractive and has beautiful sights.";
+		mes "at the sheer number of tourists coming over to Luoyang. Sure, I can understand that our town is attractive and has beautiful sights.";
 		next;
 		mes "[Jiu Lian Bu]";
 		mes "But I just can't stand crowds of people. People gather like sheep";
@@ -464,11 +464,11 @@ lou_fild01,195,177,5	script	Jiu Lian Bu#1-1	819,{
 		next;
 		mes "[Jiu Lian Bu]";
 		mes "Speaking of which, there's even";
-		mes "a place in Louyang that's just like that. Man, I hate that restaurant!";
+		mes "a place in Luoyang that's just like that. Man, I hate that restaurant!";
 		next;
 		if (select("What restaurant?:Ignore him.") == 1) {
 			mes "[Jiu Lian Bu]";
-			mes "West of Louyang, there's";
+			mes "West of Luoyang, there's";
 			mes "a restaurant built on a pond. It's been around for a long time, selling food for ridiculous prices!";
 			next;
 			mes "[Jiu Lian Bu]";
@@ -510,7 +510,7 @@ lou_fild01,195,177,5	script	Jiu Lian Bu#1-1	819,{
 				mes "see things my way!";
 				next;
 				mes "[Jiu Lian Bu]";
-				mes "Okay, the restaurant is at the West side of Louyang. But you gotta be careful. The workers there watch over that broth like freakin' hawks!";
+				mes "Okay, the restaurant is at the West side of Luoyang. But you gotta be careful. The workers there watch over that broth like freakin' hawks!";
 				next;
 				mes "[Jiu Lian Bu]";
 				mes "When you finally steal the broth, make sure you bring it without spilling any. Okay? Good luck~";
@@ -615,7 +615,7 @@ lou_fild01,175,173,3	script	Jiu Lian Bu#1-2	819,{
 		mes "So...";
 		mes "Whaddya think?";
 		mes "Prettiest place";
-		mes "in Louyang, isn't it?";
+		mes "in Luoyang, isn't it?";
 		next;
 		mes "[Jiu Lian Bu]";
 		mes "Whenever I'm depressed";
@@ -953,7 +953,7 @@ lou_in02,80,173,3	script	Li Min#lou	746,{
 	}
 	mes "[Li Min]";
 	mes "Well, I don't really";
-	mes "live here in Louyang.";
+	mes "live here in Luoyang.";
 	mes "Still, I come here often";
 	mes "enough to visit.";
 	next;
@@ -1497,7 +1497,7 @@ lou_in02,265,69,5	script	Doctor#lyang	814,{
 	mes "Hahaha...";
 	mes "I hope you enjoy";
 	mes "your visit here";
-	mes "in Louyang.";
+	mes "in Luoyang.";
 	close;
 }
 
@@ -1569,7 +1569,7 @@ lou_in02,248,166,2	script	Tool Shop Master#lou	824,{
 	}
 	else if (ch_par == 3) {
 		mes "[Wang Chuiyi]";
-		mes "I can't understand why outsiders continue to travel here to Louyang despite the weather. I'm also getting tired of keeping my business here. Sooner or later,";
+		mes "I can't understand why outsiders continue to travel here to Luoyang despite the weather. I'm also getting tired of keeping my business here. Sooner or later,";
 		mes "I may have to leave.";
 		close;
 	}
@@ -1580,7 +1580,7 @@ lou_in02,248,166,2	script	Tool Shop Master#lou	824,{
 	}
 	else if (ch_par < 10) {
 		mes "[Wang Chuiyi]";
-		mes "I can't understand why outsiders continue to travel here to Louyang despite the weather. I'm also getting tired of keeping my business here. Sooner or later,";
+		mes "I can't understand why outsiders continue to travel here to Luoyang despite the weather. I'm also getting tired of keeping my business here. Sooner or later,";
 		mes "I may have to leave.";
 		close;
 	}
@@ -1837,13 +1837,13 @@ lou_in02,210,47,0	script	City Hall Officer#lou	825,{
 		mes "a pain. Oh? You look like a tourist. Are you enjoying your stay?";
 		next;
 		mes "[Jin Chiyuan]";
-		mes "Although we've been having bad weather recently, there are many good places to visit in Louyang.";
+		mes "Although we've been having bad weather recently, there are many good places to visit in Luoyang.";
 		mes "I hope you have a good time.";
 		close;
 	}
 	else if (ch_par < 9) {
 		mes "[Jin Chiyuan]";
-		mes "Hm? A Rune-Midgardian?";
+		mes "Hm? A Midgardian?";
 		mes "Now, how may I help you?";
 		next;
 		if (select("I need a document.:I just dropped by.") == 1) {
@@ -1886,7 +1886,7 @@ lou_in02,210,47,0	script	City Hall Officer#lou	825,{
 					next;
 					mes "[Jin Chiyuan]";
 					mes "^666666*Whispers*^000000";
-					mes "^333333When you go up stairs, another officer will give you the document you want.^000000 ^666666*Ahem*^000000 Louyang thanks you!";
+					mes "^333333When you go up stairs, another officer will give you the document you want.^000000 ^666666*Ahem*^000000 Luoyang thanks you!";
 					set Zeny, Zeny-.@input;
 					if (ch_par == 5) {
 						set ch_par,11;
@@ -1960,7 +1960,7 @@ lou_in02,210,47,0	script	City Hall Officer#lou	825,{
 		mes "[Jin Chiyuan]";
 		mes "Hahahaha...";
 		mes "Take care,";
-		mes "Rune-Midgardian.";
+		mes "Midgardian.";
 	}
 	else if (ch_par == 15) {
 		mes "[Jin Chiyuan]";
@@ -1969,7 +1969,7 @@ lou_in02,210,47,0	script	City Hall Officer#lou	825,{
 		mes "didn't you?";
 		mes "Hahaha...";
 		mes "Enjoy your stay";
-		mes "in Louyang!";
+		mes "in Luoyang!";
 		emotion ET_SMILE;
 		close;
 	}
@@ -2668,9 +2668,9 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 				mes "[Nagash Arses]";
 				mes "Are you asking me";
 				mes "about my hometown...?";
-				mes "As a Rune-Midgardian,";
+				mes "As a Midgardian,";
 				mes "I'm sure you've at least";
-				mes "heard of Morroc...";
+				mes "heard of Morocc...";
 				next;
 				mes "[Nagash Arses]";
 				mes "A city built in the middle of the desert, its founders had to combat the harsh and unforgiving forces of nature everyday.";
@@ -2683,13 +2683,13 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 				next;
 				if (ch_poison == 2) {
 					mes "[Nagash Arses]";
-					mes "Ah~ I miss Morroc, my hometown.";
+					mes "Ah~ I miss Morocc, my hometown.";
 					mes "I used to be a member of the Assassin organization known as the 'Canine of Desert.' Long ago, I was their poison expert.";
 					next;
-					switch(select("Tell him news of Morroc.:Info about 'Canine of Desert'.:Just listen.")) {
+					switch(select("Tell him news of Morocc.:Info about 'Canine of Desert'.:Just listen.")) {
 					case 1:
 						mes "[Nagash Arses]";
-						mes "Hm? Do you have recent news of Morroc?";
+						mes "Hm? Do you have recent news of Morocc?";
 						next;
 						mes "["+strcharinfo(0)+"]";
 						mes "Yeah, I've got some news you might be interested in.";
@@ -2784,10 +2784,10 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 					next;
 					mes "[Nagash Arses]";
 					mes "I was floated helplessly on the ocean and somehow managed";
-					mes "to arrive here, in Louyang. That was forty years ago.";
+					mes "to arrive here, in Luoyang. That was forty years ago.";
 					next;
 					mes "[Nagash Arses]";
-					mes "It seemed that my arrival was rather timely. Louyang was intruded by huge mobs of dangerous monsters that were even able to infiltrate the Castle of the Dragon.";
+					mes "It seemed that my arrival was rather timely. Luoyang was intruded by huge mobs of dangerous monsters that were even able to infiltrate the Castle of the Dragon.";
 					next;
 					mes "[Nagash Arses]";
 					mes "Since I was one of the best Assassins of the 'Canine of Desert,' I did far more than my share of monster killing.";
@@ -2816,7 +2816,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 					mes "to put poison on weapons.";
 					next;
 					mes "[Nagash Arses]";
-					mes "I even learned martial arts in Louyang, and combined that";
+					mes "I even learned martial arts in Luoyang, and combined that";
 					mes "knowledge with my poison expertise to create my own unique fighting style.";
 					next;
 					mes "[Nagash Arses]";
@@ -2830,7 +2830,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 				}
 				else {
 					mes "[Nagash Arses]";
-					mes "Ah, Morroc.";
+					mes "Ah, Morocc.";
 					mes "That name brings";
 					mes "back memories of";
 					mes "being an Assassin";
@@ -2839,9 +2839,9 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 					mes "[Nagash Arses]";
 					mes "^666666*Sigh...*^000000";
 					mes "I wish I could see";
-					mes "Morroc just once before I die.";
+					mes "Morocc just once before I die.";
 					next;
-					if (select("Tell him news of Morroc.:Ask about 'Canine of Desert.'") == 1) {
+					if (select("Tell him news of Morocc.:Ask about 'Canine of Desert.'") == 1) {
 						mes "[Nagash Arses]";
 						mes "Hm...?";
 						mes "Is there anything";
@@ -2849,7 +2849,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 						next;
 						mes "["+strcharinfo(0)+"]";
 						mes "I have news";
-						mes "of Morroc...";
+						mes "of Morocc...";
 						input .@input$;
 						mes "["+strcharinfo(0)+"]";
 						mes ""+.@input$+"";
@@ -2943,7 +2943,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 					mes "this? Life used to be good.";
 					next;
 					mes "[Nagash Arses]";
-					mes "As I told you, I distinguished myself in the battles with monsters. I was rewarded with Louyang citizenship and given";
+					mes "As I told you, I distinguished myself in the battles with monsters. I was rewarded with Luoyang citizenship and given";
 					mes "gifts of money.";
 					next;
 					mes "[Nagash Arses]";
@@ -2984,7 +2984,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 						next;
 					}
 					mes "[Nagash Arses]";
-					mes "We managed to eliminate every monster that was wandering around Louyang. At the time, we were the only people brave enough to take on this sort of task.";
+					mes "We managed to eliminate every monster that was wandering around Luoyang. At the time, we were the only people brave enough to take on this sort of task.";
 					next;
 					mes "[Nagash Arses]";
 					mes "Unfortunately, other martial arts organizations grew envious of our success, insisting that we were dishonorable for using poison to attack our enemies.";
@@ -3005,7 +3005,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 					mes "martial arts.";
 					next;
 					mes "[Nagash Arses]";
-					mes "Even to this day, the police are hounding after me. I really want to tell the lord of Louyang that I'm innocent, but it may be";
+					mes "Even to this day, the police are hounding after me. I really want to tell the lord of Luoyang that I'm innocent, but it may be";
 					mes "too late now...";
 					set ch_poison,4;
 					close;
@@ -3191,7 +3191,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 						close;
 					}
 					mes "^3355FFYou tell Nagash Arses how";
-					mes "Song Zhi Du created this Deadly Poison Bottle and his plan to get his revenge on the lord of Louyang.^000000";
+					mes "Song Zhi Du created this Deadly Poison Bottle and his plan to get his revenge on the lord of Luoyang.^000000";
 					next;
 					mes "[Nagash Arses]";
 					mes "^666666*Sigh...*^000000";
@@ -3285,7 +3285,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 		mes "Please, I beg you.";
 		mes "For my sake, as well";
 		mes "as that of my disciple,";
-		mes "Louyang's leader must live...";
+		mes "Luoyang's leader must live...";
 		set ch_poison,16;
 		changequest 11078,11079;
 		close;
@@ -3392,7 +3392,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 		mes "^3355FFHe looks tired";
 		mes "for some reason,";
 		mes "as if he's thinking";
-		mes "of Morroc, his hometown.^000000";
+		mes "of Morocc, his hometown.^000000";
 		next;
 		mes "^3355FFYou reflect on when he gave you his remaining strength and remember that he told you that he used to be one of the greatest Assassins...^000000";
 		next;
@@ -3499,7 +3499,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 			close;
 		}
 		mes "[Song Zhi Du]";
-		mes "Huh. I see. Well, thank you for your trouble once again. I hope you have a good time in Louyang.";
+		mes "Huh. I see. Well, thank you for your trouble once again. I hope you have a good time in Luoyang.";
 		close;
 	}
 	else if (ch_par > 9 && ch_poison == 5) {
@@ -3682,7 +3682,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 				next;
 				mes "[Song Zhi Du]";
 				mes "All that's left is to create this poison, and then to get the";
-				mes "lord of Louyang to drink it...";
+				mes "lord of Luoyang to drink it...";
 				close;
 			}
 			mes "[Song Zhi Du]";
@@ -3725,7 +3725,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 		mes "Would you bring me the";
 		mes "box from the firecracker";
 		mes "lady at the entrance";
-		mes "to Louyang? Thanks";
+		mes "to Luoyang? Thanks";
 		mes "in advance.";
 		close;
 	}
@@ -3777,7 +3777,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 		mes "Would you bring me the";
 		mes "box from the firecracker";
 		mes "lady at the entrance";
-		mes "to Louyang? Thanks";
+		mes "to Luoyang? Thanks";
 		mes "in advance.";
 		close;
 	}
@@ -3897,7 +3897,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 		mes "[Song Zhi Du]";
 		mes "Hahahaha...!";
 		mes "Now, time has come.";
-		mes "With this poison, Louyang's";
+		mes "With this poison, Luoyang's";
 		mes "lord will be cast into hell!";
 		next;
 		mes "[Song Zhi Du]";
@@ -3930,7 +3930,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 		mes "I want you to put this poison some place where Lord Bai Long might stay. But be careful, the castle has a lot of security.";
 		next;
 		mes "[Song Zhi Du]";
-		mes "Still, you're an adventurer from Rune-Midgard. You've probably had challenges like this before, so I'm sure you'll find a way.";
+		mes "Still, you're an adventurer from Midgard. You've probably had challenges like this before, so I'm sure you'll find a way.";
 		next;
 		mes "[Song Zhi Du]";
 		mes "Anyway, I'm sure my master";
@@ -4107,17 +4107,17 @@ lou_fild01,224,348,0	script	Lady#delivery	817,{
 		if (rand(1,10) > 5) {
 			mes "[Lady]";
 			mes "You're at the";
-			mes "entrance of Louyang.";
+			mes "entrance of Luoyang.";
 			mes "I hope you enjoy";
 			mes "your stay here~";
 			emotion ET_CHUP;
 			close;
 		}
 		mes "[Lady]";
-		mes "You're at the entrance of Louyang.";
+		mes "You're at the entrance of Luoyang.";
 		next;
 		mes "[Lady]";
-		mes "Louyang is well known";
+		mes "Luoyang is well known";
 		mes "for its various firecrackers.";
 		mes "Would you like to see one?";
 		next;
@@ -4215,7 +4215,7 @@ lou_fild01,224,348,0	script	Lady#delivery	817,{
 		if (rand(1,10) > 5) {
 			mes "[Lady]";
 			mes "You're at the";
-			mes "entrance of Louyang.";
+			mes "entrance of Luoyang.";
 			mes "I hope you have a good time~";
 			emotion ET_CHUP;
 			close;
@@ -4223,10 +4223,10 @@ lou_fild01,224,348,0	script	Lady#delivery	817,{
 		mes "[Lady]";
 		mes "You're at the";
 		mes "entrance of";
-		mes "Louyang.";
+		mes "Luoyang.";
 		next;
 		mes "[Lady]";
-		mes "Louyang is well known";
+		mes "Luoyang is well known";
 		mes "for its various firecrackers.";
 		mes "Would you like to see one?";
 		next;
@@ -4301,7 +4301,7 @@ lou_in01,114,163,0	script	Trap#lou_in4	-1,6,1,{
 OnTouch_:
 	if (ch_poison == 12 || ch_poison == 16) {
 		mes "[Soldier]";
-		mes "Hold it right there, Rune-Midgardian!";
+		mes "Hold it right there, Midgardian!";
 		next;
 		mes "^3355FFYou run as fast as you can before the soldiers can catch you.^000000";
 		close2;
@@ -4344,7 +4344,7 @@ louyang,217,278,0	script	 #lou_path	111,{
 
 lou_in01,107,163,0	script	 #lou_drink1	111,{
 	if (ch_poison == 12) {
-		mes "^3355FFYou found a drink bottle that's possibly owned by Bai Long, lord of Louyang.^00000";
+		mes "^3355FFYou found a drink bottle that's possibly owned by Bai Long, lord of Luoyang.^00000";
 		next;
 		mes "^3355FFYou put the deadly poison into the bottle.^000000";
 		delitem 678,1; //Poison_Bottle
@@ -4370,7 +4370,7 @@ lou_in01,107,163,0	script	 #lou_drink1	111,{
 		mes "^3355FFMaybe if you found some kind of empty bottle and filled it with something, like Sticky Mucus...^000000";
 		close;
 	}
-	mes "^3355FFYou found a drink bottle. It's fancy enough that the only possible owner could be Bai Long, lord of Louyang.^000000";
+	mes "^3355FFYou found a drink bottle. It's fancy enough that the only possible owner could be Bai Long, lord of Luoyang.^000000";
 	close;
 }
 
@@ -4413,16 +4413,16 @@ lou_in01,99,158,4	script	Lord#bailong	821,{
 	else {
 		mes "[Lord Bai Long]";
 		mes "Hahahaha!";
-		mes "Welcome to Louyang!";
+		mes "Welcome to Luoyang!";
 		next;
 		mes "[Lord Bai Long]";
-		mes "Louyang is such a great city.";
+		mes "Luoyang is such a great city.";
 		mes "We've protected this land for forty years from the invasions of evil creatures!";
 		next;
 		mes "[Lord Bai Long]";
 		mes "I hope you enjoy";
 		mes "your stay here,";
-		mes "Rune-Midgardian!";
+		mes "Midgardian!";
 		next;
 		if (ch_poison == 18) {
 			mes "^3355FFYou give Nagash Arses' Journal";
@@ -4479,7 +4479,7 @@ lou_in01,99,158,4	script	Lord#bailong	821,{
 		mes "Oh, I didn't realize you were still there... Listening to me.";
 		next;
 		mes "[Lord Bai Long]";
-		mes "I'm sorry, I was just talking to myself. I hope you have a good time while staying here in Louyang.";
+		mes "I'm sorry, I was just talking to myself. I hope you have a good time while staying here in Luoyang.";
 		close;
 	}
 }
@@ -4502,7 +4502,7 @@ lou_in01,111,151,4	script	Soldier#bailong1	825,{
 	mes "much different.";
 	next;
 	mes "[Soldier]";
-	mes "Supposedly, monsters used to intrude Louyang all the time! Heh, but that's just a rumor. Still, there are a bunch of rumors going around that I'm curious about...";
+	mes "Supposedly, monsters used to intrude Luoyang all the time! Heh, but that's just a rumor. Still, there are a bunch of rumors going around that I'm curious about...";
 	close;
 }
 
@@ -4583,7 +4583,7 @@ lou_in01,99,144,4	script	Soldier#bailong4	825,{
 	mes "guy beside of me.";
 	next;
 	mes "[Soldier]";
-	mes "I hope you have a good time while you're staying here in Louyang!";
+	mes "I hope you have a good time while you're staying here in Luoyang!";
 	close;
 }
 
@@ -4598,10 +4598,10 @@ lou_in02,77,37,7	script	Hermit	824,{
 		mes "nothing we cannot do.";
 		next;
 		mes "[Sun Mao]";
-		mes "Will you lend us your power, and help us build a better future? Will you join our movement for social reform in Louyang?";
+		mes "Will you lend us your power, and help us build a better future? Will you join our movement for social reform in Luoyang?";
 		next;
 		mes "[Sun Mao]";
-		mes "It doesn't matter if you're a local or a foreigner. So long as we share the same goal of creating a better Louyang, where everyone is treated as an equal.";
+		mes "It doesn't matter if you're a local or a foreigner. So long as we share the same goal of creating a better Luoyang, where everyone is treated as an equal.";
 		next;
 		mes "[Sun Mao]";
 		mes "My name...";
@@ -4611,7 +4611,7 @@ lou_in02,77,37,7	script	Hermit	824,{
 		switch(select("What am I supposed to do?:I will join you!:Well, I'm just another tourist...")) {
 		case 1:
 			mes "[Sun Mao]";
-			mes "For now, we must recruit as many members as we can. When we're ready, we'll start a movement that will change Louyang, and even the world!";
+			mes "For now, we must recruit as many members as we can. When we're ready, we'll start a movement that will change Luoyang, and even the world!";
 			next;
 			mes "[Sun Mao]";
 			mes "However, we currently do not have the manpower to carry out the plans we have laid out. We've been lucky the lord hasn't found us out yet.";
@@ -4639,7 +4639,7 @@ lou_in02,77,37,7	script	Hermit	824,{
 				set QL_REVOL,1;
 				mes "[Sun Mao]";
 				mes strcharinfo(0)+ "...!";
-				mes "Your name is now engraved on this bloody pledge board. We will fight together to the death for Louyang's future!";
+				mes "Your name is now engraved on this bloody pledge board. We will fight together to the death for Luoyang's future!";
 				next;
 				getpartymember(getcharid(1));
 				set @partymember,$@partymembercount;
@@ -4651,7 +4651,7 @@ lou_in02,77,37,7	script	Hermit	824,{
 					mes "However, as to not arouse suspicion, bring only one new recruit at a time. Also, we suggest not to bring a friend in a party with you.";
 					next;
 					mes "[Sun Mao]";
-					mes "Now, I will wait for you here. Go forth and find others who wish for a better future for Louyang!";
+					mes "Now, I will wait for you here. Go forth and find others who wish for a better future for Luoyang!";
 					close;
 				}
 				mes "[Sun Mao]";
@@ -4730,7 +4730,7 @@ lou_in02,77,37,7	script	Hermit	824,{
 				mes "At long last, there are eight of you. Now, I believe there is among manpower amongst you to carry out this mission. Please listen carefully.";
 				next;
 				mes "[Sun Mao]";
-				mes "The martial arts organizations of Louyang, as you may well know, have been divided between those that fight for justice, and those that serve evil purposes.";
+				mes "The martial arts organizations of Luoyang, as you may well know, have been divided between those that fight for justice, and those that serve evil purposes.";
 				next;
 				mes "[Sun Mao]";
 				mes "Recently, some of the evil organizations have conspired with corrupt government officials in the interest to expand their power.";
@@ -4742,7 +4742,7 @@ lou_in02,77,37,7	script	Hermit	824,{
 				mes "Without him, we cannot continue the gunpowder research, or produce the gunpowder we'll need for our movement. We must contact him so that he may make gunpowder for us.";
 				next;
 				mes "[Sun Mao]";
-				mes "Unfortunately, many of us cannot contact him, as our identities are known to the officials. However, since you are new recruits, as well as Rune-Midgardians, they will not know how you are.";
+				mes "Unfortunately, many of us cannot contact him, as our identities are known to the officials. However, since you are new recruits, as well as Midgardians, they will not know how you are.";
 				next;
 				mes "[Sun Mao]";
 				mes "Your mission will be to deliver these chemicals to our comrade Hao Chenryu who is held captive by the government.";
@@ -4875,11 +4875,11 @@ lou_in01,43,147,3	script	Gunpowder Expert	750,{
 			mes "Are you?";
 			next;
 			mes "[Hao Chenryu]";
-			mes "I only trust my comrades in the cause for Louyang, so leave me alone. Death before oppression! Freedom for Louyang!";
+			mes "I only trust my comrades in the cause for Luoyang, so leave me alone. Death before oppression! Freedom for Luoyang!";
 			close;
 		} else if (@partymember != 8) {
 			mes "[Hao Chenryu]";
-			mes "Mao told me that eight Rune-Midgardians";
+			mes "Mao told me that eight Midgardians";
 			mes "would be coming.";
 			mes "But what happened?";
 			mes "I'm confused...";
@@ -4961,7 +4961,7 @@ lou_in01,45,138,3	script	Soldier#1	825,{
 		next;
 		mes "[Soldier]";
 		mes "You're not allowed to bring any gunpowder out of here. Now go";
-		mes "and put it back, Rune-Midgardian! Move!";
+		mes "and put it back, Midgardian! Move!";
 		close;
 	}
 	mes "[Soldier]";

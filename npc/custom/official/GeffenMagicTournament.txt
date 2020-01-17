@@ -711,7 +711,7 @@ dali,98,141,3	script	Emmitt White	4_M_KHKYEL,{
 						erasequest .@i;
 					}
 				}
-				
+		if (checkquest(9315) != -1)
 			changequest 9315,9316;
 	}
 	
@@ -730,7 +730,7 @@ dali,98,141,3	script	Emmitt White	4_M_KHKYEL,{
 						erasequest .@i;
 					}
 				}
-				
+		if (checkquest(9315) != -1)
 			changequest 9315,9316;
 	}
 	
@@ -1380,7 +1380,8 @@ OnTouch_:
 		cutin "acamaster_a.bmp", 255;
 		hideonnpc "Geffen Academy Master";
 		'GMT_1QUE = 11;
-		changequest 9294,9295;
+		if (checkquest(9294) != -1)
+			changequest 9294,9295;
 		donpcevent instance_npcname("Geffen Academy Master")+"::OnStart";
 		'charname$ = strcharinfo(0);
 		'sex = Sex;
@@ -1539,7 +1540,8 @@ end;
 OnStart:
 	if ( 'GMT_1QUE != 11 ){
 		attachrid('gmt_account_id);
-		changequest 9283 + 'GMT_1QUE, 9284 +'GMT_1QUE;
+		if (checkquest(9283 + 'GMT_1QUE) != -1)
+			changequest 9283 + 'GMT_1QUE, 9284 +'GMT_1QUE;
 		detachrid;
 	}
 
@@ -1690,7 +1692,7 @@ OnStart:
 			sleep 3000;
 			npctalk "The darling of this year's tournament!";
 			sleep 3000;
-			npctalk "Rune-Midgard newest star, "+'charname$+"!";
+			npctalk "Rune-Midgarts newest star, "+'charname$+"!";
 			sleep 2000;
 			npctalk "And "+('sex ? "his" : "her")+" opponent~!!!";
 			sleep 2000;
@@ -1702,7 +1704,7 @@ OnStart:
 			sleep 1000;
 			npctalk "Slow as a turtle, fast as a hare!";
 			sleep 3000;
-			npctalk "The maniac of Rune Midgard! Ifodes!";
+			npctalk "The maniac of Rune-Midgarts! Ifodes!";
 			donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
 			end;
 		case 19:
@@ -1740,7 +1742,7 @@ OnStart:
 			sleep 1000;
 			npctalk "And "+('sex ? "his" : "her")+" opponent~!!!";
 			sleep 1000;
-			npctalk "Seductress of Rune Midgard...";
+			npctalk "Seductress of Rune-Midgarts...";
 			sleep 500;
 			donpcevent instance_npcname("Odoric#1")+"::OnActivate";
 			sleep 500;
@@ -1822,7 +1824,7 @@ OnStart:
 			sleep 1000;
 			npctalk "Oh! This match is going to be exciting!",instance_npcname("Chaos#a2");
 			sleep 2000;
-			npctalk "Is there any Wizard stronger in all of Rune-Midgard?!";
+			npctalk "Is there any Wizard stronger in all of Rune-Midgarts?!";
 			sleep 3000;
 			npctalk "The Blue Wizard! Fenris Fenrir~!!";
 			end;
@@ -2529,7 +2531,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "Yahoo!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -2586,7 +2588,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "Time to get ready for my next match.";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -2641,7 +2643,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "Hu hu hu hu hu...";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 }
 
@@ -2693,7 +2695,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "Never show your face in Geffen again!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -2748,7 +2750,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "You should go home~ Bye~!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 }
 
@@ -2805,7 +2807,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "No matter, I'll just prepare for the next match.";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 }
 
@@ -2864,7 +2866,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "I'm ready for the next match!!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 }
 
@@ -2924,7 +2926,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "Ha ha ha ha ha~!!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 }
 
@@ -2978,7 +2980,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "Now, I shall prepare for my next match~!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -3031,7 +3033,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "Wahahaha~!!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -3087,7 +3089,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "I'm so giddy to find out who I'm up against next!~";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -3144,7 +3146,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "I need to get ready for my next match now~";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -3200,7 +3202,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "The real game is battle!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -3268,7 +3270,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "I have just one more match to win!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -3335,7 +3337,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "I will defeat her and win this tournament!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -3417,7 +3419,8 @@ OnTalk2:
     npctalk "However, next time, I won't lose!";
     sleep2 2000;
     cutin "", 255;
-    changequest 9307,9308;
+	if (checkquest(9307) != -1)
+		changequest 9307,9308;
     warp instance_mapname("1@ge_st"), 109,50;
 	donpcevent instance_npcname("#win")+"::OnEnable";
 	movenpc instance_npcname("#gefmagic_warp02"),120,213;
@@ -3434,7 +3437,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "I have to go... My friends are waiting for me.";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
