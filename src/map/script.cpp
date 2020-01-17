@@ -3200,11 +3200,10 @@ bool set_reg_str( struct script_state* st, struct map_session_data* sd, int64 nu
 				if( ref ){
 					src = ref;
 				}else{
-						std::shared_ptr<s_instance_data> idata = util::umap_find(instances, script_instancegetid(st));
+					std::shared_ptr<s_instance_data> idata = util::umap_find(instances, script_instancegetid(st));
 
-						if (idata)
-							src = &idata->regs;
-					}
+					if (idata)
+						src = &idata->regs;
 				}
 
 				if( src ){
@@ -3295,11 +3294,10 @@ bool set_reg_num( struct script_state* st, struct map_session_data* sd, int64 nu
 				if( ref ){
 					src = ref;
 				}else{
-						std::shared_ptr<s_instance_data> idata = util::umap_find(instances, script_instancegetid(st));
+					std::shared_ptr<s_instance_data> idata = util::umap_find(instances, script_instancegetid(st));
 
-						if (idata)
-							src = &idata->regs;
-					}
+					if (idata)
+						src = &idata->regs;
 				}
 
 				if( src ){
