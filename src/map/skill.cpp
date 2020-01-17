@@ -20291,10 +20291,8 @@ TIMER_FUNC(skill_blockhomun_end){
 	if (hd) {
 		auto skill = util::vector_get(hd->blockskill, (uint16)data);
 
-		if (skill != hd->blockskill.end()) {
+		if (skill != hd->blockskill.end())
 			hd->blockskill.erase(skill);
-			hd->blockskill.shrink_to_fit();
-		}
 	}
 
 	return 1;
@@ -20311,7 +20309,6 @@ int skill_blockhomun_start(struct homun_data *hd, uint16 skill_id, int tick)	//[
 
 	if (tick < 1 && skill != hd->blockskill.end()) {
 		hd->blockskill.erase(skill);
-		hd->blockskill.shrink_to_fit();
 		return -1;
 	}
 
@@ -20326,10 +20323,8 @@ TIMER_FUNC(skill_blockmerc_end){
 	if (md) {
 		auto skill = util::vector_get(md->blockskill, (uint16)data);
 
-		if (skill != md->blockskill.end()) {
+		if (skill != md->blockskill.end())
 			md->blockskill.erase(skill);
-			md->blockskill.shrink_to_fit();
-		}
 	}
 
 	return 1;
@@ -20346,7 +20341,6 @@ int skill_blockmerc_start(struct mercenary_data *md, uint16 skill_id, int tick)
 
 	if (tick < 1 && skill != md->blockskill.end()) {
 		md->blockskill.erase(skill);
-		md->blockskill.shrink_to_fit();
 		return -1;
 	}
 
@@ -21730,10 +21724,8 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 				if (active && status_exists == skill->require.status.end())
 					skill->require.status.push_back(static_cast<sc_type>(constant));
-				else if (!active && status_exists != skill->require.status.end()) {
+				else if (!active && status_exists != skill->require.status.end())
 					skill->require.status.erase(status_exists);
-					skill->require.status.shrink_to_fit();
-				}
 			}
 		}
 
@@ -21794,10 +21786,8 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 				if (active && equip_exists == skill->require.eqItem.end())
 					skill->require.eqItem.push_back(item->nameid);
-				else if (!active && equip_exists != skill->require.eqItem.end()) {
+				else if (!active && equip_exists != skill->require.eqItem.end())
 					skill->require.eqItem.erase(equip_exists);
-					skill->require.eqItem.shrink_to_fit();
-				}
 			}
 		}
 	}
