@@ -178,6 +178,8 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 
 			std::ofstream out;
 
+			body.~Emitter();
+			new (&body) YAML::Emitter();
 			out.open(to);
 
 			if (!out.is_open()) {
