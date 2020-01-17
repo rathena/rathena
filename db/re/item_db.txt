@@ -3164,8 +3164,8 @@
 4977,Wind_Resistance_Reactor,Wind Resistance Reactor,6,0,,,,,,,,,,,,,,,{ bonus2 bSubEle,Ele_Wind,25; bonus2 bSubEle,Ele_Earth,-25; },{},{}
 4978,Recovery_Reactor_101,Recovery Reactor 101,6,0,,,,,,,,,,,,,,,{ if (getrefine()>=7) bonus2 bHPRegenRate,100,5000; else bonus2 bHPRegenRate,50,5000; },{},{}
 4979,Recovery_Reactor_102,Recovery Reactor 102,6,0,,,,,,,,,,,,,,,{ if (getrefine()>=7) bonus2 bSPRegenRate,5,5000; else bonus2 bHPRegenRate,3,5000; },{},{}
-4980,Recovery_Reactor_201,Recovery Reactor 201,6,0,,,,,,,,,,,,,,,{ if (getrefine()>=7) bonus2 bRegenPercentHP,100,5000; else bonus2 bRegenPercentHP,50,5000; },{},{}
-4981,Recovery_Reactor_202,Recovery Reactor 202,6,0,,,,,,,,,,,,,,,{ if (getrefine()>=7) bonus2 bRegenPercentSP,100,5000; else bonus2 bRegenPercentSP,50,5000; },{},{}
+4980,Recovery_Reactor_201,Recovery Reactor 201,6,0,,,,,,,,,,,,,,,{ if (getrefine()>=7) bonus bHPrecovRate,100; else bonus bHPrecovRate,50; },{},{}
+4981,Recovery_Reactor_202,Recovery Reactor 202,6,0,,,,,,,,,,,,,,,{ if (getrefine()>=7) bonus bSPrecovRate,100; else bonus bSPrecovRate,50; },{},{}
 4982,STR_Supplement_Reactor,STR Supplement Reactor,6,0,,,,,,,,,,,,,,,{ if (getrefine()>=7) { .@bonus = 10; } bonus bBaseAtk,.@bonus + 5*(readparam(bStr)/10); },{},{}
 4983,INT_Supplement_Reactor,INT Supplement Reactor,6,0,,,,,,,,,,,,,,,{ if (getrefine()>=7) { .@bonus = 10; } bonus bMatk,.@bonus + 5*(readparam(bInt)/10); },{},{}
 4984,DEF_Supplement_Reactor,DEF SupplementReactor,6,0,,,,,,,,,,,,,,,{ bonus bDef,100; },{},{}
