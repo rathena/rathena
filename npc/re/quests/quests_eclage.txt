@@ -19,7 +19,7 @@
 //= 1.2 Clean-up. [Capuche]
 //============================================================
 
-// Teleport Cats (14.2 Cat Hand Addition)
+// Teleport Cats (14.2 Cat Paw Addition)
 //============================================================
 -	script	Teleport Cat#ep14_2	-1,{
 	switch(atoi(charat(strnpcinfo(1),16))) {

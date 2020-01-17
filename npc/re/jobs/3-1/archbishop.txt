@@ -29,7 +29,7 @@
 
 prt_church,103,88,3	script	Praying Minister#arch	60,{
 	if (BaseJob != Job_Priest) {
-		if (Class == Job_Arch_Bishop || Class == Job_Arch_Bishop_T || Class == Job_Baby_Bishop) {
+		if (Class == Job_Arch_Bishop || Class == Job_Arch_Bishop_T || Class == Job_Baby_Arch_Bishop) {
 			mes "[Praying Minister]";
 			mes "Ah! An Archbishop.";
 			mes "You have reached the state of light.";
@@ -788,7 +788,7 @@ job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 	if (Class != Job_Priest && Class != Job_High_Priest && Class != Job_Baby_Priest) {
 		warp "odin_tem02",282,263;
 		end;
-	} else if (Class != Job_Arch_Bishop && Class != Job_Arch_Bishop_T && Class != Job_Baby_Bishop) {
+	} else if (Class != Job_Arch_Bishop && Class != Job_Arch_Bishop_T && Class != Job_Baby_Arch_Bishop) {
 		if (job_arch < 5) {
 			warp "odin_tem02",282,263;
 			end;

@@ -38,7 +38,7 @@ prontera,121,72,3	script	Royal Messenger#e16_pr	4_M_ZONDAOYAJI,5,5,{
 	}
 	switch( banquet_main_quest ) {
 	case 0:
-		if (BaseLevel < 100 || (ep13_ryu < 100 && ep13_start < 100)) {// Access to the New World pre-req (Onward to the New World Quest or Cat Hand Agent Quest)
+		if (BaseLevel < 100 || (ep13_ryu < 100 && ep13_start < 100)) {// Access to the New World pre-req (Onward to the New World Quest or Cat Paw Agent Quest)
 			mes "[Royal Messenger]";
 			mes "Hello!";
 			mes "Now ^4d4dffthe palace is hosting a banquet for the returning heroes from Vacuum^000000.";
@@ -13621,7 +13621,7 @@ prt_q,157,334,3	script	Nillem#ep16_pprt01	4_M_JOB_WIZARD,{
 		mes "I studied in Eclage.";
 		next;
 		mes "[Nillem]";
-		mes "I have also learned a lot of things at the Cat Hand Services!";
+		mes "I have also learned a lot of things at the Cat Paw Services!";
 		mes "I believe that I have the most thorough knowledge when it comes to the crack of dimension!";
 		next;
 		mes "[Nillem]";

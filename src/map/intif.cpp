@@ -479,8 +479,8 @@ int intif_saveregistry(struct map_session_data *sd)
 			plen += 1;
 
 			if( p->value ) {
-				WFIFOL(inter_fd, plen) = p->value;
-				plen += 4;
+				WFIFOQ(inter_fd, plen) = p->value;
+				plen += 8;
 			} else {
 				script_reg_destroy_single(sd,key.i64,&p->flag);
 			}
@@ -1407,7 +1407,7 @@ void intif_parse_Registers(int fd)
 	
 	if( RFIFOW(fd, 14) ) {
 		char key[32];
-		unsigned int index;
+		uint32 index;
 		int max = RFIFOW(fd, 14), cursor = 16, i;
 
 		/**
@@ -1428,7 +1428,7 @@ void intif_parse_Registers(int fd)
 				safestrncpy(sval, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 				cursor += RFIFOB(fd, cursor) + 1;
 
-				set_reg(NULL,sd,reference_uid(add_str(key), index), key, (void*)sval, NULL);
+				set_reg_str( NULL, sd, reference_uid( add_str( key ), index ), key, sval, NULL );
 			}
 		/**
 		 * Vessel!
@@ -1438,17 +1438,17 @@ void intif_parse_Registers(int fd)
 		 **/
 		} else {
 			for(i = 0; i < max; i++) {
-				int ival;
+				int64 ival;
 				safestrncpy(key, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 				cursor += RFIFOB(fd, cursor) + 1;
 
 				index = RFIFOL(fd, cursor);
 				cursor += 4;
 
-				ival = RFIFOL(fd, cursor);
-				cursor += 4;
+				ival = RFIFOQ(fd, cursor);
+				cursor += 8;
 
-				set_reg(NULL,sd,reference_uid(add_str(key), index), key, (void*)__64BPRTSIZE(ival), NULL);
+				set_reg_num( NULL, sd, reference_uid( add_str( key ), index ), key, ival, NULL );
 			}
 		}
 	}
