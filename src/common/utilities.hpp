@@ -142,11 +142,11 @@ namespace rathena {
 		 * @param index: Index value to remove
 		 */
 		template <typename K> void erase_at(std::vector<K>& vector, size_t index) {
-			if (vector.size() == 1)
+			if (vector.size() == 1) {
 				vector.clear();
-			else
+				vector.shrink_to_fit();
+			} else
 				vector.erase(vector.begin() + index);
-      vector.shrink_to_fit();
 		}
 
 		bool safe_addition( int64 a, int64 b, int64& result );

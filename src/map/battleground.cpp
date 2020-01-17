@@ -1239,7 +1239,6 @@ static bool bg_queue_leave_sub(struct map_session_data *sd, std::vector<map_sess
 			}
 
 			list_it = lista.erase(list_it);
-			lista.shrink_to_fit();
 
 			if (lista.empty() && listb.empty()) { // If there are no players left in the queue, discard it
 				auto queue_it = bg_queues.begin();
@@ -1254,7 +1253,6 @@ static bool bg_queue_leave_sub(struct map_session_data *sd, std::vector<map_sess
 						}
 
 						queue_it = bg_queues.erase(queue_it);
-						bg_queues.shrink_to_fit();
 					}
 				}
 			}
@@ -1401,6 +1399,8 @@ void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue)
 	npc_event_do(queue->map->bgcallscript.c_str());
 	queue->teama_members.clear();
 	queue->teamb_members.clear();
+	queue->teama_members.shrink_to_fit();
+	queue->teamb_members.shrink_to_fit();
 
 	auto queue_it = bg_queues.begin();
 
@@ -1408,10 +1408,6 @@ void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue)
 		if (*queue_it == queue)
 			queue_it = bg_queues.erase(queue_it);
 	}
-
-	queue->teama_members.shrink_to_fit();
-	queue->teamb_members.shrink_to_fit();
-	bg_queues.shrink_to_fit();
 
 	return;
 }
