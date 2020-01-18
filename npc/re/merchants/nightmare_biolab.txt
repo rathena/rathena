@@ -1663,11 +1663,11 @@ OnTimer1000:
 	}
 	else if (.@npc_name$ == "#Alphoccio_Basil_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A24";
-		switch (rand(4)) {
+		switch (rand(5)) {
 			case 0:	 .@msg$ = "I thought we could make songs and travel around the world forever..."; break;
 			case 1:	 .@msg$ = "It doesn't matter where are we while you're near me..."; break;
 			case 2:	 .@msg$ = "Trentini... Where are you..."; break;
-			// still may be incomplete
+			case 3: .@msg$ = "The sound of the song is fading away..."; break;
 			default: .@msg$ = "And now... What is left for me?.."; break;
 		}
 	}
@@ -1681,11 +1681,13 @@ OnTimer1000:
 			default: .@msg$ = "Friends... I'm scared..."; break;
 		}
 	}
-	else if (.@npc_name$ == "##Katrinn Chiron_A2") {
+	else if (.@npc_name$ == "#Katrinn Chiron_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A6";
-		switch (rand(3)) {
+		switch (rand(5)) {
 			case 0:	 .@msg$ = "Seyren... Where are you..."; break;
 			case 1:	 .@msg$ = "Pain... Darkness... I'm scared..."; break;
+			case 2:  .@msg$ = "The magic that was so hard for me to learn is now just... useless..."; break;
+			case 3:  .@msg$ = "Those who are not humans..."; break;
 			default: .@msg$ = "Friends... Too dark..."; break;
 		}
 	}
@@ -1739,10 +1741,11 @@ OnTimer1000:
 	}
 	else if (.@npc_name$ == "#Eremes_Guille_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A8";
-		switch (rand(4)) {
+		switch (rand(5)) {
 			case 0:  .@msg$ = "Is Katrinn all right... I must protect..."; break;
 			case 1:  .@msg$ = "I must complete my mission... My orders..."; break;
 			case 2:	 .@msg$ = "Assasin Guild waits for me..."; break;
+			case 3: .@msg$ = "I cannot believe I fell into a trap like this..."; break;
 			default: .@msg$ = "My eyes are blurred... I won't last long..."; break;
 		}
 	}
@@ -1787,16 +1790,19 @@ OnTimer1000:
 	}
 	else if (.@npc_name$ == "#Harword_AltEisen_A1") {
 		.@talker_name$ = "#lhz_dun_talk_A9";
-		switch (rand(3)) {
+		switch (rand(5)) {
 			case 0:  .@msg$ = "What moves my body now... Is it really my will..?"; break;
 			case 1:  .@msg$ = "Where is this plase?.. I was told nothing..."; break;
+			case 2:  .@msg$ = "I won't go anywhere... I'll be by your side..."; break;
+			case 3:  .@msg$ = "I must look for my sister Cecil... no matter what..."; break;
 			default: .@msg$ = "Dangerous... My mind shuts down..."; break;
 		}
 	}
 	else if (.@npc_name$ == "#Harword Alt-Eisen_A2") {
 		.@talker_name$ = "#lhz_dun_talk_A10";
-		switch (rand(2)) {
+		switch (rand(3)) {
 			case 0:	 .@msg$ = "I cannot see my future anymore..."; break;
+			case 1: .@msg$ = "My eyes... just keep... closing..."; break;
 			default: .@msg$ = "Damn it... Cheer up... Don't loose the will..."; break;
 		}
 	}
