@@ -4600,28 +4600,28 @@ OnTouch:
 function	script	CheckBurglary	{
 	.@last = getarg(1);
 	for ( .@i = getarg(0); .@i <= .@last; .@i++ ) {
+		if (checkquest(.@i) != -1)
+			continue;
 		switch(.@i) {
-			if (checkquest(.@i) != -1)
-				continue;
 		case 9252:
 			mes "- Let's examine Poppy first -";
-			return;
+			close;
 		case 9253:
 			mes "- Let's examine the messy";
 			mes "bookshelves first -";
-			return;
+			close;
 		case 9254:
 			mes "- Let's examine the damaged";
 			mes "book first -";
-			return;
+			close;
 		case 9255:
 			mes "- Let's examine the";
 			mes "container first -";
-			return;
+			close;
 		case 9256:
 			mes "- Let's examine the";
 			mes "messed up table first -";
-			return;
+			close;
 		}
 	}
 	return;
