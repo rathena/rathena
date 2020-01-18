@@ -11103,10 +11103,10 @@ BUILDIN_FUNC(announce)
 		}else{
 			struct map_session_data* sd;
 
-			if (!script_charid2sd(9, sd))
-				bl = NULL;
-			else
+			if(script_charid2sd(9, sd))
 				bl = &sd->bl;
+			else
+				bl = NULL;
 		}
 		
 		if (bl == NULL)
