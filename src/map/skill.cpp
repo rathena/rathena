@@ -15410,9 +15410,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		return false;
 	}
 
-	if (sc && sc->data[SC_GRAVITYCONTROL])
-		return false;
-
 	if( sc && ( sc->data[SC__SHADOWFORM] || sc->data[SC__IGNORANCE] ) )
 		return false;
 
