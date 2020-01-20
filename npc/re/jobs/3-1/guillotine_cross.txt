@@ -110,7 +110,7 @@ que_job01,75,96,3	script	Guild Member#3rdgc01	997,{
 			mes "Hmm...";
 			next;
 			mes "[Ahcart]";
-			mes "Of course, a chapter of the assassin guild is not only in Morroc. If you have a chance to go there, visit there.";
+			mes "Of course, a chapter of the assassin guild is not only in Morocc. If you have a chance to go there, visit there.";
 			mes "I think you might go there.";
 			set job_3rd_gc, 1;
 			close;
@@ -251,7 +251,7 @@ job3_guil01,82,95,3	script	Daora#3rdgc02	940,{
 			}
 			next;
 			mes "[Daora]";
-			mes "I'm not sure that you already know or not, but we are selling special Morroc liquor.";
+			mes "I'm not sure that you already know or not, but we are selling special Morocc liquor.";
 			mes "Which one do you want?";
 			next;
 			switch(select("Tropical Sograt:Vermilion on the Beach:No thanks!:......")) {
@@ -738,7 +738,7 @@ job3_guil01,82,95,3	script	Daora#3rdgc02	940,{
 			mes "Everyone is waiting for you.";
 			close;
 		}
-	} else if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Baby_Cross) {
+	} else if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Baby_Guillotine_Cross) {
 		if (Sex == SEX_MALE) {
 			mes "Oh~ you're good-looking~!";
 			mes "It's worthwhile to open a pub~";
@@ -807,7 +807,7 @@ job3_guil01,82,95,3	script	Daora#3rdgc02	940,{
 		}
 		next;
 		mes "[Daora]";
-		mes "I'm not sure that you already know or not, but we are selling special liquor of Morroc.";
+		mes "I'm not sure that you already know or not, but we are selling special liquor of Morocc.";
 		mes "Which one do you want?";
 		next;
 		switch(select("Tropical Sograt:Vermilion the beach:No thanks!")) {
@@ -1076,7 +1076,7 @@ job3_guil01,16,20,4	script	Mayshell#3rdgc03	894,{
 		next;
 		mes "[Mayshell]";
 		mes "Don't forget.";
-		mes "And the task you did is related to Rachel, Rune-Midgard, and our assassin guild.";
+		mes "And the task you did is related to Rachel, Rune-Midgarts, and our assassin guild.";
 		mes "So the others should not be known. Of course, you are included, so please forget everything.";
 		close;
 	} else if (job_3rd_gc == 20) {
@@ -3755,7 +3755,7 @@ job3_guil01,148,53,3	script	Bercasell#3rdgc16	467,{
 			mes "Get out of here now!!!";
 			close;
 		}
-	} else if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Baby_Cross) {
+	} else if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Baby_Guillotine_Cross) {
 		mes "Don't pursue only strength.";
 		mes "You'll get tired.";
 		mes "It's no better than living.";

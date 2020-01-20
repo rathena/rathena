@@ -192,7 +192,7 @@
 
 //--------------------LEVEL 4-----------
 
-//-- Morroc Fruit Wine <-- 10 Strawberry, 4 Lemon, 10 Orange, 2 Alcohol, 5 Grape
+//-- Morocc Fruit Wine <-- 10 Strawberry, 4 Lemon, 10 Orange, 2 Alcohol, 5 Grape
 70,12049,14,0,0,7475,0,578,10,568,4,582,10,970,2,514,5
 //-- Seasoned Jellyfish <-- 30 Tentacle, 10 White Herb, 10 Soft Blade Grass, 1 Old Frying Pan, 20 Squid Ink
 71,12054,14,0,0,7475,0,962,30,509,10,7194,10,7031,1,1024,20

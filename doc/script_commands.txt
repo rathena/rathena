@@ -6814,7 +6814,7 @@ as soon as the progress bar activates.
 //
 ---------------------------------------
 
-*announce "<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
+*announce "<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>{,<char_id>}}}}}};
 
 This command will broadcast a message to all or most players, similar to
 @kami/@kamib GM commands.
@@ -6830,11 +6830,12 @@ Target flags:
 - bc_all: Broadcast message is sent server-wide (default).
 - bc_map: Message is sent to everyone in the same map as the source of the broadcast (see below).
 - bc_area: Message is sent to players in the vicinity of the source.
-- bc_self: Message is sent only to current player.
+- bc_self: Message is sent only to current player , if the source flag is bc_pc it also can
+			be used to send the Message to the character id if it's provided.
 You cannot use more than one target flag.
 
 Source flags:
-- bc_pc: Broadcast source is the attached player (default).
+- bc_pc: Broadcast source is the attached player or the character id if it's provided (default).
 - bc_npc: Broadcast source is the NPC, not the player attached to the script
   (useful when a player is not attached or the message should be sent to those
   nearby the NPC).
@@ -6870,6 +6871,9 @@ but it can be used instead in NPCs to "preview" an announce.
 
 	// This will be shown on everyones screen that is in sight of the NPC.
 	announce "This is my message just for you people here",bc_npc|bc_area;
+
+	// This will be a private message to the player with character id 150000
+	announce "This is my message just for char id 150000",bc_self,0xFFF618,FW_NORMAL,12,0,0,150000;
 
 ---------------------------------------
 
@@ -7979,6 +7983,8 @@ Parameters (indexes) for monsters are:
 	UMOB_ADELAY
 	UMOB_DMOTION
 	UMOB_TARGETID
+	UMOB_ROBE
+	UMOB_BODY2
 
 -----
 
@@ -8152,7 +8158,6 @@ Parameter (indexes) for elementals are:
 -----
 
 Parameter (indexes) for NPCs are:
-	UNPC_DISPLAY
 	UNPC_LEVEL
 	UNPC_HP
 	UNPC_MAXHP
@@ -8185,6 +8190,19 @@ Parameter (indexes) for NPCs are:
 	UNPC_AMOTION
 	UNPC_ADELAY
 	UNPC_DMOTION
+	UNPC_SEX
+	UNPC_CLASS
+	UNPC_HAIRSTYLE
+	UNPC_HAIRCOLOR
+	UNPC_HEADBOTTOM
+	UNPC_HEADMIDDLE
+	UNPC_HEADTOP
+	UNPC_CLOTHCOLOR
+	UNPC_SHIELD
+	UNPC_WEAPON
+	UNPC_ROBE
+	UNPC_BODY2
+	UNPC_DEADSIT
 
 *Notes:
 		- *_SIZE: small (0); medium (1); large (2)
@@ -8201,12 +8219,14 @@ Parameter (indexes) for NPCs are:
 		- *_AMOTION: see doc/mob_db.txt
 		- *_ADELAY: see doc/mob_db.txt
 		- *_DMOTION: see doc/mob_db.txt
+		- *_BODY2: enable (1) the alternate display, or disable (0)
 
 		- UMOB_AI: none (0); attack (1); marine sphere (2); flora (3); zanzou (4); legion (5); faw (6)
 		- UMOB_SCOPTION: see the 'Variables' section at the top of this document
 		- UMOB_SLAVECPYMSTRMD: make the slave copy the master's mode (1), or not (0)
 
-		- UNPC_PLUSALLSTAT: same as 'bAllStats'; increases/decreses all stats by given amount
+		- UNPC_PLUSALLSTAT: same as 'bAllStats'; increases/decreases all stats by given amount
+		- UNPC_DEADSIT: stand (0), dead (1), sit (2)
 
 Example:
 	// Spawn some Porings and save the Game ID.

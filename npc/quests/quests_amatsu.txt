@@ -52,7 +52,7 @@ amatsu,223,236,3	script	Publisher#ama	763,{
 			mes "[Publisher]";
 			mes "Eh~!? How can you not know about";
 			mes "Momotaro? Don't they have this";
-			mes "tale in Rune-Midgard?? Well...";
+			mes "tale in Midgard?? Well...";
 			mes "Let me tell you the story.";
 			next;
 			mes "[Publisher]";
@@ -1324,7 +1324,7 @@ amatsu,112,164,4	script	Gate Soldier#ama1	767,{
 	
 amatsu,119,164,4	script	Gate Soldier#ama2	767,{
 	mes "[Gate Soldier]";
-	mes "Are you from Rune-Midgard?";
+	mes "Are you from Midgard?";
 	mes "Welcome to Amatsu.";
 	mes "Visit our lord in Chun-Su-Gak";
 	mes "when you go in.";
@@ -1489,7 +1489,7 @@ ama_in02,170,62,4	script	Soldier#ama2	767,{
 		}
 		mes "[Gate Soldier]";
 		mes "The lord announced that";
-		mes "he grants guests from Rune-Midgard the right to go anywhere.";
+		mes "he grants guests from Midgard the right to go anywhere.";
 		mes "You don't need me to issue you a Transit Permit.";
 		close;
 	case 2:
@@ -1517,7 +1517,7 @@ ama_in02,37,157,4	script	Soldier#ama3	767,{
 	mes "lately. How do I say it...";
 	mes "Their faces are gloomy and";
 	mes "some of them are no longer around.";
-	mes "Have they gone to Rune-Midgard??";
+	mes "Have they gone to Midgard??";
 	next;
 	mes "[Saburo]";
 	mes "In this job, I encounter";
@@ -1540,7 +1540,7 @@ ama_in02,32,51,6	script	Soldier#ama4	767,{
 	next;
 	mes "[Shiro]";
 	mes "That quack's cold medicine";
-	mes "is useless! I should never have trusted people from Rune-Midgard!";
+	mes "is useless! I should never have trusted people from Midgard!";
 	mes "*Cough, Cough*...";
 	next;
 	mes "[Shiro]";
@@ -1800,7 +1800,7 @@ ama_in02,200,176,4	script	Lord of Palace#ama	768,{
 			mes "They disappointed me.";
 			next;
 			mes "[Ishida Yoshinaga]";
-			mes "You, who hail from Rune-Midgard,";
+			mes "You, who hail from Midgard,";
 			mes "may be able to cure my mother's disease. I will reward you well if you succeed...";
 			next;
 			set event_amatsu,2;
@@ -1907,7 +1907,7 @@ ama_in02,200,176,4	script	Lord of Palace#ama	768,{
 	next;
 	mes "[Ishida Yoshinaga]";
 	mes "Because you carry with you";
-	mes "knowledge from Rune-Midgard,";
+	mes "knowledge from Midgard,";
 	mes "I have faith in your ability.";
 	close;
 }
