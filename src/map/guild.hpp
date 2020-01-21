@@ -32,6 +32,7 @@ int guild_checkskill(struct guild *g,int id);
 bool guild_check_skill_require(struct guild *g,uint16 id); // [Komurka]
 int guild_checkcastles(struct guild *g); // [MouseJstr]
 bool guild_isallied(int guild_id, int guild_id2); //Checks alliance based on guild Ids. [Skotlex]
+bool guild_has_permission( struct map_session_data* sd, enum e_guild_permission permission );
 
 void do_init_guild(void);
 struct guild *guild_search(int guild_id);
@@ -53,15 +54,15 @@ int guild_request_info(int guild_id);
 int guild_recv_noinfo(int guild_id);
 int guild_recv_info(struct guild *sg);
 int guild_npc_request_info(int guild_id,const char *ev);
-int guild_invite(struct map_session_data *sd,struct map_session_data *tsd);
-int guild_reply_invite(struct map_session_data *sd,int guild_id,int flag);
+bool guild_invite(struct map_session_data *sd,struct map_session_data *tsd);
+bool guild_reply_invite(struct map_session_data *sd,int guild_id,int flag);
 void guild_member_joined(struct map_session_data *sd);
 int guild_member_added(int guild_id,uint32 account_id,uint32 char_id,int flag);
-int guild_leave(struct map_session_data *sd,int guild_id,
+bool guild_leave(struct map_session_data *sd,int guild_id,
 	uint32 account_id,uint32 char_id,const char *mes);
 int guild_member_withdraw(int guild_id,uint32 account_id,uint32 char_id,int flag,
 	const char *name,const char *mes);
-int guild_expulsion(struct map_session_data *sd,int guild_id,
+bool guild_expulsion(struct map_session_data *sd,int guild_id,
 	uint32 account_id,uint32 char_id,const char *mes);
 void guild_skillup(struct map_session_data* sd, uint16 skill_id);
 void guild_block_skill(struct map_session_data *sd, int time);
@@ -89,7 +90,7 @@ int guild_send_dot_remove(struct map_session_data *sd);
 int guild_skillupack(int guild_id,uint16 skill_id,uint32 account_id);
 int guild_break(struct map_session_data *sd,char *name);
 int guild_broken(int guild_id,int flag);
-int guild_gm_change(int guild_id, uint32 char_id);
+bool guild_gm_change(int guild_id, uint32 char_id, bool showMessage = false );
 int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id, time_t time);
 
 void guild_castle_map_init(void);

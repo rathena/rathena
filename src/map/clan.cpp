@@ -11,6 +11,7 @@
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 
+#include "battle.hpp"
 #include "clif.hpp"
 #include "intif.hpp"
 #include "log.hpp"
@@ -152,11 +153,15 @@ bool clan_member_join( struct map_session_data *sd, int clan_id, uint32 account_
 
 	nullpo_ret(sd);
 
-	if( ( clan = clan_search( clan_id ) ) == NULL ){
+	if( ( clan = clan_search( clan_id ) ) == nullptr ){
 		return false;
 	}
 
 	if( sd->status.account_id != account_id || sd->status.char_id != char_id || sd->status.clan_id != 0 ){
+		return false;
+	}
+
+	if( clan->instance_id > 0 && battle_config.instance_block_invite ){
 		return false;
 	}
 
@@ -172,13 +177,17 @@ bool clan_member_leave( struct map_session_data* sd, int clan_id, uint32 account
 
 	nullpo_ret(sd);
 
-	if( sd->status.account_id != account_id || sd->status.char_id != char_id || sd->status.clan_id != clan_id || ( clan = sd->clan ) == NULL ){
+	if( sd->status.account_id != account_id || sd->status.char_id != char_id || sd->status.clan_id != clan_id || ( clan = sd->clan ) == nullptr ){
+		return false;
+	}
+
+	if( clan->instance_id > 0 && battle_config.instance_block_leave ){
 		return false;
 	}
 
 	clan_member_left(sd);
 
-	sd->clan = NULL;
+	sd->clan = nullptr;
 	sd->status.clan_id = 0;
 
 	clif_clan_leave(sd);

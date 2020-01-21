@@ -663,6 +663,10 @@ struct Battle_Config
 	int mob_nopc_move_rate;
 	int boss_nopc_idleskill_rate;
 	int boss_nopc_move_rate;
+	int instance_block_leave;
+	int instance_block_leaderchange;
+	int instance_block_invite;
+	int instance_block_expulsion;
 
 #include "../custom/battle_config_struct.inc"
 };
