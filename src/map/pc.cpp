@@ -12738,7 +12738,7 @@ short pc_maxparameter(struct map_session_data *sd, enum e_params param) {
 	}
 
 	return (class_&MAPID_BASEMASK) == MAPID_SUMMONER ? battle_config.max_summoner_parameter :
-		((class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO || (class_&MAPID_UPPERMASK) == MAPID_REBELLION) ? battle_config.max_extended_parameter :
+		((class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO || (class_&MAPID_UPPERMASK) == MAPID_REBELLION) ? ((class_&JOBL_BABY) ? battle_config.max_baby_parameter : battle_config.max_extended_parameter) :
 		((class_&JOBL_THIRD) ? ((class_&JOBL_UPPER) ? battle_config.max_third_trans_parameter : ((class_&JOBL_BABY) ? battle_config.max_baby_third_parameter : battle_config.max_third_parameter)) : 
 		((class_&JOBL_BABY) ? battle_config.max_baby_parameter :
 		((class_&JOBL_UPPER) ? battle_config.max_trans_parameter : battle_config.max_parameter)));
