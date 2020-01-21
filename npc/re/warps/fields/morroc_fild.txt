@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Morroc Field Warp Script
+//= Morocc Field Warp Script
 //===== By: ==================================================
 //= Nana (1.0)
 //===== Current Version: =====================================
@@ -7,7 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
-//= Warp Points for Morroc Fields
+//= Warp Points for Morocc Fields
 //===== Additional Comments: =================================
 //= 1.1 changed 'anthell' to @anthell [Lupus]
 //= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
@@ -115,6 +115,6 @@ moc_fild19,169,107,0	warp	mocf004	1,4,morocc,27,164
 moc_fild19,71,170,0	warp	mocf018	8,2,moc_ruins,71,19
 moc_fild19,98,99,0	warp	mocf019	1,1,in_sphinx1,288,9
 
-// Satan Morroc Addition
+// Satan Morocc Addition
 moc_fild21,26,196,0	warp	mocf020	1,1,moc_fild20,349,179
 moc_fild22,32,196,0	warp	mocf021	1,1,moc_fild20,349,179

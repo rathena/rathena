@@ -283,7 +283,12 @@ static inline unsigned char clif_bl_type(struct block_list *bl) {
 	case BL_SKILL: return 0x3; //SKILL_TYPE
 	case BL_CHAT:  return 0x4; //UNKNOWN_TYPE
 	case BL_MOB:   return pcdb_checkid(status_get_viewdata(bl)->class_)?0x0:0x5; //NPC_MOB_TYPE
-	case BL_NPC:   return pcdb_checkid(status_get_viewdata(bl)->class_)?0x0:0x6; //NPC_EVT_TYPE
+	case BL_NPC:
+#if PACKETVER >= 20170726
+			return 0x6; //NPC_EVT_TYPE
+#else
+			return (pcdb_checkid(status_get_viewdata(bl)->class_) ? 0x0 : 0x6);
+#endif
 	case BL_PET:   return pcdb_checkid(status_get_viewdata(bl)->class_)?0x0:0x7; //NPC_PET_TYPE
 	case BL_HOM:   return 0x8; //NPC_HOM_TYPE
 	case BL_MER:   return 0x9; //NPC_MERSOL_TYPE
@@ -1144,7 +1149,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFW(buf,53) = (sd ? sd->status.font : 0);
 #endif
 #if PACKETVER >= 20120221
-	if ( battle_config.monster_hp_bars_info && !map_getmapflag(bl->m, MF_HIDEMOBHPBAR) && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
+	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && !map_getmapflag(bl->m, MF_HIDEMOBHPBAR) && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,55) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,59) = status_get_hp(bl);		// HP
 	} else {
@@ -1447,7 +1452,7 @@ int clif_spawn(struct block_list *bl)
 	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
 		return 0;
 
-	len = clif_set_unit_idle(bl, buf,true);
+	len = clif_set_unit_idle(bl, buf, (bl->type == BL_NPC && vd->dead_sit ? false : true));
 	clif_send(buf, len, bl, AREA_WOS);
 	if (disguised(bl))
 		clif_setdisguise(bl, buf, len);
@@ -3606,7 +3611,7 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 #if PACKETVER < 20150513
 				return;
 #else
-				if (val && sd->sc.option&OPTION_COSTUME)
+				if (val && sd && sd->sc.option&OPTION_COSTUME)
  					val = 0;
  				vd->body_style = val;
 #endif
@@ -3620,17 +3625,19 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 #if PACKETVER < 4
 	clif_sprite_change(bl, bl->id, type, val, 0, target);
 #else
-	if(type == LOOK_WEAPON || type == LOOK_SHIELD) {
-		nullpo_retv(vd);
-		type = LOOK_WEAPON;
-		val = vd->weapon;
-		val2 = vd->shield;
-	}
-	if( disguised(bl) ) {
-		clif_sprite_change(bl, bl->id, type, val, val2, AREA_WOS);
-		clif_sprite_change(bl, -bl->id, type, val, val2, SELF);
+	if (bl->type != BL_NPC) {
+		if (type == LOOK_WEAPON || type == LOOK_SHIELD) {
+			type = LOOK_WEAPON;
+			val = (vd ? vd->weapon : 0);
+			val2 = (vd ? vd->shield : 0);
+		}
+		if (disguised(bl)) {
+			clif_sprite_change(bl, bl->id, type, val, val2, AREA_WOS);
+			clif_sprite_change(bl, -bl->id, type, val, val2, SELF);
+		} else
+			clif_sprite_change(bl, bl->id, type, val, val2, target);
 	} else
-		clif_sprite_change(bl, bl->id, type, val, val2, target);
+		unit_refresh(bl);
 #endif
 }
 
@@ -5998,11 +6005,6 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, t
 		return;
 
 	nullpo_retv(bl);
-
-#if PACKETVER < 20151104
-	if (type == EFST_WEAPONPROPERTY)
-		type = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
-#endif
 
 #if PACKETVER >= 20120618
 	if (flag && battle_config.display_status_timers)
@@ -9925,6 +9927,8 @@ void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* ts
 	{
 		if (tsd->inventory.u.items_inventory[i].nameid <= 0 || tsd->inventory_data[i] == NULL)	// Item doesn't exist
 			continue;
+		if (!tsd->inventory.u.items_inventory[i].equip)
+			continue;
 		if (!itemdb_isequip2(tsd->inventory_data[i])) // Is not equippable
 			continue;
 		// Add item info : refine, identify flag, element, etc.
@@ -11358,7 +11362,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 			for( i = 0; i < NUM_WHISPER_VAR; ++i ) {
 				char variablename[CHAT_SIZE_MAX];
 				safesnprintf(variablename,sizeof(variablename),"@whispervar%d$", i);
-				set_var(sd,variablename,(char *) split_data[i]);
+				set_var_str( sd, variablename, split_data[i] );
 			}
 
 			safesnprintf(event,sizeof(event),"%s::%s", npc->exname,script_config.onwhisper_event_name);
@@ -16698,7 +16702,9 @@ void clif_parse_ViewPlayerEquip(int fd, struct map_session_data* sd)
 	if (!tsd)
 		return;
 
-	if( tsd->status.show_equip || pc_has_permission(sd, PC_PERM_VIEW_EQUIPMENT) )
+	if (sd->bl.m != tsd->bl.m)
+		return;
+	else if( tsd->status.show_equip || pc_has_permission(sd, PC_PERM_VIEW_EQUIPMENT) )
 		clif_viewequip_ack(sd, tsd);
 	else
 		clif_msg(sd, VIEW_EQUIP_FAIL);
@@ -18383,7 +18389,7 @@ int clif_spellbook_list(struct map_session_data *sd)
 
 	for( i = 0, c = 0; i < MAX_INVENTORY; i ++ )
 	{
-		if( itemdb_is_spellbook2(sd->inventory.u.items_inventory[i].nameid) )
+		if( reading_spellbook_db.findBook(sd->inventory.u.items_inventory[i].nameid) )
 		{
 			WFIFOW(fd, c * 2 + 4) = sd->inventory.u.items_inventory[i].nameid;
 			c++;

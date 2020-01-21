@@ -30,7 +30,7 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 	switch(rand(1,2)) {
 	case 1:
 		mes "[Weird old man]";
-		mes "I was on the way to visit my son who lives in Rune Midgard. It's really far away, so I took the airplane, and..";
+		mes "I was on the way to visit my son who lives in Rune-Midgarts. It's really far away, so I took the airplane, and..";
 		next;
 		mes "[Weird old man]";
 		mes "those young people...so noisy.... I was standing but none of them offered me a seat..and they were just talking loudly which bothered everyone.";
@@ -50,7 +50,7 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 		break;
 	case 2:
 		mes "[Weird old man]";
-		mes "I was on the way to visit my son who lives in Rune Midgard. It's really far away, so I took the airplane, and..";
+		mes "I was on the way to visit my son who lives in Rune-Midgarts. It's really far away, so I took the airplane, and..";
 		next;
 		mes "[Weird old man]";
 		mes "those young people...so noisy.... I was standing but none of them offered me a seat..and they were just talking loudly which bothered everyone.";

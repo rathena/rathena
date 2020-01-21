@@ -513,11 +513,11 @@ void initChangeTables(void)
 #ifdef RENEWAL
 	set_sc( GS_MAGICALBULLET	, SC_MAGICALBULLET	, EFST_GS_MAGICAL_BULLET	, SCB_NONE );
 #endif
-	set_sc( GS_GATLINGFEVER		, SC_GATLINGFEVER	, EFST_GS_GATLINGFEVER,
+	set_sc( GS_GATLINGFEVER		, SC_GATLINGFEVER	, EFST_GS_GATLINGFEVER, SCB_FLEE|SCB_SPEED|SCB_ASPD
 #ifndef RENEWAL
-		SCB_BATK|SCB_FLEE|SCB_SPEED|SCB_ASPD );
+		|SCB_BATK );
 #else
-		SCB_FLEE|SCB_SPEED|SCB_ASPD );
+		 );
 #endif
 	add_sc( NJ_TATAMIGAESHI		, SC_TATAMIGAESHI	);
 	set_sc( NJ_SUITON		, SC_SUITON		, EFST_BLANK		, SCB_AGI|SCB_SPEED );
@@ -5349,12 +5349,16 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, enum e_status_ca
 	struct status_data b_status; // Previous battle status
 	struct status_data* status; // Pointer to current battle status
 
-	if (bl->type == BL_PC && ((TBL_PC*)bl)->delayed_damage != 0) {
-		if (opt&SCO_FORCE)
-			((TBL_PC*)bl)->state.hold_recalc = 0; /* Clear and move on */
-		else {
-			((TBL_PC*)bl)->state.hold_recalc = 1; /* Flag and stop */
-			return;
+	if (bl->type == BL_PC) {
+		struct map_session_data *sd = BL_CAST(BL_PC, bl);
+
+		if (sd->delayed_damage != 0) {
+			if (opt&SCO_FORCE)
+				sd->state.hold_recalc = false; // Clear and move on
+			else {
+				sd->state.hold_recalc = true; // Flag and stop
+				return;
+			}
 		}
 	}
 
@@ -7797,7 +7801,7 @@ struct view_data* status_get_viewdata(struct block_list *bl)
 		case BL_PC:  return &((TBL_PC*)bl)->vd;
 		case BL_MOB: return ((TBL_MOB*)bl)->vd;
 		case BL_PET: return &((TBL_PET*)bl)->vd;
-		case BL_NPC: return ((TBL_NPC*)bl)->vd;
+		case BL_NPC: return &((TBL_NPC*)bl)->vd;
 		case BL_HOM: return ((TBL_HOM*)bl)->vd;
 		case BL_MER: return ((TBL_MER*)bl)->vd;
 		case BL_ELEM: return ((TBL_ELEM*)bl)->vd;
@@ -7861,10 +7865,10 @@ void status_set_viewdata(struct block_list *bl, int class_)
 				sd->vd.head_top = sd->status.head_top;
 				sd->vd.head_mid = sd->status.head_mid;
 				sd->vd.head_bottom = sd->status.head_bottom;
-				sd->vd.hair_style = cap_value(sd->status.hair,0,battle_config.max_hair_style);
-				sd->vd.hair_color = cap_value(sd->status.hair_color,0,battle_config.max_hair_color);
-				sd->vd.cloth_color = cap_value(sd->status.clothes_color,0,battle_config.max_cloth_color);
-				sd->vd.body_style = cap_value(sd->status.body,0,battle_config.max_body_style);
+				sd->vd.hair_style = cap_value(sd->status.hair, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
+				sd->vd.hair_color = cap_value(sd->status.hair_color, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
+				sd->vd.cloth_color = cap_value(sd->status.clothes_color, MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
+				sd->vd.body_style = cap_value(sd->status.body, MIN_BODY_STYLE, MAX_BODY_STYLE);
 				sd->vd.sex = sd->status.sex;
 
 				if (sd->vd.cloth_color) {
@@ -7898,6 +7902,8 @@ void status_set_viewdata(struct block_list *bl, int class_)
 				mob_set_dynamic_viewdata( md );
 
 				md->vd->class_ = class_;
+				md->vd->hair_style = cap_value(md->vd->hair_style, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
+				md->vd->hair_color = cap_value(md->vd->hair_color, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
 			}else
 				ShowError("status_set_viewdata (MOB): No view data for class %d\n", class_);
 		}
@@ -7923,15 +7929,18 @@ void status_set_viewdata(struct block_list *bl, int class_)
 		{
 			TBL_NPC* nd = (TBL_NPC*)bl;
 			if (vd)
-				nd->vd = vd;
-			else {
-				ShowError("status_set_viewdata (NPC): No view data for class %d\n", class_);
+				memcpy(&nd->vd, vd, sizeof(struct view_data));
+			else if (pcdb_checkid(class_)) {
+				memset(&nd->vd, 0, sizeof(struct view_data));
+				nd->vd.class_ = class_;
+				nd->vd.hair_style = cap_value(nd->vd.hair_style, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
+			} else {
 				if (bl->m >= 0)
 					ShowDebug("Source (NPC): %s at %s (%d,%d)\n", nd->name, map_mapid2mapname(bl->m), bl->x, bl->y);
 				else
 					ShowDebug("Source (NPC): %s (invisible/not on a map)\n", nd->name);
-				break;
 			}
+			break;
 		}
 	break;
 	case BL_HOM:
@@ -9553,6 +9562,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = INFINITE_TICK;
 			break;
 
+		case SC_KEEPING:
+		case SC_BARRIER: {
+			unit_data *ud = unit_bl2ud(bl);
+
+			if (ud)
+				ud->attackabletime = ud->canact_tick = ud->canmove_tick = gettick() + tick;
+		}
+			break;
 		case SC_DECREASEAGI:
 		case SC_INCREASEAGI:
 		case SC_ADORAMUS:
@@ -10236,9 +10253,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		// gs_something1 [Vicious]
 		case SC_GATLINGFEVER:
 			val2 = 20*val1; // Aspd increase
-#ifndef RENEWAL
 			val3 = 20+10*val1; // Atk increase
-#endif
 			val4 = 5*val1; // Flee decrease
 			break;
 
@@ -11097,12 +11112,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_VACUUM_EXTREME:
 			// Suck target at n second, only if the n second is lower than the duration
-			// Doesn't apply to BL_PC
-			if (bl->type != BL_PC && val4 < tick && !unit_blown_immune(bl,0x1) && status_has_mode(status,MD_CANMOVE)) {
+			// Does not suck targets on no-knockback maps
+			if (val4 < tick && unit_blown_immune(bl, 0x9) == UB_KNOCKABLE) {
 				tick_time = val4;
 				val4 = tick - tick_time;
-			}
-			else
+			} else
 				val4 = 0;
 			break;
 		case SC_FIRE_INSIGNIA:
@@ -11487,7 +11501,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			unit_stop_attack(bl);
 			break;
 		case SC_VACUUM_EXTREME:
-			if (bl->type != BL_PC && !unit_blown_immune(bl,0x1)) {
+			if (bl->type != BL_PC && unit_blown_immune(bl, 0x1) == UB_KNOCKABLE) {
 				unit_stop_walking(bl,1);
 				unit_stop_attack(bl);
 			}
@@ -11723,8 +11737,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		calc_flag&=~SCB_BODY;
 	}*/
 
-	if(!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && StatusDisplayType[type]))
-		clif_status_change(bl,StatusIconChangeTable[type],1,tick,(val_flag&1)?val1:1,(val_flag&2)?val2:0,(val_flag&4)?val3:0);
+	if (!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && StatusDisplayType[type])) {
+		int status_icon = StatusIconChangeTable[type];
+
+#if PACKETVER < 20151104
+		if (status_icon == EFST_WEAPONPROPERTY)
+			status_icon = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
+#endif
+
+		clif_status_change(bl, status_icon, 1, tick, (val_flag & 1) ? val1 : 1, (val_flag & 2) ? val2 : 0, (val_flag & 4) ? val3 : 0);
+	}
 
 	// Used as temporary storage for scs with interval ticks, so that the actual duration is sent to the client first.
 	if( tick_time )
@@ -11748,33 +11770,31 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	else
 		sce->timer = INVALID_TIMER; // Infinite duration
 
-	if (calc_flag)
-		status_calc_bl(bl,calc_flag);
+	if (calc_flag) {
+		if (sd) {
+			switch(type) {
+				// Statuses that adjust HP/SP and heal after starting
+				case SC_BERSERK:
+				case SC_MERC_HPUP:
+				case SC_MERC_SPUP:
+					status_calc_bl_(bl, static_cast<scb_flag>(calc_flag), SCO_FORCE);
+					break;
+				default:
+					status_calc_bl(bl, calc_flag);
+					break;
+			}
+		} else
+			status_calc_bl(bl, calc_flag);
+	}
 
 	if ( sc_isnew && StatusChangeStateTable[type] ) // Non-zero
 		status_calc_state(bl,sc,( enum scs_flag ) StatusChangeStateTable[type],true);
 
-
-	if(sd) {
-		if (sd->pd)
-			pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
-		switch (type) {
-			case SC_BERSERK:
-			case SC_MERC_HPUP:
-			case SC_MERC_SPUP:
-				status_calc_pc(sd, SCO_FORCE);
-				break;
-			default:
-				status_calc_pc(sd, SCO_NONE);
-				break;
-		}
-	}
+	if (sd && sd->pd)
+		pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
 
 	// 1st thing to execute when loading status
 	switch (type) {
-		case SC_FULL_THROTTLE:
-			status_percent_heal(bl,100,0);
-			break;
 		case SC_BERSERK:
 			if (!(sce->val2)) { // Don't heal if already set
 				status_heal(bl, status->max_hp, 0, 1); // Do not use percent_heal as this healing must override BERSERK's block.
@@ -11794,6 +11814,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (sd)
 				clif_bossmapinfo(sd, map_id2boss(sce->val1), BOSS_INFO_ALIVE_WITHMSG); // First Message
 			break;
+		case SC_FULL_THROTTLE:
 		case SC_MERC_HPUP:
 			status_percent_heal(bl, 100, 0); // Recover Full HP
 			break;
@@ -12178,6 +12199,14 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	vd = status_get_viewdata(bl);
 	calc_flag = static_cast<scb_flag>(StatusChangeFlagTable[type]);
 	switch(type) {
+		case SC_KEEPING:
+		case SC_BARRIER: {
+			unit_data *ud = unit_bl2ud(bl);
+
+			if (ud)
+				ud->attackabletime = ud->canact_tick = ud->canmove_tick = gettick();
+		}
+			break;
 		case SC_GRANITIC_ARMOR:
 			{
 				int damage = status->max_hp*sce->val3/100;
@@ -12814,7 +12843,14 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	}*/
 
 	// On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
-	clif_status_change(bl,StatusIconChangeTable[type],0,0,0,0,0);
+	int status_icon = StatusIconChangeTable[type];
+
+#if PACKETVER < 20151104
+	if (status_icon == EFST_WEAPONPROPERTY)
+		status_icon = EFST_ATTACK_PROPERTY_NOTHING + sce->val1; // Assign status icon for older clients
+#endif
+
+	clif_status_change(bl,status_icon,0,0,0,0,0);
 
 	if( opt_flag&8 ) // bugreport:681
 		clif_changeoption2(bl);
@@ -13032,17 +13068,18 @@ TIMER_FUNC(status_change_timer){
 			}
 
 			if (!flag) { // Random Skill Cast
-				if (skill_magicmushroom_count && sd && !pc_issit(sd)) { // Can't cast if sit
-					int mushroom_skill_id = 0, checked = 0, checked_max = MAX_SKILL_MAGICMUSHROOM_DB * 3;
-					unit_stop_attack(bl);
-					unit_skillcastcancel(bl, 1);
-					do {
-						int i = rnd() % MAX_SKILL_MAGICMUSHROOM_DB;
-						mushroom_skill_id = skill_magicmushroom_db[i].skill_id;
-					} while (checked++ < checked_max && mushroom_skill_id == 0);
+				if (magic_mushroom_db.size() > 0 && sd && !pc_issit(sd)) { // Can't cast if sit
+					auto mushroom_spell = magic_mushroom_db.begin();
+
+					std::advance(mushroom_spell, rnd() % magic_mushroom_db.size());
+
+					uint16 mushroom_skill_id = mushroom_spell->second->skill_id;
 
 					if (!skill_get_index(mushroom_skill_id))
 						break;
+
+					unit_stop_attack(bl);
+					unit_skillcastcancel(bl, 1);
 
 					switch (skill_get_casttype(mushroom_skill_id)) { // Magic Mushroom skills are buffs or area damage
 					case CAST_GROUND:
@@ -14273,7 +14310,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	if (sd) {
 		if (sd->hp_loss.value || sd->sp_loss.value)
 			pc_bleeding(sd, natural_heal_diff_tick);
-		if (sd->hp_regen.value || sd->sp_regen.value)
+		if (sd->hp_regen.value || sd->sp_regen.value || sd->percent_hp_regen.value || sd->percent_sp_regen.value)
 			pc_regen(sd, natural_heal_diff_tick);
 	}
 
@@ -14519,7 +14556,7 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
  */
 static bool status_readdb_status_disabled(char **str, int columns, int current)
 {
-	int type = SC_NONE;
+	int64 type = SC_NONE;
 
 	if (ISDIGIT(str[0][0]))
 		type = atoi(str[0]);
@@ -14577,6 +14614,7 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 	const YAML::Node &costs = node["Costs"];
 
 	for (const auto costit : costs) {
+		int64 idx_tmp = 0;
 		const YAML::Node &type = costit;
 		int idx = 0, price;
 		unsigned short material;
@@ -14590,8 +14628,10 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 		std::string refine_cost_const = type["Type"].as<std::string>();
 		if (ISDIGIT(refine_cost_const[0]))
 			idx = atoi(refine_cost_const.c_str());
-		else
-			script_get_constant(refine_cost_const.c_str(), &idx);
+		else {
+			script_get_constant(refine_cost_const.c_str(), &idx_tmp);
+			idx = static_cast<int>(idx_tmp);
+		}
 		price = type["Price"].as<int>();
 		material = type["Material"].as<uint16>();
 

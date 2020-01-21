@@ -255,25 +255,25 @@ const char* job_name(int class_) {
 		case JOB_MECHANIC_T2:
 			return msg_txt(79);
 
-		case JOB_BABY_RUNE:
+		case JOB_BABY_RUNE_KNIGHT:
 		case JOB_BABY_WARLOCK:
 		case JOB_BABY_RANGER:
-		case JOB_BABY_BISHOP:
+		case JOB_BABY_ARCH_BISHOP:
 		case JOB_BABY_MECHANIC:
-		case JOB_BABY_CROSS:
-		case JOB_BABY_GUARD:
+		case JOB_BABY_GUILLOTINE_CROSS:
+		case JOB_BABY_ROYAL_GUARD:
 		case JOB_BABY_SORCERER:
 		case JOB_BABY_MINSTREL:
 		case JOB_BABY_WANDERER:
 		case JOB_BABY_SURA:
 		case JOB_BABY_GENETIC:
-		case JOB_BABY_CHASER:
-			return msg_txt(88 - JOB_BABY_RUNE+class_);
+		case JOB_BABY_SHADOW_CHASER:
+			return msg_txt(88 - JOB_BABY_RUNE_KNIGHT+class_);
 
-		case JOB_BABY_RUNE2:
+		case JOB_BABY_RUNE_KNIGHT2:
 			return msg_txt(88);
 
-		case JOB_BABY_GUARD2:
+		case JOB_BABY_ROYAL_GUARD2:
 			return msg_txt(94);
 
 		case JOB_BABY_RANGER2:
@@ -561,54 +561,54 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
  * @param val either str or int, depending on type
  * @param type false when int, true otherwise
  **/
-void inter_savereg(uint32 account_id, uint32 char_id, const char *key, unsigned int index, intptr_t val, bool is_string)
+void inter_savereg(uint32 account_id, uint32 char_id, const char *key, uint32 index, int64 int_value, const char* string_value, bool is_string)
 {
 	char esc_val[254*2+1];
 	char esc_key[32*2+1];
 
 	Sql_EscapeString(sql_handle, esc_key, key);
-	if( is_string && val ) {
-		Sql_EscapeString(sql_handle, esc_val, (char*)val);
+	if( is_string && string_value ) {
+		Sql_EscapeString(sql_handle, esc_val, string_value);
 	}
 	if( key[0] == '#' && key[1] == '#' ) { // global account reg
 		if( session_isValid(login_fd) )
-			chlogif_send_global_accreg(key,index,val,is_string);
+			chlogif_send_global_accreg( key, index, int_value, string_value, is_string );
 		else {
-			ShowError("Login server unavailable, can't perform update on '%s' variable for AID:%d CID:%d\n",key,account_id,char_id);
+			ShowError("Login server unavailable, can't perform update on '%s' variable for AID:%" PRIu32 " CID:%" PRIu32 "\n",key,account_id,char_id);
 		}
 	} else if ( key[0] == '#' ) { // local account reg
 		if( is_string ) {
-			if( val ) {
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%s')", schema_config.acc_reg_str_table, account_id, esc_key, index, esc_val) )
+			if( string_value ) {
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%s')", schema_config.acc_reg_str_table, account_id, esc_key, index, esc_val) )
 					Sql_ShowDebug(sql_handle);
 			} else {
-				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `key` = '%s' AND `index` = '%u' LIMIT 1", schema_config.acc_reg_str_table, account_id, esc_key, index) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", schema_config.acc_reg_str_table, account_id, esc_key, index) )
 					Sql_ShowDebug(sql_handle);
 			}
 		} else {
-			if( val ) {
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%d')", schema_config.acc_reg_num_table, account_id, esc_key, index, (int)val) )
+			if( int_value ) {
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%" PRId64 "')", schema_config.acc_reg_num_table, account_id, esc_key, index, int_value) )
 					Sql_ShowDebug(sql_handle);
 			} else {
-				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `key` = '%s' AND `index` = '%u' LIMIT 1", schema_config.acc_reg_num_table, account_id, esc_key, index) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", schema_config.acc_reg_num_table, account_id, esc_key, index) )
 					Sql_ShowDebug(sql_handle);
 			}
 		}
 	} else { /* char reg */
 		if( is_string ) {
-			if( val ) {
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`char_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%s')", schema_config.char_reg_str_table, char_id, esc_key, index, esc_val) )
+			if( string_value ) {
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`char_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%s')", schema_config.char_reg_str_table, char_id, esc_key, index, esc_val) )
 					Sql_ShowDebug(sql_handle);
 			} else {
-				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d' AND `key` = '%s' AND `index` = '%u' LIMIT 1", schema_config.char_reg_str_table, char_id, esc_key, index) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", schema_config.char_reg_str_table, char_id, esc_key, index) )
 					Sql_ShowDebug(sql_handle);
 			}
 		} else {
-			if( val ) {
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`char_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%d')", schema_config.char_reg_num_table, char_id, esc_key, index, (int)val) )
+			if( int_value ) {
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`char_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%" PRId64 "')", schema_config.char_reg_num_table, char_id, esc_key, index, int_value) )
 					Sql_ShowDebug(sql_handle);
 			} else {
-				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d' AND `key` = '%s' AND `index` = '%u' LIMIT 1", schema_config.char_reg_num_table, char_id, esc_key, index) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", schema_config.char_reg_num_table, char_id, esc_key, index) )
 					Sql_ShowDebug(sql_handle);
 			}
 		}
@@ -624,11 +624,11 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 
 	switch( type ) {
 		case 3: //char reg
-			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `char_id`='%d'", schema_config.char_reg_str_table, char_id) )
+			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `char_id`='%" PRIu32 "'", schema_config.char_reg_str_table, char_id) )
 				Sql_ShowDebug(sql_handle);
 			break;
 		case 2: //account reg
-			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%d'", schema_config.acc_reg_str_table, account_id) )
+			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%" PRIu32 "'", schema_config.acc_reg_str_table, account_id) )
 				Sql_ShowDebug(sql_handle);
 			break;
 		case 1: //account2 reg
@@ -667,7 +667,7 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 
 		Sql_GetData(sql_handle, 1, &data, NULL);
 
-		WFIFOL(fd, plen) = (unsigned int)atol(data);
+		WFIFOL(fd, plen) = (uint32)atol(data);
 		plen += 4;
 
 		Sql_GetData(sql_handle, 2, &data, NULL);
@@ -705,11 +705,11 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 
 	switch( type ) {
 		case 3: //char reg
-			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `char_id`='%d'", schema_config.char_reg_num_table, char_id))
+			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `char_id`='%" PRIu32 "'", schema_config.char_reg_num_table, char_id))
 				Sql_ShowDebug(sql_handle);
 			break;
 		case 2: //account reg
-			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%d'", schema_config.acc_reg_num_table, account_id))
+			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%" PRIu32 "'", schema_config.acc_reg_num_table, account_id))
 				Sql_ShowDebug(sql_handle);
 			break;
 #if 0 // This is already checked above.
@@ -747,13 +747,13 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 
 		Sql_GetData(sql_handle, 1, &data, NULL);
 
-		WFIFOL(fd, plen) = (unsigned int)atol(data);
+		WFIFOL(fd, plen) = (uint32)atol(data);
 		plen += 4;
 
 		Sql_GetData(sql_handle, 2, &data, NULL);
 
-		WFIFOL(fd, plen) = atoi(data);
-		plen += 4;
+		WFIFOQ(fd, plen) = strtoll(data,NULL,10);
+		plen += 8;
 
 		WFIFOW(fd, 14) += 1;
 
@@ -1258,7 +1258,8 @@ int mapif_parse_WisToGM(int fd)
 // Save account_reg into sql (type=2)
 int mapif_parse_Registry(int fd)
 {
-	int account_id = RFIFOL(fd, 4), char_id = RFIFOL(fd, 8), count = RFIFOW(fd, 12);
+	uint32 account_id = RFIFOL(fd, 4), char_id = RFIFOL(fd, 8);
+	uint16 count = RFIFOW(fd, 12);
 
 	if( count ) {
 		int cursor = 14, i;
@@ -1273,20 +1274,17 @@ int mapif_parse_Registry(int fd)
 			std::string key( src_key, lenkey );
 			cursor += lenkey + 1;
 
-			unsigned int  index = RFIFOL(fd, cursor);
+			uint32  index = RFIFOL(fd, cursor);
 			cursor += 4;
 
 			switch (RFIFOB(fd, cursor++)) {
 				// int
 				case 0:
-				{
-					intptr_t lVal = RFIFOL( fd, cursor );
-					inter_savereg( account_id, char_id, key.c_str(), index, lVal, false );
-					cursor += 4;
+					inter_savereg( account_id, char_id, key.c_str(), index, RFIFOQ( fd, cursor ), nullptr, false );
+					cursor += 8;
 					break;
-				}
 				case 1:
-					inter_savereg(account_id,char_id,key.c_str(),index,0,false);
+					inter_savereg( account_id, char_id, key.c_str(), index, 0, nullptr, false );
 					break;
 				// str
 				case 2:
@@ -1295,11 +1293,11 @@ int mapif_parse_Registry(int fd)
 					const char* src_val= RFIFOCP(fd, cursor + 1);
 					std::string sval( src_val, len_val );
 					cursor += len_val + 1;
-					inter_savereg( account_id, char_id, key.c_str(), index, (intptr_t)sval.c_str(), true );
+					inter_savereg( account_id, char_id, key.c_str(), index, 0, sval.c_str(), true );
 					break;
 				}
 				case 3:
-					inter_savereg(account_id,char_id,key.c_str(),index,0,true);
+					inter_savereg( account_id, char_id, key.c_str(), index, 0, nullptr, true );
 					break;
 				default:
 					ShowError("mapif_parse_Registry: unknown type %d\n",RFIFOB(fd, cursor - 1));

@@ -1603,34 +1603,34 @@ void pc_reg_received(struct map_session_data *sd)
 
 	sd->vars_ok = true;
 
-	sd->change_level_2nd = pc_readglobalreg(sd, add_str(JOBCHANGE2ND_VAR));
-	sd->change_level_3rd = pc_readglobalreg(sd, add_str(JOBCHANGE3RD_VAR));
-	sd->die_counter = pc_readglobalreg(sd, add_str(PCDIECOUNTER_VAR));
+	sd->change_level_2nd = static_cast<unsigned char>(pc_readglobalreg(sd, add_str(JOBCHANGE2ND_VAR)));
+	sd->change_level_3rd = static_cast<unsigned char>(pc_readglobalreg(sd, add_str(JOBCHANGE3RD_VAR)));
+	sd->die_counter = static_cast<int>(pc_readglobalreg(sd, add_str(PCDIECOUNTER_VAR)));
 
-	sd->langtype = pc_readaccountreg(sd, add_str(LANGTYPE_VAR));
+	sd->langtype = static_cast<int>(pc_readaccountreg(sd, add_str(LANGTYPE_VAR)));
 	if (msg_checklangtype(sd->langtype,true) < 0)
 		sd->langtype = 0; //invalid langtype reset to default
 
 	// Cash shop
-	sd->cashPoints = pc_readaccountreg(sd, add_str(CASHPOINT_VAR));
-	sd->kafraPoints = pc_readaccountreg(sd, add_str(KAFRAPOINT_VAR));
+	sd->cashPoints = static_cast<int>(pc_readaccountreg(sd, add_str(CASHPOINT_VAR)));
+	sd->kafraPoints = static_cast<int>(pc_readaccountreg(sd, add_str(KAFRAPOINT_VAR)));
 
 	// Cooking Exp
-	sd->cook_mastery = pc_readglobalreg(sd, add_str(COOKMASTERY_VAR));
+	sd->cook_mastery = static_cast<short>(pc_readglobalreg(sd, add_str(COOKMASTERY_VAR)));
 
 	if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON )
 	{ // Better check for class rather than skill to prevent "skill resets" from unsetting this
-		sd->mission_mobid = pc_readglobalreg(sd, add_str(TKMISSIONID_VAR));
-		sd->mission_count = pc_readglobalreg(sd, add_str(TKMISSIONCOUNT_VAR));
+		sd->mission_mobid = static_cast<short>(pc_readglobalreg(sd, add_str(TKMISSIONID_VAR)));
+		sd->mission_count = static_cast<unsigned char>(pc_readglobalreg(sd, add_str(TKMISSIONCOUNT_VAR)));
 	}
 
 	if (battle_config.feature_banking)
-		sd->bank_vault = pc_readreg2(sd, BANK_VAULT_VAR);
+		sd->bank_vault = static_cast<int>(pc_readreg2(sd, BANK_VAULT_VAR));
 
 	if (battle_config.feature_roulette) {
-		sd->roulette_point.bronze = pc_readreg2(sd, ROULETTE_BRONZE_VAR);
-		sd->roulette_point.silver = pc_readreg2(sd, ROULETTE_SILVER_VAR);
-		sd->roulette_point.gold = pc_readreg2(sd, ROULETTE_GOLD_VAR);
+		sd->roulette_point.bronze = static_cast<int>(pc_readreg2(sd, ROULETTE_BRONZE_VAR));
+		sd->roulette_point.silver = static_cast<int>(pc_readreg2(sd, ROULETTE_SILVER_VAR));
+		sd->roulette_point.gold = static_cast<int>(pc_readreg2(sd, ROULETTE_GOLD_VAR));
 	}
 	sd->roulette.prizeIdx = -1;
 
@@ -1638,33 +1638,33 @@ void pc_reg_received(struct map_session_data *sd)
 	for(i=0;i<MAX_PC_FEELHATE;i++) { //for now - someone need to make reading from txt/sql
 		uint16 j;
 
-		if ((j = pc_readglobalreg(sd, add_str(sg_info[i].feel_var))) != 0) {
+		if ((j = static_cast<uint16>(pc_readglobalreg(sd, add_str(sg_info[i].feel_var)))) != 0) {
 			sd->feel_map[i].index = j;
 			sd->feel_map[i].m = map_mapindex2mapid(j);
 		} else {
 			sd->feel_map[i].index = 0;
 			sd->feel_map[i].m = -1;
 		}
-		sd->hate_mob[i] = pc_readglobalreg(sd, add_str(sg_info[i].hate_var))-1;
+		sd->hate_mob[i] = static_cast<short>(pc_readglobalreg(sd, add_str(sg_info[i].hate_var)))-1;
 	}
 
 	if ((i = pc_checkskill(sd,RG_PLAGIARISM)) > 0) {
-		unsigned short skid = pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM));
+		unsigned short skid = static_cast<unsigned short>(pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM)));
 		sd->cloneskill_idx = skill_get_index(skid);
 		if (sd->cloneskill_idx > 0) {
 			sd->status.skill[sd->cloneskill_idx].id = skid;
-			sd->status.skill[sd->cloneskill_idx].lv = pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM_LV));
+			sd->status.skill[sd->cloneskill_idx].lv = static_cast<uint8>(pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM_LV)));
 			if (sd->status.skill[sd->cloneskill_idx].lv > i)
 				sd->status.skill[sd->cloneskill_idx].lv = i;
 			sd->status.skill[sd->cloneskill_idx].flag = SKILL_FLAG_PLAGIARIZED;
 		}
 	}
 	if ((i = pc_checkskill(sd,SC_REPRODUCE)) > 0) {
-		unsigned short skid = pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE));
+		unsigned short skid = static_cast<unsigned short>(pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE)));
 		sd->reproduceskill_idx = skill_get_index(skid);
 		if (sd->reproduceskill_idx > 0) {
 			sd->status.skill[sd->reproduceskill_idx].id = skid;
-			sd->status.skill[sd->reproduceskill_idx].lv = pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE_LV));
+			sd->status.skill[sd->reproduceskill_idx].lv = static_cast<uint8>(pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE_LV)));
 			if (i < sd->status.skill[sd->reproduceskill_idx].lv)
 				sd->status.skill[sd->reproduceskill_idx].lv = i;
 			sd->status.skill[sd->reproduceskill_idx].flag = SKILL_FLAG_PLAGIARIZED;
@@ -2643,7 +2643,7 @@ void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonu
 
 	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr_t)bonus);
 	sd->state.autobonus |= autobonus->pos;
-	status_calc_pc(sd,SCO_FORCE);
+	status_calc_pc(sd,SCO_NONE);
 }
 
 /**
@@ -2664,7 +2664,7 @@ TIMER_FUNC(pc_endautobonus){
 		}
 	}
 	
-	status_calc_pc(sd,SCO_FORCE);
+	status_calc_pc(sd,SCO_NONE);
 	return 0;
 }
 
@@ -6290,21 +6290,21 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_SHADOW_CHASER_T:       return MAPID_SHADOW_CHASER_T;
 	//Baby 3-1 Jobs
 		case JOB_SUPER_BABY_E:          return MAPID_SUPER_BABY_E;
-		case JOB_BABY_RUNE:             return MAPID_BABY_RUNE;
+		case JOB_BABY_RUNE_KNIGHT:      return MAPID_BABY_RUNE_KNIGHT;
 		case JOB_BABY_WARLOCK:          return MAPID_BABY_WARLOCK;
 		case JOB_BABY_RANGER:           return MAPID_BABY_RANGER;
-		case JOB_BABY_BISHOP:           return MAPID_BABY_BISHOP;
+		case JOB_BABY_ARCH_BISHOP:      return MAPID_BABY_ARCH_BISHOP;
 		case JOB_BABY_MECHANIC:         return MAPID_BABY_MECHANIC;
-		case JOB_BABY_CROSS:            return MAPID_BABY_CROSS;
+		case JOB_BABY_GUILLOTINE_CROSS: return MAPID_BABY_GUILLOTINE_CROSS;
 		case JOB_BABY_STAR_EMPEROR:     return MAPID_BABY_STAR_EMPEROR;
 	//Baby 3-2 Jobs
-		case JOB_BABY_GUARD:            return MAPID_BABY_GUARD;
+		case JOB_BABY_ROYAL_GUARD:      return MAPID_BABY_ROYAL_GUARD;
 		case JOB_BABY_SORCERER:         return MAPID_BABY_SORCERER;
 		case JOB_BABY_MINSTREL:
 		case JOB_BABY_WANDERER:         return MAPID_BABY_MINSTRELWANDERER;
 		case JOB_BABY_SURA:             return MAPID_BABY_SURA;
 		case JOB_BABY_GENETIC:          return MAPID_BABY_GENETIC;
-		case JOB_BABY_CHASER:           return MAPID_BABY_CHASER;
+		case JOB_BABY_SHADOW_CHASER:    return MAPID_BABY_SHADOW_CHASER;
 		case JOB_BABY_SOUL_REAPER:      return MAPID_BABY_SOUL_REAPER;
 	//Doram Jobs
 		case JOB_SUMMONER:              return MAPID_SUMMONER;
@@ -6442,20 +6442,20 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_SHADOW_CHASER_T:       return JOB_SHADOW_CHASER_T;
 	//Baby 3-1 Jobs
 		case MAPID_SUPER_BABY_E:          return JOB_SUPER_BABY_E;
-		case MAPID_BABY_RUNE:             return JOB_BABY_RUNE;
+		case MAPID_BABY_RUNE_KNIGHT:      return JOB_BABY_RUNE_KNIGHT;
 		case MAPID_BABY_WARLOCK:          return JOB_BABY_WARLOCK;
 		case MAPID_BABY_RANGER:           return JOB_BABY_RANGER;
-		case MAPID_BABY_BISHOP:           return JOB_BABY_BISHOP;
+		case MAPID_BABY_ARCH_BISHOP:      return JOB_BABY_ARCH_BISHOP;
 		case MAPID_BABY_MECHANIC:         return JOB_BABY_MECHANIC;
-		case MAPID_BABY_CROSS:            return JOB_BABY_CROSS;
+		case MAPID_BABY_GUILLOTINE_CROSS: return JOB_BABY_GUILLOTINE_CROSS;
 		case MAPID_BABY_STAR_EMPEROR:     return JOB_BABY_STAR_EMPEROR;
 	//Baby 3-2 Jobs
-		case MAPID_BABY_GUARD:            return JOB_BABY_GUARD;
+		case MAPID_BABY_ROYAL_GUARD:      return JOB_BABY_ROYAL_GUARD;
 		case MAPID_BABY_SORCERER:         return JOB_BABY_SORCERER;
 		case MAPID_BABY_MINSTRELWANDERER: return sex?JOB_BABY_MINSTREL:JOB_BABY_WANDERER;
 		case MAPID_BABY_SURA:             return JOB_BABY_SURA;
 		case MAPID_BABY_GENETIC:          return JOB_BABY_GENETIC;
-		case MAPID_BABY_CHASER:           return JOB_BABY_CHASER;
+		case MAPID_BABY_SHADOW_CHASER:    return JOB_BABY_SHADOW_CHASER;
 		case MAPID_BABY_SOUL_REAPER:      return JOB_BABY_SOUL_REAPER;
 	//Doram Jobs
 		case MAPID_SUMMONER:              return JOB_SUMMONER;
@@ -6649,25 +6649,25 @@ const char* job_name(int class_)
 	case JOB_MECHANIC_T2:
 		return msg_txt(NULL,629);
 
-	case JOB_BABY_RUNE:
+	case JOB_BABY_RUNE_KNIGHT:
 	case JOB_BABY_WARLOCK:
 	case JOB_BABY_RANGER:
-	case JOB_BABY_BISHOP:
+	case JOB_BABY_ARCH_BISHOP:
 	case JOB_BABY_MECHANIC:
-	case JOB_BABY_CROSS:
-	case JOB_BABY_GUARD:
+	case JOB_BABY_GUILLOTINE_CROSS:
+	case JOB_BABY_ROYAL_GUARD:
 	case JOB_BABY_SORCERER:
 	case JOB_BABY_MINSTREL:
 	case JOB_BABY_WANDERER:
 	case JOB_BABY_SURA:
 	case JOB_BABY_GENETIC:
-	case JOB_BABY_CHASER:
-		return msg_txt(NULL,638 - JOB_BABY_RUNE+class_);
+	case JOB_BABY_SHADOW_CHASER:
+		return msg_txt(NULL,638 - JOB_BABY_RUNE_KNIGHT+class_);
 
-	case JOB_BABY_RUNE2:
+	case JOB_BABY_RUNE_KNIGHT2:
 		return msg_txt(NULL,638);
 
-	case JOB_BABY_GUARD2:
+	case JOB_BABY_ROYAL_GUARD2:
 		return msg_txt(NULL,644);
 
 	case JOB_BABY_RANGER2:
@@ -8034,8 +8034,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		struct pet_data *pd = sd->pd;
 		if( !mapdata->flag[MF_NOEXPPENALTY] ) {
 			pet_set_intimate(pd, pd->pet.intimate + pd->get_pet_db()->die);
-			if( pd->pet.intimate < 0 )
-				pd->pet.intimate = 0;
+			if( pd->pet.intimate <= PET_INTIMATE_NONE )
+				pet_set_intimate(pd, PET_INTIMATE_NONE);
 			clif_send_petdata(sd,sd->pd,1,pd->pet.intimate);
 		}
 		if( sd->pd->target_id ) // Unlock all targets...
@@ -8365,9 +8365,9 @@ bool pc_revive_item(struct map_session_data *sd) {
 /*==========================================
  * script reading pc status registry
  *------------------------------------------*/
-int pc_readparam(struct map_session_data* sd,int type)
+int64 pc_readparam(struct map_session_data* sd,int64 type)
 {
-	int val = 0;
+	int64 val = 0;
 
 	nullpo_ret(sd);
 
@@ -8527,7 +8527,7 @@ int pc_readparam(struct map_session_data* sd,int type)
 			val = sd->castrate; break;
 #endif
 		default:
-			ShowError("pc_readparam: Attempt to read unknown parameter '%d'.\n", type);
+			ShowError("pc_readparam: Attempt to read unknown parameter '%lld'.\n", type);
 			return -1;
 	}
 
@@ -8537,22 +8537,24 @@ int pc_readparam(struct map_session_data* sd,int type)
 /*==========================================
  * script set pc status registry
  *------------------------------------------*/
-bool pc_setparam(struct map_session_data *sd,int type,int val)
+bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 {
 	nullpo_retr(false,sd);
 
+	int val = static_cast<unsigned int>(val_tmp);
+
 	switch(type){
 	case SP_BASELEVEL:
-		if ((unsigned int)val > pc_maxbaselv(sd)) //Capping to max
+		if (val > pc_maxbaselv(sd)) //Capping to max
 			val = pc_maxbaselv(sd);
-		if ((unsigned int)val > sd->status.base_level) {
+		if (val > sd->status.base_level) {
 			int i = 0;
 			int stat=0;
-			for (i = 0; i < (int)((unsigned int)val - sd->status.base_level); i++)
+			for (i = 0; i < (int)(val - sd->status.base_level); i++)
 				stat += pc_gets_status_point(sd->status.base_level + i);
 			sd->status.status_point += stat;
 		}
-		sd->status.base_level = (unsigned int)val;
+		sd->status.base_level = val;
 		sd->status.base_exp = 0;
 		// clif_updatestatus(sd, SP_BASELEVEL);  // Gets updated at the bottom
 		clif_updatestatus(sd, SP_NEXTBASEEXP);
@@ -8563,12 +8565,12 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 			party_send_levelup(sd);
 		break;
 	case SP_JOBLEVEL:
-		if ((unsigned int)val >= sd->status.job_level) {
-			if ((unsigned int)val > pc_maxjoblv(sd)) val = pc_maxjoblv(sd);
+		if (val >= sd->status.job_level) {
+			if (val > pc_maxjoblv(sd)) val = pc_maxjoblv(sd);
 			sd->status.skill_point += val - sd->status.job_level;
 			clif_updatestatus(sd, SP_SKILLPOINT);
 		}
-		sd->status.job_level = (unsigned int)val;
+		sd->status.job_level = val;
 		sd->status.job_exp = 0;
 		// clif_updatestatus(sd, SP_JOBLEVEL);  // Gets updated at the bottom
 		clif_updatestatus(sd, SP_NEXTJOBEXP);
@@ -8590,7 +8592,7 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 	case SP_BASEEXP:
 		{
 			val = cap_value(val, 0, INT_MAX);
-			if ((unsigned int)val < sd->status.base_exp) // Lost
+			if (val < sd->status.base_exp) // Lost
 				pc_lostexp(sd, sd->status.base_exp - val, 0);
 			else // Gained
 				pc_gainexp(sd, NULL, val - sd->status.base_exp, 0, 2);
@@ -8599,7 +8601,7 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 	case SP_JOBEXP:
 		{
 			val = cap_value(val, 0, INT_MAX);
-			if ((unsigned int)val < sd->status.job_exp) // Lost
+			if (val < sd->status.job_exp) // Lost
 				pc_lostexp(sd, 0, sd->status.job_exp - val);
 			else // Gained
 				pc_gainexp(sd, NULL, 0, val - sd->status.job_exp, 2);
@@ -8750,10 +8752,10 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		pc_setglobalreg(sd, add_str(COOKMASTERY_VAR), sd->cook_mastery);
 		return true;
 	default:
-		ShowError("pc_setparam: Attempted to set unknown parameter '%d'.\n", type);
+		ShowError("pc_setparam: Attempted to set unknown parameter '%lld'.\n", type);
 		return false;
 	}
-	clif_updatestatus(sd,type);
+	clif_updatestatus(sd,static_cast<int>(type));
 
 	return true;
 }
@@ -8972,7 +8974,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 			sd->status.skill[sd->cloneskill_idx].id = 0;
 			sd->status.skill[sd->cloneskill_idx].lv = 0;
 			sd->status.skill[sd->cloneskill_idx].flag = SKILL_FLAG_PERMANENT;
-			clif_deleteskill(sd,pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM)));
+			clif_deleteskill(sd, static_cast<int>(pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM))));
 		}
 		sd->cloneskill_idx = 0;
 		pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM), 0);
@@ -8984,7 +8986,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 			sd->status.skill[sd->reproduceskill_idx].id = 0;
 			sd->status.skill[sd->reproduceskill_idx].lv = 0;
 			sd->status.skill[sd->reproduceskill_idx].flag = SKILL_FLAG_PERMANENT;
-			clif_deleteskill(sd,pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE)));
+			clif_deleteskill(sd, static_cast<int>(pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE))));
 		}
 		sd->reproduceskill_idx = 0;
 		pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE), 0);
@@ -9469,22 +9471,22 @@ bool pc_can_attack( struct map_session_data *sd, int target_id ) {
 /*==========================================
  * Read '@type' variables (temporary numeric char reg)
  *------------------------------------------*/
-int pc_readreg(struct map_session_data* sd, int64 reg)
+int64 pc_readreg(struct map_session_data* sd, int64 reg)
 {
-	return i64db_iget(sd->regs.vars, reg);
+	return i64db_i64get(sd->regs.vars, reg);
 }
 
 /*==========================================
  * Set '@type' variables (temporary numeric char reg)
  *------------------------------------------*/
-bool pc_setreg(struct map_session_data* sd, int64 reg, int val)
+bool pc_setreg(struct map_session_data* sd, int64 reg, int64 val)
 {
-	unsigned int index = script_getvaridx(reg);
+	uint32 index = script_getvaridx(reg);
 
 	nullpo_retr(false, sd);
 
 	if( val ) {
-		i64db_iput(sd->regs.vars, reg, val);
+		i64db_i64put(sd->regs.vars, reg, val);
 		if( index )
 			script_array_update(&sd->regs, reg, false);
 	} else {
@@ -9554,7 +9556,7 @@ bool pc_setregstr(struct map_session_data* sd, int64 reg, const char* str)
  * - '#type' (permanent numeric account reg)
  * - '##type' (permanent numeric account reg2)
  **/
-int pc_readregistry(struct map_session_data *sd, int64 reg)
+int64 pc_readregistry(struct map_session_data *sd, int64 reg)
 {
 	struct script_reg_num *p = NULL;
 
@@ -9600,12 +9602,12 @@ char* pc_readregistry_str(struct map_session_data *sd, int64 reg)
  * - '#type' (permanent numeric account reg)
  * - '##type' (permanent numeric account reg2)
  **/
-int pc_setregistry(struct map_session_data *sd, int64 reg, int val)
+int pc_setregistry(struct map_session_data *sd, int64 reg, int64 val)
 {
 	struct script_reg_num *p = NULL;
 	const char *regname = get_str(script_getvarid(reg));
-	unsigned int index = script_getvaridx(reg);
-	
+	uint32 index = script_getvaridx(reg);
+
 	if ( !reg_load && !sd->vars_ok ) {
 		ShowError("pc_setregistry : refusing to set %s until vars are received.\n", regname);
 		return 0;
@@ -9721,7 +9723,7 @@ int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val)
  * @param value
  * @return True if success, false if failed.
  **/
-bool pc_setreg2(struct map_session_data *sd, const char *reg, int val) {
+bool pc_setreg2(struct map_session_data *sd, const char *reg, int64 val) {
 	char prefix = reg[0];
 
 	nullpo_retr(false, sd);
@@ -9756,7 +9758,7 @@ bool pc_setreg2(struct map_session_data *sd, const char *reg, int val) {
  * @param reg Variable name
  * @return Variable value or 0 if failed.
  **/
-int pc_readreg2(struct map_session_data *sd, const char *reg) {
+int64 pc_readreg2(struct map_session_data *sd, const char *reg) {
 	char prefix = reg[0];
 
 	nullpo_ret(sd);
@@ -10415,8 +10417,10 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 		}
 	}
 
-	if (status_calc)
+	if (flag & 1 || status_calc) {
+		pc_checkallowskill(sd);
 		status_calc_pc(sd, SCO_NONE);
+	}
 
 	if (sd->sc.data[SC_SIGNUMCRUCIS] && !battle_check_undead(sd->battle_status.race, sd->battle_status.def_ele))
 		status_change_end(&sd->bl, SC_SIGNUMCRUCIS, INVALID_TIMER);
@@ -10442,8 +10446,6 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 		}
 	}
 
-	if (flag & 1)
-		status_calc_pc(sd, SCO_FORCE);
 	sd->npc_item_flag = iflag;
 }
 
@@ -11039,7 +11041,7 @@ void pc_regen (struct map_session_data *sd, t_tick diff_tick)
 	if (sd->percent_hp_regen.value) {
 		sd->percent_hp_regen.tick += diff_tick;
 		while (sd->percent_hp_regen.tick >= sd->percent_hp_regen.rate) {
-			hp += (sd->percent_hp_regen.value * sd->status.max_hp);
+			hp += sd->status.max_hp * sd->percent_hp_regen.value / 100;
 			sd->percent_hp_regen.tick -= sd->percent_hp_regen.rate;
 		}
 	}
@@ -11047,7 +11049,7 @@ void pc_regen (struct map_session_data *sd, t_tick diff_tick)
 	if (sd->percent_sp_regen.value) {
 		sd->percent_sp_regen.tick += diff_tick;
 		while (sd->percent_sp_regen.tick >= sd->percent_sp_regen.rate) {
-			sp += (sd->percent_sp_regen.value * sd->status.max_sp);
+			sp += sd->status.max_sp * sd->percent_sp_regen.value / 100;
 			sd->percent_sp_regen.tick -= sd->percent_sp_regen.rate;
 		}
 	}
@@ -11854,10 +11856,12 @@ static bool pc_readdb_job_basehpsp(char* fields[], int columns, int current)
 */
 static bool pc_readdb_job_param(char* fields[], int columns, int current)
 {
+	int64 class_tmp;
 	int idx, class_;
 	uint16 str, agi, vit, int_, dex, luk;
 
-	script_get_constant(trim(fields[0]),&class_);
+	script_get_constant(trim(fields[0]),&class_tmp);
+	class_ = static_cast<int>(class_tmp);
 
 	if ((idx = pc_class2idx(class_)) < 0) {
 		ShowError("pc_readdb_job_param: Invalid job '%s'. Skipping!",fields[0]);
@@ -11885,14 +11889,16 @@ static bool pc_readdb_job_param(char* fields[], int columns, int current)
  **/
 static bool pc_readdb_job_noenter_map(char *str[], int columns, int current) {
 	int idx, class_ = -1;
+	int64 class_tmp;
 
 	if (ISDIGIT(str[0][0])) {
 		class_ = atoi(str[0]);
 	} else {
-		if (!script_get_constant(str[0], &class_)) {
+		if (!script_get_constant(str[0], &class_tmp)) {
 			ShowError("pc_readdb_job_noenter_map: Invalid job %s specified.\n", str[0]);
 			return false;
 		}
+		class_ = static_cast<int>(class_tmp);
 	}
 
 	if (!pcdb_checkid(class_) || (idx = pc_class2idx(class_)) < 0) {
@@ -13106,7 +13112,7 @@ int32 pc_attendance_counter( struct map_session_data* sd ){
 	}
 
 	// Get the counter for the current period
-	int counter = pc_readreg2( sd, ATTENDANCE_COUNT_VAR );
+	int counter = static_cast<int>(pc_readreg2( sd, ATTENDANCE_COUNT_VAR ));
 
 	// Check if we have a remaining counter from a previous period
 	if( counter > 0 && pc_readreg2( sd, ATTENDANCE_DATE_VAR ) < period->start ){
@@ -13135,7 +13141,7 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 		return;
 	}
 
-	int32 attendance_counter = pc_readreg2( sd, ATTENDANCE_COUNT_VAR );
+	int32 attendance_counter = static_cast<int32>(pc_readreg2( sd, ATTENDANCE_COUNT_VAR ));
 
 	attendance_counter += 1;
 

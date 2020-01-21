@@ -17,6 +17,7 @@
 #include "../common/timer.hpp"
 #include "../common/utils.hpp"
 
+#include "atcommand.hpp"
 #include "battleground.hpp"
 #include "chrif.hpp"
 #include "clif.hpp"
@@ -303,36 +304,28 @@ TIMER_FUNC(battle_delay_damage_sub){
 	struct delay_damage *dat = (struct delay_damage *)data;
 
 	if ( dat ) {
-		struct block_list* src = NULL;
+		struct block_list* src = map_id2bl(dat->src_id);
 		struct block_list* target = map_id2bl(dat->target_id);
 
-		if( !target || status_isdead(target) ) { /* Nothing we can do */
-			if( dat->src_type == BL_PC && (src = map_id2bl(dat->src_id)) &&
-				--((TBL_PC*)src)->delayed_damage == 0 && ((TBL_PC*)src)->state.hold_recalc ) {
-				((TBL_PC*)src)->state.hold_recalc = 0;
-				status_calc_pc(((TBL_PC*)src), SCO_FORCE);
+		if (target && !status_isdead(target)) {
+			if( src && target->m == src->m &&
+				(target->type != BL_PC || ((TBL_PC*)target)->invincible_timer == INVALID_TIMER) &&
+				check_distance_bl(src, target, dat->distance) ) //Check to see if you haven't teleported. [Skotlex]
+			{
+				//Deal damage
+				battle_damage(src, target, dat->damage, dat->delay, dat->skill_lv, dat->skill_id, dat->dmg_lv, dat->attack_type, dat->additional_effects, tick, dat->isspdamage);
+			} else if( !src && dat->skill_id == CR_REFLECTSHIELD ) { // it was monster reflected damage, and the monster died, we pass the damage to the character as expected
+				map_freeblock_lock();
+				status_fix_damage(target, target, dat->damage, dat->delay);
+				map_freeblock_unlock();
 			}
-			ers_free(delay_damage_ers, dat);
-			return 0;
 		}
 
-		src = map_id2bl(dat->src_id);
+		struct map_session_data *sd = BL_CAST(BL_PC, src);
 
-		if( src && target->m == src->m &&
-			(target->type != BL_PC || ((TBL_PC*)target)->invincible_timer == INVALID_TIMER) &&
-			check_distance_bl(src, target, dat->distance) ) //Check to see if you haven't teleported. [Skotlex]
-		{
-			//Deal damage
-			battle_damage(src, target, dat->damage, dat->delay, dat->skill_lv, dat->skill_id, dat->dmg_lv, dat->attack_type, dat->additional_effects, tick, dat->isspdamage);
-		} else if( !src && dat->skill_id == CR_REFLECTSHIELD ) { // it was monster reflected damage, and the monster died, we pass the damage to the character as expected
-			map_freeblock_lock();
-			status_fix_damage(target, target, dat->damage, dat->delay);
-			map_freeblock_unlock();
-		}
-
-		if( src && src->type == BL_PC && --((TBL_PC*)src)->delayed_damage == 0 && ((TBL_PC*)src)->state.hold_recalc ) {
-			((TBL_PC*)src)->state.hold_recalc = 0;
-			status_calc_pc(((TBL_PC*)src), SCO_FORCE);
+		if (sd && --sd->delayed_damage == 0 && sd->state.hold_recalc) {
+			sd->state.hold_recalc = false;
+			status_calc_pc(sd, SCO_FORCE);
 		}
 	}
 	ers_free(delay_damage_ers, dat);
@@ -4493,14 +4486,8 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 				ATK_ADD(wd->weaponAtk, wd->weaponAtk2, i64max(sstatus->matk_min - tmdef, 0));
 			}
 		}
-		if (sc->data[SC_GATLINGFEVER]) {
-			if (tstatus->size == SZ_SMALL) {
-				ATK_ADD(wd->equipAtk, wd->equipAtk2, 10 * sc->data[SC_GATLINGFEVER]->val1);
-			} else if (tstatus->size == SZ_MEDIUM) {
-				ATK_ADD(wd->equipAtk, wd->equipAtk2, 5 * sc->data[SC_GATLINGFEVER]->val1);
-			} else if (tstatus->size == SZ_BIG)
-				ATK_ADD(wd->equipAtk, wd->equipAtk2, sc->data[SC_GATLINGFEVER]->val1);
-		}
+		if (sc->data[SC_GATLINGFEVER])
+			ATK_ADD(wd->equipAtk, wd->equipAtk2, sc->data[SC_GATLINGFEVER]->val3);
 #else
 		if (sc->data[SC_TRUESIGHT])
 			ATK_ADDRATE(wd->damage, wd->damage2, 2 * sc->data[SC_TRUESIGHT]->val1);
@@ -8219,7 +8206,7 @@ static const struct _battle_data {
 	{ "produce_item_name_input",            &battle_config.produce_item_name_input,         0x1|0x2, 0,     0x9F,           },
 	{ "display_skill_fail",                 &battle_config.display_skill_fail,              2,      0,      1|2|4|8,        },
 	{ "chat_warpportal",                    &battle_config.chat_warpportal,                 0,      0,      1,              },
-	{ "mob_warp",                           &battle_config.mob_warp,                        0,      0,      1|2|4,          },
+	{ "mob_warp",                           &battle_config.mob_warp,                        0,      0,      1|2|4|8,          },
 	{ "dead_branch_active",                 &battle_config.dead_branch_active,              1,      0,      1,              },
 	{ "vending_max_value",                  &battle_config.vending_max_value,               10000000, 1,    MAX_ZENY,       },
 	{ "vending_over_max",                   &battle_config.vending_over_max,                1,      0,      1,              },
@@ -8561,6 +8548,11 @@ static const struct _battle_data {
 	{ "min_shop_sell",                      &battle_config.min_shop_sell,                   0,      0,      INT_MAX,        },
 	{ "feature.equipswitch",                &battle_config.feature_equipswitch,             1,      0,      1,              },
 	{ "pet_walk_speed",                     &battle_config.pet_walk_speed,                  1,      1,      3,              },
+	{ "blacksmith_fame_refine_threshold",   &battle_config.blacksmith_fame_refine_threshold,10,     1,      MAX_REFINE,     },
+	{ "mob_nopc_idleskill_rate",            &battle_config.mob_nopc_idleskill_rate,         100,    0,    100,              },
+	{ "mob_nopc_move_rate",                 &battle_config.mob_nopc_move_rate,              100,    0,    100,              },
+	{ "boss_nopc_idleskill_rate",           &battle_config.boss_nopc_idleskill_rate,        100,    0,    100,              },
+	{ "boss_nopc_move_rate",                &battle_config.boss_nopc_move_rate,             100,    0,    100,              },
 
 #include "../custom/battle_config_init.inc"
 };
@@ -8762,8 +8754,25 @@ int battle_config_read(const char* cfgName)
 				continue;
 			if (strcmpi(w1, "import") == 0)
 				battle_config_read(w2);
-			else if
-				(battle_set_value(w1, w2) == 0)
+			else if( strcmpi( w1, "atcommand_symbol" ) == 0 ){
+				const char* symbol = &w2[0];
+
+				if (ISPRINT(*symbol) && // no control characters
+					*symbol != '/' && // symbol of client commands
+					*symbol != '%' && // symbol of party chat
+					*symbol != '$' && // symbol of guild chat
+					*symbol != charcommand_symbol)
+					atcommand_symbol = *symbol;
+			}else if( strcmpi( w1, "charcommand_symbol" ) == 0 ){
+				const char* symbol = &w2[0];
+
+				if (ISPRINT(*symbol) && // no control characters
+					*symbol != '/' && // symbol of client commands
+					*symbol != '%' && // symbol of party chat
+					*symbol != '$' && // symbol of guild chat
+					*symbol != atcommand_symbol)
+					charcommand_symbol = *symbol;
+			}else if( battle_set_value(w1, w2) == 0 )
 				ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
 		}
 

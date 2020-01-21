@@ -132,7 +132,7 @@ struct AccountDB {
 	AccountDBIterator* (*iterator)(AccountDB* self);
 };
 
-void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id);
-void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id);
+void mmo_send_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 char_id);
+void mmo_save_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 char_id);
 
 #endif /* ACCOUNT_HPP */

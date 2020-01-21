@@ -16,7 +16,7 @@
 //= Attitude to the New
 //= Finding a Fairy & Finding a Giant Tree
 //= The Tripartite Union's Feud
-//= Cat Hand Agent
+//= Cat Paw Agent
 //= Part Time Work
 //= Report from the New World
 //= Persuing Rayan Moore
@@ -91,7 +91,7 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 -	script	Alliance Manager#prt_	-1,{
 	if (ep13_ryu == 13) {
 		mes "[Alliance Manager]";
-		mes "If we'd had the initiative over Schwartzvald, we could take advantage over them! But we lost the opportunity.";
+		mes "If we'd had the initiative over Schwarzwald, we could take advantage over them! But we lost the opportunity.";
 		next;
 		mes "[Alliance Manager]";
 		mes "Though we are allied with them, that's nothing more than a formality.";
@@ -117,7 +117,7 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 		next;
 		mes "[Alliance Manager]";
 		mes "So, everything is going well?";
-		mes "You're allied with Schwartzvald?";
+		mes "You're allied with Schwarzwald?";
 		mes "They will join with you.";
 		mes "I know this.";
 		next;
@@ -140,7 +140,7 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 		mes "it secretly.";
 		next;
 		mes "[Alliance Manager]";
-		mes "The Schwartzvald... they are all";
+		mes "The Schwarzwald... they are all";
 		mes "snobs. I know what they did.";
 		mes "They'll try to get what they can";
 		mes "with little or no work. I know";
@@ -177,10 +177,10 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 -	script	Member of Alliance#prt_	-1,{
 	if ((ep13_ryu == 12) || (ep13_ryu == 13)) {
 		mes "[Member of Alliance]";
-		mes "If we have absolute power, we wouldn't have to get along with Schwartzvald and Arunafeltz.";
+		mes "If we have absolute power, we wouldn't have to get along with Schwarzwald and Arunafeltz.";
 		next;
 		mes "[Member of Alliance]";
-		mes "I don't know when Satan Morroc will attack us, and whether we're powerful enough to detect him.";
+		mes "I don't know when Satan Morocc will attack us, and whether we're powerful enough to detect him.";
 		next;
 		mes "[Member of Alliance]";
 		mes "We couldn't avoid cooperating with them. We don't have many choices left.";
@@ -200,13 +200,13 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 	if (ep13_ryu == 12) {
 		mes "[Recruiter]";
 		mes "Why have you come again?";
-		mes "You'd better go to Schwartzvald to register.";
+		mes "You'd better go to Schwarzwald to register.";
 		next;
 		mes "[Recruiter]";
 		mes "What? You came to here to convey a story? Go ahead.";
 		next;
 		mes "[Recruiter]";
-		mes "Move to the side. There's a Manager who is dealing with all of us, and is involved in international relations here on Rune Midgard.";
+		mes "Move to the side. There's a Manager who is dealing with all of us, and is involved in international relations here on Midgard.";
 		next;
 		mes "[Recruiter]";
 		mes "Just talk to him.";
@@ -250,7 +250,7 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 		mes "Nobody knows.";
 		next;
 		mes "[Recruiter]";
-		mes "Only the brave, like you, deserve to go there. There will be many dangerous things around you, but you must explore it on behalf of Rune Midgard.";
+		mes "Only the brave, like you, deserve to go there. There will be many dangerous things around you, but you must explore it on behalf of Midgard.";
 		next;
 		mes "[Recruiter]";
 		mes "Hmm......";
@@ -822,7 +822,7 @@ lhz_in01,132,259,5	script	Sikaiz#1	868,{
 			next;
 			mes "[Sikaiz]";
 			mes "All done.";
-			mes "Go to the field Officer of Schwartzvalt. He should be in the banquet hall of this building downstairs.";
+			mes "Go to the field Officer of Schwarzwald. He should be in the banquet hall of this building downstairs.";
 			next;
 			mes "[Sikaiz]";
 			mes "Only thing left for you is to go to the Officer to say that you are leaving now.";
@@ -923,14 +923,14 @@ lhz_in01,132,259,5	script	Sikaiz#1	868,{
 		mes "Anyway, I promised to tell you about the three kingdoms... This is kind of a long story, so please listen carefully.";
 		next;
 		mes "[Sikaiz]";
-		mes "The adventurers for Ash-vacuum! The alliance for the three kingdoms! Rune-Midgarts, Schwartzvalt, Arunafeltz!";
+		mes "The adventurers for Ash-vacuum! The alliance for the three kingdoms! Rune-Midgarts, Schwarzwald, Arunafeltz!";
 		mes "Three kingdoms united for one thing!";
 		next;
 		mes "[Sikaiz]";
 		mes "Frankly, there's a Dimensional Rift in the Sograt desert, so they can inspect it themselves, but it's not that good of a place to inspect the rift's magic well.";
 		next;
 		mes "[Sikaiz]";
-		mes "We are a little bit better in magic, but not that much developed in science as compared with Schwartzvalt, and not as wise compared with Arunafeltz.";
+		mes "We are a little bit better in magic, but not that much developed in science as compared with Schwarzwald, and not as wise compared with Arunafeltz.";
 		next;
 		mes "[Sikaiz]";
 		mes "So we need to get help from other countries, because the Ash-vacuum is quite a profitable place. That is why we made the Alliance to get into the Ash-Vacuum.";
@@ -948,7 +948,7 @@ lhz_in01,132,259,5	script	Sikaiz#1	868,{
 		mes "But the most valuable thing is the unity. Not each kingdom's interest. If we spoil the greatest plans, it's too regrettable.";
 		next;
 		mes "[Sikaiz]";
-		mes "Though I belong to Schwartzvalt, I need to balance the three kingdoms, as a leader... so I can't support my kingdom too much over the others.";
+		mes "Though I belong to Schwarzwald, I need to balance the three kingdoms, as a leader... so I can't support my kingdom too much over the others.";
 		next;
 		mes "[Sikaiz]";
 		mes "Anyway, I believe that my friend can assist me well.";
@@ -1027,11 +1027,11 @@ lhz_in01,132,259,5	script	Sikaiz#1	868,{
 		next;
 		mes "[Sikaiz]";
 		mes "You're probably wondering how we got there...";
-		mes "The answer lies with Satan Morroc.";
+		mes "The answer lies with Satan Morocc.";
 		next;
 		mes "[Sikaiz]";
 		mes "Can you imagine?";
-		mes "Why did Satan Morroc";
+		mes "Why did Satan Morocc";
 		mes "run away from there???";
 		mes "That's the important thing.";
 		next;
@@ -1223,7 +1223,7 @@ lhz_in01,128,249,1	script	Member of Alliance#1	904,{
 
 lhz_in01,136,245,1	script	Member of Alliance#2	869,{
 	if (ep13_ryu > 19) {
-		mes "-You should probably head over to the dimensional rift next to Morroc and find the Guard there-";
+		mes "-You should probably head over to the dimensional rift next to Morocc and find the Guard there-";
 		close;
 	}
 	mes "[Member of Alliance]";
@@ -1240,7 +1240,7 @@ lhz_in01,136,245,1	script	Member of Alliance#2	869,{
 
 lhz_in01,140,245,1	script	Member of Alliance#3	85,{
 	if (ep13_ryu > 19) {
-		mes "-You're still here? You're a member of the alliance now so you should head to the dimensional rift next to Morroc and find the Guard there-";
+		mes "-You're still here? You're a member of the alliance now so you should head to the dimensional rift next to Morocc and find the Guard there-";
 		close;
 	}
 	mes "[Member of Alliance]";
@@ -1257,7 +1257,7 @@ lhz_in01,140,245,1	script	Member of Alliance#3	85,{
 
 lhz_in01,136,249,1	script	Member of Alliance#4	865,{
 	if (ep13_ryu > 19) {
-		mes "-I'm sure they'll settle their little dispute somehow. You should be heading to the dimensional rift next to Morroc and find the Guard there-";
+		mes "-I'm sure they'll settle their little dispute somehow. You should be heading to the dimensional rift next to Morocc and find the Guard there-";
 		close;
 	}
 	mes "[Member of Alliance]";
@@ -1277,7 +1277,7 @@ lhz_in01,136,249,1	script	Member of Alliance#4	865,{
 
 lhz_in01,124,245,1	script	Member of Alliance#5	932,{
 	if (ep13_ryu > 19) {
-		mes "-Maybe Munk is a better leader instead of Sakaiz. Anyways you should be heading to the dimensional rift next to Morroc and find the Guard there-";
+		mes "-Maybe Munk is a better leader instead of Sakaiz. Anyways you should be heading to the dimensional rift next to Morocc and find the Guard there-";
 		close;
 	}
 	mes "[Member of Alliance]";
@@ -1294,7 +1294,7 @@ lhz_in01,124,245,1	script	Member of Alliance#5	932,{
 
 lhz_in01,136,241,3	script	Member of Alliance#6	849,{
 	if (ep13_ryu > 19) {
-		mes "-I'm so bored!!! You should be heading to the dimensional rift next to Morroc and find the Guard there. It's probably less boring there than it is here-";
+		mes "-I'm so bored!!! You should be heading to the dimensional rift next to Morocc and find the Guard there. It's probably less boring there than it is here-";
 		close;
 	}
 	mes "[Member of Alliance]";
@@ -1310,7 +1310,7 @@ lhz_in01,136,241,3	script	Member of Alliance#6	849,{
 
 lhz_in01,126,249,1	script	Member of Alliance#7	930,{
 	if (ep13_ryu > 19) {
-		mes "-We haven't even started and we're already bickering. Just ignore the politics and head to the dimensional rift next to Morroc and find the Guard there-";
+		mes "-We haven't even started and we're already bickering. Just ignore the politics and head to the dimensional rift next to Morocc and find the Guard there-";
 		close;
 	}
 	mes "[Member of Alliance]";
@@ -1321,7 +1321,7 @@ lhz_in01,126,249,1	script	Member of Alliance#7	930,{
 
 lhz_in01,122,245,1	script	Member of Alliance#8	882,{
 	if (ep13_ryu > 19) {
-		mes "-You shouldn't stay around here and listen to all the complaining. You should be heading to the dimensional rift next to Morroc and find the Guard there-";
+		mes "-You shouldn't stay around here and listen to all the complaining. You should be heading to the dimensional rift next to Morocc and find the Guard there-";
 		close;
 	}
 	mes "[Member of Alliance]";
@@ -3432,7 +3432,7 @@ mid_camp,166,248,4	script	Sorcerer#ep13bs	937,{
 	next;
 	mes "[Biolay]";
 	mes "I was just wandering";
-	mes "around Morroc and";
+	mes "around Morocc and";
 	mes "became faint. then";
 	mes "I found myself here.";
 	next;
@@ -3693,7 +3693,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 			mes "I'm Rumis Block, and";
 			mes "I'm working here on behalf of";
 			mes "the monsternomics academy";
-			mes "from the Schwaltzvalt Republic.";
+			mes "from the Schwarzwald Republic.";
 			mes "Botanist Terris Block is";
 			mes "my older twin brother.";
 			next;
@@ -3777,7 +3777,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 			next;
 			mes "[Rumis Block]";
 			mes "Yes, I'm a monster scholar";
-			mes "But I've been afraid of creatures even when I was on the Rune Midgard Continent...";
+			mes "But I've been afraid of creatures even when I was on the Midgard Continent...";
 			next;
 			mes "[Rumis Block]";
 			mes "No, but can't you see?";
@@ -3888,7 +3888,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 					mes "I... I see.";
 					mes "I've heard about adventurers";
 					mes "that have made positive";
-					mes "impacts on Rune Midgard.";
+					mes "impacts on Midgard.";
 					mes "You're one of them, huh?";
 					next;
 					mes "[Rumis Block]";
@@ -4013,7 +4013,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 				mes "the World Tree Yggdrasil?";
 				mes "Maybe it came along with";
 				mes "other creatures such as";
-				mes "Satan Morroc and traversed";
+				mes "Satan Morocc and traversed";
 				mes "through time and space.";
 				next;
 				mes "[Rumis Block]";
@@ -4201,7 +4201,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 				mes "I should make a brief report and then submit it to management. Hopefully, a new monster scholar after me will do a better job in actually studying them.";
 				next;
 				mes "[Rumis Block]";
-				mes "There are many cold places in my country, the Schwaltzvalt Republic, but none are as cold as this place. This weather is freezing my senses, dulling my passion toward my studies.";
+				mes "There are many cold places in my country, the Schwarzwald Republic, but none are as cold as this place. This weather is freezing my senses, dulling my passion toward my studies.";
 				mes "I shall go back home faster than anyone else in this camp. I'm tired of this world...";
 				next;
 				mes "[Rumis Block]";
@@ -4997,10 +4997,10 @@ OnTouch_:
 			next;
 			mes "[United Research Official]";
 			mes "Oh! Hello there!";
-			mes "You must be the adventurer from Rune Midgard.";
+			mes "You must be the adventurer from Midgard.";
 			next;
 			mes "[United Research Official]";
-			mes "We've come all the way here to keep track of Satan Morroc, but... Now it seems that's not our priority anymore... Tsk,tsk...";
+			mes "We've come all the way here to keep track of Satan Morocc, but... Now it seems that's not our priority anymore... Tsk,tsk...";
 			next;
 			mes "[United Research Official]";
 			mes "Well, since our research group has been gathered in such haste, many of our members collide too often.";
@@ -5023,7 +5023,7 @@ OnTouch_:
 			mes ".................";
 			next;
 			mes "[United Research Official]";
-			mes "Eh?! Oh, my... You really shouldn't. You must be extremely busy tracking down Satan Morroc!";
+			mes "Eh?! Oh, my... You really shouldn't. You must be extremely busy tracking down Satan Morocc!";
 			next;
 			mes "[United Research Official]";
 			mes "But... if you say so, could I really use your help? Hahaha.";
@@ -5070,7 +5070,7 @@ OnTouch_:
 				mes "Oh, by the way, did you get a rough idea of the atmosphere of this expedition?";
 				next;
 				mes "[United Research Official]";
-				mes "Normally, researchers just take their own instruments and find their own tracks of Satan Morroc.";
+				mes "Normally, researchers just take their own instruments and find their own tracks of Satan Morocc.";
 				mes "They don't really need to cooperate with other members.";
 				next;
 				mes "[United Research Official]";
@@ -5138,25 +5138,25 @@ OnTouch_:
 			mes "[United Research Official]";
 			mes "So, everyone's here.";
 			mes "Let us begin our meeting.";
-			mes "First, I need to hear the report on the process of tracking Satan Morroc.";
+			mes "First, I need to hear the report on the process of tracking Satan Morocc.";
 			next;
 			mes "[Ryosen]";
-			mes "Alright. I'm Ryosen from Rune-Midgarts. We're certain that Satan Morroc came to this place through the crack of dimension, however, we failed to find any traces within the area we inspected.";
+			mes "Alright. I'm Ryosen from Rune-Midgarts. We're certain that Satan Morocc came to this place through the crack of dimension, however, we failed to find any traces within the area we inspected.";
 			next;
 			mes "[Ryosen]";
-			mes "The Tripartite Union is doing whatever it takes to track down Satan Morroc's whereabouts, but the research in Ash-Vacuum is very limited.";
+			mes "The Tripartite Union is doing whatever it takes to track down Satan Morocc's whereabouts, but the research in Ash-Vacuum is very limited.";
 			next;
 			mes "[Ryosen]";
 			mes "Supplies, reinforcements as wel as demanded goods are all insufficient, so we can't really go on.";
 			next;
 			mes "[Ryosen]";
-			mes "I've heard the assassins took action in order to find the traces of Satan Morroc, but nothing's been reported so far.";
+			mes "I've heard the assassins took action in order to find the traces of Satan Morocc, but nothing's been reported so far.";
 			next;
 			mes "[Hue]";
-			mes "I'm Hue from the Schwartzvalt Republic.";
+			mes "I'm Hue from the Schwarzwald Republic.";
 			next;
 			mes "[Hue]";
-			mes "We're still researching on the crack of dimension that Satan Morroc has come through, and the false data research on the noise created when moving through the crack is currently being corrected.";
+			mes "We're still researching on the crack of dimension that Satan Morocc has come through, and the false data research on the noise created when moving through the crack is currently being corrected.";
 			next;
 			mes "[Hue]";
 			mes "The real cause of this problem has yet to be found, which makes it hard for us to provide any reinforcements or other supplies.";
@@ -5165,7 +5165,7 @@ OnTouch_:
 			mes "Ok. I see. How's it going with the research on Ash-Vacuum?";
 			next;
 			mes "[Hansenne]";
-			mes "Hi, I'm Hansenne from Arunafeltz. We have conclused that his world of Ash-Vacuum is nothing related to the continent of Rune Midgard, as it is placed in a totally indipendent world dimension.";
+			mes "Hi, I'm Hansenne from Arunafeltz. We have conclused that his world of Ash-Vacuum is nothing related to the continent of Midgard, as it is placed in a totally indipendent world dimension.";
 			next;
 			mes "[Hansenne]";
 			mes "The enviroment of the fields on the East and West where we can work on the research has nothing in common with the enviroment within the boundrary of the Tripartite Union's army post.";
@@ -5174,7 +5174,7 @@ OnTouch_:
 			mes "I also have been reported that the ecosystem in the researched are is different.";
 			next;
 			mes "[Hansenne]";
-			mes "We could not go further with the research on the ecosystem due to some violent living creatures which have never been found on the Rune Midgard continent.";
+			mes "We could not go further with the research on the ecosystem due to some violent living creatures which have never been found on the Midgard continent.";
 			next;
 			mes "[United Research Official]";
 			mes "So... All in all, nothing has been clearly found. Any problems among the members of the United Research Group?";
@@ -5260,7 +5260,7 @@ OnTouch_:
 			mes "This cake was just fine before that evil thing appeared, and there were only 4 of us here!";
 			next;
 			mes "[Ryosen]";
-			mes "One of you must be guilty of ruining my Rune-Midgart Strawberry Cake!!!";
+			mes "One of you must be guilty of ruining my Rune-Midgarts' Strawberry Cake!!!";
 			next;
 			mes "[Ryosen]";
 			mes "I can't help checking your hands! This must be a fingerprint! It's loud and clear!! Hmm, I bet this is the mark of an index finger!";
@@ -5270,7 +5270,7 @@ OnTouch_:
 			next;
 			mes "[Ryosen]";
 			mes "Whatttttt!? Only a cake????";
-			mes "Aha, yeah, I just remembered. You people from Schwartzvalt don't ever appreciate food at all, right?";
+			mes "Aha, yeah, I just remembered. You people from Schwarzwald don't ever appreciate food at all, right?";
 			next;
 			mes "[Ryosen]";
 			mes "Especially when the food is NOT yours, huh? That's why you people sneak a taste of other people's food like my strawberry cake!!!";
@@ -5529,7 +5529,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "Anyway, who are you? This place is restricted.";
 			next;
 			mes "[Ryosen]";
-			mes "Ah! You must be the one who came to help us track down that Satan Morroc, the bastard who made the giant hole and then was gone like the wind.";
+			mes "Ah! You must be the one who came to help us track down that Satan Morocc, the bastard who made the giant hole and then was gone like the wind.";
 			next;
 			mes "[Ryosen]";
 			mes "Ugh. I should watch my mouth.";
@@ -5537,29 +5537,29 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			next;
 			mes "[Ryosen]";
 			mes "How about having some tea here?";
-			mes "It's Rafflesia tea from Schwartzvalt. Don't even expect taste, it's awful... But what can I do? It's the only thing I've got...";
+			mes "It's Rafflesia tea from Schwarzwald. Don't even expect taste, it's awful... But what can I do? It's the only thing I've got...";
 			set ep13_1_rhea,2;
 			close;
 		}
 		else if (ep13_1_rhea == 2) {
 			mes "[Ryosen]";
-			mes "You must have heard about this, but this is the place where Satan Morroc landed through the crack of dimension.";
+			mes "You must have heard about this, but this is the place where Satan Morocc landed through the crack of dimension.";
 			next;
 			mes "[Ryosen]";
-			mes "As you see, this seems like a totally different world. It's nothing like the continent of Rune Midgard, though we haven't found any concrete evidence. We decided to call this place Ash-Vacuum.";
+			mes "As you see, this seems like a totally different world. It's nothing like the continent of Midgard, though we haven't found any concrete evidence. We decided to call this place Ash-Vacuum.";
 			next;
 			mes "[Ryosen]";
-			mes "We're doing everything we can, to track down Satan Morroc, but all those researchers from different countries couldn't help but wonder what this place really is.";
+			mes "We're doing everything we can, to track down Satan Morocc, but all those researchers from different countries couldn't help but wonder what this place really is.";
 			next;
 			mes "[Ryosen]";
 			mes "Well, so we're all interested in one thing. However, the real problem lies on our structure of the group.";
 			next;
 			mes "[Ryosen]";
-			mes "Three different countries united to take down the comon enemy, Satan Morroc, byt they eventually started to gather and keep the information to themselves.";
+			mes "Three different countries united to take down the comon enemy, Satan Morocc, byt they eventually started to gather and keep the information to themselves.";
 			next;
 			mes "[Ryosen]";
 			mes "So... frankly speaking...";
-			mes "Tracking Satan Morroc is not or major concern anymore. Our expedition was formed in such hase that so may things can cause problems in this group.";
+			mes "Tracking Satan Morocc is not or major concern anymore. Our expedition was formed in such hase that so may things can cause problems in this group.";
 			next;
 			mes "[Ryosen]";
 			mes "People don't believe other members of the group except for the ones from their own countries. They're all so sensitive that every little thing hits a nerve.";
@@ -5585,7 +5585,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "Oh, well... Maybe the same thing's happening at other offices. People from other countries might have hidden some important information behind my back.";
 			next;
 			mes "[Ryosen]";
-			mes "Whatever... Could you deliver this document to the Schwartzvalt and Arunafeltz researchers?";
+			mes "Whatever... Could you deliver this document to the Schwarzwald and Arunafeltz researchers?";
 			next;
 			if(select("Why me?:Alright.") == 1) {
 				mes "[Ryosen]";
@@ -5597,39 +5597,39 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "No one in our research group wants to visit the offices of the other countries!";
 			next;
 			mes "[Ryosen]";
-			mes "Ok, now, please deliver the file to Hue and Hansenne. Hue's in charge of Schwartzvalt's documents and Hansenne's in chare of Arunafeltz's.";
+			mes "Ok, now, please deliver the file to Hue and Hansenne. Hue's in charge of Schwarzwald's documents and Hansenne's in chare of Arunafeltz's.";
 			next;
 			mes "[Ryosen]";
 			mes "The file contains the brief introduction and the schedule of the meesting.";
 			next;
 			mes "[Ryosen]";
-			mes "For your information, you should go see Hue at the Schwartzvalt's office first. Otherwise, he'll be whining about it.";
+			mes "For your information, you should go see Hue at the Schwarzwald's office first. Otherwise, he'll be whining about it.";
 			next;
 			mes "[Ryosen]";
 			mes "You must check if they read and understand correctly after delivering it. Don't forget to get them to sign at the bottom of the page, just in case.";
 			next;
 			mes "[Ryosen]";
 			mes "Go on now.";
-			mes "Just so you know, today's Desert Day. Rune Midgard is sending some desserts through the crack of dimension, regularly.";
+			mes "Just so you know, today's Desert Day. Midgard is sending some desserts through the crack of dimension, regularly.";
 			next;
 			mes "[Ryosen]";
-			mes "Rune Midgard's desserts are definitely the world's best.";
+			mes "Midgard's desserts are definitely the world's best.";
 			next;
 			mes "[Ryosen]";
 			mes "The only thing we enjoy here is that dessert we receive, once a week.";
 			next;
 			mes "[Ryosen]";
-			mes "Schwartzvalt's Pineapple Jubilee is just awful. It tastes something like rusty steel.";
+			mes "Schwarzwald's Pineapple Jubilee is just awful. It tastes something like rusty steel.";
 			next;
 			mes "[Ryosen]";
 			mes "Arunafeltz's Desert Sandwich is nothing better than that. I think that sandwich's made of some old meat, otherwise, we wouldn't have been food poisoned so often!";
 			next;
 			mes "[Ryosen]";
-			mes "But, Rune-Midgart's Strawberry Cake! It's the best.";
+			mes "But, Rune-Midgarts' Strawberry Cake! It's the best.";
 			next;
 			mes "[Ryosen]";
 			mes "Nice and soft spongecake covered with sweet-tasting whipped cream, lots of fresh strawberries on top!";
-			mes "Rune-Midgart's top chef, Charles Orleans makes it himself!!!";
+			mes "Rune-Midgarts' top chef, Charles Orleans makes it himself!!!";
 			next;
 			mes "[Ryosen]";
 			mes "Hurry, you must hurry up, or you won't be able to taste this wonderful cake!";
@@ -5649,7 +5649,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "Hurry up and deliver the document to Hue and Hansenne!";
 			next;
 			mes "[Ryosen]";
-			mes "Don't forget! Schwartzvalt's Hue must get it first, otherwise, he'll nag us like crazy.";
+			mes "Don't forget! Schwarzwald's Hue must get it first, otherwise, he'll nag us like crazy.";
 			next;
 			mes "[Ryosen]";
 			mes "And you must get the document signed at the bottom before you bring it back.";
@@ -5910,7 +5910,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "Could you go see the Official in my stead and set up a meeting?";
 			next;
 			mes "[Ryosen]";
-			mes "Oh! And... Here's Rune-Midgart's fresh strawberry cake. This is for you. I'm so sorry I haven't even offered you a piece. I was so distracted with stress, I think.";
+			mes "Oh! And... Here's Rune-Midgarts' fresh strawberry cake. This is for you. I'm so sorry I haven't even offered you a piece. I was so distracted with stress, I think.";
 			next;
 			mes "[Ryosen]";
 			mes "Thank you so much for everything you've done. And... pleade don't forget to do me this last favor, going to the Official and setting up a meeting.";
@@ -5951,7 +5951,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "I heard you can get this thing from a monster named, 'Cornus' found in the fields.";
 			next;
 			mes "[Ryosen]";
-			mes "Or... do you have any ^0000ffMystic Horns^000000 with you? Of course, I'm not saying that I want it for free. If you'd give me ^0000ff2 Mystic Horns^000000, I'd give you my Rune-Midgart's Strawberry Cake.";
+			mes "Or... do you have any ^0000ffMystic Horns^000000 with you? Of course, I'm not saying that I want it for free. If you'd give me ^0000ff2 Mystic Horns^000000, I'd give you my Rune-Midgarts' Strawberry Cake.";
 			next;
 			switch(select("I haven't seen such a thing.:Oh, ok, I'll give you!")) {
 			case 1:
@@ -5967,7 +5967,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 					mes "Huh?";
 					next;
 					mes "[Ryosen]";
-					mes "You have Rune-Midgart's Strawberry Cake?";
+					mes "You have Rune-Midgarts' Strawberry Cake?";
 					next;
 					mes "[Ryosen]";
 					mes "How come you haven't had it yet?";
@@ -6105,11 +6105,11 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 			if (.@shu_agree00 == 2) {
 				mes "[Hue]";
 				mes "...Meeting Schedule, on the Xth day, from hh:mm to hh:mm...";
-				mes "Location... Rune-Midgart's camp...";
-				mes "Ha! I knew it. Rune-Midgart's camp again!";
+				mes "Location... Rune-Midgarts' camp...";
+				mes "Ha! I knew it. Rune-Midgarts' camp again!";
 				next;
 				mes "[Hue]";
-				mes "Objectives... to report on the researching progress of tracking Satan Morroc and the Ash-Vacuum!";
+				mes "Objectives... to report on the researching progress of tracking Satan Morocc and the Ash-Vacuum!";
 				next;
 				mes "[Hue]";
 				mes "Having some time to get to know each other??? Haaaaa!";
@@ -6177,7 +6177,7 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 				mes "Whew... I can't even stand looking at it! Oh just, give it to me!";
 				next;
 				mes "[Hue]";
-				mes "Too bad I'm not in Schwartzvalt. I could use our document restoring machine back at home... Ugh! Now I gotta do everything manually.";
+				mes "Too bad I'm not in Schwarzwald. I could use our document restoring machine back at home... Ugh! Now I gotta do everything manually.";
 				next;
 				mes "[Hue]";
 				mes "Hmmm. It's completely soaked. I Should dry this thing first and iron these crumples. Then, I should restore the texts.";
@@ -6307,11 +6307,11 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 			mes "Oh, I'm so embarrassed to see him face to face. Or.. how about...";
 			next;
 			mes "[Hue]";
-			mes "Here, this is the Rune-Midgart's report I took with me when everything went messy in the meeting room. Could you please give this to Ryosen?";
+			mes "Here, this is the Rune-Midgarts' report I took with me when everything went messy in the meeting room. Could you please give this to Ryosen?";
 			next;
 			mes "[Hue]";
 			mes "I'm sorry to ask you this but...";
-			mes "Could you? For this, I'll give you some Schwartzvalt's Pineapple Jubilee.";
+			mes "Could you? For this, I'll give you some Schwarzwald's Pineapple Jubilee.";
 			next;
 			mes "[Hue]";
 			mes "Please give this report to Ryosen.";
@@ -6327,7 +6327,7 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 			mes "Oh, I'm so embarrassed to see him face to face. Or.. how about...";
 			next;
 			mes "[Hue]";
-			mes "Here, this is the Rune-Midgart's report I took with me when everything went messy in the meeting room. Could you please give this to Ryosen?";
+			mes "Here, this is the Rune-Midgarts' report I took with me when everything went messy in the meeting room. Could you please give this to Ryosen?";
 			next;
 			mes "[Hue]";
 			mes "I'm sorry to ask you this but...";
@@ -6348,7 +6348,7 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 			next;
 			mes "[Hue]";
 			mes "Could you bring ^0000ffFur^000000 if you get some? I'm not asking it for free.";
-			mes "I'll give you my Pineapple Jubilee from Schwartzvalt, if you bring me ^0000ff2 Furs^000000.";
+			mes "I'll give you my Pineapple Jubilee from Schwarzwald, if you bring me ^0000ff2 Furs^000000.";
 			next;
 			switch(select("I don't have any, right now.:Oh, I'll give you Fur.")) {
 			case 1:
@@ -6364,7 +6364,7 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 					mes "Ah, oh my.";
 					next;
 					mes "[Hue]";
-					mes "You already have the Pineapple Jubilee from Schwartzvalt!";
+					mes "You already have the Pineapple Jubilee from Schwarzwald!";
 					next;
 					mes "[Hue]";
 					mes "I think you should drin that thing fast. Otherwise, all the ice will melt and it'll taste like some kinda medicine!";
@@ -6471,7 +6471,7 @@ mid_camp,222,218,3	script	Hansenne#ep131_rhea03	931,{
 				mes "An invitation to the meeting?";
 				next;
 				mes "[Hansenne]";
-				mes "Hmm, Ryosen from Rune-Midgarts made it and... Hue from Schwartzvalt agreed to sign it too?";
+				mes "Hmm, Ryosen from Rune-Midgarts made it and... Hue from Schwarzwald agreed to sign it too?";
 				next;
 				mes "[Hansenne]";
 				mes "Hmmm, that's not funny at all.";
@@ -6526,13 +6526,13 @@ mid_camp,222,218,3	script	Hansenne#ep131_rhea03	931,{
 				mes "Meeting Schedule, shmeating schedule... Beating Schedule!!";
 				next;
 				mes "[Hansenne]";
-				mes "Location... Rune-Midgart's camp!";
+				mes "Location... Rune-Midgarts' camp!";
 				mes "Rude-Midgard's camp!?!?";
 				mes "Are they camping in that place??";
 				mes "Haha, hahaha, hahahahahahahahaha.";
 				next;
 				mes "[Hansenne]";
-				mes "Objectives... to report on the researching progress of tracking Satan Morroc and of the Ash-Vacuum!";
+				mes "Objectives... to report on the researching progress of tracking Satan Morocc and of the Ash-Vacuum!";
 				next;
 				mes "[Hansenne]";
 				mes "Ash-Vacuum!";
@@ -6680,7 +6680,7 @@ mid_camp,222,218,3	script	Hansenne#ep131_rhea03	931,{
 				mes "Hmmmmm, but then... I'm afraid Ryosen would explode when he sees this! Boom!!!";
 				next;
 				mes "[Hansenne]";
-				mes "Schwartzvalt people have some talent in restoring things like this... Why don't you ask Hue to restore this?";
+				mes "Schwarzwald people have some talent in restoring things like this... Why don't you ask Hue to restore this?";
 				next;
 				mes "[Hansenne]";
 				mes "He'd scream so hard and the windows might break. But he'll do it.";
@@ -6707,7 +6707,7 @@ mid_camp,222,218,3	script	Hansenne#ep131_rhea03	931,{
 			mes "Hmmmmm, it's all screwed up. I'm afraid Ryosen would explode when he sees this! Boom!!!";
 			next;
 			mes "[Hansenne]";
-			mes "Schwartzvalt people have some talent in restoring things like this... Why don't you ask Hue to restore this?";
+			mes "Schwarzwald people have some talent in restoring things like this... Why don't you ask Hue to restore this?";
 			next;
 			mes "[Hansenne]";
 			mes "He'd scream so hard and the windows might break. But he'll do it.";
@@ -7553,17 +7553,17 @@ OnMyMobDead:
 	end;
 }
 
-// Cat Hand Trading Post :: cat_yong
+// Cat Paw Trading Post :: cat_yong
 //============================================================ 
-mid_camp,62,125,4	script	Cat Hand Agent	421,{
+mid_camp,62,125,4	script	Cat Paw Agent	421,{
 function Catwarp;
 	if (ep13_yong1 < 1) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Welcome to Cat Trading.";
 		mes "I guess you're a first-time";
 		mes "customer, huh?";
 		next;
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "How'd you like to make";
 		mes "a contract with us?";
 		mes "We'll guarantee that you'll";
@@ -7573,36 +7573,36 @@ function Catwarp;
 		next;
 		switch(select("Tell me more about your services.:No. thanks")) {
 		case 1:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Before making a contract with us, youll have to go through a few steps to satisfy our terms and conditions.";
 			next;
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "More clearly, you'll have to provide us something in return for our services.";
 			mes "You know what I mean, don't you?";
 			next;
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "For more information, please speak to Agent Gyaruk standing down there.";
 			mes "I'm sure you'll find our business proposition to be very reasonable.";
 			set ep13_yong1,1;
 			close;
 		case 2:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Well, feel free to come back whenever you change your mind.";
 			close;
 		}
 	}
 	else if (ep13_yong1 == 1) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "For more information, please speak to Agent Gyaruk standing down there.";
 		mes "I'm sure you'll find our business proposition to be very reasonable.";
 		close;
 	}
 	else if (ep13_yong1 == 2) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Thank you for making an official contract with us.";
 		mes "You're now eligable to use our services.";
 		next;
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "For our newcomers, we're offering a location-saving service with which you can save this camp as your returning location.";
 		mes "Would you like to save your location?";
 		set ep13_yong1,3;
@@ -7610,52 +7610,52 @@ function Catwarp;
 		switch(select("Save your location:Cancel")) {
 		case 1:
 			savepoint "mid_camp",56,139,1,1;
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you for using our service.";
 			close;
 		}
 	}
 	else if ((ep13_yong1 > 2) && (ep13_yong1 < 20)) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Cat Trading's available services are as followed.";
 		mes "For additional services, please consult Agent Gyaruk.";
 		next;
 		switch(select("Save your location:Cancel")) {
 		case 1:
 			savepoint "mid_camp",56,139,1,1;
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you for using our service.";
 			close;
 		}
 	}
 	else if ((ep13_yong1 > 19) && (ep13_yong1 < 40)) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Cat Trading's available services are as followed.";
 		mes "For additional services, please consult Agent Gyaruk.";
 		next;
 		switch(select("Save your location:Use Storage:Cancel")) {
 		case 1:
 			savepoint "mid_camp",56,139,1,1;
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
 			if(!callfunc("F_CanOpenStorage")){
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you";
 				mes "need the Novice's";
 				mes "Basic Skill Level 6 to";
@@ -7664,7 +7664,7 @@ function Catwarp;
 			}
 			else if (Zeny >= 60) {
 				set Zeny, Zeny-60;
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "Thank you.";
 				mes "Your storage will";
 				mes "be opened shortly.";
@@ -7673,7 +7673,7 @@ function Catwarp;
 				end;
 			}
 			else {
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you don't";
 				mes "have enough money?";
 				mes "Cat Trading's storage";
@@ -7682,27 +7682,27 @@ function Catwarp;
 				close;
 			}
 		case 3:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you for using our service.";
 			close;
 		}
 	}
 	else if ((ep13_yong1 > 39) && (ep13_yong1 < 100)) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Cat Trading's available services are as followed.";
 		mes "For additional services, please consult Agent Gyaruk.";
 		next;
 		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Cancel")) {
 		case 1:
 			savepoint "mid_camp",56,139,1,1;
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
 			if(!callfunc("F_CanOpenStorage")){
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you";
 				mes "need the Novice's";
 				mes "Basic Skill Level 6 to";
@@ -7711,7 +7711,7 @@ function Catwarp;
 			}
 			else if (Zeny >= 60) {
 				set Zeny, Zeny-60;
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "Thank you.";
 				mes "Your storage will";
 				mes "be opened shortly.";
@@ -7720,7 +7720,7 @@ function Catwarp;
 				end;
 			}
 			else {
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you don't";
 				mes "have enough money?";
 				mes "Cat Trading's storage";
@@ -7729,7 +7729,7 @@ function Catwarp;
 				close;
 			}
 		case 3:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "The warp service is only";
 			mes "available for customers with";
 			mes "40 or more Cat Trading Points.";
@@ -7776,7 +7776,7 @@ function Catwarp;
 				}
 			}
 			else if ((ep13_yong1 > 89) && (ep13_yong1 < 100)) {
-				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Morroc -> 4765z:Cancel")) {
+				switch(select("Alberta -> 4765z:Prontera -> 4765z:Izlude -> 4765z:Geffen -> 4765z:Payon -> 4765z:Morocc -> 4765z:Cancel")) {
 					case 1: Catwarp(4765,1);
 					case 2: Catwarp(4765,2);
 					case 3: Catwarp(4765,3);
@@ -7787,7 +7787,7 @@ function Catwarp;
 				}
 			}
 			else if (ep13_yong1 > 99) {
-				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morroc -> 4590z:Al De Baran -> 4590z:Cancel")) {
+				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morocc -> 4590z:Al De Baran -> 4590z:Cancel")) {
 					case 1: Catwarp(4590,1);
 					case 2: Catwarp(4590,2);
 					case 3: Catwarp(4590,3);
@@ -7799,32 +7799,32 @@ function Catwarp;
 				}
 			}
 			else {
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you're not eligible to use the warp service. Please check your points, and then come back.";
 			}
 			close;
 		case 4:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you for using our service.";
 			close;
 		}
 	}
 	else if (ep13_yong1 > 99) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Cat Trading's available services are as followed.";
 		mes "For additional services, please consult Agent Gyaruk.";
 		next;
 		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Use Cat Warp (Jottunheim):Cancel")) {
 		case 1:
 			savepoint "mid_camp",56,139,1,1;
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
 			if(!callfunc("F_CanOpenStorage")){
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you";
 				mes "need the Novice's";
 				mes "Basic Skill Level 6 to";
@@ -7833,7 +7833,7 @@ function Catwarp;
 			}
 			else if (Zeny >= 60) {
 				set Zeny, Zeny-60;
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "Thank you.";
 				mes "Your storage will";
 				mes "be opened shortly.";
@@ -7842,7 +7842,7 @@ function Catwarp;
 				end;
 			}
 			else {
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you don't";
 				mes "have enough money?";
 				mes "Cat Trading's storage";
@@ -7851,14 +7851,14 @@ function Catwarp;
 				close;
 			}
 		case 3:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "The warp service is only";
 			mes "available for customers with";
 			mes "40 or more Cat Trading Points.";
 			mes "Please remember, you can't come back easily once you move to Midgard.";
 			next;
 			if ((ep13_yong1 > 99) && (ep13_yong1 < 200)) {
-				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morroc -> 4590z:Al De Baran -> 4590z:Cancel")) {
+				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morocc -> 4590z:Al De Baran -> 4590z:Cancel")) {
 					case 1: Catwarp(4590,1);
 					case 2: Catwarp(4590,2);
 					case 3: Catwarp(4590,3);
@@ -7870,7 +7870,7 @@ function Catwarp;
 				}
 			}
 			else if ((ep13_yong1 > 199) && (ep13_yong1 < 250)) {
-				switch(select("Alberta -> 4170z:Prontera -> 4170z:Izlude -> 4170z:Geffen -> 4170z:Payon -> 4170z:Morroc -> 4170z:Al De Baran -> 4170z:Juno -> 4170z:Cancel")) {
+				switch(select("Alberta -> 4170z:Prontera -> 4170z:Izlude -> 4170z:Geffen -> 4170z:Payon -> 4170z:Morocc -> 4170z:Al De Baran -> 4170z:Juno -> 4170z:Cancel")) {
 					case 1: Catwarp(4170,1);
 					case 2: Catwarp(4170,2);
 					case 3: Catwarp(4170,3);
@@ -7883,7 +7883,7 @@ function Catwarp;
 				}
 			}
 			else if ((ep13_yong1 > 249) && (ep13_yong1 < 300)) {
-				switch(select("Alberta -> 4025z:Prontera -> 4025z:Izlude -> 4025z:Geffen -> 4025z:Payon -> 4025z:Morroc -> 4025z:Al De Baran -> 4025z:Juno -> 4025z:Einbroch -> 4025z:Cancel")) {
+				switch(select("Alberta -> 4025z:Prontera -> 4025z:Izlude -> 4025z:Geffen -> 4025z:Payon -> 4025z:Morocc -> 4025z:Al De Baran -> 4025z:Juno -> 4025z:Einbroch -> 4025z:Cancel")) {
 					case 1: Catwarp(4025,1);
 					case 2: Catwarp(4025,2);
 					case 3: Catwarp(4025,3);
@@ -7897,7 +7897,7 @@ function Catwarp;
 				}
 			}
 			else if (ep13_yong1 > 299) {
-				switch(select("Alberta -> 3970z:Prontera -> 3970z:Izlude -> 3970z:Geffen -> 3970z:Payon -> 3970z:Morroc -> 3970z:Al De Baran -> 3970z:Juno -> 3970z:Einbroch -> 3970z:Lighthalzen -> 3970z:Cancel")) {
+				switch(select("Alberta -> 3970z:Prontera -> 3970z:Izlude -> 3970z:Geffen -> 3970z:Payon -> 3970z:Morocc -> 3970z:Al De Baran -> 3970z:Juno -> 3970z:Einbroch -> 3970z:Lighthalzen -> 3970z:Cancel")) {
 					case 1: Catwarp(3970,1);
 					case 2: Catwarp(3970,2);
 					case 3: Catwarp(3970,3);
@@ -7912,7 +7912,7 @@ function Catwarp;
 				}
 			}
 			else {
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you're not eligible to use the warp service. Please check your points, and then come back.";
 			}
 			close;
@@ -7921,26 +7921,26 @@ function Catwarp;
 				case 1: Catwarp(5500,11);
 				case 2: Catwarp(5500,12);
 				case 3:
-					mes "[Cat Hand Agent]";
+					mes "[Cat Paw Agent]";
 					mes "Thank you for using our service.";
 					close;
 			}
 			close;
 		case 5:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you for using our service.";
 			close;
 		}
 	}
 	else {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "*Yawn...*";
 		mes "I want to eat fish.";
 		close;
 	}
 function Catwarp {
 	if (Zeny < getarg(0)) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Don't play with money.";
 		close;
 	}
@@ -7973,7 +7973,7 @@ mid_camp,72,94,4	script	Fluffy Gyaruk	421,{
 	else if (ep13_yong1 == 1) {
 		mes "[Fluffy Gyaruk]";
 		mes "Hmm?";
-		mes "Oh, did the Cat Hand Agent send you?";
+		mes "Oh, did the Cat Paw Agent send you?";
 		next;
 		select("Yes.");
 		mes "[Fluffy Gyaruk]";
@@ -8021,7 +8021,7 @@ mid_camp,72,94,4	script	Fluffy Gyaruk	421,{
 			mes "We hope you'll support our exploration of this unknown land.";
 			next;
 			mes "[Fluffy Gyaruk]";
-			mes "Please go speak to the Cat Hand Agent over there to use a basic service.";
+			mes "Please go speak to the Cat Paw Agent over there to use a basic service.";
 			mes "Oh, and please come back afterwards.";
 			set ep13_yong1,2;
 			close;
@@ -8076,7 +8076,7 @@ mid_camp,72,94,4	script	Fluffy Gyaruk	421,{
 		next;
 		switch(select("How can I increase my points?:I'm not interested.")) {
 		case 1:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "You can increase them daily by fishing and mining, you need to submit caught Pieces of Fish to Gorurung and minerals to the Mining Agent.";
 			close;
 		case 2:
@@ -8337,7 +8337,7 @@ mid_camp,66,122,55	script	Henry Clifford	712,{
 			mes "[Henry Clifford]";
 			mes "Thank you for the Marlin.";
 			mes "I've given you the points in return.";
-			mes "You may go check your points through the Cat Hand Agent.";
+			mes "You may go check your points through the Cat Paw Agent.";
 			close;
 		case 2:
 			mes "[Henry Clifford]";
@@ -8369,10 +8369,10 @@ mid_camp,66,122,55	script	Henry Clifford	712,{
 	}
 }
 
-mid_camp,88,100,55	script	Cat Hand Mining Agent	876,{
+mid_camp,88,100,55	script	Cat Paw Mining Agent	876,{
 	if (checkquest(12062,PLAYTIME) == -1) {
 		if ((countitem(6048) > 2) && (ep13_yong1 > 9)) {
-			mes "[Cat Hand Mining Agent]";
+			mes "[Cat Paw Mining Agent]";
 			mes "Oh, wow~";
 			mes "Thank you for collecting minerals for me.";
 			next;
@@ -8381,13 +8381,13 @@ mid_camp,88,100,55	script	Cat Hand Mining Agent	876,{
 			setquest 12062;
 			set ep13_yong1,ep13_yong1+1;
 			select("I'm freezing! Take them quickly.");
-			mes "[Cat Hand Mining Agent]";
+			mes "[Cat Paw Mining Agent]";
 			mes "Yes, yes~ I've received the mineral samples.";
 			mes "I'll go ahead and add points to your credit.";
 			close;
 		}
 		else {
-			mes "[Cat Hand Mining Agent]";
+			mes "[Cat Paw Mining Agent]";
 			mes "To collect minerals,";
 			mes "we have to go to the";
 			mes "frozen land to the east.";
@@ -8395,7 +8395,7 @@ mid_camp,88,100,55	script	Cat Hand Mining Agent	876,{
 			mes "like me, the weather";
 			mes "is unbearable.";
 			next;
-			mes "[Cat Hand Mining Agent]";
+			mes "[Cat Paw Mining Agent]";
 			mes "If the weather";
 			mes "is good tomorrow,";
 			mes "I might try to go,";
@@ -8406,14 +8406,14 @@ mid_camp,88,100,55	script	Cat Hand Mining Agent	876,{
 		}
 	}
 	else if ((checkquest(12062,PLAYTIME) == 0) || (checkquest(12062,PLAYTIME) == 1)) {
-		mes "[Cat Hand Mining Agent]";
+		mes "[Cat Paw Mining Agent]";
 		mes "I hope you'll bring me minerals again tomorrow...";
 		mes "If you can. It's much better to wait for you to do it than go there on my own.";
 		close;
 	}
 	else {
 		erasequest 12062;
-		mes "[Cat Hand Mining Agent]";
+		mes "[Cat Paw Mining Agent]";
 		mes "Umm... It's time to collect minerals.";
 		mes "How'd you like to collect minerals for me?";
 		close;
@@ -8488,7 +8488,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 	set .@start,(ep13_newbs + ep13_ryu + mao_morocc2 + ep13_1_rhea + ep13_animal + ep13_start);
 	if ((ep13_1_edq == 0) && (.@start > 115)) {
 		mes "[Hibba Agip]";
-		mes "*Sigh* Look at me, I used to command the desert of Morroc, but I've been deployed to a world that only God knows where...";
+		mes "*Sigh* Look at me, I used to command the desert of Morocc, but I've been deployed to a world that only God knows where...";
 		next;
 		mes "[Staff Officer Abidal]";
 		mes "Come on'that's not ture. In fact, you used to be an official of a small town, and have been promoted to the commander of the expedition.";
@@ -8571,7 +8571,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "I must say that I'm quite impressed.";
 		next;
 		mes "[Hibba Agip]";
-		mes "As you know by now, I have to send out an expedition report to the national leaders of the Rune Midgard continent, and I need someone that I can trust.";
+		mes "As you know by now, I have to send out an expedition report to the national leaders of the Midgard continent, and I need someone that I can trust.";
 		next;
 		mes "[Hibba Agip]";
 		mes "I'd go if I could, but my duty is to command, and my instructor over there is too dense. He'll embarrass me by acting stupid in front of the national leaders.";
@@ -8581,16 +8581,16 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "Don't you think you're exaggerating?";
 		next;
 		mes "[Hibba Agip]";
-		mes "Hmm... Anyways, this is not a difficult mission. All you have to do is deliver this expedition report to officials of three countries of Rune Midgard. Simple right?";
+		mes "Hmm... Anyways, this is not a difficult mission. All you have to do is deliver this expedition report to officials of three countries of Midgard. Simple right?";
 		next;
 		getitem 11012,1; //Expedition_Report
 		set ep13_1_edq,3;
 		changequest 3086,3087;
 		mes "[Hibba Agip]";
-		mes "The officials are ^0000FFMinister Laur^000000 of the Rune-Midgart's Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz, and ^0000FFGerhart^000000 of the Schwatzvalt Republic.";
+		mes "The officials are ^0000FFMinister Laur^000000 of the Rune-Midgarts' Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz, and ^0000FFGerhart^000000 of the Schwatzvalt Republic.";
 		next;
 		mes "[Hibba Agip]";
-		mes "A messenger, who will inform the official of your arrival, is waiting for you at the time-space gap to RUne Midgard. You'd better find him before you leave.";
+		mes "A messenger, who will inform the official of your arrival, is waiting for you at the time-space gap to Midgard. You'd better find him before you leave.";
 		next;
 		mes "[Hibba Agip]";
 		mes "Since the officials are busy attending to national matters, they won't meet you unless they're informed of your arrival beforehand. I doubt those pretentious guys would even want to see me.";
@@ -8809,7 +8809,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "It looks alright. I don't have to read this thoroughly because I trust Abidal.";
 		next;
 		mes "[Hibba Agip]";
-		mes "Now, let's go back to your original mission. I'd like you to deliver this to the national leaders of the three countries of Rune Midgard.";
+		mes "Now, let's go back to your original mission. I'd like you to deliver this to the national leaders of the three countries of Midgard.";
 		next;
 		getitem 11012,3; //Expedition_Report
 		mes "[Hibba Agip]";
@@ -8820,7 +8820,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "Of course, you can't see them because they're undercover soldiers under my direct command. Hahaha!";
 		next;
 		mes "[Hibba Agip]";
-		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwaltzvalt Republic.";
+		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune-Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwarzwald Republic.";
 		next;
 		mes "[Hibba Agip]";
 		mes "Make sure to deliver the report to them without fail. Come back in one piece, alright?";
@@ -8829,7 +8829,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 	}
 	else if ((ep13_1_edq == 9) && (countitem(11012) == 3)) {
 		mes "[Hibba Agip]";
-		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwaltzvalt Republic.";
+		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune-Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwarzwald Republic.";
 		next;
 		mes "[Hibba Agip]";
 		mes "Make sure to deliver the report to them without fail. Come back in one piece, alright?";
@@ -8843,7 +8843,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		delitem 11012,countitem(11012); //Expedition_Report
 		getitem 11012,3; //Expedition_Report
 		mes "[Hibba Agip]";
-		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwaltzvalt Republic.";
+		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune-Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwarzwald Republic.";
 		next;
 		mes "[Hibba Agip]";
 		mes "Make sure to deliver the report to them without fail. Come back in one piece, alright?";
@@ -8852,7 +8852,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 	}
 	else if (ep13_1_edq > 100) {
 		mes "[Hibba Agip]";
-		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwaltzvalt Republic.";
+		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune-Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwarzwald Republic.";
 		next;
 		mes "[Hibba Agip]";
 		mes "Make sure to deliver the report to them without fail. Come back in one piece, alright?";
@@ -9205,7 +9205,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 	}
 	else {
 		mes "[Hibba Agip]";
-		mes "*Sigh* Look at me, I used to command the desert of Morroc, but I've been deployed to a world that only God knows where...";
+		mes "*Sigh* Look at me, I used to command the desert of Morocc, but I've been deployed to a world that only God knows where...";
 		next;
 		mes "[Staff Officer Abidal]";
 		mes "Come on, that's not true. In fact, you used to be an official of a small town, and have been promoted to the commander of the expedition. Your success is almost too good to be true.";
@@ -9245,7 +9245,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 		switch(select("Midgard Expedition Introduction:Midgard Expedition's Achievement:Situation in the Ash-Vacuum:Quit")) {
 		case 1:
 			mes "[Staff Officer Abidal]";
-			mes "The Midgard Expedition is conducted by a group of explorers from the three countries of Rune Midgard and the Mercenary Association. We're here to explore the Ash-Vacuum.";
+			mes "The Midgard Expedition is conducted by a group of explorers from the three countries of Midgard and the Mercenary Association. We're here to explore the Ash-Vacuum.";
 			next;
 			mes "[Staff Officer Abidal]";
 			mes "Command Hibba Agip behind me is our commander. He may appear unreliable, but he has extensive knowledge and experience in exploration.";
@@ -9311,7 +9311,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 			mes "Thank you so much. I had a good feeling about you, and I was so sure that you'd be willing to help.";
 			next;
 			mes "[Staff Officer Abidal]";
-			mes "Let's cut to the chase. The mission is simple, deliver our expedition report to the three countries of Rune Midgard.";
+			mes "Let's cut to the chase. The mission is simple, deliver our expedition report to the three countries of Midgard.";
 			next;
 			mes "[Staff Officer Abidal]";
 			mes "But I have to tell you... We sent out three adventurers on this mission before you, and they all dissapeared. Please don't disclose this information to anyone.";
@@ -10175,10 +10175,10 @@ spl_fild03,172,71,3	duplicate(Expedition Scout#1)	Expedition Scout#4	707
 		close;
 	}
 	else {
-		mes "I'm Laur, the aide of the Home Minister of the Rune Midgarts Kingdom. Do you have any business with me?";
+		mes "I'm Laur, the aide of the Home Minister of the Rune-Midgarts Kingdom. Do you have any business with me?";
 		next;
 		mes "[Laur]";
-		mes "Can you sense the great disorder occuring on the Midgard Continent and the Rune-Midgart's Kingdom?";
+		mes "Can you sense the great disorder occuring on the Midgard Continent and the Rune-Midgarts' Kingdom?";
 		next;
 		mes "[Laur]";
 		mes "Still, there always a silver lining, no matter how dangerous this world may become.";
@@ -10633,7 +10633,7 @@ mid_campin,68,185,3	script	Pursuit Party Leader#1	803,{
 	}
 	else if (mao_morocc2 == 30) {
 		mes "[Echinacea]";
-		mes "I'm in charge of tracing the wavelength from the Rune Midgard Continent,";
+		mes "I'm in charge of tracing the wavelength from the Midgard Continent,";
 		mes "and the south camp is tracing it in this area.";
 		next;
 		mes "[Echinacea]";
@@ -10649,7 +10649,7 @@ mid_campin,68,185,3	script	Pursuit Party Leader#1	803,{
 		next;
 		mes "[Echinacea]";
 		mes "Oh, is that the case? I see.";
-		mes "That means.. The man called Rayan isn't on the Rune Midgard Continent or in this Ash Vacuum.";
+		mes "That means.. The man called Rayan isn't on the Midgard Continent or in this Ash Vacuum.";
 		next;
 		mes "[Echinacea]";
 		mes "He must be somewhere else.";
@@ -10913,15 +10913,15 @@ mid_camp,199,311,7	script	Mr. Kidd#ep13_dan01	884,{
 				mes "......";
 				mes "I don't know if Echinacea told you this already, but we are here";
 				mes "to follow the traces of Satan Morocc.";
-				mes "Some of us are here in the Ash Vacuum, and the rest are on the Rune Midgard Continent.";
+				mes "Some of us are here in the Ash Vacuum, and the rest are on the Midgard Continent.";
 				next;
 				mes "[Mr. Kidd]";
-				mes "We exchange information with our colleagues in Morroc on a regular basis, but we haven't heard from them for a while.";
+				mes "We exchange information with our colleagues in Morocc on a regular basis, but we haven't heard from them for a while.";
 				mes "How'd you like to go gather some information for me?";
 				mes "It should be simple, so you I hope you'll be able to handle this.";
 				next;
 				mes "[Mr. Kidd]";
-				mes "At Southwest Morroc, you'll find an underground tavern.";
+				mes "At Southwest Morocc, you'll find an underground tavern.";
 				mes "Go find ^4d4dffRin^000000.";
 				mes "Tell her I've sent you, and she'll take care of you.";
 				set mao_morocc2,4;
@@ -10958,17 +10958,17 @@ mid_camp,199,311,7	script	Mr. Kidd#ep13_dan01	884,{
 		mes "I don't know if Echinacea told you this already, but we are here to follow the traces of Satan Morocc.";
 		next;
 		mes "[Mr. Kidd]";
-		mes "Some of us are here in the Ash Vacuum, and the rest are on the Rune Midgard Continent.";
+		mes "Some of us are here in the Ash Vacuum, and the rest are on the Midgard Continent.";
 		next;
 		mes "[Mr. Kidd]";
-		mes "We exchange information with our colleagues in Morroc on a regular basis, but we haven't heard from them for a while.";
+		mes "We exchange information with our colleagues in Morocc on a regular basis, but we haven't heard from them for a while.";
 		next;
 		mes "[Mr. Kidd]";
 		mes "How'd you like to go gather some information for me?";
 		mes "It should be simple, so you I hope you'll be able to handle this.";
 		next;
 		mes "[Mr. Kidd]";
-		mes "At Southwest Morroc, you'll find an underground tavern.";
+		mes "At Southwest Morocc, you'll find an underground tavern.";
 		mes "Go find ^4d4dffRin^000000.";
 		mes "Tell her I've sent you, and she'll take care of you.";
 		set mao_morocc2,4;
@@ -10979,7 +10979,7 @@ mid_camp,199,311,7	script	Mr. Kidd#ep13_dan01	884,{
 		cutin "mocseal_kid01",2;
 		mes "[Mr. Kidd]";
 		mes "Let me explain one more time.";
-		mes "Go speak to Rin in an underground tavern at Southwest Morroc.";
+		mes "Go speak to Rin in an underground tavern at Southwest Morocc.";
 		mes "You won't miss the tavern if you look for a boy named Jack standing out the front.";
 		close2;
 	}
@@ -11059,7 +11059,7 @@ mid_camp,199,311,7	script	Mr. Kidd#ep13_dan01	884,{
 		}
 		else {
 			mes "[" + strcharinfo(0) + "]";
-			mes "(I was supposed to give him the 'Morroc Pursuit Journal' and a 'Bloody Crystal of the Darkness'...";
+			mes "(I was supposed to give him the 'Morocc Pursuit Journal' and a 'Bloody Crystal of the Darkness'...";
 			mes "Err? Where have they gone? I need to find them.)";
 			close2;
 		}
@@ -11223,9 +11223,9 @@ mid_camp,199,311,7	script	Mr. Kidd#ep13_dan01	884,{
 			next;
 			cutin "moc2_kid04",2;
 			mes "[Mr. Kidd]";
-			mes ".Alright, then. Would you rather capture reincarnations of Morroc and collect their remnants?";
+			mes ".Alright, then. Would you rather capture reincarnations of Morocc and collect their remnants?";
 			mes "Scholars suspect the recent space-time phenomenon has been caused by the 'Bloody Crystals of the Darkness,'";
-			mes "so they want to study the crystals, which they believe are remnants of the of Morroc's reincarnations.";
+			mes "so they want to study the crystals, which they believe are remnants of the of Morocc's reincarnations.";
 			next;
 			mes "[Mr. Kidd]";
 			mes "That sounds way more dangerous, doesn't it? Go check that place out instead.";
@@ -12921,7 +12921,7 @@ que_job01,84,17,3	script	Rin#moc_room2_1	885,{
 			mes "[Rin]";
 			mes "..This is...it.";
 			mes "You can feel the evil spirit just by looking at it.";
-			mes "This...there's no doubt. It's the same kind of crystal as the ones found on Satan Morroc and his minions.";
+			mes "This...there's no doubt. It's the same kind of crystal as the ones found on Satan Morocc and his minions.";
 			next;
 			cutin "moc2_rin04",2;
 			mes "[Rin]";
@@ -13778,7 +13778,7 @@ OnTouch:
 		mes "It sounds like they're having a serious dispute.-";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "...Rayan? ...Morroc? ...Resurrect...?";
+		mes "...Rayan? ...Morocc? ...Resurrect...?";
 		mes "I have no idea what they're talking about. Why are they fighting?";
 		next;
 		mes "[Rayan]";
@@ -13986,11 +13986,11 @@ prontera,161,192,5	script	Ash-Vacuum Warper	707,{
 //= 1.1 I missed an end in one of the lhz guards. [L0ne_W0lf]
 //= 1.2 Fixed missing ends, wrong label and some typos [Gepard]
 //= 1.3 Added the two remaining 13.1 quests. [L0ne_W0lf]
-//=     Cat Hand Agents no longer ignore you with 300+ points.
+//=     Cat Paw Agents no longer ignore you with 300+ points.
 //= 1.4 Changed killmonsterall -> killmonster. (bugreport:4131)
 //= 1.5 Removed a 'close;' which should have been 'close2'. (bugreport:4276)
-//= 1.6 Fixed check in cat hand agent.
-//= 1.7 Moved the close in Cat Hand Service Warps. (bugreport:4079) [L0ne_W0lf]
+//= 1.6 Fixed check in Cat Paw agent.
+//= 1.7 Moved the close in Cat Paw Service Warps. (bugreport:4079) [L0ne_W0lf]
 //= 1.8 Added 13.2 Additions to Report from the New World NPCs
 //= 1.9 Upped success rates for Report from the New World drops.
 //= 2.0 Added Mid Camp Warper, translated from the Official [Slim]
