@@ -663,6 +663,7 @@ struct Battle_Config
 	int mob_nopc_move_rate;
 	int boss_nopc_idleskill_rate;
 	int boss_nopc_move_rate;
+	int hom_idle_no_share;
 
 #include "../custom/battle_config_struct.inc"
 };
