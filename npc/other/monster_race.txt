@@ -1578,7 +1578,7 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 	mes "Medals may be given to Wayne";
 	mes "in Hugel in exchange for items.";
 	next;
-	if (monster_race_2_1 == $@mon_race_2_1 && monster_race_2_2 == $@mon_race_2_2) {
+	if ((monster_race_2_1 == $@mon_race_2_1 && monster_race_2_2 == $@mon_race_2_2) || (monster_race_2_1 == $@mon_race_2_2 && monster_race_2_2 == $@mon_race_2_1)) {
 		mes "[Medal Distributor]";
 		mes "Congratulations! It's really";
 		mes "difficult to guess the winners";
@@ -1924,7 +1924,7 @@ ein_in01,85,208,5	script	Ei'felle#repay01	854,{
 		mes "[Ei'felle]";
 		mes "There's a small village";
 		mes "at the outskirts of the";
-		mes "Schwaltzvalt Republic that";
+		mes "Schwarzwald Republic that";
 		mes "gives these special medals";
 		mes "that are made of this metal";
 		mes "which we desperately need...";
@@ -2735,7 +2735,7 @@ airplane,246,47,1	script	Eocatt#decoy01	878,{
 	mes "[Eocatt]";
 	mes "There's an old, humble";
 	mes "village on the outskirts of";
-	mes "the Schwaltzvalt Republic.";
+	mes "the Schwarzwald Republic.";
 	mes "It was just a tiny blip on the";
 	mes "map until they opened up";
 	mes "their Monster Race Arena!";

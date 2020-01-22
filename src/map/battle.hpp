@@ -368,7 +368,6 @@ struct Battle_Config
 	int skill_removetrap_type;
 	int disp_experience;
 	int disp_zeny;
-	int castle_defense_rate;
 	int backstab_bow_penalty;
 	int hp_rate;
 	int sp_rate;
@@ -659,6 +658,11 @@ struct Battle_Config
 	int min_shop_sell;
 	int feature_equipswitch;
 	int pet_walk_speed;
+	int blacksmith_fame_refine_threshold;
+	int mob_nopc_idleskill_rate;
+	int mob_nopc_move_rate;
+	int boss_nopc_idleskill_rate;
+	int boss_nopc_move_rate;
 
 #include "../custom/battle_config_struct.inc"
 };

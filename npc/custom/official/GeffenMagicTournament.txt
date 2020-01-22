@@ -1692,7 +1692,7 @@ OnStart:
 			sleep 3000;
 			npctalk "The darling of this year's tournament!";
 			sleep 3000;
-			npctalk "Rune-Midgard newest star, "+'charname$+"!";
+			npctalk "Rune-Midgarts newest star, "+'charname$+"!";
 			sleep 2000;
 			npctalk "And "+('sex ? "his" : "her")+" opponent~!!!";
 			sleep 2000;
@@ -1704,7 +1704,7 @@ OnStart:
 			sleep 1000;
 			npctalk "Slow as a turtle, fast as a hare!";
 			sleep 3000;
-			npctalk "The maniac of Rune Midgard! Ifodes!";
+			npctalk "The maniac of Rune-Midgarts! Ifodes!";
 			donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
 			end;
 		case 19:
@@ -1742,7 +1742,7 @@ OnStart:
 			sleep 1000;
 			npctalk "And "+('sex ? "his" : "her")+" opponent~!!!";
 			sleep 1000;
-			npctalk "Seductress of Rune Midgard...";
+			npctalk "Seductress of Rune-Midgarts...";
 			sleep 500;
 			donpcevent instance_npcname("Odoric#1")+"::OnActivate";
 			sleep 500;
@@ -1824,7 +1824,7 @@ OnStart:
 			sleep 1000;
 			npctalk "Oh! This match is going to be exciting!",instance_npcname("Chaos#a2");
 			sleep 2000;
-			npctalk "Is there any Wizard stronger in all of Rune-Midgard?!";
+			npctalk "Is there any Wizard stronger in all of Rune-Midgarts?!";
 			sleep 3000;
 			npctalk "The Blue Wizard! Fenris Fenrir~!!";
 			end;
