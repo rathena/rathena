@@ -9,6 +9,10 @@
 #include <numeric> //iota
 #include <string>
 
+#ifndef __has_builtin
+	#define __has_builtin(x) 0
+#endif
+
 struct cScopeTimer::sPimpl {
     std::chrono::steady_clock::time_point start;
     std::chrono::steady_clock::time_point end;
@@ -66,7 +70,7 @@ int levenshtein(const std::string &s1, const std::string &s2)
 }
 
 bool rathena::util::safe_addition( int64 a, int64 b, int64& result ){
-#if defined(__GNUC__) || defined(__clang__)
+#if __has_builtin( __builtin_add_overflow ) || ( defined( __GNUC__ ) && !defined( __clang__ ) && defined( GCC_VERSION  ) && GCC_VERSION >= 50100 )
 	return __builtin_add_overflow( a, b, &result );
 #else
 	bool overflow = false;
@@ -88,7 +92,7 @@ bool rathena::util::safe_addition( int64 a, int64 b, int64& result ){
 }
 
 bool rathena::util::safe_substraction( int64 a, int64 b, int64& result ){
-#if defined(__GNUC__) || defined(__clang__)
+#if __has_builtin( __builtin_sub_overflow ) || ( defined( __GNUC__ ) && !defined( __clang__ ) && defined( GCC_VERSION  ) && GCC_VERSION >= 50100 )
 	return __builtin_sub_overflow( a, b, &result );
 #else
 	bool overflow = false;
@@ -110,7 +114,7 @@ bool rathena::util::safe_substraction( int64 a, int64 b, int64& result ){
 }
 
 bool rathena::util::safe_multiplication( int64 a, int64 b, int64& result ){
-#if defined(__GNUC__) || defined(__clang__)
+#if __has_builtin( __builtin_mul_overflow ) || ( defined( __GNUC__ ) && !defined( __clang__ ) && defined( GCC_VERSION  ) && GCC_VERSION >= 50100 )
 	return __builtin_mul_overflow( a, b, &result );
 #else
 	result = a * b;
