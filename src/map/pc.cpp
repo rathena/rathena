@@ -2763,11 +2763,11 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
 }
 
 /**
-* Reduce element bonus to player when attacking
-* @param sd: Player data
-* @param ele: Race to adjust
-* @param rate: Success chance
-* @param flag: Battle flag
+ * Adjust race damage to target when attacking
+ * @param sd: Player data
+ * @param race: Race to adjust
+ * @param rate: Success chance
+ * @param flag: Battle flag
 */
 static void pc_bonus_subrace(struct map_session_data* sd, unsigned char race, short rate, short flag)
 {
