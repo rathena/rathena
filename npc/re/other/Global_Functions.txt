@@ -40,3 +40,18 @@ function	script	F_22507	{// ShabbyOldScroll
 	else if (.@r == 10) warp "pay_fild10",147,267;
 	end;
 }
+
+// Replace some previous variable to official
+function	script	F_ReplaceVarTOfficial	{
+	if (ep14_3_dimensional_travel > 0) {
+		if (ep14_3_dimensional_travel < 2)
+			ep14_3_newerabs = ep14_3_dimensional_travel;
+		else if (ep14_3_dimensional_travel == 2)
+			ep14_3_newerabs = 3;
+		else if (ep14_3_dimensional_travel > 2 && ep14_3_dimensional_travel < 8)
+			ep14_3_newerabs = ep14_3_dimensional_travel + 2;
+		else if (>ep14_3_dimensional_travel > 7)
+			ep14_3_newerabs = ep14_3_dimensional_travel + 2 + 5;
+	}
+	return;
+}
