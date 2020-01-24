@@ -2657,7 +2657,7 @@
 4455,Light_Up_Card2,Light Up Card,6,20,,10,,,,,,,,2,,,,,{},{},{}
 4456,Nidhogg_Shadow_Card,Nidhoggur Shadow Card,6,20,,10,,,,,,,,16,,,,,{ bonus bInt,5; if (Class == Job_High_Wizard || Class == Job_Baby_Warlock || Class == Job_Warlock || Class == Job_Warlock_T) bonus bFixedCastrate,-50; },{},{}
 4457,Nahtzigger_Card,Naght Sieger Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bMagicAtkEle,Ele_Ghost,30; },{},{}
-4458,Duneirre_Card,Duneyrr Card,6,20,,10,,,,,,,,769,,,,,{ bonus bBaseAtk,10; autobonus "{ bonus bAspdRate,5; }",10,10000,0,"{ specialeffect2 EF_HASTEUP; }"; },{},{}
+4458,Duneirre_Card,Duneyrr Card,6,20,,10,,,,,,,,769,,,,,{ bonus bBaseAtk,10; autobonus "{ bonus bFlee2,10; }",10,10000,0,"{ specialeffect2 EF_HASTEUP; }"; },{},{}
 4459,Lata_Card,Rata Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMatk,10; autobonus "{ bonus bFixedCastrate,-50; }",5,4000,BF_MAGIC,"{ specialeffect2 EF_SUFFRAGIUM; }"; },{},{}
 4460,Ringco_Card,Rhyncho Card,6,20,,10,,,,,,,,769,,,,,{ bonus bHealPower,4; bonus2 bSkillUseSP,"AL_HEAL",-15; },{},{}
 4461,Pillar_Card,Phylla Card,6,20,,10,,,,,,,,769,,,,,{ bonus bDex,1; bonus bAgi,1; autobonus "{ bonus bCritical,20; }",15,4000,0,"{ specialeffect2 EF_ENHANCE; }"; },{},{}
