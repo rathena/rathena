@@ -3108,6 +3108,162 @@ moro_cav,64,13,0	warp	#ep14_3What caveExit	3,3,moro_vol,198,176
 moro_vol,95,96,6	shop	Tool Merchant	4_CAT_DOWN,611:-1,501:-1,502:-1,503:-1,504:-1,645:-1,656:-1,601:-1,602:-1,1065:-1,1750:-1
 
 
+moro_vol,1,2,3	script	#f_boss_c	CLEAR_NPC,{
+	end;
+OnInit:
+	donpcevent "#f_boss_c::OnStart0";
+	donpcevent "#f_boss_c::OnStart1";
+	donpcevent "#f_boss_c::OnStart2";
+	initnpctimer;
+	end;
+OnTimer20000:
+	donpcevent "#f_boss_c::OnM_chk0";
+	donpcevent "#f_boss_c::OnM_chk1";
+	donpcevent "#f_boss_c::OnM_chk2";
+	initnpctimer;
+	end;
+OnStart0:
+	killmonster "moro_vol", "#f_boss_c::OnMobDead0";
+	areamonster "moro_vol",273,233,283,243,"Morocc Twisted Vassal",3040,1, "#f_boss_c::OnMobDead0";
+	.gid[0] = $@mobid[0];
+	end;
+OnStart1:
+	killmonster "moro_vol", "#f_boss_c::OnMobDead1";
+	areamonster "moro_vol",287,126,297,136,"Morocc Fire Vassal",3039,1, "#f_boss_c::OnMobDead1";
+	.gid[1] = $@mobid[0];
+	end;
+OnStart2:
+	killmonster "moro_vol", "#f_boss_c::OnMobDead2";
+	areamonster "moro_vol",211,240,221,250,"Morocc Cold Vassal",3041,1, "#f_boss_c::OnMobDead2";
+	.gid[2] = $@mobid[0];
+	end;
+OnFail0: callsub( S_Fail, 0, 3040, "Morocc Twisted Vassal", 278,238 );	// B_MOROCC_2
+OnFail1: callsub( S_Fail, 1, 3039, "Morocc Fire Vassal", 292,131 );	// B_MOROCC_1
+OnFail2: callsub( S_Fail, 2, 3041, "Morocc Cold Vassal", 216,245 );	// B_MOROCC_4
+S_Fail:
+	.@index = getarg(0);
+	sleep2 4000;
+	if (unitexists(.gid[.@index]) == true) {
+		getunitdata .gid[.@index], .@data;
+		.@x1 = getarg(3) - 5;
+		.@y1 = getarg(4) - 5;
+		.@x2 = getarg(3) + 5;
+		.@y2 = getarg(4) + 5;
+		killmonster "moro_vol", "#f_boss_c::OnMobDead" + .@index;
+		areamonster "moro_vol",.@x1,.@y1,.@x2,.@y2,getarg(2),getarg(1),1, "#f_boss_c::OnMobDead" + .@index;
+		.gid[.@index] = $@mobid[0];
+		setunitdata .gid[.@index], UMOB_HP, .@data[UMOB_HP];
+	}
+	end;
+OnM_chk0: callsub( S_M_chk, 0, 278,238 );
+OnM_chk1: callsub( S_M_chk, 1, 292,131 );
+OnM_chk2: callsub( S_M_chk, 2, 216,245 );
+S_M_chk:
+	.@index = getarg(0);
+	if (unitexists(.gid[.@index]) == true) {
+		getunitdata .gid[.@index], .@data;
+		if ((.@data[UMOB_X] < (getarg(1) - 15)) || (.@data[UMOB_X] > (getarg(1) + 15)) || (.@data[UMOB_Y] < (getarg(2) - 15)) || (.@data[UMOB_Y] > (getarg(2) + 15))) {
+			unittalk .gid[.@index], "I have to go back to my position, this is his order.!";
+			donpcevent "#f_boss_c::OnFail" + .@index;
+		}
+	}
+	end;
+OnMyMobDead0: callsub( S_MobDead, 0 );
+OnMyMobDead1: callsub( S_MobDead, 1 );
+OnMyMobDead2: callsub( S_MobDead, 2 );
+S_MobDead:
+	.@index = getarg(0);
+	.gid[.@index] = 0;
+	if (mobcount("moro_vol", "#f_boss_c::OnMobDead" + .@index) < 1)
+		initnpctimer "#f_boss" + .@index;
+	end;
+}
+
+moro_vol,1,2,3	script	#f_boss0	CLEAR_NPC,{
+	end;
+OnInit:
+	disablenpc "#f_boss0";
+	end;
+OnTimer60000:
+	sscanf( strnpcinfo(2), "f_boss%d", .@num );
+	donpcevent "#f_boss_c::OnStart" + .@num;
+	stopnpctimer;
+	end;
+}
+moro_vol,1,2,3	duplicate(#f_boss0)	#f_boss1	CLEAR_NPC
+moro_vol,1,2,3	duplicate(#f_boss0)	#f_boss2	CLEAR_NPC
+
+moro_vol,86,167,7	script	Advance Base Defender#1	4_M_CRU_HEAD,3,3,{
+	mes "[Advance Base Defender]";
+	.@num = atoi(strnpcinfo(2));
+	if (.@num == 1 || .@num == 11)
+		mes "This place is too dangerous. Return to the base, now!";
+	else if (.@num == 2 || .@num == 12)
+		mes "I'll see that no monster sneak into the base.";
+	else if (.@num == 3 || .@num == 13)
+		mes "Sigh, how long do I have to do this?";
+	else if (.@num == 4 || .@num == 14)
+		mes "Don't worry. I'm here to protect you.";
+	else if (.@num == 5 || .@num == 15)
+		mes "We're in the middle of the battlefield. I can't talk for too long.";
+	else if (.@num == 6 || .@num == 16)
+		mes "Please step aside. You're blocking my vision.";
+	else if (.@num == 7 || .@num == 17)
+		mes "If you have time for chit-chat, then kill one more enemy instead.";
+	else if (.@num == 8 || .@num == 18)
+		mes "Bah, I'm cold and hungry... Oh, I was just talking to myself.";
+	else if (.@num == 9 || .@num == 19)
+		mes "Be careful: this place is overrun with dangerous monsters.";
+	else if (.@num == 10 || .@num == 20)
+		mes "For every monster I kill, one or more appear to take its place.";
+	close;
+
+OnTouchNPC:
+	.@t_rnd = rand(1,4);
+	if (.@t_rnd == 1)
+		npctalk "Advance Base Defender: Creature of Depravity, I command you to return to the Netherworld.";
+	else if (.@t_rnd == 2)
+		npctalk "Advance Base Defender: Not a step closer to my base, monsters!";
+	else if (.@t_rnd == 3)
+		npctalk "Advance Base Defender: Stop right there, monsters! Don't you dare get close to our sanctuary!";
+	else if (.@t_rnd == 4)
+		npctalk "Advance Base Defender: Begone, monsters! This land belongs to the Army of Holy Light!";
+	specialeffect EF_BEGINSPELL;
+	sleep2 1000;
+	.@c_rnd = rand(1,4);
+	if (.@c_rnd == 1)
+		specialeffect EF_LORD;
+	else if (.@c_rnd == 2)
+		specialeffect EF_STORMGUST;
+	else if (.@c_rnd == 3)
+		specialeffect EF_SIGNUM;
+	else if (.@c_rnd == 4)
+		specialeffect EF_SUI_EXPLOSION;
+	sleep2 2000;
+	unitwarp 0,"moro_vol",145,148;
+	end;
+}
+moro_vol,93,166,7	duplicate(Advance Base Defender#1)	Advance Base Defender#2	4_M_CRU_KNT,3,3
+moro_vol,100,165,7	duplicate(Advance Base Defender#1)	Advance Base Defender#3	4_M_CRU_SOLD,3,3
+moro_vol,107,164,7	duplicate(Advance Base Defender#1)	Advance Base Defender#4	4_M_KY_HEAD,3,3
+moro_vol,114,162,7	duplicate(Advance Base Defender#1)	Advance Base Defender#5	4_M_KY_KIYOM,3,3
+moro_vol,121,160,7	duplicate(Advance Base Defender#1)	Advance Base Defender#6	4_M_KY_KNT,3,3
+moro_vol,128,158,7	duplicate(Advance Base Defender#1)	Advance Base Defender#7	4_M_CRU_HEAD,3,3
+moro_vol,135,155,7	duplicate(Advance Base Defender#1)	Advance Base Defender#8	4_M_CRU_KNT,3,3
+moro_vol,142,152,7	duplicate(Advance Base Defender#1)	Advance Base Defender#9	4_M_CRU_SOLD,3,3
+moro_vol,149,148,7	duplicate(Advance Base Defender#1)	Advance Base Defender#10	4_M_KY_HEAD,3,3
+moro_vol,156,144,7	duplicate(Advance Base Defender#1)	Advance Base Defender#11	4_M_KY_KIYOM,3,3
+moro_vol,162,137,6	duplicate(Advance Base Defender#1)	Advance Base Defender#12	4_M_KY_KNT,3,3
+moro_vol,168,130,6	duplicate(Advance Base Defender#1)	Advance Base Defender#13	4_M_CRU_HEAD,3,3
+moro_vol,174,123,6	duplicate(Advance Base Defender#1)	Advance Base Defender#14	4_M_CRU_KNT,3,3
+moro_vol,178,116,6	duplicate(Advance Base Defender#1)	Advance Base Defender#15	4_M_CRU_SOLD,3,3
+moro_vol,182,109,6	duplicate(Advance Base Defender#1)	Advance Base Defender#16	4_M_KY_HEAD,3,3
+moro_vol,185,102,6	duplicate(Advance Base Defender#1)	Advance Base Defender#17	4_M_KY_KIYOM,3,3
+moro_vol,187,95,6	duplicate(Advance Base Defender#1)	Advance Base Defender#18	4_M_KY_KNT,3,3
+moro_vol,189,88,6	duplicate(Advance Base Defender#1)	Advance Base Defender#19	4_M_CRU_HEAD,3,3
+moro_vol,191,81,6	duplicate(Advance Base Defender#1)	Advance Base Defender#20	4_M_CRU_KNT,3,3
+
+
 //-- GM NPC
 moro_vol,5,1,3	script	#timemaster	CLEAR_NPC,{
 	if (callfunc("F_GM_NPC",1854,0,0,9999) < 1)
