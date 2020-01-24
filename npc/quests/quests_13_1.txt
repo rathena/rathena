@@ -16,7 +16,7 @@
 //= Attitude to the New
 //= Finding a Fairy & Finding a Giant Tree
 //= The Tripartite Union's Feud
-//= Cat Hand Agent
+//= Cat Paw Agent
 //= Part Time Work
 //= Report from the New World
 //= Persuing Rayan Moore
@@ -7553,17 +7553,17 @@ OnMyMobDead:
 	end;
 }
 
-// Cat Hand Trading Post :: cat_yong
+// Cat Paw Trading Post :: cat_yong
 //============================================================ 
-mid_camp,62,125,4	script	Cat Hand Agent	421,{
+mid_camp,62,125,4	script	Cat Paw Agent	421,{
 function Catwarp;
 	if (ep13_yong1 < 1) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Welcome to Cat Trading.";
 		mes "I guess you're a first-time";
 		mes "customer, huh?";
 		next;
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "How'd you like to make";
 		mes "a contract with us?";
 		mes "We'll guarantee that you'll";
@@ -7573,36 +7573,36 @@ function Catwarp;
 		next;
 		switch(select("Tell me more about your services.:No. thanks")) {
 		case 1:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Before making a contract with us, youll have to go through a few steps to satisfy our terms and conditions.";
 			next;
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "More clearly, you'll have to provide us something in return for our services.";
 			mes "You know what I mean, don't you?";
 			next;
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "For more information, please speak to Agent Gyaruk standing down there.";
 			mes "I'm sure you'll find our business proposition to be very reasonable.";
 			set ep13_yong1,1;
 			close;
 		case 2:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Well, feel free to come back whenever you change your mind.";
 			close;
 		}
 	}
 	else if (ep13_yong1 == 1) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "For more information, please speak to Agent Gyaruk standing down there.";
 		mes "I'm sure you'll find our business proposition to be very reasonable.";
 		close;
 	}
 	else if (ep13_yong1 == 2) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Thank you for making an official contract with us.";
 		mes "You're now eligable to use our services.";
 		next;
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "For our newcomers, we're offering a location-saving service with which you can save this camp as your returning location.";
 		mes "Would you like to save your location?";
 		set ep13_yong1,3;
@@ -7610,52 +7610,52 @@ function Catwarp;
 		switch(select("Save your location:Cancel")) {
 		case 1:
 			savepoint "mid_camp",56,139,1,1;
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you for using our service.";
 			close;
 		}
 	}
 	else if ((ep13_yong1 > 2) && (ep13_yong1 < 20)) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Cat Trading's available services are as followed.";
 		mes "For additional services, please consult Agent Gyaruk.";
 		next;
 		switch(select("Save your location:Cancel")) {
 		case 1:
 			savepoint "mid_camp",56,139,1,1;
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you for using our service.";
 			close;
 		}
 	}
 	else if ((ep13_yong1 > 19) && (ep13_yong1 < 40)) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Cat Trading's available services are as followed.";
 		mes "For additional services, please consult Agent Gyaruk.";
 		next;
 		switch(select("Save your location:Use Storage:Cancel")) {
 		case 1:
 			savepoint "mid_camp",56,139,1,1;
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
 			if(!callfunc("F_CanOpenStorage")){
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you";
 				mes "need the Novice's";
 				mes "Basic Skill Level 6 to";
@@ -7664,7 +7664,7 @@ function Catwarp;
 			}
 			else if (Zeny >= 60) {
 				set Zeny, Zeny-60;
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "Thank you.";
 				mes "Your storage will";
 				mes "be opened shortly.";
@@ -7673,7 +7673,7 @@ function Catwarp;
 				end;
 			}
 			else {
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you don't";
 				mes "have enough money?";
 				mes "Cat Trading's storage";
@@ -7682,27 +7682,27 @@ function Catwarp;
 				close;
 			}
 		case 3:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you for using our service.";
 			close;
 		}
 	}
 	else if ((ep13_yong1 > 39) && (ep13_yong1 < 100)) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Cat Trading's available services are as followed.";
 		mes "For additional services, please consult Agent Gyaruk.";
 		next;
 		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Cancel")) {
 		case 1:
 			savepoint "mid_camp",56,139,1,1;
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
 			if(!callfunc("F_CanOpenStorage")){
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you";
 				mes "need the Novice's";
 				mes "Basic Skill Level 6 to";
@@ -7711,7 +7711,7 @@ function Catwarp;
 			}
 			else if (Zeny >= 60) {
 				set Zeny, Zeny-60;
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "Thank you.";
 				mes "Your storage will";
 				mes "be opened shortly.";
@@ -7720,7 +7720,7 @@ function Catwarp;
 				end;
 			}
 			else {
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you don't";
 				mes "have enough money?";
 				mes "Cat Trading's storage";
@@ -7729,7 +7729,7 @@ function Catwarp;
 				close;
 			}
 		case 3:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "The warp service is only";
 			mes "available for customers with";
 			mes "40 or more Cat Trading Points.";
@@ -7799,32 +7799,32 @@ function Catwarp;
 				}
 			}
 			else {
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you're not eligible to use the warp service. Please check your points, and then come back.";
 			}
 			close;
 		case 4:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you for using our service.";
 			close;
 		}
 	}
 	else if (ep13_yong1 > 99) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Cat Trading's available services are as followed.";
 		mes "For additional services, please consult Agent Gyaruk.";
 		next;
 		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Use Cat Warp (Jottunheim):Cancel")) {
 		case 1:
 			savepoint "mid_camp",56,139,1,1;
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
 			if(!callfunc("F_CanOpenStorage")){
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you";
 				mes "need the Novice's";
 				mes "Basic Skill Level 6 to";
@@ -7833,7 +7833,7 @@ function Catwarp;
 			}
 			else if (Zeny >= 60) {
 				set Zeny, Zeny-60;
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "Thank you.";
 				mes "Your storage will";
 				mes "be opened shortly.";
@@ -7842,7 +7842,7 @@ function Catwarp;
 				end;
 			}
 			else {
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you don't";
 				mes "have enough money?";
 				mes "Cat Trading's storage";
@@ -7851,7 +7851,7 @@ function Catwarp;
 				close;
 			}
 		case 3:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "The warp service is only";
 			mes "available for customers with";
 			mes "40 or more Cat Trading Points.";
@@ -7912,7 +7912,7 @@ function Catwarp;
 				}
 			}
 			else {
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you're not eligible to use the warp service. Please check your points, and then come back.";
 			}
 			close;
@@ -7921,26 +7921,26 @@ function Catwarp;
 				case 1: Catwarp(5500,11);
 				case 2: Catwarp(5500,12);
 				case 3:
-					mes "[Cat Hand Agent]";
+					mes "[Cat Paw Agent]";
 					mes "Thank you for using our service.";
 					close;
 			}
 			close;
 		case 5:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you for using our service.";
 			close;
 		}
 	}
 	else {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "*Yawn...*";
 		mes "I want to eat fish.";
 		close;
 	}
 function Catwarp {
 	if (Zeny < getarg(0)) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Don't play with money.";
 		close;
 	}
@@ -7973,7 +7973,7 @@ mid_camp,72,94,4	script	Fluffy Gyaruk	421,{
 	else if (ep13_yong1 == 1) {
 		mes "[Fluffy Gyaruk]";
 		mes "Hmm?";
-		mes "Oh, did the Cat Hand Agent send you?";
+		mes "Oh, did the Cat Paw Agent send you?";
 		next;
 		select("Yes.");
 		mes "[Fluffy Gyaruk]";
@@ -8021,7 +8021,7 @@ mid_camp,72,94,4	script	Fluffy Gyaruk	421,{
 			mes "We hope you'll support our exploration of this unknown land.";
 			next;
 			mes "[Fluffy Gyaruk]";
-			mes "Please go speak to the Cat Hand Agent over there to use a basic service.";
+			mes "Please go speak to the Cat Paw Agent over there to use a basic service.";
 			mes "Oh, and please come back afterwards.";
 			set ep13_yong1,2;
 			close;
@@ -8076,7 +8076,7 @@ mid_camp,72,94,4	script	Fluffy Gyaruk	421,{
 		next;
 		switch(select("How can I increase my points?:I'm not interested.")) {
 		case 1:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "You can increase them daily by fishing and mining, you need to submit caught Pieces of Fish to Gorurung and minerals to the Mining Agent.";
 			close;
 		case 2:
@@ -8337,7 +8337,7 @@ mid_camp,66,122,55	script	Henry Clifford	712,{
 			mes "[Henry Clifford]";
 			mes "Thank you for the Marlin.";
 			mes "I've given you the points in return.";
-			mes "You may go check your points through the Cat Hand Agent.";
+			mes "You may go check your points through the Cat Paw Agent.";
 			close;
 		case 2:
 			mes "[Henry Clifford]";
@@ -8369,10 +8369,10 @@ mid_camp,66,122,55	script	Henry Clifford	712,{
 	}
 }
 
-mid_camp,88,100,55	script	Cat Hand Mining Agent	876,{
+mid_camp,88,100,55	script	Cat Paw Mining Agent	876,{
 	if (checkquest(12062,PLAYTIME) == -1) {
 		if ((countitem(6048) > 2) && (ep13_yong1 > 9)) {
-			mes "[Cat Hand Mining Agent]";
+			mes "[Cat Paw Mining Agent]";
 			mes "Oh, wow~";
 			mes "Thank you for collecting minerals for me.";
 			next;
@@ -8381,13 +8381,13 @@ mid_camp,88,100,55	script	Cat Hand Mining Agent	876,{
 			setquest 12062;
 			set ep13_yong1,ep13_yong1+1;
 			select("I'm freezing! Take them quickly.");
-			mes "[Cat Hand Mining Agent]";
+			mes "[Cat Paw Mining Agent]";
 			mes "Yes, yes~ I've received the mineral samples.";
 			mes "I'll go ahead and add points to your credit.";
 			close;
 		}
 		else {
-			mes "[Cat Hand Mining Agent]";
+			mes "[Cat Paw Mining Agent]";
 			mes "To collect minerals,";
 			mes "we have to go to the";
 			mes "frozen land to the east.";
@@ -8395,7 +8395,7 @@ mid_camp,88,100,55	script	Cat Hand Mining Agent	876,{
 			mes "like me, the weather";
 			mes "is unbearable.";
 			next;
-			mes "[Cat Hand Mining Agent]";
+			mes "[Cat Paw Mining Agent]";
 			mes "If the weather";
 			mes "is good tomorrow,";
 			mes "I might try to go,";
@@ -8406,14 +8406,14 @@ mid_camp,88,100,55	script	Cat Hand Mining Agent	876,{
 		}
 	}
 	else if ((checkquest(12062,PLAYTIME) == 0) || (checkquest(12062,PLAYTIME) == 1)) {
-		mes "[Cat Hand Mining Agent]";
+		mes "[Cat Paw Mining Agent]";
 		mes "I hope you'll bring me minerals again tomorrow...";
 		mes "If you can. It's much better to wait for you to do it than go there on my own.";
 		close;
 	}
 	else {
 		erasequest 12062;
-		mes "[Cat Hand Mining Agent]";
+		mes "[Cat Paw Mining Agent]";
 		mes "Umm... It's time to collect minerals.";
 		mes "How'd you like to collect minerals for me?";
 		close;
@@ -13986,11 +13986,11 @@ prontera,161,192,5	script	Ash-Vacuum Warper	707,{
 //= 1.1 I missed an end in one of the lhz guards. [L0ne_W0lf]
 //= 1.2 Fixed missing ends, wrong label and some typos [Gepard]
 //= 1.3 Added the two remaining 13.1 quests. [L0ne_W0lf]
-//=     Cat Hand Agents no longer ignore you with 300+ points.
+//=     Cat Paw Agents no longer ignore you with 300+ points.
 //= 1.4 Changed killmonsterall -> killmonster. (bugreport:4131)
 //= 1.5 Removed a 'close;' which should have been 'close2'. (bugreport:4276)
-//= 1.6 Fixed check in cat hand agent.
-//= 1.7 Moved the close in Cat Hand Service Warps. (bugreport:4079) [L0ne_W0lf]
+//= 1.6 Fixed check in Cat Paw agent.
+//= 1.7 Moved the close in Cat Paw Service Warps. (bugreport:4079) [L0ne_W0lf]
 //= 1.8 Added 13.2 Additions to Report from the New World NPCs
 //= 1.9 Upped success rates for Report from the New World drops.
 //= 2.0 Added Mid Camp Warper, translated from the Official [Slim]

@@ -2689,11 +2689,21 @@ OnInit:
 OnEnable:
 	enablenpc strnpcinfo(0);
 	.@c = charat(strnpcinfo(0),9);
-	switch (.@c) {
-		case 1: setarray .@m, 89,112,1551,85,110,1579; break;// G_MARSE, G_HYDRA
-		case 2: setarray .@m, 89,112,1425,80,110,1254,83,114,1254,85,110,1425; break;// G_OBEAUNE, RAGGLER
-		case 3: setarray .@m, 85,111,1451,89,112,1543,90,106,1543; break;// G_MERMAN, G_KAPHA
-		case 4: setarray .@m, 85,111,1069,89,112,1543,90,106,1543; break;// SWORD_FISH, G_KAPHA
+	if (checkre(0)) {
+		switch (.@c) {
+			case 1: setarray .@m, 89,112,1551,85,110,1579; break;// G_MARSE, G_HYDRA
+			case 2: setarray .@m, 89,112,1425,80,110,1254,83,114,1254,85,110,1425; break;// G_OBEAUNE, RAGGLER
+			case 3: setarray .@m, 85,111,1451,89,112,1543,90,106,1543; break;// G_MERMAN, G_KAPHA
+			case 4: setarray .@m, 85,111,1069,89,112,1543,90,106,1543; break;// SWORD_FISH, G_KAPHA
+		}
+	}
+	else {
+		switch (.@c) {
+			case 1: setarray .@m, 89,112,1425,85,110,1425; break;// G_OBEAUNE, G_OBEAUNE
+			case 2: setarray .@m, 89,112,1425,80,110,1426,83,114,1426,85,110,1425; break;// G_OBEAUNE, G_MARC
+			case 3:
+			case 4: setarray .@m, 85,111,1451,89,112,1543,90,106,1543; break;// G_MERMAN, G_KAPHA
+		}
 	}
 	for (.@i = 0; .@i < getarraysize(.@m); .@i += 3)
 		monster "mosk_ship",.@m[.@i],.@m[.@i+1],"Sea Monster",.@m[.@i+2],1,strnpcinfo(0)+"::OnMyMobDead";
