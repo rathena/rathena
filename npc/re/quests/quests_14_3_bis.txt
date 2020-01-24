@@ -6,6 +6,7 @@
 //===== Changelogs: ==========================================
 //= 1.0 First version. Thanks to Dia from https://www.divine-pride.net/ ! [Capuche]
 //= 1.1 Added Dimensional Travel Quest. [Capuche]
+//= 1.2 Added Flaming Basin and Doom Prayers quests. [Capuche]
 //============================================================
 
 moro_vol,94,110,5	script	Guardian Nidhogg#143nyd01	4_F_NYDHOG,{
