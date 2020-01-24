@@ -2593,7 +2593,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					zeny*=rnd()%250;
 			}
 
-			if (map_getmapflag(m, MF_NOBASEEXP) || !md->db->base_exp || (md->dmglog[i].flag == MDLF_HOMUN && homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(tmpsd[i])))
+			if (map_getmapflag(m, MF_NOBASEEXP) || !md->db->base_exp)
 				base_exp = 0;
 			else {
 				double exp = apply_rate2(md->db->base_exp, per, 1);
@@ -2610,6 +2610,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				exp = apply_rate(exp, map_getmapflag(m, MF_JEXP));
 				job_exp = (unsigned int)cap_value(exp, 1, UINT_MAX);
 			}
+
+			if ((base_exp || job_exp) && md->dmglog[i].flag == MDLF_HOMUN && homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(tmpsd[i]))
+				base_exp = job_exp = 0;
 
 			if ( ( temp = tmpsd[i]->status.party_id)>0 ) {
 				int j;
