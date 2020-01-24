@@ -2640,6 +2640,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					flag = 0;
 				}
 			}
+			if (md->dmglog[i].flag == MDLF_HOMUN && homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(tmpsd[i]))
+				base_exp = job_exp = pnum = 0;
 			if(base_exp && md->dmglog[i].flag == MDLF_HOMUN) //tmpsd[i] is null if it has no homunc.
 				hom_gainexp(tmpsd[i]->hd, base_exp);
 			if(flag) {
@@ -2654,8 +2656,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 								job_exp = (unsigned int)cap_value(apply_rate(job_exp, rate), 1, UINT_MAX);
 						}
 #endif
-						if (!(homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(tmpsd[i])))
-							pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, 0);
+						pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, 0);
 					}
 				}
 				if(zeny) // zeny from mobs [Valaris]
@@ -2666,9 +2667,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				pc_damage_log_clear(tmpsd[i],md->bl.id);
 		}
 
-		if (!(homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(map_charid2sd(md->dmglog[0].id))))
-			for( i = 0; i < pnum; i++ ) //Party share.
-				party_exp_share(pt[i].p, &md->bl, pt[i].base_exp,pt[i].job_exp,pt[i].zeny);
+		for( i = 0; i < pnum; i++ ) //Party share.
+			party_exp_share(pt[i].p, &md->bl, pt[i].base_exp,pt[i].job_exp,pt[i].zeny);
 
 	} //End EXP giving.
 
