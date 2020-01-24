@@ -3264,7 +3264,1189 @@ moro_vol,189,88,6	duplicate(Advance Base Defender#1)	Advance Base Defender#19	4_
 moro_vol,191,81,6	duplicate(Advance Base Defender#1)	Advance Base Defender#20	4_M_CRU_KNT,3,3
 
 
-//-- GM NPC
+// Flaming Basin and Doom Prayers
+// gef_fild02,106,225,4	script	Base Investigator#bl	4_M_KY_HEAD,{
+moro_vol,131,103,3	script	Base Investigator#bl	4_M_KY_HEAD,{
+	if (checkweight(1301,3) == 0) {
+		mes "- Cannot progress with the dialogue because you have too many items. -";
+		close;
+	}
+	if (BaseLevel < 150) {
+		mes "[Base Investigator]";
+		mes "You look super weak!";
+		mes "Why are you here??";
+		next;
+		mes "[Base Investigator]";
+		mes "Well, there are not enough people!";
+		mes "But we will wait until you reach level 150.";
+		mes "Please come back later!";
+		close;
+	}
+	if (ep14_3_fall_bless == 0) {
+		mes "[Base Investigator]";
+		mes "Have you noticed it, too?";
+		mes "Yes, the monsters in this area are really quite strange.";
+		next;
+		mes "[Base Investigator]";
+		mes "They appear to be mutant versions of Midgard monsters";
+		next;
+		mes "[Base Investigator]";
+		mes "Worse still, their number has been rapidly increasing.";
+		mes "We must keep an eye on them.";
+		next;
+		mes "[Base Investigator]";
+		mes "To my regret, everyone seems so busy that I can't ask them for help, despite the seriousness of the investigation.";
+		mes "This is not a safe environment.";
+		next;
+		switch( select( "What's going on?", "Why can't you do it yourself?", "Do you want me to do it?" ) ) {
+		case 1:
+			mes "[Base Investigator]";
+			mes "The environmental characteristics of this area are making the investigation too difficult.";
+			mes "The scenery looks familiar, yet in a way... strange.";
+			mes "The place looks like it's on the verge of utter collapse but.. I can see bursts of vibrant growth.";
+			next;
+			mes "[Base Investigator]";
+			mes "What is this place?";
+			close;
+		case 2:
+			mes "[Base Investigator]";
+			mes "Like everyone else from a noble background,";
+			mes "I only know how to command others.";
+			emotion 4, playerattached();
+			close;
+		case 3:
+			mes "[Base Investigator]";
+			mes "Of all those monsters,";
+			mes "^0000FFFire Condors^000000 look most dangerous.";
+			mes "Those birds with burning tails charge headlong toward everyone they see. You may be able to run from them, but you will always get singed.";
+			next;
+			select("Do you want me to hunt Fire Condors?");
+			mes "[Base Investigator]";
+			mes "No, I have no one to dispose their carcasses.";
+			mes "My purpose is, after all, an investigation.";
+			mes "Just bring me";
+			mes "15 ^FF0000Burning Feathers^000000";
+			mes "from ^0000FFFire Condors^000000.";
+			next;
+			if (select( "I'm as busy as you!", "Got it." ) == 1) {
+				mes "[Base Investigator]";
+				mes "You acted as if you'd help me.";
+				mes "Were you messing with me?";
+				close;
+			}
+			mes "[Base Investigator]";
+			mes "Bring me";
+			mes "^FF000015 Burning Feathers^000000";
+			mes "from ^0000FFFire Condors^000000.";
+			mes "Hurry before more people fall victim to those vicious birds!";
+			setquest 1264;	// Flaming Basin and Doom Prayers
+			ep14_3_fall_bless = 1;
+			close;
+		}
+	}
+	if (ep14_3_fall_bless == 1) {
+		if (countitem(6691) < 15) {
+			mes "[Base Investigator]";
+			mes "I thought you'd be hard at work by now,";
+			mes "gathering ^FF000015 Burning Feathers^000000";
+			mes "from ^0000FFFire Condors^000000,";
+			mes "so I called an emergency meeting of";
+			mes "my investigators.";
+			next;
+			mes "[Base Investigator]";
+			mes "And you're still in town,";
+			mes "enjoying a leisurely walk.";
+			close;
+		}
+		mes "[Base Investigator]";
+		mes "You brought";
+		mes "all the ^FF000015 Burning Feathers^000000.";
+		mes "Thank you. Now I can";
+		mes "proceed with my investigation.";
+		next;
+		mes "[Base Investigator]";
+		mes "Most of all, I can finally enjoy the warmth of a fire!";
+		emotion 21;
+		next;
+		mes "[Base Investigator]";
+		mes "Did you notice the worrisome expression on my face?";
+		next;
+		if (select( "Nope. Never.", "I did, instantly." ) == 1) {
+			mes "[Base Investigator]";
+			mes "That's not the answer I expected,";
+			mes "but I'll continue with the spiel";
+			mes "I've prepared.";
+			mes "Sigh...";
+			next;
+			mes "[Base Investigator]";
+			mes "A scout hasn't returned";
+			mes "from the Flaming Basin.";
+			mes "I want you to go check";
+			mes "what happened to him.";
+			next;
+			if (select( "No can do.", "Sure." ) == 1) {
+				mes "[Base Investigator]";
+				mes "I know you'll do it anyway!";
+				close;
+			}
+			mes "[Base Investigator]";
+			mes "The scout headed for the area teeming with monsters.";
+			mes "Keep your eyes peeled for him.";
+			delitem 6691,15;// BurningFeather
+			completequest 1264;	// Flaming Basin and Doom Prayers
+			setquest 1265;	// Flaming Basin and Doom Prayers
+			ep14_3_fall_bless = 2;
+			close;
+		}
+		mes "[Base Investigator]";
+		// google translate..
+		mes "Not bad! You guys....";
+		mes "Please eat three bowls of gongs!";
+		next;
+		mes "[Base Investigator]";
+		mes "A scout hasn't returned";
+		mes "from the Flaming Basin.";
+		mes "I want you to go check";
+		mes "what happened to him.";
+		next;
+		if (select( "No can do.", "Sure." ) == 1) {
+			mes "[Base Investigator]";
+			mes "I know you'll do it anyway!";
+			close;
+		}
+		mes "[Base Investigator]";
+		mes "The scout headed for the area teeming with monsters.";
+		mes "Keep your eyes peeled for him.";
+		delitem 6691,15;// BurningFeather
+		completequest 1264;	// Flaming Basin and Doom Prayers
+		setquest 1265;	// Flaming Basin and Doom Prayers
+		ep14_3_fall_bless = 2;
+		close;
+	}
+	if (ep14_3_fall_bless < 4) {
+		mes "[Base Investigator]";
+		mes "I sent you out to look for the scout.";
+		mes "Did you come back or haven't you left at all?";
+		next;
+		mes "[Base Investigator]";
+		mes "Go look for the scout in the place teeming with monsters!";
+		close;
+	}
+	if (ep14_3_fall_bless == 4) {
+		mes "[Base Investigator]";
+		mes "Did you find the scout?";
+		mes "He's resting and rewriting his scout journal?";
+		next;
+		mes "[Base Investigator]";
+		mes "He does not disappoint me.";
+		mes "He's a good soldier!";
+		emotion 21;
+		emotion 4, playerattached();
+		next;
+		mes "[Base Investigator]";
+		mes "Now that we've found the missing scout,";
+		mes "I want you to move on to the next mission.";
+		next;
+		mes "[Base Investigator]";
+		mes "You know the number of mysterious monsters";
+		mes "in this Flaming Basin has been continuously increasing.";
+		next;
+		select("I know.");
+		mes "[Base Investigator]";
+		mes "Things could quickly go out of control";
+		mes "if they expand to the outside world.";
+		mes "If they encounter other monsters in Midgard or the Other World,";
+		mes "they could go on a rampage,";
+		next;
+		mes "[Base Investigator]";
+		mes "could spread deadly virus,";
+		mes "could procreate powerful mutants,";
+		mes "or worse.";
+		next;
+		mes "[Base Investigator]";
+		mes "For now, the best solution would be";
+		mes "a large cull, and I want you to do it.";
+		next;
+		mes "[Base Investigator]";
+		mes "Please exterminate";
+		mes "20 ^0000FFFire Sandmen^000000";
+		mes "and ^0000FFFire Frilldoras^000000.";
+		next;
+		if (select( "Do it yourself!", "I'll do my best." ) == 1) {
+			mes "[Base Investigator]";
+			mes "I hate to repeat myself,";
+			mes "but like everyone else from a noble background,";
+			mes "I only know how to command others.";
+			emotion 19, playerattached();
+			close;
+		}
+		mes "[Base Investigator]";
+		mes "Hurry, those monsters are breeding even as we speak.";
+		next;
+		mes "[Base Investigator]";
+		mes "Please exterminate";
+		mes "20 ^0000FFFire Sandmen^000000";
+		mes "and 20 ^0000FFFire Frilldoras^000000.";
+		completequest 1267;	// Flaming Basin and Doom Prayers
+		setquest 1268;	// Flaming Basin and Doom Prayers
+		setquest 1269;	// Flaming Basin and Doom Prayers
+		ep14_3_fall_bless = 5;
+		close;
+	}
+	if (ep14_3_fall_bless == 5) {
+		if (checkquest(1268,HUNTING) == 2 && checkquest(1269,HUNTING) == 2) {
+			mes "[Base Investigator]";
+			mes "You exterminated";
+			mes "20 ^0000FFFire Sandmen^000000";
+			mes "and 20 ^0000FFFire Frilldoras^000000 as I ordered.";
+			next;
+			mes "[Base Investigator]";
+			mes "Thanks to you we've found an effective wayto deal with the monsters.";
+			next;
+			mes "[Base Investigator]";
+			mes "From this moment on, my soldiers will take over.";
+			completequest 1268;	// Flaming Basin and Doom Prayers
+			completequest 1269;	// Flaming Basin and Doom Prayers
+			setquest 1297;	// Flaming Basin and Doom Prayers
+			ep14_3_fall_bless = 6;
+			getexp 0,100000;
+			close;
+		}
+		mes "[Base Investigator]";
+		mes "Hurry, those monsters are";
+		mes "multiplying themselves even as we speak.";
+		next;
+		mes "[Base Investigator]";
+		mes "Please exterminate";
+		mes "20 ^0000FFFire Sandmen^000000";
+		mes "and 20 ^0000FFFire Frilldoras^000000.";
+		close;
+	}
+	mes "[Base Investigator]";
+	mes "So leave it to us to take care of this area, and you go ahead and head north.";
+	mes "I want you to do something about that strange group of people over there.";
+	next;
+	mes "[Base Investigator]";
+	mes "They've appeared out of nowhere.";
+	mes "doing everything they can to pester us.";
+	emotion 28;
+	close;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 150 && isbegin_quest(1264) == 0 && ep14_3_fall_bless == 0" );
+	end;
+}
+
+//gef_fild02,106,225,4	script	Scout#bl	4_M_CRU_SOLD,{
+moro_vol,234,301,3	script	Scout#bl	4_M_CRU_SOLD,{
+	if (checkweight(1301,3) == 0) {
+		mes "- Cannot progress with the dialogue because you have too many items. -";
+		close;
+	}
+	if (ep14_3_fall_bless == 0) {
+		mes "[Scout]";
+		mes "I was sent to investigate these monsters.";
+		mes "It's unfair that I'm alone";
+		mes "in this dangerous place with no backup!";
+		close;
+	}
+	if (ep14_3_fall_bless == 1) {
+		mes "[Scout]";
+		mes "I was sent to investigate these monsters.";
+		mes "It's unfair that I'm alone";
+		mes "in this dangerous place with no backup!";
+		next;
+		mes "[Scout]";
+		mes "Argh, I'm just gonna go AWOL!";
+		close;
+	}
+	if (ep14_3_fall_bless == 2) {
+		mes "[Scout]";
+		mes "Welcome!";
+		mes "I'm in dire need of help!";
+		next;
+		mes "[Scout]";
+		mes "I came here alone on a recon mission.";
+		mes "A horde of monsters surrounded me, keeping me from leaving,";
+		mes "so I had no choice but to hang around.";
+		next;
+		if (select("Stay chilling then.", "Let's go back with me.") == 1) {
+			mes "[Scout]";
+			mes "You're afraid I might ask for help,";
+			mes "I see.";
+			close;
+		}
+		mes "[Scout]";
+		mes "I'm not injured, save a few scrapes,";
+		mes "but ^0000FFFire Sandmen^000000 stole";
+		mes "my ^FF0000scout journal^000000.";
+		next;
+		mes "[Scout]";
+		mes "Without the ^FF0000scout journal^000000, I can't go back.";
+		mes "I'll be lucky";
+		mes "if my superiors don't court-martial me.";
+		next;
+		mes "[Scout]";
+		mes "Don't I sound pitiful?";
+		mes "Doesn't it inspire you to help me?";
+		next;
+		if (select("Neh.", "It does." == 1) {
+			mes "[Scout]";
+			mes "All right, then I'll just have to";
+			mes "stay here and chill until help arrives.";
+			close;
+		}
+		mes "[Scout]";
+		mes "Okay, here's what you can do to help:";
+		mes "Please bring ^FF0000Scout Journals^000000";
+		mes "from ^0000FFFire Sandmen^000000.";
+		next;
+		mes "[Scout]";
+		mes "The journal could have been separated into pages, snapped at by those feral monsters.";
+		mes "I don't care; I still need them to show to my superiors.";
+		mes "Please bring me";
+		mes "20 ^FF0000Scout Journals^000000.";
+		next;
+		mes "[Scout]";
+		mes "Be careful--they can ambush you and snatch away ^FF0000Scout Journals^000000 before you know it.";
+		completequest 1265;	// Flaming Basin and Doom Prayers
+		setquest 1266;	// Flaming Basin and Doom Prayers
+		ep14_3_fall_bless = 3;
+		close;
+	}
+	if (ep14_3_fall_bless == 3) {
+		if (countitem(6692) < 20) {
+			mes "[Scout]";
+			mes "Please bring 20 ^FF0000Scout Journals^000000";
+			mes "from ^0000FFFire Sandmen^000000.";
+			next;
+			mes "[Scout]";
+			mes "Be careful--they can ambush you and snatch away ^FF0000Scout Journals^000000 before you know it.";
+			close;
+		}
+		mes "[Scout]";
+		mes "Did you already find";
+		mes "20 ^FF0000Scout Journals^000000?";
+		mes "If I knew you're so fast, I would have asked you for 100 pages instead.";
+		next;
+		mes "[Scout]";
+		mes "My wounds are throbbing from the thought of punishment";
+		mes "that might await me at the base.";
+		next;
+		mes "[Scout]";
+		mes "I'll follow you as soon as I'm done reorganizing these pages.";
+		mes "Please report to the Investigator";
+		mes "and put in a good word";
+		mes "for me.";
+		delitem 6692,20;// PatrolLog
+		completequest 1266;	// Flaming Basin and Doom Prayers
+		setquest 1267;	// Flaming Basin and Doom Prayers
+		ep14_3_fall_bless = 4;
+		close;
+	}
+	if (ep14_3_fall_bless == 4) {
+		mes "[Scout]";
+		mes "I'll follow you as soon as I'm done reorganizing these pages.";
+		mes "Please report to the Investigator";
+		mes "and put in a good word";
+		mes "for me.";
+		close;
+	}
+	mes "[Scout]";
+	mes "I was sent to investigate these monsters.";
+	mes "It's unfair that I'm alone";
+	mes "in this dangerous place with no backup!";
+	close;
+}
+
+moro_vol,227,294,0	script	#bg1	HIDDEN_WARP_NPC,2,2,{
+	end;
+OnTouch:
+	if (ep14_3_fall_bless != 3)
+		end;
+	getmapxy .@map$,.@x,.@y, BL_NPC;
+	sscanf( strnpcinfo(2), "bg%d", .@npc_num );
+	if (.@npc_num == 9) {
+		.@count = 2;
+		.@y = 302;
+	}
+	else if (.@npc_num == 1 || .@npc_num == 4 || .@npc_num == 5 || .@npc_num == 7 || .@npc_num == 8)
+		.@count = 3;
+	else
+		.@count = 2;
+	if (countitem(6692) >= .@count) {
+		mes "You have been ambushed by Fire Sandmen!";
+		delitem 6692, .@count;// PatrolLog
+		monster "moro_vol",.@x,(.@y-2)," ",FIRE_SAND_MAN,1;
+		monster "moro_vol",.@x,(.@y-1)," ",FIRE_SAND_MAN,1;
+		monster "moro_vol",.@x,.@y," ",FIRE_SAND_MAN,1;
+		close;
+	}
+	end;
+}
+moro_vol,236,292,0	duplicate(#bg1)	#bg2	HIDDEN_WARP_NPC,2,2
+moro_vol,219,302,0	duplicate(#bg1)	#bg3	HIDDEN_WARP_NPC,2,2
+moro_vol,214,292,0	duplicate(#bg1)	#bg4	HIDDEN_WARP_NPC,2,2
+moro_vol,233,283,0	duplicate(#bg1)	#bg5	HIDDEN_WARP_NPC,2,2
+moro_vol,243,277,0	duplicate(#bg1)	#bg6	HIDDEN_WARP_NPC,2,2
+moro_vol,220,278,0	duplicate(#bg1)	#bg7	HIDDEN_WARP_NPC,2,2
+moro_vol,205,282,0	duplicate(#bg1)	#bg8	HIDDEN_WARP_NPC,2,2
+moro_vol,195,301,0	duplicate(#bg1)	#bg9	HIDDEN_WARP_NPC,2,2
+moro_vol,232,266,0	duplicate(#bg1)	#bg10	HIDDEN_WARP_NPC,2,2
+
+
+// moro_vol,104,141,3	script	Doom Prayers Leader#bl	4_M_BELIEVER01,{
+moro_vol,91,197,3	script	Doom Prayers Leader#bl	4_M_BELIEVER01,{
+	if (checkweight(1301,3) == 0) {
+		mes "- Cannot progress with the dialogue because you have too many items. -";
+		close;
+	}
+	if (ep14_3_fall_bless < 6) {
+		mes "[Doom Prayers Leader]";
+		mes "Finally, doomsday has come!";
+		mes "Destruction is a blessing!";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "Guide us to the inside!";
+		mes "We're chosen by the gods!";
+		mes "The day when the destruction of the world begins.";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "Blood for the blood go~~";
+		mes "I mean destruction is good!";
+		mes "Destruction is a blessing!";
+		close;
+	}
+	if (ep14_3_fall_bless == 6) {
+		mes "[Doom Prayers Leader]";
+		mes "Finally, doomsday has come!";
+		mes "Destruction is a blessing!";
+		next;
+		mes "[Doom Prayers]";
+		mes "Destruction! Is! A! Blessing!";
+		mes "Destruction! Is! A! Blessing!";
+		next;
+		mes "[Doom Prayers]";
+		mes "Destruction! Blessing!";
+		mes "We are the chosen ones!";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "Guide us to the inside!";
+		mes "We're chosen by the gods!";
+		mes "The day when the destruction of the world begins,";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "The gun is good!";
+		mes "The HODE is evil!";
+		next;
+		switch( select( "What god do you serve?", "Who are you?", "Go back!" ) ) {
+		case 1:
+			mes "[Doom Prayers Leader]";
+			mes "We serve the God of Destruction!";
+			mes "He oversees the destruction of everything--from the destruction of a star to that of an entire galaxy,";
+			mes "and from the spoilage of my breakfast to that of my dinner.";
+			close;
+		case 2:
+			mes "[Doom Prayers Leader]";
+			mes "We're the Doom Prayers!";
+			mes "We serve the God of Destruction,";
+			mes "and pray to him to bless us with the end of the world.";
+			next;
+			mes "[Doom Prayers Leader]";
+			mes "Only after everything else is destroyed,";
+			mes "we can be truly blessed.";
+			next;
+			mes "[Doom Prayers Leader]";
+			mes "Those sudden cracks";
+			mes "in the ground.";
+			mes "Those talking Cats.";
+			mes "Those green giants.";
+			next;
+			mes "[Doom Prayers Leader]";
+			mes "They prove the end is near!";
+			mes "Oh, doomsday has arrived!";
+			mes "Destruction is a blessing!";
+			close;
+		case 3:
+			mes "[Doom Prayers Leader]";
+			mes "No, we won't!";
+			mes "Finally, doomsday has arrived!";
+			mes "We've been dying for the blessing!";
+			mes "I want to be there before everyone else!";
+			next;
+			mes "[Doom Prayers Leader]";
+			mes "Hell no, we won't go!";
+			mes "Let us in there!";
+			mes "We've been chosen by the God of Destruction.";
+			mes "Unlike you, we're invincible!";
+			next;
+			select("Can you prove it?");
+			mes "[Doom Prayers Leader]";
+			mes "How dare you challenge me?!";
+			mes "All right, I'll prove it to you!";
+			next;
+			mes "[Doom Prayers Leader]";
+			mes "Search this Doomsland and find ^FF000040 Blessing Stones^000000.";
+			mes "Throw them at us, and you'll see.";
+			next;
+			mes "[Doom Prayers Leader]";
+			mes "The moment they hit our bodies,";
+			mes "they'll turn into flower petals with a loud pop!";
+			mes "Destruction is a blessing!";
+			next;
+			select("Doomsland?");
+			mes "[Guard]";
+			mes "That's what those crazy people call this Flaming Basin.";
+			next;
+			mes "[Guard]";
+			mes "And what they call ^FF0000Blessing Stones^000000 are simply the debris fell off ^0000FFFire Golems^000000.";
+			next;
+			mes "The only way to send away these crazy people must be prove them they're wrong.";
+			mes "Do you want to hunt ^0000FFFire Golems^000000";
+			mes "and collect 40 ^FF0000Blessing Stones^000000?";
+			next;
+			if (select( "No, I couldn't care less!", "I'll collect the stones." ) == 1) {
+				mes "[Doom Prayers Leader]";
+				mes "I see you're afraid of witnessing the grace of our god lest that might change your mind.";
+				mes "Stop bothering me and scram!";
+				mes "Destruction is a blessing!";
+				close;
+			}
+			mes "[Doom Prayers Leader]";
+			mes "Go ahead, bring ^FF0000Blessing Stones^000000 and throw them at us!";
+			mes "You'll see those stones turning into falling flower petals!";
+			mes "Then you'll cry and beg me to let you join us.";
+			completequest 1297;	// Flaming Basin and Doom Prayers
+			setquest 1270;	// Flaming Basin and Doom Prayers
+			ep14_3_fall_bless = 7;
+			close;
+		}
+	}
+	if (ep14_3_fall_bless == 7) {
+		if (countitem(6693) < 39) {	// Stone_Of_Blessing
+			mes "[Doom Prayers Leader]";
+			mes "Search this Doomsland and find ^FF000040 Blessing Stones^000000.";
+			mes "Throw them at us, and you'll see.";
+			next;
+			mes "[Doom Prayers Leader]";
+			mes "The moment they hit our bodies, they'll turn into flower petals with a loud pop!";
+			mes "Destruction is a blessing!";
+			next;
+			mes "Hunt ^0000FFFire Golems^000000 and collect 40 ^FF0000Blessing Stones^000000.";
+			close;
+		}
+		mes "[Doom Prayers Leader]";
+		mes "You brought 40 ^FF0000Blessing Stones^000000.";
+		mes "Okay, we're ready.";
+		mes "Throw the stones at us!";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "Be prepared for the miracle!";
+		mes "Come on, hit us hard!";
+		mes "Destruction is a blessing!";
+		next;
+		mes "*Whiz*";
+		mes "*WHIZZ*";
+		next;
+		mes "*Whiz*";
+		mes "*WHIZZ*";
+		mes "*WHIZZ*";
+		mes "*WHIZZ*";
+		next;
+		mes "[Doom Prayers]";
+		mes "Yelp!";
+		emotion 19;
+		emotion 19, getnpcid(0, "Doom Prayers Second-in-command#bl");
+		emotion 28, getnpcid(0, "Doom Prayer#bl1");
+		emotion 19, getnpcid(0, "Doom Prayer#bl2");
+		emotion 19, getnpcid(0, "Doom Prayer#bl3");
+		emotion 28, getnpcid(0, "Doom Prayer#bl4");
+		next;
+		mes "[Doom Prayers]";
+		mes "Yelp!";
+		mes "Ouch! Geez!";
+		emotion 19;
+		emotion 19, getnpcid(0, "Doom Prayers Second-in-command#bl");
+		emotion 28, getnpcid(0, "Doom Prayer#bl1");
+		emotion 19, getnpcid(0, "Doom Prayer#bl3");
+		emotion 28, getnpcid(0, "Doom Prayer#bl4");
+		emotion 19, getnpcid(0, "Doom Prayer#bl6");
+		emotion 28, getnpcid(0, "Doom Prayer#bl7");
+		emotion 19, getnpcid(0, "Doom Prayer#bl9");
+		emotion 28, getnpcid(0, "Doom Prayer#bl0");
+		emotion 19, getnpcid(0, "Doom Prayer#bl12");
+		next;
+		mes "[Doom Prayers]";
+		mes "Kyaah-!";
+		mes "Aww! Err!";
+		emotion 19;
+		emotion 19, getnpcid(0, "Doom Prayers Second-in-command#bl");
+		emotion 28, getnpcid(0, "Doom Prayer#bl1");
+		emotion 4, getnpcid(0, "Doom Prayer#bl2");
+		emotion 19, getnpcid(0, "Doom Prayer#bl3");
+		emotion 28, getnpcid(0, "Doom Prayer#bl4");
+		emotion 4, getnpcid(0, "Doom Prayer#bl5");
+		emotion 19, getnpcid(0, "Doom Prayer#bl6");
+		emotion 28, getnpcid(0, "Doom Prayer#bl7");
+		emotion 19, getnpcid(0, "Doom Prayer#bl8");
+		emotion 19, getnpcid(0, "Doom Prayer#bl9");
+		emotion 28, getnpcid(0, "Doom Prayer#bl0");
+		emotion 19, getnpcid(0, "Doom Prayer#bl11");
+		emotion 19, getnpcid(0, "Doom Prayer#bl12");
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "That hurts!";
+		mes "That hurts like hell!";
+		mes "STOP! Stop hitting me in the face!";
+		next;
+		if (select( "Keep throwing." "Stop throwing.") == 2) {
+			mes "Instead of turning into flower petals, the stones inflicted immense pain on those who got hit.";
+			mes "You decided to stop throwing the stones.";
+			delitem 6693,40;// Stone_Of_Blessing
+			completequest 1270;	// Flaming Basin and Doom Prayers
+			setquest 1271;	// Flaming Basin and Doom Prayers
+			ep14_3_fall_bless = 8;
+			close;
+		}
+		mes "[Doom Prayers]";
+		mes "Yelp!";
+		mes "My head!";
+		mes "Aww! Kyaaooh-!";
+		emotion 19;
+		emotion 19, getnpcid(0, "Doom Prayers Second-in-command#bl");
+		emotion 28, getnpcid(0, "Doom Prayer#bl1");
+		emotion 19, getnpcid(0, "Doom Prayer#bl2");
+		emotion 19, getnpcid(0, "Doom Prayer#bl3");
+		emotion 28, getnpcid(0, "Doom Prayer#bl4");
+		next;
+		mes "[Doom Prayers]";
+		mes "Kyaah-!";
+		mes "My nose!";
+		mes "Kyaah-! Kyaarrr-!";
+		emotion 19;
+		emotion 19, getnpcid(0, "Doom Prayers Second-in-command#bl");
+		emotion 28, getnpcid(0, "Doom Prayer#bl1");
+		emotion 4, getnpcid(0, "Doom Prayer#bl2");
+		emotion 19, getnpcid(0, "Doom Prayer#bl3");
+		emotion 28, getnpcid(0, "Doom Prayer#bl4");
+		emotion 4, getnpcid(0, "Doom Prayer#bl5");
+		emotion 19, getnpcid(0, "Doom Prayer#bl6");
+		emotion 28, getnpcid(0, "Doom Prayer#bl7");
+		emotion 19, getnpcid(0, "Doom Prayer#bl8");
+		emotion 19, getnpcid(0, "Doom Prayer#bl9");
+		emotion 28, getnpcid(0, "Doom Prayer#bl0");
+		emotion 19, getnpcid(0, "Doom Prayer#bl11");
+		emotion 19, getnpcid(0, "Doom Prayer#bl12");
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "Hurt!";
+		mes "Hurt like hell!";
+		mes "I wasn't ready!";
+		mes "Stop! Let's do over!";
+		close;
+	}
+	if (ep14_3_fall_bless == 8) {
+		mes "[Doom Prayers Leader]";
+		mes "Brothers and sisters, calm down!";
+		mes "That heretic has fooled us with the wrong stones!";
+		next;
+		mes "[Doom Prayers]";
+		mes "I knew it!";
+		next;
+		mes "[Doom Prayers]";
+		mes "Boo!";
+		mes "Boo!";
+		emotion 32;
+		emotion 32, getnpcid(0, "Doom Prayers Second-in-command#bl");
+		emotion 6, getnpcid(0, "Doom Prayer#bl1");
+		emotion 6, getnpcid(0, "Doom Prayer#bl2");
+		emotion 6, getnpcid(0, "Doom Prayer#bl3");
+		emotion 6, getnpcid(0, "Doom Prayer#bl4");
+		emotion 6, getnpcid(0, "Doom Prayer#bl5");
+		emotion 6, getnpcid(0, "Doom Prayer#bl6");
+		emotion 6, getnpcid(0, "Doom Prayer#bl7");
+		emotion 6, getnpcid(0, "Doom Prayer#bl8");
+		emotion 6, getnpcid(0, "Doom Prayer#bl9");
+		emotion 6, getnpcid(0, "Doom Prayer#bl0");
+		emotion 6, getnpcid(0, "Doom Prayer#bl11");
+		emotion 6, getnpcid(0, "Doom Prayer#bl12");
+		next;
+		mes "[Doom Prayers]";
+		mes "Destruction is a blessing!";
+		mes "Destruction is a blessing!";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "You're a coward!";
+		mes "I command you again.";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "Bring the blood of the monsters that roam Doomsland.";
+		mes "I shall drink it and levitate to guide you all to the true faith!";
+		next;
+		mes "[Guard]";
+		mes "He means the ^FF0000Monster Bloods^000000";
+		mes "from ^0000FFFire Frilldoras^000000 and and ^0000FFFire Sandmen^000000.";
+		mes "I presume 30 bottles should suffice.";
+		next;
+		if (select( "No, I couldn't care less!" "I'll collect Monster Bloods.") == 1) {
+			mes "[Doom Prayers Leader]";
+			mes "I knew you'd say yes!";
+			mes "I can sense your fear about the possibility of witnessing the grace of the God of Destruction.";
+			next;
+			mes "[Doom Prayers Leader]";
+			mes "Stop bothering me and scram!";
+			mes "Destruction is a blessing!";
+			close;
+		}
+		mes "[Doom Prayers Leader]";
+		mes "Now go bring me Monster Bloods!";
+		mes "Hunt those heinous ^0000FFFire Frilldoras^000000 and and ^0000FFFire Sandmen^000000, and bring me 30 ^FF0000Monster Bloods^000000.";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "This is a perilous task.";
+		mes "I'll understand if you want to run.";
+		mes "If you really want to do this against my advice, then do as you wish.";
+		mes "Mwah hah hah!";
+		completequest 1271;	// Flaming Basin and Doom Prayers
+		setquest 1272;	// Flaming Basin and Doom Prayers
+		ep14_3_fall_bless = 9;
+		close;
+	}
+	if (ep14_3_fall_bless == 9) {
+		if (countitem(6694) < 29) {
+			mes "[Doom Prayers Leader]";
+			mes "Now go bring me Monster Bloods!";
+			mes "Hunt those heinous ^0000FFFire Frilldoras^000000 and and ^0000FFFire Sandmen^000000, and bring me 30 ^FF0000Monster Bloods^000000.";
+			next;
+			mes "[Doom Prayers Leader]";
+			mes "This is a perilous task.";
+			mes "I'll understand if you want to run.";
+			mes "If you really want to do this against my advice, then do as you wish.";
+			mes "Mwah hah hah!";
+			close;
+		}
+		mes "[Doom Prayers Leader]";
+		mes "You must have too much time on your hands, heretic: you really brought all the ^FF0000Monster Bloods^000000.";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "Lo and behold!";
+		mes "I'll drink this and levitate myself with its power!";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "*Gulp Gulp*";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "*Slosh Slosh*";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "*Guzzle Guzzle*";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "*Burp*";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "*Rumble*";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "...";
+		mes "Ugh...";
+		emotion 4;
+		next;
+		mes "The color drains from his face.";
+		mes "You catch a whiff of what smells like diarrhea.";
+		next;
+		mes "His lips thin in silent embarrassment.";
+		emotion 28;
+		delitem 6694,30;// Monster_Blood
+		completequest 1272;	// Flaming Basin and Doom Prayers
+		setquest 1273;	// Flaming Basin and Doom Prayers
+		ep14_3_fall_bless = 10;
+		close;
+	}
+	if (ep14_3_fall_bless < 12) {
+		mes "Enveloped in a cloud of vile stink, he remains silent.";
+		next;
+		mes "His second-in-command is angrily pointing his finger at you.";
+		mes "You should talk to him.";
+		close;
+	}
+	if (ep14_3_fall_bless == 12) {
+		mes "[Doom Prayers Leader]";
+		mes "Sigh, the world hasn't ended, again.";
+		mes "What I wouldn't give to go back home now and change to some fresh underwear...";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "I'll wait for the next natural disaster and gather more followers to call forth the God of Destruction!";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "Thanks to you, though, that whether accident has shocked everyone and put them in their place.";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "My followers have been doubting their faith in me, and haven't paid their memberships for months.";
+		mes "I should reward you for your help.";
+		next;
+		mes "[Doom Prayers Leader]";
+		mes "I hope you'll come to our next gathering and work your whether miracle again.";
+		completequest 1275;	// Flaming Basin and Doom Prayers
+		ep14_3_fall_bless = 13;
+		getexp 2000000;
+		close;
+	}
+	mes "[Doom Prayers Leader]";
+	mes "Thanks to you, that whether accident has shocked everyone and put them in their place.";
+	next;
+	mes "[Doom Prayers Leader]";
+	mes "I hope you'll come to our next gathering and work your whether miracle again.";
+	close;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 150 && isbegin_quest(1270) == 0 && isbegin_quest(1297) == 1 && ep14_3_fall_bless == 6" );
+	end;
+}
+
+moro_vol,95,195,3	script	Doom Prayers Second-in-command#bl	4_F_BELIEVER01,{
+	if (checkweight(1301,3) == 0) {
+		mes "- Cannot progress with the dialogue because you have too many items. -";
+		close;
+	}
+	if (ep14_3_fall_bless < 10) {
+		mes "[Doom Prayers Second-in-command]";
+		mes "Doom Prayers!";
+		mes "Pray Harder!";
+		mes "Destruction! Blessing!";
+		next;
+		mes "[Doom Prayers]";
+		mes "Destruction! Blessing!";
+		mes "Destruction! Blessing!";
+		close;
+	}
+	if (ep14_3_fall_bless == 10) {
+		mes "[Doom Prayers Second-in-command]";
+		mes "Doom Prayers, don't panic! Stay calm!";
+		next;
+		mes "[Doom Prayers Second-in-command]";
+		mes "Soon the judgment will begin and we'll be blessed.";
+		mes "We'll want for nothing!";
+		next;
+		mes "[Doom Prayers Second-in-command]";
+		mes "Let's pray together and raise the Blessing Gate!";
+		mes "Destruction! Blessing!";
+		next;
+		mes "[Doom Prayers]";
+		mes "Destruction! Blessing!";
+		mes "Destruction! Blessing!";
+		next;
+		mes "[Doom Prayers Second-in-command]";
+		mes "Oh, I see a light!";
+		mes "If only I can hold 30 ^FF0000Fire Golem's Stone Teeth^000000 and 30 ^FF0000Fire Frilldora's Napes^000000 in my hands!";
+		next;
+		mes "[Doom Prayers Second-in-command]";
+		mes "The tall Blessing Gate will appear itself before us, wide open for us!";
+		next;
+		mes "[Doom Prayers]";
+		mes "Oh!";
+		next;
+		mes "[Doom Prayers Second-in-command]";
+		mes "Doom Prayers, charge forward, break everything in your path, and fearlessly swing your bare hands at those dangerous monsters!";
+		next;
+		mes "[Doom Prayers Second-in-command]";
+		mes "Bring me 30 ^FF0000Fire Golem's Stone Teeth^000000 and 30 ^FF0000Fire Frilldora's Napes^000000.";
+		next;
+		if (select( "No, I couldn't care less!", "I'll bring them." ) == 1) {
+			mes "[Doom Prayers Second-in-command]";
+			mes "Listen up, Doom Prayers!";
+			mes "That heartless heretic couldn't care less about us.";
+			mes "What a relief!";
+			next;
+			mes "[Doom Prayers Second-in-command]";
+			mes "Now, hunt those heinous monsters with your bare hands and get me the materials!";
+			next;
+			mes "[Doom Prayers Second-in-command]";
+			mes "Don't be afraid if you can't fight even Porings;";
+			mes "I know in your mind, you're as strong as Baphomet!";
+			emotion 19, playerattached();
+			close;
+		}
+		mes "[Doom Prayers Second-in-command]";
+		mes "All right, Doom Prayers!";
+		mes "Let's give this heretic one more chance at the blessing!";
+		next;
+		mes "[Doom Prayers Second-in-command]";
+		mes "Now go bring me 30 ^FF0000Fire Golem's Stone Teeth^000000 and 30 ^FF0000Fire Frilldora's Napes^000000.";
+		completequest 1273;	// Flaming Basin and Doom Prayers
+		setquest 1274;	// Flaming Basin and Doom Prayers
+		ep14_3_fall_bless = 11;
+		close;
+	}
+	if (ep14_3_fall_bless == 11) {
+		if (countitem(6695) < 30 || countitem(6696) < 30) {
+			mes "[Doom Prayers Second-in-command]";
+			mes "Now go bring me 30 ^FF0000Fire Golem's Stone Teeth^000000 and 30 ^FF0000Fire Frilldora's Napes^000000.";
+			close;
+		}
+		mes "[Doom Prayers Second-in-command]";
+		mes "Oh Doom Prayers, be joyous--finally we have all the materials!";
+		mes "Destruction! Blessing!";
+		next;
+		mes "[Doom Prayers]";
+		mes "Destruction is a blessing!";
+		mes "Destruction is a blessing!";
+		next;
+		mes "[Doom Prayers Second-in-command]";
+		mes "Let's pray together and raise the Blessing Gate!";
+		next;
+		mes "[Doom Prayers]";
+		mes "Destruction is a blessing!";
+		mes "Destruction is a blessing!";
+		next;
+		mes "[Doom Prayers]";
+		mes "...";
+		next;
+		mes "[Doom Prayers]";
+		mes "!!!";
+		next;
+		mes "[Doom Prayers]";
+		mes "Kyaah-!";
+		mes "Aww! Err!";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayers Leader#bl";
+		specialeffect EF_SUI_EXPLOSION;
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl1";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl2";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl3";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl4";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl5";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl6";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl7";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl8";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl9";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl0";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl11";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl12";
+		next;
+		mes "[Doom Prayers]";
+		mes "Kyaah-!";
+		mes "It really is the end of the world!";
+		mes "We're going to die! Kyaah-!";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayers Leader#bl";
+		specialeffect EF_SUI_EXPLOSION;
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl1";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl2";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl3";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl4";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl5";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl6";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl7";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl8";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl9";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl0";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl11";
+		specialeffect EF_SUI_EXPLOSION, AREA, "Doom Prayer#bl12";
+		next;
+		mes "Whether the God of Destruction really exists or not, this small group of fanatics aren't as special as they'd like to believe.";
+		mes "You should talk to Doom Prayers Leader again.";
+		delitem 6695,30;// ToothOfFlameGolem
+		delitem 6696,30;// ToothOfFlameFrilldora
+		completequest 1274;	// Flaming Basin and Doom Prayers
+		setquest 1275;	// Flaming Basin and Doom Prayers
+		ep14_3_fall_bless = 12;
+		close;
+	}
+	mes "[Doom Prayers Second-in-command]";
+	mes "Aww... I'm scared...";
+	mes "I could have run already if only I were alone.";
+	mes "This is just too scary. I'm gonna cry a little more...";
+	close;
+}
+
+moro_vol,100,183,1	script	Base Sentry#bl	4_M_KY_SOLD,{
+	mes "[Base Sentry]";
+	mes "This area is dangerous.";
+	mes "Please refrain from exploring it alone.";
+	close;
+}
+moro_vol,102,188,1	duplicate(Base Sentry#bl)	Base Sentry#bl1	4_M_KY_SOLD
+moro_vol,104,193,1	duplicate(Base Sentry#bl)	Base Sentry#bl2	4_M_KY_SOLD
+moro_vol,95,182,1	duplicate(Base Sentry#bl)	Base Sentry#bl3	4_M_KY_SOLD
+moro_vol,90,181,7	duplicate(Base Sentry#bl)	Base Sentry#bl4	4_M_KY_SOLD
+
+moro_vol,85,196,7	script	Doom Prayer#bl1	4_M_BELIEVER02,{
+	if (ep14_3_fall_bless < 12) {
+		mes "[Doom Prayer]";
+		mes "Destruction is a blessing!";
+		mes "Destruction is a blessing!";
+		close;
+	}
+	mes "[Doom Prayer]";
+	mes "Aww, scary!";
+	mes "I really want to go home!";
+	close;
+}
+
+moro_vol,87,193,7	script	Doom Prayer#bl2	4_M_BELIEVER02,{
+	if (ep14_3_fall_bless < 12) {
+		mes "[Doom Prayer]";
+		mes "Destruction! Blessing!";
+		mes "We are the chosen ones!";
+		close;
+	}
+	mes "[Doom Prayer]";
+	mes "How terrifying!";
+	mes "I'm gonna run first chance I get!";
+	close;
+}
+
+moro_vol,90,191,7	script	Doom Prayer#bl3	4_M_BELIEVER02,{
+	if (ep14_3_fall_bless < 12) {
+		mes "[Doom Prayer]";
+		mes "Destruction is a blessing!";
+		mes "Destruction is a blessing!";
+		close;
+	}
+	mes "[Doom Prayer]";
+	mes "I've relinquished everything I had to the Leader, but for what?!";
+	next;
+	mes "[Doom Prayer]";
+	mes "...";
+	mes "Maybe I didn't pray hard enough.";
+	close;
+}
+
+moro_vol,93,189,7	script	Doom Prayer#bl4	4_M_BELIEVER02,{
+	if (ep14_3_fall_bless < 12) {
+		mes "[Doom Prayer]";
+		mes "Destruction! Blessing!";
+		mes "We are the chosen ones!";
+		close;
+	}
+	mes "[Doom Prayer]";
+	mes "Aww, scary!";
+	mes "I really want to go home!";
+	close;
+}
+
+moro_vol,83,193,7	script	Doom Prayer#bl5	4_M_BELIEVER02,{
+	if (ep14_3_fall_bless < 12) {
+		mes "[Doom Prayer]";
+		mes "Destruction is a blessing!";
+		mes "Destruction is a blessing!";
+		close;
+	}
+	mes "[Doom Prayer]";
+	mes "*Wail*";
+	mes "Argh, I'm scared!";
+	close;
+}
+
+moro_vol,86,190,7	script	Doom Prayer#bl6	4_M_BELIEVER02,{
+	if (ep14_3_fall_bless < 12) {
+		mes "[Doom Prayer]";
+		mes "Destruction is a blessing!";
+		mes "Destruction is a blessing!";
+		close;
+	}
+	mes "[Doom Prayer]";
+	mes "Aww, scary!";
+	mes "I really want to go home!";
+	close;
+}
+
+moro_vol,89,188,7	script	Doom Prayer#bl7	4_M_BELIEVER02,{
+	if (ep14_3_fall_bless < 12) {
+		mes "[Doom Prayer]";
+		mes "Destruction! Blessing!";
+		mes "We are the chosen ones!";
+		close;
+	}
+	mes "[Doom Prayer]";
+	mes "Err, I'm scared!";
+	mes "I shouldn't have come!";
+	close;
+}
+
+moro_vol,93,185,7	script	Doom Prayer#bl8	4_M_BELIEVER02,{
+	if (ep14_3_fall_bless < 12) {
+		mes "[Doom Prayer]";
+		mes "Destruction is a blessing!";
+		mes "Destruction is a blessing!";
+		close;
+	}
+	mes "[Doom Prayer]";
+	mes "Aww, scary!";
+	mes "I really want to go home!";
+	mes "I hate the Leader!";
+	close;
+}
+
+moro_vol,81,197,7	script	Doom Prayer#bl9	4_M_BELIEVER02,{
+	if (ep14_3_fall_bless < 12) {
+		mes "[Doom Prayer]";
+		mes "Destruction! Blessing!";
+		mes "We are the chosen ones!";
+		close;
+	}
+	mes "[Doom Prayer]";
+	mes "I can't believe the Leader anymore!";
+	mes "I'll probably make a better leader than him!";
+	close;
+}
+
+moro_vol,84,201,5	script	Doom Prayer#bl0	4_M_BELIEVER02,{
+	if (ep14_3_fall_bless < 12) {
+		mes "[Doom Prayer]";
+		mes "Destruction is a blessing!";
+		mes "Destruction is a blessing!";
+		close;
+	}
+	mes "[Doom Prayer]";
+	mes "Aww, scary!";
+	mes "So scary, I'm gonna wet my pants!";
+	close;
+}
+
+moro_vol,97,187,5	script	Doom Prayer#bl11	4_M_BELIEVER02,{
+	if (ep14_3_fall_bless < 12) {
+		mes "[Doom Prayer]";
+		mes "Destruction! Blessing!";
+		mes "We are the chosen ones!";
+		close;
+	}
+	mes "[Doom Prayer]";
+	mes "This is all too terrifying...";
+	mes "Maybe my faith isn't deep enough...";
+	mes "I'd better offer more money!";
+	close;
+}
+
+moro_vol,82,189,7	script	Doom Prayer#bl12	4_M_BELIEVER02,{
+	if (ep14_3_fall_bless < 12) {
+		mes "[Doom Prayer]";
+		mes "Oh, God of Destruction!";
+		mes "Let your wrath fall unto this world!";
+		mes "Let me be the sole benefactor of your blessing!";
+		close;
+	}
+	mes "[Doom Prayer]";
+	mes "This is all too terrifying...";
+	mes "Maybe my faith isn't deep enough...";
+	mes "I'd better offer more money!";
+	close;
+}
+
+moro_vol,96,205,0	script	#bp1	HIDDEN_WARP_NPC,2,2,{
+	end;
+OnTouchNPC:
+	warp "moro_vol",145,148;
+	end;
+}
+moro_vol,106,189,0	duplicate(#bp1)	#bp2	HIDDEN_WARP_NPC,2,2
+moro_vol,78,210,0	duplicate(#bp1)	#bp3	HIDDEN_WARP_NPC,2,2
+moro_vol,78,185,0	duplicate(#bp1)	#bp6	HIDDEN_WARP_NPC,2,2
+// moro_vol,96,196,0	duplicate(#bp1)	#bp4	HIDDEN_WARP_NPC,2,2
+// moro_vol,96,182,0	duplicate(#bp1)	#bp5	HIDDEN_WARP_NPC,2,2
+// moro_vol,105,194,0	duplicate(#bp1)	#bp7	HIDDEN_WARP_NPC,2,2
+
+
+//-- GM NPCs
 moro_vol,5,1,3	script	#timemaster	CLEAR_NPC,{
 	if (callfunc("F_GM_NPC",1854,0,0,9999) < 1)
 		end;
@@ -3293,4 +4475,91 @@ moro_vol,5,1,3	script	#timemaster	CLEAR_NPC,{
 		donpcevent "Guardian Nidhogg#143nyd01::OnStop";
 		close;
 	}
+}
+
+// gef_fild02,98,226,4	script	Perishing Blessing Assistant#bl	4_FROG,{
+moro_vol,1,3,4	script	Perishing Blessing Assistant#bl	4_FROG,{
+	if (callfunc("F_GM_NPC",1854,0) < 1) {
+		mes "Cough!";
+		close;
+	}
+	mes "[Perishing Blessing Assistant]";
+	mes "What do you want?";
+	mes "Speak out loud!";
+	next;
+	switch( select(
+		"Task initialization", "Flame feather 15", "Patrol log 20", "Before hunting",
+		"Blessing Stone 40", "Monster Blood 30", "Final Reward", "Before the door of blessing is opened" ) ) {
+	case 1:
+		mes "[Perishing Blessing Assistant]";
+		mes "Done!";
+		ep14_3_fall_bless = 0;
+		for ( .@i = 1264; .@i <= 1275; .@i++ ) {
+			if (isbegin_quest(.@i) > 0)
+				erasequest .@i;
+		}
+		if (isbegin_quest(1297) > 0)
+			erasequest 1297;
+		close;
+	case 2:
+		mes "[Perishing Blessing Assistant]";
+		mes "Done!";
+		getitem 6691,15;// BurningFeather
+		close;
+	case 3:
+		mes "[Perishing Blessing Assistant]";
+		mes "Done!";
+		getitem 6692,20;// PatrolLog
+		close;
+	case 4:
+		mes "[Perishing Blessing Assistant]";
+		mes "Done!";
+		setquest 1268;
+		setquest 1269;
+		for ( .@i = 1264; .@i <= 1267; .@i++ ) {
+			if (isbegin_quest(.@i) > 0)
+				erasequest .@i;
+		}
+		for ( .@i = 1270; .@i <= 1275; .@i++ ) {
+			if (isbegin_quest(.@i) > 0)
+				erasequest .@i;
+		}
+		if (isbegin_quest(1297) > 0)
+			erasequest 1297;
+		ep14_3_fall_bless = 4;
+		close;
+	case 5:
+		mes "[Perishing Blessing Assistant]";
+		mes "Done!";
+		getitem 6693,40;// Stone_Of_Blessing
+		close;
+	case 6:
+		mes "[Perishing Blessing Assistant]";
+		mes "Done!";
+		getitem 6694,30;// Monster_Blood
+		close;
+	case 7:
+		mes "[Perishing Blessing Assistant]";
+		mes "Done!";
+		getitem 6695,30;// ToothOfFlameGolem
+		getitem 6696,30;// ToothOfFlameFrilldora
+		close;
+	case 8:
+		mes "[Perishing Blessing Assistant]";
+		mes "Done!";
+		setquest 1274;
+		ep14_3_fall_bless = 11;
+		for ( .@i = 1264; .@i <= 1273; .@i++ ) {
+			if (isbegin_quest(.@i) > 0)
+				erasequest .@i;
+		}
+		if (isbegin_quest(1275) > 0)
+			erasequest 1275;
+		if (isbegin_quest(1297) > 0)
+			erasequest 1297;
+		getitem 6695,30;// ToothOfFlameGolem
+		getitem 6696,30;// ToothOfFlameFrilldora
+		close;
+	}
+	end;
 }
