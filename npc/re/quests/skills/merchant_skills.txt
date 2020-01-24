@@ -9,7 +9,7 @@
 
 alberta,47,37,5	script	Cart Remodel Expert	4_M_REPAIR,{
 	.@max_skill_lvl = 1;
-	if (cart_remodel == 0)
+	if (cart_remodel == 0) {
 		mes "[Jason]";
 		mes "The original pustcard is beautiful!";
 		next;
@@ -39,7 +39,7 @@ alberta,47,37,5	script	Cart Remodel Expert	4_M_REPAIR,{
 				mes "Why you want learn the Pushcart Decoration? Don't disturb me!";
 				close;
 			}
-			if (countitem(6606) == 0)
+			if (countitem(6606) == 0) {
 				mes "[Jason]";
 				mes "It is difficult to learn the Pushcart Decoration.";
 				next;
