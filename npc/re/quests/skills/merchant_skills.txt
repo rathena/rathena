@@ -82,7 +82,7 @@ alberta,47,37,5	script	Cart Remodel Expert	4_M_REPAIR,{
 			skill "MC_CARTDECORATE",1,SKILL_PERM;
 			close;
 		case 3:
-			end;
+			close;
 		}
 	}
 	mes "[Jason]";
