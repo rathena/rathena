@@ -7422,8 +7422,19 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce->val2] == target->id)
 				) && check_distance_bl(target, d_bl, sce->val3) )
 			{
-				clif_damage(d_bl, d_bl, gettick(), 0, 0, damage, 0, DMG_NORMAL, 0, false);
-				status_fix_damage(NULL, d_bl, damage, 0);
+				// Only trigger if the devoted player was hit
+				if( damage > 0 ){
+					struct map_session_data* dsd = BL_CAST( BL_PC, d_bl );
+
+					// The devoting player needs to stand up
+					if( dsd && pc_issit( dsd ) ){
+						pc_setstand( dsd, true );
+						skill_sit( dsd, 0 );
+					}
+
+					clif_damage(d_bl, d_bl, gettick(), wd.amotion, wd.dmotion, damage, 1, DMG_NORMAL, 0, false);
+					status_fix_damage(NULL, d_bl, damage, 0);
+				}
 			}
 			else
 				status_change_end(target, SC_DEVOTION, INVALID_TIMER);
