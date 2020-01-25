@@ -250,8 +250,6 @@ void char_set_all_offline_sql(void){
 	//Set all players to 'OFFLINE'
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online` = '0'", schema_config.char_db) )
 		Sql_ShowDebug(sql_handle);
-	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online` = '0'", schema_config.guild_member_db) )
-		Sql_ShowDebug(sql_handle);
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `connect_member` = '0'", schema_config.guild_db) )
 		Sql_ShowDebug(sql_handle);
 }
@@ -2402,9 +2400,7 @@ bool char_checkdb(void){
 		return false;
 	}
 	//checking guild_member_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`account_id`,`char_id`,`hair`,"
-			"`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`name`"
-			" FROM `%s` LIMIT 1;", schema_config.guild_member_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`char_id`,`exp`,`position` FROM `%s` LIMIT 1;", schema_config.guild_member_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -3266,7 +3262,7 @@ int do_init(int argc, char **argv)
 		Sql_ShowDebug(sql_handle);
 
 	//guildmemberdb clean
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id` = '0' AND `account_id` = '0' AND `char_id` = '0'", schema_config.guild_member_db) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id` = '0' AND `char_id` = '0'", schema_config.guild_member_db) )
 		Sql_ShowDebug(sql_handle);
 
 	set_defaultparse(chclif_parse);
