@@ -363,7 +363,7 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 		damage > 0 && skill_id != PA_PRESSURE && skill_id != CR_REFLECTSHIELD ){
 		struct map_session_data* tsd = BL_CAST( BL_PC, target );
 
-		if( tsd && pc_issit( tsd ) ){
+		if( tsd && pc_issit( tsd ) && battle_config.devotion_standup_fix ){
 			pc_setstand( tsd, true );
 			skill_sit( tsd, 0 );
 		}
@@ -8569,6 +8569,7 @@ static const struct _battle_data {
 	{ "mob_nopc_move_rate",                 &battle_config.mob_nopc_move_rate,              100,    0,    100,              },
 	{ "boss_nopc_idleskill_rate",           &battle_config.boss_nopc_idleskill_rate,        100,    0,    100,              },
 	{ "boss_nopc_move_rate",                &battle_config.boss_nopc_move_rate,             100,    0,    100,              },
+	{ "devotion_standup_fix",               &battle_config.devotion_standup_fix,            1,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };
