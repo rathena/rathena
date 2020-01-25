@@ -11,32 +11,32 @@ alberta,47,37,5	script	Cart Remodel Expert	4_M_REPAIR,{
 	.@max_skill_lvl = 1;
 	if (cart_remodel == 0) {
 		mes "[Jason]";
-		mes "The original pustcard is beautiful!";
+		mes "The original pushcart is beautiful!";
 		next;
 		mes "[Jason]";
-		mes "The grey colour, solid pushcart";
+		mes "The solid grey color pushcart.";
 		next;
 		mes "[Jason]";
-		mes "I can remodel into new cute designs";
+		mes "I can remodel it into new cute designs.";
 		next;
 		switch( select( "What is Pushcart Decoration?", "Learn Pushcart Decoration", "End Dialog" ) ) {
 		case 1:
 			mes "[Jason]";
-			mes "i like to remodel the poor pushcart";
+			mes "I would like to completely remodel the poor pushcart.";
 			next;
 			mes "[Jason]";
-			mes "The little remodel doesn't enough, are you agree?";
+			mes "A little remodel isn't enough, don't you agree?";
 			next;
 			mes "[Jason]";
-			mes "Therefore, you have invented some new designs.";
+			mes "Therefore I have invented some new designs.";
 			next;
 			mes "[Jason]";
 			mes "It is cute and refreshing!";
 			close;
 		case 2:
-			if (BaseClass == Job_Merchant) {
+			if (BaseClass != Job_Merchant) {
 				mes "[Jason]";
-				mes "Why you want learn the Pushcart Decoration? Don't disturb me!";
+				mes "Why do you want learn Pushcart Decoration? Don't disturb me!";
 				close;
 			}
 			if (countitem(6606) == 0) {
@@ -48,7 +48,7 @@ alberta,47,37,5	script	Cart Remodel Expert	4_M_REPAIR,{
 				close;
 			}
 			mes "[Jason]";
-			mes "You have brought the Cute Cart Remodel Coupon, are you sure to learn Pushcart Decoration?";
+			mes "You have brought the Cute Cart Remodel Coupon. Are you sure you want to learn Pushcart Decoration?";
 			next;
 			if (select("YES", "NO") == 2) {
 				mes "[Jason]";
@@ -60,23 +60,23 @@ alberta,47,37,5	script	Cart Remodel Expert	4_M_REPAIR,{
 			next;
 			mes "[Jason]";
 			mes "This design";
-			mes "need to caught the pushcart...";
+			mes "needs to catch the pushcart...";
 			next;
 			mes "[Jason]";
 			mes "This design";
-			mes "need to caught the pushcart,";
+			mes "needs to catch the pushcart.";
 			mes "Then add this....";
 			mes "...";
 			next;
 			mes "[Jason]";
-			mes "You are genius! You have learned it!";
+			mes "You are a genius! You have learned it!";
 			next;
 			mes "[Jason]";
-			mes "Now is your turn to do it,";
-			mes "Press Alt+S button to change your pushcart!";
+			mes "Now is your turn to do it.";
+			mes "Press Alt+S to change your pushcart!";
 			next;
 			mes "[Jason]";
-			mes "This is new cute design pushcart, you are one of our family now...!";
+			mes "This is the new cute design pushcart. You are one of our family now...!";
 			delitem 6606,1;	// P_Cart_C
 			cart_remodel = 1;
 			skill "MC_CARTDECORATE",1,SKILL_PERM;
@@ -88,18 +88,18 @@ alberta,47,37,5	script	Cart Remodel Expert	4_M_REPAIR,{
 	mes "[Jason]";
 	mes "Have you decorated the pushcart?";
 	next;
-	switch( select( "Do I still need to learn?", "I forgot how to decorate pushcart" ) ) {
+	switch( select( "Is there more to learn?", "I forgot how to decorate my pushcart" ) ) {
 	case 1:
 		if (cart_remodel == .@max_skill_lvl) {
 			mes "[Jason]";
-			mes "No. I am still exploring the new design course. I will teach you once I have learned it.";
+			mes "No. I am still exploring new designs. I will teach you once I have learned it.";
 			close;
 		}
 		mes "[Jason]";
 		mes "I have something to teach, do you want to learn?";
 		next;
 		mes "[Jason]";
-		mes "It need ^3131FFCute Cart Remodel Coupon^000000.";
+		mes "I need a ^3131FFCute Cart Remodel Coupon^000000.";
 		next;
 		if (select("I want to learn", "No") == 2) {
 			mes "[Jason]";
@@ -112,10 +112,10 @@ alberta,47,37,5	script	Cart Remodel Expert	4_M_REPAIR,{
 			close;
 		}
 		mes "[Jason]";
-		mes "Ok,let's begins!";
+		mes "Ok, let's begin!";
 		next;
 		mes "[Jason]";
-		mes "Do it like this is better,";
+		mes "Doing it like this is better.";
 		mes "Do that like this as well...";
 		next;
 		mes "[Jason]";
@@ -130,20 +130,20 @@ alberta,47,37,5	script	Cart Remodel Expert	4_M_REPAIR,{
 		close;
 	case 2:
 		mes "[Jason]";
-		mes "Oh? Let me see";
+		mes "Oh? Let me see.";
 		next;
-		if (BaseClass == Job_Merchant) {
+		if (BaseClass != Job_Merchant) {
 			mes "[Jason]";
 			mes "Please come again after you can use the pushcart!";
 			close;
 		}
 		mes "[Jason]";
-		mes "Do I have taught you?";
+		mes "Do you not remember what I have taught you?";
 		mes "I have taught you this method.";
 		next;
 		mes "[Jason]";
 		mes "You have forgotten?";
-		mes "Let's recall back now!";
+		mes "Let's recall now!";
 		next;
 		mes "[Jason]";
 		mes "Think carefully, you will remember it again.";
