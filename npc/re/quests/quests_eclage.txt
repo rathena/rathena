@@ -10997,6 +10997,7 @@ ecl_fild01,190,93,5	script	Fili#1	4_M_FAIRYANG,1,1,{
 					close;
 				}
 			}
+			close;
 		case 3:
 			if (checkquest(13060,PLAYTIME) == 2) {
 				mes "We should go check if the adventurers are okay.";
@@ -11041,6 +11042,7 @@ ecl_fild01,190,93,5	script	Fili#1	4_M_FAIRYANG,1,1,{
 					close;
 				}
 			}
+			close;
 		}
 	}
 	else if (ep14_2_nines == 2) {
