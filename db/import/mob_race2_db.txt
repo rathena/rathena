@@ -1,0 +1,5 @@
+// Monster Racial Groups Database
+//
+// Structure of Database:
+// Race2ID,MobID1,MobID2,MobID3,...,MobID100
+

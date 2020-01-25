@@ -13,39 +13,100 @@
 //= 1.1 Switched to 'getbattleflag', credits to Saithis. [Euphy]
 //============================================================
 
+
+//Translated & Modified by Start (Discord ID: Start#1356)
+
+
 prontera,170,180,1	script	Stylist#custom_stylist	122,{
-	setarray .@Styles[1],
-		getbattleflag("max_cloth_color"),
-		getbattleflag("max_hair_style"),
-		getbattleflag("max_hair_color");
-	setarray .@Look[1],
-		LOOK_CLOTHES_COLOR,
-		LOOK_HAIR,
-		LOOK_HAIR_COLOR;
-	set .@s, select(" ~ Cloth color: ~ Hairstyle: ~ Hair color");
-	set .@Revert, getlook(.@Look[.@s]);
-	set .@Style,1;
+	menu "ตัดผม, ย้อมสีผม, ย้อมสีเสื้อ",-,"เปลี่ยนชุด Class 3",L_Class3Suit,"แก้ ID เด้งเข้าเกมไม่ได้",L_ResetErrorCharacter;
+	L_MainMenu:
+	setarray .@Styles[1],getbattleflag("max_cloth_color"),getbattleflag("max_hair_style"),getbattleflag("max_hair_color");
+	setarray .@Look[1],LOOK_CLOTHES_COLOR,LOOK_HAIR,LOOK_HAIR_COLOR;
+	.@s = select(" ~ สีเสื้อ: ~ ทรงผม: ~ สีผม");
+	.@Revert = getlook(.@Look[.@s]);
+	if(.@s==2)
+	.@Style = 1;
+	else
+	.@Style = 0;
 	while(1) {
-		setlook .@Look[.@s], .@Style;
-		message strcharinfo(0),"This is style #"+.@Style+".";
-		set .@menu$, " ~ Next (^0055FF"+((.@Style!=.@Styles[.@s])?.@Style+1:1)+"^000000): ~ Previous (^0055FF"+((.@Style!=1)?.@Style-1:.@Styles[.@s])+"^000000): ~ Jump to...: ~ Revert to original (^0055FF"+.@Revert+"^000000)";
+		setlook .@Look[.@s],.@Style;
+		message strcharinfo(0),"สไตล์ที่ #" + .@Style;
+		.@menu$ = " ~ ต่อไป: ~ ก่อนหน้า : ~ ข้ามไปที่...: ~ กลับสู่แบบเดิม: ~ กลับไปที่ Menu แรก";
 		switch(select(.@menu$)) {
 		case 1:
-			set .@Style, ((.@Style != .@Styles[.@s]) ? .@Style+1 : 1);
+			.@Style = ((.@Style != .@Styles[.@s]) ? .@Style+1 : 0);
+			if(.@s==2&&.@Style <= 0)
+			.@Style = 1;
 			break;
 		case 2:
-			set .@Style, ((.@Style != 1) ? .@Style-1 : .@Styles[.@s]);
+			.@Style = (((.@s==2&&.@Style != 1) || (.@s!=2&&.@Style != 0)) ? .@Style-1 : .@Styles[.@s]);
 			break;
 		case 3:
-			message strcharinfo(0),"Choose a style between 1 - "+.@Styles[.@s]+".";
+			message strcharinfo(0),"เลือกสไตล์ระหว่าง 0 - " + .@Styles[.@s];
 			input .@Style,0,.@Styles[.@s];
 			if (!.@Style)
-				set .@Style, rand(1,.@Styles[.@s]);
+			.@Style = rand(0,.@Styles[.@s]);
 			break;
 		case 4:
-			set .@Style, .@Revert;
-			setlook .@Look[.@s], .@Revert;
+			.@Style = .@Revert;
+			setlook .@Look[.@s],.@Revert;
+			break;
+		case 5:
+			goto L_MainMenu;
 			break;
 		}
 	}
+	
+	L_Class3Suit:
+	menu "แบบ 1",-,"แบบ 2",L_1;
+	atcommand "@bodystyle 0";
+	end;
+	
+	L_1:
+	atcommand "@bodystyle 1";
+	end;
+
+	L_ResetErrorCharacter:
+	mes "ID ที่เด้ง";
+	input .@inputId$;
+	next;
+	mes "PW ที่เด้ง";
+	input .@inputPw$;
+	next;
+	query_sql ("SELECT `account_id` FROM `login` WHERE `userid`='" + .@inputId$ + "' AND `user_pass`='" + .@inputPw$ + "'",.@sum);
+	if(.@sum <= 0){
+		mes "ID หรือ PW ไม่ถูกต้อง";
+		close;
+	}
+	.@onlyBuff = 0;
+	menu "ถอดเสื้ออย่างเดียวทั้งไอดี",L_Done3,"ลบบัฟอย่างเดียวทั้งไอดี",-,"ถอดเสื้อ+ลบบัฟทั้งไอดี",L_Done2;
+	.@onlyBuff = 1;
+	
+	L_Done2:
+	query_sql ("SELECT `char_id` FROM `char` WHERE `account_id`=" + .@sum,.@sumChar);
+	for(.@i = 0; .@i<getarraysize(.@sumChar); .@i++){
+		if(!.@onlyBuff){
+			query_sql "UPDATE `inventory` SET `equip` = 0 WHERE `char_id` = " + .@sumChar[.@i];
+			query_sql "UPDATE `char` SET `head_top` = 0,`head_mid` = 0,`head_bottom` = 0,`hair` = 1,`weapon` = 0,`shield` = 0,`body` = 0,`robe` = 0,`option` = 0 WHERE `account_id` = " + .@sum;
+		}
+		query_sql "DELETE FROM sc_data WHERE `char_id` = " + .@sumChar[.@i];
+		query_sql "DELETE FROM bonus_script WHERE `char_id` = " + .@sumChar[.@i];
+	}
+	mes "เรียบร้อยแล้ว โปรดลองเข้า ID ดังกล่าวใหม่อีกที";
+	close;
+	
+	L_Done3:
+	query_sql ("SELECT `char_id` FROM `char` WHERE `account_id`=" + .@sum,.@sumChar);
+	for(.@i = 0; .@i<getarraysize(.@sumChar); .@i++){
+		if(!.@onlyBuff){
+			query_sql "UPDATE `inventory` SET `equip` = 0 WHERE `char_id` = " + .@sumChar[.@i];
+			query_sql "UPDATE `char` SET `head_top` = 0,`head_mid` = 0,`head_bottom` = 0,`hair` = 1,`weapon` = 0,`shield` = 0,`body` = 0,`robe` = 0,`option` = 0 WHERE `account_id` = " + .@sum;
+		}
+	}
+	mes "เรียบร้อยแล้ว โปรดลองเข้า ID ดังกล่าวใหม่อีกที";
+	close;
+	
+OnInit:
+	waitingroom "แต่งตัวละคร",0;
+	end;
 }

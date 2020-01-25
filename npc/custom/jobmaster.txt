@@ -15,7 +15,11 @@
 //= 1.9 Migrate/Integrate to Global Functions Platinum Skills. [mazvi]
 //============================================================
 
-prontera,153,193,6	script	Job Master	123,{
+
+//Translated & Modified by Start (Discord ID: Start#1356)
+
+
+prontera,153,193,6	script	เปลี่ยนอาชีพ	123,{
 function Get_Job_Equip;
 // Checks if the Player has the required level.
 // closes if not, returns if yes
@@ -23,15 +27,15 @@ function	Require_Level	{
 	if (BaseLevel < getarg(0) || JobLevel < getarg(1)) {
 		.@blvl = getarg(0) - BaseLevel;
 		.@jlvl = getarg(1) - JobLevel;
-		mes "Level requirement:";
+		mes "เลเวลที่ต้องการ:";
 		mes ((getarg(0)>1)? 
 			"^bb0000"+getarg(0)+"^000000 (^bb0000Base^000000) / ":"")+"^00bb00"+
 			getarg(1)+"^000000 (^00bb00Job^000000)";
-		mes "You need " +
-			((.@blvl > 0) ? "^bb0000"+.@blvl+"^000000 more base levels " + 
+		mes "คุณต้องมี " +
+			((.@blvl > 0) ? " Level เพิ่มอีก ^bb0000"+.@blvl+"^000000 " + 
 				((.@jlvl > 0) ? "and " : "") : "") +
-			((.@jlvl > 0) ? "^00bb00"+.@jlvl+"^000000 more job levels " : "") +
-			"to continue.";
+			((.@jlvl > 0) ? " Job Level เพิ่มอีก ^00bb00"+.@jlvl+"^000000 " : "") +
+			"เพื่อดำเนินการต่อ";
 		close;
 	}
 	return;
@@ -91,19 +95,19 @@ function	Check_Riding	{
 	// would make this NPC bigger just to handle with
 	// those special cases.
 	if (checkfalcon() || checkcart() || checkriding() || ismounting()) {
-		mes "Please remove your " +
-			((checkfalcon()) ? "falcon" : "") +
-			((checkcart()) ? "cart" : "") +
+		mes "โปรดนำ " +
+			((checkfalcon()) ? "Falcon" : "") +
+			((checkcart()) ? "Cart" : "") +
 			((checkriding()) ? "Peco" : "") +
-			((ismounting()) ? "mount" : "") +
-			" before proceeding.";
+			((ismounting()) ? "Mount" : "") +
+			" ออกไปเสียก่อน";
 		close;
 	}
 	return;
 }
 function	Check_SkillPoints	{
 	if (.SkillPointCheck && SkillPoint) {
-		mes "Please use all your skill points before proceeding.";
+		mes "โปรดใช้ Skill Points ให้หมดเสียก่อน";
 		close;
 	}
 	return;
@@ -213,7 +217,7 @@ function	Job_Options	{
 					Job_Options(.@job_opt, Job_Baby_Summoner);
 				break;
 			default:
-				mes "An error has occurred.";
+				mes "เกิดข้อผิดพลาด";
 				close;
 		}
 	} else if( Is_First_Cls(.@eac) || 				// First Class
@@ -254,7 +258,7 @@ function	Job_Menu	{
 	while(true) {
 		.@opt_cnt =  getarraysize(getarg(0));
 		if( .@opt_cnt <= 0 ) {
-			mes "No more jobs are available.";
+			mes "ไม่มี Class ต่อไปสำหรับท่านแล้ว";
 			close;
 		}
 
@@ -262,7 +266,7 @@ function	Job_Menu	{
 		if (.@opt_cnt > 1) {
 			// Multiple job classes given. Select one and save it to .@class
 			// After that confirm .@class
-			mes "Select a job.";
+			mes "เลือก Class";
 			.@menu$ = "";
 			for (.@i = 0; .@i < .@opt_cnt; .@i++) {
 				if( getelementofarray(getarg(0), .@i) == Job_Novice_High)
@@ -271,7 +275,7 @@ function	Job_Menu	{
 					.@jobname$ = jobname(getelementofarray(getarg(0), .@i));
 				.@menu$ = .@menu$ + " ~ " + .@jobname$ + ":";
 			}
-			.@menu$ = .@menu$+" ~ ^777777Cancel^000000";
+			.@menu$ = .@menu$+" ~ ^777777ยกเลิก^000000";
 			.@selected = select(.@menu$) - 1;
 			if( .@selected < 0 || .@selected >= .@opt_cnt )
 				close;
@@ -285,8 +289,8 @@ function	Job_Menu	{
 			// Super Baby can both be selected in one of the first class
 			// changes. That's why the Level Requirement is after and not before
 			// the selection.
-			mes "A base level of " + .SNovice +
-				" is required to turn into a " + jobname(.@class) + ".";
+			mes "ต้องการ Level " + .SNovice +
+				" เพื่อเปลี่ยนเป็น " + jobname(.@class);
 			return;
 		}
 		// Confirm the Class
@@ -303,7 +307,7 @@ function	Job_Change	{
 	.@to_cls = getarg(0);
 	next;
 	mes .NPCName$;
-	mes "You are now " + callfunc("F_InsertArticle", jobname(.@to_cls)) + "!";
+	mes "ตอนนี้คุณได้เป็น " + callfunc("F_InsertArticle", jobname(.@to_cls)) + " แล้ว!";
 	if (.@to_cls == Job_Novice_High && .LastJob)
 		lastJob = Class; // Saves the lastJob for rebirth
 	jobchange .@to_cls;
@@ -328,16 +332,16 @@ function	Confirm_Change	{
 	.@class = getarg(0, -1);
 	.@back = getarg(1, false);
 	if( .@class < 0 ) {
-		mes "Unknown Class Error.";
+		mes "เกิดข้อผิดพลาด";
 		close;
 	}
-	mes "Do you want to change into ^0055FF"+jobname(.@class)+"^000000 class?";
-	.@job_option$ = " ~ Change into ^0055FF"+jobname(.@class)+"^000000 class";
+	mes "ท่านต้องการเปลี่ยนเป็น ^0055FF"+jobname(.@class)+"^000000?";
+	.@job_option$ = " ~ เปลี่ยนเป็น ^0055FF"+jobname(.@class)+"^000000";
 	if( .@class == Job_Novice_High)
 		.@job_option$ = " ~ ^0055FFRebirth^000000";
 	
 	if (select(.@job_option$+": ~ ^777777" + 
-			((.@back) ?"Go back" : "Cancel") + "^000000") == 1) {
+			((.@back) ?"กลับ" : "ยกเลิก") + "^000000") == 1) {
 		Job_Change(.@class);
 	}
 	if (!.@back)
@@ -451,7 +455,7 @@ function	Get_Job_Equip	{
 
 OnInit:
 	// Initialisation, do not edit these
-	.NPCName$ = "[Job Master]";
+	.NPCName$ = "[เปลี่ยนอาชีพ]";
 	
 	// Settings
 	.ThirdClass = true;			// Enable third classes?

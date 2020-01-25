@@ -14,136 +14,100 @@
 //= 1.2a Added 'disable_items' command. [Euphy]
 //============================================================
 
-prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
 
-	set .zenycost,200000;    // base cost of the card remover services (in Zeny)
-	set .percardcost,25000;  // cost per card of the card remover services (in Zeny)
-	set .faildestroy,1;      // should the card remover have a chance of failure that destroys items? (1=yes, 0=no)
+//= Translated & Modified by Start (Discord ID: Start#1356)
 
+
+prt_in,28,73,4	script	ถอดการ์ด	78,{
 	disable_items;
-	mes "[Wise Old Woman]";
-	mes "Good day, young one. I have the power to remove cards that you have compounded onto your equipment. Does this idea please you?";
+	mes "•ถอดการ์ดฟรี";
+	mes "•ถอดได้เลย ไม่ต้องกลัวอะไรหายทั้งนั้น";
 	next;
-	switch(select("Yes, it does.:What do you charge?:No thanks.")) {
-	case 1:
-		mes "[Wise Old Woman]";
-		mes "Very well. Which item shall I examine for you?";
-		next;
-
-		setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
-		for( set .@i,1; .@i <= 10; set .@i,.@i+1 ) {
-			if( getequipisequiped(.@indices[.@i]) )
-				set .@menu$, .@menu$ + F_getpositionname(.@indices[.@i]) + "-[" + getequipname(.@indices[.@i]) + "]";
-			set .@menu$, .@menu$ + ":";
+	setarray .@indices[1],EQI_HEAD_TOP,EQI_ARMOR,EQI_HAND_L,EQI_HAND_R,EQI_GARMENT,EQI_SHOES,EQI_ACC_L,EQI_ACC_R,EQI_HEAD_MID,EQI_HEAD_LOW,EQI_SHADOW_WEAPON,EQI_SHADOW_ARMOR,EQI_SHADOW_SHIELD,EQI_COSTUME_GARMENT,EQI_SHADOW_SHOES,EQI_SHADOW_ACC_L,EQI_SHADOW_ACC_R,EQI_COSTUME_HEAD_TOP,EQI_COSTUME_HEAD_MID,EQI_COSTUME_HEAD_LOW;
+	for(.@i = 1; .@i < getarraysize(.@indices); .@i++){
+		if(getequipisequiped(.@indices[.@i])){
+			.@menu$ = .@menu$ + F_getpositionname(.@indices[.@i]) + "-[" + getequipname(.@indices[.@i]) + "]";
+			.@equipped = 1;
 		}
-		set .@part, .@indices[ select(.@menu$) ];
-		if(!getequipisequiped(.@part)) {
-			mes "[Wise Old Woman]";
-			mes "Young one... Your not wearing anything there that I can remove cards from.";
-			close;
-		}
-		if(getequipcardcnt(.@part) == 0) {
-			mes "[Wise Old Woman]";
-			mes "Young one... There are no cards compounded on this item. I can do nothing with it, I'm afraid.";
-			close;
-		}
-		set .@cardcount,getequipcardcnt(.@part);
-		
-		if (!checkweight(1202,(.@cardcount+1))) { 
-			mes "^3355FFJust a minute!";
-			mes "I can't offer any of my";
-			mes "services to you because";
-			mes "you're carrying too much";
-			mes "stuff. Put your extra items in";
-			mes "Kafra Storage and come again~";
-			close;
-		}
-		mes "[Wise Old Woman]";
-		mes "This item has " + .@cardcount + " cards compounded on it. To perform my magic, I will need " + (.zenycost+(.@cardcount * .percardcost)) + " zeny, a ^0000FFStar Crumb^000000, and a ^0000FFYellow Gemstone^000000.";
-		next;
-		if(select("Very well. Do it.:Never mind.") == 2) {
-			mes "[Wise Old Woman]";
-			mes "Very well. Return at once if you seek my services.";
-			close;
-		}
-		if((zeny < (.zenycost+(.@cardcount * .percardcost))) || (countitem(1000) < 1) || (countitem(715) < 1)) {
-			mes "[Wise Old Woman]";
-			mes "You do not have all the items I require to work my magic, child. Come again when you do.";
-			close;
-		}
-		mes "[Wise Old Woman]";
-		mes "Before I begin, I must warn you--I may fail. If I do, I may destroy the cards, the item, or both. I do not give refunds. That being said, which is more important to you: The cards, or the item?";
-		next;
-		switch(select("I changed my mind about this.:The item.:The cards.")) {
-		case 1:
-			mes "[Wise Old Woman]";
-			mes "Very well. Return at once if you seek my services.";
-			close;
-		case 2:
-			set .@failtype,1;
-			break;
-		case 3:
-			set .@failtype,2;
-		}
-		mes "[Wise Old Woman]";
-		mes "Very well. I shall begin.";
-		set Zeny, Zeny - (.zenycost+(.@cardcount * .percardcost));
-		delitem 1000,1; //Star_Crumb
-		delitem 715,1; //Yellow_Gemstone
-		
-		// Replace the constants in the next 3 lines with failure chance values defined in refine_db.txt
-		// First value = Total failure chance (item and cards destroyed)
-		// Second value = Partial failure chance (one or the other is destroyed, player decides which one is safe)
-		// Third value = Harmless failure chance (all that's lost is your investment)
-
-		set .@failchance,rand(100);
-		if (.faildestroy==1) {
-			if(.@failchance < 2) {
-				next;
-				failedremovecards .@part,0;
-				mes "[Wise Old Woman]";
-				mes "The process was a total failure. I am afraid the item and the cards were destroyed.";
-				close;
-			}
-
-			if(.@failchance < 8) {
-				if (.@failtype == 1) {
-					next;
-					failedremovecards .@part,1;
-					mes "[Wise Old Woman]";
-					mes "While I have managed to remove the cards from the item, they were destroyed in the process. The item, however, is okay.";
-					close;
-				}
-
-				if (.@failtype == 2) {
-					next;
-					failedremovecards .@part,2;
-					mes "[Wise Old Woman]";
-					mes "Most unfortunate. I succeeded at removing the cards, but the item itself was destroyed in the process.";
-					close;
-				}
-			}
-		}
-
-		if(.@failchance < 10) {
-			next;
-			failedremovecards .@part,3;
-			mes "[Wise Old Woman]";
-			mes "I have failed to remove the cards. Luckily, however, both the item and the cards are still okay.";
-			close;
-		}
-		next;
-		successremovecards .@part;
-		mes "[Wise Old Woman]";
-		mes "The process was a success. Here are your cards and your item. Farewell.";
-		close;
-	case 2:
-		mes "[Wise Old Woman]";
-		mes "I charge a flat fee of "+callfunc("F_InsertComma",.zenycost)+" zeny, plus "+callfunc("F_InsertComma",.percardcost)+" zeny for each card I remove from the item. In addition, I need a star crumb and a yellow gemstone to work my magic.";
-		close;
-	case 3:
-		mes "[Wise Old Woman]";
-		mes "Very well. Return at once if you seek my services.";
+		.@menu$ = .@menu$ + ":";
+	}
+	
+	if(!.@equipped){
+		mes "เกิดข้อผิดพลาด";
 		close;
 	}
+	
+	.@part = .@indices[select(.@menu$)];
+	.@equipId = getequipid(.@part);
+	
+	if(!getequipisequiped(.@part)){
+		mes "เกิดข้อผิดพลาด";
+		close;
+	}
+	
+	//Store refine
+	.@refine_count = getequiprefinerycnt(.@part);
+	
+	//Store card
+	if(getequipcardid(.@part,0) > 0)
+	.@card_slot_1 = getequipcardid(.@part,0);
+	if(getequipcardid(.@part,1) > 0)
+	.@card_slot_2 = getequipcardid(.@part,1);
+	if(getequipcardid(.@part,2) > 0)
+	.@card_slot_3 = getequipcardid(.@part,2);
+	if(getequipcardid(.@part,3) > 0)
+	.@card_slot_4 = getequipcardid(.@part,3);
+
+	//Store random option
+	if(getequiprandomoption(.@part,0,ROA_ID) > 0){
+		.@random_option_id_slot_1 = getequiprandomoption(.@part,0,ROA_ID);
+		.@random_option_val_slot_1 = getequiprandomoption(.@part,0,ROA_VALUE);
+	}	
+	if(getequiprandomoption(.@part,1,ROA_ID) > 0){
+		.@random_option_id_slot_2 = getequiprandomoption(.@part,1,ROA_ID);
+		.@random_option_val_slot_2 = getequiprandomoption(.@part,1,ROA_VALUE);
+	}	
+	if(getequiprandomoption(.@part,2,ROA_ID) > 0){
+		.@random_option_id_slot_3 = getequiprandomoption(.@part,2,ROA_ID);
+		.@random_option_val_slot_3 = getequiprandomoption(.@part,2,ROA_VALUE);
+	}
+	if(getequiprandomoption(.@part,3,ROA_ID) > 0){
+		.@random_option_id_slot_4 = getequiprandomoption(.@part,3,ROA_ID);
+		.@random_option_val_slot_4 = getequiprandomoption(.@part,3,ROA_VALUE);
+	}
+	if(getequiprandomoption(.@part,4,ROA_ID) > 0){
+		.@random_option_id_slot_5 = getequiprandomoption(.@part,4,ROA_ID);
+		.@random_option_val_slot_5 = getequiprandomoption(.@part,4,ROA_VALUE);
+	}
+
+	//Delete equipment
+	delequip .@part;
+	
+	setarray .@optID[0],.@random_option_id_slot_1,.@random_option_id_slot_2,.@random_option_id_slot_3,.@random_option_id_slot_4,.@random_option_id_slot_5;
+	setarray .@optVal[0],.@random_option_val_slot_1,.@random_option_val_slot_2,.@random_option_val_slot_3,.@random_option_val_slot_4,.@random_option_val_slot_5;
+	setarray .@optParam[0],0,0,0,0,0;
+	
+	//Give card
+	if(.@card_slot_1>0)
+	getitem .@card_slot_1,1;
+	if(.@card_slot_2>0)
+	getitem .@card_slot_2,1;
+	if(.@card_slot_3>0)
+	getitem .@card_slot_3,1;
+	if(.@card_slot_4>0)
+	getitem .@card_slot_4,1;
+
+	//Give item without card
+	if(.@random_option_id_slot_1 <= 0 && .@random_option_id_slot_2 <= 0 && .@random_option_id_slot_3 <= 0 && .@random_option_id_slot_4 <= 0 && .@random_option_id_slot_5 <= 0)
+	getitem2 .@equipId,1,1,.@refine_count,0,0,0,0,0;
+	else
+	getitem3 .@equipId,1,1,.@refine_count,0,0,0,0,0,.@optID,.@optVal,.@optParam;
+
+	mes "เรียบร้อย";
+	specialeffect2 218;
+	end;
+	
+OnInit:
+	waitingroom "ถอดการ์ด",0;
+	end;
 }

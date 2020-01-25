@@ -16,6 +16,10 @@
 //= 1.5a Fix Bifrost Tower
 //============================================================
 
+
+//Translated & Modified by Start (Discord ID: Start#1356)
+
+
 -	script	Warper	-1,{
 function Go; function Disp; function Pick; function Restrict;
 
@@ -23,17 +27,17 @@ function Go; function Disp; function Pick; function Restrict;
 //	Main Menu:
 // --------------------------------------------------
 
-menu	"Last Warp ^777777["+lastwarp$+"]^000000",-,
-    	" ~ Towns",Towns,
-    	" ~ Fields",Fields,
-    	" ~ Dungeons",Dungeons,
-    	" ~ Guild Castles",Castles,
-    	" ~ Guild Dungeons",Guild_Dungeons,
-    	" ~ Instances",Instances,
-    	" ~ Special Areas",Special;
+menu	"วาร์ปล่าสุด ^777777["+lastwarp$+"]^000000",-,
+    	" ~ เมืองหลวง",Towns,
+    	" ~ พื้นที่",Fields,
+    	" ~ ดันเจี้ยน",Dungeons,
+    	" ~ ปราสาทกิลด์",Castles,
+    	" ~ กิลด์ดันเจี้ยน",Guild_Dungeons,
+    	" ~ ดันเจี้ยนส่วนตัว",Instances,
+    	" ~ พื้นที่พิเศษ",Special;
 
 	if (lastwarp$ == "")
-		message strcharinfo(0),"You haven't warped anywhere yet.";
+		message strcharinfo(0),"คุณยังไม่เคยวาร์ปไปไหนมาก่อน";
 	else
 		warp lastwarp$,lastwarpx,lastwarpy;
 	end;
@@ -100,7 +104,7 @@ function Pick {
 		set .@map$, getarg(0)+((.@i<10)?"0":"")+.@i;
 	}
 	if (.@warp_block & (1<<.@select)) {
-		message strcharinfo(0),"This map is not enabled in "+((checkre(0))?"":"Pre-")+"Renewal.";
+		message strcharinfo(0),"แผนที่นี้ไม่เปิดใน "+((checkre(0))?"":"Pre-")+"Renewal";
 		end;
 	}
 	set .@x, @c[.@i*2];
@@ -116,7 +120,7 @@ function Restrict {
 			for (set .@i,1; .@i<getargcount(); set .@i,.@i+1)
 				set @warp_block, @warp_block | (1<<getarg(.@i));
 		} else {
-			message strcharinfo(0),"This map is not enabled in "+((checkre(0))?"":"Pre-")+"Renewal.";
+			message strcharinfo(0),"แผนที่นี้ไม่เปิดใน "+((checkre(0))?"":"Pre-")+"Renewal";
 			end;
 		}
 	}
@@ -535,52 +539,52 @@ OnInit:
 // --------------------------------------------------
 //	Duplicates:
 // --------------------------------------------------
-alb2trea,57,70,6	duplicate(Warper)	Warper#tre	811
-alberta,28,240,4	duplicate(Warper)	Warper#alb	811
-aldebaran,145,118,4	duplicate(Warper)	Warper#alde	811
-amatsu,203,87,4	duplicate(Warper)	Warper#ama	811
-ayothaya,209,169,6	duplicate(Warper)	Warper#ayo	811
-comodo,194,158,4	duplicate(Warper)	Warper#com	811
-einbech,59,38,6	duplicate(Warper)	Warper#einbe	811
-einbroch,69,202,4	duplicate(Warper)	Warper#einbr	811
-gef_fild10,71,339,4	duplicate(Warper)	Warper#orc	811
-geffen,124,72,4	duplicate(Warper)	Warper#gef	811
-glast_01,372,308,4	duplicate(Warper)	Warper#glh	811
-gonryun,162,122,4	duplicate(Warper)	Warper#gon	811
-hugel,101,151,4	duplicate(Warper)	Warper#hug	811
-izlu2dun,110,92,4	duplicate(Warper)	Warper#izd	811
-izlude,134,150,4	duplicate(Warper)	Warper#izl	811	//Pre-RE: (132,120)
-jawaii,253,138,4	duplicate(Warper)	Warper#jaw	811
-lighthalzen,162,102,4	duplicate(Warper)	Warper#lhz	811
-louyang,208,103,6	duplicate(Warper)	Warper#lou	811
-manuk,274,146,6	duplicate(Warper)	Warper#man	811
-mid_camp,216,288,4	duplicate(Warper)	Warper#mid	811
-mjolnir_02,85,364,4	duplicate(Warper)	Warper#mjo	811
-moc_ruins,64,164,4	duplicate(Warper)	Warper#moc	811
-morocc,159,97,4	duplicate(Warper)	Warper#mor	811
-moscovia,229,191,4	duplicate(Warper)	Warper#mos	811
-nameless_n,259,213,4	duplicate(Warper)	Warper#nam	811
-niflheim,205,179,4	duplicate(Warper)	Warper#nif	811
-pay_arche,42,134,4	duplicate(Warper)	Warper#arc	811
-payon,182,108,4	duplicate(Warper)	Warper#pay	811
-prontera,159,192,4	duplicate(Warper)	Warper#prt	811
-prt_fild05,279,223,6	duplicate(Warper)	Warper#cul	811
-rachel,135,116,4	duplicate(Warper)	Warper#rac	811
-splendide,205,153,4	duplicate(Warper)	Warper#spl	811
-thor_camp,249,76,4	duplicate(Warper)	Warper#thor	811
-umbala,106,150,3	duplicate(Warper)	Warper#umb	811
-veins,214,123,4	duplicate(Warper)	Warper#ve	811
-xmas,150,136,6	duplicate(Warper)	Warper#xmas	811
-yuno,162,47,4	duplicate(Warper)	Warper#yuno	811
+alb2trea,57,70,6	duplicate(Warper)	วาร์ป#tre	811
+alberta,28,240,4	duplicate(Warper)	วาร์ป#alb	811
+aldebaran,145,118,4	duplicate(Warper)	วาร์ป#alde	811
+amatsu,203,87,4	duplicate(Warper)	วาร์ป#ama	811
+ayothaya,209,169,6	duplicate(Warper)	วาร์ป#ayo	811
+comodo,194,158,4	duplicate(Warper)	วาร์ป#com	811
+einbech,59,38,6	duplicate(Warper)	วาร์ป#einbe	811
+einbroch,69,202,4	duplicate(Warper)	วาร์ป#einbr	811
+gef_fild10,71,339,4	duplicate(Warper)	วาร์ป#orc	811
+geffen,124,72,4	duplicate(Warper)	วาร์ป#gef	811
+glast_01,372,308,4	duplicate(Warper)	วาร์ป#glh	811
+gonryun,162,122,4	duplicate(Warper)	วาร์ป#gon	811
+hugel,101,151,4	duplicate(Warper)	วาร์ป#hug	811
+izlu2dun,110,92,4	duplicate(Warper)	วาร์ป#izd	811
+izlude,134,150,4	duplicate(Warper)	วาร์ป#izl	811	//Pre-RE: (132,120)
+jawaii,253,138,4	duplicate(Warper)	วาร์ป#jaw	811
+lighthalzen,162,102,4	duplicate(Warper)	วาร์ป#lhz	811
+louyang,208,103,6	duplicate(Warper)	วาร์ป#lou	811
+manuk,274,146,6	duplicate(Warper)	วาร์ป#man	811
+mid_camp,216,288,4	duplicate(Warper)	วาร์ป#mid	811
+mjolnir_02,85,364,4	duplicate(Warper)	วาร์ป#mjo	811
+moc_ruins,64,164,4	duplicate(Warper)	วาร์ป#moc	811
+morocc,159,97,4	duplicate(Warper)	วาร์ป#mor	811
+moscovia,229,191,4	duplicate(Warper)	วาร์ป#mos	811
+nameless_n,259,213,4	duplicate(Warper)	วาร์ป#nam	811
+niflheim,205,179,4	duplicate(Warper)	วาร์ป#nif	811
+pay_arche,42,134,4	duplicate(Warper)	วาร์ป#arc	811
+payon,182,108,4	duplicate(Warper)	วาร์ป#pay	811
+prontera,159,192,4	duplicate(Warper)	วาร์ป#prt	811
+prt_fild05,279,223,6	duplicate(Warper)	วาร์ป#cul	811
+rachel,135,116,4	duplicate(Warper)	วาร์ป#rac	811
+splendide,205,153,4	duplicate(Warper)	วาร์ป#spl	811
+thor_camp,249,76,4	duplicate(Warper)	วาร์ป#thor	811
+umbala,106,150,3	duplicate(Warper)	วาร์ป#umb	811
+veins,214,123,4	duplicate(Warper)	วาร์ป#ve	811
+xmas,150,136,6	duplicate(Warper)	วาร์ป#xmas	811
+yuno,162,47,4	duplicate(Warper)	วาร์ป#yuno	811
 
 // --------------------------------------------------
 //	Duplicates (Renewal):
 // --------------------------------------------------
-brasilis,201,222,4	duplicate(Warper)	Warper#bra	811
-dewata,204,186,6	duplicate(Warper)	Warper#dew	811
-dicastes01,194,194,6	duplicate(Warper)	Warper#dic	811
-ecl_in01,51,60,4	duplicate(Warper)	Warper#ecl	811
-lasagna,196,187,4	duplicate(Warper)	Warper#las	811
-malangdo,134,117,6	duplicate(Warper)	Warper#mal	811
-malaya,231,204,4	duplicate(Warper)	Warper#ma	811
-mora,57,152,4	duplicate(Warper)	Warper#mora	811
+brasilis,201,222,4	duplicate(Warper)	วาร์ป#bra	811
+dewata,204,186,6	duplicate(Warper)	วาร์ป#dew	811
+dicastes01,194,194,6	duplicate(Warper)	วาร์ป#dic	811
+ecl_in01,51,60,4	duplicate(Warper)	วาร์ป#ecl	811
+lasagna,196,187,4	duplicate(Warper)	วาร์ป#las	811
+malangdo,134,117,6	duplicate(Warper)	วาร์ป#mal	811
+malaya,231,204,4	duplicate(Warper)	วาร์ป#ma	811
+mora,57,152,4	duplicate(Warper)	วาร์ป#mora	811

@@ -1,0 +1,14 @@
+// Base HP/SP Tables
+// Supports up to base level 500.
+//
+// Structure of Database:
+// StartLevel,EndLevel,JobID,Type,Base value for Lv 1,2,...,Base value for 'Max level'
+//
+// Type:
+//	0 = BaseHP, 1 = BaseSP
+
+//===============================
+// Base HP Table
+// According to base HP calculation on http://irowiki.org/wiki/Max_HP
+//===============================
+
