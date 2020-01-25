@@ -5349,12 +5349,16 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, enum e_status_ca
 	struct status_data b_status; // Previous battle status
 	struct status_data* status; // Pointer to current battle status
 
-	if (bl->type == BL_PC && ((TBL_PC*)bl)->delayed_damage != 0) {
-		if (opt&SCO_FORCE)
-			((TBL_PC*)bl)->state.hold_recalc = 0; /* Clear and move on */
-		else {
-			((TBL_PC*)bl)->state.hold_recalc = 1; /* Flag and stop */
-			return;
+	if (bl->type == BL_PC) {
+		struct map_session_data *sd = BL_CAST(BL_PC, bl);
+
+		if (sd->delayed_damage != 0) {
+			if (opt&SCO_FORCE)
+				sd->state.hold_recalc = false; // Clear and move on
+			else {
+				sd->state.hold_recalc = true; // Flag and stop
+				return;
+			}
 		}
 	}
 
@@ -11766,33 +11770,31 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	else
 		sce->timer = INVALID_TIMER; // Infinite duration
 
-	if (calc_flag)
-		status_calc_bl(bl,calc_flag);
+	if (calc_flag) {
+		if (sd) {
+			switch(type) {
+				// Statuses that adjust HP/SP and heal after starting
+				case SC_BERSERK:
+				case SC_MERC_HPUP:
+				case SC_MERC_SPUP:
+					status_calc_bl_(bl, static_cast<scb_flag>(calc_flag), SCO_FORCE);
+					break;
+				default:
+					status_calc_bl(bl, calc_flag);
+					break;
+			}
+		} else
+			status_calc_bl(bl, calc_flag);
+	}
 
 	if ( sc_isnew && StatusChangeStateTable[type] ) // Non-zero
 		status_calc_state(bl,sc,( enum scs_flag ) StatusChangeStateTable[type],true);
 
-
-	if(sd) {
-		if (sd->pd)
-			pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
-		switch (type) {
-			case SC_BERSERK:
-			case SC_MERC_HPUP:
-			case SC_MERC_SPUP:
-				status_calc_pc(sd, SCO_FORCE);
-				break;
-			default:
-				status_calc_pc(sd, SCO_NONE);
-				break;
-		}
-	}
+	if (sd && sd->pd)
+		pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
 
 	// 1st thing to execute when loading status
 	switch (type) {
-		case SC_FULL_THROTTLE:
-			status_percent_heal(bl,100,0);
-			break;
 		case SC_BERSERK:
 			if (!(sce->val2)) { // Don't heal if already set
 				status_heal(bl, status->max_hp, 0, 1); // Do not use percent_heal as this healing must override BERSERK's block.
@@ -11812,6 +11814,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (sd)
 				clif_bossmapinfo(sd, map_id2boss(sce->val1), BOSS_INFO_ALIVE_WITHMSG); // First Message
 			break;
+		case SC_FULL_THROTTLE:
 		case SC_MERC_HPUP:
 			status_percent_heal(bl, 100, 0); // Recover Full HP
 			break;

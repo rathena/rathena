@@ -2187,7 +2187,7 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 	test_autoloot = sd 
 		&& (drop_rate <= sd->state.autoloot || pc_isautolooting(sd, ditem->item_data.nameid))
 		&& (battle_config.idle_no_autoloot == 0 || DIFF_TICK(last_tick, sd->idletime) < battle_config.idle_no_autoloot)
-		&& (battle_config.homunculus_autoloot?1:!flag);
+		&& (battle_config.homunculus_autoloot?(battle_config.hom_idle_no_share == 0 || !pc_isidle_hom(sd)):!flag);
 #ifdef AUTOLOOT_DISTANCE
 		test_autoloot = test_autoloot && sd->bl.m == md->bl.m
 		&& check_distance_blxy(&sd->bl, dlist->x, dlist->y, AUTOLOOT_DISTANCE);
@@ -2654,7 +2654,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 								job_exp = (unsigned int)cap_value(apply_rate(job_exp, rate), 1, UINT_MAX);
 						}
 #endif
-						pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, 0);
+						if (!(homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(tmpsd[i])))
+							pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, 0);
 					}
 				}
 				if(zeny) // zeny from mobs [Valaris]
@@ -2665,8 +2666,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				pc_damage_log_clear(tmpsd[i],md->bl.id);
 		}
 
-		for( i = 0; i < pnum; i++ ) //Party share.
-			party_exp_share(pt[i].p, &md->bl, pt[i].base_exp,pt[i].job_exp,pt[i].zeny);
+		if (!(homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(map_charid2sd(md->dmglog[0].id))))
+			for( i = 0; i < pnum; i++ ) //Party share.
+				party_exp_share(pt[i].p, &md->bl, pt[i].base_exp,pt[i].job_exp,pt[i].zeny);
 
 	} //End EXP giving.
 
