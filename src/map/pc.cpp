@@ -1727,21 +1727,21 @@ void pc_reg_received(struct map_session_data *sd)
 	if (sd->state.connect_new == 0 && sd->fd) { //Character already loaded map! Gotta trigger LoadEndAck manually.
 		sd->state.connect_new = 1;
 		clif_parse_LoadEndAck(sd->fd, sd);
-	}
 
-	if( pc_isinvisible(sd) ) {
-		sd->vd.class_ = JT_INVISIBLE;
-		clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
-		// decrement the number of pvp players on the map
-		map_getmapdata(sd->bl.m)->users_pvp--;
+		if( pc_isinvisible( sd ) ){
+			sd->vd.class_ = JT_INVISIBLE;
+			clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
+			// decrement the number of pvp players on the map
+			map_getmapdata( sd->bl.m )->users_pvp--;
 
-		if( map_getmapflag(sd->bl.m, MF_PVP) && !map_getmapflag(sd->bl.m, MF_PVP_NOCALCRANK) && sd->pvp_timer != INVALID_TIMER ){
-			// unregister the player for ranking
-			delete_timer( sd->pvp_timer, pc_calc_pvprank_timer );
-			sd->pvp_timer = INVALID_TIMER;
+			if( map_getmapflag( sd->bl.m, MF_PVP ) && !map_getmapflag( sd->bl.m, MF_PVP_NOCALCRANK ) && sd->pvp_timer != INVALID_TIMER ){
+				// unregister the player for ranking
+				delete_timer( sd->pvp_timer, pc_calc_pvprank_timer );
+				sd->pvp_timer = INVALID_TIMER;
+			}
+
+			clif_changeoption( &sd->bl );
 		}
-
-		clif_changeoption( &sd->bl );
 	}
 
 	channel_autojoin(sd);
