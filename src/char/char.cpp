@@ -465,14 +465,14 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		}
 
 		StringBuf_Clear(&buf);
-		StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `friend_account`, `friend_id`) VALUES ", schema_config.friend_db);
+		StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `friend_id`) VALUES ", schema_config.friend_db);
 		for( i = 0, count = 0; i < MAX_FRIENDS; ++i )
 		{
 			if( p->friends[i].char_id > 0 )
 			{
 				if( count )
 					StringBuf_AppendStr(&buf, ",");
-				StringBuf_Printf(&buf, "('%d','%d','%d')", char_id, p->friends[i].account_id, p->friends[i].char_id);
+				StringBuf_Printf(&buf, "('%d','%d')", char_id, p->friends[i].char_id);
 				count++;
 			}
 		}
@@ -1184,8 +1184,8 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	StringBuf_Printf(&msg_buf, " %d skills", skill_count);
 
 	//read friends
-	//`friends` (`char_id`, `friend_account`, `friend_id`)
-	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT c.`account_id`, c.`char_id`, c.`name` FROM `%s` c LEFT JOIN `%s` f ON f.`friend_account` = c.`account_id` AND f.`friend_id` = c.`char_id` WHERE f.`char_id`=? LIMIT %d", schema_config.char_db, schema_config.friend_db, MAX_FRIENDS)
+	//`friends` (`char_id`, `friend_id`)
+	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT c.`account_id`, c.`char_id`, c.`name` FROM `%s` c LEFT JOIN `%s` f ON f.`friend_id` = c.`char_id` WHERE f.`char_id`=? LIMIT %d", schema_config.char_db, schema_config.friend_db, MAX_FRIENDS)
 	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,    &tmp_friend.account_id, 0, NULL, NULL)
@@ -2427,7 +2427,7 @@ bool char_checkdb(void){
 		return false;
 	}
 	//checking friend_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`friend_account`,`friend_id` FROM `%s` LIMIT 1;", schema_config.friend_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`friend_id` FROM `%s` LIMIT 1;", schema_config.friend_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}

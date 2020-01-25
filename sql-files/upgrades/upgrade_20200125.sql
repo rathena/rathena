@@ -8,3 +8,6 @@ ALTER TABLE `guild_member`
 	DROP COLUMN `exp_payper`,
 	DROP COLUMN `online`,
 	DROP COLUMN `name`;
+
+ALTER TABLE `friends`
+	DROP COLUMN `friend_account`;
