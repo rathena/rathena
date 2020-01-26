@@ -109,10 +109,34 @@ std::unordered_map<const char*, int64> constants;
 // Forward declaration of constant loading functions
 static bool parse_item_constants( const char* path );
 static bool parse_mob_constants( char* split[], int columns, int current );
-static bool parse_skill_constants( char* split[], int columns, int current );
+static bool parse_skill_constants_txt( char* split[], int columns, int current );
+static bool parse_skill_constants_yml(std::string path, std::string filename);
 
 bool fileExists( const std::string& path );
 bool askConfirmation( const char* fmt, ... );
+
+// Skill database data to memory
+static void skill_txt_data(std::string path) {
+	skill_require.clear();
+	skill_cast.clear();
+	skill_castnodex.clear();
+	skill_unit.clear();
+	skill_copyable.clear();
+	skill_nearnpc.clear();
+
+	if (fileExists(path + "skill_require_db.txt"))
+		sv_readdb(path.c_str(), "skill_require_db.txt", ',', 34, 34, -1, skill_parse_row_requiredb, false);
+	if (fileExists(path + "skill_cast_db.txt"))
+		sv_readdb(path.c_str(), "skill_cast_db.txt", ',', 7, 8, -1, skill_parse_row_castdb, false);
+	if (fileExists(path + "skill_castnodex_db.txt"))
+		sv_readdb(path.c_str(), "skill_castnodex_db.txt", ',', 2, 3, -1, skill_parse_row_castnodexdb, false);
+	if (fileExists(path + "skill_unit_db.txt"))
+		sv_readdb(path.c_str(), "skill_unit_db.txt", ',', 8, 8, -1, skill_parse_row_unitdb, false);
+	if (fileExists(path + "skill_copyable_db.txt"))
+		sv_readdb(path.c_str(), "skill_copyable_db.txt", ',', 2, 4, -1, skill_parse_row_copyabledb, false);
+	if (fileExists(path + "skill_nonearnpc_db.txt"))
+		sv_readdb(path.c_str(), "skill_nonearnpc_db.txt", ',', 2, 3, -1, skill_parse_row_nonearnpcrangedb, false);
+}
 
 YAML::Emitter body;
 
@@ -212,6 +236,10 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 				}
 			}
 
+			// Parse the skill databases into memory for each database path
+			if (name_ext.compare("skill_db.txt") == 0)
+				skill_txt_data(path);
+
 			std::ofstream out;
 
 			out.open(to);
@@ -252,21 +280,17 @@ int do_init( int argc, char** argv ){
 	parse_item_constants( ( path_db_import + "/item_db.txt" ).c_str() );
 	sv_readdb( path_db_mode.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false );
 	sv_readdb( path_db_import.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false );
-	sv_readdb( path_db_mode.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants, false );
-	sv_readdb( path_db_import.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants, false );
+	if (fileExists(path_db + "/" + "skill_db.yml")) {
+		parse_skill_constants_yml(path_db_mode, "skill_db.yml");
+		parse_skill_constants_yml(path_db_import + "/", "skill_db.yml");
+	} else {
+		sv_readdb(path_db_mode.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants_txt, false);
+		sv_readdb(path_db_import.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants_txt, false);
+	}
 
 	// Load constants
 	#define export_constant_npc(a) export_constant(a)
 	#include "../map/script_constants.hpp"
-
-	if (fileExists(path_db_mode + "skill_db.txt")) {
-		sv_readdb(path_db_mode.c_str(), "skill_require_db.txt", ',', 34, 34, -1, skill_parse_row_requiredb, false);
-		sv_readdb(path_db_mode.c_str(), "skill_cast_db.txt", ',', 7, 8, -1, skill_parse_row_castdb, false);
-		sv_readdb(path_db_mode.c_str(), "skill_castnodex_db.txt", ',', 2, 3, -1, skill_parse_row_castnodexdb, false);
-		sv_readdb(path_db_mode.c_str(), "skill_unit_db.txt", ',', 8, 8, -1, skill_parse_row_unitdb, false);
-		sv_readdb(path_db.c_str(), "skill_copyable_db.txt", ',', 2, 4, -1, skill_parse_row_copyabledb, false);
-		sv_readdb(path_db.c_str(), "skill_nonearnpc_db.txt", ',', 2, 3, -1, skill_parse_row_nonearnpcrangedb, false);
-	}
 
 	std::vector<std::string> root_paths = {
 		path_db,
@@ -501,11 +525,34 @@ static bool parse_mob_constants( char* split[], int columns, int current ){
 	return true;
 }
 
-static bool parse_skill_constants( char* split[], int columns, int current ){
+static bool parse_skill_constants_txt( char* split[], int columns, int current ){
 	uint16 skill_id = atoi( split[0] );
 	char* name = trim( split[16] );
 
 	aegis_skillnames[skill_id] = std::string( name );
+
+	return true;
+}
+
+static bool parse_skill_constants_yml(std::string path, std::string filename) {
+	YAML::Node rootNode;
+
+	try {
+		rootNode = YAML::LoadFile(path + filename);
+	} catch (YAML::Exception &e) {
+		ShowError("Failed to read file from '" CL_WHITE "%s%s" CL_RESET "'.\n", path.c_str(), filename.c_str());
+		ShowError("%s (Line %d: Column %d)\n", e.msg.c_str(), e.mark.line, e.mark.column);
+		return false;
+	}
+
+	uint64 count = 0;
+
+	for (const YAML::Node &body : rootNode["Body"]) {
+		aegis_skillnames[body["Id"].as<uint16>()] = body["Name"].as<std::string>();
+		count++;
+	}
+
+	ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s%s" CL_RESET "'" CL_CLL "\n", count, path.c_str(), filename.c_str());
 
 	return true;
 }
