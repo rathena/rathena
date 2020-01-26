@@ -50,6 +50,7 @@
 #define script_isint(st,i) data_isint(get_val(st, script_getdata(st,i)))
 
 #define script_getnum(st,val) conv_num(st, script_getdata(st,val))
+#define script_getnum64(st,val) conv_num64(st, script_getdata(st,val))
 #define script_getstr(st,val) conv_str(st, script_getdata(st,val))
 #define script_getref(st,val) ( script_getdata(st,val)->ref )
 // Returns name of currently running function
@@ -2011,9 +2012,12 @@ bool is_number(const char *p);
 struct script_code* parse_script(const char* src,const char* file,int line,int options);
 void run_script(struct script_code *rootscript,int pos,int rid,int oid);
 
-int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const void* value, struct reg_db *ref);
-int set_var(struct map_session_data *sd, char *name, void *val);
-int conv_num(struct script_state *st,struct script_data *data);
+bool set_reg_num(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const int64 value, struct reg_db *ref);
+bool set_reg_str(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const char* value, struct reg_db* ref);
+bool set_var_str(struct map_session_data *sd, const char* name, const char* val);
+bool clear_reg( struct script_state* st, struct map_session_data* sd, int64 num, const char* name, struct reg_db *ref );
+int64 conv_num64(struct script_state *st, struct script_data *data);
+int conv_num(struct script_state *st, struct script_data *data);
 const char* conv_str(struct script_state *st,struct script_data *data);
 void pop_stack(struct script_state* st, int start, int end);
 TIMER_FUNC(run_script_timer);
@@ -2034,14 +2038,14 @@ struct DBMap* script_get_userfunc_db(void);
 void script_run_autobonus(const char *autobonus, struct map_session_data *sd, unsigned int pos);
 
 const char* script_get_constant_str(const char* prefix, int64 value);
-bool script_get_parameter(const char* name, int* value);
-bool script_get_constant(const char* name, int* value);
-void script_set_constant_(const char* name, int value, const char* constant_name, bool isparameter, bool deprecated);
+bool script_get_parameter(const char* name, int64* value);
+bool script_get_constant(const char* name, int64* value);
+void script_set_constant_(const char* name, int64 value, const char* constant_name, bool isparameter, bool deprecated);
 #define script_set_constant(name, value, isparameter, deprecated) script_set_constant_(name, value, NULL, isparameter, deprecated)
 void script_hardcoded_constants(void);
 
-void script_cleararray_pc(struct map_session_data* sd, const char* varname, void* value);
-void script_setarray_pc(struct map_session_data* sd, const char* varname, uint32 idx, void* value, int* refcache);
+void script_cleararray_pc(struct map_session_data* sd, const char* varname);
+void script_setarray_pc(struct map_session_data* sd, const char* varname, uint32 idx, int64 value, int* refcache);
 
 int script_config_read(const char *cfgName);
 void do_init_script(void);
@@ -2050,8 +2054,8 @@ int add_str(const char* p);
 const char* get_str(int id);
 void script_reload(void);
 
-// @commands (script based)
-void setd_sub(struct script_state *st, struct map_session_data *sd, const char *varname, int elem, void *value, struct reg_db *ref);
+void setd_sub_num( struct script_state* st, struct map_session_data* sd, const char* varname, int elem, int64 value, struct reg_db* ref );
+void setd_sub_str( struct script_state* st, struct map_session_data* sd, const char* varname, int elem, const char* value, struct reg_db* ref );
 
 /**
  * Array Handling

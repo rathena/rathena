@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `acc_reg_num` (
   `account_id` int(11) unsigned NOT NULL default '0',
   `key` varchar(32) binary NOT NULL default '',
   `index` int(11) unsigned NOT NULL default '0',
-  `value` int(11) NOT NULL default '0',
+  `value` bigint(11) NOT NULL default '0',
   PRIMARY KEY (`account_id`,`key`,`index`),
   KEY `account_id` (`account_id`)
 ) ENGINE=MyISAM;
@@ -31,16 +31,16 @@ CREATE TABLE IF NOT EXISTS `acc_reg_str` (
 CREATE TABLE IF NOT EXISTS `achievement` (
   `char_id` int(11) unsigned NOT NULL default '0',
   `id` bigint(11) unsigned NOT NULL,
-  `count1` mediumint(8) unsigned NOT NULL default '0',
-  `count2` mediumint(8) unsigned NOT NULL default '0',
-  `count3` mediumint(8) unsigned NOT NULL default '0',
-  `count4` mediumint(8) unsigned NOT NULL default '0',
-  `count5` mediumint(8) unsigned NOT NULL default '0',
-  `count6` mediumint(8) unsigned NOT NULL default '0',
-  `count7` mediumint(8) unsigned NOT NULL default '0',
-  `count8` mediumint(8) unsigned NOT NULL default '0',
-  `count9` mediumint(8) unsigned NOT NULL default '0',
-  `count10` mediumint(8) unsigned NOT NULL default '0',
+  `count1` int unsigned NOT NULL default '0',
+  `count2` int unsigned NOT NULL default '0',
+  `count3` int unsigned NOT NULL default '0',
+  `count4` int unsigned NOT NULL default '0',
+  `count5` int unsigned NOT NULL default '0',
+  `count6` int unsigned NOT NULL default '0',
+  `count7` int unsigned NOT NULL default '0',
+  `count8` int unsigned NOT NULL default '0',
+  `count9` int unsigned NOT NULL default '0',
+  `count10` int unsigned NOT NULL default '0',
   `completed` datetime,
   `rewarded` datetime,
   PRIMARY KEY (`char_id`,`id`),
@@ -274,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `char_reg_num` (
   `char_id` int(11) unsigned NOT NULL default '0',
   `key` varchar(32) binary NOT NULL default '',
   `index` int(11) unsigned NOT NULL default '0',
-  `value` int(11) NOT NULL default '0',
+  `value` bigint(11) NOT NULL default '0',
   PRIMARY KEY (`char_id`,`key`,`index`),
   KEY `char_id` (`char_id`)
 ) ENGINE=MyISAM;
@@ -403,7 +403,7 @@ CREATE TABLE IF NOT EXISTS `global_acc_reg_num` (
   `account_id` int(11) unsigned NOT NULL default '0',
   `key` varchar(32) binary NOT NULL default '',
   `index` int(11) unsigned NOT NULL default '0',
-  `value` int(11) NOT NULL default '0',
+  `value` bigint(11) NOT NULL default '0',
   PRIMARY KEY (`account_id`,`key`,`index`),
   KEY `account_id` (`account_id`)
 ) ENGINE=MyISAM;

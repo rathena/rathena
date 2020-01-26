@@ -2048,7 +2048,9 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 	{
 		// Move probability for mobs away from players
 		// In Aegis, this is 100% for mobs that have been activated by players and none otherwise.
-		if( mob_is_spotted(md) && rnd()%100 < battle_config.mob_nopc_move_rate )
+		if( mob_is_spotted(md) &&
+			((!status_has_mode(&md->status,MD_STATUS_IMMUNE) && rnd()%100 < battle_config.mob_nopc_move_rate) ||
+			(status_has_mode(&md->status,MD_STATUS_IMMUNE) && rnd()%100 < battle_config.boss_nopc_move_rate)))
 			mob_randomwalk(md, tick);
 	}
 	else if( md->ud.walktimer == INVALID_TIMER )
@@ -2058,7 +2060,9 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 
 		// Probability for mobs far from players from doing their IDLE skill.
 		// In Aegis, this is 100% for mobs that have been activated by players and none otherwise.
-		if( mob_is_spotted(md) && rnd()%100 < battle_config.mob_nopc_idleskill_rate )
+		if( mob_is_spotted(md) &&
+			((!status_has_mode(&md->status,MD_STATUS_IMMUNE) && rnd()%100 < battle_config.mob_nopc_idleskill_rate) ||
+			(status_has_mode(&md->status,MD_STATUS_IMMUNE) && rnd()%100 < battle_config.boss_nopc_idleskill_rate)))
 			mobskill_use(md, tick, -1);
 	}
 
@@ -2183,7 +2187,7 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 	test_autoloot = sd 
 		&& (drop_rate <= sd->state.autoloot || pc_isautolooting(sd, ditem->item_data.nameid))
 		&& (battle_config.idle_no_autoloot == 0 || DIFF_TICK(last_tick, sd->idletime) < battle_config.idle_no_autoloot)
-		&& (battle_config.homunculus_autoloot?1:!flag);
+		&& (battle_config.homunculus_autoloot?(battle_config.hom_idle_no_share == 0 || !pc_isidle_hom(sd)):!flag);
 #ifdef AUTOLOOT_DISTANCE
 		test_autoloot = test_autoloot && sd->bl.m == md->bl.m
 		&& check_distance_blxy(&sd->bl, dlist->x, dlist->y, AUTOLOOT_DISTANCE);
@@ -2650,7 +2654,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 								job_exp = (unsigned int)cap_value(apply_rate(job_exp, rate), 1, UINT_MAX);
 						}
 #endif
-						pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, 0);
+						if (!(homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(tmpsd[i])))
+							pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, 0);
 					}
 				}
 				if(zeny) // zeny from mobs [Valaris]
@@ -2661,8 +2666,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				pc_damage_log_clear(tmpsd[i],md->bl.id);
 		}
 
-		for( i = 0; i < pnum; i++ ) //Party share.
-			party_exp_share(pt[i].p, &md->bl, pt[i].base_exp,pt[i].job_exp,pt[i].zeny);
+		if (!(homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(map_charid2sd(md->dmglog[0].id))))
+			for( i = 0; i < pnum; i++ ) //Party share.
+				party_exp_share(pt[i].p, &md->bl, pt[i].base_exp,pt[i].job_exp,pt[i].zeny);
 
 	} //End EXP giving.
 
@@ -4375,7 +4381,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Sprite", sprite))
 			return 0;
 
-		int constant;
+		int64 constant;
 
 		if (script_get_constant(sprite.c_str(), &constant)) {
 			if (npcdb_checkid(constant) == 0 && pcdb_checkid(constant) == 0) {
@@ -4393,7 +4399,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 			constant = sprite_mob->vd.class_;
 		}
 
-		mob->vd.class_ = constant;
+		mob->vd.class_ = (unsigned short)constant;
 	} else {
 		this->invalidWarning(node["Sprite"], "Sprite is missing.\n");
 		return 0;
@@ -4412,7 +4418,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 		std::string sex_constant = "SEX_" + sex;
 
-		int constant;
+		int64 constant;
 
 		if (!script_get_constant(sex_constant.c_str(), &constant)) {
 			this->invalidWarning(node["Sex"], "Unknown sex constant %s.\n", sex.c_str());
@@ -4424,7 +4430,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 		}
 
-		mob->vd.sex = constant;
+		mob->vd.sex = (char)constant;
 	}
 
 	if (this->nodeExists(node, "HairStyle")) {
@@ -4616,7 +4622,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		for (const auto &optionNode : node["Options"]) {
 			std::string option = optionNode.first.as<std::string>();
 			std::string option_constant = "OPTION_" + option;
-			int constant;
+			int64 constant;
 
 			if (!script_get_constant(option_constant.c_str(), &constant)) {
 				this->invalidWarning(optionNode, "Unknown option constant %s, skipping.\n", option.c_str());
@@ -4661,9 +4667,14 @@ static bool mob_readdb_group(char* str[], int columns, int current){
 
 	if (ISDIGIT(str[0][0]) && ISDIGIT(str[0][1]))
 		group = atoi(str[0]);
-	else if (!script_get_constant(str[0], &group)) {
-		ShowError("mob_readdb_group: Invalid random monster group '%s'\n", str[0]);
-		return false;
+	else {
+		int64 group_tmp;
+
+		if (!script_get_constant(str[0], &group_tmp)) {
+			ShowError("mob_readdb_group: Invalid random monster group '%s'\n", str[0]);
+			return false;
+		}
+		group = static_cast<int>(group_tmp);
 	}
 
 	mob_id = atoi(str[1]);
@@ -5073,7 +5084,8 @@ static int mob_read_sqlskilldb(void)
  *------------------------------------------*/
 static bool mob_readdb_race2(char* fields[], int columns, int current)
 {
-	int race, i;
+	int64 race;
+	int i;
 
 	if( ISDIGIT(fields[0][0]) )
 		race = atoi(fields[0]);
@@ -5083,7 +5095,7 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
 	}
 
 	if (!CHK_RACE2(race)) {
-		ShowWarning("mob_readdb_race2: Unknown race2 %d.\n", race);
+		ShowWarning("mob_readdb_race2: Unknown race2 %lld.\n", race);
 		return false;
 	}
 
@@ -5092,7 +5104,7 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
 		struct mob_db* db = mob_db(mob_id);
 
 		if (db == NULL) {
-			ShowWarning("mob_readdb_race2: Unknown mob id %d for race2 %d.\n", mob_id, race);
+			ShowWarning("mob_readdb_race2: Unknown mob id %d for race2 %lld.\n", mob_id, race);
 			continue;
 		}
 		db->race2 = (enum e_race2)race;
@@ -5201,11 +5213,14 @@ static bool mob_readdb_drop(char* str[], int columns, int current) {
 		drop[i].randomopt_group = 0;
 
 		if (columns > 3) {
+			int64 randomopt_group_tmp = -1;
 			int randomopt_group = -1;
-			if (!script_get_constant(trim(str[3]), &randomopt_group)) {
+
+			if (!script_get_constant(trim(str[3]), &randomopt_group_tmp)) {
 				ShowError("mob_readdb_drop: Invalid 'randopt_groupid' '%s' for monster '%hu'.\n", str[3], mobid);
 				return false;
 			}
+			randomopt_group = static_cast<int>(randomopt_group_tmp);
 			if (randomopt_group == RDMOPTG_None)
 				return true;
 			if (!itemdb_randomopt_group_exists(randomopt_group)) {

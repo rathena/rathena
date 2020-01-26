@@ -304,36 +304,28 @@ TIMER_FUNC(battle_delay_damage_sub){
 	struct delay_damage *dat = (struct delay_damage *)data;
 
 	if ( dat ) {
-		struct block_list* src = NULL;
+		struct block_list* src = map_id2bl(dat->src_id);
 		struct block_list* target = map_id2bl(dat->target_id);
 
-		if( !target || status_isdead(target) ) { /* Nothing we can do */
-			if( dat->src_type == BL_PC && (src = map_id2bl(dat->src_id)) &&
-				--((TBL_PC*)src)->delayed_damage == 0 && ((TBL_PC*)src)->state.hold_recalc ) {
-				((TBL_PC*)src)->state.hold_recalc = 0;
-				status_calc_pc(((TBL_PC*)src), SCO_FORCE);
+		if (target && !status_isdead(target)) {
+			if( src && target->m == src->m &&
+				(target->type != BL_PC || ((TBL_PC*)target)->invincible_timer == INVALID_TIMER) &&
+				check_distance_bl(src, target, dat->distance) ) //Check to see if you haven't teleported. [Skotlex]
+			{
+				//Deal damage
+				battle_damage(src, target, dat->damage, dat->delay, dat->skill_lv, dat->skill_id, dat->dmg_lv, dat->attack_type, dat->additional_effects, tick, dat->isspdamage);
+			} else if( !src && dat->skill_id == CR_REFLECTSHIELD ) { // it was monster reflected damage, and the monster died, we pass the damage to the character as expected
+				map_freeblock_lock();
+				status_fix_damage(target, target, dat->damage, dat->delay);
+				map_freeblock_unlock();
 			}
-			ers_free(delay_damage_ers, dat);
-			return 0;
 		}
 
-		src = map_id2bl(dat->src_id);
+		struct map_session_data *sd = BL_CAST(BL_PC, src);
 
-		if( src && target->m == src->m &&
-			(target->type != BL_PC || ((TBL_PC*)target)->invincible_timer == INVALID_TIMER) &&
-			check_distance_bl(src, target, dat->distance) ) //Check to see if you haven't teleported. [Skotlex]
-		{
-			//Deal damage
-			battle_damage(src, target, dat->damage, dat->delay, dat->skill_lv, dat->skill_id, dat->dmg_lv, dat->attack_type, dat->additional_effects, tick, dat->isspdamage);
-		} else if( !src && dat->skill_id == CR_REFLECTSHIELD ) { // it was monster reflected damage, and the monster died, we pass the damage to the character as expected
-			map_freeblock_lock();
-			status_fix_damage(target, target, dat->damage, dat->delay);
-			map_freeblock_unlock();
-		}
-
-		if( src && src->type == BL_PC && --((TBL_PC*)src)->delayed_damage == 0 && ((TBL_PC*)src)->state.hold_recalc ) {
-			((TBL_PC*)src)->state.hold_recalc = 0;
-			status_calc_pc(((TBL_PC*)src), SCO_FORCE);
+		if (sd && --sd->delayed_damage == 0 && sd->state.hold_recalc) {
+			sd->state.hold_recalc = false;
+			status_calc_pc(sd, SCO_FORCE);
 		}
 	}
 	ers_free(delay_damage_ers, dat);
@@ -360,8 +352,16 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 	}
 
 	if( ((d_tbl && check_distance_bl(target, d_tbl, sc->data[SC_DEVOTION]->val3)) || e_tbl) &&
-		damage > 0 && skill_id != PA_PRESSURE && skill_id != CR_REFLECTSHIELD )
+		damage > 0 && skill_id != PA_PRESSURE && skill_id != CR_REFLECTSHIELD ){
+		struct map_session_data* tsd = BL_CAST( BL_PC, target );
+
+		if( tsd && pc_issit( tsd ) && battle_config.devotion_standup_fix ){
+			pc_setstand( tsd, true );
+			skill_sit( tsd, 0 );
+		}
+
 		damage = 0;
+	}
 
 	if ( !battle_config.delay_battle_damage || amotion <= 1 ) {
 		//Deal damage
@@ -7414,8 +7414,19 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce->val2] == target->id)
 				) && check_distance_bl(target, d_bl, sce->val3) )
 			{
-				clif_damage(d_bl, d_bl, gettick(), 0, 0, damage, 0, DMG_NORMAL, 0, false);
-				status_fix_damage(NULL, d_bl, damage, 0);
+				// Only trigger if the devoted player was hit
+				if( damage > 0 ){
+					struct map_session_data* dsd = BL_CAST( BL_PC, d_bl );
+
+					// The devoting player needs to stand up
+					if( dsd && pc_issit( dsd ) ){
+						pc_setstand( dsd, true );
+						skill_sit( dsd, 0 );
+					}
+
+					clif_damage(d_bl, d_bl, gettick(), wd.amotion, wd.dmotion, damage, 1, DMG_NORMAL, 0, false);
+					status_fix_damage(NULL, d_bl, damage, 0);
+				}
 			}
 			else
 				status_change_end(target, SC_DEVOTION, INVALID_TIMER);
@@ -8557,8 +8568,12 @@ static const struct _battle_data {
 	{ "feature.equipswitch",                &battle_config.feature_equipswitch,             1,      0,      1,              },
 	{ "pet_walk_speed",                     &battle_config.pet_walk_speed,                  1,      1,      3,              },
 	{ "blacksmith_fame_refine_threshold",   &battle_config.blacksmith_fame_refine_threshold,10,     1,      MAX_REFINE,     },
-	{ "mob_nopc_idleskill_rate",            &battle_config.mob_nopc_idleskill_rate,       100,      0,    100,              },
-	{ "mob_nopc_move_rate",                 &battle_config.mob_nopc_move_rate,            100,      0,    100,              },
+	{ "mob_nopc_idleskill_rate",            &battle_config.mob_nopc_idleskill_rate,         100,    0,    100,              },
+	{ "mob_nopc_move_rate",                 &battle_config.mob_nopc_move_rate,              100,    0,    100,              },
+	{ "boss_nopc_idleskill_rate",           &battle_config.boss_nopc_idleskill_rate,        100,    0,    100,              },
+	{ "boss_nopc_move_rate",                &battle_config.boss_nopc_move_rate,             100,    0,    100,              },
+	{ "hom_idle_no_share",                  &battle_config.hom_idle_no_share,               0,      0,      INT_MAX,        },
+	{ "devotion_standup_fix",               &battle_config.devotion_standup_fix,            1,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };
