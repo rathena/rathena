@@ -12583,7 +12583,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 						struct homun_data *hd = BL_CAST(BL_HOM,bl);
 
 						if( hd )
-							hd->homunculus.hunger = max(1,hd->homunculus.hunger / 2);
+							hd->homunculus.hunger = max(1,hd->homunculus.hunger - 50);
 					}
 					break;
 				case BL_PC:
