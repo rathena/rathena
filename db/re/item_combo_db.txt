@@ -805,7 +805,7 @@
 19192:29325,{ autobonus3 "{ bonus bCritical,5; }",1000,60000,"SC_AUTOSHADOWSPELL"; }
 19192:29326,{ autobonus3 "{ bonus bCritical,10; }",1000,60000,"SC_AUTOSHADOWSPELL"; bonus2 bMagicAtkEle,Ele_Water,5; bonus2 bMagicAtkEle,Ele_Fire,5; bonus2 bMagicAtkEle,Ele_Wind,5; bonus2 bMagicAtkEle,Ele_Earth,5; }
 19192:29327,{ autobonus3 "{ bonus bCritical,20; bonus bMatk,30; }",1000,60000,"SC_AUTOSHADOWSPELL"; bonus2 bMagicAtkEle,Ele_Water,15; bonus2 bMagicAtkEle,Ele_Fire,15; bonus2 bMagicAtkEle,Ele_Wind,15; bonus2 bMagicAtkEle,Ele_Earth,15; }
-19193:2000,{ bonus2 bVariableCastrate,"HW_MAGICPOWER",50; }
+19193:2000,{ bonus2 bFixedCastrate,"HW_MAGICPOWER",50; }
 19193:29328,{ bonus2 bSkillCooldown,"WL_FROSTMISTY",-1000; }
 19193:29329,{ bonus2 bSkillCooldown,"WL_FROSTMISTY",-3000; bonus2 bSkillAtk,"WL_JACKFROST",30; }
 19193:29330,{ bonus2 bSkillCooldown,"WL_FROSTMISTY",-5000; bonus2 bSkillAtk,"WL_JACKFROST",60; }
