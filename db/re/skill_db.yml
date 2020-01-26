@@ -22804,7 +22804,7 @@ Body:
     Unit:
       Id: Feintbomb
       Range: 2
-      Interval: 500
+      Interval: -1
       Target: Enemy
       Flag:
         NoOverlap: true

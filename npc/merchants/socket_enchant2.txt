@@ -137,7 +137,7 @@
 		case 2:
 			mes "[Leablem]";
 			mes "Armor, you said? Sure, no problem.";
-			mes "Weapons are divided into 4 different class";
+			mes "Armors are divided into 4 different class";
 			mes "depending on the work difficulty.";
 			mes "C class is the easiest one, and S class is the hardest one.";
 			mes "Which class would you like to try?";
@@ -200,7 +200,7 @@
 			next;
 			mes "[Leablem]";
 			mes "...That service itself has a very high success chance,";
-			mes "but requires a lot of materials and a high-rate service charge. ";
+			mes "but requires a lot of materials and a high-rate service charge.";
 			mes "I highly doubt that anyone would actually want to use";
 			mes "the service, even if I did open it.";
 			next;
@@ -215,7 +215,7 @@
 			next;
 			mes "[Leablem]";
 			mes "You seem interested in using that service.";
-			mes "If you want, I can at least tell you about it. ";
+			mes "If you want, I can at least tell you about it.";
 			mes "But you must promise to keep this a secret.";
 			mes "If my brother finds out what I'm about to tell you,";
 			mes "he's gonna give me a beating!";
@@ -226,7 +226,7 @@
 			mes "I can add slots to the Hat of the Sun God.";
 			next;
 			mes "[Leablem]";
-			mes "My brother said that, even since ancient times, it's forbidden to modify that hat. ";
+			mes "My brother said that, even since ancient times, it's forbidden to modify that hat.";
 			mes "But I believe humans are too curious not to";
 			mes "experiment, especially when it's forbidden.";
 			mes "I just don't want my brother to yell at me. That's all.";

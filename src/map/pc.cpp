@@ -1727,21 +1727,21 @@ void pc_reg_received(struct map_session_data *sd)
 	if (sd->state.connect_new == 0 && sd->fd) { //Character already loaded map! Gotta trigger LoadEndAck manually.
 		sd->state.connect_new = 1;
 		clif_parse_LoadEndAck(sd->fd, sd);
-	}
 
-	if( pc_isinvisible(sd) ) {
-		sd->vd.class_ = JT_INVISIBLE;
-		clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
-		// decrement the number of pvp players on the map
-		map_getmapdata(sd->bl.m)->users_pvp--;
+		if( pc_isinvisible( sd ) ){
+			sd->vd.class_ = JT_INVISIBLE;
+			clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
+			// decrement the number of pvp players on the map
+			map_getmapdata( sd->bl.m )->users_pvp--;
 
-		if( map_getmapflag(sd->bl.m, MF_PVP) && !map_getmapflag(sd->bl.m, MF_PVP_NOCALCRANK) && sd->pvp_timer != INVALID_TIMER ){
-			// unregister the player for ranking
-			delete_timer( sd->pvp_timer, pc_calc_pvprank_timer );
-			sd->pvp_timer = INVALID_TIMER;
+			if( map_getmapflag( sd->bl.m, MF_PVP ) && !map_getmapflag( sd->bl.m, MF_PVP_NOCALCRANK ) && sd->pvp_timer != INVALID_TIMER ){
+				// unregister the player for ranking
+				delete_timer( sd->pvp_timer, pc_calc_pvprank_timer );
+				sd->pvp_timer = INVALID_TIMER;
+			}
+
+			clif_changeoption( &sd->bl );
 		}
-
-		clif_changeoption( &sd->bl );
 	}
 
 	channel_autojoin(sd);
@@ -2654,7 +2654,7 @@ void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonu
 
 	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr_t)bonus);
 	sd->state.autobonus |= autobonus->pos;
-	status_calc_pc(sd,SCO_FORCE);
+	status_calc_pc(sd,SCO_NONE);
 }
 
 /**
@@ -2675,7 +2675,7 @@ TIMER_FUNC(pc_endautobonus){
 		}
 	}
 	
-	status_calc_pc(sd,SCO_FORCE);
+	status_calc_pc(sd,SCO_NONE);
 	return 0;
 }
 
@@ -10426,8 +10426,10 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 		}
 	}
 
-	if (status_calc)
+	if (flag & 1 || status_calc) {
+		pc_checkallowskill(sd);
 		status_calc_pc(sd, SCO_NONE);
+	}
 
 	if (sd->sc.data[SC_SIGNUMCRUCIS] && !battle_check_undead(sd->battle_status.race, sd->battle_status.def_ele))
 		status_change_end(&sd->bl, SC_SIGNUMCRUCIS, INVALID_TIMER);
@@ -10453,8 +10455,6 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 		}
 	}
 
-	if (flag & 1)
-		status_calc_pc(sd, SCO_FORCE);
 	sd->npc_item_flag = iflag;
 }
 
@@ -12746,11 +12746,37 @@ short pc_maxparameter(struct map_session_data *sd, enum e_params param) {
 			return max_param;
 	}
 
-	return (class_&MAPID_BASEMASK) == MAPID_SUMMONER ? battle_config.max_summoner_parameter :
-		((class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO || (class_&MAPID_UPPERMASK) == MAPID_REBELLION) ? battle_config.max_extended_parameter :
-		((class_&JOBL_THIRD) ? ((class_&JOBL_UPPER) ? battle_config.max_third_trans_parameter : ((class_&JOBL_BABY) ? battle_config.max_baby_third_parameter : battle_config.max_third_parameter)) : 
-		((class_&JOBL_BABY) ? battle_config.max_baby_parameter :
-		((class_&JOBL_UPPER) ? battle_config.max_trans_parameter : battle_config.max_parameter)));
+	// Always check babies first
+	if( class_ & JOBL_BABY ){
+		return battle_config.max_baby_parameter;
+	}
+
+	// Summoner
+	if( ( class_ & MAPID_BASEMASK ) == MAPID_SUMMONER ){
+		return battle_config.max_summoner_parameter;
+	}
+
+	// Extended classes
+	if( ( class_ & MAPID_UPPERMASK ) == MAPID_KAGEROUOBORO || ( class_ & MAPID_UPPERMASK ) == MAPID_REBELLION ){
+		return battle_config.max_extended_parameter;
+	}
+
+	// 3rd class
+	if( class_ & JOBL_THIRD ){
+		// Transcendent
+		if( class_ & JOBL_UPPER ){
+			return battle_config.max_third_trans_parameter;
+		}else{
+			return battle_config.max_third_parameter;
+		}
+	}
+
+	// Transcendent
+	if( class_ & JOBL_UPPER ){
+		return battle_config.max_trans_parameter;
+	}
+
+	return battle_config.max_parameter;
 }
 
 /**
