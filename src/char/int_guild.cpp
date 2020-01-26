@@ -240,7 +240,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 			if(m->account_id) {
 				//Since nothing references guild member table as foreign keys, it's safe to use REPLACE INTO
 				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`guild_id`,`char_id`,`exp`,`position`) "
-					"VALUES ('%d','%d','%" PRIu64 "','%d','%d')",
+					"VALUES ('%d','%d','%" PRIu64 "','%d')",
 					schema_config.guild_member_db, g->guild_id, m->char_id, m->exp, m->position ) )
 					Sql_ShowDebug(sql_handle);
 				if (m->modified&GS_MEMBER_NEW || new_guild == 1)
