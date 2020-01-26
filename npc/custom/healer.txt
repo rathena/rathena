@@ -21,6 +21,8 @@
 
 	.@Price = 0;	// o ค่าใช้จ่ายต่อครั้ง (0: ฟรี)
 	.@Buffs = 1;	// o ให้ Buff หรือไม่? (1: ให้ / 0: ไม่ให้)
+	.@Repair = 1;	// o ซ่อมของทั้งตัว หรือไม่? (1: ให้ / 0: ไม่ให้)
+	.@Identify = 1;	// o ส่องของทั้งตัว หรือไม่? (1: ให้ / 0: ไม่ให้)
 	.@Delay = 0;	// o หลังจาก Heal แล้วต้องรอกี่วินาทีถึงจะกดได้อีกที (0: ไม่ต้องรอ)
 
 	if (@HD > gettimetick(2))
@@ -40,6 +42,10 @@
 		specialeffect2 EF_BLESSING;
 		sc_start SC_BLESSING,240000,10;
 	}
+	if(.@Repair)
+	repairall;
+	if(.@Identify)
+	identifyall;
 	percentheal 100,100;
 	if (.@Delay)
 	@HD = gettimetick(2) + .@Delay;
