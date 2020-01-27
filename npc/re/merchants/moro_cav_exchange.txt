@@ -22,7 +22,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			mes "[Hero Token Exchanger]";
 			mes "Your pack has a lot of items,";
 			mes "Please come again after arrange it!";
-			close
+			close;
 		}
 		switch( select( "Ring description", "Exchange with the ring.", "End conversation." ) ) {
 		case 1:

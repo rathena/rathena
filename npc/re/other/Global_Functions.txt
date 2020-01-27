@@ -48,9 +48,9 @@ function	script	F_ReplaceVarTOfficial	{
 			ep14_3_newerabs = ep14_3_dimensional_travel;
 		else if (ep14_3_dimensional_travel == 2)
 			ep14_3_newerabs = 3;
-		else if (ep14_3_dimensional_travel > 2 && ep14_3_dimensional_travel < 8)
+		else if (ep14_3_dimensional_travel < 8)
 			ep14_3_newerabs = ep14_3_dimensional_travel + 2;
-		else if (>ep14_3_dimensional_travel > 7)
+		else
 			ep14_3_newerabs = ep14_3_dimensional_travel + 2 + 5;
 	}
 	return;
