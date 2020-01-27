@@ -1226,6 +1226,8 @@ moro_vol,93,128,1	script	Combat Laphine#line01	4_M_FAIRYSOLDIER2,2,3,{
 		npctalk "Back off--it's dangerous!";
 	end;
 
+OnTouch:	// prevent the player from triggering the text
+	end;
 OnTouchNPC:
 	.@hidden_name$ = strnpcinfo(2);
 	if (.@hidden_name$ == "line01")      kick_mob( "Enemy in sight!",2000 );
@@ -1256,6 +1258,8 @@ moro_vol,85,117,1	script	Combat Laphine#line11	4_F_FAIRYSOLDIER,2,2,{
 		npctalk "I'm worried for the guys at the front lines.";
 	end;
 
+OnTouch:
+	end;
 OnTouchNPC:
 	.@hidden_name$ = strnpcinfo(2);
 	if (.@hidden_name$ == "line11")      kick_mob( "You've come this far, huh?",2000 );
@@ -1603,6 +1607,8 @@ moro_vol,114,128,1	script	Continental Guard#line01	4_M_MOCASS1,2,2,{
 		npctalk "Please be careful.";
 	end;
 
+OnTouch:
+	end;
 OnTouchNPC:
 	kick_mob( "Don't you dare!",1000 );
 	end;
@@ -1623,6 +1629,8 @@ moro_vol,135,123,1	script	Midgard Alliance Soldier#line21	4_M_MONK,2,2,{
 		npctalk "I can take down any of you!";
 	end;
 
+OnTouch:
+	end;
 OnTouchNPC:
 	kick_mob( "Don't you dare!",1000 );
 	end;
@@ -1660,6 +1668,8 @@ moro_vol,147,124,7	script	Midgard Alliance Soldier#line24	4_M_MOC_SOLDIER,2,2,{
 		npctalk "Please step back.";
 	end;
 
+OnTouch:
+	end;
 OnTouchNPC:
 	kick_mob( "Enemy in sight!",1000 );
 	end;
@@ -1697,6 +1707,8 @@ moro_vol,153,116,7	script	Midgard Alliance Soldier#line27	4_M_EIN_SOLDIER,2,2,{
 		npctalk "Please be careful.";
 	end;
 
+OnTouch:
+	end;
 OnTouchNPC:
 	kick_mob( "Begone!",1000 );
 	end;
@@ -1712,6 +1724,8 @@ moro_vol,118,115,1	script	Midgard Alliance Soldier#line31	4_M_JOB_WIZARD,2,2,{
 		npctalk "Ugh, how did I get myself into this mess?";
 	end;
 
+OnTouch:
+	end;
 OnTouchNPC:
 	kick_mob( "SCRAM!",1000 );
 	end;
@@ -1738,6 +1752,8 @@ moro_vol,124,116,1	script	Midgard Alliance Soldier#line33	4_M_EIN_SOLDIER,2,2,{
 		npctalk "Watch out!";
 	end;
 
+OnTouch:
+	end;
 OnTouchNPC:
 	kick_mob( "Begone!",1000 );
 	end;
@@ -1786,6 +1802,8 @@ moro_vol,136,111,7	script	Midgard Alliance Soldier#line37	4_M_RASWORD,2,2,{
 		npctalk "Please be careful.";
 	end;
 
+OnTouch:
+	end;
 OnTouchNPC:
 	kick_mob( "Enemy in sight!",1000 );
 	end;
@@ -1892,6 +1910,8 @@ moro_vol,139,104,1	script	Manuk Defender#line01	4_MAN_GALTUN1,{
 		npctalk "Back off, Humanling!";
 	end;
 
+OnTouch:
+	end;
 OnTouchNPC:
 	kick_mob( "Enemy in sight!",1000 );
 	end;
@@ -1920,6 +1940,8 @@ moro_vol,152,109,1	script	Manuk Defender#line04	4_MAN_GALTUN1,2,2,{
 		npctalk "Back off, Humanling!";
 	end;
 
+OnTouch:
+	end;
 OnTouchNPC:
 	kick_mob( "Not a chance!",1000 );
 	end;
@@ -1946,6 +1968,8 @@ moro_vol,160,110,7	script	Manuk Defender#line06	4_MAN_GALTUN1,2,2,{
 		npctalk "Back off, Humanling!";
 	end;
 
+OnTouch:
+	end;
 OnTouchNPC:
 	kick_mob( "*Snort*",1000 );
 	end;
@@ -1972,6 +1996,8 @@ moro_vol,167,107,7	script	Manuk Defender#line08	4_MAN_GALTUN1,2,2,{
 		npctalk "Back off, Humanling!";
 	end;
 
+OnTouch:
+	end;
 OnTouchNPC:
 	kick_mob( "Are you an enemy?",1000 );
 	end;
@@ -1998,6 +2024,8 @@ moro_vol,171,100,5	script	Manuk Defender#line10	4_MAN_GALTUN1,2,2,{
 		npctalk "Back off, Humanling!";
 	end;
 
+OnTouch:
+	end;
 OnTouchNPC:
 	kick_mob( "Don't underestimate us!",1000 );
 	end;
@@ -2024,6 +2052,8 @@ moro_vol,173,89,5	script	Manuk Defender#line12	4_MAN_GALTUN1,2,2,{
 		npctalk "Back off, Humanling!";
 	end;
 
+OnTouch:
+	end;
 OnTouchNPC:
 	kick_mob( "Not a chance!",1000 );
 	end;
@@ -3143,7 +3173,7 @@ OnFail1: callsub( S_Fail, 1, 3039, "Morocc Fire Vassal", 292,131 );	// B_MOROCC_
 OnFail2: callsub( S_Fail, 2, 3041, "Morocc Cold Vassal", 216,245 );	// B_MOROCC_4
 S_Fail:
 	.@index = getarg(0);
-	sleep2 4000;
+	sleep 4000;
 	if (unitexists(.gid[.@index]) == true) {
 		getunitdata .gid[.@index], .@data;
 		.@x1 = getarg(3) - 5;
@@ -3169,9 +3199,9 @@ S_M_chk:
 		}
 	}
 	end;
-OnMyMobDead0: callsub( S_MobDead, 0 );
-OnMyMobDead1: callsub( S_MobDead, 1 );
-OnMyMobDead2: callsub( S_MobDead, 2 );
+OnMobDead0: callsub( S_MobDead, 0 );
+OnMobDead1: callsub( S_MobDead, 1 );
+OnMobDead2: callsub( S_MobDead, 2 );
 S_MobDead:
 	.@index = getarg(0);
 	.gid[.@index] = 0;
@@ -3219,6 +3249,8 @@ moro_vol,86,167,7	script	Advance Base Defender#1	4_M_CRU_HEAD,3,3,{
 		mes "For every monster I kill, one or more appear to take its place.";
 	close;
 
+OnTouch:
+	end;
 OnTouchNPC:
 	.@t_rnd = rand(1,4);
 	if (.@t_rnd == 1)
@@ -3591,7 +3623,7 @@ moro_vol,234,301,3	script	Scout#bl	4_M_CRU_SOLD,{
 		mes "Don't I sound pitiful?";
 		mes "Doesn't it inspire you to help me?";
 		next;
-		if (select("Neh.", "It does." == 1) {
+		if (select("Neh.", "It does.") == 1) {
 			mes "[Scout]";
 			mes "All right, then I'll just have to";
 			mes "stay here and chill until help arrives.";
@@ -3678,9 +3710,9 @@ OnTouch:
 	if (countitem(6692) >= .@count) {
 		mes "You have been ambushed by Fire Sandmen!";
 		delitem 6692, .@count;// PatrolLog
-		monster "moro_vol",.@x,(.@y-2)," ",FIRE_SAND_MAN,1;
-		monster "moro_vol",.@x,(.@y-1)," ",FIRE_SAND_MAN,1;
-		monster "moro_vol",.@x,.@y," ",FIRE_SAND_MAN,1;
+		monster "moro_vol",.@x,(.@y-2)," ",3021,1;
+		monster "moro_vol",.@x,(.@y-1)," ",3021,1;
+		monster "moro_vol",.@x,.@y," ",3021,1;
 		close;
 	}
 	end;
@@ -3900,7 +3932,7 @@ moro_vol,91,197,3	script	Doom Prayers Leader#bl	4_M_BELIEVER01,{
 		mes "That hurts like hell!";
 		mes "STOP! Stop hitting me in the face!";
 		next;
-		if (select( "Keep throwing." "Stop throwing.") == 2) {
+		if (select( "Keep throwing.", "Stop throwing.") == 2) {
 			mes "Instead of turning into flower petals, the stones inflicted immense pain on those who got hit.";
 			mes "You decided to stop throwing the stones.";
 			delitem 6693,40;// Stone_Of_Blessing
@@ -3989,7 +4021,7 @@ moro_vol,91,197,3	script	Doom Prayers Leader#bl	4_M_BELIEVER01,{
 		mes "from ^0000FFFire Frilldoras^000000 and and ^0000FFFire Sandmen^000000.";
 		mes "I presume 30 bottles should suffice.";
 		next;
-		if (select( "No, I couldn't care less!" "I'll collect Monster Bloods.") == 1) {
+		if (select( "No, I couldn't care less!", "I'll collect Monster Bloods.") == 1) {
 			mes "[Doom Prayers Leader]";
 			mes "I knew you'd say yes!";
 			mes "I can sense your fear about the possibility of witnessing the grace of the God of Destruction.";
@@ -4090,7 +4122,7 @@ moro_vol,91,197,3	script	Doom Prayers Leader#bl	4_M_BELIEVER01,{
 		mes "I hope you'll come to our next gathering and work your whether miracle again.";
 		completequest 1275;	// Flaming Basin and Doom Prayers
 		ep14_3_fall_bless = 13;
-		getexp 2000000;
+		getexp 2000000,0;
 		close;
 	}
 	mes "[Doom Prayers Leader]";
@@ -4436,7 +4468,7 @@ moro_vol,82,189,7	script	Doom Prayer#bl12	4_M_BELIEVER02,{
 moro_vol,96,205,0	script	#bp1	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouchNPC:
-	warp "moro_vol",145,148;
+	unitwarp 0,"moro_vol",145,148;
 	end;
 }
 moro_vol,106,189,0	duplicate(#bp1)	#bp2	HIDDEN_WARP_NPC,2,2
