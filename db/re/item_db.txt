@@ -6069,7 +6069,7 @@
 
 9111,Phreeoni_Egg,Phreeoni Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9112,Moonlight_Egg,Moonlight Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
-9113,Roost Of Skelion,Roost Of Skelion,7,20,,0,,,,,,,,,,,,,{},{},{}
+9113,Roost_Of_Skelion,Roost Of Skelion,7,20,,0,,,,,,,,,,,,,{},{},{}
 9114,Pouring_Egg,Pouring Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9115,Bacsojin2_Egg_,Bacsojin Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9116,Rigid_Nightmare_Terror_Egg,Rigid Nightmare Terror Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
