@@ -4459,11 +4459,11 @@
 6361,Indigo_Pts,Indigo Point,3,100,,5,,,,,,,,,,,,,{},{},{}
 6362,Yellow_Wish_Pts,Yellow Wish Point,3,100,,5,,,,,,,,,,,,,{},{},{}
 6363,Lime_Green_Pts,Lime Green Point,3,100,,5,,,,,,,,,,,,,{},{},{}
-6364,J_GvG_Coin,GvG Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
-6365,J_Arena_Coin,Arena Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
-6366,J_Turbo_Track_Coin,Turbo Track Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
-6367,J_Kafra_Coin,Kafra Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
-6368,J_Endless_Tower_Coin,Endless Tower Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
+6364,Woe_Coin,GvG Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
+6365,Arena_Coin,Arena Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
+6366,Turbo_Track_Coin,Turbo Track Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
+6367,Kafra_Coin,Kafra Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
+6368,Endless_Coin,Endless Tower Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
 6369,Amatsu_Bead_A,Amatsu Bead A,3,0,,0,,,,,,,,,,,,,{},{},{}
 6370,Amatsu_Bead_Ma,Amatsu Bead Ma,3,0,,0,,,,,,,,,,,,,{},{},{}
 6371,Amatsu_Bead_Tsu,Amatsu Bead Tsu,3,0,,0,,,,,,,,,,,,,{},{},{}
@@ -4707,7 +4707,7 @@
 6644,HITStone_Bottom,Hit Stone(Lower),3,10,,100,,,,,,,,,,,,,{ bonus bHit,1; },{},{}
 6645,FLEEStone_Bottom,Evasion Stone(Lower),3,10,,100,,,,,,,,,,,,,{ bonus bFlee,1; },{},{}
 
-6669,Emerald_Leaf,Emerald Leaf,3,0,,10,,,,,,,,,,,,,{},{},{}
+6669,Jade_Leaf,Emerald Leaf,3,0,,10,,,,,,,,,,,,,{},{},{}
 
 6697,Costumes_Exchange_Coupons,Costumes Exchange Coupons,3,10,,10,,,,,,,,,,,,,{},{},{}
 6646,Poring_Badge,Poring Badge,3,0,,0,,,,,,,,,,,,,{},{},{}
@@ -4936,7 +4936,7 @@
 6923,Bright_Fire_Lights,Bright Fire Lights,3,10,,10,,,,,,,,,,,,,{},{},{}
 6924,Red_Eye,Red Eye,3,10,,10,,,,,,,,,,,,,{},{},{}
 6925,Letter_Of_Prisoner,Letter Of Prisoner,3,10,,0,,,,,,,,,,,,,{},{},{}
-6926,Rune-Midgard_History_Book,Rune-Midgards History Book,3,10,,0,,,,,,,,,,,,,{},{},{}
+6926,Midgards_Histories,Rune-Midgards History Book,3,10,,0,,,,,,,,,,,,,{},{},{}
 6927,Stone_That_Contained_Sea,Stone That Contained Sea,3,10,,0,,,,,,,,,,,,,{},{},{}
 6928,Poring_Scourer,Poring Scourer,3,10,,0,,,,,,,,,,,,,{},{},{}
 6929,Letter_With_Stamped_Seal,Letter With Stamped Seal,3,10,,0,,,,,,,,,,,,,{},{},{}
@@ -9138,7 +9138,7 @@
 16567,Capricorn_Diadem_Box,Capricorn Diadem Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5745,1; },{},{}
 16568,FCapricorn_Diadem_Box,FCapricorn Diadem Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5745,1; },{},{}
 16569,Summer_Scroll,Summer Scroll,2,20,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-16570,J_Muscle_Box,Muscle Knights Summertime Guide Box,3,0,,0,,,,,,,,,,,,,{},{},{}
+16570,Muscles_Story_J_Box,Muscle Knights Summertime Guide Box,3,0,,0,,,,,,,,,,,,,{},{},{}
 16571,Rice_Ball_Hat_Box,Rice Ball Hat Box,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getitem 5575,1; },{},{}
 16576,Illusion_Nothing,Illusion Nothing,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Illusion_Nothing); },{},{}
 16577,Dragon_Captain,Dragon Captain,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
