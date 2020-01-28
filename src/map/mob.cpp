@@ -2611,7 +2611,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				job_exp = (unsigned int)cap_value(exp, 1, UINT_MAX);
 			}
 
-			if ((base_exp || job_exp) && md->dmglog[i].flag == MDLF_HOMUN && homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(tmpsd[i]))
+			if ((base_exp > 0 || job_exp > 0) && md->dmglog[i].flag == MDLF_HOMUN && homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(tmpsd[i]))
 				base_exp = job_exp = 0;
 
 			if ( ( temp = tmpsd[i]->status.party_id)>0 ) {
