@@ -7052,43 +7052,11 @@ rebel_in,164,88,5	script	Dien#162gmbs	4_F_DIENE,4,4,{
 		npctalk "Dien : If all of us agree, he cannot help but approve it.", "Dien#162gmbs", bc_self;
 		close3;
 	}
-	if (terra_gloria_lady_part == 11) {
-		mes "[Rebellion senior Dien]";
-		mes "Welcome.";
-		mes "Since most of the kids are busy these days, I feel somewhat bored.";
-		npctalk "Dien : I have many things to prepare.", "Dien#162gmbs", bc_self;
-		cutin "ep162_dn01.bmp",2;
-		next;
-		mes "[Rebellion senior Dien]";
-		mes "By the way, what brought you here? I thought you finished your business.";
-		mes "I guess I answered your question...";
-		next;
-		mes "[Rebellion senior Dien]";
-		mes "Oops!";
-		mes "You haven't forgotten about the errand?";
-		next;
-		mes "[Rebellion senior Dien]";
-		mes "I didn't really mean to ask you for a favor. It's so kind of you to remember it!";
-		npctalk "Dien : What a sensation!", "Dien#162gmbs", bc_self;
-		next;
-		mes "[Rebellion senior Dien]";
-		mes "We were talking about the party we are planning soon.";
-		mes "It was nearly over. But several ingredients are missing.";
-		npctalk "Dien : It's such an important party.", "Dien#162gmbs", bc_self;
-		next;
-		mes "[Rebellion senior Dien]";
-		mes "Since Larcis is in charge of our business, please ask him. He will tell you what we need.";
-		erasequest 11463;// You said the party is ready?
-		setquest 11464;// You said the party is ready?
-		terra_gloria_lady_part = 12;
-		getexp 200000,200000;
-		close3;
-	}
-	// if (terra_gloria_lady_part == 12) {// - 13
+	// if (terra_gloria_lady_part == 11) {// 12 - 13
 	mes "[Rebellion senior Dien]";
 	mes "Welcome.";
 	mes "Since most of the kids are busy these days, I feel somewhat bored.";
-	npctalk "Dien : I have many things to prepare.", "", bc_self;
+	npctalk "Dien : I have many things to prepare.", "Dien#162gmbs", bc_self;
 	cutin "ep162_dn01.bmp",2;
 	next;
 	mes "[Rebellion senior Dien]";
@@ -7101,15 +7069,21 @@ rebel_in,164,88,5	script	Dien#162gmbs	4_F_DIENE,4,4,{
 	next;
 	mes "[Rebellion senior Dien]";
 	mes "I didn't really mean to ask you for a favor. It's so kind of you to remember it!";
-	npctalk "Dien : What a sensation!", "", bc_self;
+	npctalk "Dien : What a sensation!", "Dien#162gmbs", bc_self;
 	next;
 	mes "[Rebellion senior Dien]";
 	mes "We were talking about the party we are planning soon.";
 	mes "It was nearly over. But several ingredients are missing.";
-	npctalk "Dien : It's such an important party.", "", bc_self;
+	npctalk "Dien : It's such an important party.", "Dien#162gmbs", bc_self;
 	next;
 	mes "[Rebellion senior Dien]";
 	mes "Since Larcis is in charge of our business, please ask him. He will tell you what we need.";
+	if (terra_gloria_lady_part == 11) {
+		erasequest 11463;// You said the party is ready?
+		setquest 11464;// You said the party is ready?
+		terra_gloria_lady_part = 12;
+		getexp 200000,200000;
+	}
 	close3;
 
 OnTouch:
@@ -11243,7 +11217,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 		close3;
 	}
 	if (terra_gloria_main == 16) {
-		if (terra_gloria_lady_part < 13 || terra_gloria_lady_part < 14) {
+		if (isbegin_quest(14602) != 2 || terra_gloria_lady_part < 14) {
 			cutin "16loo_01.bmp",2;
 			mes "[Rookie]";
 			mes "Did you meet all of them? They must be on the 2nd floor.";
