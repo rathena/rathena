@@ -41,8 +41,8 @@ struct s_npc_buy_list {
 
 struct npc_data {
 	struct block_list bl;
-	struct unit_data  ud; //Because they need to be able to move....
-	struct view_data *vd;
+	struct unit_data ud; //Because they need to be able to move....
+	struct view_data vd;
 	struct status_change sc; //They can't have status changes, but.. they want the visual opt values.
 	struct npc_data *master_nd;
 	short class_,speed,instance_id;
@@ -1161,6 +1161,8 @@ enum e_job_types
 	JT_4_EP17_BROKENBETA,
 	JT_4_EP17_CLEANER_W,
 	JT_4_EP17_MERMAID,
+	JT_4_JP_AB_NPC_009,
+	JT_4_JP_AB_NPC_010,
 
 	JT_NEW_NPC_3RD_END = 19999,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999

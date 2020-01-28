@@ -658,6 +658,13 @@ struct Battle_Config
 	int min_shop_sell;
 	int feature_equipswitch;
 	int pet_walk_speed;
+	int blacksmith_fame_refine_threshold;
+	int mob_nopc_idleskill_rate;
+	int mob_nopc_move_rate;
+	int boss_nopc_idleskill_rate;
+	int boss_nopc_move_rate;
+	int hom_idle_no_share;
+	int devotion_standup_fix;
 
 #include "../custom/battle_config_struct.inc"
 };

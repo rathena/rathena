@@ -1,0 +1,11 @@
+###########################################################################
+# Reading Spellbook Database
+###########################################################################
+#
+# Reading Spellbook Settings
+#
+###########################################################################
+# - Skill             Skill that is usable through a Spellbook.
+#   Book              Book item required to cast skill.
+#   PreservePoints    Amount of points required to preserve the skill into the book.
+###########################################################################

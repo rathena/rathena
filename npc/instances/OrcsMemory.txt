@@ -119,7 +119,7 @@ gef_fild10,238,202,6	script	Mad Scientist#orc	865,{
 		case 1:
 			mes "[Mad Scientist]";
 			mes "Yeah, yeah.. I know it's hard to belive. I don't blame ya.";
-			mes "I used to study the Dimensional Gorge discovered near Morroc.";
+			mes "I used to study the Dimensional Gorge discovered near Morocc.";
 			mes "According to my research, the minerals found there have enormous power inside them!";
 			next;
 			break;

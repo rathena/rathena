@@ -1,11 +1,12 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <iostream>
 #include <fstream>
 #include <functional>
-#include <vector>
+#include <iostream>
+#include <locale>
 #include <unordered_map>
+#include <vector>
 
 #ifdef WIN32
 	#include <conio.h>
@@ -17,15 +18,34 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include "../common/cbasetypes.hpp"
 #include "../common/core.hpp"
 #include "../common/malloc.hpp"
 #include "../common/mmo.hpp"
+#include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/utilities.hpp"
+#ifdef WIN32
+#include "../common/winapi.hpp"
+#endif
 
 // Only for constants - do not use functions of it or linking will fail
-#include "../map/mob.hpp" // MAX_MVP_DROP and MAX_MOB_DROP
+#include "../map/achievement.hpp"
+#include "../map/battle.hpp"
+#include "../map/battleground.hpp"
+#include "../map/channel.hpp"
+#include "../map/chat.hpp"
+#include "../map/date.hpp"
+#include "../map/instance.hpp"
+#include "../map/mercenary.hpp"
+#include "../map/mob.hpp"
+#include "../map/npc.hpp"
+#include "../map/pc.hpp"
+#include "../map/pet.hpp"
+#include "../map/quest.hpp"
+#include "../map/script.hpp"
+#include "../map/storage.hpp"
 
 using namespace rathena;
 
@@ -49,11 +69,18 @@ int getch( void ){
 // Forward declaration of conversion functions
 static bool guild_read_guildskill_tree_db( char* split[], int columns, int current );
 static size_t pet_read_db( const char* file );
+static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current);
+static bool skill_parse_row_abradb(char* split[], int columns, int current);
+static bool skill_parse_row_improvisedb(char* split[], int columns, int current);
+static bool skill_parse_row_spellbookdb(char* split[], int columns, int current);
+static bool mob_readdb_mobavail(char *str[], int columns, int current);
 
 // Constants for conversion
 std::unordered_map<uint16, std::string> aegis_itemnames;
+std::unordered_map<uint16, uint16> aegis_itemviewid;
 std::unordered_map<uint16, std::string> aegis_mobnames;
 std::unordered_map<uint16, std::string> aegis_skillnames;
+std::unordered_map<const char*, int64> constants;
 
 // Forward declaration of constant loading functions
 static bool parse_item_constants( const char* path );
@@ -61,50 +88,120 @@ static bool parse_mob_constants( char* split[], int columns, int current );
 static bool parse_skill_constants( char* split[], int columns, int current );
 
 bool fileExists( const std::string& path );
-bool writeToFile( const YAML::Node& node, const std::string& path );
-void prepareHeader( YAML::Node& node, const std::string& type, uint32 version );
 bool askConfirmation( const char* fmt, ... );
 
-YAML::Node body;
-size_t counter;
+YAML::Emitter body;
+
+// Implement the function instead of including the original version by linking
+void script_set_constant_( const char* name, int64 value, const char* constant_name, bool isparameter, bool deprecated ){
+	constants[name] = value;
+}
+
+const char* constant_lookup( int32 value, const char* prefix ){
+	nullpo_retr( nullptr, prefix );
+
+	for( auto const& pair : constants ){
+		// Same prefix group and same value
+		if( strncasecmp( pair.first, prefix, strlen( prefix ) ) == 0 && pair.second == value ){
+			return pair.first;
+		}
+	}
+
+	return nullptr;
+}
+
+void copyFileIfExists( std::ofstream& file,const std::string& name, bool newLine ){
+	std::string path = "doc/yaml/db/" + name + ".yml";
+
+	if( fileExists( path ) ){
+		std::ifstream source( path, std::ios::binary );
+
+		std::istreambuf_iterator<char> begin_source( source );
+		std::istreambuf_iterator<char> end_source;
+		std::ostreambuf_iterator<char> begin_dest( file );
+		copy( begin_source, end_source, begin_dest );
+
+		source.close();
+
+		if( newLine ){
+			file << "\n";
+		}
+	}
+}
+
+void prepareHeader(std::ofstream &file, const std::string& type, uint32 version, const std::string& name) {
+	copyFileIfExists( file, "license", false );
+	copyFileIfExists( file, name, true );
+
+	YAML::Emitter header(file);
+
+	header << YAML::BeginMap;
+	header << YAML::Key << "Header";
+	header << YAML::BeginMap;
+	header << YAML::Key << "Type" << YAML::Value << type;
+	header << YAML::Key << "Version" << YAML::Value << version;
+	header << YAML::EndMap;
+	header << YAML::EndMap;
+
+	file << "\n";
+	file << "\n";
+}
+
+void prepareBody(void) {
+	body << YAML::BeginMap;
+	body << YAML::Key << "Body";
+	body << YAML::BeginSeq;
+}
+
+void finalizeBody(void) {
+	body << YAML::EndSeq;
+	body << YAML::EndMap;
+}
 
 template<typename Func>
-bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda ){
+bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda, const std::string& rename = "" ){
 	for( const std::string& path : paths ){
 		const std::string name_ext = name + ".txt";
 		const std::string from = path + "/" + name_ext;
-		const std::string to = path + "/" + name + ".yml";
+		const std::string to = path + "/" + (rename.size() > 0 ? rename : name) + ".yml";
 
 		if( fileExists( from ) ){
 			if( !askConfirmation( "Found the file \"%s\", which requires migration to yml.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
 				continue;
 			}
-
-			YAML::Node root;
-
-			prepareHeader( root, type, version );
-			body.reset();
-			counter = 0;
 			
-			if( !lambda( path, name_ext ) ){
-				return false;
-			}
-
-			root["Body"] = body;
-
-			if( fileExists( to ) ){
-				if( !askConfirmation( "The file \"%s\" already exists.\nDo you want to replace it? (Y/N)\n", to.c_str() ) ){
+			if (fileExists(to)) {
+				if (!askConfirmation("The file \"%s\" already exists.\nDo you want to replace it? (Y/N)\n", to.c_str())) {
 					continue;
 				}
 			}
 
-			if( !writeToFile( root, to ) ){
-				ShowError( "Failed to write the converted yml data to \"%s\".\nAborting now...\n", to.c_str() );
+			std::ofstream out;
+
+			body.~Emitter();
+			new (&body) YAML::Emitter();
+			out.open(to);
+
+			if (!out.is_open()) {
+				ShowError("Can not open file \"%s\" for writing.\n", to.c_str());
 				return false;
 			}
 
+			prepareHeader(out, type, version, (rename.size() > 0 ? rename : name));
+			prepareBody();
+
+			if( !lambda( path, name_ext ) ){
+				out.close();
+				return false;
+			}
+
+			finalizeBody();
+			out << body.c_str();
+			// Make sure there is an empty line at the end of the file for git
+			out << "\n";
+			out.close();
 			
-			// TODO: do you want to delete/rename?
+			// TODO: do you want to delete?
 		}
 	}
 
@@ -124,25 +221,55 @@ int do_init( int argc, char** argv ){
 	sv_readdb( path_db_mode.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants, false );
 	sv_readdb( path_db_import.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants, false );
 
-	std::vector<std::string> guild_skill_tree_paths = {
+	// Load constants
+	#define export_constant_npc(a) export_constant(a)
+	#include "../map/script_constants.hpp"
+
+	std::vector<std::string> root_paths = {
 		path_db,
+		path_db_mode,
 		path_db_import
 	};
 
-	if( !process( "GUILD_SKILL_TREE_DB", 1, guild_skill_tree_paths, "guild_skill_tree", []( const std::string& path, const std::string& name_ext ) -> bool {
+	if( !process( "GUILD_SKILL_TREE_DB", 1, root_paths, "guild_skill_tree", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return sv_readdb( path.c_str(), name_ext.c_str(), ',', 2 + MAX_GUILD_SKILL_REQUIRE * 2, 2 + MAX_GUILD_SKILL_REQUIRE * 2, -1, &guild_read_guildskill_tree_db, false );
 	} ) ){
 		return 0;
 	}
 
-	std::vector<std::string> pet_paths = {
-		path_db_mode,
-		path_db_import
-	};
-
-	if( !process( "PET_DB", 1, pet_paths, "pet_db", []( const std::string& path, const std::string& name_ext ) -> bool {
+	if( !process( "PET_DB", 1, root_paths, "pet_db", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return pet_read_db( ( path + name_ext ).c_str() );
 	} ) ){
+		return 0;
+	}
+
+	if (!process("MAGIC_MUSHROOM_DB", 1, root_paths, "magicmushroom_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1, 1, -1, &skill_parse_row_magicmushroomdb, false);
+	})) {
+		return 0;
+	}
+
+	if (!process("ABRA_DB", 1, root_paths, "abra_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3, 3, -1, &skill_parse_row_abradb, false);
+	})) {
+		return 0;
+	}
+
+	if (!process("IMPROVISED_SONG_DB", 1, root_paths, "skill_improvise_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 2, 2, -1, &skill_parse_row_improvisedb, false);
+	}, "improvise_db")) {
+		return 0;
+	}
+
+	if (!process("READING_SPELLBOOK_DB", 1, root_paths, "spellbook_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3, 3, -1, &skill_parse_row_spellbookdb, false);
+	})) {
+		return 0;
+	}
+
+	if (!process("MOB_AVAIL_DB", 1, root_paths, "mob_avail", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 2, 12, -1, &mob_readdb_mobavail, false);
+	})) {
 		return 0;
 	}
 
@@ -166,39 +293,6 @@ bool fileExists( const std::string& path ){
 	}else{
 		return false;
 	}
-}
-
-bool writeToFile( const YAML::Node& node, const std::string& path ){
-	std::ofstream out;
-
-	out.open( path );
-
-	if( !out.is_open() ){
-		ShowError( "Can not open file \"%s\" for writing.\n", path.c_str() );
-		return false;
-	}
-
-	out << node;
-
-	// Make sure there is an empty line at the end of the file for git
-#ifdef WIN32
-	out << "\r\n";
-#else
-	out << "\n";
-#endif
-
-	out.close();
-
-	return true;
-}
-
-void prepareHeader( YAML::Node& node, const std::string& type, uint32 version ){
-	YAML::Node header;
-
-	header["Type"] = type;
-	header["Version"] = version;
-
-	node["Header"] = header;
 }
 
 bool askConfirmation( const char* fmt, ... ){
@@ -336,6 +430,9 @@ static bool parse_item_constants( const char* path ){
 
 		aegis_itemnames[item_id] = std::string(name);
 
+		if (atoi(str[14]) & (EQP_HELM | EQP_COSTUME_HELM) && util::umap_find(aegis_itemviewid, (uint16)atoi(str[18])) == nullptr)
+			aegis_itemviewid[atoi(str[18])] = item_id;
+
 		count++;
 	}
 
@@ -364,15 +461,40 @@ static bool parse_skill_constants( char* split[], int columns, int current ){
 	return true;
 }
 
+/**
+ * Split the string with ':' as separator and put each value for a skilllv
+ * if no more value found put the last value to fill the array
+ * @param str: String to split
+ * @param val: Array of MAX_SKILL_LEVEL to put value into
+ * @return 0:error, x:number of value assign (should be MAX_SKILL_LEVEL)
+ */
+int skill_split_atoi(char *str, int *val) {
+	int i;
+
+	for (i = 0; i < MAX_SKILL_LEVEL; i++) {
+		if (!str)
+			break;
+		val[i] = atoi(str);
+		str = strchr(str, ':');
+		if (str)
+			*str++ = 0;
+	}
+
+	if (i == 0) // No data found.
+		return 0;
+
+	if (i == 1) // Single value, have the whole range have the same value.
+		return 1;
+
+	return i;
+}
+
 // Implementation of the conversion functions
 
 // Copied and adjusted from guild.cpp
 // <skill id>,<max lv>,<req id1>,<req lv1>,<req id2>,<req lv2>,<req id3>,<req lv3>,<req id4>,<req lv4>,<req id5>,<req lv5>
 static bool guild_read_guildskill_tree_db( char* split[], int columns, int current ){
-	YAML::Node node;
-
 	uint16 skill_id = (uint16)atoi(split[0]);
-
 	std::string* name = util::umap_find( aegis_skillnames, skill_id );
 
 	if( name == nullptr ){
@@ -380,33 +502,39 @@ static bool guild_read_guildskill_tree_db( char* split[], int columns, int curre
 		return false;
 	}
 
-	node["Id"] = *name;
-	node["MaxLevel"] = (uint16)atoi(split[1]);
+	body << YAML::BeginMap;
+	body << YAML::Key << "Id" << YAML::Value << *name;
+	body << YAML::Key << "MaxLevel" << YAML::Value << atoi(split[1]);
 
-	for( int i = 0, j = 0; i < MAX_GUILD_SKILL_REQUIRE; i++ ){
-		uint16 required_skill_id = atoi( split[i * 2 + 2] );
-		uint16 required_skill_level = atoi( split[i * 2 + 3] );
+	if (atoi(split[2]) > 0) {
+		body << YAML::Key << "Required";
+		body << YAML::BeginSeq;
 
-		if( required_skill_id == 0 || required_skill_level == 0 ){
-			continue;
+		for (int i = 0, j = 0; i < MAX_GUILD_SKILL_REQUIRE; i++) {
+			uint16 required_skill_id = atoi(split[i * 2 + 2]);
+			uint16 required_skill_level = atoi(split[i * 2 + 3]);
+
+			if (required_skill_id == 0 || required_skill_level == 0) {
+				continue;
+			}
+
+			std::string* required_name = util::umap_find(aegis_skillnames, required_skill_id);
+
+			if (required_name == nullptr) {
+				ShowError("Skill name for required skill id %hu is not known.\n", required_skill_id);
+				return false;
+			}
+
+			body << YAML::BeginMap;
+			body << YAML::Key << "Id" << YAML::Value << *required_name;
+			body << YAML::Key << "Level" << YAML::Value << required_skill_level;
+			body << YAML::EndMap;
 		}
 
-		std::string* required_name = util::umap_find( aegis_skillnames, required_skill_id );
-
-		if( required_name == nullptr ){
-			ShowError( "Skill name for required skill id %hu is not known.\n", required_skill_id );
-			return false;
-		}
-
-		YAML::Node req;
-
-		req["Id"] = *required_name;
-		req["Level"] = required_skill_level;
-
-		node["Required"][j++] = req;
+		body << YAML::EndSeq;
 	}
 
-	body[counter++] = node;
+	body << YAML::EndMap;
 
 	return true;
 }
@@ -490,9 +618,8 @@ static size_t pet_read_db( const char* file ){
 			continue;
 		}
 
-		YAML::Node node;
-
-		node["Mob"] = *mob_name;
+		body << YAML::BeginMap;
+		body << YAML::Key << "Mob" << YAML::Value << *mob_name;
 
 		uint16 tame_item_id = (uint16)atoi( str[3] );
 
@@ -504,11 +631,10 @@ static size_t pet_read_db( const char* file ){
 				return false;
 			}
 
-			node["TameItem"] = *tame_item_name;
+			body << YAML::Key << "TameItem" << YAML::Value << *tame_item_name;
 		}
 
 		uint16 egg_item_id = (uint16)atoi( str[4] );
-
 		std::string* egg_item_name = util::umap_find( aegis_itemnames, egg_item_id );
 
 		if( egg_item_name == nullptr ){
@@ -516,7 +642,7 @@ static size_t pet_read_db( const char* file ){
 			return false;
 		}
 
-		node["EggItem"] = *egg_item_name;
+		body << YAML::Key << "EggItem" << YAML::Value << *egg_item_name;
 
 		uint16 equip_item_id = (uint16)atoi( str[5] );
 
@@ -528,7 +654,7 @@ static size_t pet_read_db( const char* file ){
 				return false;
 			}
 
-			node["EquipItem"] = *equip_item_name;
+			body << YAML::Key << "EquipItem" << YAML::Value << *equip_item_name;
 		}
 
 		uint16 food_item_id = (uint16)atoi( str[6] );
@@ -541,48 +667,47 @@ static size_t pet_read_db( const char* file ){
 				return false;
 			}
 
-			node["FoodItem"] = *food_item_name;
+			body << YAML::Key << "FoodItem" << YAML::Value << *food_item_name;
 		}
 
-		node["Fullness"] = atoi( str[7] );
+		body << YAML::Key << "Fullness" << YAML::Value << atoi(str[7]);
 		// Default: 60
 		if( atoi( str[8] ) != 60 ){
-			node["HungryDelay"] = atoi( str[8] );
+			body << YAML::Key << "HungryDelay" << YAML::Value << atoi(str[8]);
 		}
 		// Default: 250
 		if( atoi( str[11] ) != 250 ){
-			node["IntimacyStart"] = atoi( str[11] );
+			body << YAML::Key << "IntimacyStart" << YAML::Value << atoi(str[11]);
 		}
-		node["IntimacyFed"] = atoi( str[9] );
+		body << YAML::Key << "IntimacyFed" << YAML::Value << atoi(str[9]);
 		// Default: -100
 		if( atoi( str[10] ) != 100 ){
-			node["IntimacyOverfed"] = -atoi( str[10] );
+			body << YAML::Key << "IntimacyOverfed" << YAML::Value << -atoi(str[10]);
 		}
 		// pet_hungry_friendly_decrease battle_conf
-		//node["IntimacyHungry"] = -5;
+		//body << YAML::Key << "IntimacyHungry" << YAML::Value << -5;
 		// Default: -20
 		if( atoi( str[12] ) != 20 ){
-			node["IntimacyOwnerDie"] = -atoi( str[12] );
+			body << YAML::Key << "IntimacyOwnerDie" << YAML::Value << -atoi(str[12]);
 		}
-		node["CaptureRate"] = atoi( str[13] );
+		body << YAML::Key << "CaptureRate" << YAML::Value << atoi(str[13]);
 		// Default: true
 		if( atoi( str[15] ) == 0 ){
-			node["SpecialPerformance"] = false;
+			body << YAML::Key << "SpecialPerformance" << YAML::Value << "false";
 		}
-		node["AttackRate"] = atoi( str[17] );
-		node["RetaliateRate"] = atoi( str[18] );
-		node["ChangeTargetRate"] = atoi( str[19] );
+		body << YAML::Key << "AttackRate" << YAML::Value << atoi(str[17]);
+		body << YAML::Key << "RetaliateRate" << YAML::Value << atoi(str[18]);
+		body << YAML::Key << "ChangeTargetRate" << YAML::Value << atoi(str[19]);
 
 		if( *str[21] ){
-			node["Script"] = str[21];
+			body << YAML::Key << "Script" << YAML::Value << YAML::Literal << str[21];
 		}
 
 		if( *str[20] ){
-			node["SupportScript"] = str[20];
+			body << YAML::Key << "SupportScript" << YAML::Value << YAML::Literal << str[20];
 		}
 
-		body[counter++] = node;
-
+		body << YAML::EndMap;
 		entries++;
 	}
 
@@ -590,4 +715,340 @@ static size_t pet_read_db( const char* file ){
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' pets in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file );
 
 	return entries;
+}
+
+// Copied and adjusted from skill.cpp
+static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current)
+{
+	uint16 skill_id = atoi(split[0]);
+	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
+
+	if (skill_name == nullptr) {
+		ShowError("Skill name for Magic Mushroom skill ID %hu is not known.\n", skill_id);
+		return false;
+	}
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
+	body << YAML::EndMap;
+
+	return true;
+}
+
+// Copied and adjusted from skill.cpp
+static bool skill_parse_row_abradb(char* split[], int columns, int current)
+{
+	uint16 skill_id = atoi(split[0]);
+	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
+
+	if (skill_name == nullptr) {
+		ShowError("Skill name for Abra skill ID %hu is not known.\n", skill_id);
+		return false;
+	}
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
+
+	int arr[MAX_SKILL_LEVEL];
+	int arr_size = skill_split_atoi(split[2], arr);
+
+	if (arr_size == 1) {
+		if (arr[0] != 500)
+			body << YAML::Key << "Probability" << YAML::Value << arr[0];
+	} else {
+		body << YAML::Key << "Probability";
+		body << YAML::BeginSeq;
+
+		for (int i = 0; i < arr_size; i++) {
+			if (arr[i] > 0) {
+				body << YAML::BeginMap;
+				body << YAML::Key << "Level" << YAML::Value << i + 1;
+				body << YAML::Key << "Probability" << YAML::Value << arr[i];
+				body << YAML::EndMap;
+			}
+		}
+
+		body << YAML::EndSeq;
+	}
+
+	body << YAML::EndMap;
+
+	return true;
+}
+
+// Copied and adjusted from skill.cpp
+static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
+{
+	uint16 skill_id = atoi(split[0]);
+	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
+
+	if (skill_name == nullptr) {
+		ShowError("Skill name for Improvised Song skill ID %hu is not known.\n", skill_id);
+		return false;
+	}
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
+	body << YAML::Key << "Probability" << YAML::Value << atoi(split[1]) / 10;
+	body << YAML::EndMap;
+
+	return true;
+}
+
+// Copied and adjusted from skill.cpp
+static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
+{
+	uint16 skill_id = atoi(split[0]);
+	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
+
+	if (skill_name == nullptr) {
+		ShowError("Skill name for Spell Book skill ID %hu is not known.\n", skill_id);
+		return false;
+	}
+
+	uint16 nameid = atoi(split[2]);
+	std::string *book_name = util::umap_find(aegis_itemnames, nameid);
+
+	if (book_name == nullptr) {
+		ShowError("Book name for item ID %hu is not known.\n", nameid);
+		return false;
+	}
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
+	body << YAML::Key << "Book" << YAML::Value << *book_name;
+	body << YAML::Key << "PreservePoints" << YAML::Value << atoi(split[1]);
+	body << YAML::EndMap;
+
+	return true;
+}
+
+// Copied and adjusted from mob.cpp
+static bool mob_readdb_mobavail(char* str[], int columns, int current) {
+	uint16 mob_id = atoi(str[0]);
+	std::string *mob_name = util::umap_find(aegis_mobnames, mob_id);
+
+	if (mob_name == nullptr) {
+		ShowWarning("mob_avail reading: Invalid mob-class %hu, Mob not read.\n", mob_id);
+		return false;
+	}
+
+	body << YAML::Key << "Mob" << YAML::Value << *mob_name;
+
+	uint16 sprite_id = atoi(str[1]);
+	std::string *sprite_name = util::umap_find(aegis_mobnames, sprite_id);
+
+	if (sprite_name == nullptr) {
+		char *sprite = const_cast<char *>(constant_lookup(sprite_id, "JOB_"));
+
+		if (sprite == nullptr) {
+			sprite = const_cast<char *>(constant_lookup(sprite_id, "JT_"));
+
+			if (sprite == nullptr) {
+				ShowError("Sprite name %s is not known.\n", sprite);
+				return false;
+			}
+
+			sprite += 3; // Strip JT_ here because the script engine doesn't send this prefix for NPC.
+
+			body << YAML::Key << "Sprite" << YAML::Value << *sprite;
+		} else
+			body << YAML::Key << "Sprite" << YAML::Value << *sprite;
+	} else
+		body << YAML::Key << "Sprite" << YAML::Value << *sprite_name;
+
+	if (columns == 12) {
+		body << YAML::Key << "Sex" << YAML::Value << (atoi(str[2]) ? "Male" : "Female");
+		if (atoi(str[3]) != 0)
+			body << YAML::Key << "HairStyle" << YAML::Value << atoi(str[3]);
+		if (atoi(str[4]) != 0)
+			body << YAML::Key << "HairColor" << YAML::Value << atoi(str[4]);
+		if (atoi(str[11]) != 0)
+			body << YAML::Key << "ClothColor" << YAML::Value << atoi(str[11]);
+
+		if (atoi(str[5]) != 0) {
+			uint16 weapon_item_id = atoi(str[5]);
+			std::string *weapon_item_name = util::umap_find(aegis_itemnames, weapon_item_id);
+
+			if (weapon_item_name == nullptr) {
+				ShowError("Item name for item ID %hu (weapon) is not known.\n", weapon_item_id);
+				return false;
+			}
+
+			body << YAML::Key << "Weapon" << YAML::Value << *weapon_item_name;
+		}
+
+		if (atoi(str[6]) != 0) {
+			uint16 shield_item_id = atoi(str[6]);
+			std::string *shield_item_name = util::umap_find(aegis_itemnames, shield_item_id);
+
+			if (shield_item_name == nullptr) {
+				ShowError("Item name for item ID %hu (shield) is not known.\n", shield_item_id);
+				return false;
+			}
+
+			body << YAML::Key << "Shield" << YAML::Value << *shield_item_name;
+		}
+
+		if (atoi(str[7]) != 0) {
+			uint16 *headtop_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[7]));
+
+			if (headtop_item_id == nullptr) {
+				ShowError("Item ID for view ID %hu (head top) is not known.\n", atoi(str[7]));
+				return false;
+			}
+
+			std::string *headtop_item_name = util::umap_find(aegis_itemnames, *headtop_item_id);
+
+			if (headtop_item_name == nullptr) {
+				ShowError("Item name for item ID %hu (head top) is not known.\n", *headtop_item_id);
+				return false;
+			}
+
+			body << YAML::Key << "HeadTop" << YAML::Value << *headtop_item_name;
+		}
+
+		if (atoi(str[8]) != 0) {
+			uint16 *headmid_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[8]));
+
+			if (headmid_item_id == nullptr) {
+				ShowError("Item ID for view ID %hu (head mid) is not known.\n", atoi(str[8]));
+				return false;
+			}
+
+			std::string *headmid_item_name = util::umap_find(aegis_itemnames, *headmid_item_id);
+
+			if (headmid_item_name == nullptr) {
+				ShowError("Item name for item ID %hu (head mid) is not known.\n", *headmid_item_id);
+				return false;
+			}
+
+			body << YAML::Key << "HeadMid" << YAML::Value << *headmid_item_name;
+		}
+
+		if (atoi(str[9]) != 0) {
+			uint16 *headlow_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[9]));
+
+			if (headlow_item_id == nullptr) {
+				ShowError("Item ID for view ID %hu (head low) is not known.\n", atoi(str[9]));
+				return false;
+			}
+
+			std::string *headlow_item_name = util::umap_find(aegis_itemnames, *headlow_item_id);
+
+			if (headlow_item_name == nullptr) {
+				ShowError("Item name for item ID %hu (head low) is not known.\n", *headlow_item_id);
+				return false;
+			}
+
+			body << YAML::Key << "HeadLow" << YAML::Value << *headlow_item_name;
+		}
+
+		if (atoi(str[10]) != 0) {
+			uint32 options = atoi(str[10]);
+
+			body << YAML::Key << "Options";
+			body << YAML::BeginMap;
+
+			while (options > OPTION_NOTHING && options <= OPTION_SUMMER2) {
+				if (options & OPTION_SIGHT) {
+					body << YAML::Key << "Sight" << YAML::Value << "true";
+					options &= ~OPTION_SIGHT;
+				} else if (options & OPTION_CART1) {
+					body << YAML::Key << "Cart1" << YAML::Value << "true";
+					options &= ~OPTION_CART1;
+				} else if (options & OPTION_FALCON) {
+					body << YAML::Key << "Falcon" << YAML::Value << "true";
+					options &= ~OPTION_FALCON;
+				} else if (options & OPTION_RIDING) {
+					body << YAML::Key << "Riding" << YAML::Value << "true";
+					options &= ~OPTION_RIDING;
+				} else if (options & OPTION_CART2) {
+					body << YAML::Key << "Cart2" << YAML::Value << "true";
+					options &= ~OPTION_CART2;
+				} else if (options & OPTION_CART3) {
+					body << YAML::Key << "Cart2" << YAML::Value << "true";
+					options &= ~OPTION_CART3;
+				} else if (options & OPTION_CART4) {
+					body << YAML::Key << "Cart4" << YAML::Value << "true";
+					options &= ~OPTION_CART4;
+				} else if (options & OPTION_CART5) {
+					body << YAML::Key << "Cart5" << YAML::Value << "true";
+					options &= ~OPTION_CART5;
+				} else if (options & OPTION_ORCISH) {
+					body << YAML::Key << "Orcish" << YAML::Value << "true";
+					options &= ~OPTION_ORCISH;
+				} else if (options & OPTION_WEDDING) {
+					body << YAML::Key << "Wedding" << YAML::Value << "true";
+					options &= ~OPTION_WEDDING;
+				} else if (options & OPTION_RUWACH) {
+					body << YAML::Key << "Ruwach" << YAML::Value << "true";
+					options &= ~OPTION_RUWACH;
+				} else if (options & OPTION_FLYING) {
+					body << YAML::Key << "Flying" << YAML::Value << "true";
+					options &= ~OPTION_FLYING;
+				} else if (options & OPTION_XMAS) {
+					body << YAML::Key << "Xmas" << YAML::Value << "true";
+					options &= ~OPTION_XMAS;
+				} else if (options & OPTION_TRANSFORM) {
+					body << YAML::Key << "Transform" << YAML::Value << "true";
+					options &= ~OPTION_TRANSFORM;
+				} else if (options & OPTION_SUMMER) {
+					body << YAML::Key << "Summer" << YAML::Value << "true";
+					options &= ~OPTION_SUMMER;
+				} else if (options & OPTION_DRAGON1) {
+					body << YAML::Key << "Dragon1" << YAML::Value << "true";
+					options &= ~OPTION_DRAGON1;
+				} else if (options & OPTION_WUG) {
+					body << YAML::Key << "Wug" << YAML::Value << "true";
+					options &= ~OPTION_WUG;
+				} else if (options & OPTION_WUGRIDER) {
+					body << YAML::Key << "WugRider" << YAML::Value << "true";
+					options &= ~OPTION_WUGRIDER;
+				} else if (options & OPTION_MADOGEAR) {
+					body << YAML::Key << "MadoGear" << YAML::Value << "true";
+					options &= ~OPTION_MADOGEAR;
+				} else if (options & OPTION_DRAGON2) {
+					body << YAML::Key << "Dragon2" << YAML::Value << "true";
+					options &= ~OPTION_DRAGON2;
+				} else if (options & OPTION_DRAGON3) {
+					body << YAML::Key << "Dragon3" << YAML::Value << "true";
+					options &= ~OPTION_DRAGON3;
+				} else if (options & OPTION_DRAGON4) {
+					body << YAML::Key << "Dragon4" << YAML::Value << "true";
+					options &= ~OPTION_DRAGON4;
+				} else if (options & OPTION_DRAGON5) {
+					body << YAML::Key << "Dragon5" << YAML::Value << "true";
+					options &= ~OPTION_DRAGON5;
+				} else if (options & OPTION_HANBOK) {
+					body << YAML::Key << "Hanbok" << YAML::Value << "true";
+					options &= ~OPTION_HANBOK;
+				} else if (options & OPTION_OKTOBERFEST) {
+					body << YAML::Key << "Oktoberfest" << YAML::Value << "true";
+					options &= ~OPTION_OKTOBERFEST;
+				} else if (options & OPTION_SUMMER2) {
+					body << YAML::Key << "Summer2" << YAML::Value << "true";
+					options &= ~OPTION_SUMMER2;
+				}
+			}
+
+			body << YAML::EndMap;
+		}
+	} else if (columns == 3) {
+		if (atoi(str[5]) != 0) {
+			uint16 peteq_item_id = atoi(str[5]);
+			std::string *peteq_item_name = util::umap_find(aegis_itemnames, peteq_item_id);
+
+			if (peteq_item_name == nullptr) {
+				ShowError("Item name for item ID %hu (pet equip) is not known.\n", peteq_item_id);
+				return false;
+			}
+
+			body << YAML::Key << "PetEquip" << YAML::Value << *peteq_item_name;
+		}
+	}
+
+	body << YAML::EndMap;
+
+	return true;
 }

@@ -957,7 +957,7 @@ morocc,193,51,6	script	Kreg	48,{
 	if (ten_qset == 1 && countitem(1082) > 0) goto N_QuestComp;
 	if (ten_qset == 1) goto N_QuestStart;
 	mes "[Kreg]";
-	mes "Hello "+strcharinfo(0)+" welcome to Morroc.";
+	mes "Hello "+strcharinfo(0)+" welcome to Morocc.";
 	close;
 N_QuestComp:
 	mes "[Kreg]";
