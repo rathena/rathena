@@ -128,18 +128,19 @@ uint64 SizeFixDatabase::parseBodyNode(const YAML::Node &node) {
 	if (!this->asString(node, "Weapon", weapon_name))
 		return 0;
 
-	int weapon_id;
+	int64 constant;
 
-	if (!script_get_constant(weapon_name.c_str(), &weapon_id)) {
+	if (!script_get_constant(weapon_name.c_str(), &constant)) {
 		this->invalidWarning(node, "Size Fix unknown weapon %s, skipping.\n", weapon_name.c_str());
 		return 0;
 	}
 
-	if (weapon_id < W_FIST || weapon_id > W_2HSTAFF) {
-		this->invalidWarning(node, "Size Fix weapon %s (%d) is an invalid weapon, skipping.\n", weapon_name.c_str(), weapon_id);
+	if (constant < W_FIST || constant > W_2HSTAFF) {
+		this->invalidWarning(node, "Size Fix weapon %s is an invalid weapon, skipping.\n", weapon_name.c_str());
 		return 0;
 	}
 
+	int weapon_id = static_cast<int>(constant);
 	std::shared_ptr<s_sizefix_db> size = this->find(weapon_id);
 	bool exists = size != nullptr;
 
