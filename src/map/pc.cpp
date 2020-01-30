@@ -12739,7 +12739,11 @@ short pc_maxparameter(struct map_session_data *sd, enum e_params param) {
 
 	// Always check babies first
 	if( class_ & JOBL_BABY ){
-		return battle_config.max_baby_parameter;
+		if( class_ & JOBL_THIRD ){
+			return battle_config.max_baby_third_parameter;
+		}else{
+			return battle_config.max_baby_parameter;
+		}
 	}
 
 	// Summoner
