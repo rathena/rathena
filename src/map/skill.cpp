@@ -21907,6 +21907,9 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 					skill->unit_flag.reset(static_cast<uint8>(constant));
 			}
 
+			if (skill->unit_flag[UF_NOENEMY] && battle_config.defnotenemy)
+				skill->unit_target = BCT_NOENEMY;
+
 			// By default, target just characters.
 			skill->unit_target |= BL_CHAR;
 			if (skill->unit_flag[UF_NOPC])
@@ -21923,9 +21926,6 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 		}
 	}
-
-	if (skill->unit_flag[UF_NOENEMY] && battle_config.defnotenemy)
-		skill->unit_target = BCT_NOENEMY;
 
 	if (!exists) {
 		this->put(skill_id, skill);
