@@ -21098,7 +21098,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "MaxLevel", skill_lv))
 			return 0;
 
-		if ((skill_lv == 0 || skill_lv > MAX_SKILL_LEVEL) && skill_id != NPC_RUN) { // TODO
+		if (skill_lv == 0 || skill_lv > MAX_SKILL_LEVEL) {
 			this->invalidWarning(node["MaxLevel"], "MaxLevel %hu does not meet the bounds of 1~%d.\n", skill_lv, MAX_SKILL_LEVEL);
 			return 0;
 		}
