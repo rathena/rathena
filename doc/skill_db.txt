@@ -802,10 +802,10 @@ Interval: Skill unit interval in milliseconds.
 
 Target: Skill unit target type.
 
-Friend		- Targets Party, Guild, and neutral players.
+Friend		- Targets Party, Guild, Guild Allies, and neutral players.
 Party		- Targets Party.
-Ally		- Targets Party and Guild.
-Guild		- Targets Guild.
+Ally		- Targets Party and Guild and Guild Allies.
+Guild		- Targets Guild and Guild Allies.
 All			- Targets all. (Default)
 Enemy		- Targets enemy.
 Self		- Targets self.
