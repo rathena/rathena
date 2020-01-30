@@ -271,7 +271,7 @@ struct s_skill_db {
 	int32 unit_layout_type[MAX_SKILL_LEVEL];	///< Layout type. -1 is special layout, others are square with lenght*width: (val*2+1)^2
 	int32 unit_range[MAX_SKILL_LEVEL];			///< Unit cell effect range
 	int16 unit_interval;						///< Interval
-	e_battle_check_target unit_target;			///< Unit target.
+	int32 unit_target;							///< Unit target.
 	std::bitset<UF_MAX> unit_flag;				///< Unit flags.
 
 	int32 cast[MAX_SKILL_LEVEL];				///< Variable casttime

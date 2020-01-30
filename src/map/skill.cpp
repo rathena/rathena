@@ -12813,7 +12813,7 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 	limit = skill_get_time3(mapdata, skill_id,skill_lv);
 	range = skill_get_unit_range(skill_id,skill_lv);
 	interval = skill->unit_interval;
-	target = skill->unit_target;
+	target = skill_get_unit_target(skill_id);
 	layout = skill_get_unit_layout(skill_id,skill_lv,src,x,y);
 
 	sd = BL_CAST(BL_PC, src);
@@ -21151,7 +21151,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "DamageFlags")) {
-		const YAML::Node damageNode = node["DamageFlags"];
+		const YAML::Node &damageNode = node["DamageFlags"];
 
 		for (const auto &it : damageNode) {
 			std::string nk = it.first.as<std::string>(), nk_constant = "NK_" + nk;
@@ -21175,7 +21175,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Flags")) {
-		const YAML::Node infoNode = node["Flags"];
+		const YAML::Node &infoNode = node["Flags"];
 
 		for (const auto &it : infoNode) {
 			std::string inf2 = it.first.as<std::string>(), inf2_constant = "INF2_" + inf2;
@@ -21236,7 +21236,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Element")) {
-		const YAML::Node elementNode = node["Element"];
+		const YAML::Node &elementNode = node["Element"];
 		std::string element;
 
 		if (node.IsScalar()) {
@@ -21318,10 +21318,10 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "CopyFlags")) {
-		const YAML::Node copyNode = node["CopyFlags"];
+		const YAML::Node &copyNode = node["CopyFlags"];
 
 		if (this->nodeExists(copyNode, "Skill")) {
-			const YAML::Node copyskillNode = copyNode["Skill"];
+			const YAML::Node &copyskillNode = copyNode["Skill"];
 
 			if (this->nodeExists(copyskillNode, "Plagiarism")) {
 				bool active;
@@ -21352,7 +21352,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 
 		if (this->nodeExists(copyNode, "RemoveRequirement")) {
-			const YAML::Node copyreqNode = copyNode["RemoveRequirement"];
+			const YAML::Node &copyreqNode = copyNode["RemoveRequirement"];
 
 			for (const auto &it : copyreqNode) {
 				std::string req = it.first.as<std::string>(), req_constant = "SKILL_REQ_" + req;
@@ -21372,7 +21372,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "NoNearNpc")) {
-		const YAML::Node npcNode = node["NoNearNpc"];
+		const YAML::Node &npcNode = node["NoNearNpc"];
 
 		if (this->nodeExists(npcNode, "AdditionalRange")) {
 			uint16 range;
@@ -21387,7 +21387,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 
 		if (this->nodeExists(npcNode, "Type")) {
-			const YAML::Node npctypeNode = npcNode["Type"];
+			const YAML::Node &npctypeNode = npcNode["Type"];
 
 			for (const auto &it : npctypeNode) {
 				std::string type = it.first.as<std::string>(), type_constant = "SKILL_NONEAR_" + type;
@@ -21497,7 +21497,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 #endif
 
 	if (this->nodeExists(node, "CastTimeFlags")) {
-		const YAML::Node castNode = node["CastTimeFlags"];
+		const YAML::Node &castNode = node["CastTimeFlags"];
 
 		for (const auto &it : castNode) {
 			std::string flag = it.first.as<std::string>(), flag_constant = "SKILL_CAST_" + flag;
@@ -21521,7 +21521,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "CastDelayFlags")) {
-		const YAML::Node castNode = node["CastDelayFlags"];
+		const YAML::Node &castNode = node["CastDelayFlags"];
 
 		for (const auto &it : castNode) {
 			std::string flag = it.first.as<std::string>(), flag_constant = "SKILL_CAST_" + flag;
@@ -21545,7 +21545,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Requires")) {
-		const YAML::Node requireNode = node["Requires"];
+		const YAML::Node &requireNode = node["Requires"];
 
 		if (this->nodeExists(requireNode, "HpCost")) {
 			if (!this->parseNode("HpCost", "Amount", requireNode, skill->require.hp))
@@ -21596,7 +21596,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 
 		if (this->nodeExists(requireNode, "Weapon")) {
-			const YAML::Node weaponNode = requireNode["Weapon"];
+			const YAML::Node &weaponNode = requireNode["Weapon"];
 
 			if (this->nodeExists(weaponNode, "All")) {
 				bool active;
@@ -21635,7 +21635,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 
 		if (this->nodeExists(requireNode, "Ammo")) {
-			const YAML::Node ammoNode = requireNode["Ammo"];
+			const YAML::Node &ammoNode = requireNode["Ammo"];
 
 			if (this->nodeExists(ammoNode, "None")) {
 				bool active;
@@ -21703,7 +21703,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 
 		if (this->nodeExists(requireNode, "Status")) {
-			const YAML::Node statusNode = requireNode["Status"];
+			const YAML::Node &statusNode = requireNode["Status"];
 
 			for (const auto &it : statusNode) {
 				std::string status = it.first.as<std::string>(), status_constant = "SC_" + status;
@@ -21737,7 +21737,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 
 		if (this->nodeExists(requireNode, "ItemCost")) {
-			const YAML::Node itemNode = requireNode["ItemCost"];
+			const YAML::Node &itemNode = requireNode["ItemCost"];
 			int32 count = 0;
 
 			for (const YAML::Node &it : itemNode) {
@@ -21765,7 +21765,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 
 		if (this->nodeExists(requireNode, "Equipment")) {
-			const YAML::Node equipNode = requireNode["Equipment"];
+			const YAML::Node &equipNode = requireNode["Equipment"];
 
 			for (const auto &it : equipNode) {
 				std::string item_name = it.first.as<std::string>();
@@ -21792,7 +21792,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Unit")) {
-		const YAML::Node unitNode = node["Unit"];
+		const YAML::Node &unitNode = node["Unit"];
 
 		if (this->nodeExists(unitNode, "Id")) {
 			std::string unit;
@@ -21878,14 +21878,14 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 			}
 
-			skill->unit_target = static_cast<e_battle_check_target>(constant);
+			skill->unit_target = static_cast<int32>(constant);
 		} else {
 			if (!exists)
 				skill->unit_target = BCT_ALL;
 		}
 
 		if (this->nodeExists(unitNode, "Flag")) {
-			const YAML::Node flagNode = unitNode["Flag"];
+			const YAML::Node &flagNode = unitNode["Flag"];
 
 			for (const auto &it : flagNode) {
 				std::string flag = it.first.as<std::string>(), flag_constant = "UF_" + flag;
@@ -21911,6 +21911,18 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				skill->unit_flag = UF_NONE;
 		}
 	}
+
+	if (skill->unit_flag[UF_NOENEMY] && battle_config.defnotenemy)
+		skill->unit_target = BCT_NOENEMY;
+
+	// By default, target just characters.
+	skill->unit_target |= BL_CHAR;
+	if (skill->unit_flag[UF_NOPC])
+		skill->unit_target &= ~BL_PC;
+	if (skill->unit_flag[UF_NOMOB])
+		skill->unit_target &= ~BL_MOB;
+	if (skill->unit_flag[UF_SKILL])
+		skill->unit_target |= BL_SKILL;
 
 	if (!exists) {
 		this->put(skill_id, skill);

@@ -32934,7 +32934,8 @@ Body:
     Unit:
       Id: Gd_Leadership
       Layout: 2
-      Target: Guild
+      Interval: -1
+      Target: SameGuild
       Flag:
         NoMob: true
   - Id: 10007
@@ -32948,7 +32949,8 @@ Body:
     Unit:
       Id: Gd_Glorywounds
       Layout: 2
-      Target: Guild
+      Interval: -1
+      Target: SameGuild
       Flag:
         NoMob: true
   - Id: 10008
@@ -32962,7 +32964,8 @@ Body:
     Unit:
       Id: Gd_Soulcold
       Layout: 2
-      Target: Guild
+      Interval: -1
+      Target: SameGuild
       Flag:
         NoMob: true
   - Id: 10009
@@ -32976,7 +32979,8 @@ Body:
     Unit:
       Id: Gd_Hawkeyes
       Layout: 2
-      Target: Guild
+      Interval: -1
+      Target: SameGuild
       Flag:
         NoMob: true
   - Id: 10010
