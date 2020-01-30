@@ -21906,23 +21906,26 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				else
 					skill->unit_flag.reset(static_cast<uint8>(constant));
 			}
+
+			// By default, target just characters.
+			skill->unit_target |= BL_CHAR;
+			if (skill->unit_flag[UF_NOPC])
+				skill->unit_target &= ~BL_PC;
+			if (skill->unit_flag[UF_NOMOB])
+				skill->unit_target &= ~BL_MOB;
+			if (skill->unit_flag[UF_SKILL])
+				skill->unit_target |= BL_SKILL;
 		} else {
-			if (!exists)
+			if (!exists){
 				skill->unit_flag = UF_NONE;
+				// By default, target just characters.
+				skill->unit_target |= BL_CHAR;
+			}
 		}
 	}
 
 	if (skill->unit_flag[UF_NOENEMY] && battle_config.defnotenemy)
 		skill->unit_target = BCT_NOENEMY;
-
-	// By default, target just characters.
-	skill->unit_target |= BL_CHAR;
-	if (skill->unit_flag[UF_NOPC])
-		skill->unit_target &= ~BL_PC;
-	if (skill->unit_flag[UF_NOMOB])
-		skill->unit_target &= ~BL_MOB;
-	if (skill->unit_flag[UF_SKILL])
-		skill->unit_target |= BL_SKILL;
 
 	if (!exists) {
 		this->put(skill_id, skill);
