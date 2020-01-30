@@ -904,7 +904,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 			break;
 
 	}
-		return false;
+	return false;
 }
 
 /**
