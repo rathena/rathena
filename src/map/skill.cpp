@@ -779,7 +779,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 
 	struct map_data *mapdata = map_getmapdata(m);
 
-	if (mapdata->flag[MF_NOSKILL] && skill_id != ALL_EQSWITCH)
+	if (mapdata->flag[MF_NOSKILL] && skill_id != ALL_EQSWITCH && !sd->skillitem) //Item skills bypass noskill
 		return true;
 
 	// Epoque:
@@ -796,6 +796,13 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 		clif_skill_fail(sd,skill_id,USESKILL_FAIL_SKILLINTERVAL,0);
 		return true;
 	}
+
+	/**
+	 * It has been confirmed on a official server (thanks to Yommy) that item-cast skills bypass all mapflag restrictions
+	 * Also, without this check, an exploit where an item casting + healing (or any other kind buff) isn't deleted after used on a restricted map
+	 */
+	if( sd->skillitem == skill_id && !sd->skillitem_keep_requirement && !sd->state.abra_flag)
+		return false;
 
 	skill_nocast = skill_get_nocast(skill_id);
 	// Check skill restrictions [Celest]
@@ -897,15 +904,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 			break;
 
 	}
-
-	/**
-	 * It has been confirmed on a official server (thanks to Yommy) that item-cast skills bypass all the restrictions above
-	 * Also, without this check, an exploit where an item casting + healing (or any other kind buff) isn't deleted after used on a restricted map
-	 */
-	if( sd->skillitem == skill_id && !sd->skillitem_keep_requirement )
 		return false;
-
-	return false;
 }
 
 /**
