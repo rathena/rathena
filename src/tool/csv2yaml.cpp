@@ -116,7 +116,7 @@ bool fileExists( const std::string& path );
 bool askConfirmation( const char* fmt, ... );
 
 // Skill database data to memory
-static void skill_txt_data(std::string path) {
+static void skill_txt_data(const std::string& modePath, const std::string& fixedPath) {
 	skill_require.clear();
 	skill_cast.clear();
 	skill_castnodex.clear();
@@ -124,18 +124,18 @@ static void skill_txt_data(std::string path) {
 	skill_copyable.clear();
 	skill_nearnpc.clear();
 
-	if (fileExists(path + "skill_require_db.txt"))
-		sv_readdb(path.c_str(), "skill_require_db.txt", ',', 34, 34, -1, skill_parse_row_requiredb, false);
-	if (fileExists(path + "skill_cast_db.txt"))
-		sv_readdb(path.c_str(), "skill_cast_db.txt", ',', 7, 8, -1, skill_parse_row_castdb, false);
-	if (fileExists(path + "skill_castnodex_db.txt"))
-		sv_readdb(path.c_str(), "skill_castnodex_db.txt", ',', 2, 3, -1, skill_parse_row_castnodexdb, false);
-	if (fileExists(path + "skill_unit_db.txt"))
-		sv_readdb(path.c_str(), "skill_unit_db.txt", ',', 8, 8, -1, skill_parse_row_unitdb, false);
-	if (fileExists(path + "skill_copyable_db.txt"))
-		sv_readdb(path.c_str(), "skill_copyable_db.txt", ',', 2, 4, -1, skill_parse_row_copyabledb, false);
-	if (fileExists(path + "skill_nonearnpc_db.txt"))
-		sv_readdb(path.c_str(), "skill_nonearnpc_db.txt", ',', 2, 3, -1, skill_parse_row_nonearnpcrangedb, false);
+	if (fileExists(modePath + "skill_require_db.txt"))
+		sv_readdb(modePath.c_str(), "skill_require_db.txt", ',', 34, 34, -1, skill_parse_row_requiredb, false);
+	if (fileExists(modePath + "skill_cast_db.txt"))
+		sv_readdb(modePath.c_str(), "skill_cast_db.txt", ',', 7, 8, -1, skill_parse_row_castdb, false);
+	if (fileExists(modePath + "skill_castnodex_db.txt"))
+		sv_readdb(modePath.c_str(), "skill_castnodex_db.txt", ',', 2, 3, -1, skill_parse_row_castnodexdb, false);
+	if (fileExists(modePath + "skill_unit_db.txt"))
+		sv_readdb(modePath.c_str(), "skill_unit_db.txt", ',', 8, 8, -1, skill_parse_row_unitdb, false);
+	if (fileExists(fixedPath + "/skill_copyable_db.txt"))
+		sv_readdb(fixedPath.c_str(), "skill_copyable_db.txt", ',', 2, 4, -1, skill_parse_row_copyabledb, false);
+	if (fileExists(fixedPath + "/skill_nonearnpc_db.txt"))
+		sv_readdb(fixedPath.c_str(), "skill_nonearnpc_db.txt", ',', 2, 3, -1, skill_parse_row_nonearnpcrangedb, false);
 }
 
 YAML::Emitter body;
@@ -235,10 +235,6 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 					continue;
 				}
 			}
-
-			// Parse the skill databases into memory for each database path
-			if (name_ext.compare("skill_db.txt") == 0)
-				skill_txt_data(path);
 
 			std::ofstream out;
 
@@ -342,7 +338,15 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (!process("SKILL_DB", 1, root_paths, "skill_db", []( const std::string& path, const std::string& name_ext) -> bool {
+	skill_txt_data( path_db_mode, path_db );
+	if (!process("SKILL_DB", 1, { path_db_mode }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 18, 18, -1, &skill_parse_row_skilldb, false);
+	})){
+		return 0;
+	}
+
+	skill_txt_data( path_db_import, path_db_import );
+	if (!process("SKILL_DB", 1, { path_db_import }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 18, 18, -1, &skill_parse_row_skilldb, false);
 	})){
 		return 0;
@@ -2297,7 +2301,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 			body << YAML::EndSeq;
 		}
 
-		if (it_unit->second.unit_interval > 0)
+		if (it_unit->second.unit_interval != 0)
 			body << YAML::Key << "Interval" << YAML::Value << it_unit->second.unit_interval;
 
 		if (it_unit->second.target_str.size() > 0) {

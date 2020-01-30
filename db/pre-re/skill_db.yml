@@ -512,6 +512,7 @@ Body:
           Amount: 1
     Unit:
       Id: Safetywall
+      Interval: -1
       Flag:
         NoEnemy: true
         NoReiteration: true
@@ -1303,6 +1304,7 @@ Body:
     Unit:
       Id: Pneuma
       Layout: 1
+      Interval: -1
       Flag:
         NoEnemy: true
         NoReiteration: true
@@ -1378,6 +1380,7 @@ Body:
     Unit:
       Id: Warp_Active
       AlternateId: Warp_Waiting
+      Interval: -1
       Flag:
         NoReiteration: true
         NoFootSet: true
@@ -3401,6 +3404,7 @@ Body:
           Size: 0
         - Level: 13
           Size: 0
+      Interval: -1
       Flag:
         PathCheck: true
   - Id: 87
@@ -3727,6 +3731,7 @@ Body:
     Unit:
       Id: Quagmire
       Layout: 2
+      Interval: -1
       Target: Enemy
       Flag:
         PathCheck: true
@@ -6191,6 +6196,7 @@ Body:
           Amount: 1
     Unit:
       Id: Graffiti
+      Interval: -1
       Flag:
         NoReiteration: true
   - Id: 221
@@ -7636,6 +7642,7 @@ Body:
     Unit:
       Id: Volcano
       Layout: 3
+      Interval: -1
       Flag:
         PathCheck: true
   - Id: 286
@@ -7683,6 +7690,7 @@ Body:
     Unit:
       Id: Deluge
       Layout: 3
+      Interval: -1
       Flag:
         PathCheck: true
   - Id: 287
@@ -7730,6 +7738,7 @@ Body:
     Unit:
       Id: Violentgale
       Layout: 3
+      Interval: -1
       Flag:
         PathCheck: true
   - Id: 288
@@ -7802,6 +7811,7 @@ Body:
           Size: 0
         - Level: 13
           Size: 0
+      Interval: -1
       Flag:
         PathCheck: true
   - Id: 289
@@ -8122,6 +8132,7 @@ Body:
     Unit:
       Id: Richmankim
       Layout: 4
+      Interval: -1
       Target: Enemy
       Flag:
         NoPc: true
@@ -8147,6 +8158,7 @@ Body:
     Unit:
       Id: Eternalchaos
       Layout: 4
+      Interval: -1
       Target: Enemy
   - Id: 309
     Name: BD_DRUMBATTLEFIELD
@@ -8180,6 +8192,7 @@ Body:
     Unit:
       Id: Drumbattlefield
       Layout: 4
+      Interval: -1
       Target: Party
   - Id: 310
     Name: BD_RINGNIBELUNGEN
@@ -8213,6 +8226,7 @@ Body:
     Unit:
       Id: Ringnibelungen
       Layout: 4
+      Interval: -1
       Target: Party
   - Id: 311
     Name: BD_ROKISWEIL
@@ -8236,6 +8250,7 @@ Body:
     Unit:
       Id: Rokisweil
       Layout: 4
+      Interval: -1
   - Id: 312
     Name: BD_INTOABYSS
     Description: Power Chord
@@ -8258,6 +8273,7 @@ Body:
     Unit:
       Id: Intoabyss
       Layout: 4
+      Interval: -1
       Target: Party
       Flag:
         NoMob: true
@@ -8283,6 +8299,7 @@ Body:
     Unit:
       Id: Siegfried
       Layout: 4
+      Interval: -1
       Target: Party
   - Id: 315
     Name: BA_MUSICALLESSON
@@ -8428,6 +8445,7 @@ Body:
     Unit:
       Id: Whistle
       Layout: 3
+      Interval: -1
       Flag:
         NoMob: true
   - Id: 320
@@ -8473,6 +8491,7 @@ Body:
     Unit:
       Id: Assassincross
       Layout: 3
+      Interval: -1
       Flag:
         NoMob: true
   - Id: 321
@@ -8518,6 +8537,7 @@ Body:
     Unit:
       Id: Poembragi
       Layout: 3
+      Interval: -1
       Flag:
         NoMob: true
   - Id: 322
@@ -8709,6 +8729,7 @@ Body:
     Unit:
       Id: Humming
       Layout: 3
+      Interval: -1
       Flag:
         NoMob: true
   - Id: 328
@@ -8754,6 +8775,7 @@ Body:
     Unit:
       Id: Dontforgetme
       Layout: 3
+      Interval: -1
       Target: Enemy
   - Id: 329
     Name: DC_FORTUNEKISS
@@ -8798,6 +8820,7 @@ Body:
     Unit:
       Id: Fortunekiss
       Layout: 3
+      Interval: -1
       Flag:
         NoMob: true
   - Id: 330
@@ -8843,6 +8866,7 @@ Body:
     Unit:
       Id: Serviceforyou
       Layout: 3
+      Interval: -1
       Flag:
         NoMob: true
   - Id: 331
@@ -8933,6 +8957,7 @@ Body:
     Unit:
       Id: Callfamily
       Range: -1
+      Interval: -1
   - Id: 337
     Name: ITM_TOMAHAWK
     Description: Throw Tomahawk
@@ -10546,6 +10571,7 @@ Body:
     Unit:
       Id: Moonlit
       Layout: 4
+      Interval: -1
   - Id: 396
     Name: CG_MARIONETTE
     Description: Marionette Control
@@ -10819,6 +10845,7 @@ Body:
     Unit:
       Id: Fogwall
       Layout: -1
+      Interval: -1
   - Id: 405
     Name: PF_SPIDERWEB
     Description: Fiber Lock
@@ -10841,6 +10868,7 @@ Body:
           Amount: 1
     Unit:
       Id: Spiderweb
+      Interval: -1
       Target: Enemy
   - Id: 406
     Name: ASC_METEORASSAULT
@@ -10945,6 +10973,7 @@ Body:
     Unit:
       Id: Callfamily
       Range: -1
+      Interval: -1
   - Id: 410
     Name: WE_CALLBABY
     Description: Call Baby
@@ -10969,6 +10998,7 @@ Body:
     Unit:
       Id: Callfamily
       Range: -1
+      Interval: -1
   - Id: 411
     Name: TK_RUN
     Description: Running
@@ -13058,6 +13088,7 @@ Body:
     Unit:
       Id: Hermode
       Layout: 3
+      Interval: -1
   - Id: 489
     Name: CG_TAROTCARD
     Description: Tarot Card of Fate
@@ -14846,6 +14877,7 @@ Body:
           Size: 0
         - Level: 13
           Size: 0
+      Interval: -1
       Flag:
         PathCheck: true
   - Id: 539
@@ -20655,6 +20687,7 @@ Body:
     Unit:
       Id: Neutralbarrier
       Layout: 2
+      Interval: -1
   - Id: 2274
     Name: NC_STEALTHFIELD
     Description: Stealth Field
@@ -20697,6 +20730,7 @@ Body:
     Unit:
       Id: Stealthfield
       Layout: 2
+      Interval: -1
   - Id: 2275
     Name: NC_REPAIR
     Description: Repair
@@ -21796,6 +21830,7 @@ Body:
     Unit:
       Id: Maelstrom
       Layout: 2
+      Interval: -1
       Flag:
         NoReiteration: true
   - Id: 2303
@@ -21835,6 +21870,7 @@ Body:
     Unit:
       Id: Bloodylust
       Layout: 3
+      Interval: -1
       Flag:
         NoOverlap: true
         PathCheck: true
@@ -25427,6 +25463,7 @@ Body:
     Unit:
       Id: Warmer
       Layout: 3
+      Interval: -1
       Flag:
         PathCheck: true
   - Id: 2453
@@ -25927,6 +25964,7 @@ Body:
     Unit:
       Id: Fire_Insignia
       Layout: 1
+      Interval: -1
       Flag:
         PathCheck: true
   - Id: 2466
@@ -25965,6 +26003,7 @@ Body:
     Unit:
       Id: Water_Insignia
       Layout: 1
+      Interval: -1
       Flag:
         PathCheck: true
   - Id: 2467
@@ -26003,6 +26042,7 @@ Body:
     Unit:
       Id: Wind_Insignia
       Layout: 1
+      Interval: -1
       Flag:
         PathCheck: true
   - Id: 2468
@@ -26041,6 +26081,7 @@ Body:
     Unit:
       Id: Earth_Insignia
       Layout: 1
+      Interval: -1
       Flag:
         PathCheck: true
   - Id: 2474
@@ -26599,6 +26640,7 @@ Body:
     Unit:
       Id: Fire_Expansion_Smoke_Powder
       Layout: 2
+      Interval: -1
   - Id: 2488
     Name: GN_FIRE_EXPANSION_TEAR_GAS
     Description: Fire Expansion Tear Gas
@@ -26613,6 +26655,7 @@ Body:
     Unit:
       Id: Fire_Expansion_Tear_Gas
       Layout: 2
+      Interval: -1
   - Id: 2489
     Name: GN_FIRE_EXPANSION_ACID
     Description: Fire Expansion Acid
@@ -29335,6 +29378,7 @@ Body:
     Unit:
       Id: Kings_Grace
       Layout: 3
+      Interval: -1
       Flag:
         NoReiteration: true
   - Id: 5014
@@ -30616,6 +30660,7 @@ Body:
           Amount: 120
     Unit:
       Id: Safetywall
+      Interval: -1
       Flag:
         NoEnemy: true
         NoReiteration: true
@@ -31064,6 +31109,7 @@ Body:
     Unit:
       Id: Volcanic_Ash
       Layout: 1
+      Interval: -1
       Flag:
         NoOverlap: true
         PathCheck: true
@@ -32433,6 +32479,7 @@ Body:
     Unit:
       Id: Water_Barrier
       Layout: 1
+      Interval: -1
       Target: Friend
       Flag:
         NoOverlap: true
@@ -32474,6 +32521,7 @@ Body:
     Unit:
       Id: Zephyr
       Layout: 1
+      Interval: -1
       Target: Friend
       Flag:
         NoOverlap: true
@@ -32515,6 +32563,7 @@ Body:
     Unit:
       Id: Power_Of_Gaia
       Layout: 1
+      Interval: -1
       Target: Friend
       Flag:
         NoOverlap: true
