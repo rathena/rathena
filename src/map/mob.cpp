@@ -2187,7 +2187,7 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 	test_autoloot = sd 
 		&& (drop_rate <= sd->state.autoloot || pc_isautolooting(sd, ditem->item_data.nameid))
 		&& (battle_config.idle_no_autoloot == 0 || DIFF_TICK(last_tick, sd->idletime) < battle_config.idle_no_autoloot)
-		&& (battle_config.homunculus_autoloot?1:!flag);
+		&& (battle_config.homunculus_autoloot?(battle_config.hom_idle_no_share == 0 || !pc_isidle_hom(sd)):!flag);
 #ifdef AUTOLOOT_DISTANCE
 		test_autoloot = test_autoloot && sd->bl.m == md->bl.m
 		&& check_distance_blxy(&sd->bl, dlist->x, dlist->y, AUTOLOOT_DISTANCE);
@@ -2610,6 +2610,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				exp = apply_rate(exp, map_getmapflag(m, MF_JEXP));
 				job_exp = (unsigned int)cap_value(exp, 1, UINT_MAX);
 			}
+
+			if ((base_exp > 0 || job_exp > 0) && md->dmglog[i].flag == MDLF_HOMUN && homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(tmpsd[i]))
+				base_exp = job_exp = 0;
 
 			if ( ( temp = tmpsd[i]->status.party_id)>0 ) {
 				int j;

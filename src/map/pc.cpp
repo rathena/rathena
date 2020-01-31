@@ -1727,21 +1727,21 @@ void pc_reg_received(struct map_session_data *sd)
 	if (sd->state.connect_new == 0 && sd->fd) { //Character already loaded map! Gotta trigger LoadEndAck manually.
 		sd->state.connect_new = 1;
 		clif_parse_LoadEndAck(sd->fd, sd);
-	}
 
-	if( pc_isinvisible(sd) ) {
-		sd->vd.class_ = JT_INVISIBLE;
-		clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
-		// decrement the number of pvp players on the map
-		map_getmapdata(sd->bl.m)->users_pvp--;
+		if( pc_isinvisible( sd ) ){
+			sd->vd.class_ = JT_INVISIBLE;
+			clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
+			// decrement the number of pvp players on the map
+			map_getmapdata( sd->bl.m )->users_pvp--;
 
-		if( map_getmapflag(sd->bl.m, MF_PVP) && !map_getmapflag(sd->bl.m, MF_PVP_NOCALCRANK) && sd->pvp_timer != INVALID_TIMER ){
-			// unregister the player for ranking
-			delete_timer( sd->pvp_timer, pc_calc_pvprank_timer );
-			sd->pvp_timer = INVALID_TIMER;
+			if( map_getmapflag( sd->bl.m, MF_PVP ) && !map_getmapflag( sd->bl.m, MF_PVP_NOCALCRANK ) && sd->pvp_timer != INVALID_TIMER ){
+				// unregister the player for ranking
+				delete_timer( sd->pvp_timer, pc_calc_pvprank_timer );
+				sd->pvp_timer = INVALID_TIMER;
+			}
+
+			clif_changeoption( &sd->bl );
 		}
-
-		clif_changeoption( &sd->bl );
 	}
 
 	channel_autojoin(sd);
@@ -12737,11 +12737,41 @@ short pc_maxparameter(struct map_session_data *sd, enum e_params param) {
 			return max_param;
 	}
 
-	return (class_&MAPID_BASEMASK) == MAPID_SUMMONER ? battle_config.max_summoner_parameter :
-		((class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO || (class_&MAPID_UPPERMASK) == MAPID_REBELLION) ? battle_config.max_extended_parameter :
-		((class_&JOBL_THIRD) ? ((class_&JOBL_UPPER) ? battle_config.max_third_trans_parameter : ((class_&JOBL_BABY) ? battle_config.max_baby_third_parameter : battle_config.max_third_parameter)) : 
-		((class_&JOBL_BABY) ? battle_config.max_baby_parameter :
-		((class_&JOBL_UPPER) ? battle_config.max_trans_parameter : battle_config.max_parameter)));
+	// Always check babies first
+	if( class_ & JOBL_BABY ){
+		if( class_ & JOBL_THIRD ){
+			return battle_config.max_baby_third_parameter;
+		}else{
+			return battle_config.max_baby_parameter;
+		}
+	}
+
+	// Summoner
+	if( ( class_ & MAPID_BASEMASK ) == MAPID_SUMMONER ){
+		return battle_config.max_summoner_parameter;
+	}
+
+	// Extended classes
+	if( ( class_ & MAPID_UPPERMASK ) == MAPID_KAGEROUOBORO || ( class_ & MAPID_UPPERMASK ) == MAPID_REBELLION ){
+		return battle_config.max_extended_parameter;
+	}
+
+	// 3rd class
+	if( class_ & JOBL_THIRD ){
+		// Transcendent
+		if( class_ & JOBL_UPPER ){
+			return battle_config.max_third_trans_parameter;
+		}else{
+			return battle_config.max_third_parameter;
+		}
+	}
+
+	// Transcendent
+	if( class_ & JOBL_UPPER ){
+		return battle_config.max_trans_parameter;
+	}
+
+	return battle_config.max_parameter;
 }
 
 /**
