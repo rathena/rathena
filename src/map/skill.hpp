@@ -61,7 +61,7 @@ enum e_skill_inf : uint16 {
 	INF_SELF_SKILL    = 0x04, // Skills casted on self where target is automatically chosen
 	// 0x08 not assigned
 	INF_SUPPORT_SKILL = 0x10,
-	INF_TARGET_TRAP   = 0x20,
+	INF_TRAP_SKILL    = 0x20,
 };
 
 /// Constants to identify the skill's inf2 value.

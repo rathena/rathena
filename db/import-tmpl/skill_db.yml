@@ -27,7 +27,7 @@
 #   Description               Skill description.
 #   MaxLevel                  Max skill level.
 #   Type                      Skill type. (Default: None)
-#   TargetType                Skill target type. (Default: Passive_Skill)
+#   TargetType                Skill target type. (Default: Passive)
 #   DamageFlags:              Skill damage properties.
 #   Flags:                    Skill information flags.
 #   Range:                    Skill range. (Default: 0)

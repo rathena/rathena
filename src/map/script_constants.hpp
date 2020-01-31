@@ -7428,7 +7428,7 @@
 	export_constant(INF_GROUND_SKILL);
 	export_constant(INF_SELF_SKILL);
 	export_constant(INF_SUPPORT_SKILL);
-	export_constant(INF_TARGET_TRAP);
+	export_constant(INF_TRAP_SKILL);
 
 	/* skill inf2 */
 	export_constant(INF2_ISQUEST);

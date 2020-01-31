@@ -37,12 +37,12 @@ Misc	- Misc type damage.
 
 TargetType: Skill target type.
 
-Passive_Skill	- Passive skill. (Default)
-Attack_Skill	- Damage enemies.
-Ground_Skill	- Ground placement skill.
-Self_Skill		- Self cast skill.
-Support_Skill	- Friendly cast skill.
-Target_Trap		- Trap cast skill.
+Passive	- Passive skill. (Default)
+Attack	- Damage enemies.
+Ground	- Ground placement skill.
+Self	- Self cast skill.
+Support	- Friendly cast skill.
+Trap	- Trap cast skill.
 
 ---------------------------------------
 
@@ -80,7 +80,7 @@ IsChorus					- Chorus skill.
 IgnoreBgReduction			- Ignore Battleground reduction.
 IgnoreGvgReduction			- Ignore GvG reduction.
 DisableNearNpc				- Disable self/ground skills near NPC. In tandem with NoNearNpc node.
-TargetTrap					- Damage traps. If TargetType is Target_Trap.
+TargetTrap					- Damage traps. If TargetType is Trap.
 IgnoreLandProtector			- Ignore SA_LANDPROTECTOR.
 AllowWhenHidden				- Usable while hiding.
 AllowWhenPerforming			- Usable while in dancing state.

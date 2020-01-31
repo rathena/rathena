@@ -2831,7 +2831,7 @@ short skill_blown(struct block_list* src, struct block_list* target, char count,
 		case UB_MD_KNOCKBACK_IMMUNE: return ((flag&BLOWN_MD_KNOCKBACK_IMMUNE) ? count : 0); // Immune can't be knocked back
 		case UB_TARGET_BASILICA: return ((flag&BLOWN_TARGET_BASILICA) ? count : 0); // Basilica caster can't be knocked-back by normal monsters.
 		case UB_TARGET_NO_KNOCKBACK: return ((flag&BLOWN_TARGET_NO_KNOCKBACK) ? count : 0); // Target has special_state.no_knockback (equip)
-		case UB_TARGET_TRAP: return count; // Trap cannot be knocked back
+		case UB_Trap: return count; // Trap cannot be knocked back
 	}
 
 	if (dir == -1) // <optimized>: do the computation here instead of outside
@@ -21138,11 +21138,10 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "TargetType", inf))
 			return 0;
 
-		inf = "INF_" + inf;
-
+		std::string inf_constant = "INF_" + inf + "_SKILL";
 		int64 constant;
 
-		if (!script_get_constant(inf.c_str(), &constant)) {
+		if (!script_get_constant(inf_constant.c_str(), &constant)) {
 			this->invalidWarning(node["TargetType"], "TargetType %s is invalid.\n", inf.c_str());
 			return 0;
 		}
@@ -21213,7 +21212,6 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		std::string hit_constant = "DMG_" + hit;
-
 		int64 constant;
 
 		if (!script_get_constant(hit_constant.c_str(), &constant)) {
@@ -21608,9 +21606,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 					skill->require.weapon = 0;
 			} else {
 				for (const auto &it : weaponNode) {
-					std::string weapon = it.first.as<std::string>();
-
-					std::string weapon_constant = "W_" + weapon;
+					std::string weapon = it.first.as<std::string>(), weapon_constant = "W_" + weapon;
 					int64 constant;
 
 					if (!script_get_constant(weapon_constant.c_str(), &constant)) {
@@ -21691,7 +21687,6 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			std::string state_constant = "ST_" + state;
-
 			int64 constant;
 
 			if (!script_get_constant(state_constant.c_str(), &constant)) {
@@ -21870,7 +21865,6 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			std::string target_constant = "BCT_" + target;
-
 			int64 constant;
 
 			if (!script_get_constant(target_constant.c_str(), &constant)) {
