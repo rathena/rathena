@@ -9238,7 +9238,7 @@ Body:
   - Id: 354
     Name: NPC_RUN
     Description: Run
-    MaxLevel: 20
+    MaxLevel: 10
     Type: Misc
     TargetType: Self_Skill
     DamageFlags:
