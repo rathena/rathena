@@ -6283,7 +6283,7 @@ static int skill_castend_song(struct block_list* src, uint16 skill_id, uint16 sk
 		return 0;
 	}
 
-	if (!(skill_get_inf2(skill_id) & (INF2_SONG_DANCE | INF2_ENSEMBLE_SKILL))) {
+	if (!(skill_get_inf2_(skill_id, { INF2_ISSONG, INF2_ISENSEMBLE }))) {
 		ShowWarning("skill_castend_song: Unknown song skill ID: %u\n", skill_id);
 		return 0;
 	}
@@ -6311,7 +6311,7 @@ static int skill_castend_song(struct block_list* src, uint16 skill_id, uint16 sk
 	sd->skill_id_dance = skill_id;
 	sd->skill_lv_dance = skill_lv;
 
-	if (skill_get_inf2(skill_id) & INF2_ENSEMBLE_SKILL) {
+	if (skill_get_inf2(skill_id, INF2_ISENSEMBLE)) {
 		sc_start(src, src, status_skill2sc(CG_SPECIALSINGER), 100, 1, skill_get_time(CG_SPECIALSINGER, skill_lv));
 		skill_check_pc_partner(sd, skill_id, &skill_lv, 3, 1);
 		// todo, apply ensemble fatigue if it hits you + ensemble partner.. ??
@@ -15081,7 +15081,7 @@ int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 
 			default:
 				if( is_chorus )
 					break;//Chorus skills are not to be parsed as ensembles
-				if (skill_get_inf2(skill_id)&INF2_ENSEMBLE_SKILL) {
+				if (skill_get_inf2(skill_id, INF2_ISENSEMBLE)) {
 					if (c > 0 && sd->sc.data[SC_DANCING] && (tsd = map_id2sd(p_sd[0])) != NULL) {
 						sd->sc.data[SC_DANCING]->val4 = tsd->bl.id;
 						sc_start4(&sd->bl,&tsd->bl,SC_DANCING,100,skill_id,sd->sc.data[SC_DANCING]->val2,*skill_lv,sd->bl.id,skill_get_time(skill_id,*skill_lv)+1000);
@@ -16535,7 +16535,7 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 		if( sc->data[SC_TELEKINESIS_INTENSE] && skill_get_ele(skill_id, skill_lv) == ELE_GHOST)
 			req.sp -= req.sp * sc->data[SC_TELEKINESIS_INTENSE]->val2 / 100;
 #ifdef RENEWAL
-		if (sc->data[SC_ADAPTATION] && (skill_get_inf2(skill_id) & INF2_SONG_DANCE))
+		if (sc->data[SC_ADAPTATION] && (skill_get_inf2(skill_id, INF2_ISSONG)))
 			req.sp -= req.sp * 20 / 100;
 		if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_SPCONSUM)
 			req.sp -= req.sp * 30 / 100;
@@ -17307,9 +17307,7 @@ int skill_autospell(struct map_session_data *sd, uint16 skill_id)
 	if (SKILL_CHK_GUILD(skill_id))
 		return 0;
 
-	lv = pc_checkskill(sd, skill_id);
-
-	uint16 skill_lv = sd->menuskill_val;
+	uint16 lv = pc_checkskill(sd, skill_id), skill_lv = sd->menuskill_val;
 
 	if(!skill_lv || !lv) return 0; // Player must learn the skill before doing auto-spell [Lance]
 
