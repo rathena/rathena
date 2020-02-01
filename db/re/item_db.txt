@@ -2762,7 +2762,7 @@
 4562,Champion_Card,Champion Chen Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bAddClass,Class_All,(readparam(bAgi)>=110)?14:7; bonus5 bAutoSpellWhenHit,"MO_INVESTIGATE",5,70,BF_WEAPON,1; },{},{}
 4563,Creator_Card,Creator Flamel Card,6,20,,10,,,,,,,,16,,,,,{ bonus bCritical,(readparam(bStr)>=110)?40:20; bonus5 bAutoSpellWhenHit,"AM_ACIDTERROR",5,70,BF_WEAPON,1; },{},{}
 4564,Stalker_Card,Stalker Gertie Card,6,20,,10,,,,,,,,16,,,,,{ bonus bHit,(readparam(bLuk)>=110)?40:20; bonus5 bAutoSpellWhenHit,"ST_FULLSTRIP",1,70,BF_WEAPON,1; },{},{}
-4565,Paladin_Card,Paladin Randel Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMaxHPrate,(readparam(bLuk)>=110)?20:10; bonus5 bAutoSpellWhenHit,"CR_GRANDCROSS",10,70,BF_WEAPON,0; },{},{}
+4565,Paladin_Card,Paladin Randel Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMaxHPrate,(readparam(bInt)>=110)?20:10; bonus5 bAutoSpellWhenHit,"CR_GRANDCROSS",10,70,BF_WEAPON,0; },{},{}
 4566,Gypsy_Card,Gypsy Trentini Card,6,20,,10,,,,,,,,16,,,,,{ skill "DC_FORTUNEKISS",10; bonus bFlee,(readparam(bVit)>=110)?40:20; },{},{}
 4567,Alphoccio_Card,Alphoccio Card,6,20,,10,,,,,,,,4,,,,,{ bonus bFlee,10; if(BaseJob==Job_Bard) { bonus bMaxHPrate,10; bonus bMaxSPrate,5;} },{},{}
 4568,Ceila_Card,Celia Card,6,20,,10,,,,,,,,4,,,,,{ bonus bFlee,10; skill "SA_ABRACADABRA",1; },{},{}
