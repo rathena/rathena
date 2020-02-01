@@ -4936,7 +4936,7 @@
 6923,Bright_Fire_Lights,Bright Fire Lights,3,10,,10,,,,,,,,,,,,,{},{},{}
 6924,Red_Eye,Red Eye,3,10,,10,,,,,,,,,,,,,{},{},{}
 6925,Letter_Of_Prisoner,Letter Of Prisoner,3,10,,0,,,,,,,,,,,,,{},{},{}
-6926,Midgards_Histories,Rune-Midgards History Book,3,10,,0,,,,,,,,,,,,,{},{},{}
+6926,Midgards_Histories,Rune-Midgarts History Book,3,10,,0,,,,,,,,,,,,,{},{},{}
 6927,Stone_That_Contained_Sea,Stone That Contained Sea,3,10,,0,,,,,,,,,,,,,{},{},{}
 6928,Poring_Scourer,Poring Scourer,3,10,,0,,,,,,,,,,,,,{},{},{}
 6929,Letter_With_Stamped_Seal,Letter With Stamped Seal,3,10,,0,,,,,,,,,,,,,{},{},{}
@@ -13254,7 +13254,7 @@
 31599,C_Medium_Wave,C Medium Wave,4,0,,,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1803,{},{},{}
 31600,C_Kishu_Dog,C Kishu Dog,4,0,,,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,1804,{},{},{}
 31601,C_Under_Rim_Glasses_Blue,C Under Rim Glasses Blue,4,0,,,,0,,0,0xFFFFFFFF,63,2,2048,,1,,1805,{},{},{}
-31602,C_Midgarts_Glory,C Rune-Midgards Glory,4,0,,,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1807,{ hateffect(HAT_EF_MIDGARTS_GLORY,true); },{},{ hateffect(HAT_EF_MIDGARTS_GLORY,false); }
+31602,C_Midgarts_Glory,C Rune-Midgarts Glory,4,0,,,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1807,{ hateffect(HAT_EF_MIDGARTS_GLORY,true); },{},{ hateffect(HAT_EF_MIDGARTS_GLORY,false); }
 31606,C_Autumn_Headband,C Autumn Headband,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1119,{},{},{}
 31607,C_Cat_Ear_Witch_Hat,C Cat Ear Witch Hat,4,0,,,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1808,{},{},{}
 31608,C_Magicstone_of_Grace,C Magic Stone of Grace,4,0,,,,0,,0,0xFFFFFFFF,63,2,7168,,1,0,1420,{},{},{}
