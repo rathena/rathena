@@ -1747,7 +1747,7 @@ function	script	LinkFlag	{
 //============================================================
 function	script	ReturnFlag	{
 	.@map$ = getarg(0);
-	set .@str$, (compare(strnpcinfo(4),"aru"))?"Arunafeltz":"Schwaltzvalt";
+	set .@str$, (compare(strnpcinfo(4),"aru"))?"Arunafeltz":"Schwarzwald";
 	.@GID =  getcastledata(.@map$,CD_GUILD_ID);
 	if (!.@GID) {
 		mes "[ "+.@str$+" Royal Edict ]";

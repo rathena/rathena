@@ -19,7 +19,7 @@ TIMER_FUNC(chlogif_broadcast_user_count);
 void chlogif_send_usercount(int users);
 void chlogif_upd_global_accreg(uint32 account_id, uint32 char_id);
 void chlogif_prepsend_global_accreg(void);
-void chlogif_send_global_accreg(const char *key, unsigned int index, intptr_t val, bool is_string);
+void chlogif_send_global_accreg(const char *key, unsigned int index, int64 int_value, const char* string_value, bool is_string);
 void chlogif_request_accreg2(uint32 account_id, uint32 char_id);
 void chlogif_send_reqaccdata(int fd, struct char_session_data *sd);
 void chlogif_send_setacconline(int aid);
