@@ -2182,17 +2182,20 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		}
 
 		if (sc->data[SC_DANCING] && flag!=2) {
+			std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+
+			if (!skill)
+				return false;
+
 			if (src->type == BL_PC && ((skill_id >= WA_SWING_DANCE && skill_id <= WM_UNLIMITED_HUMMING_VOICE ) ||
 				skill_id == WM_FRIGG_SONG))
 			{ // Lvl 5 Lesson or higher allow you use 3rd job skills while dancing.
 				if( pc_checkskill((TBL_PC*)src,WM_LESSON) < 5 )
 					return false;
 			} else if(sc->data[SC_LONGING]) { // Allow everything except dancing/re-dancing. [Skotlex]
-				if (skill_id == BD_ENCORE ||
-					skill_get_inf2(skill_id)&(INF2_SONG_DANCE|INF2_ENSEMBLE_SKILL)
-					)
+				if (skill_id == BD_ENCORE || skill->inf2[INF2_ISSONG] || skill->inf2[INF2_ISENSEMBLE])
 					return false;
-			} else if(!(skill_get_inf3(skill_id)&INF3_USABLE_DANCE)) // Skills that can be used in dancing state
+			} else if(!skill->inf2[INF2_ALLOWWHENPERFORMING]) // Skills that can be used in dancing state
 				return false;
 			if ((sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE && skill_id == BD_ADAPTATION)
 				return false; // Can't amp out of Wand of Hermode :/ [Skotlex]
@@ -2224,7 +2227,10 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		}
 
 		if (sc->option) {
-			if ((sc->option&OPTION_HIDE) && src->type == BL_PC && (!skill_id || !(skill_get_inf3(skill_id)&INF3_USABLE_HIDING))) {
+			if (skill_id == 0) // Normal attack
+				return false;
+
+			if ((sc->option&OPTION_HIDE) && src->type == BL_PC && !skill_get_inf2(skill_id, INF2_ALLOWWHENHIDDEN)) {
 				// Non players can use all skills while hidden.
 				return false;
 			}
@@ -2252,7 +2258,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			return false;
 		if(skill_id == PR_LEXAETERNA && (tsc->data[SC_FREEZE] || (tsc->data[SC_STONE] && tsc->opt1 == OPT1_STONE)))
 			return false;
-		if (tsc->data[SC__MANHOLE] && !(skill_get_inf3(skill_id)&INF3_USABLE_MANHOLE))
+		if (tsc->data[SC__MANHOLE] && !skill_get_inf2(skill_id, INF2_TARGETMANHOLE))
 			return false;
 	}
 
@@ -2260,7 +2266,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 	hide_flag = flag?OPTION_HIDE:(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK);
 
  	// Skill that can hit hidden target
-	if( skill_get_inf3(skill_id)&INF3_HIT_HIDING )
+	if( skill_get_inf2(skill_id, INF2_TARGETHIDDEN) )
 		hide_flag &= ~OPTION_HIDE;
 
 	switch( target->type ) {
@@ -5347,12 +5353,16 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, enum e_status_ca
 	struct status_data b_status; // Previous battle status
 	struct status_data* status; // Pointer to current battle status
 
-	if (bl->type == BL_PC && ((TBL_PC*)bl)->delayed_damage != 0) {
-		if (opt&SCO_FORCE)
-			((TBL_PC*)bl)->state.hold_recalc = 0; /* Clear and move on */
-		else {
-			((TBL_PC*)bl)->state.hold_recalc = 1; /* Flag and stop */
-			return;
+	if (bl->type == BL_PC) {
+		struct map_session_data *sd = BL_CAST(BL_PC, bl);
+
+		if (sd->delayed_damage != 0) {
+			if (opt&SCO_FORCE)
+				sd->state.hold_recalc = false; // Clear and move on
+			else {
+				sd->state.hold_recalc = true; // Flag and stop
+				return;
+			}
 		}
 	}
 
@@ -11760,33 +11770,31 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	else
 		sce->timer = INVALID_TIMER; // Infinite duration
 
-	if (calc_flag)
-		status_calc_bl(bl,calc_flag);
+	if (calc_flag) {
+		if (sd) {
+			switch(type) {
+				// Statuses that adjust HP/SP and heal after starting
+				case SC_BERSERK:
+				case SC_MERC_HPUP:
+				case SC_MERC_SPUP:
+					status_calc_bl_(bl, static_cast<scb_flag>(calc_flag), SCO_FORCE);
+					break;
+				default:
+					status_calc_bl(bl, calc_flag);
+					break;
+			}
+		} else
+			status_calc_bl(bl, calc_flag);
+	}
 
 	if ( sc_isnew && StatusChangeStateTable[type] ) // Non-zero
 		status_calc_state(bl,sc,( enum scs_flag ) StatusChangeStateTable[type],true);
 
-
-	if(sd) {
-		if (sd->pd)
-			pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
-		switch (type) {
-			case SC_BERSERK:
-			case SC_MERC_HPUP:
-			case SC_MERC_SPUP:
-				status_calc_pc(sd, SCO_FORCE);
-				break;
-			default:
-				status_calc_pc(sd, SCO_NONE);
-				break;
-		}
-	}
+	if (sd && sd->pd)
+		pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
 
 	// 1st thing to execute when loading status
 	switch (type) {
-		case SC_FULL_THROTTLE:
-			status_percent_heal(bl,100,0);
-			break;
 		case SC_BERSERK:
 			if (!(sce->val2)) { // Don't heal if already set
 				status_heal(bl, status->max_hp, 0, 1); // Do not use percent_heal as this healing must override BERSERK's block.
@@ -11806,6 +11814,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (sd)
 				clif_bossmapinfo(sd, map_id2boss(sce->val1), BOSS_INFO_ALIVE_WITHMSG); // First Message
 			break;
+		case SC_FULL_THROTTLE:
 		case SC_MERC_HPUP:
 			status_percent_heal(bl, 100, 0); // Recover Full HP
 			break;
@@ -12612,11 +12621,14 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 				if (sce->val3 || status_isdead(bl) || !(caster = map_id2sd(sce->val2)))
 					break;
-				if (!itemdb_exists(skill_get_itemid(RL_H_MINE,0)))
+
+				std::shared_ptr<s_skill_db> skill = skill_db.find(RL_H_MINE);
+
+				if (!itemdb_exists(skill->require.itemid[0]))
 					break;
 				memset(&it, 0, sizeof(it));
-				it.nameid = skill_get_itemid(RL_H_MINE,0);
-				it.amount = max(skill_get_itemqty(RL_H_MINE,0),1);
+				it.nameid = skill->require.itemid[0];
+				it.amount = max(skill->require.amount[0],1);
 				it.identify = 1;
 				map_addflooritem(&it, it.amount, bl->m,bl->x, bl->y, caster->status.char_id, 0, 0, 4, 0);
 			}
@@ -13883,7 +13895,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 				if(bl->type == BL_SKILL)
 					su = (struct skill_unit *)bl;
 				if (skill_attack(BF_MAGIC,src,src,bl,WZ_SIGHTBLASTER,sce->val1,tick,0x1000000)
-					&& (!su || !su->group || !(skill_get_inf2(su->group->skill_id)&INF2_TRAP))) { // The hit is not counted if it's against a trap
+					&& (!su || !su->group || !skill_get_inf2(su->group->skill_id, INF2_ISTRAP))) { // The hit is not counted if it's against a trap
 					sce->val2 = 0; // This signals it to end.
 				} else if((bl->type&BL_SKILL) && sce->val4%2 == 0) {
 					//Remove trap immunity temporarily so it triggers if you still stand on it
@@ -14537,7 +14549,7 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
  */
 static bool status_readdb_status_disabled(char **str, int columns, int current)
 {
-	int type = SC_NONE;
+	int64 type = SC_NONE;
 
 	if (ISDIGIT(str[0][0]))
 		type = atoi(str[0]);
@@ -14595,6 +14607,7 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 	const YAML::Node &costs = node["Costs"];
 
 	for (const auto costit : costs) {
+		int64 idx_tmp = 0;
 		const YAML::Node &type = costit;
 		int idx = 0, price;
 		unsigned short material;
@@ -14608,8 +14621,10 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 		std::string refine_cost_const = type["Type"].as<std::string>();
 		if (ISDIGIT(refine_cost_const[0]))
 			idx = atoi(refine_cost_const.c_str());
-		else
-			script_get_constant(refine_cost_const.c_str(), &idx);
+		else {
+			script_get_constant(refine_cost_const.c_str(), &idx_tmp);
+			idx = static_cast<int>(idx_tmp);
+		}
 		price = type["Price"].as<int>();
 		material = type["Material"].as<uint16>();
 

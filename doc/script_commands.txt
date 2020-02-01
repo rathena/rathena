@@ -6814,7 +6814,7 @@ as soon as the progress bar activates.
 //
 ---------------------------------------
 
-*announce "<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
+*announce "<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>{,<char_id>}}}}}};
 
 This command will broadcast a message to all or most players, similar to
 @kami/@kamib GM commands.
@@ -6830,11 +6830,12 @@ Target flags:
 - bc_all: Broadcast message is sent server-wide (default).
 - bc_map: Message is sent to everyone in the same map as the source of the broadcast (see below).
 - bc_area: Message is sent to players in the vicinity of the source.
-- bc_self: Message is sent only to current player.
+- bc_self: Message is sent only to current player , if the source flag is bc_pc it also can
+			be used to send the Message to the character id if it's provided.
 You cannot use more than one target flag.
 
 Source flags:
-- bc_pc: Broadcast source is the attached player (default).
+- bc_pc: Broadcast source is the attached player or the character id if it's provided (default).
 - bc_npc: Broadcast source is the NPC, not the player attached to the script
   (useful when a player is not attached or the message should be sent to those
   nearby the NPC).
@@ -6870,6 +6871,9 @@ but it can be used instead in NPCs to "preview" an announce.
 
 	// This will be shown on everyones screen that is in sight of the NPC.
 	announce "This is my message just for you people here",bc_npc|bc_area;
+
+	// This will be a private message to the player with character id 150000
+	announce "This is my message just for char id 150000",bc_self,0xFFF618,FW_NORMAL,12,0,0,150000;
 
 ---------------------------------------
 

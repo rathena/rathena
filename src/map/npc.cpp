@@ -138,26 +138,28 @@ struct view_data* npc_get_viewdata(int class_) {
 
 int npc_isnear_sub(struct block_list* bl, va_list args) {
     struct npc_data *nd = (struct npc_data*)bl;
+
+    if (nd->sc.option & (OPTION_HIDE|OPTION_INVISIBLE))
+        return 0;
+
 	int skill_id = va_arg(args, int);
 
-	if (skill_id > 0) { //If skill_id > 0 that means is used for INF2_NO_NEARNPC [Cydh]
-		uint16 idx = skill_get_index(skill_id);
+	if (skill_id > 0) { //If skill_id > 0 that means is used for INF2_DISABLENEARNPC [Cydh]
+		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 
-		if (idx > 0 && skill_db[idx]->unit_nonearnpc_type) {
-			while (1) {
-				if (skill_db[idx]->unit_nonearnpc_type&1 && nd->subtype == NPCTYPE_WARP) break;
-				if (skill_db[idx]->unit_nonearnpc_type&2 && nd->subtype == NPCTYPE_SHOP) break;
-				if (skill_db[idx]->unit_nonearnpc_type&4 && nd->subtype == NPCTYPE_SCRIPT) break;
-				if (skill_db[idx]->unit_nonearnpc_type&8 && nd->subtype == NPCTYPE_TOMB) break;
-					return 0;
-			}
+		if (skill && skill->unit_nonearnpc_type) {
+			if (skill->unit_nonearnpc_type&SKILL_NONEAR_WARPPORTAL && nd->subtype == NPCTYPE_WARP)
+				return 1;
+			if (skill->unit_nonearnpc_type&SKILL_NONEAR_SHOP && nd->subtype == NPCTYPE_SHOP)
+				return 1;
+			if (skill->unit_nonearnpc_type&SKILL_NONEAR_NPC && nd->subtype == NPCTYPE_SCRIPT)
+				return 1;
+			if (skill->unit_nonearnpc_type&SKILL_NONEAR_TOMB && nd->subtype == NPCTYPE_TOMB)
+				return 1;
 		}
 	}
 
-    if( nd->sc.option & (OPTION_HIDE|OPTION_INVISIBLE) )
-        return 0;
-
-    return 1;
+    return 0;
 }
 
 bool npc_isnear(struct block_list * bl) {
@@ -1704,7 +1706,7 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 				clif_broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE,SELF);
 			}
 			
-			cost[0] = pc_readreg2(sd, nd->u.shop.pointshop_str);
+			cost[0] = static_cast<int>(pc_readreg2(sd, nd->u.shop.pointshop_str));
 			break;
 	}
 }
@@ -1813,13 +1815,13 @@ static int npc_buylist_sub(struct map_session_data* sd, uint16 n, struct s_npc_b
 	int i, key_nameid = 0, key_amount = 0;
 
 	// discard old contents
-	script_cleararray_pc(sd, "@bought_nameid", (void*)0);
-	script_cleararray_pc(sd, "@bought_quantity", (void*)0);
+	script_cleararray_pc( sd, "@bought_nameid" );
+	script_cleararray_pc( sd, "@bought_quantity" );
 
 	// save list of bought items
 	for (i = 0; i < n; i++) {
-		script_setarray_pc(sd, "@bought_nameid", i, (void*)(intptr_t)item_list[i].nameid, &key_nameid);
-		script_setarray_pc(sd, "@bought_quantity", i, (void*)(intptr_t)item_list[i].qty, &key_amount);
+		script_setarray_pc( sd, "@bought_nameid", i, item_list[i].nameid, &key_nameid );
+		script_setarray_pc( sd, "@bought_quantity", i, item_list[i].qty, &key_amount );
 	}
 
 	// invoke event
@@ -2000,28 +2002,28 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 	int key_option_id[MAX_ITEM_RDM_OPT], key_option_val[MAX_ITEM_RDM_OPT], key_option_param[MAX_ITEM_RDM_OPT];
 
 	// discard old contents
-	script_cleararray_pc(sd, "@sold_nameid", (void*)0);
-	script_cleararray_pc(sd, "@sold_quantity", (void*)0);
-	script_cleararray_pc(sd, "@sold_refine", (void*)0);
-	script_cleararray_pc(sd, "@sold_attribute", (void*)0);
-	script_cleararray_pc(sd, "@sold_identify", (void*)0);
+	script_cleararray_pc( sd, "@sold_nameid" );
+	script_cleararray_pc( sd, "@sold_quantity" );
+	script_cleararray_pc( sd, "@sold_refine" );
+	script_cleararray_pc( sd, "@sold_attribute" );
+	script_cleararray_pc( sd, "@sold_identify" );
 
 	for( j = 0; j < MAX_SLOTS; j++ )
 	{// clear each of the card slot entries
 		key_card[j] = 0;
 		snprintf(card_slot, sizeof(card_slot), "@sold_card%d", j + 1);
-		script_cleararray_pc(sd, card_slot, (void*)0);
+		script_cleararray_pc( sd, card_slot );
 	}
 
 	for (j = 0; j < MAX_ITEM_RDM_OPT; j++) { // Clear each of the item option entries
 		key_option_id[j] = key_option_val[j] = key_option_param[j] = 0;
 
 		snprintf(option_id, sizeof(option_id), "@sold_option_id%d", j + 1);
-		script_cleararray_pc(sd, option_id, (void *)0);
+		script_cleararray_pc( sd, option_id );
 		snprintf(option_val, sizeof(option_val), "@sold_option_val%d", j + 1);
-		script_cleararray_pc(sd, option_val, (void *)0);
+		script_cleararray_pc( sd, option_val );
 		snprintf(option_param, sizeof(option_param), "@sold_option_param%d", j + 1);
-		script_cleararray_pc(sd, option_param, (void *)0);
+		script_cleararray_pc( sd, option_param );
 	}
 
 	// save list of to be sold items
@@ -2029,28 +2031,28 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 	{
 		int idx = item_list[i * 2] - 2;
 
-		script_setarray_pc(sd, "@sold_nameid", i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].nameid, &key_nameid);
-		script_setarray_pc(sd, "@sold_quantity", i, (void*)(intptr_t)item_list[i*2+1], &key_amount);
+		script_setarray_pc( sd, "@sold_nameid", i, sd->inventory.u.items_inventory[idx].nameid, &key_nameid );
+		script_setarray_pc( sd, "@sold_quantity", i, item_list[i*2+1], &key_amount );
 
 		if( itemdb_isequip(sd->inventory.u.items_inventory[idx].nameid) )
 		{// process equipment based information into the arrays
-			script_setarray_pc(sd, "@sold_refine", i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].refine, &key_refine);
-			script_setarray_pc(sd, "@sold_attribute", i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].attribute, &key_attribute);
-			script_setarray_pc(sd, "@sold_identify", i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].identify, &key_identify);
+			script_setarray_pc( sd, "@sold_refine", i, sd->inventory.u.items_inventory[idx].refine, &key_refine );
+			script_setarray_pc( sd, "@sold_attribute", i, sd->inventory.u.items_inventory[idx].attribute, &key_attribute );
+			script_setarray_pc( sd, "@sold_identify", i, sd->inventory.u.items_inventory[idx].identify, &key_identify );
 
 			for( j = 0; j < MAX_SLOTS; j++ )
 			{// store each of the cards from the equipment in the array
 				snprintf(card_slot, sizeof(card_slot), "@sold_card%d", j + 1);
-				script_setarray_pc(sd, card_slot, i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].card[j], &key_card[j]);
+				script_setarray_pc( sd, card_slot, i, sd->inventory.u.items_inventory[idx].card[j], &key_card[j] );
 			}
 
 			for (j = 0; j < MAX_ITEM_RDM_OPT; j++) { // Store each of the item options in the array
 				snprintf(option_id, sizeof(option_id), "@sold_option_id%d", j + 1);
-				script_setarray_pc(sd, option_id, i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].option[j].id, &key_option_id[j]);
+				script_setarray_pc( sd, option_id, i, sd->inventory.u.items_inventory[idx].option[j].id, &key_option_id[j] );
 				snprintf(option_val, sizeof(option_val), "@sold_option_val%d", j + 1);
-				script_setarray_pc(sd, option_val, i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].option[j].value, &key_option_val[j]);
+				script_setarray_pc( sd, option_val, i, sd->inventory.u.items_inventory[idx].option[j].value, &key_option_val[j] );
 				snprintf(option_param, sizeof(option_param), "@sold_option_param%d", j + 1);
-				script_setarray_pc(sd, option_param, i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].option[j].param, &key_option_param[j]);
+				script_setarray_pc( sd, option_param, i, sd->inventory.u.items_inventory[idx].option[j].param, &key_option_param[j] );
 			}
 		}
 	}
@@ -2544,11 +2546,14 @@ int npc_parseview(const char* w4, const char* start, const char* buffer, const c
 
 	// Check if view id is not an ID (only numbers).
 	if (pid != nullptr && *pid != '\0') {
+		int64 val_tmp;
+
 		// Check if constant exists and get its value.
-		if(!script_get_constant(viewid, &val)) {
+		if(!script_get_constant(viewid, &val_tmp)) {
 			ShowWarning("npc_parseview: Invalid NPC constant '%s' specified in file '%s', line'%d'. Defaulting to INVISIBLE. \n", viewid, filepath, strline(buffer,start-buffer));
 			val = JT_INVISIBLE;
-		}
+		} else
+			val = static_cast<int>(val_tmp);
 	}
 
 	return val;
@@ -3795,7 +3800,7 @@ int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const c
 	}
 
 	st = script_alloc_state(ev->nd->u.scr.script, ev->pos, sd->bl.id, ev->nd->bl.id);
-	setd_sub(st, NULL, ".@atcmd_command$", 0, (void *)command, NULL);
+	setd_sub_str( st, NULL, ".@atcmd_command$", 0, command, NULL );
 
 	// split atcmd parameters based on spaces
 
@@ -3809,7 +3814,7 @@ int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const c
 			temp[k] = '\0';
 			k = 0;
 			if( temp[0] != '\0' ) {
-				setd_sub( st, NULL, ".@atcmd_parameters$", j++, (void *)temp, NULL );
+				setd_sub_str( st, NULL, ".@atcmd_parameters$", j++, temp, NULL );
 			}
 		} else {
 			temp[k] = message[i];
@@ -3817,7 +3822,7 @@ int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const c
 		}
 	 }
 
-	setd_sub(st, NULL, ".@atcmd_numparameters", 0, (void *)__64BPRTSIZE(j), NULL);
+	setd_sub_num( st, NULL, ".@atcmd_numparameters", 0, j, NULL );
 	aFree(temp);
 
 	run_script_main(st);
@@ -4185,13 +4190,15 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 					if (ISDIGIT(caster_constant[0]))
 						args.skill_damage.caster = atoi(caster_constant);
 					else {
+						int64 val_tmp;
 						int val;
 
-						if (!script_get_constant(caster_constant, &val)) {
+						if (!script_get_constant(caster_constant, &val_tmp)) {
 							ShowError( "npc_parse_mapflag: Unknown constant '%s'. Skipping (file '%s', line '%d').\n", caster_constant, filepath, strline(buffer, start - buffer) );
 							break;
 						}
 
+						val = static_cast<int>(val_tmp);
 						args.skill_damage.caster = val;
 					}
 					
