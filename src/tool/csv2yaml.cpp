@@ -2140,13 +2140,12 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 			int temp = it_req->second.ammo;
 
 			for (int i = 1; i < MAX_AMMO_TYPE; i++) {
-				if (temp & i) {
+				if (temp & 1 << i) {
 					constant = constant_lookup(i, "A_");
 					constant.erase(0, 2);
 					body << YAML::Key << name2Upper(constant) << YAML::Value << "true";
+					temp ^= 1 << i;
 				}
-
-				temp ^= 1 << i;
 			}
 
 			body << YAML::EndMap;
