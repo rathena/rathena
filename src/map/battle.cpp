@@ -5514,13 +5514,13 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		}
 			break;
 		case MH_TINDER_BREAKER:
-			ATK_ADD(2500 * skill_lv + status_get_lv(src)); // !TODO: Confirm base level bonus
+			ATK_ADD(wd.damage, wd.damage2, 2500 * skill_lv + status_get_lv(src)); // !TODO: Confirm base level bonus
 			break;
 		case MH_CBC:
-			ATK_ADD(4000 * skill_lv + status_get_lv(src)); // !TODO: Confirm base level bonus
+			ATK_ADD(wd.damage, wd.damage2, 4000 * skill_lv + status_get_lv(src)); // !TODO: Confirm base level bonus
 			break;
 		case MH_EQC:
-			ATK_ADD(6000 * skill_lv + status_get_lv(src)); // !TODO: Confirm base level bonus
+			ATK_ADD(wd.damage, wd.damage2, 6000 * skill_lv + status_get_lv(src)); // !TODO: Confirm base level bonus
 			break;
 	}
 
