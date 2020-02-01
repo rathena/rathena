@@ -7721,8 +7721,8 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 	}
 
 	for (const auto &skill : skill_db) {
-		uint8 lv = sd->status.skill[i].lv;
-		uint16 skill_id = skill.second->nameid;
+		uint16 skill_id = skill.second->nameid, idx = skill_get_index(skill_id);
+		uint8 lv = sd->status.skill[idx].lv;
 
 		if (lv == 0 || skill_id == 0)
 			continue;
@@ -7733,8 +7733,8 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		// Don't reset trick dead if not a novice/baby
 		if( skill_id == NV_TRICKDEAD && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE )
 		{
-			sd->status.skill[i].lv = 0;
-			sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
+			sd->status.skill[idx].lv = 0;
+			sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
 			continue;
 		}
 
@@ -7742,7 +7742,7 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		if (skill_id == NV_BASIC && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE )
 			continue;
 
-		if( sd->status.skill[i].flag == SKILL_FLAG_PERM_GRANTED )
+		if( sd->status.skill[idx].flag == SKILL_FLAG_PERM_GRANTED )
 			continue;
 
 		if( flag&4 && !skill_ischangesex(skill_id) )
@@ -7752,21 +7752,21 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		{ //Only handle quest skills in a special way when you can't learn them manually
 			if( battle_config.quest_skill_reset && !(flag&2) )
 			{	//Wipe them
-				sd->status.skill[i].lv = 0;
-				sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
+				sd->status.skill[idx].lv = 0;
+				sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
 			}
 			continue;
 		}
-		if( sd->status.skill[i].flag == SKILL_FLAG_PERMANENT )
+		if( sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT )
 			skill_point += lv;
 		else
-		if( sd->status.skill[i].flag >= SKILL_FLAG_REPLACED_LV_0 )
-			skill_point += (sd->status.skill[i].flag - SKILL_FLAG_REPLACED_LV_0);
+		if( sd->status.skill[idx].flag >= SKILL_FLAG_REPLACED_LV_0 )
+			skill_point += (sd->status.skill[idx].flag - SKILL_FLAG_REPLACED_LV_0);
 
 		if( !(flag&2) )
 		{// reset
-			sd->status.skill[i].lv = 0;
-			sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
+			sd->status.skill[idx].lv = 0;
+			sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
 		}
 	}
 
