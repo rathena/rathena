@@ -9590,7 +9590,7 @@ Body:
   - Id: 354
     Name: NPC_RUN
     Description: Run
-    MaxLevel: 20
+    MaxLevel: 10
     Type: Misc
     TargetType: Self
     DamageFlags:
@@ -19837,10 +19837,10 @@ Body:
           Amount: 70
         - Level: 4
           Amount: 80
-  - Id: 2049
-    Name: AB_EUCHARISTICA
-    Description: Eucharistica
-    MaxLevel: 0
+#  - Id: 2049 # Removed on kRO
+#    Name: AB_EUCHARISTICA
+#    Description: Eucharistica
+#    MaxLevel: 10
   - Id: 2050
     Name: AB_RENOVATIO
     Description: Renovatio
@@ -32134,8 +32134,6 @@ Body:
       IgnoreDex: true
       IgnoreStatus: true
       IgnoreItemBonus: true
-    Requires:
-      {}
   - Id: 5068
     Name: CG_SPECIALSINGER
     Description: Skilled Special Singer
@@ -35725,10 +35723,10 @@ Body:
     SplashArea: 2
     Duration1: 300000
     Unit:
-      Id: Grounddrift_Water
+      Id: Gd_Leadership
       Layout: 2
       Interval: -1
-      Target: Guild
+      Target: SameGuild
       Flag:
         NoMob: true
   - Id: 10007
@@ -35743,7 +35741,7 @@ Body:
       Id: Gd_Glorywounds
       Layout: 2
       Interval: -1
-      Target: Guild
+      Target: SameGuild
       Flag:
         NoMob: true
   - Id: 10008
@@ -35758,7 +35756,7 @@ Body:
       Id: Gd_Soulcold
       Layout: 2
       Interval: -1
-      Target: Guild
+      Target: SameGuild
       Flag:
         NoMob: true
   - Id: 10009
@@ -35773,7 +35771,7 @@ Body:
       Id: Gd_Hawkeyes
       Layout: 2
       Interval: -1
-      Target: Guild
+      Target: SameGuild
       Flag:
         NoMob: true
   - Id: 10010
