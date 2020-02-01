@@ -19106,10 +19106,10 @@ Body:
           Amount: 70
         - Level: 4
           Amount: 80
-  - Id: 2049
-    Name: AB_EUCHARISTICA
-    Description: Eucharistica
-    MaxLevel: 0
+#  - Id: 2049 # Removed on kRO
+#    Name: AB_EUCHARISTICA
+#    Description: Eucharistica
+#    MaxLevel: 10
   - Id: 2050
     Name: AB_RENOVATIO
     Description: Renovatio
