@@ -926,6 +926,7 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 19
     Name: MG_FIREBOLT
     Description: Fire Bolt
@@ -1319,6 +1320,7 @@ Body:
       Flag:
         NoEnemy: true
         NoReiteration: true
+        RangedSingleUnit: true
   - Id: 26
     Name: AL_TELEPORT
     Description: Teleport
@@ -2880,6 +2882,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 80
     Name: WZ_FIREPILLAR
     Description: Fire Pillar
@@ -3562,6 +3565,8 @@ Body:
       Interval: 1000
       Flag:
         PathCheck: true
+        NoKnockback: true
+        RemovedByFireRain: true
   - Id: 88
     Name: WZ_FROSTNOVA
     Description: Frost Nova
@@ -3964,6 +3969,7 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 93
     Name: WZ_ESTIMATION
     Description: Sense
@@ -4311,6 +4317,8 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
+        HiddenTrap: true
   - Id: 116
     Name: HT_LANDMINE
     Description: Land Mine
@@ -4361,6 +4369,8 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
+        HiddenTrap: true
   - Id: 117
     Name: HT_ANKLESNARE
     Description: Ankle Snare
@@ -4411,6 +4421,9 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        NoKnockback: true
+        RemovedByFireRain: true
+        HiddenTrap: true
   - Id: 118
     Name: HT_SHOCKWAVE
     Description: Shockwave Trap
@@ -4452,6 +4465,8 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
+        HiddenTrap: true
   - Id: 119
     Name: HT_SANDMAN
     Description: Sandman
@@ -4494,6 +4509,8 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
+        HiddenTrap: true
   - Id: 120
     Name: HT_FLASHER
     Description: Flasher
@@ -4536,6 +4553,8 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
+        HiddenTrap: true
   - Id: 121
     Name: HT_FREEZINGTRAP
     Description: Freezing Trap
@@ -4594,6 +4613,8 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
+        HiddenTrap: true
   - Id: 122
     Name: HT_BLASTMINE
     Description: Blast Mine
@@ -4646,6 +4667,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 123
     Name: HT_CLAYMORETRAP
     Description: Claymore Trap
@@ -4699,6 +4721,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 124
     Name: HT_REMOVETRAP
     Description: Remove Trap
@@ -4740,6 +4763,8 @@ Body:
       Interval: 1000
       Flag:
         NoMob: true
+        RemovedByFireRain: true
+        HiddenTrap: true
   - Id: 126
     Name: HT_BEASTBANE
     Description: Beast Bane
@@ -5121,6 +5146,8 @@ Body:
       Range: 1
       Interval: 1000
       Target: Enemy
+      Flag:
+        RemovedByFireRain: true
   - Id: 141
     Name: AS_SPLASHER
     Description: Venom Splasher
@@ -6547,6 +6574,7 @@ Body:
       Interval: -1
       Flag:
         NoReiteration: true
+        RemovedByFireRain: true
   - Id: 221
     Name: RG_FLAGGRAFFITI
     Description: Piece
@@ -8023,6 +8051,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 286
     Name: SA_DELUGE
     Description: Deluge
@@ -8072,6 +8101,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 287
     Name: SA_VIOLENTGALE
     Description: Whirlwind
@@ -8121,6 +8151,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 288
     Name: SA_LANDPROTECTOR
     Description: Magnetic Earth
@@ -8195,6 +8226,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 289
     Name: SA_DISPELL
     Description: Dispell
@@ -8494,6 +8526,13 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Lullaby
+      Layout: 4
+      Interval: 6000
+      Target: Enemy
+      Flag:
+        Ensemble: true
   - Id: 307
     Name: BD_RICHMANKIM
     Description: Mental Sensing
@@ -8526,6 +8565,14 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Richmankim
+      Layout: 15
+      Interval: -1
+      Target: Party
+      Flag:
+        NoPc: true
+        Ensemble: true
   - Id: 308
     Name: BD_ETERNALCHAOS
     Description: Down Tempo
@@ -8548,6 +8595,14 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Eternalchaos
+      Layout: 4
+      Interval: -1
+      Target: Enemy
+      Flag:
+        Ensemble: true
+        RemovedByFireRain: true
   - Id: 309
     Name: BD_DRUMBATTLEFIELD
     Description: Battle Theme
@@ -8580,6 +8635,13 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Drumbattlefield
+      Layout: 15
+      Interval: -1
+      Target: Party
+      Flag:
+        Ensemble: true
   - Id: 310
     Name: BD_RINGNIBELUNGEN
     Description: Harmonic Lick
@@ -8612,6 +8674,13 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Ringnibelungen
+      Layout: 15
+      Interval: -1
+      Target: Party
+      Flag:
+        Ensemble: true
   - Id: 311
     Name: BD_ROKISWEIL
     Description: Classical Pluck
@@ -8634,6 +8703,13 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Rokisweil
+      Layout: 4
+      Interval: -1
+      Flag:
+        Ensemble: true
+        RemovedByFireRain: true
   - Id: 312
     Name: BD_INTOABYSS
     Description: Power Chord
@@ -8656,6 +8732,14 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Intoabyss
+      Layout: 15
+      Interval: -1
+      Target: Party
+      Flag:
+        NoMob: true
+        Ensemble: true
   - Id: 313
     Name: BD_SIEGFRIED
     Description: Acoustic Rhythm
@@ -8688,6 +8772,13 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Siegfried
+      Layout: 15
+      Interval: -1
+      Target: Party
+      Flag:
+        Ensemble: true
   - Id: 315
     Name: BA_MUSICALLESSON
     Description: Music Lessons
@@ -8747,6 +8838,14 @@ Body:
           Amount: 47
       Weapon:
         Musical: true
+    Unit:
+      Id: Dissonance
+      Layout: 4
+      Interval: 3000
+      Target: Enemy
+      Flag:
+        Song: true
+        RemovedByFireRain: true
   - Id: 318
     Name: BA_FROSTJOKER
     Description: Unbarring Octave
@@ -8816,6 +8915,14 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Whistle
+      Layout: 15
+      Interval: -1
+      Target: Party
+      Flag:
+        NoMob: true
+        Song: true
   - Id: 320
     Name: BA_ASSASSINCROSS
     Description: Impressive Riff
@@ -8858,6 +8965,14 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Assassincross
+      Layout: 15
+      Interval: -1
+      Target: Party
+      Flag:
+        NoMob: true
+        Song: true
   - Id: 321
     Name: BA_POEMBRAGI
     Description: Magic Strings
@@ -8900,6 +9015,14 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Poembragi
+      Layout: 15
+      Interval: -1
+      Target: Party
+      Flag:
+        NoMob: true
+        Song: true
   - Id: 322
     Name: BA_APPLEIDUN
     Description: Song of Lutie
@@ -8942,6 +9065,15 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Appleidun
+      Layout: 15
+      Interval: 6000
+      Target: Party
+      Flag:
+        NoMob: true
+        Song: true
+        DualMode: true
   - Id: 323
     Name: DC_DANCINGLESSON
     Description: Dance Lessons
@@ -8999,6 +9131,13 @@ Body:
           Amount: 35
       Weapon:
         Whip: true
+    Unit:
+      Id: Uglydance
+      Layout: 4
+      Interval: 3000
+      Target: Enemy
+      Flag:
+        Dance: true
   - Id: 326
     Name: DC_SCREAM
     Description: Dazzler
@@ -9068,6 +9207,14 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Humming
+      Layout: 15
+      Interval: -1
+      Target: Party
+      Flag:
+        NoMob: true
+        Dance: true
   - Id: 328
     Name: DC_DONTFORGETME
     Description: Slow Grace
@@ -9110,6 +9257,13 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Dontforgetme
+      Layout: 4
+      Interval: -1
+      Target: Enemy
+      Flag:
+        Dance: true
   - Id: 329
     Name: DC_FORTUNEKISS
     Description: Lady Luck
@@ -9152,6 +9306,14 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Fortunekiss
+      Layout: 15
+      Interval: -1
+      Target: Party
+      Flag:
+        NoMob: true
+        Dance: true
   - Id: 330
     Name: DC_SERVICEFORYOU
     Description: Gypsy's Kiss
@@ -9194,6 +9356,14 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Serviceforyou
+      Layout: 15
+      Interval: -1
+      Target: Party
+      Flag:
+        NoMob: true
+        Dance: true
   - Id: 331
     Name: NPC_RANDOMMOVE
     Description: Random Move
@@ -9874,6 +10044,15 @@ Body:
           Amount: 70
         - Level: 5
           Amount: 80
+      ItemCost:
+        - Item: Yellow_Gemstone
+          Amount: 1
+        - Item: Red_Gemstone
+          Amount: 1
+        - Item: Blue_Gemstone
+          Amount: 1
+        - Item: Holy_Water
+          Amount: 1
   - Id: 363
     Name: HP_MEDITATIO
     Description: Meditatio
@@ -10891,6 +11070,8 @@ Body:
       Id: Moonlit
       Layout: 4
       Interval: -1
+      Flag:
+        Ensemble: true
   - Id: 396
     Name: CG_MARIONETTE
     Description: Marionette Control
@@ -11167,6 +11348,8 @@ Body:
       Id: Fogwall
       Layout: -1
       Interval: -1
+      Flag:
+        RemovedByFireRain: true
   - Id: 405
     Name: PF_SPIDERWEB
     Description: Fiber Lock
@@ -11191,6 +11374,8 @@ Body:
       Id: Spiderweb
       Interval: -1
       Target: Enemy
+      Flag:
+        RemovedByFireRain: true
   - Id: 406
     Name: ASC_METEORASSAULT
     Description: Meteor Assault
@@ -13293,6 +13478,8 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+        DualMode: true
+        RemovedByFireRain: true
   - Id: 485
     Name: WS_CARTTERMINATION
     Description: Cart Termination
@@ -13454,6 +13641,12 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+    Unit:
+      Id: Hermode
+      Layout: 3
+      Interval: -1
+      Flag:
+        Ensemble: true
   - Id: 489
     Name: CG_TAROTCARD
     Description: Tarot Card of Fate
@@ -14999,6 +15192,7 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 536
     Name: NJ_BAKUENRYU
     Description: Raging Fire Dragon
@@ -15257,6 +15451,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 539
     Name: NJ_HYOUSYOURAKU
     Description: Ice Meteor
@@ -16694,6 +16889,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 711
     Name: NPC_FLAMECROSS
     Description: Flame Cross
@@ -16716,6 +16912,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 715
     Name: NPC_DARKPIERCING
     Description: Dark Piercing
@@ -16836,6 +17033,8 @@ Body:
       Id: Reverberation
       Interval: 1000
       Target: Enemy
+      Flag:
+        NoKnockback: true
   - Id: 726
     Name: NPC_REVERBERATION_ATK
     Description: Reverberation Attack
@@ -19148,6 +19347,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 2033
     Name: GC_CLOAKINGEXCEED
     Description: Cloaking Exceed
@@ -20305,6 +20505,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 2239
     Name: RA_CLUSTERBOMB
     Description: Cluster Bomb
@@ -20341,6 +20542,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 2240
     Name: RA_WUGMASTERY
     Description: Warg Mastery
@@ -20556,6 +20758,7 @@ Body:
       Flag:
         NoReiteration: true
         NoPc: true
+        RemovedByFireRain: true
   - Id: 2250
     Name: RA_COBALTTRAP
     Description: Cobalt Trap
@@ -20593,6 +20796,7 @@ Body:
       Flag:
         NoReiteration: true
         NoPc: true
+        RemovedByFireRain: true
   - Id: 2251
     Name: RA_MAIZETRAP
     Description: Maize Trap
@@ -20630,6 +20834,7 @@ Body:
       Flag:
         NoReiteration: true
         NoPc: true
+        RemovedByFireRain: true
   - Id: 2252
     Name: RA_VERDURETRAP
     Description: Verdure Trap
@@ -20667,6 +20872,7 @@ Body:
       Flag:
         NoReiteration: true
         NoPc: true
+        RemovedByFireRain: true
   - Id: 2253
     Name: RA_FIRINGTRAP
     Description: Firing Trap
@@ -20705,6 +20911,7 @@ Body:
       Target: Enemy
       Flag:
         NoReiteration: true
+        RemovedByFireRain: true
   - Id: 2254
     Name: RA_ICEBOUNDTRAP
     Description: Icebound Trap
@@ -20743,6 +20950,7 @@ Body:
       Target: Enemy
       Flag:
         NoReiteration: true
+        RemovedByFireRain: true
   - Id: 2255
     Name: NC_MADOLICENCE
     Description: Mado License
@@ -22337,6 +22545,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 2300
     Name: SC_DIMENSIONDOOR
     Description: Dimension Door
@@ -22379,6 +22588,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 2301
     Name: SC_CHAOSPANIC
     Description: Chaos Panic
@@ -22433,6 +22643,8 @@ Body:
         NoReiteration: true
         NoFootSet: true
         NoOverlap: true
+        RangedSingleUnit: true
+        RemovedByFireRain: true
   - Id: 2302
     Name: SC_MAELSTROM
     Description: Maelstrom
@@ -22480,6 +22692,8 @@ Body:
       Interval: -1
       Flag:
         NoReiteration: true
+        RangedSingleUnit: true
+        RemovedByFireRain: true
   - Id: 2303
     Name: SC_BLOODYLUST
     Description: Bloody Lust
@@ -22522,6 +22736,8 @@ Body:
         NoOverlap: true
         PathCheck: true
         NoMob: true
+        RangedSingleUnit: true
+        RemovedByFireRain: true
   - Id: 2304
     Name: SC_FEINTBOMB
     Description: Feint Bomb
@@ -24547,6 +24763,8 @@ Body:
       Id: Reverberation
       Interval: 1000
       Target: Enemy
+      Flag:
+        NoKnockback: true
   - Id: 2415
     Name: WM_REVERBERATION_MELEE
     Description: Reverberation Melee
@@ -24658,6 +24876,8 @@ Body:
       Range: 5
       Interval: 300
       Target: Enemy
+      Flag:
+        DualMode: true
   - Id: 2419
     Name: WM_POEMOFNETHERWORLD
     Description: Poem of The Netherworld
@@ -24724,6 +24944,7 @@ Body:
       Flag:
         NoFootSet: true
         PathCheck: true
+        NoKnockback: true
   - Id: 2420
     Name: WM_VOICEOFSIREN
     Description: Voice of Siren
@@ -26102,6 +26323,7 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 2451
     Name: SO_STRIKING
     Description: Striking
@@ -26205,6 +26427,8 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RangedSingleUnit: true
+        RemovedByFireRain: true
   - Id: 2453
     Name: SO_VACUUM_EXTREME
     Description: Vacuum Extreme
@@ -26289,6 +26513,7 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 2454
     Name: SO_VARETYR_SPEAR
     Description: Varetyr Spear
@@ -26732,6 +26957,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 2466
     Name: SO_WATER_INSIGNIA
     Description: Water Insignia
@@ -26772,6 +26998,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 2467
     Name: SO_WIND_INSIGNIA
     Description: Wind Insignia
@@ -26812,6 +27039,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 2468
     Name: SO_EARTH_INSIGNIA
     Description: Earth Insignia
@@ -26852,6 +27080,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 2474
     Name: GN_TRAINING_SWORD
     Description: Sword Training
@@ -27029,6 +27258,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 2480
     Name: GN_BLOOD_SUCKER
     Description: Blood Sucker
@@ -27186,6 +27416,8 @@ Body:
       Range: 1
       Interval: 300
       Target: Enemy
+      Flag:
+        RemovedByFireRain: true
   - Id: 2483
     Name: GN_CRAZYWEED
     Description: Crazy Weed
@@ -27353,6 +27585,7 @@ Body:
         NoOverlap: true
         PathCheck: true
         Skill: true
+        RemovedByFireRain: true
   - Id: 2486
     Name: GN_FIRE_EXPANSION
     Description: Fire Expansion
@@ -27402,6 +27635,8 @@ Body:
       Id: Fire_Expansion_Smoke_Powder
       Layout: 2
       Interval: -1
+      Flag:
+        RangedSingleUnit: true
   - Id: 2488
     Name: GN_FIRE_EXPANSION_TEAR_GAS
     Description: Fire Expansion Tear Gas
@@ -27417,6 +27652,8 @@ Body:
       Id: Fire_Expansion_Tear_Gas
       Layout: 2
       Interval: -1
+      Flag:
+        RangedSingleUnit: true
   - Id: 2489
     Name: GN_FIRE_EXPANSION_ACID
     Description: Fire Expansion Acid
@@ -27530,6 +27767,7 @@ Body:
       Target: Enemy
       Flag:
         NoReiteration: true
+        RemovedByFireRain: true
   - Id: 2491
     Name: GN_HELLS_PLANT_ATK
     Description: Hell's Plant Attack
@@ -30699,6 +30937,7 @@ Body:
       Interval: -1
       Flag:
         NoReiteration: true
+        RangedSingleUnit: true
   - Id: 5014
     Name: ALL_FULL_THROTTLE
     Description: Full Throttle
@@ -30956,6 +31195,7 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 5028
     Name: SU_CN_METEOR
     Description: Catnip Meteor
@@ -31631,6 +31871,7 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 5049
     Name: SU_GROOMING
     Description: Grooming
@@ -33634,6 +33875,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 8201
     Name: MS_BASH
     Description: Bash
@@ -33949,6 +34191,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 8210
     Name: MA_LANDMINE
     Description: Land_Mine
@@ -33988,6 +34231,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 8211
     Name: MA_SANDMAN
     Description: Sandman
@@ -34037,6 +34281,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 8212
     Name: MA_FREEZINGTRAP
     Description: Freezing_Trap
@@ -34088,6 +34333,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 8213
     Name: MA_REMOVETRAP
     Description: Remove_Trap
@@ -35021,6 +35267,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 8407
     Name: EL_WIND_STEP
     Description: Wind Step
@@ -35063,6 +35310,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 8410
     Name: EL_SOLID_SKIN
     Description: Solid Skin
@@ -35105,6 +35353,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 8413
     Name: EL_PYROTECHNIC
     Description: Pyrotechnic

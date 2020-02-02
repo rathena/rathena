@@ -73,7 +73,7 @@ int getch( void ){
 
 struct s_skill_unit_csv : s_skill_db {
 	std::string target_str;
-	e_skill_unit_flag unit_flag_csv;
+	int unit_flag_csv;
 };
 
 std::unordered_map<uint16, s_skill_require> skill_require;
@@ -970,6 +970,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 		return false;
 	}
 
+	body << YAML::BeginMap;
 	body << YAML::Key << "Mob" << YAML::Value << *mob_name;
 
 	uint16 sprite_id = atoi(str[1]);
@@ -982,15 +983,15 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 			sprite = const_cast<char *>(constant_lookup(sprite_id, "JT_"));
 
 			if (sprite == nullptr) {
-				ShowError("Sprite name %s is not known.\n", sprite);
+				ShowError("Sprite name for id %d is not known.\n", sprite_id);
 				return false;
 			}
 
 			sprite += 3; // Strip JT_ here because the script engine doesn't send this prefix for NPC.
 
-			body << YAML::Key << "Sprite" << YAML::Value << *sprite;
+			body << YAML::Key << "Sprite" << YAML::Value << sprite;
 		} else
-			body << YAML::Key << "Sprite" << YAML::Value << *sprite;
+			body << YAML::Key << "Sprite" << YAML::Value << sprite;
 	} else
 		body << YAML::Key << "Sprite" << YAML::Value << *sprite_name;
 
@@ -1349,7 +1350,7 @@ static bool skill_parse_row_unitdb(char* split[], int columns, int current)
 	skill_split_atoi(split[4], entry.unit_range);
 	entry.unit_interval = atoi(split[5]);
 	entry.target_str = trim(split[6]);
-	entry.unit_flag_csv = static_cast<e_skill_unit_flag>(strtol(split[7], NULL, 16));
+	entry.unit_flag_csv = strtol(split[7], NULL, 16);
 
 	skill_unit.insert({ atoi(split[0]), entry });
 
