@@ -278,6 +278,7 @@ Body:
         Area: 2
       - Level: 11
         Area: 4
+    Knockback: 2
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -948,7 +949,7 @@ Body:
     HitCount: 1
     Element: Fire
     ActiveInstance: 3
-    Knockback: 3
+    Knockback: 2
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -1493,7 +1494,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 3
-    Knockback: 3
     CastCancel: true
     AfterCastActDelay: 1000
     Duration1:
@@ -2064,6 +2064,7 @@ Body:
         Area: 2
       - Level: 10
         Area: 2
+    Knockback: 2
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -2257,7 +2258,7 @@ Body:
     Element: Weapon
     SplashArea: 2
     ActiveInstance: 5
-    Knockback: 5
+    Knockback: 2
     CastTime: 350
     FixedCastTime: 350
     Requires:
@@ -2280,6 +2281,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
+    Knockback: 6
     Requires:
       SpCost: 9
       Weapon:
@@ -2430,6 +2432,7 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 1
+    Knockback: 1
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -2616,6 +2619,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Holy
+    Knockback: 2
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -3065,7 +3069,6 @@ Body:
       - Level: 11
         Area: 2
     ActiveInstance: 5
-    Knockback: 5
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -3162,6 +3165,7 @@ Body:
     HitCount: 1
     Element: Fire
     SplashArea: 7
+    Knockback: 5
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -3363,6 +3367,27 @@ Body:
       - Level: 10
         Count: 12
     Element: Wind
+    Knockback:
+      - Level: 1
+        Amount: 2
+      - Level: 2
+        Amount: 3
+      - Level: 3
+        Amount: 3
+      - Level: 4
+        Amount: 4
+      - Level: 5
+        Amount: 4
+      - Level: 6
+        Amount: 5
+      - Level: 7
+        Amount: 5
+      - Level: 8
+        Amount: 6
+      - Level: 9
+        Amount: 6
+      - Level: 10
+        Amount: 7
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -3786,6 +3811,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Water
+    Knockback: 2
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -4016,7 +4042,6 @@ Body:
     HitCount: 1
     Element: Earth
     ActiveInstance: 3
-    Knockback: 3
     CastCancel: true
     AfterCastActDelay: 1000
     Duration1:
@@ -4383,6 +4408,17 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
+    Knockback:
+      - Level: 1
+        Amount: 6
+      - Level: 2
+        Amount: 7
+      - Level: 3
+        Amount: 8
+      - Level: 4
+        Amount: 9
+      - Level: 5
+        Amount: 10
     Duration1:
       - Level: 1
         Time: 300000
@@ -5409,6 +5445,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
+    Knockback: 6
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -5449,6 +5486,7 @@ Body:
       IgnoreKagehumi: true
     Hit: Single
     HitCount: 1
+    Knockback: 5
     Requires:
       SpCost: 7
   - Id: 151
@@ -5508,6 +5546,7 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 1
+    Knockback: 2
     Requires:
       SpCost: 12
       State: Cart
@@ -5814,6 +5853,7 @@ Body:
     HitCount: 1
     Element: Fire
     SplashArea: 5
+    Knockback: 3
     Duration1: 3500
   - Id: 174
     Name: NPC_SPLASHATTACK
@@ -6857,7 +6897,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 5
-    Knockback: 5
     CastTime: 1600
     AfterCastActDelay: 500
     Duration1:
@@ -6888,7 +6927,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 3
-    Knockback: 3
     CastTime: 1600
     AfterCastActDelay: 500
     Duration1: 30000
@@ -7117,6 +7155,17 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
+    Knockback:
+      - Level: 1
+        Amount: 5
+      - Level: 2
+        Amount: 6
+      - Level: 3
+        Amount: 7
+      - Level: 4
+        Amount: 8
+      - Level: 5
+        Amount: 9
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -9477,7 +9526,6 @@ Body:
     HitCount: 1
     SplashArea: 3
     ActiveInstance: 1
-    Knockback: 1
     CastCancel: true
     Duration1: 20000
     CastTimeFlags:
@@ -9608,6 +9656,27 @@ Body:
       - Level: 10
         Count: 12
     Element: Dark
+    Knockback:
+      - Level: 1
+        Amount: 2
+      - Level: 2
+        Amount: 3
+      - Level: 3
+        Amount: 3
+      - Level: 4
+        Amount: 4
+      - Level: 5
+        Amount: 4
+      - Level: 6
+        Amount: 5
+      - Level: 7
+        Amount: 5
+      - Level: 8
+        Amount: 6
+      - Level: 9
+        Amount: 6
+      - Level: 10
+        Amount: 7
     CastCancel: true
   - Id: 342
     Name: NPC_STOP
@@ -10020,7 +10089,7 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 1
-    Knockback: 1
+    Knockback: 2
     CastCancel: true
     AfterCastActDelay:
       - Level: 1
@@ -10280,6 +10349,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
+    Knockback: 3
     CastCancel: true
     AfterCastActDelay: 300
     CastTimeFlags:
@@ -10676,7 +10746,6 @@ Body:
     Element: Weapon
     SplashArea: 1
     ActiveInstance: 14
-    Knockback: 14
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1500
@@ -11094,6 +11163,7 @@ Body:
       IsEnsemble: true
     HitCount: 1
     SplashArea: 3
+    Knockback: 2
     CastCancel: true
     Duration1:
       - Level: 1
@@ -11393,7 +11463,6 @@ Body:
     HitCount: 1
     Element: Earth
     ActiveInstance: 2
-    Knockback: 2
     CastCancel: true
     Duration1: 20000
     Duration2: 10000
@@ -11417,7 +11486,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 3
-    Knockback: 3
     Duration1: 16000
     Duration2: 8000
     Requires:
@@ -11525,7 +11593,6 @@ Body:
     HitCount: 1
     SplashArea: 3
     ActiveInstance: 1
-    Knockback: 1
     CastCancel: true
     Duration1: 20000
     CastTimeFlags:
@@ -11550,7 +11617,6 @@ Body:
     HitCount: 1
     SplashArea: 3
     ActiveInstance: 1
-    Knockback: 1
     CastCancel: true
     Duration1: 20000
     CastTimeFlags:
@@ -11571,6 +11637,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
+    Knockback: 4
     CastCancel: true
     CastTime:
       - Level: 1
@@ -11744,6 +11811,7 @@ Body:
     HitCount: -3
     Element: Weapon
     SplashArea: 1
+    Knockback: 2
     Duration2: 2000
     Requires:
       SpCost:
@@ -11875,17 +11943,17 @@ Body:
     HitCount: 1
     Element:
       - Level: 1
-        Element: Holy
+        Element: Earth
       - Level: 2
-        Element: Holy
+        Element: Wind
       - Level: 3
-        Element: Holy
+        Element: Water
       - Level: 4
-        Element: Holy
+        Element: Fire
       - Level: 5
-        Element: Holy
+        Element: Ghost
       - Level: 6
-        Element: Holy
+        Element: Dark
       - Level: 7
         Element: Holy
     Duration1: 300000
@@ -11969,6 +12037,7 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 1
+    Knockback: 2
     CastCancel: true
     Duration1:
       - Level: 1
@@ -12000,6 +12069,7 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 1
+    Knockback: 2
     CastCancel: true
     Duration1:
       - Level: 1
@@ -12031,6 +12101,7 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 1
+    Knockback: 2
     CastCancel: true
     Duration1:
       - Level: 1
@@ -12994,6 +13065,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Endowed
+    Knockback: 2
     CastTime: 80
     AfterCastActDelay: 500
     FixedCastTime: 20
@@ -14432,6 +14504,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
+    Knockback: 5
     AfterCastActDelay: 1000
     FixedCastTime: -1
     Requires:
@@ -14606,6 +14679,7 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 1
+    Knockback: 3
     CastTime: 800
     AfterCastActDelay: 1000
     Duration1:
@@ -14817,6 +14891,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
+    Knockback: 4
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -14955,6 +15030,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
+    Knockback: 7
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -15778,7 +15854,6 @@ Body:
         Max: 8
       - Level: 5
         Max: 9
-    Knockback: 5
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -16003,7 +16078,6 @@ Body:
     Element: Fire
     SplashArea: 3
     ActiveInstance: 14
-    Knockback: 14
   - Id: 655
     Name: NPC_ICEBREATH
     Description: Ice Breath
@@ -16018,7 +16092,6 @@ Body:
     Element: Water
     SplashArea: 3
     ActiveInstance: 14
-    Knockback: 14
     Duration2: 30000
     FixedCastTime: -1
   - Id: 656
@@ -16035,7 +16108,6 @@ Body:
     Element: Wind
     SplashArea: 3
     ActiveInstance: 14
-    Knockback: 14
   - Id: 657
     Name: NPC_ACIDBREATH
     Description: Acid Breath
@@ -16050,7 +16122,6 @@ Body:
     Element: Poison
     SplashArea: 3
     ActiveInstance: 14
-    Knockback: 14
     Duration2: 20000
     FixedCastTime: -1
   - Id: 658
@@ -16067,7 +16138,6 @@ Body:
     Element: Dark
     SplashArea: 3
     ActiveInstance: 14
-    Knockback: 14
   - Id: 659
     Name: NPC_DRAGONFEAR
     Description: Dragon Fear
@@ -16129,6 +16199,7 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: 7
+    Knockback: 7
   - Id: 662
     Name: NPC_HELLJUDGEMENT
     Description: Hell's Judgement
@@ -16956,6 +17027,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -20
     SplashArea: 9
+    Knockback: 2
     CastCancel: true
     Unit:
       Id: Dummyskill
@@ -17002,6 +17074,7 @@ Body:
       IgnoreLandProtector: true
     Hit: Single
     HitCount: 1
+    Knockback: 2
     Duration1: 3000
     FixedCastTime: -1
     Unit:
@@ -17028,7 +17101,6 @@ Body:
     HitCount: 1
     SplashArea: 2
     ActiveInstance: 14
-    Knockback: 14
     CastCancel: true
     AfterCastActDelay: 2000
     FixedCastTime: -1
@@ -17246,6 +17318,7 @@ Body:
     Flags:
       IsQuest: true
     Hit: Single
+    Knockback: 2
     Duration1: 300000
     FixedCastTime: -1
     Requires:
@@ -17334,6 +17407,7 @@ Body:
     HitCount: 1
     Element: Fire
     SplashArea: 1
+    Knockback: 3
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -17391,6 +17465,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
+    Knockback: 3
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -17521,6 +17596,7 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 1
+    Knockback: 5
     AfterCastActDelay: 2000
     Duration2: 5000
     FixedCastTime: -1
@@ -17669,6 +17745,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
+    Knockback: 3
     AfterCastActDelay: 2000
     Duration1: 3000
     Duration2: 2000
@@ -17750,6 +17827,7 @@ Body:
     HitCount: 1
     Element: Wind
     SplashArea: 2
+    Knockback: 3
     CopyFlags:
       Skill:
         Reproduce: true
@@ -18040,6 +18118,7 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 3
+    Knockback: 7
     CastTime: 2000
     FixedCastTime: -1
     Requires:
@@ -18555,6 +18634,7 @@ Body:
     HitCount: -7
     Element: Fire
     SplashArea: 3
+    Knockback: 3
     CopyFlags:
       Skill:
         Reproduce: true
@@ -18622,6 +18702,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -20
     SplashArea: 9
+    Knockback: 2
     CopyFlags:
       Skill:
         Reproduce: true
@@ -19038,7 +19119,6 @@ Body:
     HitCount: 1
     Element: Fire
     ActiveInstance: 1
-    Knockback: 1
     CopyFlags:
       Skill:
         Reproduce: true
@@ -19055,7 +19135,6 @@ Body:
     HitCount: 1
     Element: Wind
     ActiveInstance: 1
-    Knockback: 1
     CopyFlags:
       Skill:
         Reproduce: true
@@ -19072,7 +19151,6 @@ Body:
     HitCount: 1
     Element: Water
     ActiveInstance: 1
-    Knockback: 1
     CopyFlags:
       Skill:
         Reproduce: true
@@ -19089,7 +19167,6 @@ Body:
     HitCount: 1
     Element: Earth
     ActiveInstance: 1
-    Knockback: 1
     CopyFlags:
       Skill:
         Reproduce: true
@@ -19384,6 +19461,7 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 1
+    Knockback: 3
     AfterCastActDelay: 2000
     FixedCastTime: -1
     Requires:
@@ -19452,7 +19530,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 1
-    Knockback: 1
     CastCancel: true
     AfterCastActDelay: 2000
     Duration1:
@@ -19896,7 +19973,6 @@ Body:
     Element: Holy
     SplashArea: 2
     ActiveInstance: 1
-    Knockback: 1
     CastCancel: true
     CastTime:
       - Level: 1
@@ -20631,7 +20707,6 @@ Body:
     HitCount: 1
     SplashArea: 2
     ActiveInstance: 3
-    Knockback: 3
     Duration1: 15000
     Duration2:
       - Level: 1
@@ -20677,7 +20752,6 @@ Body:
     HitCount: 1
     SplashArea: 3
     ActiveInstance: 3
-    Knockback: 3
     CopyFlags:
       Skill:
         Reproduce: true
@@ -20899,7 +20973,6 @@ Body:
     Element: Fire
     SplashArea: 2
     ActiveInstance: 1
-    Knockback: 1
     AfterCastActDelay: 2000
     Duration1: 15000
     FixedCastTime: -1
@@ -20938,7 +21011,6 @@ Body:
     Element: Water
     SplashArea: 2
     ActiveInstance: 1
-    Knockback: 1
     AfterCastActDelay: 2000
     Duration1: 15000
     FixedCastTime: -1
@@ -20977,7 +21049,6 @@ Body:
     Element: Earth
     SplashArea: 2
     ActiveInstance: 1
-    Knockback: 1
     AfterCastActDelay: 2000
     Duration1: 15000
     FixedCastTime: -1
@@ -21016,7 +21087,6 @@ Body:
     Element: Wind
     SplashArea: 2
     ActiveInstance: 1
-    Knockback: 1
     AfterCastActDelay: 2000
     Duration1: 15000
     FixedCastTime: -1
@@ -21056,7 +21126,6 @@ Body:
     Element: Fire
     SplashArea: 2
     ActiveInstance: 2
-    Knockback: 2
     CopyFlags:
       Skill:
         Reproduce: true
@@ -21096,7 +21165,6 @@ Body:
     Element: Water
     SplashArea: 2
     ActiveInstance: 2
-    Knockback: 2
     CopyFlags:
       Skill:
         Reproduce: true
@@ -21230,7 +21298,6 @@ Body:
     Element: Fire
     SplashArea: 1
     ActiveInstance: 5
-    Knockback: 5
     CastTime:
       - Level: 1
         Time: 500
@@ -21437,6 +21504,7 @@ Body:
       AllowOnMado: true
     Hit: Single
     HitCount: 1
+    Knockback: 7
     AfterCastActDelay: 500
     FixedCastTime: -1
     Requires:
@@ -21456,6 +21524,7 @@ Body:
       AllowOnMado: true
     Hit: Single
     HitCount: 1
+    Knockback: 7
     AfterCastActDelay: 500
     FixedCastTime: -1
     Requires:
@@ -21493,6 +21562,7 @@ Body:
         Area: 3
       - Level: 3
         Area: 4
+    Knockback: 5
     CastTime:
       - Level: 1
         Time: 2000
@@ -21839,6 +21909,17 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
+    Knockback:
+      - Level: 1
+        Amount: 2
+      - Level: 2
+        Amount: 3
+      - Level: 3
+        Amount: 4
+      - Level: 4
+        Amount: 5
+      - Level: 5
+        Amount: 6
     Cooldown:
       - Level: 1
         Time: 5000
@@ -21970,7 +22051,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 2
-    Knockback: 2
     CastCancel: true
     Duration1:
       - Level: 1
@@ -22032,7 +22112,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 2
-    Knockback: 2
     CastCancel: true
     Duration1:
       - Level: 1
@@ -22307,6 +22386,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -3
     Element: Weapon
+    Knockback: 3
     CopyFlags:
       Skill:
         Reproduce: true
@@ -22704,7 +22784,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 3
-    Knockback: 3
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
@@ -22756,7 +22835,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 1
-    Knockback: 1
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
@@ -22859,7 +22937,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 1
-    Knockback: 1
     NoNearNPC:
       Type:
         WarpPortal: true
@@ -22951,6 +23028,13 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
+    Knockback:
+      - Level: 1
+        Amount: 3
+      - Level: 2
+        Amount: 6
+      - Level: 3
+        Amount: 9
     CopyFlags:
       Skill:
         Reproduce: true
@@ -22991,7 +23075,6 @@ Body:
     Element: Weapon
     SplashArea: 1
     ActiveInstance: 11
-    Knockback: 11
     Cooldown: 2000
     FixedCastTime: -1
     Requires:
@@ -23192,6 +23275,13 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
+    Knockback:
+      - Level: 1
+        Amount: 2
+      - Level: 2
+        Amount: 0
+      - Level: 3
+        Amount: 0
     CopyFlags:
       Skill:
         Reproduce: true
@@ -23650,6 +23740,17 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
+    Knockback:
+      - Level: 1
+        Amount: 3
+      - Level: 2
+        Amount: 4
+      - Level: 3
+        Amount: 5
+      - Level: 4
+        Amount: 6
+      - Level: 5
+        Amount: 7
     CopyFlags:
       Skill:
         Reproduce: true
@@ -24123,6 +24224,17 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
+    Knockback:
+      - Level: 1
+        Amount: 2
+      - Level: 2
+        Amount: 3
+      - Level: 3
+        Amount: 4
+      - Level: 4
+        Amount: 5
+      - Level: 5
+        Amount: 6
     CopyFlags:
       Skill:
         Reproduce: true
@@ -24256,6 +24368,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
+    Knockback: 7
     Requires:
       SpCost: 1
   - Id: 2343
@@ -25136,7 +25249,6 @@ Body:
     HitCount: 1
     SplashArea: 1
     ActiveInstance: 5
-    Knockback: 5
     CastCancel: true
     CastTime: 3000
     Duration1:
@@ -26032,7 +26144,6 @@ Body:
         Max: 14
       - Level: 5
         Max: 16
-    Knockback: 8
     CopyFlags:
       Skill:
         Reproduce: true
@@ -26083,7 +26194,6 @@ Body:
         Max: 14
       - Level: 5
         Max: 16
-    Knockback: 8
     CopyFlags:
       Skill:
         Reproduce: true
@@ -27190,7 +27300,6 @@ Body:
     HitCount: 1
     Element: Fire
     ActiveInstance: 1
-    Knockback: 1
     CastCancel: true
     CastTime: 1000
     Duration1: 60000
@@ -27231,7 +27340,6 @@ Body:
     HitCount: 1
     Element: Water
     ActiveInstance: 1
-    Knockback: 1
     CastCancel: true
     CastTime: 1000
     Duration1: 60000
@@ -27272,7 +27380,6 @@ Body:
     HitCount: 1
     Element: Wind
     ActiveInstance: 1
-    Knockback: 1
     CastCancel: true
     CastTime: 1000
     Duration1: 60000
@@ -27313,7 +27420,6 @@ Body:
     HitCount: 1
     Element: Earth
     ActiveInstance: 1
-    Knockback: 1
     CastCancel: true
     CastTime: 1000
     Duration1: 60000
@@ -27361,6 +27467,7 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 2
+    Knockback: 2
     AfterCastActDelay: 500
     Duration1: 5000
     Cooldown:
@@ -27479,7 +27586,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 3
-    Knockback: 3
     CopyFlags:
       Skill:
         Reproduce: true
@@ -27535,7 +27641,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 3
-    Knockback: 3
     CopyFlags:
       Skill:
         Reproduce: true
@@ -27641,7 +27746,7 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 1
-    Knockback: 1
+    Knockback: 2
     CopyFlags:
       Skill:
         Reproduce: true
@@ -27793,7 +27898,6 @@ Body:
     HitCount: 1
     Element: Fire
     ActiveInstance: 1
-    Knockback: 1
     CastCancel: true
     CastTime:
       - Level: 1
@@ -27990,7 +28094,6 @@ Body:
         Max: 5
       - Level: 5
         Max: 6
-    Knockback: 2
     CopyFlags:
       Skill:
         Reproduce: true
@@ -28412,7 +28515,6 @@ Body:
     HitCount: 1
     SplashArea: 1
     ActiveInstance: 1
-    Knockback: 1
     CastTime:
       - Level: 1
         Time: 2000
@@ -28653,7 +28755,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 3
-    Knockback: 3
     Duration1: 30000
     Cooldown: 1000
     FixedCastTime: -1
@@ -28823,6 +28924,7 @@ Body:
         Area: 5
       - Level: 5
         Area: 6
+    Knockback: 3
     AfterCastActDelay: 1000
     Cooldown:
       - Level: 1
@@ -29007,6 +29109,7 @@ Body:
     Range: -9
     Hit: Single
     HitCount: 1
+    Knockback: 6
     CastTime:
       - Level: 1
         Time: 5000
@@ -30111,7 +30214,17 @@ Body:
       NoDamage: true
     Hit: Single
     ActiveInstance: 1
-    Knockback: 1
+    Knockback:
+      - Level: 1
+        Amount: 3
+      - Level: 2
+        Amount: 4
+      - Level: 3
+        Amount: 5
+      - Level: 4
+        Amount: 6
+      - Level: 5
+        Amount: 7
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
@@ -30978,7 +31091,6 @@ Body:
     Element: Weapon
     SplashArea: 3
     ActiveInstance: 3
-    Knockback: 3
     CopyFlags:
       Skill:
         Reproduce: true
@@ -31124,6 +31236,19 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
+    Knockback:
+      - Level: 1
+        Amount: 4
+      - Level: 2
+        Amount: 5
+      - Level: 3
+        Amount: 6
+      - Level: 4
+        Amount: 7
+      - Level: 5
+        Amount: 8
+      - Level: 6
+        Amount: 9
     AfterCastActDelay: 500
     Duration1: 50000
     Duration2: 20000
@@ -31433,15 +31558,15 @@ Body:
     HitCount: 1
     Element:
       - Level: 1
-        Element: Holy
+        Element: Earth
       - Level: 2
-        Element: Holy
+        Element: Fire
       - Level: 3
-        Element: Holy
+        Element: Water
       - Level: 4
-        Element: Holy
+        Element: Wind
       - Level: 5
-        Element: Holy
+        Element: Ghost
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
@@ -31461,7 +31586,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 1
-    Knockback: 1
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
@@ -32072,7 +32196,6 @@ Body:
     Element: Weapon
     SplashArea: 1
     ActiveInstance: 14
-    Knockback: 14
     CastCancel: true
     CastTime:
       - Level: 1
@@ -32140,7 +32263,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 1
-    Knockback: 1
     CastCancel: true
     CastTime:
       - Level: 1
@@ -33109,7 +33231,6 @@ Body:
     HitCount: 1
     Element: Poison
     ActiveInstance: 1
-    Knockback: 1
     CastTime:
       - Level: 1
         Time: 500
@@ -33327,15 +33448,15 @@ Body:
     HitCount: -6
     Element:
       - Level: 1
-        Element: Ghost
+        Element: Wind
       - Level: 2
-        Element: Ghost
+        Element: Neutral
       - Level: 3
-        Element: Ghost
+        Element: Wind
       - Level: 4
-        Element: Ghost
+        Element: Neutral
       - Level: 5
-        Element: Ghost
+        Element: Wind
     CastCancel: true
     CastTime:
       - Level: 1
@@ -33375,15 +33496,15 @@ Body:
     HitCount: -6
     Element:
       - Level: 1
-        Element: Ghost
+        Element: Wind
       - Level: 2
-        Element: Ghost
+        Element: Neutral
       - Level: 3
-        Element: Ghost
+        Element: Wind
       - Level: 4
-        Element: Ghost
+        Element: Neutral
       - Level: 5
-        Element: Ghost
+        Element: Wind
     SplashArea:
       - Level: 1
         Area: 2
@@ -33634,6 +33755,7 @@ Body:
         Size: 9
     Hit: Single
     HitCount: 1
+    Knockback: 3
     CastTime:
       - Level: 1
         Time: 800
@@ -34056,7 +34178,6 @@ Body:
     HitCount: 1
     Element: Fire
     ActiveInstance: 1
-    Knockback: 1
     CastTime:
       - Level: 1
         Time: 5000
@@ -34186,7 +34307,6 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 3
-    Knockback: 3
     CastTime:
       - Level: 1
         Time: 4000
@@ -34300,6 +34420,7 @@ Body:
     HitCount: 1
     Element: Fire
     SplashArea: 2
+    Knockback: 2
     AfterCastActDelay: 1500
     AfterCastWalkDelay: 2000
     Duration1: 2000
@@ -34342,6 +34463,7 @@ Body:
     HitCount: 1
     Element: Weapon
     SplashArea: 1
+    Knockback: 1
     CastTime: 400
     AfterCastActDelay: 2500
     FixedCastTime: 100
@@ -34503,6 +34625,7 @@ Body:
         Area: 2
       - Level: 10
         Area: 2
+    Knockback: 2
     AfterCastActDelay: 1200
     Duration1: 100
     Requires:
@@ -34525,6 +34648,17 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
+    Knockback:
+      - Level: 1
+        Amount: 6
+      - Level: 2
+        Amount: 7
+      - Level: 3
+        Amount: 8
+      - Level: 4
+        Amount: 9
+      - Level: 5
+        Amount: 10
     Duration1:
       - Level: 1
         Time: 300000
@@ -34719,6 +34853,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
+    Knockback: 6
     CastTime: 750
     AfterCastActDelay: 1000
     FixedCastTime: 750
@@ -34747,7 +34882,6 @@ Body:
     Element: Weapon
     SplashArea: 1
     ActiveInstance: 14
-    Knockback: 14
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2500
@@ -34799,7 +34933,7 @@ Body:
     Element: Weapon
     SplashArea: 2
     ActiveInstance: 5
-    Knockback: 5
+    Knockback: 2
     CastTime: 350
     AfterCastActDelay: 1200
     FixedCastTime: 350
@@ -35544,6 +35678,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Fire
+    Knockback: 2
     FixedCastTime: -1
     Requires:
       SpCost: 40
@@ -35569,7 +35704,7 @@ Body:
     HitCount: 1
     Element: Fire
     ActiveInstance: 3
-    Knockback: 3
+    Knockback: 2
     Duration1: 15000
     FixedCastTime: -1
     Requires:
@@ -35638,6 +35773,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
+    Knockback: 5
     FixedCastTime: -1
     Requires:
       SpCost: 40
