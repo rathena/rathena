@@ -4,11 +4,14 @@
 #ifndef BATTLE_HPP
 #define BATTLE_HPP
 
+#include <bitset>
+
 #include "../common/cbasetypes.hpp"
 #include "../common/mmo.hpp"
 #include "../config/core.hpp"
 
 #include "map.hpp" //ELE_MAX
+#include "skill.hpp"
 
 //fwd declaration
 struct map_session_data;
@@ -29,6 +32,7 @@ enum damage_lv : uint8 {
 
 /// Flag of the final calculation
 enum e_battle_flag : uint16 {
+	BF_NONE		= 0x0000, /// None
 	BF_WEAPON	= 0x0001, /// Weapon attack
 	BF_MAGIC	= 0x0002, /// Magic attack
 	BF_MISC		= 0x0004, /// Misc attack
@@ -61,6 +65,8 @@ enum e_battle_check_target : uint32 {
 	BCT_NOGUILD		= BCT_ALL&~BCT_GUILD,			///< Except guildmates
 	BCT_NOPARTY		= BCT_ALL&~BCT_PARTY,			///< Except party members
 	BCT_NOENEMY		= BCT_ALL&~BCT_ENEMY,			///< Except enemy
+	BCT_ALLY		= BCT_PARTY|BCT_GUILD,
+	BCT_FRIEND		= BCT_NOENEMY,
 };
 
 /// Damage structure
@@ -94,7 +100,7 @@ void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rda
 
 int battle_attr_ratio(int atk_elem,int def_type, int def_lv);
 int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 damage,int atk_elem,int def_type, int def_lv);
-int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_list *target, int nk, int s_ele, int s_ele_, int64 damage, int left, int flag);
+int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_list *target, std::bitset<NK_MAX> nk, int s_ele, int s_ele_, int64 damage, int left, int flag);
 
 // Final calculation Damage
 int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damage *d,int64 damage,uint16 skill_id,uint16 skill_lv);
