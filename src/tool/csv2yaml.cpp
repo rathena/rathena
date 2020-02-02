@@ -73,7 +73,7 @@ int getch( void ){
 
 struct s_skill_unit_csv : s_skill_db {
 	std::string target_str;
-	e_skill_unit_flag unit_flag_csv;
+	int unit_flag_csv;
 };
 
 std::unordered_map<uint16, s_skill_require> skill_require;
@@ -1350,7 +1350,7 @@ static bool skill_parse_row_unitdb(char* split[], int columns, int current)
 	skill_split_atoi(split[4], entry.unit_range);
 	entry.unit_interval = atoi(split[5]);
 	entry.target_str = trim(split[6]);
-	entry.unit_flag_csv = static_cast<e_skill_unit_flag>(strtol(split[7], NULL, 16));
+	entry.unit_flag_csv = strtol(split[7], NULL, 16);
 
 	skill_unit.insert({ atoi(split[0]), entry });
 
