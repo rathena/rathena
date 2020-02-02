@@ -17,7 +17,7 @@ dali02,97,142,3	script	Professor Bernhard#a1	4_LGTSCIENCE,{
 		switch( isbegin_quest(9335) ) {
 		case 0:// First time doing instance
 			mes "[Professor Bernhard]";
-			mes "I would say I am Professor Bernhard, the best weapons researcher in Schwaltzvalt.";
+			mes "I would say I am Professor Bernhard, the best weapons researcher in Schwarzwald.";
 			next;
 			mes "[Professor Bernhard]";
 			mes "After endless research I have created various weapons, but I felt something was missing so I found the ancient texts.";

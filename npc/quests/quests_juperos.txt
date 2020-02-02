@@ -359,7 +359,7 @@ function Func_JupHist;
 			mes "read something? There are";
 			mes "many books that cover some";
 			mes "interesting topics, like the";
-			mes "Schwaltzvalt economy...";
+			mes "Schwarzwald economy...";
 			next;
 			mes "[Fayruz]";
 			mes "Oh, in any case, please";
@@ -744,7 +744,7 @@ function Func_JupHist {
 			mes "[Fayruz]";
 			mes "Just recently, I saw";
 			mes "him with his sister, my";
-			mes "friend from Morroc. It's";
+			mes "friend from Morocc. It's";
 			mes "weird to think that I'd have";
 			mes "these feelings for him after";
 			mes "all this time, isn't it? Oh...!";
