@@ -28,6 +28,7 @@
 #include "../common/socket.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "achievement.hpp"
@@ -60,6 +61,11 @@
 #include "pet.hpp"
 #include "quest.hpp"
 #include "storage.hpp"
+
+using namespace rathena;
+
+const int64 SCRIPT_INT_MIN = INT64_MIN;
+const int64 SCRIPT_INT_MAX = INT64_MAX;
 
 struct eri *array_ers;
 DBMap *st_db;
@@ -208,7 +214,7 @@ static struct str_data_struct {
 	int backpatch;
 	int label;
 	int (*func)(struct script_state *st);
-	int val;
+	int64 val;
 	int next;
 	const char *name;
 	bool deprecated;
@@ -361,7 +367,7 @@ unsigned int generic_ui_array_size = 0;
 
 
 c_op get_com(unsigned char *script,int *pos);
-int get_num(unsigned char *script,int *pos);
+int64 get_num(unsigned char *script,int *pos);
 
 typedef struct script_function {
 	int (*func)(struct script_state *st);
@@ -531,9 +537,9 @@ static void script_reportdata(struct script_data* data)
 				const char* name = reference_getname(data);
 				ShowDebug("Data: variable name='%s' index=%d\n", name, reference_getindex(data));
 			} else if( reference_toconstant(data) ) {// constant
-				ShowDebug("Data: constant name='%s' value=%d\n", reference_getname(data), reference_getconstant(data));
+				ShowDebug("Data: constant name='%s' value=%" PRId64 "\n", reference_getname(data), reference_getconstant(data));
 			} else if( reference_toparam(data) ) {// param
-				ShowDebug("Data: param name='%s' type=%d\n", reference_getname(data), reference_getparamtype(data));
+				ShowDebug("Data: param name='%s' type=%" PRId64 "\n", reference_getname(data), reference_getparamtype(data));
 			} else {// ???
 				ShowDebug("Data: reference name='%s' type=%s\n", reference_getname(data), script_op2name(data->type));
 				ShowDebug("Please report this!!! - script->str_data.type=%s\n", script_op2name(str_data[reference_getid(data)].type));
@@ -746,14 +752,14 @@ int add_str(const char* p)
 
 
 /// Appends 1 byte to the script buffer.
-static void add_scriptb(int a)
+static void add_scriptb(uint8 a)
 {
 	if( script_pos+1 >= script_size )
 	{
 		script_size += SCRIPT_BLOCK_SIZE;
 		RECREATE(script_buf,unsigned char,script_size);
 	}
-	script_buf[script_pos++] = (uint8)(a);
+	script_buf[script_pos++] = a;
 }
 
 /// Appends a c_op value to the script buffer.
@@ -774,15 +780,14 @@ static void add_scriptc(int a)
 /// Appends an integer value to the script buffer.
 /// The value is variable-length encoded into 8-bit blocks.
 /// The encoding scheme is ( 11?????? )* 10??????, LSB first.
-/// All blocks but the last hold 7 bits of data, topmost bit is always 1 (carries).
-static void add_scripti(int a)
-{
-	while( a >= 0x40 )
-	{
-		add_scriptb((a&0x3f)|0xc0);
-		a = (a - 0x40) >> 6;
+/// All blocks hold 6 bits of data.
+static void add_scripti(int64 a){
+	while( a > 0x3f ){
+		add_scriptb((a & (int64)0x3f)|(int64)0xc0);
+		a >>= 6;
 	}
-	add_scriptb(a|0x80);
+
+	add_scriptb(((a & (int64)0x3f)|(int64)0x80));
 }
 
 /// Appends a str_data object (label/function/variable/integer) to the script buffer.
@@ -812,7 +817,7 @@ static void add_scriptl(int l)
 		add_scriptb(backpatch>>16);
 		break;
 	case C_INT:
-		add_scripti(abs(str_data[l].val));
+		add_scripti(std::abs(str_data[l].val));
 		if( str_data[l].val < 0 ) //Notice that this is negative, from jA (Rayce)
 			add_scriptc(C_NEG);
 		break;
@@ -1281,7 +1286,7 @@ bool is_number(const char *p) {
  *------------------------------------------*/
 const char* parse_simpleexpr(const char *p)
 {
-	long long i;
+	int64 i;
 	p=skip_space(p);
 
 	if(*p==';' || *p==',')
@@ -1305,16 +1310,24 @@ const char* parse_simpleexpr(const char *p)
 		++p;
 	} else if(is_number(p)) {
 		char *np;
+		bool error;
+
+		// Skip leading zeroes
 		while(*p == '0' && ISDIGIT(p[1])) p++;
+
+		errno = 0;
 		i=strtoll(p,&np,0);
-		if( i < INT_MIN ) {
-			i = INT_MIN;
-			disp_warning_message("parse_simpleexpr: underflow detected, capping value to INT_MIN",p);
-		} else if( i > INT_MAX ) {
-			i = INT_MAX;
-			disp_warning_message("parse_simpleexpr: overflow detected, capping value to INT_MAX",p);
+		error = (errno == ERANGE);
+
+		if( i < SCRIPT_INT_MIN || ( error && i == INT64_MIN ) ){
+			i = SCRIPT_INT_MIN;
+			disp_warning_message( "parse_simpleexpr: underflow detected, capping value to SCRIPT_INT_MIN", p );
+		}else if( i > SCRIPT_INT_MAX || ( error && i == INT64_MAX ) ){
+			i = SCRIPT_INT_MAX;
+			disp_warning_message( "parse_simpleexpr: overflow detected, capping value to SCRIPT_INT_MAX", p );
 		}
-		add_scripti((int)i);
+
+		add_scripti(i);
 		p=np;
 	} else if(*p=='"'){
 		add_scriptc(C_STR);
@@ -1637,7 +1650,8 @@ const char* parse_syntax(const char* p)
 				return p+1;
 			} else {
 				char label[256];
-				int  l,v;
+				int  l;
+				int64 v;
 				char *np;
 				if(syntax.curly[pos].count != 1) {
 					//Jump for FALLTHRU
@@ -1669,7 +1683,7 @@ const char* parse_syntax(const char* p)
 					//Check for constants
 					p2 = skip_word(p);
 					v = (int)(size_t) (p2-p); // length of word at p2
-					memcpy(label,p,v);
+					memcpy(label,p,static_cast<int>(v));
 					label[v]='\0';
 					if( !script_get_constant(label, &v) )
 						disp_error_message("parse_syntax: 'case' label is not an integer",p);
@@ -1678,7 +1692,7 @@ const char* parse_syntax(const char* p)
 				p = skip_space(p);
 				if(*p != ':')
 					disp_error_message("parse_syntax: expect ':'",p);
-				sprintf(label,"if(%d != $@__SW%x_VAL) goto __SW%x_%x;",
+				sprintf(label,"if(%lld != $@__SW%x_VAL) goto __SW%x_%x;",
 					v,syntax.curly[pos].index,syntax.curly[pos].index,syntax.curly[pos].count+1);
 				syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 				// Bad I do not parse twice
@@ -2277,7 +2291,7 @@ const char* script_get_constant_str( const char* prefix, int64 value ){
 }
 
 /// Retrieves the value of a constant parameter.
-bool script_get_parameter(const char* name, int* value)
+bool script_get_parameter(const char* name, int64* value)
 {
 	int n = search_str(name);
 
@@ -2291,7 +2305,7 @@ bool script_get_parameter(const char* name, int* value)
 }
 
 /// Retrieves the value of a constant.
-bool script_get_constant(const char* name, int* value)
+bool script_get_constant(const char* name, int64* value)
 {
 	int n = search_str(name);
 
@@ -2314,7 +2328,7 @@ bool script_get_constant(const char* name, int* value)
 }
 
 /// Creates new constant or parameter with given value.
-void script_set_constant_(const char* name, int value, const char* constant_name, bool isparameter, bool deprecated)
+void script_set_constant_(const char* name, int64 value, const char* constant_name, bool isparameter, bool deprecated)
 {
 	int n = add_str(name);
 
@@ -2327,7 +2341,7 @@ void script_set_constant_(const char* name, int value, const char* constant_name
 	}
 	else if( str_data[n].type == C_PARAM || str_data[n].type == C_INT )
 	{// existing parameter or constant
-		ShowError("script_set_constant: Attempted to overwrite existing %s '%s' (old value=%d, new value=%d).\n", ( str_data[n].type == C_PARAM ) ? "parameter" : "constant", name, str_data[n].val, value);
+		ShowError("script_set_constant: Attempted to overwrite existing %s '%s' (old value=%" PRId64 ", new value=%" PRId64 ").\n", ( str_data[n].type == C_PARAM ) ? "parameter" : "constant", name, str_data[n].val, value);
 	}
 	else
 	{// existing name
@@ -2799,7 +2813,7 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 								st->stack->scope.vars : // instance/scope variable
 								st->script->local.vars; // npc variable
 						if( n )
-							data->u.num = (int)i64db_iget(n,reference_getuid(data));
+							data->u.num = i64db_i64get(n,reference_getuid(data));
 						else
 							data->u.num = 0;
 					}
@@ -2815,7 +2829,7 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 								n = instance_data[instance_id].regs.vars;
 						}
 						if (n)
-							data->u.num = (int)i64db_iget(n,reference_getuid(data));
+							data->u.num = i64db_i64get(n,reference_getuid(data));
 						else {
 							ShowWarning("script:get_val: cannot access instance variable '%s', defaulting to 0\n", name);
 							data->u.num = 0;
@@ -2840,20 +2854,45 @@ struct script_data *get_val(struct script_state* st, struct script_data* data)
 
 struct script_data* push_val2(struct script_stack* stack, enum c_op type, int64 val, struct reg_db* ref);
 
-/// Retrieves the value of a reference identified by uid (variable, constant, param)
-/// The value is left in the top of the stack and needs to be removed manually.
-/// @param st[in]: script state.
-/// @param uid[in]: reference identifier.
-/// @param ref[in]: the container to look up the reference into.
-/// @return: the retrieved value of the reference.
-void* get_val2(struct script_state* st, int64 uid, struct reg_db *ref)
-{
-	struct script_data* data;
-	push_val2(st->stack, C_NAME, uid, ref);
-	data = script_getdatatop(st, -1);
-	get_val(st, data);
-	//! TODO: Support data->u.num as int64 instead cast it to int? (in get_val, it was casted to int).
-	return (data->type == C_INT ? (void*)__64BPRTSIZE((int)data->u.num) : (void*)__64BPRTSIZE(data->u.str));
+const char* get_val2_str( struct script_state* st, int64 uid, struct reg_db* ref ){
+	push_val2( st->stack, C_NAME, uid, ref );
+
+	struct script_data* data = script_getdatatop( st, -1 );
+
+	get_val( st, data );
+
+	const char* value = "";
+
+	if( data->type == C_INT ){
+		ShowError( "get_val2_num: Invalid call. Variable %s is a numeric type.\n", reference_getname( data ) );
+	}else{
+		value = data->u.str;
+	}
+
+	// Do NOT remove the value from stack here, the pointer is returned here and will be used by the caller [Lemongrass]
+	// script_removetop( st, -1, 0 );
+
+	return value;
+}
+
+int64 get_val2_num( struct script_state* st, int64 uid, struct reg_db* ref ){
+	push_val2( st->stack, C_NAME, uid, ref );
+
+	struct script_data* data = script_getdatatop( st, -1 );
+
+	get_val( st, data );
+
+	int64 value = 0;
+
+	if( data->type == C_INT ){
+		value = data->u.num;
+	}else{
+		ShowError( "get_val2_num: Invalid call. Variable %s is not a numeric type.\n", reference_getname( data ) );
+	}
+
+	script_removetop( st, -1, 0 );
+
+	return value;
 }
 
 /**
@@ -2872,15 +2911,15 @@ void script_array_ensure_zero(struct script_state *st, struct map_session_data *
 		insert = true;
 	} else {
 		if( is_string_variable(name) ) {
-			char* str = (char*)get_val2(st, uid, ref);
+			const char* str = get_val2_str( st, uid, ref );
 			if( str && *str )
 				insert = true;
-			script_removetop(st, -1, 0);
+			// Remove stack entry from get_val2_str
+			script_removetop( st, -1, 0 );
 		} else {
-			int32 num = (int32)__64BPRTSIZE(get_val2(st, uid, ref));
+			int64 num = get_val2_num( st, uid, ref );
 			if( num )
 				insert = true;
-			script_removetop(st, -1, 0);
 		}
 	}
 
@@ -3111,157 +3150,200 @@ void script_array_update(struct reg_db *src, int64 num, bool empty)
  *
  * TODO: return values are screwed up, have been for some time (reaad: years), e.g. some functions return 1 failure and success.
  *------------------------------------------*/
-int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const void* value, struct reg_db *ref)
-{
+bool set_reg_str( struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const char* value, struct reg_db *ref ){
 	char prefix = name[0];
 	size_t vlen = 0;
-	if ( !script_check_RegistryVariableLength(0,name,&vlen) )
-	{
-		ShowError("set_reg: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%" PRIuPTR "\n", sd?sd->status.account_id:-1, sd?sd->status.char_id:-1, name, vlen);
-		return 0;
+
+	if( !script_check_RegistryVariableLength( 0, name, &vlen ) ){
+		ShowError( "set_reg: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%" PRIuPTR "\n", sd ? sd->status.account_id : -1, sd ? sd->status.char_id : -1, name, vlen );
+		return false;
 	}
 
-	if( is_string_variable(name) ) {// string variable
-		const char *str = (const char*)value;
+	if( !is_string_variable( name ) ){
+		// integer variable
+		return false;
+	}
 
-		switch (prefix) {
-			case '@':
-				pc_setregstr(sd, num, str);
-				return 1;
-			case '$':
-				return mapreg_setregstr(num, str);
-			case '#':
-				return (name[1] == '#') ?
-					pc_setaccountreg2str(sd, num, str) :
-					pc_setaccountregstr(sd, num, str);
-			case '.':
-				{
-					struct reg_db *n = (ref) ? ref : (name[1] == '@') ? &st->stack->scope : &st->script->local;
-					if( n ) {
-						if (str[0])  {
-							i64db_put(n->vars, num, aStrdup(str));
-							if( script_getvaridx(num) )
-								script_array_update(n, num, false);
-						} else {
-							i64db_remove(n->vars, num);
-							if( script_getvaridx(num) )
-								script_array_update(n, num, true);
+	switch( prefix ){
+		case '@':
+			pc_setregstr( sd, num, value );
+			return true;
+		case '$':
+			return mapreg_setregstr( num, value );
+		case '#':
+			return ( name[1] == '#' ) ? pc_setaccountreg2str( sd, num, value ) : pc_setaccountregstr( sd, num, value );
+		case '.': {
+				struct reg_db *n = ( ref ) ? ref : ( name[1] == '@' ) ? &st->stack->scope : &st->script->local;
+
+				if( n ){
+					if( value[0] ){
+						i64db_put( n->vars, num, aStrdup( value ) );
+
+						if( script_getvaridx( num ) ){
+							script_array_update( n, num, false );
+						}
+					}else{
+						i64db_remove( n->vars, num );
+
+						if( script_getvaridx( num ) ){
+							script_array_update( n, num, true );
 						}
 					}
 				}
-				return 1;
-			case '\'':
-				{
-					struct reg_db *src = nullptr;
-					if (ref)
-						src = ref;
-					else {
-						unsigned short instance_id = script_instancegetid(st);
-						if (instance_id != 0)
-							src = &instance_data[instance_id].regs;
-					}
-					if (src) {
-						bool empty;
-						if (str[0]) {
-							i64db_put(src->vars, num, aStrdup(str));
-							empty = false;
-						} else {
-							i64db_remove(src->vars, num);
-							empty = true;
-						}
-						if (script_getvaridx(num) != 0)
-							script_array_update(src, num, empty);
-					} else {
-						ShowError("script_set_reg: cannot write instance variable '%s', NPC not in a instance!\n", name);
-						script_reportsrc(st);
-					}
-					return 1;
-				}
-			default:
-				return pc_setglobalreg_str(sd, num, str);
-		}
-	} else {// integer variable
-		int val = (int)__64BPRTSIZE(value);
-
-		if(str_data[script_getvarid(num)].type == C_PARAM) {
-			if( pc_setparam(sd, str_data[script_getvarid(num)].val, val) == 0 ) {
-				if( st != NULL ) {
-					ShowError("script_set_reg: failed to set param '%s' to %d.\n", name, val);
-					script_reportsrc(st);
-					st->state = END;
-				}
-				return 0;
 			}
-			return 1;
-		}
+			return true;
+		case '\'': {
+				struct reg_db *src = nullptr;
 
-		switch (prefix) {
-			case '@':
-				pc_setreg(sd, num, val);
-				return 1;
-			case '$':
-				return mapreg_setreg(num, val);
-			case '#':
-				return (name[1] == '#') ?
-					pc_setaccountreg2(sd, num, val) :
-					pc_setaccountreg(sd, num, val);
-			case '.':
-				{
-					struct reg_db *n = (ref) ? ref : (name[1] == '@') ? &st->stack->scope : &st->script->local;
-					if( n ) {
-						if( val != 0 ) {
-							i64db_iput(n->vars, num, val);
-							if( script_getvaridx(num) )
-								script_array_update(n, num, false);
-						} else {
-							i64db_remove(n->vars, num);
-							if( script_getvaridx(num) )
-								script_array_update(n, num, true);
-						}
+				if( ref ){
+					src = ref;
+				}else{
+					unsigned short instance_id = script_instancegetid( st );
+
+					if( instance_id != 0 ){
+						src = &instance_data[instance_id].regs;
 					}
 				}
-				return 1;
-			case '\'':
-				{
-					struct reg_db *src = nullptr;
-					if (ref)
-						src = ref;
-					else {
-						unsigned short instance_id = script_instancegetid(st);
-						if (instance_id != 0)
-							src = &instance_data[instance_id].regs;
+
+				if( src ){
+					bool empty;
+
+					if( value[0] ){
+						i64db_put( src->vars, num, aStrdup( value ) );
+						empty = false;
+					}else{
+						i64db_remove( src->vars, num );
+						empty = true;
 					}
-					if (src) {
-						bool empty;
-						if (val != 0) {
-							i64db_iput(src->vars, num, val);
-							empty = false;
-						} else {
-							i64db_remove(src->vars, num);
-							empty = true;
-						}
-						if (script_getvaridx(num) != 0)
-							script_array_update(src, num, empty);
-					} else {
-						ShowError("script_set_reg: cannot write instance variable '%s', NPC not in a instance!\n", name);
-						script_reportsrc(st);
+
+					if( script_getvaridx( num ) != 0 ){
+						script_array_update( src, num, empty );
 					}
-					return 1;
+				}else{
+					ShowError( "script_set_reg: cannot write instance variable '%s', NPC not in a instance!\n", name );
+					script_reportsrc( st );
 				}
-			default:
-				return pc_setglobalreg(sd, num, val);
-		}
+
+				return true;
+			}
+		default:
+			return pc_setglobalreg_str( sd, num, value );
 	}
 }
 
-int set_var(struct map_session_data* sd, char* name, void* val)
-{
-	return set_reg(NULL, sd, reference_uid(add_str(name),0), name, val, NULL);
+bool set_reg_num( struct script_state* st, struct map_session_data* sd, int64 num, const char* name, int64 value, struct reg_db *ref ){
+	char prefix = name[0];
+	size_t vlen = 0;
+
+	if( !script_check_RegistryVariableLength( 0, name, &vlen ) ){
+		ShowError( "set_reg: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%" PRIuPTR "\n", sd ? sd->status.account_id : -1, sd ? sd->status.char_id : -1, name, vlen );
+		return false;
+	}
+
+	if( is_string_variable( name ) ){
+		// string variable
+		return false;
+	}
+
+	if( str_data[script_getvarid(num)].type == C_PARAM ){
+		if( pc_setparam( sd, str_data[script_getvarid(num)].val, value ) == 0 ){
+			if( st != NULL ) {
+				ShowError( "script_set_reg: failed to set param '%s' to %" PRId64 ".\n", name, value );
+				script_reportsrc( st );
+				st->state = END;
+			}
+
+			return false;
+		}
+
+		return true;
+	}
+
+	switch( prefix ){
+		case '@':
+			pc_setreg( sd, num, value );
+			return true;
+		case '$':
+			return mapreg_setreg( num, value );
+		case '#':
+			return ( name[1] == '#' ) ? pc_setaccountreg2(sd, num, value) :	pc_setaccountreg( sd, num, value );
+		case '.': {
+				struct reg_db *n = ( ref ) ? ref : ( name[1] == '@' ) ? &st->stack->scope : &st->script->local;
+
+				if( n ){
+					if( value != 0 ){
+						i64db_i64put( n->vars, num, value );
+
+						if( script_getvaridx( num ) ){
+							script_array_update( n, num, false );
+						}
+					}else{
+						i64db_remove( n->vars, num );
+
+						if( script_getvaridx( num ) ){
+							script_array_update( n, num, true );
+						}
+					}
+				}
+			}
+			return true;
+		case '\'': {
+				struct reg_db *src = nullptr;
+
+				if( ref ){
+					src = ref;
+				}else{
+					unsigned short instance_id = script_instancegetid( st );
+
+					if( instance_id != 0 ){
+						src = &instance_data[instance_id].regs;
+					}
+				}
+
+				if( src ){
+					bool empty;
+
+					if( value != 0 ){
+						i64db_i64put( src->vars, num, value );
+						empty = false;
+					}else{
+						i64db_remove( src->vars, num );
+						empty = true;
+					}
+
+					if( script_getvaridx( num ) != 0 ){
+						script_array_update( src, num, empty );
+					}
+				}else{
+					ShowError( "script_set_reg: cannot write instance variable '%s', NPC not in a instance!\n", name );
+					script_reportsrc( st );
+				}
+
+				return true;
+			}
+		default:
+			return pc_setglobalreg( sd, num, value );
+	}
 }
 
-void setd_sub(struct script_state *st, struct map_session_data *sd, const char *varname, int elem, void *value, struct reg_db *ref)
-{
-	set_reg(st, sd, reference_uid(add_str(varname),elem), varname, value, ref);
+bool set_var_str( struct map_session_data* sd, const char* name, const char* val ){
+	return set_reg_str( NULL, sd, reference_uid( add_str( name ), 0 ), name, val, NULL );
+}
+
+bool clear_reg( struct script_state* st, struct map_session_data* sd, int64 num, const char* name, struct reg_db *ref ){
+	if( is_string_variable( name ) ){
+		return set_reg_str( st, sd, num, name, "", ref );
+	}else{
+		return set_reg_num( st, sd, num, name, 0, ref );
+	}
+}
+
+void setd_sub_num( struct script_state* st, struct map_session_data* sd, const char* varname, int elem, int64 value, struct reg_db* ref ){
+	set_reg_num( st, sd, reference_uid( add_str( varname ), elem ), varname, value, ref );
+}
+
+void setd_sub_str( struct script_state* st, struct map_session_data* sd, const char* varname, int elem, const char* value, struct reg_db* ref ){
+	set_reg_str( st, sd, reference_uid( add_str( varname ), elem ), varname, value, ref );
 }
 
 /**
@@ -3314,7 +3396,7 @@ const char* conv_str(struct script_state* st, struct script_data* data)
  * @param data
  * @param sd
  */
-int conv_num_(struct script_state* st, struct script_data* data, struct map_session_data *sd)
+int64 conv_num_(struct script_state* st, struct script_data* data, struct map_session_data *sd)
 {
 	get_val_(st, data, sd);
 	if( data_isint(data) )
@@ -3325,33 +3407,29 @@ int conv_num_(struct script_state* st, struct script_data* data, struct map_sess
 		// the result does not overflow or underflow, it is capped instead
 		// ex: 999999999999 is capped to INT_MAX (2147483647)
 		char* p = data->u.str;
-		long num;
+		int64 num;
+		bool error;
 
 		errno = 0;
-		num = strtol(data->u.str, NULL, 10);// change radix to 0 to support octal numbers "o377" and hex numbers "0xFF"
-		if( errno == ERANGE
-#if LONG_MAX > INT_MAX
-			|| num < INT_MIN || num > INT_MAX
-#endif
-			)
-		{
-			if( num <= INT_MIN )
-			{
-				num = INT_MIN;
-				ShowError("script:conv_num: underflow detected, capping to %ld\n", num);
-			}
-			else//if( num >= INT_MAX )
-			{
-				num = INT_MAX;
-				ShowError("script:conv_num: overflow detected, capping to %ld\n", num);
-			}
+		num = strtoll(data->u.str, NULL, 10);// change radix to 0 to support octal numbers "o377" and hex numbers "0xFF"
+		error = (errno == ERANGE);
+
+		if( num < SCRIPT_INT_MIN || ( error && num == INT64_MIN ) ){
+			num = SCRIPT_INT_MIN;
+			ShowError( "script:conv_num: underflow detected, capping value to %" PRId64 "", SCRIPT_INT_MIN );
+			script_reportdata(data);
+			script_reportsrc(st);
+		}else if( num > SCRIPT_INT_MAX || ( error && num == INT64_MAX ) ){
+			num = SCRIPT_INT_MAX;
+			ShowError( "script:conv_num: overflow detected, capping value to %" PRId64 "", SCRIPT_INT_MAX );
 			script_reportdata(data);
 			script_reportsrc(st);
 		}
+
 		if( data->type == C_STR )
 			aFree(p);
 		data->type = C_INT;
-		data->u.num = (int)num;
+		data->u.num = num;
 	}
 #if 0
 	// FIXME this function is being used to retrieve the position of labels and
@@ -3365,12 +3443,17 @@ int conv_num_(struct script_state* st, struct script_data* data, struct map_sess
 		data->u.num = 0;
 	}
 #endif
-	return (int)data->u.num;
+	return data->u.num;
+}
+
+int64 conv_num64(struct script_state* st, struct script_data* data)
+{
+	return conv_num_(st, data, NULL);
 }
 
 int conv_num(struct script_state* st, struct script_data* data)
 {
-	return conv_num_(st, data, NULL);
+	return static_cast<int>(conv_num_(st, data, NULL));
 }
 
 //
@@ -3666,15 +3749,29 @@ c_op get_com(unsigned char *script,int *pos)
 /*==========================================
  *  Income figures
  *------------------------------------------*/
-int get_num(unsigned char *script,int *pos)
+int64 get_num(unsigned char *script,int *pos)
 {
-	int i,j;
-	i=0; j=0;
-	while(script[*pos]>=0xc0){
-		i+=(script[(*pos)++]&0x7f)<<j;
-		j+=6;
+	int i, end;
+	int64 value;
+
+	// Find the end of the data
+	for( i = 0; script[*pos+i] >= 0xc0; i++ ) ; // do nothing just find it
+
+	end = i; // store the end for later
+	value = 0; // initialize empty value
+
+	// If more than one byte of data exists
+	for( ; i > 0; i-- ){
+		value |= (int64)( script[*pos+i] & (int64)0x3f );
+		value <<= 6;
 	}
-	return i+((script[(*pos)++]&0x7f)<<j);
+
+	// Put our last piece of data into the return value
+	value |= (script[*pos+i] & (int64)0x3f);
+
+	*pos += end + 1; // one byte after the last byte of data
+
+	return value;
 }
 
 /// Ternary operators
@@ -3747,10 +3844,8 @@ void op_2str(struct script_state* st, int op, const char* s1, const char* s2)
 
 /// Binary number operators
 /// i OP i -> i
-void op_2num(struct script_state* st, int op, int i1, int i2)
-{
-	int ret;
-	double ret_double;
+void op_2num( struct script_state* st, int op, int64 i1, int64 i2 ){
+	int64 ret;
 
 	switch( op ) {
 		case C_AND:  ret = i1 & i2;		break;
@@ -3770,7 +3865,7 @@ void op_2num(struct script_state* st, int op, int i1, int i2)
 		case C_MOD:
 			if( i2 == 0 )
 			{
-				ShowError("script:op_2num: division by zero detected op=%s i1=%d i2=%d\n", script_op2name(op), i1, i2);
+				ShowError("script:op_2num: division by zero detected op=%s i1=%" PRId64 " i2=%" PRId64 "\n", script_op2name(op), i1, i2);
 				script_reportsrc(st);
 				script_pushnil(st);
 				st->state = END;
@@ -3782,25 +3877,26 @@ void op_2num(struct script_state* st, int op, int i1, int i2)
 				ret = i1 % i2;
 			break;
 		default:
-			switch( op ) {// operators that can overflow/underflow
-				case C_ADD: ret = i1 + i2; ret_double = (double)i1 + (double)i2; break;
-				case C_SUB: ret = i1 - i2; ret_double = (double)i1 - (double)i2; break;
-				case C_MUL: ret = i1 * i2; ret_double = (double)i1 * (double)i2; break;
+			bool overflow;
+
+			// operators that can overflow/underflow
+			switch( op ) {
+				case C_ADD: overflow = util::safe_addition( i1, i2, ret ); break;
+				case C_SUB: overflow = util::safe_substraction( i1, i2, ret ); break;
+				case C_MUL: overflow = util::safe_multiplication( i1, i2, ret ); break;
 				default:
-					ShowError("script:op_2num: unexpected number operator %s i1=%d i2=%d\n", script_op2name(op), i1, i2);
+					ShowError("script:op_2num: unexpected number operator %s i1=%" PRId64 " i2=%" PRId64 "\n", script_op2name(op), i1, i2);
 					script_reportsrc(st);
 					script_pushnil(st);
 					return;
 			}
-			if( ret_double < (double)INT_MIN ) {
-				ShowWarning("script:op_2num: underflow detected op=%s i1=%d i2=%d\n", script_op2name(op), i1, i2);
+
+			if( overflow ){
+				ShowWarning("script:op_2num: overflow detected op=%s i1=%" PRId64 " i2=%" PRId64 "\n", script_op2name(op), i1, i2);
 				script_reportsrc(st);
-				ret = INT_MIN;
-			}
-			else if( ret_double > (double)INT_MAX ) {
-				ShowWarning("script:op_2num: overflow detected op=%s i1=%d i2=%d\n", script_op2name(op), i1, i2);
-				script_reportsrc(st);
-				ret = INT_MAX;
+				script_pushnil(st);
+				st->state = END;
+				return;
 			}
 	}
 	script_pushint(st, ret);
@@ -3857,8 +3953,8 @@ void op_2(struct script_state *st, int op)
 	}
 	else if( data_isint(left) && data_isint(right) )
 	{// ii => op_2num
-		int i1 = (int)left->u.num;
-		int i2 = (int)right->u.num;
+		int64 i1 = left->u.num;
+		int64 i2 = right->u.num;
 
 		script_removetop(st, leftref.type == C_NOP ? -2 : -1, 0);
 		op_2num(st, op, i1, i2);
@@ -3885,7 +3981,6 @@ void op_2(struct script_state *st, int op)
 void op_1(struct script_state* st, int op)
 {
 	struct script_data* data;
-	int i1;
 
 	data = script_getdatatop(st, -1);
 	get_val(st, data);
@@ -3900,7 +3995,7 @@ void op_1(struct script_state* st, int op)
 		return;
 	}
 
-	i1 = (int)data->u.num;
+	int64 i1 = data->u.num;
 	script_removetop(st, -1, 0);
 	switch( op )
 	{
@@ -3908,7 +4003,7 @@ void op_1(struct script_state* st, int op)
 		case C_NOT: i1 = ~i1; break;
 		case C_LNOT: i1 = !i1; break;
 		default:
-			ShowError("script:op_1: unexpected operator %s i1=%d\n", script_op2name(op), i1);
+			ShowError("script:op_1: unexpected operator %s i1=%" PRId64 "\n", script_op2name(op), i1);
 			script_reportsrc(st);
 			script_pushnil(st);
 			st->state = END;
@@ -4530,8 +4625,7 @@ void script_add_autobonus(const char *autobonus)
 
 
 /// resets a temporary character array variable to given value
-void script_cleararray_pc(struct map_session_data* sd, const char* varname, void* value)
-{
+void script_cleararray_pc( struct map_session_data* sd, const char* varname ){
 	struct script_array *sa = NULL;
 	struct reg_db *src = NULL;
 	unsigned int i, *list = NULL, size = 0;
@@ -4542,24 +4636,21 @@ void script_cleararray_pc(struct map_session_data* sd, const char* varname, void
 	if( !(src = script_array_src(NULL,sd,varname,NULL) ) )
 		return;
 
-	if( value )
-		script_array_ensure_zero(NULL,sd,reference_uid(key,0), NULL);
-
 	if( !(sa = static_cast<script_array *>(idb_get(src->arrays, key))) ) /* non-existent array, nothing to empty */
 		return;
 
 	size = sa->size;
 	list = script_array_cpy_list(sa);
 
-	for(i = 0; i < size; i++) {
-		set_reg(NULL,sd,reference_uid(key, list[i]),varname,value,NULL);
+	for( i = 0; i < size; i++ ){
+		clear_reg( NULL, sd, reference_uid( key, list[i] ), varname, NULL );
 	}
 }
 
 
 /// sets a temporary character array variable element idx to given value
 /// @param refcache Pointer to an int variable, which keeps a copy of the reference to varname and must be initialized to 0. Can be NULL if only one element is set.
-void script_setarray_pc(struct map_session_data* sd, const char* varname, uint32 idx, void* value, int* refcache)
+void script_setarray_pc(struct map_session_data* sd, const char* varname, uint32 idx, int64 value, int* refcache)
 {
 	int key;
 
@@ -4570,7 +4661,7 @@ void script_setarray_pc(struct map_session_data* sd, const char* varname, uint32
 
 	key = ( refcache && refcache[0] ) ? refcache[0] : add_str(varname);
 
-	set_reg(NULL,sd,reference_uid(key, idx),varname,value,NULL);
+	set_reg_num( NULL, sd, reference_uid( key, idx ), varname, value, NULL );
 
 	if( refcache ) {
 		// save to avoid repeated script->add_str calls
@@ -5959,13 +6050,13 @@ BUILDIN_FUNC(input)
 		if( is_string_variable(name) )
 		{
 			int len = (int)strlen(sd->npc_str);
-			set_reg(st, sd, uid, name, (void*)sd->npc_str, script_getref(st,2));
+			set_reg_str(st, sd, uid, name, sd->npc_str, script_getref(st,2));
 			script_pushint(st, (len > max ? 1 : len < min ? -1 : 0));
 		}
 		else
 		{
 			int amount = sd->npc_amount;
-			set_reg(st, sd, uid, name, (void*)__64BPRTSIZE(cap_value(amount,min,max)), script_getref(st,2));
+			set_reg_num(st, sd, uid, name, cap_value(amount,min,max), script_getref(st,2));
 			script_pushint(st, (amount > max ? 1 : amount < min ? -1 : 0));
 		}
 		st->state = RUN;
@@ -6044,14 +6135,14 @@ BUILDIN_FUNC(setr)
 		if( is_string_variable(name) )
 			script_pushstrcopy(st,script_getstr(st, 4));
 		else
-			script_pushint(st,script_getnum(st, 4));
+			script_pushint(st,script_getnum64(st, 4));
 	} else // Return a copy of the variable reference
 		script_pushcopy(st, 2);
 
 	if( is_string_variable(name) )
-		set_reg(st,sd,num,name,(void*)script_getstr(st,3),script_getref(st,2));
+		set_reg_str( st, sd, num, name, script_getstr( st, 3 ), script_getref( st, 2 ) );
 	else
-		set_reg(st,sd,num,name,(void*)__64BPRTSIZE(script_getnum(st,3)),script_getref(st,2));
+		set_reg_num( st, sd, num, name, script_getnum64( st, 3 ), script_getref( st, 2 ) );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -6100,12 +6191,12 @@ BUILDIN_FUNC(setarray)
 	if( is_string_variable(name) )
 	{// string array
 		for( i = 3; start < end; ++start, ++i )
-			set_reg(st, sd, reference_uid(id, start), name, (void*)script_getstr(st,i), reference_getref(data));
+			set_reg_str( st, sd, reference_uid( id, start ), name, script_getstr( st, i ), reference_getref( data ) );
 	}
 	else
 	{// int array
 		for( i = 3; start < end; ++start, ++i )
-			set_reg(st, sd, reference_uid(id, start), name, (void*)__64BPRTSIZE(script_getnum(st,i)), reference_getref(data));
+			set_reg_num( st, sd, reference_uid( id, start ), name, script_getnum64( st, i ), reference_getref( data ) );
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -6121,7 +6212,6 @@ BUILDIN_FUNC(cleararray)
 	uint32 start;
 	uint32 end;
 	int32 id;
-	void* v;
 	TBL_PC* sd = NULL;
 
 	data = script_getdata(st, 2);
@@ -6143,17 +6233,24 @@ BUILDIN_FUNC(cleararray)
 			return SCRIPT_CMD_SUCCESS;// no player attached
 	}
 
-	if( is_string_variable(name) )
-		v = (void*)script_getstr(st, 3);
-	else
-		v = (void*)__64BPRTSIZE(script_getnum(st, 3));
-
 	end = start + script_getnum(st, 4);
 	if( end > SCRIPT_MAX_ARRAYSIZE )
 		end = SCRIPT_MAX_ARRAYSIZE;
 
-	for( ; start < end; ++start )
-		set_reg(st, sd, reference_uid(id, start), name, v, script_getref(st,2));
+	if( is_string_variable( name ) ){
+		const char* value = script_getstr( st, 3 );
+
+		for( ; start < end; ++start ){
+			set_reg_str( st, sd, reference_uid( id, start ), name, value, script_getref( st,2 ) );
+		}
+	}else{
+		int64 value = script_getnum64( st, 3 );
+
+		for( ; start < end; ++start ){
+			set_reg_num( st, sd, reference_uid( id, start ), name, value, script_getref( st,2 ) );
+		}
+	}
+	
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -6171,7 +6268,6 @@ BUILDIN_FUNC(copyarray)
 	int32 idx2;
 	int32 id1;
 	int32 id2;
-	void* v;
 	int32 i;
 	uint32 count;
 	TBL_PC* sd = NULL;
@@ -6194,8 +6290,9 @@ BUILDIN_FUNC(copyarray)
 	name1 = reference_getname(data1);
 	name2 = reference_getname(data2);
 
-	if( is_string_variable(name1) != is_string_variable(name2) )
-	{
+	bool is_string = is_string_variable( name1 );
+
+	if( is_string != is_string_variable( name2 ) ){
 		ShowError("script:copyarray: type mismatch\n");
 		script_reportdata(data1);
 		script_reportdata(data2);
@@ -6215,27 +6312,36 @@ BUILDIN_FUNC(copyarray)
 	if( count <= 0 || (id1 == id2 && idx1 == idx2) )
 		return SCRIPT_CMD_SUCCESS;// nothing to copy
 
-	if( id1 == id2 && idx1 > idx2 )
-	{// destination might be overlapping the source - copy in reverse order
-		for( i = count - 1; i >= 0; --i )
-		{
-			v = get_val2(st, reference_uid(id2, idx2 + i), reference_getref(data2));
-			set_reg(st, sd, reference_uid(id1, idx1 + i), name1, v, reference_getref(data1));
-			script_removetop(st, -1, 0);
-		}
-	}
-	else
-	{// normal copy
-		for( i = 0; i < count; ++i )
-		{
-			if( idx2 + i < SCRIPT_MAX_ARRAYSIZE )
-			{
-				v = get_val2(st, reference_uid(id2, idx2 + i), reference_getref(data2));
-				set_reg(st, sd, reference_uid(id1, idx1 + i), name1, v, reference_getref(data1));
-				script_removetop(st, -1, 0);
+	if( id1 == id2 && idx1 > idx2 ){
+		// destination might be overlapping the source - copy in reverse order
+		for( i = count - 1; i >= 0; --i ){
+			if( is_string ){
+				const char* value = get_val2_str( st, reference_uid( id2, idx2 + i ), reference_getref( data2 ) );
+				set_reg_str( st, sd, reference_uid( id1, idx1 + i ), name1, value, reference_getref( data1 ) );
+				// Remove stack entry from get_val2_str
+				script_removetop( st, -1, 0 );
+			}else{
+				int64 value = get_val2_num( st, reference_uid( id2, idx2 + i ), reference_getref( data2 ) );
+				set_reg_num( st, sd, reference_uid( id1, idx1 + i ), name1, value, reference_getref( data1 ) );
 			}
-			else// out of range - assume ""/0
-				set_reg(st, sd, reference_uid(id1, idx1 + i), name1, (is_string_variable(name1)?(void*)"":(void*)0), reference_getref(data1));
+		}
+	}else{
+		// normal copy
+		for( i = 0; i < count; ++i ){
+			if( idx2 + i < SCRIPT_MAX_ARRAYSIZE ){
+				if( is_string ){
+					const char* value = get_val2_str( st, reference_uid( id2, idx2 + i ), reference_getref( data2 ) );
+					set_reg_str( st, sd, reference_uid( id1, idx1 + i ), name1, value, reference_getref( data1 ) );
+					// Remove stack entry from get_val2_str
+					script_removetop( st, -1, 0 );
+				}else{
+					int64 value = get_val2_num( st, reference_uid( id2, idx2 + i ), reference_getref( data2 ) );
+					set_reg_num( st, sd, reference_uid( id1, idx1 + i ), name1, value, reference_getref( data1 ) );
+				}
+			}else{
+				// out of range - assume ""/0
+				clear_reg( st, sd, reference_uid( id1, idx1 + i ), name1, reference_getref( data1 ) );
+			}
 		}
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -6291,7 +6397,6 @@ BUILDIN_FUNC(deletearray)
 	TBL_PC *sd = NULL;
 	struct script_array *sa = NULL;
 	struct reg_db *src = NULL;
-	void *value;
 
 	data = script_getdata(st, 2);
 	if( !data_isreference(data) ) {
@@ -6328,11 +6433,6 @@ BUILDIN_FUNC(deletearray)
 	if( start >= end )
 		return SCRIPT_CMD_SUCCESS;// nothing to free
 
-	if( is_string_variable(name) )
-		value = (void *)"";
-	else
-		value = (void *)0;
-
 	if( script_hasdata(st,3) ) {
 		unsigned int count = script_getnum(st, 3);
 		if( count > end - start )
@@ -6340,17 +6440,25 @@ BUILDIN_FUNC(deletearray)
 		if( count <= 0 )
 			return SCRIPT_CMD_SUCCESS;// nothing to free
 
+		bool is_string = is_string_variable( name );
+
 		if( end - start < sa->size ) {
 			// Better to iterate directly on the array, no speed-up from using sa
 			for( ; start + count < end; ++start ) {
 				// Compact and overwrite
-				void* v = get_val2(st, reference_uid(id, start + count), reference_getref(data));
-				set_reg(st, sd, reference_uid(id, start), name, v, reference_getref(data));
-				script_removetop(st, -1, 0);
+				if( is_string ){
+					const char* value = get_val2_str( st, reference_uid( id, start + count ), reference_getref( data ) );
+					set_reg_str( st, sd, reference_uid( id, start ), name, value, reference_getref( data ) );
+					// Remove stack entry from get_val2_str
+					script_removetop( st, -1, 0 );
+				}else{
+					int64 value = get_val2_num( st, reference_uid( id, start + count ), reference_getref( data ) );
+					set_reg_num( st, sd, reference_uid( id, start ), name, value, reference_getref( data ) );
+				}
 			}
 			for( ; start < end; start++ ) {
 				// Clean up any leftovers that weren't overwritten
-				set_reg(st, sd, reference_uid(id, start), name, value, reference_getref(data));
+				clear_reg( st, sd, reference_uid( id, start ), name, reference_getref( data ) );
 			}
 		} else {
 			// using sa to speed up
@@ -6363,16 +6471,23 @@ BUILDIN_FUNC(deletearray)
 			
 			for( ; i < size && list[i] < start + count; i++ ) {
 				// Clear any entries between start and start+count, if they exist
-				set_reg(st, sd, reference_uid(id, list[i]), name, value, reference_getref(data));
+				clear_reg( st, sd, reference_uid( id, list[i] ), name, reference_getref( data ) );
 			}
 			
 			for( ; i < size && list[i] < end; i++ ) {
 				// Move back count positions any entries between start+count to fill the gaps
-				void* v = get_val2(st, reference_uid(id, list[i]), reference_getref(data));
-				set_reg(st, sd, reference_uid(id, list[i]-count), name, v, reference_getref(data));
-				script_removetop(st, -1, 0);
+				if( is_string ){
+					const char* value = get_val2_str( st, reference_uid( id, list[i] ), reference_getref( data ) );
+					set_reg_str( st, sd, reference_uid( id, list[i] - count ), name, value, reference_getref( data ) );
+					// Remove stack entry from get_val2_str
+					script_removetop( st, -1, 0 );
+				}else{
+					int64 value = get_val2_num( st, reference_uid( id, list[i] ), reference_getref( data ) );
+					set_reg_num( st, sd, reference_uid( id, list[i] - count ), name, value, reference_getref( data ) );
+				}
+
 				// Clear their originals
-				set_reg(st, sd, reference_uid(id, list[i]), name, value, reference_getref(data));
+				clear_reg( st, sd, reference_uid( id, list[i] ), name, reference_getref( data ) );
 			}
 		}
 	} else {
@@ -6382,7 +6497,7 @@ BUILDIN_FUNC(deletearray)
 		
 		for(i = 0; i < size; i++) {
 			if( list[i] >= start ) // Less expensive than sorting it, most likely
-				set_reg(st, sd, reference_uid(id, list[i]), name, value, reference_getref(data));
+				clear_reg( st, sd, reference_uid( id, list[i] ), name, reference_getref( data ) );
 		}
 	}
 
@@ -6468,37 +6583,33 @@ BUILDIN_FUNC(inarray)
 	}
 
 	id = reference_getid(data);
-	if (is_string_variable(name))
-	{
-		const char* temp;
-		const char* value;
-		value = script_getstr(st, 3);
-		for (i = 0; i <= array_size; ++i)
-		{
-			temp = (char*)get_val2(st, reference_uid(id, i), ref);
-			if (!strcmp(temp, value))
-			{
-				script_removetop(st, -1, 0);
-				script_pushint(st, i);
+
+	if( is_string_variable( name ) ){
+		const char* value = script_getstr( st, 3 );
+
+		for( i = 0; i <= array_size; ++i ){
+			const char* temp = get_val2_str( st, reference_uid( id, i ), ref );
+
+			if( !strcmp( temp, value ) ){
+				// Remove stack entry from get_val2_str
+				script_removetop( st, -1, 0 );
+				script_pushint( st, i );
 				return SCRIPT_CMD_SUCCESS;
 			}
-			script_removetop(st, -1, 0);
+
+			// Remove stack entry from get_val2_str
+			script_removetop( st, -1, 0 );
 		}
-	}
-	else
-	{
-		int temp, value;
-		value = script_getnum(st, 3);
-		for (i = 0; i <= array_size; ++i)
-		{
-			temp = (int32)__64BPRTSIZE(get_val2(st, reference_uid(id, i), ref));
-			script_removetop(st, -1, 0);
-			if (temp == value)
-			{
-				script_pushint(st, i);
+	}else{
+		int64 value = script_getnum64( st, 3 );
+
+		for( i = 0; i <= array_size; ++i ){
+			int64 temp = get_val2_num( st, reference_uid( id, i ), ref );
+
+			if( temp == value ){
+				script_pushint( st, i );
 				return SCRIPT_CMD_SUCCESS;
-			}
-			
+			}	
 		}
 	}
 
@@ -6569,46 +6680,39 @@ BUILDIN_FUNC(countinarray)
 
 	id1 = reference_getid(data1);
 	id2 = reference_getid(data2);
-	if (is_string_variable(name1) && is_string_variable(name2))
-	{
-		const char* temp1;
-		const char* temp2;
-		for (; i <= array_size1; ++i)
-		{
-			temp1 = (char*)get_val2(st, reference_uid(id1, i), ref1);
-			for (j = reference_getindex(data2); j <= array_size2; j++)
-			{
-				temp2 = (char*)get_val2(st, reference_uid(id2, j), ref2);
-				if (!strcmp(temp1, temp2))
-				{
+
+	if( is_string_variable( name1 ) && is_string_variable( name2 ) ){
+		for( ; i <= array_size1; ++i ){
+			const char* temp1 = get_val2_str( st, reference_uid( id1, i ), ref1 );
+
+			for( j = reference_getindex( data2 ); j <= array_size2; j++ ){
+				const char* temp2 = get_val2_str( st, reference_uid( id2, j ), ref2 );
+
+				if( !strcmp( temp1, temp2 ) ){
 					case_count++;
 				}
-				script_removetop(st, -1, 0);
+
+				// Remove stack entry from get_val2_str
+				script_removetop( st, -1, 0 );
 			}
-			script_removetop(st, -1, 0);
+
+			// Remove stack entry from get_val2_str
+			script_removetop( st, -1, 0 );
 		}
-	}
-	else if (!is_string_variable(name1) && !is_string_variable(name2))
-	{
-		int temp1, temp2;
-		for (; i <= array_size1; ++i)
-		{
-			temp1 = (int32)__64BPRTSIZE(get_val2(st, reference_uid(id1, i), ref1));
-			for (j = reference_getindex(data2); j <= array_size2; j++)
-			{
-				temp2 = (int32)__64BPRTSIZE(get_val2(st, reference_uid(id2, j), ref2));
-				if (temp1 == temp2)
-				{
+	}else if( !is_string_variable( name1 ) && !is_string_variable( name2 ) ){
+		for( ; i <= array_size1; ++i ){
+			int64 temp1 = get_val2_num( st, reference_uid( id1, i ), ref1 );
+
+			for( j = reference_getindex( data2 ); j <= array_size2; j++ ){
+				int64 temp2 = get_val2_num( st, reference_uid( id2, j ), ref2 );
+
+				if( temp1 == temp2 ){
 					case_count++;
 				}
-				script_removetop(st, -1, 0);
 			}
-			script_removetop(st, -1, 0);
 		}
-	}
-	else
-	{
-		ShowError("buildin_countinarray: Arrays does not match , You can't compare int array to string array.\n");
+	}else{
+		ShowError("buildin_countinarray: Arrays do not match , You can't compare an int array to a string array.\n");
 		script_reportdata(data1);
 		script_reportdata(data2);
 		st->state = END;
@@ -6804,12 +6908,9 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
 	opt_param_idx = reference_getindex(opt_param);
 	
 	for (i = 0; i < opt_id_n && i < MAX_ITEM_RDM_OPT; i++) {
-		it->option[i].id = static_cast<short>((int32)__64BPRTSIZE(get_val2(st,reference_uid(opt_id_id,opt_id_idx+i),opt_id_ref)));
-		script_removetop(st, -1, 0);
-		it->option[i].value = static_cast<short>((int32)__64BPRTSIZE(get_val2(st,reference_uid(opt_val_id,opt_val_idx+i),opt_val_ref)));
-		script_removetop(st, -1, 0);
-		it->option[i].param = static_cast<char>((int32)__64BPRTSIZE(get_val2(st,reference_uid(opt_param_id,opt_param_idx+i),opt_param_ref)));
-		script_removetop(st, -1, 0);
+		it->option[i].id = (short)get_val2_num( st, reference_uid( opt_id_id, opt_id_idx + i ), opt_id_ref );
+		it->option[i].value = (short)get_val2_num( st, reference_uid( opt_val_id, opt_val_idx + i ), opt_val_ref );
+		it->option[i].param = (char)get_val2_num( st, reference_uid( opt_param_id, opt_param_idx + i ), opt_param_ref );
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -7215,10 +7316,8 @@ BUILDIN_FUNC(checkweight2)
 
 	slots = pc_inventoryblank(sd);
 	for(i=0; i<nb_it; i++) {
-		unsigned short amount, nameid = (int32)__64BPRTSIZE(get_val2(st,reference_uid(id_it,idx_it+i),reference_getref(data_it)));
-		script_removetop(st, -1, 0);
-		amount = (int32)__64BPRTSIZE(get_val2(st,reference_uid(id_nb,idx_nb+i),reference_getref(data_nb)));
-		script_removetop(st, -1, 0);
+		unsigned short nameid = (unsigned short)get_val2_num( st, reference_uid( id_it, idx_it + i ), reference_getref( data_it ) );
+		unsigned short amount = (unsigned short)get_val2_num( st, reference_uid( id_nb, idx_nb + i ), reference_getref( data_nb ) );
 
 		if(fail)
 			continue; //cpntonie to depop rest
@@ -8311,7 +8410,7 @@ BUILDIN_FUNC(readparam)
 		get_val_(st, data, sd);
 		value = (int)data->u.num;
 	}else{
-		value = pc_readparam(sd,script_getnum(st, 2));
+		value = static_cast<int>(pc_readparam(sd,script_getnum(st, 2)));
 	}
 
 	script_pushint(st,value);
@@ -8456,19 +8555,19 @@ BUILDIN_FUNC(getpartymember)
 				switch (type) {
 					case 2:
 						if (data)
-							setd_sub(st, NULL, varname, j, (void *)__64BPRTSIZE(p->party.member[i].account_id), data->ref);
+							setd_sub_num( st, NULL, varname, j, p->party.member[i].account_id, data->ref );
 						else
 							mapreg_setreg(reference_uid(add_str("$@partymemberaid"), j),p->party.member[i].account_id);
 						break;
 					case 1:
 						if (data)
-							setd_sub(st, NULL, varname, j, (void *)__64BPRTSIZE(p->party.member[i].char_id), data->ref);
+							setd_sub_num( st, NULL, varname, j, p->party.member[i].char_id, data->ref );
 						else
 							mapreg_setreg(reference_uid(add_str("$@partymembercid"), j),p->party.member[i].char_id);
 						break;
 					default:
 						if (data)
-							setd_sub(st, NULL, varname, j, (void *)__64BPRTSIZE(p->party.member[i].name), data->ref);
+							setd_sub_str( st, NULL, varname, j, p->party.member[i].name, data->ref );
 						else
 							mapreg_setregstr(reference_uid(add_str("$@partymembername$"), j),p->party.member[i].name);
 						break;
@@ -9085,7 +9184,7 @@ BUILDIN_FUNC(successrefitem) {
 		pc_equipitem(sd,i,ep);
 		clif_misceffect(&sd->bl,3);
 		achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
-		if (sd->inventory.u.items_inventory[i].refine == MAX_REFINE &&
+		if (sd->inventory.u.items_inventory[i].refine == battle_config.blacksmith_fame_refine_threshold &&
 			sd->inventory.u.items_inventory[i].card[0] == CARD0_FORGE &&
 			sd->status.char_id == (int)MakeDWord(sd->inventory.u.items_inventory[i].card[2],sd->inventory.u.items_inventory[i].card[3]))
 		{ // Fame point system [DracoRPG]
@@ -11063,7 +11162,7 @@ BUILDIN_FUNC(announce)
 		}else{
 			struct map_session_data* sd;
 
-			if( script_rid2sd(sd) )
+			if(script_charid2sd(9, sd))
 				bl = &sd->bl;
 			else
 				bl = NULL;
@@ -11349,8 +11448,14 @@ BUILDIN_FUNC(getunits)
 	{
 		if (m == -1 || (m == bl->m && !x0 && !y0 && !x1 && !y1) || (bl->m == m && (bl->x >= x0 && bl->y >= y0) && (bl->x <= x1 && bl->y <= y1)))
 		{
-			if (data)
-				set_reg(st, sd, reference_uid(id, idx + size), name, (is_string_variable(name) ? (void*)status_get_name(bl) : (void*)__64BPRTSIZE(bl->id)), reference_getref(data));
+			if( data ){
+				if( is_string_variable( name ) ){
+					set_reg_str( st, sd, reference_uid( id, idx + size ), name, status_get_name( bl ), reference_getref( data ) );
+				}else{
+					set_reg_num( st, sd, reference_uid( id, idx + size ), name, bl->id, reference_getref( data ) );
+				}
+			}
+
 			size++;
 		}
 	}
@@ -12159,10 +12264,10 @@ BUILDIN_FUNC(getwaitingroomusers)
 	
 	if( nd != NULL && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != NULL ) {
 		for(i = 0; i < cd->users; ++i) {
-			setd_sub(st, NULL, ".@waitingroom_users", j, (void *)__64BPRTSIZE(cd->usersd[i]->status.account_id), NULL);
+			setd_sub_num( st, NULL, ".@waitingroom_users", j, cd->usersd[i]->status.account_id, NULL );
 			j++;
 		}
-		setd_sub(st, NULL, ".@waitingroom_usercount", 0, (void *)__64BPRTSIZE(j), NULL);
+		setd_sub_num( st, NULL, ".@waitingroom_usercount", 0, j, NULL );
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -15233,7 +15338,7 @@ BUILDIN_FUNC(getmapxy)
 		}
 	}else
 		sd=NULL;
-	set_reg(st,sd,num,name,(void*)mapname,script_getref(st,2));
+	set_reg_str( st, sd, num, name, mapname, script_getref( st, 2 ) );
 
 	//Set MapX
 	num=st->stack->stack_data[st->start+3].u.num;
@@ -15247,7 +15352,7 @@ BUILDIN_FUNC(getmapxy)
 		}
 	}else
 		sd=NULL;
-	set_reg(st,sd,num,name,(void*)__64BPRTSIZE(x),script_getref(st,3));
+	set_reg_num( st, sd, num, name, x, script_getref( st, 3 ) );
 
 	//Set MapY
 	num=st->stack->stack_data[st->start+4].u.num;
@@ -15261,7 +15366,7 @@ BUILDIN_FUNC(getmapxy)
 		}
 	}else
 		sd=NULL;
-	set_reg(st,sd,num,name,(void*)__64BPRTSIZE(y),script_getref(st,4));
+	set_reg_num( st, sd, num, name, y, script_getref( st, 4 ) );
 
 	//Return Success value
 	script_pushint(st,0);
@@ -15956,7 +16061,7 @@ BUILDIN_FUNC(explode)
 	while(str[i] != '\0') {
 		if(str[i] == delimiter && start < SCRIPT_MAX_ARRAYSIZE-1) { //break at delimiter but ignore after reaching last array index
 			temp[j] = '\0';
-			set_reg(st, sd, reference_uid(id, start++), name, (void*)temp, reference_getref(data));
+			set_reg_str( st, sd, reference_uid( id, start++ ), name, temp, reference_getref( data ) );
 			j = 0;
 			++i;
 		} else {
@@ -15966,7 +16071,7 @@ BUILDIN_FUNC(explode)
 
 	//set last string
 	temp[j] = '\0';
-	set_reg(st, sd, reference_uid(id, start), name, (void*)temp, reference_getref(data));
+	set_reg_str( st, sd, reference_uid( id, start ), name, temp, reference_getref( data ) );
 
 	aFree(temp);
 	return SCRIPT_CMD_SUCCESS;
@@ -16018,9 +16123,10 @@ BUILDIN_FUNC(implode)
 		int i, k = 0;
 
 		for(i = 0; i <= array_size; ++i) {
-			temp = (char*) get_val2(st, reference_uid(id, i), reference_getref(data));
+			temp = get_val2_str( st, reference_uid( id, i ), reference_getref( data ) );
 			len += strlen(temp);
-			script_removetop(st, -1, 0);
+			// Remove stack entry from get_val2_str
+			script_removetop( st, -1, 0 );
 		}
 
 		//allocate mem
@@ -16033,25 +16139,26 @@ BUILDIN_FUNC(implode)
 
 		//build output
 		for(i = 0; i < array_size; ++i) {
-			temp = (char*) get_val2(st, reference_uid(id, i), reference_getref(data));
+			temp = get_val2_str( st, reference_uid( id, i ), reference_getref( data ) );
 			len = strlen(temp);
 			memcpy(&output[k], temp, len);
 			k += len;
+			// Remove stack entry from get_val2_str
+			script_removetop( st, -1, 0 );
 
 			if(glue_len != 0) {
 				memcpy(&output[k], glue, glue_len);
 				k += glue_len;
 			}
-
-			script_removetop(st, -1, 0);
 		}
 
-		temp = (char*) get_val2(st, reference_uid(id, array_size), reference_getref(data));
+		temp = get_val2_str( st, reference_uid( id, array_size ), reference_getref( data ) );
 		len = strlen(temp);
 		memcpy(&output[k], temp, len);
 		k += len;
-		script_removetop(st, -1, 0);
 		output[k] = '\0';
+		// Remove stack entry from get_val2_str
+		script_removetop( st, -1, 0 );
 	}
 
 	script_pushstr(st, output);
@@ -16289,12 +16396,12 @@ BUILDIN_FUNC(sscanf){
 			if(sscanf(str, buf, ref_str)==0){
 				break;
 			}
-			set_reg(st, sd, reference_uid( reference_getid(data), reference_getindex(data) ), buf_p, (void *)(ref_str), reference_getref(data));
+			set_reg_str( st, sd, reference_uid( reference_getid( data ), reference_getindex( data ) ), buf_p, ref_str, reference_getref( data ) );
 		} else {  // Number
 			if(sscanf(str, buf, &ref_int)==0){
 				break;
 			}
-			set_reg(st, sd, reference_uid( reference_getid(data), reference_getindex(data) ), buf_p, (void *)__64BPRTSIZE(ref_int), reference_getref(data));
+			set_reg_num( st, sd, reference_uid( reference_getid( data ), reference_getindex( data ) ), buf_p, ref_int, reference_getref( data ) );
 		}
 		arg++;
 
@@ -16542,10 +16649,7 @@ BUILDIN_FUNC(setnpcdisplay)
 	if( class_ != JT_FAKENPC && nd->class_ != class_ )
 		npc_setclass(nd, class_);
 	else if( size != -1 )
-	{ // Required to update the visual size
-		clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);
-		clif_spawn(&nd->bl);
-	}
+		unit_refresh(&nd->bl); // Required to update the visual size
 
 	script_pushint(st,0);
 	return SCRIPT_CMD_SUCCESS;
@@ -16671,9 +16775,9 @@ BUILDIN_FUNC(setd)
 	}
 
 	if( is_string_variable(varname) ) {
-		setd_sub(st, sd, varname, elem, (void *)script_getstr(st, 3), NULL);
+		setd_sub_str( st, sd, varname, elem, script_getstr( st, 3 ), NULL );
 	} else {
-		setd_sub(st, sd, varname, elem, (void *)__64BPRTSIZE(script_getnum(st, 3)), NULL);
+		setd_sub_num( st, sd, varname, elem, script_getnum64( st, 3 ), NULL );
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -16746,10 +16850,11 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 
 			data = script_getdata(st, j+3);
 			name = reference_getname(data);
+
 			if( is_string_variable(name) )
-				setd_sub(st, sd, name, i, (void *)(str?str:""), reference_getref(data));
+				setd_sub_str( st, sd, name, i, str ? str : "", reference_getref( data ) );
 			else
-				setd_sub(st, sd, name, i, (void *)__64BPRTSIZE((str?atoi(str):0)), reference_getref(data));
+				setd_sub_num( st, sd, name, i, str ? strtoll( str, nullptr, 10 ) : 0, reference_getref( data ) );
 		}
 	}
 	if( i == max_rows && max_rows < Sql_NumRows(handle) ) {
@@ -17327,8 +17432,7 @@ BUILDIN_FUNC(searchitem)
 
 	for( i = 0; i < count; ++start, ++i )
 	{// Set array
-		void* v = (void*)__64BPRTSIZE((int)items[i]->nameid);
-		set_reg(st, sd, reference_uid(id, start), name, v, reference_getref(data));
+		set_reg_num( st, sd, reference_uid( id, start ), name, items[i]->nameid, reference_getref( data ) );
 	}
 
 	script_pushint(st, count);
@@ -17551,7 +17655,7 @@ BUILDIN_FUNC(getunitdata)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-#define getunitdata_sub(idx__,var__) setd_sub(st,sd,name,(idx__),(void *)__64BPRTSIZE((int)(var__)),data->ref)
+#define getunitdata_sub(idx__,var__) setd_sub_num(st,sd,name,(idx__),(var__),data->ref)
 
 	switch(bl->type) {
 		case BL_MOB:
@@ -17609,6 +17713,8 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMOB_ADELAY, md->status.adelay);
 			getunitdata_sub(UMOB_DMOTION, md->status.dmotion);
 			getunitdata_sub(UMOB_TARGETID, md->target_id);
+			getunitdata_sub(UMOB_ROBE, md->vd->robe);
+			getunitdata_sub(UMOB_BODY2, md->vd->body_style);
 			break;
 
 		case BL_HOM:
@@ -17797,7 +17903,6 @@ BUILDIN_FUNC(getunitdata)
 				ShowWarning("buildin_getunitdata: Error in finding object BL_NPC!\n");
 				return SCRIPT_CMD_FAILURE;
 			}
-			getunitdata_sub(UNPC_DISPLAY, nd->class_);
 			getunitdata_sub(UNPC_LEVEL, nd->level);
 			getunitdata_sub(UNPC_HP, nd->status.hp);
 			getunitdata_sub(UNPC_MAXHP, nd->status.max_hp);
@@ -17830,6 +17935,19 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UNPC_AMOTION,  nd->status.amotion);
 			getunitdata_sub(UNPC_ADELAY, nd->status.adelay);
 			getunitdata_sub(UNPC_DMOTION, nd->status.dmotion);
+			getunitdata_sub(UNPC_SEX, nd->vd.sex);
+			getunitdata_sub(UNPC_CLASS, nd->vd.class_);
+			getunitdata_sub(UNPC_HAIRSTYLE, nd->vd.hair_style);
+			getunitdata_sub(UNPC_HAIRCOLOR, nd->vd.hair_color);
+			getunitdata_sub(UNPC_HEADBOTTOM, nd->vd.head_bottom);
+			getunitdata_sub(UNPC_HEADMIDDLE, nd->vd.head_mid);
+			getunitdata_sub(UNPC_HEADTOP, nd->vd.head_top);
+			getunitdata_sub(UNPC_CLOTHCOLOR, nd->vd.cloth_color);
+			getunitdata_sub(UNPC_SHIELD, nd->vd.shield);
+			getunitdata_sub(UNPC_WEAPON, nd->vd.weapon);
+			getunitdata_sub(UNPC_ROBE, nd->vd.robe);
+			getunitdata_sub(UNPC_BODY2, nd->vd.body_style);
+			getunitdata_sub(UNPC_DEADSIT, nd->vd.dead_sit);
 			break;
 
 		default:
@@ -17912,6 +18030,8 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_CLOTHCOLOR:
 			case UMOB_SHIELD:
 			case UMOB_WEAPON:
+			case UMOB_ROBE:
+			case UMOB_BODY2:
 				mob_set_dynamic_viewdata( md );
 				break;
 		}
@@ -17929,8 +18049,8 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_MODE: md->base_status->mode = (enum e_mode)value; calc_status = true; break;
 			case UMOB_AI: md->special_state.ai = (enum mob_ai)value; break;
 			case UMOB_SCOPTION: md->sc.option = (unsigned short)value; break;
-			case UMOB_SEX: md->vd->sex = (char)value; clif_clearunit_area(bl, CLR_OUTSIGHT); clif_spawn(bl); break;
-			case UMOB_CLASS: status_set_viewdata(bl, (unsigned short)value); clif_clearunit_area(bl, CLR_OUTSIGHT); clif_spawn(bl); break;
+			case UMOB_SEX: md->vd->sex = (char)value; unit_refresh(bl); break;
+			case UMOB_CLASS: status_set_viewdata(bl, (unsigned short)value); unit_refresh(bl); break;
 			case UMOB_HAIRSTYLE: clif_changelook(bl, LOOK_HAIR, (unsigned short)value); break;
 			case UMOB_HAIRCOLOR: clif_changelook(bl, LOOK_HAIR_COLOR, (unsigned short)value); break;
 			case UMOB_HEADBOTTOM: clif_changelook(bl, LOOK_HEAD_BOTTOM, (unsigned short)value); break;
@@ -17987,6 +18107,8 @@ BUILDIN_FUNC(setunitdata)
 				mob_target(md,target,0);
 				break;
 			}
+			case UMOB_ROBE: clif_changelook(bl, LOOK_ROBE, (unsigned short)value); break;
+			case UMOB_BODY2: clif_changelook(bl, LOOK_BODY2, (unsigned short)value); break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MOB.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18233,7 +18355,6 @@ BUILDIN_FUNC(setunitdata)
 			return SCRIPT_CMD_FAILURE;
 		}
 		switch (type) {
-			case UNPC_DISPLAY: status_set_viewdata(bl, (unsigned short)value); break;
 			case UNPC_LEVEL: nd->level = (unsigned int)value; break;
 			case UNPC_HP: nd->status.hp = (unsigned int)value; status_set_hp(bl, (unsigned int)value, 0); break;
 			case UNPC_MAXHP: nd->status.hp = nd->status.max_hp = (unsigned int)value; status_set_maxhp(bl, (unsigned int)value, 0); break;
@@ -18265,6 +18386,19 @@ BUILDIN_FUNC(setunitdata)
 			case UNPC_AMOTION: nd->status.amotion = (short)value; break;
 			case UNPC_ADELAY: nd->status.adelay = (short)value; break;
 			case UNPC_DMOTION: nd->status.dmotion = (short)value; break;
+			case UNPC_SEX: nd->vd.sex = (char)value; unit_refresh(bl); break;
+			case UNPC_CLASS: npc_setclass(nd, (short)value); break;
+			case UNPC_HAIRSTYLE: clif_changelook(bl, LOOK_HAIR, (unsigned short)value); break;
+			case UNPC_HAIRCOLOR: clif_changelook(bl, LOOK_HAIR_COLOR, (unsigned short)value); break;
+			case UNPC_HEADBOTTOM: clif_changelook(bl, LOOK_HEAD_BOTTOM, (unsigned short)value); break;
+			case UNPC_HEADMIDDLE: clif_changelook(bl, LOOK_HEAD_MID, (unsigned short)value); break;
+			case UNPC_HEADTOP: clif_changelook(bl, LOOK_HEAD_TOP, (unsigned short)value); break;
+			case UNPC_CLOTHCOLOR: clif_changelook(bl, LOOK_CLOTHES_COLOR, (unsigned short)value); break;
+			case UNPC_SHIELD: clif_changelook(bl, LOOK_SHIELD, (unsigned short)value); break;
+			case UNPC_WEAPON: clif_changelook(bl, LOOK_WEAPON, (unsigned short)value); break;
+			case UNPC_ROBE: clif_changelook(bl, LOOK_ROBE, (unsigned short)value); break;
+			case UNPC_BODY2: clif_changelook(bl, LOOK_BODY2, (unsigned short)value); break;
+			case UNPC_DEADSIT: nd->vd.dead_sit = (char)value; unit_refresh(bl); break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_NPC.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -19072,7 +19206,7 @@ BUILDIN_FUNC(getfreecell)
 	}else
 		sd = NULL;
 
-	set_reg(st, sd, num, name, (void*)__64BPRTSIZE((int)x), script_getref(st, 3));
+	set_reg_num( st, sd, num, name, x, script_getref( st, 3 ) );
 
 	// Set MapY
 	num = st->stack->stack_data[st->start + 4].u.num;
@@ -19087,7 +19221,7 @@ BUILDIN_FUNC(getfreecell)
 	}else
 		sd = NULL;
 
-	set_reg(st, sd, num, name, (void*)__64BPRTSIZE((int)y), script_getref(st, 4));
+	set_reg_num( st, sd, num, name, y, script_getref( st, 4 ) );
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -22027,19 +22161,19 @@ BUILDIN_FUNC(getguildmember)
 				switch (type) {
 					case 2:
 						if (data)
-							setd_sub(st, NULL, varname, j, (void *)__64BPRTSIZE(g->member[i].account_id), data->ref);
+							setd_sub_num( st, NULL, varname, j, g->member[i].account_id, data->ref );
 						else
 							mapreg_setreg(reference_uid(add_str("$@guildmemberaid"), j),g->member[i].account_id);
 						break;
 					case 1:
 						if (data)
-							setd_sub(st, NULL, varname, j, (void *)__64BPRTSIZE(g->member[i].char_id), data->ref);
+							setd_sub_num( st, NULL, varname, j, g->member[i].char_id, data->ref );
 						else
 							mapreg_setreg(reference_uid(add_str("$@guildmembercid"), j), g->member[i].char_id);
 						break;
 					default:
 						if (data)
-							setd_sub(st, NULL, varname, j, (void *)__64BPRTSIZE(g->member[i].name), data->ref);
+							setd_sub_str( st, NULL, varname, j, g->member[i].name, data->ref );
 						else
 							mapreg_setregstr(reference_uid(add_str("$@guildmembername$"), j), g->member[i].name);
 						break;
@@ -22602,9 +22736,9 @@ BUILDIN_FUNC(adopt)
 BUILDIN_FUNC(minmax){
 	char *functionname;
 	unsigned int i;
-	int value;
+	int64 value;
 	// Function pointer for our comparison function (either min or max at the moment)
-	int32 (*func)(int32, int32);
+	int64 (*func)(int64, int64);
 	
 	// Get the real function name
 	functionname = script_getfuncname(st);
@@ -22619,11 +22753,11 @@ BUILDIN_FUNC(minmax){
 	}
 
 	if( strnicmp( functionname, "min", strlen( "min" ) ) == 0 ){
-		value = INT_MAX;
-		func = i32min;
+		value = SCRIPT_INT_MAX;
+		func = i64min;
 	}else if( strnicmp( functionname, "max", strlen( "max" ) ) == 0 ){
-		value = INT_MIN;
-		func = i32max;
+		value = SCRIPT_INT_MIN;
+		func = i64max;
 	}else{
 		ShowError( "buildin_%s: Unknown call case for min/max!\n", functionname );
 		st->state = END;
@@ -22686,9 +22820,7 @@ BUILDIN_FUNC(minmax){
 
 				// Loop through each value stored in the array
 				for( ; start < end; start++ ){
-					value = func( value, (int32)__64BPRTSIZE( get_val2( st, reference_uid( id, start ), reference_getref( data ) ) ) );
-
-					script_removetop( st, -1, 0 );
+					value = func( value, get_val2_num( st, reference_uid( id, start ), reference_getref( data ) ) );
 				}
 			}
 		}else{
@@ -23267,7 +23399,7 @@ BUILDIN_FUNC(channel_setgroup) {
 		id = reference_getid(data);
 		idx = reference_getindex(data);
 		for (i = 0; i < n; i++) {
-			group = (int32)__64BPRTSIZE(get_val2(st,reference_uid(id,idx+i),reference_getref(data)));
+			group = (int32)get_val2_num( st, reference_uid( id, idx + i ), reference_getref( data ) );
 			if (group == 0) {
 				script_pushint(st,1);
 				return SCRIPT_CMD_SUCCESS;
@@ -24010,10 +24142,8 @@ BUILDIN_FUNC(mail){
 		}
 
 		for( i = 0; i < num_items && start < end; i++, start++ ){
-			msg.item[i].nameid = (int32)__64BPRTSIZE( get_val2( st, reference_uid( id, start ), reference_getref( data ) ) );
+			msg.item[i].nameid = (unsigned short)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 			msg.item[i].identify = 1;
-
-			script_removetop(st, -1, 0);
 
 			if( !itemdb_exists(msg.item[i].nameid) ){
 				ShowError( "buildin_mail: invalid item id %hu.\n", msg.item[i].nameid );
@@ -24036,9 +24166,7 @@ BUILDIN_FUNC(mail){
 		for( i = 0; i < num_items && start < end; i++, start++ ){
 			struct item_data *item = itemdb_exists(msg.item[i].nameid);
 
-			msg.item[i].amount = (int32)__64BPRTSIZE( get_val2( st, reference_uid( id, start ), reference_getref( data ) ) );
-
-			script_removetop(st, -1, 0);
+			msg.item[i].amount = (short)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 
 			if( msg.item[i].amount <= 0 ){
 				ShowError( "buildin_mail: amount %d for item %hu is invalid.\n", msg.item[i].amount, msg.item[i].nameid );
@@ -24071,9 +24199,7 @@ BUILDIN_FUNC(mail){
 			}
 
 			for( k = 0; k < num_items && start < end; k++, start++ ){
-				msg.item[k].card[i] = (int32)__64BPRTSIZE( get_val2( st, reference_uid( id, start ), reference_getref( data ) ) );
-
-				script_removetop(st, -1, 0);
+				msg.item[k].card[i] = (unsigned short)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 
 				if( msg.item[k].card[i] != 0 && !itemdb_exists(msg.item[k].card[i]) ){
 					ShowError( "buildin_mail: invalid card id %hu.\n", msg.item[k].card[i] );
@@ -24096,9 +24222,7 @@ BUILDIN_FUNC(mail){
 			}
 
 			for( k = 0; k < num_items && start < end; k++, start++ ){
-				msg.item[k].option[i].id = (int32)__64BPRTSIZE( get_val2( st, reference_uid( id, start ), reference_getref( data ) ) );
-
-				script_removetop(st, -1, 0);
+				msg.item[k].option[i].id = (short)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 			}
 
 			j++;
@@ -24111,9 +24235,7 @@ BUILDIN_FUNC(mail){
 			}
 
 			for( k = 0; k < num_items && start < end; k++, start++ ){
-				msg.item[k].option[i].value = (int32)__64BPRTSIZE( get_val2( st, reference_uid( id, start ), reference_getref( data ) ) );
-
-				script_removetop(st, -1, 0);
+				msg.item[k].option[i].value = (short)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 			}
 
 			j++;
@@ -24126,9 +24248,7 @@ BUILDIN_FUNC(mail){
 			}
 
 			for( k = 0; k < num_items && start < end; k++, start++ ){
-				msg.item[k].option[i].param = (int32)__64BPRTSIZE( get_val2( st, reference_uid( id, start ), reference_getref( data ) ) );
-
-				script_removetop(st, -1, 0);
+				msg.item[k].option[i].param = (char)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 			}
 		}
 
@@ -24585,7 +24705,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(attachnpctimer,"?"), // attached the player id to the npc timer [Celest]
 	BUILDIN_DEF(detachnpctimer,"?"), // detached the player id from the npc timer [Celest]
 	BUILDIN_DEF(playerattached,""), // returns id of the current attached player. [Skotlex]
-	BUILDIN_DEF(announce,"si?????"),
+	BUILDIN_DEF(announce,"si??????"),
 	BUILDIN_DEF(mapannounce,"ssi?????"),
 	BUILDIN_DEF(areaannounce,"siiiisi?????"),
 	BUILDIN_DEF(getusers,"i"),

@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Louyang Fields Monster Spawn Script
+//= Luoyang Fields Monster Spawn Script
 //===== By: ==================================================
 //= Evera/Lorri
 //===== Current Version: =====================================
@@ -14,7 +14,7 @@
 //============================================================
 
 //==================================================
-// lou_fild01 - Louyang Field
+// lou_fild01 - Luoyang Field
 //==================================================
 lou_fild01,0,0	monster	Mi Gao	1516,40,5000
 lou_fild01,0,0	monster	Mantis	1139,19,5000

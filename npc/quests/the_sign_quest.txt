@@ -66,7 +66,7 @@ OnInit:
 
 prontera,147,305,0	duplicate(TheSign)	Sign#prontera	111
 geffen,168,175,0	duplicate(TheSign)	Sign#geffen	111
-morocc,168,265,0	duplicate(TheSign)	Sign#morroc	111
+morocc,168,265,0	duplicate(TheSign)	Sign#morocc	111
 payon,160,183,0	duplicate(TheSign)	Sign#payon	111
 aldebaran,54,223,0	duplicate(TheSign)	Sign#aldebaran	111
 alberta,35,241,0	duplicate(TheSign)	Sign#alberta	111
@@ -137,7 +137,7 @@ prt_in,227,45,0	script	Archeologist#sign	804,{
 			mes "[Metz]";
 			mes "Now, the first person";
 			mes "you must visit is ^FF0000Arian^000000";
-			mes "in Morroc. Please speak";
+			mes "in Morocc. Please speak";
 			mes "to him and he'll give you";
 			mes "all the details about his";
 			mes "examination... I hope.";
@@ -160,7 +160,7 @@ prt_in,227,45,0	script	Archeologist#sign	804,{
 		case 3:
 			mes "Hm...?";
 			mes "Shouldn't you leave";
-			mes "for Morroc to see Arian?";
+			mes "for Morocc to see Arian?";
 			mes "You better hurry in case";
 			mes "somebody else applies";
 			mes "for this little job.";
@@ -306,7 +306,7 @@ prt_in,227,45,0	script	Archeologist#sign	804,{
 			mes "His name is";
 			mes "^FF0000Engel Howard^000000,";
 			mes "a legendary Blacksmith";
-			mes "in Rune-Midgard. I don't";
+			mes "in Midgard. I don't";
 			mes "know where he is, but maybe";
 			mes "his family in Geffen may know.";
 			next;
@@ -635,7 +635,7 @@ prt_in,227,45,0	script	Archeologist#sign	804,{
 			mes "Fascinating...";
 			mes "This was made with";
 			mes "a material outside of";
-			mes "Rune-Midgard! See this";
+			mes "Midgard! See this";
 			mes "blue lens? That must be";
 			mes "its incredible power source!";
 			next;
@@ -656,7 +656,7 @@ prt_in,227,45,0	script	Archeologist#sign	804,{
 			mes "one person who can";
 			mes "handle working with";
 			mes "this: Engel Howard,";
-			mes "Rune-Midgard's best";
+			mes "Midgard's best";
 			mes "Blacksmith.";
 			set sign_q,139;
 			set sign_sq,0;
@@ -2195,7 +2195,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 			mes "[Daewoon]";
 			mes "Anyway, I'm sure you're";
 			mes "aware of the War of Emperium";
-			mes "in which mighty guilds all across Rune-Midgard battle for guild castle dominion. It's actually quite popular, really.";
+			mes "in which mighty guilds all across Midgard battle for guild castle dominion. It's actually quite popular, really.";
 			next;
 			mes "[Daewoon]";
 			mes "Now imagine that both of us";
@@ -4300,7 +4300,7 @@ geffen_in,61,72,7	script	Aaron#sign	754,{
 			mes "that looks different";
 			mes "than all the others.";
 			next;
-			if (select("Prontera Hollgrehenn:Prontera Doll Merchant:Izlude Meat Merchant:Morroc Meat Merchant") == 3) set .@user_p,.@user_p+1;
+			if (select("Prontera Hollgrehenn:Prontera Doll Merchant:Izlude Meat Merchant:Morocc Meat Merchant") == 3) set .@user_p,.@user_p+1;
 			break;
 		case 2:
 			mes "[Aaron]";
@@ -5710,7 +5710,7 @@ alberta_in,154,171,5	script	Maid#s10	758,{
 		mes "to. Hm, I wonder. Do you";
 		mes "think he could have been";
 		mes "heading towards the";
-		mes "Schwaltzvalt Republic?";
+		mes "Schwarzwald Republic?";
 		close;
 	}
 	else if (sign_q < 42) {
@@ -6675,7 +6675,7 @@ alberta,43,49,5	script	Poor-looking Merchant	89,{
 			mes "Under Bakerlan's guidance,";
 			mes "their estate has grown to be";
 			mes "one of the richest in Alberta,";
-			mes "if not all of Rune-Midgard...";
+			mes "if not all of Rune-Midgarts...";
 			close;
 		case 2:
 			mes "[Machen]";
@@ -8303,10 +8303,10 @@ himinn,48,86,5	script	Valkyrie#sign	811,{
 	}
 	else if ((sign_q == 129) || (sign_q == 130)) {
 		mes "Welcome back.";
-		mes "Not only have you passed the trials that the gods have set for you, you have tested your courage in the realm of the dead and protected Rune-Midgard from attack.";
+		mes "Not only have you passed the trials that the gods have set for you, you have tested your courage in the realm of the dead and protected Midgard from attack.";
 		next;
 		mes "[Valkyrie Sandra]";
-		mes "I'm pleased to announce that the gods have been watching you and decided to invite you to Valhalla. However, Rune-Midgard still has great need of you.";
+		mes "I'm pleased to announce that the gods have been watching you and decided to invite you to Valhalla. However, Midgard still has great need of you.";
 		next;
 		mes "[Valkyrie Sandra]";
 		mes "As a symbol of this promise to invite you to Valhalla, you shall be rewarded with 'The Sign' which will show all others that you are a great warrior whose courage was tested by the gods themselves.";
@@ -8478,11 +8478,11 @@ que_sign01,196,39,4	script	Serin#serin	90,{
 		mes "back, so summoning Dark Lord is";
 		mes "my last chance.";
 		next;
-		select("But if Dark Lord comes to Rune-Midgard...");
+		select("But if Dark Lord comes to Midgard...");
 		mes "[Serin]";
 		mes "Oh, I'm pretty sure of";
 		mes "what will happen if Dark Lord";
-		mes "enters the realm of the living. He'll destroy Rune-Midgard and bring death to thousands and thousands of people.";
+		mes "enters the realm of the living. He'll destroy Midgard and bring death to thousands and thousands of people.";
 		next;
 		mes "[Serin]";
 		mes "So if I came back to life";
@@ -8510,7 +8510,7 @@ que_sign01,196,39,4	script	Serin#serin	90,{
 			mes "my sake? You do understand";
 			mes "that you'll be failing the ordeals set before you by the gods...";
 			next;
-			switch(select("I changed my mind for Rune-Midgard.:I do, and it's alright...")) {
+			switch(select("I changed my mind for Midgard.:I do, and it's alright...")) {
 			case 1:
 				mes "[Serin]";
 				mes "...";
@@ -8534,7 +8534,7 @@ que_sign01,196,39,4	script	Serin#serin	90,{
 				mes "[Serin]";
 				mes "The least I can";
 				mes "do is send you back";
-				mes "to Rune-Midgard and";
+				mes "to Midgard and";
 				mes "ask the Dark Lord to spare";
 				mes "you. Thank you so much...";
 				set sign_q,200;
@@ -8633,7 +8633,7 @@ que_sign01,196,39,4	script	Serin#serin	90,{
 				mes "to stop me, I still don't wish";
 				mes "to take your life. I understand";
 				mes "that you've merely trying to";
-				mes "protect your Rune-Midgard.";
+				mes "protect your Midgard.";
 				next;
 				mes "[Serin]";
 				mes "However...";
@@ -8672,7 +8672,7 @@ que_sign01,196,39,4	script	Serin#serin	90,{
 				mes "to stop me, I still don't wish";
 				mes "to take your life. I understand";
 				mes "that you've merely trying to";
-				mes "protect your Rune-Midgard.";
+				mes "protect your Midgard.";
 				next;
 				mes "[Serin]";
 				mes "However...";
@@ -8762,11 +8762,11 @@ que_sign01,197,195,4	script	Serin#witch	90,{
 		mes "back, so summoning Dark Lord is";
 		mes "my last chance.";
 		next;
-		select("But if Dark Lord comes to Rune-Midgard...");
+		select("But if Dark Lord comes to Midgard...");
 		mes "[Serin]";
 		mes "Oh, I'm pretty sure of";
 		mes "what will happen if Dark Lord";
-		mes "enters the realm of the living. He'll destroy Rune-Midgard and bring death to thousands and thousands of people.";
+		mes "enters the realm of the living. He'll destroy Midgard and bring death to thousands and thousands of people.";
 		next;
 		mes "[Serin]";
 		mes "So if I came back to life";
@@ -8797,7 +8797,7 @@ que_sign01,197,195,4	script	Serin#witch	90,{
 			mes "my sake? You do understand";
 			mes "that you'll be failing the ordeals set before you by the gods...";
 			next;
-			switch(select("I changed my mind for Rune-Midgard.:I do, and it's alright...")) {
+			switch(select("I changed my mind for Midgard.:I do, and it's alright...")) {
 			case 1:
 				set sign_q,125;
 				close;
@@ -8805,7 +8805,7 @@ que_sign01,197,195,4	script	Serin#witch	90,{
 				mes "[Serin]";
 				mes "The least I can";
 				mes "do is send you back";
-				mes "to Rune-Midgard and";
+				mes "to Midgard and";
 				mes "ask the Dark Lord to spare";
 				mes "you. Thank you so much...";
 				set sign_q,200;
@@ -8975,7 +8975,7 @@ que_sign01,197,195,4	script	Serin#witch	90,{
 				mes "to stop me, I still don't wish";
 				mes "to take your life. I understand";
 				mes "that you've merely trying to";
-				mes "protect your Rune-Midgard.";
+				mes "protect your Midgard.";
 				next;
 				mes "[Serin]";
 				mes "However...";
@@ -9022,7 +9022,7 @@ que_sign01,197,195,4	script	Serin#witch	90,{
 				mes "to stop me, I still don't wish";
 				mes "to take your life. I understand";
 				mes "that you've merely trying to";
-				mes "protect your Rune-Midgard.";
+				mes "protect your Midgard.";
 				next;
 				mes "[Serin]";
 				mes "However...";
@@ -9374,7 +9374,7 @@ niflheim,313,70,4	script	Pleasant-Featured Lady#s	90,{
 		mes "I have no idea how,";
 		mes "but it seems like Angrboda";
 		mes "has been sealed away in the";
-		mes "world of Rune-Midgard...";
+		mes "world of Midgard...";
 		emotion ET_THINK;
 		set sign_q,94;
 		close;
@@ -9611,27 +9611,27 @@ niflheim,313,70,4	script	Pleasant-Featured Lady#s	90,{
 		next;
 		mes "[Serin]";
 		mes "Now, sometimes Dark Lord can";
-		mes "enter the world of Rune-Midgard, but only in a manifestation that represents just a small portion";
+		mes "enter the world of Midgard, but only in a manifestation that represents just a small portion";
 		mes "of his full power.";
 		next;
 		mes "[Serin]";
-		mes "You see, it takes too much energy to travel from the Realm of Fiends to Rune-Midgard. And since the life force in Rune-Midgard conflicts with his powers, Dark Lord can't reach your world directly.";
+		mes "You see, it takes too much energy to travel from the Realm of Fiends to Midgard. And since the life force in Midgard conflicts with his powers, Dark Lord can't reach your world directly.";
 		next;
 		select("Wouldn't Lady Hell stop him?");
 		mes "[Serin]";
 		mes "Well, Dark Lord only wants";
-		mes "Rune-Midgard, so the Queen of the Dead doesn't feel threatened about her control of Niflheim.";
+		mes "Midgard, so the Queen of the Dead doesn't feel threatened about her control of Niflheim.";
 		next;
 		mes "[Serin]";
 		mes "In fact, I'm sure she's aware";
-		mes "that Dark Lord will cause thousands of deaths in Rune-Midgard, meaning that there would be thousands more souls for her to rule over. So it's not to her advantage to stop him.";
+		mes "that Dark Lord will cause thousands of deaths in Midgard, meaning that there would be thousands more souls for her to rule over. So it's not to her advantage to stop him.";
 		next;
 		select("Then what should we do...?");
 		mes "[Serin]";
 		mes "No matter what the cost,";
 		mes "we've got to stop her from";
 		mes "summoning Dark Lord in order";
-		mes "to protect Rune-Midgard from";
+		mes "to protect Midgard from";
 		mes "total annihiliation.";
 		next;
 		mes "[Serin]";
@@ -10101,7 +10101,7 @@ que_sign01,122,141,4	script	Witch#s	792,{
 				next;
 				mes "[Kirkena]";
 				mes "Sometimes Dark Lord can";
-				mes "cross over into Rune-Midgard,";
+				mes "cross over into Midgard,";
 				mes "but traveling from his world into";
 				mes "ours takes vast amounts of energy. Also the life force in your world conflicts with his dark powers.";
 				next;
@@ -10109,7 +10109,7 @@ que_sign01,122,141,4	script	Witch#s	792,{
 				mes "Now, if Dark Lord were";
 				mes "summoned into Niflheim,";
 				mes "he would have easy access";
-				mes "to Rune-Midgard and the use";
+				mes "to Midgard and the use";
 				mes "of all of his destructive power.";
 				next;
 				mes "[Kirkena]";
@@ -10124,7 +10124,7 @@ que_sign01,122,141,4	script	Witch#s	792,{
 				mes "favor with Lady Hell, she";
 				mes "will probably not stop Dark";
 				mes "Lord's approach. Dark Lord";
-				mes "only wants Rune-Midgard.";
+				mes "only wants Midgard.";
 				next;
 				mes "[Kirkena]";
 				mes "Now that I think about";
@@ -10765,7 +10765,7 @@ que_sign01,45,227,4	script	Queen of the Dead	856,{
 		next;
 		mes "[Lady Hell]";
 		mes "^8C1717Do not fear me,";
-		mes "hero of Rune-Midgard.";
+		mes "hero of Midgard.";
 		mes "You have won the favor";
 		mes "of the Queen of the Dead";
 		mes "and may ask me of any";
@@ -11252,7 +11252,7 @@ niflheim,102,54,4	script	Mad Man#s	739,{
 		next;
 		mes "[Laichin]";
 		mes "Yeah, those guys were pretty";
-		mes "gangster about it. I mean, they took her soul, broke it in four pieces and stashed them in the deepest hole in Rune-Midgard!";
+		mes "gangster about it. I mean, they took her soul, broke it in four pieces and stashed them in the deepest hole in Midgard!";
 		next;
 		mes "[Laichin]";
 		mes "Sure, she was a giant, but";
@@ -11271,7 +11271,7 @@ niflheim,102,54,4	script	Mad Man#s	739,{
 		mes "[Laichin]";
 		mes "What...? I just said,";
 		mes "the deepest underground";
-		mes "place in Rune-Midgard.";
+		mes "place in Midgard.";
 		mes "It's a dangerous joint";
 		mes "protected by gangs";
 		mes "of monsters.";

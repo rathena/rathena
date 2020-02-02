@@ -149,9 +149,9 @@ ve_fild04,0,0	monster	Elusive Muscipular	2738,2,300000
 moc_pryd03,0,0	monster	Swift Mummy	2739,2,300000
 moc_pryd02,0,0	monster	Solid Mummy	2740,2,300000
 moc_fild01,0,0	monster	Muka Ringleader	2741,2,300000
-moc_fild22,0,0	monster	Furious Incarnation of Morroc	2742,2,300000
-moc_fild21,0,0	monster	Elusive Incarnation of Morroc	2743,2,300000
-moc_fild20,0,0	monster	Swift Incarnation of Morroc	2744,2,300000
+moc_fild22,0,0	monster	Furious Incarnation of Morocc	2742,2,300000
+moc_fild21,0,0	monster	Elusive Incarnation of Morocc	2743,2,300000
+moc_fild20,0,0	monster	Swift Incarnation of Morocc	2744,2,300000
 ein_fild06,0,0	monster	Solid Holden	2745,2,300000
 ama_dun01,0,0	monster	Miyabi Doll Ringleader	2746,2,300000
 moc_prydn1,0,0	monster	Furious Minorous	2747,2,300000
