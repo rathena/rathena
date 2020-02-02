@@ -1881,12 +1881,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 47
     Name: AC_SHOWER
@@ -1915,12 +1910,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 48
     Name: TF_DOUBLE
@@ -5041,12 +5031,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 149
     Name: TF_SPRINKLESAND
@@ -8334,12 +8319,7 @@ Body:
       Weapon:
         Musical: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 317
     Name: BA_DISSONANCE
@@ -8619,12 +8599,7 @@ Body:
       Weapon:
         Whip: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 325
     Name: DC_UGLYDANCE
@@ -10168,12 +10143,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 383
     Name: SN_WINDWALK
@@ -10522,12 +10492,7 @@ Body:
         Musical: true
         Whip: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 395
     Name: CG_MOONLIT
@@ -13321,12 +13286,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 500
     Name: GS_GLITTERING
@@ -13374,9 +13334,13 @@ Body:
       SpCost: 20
       Ammo:
         Arrow: true
+        Dagger: true
         Bullet: true
+        Shell: true
         Grenade: true
+        Shuriken: true
         Kunai: true
+        Cannonball: true
         Throwweapon: true
       AmmoAmount: 1
       SpiritSphereCost: 1
@@ -13400,9 +13364,13 @@ Body:
       SpCost: 30
       Ammo:
         Arrow: true
+        Dagger: true
         Bullet: true
+        Shell: true
         Grenade: true
+        Shuriken: true
         Kunai: true
+        Cannonball: true
         Throwweapon: true
       AmmoAmount: 1
       SpiritSphereCost: 1
@@ -13484,9 +13452,13 @@ Body:
       SpCost: 10
       Ammo:
         Arrow: true
+        Dagger: true
         Bullet: true
+        Shell: true
         Grenade: true
+        Shuriken: true
         Kunai: true
+        Cannonball: true
         Throwweapon: true
       AmmoAmount: 1
       SpiritSphereCost: 1
@@ -13570,12 +13542,7 @@ Body:
         Revolver: true
         Rifle: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
   - Id: 513
     Name: GS_DISARM
@@ -13604,12 +13571,7 @@ Body:
         Revolver: true
         Rifle: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
   - Id: 514
     Name: GS_PIERCINGSHOT
@@ -13643,12 +13605,7 @@ Body:
         Revolver: true
         Rifle: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
   - Id: 515
     Name: GS_RAPIDSHOWER
@@ -13688,12 +13645,7 @@ Body:
       Weapon:
         Revolver: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 5
   - Id: 516
     Name: GS_DESPERADO
@@ -13735,12 +13687,7 @@ Body:
       Weapon:
         Revolver: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 10
     Unit:
       Id: Dummyskill
@@ -13840,12 +13787,7 @@ Body:
       Weapon:
         Shotgun: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
   - Id: 519
     Name: GS_FULLBUSTER
@@ -13907,12 +13849,7 @@ Body:
       Weapon:
         Shotgun: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount:
         - Level: 1
           Amount: 2
@@ -13995,12 +13932,7 @@ Body:
       Weapon:
         Shotgun: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 5
   - Id: 521
     Name: GS_GROUNDDRIFT
@@ -14074,14 +14006,7 @@ Body:
       Weapon:
         Grenade: true
       Ammo:
-        Dagger: true
-        Bullet: true
-        Shell: true
         Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
       AmmoAmount: 1
     Unit:
       Id: Grounddrift_Wind
@@ -14109,14 +14034,7 @@ Body:
     Requires:
       SpCost: 2
       Ammo:
-        Dagger: true
-        Bullet: true
-        Shell: true
-        Grenade: true
         Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
       AmmoAmount: 1
   - Id: 524
     Name: NJ_KUNAI
@@ -14145,14 +14063,7 @@ Body:
         - Level: 5
           Amount: 10
       Ammo:
-        Dagger: true
-        Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
         Kunai: true
-        Cannonball: true
-        Throwweapon: true
       AmmoAmount: 1
   - Id: 525
     Name: NJ_HUUMA
@@ -16408,11 +16319,6 @@ Body:
       SpCost: 15
       Ammo:
         Dagger: true
-        Bullet: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
       AmmoAmount: 1
   - Id: 1005
     Name: RG_CLOSECONFINE
@@ -19520,12 +19426,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 10
   - Id: 2234
     Name: RA_FEARBREEZE
@@ -19612,12 +19513,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 2237
     Name: RA_DETONATOR
@@ -20356,14 +20252,7 @@ Body:
         - Level: 3
           Amount: 60
       Ammo:
-        Dagger: true
-        Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
         Cannonball: true
-        Throwweapon: true
       AmmoAmount: 1
       State: Mado
       ItemCost:
@@ -21292,12 +21181,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 3
   - Id: 2289
     Name: SC_BODYPAINT
@@ -23981,12 +23865,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 20
     Unit:
       Id: Severe_Rainstorm
@@ -26178,14 +26057,7 @@ Body:
         - Level: 5
           Amount: 50
       Ammo:
-        Dagger: true
-        Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
         Cannonball: true
-        Throwweapon: true
       AmmoAmount: 1
       State: Cart
   - Id: 2478
@@ -26852,13 +26724,6 @@ Body:
     Requires:
       SpCost: 4
       Ammo:
-        Dagger: true
-        Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
         Throwweapon: true
       AmmoAmount: 1
   - Id: 2494
@@ -27070,12 +26935,7 @@ Body:
       Weapon:
         Rifle: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
   - Id: 2554
     Name: RL_BANISHING_BUSTER
@@ -27117,12 +26977,7 @@ Body:
       Weapon:
         Shotgun: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
   - Id: 2555
     Name: RL_B_TRAP
@@ -27303,12 +27158,7 @@ Body:
       Weapon:
         Shotgun: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
   - Id: 2558
     Name: RL_E_CHAIN
@@ -27372,12 +27222,9 @@ Body:
         Shotgun: true
         Grenade: true
       Ammo:
-        Dagger: true
         Bullet: true
         Shell: true
         Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
       Status:
         Qd_Shot_Ready: true
@@ -27433,12 +27280,7 @@ Body:
       Weapon:
         Revolver: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 5
   - Id: 2562
     Name: RL_H_MINE
@@ -27514,12 +27356,7 @@ Body:
         - Level: 5
           Amount: 36
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
       Equipment:
         Silver_Bullet: true
@@ -27589,12 +27426,7 @@ Body:
       Weapon:
         Gatling: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 5
   - Id: 2566
     Name: RL_D_TAIL
@@ -27638,14 +27470,7 @@ Body:
       Weapon:
         Grenade: true
       Ammo:
-        Dagger: true
-        Bullet: true
-        Shell: true
         Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
       AmmoAmount: 1
   - Id: 2567
     Name: RL_FIRE_RAIN
@@ -27668,12 +27493,7 @@ Body:
       Weapon:
         Gatling: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 10
     Unit:
       Id: Fire_Rain
@@ -28025,14 +27845,7 @@ Body:
         - Level: 5
           Amount: 20
       Ammo:
-        Dagger: true
-        Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
         Kunai: true
-        Cannonball: true
-        Throwweapon: true
       AmmoAmount: 8
   - Id: 3008
     Name: KO_MUCHANAGE
@@ -31342,12 +31155,7 @@ Body:
     Requires:
       SpCost: 12
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 8208
     Name: MA_SHOWER
@@ -31370,12 +31178,7 @@ Body:
     Requires:
       SpCost: 15
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 8209
     Name: MA_SKIDTRAP
@@ -31590,12 +31393,7 @@ Body:
     Requires:
       SpCost: 15
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 8215
     Name: MA_SHARPSHOOTING
@@ -31634,12 +31432,7 @@ Body:
         - Level: 5
           Amount: 30
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 8216
     Name: ML_PIERCE

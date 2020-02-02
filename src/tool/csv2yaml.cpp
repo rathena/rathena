@@ -1461,6 +1461,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 	if (atoi(split[3]) != 0) {
 		constant = constant_lookup(atoi(split[3]), "INF_");
 		constant.erase(0, 4);
+		constant.erase(constant.size() - 6);
 		body << YAML::Key << "TargetType" << YAML::Value << name2Upper(constant);
 	}
 
@@ -2139,13 +2140,12 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 			int temp = it_req->second.ammo;
 
 			for (int i = 1; i < MAX_AMMO_TYPE; i++) {
-				if (temp & i) {
+				if (temp & 1 << i) {
 					constant = constant_lookup(i, "A_");
 					constant.erase(0, 2);
 					body << YAML::Key << name2Upper(constant) << YAML::Value << "true";
+					temp ^= 1 << i;
 				}
-
-				temp ^= 1 << i;
 			}
 
 			body << YAML::EndMap;
