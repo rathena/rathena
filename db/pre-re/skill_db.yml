@@ -938,6 +938,7 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 19
     Name: MG_FIREBOLT
     Description: Fire Bolt
@@ -1308,6 +1309,7 @@ Body:
       Flag:
         NoEnemy: true
         NoReiteration: true
+        RangedSingleUnit: true
   - Id: 26
     Name: AL_TELEPORT
     Description: Teleport
@@ -1881,12 +1883,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 47
     Name: AC_SHOWER
@@ -1915,12 +1912,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 48
     Name: TF_DOUBLE
@@ -2833,6 +2825,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 80
     Name: WZ_FIREPILLAR
     Description: Fire Pillar
@@ -3428,6 +3421,8 @@ Body:
       Interval: 1000
       Flag:
         PathCheck: true
+        NoKnockback: true
+        RemovedByFireRain: true
   - Id: 88
     Name: WZ_FROSTNOVA
     Description: Frost Nova
@@ -3735,6 +3730,7 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 93
     Name: WZ_ESTIMATION
     Description: Sense
@@ -4081,6 +4077,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 116
     Name: HT_LANDMINE
     Description: Land Mine
@@ -4128,6 +4125,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 117
     Name: HT_ANKLESNARE
     Description: Ankle Snare
@@ -4178,6 +4176,8 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        NoKnockback: true
+        RemovedByFireRain: true
   - Id: 118
     Name: HT_SHOCKWAVE
     Description: Shockwave Trap
@@ -4219,6 +4219,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 119
     Name: HT_SANDMAN
     Description: Sandman
@@ -4261,6 +4262,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 120
     Name: HT_FLASHER
     Description: Flasher
@@ -4303,6 +4305,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 121
     Name: HT_FREEZINGTRAP
     Description: Freezing Trap
@@ -4361,6 +4364,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 122
     Name: HT_BLASTMINE
     Description: Blast Mine
@@ -4409,6 +4413,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 123
     Name: HT_CLAYMORETRAP
     Description: Claymore Trap
@@ -4458,6 +4463,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 124
     Name: HT_REMOVETRAP
     Description: Remove Trap
@@ -4499,6 +4505,7 @@ Body:
       Interval: 1000
       Flag:
         NoMob: true
+        RemovedByFireRain: true
   - Id: 126
     Name: HT_BEASTBANE
     Description: Beast Bane
@@ -4880,6 +4887,8 @@ Body:
       Range: 1
       Interval: 1000
       Target: Enemy
+      Flag:
+        RemovedByFireRain: true
   - Id: 141
     Name: AS_SPLASHER
     Description: Venom Splasher
@@ -5041,12 +5050,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 149
     Name: TF_SPRINKLESAND
@@ -6199,6 +6203,7 @@ Body:
       Interval: -1
       Flag:
         NoReiteration: true
+        RemovedByFireRain: true
   - Id: 221
     Name: RG_FLAGGRAFFITI
     Description: Piece
@@ -7645,6 +7650,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 286
     Name: SA_DELUGE
     Description: Deluge
@@ -7693,6 +7699,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 287
     Name: SA_VIOLENTGALE
     Description: Whirlwind
@@ -7741,6 +7748,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 288
     Name: SA_LANDPROTECTOR
     Description: Magnetic Earth
@@ -7814,6 +7822,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 289
     Name: SA_DISPELL
     Description: Dispell
@@ -8110,6 +8119,8 @@ Body:
       Layout: 4
       Interval: 6000
       Target: Enemy
+      Flag:
+        Ensemble: true
   - Id: 307
     Name: BD_RICHMANKIM
     Description: Mental Sensing
@@ -8136,6 +8147,7 @@ Body:
       Target: Enemy
       Flag:
         NoPc: true
+        Ensemble: true
   - Id: 308
     Name: BD_ETERNALCHAOS
     Description: Down Tempo
@@ -8160,6 +8172,8 @@ Body:
       Layout: 4
       Interval: -1
       Target: Enemy
+      Flag:
+        Ensemble: true
   - Id: 309
     Name: BD_DRUMBATTLEFIELD
     Description: Battle Theme
@@ -8194,6 +8208,8 @@ Body:
       Layout: 4
       Interval: -1
       Target: Party
+      Flag:
+        Ensemble: true
   - Id: 310
     Name: BD_RINGNIBELUNGEN
     Description: Harmonic Lick
@@ -8228,6 +8244,8 @@ Body:
       Layout: 4
       Interval: -1
       Target: Party
+      Flag:
+        Ensemble: true
   - Id: 311
     Name: BD_ROKISWEIL
     Description: Classical Pluck
@@ -8251,6 +8269,8 @@ Body:
       Id: Rokisweil
       Layout: 4
       Interval: -1
+      Flag:
+        Ensemble: true
   - Id: 312
     Name: BD_INTOABYSS
     Description: Power Chord
@@ -8277,6 +8297,7 @@ Body:
       Target: Party
       Flag:
         NoMob: true
+        Ensemble: true
   - Id: 313
     Name: BD_SIEGFRIED
     Description: Acoustic Rhythm
@@ -8301,6 +8322,8 @@ Body:
       Layout: 4
       Interval: -1
       Target: Party
+      Flag:
+        Ensemble: true
   - Id: 315
     Name: BA_MUSICALLESSON
     Description: Music Lessons
@@ -8334,12 +8357,7 @@ Body:
       Weapon:
         Musical: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 317
     Name: BA_DISSONANCE
@@ -8376,6 +8394,8 @@ Body:
       Layout: 3
       Interval: 3000
       Target: Enemy
+      Flag:
+        Song: true
   - Id: 318
     Name: BA_FROSTJOKER
     Description: Unbarring Octave
@@ -8448,6 +8468,7 @@ Body:
       Interval: -1
       Flag:
         NoMob: true
+        Song: true
   - Id: 320
     Name: BA_ASSASSINCROSS
     Description: Impressive Riff
@@ -8494,6 +8515,7 @@ Body:
       Interval: -1
       Flag:
         NoMob: true
+        Song: true
   - Id: 321
     Name: BA_POEMBRAGI
     Description: Magic Strings
@@ -8540,6 +8562,7 @@ Body:
       Interval: -1
       Flag:
         NoMob: true
+        Song: true
   - Id: 322
     Name: BA_APPLEIDUN
     Description: Song of Lutie
@@ -8586,6 +8609,8 @@ Body:
       Interval: 6000
       Flag:
         NoMob: true
+        Song: true
+        DualMode: true
   - Id: 323
     Name: DC_DANCINGLESSON
     Description: Dance Lessons
@@ -8619,12 +8644,7 @@ Body:
       Weapon:
         Whip: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 325
     Name: DC_UGLYDANCE
@@ -8660,6 +8680,8 @@ Body:
       Layout: 3
       Interval: 3000
       Target: Enemy
+      Flag:
+        Dance: true
   - Id: 326
     Name: DC_SCREAM
     Description: Dazzler
@@ -8732,6 +8754,7 @@ Body:
       Interval: -1
       Flag:
         NoMob: true
+        Dance: true
   - Id: 328
     Name: DC_DONTFORGETME
     Description: Slow Grace
@@ -8777,6 +8800,8 @@ Body:
       Layout: 3
       Interval: -1
       Target: Enemy
+      Flag:
+        Dance: true
   - Id: 329
     Name: DC_FORTUNEKISS
     Description: Lady Luck
@@ -8823,6 +8848,7 @@ Body:
       Interval: -1
       Flag:
         NoMob: true
+        Dance: true
   - Id: 330
     Name: DC_SERVICEFORYOU
     Description: Gypsy's Kiss
@@ -8869,6 +8895,7 @@ Body:
       Interval: -1
       Flag:
         NoMob: true
+        Dance: true
   - Id: 331
     Name: NPC_RANDOMMOVE
     Description: Random Move
@@ -9561,6 +9588,8 @@ Body:
       Id: Basilica
       Layout: 2
       Interval: 300
+      Flag:
+        RangedSingleUnit: true
   - Id: 363
     Name: HP_MEDITATIO
     Description: Meditatio
@@ -10168,12 +10197,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 383
     Name: SN_WINDWALK
@@ -10522,12 +10546,7 @@ Body:
         Musical: true
         Whip: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 395
     Name: CG_MOONLIT
@@ -10572,6 +10591,8 @@ Body:
       Id: Moonlit
       Layout: 4
       Interval: -1
+      Flag:
+        Ensemble: true
   - Id: 396
     Name: CG_MARIONETTE
     Description: Marionette Control
@@ -10846,6 +10867,8 @@ Body:
       Id: Fogwall
       Layout: -1
       Interval: -1
+      Flag:
+        RemovedByFireRain: true
   - Id: 405
     Name: PF_SPIDERWEB
     Description: Fiber Lock
@@ -10870,6 +10893,8 @@ Body:
       Id: Spiderweb
       Interval: -1
       Target: Enemy
+      Flag:
+        RemovedByFireRain: true
   - Id: 406
     Name: ASC_METEORASSAULT
     Description: Meteor Assault
@@ -12908,6 +12933,8 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+        DualMode: true
+        RemovedByFireRain: true
   - Id: 485
     Name: WS_CARTTERMINATION
     Description: Cart Termination
@@ -13089,6 +13116,8 @@ Body:
       Id: Hermode
       Layout: 3
       Interval: -1
+      Flag:
+        Ensemble: true
   - Id: 489
     Name: CG_TAROTCARD
     Description: Tarot Card of Fate
@@ -13321,12 +13350,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 500
     Name: GS_GLITTERING
@@ -13374,9 +13398,13 @@ Body:
       SpCost: 20
       Ammo:
         Arrow: true
+        Dagger: true
         Bullet: true
+        Shell: true
         Grenade: true
+        Shuriken: true
         Kunai: true
+        Cannonball: true
         Throwweapon: true
       AmmoAmount: 1
       SpiritSphereCost: 1
@@ -13400,9 +13428,13 @@ Body:
       SpCost: 30
       Ammo:
         Arrow: true
+        Dagger: true
         Bullet: true
+        Shell: true
         Grenade: true
+        Shuriken: true
         Kunai: true
+        Cannonball: true
         Throwweapon: true
       AmmoAmount: 1
       SpiritSphereCost: 1
@@ -13484,9 +13516,13 @@ Body:
       SpCost: 10
       Ammo:
         Arrow: true
+        Dagger: true
         Bullet: true
+        Shell: true
         Grenade: true
+        Shuriken: true
         Kunai: true
+        Cannonball: true
         Throwweapon: true
       AmmoAmount: 1
       SpiritSphereCost: 1
@@ -13570,12 +13606,7 @@ Body:
         Revolver: true
         Rifle: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
   - Id: 513
     Name: GS_DISARM
@@ -13604,12 +13635,7 @@ Body:
         Revolver: true
         Rifle: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
   - Id: 514
     Name: GS_PIERCINGSHOT
@@ -13643,12 +13669,7 @@ Body:
         Revolver: true
         Rifle: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
   - Id: 515
     Name: GS_RAPIDSHOWER
@@ -13688,12 +13709,7 @@ Body:
       Weapon:
         Revolver: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 5
   - Id: 516
     Name: GS_DESPERADO
@@ -13735,12 +13751,7 @@ Body:
       Weapon:
         Revolver: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 10
     Unit:
       Id: Dummyskill
@@ -13840,12 +13851,7 @@ Body:
       Weapon:
         Shotgun: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
   - Id: 519
     Name: GS_FULLBUSTER
@@ -13907,12 +13913,7 @@ Body:
       Weapon:
         Shotgun: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount:
         - Level: 1
           Amount: 2
@@ -13995,12 +13996,7 @@ Body:
       Weapon:
         Shotgun: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 5
   - Id: 521
     Name: GS_GROUNDDRIFT
@@ -14074,14 +14070,7 @@ Body:
       Weapon:
         Grenade: true
       Ammo:
-        Dagger: true
-        Bullet: true
-        Shell: true
         Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
       AmmoAmount: 1
     Unit:
       Id: Grounddrift_Wind
@@ -14109,14 +14098,7 @@ Body:
     Requires:
       SpCost: 2
       Ammo:
-        Dagger: true
-        Bullet: true
-        Shell: true
-        Grenade: true
         Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
       AmmoAmount: 1
   - Id: 524
     Name: NJ_KUNAI
@@ -14145,14 +14127,7 @@ Body:
         - Level: 5
           Amount: 10
       Ammo:
-        Dagger: true
-        Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
         Kunai: true
-        Cannonball: true
-        Throwweapon: true
       AmmoAmount: 1
   - Id: 525
     Name: NJ_HUUMA
@@ -14647,6 +14622,7 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 536
     Name: NJ_BAKUENRYU
     Description: Raging Fire Dragon
@@ -14880,6 +14856,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 539
     Name: NJ_HYOUSYOURAKU
     Description: Ice Meteor
@@ -16300,6 +16277,8 @@ Body:
       Id: Reverberation
       Interval: 1000
       Target: Enemy
+      Flag:
+        NoKnockback: true
   - Id: 726
     Name: NPC_REVERBERATION_ATK
     Description: Reverberation Attack
@@ -16408,11 +16387,6 @@ Body:
       SpCost: 15
       Ammo:
         Dagger: true
-        Bullet: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
       AmmoAmount: 1
   - Id: 1005
     Name: RG_CLOSECONFINE
@@ -18531,6 +18505,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 2033
     Name: GC_CLOAKINGEXCEED
     Description: Cloaking Exceed
@@ -19520,12 +19495,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 10
   - Id: 2234
     Name: RA_FEARBREEZE
@@ -19612,12 +19582,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 2237
     Name: RA_DETONATOR
@@ -19680,6 +19645,8 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        NoKnockback: true
+        RemovedByFireRain: true
   - Id: 2239
     Name: RA_CLUSTERBOMB
     Description: Cluster Bomb
@@ -19716,6 +19683,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 2240
     Name: RA_WUGMASTERY
     Description: Warg Mastery
@@ -19931,6 +19899,7 @@ Body:
       Flag:
         NoReiteration: true
         NoPc: true
+        RemovedByFireRain: true
   - Id: 2250
     Name: RA_COBALTTRAP
     Description: Cobalt Trap
@@ -19968,6 +19937,7 @@ Body:
       Flag:
         NoReiteration: true
         NoPc: true
+        RemovedByFireRain: true
   - Id: 2251
     Name: RA_MAIZETRAP
     Description: Maize Trap
@@ -20005,6 +19975,7 @@ Body:
       Flag:
         NoReiteration: true
         NoPc: true
+        RemovedByFireRain: true
   - Id: 2252
     Name: RA_VERDURETRAP
     Description: Verdure Trap
@@ -20042,6 +20013,7 @@ Body:
       Flag:
         NoReiteration: true
         NoPc: true
+        RemovedByFireRain: true
   - Id: 2253
     Name: RA_FIRINGTRAP
     Description: Firing Trap
@@ -20080,6 +20052,7 @@ Body:
       Target: Enemy
       Flag:
         NoReiteration: true
+        RemovedByFireRain: true
   - Id: 2254
     Name: RA_ICEBOUNDTRAP
     Description: Icebound Trap
@@ -20118,6 +20091,7 @@ Body:
       Target: Enemy
       Flag:
         NoReiteration: true
+        RemovedByFireRain: true
   - Id: 2255
     Name: NC_MADOLICENCE
     Description: Mado License
@@ -20356,14 +20330,7 @@ Body:
         - Level: 3
           Amount: 60
       Ammo:
-        Dagger: true
-        Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
         Cannonball: true
-        Throwweapon: true
       AmmoAmount: 1
       State: Mado
       ItemCost:
@@ -21292,12 +21259,7 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 3
   - Id: 2289
     Name: SC_BODYPAINT
@@ -21690,6 +21652,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 2300
     Name: SC_DIMENSIONDOOR
     Description: Dimension Door
@@ -21732,6 +21695,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 2301
     Name: SC_CHAOSPANIC
     Description: Chaos Panic
@@ -21786,6 +21750,8 @@ Body:
         NoReiteration: true
         NoFootSet: true
         NoOverlap: true
+        RangedSingleUnit: true
+        RemovedByFireRain: true
   - Id: 2302
     Name: SC_MAELSTROM
     Description: Maelstrom
@@ -21833,6 +21799,8 @@ Body:
       Interval: -1
       Flag:
         NoReiteration: true
+        RangedSingleUnit: true
+        RemovedByFireRain: true
   - Id: 2303
     Name: SC_BLOODYLUST
     Description: Bloody Lust
@@ -21875,6 +21843,8 @@ Body:
         NoOverlap: true
         PathCheck: true
         NoMob: true
+        RangedSingleUnit: true
+        RemovedByFireRain: true
   - Id: 2304
     Name: SC_FEINTBOMB
     Description: Feint Bomb
@@ -23878,6 +23848,8 @@ Body:
       Id: Reverberation
       Interval: 1000
       Target: Enemy
+      Flag:
+        NoKnockback: true
   - Id: 2415
     Name: WM_REVERBERATION_MELEE
     Description: Reverberation Melee
@@ -23981,18 +23953,15 @@ Body:
       Weapon:
         Bow: true
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 20
     Unit:
       Id: Severe_Rainstorm
       Range: 5
       Interval: 300
       Target: Enemy
+      Flag:
+        DualMode: true
   - Id: 2419
     Name: WM_POEMOFNETHERWORLD
     Description: Poem of The Netherworld
@@ -24059,6 +24028,7 @@ Body:
       Flag:
         NoFootSet: true
         PathCheck: true
+        NoKnockback: true
   - Id: 2420
     Name: WM_VOICEOFSIREN
     Description: Voice of Siren
@@ -25374,6 +25344,7 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 2451
     Name: SO_STRIKING
     Description: Striking
@@ -25466,6 +25437,8 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RangedSingleUnit: true
+        RemovedByFireRain: true
   - Id: 2453
     Name: SO_VACUUM_EXTREME
     Description: Vacuum Extreme
@@ -25550,6 +25523,7 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
+        RemovedByFireRain: true
   - Id: 2454
     Name: SO_VARETYR_SPEAR
     Description: Varetyr Spear
@@ -25967,6 +25941,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 2466
     Name: SO_WATER_INSIGNIA
     Description: Water Insignia
@@ -26006,6 +25981,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 2467
     Name: SO_WIND_INSIGNIA
     Description: Wind Insignia
@@ -26045,6 +26021,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 2468
     Name: SO_EARTH_INSIGNIA
     Description: Earth Insignia
@@ -26084,6 +26061,7 @@ Body:
       Interval: -1
       Flag:
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 2474
     Name: GN_TRAINING_SWORD
     Description: Sword Training
@@ -26178,14 +26156,7 @@ Body:
         - Level: 5
           Amount: 50
       Ammo:
-        Dagger: true
-        Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
         Cannonball: true
-        Throwweapon: true
       AmmoAmount: 1
       State: Cart
   - Id: 2478
@@ -26268,6 +26239,7 @@ Body:
       Flag:
         NoReiteration: true
         NoFootSet: true
+        RemovedByFireRain: true
   - Id: 2480
     Name: GN_BLOOD_SUCKER
     Description: Blood Sucker
@@ -26425,6 +26397,8 @@ Body:
       Range: 1
       Interval: 300
       Target: Enemy
+      Flag:
+        RemovedByFireRain: true
   - Id: 2483
     Name: GN_CRAZYWEED
     Description: Crazy Weed
@@ -26592,6 +26566,7 @@ Body:
         NoOverlap: true
         PathCheck: true
         Skill: true
+        RemovedByFireRain: true
   - Id: 2486
     Name: GN_FIRE_EXPANSION
     Description: Fire Expansion
@@ -26641,6 +26616,8 @@ Body:
       Id: Fire_Expansion_Smoke_Powder
       Layout: 2
       Interval: -1
+      Flag:
+        RangedSingleUnit: true
   - Id: 2488
     Name: GN_FIRE_EXPANSION_TEAR_GAS
     Description: Fire Expansion Tear Gas
@@ -26656,6 +26633,8 @@ Body:
       Id: Fire_Expansion_Tear_Gas
       Layout: 2
       Interval: -1
+      Flag:
+        RangedSingleUnit: true
   - Id: 2489
     Name: GN_FIRE_EXPANSION_ACID
     Description: Fire Expansion Acid
@@ -26768,6 +26747,7 @@ Body:
       Target: Enemy
       Flag:
         NoReiteration: true
+        RemovedByFireRain: true
   - Id: 2491
     Name: GN_HELLS_PLANT_ATK
     Description: Hell's Plant Attack
@@ -26852,13 +26832,6 @@ Body:
     Requires:
       SpCost: 4
       Ammo:
-        Dagger: true
-        Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
         Throwweapon: true
       AmmoAmount: 1
   - Id: 2494
@@ -27070,12 +27043,7 @@ Body:
       Weapon:
         Rifle: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
   - Id: 2554
     Name: RL_BANISHING_BUSTER
@@ -27117,12 +27085,7 @@ Body:
       Weapon:
         Shotgun: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
   - Id: 2555
     Name: RL_B_TRAP
@@ -27303,12 +27266,7 @@ Body:
       Weapon:
         Shotgun: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
   - Id: 2558
     Name: RL_E_CHAIN
@@ -27372,12 +27330,9 @@ Body:
         Shotgun: true
         Grenade: true
       Ammo:
-        Dagger: true
         Bullet: true
         Shell: true
         Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
       Status:
         Qd_Shot_Ready: true
@@ -27433,12 +27388,7 @@ Body:
       Weapon:
         Revolver: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 5
   - Id: 2562
     Name: RL_H_MINE
@@ -27514,12 +27464,7 @@ Body:
         - Level: 5
           Amount: 36
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 1
       Equipment:
         Silver_Bullet: true
@@ -27589,12 +27534,7 @@ Body:
       Weapon:
         Gatling: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 5
   - Id: 2566
     Name: RL_D_TAIL
@@ -27638,14 +27578,7 @@ Body:
       Weapon:
         Grenade: true
       Ammo:
-        Dagger: true
-        Bullet: true
-        Shell: true
         Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
       AmmoAmount: 1
   - Id: 2567
     Name: RL_FIRE_RAIN
@@ -27668,12 +27601,7 @@ Body:
       Weapon:
         Gatling: true
       Ammo:
-        Dagger: true
         Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
       AmmoAmount: 10
     Unit:
       Id: Fire_Rain
@@ -28025,14 +27953,7 @@ Body:
         - Level: 5
           Amount: 20
       Ammo:
-        Dagger: true
-        Bullet: true
-        Shell: true
-        Grenade: true
-        Shuriken: true
         Kunai: true
-        Cannonball: true
-        Throwweapon: true
       AmmoAmount: 8
   - Id: 3008
     Name: KO_MUCHANAGE
@@ -29381,6 +29302,7 @@ Body:
       Interval: -1
       Flag:
         NoReiteration: true
+        RangedSingleUnit: true
   - Id: 5014
     Name: ALL_FULL_THROTTLE
     Description: Full Throttle
@@ -31113,6 +31035,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 8201
     Name: MS_BASH
     Description: Bash
@@ -31342,12 +31265,7 @@ Body:
     Requires:
       SpCost: 12
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 8208
     Name: MA_SHOWER
@@ -31370,12 +31288,7 @@ Body:
     Requires:
       SpCost: 15
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 8209
     Name: MA_SKIDTRAP
@@ -31590,12 +31503,7 @@ Body:
     Requires:
       SpCost: 15
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 8215
     Name: MA_SHARPSHOOTING
@@ -31634,12 +31542,7 @@ Body:
         - Level: 5
           Amount: 30
       Ammo:
-        Shell: true
-        Grenade: true
-        Shuriken: true
-        Kunai: true
-        Cannonball: true
-        Throwweapon: true
+        Arrow: true
       AmmoAmount: 1
   - Id: 8216
     Name: ML_PIERCE
@@ -32484,6 +32387,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 8407
     Name: EL_WIND_STEP
     Description: Wind Step
@@ -32526,6 +32430,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 8410
     Name: EL_SOLID_SKIN
     Description: Solid Skin
@@ -32568,6 +32473,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+        RangedSingleUnit: true
   - Id: 8413
     Name: EL_PYROTECHNIC
     Description: Pyrotechnic

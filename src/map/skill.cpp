@@ -21221,7 +21221,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 		const YAML::Node &elementNode = node["Element"];
 		std::string element;
 
-		if (node.IsScalar()) {
+		if (elementNode.IsScalar()) {
 			if (!this->asString(node, "Element", element))
 				return 0;
 
@@ -21707,8 +21707,8 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 		}
 
-		if (this->nodeExists(requireNode, "SphereCost")) {
-			if (!this->parseNode("SphereCost", "Amount", requireNode, skill->require.spiritball))
+		if (this->nodeExists(requireNode, "SpiritSphereCost")) {
+			if (!this->parseNode("SpiritSphereCost", "Amount", requireNode, skill->require.spiritball))
 				return 0;
 		} else {
 			if (!exists)

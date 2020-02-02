@@ -2227,10 +2227,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		}
 
 		if (sc->option) {
-			if (skill_id == 0) // Normal attack
-				return false;
-
-			if ((sc->option&OPTION_HIDE) && src->type == BL_PC && !skill_get_inf2(skill_id, INF2_ALLOWWHENHIDDEN)) {
+			if ((sc->option&OPTION_HIDE) && src->type == BL_PC && (skill_id == 0 || !skill_get_inf2(skill_id, INF2_ALLOWWHENHIDDEN))) {
 				// Non players can use all skills while hidden.
 				return false;
 			}
