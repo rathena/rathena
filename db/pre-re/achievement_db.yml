@@ -452,7 +452,7 @@ Body:
     Score: 10
   - ID: 120061
     Group: "AG_ADVENTURE"
-    Name: "Yuno Field Exploration"
+    Name: "Juno Field Exploration"
     #Reward:
     #  ItemID: 22876
     Score: 10
@@ -704,7 +704,7 @@ Body:
     Score: 10
   - ID: 120103
     Group: "AG_ADVENTURE"
-    Name: "Gonryun Field Exploration"
+    Name: "Kunlun Field Exploration"
     #Reward:
     #  ItemID: 22876
     Score: 10
@@ -890,7 +890,7 @@ Body:
     Score: 20
   - ID: 120134
     Group: "AG_ADVENTURE"
-    Name: "Gonryun Dungeon Exploration"
+    Name: "Kunlun Dungeon Exploration"
     #Reward:
     #  ItemID: 22876
     Score: 20
@@ -1000,7 +1000,7 @@ Body:
     Score: 10
   - ID: 127005
     Group: "AG_CHATTING"
-    Name: "Yuno Contribution"
+    Name: "Juno Contribution"
     Map: "yuno"
     Target:
       - Id: 0
@@ -1564,7 +1564,7 @@ Body:
     Score: 20
   - ID: 129008
     Group: "AG_ADVENTURE"
-    Name: "Rune Midgard Explorer"
+    Name: "Rune-Midgarts Explorer"
     Dependent:
       - Id: 129001
       - Id: 129002
@@ -1578,7 +1578,7 @@ Body:
     Score: 50
   - ID: 129009
     Group: "AG_ADVENTURE"
-    Name: "Yuno Explorer"
+    Name: "Juno Explorer"
     Dependent:
       - Id: 120052
       - Id: 120053

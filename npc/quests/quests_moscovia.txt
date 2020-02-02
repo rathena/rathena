@@ -301,7 +301,7 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	4_M_RUSBALD,{
 			next;
 			mes "[Mr. Ibanoff]";
 			mes "When I adventured around";
-			mes "Rune Midgarts, maybe it was";
+			mes "Rune-Midgarts, maybe it was";
 			mes "well before you were born.";
 			mes "Ah... I miss those days...";
 			next;
@@ -2689,11 +2689,21 @@ OnInit:
 OnEnable:
 	enablenpc strnpcinfo(0);
 	.@c = charat(strnpcinfo(0),9);
-	switch (.@c) {
-		case 1: setarray .@m, 89,112,1551,85,110,1579; break;// G_MARSE, G_HYDRA
-		case 2: setarray .@m, 89,112,1425,80,110,1254,83,114,1254,85,110,1425; break;// G_OBEAUNE, RAGGLER
-		case 3: setarray .@m, 85,111,1451,89,112,1543,90,106,1543; break;// G_MERMAN, G_KAPHA
-		case 4: setarray .@m, 85,111,1069,89,112,1543,90,106,1543; break;// SWORD_FISH, G_KAPHA
+	if (checkre(0)) {
+		switch (.@c) {
+			case 1: setarray .@m, 89,112,1551,85,110,1579; break;// G_MARSE, G_HYDRA
+			case 2: setarray .@m, 89,112,1425,80,110,1254,83,114,1254,85,110,1425; break;// G_OBEAUNE, RAGGLER
+			case 3: setarray .@m, 85,111,1451,89,112,1543,90,106,1543; break;// G_MERMAN, G_KAPHA
+			case 4: setarray .@m, 85,111,1069,89,112,1543,90,106,1543; break;// SWORD_FISH, G_KAPHA
+		}
+	}
+	else {
+		switch (.@c) {
+			case 1: setarray .@m, 89,112,1425,85,110,1425; break;// G_OBEAUNE, G_OBEAUNE
+			case 2: setarray .@m, 89,112,1425,80,110,1426,83,114,1426,85,110,1425; break;// G_OBEAUNE, G_MARC
+			case 3:
+			case 4: setarray .@m, 85,111,1451,89,112,1543,90,106,1543; break;// G_MERMAN, G_KAPHA
+		}
 	}
 	for (.@i = 0; .@i < getarraysize(.@m); .@i += 3)
 		monster "mosk_ship",.@m[.@i],.@m[.@i+1],"Sea Monster",.@m[.@i+2],1,strnpcinfo(0)+"::OnMyMobDead";
@@ -6353,7 +6363,7 @@ mosk_fild02,198,252,3	script	Sage#rus01	4_M_SAGE_C,{
 		next;
 		select("Show him a Poring Card");
 		mes "["+ strcharinfo(0) +"]";
-		mes "This is a card of one of the monsters that inhabit the Rune Midgard continent.";
+		mes "This is a card of one of the monsters that inhabit the Midgard continent.";
 		next;
 		if (!countitem(4001)) {
 			mes "[Sage]";
@@ -8418,7 +8428,7 @@ OnTouch_:
 		}
 	} else if (rhea_rus_hair > 2 && rhea_rus_hair < 7) {
 		mes "[Lusalka's Voice]";
-		mes "His name is 'Igor'.. He has gone to the capital of Rune Midgarts. Give him my golden earrings.";
+		mes "His name is 'Igor'.. He has gone to the capital of Rune-Midgarts. Give him my golden earrings.";
 		next;
 		mes "[Lusalka's Voice]";
 		mes "And please, tell him to stop suffering and to be happy. This is my request.";
@@ -8511,11 +8521,11 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	4_F_RUSGREEN,{
 				mes "If so, you came here from another continent, not Moscovia...?";
 				next;
 				mes "["+ strcharinfo(0) +"]";
-				mes "I'm from Rune Midgarts.";
+				mes "I'm from Rune-Midgarts.";
 				next;
 				mes "[Lusalka]";
 				mes "...Rune... Midgarts...";
-				mes "A few days ago, my lover left for Rune Midgarts.. Can you find him for me? I want to talk with him...";
+				mes "A few days ago, my lover left for Rune-Midgarts.. Can you find him for me? I want to talk with him...";
 				next;
 				mes "[Lusalka]";
 				mes "...I don't know why but, I can't remember how I became Lusalka. When I woke up, I was lying down on the bottom of the river.";
@@ -8530,7 +8540,7 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	4_F_RUSGREEN,{
 				mes "I suffered seeing him grieve, but wasn't able to meet him. Ordinary people are killed immediately when they see Lusalka's stare...";
 				next;
 				mes "[Lusalka]";
-				mes "I saw him coming to the marsh everyday and heard him mourning. And his assurance to go to Rune Midgarts.";
+				mes "I saw him coming to the marsh everyday and heard him mourning. And his assurance to go to Rune-Midgarts.";
 				next;
 				mes "[Lusalka]";
 				mes "Adventurer, can you find him for me? I can't leave this marsh. Please, find him for me?";
@@ -8548,11 +8558,11 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	4_F_RUSGREEN,{
 				mes "Where can I find him?";
 				next;
 				mes "[Lusalka]";
-				mes "The night when he left, he said that he would go to the capital of Rune Midgarts. I am not sure if he is still there...";
+				mes "The night when he left, he said that he would go to the capital of Rune-Midgarts. I am not sure if he is still there...";
 				next;
 				if(select("Ok, I will do it:I don't think I can do it...") == 2) {
 					mes "["+ strcharinfo(0) +"]";
-					mes "Rune Midgarts is large! I don't think I can do it.";
+					mes "Rune-Midgarts is large! I don't think I can do it.";
 					next;
 					mes "["+ strcharinfo(0) +"]";
 					mes "There's nothing we can do. Just give it up.";
@@ -8575,7 +8585,7 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	4_F_RUSGREEN,{
 				close;
 			} else if (rhea_rus_hair > 2 && rhea_rus_hair < 7) {
 				mes "[Lusalka]";
-				mes "His name is 'Igor'.. He has gone to the capital of Rune Midgarts. Give him my golden earrings.";
+				mes "His name is 'Igor'.. He has gone to the capital of Rune-Midgarts. Give him my golden earrings.";
 				next;
 				mes "[Lusalka]";
 				mes "And please, tell him to stop suffering and to be happy. This is my request.";
@@ -8699,7 +8709,7 @@ OnInit:
 prontera,228,279,3	script	Wanderer#rus24	4_M_RUSMAN2,{
 	if (rhea_rus_main < 8) {
 		mes "[A Wanderer from a strange land]";
-		mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune Midgarts Kingdom!";
+		mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune-Midgarts Kingdom!";
 		next;
 		mes "[A Wanderer from a strange land]";
 		mes "In your free time, come to see me! The weather here is even more favorable than our the best summer back home.";
@@ -8707,7 +8717,7 @@ prontera,228,279,3	script	Wanderer#rus24	4_M_RUSMAN2,{
 	} else if (rhea_rus_main == 8) {
 		if (rhea_rus_hair < 3) {
 			mes "[A Wanderer from a strange land]";
-			mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune Midgarts Kingdom!";
+			mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune-Midgarts Kingdom!";
 			next;
 			mes "[A Wanderer from a strange land]";
 			mes "In your free time, come to see me! The weather here is even more favorable than our the best summer back home.";
@@ -8719,7 +8729,7 @@ prontera,228,279,3	script	Wanderer#rus24	4_M_RUSMAN2,{
 				close;
 			}
 			mes "[A Wanderer from a strange land]";
-			mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune Midgarts Kingdom!";
+			mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune-Midgarts Kingdom!";
 			next;
 			mes "[A Wanderer from a strange land]";
 			mes "In your free time, come to see me! The weather here is even more favorable than our the best summer back home.";
@@ -8798,22 +8808,22 @@ prontera,228,279,3	script	Wanderer#rus24	4_M_RUSMAN2,{
 }
 
 //----------------------------------------------------------------------------
-// Morroc Villager (Lusalka's Hair)
+// Morocc Villager (Lusalka's Hair)
 //----------------------------------------------------------------------------
-morocc,165,82,0	script	Morroc Villager#rus25	1_M_02,{
+morocc,165,82,0	script	Morocc Villager#rus25	1_M_02,{
 	if (rhea_rus_main < 8) {
-		mes "[Morroc Villager]";
+		mes "[Morocc Villager]";
 		mes "Huh, more and more adventurers are settling here recently, so it's hard to tell who is a villager or an adventurer.";
 		next;
-		mes "[Morroc Villager]";
+		mes "[Morocc Villager]";
 		mes "But natives, like me, can tell the difference.";
 		close;
 	} else if (rhea_rus_main == 8) {
 		if (rhea_rus_hair < 4) {
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "Huh, more and more adventurers are settling here recently, so it's hard to tell who is a villager or an adventurer.";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "But natives, like me, can tell the difference.";
 			close;
 		} else if (rhea_rus_hair == 4) {
@@ -8822,49 +8832,49 @@ morocc,165,82,0	script	Morroc Villager#rus25	1_M_02,{
 				mes "...Hmm, did I forget to wear something...?";
 				close;
 			}
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "Huh, more and more adventurers are settling here recently, so it's hard to tell who is a villager or an adventurer.";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "But natives, like me, can tell the difference.";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "As I was saying, I like this village. The desert is hot and Kafra staff is even hotter!!! *hack* *cough*!!";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "Ah, but don't get me wrong! I'm not coughing because of the Kafra Staffers. It's uhh the heat, it's getting to me... ya...";
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "................................";
 			mes "The hell you talking about..? I'm looking for someone.";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "I see so many adventurers around here, how can I remember everybody? Got any descriptions of this someone..? Or traits..? anything to help me remember.";
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Hmm... I don't know how he looks like but he is from a land called Moscovia.";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "Ah, are you talking about a guy that's always sad and dresses funny? I figured his accent wasn't from around here...";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "He was here a coupla days ago but he left to see the Pyramid. I never saw him after that. I said it would be dangerous but he went anyways.";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "Yep that's gotta be who you're looking for. I can see his gloomy face right now... that poor sad man.";
 			rhea_rus_hair = 5;
 			// changequest 8151,8152;
 			close;
 		} else if (rhea_rus_hair > 4 && rhea_rus_hair < 7) {
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "He was here a coupla days ago but he left to see the Pyramid. I never saw him after that. I said it would be dangerous but he went anyways.";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "Yep that's gotta be who you're looking for. I can see his gloomy face right now... that poor sad man.";
 			close;
 		}
 	}
-	mes "[Morroc Villager]";
+	mes "[Morocc Villager]";
 	mes "Many travellers in the village and I feel fun to see them. Even though I am here, I feel like that I travel all around the world?";
 	close;
 }

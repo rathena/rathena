@@ -1924,7 +1924,7 @@ ein_in01,85,208,5	script	Ei'felle#repay01	854,{
 		mes "[Ei'felle]";
 		mes "There's a small village";
 		mes "at the outskirts of the";
-		mes "Schwaltzvalt Republic that";
+		mes "Schwarzwald Republic that";
 		mes "gives these special medals";
 		mes "that are made of this metal";
 		mes "which we desperately need...";
@@ -2735,7 +2735,7 @@ airplane,246,47,1	script	Eocatt#decoy01	878,{
 	mes "[Eocatt]";
 	mes "There's an old, humble";
 	mes "village on the outskirts of";
-	mes "the Schwaltzvalt Republic.";
+	mes "the Schwarzwald Republic.";
 	mes "It was just a tiny blip on the";
 	mes "map until they opened up";
 	mes "their Monster Race Arena!";
