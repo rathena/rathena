@@ -2378,7 +2378,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 	if (!first_call)
 		return (wd->type == DMG_CRITICAL || wd->type == DMG_MULTI_HIT_CRITICAL);
 
-	if( skill_id && !(skill_get_nk(skill_id,NK_CRITICAL) )
+	if( skill_id && !skill_get_nk(skill_id,NK_CRITICAL) )
 		return false;
 
 #ifdef RENEWAL
@@ -2397,10 +2397,10 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 		struct map_session_data *sd = BL_CAST(BL_PC, src);
 
 		if(wd->type == DMG_MULTI_HIT){	//Multiple Hit Attack Skills.
-			if(pc_checkskill(sd,GS_CHAINACTION) && !(skill_get_nk(GS_CHAINACTION,NK_CRITICAL)) //Chain Action
+			if(pc_checkskill(sd,GS_CHAINACTION) && !skill_get_nk(GS_CHAINACTION,NK_CRITICAL)) //Chain Action
 				return false;
 
-			if(pc_checkskill(sd,TF_DOUBLE) && !(skill_get_nk(TF_DOUBLE,NK_CRITICAL)) //Double Attack
+			if(pc_checkskill(sd,TF_DOUBLE) && !skill_get_nk(TF_DOUBLE,NK_CRITICAL)) //Double Attack
 				return false;
 
 		}
