@@ -1939,14 +1939,14 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 
 #ifdef RENEWAL_CAST
 		if (!isMultiLevel(it_cast->second.fixed_cast)) {
-			if (it_cast->second.fixed_cast[0] > 0)
+			if (it_cast->second.fixed_cast[0] != 0)
 				body << YAML::Key << "FixedCastTime" << YAML::Value << it_cast->second.fixed_cast[0];
 		} else {
 			body << YAML::Key << "FixedCastTime";
 			body << YAML::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.fixed_cast); i++) {
-				if (it_cast->second.fixed_cast[i] > 0) {
+				if (it_cast->second.fixed_cast[i] != 0) {
 					body << YAML::BeginMap;
 					body << YAML::Key << "Level" << YAML::Value << i + 1;
 					body << YAML::Key << "Time" << YAML::Value << it_cast->second.fixed_cast[i];
