@@ -5714,6 +5714,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       IgnoreDefense: true
+      Critical: true
     Flags:
       IsNpc: true
     Range: -9
@@ -22885,6 +22886,8 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
+    DamageFlags:
+      Critical: true
     Range: 5
     Hit: Single
     HitCount: 1
