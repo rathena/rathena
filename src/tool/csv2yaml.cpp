@@ -970,6 +970,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 		return false;
 	}
 
+	body << YAML::BeginMap;
 	body << YAML::Key << "Mob" << YAML::Value << *mob_name;
 
 	uint16 sprite_id = atoi(str[1]);
@@ -982,15 +983,15 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 			sprite = const_cast<char *>(constant_lookup(sprite_id, "JT_"));
 
 			if (sprite == nullptr) {
-				ShowError("Sprite name %s is not known.\n", sprite);
+				ShowError("Sprite name for id %d is not known.\n", sprite_id);
 				return false;
 			}
 
 			sprite += 3; // Strip JT_ here because the script engine doesn't send this prefix for NPC.
 
-			body << YAML::Key << "Sprite" << YAML::Value << *sprite;
+			body << YAML::Key << "Sprite" << YAML::Value << sprite;
 		} else
-			body << YAML::Key << "Sprite" << YAML::Value << *sprite;
+			body << YAML::Key << "Sprite" << YAML::Value << sprite;
 	} else
 		body << YAML::Key << "Sprite" << YAML::Value << *sprite_name;
 
