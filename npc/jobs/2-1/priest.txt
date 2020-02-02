@@ -298,7 +298,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 				next;
 				mes "[Bishop Paul]";
 				mes "Second, please visit Sister Mathilda. She is located in";
-				mes "an area near Morroc, Southwest of Prontera.";
+				mes "an area near Morocc, Southwest of Prontera.";
 				next;
 				mes "[Bishop Paul]";
 				mes "The third Priest you must visit is Father Yosuke. He is in a field Northwest of Prontera.";
@@ -353,7 +353,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 			mes "First, meet Father Rubalkabara. He's at the Northeast of the Prontera ruins.";
 			next;
 			mes "[Bishop Paul]";
-			mes "Then, remember to meet Sister Mathilda. She's somewhere near the town of Morroc, Southwest of Prontera.";
+			mes "Then, remember to meet Sister Mathilda. She's somewhere near the town of Morocc, Southwest of Prontera.";
 			next;
 			mes "[Bishop Paul]";
 			mes "And lastly, please seek out Father Yosuke. He is in the a field Northwest of Prontera.";
@@ -632,10 +632,10 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 		close;
 	}
 	else if (PRIEST_Q == 2) {
-		mes "Oh, you've met Father Rubalkabara. Now it's time for you to visit Sister Mathilda. She is near a town named Morroc.";
+		mes "Oh, you've met Father Rubalkabara. Now it's time for you to visit Sister Mathilda. She is near a town named Morocc.";
 		next;
 		mes "[Sister Cecilia]";
-		mes "She has been training her religious discipline somewhere in a field North of Morroc. If you look around that field, you will be able to find her.";
+		mes "She has been training her religious discipline somewhere in a field North of Morocc. If you look around that field, you will be able to find her.";
 		next;
 		mes "[Sister Cecilia]";
 		mes "Of course, sometimes I want to devote myself to training like those other Priests, but I have my duty to assist those Acolytes applying for the Priest job.";
@@ -1777,7 +1777,7 @@ function	script	F_MotherMart	{
 			mes "the peoples of the Earth.";
 			next;
 			mes "[Mother Mathilda]";
-			mes "After you become a Priest, your travels may take you to the Morroc Pyramids. I hope that you may release the Undead there from the evil to which they are bound.";
+			mes "After you become a Priest, your travels may take you to the Morocc Pyramids. I hope that you may release the Undead there from the evil to which they are bound.";
 			next;
 			mes "[Mother Mathilda]";
 			mes "Well then...";

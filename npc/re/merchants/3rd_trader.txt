@@ -162,7 +162,7 @@ job3_guil01,91,93,3	script	Rare Herb Collector	1_M_03,{
 		mes "- after you lose some weight. -";
 		close;
 	}
-	if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Baby_Cross) {
+	if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Baby_Guillotine_Cross) {
 		mes "[Rare Poison Herb Collector]";
 		mes "I wander around the world and collect rare poison herbs. Recently, I started dealing in the herb called Izidor. If you are interested, you can buy them.";
 		next;

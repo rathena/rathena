@@ -606,6 +606,9 @@ void pet_set_intimate(struct pet_data *pd, int value)
 
 	struct map_session_data *sd = pd->master;
 
+	if(pd->pet.intimate <= PET_INTIMATE_NONE)
+		pc_delitem(sd, pet_egg_search(sd, pd->pet.pet_id), 1, 0, 0, LOG_TYPE_OTHER);
+
 	if (sd)
 		status_calc_pc(sd,SCO_NONE);
 }
@@ -819,7 +822,7 @@ static TIMER_FUNC(pet_hungry){
 		pet_set_intimate(pd, pd->pet.intimate + pet_db_ptr->hungry_intimacy_dec);
 
 		if( pd->pet.intimate <= PET_INTIMATE_NONE ) {
-			pd->pet.intimate = PET_INTIMATE_NONE;
+			pet_set_intimate(pd, PET_INTIMATE_NONE);
 			pd->status.speed = pd->get_pet_walk_speed();
 		}
 
@@ -1147,6 +1150,15 @@ int pet_select_egg(struct map_session_data *sd,short egg_index)
 
 	if(egg_index < 0 || egg_index >= MAX_INVENTORY)
 		return 0; //Forged packet!
+
+	if(sd->trade_partner)	//The player have trade in progress.
+		return 0;
+
+	std::shared_ptr<s_pet_db> pet = pet_db_search(sd->inventory.u.items_inventory[egg_index].nameid, PET_EGG);
+	if (!pet) {
+		ShowError("pet does not exist, egg id %d\n", sd->inventory.u.items_inventory[egg_index].nameid);
+		return 0;
+	}
 
 	if(sd->inventory.u.items_inventory[egg_index].card[0] == CARD0_PET)
 		intif_request_petdata(sd->status.account_id, sd->status.char_id, MakeDWord(sd->inventory.u.items_inventory[egg_index].card[1], sd->inventory.u.items_inventory[egg_index].card[2]) );
@@ -1524,7 +1536,7 @@ int pet_food(struct map_session_data *sd, struct pet_data *pd)
 	if (pd->pet.hungry > PET_HUNGRY_SATISFIED) {
 		pet_set_intimate(pd, pd->pet.intimate + pet_db_ptr->r_full);
 		if (pd->pet.intimate <= PET_INTIMATE_NONE) {
-			pd->pet.intimate = PET_INTIMATE_NONE;
+			pet_set_intimate(pd, PET_INTIMATE_NONE);
 			pet_stop_attack(pd);
 			pd->status.speed = pd->get_pet_walk_speed();
 		}
@@ -2210,7 +2222,7 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 	// Prepare the new pet
 	sd->pd->pet.class_ = pet_id;
 	sd->pd->pet.egg_id = new_data->EggID;
-	sd->pd->pet.intimate = new_data->intimate;
+	pet_set_intimate(sd->pd, new_data->intimate);
 	if( !sd->pd->pet.rename_flag ){
 		struct mob_db* mdb = mob_db( pet_id );
 

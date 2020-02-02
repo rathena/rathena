@@ -12,13 +12,16 @@
 //    Cursed Crystal (ID: 23080)
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
+//= 1.1 Added some missing warp points and lore pieces [akaineko]
 //============================================================
 
 // Item Functions
 //============================================================
 function	script	F_Pieces_Of_Sentiment	{	// 22687
+	if (strcharinfo(3) == "lhz_dun_n")// usage forbidden on the same map
+		return;
 	specialeffect2 EF_HIT4;
-	.@r = rand(6);
+	.@r = rand(18);
 	if (.@r == 0)
 		warp "lhz_dun_n",40,212;
 	else if (.@r == 1)
@@ -29,6 +32,30 @@ function	script	F_Pieces_Of_Sentiment	{	// 22687
 		warp "lhz_dun_n",162,252;
 	else if (.@r == 4)
 		warp "lhz_dun_n",201,101;
+	else if (.@r == 5)
+		warp "lhz_dun_n",34,70;
+	else if (.@r == 6)
+		warp "lhz_dun_n",75,138;
+	else if (.@r == 7)
+		warp "lhz_dun_n",78,189;
+	else if (.@r == 8)
+		warp "lhz_dun_n",28,140;
+	else if (.@r == 9)
+		warp "lhz_dun_n",240,64;
+	else if (.@r == 10)
+		warp "lhz_dun_n",140,39;
+	else if (.@r == 11)
+		warp "lhz_dun_n",140,191;
+	else if (.@r == 12)
+		warp "lhz_dun_n",124,138;
+	else if (.@r == 13)
+		warp "lhz_dun_n",131,235;
+	else if (.@r == 14)
+		warp "lhz_dun_n",140,114;
+	else if (.@r == 15)
+		warp "lhz_dun_n",99,106;
+	else if (.@r == 16)
+		warp "lhz_dun_n",115,253;
 	else
 		warp "lhz_dun_n",230,138;
 	delitem 22687,1;
@@ -1624,16 +1651,258 @@ OnTouch:
 	end;
 OnTimer1000:
 	.@npc_name$ = strnpcinfo(0);
-	if (.@npc_name$ == "#Alphoccio_Basil_A1")			npctalk "It was my mistake to think that this will be just traveling...", "#lhz_dun_talk_A23";
-	else if (.@npc_name$ == "#Alphoccio_Basil_A2")		npctalk "I thought we could make songs and travel around the world forever...", "#lhz_dun_talk_A24";
-	else if (.@npc_name$ == "#Catherine Cheiron_A1")	npctalk "It's a very strange trick...", "#lhz_dun_talk_A5";
-	else if (.@npc_name$ == "#Flamel_Emule_A1")			npctalk "I've never felt so helpless before...", "#lhz_dun_talk_A15";
-	else if (.@npc_name$ == "#Gertie_Wie_A1")			npctalk "We have been used...", "#lhz_dun_talk_A21";
-	else if (.@npc_name$ == "#Gertie_Wie_A2")			npctalk "I should have received more money if I knew this would happen...", "#lhz_dun_talk_A22";
-	else if (.@npc_name$ == "#Harword Alt-Eisen_A2")	npctalk "I cannot see my future anymore...", "#lhz_dun_talk_A10";
-	else if (.@npc_name$ == "#Shecil_Damon_A2")			npctalk "I cannot die like this here...", "#lhz_dun_talk_A12";
-	else if (.@npc_name$ == "#Flamel_Emule_A2")			npctalk "I feel like... my consciousness... is no longer me...", "#lhz_dun_talk_A16";
-	// incomplete
+	if (.@npc_name$ == "#Alphoccio_Basil_A1") {
+		.@talker_name$ = "#lhz_dun_talk_A23"; 
+		switch (rand(5)) {
+			case 0:	 .@msg$ = "It was my mistake to think that this will be just traveling..."; break;
+			case 1:	 .@msg$ = "Hah... And so what?.. I listen to my wife..."; break;
+			case 2:	 .@msg$ = "What's wrong with them all here?.. Why such eyes?.."; break;
+			case 3:	 .@msg$ = "I can hear the sounds of music and songs.. Hah hah..."; break;
+			default: .@msg$ = "Where am I?.. Is there any exit?.."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Alphoccio_Basil_A2") {
+		.@talker_name$ = "#lhz_dun_talk_A24";
+		switch (rand(5)) {
+			case 0:	 .@msg$ = "I thought we could make songs and travel around the world forever..."; break;
+			case 1:	 .@msg$ = "It doesn't matter where are we while you're near me..."; break;
+			case 2:	 .@msg$ = "Trentini... Where are you..."; break;
+			case 3: .@msg$ = "The sound of the song is fading away..."; break;
+			default: .@msg$ = "And now... What is left for me?.."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Catherine Cheiron_A1") {
+		.@talker_name$ = "#lhz_dun_talk_A5";
+		switch (rand(5)) {
+			case 0:	 .@msg$ = "It's a very strange trick..."; break;
+			case 1:	 .@msg$ = "Sob sob... Somebody... Please.."; break;
+			case 2:	 .@msg$ = "It's cold... This place... Is it a warehouse?.."; break;
+			case 3:	 .@msg$ = "My voice... won't come out..."; break;
+			default: .@msg$ = "Friends... I'm scared..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Katrinn Chiron_A2") {
+		.@talker_name$ = "#lhz_dun_talk_A6";
+		switch (rand(5)) {
+			case 0:	 .@msg$ = "Seyren... Where are you..."; break;
+			case 1:	 .@msg$ = "Pain... Darkness... I'm scared..."; break;
+			case 2:  .@msg$ = "The magic that was so hard for me to learn is now just... useless..."; break;
+			case 3:  .@msg$ = "Those who are not humans..."; break;
+			default: .@msg$ = "Friends... Too dark..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Celia_Alde_A1") {
+		.@talker_name$ = "#lhz_dun_talk_A17";
+		switch (rand(5)) {
+			case 0:  .@msg$ = "Crap... This is crazy... All of this..."; break;
+			case 1:  .@msg$ = "I'm not sure I could tell who..."; break;
+			case 2:	 .@msg$ = "So poor spirit here... May it be..."; break;
+			case 3:  .@msg$ = "This is ridiculous... How this could even happen..?"; break;
+			default: .@msg$ = "Darn it... This is beyond my analytical abilities... Impossible..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Celia_Alde_A2") {
+		.@talker_name$ = "#lhz_dun_talk_A18";
+		switch (rand(4)) {
+			case 0:  .@msg$ = "Nobody around... What is..."; break;
+			case 1:  .@msg$ = "My... survival... and escape... analyzis results..."; break;
+			case 2:	 .@msg$ = "Where... what... No, no... Never..."; break;
+			default: .@msg$ = "I wanna get out of here as soon as possible..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Chen_Liu_A1") {
+		.@talker_name$ = "#lhz_dun_talk_A19";
+		switch (rand(5)) {
+			case 0:  .@msg$ = "My head feels somewhat weird..."; break;
+			case 1:  .@msg$ = "This place seems like an abandoned cellar..."; break;
+			case 2:	 .@msg$ = "There's a wound in my chest... What's goin..."; break;
+			case 3:	 .@msg$ = "I'm about to lose myself..."; break;
+			default: .@msg$ = "I'm a Monk... Agent of divine punishment..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Chen_Liu_A2") {
+		.@talker_name$ = "#lhz_dun_talk_A20";
+		switch (rand(4)) {
+			case 0:  .@msg$ = "Enemies' faces... That's collegues' faces..."; break;
+			case 1:  .@msg$ = "St Capitolina Abbey... There's still a work to be done..."; break;
+			case 2:	 .@msg$ = "My wound is sewed up... What the hell they have done to me?.."; break;
+			default: .@msg$ = "Holy power... Power of the mind..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Eremes_Guille_A1") {
+		.@talker_name$ = "#lhz_dun_talk_A7";
+		switch (rand(5)) {
+			case 0:  .@msg$ = "Concentrate on survival..."; break;
+			case 1:  .@msg$ = "I bear the Guillotine crest, I must survive!.."; break;
+			case 2:	 .@msg$ = "Don't give up... Remember the mission..."; break;
+			case 3:	 .@msg$ = "Exit is not near at all... I can't see it..."; break;
+			default: .@msg$ = "All of this... It was planned meticulously for sure..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Eremes_Guille_A2") {
+		.@talker_name$ = "#lhz_dun_talk_A8";
+		switch (rand(5)) {
+			case 0:  .@msg$ = "Is Katrinn all right... I must protect..."; break;
+			case 1:  .@msg$ = "I must complete my mission... My orders..."; break;
+			case 2:	 .@msg$ = "Assasin Guild waits for me..."; break;
+			case 3: .@msg$ = "I cannot believe I fell into a trap like this..."; break;
+			default: .@msg$ = "My eyes are blurred... I won't last long..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Flamel_Emule_A1") {
+		.@talker_name$ = "#lhz_dun_talk_A15";
+		switch (rand(5)) {
+			case 0:	 .@msg$ = "I've never felt so helpless before..."; break;
+			case 1:	 .@msg$ = "Celia... I'm scared..."; break;
+			case 2:	 .@msg$ = "My body is full of surgical scars..."; break;
+			case 3:	 .@msg$ = "Nobody showed up... Nobody... Here..."; break;
+			default: .@msg$ = "I can bear it..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Flamel_Emule_A2") {
+		.@talker_name$ = "#lhz_dun_talk_A16";
+		switch (rand(5)) {
+			case 0:  .@msg$ = "My family... Geneticists... gonna be so embarassed..."; break;
+			case 1:  .@msg$ = "I feel like... my consciousness... is no longer me..."; break;
+			case 2:	 .@msg$ = "My consciousness... is fading..."; break;
+			case 3:	 .@msg$ = "Now with the last remaining strength..."; break;
+			default: .@msg$ = "My body... what... No way..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Gertie_Wie_A1") {
+		.@talker_name$ = "#lhz_dun_talk_A21";
+		switch (rand(4)) {
+			case 0:	 .@msg$ = "We have been used..."; break;
+			case 1:	 .@msg$ = "What are you up to..."; break;
+			case 2:	 .@msg$ = "It's too wide... Can't see any exit..."; break;
+			default: .@msg$ = "Hah... Grand misfortune..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Gertie_Wie_A2") {
+		.@talker_name$ = "#lhz_dun_talk_A22";
+		switch (rand(5)) {
+			case 0:	 .@msg$ = "I should have received more money if I knew this would happen..."; break;
+			case 1:	 .@msg$ = "My cheeks are burning... Whatever happened to us... It's right..."; break;
+			case 2:	 .@msg$ = "My ages are gone... Young ones... Shall grow up into warriors..."; break;
+			case 3:	 .@msg$ = "I'll watch carefully... I should remember..."; break;
+			default: .@msg$ = "If we knew this would happen and we'd get this..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Harword_AltEisen_A1") {
+		.@talker_name$ = "#lhz_dun_talk_A9";
+		switch (rand(5)) {
+			case 0:  .@msg$ = "What moves my body now... Is it really my will..?"; break;
+			case 1:  .@msg$ = "Where is this plase?.. I was told nothing..."; break;
+			case 2:  .@msg$ = "I won't go anywhere... I'll be by your side..."; break;
+			case 3:  .@msg$ = "I must look for my sister Cecil... no matter what..."; break;
+			default: .@msg$ = "Dangerous... My mind shuts down..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Harword Alt-Eisen_A2") {
+		.@talker_name$ = "#lhz_dun_talk_A10";
+		switch (rand(3)) {
+			case 0:	 .@msg$ = "I cannot see my future anymore..."; break;
+			case 1: .@msg$ = "My eyes... just keep... closing..."; break;
+			default: .@msg$ = "Damn it... Cheer up... Don't loose the will..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Magaleta_Sorin_A1") {
+		.@talker_name$ = "#lhz_dun_talk_A3";
+		switch (rand(5)) {
+			case 0:  .@msg$ = "Dear Odin... Let Seyren be all..."; break;
+			case 1:  .@msg$ = "All of this terrifies me..."; break;
+			case 2:	 .@msg$ = "That's not my will... This is not me..."; break;
+			case 3:	 .@msg$ = "Holy power can't heal the black blood..."; break;
+			default: .@msg$ = "Dear Odin... May we... May he..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Magaleta_Sorin_A2") {
+		.@talker_name$ = "#lhz_dun_talk_A4";
+		switch (rand(4)) {
+			case 0:  .@msg$ = "Dear Odin, be my strength remaining..."; break;
+			case 1:  .@msg$ = "My body keeps loosing its strength..."; break;
+			case 2:	 .@msg$ = "Holy powers keep weakening..."; break;
+			default: .@msg$ = "My Seyren... Where are you..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Randel_Lawrence_A1") {
+		.@talker_name$ = "#lhz_dun_talk_A13";
+		switch (rand(4)) {
+			case 0:  .@msg$ = "I was dispatched here as the commander..."; break;
+			case 1:  .@msg$ = "Now it's impossible... Really..."; break;
+			case 2:	 .@msg$ = "I'll show you paladins strength..."; break;
+			default: .@msg$ = "Where is my crew..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Randel_Lawrence_A2") {
+		.@talker_name$ = "#lhz_dun_talk_A14";
+		switch (rand(5)) {
+			case 0:  .@msg$ = "Dispatched crew... If any of you survive... You must make out of this... This is an order..."; break;
+			case 1:  .@msg$ = "My powers are gone now..."; break;
+			case 2:	 .@msg$ = "What is that?.. I'm changing..."; break;
+			case 3:	 .@msg$ = "Am I the last survivor here?.."; break;
+			default: .@msg$ = "Have I fallen? It darkens before my eyes..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Seyren_Windsor_A1") {
+		.@talker_name$ = "#lhz_dun_talk_A1";
+		switch (rand(4)) {
+			case 0:  .@msg$ = "I have to find my fellows... I must..."; break;
+			case 1:  .@msg$ = "Where's Sorin?.. Are my friends all right?.."; break;
+			case 2:	 .@msg$ = "There is a traitor amongst our leaders... Nobody is safe to tell to..."; break;
+			default: .@msg$ = "My father should be informed of this..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Seyren_Windsor_A2") {
+		.@talker_name$ = "#lhz_dun_talk_A2";
+		switch (rand(5)) {
+			case 0:  .@msg$ = "My guilt tightens..."; break;
+			case 1:  .@msg$ = "I am Windsor, son of honor, I shall not defile my name..."; break;
+			case 2:	 .@msg$ = "Gotta flee from them... This should never..."; break;
+			case 3:	 .@msg$ = "We cannot die in such a place..."; break;
+			default: .@msg$ = "My love... Margaretha..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Shecil_Damon_A1") {
+		.@talker_name$ = "#lhz_dun_talk_A11";
+		switch (rand(5)) {
+			case 0:  .@msg$ = "Keep calm... It's okay..."; break;
+			case 1:  .@msg$ = "This hallway is not the exit too..."; break;
+			case 2:	 .@msg$ = "I'll come... Wait for me, Sorin..."; break;
+			case 3:  .@msg$ = "I'm scared... Very... scared..."; break;
+			default: .@msg$ = "I still have my bow and arrows..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Shecil_Damon_A2") {
+		.@talker_name$ = "#lhz_dun_talk_A12";
+		switch (rand(5)) {
+			case 0:	 .@msg$ = "I cannot die like this here..."; break;
+			case 1:	 .@msg$ = "Sorin... Where did you go..."; break;
+			case 2:	 .@msg$ = "Friends... That's what I miss..."; break;
+			case 3:	 .@msg$ = "What's in that space?.. Where will come up..?"; break;
+			default: .@msg$ = "I can do this... It's not an end..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Trentini_A1") {
+		.@talker_name$ = "#lhz_dun_talk_A25";
+		switch (rand(5)) {
+			case 0:  .@msg$ = "I can feel where he is..."; break;
+			case 1:  .@msg$ = "What do I do now?.. My head aches too much..."; break;
+			case 2:	 .@msg$ = "It's my fault... I shoul break up with Alphoccio in the end..."; break;
+			case 3:	 .@msg$ = "It's an end, it's an oppression... That's the result..."; break;
+			default: .@msg$ = "I miss you... Very much..."; break;
+		}
+	}
+	else if (.@npc_name$ == "#Trentini_A2") {
+		.@talker_name$ = "#lhz_dun_talk_A26";
+		switch (rand(4)) {
+			case 0:  .@msg$ = "Is anybody there?.. Friends, please... Ah..."; break;
+			case 1:  .@msg$ = "That Taro reading was terrifying..."; break;
+			case 2:	 .@msg$ = "I liked all their voices so much..."; break;
+			default: .@msg$ = "My body won't move at all..."; break;
+		}
+	}
+	npctalk .@msg$, .@talker_name$;
 	end;
 OnTimer40000:
 	stopnpctimer;

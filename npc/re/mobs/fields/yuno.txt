@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Yuno Fields Monster Spawn Script
+//= Juno Fields Monster Spawn Script
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
@@ -16,7 +16,7 @@
 //=     Mob quantity is custom.
 //= 1.5b Changed the spawn numbers a bit. [Poki#3]
 //=     Thanks to Playtester and Emperium.org
-//= 1.6 Fixed Yuno Field 10. Mob amount sugested by Playtester [Poki#3]
+//= 1.6 Fixed Juno Field 10. Mob amount sugested by Playtester [Poki#3]
 //= 1.7 Updated by using Tharis' Homun AI, by Tharis [Vicious]
 //= 1.8 Added kRO 10.1 spawns where they fit [Playtester]
 //= 1.9 More accurate spawns [Playtester]
@@ -109,7 +109,7 @@ yuno_fild08,0,0	monster	Green Plant	1080,10,180000,90000
 yuno_fild08,0,0	monster	Yellow Plant	1081,10,180000,90000
 
 //==================================================
-// yuno_fild09 - Schwaltzvalt Guards Camp 
+// yuno_fild09 - Schwarzwald Guards Camp 
 //==================================================
 yuno_fild09,0,0	monster	Grand Peco	1369,130,5000
 yuno_fild09,0,0	monster	Sleeper	1386,30,5000

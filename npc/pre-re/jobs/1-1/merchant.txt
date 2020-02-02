@@ -210,7 +210,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 			}
 		}
 		else if (job_merchant_q2 == 5 || job_merchant_q2 == 6) {
-			mes "First, get the delivery package from the storehouse, and then take it to Morroc.";
+			mes "First, get the delivery package from the storehouse, and then take it to Morocc.";
 			next;
 			mes "[Chief Mahnsoo]";
 			mes "You'll have to find Java Dullihan, the Dyemaker, so that you can deliver the product he ordered.";
@@ -394,7 +394,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 				callsub S_GiveSerial,2989396,3,2191737,4,1010;
 				break;
 			case 3:
-				mes "First, get the delivery package from the storehouse, and then go to Morroc. There you must find Java Dullihan, the dyemaker.";
+				mes "First, get the delivery package from the storehouse, and then go to Morocc. There you must find Java Dullihan, the dyemaker.";
 				next;
 				mes "[Chief Mahnsoo]";
 				mes "He's a bit forgetful, so you should probably give the package to one of his students.";
@@ -528,7 +528,7 @@ alberta_in,28,29,2	script	Merchant Guildsman#mer	83,{
 		else if (job_merchant_q2 == 3 || job_merchant_q2 == 4)
 			mes "Geffen Magic Academy. Okay, receipt?";
 		else if (job_merchant_q2 == 5 || job_merchant_q2 == 6)
-			mes "The dyemaker in Morroc. Not bad. Receipt?";
+			mes "The dyemaker in Morocc. Not bad. Receipt?";
 		else if (job_merchant_q2 == 7 || job_merchant_q2 == 8)
 			mes "Oh hohohoho~! The Kafra Babe on Byalan Island?! Awesome! Anyway, did you bring the receipt?";
 
@@ -846,7 +846,7 @@ morocc_in,140,102,4	script	Student#mer	86,{
 	}
 	else {
 		mes "[Dyer's Student]";
-		mes "Mr. Java Dullihan is the one and only, the best dye maker on the Rune-Midgard continent.";
+		mes "Mr. Java Dullihan is the one and only, the best dye maker on the Midgard continent.";
 		next;
 		mes "[Dyer's Student]";
 		mes "Aaaand I'm proud to say that I'm his student! Someday, I'll be able to make really beautiful dyes too!";
