@@ -2378,19 +2378,14 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 	if (!first_call)
 		return (wd->type == DMG_CRITICAL || wd->type == DMG_MULTI_HIT_CRITICAL);
 
+#ifdef RENEWAL
+	if (skill_id == NPC_CRITICALSLASH || skill_id == LG_PINPOINTATTACK) //Always critical skills
+		return true;
+#endif
 	if( skill_id && !skill_get_nk(skill_id,NK_CRITICAL) )
 		return false;
 
-#ifdef RENEWAL
-	switch(skill_id) { //Always critical skills
-		case NPC_CRITICALSLASH:
-		case LG_PINPOINTATTACK:
-			return true;
-	}
-#endif
-
 	struct status_data *sstatus = status_get_status_data(src);
-
 
 	if( sstatus->cri )
 	{
@@ -2402,7 +2397,6 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 
 			if(pc_checkskill(sd,TF_DOUBLE) && !skill_get_nk(TF_DOUBLE,NK_CRITICAL)) //Double Attack
 				return false;
-
 		}
 
 		struct status_data *tstatus = status_get_status_data(target);
@@ -2435,7 +2429,6 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 					break;
 				clif_specialeffect(src, EF_AUTOCOUNTER, AREA);
 				status_change_end(src, SC_AUTOCOUNTER, INVALID_TIMER);
-#ifdef RENEWAL
 			case KN_AUTOCOUNTER:
 				if(battle_config.auto_counter_type &&
 					(battle_config.auto_counter_type&src->type))
@@ -2450,7 +2443,6 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			case NJ_KIRIKAGE:
 				cri += 250 + 50*skill_lv;
 				break;
-#endif
 		}
 		if(tsd && tsd->bonus.critical_def)
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
