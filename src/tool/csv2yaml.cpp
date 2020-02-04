@@ -1665,7 +1665,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 				else if (arr[i] == -3)
 					body << YAML::Key << "Element" << YAML::Value << "Random";
 				else {
-					constant = constant_lookup(atoi(split[2]), "ELE_");
+					constant = constant_lookup(arr[i], "ELE_");
 					constant.erase(0, 4);
 					body << YAML::Key << "Element" << YAML::Value << name2Upper(constant);
 				}
@@ -1720,9 +1720,9 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 		}
 	}
 
-	if (atoi(split[12]) != 0) {
+	if (atoi(split[14]) != 0) {
 		memset(arr, 0, sizeof(arr));
-		arr_size = skill_split_atoi(split[12], arr);
+		arr_size = skill_split_atoi(split[14], arr);
 
 		body << YAML::Key << "Knockback";
 
@@ -1939,14 +1939,14 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 
 #ifdef RENEWAL_CAST
 		if (!isMultiLevel(it_cast->second.fixed_cast)) {
-			if (it_cast->second.fixed_cast[0] > 0)
+			if (it_cast->second.fixed_cast[0] != 0)
 				body << YAML::Key << "FixedCastTime" << YAML::Value << it_cast->second.fixed_cast[0];
 		} else {
 			body << YAML::Key << "FixedCastTime";
 			body << YAML::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.fixed_cast); i++) {
-				if (it_cast->second.fixed_cast[i] > 0) {
+				if (it_cast->second.fixed_cast[i] != 0) {
 					body << YAML::BeginMap;
 					body << YAML::Key << "Level" << YAML::Value << i + 1;
 					body << YAML::Key << "Time" << YAML::Value << it_cast->second.fixed_cast[i];
