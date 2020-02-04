@@ -55,7 +55,6 @@ S_Zone:
 		//mes getarg(0);
 		mes "You must complete the access mission to teleport to " + getarg(0) + " before using our Teleportation services.";
 		close3;
-		cutin "zonda_do01", 255;
 	}
 	mes "[Zonda Employee]";
 	mes getarg(0) + " is available for ^ff0000" + .@zeny_req + " Zenys^000000 or ^ff0000" + .@item_req + " Malang Sp Can^000000.";
