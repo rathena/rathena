@@ -142,9 +142,7 @@ function	script	F_KafTeleDoram	{
 			warp "moc_fild02",109,144;
 			end;
 		case 5:
-			cutin "", 255;
 			callfunc( "F_KafEnd",0,0 );
-			close;
 		}
 	case 9: // Rachel
 		switch( select( "Southern Ice Cave Field", "Thor Volcano East Field", "Cancel.") ) {
@@ -170,9 +168,7 @@ function	script	F_KafTeleDoram	{
 			warp "ve_fild07",85,255;
 			end;
 		case 3:
-			cutin "", 255;
 			callfunc( "F_KafEnd",0,0 );
-			close;
 		}
 	case 11: // Yuno
 		switch( select( "West Field of the Abyss Valley", "Phantasmagorika Excavation of the Abyss Valley", "Magma Dungeon Juno Plateau", "West Field of Abyss Lake", "Cancel.") ) {

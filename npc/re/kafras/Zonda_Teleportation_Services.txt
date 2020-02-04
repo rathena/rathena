@@ -19,7 +19,7 @@
 		warp "bif_fild02",160,230; // Unverified Coordinates
 		end;
 	case 2:
-		callsub( S_Zone, "Eclage", 17000,850, 11310 );
+		callsub( S_Zone, "Eclage", 17000,850, 11311 );
 		warp "eclage",111,39;
 		end;
 	case 3:
