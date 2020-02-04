@@ -1603,16 +1603,16 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	if (sd && pc_ismadogear(sd)) {
 		short element = skill_get_ele(skill_id, skill_lv);
 
-		if( !skill_id || element == -1 ) { //Take weapon's element
+		if( !skill_id || element == ELE_WEAPON ) { //Take weapon's element
 			struct status_data *sstatus = NULL;
 			if( src->type == BL_PC && ((TBL_PC*)src)->bonus.arrow_ele )
 				element = ((TBL_PC*)src)->bonus.arrow_ele;
 			else if( (sstatus = status_get_status_data(src)) ) {
 				element = sstatus->rhw.ele;
 			}
-		} else if( element == -2 ) //Use enchantment's element
+		} else if( element == ELE_ENDOWED ) //Use enchantment's element
 			element = status_get_attack_sc_element(src,status_get_sc(src));
-		else if( element == -3 ) //Use random element
+		else if( element == ELE_RANDOM ) //Use random element
 			element = rnd()%ELE_ALL;
 		pc_overheat(sd, (element == ELE_FIRE ? 3 : 1));
 	}
@@ -2784,7 +2784,7 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 	int element = skill_get_ele(skill_id, skill_lv);
 
 	//Take weapon's element
-	if( !skill_id || element == -1 ) {
+	if( !skill_id || element == ELE_WEAPON ) {
 		if (weapon_position == EQI_HAND_R)
 			element = sstatus->rhw.ele;
 		else
@@ -2796,9 +2796,9 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 		// on official endows override all other elements [helvetica]
 		if(sc && sc->data[SC_ENCHANTARMS]) // Check for endows
 			element = sc->data[SC_ENCHANTARMS]->val1;
-	} else if( element == -2 ) //Use enchantment's element
+	} else if( element == ELE_ENDOWED ) //Use enchantment's element
 		element = status_get_attack_sc_element(src,sc);
-	else if( element == -3 ) //Use random element
+	else if( element == ELE_RANDOM ) //Use random element
 		element = rnd()%ELE_ALL;
 
 	switch( skill_id ) {
@@ -2859,7 +2859,7 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 		//However the "non elemental" attacks still get reduced by "Neutral resistance"
 		//Also non-pc units have only a defending element, but can inflict elemental attacks using skills [exneval]
 		if(battle_config.attack_attr_none&src->type)
-			if(((!skill_id && !right_element) || (skill_id && (element == -1 || !right_element))) &&
+			if(((!skill_id && !right_element) || (skill_id && (element == ELE_WEAPON || !right_element))) &&
 				(wd->flag&(BF_SHORT|BF_WEAPON)) == (BF_SHORT|BF_WEAPON))
 				return;
 		if(wd->damage > 0) {
@@ -5718,13 +5718,13 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	//Initialize variables that will be used afterwards
 	s_ele = skill_get_ele(skill_id, skill_lv);
 
-	if (s_ele == -1) { // pl=-1 : the skill takes the weapon's element
+	if (s_ele == ELE_WEAPON) { // pl=-1 : the skill takes the weapon's element
 		s_ele = sstatus->rhw.ele;
 		if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm >= MAX_SPIRITCHARM)
 			s_ele = sd->spiritcharm_type; // Summoning 10 spiritcharm will endow your weapon
-	} else if (s_ele == -2) //Use status element
+	} else if (s_ele == ELE_ENDOWED) //Use status element
 		s_ele = status_get_attack_sc_element(src,status_get_sc(src));
-	else if (s_ele == -3) //Use random element
+	else if (s_ele == ELE_RANDOM) //Use random element
 		s_ele = rnd()%ELE_ALL;
 
 	switch(skill_id) {
@@ -6464,9 +6464,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	}
 
 	s_ele = skill_get_ele(skill_id, skill_lv);
-	if (s_ele < 0 && s_ele != -3) //Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
+	if (s_ele == ELE_WEAPON || s_ele == ELE_ENDOWED) //Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
 		s_ele = ELE_NEUTRAL;
-	else if (s_ele == -3) //Use random element
+	else if (s_ele == ELE_RANDOM) //Use random element
 		s_ele = rnd()%ELE_ALL;
 
 	//Skill Range Criteria

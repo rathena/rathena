@@ -1665,7 +1665,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 				else if (arr[i] == -3)
 					body << YAML::Key << "Element" << YAML::Value << "Random";
 				else {
-					constant = constant_lookup(atoi(split[2]), "ELE_");
+					constant = constant_lookup(arr[i], "ELE_");
 					constant.erase(0, 4);
 					body << YAML::Key << "Element" << YAML::Value << name2Upper(constant);
 				}
@@ -1720,9 +1720,9 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 		}
 	}
 
-	if (atoi(split[12]) != 0) {
+	if (atoi(split[14]) != 0) {
 		memset(arr, 0, sizeof(arr));
-		arr_size = skill_split_atoi(split[12], arr);
+		arr_size = skill_split_atoi(split[14], arr);
 
 		body << YAML::Key << "Knockback";
 
