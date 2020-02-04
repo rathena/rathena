@@ -1,10 +1,11 @@
 //===== rAthena Script =======================================
 //= The Last Room
 //===== Description: =========================================
-//= [Walkthrough Conversion]
+//= [Official Conversion]
 //= The Last Room Instance
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
+//= 1.1 Updated to match official script. [Capuche]
 //============================================================
 
 un_myst,163,38,5	script	Mark	4_M_BLUEMAN,{
@@ -16,11 +17,6 @@ un_myst,163,38,5	script	Mark	4_M_BLUEMAN,{
 		mes "It would be better to come back next time when we are stronger.";
 		close3;
 	}
-	if (getcharid(1) < 1) {
-		mes "...It doesn't feel right here.";
-		mes "It may be dangerous alone so it might be better to form a party.";
-		close3;
-	}
 	mes "Unlike the other doors we saw this door has traces of it being blocked from this side.";
 	next;
 	mes "[Mark]";
@@ -29,32 +25,52 @@ un_myst,163,38,5	script	Mark	4_M_BLUEMAN,{
 	switch( checkquest(11379,PLAYTIME) ) {
 	case -1:
 		.@party_id = getcharid(1);
+		if (.@party_id < 1) {
+			mes "...It doesn't feel right here.";
+			mes "It may be dangerous alone so it might be better to form a party.";
+			close3;
+		}
 		if (is_party_leader() == true)
 			.@string$ = "Open door.";
-		.@s = select( .@string$, "Go in.", "Quit." );
-		if (.@s == 1) {
+		switch( select( .@string$, "Go in.", "Quit." ) ) {
+		case 1:
+			if (instance_create("Last room") < 1) {
+				mes "Party: " + getpartyname( getcharid(1) ) + "";
+				mes "Leader: " + getpartyleader( getcharid(1) ) + "";
+				mes "^0000ffLast room ^000000- Creation failed";
+				close3;
+			}
 			mes "[Mark]";
 			mes "I'm opening the door.";
 			mes "Go in when the door is completely open.";
-			instance_create("Last room");
-		}
-		else if (.@s == 2) {
-			mes "[Mark]";
+			close3;
+		case 2:
 			switch( instance_enter("Last room") ) {
 			case IE_NOMEMBER:
+				mes "[Mark]";
+				mes "...feel very suspicious!";
+				mes "It's a little dangerous to be alone. It is recommended to team up!";
+				close3;
 			case IE_NOINSTANCE:
+				mes "[Mark]";
+				mes "The door does not seem to be fully open.";
+				close3;
 			case IE_OTHER:
-				mes "The door won't open right.";
-				break;
+				mes "[Mark]";
+				mes "Hey... what is going on?";
+				close3;
 			case IE_OK:
-				mapannounce "un_myst", strcharinfo(0) + " of the party, " + getpartyname(.@party_id) + ", is entering Last room.",bc_map,"0x00FF99";
+				mapannounce "un_myst", "" + strcharinfo(0) + " of the party, " + getpartyname(.@party_id) + ", is entering Last room.",bc_map,"0x00FF99";
 				setquest 11379;// Final Room
 				if (isbegin_quest(11380) == 0)
 					setquest 11380;// Final Room
-				break;
+				end;
 			}
+			end;
+		case 3:
+			close3;
 		}
-		close3;
+		end;
 	case 0:
 	case 1:
 		mes "[Mark]";
@@ -72,6 +88,8 @@ un_myst,163,38,5	script	Mark	4_M_BLUEMAN,{
 }
 
 // 1st step
+/*
+// npcs found on iro
 1@uns,139,41,3	script	Mark#room1	4_M_BLUEMAN,{
 	mes "[Mark]";
 	mes "Something doesn't feel right. It is better that we move carefully.";
@@ -87,6 +105,14 @@ un_myst,163,38,5	script	Mark	4_M_BLUEMAN,{
 	close3;
 }
 
+1@uns,143,39,5	script	Maggi#room1	4_F_PINKWOMAN,{
+	mes "[Maggi]";
+	mes "Aahh....";
+	cutin "bu_maggi4.bmp",2;
+	close3;
+}
+*/
+
 1@uns,145,37,3	script	Tamarin#room1	4_M_TAMARIN,{
 	mes "[Tamarin]";
 	mes "Verity, are you alright?";
@@ -99,13 +125,6 @@ un_myst,163,38,5	script	Mark	4_M_BLUEMAN,{
 	mes "[Du]";
 	mes "I have a bad feeling about this...";
 	cutin "bu_du1.bmp",2;
-	close3;
-}
-
-1@uns,143,39,5	script	Maggi#room1	4_F_PINKWOMAN,{
-	mes "[Maggi]";
-	mes "Aahh....";
-	cutin "bu_maggi4.bmp",2;
 	close3;
 }
 
@@ -163,73 +182,89 @@ un_myst,163,38,5	script	Mark	4_M_BLUEMAN,{
 		mes "Then I will stay with Verity until she recovers so you can go on ahead.";
 		cutin "ep143_tahuk.bmp",2;
 		npctalk "Tamarin: Then I will stay with Verity until she recovers so you can go on ahead.";
-		close2;
-		if ('protocole == 0)
+		if ('protocole == 0) {
 			'protocole = 1;
+			disablenpc instance_npcname("#lrdoor1");
+			enablenpc instance_npcname("#lrdoor2");
+		}
+		close2;
 		cutin "",255;
 	}
 	end;
 }
 
-1@uns,140,45,0	script	#lrdoor2	HIDDEN_WARP_NPC,6,6,{
+1@uns,140,45,0	script	#lrdoor1	WARPNPC,5,5,{
 	end;
 OnTouch:
-	if ('protocole == 0)
-		warp 'map_name$,142,30;
-	else if ('protocole == 1) {
+	warp 'map_name$,142,30;
+	end;
+}
+
+1@uns,140,45,0	script	#lrdoor2	HIDDEN_WARP_NPC,5,5,{
+	end;
+OnTouch:
+	if ('protocole == 1) {
 		'protocole = 2;
 		disablenpc instance_npcname("#lrdoor2");
-		disablenpc instance_npcname("Mark#room1");
+		// disablenpc instance_npcname("Mark#room1");
 		disablenpc instance_npcname("Du#room1");
 		disablenpc instance_npcname("Tamarin#room1");
 		disablenpc instance_npcname("Verity#room1");
-		disablenpc instance_npcname("Maggi#room1");
-		disablenpc instance_npcname("Alph#room1");
+		// disablenpc instance_npcname("Maggi#room1");
+		// disablenpc instance_npcname("Alph#room1");
 		mapannounce 'map_name$, "-----------------Creak---------------------",bc_map,"0xFF0000";
-		sleep 2000;
-		mapannounce 'map_name$, "-----Creak---Wrr--------------------------",bc_map,"0xFF0000";
-		sleep 2000;
-		mapannounce 'map_name$, "--------------Wirrrrrrr-----------------",bc_map,"0xFF0000";
-		sleep 2000;
-		mapannounce 'map_name$, "-----Zizip--------Zizizip------------------",bc_map,"0xFF0000";
-		sleep 2000;
-		mapannounce 'map_name$, "System message : Intruder detected.",bc_map,"0xFF0000";
-		sleep 2000;
-		mapannounce 'map_name$, "System message : Sealing off entrance and eliminating intruder according to designated protocols.",bc_map,"0xFF0000";
-		donpcevent instance_npcname("protocole1") + "::OnStart";
+		donpcevent instance_npcname("#lrdoor3") + "::OnStart";
 	}
 	end;
 }
 
-1@uns,1,1,0	script	protocole1	-1,{
+1@uns,1,1,0	script	#lrdoor3	-1,{
 	end;
 OnStart:
-	enablenpc instance_npcname("protocole1");
-	monster 'map_name$,47,49,"System message",3253,1, instance_npcname("protocole1") + "::OnMyMobDead2";
+	initnpctimer;
+	end;
+OnTimer2000:
+	mapannounce 'map_name$, "-----Creak---Wrr--------------------------",bc_map,"0xFF0000";
+	end;
+OnTimer4000:
+	mapannounce 'map_name$, "--------------Wirrrrrrr-----------------",bc_map,"0xFF0000";
+	end;
+OnTimer6000:
+	mapannounce 'map_name$, "-----Zizip--------Zizizip------------------",bc_map,"0xFF0000";
+	end;
+OnTimer8000:
+	mapannounce 'map_name$, "System message : Intruder detected.",bc_map,"0xFF0000";
+	end;
+OnTimer10000:
+	mapannounce 'map_name$, "System message : Sealing off entrance and eliminating intruder according to designated protocols.",bc_map,"0xFF0000";
+	enablenpc instance_npcname("#lrdoor3");
+	areamonster 'map_name$,30,33,70,73,"System message",3253,1, instance_npcname("#lrdoor3") + "::OnMyMobDead";
 	callsub S_Spawn;
-OnTimer300000:
+OnTimer310000:
+	mapannounce 'map_name$, "System message : Eliminating intruder.",bc_map,"0xFF0000";
+	callsub S_Spawn;
+OnTimer610000:
+	stopnpctimer;
 	mapannounce 'map_name$, "System message : Eliminating intruder.",bc_map,"0xFF0000";
 	callsub S_Spawn;
 S_Spawn:
-	initnpctimer;
-	.@npc_name$ = instance_npcname("protocole1");
-	// don't kill System message
-	killmonster 'map_name$, .@npc_name$ + "::OnMyMobDead";
-	areamonster 'map_name$,118,56,131,67, "Machine Component",3251,6, .@npc_name$ + "::OnMyMobDead";
-	areamonster 'map_name$, 62,82, 61,67, "Machine Component",3251,6, .@npc_name$ + "::OnMyMobDead";
-	areamonster 'map_name$, 46,89, 64,96, "Machine Component",3251,6, .@npc_name$ + "::OnMyMobDead";
-	areamonster 'map_name$,118,56,131,67, "Machine Component",3252,6, .@npc_name$ + "::OnMyMobDead";
-	areamonster 'map_name$, 62,82, 61,67, "Machine Component",3252,6, .@npc_name$ + "::OnMyMobDead";
-	areamonster 'map_name$, 46,89, 64,96, "Machine Component",3252,6, .@npc_name$ + "::OnMyMobDead";
+	.@label$ = instance_npcname("#lrdoor3") + "::OnMyMobDead";
+	areamonster 'map_name$,125,44,145, 64, "Machine Component",3251,3, .@label$;	// GC109
+	areamonster 'map_name$,117,50,137, 70, "Machine Component",3251,3, .@label$;
+	areamonster 'map_name$, 77,59, 97, 79, "Machine Component",3251,3, .@label$;
+	areamonster 'map_name$, 53,86, 73,106, "Machine Component",3251,3, .@label$;
+	areamonster 'map_name$,125,44,145, 64, "Machine Component",3252,3, .@label$;	// DR815
+	areamonster 'map_name$,117,50,137, 70, "Machine Component",3252,3, .@label$;
+	areamonster 'map_name$, 77,59, 97, 79, "Machine Component",3252,3, .@label$;
+	areamonster 'map_name$, 53,86, 73,106, "Machine Component",3252,3, .@label$;
 	end;
 OnMyMobDead:
-OnMyMobDead2:
-	.@count = mobcount( 'map_name$, instance_npcname("protocole1") + "::OnMyMobDead" ) + mobcount( 'map_name$, instance_npcname("protocole1") + "::OnMyMobDead2" );
+	.@count = mobcount( 'map_name$, instance_npcname("#lrdoor3") + "::OnMyMobDead" );
 	if (.@count < 1) {
 		mapannounce 'map_name$, "System message : First protocol failed. Commencing next protocol.",bc_map,"0xFF0000";
 		stopnpctimer;
 		enablenpc instance_npcname("Tamarin#room2");
-		disablenpc instance_npcname("protocole1");
+		disablenpc instance_npcname("#lrdoor3");
 	}
 	end;
 }
@@ -264,7 +299,6 @@ OnMyMobDead2:
 	mes "[Tamarin]";
 	mes "There is only the route going up so go ahead.";
 	npctalk "Tamarin: There is only the route going up so go ahead.";
-	close2;
 	if ('protocole == 2) {
 		'protocole = 3;
 		enablenpc instance_npcname("#lrdoor4");
@@ -273,8 +307,7 @@ OnMyMobDead2:
 		enablenpc instance_npcname("Verity#room2");
 		enablenpc instance_npcname("Verity#room3");
 	}
-	cutin "",255;
-	end;
+	close3;
 }
 
 // 2nd step
@@ -283,12 +316,10 @@ OnMyMobDead2:
 1@uns,157,94,0	script	#lrboom1	4_CRACK,2,2,{
 	end;
 OnTouch:
-	.@npc_name$ = instance_npcname( strnpcinfo(0) );
-	areamonster 'map_name$,176,26,196,52, "Machine Component", (3251 + rand(2)), 3, .@npc_name$ + "::OnMyMobDead";
+	sscanf( strnpcinfo(2), "lrboom%d", .@num );
+	areamonster 'map_name$,178,34,198,54, "Machine Component", (3251 + ((.@num-1) % 2)), 3;
 	mapannounce 'map_name$, "System message : Intruder detected in Zone 2.",bc_map,"0xFF0000";
-	disablenpc .@npc_name$;
-	end;
-OnMyMobDead:
+	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 1@uns,164,97,0	duplicate(#lrboom1)	#lrboom2	4_CRACK,2,2
@@ -327,7 +358,6 @@ OnMyMobDead:
 	cutin "EP15_2_brt_7.bmp",2;
 	close2;
 	warp 'map_name$,240,255;
-	cutin "",255;
 	end;
 }
 
@@ -337,81 +367,120 @@ OnMyMobDead:
 	mes "Finally.. We came back...";
 	mes "Finally.....";
 	cutin "EP15_2_brt_7.bmp",2;
-	close2;
-	cutin "",255;
 	if ('protocole == 3) {
 		'protocole = 4;
 		disablenpc instance_npcname("Verity#room3");
-		donpcevent instance_npcname("protocole3") + "::OnStart";
+		donpcevent instance_npcname("#bosslr") + "::OnStart";
 	}
-	end;
+	close3;
 }
 
-1@uns,1,1,0	script	protocole3	-1,{
+1@uns,1,1,0	script	#bosslr	-1,{
 	end;
 OnStart:
-	enablenpc instance_npcname("protocole3");
+	enablenpc instance_npcname("#bosslr");
 	initnpctimer;
-	mapannounce 'map_name$, "System message : Intruder detected in Mother Room.",bc_map,"0xFF0000";
-	monster 'map_name$,247,270,"T_W_O",3254,1, instance_npcname("protocole3") + "::OnMyMobDead";
 	end;
 OnTimer2000:
-	mapannounce 'map_name$, "System message : Commencing final protocol.",bc_map,"0xFF0000";
+	mapannounce 'map_name$, "System message : Intruder detected in Mother Room.",bc_map,"0xFF0000";
 	end;
 OnTimer4000:
-	mapannounce 'map_name$, "System message : Changing all systems from maintenance mode to combat mode.",bc_map,"0xFF0000";
+	mapannounce 'map_name$, "System message : Commencing final protocol.",bc_map,"0xFF0000";
+	areamonster 'map_name$,235,255,255,275,"T_W_O",3254,1, instance_npcname("#bosslr") + "::OnMyMobDead";
 	end;
 OnTimer6000:
+	mapannounce 'map_name$, "System message : Changing all systems from maintenance mode to combat mode.",bc_map,"0xFF0000";
+	end;
+OnTimer8000:
 	mapannounce 'map_name$, "System message : This is the final protocol to protect... all unrelated personnel please evacuate.",bc_map,"0xFF0000";
 	end;
-OnTimer9000:
+OnTimer11000:
 	mapannounce 'map_name$, "T_W_O : Have to go back..... This place isn't it....",bc_map,"0xFF0000";
 	end;
-OnTimer28000:
-	mapannounce 'map_name$, "System message : System damage occurred.",bc_map,"0xFF0000";
-	areamonster 'map_name$,222,250,267,281, "System message",3253,3, instance_npcname("protocole3") + "::OnMyMobDead2";
-	end;
 OnTimer30000:
+	mapannounce 'map_name$, "System message : System damage occurred.",bc_map,"0xFF0000";
+	areamonster 'map_name$,225,250,265,280, "System message",3253,4, instance_npcname("#bosslr") + "::OnMyMobDead2";
+	end;
+OnTimer32000:
 	mapannounce 'map_name$, "T_W_O : Who am I? Why am I here?.",bc_map,"0xFF0000";
 	end;
-OnTimer58000:
+OnTimer60000:
 	mapannounce 'map_name$, "System message : There may be critical damage within the Zone during system damage so please be careful.",bc_map,"0xFF0000";
 	end;
-OnTimer88000:
+OnTimer90000:
 	mapannounce 'map_name$, "System message : System damage occurred.",bc_map,"0xFF0000";
-	areamonster 'map_name$,222,250,267,281, "System message",3253,3, instance_npcname("protocole3") + "::OnMyMobDead2";
+	areamonster 'map_name$,225,250,265,280, "System message",3253,4, instance_npcname("#bosslr") + "::OnMyMobDead2";
 	end;
-OnTimer98000:
+OnTimer100000:
 	mapannounce 'map_name$, "T_W_O : There is nothing left....",bc_map,"0xFF0000";
 	end;
-OnTimer108000:
+OnTimer110000:
 	mapannounce 'map_name$, "T_W_O : I... Nor them....",bc_map,"0xFF0000";
 	end;
-OnTimer148000:
+OnTimer150000:
 	mapannounce 'map_name$, "System message : System damage occurred.",bc_map,"0xFF0000";
-	areamonster 'map_name$,222,250,267,281, "System message",3253,3, instance_npcname("protocole3") + "::OnMyMobDead2";
+	areamonster 'map_name$,225,250,265,280, "System message",3253,4, instance_npcname("#bosslr") + "::OnMyMobDead2";
 	end;
-OnTimer208000:
+OnTimer210000:
 	mapannounce 'map_name$, "System message : System damage occurred.",bc_map,"0xFF0000";
-	areamonster 'map_name$,222,250,267,281, "System message",3253,3, instance_npcname("protocole3") + "::OnMyMobDead2";
+	areamonster 'map_name$,225,250,265,280, "System message",3253,4, instance_npcname("#bosslr") + "::OnMyMobDead2";
 	stopnpctimer;
 	end;
 OnMyMobDead:
-	stopnpctimer;
-	killmonster 'map_name$, instance_npcname("protocole3") + "::OnMyMobDead2";
-	mapannounce 'map_name$, "System message : All protocols failed. Locking down area excluding threat element.",bc_map,"0xFF0000";
-	enablenpc instance_npcname("Alph#room4");
-	enablenpc instance_npcname("Tamarin#room4");
-	enablenpc instance_npcname("Maggi#room4");
-	enablenpc instance_npcname("Du#room4");
-	enablenpc instance_npcname("Mark#room4");
-	enablenpc instance_npcname("Verity#room4");
-	disablenpc instance_npcname("protocole3");
+	if (mobcount( 'map_name$, instance_npcname("#bosslr") + "::OnMyMobDead" ) < 1) {
+		stopnpctimer;
+		killmonster 'map_name$, instance_npcname("#bosslr") + "::OnMyMobDead";
+		killmonster 'map_name$, instance_npcname("#bosslr") + "::OnMyMobDead2";
+		mapannounce 'map_name$, "System message : All protocols failed. Locking down area excluding threat element.",bc_map,"0xFF0000";
+		// enablenpc instance_npcname("Alph#room4");
+		// enablenpc instance_npcname("Tamarin#room4");
+		// enablenpc instance_npcname("Maggi#room4");
+		// enablenpc instance_npcname("Du#room4");
+		// enablenpc instance_npcname("Mark#room4");
+		enablenpc instance_npcname("Verity#room4");
+		disablenpc instance_npcname("#bosslr");
+	}
 	end;
 OnMyMobDead2:
 	end;
 }
-	
+
+1@uns,242,253,3	script	Verity#room4	4_F_BERRYTEA,{
+	mes "[Verity]";
+	mes "Who am I?";
+	mes "Who am I...";
+	cutin "EP15_2_brt_6.bmp",2;
+	close2;
+	warp "un_bunker",299,162;
+	end;
+
+OnInstanceInit:
+	'map_name$ = instance_mapname("1@uns");
+	'protocole = 0;
+
+	// 1st step
+	disablenpc instance_npcname("#lrdoor3");
+	disablenpc instance_npcname("Tamarin#room2");
+	disablenpc instance_npcname("#lrdoor4");
+
+	// 2nd step
+	disablenpc instance_npcname("Verity#room2");
+	for ( .@i = 1; .@i < 16; ++.@i )
+		disablenpc instance_npcname( "#lrboom" + .@i );
+
+	// Last step
+	disablenpc instance_npcname("Verity#room3");
+	disablenpc instance_npcname("#bosslr");
+	// disablenpc instance_npcname("Alph#room4");
+	// disablenpc instance_npcname("Tamarin#room4");
+	// disablenpc instance_npcname("Maggi#room4");
+	// disablenpc instance_npcname("Du#room4");
+	// disablenpc instance_npcname("Mark#room4");
+	disablenpc instance_npcname("Verity#room4");
+	end;
+}
+
+/*
 1@uns,236,258,1	script	Alph#room4	4_M_BLACKMAN,{
 	mes "[Alph]";
 	mes "It's too early to relax...";
@@ -560,31 +629,6 @@ OnMyMobDead2:
 	npctalk "Mark: Qui...quickly outside!!!!!", instance_npcname("Mark#room4");
 	close2;
 	warp "un_bunker",299,162;
-	cutin "",255;
 	end;
+*/
 
-OnInstanceInit:
-	'map_name$ = instance_mapname("1@uns");
-	'protocole = 0;
-
-	// 1st step
-	disablenpc instance_npcname("protocole1");
-	disablenpc instance_npcname("Tamarin#room2");
-	disablenpc instance_npcname("#lrdoor4");
-
-	// 2nd step
-	disablenpc instance_npcname("Verity#room2");
-	for ( .@i = 1; .@i < 16; ++.@i )
-		disablenpc instance_npcname( "#lrboom" + .@i );
-
-	// Last step
-	disablenpc instance_npcname("Verity#room3");
-	disablenpc instance_npcname("protocole3");
-	disablenpc instance_npcname("Alph#room4");
-	disablenpc instance_npcname("Tamarin#room4");
-	disablenpc instance_npcname("Maggi#room4");
-	disablenpc instance_npcname("Du#room4");
-	disablenpc instance_npcname("Mark#room4");
-	disablenpc instance_npcname("Verity#room4");
-	end;
-}
