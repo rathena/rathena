@@ -8491,13 +8491,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		{
 			struct skill_unit* su;
 			struct skill_unit_group* sg = NULL;
-			std::shared_ptr<s_skill_db> skill_group = skill_db.find(sg->skill_id);
+			std::shared_ptr<s_skill_db> skill_group;
 
 			su = BL_CAST(BL_SKILL, bl);
 
 			// Mercenaries can remove any trap
 			// Players can only remove their own traps or traps on Vs maps.
-			if( su && (sg = su->group) && (src->type == BL_MER || sg->src_id == src->id || map_flag_vs(bl->m)) && skill_group->inf2[INF2_ISTRAP] )
+			if( su && (sg = su->group) && (src->type == BL_MER || sg->src_id == src->id || map_flag_vs(bl->m)) && ( skill_group = skill_db.find(sg->skill_id) ) && skill_group->inf2[INF2_ISTRAP] )
 			{
 				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 				if( sd && !(sg->unit_id == UNT_USED_TRAPS || (sg->unit_id == UNT_ANKLESNARE && sg->val2 != 0 )) )
