@@ -13,7 +13,7 @@ function	script	F_KafTeleDoram	{
 	mes "[Kafra Employee]";
 	mes "Welcome.";
 	mes "The Kafra services are always on your side.";
-	mes "Please tell me your destiny?";
+	mes "Please tell me your destiny.";
 	next;
 	switch(.@menu_choice) {
 	case 1: // Alberta
@@ -82,9 +82,9 @@ function	script	F_KafTeleDoram	{
 			callfunc( "F_KafEnd",0,0 );
 		}
 	case 6: // Morocc
-		switch( select( "Morroc Ruins Pyramid", "Sograt Desert Sphinx", "Southeast Morroc Field", "Comodo Beaches", "Kingdom of the Dead", "Cancel.") ) {
+		switch( select( "Morocc Ruins Pyramid", "Sograt Desert Sphinx", "Southeast Morocc Field", "Comodo Beaches", "Kingdom of the Dead", "Cancel.") ) {
 		case 1:
-			callsub( S_Zone, "Morroc Ruins Pyramid", 50,3 );
+			callsub( S_Zone, "Morocc Ruins Pyramid", 50,3 );
 			warp "moc_ruins",100,140;
 			end;
 		case 2:
@@ -92,7 +92,7 @@ function	script	F_KafTeleDoram	{
 			warp "moc_fild19",132,100;
 			end;
 		case 3:
-			callsub( S_Zone, "Southeast Morroc Field", 100,5 );
+			callsub( S_Zone, "Southeast Morocc Field", 100,5 );
 			warp "moc_fild11",267,100;
 			end;
 		case 4:
@@ -233,12 +233,12 @@ moc_para01,35,23,3	script	Kafra Teleportation#eden	4_F_DRKAFRA01,{
 	next;
 	if (BaseLevel > 40) {
 		mes "[Kafra Employee]";
-		mes "We do not offer free teleportation services for adventurers ^ff0000above level 40 or higher^000000.";
+		mes "We do not offer free teleportation services for adventurers ^ff0000above level 40^000000.";
 		mes "Search for Kafra Teleportation services in the city.";
 		close3;
 	}
 	mes "[Kafra Employee]";
-	mes "Please tell me your destiny?";
+	mes "Please tell me your destiny.";
 	next;
 	switch( select( "Prontera West Field", "Prontera Southwestern Field", "Prontera Lake Field", "Payon Dungeon Entrance", "Southwest Izlude Field", "Cancel.") ) {
 	case 1:
@@ -253,7 +253,7 @@ moc_para01,35,23,3	script	Kafra Teleportation#eden	4_F_DRKAFRA01,{
 	case 2:
 		mes "[Kafra Employee]";
 		mes "Prontera Field :";
-		mes "Southwestern Prontera Field is a place where ^ff0000Rocker^000000 live.";
+		mes "Southwestern Prontera Field is a place where ^ff0000Rockers^000000 live.";
 		next;
 		callsub( S_Zone );
 		warp "prt_fild07",250,257;
@@ -277,7 +277,7 @@ moc_para01,35,23,3	script	Kafra Teleportation#eden	4_F_DRKAFRA01,{
 	case 5:
 		mes "[Kafra Employee]";
 		mes "Sograt Desert :";
-		mes "Southwest of Prontera and Southwest of Izlude, this place is full of ^ff0000Muka^000000 and ^ff0000Peco Peco^000000.";
+		mes "Southwest of Prontera and Southwest of Izlude, this place is full of ^ff0000Mukas^000000 and ^ff0000Peco Pecos^000000.";
 		next;
 		callsub( S_Zone );
 		warp "moc_fild01",232,250;
@@ -291,7 +291,7 @@ S_Zone:
 		return;
 	case 2:
 		mes "[Kafra Employee]";
-		mes "So can you check out other service?";
+		mes "Want to check out our other services?";
 		close3;
 	}	
 }
