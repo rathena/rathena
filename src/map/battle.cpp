@@ -2375,21 +2375,34 @@ static bool is_attack_left_handed(struct block_list *src, int skill_id)
  */
 static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct block_list *target, int skill_id, int skill_lv, bool first_call)
 {
-	struct status_data *sstatus = status_get_status_data(src);
-	struct status_data *tstatus = status_get_status_data(target);
-	struct status_change *sc = status_get_sc(src);
-	struct status_change *tsc = status_get_sc(target);
-	struct map_session_data *sd = BL_CAST(BL_PC, src);
-	struct map_session_data *tsd = BL_CAST(BL_PC, target);
-
 	if (!first_call)
 		return (wd->type == DMG_CRITICAL || wd->type == DMG_MULTI_HIT_CRITICAL);
 
+#ifdef RENEWAL
 	if (skill_id == NPC_CRITICALSLASH || skill_id == LG_PINPOINTATTACK) //Always critical skills
 		return true;
+#endif
+	if( skill_id && !skill_get_nk(skill_id,NK_CRITICAL) )
+		return false;
 
-	if( sstatus->cri && ( !skill_id || skill_get_nk(skill_id, NK_CRITICAL) ) )
+	struct status_data *sstatus = status_get_status_data(src);
+
+	if( sstatus->cri )
 	{
+		struct map_session_data *sd = BL_CAST(BL_PC, src);
+
+		if(wd->type == DMG_MULTI_HIT){	//Multiple Hit Attack Skills.
+			if(pc_checkskill(sd,GS_CHAINACTION) && !skill_get_nk(GS_CHAINACTION,NK_CRITICAL)) //Chain Action
+				return false;
+
+			if(pc_checkskill(sd,TF_DOUBLE) && !skill_get_nk(TF_DOUBLE,NK_CRITICAL)) //Double Attack
+				return false;
+		}
+
+		struct status_data *tstatus = status_get_status_data(target);
+		struct status_change *sc = status_get_sc(src);
+		struct status_change *tsc = status_get_sc(target);
+		struct map_session_data *tsd = BL_CAST(BL_PC, target);
 		short cri = sstatus->cri;
 
 		if (sd) {
@@ -2435,7 +2448,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
 		return (rnd()%1000 < cri);
 	}
-	return 0;
+	return false;
 }
 
 /*==========================================================
@@ -3269,7 +3282,7 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 					RE_ALLATK_ADDRATE(wd, sd->bonus.atk_rate);
 				}
 #ifndef RENEWAL
-				if(sd->bonus.crit_atk_rate && !skill_id && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
+				if(sd->bonus.crit_atk_rate && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
 					ATK_ADDRATE(wd->damage, wd->damage2, sd->bonus.crit_atk_rate);
 				}
 #endif
@@ -5473,7 +5486,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		return wd; //Enough, rest is not needed.
 
 #ifdef RENEWAL
-	if (!skill_id && is_attack_critical(&wd, src, target, skill_id, skill_lv, false)) {
+	if (is_attack_critical(&wd, src, target, skill_id, skill_lv, false)) {
 		if (sd) { //Check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
 			wd.damage = (int)floor((float)((wd.damage * 140) / 100 * (100 + sd->bonus.crit_atk_rate)) / 100);
 			if (is_attack_left_handed(src, skill_id))
