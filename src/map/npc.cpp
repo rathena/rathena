@@ -1916,7 +1916,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 				return 2;
 		}
 
-		if (npc_shop_discount(nd->subtype,nd->u.shop.discount))
+		if (npc_shop_discount(nd))
 			value = pc_modifybuyvalue(sd,value);
 
 		z += (double)value * amount;
@@ -2827,7 +2827,20 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			break;
 #endif
 		default:
-			is_discount = 1;
+			if( sscanf( p, ",%32[^,:]:%11d,", point_str, &is_discount ) == 2 ){
+				is_discount = 1;
+			}else{
+				if( !strcasecmp( point_str, "yes" ) ){
+					is_discount = 1;
+				}else if( !strcasecmp( point_str, "no" ) ){
+					is_discount = 0;
+				}else{
+					ShowError( "npc_parse_shop: unknown discount setting %s\n", point_str );
+					return strchr( start, '\n' ); // skip and continue
+				}
+
+				p = strchr( p + 1, ',' );
+			}
 			break;
 	}
 	
@@ -2919,11 +2932,15 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		return strchr(start,'\n');// continue
 	}
 
-	if (type != NPCTYPE_SHOP) {
-		if (type == NPCTYPE_ITEMSHOP) nd->u.shop.itemshop_nameid = nameid; // Item shop currency
-		else if (type == NPCTYPE_POINTSHOP) safestrncpy(nd->u.shop.pointshop_str,point_str,strlen(point_str)+1); // Point shop currency
-		nd->u.shop.discount = is_discount > 0;
+	if( type == NPCTYPE_ITEMSHOP ){
+		// Item shop currency
+		nd->u.shop.itemshop_nameid = nameid;
+	}else if( type == NPCTYPE_POINTSHOP ){
+		// Point shop currency
+		safestrncpy( nd->u.shop.pointshop_str, point_str, strlen( point_str ) + 1 );
 	}
+
+	nd->u.shop.discount = is_discount > 0;
 
 	npc_parsename(nd, w3, start, buffer, filepath);
 	nd->class_ = m == -1 ? JT_FAKENPC : npc_parseview(w4, start, buffer, filepath);
@@ -2967,14 +2984,15 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 * @param discount Discount flag of NPC shop
 * @return bool 'true' is discountable, 'false' otherwise
 */
-bool npc_shop_discount(enum npc_subtype type, bool discount) {
-	if (type == NPCTYPE_SHOP || (type != NPCTYPE_SHOP && discount))
-		return true;
-
-	if( (type == NPCTYPE_ITEMSHOP && battle_config.discount_item_point_shop&1) ||
-		(type == NPCTYPE_POINTSHOP && battle_config.discount_item_point_shop&2) )
-		return true;
-	return false;
+bool npc_shop_discount( struct npc_data* nd ){
+	switch( nd->subtype ){
+		case NPCTYPE_ITEMSHOP:
+			return nd->u.shop.discount || ( battle_config.discount_item_point_shop&1 );
+		case NPCTYPE_POINTSHOP:
+			return nd->u.shop.discount || ( battle_config.discount_item_point_shop&2 );
+		default:
+			return nd->u.shop.discount;
+	}
 }
 
 /**
