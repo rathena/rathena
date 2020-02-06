@@ -24181,7 +24181,7 @@ BUILDIN_FUNC(mail){
 		for (i = 0; i < num_items && start < end; i++, start++) {
 			struct item_data* item = itemdb_exists(msg.item[i].nameid);
 
-			msg.item[i].refine = (int32)__64BPRTSIZE(get_val2(st, reference_uid(id, start), reference_getref(data)));
+			msg.item[i].refine = (char)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 
 			script_removetop(st, -1, 0);
 
@@ -24210,7 +24210,7 @@ BUILDIN_FUNC(mail){
 		for( i = 0; i < num_items && start < end; i++, start++ ){
 			struct item_data *item = itemdb_exists(msg.item[i].nameid);
 
-			msg.item[i].bound = (int32)__64BPRTSIZE( get_val2( st, reference_uid( id, start ), reference_getref( data ) ) );
+			msg.item[i].bound = (char)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 
 			script_removetop(st, -1, 0);
 
