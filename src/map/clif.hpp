@@ -13,6 +13,8 @@
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp" // t_tick
 
+#include "script.hpp"
+
 struct Channel;
 struct clan;
 struct item;
@@ -540,13 +542,14 @@ enum e_damage_type : uint8_t {
 	DMG_STAND_UP,			/// stand up
 	DMG_ENDURE,				/// damage (endure)
 	DMG_SPLASH,				/// (splash?)
-	DMG_SKILL,				/// (skill?)
+	DMG_SINGLE,				/// (skill?)
 	DMG_REPEAT,				/// (repeat damage?)
 	DMG_MULTI_HIT,			/// multi-hit damage
 	DMG_MULTI_HIT_ENDURE,	/// multi-hit damage (endure)
 	DMG_CRITICAL,			/// critical hit
 	DMG_LUCY_DODGE,			/// lucky dodge
 	DMG_TOUCH,				/// (touch skill?)
+	DMG_MULTI_HIT_CRITICAL  /// multi-hit with critical
 };
 
 enum class e_pet_evolution_result : uint32 {
@@ -909,7 +912,7 @@ void clif_quest_add(struct map_session_data * sd, struct quest * qd);
 void clif_quest_delete(struct map_session_data * sd, int quest_id);
 void clif_quest_update_status(struct map_session_data * sd, int quest_id, bool active);
 void clif_quest_update_objective(struct map_session_data * sd, struct quest * qd, int mobid);
-void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, short state, short color);
+void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, e_questinfo_types effect, e_questinfo_markcolor color);
 void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, bool quest, bool lost);
 
 int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target type);
@@ -1119,7 +1122,7 @@ void clif_camerainfo( struct map_session_data* sd, bool show, float range = 0.0f
 
 /// Equip Switch System
 void clif_equipswitch_list( struct map_session_data* sd );
-void clif_equipswitch_add( struct map_session_data* sd,uint16 index, uint32 pos, bool failed );
+void clif_equipswitch_add( struct map_session_data* sd,uint16 index, uint32 pos, uint8 flag );
 void clif_equipswitch_remove( struct map_session_data* sd, uint16 index, uint32 pos, bool failed );
 void clif_equipswitch_reply( struct map_session_data* sd, bool failed );
 
