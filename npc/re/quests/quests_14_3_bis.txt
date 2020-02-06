@@ -2070,7 +2070,6 @@ morocc,138,238,4	script	Piled Rags#ep14bs	4_M_DIEMAN,{
 		mes "- You are carrying too many items to proceed with the quest. -";
 		close;
 	}
-	callfunc( "F_ReplaceVarTOfficial" );
 	if (ep14_3_newerabs == 0) {
 		mes "- There is a pile of dirty rags. -";
 		next;
@@ -2262,7 +2261,6 @@ OnInit:
 }
 
 moc_ruins,106,140,4	script	Tamarin#ep14bs_ru	4_M_TAMARIN,{
-	callfunc( "F_ReplaceVarTOfficial" );
 	if (ep14_3_newerabs == 5 || ep14_3_newerabs == 6) {
 		if (ep14_3_newerabs == 5) {
 			mes "[Tamarin]";
@@ -2446,7 +2444,6 @@ moc_ruins,106,140,4	script	Tamarin#ep14bs_ru	4_M_TAMARIN,{
 }
 
 dali,112,69,4	script	Tamarin#ep14bs_cha	4_M_TAMARIN,{
-	callfunc( "F_ReplaceVarTOfficial" );
 	if (ep14_3_newerabs == 7) {
 		mes "[Tamarin]";
 		mes "" + strcharinfo(0) + ", over here!";
@@ -2495,7 +2492,6 @@ dali,112,69,4	script	Tamarin#ep14bs_cha	4_M_TAMARIN,{
 }
 
 dali02,90,62,0	script	Sand Mound#ep14bs	4_SOIL,{
-	callfunc( "F_ReplaceVarTOfficial" );
 	if (ep14_3_newerabs < 8) {
 		mes "- A mound of sand stands awkwardly, looking out of place. -";
 		close;
@@ -2539,7 +2535,6 @@ dali02,90,62,0	script	Sand Mound#ep14bs	4_SOIL,{
 }
 
 moro_vol,137,136,0	script	Sand Mound#ep14bs_	4_SOIL,{
-	callfunc( "F_ReplaceVarTOfficial" );
 	if (ep14_3_newerabs < 9) {
 		mes "- A mound of sand stands awkwardly, looking out of place. -";
 		close;
@@ -2557,7 +2552,6 @@ moro_vol,137,136,0	script	Sand Mound#ep14bs_	4_SOIL,{
 }
 
 moro_vol,132,140,4	script	Tamarin#ep14bs_ju	4_M_TAMARIN,{
-	callfunc( "F_ReplaceVarTOfficial" );
 	if (ep14_3_newerabs == 9) {
 		mes "[Tamarin]";
 		mes "Whoa!";
@@ -2668,7 +2662,6 @@ moro_vol,142,131,5	script	Barget Tiblack#ep14bs	4_M_ALCHE_D,{
 		mes "- You are carrying too many items to proceed with the quest. -";
 		close;
 	}
-	callfunc( "F_ReplaceVarTOfficial" );
 	if (ep14_3_newerabs < 15) {
 		mes "[Barget Tiblack]";
 		mes "Ugh, I'm exhausted.";
@@ -2893,7 +2886,6 @@ moro_vol,142,131,5	script	Barget Tiblack#ep14bs	4_M_ALCHE_D,{
 }
 
 moro_vol,198,179,4	script	Tamarin#ep14bs_st	4_M_TAMARIN,{
-	callfunc( "F_ReplaceVarTOfficial" );
 	if (ep14_3_newerabs < 18) {
 		mes "[Tamarin]";
 		mes "Hm...";
@@ -2985,7 +2977,6 @@ moro_vol,198,179,4	script	Tamarin#ep14bs_st	4_M_TAMARIN,{
 }
 
 moro_vol,105,71,5	script	Instructor Rugen#ep14bs	4_M_YOUNGKNIGHT,{
-	callfunc( "F_ReplaceVarTOfficial" );
 	if (ep14_3_newerabs < 20) {
 		mes "[Instructor Rugen]";
 		mes "Phew...";
@@ -3084,7 +3075,6 @@ moro_vol,105,71,5	script	Instructor Rugen#ep14bs	4_M_YOUNGKNIGHT,{
 }
 
 moro_vol,104,70,4	script	Intoxicated Patient#ep14bs	4_M_LIEMAN,{
-	callfunc( "F_ReplaceVarTOfficial" );
 	if (ep14_3_newerabs == 21) {
 		mes "[Poisoned Patient]";
 		mes "Ugh...";

@@ -27,7 +27,6 @@ moro_vol,91,105,1	script	Eclage Teleporter#143_1	PORTAL,{
 }
 
 ecl_in01,38,98,1	script	Interdimensional Device#ecl	PORTAL,{
-	callfunc( "F_ReplaceVarTOfficial" );
 	if (ep14_3_newerabs < 10) {
 		mes "[Eclage Guard]";
 		mes "This teleporter is connected to the recently discovered hideout of the Demon God.";
