@@ -13277,6 +13277,27 @@ Body:
       IsNpc: true
     Hit: Single
     HitCount: 1
+    Element:
+      - Level: 1
+        Element: Neutral
+      - Level: 2
+        Element: Water
+      - Level: 3
+        Element: Earth
+      - Level: 4
+        Element: Fire
+      - Level: 5
+        Element: Wind
+      - Level: 6
+        Element: Poison
+      - Level: 7
+        Element: Holy
+      - Level: 8
+        Element: Dark
+      - Level: 9
+        Element: Ghost
+      - Level: 10
+        Element: Undead
     Duration1: 180000
     Requires:
       SpCost: 1
@@ -22168,6 +22189,13 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
+    Element:
+      - Level: 1
+        Element: Neutral
+      - Level: 2
+        Element: Holy
+      - Level: 3
+        Element: Neutral
     Knockback:
       - Level: 1
         Amount: 2

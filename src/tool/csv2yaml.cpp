@@ -1584,15 +1584,17 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 		body << YAML::EndMap;
 	}
 
-	if (atoi(split[1]) != 0) {
-		memset(arr, 0, sizeof(arr));
-		arr_size = skill_split_atoi(split[1], arr);
+	memset(arr, 0, sizeof(arr));
+	arr_size = skill_split_atoi(split[1], arr);
 
-		body << YAML::Key << "Range";
-
+	if (arr_size != 0) {
 		if (arr_size == 1) {
-			body << YAML::Value << arr[0];
+			if (arr[0] != 0) {
+				body << YAML::Key << "Range";
+				body << YAML::Value << arr[0];
+			}
 		} else {
+			body << YAML::Key << "Range";
 			body << YAML::BeginSeq;
 
 			for (int i = 0; i < arr_size; i++) {
@@ -1612,15 +1614,17 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 		body << YAML::Key << "Hit" << YAML::Value << name2Upper(constant);
 	}
 
-	if (atoi(split[8]) != 0) {
-		memset(arr, 0, sizeof(arr));
-		arr_size = skill_split_atoi(split[8], arr);
+	memset(arr, 0, sizeof(arr));
+	arr_size = skill_split_atoi(split[8], arr);
 
-		body << YAML::Key << "HitCount";
-
+	if (arr_size != 0) {
 		if (arr_size == 1) {
-			body << YAML::Value << arr[0];
+			if (arr[0] != 0) {
+				body << YAML::Key << "HitCount";
+				body << YAML::Value << arr[0];
+			}
 		} else {
+			body << YAML::Key << "HitCount";
 			body << YAML::BeginSeq;
 
 			for (int i = 0; i < arr_size; i++) {
@@ -1634,25 +1638,28 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 		}
 	}
 
-	if (atoi(split[4]) != 0) {
-		memset(arr, 0, sizeof(arr));
-		arr_size = skill_split_atoi(split[4], arr);
+	memset(arr, 0, sizeof(arr));
+	arr_size = skill_split_atoi(split[4], arr);
 
-		body << YAML::Key << "Element";
-
+	if (arr_size != 0) {
 		if (arr_size == 1) {
-			if (arr[0] == -1)
-				body << YAML::Value << "Weapon";
-			else if (arr[0] == -2)
-				body << YAML::Value << "Endowed";
-			else if (arr[0] == -3)
-				body << YAML::Value << "Random";
-			else {
-				constant = constant_lookup(arr[0], "ELE_");
-				constant.erase(0, 4);
-				body << YAML::Value << name2Upper(constant);
+			if (arr[0] != 0){
+				body << YAML::Key << "Element";
+
+				if (arr[0] == -1)
+					body << YAML::Value << "Weapon";
+				else if (arr[0] == -2)
+					body << YAML::Value << "Endowed";
+				else if (arr[0] == -3)
+					body << YAML::Value << "Random";
+				else {
+					constant = constant_lookup(arr[0], "ELE_");
+					constant.erase(0, 4);
+					body << YAML::Value << name2Upper(constant);
+				}
 			}
 		} else {
+			body << YAML::Key << "Element";
 			body << YAML::BeginSeq;
 
 			for (int i = 0; i < arr_size; i++) {
@@ -1676,15 +1683,17 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 		}
 	}
 
-	if (atoi(split[6]) != 0) {
-		memset(arr, 0, sizeof(arr));
-		arr_size = skill_split_atoi(split[6], arr);
+	memset(arr, 0, sizeof(arr));
+	arr_size = skill_split_atoi(split[6], arr);
 
-		body << YAML::Key << "SplashArea";
-
+	if (arr_size != 0) {
 		if (arr_size == 1) {
-			body << YAML::Value << arr[0];
+			if (arr[0] != 0) {
+				body << YAML::Key << "SplashArea";
+				body << YAML::Value << arr[0];
+			}
 		} else {
+			body << YAML::Key << "SplashArea";
 			body << YAML::BeginSeq;
 
 			for (int i = 0; i < arr_size; i++) {
@@ -1698,15 +1707,17 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 		}
 	}
 
-	if (atoi(split[12]) != 0) {
-		memset(arr, 0, sizeof(arr));
-		arr_size = skill_split_atoi(split[12], arr);
+	memset(arr, 0, sizeof(arr));
+	arr_size = skill_split_atoi(split[12], arr);
 
-		body << YAML::Key << "ActiveInstance";
-
+	if (arr_size != 0) {
 		if (arr_size == 1) {
-			body << YAML::Value << arr[0];
+			if (arr[0] != 0) {
+				body << YAML::Key << "ActiveInstance";
+				body << YAML::Value << arr[0];
+			}
 		} else {
+			body << YAML::Key << "ActiveInstance";
 			body << YAML::BeginSeq;
 
 			for (int i = 0; i < arr_size; i++) {
@@ -1720,15 +1731,17 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 		}
 	}
 
-	if (atoi(split[14]) != 0) {
-		memset(arr, 0, sizeof(arr));
-		arr_size = skill_split_atoi(split[14], arr);
+	memset(arr, 0, sizeof(arr));
+	arr_size = skill_split_atoi(split[14], arr);
 
-		body << YAML::Key << "Knockback";
-
+	if (arr_size != 0) {
 		if (arr_size == 1) {
-			body << YAML::Value << arr[0];
+			if (arr[0] != 0) {
+				body << YAML::Key << "Knockback";
+				body << YAML::Value << arr[0];
+			}
 		} else {
+			body << YAML::Key << "Knockback";
 			body << YAML::BeginSeq;
 
 			for (int i = 0; i < arr_size; i++) {
