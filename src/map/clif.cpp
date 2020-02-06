@@ -1964,7 +1964,7 @@ void clif_buylist(struct map_session_data *sd, struct npc_data *nd)
 	WFIFOW(fd,0) = 0xc6;
 
 	c = 0;
-	discount = npc_shop_discount(nd->subtype,nd->u.shop.discount);
+	discount = npc_shop_discount(nd);
 	for( i = 0; i < nd->u.shop.count; i++ )
 	{
 		struct item_data* id = itemdb_exists(nd->u.shop.shop_item[i].nameid);
