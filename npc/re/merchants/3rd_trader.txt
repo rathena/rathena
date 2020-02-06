@@ -23,7 +23,7 @@
 
 // Poison Herb Merchants (Guillotine Cross) :: poison_herb_3rd_trader
 //============================================================
--	shop	Herb_Seller	HIDDEN_NPC,7932:4000,7933:4000,7934:4000,7935:4000,7936:4000,7937:4000,7931:5000
+-	shop	Herb_Seller	HIDDEN_NPC,no,7932:4000,7933:4000,7934:4000,7935:4000,7936:4000,7937:4000,7931:5000
 
 -	script	::phs	HIDDEN_NPC,{
 	npctalk "Do you need poison?", "", bc_self;
@@ -37,7 +37,7 @@ lhz_in02,16,205,4	duplicate(phs)	Poison Herb Merchant#lhz	4_F_YUNYANG
 
 // Rune Stone Merchants (Rune Knight) :: rune_3rd_trader
 //============================================================
--	shop	Runes_Seller	HIDDEN_NPC,12737:1000,12734:2500,12738:7500,12735:18000,12736:50000,7939:20000,7938:10000
+-	shop	Runes_Seller	HIDDEN_NPC,no,12737:1000,12734:2500,12738:7500,12735:18000,12736:50000,7939:20000,7938:10000
 
 -	script	::runesale	HIDDEN_NPC,{
 	npctalk "There are several types of runes.", "", bc_self;
@@ -45,12 +45,12 @@ lhz_in02,16,205,4	duplicate(phs)	Poison Herb Merchant#lhz	4_F_YUNYANG
 	end;
 }
 
-job3_rune01,90,62,3	duplicate(runesale)	Rune Merchant#job3	4_M_YURI
-prontera,168,228,3	duplicate(runesale)	Rune Merchant#prt	4_M_YURI
+job3_rune01,90,62,3	duplicate(runesale)	Rune Merchant#job3	4W_M_01
+prontera,168,228,3	duplicate(runesale)	Rune Merchant#prt	4W_M_01
 
 // Point Merchants (Sorcerer) :: point_3rd_trader
 //============================================================
--	shop	Shard_Seller	HIDDEN_NPC,6360:200,6363:200,6361:200,6362:200
+-	shop	Shard_Seller	HIDDEN_NPC,no,6360:200,6363:200,6361:200,6362:200
 
 -	script	::pss	HIDDEN_NPC,{
 	npctalk "Do you have an element for each property?", "", bc_self;
