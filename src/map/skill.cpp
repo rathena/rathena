@@ -793,7 +793,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-	if (mapdata->flag[MF_NOSKILL] && skill_id != ALL_EQSWITCH)
+	if (mapdata->flag[MF_NOSKILL] && skill_id != ALL_EQSWITCH && !sd->skillitem) //Item skills bypass noskill
 		return true;
 
 	// Epoque:
@@ -812,10 +812,10 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 	}
 
 	/**
-	 * It has been confirmed on a official server (thanks to Yommy) that item-cast skills bypass all the restrictions above
+	 * It has been confirmed on a official server (thanks to Yommy) that item-cast skills bypass all mapflag restrictions
 	 * Also, without this check, an exploit where an item casting + healing (or any other kind buff) isn't deleted after used on a restricted map
 	 */
-	if( sd->skillitem == skill_id && !sd->skillitem_keep_requirement )
+	if( sd->skillitem == skill_id && !sd->skillitem_keep_requirement && !sd->state.abra_flag)
 		return false;
 
 	uint32 skill_nocast = skill_get_nocast(skill_id);
@@ -8709,13 +8709,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		{
 			struct skill_unit* su;
 			struct skill_unit_group* sg = NULL;
-			std::shared_ptr<s_skill_db> skill_group = skill_db.find(sg->skill_id);
+			std::shared_ptr<s_skill_db> skill_group;
 
 			su = BL_CAST(BL_SKILL, bl);
 
 			// Mercenaries can remove any trap
 			// Players can only remove their own traps or traps on Vs maps.
-			if( su && (sg = su->group) && (src->type == BL_MER || sg->src_id == src->id || map_flag_vs(bl->m)) && skill_group->inf2[INF2_ISTRAP] )
+			if( su && (sg = su->group) && (src->type == BL_MER || sg->src_id == src->id || map_flag_vs(bl->m)) && ( skill_group = skill_db.find(sg->skill_id) ) && skill_group->inf2[INF2_ISTRAP] )
 			{
 				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 				if( sd && !(sg->unit_id == UNT_USED_TRAPS || (sg->unit_id == UNT_ANKLESNARE && sg->val2 != 0 )) )

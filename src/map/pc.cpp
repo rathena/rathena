@@ -9763,9 +9763,9 @@ bool pc_setreg2(struct map_session_data *sd, const char *reg, int64 val) {
 		case '@':
 			return pc_setreg(sd, add_str(reg), val);
 		case '#':
-			return (reg[1] == '#') ? pc_setaccountreg2(sd, add_str(reg), val) > 0 : pc_setaccountreg(sd, add_str(reg), val) > 0;
+			return (reg[1] == '#') ? pc_setaccountreg2(sd, add_str(reg), val) : pc_setaccountreg(sd, add_str(reg), val);
 		default:
-			return pc_setglobalreg(sd, add_str(reg), val) > 0;
+			return pc_setglobalreg(sd, add_str(reg), val);
 	}
 
 	return false;
