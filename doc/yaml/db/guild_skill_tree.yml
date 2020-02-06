@@ -1,0 +1,15 @@
+###########################################################################
+# Guild Skill Database
+###########################################################################
+#
+# Guild Skill Settings
+#
+###########################################################################
+# Id - Skill ID of the guild skill.
+###########################################################################
+# MaxLevel - Maximum level of the guild skill.
+###########################################################################
+# Required - A list of required skills for the skill to become available.
+#   Id: Skill ID of the required guild skill.
+#   Level: Level of the required guild skill.
+###########################################################################

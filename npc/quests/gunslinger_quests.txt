@@ -383,7 +383,7 @@ SubGarrison_:
 	}
 }
 
-lighthalzen,322,247,6	script	Ravey	 86,{
+lighthalzen,322,247,6	script	Ravey	86,{
 
 	if(gun_gs == 2)
 	{

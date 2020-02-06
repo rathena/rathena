@@ -283,7 +283,12 @@ static inline unsigned char clif_bl_type(struct block_list *bl) {
 	case BL_SKILL: return 0x3; //SKILL_TYPE
 	case BL_CHAT:  return 0x4; //UNKNOWN_TYPE
 	case BL_MOB:   return pcdb_checkid(status_get_viewdata(bl)->class_)?0x0:0x5; //NPC_MOB_TYPE
-	case BL_NPC:   return pcdb_checkid(status_get_viewdata(bl)->class_)?0x0:0x6; //NPC_EVT_TYPE
+	case BL_NPC:
+#if PACKETVER >= 20170726
+			return 0x6; //NPC_EVT_TYPE
+#else
+			return (pcdb_checkid(status_get_viewdata(bl)->class_) ? 0x0 : 0x6);
+#endif
 	case BL_PET:   return pcdb_checkid(status_get_viewdata(bl)->class_)?0x0:0x7; //NPC_PET_TYPE
 	case BL_HOM:   return 0x8; //NPC_HOM_TYPE
 	case BL_MER:   return 0x9; //NPC_MERSOL_TYPE
@@ -1144,7 +1149,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFW(buf,53) = (sd ? sd->status.font : 0);
 #endif
 #if PACKETVER >= 20120221
-	if ( battle_config.monster_hp_bars_info && !map_getmapflag(bl->m, MF_HIDEMOBHPBAR) && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
+	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && !map_getmapflag(bl->m, MF_HIDEMOBHPBAR) && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,55) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,59) = status_get_hp(bl);		// HP
 	} else {
@@ -1447,7 +1452,7 @@ int clif_spawn(struct block_list *bl)
 	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
 		return 0;
 
-	len = clif_set_unit_idle(bl, buf,true);
+	len = clif_set_unit_idle(bl, buf, (bl->type == BL_NPC && vd->dead_sit ? false : true));
 	clif_send(buf, len, bl, AREA_WOS);
 	if (disguised(bl))
 		clif_setdisguise(bl, buf, len);
@@ -1959,7 +1964,7 @@ void clif_buylist(struct map_session_data *sd, struct npc_data *nd)
 	WFIFOW(fd,0) = 0xc6;
 
 	c = 0;
-	discount = npc_shop_discount(nd->subtype,nd->u.shop.discount);
+	discount = npc_shop_discount(nd);
 	for( i = 0; i < nd->u.shop.count; i++ )
 	{
 		struct item_data* id = itemdb_exists(nd->u.shop.shop_item[i].nameid);
@@ -3606,7 +3611,7 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 #if PACKETVER < 20150513
 				return;
 #else
-				if (val && sd->sc.option&OPTION_COSTUME)
+				if (val && sd && sd->sc.option&OPTION_COSTUME)
  					val = 0;
  				vd->body_style = val;
 #endif
@@ -3620,17 +3625,19 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 #if PACKETVER < 4
 	clif_sprite_change(bl, bl->id, type, val, 0, target);
 #else
-	if(type == LOOK_WEAPON || type == LOOK_SHIELD) {
-		nullpo_retv(vd);
-		type = LOOK_WEAPON;
-		val = vd->weapon;
-		val2 = vd->shield;
-	}
-	if( disguised(bl) ) {
-		clif_sprite_change(bl, bl->id, type, val, val2, AREA_WOS);
-		clif_sprite_change(bl, -bl->id, type, val, val2, SELF);
+	if (bl->type != BL_NPC) {
+		if (type == LOOK_WEAPON || type == LOOK_SHIELD) {
+			type = LOOK_WEAPON;
+			val = (vd ? vd->weapon : 0);
+			val2 = (vd ? vd->shield : 0);
+		}
+		if (disguised(bl)) {
+			clif_sprite_change(bl, bl->id, type, val, val2, AREA_WOS);
+			clif_sprite_change(bl, -bl->id, type, val, val2, SELF);
+		} else
+			clif_sprite_change(bl, bl->id, type, val, val2, target);
 	} else
-		clif_sprite_change(bl, bl->id, type, val, val2, target);
+		unit_refresh(bl);
 #endif
 }
 
@@ -5024,9 +5031,9 @@ void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, 
 	if (unit->group->state.guildaura)
 		return;
 
-	if (unit->group->state.song_dance&0x1 && unit->val2&UF_ENSEMBLE)
-		unit_id = unit->val2&UF_SONG ? UNT_DISSONANCE : UNT_UGLYDANCE;
-	else if (skill_get_unit_flag(unit->group->skill_id) & UF_RANGEDSINGLEUNIT && !(unit->val2 & UF_RANGEDSINGLEUNIT))
+	if (unit->group->state.song_dance&0x1 && unit->val2&(1 << UF_ENSEMBLE))
+		unit_id = unit->val2&(1 << UF_SONG) ? UNT_DISSONANCE : UNT_UGLYDANCE;
+	else if (skill_get_unit_flag(unit->group->skill_id, UF_RANGEDSINGLEUNIT) && !(unit->val2 & (1 << UF_RANGEDSINGLEUNIT)))
 		unit_id = UNT_DUMMYSKILL; // Use invisible unit id for other case of rangedsingle unit
 	else
 		unit_id = unit->group->unit_id;
@@ -5615,7 +5622,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tick,
 #if PACKETVER < 20131223
 	WBUFB(buf,32)=type;
 #else
-	WBUFB(buf,32)=( type == DMG_SKILL ) ? DMG_MULTI_HIT : type;
+	WBUFB(buf,32)=( type == DMG_SINGLE ) ? DMG_MULTI_HIT : type;
 #endif
 	if (disguised(dst)) {
 		clif_send(buf,packet_len(0x1de),dst,AREA_WOS);
@@ -5998,11 +6005,6 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, t
 		return;
 
 	nullpo_retv(bl);
-
-#if PACKETVER < 20151104
-	if (type == EFST_WEAPONPROPERTY)
-		type = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
-#endif
 
 #if PACKETVER >= 20120618
 	if (flag && battle_config.display_status_timers)
@@ -9925,6 +9927,8 @@ void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* ts
 	{
 		if (tsd->inventory.u.items_inventory[i].nameid <= 0 || tsd->inventory_data[i] == NULL)	// Item doesn't exist
 			continue;
+		if (!tsd->inventory.u.items_inventory[i].equip)
+			continue;
 		if (!itemdb_isequip2(tsd->inventory_data[i])) // Is not equippable
 			continue;
 		// Add item info : refine, identify flag, element, etc.
@@ -11358,7 +11362,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 			for( i = 0; i < NUM_WHISPER_VAR; ++i ) {
 				char variablename[CHAT_SIZE_MAX];
 				safesnprintf(variablename,sizeof(variablename),"@whispervar%d$", i);
-				set_var(sd,variablename,(char *) split_data[i]);
+				set_var_str( sd, variablename, split_data[i] );
 			}
 
 			safesnprintf(event,sizeof(event),"%s::%s", npc->exname,script_config.onwhisper_event_name);
@@ -12316,7 +12320,9 @@ void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16
 	if( sd->menuskill_id ) {
 		if( sd->menuskill_id == SA_TAMINGMONSTER ) {
 			clif_menuskill_clear(sd); //Cancel pet capture.
-		} else if( sd->menuskill_id != SA_AUTOSPELL )
+		}else if( sd->menuskill_id == SG_FEEL ){
+			clif_menuskill_clear( sd ); // Cancel selection
+		}else if( sd->menuskill_id != SA_AUTOSPELL )
 			return; //Can't use skills while a menu is open.
 	}
 
@@ -12424,6 +12430,8 @@ static void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, uin
 	if( sd->menuskill_id ) {
 		if( sd->menuskill_id == SA_TAMINGMONSTER ) {
 			clif_menuskill_clear(sd); //Cancel pet capture.
+		}else if( sd->menuskill_id == SG_FEEL ){
+			clif_menuskill_clear( sd ); // Cancel selection
 		} else if( sd->menuskill_id != SA_AUTOSPELL )
 			return; //Can't use skills while a menu is open.
 	}
@@ -16698,7 +16706,9 @@ void clif_parse_ViewPlayerEquip(int fd, struct map_session_data* sd)
 	if (!tsd)
 		return;
 
-	if( tsd->status.show_equip || pc_has_permission(sd, PC_PERM_VIEW_EQUIPMENT) )
+	if (sd->bl.m != tsd->bl.m)
+		return;
+	else if( tsd->status.show_equip || pc_has_permission(sd, PC_PERM_VIEW_EQUIPMENT) )
 		clif_viewequip_ack(sd, tsd);
 	else
 		clif_msg(sd, VIEW_EQUIP_FAIL);
@@ -17057,9 +17067,12 @@ void clif_quest_update_status(struct map_session_data *sd, int quest_id, bool ac
 ///     1 = orange
 ///     2 = green
 ///     3 = purple
-void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, short effect, short color)
+void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, e_questinfo_types effect, e_questinfo_markcolor color)
 {
 #if PACKETVER >= 20090218
+	nullpo_retv(sd);
+	nullpo_retv(bl);
+
 	int fd = sd->fd;
 
 	WFIFOHEAD(fd, packet_len(0x446));
@@ -18380,7 +18393,7 @@ int clif_spellbook_list(struct map_session_data *sd)
 
 	for( i = 0, c = 0; i < MAX_INVENTORY; i ++ )
 	{
-		if( itemdb_is_spellbook2(sd->inventory.u.items_inventory[i].nameid) )
+		if( reading_spellbook_db.findBook(sd->inventory.u.items_inventory[i].nameid) )
 		{
 			WFIFOW(fd, c * 2 + 4) = sd->inventory.u.items_inventory[i].nameid;
 			c++;
@@ -18487,7 +18500,7 @@ int clif_autoshadowspell_list(struct map_session_data *sd) {
 	//AEGIS listed the specified skills that available for SC_AUTOSHADOWSPELL
 	for( i = 0, c = 0; i < MAX_SKILL; i++ )
 		if( sd->status.skill[i].flag == SKILL_FLAG_PLAGIARIZED && sd->status.skill[i].id > 0 &&
-			(skill_get_inf2(sd->status.skill[i].id)&INF2_AUTOSHADOWSPELL))
+			skill_get_inf2(sd->status.skill[i].id, INF2_ISAUTOSHADOWSPELL))
 		{
 			WFIFOW(fd,8+c*2) = sd->status.skill[i].id;
 			c++;

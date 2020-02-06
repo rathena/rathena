@@ -66,7 +66,7 @@ struct homun_data {
 	struct map_session_data *master; //pointer back to its master
 	int hungry_timer;	//[orn]
 	unsigned int exp_next;
-	char blockskill[MAX_SKILL];	// [orn]
+	std::vector<uint16> blockskill;	// [orn]
 };
 
 #define MAX_HOM_SKILL_REQUIRE 5
