@@ -48,36 +48,6 @@ lhz_in02,16,205,4	duplicate(phs)	Poison Herb Merchant#lhz	4_F_YUNYANG
 job3_rune01,90,62,3	duplicate(runesale)	Rune Merchant#job3	4W_M_01
 prontera,168,228,3	duplicate(runesale)	Rune Merchant#prt	4W_M_01
 
-// Point Merchants (Sorcerer) :: point_3rd_trader
-//============================================================
--	shop	Shard_Seller	HIDDEN_NPC,no,6360:200,6363:200,6361:200,6362:200
-
--	script	::pss	HIDDEN_NPC,{
-	npctalk "Do you have an element for each property?", "", bc_self;
-	callshop "Shard_Seller",1;
-	end;
-}
-
-gef_tower,105,172,5	duplicate(pss)	Point Merchant#Sorcerer	8_F_GIRL
-prt_in,131,66,0	duplicate(pss)	Point Merchant#Prontera	8_F_GIRL
-alberta,105,52,7	duplicate(pss)	Point Merchant#Alberta	8_F_GIRL
-aldebaran,133,114,5	duplicate(pss)	Point Merchant#Aldebaran	8_F_GIRL
-comodo,193,159,5	duplicate(pss)	Point Merchant#Comodo	8_F_GIRL
-geffen,129,49,5	duplicate(pss)	Point Merchant#Geffen	8_F_GIRL
-izlude,138,163,5	duplicate(pss)	Point Merchant#Izlude	8_F_GIRL	// Old coordinates: izlude (135,121)
-izlude_a,138,163,5	duplicate(pss)	Point Merchant#Izlude_a	8_F_GIRL
-izlude_b,138,163,5	duplicate(pss)	Point Merchant#Izlude_b	8_F_GIRL
-izlude_c,138,163,5	duplicate(pss)	Point Merchant#Izlude_c	8_F_GIRL
-izlude_d,138,163,5	duplicate(pss)	Point Merchant#Izlude_d	8_F_GIRL
-malangdo,214,163,5	duplicate(pss)	Point Merchant#Malangdo	8_F_GIRL
-mora,115,118,3	duplicate(pss)	Point Merchant#Mora	8_F_GIRL
-ra_in01,256,273,3	duplicate(pss)	Point Merchant#Rachel	8_F_GIRL
-veins,202,128,5	duplicate(pss)	Point Merchant#Veins	8_F_GIRL
-dicastes01,207,200,5	duplicate(pss)	Point Merchant#Dicastes	8_F_GIRL
-manuk,261,206,3	duplicate(pss)	Point Merchant#Manuk	8_F_GIRL
-splendide,207,160,5	duplicate(pss)	Point Merchant#Splendide	8_F_GIRL
-mid_camp,224,237,3	duplicate(pss)	Point Merchant#Midgard	8_F_GIRL
-
 // Rare Herb Merchants (Guillotine Cross) :: rare_herb_3rd_trader
 //============================================================
 job3_guil01,91,93,3	script	Rare Herb Collector	1_M_03,{
@@ -140,3 +110,33 @@ job3_guil01,91,93,3	script	Rare Herb Collector	1_M_03,{
 	mes "I wander around the world and collect rare poison herbs. But I don't feel like selling my herbs to a person like you... ha ha ha...";
 	close;
 }
+
+// Point Merchants (Sorcerer) :: point_3rd_trader
+//============================================================
+-	shop	Shard_Seller	HIDDEN_NPC,no,6360:200,6363:200,6361:200,6362:200
+
+-	script	::pss	HIDDEN_NPC,{
+	npctalk "Do you have an element for each property?", "", bc_self;
+	callshop "Shard_Seller",1;
+	end;
+}
+
+gef_tower,105,172,5	duplicate(pss)	Point Merchant#Sorcerer	8_F_GIRL
+prt_in,131,66,0	duplicate(pss)	Point Merchant#Prontera	8_F_GIRL
+alberta,105,52,7	duplicate(pss)	Point Merchant#Alberta	8_F_GIRL
+aldebaran,133,114,5	duplicate(pss)	Point Merchant#Aldebaran	8_F_GIRL
+comodo,193,159,5	duplicate(pss)	Point Merchant#Comodo	8_F_GIRL
+geffen,129,49,5	duplicate(pss)	Point Merchant#Geffen	8_F_GIRL
+izlude,138,163,5	duplicate(pss)	Point Merchant#Izlude	8_F_GIRL	// Old coordinates: izlude (135,121)
+izlude_a,138,163,5	duplicate(pss)	Point Merchant#Izlude_a	8_F_GIRL
+izlude_b,138,163,5	duplicate(pss)	Point Merchant#Izlude_b	8_F_GIRL
+izlude_c,138,163,5	duplicate(pss)	Point Merchant#Izlude_c	8_F_GIRL
+izlude_d,138,163,5	duplicate(pss)	Point Merchant#Izlude_d	8_F_GIRL
+malangdo,214,163,5	duplicate(pss)	Point Merchant#Malangdo	8_F_GIRL
+mora,115,118,3	duplicate(pss)	Point Merchant#Mora	8_F_GIRL
+ra_in01,256,273,3	duplicate(pss)	Point Merchant#Rachel	8_F_GIRL
+veins,202,128,5	duplicate(pss)	Point Merchant#Veins	8_F_GIRL
+dicastes01,207,200,5	duplicate(pss)	Point Merchant#Dicastes	8_F_GIRL
+manuk,261,206,3	duplicate(pss)	Point Merchant#Manuk	8_F_GIRL
+splendide,207,160,5	duplicate(pss)	Point Merchant#Splendide	8_F_GIRL
+mid_camp,224,237,3	duplicate(pss)	Point Merchant#Midgard	8_F_GIRL
