@@ -321,4 +321,6 @@ Body:
 
 Footer:
   Imports:
+  - Path: db/pre-re/abra_db.yml
+    Mode: Prerenewal
   - Path: db/import/abra_db.yml

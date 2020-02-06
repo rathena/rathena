@@ -390,7 +390,6 @@ CREATE TABLE IF NOT EXISTS `elemental` (
 
 CREATE TABLE IF NOT EXISTS `friends` (
   `char_id` int(11) NOT NULL default '0',
-  `friend_account` int(11) NOT NULL default '0',
   `friend_id` int(11) NOT NULL default '0',
   PRIMARY KEY (`char_id`, `friend_id`)
 ) ENGINE=MyISAM;
@@ -506,18 +505,9 @@ CREATE TABLE IF NOT EXISTS `guild_expulsion` (
 
 CREATE TABLE IF NOT EXISTS `guild_member` (
   `guild_id` int(11) unsigned NOT NULL default '0',
-  `account_id` int(11) unsigned NOT NULL default '0',
   `char_id` int(11) unsigned NOT NULL default '0',
-  `hair` tinyint(6) unsigned NOT NULL default '0',
-  `hair_color` smallint(6) unsigned NOT NULL default '0',
-  `gender` tinyint(6) unsigned NOT NULL default '0',
-  `class` smallint(6) unsigned NOT NULL default '0',
-  `lv` smallint(6) unsigned NOT NULL default '0',
   `exp` bigint(20) unsigned NOT NULL default '0',
-  `exp_payper` tinyint(11) unsigned NOT NULL default '0',
-  `online` tinyint(4) unsigned NOT NULL default '0',
   `position` tinyint(6) unsigned NOT NULL default '0',
-  `name` varchar(24) NOT NULL default '',
   PRIMARY KEY  (`guild_id`,`char_id`),
   KEY `char_id` (`char_id`)
 ) ENGINE=MyISAM;
