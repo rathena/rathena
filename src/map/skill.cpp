@@ -791,7 +791,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-	if (mapdata->flag[MF_NOSKILL] && skill_id != ALL_EQSWITCH)
+	if (mapdata->flag[MF_NOSKILL] && skill_id != ALL_EQSWITCH && !sd->skillitem) //Item skills bypass noskill
 		return true;
 
 	// Epoque:
@@ -810,10 +810,10 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 	}
 
 	/**
-	 * It has been confirmed on a official server (thanks to Yommy) that item-cast skills bypass all the restrictions above
+	 * It has been confirmed on a official server (thanks to Yommy) that item-cast skills bypass all mapflag restrictions
 	 * Also, without this check, an exploit where an item casting + healing (or any other kind buff) isn't deleted after used on a restricted map
 	 */
-	if( sd->skillitem == skill_id && !sd->skillitem_keep_requirement )
+	if( sd->skillitem == skill_id && !sd->skillitem_keep_requirement && !sd->state.abra_flag)
 		return false;
 
 	uint32 skill_nocast = skill_get_nocast(skill_id);
@@ -3376,11 +3376,11 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 #endif
 				short s_ele = skill_get_ele(skill_id, skill_lv);
 
-				if (s_ele == -1) // the skill takes the weapon's element
+				if (s_ele == ELE_WEAPON) // the skill takes the weapon's element
 					s_ele = sstatus->rhw.ele;
-				else if (s_ele == -2) //Use status element
+				else if (s_ele == ELE_ENDOWED) //Use status element
 					s_ele = status_get_attack_sc_element(src,status_get_sc(src));
-				else if( s_ele == -3 ) //Use random element
+				else if( s_ele == ELE_RANDOM) //Use random element
 					s_ele = rnd()%ELE_ALL;
 
 				dmg.damage = battle_attr_fix(bl, bl, dmg.damage, s_ele, status_get_element(bl), status_get_element_level(bl));
@@ -6260,7 +6260,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	tsce = (tsc && type != -1)?tsc->data[type]:NULL;
 
 	if (src!=bl && type > -1 &&
-		(i = skill_get_ele(skill_id, skill_lv)) > ELE_NEUTRAL &&
+		CHK_ELEMENT((i = skill_get_ele(skill_id, skill_lv))) &&
 		skill_get_inf(skill_id) != INF_SUPPORT_SKILL &&
 		battle_attr_fix(NULL, NULL, 100, i, tstatus->def_ele, tstatus->ele_lv) <= 0)
 		return 1; //Skills that cause an status should be blocked if the target element blocks its element.
@@ -8490,13 +8490,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		{
 			struct skill_unit* su;
 			struct skill_unit_group* sg = NULL;
-			std::shared_ptr<s_skill_db> skill_group = skill_db.find(sg->skill_id);
+			std::shared_ptr<s_skill_db> skill_group;
 
 			su = BL_CAST(BL_SKILL, bl);
 
 			// Mercenaries can remove any trap
 			// Players can only remove their own traps or traps on Vs maps.
-			if( su && (sg = su->group) && (src->type == BL_MER || sg->src_id == src->id || map_flag_vs(bl->m)) && skill_group->inf2[INF2_ISTRAP] )
+			if( su && (sg = su->group) && (src->type == BL_MER || sg->src_id == src->id || map_flag_vs(bl->m)) && ( skill_group = skill_db.find(sg->skill_id) ) && skill_group->inf2[INF2_ISTRAP] )
 			{
 				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 				if( sd && !(sg->unit_id == UNT_USED_TRAPS || (sg->unit_id == UNT_ANKLESNARE && sg->val2 != 0 )) )
@@ -13058,11 +13058,11 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 			int ele = skill_get_ele(skill_id, skill_lv);
 			int element[5] = { ELE_WIND, ELE_DARK, ELE_POISON, ELE_WATER, ELE_FIRE };
 
-			if (ele == -3)
+			if (ele == ELE_RANDOM)
 				val1 = element[rnd()%5]; // Use random from available unit visual?
-			else if (ele == -2)
+			else if (ele == ELE_ENDOWED)
 				val1 = status_get_attack_sc_element(src,sc);
-			else if (ele == -1) {
+			else if (ele == ELE_WEAPON) {
 				val1 = status->rhw.ele;
 				if (sc && sc->data[SC_ENCHANTARMS])
 					val1 = sc->data[SC_ENCHANTARMS]->val1;

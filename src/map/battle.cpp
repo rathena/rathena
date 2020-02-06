@@ -1645,16 +1645,16 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	if (sd && pc_ismadogear(sd)) {
 		short element = skill_get_ele(skill_id, skill_lv);
 
-		if( !skill_id || element == -1 ) { //Take weapon's element
+		if( !skill_id || element == ELE_WEAPON ) { //Take weapon's element
 			struct status_data *sstatus = NULL;
 			if( src->type == BL_PC && ((TBL_PC*)src)->bonus.arrow_ele )
 				element = ((TBL_PC*)src)->bonus.arrow_ele;
 			else if( (sstatus = status_get_status_data(src)) ) {
 				element = sstatus->rhw.ele;
 			}
-		} else if( element == -2 ) //Use enchantment's element
+		} else if( element == ELE_ENDOWED ) //Use enchantment's element
 			element = status_get_attack_sc_element(src,status_get_sc(src));
-		else if( element == -3 ) //Use random element
+		else if( element == ELE_RANDOM ) //Use random element
 			element = rnd()%ELE_ALL;
 		pc_overheat(sd, (element == ELE_FIRE ? 3 : 1));
 	}
@@ -2417,21 +2417,34 @@ static bool is_attack_left_handed(struct block_list *src, int skill_id)
  */
 static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct block_list *target, int skill_id, int skill_lv, bool first_call)
 {
-	struct status_data *sstatus = status_get_status_data(src);
-	struct status_data *tstatus = status_get_status_data(target);
-	struct status_change *sc = status_get_sc(src);
-	struct status_change *tsc = status_get_sc(target);
-	struct map_session_data *sd = BL_CAST(BL_PC, src);
-	struct map_session_data *tsd = BL_CAST(BL_PC, target);
-
 	if (!first_call)
 		return (wd->type == DMG_CRITICAL || wd->type == DMG_MULTI_HIT_CRITICAL);
 
+#ifdef RENEWAL
 	if (skill_id == NPC_CRITICALSLASH || skill_id == LG_PINPOINTATTACK) //Always critical skills
 		return true;
+#endif
+	if( skill_id && !skill_get_nk(skill_id,NK_CRITICAL) )
+		return false;
 
-	if( sstatus->cri && ( !skill_id || skill_get_nk(skill_id, NK_CRITICAL) ) )
+	struct status_data *sstatus = status_get_status_data(src);
+
+	if( sstatus->cri )
 	{
+		struct map_session_data *sd = BL_CAST(BL_PC, src);
+
+		if(wd->type == DMG_MULTI_HIT){	//Multiple Hit Attack Skills.
+			if(pc_checkskill(sd,GS_CHAINACTION) && !skill_get_nk(GS_CHAINACTION,NK_CRITICAL)) //Chain Action
+				return false;
+
+			if(pc_checkskill(sd,TF_DOUBLE) && !skill_get_nk(TF_DOUBLE,NK_CRITICAL)) //Double Attack
+				return false;
+		}
+
+		struct status_data *tstatus = status_get_status_data(target);
+		struct status_change *sc = status_get_sc(src);
+		struct status_change *tsc = status_get_sc(target);
+		struct map_session_data *tsd = BL_CAST(BL_PC, target);
 		short cri = sstatus->cri;
 
 		if (sd) {
@@ -2477,7 +2490,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
 		return (rnd()%1000 < cri);
 	}
-	return 0;
+	return false;
 }
 
 /*==========================================================
@@ -2820,7 +2833,7 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 	int element = skill_get_ele(skill_id, skill_lv);
 
 	//Take weapon's element
-	if( !skill_id || element == -1 ) {
+	if( !skill_id || element == ELE_WEAPON ) {
 		if (weapon_position == EQI_HAND_R)
 			element = sstatus->rhw.ele;
 		else
@@ -2832,9 +2845,9 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 		// on official endows override all other elements [helvetica]
 		if(sc && sc->data[SC_ENCHANTARMS]) // Check for endows
 			element = sc->data[SC_ENCHANTARMS]->val1;
-	} else if( element == -2 ) //Use enchantment's element
+	} else if( element == ELE_ENDOWED ) //Use enchantment's element
 		element = status_get_attack_sc_element(src,sc);
-	else if( element == -3 ) //Use random element
+	else if( element == ELE_RANDOM ) //Use random element
 		element = rnd()%ELE_ALL;
 
 	switch( skill_id ) {
@@ -2895,7 +2908,7 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 		//However the "non elemental" attacks still get reduced by "Neutral resistance"
 		//Also non-pc units have only a defending element, but can inflict elemental attacks using skills [exneval]
 		if(battle_config.attack_attr_none&src->type)
-			if(((!skill_id && !right_element) || (skill_id && (element == -1 || !right_element))) &&
+			if(((!skill_id && !right_element) || (skill_id && (element == ELE_WEAPON || !right_element))) &&
 				(wd->flag&(BF_SHORT|BF_WEAPON)) == (BF_SHORT|BF_WEAPON))
 				return;
 		if(wd->damage > 0) {
@@ -3313,7 +3326,7 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 					RE_ALLATK_ADDRATE(wd, sd->bonus.atk_rate);
 				}
 #ifndef RENEWAL
-				if(sd->bonus.crit_atk_rate && !skill_id && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
+				if(sd->bonus.crit_atk_rate && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
 					ATK_ADDRATE(wd->damage, wd->damage2, sd->bonus.crit_atk_rate);
 				}
 #endif
@@ -5533,7 +5546,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		return wd; //Enough, rest is not needed.
 
 #ifdef RENEWAL
-	if (!skill_id && is_attack_critical(&wd, src, target, skill_id, skill_lv, false)) {
+	if (is_attack_critical(&wd, src, target, skill_id, skill_lv, false)) {
 		if (sd) { //Check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
 			wd.damage = (int)floor((float)((wd.damage * 140) / 100 * (100 + sd->bonus.crit_atk_rate)) / 100);
 			if (is_attack_left_handed(src, skill_id))
@@ -5781,13 +5794,13 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	//Initialize variables that will be used afterwards
 	s_ele = skill_get_ele(skill_id, skill_lv);
 
-	if (s_ele == -1) { // pl=-1 : the skill takes the weapon's element
+	if (s_ele == ELE_WEAPON) { // pl=-1 : the skill takes the weapon's element
 		s_ele = sstatus->rhw.ele;
 		if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm >= MAX_SPIRITCHARM)
 			s_ele = sd->spiritcharm_type; // Summoning 10 spiritcharm will endow your weapon
-	} else if (s_ele == -2) //Use status element
+	} else if (s_ele == ELE_ENDOWED) //Use status element
 		s_ele = status_get_attack_sc_element(src,status_get_sc(src));
-	else if (s_ele == -3) //Use random element
+	else if (s_ele == ELE_RANDOM) //Use random element
 		s_ele = rnd()%ELE_ALL;
 
 	switch(skill_id) {
@@ -6535,9 +6548,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	}
 
 	s_ele = skill_get_ele(skill_id, skill_lv);
-	if (s_ele < 0 && s_ele != -3) //Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
+	if (s_ele == ELE_WEAPON || s_ele == ELE_ENDOWED) //Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
 		s_ele = ELE_NEUTRAL;
-	else if (s_ele == -3) //Use random element
+	else if (s_ele == ELE_RANDOM) //Use random element
 		s_ele = rnd()%ELE_ALL;
 
 	//Skill Range Criteria
