@@ -23704,7 +23704,7 @@ Body:
     Element: Holy
     SplashArea: 5
     CastCancel: true
-    CastTime:
+    CastTime: # !TODO: Confirm cast delay and cooldown
       - Level: 1
         Time: 1000
       - Level: 2
@@ -25323,7 +25323,7 @@ Body:
       Skill:
         Reproduce: true
     CastCancel: true
-    CastTime:
+    CastTime: # !TODO: Confirm all times
       - Level: 1
         Time: 1000
       - Level: 2
@@ -27270,7 +27270,7 @@ Body:
       Skill:
         Reproduce: true
     CastCancel: true
-    CastTime:
+    CastTime: # !TODO: Confirm all times
       - Level: 1
         Time: 1800
       - Level: 2
