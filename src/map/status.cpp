@@ -5284,10 +5284,10 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 #ifndef RENEWAL_ASPD
 			status->aspd_rate = status_calc_aspd_rate(bl, sc, b_status->aspd_rate);
 #endif
-			// Absolute ASPD % modifier
+			// Absolute ASPD % modifiers
 			amotion = amotion * status->aspd_rate / 1000;
 			if (sd->ud.skilltimer != INVALID_TIMER && (skill_lv = pc_checkskill(sd, SA_FREECAST)) > 0)
-				amotion = amotion * 5 * (skill_lv + 10) / 100;
+				amotion += (2000 - amotion) * ( 55 - 5 * ( skill_lv + 1 ) ) / 100; //Increases amotion to reduce ASPD to the corresponding absolute percentage for each level (overriding other adjustments)
 #ifdef RENEWAL_ASPD
 			// RE ASPD % modifier
 			amotion += (max(0xc3 - amotion, 2) * (status->aspd_rate2 + status_calc_aspd(bl, sc, false))) / 100;
