@@ -1266,7 +1266,7 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 extern struct npc_data* fake_nd;
 
 int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, unsigned short* item_list);
-bool npc_shop_discount(enum npc_subtype type, bool discount);
+bool npc_shop_discount(struct npc_data* nd);
 
 #if PACKETVER >= 20131223
 void npc_market_tosql(const char *exname, struct npc_item_list *list);
