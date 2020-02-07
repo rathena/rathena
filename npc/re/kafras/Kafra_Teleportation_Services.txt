@@ -13,7 +13,7 @@ function	script	F_KafTeleDoram	{
 	mes "[Kafra Employee]";
 	mes "Welcome.";
 	mes "The Kafra services are always on your side.";
-	mes "Please tell me your destiny.";
+	mes "Please choose your destination.";
 	next;
 	switch(.@menu_choice) {
 	case 1: // Alberta
@@ -238,7 +238,7 @@ moc_para01,35,23,3	script	Kafra Teleportation#eden	4_F_DRKAFRA01,{
 		close3;
 	}
 	mes "[Kafra Employee]";
-	mes "Please tell me your destiny.";
+	mes "Please choose your destination.";
 	next;
 	switch( select( "Prontera West Field", "Prontera Southwestern Field", "Prontera Lake Field", "Payon Dungeon Entrance", "Southwest Izlude Field", "Cancel.") ) {
 	case 1:

@@ -11,7 +11,7 @@
 	mes "[Zonda Employee]";
 	mes "Welcome.";
 	mes "Our team is always working to exceed your expectations regarding quality of service.";
-	mes "Please tell me your destiny.";
+	mes "Please choose your destination.";
 	next;
 	switch( select( "North Bifrost", "Eclage", "Splendide", "Midgard Expedition Camp", "Manuk", "Outskirts of Kamidal Mountain", "Cancel.") ) {
 	case 1:
