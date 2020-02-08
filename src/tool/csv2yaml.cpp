@@ -124,13 +124,13 @@ static void skill_txt_data(const std::string& modePath, const std::string& fixed
 	skill_copyable.clear();
 	skill_nearnpc.clear();
 
-	if (fileExists(modePath + "skill_require_db.txt"))
+	if (fileExists(modePath + "/skill_require_db.txt"))
 		sv_readdb(modePath.c_str(), "skill_require_db.txt", ',', 34, 34, -1, skill_parse_row_requiredb, false);
-	if (fileExists(modePath + "skill_cast_db.txt"))
+	if (fileExists(modePath + "/skill_cast_db.txt"))
 		sv_readdb(modePath.c_str(), "skill_cast_db.txt", ',', 7, 8, -1, skill_parse_row_castdb, false);
-	if (fileExists(modePath + "skill_castnodex_db.txt"))
+	if (fileExists(modePath + "/skill_castnodex_db.txt"))
 		sv_readdb(modePath.c_str(), "skill_castnodex_db.txt", ',', 2, 3, -1, skill_parse_row_castnodexdb, false);
-	if (fileExists(modePath + "skill_unit_db.txt"))
+	if (fileExists(modePath + "/skill_unit_db.txt"))
 		sv_readdb(modePath.c_str(), "skill_unit_db.txt", ',', 8, 8, -1, skill_parse_row_unitdb, false);
 	if (fileExists(fixedPath + "/skill_copyable_db.txt"))
 		sv_readdb(fixedPath.c_str(), "skill_copyable_db.txt", ',', 2, 4, -1, skill_parse_row_copyabledb, false);
