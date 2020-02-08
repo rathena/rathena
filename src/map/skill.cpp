@@ -344,16 +344,19 @@ int skill_unit_onleft(uint16 skill_id, struct block_list *bl,t_tick tick);
 static int skill_unit_effect(struct block_list *bl,va_list ap);
 static int skill_bind_trap(struct block_list *bl, va_list ap);
 
-int skill_get_casttype (uint16 skill_id) {
-	int inf = skill_get_inf(skill_id);
-	if (inf&(INF_GROUND_SKILL))
-		return CAST_GROUND;
-	if (inf&INF_SUPPORT_SKILL)
-		return CAST_NODAMAGE;
-
+e_cast_type skill_get_casttype (uint16 skill_id) {
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 
-	if (inf&INF_SELF_SKILL) {
+	if( skill == nullptr ){
+		return CAST_DAMAGE;
+	}
+
+	if (skill->inf&(INF_GROUND_SKILL))
+		return CAST_GROUND;
+	if (skill->inf&INF_SUPPORT_SKILL)
+		return CAST_NODAMAGE;
+
+	if (skill->inf&INF_SELF_SKILL) {
 		if(skill->inf2[INF2_NOTARGETSELF])
 			return CAST_DAMAGE; //Combo skill.
 		return CAST_NODAMAGE;
