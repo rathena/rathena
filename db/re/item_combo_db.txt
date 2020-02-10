@@ -28,9 +28,9 @@
 1433:2153:18823,{ bonus2 bSkillAtk,"LG_BANISHINGPOINT",20; bonus2 bSkillAtk,"LG_CANNONSPEAR",20; bonus2 bSkillAtk,"LG_SHIELDPRESS",20; }
 1433:2153:18823:28372,{ bonus2 bSkillUseSP,"LG_BANISHINGPOINT",15; bonus2 bSkillUseSP,"LG_CANNONSPEAR",10; bonus2 bSkillUseSP,"CR_GRANDCROSS",30; bonus2 bSkillUseSP,"LG_SHIELDPRESS",5; }
 1433:28372,{ .@r = getequiprefinerycnt(EQI_HAND_R)/2*7; bonus2 bSkillAtk,"LG_CANNONSPEAR",.@r; bonus2 bSkillAtk,"LG_BANISHINGPOINT",.@r; }
-1472:2677,{ bonus bMatkRate,6; bonus bDex,2; bonus bVariableCastrate,-getequiprefinerycnt(EQI_HEAD_TOP); }
+1472:2677,{ bonus bMatkRate,6; bonus bDex,2; bonus bVariableCastrate,-getequiprefinerycnt(EQI_HAND_R); }
 1472:2711,{ bonus bMatkRate,6; bonus bDex,2; bonus bVariableCastrate,-getequiprefinerycnt(EQI_HAND_R); }
-1473:2677,{ bonus bMatkRate,6; bonus bDex,2; bonus bVariableCastrate,-getequiprefinerycnt(EQI_HEAD_TOP); }
+1473:2677,{ bonus bMatkRate,6; bonus bDex,2; bonus bVariableCastrate,-getequiprefinerycnt(EQI_HAND_R); }
 1473:2711,{ bonus bMatkRate,6; bonus bDex,2; bonus bVariableCastrate,-getequiprefinerycnt(EQI_HAND_R); }
 1474:2527,{ bonus2 bAddRace,RC_Dragon,5; }
 1474:2527:5467,{ bonus2 bAddRace,RC_Dragon,25; }
