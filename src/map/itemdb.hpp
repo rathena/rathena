@@ -7,8 +7,6 @@
 #include "../common/db.hpp"
 #include "../common/mmo.hpp" // ITEM_NAME_LENGTH
 
-///Minimum available Item ID - 1
-#define ITEMID_DUMMY 499
 ///Maximum allowed Item ID (range: 1 ~ 65,534)
 #define MAX_ITEMID USHRT_MAX
 ///Use apple for unknown items.
@@ -35,6 +33,7 @@
 ///Enum of item id (for hardcoded purpose)
 enum item_itemid
 {
+	ITEMID_DUMMY						= 499,
 	ITEMID_RED_POTION					= 501,
 	ITEMID_YELLOW_POTION				= 503,
 	ITEMID_WHITE_POTION					= 504,
