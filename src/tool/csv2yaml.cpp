@@ -1894,14 +1894,14 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 		}
 		
 		if (!isMultiLevel(it_cast->second.upkeep_time)) {
-			if (it_cast->second.upkeep_time[0] > 0)
+			if (it_cast->second.upkeep_time[0] != 0)
 				body << YAML::Key << "Duration1" << YAML::Value << it_cast->second.upkeep_time[0];
 		} else {
 			body << YAML::Key << "Duration1";
 			body << YAML::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.upkeep_time); i++) {
-				if (it_cast->second.upkeep_time[i] > 0) {
+				if (it_cast->second.upkeep_time[i] != 0) {
 					body << YAML::BeginMap;
 					body << YAML::Key << "Level" << YAML::Value << i + 1;
 					body << YAML::Key << "Time" << YAML::Value << it_cast->second.upkeep_time[i];
@@ -1913,14 +1913,14 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 		}
 
 		if (!isMultiLevel(it_cast->second.upkeep_time2)) {
-			if (it_cast->second.upkeep_time2[0] > 0)
+			if (it_cast->second.upkeep_time2[0] != 0)
 				body << YAML::Key << "Duration2" << YAML::Value << it_cast->second.upkeep_time2[0];
 		} else {
 			body << YAML::Key << "Duration2";
 			body << YAML::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_cast->second.upkeep_time2); i++) {
-				if (it_cast->second.upkeep_time2[i] > 0) {
+				if (it_cast->second.upkeep_time2[i] != 0) {
 					body << YAML::BeginMap;
 					body << YAML::Key << "Level" << YAML::Value << i + 1;
 					body << YAML::Key << "Time" << YAML::Value << it_cast->second.upkeep_time2[i];
