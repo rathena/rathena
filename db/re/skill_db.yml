@@ -29287,6 +29287,7 @@ Body:
       Ammo:
         Bullet: true
       AmmoAmount: 1
+      SpiritSphereCost: -1
       Equipment:
         Silver_Bullet: true
         Sanctified_Bullet: true
@@ -29468,6 +29469,7 @@ Body:
     FixedCastTime: -1
     Requires:
       SpCost: 30
+      SpiritSphereCost: -1
   - Id: 2569
     Name: RL_AM_BLAST
     Description: Anti-Material Blast
@@ -29599,6 +29601,7 @@ Body:
           Amount: 55
       Weapon:
         Rifle: true
+      SpiritSphereCost: -1
   - Id: 2572
     Name: RL_R_TRIP_PLUSATK
     Description: Round Trip Plus Attack
