@@ -30025,6 +30025,7 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
+        NoKnockback: true
   - Id: 2588
     Name: SJ_DOCUMENT
     Description: Document of Sun Moon and Star
