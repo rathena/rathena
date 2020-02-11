@@ -8578,13 +8578,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Lullaby
-      Layout: 4
-      Interval: 6000
-      Target: Enemy
-      Flag:
-        Ensemble: true
   - Id: 307
     Name: BD_RICHMANKIM
     Description: Mental Sensing
@@ -8617,14 +8610,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Richmankim
-      Layout: 15
-      Interval: -1
-      Target: Party
-      Flag:
-        NoPc: true
-        Ensemble: true
   - Id: 308
     Name: BD_ETERNALCHAOS
     Description: Down Tempo
@@ -8647,14 +8632,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Eternalchaos
-      Layout: 4
-      Interval: -1
-      Target: Enemy
-      Flag:
-        Ensemble: true
-        RemovedByFireRain: true
   - Id: 309
     Name: BD_DRUMBATTLEFIELD
     Description: Battle Theme
@@ -8687,13 +8664,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Drumbattlefield
-      Layout: 15
-      Interval: -1
-      Target: Party
-      Flag:
-        Ensemble: true
   - Id: 310
     Name: BD_RINGNIBELUNGEN
     Description: Harmonic Lick
@@ -8726,13 +8696,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Ringnibelungen
-      Layout: 15
-      Interval: -1
-      Target: Party
-      Flag:
-        Ensemble: true
   - Id: 311
     Name: BD_ROKISWEIL
     Description: Classical Pluck
@@ -8755,13 +8718,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Rokisweil
-      Layout: 4
-      Interval: -1
-      Flag:
-        Ensemble: true
-        RemovedByFireRain: true
   - Id: 312
     Name: BD_INTOABYSS
     Description: Power Chord
@@ -8784,14 +8740,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Intoabyss
-      Layout: 15
-      Interval: -1
-      Target: Party
-      Flag:
-        NoMob: true
-        Ensemble: true
   - Id: 313
     Name: BD_SIEGFRIED
     Description: Acoustic Rhythm
@@ -8824,13 +8772,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Siegfried
-      Layout: 15
-      Interval: -1
-      Target: Party
-      Flag:
-        Ensemble: true
   - Id: 315
     Name: BA_MUSICALLESSON
     Description: Music Lessons
@@ -8890,14 +8831,6 @@ Body:
           Amount: 47
       Weapon:
         Musical: true
-    Unit:
-      Id: Dissonance
-      Layout: 4
-      Interval: 3000
-      Target: Enemy
-      Flag:
-        Song: true
-        RemovedByFireRain: true
   - Id: 318
     Name: BA_FROSTJOKER
     Description: Unbarring Octave
@@ -8967,14 +8900,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Whistle
-      Layout: 15
-      Interval: -1
-      Target: Party
-      Flag:
-        NoMob: true
-        Song: true
   - Id: 320
     Name: BA_ASSASSINCROSS
     Description: Impressive Riff
@@ -9017,14 +8942,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Assassincross
-      Layout: 15
-      Interval: -1
-      Target: Party
-      Flag:
-        NoMob: true
-        Song: true
   - Id: 321
     Name: BA_POEMBRAGI
     Description: Magic Strings
@@ -9067,14 +8984,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Poembragi
-      Layout: 15
-      Interval: -1
-      Target: Party
-      Flag:
-        NoMob: true
-        Song: true
   - Id: 322
     Name: BA_APPLEIDUN
     Description: Song of Lutie
@@ -9117,15 +9026,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Appleidun
-      Layout: 15
-      Interval: 6000
-      Target: Party
-      Flag:
-        NoMob: true
-        Song: true
-        DualMode: true
   - Id: 323
     Name: DC_DANCINGLESSON
     Description: Dance Lessons
@@ -9183,13 +9083,6 @@ Body:
           Amount: 35
       Weapon:
         Whip: true
-    Unit:
-      Id: Uglydance
-      Layout: 4
-      Interval: 3000
-      Target: Enemy
-      Flag:
-        Dance: true
   - Id: 326
     Name: DC_SCREAM
     Description: Dazzler
@@ -9259,14 +9152,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Humming
-      Layout: 15
-      Interval: -1
-      Target: Party
-      Flag:
-        NoMob: true
-        Dance: true
   - Id: 328
     Name: DC_DONTFORGETME
     Description: Slow Grace
@@ -9309,13 +9194,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Dontforgetme
-      Layout: 4
-      Interval: -1
-      Target: Enemy
-      Flag:
-        Dance: true
   - Id: 329
     Name: DC_FORTUNEKISS
     Description: Lady Luck
@@ -9358,14 +9236,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Fortunekiss
-      Layout: 15
-      Interval: -1
-      Target: Party
-      Flag:
-        NoMob: true
-        Dance: true
   - Id: 330
     Name: DC_SERVICEFORYOU
     Description: Gypsy's Kiss
@@ -9408,14 +9278,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Serviceforyou
-      Layout: 15
-      Interval: -1
-      Target: Party
-      Flag:
-        NoMob: true
-        Dance: true
   - Id: 331
     Name: NPC_RANDOMMOVE
     Description: Random Move
@@ -10057,7 +9919,6 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    ActiveInstance: 1
     CastCancel: true
     CastTime: 3000
     AfterCastActDelay:
@@ -10117,15 +9978,6 @@ Body:
           Amount: 70
         - Level: 5
           Amount: 80
-      ItemCost:
-        - Item: Yellow_Gemstone
-          Amount: 1
-        - Item: Red_Gemstone
-          Amount: 1
-        - Item: Blue_Gemstone
-          Amount: 1
-        - Item: Holy_Water
-          Amount: 1
   - Id: 363
     Name: HP_MEDITATIO
     Description: Meditatio
@@ -13562,7 +13414,6 @@ Body:
       Target: Enemy
       Flag:
         PathCheck: true
-        DualMode: true
         RemovedByFireRain: true
   - Id: 485
     Name: WS_CARTTERMINATION
@@ -13725,12 +13576,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Hermode
-      Layout: 3
-      Interval: -1
-      Flag:
-        Ensemble: true
   - Id: 489
     Name: CG_TAROTCARD
     Description: Tarot Card of Fate
