@@ -879,6 +879,8 @@ enum sc_type : int16 {
 
 	SC_ANCILLA,
 	SC_EARTHSHAKER,
+	SC_WEAPONBLOCK_ON,
+	SC_SPORE_EXPLOSION,
 	SC_ADAPTATION,
 	SC_BASILICA_CELL, // Used in renewal mode for cell_basilica only
 
