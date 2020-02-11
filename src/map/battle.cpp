@@ -5573,20 +5573,22 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	}
 
 	if(tsd) { // Card Fix for target (tsd), 2 is not added to the "left" flag meaning "target cards only"
-		switch(skill_id) {
 #ifdef RENEWAL
+		switch(skill_id) {
 			case NJ_ISSEN:
 			case ASC_BREAKER:
 			case CR_ACIDDEMONSTRATION:
 			case GN_FIRE_EXPANSION_ACID:
 				break; //These skills will do a card fix later
-#endif
 			default:
+#endif
 				wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage, 0, wd.flag);
 				if(is_attack_left_handed(src, skill_id))
 					wd.damage2 += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage2, 1, wd.flag);
+#ifdef RENEWAL
 				break;
 		}
+#endif
 	}
 
 #ifdef RENEWAL
@@ -5654,18 +5656,20 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 	battle_calc_attack_left_right_hands(&wd, src, target, skill_id, skill_lv);
 
-	switch (skill_id) {
 #ifdef RENEWAL
+	switch (skill_id) {
 		case NJ_ISSEN:
 		case ASC_BREAKER:
 		case CR_ACIDDEMONSTRATION:
 		case GN_FIRE_EXPANSION_ACID:
 			return wd; //These skills will do a GVG fix later
-#endif
 		default:
+#endif
 			battle_calc_attack_gvg_bg(&wd, src, target, skill_id, skill_lv);
+#ifdef RENEWAL
 			break;
 	}
+#endif
 
 	battle_calc_weapon_final_atk_modifiers(&wd, src, target, skill_id, skill_lv);
 
