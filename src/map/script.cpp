@@ -24168,7 +24168,6 @@ BUILDIN_FUNC(mail){
 
 		// Refine
 		if (!script_hasdata(st, 9)) {
-			ShowError("buildin_mail: missing item refine variable at position %d.\n", 9);
 			break;
 		}
 
@@ -24197,7 +24196,6 @@ BUILDIN_FUNC(mail){
 
 		// Bound
 		if (!script_hasdata(st, 10)) {
-			ShowError("buildin_mail: missing item bound variable at position %d.\n", 10);
 			break;
 		}
 
