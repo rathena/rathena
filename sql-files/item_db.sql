@@ -774,8 +774,8 @@ REPLACE INTO `item_db` VALUES (1469,'Longinus\'s_Spear','Longinus\'s Spear',5,20
 REPLACE INTO `item_db` VALUES (1470,'Brionac','Brionac',5,20,NULL,3000,190,NULL,3,0,0x00004082,7,2,34,4,48,1,5,'bonus bAtkEle,Ele_Holy; skill "AL_HEAL",5; bonus3 bAutoSpell,"MG_SOULSTRIKE",3,100; bonus2 bAddClass,Class_Boss,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1471,'Hell_Fire','Hellfire',5,20,NULL,3500,200,NULL,3,0,0x00004082,7,2,34,4,48,1,5,'bonus bAtkEle,Ele_Fire; bonus3 bAutoSpell,"MG_FIREBALL",3,100; bonus bStr,3;',NULL,NULL);
 # 2-Handed Staffs
-REPLACE INTO `item_db` VALUES (1472,'Staff_Of_Soul','Soul Staff',5,20,NULL,1400,25,NULL,1,0,0x00810204,7,2,34,3,73,1,10,'bonus bInt,5; bonus bAgi,2; bonus bMatkRate,15;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (1473,'Wizardy_Staff','Wizardry Staff',5,20,NULL,2400,120,NULL,1,0,0x00810204,7,2,34,4,90,1,10,'bonus bInt,6; bonus bDex,2; bonus bMatkRate,15;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (1472,'Staff_Of_Soul','Soul Staff',5,20,NULL,1400,25,NULL,1,0,0x00810204,7,2,34,3,73,1,23,'bonus bInt,5; bonus bAgi,2; bonus bMatkRate,15;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (1473,'Wizardy_Staff','Wizardry Staff',5,20,NULL,2400,120,NULL,1,0,0x00810204,7,2,34,4,90,1,23,'bonus bInt,6; bonus bDex,2; bonus bMatkRate,15;',NULL,NULL);
 # 2-Handed Spears
 REPLACE INTO `item_db` VALUES (1474,'Gae_Bolg','Gae Bolg',5,20,NULL,2000,160,NULL,3,0,0x00004082,7,2,34,4,60,1,5,'bonus bIgnoreDefRace,RC_Dragon; bonus2 bAddClass,Class_Boss,10;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1475,'Horseback_Lance','Equestrian\'s Spear',5,20,NULL,3700,200,NULL,4,0,0x00004082,7,2,34,4,75,1,5,NULL,NULL,NULL);

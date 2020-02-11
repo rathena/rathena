@@ -452,9 +452,9 @@ void do_init_skill(void);
 void do_final_skill(void);
 
 /// Cast type
-enum { CAST_GROUND, CAST_DAMAGE, CAST_NODAMAGE };
+enum e_cast_type { CAST_GROUND, CAST_DAMAGE, CAST_NODAMAGE };
 /// Returns the cast type of the skill: ground cast, castend damage, castend no damage
-int skill_get_casttype(uint16 skill_id); //[Skotlex]
+e_cast_type skill_get_casttype(uint16 skill_id); //[Skotlex]
 const char*	skill_get_name( uint16 skill_id ); 	// [Skotlex]
 const char*	skill_get_desc( uint16 skill_id ); 	// [Skotlex]
 int skill_tree_get_max( uint16 skill_id, int b_class );	// Celest

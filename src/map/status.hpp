@@ -861,6 +861,8 @@ enum sc_type : int16 {
 
 	SC_ANCILLA,
 	SC_EARTHSHAKER,
+	SC_WEAPONBLOCK_ON,
+	SC_SPORE_EXPLOSION,
 
 	// Star Emperor
 	SC_LIGHTOFMOON,

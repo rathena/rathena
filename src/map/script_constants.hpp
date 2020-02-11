@@ -1541,6 +1541,7 @@
 	export_constant(SC_LHZ_DUN_N4);
 	export_constant(SC_ANCILLA);
 	export_constant(SC_EARTHSHAKER);
+	export_constant(SC_WEAPONBLOCK_ON);
 	export_constant(SC_LIGHTOFMOON);
 	export_constant(SC_LIGHTOFSUN);
 	export_constant(SC_LIGHTOFSTAR);
