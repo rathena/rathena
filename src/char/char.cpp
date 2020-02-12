@@ -1708,6 +1708,10 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.bonus_script_db, char_id) )
 		Sql_ShowDebug(sql_handle);
 
+	/* Quest Data */
+	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.quest_db, char_id))
+		Sql_ShowDebug(sql_handle);
+
 	/* Achievement Data */
 	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.achievement_table, char_id))
 		Sql_ShowDebug(sql_handle);
