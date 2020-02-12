@@ -3401,7 +3401,7 @@ ACMD_FUNC(questskill)
 		clif_displaymessage(fd, msg_txt(sd,198)); // This skill number doesn't exist.
 		return -1;
 	}
-	if (!(skill_get_inf2(skill_id) & INF2_QUEST_SKILL)) {
+	if (!skill_get_inf2(skill_id, INF2_ISQUEST)) {
 		clif_displaymessage(fd, msg_txt(sd,197)); // This skill number doesn't exist or isn't a quest skill.
 		return -1;
 	}
@@ -3445,7 +3445,7 @@ ACMD_FUNC(lostskill)
 		clif_displaymessage(fd, msg_txt(sd,198)); // This skill number doesn't exist.
 		return -1;
 	}
-	if (!(skill_get_inf2(skill_id) & INF2_QUEST_SKILL)) {
+	if (!skill_get_inf2(skill_id, INF2_ISQUEST)) {
 		clif_displaymessage(fd, msg_txt(sd,197)); // This skill number doesn't exist or isn't a quest skill.
 		return -1;
 	}
@@ -5754,9 +5754,6 @@ ACMD_FUNC(clearcart)
 #define MAX_SKILLID_PARTIAL_RESULTS_LEN 74 // "skill " (6) + "%d:" (up to 5) + "%s" (up to 30) + " (%s)" (up to 33)
 ACMD_FUNC(skillid) {
 	int skillen, i, found = 0;
-	DBIterator* iter;
-	DBKey key;
-	DBData *data;
 	char partials[MAX_SKILLID_PARTIAL_RESULTS][MAX_SKILLID_PARTIAL_RESULTS_LEN];
 
 	nullpo_retr(-1, sd);
@@ -5768,19 +5765,19 @@ ACMD_FUNC(skillid) {
 
 	skillen = strlen(message);
 
-	iter = db_iterator(skilldb_name2id);
+	for(const auto & skill : skill_db) {
+		uint16 skill_id = skill.second->nameid;
+		uint16 idx = skill_get_index(skill_id);
+		const char *name = skill.second->name;
+		const char *desc = skill.second->desc;
 
-	for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) ) {
-		int idx = skill_get_index(db_data2i(data));
-		if (strnicmp(key.str, message, skillen) == 0 || strnicmp(skill_db[idx]->desc, message, skillen) == 0) {
-			sprintf(atcmd_output, msg_txt(sd,1164), db_data2i(data), skill_db[idx]->desc, key.str); // skill %d: %s (%s)
+		if (strnicmp(name, message, skillen) == 0 || strnicmp(desc, message, skillen) == 0) {
+			sprintf(atcmd_output, msg_txt(sd,1164), skill_id, desc, name); // skill %d: %s (%s)
 			clif_displaymessage(fd, atcmd_output);
-		} else if ( found < MAX_SKILLID_PARTIAL_RESULTS && ( stristr(key.str,message) || stristr(skill_db[idx]->desc,message) ) ) {
-			snprintf(partials[found++], MAX_SKILLID_PARTIAL_RESULTS_LEN, msg_txt(sd,1164), db_data2i(data), skill_db[idx]->desc, key.str); // // skill %d: %s (%s)
+		} else if ( found < MAX_SKILLID_PARTIAL_RESULTS && ( stristr(name,message) || stristr(desc,message) ) ) {
+			snprintf(partials[found++], MAX_SKILLID_PARTIAL_RESULTS_LEN, msg_txt(sd,1164), skill_id, desc, name); // // skill %d: %s (%s)
 		}
 	}
-
-	dbi_destroy(iter);
 
 	if( found ) {
 		sprintf(atcmd_output, msg_txt(sd,1398), found); // -- Displaying first %d partial matches
@@ -5912,7 +5909,7 @@ ACMD_FUNC(skilltree)
 	{
 		if( ent->need[j].skill_id && pc_checkskill(sd,ent->need[j].skill_id) < ent->need[j].skill_lv)
 		{
-			sprintf(atcmd_output, msg_txt(sd,1170), ent->need[j].skill_lv, skill_db[skill_get_index(ent->need[j].skill_id)]->desc); // Player requires level %d of skill %s.
+			sprintf(atcmd_output, msg_txt(sd,1170), ent->need[j].skill_lv, skill_get_desc(ent->need[j].skill_id)); // Player requires level %d of skill %s.
 			clif_displaymessage(fd, atcmd_output);
 			meets = 0;
 		}

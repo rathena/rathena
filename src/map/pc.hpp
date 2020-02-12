@@ -4,12 +4,14 @@
 #ifndef PC_HPP
 #define PC_HPP
 
+#include <memory>
 #include <vector>
 
 #include "../common/mmo.hpp" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/strlib.hpp"// StringBuf
 #include "../common/timer.hpp"
 
+#include "battleground.hpp"
 #include "buyingstore.hpp" // struct s_buyingstore
 #include "clif.hpp" //e_wip_block
 #include "itemdb.hpp" // MAX_ITEMGROUP
@@ -300,7 +302,7 @@ struct map_session_data {
 		unsigned int prevend : 1;//used to flag wheather you've spent 40sp to open the vending or not.
 		unsigned int warping : 1;//states whether you're in the middle of a warp processing
 		unsigned int permanent_speed : 1; // When 1, speed cannot be changed through status_calc_pc().
-		unsigned int hold_recalc : 1;
+		bool hold_recalc;
 		unsigned int banking : 1; //1 when we using the banking system 0 when closed
 		unsigned int hpmeter_visible : 1;
 		unsigned disable_atcommand_on_npc : 1; //Prevent to use atcommand while talking with NPC [Kichi]
@@ -382,7 +384,7 @@ struct map_session_data {
 	uint16 skill_id_dance,skill_lv_dance;
 	short cook_mastery; // range: [0,1999] [Inkfish]
 	struct skill_cooldown_entry * scd[MAX_SKILLCOOLDOWN]; // Skill Cooldown
-	short cloneskill_idx, ///Stores index of copied skill by Intimidate/Plagiarism
+	uint16 cloneskill_idx, ///Stores index of copied skill by Intimidate/Plagiarism
 		reproduceskill_idx; ///Stores index of copied skill by Reproduce
 	int menuskill_id, menuskill_val, menuskill_val2;
 
@@ -623,6 +625,10 @@ struct map_session_data {
 		bool changed; // if true, should sync with charserver on next mailbox request
 	} mail;
 
+	// Battlegrounds queue system [MasterOfMuppets]
+	std::shared_ptr<s_battleground_queue> bg_queue;
+	bool bg_queue_accept_state; // Set this to true when someone has accepted the invite to join BGs
+
 	//Quest log system
 	int num_quests;          ///< Number of entries in quest_log
 	int avail_quests;        ///< Number of Q_ACTIVE and Q_INACTIVE entries in quest log (index of the first Q_COMPLETE entry)
@@ -651,7 +657,7 @@ struct map_session_data {
 	int debug_line;
 	const char* debug_func;
 
-	unsigned int bg_id;
+	int bg_id;
 
 #ifdef SECURE_NPCTIMEOUT
 	/**
@@ -894,7 +900,8 @@ extern struct s_job_info job_info[CLASS_COUNT];
 #define pc_setsit(sd)         { pc_stop_walking((sd), 1|4); pc_stop_attack((sd)); (sd)->state.dead_sit = (sd)->vd.dead_sit = 2; }
 #define pc_isdead(sd)         ( (sd)->state.dead_sit == 1 )
 #define pc_issit(sd)          ( (sd)->vd.dead_sit == 2 )
-#define pc_isidle(sd)         ( (sd)->chatID || (sd)->state.vending || (sd)->state.buyingstore || DIFF_TICK(last_tick, (sd)->idletime) >= battle_config.idle_no_share )
+#define pc_isidle_party(sd)   ( (sd)->chatID || (sd)->state.vending || (sd)->state.buyingstore || DIFF_TICK(last_tick, (sd)->idletime) >= battle_config.idle_no_share )
+#define pc_isidle_hom(sd)     ( (sd)->hd && ( (sd)->chatID || (sd)->state.vending || (sd)->state.buyingstore || DIFF_TICK(last_tick, (sd)->idletime) >= battle_config.hom_idle_no_share ) )
 #define pc_istrading(sd)      ( (sd)->npc_id || (sd)->state.vending || (sd)->state.buyingstore || (sd)->state.trading )
 #define pc_cant_act(sd)       ( (sd)->npc_id || (sd)->state.vending || (sd)->state.buyingstore || (sd)->chatID || ((sd)->sc.opt1 && (sd)->sc.opt1 != OPT1_BURNING) || (sd)->state.trading || (sd)->state.storage_flag || (sd)->state.prevend )
 
@@ -919,7 +926,7 @@ extern struct s_job_info job_info[CLASS_COUNT];
 
 #define pc_isfalcon(sd)       ( (sd)->sc.option&OPTION_FALCON )
 #define pc_isriding(sd)       ( (sd)->sc.option&OPTION_RIDING )
-#define pc_isinvisible(sd)    ( (sd)->sc.option&OPTION_INVISIBLE && !((sd)->sc.data && (sd)->sc.data[SC__FEINTBOMB]) )
+#define pc_isinvisible(sd)    ( (sd)->sc.option&OPTION_INVISIBLE )
 #define pc_is50overweight(sd) ( (sd)->weight * 100 >= (sd)->max_weight * battle_config.natural_heal_weight_rate )
 #define pc_is70overweight(sd) ( (sd)->weight * 100 >= (sd)->max_weight * battle_config.natural_heal_weight_rate_renewal )
 #define pc_is90overweight(sd) ( (sd)->weight * 10 >= (sd)->max_weight * 9 )
@@ -1188,9 +1195,9 @@ bool pc_setreg(struct map_session_data *sd, int64 reg, int64 val);
 char *pc_readregstr(struct map_session_data *sd, int64 reg);
 bool pc_setregstr(struct map_session_data *sd, int64 reg, const char *str);
 int64 pc_readregistry(struct map_session_data *sd, int64 reg);
-int pc_setregistry(struct map_session_data *sd, int64 reg, int64 val);
+bool pc_setregistry(struct map_session_data *sd, int64 reg, int64 val);
 char *pc_readregistry_str(struct map_session_data *sd, int64 reg);
-int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val);
+bool pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val);
 
 #define pc_readglobalreg(sd,reg) pc_readregistry(sd,reg)
 #define pc_setglobalreg(sd,reg,val) pc_setregistry(sd,reg,val)

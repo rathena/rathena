@@ -337,7 +337,10 @@ enum e_element : int8{
 	ELE_GHOST,
 	ELE_UNDEAD,
 	ELE_ALL,
-	ELE_MAX
+	ELE_MAX,
+	ELE_WEAPON,
+	ELE_ENDOWED,
+	ELE_RANDOM,
 };
 
 #define MAX_ELE_LEVEL 4 /// Maximum Element level

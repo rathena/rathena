@@ -17,6 +17,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "battle.hpp"
@@ -35,6 +36,8 @@
 #include "pc_groups.hpp"
 #include "pet.hpp"
 #include "script.hpp"
+
+using namespace rathena;
 
 // Regen related flags.
 enum e_regen {
@@ -796,6 +799,7 @@ void initChangeTables(void)
 	set_sc( GN_CARTBOOST			, SC_GN_CARTBOOST	, EFST_GN_CARTBOOST			, SCB_SPEED );
 	set_sc( GN_THORNS_TRAP			, SC_THORNSTRAP		, EFST_THORNS_TRAP, SCB_NONE );
 	set_sc_with_vfx( GN_BLOOD_SUCKER	, SC_BLOODSUCKER	, EFST_BLOOD_SUCKER, SCB_NONE );
+	set_sc( GN_SPORE_EXPLOSION		, SC_SPORE_EXPLOSION	, EFST_SPORE_EXPLOSION, SCB_NONE );
 	set_sc( GN_FIRE_EXPANSION_SMOKE_POWDER	, SC_SMOKEPOWDER	, EFST_FIRE_EXPANSION_SMOKE_POWDER, SCB_FLEE );
 	set_sc( GN_FIRE_EXPANSION_TEAR_GAS	, SC_TEARGAS		, EFST_FIRE_EXPANSION_TEAR_GAS	, SCB_HIT|SCB_FLEE );
 	set_sc( GN_MANDRAGORA			, SC_MANDRAGORA		, EFST_MANDRAGORA			, SCB_INT );
@@ -1176,6 +1180,11 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_LHZ_DUN_N4] = EFST_LHZ_DUN_N4;
 
 	StatusIconChangeTable[SC_ANCILLA] = EFST_ANCILLA;
+	StatusIconChangeTable[SC_WEAPONBLOCK_ON] = EFST_WEAPONBLOCK_ON;
+
+	// Battleground Queue
+	StatusIconChangeTable[SC_ENTRY_QUEUE_APPLY_DELAY] = EFST_ENTRY_QUEUE_APPLY_DELAY;
+	StatusIconChangeTable[SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT] = EFST_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT;
 
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
@@ -1330,6 +1339,10 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_GLASTHEIM_STATE] |= SCB_STR|SCB_AGI|SCB_VIT|SCB_DEX|SCB_INT|SCB_LUK;
 	StatusChangeFlagTable[SC_GLASTHEIM_ITEMDEF] |= SCB_DEF|SCB_MDEF;
 	StatusChangeFlagTable[SC_GLASTHEIM_HPSP] |= SCB_MAXHP|SCB_MAXSP;
+
+	// Battleground Queue
+	StatusChangeFlagTable[SC_ENTRY_QUEUE_APPLY_DELAY] |= SCB_NONE;
+	StatusChangeFlagTable[SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT] |= SCB_NONE;
 
 	// Summoner
 	StatusChangeFlagTable[SC_DORAM_WALKSPEED] |= SCB_SPEED;
@@ -1862,14 +1875,15 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 	}
 
 	// Always run NPC scripts for players last
-	//FIXME those ain't always run if a player die if he was resurect meanwhile
+	//FIXME those ain't always run if a player die if he was resurrect meanwhile
 	//cf SC_REBIRTH, SC_KAIZEL, pc_dead...
 	if(target->type == BL_PC) {
 		TBL_PC *sd = BL_CAST(BL_PC,target);
 		if( sd->bg_id ) {
-			struct battleground_data *bg;
-			if( (bg = bg_team_search(sd->bg_id)) != NULL && bg->die_event[0] )
-				npc_event(sd, bg->die_event, 0);
+			std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, sd->bg_id);
+
+			if( bg && !(bg->die_event.empty()) )
+				npc_event(sd, bg->die_event.c_str(), 0);
 		}
 
 		npc_script_event(sd,NPCE_DIE);
@@ -2184,17 +2198,20 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		}
 
 		if (sc->data[SC_DANCING] && flag!=2) {
+			std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+
+			if (!skill)
+				return false;
+
 			if (src->type == BL_PC && ((skill_id >= WA_SWING_DANCE && skill_id <= WM_UNLIMITED_HUMMING_VOICE ) ||
 				skill_id == WM_FRIGG_SONG))
 			{ // Lvl 5 Lesson or higher allow you use 3rd job skills while dancing.
 				if( pc_checkskill((TBL_PC*)src,WM_LESSON) < 5 )
 					return false;
 			} else if(sc->data[SC_LONGING]) { // Allow everything except dancing/re-dancing. [Skotlex]
-				if (skill_id == BD_ENCORE ||
-					skill_get_inf2(skill_id)&(INF2_SONG_DANCE|INF2_ENSEMBLE_SKILL)
-					)
+				if (skill_id == BD_ENCORE || skill->inf2[INF2_ISSONG] || skill->inf2[INF2_ISENSEMBLE])
 					return false;
-			} else if(!(skill_get_inf3(skill_id)&INF3_USABLE_DANCE)) // Skills that can be used in dancing state
+			} else if(!skill->inf2[INF2_ALLOWWHENPERFORMING]) // Skills that can be used in dancing state
 				return false;
 			if ((sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE && skill_id == BD_ADAPTATION)
 				return false; // Can't amp out of Wand of Hermode :/ [Skotlex]
@@ -2226,7 +2243,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		}
 
 		if (sc->option) {
-			if ((sc->option&OPTION_HIDE) && src->type == BL_PC && (!skill_id || !(skill_get_inf3(skill_id)&INF3_USABLE_HIDING))) {
+			if ((sc->option&OPTION_HIDE) && src->type == BL_PC && (skill_id == 0 || !skill_get_inf2(skill_id, INF2_ALLOWWHENHIDDEN))) {
 				// Non players can use all skills while hidden.
 				return false;
 			}
@@ -2254,7 +2271,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			return false;
 		if(skill_id == PR_LEXAETERNA && (tsc->data[SC_FREEZE] || (tsc->data[SC_STONE] && tsc->opt1 == OPT1_STONE)))
 			return false;
-		if (tsc->data[SC__MANHOLE] && !(skill_get_inf3(skill_id)&INF3_USABLE_MANHOLE))
+		if (tsc->data[SC__MANHOLE] && !skill_get_inf2(skill_id, INF2_TARGETMANHOLE))
 			return false;
 	}
 
@@ -2262,7 +2279,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 	hide_flag = flag?OPTION_HIDE:(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK);
 
  	// Skill that can hit hidden target
-	if( skill_get_inf3(skill_id)&INF3_HIT_HIDING )
+	if( skill_get_inf2(skill_id, INF2_TARGETHIDDEN) )
 		hide_flag &= ~OPTION_HIDE;
 
 	switch( target->type ) {
@@ -5279,10 +5296,10 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 #ifndef RENEWAL_ASPD
 			status->aspd_rate = status_calc_aspd_rate(bl, sc, b_status->aspd_rate);
 #endif
-			// Absolute ASPD % modifier
+			// Absolute ASPD % modifiers
 			amotion = amotion * status->aspd_rate / 1000;
 			if (sd->ud.skilltimer != INVALID_TIMER && (skill_lv = pc_checkskill(sd, SA_FREECAST)) > 0)
-				amotion = amotion * 5 * (skill_lv + 10) / 100;
+				amotion += (2000 - amotion) * ( 55 - 5 * ( skill_lv + 1 ) ) / 100; //Increases amotion to reduce ASPD to the corresponding absolute percentage for each level (overriding other adjustments)
 #ifdef RENEWAL_ASPD
 			// RE ASPD % modifier
 			amotion += (max(0xc3 - amotion, 2) * (status->aspd_rate2 + status_calc_aspd(bl, sc, false))) / 100;
@@ -5349,12 +5366,16 @@ void status_calc_bl_(struct block_list* bl, enum scb_flag flag, enum e_status_ca
 	struct status_data b_status; // Previous battle status
 	struct status_data* status; // Pointer to current battle status
 
-	if (bl->type == BL_PC && ((TBL_PC*)bl)->delayed_damage != 0) {
-		if (opt&SCO_FORCE)
-			((TBL_PC*)bl)->state.hold_recalc = 0; /* Clear and move on */
-		else {
-			((TBL_PC*)bl)->state.hold_recalc = 1; /* Flag and stop */
-			return;
+	if (bl->type == BL_PC) {
+		struct map_session_data *sd = BL_CAST(BL_PC, bl);
+
+		if (sd->delayed_damage != 0) {
+			if (opt&SCO_FORCE)
+				sd->state.hold_recalc = false; // Clear and move on
+			else {
+				sd->state.hold_recalc = true; // Flag and stop
+				return;
+			}
 		}
 	}
 
@@ -11766,33 +11787,31 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	else
 		sce->timer = INVALID_TIMER; // Infinite duration
 
-	if (calc_flag)
-		status_calc_bl(bl,calc_flag);
+	if (calc_flag) {
+		if (sd) {
+			switch(type) {
+				// Statuses that adjust HP/SP and heal after starting
+				case SC_BERSERK:
+				case SC_MERC_HPUP:
+				case SC_MERC_SPUP:
+					status_calc_bl_(bl, static_cast<scb_flag>(calc_flag), SCO_FORCE);
+					break;
+				default:
+					status_calc_bl(bl, calc_flag);
+					break;
+			}
+		} else
+			status_calc_bl(bl, calc_flag);
+	}
 
 	if ( sc_isnew && StatusChangeStateTable[type] ) // Non-zero
 		status_calc_state(bl,sc,( enum scs_flag ) StatusChangeStateTable[type],true);
 
-
-	if(sd) {
-		if (sd->pd)
-			pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
-		switch (type) {
-			case SC_BERSERK:
-			case SC_MERC_HPUP:
-			case SC_MERC_SPUP:
-				status_calc_pc(sd, SCO_FORCE);
-				break;
-			default:
-				status_calc_pc(sd, SCO_NONE);
-				break;
-		}
-	}
+	if (sd && sd->pd)
+		pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
 
 	// 1st thing to execute when loading status
 	switch (type) {
-		case SC_FULL_THROTTLE:
-			status_percent_heal(bl,100,0);
-			break;
 		case SC_BERSERK:
 			if (!(sce->val2)) { // Don't heal if already set
 				status_heal(bl, status->max_hp, 0, 1); // Do not use percent_heal as this healing must override BERSERK's block.
@@ -11812,6 +11831,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (sd)
 				clif_bossmapinfo(sd, map_id2boss(sce->val1), BOSS_INFO_ALIVE_WITHMSG); // First Message
 			break;
+		case SC_FULL_THROTTLE:
 		case SC_MERC_HPUP:
 			status_percent_heal(bl, 100, 0); // Recover Full HP
 			break;
@@ -12008,6 +12028,8 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_LHZ_DUN_N2:
 			case SC_LHZ_DUN_N3:
 			case SC_LHZ_DUN_N4:
+			case SC_ENTRY_QUEUE_APPLY_DELAY:
+			case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -12042,6 +12064,8 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_PUSH_CART:
 			case SC_ALL_RIDING:
 			case SC_STYLE_CHANGE:
+			case SC_ENTRY_QUEUE_APPLY_DELAY:
+			case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -12336,6 +12360,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			}
 			break;
 		case SC_SPLASHER:
+		case SC_SPORE_EXPLOSION:
 			{
 				struct block_list *src=map_id2bl(sce->val3);
 				if(src && tid != INVALID_TIMER)
@@ -12625,11 +12650,14 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 				if (sce->val3 || status_isdead(bl) || !(caster = map_id2sd(sce->val2)))
 					break;
-				if (!itemdb_exists(skill_get_itemid(RL_H_MINE,0)))
+
+				std::shared_ptr<s_skill_db> skill = skill_db.find(RL_H_MINE);
+
+				if (!itemdb_exists(skill->require.itemid[0]))
 					break;
 				memset(&it, 0, sizeof(it));
-				it.nameid = skill_get_itemid(RL_H_MINE,0);
-				it.amount = max(skill_get_itemqty(RL_H_MINE,0),1);
+				it.nameid = skill->require.itemid[0];
+				it.amount = max(skill->require.amount[0],1);
 				it.identify = 1;
 				map_addflooritem(&it, it.amount, bl->m,bl->x, bl->y, caster->status.char_id, 0, 0, 4, 0);
 			}
@@ -13240,6 +13268,7 @@ TIMER_FUNC(status_change_timer){
 		break;
 
 	case SC_SPLASHER:
+	case SC_SPORE_EXPLOSION:
 		// Custom Venom Splasher countdown timer
 		// if (sce->val4 % 1000 == 0) {
 		// 	char timer[10];
@@ -13320,7 +13349,7 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_RENOVATIO:
 		if( --(sce->val4) >= 0 ) {
-			int heal = status->max_hp * 5 / 100;
+			int heal = status->max_hp * (sce->val1 + 4) / 100;
 			if( sc && sc->data[SC_AKAITSUKI] && heal )
 				heal = ~heal + 1;
 			status_heal(bl, heal, 0, 3);
@@ -13896,7 +13925,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 				if(bl->type == BL_SKILL)
 					su = (struct skill_unit *)bl;
 				if (skill_attack(BF_MAGIC,src,src,bl,WZ_SIGHTBLASTER,sce->val1,tick,0x1000000)
-					&& (!su || !su->group || !(skill_get_inf2(su->group->skill_id)&INF2_TRAP))) { // The hit is not counted if it's against a trap
+					&& (!su || !su->group || !skill_get_inf2(su->group->skill_id, INF2_ISTRAP))) { // The hit is not counted if it's against a trap
 					sce->val2 = 0; // This signals it to end.
 				} else if((bl->type&BL_SKILL) && sce->val4%2 == 0) {
 					//Remove trap immunity temporarily so it triggers if you still stand on it
