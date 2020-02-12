@@ -2397,22 +2397,6 @@
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
 	export_constant(EFST_BLANK);
-	export_constant(EFST_PROVOKE);
-	export_constant(EFST_ENDURE);
-	export_constant(EFST_TWOHANDQUICKEN);
-	export_constant(EFST_CONCENTRATION);
-	export_constant(EFST_HIDING);
-	export_constant(EFST_CLOAKING);
-	export_constant(EFST_ENCHANTPOISON);
-	export_constant(EFST_POISONREACT);
-	export_constant(EFST_QUAGMIRE);
-	export_constant(EFST_ANGELUS);
-	export_constant(EFST_BLESSING);
-	export_constant(EFST_CRUCIS);
-	export_constant(EFST_INC_AGI);
-	export_constant(EFST_DEC_AGI);
-	export_constant(EFST_SLOWPOISON);
-	export_constant(EFST_IMPOSITIO);
 	export_constant(EFST_SUFFRAGIUM);
 	export_constant(EFST_ASPERSIO);
 	export_constant(EFST_BENEDICTIO);
