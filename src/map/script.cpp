@@ -1692,7 +1692,7 @@ const char* parse_syntax(const char* p)
 				p = skip_space(p);
 				if(*p != ':')
 					disp_error_message("parse_syntax: expect ':'",p);
-				sprintf(label,"if(%lld != $@__SW%x_VAL) goto __SW%x_%x;",
+				sprintf(label,"if(%" PRId64 " != $@__SW%x_VAL) goto __SW%x_%x;",
 					v,syntax.curly[pos].index,syntax.curly[pos].index,syntax.curly[pos].count+1);
 				syntax.curly[syntax.curly_count++].type = TYPE_NULL;
 				// Bad I do not parse twice
@@ -11162,7 +11162,7 @@ BUILDIN_FUNC(announce)
 		}else{
 			struct map_session_data* sd;
 
-			if( script_rid2sd(sd) )
+			if(script_charid2sd(9, sd))
 				bl = &sd->bl;
 			else
 				bl = NULL;
@@ -19138,37 +19138,43 @@ BUILDIN_FUNC(setcell)
  */
 BUILDIN_FUNC(getfreecell)
 {
-	const char *mapn = script_getstr(st, 2), *name;
-	char prefix;
-	struct map_session_data *sd;
-	int64 num;
+	const char *mapn = script_getstr(st, 2), *name_x, *name_y;
+	struct script_data
+		*data_x = script_getdata(st, 3),
+		*data_y = script_getdata(st, 4);
+	struct block_list* bl = map_id2bl(st->rid);
+	struct map_session_data *sd = nullptr;
 	int16 m, x = 0, y = 0;
 	int rx = -1, ry = -1, flag = 1;
 
-	sd = map_id2sd(st->rid);
-
-	if (!data_isreference(script_getdata(st, 3))) {
+	if (!data_isreference(data_x)) {
 		ShowWarning("script: buildin_getfreecell: rX is not a variable.\n");
-		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
 	}
-
-	if (!data_isreference(script_getdata(st, 4))) {
+	if (!data_isreference(data_y)) {
 		ShowWarning("script: buildin_getfreecell: rY is not a variable.\n");
-		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
 	}
+	name_x = reference_getname(data_x),
+	name_y = reference_getname(data_y);
 
-	if (is_string_variable(reference_getname(script_getdata(st, 3)))) {
+	if (is_string_variable(name_x)) {
 		ShowWarning("script: buildin_getfreecell: rX is a string, must be an INT.\n");
-		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (is_string_variable(name_y)) {
+		ShowWarning("script: buildin_getfreecell: rY is a string, must be an INT.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (is_string_variable(reference_getname(script_getdata(st, 4)))) {
-		ShowWarning("script: buildin_getfreecell: rY is a string, must be an INT.\n");
-		script_pushint(st, -1);
-		return SCRIPT_CMD_FAILURE;
+	if (not_server_variable(*name_x) || not_server_variable(*name_y)) {
+		if (!script_rid2sd(sd)) {
+			if (not_server_variable(*name_x))
+				ShowError( "buildin_getfreecell: variable '%s' for mapX is not a server variable, but no player is attached!", name_x );
+			else
+				ShowError( "buildin_getfreecell: variable '%s' for mapY is not a server variable, but no player is attached!", name_y );
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
 
 	if (script_hasdata(st, 5))
@@ -19186,42 +19192,15 @@ BUILDIN_FUNC(getfreecell)
 	if (script_hasdata(st, 9))
 		flag = script_getnum(st, 9);
 
-	if (sd && strcmp(mapn, "this") == 0)
-		m = sd->bl.m;
+	if (bl && strcmp(mapn, "this") == 0)
+		m = bl->m;
 	else
 		m = map_mapname2mapid(mapn);
 
-	map_search_freecell(NULL, m, &x, &y, rx, ry, flag);
+	map_search_freecell(bl, m, &x, &y, rx, ry, flag);
 
-	// Set MapX
-	num = st->stack->stack_data[st->start + 3].u.num;
-	name = get_str(num&0x00ffffff);
-	prefix = *name;
-
-	if (not_server_variable(prefix)){
-		if( !script_rid2sd(sd) ){
-			ShowError( "buildin_getfreecell: variable '%s' for mapX is not a server variable, but no player is attached!", name );
-			return SCRIPT_CMD_FAILURE;
-		}
-	}else
-		sd = NULL;
-
-	set_reg_num( st, sd, num, name, x, script_getref( st, 3 ) );
-
-	// Set MapY
-	num = st->stack->stack_data[st->start + 4].u.num;
-	name = get_str(num&0x00ffffff);
-	prefix = *name;
-
-	if (not_server_variable(prefix)){
-		if( !script_rid2sd(sd) ){
-			ShowError( "buildin_getfreecell: variable '%s' for mapY is not a server variable, but no player is attached!", name );
-			return SCRIPT_CMD_FAILURE;
-		}
-	}else
-		sd = NULL;
-
-	set_reg_num( st, sd, num, name, y, script_getref( st, 4 ) );
+	set_reg_num(st, sd, reference_getuid(data_x), name_x, x, data_x->ref);
+	set_reg_num(st, sd, reference_getuid(data_y), name_y, y, data_y->ref);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -24146,6 +24125,7 @@ static inline bool mail_sub( struct script_state *st, struct script_data *data, 
 	return true;
 }
 
+// mail <destination id>,"<sender name>","<title>","<body>"{,<zeny>{,<item id array>,<item amount array>{,refine{,bound{,<item card0 array>{,<item card1 array>{,<item card2 array>{,<item card3 array>{,<random option id0 array>, <random option value0 array>, <random option paramter0 array>{,<random option id1 array>, <random option value1 array>, <random option paramter1 array>{,<random option id2 array>, <random option value2 array>, <random option paramter2 array>{,<random option id3 array>, <random option value3 array>, <random option paramter3 array>{,<random option id4 array>, <random option value4 array>, <random option paramter4 array>}}}}}}}}};
 BUILDIN_FUNC(mail){
 	const char *sender, *title, *body, *name;
 	struct mail_message msg;
@@ -24265,12 +24245,64 @@ BUILDIN_FUNC(mail){
 			}
 		}
 
-		// Cards
-		if( !script_hasdata(st,9) ){
+		// Refine
+		if (!script_hasdata(st, 9)) {
 			break;
 		}
 
-		for( i = 0, j = 9; i < MAX_SLOTS && script_hasdata(st,j); i++, j++ ){
+		data = script_getdata(st, 9);
+
+		if (!mail_sub(st, data, sd, 9, &name, &start, &end, &id)) {
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		for (i = 0; i < num_items && start < end; i++, start++) {
+			struct item_data* item = itemdb_exists(msg.item[i].nameid);
+
+			msg.item[i].refine = (char)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
+
+			script_removetop(st, -1, 0);
+
+			if (!item->flag.no_refine && (item->type == IT_WEAPON || item->type == IT_ARMOR || item->type == IT_SHADOWGEAR)) {
+				if (msg.item[i].refine > MAX_REFINE)
+					msg.item[i].refine = MAX_REFINE;
+			}
+			else
+				msg.item[i].refine = 0;
+			if (msg.item[i].refine < 0)
+				msg.item[i].refine = 0;
+		}
+
+		// Bound
+		if (!script_hasdata(st, 10)) {
+			break;
+		}
+
+		data = script_getdata(st,10);
+
+		if( !mail_sub( st, data, sd, 10, &name, &start, &end, &id ) ){
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		for( i = 0; i < num_items && start < end; i++, start++ ){
+			struct item_data *item = itemdb_exists(msg.item[i].nameid);
+
+			msg.item[i].bound = (char)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
+
+			script_removetop(st, -1, 0);
+
+			if( msg.item[i].bound <= BOUND_NONE || msg.item[i].bound >= BOUND_MAX ){
+				ShowError( "buildin_mail: bound %d for item %hu is invalid.\n", msg.item[i].bound, msg.item[i].nameid );
+				return SCRIPT_CMD_FAILURE;
+			}
+		}
+
+		// Cards
+		if( !script_hasdata(st,11) ){
+			break;
+		}
+
+		for( i = 0, j = 11; i < MAX_SLOTS && script_hasdata(st,j); i++, j++ ){
 			data = script_getdata(st,j);
 
 			if( !mail_sub( st, data, sd, j + 1, &name, &start, &end, &id ) ){
@@ -24288,11 +24320,11 @@ BUILDIN_FUNC(mail){
 		}
 	
 		// Random Options
-		if( !script_hasdata(st,9 + MAX_SLOTS) ){
+		if( !script_hasdata(st,12 + MAX_SLOTS) ){
 			break;
 		}
 
-		for( i = 0, j = 9 + MAX_SLOTS; i < MAX_ITEM_RDM_OPT && script_hasdata(st,j) && script_hasdata(st,j + 1) && script_hasdata(st,j + 2); i++, j++ ){
+		for( i = 0, j = 12 + MAX_SLOTS; i < MAX_ITEM_RDM_OPT && script_hasdata(st,j) && script_hasdata(st,j + 1) && script_hasdata(st,j + 2); i++, j++ ){
 			// Option IDs
 			data = script_getdata(st, j);
 
@@ -24784,7 +24816,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(attachnpctimer,"?"), // attached the player id to the npc timer [Celest]
 	BUILDIN_DEF(detachnpctimer,"?"), // detached the player id from the npc timer [Celest]
 	BUILDIN_DEF(playerattached,""), // returns id of the current attached player. [Skotlex]
-	BUILDIN_DEF(announce,"si?????"),
+	BUILDIN_DEF(announce,"si??????"),
 	BUILDIN_DEF(mapannounce,"ssi?????"),
 	BUILDIN_DEF(areaannounce,"siiiisi?????"),
 	BUILDIN_DEF(getusers,"i"),

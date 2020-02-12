@@ -742,8 +742,8 @@
 1470,Brionac,Brionac,5,20,,3000,190,,3,0,0x00004082,7,2,34,4,48,1,5,{ bonus bAtkEle,Ele_Holy; skill "AL_HEAL",5; bonus3 bAutoSpell,"MG_SOULSTRIKE",3,100; bonus2 bAddClass,Class_Boss,5; },{},{}
 1471,Hell_Fire,Hellfire,5,20,,3500,200,,3,0,0x00004082,7,2,34,4,48,1,5,{ bonus bAtkEle,Ele_Fire; bonus3 bAutoSpell,"MG_FIREBALL",3,100; bonus bStr,3; },{},{}
 // 2-Handed Staffs
-1472,Staff_Of_Soul,Soul Staff,5,20,,1400,25,,1,0,0x00810204,7,2,34,3,73,1,10,{ bonus bInt,5; bonus bAgi,2; bonus bMatkRate,15; },{},{}
-1473,Wizardy_Staff,Wizardry Staff,5,20,,2400,120,,1,0,0x00810204,7,2,34,4,90,1,10,{ bonus bInt,6; bonus bDex,2; bonus bMatkRate,15; },{},{}
+1472,Staff_Of_Soul,Soul Staff,5,20,,1400,25,,1,0,0x00810204,7,2,34,3,73,1,23,{ bonus bInt,5; bonus bAgi,2; bonus bMatkRate,15; },{},{}
+1473,Wizardy_Staff,Wizardry Staff,5,20,,2400,120,,1,0,0x00810204,7,2,34,4,90,1,23,{ bonus bInt,6; bonus bDex,2; bonus bMatkRate,15; },{},{}
 // 2-Handed Spears
 1474,Gae_Bolg,Gae Bolg,5,20,,2000,160,,3,0,0x00004082,7,2,34,4,60,1,5,{ bonus bIgnoreDefRace,RC_Dragon; bonus2 bAddClass,Class_Boss,10; },{},{}
 1475,Horseback_Lance,Equestrian's Spear,5,20,,3700,200,,4,0,0x00004082,7,2,34,4,75,1,5,{},{},{}
