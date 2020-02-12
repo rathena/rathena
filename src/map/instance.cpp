@@ -64,7 +64,7 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 	bool exists = instance != nullptr;
 
 	if (!exists) {
-		if (!this->nodesExist(node, { "Name", "EnterMap", "EnterX", "EnterY" }))
+		if (!this->nodesExist(node, { "Name", "Enter" }))
 			return 0;
 
 		instance = std::make_shared<s_instance_db>();
@@ -118,38 +118,45 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 	*/
 
-	if (this->nodeExists(node, "EnterMap")) {
-		std::string map;
+	if (this->nodeExists(node, "Enter")) {
+		const YAML::Node &enterNode = node["Enter"];
 
-		if (!this->asString(node, "EnterMap", map))
+		if (!this->nodesExist(enterNode, { "Map", "X", "Y" }))
 			return 0;
 
-		int16 m = map_mapname2mapid(map.c_str());
+		if (this->nodeExists(enterNode, "Map")) {
+			std::string map;
 
-		if (!m) {
-			this->invalidWarning(node["EnterMap"], "EnterMap %s is not a valid map, skipping.\n", map.c_str());
-			return 0;
+			if (!this->asString(enterNode, "Map", map))
+				return 0;
+
+			int16 m = map_mapname2mapid(map.c_str());
+
+			if (m == 0) {
+				this->invalidWarning(enterNode["Map"], "Map %s is not a valid map, skipping.\n", map.c_str());
+				return 0;
+			}
+
+			instance->enter.map = m;
 		}
 
-		instance->enter.map = m;
-	}
+		if (this->nodeExists(enterNode, "X")) {
+			int16 x;
 
-	if (this->nodeExists(node, "EnterX")) {
-		int16 x;
+			if (!this->asInt16(enterNode, "X", x))
+				return 0;
 
-		if (!this->asInt16(node, "EnterX", x))
-			return 0;
+			instance->enter.x = x;
+		}
 
-		instance->enter.x = x;
-	}
+		if (this->nodeExists(enterNode, "Y")) {
+			int16 y;
 
-	if (this->nodeExists(node, "EnterY")) {
-		int16 y;
+			if (!this->asInt16(enterNode, "Y", y))
+				return 0;
 
-		if (!this->asInt16(node, "EnterY", y))
-			return 0;
-
-		instance->enter.y = y;
+			instance->enter.y = y;
+		}
 	}
 
 	if (this->nodeExists(node, "AdditionalMaps")) {

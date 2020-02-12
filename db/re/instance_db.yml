@@ -26,9 +26,10 @@
 #   Name              Unique Instance Name.
 #   TimeLimit         Total lifetime of instance in seconds. (Default: 3600)
 #   IdleTimeOut       Time before an idle instance is destroyed in seconds. (Default: 300)
-#   EnterMap          Map Name where players start.
-#   EnterX            X Coordinate where players start.
-#   EnterY            Y Coordinate where players start.
+#   Enter:            Instance entrance coordinates.
+#     Map             Map Name where players start.
+#     X               X Coordinate where players start.
+#     Y               Y Coordinate where players start.
 #   AdditionalMaps:   List of maps that are part of an instance. (Optional)
 #     - Map           Map name.
 ###########################################################################
@@ -41,9 +42,10 @@ Body:
   - Id: 1
     Name: Endless Tower
     TimeLimit: 14400
-    EnterMap: 1@tower
-    EnterX: 50
-    EnterY: 355
+    Enter:
+      Map: 1@tower
+      X: 50
+      Y: 355
     AdditionalMaps:
       - Map: 2@tower
       - Map: 3@tower
@@ -53,191 +55,223 @@ Body:
   - Id: 2
     Name: Sealed Catacomb
     TimeLimit: 7200
-    EnterMap: 1@cata
-    EnterX: 100
-    EnterY: 224
+    Enter:
+      Map: 1@cata
+      X: 100
+      Y: 224
     AdditionalMaps:
       - Map: 2@cata
   - Id: 3
     Name: Orc's Memory
-    EnterMap: 1@orcs 
-    EnterX: 179
-    EnterY: 15
+    Enter:
+      Map: 1@orcs 
+      X: 179
+      Y: 15
     AdditionalMaps:
       - Map: 2@orcs
   - Id: 4
     Name: Nidhoggur's Nest
     TimeLimit: 14400
-    EnterMap: 1@nyd
-    EnterX: 32
-    EnterY: 36
+    Enter:
+      Map: 1@nyd
+      X: 32
+      Y: 36
     AdditionalMaps:
       - Map: 2@nyd
   - Id: 5
     Name: Mistwood Maze
     TimeLimit: 7200
-    EnterMap: 1@mist
-    EnterX: 89
-    EnterY: 29
+    Enter:
+      Map: 1@mist
+      X: 89
+      Y: 29
   - Id: 6
     Name: Culvert
-    EnterMap: 1@pump
-    EnterX: 63
-    EnterY: 98
+    Enter:
+      Map: 1@pump
+      X: 63
+      Y: 98
     AdditionalMaps:
       - Map: 2@pump
   - Id: 7
     Name: Octopus Cave
-    EnterMap: 1@cash
-    EnterX: 199
-    EnterY: 99
+    Enter:
+      Map: 1@cash
+      X: 199
+      Y: 99
   - Id: 8
     Name: Bangungot Hospital 2F
-    EnterMap: 1@ma_h
-    EnterX: 40
-    EnterY: 157
+    Enter:
+      Map: 1@ma_h
+      X: 40
+      Y: 157
   - Id: 9
     Name: Buwaya Cave
-    EnterMap: 1@ma_c
-    EnterX: 35
-    EnterY: 57
+    Enter:
+      Map: 1@ma_c
+      X: 35
+      Y: 57
   - Id: 10
     Name: Bakonawa Lake
     TimeLimit: 7200
-    EnterMap: 1@ma_b
-    EnterX: 64
-    EnterY: 51
+    Enter:
+      Map: 1@ma_b
+      X: 64
+      Y: 51
   - Id: 11
     Name: Wolfchev's Laboratory
     TimeLimit: 14400
-    EnterMap: 1@lhz
-    EnterX: 45
-    EnterY: 148
+    Enter:
+      Map: 1@lhz
+      X: 45
+      Y: 148
   - Id: 12
     Name: Old Glast Heim
-    EnterMap: 1@gl_k
-    EnterX: 150
-    EnterY: 20
+    Enter:
+      Map: 1@gl_k
+      X: 150
+      Y: 20
     AdditionalMaps:
       - Map: 2@gl_k
   - Id: 13
     Name: Eclage Interior
     TimeLimit: 1200
-    EnterMap: 1@ecl
-    EnterX: 60
-    EnterY: 50
+    Enter:
+      Map: 1@ecl
+      X: 60
+      Y: 50
   - Id: 14
     Name: Sara's Memories
-    EnterMap: 1@sara
-    EnterX: 250
-    EnterY: 155
+    Enter:
+      Map: 1@sara
+      X: 250
+      Y: 155
   - Id: 15
     Name: Geffen Magic Tournament
     TimeLimit: 7200
-    EnterMap: 1@gef
-    EnterX: 119
-    EnterY: 209
+    Enter:
+      Map: 1@gef
+      X: 119
+      Y: 209
     AdditionalMaps:
       - Map: 1@gef_in
       - Map: 1@ge_st
   - Id: 16
     Name: Horror Toy Factory
-    EnterMap: 1@xm_d
-    EnterX: 111
-    EnterY: 22
+    Enter:
+      Map: 1@xm_d
+      X: 111
+      Y: 22
   - Id: 17
     Name: Faceworm's Nest
-    EnterMap: 1@face
-    EnterX: 112
-    EnterY: 370
+    Enter:
+      Map: 1@face
+      X: 112
+      Y: 370
   - Id: 18
     Name: Ghost Palace
-    EnterMap: 1@spa
-    EnterX: 42
-    EnterY: 196
+    Enter:
+      Map: 1@spa
+      X: 42
+      Y: 196
   - Id: 19
     Name: Devil's Tower
-    EnterMap: 1@tnm1
-    EnterX: 50
-    EnterY: 104
+    Enter:
+      Map: 1@tnm1
+      X: 50
+      Y: 104
     AdditionalMaps:
       - Map: 1@tnm2
       - Map: 1@tnm3
   - Id: 20
     Name: Assault on the Airship
-    EnterMap: 1@air1
-    EnterX: 244
-    EnterY: 73
+    Enter:
+      Map: 1@air1
+      X: 244
+      Y: 73
     AdditionalMaps:
       - Map: 1@air2
   - Id: 21
     Name: Fenrir and Sarah
-    EnterMap: 1@glast
-    EnterX: 367
-    EnterY: 304
+    Enter:
+      Map: 1@glast
+      X: 367
+      Y: 304
 #  - Id: 22
 #    Name: Wave Mode - Forest
-#    EnterMap: 1@def01
-#    EnterX: 50
-#    EnterY: 21
+#    Enter:
+#      Map: 1@def01
+#      X: 50
+#      Y: 21
 #  - Id: 23
 #    Name: Wave Mode - Sky
-#    EnterMap: 1@def02
-#    EnterX: 29
-#    EnterY: 35
+#    Enter:
+#      Map: 1@def02
+#      X: 29
+#      Y: 35
   - Id: 24
     Name: Nightmarish Jitterbug
-    EnterMap: 1@jtb
-    EnterX: 16
-    EnterY: 17
+    Enter:
+      Map: 1@jtb
+      X: 16
+      Y: 17
   - Id: 25
     Name: Isle of Bios
-    EnterMap: 1@dth1
-    EnterX: 17
-    EnterY: 93
+    Enter:
+      Map: 1@dth1
+      X: 17
+      Y: 93
     AdditionalMaps:
       - Map: 1@dth2
       - Map: 1@dth3
   - Id: 26
     Name: Morse's Cave
-    EnterMap: 1@rev
-    EnterX: 26
-    EnterY: 181
+    Enter:
+      Map: 1@rev
+      X: 26
+      Y: 181
 #  - Id: 27
 #    Name: Temple of the Demon God
-#    EnterMap: 1@eom
-#    EnterX: 101
-#    EnterY: 16
+#    Enter:
+#      Map: 1@eom
+#      X: 101
+#      Y: 16
   - Id: 28
     Name: Central Laboratory
-    EnterMap: 1@lab
-    EnterX: 120
-    EnterY: 30
+    Enter:
+      Map: 1@lab
+      X: 120
+      Y: 30
   - Id: 29
     Name: Last room
-    EnterMap: 1@uns
-    EnterX: 145
-    EnterY: 35
+    Enter:
+      Map: 1@uns
+      X: 145
+      Y: 35
 #  - Id: 30
 #    Name: Charleston in Distress
-#    EnterMap: 1@mcd
-#    EnterX: 127
-#    EnterY: 282
+#    Enter:
+#      Map: 1@mcd
+#      X: 127
+#      Y: 282
   - Id: 31
     Name: Ritual of Blessing
-    EnterMap: 2@mir
-    EnterX: 101
-    EnterY: 12
+    Enter:
+      Map: 2@mir
+      X: 101
+      Y: 12
   - Id: 32
     Name: Room of Consciousness
-    EnterMap: 1@mir
-    EnterX: 101
-    EnterY: 10
+    Enter:
+      Map: 1@mir
+      X: 101
+      Y: 10
 #  - Id: 33
 #    Name: Sky Fortress Invasion
-#    EnterMap: 1@sthb
-#    EnterX: 54
-#    EnterY: 67
+#    Enter:
+#      Map: 1@sthb
+#      X: 54
+#      Y: 67
 #    AdditionalMaps:
 #      - Map: 1@sthc
 #      - Map: 1@sthd

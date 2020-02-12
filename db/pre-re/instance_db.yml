@@ -26,9 +26,11 @@
 #   Name              Unique Instance Name.
 #   TimeLimit         Total lifetime of instance in seconds. (Default: 3600)
 #   IdleTimeOut       Time before an idle instance is destroyed in seconds. (Default: 300)
-#   EnterMap          Map Name where players start.
-#   EnterX            X Coordinate where players start.
-#   EnterY            Y Coordinate where players start.
+    Enter:
+  #   :            Instance entrance coordinates.
+  Map             Map Name where players start.
+  X               X Coordinate where players start.
+#     Y               Y Coordinate where players start.
 #   AdditionalMaps:   List of maps that are part of an instance. (Optional)
 #     - Map           Map name.
 ###########################################################################
@@ -41,9 +43,10 @@ Body:
   - Id: 1
     Name: Endless Tower
     TimeLimit: 14400
-    EnterMap: 1@tower
-    EnterX: 50
-    EnterY: 355
+    Enter:
+      Map: 1@tower
+      X: 50
+      Y: 355
     AdditionalMaps:
       - Map: 2@tower
       - Map: 3@tower
@@ -53,23 +56,26 @@ Body:
   - Id: 2
     Name: Sealed Catacomb
     TimeLimit: 7200
-    EnterMap: 1@cata
-    EnterX: 100
-    EnterY: 224
+    Enter:
+      Map: 1@cata
+      X: 100
+      Y: 224
     AdditionalMaps:
       - Map: 2@cata
   - Id: 3
     Name: Orc's Memory
-    EnterMap: 1@orcs 
-    EnterX: 179
-    EnterY: 15
+    Enter:
+      Map: 1@orcs 
+      X: 179
+      Y: 15
     AdditionalMaps:
       - Map: 2@orcs
   - Id: 4
     Name: Nidhoggur's Nest
     TimeLimit: 14400
-    EnterMap: 1@nyd
-    EnterX: 32
-    EnterY: 36
+    Enter:
+      Map: 1@nyd
+      X: 32
+      Y: 36
     AdditionalMaps:
       - Map: 2@nyd

@@ -2409,9 +2409,12 @@ static bool instance_readdb_sub(char* str[], int columns, int current) {
 		body << YAML::Key << "TimeLimit" << YAML::Value << atoi(str[2]);
 	if (atoi(str[3]) != 300)
 		body << YAML::Key << "IdleTimeOut" << YAML::Value << atoi(str[3]);
-	body << YAML::Key << "EnterMap" << YAML::Value << str[4];
-	body << YAML::Key << "EnterX" << YAML::Value << atoi(str[5]);
-	body << YAML::Key << "EnterY" << YAML::Value << atoi(str[6]);
+	body << YAML::Key << "Enter";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Map" << YAML::Value << str[4];
+	body << YAML::Key << "X" << YAML::Value << atoi(str[5]);
+	body << YAML::Key << "Y" << YAML::Value << atoi(str[6]);
+	body << YAML::EndMap;
 
 	if (columns > 7) {
 		body << YAML::Key << "AdditionalMaps";
