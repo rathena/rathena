@@ -1,23 +1,18 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= BattleGround System - Tierra Gorge 2
-//===== By: ================================================== 
-//= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 1.5
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Second Tierra Gorge Battleground.
 //= - Winning Team: 3 badges (5 if VIP)
 //= - Losing Team: 1 badge (3 if VIP)
-//===== Additional Comments: ================================= 
-//= 1.0 First Version.
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [L0ne_W0lf]
 //= 1.1 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
 //= 1.2 Removed MaxLvl check in waitingrooms.
 //= 1.3 Label standardization. [Euphy]
 //= 1.4 Added GM management function. [Euphy]
 //= 1.5 Added VIP features and created a reward function. [Euphy]
+//= 1.6 Added battle_config checks to allow this script to use the new queue interface or the previous method. [Aleos]
 //============================================================
 
 // Waiting Room NPCs
@@ -50,6 +45,8 @@ bat_room,1,151,3	script	#bat_a02_timer	844,{
 	end;
 
 OnInit:
+	if (getbattleflag("feature.bgqueue"))
+		end;
 OnEnable:
 	initnpctimer;
 	end;
@@ -60,14 +57,21 @@ OnStop:
 
 OnTimer1000:
 	stopnpctimer;
-	initnpctimer;
+	if (!getbattleflag("feature.bgqueue"))
+		initnpctimer;
 	set .@chk_bat_a02,getmapusers("bat_a02");
 	if (.@chk_bat_a02 < 1) {
 		set $@TierraBG2,0; set $@TierraBG2_Victory, 0;
 		if( $@TierraBG2_id1 ) { bg_destroy $@TierraBG2_id1; set $@TierraBG2_id1, 0; }
 		if( $@TierraBG2_id2 ) { bg_destroy $@TierraBG2_id2; set $@TierraBG2_id2, 0; }
-		donpcevent "start#bat_a02::OnReadyCheck";
+		if (getbattleflag("feature.bgqueue")) {
+			bg_unbook "bat_a02";
+			end;
+		} else
+			donpcevent "start#bat_a02::OnReadyCheck";
 	}
+	if (getbattleflag("feature.bgqueue"))
+		initnpctimer;
 	end;
 }
 
@@ -123,23 +127,30 @@ OnEnable:
 
 OnGuillaumeQuit:
 OnCroixQuit:
-	bg_leave;
+	if (getbattleflag("feature.bgqueue"))
+		bg_desert;
+	else
+		bg_leave;
 	end;
 
 OnReadyCheck:
 	if( $@TierraBG2 )
 		end;
-	set .@Guillaume, getwaitingroomstate(0,"Lieutenant Rundel");
-	set .@Croix, getwaitingroomstate(0,"Lieutenant Guerrit");
-	if( !.@Guillaume && !.@Croix ) {
-		donpcevent "#bat_a02_timer::OnStop";
-		end;
+	if (!getbattleflag("feature.bgqueue")) {
+		set .@Guillaume, getwaitingroomstate(0,"Lieutenant Rundel");
+		set .@Croix, getwaitingroomstate(0,"Lieutenant Guerrit");
+		if( !.@Guillaume && !.@Croix ) {
+			donpcevent "#bat_a02_timer::OnStop";
+			end;
+		}
+		else if( .@Guillaume < 10 || .@Croix < 10 )
+			end;
 	}
-	else if( .@Guillaume < 10 || .@Croix < 10 )
-		end;
 	set $@TierraBG2,1;
-	donpcevent "Lieutenant Rundel::OnEnterBG";
-	donpcevent "Lieutenant Guerrit::OnEnterBG";
+	if (!getbattleflag("feature.bgqueue")) {
+		donpcevent "Lieutenant Rundel::OnEnterBG";
+		donpcevent "Lieutenant Guerrit::OnEnterBG";
+	}
 	donpcevent "start#bat_a02::OnEnable";
 	bg_warp $@TierraBG2_id1,"bat_a02",352,342;
 	bg_warp $@TierraBG2_id2,"bat_a02",353,52;
@@ -689,7 +700,8 @@ bat_a02,53,377,3	script	Guillaume Vintenar#a02_a	419,{
 			callfunc "F_BG_Badge",1,"Guillaume","Tierra";
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -711,7 +723,8 @@ bat_a02,45,19,3	script	Croix Vintenar#a02_b	415,{
 			callfunc "F_BG_Badge",1,"Croix","Tierra";
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -795,4 +808,22 @@ bat_a02,1,1,3	script	Release all#a02	81,{
 			close;
 		}
 	}
+}
+
+// BG Queue makes these scripts useless
+-	script	BGQueueInit#tierra02	-1,{
+	end;
+
+OnInit:
+	if (getbattleflag("feature.bgqueue")) {
+		unloadnpc "Lieutenant Rundel";
+		unloadnpc "Lieutenant Guerrit";
+		unloadnpc "#bat_a02_quest_a";
+		unloadnpc "#bat_a02_quest_b";
+		unloadnpc "back_bgrooma02a";
+		unloadnpc "back_bgrooma02b";
+		unloadnpc "A_CODE#bat_a02";
+		unloadnpc "B_CODE#bat_a02";
+	}
+	end;
 }

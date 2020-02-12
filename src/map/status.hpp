@@ -864,6 +864,9 @@ enum sc_type : int16 {
 	SC_WEAPONBLOCK_ON,
 	SC_SPORE_EXPLOSION,
 
+	SC_ENTRY_QUEUE_APPLY_DELAY,
+	SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
