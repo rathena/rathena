@@ -686,17 +686,17 @@ static bool parse_item_constants_yml(std::string path, std::string filename) {
 			for (const auto &locit : body["Location"]) {
 				std::string equipName = locit.first.as<std::string>();
 
-				if (!body["Location"][equipName].as<bool>())
+				if (body["Location"][equipName].IsDefined() && !body["Location"][equipName].as<bool>())
 					continue;
 
-				int32 constant;
+				int64 constant = 0;
 
 				for (const auto &eqpit : um_equipnames) {
 					if (eqpit.first.compare(equipName) == 0)
-						constant |= 1 << eqpit.second;
+						constant |= eqpit.second;
 				}
 
-				if (constant & (EQP_HELM | EQP_COSTUME_HELM) && util::umap_find(aegis_itemviewid, body["View"].as<uint16>()) == nullptr)
+				if (constant > 0 && constant & (EQP_HELM | EQP_COSTUME_HELM) && body["View"].IsDefined() && util::umap_find(aegis_itemviewid, body["View"].as<uint16>()) == nullptr)
 					aegis_itemviewid[body["View"].as<uint16>()] = item_id;
 			}
 		}
@@ -2968,26 +2968,30 @@ static size_t itemdb_read_db(const char* file) {
 			body << YAML::Key << "Refineable" << YAML::Value << "true";
 		if (atoi(str[18]) > 0 && type != IT_WEAPON && type != IT_AMMO)
 			body << YAML::Key << "View" << YAML::Value << atoi(str[18]);
-		if (item_buyingstore.find(nameid) != item_buyingstore.end())
-			body << YAML::Key << "BuyingStore" << YAML::Value << "true";
 
 		auto it_flag = item_flag.find(nameid);
+		auto it_buying = item_buyingstore.find(nameid);
 
-		if (it_flag != item_flag.end()) {
-			if (it_flag->second.dead_branch)
+		if (it_flag != item_flag.end() || it_buying != item_buyingstore.end()) {
+			body << YAML::Key << "Flags";
+			body << YAML::BeginMap;
+			if (it_buying != item_buyingstore.end())
+				body << YAML::Key << "BuyingStore" << YAML::Value << "true";
+			if (it_flag != item_flag.end() && it_flag->second.dead_branch)
 				body << YAML::Key << "DeadBranch" << YAML::Value << it_flag->second.dead_branch;
-			if (it_flag->second.group)
+			if (it_flag != item_flag.end() && it_flag->second.group)
 				body << YAML::Key << "Container" << YAML::Value << it_flag->second.group;
-			if (it_flag->second.guid)
+			if (it_flag != item_flag.end() && it_flag->second.guid)
 				body << YAML::Key << "Guid" << YAML::Value << it_flag->second.guid;
-			if (it_flag->second.bindOnEquip)
+			if (it_flag != item_flag.end() && it_flag->second.bindOnEquip)
 				body << YAML::Key << "BindOnEquip" << YAML::Value << it_flag->second.bindOnEquip;
-			if (it_flag->second.broadcast)
+			if (it_flag != item_flag.end() && it_flag->second.broadcast)
 				body << YAML::Key << "DropAnnounce" << YAML::Value << it_flag->second.broadcast;
-			if (it_flag->second.delay_consume)
+			if (it_flag != item_flag.end() && it_flag->second.delay_consume)
 				body << YAML::Key << "NoConsume" << YAML::Value << it_flag->second.delay_consume;
-			if (it_flag->second.dropEffect)
+			if (it_flag != item_flag.end() && it_flag->second.dropEffect)
 				body << YAML::Key << "DropEffect" << YAML::Value << name2Upper(constant_lookup(it_flag->second.dropEffect, "DROPEFFECT_") + 11);
+			body << YAML::EndMap;
 		}
 
 		auto it_delay = item_delay.find(nameid);
