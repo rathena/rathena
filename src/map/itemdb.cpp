@@ -487,123 +487,113 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->look = 0;
 	}
 
-	if (this->nodeExists(node, "Buyingstore")) {
-		bool active;
+	if (this->nodeExists(node, "Flags")) {
+		const YAML::Node &flagNode = node["Flags"];
 
-		if (!this->asBool(node, "Buyingstore", active))
-			return 0;
+		if (this->nodeExists(flagNode, "Buyingstore")) {
+			bool active;
 
-		if (!itemdb_isstackable2(item.get()) && active) {
-			this->invalidWarning(node["Buyingstore"], "Non-stackable item %s (%hu) cannot be enabled for buying store.\n", item->name.c_str(), nameid);
-			active = false;
+			if (!this->asBool(flagNode, "Buyingstore", active))
+				return 0;
+
+			if (!itemdb_isstackable2(item.get()) && active) {
+				this->invalidWarning(flagNode["Buyingstore"], "Non-stackable item %s (%hu) cannot be enabled for buying store.\n", item->name.c_str(), nameid);
+				active = false;
+			}
+
+			item->flag.buyingstore = active;
 		}
 
-		item->flag.buyingstore = active;
-	} else {
-		if (!exists)
-			item->flag.buyingstore = false;
-	}
+		if (this->nodeExists(flagNode, "DeadBranch")) {
+			bool active;
 
-	if (this->nodeExists(node, "DeadBranch")) {
-		bool active;
+			if (!this->asBool(flagNode, "DeadBranch", active))
+				return 0;
 
-		if (!this->asBool(node, "DeadBranch", active))
-			return 0;
-
-		item->flag.dead_branch = active;
-	} else {
-		if (!exists)
-			item->flag.dead_branch = false;
-	}
-
-	if (this->nodeExists(node, "Container")) {
-		bool active;
-
-		if (!this->asBool(node, "Container", active))
-			return 0;
-
-		item->flag.group = active;
-	} else {
-		if (!exists)
-			item->flag.group = false;
-	}
-
-	if (this->nodeExists(node, "Guid")) {
-		bool active;
-
-		if (!this->asBool(node, "Guid", active))
-			return 0;
-
-		if (!itemdb_isstackable2(item.get()) && active) {
-			this->invalidWarning(node["Guid"], "Non-stackable item %s (%hu) cannot be enabled for GUID.\n", item->name.c_str(), nameid);
-			active = false;
+			item->flag.dead_branch = active;
 		}
 
-		item->flag.guid = active;
-	} else {
-		if (!exists)
-			item->flag.guid = false;
-	}
+		if (this->nodeExists(flagNode, "Container")) {
+			bool active;
 
-	if (this->nodeExists(node, "BindOnEquip")) {
-		bool active;
+			if (!this->asBool(flagNode, "Container", active))
+				return 0;
 
-		if (!this->asBool(node, "BindOnEquip", active))
-			return 0;
+			item->flag.group = active;
+		}
 
-		item->flag.bindOnEquip = active;
-	} else {
-		if (!exists)
-			item->flag.bindOnEquip = false;
-	}
+		if (this->nodeExists(flagNode, "Guid")) {
+			bool active;
 
-	if (this->nodeExists(node, "DropAnnounce")) {
-		bool active;
+			if (!this->asBool(flagNode, "Guid", active))
+				return 0;
 
-		if (!this->asBool(node, "DropAnnounce", active))
-			return 0;
+			if (!itemdb_isstackable2(item.get()) && active) {
+				this->invalidWarning(flagNode["Guid"], "Non-stackable item %s (%hu) cannot be enabled for GUID.\n", item->name.c_str(), nameid);
+				active = false;
+			}
 
-		item->flag.broadcast = active;
-	} else {
-		if (!exists)
-			item->flag.broadcast = false;
-	}
+			item->flag.guid = active;
+		}
 
-	if (this->nodeExists(node, "NoConsume")) {
-		bool active;
+		if (this->nodeExists(flagNode, "BindOnEquip")) {
+			bool active;
 
-		if (!this->asBool(node, "NoConsume", active))
-			return 0;
+			if (!this->asBool(flagNode, "BindOnEquip", active))
+				return 0;
 
-		if (active)
-			item->flag.delay_consume |= 0x2;
-		else
-			item->flag.delay_consume &= ~0x2;
+			item->flag.bindOnEquip = active;
+		}
+
+		if (this->nodeExists(flagNode, "DropAnnounce")) {
+			bool active;
+
+			if (!this->asBool(flagNode, "DropAnnounce", active))
+				return 0;
+
+			item->flag.broadcast = active;
+		}
+
+		if (this->nodeExists(flagNode, "NoConsume")) {
+			bool active;
+
+			if (!this->asBool(flagNode, "NoConsume", active))
+				return 0;
+
+			if (active)
+				item->flag.delay_consume |= 0x2;
+			else
+				item->flag.delay_consume &= ~0x2;
+		}
+
+		if (this->nodeExists(flagNode, "DropEffect")) {
+			std::string effect;
+
+			if (!this->asString(flagNode, "DropEffect", effect))
+				return 0;
+
+			std::string effect_constant = "DROPEFFECT_" + effect;
+			int64 constant;
+
+			if (!script_get_constant(effect_constant.c_str(), &constant) || constant < DROPEFFECT_NONE || constant > DROPEFFECT_MAX) {
+				this->invalidWarning(flagNode["DropEffect"], "Invalid item drop effect %s for %s (%hu), defaulting to DROPEFFECT_NONE.\n", effect.c_str(), item->name.c_str(), nameid);
+				constant = DROPEFFECT_NONE;
+			}
+
+			item->flag.dropEffect = static_cast<e_item_drop_effect>(constant);
+		}
 	} else {
 		if (!exists) {
+			item->flag.buyingstore = false;
+			item->flag.dead_branch = false;
+			item->flag.group = false;
+			item->flag.guid = false;
+			item->flag.bindOnEquip = false;
+			item->flag.broadcast = false;
 			if (!(item->flag.delay_consume & 0x1))
 				item->flag.delay_consume = 0;
-		}
-	}
-
-	if (this->nodeExists(node, "DropEffect")) {
-		std::string effect;
-
-		if (!this->asString(node, "DropEffect", effect))
-			return 0;
-
-		std::string effect_constant = "DROPEFFECT_" + effect;
-		int64 constant;
-
-		if (!script_get_constant(effect_constant.c_str(), &constant) || constant < DROPEFFECT_NONE || constant > DROPEFFECT_MAX) {
-			this->invalidWarning(node["DropEffect"], "Invalid item drop effect %s for %s (%hu), defaulting to ITDE_NONE.\n", effect.c_str(), item->name.c_str(), nameid);
-			constant = DROPEFFECT_NONE;
-		}
-
-		item->flag.dropEffect = static_cast<e_item_drop_effect>(constant);
-	} else {
-		if (!exists)
 			item->flag.dropEffect = DROPEFFECT_NONE;
+		}
 	}
 
 	if (this->nodeExists(node, "Delay")) {
