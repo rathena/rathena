@@ -206,7 +206,8 @@ std::unordered_map<uint16, std::string> aegis_skillnames;
 std::unordered_map<const char*, int64> constants;
 
 // Forward declaration of constant loading functions
-static bool parse_item_constants( const char* path );
+static bool parse_item_constants_txt( const char* path );
+static bool parse_item_constants_yml(std::string path, std::string filename);
 static bool parse_mob_constants( char* split[], int columns, int current );
 static bool parse_skill_constants_txt( char* split[], int columns, int current );
 static bool parse_skill_constants_yml(std::string path, std::string filename);
@@ -396,8 +397,13 @@ int do_init( int argc, char** argv ){
 	const std::string path_db_import = path_db + "/" + DBIMPORT + "/";
 
 	// Loads required conversion constants
-	parse_item_constants( ( path_db_mode + "item_db.txt" ).c_str() );
-	parse_item_constants( ( path_db_import + "/item_db.txt" ).c_str() );
+	if (fileExists(path_db + "/" + "item_db.yml")) {
+		parse_item_constants_yml(path_db_mode, "item_db.yml");
+		parse_item_constants_yml(path_db_import, "item_db.yml");
+	} else {
+		parse_item_constants_txt( ( path_db_mode + "item_db.txt" ).c_str() );
+		parse_item_constants_txt( ( path_db_import + "/item_db.txt" ).c_str() );
+	}
 	sv_readdb( path_db_mode.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false );
 	sv_readdb( path_db_import.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false );
 	if (fileExists(path_db + "/" + "skill_db.yml")) {
@@ -529,7 +535,7 @@ bool askConfirmation( const char* fmt, ... ){
 }
 
 // Constant loading functions
-static bool parse_item_constants( const char* path ){
+static bool parse_item_constants_txt( const char* path ){
 	uint32 lines = 0, count = 0;
 	char line[1024];
 
@@ -654,6 +660,50 @@ static bool parse_item_constants( const char* path ){
 	fclose(fp);
 
 	ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, path);
+
+	return true;
+}
+
+static bool parse_item_constants_yml(std::string path, std::string filename) {
+	YAML::Node rootNode;
+
+	try {
+		rootNode = YAML::LoadFile(path + filename);
+	} catch (YAML::Exception &e) {
+		ShowError("Failed to read file from '" CL_WHITE "%s%s" CL_RESET "'.\n", path.c_str(), filename.c_str());
+		ShowError("%s (Line %d: Column %d)\n", e.msg.c_str(), e.mark.line, e.mark.column);
+		return false;
+	}
+
+	uint64 count = 0;
+
+	for (const YAML::Node &body : rootNode["Body"]) {
+		uint16 item_id = body["Id"].as<uint16>();
+
+		aegis_itemnames[item_id] = body["Name"].as<std::string>();
+
+		if (body["Location"].IsDefined()) {
+			for (const auto &locit : body["Location"]) {
+				std::string equipName = locit.first.as<std::string>();
+
+				if (!body["Location"][equipName].as<bool>())
+					continue;
+
+				int32 constant;
+
+				for (const auto &eqpit : um_equipnames) {
+					if (eqpit.first.compare(equipName) == 0)
+						constant |= 1 << eqpit.second;
+				}
+
+				if (constant & (EQP_HELM | EQP_COSTUME_HELM) && util::umap_find(aegis_itemviewid, body["View"].as<uint16>()) == nullptr)
+					aegis_itemviewid[body["View"].as<uint16>()] = item_id;
+			}
+		}
+		count++;
+	}
+
+	ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s%s" CL_RESET "'" CL_CLL "\n", count, path.c_str(), filename.c_str());
 
 	return true;
 }
