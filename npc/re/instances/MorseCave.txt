@@ -383,7 +383,7 @@ OnMobDead:
 }
 
 
-1@rev,34,126,4	script	Grim Reaper Ankou#RZ Event_3		3029,{ end; }
+1@rev,34,126,4	script	Grim Reaper Ankou#RZ Event_3	3029,{ end; }
 1@rev,112,126,4	duplicate(Grim Reaper Ankou#RZ Event_3)	Grim Reaper Ankou#RZ Event_4	3029
 1@rev,34,55,4	duplicate(Grim Reaper Ankou#RZ Event_3)	Grim Reaper Ankou#RZ Event_5	3029
 1@rev,112,48,4	duplicate(Grim Reaper Ankou#RZ Event_3)	Grim Reaper Ankou#RZ Event_6	3029

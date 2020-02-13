@@ -34,11 +34,11 @@
 1101,0,1164,20,0,0,0,0,0,0,0,0,0,0,0,0,0,"Soloing Sphinx Dungeon!"
 1102,0,1194,40,0,0,0,0,0,0,0,0,0,0,0,0,0,"Soloing Clock Tower!"
 1103,0,1213,30,0,0,0,0,0,0,0,0,0,0,0,0,0,"Soloing Clock Tower!"
-1104,0,1519,20,0,0,0,0,0,0,0,0,0,0,0,0,0,"Solo at Louyang!"
-1105,0,1513,50,0,0,0,0,0,0,0,0,0,0,0,0,0,"Solo at Louyang!"
+1104,0,1519,20,0,0,0,0,0,0,0,0,0,0,0,0,0,"Solo at Luoyang!"
+1105,0,1513,50,0,0,0,0,0,0,0,0,0,0,0,0,0,"Solo at Luoyang!"
 1106,0,1375,20,0,0,0,0,0,0,0,0,0,0,0,0,0,"Solo at Amatsu Dungeon!"
 1107,0,1403,40,0,0,0,0,0,0,0,0,0,0,0,0,0,"Solo at Amatsu Dungeon!"
-1108,0,1631,20,0,0,0,0,0,0,0,0,0,0,0,0,0,"Solo at Louyang!"
+1108,0,1631,20,0,0,0,0,0,0,0,0,0,0,0,0,0,"Solo at Luoyang!"
 
 // Ropewa & Yuridi Quest
 1109,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ropewa & Yuridi - Survivors of the Labyrinth"
@@ -461,7 +461,7 @@
 3083,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Kids in Veins - Mr. Lockenlock's key"
 3085,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Call from the commander"
 3086,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Commander's Duty"
-3087,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Report to Rune Midgard"
+3087,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Report to Midgard"
 3088,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Report to the continent - Accident!"
 3089,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Report to the continent - How to restore"
 3090,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Report to the continent - Location of reports"
@@ -1853,10 +1853,10 @@
 8120,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Conversation with Katinshuell"
 8121,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Conversation with Katinshuell"
 8122,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Bruspetti's resting place"
-8123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ayotaya's world famous dish, Tom Yum Goong"
-8124,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ayotaya's world famous dish, Tom Yum Goong"
-8125,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ayotaya's world famous dish, Tom Yum Goong"
-8126,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ayotaya's world famous dish, Tom Yum Goong"
+8123,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ayothaya's world famous dish, Tom Yum Goong"
+8124,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ayothaya's world famous dish, Tom Yum Goong"
+8125,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ayothaya's world famous dish, Tom Yum Goong"
+8126,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ayothaya's world famous dish, Tom Yum Goong"
 8127,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Momotaro Field Trip"
 8128,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Momotaro Field Trip"
 8129,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Momotaro Field Trip"
@@ -2150,8 +2150,8 @@
 9316,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Re-exploring the crack of spaces"
 
 // EP14.3 Morse's Cave
-9318,0,3000,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"Pursuing Hiding Morroc"
-9319,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Pursuing Hiding Morroc Continues"
+9318,0,3000,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"Pursuing Hiding Morocc"
+9319,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Pursuing Hiding Morocc Continues"
 
 //9327,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,""
 //9328,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,""
@@ -2280,7 +2280,7 @@
 
 10102,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"To client - the chapter of the sphinx dungeon"
 10103,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"To client - the chapter of Glast heim"
-10104,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"To client - the chapter of Yuno"
+10104,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"To client - the chapter of Juno"
 10105,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"To client - the chapter of a clock tower"
 10106,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"To client - the chapter of localizing "
 10107,0,1164,10,0,0,0,0,0,0,0,0,0,0,0,0,0,"Sphinx dungeon - Requiem"

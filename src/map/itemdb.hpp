@@ -39,6 +39,7 @@ enum e_ammo_type : uint8;
 ///Enum of item id (for hardcoded purpose)
 enum item_itemid
 {
+	ITEMID_DUMMY						= 499,
 	ITEMID_RED_POTION					= 501,
 	ITEMID_YELLOW_POTION				= 503,
 	ITEMID_WHITE_POTION					= 504,
@@ -796,39 +797,6 @@ struct s_roulette_db {
 };
 extern struct s_roulette_db rd;
 
-static std::unordered_map<std::string, equip_pos> um_equipnames {
-	{ "HeadLow", EQP_HEAD_LOW },
-	{ "HeadMid", EQP_HEAD_MID },
-	{ "HeadTop", EQP_HEAD_TOP },
-	{ "RightHand", EQP_HAND_R },
-	{ "LeftHand", EQP_HAND_L },
-	{ "Armor", EQP_ARMOR },
-	{ "Shoes", EQP_SHOES },
-	{ "Garment", EQP_GARMENT },
-	{ "RightAccessory", EQP_ACC_R },
-	{ "LeftAccessory", EQP_ACC_L },
-	{ "CostumeHeadTop", EQP_COSTUME_HEAD_TOP },
-	{ "CostumeHeadMid", EQP_COSTUME_HEAD_MID },
-	{ "CostumeHeadLow", EQP_COSTUME_HEAD_LOW },
-	{ "CostumeGarment", EQP_COSTUME_GARMENT },
-	{ "Ammo", EQP_AMMO },
-	{ "ShadowArmor", EQP_SHADOW_ARMOR },
-	{ "ShadowWeapon", EQP_SHADOW_WEAPON },
-	{ "ShadowShield", EQP_SHADOW_SHIELD },
-	{ "ShadowShoes", EQP_SHADOW_SHOES },
-	{ "ShadowRightAccessory", EQP_SHADOW_ACC_R },
-	{ "ShadowLeftAccessory", EQP_SHADOW_ACC_L },
-};
-
-static std::unordered_map<std::string, e_item_job> um_itemjobnames {
-	{ "Normal", ITEMJ_NORMAL },
-	{ "High", ITEMJ_UPPER },
-	{ "Baby", ITEMJ_BABY },
-	{ "Third", ITEMJ_THIRD },
-	{ "ThirdHigh", ITEMJ_THIRD_UPPER },
-	{ "ThirdBaby", ITEMJ_THIRD_BABY },
-};
-
 ///Main item data struct
 struct item_data
 {
@@ -912,6 +880,9 @@ struct item_data
 		if (this->unequip_script)
 			script_free_code(this->unequip_script);
 	}
+
+	bool isStackable();
+	int inventorySlotNeeded(int quantity);
 };
 
 // Struct for item random option [Secret]
@@ -977,7 +948,6 @@ struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_dropeffect(n) (itemdb_search(n)->flag.dropEffect)
 const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (e_ammo_type ammo);
-bool itemdb_is_spellbook2(unsigned short nameid);
 
 struct s_item_group_entry *itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group);
 unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);

@@ -96,7 +96,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 		mes "Ah, that I do remember.";
 		next;
 		mes "[Mingmin]";
-		mes "I am collecting information on the flora and fauna of Rune Midgard for the Eden Group.";
+		mes "I am collecting information on the flora and fauna of Midgard for the Eden Group.";
 		next;
 		mes "[Mingmin]";
 		mes "The intention is to scientifically catalog and itemize the dangers of the world. I do not like this idea personally.";
@@ -487,7 +487,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 								cutin "min01",0;
 								if (select( "Take the request.", "Quit" ) == 1) {
 									mes "[Mingmin]";
-									mes "Please take care of them one by one. Those books contain precious history of Rune Midgard so I want to research them.";
+									mes "Please take care of them one by one. Those books contain precious history of Midgard so I want to research them.";
 									callsub S_Quest,13076,13075;
 								}
 							}

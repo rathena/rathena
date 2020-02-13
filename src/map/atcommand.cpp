@@ -3,10 +3,14 @@
 
 #include "atcommand.hpp"
 
+#include <set>
+#include <unordered_map>
+
 #include <math.h>
 #include <stdlib.h>
 
 #include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
 #include "../common/cli.hpp"
 #include "../common/conf.hpp"
 #include "../common/malloc.hpp"
@@ -50,11 +54,12 @@
 #include "storage.hpp"
 #include "trade.hpp"
 
+using namespace rathena;
+
 #define ATCOMMAND_LENGTH 50
 #define ACMD_FUNC(x) static int atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
 
 typedef struct AtCommandInfo AtCommandInfo;
-typedef struct AliasInfo AliasInfo;
 
 int atcmd_binding_count = 0;
 
@@ -73,9 +78,10 @@ struct AtCommandInfo {
 	uint8 restriction; /// Restrictions see enum e_restict
 };
 
-struct AliasInfo {
+struct s_atcommand_alias_info{
 	AtCommandInfo *command;
-	char alias[ATCOMMAND_LENGTH];
+	std::set<std::string> aliases;
+	std::string help;
 };
 
 
@@ -83,8 +89,100 @@ char atcommand_symbol = '@'; // first char of the commands
 char charcommand_symbol = '#';
 
 static DBMap* atcommand_db = NULL; //name -> AtCommandInfo
-static DBMap* atcommand_alias_db = NULL; //alias -> AtCommandInfo
-static config_t atcommand_config;
+
+static AtCommandInfo* get_atcommandinfo_byname( const char* name );
+
+class AtcommandAliasDatabase : public TypesafeYamlDatabase<std::string, s_atcommand_alias_info>{
+private:
+	std::unordered_map<std::string, std::string> aliases;
+
+public:
+	AtcommandAliasDatabase() : TypesafeYamlDatabase( "ATCOMMAND_DB", 1 ){
+
+	}
+
+	void clear();
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const YAML::Node& node );
+	const char* checkAlias( const char* alias );
+};
+
+void AtcommandAliasDatabase::clear(){
+	TypesafeYamlDatabase::clear();
+	this->aliases.clear();
+}
+
+const std::string AtcommandAliasDatabase::getDefaultLocation(){
+	return std::string(conf_path) + "/atcommands.yml";
+}
+
+uint64 AtcommandAliasDatabase::parseBodyNode( const YAML::Node& node ){
+	std::string command;
+
+	if( !this->asString( node, "Command", command ) ){
+		return 0;
+	}
+
+	AtCommandInfo* commandinfo = get_atcommandinfo_byname( command.c_str() );
+
+	if( commandinfo == nullptr ){
+		this->invalidWarning( node["Command"], "Command %s does not exist.\n", command.c_str() );
+		return 0;
+	}
+
+	std::shared_ptr<s_atcommand_alias_info> info = this->find( command );
+	bool exists = info != nullptr;
+
+	if( !exists ){
+		info = std::make_shared<s_atcommand_alias_info>();
+		info->command = commandinfo;
+	}
+
+	if( this->nodeExists( node, "Help" )  ){
+		std::string help;
+
+		if( !this->asString( node, "Help", help ) ){
+			return 0;
+		}
+
+		info->help = help;
+	}
+
+	if( this->nodeExists( node, "Aliases" ) ){
+		const YAML::Node& aliasesNode = node["Aliases"];
+
+		if( !aliasesNode.IsSequence() ){
+			this->invalidWarning( aliasesNode, "Aliases should be a sequence.\n" );
+			return 0;
+		}
+
+		for( const auto& subNode : aliasesNode ){
+			std::string alias = subNode.as<std::string>();
+
+			info->aliases.insert( alias );
+			this->aliases[alias] = command;
+		}
+	}
+
+	if( !exists ){
+		this->put( command, info );
+	}
+
+	return 1;
+}
+
+const char* AtcommandAliasDatabase::checkAlias( const char* alias ){
+	std::string alias_str( alias );
+	std::string* command = util::umap_find( this->aliases, alias_str );
+
+	if( command == nullptr ){
+		return alias;
+	}else{
+		return command->c_str();
+	}
+}
+
+AtcommandAliasDatabase atcommand_alias_db;
 
 static char atcmd_output[CHAT_SIZE_MAX];
 static char atcmd_player_name[NAME_LENGTH];
@@ -93,7 +191,6 @@ const char *parent_cmd;
 struct atcmd_binding_data** atcmd_binding;
 
 static AtCommandInfo* get_atcommandinfo_byname(const char *name); // @help
-static const char* atcommand_checkalias(const char *aliasname); // @help
 static void atcommand_get_suggestions(struct map_session_data* sd, const char *name, bool atcommand); // @help
 static void warp_get_suggestions(struct map_session_data* sd, const char *name); // @rura, @warp, @mapmove
 
@@ -115,34 +212,25 @@ struct atcmd_binding_data* get_atcommandbind_byname(const char* name) {
  * @param name the name of the command to retrieve help information for
  * @return the string associated with the command, or NULL
  */
-static const char* atcommand_help_string(const char* command)
-{
-	const char* str = NULL;
-	config_setting_t* info;
-
-	if( *command == atcommand_symbol || *command == charcommand_symbol )
-	{// remove the prefix symbol for the raw name of the command
-		command ++;
+static const char* atcommand_help_string( const char* command ){
+	// remove the prefix symbol for the raw name of the command
+	if( *command == atcommand_symbol || *command == charcommand_symbol ){
+		command++;
 	}
 
 	// convert alias to the real command name
-	command = atcommand_checkalias(command);
+	command = atcommand_alias_db.checkAlias( command );
 
 	// attempt to find the first default help command
-	info = config_lookup(&atcommand_config, "help");
+	std::shared_ptr<s_atcommand_alias_info> info = atcommand_alias_db.find( command );
 
-	if( info == NULL )
-	{// failed to find the help property in the configuration file
-		return NULL;
-	}
-
-	if( !config_setting_lookup_string( info, command, &str ) )
-	{// failed to find the matching help string
-		return NULL;
+	// failed to find the help property in the configuration file
+	if( info == nullptr ){
+		return nullptr;
 	}
 
 	// push the result from the method
-	return str;
+	return info->help.c_str();
 }
 
 
@@ -1100,7 +1188,7 @@ ACMD_FUNC(jobchange)
 
 	if (job == JOB_KNIGHT2 || job == JOB_CRUSADER2 || job == JOB_WEDDING || job == JOB_XMAS || job == JOB_SUMMER || job == JOB_HANBOK || job == JOB_OKTOBERFEST
 		|| job == JOB_LORD_KNIGHT2 || job == JOB_PALADIN2 || job == JOB_BABY_KNIGHT2 || job == JOB_BABY_CRUSADER2 || job == JOB_STAR_GLADIATOR2
-		|| (job >= JOB_RUNE_KNIGHT2 && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE2 && job <= JOB_BABY_MECHANIC2) || job == JOB_BABY_STAR_GLADIATOR2
+		|| (job >= JOB_RUNE_KNIGHT2 && job <= JOB_MECHANIC_T2) || (job >= JOB_BABY_RUNE_KNIGHT2 && job <= JOB_BABY_MECHANIC2) || job == JOB_BABY_STAR_GLADIATOR2
 		|| job == JOB_STAR_EMPEROR2 || job == JOB_BABY_STAR_EMPEROR2 || job == JOB_SUMMER2)
 	{ // Deny direct transformation into dummy jobs
 		clif_displaymessage(fd, msg_txt(sd,923)); //"You can not change to this job by command."
@@ -1265,7 +1353,7 @@ ACMD_FUNC(item)
 	nullpo_retr(-1, sd);
 	memset(item_name, '\0', sizeof(item_name));
 
-	parent_cmd = atcommand_checkalias(command+1);
+	parent_cmd = atcommand_alias_db.checkAlias(command+1);
 
 	if (!strcmpi(parent_cmd,"itembound")) {
 		if (!message || !*message || (
@@ -1342,7 +1430,7 @@ ACMD_FUNC(item2)
 
 	memset(item_name, '\0', sizeof(item_name));
 
-	parent_cmd = atcommand_checkalias(command+1);
+	parent_cmd = atcommand_alias_db.checkAlias(command+1);
 
 	if (!strcmpi(parent_cmd+1,"itembound2")) {
 		if (!message || !*message || (
@@ -1570,27 +1658,17 @@ ACMD_FUNC(joblevelup)
 /*==========================================
  * @help
  *------------------------------------------*/
-ACMD_FUNC(help)
-{
-	config_setting_t *help;
-	const char *text = NULL;
-	const char *command_name = NULL;
-	const char *default_command = "help";
+ACMD_FUNC(help){
+	const char *command_name = nullptr;
 
 	nullpo_retr(-1, sd);
 
-	help = config_lookup(&atcommand_config, "help");
-	if (help == NULL) {
-		clif_displaymessage(fd, msg_txt(sd,27)); // "Commands help is not available."
-		return -1;
-	}
-
 	if (!message || !*message) {
-		command_name = default_command; // If no command_name specified, display help for @help.
+		command_name = "help"; // If no command_name specified, display help for @help.
 	} else {
 		if (*message == atcommand_symbol || *message == charcommand_symbol)
 			++message;
-		command_name = atcommand_checkalias(message);
+		command_name = atcommand_alias_db.checkAlias(message);
 	}
 
 	if (!pc_can_use_command(sd, command_name, COMMAND_ATCOMMAND)) {
@@ -1600,7 +1678,12 @@ ACMD_FUNC(help)
 		return -1;
 	}
 
-	if (!config_setting_lookup_string(help, command_name, &text)) {
+	// attempt to find the first default help command
+	std::shared_ptr<s_atcommand_alias_info> info = atcommand_alias_db.find( command_name );
+
+	const char* text = info != nullptr ? info->help.c_str() : nullptr;
+
+	if( text == nullptr ){
 		sprintf(atcmd_output, msg_txt(sd,988), atcommand_symbol, command_name); // There is no help for %c%s.
 		clif_displaymessage(fd, atcmd_output);
 		atcommand_get_suggestions(sd, command_name, true);
@@ -1611,23 +1694,17 @@ ACMD_FUNC(help)
 	clif_displaymessage(fd, atcmd_output);
 
 	{   // Display aliases
-		DBIterator* iter;
-		AtCommandInfo *command_info;
-		AliasInfo *alias_info = NULL;
 		StringBuf buf;
 		bool has_aliases = false;
 
 		StringBuf_Init(&buf);
 		StringBuf_AppendStr(&buf, msg_txt(sd,990)); // Available aliases:
-		command_info = get_atcommandinfo_byname(command_name);
-		iter = db_iterator(atcommand_alias_db);
-		for (alias_info = (AliasInfo *)dbi_first(iter); dbi_exists(iter); alias_info = (AliasInfo *)dbi_next(iter)) {
-			if (alias_info->command == command_info) {
-				StringBuf_Printf(&buf, " %s", alias_info->alias);
-				has_aliases = true;
-			}
+
+		for( const std::string& alias : info->aliases ){
+			StringBuf_Printf( &buf, " %s", alias.c_str() );
+			has_aliases = true;
 		}
-		dbi_destroy(iter);
+
 		if (has_aliases)
 			clif_displaymessage(fd, StringBuf_Value(&buf));
 		StringBuf_Destroy(&buf);
@@ -2126,7 +2203,7 @@ ACMD_FUNC(monster)
 	if (battle_config.atc_spawn_quantity_limit && number > battle_config.atc_spawn_quantity_limit)
 		number = battle_config.atc_spawn_quantity_limit;
 
-	parent_cmd = atcommand_checkalias(command+1);
+	parent_cmd = atcommand_alias_db.checkAlias(command+1);
 
 	if (strcmp(parent_cmd, "monstersmall") == 0)
 		size = SZ_MEDIUM; // This is just gorgeous [mkbu95]
@@ -2201,7 +2278,7 @@ ACMD_FUNC(killmonster)
 			map_id = sd->bl.m;
 	}
 
-	parent_cmd = atcommand_checkalias(command+1);
+	parent_cmd = atcommand_alias_db.checkAlias(command+1);
 
 	drop_flag = strcmp(parent_cmd, "killmonster2");
 
@@ -2977,7 +3054,7 @@ ACMD_FUNC(char_ban)
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
-	parent_cmd = atcommand_checkalias(command+1);
+	parent_cmd = atcommand_alias_db.checkAlias(command+1);
 
 	if (strcmpi(parent_cmd,"charban") == 0)
 		bantype = CHRIF_OP_BAN;
@@ -3058,7 +3135,7 @@ ACMD_FUNC(char_unban){
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
-	parent_cmd = atcommand_checkalias(command+1);
+	parent_cmd = atcommand_alias_db.checkAlias(command+1);
 
 	if (strcmpi(parent_cmd,"charunban") == 0)
 		unbantype = CHRIF_OP_UNBAN;
@@ -3324,7 +3401,7 @@ ACMD_FUNC(questskill)
 		clif_displaymessage(fd, msg_txt(sd,198)); // This skill number doesn't exist.
 		return -1;
 	}
-	if (!(skill_get_inf2(skill_id) & INF2_QUEST_SKILL)) {
+	if (!skill_get_inf2(skill_id, INF2_ISQUEST)) {
 		clif_displaymessage(fd, msg_txt(sd,197)); // This skill number doesn't exist or isn't a quest skill.
 		return -1;
 	}
@@ -3368,7 +3445,7 @@ ACMD_FUNC(lostskill)
 		clif_displaymessage(fd, msg_txt(sd,198)); // This skill number doesn't exist.
 		return -1;
 	}
-	if (!(skill_get_inf2(skill_id) & INF2_QUEST_SKILL)) {
+	if (!skill_get_inf2(skill_id, INF2_ISQUEST)) {
 		clif_displaymessage(fd, msg_txt(sd,197)); // This skill number doesn't exist or isn't a quest skill.
 		return -1;
 	}
@@ -3841,13 +3918,6 @@ ACMD_FUNC(reload) {
 
 		if (conf_read_file(&run_test, "conf/groups.conf")) {
 			clif_displaymessage(fd, msg_txt(sd,1036)); // Error reading groups.conf, reload failed.
-			return -1;
-		}
-
-		config_destroy(&run_test);
-
-		if (conf_read_file(&run_test, ATCOMMAND_CONF_FILENAME)) {
-			clif_displaymessage(fd, msg_txt(sd,1037)); // Error reading atcommand_athena.conf, reload failed.
 			return -1;
 		}
 
@@ -5534,9 +5604,12 @@ ACMD_FUNC(dropall)
 				if( sd->inventory.u.items_inventory[i].equip != 0 )
 					pc_unequipitem(sd, i, 3);
 				pc_equipswitch_remove(sd, i);
-				if(pc_dropitem(sd, i, sd->inventory.u.items_inventory[i].amount))
-					count += sd->inventory.u.items_inventory[i].amount;
-				else count2 += sd->inventory.u.items_inventory[i].amount;
+
+				int amount = sd->inventory.u.items_inventory[i].amount;
+
+				if(pc_dropitem(sd, i, amount))
+					count += amount;
+				else count2 += amount;
 			}
 		}
 	}
@@ -5681,9 +5754,6 @@ ACMD_FUNC(clearcart)
 #define MAX_SKILLID_PARTIAL_RESULTS_LEN 74 // "skill " (6) + "%d:" (up to 5) + "%s" (up to 30) + " (%s)" (up to 33)
 ACMD_FUNC(skillid) {
 	int skillen, i, found = 0;
-	DBIterator* iter;
-	DBKey key;
-	DBData *data;
 	char partials[MAX_SKILLID_PARTIAL_RESULTS][MAX_SKILLID_PARTIAL_RESULTS_LEN];
 
 	nullpo_retr(-1, sd);
@@ -5695,19 +5765,19 @@ ACMD_FUNC(skillid) {
 
 	skillen = strlen(message);
 
-	iter = db_iterator(skilldb_name2id);
+	for(const auto & skill : skill_db) {
+		uint16 skill_id = skill.second->nameid;
+		uint16 idx = skill_get_index(skill_id);
+		const char *name = skill.second->name;
+		const char *desc = skill.second->desc;
 
-	for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) ) {
-		int idx = skill_get_index(db_data2i(data));
-		if (strnicmp(key.str, message, skillen) == 0 || strnicmp(skill_db[idx]->desc, message, skillen) == 0) {
-			sprintf(atcmd_output, msg_txt(sd,1164), db_data2i(data), skill_db[idx]->desc, key.str); // skill %d: %s (%s)
+		if (strnicmp(name, message, skillen) == 0 || strnicmp(desc, message, skillen) == 0) {
+			sprintf(atcmd_output, msg_txt(sd,1164), skill_id, desc, name); // skill %d: %s (%s)
 			clif_displaymessage(fd, atcmd_output);
-		} else if ( found < MAX_SKILLID_PARTIAL_RESULTS && ( stristr(key.str,message) || stristr(skill_db[idx]->desc,message) ) ) {
-			snprintf(partials[found++], MAX_SKILLID_PARTIAL_RESULTS_LEN, msg_txt(sd,1164), db_data2i(data), skill_db[idx]->desc, key.str); // // skill %d: %s (%s)
+		} else if ( found < MAX_SKILLID_PARTIAL_RESULTS && ( stristr(name,message) || stristr(desc,message) ) ) {
+			snprintf(partials[found++], MAX_SKILLID_PARTIAL_RESULTS_LEN, msg_txt(sd,1164), skill_id, desc, name); // // skill %d: %s (%s)
 		}
 	}
-
-	dbi_destroy(iter);
 
 	if( found ) {
 		sprintf(atcmd_output, msg_txt(sd,1398), found); // -- Displaying first %d partial matches
@@ -5839,7 +5909,7 @@ ACMD_FUNC(skilltree)
 	{
 		if( ent->need[j].skill_id && pc_checkskill(sd,ent->need[j].skill_id) < ent->need[j].skill_lv)
 		{
-			sprintf(atcmd_output, msg_txt(sd,1170), ent->need[j].skill_lv, skill_db[skill_get_index(ent->need[j].skill_id)]->desc); // Player requires level %d of skill %s.
+			sprintf(atcmd_output, msg_txt(sd,1170), ent->need[j].skill_lv, skill_get_desc(ent->need[j].skill_id)); // Player requires level %d of skill %s.
 			clif_displaymessage(fd, atcmd_output);
 			meets = 0;
 		}
@@ -7225,8 +7295,8 @@ ACMD_FUNC(mobinfo)
 		job_exp = mob->job_exp;
 
 		if (pc_isvip(sd)) { // Display EXP rate increase for VIP
-			base_exp = (base_exp * battle_config.vip_base_exp_increase) / 100;
-			job_exp = (job_exp * battle_config.vip_job_exp_increase) / 100;
+			base_exp += (base_exp * battle_config.vip_base_exp_increase) / 100;
+			job_exp += (job_exp * battle_config.vip_job_exp_increase) / 100;
 		}
 #ifdef RENEWAL_EXP
 		if( battle_config.atcommand_mobinfo_type ) {
@@ -8460,7 +8530,7 @@ ACMD_FUNC(cash)
 		return -1;
 	}
 
-	parent_cmd = atcommand_checkalias(command+1);
+	parent_cmd = atcommand_alias_db.checkAlias(command+1);
 
 	if( !strcmpi(parent_cmd,"cash") )
 	{
@@ -8531,7 +8601,7 @@ ACMD_FUNC(clone)
 		return 0;
 	}
 
-	parent_cmd = atcommand_checkalias(command+1);
+	parent_cmd = atcommand_alias_db.checkAlias(command+1);
 
 	if (strcmpi(parent_cmd, "clone") == 0)
 		flag = 1;
@@ -8715,7 +8785,7 @@ ACMD_FUNC(itemlist)
 
 	nullpo_retr(-1, sd);
 
-	parent_cmd = atcommand_checkalias(command+1);
+	parent_cmd = atcommand_alias_db.checkAlias(command+1);
 
 	if( strcmp(parent_cmd, "storagelist") == 0 ) {
 		location = "storage";
@@ -9186,7 +9256,8 @@ ACMD_FUNC(accinfo) {
 */
 ACMD_FUNC(set) {
 	char reg[46], val[128], name[32];
-	int toset = 0, len, index;
+	int toset = 0, len;
+	uint32 index;
 	bool is_str = false;
 	int64 uid;
 
@@ -9208,7 +9279,7 @@ ACMD_FUNC(set) {
 	}
 
 	// Check if the user wanted to set an array
-	if( sscanf( reg, "%31[^[][%11d]", name, &index ) < 2 ){
+	if( sscanf( reg, "%31[^[][%" PRIu32 "]", name, &index ) < 2 ){
 		// The user did not specify array brackets, so we set the index to zero
 		index = 0;
 	}
@@ -9224,7 +9295,11 @@ ACMD_FUNC(set) {
 
 	// Only set the variable if there is a value for it
 	if( toset >= 2 ){
-		setd_sub( NULL, sd, name, index, is_str ? (void*)val : (void*)__64BPRTSIZE((atoi(val))), NULL );
+		if( is_str ){
+			setd_sub_str( NULL, sd, name, index, val, NULL );
+		}else{
+			setd_sub_num( NULL, sd, name, index, strtoll( val, NULL, 10 ), NULL );
+		}
 	}
 
 	uid = reference_uid( add_str( name ), index );
@@ -9253,10 +9328,10 @@ ACMD_FUNC(set) {
 		if( value == NULL || *value == '\0' ){// empty string
 			sprintf(atcmd_output,msg_txt(sd,1375),reg); // %s is empty
 		}else{
-			sprintf(atcmd_output,msg_txt(sd,1374),reg,value); // %s value is now :%s
+			sprintf(atcmd_output,msg_txt(sd,1374),reg,value); // %s value is now: %s
 		}
 	} else {// integer variable
-		int value;
+		int64 value;
 
 		switch( reg[0] ) {
 			case '@':
@@ -9276,7 +9351,7 @@ ACMD_FUNC(set) {
 				break;
 		}
 
-		sprintf(atcmd_output,msg_txt(sd,1373),reg,value); // %s value is now :%d
+		sprintf(atcmd_output,msg_txt(sd,1373),reg,value); // %s value is now: %lld
 	}
 
 	clif_displaymessage(fd, atcmd_output);
@@ -9288,7 +9363,7 @@ ACMD_FUNC(addperm) {
 	bool add;
 	int i;
 
-	parent_cmd = atcommand_checkalias(command+1);
+	parent_cmd = atcommand_alias_db.checkAlias(command+1);
 
 	add = (strcmpi(parent_cmd, "addperm") == 0);
 
@@ -10387,20 +10462,10 @@ static AtCommandInfo* get_atcommandinfo_byname(const char *name)
 	return NULL;
 }
 
-static const char* atcommand_checkalias(const char *aliasname)
-{
-	AliasInfo *alias_info = NULL;
-	if ((alias_info = (AliasInfo*)strdb_get(atcommand_alias_db, aliasname)) != NULL)
-		return alias_info->command->command;
-	return aliasname;
-}
-
 /// AtCommand suggestion
 static void atcommand_get_suggestions(struct map_session_data* sd, const char *name, bool atcommand) {
 	DBIterator* atcommand_iter;
-	DBIterator* alias_iter;
 	AtCommandInfo* command_info = NULL;
-	AliasInfo* alias_info = NULL;
 	AtCommandType type = atcommand ? COMMAND_ATCOMMAND : COMMAND_CHARCOMMAND;
 	char* full_match[MAX_SUGGESTIONS];
 	char* suggestions[MAX_SUGGESTIONS];
@@ -10412,7 +10477,6 @@ static void atcommand_get_suggestions(struct map_session_data* sd, const char *n
 		return;
 
 	atcommand_iter = db_iterator(atcommand_db);
-	alias_iter = db_iterator(atcommand_alias_db);
 
 	// Build the matches
 	for (command_info = (AtCommandInfo*)dbi_first(atcommand_iter); dbi_exists(atcommand_iter); command_info = (AtCommandInfo*)dbi_next(atcommand_iter))     {
@@ -10428,16 +10492,25 @@ static void atcommand_get_suggestions(struct map_session_data* sd, const char *n
 		}
 	}
 
-	for (alias_info = (AliasInfo *)dbi_first(alias_iter); dbi_exists(alias_iter); alias_info = (AliasInfo *)dbi_next(alias_iter)) {
-		match = strstr(alias_info->alias, name);
-		can_use = pc_can_use_command(sd, alias_info->command->command, type);
-		if ( prefix_count < MAX_SUGGESTIONS && match == alias_info->alias && can_use) {
-			suggestions[prefix_count] = alias_info->alias;
-			++prefix_count;
-		}
-		if ( full_count < MAX_SUGGESTIONS && match != NULL && match != alias_info->alias && can_use ) {
-			full_match[full_count] = alias_info->alias;
-			++full_count;
+	for( auto& pair : atcommand_alias_db ){
+		std::shared_ptr<s_atcommand_alias_info> info = pair.second;
+
+		if( pc_can_use_command( sd, info->command->command, type ) ){
+			for( const std::string& alias_str : info->aliases ){
+				char* alias = const_cast<char *>(alias_str.c_str());
+
+				match = strstr( alias, name );
+
+				if( prefix_count < MAX_SUGGESTIONS && match == alias ){
+					suggestions[prefix_count] = alias;
+					++prefix_count;
+				}
+
+				if( full_count < MAX_SUGGESTIONS && match != NULL && match != alias ){
+					full_match[full_count] = alias;
+					++full_count;
+				}
+			}
 		}
 	}
 
@@ -10464,7 +10537,6 @@ static void atcommand_get_suggestions(struct map_session_data* sd, const char *n
 	}
 
 	dbi_destroy(atcommand_iter);
-	dbi_destroy(alias_iter);
 }
 
 /**
@@ -10540,7 +10612,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 				if (n < 1)
 					return false; // No command found. Display as normal message.
 
-				info = get_atcommandinfo_byname(atcommand_checkalias(command + 1));
+				info = get_atcommandinfo_byname(atcommand_alias_db.checkAlias(command + 1));
 				if (!info || info->char_groups[sd->group_pos] == 0)  // If we can't use or doesn't exist: don't even display the command failed message
 					return false;
 			}
@@ -10596,7 +10668,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	}
 
 	//Grab the command information and check for the proper GM level required to use it or if the command exists
-	info = get_atcommandinfo_byname(atcommand_checkalias(command + 1));
+	info = get_atcommandinfo_byname(atcommand_alias_db.checkAlias(command + 1));
 	if (info == NULL) {
 		if (pc_get_group_level(sd) == 0) // TODO: remove or replace with proper permission
 			return false;
@@ -10644,98 +10716,6 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	return true;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
-static void atcommand_config_read(const char* config_filename)
-{
-	config_setting_t *aliases = NULL, *help = NULL;
-	const char *symbol = NULL;
-	int num_aliases = 0;
-
-	if (conf_read_file(&atcommand_config, config_filename))
-		return;
-
-	// Command symbols
-	if (config_lookup_string(&atcommand_config, "atcommand_symbol", &symbol)) {
-		if (ISPRINT(*symbol) && // no control characters
-			*symbol != '/' && // symbol of client commands
-			*symbol != '%' && // symbol of party chat
-			*symbol != '$' && // symbol of guild chat
-			*symbol != charcommand_symbol)
-			atcommand_symbol = *symbol;
-	}
-
-	if (config_lookup_string(&atcommand_config, "charcommand_symbol", &symbol)) {
-		if (ISPRINT(*symbol) && // no control characters
-			*symbol != '/' && // symbol of client commands
-			*symbol != '%' && // symbol of party chat
-			*symbol != '$' && // symbol of guild chat
-			*symbol != atcommand_symbol)
-			charcommand_symbol = *symbol;
-	}
-
-	// Command aliases
-	aliases = config_lookup(&atcommand_config, "aliases");
-	if (aliases != NULL) {
-		int i = 0;
-		int count = config_setting_length(aliases);
-
-		for (i = 0; i < count; ++i) {
-			config_setting_t *command;
-			const char *commandname = NULL;
-			int j = 0, alias_count = 0;
-			AtCommandInfo *commandinfo = NULL;
-
-			command = config_setting_get_elem(aliases, i);
-			if (config_setting_type(command) != CONFIG_TYPE_ARRAY)
-				continue;
-			commandname = config_setting_name(command);
-			if (!atcommand_exists(commandname)) {
-				ShowConfigWarning(command, "atcommand_config_read: can not set alias for non-existent command %s", commandname);
-				continue;
-			}
-			commandinfo = get_atcommandinfo_byname(commandname);
-			alias_count = config_setting_length(command);
-			for (j = 0; j < alias_count; ++j) {
-				const char *alias = config_setting_get_string_elem(command, j);
-				if (alias != NULL) {
-					AliasInfo *alias_info;
-					if (strdb_exists(atcommand_alias_db, alias)) {
-						ShowConfigWarning(command, "atcommand_config_read: alias %s already exists", alias);
-						continue;
-					}
-					CREATE(alias_info, AliasInfo, 1);
-					alias_info->command = commandinfo;
-					safestrncpy(alias_info->alias, alias, sizeof(alias_info->alias));
-					strdb_put(atcommand_alias_db, alias, alias_info);
-					++num_aliases;
-				}
-			}
-		}
-	}
-
-	// Commands help
-	// We only check if all commands exist
-	help = config_lookup(&atcommand_config, "help");
-	if (help != NULL) {
-		int count = config_setting_length(help);
-		int i;
-
-		for (i = 0; i < count; ++i) {
-			config_setting_t *command;
-			const char *commandname;
-
-			command = config_setting_get_elem(help, i);
-			commandname = config_setting_name(command);
-			if (!atcommand_exists(commandname))
-				ShowConfigWarning(command, "atcommand_config_read: command %s does not exist", commandname);
-		}
-	}
-
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' command aliases in '" CL_WHITE "%s" CL_RESET "'.\n", num_aliases, config_filename);
-	return;
-}
 void atcommand_db_load_groups(int* group_ids) {
 	DBIterator *iter = db_iterator(atcommand_db);
 	AtCommandInfo* cmd;
@@ -10775,18 +10755,15 @@ void atcommand_db_clear(void) {
 
 		db_destroy(atcommand_db);
 	}
-	if (atcommand_alias_db != NULL)
-		db_destroy(atcommand_alias_db);
 
-	config_destroy(&atcommand_config);
+	atcommand_alias_db.clear();
 }
 
 void atcommand_doload(void) {
 	atcommand_db_clear();
 	atcommand_db = stridb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA), ATCOMMAND_LENGTH);
-	atcommand_alias_db = stridb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA), ATCOMMAND_LENGTH);
 	atcommand_basecommands(); //fills initial atcommand_db with known commands
-	atcommand_config_read(ATCOMMAND_CONF_FILENAME);
+	atcommand_alias_db.load();
 }
 
 void do_init_atcommand(void) {

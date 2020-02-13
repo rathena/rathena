@@ -70,7 +70,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (itemdb_search_aegisname(name.c_str()))
-			this->invalidWarning(node, "Found duplicate item Aegis name for %s.\n", name.c_str());
+			this->invalidWarning(node["AegisName"], "Found duplicate item Aegis name for %s.\n", name.c_str());
 
 		item->name.resize(ITEM_NAME_LENGTH);
 		item->name = name.c_str();
@@ -92,10 +92,11 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Type", type))
 			return 0;
 
-		int constant;
+		std::string type_constant = "IT_" + type;
+		int64 constant;
 
-		if (!script_get_constant(type.c_str(), &constant) || constant < IT_HEALING || constant == IT_UNKNOWN || constant == IT_UNKNOWN2 || (constant > IT_SHADOWGEAR && constant < IT_CASH) || constant >= IT_MAX) {
-			this->invalidWarning(node, "Invalid item type %s for %s (%hu), defaulting to IT_ETC.\n", type.c_str(), item->name.c_str(), nameid);
+		if (!script_get_constant(type_constant.c_str(), &constant) || constant < IT_HEALING || constant == IT_UNKNOWN || constant == IT_UNKNOWN2 || (constant > IT_SHADOWGEAR && constant < IT_CASH) || constant >= IT_MAX) {
+			this->invalidWarning(node["Type"], "Invalid item type %s for %s (%hu), defaulting to IT_ETC.\n", type.c_str(), item->name.c_str(), nameid);
 			constant = IT_ETC;
 		}
 
@@ -116,17 +117,24 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "SubType", type))
 			return 0;
 
-		int constant;
+		std::string type_constant = "W_" + type;
+		int64 constant;
 
-		if (!script_get_constant(type.c_str(), &constant)) {
-			if (item->type == IT_WEAPON && (constant < W_FIST || constant > MAX_WEAPON_TYPE)) {
-				this->invalidWarning(node, "Invalid weapon type %s for %s (%hu), defaulting to IT_ETC.\n", type.c_str(), item->name.c_str(), nameid);
+		if (item->type == IT_WEAPON && script_get_constant(type_constant.c_str(), &constant)) {
+			if (constant < W_FIST || constant > MAX_WEAPON_TYPE) {
+				this->invalidWarning(node["SubType"], "Invalid weapon type %s for %s (%hu), defaulting to IT_ETC.\n", type.c_str(), item->name.c_str(), nameid);
 				item->type = IT_ETC;
-			} else if (item->type == IT_AMMO && (constant < AMMO_ARROW || constant > AMMO_THROWWEAPON)) {
-				this->invalidWarning(node, "Invalid ammo type %s for %s (%hu), defaulting to IT_ETC.\n", type.c_str(), item->name.c_str(), nameid);
-				item->type = IT_ETC;
-			} else
-				item->subtype = constant;
+			}
+		} else {
+			type_constant = "AMMO_" + type;
+
+			if (!script_get_constant(type_constant.c_str(), &constant)) {
+				if (item->type == IT_AMMO && (constant < AMMO_ARROW || constant > AMMO_THROWWEAPON)) {
+					this->invalidWarning(node["SubType"], "Invalid ammo type %s for %s (%hu), defaulting to IT_ETC.\n", type.c_str(), item->name.c_str(), nameid);
+					item->type = IT_ETC;
+				} else
+					item->subtype = constant;
+			}
 		}
 	} else {
 		if (!exists)
@@ -169,7 +177,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (item->value_buy / 124. < item->value_sell / 75.)
-		this->invalidWarning(node, "Buying/Selling [%d/%d] price of %s (%hu) allows Zeny making exploit through buying/selling at discounted/overcharged prices!\n", item->value_buy, item->value_sell, item->name.c_str(), nameid);
+		this->invalidWarning(node["Sell"], "Buying/Selling [%d/%d] price of %s (%hu) allows Zeny making exploit through buying/selling at discounted/overcharged prices!\n", item->value_buy, item->value_sell, item->name.c_str(), nameid);
 
 	if (this->nodeExists(node, "Weight")) {
 		int32 weight;
@@ -240,7 +248,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (slot > MAX_SLOTS) {
-			this->invalidWarning(node, "Item %s (%hu) exceeds maximum slot count, capping to MAX_SLOTS.\n", item->name.c_str(), nameid);
+			this->invalidWarning(node["Slots"], "Item %s (%hu) exceeds maximum slot count, capping to MAX_SLOTS.\n", item->name.c_str(), nameid);
 			slot = MAX_SLOTS;
 		}
 
@@ -270,10 +278,11 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			if (jobName.compare("All") == 0)
 				continue;
 
-			const auto &um_j = um_jobnames.find(jobName);
+			std::string jobName_constant = "JOB_" + jobName;
+			int64 constant;
 
-			if (um_j == um_jobnames.end()) {
-				this->invalidWarning(jobNode, "Invalid item job %s for %s (%hu), defaulting to All.\n", jobName.c_str(), item->name.c_str(), nameid);
+			if (!script_get_constant(jobName_constant.c_str(), &constant)) {
+				this->invalidWarning(jobNode[jobName], "Invalid item job %s for %s (%hu), defaulting to All.\n", jobName.c_str(), item->name.c_str(), nameid);
 				itemdb_jobid2mapid(item->class_base, UINT64_MAX, true);
 				break;
 			}
@@ -283,7 +292,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			if (!this->asBool(jobNode, jobName.c_str(), active))
 				return 0;
 
-			itemdb_jobid2mapid(item->class_base, static_cast<uint64>(1) << um_j->second, active);
+			itemdb_jobid2mapid(item->class_base, static_cast<uint64>(1) << constant, active);
 		}
 	} else {
 		if (!exists) {
@@ -314,23 +323,24 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			if (className.compare("All") == 0)
 				continue;
 
-			const auto &um_ij = um_itemjobnames.find(className);
+			std::string className_constant = "ITEMJ_" + className;
+			int64 constant;
 
-			if (um_ij == um_itemjobnames.end()) {
-				this->invalidWarning(classNode, "Invalid class upper %s for %s (%hu), defaulting to All.\n", className.c_str(), item->name.c_str(), nameid);
+			if (!script_get_constant(className_constant.c_str(), &constant)) {
+				this->invalidWarning(classNode[className], "Invalid class upper %s for %s (%hu), defaulting to All.\n", className.c_str(), item->name.c_str(), nameid);
 				item->class_upper = ITEMJ_MAX;
 				break;
 			}
 
 			bool active;
 
-			if (!this->asBool(classNode, um_ij->first, active))
+			if (!this->asBool(classNode, className.c_str(), active))
 				return 0;
 
 			if (active)
-				item->class_upper |= um_ij->second;
+				item->class_upper |= constant;
 			else
-				item->class_upper &= um_ij->second;
+				item->class_upper &= constant;
 		}
 	} else {
 		if (!exists)
@@ -343,10 +353,11 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Gender", gender))
 			return 0;
 
-		int constant;
+		std::string gender_constant = "SEX_" + gender;
+		int64 constant;
 
-		if (!script_get_constant(gender.c_str(), &constant) || constant < SEX_FEMALE || constant > SEX_BOTH) {
-			this->invalidWarning(node, "Invalid item gender %s for %s (%hu), defaulting to SEX_BOTH.\n", gender.c_str(), item->name.c_str(), nameid);
+		if (!script_get_constant(gender_constant.c_str(), &constant) || constant < SEX_FEMALE || constant > SEX_BOTH) {
+			this->invalidWarning(node["Gender"], "Invalid item gender %s for %s (%hu), defaulting to SEX_BOTH.\n", gender.c_str(), item->name.c_str(), nameid);
 			constant = SEX_BOTH;
 		}
 
@@ -363,34 +374,34 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		const YAML::Node &locationNode = node["Location"];
 
 		for (const auto &locit : locationNode) {
-			std::string equipName = locit.first.as<std::string>();
-			const auto &um_e = um_equipnames.find(equipName);
+			std::string equipName = locit.first.as<std::string>(), equipName_constant = "EQP_" + equipName;
+			int64 constant;
 
-			if (um_e == um_equipnames.end()) {
-				this->invalidWarning(locationNode, "Invalid location %s for %s (%hu), defaulting to IT_ETC.\n", equipName.c_str(), item->name.c_str(), nameid);
+			if (!script_get_constant(equipName_constant.c_str(), &constant)) {
+				this->invalidWarning(locationNode[equipName], "Invalid location %s for %s (%hu), defaulting to IT_ETC.\n", equipName.c_str(), item->name.c_str(), nameid);
 				item->type = IT_ETC;
 				break;
 			}
 
 			bool active;
 
-			if (!this->asBool(locationNode, um_e->first, active))
+			if (!this->asBool(locationNode, equipName.c_str(), active))
 				return 0;
 
 			if (active) {
-				if (um_e->second & EQP_SHADOW_GEAR && item->type != IT_SHADOWGEAR) {
-					this->invalidWarning(node, "Invalid item equip location %s for %s (%hu) as it's not a Shadow Gear item type, defaulting to IT_ETC.\n", um_e->first.c_str(), item->name.c_str(), nameid);
+				if (constant & EQP_SHADOW_GEAR && item->type != IT_SHADOWGEAR) {
+					this->invalidWarning(node, "Invalid item equip location %s for %s (%hu) as it's not a Shadow Gear item type, defaulting to IT_ETC.\n", equipName.c_str(), item->name.c_str(), nameid);
 					item->type = IT_ETC;
 				}
 
-				item->equip |= um_e->second;
+				item->equip |= constant;
 			} else
-				item->equip &= um_e->second;
+				item->equip &= constant;
 		}
 	} else {
 		if (!exists) {
 			if (item->equip == 0 && itemdb_isequip2(item.get())) {
-				this->invalidWarning(node, "Invalid item equip location for %s (%hu) as it has no equip location, defaulting to IT_ETC.\n", item->name.c_str(), nameid);
+				this->invalidWarning(node["Location"], "Invalid item equip location for %s (%hu) as it has no equip location, defaulting to IT_ETC.\n", item->name.c_str(), nameid);
 				item->type = IT_ETC;
 			}
 		}
@@ -403,7 +414,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (lv > REFINE_TYPE_MAX) {
-			this->invalidWarning(node, "Invalid weapon level %d for %s (%hu), defaulting to REFINE_TYPE_MAX.\n", lv, item->name.c_str(), nameid);
+			this->invalidWarning(node["WeaponLevel"], "Invalid weapon level %d for %s (%hu), defaulting to REFINE_TYPE_MAX.\n", lv, item->name.c_str(), nameid);
 			lv = REFINE_TYPE_MAX;
 		}
 
@@ -420,7 +431,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (lv > MAX_LEVEL) {
-			this->invalidWarning(node, "Invalid minimum equip level for %s (%hu), defaulting to MAX_LEVEL.\n", item->name.c_str(), nameid);
+			this->invalidWarning(node["EquipLevelMin"], "Invalid minimum equip level for %s (%hu), defaulting to MAX_LEVEL.\n", item->name.c_str(), nameid);
 			lv = MAX_LEVEL;
 		}
 
@@ -437,12 +448,12 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (lv < item->elv) {
-			this->invalidWarning(node, "Max equip level is less than equip level for %s (%hu), defaulting to equip level.\n", item->name.c_str(), nameid);
+			this->invalidWarning(node["EquipLevelMax"], "Max equip level is less than equip level for %s (%hu), defaulting to equip level.\n", item->name.c_str(), nameid);
 			lv = item->elv;
 		}
 
 		if (lv > MAX_LEVEL) {
-			this->invalidWarning(node, "Invalid maximum equip level for %s (%hu), defaulting to MAX_LEVEL.\n", item->name.c_str(), nameid);
+			this->invalidWarning(node["EquipLevelMax"], "Invalid maximum equip level for %s (%hu), defaulting to MAX_LEVEL.\n", item->name.c_str(), nameid);
 			lv = MAX_LEVEL;
 		}
 
@@ -483,7 +494,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (!itemdb_isstackable2(item.get()) && active) {
-			this->invalidWarning(node, "Non-stackable item %s (%hu) cannot be enabled for buying store.\n", item->name.c_str(), nameid);
+			this->invalidWarning(node["Buyingstore"], "Non-stackable item %s (%hu) cannot be enabled for buying store.\n", item->name.c_str(), nameid);
 			active = false;
 		}
 
@@ -517,14 +528,14 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->flag.group = false;
 	}
 
-	if (this->nodeExists(node, "GUID")) {
+	if (this->nodeExists(node, "Guid")) {
 		bool active;
 
-		if (!this->asBool(node, "GUID", active))
+		if (!this->asBool(node, "Guid", active))
 			return 0;
 
 		if (!itemdb_isstackable2(item.get()) && active) {
-			this->invalidWarning(node, "Non-stackable item %s (%hu) cannot be enabled for GUID.\n", item->name.c_str(), nameid);
+			this->invalidWarning(node["Guid"], "Non-stackable item %s (%hu) cannot be enabled for GUID.\n", item->name.c_str(), nameid);
 			active = false;
 		}
 
@@ -581,10 +592,11 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "DropEffect", effect))
 			return 0;
 
-		int constant;
+		std::string effect_constant = "DROPEFFECT_" + effect;
+		int64 constant;
 
-		if (!script_get_constant(effect.c_str(), &constant) || constant < DROPEFFECT_NONE || constant > DROPEFFECT_MAX) {
-			this->invalidWarning(node, "Invalid item drop effect %s for %s (%hu), defaulting to ITDE_NONE.\n", effect.c_str(), item->name.c_str(), nameid);
+		if (!script_get_constant(effect_constant.c_str(), &constant) || constant < DROPEFFECT_NONE || constant > DROPEFFECT_MAX) {
+			this->invalidWarning(node["DropEffect"], "Invalid item drop effect %s for %s (%hu), defaulting to ITDE_NONE.\n", effect.c_str(), item->name.c_str(), nameid);
 			constant = DROPEFFECT_NONE;
 		}
 
@@ -612,10 +624,11 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			if (!this->asString(delayNode, "Status", status))
 				return 0;
 
-			int constant;
+			std::string status_constant = "SC_" + status;
+			int64 constant;
 
-			if (!script_get_constant(status.c_str(), &constant)) {
-				this->invalidWarning(delayNode, "Invalid item delay status %s for %s (%hu), defaulting to SC_NONE.\n", status.c_str(), item->name.c_str(), nameid);
+			if (!script_get_constant(status_constant.c_str(), &constant)) {
+				this->invalidWarning(delayNode[status], "Invalid item delay status %s for %s (%hu), defaulting to SC_NONE.\n", status.c_str(), item->name.c_str(), nameid);
 				constant = SC_NONE;
 			}
 
@@ -638,7 +651,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (!itemdb_isstackable2(item.get())) {
-				this->invalidWarning(stackNode, "Non-stackable item %s (%hu) cannot be enabled for stacking.\n", item->name.c_str(), nameid);
+				this->invalidWarning(stackNode["Amount"], "Non-stackable item %s (%hu) cannot be enabled for stacking.\n", item->name.c_str(), nameid);
 				amount = 0;
 			}
 
@@ -652,6 +665,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->stack.inventory = active;
+		} else {
+			if (!exists)
+				item->stack.inventory = true;
 		}
 
 		if (this->nodeExists(stackNode, "Cart")) {
@@ -700,7 +716,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (override > 100) {
-				this->invalidWarning(nouseNode, "Item no use override level exceeds 100 for %s (%hu), capping.\n", item->name.c_str(), nameid);
+				this->invalidWarning(nouseNode["Override"], "Item no use override level exceeds 100 for %s (%hu), capping.\n", item->name.c_str(), nameid);
 				override = 100;
 			}
 
@@ -732,7 +748,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (override > 100) {
-				this->invalidWarning(tradeNode, "Item trade override level exceeds 100 for %s (%hu), capping.\n", item->name.c_str(), nameid);
+				this->invalidWarning(tradeNode["Override"], "Item trade override level exceeds 100 for %s (%hu), capping.\n", item->name.c_str(), nameid);
 				override = 100;
 			}
 
@@ -1280,7 +1296,7 @@ static void itemdb_create_dummy(void) {
 	CREATE(dummy_item, struct item_data, 1);
 
 	memset(dummy_item, 0, sizeof(struct item_data));
-	dummy_item->nameid = 500;
+	dummy_item->nameid = ITEMID_DUMMY;
 	dummy_item->weight = 1;
 	dummy_item->value_sell = 1;
 	dummy_item->type = IT_ETC; //Etc item
@@ -1330,18 +1346,8 @@ bool itemdb_isequip2(struct item_data *id) {
 bool itemdb_isstackable2(struct item_data *id)
 {
 	nullpo_ret(id);
-	switch(id->type) {
-		case IT_WEAPON:
-		case IT_ARMOR:
-		case IT_PETEGG:
-		case IT_PETARMOR:
-		case IT_SHADOWGEAR:
-			return false;
-		default:
-			return true;
-	}
+	return id->isStackable();
 }
-
 
 /*==========================================
  * Trade Restriction functions [Skotlex]
@@ -1472,8 +1478,14 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	if( ISDIGIT(str[0][0]) ){
 		group_id = atoi(str[0]);
 	}else{
+		int64 group_tmp;
+
 		// Try to parse group id as constant
-		script_get_constant(str[0], &group_id);
+		if (!script_get_constant(str[0], &group_tmp)) {
+			ShowError("itemdb_read_group: Unknown group constant \"%s\".\n", str[0]);
+			return false;
+		}
+		group_id = static_cast<int>(group_tmp);
 	}
 
 	// Check the group id
@@ -1960,19 +1972,6 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 }
 
 /**
-* Check if item is available in spellbook_db or not
-* @param nameid
-* @return True if item is spellbook; False if not
-*/
-bool itemdb_is_spellbook2(unsigned short nameid) {
-	unsigned char i;
-	if (!nameid || !itemdb_exists(nameid) || !skill_spellbook_count)
-		return false;
-	ARR_FIND(0, MAX_SKILL_SPELLBOOK_DB, i, skill_spellbook_db[i].nameid == nameid);
-	return i == MAX_SKILL_SPELLBOOK_DB ? false : true;
-}
-
-/**
 * Retrieves random option data
 */
 struct s_random_opt_data* itemdb_randomopt_exists(short id) {
@@ -2045,7 +2044,13 @@ static bool itemdb_read_randomopt(const char* basedir, bool silent) {
 				id = atoi(str[0]);
 			}
 			else {
-				script_get_constant(str[0], &id);
+				int64 id_tmp;
+
+				if (!script_get_constant(str[0], &id_tmp)) {
+					ShowError("itemdb_read_randopt: Unknown random option constant \"%s\".\n", str[0]);
+					continue;
+				}
+				id = static_cast<int>(id_tmp);
 			}
 
 			if (id < 0) {
@@ -2107,14 +2112,18 @@ struct s_random_opt_group *itemdb_randomopt_group_exists(int id) {
  * @author [Cydh]
  **/
 static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
-	int id = 0, i;
+	int64 id_tmp;
+	int id = 0;
+	int i;
 	unsigned short rate = (unsigned short)strtoul(str[1], NULL, 10);
 	struct s_random_opt_group *g = NULL;
 
-	if (!script_get_constant(str[0], &id)) {
+	if (!script_get_constant(str[0], &id_tmp)) {
 		ShowError("itemdb_read_randomopt_group: Invalid ID for Random Option Group '%s'.\n", str[0]);
 		return false;
 	}
+
+	id = static_cast<int>(id_tmp);
 
 	if ((columns-2)%3 != 0) {
 		ShowError("itemdb_read_randomopt_group: Invalid column entries '%d'.\n", columns);
@@ -2135,8 +2144,10 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 		int j, k;
 		memset(&g->entries[i].option, 0, sizeof(g->entries[i].option));
 		for (j = 0, k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k+=3) {
+			int64 randid_tmp;
 			int randid = 0;
-			if (!script_get_constant(str[k], &randid) || !itemdb_randomopt_exists(randid)) {
+
+			if (!script_get_constant(str[k], &randid_tmp) || ((randid = static_cast<int>(randid_tmp)) && !itemdb_randomopt_exists(randid))) {
 				ShowError("itemdb_read_randomopt_group: Invalid random group id '%s' in column %d!\n", str[k], k+1);
 				continue;
 			}
@@ -2289,6 +2300,24 @@ static int itemdb_randomopt_free(DBKey key, DBData *data, va_list ap) {
 	opt->script = NULL;
 	aFree(opt);
 	return 1;
+}
+
+bool item_data::isStackable()
+{
+	switch (this->type) {
+		case IT_WEAPON:
+		case IT_ARMOR:
+		case IT_PETEGG:
+		case IT_PETARMOR:
+		case IT_SHADOWGEAR:
+			return false;
+	}
+	return true;
+}
+
+int item_data::inventorySlotNeeded(int quantity)
+{
+	return (this->flag.guid || !this->isStackable()) ? quantity : 1;
 }
 
 /**

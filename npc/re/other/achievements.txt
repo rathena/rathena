@@ -77,7 +77,7 @@ gl_sew04,288,6,0	duplicate(ach_treasure#core)	#gl_ach2::120125	HIDDEN_WARP_NPC,5
 gl_knt02,126,235,0	duplicate(ach_treasure#core)	#gl_ach3::120126	HIDDEN_WARP_NPC,5,5
 gl_prison1,125,159,0	duplicate(ach_treasure#core)	#gl_ach4::120127	HIDDEN_WARP_NPC,5,5
 
-// Gonryun Dungeon
+// Kunlun Dungeon
 gon_dun03,167,232,0	duplicate(ach_treasure#core)	#gon_ach1::120128	HIDDEN_WARP_NPC,5,5
 
 // Istana
@@ -86,7 +86,7 @@ dew_dun02,87,272,0	duplicate(ach_treasure#core)	#dew_ach1::120119	HIDDEN_WARP_NP
 // Labyrinth
 prt_maze03,11,14,0	duplicate(ach_treasure#core)	#maze_ach1::120140	HIDDEN_WARP_NPC,5,5
 
-// Louyang Dungeon
+// Luoyang Dungeon
 lou_dun03,29,228,0	duplicate(ach_treasure#core)	#lou_ach1::120134	HIDDEN_WARP_NPC,5,5
 
 // Nogg Road
@@ -265,7 +265,7 @@ ve_fild03,197,242,0	duplicate(ach_treasure#core)	#ve_ach3::120087	HIDDEN_WARP_NP
 ve_fild04,288,279,0	duplicate(ach_treasure#core)	#ve_ach4::120088	HIDDEN_WARP_NPC,5,5
 ve_fild07,33,113,0	duplicate(ach_treasure#core)	#ve_ach5::120089	HIDDEN_WARP_NPC,5,5
 
-// Yuno
+// Juno
 yuno_fild01,284,138,0	duplicate(ach_treasure#core)	#yuno_ach1::120052	HIDDEN_WARP_NPC,5,5
 yuno_fild12,76,268,0	duplicate(ach_treasure#core)	#yuno_ach2::120053	HIDDEN_WARP_NPC,5,5
 yuno_fild02,142,191,0	duplicate(ach_treasure#core)	#yuno_ach3::120054	HIDDEN_WARP_NPC,5,5

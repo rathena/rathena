@@ -1362,7 +1362,7 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 						next;
 						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
 						mes "Current location:";
-						mes "^996633Inn, Morroc^663300.^000000";
+						mes "^996633Inn, Morocc^663300.^000000";
 						close2;
 					}
 					else if (compare(.@input$,"jack_o") == 1) {
@@ -3096,7 +3096,7 @@ niflheim,109,254,0	script	Egnigem	796,{
 						mes "I've never known why the King Tristram III ordered the research of godly artifacts. It also bothers me that Rebarev Doug is in charge of Megingjard's research. There must be some reason.";
 						next;
 						mes "[Egnigem]";
-						mes "In any case, for the sake of Rune-Midgard, it will be your responsibility to find the answers.";
+						mes "In any case, for the sake of Midgard, it will be your responsibility to find the answers.";
 						next;
 						mes "[Egnigem]";
 						mes "There's not much a dead man";

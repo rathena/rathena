@@ -88,7 +88,7 @@ OnInit:
 		"schg_cas01","schg_cas02","schg_cas03","schg_cas04","schg_cas05";
 	setarray .EndLabel$[0],"ar01","ar02","ar03","ar04","ar05","sc01","sc02","sc03","sc04","sc05";
 	setarray .Days$[0],"Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday";
-	setarray .Regions$[0],"Prontera","Payon","Geffen","Aldebaran","Arunafeltz","Schwaltzvalt";
+	setarray .Regions$[0],"Prontera","Payon","Geffen","Aldebaran","Arunafeltz","Schwarzwald";
 	setarray .Map$[0],"prt_gld","pay_gld","gef_fild13","alde_gld","aru_gld","sch_gld";
 	setarray .MapX[0],134,240,153,111,208,121,295,317,140,204,214,308,143,193,305,48, 95,142,239,264,158,83, 68,299,292,293,288, 97,137, 71;
 	setarray .MapY[0], 65,128,137,240,240,233,116,293,160,266, 75,240,240,278, 87,83,249, 85,242, 90,272,47,155,345,107,100,252,196, 90,315;

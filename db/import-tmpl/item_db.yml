@@ -22,62 +22,62 @@
 # Item Settings
 #
 ###########################################################################
-# - Id                      Item ID
-#   AegisName               Server name to reference the item in scripts and lookups, should use no spaces
-#   Name                    Name in English for displaying as output
-#   Type                    Item type (Optional) (Default: IT_ETC)
-#   SubType                 Weapon or Ammo type (Optional) (Default: 0)
-#   Buy                     Buying price. When not specified, becomes double the sell price (Optional) (Default: 0)
-#   Sell                    Selling price. When not specified, becomes half the buy price (Optional) (Default: 0)
-#   Weight                  Item weight. Each 10 is 1 weight (Optional) (Default: 0)
-#   Attack                  Weapon's attack (Optional) (Default: 0)
-#   MagicAttack             Weapon's magic attack (Optional) (Default: 0)
-#   Defense                 Armor's defense (Optional) (Default: 0)
-#   Range                   Weapon's attack range (Optional) (Default: 0)
-#   Slots                   Available slots in item (Optional) (Default: 0)
-#   Job                     Jobs that can equip the item (Optional) (Default: All)
-#   Class                   Upper class types that can equip the item (Optional) (Default: All)
-#   Gender                  Gender that can equip the item (Optional) (Default: SEX_BOTH)
-#   Location                Equipment location (Optional) (Default: None)
-#   WeaponLevel             Weapon level (Optional) (Default: 0)
-#   EquipLevelMin           Minimum required level to equip (Optional) (Default: 0)
-#   EquipLevelMax           Maximum level that can equip (Optional) (Default: 0)
-#   Refineable              If the item can be refined (Optional) (Default: False)
-#   View                    View sprite of an item (Optional) (Default: 0)
-#   BuyingStore             If the item is available for Buyingstores (Optional) (Default: False)
-#   DeadBranch              If the item is a Dead Branch (Optional) (Default: False)
-#   Container               If the item is part of a container (Optional) (Default: False)
-#   GUID                    If the item is a unique stack (Optional) (Default: False)
-#   BindOnEquip             If the item is bound to the character upon equipping (Optional) (Default: False)
-#   DropAnnounce            If the item has a special announcement to self on drop (Optional) (Default: False)
-#   NoConsume               If the item is consumed on use (Optional) (Default: False)
-#   DropEffect              If the item has a special effect when on the ground (Optional) (Default: DROPEFFECT_NONE)
-#   Delay:                  Item use delay (Optional) (Default: null)
-#     Duration                Duration of delay in seconds
-#     Status                  Status Change used to track delay (Optional) (Default: SC_NONE)
-#   Stack:                  Item stack amount (Optional) (Default: null)
-#     Amount                  Maximum amount that can be stacked
-#     Inventory               If the stack is applied to player's inventory (Optional) (Default: False)
-#     Cart                    If the stack is applied to the player's cart (Optional) (Default: False)
-#     Storage                 If the stack is applied to the player's storage (Optional) (Default: False)
-#     GuildStorage            If the stack is applied to the player's guild storage (Optional) (Default: False)
-#   NoUse:                  Conditions when the item is unusable (Optional) (Default: null)
-#     Override                Group level to override these conditions
-#     Sitting                 If the item can not be used while sitting (Optional) (Default: False)
-#   Trade:                  Trade restrictions (Optional) (Default: null)
-#     Override                Group level to override these conditions
-#     NoDrop                  If the item can not be dropped (Optional) (Default: False)
-#     NoTrade                 If the item can not be traded (Optional) (Default: False)
-#     TradePartner            If the item can not be traded to the player's partner (Optional) (Default: False)
-#     NoSell                  If the item can not be sold (Optional) (Default: False)
-#     NoCart                  If the item can not be put in a cart (Optional) (Default: False)
-#     NoStorage               If the item can not be put in a storage (Optional) (Default: False)
-#     NoGuildStorage          If the item can not be put in a guild storage (Optional) (Default: False)
-#     NoMail                  If the item can not be put in a mail (Optional) (Default: False)
-#     NoAuction               If the item can not be put in an auction (Optional) (Default: False)
-#   Script                  Script to execute when the item is used/equipped (Optional) (Default: null)
-#   EquipScript             Script to execute when the item is equipped (Optional) (Default: null)
-#   UnEquipScript           Script to execute when the item is unequipped or when a rental item expires (Optional) (Default: null)
+# - Id                      Item ID.
+#   AegisName               Server name to reference the item in scripts and lookups, should use no spaces.
+#   Name                    Name in English for displaying as output.
+#   Type                    Item type. (Default: IT_ETC)
+#   SubType                 Weapon or Ammo type. (Default: 0)
+#   Buy                     Buying price. When not specified, becomes double the sell price. (Default: 0)
+#   Sell                    Selling price. When not specified, becomes half the buy price. (Default: 0)
+#   Weight                  Item weight. Each 10 is 1 weight. (Default: 0)
+#   Attack                  Weapon's attack. (Default: 0)
+#   MagicAttack             Weapon's magic attack. (Default: 0)
+#   Defense                 Armor's defense. (Default: 0)
+#   Range                   Weapon's attack range. (Default: 0)
+#   Slots                   Available slots in item. (Default: 0)
+#   Job                     Jobs that can equip the item. (Default: All)
+#   Class                   Upper class types that can equip the item. (Default: All)
+#   Gender                  Gender that can equip the item. (Default: SEX_BOTH)
+#   Location                Equipment location. (Default: None)
+#   WeaponLevel             Weapon level. (Default: 0)
+#   EquipLevelMin           Minimum required level to equip. (Default: 0)
+#   EquipLevelMax           Maximum level that can equip. (Default: 0)
+#   Refineable              If the item can be refined. (Default: false)
+#   View                    View sprite of an item. (Default: 0)
+#   BuyingStore             If the item is available for Buyingstores. (Default: false)
+#   DeadBranch              If the item is a Dead Branch. (Default: false)
+#   Container               If the item is part of a container. (Default: false)
+#   Guid                    If the item is a unique stack. (Default: false)
+#   BindOnEquip             If the item is bound to the character upon equipping. (Default: false)
+#   DropAnnounce            If the item has a special announcement to self on drop. (Default: false)
+#   NoConsume               If the item is consumed on use. (Default: false)
+#   DropEffect              If the item has a special effect when on the ground. (Default: DROPEFFECT_NONE)
+#   Delay:                  Item use delay. (Default: null)
+#     Duration                Duration of delay in seconds.
+#     Status                  Status Change used to track delay. (Default: SC_NONE)
+#   Stack:                  Item stack amount. (Default: null)
+#     Amount                  Maximum amount that can be stacked.
+#     Inventory               If the stack is applied to player's inventory. (Default: true)
+#     Cart                    If the stack is applied to the player's cart. (Default: false)
+#     Storage                 If the stack is applied to the player's storage. (Default: false)
+#     GuildStorage            If the stack is applied to the player's guild storage. (Default: false)
+#   NoUse:                  Conditions when the item is unusable. (Default: null)
+#     Override                Group level to override these conditions.
+#     Sitting                 If the item can not be used while sitting. (Default: false)
+#   Trade:                  Trade restrictions. (Default: null)
+#     Override                Group level to override these conditions.
+#     NoDrop                  If the item can not be dropped. (Default: false)
+#     NoTrade                 If the item can not be traded. (Default: false)
+#     TradePartner            If the item can not be traded to the player's partner. (Default: false)
+#     NoSell                  If the item can not be sold. (Default: false)
+#     NoCart                  If the item can not be put in a cart. (Default: false)
+#     NoStorage               If the item can not be put in a storage. (Default: false)
+#     NoGuildStorage          If the item can not be put in a guild storage. (Default: false)
+#     NoMail                  If the item can not be put in a mail. (Default: false)
+#     NoAuction               If the item can not be put in an auction. (Default: false)
+#   Script                  Script to execute when the item is used/equipped. (Default: null)
+#   EquipScript             Script to execute when the item is equipped. (Default: null)
+#   UnEquipScript           Script to execute when the item is unequipped or when a rental item expires. (Default: null)
 ###########################################################################
 
 Header:
@@ -90,7 +90,7 @@ Body:
 #  - Id: 7950
 #    AegisName: THG_Membership
 #    Name: THG Membership
-#    Type: IT_ETC
+#    Type: Etc
 #    Sell: 10
 #    Weight: 10
 #    Job:
@@ -98,7 +98,7 @@ Body:
 #  - Id: 7951
 #    AegisName: Token_Bag
 #    Name: Token Bag
-#    Type: IT_ETC
+#    Type: Etc
 #    Sell: 10
 #    Weight: 10
 #    Job:
@@ -106,7 +106,7 @@ Body:
 #  - Id: 1998
 #    AegisName: Jeramiah's_Jur
 #    Name: Jeramiah's Jur
-#    Type: IT_ETC
+#    Type: Etc
 #    Sell: 10
 #    Weight: 10
 #    Job:
@@ -114,7 +114,7 @@ Body:
 #  - Id: 1999
 #    AegisName: Zed's_Staff
 #    Name: Zed's Staff
-#    Type: IT_ETC
+#    Type: Etc
 #    Sell: 10
 #    Weight: 10
 #    Job:
@@ -125,195 +125,195 @@ Body:
 #  - Id: 585
 #    AegisName: Wurst
 #    Name: Brusti
-#    Type: IT_DELAYCONSUME
+#    Type: Delayconsume
 #    Buy: 2
 #    Weight: 40
-#    Script: >
+#    Script: |
 #       itemheal rand(15,20),0; itemskill "PR_MAGNIFICAT",3; 
 #  - Id: 679
 #    AegisName: Gold_Pill
 #    Name: Pilule
-#    Type: IT_HEALING
+#    Type: Healing
 #    Buy: 5000
 #    Weight: 300
-#    Script: >
+#    Script: |
 #       percentheal 50,50; 
 
 #  - Id: 2681
 #    AegisName: Republic_Ring
 #    Name: Republic Anniversary Ring
-#    Type: IT_ARMOR
+#    Type: Armor
 #    Buy: 20
 #    Weight: 100
 #    Location:
-#      RightAccessory: true
-#      LeftAccessory: true
-#    Script: >
+#      Right_Accessory: true
+#      Left_Accessory: true
+#    Script: |
 #       bonus bAllStats,3; 
 
 #  - Id: 5134
 #    AegisName: Pumpkin_Hat
 #    Name: Pumpkin-Head
-#    Type: IT_ARMOR
+#    Type: Armor
 #    Buy: 20
 #    Weight: 200
 #    Defense: 2
 #    Location:
-#      HeadTop: true
+#      Head_Top: true
 #    Refineable: true
 #    View: 206
-#    Script: >
+#    Script: |
 #       bonus2 bSubRace,RC_Demon,5; 
 #  - Id: 5136
 #    AegisName: Santa's_Hat_
 #    Name: Louise's Santa Hat
-#    Type: IT_ARMOR
+#    Type: Armor
 #    Buy: 20
 #    Weight: 100
 #    Defense: 3
 #    Location:
-#      HeadTop: true
+#      Head_Top: true
 #    Refineable: true
 #    View: 20
-#    Script: >
+#    Script: |
 #       bonus bMdef,1; bonus bLuk,1; bonus3 bAutoSpellWhenHit,"AL_HEAL",3,50; bonus3 bAutoSpellWhenHit,"AL_BLESSING",10,50; 
 #  - Id: 5145
 #    AegisName: Carnival_Joker_Jester
 #    Name: Carnival Jester
-#    Type: IT_ARMOR
+#    Type: Armor
 #    Buy: 10
 #    Weight: 100
 #    Location:
-#      HeadTop: true
+#      Head_Top: true
 #    Refineable: true
 #    View: 89
-#    Script: >
+#    Script: |
 #       bonus bAllStats,3; 
 #  - Id: 5147
 #    AegisName: Baseball_Cap
 #    Name: Baseball Cap
-#    Type: IT_ARMOR
+#    Type: Armor
 #    Weight: 200
 #    Defense: 3
 #    Location:
-#      HeadTop: true
+#      Head_Top: true
 #    Refineable: true
 #    View: 216
-#    Script: >
+#    Script: |
 #       bonus2 bExpAddRace,RC_Boss,50; bonus2 bExpAddRace,RC_NonBoss,50; 
 #  - Id: 5201
 #    AegisName: Party_Hat_B
 #    Name: 2nd Anniversary Party Hat
-#    Type: IT_ARMOR
+#    Type: Armor
 #    Buy: 20
 #    Weight: 300
 #    Defense: 3
 #    Location:
-#      HeadTop: true
+#      Head_Top: true
 #    Refineable: true
 #    View: 144
-#    Script: >
+#    Script: |
 #       bonus bAllStats,3; 
 #  - Id: 5202
 #    AegisName: Pumpkin_Hat_
 #    Name: Pumpkin Hat
-#    Type: IT_ARMOR
+#    Type: Armor
 #    Buy: 20
 #    Weight: 200
 #    Defense: 2
 #    Location:
-#      HeadTop: true
+#      Head_Top: true
 #    Refineable: true
 #    View: 206
-#    Script: >
+#    Script: |
 #       bonus bAllStats,2; bonus2 bSubRace,RC_Demon,5; bonus3 bAddMonsterDropItem,529,RC_DemiHuman,1500; 
 #  - Id: 5204
 #    AegisName: Event_Pierrot_Nose
 #    Name: Rudolf's Red Nose
-#    Type: IT_ARMOR
+#    Type: Armor
 #    Buy: 20
 #    Weight: 100
 #    Location:
-#      HeadLow: true
+#      Head_Low: true
 #    View: 49
-#    Script: >
+#    Script: |
 #       bonus2 bResEff,Eff_Blind,3000; bonus2 bAddMonsterDropItem,12130,30; 
 #  - Id: 5264
 #    AegisName: Aussie_Flag_Hat
 #    Name: Australian Flag Hat
-#    Type: IT_ARMOR
+#    Type: Armor
 #    Buy: 20
 #    Weight: 500
 #    Defense: 4
 #    Location:
-#      HeadTop: true
+#      Head_Top: true
 #    Refineable: true
 #    View: 304
-#    Script: >
+#    Script: |
 #       bonus bAllStats,2; 
 #  - Id: 5356
 #    AegisName: Pumpkin_Hat_H
 #    Name: Pumpkin Hat
-#    Type: IT_ARMOR
+#    Type: Armor
 #    Buy: 20
 #    Weight: 200
 #    Defense: 2
 #    Location:
-#      HeadTop: true
+#      Head_Top: true
 #    Refineable: true
 #    View: 206
-#    Script: >
+#    Script: |
 #       bonus bAllStats,2; bonus2 bSubRace,RC_Demon,5; bonus2 bMagicAddRace,RC_Demon,5; 
 #  - Id: 5384
 #    AegisName: Santa_Hat_1
 #    Name: Twin Pompom By JB
-#    Type: IT_ARMOR
+#    Type: Armor
 #    Buy: 20
 #    Weight: 200
 #    Defense: 2
 #    Slots: 1
 #    Location:
-#      HeadTop: true
+#      Head_Top: true
 #    EquipLevelMin: 20
 #    Refineable: true
 #    View: 390
-#    Script: >
+#    Script: |
 #       bonus bLuk,3; bonus2 bResEff,Eff_Curse,2000; bonus bVariableCastrate,-2; bonus bAspdRate,4; bonus2 bAddMonsterDropItem,539,100; bonus2 bAddMonsterDropItem,529,200; bonus2 bAddMonsterDropItem,530,200; autobonus "{ bonus bCritical,10; }",10,5000; 
 #  - Id: 5811
 #    AegisName: Santa_Beard
 #    Name: Santa Beard
-#    Type: IT_ARMOR
+#    Type: Armor
 #    Buy: 20
 #    Weight: 100
 #    Defense: 5
 #    Location:
-#      HeadLow: true
+#      Head_Low: true
 #    View: 25
-#    Script: >
+#    Script: |
 #       bonus2 bSubRace,RC_Brute,5; 
 
 #  - Id: 11702
 #    AegisName: Moon_Cookie
 #    Name: Moon Cookie
-#    Type: IT_DELAYCONSUME
+#    Type: Delayconsume
 #    Weight: 10
-#    Script: >
+#    Script: |
 #       sc_end SC_POISON; sc_end SC_SILENCE; sc_end SC_BLIND; sc_end SC_CONFUSION; sc_end SC_CURSE; sc_end SC_HALLUCINATION; itemskill "AL_BLESSING",7; 
 #  - Id: 12131
 #    AegisName: Lucky_Potion
 #    Name: Lucky Potion
-#    Type: IT_HEALING
+#    Type: Healing
 #    Buy: 2
 #    Weight: 100
-#    Script: >
+#    Script: |
 #       sc_start SC_LUKFOOD,180000,15; 
 #  - Id: 12143
 #    AegisName: Red_Can
 #    Name: Red Can
-#    Type: IT_USABLE
+#    Type: Usable
 #    Buy: 50000
 #    Weight: 300
-#    Script: >
+#    Script: |
 #       percentheal 25,25; 
 
 # Event effect: Summon monster? Probably Rice_Cake. x_x
@@ -321,30 +321,30 @@ Body:
 #  - Id: 12199
 #    AegisName: Rice_Scroll
 #    Name: Rice Scroll
-#    Type: IT_USABLE
+#    Type: Usable
 #  - Id: 12200
 #    AegisName: Event_Cake
 #    Name: Event Cake
-#    Type: IT_USABLE
+#    Type: Usable
 #    Buy: 20
 #    Weight: 50
-#    Script: >
+#    Script: |
 #       itemskill "PR_MAGNIFICAT",3; 
 #  - Id: 12238
 #    AegisName: New_Year_Rice_Cake_1
 #    Name: New Year Rice Cake
-#    Type: IT_HEALING
+#    Type: Healing
 #    Buy: 20
 #    Weight: 100
-#    Script: >
+#    Script: |
 #       percentheal 20,15; sc_start SC_STRFOOD,1200000,3; sc_start SC_INTFOOD,1200000,3; sc_start SC_LUKFOOD,1200000,3; sc_start SC_SPEEDUP1,5000,0; 
 #  - Id: 12239
 #    AegisName: New_Year_Rice_Cake_2
 #    Name: New Year Rice Cake
-#    Type: IT_HEALING
+#    Type: Healing
 #    Buy: 20
 #    Weight: 100
-#    Script: >
+#    Script: |
 #       percentheal 20,15; sc_start SC_DEXFOOD,1200000,3; sc_start SC_AGIFOOD,1200000,3; sc_start SC_VITFOOD,1200000,3; sc_start SC_SPEEDUP1,5000,0; 
 
 # iRO St. Patrick's Day Event 2008
@@ -352,9 +352,9 @@ Body:
 #  - Id: 12715
 #    AegisName: Black_Treasure_Chest
 #    Name: Black Treasure Chest
-#    Type: IT_USABLE
+#    Type: Usable
 #    Weight: 200
-#    Script: >
+#    Script: |
 #       callfunc "F_08stpattyseventbox"; 
 
 # iRO Valentine's Day Event 2009
@@ -362,49 +362,49 @@ Body:
 #  - Id: 12742
 #    AegisName: Valentine_Gift_Box_M
 #    Name: Valentine Gift Box
-#    Type: IT_USABLE
+#    Type: Usable
 #    Buy: 10
-#    Script: >
+#    Script: |
 #       getitem 7946,1; 
 #  - Id: 12743
 #    AegisName: Valentine_Gift_Box_F
 #    Name: Valentine Gift Box
-#    Type: IT_USABLE
+#    Type: Usable
 #    Buy: 10
-#    Script: >
+#    Script: |
 #       getitem 7947,1; 
 #  - Id: 12744
 #    AegisName: Chocolate_Box
 #    Name: Chocolate Box
-#    Type: IT_USABLE
+#    Type: Usable
 #    Buy: 10
-#    Script: >
+#    Script: |
 #       getitem 558,1; 
 #  - Id: 14466
 #    AegisName: Valentine's_Emblem_Box
 #    Name: Valentine's Emblem Box
-#    Type: IT_USABLE
+#    Type: Usable
 #    Buy: 10
-#    Script: >
+#    Script: |
 #       getitem 5817,1; 
 #  - Id: 7946
 #    AegisName: Gold_Ring_Of_Valentine
 #    Name: Gold Ring Of Valentine
-#    Type: IT_ETC
+#    Type: Etc
 #    Buy: 10
 #    Job:
 #      All: false
 #  - Id: 7947
 #    AegisName: Silver_Ring_Of_Valentine
 #    Name: Silver Ring Of Valentine
-#    Type: IT_ETC
+#    Type: Etc
 #    Buy: 10
 #    Job:
 #      All: false
 #  - Id: 7948
 #    AegisName: Box
 #    Name: Box
-#    Type: IT_ETC
+#    Type: Etc
 #    Buy: 10
 #    Weight: 10
 #    Job:
@@ -412,13 +412,13 @@ Body:
 #  - Id: 5817
 #    AegisName: Valentine's_Emblem
 #    Name: Valentine's Emblem
-#    Type: IT_ARMOR
+#    Type: Armor
 #    Buy: 10
 #    Defense: 3
 #    Location:
-#      RightAccessory: true
-#      LeftAccessory: true
-#    Script: >
+#      Right_Accessory: true
+#      Left_Accessory: true
+#    Script: |
 #       bonus bAtkRate,3; bonus bMatkRate,3; bonus bAllStats,2; bonus bFlee,10; bonus bAspd,1; bonus bMdef,3; bonus2 bSkillAtk,"AL_HEAL",10; bonus2 bSkillHeal,"AL_HEAL",10; bonus2 bSkillHeal,"AM_POTIONPITCHER",10; bonus2 bAddItemGroupHealRate,IG_Potion,10; 
 
 # iRO Halloween Event 2009
@@ -426,25 +426,25 @@ Body:
 #  - Id: 5668
 #    AegisName: Weird_Pumpkin_Hat
 #    Name: Weird Pumpkin Hat
-#    Type: IT_ARMOR
+#    Type: Armor
 #    Buy: 20
 #    Defense: 5
 #    Location:
-#      HeadTop: true
+#      Head_Top: true
 #    Refineable: true
 #    View: 206
-#    Script: >
+#    Script: |
 #       bonus bMdef,5; bonus2 bAddMonsterDropItem,12192,2500; 
 #  - Id: 6298
 #    AegisName: Crushed_Pumpkin
 #    Name: Crushed Pumpkin
-#    Type: IT_ETC
+#    Type: Etc
 #    Job:
 #      All: false
 #  - Id: 6299
 #    AegisName: Worn_Fabric
 #    Name: Worn Fabric
-#    Type: IT_ETC
+#    Type: Etc
 #    Job:
 #      All: false
 
@@ -453,7 +453,7 @@ Body:
 #  - Id: 2338
 #    AegisName: Wedding_Dress
 #    Name: Wedding Dress
-#    Type: IT_ARMOR
+#    Type: Armor
 #    Buy: 43000
 #    Weight: 500
 #    Job:
@@ -462,26 +462,26 @@ Body:
 #    Location:
 #      Armor: true
 #    Refineable: true
-#    EquipScript: >
+#    EquipScript: |
 #       sc_start SC_WEDDING,INFINITE_TICK,0; 
-#    UnEquipScript: >
+#    UnEquipScript: |
 #       sc_end SC_WEDDING; 
 #  - Id: 7170
 #    AegisName: Tuxedo
 #    Name: Tuxedo
-#    Type: IT_ARMOR
+#    Type: Armor
 #    Buy: 43000
 #    Weight: 10
 #    Job:
 #      All: true
 #      Novice: false
-#    Gender: SEX_MALE
+#    Gender: Male
 #    Location:
 #      Armor: true
 #    Refineable: true
-#    EquipScript: >
+#    EquipScript: |
 #       sc_start SC_WEDDING,INFINITE_TICK,0; 
-#    UnEquipScript: >
+#    UnEquipScript: |
 #       sc_end SC_WEDDING; 
 
 # Non-kRO Eden Group Mark effect
@@ -489,6 +489,6 @@ Body:
 #  - Id: 22508
 #    AegisName: Para_Team_Mark_
 #    Name: Eden Group Mark
-#    Type: IT_DELAYCONSUME
-#    Script: >
+#    Type: Delayconsume
+#    Script: |
 #       unitskilluseid getcharid(3),"AL_TELEPORT",3; 

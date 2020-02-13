@@ -1739,7 +1739,7 @@ paramk,124,97,3	script	Gecko the Trainer#unm01	4_M_DESERT,{
 	switch( Class ) {
 	case Job_Rune_Knight:
 	case Job_Rune_Knight_T:
-	case Job_Baby_Rune:
+	case Job_Baby_Rune_Knight:
 		mes "Welcome. Would you like to rent a Dragon?";
 		next;
 		if (select("Yes:No") == 2) {
@@ -1766,7 +1766,7 @@ paramk,124,97,3	script	Gecko the Trainer#unm01	4_M_DESERT,{
 
 	case Job_Royal_Guard:
 	case Job_Royal_Guard_T:
-	case Job_Baby_Guard:
+	case Job_Baby_Royal_Guard:
 		mes "Welcome. Would you like to rent a Gryphon?";
 		next;
 		if (select("Yes:No") == 2) {
