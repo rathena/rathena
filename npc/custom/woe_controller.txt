@@ -11,6 +11,7 @@
 //= 1.6b Fixed hardcoded castle numbers [Lemongrass]
 //= 1.7 Removed direct SQL access [Lemongrass]
 //= 1.8 Fixed invalid checkweight usage [Lemongrass]
+//= 1.9 Fixed reward handout for multiple characters on the same account [Lemongrass]
 //===== Description: ========================================= 
 //= A controller for War of Emperium designed for
 //= simplicity and ease of use.
@@ -222,7 +223,7 @@ OnReward:
 						setd ".@str_"+.@cid[.@j],1;
 						message rid2name(.@aid[.@j]),"You've got mail!";
 					}
-				} else if (isloggedin(.@aid[.@j])) {
+				} else if (isloggedin(.@aid[.@j],.@cid[.@j])) {
 					attachrid( .@aid[.@j], true );
 					.@name$ = strcharinfo( 0 );
 					.@castle_name$ = getcastlename(.Castles$[.@i]);
