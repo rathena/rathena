@@ -9,6 +9,7 @@
 //= 1.6 Replaced SQL insert for mail with script command [Capuche]
 //= 1.6a Fixed invalid name Schwaltzvalt [Daegaladh]
 //= 1.6b Fixed hardcoded castle numbers [Lemongrass]
+//= 1.7 Removed direct SQL access [Lemongrass]
 //===== Description: ========================================= 
 //= A controller for War of Emperium designed for
 //= simplicity and ease of use.
@@ -171,14 +172,34 @@ OnReward:
 	if (!.reward_id_size && !.reward_zeny)
 		return;
 
-	set .@sql$, ((.Options&4)?"position = 0":"online = 1");
 	if (.Options&2) set .@str$,gettimestr("%B %d, %Y",21);
 	freeloop(1);
 	for(set .@i,0; .@i<getarraysize(.Castles$); set .@i,.@i+1) {
 		if (getarg(0)&(1<<.@i)) {
 			set .@gid, getcastledata(.Castles$[.@i],1);
 			if (!.@gid) continue;
-			set .@size, query_sql("SELECT account_id,char_id FROM `guild_member` WHERE guild_id = '"+.@gid+"' AND "+.@sql$,.@aid,.@cid);
+
+			getguildmember( .@gid, 1, .@cid );
+			.@size = getguildmember( .@gid, 2, .@aid );
+
+			if( .Options&4 ){
+				.@master_cid = getguildmasterid( .@gid );
+				
+				for( .@j = 0; .@j < .@size; .@j++ ){
+					if( .@cid[.@j] == .@master_cid ){
+						.@master_aid = .@aid[.@j];
+
+						cleararray( .@cid, 0, .@size );
+						cleararray( .@aid, 0, .@size );
+
+						.@size = 1;
+						.@cid[0] = .@master_cid;
+						.@aid[0] = .@master_aid;
+						break;
+					}
+				}
+			}
+
 			for(set .@j,0; .@j<.@size; set .@j,.@j+1) {
 				if ((.Options&8) && !(.Options&4)) {
 					set .@ip$, replacestr(getcharip(.@aid[.@j]),".","a");
