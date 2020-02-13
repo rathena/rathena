@@ -1,20 +1,23 @@
-//===== rAthena Script =======================================
+//===== rAthena Script ======================================= 
 //= Euphy's WOE Controller
-//===== By: ==================================================
-//= Euphy
-//===== Current Version: =====================================
-//= 1.5
-//===== Compatible With: =====================================
-//= rAthena Project
-//===== Description: =========================================
+//===== Changelogs: ==========================================
+//= 1.3a Initial SVN release [Euphy]
+//= 1.3b Fixed WoE SE end labels [Euphy]
+//= 1.4 Added auto kick config [Euphy]
+//= 1.5 Added additional reward configs [Euphy]
+//= 1.5a Fixed hardcoded date constants [Lemongrass]
+//= 1.6 Replaced SQL insert for mail with script command [Capuche]
+//= 1.6a Fixed invalid name Schwaltzvalt [Daegaladh]
+//= 1.6b Fixed hardcoded castle numbers [Lemongrass]
+//===== Description: ========================================= 
 //= A controller for War of Emperium designed for
 //= simplicity and ease of use.
 //= Many concepts taken from ToastOfDoom's script,
 //= and "rewards" function originally by Goddameit.
-//===== Additional Comments: =================================
+//=
 //= Be sure to disable the default agit controllers!
-//== npc\guild\agit_controller.txt
-//== npc\guild2\agit_start_se.txt
+//= npc\guild\agit_controller.txt
+//= npc\guild2\agit_start_se.txt
 //============================================================
 
 // Information NPC
