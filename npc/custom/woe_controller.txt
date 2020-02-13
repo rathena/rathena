@@ -10,6 +10,7 @@
 //= 1.6a Fixed invalid name Schwaltzvalt [Daegaladh]
 //= 1.6b Fixed hardcoded castle numbers [Lemongrass]
 //= 1.7 Removed direct SQL access [Lemongrass]
+//= 1.8 Fixed invalid checkweight usage [Lemongrass]
 //===== Description: ========================================= 
 //= A controller for War of Emperium designed for
 //= simplicity and ease of use.
@@ -222,16 +223,18 @@ OnReward:
 						message rid2name(.@aid[.@j]),"You've got mail!";
 					}
 				} else if (isloggedin(.@aid[.@j])) {
-					.@name$ = rid2name(.@aid[.@j]);
+					attachrid( .@aid[.@j], true );
+					.@name$ = strcharinfo( 0 );
 					.@castle_name$ = getcastlename(.Castles$[.@i]);
 					for ( .@k = 0; .@k < .reward_id_size; .@k++ ) {
 						if (checkweight(.reward_id[.@k], .reward_amount[.@k]))
-							getitem .reward_id[.@k], .reward_amount[.@k], .@aid[.@j];
+							getitem .reward_id[.@k], .reward_amount[.@k];
 						else
-							message .@name$, "You can't receive x" + .reward_amount[.@k] + " " + getitemname(.reward_id[.@k]) + " for conquering " + .@castle_name$ + " because you're overweight.";
+							dispbottom "You can't receive x" + .reward_amount[.@k] + " " + getitemname(.reward_id[.@k]) + " for conquering " + .@castle_name$ + " because you're overweight.";
 					}
 					Zeny += .reward_zeny;
-					message .@name$, "You have been rewarded for conquering " + .@castle_name$ + ".";
+					dispbottom "You have been rewarded for conquering " + .@castle_name$ + ".";
+					detachrid;
 				}
 			}
 		}
