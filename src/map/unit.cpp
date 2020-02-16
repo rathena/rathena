@@ -46,7 +46,7 @@ const short dirx[DIR_MAX]={0,-1,-1,-1,0,1,1,1}; ///lookup to know where will mov
 const short diry[DIR_MAX]={1,1,0,-1,-1,-1,0,1}; ///lookup to know where will move to y according dir
 
 
-#define CLIENT_COMPLEX_PATH_LIMIT 12
+#define CLIENT_COMPLEX_PATH_LIMIT 14
 
 //early declaration
 static TIMER_FUNC(unit_attack_timer);
@@ -96,7 +96,15 @@ int unit_walktoxy_sub(struct block_list *bl)
 		&& wpd.path_len > CLIENT_COMPLEX_PATH_LIMIT	// Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
 		&& (bl->type != BL_NPC)) // If type is a NPC, please disregard.
 	{
-		if (bl->type == BL_MOB) return 0; // prevent monsters jumping through walls, client can't display
+		if (bl->type == BL_MOB) {
+			ud->to_x = bl->x;
+			ud->to_y = bl->y;
+			for (i = 0; i < CLIENT_COMPLEX_PATH_LIMIT-1; i++) { ud->to_x = ud->to_x + dirx[wpd.path[i]];
+			ud->to_y = ud->to_y + diry[wpd.path[i]];
+			}
+
+		}
+			//return 0; // prevent monsters jumping through walls, client can't display
 #ifdef OFFICIAL_WALKPATH
 		return 0;
 #endif
@@ -658,7 +666,16 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 		&& wpd.path_len > CLIENT_COMPLEX_PATH_LIMIT	// Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
 		&& (bl->type != BL_NPC)) // If type is a NPC, please disregard.
 	{
-		if (bl->type == BL_MOB) return 0; // prevent monsters jumping through walls, client can't display
+			if (bl->type == BL_MOB) if (bl->type == BL_MOB) {
+				x = bl->x;
+				y = bl->y;
+				for (int i = 0; i < CLIENT_COMPLEX_PATH_LIMIT - 1; i++) {
+					x = x + dirx[wpd.path[i]];
+					y = y + diry[wpd.path[i]];
+				}
+			}
+
+			//return 0; // prevent monsters jumping through walls, client can't display
 #ifdef OFFICIAL_WALKPATH
 		return 0;
 #endif
@@ -2433,7 +2450,7 @@ bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, 
 		&& wpd.path_len > CLIENT_COMPLEX_PATH_LIMIT	// Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
 		&& (bl->type != BL_NPC)) // If type is a NPC, please disregard.
 	{
-		if (bl->type == BL_MOB) return false;
+		//if (bl->type == BL_MOB) return false;
 #ifdef OFFICIAL_WALKPATH
 		return false;
 #endif
