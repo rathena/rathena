@@ -677,11 +677,33 @@ static TIMER_FUNC(bg_on_ready_expire)
  */
 static TIMER_FUNC(bg_on_ready_start)
 {
-	s_battleground_queue *queue = (s_battleground_queue*)data;
+	s_battleground_queue* queue = (s_battleground_queue*)data;
 
 	nullpo_retr(1, queue);
 
-	bg_queue_start_battleground(std::shared_ptr<s_battleground_queue>(queue));
+	queue->tid_start = INVALID_TIMER;
+	bg_queue_start_battleground(queue);
+
+	return 0;
+}
+
+/**
+ * Cleanup Battleground Queue data
+ * @param tid: Timer ID
+ * @param tick: Timer
+ * @param id: ID
+ * @return 0 on success or 1 otherwise
+ */
+static TIMER_FUNC(bg_queue_cleanup)
+{
+	size_t index = 0;
+
+	for (const auto &queue_it : bg_queues) {
+		if (queue_it->clean)
+			util::erase_at(bg_queues, index);
+		index++;
+	}
+
 	return 0;
 }
 
@@ -1360,13 +1382,8 @@ void bg_queue_on_accept_invite(std::shared_ptr<s_battleground_queue> queue, stru
  * Begin the Battleground from the given queue
  * @param queue: Battleground queue
  */
-void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue)
+void bg_queue_start_battleground(s_battleground_queue *queue)
 {
-	if (queue->tid_start != INVALID_TIMER && get_timer(queue->tid_start)) {
-		delete_timer(queue->tid_start, bg_on_ready_start);
-		queue->tid_start = INVALID_TIMER;
-	}
-
 	std::shared_ptr<s_battleground_type> bg = battleground_db.find(queue->id);
 
 	if (!bg) {
@@ -1401,15 +1418,7 @@ void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue)
 	queue->teamb_members.clear();
 	queue->teama_members.shrink_to_fit();
 	queue->teamb_members.shrink_to_fit();
-
-	auto queue_it = bg_queues.begin();
-
-	while (queue_it != bg_queues.end()) {
-		if (*queue_it == queue)
-			queue_it = bg_queues.erase(queue_it);
-	}
-
-	return;
+	queue->clean = true;
 }
 
 /**
@@ -1424,6 +1433,8 @@ void do_init_battleground(void)
 	add_timer_func_list(bg_on_ready_loopback, "bg_on_ready_loopback");
 	add_timer_func_list(bg_on_ready_expire, "bg_on_ready_expire");
 	add_timer_func_list(bg_on_ready_start, "bg_on_ready_start");
+	add_timer_func_list(bg_queue_cleanup, "bg_queue_cleanup");
+	add_timer_interval(gettick() + 5000, bg_queue_cleanup, 0, 0, 5000);
 	add_timer_interval(gettick() + battle_config.bg_update_interval, bg_send_xy_timer, 0, 0, battle_config.bg_update_interval);
 }
 

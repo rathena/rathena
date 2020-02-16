@@ -53,6 +53,7 @@ struct s_battleground_queue {
 	int max_players; ///< Maximum amount of players on each side
 	int accepted_players; ///< Amount of players who accepted the offer to enter the battleground
 	bool in_ready_state; ///< Is this BG queue waiting for players to enter the BG?
+	bool clean; ///< If the queue data need to be cleaned up from the global timer
 	int tid_expire; ///< Timer ID associated with the time out at the ready to enter window
 	int tid_start; ///< Timer ID associated with the start delay
 	int tid_requeue; ///< Timer ID associated with requeuing this group if all BG maps are reserved
@@ -134,7 +135,7 @@ e_bg_queue_apply_ack bg_queue_join_multi(const char *name, struct map_session_da
 bool bg_queue_leave(struct map_session_data *sd);
 bool bg_queue_on_ready(const char *name, std::shared_ptr<s_battleground_queue> queue);
 void bg_queue_on_accept_invite(std::shared_ptr<s_battleground_queue> queue, struct map_session_data *sd);
-void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue);
+void bg_queue_start_battleground(s_battleground_queue *queue);
 bool bg_member_respawn(struct map_session_data *sd);
 void bg_send_message(struct map_session_data *sd, const char *mes, int len);
 
