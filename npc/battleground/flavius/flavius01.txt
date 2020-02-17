@@ -1,18 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= BattleGround System - Flavius
-//===== By: ================================================== 
-//= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 1.7
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Flavius Battleground.
 //= - Winning Team: 9 badges (11 if VIP)
 //= - Losing Team: 3 badges (5 if VIP)
-//===== Additional Comments: ================================= 
-//= 1.0 First Version.
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [L0ne_W0lf]
 //= 1.1 Fixed pink crystal spawning as blue. [L0ne_W0lf]
 //= 1.2 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
 //= 1.3 Removed MaxLvl check in waitingrooms. Replaced setwall with setcell.
@@ -20,6 +14,7 @@
 //= 1.5 Added GM management function. [Euphy]
 //= 1.6 Added VIP features and created a reward function. [Euphy]
 //= 1.7 Made Crystals immune to attacks until Guardians are defeated. [Cydh/Aleos]
+//= 1.8 Added battle_config checks to allow this script to use the new queue interface or the previous method. [Aleos]
 //============================================================
 
 // Waiting Room NPCs
@@ -51,6 +46,8 @@ bat_room,2,151,3	script	#bat_b01_timer	844,{
 	end;
 
 OnInit:
+	if (getbattleflag("feature.bgqueue"))
+		end;
 OnEnable:
 	initnpctimer;
 	end;
@@ -61,14 +58,21 @@ OnStop:
 
 OnTimer1000:
 	stopnpctimer;
-	initnpctimer;
+	if (!getbattleflag("feature.bgqueue"))
+		initnpctimer;
 	set .@chk_bat_a01,getmapusers("bat_b01");
 	if (.@chk_bat_a01 < 1) {
 		set $@FlaviusBG1, 0;
 		if( $@FlaviusBG1_id1 ) { bg_destroy $@FlaviusBG1_id1; set $@FlaviusBG1_id1, 0; }
 		if( $@FlaviusBG1_id2 ) { bg_destroy $@FlaviusBG1_id2; set $@FlaviusBG1_id2, 0; }
-		donpcevent "start#bat_b01::OnReadyCheck";
+		if (getbattleflag("feature.bgqueue")) {
+			bg_unbook "bat_b01";
+			end;
+		} else
+			donpcevent "start#bat_b01::OnReadyCheck";
 	}
+	if (getbattleflag("feature.bgqueue"))
+		initnpctimer;
 	end;
 }
 
@@ -83,22 +87,26 @@ OnInit:
 OnReadyCheck:
 	if( $@FlaviusBG1 )
 		end;
-	set .@Guillaume, getwaitingroomstate(0,"Lieutenant Ator");
-	set .@Croix, getwaitingroomstate(0,"Lieutenant Thelokus");
-	if( !.@Guillaume && !.@Croix ) {
-		donpcevent "#bat_b01_timer::OnStop";
-		end;
+	if (!getbattleflag("feature.bgqueue")) {
+		set .@Guillaume, getwaitingroomstate(0,"Lieutenant Ator");
+		set .@Croix, getwaitingroomstate(0,"Lieutenant Thelokus");
+		if( !.@Guillaume && !.@Croix ) {
+			donpcevent "#bat_b01_timer::OnStop";
+			end;
+		}
+		if( .@Guillaume < 10 || .@Croix < 10 )
+			end;
 	}
-	if( .@Guillaume < 10 || .@Croix < 10 )
-		end;
 	set $@FlaviusBG1, 1;
 	set $@FlaviusBG1_Victory, 0;
 	set $@Croix_ScoreBG1, 0;
 	set $@Guill_ScoreBG1, 0;
 	bg_updatescore "bat_b01",$@Guill_ScoreBG1,$@Croix_ScoreBG1;
 
-	donpcevent "Lieutenant Ator::OnEnterBG";
-	donpcevent "Lieutenant Thelokus::OnEnterBG";
+	if (!getbattleflag("feature.bgqueue")) {
+		donpcevent "Lieutenant Ator::OnEnterBG";
+		donpcevent "Lieutenant Thelokus::OnEnterBG";
+	}
 	donpcevent "OBJ#bat_b01_a::OnKill";
 	donpcevent "OBJ#bat_b01_a::OnEnable";
 	donpcevent "OBJ#bat_b01_b::OnKill";
@@ -142,7 +150,10 @@ OnReset:
 
 OnGuillaumeQuit:
 OnCroixQuit:
-	bg_leave;
+	if (getbattleflag("feature.bgqueue"))
+		bg_desert;
+	else
+		bg_leave;
 	end;
 
 OnTimer10000:
@@ -405,7 +416,8 @@ bat_b01,10,294,3	script	Guillaume Vintenar#b01_a	934,{
 			callfunc "F_BG_Badge",0,"Guillaume","Flavius";
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -421,7 +433,8 @@ bat_b01,389,14,3	script	Croix Vintenar#b01_b	934,{
 			callfunc "F_BG_Badge",0,"Croix","Flavius";
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -578,4 +591,20 @@ bat_b01,1,10,3	script	Release all#b01	81,{
 			close;
 		}
 	}
+}
+
+// BG Queue makes these scripts useless
+-	script	BGQueueInit#flavius01	-1,{
+	end;
+
+OnInit:
+	if (getbattleflag("feature.bgqueue")) {
+		unloadnpc "Lieutenant Ator";
+		unloadnpc "Lieutenant Thelokus";
+		unloadnpc "back_bgroomb01a";
+		unloadnpc "back_bgroomb01b";
+		unloadnpc "A_CODE#bat_b01";
+		unloadnpc "B_CODE#bat_b01";
+	}
+	end;
 }

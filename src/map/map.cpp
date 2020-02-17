@@ -2058,8 +2058,11 @@ int map_quit(struct map_session_data *sd) {
 	if (sd->npc_id)
 		npc_event_dequeue(sd);
 
-	if( sd->bg_id )
-		bg_team_leave(sd,1);
+	if (sd->bg_id)
+		bg_team_leave(sd, true, true);
+
+	if (sd->bg_queue != nullptr)
+		bg_queue_leave(sd);
 
 	if( sd->status.clan_id )
 		clan_member_left(sd);
@@ -2979,6 +2982,9 @@ const char* map_mapid2mapname(int m)
 
 	struct map_data *mapdata = map_getmapdata(m);
 
+	if (!mapdata)
+		return "";
+
 	if (mapdata->instance_id) { // Instance map check
 		struct instance_data *im = &instance_data[mapdata->instance_id];
 
@@ -3701,8 +3707,6 @@ void map_data_copyall (void) {
 	}
 }
 
-#define NO_WATER 1000000
-
 /*
  * Reads from the .rsw for each map
  * Returns water height (or NO_WATER if file doesn't exist) or other error is encountered.
@@ -3712,7 +3716,7 @@ void map_data_copyall (void) {
 int map_waterheight(char* mapname)
 {
 	char fn[256];
- 	char *rsw, *found;
+ 	char *found;
 
 	//Look up for the rsw
 	sprintf(fn, "data\\%s.rsw", mapname);
@@ -3721,15 +3725,7 @@ int map_waterheight(char* mapname)
 	if (found) strcpy(fn, found); // replace with real name
 
 	// read & convert fn
-	rsw = (char *) grfio_read (fn);
-	if (rsw)
-	{	//Load water height from file
-		int wh = (int) *(float*)(rsw+166); //FIXME Casting between integer* and float* which have an incompatible binary data representation.
-		aFree(rsw);
-		return wh;
-	}
-	ShowWarning("Failed to find water level for (%s)\n", mapname, fn);
-	return NO_WATER;
+	return grfio_read_rsw_water_level( fn );
 }
 
 /*==================================
@@ -3764,7 +3760,7 @@ int map_readgat (struct map_data* m)
 		uint32 type = *(uint32*)( gat + off + 16 );
 		off += 20;
 
-		if( type == 0 && water_height != NO_WATER && height > water_height )
+		if( type == 0 && water_height != RSW_NO_WATER && height > water_height )
 			type = 3; // Cell is 0 (walkable) but under water level, set to 3 (walkable water)
 
 		m->cell[xy] = map_gat2cell(type);
@@ -5249,9 +5245,9 @@ int do_init(int argc, char *argv[])
 	do_init_elemental();
 	do_init_quest();
 	do_init_achievement();
+	do_init_battleground();
 	do_init_npc();
 	do_init_unit();
-	do_init_battleground();
 	do_init_duel();
 	do_init_vending();
 	do_init_buyingstore();
