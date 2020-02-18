@@ -1059,9 +1059,11 @@ static void bg_queue_clear(s_battleground_queue *queue)
 		queue->tid_start = INVALID_TIMER;
 	}
 
+	if (queue->map != nullptr) {
+		queue->map->isReserved = false; // Remove reservation to free up for future queue
+		queue->map = nullptr;
+	}
 	queue->in_ready_state = false;
-	queue->map->isReserved = false; // Remove reservation to free up for future queue
-	queue->map = nullptr;
 	queue->accepted_players = 0; // Reset the queue count
 }
 
