@@ -1036,6 +1036,36 @@ e_bg_queue_apply_ack bg_queue_join_multi(const char *name, struct map_session_da
 }
 
 /**
+ * Clear Battleground queue for next one
+ * @param queue: Queue to clean up
+ */
+static void bg_queue_clear(s_battleground_queue *queue)
+{
+	if (!queue)
+		return;
+
+	if (queue->tid_requeue != INVALID_TIMER && get_timer(queue->tid_requeue)) {
+		delete_timer(queue->tid_requeue, bg_on_ready_loopback);
+		queue->tid_requeue = INVALID_TIMER;
+	}
+
+	if (queue->tid_expire != INVALID_TIMER && get_timer(queue->tid_expire)) {
+		delete_timer(queue->tid_expire, bg_on_ready_expire);
+		queue->tid_expire = INVALID_TIMER;
+	}
+
+	if (queue->tid_start != INVALID_TIMER && get_timer(queue->tid_start)) {
+		delete_timer(queue->tid_start, bg_on_ready_start);
+		queue->tid_start = INVALID_TIMER;
+	}
+
+	queue->in_ready_state = false;
+	queue->map->isReserved = false; // Remove reservation to free up for future queue
+	queue->map = nullptr;
+	queue->accepted_players = 0; // Reset the queue count
+}
+
+/**
  * Sub function for leaving a Battleground queue
  * @param sd: Player leaving
  * @param lista: List of players in queue data
@@ -1063,27 +1093,8 @@ static bool bg_queue_leave_sub(struct map_session_data *sd, std::vector<map_sess
 
 			if (lista.empty() && listb.empty()) { // If there are no players left in the queue, discard it
 				for (auto &queue : bg_queues) {
-					if (sd->bg_queue == queue) {
-						if (queue->tid_requeue != INVALID_TIMER && get_timer(queue->tid_requeue)) {
-							delete_timer(queue->tid_requeue, bg_on_ready_loopback);
-							queue->tid_requeue = INVALID_TIMER;
-						}
-
-						if (queue->tid_expire != INVALID_TIMER && get_timer(queue->tid_expire)) {
-							delete_timer(queue->tid_expire, bg_on_ready_expire);
-							queue->tid_expire = INVALID_TIMER;
-						}
-
-						if (queue->tid_start != INVALID_TIMER && get_timer(queue->tid_start)) {
-							delete_timer(queue->tid_start, bg_on_ready_start);
-							queue->tid_start = INVALID_TIMER;
-						}
-
-						queue->in_ready_state = false;
-						queue->map->isReserved = false; // Remove reservation to free up for future queue
-						queue->map = nullptr;
-						queue->accepted_players = 0; // Reset the queue count
-					}
+					if (sd->bg_queue == queue)
+						bg_queue_clear(queue.get());
 				}
 			}
 
@@ -1226,6 +1237,7 @@ void bg_queue_start_battleground(s_battleground_queue *queue)
 	queue->teamb_members.clear();
 	queue->teama_members.shrink_to_fit();
 	queue->teamb_members.shrink_to_fit();
+	bg_queue_clear(queue);
 }
 
 /**
@@ -1234,7 +1246,7 @@ void bg_queue_start_battleground(s_battleground_queue *queue)
  * @param req_players: Required amount of players
  * @return s_battleground_queue*
  */
-void bg_queue_create(int bg_id, int req_players)
+static void bg_queue_create(int bg_id, int req_players)
 {
 	auto queue = std::make_shared<s_battleground_queue>();
 
