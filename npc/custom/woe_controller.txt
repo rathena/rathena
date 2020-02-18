@@ -182,29 +182,30 @@ OnReward:
 			if (!.@gid) continue;
 
 			getguildmember( .@gid, 1, .@cid );
-			.@size = getguildmember( .@gid, 2, .@aid );
+			.@size_guild = getguildmember( .@gid, 2, .@aid );
 
 			if( .Options&4 ){
 				.@master_cid = getguildmasterid( .@gid );
-				
-				for( .@j = 0; .@j < .@size; .@j++ ){
-					if( .@cid[.@j] == .@master_cid ){
-						.@master_aid = .@aid[.@j];
+				.@index = inarray(.@cid, .@master_cid);
+				.@master_aid = .@aid[.@index];
 
-						cleararray( .@cid, 0, .@size );
-						cleararray( .@aid, 0, .@size );
+				cleararray( .@cid, 0, .@size_guild );
+				cleararray( .@aid, 0, .@size_guild );
 
-						.@size = 1;
-						.@cid[0] = .@master_cid;
-						.@aid[0] = .@master_aid;
-						break;
-					}
-				}
+				.@size_guild = 1;
+				.@cid[0] = .@master_cid;
+				.@aid[0] = .@master_aid;
 			}
 
-			for(set .@j,0; .@j<.@size; set .@j,.@j+1) {
+			for(set .@j,0; .@j<.@size_guild; set .@j,.@j+1) {
 				if ((.Options&8) && !(.Options&4)) {
-					set .@ip$, replacestr(getcharip(.@aid[.@j]),".","a");
+					if (isloggedin(.@aid[.@j],.@cid[.@j]))
+						set .@ip$, replacestr(getcharip(.@aid[.@j]),".","a");
+					else {
+						if (query_sql("SELECT `last_ip` FROM `login` WHERE `account_id` = '" + .@aid[.@j] + "'", .@last_ip$) < 1)
+							continue;
+						.@ip$ = replacestr(.@last_ip$, ".", "a");
+					}
 					if (getd(".@ip_"+.@i+"_"+.@ip$)) continue;
 					setd ".@ip_"+.@i+"_"+.@ip$,1;
 				}
