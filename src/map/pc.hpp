@@ -4,12 +4,14 @@
 #ifndef PC_HPP
 #define PC_HPP
 
+#include <memory>
 #include <vector>
 
 #include "../common/mmo.hpp" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/strlib.hpp"// StringBuf
 #include "../common/timer.hpp"
 
+#include "battleground.hpp"
 #include "buyingstore.hpp" // struct s_buyingstore
 #include "clif.hpp" //e_wip_block
 #include "itemdb.hpp" // MAX_ITEMGROUP
@@ -623,6 +625,10 @@ struct map_session_data {
 		bool changed; // if true, should sync with charserver on next mailbox request
 	} mail;
 
+	// Battlegrounds queue system [MasterOfMuppets]
+	std::shared_ptr<s_battleground_queue> bg_queue;
+	bool bg_queue_accept_state; // Set this to true when someone has accepted the invite to join BGs
+
 	//Quest log system
 	int num_quests;          ///< Number of entries in quest_log
 	int avail_quests;        ///< Number of Q_ACTIVE and Q_INACTIVE entries in quest log (index of the first Q_COMPLETE entry)
@@ -651,7 +657,7 @@ struct map_session_data {
 	int debug_line;
 	const char* debug_func;
 
-	unsigned int bg_id;
+	int bg_id;
 
 #ifdef SECURE_NPCTIMEOUT
 	/**

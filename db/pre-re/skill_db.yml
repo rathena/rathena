@@ -17987,11 +17987,32 @@ Body:
     Range: 11
     Hit: Single
     HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 0
+      - Level: 2
+        Area: 0
+      - Level: 3
+        Area: 0
+      - Level: 4
+        Area: 0
+      - Level: 5
+        Area: 0
+      - Level: 6
+        Area: 1
+      - Level: 7
+        Area: 1
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 2
+      - Level: 10
+        Area: 3
     CopyFlags:
       Skill:
         Reproduce: true
     CastCancel: true
-    CastTime:
+    CastTime: # !TODO: Confirm cast time
       - Level: 1
         Time: 5000
       - Level: 2
@@ -18001,6 +18022,16 @@ Body:
       - Level: 4
         Time: 8000
       - Level: 5
+        Time: 9000
+      - Level: 6
+        Time: 9000
+      - Level: 7
+        Time: 9000
+      - Level: 8
+        Time: 9000
+      - Level: 9
+        Time: 9000
+      - Level: 10
         Time: 9000
     AfterCastActDelay: 2000
     Cooldown: 15000
@@ -22107,11 +22138,25 @@ Body:
     Element: Weapon
     Knockback:
       - Level: 1
-        Amount: 3
+        Amount: 1
       - Level: 2
-        Amount: 6
+        Amount: 2
       - Level: 3
+        Amount: 3
+      - Level: 4
+        Amount: 4
+      - Level: 5
+        Amount: 5
+      - Level: 6
+        Amount: 6
+      - Level: 7
+        Amount: 7
+      - Level: 8
+        Amount: 8
+      - Level: 9
         Amount: 9
+      - Level: 10
+        Amount: 10
     CopyFlags:
       Skill:
         Reproduce: true
@@ -27958,6 +28003,7 @@ Body:
       Ammo:
         Bullet: true
       AmmoAmount: 1
+      SpiritSphereCost: -1
       Equipment:
         Silver_Bullet: true
   - Id: 2564
@@ -28130,6 +28176,7 @@ Body:
         Time: 80000
     Requires:
       SpCost: 30
+      SpiritSphereCost: -1
   - Id: 2569
     Name: RL_AM_BLAST
     Description: Anti-Material Blast
@@ -28256,6 +28303,7 @@ Body:
           Amount: 55
       Weapon:
         Rifle: true
+      SpiritSphereCost: -1
   - Id: 2572
     Name: RL_R_TRIP_PLUSATK
     Description: Round Trip Plus Attack

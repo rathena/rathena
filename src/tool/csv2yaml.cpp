@@ -85,7 +85,7 @@ std::unordered_map<uint16, s_skill_db> skill_nearnpc;
 
 // Forward declaration of conversion functions
 static bool guild_read_guildskill_tree_db( char* split[], int columns, int current );
-static size_t pet_read_db( const char* file );
+static bool pet_read_db( const char* file );
 static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current);
 static bool skill_parse_row_abradb(char* split[], int columns, int current);
 static bool skill_parse_row_improvisedb(char* split[], int columns, int current);
@@ -677,12 +677,12 @@ static bool guild_read_guildskill_tree_db( char* split[], int columns, int curre
 }
 
 // Copied and adjusted from pet.cpp
-static size_t pet_read_db( const char* file ){
+static bool pet_read_db( const char* file ){
 	FILE* fp = fopen( file, "r" );
 
 	if( fp == nullptr ){
 		ShowError( "can't read %s\n", file );
-		return 0;
+		return false;
 	}
 
 	int lines = 0;
@@ -851,7 +851,7 @@ static size_t pet_read_db( const char* file ){
 	fclose(fp);
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' pets in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file );
 
-	return entries;
+	return true;
 }
 
 // Copied and adjusted from skill.cpp
@@ -2203,14 +2203,14 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 		}
 		
 		if (!isMultiLevel(it_req->second.spiritball)) {
-			if (it_req->second.spiritball[0] > 0)
+			if (it_req->second.spiritball[0] != 0)
 				body << YAML::Key << "SpiritSphereCost" << YAML::Value << it_req->second.spiritball[0];
 		} else {
 			body << YAML::Key << "SpiritSphereCost";
 			body << YAML::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_req->second.spiritball); i++) {
-				if (it_req->second.spiritball[i] > 0) {
+				if (it_req->second.spiritball[i] != 0) {
 					body << YAML::BeginMap;
 					body << YAML::Key << "Level" << YAML::Value << i + 1;
 					body << YAML::Key << "Amount" << YAML::Value << it_req->second.spiritball[i];
