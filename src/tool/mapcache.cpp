@@ -52,7 +52,7 @@ struct map_info {
 int read_map(char *name, struct map_data *m)
 {
 	char filename[256];
-	unsigned char *gat, *rsw;
+	unsigned char *gat;
 	int water_height;
 	size_t xy, off, num_cells;
 
