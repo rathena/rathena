@@ -1793,6 +1793,13 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 					}
 
+					skill_id = skill_name2id(skill_name.c_str());
+
+					if (skill_id == 0) {
+						this->invalidWarning(required["Skill"], "Invalid homunculus skill %s, skipping.\n", skill_name.c_str());
+						return 0;
+					}
+
 					if (!SKILL_CHK_HOMUN(skill_id)) {
 						this->invalidWarning(required["Skill"], "Homunculus skill %s (%u) is out of the homunculus skill range [%u-%u], skipping.\n", skill_name.c_str(), skill_id, HM_SKILLBASE, HM_SKILLBASE + MAX_HOMUNSKILL - 1);
 						return 0;
@@ -1800,9 +1807,7 @@ uint64 HomunculusDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 
 				if (this->nodeExists(required, "Level")) {
-					uint16 level;
-
-					if (!this->asUInt16(required, "Level", level))
+					if (!this->asUInt16(required, "Level", skill_lv))
 						return 0;
 				}
 
