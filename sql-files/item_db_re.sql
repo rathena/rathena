@@ -37,6 +37,7 @@ CREATE TABLE `item_db_re` (
 #
 # Healing Items
 #=============================================================
+REPLACE INTO `item_db_re` VALUES (500,'Choko_Gangjeong','Choko Gangjeong',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'percentheal 10,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (501,'Red_Potion','Red Potion',0,10,NULL,70,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(45,65),0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (502,'Orange_Potion','Orange Potion',0,50,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(105,145),0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (503,'Yellow_Potion','Yellow Potion',0,180,NULL,130,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(175,235),0;',NULL,NULL);

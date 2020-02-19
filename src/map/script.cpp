@@ -14975,8 +14975,7 @@ BUILDIN_FUNC(checkequipedcard)
 
 BUILDIN_FUNC(jump_zero)
 {
-	int sel;
-	sel=script_getnum(st,2);
+	int64 sel=script_getnum64(st,2);
 	if(!sel) {
 		int pos;
 		if( !data_islabel(script_getdata(st,3)) ){
@@ -19662,9 +19661,10 @@ BUILDIN_FUNC(waitingroom2bg)
 {
 	struct npc_data *nd;
 	struct chat_data *cd;
-	const char *map_name, *ev = "", *dev = "";
-	int x, y, mapindex = 0, bg_id;
+	const char *map_name;
+	int mapindex = 0, bg_id;
 	unsigned char i,c=0;
+	struct s_battleground_team team;
 
 	if( script_hasdata(st,7) )
 		nd = npc_name2id(script_getstr(st,7));
@@ -19684,17 +19684,20 @@ BUILDIN_FUNC(waitingroom2bg)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	x = script_getnum(st,3);
-	y = script_getnum(st,4);
-	if(script_hasdata(st,5))
-		ev = script_getstr(st,5); // Logout Event
-	if(script_hasdata(st,6))
-		dev = script_getstr(st,6); // Die Event
+	team.warp_x = script_getnum(st,3);
+	team.warp_y = script_getnum(st,4);
+	if (script_hasdata(st,5)) {
+		team.quit_event = script_getstr(st,5); // Logout Event
+		check_event(st, team.quit_event.c_str());
+	} else
+		team.quit_event = "";
+	if (script_hasdata(st,6)) {
+		team.death_event = script_getstr(st,6); // Die Event
+		check_event(st, team.death_event.c_str());
+	} else
+		team.death_event = "";
 
-	check_event(st, ev);
-	check_event(st, dev);
-
-	if( (bg_id = bg_create(mapindex, x, y, ev, dev)) == 0 )
+	if( (bg_id = bg_create(mapindex, &team)) == 0 )
 	{ // Creation failed
 		script_pushint(st,0);
 		return SCRIPT_CMD_SUCCESS;
@@ -19702,7 +19705,7 @@ BUILDIN_FUNC(waitingroom2bg)
 
 	for (i = 0; i < cd->users; i++) { // Only add those who are in the chat room
 		struct map_session_data *sd;
-		if( (sd = cd->usersd[i]) != NULL && bg_team_join(bg_id, sd) ){
+		if( (sd = cd->usersd[i]) != NULL && bg_team_join(bg_id, sd, false) ){
 			mapreg_setreg(reference_uid(add_str("$@arenamembers"), c), sd->bl.id);
 			++c;
 		}
@@ -19719,11 +19722,10 @@ BUILDIN_FUNC(waitingroom2bg_single)
 	struct npc_data *nd;
 	struct chat_data *cd;
 	struct map_session_data *sd;
-	struct battleground_data *bg;
-	int x, y, mapindex, bg_id;
+	int x, y, mapindex, bg_id = script_getnum(st,2);
+	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
 
-	bg_id = script_getnum(st,2);
-	if ((bg = bg_team_search(bg_id)) == NULL) {
+	if (!bg) {
 		script_pushint(st, false);
 		return SCRIPT_CMD_SUCCESS;
 	}
@@ -19737,9 +19739,9 @@ BUILDIN_FUNC(waitingroom2bg_single)
 		y = script_getnum(st, 5);
 	}
 	else {
-		mapindex = bg->mapindex;
-		x = bg->x;
-		y = bg->y;
+		mapindex = bg->cemetery.map;
+		x = bg->cemetery.x;
+		y = bg->cemetery.y;
 	}
 
 	nd = npc_name2id(script_getstr(st,6));
@@ -19750,7 +19752,7 @@ BUILDIN_FUNC(waitingroom2bg_single)
 	if( (sd = cd->usersd[0]) == NULL )
 		return SCRIPT_CMD_SUCCESS;
 
-	if( bg_team_join(bg_id, sd) && pc_setpos(sd, mapindex, x, y, CLR_TELEPORT) == SETPOS_OK)
+	if( bg_team_join(bg_id, sd, false) && pc_setpos(sd, mapindex, x, y, CLR_TELEPORT) == SETPOS_OK)
 	{
 		script_pushint(st, true);
 	}
@@ -19765,8 +19767,9 @@ BUILDIN_FUNC(waitingroom2bg_single)
 /// *bg_create("<map name>",<x>,<y>{,"<On Quit Event>","<On Death Event>"});
 /// @author [secretdataz]
 BUILDIN_FUNC(bg_create) {
-	const char *map_name, *ev = "", *dev = "";
-	int x, y, mapindex = 0;
+	const char *map_name;
+	int mapindex = 0;
+	struct s_battleground_team team;
 
 	map_name = script_getstr(st, 2);
 	if (strcmp(map_name, "-") != 0 && (mapindex = mapindex_name2id(map_name)) == 0)
@@ -19775,17 +19778,20 @@ BUILDIN_FUNC(bg_create) {
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	x = script_getnum(st, 3);
-	y = script_getnum(st, 4);
-	if(script_hasdata(st, 5))
-		ev = script_getstr(st, 5); // Logout Event
-	if(script_hasdata(st, 6))
-		dev = script_getstr(st, 6); // Die Event
+	team.warp_x = script_getnum(st,3);
+	team.warp_y = script_getnum(st,4);
+	if (script_hasdata(st,5)) {
+		team.quit_event = script_getstr(st,5); // Logout Event
+		check_event(st, team.quit_event.c_str());
+	} else
+		team.quit_event = "";
+	if (script_hasdata(st,6)) {
+		team.death_event = script_getstr(st,6); // Die Event
+		check_event(st, team.death_event.c_str());
+	} else
+		team.death_event = "";
 
-	check_event(st, ev);
-	check_event(st, dev);
-
-	script_pushint(st, bg_create(mapindex, x, y, ev, dev));
+	script_pushint(st, bg_create(mapindex, &team));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -19797,11 +19803,10 @@ BUILDIN_FUNC(bg_create) {
 BUILDIN_FUNC(bg_join) {
 	const char* map_name;
 	struct map_session_data *sd;
-	struct battleground_data *bg;
-	int x, y, bg_id, mapindex;
+	int x, y, mapindex, bg_id = script_getnum(st, 2);
+	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
 
-	bg_id = script_getnum(st, 2);
-	if ((bg = bg_team_search(bg_id)) == NULL) {
+	if (!bg) {
 		script_pushint(st, false);
 		return SCRIPT_CMD_SUCCESS;
 	}
@@ -19814,9 +19819,9 @@ BUILDIN_FUNC(bg_join) {
 		x = script_getnum(st, 4);
 		y = script_getnum(st, 5);
 	} else {
-		mapindex = bg->mapindex;
-		x = bg->x;
-		y = bg->y;
+		mapindex = bg->cemetery.map;
+		x = bg->cemetery.x;
+		y = bg->cemetery.y;
 	}
 
 	if (!script_charid2sd(6, sd)) {
@@ -19824,7 +19829,7 @@ BUILDIN_FUNC(bg_join) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (bg_team_join(bg_id, sd) && pc_setpos(sd, mapindex, x, y, CLR_TELEPORT) == SETPOS_OK)
+	if (bg_team_join(bg_id, sd, false) && pc_setpos(sd, mapindex, x, y, CLR_TELEPORT) == SETPOS_OK)
 	{
 		script_pushint(st, true);
 	}
@@ -19836,15 +19841,14 @@ BUILDIN_FUNC(bg_join) {
 
 BUILDIN_FUNC(bg_team_setxy)
 {
-	struct battleground_data *bg;
-	int bg_id;
+	int bg_id = script_getnum(st,2);
+	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
 
-	bg_id = script_getnum(st,2);
-	if( (bg = bg_team_search(bg_id)) == NULL )
-		return SCRIPT_CMD_SUCCESS;
+	if (bg) {
+		bg->cemetery.x = script_getnum(st, 3);
+		bg->cemetery.y = script_getnum(st, 4);
+	}
 
-	bg->x = script_getnum(st,3);
-	bg->y = script_getnum(st,4);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -19903,10 +19907,15 @@ BUILDIN_FUNC(bg_monster_set_team)
 BUILDIN_FUNC(bg_leave)
 {
 	struct map_session_data *sd = NULL;
+	bool deserter = false;
+
 	if( !script_charid2sd(2,sd) || !sd->bg_id )
 		return SCRIPT_CMD_SUCCESS;
 
-	bg_team_leave(sd,0);
+	if (!strcmp(script_getfuncname(st), "bg_desert"))
+		deserter = true;
+
+	bg_team_leave(sd, false, deserter);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -19919,17 +19928,13 @@ BUILDIN_FUNC(bg_destroy)
 
 BUILDIN_FUNC(bg_getareausers)
 {
-	const char *str;
+	const char *str = script_getstr(st, 3);
 	int16 m, x0, y0, x1, y1;
-	int bg_id;
+	int bg_id = script_getnum(st, 2);
 	int i = 0, c = 0;
-	struct battleground_data *bg = NULL;
+	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
 
-	bg_id = script_getnum(st,2);
-	str = script_getstr(st,3);
-
-	if( (bg = bg_team_search(bg_id)) == NULL || (m = map_mapname2mapid(str)) < 0 )
-	{
+	if (!bg || (m = map_mapname2mapid(str)) < 0) {
 		script_pushint(st,0);
 		return SCRIPT_CMD_SUCCESS;
 	}
@@ -19939,7 +19944,7 @@ BUILDIN_FUNC(bg_getareausers)
 	x1 = script_getnum(st,6);
 	y1 = script_getnum(st,7);
 
-	for( i = 0; i < MAX_BG_MEMBERS; i++ )
+	for( i = 0; i < bg->members.size(); i++ )
 	{
 		struct map_session_data *sd;
 		if( (sd = bg->members[i].sd) == NULL )
@@ -19973,29 +19978,102 @@ BUILDIN_FUNC(bg_updatescore)
 
 BUILDIN_FUNC(bg_get_data)
 {
-	struct battleground_data *bg = bg_team_search( script_getnum(st, 2) );
+	int bg_id = script_getnum(st,2), type = script_getnum(st,3), i;
+	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
 
-	if (bg == NULL) {
-		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
-	}
-	int i, j, type = script_getnum(st, 3);
-
-	switch( type ) {
-	case 0:
-		script_pushint(st, bg->count);
-		break;
-	case 1:
-		for (i = 0, j = 0; i < ARRAYLENGTH(bg->members); i++) {
-			if (bg->members[i].sd != NULL)
-				mapreg_setreg(reference_uid(add_str("$@arenamembers"), j++), bg->members[i].sd->bl.id);
+	if (bg) {
+		switch (type) {
+		case 0:
+			script_pushint(st, bg->members.size());
+			break;
+		case 1:
+			for (i = 0; bg->members[i].sd != NULL; i++)
+				mapreg_setreg(reference_uid(add_str("$@arenamembers"), i), bg->members[i].sd->bl.id);
+			mapreg_setreg(add_str("$@arenamemberscount"), i);
+			script_pushint(st, i);
+			break;
+		default:
+			ShowError("script:bg_get_data: unknown data identifier %d\n", type);
+			break;
 		}
-		mapreg_setreg(add_str("$@arenamemberscount"), j);
-		script_pushint(st, j);
-		break;
-	default:
-		ShowError("script:bg_get_data: unknown data identifier %d\n", type);
-		break;
+	} else
+		script_pushint(st, 0);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Reserves a slot for the given Battleground.
+ * bg_reserve(<"bg_name">);
+ */
+BUILDIN_FUNC(bg_reserve)
+{
+	const char *str = script_getstr(st, 2);
+
+	if (!bg_queue_reserve(str))
+		ShowWarning("buildin_bg_reserve: Could not reserve battleground with name %s\n", str);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Removes a spot for the given Battleground.
+ * bg_unbook(<"bg_name">);
+ */
+BUILDIN_FUNC(bg_unbook)
+{
+	const char *str = script_getstr(st, 2);
+
+	if (!bg_queue_unbook(str))
+		ShowWarning("buildin_bg_unbook: Could not unreserve battleground with name %s\n", str);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Gets battleground database information.
+ * bg_info("<battleground name>", <type>);
+ */
+BUILDIN_FUNC(bg_info)
+{
+	std::shared_ptr<s_battleground_type> bg = bg_search_name(script_getstr(st, 2));
+
+	if (!bg) {
+		ShowError("bg_info: Invalid Battleground name %s.\n", script_getstr(st, 2));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int type = script_getnum(st, 3);
+
+	switch (type) {
+		case BG_INFO_ID:
+			script_pushint(st, bg->id);
+			break;
+		case BG_INFO_REQUIRED_PLAYERS:
+			script_pushint(st, bg->required_players);
+			break;
+		case BG_INFO_MAX_PLAYERS:
+			script_pushint(st, bg->max_players);
+			break;
+		case BG_INFO_MIN_LEVEL:
+			script_pushint(st, bg->min_lvl);
+			break;
+		case BG_INFO_MAX_LEVEL:
+			script_pushint(st, bg->max_lvl);
+			break;
+		case BG_INFO_MAPS: {
+			size_t i;
+
+			for (i = 0; i < bg->maps.size(); i++)
+				setd_sub_str(st, nullptr, ".@bgmaps$", i, map_mapid2mapname(bg->maps[i].mapid), nullptr);
+			setd_sub_num(st, nullptr, ".@bgmapscount", 0, i, nullptr);
+			script_pushint(st, i);
+			break;
+		}
+		case BG_INFO_DESERTER_TIME:
+			script_pushint(st, bg->deserter_time);
+			break;
+		default:
+			ShowError("bg_info: Unknown battleground info type %d given.\n", type);
+			return SCRIPT_CMD_FAILURE;
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -24046,6 +24124,7 @@ static inline bool mail_sub( struct script_state *st, struct script_data *data, 
 	return true;
 }
 
+// mail <destination id>,"<sender name>","<title>","<body>"{,<zeny>{,<item id array>,<item amount array>{,refine{,bound{,<item card0 array>{,<item card1 array>{,<item card2 array>{,<item card3 array>{,<random option id0 array>, <random option value0 array>, <random option paramter0 array>{,<random option id1 array>, <random option value1 array>, <random option paramter1 array>{,<random option id2 array>, <random option value2 array>, <random option paramter2 array>{,<random option id3 array>, <random option value3 array>, <random option paramter3 array>{,<random option id4 array>, <random option value4 array>, <random option paramter4 array>}}}}}}}}};
 BUILDIN_FUNC(mail){
 	const char *sender, *title, *body, *name;
 	struct mail_message msg;
@@ -24165,12 +24244,64 @@ BUILDIN_FUNC(mail){
 			}
 		}
 
-		// Cards
-		if( !script_hasdata(st,9) ){
+		// Refine
+		if (!script_hasdata(st, 9)) {
 			break;
 		}
 
-		for( i = 0, j = 9; i < MAX_SLOTS && script_hasdata(st,j); i++, j++ ){
+		data = script_getdata(st, 9);
+
+		if (!mail_sub(st, data, sd, 9, &name, &start, &end, &id)) {
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		for (i = 0; i < num_items && start < end; i++, start++) {
+			struct item_data* item = itemdb_exists(msg.item[i].nameid);
+
+			msg.item[i].refine = (char)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
+
+			script_removetop(st, -1, 0);
+
+			if (!item->flag.no_refine && (item->type == IT_WEAPON || item->type == IT_ARMOR || item->type == IT_SHADOWGEAR)) {
+				if (msg.item[i].refine > MAX_REFINE)
+					msg.item[i].refine = MAX_REFINE;
+			}
+			else
+				msg.item[i].refine = 0;
+			if (msg.item[i].refine < 0)
+				msg.item[i].refine = 0;
+		}
+
+		// Bound
+		if (!script_hasdata(st, 10)) {
+			break;
+		}
+
+		data = script_getdata(st,10);
+
+		if( !mail_sub( st, data, sd, 10, &name, &start, &end, &id ) ){
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		for( i = 0; i < num_items && start < end; i++, start++ ){
+			struct item_data *item = itemdb_exists(msg.item[i].nameid);
+
+			msg.item[i].bound = (char)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
+
+			script_removetop(st, -1, 0);
+
+			if( msg.item[i].bound <= BOUND_NONE || msg.item[i].bound >= BOUND_MAX ){
+				ShowError( "buildin_mail: bound %d for item %hu is invalid.\n", msg.item[i].bound, msg.item[i].nameid );
+				return SCRIPT_CMD_FAILURE;
+			}
+		}
+
+		// Cards
+		if( !script_hasdata(st,11) ){
+			break;
+		}
+
+		for( i = 0, j = 11; i < MAX_SLOTS && script_hasdata(st,j); i++, j++ ){
 			data = script_getdata(st,j);
 
 			if( !mail_sub( st, data, sd, j + 1, &name, &start, &end, &id ) ){
@@ -24188,11 +24319,11 @@ BUILDIN_FUNC(mail){
 		}
 	
 		// Random Options
-		if( !script_hasdata(st,9 + MAX_SLOTS) ){
+		if( !script_hasdata(st,12 + MAX_SLOTS) ){
 			break;
 		}
 
-		for( i = 0, j = 9 + MAX_SLOTS; i < MAX_ITEM_RDM_OPT && script_hasdata(st,j) && script_hasdata(st,j + 1) && script_hasdata(st,j + 2); i++, j++ ){
+		for( i = 0, j = 12 + MAX_SLOTS; i < MAX_ITEM_RDM_OPT && script_hasdata(st,j) && script_hasdata(st,j + 1) && script_hasdata(st,j + 2); i++, j++ ){
 			// Option IDs
 			data = script_getdata(st, j);
 
@@ -24975,6 +25106,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(bg_monster,"isiisi?"),
 	BUILDIN_DEF(bg_monster_set_team,"ii"),
 	BUILDIN_DEF(bg_leave,"?"),
+	BUILDIN_DEF2(bg_leave,"bg_desert","?"),
 	BUILDIN_DEF(bg_destroy,"i"),
 	BUILDIN_DEF(areapercentheal,"siiiiii"),
 	BUILDIN_DEF(bg_get_data,"ii"),
@@ -24982,6 +25114,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(bg_updatescore,"sii"),
 	BUILDIN_DEF(bg_join,"i????"),
 	BUILDIN_DEF(bg_create,"sii??"),
+	BUILDIN_DEF(bg_reserve,"s"),
+	BUILDIN_DEF(bg_unbook,"s"),
+	BUILDIN_DEF(bg_info,"si"),
 
 	// Instancing
 	BUILDIN_DEF(instance_create,"s??"),

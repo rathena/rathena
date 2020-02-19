@@ -1632,6 +1632,34 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 }
 
 /**
+ * Determines whether battleground target can be hit
+ * @param src: Source of attack
+ * @param bl: Target of attack
+ * @param skill_id: Skill ID used
+ * @param flag: Special flags
+ * @return Can be hit (true) or can't be hit (false)
+ */
+bool battle_can_hit_bg_target(struct block_list *src, struct block_list *bl, uint16 skill_id, int flag)
+{
+	struct mob_data* md = BL_CAST(BL_MOB, bl);
+	struct unit_data *ud = unit_bl2ud(bl);
+
+	if (ud && ud->immune_attack)
+		return false;
+	if (md && md->bg_id) {
+		if (status_bl_has_mode(bl, MD_SKILL_IMMUNE) && flag&BF_SKILL) //Skill immunity.
+			return false;
+		if (src->type == BL_PC) {
+			struct map_session_data *sd = map_id2sd(src->id);
+
+			if (sd && sd->bg_id == md->bg_id)
+				return false;
+		}
+	}
+	return true;
+}
+
+/**
  * Calculates BG related damage adjustments.
  * @param src
  * @param bl
@@ -1647,6 +1675,9 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 int64 battle_calc_bg_damage(struct block_list *src, struct block_list *bl, int64 damage, uint16 skill_id, int flag)
 {
 	if( !damage )
+		return 0;
+
+	if (!battle_can_hit_bg_target(src, bl, skill_id, flag))
 		return 0;
 
 	if(skill_get_inf2(skill_id, INF2_IGNOREBGREDUCTION))
@@ -8733,6 +8764,7 @@ static const struct _battle_data {
 	{ "boss_nopc_move_rate",                &battle_config.boss_nopc_move_rate,             100,    0,    100,              },
 	{ "hom_idle_no_share",                  &battle_config.hom_idle_no_share,               0,      0,      INT_MAX,        },
 	{ "devotion_standup_fix",               &battle_config.devotion_standup_fix,            1,      0,      1,              },
+	{ "feature.bgqueue",                    &battle_config.feature_bgqueue,                 1,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };
@@ -8818,6 +8850,13 @@ void battle_adjust_conf()
 	if (battle_config.feature_search_stores) {
 		ShowWarning("conf/battle/feature.conf:search_stores is enabled but it requires PACKETVER 2010-08-03 or newer, disabling...\n");
 		battle_config.feature_search_stores = 0;
+	}
+#endif
+
+#if PACKETVER < 20120101
+	if (battle_config.feature_bgqueue) {
+		ShowWarning("conf/battle/feature.conf:bgqueue is enabled but it requires PACKETVER 2012-01-01 or newer, disabling...\n");
+		battle_config.feature_bgqueue = 0;
 	}
 #endif
 
