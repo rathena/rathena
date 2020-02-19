@@ -98,6 +98,14 @@
 #       EvolutionBonus:     Evolution LUK bonus.
 #         Min               Minimum Evolution LUK bonus.
 #         Max               Maximum Evolution LUK bonus.
+#     SkillTree:            Skill tree for homunculus.
+#       - Skill             Skill name.
+#         MaxLevel          Maximum level of skill.
+#         RequiredLevel     Required base level of homunculus to learn. (Default: 0)
+#         RequiredIntimacy  Required intimacy of homunculus to learn. (Default: 0)
+#         Required:         Prerequisite skills.
+#           - Skill         Prerequisite skill name.
+#             Level         Level of prerequisite skill.
 ###########################################################################
 
 Header:
