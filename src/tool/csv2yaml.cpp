@@ -2477,7 +2477,6 @@ static bool read_homunculusdb(char* str[], int columns, int current) {
 	body << YAML::Key << "Min" << YAML::Value << atoi(str[18]);
 	body << YAML::Key << "Max" << YAML::Value << atoi(str[19]);
 	body << YAML::EndMap;
-	body << YAML::EndMap;
 	body << YAML::Key << "EvolutionBonus";
 	body << YAML::BeginMap;
 	body << YAML::Key << "Min" << YAML::Value << atoi(str[34]);
@@ -2491,7 +2490,6 @@ static bool read_homunculusdb(char* str[], int columns, int current) {
 	body << YAML::BeginMap;
 	body << YAML::Key << "Min" << YAML::Value << atoi(str[20]);
 	body << YAML::Key << "Max" << YAML::Value << atoi(str[21]);
-	body << YAML::EndMap;
 	body << YAML::EndMap;
 	body << YAML::Key << "EvolutionBonus";
 	body << YAML::BeginMap;
@@ -2507,7 +2505,6 @@ static bool read_homunculusdb(char* str[], int columns, int current) {
 	body << YAML::Key << "Min" << YAML::Value << atoi(str[22]);
 	body << YAML::Key << "Max" << YAML::Value << atoi(str[23]);
 	body << YAML::EndMap;
-	body << YAML::EndMap;
 	body << YAML::Key << "EvolutionBonus";
 	body << YAML::BeginMap;
 	body << YAML::Key << "Min" << YAML::Value << atoi(str[38]);
@@ -2521,7 +2518,6 @@ static bool read_homunculusdb(char* str[], int columns, int current) {
 	body << YAML::BeginMap;
 	body << YAML::Key << "Min" << YAML::Value << atoi(str[24]);
 	body << YAML::Key << "Max" << YAML::Value << atoi(str[25]);
-	body << YAML::EndMap;
 	body << YAML::EndMap;
 	body << YAML::Key << "EvolutionBonus";
 	body << YAML::BeginMap;
@@ -2537,7 +2533,6 @@ static bool read_homunculusdb(char* str[], int columns, int current) {
 	body << YAML::Key << "Min" << YAML::Value << atoi(str[26]);
 	body << YAML::Key << "Max" << YAML::Value << atoi(str[27]);
 	body << YAML::EndMap;
-	body << YAML::EndMap;
 	body << YAML::Key << "EvolutionBonus";
 	body << YAML::BeginMap;
 	body << YAML::Key << "Min" << YAML::Value << atoi(str[42]);
@@ -2551,7 +2546,6 @@ static bool read_homunculusdb(char* str[], int columns, int current) {
 	body << YAML::BeginMap;
 	body << YAML::Key << "Min" << YAML::Value << atoi(str[28]);
 	body << YAML::Key << "Max" << YAML::Value << atoi(str[29]);
-	body << YAML::EndMap;
 	body << YAML::EndMap;
 	body << YAML::Key << "EvolutionBonus";
 	body << YAML::BeginMap;
@@ -2567,7 +2561,6 @@ static bool read_homunculusdb(char* str[], int columns, int current) {
 	body << YAML::Key << "Min" << YAML::Value << atoi(str[30]);
 	body << YAML::Key << "Max" << YAML::Value << atoi(str[31]);
 	body << YAML::EndMap;
-	body << YAML::EndMap;
 	body << YAML::Key << "EvolutionBonus";
 	body << YAML::BeginMap;
 	body << YAML::Key << "Min" << YAML::Value << atoi(str[46]);
@@ -2581,7 +2574,6 @@ static bool read_homunculusdb(char* str[], int columns, int current) {
 	body << YAML::BeginMap;
 	body << YAML::Key << "Min" << YAML::Value << atoi(str[32]);
 	body << YAML::Key << "Max" << YAML::Value << atoi(str[33]);
-	body << YAML::EndMap;
 	body << YAML::EndMap;
 	body << YAML::Key << "EvolutionBonus";
 	body << YAML::BeginMap;

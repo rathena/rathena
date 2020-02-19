@@ -127,65 +127,65 @@ Body:
         GrowthBonus:
           Min: 60
           Max: 100
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Sp:
         Base: 40
         GrowthBonus:
           Min: 4
           Max: 9
-      EvolutionBonus:
-        Min: 10
-        Max: 20
+        EvolutionBonus:
+          Min: 10
+          Max: 20
       Str:
         Base: 17
         GrowthBonus:
           Min: 5
           Max: 19
-      EvolutionBonus:
-        Min: 1
-        Max: 5
+        EvolutionBonus:
+          Min: 1
+          Max: 5
       Agi:
         Base: 20
         GrowthBonus:
           Min: 5
           Max: 19
-      EvolutionBonus:
-        Min: 1
-        Max: 4
+        EvolutionBonus:
+          Min: 1
+          Max: 4
       Vit:
         Base: 15
         GrowthBonus:
           Min: 5
           Max: 19
-      EvolutionBonus:
-        Min: 1
-        Max: 5
+        EvolutionBonus:
+          Min: 1
+          Max: 5
       Int:
         Base: 35
         GrowthBonus:
           Min: 4
           Max: 20
-      EvolutionBonus:
-        Min: 4
-        Max: 10
+        EvolutionBonus:
+          Min: 4
+          Max: 10
       Dex:
         Base: 24
         GrowthBonus:
           Min: 6
           Max: 20
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Luk:
         Base: 12
         GrowthBonus:
           Min: 6
           Max: 20
-      EvolutionBonus:
-        Min: 1
-        Max: 3
+        EvolutionBonus:
+          Min: 1
+          Max: 3
     SkillTree:
       - Skill: HLIF_HEAL
         MaxLevel: 5
@@ -214,65 +214,65 @@ Body:
         GrowthBonus:
           Min: 80
           Max: 130
-      EvolutionBonus:
-        Min: 10
-        Max: 20
+        EvolutionBonus:
+          Min: 10
+          Max: 20
       Sp:
         Base: 10
         GrowthBonus:
           Min: 1
           Max: 4
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Str:
         Base: 20
         GrowthBonus:
           Min: 8
           Max: 20
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Agi:
         Base: 17
         GrowthBonus:
           Min: 4
           Max: 20
-      EvolutionBonus:
-        Min: 1
-        Max: 5
+        EvolutionBonus:
+          Min: 1
+          Max: 5
       Vit:
         Base: 35
         GrowthBonus:
           Min: 4
           Max: 20
-      EvolutionBonus:
-        Min: 4
-        Max: 10
+        EvolutionBonus:
+          Min: 4
+          Max: 10
       Int:
         Base: 11
         GrowthBonus:
           Min: 1
           Max: 10
-      EvolutionBonus:
-        Min: 1
-        Max: 3
+        EvolutionBonus:
+          Min: 1
+          Max: 3
       Dex:
         Base: 24
         GrowthBonus:
           Min: 3
           Max: 19
-      EvolutionBonus:
-        Min: 1
-        Max: 4
+        EvolutionBonus:
+          Min: 1
+          Max: 4
       Luk:
         Base: 12
         GrowthBonus:
           Min: 3
           Max: 19
-      EvolutionBonus:
-        Min: 1
-        Max: 5
+        EvolutionBonus:
+          Min: 1
+          Max: 5
     SkillTree:
       - Skill: HAMI_CASTLE
         MaxLevel: 5
@@ -301,65 +301,65 @@ Body:
         GrowthBonus:
           Min: 45
           Max: 75
-      EvolutionBonus:
-        Min: 5
-        Max: 15
+        EvolutionBonus:
+          Min: 5
+          Max: 15
       Sp:
         Base: 25
         GrowthBonus:
           Min: 3
           Max: 6
-      EvolutionBonus:
-        Min: 5
-        Max: 15
+        EvolutionBonus:
+          Min: 5
+          Max: 15
       Str:
         Base: 29
         GrowthBonus:
           Min: 4
           Max: 20
-      EvolutionBonus:
-        Min: 4
-        Max: 10
+        EvolutionBonus:
+          Min: 4
+          Max: 10
       Agi:
         Base: 35
         GrowthBonus:
           Min: 8
           Max: 20
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Vit:
         Base: 9
         GrowthBonus:
           Min: 1
           Max: 10
-      EvolutionBonus:
-        Min: 1
-        Max: 3
+        EvolutionBonus:
+          Min: 1
+          Max: 3
       Int:
         Base: 8
         GrowthBonus:
           Min: 3
           Max: 19
-      EvolutionBonus:
-        Min: 1
-        Max: 4
+        EvolutionBonus:
+          Min: 1
+          Max: 4
       Dex:
         Base: 30
         GrowthBonus:
           Min: 4
           Max: 20
-      EvolutionBonus:
-        Min: 1
-        Max: 5
+        EvolutionBonus:
+          Min: 1
+          Max: 5
       Luk:
         Base: 9
         GrowthBonus:
           Min: 3
           Max: 19
-      EvolutionBonus:
-        Min: 1
-        Max: 5
+        EvolutionBonus:
+          Min: 1
+          Max: 5
     SkillTree:
       - Skill: HFLI_MOON
         MaxLevel: 5
@@ -388,65 +388,65 @@ Body:
         GrowthBonus:
           Min: 30
           Max: 150
-      EvolutionBonus:
-        Min: 1
-        Max: 30
+        EvolutionBonus:
+          Min: 1
+          Max: 30
       Sp:
         Base: 11
         GrowthBonus:
           Min: 0
           Max: 7
-      EvolutionBonus:
-        Min: 1
-        Max: 30
+        EvolutionBonus:
+          Min: 1
+          Max: 30
       Str:
         Base: 11
         GrowthBonus:
           Min: 1
           Max: 30
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Agi:
         Base: 11
         GrowthBonus:
           Min: 1
           Max: 30
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Vit:
         Base: 11
         GrowthBonus:
           Min: 1
           Max: 30
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Int:
         Base: 11
         GrowthBonus:
           Min: 1
           Max: 30
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Dex:
         Base: 11
         GrowthBonus:
           Min: 1
           Max: 30
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Luk:
         Base: 11
         GrowthBonus:
           Min: 1
           Max: 30
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
     SkillTree:
       - Skill: HVAN_CAPRICE
         MaxLevel: 5
@@ -474,65 +474,65 @@ Body:
         GrowthBonus:
           Min: 60
           Max: 100
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Sp:
         Base: 40
         GrowthBonus:
           Min: 4
           Max: 9
-      EvolutionBonus:
-        Min: 10
-        Max: 20
+        EvolutionBonus:
+          Min: 10
+          Max: 20
       Str:
         Base: 17
         GrowthBonus:
           Min: 5
           Max: 19
-      EvolutionBonus:
-        Min: 1
-        Max: 5
+        EvolutionBonus:
+          Min: 1
+          Max: 5
       Agi:
         Base: 20
         GrowthBonus:
           Min: 5
           Max: 19
-      EvolutionBonus:
-        Min: 1
-        Max: 4
+        EvolutionBonus:
+          Min: 1
+          Max: 4
       Vit:
         Base: 15
         GrowthBonus:
           Min: 5
           Max: 19
-      EvolutionBonus:
-        Min: 1
-        Max: 5
+        EvolutionBonus:
+          Min: 1
+          Max: 5
       Int:
         Base: 35
         GrowthBonus:
           Min: 4
           Max: 20
-      EvolutionBonus:
-        Min: 4
-        Max: 10
+        EvolutionBonus:
+          Min: 4
+          Max: 10
       Dex:
         Base: 24
         GrowthBonus:
           Min: 6
           Max: 20
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Luk:
         Base: 12
         GrowthBonus:
           Min: 6
           Max: 20
-      EvolutionBonus:
-        Min: 1
-        Max: 3
+        EvolutionBonus:
+          Min: 1
+          Max: 3
     SkillTree:
       - Skill: HLIF_HEAL
         MaxLevel: 5
@@ -561,65 +561,65 @@ Body:
         GrowthBonus:
           Min: 80
           Max: 130
-      EvolutionBonus:
-        Min: 10
-        Max: 20
+        EvolutionBonus:
+          Min: 10
+          Max: 20
       Sp:
         Base: 10
         GrowthBonus:
           Min: 1
           Max: 4
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Str:
         Base: 20
         GrowthBonus:
           Min: 8
           Max: 20
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Agi:
         Base: 17
         GrowthBonus:
           Min: 4
           Max: 20
-      EvolutionBonus:
-        Min: 1
-        Max: 5
+        EvolutionBonus:
+          Min: 1
+          Max: 5
       Vit:
         Base: 35
         GrowthBonus:
           Min: 4
           Max: 20
-      EvolutionBonus:
-        Min: 4
-        Max: 10
+        EvolutionBonus:
+          Min: 4
+          Max: 10
       Int:
         Base: 11
         GrowthBonus:
           Min: 1
           Max: 10
-      EvolutionBonus:
-        Min: 1
-        Max: 3
+        EvolutionBonus:
+          Min: 1
+          Max: 3
       Dex:
         Base: 24
         GrowthBonus:
           Min: 3
           Max: 19
-      EvolutionBonus:
-        Min: 1
-        Max: 4
+        EvolutionBonus:
+          Min: 1
+          Max: 4
       Luk:
         Base: 12
         GrowthBonus:
           Min: 3
           Max: 19
-      EvolutionBonus:
-        Min: 1
-        Max: 5
+        EvolutionBonus:
+          Min: 1
+          Max: 5
     SkillTree:
       - Skill: HAMI_CASTLE
         MaxLevel: 5
@@ -648,65 +648,65 @@ Body:
         GrowthBonus:
           Min: 45
           Max: 75
-      EvolutionBonus:
-        Min: 5
-        Max: 15
+        EvolutionBonus:
+          Min: 5
+          Max: 15
       Sp:
         Base: 25
         GrowthBonus:
           Min: 3
           Max: 6
-      EvolutionBonus:
-        Min: 5
-        Max: 15
+        EvolutionBonus:
+          Min: 5
+          Max: 15
       Str:
         Base: 29
         GrowthBonus:
           Min: 4
           Max: 20
-      EvolutionBonus:
-        Min: 4
-        Max: 10
+        EvolutionBonus:
+          Min: 4
+          Max: 10
       Agi:
         Base: 35
         GrowthBonus:
           Min: 8
           Max: 20
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Vit:
         Base: 9
         GrowthBonus:
           Min: 1
           Max: 10
-      EvolutionBonus:
-        Min: 1
-        Max: 3
+        EvolutionBonus:
+          Min: 1
+          Max: 3
       Int:
         Base: 8
         GrowthBonus:
           Min: 3
           Max: 19
-      EvolutionBonus:
-        Min: 1
-        Max: 4
+        EvolutionBonus:
+          Min: 1
+          Max: 4
       Dex:
         Base: 30
         GrowthBonus:
           Min: 4
           Max: 20
-      EvolutionBonus:
-        Min: 1
-        Max: 5
+        EvolutionBonus:
+          Min: 1
+          Max: 5
       Luk:
         Base: 9
         GrowthBonus:
           Min: 3
           Max: 19
-      EvolutionBonus:
-        Min: 1
-        Max: 5
+        EvolutionBonus:
+          Min: 1
+          Max: 5
     SkillTree:
       - Skill: HFLI_MOON
         MaxLevel: 5
@@ -735,65 +735,65 @@ Body:
         GrowthBonus:
           Min: 30
           Max: 150
-      EvolutionBonus:
-        Min: 1
-        Max: 30
+        EvolutionBonus:
+          Min: 1
+          Max: 30
       Sp:
         Base: 11
         GrowthBonus:
           Min: 0
           Max: 7
-      EvolutionBonus:
-        Min: 1
-        Max: 30
+        EvolutionBonus:
+          Min: 1
+          Max: 30
       Str:
         Base: 11
         GrowthBonus:
           Min: 1
           Max: 30
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Agi:
         Base: 11
         GrowthBonus:
           Min: 1
           Max: 30
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Vit:
         Base: 11
         GrowthBonus:
           Min: 1
           Max: 30
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Int:
         Base: 11
         GrowthBonus:
           Min: 1
           Max: 30
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Dex:
         Base: 11
         GrowthBonus:
           Min: 1
           Max: 30
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
       Luk:
         Base: 11
         GrowthBonus:
           Min: 1
           Max: 30
-      EvolutionBonus:
-        Min: 1
-        Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
     SkillTree:
       - Skill: HVAN_CAPRICE
         MaxLevel: 5
