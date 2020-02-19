@@ -1541,6 +1541,9 @@
 	export_constant(SC_LHZ_DUN_N4);
 	export_constant(SC_ANCILLA);
 	export_constant(SC_EARTHSHAKER);
+	export_constant(SC_WEAPONBLOCK_ON);
+	export_constant(SC_ENTRY_QUEUE_APPLY_DELAY);
+	export_constant(SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -7687,6 +7690,15 @@
 	export_constant(UNT_GD_GLORYWOUNDS);
 	export_constant(UNT_GD_SOULCOLD);
 	export_constant(UNT_GD_HAWKEYES);
+
+	/* battleground info types */
+	export_constant(BG_INFO_ID);
+	export_constant(BG_INFO_REQUIRED_PLAYERS);
+	export_constant(BG_INFO_MAX_PLAYERS);
+	export_constant(BG_INFO_MIN_LEVEL);
+	export_constant(BG_INFO_MAX_LEVEL);
+	export_constant(BG_INFO_MAPS);
+	export_constant(BG_INFO_DESERTER_TIME);
 
 	#undef export_constant
 	#undef export_constant2

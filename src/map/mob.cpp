@@ -4630,9 +4630,10 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Options")) {
-		for (const auto &optionNode : node["Options"]) {
-			std::string option = optionNode.first.as<std::string>();
-			std::string option_constant = "OPTION_" + option;
+		const YAML::Node &optionNode = node["Options"];
+
+		for (const auto &it : optionNode) {
+			std::string option = it.first.as<std::string>(), option_constant = "OPTION_" + option;
 			int64 constant;
 
 			if (!script_get_constant(option_constant.c_str(), &constant)) {
@@ -4642,7 +4643,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 			bool active;
 
-			if (!this->asBool(node, option, active))
+			if (!this->asBool(optionNode, option, active))
 				continue;
 
 #ifdef NEW_CARTS
