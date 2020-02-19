@@ -4400,7 +4400,8 @@ int status_calc_homunculus_(struct homun_data *hd, enum e_status_calc_opt opt)
 	APPLY_HOMUN_LEVEL_STATWEIGHT();
 
 	if (opt&SCO_FIRST) {
-		const struct s_homunculus_db *db = hd->homunculusDB;
+		const std::shared_ptr<s_homunculus_db> db = hd->homunculusDB;
+
 		status->def_ele = db->element;
 		status->ele_lv = 1;
 		status->race = db->race;

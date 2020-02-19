@@ -7700,6 +7700,29 @@
 	export_constant(BG_INFO_MAPS);
 	export_constant(BG_INFO_DESERTER_TIME);
 
+	/* homunculus view IDs */
+	export_constant(MER_LIF);
+	export_constant(MER_AMISTR);
+	export_constant(MER_FILIR);
+	export_constant(MER_VANILMIRTH);
+	export_constant(MER_LIF2);
+	export_constant(MER_AMISTR2);
+	export_constant(MER_FILIR2);
+	export_constant(MER_VANILMIRTH2);
+	export_constant(MER_LIF_H);
+	export_constant(MER_AMISTR_H);
+	export_constant(MER_FILIR_H);
+	export_constant(MER_VANILMIRTH_H);
+	export_constant(MER_LIF_H2);
+	export_constant(MER_AMISTR_H2);
+	export_constant(MER_FILIR_H2);
+	export_constant(MER_VANILMIRTH_H2);
+	export_constant(MER_EIRA);
+	export_constant(MER_BAYERI);
+	export_constant(MER_SERA);
+	export_constant(MER_DIETER);
+	export_constant(MER_ELEANOR);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter

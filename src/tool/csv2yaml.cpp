@@ -38,7 +38,9 @@
 #include "../map/channel.hpp"
 #include "../map/chat.hpp"
 #include "../map/date.hpp"
+#include "../map/homunculus.hpp"
 #include "../map/instance.hpp"
+#include "../map/itemdb.hpp"
 #include "../map/mercenary.hpp"
 #include "../map/mob.hpp"
 #include "../map/npc.hpp"
@@ -70,6 +72,7 @@ int getch( void ){
 #define MAX_SKILL_ITEM_REQUIRE	10
 #define MAX_SKILL_STATUS_REQUIRE 3
 #define MAX_SKILL_EQUIP_REQUIRE 10
+#define MAX_HOM_SKILL_REQUIRE 5
 
 struct s_skill_unit_csv : s_skill_db {
 	std::string target_str;
@@ -82,6 +85,8 @@ std::unordered_map<uint16, s_skill_db> skill_castnodex;
 std::unordered_map<uint16, s_skill_unit_csv> skill_unit;
 std::unordered_map<uint16, s_skill_copyable> skill_copyable;
 std::unordered_map<uint16, s_skill_db> skill_nearnpc;
+
+std::unordered_map<int32, std::vector<s_homun_skill_tree_entry>> hom_skill_tree;
 
 // Forward declaration of conversion functions
 static bool guild_read_guildskill_tree_db( char* split[], int columns, int current );
@@ -98,6 +103,8 @@ static bool skill_parse_row_unitdb(char* split[], int columns, int current);
 static bool skill_parse_row_copyabledb(char* split[], int columns, int current);
 static bool skill_parse_row_nonearnpcrangedb(char* split[], int columns, int current);
 static bool skill_parse_row_skilldb(char* split[], int columns, int current);
+static bool read_homunculus_skilldb(char* split[], int columns, int current);
+static bool read_homunculusdb(char* str[], int columns, int current);
 
 // Constants for conversion
 std::unordered_map<uint16, std::string> aegis_itemnames;
@@ -136,6 +143,14 @@ static void skill_txt_data(const std::string& modePath, const std::string& fixed
 		sv_readdb(fixedPath.c_str(), "skill_copyable_db.txt", ',', 2, 4, -1, skill_parse_row_copyabledb, false);
 	if (fileExists(fixedPath + "/skill_nonearnpc_db.txt"))
 		sv_readdb(fixedPath.c_str(), "skill_nonearnpc_db.txt", ',', 2, 3, -1, skill_parse_row_nonearnpcrangedb, false);
+}
+
+// Homunculus database data to memory
+static void homunculus_txt_data(const std::string& modePath, const std::string& fixedPath) {
+	hom_skill_tree.clear();
+
+	if (fileExists(modePath + "/homun_skill_tree.txt"))
+		sv_readdb(modePath.c_str(), "homun_skill_tree.txt", ',', 15, 15, -1, read_homunculus_skilldb, false);
 }
 
 YAML::Emitter body;
@@ -349,6 +364,20 @@ int do_init( int argc, char** argv ){
 	if (!process("SKILL_DB", 1, { path_db_import }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 18, 18, -1, &skill_parse_row_skilldb, false);
 	})){
+		return 0;
+	}
+
+	homunculus_txt_data(path_db, path_db);
+	if (!process("HOMUNCULUS_DB", 1, { path_db_mode }, "homunculus_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 50, 50, MAX_HOMUNCULUS_CLASS, read_homunculusdb, false);
+	})) {
+		return 0;
+	}
+	
+	homunculus_txt_data(path_db_import, path_db_import);
+	if (!process("HOMUNCULUS_DB", 1, { path_db_import }, "homunculus_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 50, 50, MAX_HOMUNCULUS_CLASS, read_homunculusdb, false);
+	})) {
 		return 0;
 	}
 
@@ -2384,6 +2413,237 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 		}
 
 		body << YAML::EndMap;
+	}
+
+	body << YAML::EndMap;
+
+	return true;
+}
+
+// homunculus_db.yml function
+//---------------------------
+static bool read_homunculus_skilldb(char* split[], int columns, int current) {
+	s_homun_skill_tree_entry entry = {};
+
+	entry.id = atoi(split[1]);
+	entry.max = atoi(split[2]);
+	entry.need_level = atoi(split[3]);
+	entry.intimacy = atoi(split[14]);
+
+	for (int i = 0; i < MAX_HOM_SKILL_REQUIRE; i++) {
+		if (atoi(split[4 + i * 2]) > 0)
+			entry.need.emplace(atoi(split[4 + i * 2]), atoi(split[4 + i * 2 + 1]));
+	}
+
+	if (util::umap_find(hom_skill_tree, atoi(split[0])))
+		hom_skill_tree[(uint16)atoi(split[0])].push_back(entry);
+	else {
+		hom_skill_tree[(uint16)atoi(split[0])] = std::vector<s_homun_skill_tree_entry>();
+		hom_skill_tree[(uint16)atoi(split[0])].push_back(entry);
+	}
+
+	return true;
+}
+
+// Copied and adjusted from homunculus.cpp
+static bool read_homunculusdb(char* str[], int columns, int current) {
+	body << YAML::BeginMap;
+	body << YAML::Key << "BaseClass" << YAML::Value << name2Upper(constant_lookup(atoi(str[0]), "MER_") + 4);
+	if (atoi(str[0]) != atoi(str[1]))
+		body << YAML::Key << "EvolutionClass" << YAML::Value << name2Upper(constant_lookup(atoi(str[1]), "MER_") + 4);
+	body << YAML::Key << "Name" << YAML::Value << str[2];
+	if (atoi(str[3]) != ITEMID_PET_FOOD)
+		body << YAML::Key << "Food" << YAML::Value << name2Upper(*util::umap_find(aegis_itemnames, (uint16)atoi(str[3])));
+	if (atoi(str[4]) != 60000)
+		body << YAML::Key << "HungryDelay" << YAML::Value << atoi(str[4]);
+	if (atoi(str[9]) != 700)
+		body << YAML::Key << "BaseAspd" << YAML::Value << atoi(str[9]);
+	body << YAML::Key << "Status";
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Race" << YAML::Value << name2Upper(constant_lookup(atoi(str[7]), "RC_") + 3);
+	body << YAML::Key << "Element" << YAML::Value << name2Upper(constant_lookup(atoi(str[8]), "ELE_") + 4);
+	body << YAML::Key << "Size";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Base" << YAML::Value << name2Upper(constant_lookup(atoi(str[5]), "Size_") + 5);
+	body << YAML::Key << "Evolution" << YAML::Value << name2Upper(constant_lookup(atoi(str[6]), "Size_") + 5);
+	body << YAML::EndMap;
+
+	body << YAML::Key << "Hp";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Base" << YAML::Value << atoi(str[10]);
+	body << YAML::Key << "GrowthBonus";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Min" << YAML::Value << atoi(str[18]);
+	body << YAML::Key << "Max" << YAML::Value << atoi(str[19]);
+	body << YAML::EndMap;
+	body << YAML::EndMap;
+	body << YAML::Key << "EvolutionBonus";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Min" << YAML::Value << atoi(str[34]);
+	body << YAML::Key << "Max" << YAML::Value << atoi(str[35]);
+	body << YAML::EndMap;
+
+	body << YAML::Key << "Sp";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Base" << YAML::Value << atoi(str[11]);
+	body << YAML::Key << "GrowthBonus";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Min" << YAML::Value << atoi(str[20]);
+	body << YAML::Key << "Max" << YAML::Value << atoi(str[21]);
+	body << YAML::EndMap;
+	body << YAML::EndMap;
+	body << YAML::Key << "EvolutionBonus";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Min" << YAML::Value << atoi(str[36]);
+	body << YAML::Key << "Max" << YAML::Value << atoi(str[37]);
+	body << YAML::EndMap;
+
+	body << YAML::Key << "Str";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Base" << YAML::Value << atoi(str[12]);
+	body << YAML::Key << "GrowthBonus";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Min" << YAML::Value << atoi(str[22]);
+	body << YAML::Key << "Max" << YAML::Value << atoi(str[23]);
+	body << YAML::EndMap;
+	body << YAML::EndMap;
+	body << YAML::Key << "EvolutionBonus";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Min" << YAML::Value << atoi(str[38]);
+	body << YAML::Key << "Max" << YAML::Value << atoi(str[39]);
+	body << YAML::EndMap;
+
+	body << YAML::Key << "Agi";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Base" << YAML::Value << atoi(str[13]);
+	body << YAML::Key << "GrowthBonus";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Min" << YAML::Value << atoi(str[24]);
+	body << YAML::Key << "Max" << YAML::Value << atoi(str[25]);
+	body << YAML::EndMap;
+	body << YAML::EndMap;
+	body << YAML::Key << "EvolutionBonus";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Min" << YAML::Value << atoi(str[40]);
+	body << YAML::Key << "Max" << YAML::Value << atoi(str[41]);
+	body << YAML::EndMap;
+
+	body << YAML::Key << "Vit";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Base" << YAML::Value << atoi(str[14]);
+	body << YAML::Key << "GrowthBonus";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Min" << YAML::Value << atoi(str[26]);
+	body << YAML::Key << "Max" << YAML::Value << atoi(str[27]);
+	body << YAML::EndMap;
+	body << YAML::EndMap;
+	body << YAML::Key << "EvolutionBonus";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Min" << YAML::Value << atoi(str[42]);
+	body << YAML::Key << "Max" << YAML::Value << atoi(str[43]);
+	body << YAML::EndMap;
+
+	body << YAML::Key << "Int";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Base" << YAML::Value << atoi(str[15]);
+	body << YAML::Key << "GrowthBonus";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Min" << YAML::Value << atoi(str[28]);
+	body << YAML::Key << "Max" << YAML::Value << atoi(str[29]);
+	body << YAML::EndMap;
+	body << YAML::EndMap;
+	body << YAML::Key << "EvolutionBonus";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Min" << YAML::Value << atoi(str[44]);
+	body << YAML::Key << "Max" << YAML::Value << atoi(str[45]);
+	body << YAML::EndMap;
+
+	body << YAML::Key << "Dex";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Base" << YAML::Value << atoi(str[16]);
+	body << YAML::Key << "GrowthBonus";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Min" << YAML::Value << atoi(str[30]);
+	body << YAML::Key << "Max" << YAML::Value << atoi(str[31]);
+	body << YAML::EndMap;
+	body << YAML::EndMap;
+	body << YAML::Key << "EvolutionBonus";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Min" << YAML::Value << atoi(str[46]);
+	body << YAML::Key << "Max" << YAML::Value << atoi(str[47]);
+	body << YAML::EndMap;
+
+	body << YAML::Key << "Luk";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Base" << YAML::Value << atoi(str[17]);
+	body << YAML::Key << "GrowthBonus";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Min" << YAML::Value << atoi(str[32]);
+	body << YAML::Key << "Max" << YAML::Value << atoi(str[33]);
+	body << YAML::EndMap;
+	body << YAML::EndMap;
+	body << YAML::Key << "EvolutionBonus";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Min" << YAML::Value << atoi(str[48]);
+	body << YAML::Key << "Max" << YAML::Value << atoi(str[49]);
+	body << YAML::EndMap;
+
+	body << YAML::EndMap;
+
+	for (const auto &homskit : hom_skill_tree) {
+		if (homskit.first != atoi(str[0]))
+			continue;
+
+		body << YAML::Key << "SkillTree";
+		body << YAML::BeginSeq;
+
+		for (const auto &skillit : homskit.second) {
+			std::string *skill_name = util::umap_find(aegis_skillnames, skillit.id);
+
+			if (skill_name == nullptr) {
+				ShowError("Skill name for homunculus skill ID %hu is not known.\n", skillit.id);
+				return false;
+			}
+
+			body << YAML::BeginMap;
+			body << YAML::Key << "Skill" << YAML::Value << *skill_name;
+			body << YAML::Key << "MaxLevel" << YAML::Value << (int)skillit.max;
+			if (skillit.need_level > 0)
+				body << YAML::Key << "RequiredLevel" << YAML::Value << (int)skillit.need_level;
+			if (skillit.intimacy > 0)
+				body << YAML::Key << "RequiredIntimacy" << YAML::Value << skillit.intimacy;
+			if (!skillit.need.empty()) {
+				body << YAML::Key << "Required";
+				body << YAML::BeginSeq;
+
+				for (const auto &it : skillit.need) {
+					uint16 required_skill_id = it.first;
+					uint16 required_skill_level = it.second;
+
+					if (required_skill_id == 0 || required_skill_level == 0)
+						continue;
+
+					std::string* required_name = util::umap_find(aegis_skillnames, required_skill_id);
+
+					if (required_name == nullptr) {
+						ShowError("Skill name for required skill id %hu is not known.\n", required_skill_id);
+						return false;
+					}
+
+					body << YAML::BeginMap;
+					body << YAML::Key << "Skill" << YAML::Value << *required_name;
+					body << YAML::Key << "Level" << YAML::Value << required_skill_level;
+					body << YAML::EndMap;
+				}
+
+				body << YAML::EndSeq;
+			}
+
+			body << YAML::EndMap;
+		}
+
+		body << YAML::EndSeq;
 	}
 
 	body << YAML::EndMap;
