@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20191107
+//= 20200220
 //===== Description: =========================================
 //= Explanation of the achievements_db.yml file and structure.
 //============================================================
@@ -16,29 +16,29 @@ Id: Unique achievement ID.
 
 Group: Achievement group type. Each achievement type calls a specific objective check.
 Valid groups:
-	AG_ADD_FRIEND - Triggered when a player adds a friend.
-	AG_ADVENTURE - Does not trigger automatically. These are triggered by the achievementcomplete script command.
-	AG_BABY - Triggered when a player becomes a baby job.
-	AG_BATTLE - Triggered when a player kills a monster.
-	AG_CHATTING - Unknown.
-	AG_CHATTING_COUNT - Triggered when a player has a chatroom open and others join.
-	AG_CHATTING_CREATE - Triggered when a player creates a chatroom.
-	AG_CHATTING_DYING - Triggered when a player creates a chatroom and dies with it open.
-	AG_EAT - Unknown.
-	AG_GET_ITEM - Triggered when a player gets an item that has a specific sell value.
-	AG_GET_ZENY - Triggered when a player gets a specific amount of zeny at once.
-	AG_GOAL_ACHIEVE - Triggered when a player's achievement rank levels up.
-	AG_GOAL_LEVEL - Triggered when a player's base level or job level changes.
-	AG_GOAL_STATUS - Triggered when a player's base stats changes.
-	AG_HEAR - Unknown.
-	AG_JOB_CHANGE - Triggered when a player's job changes.
-	AG_MARRY - Triggered when two players get married.
-	AG_PARTY - Triggered when a player creates a party.
-	AG_ENCHANT_FAIL - Triggered when a player fails to refine an equipment.
-	AG_ENCHANT_SUCCESS - Triggered when a player successfully refines an equipment.
-	AG_SEE - Unknown.
-	AG_SPEND_ZENY - Triggered when a player spends any amount of zeny on vendors.
-	AG_TAMING - Triggered when a player tames a monster.
+	Add_Friend - Triggered when a player adds a friend.
+	Adventure - Does not trigger automatically. These are triggered by the achievementcomplete script command.
+	Baby - Triggered when a player becomes a baby job.
+	Battle - Triggered when a player kills a monster.
+	Chatting - Unknown.
+	Chatting_Count - Triggered when a player has a chatroom open and others join.
+	Chatting_Create - Triggered when a player creates a chatroom.
+	Chatting_Dying - Triggered when a player creates a chatroom and dies with it open.
+	Eat - Unknown.
+	Get_Item - Triggered when a player gets an item that has a specific sell value.
+	Get_Zeny - Triggered when a player gets a specific amount of zeny at once.
+	Goal_Achieve - Triggered when a player's achievement rank levels up.
+	Goal_Level - Triggered when a player's base level or job level changes.
+	Goal_Status - Triggered when a player's base stats changes.
+	Hear - Unknown.
+	Job_Change - Triggered when a player's job changes.
+	Marry - Triggered when two players get married.
+	Party - Triggered when a player creates a party.
+	Enchant_Fail - Triggered when a player fails to refine an equipment.
+	Enchant_Success - Triggered when a player successfully refines an equipment.
+	See - Unknown.
+	Spend_Zeny - Triggered when a player spends any amount of zeny on vendors.
+	Taming - Triggered when a player tames a monster.
 
 ---------------------------------------
 
@@ -86,7 +86,7 @@ Example 2:
 
 ---------------------------------------
 
-Map: A map name that is used for the AG_CHATTING type which increments the counter based on the player's map.
+Map: A map name that is used for the Chatting group which increments the counter based on the player's map.
 
 ---------------------------------------
 

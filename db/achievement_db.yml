@@ -22,19 +22,19 @@
 # Achievement Settings
 #
 ###########################################################################
-# - Id                  Unique achievement ID.
+# - Id                  Achievement ID.
 #   Group               Achievement group type.
 #   Name                Achievement name.
-#   Targets:            List of targets the achievement requires. (Optional)
+#   Targets:            List of targets the achievement requires. (Default: null)
 #     - Id              Index value used for import methods.
 #       Mob             Target mob. (Default: 0)
 #       Count           Target count. (Default: 1)
 #   Condition           Conditional statement that must be met for the achievement to be considered complete. (Default: null)
 #   Map                 Map name that is used for the AG_CHATTING type. (Default: -1)
-#   Dependents:         List of achievements that need to be completed before this achievement is considered complete. (Optional)
+#   Dependents:         List of achievements that need to be completed before this achievement is considered complete. (Default: null)
 #     - Id              Index value used for import methods.
 #       AchievementId   Dependent ID.
-#   Rewards:            List of rewards that are given on completion. (Optional)
+#   Rewards:            List of rewards that are given on completion. (Default: null)
 #     Item              Item name.
 #     Amount            Amount of item. (Default: 1)
 #     Script            Bonus Script. (Default: null)

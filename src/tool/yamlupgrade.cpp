@@ -62,17 +62,20 @@ int getch( void ){
 #endif
 
 // Forward declaration of conversion functions
-static size_t upgrade_achievement_db(std::string file);
+static bool upgrade_achievement_db(std::string file);
 
 // Constants for conversion
 std::unordered_map<uint16, std::string> aegis_itemnames;
+std::unordered_map<uint16, uint16> aegis_itemviewid;
 std::unordered_map<uint16, std::string> aegis_mobnames;
 std::unordered_map<uint16, std::string> aegis_skillnames;
+std::unordered_map<const char *, int64> constants;
 
 // Forward declaration of constant loading functions
 static bool parse_item_constants(const char* path);
 static bool parse_mob_constants(char* split[], int columns, int current);
-static bool parse_skill_constants(char* split[], int columns, int current);
+static bool parse_skill_constants_txt(char *split[], int columns, int current);
+static bool parse_skill_constants_yml(std::string path, std::string filename);
 
 bool fileExists(const std::string &path);
 bool askConfirmation(const char *fmt, ...);
@@ -80,11 +83,63 @@ bool askConfirmation(const char *fmt, ...);
 YAML::Node inNode;
 YAML::Emitter body;
 
+// Implement the function instead of including the original version by linking
+void script_set_constant_(const char *name, int64 value, const char *constant_name, bool isparameter, bool deprecated) {
+	constants[name] = value;
+}
+
+const char *constant_lookup(int32 value, const char *prefix) {
+	nullpo_retr(nullptr, prefix);
+
+	for (auto const &pair : constants) {
+		// Same prefix group and same value
+		if (strncasecmp(pair.first, prefix, strlen(prefix)) == 0 && pair.second == value) {
+			return pair.first;
+		}
+	}
+
+	return nullptr;
+}
+
+int64 constant_lookup_int(const char *constant) {
+	nullpo_retr(-100, constant);
+
+	for (auto const &pair : constants) {
+		if (strlen(pair.first) == strlen(constant) && strncasecmp(pair.first, constant, strlen(constant)) == 0) {
+			return pair.second;
+		}
+	}
+
+	return -100;
+}
+
 uint32 getHeaderVersion(YAML::Node &node) {
 	return node["Header"]["Version"].as<uint32>();
 }
 
-void prepareHeader(std::ofstream &file, const std::string &type, uint32 version) {
+void copyFileIfExists(std::ofstream &file, const std::string &name, bool newLine) {
+	std::string path = "doc/yaml/db/" + name + ".yml";
+
+	if (fileExists(path)) {
+		std::ifstream source(path, std::ios::binary);
+
+		std::istreambuf_iterator<char> begin_source(source);
+		std::istreambuf_iterator<char> end_source;
+		std::ostreambuf_iterator<char> begin_dest(file);
+		copy(begin_source, end_source, begin_dest);
+
+		source.close();
+
+		if (newLine) {
+			file << "\n";
+		}
+	}
+}
+
+void prepareHeader(std::ofstream &file, const std::string &type, uint32 version, const std::string &name) {
+	copyFileIfExists(file, "license", false);
+	copyFileIfExists(file, name, true);
+
 	YAML::Emitter header(file);
 
 	header << YAML::BeginMap;
@@ -110,6 +165,34 @@ void finalizeBody(void) {
 	body << YAML::EndMap;
 }
 
+void prepareFooter(std::ostream &file) {
+	if (!inNode["Footer"].IsDefined())
+		return;
+
+	if (inNode["Body"].IsDefined()) {
+		file << "\n";
+		file << "\n";
+	}
+
+	YAML::Emitter footer(file);
+
+	footer << YAML::BeginMap;
+	footer << YAML::Key << "Footer";
+	footer << YAML::BeginMap;
+	footer << YAML::Key << "Imports";
+	footer << YAML::BeginSeq;
+	for (const YAML::Node &import : inNode["Footer"]["Imports"]) {
+		footer << YAML::BeginMap;
+		footer << YAML::Key << "Path" << YAML::Value << import["Path"];
+		if (import["Mode"].IsDefined())
+			footer << YAML::Key << "Mode" << YAML::Value << import["Mode"];
+		footer << YAML::EndMap;
+	}
+	footer << YAML::EndSeq;
+	footer << YAML::EndMap;
+	footer << YAML::EndMap;
+}
+
 template<typename Func>
 bool process(const std::string &type, uint32 version, const std::vector<std::string> &paths, const std::string &name, Func lambda) {
 	for (const std::string &path : paths) {
@@ -133,6 +216,8 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 
 			std::ofstream out;
 
+			body.~Emitter();
+			new (&body) YAML::Emitter();
 			out.open(to);
 
 			if (!out.is_open()) {
@@ -140,16 +225,19 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 				return false;
 			}
 
-			prepareHeader(out, type, version);
-			prepareBody();
+			prepareHeader(out, type, version, name);
+			if (inNode["Body"].IsDefined()) {
+				prepareBody();
 
-			if (!lambda(path, name_ext)) {
-				out.close();
-				return false;
+				if (!lambda(path, name_ext)) {
+					out.close();
+					return false;
+				}
+
+				finalizeBody();
+				out << body.c_str();
 			}
-
-			finalizeBody();
-			out << body.c_str();
+			prepareFooter(out);
 			// Make sure there is an empty line at the end of the file for git
 			out << "\n";
 			out.close();
@@ -169,8 +257,17 @@ int do_init(int argc, char** argv) {
 	parse_item_constants((path_db_import + "/item_db.txt").c_str());
 	sv_readdb(path_db_mode.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false);
 	sv_readdb(path_db_import.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false);
-	sv_readdb(path_db_mode.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants, false);
-	sv_readdb(path_db_import.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants, false);
+	if (fileExists(path_db + "/" + "skill_db.yml")) {
+		parse_skill_constants_yml(path_db_mode, "skill_db.yml");
+		parse_skill_constants_yml(path_db_import + "/", "skill_db.yml");
+	} else {
+		sv_readdb(path_db_mode.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants_txt, false);
+		sv_readdb(path_db_import.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants_txt, false);
+	}
+
+	// Load constants
+	#define export_constant_npc(a) export_constant(a)
+	#include "../map/script_constants.hpp"
 
 	std::vector<std::string> root_paths = {
 		path_db,
@@ -358,7 +455,7 @@ static bool parse_mob_constants(char* split[], int columns, int current) {
 	return true;
 }
 
-static bool parse_skill_constants(char* split[], int columns, int current) {
+static bool parse_skill_constants_txt(char* split[], int columns, int current) {
 	uint16 skill_id = atoi(split[0]);
 	char* name = trim(split[16]);
 
@@ -367,14 +464,53 @@ static bool parse_skill_constants(char* split[], int columns, int current) {
 	return true;
 }
 
+static bool parse_skill_constants_yml(std::string path, std::string filename) {
+	YAML::Node rootNode;
+
+	try {
+		rootNode = YAML::LoadFile(path + filename);
+	} catch (YAML::Exception & e) {
+		ShowError("Failed to read file from '" CL_WHITE "%s%s" CL_RESET "'.\n", path.c_str(), filename.c_str());
+		ShowError("%s (Line %d: Column %d)\n", e.msg.c_str(), e.mark.line, e.mark.column);
+		return false;
+	}
+
+	uint64 count = 0;
+
+	for (const YAML::Node &body : rootNode["Body"]) {
+		aegis_skillnames[body["Id"].as<uint16>()] = body["Name"].as<std::string>();
+		count++;
+	}
+
+	ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s%s" CL_RESET "'" CL_CLL "\n", count, path.c_str(), filename.c_str());
+
+	return true;
+}
+
+std::string name2Upper(std::string name) {
+	std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+	name[0] = toupper(name[0]);
+
+	for (size_t i = 0; i < name.size(); i++) {
+		if (name[i - 1] == '_' || (name[i - 2] == '1' && name[i - 1] == 'h') || (name[i - 2] == '2' && name[i - 1] == 'h'))
+			name[i] = toupper(name[i]);
+	}
+
+	return name;
+}
+
 // Implementation of the upgrade functions
-static size_t upgrade_achievement_db(std::string file) {
+static bool upgrade_achievement_db(std::string file) {
 	size_t entries = 0;
 
 	for (const auto &input : inNode["Body"]) {
 		body << YAML::BeginMap;
 		body << YAML::Key << "Id" << YAML::Value << input["ID"];
-		body << YAML::Key << "Group" << YAML::Value << input["Group"];
+
+		std::string constant = input["Group"].as<std::string>();
+
+		constant.erase(0, 3); // Remove "AG_"
+		body << YAML::Key << "Group" << YAML::Value << name2Upper(constant);
 		body << YAML::Key << "Name" << YAML::Value << input["Name"];
 
 		if (input["Target"].IsDefined()) {
@@ -386,7 +522,7 @@ static size_t upgrade_achievement_db(std::string file) {
 				body << YAML::Key << "Id" << YAML::Value << it["Id"];
 				if (it["MobID"].IsDefined())
 					body << YAML::Key << "Mob" << YAML::Value << *util::umap_find(aegis_mobnames, it["MobID"].as<uint16>());
-				if (it["Count"].IsDefined() && it["Count"].as<int>() > 1)
+				if (it["Count"].IsDefined() && it["Count"].as<int32>() > 1)
 					body << YAML::Key << "Count" << YAML::Value << it["Count"];
 				body << YAML::EndMap;
 			}
@@ -435,5 +571,5 @@ static size_t upgrade_achievement_db(std::string file) {
 
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' achievements in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
-	return entries;
+	return true;
 }

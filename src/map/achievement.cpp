@@ -76,9 +76,10 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 			return 0;
 		}
 
+		std::string group_name_constant = "AG_" + group_name;
 		int64 constant;
 
-		if( !script_get_constant( group_name.c_str(), &constant ) ){
+		if( !script_get_constant( group_name_constant.c_str(), &constant ) ){
 			this->invalidWarning( node, "Invalid Group %s for achievement %d, skipping.\n", group_name.c_str(), achievement_id );
 			return 0;
 		}
