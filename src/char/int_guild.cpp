@@ -90,9 +90,9 @@ TIMER_FUNC(guild_save_timer){
 	return 0;
 }
 
-int inter_guild_removemember_tosql(uint32 account_id, uint32 char_id)
+int inter_guild_removemember_tosql(uint32 char_id)
 {
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE from `%s` where `account_id` = '%d' and `char_id` = '%d'", schema_config.guild_member_db, account_id, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE from `%s` where `char_id` = '%d'", schema_config.guild_member_db, char_id) )
 		Sql_ShowDebug(sql_handle);
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `guild_id` = '0' WHERE `char_id` = '%d'", schema_config.char_db, char_id) )
 		Sql_ShowDebug(sql_handle);
@@ -109,7 +109,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 	// GS_LEVEL `guild_lv`,`max_member`,`exp`,`next_exp`,`skill_point`
 	// GS_BASIC `name`,`master`,`char_id`
 
-	// GS_MEMBER `guild_member` (`guild_id`,`account_id`,`char_id`,`hair`,`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`name`)
+	// GS_MEMBER `guild_member` (`guild_id`,`char_id`,`exp`,`position`)
 	// GS_POSITION `guild_position` (`guild_id`,`position`,`name`,`mode`,`exp_mode`)
 	// GS_ALLIANCE `guild_alliance` (`guild_id`,`opposition`,`alliance_id`,`name`)
 	// GS_EXPULSION `guild_expulsion` (`guild_id`,`account_id`,`name`,`mes`)
@@ -239,12 +239,9 @@ int inter_guild_tosql(struct guild *g,int flag)
 				continue;
 			if(m->account_id) {
 				//Since nothing references guild member table as foreign keys, it's safe to use REPLACE INTO
-				Sql_EscapeStringLen(sql_handle, esc_name, m->name, strnlen(m->name, NAME_LENGTH));
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`guild_id`,`account_id`,`char_id`,`hair`,`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`name`) "
-					"VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%" PRIu64 "','%d','%d','%d','%s')",
-					schema_config.guild_member_db, g->guild_id, m->account_id, m->char_id,
-					m->hair, m->hair_color, m->gender,
-					m->class_, m->lv, m->exp, m->exp_payper, m->online, m->position, esc_name) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`guild_id`,`char_id`,`exp`,`position`) "
+					"VALUES ('%d','%d','%" PRIu64 "','%d')",
+					schema_config.guild_member_db, g->guild_id, m->char_id, m->exp, m->position ) )
 					Sql_ShowDebug(sql_handle);
 				if (m->modified&GS_MEMBER_NEW || new_guild == 1)
 				{
@@ -411,7 +408,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	}
 
 	// load guild member info
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `m`.`account_id`,`m`.`char_id`,`m`.`hair`,`m`.`hair_color`,`m`.`gender`,`m`.`class`,`m`.`lv`,`m`.`exp`,`m`.`exp_payper`,`m`.`online`,`m`.`position`,`m`.`name`,coalesce(UNIX_TIMESTAMP(`c`.`last_login`),0) "
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `c`.`account_id`,`m`.`char_id`,`c`.`hair`,`c`.`hair_color`,`c`.`sex`,`c`.`class`,`c`.`base_level`,`m`.`exp`,`c`.`online`,`m`.`position`,`c`.`name`,coalesce(UNIX_TIMESTAMP(`c`.`last_login`),0) "
 		"FROM `%s` `m` INNER JOIN `%s` `c` on `c`.`char_id`=`m`.`char_id` WHERE `m`.`guild_id`='%d' ORDER BY `position`", schema_config.guild_member_db, schema_config.char_db, guild_id) )
 	{
 		Sql_ShowDebug(sql_handle);
@@ -426,17 +423,28 @@ struct guild * inter_guild_fromsql(int guild_id)
 		Sql_GetData(sql_handle,  1, &data, NULL); m->char_id = atoi(data);
 		Sql_GetData(sql_handle,  2, &data, NULL); m->hair = atoi(data);
 		Sql_GetData(sql_handle,  3, &data, NULL); m->hair_color = atoi(data);
-		Sql_GetData(sql_handle,  4, &data, NULL); m->gender = atoi(data);
+		Sql_GetData(sql_handle,  4, &data, NULL);
+		switch( *data ){
+			case 'F':
+				m->gender = SEX_FEMALE;
+				break;
+			case 'M':
+				m->gender = SEX_MALE;
+				break;
+			default:
+				ShowWarning( "inter_guild_fromsql: Unsupported gender %c for char_id %u. Defaulting to male...\n", *data, m->char_id );
+				m->gender = SEX_MALE;
+				break;
+		}
 		Sql_GetData(sql_handle,  5, &data, NULL); m->class_ = atoi(data);
 		Sql_GetData(sql_handle,  6, &data, NULL); m->lv = atoi(data);
 		Sql_GetData(sql_handle,  7, &data, NULL); m->exp = strtoull(data, NULL, 10);
-		Sql_GetData(sql_handle,  8, &data, NULL); m->exp_payper = (unsigned int)atoi(data);
-		Sql_GetData(sql_handle,  9, &data, NULL); m->online = atoi(data);
-		Sql_GetData(sql_handle, 10, &data, NULL); m->position = atoi(data);
+		Sql_GetData(sql_handle,  8, &data, NULL); m->online = atoi(data);
+		Sql_GetData(sql_handle,  9, &data, NULL); m->position = atoi(data);
 		if( m->position >= MAX_GUILDPOSITION ) // Fix reduction of MAX_GUILDPOSITION [PoW]
 			m->position = MAX_GUILDPOSITION - 1;
-		Sql_GetData(sql_handle, 11, &data, &len); memcpy(m->name, data, zmin(len, NAME_LENGTH));
-		Sql_GetData(sql_handle, 12, &data, NULL); m->last_login = atoi(data);
+		Sql_GetData(sql_handle, 10, &data, &len); memcpy(m->name, data, zmin(len, NAME_LENGTH));
+		Sql_GetData(sql_handle, 11, &data, NULL); m->last_login = atoi(data);
 		m->modified = GS_MEMBER_UNMODIFIED;
 	}
 
@@ -1327,7 +1335,7 @@ int mapif_parse_GuildLeave(int fd, int guild_id, uint32 account_id, uint32 char_
 	}
 
 	mapif_guild_withdraw(guild_id,account_id,char_id,flag,g->member[i].name,mes);
-	inter_guild_removemember_tosql(g->member[i].account_id,g->member[i].char_id);
+	inter_guild_removemember_tosql(g->member[i].char_id);
 
 	memset(&g->member[i],0,sizeof(struct guild_member));
 

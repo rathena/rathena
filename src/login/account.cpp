@@ -641,17 +641,17 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 	return result;
 }
 
-void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id) {
+void mmo_save_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 char_id) {
 	Sql* sql_handle = ((AccountDB_SQL*)self)->accounts;
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
-	int count = RFIFOW(fd, 12);
+	uint16 count = RFIFOW(fd, 12);
 
 	if (count) {
 		int cursor = 14, i;
 		char key[32], sval[254], esc_key[32*2+1], esc_sval[254*2+1];
 
 		for (i = 0; i < count; i++) {
-			unsigned int index;
+			uint32 index;
 			safestrncpy(key, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 			Sql_EscapeString(sql_handle, esc_key, key);
 			cursor += RFIFOB(fd, cursor) + 1;
@@ -662,12 +662,12 @@ void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 			switch (RFIFOB(fd, cursor++)) {
 				// int
 				case 0:
-					if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%d')", db->global_acc_reg_num_table, account_id, esc_key, index, RFIFOL(fd, cursor)) )
+					if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%" PRId64 "')", db->global_acc_reg_num_table, account_id, esc_key, index, RFIFOQ(fd, cursor)) )
 						Sql_ShowDebug(sql_handle);
-					cursor += 4;
+					cursor += 8;
 					break;
 				case 1:
-					if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `key` = '%s' AND `index` = '%u' LIMIT 1", db->global_acc_reg_num_table, account_id, esc_key, index) )
+					if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", db->global_acc_reg_num_table, account_id, esc_key, index) )
 						Sql_ShowDebug(sql_handle);
 					break;
 				// str
@@ -675,11 +675,11 @@ void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 					safestrncpy(sval, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 					cursor += RFIFOB(fd, cursor) + 1;
 					Sql_EscapeString(sql_handle, esc_sval, sval);
-					if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%s')", db->global_acc_reg_str_table, account_id, esc_key, index, esc_sval) )
+					if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%s')", db->global_acc_reg_str_table, account_id, esc_key, index, esc_sval) )
 						Sql_ShowDebug(sql_handle);
 					break;
 				case 3:
-					if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `key` = '%s' AND `index` = '%u' LIMIT 1", db->global_acc_reg_str_table, account_id, esc_key, index) )
+					if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", db->global_acc_reg_str_table, account_id, esc_key, index) )
 						Sql_ShowDebug(sql_handle);
 					break;
 				default:
@@ -690,14 +690,14 @@ void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 	}
 }
 
-void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id) {
+void mmo_send_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 char_id) {
 	Sql* sql_handle = ((AccountDB_SQL*)self)->accounts;
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 	char* data;
 	int plen = 0;
 	size_t len;
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%d'", db->global_acc_reg_str_table, account_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%" PRIu32 "'", db->global_acc_reg_str_table, account_id) )
 		Sql_ShowDebug(sql_handle);
 
 	WFIFOHEAD(fd, 60000 + 300);
@@ -728,7 +728,7 @@ void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 
 		Sql_GetData(sql_handle, 1, &data, NULL);
 
-		WFIFOL(fd, plen) = (unsigned int)atol(data);
+		WFIFOL(fd, plen) = (uint32)atol(data);
 		plen += 4;
 
 		Sql_GetData(sql_handle, 2, &data, NULL);
@@ -764,7 +764,7 @@ void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 
 	Sql_FreeResult(sql_handle);
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%d'", db->global_acc_reg_num_table, account_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%" PRIu32 "'", db->global_acc_reg_num_table, account_id) )
 		Sql_ShowDebug(sql_handle);
 
 	WFIFOHEAD(fd, 60000 + 300);
@@ -795,13 +795,13 @@ void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 
 		Sql_GetData(sql_handle, 1, &data, NULL);
 
-		WFIFOL(fd, plen) = (unsigned int)atol(data);
+		WFIFOL(fd, plen) = (uint32)atol(data);
 		plen += 4;
 
 		Sql_GetData(sql_handle, 2, &data, NULL);
 
-		WFIFOL(fd, plen) = atoi(data);
-		plen += 4;
+		WFIFOQ(fd, plen) = strtoll(data,NULL,10);
+		plen += 8;
 
 		WFIFOW(fd, 14) += 1;
 
