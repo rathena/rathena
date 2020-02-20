@@ -703,7 +703,7 @@ OnTimer12000:
 	hideonnpc instance_npcname("#wl20");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl21");
 	hideonnpc instance_npcname("#wl21");
-	setcell 'map_swat$,116,30,116,66,cell_walkable,0;
+	setcell 'map_swat$,116,30,116,66,cell_walkable,1;
 	end;
 OnTimer17000:
 	stopnpctimer;
@@ -790,7 +790,7 @@ OnTimer7000:
 	hideonnpc instance_npcname("#wl54");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl55");
 	hideonnpc instance_npcname("#wl55");
-	setcell 'map_swat$,151,30,151,60,cell_walkable,0;
+	setcell 'map_swat$,151,30,151,60,cell_walkable,1;
 	end;
 OnTimer15000:
 	stopnpctimer;
@@ -957,7 +957,7 @@ OnTimer9000:
 	hideonnpc instance_npcname("#wl75");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl76");
 	hideonnpc instance_npcname("#wl76");
-	setcell 'map_swat$,250,30,250,46,cell_walkable,0;
+	setcell 'map_swat$,250,30,250,46,cell_walkable,1;
 	end;
 OnTimer14000:
 	mapannounce 'map_swat$, "Julian: Great. Shall we go now!", bc_map,0xFF99;
@@ -1231,9 +1231,9 @@ OnInstanceInit:
 	disablenpc instance_npcname("#ext1_1");
 	disablenpc instance_npcname("#ext1_2");
 
-	setcell 'map_swat$,116,30,116,66,cell_walkable,1;
-	setcell 'map_swat$,151,30,151,60,cell_walkable,1;
-	setcell 'map_swat$,250,30,250,46,cell_walkable,1;
+	setcell 'map_swat$,116,30,116,66,cell_walkable,0;
+	setcell 'map_swat$,151,30,151,60,cell_walkable,0;
+	setcell 'map_swat$,250,30,250,46,cell_walkable,0;
 	end;
 }
 
@@ -1363,7 +1363,7 @@ OnTouch:
 	hideonnpc instance_npcname("#wl92");
 	enablenpc instance_npcname("#start2_2_1");
 	enablenpc instance_npcname("Julian#5");
-	setcell 'map_swat$,23,222,40,222,cell_walkable,0;
+	setcell 'map_swat$,23,222,40,222,cell_walkable,1;
 	end;
 }
 
@@ -1435,7 +1435,7 @@ OnTimer1000:
 	hideonnpc instance_npcname("#wl113");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl114");
 	hideonnpc instance_npcname("#wl114");
-	setcell 'map_swat$,22,272,52,272,cell_walkable,0;
+	setcell 'map_swat$,22,272,52,272,cell_walkable,1;
 
 	enablenpc instance_npcname("#start2_2_2");
 	enablenpc instance_npcname("Julian#6");
@@ -1828,7 +1828,7 @@ OnInstanceInit:
 	disablenpc instance_npcname("Julian#8_1");
 	disablenpc instance_npcname("Ebel#3_1");
 
-	setcell 'map_swat$,23,222,40,222,cell_walkable,1;
-	setcell 'map_swat$,22,272,52,272,cell_walkable,1;
+	setcell 'map_swat$,23,222,40,222,cell_walkable,0;
+	setcell 'map_swat$,22,272,52,272,cell_walkable,0;
 	end;
 }
