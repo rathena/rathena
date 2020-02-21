@@ -987,17 +987,17 @@ static void bg_queue_clear(s_battleground_queue *queue)
 	if (!queue)
 		return;
 
-	if (queue->tid_requeue != INVALID_TIMER && get_timer(queue->tid_requeue)) {
+	if (queue->tid_requeue != INVALID_TIMER) {
 		delete_timer(queue->tid_requeue, bg_on_ready_loopback);
 		queue->tid_requeue = INVALID_TIMER;
 	}
 
-	if (queue->tid_expire != INVALID_TIMER && get_timer(queue->tid_expire)) {
+	if (queue->tid_expire != INVALID_TIMER) {
 		delete_timer(queue->tid_expire, bg_on_ready_expire);
 		queue->tid_expire = INVALID_TIMER;
 	}
 
-	if (queue->tid_start != INVALID_TIMER && get_timer(queue->tid_start)) {
+	if (queue->tid_start != INVALID_TIMER) {
 		delete_timer(queue->tid_start, bg_on_ready_start);
 		queue->tid_start = INVALID_TIMER;
 	}
@@ -1135,7 +1135,7 @@ void bg_queue_on_accept_invite(std::shared_ptr<s_battleground_queue> queue, stru
 	if (queue->accepted_players == queue->required_players * 2) {
 		queue->tid_start = add_timer(gettick() + battleground_db.find(queue->id)->start_delay * 1000, bg_on_ready_start, 0, (intptr_t)queue.get());
 
-		if (queue->tid_expire != INVALID_TIMER && get_timer(queue->tid_expire)) {
+		if (queue->tid_expire != INVALID_TIMER) {
 			delete_timer(queue->tid_expire, bg_on_ready_expire);
 			queue->tid_expire = INVALID_TIMER;
 		}
