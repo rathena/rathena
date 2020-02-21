@@ -150,9 +150,9 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "StartDelay")) {
-		int32 delay;
+		uint32 delay;
 
-		if (!this->asInt32(node, "StartDelay", delay))
+		if (!this->asUInt32(node, "StartDelay", delay))
 			return 0;
 
 		bg->start_delay = delay;
