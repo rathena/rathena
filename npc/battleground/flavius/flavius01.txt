@@ -416,7 +416,8 @@ bat_b01,10,294,3	script	Guillaume Vintenar#b01_a	934,{
 			callfunc "F_BG_Badge",0,"Guillaume","Flavius";
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -432,7 +433,8 @@ bat_b01,389,14,3	script	Croix Vintenar#b01_b	934,{
 			callfunc "F_BG_Badge",0,"Croix","Flavius";
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -536,7 +538,8 @@ bat_b01,10,294,3	script	Vintenar#bat_b01_aover	419,{
 		close;
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -560,7 +563,8 @@ bat_b01,389,14,3	script	Vintenar#bat_b01_bover	415,{
 		close;
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:

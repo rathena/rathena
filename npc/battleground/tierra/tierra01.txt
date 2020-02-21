@@ -701,7 +701,8 @@ bat_a01,53,377,3	script	Guillaume Vintenar#a01_a	419,{
 			callfunc "F_BG_Badge",1,"Guillaume","Tierra";
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -723,7 +724,8 @@ bat_a01,45,19,3	script	Croix Vintenar#a01_b	415,{
 			callfunc "F_BG_Badge",1,"Croix","Tierra";
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
