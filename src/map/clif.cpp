@@ -17482,7 +17482,6 @@ void clif_parse_bg_queue_apply_request(int fd, struct map_session_data *sd)
 
 	short type = RFIFOW(fd,2);
 	char name[NAME_LENGTH];
-	e_bg_queue_apply_ack result;
 
 	safestrncpy(name, RFIFOCP(fd, 4), NAME_LENGTH);
 
@@ -17491,20 +17490,16 @@ void clif_parse_bg_queue_apply_request(int fd, struct map_session_data *sd)
 		clif_bg_queue_apply_result(BG_APPLY_DUPLICATE, name, sd); // Duplicate application warning
 		return;
 	} else if (type == 1) // Solo
-		result = bg_queue_join(name, sd);
+		bg_queue_join_multi(name, sd, { sd });
 	else if (type == 2) // Party
-		result = bg_queue_join_party(name, sd);
+		bg_queue_join_party(name, sd);
 	else if (type == 4) // Guild
-		result = bg_queue_join_guild(name, sd);
+		bg_queue_join_guild(name, sd);
 	else {
 		ShowWarning("clif_parse_bg_queue_apply_request: Received invalid queue type: %d from player %s (AID:%d CID:%d).\n", type, sd->status.name, sd->status.account_id, sd->status.char_id);
 		clif_bg_queue_apply_result(BG_APPLY_INVALID_APP, name, sd); // Someone sent an invalid queue type packet
 		return;
 	}
-
-	clif_bg_queue_apply_result(result, name, sd);
-	if (result == BG_APPLY_ACCEPT)
-		clif_bg_queue_apply_notify(name, sd);
 }
 
 /// Outgoing battlegrounds queue apply result.
