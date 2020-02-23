@@ -8,7 +8,7 @@
 # - Id                      Item ID.
 #   AegisName               Server name to reference the item in scripts and lookups, should use no spaces.
 #   Name                    Name in English for displaying as output.
-#   Type                    Item type. (Default: IT_ETC)
+#   Type                    Item type. (Default: Etc)
 #   SubType                 Weapon or Ammo type. (Default: 0)
 #   Buy                     Buying price. When not specified, becomes double the sell price. (Default: 0)
 #   Sell                    Selling price. When not specified, becomes half the buy price. (Default: 0)

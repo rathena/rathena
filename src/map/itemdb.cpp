@@ -133,7 +133,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 					this->invalidWarning(node["SubType"], "Invalid ammo type %s for %s (%hu), defaulting to IT_ETC.\n", type.c_str(), item->name.c_str(), nameid);
 					item->type = IT_ETC;
 				} else
-					item->subtype = constant;
+					item->subtype = static_cast<int32>(constant);
 			}
 		}
 	} else {
@@ -361,7 +361,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			constant = SEX_BOTH;
 		}
 
-		item->sex = constant;
+		item->sex = static_cast<e_sex>(constant);
 		item->sex = itemdb_gendercheck(item.get());
 	} else {
 		if (!exists) {
@@ -1885,19 +1885,197 @@ static char itemdb_gendercheck(struct item_data *id)
 }
 
 /**
- * Read item from item db
- * item_db2 overwriting item_db
+ * Convert SQL data to YAML Node
+ * @param str: Array of parsed SQL data
+ * @return True on success or false otherwise
  */
-void itemdb_readdb(void)
-{
-	item_db.load();
+static bool itemdb_read_sqldb_sub(char **str) {
+	YAML::Node node;
+	bool offset = false;
+
+	node["Id"] = atoi(str[0]);
+	node["AegisName"] = str[1];
+	node["Name"] = str[2];
+	node["Type"] = str[3];
+	if (atoi(str[4]) != 0)
+		node["SubType"] = str[4];
+	if (atoi(str[5]) != 0)
+		node["Buy"] = atoi(str[5]);
+	if (atoi(str[6]) != 0)
+		node["Sell"] = atoi(str[6]);
+	if (atoi(str[7]) != 0)
+		node["Weight"] = atoi(str[7]);
+	if (atoi(str[8]) != 0)
+		node["Attack"] = atoi(str[8]);
+#ifdef RENEWAL
+	if (atoi(str[9]) != 0)
+		node["MagicAttack"] = atoi(str[9]);
+#else
+	offset = true;
+#endif
+	if (atoi(str[10 - offset]) != 0)
+		node["Defense"] = atoi(str[10 - offset]);
+	if (atoi(str[11 - offset]) != 0)
+		node["Range"] = atoi(str[11 - offset]);
+	if (atoi(str[12 - offset]) != 0)
+		node["Slots"] = atoi(str[12 - offset]);
+
+	const char *delim = "|", *state_delim = ":";
+	char *p = strtok(str[13 - offset], delim);
+
+	if (p) {
+		while (p != nullptr) {
+			trim(p);
+
+			char *state = strtok(p, state_delim);
+
+			state = strtok(nullptr, state_delim);
+
+			if (state == "true")
+				node["Job"][p] = true;
+			else
+				node["Job"][p] = false;
+			p = strtok(nullptr, delim);
+		}
+	}
+
+	p = strtok(str[14 - offset], delim);
+
+	if (p) {
+		while (p != nullptr) {
+			trim(p);
+
+			char *state = strtok(p, state_delim);
+
+			state = strtok(nullptr, state_delim);
+
+			if (state == "true")
+				node["Class"][p] = true;
+			else
+				node["Class"][p] = false;
+			p = strtok(nullptr, delim);
+		}
+	}
+
+	if (atoi(str[15 - offset]) != 0)
+		node["Gender"] = str[15 - offset];
+	p = strtok(str[16 - offset], delim);
+
+	if (p) {
+		while (p != nullptr) {
+			trim(p);
+
+			char *state = strtok(p, state_delim);
+
+			state = strtok(nullptr, state_delim);
+
+			if (state == "true")
+				node["Location"][p] = true;
+			else
+				node["Location"][p] = false;
+			p = strtok(nullptr, delim);
+		}
+	}
+
+	if (atoi(str[17 - offset]) != 0)
+		node["WeaponLevel"] = atoi(str[17 - offset]);
+	if (atoi(str[18 - offset]) != 0)
+		node["EquipLevelMin"] = atoi(str[18 - offset]);
+	if (atoi(str[19 - offset]) != 0)
+		node["EquipLevelMax"] = atoi(str[19 - offset]);
+	if (atoi(str[20 - offset]) != 0)
+		node["Refineable"] = true;
+	if (atoi(str[21 - offset]) != 0)
+		node["View"] = atoi(str[21 - offset]);
+
+	YAML::Node flags;
+
+	if (atoi(str[22 - offset]) != 0)
+		flags["BuyingStore"] = true;
+	if (atoi(str[23 - offset]) != 0)
+		flags["DeadBranch"] = true;
+	if (atoi(str[24 - offset]) != 0)
+		flags["Container"] = true;
+	if (atoi(str[25 - offset]) != 0)
+		flags["Guid"] = true;
+	if (atoi(str[26 - offset]) != 0)
+		flags["BindOnEquip"] = true;
+	if (atoi(str[27 - offset]) != 0)
+		flags["DropAnnounce"] = true;
+	if (atoi(str[28 - offset]) != 0)
+		flags["NoConsume"] = true;
+	if (atoi(str[29 - offset]) != 0)
+		flags["DropEffect"] = str[29 - offset];
+	node["Flags"] = flags;
+
+	YAML::Node delay;
+
+	if (atoi(str[30 - offset]) != 0)
+		delay["Duration"] = atoi(str[30 - offset]);
+	if (atoi(str[31 - offset]) != 0)
+		delay["Status"] = str[31 - offset];
+	node["Delay"] = delay;
+
+	YAML::Node stack;
+
+	if (atoi(str[32 - offset]) != 0)
+		stack["Amount"] = atoi(str[32 - offset]);
+	if (atoi(str[33 - offset]) != 0)
+		stack["Inventory"] = true;
+	if (atoi(str[34 - offset]) != 0)
+		stack["Cart"] = true;
+	if (atoi(str[35 - offset]) != 0)
+		stack["Storage"] = true;
+	if (atoi(str[36 - offset]) != 0)
+		stack["GuildStorage"] = true;
+	node["Stack"] = stack;
+
+	YAML::Node nouse;
+
+	if (atoi(str[37 - offset]) != 0)
+		nouse["Override"] = atoi(str[37 - offset]);
+	if (atoi(str[38 - offset]) != 0)
+		nouse["Sitting"] = true;
+	node["NoUse"] = nouse;
+
+	YAML::Node trade;
+
+	if (atoi(str[39 - offset]) != 0)
+		trade["Override"] = atoi(str[39 - offset]);
+	if (atoi(str[40 - offset]) != 0)
+		trade["NoDrop"] = true;
+	if (atoi(str[41 - offset]) != 0)
+		trade["NoTrade"] = true;
+	if (atoi(str[42 - offset]) != 0)
+		trade["TradePartner"] = true;
+	if (atoi(str[43 - offset]) != 0)
+		trade["NoSell"] = true;
+	if (atoi(str[44 - offset]) != 0)
+		trade["NoCart"] = true;
+	if (atoi(str[45 - offset]) != 0)
+		trade["NoStorage"] = true;
+	if (atoi(str[46 - offset]) != 0)
+		trade["NoGuildStorage"] = true;
+	if (atoi(str[47 - offset]) != 0)
+		trade["NoMail"] = true;
+	if (atoi(str[48 - offset]) != 0)
+		trade["NoAuction"] = true;
+	node["Trade"] = trade;
+
+	if (*str[49 - offset])
+		node["Script"] = str[49 - offset];
+	if (*str[50 - offset])
+		node["EquipScript"] = str[50 - offset];
+	if (*str[51 - offset])
+		node["UnEquipScript"] = str[51 - offset];
+
+	return item_db.parseBodyNode(node) > 0;
 }
 
 /**
-* Read item_db table
-*/
+ * Read SQL item_db table
+ */
 static int itemdb_read_sqldb(void) {
-
 	const char* item_db_name[] = {
 		item_table,
 		item2_table
@@ -1905,7 +2083,7 @@ static int itemdb_read_sqldb(void) {
 	int fi;
 
 	for( fi = 0; fi < ARRAYLENGTH(item_db_name); ++fi ) {
-		uint32 lines = 0, count = 0;
+		uint32 count = 0;
 
 		// retrieve all rows from the item database
 		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", item_db_name[fi]) ) {
@@ -1915,18 +2093,23 @@ static int itemdb_read_sqldb(void) {
 
 		// process rows one by one
 		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {// wrap the result into a TXT-compatible format
-			char* str[22];
 			char dummy[256] = "";
-			int i;
-			++lines;
-			for( i = 0; i < 22; ++i ) {
-				Sql_GetData(mmysql_handle, i, &str[i], NULL);
-				if( str[i] == NULL )
+#ifdef RENEWAL
+			char *str[52];
+			uint16 total_columns = 52;
+#else
+			char *str[51];
+			uint16 total_columns = 51;
+#endif
+
+			for( uint16 i = 0; i < total_columns; ++i ) {
+				Sql_GetData(mmysql_handle, i, &str[i], nullptr);
+				if( str[i] == nullptr )
 					str[i] = dummy; // get rid of NULL columns
 			}
 
-			//if (!itemdb_parse_dbrow(str, item_db_name[fi], lines, SCRIPT_IGNORE_EXTERNAL_BRACKETS)) // TODO?
-			//	continue;
+			if (!itemdb_read_sqldb_sub(str))
+				continue;
 			++count;
 		}
 
@@ -2162,10 +2345,9 @@ static void itemdb_read(void) {
 	};
 	
 	if (db_use_sqldbs)
-		ShowError("SQL Item Database is disabled.\n");
-		//itemdb_read_sqldb();
+		itemdb_read_sqldb();
 	else
-		itemdb_readdb();
+		item_db.load();
 	
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[i])+1);

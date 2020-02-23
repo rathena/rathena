@@ -196,7 +196,7 @@ static bool itemdb_read_itemdelay(char* str[], int columns, int current);
 static bool itemdb_read_stack(char* fields[], int columns, int current);
 static bool itemdb_read_nouse(char* fields[], int columns, int current);
 static bool itemdb_read_itemtrade(char* fields[], int columns, int current);
-static size_t itemdb_read_db(const char *file);
+static bool itemdb_read_db(const char *file);
 
 // Constants for conversion
 std::unordered_map<uint16, std::string> aegis_itemnames;
@@ -543,7 +543,7 @@ static bool parse_item_constants_txt( const char* path ){
 
 	fp = fopen(path, "r");
 	if (fp == NULL) {
-		ShowWarning("itemdb_readdb: File not found \"%s\", skipping.\n", path);
+		ShowWarning("parse_item_constants_txt: File not found \"%s\", skipping.\n", path);
 		return false;
 	}
 
@@ -580,21 +580,21 @@ static bool parse_item_constants_txt( const char* path ){
 
 		if (p == NULL)
 		{
-			ShowError("itemdb_readdb: Insufficient columns in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+			ShowError("parse_item_constants_txt: Insufficient columns in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 			continue;
 		}
 
 		// Script
 		if (*p != '{')
 		{
-			ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+			ShowError("parse_item_constants_txt: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 			continue;
 		}
 		str[19] = p + 1;
 		p = strstr(p + 1, "},");
 		if (p == NULL)
 		{
-			ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+			ShowError("parse_item_constants_txt: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 			continue;
 		}
 		*p = '\0';
@@ -603,14 +603,14 @@ static bool parse_item_constants_txt( const char* path ){
 		// OnEquip_Script
 		if (*p != '{')
 		{
-			ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+			ShowError("parse_item_constants_txt: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 			continue;
 		}
 		str[20] = p + 1;
 		p = strstr(p + 1, "},");
 		if (p == NULL)
 		{
-			ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+			ShowError("parse_item_constants_txt: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 			continue;
 		}
 		*p = '\0';
@@ -619,7 +619,7 @@ static bool parse_item_constants_txt( const char* path ){
 		// OnUnequip_Script (last column)
 		if (*p != '{')
 		{
-			ShowError("itemdb_readdb: Invalid format (OnUnequip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+			ShowError("parse_item_constants_txt: Invalid format (OnUnequip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 			continue;
 		}
 		str[21] = p;
@@ -639,7 +639,7 @@ static bool parse_item_constants_txt( const char* path ){
 			}
 
 			if (lcurly != rcurly) {
-				ShowError("itemdb_readdb: Mismatching curly braces in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+				ShowError("parse_item_constants_txt: Mismatching curly braces in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
 		}
@@ -2732,12 +2732,12 @@ static bool itemdb_read_itemtrade(char* str[], int columns, int current) {
 }
 
 // Copied and adjusted from itemdb.cpp
-static size_t itemdb_read_db(const char* file) {
+static bool itemdb_read_db(const char* file) {
 	FILE* fp = fopen(file, "r");
 
 	if (fp == nullptr) {
 		ShowError("can't read %s\n", file);
-		return 0;
+		return false;
 	}
 
 	int lines = 0;
@@ -3073,5 +3073,5 @@ static size_t itemdb_read_db(const char* file) {
 	fclose(fp);
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file);
 
-	return entries;
+	return true;
 }
