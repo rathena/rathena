@@ -144,7 +144,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 		const std::string from = path + "/" + name_ext;
 		std::string rename = "";
 
-		if (name.find("import") == std::string::npos) {
+		if (path.find("import") == std::string::npos) {
 #ifdef RENEWAL
 			rename = "item_db_re";
 #else
@@ -162,7 +162,14 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 
 		if( fileExists( from ) ){
 			inNode.reset();
-			inNode = YAML::LoadFile(from);
+
+			try {
+				inNode = YAML::LoadFile(from);
+			} catch (YAML::Exception &e) {
+				ShowError("%s (Line %d: Column %d)\n", e.msg.c_str(), e.mark.line, e.mark.column);
+				if (!askConfirmation("Error found in \"%s\" while attempting to load.\nPress any key to continue.\n", from.c_str()))
+					continue;
+			}
 
 			if (!inNode["Body"].IsDefined())
 				continue;

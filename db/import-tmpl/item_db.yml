@@ -84,7 +84,7 @@ Header:
   Type: ITEM_DB
   Version: 1
 
-Body:
+#Body:
 # THQ Quest Items
 #=============================================================
 #  - Id: 7950
