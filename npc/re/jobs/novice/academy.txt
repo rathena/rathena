@@ -14150,7 +14150,7 @@ izlude,158,130,4	script	Repair Man#iz	4_M_04,{
 		mes "[Repair Man]";
 		mes "------------------------";
 		mes "Damaged Equipment Estimate";
-		mes "Damaged Equipment: ^FF0000"+ .@broken +"?000000";
+		mes "Damaged Equipment: ^FF0000"+ .@broken +"^000000";
 		mes "Fee: ^0000FF"+ .@cost +" Zeny^000000";
 		mes "------------------------";
 		mes "Would you like to proceed with the repair?";

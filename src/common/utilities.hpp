@@ -4,10 +4,12 @@
 #ifndef UTILILITIES_HPP
 #define UTILILITIES_HPP
 
+#include <algorithm>
 #include <map>
 #include <memory>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "cbasetypes.hpp"
 #include "random.hpp"
@@ -133,6 +135,44 @@ namespace rathena {
 			std::advance( it, rnd_value( 0, map.size() - 1 ) );
 
 			return it->second;
+		}
+
+		/**
+		 * Get an iterator element
+		 * @param vec: Vector to search through
+		 * @param value: Value wanted
+		 * @return Key value iterator on success or vector end iterator on failure
+		 */
+		template <typename K, typename V> typename std::vector<K>::iterator vector_get(std::vector<K> &vec, V key) {
+			return std::find(vec.begin(), vec.end(), key);
+		}
+
+		/**
+		 * Determine if a value exists in the vector
+		 * @param vec: Vector to search through
+		 * @param value: Value wanted
+		 * @return True on success or false on failure
+		 */
+		template <typename K, typename V> bool vector_exists(std::vector<K> &vec, V value) {
+			auto it = std::find(vec.begin(), vec.end(), value);
+
+			if (it != vec.end())
+				return true;
+			else
+				return false;
+		}
+
+		/**
+		 * Erase an index value from a vector
+		 * @param vector: Vector to erase value from
+		 * @param index: Index value to remove
+		 */
+		template <typename K> void erase_at(std::vector<K>& vector, size_t index) {
+			if (vector.size() == 1) {
+				vector.clear();
+				vector.shrink_to_fit();
+			} else
+				vector.erase(vector.begin() + index);
 		}
 
 		bool safe_addition( int64 a, int64 b, int64& result );

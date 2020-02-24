@@ -90,6 +90,7 @@ List of GM Management NPCs (incomplete)
 - Bangungot Gate (RE)
 - Horror Toy Factory (RE)
 - Faceworm's Nest (RE)
+- Central Laboratory (RE)
 
 [ Job-related ]
 ----- 3rd Class (RE) -----
