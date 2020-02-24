@@ -20,7 +20,7 @@ Valid groups:
 	Adventure - Does not trigger automatically. These are triggered by the achievementcomplete script command.
 	Baby - Triggered when a player becomes a baby job.
 	Battle - Triggered when a player kills a monster.
-	Chatting - Unknown.
+	Chatting - Aegis uses this when talking to a NPC. These are triggered by the achievementupdate script command.
 	Chatting_Count - Triggered when a player has a chatroom open and others join.
 	Chatting_Create - Triggered when a player creates a chatroom.
 	Chatting_Dying - Triggered when a player creates a chatroom and dies with it open.
@@ -30,13 +30,11 @@ Valid groups:
 	Goal_Achieve - Triggered when a player's achievement rank levels up.
 	Goal_Level - Triggered when a player's base level or job level changes.
 	Goal_Status - Triggered when a player's base stats changes.
-	Hear - Unknown.
 	Job_Change - Triggered when a player's job changes.
 	Marry - Triggered when two players get married.
 	Party - Triggered when a player creates a party.
 	Enchant_Fail - Triggered when a player fails to refine an equipment.
 	Enchant_Success - Triggered when a player successfully refines an equipment.
-	See - Unknown.
 	Spend_Zeny - Triggered when a player spends any amount of zeny on vendors.
 	Taming - Triggered when a player tames a monster.
 
@@ -87,6 +85,7 @@ Example 2:
 ---------------------------------------
 
 Map: A map name that is used for the Chatting group which increments the counter based on the player's map.
+NOTICE: This option is currently disabled until the official behavior is confirmed.
 
 ---------------------------------------
 

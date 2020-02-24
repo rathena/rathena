@@ -510,6 +510,8 @@ static bool upgrade_achievement_db(std::string file) {
 		std::string constant = input["Group"].as<std::string>();
 
 		constant.erase(0, 3); // Remove "AG_"
+		if (constant.compare("Hear") == 0 || constant.compare("See") == 0)
+			constant = "Chatting"; // Aegis treats these as general "Talk to NPC" achievements.
 		body << YAML::Key << "Group" << YAML::Value << name2Upper(constant);
 		body << YAML::Key << "Name" << YAML::Value << input["Name"];
 

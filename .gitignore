@@ -41,6 +41,7 @@ Thumbs.db
 /map-server
 /mapcache
 /nbproject
+/yamlupgrade
 
 # /3rdparty/libconfig/
 /3rdparty/libconfig/Makefile
@@ -119,6 +120,7 @@ Thumbs.db
 /mapserv.bat
 /runserver.bat
 /serv.bat
+/yamlupgrade.bat
 
 # dlls
 /libmysql.dll

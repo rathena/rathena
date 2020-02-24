@@ -202,7 +202,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 	}
 
 	if( this->nodeExists( node, "Map" ) ){
-		if( achievement->group != AG_CHAT ){
+		if( achievement->group != AG_CHATTING ){
 			this->invalidWarning( node, "Map can only be used with the group AG_CHATTING, skipping.\n" );
 			return 0;
 		}
@@ -909,9 +909,9 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 	switch (group) {
 		case AG_ADD_FRIEND:
 		case AG_BABY:
-		case AG_CHAT_COUNT:
-		case AG_CHAT_CREATE:
-		case AG_CHAT_DYING:
+		case AG_CHATTING_COUNT:
+		case AG_CHATTING_CREATE:
+		case AG_CHATTING_DYING:
 		case AG_GET_ITEM:
 		case AG_GET_ZENY:
 		case AG_GOAL_LEVEL:
@@ -919,8 +919,8 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 		case AG_JOB_CHANGE:
 		case AG_MARRY:
 		case AG_PARTY:
-		case AG_REFINE_FAIL:
-		case AG_REFINE_SUCCESS:
+		case AG_ENCHANT_FAIL:
+		case AG_ENCHANT_SUCCESS:
 			if (!ad->condition)
 				return false;
 
@@ -930,15 +930,13 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 			changed = true;
 			complete = true;
 			break;
+		case AG_CHATTING:
 		case AG_SPEND_ZENY:
-		//case AG_CHAT: // No information on trigger events
 			if (ad->targets.empty() || !ad->condition)
 				return false;
 
-			//if (group == AG_CHAT) {
-			//	if (ad->mapindex > -1 && sd->bl.m != ad->mapindex)
-			//		return false;
-			//}
+			if (group == AG_CHATTING && ad->mapindex > -1 && sd->bl.m != ad->mapindex)
+				return false;
 
 			for (const auto &it : ad->targets) {
 				if (current_count[it.first] < it.second->count)
@@ -1039,15 +1037,8 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 		}
 		va_end(ap);
 
-		switch(group) {
-			case AG_CHAT: //! TODO: Not sure how this works officially
-				// These have no objective use.
-				break;
-			default:
-				for (auto &ach : achievement_db)
-					achievement_update_objectives(sd, ach.second, group, count);
-				break;
-		}
+		for (auto &ach : achievement_db)
+			achievement_update_objectives(sd, ach.second, group, count);
 
 		// Remove variables that might have been set
 		for (int i = 0; i < arg_count; i++){

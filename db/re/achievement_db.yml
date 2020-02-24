@@ -52,8 +52,24 @@ Body:
     Name: At this time I live to eat
     Score: 10
   - Id: 110001
-    Group: See
+    Group: Chatting
     Name: A fan of this polarity
+    Targets:
+      - Id: 0
+        Count: 1
+      - Id: 1
+        Count: 1
+      - Id: 2
+        Count: 1
+      - Id: 3
+        Count: 1
+      - Id: 4
+        Count: 1
+      - Id: 5
+        Count: 1
+      - Id: 6
+        Count: 1
+    Condition: " ARG0 >= 1 && ARG1 >= 1 && ARG2 >= 1 && ARG3 >= 1 && ARG4 >= 1 && ARG5 >= 1 && ARG6 >= 1 "
     Score: 10
   - Id: 120001
     Group: Adventure
@@ -936,7 +952,16 @@ Body:
     Name: Prontera Contribution
     Targets:
       - Id: 0
-        Count: 100000
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: prontera
     Score: 10
   - Id: 127002
@@ -944,7 +969,16 @@ Body:
     Name: Geffen Contribution
     Targets:
       - Id: 0
-        Count: 100000
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: geffen
     Score: 10
   - Id: 127003
@@ -952,7 +986,16 @@ Body:
     Name: Morocc Contribution
     Targets:
       - Id: 0
-        Count: 100000
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: morocc
     Score: 10
   - Id: 127004
@@ -960,7 +1003,16 @@ Body:
     Name: Payon Contribution
     Targets:
       - Id: 0
-        Count: 100000
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: payon
     Score: 10
   - Id: 127005
@@ -968,7 +1020,16 @@ Body:
     Name: Juno Contribution
     Targets:
       - Id: 0
-        Count: 100000
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: yuno
     Score: 10
   - Id: 127006
@@ -976,7 +1037,16 @@ Body:
     Name: Lighthalzen Contribution
     Targets:
       - Id: 0
-        Count: 100000
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: lighthalzen
     Score: 10
   - Id: 127007
@@ -984,7 +1054,16 @@ Body:
     Name: Einbroch Contribution
     Targets:
       - Id: 0
-        Count: 100000
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: einbroch
     Score: 10
   - Id: 127008
@@ -992,7 +1071,16 @@ Body:
     Name: Rachel Contribution
     Targets:
       - Id: 0
-        Count: 100000
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: rachel
     Score: 10
   - Id: 127009
@@ -1000,7 +1088,16 @@ Body:
     Name: Veins Contribution
     Targets:
       - Id: 0
-        Count: 100000
+        Count: 3000
+      - Id: 1
+        Count: 6000
+      - Id: 2
+        Count: 12000
+      - Id: 3
+        Count: 20000
+      - Id: 4
+        Count: 1000
+    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: veins
     Score: 10
   - Id: 128000
@@ -1677,19 +1774,49 @@ Body:
     Rewards:
       TitleId: 1045
     Score: 10
-  - Id: 130000 # Talk to Prince NPC (npc/quests/quests_morocc.txt L5288)
+  - Id: 130000
     Group: Chatting
     Name: Socialite debut
+    Targets:
+      - Id: 0
+        Count: 1
+      - Id: 1
+        Count: 1
+      - Id: 2
+        Count: 1
+      - Id: 3
+        Count: 1
+      - Id: 4
+        Count: 1
+      - Id: 5
+        Count: 1
+      - Id: 6
+        Count: 1
+    Condition: " ARG0 >= 1 && ARG1 >= 1 && ARG2 >= 1 && ARG3 >= 1 && ARG4 >= 1 && ARG5 >= 1 && ARG6 >= 1 "
     Rewards:
       TitleId: 1034
     Score: 10
   - Id: 170000
-    Group: Hear
+    Group: Chatting
     Name: Song chamber is not an accident
+    Targets:
+      - Id: 0
+        Count: 1
+    Condition: " ARG0 >= 1 "
     Score: 10
   - Id: 190000
     Group: Chatting
     Name: Alliance workers of merchant city
+    Targets:
+      - Id: 0
+        Count: 1
+      - Id: 1
+        Count: 10
+      - Id: 2
+        Count: 30
+      - Id: 3
+        Count: 100
+    Condition: " ARG0 >= 1 && ARG1 >= 10 && ARG2 >= 30 && ARG3 >= 100 "
     Score: 50
   - Id: 200000
     Group: Goal_Level
