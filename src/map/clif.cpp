@@ -17734,7 +17734,7 @@ void clif_instance_changewait(int instance_id, int num)
 
 /// Notify the current status to members
 /// S 0x2cd <Instance Name>.61B <Instance Remaining Time>.L <Instance Noplayers close time>.L
-void clif_instance_status(int instance_id, t_tick limit1, t_tick limit2)
+void clif_instance_status(int instance_id, unsigned int limit1, unsigned int limit2)
 {
 #if PACKETVER >= 20071128
 	struct map_session_data *sd = NULL;
@@ -17753,8 +17753,8 @@ void clif_instance_status(int instance_id, t_tick limit1, t_tick limit2)
 
 	WBUFW(buf,0) = 0x2cd;
 	safestrncpy(WBUFCP(buf,2), db->name.c_str(), INSTANCE_NAME_LENGTH);
-	WBUFL(buf,63) = client_tick(limit1);
-	WBUFL(buf,67) = client_tick(limit2);
+	WBUFL(buf,63) = limit1;
+	WBUFL(buf,67) = limit2;
 	clif_send(buf,packet_len(0x2cd),&sd->bl,target);
 #endif
 
@@ -17768,7 +17768,7 @@ void clif_instance_status(int instance_id, t_tick limit1, t_tick limit2)
 /// 2 = The Memorial Dungeon's entry time limit expired; it has been destroyed
 /// 3 = The Memorial Dungeon has been removed.
 /// 4 = Create failure (removes the instance window)
-void clif_instance_changestatus(int instance_id, e_instance_notify type, t_tick limit)
+void clif_instance_changestatus(int instance_id, e_instance_notify type, unsigned int limit)
 {
 #if PACKETVER >= 20071128
 	struct map_session_data *sd = NULL;
@@ -17782,7 +17782,7 @@ void clif_instance_changestatus(int instance_id, e_instance_notify type, t_tick 
 
 	WBUFW(buf,0) = 0x2ce;
 	WBUFL(buf,2) = type;
-	WBUFL(buf,6) = client_tick(limit);
+	WBUFL(buf,6) = limit;
 	clif_send(buf,packet_len(0x2ce),&sd->bl,target);
 #endif
 

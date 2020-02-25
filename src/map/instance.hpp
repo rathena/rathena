@@ -46,11 +46,11 @@ enum e_instance_enter : uint8 {
 };
 
 enum e_instance_notify : uint8 {
-	IN_NOTIFY = 0x0,
-	IN_DESTROY_LIVE_TIMEOUT = 0x1,
-	IN_DESTROY_ENTER_TIMEOUT = 0x2,
-	IN_DESTROY_USER_REQUEST = 0x3,
-	IN_CREATE_FAIL = 0x4,
+	IN_NOTIFY = 0,
+	IN_DESTROY_LIVE_TIMEOUT,
+	IN_DESTROY_ENTER_TIMEOUT,
+	IN_DESTROY_USER_REQUEST,
+	IN_CREATE_FAIL,
 };
 
 struct s_instance_map {
@@ -63,9 +63,9 @@ struct s_instance_data {
 	e_instance_state state; ///< State of instance
 	e_instance_mode mode; ///< Mode of instance
 	int owner_id; ///< Owner ID of instance
-	t_tick keep_limit; ///< Life time of instance
+	unsigned int keep_limit; ///< Life time of instance
 	int keep_timer; ///< Life time ID
-	t_tick idle_limit; ///< Idle time of instance
+	unsigned int idle_limit; ///< Idle time of instance
 	int idle_timer; ///< Idle timer ID
 	struct reg_db regs; ///< Instance variables for scripts
 	std::vector<s_instance_map> map; ///< Array of maps in instance
@@ -87,14 +87,14 @@ struct s_instance_data {
 struct s_instance_db {
 	int id; ///< Instance DB ID
 	std::string name; ///< Instance name
-	unsigned int limit, ///< Duration limit
+	uint32 limit, ///< Duration limit
 		timeout; ///< Timeout limit
 	//bool destroyable; ///< Destroyable flag
 	struct point enter; ///< Instance entry point
 	std::vector<int16> maplist; ///< Maps in instance
 };
 
-class InstanceDatabase : public TypesafeYamlDatabase<uint32, s_instance_db> {
+class InstanceDatabase : public TypesafeYamlDatabase<int32, s_instance_db> {
 public:
 	InstanceDatabase() : TypesafeYamlDatabase("INSTANCE_DB", 1) {
 
@@ -102,7 +102,6 @@ public:
 
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node &node);
-	bool reload();
 };
 
 extern InstanceDatabase instance_db;

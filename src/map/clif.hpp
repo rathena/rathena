@@ -836,8 +836,8 @@ void clig_bg_queue_ack_lobby(bool result, const char *name, const char *lobbynam
 // Instancing
 void clif_instance_create(int instance_id, int num);
 void clif_instance_changewait(int instance_id, int num);
-void clif_instance_status(int instance_id, t_tick limit1, t_tick limit2);
-void clif_instance_changestatus(int instance_id, e_instance_notify type, t_tick limit);
+void clif_instance_status(int instance_id, unsigned int limit1, unsigned int limit2);
+void clif_instance_changestatus(int instance_id, e_instance_notify type, unsigned int limit);
 
 // Custom Fonts
 void clif_font(struct map_session_data *sd);

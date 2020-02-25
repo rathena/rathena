@@ -50,9 +50,9 @@ const std::string InstanceDatabase::getDefaultLocation() {
  * @return count of successfully parsed rows
  */
 uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
-	uint32 instance_id = 0;
+	int32 instance_id = 0;
 
-	if (!this->asUInt32(node, "Id", instance_id))
+	if (!this->asInt32(node, "Id", instance_id))
 		return 0;
 
 	if (instance_id <= 0) {
@@ -188,14 +188,6 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 	return 1;
 }
 
-bool InstanceDatabase::reload() {
-	if (!TypesafeYamlDatabase::reload()) {
-		return false;
-	}
-
-	return true;
-}
-
 InstanceDatabase instance_db;
 
 /**
@@ -269,18 +261,17 @@ static TIMER_FUNC(instance_subscription_timer){
 	if (instance_id == 0 || instance_wait.id.empty())
 		return 0;
 
-	struct map_session_data *sd;
-	struct party_data *pd;
-	struct guild *gd;
-	struct clan *cd;
-	e_instance_mode mode;
-	int ret = instance_addmap(instance_id); // Check that maps have been added
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
 	if (!idata)
 		return 0;
 
-	mode = idata->mode;
+	struct map_session_data *sd;
+	struct party_data *pd;
+	struct guild *gd;
+	struct clan *cd;
+	e_instance_mode mode = idata->mode;
+	int ret = instance_addmap(instance_id); // Check that maps have been added
 
 	switch(mode) {
 		case IM_NONE:
@@ -307,13 +298,13 @@ static TIMER_FUNC(instance_subscription_timer){
 
 	instance_wait.id.pop_front();
 
-	for(int i = 0; i < instance_wait.id.size(); i++) {
+	for (int i = 0; i < instance_wait.id.size(); i++) {
 		if (idata->state == INSTANCE_IDLE && ((mode == IM_CHAR && sd) || (mode == IM_GUILD && gd) || (mode == IM_PARTY && pd) || (mode == IM_CLAN && cd)))
 			clif_instance_changewait(instance_id, i + 1);
 	}
 
 	if (!instance_wait.id.empty())
-		instance_wait.timer = add_timer(gettick()+INSTANCE_INTERVAL, instance_subscription_timer, 0, 0);
+		instance_wait.timer = add_timer(gettick() + INSTANCE_INTERVAL, instance_subscription_timer, 0, 0);
 	else
 		instance_wait.timer = INVALID_TIMER;
 
@@ -338,7 +329,7 @@ bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, int instanc
 		return false;
 
 	// Add timer
-	t_tick duration = gettick() + db->limit * 1000;
+	unsigned int duration = static_cast<unsigned int>(time(nullptr)) + db->limit * 1000;
 
 	idata->keep_limit = duration;
 	idata->keep_timer = add_timer(duration, instance_delete_timer, instance_id, 0);
@@ -387,7 +378,7 @@ bool instance_startidletimer(std::shared_ptr<s_instance_data> idata, int instanc
 		return false;
 
 	// Add the timer
-	t_tick duration = gettick() + db->timeout * 1000;
+	unsigned int duration = static_cast<unsigned int>(time(nullptr)) + db->timeout * 1000;
 
 	idata->idle_limit = duration;
 	idata->idle_timer = add_timer(duration, instance_delete_timer, instance_id, 0);
@@ -645,7 +636,7 @@ int instance_addmap(int instance_id) {
 		return 0;
 
 	// Set to busy, update timers
-	t_tick duration = gettick() + db->timeout * 1000;
+	unsigned int duration = static_cast<unsigned int>(time(nullptr)) + db->timeout * 1000;
 
 	idata->state = INSTANCE_BUSY;
 	idata->idle_limit = duration;
@@ -659,7 +650,7 @@ int instance_addmap(int instance_id) {
 		return 0;
 	}
 
-	struct s_instance_map entry = {};
+	struct s_instance_map entry;
 
 	entry.m = m;
 	entry.src_m = db->enter.map;
@@ -760,7 +751,7 @@ bool instance_destroy(int instance_id)
 	struct guild *gd;
 	struct clan *cd;
 	e_instance_mode mode = idata->mode;
-	e_instance_notify type;
+	e_instance_notify type = IN_NOTIFY;
 
 	switch(mode) {
 		case IM_NONE:
@@ -780,9 +771,9 @@ bool instance_destroy(int instance_id)
 	}
 
 	if(idata->state == INSTANCE_IDLE) {
-		for (const auto &it : instance_wait.id) {
-			if(it == instance_id) {
-				instance_wait.id.pop_front();
+		for (auto &instance_it = instance_wait.id.begin(); instance_it != instance_wait.id.end(); ++instance_it) {
+			if (*instance_it == instance_id) {
+				instance_wait.id.erase(instance_it);
 
 				for (int i = 0; i < instance_wait.id.size(); i++) {
 					if (util::umap_find(instances, instance_wait.id[i])->state == INSTANCE_IDLE)
@@ -791,15 +782,14 @@ bool instance_destroy(int instance_id)
 				}
 
 				if (!instance_wait.id.empty())
-					instance_wait.timer = add_timer(gettick()+INSTANCE_INTERVAL, instance_subscription_timer, 0, 0);
+					instance_wait.timer = add_timer(gettick() + INSTANCE_INTERVAL, instance_subscription_timer, 0, 0);
 				else
 					instance_wait.timer = INVALID_TIMER;
-				type = IN_NOTIFY;
 				break;
 			}
 		}
 	} else {
-		t_tick now = gettick();
+		unsigned int now = static_cast<unsigned int>(time(nullptr));
 
 		if(idata->keep_limit && idata->keep_limit <= now)
 			type = IN_DESTROY_LIVE_TIMEOUT;
@@ -836,7 +826,7 @@ bool instance_destroy(int instance_id)
 		cd->instance_id = 0;
 
 	if (mode != IM_NONE) {
-		if(type)
+		if(type != IN_NOTIFY)
 			clif_instance_changestatus(instance_id, type, 0);
 		else
 			clif_instance_changewait(instance_id, 0xffff);
@@ -1048,7 +1038,7 @@ void do_reload_instance(void)
 			std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
 
 			if (db)
-				idata->keep_limit = gettick() + db->limit * 1000;
+				idata->keep_limit = static_cast<unsigned int>(time(nullptr)) + db->limit * 1000;
 		}
 	}
 
@@ -1110,7 +1100,7 @@ void do_reload_instance(void)
 void do_init_instance(void) {
 	instance_start = map_num;
 	instance_db.load();
-	instance_wait.timer = -1;
+	instance_wait.timer = INVALID_TIMER;
 
 	add_timer_func_list(instance_delete_timer,"instance_delete_timer");
 	add_timer_func_list(instance_subscription_timer,"instance_subscription_timer");
