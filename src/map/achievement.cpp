@@ -57,11 +57,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 	bool exists = achievement != nullptr;
 
 	if( !exists ){
-		if( !this->nodeExists( node, "Group" ) ){
-			return 0;
-		}
-
-		if( !this->nodeExists( node, "Name" ) ){
+		if( !this->nodesExist( node, { "Name" } ) ){
 			return 0;
 		}
 
@@ -85,6 +81,9 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 		}
 
 		achievement->group = (e_achievement_group)constant;
+	} else {
+		if (!exists)
+			achievement->group = AG_NONE;
 	}
 
 	if( this->nodeExists( node, "Name" ) ){

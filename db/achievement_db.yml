@@ -23,7 +23,7 @@
 #
 ###########################################################################
 # - Id                  Achievement ID.
-#   Group               Achievement group type.
+#   Group               Achievement group type. (Defaut: None)
 #   Name                Achievement name.
 #   Targets:            List of targets the achievement requires. (Default: null)
 #     - Id              Index value used for import methods.
