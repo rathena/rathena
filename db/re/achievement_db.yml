@@ -69,7 +69,6 @@ Body:
         Count: 1
       - Id: 6
         Count: 1
-    Condition: " ARG0 >= 1 && ARG1 >= 1 && ARG2 >= 1 && ARG3 >= 1 && ARG4 >= 1 && ARG5 >= 1 && ARG6 >= 1 "
     Score: 10
   - Id: 120001
     Group: Adventure
@@ -961,7 +960,6 @@ Body:
         Count: 20000
       - Id: 4
         Count: 1000
-    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: prontera
     Score: 10
   - Id: 127002
@@ -978,7 +976,6 @@ Body:
         Count: 20000
       - Id: 4
         Count: 1000
-    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: geffen
     Score: 10
   - Id: 127003
@@ -995,7 +992,6 @@ Body:
         Count: 20000
       - Id: 4
         Count: 1000
-    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: morocc
     Score: 10
   - Id: 127004
@@ -1012,7 +1008,6 @@ Body:
         Count: 20000
       - Id: 4
         Count: 1000
-    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: payon
     Score: 10
   - Id: 127005
@@ -1029,7 +1024,6 @@ Body:
         Count: 20000
       - Id: 4
         Count: 1000
-    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: yuno
     Score: 10
   - Id: 127006
@@ -1046,7 +1040,6 @@ Body:
         Count: 20000
       - Id: 4
         Count: 1000
-    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: lighthalzen
     Score: 10
   - Id: 127007
@@ -1063,7 +1056,6 @@ Body:
         Count: 20000
       - Id: 4
         Count: 1000
-    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: einbroch
     Score: 10
   - Id: 127008
@@ -1080,7 +1072,6 @@ Body:
         Count: 20000
       - Id: 4
         Count: 1000
-    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: rachel
     Score: 10
   - Id: 127009
@@ -1097,7 +1088,6 @@ Body:
         Count: 20000
       - Id: 4
         Count: 1000
-    Condition: " ARG0 >= 3000 && ARG1 >= 6000 && ARG2 >= 12000 && ARG3 >= 20000 && ARG4 >= 1000 "
     Map: veins
     Score: 10
   - Id: 128000
@@ -1792,7 +1782,6 @@ Body:
         Count: 1
       - Id: 6
         Count: 1
-    Condition: " ARG0 >= 1 && ARG1 >= 1 && ARG2 >= 1 && ARG3 >= 1 && ARG4 >= 1 && ARG5 >= 1 && ARG6 >= 1 "
     Rewards:
       TitleId: 1034
     Score: 10
@@ -1802,7 +1791,6 @@ Body:
     Targets:
       - Id: 0
         Count: 1
-    Condition: " ARG0 >= 1 "
     Score: 10
   - Id: 190000
     Group: Chatting
@@ -1816,7 +1804,6 @@ Body:
         Count: 30
       - Id: 3
         Count: 100
-    Condition: " ARG0 >= 1 && ARG1 >= 10 && ARG2 >= 30 && ARG3 >= 100 "
     Score: 50
   - Id: 200000
     Group: Goal_Level

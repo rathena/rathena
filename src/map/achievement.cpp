@@ -867,6 +867,23 @@ bool achievement_check_condition( struct script_code* condition, struct map_sess
 }
 
 /**
+ * Check to see if an achievement's target count is complete
+ * @param ad: Achievement data
+ * @param current_count: Current target data
+ * @return True if all target values meet the requirements or false otherwise
+ */
+static bool achievement_target_complete(std::shared_ptr<s_achievement_db> ad, std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> current_count) {
+	if (std::find_if(ad->targets.begin(), ad->targets.end(),
+		[current_count](const std::pair<uint16, std::shared_ptr<achievement_target>> &target) -> bool {
+		return current_count[target.first] < target.second->count;
+	}
+	) == ad->targets.end())
+		return true;
+
+	return false;
+}
+
+/**
  * Update achievement objectives.
  * @param sd: Player to update
  * @param ad: Achievement data to compare for completion
@@ -929,12 +946,8 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 			changed = true;
 			complete = true;
 			break;
-		case AG_CHATTING:
 		case AG_SPEND_ZENY:
 			if (ad->targets.empty() || !ad->condition)
-				return false;
-
-			if (group == AG_CHATTING && ad->mapindex > -1 && sd->bl.m != ad->mapindex)
 				return false;
 
 			for (const auto &it : ad->targets) {
@@ -947,11 +960,7 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 
 			changed = true;
 
-			if (std::find_if(ad->targets.begin(), ad->targets.end(),
-				[current_count](const std::pair<uint16, std::shared_ptr<achievement_target>> &target) -> bool {
-					return current_count[target.first] < target.second->count;
-				}
-			) == ad->targets.end())
+			if (achievement_target_complete(ad, current_count))
 				complete = true;
 			break;
 		case AG_BATTLE:
@@ -969,11 +978,27 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 			if (!changed)
 				return false;
 
-			if (std::find_if(ad->targets.begin(), ad->targets.end(),
-				[current_count](const std::pair<uint16, std::shared_ptr<achievement_target>> &target) -> bool {
-					return current_count[target.first] < target.second->count;
+			if (achievement_target_complete(ad, current_count))
+				complete = true;
+			break;
+		case AG_CHATTING:
+			if (ad->targets.empty())
+				return false;
+
+			if (ad->mapindex > -1 && sd->bl.m != ad->mapindex)
+				return false;
+
+			for (const auto &it : ad->targets) {
+				if (current_count[it.first] < it.second->count) {
+					current_count[it.first]++;
+					changed = true;
 				}
-			) == ad->targets.end())
+			}
+
+			if (!changed)
+				return false;
+
+			if (achievement_target_complete(ad, current_count))
 				complete = true;
 			break;
 	}
