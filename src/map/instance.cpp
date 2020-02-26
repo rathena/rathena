@@ -771,7 +771,7 @@ bool instance_destroy(int instance_id)
 	}
 
 	if(idata->state == INSTANCE_IDLE) {
-		for (auto &instance_it = instance_wait.id.begin(); instance_it != instance_wait.id.end(); ++instance_it) {
+		for (auto instance_it = instance_wait.id.begin(); instance_it != instance_wait.id.end(); ++instance_it) {
 			if (*instance_it == instance_id) {
 				instance_wait.id.erase(instance_it);
 
