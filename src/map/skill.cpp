@@ -21943,7 +21943,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 void SkillDatabase::clear() {
 	TypesafeCachedYamlDatabase::clear();
 	memset(skilldb_id2idx, 0, sizeof(skilldb_id2idx));
-	skill_num = 0;
+	skill_num = 1;
 }
 
 SkillDatabase skill_db;
@@ -22456,15 +22456,14 @@ static void skill_readdb(void)
 }
 
 void skill_reload (void) {
-	struct s_mapiterator *iter;
-	struct map_session_data *sd;
-
+	skill_db.clear();
 	skill_readdb();
 	initChangeTables(); // Re-init Status Change tables
 
 	/* lets update all players skill tree : so that if any skill modes were changed they're properly updated */
-	iter = mapit_getallusers();
-	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) ) {
+	s_mapiterator *iter = mapit_getallusers();
+
+	for( map_session_data *sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) ) {
 		pc_validate_skill(sd);
 		clif_skillinfoblock(sd);
 	}
