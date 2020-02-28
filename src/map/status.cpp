@@ -131,15 +131,16 @@ uint64 SizeFixDatabase::parseBodyNode(const YAML::Node &node) {
 	if (!this->asString(node, "Weapon", weapon_name))
 		return 0;
 
+	std::string weapon_name_constant = "W_" + weapon_name;
 	int64 constant;
 
-	if (!script_get_constant(weapon_name.c_str(), &constant)) {
-		this->invalidWarning(node, "Size Fix unknown weapon %s, skipping.\n", weapon_name.c_str());
+	if (!script_get_constant(weapon_name_constant.c_str(), &constant)) {
+		this->invalidWarning(node["Weapon"], "Size Fix unknown weapon %s, skipping.\n", weapon_name.c_str());
 		return 0;
 	}
 
 	if (constant < W_FIST || constant > W_2HSTAFF) {
-		this->invalidWarning(node, "Size Fix weapon %s is an invalid weapon, skipping.\n", weapon_name.c_str());
+		this->invalidWarning(node["Weapon"], "Size Fix weapon %s is an invalid weapon, skipping.\n", weapon_name.c_str());
 		return 0;
 	}
 
@@ -157,7 +158,7 @@ uint64 SizeFixDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (small > 100) {
-			this->invalidWarning(node, "Small Size Fix %d for weapon %d is out of bounds, defaulting to 100.\n", small, weapon_id);
+			this->invalidWarning(node["Small"], "Small Size Fix %d for %s is out of bounds, defaulting to 100.\n", small, weapon_name.c_str());
 			small = 100;
 		}
 
@@ -174,7 +175,7 @@ uint64 SizeFixDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (medium > 100) {
-			this->invalidWarning(node, "Medium Size Fix %d for weapon %d is out of bounds, defaulting to 100.\n", medium, weapon_id);
+			this->invalidWarning(node["Medium"], "Medium Size Fix %d for %s is out of bounds, defaulting to 100.\n", medium, weapon_name.c_str());
 			medium = 100;
 		}
 
@@ -191,7 +192,7 @@ uint64 SizeFixDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (large > 100) {
-			this->invalidWarning(node, "Large Size Fix %d for weapon %d is out of bounds, defaulting to 100.\n", large, weapon_id);
+			this->invalidWarning(node["Large"], "Large Size Fix %d for %s is out of bounds, defaulting to 100.\n", large, weapon_name.c_str());
 			large = 100;
 		}
 

@@ -16,16 +16,16 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Custom Size Fix Database
+# Size Fix Database
 ###########################################################################
 #
 # Size Fix Settings
 #
 ###########################################################################
-# - Weapon  Weapon type.
-#   Small   Small size modifier. (Default: 100)
-#   Medium  Medium size modifier. (Default: 100)
-#   Large   Large size modifier. (Default: 100)
+# - Weapon    Weapon type.
+#   Small     Small size modifier. (Default: 100)
+#   Medium    Medium size modifier. (Default: 100)
+#   Large     Large size modifier. (Default: 100)
 ###########################################################################
 
 Header:

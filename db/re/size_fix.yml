@@ -16,16 +16,16 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Renewal Size Fix Database
+# Size Fix Database
 ###########################################################################
 #
 # Size Fix Settings
 #
 ###########################################################################
-# - Weapon  Weapon type.
-#   Small   Small size modifier. (Default: 100)
-#   Medium  Medium size modifier. (Default: 100)
-#   Large   Large size modifier. (Default: 100)
+# - Weapon    Weapon type.
+#   Small     Small size modifier. (Default: 100)
+#   Medium    Medium size modifier. (Default: 100)
+#   Large     Large size modifier. (Default: 100)
 ###########################################################################
 
 Header:
@@ -33,99 +33,5 @@ Header:
   Version: 1
 
 Body:
-  - Weapon: W_FIST
-    Small: 100
-    Medium: 100
-    Large: 100
-  - Weapon: W_DAGGER
-    Small: 100
-    Medium: 75
-    Large: 50
-  - Weapon: W_1HSWORD
-    Small: 75
-    Medium: 100
+  - Weapon: Knuckle
     Large: 75
-  - Weapon: W_2HSWORD
-    Small: 75
-    Medium: 75
-    Large: 100
-  - Weapon: W_1HSPEAR
-    Small: 75
-    Medium: 75
-    Large: 100
-  - Weapon: W_2HSPEAR
-    Small: 75
-    Medium: 75
-    Large: 100
-  - Weapon: W_1HAXE
-    Small: 50
-    Medium: 75
-    Large: 100
-  - Weapon: W_2HAXE
-    Small: 50
-    Medium: 75
-    Large: 100
-  - Weapon: W_MACE
-    Small: 75
-    Medium: 100
-    Large: 100
-  - Weapon: W_2HMACE
-    Small: 100
-    Medium: 100
-    Large: 100
-  - Weapon: W_STAFF
-    Small: 100
-    Medium: 100
-    Large: 100
-  - Weapon: W_BOW
-    Small: 100
-    Medium: 100
-    Large: 75
-  - Weapon: W_KNUCKLE
-    Small: 100
-    Medium: 100
-    Large: 75
-  - Weapon: W_MUSICAL
-    Small: 75
-    Medium: 100
-    Large: 75
-  - Weapon: W_WHIP
-    Small: 75
-    Medium: 100
-    Large: 50
-  - Weapon: W_BOOK
-    Small: 100
-    Medium: 100
-    Large: 50
-  - Weapon: W_KATAR
-    Small: 75
-    Medium: 100
-    Large: 75
-  - Weapon: W_REVOLVER
-    Small: 100
-    Medium: 100
-    Large: 100
-  - Weapon: W_RIFLE
-    Small: 100
-    Medium: 100
-    Large: 100
-  - Weapon: W_GATLING
-    Small: 100
-    Medium: 100
-    Large: 100
-  - Weapon: W_SHOTGUN
-    Small: 100
-    Medium: 100
-    Large: 100
-  - Weapon: W_GRENADE
-    Small: 100
-    Medium: 100
-    Large: 100
-  - Weapon: W_HUUMA
-    Small: 100
-    Medium: 100
-    Large: 100
-  - Weapon: W_2HSTAFF
-    Small: 100
-    Medium: 100
-    Large: 100

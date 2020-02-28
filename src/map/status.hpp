@@ -60,7 +60,7 @@ struct refine_cost {
 int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched);
 int status_get_refine_cost(int weapon_lv, int type, bool what);
 
-/// Weapon attack modification for size (size_fix.yml)
+/// Weapon attack modification for size
 struct s_sizefix_db {
 	uint16 small, medium, large;
 };
