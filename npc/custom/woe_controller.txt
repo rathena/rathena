@@ -1,20 +1,26 @@
-//===== rAthena Script =======================================
+//===== rAthena Script ======================================= 
 //= Euphy's WOE Controller
-//===== By: ==================================================
-//= Euphy
-//===== Current Version: =====================================
-//= 1.5
-//===== Compatible With: =====================================
-//= rAthena Project
-//===== Description: =========================================
+//===== Changelogs: ==========================================
+//= 1.3a Initial SVN release [Euphy]
+//= 1.3b Fixed WoE SE end labels [Euphy]
+//= 1.4 Added auto kick config [Euphy]
+//= 1.5 Added additional reward configs [Euphy]
+//= 1.5a Fixed hardcoded date constants [Lemongrass]
+//= 1.6 Replaced SQL insert for mail with script command [Capuche]
+//= 1.6a Fixed invalid name Schwaltzvalt [Daegaladh]
+//= 1.6b Fixed hardcoded castle numbers [Lemongrass]
+//= 1.7 Removed direct SQL access [Lemongrass]
+//= 1.8 Fixed invalid checkweight usage [Lemongrass]
+//= 1.9 Fixed reward handout for multiple characters on the same account [Lemongrass]
+//===== Description: ========================================= 
 //= A controller for War of Emperium designed for
 //= simplicity and ease of use.
 //= Many concepts taken from ToastOfDoom's script,
 //= and "rewards" function originally by Goddameit.
-//===== Additional Comments: =================================
+//=
 //= Be sure to disable the default agit controllers!
-//== npc\guild\agit_controller.txt
-//== npc\guild2\agit_start_se.txt
+//= npc\guild\agit_controller.txt
+//= npc\guild2\agit_start_se.txt
 //============================================================
 
 // Information NPC
@@ -98,7 +104,7 @@ OnInit:
 	.reward_id_size = getarraysize(.reward_id);
 	set .Size, getarraysize($WOE_CONTROL);
 	if (.AutoKick || .NoOwner)
-		for(set .@i,0; .@i<30; set .@i,.@i+1) {
+		for(set .@i,0; .@i<getarraysize(.Castles$); set .@i,.@i+1) {
 			setmapflag .Castles$[.@i], mf_loadevent;
 			setd "."+.Castles$[.@i], .@i;
 		}
@@ -114,7 +120,7 @@ OnMinute00:
 				announce "The War Of Emperium is over!",bc_all|bc_woe;
 				AgitEnd; AgitEnd2;
 				sleep 1000;
-				for(set .@j,0; .@j<30; set .@j,.@j+1) {
+				for(set .@j,0; .@j<getarraysize(.Castles$); set .@j,.@j+1) {
 					if (.Active[0]&(1<<.@j)) Disp_Owner(.Castles$[.@j],1);
 					if (.ExitWarp) maprespawnguildid .Castles$[.@j],0,3;
 				}
@@ -134,7 +140,7 @@ OnMinute00:
 				else announce "The War Of Emperium has begun!",bc_all|bc_woe;
 				sleep 1000;
 				AgitStart; AgitStart2;
-				for(set .@j,0; .@j<30; set .@j,.@j+1) {
+				for(set .@j,0; .@j<getarraysize(.Castles$); set .@j,.@j+1) {
 					if (.Active[0]&(1<<.@j)) {
 						if (!.Init) Disp_Owner(.Castles$[.@j],0);
 						set .Active[1], .Active[1] | (1<<((.@j/5)+1));
@@ -168,17 +174,38 @@ OnReward:
 	if (!.reward_id_size && !.reward_zeny)
 		return;
 
-	set .@sql$, ((.Options&4)?"position = 0":"online = 1");
 	if (.Options&2) set .@str$,gettimestr("%B %d, %Y",21);
 	freeloop(1);
-	for(set .@i,0; .@i<30; set .@i,.@i+1) {
+	for(set .@i,0; .@i<getarraysize(.Castles$); set .@i,.@i+1) {
 		if (getarg(0)&(1<<.@i)) {
 			set .@gid, getcastledata(.Castles$[.@i],1);
 			if (!.@gid) continue;
-			set .@size, query_sql("SELECT account_id,char_id FROM `guild_member` WHERE guild_id = '"+.@gid+"' AND "+.@sql$,.@aid,.@cid);
-			for(set .@j,0; .@j<.@size; set .@j,.@j+1) {
+
+			getguildmember( .@gid, 1, .@cid );
+			.@size_guild = getguildmember( .@gid, 2, .@aid );
+
+			if( .Options&4 ){
+				.@master_cid = getguildmasterid( .@gid );
+				.@index = inarray(.@cid, .@master_cid);
+				.@master_aid = .@aid[.@index];
+
+				cleararray( .@cid, 0, .@size_guild );
+				cleararray( .@aid, 0, .@size_guild );
+
+				.@size_guild = 1;
+				.@cid[0] = .@master_cid;
+				.@aid[0] = .@master_aid;
+			}
+
+			for(set .@j,0; .@j<.@size_guild; set .@j,.@j+1) {
 				if ((.Options&8) && !(.Options&4)) {
-					set .@ip$, replacestr(getcharip(.@aid[.@j]),".","a");
+					if (isloggedin(.@aid[.@j],.@cid[.@j]))
+						set .@ip$, replacestr(getcharip(.@aid[.@j]),".","a");
+					else {
+						if (query_sql("SELECT `last_ip` FROM `login` WHERE `account_id` = '" + .@aid[.@j] + "'", .@last_ip$) < 1)
+							continue;
+						.@ip$ = replacestr(.@last_ip$, ".", "a");
+					}
 					if (getd(".@ip_"+.@i+"_"+.@ip$)) continue;
 					setd ".@ip_"+.@i+"_"+.@ip$,1;
 				}
@@ -197,17 +224,19 @@ OnReward:
 						setd ".@str_"+.@cid[.@j],1;
 						message rid2name(.@aid[.@j]),"You've got mail!";
 					}
-				} else if (isloggedin(.@aid[.@j])) {
-					.@name$ = rid2name(.@aid[.@j]);
+				} else if (isloggedin(.@aid[.@j],.@cid[.@j])) {
+					attachrid( .@aid[.@j], true );
+					.@name$ = strcharinfo( 0 );
 					.@castle_name$ = getcastlename(.Castles$[.@i]);
 					for ( .@k = 0; .@k < .reward_id_size; .@k++ ) {
 						if (checkweight(.reward_id[.@k], .reward_amount[.@k]))
-							getitem .reward_id[.@k], .reward_amount[.@k], .@aid[.@j];
+							getitem .reward_id[.@k], .reward_amount[.@k];
 						else
-							message .@name$, "You can't receive x" + .reward_amount[.@k] + " " + getitemname(.reward_id[.@k]) + " for conquering " + .@castle_name$ + " because you're overweight.";
+							dispbottom "You can't receive x" + .reward_amount[.@k] + " " + getitemname(.reward_id[.@k]) + " for conquering " + .@castle_name$ + " because you're overweight.";
 					}
 					Zeny += .reward_zeny;
-					message .@name$, "You have been rewarded for conquering " + .@castle_name$ + ".";
+					dispbottom "You have been rewarded for conquering " + .@castle_name$ + ".";
+					detachrid;
 				}
 			}
 		}
@@ -282,7 +311,7 @@ while(1) {
 			freeloop(1);
 			for(set .@i,0; .@i<.Size; set .@i,.@i+4) {
 				mes "> ^FF0000"+.Days$[$WOE_CONTROL[.@i]]+" ("+Add_Zero($WOE_CONTROL[.@i+1])+"-"+Add_Zero($WOE_CONTROL[.@i+2])+")^000000";
-				for(set .@j,0; .@j<30; set .@j,.@j+1)
+				for(set .@j,0; .@j<getarraysize(.Castles$); set .@j,.@j+1)
 					if ($WOE_CONTROL[.@i+3]&(1<<.@j)) mes "  ~ "+getcastlename(.Castles$[.@j])+" ^777777("+.Castles$[.@j]+")^000000";
 				if (.@i+4 < .Size) mes " ";
 			}
@@ -354,11 +383,11 @@ while(1) {
 				mes " > Castles:";
 				if (!.@Castle)
 					mes "   ~ ^777777(none selected)^000000";
-				else for(set .@i,0; .@i<30; set .@i,.@i+1)
+				else for(set .@i,0; .@i<getarraysize(.Castles$); set .@i,.@i+1)
 					if (.@Castle&(1<<.@i)) mes "   ~ "+getcastlename(.Castles$[.@i])+" ("+.Castles$[.@i]+")";
 				next;
 				set .@menu$,((.@Castle)?" ~ ^FF0000Finished...^000000":"")+":";
-				for(set .@i,0; .@i<30; set .@i,.@i+1)
+				for(set .@i,0; .@i<getarraysize(.Castles$); set .@i,.@i+1)
 					set .@menu$, .@menu$+" ~ "+((.@Castle&(1<<.@i))?"^0055FF":"")+getcastlename(.Castles$[.@i])+" ("+.Castles$[.@i]+")^000000:";
 				set .@i, select(.@menu$)-1;
 				if (.@i)
