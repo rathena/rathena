@@ -11461,7 +11461,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 5 * val1; // Skill Damage Increase.
 			break;
 		case SC_SOULGOLEM:
-			val2 = 60 * val1 / 10; // DEF Increase
+			val2 = 60 * val1; // DEF Increase
 			val3 = 15 + 5 * val1; // MDEF Increase
 			break;
 		case SC_SOULSHADOW:
@@ -11473,20 +11473,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = 10; // HIT Increase
 			if (val1 >= 3)
 				val3 += 3;
-			if (val1 >= 5)
-				val3 += 2;
-			if (val1 >= 6) // In case someone uses a level higher then 5.
-				val3 += val1 - 5;
+			else if (val1 >= 5)
+				val3 += 5;
 			break;
 		case SC_SOULFAIRY:
 			val2 = 10 * val1; // MATK Increase
 			val3 = 5; // Variable Cast Time Reduction
 			if (val1 >= 3)
 				val3 += 2;
-			if (val1 >= 5)
-				val3 += 3;
-			if (val1 >= 6) // In case someone uses a level higher then 5.
-				val3 += 4 * (val1 - 5);
+			else if (val1 >= 5)
+				val3 += 5;
 			break;
 		case SC_SOULUNITY:
 			tick_time = 3000;
@@ -12503,17 +12499,17 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 
 		case SC_FLASHKICK: {
-				struct block_list *d_bl = map_id2bl(sce->val1);
+				map_session_data *tsd;
 
-				if (d_bl) {
-					if (d_bl->type == BL_PC)
-						((TBL_PC *)d_bl)->stellar_mark[sce->val2] = 0;
-				}
+				if (!(tsd = map_id2sd(sce->val1))
+					break;
+
+				tsd->stellar_mark[sce->val2] = 0;
 			}
 			break;
 
 		case SC_SOULUNITY: {
-				struct map_session_data *tsd = nullptr;
+				map_session_data *tsd;
 
 				if (!(tsd = map_id2sd(sce->val2)))
 					break;

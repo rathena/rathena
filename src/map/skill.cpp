@@ -5463,19 +5463,16 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			sc_start(src, &sd->bl, SC_NOVAEXPLOSING, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 		
-	case SP_SOULEXPLOSION: {
-		struct status_data *tstatus;
-		tstatus = status_get_status_data(&sd->bl);
-
+	case SP_SOULEXPLOSION:
 		if (!(tsc && (tsc->data[SC_SPIRIT] || tsc->data[SC_SOULGOLEM] || tsc->data[SC_SOULSHADOW] || tsc->data[SC_SOULFALCON] || tsc->data[SC_SOULFAIRY])) || tstatus->hp < 10 * tstatus->max_hp / 100) { // Requires target to have a soul link and more then 10% of MaxHP.
 			// With this skill requiring a soul link, and the target to have more then 10% if MaxHP, I wonder
 			// if the cooldown still happens after it fails. Need a confirm. [Rytech] 
-			clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+			if (sd)
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 			break;
 		}
 
 		skill_attack(BF_MISC, src, src, bl, skill_id, skill_lv, tick, flag);
-	}
 		break;
 
 	case SL_SMA:
@@ -6976,7 +6973,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case SJ_GRAVITYCONTROL: {
-			int fall_damage = (sstatus->batk + sstatus->rhw.atk) - tstatus->def2;
+			int fall_damage = sstatus->batk + sstatus->rhw.atk - tstatus->def2;
 
 			if (bl->type == BL_PC)
 				fall_damage += dstsd->weight / 10 - tstatus->def;
@@ -7227,7 +7224,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SP_SOULUNITY: {
 			int8 count = min(5 + skill_lv, MAX_UNITED_SOULS);
 
-			if (sd == NULL || sd->status.party_id == 0 || (flag & 1)) {
+			if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
 				if (!dstsd || !sd) { // Only put player's souls in unity.
 					if (sd)
 						clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
@@ -7241,7 +7238,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					return 1;
 				}
 
-				if(sd) { // Unite player's soul with caster's soul.
+				if (sd) { // Unite player's soul with caster's soul.
 					i = 0;
 
 					ARR_FIND(0, count, i, sd->united_soul[i] == bl->id);
@@ -9119,7 +9116,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case SP_SOULREVOLVE:
 		if (!(tsc && (tsc->data[SC_SPIRIT] || tsc->data[SC_SOULGOLEM] || tsc->data[SC_SOULSHADOW] || tsc->data[SC_SOULFALCON] || tsc->data[SC_SOULFAIRY]))) {
-			clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
+			if (sd)
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
 			break;
 		}
 		status_heal(bl, 0, 50*skill_lv, 2);
@@ -9231,7 +9229,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case SJ_DOCUMENT:
 		if (sd) {
-			switch(skill_lv) {
+			switch (skill_lv) {
 				case 1:
 					pc_resetfeel(sd);
 					break;

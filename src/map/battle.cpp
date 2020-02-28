@@ -4498,8 +4498,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case SJ_FULLMOONKICK:
 			skillratio += 1000 + 100 * skill_lv;
-			if (status_get_lv(src) > 100)
-					skillratio = skillratio * status_get_lv(src) / 100;
+			RE_LVL_DMOD(100);
 			if (sc && sc->data[SC_LIGHTOFMOON])
 				skillratio += skillratio * sc->data[SC_LIGHTOFMOON]->val2 / 100;
 			break;
@@ -4511,8 +4510,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case SJ_SOLARBURST:
 			skillratio += 900 + 220 * skill_lv;
-			if (status_get_lv(src) > 100)
-					skillratio = skillratio * status_get_lv(src) / 100;
+			RE_LVL_DMOD(100);
 			if (sc && sc->data[SC_LIGHTOFSUN])
 				skillratio += skillratio * sc->data[SC_LIGHTOFSUN]->val2 / 100;
 			break;
@@ -4522,8 +4520,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case SJ_FALLINGSTAR_ATK:
 		case SJ_FALLINGSTAR_ATK2:
 			skillratio += 100 * skill_lv;
-			if (status_get_lv(src) > 100)
-					skillratio = skillratio * status_get_lv(src) / 100;
+			RE_LVL_DMOD(100);
 			if (sc && sc->data[SC_LIGHTOFSTAR])
 				skillratio += skillratio * sc->data[SC_LIGHTOFSTAR]->val2 / 100;
 			break;
