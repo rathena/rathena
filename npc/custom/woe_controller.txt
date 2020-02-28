@@ -430,11 +430,6 @@ while(1) {
 		switch(select(" ~ Add a session...: ~ Delete a session...: ~ Reload settings...:"+((agitcheck() || agitcheck2() || agitcheck3())?" ~ End WOE session...":"")+": ~ ^777777Go back^000000")) {
 		case 1:
 			mes "[New Session]";
-			if (.Size > 248) {
-				mes "You have already reached the maximum of 62 sessions.";
-				next;
-				break;
-			}
 			mes "Select a day.";
 			next;
 			set .@Day, select(" ~ "+implode(.Days$,": ~ "))-1;
