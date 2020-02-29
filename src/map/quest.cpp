@@ -45,10 +45,8 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 	bool exists = quest != nullptr;
 
 	if (!exists) {
-		if (!this->nodeExists(node, "Title")) {
-			this->invalidWarning(node, "Title is missing.\n");
+		if (!this->nodesExist(node, { "Title" }))
 			return 0;
-		}
 
 		quest = std::make_shared<s_quest_db>();
 		quest->id = quest_id;
@@ -57,9 +55,8 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 	if (this->nodeExists(node, "Title")) {
 		std::string name;
 
-		if (!this->asString(node, "Title", name)) {
+		if (!this->asString(node, "Title", name))
 			return 0;
-		}
 
 		quest->name = name;
 	}
@@ -73,7 +70,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 		double timediff = solve_time(const_cast<char *>(time.c_str()));
 
 		if (timediff == 0) {
-			this->invalidWarning(node, "Incorrect TimeLimit format supplied, skipping.\n");
+			this->invalidWarning(node["TimeLimit"], "Incorrect TimeLimit format %s given, skipping.\n", time.c_str());
 			return 0;
 		}
 
@@ -115,8 +112,8 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 			struct mob_db *mob = mobdb_search_aegisname(mob_name.c_str());
 
 			if (!mob) {
-				this->invalidWarning(targetNode["Mob"], "Mob %s does not exist.\n", mob_name.c_str());
-				return 0;
+				this->invalidWarning(targetNode["Mob"], "Mob %s does not exist, skipping.\n", mob_name.c_str());
+				continue;
 			}
 
 			//std::shared_ptr<s_quest_objective> target = util::vector_find(quest->objectives, mob->vd.class_);
@@ -134,8 +131,8 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 
 			if (!targetExists) {
 				if (!this->nodeExists(targetNode, "Count")) {
-					this->invalidWarning(targetNode, "Targets has no data specified, skipping.\n");
-					return 0;
+					this->invalidWarning(targetNode["Count"], "Targets has no Count value specified, skipping.\n");
+					continue;
 				}
 
 				target = std::make_shared<s_quest_objective>();
@@ -175,8 +172,8 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				struct mob_db *mob = mobdb_search_aegisname(mob_name.c_str());
 
 				if (!mob) {
-					this->invalidWarning(dropNode["Mob"], "Mob %s does not exist.\n", mob_name.c_str());
-					return 0;
+					this->invalidWarning(dropNode["Mob"], "Mob %s does not exist, skipping.\n", mob_name.c_str());
+					continue;
 				}
 
 				mob_id = mob->vd.class_;
@@ -196,9 +193,14 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 			bool targetExists = target != nullptr;
 
 			if (!targetExists) {
-				if (!this->nodeExists(dropNode, "Item") || !this->nodeExists(dropNode, "Rate")) {
-					this->invalidWarning(dropNode, "Drops has no data specified, skipping.\n");
-					return 0;
+				if (!this->nodeExists(dropNode, "Item")) {
+					this->invalidWarning(dropNode["Item"], "Drops has no Item value specified, skipping.\n");
+					continue;
+				}
+
+				if (!this->nodeExists(dropNode, "Rate")) {
+					this->invalidWarning(dropNode["Item"], "Drops has no Rate value specified, skipping.\n");
+					continue;
 				}
 
 				target = std::make_shared<s_quest_dropitem>();
@@ -214,8 +216,8 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				struct item_data *item = itemdb_search_aegisname(item_name.c_str());
 
 				if (!item) {
-					this->invalidWarning(dropNode["Item"], "Item %s does not exist.\n", item_name.c_str());
-					return 0;
+					this->invalidWarning(dropNode["Item"], "Item %s does not exist, skipping.\n", item_name.c_str());
+					continue;
 				}
 
 				target->nameid = item->nameid;
@@ -306,10 +308,10 @@ static time_t quest_time(std::shared_ptr<s_quest_db> qi)
 		return 0;
 
 	if (!qi->time_at && qi->time > 0)
-		return time(NULL) + qi->time;
+		return time(nullptr) + qi->time;
 	else if (qi->time_at && (qi->day > 0 || qi->hour > 0 || qi->minute > 0)) {
-		uint32 q_hour = (qi->hour * 3600) + (qi->minute * 60), q_minute = (qi->minute * 60);
-		time_t t = time(NULL);
+		uint32 q_hour = (qi->hour * 3600) + (qi->minute * 60), q_minute = qi->minute * 60;
+		time_t t = time(nullptr);
 		struct tm *lt = localtime(&t);
 
 		if (q_hour > 0) {
@@ -319,7 +321,7 @@ static time_t quest_time(std::shared_ptr<s_quest_db> qi)
 				q_hour -= current_hour;
 			else
 				q_hour += 86400 - current_hour;
-		} else {
+		} else if (q_minute > 0) {
 			uint32 current_minute = (lt->tm_min * 60) + lt->tm_sec;
 
 			if (current_minute < q_minute)
@@ -622,7 +624,7 @@ int quest_check(struct map_session_data *sd, int quest_id, e_quest_check_type ty
 				return 1;
 			return sd->quest_log[i].state;
 		case PLAYTIME:
-			return (sd->quest_log[i].time < (unsigned int)time(NULL) ? 2 : sd->quest_log[i].state == Q_COMPLETE ? 1 : 0);
+			return (sd->quest_log[i].time < (unsigned int)time(nullptr) ? 2 : sd->quest_log[i].state == Q_COMPLETE ? 1 : 0);
 		case HUNTING:
 			if (sd->quest_log[i].state == Q_INACTIVE || sd->quest_log[i].state == Q_ACTIVE) {
 				int j;
@@ -631,7 +633,7 @@ int quest_check(struct map_session_data *sd, int quest_id, e_quest_check_type ty
 				ARR_FIND(0, qi->objectives.size(), j, sd->quest_log[i].count[j] < qi->objectives[j]->count);
 				if (j == qi->objectives.size())
 					return 2;
-				if (sd->quest_log[i].time < (unsigned int)time(NULL))
+				if (sd->quest_log[i].time < (unsigned int)time(nullptr))
 					return 1;
 			}
 			return 0;
