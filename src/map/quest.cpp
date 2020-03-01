@@ -77,17 +77,15 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 		if (time.find("+") != std::string::npos)
 			quest->time = static_cast<time_t>(timediff);
 		else {
-			int32 zero;
+			int32 zero, day, hour, minute, second;
 
-			split_time(static_cast<int32>(timediff), &zero, &zero, &quest->day, &quest->hour, &quest->minute, &zero);
+			split_time(static_cast<int32>(timediff), &zero, &zero, &day, &hour, &minute, &second);
+			quest->time = day * 86400 + hour * 3600 + minute * 60 + second;
 			quest->time_at = true; // '+' not found, set to specific time
 		}
 	} else {
 		if (!exists) {
 			quest->time = 0;
-			quest->day = 0;
-			quest->hour = 0;
-			quest->minute = 0;
 			quest->time_at = false;
 		}
 	}
@@ -304,33 +302,20 @@ int quest_pc_login(struct map_session_data *sd)
  */
 static time_t quest_time(std::shared_ptr<s_quest_db> qi)
 {
-	if (!qi)
+	if (!qi || qi->time <= 0)
 		return 0;
 
-	if (!qi->time_at && qi->time > 0)
+	if (!qi->time_at)
 		return time(nullptr) + qi->time;
-	else if (qi->time_at && (qi->day > 0 || qi->hour > 0 || qi->minute > 0)) {
-		uint32 q_hour = (qi->hour * 3600) + (qi->minute * 60), q_minute = qi->minute * 60;
+	else {
 		time_t t = time(nullptr);
 		struct tm *lt = localtime(&t);
+		uint32 time_today = lt->tm_hour * 3600 + lt->tm_min * 60 + lt->tm_sec;
 
-		if (q_hour > 0) {
-			uint32 current_hour = (lt->tm_hour * 3600) + (lt->tm_min * 60) + lt->tm_sec;
-
-			if (current_hour < q_hour)
-				q_hour -= current_hour;
-			else
-				q_hour += 86400 - current_hour;
-		} else if (q_minute > 0) {
-			uint32 current_minute = (lt->tm_min * 60) + lt->tm_sec;
-
-			if (current_minute < q_minute)
-				q_minute -= current_minute;
-			else
-				q_minute += 3600 - current_minute;
-		}
-
-		return static_cast<time_t>(t + (qi->day * 86400) + q_hour + q_minute);
+		if (time_today < qi->time)
+			return static_cast<time_t>(t + qi->time - time_today);
+		else // Carry over to the next day
+			return static_cast<time_t>(t + 86400 + qi->time - time_today);
 	}
 
 	return 0;

@@ -2359,7 +2359,7 @@ Body:
     Title: Daily delivery
   - Id: 7211
     Title: Misty Forest Labyrinth Exploration
-    TimeLimit: +2h 30mn
+    TimeLimit: +2h30mn
   - Id: 7212
     Title: Loki's Search
   - Id: 7213
@@ -5175,10 +5175,10 @@ Body:
     TimeLimit: +23h
   - Id: 12273
     Title: In progress general culvert weekly service
-    TimeLimit: +6d 17h
+    TimeLimit: +6d17h
   - Id: 12274
     Title: In progress hard culvert weekly service
-    TimeLimit: +6d 17h
+    TimeLimit: +6d17h
   - Id: 12278
     Title: Towards Bakonawa Lake...
     TimeLimit: +7d

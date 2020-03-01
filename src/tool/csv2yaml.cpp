@@ -2444,21 +2444,12 @@ static bool quest_read_db(char *split[], int columns, int current) {
 
 			if (day > 0)
 				output += std::to_string(day) + "d";
-			if (hour > 0) {
-				if (day > 0)
-					output += " ";
+			if (hour > 0)
 				output += std::to_string(hour) + "h";
-			}
-			if (minute > 0) {
-				if (day > 0 || hour > 0)
-					output += " ";
+			if (minute > 0)
 				output += std::to_string(minute) + "mn";
-			}
-			if (second > 0) {
-				if (day > 0 || hour > 0 || minute > 0)
-					output += " ";
+			if (second > 0)
 				output += std::to_string(second) + "s";
-			}
 
 			body << YAML::Key << "TimeLimit" << YAML::Value << output;
 		}
@@ -2470,11 +2461,8 @@ static bool quest_read_db(char *split[], int columns, int current) {
 
 			if (std::stoi(hour) > 0)
 				output = std::to_string(std::stoi(hour)) + "h";
-			if (std::stoi(time_str) > 0) {
-				if (output.size() > 0)
-					output += " ";
+			if (std::stoi(time_str) > 0)
 				output += std::to_string(std::stoi(time_str)) + "mn";
-			}
 
 			body << YAML::Key << "TimeLimit" << YAML::Value << output; // No quests in TXT format had days, default to 0
 		}
