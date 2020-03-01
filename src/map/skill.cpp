@@ -3758,16 +3758,24 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			skill_onskillusage(sd, bl, skill_id, tick);
 	}
 
-	if (!(flag&2) &&
-		(
-			skill_id == MG_COLDBOLT || skill_id == MG_FIREBOLT || skill_id == MG_LIGHTNINGBOLT
-		) &&
-		(tsc = status_get_sc(src)) &&
-		tsc->data[SC_DOUBLECAST] &&
-		rnd() % 100 < tsc->data[SC_DOUBLECAST]->val2)
-	{
-//		skill_addtimerskill(src, tick + dmg.div_*dmg.amotion, bl->id, 0, 0, skill_id, skill_lv, BF_MAGIC, flag|2);
-		skill_addtimerskill(src, tick + dmg.amotion, bl->id, 0, 0, skill_id, skill_lv, BF_MAGIC, flag|2);
+	if (!(flag&2)) {
+		switch (skill_id) {
+			case MG_COLDBOLT:
+			case MG_FIREBOLT:
+			case MG_LIGHTNINGBOLT:
+				if (sc && sc->data[SC_DOUBLECAST] && rnd() % 100 < tsc->data[SC_DOUBLECAST]->val2)
+					//skill_addtimerskill(src, tick + dmg.div_*dmg.amotion, bl->id, 0, 0, skill_id, skill_lv, BF_MAGIC, flag|2);
+					skill_addtimerskill(src, tick + dmg.amotion, bl->id, 0, 0, skill_id, skill_lv, BF_MAGIC, flag|2);
+				break;
+			case SU_BITE:
+			case SU_SCRATCH:
+			case SU_SV_STEMSPEAR:
+			case SU_SCAROFTAROU:
+			case SU_PICKYPECK:
+				if (status_get_lv(src) > 29 && rnd() % 100 < 10 * status_get_lv(src) / 30)
+					skill_addtimerskill(src, tick + dmg.amotion + skill_get_delay(skill_id, skill_lv), bl->id, 0, 0, skill_id, skill_lv, attack_type, flag|2);
+				break;
+		}
 	}
 
 	map_freeblock_unlock();
@@ -5006,8 +5014,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 	case SU_BITE:
 		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-		if (status_get_lv(src) > 29 && (rnd() % 100 < (int)((status_get_lv(src) / 30) * 10 + 10)))
-			skill_addtimerskill(src, tick + skill_get_delay(skill_id, skill_lv), bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag);
 		break;
 	case SU_SVG_SPIRIT:
 		skill_area_temp[1] = bl->id;
@@ -5100,8 +5106,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				clif_skill_nodamage(NULL, src, AL_HEAL, heal, 1);
 				status_heal(src,heal,0,0);
 			}
-			if (skill_id == SU_SCRATCH && status_get_lv(src) > 29 && (rnd() % 100 < (int)((status_get_lv(src) / 30) * 10 + 10)))
-				skill_addtimerskill(src, tick + skill_get_delay(skill_id, skill_lv), bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag);
 		} else {
 			int starget = BL_CHAR|BL_SKILL;
 
@@ -6096,8 +6100,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				sc_start(src, src, SC_DORAM_WALKSPEED, 100, 50, skill_get_time(SU_SPIRITOFLAND, 1));
 		}
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		if (status_get_lv(src) > 29 && (rnd() % 100 < (int)((status_get_lv(src) / 30) * 10 + 10)))
-			skill_addtimerskill(src, tick + skill_get_delay(skill_id, skill_lv), bl->id, 0, 0, skill_id, skill_lv, skill_get_type(skill_id), flag);
 		break;
 
 	case 0:/* no skill - basic/normal attack */
@@ -6251,7 +6253,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	tsce = (tsc && type != -1)?tsc->data[type]:NULL;
 
 	if (src!=bl && type > -1 &&
-		CHK_ELEMENT((i = skill_get_ele(skill_id, skill_lv))) &&
+		CHK_ELEMENT((i = skill_get_ele(skill_id, skill_lv))) && i > ELE_NEUTRAL &&
 		skill_get_inf(skill_id) != INF_SUPPORT_SKILL &&
 		battle_attr_fix(NULL, NULL, 100, i, tstatus->def_ele, tstatus->ele_lv) <= 0)
 		return 1; //Skills that cause an status should be blocked if the target element blocks its element.

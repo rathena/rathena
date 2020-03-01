@@ -9390,6 +9390,9 @@ Note: 'bg_reserve' and 'bg_unbook' prevent the Battlegrounds queue from joining 
 Same as 'bg_leave' but slaps the player with a deserter status so they can't enter another queue for the time
 defined in battleground_db (10 minutes by default).
 
+With the Battleground Queue System, it will also warp the player to their previous position when they joined or
+to their save point if the map had MF_NOSAVE.
+
 ---------------------------------------
 
 *bg_warp <Battle Group>,"<map name>",<x>,<y>;
@@ -9450,6 +9453,9 @@ OnTimer1000:
 *bg_leave {<char_id>};
 
 Removes attached player from their Battle Group.
+
+With the Battleground Queue System, it will also warp the player to their previous position when they joined or
+to their save point if the map had MF_NOSAVE.
 
 ---------------------------------------
 
