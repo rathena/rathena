@@ -14975,8 +14975,7 @@ BUILDIN_FUNC(checkequipedcard)
 
 BUILDIN_FUNC(jump_zero)
 {
-	int sel;
-	sel=script_getnum(st,2);
+	int64 sel=script_getnum64(st,2);
 	if(!sel) {
 		int pos;
 		if( !data_islabel(script_getdata(st,3)) ){

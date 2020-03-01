@@ -4013,6 +4013,9 @@ ACMD_FUNC(reload) {
 	} else if (strstr(command, "achievementdb") || strncmp(message, "achievementdb", 4) == 0) {
 		achievement_db_reload();
 		clif_displaymessage(fd, msg_txt(sd,771)); // Achievement database has been reloaded.
+	} else if (strstr(command, "attendancedb") || strncmp(message, "attendancedb", 4) == 0) {
+		attendance_db.reload();
+		clif_displaymessage(fd, msg_txt(sd, 795)); // Attendance database has been reloaded.
 	}
 
 	return 0;
@@ -10250,6 +10253,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("reloadmsgconf", reload),
 		ACMD_DEF2("reloadinstancedb", reload),
 		ACMD_DEF2("reloadachievementdb",reload),
+		ACMD_DEF2("reloadattendancedb",reload),
 		ACMD_DEF(partysharelvl),
 		ACMD_DEF(mapinfo),
 		ACMD_DEF(dye),
