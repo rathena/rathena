@@ -12501,7 +12501,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_FLASHKICK: {
 				map_session_data *tsd;
 
-				if (!(tsd = map_id2sd(sce->val1))
+				if (!(tsd = map_id2sd(sce->val1)))
 					break;
 
 				tsd->stellar_mark[sce->val2] = 0;
