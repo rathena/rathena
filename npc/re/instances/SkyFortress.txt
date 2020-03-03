@@ -970,7 +970,7 @@ OnTouch:
 1@sthc,15,94,0	script	#sthd_event_17	HIDDEN_WARP_NPC,8,8,{
 	end;
 OnTouch:
-	.@label$ = instance_npcname("#chest_spawn") + "::OnTreasureB";
+	enablenpc instance_npcname("Sky Fortress Treasure Box");
 	monster 'sthc_map$,19,106, "Immortal Death Shadow",3483,1;// AS_EVIL_SHADOW3
 	monster 'sthc_map$,12,105, "Immortal Death Shadow",3483,1;
 	monster 'sthc_map$,14,115, "Immortal Death Shadow",3483,1;
@@ -989,7 +989,7 @@ OnTouch:
 1@sthc,16,11,0	script	#sthd_event_18	HIDDEN_WARP_NPC,8,8,{
 	end;
 OnTouch:
-	.@label$ = instance_npcname("#chest_spawn") + "::OnWindGhostRoom";
+	enablenpc instance_npcname("Wind Ghost in Experiment");
 	monster 'sthc_map$,19,21, "Immortal Death Shadow",3483,1;// AS_EVIL_SHADOW3
 	monster 'sthc_map$,12,21, "Immortal Death Shadow",3483,1;
 	monster 'sthc_map$,11,30, "Immortal Death Shadow",3483,1;
@@ -1015,17 +1015,9 @@ S_Treasure:
 	if (mobcount( 'sthc_map$, instance_npcname("#chest_spawn") + "::OnTreasure" + .@num ) < 1)	// todo it seems there is a random delay of ~0-2 seconds
 		enablenpc instance_npcname("Sky Fortress Gold Treasure#" + .@num);
 	end;
-OnTreasureB:
-	if (mobcount( 'sthc_map$, instance_npcname("#chest_spawn") + "::OnTreasureB" ) < 1)
-		enablenpc instance_npcname("Sky Fortress Treasure Box");
-	end;
 OnKnightB:
 	if (mobcount( 'sthc_map$, instance_npcname("#chest_spawn") + "::OnKnightB" ) < 1)
 		mapannounce 'sthc_map$, "Stefan Jack Earnest Wolf: Fell down... Immortal Cursed Knight... Sad... Will kill... The intruder...", bc_map,0xEBFF;
-	end;
-OnWindGhostRoom:
-	if (mobcount( 'sthc_map$, instance_npcname("#chest_spawn") + "::OnWindGhostRoom" ) < 1)
-		enablenpc instance_npcname("Wind Ghost in Experiment");
 	end;
 OnWindDead:
 	if (mobcount( 'sthc_map$, instance_npcname("#chest_spawn") + "::OnWindDead" ) < 1)
