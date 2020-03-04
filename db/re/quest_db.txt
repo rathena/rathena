@@ -140,6 +140,21 @@
 1261,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Cursed Swordman"
 1263,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Cursed Swordman"
 
+1264,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
+1265,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
+// Note: Rate1 is unknown
+1266,0,0,0,0,0,0,0,3021,6692,5000,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
+1267,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
+1268,0,3021,20,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
+1269,0,3022,20,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
+1270,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
+1271,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
+1272,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
+1273,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
+1274,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
+1275,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
+1297,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
+
 // Rockridge
 1298,0,3740,20,0,0,0,0,0,0,0,0,0,0,0,0,0,"Gas! Gas!"
 1299,4:00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Patrol Once a Day"
