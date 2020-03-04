@@ -3488,6 +3488,7 @@
 	export_constant(EFST_MD_Ta_Potion);
 	export_constant(EFST_MD_Ra_Potion);
 	export_constant(EFST_MVPCARD_KIEL);
+	export_constant(EFST_HOMUN_TIME);
 	export_constant(EFST_POWER_ACCELERATION);
 	export_constant(EFST_MAX_HP_SP_AVOID);
 	export_constant(EFST_ADD_ALL_STATE);
