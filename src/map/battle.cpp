@@ -2200,27 +2200,25 @@ static enum e_skill_damage_type battle_skill_damage_type( struct block_list* bl 
  * @return Skill damage rate
  */
 static int battle_skill_damage_skill(struct block_list *src, struct block_list *target, uint16 skill_id) {
-	int16 m = src->m;
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
-	struct s_skill_damage *damage = NULL;
 
 	if (!skill || !skill->damage.map)
 		return 0;
 
-	damage = &skill->damage;
+	s_skill_damage *damage = &skill->damage;
 
 	//check the adjustment works for specified type
 	if (!(damage->caster&src->type))
 		return 0;
 
-	struct map_data *mapdata = map_getmapdata(m);
+	map_data *mapdata = map_getmapdata(src->m);
 
 	if ((damage->map&1 && (!mapdata->flag[MF_PVP] && !mapdata_flag_gvg2(mapdata) && !mapdata->flag[MF_BATTLEGROUND] && !mapdata->flag[MF_SKILL_DAMAGE] && !mapdata->flag[MF_RESTRICTED])) ||
 		(damage->map&2 && mapdata->flag[MF_PVP]) ||
 		(damage->map&4 && mapdata_flag_gvg2(mapdata)) ||
 		(damage->map&8 && mapdata->flag[MF_BATTLEGROUND]) ||
 		(damage->map&16 && mapdata->flag[MF_SKILL_DAMAGE]) ||
-		(damage->map&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]))
+		(damage->map&mapdata->zone && mapdata->flag[MF_RESTRICTED]))
 	{
 		return damage->rate[battle_skill_damage_type(target)];
 	}
@@ -2236,11 +2234,12 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
  * @return Skill damage rate
  */
 static int battle_skill_damage_map(struct block_list *src, struct block_list *target, uint16 skill_id) {
-	int rate = 0;
-	struct map_data *mapdata = map_getmapdata(src->m);
+	map_data *mapdata = map_getmapdata(src->m);
 
 	if (!mapdata || !mapdata->flag[MF_SKILL_DAMAGE])
 		return 0;
+
+	int rate = 0;
 
 	// Damage rate for all skills at this map
 	if (mapdata->damage_adjust.caster&src->type)

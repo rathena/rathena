@@ -22360,13 +22360,21 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
 static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 {
 	int64 caster_tmp;
-	uint16 id = 0;
-	int caster;
+	uint16 id;
+	int caster, value;
+	char *result;
 
 	trim(split[0]);
-	if (ISDIGIT(split[0][0]))
-		id = atoi(split[0]);
-	else
+	if (ISDIGIT(split[0][0])) {
+		value = strtol(split[0], &result, 10);
+
+		if (*result) {
+			ShowError("skill_parse_row_skilldamage: Invalid skill %s given for skill %d, skipping.\n", result, id);
+			return false;
+		}
+
+		id = value;
+	} else
 		id = skill_name2id(split[0]);
 
 	std::shared_ptr<s_skill_db> skill = skill_db.find(id);
@@ -22376,20 +22384,41 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 
 	skill->damage = {};
 	trim(split[1]);
-	if (ISDIGIT(split[1][0]))
-		caster = atoi(split[1]);
-	else { // Try to parse caster as constant
-		if (!script_get_constant(split[1], &caster_tmp)) {
-			ShowError("skill_parse_row_skilldamage: Invalid caster constant given for skill %d. Skipping.", id);
+	if (ISDIGIT(split[1][0])) {
+		value = strtol(split[1], &result, 10);
+
+		if (*result) {
+			ShowError("skill_parse_row_skilldamage: Invalid caster %s given for skill %d, skipping.\n", result, id);
 			return false;
 		}
-		caster = static_cast<int>(caster_tmp);
+
+		caster = value;
+	} else { // Try to parse caster as constant
+		if (!script_get_constant(split[1], &caster_tmp)) {
+			ShowError("skill_parse_row_skilldamage: Invalid caster constant given for skill %d, skipping.\n", id);
+			return false;
+		}
+		caster = static_cast<uint16>(caster_tmp);
 	}
 	skill->damage.caster |= caster;
-	skill->damage.map |= atoi(split[2]);
 
-	for(int offset = 3, i = 0; i < SKILLDMG_MAX && offset < columns; i++, offset++ ){
-		skill->damage.rate[i] = cap_value(atoi(split[offset]), -100, INT_MAX);
+	value = strtol(split[2], &result, 10);
+
+	if (*result) {
+		ShowError("skill_parse_row_skilldamage: Invalid map %s given for skill %d, skipping.\n", result, id);
+		return false;
+	}
+
+	skill->damage.map |= value;
+
+	for(int offset = 3, i = SKILLDMG_PC; i < SKILLDMG_MAX && offset < columns; i++, offset++ ){
+		value = strtol(split[offset], &result, 10);
+
+		if (*result) {
+			ShowError("skill_parse_row_skilldamage: Invalid damage %s given for skill %d, defaulting to 0.\n", result, id);
+			value = 0;
+		}
+		skill->damage.rate[i] = cap_value(value, -100, 100000);
 	}
 
 	return true;
