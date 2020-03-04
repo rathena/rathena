@@ -142,8 +142,7 @@
 
 1264,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
 1265,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
-// Note: Rate1 is unknown
-1266,0,0,0,0,0,0,0,3021,6692,5000,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
+1266,0,0,0,0,0,0,0,3021,6692,2000,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
 1267,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
 1268,0,3021,20,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
 1269,0,3022,20,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
