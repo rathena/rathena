@@ -26897,7 +26897,7 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 1
-    Knockback: 2
+    Knockback: 1
     CopyFlags:
       Skill:
         Reproduce: true
