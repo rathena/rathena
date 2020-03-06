@@ -22369,7 +22369,7 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 		value = strtol(split[0], &result, 10);
 
 		if (*result) {
-			ShowError("skill_parse_row_skilldamage: Invalid skill %s given for skill %d, skipping.\n", result, id);
+			ShowError("skill_parse_row_skilldamage: Invalid skill %s given, skipping.\n", result);
 			return false;
 		}
 
