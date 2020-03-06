@@ -1544,6 +1544,8 @@
 	export_constant(SC_WEAPONBLOCK_ON);
 	export_constant(SC_ENTRY_QUEUE_APPLY_DELAY);
 	export_constant(SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT);
+	export_constant(SC_ADAPTATION);
+	export_constant(SC_BASILICA_CELL);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
