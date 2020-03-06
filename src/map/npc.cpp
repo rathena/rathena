@@ -296,7 +296,7 @@ bool npc_enable_target(const char* name, uint32 char_id, int flag)
 		if (nd->class_ != JT_WARPNPC && nd->class_ != JT_GUILD_FLAG)
 			clif_changeoption_target(&nd->bl, &sd->bl);
 		else {
-			if (option&(OPTION_HIDE|OPTION_INVISIBLE|OPTION_CLOAK))
+			if (nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE|OPTION_CLOAK))
 				clif_clearunit_single(nd->bl.id, CLR_OUTSIGHT, sd->fd);
 			else
 				clif_spawn(&nd->bl);
@@ -322,6 +322,12 @@ bool npc_enable_target(const char* name, uint32 char_id, int flag)
 		}
 		if (nd->class_ != JT_WARPNPC && nd->class_ != JT_GUILD_FLAG)	//Client won't display option changes for these classes [Toms]
 			clif_changeoption(&nd->bl);
+		else {
+			if (nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE|OPTION_CLOAK))
+				clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);
+			else
+				clif_spawn(&nd->bl);
+		}
 		map_foreachinmap(npc_cloaked_sub, nd->bl.m, BL_PC, nd->bl.id);	// Because npc option has been updated we remove the npc id from sd->cloaked_npc
 	}
 
@@ -1107,6 +1113,9 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 
 		if (x >= mapdata->npc[i]->bl.x - xs && x <= mapdata->npc[i]->bl.x + xs && y >= mapdata->npc[i]->bl.y - ys && y <= mapdata->npc[i]->bl.y + ys) {
 			f = 0;
+
+			if (npc_is_cloaked(mapdata->npc[i], sd))
+				continue;
 
 			switch (mapdata->npc[i]->subtype) {
 			case NPCTYPE_WARP:
