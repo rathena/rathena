@@ -352,7 +352,7 @@ while(1) {
 			mes "The War of Emperium is ^0055FFactive^000000 until ^FF0000"+Add_Zero(.@i)+"^000000 in the following regions:";
 			mes " ";
 			for(set .@i,0; .@i < .total_region; set .@i,.@i+1)
-				if (.Active[1]&(1<<(.@i+1))) mes " > ^777777"+.Regions$[.@i]+"^000000";
+				if (.Active[1]&(1<<.@i)) mes " > ^777777"+.Regions$[.@i]+"^000000";
 		} else
 			mes "The War of Emperium is ^0055FFactive^000000.";
 	} else {
@@ -376,8 +376,8 @@ while(1) {
 		if (.CastleWarp) set .@clr$,"^0055FF";
 		set .@menu$,"";
 		for(set .@i,0; .@i < .total_region; set .@i,.@i+1) {
-			if (.CastleWarp || .Active[1]&(1<<(.@i+1)))
-				set .@menu$, .@menu$+" ~ "+((.Active[1]&(1<<(.@i+1)))?.@clr$:"^777777")+.Regions$[.@i]+" Castles^000000";
+			if (.CastleWarp || .Active[1]&(1<<.@i))
+				set .@menu$, .@menu$+" ~ "+((.Active[1]&(1<<.@i))?.@clr$:"^777777")+.Regions$[.@i]+" Castles^000000";
 			set .@menu$, .@menu$+":";
 		}
 		set .@i, select(.@menu$)-1;
@@ -385,7 +385,7 @@ while(1) {
 		for(set .@j,0; .@j < .size_region[.@i]; set .@j,.@j+1) {
 			.@index = getd( ".castle_index_in_region_" + .@i + "[" + .@j + "]" );
 			if (.CastleWarp || .Active[0]&(1<<.@index))
-				set .@menu$, .@menu$+" ~ "+((.Active[0]&(1<<.@index))?.@clr$:"^777777")+getcastlename(.Castles$[.@j])+"^000000";
+				set .@menu$, .@menu$+" ~ "+((.Active[0]&(1<<.@index))?.@clr$:"^777777")+getcastlename(.Castles$[.@index])+"^000000";
 			set .@menu$, .@menu$+":";
 		}
 		set .@j, select(.@menu$)-1;
