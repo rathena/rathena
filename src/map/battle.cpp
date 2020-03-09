@@ -1313,6 +1313,13 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				status_change_end(bl,SC_VOICEOFSIREN,INVALID_TIMER);
 		}
 
+		if (sc->data[SC_SOUNDOFDESTRUCTION])
+			damage <<= 1;
+		if (sc->data[SC_DANCEWITHWUG] && (flag&(BF_LONG|BF_WEAPON)) == (BF_LONG|BF_WEAPON))
+			damage += damage * 1 / 100;
+		if (sc->data[SC_UNLIMITEDHUMMINGVOICE] && flag&BF_MAGIC)
+			damage += damage * sc->data[SC_UNLIMITEDHUMMINGVOICE]->val3 / 100;
+
 		// Damage reductions
 		// Assumptio increases DEF on RE mode, otherwise gives a reduction on the final damage. [Igniz]
 #ifndef RENEWAL
@@ -4316,11 +4323,6 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += skillratio * 25 / 100;
 			RE_LVL_DMOD(100);
 			break;
-		case WM_REVERBERATION_MELEE:
-			// ATK [{(Skill Level x 100) + 300} x Caster Base Level / 100]
-			skillratio += 200 + 100 * ((sd) ? pc_checkskill(sd, WM_REVERBERATION) : 1);
-			RE_LVL_DMOD(100);
-			break;
 		case WM_SEVERE_RAINSTORM_MELEE:
 			//ATK [{(Caster DEX + AGI) x (Skill Level / 5)} x Caster Base Level / 100] %
 			skillratio = (status_get_dex(src) + status_get_agi(src)) * skill_lv / 5;
@@ -4329,13 +4331,11 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case WM_GREAT_ECHO:
-			skillratio += 300 + 200 * skill_lv;
+			skillratio += -100 + 250 + 500 * skill_lv;
 			if (sd) {
-				int chorusbonus = battle_calc_chorusbonus(sd);
-
-				// Chorus bonus don't count the first 2 Minstrels/Wanderers and only increases when their are 3 or more. [Rytech]
-				if (chorusbonus >= 1 && chorusbonus <= 5)
-					skillratio += 100<<(chorusbonus-1); // 1->100; 2->200; 3->400; 4->800; 5->1600
+				skillratio += pc_checkskill(sd, WM_LESSON) * 50; // !TODO: Confirm bonus
+				if (skill_check_pc_partner(sd, skill_id, &skill_lv, AREA_SIZE, 0) > 0)
+					skillratio <<= 1;
 			}
 			RE_LVL_DMOD(100);
 			break;
@@ -4703,16 +4703,6 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 		if (sc->data[SC_GLOOMYDAY_SK] && skill_get_inf2(skill_id, INF2_INCREASEGLOOMYDAYDAMAGE)) {
 			ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_GLOOMYDAY_SK]->val2);
 			RE_ALLATK_ADDRATE(wd, sc->data[SC_GLOOMYDAY_SK]->val2);
-		}
-		if (sc->data[SC_DANCEWITHWUG]) {
-			if (skill_get_inf2(skill_id, INF2_INCREASEDANCEWITHWUGDAMAGE)) {
-				ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_DANCEWITHWUG]->val1 * 10 * battle_calc_chorusbonus(sd));
-				RE_ALLATK_ADDRATE(wd, sc->data[SC_DANCEWITHWUG]->val1 * 10 * battle_calc_chorusbonus(sd));
-			}
-			ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_DANCEWITHWUG]->val1 * 2 * battle_calc_chorusbonus(sd));
-#ifdef RENEWAL
-			ATK_ADDRATE(wd->equipAtk, wd->equipAtk2, sc->data[SC_DANCEWITHWUG]->val1 * 2 * battle_calc_chorusbonus(sd));
-#endif
 		}
 		if(sc->data[SC_ZENKAI] && sstatus->rhw.ele == sc->data[SC_ZENKAI]->val2) {
 			ATK_ADD(wd->damage, wd->damage2, 200);
@@ -6284,11 +6274,13 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case WM_METALICSOUND:
 						skillratio += -100 + 120 * skill_lv + 60 * ((sd) ? pc_checkskill(sd, WM_LESSON) : 1);
+						if (tsc && tsc->data[SC_SLEEP])
+							skillratio += 100; // !TODO: Confirm target sleeping bonus
 						RE_LVL_DMOD(100);
 						break;
 					case WM_REVERBERATION_MAGIC:
-						// MATK [{(Skill Level x 100) + 100} x Casters Base Level / 100] %
-						skillratio += 100 * skill_lv;
+						// MATK [{(Skill Level x 300) + 400} x Casters Base Level / 100] %
+						skillratio += -100 + 700 + 300 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case SO_FIREWALK:
@@ -6848,10 +6840,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			break;
 		case NC_MAGMA_ERUPTION_DOTDAMAGE: // 'Eruption' damage
 			md.damage = 800 + 200 * skill_lv;
-			break;
-		case WM_SOUND_OF_DESTRUCTION:
-			md.damage = 1000 * skill_lv + sstatus->int_ * ((sd) ? pc_checkskill(sd,WM_LESSON) : 1);
-			md.damage += md.damage * 10 * ((sd) ? battle_calc_chorusbonus(sd) / 100 : 0);
 			break;
 		case GN_THORNS_TRAP:
 			md.damage = 100 + 200 * skill_lv + status_get_int(src);
