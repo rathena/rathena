@@ -13742,7 +13742,7 @@ prt_q,159,328,6	script	Medic#EP162PS18	4_F_ACOLYTE,{
 	close;
 }
 
-prt_q,160,327,5	script	Wounded Soldier#EP161PS	8W_SOLDIER,{
+prt_q,160,327,5	script	Wounded Soldier#EP161PS17	8W_SOLDIER,{
 	emotion ET_STARE;
 	mes "[Soldier]";
 	mes "Argh... Those undead bastards... I'll kill them all...";
@@ -13750,179 +13750,114 @@ prt_q,160,327,5	script	Wounded Soldier#EP161PS	8W_SOLDIER,{
 }
 
 prt_q,165,326,6	script	Soldier#EP162PS01	8W_SOLDIER,1,1,{
-	emotion ET_FRET;
 	mes "[Soldier]";
-	mes "Argh.... Those undead...";
-	close;
+	sscanf( strnpcinfo(2), "EP162PS%d", .@num );
+	switch(.@num) {
+	case 1:
+		emotion ET_FRET;
+		mes "Argh.... Those undead...";
+		close;
+	case 2:
+		emotion ET_CRY;
+		mes "My colleague who had been laughing with me just... Aww...";
+		close;
+	case 3:
+		mes "Please. Don't get yourself killed by the enemy.";
+		close;
+	case 4:
+		emotion ET_CONFUSE;
+		mes "What was it that had dropped from the sky? How could it bring the undead to the capital?";
+		close;
+	case 5:
+		emotion ET_STARE;
+		mes "I'll... I'll make sure to defend this place.";
+		close;
+	case 6:
+		emotion ET_OTL;
+		mes "The endless battle against the enemies...";
+		close;
+	case 7:
+		mes "An eccentric scientist, Doyeon, went out there with soldiers, and there has been no message from them. I am getting worried.";
+		close;
+	case 8:
+		emotion ET_PROFUSELY_SWEAT;
+		mes "Damn it... Those undead...";
+		close;
+	case 9:
+		mes "Scientist Doyeon... Would she be OK? How can she go out there to study in a situation like this?";
+		close;
+	case 10:
+		mes "The troops of immortality... They are really strong. Please be careful.";
+		close;
+	case 11:
+		emotion ET_ROCK;
+		mes "We will defend the palace of Prontera.";
+		close;
+	case 12:
+		emotion ET_OHNO;
+		mes "My family live in Prontera. I wonder if they have fled safely.";
+		close;
+	case 13:
+		emotion ET_HUM;
+		mes "Thank god... The undead are not coming this way much. What a relief.";
+		close;
+	case 14:
+		mes "My friend has followed Scientist Doyeon. I am worried. I have heard that she really is an oddball.";
+		close;
+	case 15:
+		emotion ET_OHNO;
+		mes "Hahaha, I was supposed to have a romantic dinner with my girlfriend, damn it!";
+		close;
+	case 16:
+		emotion ET_PROFUSELY_SWEAT;
+		mes "Humph! Bring it on!";
+		close;
+	}
+	end;
+OnTouch:
+	end;
 OnTouchNPC:
-	npctalk "Soldier: Huh!";
+	sscanf( strnpcinfo(2), "EP162PS%d", .@num );
+	setarray .@text$[1],
+		"Soldier: Huh!",
+		"Soldier: Hiya!",
+		"Soldier: Heh...",
+		"Soldier: Humph!",
+		"Soldier: Whoa!",
+		"Soldier: Argh!",
+		"Soldier: Humph!",
+		"Soldier: Huh!",
+		"Soldier: Hiya!",
+		"Soldier: Humph!",
+		"Soldier: Huh!",
+		"Soldier: Whoa!",
+		"Soldier: Argh!",
+		"Soldier: Hiya!",
+		"Soldier: Whoa!",
+		"Soldier: Argh...";
+	npctalk .@text$[.@num];
 	specialeffect EF_ATTACKENERGY2;
-	unitwarp 0,"prt_q",-1,-1;
+	unitwarp 0,"prt_q",100,100;
 	end;
 }
-prt_q,167,324,6	script	Soldier#EP162PS02	8W_SOLDIER,1,1,{
-	emotion ET_CRY;
-	mes "[Soldier]";
-	mes "My colleague who had been laughing with me just... Aww...";
-	close;
-OnTouchNPC:
-	npctalk "Soldier: Hiya!";
-	specialeffect EF_ATTACKENERGY2;
-	unitwarp 0,"prt_q",-1,-1;
-	end;
-}
-prt_q,165,322,6	script	Soldier#EP162PS03	8W_SOLDIER,1,1,{
-	mes "[Soldier]";
-	mes "Please. Don't get yourself killed by the enemy.";
-	close;
-OnTouchNPC:
-	npctalk "Soldier: Heh...";
-	specialeffect EF_ATTACKENERGY2;
-	unitwarp 0,"prt_q",-1,-1;
-	end;
-}
-prt_q,167,320,6	script	Soldier#EP162PS04	8W_SOLDIER,1,1,{
-	emotion ET_CONFUSE;
-	mes "[Soldier]";
-	mes "What was it that had dropped from the sky? How could it bring the undead to the capital?";
-	close;
-OnTouchNPC:
-	npctalk "Soldier: Humph!";
-	specialeffect EF_ATTACKENERGY2;
-	unitwarp 0,"prt_q",-1,-1;
-	end;
-}
-prt_q,165,318,6	script	Soldier#EP162PS05	8W_SOLDIER,1,1,{
-	emotion ET_STARE;
-	mes "[Soldier]";
-	mes "I'll... I'll make sure to defend this place.";
-	close;
-OnTouchNPC:
-	npctalk "Soldier: Whoa!";
-	specialeffect EF_ATTACKENERGY2;
-	unitwarp 0,"prt_q",-1,-1;
-	end;
-}
-prt_q,146,326,2	script	Soldier#EP162PS06	8W_SOLDIER,1,1,{
-	emotion ET_OTL;
-	mes "[Soldier]";
-	mes "The endless battle against the enemies...";
-	close;
-OnTouchNPC:
-	npctalk "Soldier: Argh!";
-	specialeffect EF_ATTACKENERGY2;
-	unitwarp 0,"prt_q",-1,-1;
-	end;
-}
-prt_q,144,324,2	script	Soldier#EP162PS07	8W_SOLDIER,1,1,{
-	mes "[Soldier]";
-	mes "An eccentric scientist, Doyeon, went out there with soldiers, and there has been no message from them. I am getting worried.";
-	close;
-OnTouchNPC:
-	npctalk "Soldier: Humph!";
-	specialeffect EF_ATTACKENERGY2;
-	unitwarp 0,"prt_q",-1,-1;
-	end;
-}
-prt_q,146,322,2	script	Soldier#EP162PS08	8W_SOLDIER,1,1,{
-	emotion ET_PROFUSELY_SWEAT;
-	mes "[Soldier]";
-	mes "Damn it... Those undead...";
-	close;
-OnTouchNPC:
-	npctalk "Soldier: Huh!";
-	specialeffect EF_ATTACKENERGY2;
-	unitwarp 0,"prt_q",-1,-1;
-	end;
-}
-prt_q,144,320,2	script	Soldier#EP162PS09	8W_SOLDIER,1,1,{
-	mes "[Soldier]";
-	mes "Scientist Doyeon... Would she be OK? How can she go out there to study in a situation like this?";
-	close;
-OnTouchNPC:
-	npctalk "Soldier: Hiya!";
-	specialeffect EF_ATTACKENERGY2;
-	unitwarp 0,"prt_q",-1,-1;
-	end;
-}
-prt_q,146,318,2	script	Soldier#EP162PS10	8W_SOLDIER,1,1,{
-	mes "[Soldier]";
-	mes "The troops of immortality... They are really strong. Please be careful.";
-	close;
-OnTouchNPC:
-	npctalk "Soldier: Humph!";
-	specialeffect EF_ATTACKENERGY2;
-	unitwarp 0,"prt_q",-1,-1;
-	end;
-}
-prt_q,149,316,4	script	Soldier#EP162PS11	8W_SOLDIER,1,1,{
-	emotion ET_ROCK;
-	mes "[Soldier]";
-	mes "We will defend the palace of Prontera.";
-	close;
-OnTouchNPC:
-	npctalk "Soldier: Huh!";
-	specialeffect EF_ATTACKENERGY2;
-	unitwarp 0,"prt_q",-1,-1;
-	end;
-}
-prt_q,151,314,4	script	Soldier#EP162PS12	8W_SOLDIER,1,1,{
-	emotion ET_OHNO;
-	mes "[Soldier]";
-	mes "My family live in Prontera. I wonder if they have fled safely.";
-	close;
-OnTouchNPC:
-	npctalk "Soldier: Whoa!";
-	specialeffect EF_ATTACKENERGY2;
-	unitwarp 0,"prt_q",-1,-1;
-	end;
-}
-prt_q,153,316,4	script	Soldier#EP162PS13	8W_SOLDIER,1,1,{
-	emotion ET_HUM;
-	mes "[Soldier]";
-	mes "Thank god... The undead are not coming this way much. What a relief.";
-	close;
-OnTouchNPC:
-	npctalk "Soldier: Argh!";
-	specialeffect EF_ATTACKENERGY2;
-	unitwarp 0,"prt_q",-1,-1;
-	end;
-}
-prt_q,158,316,4	script	Soldier#EP162PS14	8W_SOLDIER,1,1,{
-	mes "[Soldier]";
-	mes "My friend has followed Scientist Doyeon. I am worried. I have heard that she really is an oddball.";
-	close;
-OnTouchNPC:
-	npctalk "Soldier: Hiya!";
-	specialeffect EF_ATTACKENERGY2;
-	unitwarp 0,"prt_q",-1,-1;
-	end;
-}
-prt_q,160,314,4	script	Soldier#EP162PS15	8W_SOLDIER,1,1,{
-	emotion ET_OHNO;
-	mes "[Soldier]";
-	mes "Hahaha, I was supposed to have a romantic dinner with my girlfriend, damn it!";
-	close;
-OnTouchNPC:
-	npctalk "Soldier: Whoa!";
-	specialeffect EF_ATTACKENERGY2;
-	unitwarp 0,"prt_q",-1,-1;
-	end;
-}
-prt_q,162,316,4	script	Soldier#EP162PS16	8W_SOLDIER,1,1,{
-	emotion ET_PROFUSELY_SWEAT;
-	mes "[Soldier]";
-	mes "Humph! Bring it on!";
-	close;
-OnTouchNPC:
-	npctalk "Soldier: Argh...";
-	specialeffect EF_ATTACKENERGY2;
-	unitwarp 0,"prt_q",-1,-1;
-	end;
-}
+prt_q,167,324,6	duplicate(Soldier#EP162PS01)	Soldier#EP162PS02	8W_SOLDIER,1,1
+prt_q,165,322,6	duplicate(Soldier#EP162PS01)	Soldier#EP162PS03	8W_SOLDIER,1,1
+prt_q,167,320,6	duplicate(Soldier#EP162PS01)	Soldier#EP162PS04	8W_SOLDIER,1,1
+prt_q,165,318,6	duplicate(Soldier#EP162PS01)	Soldier#EP162PS05	8W_SOLDIER,1,1
+prt_q,146,326,2	duplicate(Soldier#EP162PS01)	Soldier#EP162PS06	8W_SOLDIER,1,1
+prt_q,144,324,2	duplicate(Soldier#EP162PS01)	Soldier#EP162PS07	8W_SOLDIER,1,1
+prt_q,146,322,2	duplicate(Soldier#EP162PS01)	Soldier#EP162PS08	8W_SOLDIER,1,1
+prt_q,144,320,2	duplicate(Soldier#EP162PS01)	Soldier#EP162PS09	8W_SOLDIER,1,1
+prt_q,146,318,2	duplicate(Soldier#EP162PS01)	Soldier#EP162PS10	8W_SOLDIER,1,1
+prt_q,149,316,4	duplicate(Soldier#EP162PS01)	Soldier#EP162PS11	8W_SOLDIER,1,1
+prt_q,151,314,4	duplicate(Soldier#EP162PS01)	Soldier#EP162PS12	8W_SOLDIER,1,1
+prt_q,153,316,4	duplicate(Soldier#EP162PS01)	Soldier#EP162PS13	8W_SOLDIER,1,1
+prt_q,158,316,4	duplicate(Soldier#EP162PS01)	Soldier#EP162PS14	8W_SOLDIER,1,1
+prt_q,160,314,4	duplicate(Soldier#EP162PS01)	Soldier#EP162PS15	8W_SOLDIER,1,1
+prt_q,162,316,4	duplicate(Soldier#EP162PS01)	Soldier#EP162PS16	8W_SOLDIER,1,1
 
 prt_q,156,324,6	script	Chief Guard#EP161PG	4_EP16_SPIEGEL,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
 	}
@@ -13991,7 +13926,7 @@ prt_q,156,324,6	script	Chief Guard#EP161PG	4_EP16_SPIEGEL,{
 		erasequest 5456;// Ungrateful(4)
 		setquest 5452;// [Stand by]Request from Chief Guard
 		getexp 800000,250000;
-		getitem 6919,4;// Honor Token
+		getitem 6919,4;// TokenOfHonor
 		mes "[Chief Guard Spiegel]";
 		mes "Since we are in a difficult situation, we cannot offer you anything too spectacular, but this is the rewards for you prepared by the Guards.";
 		close;
@@ -14012,7 +13947,7 @@ prt_q,156,324,6	script	Chief Guard#EP161PG	4_EP16_SPIEGEL,{
 		erasequest 5459;// Find My Sister(3)
 		setquest 5452;// [Stand by]Request from Chief Guard
 		getexp 800000,250000;
-		getitem 6919,4;// Honor Token
+		getitem 6919,4;// TokenOfHonor
 		mes "[Chief Guard Spiegel]";
 		mes "Since we are in a difficult situation, we cannot offer you anything too spectacular, but this is the rewards for you prepared by the Guards.";
 		close;
@@ -14030,7 +13965,7 @@ prt_q,156,324,6	script	Chief Guard#EP161PG	4_EP16_SPIEGEL,{
 		erasequest 5462;// Blatant Bluff(3)
 		setquest 5452;// [Stand by]Request from Chief Guard
 		getexp 800000,250000;
-		getitem 6919,4;// Honor Token
+		getitem 6919,4;// TokenOfHonor
 		mes "[Chief Guard Spiegel]";
 		mes "Since we are in a difficult situation, we cannot offer you anything too spectacular, but this is the rewards for you prepared by the Guards.";
 		close;
@@ -14048,7 +13983,7 @@ prt_q,156,324,6	script	Chief Guard#EP161PG	4_EP16_SPIEGEL,{
 		erasequest 5468;// Mad Love for Wife(6)
 		setquest 5452;// [Stand by]Request from Chief Guard
 		getexp 800000,250000;
-		getitem 6919,4;// Honor Token
+		getitem 6919,4;// TokenOfHonor
 		mes "[Chief Guard Spiegel]";
 		mes "Since we are in a difficult situation, we cannot offer you anything too spectacular, but this is the rewards for you prepared by the Guards.";
 		close;
@@ -14130,7 +14065,21 @@ prt_q,156,324,6	script	Chief Guard#EP161PG	4_EP16_SPIEGEL,{
 
 
 // Request 1
-prt_q,221,193,4	script	Village Lad#EP161HO01	HIDDEN_WARP_NPC,6,6,{
+prt_q,221,193,0	script	Lad Quest_START#EP161QU01	HIDDEN_WARP_NPC,6,6,{
+	end;
+OnTouch:
+	if (isbegin_quest(5448) == 1) {
+		cloakoffnpc "Village Lad#EP161HO01", getcharid(0);
+		npctalk "Village Lad: Arghhhhhh!", "Village Lad#EP161HO01", bc_self;
+	}
+	end;
+}
+
+prt_q,221,193,4	script	Village Lad#EP161HO01	4_M_03,{
+	if (checkweight(1301,3) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
 	if (isbegin_quest(5448) == 1) {
 		emotion ET_CRY;
 		mes "[Village Lad]";
@@ -14148,22 +14097,44 @@ prt_q,221,193,4	script	Village Lad#EP161HO01	HIDDEN_WARP_NPC,6,6,{
 		mes "[Village Lad]";
 		mes "Thank god... The shelter is supposed to be near the village office over there. Why don't we continue this conversation there?";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
 	}
+	else {
+		mes "[Village Lad]";
+		mes "Do you see me? How strange. I am not supposed to be seen.";
+		close2;
+	}
+	cloakonnpc "Village Lad#EP161HO01", getcharid(0);
 	end;
 
-OnTouch:
-	if (isbegin_quest(5448) == 1) {
-		npctalk "Village Lad: Arghhhhhh!", "", bc_self;
-		classchange( 4_M_03, "", bc_self );
-	}
+OnInit:
+	cloakonnpc strnpcinfo(0);
 	end;
 }
 
 // Office
 prt_q,79,96,7	script	Soldier#EP161HO02	8W_SOLDIER,5,5,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (isbegin_quest(5454) == 1) {
+		emotion 55;
+		mes "[Village Lad]";
+		mes "Huh...? What a nerve! That guy... Save a stranger from the sea, and heùéll ask for more...";
+		next;
+		emotion 17;
+		mes "[Village Lad]";
+		mes "Oh! I wasn't going to eavesdrop. Please don't get me wrong.";
+		close;
+	}
+	if (isbegin_quest(5462) == 1) {
+		emotion 20;
+		mes "[Village Lad]";
+		mes "Dear adventurer. I believe that uniform is worn by the Guards of Geffen.";
+		next;
+		emotion 9;
+		mes "[Village Lad]";
+		mes "Who is that soldier? He seems to enter the shelter so smoothly in a situation like this. He confuses me.";
 		close;
 	}
 	mes "[Village Lad]";
@@ -14172,13 +14143,17 @@ prt_q,79,96,7	script	Soldier#EP161HO02	8W_SOLDIER,5,5,{
 
 OnTouch:
 	if (isbegin_quest(5453) == 1 || isbegin_quest(5455) == 1)
-		classchange( 4_M_03, "Village Lad#EP161HO03", bc_self );
+		cloakoffnpc "Village Lad#EP161HO03", getcharid(0);
 	if (isbegin_quest(5461) == 1)
-		classchange( 4_M_GEF_SOLDIER, "Soldier#EP161HU03", bc_self );
+		cloakoffnpc "Soldier#EP161HU03", getcharid(0);
 	end;
 }
 
-prt_q,77,98,8	script	Village Lad#EP161HO03	HIDDEN_WARP_NPC,{
+prt_q,77,98,8	script	Village Lad#EP161HO03	4_M_03,{
+	if (checkweight(1301,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
 	if (isbegin_quest(5453) == 1) {
 		emotion ET_DELIGHT;
 		mes "[Village Lad]";
@@ -14208,7 +14183,7 @@ prt_q,77,98,8	script	Village Lad#EP161HO03	HIDDEN_WARP_NPC,{
 		mes "[Village Lad]";
 		mes "Oh! Never mind. I am counting on you.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc "Village Lad#EP161HO03", getcharid(0);
 		end;
 	}
 	if (isbegin_quest(5455) == 1) {
@@ -14229,14 +14204,27 @@ prt_q,77,98,8	script	Village Lad#EP161HO03	HIDDEN_WARP_NPC,{
 		mes "[Village Lad]";
 		mes "Thank you. Farewell.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc "Village Lad#EP161HO03", getcharid(0);
 		end;
 	}
+	mes "[Village Lad]";
+	mes "Do you see me? How strange. I am not supposed to be seen.";
+	close2;
+	cloakonnpc "Village Lad#EP161HO03", getcharid(0);
+	end;
+
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 prt_q,178,185,0	script	Tool Bag#EP161HO04	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
+	if (checkweight(1301,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
 	if (isbegin_quest(5454) == 1) {
 		mes "In front of the Prontera Smelter";
 		mes "There a bag which would be full if you put some items.";
@@ -14246,21 +14234,131 @@ OnTouch:
 			setquest 5455;// Ungrateful(3)
 			mes "You have acquired a bag.";
 		}
+		close;
 	}
 	end;
 }
 
-prt_q,85,90,7	script	Giant Beast Manager#EP1	8W_SOLDIER,{
-	emotion ET_PROFUSELY_SWEAT;
-	mes "[" + strnpcinfo(1) + "]";
-	mes "This the village office which is the third shelter in Prontera.";
+prt_q,85,90,7	script	Giant Beast Manager#EP161ETC06	8W_SOLDIER,{
+	.@thirdmask = eaclass() & EAJ_THIRDMASK;
+	if ((.@thirdmask != EAJ_RUNE_KNIGHT && .@thirdmask != EAJ_ROYAL_GUARD) || countitem(6939) < 1) {
+		emotion 19;
+		mes "[Giant Beast Manager]";
+		mes "This the village office which is the third shelter in Prontera.";
+		close;
+	}
+	if (.@thirdmask == EAJ_RUNE_KNIGHT) {
+		.@job$ = "Rune Knight";
+		.@mount$ = "Dragon";
+	}
+	else {
+		.@job$ = "Royal Guard";
+		.@mount$ = "Griffon";
+	}
+	mes "[Giant Beast Manager]";
+	mes "Oh! Dear " + .@job$ + "... That belt? It looks like a belt which belongs to my colleague who has been killed by the undead.";
+	next;
+	mes "[Giant Beast Manager]";
+	mes "Would you hand it over to me so that I can comfort his poor soul? Although the service is stopped due to the emergency, let me help you ride a " + .@mount$ + ".";
+	next;
+	if (select( "Use the service.", "Cancel." ) == 2) {
+		mes "[Giant Beast Manager]";
+		mes "I see. Then, good bye.";
+		close;
+	}
+	if (getskilllv("KN_RIDING") < 1) {
+		mes "[Giant Beast Manager]";
+		mes "You need to learn how to ride a " + .@mount$ + " first.";
+		close;
+	}
+	if (checkriding() || checkdragon()) {
+		mes "[Giant Beast Manager]";
+		mes "You are already using a " + .@mount$ + ".";
+		close;
+	}
+	if (ismounting()) {
+		mes "[Giant Beast Manager]";
+		mes "You need to let go of the bridle to ride a " + .@mount$ + ".";
+		close;
+	}
+	delitem 6939,1;	// Shabby_Old_Belt
+	if (.@thirdmask == EAJ_RUNE_KNIGHT)
+		setdragon();
+	else
+		setriding();
+	mes "[Giant Beast Manager]";
+	mes "Thank you. If you find other articles left by the dead soldiers, please bring them to me.";
 	close;
 }
-prt_q,74,101,7	duplicate(Giant Beast Manager#EP1)	Magical Gear Mechanic#E	8W_SOLDIER
+
+prt_q,74,101,7	script	Magical Gear Mechanic#EP161ETC05	8W_SOLDIER,{
+	.@thirdmask = eaclass() & EAJ_THIRDMASK;
+	if (.@thirdmask != EAJ_MECHANIC || countitem(6939) < 1) {
+		emotion 19;
+		mes "[Magical Gear Mechanic]";
+		mes "This the village office which is the third shelter in Prontera.";
+		close;
+	}
+	mes "[Magical Gear Mechanic]";
+	mes "Oh, dear Mechanic! That belt? It looks like a belt which belongs to my colleague who has been killed by the undead.";
+	next;
+	mes "[Magical Gear Mechanic]";
+	mes "Would you hand it over to me so that I can comfort his poor soul? Although the service is stopped due to the emergency, let me help you borrow a Cart or ride a Magical Gear.";
+	next;
+	switch( select( "Borrow a Cart.", "Ride a Magical Gear", "Do not use it." ) ) {
+	case 1:
+		if (checkcart() == true) {
+			mes "[Magical Gear Mechanic]";
+			mes "You are already using a Cart.";
+			close;
+		}
+		if (getskilllv("MC_PUSHCART") == 0)	// the check is missing officially
+			close;
+		delitem 6939,1;	// Shabby_Old_Belt
+		setcart();
+		mes "[Magical Gear Mechanic]";
+		mes "Thank you. If you find other articles left by the dead soldiers, please bring them to me.";
+		close;
+	case 2:
+		if (checkmadogear()) {
+			mes "[Magical Gear Mechanic]";
+			mes "You cannot ride another magical gear since you are already riding one.";
+			close;
+		}
+		if (getskilllv("NC_MADOLICENCE") < 1) {
+			mes "[Magical Gear Mechanic]";
+			mes "Go get a license to ride a magical gear first.";
+			close;
+		}
+		delitem 6939,1;	// Shabby_Old_Belt
+		setmadogear();
+		mes "[Magical Gear Mechanic]";
+		mes "Thank you. If you find other articles left by the dead soldiers, please bring them to me.";
+		close;
+	case 3:
+		mes "[Magical Gear Mechanic]";
+		mes "Oh... Really. I see.";
+		close;
+	}
+}
 
 // Request 2
-prt_q,276,242,4	script	Girl#EP161GU01	HIDDEN_WARP_NPC,6,6,{
-	if (isbegin_quest(5449) == 1) {
+prt_q,276,242,0	script	Girl Quest_START#EP161QU02	HIDDEN_WARP_NPC,6,6,{
+	end;
+OnTouch:
+	if (isbegin_quest(5449) == 1 && isbegin_quest(5457) == 0) {
+		cloakoffnpc "Girl#EP161GU01", getcharid(0);
+		npctalk "Girl: Awwww...", "Girl#EP161GU01", bc_self;
+	}
+	end;
+}
+
+prt_q,276,242,4	script	Girl#EP161GU01	4_F_RUSCHILD,{
+	if (checkweight(1301,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (isbegin_quest(5449) == 1 && isbegin_quest(5457) == 0) {
 		select("Hey dear, are you OK?");
 		emotion ET_QUESTION, playerattached();
 		emotion ET_CRY;
@@ -14280,46 +14378,148 @@ prt_q,276,242,4	script	Girl#EP161GU01	HIDDEN_WARP_NPC,6,6,{
 		mes "[Lowen]";
 		mes "We promised to meet at the cathedral when we are lost. I believe she would be there in the church.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc "Girl#EP161GU01", getcharid(0);
 		end;
 	}
 	mes "[Lowen]";
 	mes "Oh? Do you see me? How strange. I am not supposed to be seen.";
-	close;
+	close2;
+	cloakonnpc "Girl#EP161GU01", getcharid(0);
+	end;
 
-OnTouch:
-	if (isbegin_quest(5449) == 1) {
-		classchange( 4_F_RUSCHILD, "", bc_self );
-		npctalk "Girl: Awwww...", "", bc_self;
-	}
+OnInit:
+	cloakonnpc strnpcinfo(0);
 	end;
 }
 
 // Cathedral
-prt_q,235,315,4	script	Cathedral Knight#EP161G	4_F_CRU,5,5,{
-	if (checkweight(501,1) == 0) {
+prt_q,235,315,4	script	Cathedral Knight#EP161GU04	4_F_CRU,5,5,{
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (isbegin_quest(5458) == 1) {
+		mes "[Cathedral Knight]";
+		mes "Please take care of Lowen. She is like a mascot to us in Prontera.";
+		close;
+	}
+	if (isbegin_quest(5464) == 1) {
+		mes "[Cathedral Knight]";
+		mes "Ellie is really fragile. I hope she is all right.";
+		close;
+	}
+	if (isbegin_quest(5466) == 1) {
+		mes "[Cathedral Knight]";
+		mes "Oh, my... Ellie is in a critical condition. I hope a priest comes out to help her if there is one in there.";
+		close;
+	}
+	if (isbegin_quest(5468) == 1) {
+		mes "[Cathedral Knight]";
+		mes "Thank you for your effort. We will devote our lives to protect the cathedral from the undead coming this way.";
 		close;
 	}
 	mes "[Cathedral Knight]";
 	mes "This the cathedral which is the first shelter in Prontera.";
+	if (countitem(6939) < 1)
+		close;
+	next;
+	mes "[Cathedral Knight]";
+	mes "That belt... It looks like a belt which belongs to my colleague who has been killed by the undead. Would you mind giving it to me?";
+	next;
+	mes "[Cathedral Knight]";
+	mes "I know it is an emergency, but I'd like to comfort the soul of my colleague.";
+	next;
+	if (select( "Give it to him.", "Do not give it him." ) == 2) {
+		mes "[Cathedral Knight]";
+		mes "Oh, I see. Please bring them to me if you change your mind.";
+		close;
+	}
+	if (countitem(6939) < 1) {
+		mes "[Cathedral Knight]";
+		mes "Oh, where did you lose the belt you had?";
+		close;
+	}
+	mes "[Cathedral Knight]";
+	mes "Thank you. I guess the dead may rest in peace now. This is the only thing that I can offer you... However...";
+	next;
+	delitem 6939,1;	// Shabby_Old_Belt
+	npcskill "AL_HEAL",10,99,99;
+	percentheal 100,0;
+	mes "[Cathedral Knight]";
+	mes "If you find more articles left by the soldiers, would you please bring them to me?";
 	close;
 
 OnTouch:
 	if (isbegin_quest(5457) == 1)
-		classchange( 4_F_RUSCHILD, "Girl#EP161GU03", bc_self );
-	if (isbegin_quest(5463) == 1 || isbegin_quest(5464) == 1 || isbegin_quest(5466) == 1 || isbegin_quest(5467) == 1)
-		classchange( 4_F_03, "Eryus#EP161BU02", bc_self );
+		cloakoffnpc "Girl#EP161GU03", getcharid(0);
+	if (isbegin_quest(5463) == 1 || isbegin_quest(5467) == 1)
+		cloakoffnpc "Eryus#EP161BU02", getcharid(0);
 	else if (isbegin_quest(5465) == 1) {
-		classchange( 4_F_03, "Eryus#EP161BU02", bc_self );
-		classchange( 4W_F_01, "Female#EP161BU04", bc_self );
+		cloakoffnpc "Eryus#EP161BU02", getcharid(0);
+		cloakoffnpc "Female#EP161BU04", getcharid(0);
 	}
 	end;
 }
 
-prt_q,232,318,3	script	PecoPeco Mechanic#EP161_2	8W_SOLDIER,{
-	if (checkweight(501,1) == 0) {
+prt_q,232,318,3	script	PecoPeco Mechanic#EP161GU02	8W_SOLDIER,{
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (strnpcinfo(0) == "PecoPeco Mechanic#EP161GU02")
+		.@check = (Class == JOB_CRUSADER || Class == JOB_PALADIN);
+	else
+		.@check = (Class == JOB_KNIGHT || Class == JOB_LORD_KNIGHT);
+	if (.@check && countitem(6939) > 0) {	// Shabby_Old_Belt
+		mes "[PecoPeco Mechanic]";
+		if (Class == JOB_CRUSADER)
+			mes "Oh! Dear crusader!";
+		else if (Class == JOB_PALADIN)
+			mes "Oh! Dear paladin!";
+		mes "That belt? It looks like a belt which belongs to my colleague who has been killed by the undead.";
+		next;
+		mes "[PecoPeco Mechanic]";
+		mes "Would you hand it over to me so that I can comfort his poor soul? Although the service is stopped due to the emergency, let me call Pecopeco for you.";
+		next;
+		if (select( "Use the service.", "Cancel." ) == 2) {
+			mes "[PecoPeco Mechanic]";
+			mes "Oh... Really. I see.";
+			close;
+		}
+		if (countitem(6939) < 1) {
+			mes "[PecoPeco Mechanic]";
+			if (Class == JOB_CRUSADER)
+				mes "Dear crusader";
+			else if (Class == JOB_PALADIN)
+				mes "Dear paladin";
+			mes "Oh! Where did you lose the belt you had?";
+			close;
+		}
+		if (getskilllv("KN_RIDING") != 1) {
+			mes "[PecoPeco Mechanic]";
+			mes "Oh... I guess you should learn how to ride a Pecopeco first.";
+			close;
+		}
+		if (checkriding()) {
+			mes "[PecoPeco Mechanic]";
+			mes "You are already using the Pecopeco.";
+			close;
+		}
+		if (ismounting()) {
+			mes "[PecoPeco Mechanic]";
+			mes "You need to let go of the bridle to ride it.";
+			close;
+		}
+		delitem 6939,1;	// Shabby_Old_Belt
+		setriding();
+		mes "[PecoPeco Mechanic]";
+		mes "Thank you. If you find other articles left by the dead soldiers, please bring them to me.";
+		close;
+	}
+	if (isbegin_quest(5458) == 2) {
+		emotion 57;
+		mes "[PecoPeco Mechanic]";
+		mes "Oh, I am an uncle now...";
 		close;
 	}
 	emotion ET_SORRY;
@@ -14331,7 +14531,11 @@ prt_q,232,318,3	script	PecoPeco Mechanic#EP161_2	8W_SOLDIER,{
 	close;
 }
 
-prt_q,229,317,6	script	Girl#EP161GU03	HIDDEN_WARP_NPC,{
+prt_q,229,317,6	script	Girl#EP161GU03	4_F_RUSCHILD,{
+	if (checkweight(1301,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
 	if (isbegin_quest(5457) == 1) {
 		mes "[Lowen]";
 		mes "Whoa, thank you so much!";
@@ -14346,7 +14550,7 @@ prt_q,229,317,6	script	Girl#EP161GU03	HIDDEN_WARP_NPC,{
 		mes "[Lowen]";
 		mes "Oh, Uncle Peco, did you see my sister here?";
 		next;
-		emotion ET_HUK, getnpcid(0, "PecoPeco Mechanic#EP161_2");
+		emotion ET_HUK, getnpcid(0, "PecoPeco Mechanic#EP161GU02");
 		mes "[PecoPeco Mechanic]";
 		mes "Cough... Uncle...";
 		next;
@@ -14362,7 +14566,7 @@ prt_q,229,317,6	script	Girl#EP161GU03	HIDDEN_WARP_NPC,{
 		mes "[PecoPeco Mechanic]";
 		mes "She could have gone to the Knights' building. Weren't you sisters supposed to go to the shelter there?";
 		next;
-		emotion ET_HUK, getnpcid(0, "PecoPeco Mechanic#EP161_2");
+		emotion ET_HUK, getnpcid(0, "PecoPeco Mechanic#EP161GU02");
 		mes "[Lowen]";
 		mes "Eh? It must have not been the cathedral then... Huh? What should I do?";
 		next;
@@ -14376,24 +14580,25 @@ prt_q,229,317,6	script	Girl#EP161GU03	HIDDEN_WARP_NPC,{
 		select("Since I am here already, let me keep helping her.");
 		erasequest 5457;// Find My Sister(1)
 		setquest 5458;// Find My Sister(2)
-		emotion ET_THANKS, getnpcid(0, "PecoPeco Mechanic#EP161_2");
+		emotion ET_THANKS, getnpcid(0, "PecoPeco Mechanic#EP161GU02");
 		mes "[PecoPeco Mechanic]";
 		mes "Thank you. Please take care of her.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "Girl#EP161GU03", bc_self);
+		cloakonnpc "Girl#EP161GU03", getcharid(0);
 		end;
 	}
+	mes "[Lowen]";
+	mes "Oh? Do you see me? How strange. I am not supposed to be seen.";
+	close2;
+	cloakonnpc "Girl#EP161GU03", getcharid(0);
+	end;
+
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
-prt_q,55,350,5	script	PecoPeco Mechanic#EP161_1	8W_SOLDIER,{
-	emotion ET_SORRY;
-	mes "[PecoPeco Mechanic]";
-	mes "If you are here to borrow a PecoPeco, I have to say I am sorry.";
-	next;
-	mes "[PecoPeco Mechanic]";
-	mes "Due to the emergency situation, all troops of Prontera are deployed to protect the residents of Prontera.";
-	close;
-}
+prt_q,55,350,5	duplicate(PecoPeco Mechanic#EP161GU02)	PecoPeco Mechanic#EP161ETC04	8W_SOLDIER
 
 prt_q,47,339,5	script	Soldier#EP161ETC01	8W_SOLDIER,{
 	emotion ET_PROFUSELY_SWEAT;
@@ -14404,8 +14609,13 @@ prt_q,47,339,5	script	Soldier#EP161ETC01	8W_SOLDIER,{
 prt_q,52,344,5	duplicate(Soldier#EP161ETC01)	Soldier#EP161ETC02	8W_SOLDIER
 
 prt_q,52,340,6	script	Knight Gray#EP161GU05	2_M_SWORDMASTER,7,7,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
+	if (isbegin_quest(5459) == 1) {	// there is an issue in the raw file, this message is not displayed on official
+		mes "[Knight Gray]";
+		mes "Are you the one who has helped Sister Erinin? What a relief that we have someone like you?";
 		close;
 	}
 	mes "[Knight Gray]";
@@ -14414,17 +14624,17 @@ prt_q,52,340,6	script	Knight Gray#EP161GU05	2_M_SWORDMASTER,7,7,{
 
 OnTouch:
 	if (isbegin_quest(5458) == 1) {
-		classchange( 4_F_RUSCHILD, "Girl#EP161GU06", bc_self );
-		classchange( 4W_F_01, "Rosa Erinin#EP161GU07", bc_self );
+		cloakoffnpc "Girl#EP161GU06", getcharid(0);
+		cloakoffnpc "Rosa Erinin#EP161GU07", getcharid(0);
 	}
 	if (isbegin_quest(5460) == 1) {
-		classchange( 4_M_GEF_SOLDIER, "Soldier#EP161HU02", bc_self );
+		cloakoffnpc "Soldier#EP161HU02", getcharid(0);
 		npctalk "Soldier: Hey you! Here! This way...", "Soldier#EP161HU02", bc_self;
 	}
 	end;
 }
 
-prt_q,41,337,5	script	Mercenary Guild Admin#E	8W_SOLDIER,{
+prt_q,41,337,5	script	Mercenary Guild Admin#EP161ETC03	8W_SOLDIER,{
 	mes "[Mercenary Guild Admin]";
 	mes "Are you here to hire a mercenary?";
 	next;
@@ -14437,7 +14647,7 @@ prt_q,41,337,5	script	Mercenary Guild Admin#E	8W_SOLDIER,{
 	close;
 }
 
-prt_q,55,347,6	script	Rosa Erinin#EP161GU07	HIDDEN_WARP_NPC,{
+prt_q,55,347,6	script	Rosa Erinin#EP161GU07	4W_F_01,{
 	if (isbegin_quest(5458) == 1) {
 		emotion ET_STARE, getnpcid(0, "Rosa Erinin#EP161GU07");
 		mes "[Rosa Erinin]";
@@ -14463,15 +14673,44 @@ prt_q,55,347,6	script	Rosa Erinin#EP161GU07	HIDDEN_WARP_NPC,{
 		mes "[Lowen]";
 		mes "Thank you. Goodbye!";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "Rosa Erinin#EP161GU07", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Girl#EP161GU06", bc_self );
+		cloakonnpc "Rosa Erinin#EP161GU07", getcharid(0);
+		cloakonnpc "Girl#EP161GU06", getcharid(0);
 		end;
 	}
+	if (strnpcinfo(1) == "Girl") {
+		mes "[Lowen]";
+		mes "Oh? Do you see me? How strange. I am not supposed to be seen.";
+		close2;
+		cloakonnpc "Girl#EP161GU06", getcharid(0);
+		end;
+	}
+	mes "[Rosa Erinin]";
+	mes "Dear adventurer, do you see me? Strange. I am not supposed to be seen.";
+	close2;
+	cloakonnpc "Rosa Erinin#EP161GU07", getcharid(0);
+	end;
+
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
-prt_q,57,346,4	duplicate(Rosa Erinin#EP161GU07)	Girl#EP161GU06	HIDDEN_WARP_NPC,{ end; }
+prt_q,57,346,4	duplicate(Rosa Erinin#EP161GU07)	Girl#EP161GU06	4_F_RUSCHILD
 
 // Request 3
-prt_q,140,304,6	script	Soldier#EP161HU01	HIDDEN_WARP_NPC,7,7,{
+prt_q,140,304,0	script	Soldier Quest_START#EP161QU03	HIDDEN_WARP_NPC,7,7,{
+	end;
+OnTouch:
+	if (isbegin_quest(5450) == 1) {
+		cloakoffnpc "Soldier#EP161HU01", getcharid(0);
+		npctalk "Soldier: Argh! Don't come this way!", "Soldier#EP161HU01", bc_self;
+	}
+}
+
+prt_q,140,304,6	script	Soldier#EP161HU01	4_M_GEF_SOLDIER,{
+	if (checkweight(1301,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
 	if (isbegin_quest(5450) == 1) {
 		emotion ET_KEK;
 		mes "[Soldier]";
@@ -14509,19 +14748,21 @@ prt_q,140,304,6	script	Soldier#EP161HU01	HIDDEN_WARP_NPC,7,7,{
 		mes "[Soldier]";
 		mes "Good. Since I am tired from the previous battle, please escort me to the Knight's building.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc "Soldier#EP161HU01", getcharid(0);
+		end;
 	}
-	end;
-
-OnTouch:
-	if (isbegin_quest(5450) == 1) {
-		npctalk "Soldier: Argh! Don't come this way!", "", bc_self;
-		classchange( 4_M_GEF_SOLDIER, "", bc_self );
-	}
+	mes "[Soldier]";
+	mes "Haha, do you see me? Strange. I am not supposed to be seen.";
+	close2;
+	cloakonnpc "Soldier#EP161HU01", getcharid(0);
 	end;
 }
 
-prt_q,68,336,4	script	Soldier#EP161HU02	HIDDEN_WARP_NPC,{
+prt_q,68,336,4	script	Soldier#EP161HU02	4_M_GEF_SOLDIER,{
+	if (checkweight(1301,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
 	if (isbegin_quest(5460) == 1) {
 		emotion ET_BEST;
 		mes "[Soldier]";
@@ -14543,12 +14784,25 @@ prt_q,68,336,4	script	Soldier#EP161HU02	HIDDEN_WARP_NPC,{
 		mes "[Soldier]";
 		mes "Since I want to save my energy for the battle, please escort me to the village office.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc "Soldier#EP161HU02", getcharid(0);
+		end;
 	}
+	mes "[Soldier]";
+	mes "Haha, do you see me? Strange. I am not supposed to be seen.";
+	close2;
+	cloakonnpc "Soldier#EP161HU02", getcharid(0);
+	end;
+
+OnInit:
+	cloakonnpc strnpcinfo(0);
 	end;
 }
 
-prt_q,79,102,8	script	Soldier#EP161HU03	HIDDEN_WARP_NPC,{
+prt_q,79,102,8	script	Soldier#EP161HU03	4_M_GEF_SOLDIER,{
+	if (checkweight(1301,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
 	if (isbegin_quest(5461) == 1) {
 		emotion ET_OK;
 		mes "[Soldier]";
@@ -14594,12 +14848,36 @@ prt_q,79,102,8	script	Soldier#EP161HU03	HIDDEN_WARP_NPC,{
 		mes "[Soldier]";
 		mes "Good luck.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc "Soldier#EP161HU03", getcharid(0);
+		end;
 	}
+	mes "[Soldier]";
+	mes "Haha, do you see me? Strange. I am not supposed to be seen.";
+	close2;
+	cloakonnpc "Soldier#EP161HU03", getcharid(0);
+	end;
+
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 // Request 4
-prt_q,38,261,6	script	Eryus#EP161BU01	HIDDEN_WARP_NPC,6,6,{
+prt_q,38,261,0	script	Married couple Quest _START#EP161QU04	HIDDEN_WARP_NPC,6,6,{
+	end;
+OnTouch:
+	if (isbegin_quest(5451) == 1) {
+		cloakoffnpc "Eryus#EP161BU01", getcharid(0);
+		npctalk "Eryus: Ellie! Where are you? Honey! My love!", "Eryus#EP161BU01", bc_self;
+	}
+	end;
+}
+
+prt_q,38,261,6	script	Eryus#EP161BU01	4_F_03,{
+	if (checkweight(1301,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
 	if (isbegin_quest(5451) == 1) {
 		emotion ET_THANKS;
 		mes "[Eryus]";
@@ -14640,19 +14918,25 @@ prt_q,38,261,6	script	Eryus#EP161BU01	HIDDEN_WARP_NPC,6,6,{
 		mes "[Eryus]";
 		mes "Awww... Please help me. Please find my wife.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc "Eryus#EP161BU01", getcharid(0);
+		end;
 	}
+	mes "[Eryus]";
+	mes "Awww... I need to find my wife... And I am not supposed to be seen.";
+	close2;
+	cloakonnpc "Eryus#EP161BU01", getcharid(0);
 	end;
 
-OnTouch:
-	if (isbegin_quest(5451) == 1) {
-		npctalk "Eryus: Ellie! Where are you? Honey! My love!", "", bc_self;
-		classchange( 4_F_03, "", bc_self );
-	}
+OnInit:
+	cloakonnpc strnpcinfo(0);
 	end;
 }
 
-prt_q,231,310,4	script	Eryus#EP161BU02	HIDDEN_WARP_NPC,{
+prt_q,231,310,4	script	Eryus#EP161BU02	4_F_03,{
+	if (checkweight(1301,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
 	if (isbegin_quest(5463) == 1) {
 		emotion ET_CRY;
 		mes "[Eryus]";
@@ -14720,7 +15004,7 @@ prt_q,231,310,4	script	Eryus#EP161BU02	HIDDEN_WARP_NPC,{
 		mes "[Eryus]";
 		mes "Would you do that for us? Please. We are running out of time. Ellie. hold on...";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "Female#EP161BU04", bc_self );
+		cloakonnpc "Female#EP161BU04", getcharid(0);
 		end;
 	}
 	if (isbegin_quest(5466) == 1) {
@@ -14741,12 +15025,44 @@ prt_q,231,310,4	script	Eryus#EP161BU02	HIDDEN_WARP_NPC,{
 		mes "[Eryus]";
 		mes "Thank you so much. God bless your journey...";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc "Eryus#EP161BU02", getcharid(0);
 		end;
 	}
+	mes "[Eryus]";
+	mes "Awww... I need to find my wife... And I am not supposed to be seen.";
+	close2;
+	cloakonnpc "Eryus#EP161BU02", getcharid(0);
+	end;
+
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
-prt_q,108,164,4	script	Female#EP161BU03	HIDDEN_WARP_NPC,4,4,{
+
+prt_q,111,166,0	script	Emergency Medicine#EP161BU05	HIDDEN_WARP_NPC,6,6,{
+	end;
+OnTouch:
+	if (isbegin_quest(5464) == 1)
+		cloakoffnpc "Female#EP161BU03", getcharid(0);
+	else if (isbegin_quest(5466) == 1) {
+		mes "It seems to be the bundle of medicine dropped by Ellie while running.";
+		next;
+		if (select( "Pick up.", "Leave it." ) == 1) {
+			erasequest 5466;
+			setquest 5467;
+			mes "You picked up the bundle of medicine. Bring it to Ellie in pain.";
+			close;
+		}
+	}
+	end;
+}
+
+prt_q,108,164,4	script	Female#EP161BU03	4W_F_01,{
+	if (checkweight(1301,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
 	if (isbegin_quest(5464) == 1) {
 		emotion ET_QUESTION;
 		mes "[Ellie]";
@@ -14767,17 +15083,24 @@ prt_q,108,164,4	script	Female#EP161BU03	HIDDEN_WARP_NPC,4,4,{
 		mes "[Ellie]";
 		mes "Thank you, dear adventurer.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc "Female#EP161BU03", getcharid(0);
+		end;
 	}
-	end;
+	cloakonnpc "Female#EP161BU03", getcharid(0);
+	mes "[Ellie]";
+	mes "Dear adventurer, do you see me? This is not good.";
+	close;
 
-OnTouch:
-	if (isbegin_quest(5464) == 1)
-		classchange( 4W_F_01, "", bc_self );
+OnInit:
+	cloakonnpc strnpcinfo(0);
 	end;
 }
 
-prt_q,229,310,6	script	Female#EP161BU04	HIDDEN_WARP_NPC,{
+prt_q,229,310,6	script	Female#EP161BU04	4W_F_01,{
+	if (checkweight(1301,1) == 0) {
+		mes "- You cannot proceed with the quest since you have too many items. -";
+		close;
+	}
 	if (isbegin_quest(5465) == 1) {
 		emotion ET_THANKS, getnpcid(0, "Eryus#EP161BU02");
 		mes "[Eryus]";
@@ -14813,8 +15136,25 @@ prt_q,229,310,6	script	Female#EP161BU04	HIDDEN_WARP_NPC,{
 		mes "[Eryus]";
 		mes "Would you do that for us? Please. We are running out of time. Ellie. hold on...";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "Female#EP161BU04", bc_self );
+		cloakonnpc "Female#EP161BU04", getcharid(0);
+		end;
 	}
+	if (isbegin_quest(5466) == 1) {
+		mes "[Ellie]";
+		mes "Cough... Cough... Cough...";
+		close2;
+		cloakonnpc "Female#EP161BU04", getcharid(0);
+		end;
+	}
+	mes "[Ellie]";
+	mes "Dear adventurer, do you see me? This is not good.";
+	close2;
+	cloakonnpc "Female#EP161BU04", getcharid(0);
+	end;
+
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 prt_q,111,166,0	script	Emergency Medicine#EP16	HIDDEN_WARP_NPC,6,6,{
@@ -14833,110 +15173,93 @@ OnTouch:
 	end;
 }
 
-prt_q,146,252,6	script	Dead Villager#EP161DIE01	4_M_LIEMAN,2,2,{
+prt_q,213,90,2	script	Dead Villager#EP161DIE01	4_M_DSTMANDEAD,2,2,{
 	mes "He seems to be dead.";
 	close;
 OnTouch_:
-	.@hidden_name$ = strnpcinfo(2);
-	if (getd(".mob_count_" + .@hidden_name$) > 0)
-		end;
-	.@num = atoi( replacestr( .@hidden_name$, "EP161DIE", "" ) );
-	switch(.@num) {
-	case 0:
-	case 12:
-		npctalk "Don't worry, it is not a ferocious dog... Let me go take a look...", "", bc_area;
-		break;
-	case 1:
-	case 11:
-		npctalk "Bon appetite", "", bc_area;
-		break;
-	case 2:
-		npctalk "This is my daughter. She will be 6 in 2 weeks.", "", bc_area;
-		break;
-	case 3:
-		npctalk "WUG is the best!", "", bc_area;
-		break;
-	case 5:
-		npctalk "I want to go home...", "", bc_area;
-		break;
-	case 4:
-	case 6:
-	case 7:
-	case 13:
-	case 14:
-		npctalk "Argh...", "", bc_area;
-		break;
-	case 8:
-		npctalk "Oh, I love dogs!", "", bc_area;
-		break;
-	case 9:
-		npctalk "I want to have some beef stew.", "", bc_area;
-		break;
-	case 10:
-		npctalk "Haha, don't worry. It won't burst.", "", bc_area;
-		break;
-	case 15:
-		npctalk "For Himmelmez...", "", bc_area;
-		break;
-	case 16:
-		npctalk "I am hungry...", "", bc_area;
-		break;
-	case 17:
-		npctalk "I had a date...", "", bc_area;
-		break;
-	case 18:
-		npctalk "Help... Help me...", "", bc_area;
-		break;
-	case 19:
-		npctalk "My sister has given me this as a lucky charm...", "", bc_area;
-		break;
-	case 20:
-		npctalk "According to the monster's gourmet guide, humans are supposed to be very delicious, right?", "", bc_area;
-		break;
-	}
+	npctalk "Argh...";
 	unittalk getcharid(3), "" + strcharinfo(0) + " : ?";
 	setpcblock PCBLOCK_NPC, true;
 	sleep2 1000;
+	setpcblock PCBLOCK_NPC, false;
 	specialeffect EF_POISONSMOKE;
 	getmapxy .@map$, .@x, .@y, BL_NPC;
 	monster "prt_q",.@x,.@y,"Resurrected Corpse",1015,1, strnpcinfo(0) + "::OnMyMobDead";// ZOMBIE
 	monster "prt_q",.@x,.@y,"Maggot",1194,1, strnpcinfo(0) + "::OnMyMobDead";// ARCLOUSE
 	monster "prt_q",.@x,.@y,"Fly",1035,1, strnpcinfo(0) + "::OnMyMobDead";// HUNTER_FLY
-	setd ".mob_count_" + strnpcinfo(2), 1;
-	hideonnpc strnpcinfo(0);
-	setpcblock PCBLOCK_NPC, false;
+	disablenpc strnpcinfo(0);
+	initnpctimer;
 	end;
 OnMyMobDead:
-	.@hidden_name$ = strnpcinfo(2);
-	setd ".mob_count_" + .@hidden_name$, getd(".mob_count_" + .@hidden_name$) + 1;
-	if (getd(".mob_count_" + .@hidden_name$) == 4)
-		initnpctimer;
 	end;
 OnTimer180000:
-	setd ".mob_count_" + strnpcinfo(2), 0;
+	killmonster "prt_q", strnpcinfo(0) + "::OnMyMobDead";
 	stopnpctimer;
-	hideoffnpc strnpcinfo(0);
+	enablenpc strnpcinfo(0);
 	end;
 }
-prt_q,108,318,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE02	4_M_LIEMAN,2,2
-prt_q,265,300,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE03	4_M_DSTMANDEAD,2,2
-prt_q,213,90,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE04	4_M_DSTMANDEAD,2,2
-prt_q,109,94,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE05	4_M_DSTMANDEAD,2,2
-prt_q,214,85,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE06	4_M_LIEMAN,2,2
-prt_q,222,87,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE07	4_M_DIEMAN,2,2
-prt_q,238,129,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE08	4_M_DIEMAN,2,2
-prt_q,200,139,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE09	4_M_DIEMAN,2,2
-prt_q,220,350,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE10	4_M_DIEMAN,2,2
+prt_q,214,85,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE02	4_M_LIEMAN,2,2
+prt_q,222,87,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE03	4_M_DIEMAN,2,2
+prt_q,149,188,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE04	4_M_LIEMAN,2,2
+prt_q,188,207,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE05	4_M_DIEMAN,2,2
+
+prt_q,109,94,8	script	Dead Villager#EP161DIE06	4_M_DSTMANDEAD,2,2,{
+	mes "He seems to be dead.";
+	close;
+
+OnTouch_:
+	sscanf( strnpcinfo(2), "EP161DIE%d", .@num );
+	setarray .@text$[6],
+		"I want to go home...",
+		"For Himmelmez...",
+		"I am hungey...",
+		"WUG is the best!",
+		"I had a date...",
+		"When I am done with this mission, I will go back to my hometown... Argh...",
+		"Don't worry, it is not a ferocious dog... Let me go take a look...",
+		"This is my daughter. She will be 6 in 2 weeks.",
+		"Oh, I love dogs!",
+		"I want to have some beef stew.",
+		"My sister has given me this as a lucky charm...",
+		"Haha, don't worry. It won't burst.",
+		"According to the monster's gourmet guide, humans are supposed to be very delicious, right?",
+		"Help... Help me...",
+		"Bon appetite";
+	npctalk .@text$[.@num];
+	unittalk getcharid(3), "" + strcharinfo(0) + " : ?";
+	setpcblock PCBLOCK_NPC, true;
+	sleep2 1000;
+	setpcblock PCBLOCK_NPC, false;
+	specialeffect EF_POISONSMOKE;
+	getmapxy .@map$, .@x, .@y, BL_NPC;
+	monster "prt_q",.@x,.@y,"Resurrected Corpse",1015,1, strnpcinfo(0) + "::OnMyMobDead";// ZOMBIE
+	monster "prt_q",.@x,.@y,"Maggot",1194,1, strnpcinfo(0) + "::OnMyMobDead";// ARCLOUSE
+	monster "prt_q",.@x,.@y,"Fly",1035,1, strnpcinfo(0) + "::OnMyMobDead";// HUNTER_FLY
+	cloakonnpc strnpcinfo(0);
+	end;
+OnMyMobDead:
+	if (mobcount( "prt_q", strnpcinfo(0) + "::OnMyMobDead" ) < 1)
+		initnpctimer;
+	end;
+OnTimer300000:
+	stopnpctimer;
+	cloakoffnpc strnpcinfo(0);
+	end;
+}
+prt_q,88,279,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE07	4_M_LIEMAN,2,2
+prt_q,89,207,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE08	4_M_DIEMAN,2,2
+prt_q,265,300,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE09	4_M_DSTMANDEAD,2,2
+prt_q,88,350,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE10	4_M_LIEMAN,2,2
 prt_q,156,275,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE11	4_M_DSTMANDEAD,2,2
 prt_q,104,114,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE12	4_M_DIEMAN,2,2
-prt_q,149,188,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE13	4_M_LIEMAN,2,2
-prt_q,188,207,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE14	4_M_DIEMAN,2,2
-prt_q,88,279,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE15	4_M_LIEMAN,2,2
-prt_q,89,207,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE16	4_M_DIEMAN,2,2
-prt_q,88,350,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE17	4_M_LIEMAN,2,2
-prt_q,227,219,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE18	4_M_DSTMANDEAD,2,2
-prt_q,74,227,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE19	4_M_DSTMANDEAD,2,2
-prt_q,45,146,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE20	4_M_DIEMAN,2,2
+prt_q,108,318,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE13	4_M_LIEMAN,2,2
+prt_q,238,129,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE14	4_M_DIEMAN,2,2
+prt_q,200,139,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE15	4_M_DIEMAN,2,2
+prt_q,74,227,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE16	4_M_DSTMANDEAD,2,2
+prt_q,220,350,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE17	4_M_DIEMAN,2,2
+prt_q,45,146,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE18	4_M_DIEMAN,2,2
+prt_q,227,219,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE19	4_M_DSTMANDEAD,2,2
+prt_q,146,252,6	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE20	4_M_LIEMAN,2,2
 
 prt_q,148,49,0	script	Sign#EP161ETC12	2_BULLETIN_BOARD,{
 	mes "[Prontera, the Capital of Rune-Midgarts Kingdom]";
