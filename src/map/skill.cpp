@@ -105,8 +105,6 @@ struct s_skill_changematerial_db skill_changematerial_db[MAX_SKILL_CHANGEMATERIA
 static unsigned short skill_changematerial_count;
 
 
-MagicMushroomDatabase magic_mushroom_db;
-
 struct s_skill_unit_layout skill_unit_layout[MAX_SKILL_UNIT_LAYOUT];
 int firewall_unit_pos;
 int icewall_unit_pos;
@@ -726,8 +724,6 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 
 		if (tsc->data[SC_CRITICALWOUND])
 			penalty += tsc->data[SC_CRITICALWOUND]->val2;
-		if (tsc->data[SC_DEATHHURT])
-			penalty += 20;
 		if (tsc->data[SC_NORECOVER_STATE])
 			penalty = 100;
 		if (penalty > 0) {
@@ -5635,7 +5631,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		else
 		{
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-			status_change_end(src,SC_ROLLINGCUTTER,INVALID_TIMER);
 		}
 		break;
 
@@ -8040,8 +8035,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				}
 				if (tsc->data[SC_CRITICALWOUND])
 					penalty += tsc->data[SC_CRITICALWOUND]->val2;
-				if (tsc->data[SC_DEATHHURT])
-					penalty += 20;
 				if (tsc->data[SC_NORECOVER_STATE])
 					penalty = 100;
 				if (penalty > 0) {
@@ -8897,8 +8890,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				}
 				if (tsc->data[SC_CRITICALWOUND])
 					penalty += tsc->data[SC_CRITICALWOUND]->val2;
-				if (tsc->data[SC_DEATHHURT])
-					penalty += 20;
 				if (tsc->data[SC_NORECOVER_STATE])
 					penalty = 100;
 				if (penalty > 0) {
@@ -17111,17 +17102,21 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 			}
 	}
 
-	if (sc && sc->data[SC_SPIRIT]) {
-		switch (skill_id) {
-			case CR_SHIELDBOOMERANG:
-				if (sc->data[SC_SPIRIT]->val2 == SL_CRUSADER)
-					time /= 2;
-				break;
-			case AS_SONICBLOW:
-				if (!map_flag_gvg2(bl->m) && !map_getmapflag(bl->m, MF_BATTLEGROUND) && sc->data[SC_SPIRIT]->val2 == SL_ASSASIN)
-					time /= 2;
-				break;
+	if (sc && sc->count) {
+		if (sc->data[SC_SPIRIT]) {
+			switch (skill_id) {
+				case CR_SHIELDBOOMERANG:
+					if (sc->data[SC_SPIRIT]->val2 == SL_CRUSADER)
+						time /= 2;
+					break;
+				case AS_SONICBLOW:
+					if (!map_flag_gvg2(bl->m) && !map_getmapflag(bl->m, MF_BATTLEGROUND) && sc->data[SC_SPIRIT]->val2 == SL_ASSASIN)
+						time /= 2;
+					break;
+			}
 		}
+		if (sc->data[SC_MAGICMUSHROOM])
+			time -= time * sc->data[SC_MAGICMUSHROOM]->val2 / 100;
 	}
 
 	if (!(delaynodex&2)) {
@@ -22376,46 +22371,6 @@ uint64 ImprovisedSongDatabase::parseBodyNode(const YAML::Node &node) {
 	return 1;
 }
 
-const std::string MagicMushroomDatabase::getDefaultLocation() {
-	return std::string(db_path) + "/magicmushroom_db.yml";
-}
-
-/**
- * Reads and parses an entry from the magicmushroom_db.
- * @param node: YAML node containing the entry.
- * @return count of successfully parsed rows
- */
-uint64 MagicMushroomDatabase::parseBodyNode(const YAML::Node &node) {
-	std::string skill_name;
-
-	if (!this->asString(node, "Skill", skill_name))
-		return 0;
-
-	uint16 skill_id = skill_name2id(skill_name.c_str());
-
-	if (!skill_id) {
-		this->invalidWarning(node["Skill"], "Invalid Magic Mushroom skill name \"%s\", skipping.\n", skill_name.c_str());
-		return 0;
-	}
-
-	if (!skill_get_inf(skill_id)) {
-		this->invalidWarning(node["Skill"], "Passive skill %s cannot be casted by Magic Mushroom.\n", skill_name.c_str());
-		return 0;
-	}
-
-	std::shared_ptr<s_skill_magicmushroom_db> mushroom = this->find(skill_id);
-	bool exists = mushroom != nullptr;
-
-	if (!exists) {
-		mushroom = std::make_shared<s_skill_magicmushroom_db>();
-		mushroom->skill_id = skill_id;
-
-		this->put(skill_id, mushroom);
-	}
-
-	return 1;
-}
-
 /** Reads skill no cast db
  * Structure: SkillID,Flag
  */
@@ -22766,7 +22721,6 @@ static void skill_readdb(void)
 
 	abra_db.load();
 	improvised_song_db.load();
-	magic_mushroom_db.load();
 	reading_spellbook_db.load();
 
 	skill_init_unit_layout();
