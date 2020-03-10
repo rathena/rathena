@@ -15301,12 +15301,12 @@ prt_q,165,194,5	duplicate(Kriemhild)	Gondul	GUILD_FLAG
 
 // Prison quests
 prt_pri00,46,130,7	script	Corrupt Warder#pa0829	4_M_KY_SOLD,{
-	if ((MaxWeight - Weight) < 1000) {
-		mes "It seems difficult to proceed any further since the items in your possession are too heavy. Reduce the weight and try again.";
+	if (checkweight(1201,1) == 0) {
+		mes "There are too many kinds of items in possession. Reduce the type of the items and try again.";
 		close;
 	}
-	if (checkweight(501,1) == 0) {
-		mes "There are too many kinds of items in possession. Reduce the type of the items and try again.";
+	if ((MaxWeight - Weight) < 1000) {
+		mes "It seems difficult to proceed any further since the items in your possession are too heavy. Reduce the weight and try again.";
 		close;
 	}
 	mes "[Corrupt Warder]";
@@ -15330,19 +15330,19 @@ prt_pri00,46,130,7	script	Corrupt Warder#pa0829	4_M_KY_SOLD,{
 	}
 	mes "[Corrupt Warder]";
 	mes "Good, it is a great deal.";
-	delitem 6920,30;// Rune_Magic_Powder
-	getitem 22901,1;// Mysterious Blue Box
+	delitem 6920,30;// RuneMagicPowder
+	getitem 22901,1;// BlueboxOfQuestions
 	close;
 }
 
 prt_pri00,61,136,3	script	Dylan#pa0829	4_CAT_SAILOR5,{
 	disable_items;
-	if ((MaxWeight - Weight) < 1000) {
-		mes "It seems difficult to proceed any further since the items in your possession are too heavy. Reduce the weight and try again.";
+	if (checkweight(1201,1) == 0) {
+		mes "There are too many kinds of items in possession. Reduce the type of the items and try again.";
 		close;
 	}
-	if (checkweight(501,1) == 0) {
-		mes "There are too many kinds of items in possession. Reduce the type of the items and try again.";
+	if ((MaxWeight - Weight) < 1000) {
+		mes "It seems difficult to proceed any further since the items in your possession are too heavy. Reduce the weight and try again.";
 		close;
 	}
 	if (isbegin_quest(12369) == 0) {
@@ -15469,102 +15469,32 @@ prt_pri00,61,136,3	script	Dylan#pa0829	4_CAT_SAILOR5,{
 			mes "Hey, buddy. You cannot deal with me if you don't have any Honor Marks.";
 			close;
 		}
+		.@r = rand(1,961);
+		if (.@r < 84) .@en_name = 4994;	// Neev_STR_1
+		else if (.@r < 141) .@en_name = 4995;	// Neev_STR_2
+		else if (.@r < 161) .@en_name = 4996;	// Neev_STR_3
+		else if (.@r < 244) .@en_name = 4997;	// Neev_AGI_1
+		else if (.@r < 301) .@en_name = 4998;	// Neev_AGI_2
+		else if (.@r < 321) .@en_name = 4999;	// Neev_AGI_3
+		else if (.@r < 404) .@en_name = 29000;	// Neev_INT_1
+		else if (.@r < 461) .@en_name = 29001;	// Neev_INT_2
+		else if (.@r < 481) .@en_name = 29002;	// Neev_INT_3
+		else if (.@r < 564) .@en_name = 29003;	// Neev_DEX_1
+		else if (.@r < 621) .@en_name = 29004;	// Neev_DEX_2
+		else if (.@r < 641) .@en_name = 29005;	// Neev_DEX_3
+		else if (.@r < 724) .@en_name = 29009;	// Neev_VIT_1
+		else if (.@r < 781) .@en_name = 29010;	// Neev_VIT_2
+		else if (.@r < 801) .@en_name = 29011;	// Neev_VIT_3
+		else if (.@r < 884) .@en_name = 29006;	// Neev_LUK_1
+		else if (.@r < 941) .@en_name = 29007;	// Neev_LUK_2
+		else if (.@r < 961) .@en_name = 29008;	// Neev_LUK_3
+		else .@en_name = 0;
+		if (.@card[3] == 0)
+			.@card_index = 3;
+		else
+			.@card_index = 2;
 
-		if (.@item_id == 15147) {// Abusive Robe
-			if (.@card[3] == 0) {
-				setarray .@enhance[0],
-					25,   4994,	// Rune of Strength Lv 1
-					105,  4997,	// Rune of Agility Lv 1
-					110, 29009,	// Rune of Vitality Lv 1
-					170, 29000,	// Rune of Intellect Lv 1
-					230, 29003,	// Rune of Dexterity Lv 1
-					255, 29006,	// Rune of Luck Lv 1
-					265,  4995,	// Rune of Strength Lv 2
-					315,  4998,	// Rune of Agility Lv 2
-					317, 29010,	// Rune of Vitality Lv 2
-					352, 29001,	// Rune of Intellect Lv 2
-					387, 29004,	// Rune of Dexterity Lv 2
-					407, 29007,	// Rune of Luck Lv 2
-					412,  4996,	// Rune of Strength Lv 3
-					432,  4999,	// Rune of Agility Lv 3
-					452, 29002,	// Rune of Intellect Lv 3
-					467, 29005,	// Rune of Dexterity Lv 3
-					477, 29008;	// Rune of Luck Lv 3
-				.@card_index = 3;
-			}
-			else {
-				setarray .@enhance[0],
-					60,   4994,	// Rune of Strength Lv 1
-					80,  29000,	// Rune of Intellect Lv 1
-					160, 29009,	// Rune of Vitality Lv 1
-					180, 29003,	// Rune of Dexterity Lv 1
-					220, 29006,	// Rune of Luck Lv 1
-					270,  4995,	// Rune of Strength Lv 2
-					275,  4998,	// Rune of Agility Lv 2
-					325, 29010,	// Rune of Vitality Lv 2
-					350, 29001,	// Rune of Intellect Lv 2
-					365, 29004,	// Rune of Dexterity Lv 2
-					405, 29007,	// Rune of Luck Lv 2
-					420,  4996,	// Rune of Strength Lv 3
-					425,  4999,	// Rune of Agility Lv 3
-					435, 29002,	// Rune of Intellect Lv 3
-					455, 29011,	// Rune of Vitality Lv 3
-					465, 29005,	// Rune of Dexterity Lv 3
-					480, 29008;	// Rune of Luck Lv 3
-				.@card_index = 2;
-			}
-		}
-		else {// Flattery Robe
-			if (.@card[3] == 0) {
-				setarray .@enhance[0],
-					50,   4994,	// Rune of Strength Lv 1
-					100,  4997,	// Rune of Agility Lv 1
-					150, 29009,	// Rune of Vitality Lv 1
-					190, 29000,	// Rune of Intellect Lv 1
-					230, 29003,	// Rune of Dexterity Lv 1
-					270, 29006,	// Rune of Luck Lv 1
-					305,  4995,	// Rune of Strength Lv 2
-					340,  4998,	// Rune of Agility Lv 2
-					390, 29010,	// Rune of Vitality Lv 2
-					425, 29001,	// Rune of Intellect Lv 2
-					460, 29004,	// Rune of Dexterity Lv 2
-					495, 29007,	// Rune of Luck Lv 2
-					505,  4996,	// Rune of Strength Lv 3
-					520,  4999,	// Rune of Agility Lv 3
-					530, 29011,	// Rune of Vitality Lv 3
-					545, 29002,	// Rune of Intellect Lv 3
-					555, 29005,	// Rune of Dexterity Lv 3
-					565, 29008;	// Rune of Luck Lv 3
-				.@card_index = 3;
-			}
-			else {
-				setarray .@enhance[0],
-					70,   4994,	// Rune of Strength Lv 1
-					72,   4997,	// Rune of Agility Lv 1
-					147, 29009,	// Rune of Vitality Lv 1
-					177, 29000,	// Rune of Intellect Lv 1
-					197, 29003,	// Rune of Dexterity Lv 1
-					247, 29006,	// Rune of Luck Lv 1
-					297,  4995,	// Rune of Strength Lv 2
-					307,  4998,	// Rune of Agility Lv 2
-					382, 29010,	// Rune of Vitality Lv 2
-					412, 29001,	// Rune of Intellect Lv 2
-					437, 29004,	// Rune of Dexterity Lv 2
-					487, 29007,	// Rune of Luck Lv 2
-					507,  4996,	// Rune of Strength Lv 3
-					510,  4999,	// Rune of Agility Lv 3
-					540, 29011,	// Rune of Vitality Lv 3
-					555, 29002,	// Rune of Intellect Lv 3
-					563, 29005,	// Rune of Dexterity Lv 3
-					573, 29008;	// Rune of Luck Lv 3
-				.@card_index = 2;
-			}
-		}
-		.@size = getarraysize(.@enhance);
-		.@r = rand( 1,.@enhance[.@size-2] );
-		for ( .@i = 0; .@i < .@size && .@enhance[.@i] < .@r; .@i += 2 )
-			continue;
-		.@card[ .@card_index ] = .@enhance[.@i+1];
+		.@card[ .@card_index ] = .@en_name;
 		delitem 6919,20;
 		delequip EQI_ARMOR;
 		getitem2 .@item_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
@@ -15592,56 +15522,44 @@ prt_pri00,61,136,3	script	Dylan#pa0829	4_CAT_SAILOR5,{
 			mes "Hey, buddy. You cannot deal with me if you don't have any Honor Marks.";
 			close;
 		}
-		.@card[3] = getequipcardid(EQI_ACC_L,3);
-		if (.@card[3] == 0) {
-			setarray .@enhance[0],
-				 37, 4710,	// INT+1
-				 57, 4730,	// AGI+1
-				 76, 4740,	// VIT+1
-				 91, 4720,	// DEX+1
-				104, 4750,	// LUK+1
-				113, 4700,	// STR+1
-				120, 4711,	// INT+2
-				122, 4721,	// DEX+2
-				124, 4701,	// STR+2
-				126, 4731,	// AGI+2
-				128, 4751,	// LUK+2
-				129, 4741,	// VIT+2
-				130, 4752,	// LUK+3
-				131, 4702,	// STR+3
-				132, 4732,	// AGI+3
-				133, 4712,	// INT+3
-				134, 4722,	// DEX+3
-				135, 4742;	// VIT+3
+		.@r = rand(1,22231);
+		if (.@r < 3001) .@en_name = 4710;		// Inteligence1
+		else if (.@r < 3601) .@en_name = 4711;	// Inteligence2
+		else if (.@r < 3701) .@en_name = 4712;	// Inteligence3
+		else if (.@r < 3705) .@en_name = 4713;	// Inteligence4
+		else if (.@r < 3706) .@en_name = 4714;	// Inteligence5
+		else if (.@r < 6706) .@en_name = 4730;	// Agility1
+		else if (.@r < 7306) .@en_name = 4731;	// Agility2
+		else if (.@r < 7406) .@en_name = 4732;	// Agility3
+		else if (.@r < 7410) .@en_name = 4733;	// Agility4
+		else if (.@r < 7411) .@en_name = 4734;	// Agility5
+		else if (.@r < 10411) .@en_name = 4740;	// Vitality1
+		else if (.@r < 11011) .@en_name = 4741;	// Vitality2
+		else if (.@r < 11111) .@en_name = 4742;	// Vitality3
+		else if (.@r < 11115) .@en_name = 4743;	// Vitality4
+		else if (.@r < 11116) .@en_name = 4744;	// Vitality5
+		else if (.@r < 14116) .@en_name = 4750;	// Luck1
+		else if (.@r < 14716) .@en_name = 4751;	// Luck2
+		else if (.@r < 14816) .@en_name = 4752;	// Luck3
+		else if (.@r < 14820) .@en_name = 4753;	// Luck4
+		else if (.@r < 14821) .@en_name = 4754;	// Luck5
+		else if (.@r < 17821) .@en_name = 4700;	// Strength1
+		else if (.@r < 18421) .@en_name = 4701;	// Strength2
+		else if (.@r < 18521) .@en_name = 4702;	// Strength3
+		else if (.@r < 18525) .@en_name = 4703;	// Strength4
+		else if (.@r < 18526) .@en_name = 4704;	// Strength5
+		else if (.@r < 21526) .@en_name = 4720;	// Dexterity1
+		else if (.@r < 22126) .@en_name = 4721;	// Dexterity2
+		else if (.@r < 22226) .@en_name = 4722;	// Dexterity3
+		else if (.@r < 22230) .@en_name = 4723;	// Dexterity4
+		else if (.@r < 22231) .@en_name = 4724;	// Dexterity5
+		else .@en_name = 0;
+
+		if (.@card[3] == 0)
 			.@card_index = 3;
-		}
-		else {
-			setarray .@enhance[0],
-				 37, 4740,	// VIT+1
-				 63, 4710,	// INT+1
-				 81, 4750,	// LUK+1
-				 96, 4700,	// STR+1
-				105, 4720,	// DEX+1
-				111, 4730,	// AGI+1
-				116, 4751,	// LUK+2
-				120, 4711,	// INT+2
-				122, 4721,	// DEX+2
-				124, 4741,	// VIT+2
-				126, 4701,	// STR+2
-				128, 4731,	// AGI+2
-				129, 4742,	// VIT+3
-				130, 4752,	// LUK+3
-				131, 4702,	// STR+3
-				132, 4732,	// AGI+3
-				133, 4712,	// INT+3
-				134, 4722;	// DEX+3
+		else
 			.@card_index = 2;
-		}
-		.@size = getarraysize(.@enhance);
-		.@r = rand( 1,.@enhance[.@size-2] );
-		for ( .@i = 0; .@i < .@size && .@enhance[.@i] < .@r; .@i += 2 )
-			continue;
-		.@card[ .@card_index ] = .@enhance[.@i+1];
+		.@card[ .@card_index ] = .@en_name;
 
 		delitem 6919,5;
 		delequip EQI_ACC_L;
@@ -15710,7 +15628,14 @@ prt_pri00,61,136,3	script	Dylan#pa0829	4_CAT_SAILOR5,{
 		}
 		else {
 			mes "I guess you are out of luck. The equipment is broken. Tut tut.";
-			getitem 6920,14;// Rune_Magic_Powder
+			.@r = rand(1,100);
+			if (.@r < 61) getitem 6920,9;	// RuneMagicPowder
+			else if (.@r < 81) getitem 6920,10;
+			else if (.@r < 87) getitem 6920,11;
+			else if (.@r < 93) getitem 6920,12;
+			else if (.@r < 98) getitem 6920,13;
+			else if (.@r < 100) getitem 6920,14;
+			else getitem 6920,15;
 			specialeffect2 EF_LORD;
 		}
 		close;
