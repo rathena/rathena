@@ -25222,7 +25222,8 @@ Body:
           Amount: 42
         - Level: 5
           Amount: 48
-      Ammo: Arrow
+      Ammo:
+        Arrow: true
       AmmoAmount: 10
     Unit:
       Id: Reverberation
