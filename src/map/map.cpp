@@ -4430,25 +4430,19 @@ int cleanup_sub(struct block_list *bl, va_list ap)
  * Add new skill damage adjustment entry for a map
  * @param m: Map data
  * @param skill_id: Skill ID
- * @param pc: Rate to PC
- * @param mobs: Rate to Monster
- * @param boss: Rate to Boss-monster
- * @param other: Rate to Other target
- * @param caster: Caster type
+ * @param args: Mapflag arguments
  */
-void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster) {
-	struct s_skill_damage entry = {};
+void map_skill_damage_add(struct map_data *m, uint16 skill_id, union u_mapflag_args *args) {
+	nullpo_retv(m);
+	nullpo_retv(args);
 
-	for (int i = 0; i < SKILLDMG_MAX; i++)
-		entry.rate[i] = rate[i];
-	entry.caster = caster;
-
-	if (m->skill_damage.find(skill_id) != m->skill_damage.end()) {
-		m->skill_damage[skill_id] = entry;
+	if (m->skill_damage.find(skill_id) != m->skill_damage.end()) { // Entry exists
+		args->skill_damage.caster |= m->skill_damage[skill_id].caster;
+		m->skill_damage[skill_id] = args->skill_damage;
 		return;
 	}
 
-	m->skill_damage.insert({ skill_id, entry });
+	m->skill_damage.insert({ skill_id, args->skill_damage }); // Add new entry
 }
 
 /**
@@ -4458,6 +4452,8 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG
  * @param per: Skill duration adjustment value in percent
  */
 void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per) {
+	nullpo_retv(mapd);
+
 	if (mapd->skill_duration.find(skill_id) != mapd->skill_duration.end()) // Entry exists
 		mapd->skill_duration[skill_id] += per;
 	else // Update previous entry
@@ -4828,13 +4824,13 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				nullpo_retr(false, args);
 
 				if (!args->flag_val) { // Signifies if it's a single skill or global damage adjustment
-					if (!args->skill_damage.caster) {
+					if (args->skill_damage.caster == 0) {
 						ShowError("map_setmapflag: Skill damage adjustment without casting type for map %s.\n", mapdata->name);
 						return false;
 					}
 
-					mapdata->damage_adjust.caster = args->skill_damage.caster;
-					for (int i = 0; i < SKILLDMG_MAX; i++)
+					mapdata->damage_adjust.caster |= args->skill_damage.caster;
+					for (int i = SKILLDMG_PC; i < SKILLDMG_MAX; i++)
 						mapdata->damage_adjust.rate[i] = cap_value(args->skill_damage.rate[i], -100, 100000);
 				}
 			}

@@ -1544,6 +1544,8 @@
 	export_constant(SC_WEAPONBLOCK_ON);
 	export_constant(SC_ENTRY_QUEUE_APPLY_DELAY);
 	export_constant(SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT);
+	export_constant(SC_ADAPTATION);
+	export_constant(SC_BASILICA_CELL);
 	export_constant(SC_LIGHTOFMOON);
 	export_constant(SC_LIGHTOFSUN);
 	export_constant(SC_LIGHTOFSTAR);
@@ -3517,6 +3519,7 @@
 	export_constant(EFST_MD_Ta_Potion);
 	export_constant(EFST_MD_Ra_Potion);
 	export_constant(EFST_MVPCARD_KIEL);
+	export_constant(EFST_HOMUN_TIME);
 	export_constant(EFST_POWER_ACCELERATION);
 	export_constant(EFST_MAX_HP_SP_AVOID);
 	export_constant(EFST_ADD_ALL_STATE);
