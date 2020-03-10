@@ -6305,7 +6305,7 @@ Body:
     Type: Weapon
     TargetType: Attack
     DamageFlags:
-      IgnoreFlee: true
+      IgnoreFlee: false
     Flags:
       AllowWhenHidden: false
     Range: -1
