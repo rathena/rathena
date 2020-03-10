@@ -15300,7 +15300,6 @@ prt_q,167,203,6	duplicate(Kriemhild)	Skoegul	GUILD_FLAG
 prt_q,165,194,5	duplicate(Kriemhild)	Gondul	GUILD_FLAG
 
 // Prison quests
-
 prt_pri00,46,130,7	script	Corrupt Warder#pa0829	4_M_KY_SOLD,{
 	if ((MaxWeight - Weight) < 1000) {
 		mes "It seems difficult to proceed any further since the items in your possession are too heavy. Reduce the weight and try again.";
@@ -16136,10 +16135,9 @@ prt_pri00,58,128,4	script	Overwatcher Terketh#ep1	4_M_JOB_HUNTER,{
 	end;
 }
 
-
 // Sector A
-prt_prison,243,265,6	script	Prisoner 243AD265#EP161	4_M_DRAKE,{
-	if (checkweight(501,1) == 0) {
+prt_prison,243,265,6	script	Prisoner 243AD265#EP161A	4_M_DRAKE,{
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
 	}
@@ -16149,6 +16147,11 @@ prt_prison,243,265,6	script	Prisoner 243AD265#EP161	4_M_DRAKE,{
 		mes "Who is it? Who's calling me?";
 		next;
 		mes "The prisoner is howling. Is something happening?";
+		close;
+	}
+	if (BaseLevel < 140) {
+		mes "[Prisoner 243AD265]";
+		mes "You must be adventurer, are you? Hmm...You seem like a beginner. I don't see much charm in you.";
 		close;
 	}
 	switch( isbegin_quest(5425) ) {
@@ -16238,11 +16241,11 @@ prt_prison,243,265,6	script	Prisoner 243AD265#EP161	4_M_DRAKE,{
 		emotion ET_BLABLA;
 		mes "- The prisoner grabs a fist and pounds his left chest. -";
 		next;
-		delitem 6925,1;// Prisoner's Letter
+		delitem 6925,1;// Prisoner_Letter
 		completequest 5425;// To My Beloved Fellow
 		setquest 5426;// [Stand by]To My Beloved Fellow
 		getexp 700000,500000;
-		getitem 6919,4;// Honor Token
+		getitem 6919,4;// TokenOfHonor
 		mes "[Prisoner 243AD265]";
 		mes "I'll inscribe your name right here. I hope you would continue to be the messenger for my fellow men.";
 		close;
@@ -16277,11 +16280,11 @@ prt_prison,243,265,6	script	Prisoner 243AD265#EP161	4_M_DRAKE,{
 			emotion ET_BLABLA;
 			mes "- The prisoner grabs a fist and pounds his left chest. -";
 			next;
-			delitem 6925,1;// Prisoner's Letter
+			delitem 6925,1;// Prisoner_Letter
 			erasequest 5427;// [Repeat]To My Beloved Fellow
 			setquest 5426;// [Stand by]To My Beloved Fellow
 			getexp 700000,500000;
-			getitem 6919,4;// Honor Token
+			getitem 6919,4;// TokenOfHonor
 			mes "[Prisoner 243AD265]";
 			mes "I'll inscribe your name right here. I hope you would continue to be the messenger for my fellow men.";
 			close;
@@ -16293,40 +16296,129 @@ prt_prison,243,265,6	script	Prisoner 243AD265#EP161	4_M_DRAKE,{
 			mes "The prisoner started singing as if he was reminiscing about something.";
 			close2;
 			setpcblock PCBLOCK_NPC, true;
-			sleep2 30;
-			npctalk "Prisoner 243AD265: We're coming home~~ We're coming home~~", "", bc_self;
-			sleep2 2000;
-			npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
-			sleep2 2000;
-			npctalk "Prisoner 243AD265: When we return home~~ When we do~~ We'll be good to our parents~~ We will~~", "", bc_self;
-			sleep2 2000;
-			npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
-			sleep2 2000;
-			npctalk "Prisoner 243AD265: The lady here~~ is pretty~~ and amusing~~ She is~~", "", bc_self;
-			sleep2 2000;
-			npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
-			sleep2 2000;
-			npctalk "Prisoner 243AD265: Hard-earned money~~ Spend it~~ Spend it all~~", "", bc_self;
-			sleep2 2000;
-			npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
-			sleep2 2000;
-			npctalk "Prisoner 243AD265: Let's dance~~ Dance~~ Until~~ We return home~~ Dance away~~", "", bc_self;
-			sleep2 2000;
-			npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
-			sleep2 2000;
-			npctalk "Prisoner 243AD265: When we go home~~ When we do~~ We will dance~~ with our fiancee", "", bc_self;
-			sleep2 2000;
-			npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
-			sleep2 2000;
-			npctalk "Prisoner 243AD265: Say farewell~~ to our loved ones~~ Say~~ farewell~~ Drink up~~ Dance away~~ Dance~~", "", bc_self;
-			sleep2 2000;
-			npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
+			switch( rand(1,5) ) {
+			case 1:
+				npctalk "Prisoner 243AD265: Good-bye~~ So long~~ My dear lady~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: I was ordered~~ to go back~~ to my hometown~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: If I do, I will never see you again, my beautiful lady~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Good-bye~~ So long~~ My dear lady~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: We will scream~~ We will shout~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Even on the sea~~ We will scream~~ We will shout~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Good-bye~~ So long~~ My dear lady~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Every mate~~ Fill her up~~ Drink it all up~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: It's for the men~~ We're sad~~ Let's drink away~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Good-bye~~ So long~~ My dear lady~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: I was ordered~~ to go back~~ to my hometown~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: If I do, I will never see you again, my beautiful lady~~", "", bc_self;
+				break;
+			case 2:
+				npctalk "Prisoner 243AD265: Listen up~~ Young mates~~ Let me tell you about the sea you're all wondering about~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Wind is blowing~~ So is storm~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: When the wind starts to blow~~ Everyone is here together~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Listen up~~ Young mates~~ Let me tell you about the sea you're all wondering about~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: The wind is blowing~~ Storm is coming~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: The wind is blowing~~ The ship is sailing along~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Listen up~~ Young mates~~ Let me tell you about the sea you're all wondering about~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Eels are flying, wagging its fin~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: We spread the sail and dodge the rock~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Listen up~~ Young mates~~ Let me tell you about the sea you're all wondering about~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Shark with sharp teeth is swimming~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: If you eat bread~~ I'll eat the meat~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Listen up~~ Young mates~~ Let me tell you about the sea you're all wondering about~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Large whale~~ swims~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: If you want the wind~~ let me create a gust~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Listen up~~ Young mates~~ Let me tell you about the sea you're all wondering about~~", "", bc_self;
+				break;
+			case 3:
+				npctalk "Prisoner 243AD265: We're coming home~~ We're coming home~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: When we return home~~ When we do~~ We'll be good to our parents~~ We will~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: The lady here~~ is pretty~~ and amusing~~ She is~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Hard-earned money~~ Spend it~~ Spend it all~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Let's dance~~ Dance~~ Until~~ We return home~~ Dance away~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: When we go home~~ When we do~~ We will dance~~ with our fiancee", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Say farewell~~ to our loved ones~~ Say~~ farewell~~ Drink up~~ Dance away~~ Dance~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Move forward~~ Move forward~~ Hello~~ Lady~~", "", bc_self;
+				break;
+			case 4:
+				npctalk "Prisoner 243AD265: Hey, hey~~ Set a ship afloat~~ Hey, hey~~ Set it afloat~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Early~~ in the morning~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: What should we do~~ with the drunk sailors~~ What should we do~~ with the drunk sailors~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Early~~ in the morning~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Stick the hose~~ Sink it in the drainage hole~~ Stick the hose~~ Sink it in the drainage hole~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Early~~ in the morning~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: When he wakes up~~ Lock him inside the cabin~~ When he wakes up~~ Lock him inside the cabin~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Early~~ in the morning~~", "", bc_self;
+				break;
+			case 5:
+				npctalk "Prisoner 243AD265: Ahoy~~ Mate~~ Early in the morning~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Ahoy~~ Mate~~ Spread the sail~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Ahoy~~ Mate~~ Pour the liquor~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Ahoy~~ Mate~~ Sing a song~~", "", bc_self;
+				sleep2 2000;
+				npctalk "Prisoner 243AD265: Ahoy~~ Mate~~", "", bc_self;
+				break;
+			}
 			sleep2 2000;
 			npctalk "Prisoner 243AD265: ... ... ...", "", bc_self;
 			sleep2 2000;
+			setpcblock PCBLOCK_NPC, false;
 			emotion ET_HNG;
 			npctalk "Prisoner 243AD265: It is far from amusing when there is no fellow sailor around.", "", bc_self;
-			setpcblock PCBLOCK_NPC, false;
 			end;
 		case 2:
 			erasequest 5426;// [Stand by]To My Beloved Fellow
@@ -16338,7 +16430,7 @@ prt_prison,243,265,6	script	Prisoner 243AD265#EP161	4_M_DRAKE,{
 }
 
 prt_prison,205,139,4	script	Dark Shape#EP161A01	4_GHOST_STAND,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
 	}
@@ -16348,10 +16440,10 @@ prt_prison,205,139,4	script	Dark Shape#EP161A01	4_GHOST_STAND,{
 		mes "The Dark Shape starts to sway when it saw me. Did it mean it's delighted to see me?";
 		next;
 		select("Anything else to give me?");
-		getitem 6925,1;// Prisoner's Letter
+		getitem 6925,1;// Prisoner_Letter
 		mes "The Dark Shape handed you the letter and was gone.";
 		next;
-		playBGM "148";
+		playbgm "148";
 		mes "The Dark Shape seems to be in a good mood, humming along.";
 	}
 	else {
@@ -16374,7 +16466,7 @@ prt_prison,205,139,4	script	Dark Shape#EP161A01	4_GHOST_STAND,{
 		mes "What should you do?";
 		next;
 		if (select( "Just leave.", "Wait a little more." ) == 2) {
-			getitem 6925,1;// Prisoner's Letter
+			getitem 6925,1;// Prisoner_Letter
 			mes "The Dark Shape handed you the letter and left. Did it mean to ask you to deliver it?";
 		}
 		else {
@@ -16383,13 +16475,12 @@ prt_prison,205,139,4	script	Dark Shape#EP161A01	4_GHOST_STAND,{
 			mes "The Dark Shape must've noticed it. It's gone nowhere, too.";
 		}
 	}
-	close2;
 	.@num = atoi( replacestr( strnpcinfo(2), "EP161A0", "" ) );
 	setarray .@npc_num[1],1,2,3,4,5;
 	deletearray .@npc_num[.@num],1;
 	disablenpc strnpcinfo(0);
 	enablenpc "Dark Shape#EP161A0" + .@npc_num[ rand(1,4) ];// enable another npc randomly
-	end;
+	close;
 
 OnInit:
 	.@npc_num = atoi( replacestr( strnpcinfo(2), "EP161A0", "" ) );
@@ -16406,13 +16497,18 @@ prt_prison,203,215,4	duplicate(Dark Shape#EP161A01)	Dark Shape#EP161A05	4_GHOST_
 
 // Sector B
 prt_prison,267,184,8	script	Prisoner 267BD184#EP161	4_DRACULA,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
 	}
 	if (isbegin_quest(5415) < 2) {// Restricted Sector
 		emotion ET_SLEEPY;
 		mes "The prisoner here is sitting with the extremely bored look. If you talk to him at this point, you may have to sit down to hang out with him.";
+		close;
+	}
+	if (BaseLevel < 140) {
+		mes "[Prisoner 267BD184]";
+		mes "Yes, I'm bored as you must've imagined, but I can't hang out with you. Why? You don't have the eyes that I want.";
 		close;
 	}
 	switch( isbegin_quest(5428) ) {
@@ -16524,10 +16620,10 @@ prt_prison,267,184,8	script	Prisoner 267BD184#EP161	4_DRACULA,{
 		mes "Now that I have a job to do for today and you've done a good job. Maybe I should give you a present.";
 		next;
 		completequest 5428;// Lowly Standards
-		delitem 6924,20;// Red Eye
+		delitem 6924,20;// Red_Eyes
 		setquest 5429;// [Stand by]Lowly Standards
 		getexp 700000,500000;
-		getitem 6919,4;// Honor Token
+		getitem 6919,4;// TokenOfHonor
 		mes "[Prisoner 267BD184]";
 		mes "Humans who had been here before gave me this. I don't like this kind of design, so I'll give it to you.";
 		close;
@@ -16566,10 +16662,10 @@ prt_prison,267,184,8	script	Prisoner 267BD184#EP161	4_DRACULA,{
 			mes "Oh, you indeed brought them! I'll take a close look. Let me.";
 			next;
 			erasequest 5430;// [Repeat]Lowly Standards
-			delitem 6924,20;// Red Eye
+			delitem 6924,20;// Red_Eyes
 			setquest 5429;// [Stand by]Lowly Standards
 			getexp 700000,500000;
-			getitem 6919,4;// Honor Token
+			getitem 6919,4;// TokenOfHonor
 			mes "[Prisoner 267BD184]";
 			mes "Oh, I almost forgot. This is the thing I talked to you the last time. I don't like this kind of design, so I'll give it to you.";
 			close;
@@ -16595,12 +16691,18 @@ prt_prison,267,184,8	script	Prisoner 267BD184#EP161	4_DRACULA,{
 
 // Sector C
 prt_prison,265,154,4	script	Prisoner 265CM154#EP161	4_MOONLIGHT,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
 	}
 	if (isbegin_quest(5415) < 2) {// Restricted Sector
 		mes "The prisoner here is gazing around the corners like a hunting lion. You want to get away before you get caught.";
+		close;
+	}
+	if (BaseLevel < 140) {
+		mes "[Prisoner 265CM154]";
+		mes "Whoa, this is human!";
+		mes "I'm sorry to say this but I have to work now. Let me play with you later.";
 		close;
 	}
 	switch( isbegin_quest(5431) ) {
@@ -16680,7 +16782,7 @@ prt_prison,265,154,4	script	Prisoner 265CM154#EP161	4_MOONLIGHT,{
 		erasequest 5432;// Cleaning is complete.
 		setquest 5433;// [Stand by]Clean Life
 		getexp 700000,500000;
-		getitem 6919,4;// Honor Token
+		getitem 6919,4;// TokenOfHonor
 		mes "[Prisoner 265CM154]";
 		mes "If you come back again tomorrow and give me a hand, there will be more of this. Come back often!";
 		close;
@@ -16720,7 +16822,7 @@ prt_prison,265,154,4	script	Prisoner 265CM154#EP161	4_MOONLIGHT,{
 			erasequest 5435;// [Repeat]Cleaning is complete.
 			setquest 5433;// [Stand by]Clean Life
 			getexp 700000,500000;
-			getitem 6919,4;// Honor Token
+			getitem 6919,4;// TokenOfHonor
 			mes "[Prisoner 265CM154]";
 			mes "Now that you finished cleaning for today, let me give you this. Come back tomorrow!";
 			close;
@@ -16744,14 +16846,13 @@ prt_prison,265,154,4	script	Prisoner 265CM154#EP161	4_MOONLIGHT,{
 
 // Rubbish heap
 prt_prison,118,247,4	script	Rubbish heap#EP161C01	4_ENERGY_BLACK,{
-	if (isbegin_quest(5432) > 0 || isbegin_quest(5435) > 0)
-		end;
-	if (isbegin_quest(5431) == 1 || (isbegin_quest(5431) == 2 && isbegin_quest(5434) == 1)) {
+	if ((isbegin_quest(5431) == 1 && isbegin_quest(5432) == 0) || (isbegin_quest(5434) == 1 && isbegin_quest(5435) == 0)) {
 		mes "Some stuff left around the floor are lumped together.";
 		next;
 		if (select( "Clean them.", "Just leave them." ) == 1) {
 			progressbar "ffff00",2;
-			if (rand(100) < 75)
+			.@r = rand(1,100);
+			if (.@r < 10 || .@r > 30)
 				mes "You're sad but there still are much to clean. Go find something to clean up.";
 			else {
 				mes "You finished cleaning. Report the result.";
@@ -16767,6 +16868,20 @@ prt_prison,118,247,4	script	Rubbish heap#EP161C01	4_ENERGY_BLACK,{
 	}
 	end;
 OnTimer30000:
+OnTimer60000:
+OnTimer90000:
+OnTimer120000:
+OnTimer150000:
+OnTimer180000:
+OnTimer210000:
+OnTimer240000:
+OnTimer270000:
+	if (rand(1,2) == 1) {
+		stopnpctimer;
+		enablenpc strnpcinfo(0);
+	}
+	end;
+OnTimer300000:
 	stopnpctimer;
 	enablenpc strnpcinfo(0);
 	end;
@@ -16774,7 +16889,7 @@ OnTimer30000:
 prt_prison,171,247,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C02	4_ENERGY_BLACK
 prt_prison,181,230,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C03	4_ENERGY_BLACK
 prt_prison,238,165,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C04	4_ENERGY_BLACK
-//
+prt_prison,252,132,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C05	4_ENERGY_BLACK
 prt_prison,232,137,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C06	4_ENERGY_BLACK
 prt_prison,200,133,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C07	4_ENERGY_BLACK
 prt_prison,212,107,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C08	4_ENERGY_BLACK
@@ -16790,7 +16905,7 @@ prt_prison,160,70,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C17	4_ENE
 prt_prison,156,87,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C18	4_ENERGY_BLACK
 prt_prison,140,93,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C19	4_ENERGY_BLACK
 prt_prison,113,98,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C20	4_ENERGY_BLACK
-//
+prt_prison,91,101,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C21	4_ENERGY_BLACK
 prt_prison,112,79,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C22	4_ENERGY_BLACK
 prt_prison,122,42,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C23	4_ENERGY_BLACK
 prt_prison,135,127,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C24	4_ENERGY_BLACK
@@ -16803,11 +16918,11 @@ prt_prison,188,186,4	duplicate(Rubbish heap#EP161C01)	Rubbish heap#EP161C30	4_EN
 
 // Sector D
 prt_prison,243,17,4	script	Prisoner 243DV17#EP161D	4_PORING,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
 	}
-	if (isbegin_quest(5415) < 2) {// Restricted Sector
+	if (isbegin_quest(5415) < 2 || BaseLevel < 140) {// Restricted Sector
 		emotion ET_THINK, playerattached();
 		emotion ET_THINK;
 		mes "... ... ... ...";
@@ -16825,8 +16940,8 @@ prt_prison,243,17,4	script	Prisoner 243DV17#EP161D	4_PORING,{
 		warp "prt_prison",160,290;
 		end;
 	}
-	.@r = rand(100);
-	if (.@r < 10) {
+	.@r = rand(1,10);
+	if (.@r == 3) {
 		mes "[Prisoner 243DV17]";
 		mes "What?! Do you have anything to say to me? Spit it out, then!";
 		next;
@@ -16846,7 +16961,7 @@ prt_prison,243,17,4	script	Prisoner 243DV17#EP161D	4_PORING,{
 		mes "What?! Do you have a problem with me? Be gone now.";
 		close;
 	}
-	if (.@r < 20) {
+	if (.@r == 7) {
 		emotion ET_KIK;
 		mes "[Prisoner 243DV17]";
 		mes "~Giggles~ I suddenly feel better now. Alright, what the heck. I'll send you to the sector you want for 1 Jellopy.";
@@ -16905,7 +17020,7 @@ prt_prison,243,17,4	script	Prisoner 243DV17#EP161D	4_PORING,{
 
 // Sector E
 prt_prison,95,72,6	script	Prisoner 95EB72#EP161E	4_BAPHOMET,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
 	}
@@ -16914,6 +17029,11 @@ prt_prison,95,72,6	script	Prisoner 95EB72#EP161E	4_BAPHOMET,{
 		mes "Zzzzzzzzz...~Snores~";
 		next;
 		mes "The prisoner is breathing calmly so he must be sleeping.";
+		close;
+	}
+	if (BaseLevel < 140) {
+		mes "[Prisoner 95EB72]";
+		mes "What a worthless human!";
 		close;
 	}
 	switch( isbegin_quest(5436) ) {
@@ -16928,6 +17048,7 @@ prt_prison,95,72,6	script	Prisoner 95EB72#EP161E	4_BAPHOMET,{
 		next;
 		select("Approach closer.");
 		npctalk "~Cringes~", "", bc_self;
+		sleep2 2000;
 		emotion ET_SWEAT;
 		mes "[Prisoner 95EB72]";
 		mes "~Evil laughter~ You've got the courage, human!";
@@ -16940,6 +17061,7 @@ prt_prison,95,72,6	script	Prisoner 95EB72#EP161E	4_BAPHOMET,{
 		mes "Well...there is particularly no need to...";
 		next;
 		npctalk "~Cringes~", "", bc_self;
+		sleep2 2000;
 		emotion ET_KIK;
 		mes "[Prisoner 95EB72]";
 		mes "~Evil laughter~";
@@ -16947,6 +17069,7 @@ prt_prison,95,72,6	script	Prisoner 95EB72#EP161E	4_BAPHOMET,{
 		next;
 		select("By the way, didn't you just cringe?");
 		emotion ET_QUESTION, playerattached();
+		sleep2 2000;
 		emotion ET_STARE;
 		mes "[Prisoner 95EB72]";
 		mes "Wa-hahaha! I think I've got myself a cocky underling.";
@@ -16987,9 +17110,9 @@ prt_prison,95,72,6	script	Prisoner 95EB72#EP161E	4_BAPHOMET,{
 		next;
 		completequest 5436;// Finding Lights
 		setquest 5437;// [Stand by]Finding Lights
-		delitem 6923,1;// Bright Light
+		delitem 6923,1;// Bright_Lights
 		getexp 700000,500000;
-		getitem 6919,4;// Honor Token
+		getitem 6919,4;// TokenOfHonor
 		mes "[Prisoner 95EB72]";
 		mes "I promise you a lot more rewards the day when I stand tall in the world again.";
 		close;
@@ -17022,9 +17145,9 @@ prt_prison,95,72,6	script	Prisoner 95EB72#EP161E	4_BAPHOMET,{
 			next;
 			erasequest 5438;// [Repeat]Finding Lights
 			setquest 5437;// [Stand by]Finding Lights
-			delitem 6923,1;// Bright Light
+			delitem 6923,1;// Bright_Lights
 			getexp 700000,500000;
-			getitem 6919,4;// Honor Token
+			getitem 6919,4;// TokenOfHonor
 			mes "[Prisoner 95EB72]";
 			mes "Keep this in mind. I promise you a lot more rewards the day when I stand tall in the world again.";
 			close;
@@ -17044,7 +17167,7 @@ prt_prison,95,72,6	script	Prisoner 95EB72#EP161E	4_BAPHOMET,{
 
 // Torchs
 prt_prison,146,268,4	script	Torch#EP161EB01	CLEAR_NPC,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
 	}
@@ -17055,12 +17178,15 @@ prt_prison,146,268,4	script	Torch#EP161EB01	CLEAR_NPC,{
 		next;
 		select("Collect the light.");
 		progressbar "ffff00",2;
-		if (rand(100) < 50)
-			mes "You carefully collected the light but it scattered.";
-		else {
+		.@r = rand(1,100);
+		if (.@r >= 25 && .@r <= 50) {
 			getitem 6923,1;// Bright Light
 			specialeffect2 EF_LIGHTSPHERE;
 			mes "You carefully collected the light and obtained the bright light.";
+		}
+		else {
+			specialeffect2 406;
+			mes "You carefully collected the light but it scattered.";
 		}
 		initnpctimer;
 		disablenpc strnpcinfo(0);
@@ -17068,6 +17194,16 @@ prt_prison,146,268,4	script	Torch#EP161EB01	CLEAR_NPC,{
 	close;
 
 OnTimer30000:
+OnTimer60000:
+OnTimer90000:
+OnTimer120000:
+OnTimer150000:
+	if (rand(1,2) == 1) {
+		stopnpctimer;
+		enablenpc strnpcinfo(0);
+	}
+	end;
+OnTimer180000:
 	stopnpctimer;
 	enablenpc strnpcinfo(0);
 	end;
@@ -17092,8 +17228,8 @@ prt_prison,237,139,4	duplicate(Torch#EP161EB01)	Torch#EP161EB18	CLEAR_NPC
 prt_prison,246,140,4	duplicate(Torch#EP161EB01)	Torch#EP161EB19	CLEAR_NPC
 
 // Sector F
-prt_prison,117,188,4	script	Prisoner 117FM188#EP161	4_MISTRESS,{
-	if (checkweight(501,1) == 0) {
+prt_prison,117,188,4	script	Prisoner 117FM188#EP161F	4_MISTRESS,{
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
 	}
@@ -17103,6 +17239,11 @@ prt_prison,117,188,4	script	Prisoner 117FM188#EP161	4_MISTRESS,{
 		mes "Hey, are you that new servant?";
 		next;
 		mes "The prisoner inside seems to be looking for a servant. I think he saw me but I'll just have to act like I didn't hear him.";
+		close;
+	}
+	if (BaseLevel < 140) {
+		mes "[Prisoner 117FM188]";
+		mes "Tsk, tsk. Even a servant is supposed to know manners.";
 		close;
 	}
 	switch( isbegin_quest(5439) ) {
@@ -17182,11 +17323,11 @@ prt_prison,117,188,4	script	Prisoner 117FM188#EP161	4_MISTRESS,{
 		mes "[Prisoner 117FM188]";
 		mes "Good job. Go have a rest until I call you back up.";
 		next;
-		delitem 6921,20;// Dehumidifier
+		delitem 6921,20;// Desiccant
 		completequest 5439;// Refreshing Prison Life
 		setquest 5440;// [Stand by]Refreshing Prison Life
 		getexp 700000,500000;
-		getitem 6919,4;// Honor Token
+		getitem 6919,4;// TokenOfHonor
 		mes "[Prisoner 117FM188]";
 		mes "It's nothing. I don't need it so you take and use it.";
 		close;
@@ -17222,11 +17363,11 @@ prt_prison,117,188,4	script	Prisoner 117FM188#EP161	4_MISTRESS,{
 			mes "[Prisoner 117FM188]";
 			mes "I was actually starting to feel displeased by the dampening air.";
 			next;
-			delitem 6921,20;// Dehumidifier
+			delitem 6921,20;// Desiccant
 			erasequest 5441;// [Repeat]Refreshing Prison Life
 			setquest 5440;// [Stand by]Refreshing Prison Life
 			getexp 700000,500000;
-			getitem 6919,4;// Honor Token
+			getitem 6919,4;// TokenOfHonor
 			mes "[Prisoner 117FM188]";
 			mes "You did a good job getting the humidifier, Noyel.";
 			close;
@@ -17251,8 +17392,8 @@ prt_prison,117,188,4	script	Prisoner 117FM188#EP161	4_MISTRESS,{
 }
 
 // Sector G
-prt_prison,103,214,4	script	Prisoner 103GD214#EP161	4_DARKLORD,{
-	if (checkweight(501,1) == 0) {
+prt_prison,103,214,4	script	Prisoner 103GD214#EP161G	4_DARKLORD,{
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
 	}
@@ -17263,6 +17404,27 @@ prt_prison,103,214,4	script	Prisoner 103GD214#EP161	4_DARKLORD,{
 		next;
 		mes "The prisoner here is smiling out of his pain. I don't think he's in normal condition. Should I pass him?";
 		close;
+	}
+	if (BaseLevel < 140) {
+		mes "[Prisoner 117FM188]";
+		mes "... ... ... ... ...";
+		close;
+	}
+
+	setarray .@flowers[0],
+		 710, 100,	// ID, percent
+		6509, 50,
+		6510, 50,
+		 704, 30,
+		 709, 30,
+		 703, 30,
+		 708, 30,
+		6511, 10,
+		 712, 10;
+	.@size = getarraysize(.@flowers);
+	for ( .@index = 0; .@index < .@size; .@index += 2 ) {
+		if (countitem(.@flowers[.@index]) > 0)
+			break;
 	}
 	switch( isbegin_quest(5442) ) {
 	case 0:
@@ -17319,7 +17481,7 @@ prt_prison,103,214,4	script	Prisoner 103GD214#EP161	4_DARKLORD,{
 		mes "Hurry. ~Grunts~ Darkness inside of me is trying to stomp around. If you don't want to see the world brought to ashes by this darkness, bring me...flowers...Now.";
 		close;
 	case 1:
-		if (countitem(712) < 1) {// todo search flowers
+		if (.@flowers[.@index] < 1) {
 			mes "[Prisoner 103GD214]";
 			mes "~Grunts~ I'll wait here for you. Any flowers would do. Bring me flowers.";
 			close;
@@ -17369,11 +17531,11 @@ prt_prison,103,214,4	script	Prisoner 103GD214#EP161	4_DARKLORD,{
 		mes "[Prisoner 103GD214]";
 		mes "It's true that you've been of help so let me give you one of the things that the followers left for me.";
 		next;
-		delitem 712,1;// Flower
+		delitem .@flowers[.@index],1;
 		completequest 5442;// Suppressing Darkness
 		setquest 5443;// [Stand by]Suppressing Darkness
 		getexp 700000,500000;
-		getitem 6919,4;// Honor Token
+		getitem 6919,4;// TokenOfHonor
 		mes "[Prisoner 103GD214]";
 		mes "~Grunts~ If you don't want to see my darkness drags down the whole world to ashes, you'd better come often and bring me flowers.";
 		close;
@@ -17404,7 +17566,7 @@ prt_prison,103,214,4	script	Prisoner 103GD214#EP161	4_DARKLORD,{
 				mes "Please...~Grunts~ Human...";
 				close;
 			}
-			if (countitem(712) < 1) {// todo search flowers
+			if (.@flowers[.@index] < 1) {
 				mes "[Prisoner 103GD214]";
 				mes "Oh, no. It's getting out of my hand. Before this darkness goes berserk, bring me...flowers...~Grunts~";
 				close;
@@ -17412,8 +17574,8 @@ prt_prison,103,214,4	script	Prisoner 103GD214#EP161	4_DARKLORD,{
 			mes "[Prisoner 103GD214]";
 			mes "Flower...? ~Grunts~ Darkness should be stable...";
 			next;
-			delitem 712,1;// Flower
-			if (rand(2) == 0) {// todo chance
+			delitem .@flowers[.@index],1;
+			if (rand(1,100) > .@flowers[.@index+1]) {
 				specialeffect EF_DEVIL4;
 				specialeffect EF_POISONSMOKE;
 				mes "[Prisoner 103GD214]";
@@ -17428,7 +17590,7 @@ prt_prison,103,214,4	script	Prisoner 103GD214#EP161	4_DARKLORD,{
 			erasequest 5444;// [Repeat]Suppressing Darkness
 			setquest 5443;// [Stand by]Suppressing Darkness
 			getexp 700000,500000;
-			getitem 6919,4;// Honor Token
+			getitem 6919,4;// TokenOfHonor
 			specialeffect EF_HEALSP;
 			mes "[Prisoner 103GD214]";
 			mes "...It's working. Thank you, human. You've been a lot of help, too, this time.";
@@ -17459,7 +17621,7 @@ prt_prison,103,214,4	script	Prisoner 103GD214#EP161	4_DARKLORD,{
 
 // Sector H
 prt_prison,55,115,2	script	Prisoner 55HK115#EP161H	4_STORMKNIGHT,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
 	}
@@ -17468,6 +17630,11 @@ prt_prison,55,115,2	script	Prisoner 55HK115#EP161H	4_STORMKNIGHT,{
 		mes "Manager! Isn't there a manager?";
 		next;
 		mes "I wonder the prisoner here may think this prison as some kind of a hotel. He's looking for a manager. I'll just let this one pass.";
+		close;
+	}
+	if (BaseLevel < 140) {
+		mes "[Prisoner 55HK115]";
+		mes "I would like to talk to the manager, not some normal clerk!";
 		close;
 	}
 	switch( isbegin_quest(5445) ) {
@@ -17519,7 +17686,7 @@ prt_prison,55,115,2	script	Prisoner 55HK115#EP161H	4_STORMKNIGHT,{
 		completequest 5445;// Bothersome Little Thing
 		setquest 5446;// [Stand by]Bothersome Little Thing
 		getexp 700000,500000;
-		getitem 6919,4;// Honor Token
+		getitem 6919,4;// TokenOfHonor
 		mes "[Prisoner 55HK115]";
 		mes "What in the world are they taking so long? They're slow with poor service...I know my manners as knight so I can't just pick a fight. Alright. Just take this tip.";
 		next;
@@ -17534,7 +17701,10 @@ prt_prison,55,115,2	script	Prisoner 55HK115#EP161H	4_STORMKNIGHT,{
 				mes "You've come at the right time, manager.";
 				next;
 				mes "[Prisoner 55HK115]";
-				mes "I was putting on a cool pair of shoes but something happened and I broke my toenails.";
+				if (rand(1,5) == 1)
+					mes "I was putting on a cool pair of shoes but something happened and I broke my toenails.";
+				else
+					mes "That thing you brought me last time was pretty good. I'm impressed by your skinning ability. How about changing your job to skin master?";
 				next;
 				mes "[Prisoner 55HK115]";
 				mes "In that spirit, why don't you bring me those 20 Sandpapers again?";
@@ -17552,14 +17722,17 @@ prt_prison,55,115,2	script	Prisoner 55HK115#EP161H	4_STORMKNIGHT,{
 			}
 			if (countitem(6922) < 20) {
 				mes "[Prisoner 55HK115]";
-				mes "You can't turn back time once it passes. Hurry up. You have no time to lose.";
+				if (gettime(DT_MONTH) == 2 && (gettime(DT_DAYOFMONTH) == 24 || gettime(DT_DAYOFMONTH) == 25))
+					mes "Rudolph the hero of reindeers said time is gold. I think it applies to humans, too.";
+				else
+					mes "You can't turn back time once it passes. Hurry up. You have no time to lose.";
 				close;
 			}
 			delitem 6922,20;// Sandpaper
 			erasequest 5447;// [Repeat]Bothersome Little Thing
 			setquest 5446;// [Stand by]Bothersome Little Thing
 			getexp 700000,500000;
-			getitem 6919,4;// Honor Token
+			getitem 6919,4;// TokenOfHonor
 			mes "[Prisoner 55HK115]";
 			mes "This time, the service is acceptable.";
 			next;
@@ -17578,4 +17751,268 @@ prt_prison,55,115,2	script	Prisoner 55HK115#EP161H	4_STORMKNIGHT,{
 			close;
 		}
 	}
+}
+
+// GM NPC
+prt_prison,20,20,4	script	Underground Dungeon Helper#EP161D	4_PORING,{
+	if (callfunc("F_GM_NPC",1854,0,1,9999) < 1)
+		end;
+	mes "[Underground Dungeon Helper]";
+	mes "Select the service to use.";
+	next;
+	switch( select( "Reset Quest", "Individual quest setting", "Reset cooldown." ) ) {
+	case 1:
+		mes "[Underground Dungeon Helper]";
+		mes "All quests related with the underground dungeon will be reset.";
+		next;
+		select("Setting");
+		mes "[Underground Dungeon Helper]";
+		for ( .@quest_id = 5415; .@quest_id < 5447; ++.@quest_id ) {
+			if (isbegin_quest(.@quest_id) > 0)
+				erasequest .@quest_id;
+			mes "" + .@quest_id + " Delete";
+		}
+		next;
+		break;
+	case 2:
+		mes "[Underground Dungeon Helper]";
+		mes "Choose the quest to customize the setting.";
+		next;
+		switch( select( "Sector A - To My Beloved Fellow", "Sector B - Lowly Standards", "Sector C - Clean Life", "Sector E - Finding Lights", "Sector F - Refreshing Prison Life", "Sector G - Suppressing Darkness", "Sector H - Bothersome Little Thing" ) ) {
+		case 1:
+			mes "[Underground Dungeon Helper]";
+			mes "This quest is currently in the state of";
+			mes "5425(" + isbegin_quest(5425) + ")/5426(" + checkquest(5426,PLAYTIME) + ")/5427(" + isbegin_quest(5427) + ")";
+			next;
+			switch( select( "Move to the position.", "First Quest", "Right before the reward" ) ) {
+			case 1:
+				warp "prt_prison",245,255;
+				break;
+			case 2:
+				if (select( "Complete", "Reset" ) == 1) {
+					if (isbegin_quest(5425) == 0)
+						setquest 5425;
+					if (isbegin_quest(5425) == 1)
+						completequest 5425;
+					break;
+				}
+				if (isbegin_quest(5425) > 0)
+					erasequest 5425;
+				break;
+			case 3:
+				mes "[Underground Dungeon Helper]";
+				mes "Accept a quest before you customize the setting.";
+				next;
+				select("Setting");
+				getitem 6925,1;	// Prisoner_Letter
+				break;
+			}
+			break;
+		case 2:
+			mes "[Underground Dungeon Helper]";
+			mes "This quest is currently in the state of";
+			mes "5428(" + isbegin_quest(5428) + ")/5429(" + checkquest(5429,PLAYTIME) + ")/5430(" + isbegin_quest(5430) + ")";
+			next;
+			switch( select( "Move to the position.", "First Quest", "Right before the reward" ) ) {
+			case 1:
+				warp "prt_prison",265,195;
+				break;
+			case 2:
+				if (select( "Complete", "Reset" ) == 1) {
+					if (isbegin_quest(5428) == 0)
+						setquest 5428;
+					if (isbegin_quest(5428) == 1)
+						completequest 5428;
+					break;
+				}
+				if (isbegin_quest(5428) > 0)
+					erasequest 5428;
+				break;
+			case 3:
+				mes "[Underground Dungeon Helper]";
+				mes "Accept a quest before you customize the setting.";
+				next;
+				select("Setting");
+				getitem 6924,20;	// Red_Eyes
+				break;
+			}
+			break;
+		case 3:
+			mes "[Underground Dungeon Helper]";
+			mes "This quest is currently in the state of";
+			mes "5431(" + isbegin_quest(5431) + ")/5432(" + isbegin_quest(5432) + ")/5433(" + checkquest(5433,PLAYTIME) + ")/5434(" + isbegin_quest(5434) + ")/5435(" + isbegin_quest(5435) + ")";
+			next;
+			switch( select( "Move to the position.", "First Quest", "Right before the reward" ) ) {
+			case 1:
+				warp "prt_prison",255,155;
+				break;
+			case 2:
+				if (select( "Complete", "Reset" ) == 1) {
+					if (isbegin_quest(5431) == 0)
+						setquest 5431;
+					if (isbegin_quest(5431) == 1)
+						completequest 5431;
+					if (isbegin_quest(5432) == 0)
+						setquest 5432;
+					if (isbegin_quest(5432) == 1)
+						completequest 5432;
+					break;
+				}
+				if (isbegin_quest(5431) > 0)
+					erasequest 5431;
+				if (isbegin_quest(5432) > 0)
+					erasequest 5432;
+				break;
+			case 3:
+				mes "[Underground Dungeon Helper]";
+				mes "Accept a quest before you customize the setting.";
+				next;
+				select("Setting");
+				if (isbegin_quest(5431) == 1) {
+					if (isbegin_quest(5432) == 0)
+						setquest 5432;
+				}
+				else {
+					if (isbegin_quest(5435) == 0)
+						setquest 5435;
+				}
+				break;
+			}
+			break;
+		case 4:
+			mes "[Underground Dungeon Helper]";
+			mes "This quest is currently in the state of";
+			mes "5436(" + isbegin_quest(5436) + ")/5437(" + checkquest(5437,PLAYTIME) + ")/5438(" + isbegin_quest(5438) + ")";
+			next;
+			switch( select( "Move to the position.", "First Quest", "Right before the reward" ) ) {
+			case 1:
+				warp "prt_prison",105,75;
+				break;
+			case 2:
+				if (select( "Complete", "Reset" ) == 1) {
+					if (isbegin_quest(5436) == 0)
+						setquest 5436;
+					if (isbegin_quest(5436) == 1)
+						completequest 5436;
+					break;
+				}
+				if (isbegin_quest(5436) > 0)
+					erasequest 5436;
+				break;
+			case 3:
+				mes "[Underground Dungeon Helper]";
+				mes "Accept a quest before you customize the setting.";
+				next;
+				select("Setting");
+				getitem 6923,1;	// Bright_Lights
+				break;
+			}
+			break;
+		case 5:
+			mes "[Underground Dungeon Helper]";
+			mes "This quest is currently in the state of";
+			mes "5439(" + isbegin_quest(5439) + ")/5440(" + checkquest(5440,PLAYTIME) + ")/5441(" + isbegin_quest(5441) + ")";
+			next;
+			switch( select( "Move to the position.", "First Quest", "Right before the reward" ) ) {
+			case 1:
+				warp "prt_prison",105,190;
+				break;
+			case 2:
+				if (select( "Complete", "Reset" ) == 1) {
+					if (isbegin_quest(5439) == 0)
+						setquest 5439;
+					if (isbegin_quest(5439) == 1)
+						completequest 5439;
+					break;
+				}
+				if (isbegin_quest(5439) > 0)
+					erasequest 5439;
+				break;
+			case 3:
+				mes "[Underground Dungeon Helper]";
+				mes "Accept a quest before you customize the setting.";
+				next;
+				select("Setting");
+				getitem 6921,20;	// Desiccant
+				break;
+			}
+			break;
+		case 6:
+			mes "[Underground Dungeon Helper]";
+			mes "This quest is currently in the state of";
+			mes "5442(" + isbegin_quest(5442) + ")/5443(" + checkquest(5443,PLAYTIME) + ")/5444(" + isbegin_quest(5444) + ")";
+			next;
+			switch( select( "Move to the position.", "First Quest", "Right before the reward" ) ) {
+			case 1:
+				warp "prt_prison",95,215;
+				break;
+			case 2:
+				if (select( "Complete", "Reset" ) == 1) {
+					if (isbegin_quest(5442) == 0)
+						setquest 5442;
+					if (isbegin_quest(5442) == 1)
+						completequest 5442;
+					break;
+				}
+				if (isbegin_quest(5442) > 0)
+					erasequest 5442;
+				break;
+			case 3:
+				mes "[Underground Dungeon Helper]";
+				mes "Accept a quest before you customize the setting.";
+				next;
+				select("Setting");
+				getitem 710,1;	// Illusion_Flower
+				break;
+			}
+			break;
+		case 7:
+			mes "[Underground Dungeon Helper]";
+			mes "This quest is currently in the state of";
+			mes "5445(" + isbegin_quest(5445) + ")/5446(" + checkquest(5446,PLAYTIME) + ")/5447(" + isbegin_quest(5447) + ")";
+			next;
+			switch( select( "Move to the position.", "First Quest", "Right before the reward" ) ) {
+			case 1:
+				warp "prt_prison",55,125;
+				break;
+			case 2:
+				if (select( "Complete", "Reset" ) == 1) {
+					if (isbegin_quest(5445) == 0)
+						setquest 5445;
+					if (isbegin_quest(5445) == 1)
+						completequest 5445;
+					break;
+				}
+				if (isbegin_quest(5445) > 0)
+					erasequest 5445;
+				break;
+			case 3:
+				mes "[Underground Dungeon Helper]";
+				mes "Accept a quest before you customize the setting.";
+				next;
+				select("Setting");
+				getitem 6922,20;	// Sandpaper
+				break;
+			}
+			break;
+		}
+		break;
+	case 3:
+		mes "[Underground Dungeon Helper]";
+		mes "Resets the Underground Dungeon cooldown.";
+		next;
+		select("Setting");
+		setarray .@list[0],
+			5426, 5429, 5433, 5437,
+			5440, 5443, 5446, 5426;
+		.@size = getarraysize(.@list);
+		for ( .@i = 0; .@i < .@size; ++.@i ) {
+			if (isbegin_quest(.@i) > 0)
+				erasequest .@i;
+		}
+		break;
+	}
+	mes "[Underground Dungeon Helper]";
+	mes "Complete";
+	close;
 }
