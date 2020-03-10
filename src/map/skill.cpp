@@ -22705,7 +22705,7 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 	for(int offset = 3, i = SKILLDMG_PC; i < SKILLDMG_MAX && offset < columns; i++, offset++ ){
 		value = strtol(split[offset], &result, 10);
 
-		if (*result) {
+		if (*result && *result != ' ') {
 			ShowError("skill_parse_row_skilldamage: Invalid damage %s given for skill %d, defaulting to 0.\n", result, id);
 			value = 0;
 		}
