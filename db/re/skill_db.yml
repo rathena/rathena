@@ -6307,7 +6307,7 @@ Body:
     DamageFlags:
       IgnoreFlee: true
     Flags:
-      AllowWhenHidden: true
+      AllowWhenHidden: false
     Range: -1
     Hit: Single
     HitCount: 1
