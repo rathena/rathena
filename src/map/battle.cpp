@@ -5360,9 +5360,9 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 		{
 #ifdef RENEWAL
 			case RG_BACKSTAP:
-				if (skill_id == RG_BACKSTAP && sd && sd->status.weapon == W_DAGGER)
-				wd.div_ = -2;
-			break;
+				if (sd && sd->status.weapon == W_DAGGER)
+					wd.div_ = -2;
+				break;
 #endif
 			case MH_SONIC_CRAW:{
 				TBL_HOM *hd = BL_CAST(BL_HOM,src);
