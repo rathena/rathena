@@ -1013,7 +1013,7 @@ har_in01,89,26,5	script	Johnny James#har_in01	10213,{
 		setpcblock PCBLOCK_NPC, true;
 		npctalk "You sneaky bastards, how dare you show up again? Go to hell!", "", bc_self;
 		sleep2 2000;
-		cloakonffpc  "Ivoka Skudi#har02", getcharid(0);
+		cloakoffnpc  "Ivoka Skudi#har02", getcharid(0);
 		setpcblock PCBLOCK_NPC, false;
 		npctalk "Ah, you'd better show some respect to our future mayor.", "Ivoka Skudi#har02", bc_self;
 		mes "[Ivoka Skudi]";

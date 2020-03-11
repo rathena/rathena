@@ -66,7 +66,7 @@ iz_int04,51,30,0	duplicate(iz_int#intro_evt02)	iz_int04#intro_evt02	HIDDEN_WARP_
 iz_int,56,32,3	script	Wounded Swordsman#intro_npc01_iz_int	4_TOWER_01,5,5,{
 	npctalk "Oh...", "", bc_self;
 	cloakonnpc strnpcinfo(0), getcharid(0);
-	cloakonffpc "Wounded Swordsman#intro_npc02_" + strnpcinfo(4), getcharid(0);
+	cloakoffnpc "Wounded Swordsman#intro_npc02_" + strnpcinfo(4), getcharid(0);
 	end;
 
 OnTouch:
