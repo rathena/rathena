@@ -10018,7 +10018,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = 50*(val1+1); // Damage increase (+50 +50*lv%)
 #endif
 			if (sd) {
-				uint16 poison_level = pc_checkskill(sd, GC_RESEARCHNEWPOISON)
+				uint16 poison_level = pc_checkskill(sd, GC_RESEARCHNEWPOISON);
 
 				if (poison_level > 0) {
 					tick += 30000; // Base of 30 seconds
@@ -13533,14 +13533,14 @@ TIMER_FUNC(status_change_timer){
 	case SC_DEATHHURT:
 		if (sce->val4 >= 0) {
 			if (status->hp < status->max_hp)
-				status_heal(bl, (int)status->max_hp * 1 / 100., 0, 1);
+				status_heal(bl, (int)status->max_hp * 1 / 100, 0, 1);
 		}
 		break;
 
 	case SC_TOXIN:
 		if (sce->val4 >= 0) {
 			if (status->sp < status->max_sp)
-				status_heal(bl, 0, (int)status->max_sp * 1 / 100., 1);
+				status_heal(bl, 0, (int)status->max_sp * 1 / 100, 1);
 		}
 		break;
 

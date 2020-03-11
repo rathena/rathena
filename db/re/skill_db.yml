@@ -19139,6 +19139,8 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
+    DamageFlags:
+      Critical: true
     Range: 3
     Hit: Multi_Hit
     HitCount: 1
@@ -19161,7 +19163,6 @@ Body:
     FixedCastTime: -1
     CastDelayFlags:
       IgnoreStatus: true
-      Critical: true
     Requires:
       SpCost: 40
       State: Move_Enable

@@ -1214,7 +1214,11 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 
 	if( sd )
 	{ // These statuses would be applied anyway even if the damage was blocked by some skills. [Inkfish]
-		if( skill_id != WS_CARTTERMINATION && skill_id != AM_DEMONSTRATION && skill_id != CR_REFLECTSHIELD && skill_id != MS_REFLECTSHIELD && skill_id != ASC_BREAKER ) {
+		if( skill_id != WS_CARTTERMINATION && skill_id != AM_DEMONSTRATION && skill_id != CR_REFLECTSHIELD && skill_id != MS_REFLECTSHIELD
+#ifndef RENEWAL
+		&& skill_id != ASC_BREAKER
+#endif
+		) {
 			// Trigger status effects
 			enum sc_type type;
 			unsigned int time;
@@ -4818,9 +4822,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case GS_FULLBUSTER:
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
-#ifndef RENEWAL
 	case ASC_BREAKER:
-#endif
 	case HFLI_MOON:	//[orn]
 	case HFLI_SBR44:	//[orn]
 	case NPC_BLEEDING:
@@ -5466,9 +5468,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 #endif
 	case CR_ACIDDEMONSTRATION:
 	case TF_THROWSTONE:
-#ifdef RENEWAL
-	case ASC_BREAKER:
-#endif
 	case NPC_SMOKING:
 	case GS_FLING:
 	case NJ_ZENYNAGE:
