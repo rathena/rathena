@@ -3654,10 +3654,6 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += (200 + 40 * skill_lv) / 2;
 			else
 				skillratio += 200 + 40 * skill_lv;
-#ifdef RENEWAL
-			if (sd && sd->status.weapon == W_DAGGER)
-				skillratio *= 2;
-#endif
 			break;
 		case RG_RAID:
 #ifdef RENEWAL
@@ -5361,7 +5357,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 #ifdef RENEWAL
 			case RG_BACKSTAP:
 				if (sd && sd->status.weapon == W_DAGGER)
-					wd.div_ = -2;
+					wd.div_ = 2;
 				break;
 #endif
 			case MH_SONIC_CRAW:{
