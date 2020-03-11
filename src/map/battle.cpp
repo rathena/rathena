@@ -2162,6 +2162,10 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 	if (src->type == BL_MOB && (skill_id == AC_SHOWER || skill_id == AM_DEMONSTRATION))
 		return BF_SHORT;
 
+	// Cast range is 7 cells and player jumps to target but skill is considered melee
+	if (skill_id == GC_CROSSIMPACT)
+		return BF_SHORT;
+
 	//Skill Range Criteria
 	if (battle_config.skillrange_by_distance &&
 		(src->type&battle_config.skillrange_by_distance)

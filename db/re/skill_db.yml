@@ -19141,7 +19141,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       Critical: true
-    Range: 3
+    Range: 7
     Hit: Multi_Hit
     HitCount: 1
     Element: Weapon

@@ -4836,7 +4836,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NC_AXEBOOMERANG:
 	case NC_POWERSWING:
 	case NC_MAGMA_ERUPTION:
-	case GC_CROSSIMPACT:
 	case GC_VENOMPRESSURE:
 	case SC_TRIANGLESHOT:
 	case SC_FEINTBOMB:
@@ -5631,6 +5630,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		{
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		}
+		break;
+	case GC_CROSSIMPACT:
+		if (skill_check_unit_movepos(5, src, bl->x, bl->y, 1, 1))
+			clif_blown(src);
+		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
 	case GC_PHANTOMMENACE:
