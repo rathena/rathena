@@ -6500,7 +6500,8 @@ This command will fully unload a NPC object and all of it's duplicates.
 
 These commands will make the NPC object specified display as cloaked/uncloaked,
 even though not actually disabled.
-The player can interact with a NPC cloaked but the NPC trigger area is disabled.
+The player can interact with a NPC cloaked (via NPC click, monster event..)
+but the NPC trigger area is disabled.
 
 If <character ID> is given then the NPC will only display to the specified
 player until he/she leaves the map, logs out, or the npc option is changed.

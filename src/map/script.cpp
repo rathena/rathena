@@ -24629,7 +24629,7 @@ BUILDIN_FUNC(isnpccloaked)
 	struct npc_data *nd = npc_name2id(script_getstr(st, 2));
 
 	if (!nd) {
-		ShowError("isnpccloaked: %s is a non-existing NPC.\n", script_getstr(st, 2));
+		ShowError("buildin_isnpccloaked: %s is a non-existing NPC.\n", script_getstr(st, 2));
 		return SCRIPT_CMD_FAILURE;
 	}
 
