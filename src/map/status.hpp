@@ -887,6 +887,9 @@ enum sc_type : int16 {
 	SC_ENTRY_QUEUE_APPLY_DELAY,
 	SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT,
 
+	SC_LUXANIMA,
+	SC_REUSE_LIMIT_LUXANIMA,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif

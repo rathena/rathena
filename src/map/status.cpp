@@ -810,11 +810,12 @@ void initChangeTables(void)
 	set_sc( RK_REFRESH		, SC_REFRESH		, EFST_REFRESH			, SCB_NONE );
 	set_sc( RK_GIANTGROWTH		, SC_GIANTGROWTH	, EFST_GIANTGROWTH		, SCB_STR );
 	set_sc( RK_STONEHARDSKIN	, SC_STONEHARDSKIN	, EFST_STONEHARDSKIN		, SCB_DEF|SCB_MDEF );
-	set_sc( RK_VITALITYACTIVATION	, SC_VITALITYACTIVATION	, EFST_VITALITYACTIVATION		, SCB_REGEN );
+	set_sc( RK_VITALITYACTIVATION	, SC_VITALITYACTIVATION	, EFST_VITALITYACTIVATION		, SCB_NONE );
 	set_sc( RK_FIGHTINGSPIRIT	, SC_FIGHTINGSPIRIT	, EFST_FIGHTINGSPIRIT		, SCB_WATK|SCB_ASPD );
 	set_sc( RK_ABUNDANCE		, SC_ABUNDANCE		, EFST_ABUNDANCE			, SCB_NONE );
 	set_sc( RK_CRUSHSTRIKE		, SC_CRUSHSTRIKE	, EFST_CRUSHSTRIKE		, SCB_NONE );
 	set_sc_with_vfx( RK_DRAGONBREATH_WATER	, SC_FREEZING	, EFST_FROSTMISTY			, SCB_ASPD|SCB_SPEED|SCB_DEF );
+	set_sc( RK_LUXANIMA			, SC_LUXANIMA		, EFST_LUXANIMA			, SCB_MAXHP|SCB_MAXSP );
 	
 	/* GC Guillotine Cross */
 	set_sc_with_vfx( GC_VENOMIMPRESS, SC_VENOMIMPRESS	, EFST_VENOMIMPRESS	, SCB_NONE );
@@ -3360,6 +3361,8 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 			if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_HPRATE)
 				bonus += 30;
 #endif
+			if (sc->data[SC_LUXANIMA])
+				bonus += sc->data[SC_LUXANIMA]->val3;
 
 			//Decreasing
 			if(sc->data[SC_VENOMBLEED])
@@ -3473,6 +3476,8 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += sc->data[SC_VITATA_500]->val2;
 			if (sc->data[SC_ENERGY_DRINK_RESERCH])
 				bonus += sc->data[SC_ENERGY_DRINK_RESERCH]->val3;
+			if (sc->data[SC_LUXANIMA])
+				bonus += sc->data[SC_LUXANIMA]->val3;
 		}
 		// Max rate reduce is -100%
 		bonus = cap_value(bonus,-100,INT_MAX);
@@ -4969,7 +4974,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		(bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
 		sc->data[SC_EXTREMITYFIST] && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK)) ||
 #endif
-		sc->data[SC_OBLIVIONCURSE] || sc->data[SC_VITALITYACTIVATION])
+		sc->data[SC_OBLIVIONCURSE])
 		regen->flag &= ~RGN_SP;
 
 	if (sc->data[SC_TENSIONRELAX]) {
@@ -5847,7 +5852,7 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 	if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
 		str += ((sc->data[SC_SPIRIT]->val3)>>16)&0xFF;
 	if(sc->data[SC_GIANTGROWTH])
-		str += 30;
+		str += sc->data[SC_GIANTGROWTH]->val2;
 	if(sc->data[SC_BEYONDOFWARCRY])
 		str -= sc->data[SC_BEYONDOFWARCRY]->val3;
 	if(sc->data[SC_SAVAGE_STEAK])
@@ -7422,7 +7427,7 @@ static short status_calc_fix_aspd(struct block_list *bl, struct status_change *s
 
 	if ((sc->data[SC_GUST_OPTION] || sc->data[SC_BLAST_OPTION] || sc->data[SC_WILD_STORM_OPTION]))
 		aspd -= 50; // +5 ASPD
-	if (sc->data[SC_FIGHTINGSPIRIT] && sc->data[SC_FIGHTINGSPIRIT]->val2)
+	if (sc->data[SC_FIGHTINGSPIRIT])
 		aspd -= sc->data[SC_FIGHTINGSPIRIT]->val2;
 	if (sc->data[SC_MTF_ASPD])
 		aspd -= sc->data[SC_MTF_ASPD]->val1;
@@ -9871,6 +9876,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_REUSE_LIMIT_ASPD_POTION:
 			case SC_DORAM_BUF_01:
 			case SC_DORAM_BUF_02:
+			case SC_REUSE_LIMIT_LUXANIMA:
 				return 0;
 			case SC_PUSH_CART:
 			case SC_COMBO:
@@ -10924,7 +10930,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 10000; // [GodLesZ] tick time
 			break;
 		case SC_GIANTGROWTH:
-			val2 = 15; // Double damage success rate.
+			val2 = 30; // Damage success rate and STR increase
+			break;
+		case SC_LUXANIMA:
+			val2 = 15; // Storm Blast success %
+			val3 = 30; // Damage/HP/SP % increase
 			break;
 
 		/* Arch Bishop */
@@ -12480,6 +12490,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_LHZ_DUN_N4:
 			case SC_ENTRY_QUEUE_APPLY_DELAY:
 			case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
+			case SC_REUSE_LIMIT_LUXANIMA:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -14541,6 +14552,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_LHZ_DUN_N2:
 			case SC_LHZ_DUN_N3:
 			case SC_LHZ_DUN_N4:
+			case SC_REUSE_LIMIT_LUXANIMA:
 			// Clans
 			case SC_CLAN_INFO:
 			case SC_SWORDCLAN:

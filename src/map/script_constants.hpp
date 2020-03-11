@@ -1546,6 +1546,8 @@
 	export_constant(SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT);
 	export_constant(SC_ADAPTATION);
 	export_constant(SC_BASILICA_CELL);
+	export_constant(SC_LUXANIMA);
+	export_constant(SC_REUSE_LIMIT_LUXANIMA);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
