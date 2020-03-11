@@ -223,14 +223,30 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 		if (nd->sc.option&OPTION_INVISIBLE)
 			return 1;
 
-		// note : disablenpc doesn't reset the previous trigger status on official
-		if( npc_ontouch_event(sd,nd) > 0 && npc_ontouch2_event(sd,nd) > 0 )
-		{ // failed to run OnTouch event, so just click the npc
-			if (sd->npc_id != 0)
-				return 0;
+		switch (nd->subtype) {
+		case NPCTYPE_WARP:
+			if ((!nd->trigger_on_hidden && (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]))) || pc_isdead(sd))
+				return 1;
+			if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(nd->u.warp.mapindex), sd->group_level))
+				return 1;
+			if (sd->count_rewarp > 10) {
+				ShowWarning("Prevented infinite warp loop for player (%d:%d). Please fix NPC: '%s', path: '%s'\n", sd->status.account_id, sd->status.char_id, nd->exname, nd->path);
+				sd->count_rewarp = 0;
+				return 1;
+			}
+			pc_setpos(sd, nd->u.warp.mapindex, nd->u.warp.x, nd->u.warp.y, CLR_OUTSIGHT);
+			break;
+		default:
+			// note : disablenpc doesn't reset the previous trigger status on official
+			if( npc_ontouch_event(sd,nd) > 0 && npc_ontouch2_event(sd,nd) > 0 )
+			{ // failed to run OnTouch event, so just click the npc
+				if (sd->npc_id != 0)
+					return 0;
 
-			pc_stop_walking(sd,1);
-			npc_click(sd,nd);
+				pc_stop_walking(sd,1);
+				npc_click(sd,nd);
+			}
+			break;
 		}
 	}
 	return 0;
