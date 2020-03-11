@@ -2493,12 +2493,12 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			case NJ_KIRIKAGE:
 				cri += 250 + 50*skill_lv;
 				break;
-			case GC_CROSSIMPACT:
 #ifdef RENEWAL
 			case ASC_BREAKER:
+#endif
+			case GC_CROSSIMPACT:
 				cri /= 2;
 				break;
-#endif
 		}
 		if(tsd && tsd->bonus.critical_def)
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
