@@ -6304,10 +6304,6 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      IgnoreFlee: false
-    Flags:
-      AllowWhenHidden: false
     Range: -1
     Hit: Single
     HitCount: 1
