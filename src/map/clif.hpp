@@ -631,7 +631,8 @@ void clif_statusupack(struct map_session_data *sd,int type,int ok,int val);	// s
 void clif_equipitemack(struct map_session_data *sd,int n,int pos,uint8 flag);	// self
 void clif_unequipitemack(struct map_session_data *sd,int n,int pos,int ok);	// self
 void clif_misceffect(struct block_list* bl,int type);	// area
-void clif_changeoption(struct block_list* bl);	// area
+void clif_changeoption_target(struct block_list* bl, struct block_list* target);
+#define clif_changeoption(bl) clif_changeoption_target(bl, NULL)	// area
 void clif_changeoption2(struct block_list* bl);	// area
 void clif_useitemack(struct map_session_data *sd,int index,int amount,bool ok);	// self
 void clif_GlobalMessage(struct block_list* bl, const char* message,enum send_target target);
