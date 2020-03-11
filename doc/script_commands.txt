@@ -277,8 +277,8 @@ these floating NPC objects are for. More on that below.
 
 ** Define a shop/cashshop/itemshop/pointshop NPC.
 
--%TAB%shop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
-<map name>,<x>,<y>,<facing>%TAB%shop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
+-%TAB%shop%TAB%<NPC Name>%TAB%<sprite id>{,discount},<itemid>:<price>{,<itemid>:<price>...}
+<map name>,<x>,<y>,<facing>%TAB%shop%TAB%<NPC Name>%TAB%<sprite id>{,discount},<itemid>:<price>{,<itemid>:<price>...}
 
 -%TAB%cashshop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
 <map name>,<x>,<y>,<facing>%TAB%cashshop%TAB%<NPC Name>%TAB%<sprite id>,<itemid>:<price>{,<itemid>:<price>...}
@@ -300,6 +300,8 @@ The Item ID is the number of item in the 'item_db.txt' database. If Price is set
 to -1, the 'buy price' given in the item database will be used. Otherwise, the
 price you gave will be used for this item, which is how you create differing
 prices for items in different shops.
+
+Optionally you can specify the discount option and set it to "yes" or "no", to enable or disable discounting.
 
 There are other types of shops available:
 cashshop - use "cashshop" in place of "shop" to use the Cash Shop interface, allowing
@@ -2246,7 +2248,7 @@ Notice that .@array[4] and .@array[5] won't be copied to the second array, and i
 
 ---------------------------------------
 
-*deletearray <array name>[<first value>],<how much to delete>;
+*deletearray <array name>[<first value>]{,<how much to delete>};
 
 This command will delete a specified number of array elements totally from an
 array, shifting all the elements beyond this towards the beginning.
@@ -5434,10 +5436,10 @@ invoking character.
 
 ---------------------------------------
 
-*mail <destination id>,"<sender name>","<title>","<body>"{,<zeny>{,<item id array>,<item amount array>{,<item card0 array>{,<item card1 array>{,<item card2 array>{,<item card3 array>
+*mail <destination id>,"<sender name>","<title>","<body>"{,<zeny>{,<item id array>,<item amount array>{,refine{,bound{,<item card0 array>{,<item card1 array>{,<item card2 array>{,<item card3 array>
 		{,<random option id0 array>, <random option value0 array>, <random option paramter0 array>{,<random option id1 array>, <random option value1 array>, <random option paramter1 array>
 		{,<random option id2 array>, <random option value2 array>, <random option paramter2 array>{,<random option id3 array>, <random option value3 array>, <random option paramter3 array>
-		{,<random option id4 array>, <random option value4 array>, <random option paramter4 array>}}}}}}};
+		{,<random option id4 array>, <random option value4 array>, <random option paramter4 array>}}}}}}}}};
 
 This command will send mail to the <destination id> which is a character ID.
 A <sender name> can be specified but does not have to be from the direct creator
@@ -5470,10 +5472,12 @@ Example of sending mail with items:
 	.@zeny = 0;
 	setarray .@mailitem[0], 504, 505, 2220, 1214; // White Potion, Blue Potion, Hat, Dagger
 	setarray .@mailamount[0], 10, 5, 1, 1; // 10 White Potions, 5 Blue Potions, 1 Hat, 1 Dagger
+	setarray .@mailrefine[0], 0, 0, 3, 10; // +3 Hat, +10 Dagger
+	setarray .@mailbound[0], 0, 0, Bound_Account, Bound_Char; // Account bounded Hat, Char bounded Dagger
 	setarray .@mailcard0[0], 0, 0, 4198, 4092; // Attach Maya Purple Card to the Hat, Attach Skeleton Worker Card to Dagger
 	setarray .@mailcard1[0], 0, 0, 0, 4092; // Attach Skeleton Worker Card to Dagger
 	setarray .@mailcard2[0], 0, 0, 0, 4092; // Attach Skeleton Worker Card to Dagger
-	mail .@charid, .@sender$, .@title$, .@body$, .@zeny, .@mailitem, .@mailamount, .@mailcard0, .@mailcard1, .@mailcard2;
+	mail .@charid, .@sender$, .@title$, .@body$, .@zeny, .@mailitem, .@mailamount, .@mailrefine, .@mailbound, .@mailcard0, .@mailcard1, .@mailcard2;
 	
 Example of sending mail with items and random options:
 	.@charid = getcharid(0);
@@ -5483,14 +5487,16 @@ Example of sending mail with items and random options:
 	.@zeny = 0;
 	setarray .@mailitem[0], 504, 505, 2220, 1214; // White Potion, Blue Potion, Hat, Dagger
 	setarray .@mailamount[0], 10, 5, 1, 1; // 10 White Potions, 5 Blue Potions, 1 Hat, 1 Dagger
+	setarray .@mailrefine[0], 0, 0, 3, 10; // +3 Hat, +10 Dagger
+	setarray .@mailbound[0], 0, 0, Bound_Account, Bound_Char; // Account bounded Hat, Char bounded Dagger
 	setarray .@mailcard0[0], 0, 0, 4198, 4092; // Attach Maya Purple Card to the Hat, Attach Skeleton Worker Card to Dagger
 	setarray .@mailcard1[0], 0, 0, 0, 4092; // Attach Skeleton Worker Card to Dagger
 	setarray .@mailcard2[0], 0, 0, 0, 4092; // Attach Skeleton Worker Card to Dagger
 	setarray .@mailcard3[0], 0, 0, 0, 0; // Empty last slot
-	setarray .@mailrndopt_id0[0], 0, 0, 0, 0, RDMOPT_VAR_MAXHPAMOUNT; // Enchant the Dagger with increased HP option
-	setarray .@mailrndopt_val0[0], 0, 0, 0, 0, 1000; // Enchant the Dagger with increased HP option by 1000 points
-	setarray .@mailrndopt_prm0[0], 0, 0, 0, 0, 0; // Enchant the Dagger with increased HP option - does not need any parameter
-	mail .@charid, .@sender$, .@title$, .@body$, .@zeny, .@mailitem, .@mailamount, .@mailcard0, .@mailcard1, .@mailcard2, .@mailcard3, .@mailrndopt_id0, .@mailrndopt_val0, .@mailrndopt_prm0;
+	setarray .@mailrndopt_id0[0], 0, 0, 0, RDMOPT_VAR_MAXHPAMOUNT; // Enchant the Dagger with increased HP option
+	setarray .@mailrndopt_val0[0], 0, 0, 0, 1000; // Enchant the Dagger with increased HP option by 1000 points
+	setarray .@mailrndopt_prm0[0], 0, 0, 0, 0; // Enchant the Dagger with increased HP option - does not need any parameter
+	mail .@charid, .@sender$, .@title$, .@body$, .@zeny, .@mailitem, .@mailamount, .@mailrefine, .@mailbound, .@mailcard0, .@mailcard1, .@mailcard2, .@mailcard3, .@mailrndopt_id0, .@mailrndopt_val0, .@mailrndopt_prm0;
 
 ---------------------------------------
 
@@ -6486,6 +6492,28 @@ while hidden then revealing.... you can wonder around =P
 *unloadnpc "<NPC object name>";
 
 This command will fully unload a NPC object and all of it's duplicates.
+
+---------------------------------------
+ 
+*cloakonnpc "<NPC object name>"{,<character ID>};
+*cloakoffnpc "<NPC object name>"{,<character ID>};
+
+These commands will make the NPC object specified display as cloaked/uncloaked,
+even though not actually disabled.
+The player can interact with a NPC cloaked (via NPC click, monster event..)
+but the NPC trigger area is disabled.
+
+If <character ID> is given then the NPC will only display to the specified
+player until he/she leaves the map, logs out, or the npc option is changed.
+If no <character ID> is specified it will display to the area.
+
+---------------------------------------
+
+*isnpccloaked "<NPC object name>"{,<character ID>};
+
+Returns true if the NPC has been cloaked to the attached player or given
+<character ID>, false otherwise. This works in association with cloakonnpc
+when it is targetting a specific character.
 
 ---------------------------------------
 
@@ -9299,7 +9327,8 @@ QMARK_PURPLE - Purple Marker
 *waitingroom2bg_single(<battle group>,{"<map name>",<x>,<y>{,"<npc name>"}});
 
 Adds the first waiting player from the chat room of the given NPC to an existing battleground group.
-The player will also be warped to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
+The player will also be warped to the default spawn point of the battle group or to the specified coordinates
+<x> and <y> on the given <map>.
 
 ---------------------------------------
 
@@ -9343,7 +9372,8 @@ Returns battle group ID on success. Returns 0 on failure.
 
 *bg_join(<battle group>,{"<map name>",{<x>,<y>{,<char id>}});
 
-Adds an attached player or <char id> if specified to an existing battleground group. The player will also be warped to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
+Adds an attached player or <char id> if specified to an existing battleground group. The player will also be warped
+to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
 
 Returns true on success. Returns false on failure.
 
@@ -9351,12 +9381,39 @@ Returns true on success. Returns false on failure.
 
 *bg_team_setxy <Battle Group ID>,<x>,<y>;
 
-Updates the respawn point of the given Battle Group to x,y on the same map. <Battle Group ID> can be retrieved using getcharid(4).
+Updates the respawn point of the given Battle Group to x,y on the same map. <Battle Group ID> can be retrieved
+using getcharid(4).
 
 Example:
 	bg_team_setxy getcharid(4),56,212;
 	mapannounce "bat_a01", "Group [1] has taken the work shop, and will now respawn there.",bc_map,"0xFFCE00";
 	end;
+
+---------------------------------------
+
+*bg_reserve("<battleground_name>");
+
+Reserves a slot for the given Battleground for the Battleground UI System.
+
+Note: 'bg_reserve' and 'bg_unbook' prevent the Battlegrounds queue from joining players in an active Battleground.
+
+---------------------------------------
+
+*bg_unbook("<battleground_name>");
+
+Removes a spot for the given Battleground for the Battleground UI System.
+
+Note: 'bg_reserve' and 'bg_unbook' prevent the Battlegrounds queue from joining players in an active Battleground.
+
+---------------------------------------
+
+*bg_desert({<char_id>});
+
+Same as 'bg_leave' but slaps the player with a deserter status so they can't enter another queue for the time
+defined in battleground_db (10 minutes by default).
+
+With the Battleground Queue System, it will also warp the player to their previous position when they joined or
+to their save point if the map had MF_NOSAVE.
 
 ---------------------------------------
 
@@ -9419,6 +9476,9 @@ OnTimer1000:
 
 Removes attached player from their Battle Group.
 
+With the Battleground Queue System, it will also warp the player to their previous position when they joined or
+to their save point if the map had MF_NOSAVE.
+
 ---------------------------------------
 
 *bg_destroy <Batte Group>;
@@ -9460,6 +9520,21 @@ map within the specified rectangular area.
 This command will force the update of the displayed scoreboard.
 It is only usable when the map is defined as a Type 2 Battleground:
 mapflag	<map name>	battleground	2
+
+---------------------------------------
+
+*bg_info("<battleground name>", <type>);
+
+Retrieves data related to given <battleground name> from the database. Requires feature.bgqueue
+to be enabled. <Type> can be one of the following:
+
+	BG_INFO_ID: Battleground ID.
+	BG_INFO_REQUIRED_PLAYERS: Required players to start a battleground (per side).
+	BG_INFO_MAX_PLAYERS: Maximum players allowed in a battleground.
+	BG_INFO_MIN_LEVEL: Minimum level allowed to join a battleground.
+	BG_INFO_MAX_LEVEL: Maximum level allowed to join a battleground.
+	BG_INFO_MAPS: Number of maps in a battleground. Stores an array of map names in @bgmaps[] and a count in @bgmapscount.
+	BG_INFO_DESERTER_TIME: Amount of time in seconds a player is marked deserter.
 
 ---------------------------------------
 

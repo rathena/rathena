@@ -1,24 +1,19 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= BattleGround System - Tierra Gorge
-//===== By: ================================================== 
-//= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 1.6
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Tierra Gorge Battleground.
 //= - Winning Team: 3 badges (5 if VIP)
 //= - Losing Team: 1 badge (3 if VIP)
-//===== Additional Comments: ================================= 
-//= 1.0 First Version.
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [L0ne_W0lf]
 //= 1.1 Corrected setwalls for barricades. [L0ne_W0lf]
 //= 1.2 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
 //= 1.3 Removed MaxLvl check in waitingrooms.
 //= 1.4 Label standardization. [Euphy]
 //= 1.5 Added GM management function. [Euphy]
 //= 1.6 Added VIP features and created a reward function. [Euphy]
+//= 1.7 Added battle_config checks to allow this script to use the new queue interface or the previous method. [Aleos]
 //============================================================
 
 // Waiting Room NPCs
@@ -51,6 +46,8 @@ bat_room,1,151,3	script	#bat_a01_timer	844,{
 	end;
 
 OnInit:
+	if (getbattleflag("feature.bgqueue"))
+		end;
 OnEnable:
 	initnpctimer;
 	end;
@@ -61,14 +58,21 @@ OnStop:
 
 OnTimer1000:
 	stopnpctimer;
-	initnpctimer;
+	if (!getbattleflag("feature.bgqueue"))
+		initnpctimer;
 	set .@chk_bat_a01,getmapusers("bat_a01");
 	if (.@chk_bat_a01 < 1) {
 		set $@TierraBG1,0; set $@TierraBG1_Victory, 0;
 		if( $@TierraBG1_id1 ) { bg_destroy $@TierraBG1_id1; set $@TierraBG1_id1, 0; }
 		if( $@TierraBG1_id2 ) { bg_destroy $@TierraBG1_id2; set $@TierraBG1_id2, 0; }
-		donpcevent "start#bat_a01::OnReadyCheck";
+		if (getbattleflag("feature.bgqueue")) {
+			bg_unbook "bat_a01";
+			end;
+		} else
+			donpcevent "start#bat_a01::OnReadyCheck";
 	}
+	if (getbattleflag("feature.bgqueue"))
+		initnpctimer;
 	end;
 }
 
@@ -124,23 +128,30 @@ OnEnable:
 
 OnGuillaumeQuit:
 OnCroixQuit:
-	bg_leave;
+	if (getbattleflag("feature.bgqueue"))
+		bg_desert;
+	else
+		bg_leave;
 	end;
 
 OnReadyCheck:
 	if( $@TierraBG1 )
 		end;
-	set .@Guillaume, getwaitingroomstate(0,"Lieutenant Kalos");
-	set .@Croix, getwaitingroomstate(0,"Lieutenant Eyor");
-	if( !.@Guillaume && !.@Croix ) {
-		donpcevent "#bat_a01_timer::OnStop";
-		end;
+	if (!getbattleflag("feature.bgqueue")) {
+		set .@Guillaume, getwaitingroomstate(0,"Lieutenant Kalos");
+		set .@Croix, getwaitingroomstate(0,"Lieutenant Eyor");
+		if( !.@Guillaume && !.@Croix ) {
+			donpcevent "#bat_a01_timer::OnStop";
+			end;
+		}
+		else if( .@Guillaume < 10 || .@Croix < 10 )
+			end;
 	}
-	else if( .@Guillaume < 10 || .@Croix < 10 )
-		end;
 	set $@TierraBG1,1;
-	donpcevent "Lieutenant Kalos::OnEnterBG";
-	donpcevent "Lieutenant Eyor::OnEnterBG";
+	if (!getbattleflag("feature.bgqueue")) {
+		donpcevent "Lieutenant Kalos::OnEnterBG";
+		donpcevent "Lieutenant Eyor::OnEnterBG";
+	}
 	donpcevent "start#bat_a01::OnEnable";
 	bg_warp $@TierraBG1_id1,"bat_a01",352,342;
 	bg_warp $@TierraBG1_id2,"bat_a01",353,52;
@@ -690,7 +701,8 @@ bat_a01,53,377,3	script	Guillaume Vintenar#a01_a	419,{
 			callfunc "F_BG_Badge",1,"Guillaume","Tierra";
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -712,7 +724,8 @@ bat_a01,45,19,3	script	Croix Vintenar#a01_b	415,{
 			callfunc "F_BG_Badge",1,"Croix","Tierra";
 	}
 	bg_leave;
-	warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -796,4 +809,22 @@ bat_a01,1,1,3	script	Release all#a01	81,{
 			close;
 		}
 	}
+}
+
+// BG Queue makes these scripts useless
+-	script	BGQueueInit#tierra01	-1,{
+	end;
+
+OnInit:
+	if (getbattleflag("feature.bgqueue")) {
+		unloadnpc "Lieutenant Kalos";
+		unloadnpc "Lieutenant Eyor";
+		unloadnpc "#bat_a01_quest_a";
+		unloadnpc "#bat_a01_quest_b";
+		unloadnpc "back_bgrooma01a";
+		unloadnpc "back_bgrooma01b";
+		unloadnpc "A_CODE#bat_a01";
+		unloadnpc "B_CODE#bat_a01";
+	}
+	end;
 }

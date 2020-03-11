@@ -1221,7 +1221,9 @@ const char *npc_get_script_event_name(int npce_index);
 void npc_setcells(struct npc_data* nd);
 void npc_unsetcells(struct npc_data* nd);
 bool npc_movenpc(struct npc_data* nd, int16 x, int16 y);
-bool npc_enable(const char* name, int flag);
+bool npc_is_cloaked(struct npc_data* nd, struct map_session_data* sd);
+bool npc_enable_target(const char* name, uint32 char_id, int flag);
+#define npc_enable(name, flag) npc_enable_target(name, 0, flag)
 void npc_setdisplayname(struct npc_data* nd, const char* newname);
 void npc_setclass(struct npc_data* nd, short class_);
 struct npc_data* npc_name2id(const char* name);
@@ -1266,7 +1268,7 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 extern struct npc_data* fake_nd;
 
 int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, unsigned short* item_list);
-bool npc_shop_discount(enum npc_subtype type, bool discount);
+bool npc_shop_discount(struct npc_data* nd);
 
 #if PACKETVER >= 20131223
 void npc_market_tosql(const char *exname, struct npc_item_list *list);

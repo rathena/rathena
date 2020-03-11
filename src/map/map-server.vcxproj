@@ -296,6 +296,7 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\achievement_level_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\achievement_level_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\attendance.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\attendance.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\attr_fix.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\attr_fix.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\battleground_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\battleground_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\castle_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\castle_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\const.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\const.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\create_arrow_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\create_arrow_db.txt')" />
@@ -358,18 +359,12 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\produce_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\produce_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\quest_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\quest_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\refine_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\refine_db.yml')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\size_fix.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\size_fix.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_cast_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_cast_db.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_castnodex_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_castnodex_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\size_fix.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\size_fix.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_changematerial_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_changematerial_db.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_copyable_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_copyable_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_damage_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_damage_db.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_nocast_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_nocast_db.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_nonearnpc_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_nonearnpc_db.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_require_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_require_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_tree.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_tree.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_unit_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_unit_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\spellbook_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\spellbook_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\statpoint.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\statpoint.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\status_disabled.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\status_disabled.txt')" />

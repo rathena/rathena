@@ -337,7 +337,10 @@ enum e_element : int8{
 	ELE_GHOST,
 	ELE_UNDEAD,
 	ELE_ALL,
-	ELE_MAX
+	ELE_MAX,
+	ELE_WEAPON,
+	ELE_ENDOWED,
+	ELE_RANDOM,
 };
 
 #define MAX_ELE_LEVEL 4 /// Maximum Element level
@@ -1120,7 +1123,7 @@ void map_removemobs(int16 m); // [Wizputer]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 
-void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster);
+void map_skill_damage_add(struct map_data *m, uint16 skill_id, union u_mapflag_args *args);
 void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per);
 
 enum e_mapflag map_getmapflag_by_name(char* name);

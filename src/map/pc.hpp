@@ -4,12 +4,14 @@
 #ifndef PC_HPP
 #define PC_HPP
 
+#include <memory>
 #include <vector>
 
 #include "../common/mmo.hpp" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/strlib.hpp"// StringBuf
 #include "../common/timer.hpp"
 
+#include "battleground.hpp"
 #include "buyingstore.hpp" // struct s_buyingstore
 #include "clif.hpp" //e_wip_block
 #include "itemdb.hpp" // MAX_ITEMGROUP
@@ -146,7 +148,7 @@ struct s_addele2 {
 };
 
 struct weapon_data {
-	int atkmods[3];
+	int atkmods[SZ_ALL];
 	// all the variables except atkmods get zero'ed in each call of status_calc_pc
 	// NOTE: if you want to add a non-zeroed variable, you need to update the memset call
 	//  in status_calc_pc as well! All the following are automatically zero'ed. [Skotlex]
@@ -382,7 +384,7 @@ struct map_session_data {
 	uint16 skill_id_dance,skill_lv_dance;
 	short cook_mastery; // range: [0,1999] [Inkfish]
 	struct skill_cooldown_entry * scd[MAX_SKILLCOOLDOWN]; // Skill Cooldown
-	short cloneskill_idx, ///Stores index of copied skill by Intimidate/Plagiarism
+	uint16 cloneskill_idx, ///Stores index of copied skill by Intimidate/Plagiarism
 		reproduceskill_idx; ///Stores index of copied skill by Reproduce
 	int menuskill_id, menuskill_val, menuskill_val2;
 
@@ -623,6 +625,10 @@ struct map_session_data {
 		bool changed; // if true, should sync with charserver on next mailbox request
 	} mail;
 
+	// Battlegrounds queue system [MasterOfMuppets]
+	std::shared_ptr<s_battleground_queue> bg_queue;
+	bool bg_queue_accept_state; // Set this to true when someone has accepted the invite to join BGs
+
 	//Quest log system
 	int num_quests;          ///< Number of entries in quest_log
 	int avail_quests;        ///< Number of Q_ACTIVE and Q_INACTIVE entries in quest log (index of the first Q_COMPLETE entry)
@@ -642,6 +648,8 @@ struct map_session_data {
 	// Title system
 	std::vector<int> titles;
 
+	std::vector<int> cloaked_npc;
+
 	/* ShowEvent Data Cache flags from map */
 	bool *qi_display;
 	int qi_count;
@@ -651,7 +659,7 @@ struct map_session_data {
 	int debug_line;
 	const char* debug_func;
 
-	unsigned int bg_id;
+	int bg_id;
 
 #ifdef SECURE_NPCTIMEOUT
 	/**
@@ -1005,6 +1013,29 @@ short pc_maxaspd(struct map_session_data *sd);
     )
 #endif
 
+struct s_attendance_reward {
+	uint16 item_id;
+	uint16 amount;
+};
+
+struct s_attendance_period {
+	uint32 start;
+	uint32 end;
+	std::map<uint32, std::shared_ptr<struct s_attendance_reward>> rewards;
+};
+
+class AttendanceDatabase : public TypesafeYamlDatabase<uint32, s_attendance_period> {
+public:
+	AttendanceDatabase() : TypesafeYamlDatabase("ATTENDANCE_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+};
+
+extern AttendanceDatabase attendance_db;
+
 void pc_set_reg_load(bool val);
 int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
@@ -1189,9 +1220,9 @@ bool pc_setreg(struct map_session_data *sd, int64 reg, int64 val);
 char *pc_readregstr(struct map_session_data *sd, int64 reg);
 bool pc_setregstr(struct map_session_data *sd, int64 reg, const char *str);
 int64 pc_readregistry(struct map_session_data *sd, int64 reg);
-int pc_setregistry(struct map_session_data *sd, int64 reg, int64 val);
+bool pc_setregistry(struct map_session_data *sd, int64 reg, int64 val);
 char *pc_readregistry_str(struct map_session_data *sd, int64 reg);
-int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val);
+bool pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val);
 
 #define pc_readglobalreg(sd,reg) pc_readregistry(sd,reg)
 #define pc_setglobalreg(sd,reg,val) pc_setregistry(sd,reg,val)

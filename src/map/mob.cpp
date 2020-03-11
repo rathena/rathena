@@ -2534,8 +2534,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	) { //Experience calculation.
 		int bonus = 100; //Bonus on top of your share (common to all attackers).
 		int pnum = 0;
+#ifndef RENEWAL
 		if (md->sc.data[SC_RICHMANKIM])
 			bonus += md->sc.data[SC_RICHMANKIM]->val2;
+#else
+		if (sd && sd->sc.data[SC_RICHMANKIM])
+			bonus += sd->sc.data[SC_RICHMANKIM]->val2;
+#endif
 		if(sd) {
 			temp = status_get_class(&md->bl);
 			if(sd->sc.data[SC_MIRACLE]) i = 2; //All mobs are Star Targets
@@ -2611,6 +2616,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				job_exp = (unsigned int)cap_value(exp, 1, UINT_MAX);
 			}
 
+			if ((base_exp > 0 || job_exp > 0) && md->dmglog[i].flag == MDLF_HOMUN && homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(tmpsd[i]))
+				base_exp = job_exp = 0;
+
 			if ( ( temp = tmpsd[i]->status.party_id)>0 ) {
 				int j;
 				for( j = 0; j < pnum && pt[j].id != temp; j++ ); //Locate party.
@@ -2654,8 +2662,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 								job_exp = (unsigned int)cap_value(apply_rate(job_exp, rate), 1, UINT_MAX);
 						}
 #endif
-						if (!(homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(tmpsd[i])))
-							pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, 0);
+						pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, 0);
 					}
 				}
 				if(zeny) // zeny from mobs [Valaris]
@@ -2666,9 +2673,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				pc_damage_log_clear(tmpsd[i],md->bl.id);
 		}
 
-		if (!(homkillonly && battle_config.hom_idle_no_share && pc_isidle_hom(map_charid2sd(md->dmglog[0].id))))
-			for( i = 0; i < pnum; i++ ) //Party share.
-				party_exp_share(pt[i].p, &md->bl, pt[i].base_exp,pt[i].job_exp,pt[i].zeny);
+		for( i = 0; i < pnum; i++ ) //Party share.
+			party_exp_share(pt[i].p, &md->bl, pt[i].base_exp,pt[i].job_exp,pt[i].zeny);
 
 	} //End EXP giving.
 
@@ -3906,8 +3912,9 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 	for (i=0,j = MAX_SKILL_TREE-1;j>=0 && i< MAX_MOBSKILL ;j--) {
 		uint16 skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].skill_id;
 		uint16 sk_idx = 0;
+
 		if (!skill_id || !(sk_idx = skill_get_index(skill_id)) || sd->status.skill[sk_idx].lv < 1 ||
-			(skill_get_inf2(skill_id)&(INF2_WEDDING_SKILL|INF2_GUILD_SKILL)) ||
+			skill_get_inf2_(skill_id, { INF2_ISWEDDING, INF2_ISGUILD }) ||
 			mob_clone_disabled_skills(skill_id)
 		)
 			continue;
@@ -3915,8 +3922,8 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 		//against players (those with flags UF_NOMOB and UF_NOPC are specific
 		//to always aid players!) [Skotlex]
 		if (!(flag&1) &&
-			skill_get_unit_id(skill_id, 0) &&
-			skill_get_unit_flag(skill_id)&(UF_NOMOB|UF_NOPC))
+			skill_get_unit_id(skill_id) &&
+			skill_get_unit_flag_(skill_id, { UF_NOMOB, UF_NOPC }))
 			continue;
 		/**
 		 * The clone should be able to cast the skill (e.g. have the required weapon) bugreport:5299)
@@ -3944,7 +3951,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 			else
 				ms[i].state = MSS_BERSERK;
 		} else if(inf&INF_GROUND_SKILL) {
-			if (skill_get_inf2(skill_id)&INF2_TRAP) { //Traps!
+			if (skill_get_inf2(skill_id, INF2_ISTRAP)) { //Traps!
 				ms[i].state = MSS_IDLE;
 				ms[i].target = MST_AROUND2;
 				ms[i].delay = 60000;
@@ -3958,7 +3965,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 				ms[i].cond2 = 95;
 			}
 		} else if (inf&INF_SELF_SKILL) {
-			if (skill_get_inf2(skill_id)&INF2_NO_TARGET_SELF) { //auto-select target skill.
+			if (skill_get_inf2(skill_id, INF2_NOTARGETSELF)) { //auto-select target skill.
 				ms[i].target = MST_TARGET;
 				ms[i].cond1 = MSC_ALWAYS;
 				if (skill_get_range(skill_id, ms[i].skill_lv)  > 3) {
@@ -4619,9 +4626,10 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Options")) {
-		for (const auto &optionNode : node["Options"]) {
-			std::string option = optionNode.first.as<std::string>();
-			std::string option_constant = "OPTION_" + option;
+		const YAML::Node &optionNode = node["Options"];
+
+		for (const auto &it : optionNode) {
+			std::string option = it.first.as<std::string>(), option_constant = "OPTION_" + option;
 			int64 constant;
 
 			if (!script_get_constant(option_constant.c_str(), &constant)) {
@@ -4631,7 +4639,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 			bool active;
 
-			if (!this->asBool(node, option, active))
+			if (!this->asBool(optionNode, option, active))
 				continue;
 
 #ifdef NEW_CARTS
