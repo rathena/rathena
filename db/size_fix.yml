@@ -16,27 +16,74 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Attendance Database
+# Size Fix Database
 ###########################################################################
 #
-# Attendance Settings
+# Size Fix Settings
 #
 ###########################################################################
-# - Start                   Start date.
-#   End                     End date.
-#   Rewards:                List of rewards for each day.
-#     - Day                 Reward day.
-#       ItemId              Item ID.
+# - Weapon  Weapon type.
+#   Small   Small size modifier. (Default: 100)
+#   Medium  Medium size modifier. (Default: 100)
+#   Large   Large size modifier. (Default: 100)
 ###########################################################################
 
 Header:
-  Type: ATTENDANCE_DB
+  Type: SIZE_FIX_DB
   Version: 1
-  
+
+Body:
+  - Weapon: Fist
+  - Weapon: Dagger
+    Medium: 75
+    Large: 50
+  - Weapon: 1hSword
+    Small: 75
+    Large: 75
+  - Weapon: 2hSword
+    Small: 75
+    Medium: 75
+  - Weapon: 1hSpear
+    Small: 75
+    Medium: 75
+  - Weapon: 2hSpear
+    Small: 75
+    Medium: 75
+  - Weapon: 1hAxe
+    Small: 50
+    Medium: 75
+  - Weapon: 2hAxe
+    Small: 50
+    Medium: 75
+  - Weapon: Mace
+    Small: 75
+  - Weapon: 2hMace
+  - Weapon: Staff
+  - Weapon: Bow
+    Large: 75
+  - Weapon: Musical
+    Small: 75
+    Large: 75
+  - Weapon: Whip
+    Small: 75
+    Large: 50
+  - Weapon: Book
+    Large: 50
+  - Weapon: Katar
+    Small: 75
+    Large: 75
+  - Weapon: Revolver
+  - Weapon: Rifle
+  - Weapon: Gatling
+  - Weapon: Shotgun
+  - Weapon: Grenade
+  - Weapon: Huuma
+  - Weapon: 2hStaff
+
 Footer:
   Imports:
-  - Path: db/pre-re/attendance.yml
+  - Path: db/pre-re/size_fix.yml
     Mode: Prerenewal
-  - Path: db/re/attendance.yml
+  - Path: db/re/size_fix.yml
     Mode: Renewal
-  - Path: db/import/attendance.yml
+  - Path: db/import/size_fix.yml

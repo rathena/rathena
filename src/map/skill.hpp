@@ -387,6 +387,22 @@ struct skill_unit_group_tickset {
 	int id;
 };
 
+/// Ring of Nibelungen bonuses
+enum e_nibelungen_status : uint8 {
+	RINGNBL_ASPDRATE = 1,		///< ASPD + 20%
+	RINGNBL_ATKRATE,		///< Physical damage + 20%
+	RINGNBL_MATKRATE,		///< MATK + 20%
+	RINGNBL_HPRATE,			///< Maximum HP + 30%
+	RINGNBL_SPRATE,			///< Maximum SP + 30%
+	RINGNBL_ALLSTAT,		///< All stats + 15
+	RINGNBL_HIT,			///< HIT + 50
+	RINGNBL_FLEE,			///< FLEE + 50
+	RINGNBL_SPCONSUM,		///< SP consumption - 30%
+	RINGNBL_HPREGEN,		///< HP recovery + 100%
+	RINGNBL_SPREGEN,		///< SP recovery + 100%
+	RINGNBL_MAX,
+};
+
 /// Enum for skill_blown
 enum e_skill_blown	{
 	BLOWN_NONE					= 0x00,
@@ -452,9 +468,9 @@ void do_init_skill(void);
 void do_final_skill(void);
 
 /// Cast type
-enum { CAST_GROUND, CAST_DAMAGE, CAST_NODAMAGE };
+enum e_cast_type { CAST_GROUND, CAST_DAMAGE, CAST_NODAMAGE };
 /// Returns the cast type of the skill: ground cast, castend damage, castend no damage
-int skill_get_casttype(uint16 skill_id); //[Skotlex]
+e_cast_type skill_get_casttype(uint16 skill_id); //[Skotlex]
 const char*	skill_get_name( uint16 skill_id ); 	// [Skotlex]
 const char*	skill_get_desc( uint16 skill_id ); 	// [Skotlex]
 int skill_tree_get_max( uint16 skill_id, int b_class );	// Celest
@@ -1932,6 +1948,8 @@ enum e_skill {
 	WE_CHEERUP,
 
 	ALL_EQSWITCH = 5067,
+
+	CG_SPECIALSINGER,
 
 	AB_VITUPERATUM = 5072,
 	AB_CONVENIO,

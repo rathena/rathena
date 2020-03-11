@@ -223,14 +223,30 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 		if (nd->sc.option&OPTION_INVISIBLE)
 			return 1;
 
-		// note : disablenpc doesn't reset the previous trigger status on official
-		if( npc_ontouch_event(sd,nd) > 0 && npc_ontouch2_event(sd,nd) > 0 )
-		{ // failed to run OnTouch event, so just click the npc
-			if (sd->npc_id != 0)
-				return 0;
+		switch (nd->subtype) {
+		case NPCTYPE_WARP:
+			if ((!nd->trigger_on_hidden && (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]))) || pc_isdead(sd))
+				return 1;
+			if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(nd->u.warp.mapindex), sd->group_level))
+				return 1;
+			if (sd->count_rewarp > 10) {
+				ShowWarning("Prevented infinite warp loop for player (%d:%d). Please fix NPC: '%s', path: '%s'\n", sd->status.account_id, sd->status.char_id, nd->exname, nd->path);
+				sd->count_rewarp = 0;
+				return 1;
+			}
+			pc_setpos(sd, nd->u.warp.mapindex, nd->u.warp.x, nd->u.warp.y, CLR_OUTSIGHT);
+			break;
+		default:
+			// note : disablenpc doesn't reset the previous trigger status on official
+			if( npc_ontouch_event(sd,nd) > 0 && npc_ontouch2_event(sd,nd) > 0 )
+			{ // failed to run OnTouch event, so just click the npc
+				if (sd->npc_id != 0)
+					return 0;
 
-			pc_stop_walking(sd,1);
-			npc_click(sd,nd);
+				pc_stop_walking(sd,1);
+				npc_click(sd,nd);
+			}
+			break;
 		}
 	}
 	return 0;
@@ -1916,7 +1932,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 				return 2;
 		}
 
-		if (npc_shop_discount(nd->subtype,nd->u.shop.discount))
+		if (npc_shop_discount(nd))
 			value = pc_modifybuyvalue(sd,value);
 
 		z += (double)value * amount;
@@ -2827,7 +2843,20 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			break;
 #endif
 		default:
-			is_discount = 1;
+			if( sscanf( p, ",%32[^,:]:%11d,", point_str, &is_discount ) == 2 ){
+				is_discount = 1;
+			}else{
+				if( !strcasecmp( point_str, "yes" ) ){
+					is_discount = 1;
+				}else if( !strcasecmp( point_str, "no" ) ){
+					is_discount = 0;
+				}else{
+					ShowError( "npc_parse_shop: unknown discount setting %s\n", point_str );
+					return strchr( start, '\n' ); // skip and continue
+				}
+
+				p = strchr( p + 1, ',' );
+			}
 			break;
 	}
 	
@@ -2919,11 +2948,15 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		return strchr(start,'\n');// continue
 	}
 
-	if (type != NPCTYPE_SHOP) {
-		if (type == NPCTYPE_ITEMSHOP) nd->u.shop.itemshop_nameid = nameid; // Item shop currency
-		else if (type == NPCTYPE_POINTSHOP) safestrncpy(nd->u.shop.pointshop_str,point_str,strlen(point_str)+1); // Point shop currency
-		nd->u.shop.discount = is_discount > 0;
+	if( type == NPCTYPE_ITEMSHOP ){
+		// Item shop currency
+		nd->u.shop.itemshop_nameid = nameid;
+	}else if( type == NPCTYPE_POINTSHOP ){
+		// Point shop currency
+		safestrncpy( nd->u.shop.pointshop_str, point_str, strlen( point_str ) + 1 );
 	}
+
+	nd->u.shop.discount = is_discount > 0;
 
 	npc_parsename(nd, w3, start, buffer, filepath);
 	nd->class_ = m == -1 ? JT_FAKENPC : npc_parseview(w4, start, buffer, filepath);
@@ -2967,14 +3000,15 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 * @param discount Discount flag of NPC shop
 * @return bool 'true' is discountable, 'false' otherwise
 */
-bool npc_shop_discount(enum npc_subtype type, bool discount) {
-	if (type == NPCTYPE_SHOP || (type != NPCTYPE_SHOP && discount))
-		return true;
-
-	if( (type == NPCTYPE_ITEMSHOP && battle_config.discount_item_point_shop&1) ||
-		(type == NPCTYPE_POINTSHOP && battle_config.discount_item_point_shop&2) )
-		return true;
-	return false;
+bool npc_shop_discount( struct npc_data* nd ){
+	switch( nd->subtype ){
+		case NPCTYPE_ITEMSHOP:
+			return nd->u.shop.discount || ( battle_config.discount_item_point_shop&1 );
+		case NPCTYPE_POINTSHOP:
+			return nd->u.shop.discount || ( battle_config.discount_item_point_shop&2 );
+		default:
+			return nd->u.shop.discount;
+	}
 }
 
 /**
@@ -4191,22 +4225,22 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 						args.skill_damage.caster = atoi(caster_constant);
 					else {
 						int64 val_tmp;
-						int val;
 
 						if (!script_get_constant(caster_constant, &val_tmp)) {
 							ShowError( "npc_parse_mapflag: Unknown constant '%s'. Skipping (file '%s', line '%d').\n", caster_constant, filepath, strline(buffer, start - buffer) );
 							break;
 						}
 
-						val = static_cast<int>(val_tmp);
-						args.skill_damage.caster = val;
+						args.skill_damage.caster = static_cast<uint16>(val_tmp);
 					}
 					
-					if (!args.skill_damage.caster)
+					if (args.skill_damage.caster == 0)
 						args.skill_damage.caster = BL_ALL;
 
-					for (int i = 0; i < SKILLDMG_MAX; i++)
+					for (int i = SKILLDMG_PC; i < SKILLDMG_MAX; i++)
 						args.skill_damage.rate[i] = cap_value(args.skill_damage.rate[i], -100, 100000);
+
+					trim(skill_name);
 
 					if (strcmp(skill_name, "all") == 0) // Adjust damage for all skills
 						map_setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
@@ -4215,7 +4249,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 					else { // Adjusted damage for specified skill
 						args.flag_val = 1;
 						map_setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
-						map_skill_damage_add(map_getmapdata(m), skill_name2id(skill_name), args.skill_damage.rate, args.skill_damage.caster);
+						map_skill_damage_add(map_getmapdata(m), skill_name2id(skill_name), &args);
 					}
 				}
 			}

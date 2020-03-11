@@ -439,7 +439,7 @@ static void itemdb_create_dummy(void) {
 	CREATE(dummy_item, struct item_data, 1);
 
 	memset(dummy_item, 0, sizeof(struct item_data));
-	dummy_item->nameid = 500;
+	dummy_item->nameid = ITEMID_DUMMY;
 	dummy_item->weight = 1;
 	dummy_item->value_sell = 1;
 	dummy_item->type = IT_ETC; //Etc item

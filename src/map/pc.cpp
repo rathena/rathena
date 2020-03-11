@@ -90,27 +90,6 @@ struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 
 struct s_job_info job_info[CLASS_COUNT];
 
-struct s_attendance_reward{
-	uint16 item_id;
-	uint16 amount;
-};
-
-struct s_attendance_period{
-	uint32 start;
-	uint32 end;
-	std::map<uint32,std::shared_ptr<struct s_attendance_reward>> rewards;
-};
-
-class AttendanceDatabase : public TypesafeYamlDatabase<uint32,s_attendance_period>{
-public:
-	AttendanceDatabase() : TypesafeYamlDatabase( "ATTENDANCE_DB", 1 ){
-
-	}
-
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
-};
-
 const std::string AttendanceDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/attendance.yml";
 }
@@ -1528,6 +1507,10 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	
 	sd->bonus_script.head = NULL;
 	sd->bonus_script.count = 0;
+
+	// Initialize BG queue pointer
+	sd->bg_queue = nullptr;
+	sd->bg_queue_accept_state = false;
 
 #if PACKETVER >= 20150513
 	sd->hatEffectIDs = NULL;
@@ -5758,6 +5741,9 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 				instance_addusers(new_map_instance_id);
 		}
 
+		if (sd->bg_id && !mapdata->flag[MF_BATTLEGROUND]) // Moving to a map that isn't a Battlegrounds
+			bg_team_leave(sd, false, true);
+
 		sd->state.pmap = sd->bl.m;
 		if (sd->sc.count) { // Cancel some map related stuff.
 			if (sd->sc.data[SC_JAILED])
@@ -8306,10 +8292,13 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		return 1|8;
 	}
 	else if( sd->bg_id ) {
-		struct battleground_data *bg = bg_team_search(sd->bg_id);
-		if( bg && bg->mapindex > 0 ) { // Respawn by BG
-			sd->respawn_tid = add_timer(tick+1000, pc_respawn_timer, sd->bl.id, 0);
-			return 1|8;
+		std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, sd->bg_id);
+
+		if (bg) {
+			if (bg->cemetery.map > 0) { // Respawn by BG
+				sd->respawn_tid = add_timer(tick + 1000, pc_respawn_timer, sd->bl.id, 0);
+				return 1|8;
+			}
 		}
 	}
 
@@ -8861,6 +8850,11 @@ int pc_itemheal(struct map_session_data *sd, int itemid, int hp, int sp)
 			hp += hp / 10;
 			sp += sp / 10;
 		}
+
+#ifdef RENEWAL
+		if (sd->sc.data[SC_APPLEIDUN])
+			hp += sd->sc.data[SC_APPLEIDUN]->val3 / 100;
+#endif
 
 		if (penalty > 0) {
 			hp -= hp * penalty / 100;
@@ -9460,7 +9454,12 @@ bool pc_can_attack( struct map_session_data *sd, int target_id ) {
 	if (sd->state.block_action & PCBLOCK_ATTACK)
 		return false;
 
-	if( sd->sc.data[SC_BASILICA] ||
+	if(
+#ifdef RENEWAL
+		sd->sc.data[SC_BASILICA_CELL] ||
+#else
+		sd->sc.data[SC_BASILICA] ||
+#endif
 		sd->sc.data[SC__SHADOWFORM] ||
 		sd->sc.data[SC_CURSEDCIRCLE_ATKER] ||
 		sd->sc.data[SC_CURSEDCIRCLE_TARGET] ||
@@ -10570,6 +10569,12 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		//status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER); // No longer is removed? Need confirmation
 		status_change_end(&sd->bl, SC_ARMOR_RESIST, INVALID_TIMER);
 	}
+
+	// On equipment change
+#ifndef RENEWAL
+	if (!(flag&4))
+		status_change_end(&sd->bl, SC_CONCENTRATION, INVALID_TIMER);
+#endif
 
 	// On ammo change
 	if (sd->inventory_data[n]->type == IT_AMMO && (sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET || sd->inventory_data[n]->nameid != ITEMID_PURIFICATION_BULLET || sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET_))
@@ -12713,13 +12718,19 @@ void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
  */
 void pc_cell_basilica(struct map_session_data *sd) {
 	nullpo_retv(sd);
-	
+
+#ifdef RENEWAL
+	enum sc_type type = SC_BASILICA_CELL;
+#else
+	enum sc_type type = SC_BASILICA;
+#endif
+
 	if (!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKBASILICA)) {
-		if (sd->sc.data[SC_BASILICA])
-			status_change_end(&sd->bl,SC_BASILICA,INVALID_TIMER);
+		if (sd->sc.data[type])
+			status_change_end(&sd->bl, type,INVALID_TIMER);
 	}
-	else if (!sd->sc.data[SC_BASILICA])
-		sc_start(&sd->bl,&sd->bl,SC_BASILICA,100,0,INFINITE_TICK);
+	else if (!sd->sc.data[type])
+		sc_start(&sd->bl,&sd->bl, type,100,0,INFINITE_TICK);
 }
 
 /** [Cydh]

@@ -16,19 +16,22 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Attendance Database
+# Size Fix Database
 ###########################################################################
 #
-# Attendance Settings
+# Size Fix Settings
 #
 ###########################################################################
-# - Start                   Start date.
-#   End                     End date.
-#   Rewards:                List of rewards for each day.
-#     - Day                 Reward day.
-#       ItemId              Item ID.
+# - Weapon    Weapon type.
+#   Small     Small size modifier. (Default: 100)
+#   Medium    Medium size modifier. (Default: 100)
+#   Large     Large size modifier. (Default: 100)
 ###########################################################################
 
 Header:
-  Type: ATTENDANCE_DB
+  Type: SIZE_FIX_DB
   Version: 1
+
+Body:
+  - Weapon: Knuckle
+    Large: 75
