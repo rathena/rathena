@@ -3571,12 +3571,12 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 50 * skill_lv;
 			break;
 		case KN_BRANDISHSPEAR:
-		case ML_BRANDISH: {
+		case ML_BRANDISH:
 #ifdef RENEWAL
-				int ratio = 100 + 20 * skill_lv + sstatus->str; // !TODO: Confirm STR role
+			skillratio += -100 + 400 + 100 * skill_lv + sstatus->str; // !TODO: Confirm STR role
 #else
+			{
 				int ratio = 100 + 20 * skill_lv;
-#endif
 
 				skillratio += -100 + ratio;
 				if(skill_lv > 3 && wd->miscflag == 0)
@@ -3591,8 +3591,9 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 					skillratio += ratio / 4;
 				if(skill_lv > 9 && wd->miscflag == 2)
 					skillratio += ratio / 2;
-				break;
 			}
+#endif
+			break;
 		case KN_BOWLINGBASH:
 		case MS_BOWLINGBASH:
 			skillratio += 40 * skill_lv;
