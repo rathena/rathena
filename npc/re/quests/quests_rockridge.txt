@@ -1328,6 +1328,7 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 		npctalk "Guys, let's go!", "Ivoka Skudi#revt02", bc_self;
 		sleep2 2000;
 		cloakonnpc "Ivoka Skudi#revt02", getcharid(0);
+		cloakonnpc "Cactus Gunslinger#revt01", getcharid(0);
 		cloakonnpc "Cactus Gunslinger#revt02", getcharid(0);
 		cloakonnpc "Cactus Gunslinger#revt03", getcharid(0);
 		cloakonnpc "Johnny James#revt04", getcharid(0);
