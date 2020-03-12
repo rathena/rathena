@@ -252,41 +252,102 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 	return 0;
 }
 
+bool npc_is_cloaked(struct npc_data* nd, struct map_session_data* sd) {
+	bool npc_cloaked = (nd->sc.option & OPTION_CLOAK) ? true : false;
+
+	if (std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), nd->bl.id) != sd->cloaked_npc.end())
+		return (!npc_cloaked);
+	return npc_cloaked;
+}
+
+static int npc_cloaked_sub(struct block_list *bl, va_list ap)
+{
+	struct map_session_data* sd;
+
+	nullpo_ret(bl);
+	nullpo_ret(sd = (struct map_session_data *)bl);
+	int id = va_arg(ap, int);
+
+	auto it = std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), id);
+
+	if (it != sd->cloaked_npc.end())
+		sd->cloaked_npc.erase(it);
+
+	return 1;
+}
+
 /*==========================================
  * Disable / Enable NPC
  *------------------------------------------*/
-bool npc_enable(const char* name, int flag)
+bool npc_enable_target(const char* name, uint32 char_id, int flag)
 {
 	struct npc_data* nd = npc_name2id(name);
 
-	if (nd==NULL)
-	{
-		ShowError("npc_enable: Attempted to %s a non-existing NPC '%s' (flag=%d).\n", (flag&3) ? "show" : "hide", name, flag);
+	if (!nd) {
+		ShowError("npc_enable: Attempted to %s a non-existing NPC '%s' (flag=%d).\n", (flag&11) ? "show" : "hide", name, flag);
 		return false;
 	}
 
-	if (flag&1) {
-		nd->sc.option&=~OPTION_INVISIBLE;
-		clif_spawn(&nd->bl);
-	} else if (flag&2)
-		nd->sc.option&=~OPTION_HIDE;
-	else if (flag&4)
-		nd->sc.option|= OPTION_HIDE;
-	else {	//Can't change the view_data to invisible class because the view_data for all npcs is shared! [Skotlex]
-		nd->sc.option|= OPTION_INVISIBLE;
-		clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);  // Hack to trick maya purple card [Xazax]
+	if (char_id > 0 && (flag & 24)) {
+		map_session_data *sd = map_charid2sd(char_id);
+	
+		if (!sd) {
+			ShowError("npc_enable: Attempted to %s a NPC '%s' on an invalid target %d.\n", (flag & 8) ? "show" : "hide", name, char_id);
+			return false;
+		}
+
+		unsigned int option = nd->sc.option;
+		if (flag&8)
+			nd->sc.option &= ~OPTION_CLOAK;
+		else
+			nd->sc.option |= OPTION_CLOAK;
+
+		auto it = std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), nd->bl.id);
+	
+		if (it == sd->cloaked_npc.end() && option != nd->sc.option)
+			sd->cloaked_npc.push_back(nd->bl.id);
+		else if (it != sd->cloaked_npc.end() && option == nd->sc.option)
+			sd->cloaked_npc.erase(it);
+	
+		if (nd->class_ != JT_WARPNPC && nd->class_ != JT_GUILD_FLAG)
+			clif_changeoption_target(&nd->bl, &sd->bl);
+		else {
+			if (nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE|OPTION_CLOAK))
+				clif_clearunit_single(nd->bl.id, CLR_OUTSIGHT, sd->fd);
+			else
+				clif_spawn(&nd->bl);
+		}
+		nd->sc.option = option;
+	}
+	else {
+		if (flag&1) {
+			nd->sc.option &= ~OPTION_INVISIBLE;
+			clif_spawn(&nd->bl);
+		}
+		else if (flag&2)
+			nd->sc.option &= ~OPTION_HIDE;
+		else if (flag&4)
+			nd->sc.option |= OPTION_HIDE;
+		else if (flag&8)
+			nd->sc.option &= ~OPTION_CLOAK;
+		else if (flag&16)
+			nd->sc.option |= OPTION_CLOAK;
+		else {	//Can't change the view_data to invisible class because the view_data for all npcs is shared! [Skotlex]
+			nd->sc.option |= OPTION_INVISIBLE;
+			clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);  // Hack to trick maya purple card [Xazax]
+		}
+		if (nd->class_ != JT_WARPNPC && nd->class_ != JT_GUILD_FLAG)	//Client won't display option changes for these classes [Toms]
+			clif_changeoption(&nd->bl);
+		else {
+			if (nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE|OPTION_CLOAK))
+				clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);
+			else
+				clif_spawn(&nd->bl);
+		}
+		map_foreachinmap(npc_cloaked_sub, nd->bl.m, BL_PC, nd->bl.id);	// Because npc option has been updated we remove the npc id from sd->cloaked_npc
 	}
 
-	if (nd->class_ == JT_WARPNPC || nd->class_ == JT_GUILD_FLAG)
-	{	//Client won't display option changes for these classes [Toms]
-		if (nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE))
-			clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);
-		else
-			clif_spawn(&nd->bl);
-	} else
-		clif_changeoption(&nd->bl);
-
-	if( flag&3 && (nd->u.scr.xs >= 0 || nd->u.scr.ys >= 0) )// check if player standing on a OnTouchArea
+	if( flag&11 && (nd->u.scr.xs >= 0 || nd->u.scr.ys >= 0) )// check if player standing on a OnTouchArea
 		map_foreachinallarea( npc_enable_sub, nd->bl.m, nd->bl.x-nd->u.scr.xs, nd->bl.y-nd->u.scr.ys, nd->bl.x+nd->u.scr.xs, nd->bl.y+nd->u.scr.ys, BL_PC, nd );
 
 	return true;
@@ -1068,6 +1129,9 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 
 		if (x >= mapdata->npc[i]->bl.x - xs && x <= mapdata->npc[i]->bl.x + xs && y >= mapdata->npc[i]->bl.y - ys && y <= mapdata->npc[i]->bl.y + ys) {
 			f = 0;
+
+			if (npc_is_cloaked(mapdata->npc[i], sd))
+				continue;
 
 			switch (mapdata->npc[i]->subtype) {
 			case NPCTYPE_WARP:
