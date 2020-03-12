@@ -1176,9 +1176,11 @@ S_Exchange:
 			mes "[Victimized Soul's Mind]";
 			mes "You don't... have... ^006400" + getitemname(getarg(.@s)) + "^000000...";
 			mes "Do you have... any other business... with me?...";
+			next;
 			return;
 		}
-		progressbar_npc "000000",5;
+		donpcevent strnpcinfo(0) + "::OnBar";
+		sleep2 5000;
 		specialeffect EF_BLACKBODY;
 		specialeffect EF_GUMGANG4;
 		specialeffect EF_DARKCASTING2;
@@ -1203,7 +1205,12 @@ S_Exchange:
 	}
 	mes "[Victimized Soul's Mind]";
 	mes "Do you have... any other business... with me?...";
+	next;
 	return;
+
+OnBar:
+	progressbar_npc "000000",5;
+	end;
 }
 
 lhz_dun_n,136,269,6	script	Sorrowful Soul's Mind#1	4_M_DEATH,{
