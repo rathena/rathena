@@ -2895,6 +2895,7 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 				else if (sc->data[SC_FIGHTINGSPIRIT])
 					element = ELE_GHOST;
 			}
+			break;
 		case LG_HESPERUSLIT:
 			if (sc && sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 4)
 				element = ELE_HOLY;
@@ -3462,6 +3463,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 		case RK_WINDCUTTER:
 			if (sd && sd->weapontype1 == W_2HSWORD)
 				wd->div_ = 2;
+			break;
 		case RA_AIMEDBOLT:
 			wd->div_ = 2 + tstatus->size + rnd()%2;
 			break;
