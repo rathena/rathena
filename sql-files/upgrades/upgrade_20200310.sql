@@ -11,3 +11,17 @@ UPDATE `char_reg_num` SET `key` = 'ep16_wal' WHERE `key` = 'banquet_walther_ques
 UPDATE `char_reg_num` SET `key` = 'ep16_wal', `value` = `value` - 1 WHERE `key` = 'banquet_walther_quest';
 UPDATE `char_reg_num` SET `key` = 'ep16_lug' WHERE `key` = 'banquet_roegenburg_quest';
 UPDATE `char_reg_num` SET `key` = 'ep16_gaobs' WHERE `key` = 'banquet_geoborg_quest';
+
+UPDATE `char_reg_num` SET `key` = 'ep16_wig' WHERE `key` = 'banquet_wigner_quest' AND `value` < 5;
+UPDATE `char_reg_num` SET `key` = 'ep16_wig', `value` = `value` + 5 WHERE `key` = 'banquet_wigner_quest' AND `value` > 5;
+UPDATE `char_reg_num` SET `key` = 'ep16_wig', `value` = 10 FROM `char_reg_num` INNER JOIN `quest` ON `char_reg_num`.`char_id` = `quest`.`char_id`
+WHERE `key` = 'banquet_wigner_quest' AND `value` = 5 AND `quest_id` = 14482 AND `state` = 1;
+UPDATE `char_reg_num` SET `key` = 'ep16_wig', `value` = 9 FROM `char_reg_num` INNER JOIN `quest` ON `char_reg_num`.`char_id` = `quest`.`char_id`
+WHERE `key` = 'banquet_wigner_quest' AND `value` = 5 AND `quest_id` = 14480 AND `state` = 2;
+UPDATE `char_reg_num` SET `key` = 'ep16_wig', `value` = 8 FROM `char_reg_num` INNER JOIN `quest` ON `char_reg_num`.`char_id` = `quest`.`char_id`
+WHERE `key` = 'banquet_wigner_quest' AND `value` = 5 AND `quest_id` = 14480 AND `state` = 1;
+UPDATE `char_reg_num` SET `key` = 'ep16_wig', `value` = 7 FROM `char_reg_num` INNER JOIN `quest` ON `char_reg_num`.`char_id` = `quest`.`char_id`
+WHERE `key` = 'banquet_wigner_quest' AND `value` = 5 AND `quest_id` = 14481 AND `state` = 2;
+UPDATE `char_reg_num` SET `key` = 'ep16_wig', `value` = 6 FROM `char_reg_num` INNER JOIN `quest` ON `char_reg_num`.`char_id` = `quest`.`char_id`
+WHERE `key` = 'banquet_wigner_quest' AND `value` = 5 AND `quest_id` = 14481 AND `state` = 1;
+UPDATE `char_reg_num` SET `key` = 'ep16_wig' WHERE `key` = 'banquet_wigner_quest' AND `value` = 5;

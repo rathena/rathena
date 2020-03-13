@@ -367,13 +367,13 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_main	4_M_RUSMAN1,{
 		close;
 	case 2:
 		if (isbegin_quest(7682) != 2) {// Socializing Starts from an Eye Contact
-			if (banquet_heine_quest < 2) .@string$ = "Heine";
-			if (banquet_nerius_quest < 1) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Nerius";
-			if (banquet_richard_quest < 2) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Richard";
-			if (banquet_walther_quest < 3) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Walther";
-			if (banquet_wigner_quest < 2) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Wigner";
-			if (banquet_roegenburg_quest < 2) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Roegenburg";
-			if (banquet_geoborg_quest < 2) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Geoborg";
+			if (isbegin_quest(7683) < 2) .@string$ = "Heine";
+			if (isbegin_quest(7684) < 2) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Nerius";
+			if (isbegin_quest(5402) < 2) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Richard";
+			if (ep16_wal < 2) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Walther";
+			if (ep16_wig < 2) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Wigner";
+			if (ep16_lug < 2) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Roegenburg";
+			if (ep16_gaobs < 2) .@string$ += ( .@string$ != "" ? ", " : "" ) + "Geoborg";
 
 			if (.@string$ == "") {	// it shouldn't happen
 				completequest 7682;// Socializing Starts from an Eye Contact
@@ -4351,6 +4351,13 @@ prt_cas_q,18,136,3	script	Spica Nerius#ep16_room02	4_EP16_SPICA,{
 OnInit:
 	cloakonnpc strnpcinfo(0);
 	cloakonnpc "Nyhill M. Heine#ep16_nroom01";
+	end;
+}
+
+prt_cas_q,23,187,3	script	Mysterious Person#ep16wal	4_M_04,{
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
 	end;
 }
 
@@ -9119,6 +9126,54 @@ prt_cas_q,120,100,4	script	Helper for the Royal Richard#EP161DY	4_M_6THPRIN2,{
 	end;
 }
 
+function	script	F_geoborg_text	{
+	mes "[Bodyguard Martin]";
+	mes "There! Stop there!";
+	mes "Please go through the inspection for a security check.";
+	npctalk "There! Stop there!", "Bodyguard#ep16_1_g", bc_self;
+	emotion ET_SURPRISE, getnpcid(0, "Bodyguard#ep16_1_m");
+	emotion ET_SURPRISE, getnpcid(0, "Bodyguard#ep16_1_g");
+	next;
+	mes "[Bodyguard Martin]";
+	mes "Please place your identification and personal belongings on this table and stand facing the wall...";
+	next;
+	mes "[Bodyguard Jerad]";
+	mes "Martin! What are you doing?";
+	mes "Don't be rude to the guest to the room! I told you.";
+	emotion ET_HUK, getnpcid(0, "Bodyguard#ep16_1_g");
+	next;
+	mes "[Bodyguard Martin]";
+	mes "It is for the safety of the queen.";
+	next;
+	mes "[Bodyguard Jerad]";
+	mes "You are near the queen for security, not to chase away the guests discourteously.";
+	emotion ET_ANGER, getnpcid(0, "Bodyguard#ep16_1_g");
+	next;
+	mes "[Bodyguard Martin]";
+	mes "The palace is so hectic like this. How can we guard the queen with such an easygoing way of thinking!";
+	next;
+	mes "[Bodyguard Jerad]";
+	mes "We cannot help it during the Imperial Ordinance!";
+	next;
+	mes "[Bodyguard Martin]";
+	mes "Now the Imperial Ordinance would just be...";
+	emotion ET_THINK, getnpcid(0, "Bodyguard#ep16_1_m");
+	next;
+	mes "[Queen]";
+	mes "It is noisy out here.";
+	cutin "ep16gao_1",2;
+	next;
+	cutin "",255;
+	mes "[Bodyguard Jerad]";
+	mes "Huh! Your majesty!";
+	mes "I am sorry.";
+	mes "We have a guest here.";
+	setquest 11400;// The Geoborgs
+	ep16_gaobs = 1;
+	emotion ET_SURPRISE, getnpcid(0, "Bodyguard#ep16_1_g");
+	close;
+}
+
 prt_cas_q,81,131,0	script	#ep16_1Geoborg	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
@@ -9879,14 +9934,19 @@ prt_cas_q,153,116,1	script	Strong Guards#ep16wig02	8W_SOLDIER,{
 
 // Wigner
 prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
-	if (banquet_main_quest < 2) {// pre-req
+	if (BaseLevel < 100) {
 		mes "[Levuiere]";
-		mes "Who are you?";
-		mes "Only the people with permission can enter this place. Please leave.";
+		mes "Dear adventurer, although I respect your hard work going through all the obstacles and hardships, it is still a little too early for you to be here.";
+		mes "I hope I will see you later.";
 		close;
 	}
-
-	if (banquet_wigner_quest == 0) {
+	if (ep16_wig == 0) {
+		if (isbegin_quest(7682) != 1) {
+			mes "[Levuiere]";
+			mes "Who are you?";
+			mes "Only the people with permission can enter this place. Please leave.";
+			close;
+		}
 		mes "[Levuiere]";
 		mes "Dear adventurer, welcome to the Wigner family. My name is ^0000cdLevuiere Wigner^000000.";
 		next;
@@ -9912,8 +9972,8 @@ prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
 		mes "Please visit our manor too if you have the time, dear adventurer. You are always welcome.";
 		mes "Where is ^0000cdJurgen^000000 now?";
 		next;
-		classchange( HIDDEN_WARP_NPC, "Jurgen Wigner#ep16wig", bc_self );
-		classchange( 4_M_4THPRIN1, "Jurgen Wigner#ep16wig00", bc_self );
+		cloakoffnpc "Jurgen Wigner#ep16wig00", getcharid(0);
+		cloakonnpc "Jurgen Wigner#ep16wig", getcharid(0);
 		cutin "16jur_nor",0;
 		mes "[Jurgen]";
 		mes "Are you looking for me?";
@@ -9935,8 +9995,8 @@ prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
 		mes "[Jurgen]";
 		mes "Then, please excuse me.";
 		next;
-		classchange( HIDDEN_WARP_NPC, "Jurgen Wigner#ep16wig00", bc_self );
-		classchange( 4_M_4THPRIN1, "Jurgen Wigner#ep16wig", bc_self );
+		cloakonnpc "Jurgen Wigner#ep16wig00", getcharid(0);
+		cloakoffnpc "Jurgen Wigner#ep16wig", getcharid(0);
 		cutin "",255;
 		mes "[Levuiere]";
 		mes "Tut, I am worried that he lacks sociability. He would have to meet a lot of people as the heir of the house, you know. Dear adventurer, please excuse my son's discourtesy.";
@@ -9944,13 +10004,13 @@ prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
 		mes "[Levuiere]";
 		mes "If time allows, would you like to meet our children? They have been excited to meet the hero who defeated Morocc in the banquet.";
 		setquest 14475;// To Jurgen
-		banquet_wigner_quest = 1;
+		ep16_wig = 1;
 		next;
 		mes "[Levuiere]";
 		mes "Then please make yourself at home and take a look around, dear adventurer.";
 		close;
 	}
-	if (banquet_wigner_quest == 1) {
+	if (ep16_wig == 1) {
 		mes "[Levuiere]";
 		mes "Dear adventurer, please make yourself home and take your time looking around here.";
 		next;
@@ -9961,7 +10021,7 @@ prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
 		mes "Then, have a restful time.";
 		close;
 	}
-	if (banquet_wigner_quest == 2) {
+	if (ep16_wig == 2) {
 		mes "[Levuiere]";
 		mes "Dear adventurer, did you meet the children? I would love to have some tea with you and listen to your stories if you are available.";
 		next;
@@ -10067,9 +10127,13 @@ prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "You two stay here. It might be dangerous. Let me go take a look first.";
+		cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
 		erasequest 14476;// To Levuiere and His Wife
 		setquest 14477;// What Is Going on?
-		banquet_wigner_quest = 3;
+		ep16_wig = 3;
+		close;
+	}
+	if (ep16_wig == 3) {
 		mes "[Levuiere]";
 		mes "Has something happened to our child, I mean, Katrin?";
 		mes "Shouldn't I go down there myself?";
@@ -10079,17 +10143,7 @@ prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
 		mes "I'll go.";
 		close;
 	}
-	if (banquet_wigner_quest == 3) {
-		mes "[Levuiere]";
-		mes "Has something happened to our child, I mean, Katrin?";
-		mes "Shouldn't I go down there myself?";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "It could be dangerous. Please wait here for a minute.";
-		mes "I'll go.";
-		close;
-	}
-	if (banquet_wigner_quest < 10) {
+	if (ep16_wig < 12) {
 		mes "[Levuiere]";
 		mes "Dear adventurer, welcome.";
 		mes "I asked what had happened to the children, but they didn't tell me.";
@@ -10108,7 +10162,7 @@ prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
 		mes "Since I have to run some errands, I should get going now.";
 		close;
 	}
-	if (banquet_wigner_quest == 10) {
+	if (ep16_wig < 16) {
 		mes "[Levuiere]";
 		mes "Dear adventurer, you seem busy.";
 		mes "Is it about what our children have asked you?";
@@ -10122,7 +10176,7 @@ prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
 		mes "And thank you for helping our children.";
 		close;
 	}
-	if (banquet_wigner_quest == 11) {
+	if (ep16_wig > 15) {
 		mes "[Levuiere]";
 		mes "Dear adventurer, I have heard the story from the children.";
 		mes "They didn't go into all the details, but I heard that they owed you a huge favor.";
@@ -10143,7 +10197,7 @@ prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
 }
 
 prt_cas_q,82,23,0	script	Catherine Wigner#ep16wi	1_F_LIBRARYGIRL,{
-	if (banquet_wigner_quest == 0) {
+	if (ep16_wig == 0) {
 		mes "[Catherine]";
 		mes "Hello, dear adventurer. Welcome!";
 		mes "We are honored by your visit to the Wigner family.";
@@ -10156,7 +10210,7 @@ prt_cas_q,82,23,0	script	Catherine Wigner#ep16wi	1_F_LIBRARYGIRL,{
 		mes "You may talk to the head of the family standing next to me. His name is Levuiere Wigner.";
 		close;
 	}
-	if (banquet_wigner_quest <= 2) {
+	if (ep16_wig <= 2) {
 		mes "[Catherine]";
 		mes "Have you met our children? Having a conversation with you would be an invaluable experience for our children, dear adventurer.";
 		mes "They haven't been through any trouble growing up so we feel that they lack in various life experiences.";
@@ -10175,7 +10229,7 @@ prt_cas_q,82,23,0	script	Catherine Wigner#ep16wi	1_F_LIBRARYGIRL,{
 		mes "It is always a great joy to listen to the stories of the people who have gone through a lot of experiences.";
 		close;
 	}
-	if (banquet_wigner_quest == 3) {
+	if (ep16_wig == 3) {
 		mes "[Catherine]";
 		mes "What if anything has happened to my baby, Katrin?";
 		mes "I'd better I go down there myself.";
@@ -10188,7 +10242,7 @@ prt_cas_q,82,23,0	script	Catherine Wigner#ep16wi	1_F_LIBRARYGIRL,{
 		mes "I hope everything is OK.";
 		close;
 	}
-	if (banquet_wigner_quest < 10) {
+	if (ep16_wig < 12) {
 		mes "[Levuiere]";
 		mes "Dear adventurer, welcome.";
 		mes "I asked what had happened to the children, but they didn't tell me.";
@@ -10207,7 +10261,7 @@ prt_cas_q,82,23,0	script	Catherine Wigner#ep16wi	1_F_LIBRARYGIRL,{
 		mes "Since I have to run some errands, I should get going now.";
 		close;
 	}
-	if (banquet_wigner_quest == 10) {
+	if (ep16_wig < 16) {
 		mes "[Catherine]";
 		mes "I wonder if our children haven't bothered you much. Although we are very curious, we have decided not to question it any more.";
 		mes "They have grown up, but we still tend to baby them too much...";
@@ -10217,7 +10271,7 @@ prt_cas_q,82,23,0	script	Catherine Wigner#ep16wi	1_F_LIBRARYGIRL,{
 		mes "And thank you for helping our children.";
 		close;
 	}
-	if (banquet_wigner_quest == 11) {
+	if (ep16_wig > 15) {
 		mes "[Catherine]";
 		mes "For some reason, our children have become very close to one another.";
 		mes "I think it is all thanks to you.";
@@ -10230,7 +10284,7 @@ prt_cas_q,82,23,0	script	Catherine Wigner#ep16wi	1_F_LIBRARYGIRL,{
 }
 
 prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1304,3) == 0) {
 		cutin "16jur_nor",0;
 		mes "[Jurgen]";
 		mes "You seem to have a lot of luggage. Are you OK?";
@@ -10240,12 +10294,12 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		mes "How about cutting down some?";
 		close3;
 	}
-	if (banquet_wigner_quest == 0) {
+	if (ep16_wig == 0) {
 		mes "[Jurgen]";
 		mes "Are you a fan of mine? Did you make an appointment? If you are a guest of mine, why don't you go see my father over there?";
 		close;
 	}
-	if (banquet_wigner_quest == 1) {
+	if (ep16_wig == 1) {
 		cutin "16jur_nor",0;
 		mes "[Jurgen]";
 		mes "Dear adventurer, I am glad that you are still here. Sorry about my bad manners earlier. I wanted to have more conversation with you. However, if I make any mistakes while I talk in front of my mother, I get scolded.";
@@ -10325,9 +10379,15 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		next;
 		cutin "16isa",1;
 		mes "[Isaac]";
-		mes "Oh, there he goes again. I should get going now. Dear adventurer, I would like to see you later.";
-		next;
-		classchange( HIDDEN_WARP_NPC, "Isaac Wigner#ep16wig", bc_self );
+		if (ep16_lug == 2 || ep16_lug == 3 || ep16_lug == 7 || ep16_lug == 8) {
+			mes "Oh, not again. Dear adventurer, you should be used to this to have a conversation with my brother at our home.";
+			next;
+		}
+		else {
+			mes "Oh, there he goes again. I should get going now. Dear adventurer, I would like to see you later.";
+			next;
+			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+		}
 		cutin "16kat_nor",2;
 		mes "[Katrin]";
 		mes "Dear adventurer, I guess that is it for today. If you are not busy, ^0000cdwhy don't you go have a cup of tea with our parents^000000?";
@@ -10337,13 +10397,14 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "It is a good idea. Please excuse me then.";
-		erasequest 14475;// To Jurgen
+		completequest 14475;// To Jurgen
 		setquest 14476;// To Levuiere and His Wife
-		banquet_wigner_quest = 2;
-		if (banquet_walther_quest >= 3 && banquet_nerius_quest >= 1 && banquet_heine_quest >= 2 && banquet_wigner_quest >= 2 && banquet_richard_quest >= 2 && banquet_geoborg_quest >= 2 && banquet_roegenburg_quest >= 2) {
+		ep16_wig = 2;
+		if (isbegin_quest(7682) == 1 && isbegin_quest(5402) == 2 && isbegin_quest(7683) == 2 && isbegin_quest(7684) == 2 && ep16_wal > 1 && ep16_wig > 1 && ep16_lug > 1 && ep16_gaobs > 1) {
 			completequest 7682;// Socializing Starts from an Eye Contact
 			setquest 7685;// What Is the Next Thing on the Schedule ?
 		}
+		//achievement 130000 3
 		cutin "16jur_nor",0;
 		mes "[Jurgen]";
 		mes "Our ^0000cdparents^000000 are over there. They'd like to talk to you.";
@@ -10354,7 +10415,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		mes "It is very demanding to guard the world's peace with my beauty.";
 		close3;
 	}
-	if (banquet_wigner_quest == 2) {
+	if (ep16_wig == 2) {
 		cutin "16jur_nor",0;
 		mes "[Jurgen]";
 		mes "Our ^0000cdparents^000000 are over there. They'd like to talk to you.";
@@ -10365,14 +10426,14 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		mes "It is very demanding to guard the world's peace with my beauty.";
 		close3;
 	}
-	if (banquet_wigner_quest == 3) {
+	if (ep16_wig == 3) {
 		cutin "16jur_sim",0;
 		mes "[Jurgen]";
 		mes "It seems that my sister has lost something. I couldn't understand her words since she was in such a hurry.";
 		mes "Would you please ask her what it is about?";
 		close3;
 	}
-	if (banquet_wigner_quest >= 4 && banquet_wigner_quest < 9) {
+	if (ep16_wig >= 4 && ep16_wig < 14) {
 		cutin "16jur_sim",0;
 		mes "[Jurgen]";
 		mes "Whatever she has lost, it must be very valuable to her. I feel that she'd better get someone to help her to find it.";
@@ -10386,7 +10447,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		mes "It seems that she may drop dead if she doesn't find whatever she has lost.";
 		close3;
 	}
-	if (banquet_wigner_quest == 9) {
+	if (ep16_wig == 14) {
 		cutin "16jur_nor",0;
 		mes "[Jurgen]";
 		mes "Dear adventurer, you are here. How did it go?";
@@ -10410,7 +10471,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		mes "[Jurgen]";
 		mes "What a nonsense! Phew... This is exactly why I have told her to open her heart to others and talk more...";
 		next;
-		classchange( 4_EP16_POE, "Katrin Wigner#ep16wig", bc_self );
+		cloakoffnpc "Katrin Wigner#ep16wig", getcharid(0);
 		cutin "16kat_nor",2;
 		mes "[Katrin]";
 		mes "Why should I do that? I don't care about the people who don't know me well anyway.";
@@ -10490,7 +10551,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "Both of you should calm down.";
 		next;
-		classchange( 4_EP16_ISAAC, "Isaac Wigner#ep16wig", bc_self );
+		cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
 		cutin "16isa",1;
 		mes "[Isaac]";
 		mes "Yes. Whatever it is, you'd better calm down. I could hear you yelling at each other from the other end of the hallway.";
@@ -10563,7 +10624,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		mes "[Katrin]";
 		mes "That's all right now. I'll forget it all. You don't have to care about it either.";
 		next;
-		classchange( HIDDEN_WARP_NPC, "Katrin Wigner#ep16wig", bc_self );
+		cloakonnpc "Katrin Wigner#ep16wig", getcharid(0);
 		cutin "16isa",1;
 		mes "[Isaac]";
 		mes "She walks so fast. What was it all about?";
@@ -10815,10 +10876,10 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		mes "We are depending on you.";
 		erasequest 14486;// I Heard the Story
 		setquest 14487;// Please Find the Token of Memory
-		banquet_wigner_quest = 10;
+		ep16_wig = 15;
 		close3;
 	}
-	if (banquet_wigner_quest == 10) {
+	if (ep16_wig == 15) {
 		if (countitem(748) < 1 || countitem(6927) < 10) {
 			cutin "16jur_sim",0;
 			mes "[Jurgen]";
@@ -10858,7 +10919,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		mes "[Isaac]";
 		mes "I have already called her.";
 		next;
-		classchange( 4_EP16_POE, "Katrin Wigner#ep16wig", bc_self );
+		cloakoffnpc "Katrin Wigner#ep16wig", getcharid(0);
 		cutin "16kat_nor",2;
 		mes "[Katrin]";
 		mes "Why do you keep calling me? Please leave me alone for that I am not mad at you any more.";
@@ -10930,16 +10991,16 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		mes "[Jurgen]";
 		mes "Dear adventurer, I have learned new lessons and earned many things, thanks to you. If you need our help, we will try to help you as much as we can. I wish you luck!";
 		completequest 14487;// Please Find the Token of Memory
-		delitem 6927,10;// Sea Stone
+		delitem 6927, countitem(6927);// Filled_With_SeaStones
 		delitem 748,1;// Witherless Rose
-		getitem 6919,10;// Honor Token
+		getitem 6919,10;// TokenOfHonor
 		getexp 1000000,500000;
-		banquet_wigner_quest = 11;
+		ep16_wig = 16;
 		close3;
 	}
 	switch( checkquest(14492,PLAYTIME) ) {
 	case -1:
-		if (banquet_wigner_quest == 11) {	// first time (not repeatable)
+		if (ep16_wig == 16) {	// first time (not repeatable)
 			mes "[" + strcharinfo(0) + "]";
 			mes "Jurgen, Hello?";
 			next;
@@ -10957,7 +11018,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 			mes "Thanks to your help, we have never been better than this.";
 			mes "I've been talking to my sister much more, and..";
 			next;
-			classchange( 1_F_04, "Maid#ep16wig01", bc_self );
+			cloakoffnpc "Maid#ep16wig01", getcharid(0);
 			cutin "",255;
 			mes "[Maid]";
 			mes "Excuse me.";
@@ -11008,7 +11069,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 			mes "Then, I should get going.";
 			mes "I am supposed to clean the room when there is no one inside anyway. Please excuse me.";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Maid#ep16wig01", bc_self );
+			cloakonnpc "Maid#ep16wig01", getcharid(0);
 			cutin "16jur_sim",0;
 			mes "[Jurgen]";
 			mes "You shouldn't have to... Well, she's gone...";
@@ -11109,10 +11170,10 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "OK. I should get going then.";
 			setquest 14488;// Please Deliver My Love
-			banquet_wigner_quest = 12;
+			ep16_wig = 17;
 			close;
 		}
-		if (banquet_wigner_quest == 12) {
+		if (ep16_wig == 17) {
 			cutin "16jur_nor",0;
 			mes "[Jurgen]";
 			mes "Dear adventurer! I've been waiting for you. How did it go? Has she said she loves me too?";
@@ -11121,7 +11182,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 			mes "No, I haven't been able to meet her yet. Let me go see her again.";
 			close3;
 		}
-		if (banquet_wigner_quest == 13) {
+		if (ep16_wig == 18) {
 			cutin "16jur_nor",0;
 			mes "[Jurgen]";
 			mes "Dear adventurer! I've been waiting for you.";
@@ -11209,10 +11270,10 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 			mes "Dear adventurer, you may set off now. Please deliver my feelings to her safely.";
 			erasequest 14489;// I Have to Turn It Down
 			setquest 14490;// My Love Once More
-			banquet_wigner_quest = 14;
+			ep16_wig = 19;
 			close3;
 		}
-		if (banquet_wigner_quest == 14) {
+		if (ep16_wig == 19) {
 			cutin "16jur_nor",0;
 			mes "[Jurgen]";
 			mes "Did you deliver my heart to Mary safely? You have come back so early.";
@@ -11227,7 +11288,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 			mes "Mary wouldn't feel uncomfortable if I express my feelings with ordinary things like these, right? Please send her my heart wider than the sea which never withers.";
 			close3;
 		}
-		if (banquet_wigner_quest == 15) {
+		if (ep16_wig == 20) {
 			cutin "16jur_nor",0;
 			mes "[Jurgen]";
 			mes "Dear adventurer! You are back!";
@@ -11300,9 +11361,9 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 			mes "I'll see you tomorrow then!";
 			erasequest 14491;// I Have to Turn It Down Again
 			setquest 14492;// There Is a Silver Lining
-			getitem 6919,4;// Honor Token
+			getitem 6919,4;// TokenOfHonor
 			getexp 200000,200000;
-			banquet_wigner_quest = 16;
+			ep16_wig = 21;
 			close3;
 		}
 		if (isbegin_quest(14493) == 1) {// daily
@@ -11350,7 +11411,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 			mes "Then dear adventurer, I'll see you again tomorrow.";
 			erasequest 14494;// I Have to Turn It Down Again
 			setquest 14492;// There Is a Silver Lining
-			getitem 6919,4;// Honor Token
+			getitem 6919,4;// TokenOfHonor
 			getexp 200000,200000;
 			close3;
 		}
@@ -11396,8 +11457,8 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 	}
 }
 
-prt_cas_q,96,7,1	script	Katrin Wigner#ep16wig	4_EP16_POE,3,3,{
-	if (banquet_wigner_quest == 0) {
+prt_cas_q,96,7,1	script	Katrin Wigner#ep16wig	4_EP16_POE,{
+	if (ep16_wig < 3) {
 		cutin "16kat_nor",2;
 		mes "[Katrin]";
 		mes "Dear adventurer, we are honored to have you with us. Have you met our father who is the head of the Wigner family?";
@@ -11409,19 +11470,7 @@ prt_cas_q,96,7,1	script	Katrin Wigner#ep16wig	4_EP16_POE,3,3,{
 		mes "Then, have a comfortable time in the Wigner family.";
 		close3;
 	}
-	if (banquet_wigner_quest <= 2) {
-		cutin "16kat_nor",2;
-		mes "[Katrin]";
-		mes "Dear adventurer, we are honored to have you with us. Have you met our father who is the head of the Wigner family?";
-		next;
-		mes "[Katrin]";
-		mes "How about meeting Jurgen, the hair of the Wigner family who is participating in the Royal Assembly?";
-		next;
-		mes "[Katrin]";
-		mes "Then, have a comfortable time in the Wigner family.";
-		close3;
-	}
-	if (banquet_wigner_quest == 3) {
+	if (ep16_wig == 3) {
 		cutin "16kat_nor",2;
 		mes "[Katrin]";
 		mes "I am over!";
@@ -11493,15 +11542,16 @@ prt_cas_q,96,7,1	script	Katrin Wigner#ep16wig	4_EP16_POE,3,3,{
 		mes "Should I...";
 		mes "Then, please help me, dear adventurer. I'll go search other pleases then.";
 		next;
+		cloakonnpc "Katrin Wigner#ep16wig", getcharid(0);
 		cutin "16jur_nor",0;
 		mes "[Jurgen]";
 		mes "Please, help her. I have heard that ^0000cdthe maids are in the kitchen^000000.";
 		erasequest 14477;// What Is Going on?
 		setquest 14478;// Searching for the Clue
-		banquet_wigner_quest = 4;
+		ep16_wig = 4;
 		close3;
 	}
-	if (banquet_wigner_quest == 4 || banquet_wigner_quest == 5) {
+	if (ep16_wig < 12) {
 		cutin "16kat_nor",2;
 		mes "[Katrin]";
 		mes "Oh, what should I do?";
@@ -11516,7 +11566,7 @@ prt_cas_q,96,7,1	script	Katrin Wigner#ep16wig	4_EP16_POE,3,3,{
 		mes "I would be embarrassed to death.";
 		close3;
 	}
-	if (banquet_wigner_quest == 10) {
+	if (ep16_wig == 15) {
 		cutin "16kat_nor",2;
 		mes "[Katrin]";
 		mes "Please leave me alone now!";
@@ -11546,7 +11596,7 @@ prt_cas_q,96,7,1	script	Katrin Wigner#ep16wig	4_EP16_POE,3,3,{
 		mes "Please.";
 		close3;
 	}
-	if (banquet_wigner_quest == 11) {
+	if (ep16_wig > 15) {
 		cutin "16kat_nor",2;
 		mes "[Katrin]";
 		mes "Thanks to you, we have become closer to one another now.";
@@ -11567,11 +11617,6 @@ prt_cas_q,96,7,1	script	Katrin Wigner#ep16wig	4_EP16_POE,3,3,{
 	mes "[Katrin]";
 	mes "My father is over there.";
 	close3;
-
-OnTouch:
-	if (banquet_wigner_quest >= 4 && banquet_wigner_quest <= 10)
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
-	end;
 }
 
 prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	4_EP16_ISAAC,{
@@ -11731,14 +11776,7 @@ prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	4_EP16_ISAAC,{
 		close3;
 	}
 
-	if (banquet_wigner_quest == 0) {
-		cutin "16isa",1;
-		mes "[Isaac]";
-		mes "Is it your first time to visit the Wigner family?";
-		mes "Then, ^0000cdyou should meet our parents^000000 over there first.";
-		close3;
-	}
-	if (banquet_wigner_quest == 1) {
+	if (ep16_wig == 1 || ep16_wig == 2) {
 		cutin "16isa",1;
 		mes "[Isaac]";
 		mes "Dear adventurer, since you are here to the Wigner family, why don't you go meet some other members of the family?";
@@ -11748,7 +11786,7 @@ prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	4_EP16_ISAAC,{
 		mes "I believe that you would have more productive time with them.";
 		close3;
 	}
-	if (banquet_wigner_quest == 10) {
+	if (ep16_wig == 15) {
 		cutin "16isa",1;
 		mes "[Isaac]";
 		mes "Dear adventurer, did you bring what I had asked you?";
@@ -11769,7 +11807,7 @@ prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	4_EP16_ISAAC,{
 		mes "Please bring them to us as soon as possible!";
 		close3;
 	}
-	if (banquet_wigner_quest == 11) {
+	if (ep16_wig > 15) {
 		cutin "16isa",1;
 		mes "[Isaac]";
 		mes "Thanks to you, my brother and sister have become close to each other again.";
@@ -11786,8 +11824,13 @@ prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	4_EP16_ISAAC,{
 	close3;
 }
 
-prt_cas_q,80,23,5	script	Jurgen Wigner#ep16wig00	HIDDEN_WARP_NPC,{ end; }
-prt_cas_q,93,10,4	script	Maid#ep16wig01	HIDDEN_WARP_NPC,{ end; }
+prt_cas_q,80,23,5	script	Jurgen Wigner#ep16wig00	4_M_4THPRIN1,{
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
+}
+prt_cas_q,93,10,4	duplicate(Jurgen Wigner#ep16wig00)	Maid#ep16wig01	1_F_04
 
 prt_cas_q,95,11,4	script	Womenfolk#ep16wig01	1_F_03,{ end; }
 prt_cas_q,94,12,4	script	Strong Guards#ep16wig03	8W_SOLDIER,{ end; }
@@ -11868,7 +11911,7 @@ OnEvent2:
 }
 
 prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1304,3) == 0) {
 		mes "[Maid]";
 		mes "Oh, you shouldn't bring too much stuff in here.";
 		mes "As you see there are a lot of fragile things.";
@@ -11877,7 +11920,8 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "You need to leave some out. It would be a big problem if the bundle touches the dishes and breaks them.";
 		close;
 	}
-	if (banquet_wigner_quest == 4) {
+	.@name$ = strcharinfo(0);
+	if (ep16_wig == 4) {
 		mes "[Maid]";
 		mes "I am cleaning the kitchen now, which is the hardest place to clean. It is really difficult to get rid of all the dirt in here.";
 		mes "My arms are way too weak to handle it.";
@@ -11885,19 +11929,19 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "[Maid]";
 		mes "I happen to see someone with a strong set of arms... Those arms... What brought you here?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Hello, I am the adventurer invited to the royal banquet. Are you the maid who have cleaned the Wigner residence this afternoon?";
 		next;
 		mes "[Maid]";
 		mes "Yes, I am. What can I do for you?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Did you happen to see ^0000cda small box^000000 in the Wigner residence? It was supposed to be on the table next to the bed. The box belongs to Princess Katrin. Have you seen it?";
 		next;
 		mes "[Maid]";
 		mes "Yes, I have. It was the box which looked simple but classy. I held it up for a second to clean the table and put it down. I remember it.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Did you see it there when you leave the room? Wasn't there anyone else in the room?";
 		next;
 		mes "[Maid]";
@@ -11907,14 +11951,14 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "[Maid]";
 		mes "Isn't the box missing and are you ^0000cdsuspecting the maid who has cleaned the room^000000? Am I right?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "I am not suspecting you. I am just ^0000cdasking you about the situation^000000 to track the box.";
 		next;
 		emotion ET_FRET;
 		mes "[Maid]";
 		mes "With an element of suspicion in your mind, right?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "No, I am not suspecting you. Please don't get me wrong. I am just asking you when you have seen it and if there haven't been anyone else there.";
 		next;
 		emotion ET_ANGER;
@@ -11924,7 +11968,7 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "[Maid]";
 		mes "I can tell you this one though. I didn't take it. If you ask me if there was anyone in the room, well...";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "There was someone in the room, right?";
 		next;
 		mes "[Maid]";
@@ -11934,7 +11978,7 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "[Maid]";
 		mes "Oh, the kitchen is messy and so are the thoughts inside my head. Oh, how dirty and messy!";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "May I help you clean up?";
 		next;
 		emotion ET_SMILE;
@@ -11951,15 +11995,15 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "[Maid]";
 		mes "Oh, wait! You know, there is a certain protocol when it comes to cleaning. You first need to wipe off the mold on the wall. Then you have to clean up the grease. The last thing for you to do is cleaning the floor.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "I... I see.";
 		erasequest 14478;// Searching for the Clue
 		setquest 14479;// Clean-up out of Apology
-		getitem 6928,3;// Poring Loofah
-		banquet_wigner_quest = 5;
+		getitem 6928,3;// Poring_Loofah
+		ep16_wig = 5;
 		close;
 	}
-	if (banquet_wigner_quest == 5) {
+	if (ep16_wig > 4 && ep16_wig < 11) {
 		mes "[Maid]";
 		mes "Have you finished it already?";
 		mes "It doesn't seem so. The thoughts in my head haven't cleared up yet.";
@@ -11968,12 +12012,12 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "I think I would be able to recall when you come back after cleaning the kitchen with the Scrub Sponge I have given you.";
 		close;
 	}
-	if (banquet_wigner_quest == 6) {
+	if (ep16_wig == 11) {
 		emotion ET_BEST;
 		mes "[Maid]";
 		mes "Wow... The kitchen has become so clean! You really need to clean the grease with a strong set of arms!";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Argh... My arms... Was there anyone else in the room?";
 		next;
 		mes "[Maid]";
@@ -11982,21 +12026,21 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "[Maid]";
 		mes "All the gorgeous pieces of furniture and carpets... I have never seen tiger skin as white and huge as that one in there.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Why are you talking about the furniture all of a sudden?";
 		next;
 		mes "[Maid]";
 		mes "Oh, my, how are you going to deal with the members of the royal families with such slow wit?";
 		mes "Think. Why would I ^0000cdtalk about the furniture^000000 ?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "...You ^0000cdcan ask the person who was delivering the furniture^000000 .";
 		next;
 		mes "[Maid]";
 		mes "I cannot point it out, but I think I have given you enough clues.";
 		mes "By the way, is the box really missing in the first place?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "What do you mean?";
 		next;
 		mes "[Maid]";
@@ -12012,14 +12056,14 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "[Maid]";
 		mes "The words haven not been spread yet, but I am sure that everyone will be talking about it even before the teatime is over.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "I don't think that is true. She is not that kind of person.";
 		next;
 		emotion ET_FRET;
 		mes "[Maid]";
 		mes "That's what people say. You don't have to reason with me. Anyways, I should get back to my cleaning duty. If you are not going to help me, please leave me alone now.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Do you know where the man who have delivered the furniture is?";
 		next;
 		mes "[Maid]";
@@ -12028,14 +12072,16 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "[Maid]";
 		mes "Oh, by the way, you didn't hear it from me. Not that I said anything to you.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Of course. Thank you for your cooperation.";
+		if (isbegin_quest(14479))
+			erasequest 14479;
 		erasequest 14483;// Report the Completion of the Clean-up
 		setquest 14484;// There Was a Furniture Delivery Man
-		banquet_wigner_quest = 7;
+		ep16_wig = 12;
 		close;
 	}
-	if (banquet_wigner_quest == 7) {
+	if (ep16_wig == 12) {
 		mes "[Maid]";
 		mes "Dear adventurer, didn't you say that you were going to visit the delivery man?";
 		mes "He must be somewhere ^0000cdnear the district office^000000.";
@@ -12045,26 +12091,26 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "You are getting in the way.";
 		close;
 	}
-	if (banquet_wigner_quest < 12) {
+	if (ep16_wig < 12) {
 		mes "[Maid]";
 		mes "Oh, I am sick of cleaning! I have enough things to clean at home. I don't need to do more out here.";
 		mes "I should just give it all up and run away.";
 		close;
 	}
-	if (banquet_wigner_quest == 12) {
+	if (ep16_wig == 17) {
 		emotion ET_FRET;
 		mes "[Maid]";
 		mes "Oh, why can't I get it off easily? I guess I won't be able to go home early.";
 		mes "Why should I do this?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Hello. Do you have a moment?";
 		next;
 		mes "[Maid]";
 		mes "Yes... Well... Hum.. You are...";
 		mes "Aren't you the adventurer who was at the Wigner residence?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Yes. And I have come here before, and I have helped you with cleaning.";
 		mes "^0000cdDon't you remember...?^000000";
 		next;
@@ -12073,13 +12119,13 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "Oh, I am really sorry. ^0000cdI am not good at remembering faces.^000000";
 		mes "What brought you here?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Jurgen of the Wigner family has asked me to give it to you.";
 		next;
 		mes "[Maid]";
 		mes "What is it? Why did he give it to me? Is it an invoice? Have I done anything wrong?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "No, it is not. Please just read it first.";
 		next;
 		emotion ET_BIGTHROB;
@@ -12087,23 +12133,23 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "Hum... I have fallen in love with you at first sight.";
 		mes "Well... Hum... Please accept my love for... Eh... Umm...";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "He has used some really direct languages here. How very Wigner of him for that he values efficiency... Hahaha...";
 		next;
 		mes "[Maid]";
 		mes "Hum... It is... It is... Well, is it what I think it is?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Yes, it is a love letter.";
 		next;
 		mes "[Maid]";
 		mes "Phew... I am sorry, but you should take it back.";
 		mes "Well... I appreciate his feelings for me... I really do... But please just take it back.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Really? He has just tried to express his feelings... You may as well just keep it...";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Oh, are you in a relationship or engaged? Or are you married?";
 		next;
 		mes "[Maid]";
@@ -12113,26 +12159,26 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "[Maid]";
 		mes "Most of all, I am not in the situation to date anyone. ^0000cdIt is for a personal reason.^000000";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "If you say so, I cannot force it. I'll deliver your words to him.";
 		next;
 		mes "[Maid]";
 		mes "Yes. I am really sorry.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "May I get your name at least?";
 		next;
 		mes "[Maid]";
 		mes "Mad... No, ^0000cdMary^000000. My name is Mary.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "I see. Then let me deliver your words to Jurgen.";
 		erasequest 14488;// Please Deliver My Love
 		setquest 14489;// I Have to Turn It Down
-		banquet_wigner_quest = 13;
+		ep16_wig = 18;
 		close;
 	}
-	if (banquet_wigner_quest == 13) {
+	if (ep16_wig == 18) {
 		mes "[Maid]";
 		mes "Well, have you told the prince about it? Please make sure not to hurt his feelings much.";
 		next;
@@ -12140,21 +12186,21 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "Please.";
 		close;
 	}
-	if (banquet_wigner_quest == 14) {
+	if (ep16_wig == 19) {
 		if (countitem(748) < 1 || countitem(6927) < 15) {
 			emotion ET_OHNO;
 			mes "[Mary]";
 			mes "Oh, when will it end.";
 			mes "I won't let go of this, really!";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@name$ + "]";
 			mes "Oh, I don't think it is the right time. May I come back later?";
 			next;
 			mes "[Mary]";
 			mes "No, not at all.";
 			mes "Dear adventurer, you have a hole in your pocket. Have you lost anything?";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@name$ + "]";
 			mes "Oh! When did I get a hole in there? Where are the ^0000cd15 Sea Stones and 1 Witherless Rose...?^000000";
 			mes "They are gone! Let me come back later! I have forgotten to bring something!";
 			close;
@@ -12164,7 +12210,7 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "Oh, when will it end.";
 		mes "I won't let go of this, really!";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Oh, hello.";
 		mes "Is it a bad time? Should I just go?";
 		next;
@@ -12172,7 +12218,7 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "Oh, no.";
 		mes "By the way, you are back. Is it about the prince of the Wigner family again?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Yes. Jurgen seems to be really serious about it.";
 		mes "He wants you to have these.";
 		next;
@@ -12180,13 +12226,13 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "I turned it down.";
 		mes "Oh, this really is... So pretty. There is water inside this glass-like thing...";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Yes. Jurgen wants me to let you know about his heart as wide and beautiful as the sea.";
 		next;
 		mes "[Mary]";
 		mes "Oh, I really cannot go out with him. Well, there really is a reason that I cannot accept this feelings. I wonder if I should tell you this.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Please tell me. If you have a good enough reason which Jurgen can understand, he would not bother you again, Mary.";
 		next;
 		mes "[Mary]";
@@ -12195,20 +12241,20 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "[Mary]";
 		mes "In fact, I am ^0000cdthe younger sibling of the maid who used to work here^000000. The maid you have met before.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Oh, no wonder you couldn't remember my face. I found it a little strange. By the way, you two sisters must have worked here together.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "However, what would it matter since it is you whom he has fallen for?";
 		next;
 		mes "[Mary]";
 		mes "It matters. ^0000cdBecause, I am her brother^000000.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Oh, you are...";
 		next;
 		emotion ET_HUK, playerattached();
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Wha... What? A brother?";
 		next;
 		mes "[Mary]";
@@ -12233,16 +12279,16 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "[Mary]";
 		mes "After consulting my mother, I decided to work here pretending as if I was my sister. Since everyone was so busy, no one paid attention to me who was working quietly in this corner.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "You have managed not to be busted so far.";
 		next;
 		mes "[Mary]";
 		mes "Since ^0000cdI look just like my sister^000000, no one seems to notice.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "What should we do then? Jurgen really wants you to accept his love.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "He is in sorrow saying how difficult it is to get the first thing he has ever wanted in this entire life.";
 		next;
 		emotion ET_SCRATCH;
@@ -12252,13 +12298,13 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "[Mary]";
 		mes "I assumed that the people who have all the money in the world and have seen all the good things in the world must have a keen eye. I stand corrected.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "You get blinded when you are in love.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "And, you really are doing so remarkably at what you are doing now.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "I guess I should go back and tell him the truth.";
 		next;
 		emotion ET_HUK;
@@ -12269,22 +12315,22 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "[Mary]";
 		mes "I am keep sending the message to my sister to comeback, but it seems difficult to reach her. Would you please keep it secret until the banquet is over?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Jurgen would keep sending me to earn your love, and this means that we are deceiving him.";
 		next;
 		mes "[Mary]";
 		mes "I am sorry for him, but my life depends on this.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Hum, I don't feel comfortable doing this...";
 		next;
 		mes "[Mary]";
 		mes "It is not my fault to be here in this clothing... Please feel for me.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Oh, OK. Calm down. I'll tell Jurgen that you have held off the answer.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Please take good care of the stuff. If you return them, he will send me down here again.";
 		next;
 		mes "[Mary]";
@@ -12293,20 +12339,20 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "[Mary]";
 		mes "Oh, I guess I should change my cleaning area so that I don't bump into him.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Yes, I guess it would work.";
 		mes "Then, let me go tell him that.";
 		next;
 		mes "[Mary]";
 		mes "Thank you.";
-		delitem 6927, countitem(6927);// Sea Stone
+		delitem 6927, countitem(6927);// Filled_With_SeaStones
 		delitem 748,1;// Witherless Rose
 		erasequest 14490;// My Love Once More
 		setquest 14491;// I Have to Turn It Down Again
-		banquet_wigner_quest = 15;
+		ep16_wig = 20;
 		close;
 	}
-	if (banquet_wigner_quest == 15) {
+	if (ep16_wig == 20) {
 		mes "[Mary]";
 		mes "Did you tell the prince about it?";
 		mes "I am worried about the consequences if anything goes wrong.";
@@ -12315,58 +12361,66 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "I may have to run off like my sister.";
 		close;
 	}
-
-	if (isbegin_quest(14493) == 1) {	// daily quest
-		if (countitem(748) < 1 || countitem(6927) < 15) {
-			emotion ET_OHNO;
+	if (ep16_wig > 20) {
+		if (isbegin_quest(14494) == 1 || isbegin_quest(14492) == 1) {	// daily quest
 			mes "[Mary]";
-			mes "Oh, when will it end.";
-			mes "I won't let go of this, really!";
-			next;
-			mes "[" + strcharinfo(0) + "]";
-			mes "Oh, I don't think it is the right time. May I come back later?";
-			next;
-			mes "[Mary]";
-			mes "No, not at all.";
-			mes "Dear adventurer, you have a hole in your pocket. Have you lost anything?";
-			next;
-			mes "[" + strcharinfo(0) + "]";
-			mes "Oh! When did I get a hole in there? Where are the ^0000cd15 Sea Stones and 1 Witherless Rose...?^000000";
-			mes "They are gone! Let me come back later! I have forgotten to bring something!";
+			mes "Did you tell the prince about it? I hope he gives up from tomorrow without sending you down here again.";
 			close;
 		}
-		mes "[Maid]";
-		mes "Adventurer? What brought you here?";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Jurgen sent me here to deliver his love to you again.";
-		next;
-		emotion ET_CRY;
-		mes "[Maid]";
-		mes "Again... I really hoped he would have given up by today... I guess it must have been a vain hope.";
-		next;
-		mes "[Maid]";
-		mes "Please tell him I appreciate it.";
-		next;
-		mes "[Maid]";
-		mes "I really want the banquet to be over soon. Or my sister could just come back.";
-		next;
-		mes "[Maid]";
-		mes "Anyway, I am sorry to put you in the difficult situation again today.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Well then, since I have delivered you what I have to deliver you, I should get going.";
-		next;
-		mes "[Maid]";
-		mes "Yes, please go back safely. I hope he gives up by tomorrow.";
-		delitem 6927,15;// Sea Stone
-		delitem 748,1;// Witherless Rose
-		erasequest 14493;// Today I Feel
-		setquest 14494;// I Have to Turn It Down Again
-		close;
+		if (isbegin_quest(14493) == 1) {
+			if (countitem(748) < 1 || countitem(6927) < 15) {
+				emotion ET_OHNO;
+				mes "[Mary]";
+				mes "Oh, when will it end.";
+				mes "I won't let go of this, really!";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "Oh, I don't think it is the right time. May I come back later?";
+				next;
+				mes "[Mary]";
+				mes "No, not at all.";
+				mes "Dear adventurer, you have a hole in your pocket. Have you lost anything?";
+				next;
+				mes "[" + .@name$ + "]";
+				mes "Oh! When did I get a hole in there? Where are the ^0000cd15 Sea Stones and 1 Witherless Rose...?^000000";
+				mes "They are gone! Let me come back later! I have forgotten to bring something!";
+				close;
+			}
+			mes "[Maid]";
+			mes "Adventurer? What brought you here?";
+			next;
+			mes "[" + .@name$ + "]";
+			mes "Jurgen sent me here to deliver his love to you again.";
+			next;
+			emotion ET_CRY;
+			mes "[Maid]";
+			mes "Again... I really hoped he would have given up by today... I guess it must have been a vain hope.";
+			next;
+			mes "[Maid]";
+			mes "Please tell him I appreciate it.";
+			next;
+			mes "[Maid]";
+			mes "I really want the banquet to be over soon. Or my sister could just come back.";
+			next;
+			mes "[Maid]";
+			mes "Anyway, I am sorry to put you in the difficult situation again today.";
+			next;
+			mes "[" + .@name$ + "]";
+			mes "Well then, since I have delivered you what I have to deliver you, I should get going.";
+			next;
+			mes "[Maid]";
+			mes "Yes, please go back safely. I hope he gives up by tomorrow.";
+			delitem 6927, countitem(6927);// Filled_With_SeaStones
+			delitem 748,1;// Witherless Rose
+			erasequest 14493;// Today I Feel
+			setquest 14494;// I Have to Turn It Down Again
+			close;
+		}
+		// fall through
 	}
-	mes "[Mary]";
-	mes "Did you tell the prince about it? I hope he gives up from tomorrow without sending you down here again.";
+	mes "[Maid]";
+	mes "Oh, I am sick of cleaning! I have enough things to clean at home. I don't need to do more out here.";
+	mes "I should just give it all up and run away.";
 	close;
 }
 
@@ -12374,47 +12428,48 @@ prt_cas,339,212,5	script	Dark and Damp Wall#ep16	HIDDEN_NPC,5,5,{
 	callsub S_Talk;
 
 S_Talk:
-	if (banquet_wigner_quest == 5) {
-		switch( isbegin_quest(14481) ) {
-		case 0:
+	if (ep16_wig == 5) {
+		mes "[Scrub Sponge]";
+		mes "Dear human, are you the one who have waken me up?";
+		mes "After a long sleep, I am waken up before such a mess.";
+		next;
+		mes "[Scrub Sponge]";
+		mes "I am the god of cleaning sealed in the Scrub Sponge.";
+		mes "You shall pay for your sin of interrupting my rest with cleaning.";
+		next;
+		mes "[Scrub Sponge]";
+		mes "Let's see. This must be ^0000cda cluster of mold^000000!";
+		mes "You cannot get this mold without borrowing strength from its own race and the god.";
+		next;
+		mes "[Scrub Sponge]";
+		mes "Bring ^0000cd1 Mold Powder and 1 Holy Water^000000!";
+		setquest 14481;// Conquer the Mold
+		ep16_wig = 6;
+		close;
+	}
+	if (ep16_wig == 6) {
+		if (countitem(6928) < 1 || countitem(7001) < 1 || countitem(523) < 1) {
 			mes "[Scrub Sponge]";
-			mes "Dear human, are you the one who have waken me up?";
-			mes "After a long sleep, I am waken up before such a mess.";
+			mes "Human, what are you doing now?";
+			mes "I told you! You need ^0000cd1 Mold Powder and 1 Holy Water^000000 to clean up the mold!";
 			next;
 			mes "[Scrub Sponge]";
-			mes "I am the god of cleaning sealed in the Scrub Sponge.";
-			mes "You shall pay for your sin of interrupting my rest with cleaning.";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Let's see. This must be ^0000cda cluster of mold^000000!";
-			mes "You cannot get this mold without borrowing strength from its own race and the god.";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Bring ^0000cd1 Mold Powder and 1 Holy Water^000000!";
-			setquest 14481;// Conquer the Mold
+			mes "How can you clean up without them?";
+			mes "Go get them first.";
 			close;
-		case 1:
-			if (countitem(6928) < 1 || countitem(7001) < 1 || countitem(523) < 1) {
-				mes "[Scrub Sponge]";
-				mes "Human, what are you doing now?";
-				mes "I told you! You need ^0000cd1 Mold Powder and 1 Holy Water^000000 to clean up the mold!";
-				next;
-				mes "[Scrub Sponge]";
-				mes "How can you clean up without them?";
-				mes "Go get them first.";
-				close;
-			}
-			mes "[Scrub Sponge]";
-			mes "Since you have the Mold Powder and alcohol with you, try getting rid of the mold now.";
-			next;
-			mes "[Scrub Sponge]";
-			mes "This is not the proper way of wiping off the mold, but this is the only way to get rid of such severe mold.";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Wipe the Mold Power over the mold which resembles demon's skin and sprinkle it with Holy Water.";
-			next;
-			mes "[Scrub Sponge]";
-			mes "And wipe it as I tell you. I am not going to tell you again so pay attention.";
+		}
+		mes "[Scrub Sponge]";
+		mes "Since you have the Mold Powder and alcohol with you, try getting rid of the mold now.";
+		next;
+		mes "[Scrub Sponge]";
+		mes "This is not the proper way of wiping off the mold, but this is the only way to get rid of such severe mold.";
+		next;
+		mes "[Scrub Sponge]";
+		mes "Wipe the Mold Power over the mold which resembles demon's skin and sprinkle it with Holy Water.";
+		next;
+		mes "[Scrub Sponge]";
+		mes "And wipe it as I tell you. I am not going to tell you again so pay attention.";
+		while(1) {
 			next;
 			mes "[Scrub Sponge]";
 			mes "Tap it once gently and tap it three times more. You really need to soak the wall with the Holy Water and Mold Powder to wipe it off. This is very important.";
@@ -12423,43 +12478,46 @@ S_Talk:
 			mes "Then, you need to scrub hard about ten times and wipe it off in circles about five times. Why don't you try now?";
 			next;
 			progressbar "ffff00",3;
-			mes "[Scrub Sponge]";
-			while( rand(100) < 50 ) {
+			switch( rand(1,3) ) {
+			case 1:
+				mes "[Scrub Sponge]";
+				mes "That's not it! You really need to be determined to get rid of the flower of devil.";
+				mes "Compose yourself and listen again carefully.";
+				continue;
+			case 2:
+				specialeffect EF_RECOVERY;
+				mes "Well done. You have cleaned it so well.";
+				mes "As a Scrub Sponge, I am very contented.";
+				next;
+				mes "[Scrub Sponge]";
+				mes "Since I have fulfilled my duty, I shall go now!";
+				mes "Thank you, human... Thank you for being with me for this life...";
+				specialeffect2 EF_CURE;
+				break;
+			case 3:
+				mes "[Scrub Sponge]";
 				mes "That's not it! Relax your arms a little!";
 				mes "Cleaning is not just about physical strength. You are still too far behind to reach the enlightenment. Ease your mind and body to try again.";
-				next;
-				mes "[Scrub Sponge]";
-				mes "Tap it once gently and tap it three times more. You really need to soak the wall with the Holy Water and Mold Powder to wipe it off. This is very important.";
-				next;
-				mes "[Scrub Sponge]";
-				mes "Then, you need to scrub hard about ten times and wipe it off in circles about five times. Why don't you try now?";
-				next;
-				progressbar "ffff00",3;
-				mes "[Scrub Sponge]";
+				continue;
 			}
-			specialeffect EF_RECOVERY;
-			mes "Well done. You have cleaned it so well.";
-			mes "As a Scrub Sponge, I am very contented.";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Since I have fulfilled my duty, I shall go now!";
-			mes "Thank you, human... Thank you for being with me for this life...";
-			specialeffect2 EF_CURE;
-			delitem 6928,1;// Poring Loofah
-			delitem 7001,1;// Mould Powder
-			delitem 523,1;// Holy Water
-			completequest 14481;// Conquer the Mold
-			close;
-		case 2:
-			mes "[Wall Which Used to Be Moldy]";
-			mes "The clean wall reminds me of the Scrub Sponge which has been through the cleaning duty with me.";
-			close;
+			break;
 		}
+		delitem 6928,1;// Poring Loofah
+		delitem 7001,1;// Mould Powder
+		delitem 523,1;// Holy Water
+		completequest 14481;// Conquer the Mold
+		ep16_wig = 7;
+		close;
+	}
+	if (ep16_wig > 6) {
+		mes "[Wall Which Used to Be Moldy]";
+		mes "The clean wall reminds me of the Scrub Sponge which has been through the cleaning duty with me.";
+		close;
 	}
 	end;
 
 OnTouch:
-	if (isbegin_quest(14481) == 0)
+	if (ep16_wig == 5)
 		callsub S_Talk;
 	end;
 }
@@ -12468,213 +12526,230 @@ prt_cas,339,198,5	script	Sticky Wall#ep16wig	HIDDEN_NPC,5,5,{
 	callsub S_Talk;
 
 S_Talk:
-	if (banquet_wigner_quest == 5 && isbegin_quest(14481) == 2) {
-		switch( isbegin_quest(14480) ) {
-		case 0:
+	if (ep16_wig == 7) {
+		mes "[Scrub Sponge]";
+		mes "Is it you...? Are you the one who has guided me to ^0000cdthe ingrained grease^000000?";
+		mes "Nice to meet you. I have been a sleep in this waiting for someone who would clean up something with me.";
+		next;
+		mes "[Scrub Sponge]";
+		mes "I am the fairy of cleaning sealed in the Scrub Sponge.";
+		mes "I wake up when I am near somewhere dirty.";
+		next;
+		mes "[Scrub Sponge]";
+		mes "Thank you for choosing me to clean the grease.";
+		mes "I always wanted to clean grease in style.";
+		next;
+		mes "[Scrub Sponge]";
+		mes "Hum... For the ingrained grease, ^0000cdthe mixture of orange and alcohol^000000 works the best.";
+		mes "Would you bring ^0000cd1 orange and 1 alcohol^000000? Let's clean up with them!";
+		setquest 14480;// Conquer the Grease
+		ep16_wig = 8;
+		close;
+	}
+	if (ep16_wig == 8) {
+		if (countitem(6928) < 1 || countitem(582) < 1 || countitem(970) < 1) {
 			mes "[Scrub Sponge]";
-			mes "Is it you...? Are you the one who has guided me to ^0000cdthe ingrained grease^000000?";
-			mes "Nice to meet you. I have been a sleep in this waiting for someone who would clean up something with me.";
+			mes "Oh, wait a moment!";
+			mes "You need ^0000cd1 orange and 1 alcohol^000000 to clean up the ingrained grease.";
 			next;
 			mes "[Scrub Sponge]";
-			mes "I am the fairy of cleaning sealed in the Scrub Sponge.";
-			mes "I wake up when I am near somewhere dirty.";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Thank you for choosing me to clean the grease.";
-			mes "I always wanted to clean grease in style.";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Hum... For the ingrained grease, ^0000cdthe mixture of orange and alcohol^000000 works the best.";
-			mes "Would you bring ^0000cd1 orange and 1 alcohol^000000? Let's clean up with them!";
-			setquest 14480;// Conquer the Grease
+			mes "I would like to prepare it myself but I am just a Scrub Sponge.";
+			mes "Please bring them with you.";
 			close;
-		case 1:
-			if (countitem(6928) < 1 || countitem(582) < 1 || countitem(970) < 1) {
-				mes "[Scrub Sponge]";
-				mes "Oh, wait a moment!";
-				mes "You need ^0000cd1 orange and 1 alcohol^000000 to clean up the ingrained grease.";
-				next;
-				mes "[Scrub Sponge]";
-				mes "I would like to prepare it myself but I am just a Scrub Sponge.";
-				mes "Please bring them with you.";
-				close;
-			}
-			mes "[Scrub Sponge]";
-			mes "Since we have the orange and alcohol, let's clean up together now!";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Peel the orange and put the orange peels in the alcohol. Then wait a moment. You may eat the flesh of orange if you want. Yum!";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Well, the essence of the orange peels must have been infused in the alcohol by now. Spray it over the grease and wipe with me.";
-			next;
-			mes "[Scrub Sponge]";
-			mes "It takes some skills to wipe it off.";
+		}
+		mes "[Scrub Sponge]";
+		mes "Since we have the orange and alcohol, let's clean up together now!";
+		next;
+		mes "[Scrub Sponge]";
+		mes "Peel the orange and put the orange peels in the alcohol. Then wait a moment. You may eat the flesh of orange if you want. Yum!";
+		next;
+		mes "[Scrub Sponge]";
+		mes "Well, the essence of the orange peels must have been infused in the alcohol by now. Spray it over the grease and wipe with me.";
+		next;
+		mes "[Scrub Sponge]";
+		mes "It takes some skills to wipe it off.";
+		while(1) {
 			next;
 			mes "[Scrub Sponge]";
 			mes "First you need to scrub gently, gently once more and hard! Then scrub with medium strength and scrub harder.";
 			mes "You should then spray the mixture once more and keep wiping with medium strength.";
 			next;
 			progressbar "ffff00",3;
-			specialeffect EF_RECOVERY;
-			mes "[Scrub Sponge]";
-			mes "Whoa, good job! The grease is gone now!";
-			mes "Even better, the fresh scent remains after cleaning, making the passengers happy.";
-			next;
-			mes "[Scrub Sponge]";
-			mes "However, I will disappear soon.";
-			mes "It is the fate of dirty Scrub Sponge.";
-			next;
-			mes "[Scrub Sponge]";
-			mes "However, I was happy to spend the short life of a Scrub Sponge with you.";
-			mes "I want to be born as a human in my next life to be a close... Friend of yours...";
-			specialeffect2 EF_CURE;
-			delitem 6928,1;// Poring Loofah
-			delitem 582,1;// Orange
-			delitem 970,1;// Alcohol
-			completequest 14480;// Conquer the Grease
-			close;
-		case 2:
-			mes "[Scrapped-off Wall]";
-			mes "The clean wall reminds me of the Scrub Sponge has been really kind to me.";
-			close;
+
+			switch( rand(1,3) ) {
+			case 1:
+				mes "[Scrub Sponge]";
+				mes "I think you are scrubbing too gently. You should allow sometime for the grease to dissolve in the mixture.";
+				next;
+				mes "[Scrub Sponge]";
+				mes "First, you need to penetrate the grease with the mixture. Then you need to wipe off the grease. Well, let's try again.";
+				continue;
+			case 2:
+				specialeffect EF_RECOVERY;
+				mes "[Scrub Sponge]";
+				mes "Whoa, good job! The grease is gone now!";
+				mes "Even better, the fresh scent remains after cleaning, making the passengers happy.";
+				next;
+				mes "[Scrub Sponge]";
+				mes "However, I will disappear soon.";
+				mes "It is the fate of dirty Scrub Sponge.";
+				next;
+				mes "[Scrub Sponge]";
+				mes "However, I was happy to spend the short life of a Scrub Sponge with you.";
+				mes "I want to be born as a human in my next life to be a close... Friend of yours...";
+				specialeffect2 EF_CURE;
+				break;
+			case 3:
+				mes "[Scrub Sponge]";
+				mes "You shouldn't just wipe it too hard. You need to let the mixture melt into the grease to get it off.";
+				mes "Scrub gently and wipe it off at once. Well, listen up again.";
+				continue;
+			}
+			break;
 		}
+		delitem 6928,1;// Poring Loofah
+		delitem 582,1;// Orange
+		delitem 970,1;// Alcohol
+		completequest 14480;// Conquer the Grease
+		ep16_wig = 9;
+		close;
+	}
+	if (ep16_wig > 8) {
+		mes "[Scrapped-off Wall]";
+		mes "The clean wall reminds me of the Scrub Sponge has been really kind to me.";
+		close;
 	}
 	end;
 
 OnTouch:
-	if (isbegin_quest(14480) == 0)
+	if (ep16_wig == 7)
 		callsub S_Talk;
 	end;
 }
 
-prt_cas,309,215,5	script	Pitch-black Floor#ep16w	HIDDEN_NPC,5,5,{
+prt_cas,309,215,5	script	Pitch-black Floor#ep16wig	HIDDEN_NPC,5,5,{
 	callsub S_Talk;
 
 S_Talk:
-	if (banquet_wigner_quest == 5 && isbegin_quest(14480) == 2) {
-		switch( isbegin_quest(14482) ) {
-		case 0:
+	if (ep16_wig == 9) {
+		mes "[Scrub Sponge]";
+		mes "Is it you? Are you the one in charge of the cleaning mission today?";
+		mes "Nice to meet you! I am the cleaning instructor sealed in the Scrub Sponge!";
+		next;
+		mes "[Scrub Sponge]";
+		mes "If you follow my lead, you can get through the most difficult cleaning mission in this world!";
+		mes "Do you understand?";
+		next;
+		mes "[Scrub Sponge]";
+		mes "Let's check today's target! It is ^0000cdthe black dirt of devil^000000 stuck in the gaps in the floor!";
+		mes "We have a Thor 3 situation here!";
+		next;
+		mes "[Scrub Sponge]";
+		mes "In other words, we can resolve it as long as we have all the materials ready!";
+		mes "You need ^0000cd1 Powdery Fine Sand and 1 Lemon^000000 to get rid of the target!";
+		next;
+		mes "[Scrub Sponge]";
+		mes "Go get them now!";
+		mes "Go!";
+		setquest 14482;// Conquer the Dirt of Devil
+		ep16_wig = 10;
+		close;
+	}
+	if (ep16_wig == 10) {
+		if (countitem(6928) < 1 || countitem(7043) < 1 || countitem(568) < 1) {
 			mes "[Scrub Sponge]";
-			mes "Is it you? Are you the one in charge of the cleaning mission today?";
-			mes "Nice to meet you! I am the cleaning instructor sealed in the Scrub Sponge!";
+			mes "What are you doing now?";
+			mes "You cannot get rid of the black dirt stuck in the gaps of tiles without the lemon and powdery find sand!";
 			next;
 			mes "[Scrub Sponge]";
-			mes "If you follow my lead, you can get through the most difficult cleaning mission in this world!";
-			mes "Do you understand?";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Let's check today's target! It is ^0000cdthe black dirt of devil^000000 stuck in the gaps in the floor!";
-			mes "We have a Thor 3 situation here!";
-			next;
-			mes "[Scrub Sponge]";
-			mes "In other words, we can resolve it as long as we have all the materials ready!";
-			mes "You need ^0000cd1 Powdery Fine Sand and 1 Lemon^000000 to get rid of the target!";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Go get them now!";
+			mes "Prepare 1 Powdery Fine Sand and 1 Lemon now!";
 			mes "Go!";
-			setquest 14482;// Conquer the Dirt of Devil
-			close;
-		case 1:
-			if (countitem(6928) < 1 || countitem(7043) < 1 || countitem(568) < 1) {
-				mes "[Scrub Sponge]";
-				mes "What are you doing now?";
-				mes "You cannot get rid of the black dirt stuck in the gaps of tiles without the lemon and powdery find sand!";
-				next;
-				mes "[Scrub Sponge]";
-				mes "Prepare 1 Powdery Fine Sand and 1 Lemon now!";
-				mes "Go!";
-				close;
-			}
-			mes "[Scrub Sponge]";
-			mes "Good! It has all been prepared!";
-			mes "Let's start cleaning now!";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Squeeze the lemon and sprinkle the juice over the floor. Then sprinkle the powdery fine sand over it!";
-			mes "This will whiten and polish the floor! Not to mention the fresh scent of lemon adding something extra!";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Then you scrub briskly with me!";
-			mes "The method of scrubbing is as follows! It is not difficult if you follow me! Listen up!";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Three times to the left! Once to the right! Once to the left again! Twice to the front!";
-			mes "Then twice to the left to wrap up! Start now!";
-			next;
-			progressbar "ffff00",3;
-			mes "[Scrub Sponge]";
-			mes "Wrong!";
-			mes "Try to keep it together! Repeat once again!";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Three times to the left! Once to the right! Once to the left again! Twice to the front!";
-			mes "Then twice to the left to wrap up! Start now!";
-			next;
-			progressbar "ffff00",3;
-			mes "[Scrub Sponge]";
-			mes "Wrong!";
-			mes "Try to keep it together! Repeat once again!";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Three times to the left! Once to the right! Once to the left again! Twice to the front!";
-			mes "Then twice to the left to wrap up! Start now!";
-			next;
-			progressbar "ffff00",3;
-			mes "[Scrub Sponge]";
-			mes "When did I teach you like that? Don't you dare say that you have learned it from me!";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Try to keep it together! Listen up once more!";
-			next;
-			mes "[Scrub Sponge]";
-			mes "Three times to the left! Once to the right! Once to the left again! Twice to the front!";
-			mes "Then twice to the left to wrap up! Start now!";
-			next;
-			progressbar "ffff00",3;
-			specialeffect EF_RECOVERY;
-			mes "[Scrub Sponge]";
-			mes "Well done!";
-			mes "You have completed the cleaning mission beautifully!";
-			next;
-			mes "[Scrub Sponge]";
-			mes "I believe that you can handle cleaning perfectly even without me!";
-			mes "Old soldiers never die! They just fade away! So save the tears!";
-			next;
-			mes "[Scrub Sponge]";
-			mes "You may think of me whenever you see and clean the black dirt stuck in the gaps of tiles!";
-			mes "Now disperse! Go!";
-			specialeffect2 EF_CURE;
-			delitem 6928,1;// Poring Loofah
-			delitem 7043,1;// Fine Sand
-			delitem 568,1;// Lemon
-			completequest 14482;// Conquer the Dirt of Devil
-			completequest 14479;// Clean-up out of Apology
-			setquest 14483;// Report the Completion of the Clean-up
-			banquet_wigner_quest = 6;
-			close;
-		case 2:
-			mes "[Shining Floor]";
-			mes "The clean floor reminds me of the Scrub Sponge who has been tough but soft inside.";
-			mes "Let's go back to the maid and report that the cleaning is completed.";
 			close;
 		}
+		mes "[Scrub Sponge]";
+		mes "Good! It has all been prepared!";
+		mes "Let's start cleaning now!";
+		next;
+		mes "[Scrub Sponge]";
+		mes "Squeeze the lemon and sprinkle the juice over the floor. Then sprinkle the powdery fine sand over it!";
+		mes "This will whiten and polish the floor! Not to mention the fresh scent of lemon adding something extra!";
+		next;
+		mes "[Scrub Sponge]";
+		mes "Then you scrub briskly with me!";
+		mes "The method of scrubbing is as follows! It is not difficult if you follow me! Listen up!";
+		while(1) {
+			next;
+			mes "[Scrub Sponge]";
+			mes "Three times to the left! Once to the right! Once to the left again! Twice to the front!";
+			mes "Then twice to the left to wrap up! Start now!";
+			next;
+			progressbar "ffff00",3;
+			switch( rand(1,3) ) {
+			case 1:
+				mes "[Scrub Sponge]";
+				mes "Wrong!";
+				mes "Try to keep it together! Repeat once again!";
+				continue;
+			case 2:
+				specialeffect EF_RECOVERY;
+				mes "[Scrub Sponge]";
+				mes "Well done!";
+				mes "You have completed the cleaning mission beautifully!";
+				next;
+				mes "[Scrub Sponge]";
+				mes "I believe that you can handle cleaning perfectly even without me!";
+				mes "Old soldiers never die! They just fade away! So save the tears!";
+				next;
+				mes "[Scrub Sponge]";
+				mes "You may think of me whenever you see and clean the black dirt stuck in the gaps of tiles!";
+				mes "Now disperse! Go!";
+				specialeffect2 EF_CURE;
+				break;
+			case 3:
+				mes "[Scrub Sponge]";
+				mes "When did I teach you like that? Don't you dare say that you have learned it from me!";
+				next;
+				mes "[Scrub Sponge]";
+				mes "Try to keep it together! Listen up once more!";
+				continue;
+			}
+			break;
+		}
+		delitem 6928,1;// Poring Loofah
+		delitem 7043,1;// Fine Sand
+		delitem 568,1;// Lemon
+		completequest 14482;// Conquer the Dirt of Devil
+		erasequest 14479;// Clean-up out of Apology
+		setquest 14483;// Report the Completion of the Clean-up
+		ep16_wig = 11;
+		close;
+	}
+	if (ep16_wig == 11) {
+		mes "[Shining Floor]";
+		mes "The clean floor reminds me of the Scrub Sponge who has been tough but soft inside.";
+		mes "Let's go back to the maid and report that the cleaning is completed.";
+		close;
+	}
+	if (ep16_wig > 11) {
+		mes "[Shining Floor]";
+		mes "The clean floor reminds me of the Scrub Sponge who has been tough but soft inside.";
+		close;
 	}
 	end;
 
 OnTouch:
-	if (isbegin_quest(14482) == 0)
+	if (ep16_wig == 9)
 		callsub S_Talk;
 	end;
 }
 
-prontera,68,68,5	script	Furniture Deliveryman#e	1_M_HOF,{
-	if (banquet_wigner_quest == 7) {
+prontera,68,68,5	script	Furniture Deliveryman#ep16wig	1_M_HOF,{
+	if (ep16_wig == 12) {
+		.@name$ = strcharinfo(0);
 		mes "[Furniture Deliveryman]";
 		mes "Oh, my arms, legs, back and my entire body hurts. Well, I am just glad that today's work is done. I can take some rest now. I should go have some hot soup. Is it supposed to be the meat soup for today?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "May I ask you something?";
 		next;
 		emotion ET_CRY;
@@ -12684,7 +12759,7 @@ prontera,68,68,5	script	Furniture Deliveryman#e	1_M_HOF,{
 		mes "[Furniture Deliveryman]";
 		mes "I am exhausted from today's work. I almost cannot stand with my back straight now.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "No, it is not about that. You are the one who has delivered the furniture to the Wigner family, right?";
 		next;
 		mes "[Furniture Deliveryman]";
@@ -12693,14 +12768,14 @@ prontera,68,68,5	script	Furniture Deliveryman#e	1_M_HOF,{
 		mes "[Furniture Deliveryman]";
 		mes "What if there is a dent? Should I call James to fix it? Damage? Wrong delivery? What should I do? What is it about?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "No, nothing like that. Please relax.";
 		next;
 		mes "[Furniture Deliveryman]";
 		mes "What is it? Additional delivery? I really want to take some rest now... However, I guess I have no choice since it is the Wigners that I am dealing with. Oh, I really hate it... It is just too difficult to make ends meet.";
 		next;
 		emotion ET_OHNO;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "No, I just have a question for you. Have you seen a small box on the table in the room?";
 		next;
 		mes "[Furniture Deliveryman]";
@@ -12709,7 +12784,7 @@ prontera,68,68,5	script	Furniture Deliveryman#e	1_M_HOF,{
 		mes "[Furniture Deliveryman]";
 		mes "You mean the ^0000cdsmall box^000000 on the table next to the bed, right? The locked box with no particular decoration.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "I believe so.";
 		next;
 		mes "[Furniture Deliveryman]";
@@ -12719,7 +12794,7 @@ prontera,68,68,5	script	Furniture Deliveryman#e	1_M_HOF,{
 		mes "[Furniture Deliveryman]";
 		mes "Since I work with furniture, a piece like that really catches my eyes. It really was a work of art.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Was the box still there after you delivered the furniture?";
 		next;
 		emotion ET_FRET;
@@ -12730,7 +12805,7 @@ prontera,68,68,5	script	Furniture Deliveryman#e	1_M_HOF,{
 		mes "[Furniture Deliveryman]";
 		mes "Oh, wait? Are you telling me that it is missing? Are you implying that it has been carried out in my carriage?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "No. Please calm down. I am not suspecting you. I just want to listen to your story. I am just tracking the whereabouts of the box based on the words of the people who have seen the box.";
 		next;
 		emotion ET_ANGER;
@@ -12738,42 +12813,42 @@ prontera,68,68,5	script	Furniture Deliveryman#e	1_M_HOF,{
 		mes "If anything goes missing, it is always us, the ordinary people, who are suspected. Do you know that it is just a prejudice?";
 		mes "The people who have less must be hungry for money. And they are unvirtuous...";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "It is just a misunderstanding. Trust me, I am not suspecting you.... You know, you look for any witnesses when a person goes missing.";
 		next;
 		emotion ET_ANGER;
 		mes "[Furniture Deliveryman]";
 		mes "I don't want to hear it! Why are you scaring an innocent furniture delivery man for some missing box?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "I am sorry to make you uncomfortable. I am just asking everyone who has been in that room. I am not suspecting you.";
 		next;
 		emotion ET_HNG;
 		mes "[Furniture Deliveryman]";
 		mes "Heh, not that it makes me feel any better. I think I may be feeling even worse since I am hungry. Oh, my stomach is growling... I don't feel well...";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Do you need something to eat?";
 		next;
 		mes "[Furniture Deliveryman]";
 		mes "It doesn't change anything even if you say that...Well, I may be able to let it go if I have some Ox Head Slices... I cannot forget the taste from 10 years ago...";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Would it make you feel better?";
 		next;
 		mes "[Furniture Deliveryman]";
 		mes "Well, not that it will... OK, good! I'll let it go for ^0000cd3 Ox Head Slices^000000! Fair is fair after all.";
 		emotion ET_KIK;
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Would it be enough? OK, please wait for me then.";
 		close2;
 		erasequest 14484;// There Was a Furniture Delivery Man
 		setquest 14485;// I Am Upset
-		banquet_wigner_quest = 8;
+		ep16_wig = 13;
 		end;
 	}
-	if (banquet_wigner_quest == 8) {
+	if (ep16_wig == 13) {
 		if (countitem(6254) < 3) {
 			mes "[Furniture Deliveryman]";
 			mes "You are here. If you came here any late, I would have been really upset as I get parched with thirst.";
@@ -12787,10 +12862,11 @@ prontera,68,68,5	script	Furniture Deliveryman#e	1_M_HOF,{
 			mes "I wouldn't let it go without them! I won't! I'll tell people that there is an adventurer who frames an innocent person! He!";
 			close;
 		}
+		.@name$ = strcharinfo(0);
 		mes "[Furniture Deliveryman]";
 		mes "You are here. If you came here any late, I would have been really upset due to my raging stomach.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Well, it was very difficult to get them. Here you are.";
 		next;
 		emotion ET_SMILE;
@@ -12800,7 +12876,7 @@ prontera,68,68,5	script	Furniture Deliveryman#e	1_M_HOF,{
 		mes "[Furniture Deliveryman]";
 		mes "This tastes the same as it did 10 years ago! Now I feel fully recovered from the fatigue! I don't feel tired any more! All the stress is gone!";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Oh, it sure looks delicious. I should try some later. Anyways, do you know anything else about the box?";
 		next;
 		emotion ET_FRET;
@@ -12810,19 +12886,19 @@ prontera,68,68,5	script	Furniture Deliveryman#e	1_M_HOF,{
 		mes "[Furniture Deliveryman]";
 		mes "If you feel suspicious, ask the Gate Guard. He inspected my carriage.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Hum...";
 		next;
 		mes "[Furniture Deliveryman]";
 		mes "Oh, well. By the way...";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "By the way?";
 		next;
 		mes "[Furniture Deliveryman]";
 		mes "Have you seen the princess of the family? You must have. Doesn't she appear suspicious to you? I can tell people's character by their faces. She seems to be hiding something. She may stab you in the back.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Isn't it called a prejudice to judge some based on the appearance?";
 		next;
 		emotion ET_SCRATCH;
@@ -12830,21 +12906,21 @@ prontera,68,68,5	script	Furniture Deliveryman#e	1_M_HOF,{
 		mes "You are right. I feel sorry, However, there are people talking about it. There's no smoke without fire.";
 		mes "No? Well. Perhaps, there could be smoke without fire.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Katrin was not that kind of person as far as I observed.";
 		next;
 		mes "[Furniture Deliveryman]";
 		mes "Well, if not, that's fine. Anyways, the box was there in its place when I left the room. You may go if you don't have any business left here.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Excuse me.";
 		delitem 6254,3;// Beef Head
 		erasequest 14485;// I Am Upset
 		setquest 14486;// I Heard the Story
-		banquet_wigner_quest = 9;
+		ep16_wig = 14;
 		close;
 	}
-	if (banquet_wigner_quest == 9) {
+	if (ep16_wig == 14) {
 		mes "[Furniture Deliveryman]";
 		mes "Dear adventurer, why are you here again? Didn't you say you were heading back to the palace?";
 		next;
