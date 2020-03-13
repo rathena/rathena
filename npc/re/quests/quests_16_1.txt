@@ -3950,11 +3950,151 @@ prt_cas_q,18,136,5	script	Skia Nerius#ep16_room01	4_EP16_SKIA,{
 	close3;
 }
 
-prt_cas_q,20,139,3	script	Spica Nerius#ep16_room01_a	4_EP16_SPICA,{
+prt_cas_q,20,139,3	script	Spica Nerius#ep16_room01	4_EP16_SPICA,{
 	if (ep16_royal < 2) {
 		mes "[Spica]";
 		mes "Are you invited to the banquet?";
 		mes "This place is not the Banquet Hall.";
+		close3;
+	}
+	if (ep16_royal == 2) {
+		switch( isbegin_quest(7684) ) {
+		case 0:
+			mes "[Spica]";
+			mes "You must be " + strcharinfo(0) + " whom everyone talks about.";
+			mes "Thank you for visiting us.";
+			mes "I am Spica of the Nerius family.";
+			cutin "ep16_spica_nerius01",1;
+			next;
+			mes "[Skia]";
+			mes "I am Skia.";
+			mes "Nice to meet you.";
+			cutin "ep16_skia_nerius01",0;
+			next;
+			mes "[Spica]";
+			mes "And he is my bodyguard.";
+			cutin "ep16_spica_nerius01",1;
+			next;
+			mes "[Crux]";
+			mes "My name is Crux Findel.";
+			mes "I am learning swordsmanship in the Nerius family.";
+			cutin "ep16_crux_findel01",2;
+			next;
+			mes "[Spica]";
+			mes "Our mother, the current head of the family, is supposed to be here.";
+			mes "However, since many heroes like you," + strcharinfo(0) + ", are said to attend this banquet,";
+			cutin "ep16_spica_nerius01",1;
+			next;
+			mes "[Spica]";
+			mes "Our mother let us come here to meet and learn from them.";
+			next;
+			select("Where is the candidate for the throne?");
+			cutin "ep16_spica_nerius05",1;
+			mes "[Spica]";
+			mes "Oh, you must be invited as the observer to the ritual...";
+			mes "I see.";
+			npctalk "He must be in the library.", "Bodyguard Crux#ep16_room01", bc_self;
+			next;
+			cutin "ep16_spica_nerius01",1;
+			mes "[Spica]";
+			mes "Erich is in the royal library.";
+			mes "I guess he could be looking for blueprints of some sort which interest him.";
+			next;
+			cutin "ep16_spica_nerius02",1;
+			mes "[Spica]";
+			mes "Nerius is not interested in the throne.";
+			mes "Erich didn't have to participate in the Royal Assembly.";
+			next;
+			cutin "ep16_spica_nerius01",1;
+			mes "[Spica]";
+			mes "Since he is just a candidate merely for effect, he must be doing what he wants to do now.";
+			next;
+			select("Why aren't you interested in the throne?");
+			cutin "ep16_spica_nerius05",1;
+			mes "[Spica]";
+			mes "It is one of the characteristics of the Nerius.";
+			mes "The family is led by women for generations. Therefore, we turn out more queens than kings.";
+			next;
+			cutin "ep16_spica_nerius03",1;
+			mes "[Spica]";
+			mes "If Erich hasn't come forth, one of us, Skia and I would have been elected as a candidate for the queen.";
+			next;
+			cutin "ep16_spica_nerius02",1;
+			mes "[Spica]";
+			mes "Our mother didn't like it.";
+			mes "That's why Erich became a candidate for the throne. Poor cousin...";
+			next;
+			cutin "ep16_spica_nerius01",1;
+			mes "[Spica]";
+			mes "Well, I guess that's enough information about our family.";
+			mes "Have you exchanged greetings with all other families?";
+			next;
+			mes "[Spica]";
+			mes "Since freedom doesn't come often for us, I tend to enjoy it as much as possible.";
+			mes "So...";
+			next;
+			cutin "ep16_skia_nerius03",0;
+			mes "[Skia]";
+			mes "Why don't you enjoy it with us?";
+			mes "I believe the lord of the Heine family would make a good friend too.";
+			next;
+			cutin "ep16_spica_nerius06",1;
+			mes "[Spica]";
+			mes "Skia, my beloved twin.";
+			mes "You need to learn to speak more elegantly.";
+			npctalk "Gosh, stop nagging...", "Skia Nerius#ep16_room01", bc_self;
+			next;
+			npctalk "I can hear you.", "", bc_self;
+			cutin "ep16_spica_nerius07",1;
+			mes "[Spica]";
+			mes "Anyways, what I want to say is that";
+			mes "the Nerius family is always open to you," + strcharinfo(0) + ", so please visit us";
+			mes "anytime you want.";
+			npctalk "......", "Bodyguard Crux#ep16_room01", bc_self;
+			next;
+			setquest 7684;// Visit the Nerius
+			completequest 7684;// Visit the Nerius
+			//achievement 130000 1
+			break;
+		case 1:
+			completequest 7684;
+			break;
+		case 2:
+			if (isbegin_quest(7685) == 1) {
+				mes "[Spica]";
+				mes "I guess other families must be ready by now and about to move soon.";
+				mes "We may have some time to spare.";
+				cutin "ep16_spica_nerius01.bmp",1;
+				next;
+				mes "[Spica]";
+				mes "" + strcharinfo(0) + ", why don't you go back to your room and wait for the message?";
+				close;
+			}
+			mes "[Spica]";
+			mes "Why don't you go visit other families if you have not visited them all?";
+			close;
+		}
+		if (isbegin_quest(7682) == 1 && isbegin_quest(5402) == 2 && isbegin_quest(7683) == 2 && isbegin_quest(7684) == 2 && ep16_wal > 1 && ep16_wig > 1 && ep16_lug > 1 && ep16_gaobs > 1) {
+			completequest 7682;// Socializing Starts from an Eye Contact
+			setquest 7685;// What Is the Next Thing on the Schedule ?
+			mes "[Spica]";
+			mes "I guess other families must be ready by now and about to move soon.";
+			mes "We may have some time to spare.";
+			cutin "ep16_spica_nerius01.bmp",1;
+			next;
+			mes "[Spica]";
+			mes "" + strcharinfo(0) + ", why don't you go back to your room and wait for the message?";
+			close3;
+		}
+		cutin "ep16_spica_nerius01.bmp",1;
+		mes "[Spica]";
+		mes "We must get prepared for the Banquet now. We need some time to dress up.";
+		next;
+		mes "[Spica]";
+		mes "Why don't you go visit other families if you have not visited them all?";
+		next;
+		mes "[Spica]";
+		mes "I'll send you a formal invitation to make up for this.";
 		close3;
 	}
 	if (ep16_royal < 7)
@@ -4040,10 +4180,10 @@ prt_cas_q,20,139,3	script	Spica Nerius#ep16_room01_a	4_EP16_SPICA,{
 	mes "[Crux]";
 	mes "See you later.";
 	close2;
-	setpcblock PCBLOCK_NPC, true;
 	cutin "",255;
 	npctalk "Why are you letting the guest out?", "", bc_self;
-	sleep2 1000;
+	setpcblock PCBLOCK_NPC, true;
+	sleep2 3000;
 	npctalk "Yes, yes, my lady. I am at your service. Where are you?", "Bodyguard Crux#ep16_room01", bc_self;
 	sleep2 3000;
 	npctalk "You are not the one I am looking for!", "", bc_self;
@@ -4052,126 +4192,9 @@ prt_cas_q,20,139,3	script	Spica Nerius#ep16_room01_a	4_EP16_SPICA,{
 	sleep2 3000;
 	npctalk "I don't mean that!", "", bc_self;
 	sleep2 3000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : (Oh my, I'd better get out now.)", bc_self;
 	setpcblock PCBLOCK_NPC, false;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : (Oh my, I'd better get out now.)", bc_self;
 	end;
-
-	if (banquet_nerius_quest == 0) {
-		mes "[Spica]";
-		mes "You must be " + strcharinfo(0) + " whom everyone talks about.";
-		mes "Thank you for visiting us.";
-		mes "I am Spica of the Nerius family.";
-		cutin "ep16_spica_nerius01",1;
-		next;
-		mes "[Skia]";
-		mes "I am Skia.";
-		mes "Nice to meet you.";
-		cutin "ep16_skia_nerius01",0;
-		next;
-		mes "[Spica]";
-		mes "And he is my bodyguard.";
-		cutin "ep16_spica_nerius01",1;
-		next;
-		mes "[Crux]";
-		mes "My name is Crux Findel.";
-		mes "I am learning swordsmanship in the Nerius family.";
-		cutin "ep16_crux_findel01",2;
-		next;
-		mes "[Spica]";
-		mes "Our mother, the current head of the family, is supposed to be here.";
-		mes "However, since many heroes like you," + strcharinfo(0) + ", are said to attend this banquet,";
-		cutin "ep16_spica_nerius01",1;
-		next;
-		mes "[Spica]";
-		mes "Our mother let us come here to meet and learn from them.";
-		next;
-		select("Where is the candidate for the throne?");
-		cutin "ep16_spica_nerius05",1;
-		mes "[Spica]";
-		mes "Oh, you must be invited as the observer to the ritual...";
-		mes "I see.";
-		npctalk "He must be in the library.", "Bodyguard Crux#ep16_room01", bc_self;
-		next;
-		cutin "ep16_spica_nerius01",1;
-		mes "[Spica]";
-		mes "Erich is in the royal library.";
-		mes "I guess he could be looking for blueprints of some sort which interest him.";
-		next;
-		cutin "ep16_spica_nerius02",1;
-		mes "[Spica]";
-		mes "Nerius is not interested in the throne.";
-		mes "Erich didn't have to participate in the Royal Assembly.";
-		next;
-		cutin "ep16_spica_nerius01",1;
-		mes "[Spica]";
-		mes "Since he is just a candidate merely for effect, he must be doing what he wants to do now.";
-		next;
-		select("Why aren't you interested in the throne?");
-		cutin "ep16_spica_nerius05",1;
-		mes "[Spica]";
-		mes "It is one of the characteristics of the Nerius.";
-		mes "The family is led by women for generations. Therefore, we turn out more queens than kings.";
-		next;
-		cutin "ep16_spica_nerius03",1;
-		mes "[Spica]";
-		mes "If Erich hasn't come forth, one of us, Skia and I would have been elected as a candidate for the queen.";
-		next;
-		cutin "ep16_spica_nerius02",1;
-		mes "[Spica]";
-		mes "Our mother didn't like it.";
-		mes "That's why Erich became a candidate for the throne. Poor cousin...";
-		next;
-		cutin "ep16_spica_nerius01",1;
-		mes "[Spica]";
-		mes "Well, I guess that's enough information about our family.";
-		mes "Have you exchanged greetings with all other families?";
-		next;
-		mes "[Spica]";
-		mes "Since freedom doesn't come often for us, I tend to enjoy it as much as possible.";
-		mes "So...";
-		next;
-		cutin "ep16_skia_nerius03",0;
-		mes "[Skia]";
-		mes "Why don't you enjoy it with us?";
-		mes "I believe the lord of the Heine family would make a good friend too.";
-		next;
-		cutin "ep16_spica_nerius06",1;
-		mes "[Spica]";
-		mes "Skia, my beloved twin.";
-		mes "You need to learn to speak more elegantly.";
-		npctalk "Gosh, stop nagging...", "Skia Nerius#ep16_room01", bc_self;
-		next;
-		npctalk "I can hear you.", "", bc_self;
-		cutin "ep16_spica_nerius07",1;
-		mes "[Spica]";
-		mes "Anyways, what I want to say is that";
-		mes "the Nerius family is always open to you," + strcharinfo(0) + ", so please visit us";
-		mes "anytime you want.";
-		npctalk "......", "Bodyguard Crux#ep16_room01", bc_self;
-		next;
-		setquest 7684;// Visit the Nerius
-		completequest 7684;// Visit the Nerius
-		banquet_nerius_quest = 1;
-		if (banquet_walther_quest >= 3 && banquet_nerius_quest >= 1 && banquet_heine_quest >= 2 && banquet_wigner_quest >= 2 && banquet_richard_quest >= 2 && banquet_geoborg_quest >= 2 && banquet_roegenburg_quest >= 2) {
-			completequest 7682;// Socializing Starts from an Eye Contact
-			setquest 7685;// What Is the Next Thing on the Schedule ?
-		}
-		cutin "ep16_spica_nerius01",1;
-		mes "[Spica]";
-		mes "We must get prepared for the Banquet now. We need some time to dress up.";
-		next;
-		mes "[Spica]";
-		mes "Why don't you go visit other families if you have not visited them all?";
-		next;
-		mes "[Spica]";
-		mes "I'll send you a formal invitation to make up for this.";
-		close3;
-	}
-	if (banquet_nerius_quest == 1) {
-		mes "[Spica]";
-		mes "Why don't you go visit other families if you have not visited them all?";
-		close;
-	}
 }
 
 prt_cas_q,21,140,3	script	Bodyguard Crux#ep16_room01	4_EP16_CRUX,{
