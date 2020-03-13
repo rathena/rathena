@@ -8623,11 +8623,54 @@ prontera,269,73,5	script	Ordinary Man#ep16lug02	HIDDEN_WARP_NPC,{
 
 // Richard
 prt_cas_q,80,80,4	script	Butler for the Richards	1_M_LIBRARYMASTER,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
 	}
-	if (banquet_main_quest < 2) {// pre-req
+	switch( checkquest(5414,PLAYTIME) ) {
+	case -1:
+		break;
+	case 0:
+	case 1:
+		.@r = rand(1,5);
+		mes "[Butler]";
+		if (.@r == 1)
+			mes "It is a fast way to get stronger to take a good rest after a hard battle.";
+		else if (.@r == 2)
+			mes "The Richard family runs various ways of training. Taking a rest is one of the most important training.";
+		else if (.@r == 3)
+			mes "The former heads of the Richard family have also taken enough rest after training. Well, it's too common to mention, I guess.";
+		else if (.@r == 4)
+			mes "Everyone may know how one feels itching for more action after training. However, that is the time to take a rest.";
+		else
+			mes "The next training would be just as tough. You'd better take a rest now.";
+		close;
+	case 2:
+		erasequest 5414;// [Stand by]Warrior Discipline
+		mes "[Butler]";
+		mes "I feel that you must be raring to get some action. I guess it is the time to proceed with the next training.";
+		close;
+	}
+	.@ep161_family00 = isbegin_quest(5402) + isbegin_quest(5403);
+	if (.@ep161_family00 == 0) {
+		if ((isbegin_quest(7681) == 2 && isbegin_quest(7682) == 1) || ep16_royal == 2) {
+			mes "[Butler]";
+			mes "How do you do? I have been waiting for you after being informed by the Chamberlain.";
+			next;
+			mes "[Butler]";
+			mes "This it the room of the Richard family which has been controlling the military power of the kingdom.";
+			next;
+			mes "[Butler]";
+			mes "I have heard your name for that " + strcharinfo(0) + ", you are the hero in the subjugation of Morocc";
+			next;
+			mes "[Butler]";
+			mes "Oh! I am sorry to take too much of your time. Inside the room, there is Po, the next head of the family, waiting for you.";
+			next;
+			mes "[Butler]";
+			mes "Let me escort you inside.";
+			setquest 5402;// The Royal Richard
+			close;
+		}
 		mes "[Butler]";
 		mes "This it the room of the Richard family.";
 		next;
@@ -8635,31 +8678,12 @@ prt_cas_q,80,80,4	script	Butler for the Richards	1_M_LIBRARYMASTER,{
 		mes "Po, the next head of the family, is taking a rest. Please come back later.";
 		close;
 	}
-	if (banquet_richard_quest == 0) {
-		mes "[Butler]";
-		mes "How do you do? I have been waiting for you after being informed by the Chamberlain.";
-		next;
-		mes "[Butler]";
-		mes "This it the room of the Richard family which has been controlling the military power of the kingdom.";
-		next;
-		mes "[Butler]";
-		mes "I have heard your name for that " + strcharinfo(0) + ", you are the hero in the subjugation of Morocc";
-		next;
-		mes "[Butler]";
-		mes "Oh! I am sorry to take too much of your time. Inside the room, there is Po, the next head of the family, waiting for you.";
-		next;
-		mes "[Butler]";
-		mes "Let me escort you inside.";
-		banquet_richard_quest = 1;
-		setquest 5402;// The Royal Richard
-		close;
-	}
-	if (banquet_richard_quest == 1) {
+	if (.@ep161_family00 == 1) {
 		mes "[Butler]";
 		mes "Inside the room, there is Po, the next head of the family, waiting for you.";
 		close;
 	}
-	if (banquet_richard_quest == 2) {
+	if (.@ep161_family00 == 2) {
 		mes "[Butler]";
 		mes "Have you met the next head of the family?";
 		next;
@@ -8670,7 +8694,22 @@ prt_cas_q,80,80,4	script	Butler for the Richards	1_M_LIBRARYMASTER,{
 		mes "Oh! I am sorry about my bad manners. It is nothing. Please never mind...";
 		close;
 	}
-	if (banquet_richard_quest == 3) {
+	setarray .@quest_list[0],
+		5404,	// [Repeat]Warrior Discipline-Human
+		5405,	// [Repeat]Warrior Discipline-Animal
+		5406,	// [Repeat]Warrior Discipline-Insect
+		5407,	// [Repeat]Warrior Discipline-Fish
+		5408,	// [Repeat]Warrior Discipline-Plant
+		5409,	// [Repeat]Warrior Discipline-Devil
+		5410,	// [Repeat]Warrior Discipline-Angel
+		5411,	// [Repeat]Warrior Discipline-Immortal
+		5412,	// [Repeat]Warrior Discipline-Intangible
+		5413;	// [Repeat]Warrior Discipline-Dragon
+	setarray .@training_list$[0], "human","animal","insect","fish","plant","demon","angel","Immortal","nothing","dragon";
+	.@size = getarraysize( .@quest_list );
+	while( isbegin_quest(.@quest_list[.@i]) == 0 && .@i < .@size ) .@i++;
+
+	if (.@ep161_family00 == 3) {
 		if (BaseLevel < 140) {
 			mes "[Butler]";
 			mes "I heard from Po the next head of the family that you are going to try the Richard battle training program.";
@@ -8679,171 +8718,147 @@ prt_cas_q,80,80,4	script	Butler for the Richards	1_M_LIBRARYMASTER,{
 			mes "For now, the training would be too overwhelming for you. You'd better learn the basics before proceeding with the training.";
 			close;
 		}
-
-		switch( checkquest(5414,PLAYTIME) ) {
-		case -1:
-			break;
-		case 0:
-		case 1:
-			mes "[Butler]";
-			if (isbegin_quest(5403) == 2)
-				mes "The former heads of the Richard family have also taken enough rest after training. Well, it's too common to mention, I guess.";
-			else
-				mes "The Richard family runs various ways of training. Taking a rest is one of the most important training.";
-			close;
-		case 2:
-			erasequest 5414;// [Stand by]Warrior Discipline
-			mes "[Butler]";
-			mes "I feel that you must be raring to get some action. I guess it is the time to proceed with the next training.";
-			close;
-		}
-
-		setarray .@quest_list[0],
-			5404,	// [Repeat]Warrior Discipline-Human
-			5405,	// [Repeat]Warrior Discipline-Animal
-			5406,	// [Repeat]Warrior Discipline-Insect
-			5407,	// [Repeat]Warrior Discipline-Fish
-			5408,	// [Repeat]Warrior Discipline-Plant
-			5409,	// [Repeat]Warrior Discipline-Devil
-			5410,	// [Repeat]Warrior Discipline-Angel
-			5411,	// [Repeat]Warrior Discipline-Immortal
-			5412,	// [Repeat]Warrior Discipline-Intangible
-			5413;	// [Repeat]Warrior Discipline-Dragon
-		setarray .@training_list$[0], "human","animal","insect","fish","plant","demon","angel","Immortal","nothing","dragon";
-		.@size = getarraysize( .@quest_list );
-		while( isbegin_quest(.@quest_list[.@i]) == 0 && .@i < .@size ) .@i++;
-
 		if (.@i == .@size) {
 			mes "[Butler]";
-			if (isbegin_quest(5403) == 2)
-				mes "Good. Are you ready now?";
-			else {
-				mes "I heard from Po the next head of the family that you are going to try the Richard battle training program.";
-				next;
-				mes "[Butler]";
-				mes "The training of the Richard family is differentiated from other training programs.";
-				next;
-				mes "[Butler]";
-				mes "You must have been getting yourself trained by hunting the monsters individually.";
-				next;
-				mes "[Butler]";
-				mes "From now on, you can be trained with hunting certain types of monsters such as human, animal, insect, fish, plant, demon, angel, nothing and dragon monsters.";
-				next;
-				mes "[Butler]";
-				mes "It is supposed to be more effective to swing a sword than to say 100 words.";
-			}
-			while( true ) {
-				next;
-				mes "[Butler]";
-				mes "Please select a training program to try.";
-				next;
-				.@s = select( "Warrior Discipline-Human", "Warrior Discipline-Animal", "Warrior Discipline-Insect", "Warrior Discipline-Fish", "Warrior Discipline-Plant", "Warrior Discipline-Devil", "Warrior Discipline-Angel", "Warrior Discipline-Immortal", "Warrior Discipline-Intangible", "Warrior Discipline-Dragon" ) - 1;
-				mes "[Butler]";
-				mes "This training involves hunting 50 " + .@training_list$[.@s] + " monsters of Level 140 or higher.";
-				next;
-				mes "[Butler]";
-				mes "Would you try this training?";
-				next;
-				if (select( "Try.", "Do not try." ) == 2) {
-					mes "[Butler]";
-					mes "Hum... You don't like the contents of the training? Well, it's OK. Why don't you choose another training?";
-					continue;
-				}
-				mes "[Butler]";
-				mes "You shouldn't let your guard down even when you feel that the training is too easy for your level. Good luck...";
-				setquest .@quest_list[.@s];
-				close;
-			}
+			mes "I heard from Po the next head of the family that you are going to try the Richard battle training program.";
+			next;
+			mes "[Butler]";
+			mes "The training of the Richard family is differentiated from other training programs.";
+			next;
+			mes "[Butler]";
+			mes "You must have been getting yourself trained by hunting the monsters individually.";
+			next;
+			mes "[Butler]";
+			mes "From now on, you can be trained with hunting certain types of monsters such as human, animal, insect, fish, plant, demon, angel, nothing and dragon monsters.";
+			next;
+			mes "[Butler]";
+			mes "It is supposed to be more effective to swing a sword than to say 100 words.";
 		}
-
-		if (isbegin_quest(5403) == 2) {
-			mes "[Butler]";
-			mes "Good. Are you ready now?";
-			next;
-		}
-		if (checkquest(.@quest_list[.@i],HUNTING) == 2) {
-			// todo src side
-			mes "This quest isn't enabled for now.";
-			close;
-
-			if (isbegin_quest(5403) == 1)
-				completequest 5403;// The Royal Richard
-			erasequest .@quest_list[.@i];
-			setquest 5414;// [Stand by]Warrior Discipline
-			getexp 500000,550000;
-			getitem 6919,4;// Honor Token
-			mes "[Butler]";
-			mes "Congratulations on completing the training.";
-			next;
-			mes "[Butler]";
-			mes "If you keep training, you'll achieve the goal you want.";
-			next;
-			mes "[Butler]";
-			mes "This is what I have prepared for the reward for completing training.";
-			next;
-			mes "[Butler]";
-			mes "We thank you for training with us since it benefits the Richard family. Don't feel pressured.";
-			close;
-		}
+	}
+	else if (.@ep161_family00 == 4) {
 		mes "[Butler]";
-		mes "You are participating in the training. Do you need anything?";
-		next;
-		switch( select( "No.", "About the way of training", "About the goal of training", "Give up the training." ) ) {
-		case 1:
-			mes "[Butler]";
-			mes "You should deal with the training like the actual fight! Do not let your guard down during the training.";
-			close;
-		case 2:
-			mes "[Butler]";
-			mes "The Richard family has always been concerned about the ways to produce more excellent warriors.";
+		mes "Good. Are you ready now?";
+	}
+	else {
+		mes "[Butler]";
+		mes "Hum, there seems to be an issue which cannot be resolved. Well, try again and if the same issue occurs, take a screenshot and send it to the admin team.";
+		close;
+	}
+	if (.@i == .@size) {
+		while( true ) {
 			next;
 			mes "[Butler]";
-			mes "One of the former heads of the family felt that the way to train with a certain monster had a limit.";
+			mes "Please select a training program to try.";
+			next;
+			.@s = select( "Warrior Discipline-Human", "Warrior Discipline-Animal", "Warrior Discipline-Insect", "Warrior Discipline-Fish", "Warrior Discipline-Plant", "Warrior Discipline-Devil", "Warrior Discipline-Angel", "Warrior Discipline-Immortal", "Warrior Discipline-Intangible", "Warrior Discipline-Dragon" ) - 1;
+			mes "[Butler]";
+			mes "This training involves hunting 50 " + .@training_list$[.@s] + " monsters of Level 140 or higher.";
 			next;
 			mes "[Butler]";
-			mes "The former and former head of the family... Oh! Just to clear things out, he is retired, but he is not dead.";
+			mes "Would you try this training?";
 			next;
-			mes "[Butler]";
-			mes "Hum... Let's come back down to the business... He has come up with the method to train with the monster depending on the level of the trainee or the type of the monster.";
-			next;
-			mes "[Butler]";
-			mes "Well... The training began like that...";
-			close;
-		case 3:
-			mes "[Butler]";
-			mes "The goal of the training... It is an easy and difficult question.";
-			next;
-			mes "[Butler]";
-			mes "The most obvious goal must be getting stronger. I would have answered if I was younger.";
-			next;
-			mes "[Butler]";
-			mes "However, I would like to answer that it is to protect the people around me.";
-			next;
-			mes "[Butler]";
-			mes "The goal may be different for each warrior.";
-			close;
-		case 4:
-			mes "[Butler]";
-			mes "I won't stop you from giving up. However, you should know that the progress of your training so far won't be reflected in the next training.";
-			next;
-			if (select( "Do not give up.", "Give up." ) == 1) {
+			if (select( "Try.", "Do not try." ) == 2) {
 				mes "[Butler]";
-				mes "Good decision. You should deal with the training like the actual fight! Do not let your guard down during the training.";
-				close;
+				mes "Hum... You don't like the contents of the training? Well, it's OK. Why don't you choose another training?";
+				continue;
 			}
-			erasequest .@quest_list[.@i];
 			mes "[Butler]";
-			mes "Too bad. If you finished the training, you must have been able to reap the benefit of hard work.";
+			mes "You shouldn't let your guard down even when you feel that the training is too easy for your level. Good luck...";
+			setquest .@quest_list[.@s];
 			close;
 		}
 	}
+	next;
+
+	if (checkquest(.@quest_list[.@i],HUNTING) == 2) {
+		// todo src side
+		mes "This quest isn't enabled for now.";
+		close;
+
+		if (isbegin_quest(5403) == 1)
+			completequest 5403;// The Royal Richard
+		erasequest .@quest_list[.@i];
+		setquest 5414;// [Stand by]Warrior Discipline
+		getexp 500000,550000;
+		getitem 6919,4;// TokenOfHonor
+		mes "[Butler]";
+		mes "Congratulations on completing the training.";
+		next;
+		mes "[Butler]";
+		mes "If you keep training, you'll achieve the goal you want.";
+		next;
+		mes "[Butler]";
+		mes "This is what I have prepared for the reward for completing training.";
+		next;
+		mes "[Butler]";
+		mes "We thank you for training with us since it benefits the Richard family. Don't feel pressured.";
+		close;
+	}
+	mes "[Butler]";
+	mes "You are participating in the training. Do you need anything?";
+	next;
+	switch( select( "No.", "About the way of training", "About the goal of training", "Give up the training." ) ) {
+	case 1:
+		mes "[Butler]";
+		mes "You should deal with the training like the actual fight! Do not let your guard down during the training.";
+		close;
+	case 2:
+		mes "[Butler]";
+		mes "The Richard family has always been concerned about the ways to produce more excellent warriors.";
+		next;
+		mes "[Butler]";
+		mes "One of the former heads of the family felt that the way to train with a certain monster had a limit.";
+		next;
+		mes "[Butler]";
+		mes "The former and former head of the family... Oh! Just to clear things out, he is retired, but he is not dead.";
+		next;
+		mes "[Butler]";
+		mes "Hum... Let's come back down to the business... He has come up with the method to train with the monster depending on the level of the trainee or the type of the monster.";
+		next;
+		mes "[Butler]";
+		mes "Well... The training began like that...";
+		close;
+	case 3:
+		mes "[Butler]";
+		mes "The goal of the training... It is an easy and difficult question.";
+		next;
+		mes "[Butler]";
+		mes "The most obvious goal must be getting stronger. I would have answered if I was younger.";
+		next;
+		mes "[Butler]";
+		mes "However, I would like to answer that it is to protect the people around me.";
+		next;
+		mes "[Butler]";
+		mes "The goal may be different for each warrior.";
+		close;
+	case 4:
+		mes "[Butler]";
+		mes "I won't stop you from giving up. However, you should know that the progress of your training so far won't be reflected in the next training.";
+		next;
+		if (select( "Do not give up.", "Give up." ) == 1) {
+			mes "[Butler]";
+			mes "Good decision. You should deal with the training like the actual fight! Do not let your guard down during the training.";
+			close;
+		}
+		erasequest .@quest_list[.@i];
+		mes "[Butler]";
+		mes "Too bad. If you finished the training, you must have been able to reap the benefit of hard work.";
+		close;
+	}
 }
+
 prt_cas_q,93,74,4	script	Po Richard#EP161GAM	4_M_6THPRIN1,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
 	}
-	if (banquet_richard_quest == 0) {
+	if (BaseLevel < 100) {
+		mes "[Po Richard]";
+		mes "An adventurer? I guess you need to try harder now.";
+		close3;
+	}
+	.@ep161_family00 = isbegin_quest(5402) + isbegin_quest(5403);
+	if (.@ep161_family00 == 0) {
 		cutin "richard_po02",2;
 		emotion ET_PROFUSELY_SWEAT;
 		mes "[Po Richard]";
@@ -8856,7 +8871,7 @@ prt_cas_q,93,74,4	script	Po Richard#EP161GAM	4_M_6THPRIN1,{
 		mes "That is the way to do it in the palace.";
 		close3;
 	}
-	if (banquet_richard_quest == 1) {
+	if (.@ep161_family00 == 1) {
 		cutin "richard_po01",2;
 		emotion ET_SPARK;
 		mes "[Po Richard]";
@@ -8898,8 +8913,8 @@ prt_cas_q,93,74,4	script	Po Richard#EP161GAM	4_M_6THPRIN1,{
 		mes "Well, since it is not important, I guess we should let it pass. It's been a long time since I say this much. I am thirsty.";
 		next;
 		completequest 5402;// The Royal Richard
-		banquet_richard_quest = 2;
-		if (banquet_walther_quest >= 3 && banquet_nerius_quest >= 1 && banquet_heine_quest >= 2 && banquet_wigner_quest >= 2 && banquet_richard_quest >= 2 && banquet_geoborg_quest >= 2 && banquet_roegenburg_quest >= 2) {
+		//achievement 130000 4
+		if (isbegin_quest(7682) == 1 && isbegin_quest(5402) == 2 && isbegin_quest(7683) == 2 && isbegin_quest(7684) == 2 && ep16_wal > 1 && ep16_wig > 1 && ep16_lug > 1 && ep16_gaobs > 1) {
 			completequest 7682;// Socializing Starts from an Eye Contact
 			setquest 7685;// What Is the Next Thing on the Schedule ?
 		}
@@ -8907,7 +8922,7 @@ prt_cas_q,93,74,4	script	Po Richard#EP161GAM	4_M_6THPRIN1,{
 		mes "Shall we take a rest before proceeding?";
 		close3;
 	}
-	if (banquet_richard_quest == 2) {
+	if (.@ep161_family00 == 2) {
 		cutin "richard_po01",2;
 		mes "[Po Richard]";
 		mes "Well, let's talk about the reason that the Richard family has been interested in you then.";
@@ -8946,11 +8961,10 @@ prt_cas_q,93,74,4	script	Po Richard#EP161GAM	4_M_6THPRIN1,{
 		next;
 		mes "[Po Richard]";
 		mes "Let me tell the butler about it. You can proceed with the training through him.";
-		banquet_richard_quest = 3;
 		setquest 5403;// The Royal Richard
 		close3;
 	}
-	if (banquet_richard_quest == 3) {
+	if (.@ep161_family00 == 3) {
 		cutin "richard_po01",2;
 		mes "[Po Richard]";
 		mes "Don't underestimate the butler who would guide you through the training.";
@@ -8959,8 +8973,132 @@ prt_cas_q,93,74,4	script	Po Richard#EP161GAM	4_M_6THPRIN1,{
 		mes "He is a member of the Richard family himself. He is an outstanding warrior.";
 		close3;
 	}
+	if (.@ep161_family00 == 4) {
+		setarray .@quest_list[0],
+			5404,	// [Repeat]Warrior Discipline-Human
+			5405,	// [Repeat]Warrior Discipline-Animal
+			5406,	// [Repeat]Warrior Discipline-Insect
+			5407,	// [Repeat]Warrior Discipline-Fish
+			5408,	// [Repeat]Warrior Discipline-Plant
+			5409,	// [Repeat]Warrior Discipline-Devil
+			5410,	// [Repeat]Warrior Discipline-Angel
+			5411,	// [Repeat]Warrior Discipline-Immortal
+			5412,	// [Repeat]Warrior Discipline-Intangible
+			5413;	// [Repeat]Warrior Discipline-Dragon
+		.@size = getarraysize( .@quest_list );
+		while( isbegin_quest(.@quest_list[.@i]) == 0 && .@i < .@size ) .@i++;
+
+		if (.@i == .@size) {
+			mes "[Po Richard]";
+			mes "I wonder if you are happy with the rewards of the training.";
+			next;
+			mes "[Po Richard]";
+			mes "It would be difficult to offer you a payment higher than that for now. Please do it as if you are having a part-time job.";
+			next;
+			mes "[Po Richard]";
+			mes "You may find it obvious. However, the more you get yourself trained, the more benefits that Richard family gets. We are willing to pay for it.";
+			close3;
+		}
+		mes "[Po Richard]";
+		mes "Oh! You must be participating in the training. Well, how do you find the training?";
+		next;
+		mes "[Po Richard]";
+		.@r = rand(1,10);
+		if (.@r == 1) {
+			emotion 29;
+			mes "I have participated in the training myself when I was younger. It brings back the good old memories.";
+		}
+		else if (.@r == 2) {
+			emotion 20;
+			mes "There are a variety of training programs. Please choose what you'd like to participate. Well, the adventurers tend to do what they usually do.";
+		}
+		else if (.@r == 3) {
+			emotion 0;
+			mes "Accidents happen when you let your guard down. Always make sure to watch out.";
+		}
+		else if (.@r == 4) {
+			emotion 33;
+			mes "I believe the most important thing to a warrior is the spirit of challenge. The challenge to move on to the next level... It is the most important thing.";
+		}
+		else if (.@r == 5) {
+			emotion 21;
+			mes "A song of a warrior was very popular in the pub in Prontera. I am sad that I cannot hear it these days.";
+		}
+		else {
+			.@r = rand(1,6);
+			if (.@r == 1) emotion 58;
+			else if (.@r == 2) emotion 59;
+			else if (.@r == 3) emotion 60;
+			else if (.@r == 4) emotion 61;
+			else if (.@r == 5) emotion 62;
+			else
+				emotion 63;
+			mes "Do you like gambling by any chance? Doesn't the tension make you feel like a warrior in battle?";
+		}
+		close3;
+	}
 }
 
+// GM NPC
+prt_cas_q,120,100,4	script	Helper for the Royal Richard#EP161DY	4_M_6THPRIN2,{
+	if (callfunc("F_GM_NPC",1854,0,1,9999) < 1)
+		end;
+	mes "[Helper for the Royal Richard]";
+	mes "Select the service to use.";
+	next;
+	switch( select( "Quest Start Setting", "Reset cooldown.", "Reset Quest", "Check current status" ) ) {
+	case 1:
+		mes "[Helper for the Royal Richard]";
+		mes "Set to proceed with the Richard family quest.";
+		next;
+		select("Setting");
+		if (isbegin_quest(7681) == 0)
+			setquest 7681;
+		if (isbegin_quest(7681) == 1)
+			completequest 7681;
+		if (isbegin_quest(7682) == 0)
+			setquest 7682;
+		if (isbegin_quest(7682) == 1)
+			completequest 7682;
+		mes "[Helper for the Royal Richard]";
+		mes "Complete";
+		close;
+	case 2:
+		mes "[Helper for the Royal Richard]";
+		mes "Reset the cooldown time of the Richard family battle training.";
+		next;
+		select("Setting");
+		if (isbegin_quest(5414) > 0)
+			erasequest 5414;
+		mes "[Helper for the Royal Richard]";
+		mes "Complete";
+		close;
+	case 3:
+		mes "[Helper for the Royal Richard]";
+		mes "Reset all Richard-related quests.";
+		next;
+		select("Setting");
+		mes "[Helper for the Royal Richard]";
+		for ( .@quest_id = 5402; .@quest_id <= 5414; ++.@quest_id ) {
+			if (isbegin_quest(.@quest_id) > 0)
+				erasequest .@quest_id;
+			mes "" + .@quest_id + " Delete";
+		}
+		next;
+		mes "[Helper for the Royal Richard]";
+		mes "Complete";
+		close;
+	case 4:
+		mes "[Helper for the Royal Richard]";
+		mes "7681(" + isbegin_quest(7681) + ")/7682(" + isbegin_quest(7682) + ")";
+		mes "5402(" + isbegin_quest(5402) + ")/5403(" + isbegin_quest(5403) + ")";
+		mes "5404(" + checkquest(5404,HUNTING) + ")/5405(" + checkquest(5405,HUNTING) + ")/5406(" + checkquest(5406,HUNTING) + ")/5407(" + checkquest(5407,HUNTING) + ")";
+		mes "5408(" + checkquest(5408,HUNTING) + ")/5409(" + checkquest(5409,HUNTING) + ")/5410(" + checkquest(5410,HUNTING) + ")/5411(" + checkquest(5411,HUNTING) + ")";
+		mes "5412(" + checkquest(5412,HUNTING) + ")/5413(" + checkquest(5413,HUNTING) + ")/5414(" + checkquest(5414,PLAYTIME) + ")";
+		close;
+	}
+	end;
+}
 
 prt_cas_q,81,131,0	script	#ep16_1Geoborg	HIDDEN_WARP_NPC,3,3,{
 	end;

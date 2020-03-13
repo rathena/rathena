@@ -5,3 +5,4 @@ UPDATE `char_reg_num` SET `key` = 'ep16_royal', `value` = 25 WHERE `key` = 'banq
 
 DELETE FROM `char_reg_num` WHERE `key` = 'banquet_nerius_quest';
 DELETE FROM `char_reg_num` WHERE `key` = 'banquet_heine_quest';
+DELETE FROM `char_reg_num` WHERE `key` = 'banquet_richard_quest';
