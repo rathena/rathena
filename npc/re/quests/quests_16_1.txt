@@ -5899,7 +5899,7 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 		mes "I hope I will see you later.";
 		close;
 	}
-	if (banquet_roegenburg_quest == 0) {
+	if (ep16_lug == 0) {
 		if (isbegin_quest(7682) != 1) {
 			mes "[Maximilian]";
 			mes "How could you come in here?";
@@ -5934,10 +5934,10 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "Yes, it is a good opportunity, of course.";
 		setquest 14495;// To Wolf
-		banquet_roegenburg_quest = 1;
+		ep16_lug = 1;
 		close3;
 	}
-	if (banquet_roegenburg_quest == 1) {
+	if (ep16_lug == 1) {
 		mes "[Maximilian]";
 		mes "Did you see the children of the Roegenburg? They look like babies, but now when I see them in the palace, I am pleased that they are almost grown up.";
 		next;
@@ -5948,7 +5948,7 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 		mes "He is in charge of all matters of the Roegenburg instead of the first son who is busy for participation in the royal assembly and protection of the border. You will hear lots of interesting stories.";
 		close;
 	}
-	if (banquet_roegenburg_quest >= 2 && banquet_roegenburg_quest <= 6) {
+	if (ep16_lug > 1 && ep16_lug < 7) {
 		mes "[Maximilian]";
 		mes "The Roegenburg is proud that we are descents of Wilhelm, the national hero, and contributed to the foundation and development of Rune-Midgarts Kingdom.";
 		next;
@@ -5977,7 +5977,7 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 		mes "Please forgive me grumbling and forget this old man's complaints.";
 		close;
 	}
-	if (banquet_roegenburg_quest == 7 || banquet_roegenburg_quest == 8) {
+	if (ep16_lug == 7 || ep16_lug == 8) {
 		mes "[Maximilian]";
 		mes "Myer, Myer...";
 		mes "I cannot believe that Myer did that.";
@@ -5996,13 +5996,13 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 		mes "Opportunities are found in times of crisis.";
 		close;
 	}
-	if (banquet_roegenburg_quest == 9) {
+	if (ep16_lug == 9) {
 		mes "[Maximilian]";
 		mes "Please bring Helmut. He must be in the ^0000cdcheckpoint near the border with Schwarzwald^000000. He is responsible for the patrol party.";
 		mes "Please.";
 		close;
 	}
-	if (banquet_roegenburg_quest == 10) {
+	if (ep16_lug == 10) {
 		mes "[Maximilian]";
 		mes "Welcome adventurer. Did you have a safe travel?";
 		next;
@@ -6055,16 +6055,16 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 		mes "I am willing to do so.";
 		erasequest 14505;// I Won't go Back
 		setquest 14506;// Things Turned out This Way
-		banquet_roegenburg_quest = 11;
+		ep16_lug = 11;
 		close3;
 	}
-	if (banquet_roegenburg_quest == 11) {
+	if (ep16_lug == 11) {
 		mes "[Maximilian]";
 		mes "Please deliver the story of Helmut to Myer.";
 		mes "He must be somewhere in Prontera.";
 		close;
 	}
-	if (banquet_roegenburg_quest == 12) {
+	if (ep16_lug == 12) {
 		mes "[Maximilian]";
 		mes "Dear adventurer, welcome.";
 		next;
@@ -6108,12 +6108,12 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 		mes "[Maximilian]";
 		mes "If you need a help from the Roegenburg, come to use anytime. The gate of the Roegenburg is always opened to you.";
 		completequest 14507;// To Maximilian
-		getitem 6919,10;// Honor Token
+		getitem 6919,10;// TokenOfHonor
 		getexp 1000000,500000;
-		banquet_roegenburg_quest = 13;
+		ep16_lug = 13;
 		close;
 	}
-	if (banquet_roegenburg_quest == 13) {
+	if (ep16_lug > 12) {
 		mes "[Maximilian]";
 		mes "Dear adventurer, welcome.";
 		mes "I wanted to thank you always. Thanks to your contribution, my family is returning to safety.";
@@ -6128,12 +6128,12 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 }
 
 prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,1) == 0) {
 		mes "[Agnes Roegenburg]";
 		mes "Well, you seem to have lots of luggage. How about removing some?";
 		close;
 	}
-	if (banquet_roegenburg_quest == 0) {
+	if (ep16_lug == 0) {
 		cutin "16agn_nor",2;
 		mes "[Agnes]";
 		mes "Hello, nice to meet you.";
@@ -6144,7 +6144,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 		mes "Then, have a good time.";
 		close3;
 	}
-	if (banquet_roegenburg_quest == 1) {
+	if (ep16_lug == 1) {
 		cutin "16agn_nor",2;
 		mes "[Agnes]";
 		mes "Did you see my brothers?";
@@ -6155,7 +6155,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 		mes "So the time for me to talk with him is quite reduced though.";
 		close3;
 	}
-	if (banquet_roegenburg_quest == 2 || banquet_roegenburg_quest == 3) {
+	if (ep16_lug == 2 || ep16_lug == 3) {
 		cutin "16agn_nor",2;
 		mes "[Agnes]";
 		mes "The banquet has started but I haven't yet found any body who I go with.";
@@ -6186,7 +6186,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 		mes "But there is no one for me to hand my handkerchiefs to...";
 		close3;
 	}
-	if (banquet_roegenburg_quest == 4 || banquet_roegenburg_quest == 5) {
+	if (ep16_lug == 4 || ep16_lug == 5) {
 		cutin "16agn_nor",2;
 		mes "[Agnes]";
 		mes "Did you see him too?";
@@ -6197,7 +6197,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 		mes "I am sorry that I left so early that I couldn't talk with him at all. I asked Myer who he is, but he didn't tell me.";
 		close3;
 	}
-	if (banquet_roegenburg_quest == 6) {
+	if (ep16_lug == 6) {
 		cutin "16agn_nor",2;
 		mes "[Agnes]";
 		mes "Dear adventurer?";
@@ -6207,7 +6207,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 		mes "Why don't you visit Wolf?";
 		close3;
 	}
-	if (banquet_roegenburg_quest == 7) {
+	if (ep16_lug == 7) {
 		cutin "16agn_nor",2;
 		mes "[Agnes]";
 		mes "He is my brother, but he and other brothers are so childish.";
@@ -6228,7 +6228,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 		mes "But I feel safe that my grandfather stays with me.";
 		close3;
 	}
-	if (banquet_roegenburg_quest >= 8 && banquet_roegenburg_quest <= 12) {
+	if (ep16_lug >= 8 && ep16_lug <= 12) {
 		cutin "16agn_nor",2;
 		mes "[Agnes]";
 		mes "You seem to have come to see my brothers? but there is no one in the house.";
@@ -6285,10 +6285,18 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 			mes "And Can I ask you to get more? I am afraid that cloth is not sufficient.";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "I guess so. I will help you to the best of my ability.";
-			next;
-			mes "[Agnes]";
-			mes "You really understand me. I'm so happy.";
+			if( Sex == SEX_FEMALE) {
+				mes "I guess so. I will help you to the best of my ability.";
+				next;
+				mes "[Agnes]";
+				mes "You really understand me. I'm so happy.";
+			}
+			else {
+				mes "Yes, I will.";
+				next;
+				mes "[Agnes]";
+				mes "Thank you very much";
+			}
 			next;
 			mes "[Agnes]";
 			mes "See you tomorrow. Have a nice day.";
@@ -6296,8 +6304,9 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 			delitem 949,50;// Feather
 			erasequest 14508;// Jewel and Cloth
 			setquest 14509;// Still Making It
-			getitem 6919,4;// Honor Token
+			getitem 6919,4;// TokenOfHonor
 			getexp 200000,200000;
+			ep16_lug = 15;
 			close3;
 		case 14510:
 			if (countitem(7166) < 15 || countitem(507) < 30 || countitem(509) < 10) {
@@ -6355,7 +6364,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 			delitem 509,10;// White Herb
 			erasequest 14510;// Pink Petal-like Dress
 			setquest 14509;// Still Making It
-			getitem 6919,4;// Honor Token
+			getitem 6919,4;// TokenOfHonor
 			getexp 200000,200000;
 			close3;
 		case 14511:
@@ -6414,7 +6423,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 			delitem 6510,5;// Elegant Flower
 			erasequest 14511;// Beautiful Flower Decoration
 			setquest 14509;// Still Making It
-			getitem 6919,4;// Honor Token
+			getitem 6919,4;// TokenOfHonor
 			getexp 200000,200000;
 			close3;
 		case 14512:
@@ -6463,7 +6472,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 			delitem 7205,20;// Piece of Black Cloth
 			erasequest 14512;// Dress of the Night Sky
 			setquest 14509;// Still Making It
-			getitem 6919,4;// Honor Token
+			getitem 6919,4;// TokenOfHonor
 			getexp 200000,200000;
 			close3;
 		case 14513:
@@ -6512,7 +6521,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 			delitem 7122,20;// Burning Hair
 			erasequest 14513;// Shawl of the Blazing Sun
 			setquest 14509;// Still Making It
-			getitem 6919,4;// Honor Token
+			getitem 6919,4;// TokenOfHonor
 			getexp 200000,200000;
 			close3;
 		case 14514:
@@ -6561,7 +6570,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 			delitem 6557,5;// Fancy Fairy Wing
 			erasequest 14514;// Step of the Fairy
 			setquest 14509;// Still Making It
-			getitem 6919,4;// Honor Token
+			getitem 6919,4;// TokenOfHonor
 			getexp 200000,200000;
 			close3;
 		case 14515:
@@ -6610,7 +6619,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 			delitem 1001,5;// Star Dust
 			erasequest 14515;// Sparkling Star
 			setquest 14509;// Still Making It
-			getitem 6919,4;// Honor Token
+			getitem 6919,4;// TokenOfHonor
 			getexp 200000,200000;
 			close3;
 		default:	// none quest
@@ -6666,10 +6675,18 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 		mes "I mean I prepared a dress that I choose thinking that I would go with Myer. And now the partner has changed and I have to prepare considering him.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Yes, you should!!!";
-		next;
-		mes "[Agnes]";
-		mes "I expected you would agree as a woman like me.";
+		if (Sex == SEX_FEMALE) {
+			mes "Yes, you should!!!";
+			next;
+			mes "[Agnes]";
+			mes "I expected you would agree as a woman like me.";
+		}
+		else {
+			mes "Ah....!";
+			next;
+			mes "[Agnes]";
+			mes "Do you understand?";
+		}
 		next;
 		mes "[Agnes]";
 		mes "There are so many things I have to consider, such as his hair color, eye color, clothes color and shape. I asked Myer about him, but he didn't tell me.";
@@ -6684,10 +6701,18 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 		mes "Therefore, I told my grandfather that I want to have some more dresses to prepare for all situations, but he said that what I have now is enough. Does it make sense?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "That is nonsense!";
-		next;
-		mes "[Agnes]";
-		mes "Yes!!!";
+		if (Sex == SEX_FEMALE) {
+			mes "That is nonsense!";
+			next;
+			mes "[Agnes]";
+			mes "Yes!!!";
+		}
+		else {
+			mes "You are beautiful enough with the clothes you are wearing now.";
+			next;
+			mes "[Agnes]";
+			mes "Oh, no. I am not.";
+		}
 		next;
 		mes "[Agnes]";
 		mes "I talked with Wolf too but He said the same thing as grandfather. I should ask somebody to do me a favor unless he doesn't listen to me.";
@@ -6702,18 +6727,29 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 		mes "If I go out to get a dress, I may be the first princess in Rune-Midgarts who dies for a dress. So would you please save me from this situation?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Of course, I'll do my best to help you.";
-		mes "You need cloth, accessories and dyes don't you?";
-		next;
-		mes "[Agnes]";
-		mes "Yes, you are right!";
-		mes "You understand me very well! I like you very much.";
-		next;
-		mes "[Agnes]";
-		mes "Can you be my friend. I have wanted a woman who understands me very much.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Of course. What do you want?";
+		if (Sex == SEX_FEMALE) {
+			mes "Of course, I'll do my best to help you.";
+			mes "You need cloth, accessories and dyes don't you?";
+			next;
+			mes "[Agnes]";
+			mes "Yes, you are right!";
+			mes "You understand me very well! I like you very much.";
+			next;
+			mes "[Agnes]";
+			mes "Can you be my friend. I have wanted a woman who understands me very much.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Of course. What do you want?";
+		}
+		else {
+			mes "Hmm.. how can I help you?";
+			next;
+			mes "[Agnes]";
+			mes "Of course, you will get cloth, accessories and dyes!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Then which kind do you want?";
+		}
 		next;
 		mes "[Agnes]";
 		mes "There is an accessory I really want to have, but it is so rare that I couldn't get it.";
@@ -6756,6 +6792,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 		mes "[Agnes]";
 		mes "The success of my banquet is in your hands. I will do my best to make it one of the best ever.";
 		setquest 14508;// Jewel and Cloth
+		ep16_lug = 14;
 		close3;
 	case 0:
 	case 1:
@@ -6787,8 +6824,9 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 		mes "I have made a decision!!";
 		next;
 		mes "[Agnes]";
-		switch( rand(14510,14515) ) {
-		case 14510:
+		switch( rand(1,10) ) {
+		case 1:
+		case 2:
 			mes "I prefer the soft pink dress other than young flower petal blooming on a large field. To be like that, I think I need a very soft silk cloth.";
 			next;
 			mes "[Agnes]";
@@ -6808,7 +6846,8 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 			erasequest 14509;// Still Making It
 			setquest 14510;// Pink Petal-like Dress
 			close3;
-		case 14511:
+		case 3:
+		case 4:
 			mes "Flower! It a flower! Large and shining jewels are too common here in the palace.";
 			next;
 			mes "[Agnes]";
@@ -6828,73 +6867,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 			erasequest 14509;// Still Making It
 			setquest 14511;// Beautiful Flower Decoration
 			close3;
-		case 14512:
-			mes "I like a black dress that reminds of dark night. A dress so elegant and beautiful that makes people to admire in silence.";
-			next;
-			mes "[Agnes]";
-			mes "I should make a dress that is as far and mysterious as a dark night.";
-			next;
-			mes "[Agnes]";
-			mes "I will go around the banquet hall like a sleek cat, concealing everything underneath the black dress.";
-			next;
-			mes "[Agnes]";
-			mes "To do so, I think I need ^0000cd20 " + getitemname(7205) + "^000000.";
-			next;
-			mes "[Agnes]";
-			mes "This will be beautiful dress without a decoration.";
-			next;
-			mes "[Agnes]";
-			mes "Dear adventurer, my black night-like dress is up to your hands.";
-			erasequest 14509;// Still Making It
-			setquest 14512;// Dress of the Night Sky
-			close3;
-		case 14513:
-			mes "Have you ever watch the burning sun directly. I am sure you haven't. The sun stabs the eyes of the people who watch it so that they cannot watch it.";
-			next;
-			mes "[Agnes]";
-			mes "But I wonder how many people lost their eyes after watching the sun directly. Why do people watch that burning fire? What is it?";
-			next;
-			mes "[Agnes]";
-			mes "Dear adventurer. I want to have that burning fire.";
-			next;
-			mes "[Agnes]";
-			mes "I heard that there is the ^0000cdhot hair^000000 that looks burning but not hot at all, though the name sounds contradictory.";
-			next;
-			mes "[Agnes]";
-			mes "I will use it to make a beautiful shawl. As soon as I enter the banquet hall, I will be able to give a strong impression.";
-			next;
-			mes "[Agnes]";
-			mes "Please get me ^0000cd20 strands of " + getitemname(7122) + "^000000.";
-			next;
-			mes "[Agnes]";
-			mes "My beautiful shawl burning like the sun is up to your hands.";
-			erasequest 14509;// Still Making It
-			setquest 14513;// Shawl of the Blazing Sun
-			close3;
-		case 14514:
-			mes "I would like to make a fairy dress! A dress so shining in golden light that anyone should admire it.";
-			next;
-			mes "[Agnes]";
-			mes "Cloth is sufficient, but the problem is decoration. I heard that there is something called fairy's wing.";
-			next;
-			mes "[Agnes]";
-			mes "It will make a dress as elegant as fairy and on which I can work lightly. The thought alone makes you fascinated?";
-			next;
-			mes "[Agnes]";
-			mes "Every time I step, the luxury lace will flutter, making people to imagine a fairy waling in the wood. The dress will make me better.";
-			next;
-			mes "[Agnes]";
-			mes "Of course, I will not attach them as they are. I know a person who will modify them properly.";
-			next;
-			mes "[Agnes]";
-			mes "Dear adventurer, Please get me ^0000cd5 " + getitemname(6557) + "^000000.";
-			next;
-			mes "[Agnes]";
-			mes "My fairly-like dress is up to you hands.";
-			erasequest 14509;// Still Making It
-			setquest 14514;// Step of the Fairy
-			close3;
-		case 14515:
+		case 5:
 			mes "I was thinking of how I can emphasize my pearl necklace.";
 			next;
 			mes "[Agnes]";
@@ -6923,12 +6896,79 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 			erasequest 14509;// Still Making It
 			setquest 14515;// Sparkling Star
 			close3;
+		case 6:
+			mes "I would like to make a fairy dress! A dress so shining in golden light that anyone should admire it.";
+			next;
+			mes "[Agnes]";
+			mes "Cloth is sufficient, but the problem is decoration. I heard that there is something called fairy's wing.";
+			next;
+			mes "[Agnes]";
+			mes "It will make a dress as elegant as fairy and on which I can work lightly. The thought alone makes you fascinated?";
+			next;
+			mes "[Agnes]";
+			mes "Every time I step, the luxury lace will flutter, making people to imagine a fairy waling in the wood. The dress will make me better.";
+			next;
+			mes "[Agnes]";
+			mes "Of course, I will not attach them as they are. I know a person who will modify them properly.";
+			next;
+			mes "[Agnes]";
+			mes "Dear adventurer, Please get me ^0000cd5 " + getitemname(6557) + "^000000.";
+			next;
+			mes "[Agnes]";
+			mes "My fairly-like dress is up to you hands.";
+			erasequest 14509;// Still Making It
+			setquest 14514;// Step of the Fairy
+			close3;
+		case 7:
+		case 8:
+			mes "Have you ever watch the burning sun directly. I am sure you haven't. The sun stabs the eyes of the people who watch it so that they cannot watch it.";
+			next;
+			mes "[Agnes]";
+			mes "But I wonder how many people lost their eyes after watching the sun directly. Why do people watch that burning fire? What is it?";
+			next;
+			mes "[Agnes]";
+			mes "Dear adventurer. I want to have that burning fire.";
+			next;
+			mes "[Agnes]";
+			mes "I heard that there is the ^0000cdhot hair^000000 that looks burning but not hot at all, though the name sounds contradictory.";
+			next;
+			mes "[Agnes]";
+			mes "I will use it to make a beautiful shawl. As soon as I enter the banquet hall, I will be able to give a strong impression.";
+			next;
+			mes "[Agnes]";
+			mes "Please get me ^0000cd20 strands of " + getitemname(7122) + "^000000.";
+			next;
+			mes "[Agnes]";
+			mes "My beautiful shawl burning like the sun is up to your hands.";
+			erasequest 14509;// Still Making It
+			setquest 14513;// Shawl of the Blazing Sun
+			close3;
+		default:
+			mes "I like a black dress that reminds of dark night. A dress so elegant and beautiful that makes people to admire in silence.";
+			next;
+			mes "[Agnes]";
+			mes "I should make a dress that is as far and mysterious as a dark night.";
+			next;
+			mes "[Agnes]";
+			mes "I will go around the banquet hall like a sleek cat, concealing everything underneath the black dress.";
+			next;
+			mes "[Agnes]";
+			mes "To do so, I think I need ^0000cd20 " + getitemname(7205) + "^000000.";
+			next;
+			mes "[Agnes]";
+			mes "This will be beautiful dress without a decoration.";
+			next;
+			mes "[Agnes]";
+			mes "Dear adventurer, my black night-like dress is up to your hands.";
+			erasequest 14509;// Still Making It
+			setquest 14512;// Dress of the Night Sky
+			close3;
 		}
 	}
 }
 
 prt_cas_q,90,184,7	script	Helmut Roegenburg#ep16l	4_EP16_HELMUT,{
-	if (banquet_roegenburg_quest == 0) {
+	if (ep16_lug == 0) {
 		cutin "16hel",0;
 		mes "[Helmut]";
 		mes "Hello.";
@@ -6939,7 +6979,7 @@ prt_cas_q,90,184,7	script	Helmut Roegenburg#ep16l	4_EP16_HELMUT,{
 		mes "He will explain better than me.";
 		close3;
 	}
-	if (banquet_roegenburg_quest <= 2) {
+	if (ep16_lug < 3) {
 		cutin "16hel",0;
 		mes "[Helmut]";
 		mes "Did you see my brother, ^0000cdWolf Roegenburg^000000?";
@@ -6949,7 +6989,7 @@ prt_cas_q,90,184,7	script	Helmut Roegenburg#ep16l	4_EP16_HELMUT,{
 		mes "If you want to know about the Roegenburg, it will be a quality time.";
 		close3;
 	}
-	if (banquet_roegenburg_quest >= 3 && banquet_roegenburg_quest <= 6) {
+	if (ep16_lug > 2 && ep16_lug < 7) {
 		cutin "16hel",0;
 		mes "[Helmut]";
 		mes "I am glad that I come back home and can see the family members.";
@@ -6965,7 +7005,7 @@ prt_cas_q,90,184,7	script	Helmut Roegenburg#ep16l	4_EP16_HELMUT,{
 }
 
 prt_cas_q,86,180,7	script	Kalbern#ep16lug	4_M_RUSCHILD,{
-	if (banquet_roegenburg_quest <= 6) {
+	if (ep16_lug <= 6) {
 		mes "[Kalbern]";
 		mes "Dear adventurer, hello.";
 		mes "I am ^0000cdKalbern^000000 and a chamberlain of Helmut.";
@@ -7002,12 +7042,12 @@ prt_cas_q,86,180,7	script	Kalbern#ep16lug	4_M_RUSCHILD,{
 }
 
 prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,1) == 0) {
 		mes "[Wolf Roegenburg]";
 		mes "Well, you seem to have lots of luggage. How about removing some?";
 		close;
 	}
-	if (banquet_roegenburg_quest == 0) {
+	if (ep16_lug == 0) {
 		cutin "16wol_nor",2;
 		mes "[Wolf]";
 		mes "Thank you for visiting the Roegenburg.";
@@ -7017,7 +7057,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "He enjoys talking with adventurers.";
 		close3;
 	}
-	if (banquet_roegenburg_quest == 1) {
+	if (ep16_lug == 1) {
 		cutin "16wol_nor",2;
 		mes "[Wolf]";
 		mes "Dear adventurer, it is a honor to have you in the Roegenburg.";
@@ -7046,7 +7086,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "[Wolf]";
 		mes "Agnes, don't say that. it is not appropriate. We are telling the adventurer of the story of the Roegenburg...";
 		next;
-		classchange( 4_EP16_MEYER, "Myer Roegenburg#ep16lug", bc_self );
+		cloakoffnpc "Myer Roegenburg#ep16lug", getcharid(0);
 		cutin "16mye_nor",1;
 		mes "[Myer]";
 		mes "Now, will my prince come with me?";
@@ -7103,7 +7143,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "[Myer]";
 		mes "Yes, you are right. I think I am the unwelcome guest. I'd better leave. Agnes, I'll come back later.";
 		next;
-		classchange( HIDDEN_WARP_NPC, "Myer Roegenburg#ep16lug", bc_self );
+		cloakonnpc "Myer Roegenburg#ep16lug", getcharid(0);
 		cutin "16agn_nor",2;
 		mes "[Agnes]";
 		mes "Oh my god, I forgot. I have to make preparations!";
@@ -7144,16 +7184,17 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		next;
 		mes "[Wolf]";
 		mes "Yes. right.";
-		erasequest 14495;// To Wolf
+		completequest 14495;// To Wolf
 		setquest 14496;// To Isaac
-		banquet_roegenburg_quest = 2;
-		if (banquet_walther_quest >= 3 && banquet_nerius_quest >= 1 && banquet_heine_quest >= 2 && banquet_wigner_quest >= 2 && banquet_richard_quest >= 2 && banquet_geoborg_quest >= 2 && banquet_roegenburg_quest >= 2) {
+		//achievement 130000 6
+		ep16_lug = 2;
+		if (isbegin_quest(7682) == 1 && isbegin_quest(5402) == 2 && isbegin_quest(7683) == 2 && isbegin_quest(7684) == 2 && ep16_wal > 1 && ep16_wig > 1 && ep16_lug > 1 && ep16_gaobs > 1) {
 			completequest 7682;// Socializing Starts from an Eye Contact
 			setquest 7685;// What Is the Next Thing on the Schedule ?
 		}
 		close3;
 	}
-	if (banquet_roegenburg_quest == 2) {
+	if (ep16_lug == 2) {
 		cutin "16wol_nor",2;
 		mes "[Wolf]";
 		mes "Walk along the ^0000cdcorridor. The Wigner is in the last room^000000.";
@@ -7163,7 +7204,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "I am very sorry to cause inconvenience to you.";
 		close3;
 	}
-	if (banquet_roegenburg_quest == 3) {
+	if (ep16_lug == 3) {
 		if (countitem(6930) < 1) {
 			cutin "16wol_nor",2;
 			mes "[Wolf]";
@@ -7171,6 +7212,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 			mes "You just go to the ^0000cdWigner and bring a thing from Isaac^000000.";
 			close3;
 		}
+		cloakoffnpc "Myer Roegenburg#ep16lug", getcharid(0);
 		cutin "16wol_nor",2;
 		mes "[Wolf]";
 		mes "Dear adventurer, did you bring the thing? Oh, you have brought it. Thank you very much.";
@@ -7261,13 +7303,13 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		next;
 		mes "[Wolf]";
 		mes "Then, see you soon.";
-		delitem 6930,1;// Sample of New Business Item
+		delitem 6930,1;// Biz_Items_Sample
 		erasequest 14497;// Delivery for Wolf
 		setquest 14498;// Which Rumor
-		banquet_roegenburg_quest = 4;
+		ep16_lug = 4;
 		close3;
 	}
-	if (banquet_roegenburg_quest == 4 || banquet_roegenburg_quest == 5) {
+	if (ep16_lug == 4 || ep16_lug == 5) {
 		cutin "16wol_nor",2;
 		mes "[Wolf]";
 		mes "What is the rumor about Roegenburg that is circulating in Prontera.";
@@ -7282,7 +7324,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "Then see you soon.";
 		close3;
 	}
-	if (banquet_roegenburg_quest == 6) {
+	if (ep16_lug == 6) {
 		cutin "16wol_nor",2;
 		mes "[Wolf]";
 		mes "Hi, you look a little tired.";
@@ -7501,7 +7543,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "[Myer]";
 		mes "...Excuse me.";
 		next;
-		classchange( HIDDEN_WARP_NPC, "Myer Roegenburg#ep16lug", bc_self );
+		cloakonnpc "Myer Roegenburg#ep16lug", getcharid(0);
 		cutin "16agn_ang",2;
 		mes "[Agnes]";
 		mes "Myer! where are you going? Are going to leave the family again?";
@@ -7530,12 +7572,12 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "......";
 		mes "Excuse me too.";
 		next;
-		classchange( HIDDEN_WARP_NPC, "Helmut Roegenburg#ep16l", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Kalbern#ep16lug", bc_self );
+		cloakonnpc "Helmut Roegenburg#ep16lug", getcharid(0);
 		cutin "",255;
 		mes "[Kalbern]";
 		mes "Lord Helmut! where are you going?";
 		next;
+		cloakonnpc "Kalbern#ep16lug", getcharid(0);
 		cutin "16wol_nor",2;
 		mes "[Wolf]";
 		mes "......";
@@ -7566,11 +7608,11 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "No. I'll come back soon.";
 		erasequest 14501;// Report to Wolf
 		setquest 14502;// To Isaac
-		getitem 6931,1;// Top Secret Document
-		banquet_roegenburg_quest = 7;
+		getitem 6931,1;// Secret_Documents
+		ep16_lug = 7;
 		close3;
 	}
-	if (banquet_roegenburg_quest == 7) {
+	if (ep16_lug == 7) {
 		cutin "16wol_nor",2;
 		mes "[Wolf]";
 		mes "Did you deliver the document to Isaac? I should have done it myself, but I got busy suddenly.";
@@ -7582,7 +7624,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "Then see you soon.";
 		close3;
 	}
-	if (banquet_roegenburg_quest == 8) {
+	if (ep16_lug == 8) {
 		cutin "16wol_nor",2;
 		mes "[Wolf]";
 		mes "Dear adventurer, thank you very much. Was Wigner offended?";
@@ -7713,11 +7755,11 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "Yes. I'll come back soon.";
 		erasequest 14503;// Report to Wolf
 		setquest 14504;// In Search of Helmut
-		getitem 22847,1;// Prontera Badge
-		banquet_roegenburg_quest = 9;
+		getitem 22847,1;// BadgeOfProntera
+		ep16_lug = 9;
 		close3;
 	}
-	if (banquet_roegenburg_quest >= 9 && banquet_roegenburg_quest < 13) {
+	if (ep16_lug > 8 && ep16_lug < 13) {
 		cutin "16wol_nor",2;
 		mes "[Wolf]";
 		mes "I think I was closer to brothers than now, to Helmut and Myer.";
@@ -7744,7 +7786,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "I think I am going to continue to go around to find it.";
 		close3;
 	}
-	if (banquet_roegenburg_quest == 13) {
+	if (ep16_lug > 12) {
 		cutin "16wol_nor",2;
 		mes "[Wolf]";
 		mes "Dear adventurer, thanks to you, I feel that my brothers and I have become closer.";
@@ -7767,17 +7809,20 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 prt_cas_q,90,184,7	script	#ep16lug004	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
-	if (banquet_roegenburg_quest >= 3 && banquet_roegenburg_quest <= 6)
-		classchange( 4_EP16_MEYER, "Myer Roegenburg#ep16lug", bc_self );
-	else if (banquet_roegenburg_quest >= 7) {
-		classchange( HIDDEN_WARP_NPC, "Helmut Roegenburg#ep16l", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Kalbern#ep16lug", bc_self );
+	if (ep16_lug < 3)
+		cloakonnpc "Myer Roegenburg#ep16lug", getcharid(0);
+	else if (ep16_lug > 2 && ep16_lug < 7)
+		cloakoffnpc "Myer Roegenburg#ep16lug", getcharid(0);
+	else if (ep16_lug > 6) {
+		cloakonnpc "Helmut Roegenburg#ep16lug", getcharid(0);
+		cloakonnpc "Myer Roegenburg#ep16lug", getcharid(0);
+		cloakonnpc "Kalbern#ep16lug", getcharid(0);
 	}
 	end;
 }
 
-prt_cas_q,92,182,7	script	Myer Roegenburg#ep16lug	HIDDEN_WARP_NPC,{
-	if (banquet_roegenburg_quest >= 3 && banquet_roegenburg_quest <= 6) {
+prt_cas_q,92,182,7	script	Myer Roegenburg#ep16lug	4_EP16_MEYER,{
+	if (ep16_lug > 2 && ep16_lug < 7) {
 		cutin "16mye_nor",1;
 		mes "[Myer]";
 		mes "It feels good that I come home for a long time.";
@@ -7794,10 +7839,30 @@ prt_cas_q,92,182,7	script	Myer Roegenburg#ep16lug	HIDDEN_WARP_NPC,{
 		mes "It is stupid to think like this, as I left home.";
 		close3;
 	}
+	end;
+
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
+}
+
+prt_cas_q,74,189,5	script	#ep16lug000	HIDDEN_NPC,5,5,{
+	end;
+OnTouch:
+	if (ep16_lug < 3)
+		cloakonnpc "Myer Roegenburg#ep16lug", getcharid(0);
+	else if (ep16_lug > 2 && ep16_lug < 7)
+		cloakoffnpc "Myer Roegenburg#ep16lug", getcharid(0);
+	else if (ep16_lug > 6) {
+		cloakonnpc "Helmut Roegenburg#ep16lug", getcharid(0);
+		cloakonnpc "Myer Roegenburg#ep16lug", getcharid(0);
+		cloakonnpc "Kalbern#ep16lug", getcharid(0);
+	}
+	end;
 }
 
 function	script	F_kids_roegenburg_quest	{
-	switch( banquet_roegenburg_quest ) {
+	switch( ep16_lug ) {
 	case 4:
 		next;
 		emotion ET_FRET, getnpcid(0, "Kiddo#ep16lug03");
@@ -7943,7 +8008,7 @@ function	script	F_kids_roegenburg_quest	{
 		mes "I will be waiting for you!";
 		erasequest 14498;// Which Rumor
 		setquest 14499;// Prove Yourself
-		banquet_roegenburg_quest = 5;
+		ep16_lug = 5;
 		close;
 	case 5:
 		mes "[" + strcharinfo(0) + "]";
@@ -8048,11 +8113,11 @@ function	script	F_kids_roegenburg_quest	{
 		next;
 		mes "[Allen]";
 		mes "Men do not see anyone out.";
-		delitem 6926,1;// Rune-Midgartz History Book
+		delitem 6926,1;// Midgards_Histories
 		delitem 7166,12;// Soft Silk
 		erasequest 14499;// Prove Yourself
 		setquest 14501;// Report to Wolf
-		banquet_roegenburg_quest = 6;
+		ep16_lug = 6;
 		close;
 	case 11:
 		mes "[" + strcharinfo(0) + "]";
@@ -8100,7 +8165,7 @@ function	script	F_kids_roegenburg_quest	{
 		mes "[Harriet]";
 		mes "Ah, there he comes!, Jonathan! We have a guest.";
 		next;
-		classchange( 4_M_04, "Ordinary Man#ep16lug02", bc_self );
+		cloakoffnpc "Ordinary Man#ep16lug02", getcharid(0);
 		mes "[Myer]";
 		mes "Dear adventurer. What has brought you here?";
 		next;
@@ -8203,14 +8268,14 @@ function	script	F_kids_roegenburg_quest	{
 		mes "If you need my help, just find me. I will help you with all my efforts. Take care!";
 		erasequest 14506;// Things Turned out This Way
 		setquest 14507;// To Maximilian
-		banquet_roegenburg_quest = 12;
+		ep16_lug = 12;
 		close;
 	}
 	return;
 }
 
 prontera,271,70,3	script	Kiddo#ep16lug01	4_M_MIKID,{
-	if (banquet_roegenburg_quest < 4) {
+	if (ep16_lug < 4) {
 		mes "[Allen]";
 		mes "Do you want business with us? But we don't meet with anybody.";
 		next;
@@ -8219,7 +8284,7 @@ prontera,271,70,3	script	Kiddo#ep16lug01	4_M_MIKID,{
 		mes "Go back.";
 		close;
 	}
-	if (banquet_roegenburg_quest == 4) {
+	if (ep16_lug == 4) {
 		mes "[Allen]";
 		mes "Today, the wind is cold and smells rotten. I feel that something has happened.";
 		next;
@@ -8231,7 +8296,7 @@ prontera,271,70,3	script	Kiddo#ep16lug01	4_M_MIKID,{
 		mes "Is it so? I feel that they are testing me.";
 		F_kids_roegenburg_quest();
 	}
-	if (banquet_roegenburg_quest == 5) {
+	if (ep16_lug == 5) {
 		if (countitem(6926) < 1 || countitem(7166) < 12 || checkquest(14499,HUNTING) < 2) {
 			mes "[Allen]";
 			mes "He has come with empty hands.";
@@ -8254,7 +8319,7 @@ prontera,271,70,3	script	Kiddo#ep16lug01	4_M_MIKID,{
 		}
 		F_kids_roegenburg_quest();
 	}
-	if (banquet_roegenburg_quest >= 6 && banquet_roegenburg_quest <= 10) {
+	if (ep16_lug >= 6 && ep16_lug <= 10) {
 		mes "[Allen]";
 		mes "Do you hear more? If so, you need to prove you have stronger credentials.";
 		next;
@@ -8268,7 +8333,7 @@ prontera,271,70,3	script	Kiddo#ep16lug01	4_M_MIKID,{
 		mes "Please go. We'll handle him.";
 		close;
 	}
-	if (banquet_roegenburg_quest == 11)
+	if (ep16_lug == 11)
 		F_kids_roegenburg_quest();
 	mes "[Allen]";
 	mes "The threat of war has disappeared. Hero in the time of turbulence is not born. Darkness calls me!";
@@ -8282,7 +8347,7 @@ prontera,271,70,3	script	Kiddo#ep16lug01	4_M_MIKID,{
 }
 
 prontera,271,68,1	script	Kiddo#ep16lug02	4_M_KID1,5,5,{
-	if (banquet_roegenburg_quest < 4) {
+	if (ep16_lug < 4) {
 		mes "[Jin]";
 		mes "It is a good weather today.";
 		mes "The banquet is in full swing in the palace.";
@@ -8294,7 +8359,7 @@ prontera,271,68,1	script	Kiddo#ep16lug02	4_M_KID1,5,5,{
 		mes "End of today's diary.";
 		close;
 	}
-	if (banquet_roegenburg_quest == 4) {
+	if (ep16_lug == 4) {
 		mes "[Jin]";
 		mes "It is a good weather today.";
 		mes "The banquet is in full swing in the palace.";
@@ -8311,8 +8376,8 @@ prontera,271,68,1	script	Kiddo#ep16lug02	4_M_KID1,5,5,{
 		mes "Human comes from nothing and goes to nothing.";
 		F_kids_roegenburg_quest();
 	}
-	if (banquet_roegenburg_quest == 5) {
-		if (countitem(6926) < 1 || countitem(7166) < 12) {
+	if (ep16_lug == 5) {
+		if (countitem(6926) < 1 || countitem(7166) < 12 || checkquest(14499,HUNTING) < 2) {
 			mes "[Jin]";
 			mes "Huh? why empty hands? I cannot see what we told you.";
 			next;
@@ -8334,7 +8399,7 @@ prontera,271,68,1	script	Kiddo#ep16lug02	4_M_KID1,5,5,{
 		}
 		F_kids_roegenburg_quest();
 	}
-	if (banquet_roegenburg_quest >= 6 && banquet_roegenburg_quest <= 10) {
+	if (ep16_lug >= 6 && ep16_lug <= 10) {
 		mes "[Jin]";
 		mes "I am enjoying reading the book you gave, though it is too large and heavy.";
 		next;
@@ -8342,7 +8407,7 @@ prontera,271,68,1	script	Kiddo#ep16lug02	4_M_KID1,5,5,{
 		mes "My dream is to become a historian. I would like travel around Midgards and discover old hidden stories.";
 		close;
 	}
-	if (banquet_roegenburg_quest == 11)
+	if (ep16_lug == 11)
 		F_kids_roegenburg_quest();
 	mes "[Jin]";
 	mes "Jonathan returned the book you borrowed and he borrowed me other two volumes.";
@@ -8352,18 +8417,18 @@ prontera,271,68,1	script	Kiddo#ep16lug02	4_M_KID1,5,5,{
 	close;
 
 OnTouch:
-	if (banquet_roegenburg_quest >= 12)
-		classchange( 4_M_04, "Ordinary Man#ep16lug02", bc_self );
+	if (ep16_lug >= 12)
+		cloakoffnpc "Ordinary Man#ep16lug02", getcharid(0);
 	end;
 }
 
 prontera,269,69,5	script	Kiddo#ep16lug03	4_F_KID2,{
-	if (banquet_roegenburg_quest < 4) {
+	if (ep16_lug < 4) {
 		mes "[Harriet]";
 		mes "How beautiful and shining the dresses of princesses would be! I wish I could wear as many pretty dresses as possible.";
 		close;
 	}
-	if (banquet_roegenburg_quest == 4) {
+	if (ep16_lug == 4) {
 		emotion ET_SMILE;
 		mes "[Harriet]";
 		mes "Hello, singing birds and pretty flowers.";
@@ -8383,8 +8448,8 @@ prontera,269,69,5	script	Kiddo#ep16lug03	4_F_KID2,{
 		mes "I'm too big to be locked in it.";
 		F_kids_roegenburg_quest();
 	}
-	if (banquet_roegenburg_quest == 5) {
-		if (countitem(6926) < 1 || countitem(7166) < 12) {
+	if (ep16_lug == 5) {
+		if (countitem(6926) < 1 || countitem(7166) < 12 || checkquest(14499,HUNTING) < 2) {
 			mes "[Jin]";
 			mes "Huh? why empty hands? I cannot see what we told you.";
 			next;
@@ -8406,7 +8471,7 @@ prontera,269,69,5	script	Kiddo#ep16lug03	4_F_KID2,{
 		}
 		F_kids_roegenburg_quest();
 	}
-	if (banquet_roegenburg_quest >= 6 && banquet_roegenburg_quest <= 10) {
+	if (ep16_lug >= 6 && ep16_lug <= 10) {
 		mes "[Harriet]";
 		mes "Please ask my mother to use this cloth to make clothes";
 		mes "My mother makes pretty clothes!";
@@ -8416,7 +8481,7 @@ prontera,269,69,5	script	Kiddo#ep16lug03	4_F_KID2,{
 		mes "Ah, I wish that she was here!";
 		close;
 	}
-	if (banquet_roegenburg_quest == 11)
+	if (ep16_lug == 11)
 		F_kids_roegenburg_quest();
 	mes "[Harriet]";
 	mes "Jonathan said that the threat of war is gone. What a relief that would be.";
@@ -8432,8 +8497,8 @@ yuno_fild01,241,171,7	duplicate(Border Guards#ep16lug01)	Border Guards#ep16lug06
 yuno_fild01,243,171,1	duplicate(Border Guards#ep16lug01)	Border Guards#ep16lug07	4_M_JOB_WIZARD
 yuno_fild01,245,171,1	duplicate(Border Guards#ep16lug01)	Border Guards#ep16lug08	4_M_PECOKNIGHT
 
-yuno_fild01,242,175,5	script	Helmut Roegenburg#ep16lug01_b	4_EP16_HELMUT,5,5,{
-	if (banquet_roegenburg_quest == 9) {
+yuno_fild01,242,175,5	script	Helmut Roegenburg#ep16lug02	4_EP16_HELMUT,5,5,{
+	if (ep16_lug == 9) {
 		mes "[Helmut]";
 		mes "Dear adventurer? What are you doing here? It is dangerous. The monster came down here just before. Please leave now.";
 		next;
@@ -8490,10 +8555,10 @@ yuno_fild01,242,175,5	script	Helmut Roegenburg#ep16lug01_b	4_EP16_HELMUT,5,5,{
 		mes "Yes. thank you. Please take care.";
 		erasequest 14504;// In Search of Helmut
 		setquest 14505;// I Won't go Back
-		banquet_roegenburg_quest = 10;
+		ep16_lug = 10;
 		close;
 	}
-	if (banquet_roegenburg_quest == 10) {
+	if (ep16_lug == 10) {
 		mes "[Helmut]";
 		mes "This is where I should stay.";
 		mes "Please tell him '^0000cdI give up wars and transfer my position of heir to Wolf^000000'.";
@@ -8511,21 +8576,21 @@ yuno_fild01,242,175,5	script	Helmut Roegenburg#ep16lug01_b	4_EP16_HELMUT,5,5,{
 	close;
 
 OnTouch:
-	if (banquet_roegenburg_quest == 9 || banquet_roegenburg_quest == 10) {
+	if (ep16_lug == 9 || ep16_lug == 10) {
 		mes "[Helmut]";
 		mes "Give shout of concentration!!!";
-		for ( .@i = 1; .@i < 9; .@i++ )
+		for ( .@i = 1; .@i < 9; ++.@i )
 			npctalk "Hab!", "Border Guards#ep16lug0" + .@i, bc_area;
 		next;
 		mes "[Helmut]";
 		mes "Louder!!!!";
-		for ( .@i = 1; .@i < 9; .@i++ )
+		for ( .@i = 1; .@i < 9; ++.@i )
 			npctalk "Hab!", "Border Guards#ep16lug0" + .@i, bc_area;
 		next;
 		mes "[Helmut]";
 		mes "We!!!!!!";
 		next;
-		for ( .@i = 1; .@i < 9; .@i++ )
+		for ( .@i = 1; .@i < 9; ++.@i )
 			npctalk "protect our families and our country!!!", "Border Guards#ep16lug0" + .@i, bc_area;
 		close;
 	}
@@ -8533,7 +8598,7 @@ OnTouch:
 }
 
 yuno_fild01,244,176,3	script	Kalbern#ep16lug02	4_M_RUSCHILD,{
-	if (banquet_roegenburg_quest == 9 || banquet_roegenburg_quest == 10) {
+	if (ep16_lug == 9 || ep16_lug == 10) {
 		mes "[Kalbern]";
 		mes "I am very happy that I came back here.";
 		mes "Now I've got something to do.";
@@ -8552,8 +8617,9 @@ yuno_fild01,244,176,3	script	Kalbern#ep16lug02	4_M_RUSCHILD,{
 	close;
 }
 
-prontera,269,73,5	script	Ordinary Man#ep16lug02	HIDDEN_WARP_NPC,{
-	if (banquet_roegenburg_quest >= 12) {
+//prontera,269,73,5	script	Ordinary Man#ep16lug02	4_M_04,5,5,{	// no OnTouch
+prontera,269,73,5	script	Ordinary Man#ep16lug02	4_M_04,{
+	if (ep16_lug >= 12) {
 		mes "[Myer]";
 		mes "Thank you for coming here to deliver the message. Without you, I would not have listened to anything like the one I heard today.";
 		next;
@@ -8568,6 +8634,10 @@ prontera,269,73,5	script	Ordinary Man#ep16lug02	HIDDEN_WARP_NPC,{
 	mes "Shh! You'd better not speak to me.";
 	mes "There are may eyes around.";
 	close;
+
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 // Richard
@@ -11556,28 +11626,29 @@ OnTouch:
 	end;
 }
 
-prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	HIDDEN_WARP_NPC,5,5,{
-	if (checkweight(501,1) == 0) {
+prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	4_EP16_ISAAC,{
+	if (checkweight(1304,3) == 0) {
 		mes "[Isaac Wigner]";
 		mes "Dear adventurer, do you know the old saying that the emptier it is, the more you can fill it?";
 		mes "It is one of the many aphorisms passing down in our family.";
 		close;
 	}
-	if (banquet_roegenburg_quest == 2) {
-		mes "[" + strcharinfo(0) + "]";
+	.@name$ = strcharinfo(0);
+	if (ep16_lug == 2) {
+		mes "[" + .@name$ + "]";
 		mes "Hello, Isaac Wigner.";
 		next;
 		cutin "16isa",1;
 		mes "[Isaac]";
 		mes "Oh, welcome, dear adventurer, my brother is over there...";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "No. I am here to see you, Isaac.";
 		next;
 		mes "[Isaac]";
 		mes "Is it about Wolf?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Yes. How did you know it...?";
 		next;
 		mes "[Isaac]";
@@ -11586,25 +11657,25 @@ prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	HIDDEN_WARP_NPC,5,5,{
 		mes "[Isaac]";
 		mes "I never expected you would come here instead though. So is he cancelling the appointment today then?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Yes, he is. And he asked me to get ^0000cda certain thing^000000 from you, Isaac.";
 		next;
 		mes "[Isaac]";
 		mes "That thing...? Wolf must trust you, dear adventurer. Or it could be...";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Some kind of a test.";
 		next;
 		mes "[Isaac]";
 		mes "Don't take it the wrong way. I am just be careful. In order to do what I do, I need to know who I can trust first.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "I understand.";
 		next;
 		mes "[Isaac]";
 		mes "You can bring it to Wolf. Please be careful with it.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "OK.";
 		next;
 		mes "[Isaac]";
@@ -11615,34 +11686,40 @@ prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	HIDDEN_WARP_NPC,5,5,{
 		next;
 		mes "[Isaac]";
 		mes "Since I have a reputation to keep. I cannot afford to have a scandal. Please help me.";
-		next;
-		mes "[Isaac]";
-		mes "Please excuse me then.";
+		if (ep16_wig > 1 && ep16_wig < 15) {
+			next;
+			mes "[Isaac]";
+			mes "Please excuse me then.";
+			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+		}
 		erasequest 14496;// To Isaac
 		setquest 14497;// Delivery for Wolf
-		banquet_roegenburg_quest = 3;
-		getitem 6930,1;// Sample of New Business Item
+		ep16_lug = 3;
+		getitem 6930,1;// Biz_Items_Sample
 		close3;
 	}
-	if (banquet_roegenburg_quest == 3) {
+	if (ep16_lug == 3) {
 		cutin "16isa",1;
 		mes "[Isaac]";
 		mes "Have you deliver the thing to Wolf safely? You should be careful with it since it can be dangerous.";
 		next;
 		mes "[Isaac]";
 		mes "And, don't forget to ask about the rumor as well.";
-		next;
-		mes "[Isaac]";
-		mes "Please excuse me then.";
+		if (ep16_wig > 1 && ep16_wig < 15) {
+			next;
+			mes "[Isaac]";
+			mes "Please excuse me then.";
+			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+		}
 		close3;
 	}
-	if (banquet_roegenburg_quest == 7) {
+	if (ep16_lug == 7) {
 		if (countitem(6931) < 1) {
 			cutin "16isa",1;
 			mes "[Isaac]";
 			mes "Dear adventurer, you are back. Did you deliver the thing safely? What did he say about the rumor?";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@name$ + "]";
 			mes "Here is the document about that. Here... It was. Wait, I must have forget to bring it with me. I am sorry. I'll be back with it soon.";
 			next;
 			mes "[Isaac]";
@@ -11653,7 +11730,7 @@ prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	HIDDEN_WARP_NPC,5,5,{
 		mes "[Isaac]";
 		mes "Dear adventurer, you are back. Did you deliver the thing safely? What did he say about the rumor?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Here is the ^0000cddocument^000000 about it. It is written by Wolf Roegenburg himself.";
 		next;
 		mes "[Isaac]";
@@ -11671,15 +11748,21 @@ prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	HIDDEN_WARP_NPC,5,5,{
 		mes "[Isaac]";
 		mes "Well, I believe Wolf would find a better direction to the business. Please tell Wolf that I support his decision. And that I am excited about his new business.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Yes, I will.";
-		delitem 6931,1;// Top Secret Document
+		if (ep16_wig > 1 && ep16_wig < 15) {
+			next;
+			mes "[Isaac]";
+			mes "Please excuse me then.";
+			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+		}
+		delitem 6931,1;// Secret_Documents
 		erasequest 14502;// To Isaac
 		setquest 14503;// Report to Wolf
-		banquet_roegenburg_quest = 8;
+		ep16_lug = 8;
 		close3;
 	}
-	if (banquet_roegenburg_quest == 8) {
+	if (ep16_lug == 8) {
 		cutin "16isa",1;
 		mes "[Isaac]";
 		mes "It is a shame.";
@@ -11691,6 +11774,12 @@ prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	HIDDEN_WARP_NPC,5,5,{
 		next;
 		mes "[Isaac]";
 		mes "That's why I accepted his suggestion to be partners in business.";
+		if (ep16_wig > 1 && ep16_wig < 15) {
+			next;
+			mes "[Isaac]";
+			mes "Please excuse me then.";
+			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+		}
 		close3;
 	}
 
@@ -11742,12 +11831,11 @@ prt_cas_q,94,7,7	script	Isaac Wigner#ep16wig	HIDDEN_WARP_NPC,5,5,{
 		mes "Dear adventurer, I'll see you around then.";
 		close3;
 	}
-	end;
-
-OnTouch:
-	if (banquet_wigner_quest < 2 || banquet_wigner_quest == 10 || banquet_wigner_quest == 11 || banquet_roegenburg_quest == 2 || banquet_roegenburg_quest == 3 || banquet_roegenburg_quest == 7 || banquet_roegenburg_quest == 8)
-		classchange( 4_EP16_ISAAC, "", bc_self );
-	end;
+	cutin "16isa",1;
+	mes "[Isaac]";
+	mes "Is it your first time to visit the Wigner family?";
+	mes "Then, ^0000cdyou should meet our parents^000000 over there first.";
+	close3;
 }
 
 prt_cas_q,80,23,5	script	Jurgen Wigner#ep16wig00	HIDDEN_WARP_NPC,{ end; }
@@ -13249,53 +13337,63 @@ prt_cas,99,247,3	script	Banquet Hall Aristocrat	4_M_MAYOR,{
 
 // Library
 prt_cas,343,67,4	script	Uptight Librarian#ep16l	1_F_LIBRARYGIRL,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1304,3) == 0) {
 		mes "[Uptight Librarian]";
 		mes "If you are going to borrow a book, you'd better reduce your luggage. It seems that there is no space for a book.";
 		close;
 	}
-	if (banquet_roegenburg_quest == 5 && isbegin_quest(14500) == 0) {
-		mes "[" + strcharinfo(0) + "]";
+	.@name$ = strcharinfo(0);
+	if (ep16_lug == 5) {
+		if (countitem(6926) > 0) {
+			mes "[Uptight Librarian]";
+			mes "Have you read the book? Did you come to return the book. Well, seeing your hands empty, it seems that you didn't finished the book yet.";
+			next;
+			mes "[Uptight Librarian]";
+			mes "Take the time to look around. Take out and read any book that comes into your favor.";
+			mes "The book always enriches mind.";
+			close;
+		}
+		mes "[" + .@name$ + "]";
 		mes "Hey, I'm looking for a book. Would you please advice me where it is?";
 		next;
 		mes "[Uptight Librarian]";
 		mes "What kind of book are you looking for?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "A book about history of Rune-Midgarts.";
 		next;
 		mes "[Uptight Librarian]";
 		mes "Hm... history of Rune-Midgarts.";
 		mes "Are you going to borrow the book?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Yes.";
 		next;
 		mes "[Uptight Librarian]";
 		mes "May I see your library card, please?";
 		next;
 		emotion ET_HUK, playerattached();
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Library card? I don't have such a thing.";
 		next;
 		mes "[Uptight Librarian]";
 		mes "Then, I cannot borrow a book to you.";
 		next;
 		emotion ET_SWEAT, playerattached();
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "How can I have a library card?";
 		next;
 		mes "[Uptight Librarian]";
 		mes "If you present your identification card, we will make you one instantly.";
 		next;
 		emotion ET_SWEAT, playerattached();
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Huh... I don't have it. I left all my things to attend the banquet.";
 		next;
 		mes "[Uptight Librarian]";
 		mes "Banquet? You mean the banquet held in the palace? Are you the adventurer invited to it?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Yes, I am...";
 		next;
 		mes "[Uptight Librarian]";
@@ -13304,38 +13402,38 @@ prt_cas,343,67,4	script	Uptight Librarian#ep16l	1_F_LIBRARYGIRL,{
 		mes "[Uptight Librarian]";
 		mes "The kingdom circulated your details and ordered to provide maximum convenience to you.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "It's nice, but I feel that privacy is not protected.";
 		next;
 		mes "[Uptight Librarian]";
 		mes "What is you name, sir?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "" + strcharinfo(0) + ".";
+		mes "[" + .@name$ + "]";
+		mes "" + .@name$ + ".";
 		next;
 		mes "[Uptight Librarian]";
 		mes "Let me see...";
-		mes "Yes, here it is. Sir " + strcharinfo(0) + "...";
+		mes "Yes, here it is. Sir " + .@name$ + "...";
 		emotion ET_SURPRISE;
 		next;
 		mes "[Uptight Librarian]";
 		mes "But this book consists of 12 volumes. Only the first volume is here and the others are already borrowed.";
 		mes "Is it OK with you?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Yes, it is.";
 		next;
 		mes "[Uptight Librarian]";
 		mes "Hmm. Anyway, can I ask you some questions? I know nothing as I stay in the library all day long.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Yes, I tell you as long as I know.";
 		next;
 		mes "[Uptight Librarian]";
 		mes "^0000cdWhat kind of banquet ^000000 is being held in the palace? Why are you and royal family members invited?";
 		next;
 		while( select( "Birth of prince.", "Birthday of king.", "In memory of defeating Morocc." ) != 3 ) {
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@name$ + "]";
 			mes "I am sorry, I said wrong as I thought of something else.";
 			mes "I made a mistake. What did you say?";
 			next;
@@ -13350,7 +13448,7 @@ prt_cas,343,67,4	script	Uptight Librarian#ep16l	1_F_LIBRARYGIRL,{
 		mes "Did ^0000cdall royal families^000000 attend the banquet?";
 		next;
 		while( select( "8 royal families attended it.", "7 royal families attended it.", "6 royal families attended it." ) != 2 ) {
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@name$ + "]";
 			mes "I am sorry, I said wrong as I thought of something else.";
 			mes "I made a mistake. What did you say?";
 			next;
@@ -13365,7 +13463,7 @@ prt_cas,343,67,4	script	Uptight Librarian#ep16l	1_F_LIBRARYGIRL,{
 		mes "I heard that there are royal families ^0000cdwho do not attend the Royal Assembly^000000. Who's that?";
 		next;
 		while( select( "Wigner and Heine.", "Roegenburg and Richard.", "Geoborg and Walther." ) != 3 ) {
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@name$ + "]";
 			mes "I am sorry, I said wrong as I thought of something else.";
 			mes "I made a mistake. What did you say?";
 			next;
@@ -13380,7 +13478,7 @@ prt_cas,343,67,4	script	Uptight Librarian#ep16l	1_F_LIBRARYGIRL,{
 		mes "The family of the previous king ^0000cdbecame so due to the old curse^000000...";
 		next;
 		while( select( "You mean the Nerius?", "You mean the Geoborg?", "You mean the Richard?" ) != 2 ) {
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@name$ + "]";
 			mes "I am sorry, I said wrong as I thought of something else.";
 			mes "I made a mistake. What did you say?";
 			next;
@@ -13406,7 +13504,7 @@ prt_cas,343,67,4	script	Uptight Librarian#ep16l	1_F_LIBRARYGIRL,{
 		mes "Then, enjoy the book!";
 		setquest 14500;// Complete checking out the book
 		completequest 14500;// Complete checking out the book
-		getitem 6926,1;// Rune-Midgartz History Book
+		getitem 6926,1;// Midgards_Histories
 		close;
 	}
 	mes "[Uptight Librarian]";
