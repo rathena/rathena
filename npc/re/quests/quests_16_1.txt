@@ -4354,100 +4354,24 @@ OnInit:
 	end;
 }
 
-prt_cas_q,23,187,3	script	Mysterious Person#ep16w	HIDDEN_WARP_NPC,5,5,{
-	end;
-OnTouch:
-	if (banquet_walther_quest == 1) {
-		classchange( 4_M_04, "Mysterious Person#ep16w", bc_self );
-		mes "[Man from the Richard]";
-		mes "Long time no see, Ian.";
-		next;
-		mes "[Ian]";
-		mes "Why are you here? I thought we agreed ^0000cdnot to see each other ever again after the previous Royal Assembly^000000.";
-		next;
-		mes "[Man from the Richard]";
-		mes "I remember that, but the heir of your family has been busy these days.";
-		next;
-		mes "[Man from the Richard]";
-		mes "He has been digging around so much that the story has reached me.";
-		mes "No one seems to pay much attention, but you never know.";
-		next;
-		mes "[Ian]";
-		mes "I told Isenhonor to ^0000cdstop investigating about his brother's death^000000.";
-		next;
-		mes "[Man from the Richard]";
-		mes "He should. It would get us both in trouble if the fact that ^0000cdwe were going to kill the imperial candidate of the Geoborg family^000000 leaks out.";
-		next;
-		mes "[Ian]";
-		mes "No one knows about it, you know.";
-		mes "The ^0000cdplan was ruined ^000000as Isenarm was killed while acting violently.";
-		next;
-		mes "[Man from the Richard]";
-		mes "I am sorry about your heir.";
-		next;
-		mes "[Ian]";
-		mes "I don't care who becomes the heir as long as he leads the family well.";
-		mes "I don't understand why Isenarm who has behaved so well acted that way though...";
-		next;
-		mes "[Ian]";
-		mes "He must have sensed something to act like than when he was about to be elected as the king... There is no way to find out now...";
-		mes "Geoborg has been silent as well ever since, I hear.";
-		next;
-		mes "[Man from the Richard]";
-		mes "Yes, the word has it.";
-		next;
-		mes "[Ian]";
-		mes "Since Isenarm was killed by Geoborg, ^0000cdthe Walther family has been excluded from the Royal Assembly^000000 this time.";
-		mes "He was a great boy. It is a shame since he was the perfect candidate for the throne.";
-		next;
-		mes "[Man from the Richard]";
-		mes "The important thing is that as long as we both keep silent, the truth will remain unknown forever.";
-		mes "Then, I guess we will never see each other again.";
-		next;
-		mes "[Man from the Richard]";
-		mes "Make sure to warn your heir not to dig around the incident, no more.";
-		mes "If it gets out, my family can deny it.";
-		next;
-		mes "[Man from the Richard]";
-		mes "However, you Ian will be in trouble as the same member of the family since there is no witness or proof left now.";
-		next;
-		mes "[Ian]";
-		mes "Are you threatening me?";
-		next;
-		mes "[Man from the Richard]";
-		mes "Shh... You'd better keep your voice down. Your heir may hear you.";
-		mes "I mean, we should be careful.";
-		next;
-		mes "[Man from the Richard]";
-		mes "Well, I cannot be absent for so long anyway. Let me head back now.";
-		next;
-		classchange( HIDDEN_WARP_NPC, "Mysterious Person#ep16w", bc_self );
-		mes "[Ian]";
-		mes "Argh... How dare...!";
-		mes "I shouldn't have worked with him in the first place. I lost my poor nephew for nothing.";
-		next;
-		mes "[Ian]";
-		mes "Are you enjoying the banquet?";
-		mes "I hope you enjoy the banquet since it is held for you.";
-		banquet_walther_quest = 2;
-		setquest 14516;// Suspicious Shadow
-		completequest 14516;// Suspicious Shadow
-		close;
-	}
-}
-
 // Walther
-prt_cas_q,20,184,3	script	Ian Walther#ep16wal	1_M_JOBTESTER,{
-	if (banquet_main_quest < 2) {
+prt_cas_q,20,184,3	script	Ian Walther#ep16wal	1_M_JOBTESTER,5,5,{
+	if (BaseLevel < 100) {
 		mes "[Ian]";
-		mes "How did you get in here.";
-		mes "Only the people with permission are allowed to be here.";
-		next;
-		mes "[Ian]";
+		mes "What are you doing here, you punk?";
 		mes "Get out of here now before I call someone to drag you out!";
 		close;
 	}
-	if (banquet_walther_quest == 0) {
+	if (ep16_wal == 0) {
+		if (isbegin_quest(7682) != 1) {
+			mes "[Ian]";
+			mes "How did you get in here.";
+			mes "Only the people with permission are allowed to be here.";
+			next;
+			mes "[Ian]";
+			mes "Get out of here now before I call someone to drag you out!";
+			close;
+		}
 		mes "[Ian]";
 		mes "Are you the hero invited to the banquet? The Royal Assembly to be exact.";
 		mes "Nice to meet you. I am ^0000cdIan Walther^000000.";
@@ -4485,10 +4409,19 @@ prt_cas_q,20,184,3	script	Ian Walther#ep16wal	1_M_JOBTESTER,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "Yes. Thank you for sparing me some time.";
 		setquest 14469;// Look around the Walther Family
-		banquet_walther_quest = 1;
+		ep16_wal = 1;
 		close;
 	}
-	if (banquet_walther_quest == 1) {
+	if (ep16_wal == 1)
+		callsub S_Mysterious;
+	mes "[Ian]";
+	mes "Are you enjoying the banquet?";
+	mes "I hope you enjoy the banquet since it is held for you.";
+	close;
+
+S_Mysterious:
+	if (isbegin_quest(14516) != 2) {
+		cloakoffnpc "Mysterious Person#ep16wal", getcharid(0);
 		mes "[Man from the Richard]";
 		mes "Long time no see, Ian.";
 		next;
@@ -4551,24 +4484,24 @@ prt_cas_q,20,184,3	script	Ian Walther#ep16wal	1_M_JOBTESTER,{
 		mes "[Man from the Richard]";
 		mes "Well, I cannot be absent for so long anyway. Let me head back now.";
 		next;
+		cloakonnpc "Mysterious Person#ep16wal", getcharid(0);
 		mes "[Ian]";
 		mes "Argh... How dare...!";
 		mes "I shouldn't have worked with him in the first place. I lost my poor nephew for nothing.";
 		setquest 14516;// Suspicious Shadow
 		completequest 14516;// Suspicious Shadow
-		banquet_walther_quest = 2;
 		close;
 	}
-	if (banquet_walther_quest >= 2) {
-		mes "[Ian]";
-		mes "Are you enjoying the banquet?";
-		mes "I hope you enjoy the banquet since it is held for you.";
-		close;
-	}
+	return;
+
+OnTouch:
+	if (ep16_wal == 1)
+		callsub S_Mysterious;
+	end;
 }
 
 prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1304,3) == 0) {
 		mes "[Isenhonor Walther]";
 		mes "You seem to have a lot of luggage. Are you OK?";
 		mes "It looks a lot and large.";
@@ -4577,7 +4510,8 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
 		mes "How about cutting down some?";
 		close;
 	}
-	if (banquet_walther_quest == 0) {
+	.@name$ = strcharinfo(0);
+	if (ep16_wal == 0) {
 		mes "[Isenhonor]";
 		mes "You must be an adventurer. Thank you for visiting this gloomy place.";
 		next;
@@ -4585,20 +4519,20 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
 		mes "The representative of our family is over there. I hope you have a good time then.";
 		close;
 	}
-	if (banquet_walther_quest <= 2) {// can skip event in banquet_walther_quest == 1
-		mes "[" + strcharinfo(0) + "]";
+	if (ep16_wal == 1) {
+		mes "[" + .@name$ + "]";
 		mes "Hello?";
 		next;
 		mes "[Isenhonor]";
 		mes "What are you doing here? The Banquet Hall is over there.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "I was sorry that I didn't get the time to talk to you then.";
 		next;
 		mes "[Isenhonor]";
 		mes "What story? You mean the story of my brother being killed for his violent behavior? You seemed to hear it so eagerly. I hope you don't believe that bullshit.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Oh, well...";
 		next;
 		mes "[Isenhonor]";
@@ -4607,7 +4541,7 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
 		mes "[Isenhonor]";
 		mes "My brother, he must have done it for something. No one knows the truth, but people seem to believe the gossip.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "If you want to clear the name of your brother, you can investigate on your own.";
 		next;
 		mes "[Isenhonor]";
@@ -4616,7 +4550,7 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
 		mes "[Isenhonor]";
 		mes "Also, it is impossible to meet ^0000cdErnst Geoborg^000000.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Wouldn't he meet you?";
 		next;
 		mes "[Isenhonor]";
@@ -4625,7 +4559,7 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
 		mes "[Isenhonor]";
 		mes "The ^0000cdGuardian Knight^000000 and ^0000cdErnst Geoborg^000000 are the only people who know what has happened that day. However it is impossible to meet them. I don't know where to begin...";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "A Guardian Knight? Did your brother have a Guardian Knight?";
 		next;
 		mes "[Isenhonor]";
@@ -4634,7 +4568,7 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
 		mes "[Isenhonor]";
 		mes "As you know, the sailors are not a gentle bunch and we tend to carry money with us so that we are often threatened. We all have to bring Guardian Knights with us.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Where is your Guardian Knight then, Isenhonor?";
 		next;
 		mes "[Isenhonor]";
@@ -4643,7 +4577,7 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
 		mes "[Isenhonor]";
 		mes "What should I call a Guardian Knight who betrays the master and runs away?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "I think it would be a good idea to start from your Guardian Knight. Since they worked together as Guardian Knight, he must know something.";
 		next;
 		mes "[Isenhonor]";
@@ -4654,25 +4588,25 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
 		mes "Oh, well, since they were so close, he could have tried to defend his friend.";
 		mes "Why didn't I think of that...";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Let me talk to him now. If I hear anything, it would be a good thing. Even if I don't get to hear anything it would still count as a try.";
 		next;
 		mes "[Isenhonor]";
 		mes "Why would you go through such trouble?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Well, I have a hunch. As an adventurer, my instinct says that there must be something going on.";
 		next;
 		mes "[Isenhonor]";
 		mes "Do all the adventurers count on their hunch like that? This could be dangerous. It is no matter to approach with a hunch.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "That is why it is called an adventure. Adventurers where the adventures are.";
 		next;
 		mes "[Isenhonor]";
 		mes "I don't understand.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "You may call it a needless meddling out of curiosity. However, I cannot neglect anyone in distress.";
 		next;
 		mes "[Isenhonor]";
@@ -4681,18 +4615,19 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
 		mes "[Isenhonor]";
 		mes "If you want to meet him anyway, go to ^0000cdour manor in the south of Alberta^000000. He must be there.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Well then.";
-		erasequest 14469;// Look around the Walther Family
+		completequest 14469;// Look around the Walther Family
 		setquest 14470;// In Search of the Guardian Knight
-		banquet_walther_quest = 3;
-		if (banquet_walther_quest >= 3 && banquet_nerius_quest >= 1 && banquet_heine_quest >= 2 && banquet_wigner_quest >= 2 && banquet_richard_quest >= 2 && banquet_geoborg_quest >= 2 && banquet_roegenburg_quest >= 2) {
+		ep16_wal = 2;
+		//achievement 130000 2
+		if (isbegin_quest(7682) == 1 && isbegin_quest(5402) == 2 && isbegin_quest(7683) == 2 && isbegin_quest(7684) == 2 && ep16_wal > 1 && ep16_wig > 1 && ep16_lug > 1 && ep16_gaobs > 1) {
 			completequest 7682;// Socializing Starts from an Eye Contact
 			setquest 7685;// What Is the Next Thing on the Schedule ?
 		}
 		close;
 	}
-	if (banquet_walther_quest < 7) {
+	if (ep16_wal < 6) {
 		mes "[Isenhonor]";
 		mes "Adventurer, how did your meeting with the Guardian Knight in Alberta go? Not that I expect too much...";
 		next;
@@ -4700,16 +4635,16 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
 		mes "However, still, I have hoped to hear a good news from you...";
 		close;
 	}
-	if (banquet_walther_quest == 7) {
+	if (ep16_wal == 6) {
 		if (countitem(6929) < 1) {
 			mes "[Isenhonor]";
 			mes "Adventurer, you are back. How did it go?";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@name$ + "]";
 			mes "Yes, I have something for you...";
 			mes "Oh? Where did it go?";
 			next;
-			mes "[" + strcharinfo(0) + "]";
+			mes "[" + .@name$ + "]";
 			mes "I must have left it back. Let me go bring it for you.";
 			close;
 		}
@@ -4718,7 +4653,7 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
 		next;
 		mes "I told him the story of meeting the Guardian Knight of Isenarm and the conversation with him.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "This is the ^0000cdletter^000000.";
 		next;
 		mes "[Isenhonor]";
@@ -4730,7 +4665,7 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
 		mes "[Isenhonor]";
 		mes "My brother indeed must have done such a thing for a reason.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "I guess this is all I can do you now.";
 		next;
 		mes "[Isenhonor]";
@@ -4741,29 +4676,28 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
 		next;
 		mes "[Isenhonor]";
 		mes "You are a valuable guest for us, the Walther family, from now on, dear adventurer. I'll help you anytime you want.";
-		delitem 6929,1;// Seal Stamped Letter
+		delitem 6929,1;// Letters_Stamped_Seal
 		completequest 14474;// Report to Isenhonor
-		getitem 6919,10;// Honor Token
+		getitem 6919,10;// TokenOfHonor
 		getexp 1000000,500000;
-		banquet_walther_quest = 8;
+		ep16_wal = 7;
 		close;
 	}
-	if (banquet_walther_quest == 8) {
-		mes "[Isenhonor]";
-		mes "Based on the piece of information you have brought me, I am collecting other information too. It is not enough year, but I believe that I can unveil the truth someday.";
-		next;
-		mes "[Isenhonor]";
-		mes "I called Simon from Alberta. I need to gather all the help I can get now.";
-		next;
-		mes "[Isenhonor]";
-		mes "I will see you again when the truth is revealed.";
-		close;
-	}
+	mes "[Isenhonor]";
+	mes "Based on the piece of information you have brought me, I am collecting other information too. It is not enough year, but I believe that I can unveil the truth someday.";
+	next;
+	mes "[Isenhonor]";
+	mes "I called Simon from Alberta. I need to gather all the help I can get now.";
+	next;
+	mes "[Isenhonor]";
+	mes "I will see you again when the truth is revealed.";
+	close;
 }
 
 alberta,187,147,7	script	Guardian Knight#ep16wal	4_M_KNIGHT_SILVER,{
-	if (banquet_walther_quest == 3) {
-		mes "[" + strcharinfo(0) + "]";
+	.@name$ = strcharinfo(0);
+	if (ep16_wal == 2) {
+		mes "[" + .@name$ + "]";
 		mes "Well, I am looking for the Guardian Knight of Isenhonor. Where can I find him?";
 		next;
 		mes "[Simon]";
@@ -4775,7 +4709,7 @@ alberta,187,147,7	script	Guardian Knight#ep16wal	4_M_KNIGHT_SILVER,{
 		mes "[Simon]";
 		mes "Kidnapping? Injury? Robbery? Fall? What is it? Oh, I should go there now...!";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Calm down. Isenhonor is all right. Nothing happened. I am here to ask you something.";
 		next;
 		mes "[Simon]";
@@ -4792,7 +4726,7 @@ alberta,187,147,7	script	Guardian Knight#ep16wal	4_M_KNIGHT_SILVER,{
 		mes "[Simon]";
 		mes "I don't know the whereabouts of ^0000cdKain Walther Walker^000000 who used to be the Guardian Knight of Isenarm, unfortunately.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "You both have Walther in your names. Is there a special reason for it?";
 		next;
 		mes "[Simon]";
@@ -4801,14 +4735,14 @@ alberta,187,147,7	script	Guardian Knight#ep16wal	4_M_KNIGHT_SILVER,{
 		mes "[Simon]";
 		mes "The name gives a sense of belonging. Also it gives us the pride to have been recognized as excellent knights.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Right. By the way, did you say that you know nothing about Kain Walther Walker?";
 		next;
 		mes "[Simon]";
 		mes "No, I don't.";
 		mes "However...";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "However...?";
 		next;
 		mes "[Simon]";
@@ -4823,7 +4757,7 @@ alberta,187,147,7	script	Guardian Knight#ep16wal	4_M_KNIGHT_SILVER,{
 		mes "[Simon]";
 		mes "I wanted to investigate myself considering the importance of the matter. But Isenhonor ordered me to go back to Alberta so I had to come back here.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "The pickpocket in the underground prison?";
 		next;
 		mes "[Simon]";
@@ -4838,7 +4772,7 @@ alberta,187,147,7	script	Guardian Knight#ep16wal	4_M_KNIGHT_SILVER,{
 		mes "[Simon]";
 		mes "That guy seems to have a lot of information from all over the continent. Even when his words about seen the person of the Walther family wasn't true, I felt that I could get useful information from him.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Whether the information he has is true or not, I would rather go visit him. Thank you for the information.";
 		next;
 		mes "[Simon]";
@@ -4847,17 +4781,17 @@ alberta,187,147,7	script	Guardian Knight#ep16wal	4_M_KNIGHT_SILVER,{
 		mes "[Simon]";
 		mes "And, let him know that he can call me anytime. I would gladly go there to guard him.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Yes, I'll let him know for sure.";
 		next;
 		mes "[Simon]";
 		mes "Have a safe trip then!";
 		erasequest 14470;// In Search of the Guardian Knight
 		setquest 14471;// To the Royal Prison
-		banquet_walther_quest = 4;
+		ep16_wal = 3;
 		close;
 	}
-	if (banquet_walther_quest == 4) {
+	if (ep16_wal == 3) {
 		mes "[Simon]";
 		mes "How did your visit to the prison go?";
 		next;
@@ -4866,6 +4800,20 @@ alberta,187,147,7	script	Guardian Knight#ep16wal	4_M_KNIGHT_SILVER,{
 		next;
 		mes "[Simon]";
 		mes "Didn't you hear anything else from Isenhonor? Please extend my greetings to him when you go to Prontera.";
+		close;
+	}
+	if (ep16_wal > 6) {
+		mes "[Simon]";
+		mes "Dear adventurer! At last, Master Isenhonor called me! I am happy that I can guard my lord nearby.";
+		next;
+		mes "[" + .@name$ + "]";
+		mes "Glad to hear that. Then what are you doing here now?";
+		next;
+		mes "[Simon]";
+		mes "I am waiting for the ship to Izlude. I will rush to the ship when it comes here.";
+		next;
+		mes "[Simon]";
+		mes "I have a lot of questions for you, but I guess I'd better hear the story from my master. Then dear adventurer, have a safe trip!";
 		close;
 	}
 	mes "[Guardian Knight]";
@@ -4882,7 +4830,7 @@ alberta,187,147,7	script	Guardian Knight#ep16wal	4_M_KNIGHT_SILVER,{
 }
 
 alberta,48,30,7	script	Butler for the Walthers	4_M_MANAGER,{
-	if (banquet_walther_quest == 3) {
+	if (ep16_wal == 2) {
 		mes "[Butler for the Walthers]";
 		mes "What a fine day. However, the house feels to empty and lonely.";
 		next;
@@ -4923,7 +4871,7 @@ alberta,48,30,7	script	Butler for the Walthers	4_M_MANAGER,{
 }
 
 prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
-	if (banquet_walther_quest < 4) {
+	if (ep16_wal < 3) {
 		mes "[Bigfoot]";
 		mes "Fried chicken, baked potato, beer, fresh cheese... Ha.... I crave those ordinary dishes now that I am locked in a place like this.";
 		mes "I would marry anyone who brings them to me.";
@@ -4934,7 +4882,8 @@ prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
 		mes "But I would be safe as long as I am locked in here.";
 		close;
 	}
-	if (banquet_walther_quest == 4) {
+	.@name$ = strcharinfo(0);
+	if (ep16_wal == 3) {
 		mes "[Bigfoot]";
 		mes "Fried chicken, baked potato, beer, fresh cheese... Ha.... I crave those ordinary dishes now that I am locked in a place like this.";
 		next;
@@ -4945,7 +4894,7 @@ prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
 		mes "[Bigfoot]";
 		mes "Argh! Not again! I am terrified! But I would be safe as long as I am locked in here.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Bigfoot?";
 		next;
 		emotion ET_FRET;
@@ -4955,7 +4904,7 @@ prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
 		mes "[Bigfoot]";
 		mes "Bring me something I can eat! I know that I am locked in the prison, but I deserve to eat something edible!";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "There must have been a misunderstanding. I am not the warden here. I came here to meet you.";
 		next;
 		mes "[Bigfoot]";
@@ -4968,13 +4917,13 @@ prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
 		mes "Well, it is not important. You are here to ask me something, right? You know nothing in this world is free.";
 		next;
 		emotion ET_SWEAT, playerattached();
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "...What do you want?";
 		next;
 		mes "[Bigfoot]";
 		mes "Get me out of here.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "It would be beyond my ability.";
 		next;
 		mes "[Bigfoot]";
@@ -4989,7 +4938,7 @@ prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
 		mes "[Bigfoot]";
 		mes "However, you turned it down so firmly. You could at least pretend to consider or think about it.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "What do you really want then?";
 		next;
 		mes "[Bigfoot]";
@@ -4998,7 +4947,7 @@ prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
 		mes "[Bigfoot]";
 		mes "I don't offer a monthly installment plan. I only take cash. I only accept currencies older than 2 years. I'll spend it meaningfully when I get out here in the future.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "I don't have much money, but I know where to spend it. I guess I should turn down the deal. Goodbye then.";
 		next;
 		emotion ET_HNG;
@@ -5008,7 +4957,7 @@ prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
 		mes "[Bigfoot]";
 		mes "I knew it. You give up too easily. You are still young, you know.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Please get to the point.";
 		next;
 		mes "[Bigfoot]";
@@ -5023,7 +4972,7 @@ prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
 		mes "[Bigfoot]";
 		mes "What I crave the most is that. Would you do this for me at least? ^0000cdThree fried spicy dumplings and one green salad!^000000";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "I can do that. Wait for me.";
 		next;
 		emotion ET_SMILE;
@@ -5031,10 +4980,10 @@ prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
 		mes "You don't have to tell me to wait. I cannot go anywhere.";
 		erasequest 14471;// To the Royal Prison
 		setquest 14472;// Gourmet Bigfoot
-		banquet_walther_quest = 5;
+		ep16_wal = 4;
 		close;
 	}
-	if (banquet_walther_quest == 5) {
+	if (ep16_wal == 4) {
 		if (countitem(12055) < 3 || countitem(12065) < 1) {
 			mes "[Bigfoot]";
 			mes "Wait, you stop there for a moment.";
@@ -5050,13 +4999,13 @@ prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
 		mes "[Bigfoot]";
 		mes "I smell it! This smell! Take out what you have brought.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Here you are.";
 		next;
 		mes "[Bigfoot]";
 		mes "Oh, my love. I'll enjoy every bite of it. Well, ask me the question now.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "I heard that you saw a person of the Walther family in a foreign country. Where did you see him? How did you know that he was from the Walther family?";
 		next;
 		mes "[Bigfoot]";
@@ -5066,13 +5015,13 @@ prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
 		mes "[Bigfoot]";
 		mes "However, I saw the distinctive symbol of the family in ^0000cdVeins^000000.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Veins? Who did you see there? And how?";
 		next;
 		mes "[Bigfoot]";
 		mes "I don't know who he is. I was working as always. You know you have to work to make ends meet.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "You mean pickpocketing?";
 		next;
 		emotion ET_FRET;
@@ -5085,7 +5034,7 @@ prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
 		mes "[Bigfoot]";
 		mes "I opened the wallet in a secluded corner of the market. He turned out to be quite loaded. And I found an ^0000cdold letter^000000 in there. The one stamped with the ^0000cdseal^000000, you know.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "The fact that he had the letter doesn't prove that he was a person from the Walther family.";
 		next;
 		mes "[Bigfoot]";
@@ -5100,14 +5049,14 @@ prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
 		mes "[Bigfoot]";
 		mes "There was a hidden ^0000cdsword^000000 under his cloak. The ^0000cdhandle was engraved with the symbol^000000. You see, well. Do you believe my story now?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "How did you manage to see that when you were beaten up so bad?";
 		next;
 		emotion ET_FRET;
 		mes "[Bigfoot]";
 		mes "Oh, have some faith. Don't you know what I do for living?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "You mean pickpocketing?";
 		next;
 		emotion ET_ANGER;
@@ -5125,16 +5074,16 @@ prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
 		mes "Well, you must have hidden your money inside the belt and your shoes. Nice work. Those are tough spots to steal from.";
 		next;
 		emotion ET_HUK, playerattached();
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "OK, I guess I can trust your skill.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Anyways, it sure seems suspicious. Thank you for your information.";
 		next;
 		mes "[Bigfoot]";
 		mes "Don't you need anything else? I want to have some dessert now.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "No. This is enough.";
 		next;
 		mes "[Bigfoot]";
@@ -5143,32 +5092,37 @@ prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
 		delitem 12065,1;// Green Salad
 		erasequest 14472;// Gourmet Bigfoot
 		setquest 14473;// To Veins
-		banquet_walther_quest = 6;
+		ep16_wal = 5;
 		close;
 	}
-	if (banquet_walther_quest >= 6) {
-		mes "[Bigfoot]";
-		mes "What is it? Did you change your mind?";
-		mes "Do you want more information? I'd really like to have some Mastela Fruit Wine.";
-		next;
-		mes "[Bigfoot]";
-		mes "Did you forget where to go?";
-		mes "You should go to ^0000cdVeins^000000.";
-		next;
-		mes "[Bigfoot]";
-		mes "Bring me some dessert when you come back!";
-		close;
-	}
+	mes "[Bigfoot]";
+	mes "What is it? Did you change your mind?";
+	mes "Do you want more information? I'd really like to have some Mastela Fruit Wine.";
+	next;
+	mes "[Bigfoot]";
+	mes "Did you forget where to go?";
+	mes "You should go to ^0000cdVeins^000000.";
+	next;
+	mes "[Bigfoot]";
+	mes "Bring me some dessert when you come back!";
+	close;
 }
 
 veins,156,160,7	script	K#ep16wal	4_M_RASWORD,{
-	if (banquet_walther_quest < 6) {
+	if (checkweight(1304,3) == 0) {
+		mes "[K]";
+		mes "You seem to carry a heavy burden.";
+		mes "How about cutting down some?";
+		close;
+	}
+	if (ep16_wal < 5) {
 		mes "[K]";
 		mes "I want to go back...";
 		mes "There again...";
 		close;
 	}
-	if (banquet_walther_quest == 6) {
+	if (ep16_wal == 5) {
+		.@name$ = strcharinfo(0);
 		emotion ET_ANGER;
 		mes "[K]";
 		mes "Who are you? Why are you staring at me? Are you after my wallet too?";
@@ -5177,27 +5131,27 @@ veins,156,160,7	script	K#ep16wal	4_M_RASWORD,{
 		mes "[K]";
 		mes "I guess no such information is shared among the pickpockets. Get lost if you don't want to be sent to prison.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "You are quite quick-tempered, aren't you.";
 		mes "^0000cdKain Walther Walker^000000.";
 		next;
 		mes "[K]";
 		mes "I don't know such name.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "The one who betrayed his master.";
 		next;
 		mes "[K]";
 		mes "Who... Who are you? Reveal yourself!";
 		mes "Why are you telling me such a thing?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "People say that. I don't buy it though.";
 		next;
 		mes "[K]";
 		mes "Why don't you believe it? Why? Do you know anything about it?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "You are the one who knows the truth, Kain Walther Walker.";
 		next;
 		mes "[K]";
@@ -5210,10 +5164,10 @@ veins,156,160,7	script	K#ep16wal	4_M_RASWORD,{
 		mes "Well, tell me.";
 		mes "Who are you? How did you find me? And what do you know about the death of Isenarm?";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "I am asked to investigate the death of Isenarm by Isenhonor.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "While carrying out the investigation, I got the information that you would be here. I came here to meet you.";
 		next;
 		mes "[K]";
@@ -5222,7 +5176,7 @@ veins,156,160,7	script	K#ep16wal	4_M_RASWORD,{
 		mes "[K]";
 		mes "Oh, please excuse my bad manners. I am sorry. Please forgive my earlier behavior.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "That's OK. It wouldn't hurt to be careful, Kain Walther Walker.";
 		next;
 		mes "[K]";
@@ -5232,16 +5186,16 @@ veins,156,160,7	script	K#ep16wal	4_M_RASWORD,{
 		mes "[K]";
 		mes "Is Isenhonor investigating the death of Isenarm? I will do my best to help him by his side.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Not yet. Isenhonor wants to know the truth behind his brother's death, but he is not in the position to carry out the investigation due to the circumstances.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "That's why I, who is relatively free to move around, am is doing the research for him.";
 		next;
 		mes "[K]";
 		mes "Is that so... Then what can I do to help you? I'll do whatever I can do to reveal the truth.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "You can tell me what happened when you were with Isenarm. Why you disappeared before Isenarm's death, why you are here and all.";
 		next;
 		mes "[K]";
@@ -5250,7 +5204,7 @@ veins,156,160,7	script	K#ep16wal	4_M_RASWORD,{
 		mes "[K]";
 		mes "When I was going to go back after completing the mission, he sent me a lot of money and a ^0000cdletter^000000. It said ^0000cdnot to return to Rune-Midgarts^000000.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "And then?";
 		next;
 		mes "[K]";
@@ -5265,7 +5219,7 @@ veins,156,160,7	script	K#ep16wal	4_M_RASWORD,{
 		mes "[K]";
 		mes "When I became a wanted man, I wanted to back and tell the truth. However, the letter said ^0000cdnot to return no matter what^000000. I couldn't let down the last order given by my master.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "I guess Isenarm didn't want you to be involved. If anything happened to him, you would have been the one in the biggest trouble.";
 		next;
 		mes "[K]";
@@ -5274,25 +5228,23 @@ veins,156,160,7	script	K#ep16wal	4_M_RASWORD,{
 		mes "[K]";
 		mes "Please give them to Isenhonor. I hope they help him recover his brother's honor.";
 		next;
-		mes "[" + strcharinfo(0) + "]";
+		mes "[" + .@name$ + "]";
 		mes "Keep the sword. The sword is like the life of the knight. I believe Isenarm would want you to have it.";
 		next;
 		mes "[K]";
 		mes "Then, have a safe travel.";
 		erasequest 14473;// To Veins
 		setquest 14474;// Report to Isenhonor
-		getitem 6929,1;// Seal Stamped Letter
-		banquet_walther_quest = 7;
+		getitem 6929,1;// Letters_Stamped_Seal
+		ep16_wal = 6;
 		close;
 	}
-	if (banquet_walther_quest >= 7) {
-		mes "[K]";
-		mes "Did you deliver the letter and the words to Isenhonor well?";
-		next;
-		mes "[K]";
-		mes "Please let him know that I am ready to devote my life if he needs my help.";
-		close;
-	}
+	mes "[K]";
+	mes "Did you deliver the letter and the words to Isenhonor well?";
+	next;
+	mes "[K]";
+	mes "Please let him know that I am ready to devote my life if he needs my help.";
+	close;
 }
 
 prt_cas_q,30,78,0	script	#ep16_heine_evt01	HIDDEN_WARP_NPC,1,1,{
@@ -5843,9 +5795,6 @@ OnTouch:
 		sleep2 500;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Oh, he left.", bc_self;
 		sleep2 1000;
-		setpcblock PCBLOCK_NPC, false;
-		npctalk "...That useless punk. He doesn't do any good!", "Kronecker G. Heine#ep16_01", bc_self;
-		setquest 7683;
 		setpcblock PCBLOCK_NPC, false;
 		npctalk "...That useless punk. He doesn't do any good!", "Kronecker G. Heine#ep16_01", bc_self;
 		setquest 7683;
