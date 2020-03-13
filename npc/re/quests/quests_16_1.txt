@@ -3011,7 +3011,7 @@ prt_cas,309,200,5	script	Royal Head Chef#ep16_1	4_EP16_COOK,{
 		mes "I hope to be able to cook with you again!";
 		cutin "ep16cook_king_2",2;
 		getexp 700000,700000;
-		getitem 6919,10;// Honor Token
+		getitem 6919,10;// TokenOfHonor
 		completequest 11420;// Why Should I Prepare for the Banquets?
 		banquet_quest_cooking = 15;
 		close3;
@@ -3056,7 +3056,8 @@ prt_cas,309,200,5	script	Royal Head Chef#ep16_1	4_EP16_COOK,{
 	}
 }
 
-prt_cas,313,199,0	script	#ep16_1	HIDDEN_WARP_NPC,1,1,{
+prt_cas,313,199,0	script	#ep16_1	HIDDEN_WARP_NPC,2,2,{
+	end;
 OnTouch:
 	if (banquet_quest_cooking < 5) {
 		mes "[Head Chef]";
@@ -3232,7 +3233,7 @@ prt_cas,319,211,3	script	Royal Sauce Master#ep16	4_M_ALCHE_B,{
 		mes "Why don't you become a master sauce maker?";
 		erasequest 11421;// Banquet: Unexpected Sauce
 		setquest 11422;// Complete Today's Sauce
-		getitem 6919,4;// Honor Token
+		getitem 6919,4;// TokenOfHonor
 		close;
 	case 0:
 	case 1:
@@ -3470,7 +3471,7 @@ prt_cas,302,205,5	script	Dishwasher#ep16_1	4_M_ALCHE_D,{
 		delitem 6935,15;// High-Class Dish
 		erasequest 11426;// Banquet: Washing 15 Dishes
 		setquest 11427;// Complete Today's Dish Collecting
-		getitem 6919,4;// Honor Token
+		getitem 6919,4;// TokenOfHonor
 		close;
 	case 0:
 	case 1:
@@ -3915,7 +3916,7 @@ prt_cas,358,124,0	script	Grilled Griffon#ep16_1	4_EP16_FOOD,{
 		mes "Place the dish carefully on the surface.";
 		erasequest 11424;// Banquet: Griffin Barbecue
 		setquest 11425;// Complete Today's Grilled Griffin
-		getitem 6919,4;// Honor Token
+		getitem 6919,4;// TokenOfHonor
 	}
 	mes "A tasty-looking Grilled Griffon.";
 	close;
@@ -4054,7 +4055,8 @@ prt_cas_q,20,139,3	script	Spica Nerius#ep16_room01	4_EP16_SPICA,{
 			next;
 			setquest 7684;// Visit the Nerius
 			completequest 7684;// Visit the Nerius
-			//achievement 130000 1
+			if (achievementinfo(130000, ACHIEVEINFO_COUNT2) == 0)
+				achievementupdate(130000, ACHIEVEINFO_COUNT2, 1);
 			break;
 		case 1:
 			completequest 7684;
@@ -4627,7 +4629,8 @@ prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
 		completequest 14469;// Look around the Walther Family
 		setquest 14470;// In Search of the Guardian Knight
 		ep16_wal = 2;
-		//achievement 130000 2
+		if (achievementinfo(130000, ACHIEVEINFO_COUNT3) == 0)
+			achievementupdate(130000, ACHIEVEINFO_COUNT3, 1);
 		if (isbegin_quest(7682) == 1 && isbegin_quest(5402) == 2 && isbegin_quest(7683) == 2 && isbegin_quest(7684) == 2 && ep16_wal > 1 && ep16_wig > 1 && ep16_lug > 1 && ep16_gaobs > 1) {
 			completequest 7682;// Socializing Starts from an Eye Contact
 			setquest 7685;// What Is the Next Thing on the Schedule ?
@@ -5614,7 +5617,8 @@ prt_cas_q,19,85,4	script	Kronecker G. Heine#ep16	4_EP16_GRANZ,{
 				mes "Don't be overly curious of our family matter.";
 				mes "Phew... I guess I will see you again later.";
 				completequest 7683;
-				//achievement 130000 0
+				if (achievementinfo(130000, ACHIEVEINFO_COUNT1) == 0)
+					achievementupdate(130000, ACHIEVEINFO_COUNT1, 1);
 				next;
 				if (isbegin_quest(7682) == 1 && isbegin_quest(5402) == 2 && isbegin_quest(7683) == 2 && isbegin_quest(7684) == 2 && ep16_wal > 1 && ep16_wig > 1 && ep16_lug > 1 && ep16_gaobs > 1) {
 					completequest 7682;// Socializing Starts from an Eye Contact
@@ -7193,7 +7197,8 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "Yes. right.";
 		completequest 14495;// To Wolf
 		setquest 14496;// To Isaac
-		//achievement 130000 6
+		if (achievementinfo(130000, ACHIEVEINFO_COUNT7) == 0)
+			achievementupdate(130000, ACHIEVEINFO_COUNT7, 1);
 		ep16_lug = 2;
 		if (isbegin_quest(7682) == 1 && isbegin_quest(5402) == 2 && isbegin_quest(7683) == 2 && isbegin_quest(7684) == 2 && ep16_wal > 1 && ep16_wig > 1 && ep16_lug > 1 && ep16_gaobs > 1) {
 			completequest 7682;// Socializing Starts from an Eye Contact
@@ -8939,7 +8944,8 @@ prt_cas_q,93,74,4	script	Po Richard#EP161GAM	4_M_6THPRIN1,{
 		mes "Well, since it is not important, I guess we should let it pass. It's been a long time since I say this much. I am thirsty.";
 		next;
 		completequest 5402;// The Royal Richard
-		//achievement 130000 4
+		if (achievementinfo(130000, ACHIEVEINFO_COUNT5) == 0)
+			achievementupdate(130000, ACHIEVEINFO_COUNT5, 1);
 		if (isbegin_quest(7682) == 1 && isbegin_quest(5402) == 2 && isbegin_quest(7683) == 2 && isbegin_quest(7684) == 2 && ep16_wal > 1 && ep16_wig > 1 && ep16_lug > 1 && ep16_gaobs > 1) {
 			completequest 7682;// Socializing Starts from an Eye Contact
 			setquest 7685;// What Is the Next Thing on the Schedule ?
@@ -9362,7 +9368,8 @@ prt_cas_q,93,129,3	script	Queen#ep16_1	4_EP16_EGEO,{
 		mes "Please excuse me for not sharing more time with you due to some urgent duties.";
 		completequest 11400;// The Geoborgs
 		setquest 11401;// The Geoborgs
-		//achievement 130000 5
+		if (achievementinfo(130000, ACHIEVEINFO_COUNT6) == 0)
+			achievementupdate(130000, ACHIEVEINFO_COUNT6, 1);
 		ep16_gaobs = 2;
 		if (isbegin_quest(7682) == 1 && isbegin_quest(5402) == 2 && isbegin_quest(7683) == 2 && isbegin_quest(7684) == 2 && ep16_wal > 1 && ep16_wig > 1 && ep16_lug > 1 && ep16_gaobs > 1) {
 			completequest 7682;// Socializing Starts from an Eye Contact
@@ -9814,7 +9821,10 @@ prt_cas_q,146,121,4	script	Bachelor#ep16wig	1_M_ORIENT01,{
 	mes "[Bachelor]";
 	mes "I won't go before seeing the elegant and luminous presence of him!";
 	mes "I have come here from Payon to meet Jurgen!";
-	close;
+	close2;
+	if (achievementinfo(110001, ACHIEVEINFO_COUNT5) == 0)
+		achievementupdate(110001, ACHIEVEINFO_COUNT5, 1);
+	end;
 }
 
 prt_cas_q,148,117,7	script	Miss#ep16wig	4_F_02,{
@@ -9837,7 +9847,10 @@ prt_cas_q,148,117,7	script	Miss#ep16wig	4_F_02,{
 		sleep2 1000;
 		npctalk "Katrin is just too nice.", "Bachelorette#ep16wig", bc_area;
 	}
-	close;
+	close2;
+	if (achievementinfo(110001, ACHIEVEINFO_COUNT3) == 0)
+		achievementupdate(110001, ACHIEVEINFO_COUNT3, 1);
+	end;
 }
 
 prt_cas_q,148,122,4	script	Womenfolk#ep16wig	1_F_03,{
@@ -9859,7 +9872,10 @@ prt_cas_q,148,122,4	script	Womenfolk#ep16wig	1_F_03,{
 		sleep2 1000;
 		npctalk "It is a relief that the heaven would forgive at least.", "Bachelorette#ep16wig", bc_area;
 	}
-	close;
+	close2;
+	if (achievementinfo(110001, ACHIEVEINFO_COUNT2) == 0)
+		achievementupdate(110001, ACHIEVEINFO_COUNT2, 1);
+	end;
 }
 
 prt_cas_q,150,122,4	script	Gyusoo#ep16wig	1_F_LIBRARYGIRL,{
@@ -9882,7 +9898,10 @@ prt_cas_q,150,122,4	script	Gyusoo#ep16wig	1_F_LIBRARYGIRL,{
 		sleep2 1000;
 		npctalk "If you are in the 23rd place, you may not be able to see him today.", "Bachelorette#ep16wig", bc_area;
 	}
-	close;
+	close2;
+	if (achievementinfo(110001, ACHIEVEINFO_COUNT1) == 0)
+		achievementupdate(110001, ACHIEVEINFO_COUNT1, 1);
+	end;
 }
 
 prt_cas_q,150,117,7	script	Bachelorette#ep16wig	4_F_01,{
@@ -9905,31 +9924,76 @@ prt_cas_q,150,117,7	script	Bachelorette#ep16wig	4_F_01,{
 		sleep2 1000;
 		npctalk "Where did the person who was supervising the lineup go?";
 	}
-	close;
+	close2;
+	if (achievementinfo(110001, ACHIEVEINFO_COUNT4) == 0)
+		achievementupdate(110001, ACHIEVEINFO_COUNT4, 1);
+	end;
 }
 
 prt_cas_q,153,123,3	script	Strong Guards#ep16wig01	8W_SOLDIER,{
-	emotion ET_OHNO;
-	mes "[Strong Guards]";
-	mes "Ha, I am already feeling tired as always.";
-	mes "I didn't know that women were so strong before.";
-	next;
-	mes "[Strong Guards]";
-	mes "I started yesterday and realized why the people who had worked here before quit.";
-	mes "Despite being with so many ladies here, I am not happy at all.";
-	close;
+	switch( rand(1,3) ) {
+	case 1:
+		emotion 25;
+		mes "[Strong Guards]";
+		mes "Hey, you lady! Don't push!";
+		mes "Stay in the line!";
+		next;
+		mes "[Strong Guards]";
+		mes "There was this lady who was carried out with a broken ankle from pushing!";
+		mes "It is all for your own good!";
+		close;
+	case 2:
+		emotion ET_OHNO;
+		mes "[Strong Guards]";
+		mes "Ha, I am already feeling tired as always.";
+		mes "I didn't know that women were so strong before.";
+		next;
+		mes "[Strong Guards]";
+		mes "I started yesterday and realized why the people who had worked here before quit.";
+		mes "Despite being with so many ladies here, I am not happy at all.";
+		close;
+	case 3:
+		mes "[Strong Guards]";
+		mes "As you see, there are no guards guarding the doord to other family's residences.";
+		mes "However, there are too many infiltrators to the Wigner residence who get in there to see Jurgen. Now the door is guarded at all times.";
+		close;
+	}
 }
 
 prt_cas_q,153,116,1	script	Strong Guards#ep16wig02	8W_SOLDIER,{
-	emotion ET_ANGER;
-	mes "[Strong Guards]";
-	mes "Oh, wait there! Stop there!";
-	mes "Aren't you the one who has infiltrated the room before? You don't have to run hiding your face! Come back here!";
-	next;
-	mes "[Strong Guards]";
-	mes "She went off again. She sure is fast.";
-	mes "I am glad that my own sister doesn't come to a place like this.";
-	close;
+	switch( rand(1,3) ) {
+	case 1:
+		emotion 36;
+		mes "[Strong Guards]";
+		mes "Oh, be quiet there!";
+		mes "It is too noisy that Jurgen cannot take his beauty rest!";
+		next;
+		mes "[Strong Guards]";
+		mes "It is not for my sake, but for Jurgen.";
+		mes "It would make you sad if Jurgen is unable to sleep, right? So be quiet!";
+		close;
+	case 2:
+		emotion ET_ANGER;
+		mes "[Strong Guards]";
+		mes "Oh, wait there! Stop there!";
+		mes "Aren't you the one who has infiltrated the room before? You don't have to run hiding your face! Come back here!";
+		next;
+		mes "[Strong Guards]";
+		mes "She went off again. She sure is fast.";
+		mes "I am glad that my own sister doesn't come to a place like this.";
+		close;
+	case 3:
+		emotion 28;
+		mes "[Strong Guards]";
+		mes "When I applied to become a guard, I wanted to keep the palace safe with my own hands...";
+		mes "Never did I know that I would end up here...";
+		next;
+		emotion 6;
+		mes "[Strong Guards]";
+		mes "Hey, you! There! Stand in the line! Stop there! You shouldn't block the way!";
+		mes "If you keep doing that, I'll stop you from coming here!";
+		close;
+	}
 }
 
 // Wigner
@@ -10404,7 +10468,8 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 			completequest 7682;// Socializing Starts from an Eye Contact
 			setquest 7685;// What Is the Next Thing on the Schedule ?
 		}
-		//achievement 130000 3
+		if (achievementinfo(130000, ACHIEVEINFO_COUNT4) == 0)
+			achievementupdate(130000, ACHIEVEINFO_COUNT4, 1);
 		cutin "16jur_nor",0;
 		mes "[Jurgen]";
 		mes "Our ^0000cdparents^000000 are over there. They'd like to talk to you.";
@@ -11832,80 +11897,152 @@ OnInit:
 }
 prt_cas_q,93,10,4	duplicate(Jurgen Wigner#ep16wig00)	Maid#ep16wig01	1_F_04
 
-prt_cas_q,95,11,4	script	Womenfolk#ep16wig01	1_F_03,{ end; }
+prt_cas_q,95,11,4	script	Womenfolk#ep16wig01	1_F_03,{
+	mes "[Womenfolk]";
+	mes "Jurgen, you are mine!";
+	close2;
+	if (achievementinfo(110001, ACHIEVEINFO_COUNT6) == 0)
+		achievementupdate(110001, ACHIEVEINFO_COUNT6, 1);
+	end;
+
+OnTimer600000:
+	enablenpc "Womenfolk#ep16wig01";
+	npctalk "Oh my! Jurgen! My prince! I love you! Please look this way!", "Womenfolk#ep16wig01";
+	emotion ET_CHUP, getnpcid(0, "Womenfolk#ep16wig01");
+	sleep 2000;
+	npctalk "Are you... I have seen you before... Well... Are you here to see me?", "Jurgen Wigner#ep16wig";
+	sleep 2000;
+	npctalk "Dear Jurgen! Please be with me together! Forever!", "Womenfolk#ep16wig01";
+	specialeffect EF_HEARTCASTING,AREA,"Womenfolk#ep16wig01";
+	sleep 2000;
+	npctalk "That's a bit difficult...", "Jurgen Wigner#ep16wig";
+	sleep 2000;
+	enablenpc "Strong Guards#ep16wig03";
+	enablenpc "Strong Guards#ep16wig04";
+	npctalk "Oh my! How did you get in here again?", "Strong Guards#ep16wig03";
+	sleep 2000;
+	npctalk "They keep getting in here through the guard. It is no use to tighten security!", "Strong Guards#ep16wig04";
+	sleep 2000;
+	npctalk "Get her out of here!", "Strong Guards#ep16wig03";
+	sleep 2000;
+	npctalk "Oh my! Jurgen! I love you!", "Womenfolk#ep16wig01";
+	disablenpc "Womenfolk#ep16wig01";
+	disablenpc "Strong Guards#ep16wig03";
+	disablenpc "Strong Guards#ep16wig04";
+	initnpctimer;
+	end;
+OnInit:
+	initnpctimer;
+	disablenpc "Womenfolk#ep16wig01";
+	disablenpc "Strong Guards#ep16wig03";
+	disablenpc "Strong Guards#ep16wig04";
+	end;
+}
+
 prt_cas_q,94,12,4	script	Strong Guards#ep16wig03	8W_SOLDIER,{ end; }
 prt_cas_q,95,12,4	script	Strong Guards#ep16wig04	8W_SOLDIER,{ end; }
 
-prt_cas_q,98,23,1	script	Bachelor#ep16wig01	1_M_ORIENT01,{ end; }
+prt_cas_q,98,23,1	script	Bachelor#ep16wig01	1_M_ORIENT01,{
+	mes "[Bachelor]";
+	mes "I couldn't shake hands with Jurgen! Oh, it's too hot!";
+	close2;
+	if (achievementinfo(110001, ACHIEVEINFO_COUNT7) == 0)
+		achievementupdate(110001, ACHIEVEINFO_COUNT7, 1);
+	end;
+
+OnTimer480000:
+	enablenpc "Bachelor#ep16wig01";
+	npctalk "Jurgen, argh! It is hot!", "Bachelor#ep16wig01";
+	sleep 2000;
+	npctalk "Why did I fall in this place?", "Bachelor#ep16wig01";
+	sleep 2000;
+	npctalk "That woman must have given me the wrong set of coordinates!", "Bachelor#ep16wig01";
+	sleep 2000;
+	npctalk "Oh, it is hot!", "Bachelor#ep16wig01";
+	npctalk "Well, you didn't need to show me the blazing love for me with your entire body.", "Jurgen Wigner#ep16wig";
+	sleep 2000;
+	npctalk "Oh, it's hot! Jurgen, please save me... Argh!", "Bachelor#ep16wig01";
+	sleep 3000;
+	enablenpc "Strong Guards#ep16wig05";
+	enablenpc "Strong Guards#ep16wig06";
+	npctalk "Strong Guards at your service!", "Strong Guards#ep16wig05";
+	sleep 2000;
+	npctalk "Why is this person doing here?", "Strong Guards#ep16wig06";
+	sleep 2000;
+	npctalk "There are all kinds of people in the world.", "Strong Guards#ep16wig05";
+	sleep 2000;
+	npctalk "Get her out of here!", "Strong Guards#ep16wig06";
+	sleep 2000;
+	npctalk "Argh! Jurgen, my prince!", "Bachelor#ep16wig01";
+	disablenpc "Bachelor#ep16wig01";
+	disablenpc "Strong Guards#ep16wig05";
+	disablenpc "Strong Guards#ep16wig06";
+	initnpctimer;
+	end;
+OnInit:
+	initnpctimer;
+	disablenpc "Bachelor#ep16wig01";
+	disablenpc "Strong Guards#ep16wig05";
+	disablenpc "Strong Guards#ep16wig06";
+	end;
+}
+
 prt_cas_q,98,20,7	script	Strong Guards#ep16wig05	8W_SOLDIER,{ end; }
 prt_cas_q,96,22,7	script	Strong Guards#ep16wig06	8W_SOLDIER,{ end; }
 
-prt_cas_q,95,7,5	script	#ep16wig004	HIDDEN_WARP_NPC,{
-	end;
-OnInit:
-	donpcevent "#ep16wig004::OnEvent1";
-	donpcevent "#ep16wig004::OnEvent2";
-	end;
 
-OnEvent1:
-	while(true) {
-		disablenpc "Bachelor#ep16wig01";
-		disablenpc "Strong Guards#ep16wig05";
-		disablenpc "Strong Guards#ep16wig06";
-		sleep 480000;	// 8 mins
-		enablenpc "Bachelor#ep16wig01";
-		npctalk "Jurgen, argh! It is hot!", "Bachelor#ep16wig01";
-		sleep 2000;
-		npctalk "Why did I fall in this place?", "Bachelor#ep16wig01";
-		sleep 2000;
-		npctalk "That woman must have given me the wrong set of coordinates!", "Bachelor#ep16wig01";
-		sleep 2000;
-		npctalk "Oh, it is hot!", "Bachelor#ep16wig01";
-		sleep 10;
-		npctalk "Well, you didn't need to show me the blazing love for me with your entire body.", "Jurgen Wigner#ep16wig";
-		sleep 2000;
-		npctalk "Oh, it's hot! Jurgen, please save me... Argh!", "Bachelor#ep16wig01";
-		sleep 3000;
-		enablenpc "Strong Guards#ep16wig05";
-		enablenpc "Strong Guards#ep16wig06";
-		npctalk "Strong Guards at your service!", "Strong Guards#ep16wig05";
-		sleep 2000;
-		npctalk "Why is this person doing here?", "Strong Guards#ep16wig06";
-		sleep 2000;
-		npctalk "There are all kinds of people in the world.", "Strong Guards#ep16wig05";
-		sleep 2000;
-		npctalk "Get her out of here!", "Strong Guards#ep16wig06";
-		sleep 2000;
-		npctalk "Argh! Jurgen, my prince!", "Bachelor#ep16wig01";
+prt_cas_q,74,21,5	script	#ep16wig003	HIDDEN_NPC,5,5,{
+	end;
+OnTouch:
+	if (ep16_wig == 2 || ep16_wig == 3) {
+		cloakoffnpc "Katrin Wigner#ep16wig", getcharid(0);
+		if (ep16_lug == 2 || ep16_lug == 7)
+			cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
+		else
+			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+	}
+	else if (ep16_wig > 3 && ep16_wig < 15) {
+		cloakonnpc "Katrin Wigner#ep16wig", getcharid(0);
+		if (ep16_lug == 2 || ep16_lug == 7)
+			cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
+		else
+			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+	}
+	else if (ep16_wig == 15) {
+		cloakonnpc "Katrin Wigner#ep16wig", getcharid(0);
+		cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
+	}
+	else {
+		cloakoffnpc "Katrin Wigner#ep16wig", getcharid(0);
+		cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
 	}
 	end;
+}
 
-OnEvent2:
-	while(true) {
-		disablenpc "Womenfolk#ep16wig01";
-		disablenpc "Strong Guards#ep16wig03";
-		disablenpc "Strong Guards#ep16wig04";
-		sleep 600000;	// 10 mins
-		enablenpc "Womenfolk#ep16wig01";
-		npctalk "Oh my! Jurgen! My prince! I love you! Please look this way!", "Womenfolk#ep16wig01";
-		emotion ET_CHUP, getnpcid(0, "Womenfolk#ep16wig01");
-		sleep 2000;
-		npctalk "Are you... I have seen you before... Well... Are you here to see me?", "Jurgen Wigner#ep16wig";
-		sleep 1500;
-		npctalk "Dear Jurgen! Please be with me together! Forever!", "Womenfolk#ep16wig01";
-		specialeffect EF_HEARTCASTING,AREA,"Womenfolk#ep16wig01";
-		sleep 2000;
-		npctalk "That's a bit difficult...", "Jurgen Wigner#ep16wig";
-		sleep 2000;
-		enablenpc "Strong Guards#ep16wig03";
-		enablenpc "Strong Guards#ep16wig04";
-		npctalk "Oh my! How did you get in here again?", "Strong Guards#ep16wig03";
-		sleep 1500;
-		npctalk "They keep getting in here through the guard. It is no use to tighten security!", "Strong Guards#ep16wig04";
-		sleep 2000;
-		npctalk "Get her out of here!", "Strong Guards#ep16wig03";
-		sleep 2000;
-		npctalk "Oh my! Jurgen! I love you!", "Womenfolk#ep16wig01";
+prt_cas_q,95,7,5	script	#ep16wig004	HIDDEN_NPC,5,5,{
+	end;
+OnTouch:
+	if (ep16_wig == 2 || ep16_wig == 3) {
+		cloakoffnpc "Katrin Wigner#ep16wig", getcharid(0);
+		if (ep16_lug == 2 || ep16_lug == 7)
+			cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
+		else
+			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+	}
+	else if (ep16_wig > 3 && ep16_wig < 15) {
+		cloakonnpc "Katrin Wigner#ep16wig", getcharid(0);
+		if (ep16_lug == 2 || ep16_lug == 7)
+			cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
+		else
+			cloakonnpc "Isaac Wigner#ep16wig", getcharid(0);
+	}
+	else if (ep16_wig == 15) {
+		cloakonnpc "Katrin Wigner#ep16wig", getcharid(0);
+		cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
+	}
+	else {
+		cloakoffnpc "Katrin Wigner#ep16wig", getcharid(0);
+		cloakoffnpc "Isaac Wigner#ep16wig", getcharid(0);
 	}
 	end;
 }
@@ -13056,6 +13193,15 @@ prt_cas,71,227,5	script	Banquet Hall Guest#2	4_M_JPN,{
 	close;
 }
 
+prt_cas,100,100,3	script	Banquet Hall Guest#3	4_M_BOSSCAT,{
+	mes "[Banquet Hall Guest]";
+	mes "All the nobility who are in charge of the market in Rune Midgarts are here. We, the Cat Hand Services, shouldn't miss this chance.";
+	next;
+	mes "[Banquet Hall Guest]";
+	mes "I'll score contracts as tall as my height.";
+	close;
+}
+
 prt_cas,89,250,5	script	Banquet Hall Guest#5	4_F_KHELLY,{
 	mes "[Banquet Hall Guest]";
 	mes "I am an old fan of Orint of the band.";
@@ -13075,11 +13221,34 @@ prt_cas,89,244,7	script	Banquet Hall Guest#6	4_M_NOV_HUNT,{
 }
 
 prt_cas,91,237,3	script	Ekinasia#ep16_etc01	1_F_SIGNZISK,{
-	setpcblock PCBLOCK_NPC, true;
+	if (mao_morocc2 > 99) {
+		mes "[Ekinasia]";
+		mes "You have been invited to the banquet as well.";
+		mes "Well, no wonder... If you think about it.";
+		next;
+		mes "[Lin]";
+		mes "Oh, you are still alive!";
+		mes "I am glad to see you here. Life must be treating you well!";
+		next;
+		mes "[Ekinasia]";
+		mes "Come to think of it, Kid is here too.";
+		mes "He met the people from the guild and went to see them...";
+		next;
+		mes "[Lin]";
+		mes "Hum... Then he was taken by a strange guy among the bunch to the dining hall.";
+		mes "You may go say hi.";
+		next;
+		mes "[Ekinasia]";
+		mes "It is a banquet in a long time. We may as well enjoy it.";
+		close2;
+		npctalk "Sure, sure!", "Lin#ep16_etc02", bc_self;
+		end;
+	}
 	npctalk "It's been a while since the last time a royal banquet like this was held.", "Ekinasia#ep16_etc01", bc_self;
+	setpcblock PCBLOCK_NPC, true;
 	sleep2 3000;
-	npctalk "We need to blow off some steam like this from time to time.", "Ekinasia#ep16_etc01", bc_self;
 	setpcblock PCBLOCK_NPC, false;
+	npctalk "We need to blow off some steam like this from time to time.", "Ekinasia#ep16_etc01", bc_self;
 	end;
 }
 
@@ -13091,6 +13260,38 @@ prt_cas,89,238,5	script	Lin#ep16_etc02	4_F_ACROSS,{
 }
 
 prt_cas,78,255,3	script	Mayssel#ep16_etc05	4_F_MAYSEL,{
+	if ((eaclass()&EAJ_THIRDMASK) == EAJ_GUILLOTINE_CROSS_T) {
+		setpcblock PCBLOCK_NPC, true;
+		cutin "gc_mayssel01.bmp",1;
+		sleep2 100;
+		cutin "gc_mayssel02.bmp",1;
+		sleep2 100;
+		cutin "gc_mayssel03.bmp",1;
+		sleep2 200;
+		cutin "gc_mayssel04.bmp",1;
+		sleep2 200;
+		cutin "gc_mayssel05.bmp",1;
+		sleep2 200;
+		cutin "gc_mayssel04.bmp",1;
+		sleep2 100;
+		cutin "gc_mayssel03.bmp",1;
+		sleep2 100;
+		cutin "gc_mayssel02.bmp",1;
+		sleep2 100;
+		setpcblock PCBLOCK_NPC, false;
+		cutin "gc_mayssel01.bmp",1;
+		mes "[Mayssel]";
+		mes "Who are you...?";
+		next;
+		mes "[Mayssel]";
+		mes "...Oh... You have visited us to change your class, I remember.";
+		mes "We have recommended you as a representative of the guild.";
+		next;
+		mes "[Mayssel]";
+		mes "I am glad to see you all grown up.";
+		mes "Never forget the weight of the blood to be covered on your hands at all times.";
+		close3;
+	}
 	cutin "gc_mayssel01",1;
 	mes "[Mayssel]";
 	mes "You must have been invited to the banquet.";
@@ -13102,17 +13303,47 @@ prt_cas,78,255,3	script	Mayssel#ep16_etc05	4_F_MAYSEL,{
 }
 
 prt_cas,78,252,2	script	Verkhasel#ep_etc06	4_M_GUILLOTINE,{
-	setpcblock PCBLOCK_NPC, true;
+	if ((eaclass()&EAJ_THIRDMASK) == EAJ_GUILLOTINE_CROSS_T) {
+		cutin "gc_verkhasel01.bmp",2;
+		mes "[Verkhasel]";
+		mes "...I don't like a crowded place like this, but I cannot help it when I am on a mission.";
+		sleep2 200;
+		cutin "gc_verkhasel02.bmp",2;
+		sleep2 200;
+		cutin "gc_verkhasel01.bmp",2;
+		next;
+		mes "[Verkhasel]";
+		mes "You are here too.";
+		mes "Well, I guess you are supposed to be here.";
+		next;
+		mes "[Verkhasel]";
+		mes "...What a trouble.";
+		close2;
+		cutin "",255;
+	}
 	npctalk "I want to go back now.", "Verkhasel#ep_etc06", bc_self;
+	setpcblock PCBLOCK_NPC, true;
 	sleep2 3000;
 	npctalk "...You can't.", "Mayssel#ep16_etc05", bc_self;
 	sleep2 3000;
-	npctalk "You made that very clear, hahahaha!", "Vicente#ep16_etc07", bc_self;
 	setpcblock PCBLOCK_NPC, false;
+	npctalk "You made that very clear, hahahaha!", "Vicente#ep16_etc07", bc_self;
 	end;
 }
 
 prt_cas,76,254,5	script	Vicente#ep16_etc07	4_M_HUMAN_02,{
+	if ((eaclass()&EAJ_THIRDMASK) == EAJ_SHADOW_CHASER_T) {
+		cutin "sc_vicente01.bmp",2;
+		mes "[Vicente]";
+		mes "Oh, is it the first time since our last encounter for your class change?";
+		mes "Thanks to your contribution, the position of the guild has been strengthened.";
+		next;
+		cutin "sc_vicente03.bmp",2;
+		mes "[Vicente]";
+		mes "I guess you will be the hero of the palace.";
+		mes "I am glad to see you well.";
+		close3;
+	}
 	cutin "sc_vicente01",2;
 	mes "[Vicente]";
 	mes "Hum... Did we meet at Criatura?";
@@ -13205,6 +13436,35 @@ prt_cas,98,248,5	script	Cat#ep16bgm	4_CAT,{
 	close;
 }
 
+prt_cas,90,121,5	script	Hiba Ajif#ep16	4_M_REDSWORD,{
+	mes "[Hiba Ajif]";
+	mes "Since Ashbacuum has been taken care of, I want to go home and take a nap. However, they are holding me here.";
+	next;
+	mes "[Avidal the Advisor]";
+	mes "It is the event to praise our contributions. Try to smile a little.";
+	next;
+	mes "[Instructor Igrid]";
+	mes "Brother, these shoes hurt my feet. May I go back to the guest room and sleep?";
+	next;
+	mes "[Hiba Ajif]";
+	mes "]If you can't avoid it, enjoy it...";
+	mes "I shall get drunk fast.";
+	close;
+}
+
+prt_cas,94,118,3	script	Avidal the Advisor#ep16	4_M_SAGE_C,{
+	mes "[Avidal the Advisor]";
+	mes "I have spent too much time in the tension between the two races. It just feels like I am dreaming to be in a happy and relaxing place like this. This must be what they call peace, right?";
+	close;
+}
+
+prt_cas,85,118,7	script	Instructor Igrid#ep16	4_M_CRU,{
+	mes "[Instructor Igrid]";
+	mes "If they really want to do something for us, they really let us take a rest.";
+	mes "Only the ones who don't work in the field like an event like this. It is true.";
+	close;
+}
+
 prt_cas,106,258,5	script	Bruno#ep16_1	4_F_SURA,{
 	mes "[Bruno]";
 	mes "Argh... I have never been to a place like this...";
@@ -13227,7 +13487,7 @@ prt_cas,89,257,3	script	Karian#ep16_1	4_M_MINSTREL1,{
 	close3;
 }
 
-prt_cas,85,223,1	script	Maximilian Roegenburg#e_hall	4_EP16_MAX,{
+prt_cas,85,223,1	script	Maximilian Roegenburg#ep16wig01	4_EP16_MAX,{
 	mes "[Maximilian]";
 	mes "I have heard that my grandson is under indebtedness to your son these days.";
 	next;
@@ -13239,7 +13499,7 @@ prt_cas,85,223,1	script	Maximilian Roegenburg#e_hall	4_EP16_MAX,{
 	close;
 }
 
-prt_cas,85,225,4	script	Catherine Wigner#ep16wig_hall	1_F_LIBRARYGIRL,{
+prt_cas,85,225,4	script	Catherine Wigner#ep16wig01	1_F_LIBRARYGIRL,{
 	mes "[Catherine]";
 	mes "Many things have changed since the last time we were here in the palace. I want to come here more often, but we cannot find the excuse to come...";
 	next;
@@ -13251,7 +13511,7 @@ prt_cas,85,225,4	script	Catherine Wigner#ep16wig_hall	1_F_LIBRARYGIRL,{
 	close;
 }
 
-prt_cas,84,225,4	script	Levuiere Wigner#ep16wig_hall	4_EP16_LOUVIERE,{
+prt_cas,84,225,4	script	Levuiere Wigner#ep16wig01	4_EP16_LOUVIERE,{
 	mes "[Levuiere]";
 	mes "Dear Roegenburg, how are your children doing? I often hear about your third grandson from Isaac/";
 	next;
@@ -13538,10 +13798,38 @@ prt_cas,343,67,4	script	Uptight Librarian#ep16l	1_F_LIBRARYGIRL,{
 }
 
 prt_cas,321,25,1	script	Erich Nerius#ep16_erihi	4_M_SITDOWN,{
-	if (banquet_main_quest < 2) {
+	if (ep16_royal < 2) {
 		mes "[Erich]";
 		mes "There are so many guests attending the banquet.";
 		mes "However, since we are in the library, would you keep it down?";
+		close;
+	}
+	if (ep16_royal == 2) {// buggy officially (never displayed)
+		if (isbegin_quest(7684) == 0) {
+			mes "[Erich]";
+			mes "Are you attending the banquet and exchanging greeting with each family?";
+			mes "Then you should go see Spica Nerius, not me.";
+			next;
+			mes "[Erich]";
+			mes "Although Shedhar, the current head of the family, is not here, Spica has all the actual power.";
+			next;
+			mes "[Erich]";
+			mes "I am just participating in the Royal Assembly to fill in the place as a Nerius.";
+			next;
+			mes "[Erich]";
+			mes "I am not interested in the throne at all.";
+			mes "So you should go see Spica.";
+			next;
+			mes "[Erich]";
+			mes "Enjoy the banquet too.";
+			close;
+		}
+		mes "[Erich]";
+		mes "Did you meet Spica?";
+		mes "She is such a cheerful girl, isn't she?";
+		next;
+		mes "[Erich]";
+		mes "She will be the head of the Nerius family.";
 		close;
 	}
 	mes "[Erich]";
@@ -13586,7 +13874,35 @@ prt_cas,341,79,2	script	Alf Ocat#ep16_1	4_M_BLACKMAN,{
 	close3;
 }
 
+// prt_cas,364,69,3	script	Nervous Man#ep16lug01	4_M_ALCHE_A,5,5,{
 prt_cas,364,69,3	script	Nervous Man#ep16lug01	4_M_ALCHE_A,{
+	if (ep16_lug > 12) {
+		mes "[Nervous Man]";
+		mes "It is not here either....";
+		next;
+		mes "[Taunting Man]";
+		mes "Why do you need that book? Just go without it.";
+		next;
+		mes "[Nervous Man]";
+		mes "The first impression is the most important. The first greeting has a big impact! By the way, what should I speak as a greeting?";
+		next;
+		mes "[Nervous Man]";
+		mes "'Good morning, sir. I, an unworthy person, live in Prontera....' No. No. I cannot speak like to a person who is younger than me.";
+		npctalk "That's good!!", "Taunting Man#ep16lug01";
+		next;
+		mes "[Nervous Man]";
+		mes "Hi? Your brother told me to attend the banquet. No. No. this is not either. My patner is a princess!";
+		npctalk "Gross~", "Taunting Man#ep16lug01";
+		next;
+		mes "[Nervous Man]";
+		mes "Why is there no book such as ¡®Royal Etiquette - Meet Princess First Time' It's a royal library.";
+		npctalk "Because it is a palace.", "Taunting Man#ep16lug01";
+		next;
+		mes "[Nervous Man]";
+		mes "He sent me on the excuse of being busy. Jonathan, I'll get you.";
+		npctalk "If you hurt Jonathan, you will be arrestd.", "Taunting Man#ep16lug01";
+		close;
+	}
 	mes "[Nervous Man]";
 	mes "It is not here, either. How can I find it. There are so many books here.";
 	close;
@@ -13617,31 +13933,70 @@ prt_cas,97,248,5	script	Court Musician#orint	2_M_BARD_ORIENT,{
 	mes "Chatting is forbidden while working.";
 	next;
 	if (select( "Please play a song", "Wrap up the conversation" ) == 1) {
-		if (rand(1000) < 15)
-			setarray .@musics$[0],111, "Good Morning";
-		else {
-			setarray .@musics$[0],
-				004, "I miss you",
-				015, "Theme of Alberta",
-				030, "Not so Far away",
-				030, "One Step Closer",
-				033, "Yuna Song",
-				109, "Alpen Rose",
-				115, "Tales of East",
-				117, "Dream of Whale",
-				128, "Splendide Dreams",
-				137, "Dazzling Snow",
-				145, "Marshmallow Waltz",
-				155, "Eclage",
-				160, "Jittering Nightmare";
-		}
-		.@r = rand( getarraysize(.@musics$) / 2 ) * 2;
-
 		specialeffect EF_CHEMICAL_ALLRANGE,AREA, "Court Musician#3";
 		mes "[Court Musician Orint]";
-		if (atoi(.@musics$[.@r]) != 111)
-			mes "I'll play <" + .@musics$[.@r+1] + ">.";
+		.@r = rand(1,100);
+		if (.@r < 12) {
+			mes "I'll play <I miss you>.";
+			playbgm "04";
+		}
+		else if (.@r < 22) {
+			mes "I'll play <Alpen Rose>.";
+			playbgm "109";
+		}
+		else if (.@r < 30) {
+			mes "I'll play <Tales of East>.";
+			playbgm "115";
+		}
+		else if (.@r < 37) {
+			mes "I'll play <Dream of Whale>.";
+			playbgm "117";
+		}
+		else if (.@r < 44) {
+			mes "I'll play <Dazzling Snow>.";
+			playbgm "137";
+		}
+		else if (.@r < 51) {
+			mes "I'll play <Marschmallow Waltz>.";
+			playbgm "145";
+		}
+		else if (.@r < 58) {
+			mes "I'll play <Eclage>.";
+			playbgm "155";
+		}
+		else if (.@r < 65) {
+			mes "I'll play <One Step Closer>.";
+			playbgm "30";
+		}
+		else if (.@r < 72) {
+			mes "I'll play <Not so Far away>.";
+			playbgm "30";
+		}
+		else if (.@r < 79) {
+			mes "I'll play <Theme of Alberta>.";
+			playbgm "15";
+		}
+		else if (.@r < 86) {
+			mes "I'll play <Splendide Dreams>.";
+			playbgm "128";
+		}
+		else if (.@r < 93) {
+			mes "I'll play <Jittering Nightmare>.";
+			playbgm "160";
+		}
+		else if (.@r < 100) {
+			mes "I'll play <Yuna Song>.";
+			playbgm "33";
+		}
 		else {
+			mes "This is not a song in the program...";
+			mes "How about listening to a song I recommend?";
+			next;
+			mes "[Court Musician Orint]";
+			mes "I'll play <Good Morning> which has a sad story behind it.";
+			playbgm "111";
+			if (!achievementexists(170000))
+				achievementcomplete(170000);
 			mes "This is not a song in the program...";
 			mes "How about listening to a song I recommend?";
 			next;
@@ -13650,7 +14005,6 @@ prt_cas,97,248,5	script	Court Musician#orint	2_M_BARD_ORIENT,{
 			npctalk "Oh, this is the song of misfortune which has been forgotten despite its musical value.", "Banquet Hall Guest#6", bc_self;
 			npctalk "Isn't the song about the island where the former king has been found... Would it be OK?", "Banquet Hall Guest#6", bc_self;
 		}
-		playbgm .@musics$[.@r];
 		close;
 	}
 	close;
@@ -13663,6 +14017,15 @@ prt_cas,375,124,7	script	Woman with Glasses#nir	4_F_MADAME,{
 }
 
 prt_cas,379,124,3	script	Glamorous Girl#pop	4_F_ARUNA_POP,{
+	if (rachel_ma1 < 4) {
+		cutin "ra_bishop.bmp",2;
+		mes "- There is a girl with a expressionless face looking at the table. Her outfit seems rather unusual in Prontera. She could be a guest attending the banquet. -";
+		next;
+		mes "[Glamorous Girl]";
+		mes "......";
+		mes "...I am hungry.";
+		close3;
+	}
 	cutin "ra_bishop",2;
 	mes "[Glamorous Girl]";
 	mes "......";
@@ -13742,8 +14105,39 @@ prt_cas,379,124,3	script	Glamorous Girl#pop	4_F_ARUNA_POP,{
 }
 
 prt_cas,368,125,3	script	Dumk#ep16_etc03	4_M_SHADOWCHASER,{
-	setpcblock PCBLOCK_NPC, true;
+	if ((eaclass()&EAJ_THIRDMASK) == EAJ_SHADOW_CHASER_T) {
+		mes "[Dumk]";
+		mes "Oh, who is this.";
+		mes "You are" + strcharinfo(0) + "the one who would lead to the highest peaks of dark art, right?";
+		cutin "3rd_sc_doomk01.bmp",0;
+		next;
+		mes "[Dumk]";
+		mes "You've been invited to this banquet too?";
+		mes "Hum, are you the hero of the century recommended by the guild?";
+		cutin "3rd_sc_doomk04.bmp",0;
+		next;
+		mes "[Dumk]";
+		mes "Ha, what a nonsense to disregard me, Dumk!";
+		mes "I can never agree to that.";
+		next;
+		mes "[Dumk]";
+		mes "By the way, where is Vicente?";
+		cutin "3rd_sc_doomk06.bmp",0;
+		next;
+		mes "[Dumk]";
+		mes "Hey, you assassin, do you know Vicente?";
+		cutin "3rd_sc_doomk02.bmp",0;
+		next;
+		mes "[Kid]";
+		mes "...Cut it out there, Dumk...";
+		cutin "moc2_kid03.bmp",2;
+		close2;
+		cutin "",255;
+		npctalk "What did I do?", "", bc_self;
+		end;
+	}
 	npctalk "Where is he?", "Dumk#ep16_etc03", bc_self;
+	setpcblock PCBLOCK_NPC, true;
 	sleep2 3000;
 	npctalk "I don't know.", "Kid#ep16_etc04", bc_self;
 	sleep2 3000;
@@ -13757,12 +14151,46 @@ prt_cas,368,125,3	script	Dumk#ep16_etc03	4_M_SHADOWCHASER,{
 	sleep2 3000;
 	npctalk "Watch whom you are talking to!!! Do you want to pick a trouble with me!", "Dumk#ep16_etc03", bc_self;
 	sleep2 1000;
+	setpcblock PCBLOCK_NPC, false;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : (Shaking the head from side to side)", bc_self;
 	emotion ET_STARE_ABOUT, playerattached();
-	setpcblock PCBLOCK_NPC, false;
 	end;
 }
-prt_cas,367,123,7	duplicate(Dumk#ep16_etc03)	Kid#ep16_etc04	4_M_ACROSS
+
+prt_cas,367,123,7	script	Kid#ep16_etc04	4_M_ACROSS,{
+	if (mao_morocc2 > 99) {
+		mes "[Kid]";
+		mes "It's been a long time. Did you catch up with Lin and Ekinasia?";
+		cutin "mocseal_kid01.bmp",2;
+		next;
+		mes "[Kid]";
+		mes "They seemed very excited in the fancy place...";
+		next;
+		mes "...It is a pain to stand in a place where you don't belong...";
+		close2;
+		cutin "",255;
+		sleep2 500;
+	}
+	npctalk "Where is he?", "Dumk#ep16_etc03", bc_self;
+	setpcblock PCBLOCK_NPC, true;
+	sleep2 3000;
+	npctalk "I don't know.", "Kid#ep16_etc04", bc_self;
+	sleep2 3000;
+	npctalk "Find him! It's your specialty!", "Dumk#ep16_etc03", bc_self;
+	sleep2 3000;
+	npctalk "Why should I do that? You have been insufferable.", "Kid#ep16_etc04", bc_self;
+	sleep2 3000;
+	npctalk "Hey, I am of a higher rank than you. Where is Vicente!", "Dumk#ep16_etc03", bc_self;
+	sleep2 3000;
+	npctalk "...Look for your nanny at your own home!", "Kid#ep16_etc04", bc_self;
+	sleep2 3000;
+	npctalk "Watch whom you are talking to!!! Do you want to pick a trouble with me!", "Dumk#ep16_etc03", bc_self;
+	sleep2 1000;
+	setpcblock PCBLOCK_NPC, false;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : (Shaking the head from side to side)", bc_self;
+	emotion ET_STARE_ABOUT, playerattached();
+	end;
+}
 
 // Corridor left
 prt_cas,161,168,5	script	Royal Guardian Knight#0_left	4_M_CRU,{
@@ -15606,6 +16034,88 @@ prt_q,146,194,3	duplicate(Kriemhild)	Swanhild	GUILD_FLAG
 prt_q,143,203,2	duplicate(Kriemhild)	Fadhgridh	GUILD_FLAG
 prt_q,167,203,6	duplicate(Kriemhild)	Skoegul	GUILD_FLAG
 prt_q,165,194,5	duplicate(Kriemhild)	Gondul	GUILD_FLAG
+
+// GM NPC
+prt_q,5,5,6	script	Pron Dungeon Helper#EP161PG	4_EP16_SPIEGEL,{
+	if (callfunc("F_GM_NPC",1854,0,1,9999) < 1)
+		end;
+	mes "[Pron Dungeon Helper]";
+	mes "Select the service to use.";
+	next;
+	switch( select( "Quest Start Setting", "Reset cooldown time", "Reset Quest", "Check current status" ) ) {
+	case 1:
+		mes "[Pron Dungeon Helper]";
+		mes "Proceed after resetting the quest. Select the quest to start.";
+		next;
+		switch( select( "Lad Quest", "Girl Quest", "Soldier Quest", "Married couple Quest" ) ) {
+		case 1:
+			setquest 5448;
+			mes "[Pron Dungeon Helper]";
+			mes "Would you move to this starting point?";
+			next;
+			select("Move");
+			warp "prt_q",221,193;
+			end;
+		case 2:
+			setquest 5449;
+			mes "[Pron Dungeon Helper]";
+			mes "Would you move to this starting point?";
+			next;
+			select("Move");
+			warp "prt_q",276,242;
+			end;
+		case 3:
+			setquest 5450;
+			mes "[Pron Dungeon Helper]";
+			mes "Would you move to this starting point?";
+			next;
+			select("Move");
+			warp "prt_q",140,304;
+			end;
+		case 4:
+			setquest 5451;
+			mes "[Pron Dungeon Helper]";
+			mes "Would you move to this starting point?";
+			next;
+			select("Move");
+			warp "prt_q",38,261;
+			end;
+		}
+		end;
+	case 2:
+		mes "[Pron Dungeon Helper]";
+		mes "Reset the cooldown time.";
+		next;
+		select("Setting");
+		erasequest 5452;
+		break;
+	case 3:
+		mes "[Underground Dungeon Helper]";
+		mes "All quests related with the underground dungeon will be reset.";
+		next;
+		select("Setting");
+		mes "[Underground Dungeon Helper]";
+		for ( .@i = 5448; .@i < 5468; ++.@i ) {
+			if (isbegin_quest(.@i) > 0)
+				erasequest .@i;
+			mes "" + .@i + " Delete";
+		}
+		next;
+		break;
+	case 4:
+		mes "[Pron Dungeon Helper]";
+		mes "5448(" + isbegin_quest(5448) + ")/5449(" + isbegin_quest(5449) + ")/5450(" + isbegin_quest(5450) + ")/5451(" + isbegin_quest(5451) + ")";
+		mes "5453(" + isbegin_quest(5453) + ")/5454(" + isbegin_quest(5454) + ")/5455(" + isbegin_quest(5455) + ")/5456(" + isbegin_quest(5456) + ")";
+		mes "5457(" + isbegin_quest(5457) + ")/5458(" + isbegin_quest(5458) + ")/5459(" + isbegin_quest(5459) + ")";
+		mes "5460(" + isbegin_quest(5460) + ")/5461(" + isbegin_quest(5461) + ")/5462(" + isbegin_quest(5462) + ")";
+		mes "5463(" + isbegin_quest(5463) + ")/5464(" + isbegin_quest(5464) + ")/5465(" + isbegin_quest(5465) + ")/5466(" + isbegin_quest(5466) + ")/5467(" + isbegin_quest(5467) + ")/5468(" + isbegin_quest(5468) + ")";
+		next;
+		break;
+	}
+	mes "[Pron Dungeon Helper]";
+	mes "Complete";
+	close;
+}
 
 // Prison quests
 prt_pri00,46,130,7	script	Corrupt Warder#pa0829	4_M_KY_SOLD,{
