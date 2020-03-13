@@ -3570,11 +3570,14 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case KN_SPEARBOOMERANG:
 			skillratio += 50 * skill_lv;
 			break;
-		case KN_BRANDISHSPEAR:
-		case ML_BRANDISH:
 #ifdef RENEWAL
+		case KN_BRANDISHSPEAR:
 			skillratio += -100 + 400 + 100 * skill_lv + sstatus->str; // !TODO: Confirm STR role
+			break;
 #else
+		case KN_BRANDISHSPEAR:
+#endif
+		case ML_BRANDISH:
 			{
 				int ratio = 100 + 20 * skill_lv;
 
@@ -3592,7 +3595,6 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				if(skill_lv > 9 && wd->miscflag == 2)
 					skillratio += ratio / 2;
 			}
-#endif
 			break;
 		case KN_BOWLINGBASH:
 		case MS_BOWLINGBASH:
@@ -5394,6 +5396,11 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				wd.blewcount = 0;
 				break;
 
+#ifdef RENEWAL
+			case KN_BRANDISHSPEAR:
+				wd.flag |= BF_LONG;
+				break;
+#endif
 			case KN_AUTOCOUNTER:
 				wd.flag = (wd.flag&~BF_SKILLMASK)|BF_NORMAL;
 				break;

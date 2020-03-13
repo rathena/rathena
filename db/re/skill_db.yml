@@ -2112,7 +2112,7 @@ Body:
       NoDamage: true
     Flags:
       IncreaseGloomyDayDamage: true
-    Range: 5 # !TODO: Confirm range
+    Range: -2
     Hit: Multi_Hit
     HitCount: 3
     Element: Weapon
