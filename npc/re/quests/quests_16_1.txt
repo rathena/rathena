@@ -9119,72 +9119,29 @@ prt_cas_q,120,100,4	script	Helper for the Royal Richard#EP161DY	4_M_6THPRIN2,{
 	end;
 }
 
-prt_cas_q,81,131,0	script	#ep16_1Geoborg	HIDDEN_WARP_NPC,3,3,{
+prt_cas_q,81,131,0	script	#ep16_1Geoborg	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
-	if (banquet_main_quest >= 2 && banquet_geoborg_quest == 0) {
-		mes "[Bodyguard Martin]";
-		mes "There! Stop there!";
-		mes "Please go through the inspection for a security check.";
-		npctalk "There! Stop there!", "Bodyguard#ep16_1_g", bc_self;
-		emotion ET_SURPRISE, getnpcid(0, "Bodyguard#ep16_1_m");
-		emotion ET_SURPRISE;
-		next;
-		mes "[Bodyguard Martin]";
-		mes "Please place your identification and personal belongings on this table and stand facing the wall...";
-		next;
-		mes "[Bodyguard Jerad]";
-		mes "Martin! What are you doing?";
-		mes "Don't be rude to the guest to the room! I told you.";
-		emotion ET_HUK;
-		next;
-		mes "[Bodyguard Martin]";
-		mes "It is for the safety of the queen.";
-		next;
-		mes "[Bodyguard Jerad]";
-		mes "You are near the queen for security, not to chase away the guests discourteously.";
-		emotion ET_ANGER;
-		next;
-		mes "[Bodyguard Martin]";
-		mes "The palace is so hectic like this. How can we guard the queen with such an easygoing way of thinking!";
-		next;
-		mes "[Bodyguard Jerad]";
-		mes "We cannot help it during the Imperial Ordinance!";
-		next;
-		mes "[Bodyguard Martin]";
-		mes "Now the Imperial Ordinance would just be...";
-		emotion ET_THINK, getnpcid(0, "Bodyguard#ep16_1_m");
-		next;
-		mes "[Queen]";
-		mes "It is noisy out here.";
-		cutin "ep16gao_1",2;
-		next;
-		cutin "",255;
-		mes "[Bodyguard Jerad]";
-		mes "Huh! Your majesty!";
-		mes "I am sorry.";
-		mes "We have a guest here.";
-		setquest 11400;// The Geoborgs
-		banquet_geoborg_quest = 1;
-		emotion ET_SURPRISE;
-		close;
-	}
+	if (ep16_royal == 2 && ep16_gaobs == 0)
+		callfunc("F_geoborg_text");
 	end;
 }
 
 // Geoborg
 prt_cas_q,87,132,6	script	Bodyguard#ep16_1_m	4_M_JOB_KNIGHT1,{
-	if (banquet_geoborg_quest == 1) {
+	if (ep16_royal == 2 && ep16_gaobs == 0)
+		callfunc("F_geoborg_text");
+	if (ep16_gaobs == 1) {
 		mes "[Bodyguard Jerad]";
 		mes "Extend the queen every courtesy.";
 		close;
 	}
-	if (banquet_geoborg_quest == 2) {
+	if (ep16_gaobs == 2) {
 		mes "[Bodyguard Martin]";
 		mes "I have something to you. Please talk to Jerad here.";
 		close;
 	}
-	if (banquet_geoborg_quest == 4 || banquet_geoborg_quest == 5) {
+	if (ep16_gaobs == 4 || ep16_gaobs == 5) {
 		mes "[Bodyguard Martin]";
 		mes "I don't know why but Scarlet and Lidion have been on bad terms for a long time.";
 		next;
@@ -9197,13 +9154,13 @@ prt_cas_q,87,132,6	script	Bodyguard#ep16_1_m	4_M_JOB_KNIGHT1,{
 		mes "It is supposed to be the characteristic of the Jahas.";
 		close;
 	}
-	if (banquet_geoborg_quest > 6 && banquet_geoborg_quest <= 13) {
+	if (ep16_gaobs > 6 && ep16_gaobs <= 13) {
 		mes "[Bodyguard Martin]";
 		mes "Ernst told me that he would go to the Banquet Hall.";
 		mes "I wonder if he is still there.";
 		close;
 	}
-	if (banquet_geoborg_quest == 14) {
+	if (ep16_gaobs == 14) {
 		mes "[Bodyguard Martin]";
 		mes "Ha...";
 		close;
@@ -9214,17 +9171,14 @@ prt_cas_q,87,132,6	script	Bodyguard#ep16_1_m	4_M_JOB_KNIGHT1,{
 }
 
 prt_cas_q,85,127,3	script	Bodyguard#ep16_1_g	1_M_YOUNGKNIGHT,{
-	if (banquet_main_quest < 2) {
-		mes "[Bodyguard Martin]";
-		mes "Do you have any business left here?";
-		close;
-	}
-	if (banquet_geoborg_quest == 1) {
+	if (ep16_royal == 2 && ep16_gaobs == 0)
+		callfunc("F_geoborg_text");
+	if (ep16_gaobs == 1) {
 		mes "[Bodyguard Martin]";
 		mes "Extend the queen every courtesy.";
 		close;
 	}
-	if (banquet_geoborg_quest == 2) {
+	if (ep16_gaobs == 2) {
 		mes "[Bodyguard Jerad]";
 		mes "Please excuse me for all the trouble.";
 		next;
@@ -9259,7 +9213,7 @@ prt_cas_q,85,127,3	script	Bodyguard#ep16_1_g	1_M_YOUNGKNIGHT,{
 		mes "She is not one of the members of the family, but she knows everything about the queen.";
 		erasequest 11401;// The Geoborgs
 		setquest 11402;// The Geoborgs
-		banquet_geoborg_quest = 3;
+		ep16_gaobs = 3;
 		mes "[Bodyguard Jerad]";
 		mes "Oh!";
 		mes "The queen's sister 'Scarlet Jaha' headed to the Banquet Hall a little while ago. You may be able to meet her there.";
@@ -9268,7 +9222,7 @@ prt_cas_q,85,127,3	script	Bodyguard#ep16_1_g	1_M_YOUNGKNIGHT,{
 		mes "She is not one of the members of the family, but she knows everything about the queen.";
 		close;
 	}
-	if (banquet_geoborg_quest == 3) {
+	if (ep16_gaobs == 3) {
 		mes "[Bodyguard Jerad]";
 		mes "Oh!";
 		mes "The queen's sister 'Scarlet Jaha' headed to the Banquet Hall a little while ago. You may be able to meet her there.";
@@ -9277,7 +9231,7 @@ prt_cas_q,85,127,3	script	Bodyguard#ep16_1_g	1_M_YOUNGKNIGHT,{
 		mes "She is not one of the members of the family, but she knows everything about the queen.";
 		close;
 	}
-	if (banquet_geoborg_quest >= 4) {
+	if (ep16_gaobs > 3 && ep16_gaobs < 7) {
 		mes "[Bodyguard Jerad]";
 		mes "Scarlet is much older than the queen, but she doesn't look that old at all.";
 		next;
@@ -9285,12 +9239,12 @@ prt_cas_q,85,127,3	script	Bodyguard#ep16_1_g	1_M_YOUNGKNIGHT,{
 		mes "Of course, the queen is well along in years now as well...";
 		close;
 	}
-	if (banquet_geoborg_quest > 6 && banquet_geoborg_quest <= 13) {
+	if (ep16_gaobs > 6 && ep16_gaobs <= 13) {
 		mes "[Bodyguard Jerad]";
 		mes "I hope the queen and Ernst can take some rest now.";
 		close;
 	}
-	if (banquet_geoborg_quest == 14) {
+	if (ep16_gaobs == 14) {
 		mes "[Bodyguard Jerad]";
 		mes "After the Royal Assembly is over, the queen may turn over the throne to the new king, and go to the castle of Scarlet.";
 		next;
@@ -9298,18 +9252,15 @@ prt_cas_q,85,127,3	script	Bodyguard#ep16_1_g	1_M_YOUNGKNIGHT,{
 		mes "I am a little worried for that I have been serving under the queen my entire life.";
 		close;
 	}
+	mes "[Bodyguard Martin]";
+	mes "Do you have any business left here?";
+	close;
 }
 
 prt_cas_q,93,129,3	script	Queen#ep16_1	4_EP16_EGEO,{
-	if (banquet_main_quest < 2) {
-		mes "[Queen Catherine D. Geoborg]";
-		mes "The ink pad of the highest quality to be used in the royal debate room?";
-		mes "It is the clerk who writes down everything. Why are they buying luxury item that no one will ever use...";
-		emotion ET_FRET;
-		cutin "ep16gao_3",2;
-		close3;
-	}
-	if (banquet_geoborg_quest == 1) {
+	if (ep16_royal == 2 && ep16_gaobs == 0)
+		callfunc("F_geoborg_text");
+	if (ep16_gaobs == 1) {
 		mes "[Queen Catherine D. Geoborg]";
 		mes "Welcome.";
 		mes "I am Queen Catherine D. Geoborg.";
@@ -9354,16 +9305,17 @@ prt_cas_q,93,129,3	script	Queen#ep16_1	4_EP16_EGEO,{
 		mes "[Queen Catherine D. Geoborg]";
 		mes "If you have more questions, you may ask Jerad and Martin here.";
 		mes "Please excuse me for not sharing more time with you due to some urgent duties.";
-		erasequest 11400;// The Geoborgs
+		completequest 11400;// The Geoborgs
 		setquest 11401;// The Geoborgs
-		banquet_geoborg_quest = 2;
-		if (banquet_walther_quest >= 3 && banquet_nerius_quest >= 1 && banquet_heine_quest >= 2 && banquet_wigner_quest >= 2 && banquet_richard_quest >= 2 && banquet_geoborg_quest >= 2 && banquet_roegenburg_quest >= 2) {
+		//achievement 130000 5
+		ep16_gaobs = 2;
+		if (isbegin_quest(7682) == 1 && isbegin_quest(5402) == 2 && isbegin_quest(7683) == 2 && isbegin_quest(7684) == 2 && ep16_wal > 1 && ep16_wig > 1 && ep16_lug > 1 && ep16_gaobs > 1) {
 			completequest 7682;// Socializing Starts from an Eye Contact
 			setquest 7685;// What Is the Next Thing on the Schedule ?
 		}
 		close3;
 	}
-	if (banquet_geoborg_quest == 2) {
+	if (ep16_gaobs == 2) {
 		mes "[Queen Catherine D. Geoborg]";
 		mes "You have come here, but there isn't much that I can tell you.";
 		cutin "ep16gao_1",2;
@@ -9373,30 +9325,7 @@ prt_cas_q,93,129,3	script	Queen#ep16_1	4_EP16_EGEO,{
 		mes "Please excuse me for not sharing more time with you due to some urgent duties.";
 		close3;
 	}
-	if (banquet_geoborg_quest == 3) {
-		mes "[Queen Catherine D. Geoborg]";
-		mes "The ink pad of the highest quality to be used in the royal debate room?";
-		mes "It is the clerk who writes down everything. Why are they buying luxury item that no one will ever use...";
-		emotion ET_FRET;
-		cutin "ep16gao_3",2;
-		close3;
-	}
-	if (banquet_geoborg_quest == 4) {
-		mes "[Queen Catherine D. Geoborg]";
-		mes "Hum.. Trade request from Marol Kingdom...";
-		mes "I should dispatch an envoy to take care of it soon...";
-		cutin "ep16gao_2",2;
-		close3;
-	}
-	if (banquet_geoborg_quest == 5) {
-		mes "[Queen Catherine D. Geoborg]";
-		mes "I have enough dresses to last my lifetime. Why do they keep making them...";
-		mes "A cutback!";
-		emotion ET_FRET;
-		cutin "ep16gao_1",2;
-		close3;
-	}
-	if (banquet_geoborg_quest >= 6 && banquet_geoborg_quest <= 13) {
+	if (ep16_gaobs > 5 && ep16_gaobs < 14) {
 		mes "[Queen Catherine D. Geoborg]";
 		mes "You mean Prince Ernst?";
 		mes "Well?";
@@ -9413,7 +9342,7 @@ prt_cas_q,93,129,3	script	Queen#ep16_1	4_EP16_EGEO,{
 		mes "He could be somewhere in the Banquet Hall.";
 		close3;
 	}
-	if (banquet_geoborg_quest == 14) {
+	if (ep16_gaobs == 14) {
 		mes "[Queen Catherine D. Geoborg]";
 		mes "Haven't you met Prince Ernst yet?";
 		mes "He just stopped by and went out again...";
@@ -9432,17 +9361,39 @@ prt_cas_q,93,129,3	script	Queen#ep16_1	4_EP16_EGEO,{
 		mes "It is a problem that we, the Geoborg family, should get over ourselves.";
 		close3;
 	}
+	switch( rand(1,3) ) {
+	case 1:
+		mes "[Queen Catherine D. Geoborg]";
+		mes "The ink pad of the highest quality to be used in the royal debate room?";
+		mes "It is the clerk who writes down everything. Why are they buying luxury item that no one will ever use...";
+		emotion ET_FRET;
+		cutin "ep16gao_3",2;
+		close3;
+	case 2:
+		mes "[Queen Catherine D. Geoborg]";
+		mes "I have enough dresses to last my lifetime. Why do they keep making them...";
+		mes "A cutback!";
+		emotion ET_FRET;
+		cutin "ep16gao_1.bmp",2;
+		close3;
+	case 3:
+		mes "[Queen Catherine D. Geoborg]";
+		mes "Hum.. Trade request from Marol Kingdom...";
+		mes "I should dispatch an envoy to take care of it soon...";
+		cutin "ep16gao_2.bmp",2;
+		close3;
+	}
 }
 
 // Hall
 prt_cas,73,244,5	script	Scarlet Jaha#ep16_1	1_F_LIBRARYGIRL,{
-	if (banquet_geoborg_quest < 3) {
+	if (ep16_gaobs < 3) {
 		mes "[Scarlet Jaha]";
 		mes "Oh, what can I help you, dear adventurer?";
 		emotion ET_SMILE;
 		close;
 	}
-	if (banquet_geoborg_quest == 3) {
+	if (ep16_gaobs == 3) {
 		mes "[Scarlet Jaha]";
 		mes "Oh, what can I help you, dear adventurer?";
 		emotion ET_SMILE;
@@ -9481,10 +9432,10 @@ prt_cas,73,244,5	script	Scarlet Jaha#ep16_1	1_F_LIBRARYGIRL,{
 		mes "I couldn't risk letting a lady of the Jaha family pretend to know about the Geoborg family. I couldn't just take a rest.";
 		erasequest 11402;// The Geoborgs
 		setquest 11403;// The Geoborgs
-		banquet_geoborg_quest = 4;
+		ep16_gaobs = 4;
 		close;
 	}
-	if (banquet_geoborg_quest == 4) {
+	if (ep16_gaobs == 4) {
 		mes "[Scarlet Jaha]";
 		mes "Oh, my!";
 		mes "Lidion Geoborg!";
@@ -9496,7 +9447,7 @@ prt_cas,73,244,5	script	Scarlet Jaha#ep16_1	1_F_LIBRARYGIRL,{
 		mes "I couldn't risk letting a lady of the Jaha family pretend to know about the Geoborg family. I couldn't just take a rest.";
 		close;
 	}
-	if (banquet_geoborg_quest == 5) {
+	if (ep16_gaobs == 5) {
 		mes "[Scarlet Jaha]";
 		mes "Phew, that old jerk!";
 		mes "He is younger than me and always tries to preach!";
@@ -9523,10 +9474,10 @@ prt_cas,73,244,5	script	Scarlet Jaha#ep16_1	1_F_LIBRARYGIRL,{
 		mes "If you run into Ernst in the Banquet Hall, please tell him to come this way.";
 		erasequest 11404;// The Geoborgs
 		setquest 11405;// The Geoborgs
-		banquet_geoborg_quest = 6;
+		ep16_gaobs = 6;
 		close;
 	}
-	if (banquet_geoborg_quest >= 6 && banquet_geoborg_quest < 13) {
+	if (ep16_gaobs >= 6 && ep16_gaobs < 13) {
 		mes "[Scarlet Jaha]";
 		mes "However, Prince Ernst is nowhere to be found.";
 		mes "His aunt has come a long way to comfort her poor nephew, you know!";
@@ -9539,7 +9490,12 @@ prt_cas,73,244,5	script	Scarlet Jaha#ep16_1	1_F_LIBRARYGIRL,{
 		mes "If you run into Ernst in the Banquet Hall, please tell him to come this way.";
 		close;
 	}
-	if (banquet_geoborg_quest == 13) {
+	if (ep16_gaobs == 13) {
+		if (checkweight(1119,3) == 0) {
+			mes "- You have too many items in possession.";
+			mes "Please organize your inventory and try again. -";
+			close;
+		}
 		mes "[Scarlet Jaha]";
 		mes "Oh!";
 		mes "Haven't you found him yet?";
@@ -9560,12 +9516,12 @@ prt_cas,73,244,5	script	Scarlet Jaha#ep16_1	1_F_LIBRARYGIRL,{
 		mes "[Scarlet Jaha]";
 		mes "What a waste to let the banquet end like this!";
 		getexp 700000,700000;
-		getitem 6919,10;// Honor Token
+		getitem 6919,10;// TokenOfHonor
 		completequest 11412;// The Geoborgs
-		banquet_geoborg_quest = 14;
+		ep16_gaobs = 14;
 		close;
 	}
-	if (banquet_geoborg_quest > 13) {
+	if (ep16_gaobs > 13) {
 		mes "[Scarlet Jaha]";
 		mes "Oh, hero!";
 		mes "Are you having a good time?";
@@ -9578,13 +9534,7 @@ prt_cas,73,244,5	script	Scarlet Jaha#ep16_1	1_F_LIBRARYGIRL,{
 }
 
 prt_cas,82,240,3	script	Lidion Geoborg#ep16_1	4_M_DOCTOR,{
-	if (banquet_geoborg_quest < 4) {
-		mes "[Lidion Geoborg]";
-		mes "Tut...";
-		mes "Letting anybody in like this... The dignity of the palace has fallen down to the ground.";
-		close;
-	}
-	if (banquet_geoborg_quest == 4) {
+	if (ep16_gaobs == 4) {
 		mes "[Lidion Geoborg]";
 		mes "We, the Geoborg family, is one of the seven royal families, but we are the creme de la creme for producing the highest number of kings in the history.";
 		next;
@@ -9630,10 +9580,10 @@ prt_cas,82,240,3	script	Lidion Geoborg#ep16_1	4_M_DOCTOR,{
 		npctalk "Arghhhh!";
 		erasequest 11403;// The Geoborgs
 		setquest 11404;// The Geoborgs
-		banquet_geoborg_quest = 5;
+		ep16_gaobs = 5;
 		close;
 	}
-	if (banquet_geoborg_quest >= 5 && banquet_geoborg_quest <= 13) {
+	if (ep16_gaobs >= 5 && ep16_gaobs <= 13) {
 		mes "[Lidion Geoborg]";
 		mes "Arghhhh!";
 		mes "I won't let this punk... Ernst....!";
@@ -9648,18 +9598,16 @@ prt_cas,82,240,3	script	Lidion Geoborg#ep16_1	4_M_DOCTOR,{
 		npctalk "Arghhhh!";
 		close;
 	}
-	if (banquet_geoborg_quest > 13) {
-		mes "[Lidion Geoborg]";
-		mes "Tut...";
-		mes "Letting anybody in like this... The dignity of the palace has fallen down to the ground.";
-		close;
-	}
+	mes "[Lidion Geoborg]";
+	mes "Tut...";
+	mes "Letting anybody in like this... The dignity of the palace has fallen down to the ground.";
+	close;
 }
 
 prt_cas,76,258,0	script	#ep16_1Whisper1	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch:
-	if (banquet_geoborg_quest == 6) {
+	if (ep16_gaobs == 6) {
 		mes "[Mumbling Sound]";
 		mes "Did you hear the story?";
 		mes "The skeleton of King Tristan III has been found.";
@@ -9672,7 +9620,7 @@ OnTouch:
 		mes "It is a secret. Don't tell anyone.";
 		erasequest 11405;// The Geoborgs
 		setquest 11406;// The Geoborgs
-		banquet_geoborg_quest = 7;
+		ep16_gaobs = 7;
 		close;
 	}
 }
@@ -9680,7 +9628,7 @@ OnTouch:
 prt_cas,84,232,0	script	#ep16_1Whisper2	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch:
-	if (banquet_geoborg_quest == 7) {
+	if (ep16_gaobs == 7) {
 		mes "[Mumbling Sound]";
 		mes "...So the princes must have been poisoned...";
 		next;
@@ -9689,7 +9637,7 @@ OnTouch:
 		mes "Well, in the last Royal Assembly...";
 		erasequest 11406;// The Geoborgs
 		setquest 11407;// The Geoborgs
-		banquet_geoborg_quest = 8;
+		ep16_gaobs = 8;
 		close;
 	}
 }
@@ -9697,7 +9645,7 @@ OnTouch:
 prt_cas,110,242,0	script	#ep16_1Whisper3	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch:
-	if (banquet_geoborg_quest == 8) {
+	if (ep16_gaobs == 8) {
 		mes "[Mumbling Sound]";
 		mes "Ha!";
 		mes "He has given up the royal authority like that!";
@@ -9717,7 +9665,7 @@ OnTouch:
 		mes "How can he decide such a major issue as he wants?";
 		erasequest 11407;// The Geoborgs
 		setquest 11408;// The Geoborgs
-		banquet_geoborg_quest = 9;
+		ep16_gaobs = 9;
 		close;
 	}
 }
@@ -9725,12 +9673,12 @@ OnTouch:
 prt_cas,111,218,0	script	#ep16_1Whisper4	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch:
-	if (banquet_geoborg_quest == 9) {
+	if (ep16_gaobs == 9) {
 		mes "[Mumbling Sound]";
 		mes "I knew it. He has been hanging out with that punk from the third-rate family too long...";
 		erasequest 11408;// The Geoborgs
 		setquest 11409;// The Geoborgs
-		banquet_geoborg_quest = 10;
+		ep16_gaobs = 10;
 		close;
 	}
 }
@@ -9738,7 +9686,7 @@ OnTouch:
 prt_cas,92,224,0	script	#ep16_1Whisper5	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch:
-	if (banquet_geoborg_quest == 10) {
+	if (ep16_gaobs == 10) {
 		mes "[Mumbling Sound]";
 		mes "So is the queen who is handling all the matters of the palace now?";
 		next;
@@ -9746,7 +9694,7 @@ OnTouch:
 		mes "She hasn't showed her presence to the public so far...";
 		erasequest 11409;// The Geoborgs
 		setquest 11410;// The Geoborgs
-		banquet_geoborg_quest = 11;
+		ep16_gaobs = 11;
 		close;
 	}
 }
@@ -9754,7 +9702,7 @@ OnTouch:
 prt_cas,77,223,0	script	#ep16_1Whisper6	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch:
-	if (banquet_geoborg_quest == 11) {
+	if (ep16_gaobs == 11) {
 		mes "[Mumbling Sound]";
 		mes "How foolish it is to give up the regal power like that!";
 		next;
@@ -9770,7 +9718,7 @@ OnTouch:
 		mes "I am free to dream!";
 		erasequest 11410;// The Geoborgs
 		setquest 11411;// The Geoborgs
-		banquet_geoborg_quest = 12;
+		ep16_gaobs = 12;
 		close;
 	}
 }
@@ -9778,7 +9726,7 @@ OnTouch:
 prt_cas,93,226,0	script	#ep16_1Whisper7	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch:
-	if (banquet_geoborg_quest == 12) {
+	if (ep16_gaobs == 12) {
 		mes "[Mumbling Sound]";
 		mes "Is the Geoborg family cursed?";
 		next;
@@ -9787,7 +9735,7 @@ OnTouch:
 		mes "You shouldn't say such a thing so easily!";
 		erasequest 11411;// The Geoborgs
 		setquest 11412;// The Geoborgs
-		banquet_geoborg_quest = 13;
+		ep16_gaobs = 13;
 		close;
 	}
 }
