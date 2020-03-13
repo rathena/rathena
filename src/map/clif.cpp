@@ -3951,7 +3951,7 @@ void clif_changeoption_target(struct block_list* bl, struct block_list *target)
 
 	struct map_session_data *sd = BL_CAST(BL_PC, bl);
 	unsigned char buf[32];
-#if PAKCETVER >= 7
+#if PACKETVER >= 7
 	int cmd = 0x229;
 #else
 	int cmd = 0x119;
