@@ -32,11 +32,11 @@ function	script	F_Mysterious_box	{
 
 // Main Quest
 prontera,121,72,3	script	Royal Messenger#e16_pr	4_M_ZONDAOYAJI,5,5,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,5) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
 	}
-	switch( banquet_main_quest ) {
+	switch( ep16_royal ) {
 	case 0:
 		if (BaseLevel < 100 || (ep13_ryu < 100 && ep13_start < 100)) {// Access to the New World pre-req (Onward to the New World Quest or Cat Paw Agent Quest)
 			mes "[Royal Messenger]";
@@ -83,9 +83,9 @@ prontera,121,72,3	script	Royal Messenger#e16_pr	4_M_ZONDAOYAJI,5,5,{
 		mes "[Royal Messenger]";
 		mes "Make sure to bring the invitation with you. Don't forget!";
 		mes "Why don't you go right now? ^4d4dffI can teleport you there now if you want^000000.";
-		getitem 6933,1;// Banquet Invitation
+		getitem 6933,1;// Banquet_Invitation
 		setquest 7681;// Invitation to Royal Banquet
-		banquet_main_quest = 1;
+		ep16_royal = 1;
 		next;
 		if (select( "I'll go on my own.", "I'll go right away." ) == 1) {
 			mes "[Royal Messenger]";
@@ -145,7 +145,7 @@ prontera,121,72,3	script	Royal Messenger#e16_pr	4_M_ZONDAOYAJI,5,5,{
 	}
 
 OnTouch:
-	if (banquet_main_quest == 0 && BaseLevel > 99 && (ep13_ryu > 99 || ep13_start > 99))
+	if (ep16_royal == 0 && BaseLevel > 99 && (ep13_ryu > 99 || ep13_start > 99))
 		npctalk "Wait! You must be... " + strcharinfo(0) + ". I have something to tell you!", "", bc_self;
 	else
 		npctalk "I am looking for the hero who returned from the expedition...", "", bc_self;
@@ -162,7 +162,7 @@ yuno,162,132,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_yu	4_M_ZOND
 lighthalzen,152,100,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_lh	4_M_ZONDAOYAJI,5,5
 
 prontera,150,331,4	script	Royal Guard#ep16_ect01	8W_SOLDIER,4,4,{
-	if (banquet_main_quest == 1) {
+	if (ep16_royal == 1) {
 		mes "[Guard]";
 		mes "Here comes the hero!";
 		mes "The Banquet Hall is inside the palace. You may follow the passage to get there.";
@@ -173,7 +173,7 @@ prontera,150,331,4	script	Royal Guard#ep16_ect01	8W_SOLDIER,4,4,{
 	end;
 
 OnTouch:
-	if (banquet_main_quest > 0) {
+	if (ep16_royal > 0) {
 		npctalk "Eternal glory to the hero of the Midgards!", "Royal Guard#ep16_ect01", bc_self;
 		npctalk "Eternal glory to the hero of the Midgards!", "Royal Guard#ep16_ect02", bc_self;
 	}
@@ -184,18 +184,18 @@ prontera,161,331,4	duplicate(Royal Guard#ep16_ect01)	Royal Guard#ep16_ect02	8W_S
 prt_cas,215,146,0	script	#ep16_evt_01_on	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
-	if (banquet_main_quest == 1) {
+	if (isbegin_quest(7681) == 1) {
+		cloakoffnpc "Chamberlain Bell#ep16_01", getcharid(0);
 		setpcblock PCBLOCK_NPC, true;
-		classchange( 4_M_RUSMAN1, "Chamberlain Bell#ep16_0_0", bc_self );
-		sleep2 2000;
-		npctalk "I've been waiting for you. Sir " + strcharinfo(0) + "...", "Chamberlain Bell#ep16_0_0", bc_self;
+		sleep2 3000;
 		setpcblock PCBLOCK_NPC, false;
+		npctalk "I've been waiting for you. Sir " + strcharinfo(0) + "...", "Chamberlain Bell#ep16_01", bc_self;
 	}
 	end;
 }
 
-prt_cas,217,150,3	script	Chamberlain Bell#ep16_0_0	HIDDEN_WARP_NPC,{
-	if (banquet_main_quest == 1) {
+prt_cas,217,150,3	script	Chamberlain Bell#ep16_01	4_M_RUSMAN1,{
+	if (isbegin_quest(7681) == 1) {
 		mes "[Chamberlain Bell]";
 		mes "You must be Sir " + strcharinfo(0) + "... Am I right?";
 		mes "You are here at last.";
@@ -214,24 +214,30 @@ prt_cas,217,150,3	script	Chamberlain Bell#ep16_0_0	HIDDEN_WARP_NPC,{
 		mes "Let me go ahead and mall all the preparations.";
 		mes "Come with me, please.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc "Chamberlain Bell#ep16_01", getcharid(0);
 		end;
 	}
+	end;
+OnInit:
+	cloakonnpc "Chamberlain Bell#ep16_01";
+	cloakonnpc "Chamberlain Bell#ep16_02";
+	cloakonnpc "Chamberlain Bell#ep16_03";
+	end;
 }
 
 // Corridor left
 prt_cas,163,163,0	script	#ep16_evt_02_on	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch:
-	if (banquet_main_quest == 1) {
-		classchange( 4_M_RUSMAN1, "Chamberlain Bell#ep16_0_1", bc_self );
-		npctalk "This way. Sir " + strcharinfo(0) + "...", "Chamberlain Bell#ep16_0_1", bc_self;
+	if (isbegin_quest(7681) == 1) {
+		cloakoffnpc "Chamberlain Bell#ep16_02", getcharid(0);
+		npctalk "This way. Sir " + strcharinfo(0) + "...", "Chamberlain Bell#ep16_02", bc_self;
 	}
 	end;
 }
 
-prt_cas,155,165,4	script	Chamberlain Bell#ep16_0_1	HIDDEN_WARP_NPC,{
-	if (banquet_main_quest == 1) {
+prt_cas,155,165,4	script	Chamberlain Bell#ep16_02	4_M_RUSMAN1,{
+	if (isbegin_quest(7681) == 1) {
 		mes "[Chamberlain Bell]";
 		mes "The special guestroom is prepared this way.";
 		mes "It is the ^4d4dfffirst room^000000 you'll see in there.";
@@ -240,7 +246,7 @@ prt_cas,155,165,4	script	Chamberlain Bell#ep16_0_1	HIDDEN_WARP_NPC,{
 		mes "Let me tell you the story in detail after moving into the room.";
 		mes "Come this way.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc "Chamberlain Bell#ep16_02", getcharid(0);
 	}
 	end;
 }
@@ -248,29 +254,37 @@ prt_cas,155,165,4	script	Chamberlain Bell#ep16_0_1	HIDDEN_WARP_NPC,{
 prt_cas_q,150,8,0	script	#ep16_evt_03_on	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
-	if (banquet_main_quest == 1) {
-		classchange( 4_M_RUSMAN1, "Chamberlain Bell#ep16_0_2", bc_self );
-		npctalk "This way. Sir " + strcharinfo(0) + "...", "Chamberlain Bell#ep16_0_2", bc_self;
+	if (isbegin_quest(7681) == 1) {
+		cloakoffnpc "Chamberlain Bell#ep16_03", getcharid(0);
+		npctalk "This way. Sir " + strcharinfo(0) + "...", "Chamberlain Bell#ep16_03", bc_self;
 	}
 	end;
 }
 
-prt_cas_q,135,10,4	script	Chamberlain Bell#ep16_0_2	HIDDEN_WARP_NPC,{
-	if (banquet_main_quest == 1) {
+prt_cas_q,135,10,4	script	Chamberlain Bell#ep16_03	4_M_RUSMAN1,{
+	if (isbegin_quest(7681) == 1) {
 		mes "[Chamberlain Bell]";
 		mes "Let me tell you about the detailed schedule inside.";
 		mes "Let's go inside.";
-		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
 	}
+	else {
+		mes "[Chamberlain Bell]";
+		mes "I'll be waiting for you here in this room at all times.";
+		mes "You may find me when you need a help.";
+	}
+	close2;
+	cloakonnpc "Chamberlain Bell#ep16_03", getcharid(0);
 	end;
 }
 
 // Belle Room
-prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
-	switch( banquet_main_quest ) {
+prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_main	4_M_RUSMAN1,{
+	switch( ep16_royal ) {
 	case 0:
-		end;
+		mes "[Belle]";
+		mes "This is the guest room for the officially invited guest.";
+		mes "Since this place forbids the access of outsiders, please leave.";
+		close;
 	case 1:
 		if (countitem(6933) > 0)
 			delitem 6933,1;// Banquet_Invitation
@@ -349,7 +363,7 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 		mes "You need to exchange greetings with the members of each families so make sure to visit them all.";
 		erasequest 7681;// Invitation to Royal Banquet
 		setquest 7682;// Socializing Starts from an Eye Contact
-		banquet_main_quest = 2;
+		ep16_royal = 2;
 		close;
 	case 2:
 		if (isbegin_quest(7682) != 2) {// Socializing Starts from an Eye Contact
@@ -411,8 +425,8 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 		erasequest 7685;// What Is the Next Thing on the Schedule ?
 		setquest 7687;// Participating in the Banquet
 		getexp 300000,300000;
-		getitem 6919,10;// Honor_Token
-		banquet_main_quest = 3;
+		getitem 6919,10;// TokenOfHonor
+		ep16_royal = 3;
 		next;
 		mes "[Belle]";
 		mes "When the time comes, the Court Mage will come to guide you. You may enjoy the banquet by then.";
@@ -439,33 +453,34 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 		mes "By the way, the Court Mage has visited just before.";
 		mes "The Court Magician will be back soon after visiting other families.";
 		next;
-		npctalk "Yeah! Here comes Nillem the genius mage!", "Court Mage Nillem#ep16_1", bc_self;
+		cloakoffnpc "Court Mage Nillem#ep16_wiz01", getcharid(0);
+		npctalk "Yeah! Here comes Nillem the genius mage!", "Court Mage Nillem#ep16_wiz01", bc_self;
+		sleep2 1000;
 		mes "[Belle]";
 		mes "There... Is the magician.";
 		mes "The Court Mage will give you the details.";
 		erasequest 7691;// Waiting for the Ritual
 		setquest 7692;// Attend the Ritual
-		banquet_main_quest = 8;
-		classchange( 4_M_JOB_WIZARD, "Court Mage Nillem#ep16_1", bc_self );
+		ep16_royal = 8;
 		sleep2 3000;
-		npctalk "You must be the famous " + strcharinfo(0) + "!", "Court Mage Nillem#ep16_1", bc_self;
+		npctalk "You must be the famous " + strcharinfo(0) + "!", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 3000;
-		npctalk "Oh, nice to meet you.", "Court Mage Nillem#ep16_1", bc_self;
+		npctalk "Oh, nice to meet you.", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 3000;
-		npctalk "There are a lot of things that I would like to talk about with you...", "Court Mage Nillem#ep16_1", bc_self;
+		npctalk "There are a lot of things that I would like to talk about with you...", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 3000;
-		npctalk "But I guess we don't have enough time for that.", "Court Mage Nillem#ep16_1", bc_self;
+		npctalk "But I guess we don't have enough time for that.", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 3000;
-		npctalk "Let's move to the Room of Consciousness now.", "Court Mage Nillem#ep16_1", bc_self;
+		npctalk "Let's move to the Room of Consciousness now.", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 3000;
-		npctalk "Don't be surprised by the sudden disappearance!", "Court Mage Nillem#ep16_1", bc_self;
+		npctalk "Don't be surprised by the sudden disappearance!", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 3000;
-		npctalk "Three!", "Court Mage Nillem#ep16_1", bc_self;
+		npctalk "Three!", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 1000;
-		npctalk "Two!", "Court Mage Nillem#ep16_1", bc_self;
+		npctalk "Two!", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 1000;
-		npctalk "One!", "Court Mage Nillem#ep16_1", bc_self;
-		sleep2 1000;
+		npctalk "One!", "Court Mage Nillem#ep16_wiz01", bc_self;
+		sleep2 500;
 		warp "prt_lib",89,44;
 		end;
 	case 8:
@@ -474,29 +489,30 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 	case 11:
 	case 12:
 	case 13:
-		setpcblock PCBLOCK_NPC, true;
 		npctalk "You are back already?", "", bc_self;
+		setpcblock PCBLOCK_NPC, true;
 		sleep2 1000;
-		classchange( 4_M_JOB_WIZARD, "Court Mage Nillem#ep16_1", bc_self );
-		npctalk "Oh! Here you are!", "Court Mage Nillem#ep16_1", bc_self;
+		cloakoffnpc "Court Mage Nillem#ep16_wiz01", getcharid(0);
+		npctalk "Oh! Here you are!", "Court Mage Nillem#ep16_wiz01", bc_self;
+		sleep2 500;
 		npctalk "Eh?", "", bc_self;
 		sleep2 3000;
-		npctalk "Oh, there must have been a mistake!", "Court Mage Nillem#ep16_1", bc_self;
+		npctalk "Oh, there must have been a mistake!", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 3000;
-		npctalk "Well, let's go back! You shouldn't be here now!", "Court Mage Nillem#ep16_1", bc_self;
+		npctalk "Well, let's go back! You shouldn't be here now!", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 3000;
-		npctalk "Let's count it as my mistake this time-", "Court Mage Nillem#ep16_1", bc_self;
+		npctalk "Let's count it as my mistake this time-", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 3000;
-		npctalk "Let's move to the Room of Consciousness now.", "Court Mage Nillem#ep16_1", bc_self;
+		npctalk "Let's move to the Room of Consciousness now.", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 3000;
-		npctalk "Are you ready?", "Court Mage Nillem#ep16_1", bc_self;
+		npctalk "Are you ready?", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 3000;
-		npctalk "Three!", "Court Mage Nillem#ep16_1", bc_self;
+		npctalk "Three!", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 1000;
-		npctalk "Two!", "Court Mage Nillem#ep16_1", bc_self;
+		npctalk "Two!", "Court Mage Nillem#ep16_wiz01", bc_self;
 		sleep2 1000;
-		npctalk "One!", "Court Mage Nillem#ep16_1", bc_self;
-		sleep2 1000;
+		npctalk "One!", "Court Mage Nillem#ep16_wiz01", bc_self;
+		sleep2 500;
 		setpcblock PCBLOCK_NPC, false;
 		warp "prt_lib",89,44;
 		end;
@@ -531,7 +547,7 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 		mes "[Belle]";
 		mes "She asked me to let her know as soon as you come. Shall I send her a message now?";
 		erasequest 7696;// What's Next?
-		banquet_main_quest = 15;
+		ep16_royal = 15;
 		next;
 		if (select( "I'll visit her now.", "I'll visit her later." ) == 2) {
 			mes "[Belle]";
@@ -542,26 +558,25 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 		mes "[Belle]";
 		mes "Let me send the message now.";
 		mes "Good bye.";
-		banquet_main_quest = 16;
 		setquest 7697;// Invitation from the Nerius
 		close;
 	case 15:
-		mes "[Belle]";
-		mes "Would you accept the invitation from the Nerius family now?";
-		next;
-		if (select( "I'll visit her now.", "I'll visit her later." ) == 2) {
+		if (isbegin_quest(7697) == 0) {
 			mes "[Belle]";
-			mes "Let me know when you are ready.";
-			mes "I'll send her the message then.";
+			mes "Would you accept the invitation from the Nerius family now?";
+			next;
+			if (select( "I'll visit her now.", "I'll visit her later." ) == 2) {
+				mes "[Belle]";
+				mes "Let me know when you are ready.";
+				mes "I'll send her the message then.";
+				close;
+			}
+			mes "[Belle]";
+			mes "Let me send the message now.";
+			mes "Good bye.";
+			setquest 7697;// Invitation from the Nerius
 			close;
 		}
-		mes "[Belle]";
-		mes "Let me send the message now.";
-		mes "Good bye.";
-		banquet_main_quest = 16;
-		setquest 7697;// Invitation from the Nerius
-		close;
-	case 16:
 		mes "[Belle]";
 		mes "The Nerius family stays in the second room from this room.";
 		mes "The room next to the room of the Heine family.";
@@ -569,12 +584,12 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 		mes "[Belle]";
 		mes "I have sent the message that you would visit them soon. You may go there anytime.";
 		close;
-	case 17:
+	case 16:
 		mes "[Belle]";
 		mes "There has been a request from the Heine family to meet you.";
 		mes "They asked you to visit the Heine family as soon as you come back.";
 		close;
-	case 18:
+	case 17:
 		mes "[Belle]";
 		mes "Oh, you are back!";
 		mes "Let me call the Mage.";
@@ -584,22 +599,14 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 		mes "Court Mage Nillem opened the door and left right away.";
 		mes "Saying, 'Where are you?' " + strcharinfo(0) + " The magician must be looking for you.";
 		close2;
+		cloakoffnpc "Court Mage Nillem#ep16_wiz01", getcharid(0);
+		npctalk "There you are!", "Court Mage Nillem#ep16_wiz01", bc_self;
 		setpcblock PCBLOCK_NPC, true;
-		sleep2 50;
-		classchange( 4_M_JOB_WIZARD, "Court Mage Nillem#ep16_1", bc_self );
-		npctalk "There you are!", "Court Mage Nillem#ep16_1", bc_self;
-		sleep2 50;
-		npctalk "What an impeccable timing...", bc_self;
+		sleep2 500;
 		setpcblock PCBLOCK_NPC, false;
+		npctalk "What an impeccable timing...", bc_self;
 		end;
-	case 19:
-	case 20:
-	case 21:
-	case 22:
-	case 23:
-	case 24:
-	case 25:
-	case 26:
+	default:
 		mes "[Chamberlain]";
 		mes "I am at your service.";
 		next;
@@ -611,32 +618,36 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 			mes "I have just sent a message. The magician will arrive here soon.";
 			close2;
 			setpcblock PCBLOCK_NPC, true;
-			sleep2 1000;
-			classchange( 4_M_JOB_WIZARD, "Court Mage Nillem#ep16_1", bc_self );
-			if (banquet_main_quest < 25) {
-				npctalk "Thank you for using the million-call ticket today!", "Court Mage Nillem#ep16_1", bc_self;
+			sleep2 500;
+			cloakoffnpc "Court Mage Nillem#ep16_wiz01", getcharid(0);
+			sleep2 500;
+			if (ep16_royal < 24) {
+				npctalk "Thank you for using the million-call ticket today!", "Court Mage Nillem#ep16_wiz01", bc_self;
 				sleep2 3000;
-				npctalk "You must have missed me so much-", "Court Mage Nillem#ep16_1", bc_self;
+				npctalk "You must have missed me so much-", "Court Mage Nillem#ep16_wiz01", bc_self;
 				sleep2 3000;
-				npctalk "I am almost falling for your merciless calls...", "Court Mage Nillem#ep16_1", bc_self;
+				npctalk "I am almost falling for your merciless calls...", "Court Mage Nillem#ep16_wiz01", bc_self;
 				sleep2 3000;
-				npctalk "Just kidding.", "Court Mage Nillem#ep16_1", bc_self;
+				npctalk "Just kidding.", "Court Mage Nillem#ep16_wiz01", bc_self;
 				sleep2 3000;
-				npctalk "Shall we get going now?", "Court Mage Nillem#ep16_1", bc_self;
+				npctalk "Shall we get going now?", "Court Mage Nillem#ep16_wiz01", bc_self;
 			}
 			else {
-				switch( rand(4) ) {
+				switch( rand(5) ) {
 				case 0:
-					npctalk "I was wondering when you'd call me! I knew you would-", "Court Mage Nillem#ep16_1", bc_self;
+					npctalk "I was wondering when you'd call me! I knew you would-", "Court Mage Nillem#ep16_wiz01", bc_self;
 					break;
 				case 1:
-					npctalk "I am thrilled that you called me so mercilessly-", "Court Mage Nillem#ep16_1", bc_self;
+					npctalk "I am thrilled that you called me so mercilessly-", "Court Mage Nillem#ep16_wiz01", bc_self;
 					break;
 				case 2:
-					npctalk "Haha, we are going again! To the past!", "Court Mage Nillem#ep16_1", bc_self;
+					npctalk "Haha, we are going again! To the past!", "Court Mage Nillem#ep16_wiz01", bc_self;
 					break;
 				case 3:
-					npctalk "Thank you for using the million-call ticket today!", "Court Mage Nillem#ep16_1", bc_self;
+					npctalk "Thank you for using the million-call ticket today!", "Court Mage Nillem#ep16_wiz01", bc_self;
+					break;
+				case 4:
+					npctalk "Here comes Genius Mage Nillem!", "Court Mage Nillem#ep16_wiz01", bc_self;
 					break;
 				}
 			}
@@ -648,11 +659,22 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 			close;
 		case 3:
 			mes "[Belle]";
-			mes "Here is some strong mint tea mixed with milk and chocolate chips. A great after-meal treat.";
+			.@r = rand(1,5);
+			if (.@r == 1)
+				mes "Here are some chamomile tea and ginger cookies. They will help you take a rest and get recovered from fatigue.";
+			else if (.@r == 2)
+				mes "You seemed hungry, so I have prepared some afternoon tea, scones and clotted cream.";
+			else if (.@r == 3)
+				mes "Here are some chocolate and cinnamon-flavored rooibos tea for refreshment.";
+			else if (.@r == 4)
+				mes "Here is some strong mint tea mixed with milk and chocolate chips. A great after-meal treat.";
+			else
+				mes "Here is some cold milk with citron jelly and cream. It is a sweet and sour drink.";
 			mes "Do you like it?";
 			next;
 			specialeffect2 EF_SANCTUARY;
 			mes "^4d4dff All HP and SP are recovered!";
+			percentheal 100,100;
 			close;
 		case 4:
 			mes "[Belle]";
@@ -665,7 +687,10 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 				mes "You want the Kafra Service.";
 				mes "Let me make a call right away.";
 				close2;
-				classchange( 4_F_KAFRA2, "Kafra Employee#ep16_s01", bc_self );
+				setpcblock PCBLOCK_NPC, true;
+				sleep2 500;
+				setpcblock PCBLOCK_NPC, false;
+				cloakoffnpc "Kafra Employee#ep16_s01", getcharid(0);
 				npctalk "Kafra Service.", "Kafra Employee#ep16_s01", bc_self;
 				end;
 			case 2:
@@ -673,82 +698,98 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 				mes "You need a Giant Beast Manager.";
 				mes "Let me make a call right away.";
 				close2;
-				classchange( 8W_SOLDIER, "Giant Beast Manager#ep16_s01", bc_self );
-				npctalk "I am at your service.", "Giant Beast Manager#ep16_s01", bc_self;
+				setpcblock PCBLOCK_NPC, true;
+				sleep2 500;
+				setpcblock PCBLOCK_NPC, false;
+				cloakoffnpc "Giant Beast Manager#ep16_s02", getcharid(0);
+				npctalk "I am at your service.", "Giant Beast Manager#ep16_s02", bc_self;
 				end;
 			case 3:
 				mes "[Belle]";
 				mes "I see.";
-				close;
+				close2;
+				cloakonnpc "Kafra Employee#ep16_s01", getcharid(0);
+				cloakonnpc "Giant Beast Manager#ep16_s02", getcharid(0);
+				end;
 			}
 		}
 	}
 }
 
-prt_cas_q,29,30,3	script	Giant Beast Manager#ep16_s01	HIDDEN_WARP_NPC,{
-	if (getskilllv("KN_RIDING") < 1 || ismounting() == 1) {// ismounting custom
-		mes "[Giant Beast Manager]";
+prt_cas_q,29,30,3	script	Giant Beast Manager#ep16_s02	8W_SOLDIER,{
+	.@thirdmask = eaclass() & EAJ_THIRDMASK;
+	if (.@thirdmask != EAJ_RUNE_KNIGHT && .@thirdmask != EAJ_ROYAL_GUARD) {
 		mes "I am managing the Dragons and Griffons for the Rune Knights and Royal Guards.";
 		close;
 	}
-	.@job = ( (eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT );
 	mes "[Giant Beast Manager]";
-	if (.@job == 1)
-		mes "Thank you for calling me. Shall I bring a Dragon for you?";
+	if (.@thirdmask == EAJ_RUNE_KNIGHT)
+		.@string$ = "Dragon";
 	else
-		mes "Thank you for calling me. Shall I bring a Griffon for you?";// custom
+		.@string$ = "Griffon";
+	mes "Thank you for calling me. Shall I bring a " + .@string$ + " for you?";
 	next;
 	if (select( "Use", "Cancel" ) == 2) {
 		mes "[Giant Beast Manager]";
 		mes "I see. Then, good bye.";
-		close;
+		close2;
+		cloakonnpc "Giant Beast Manager#ep16_s02", getcharid(0);
+		end;
 	}
-	if (checkriding() == 1 || checkdragon() == 1) {
+	if (getskilllv("KN_RIDING") < 1) {
 		mes "[Giant Beast Manager]";
-		if (.@job == 1)
-			mes "You are already using a Dragon.";
-		else
-			mes "You are already using a Griffon.";
+		mes "You need to learn how to ride a " + .@string$ + " first.";
 		close;
 	}
-	if (.@job == 1)
-		setdragon;
+	if (checkriding() || checkdragon()) {
+		mes "[Giant Beast Manager]";
+		mes "You are already using a " + .@string$ + ".";
+		close;
+	}
+	if (ismounting()) {
+		mes "[Giant Beast Manager]";
+		mes "You are already riding something else.";
+		mes "You need to take off the ride to ride a " + .@string$ + ".";
+		close;
+	}
+	if (.@thirdmask == EAJ_RUNE_KNIGHT)
+		setdragon();
 	else
-		setriding;
+		setriding();
+	close;
 }
 
-prt_cas_q,28,30,3	script	Kafra Employee#ep16_s01	HIDDEN_WARP_NPC,{
-	cutin "kafra_02",2;
+prt_cas_q,28,30,3	script	Kafra Employee#ep16_s01	4_F_KAFRA2,{
+	cutin "kafra_02.bmp",2;
 	mes "[Kafra Employee]";
 	mes "Hello. This is Kafra Service.";
 	mes "What can I do for you?";
 	next;
 	switch( select( "Use Cargo Service", "Use Cart Service", "Quit" ) ) {
 	case 1:
-		if (callfunc("F_CanOpenStorage") == 0) {// custom
-			mes "I'm sorry, but you";
-			mes "need the Novice's";
-			mes "Basic Skill Level 6 to";
-			mes "use the Storage Service.";
-			close3;
-		}
-		if (countitem(7060) > 0)
-			delitem 7060,1;// Warp_Free_Ticket
-		else if (Zeny < 500) {
+		if (!callfunc("F_CanOpenStorage")) {
 			mes "[Kafra Employee]";
-			mes "I'm sorry, but you don't";
-			mes "have enough zeny to use";
-			mes "the Storage Service. Our";
-			mes "Storage access fee is 500 zeny.";
+			mes "I am sorry, dear customer.";
+			mes "You need to raise the novice skill level to 6 or higher to use the cargo service.";
 			close3;
 		}
+		if (countitem(7059) == 0 && Zeny < 50) {
+			mes "[Kafra Employee]";
+			mes "You don't have enough money.";
+			mes "The Cargo Service costs 50 Zeny.";
+			close3;
+	}
+		if (countitem(7059) != 0)
+			delitem 7059,1;	// Cargo_Free_Ticket
 		else
-			Zeny = Zeny - 500;
-		openstorage;
+			Zeny -= 50;
 		mes "[Kafra Employee]";
 		mes "Let me open the warehouse for you.";
 		mes "Thank you for using Kafra Service.";
-		close3;
+		close2;
+		cutin "",255;
+		openstorage;
+		end;
 	case 2:
 		if (BaseClass != Job_Merchant) {
 			mes "[Kafra Employee]";
@@ -756,46 +797,50 @@ prt_cas_q,28,30,3	script	Kafra Employee#ep16_s01	HIDDEN_WARP_NPC,{
 			mes "The Cart Service is available for Merchant classes only.";
 			close3;
 		}
-		if (getskilllv("MC_PUSHCART") == 0) {// custom
-			mes "[Kafra Employee]";
-			mes "You can only rent a cart after";
-			mes "learning the Pushcart Skill.";
-			close3;
-		}
-		if (checkcart() == 1) {
+		if (checkcart() == true) {
 			mes "[Kafra Employee]";
 			mes "You are already equipped with a cart.";
+			close3;
+		}
+		if (getskilllv("MC_PUSHCART") == 0) {
+			mes "[Kafra Employee]";
+			mes "You can use the cart after learning the 'Push Cart' skill.";
+			close3;
+		}
+		if (countitem(7061) > 0) {
+			delitem 7061,1;	// Cart_Free_Ticket
+			setcart();
 			close3;
 		}
 		mes "[Kafra Employee]";
 		mes "The Cart Service costs 800 Zeny.";
 		mes "Would you use it?";
 		next;
-		if (select( "Use", "Cancel" ) == 1) {
-			if (countitem(7061) > 0) {
-				delitem 7061,1;// Cart_Free_Ticket
-				setcart();
-			}
-			else if (Zeny < 800) {
-				mes "[Kafra Employee]";
-				mes "You don't have enough money, dear customer.";
-				mes "The Cart Service costs 800 Zeny.";
-			}
-			else {
-				Zeny = Zeny - 800;
-				setcart();
-			}
+		if (select( "Use", "Cancel" ) == 2)
+			close3;
+		if (Zeny < 800) {
+			mes "[Kafra Employee]";
+			mes "You don't have enough money, dear customer.";
+			mes "The Cart Service costs 800 Zeny.";
+			close3;
 		}
+		RESRVPTS += 8;
+		Zeny -= 800;
+		setcart();
 		close3;
 	case 3:
 		mes "[Kafra Employee]";
 		mes "Thank you for using Kafra Service as always.";
-		close3;
+		close2;
+		cutin "",255;
+		cloakonnpc "Kafra Employee#ep16_s01", getcharid(0);
+		end;
 	}
+	end;
 }
 
-prt_cas_q,28,28,3	script	Court Mage Nillem#ep16_1	HIDDEN_WARP_NPC,{
-	if (banquet_main_quest == 18) {
+prt_cas_q,28,28,3	script	Court Mage Nillem#ep16_wiz01	4_M_JOB_WIZARD,{
+	if (ep16_royal == 17) {
 		mes "[Nillem]";
 		mes "Oh, it's you, darling! I've been waiting for you!";
 		next;
@@ -847,7 +892,7 @@ prt_cas_q,28,28,3	script	Court Mage Nillem#ep16_1	HIDDEN_WARP_NPC,{
 		mes "[Nillem]";
 		mes "I'll be here immediately like a flash of lightning-";
 		mes "Well, then, shall we get going?";
-		banquet_main_quest = 19;
+		ep16_royal = 18;
 		next;
 		if (select( "Let's go now!", "I need to make some preparations." ) == 2) {
 			mes "[Nillem]";
@@ -865,7 +910,7 @@ prt_cas_q,28,28,3	script	Court Mage Nillem#ep16_1	HIDDEN_WARP_NPC,{
 		warp "prt_lib",89,44;
 		end;
 	}
-	if (banquet_main_quest > 18) {
+	if (ep16_royal > 17) {
 		mes "[Nillem]";
 		mes "Haha, then, let's go to the Past Memories of the Royal Family!";
 		next;
@@ -882,51 +927,65 @@ prt_cas_q,28,28,3	script	Court Mage Nillem#ep16_1	HIDDEN_WARP_NPC,{
 		warp "prt_lib",89,44;
 		end;
 	}
+	end;
+OnInit:
+	cloakonnpc "Court Mage Nillem#ep16_wiz01";
+	cloakonnpc "Kafra Employee#ep16_s01";
+	cloakonnpc "Giant Beast Manager#ep16_s02";
+	end;
 }
 
-prt_cas,177,164,0	script	#ep16_evt_7688	HIDDEN_WARP_NPC,1,1,{
+prt_cas,177,164,0	script	#ep16_evt_7688	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch:
-	if (banquet_main_quest == 3) {
+	if (ep16_royal == 3) {
 		mes "I hear voices from somewhere.";
+		sleep2 2000;
+		cloakoffnpc "Mysterious Guest#ep16_01", getcharid(0);
+		cloakoffnpc "Chamberlain#ep16_01", getcharid(0);
+		npctalk "The story you just have told must be true, right?", "Mysterious Guest#ep16_01", bc_self;
 		sleep2 3000;
-		classchange( 4_LGTSCIENCE, "#ep16_7689_01", bc_self );
-		classchange( 1_M_01, "#ep16_7689_02", bc_self );
-		npctalk "The story you just have told must be true, right?", "#ep16_7689_01", bc_self;
-		sleep2 2000;
-		npctalk "Sure. It will meet the condition you are looking for just right.", "#ep16_7689_02", bc_self;
-		sleep2 2000;
-		npctalk "Hum...", "#ep16_7689_01", bc_self;
-		sleep2 2000;
-		npctalk "He also is heir to the throne. You will get the information you want.", "#ep16_7689_02", bc_self;
-		sleep2 2000;
-		npctalk "There must be no mistake in the arrangement. He must be called here without doubt.", "#ep16_7689_01", bc_self;
-		sleep2 2000;
-		npctalk "It has all been prepared... However, let me tell you the details later.", "#ep16_7689_02", bc_self;
-		sleep2 2000;
-		npctalk "It is the time for you to join the banquet.", "#ep16_7689_02", bc_self;
+		npctalk "Sure. It will meet the condition you are looking for just right.", "Chamberlain#ep16_01", bc_self;
 		sleep2 3000;
-		classchange( HIDDEN_WARP_NPC, "#ep16_7689_01", bc_self );
-		npctalk "Right. I'll see you later. Don't you dare disappoint me.", "#ep16_7689_01", bc_self;
-		sleep2 4000;
-		npctalk "What a bossy pants...", "#ep16_7689_02", bc_self;
-		sleep2 2000;
-		classchange( HIDDEN_WARP_NPC, "#ep16_7689_02", bc_self );
+		npctalk "Hum...", "Mysterious Guest#ep16_01", bc_self;
+		sleep2 3000;
+		npctalk "He also is heir to the throne. You will get the information you want.", "Chamberlain#ep16_01", bc_self;
+		sleep2 3000;
+		npctalk "There must be no mistake in the arrangement. He must be called here without doubt.", "Mysterious Guest#ep16_01", bc_self;
+		sleep2 3000;
+		npctalk "It has all been prepared... However, let me tell you the details later.", "Chamberlain#ep16_01", bc_self;
+		sleep2 3000;
+		npctalk "It is the time for you to join the banquet.", "Chamberlain#ep16_01", bc_self;
+		sleep2 3000;
+		npctalk "Right. I'll see you later. Don't you dare disappoint me.", "Mysterious Guest#ep16_01", bc_self;
+		sleep2 3000;
+		cloakonnpc "Mysterious Guest#ep16_01", getcharid(0);
+		sleep2 1000;
+		npctalk "What a bossy pants...", "Chamberlain#ep16_01", bc_self;
+		sleep2 1000;
+		cloakonnpc "Chamberlain#ep16_01", getcharid(0);
 		next;
 		mes "I happen to eavesdrop on a fishy conversation.";
-		banquet_main_quest = 4;
+		ep16_royal = 4;
 		erasequest 7687;// Participating in the Banquet
 		setquest 7688;// Suspicious Movement
 	}
 	end;
+OnInit:
+	cloakonnpc "Mysterious Guest#ep16_01";
+	cloakonnpc "Chamberlain#ep16_01";
+	end;
 }
-prt_cas,181,157,3	script	#ep16_7689_02	HIDDEN_WARP_NPC,{ end; }
-prt_cas,179,158,4	script	#ep16_7689_01	HIDDEN_WARP_NPC,{ end; }
+prt_cas,179,155,6	script	Mysterious Guest#ep16_01	4_LGTSCIENCE,{ end; }
+prt_cas,181,154,2	script	Chamberlain#ep16_01	1_M_01,{ end; }
 
 // Hall
 function	script	F_banquet_main_4_spica	{
+	.@char_id = getcharid(0);
+	.@char_name$ = strcharinfo(0);
+
 	mes "[Spica]";
-	mes "I get to see you again. " + strcharinfo(0) + ".";
+	mes "I get to see you again. " + .@char_name$ + ".";
 	mes "Chamberlain must have been a great messenger.";
 	mes "I saw you coming this way right away.";
 	cutin "ep16_spica_nerius01",2;
@@ -934,7 +993,7 @@ function	script	F_banquet_main_4_spica	{
 	mes "[Spica]";
 	mes "I was surprised when you were introduced as a special guest. You seem to be more extraordinary than I have thought.";
 	mes "You were introduced as...";
-	unittalk getcharid(3), "" + strcharinfo(0) + " : Let's not mention that since I am embarrassed by it so much...", bc_self;
+	unittalk getcharid(3), "" + .@char_name$ + " : Let's not mention that since I am embarrassed by it so much...", bc_self;
 	next;
 	mes "[Spica]";
 	mes "But it is true.";
@@ -982,11 +1041,11 @@ function	script	F_banquet_main_4_spica	{
 	mes "Oh, you are right? Nyhill! This way!";
 	npctalk "Nyhill?", "Spica Nerius#ep16_02", bc_self;
 	next;
-	classchange( 4_EP16_NIHIL, "Nyhill M. Heine#ep16_02", bc_self );
+	cloakoffnpc "Nyhill M. Heine#ep16_02", .@char_id;
 	cutin "ep16_nihi_miseria_heine01",2;
 	mes "[Nyhill]";
 	mes "You don't have to scream like that, Skia.";
-	mes "" + strcharinfo(0) + " is here too.";
+	mes "" + .@char_name$ + " is here too.";
 	mes "Indeed, you won't be mistaken when you hang out with the people of the Nerius family.";
 	mes "Good decision.";
 	npctalk "Skia?", "Spica Nerius#ep16_02", bc_self;
@@ -996,7 +1055,7 @@ function	script	F_banquet_main_4_spica	{
 	mes "Skia and Lord of the Heine family.";
 	mes "Since when did you call each other by the first name?";
 	npctalk "Did you know?", "Spica Nerius#ep16_02", bc_self;
-	sleep2 20;
+	sleep2 1000;
 	npctalk "...No, no. I didn't.", "Crux Findel#ep16_02", bc_self;
 	next;
 	cutin "ep16_skia_nerius01",0;
@@ -1011,8 +1070,8 @@ function	script	F_banquet_main_4_spica	{
 	next;
 	cutin "ep16_nihi_miseria_heine01",2;
 	mes "[Nyhill]";
-	mes "" + strcharinfo(0) + ", I visited your room to give you my apology, but you had already left for the Banquet Hall.";
-	unittalk getcharid(3), "" + strcharinfo(0) + " : Apology?", bc_self;
+	mes "" + .@char_name$ + ", I visited your room to give you my apology, but you had already left for the Banquet Hall.";
+	unittalk getcharid(3), "" + .@char_name$ + " : Apology?", bc_self;
 	next;
 	cutin "ep16_nihi_miseria_heine04",2;
 	mes "[Nyhill]";
@@ -1021,8 +1080,8 @@ function	script	F_banquet_main_4_spica	{
 	mes "Please forgive me.";
 	next;
 	npctalk "You must have done something wrong, right?", "Spica Nerius#ep16_02", bc_self;
-	sleep2 20;
-	classchange( 4_F_RUSWOMAN1, "Violeta#ep16_02", bc_self );
+	sleep2 1000;
+	cloakoffnpc "Violeta#ep16_02", .@char_id;
 	npctalk "I am not surprised since it was Mijeria who had nothing!", "Violeta#ep16_02", bc_self;
 	cutin "",255;
 	mes "[Drunk Woman]";
@@ -1061,7 +1120,7 @@ function	script	F_banquet_main_4_spica	{
 	mes "[Spica]";
 	mes "Isn't it right? Violeta Collette Heine?";
 	mes "I understand your feelings for the lord, but your behavior will just bring disgrace to your family.";
-	unittalk getcharid(3), "" + strcharinfo(0) + " : Heine...?", bc_self;
+	unittalk getcharid(3), "" + .@char_name$ + " : Heine...?", bc_self;
 	next;
 	npctalk "...Phew... She is a collateral relative of mine...", "Nyhill M. Heine#ep16_02", bc_self;
 	mes "[Spica]";
@@ -1080,7 +1139,7 @@ function	script	F_banquet_main_4_spica	{
 	mes "Well, I'll get back.";
 	mes "Since things have turned out this way, you better go to join the Nerius family, then! He!";
 	next;
-	classchange( HIDDEN_WARP_NPC, "Violeta#ep16_02", bc_self );
+	cloakonnpc "Violeta#ep16_02", .@char_id;
 	cutin "ep16_skia_nerius01",0;
 	mes "[Skia]";
 	mes "How does the story go that way?";
@@ -1108,15 +1167,16 @@ function	script	F_banquet_main_4_spica	{
 	cutin "",255;
 	mes "[Nyhill]";
 	mes "Skia, it is the same for you. You sometimes have to become a shadow yourself.";
-	classchange( 1_F_PUBGIRL, "Royal Chamberlain#ep16_", bc_self );
-	npctalk "Light champagne. Would you like some?", "Royal Chamberlain#ep16_", bc_self;
+	cloakoffnpc "Royal Chamberlain#ep16_02", .@char_id;
+	npctalk "Light champagne. Would you like some?", "Royal Chamberlain#ep16_02", bc_self;
 	next;
 	npctalk "Thanks.", "Nyhill M. Heine#ep16_02", bc_self;
 	npctalk "May I have a glass too?", "Skia Nerius#ep16_02", bc_self;
+	sleep2 1000;
 	mes "[Spica]";
 	mes "However, I didn't know you have been treated like that by the members of your own family.";
 	next;
-	classchange( HIDDEN_WARP_NPC, "Royal Chamberlain#ep16_", bc_self );
+	cloakonnpc "Royal Chamberlain#ep16_02", .@char_id;
 	npctalk ".....", "Nyhill M. Heine#ep16_02", bc_self;
 	cutin "ep16_nihi_miseria_heine04",2;
 	mes "[Nyhill]";
@@ -1135,7 +1195,7 @@ function	script	F_banquet_main_4_spica	{
 	npctalk "It was fun!", "Skia Nerius#ep16_02", bc_self;
 	npctalk "...Which part of it was fun...?", "Crux Findel#ep16_02", bc_self;
 	next;
-	classchange( HIDDEN_WARP_NPC, "Nyhill M. Heine#ep16_02", bc_self );
+	cloakonnpc "Nyhill M. Heine#ep16_02", .@char_id;
 	cutin "ep16_spica_nerius01",2;
 	mes "[Spica]";
 	mes "...Hum...";
@@ -1147,12 +1207,12 @@ function	script	F_banquet_main_4_spica	{
 	mes "[Spica]";
 	mes "And, Crux.";
 	mes "Go dig out the Chamberlain who has given us the drink.";
-	sleep2 20;
+	sleep2 1000;
 	npctalk "Yes, my lady.", "Crux Findel#ep16_02", bc_self;
 	next;
 	mes "[Spica]";
 	mes "No one can fool my eyes like this.";
-	mes "" + strcharinfo(0) + ", you take a look too.";
+	mes "" + .@char_name$ + ", you take a look too.";
 	mes "Doesn't something seem strange to you?";
 	next;
 	select("Well, you do seem to talk a little casually now...");
@@ -1176,7 +1236,7 @@ function	script	F_banquet_main_4_spica	{
 	next;
 	cutin "ep16_spica_nerius05",2;
 	mes "[Spica]";
-	mes "" + strcharinfo(0) + ".";
+	mes "" + .@char_name$ + ".";
 	mes "Don't you think something funny is about to happen now?";
 	mes "Oh, how suspicious.";
 	mes "Since it seems suspicious, let's get back now.";
@@ -1191,11 +1251,11 @@ function	script	F_banquet_main_4_spica	{
 	mes "If you are curious, you may follow him.";
 	mes "I am well taken care of by Crux.";
 	npctalk "Crux, let's get back to the room.", "Spica Nerius#ep16_02", bc_self;
-	sleep2 20;
+	sleep2 1000;
 	npctalk "Yes, my lady.", "Crux Findel#ep16_02", bc_self;
 	next;
-	classchange( HIDDEN_WARP_NPC, "Spica Nerius#ep16_02", bc_self );
-	classchange( HIDDEN_WARP_NPC, "Crux Findel#ep16_02", bc_self );
+	cloakonnpc "Spica Nerius#ep16_02", .@char_id;
+	cloakonnpc "Crux Findel#ep16_02", .@char_id;
 	npctalk "How cold-hearted...", "Skia Nerius#ep16_02", bc_self;
 	mes "[Skia]";
 	mes "Well, hero?";
@@ -1214,25 +1274,20 @@ function	script	F_banquet_main_4_spica	{
 	mes "He must have headed to the Royal Villa. Let's go that way.";
 	erasequest 7688;// Suspicious Movement
 	setquest 7689;// Find Nyhill
-	banquet_main_quest = 5;
-	next;
-	cutin "ep16_skia_nerius01",0;
-	mes "[Skia]";
-	mes "Nyhill must have left the Banquet Hall.";
-	mes "He must have headed to the Royal Villa. Let's go that way.";
+	ep16_royal = 5;
 	close3;
 }
 
-prt_cas,107,237,2	script	Nyhill M. Heine#ep16_02	HIDDEN_WARP_NPC,{ end; }
-prt_cas,103,235,7	script	Violeta#ep16_02	HIDDEN_WARP_NPC,{ end; }
-prt_cas,108,235,2	script	Royal Chamberlain#ep16_	HIDDEN_WARP_NPC,{ end; }
+prt_cas,107,237,2	script	Nyhill M. Heine#ep16_02	4_EP16_NIHIL,{ end; }
+prt_cas,103,235,7	script	Violeta#ep16_02	4_F_RUSWOMAN1,{ end; }
+prt_cas,108,235,2	script	Royal Chamberlain#ep16_02	1_F_PUBGIRL,{ end; }
 
 prt_cas,104,240,5	script	Skia Nerius#ep16_02	4_EP16_SKIA,{
-	if (banquet_main_quest < 3) {
-		npctalk "......", "Skia Nerius#ep16_02", bc_self;
-		end;
-	}
-	if (banquet_main_quest == 3) {
+	if (ep16_royal < 4) {
+		if (isbegin_quest(7684) == 0) {
+			npctalk "......", "Skia Nerius#ep16_02", bc_self;
+			end;
+		}
 		cutin "ep16_skia_nerius01",0;
 		mes "[Skia]";
 		mes "Iwine.";
@@ -1255,16 +1310,16 @@ prt_cas,104,240,5	script	Skia Nerius#ep16_02	4_EP16_SKIA,{
 		mes "I am sorry.";
 		close3;
 	}
-	if (banquet_main_quest == 4)
+	if (ep16_royal == 4)
 		F_banquet_main_4_spica();
-	if (banquet_main_quest == 5) {
+	if (ep16_royal == 5) {
 		cutin "ep16_skia_nerius01",0;
 		mes "[Skia]";
 		mes "Nyhill must have left the Banquet Hall.";
 		mes "He must have headed to the Royal Villa. Let's go that way.";
 		close3;
 	}
-	if (banquet_main_quest >= 6) {
+	if (ep16_royal >= 6) {
 		cutin "ep16_skia_nerius02",0;
 		mes "[Skia]";
 		mes "Bad things seem to keep happening.";
@@ -1273,11 +1328,11 @@ prt_cas,104,240,5	script	Skia Nerius#ep16_02	4_EP16_SKIA,{
 }
 
 prt_cas,106,240,3	script	Spica Nerius#ep16_02	4_EP16_SPICA,{
-	if (banquet_main_quest < 3) {
-		npctalk "...Pardon me.", "Spica Nerius#ep16_02", bc_self;
-		end;
-	}
-	if (banquet_main_quest == 3) {
+	if (ep16_royal < 4) {
+		if (isbegin_quest(7684) == 0) {
+			npctalk "...Pardon me.", "Spica Nerius#ep16_02", bc_self;
+			end;
+		}
 		mes "[Spica]";
 		mes "You are here to enjoy the banquet, right?";
 		mes "Have you visit all other families?";
@@ -1295,9 +1350,9 @@ prt_cas,106,240,3	script	Spica Nerius#ep16_02	4_EP16_SPICA,{
 		mes "You never know what would happen!";
 		close3;
 	}
-	if (banquet_main_quest == 4)
+	if (ep16_royal == 4)
 		F_banquet_main_4_spica();
-	if (banquet_main_quest == 5) {
+	if (ep16_royal == 5) {
 		mes "[Spica]";
 		mes "Hum? You are still here. I thought you went after the lord from the Heine family.";
 		cutin "ep16_spica_nerius05",2;
@@ -1315,7 +1370,7 @@ prt_cas,106,240,3	script	Spica Nerius#ep16_02	4_EP16_SPICA,{
 		mes "I have advised you as so, remember.";
 		close3;
 	}
-	if (banquet_main_quest >= 6) {
+	if (ep16_royal >= 6) {
 		cutin "ep16_spica_nerius02",2;
 		mes "[Spica]";
 		mes "I don't like how things have been going these days.";
@@ -1325,18 +1380,25 @@ prt_cas,106,240,3	script	Spica Nerius#ep16_02	4_EP16_SPICA,{
 }
 
 prt_cas,108,240,3	script	Crux Findel#ep16_02	4_EP16_CRUX,{
-	if (banquet_main_quest < 4) {
-		npctalk "......", "Crux Findel#ep16_02", bc_self;
-		end;
+	if (ep16_royal < 4) {
+		if (isbegin_quest(7684) == 0) {
+			npctalk "......", "Crux Findel#ep16_02", bc_self;
+			end;
+		}
+		cutin "ep16_crux_findel01.bmp",2;
+		mes "[Crux]";
+		mes "Don't mind me.";
+		mes "I am just a bodyguard.";
+		close3;
 	}
-	if (banquet_main_quest == 4) {
+	if (ep16_royal == 4) {
 		cutin "ep16_crux_findel01",2;
 		mes "[Crux]";
 		mes "I get to see you again.";
 		mes "The lady has been waiting for you.";
 		close3;
 	}
-	if (banquet_main_quest == 5) {
+	if (ep16_royal == 5) {
 		cutin "ep16_crux_findel01",2;
 		mes "[Crux]";
 		mes "I am thinking about the order given by the lady.";
@@ -1365,7 +1427,7 @@ prt_cas,108,240,3	script	Crux Findel#ep16_02	4_EP16_CRUX,{
 		mes "You shouldn't worry about me.";
 		close3;
 	}
-	if (banquet_main_quest >= 6) {
+	if (ep16_royal >= 6) {
 		cutin "ep16_crux_findel01",2;
 		mes "[Crux]";
 		mes "I guess we won't be able to return to the head house anytime soon.";
@@ -1373,17 +1435,25 @@ prt_cas,108,240,3	script	Crux Findel#ep16_02	4_EP16_CRUX,{
 		npctalk "...Oh, good. It is a good thing.", bc_self;
 		close3;
 	}
+	end;
+OnInit:
+	cloakonnpc "Nyhill M. Heine#ep16_02";
+	cloakonnpc "Violeta#ep16_02";
+	cloakonnpc "Royal Chamberlain#ep16_02";
+	end;
 }
 
-prt_cas,183,164,0	script	#ep16_evt_7689	HIDDEN_WARP_NPC,1,1,{
+prt_cas,183,164,0	script	#ep16_evt_7689	HIDDEN_WARP_NPC,2,3,{
 	end;
 OnTouch:
-	if (banquet_main_quest == 5) {
+	if (ep16_royal == 5) {
+		.@name$ = strcharinfo(0);
+		.@char_id = getcharid(0);
+		unittalk getcharid(3), "" + .@name$ + " : ...Hum? Who's coming?", bc_self;
 		setpcblock PCBLOCK_NPC, true;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : ...Hum? Who's coming?", bc_self;
 		sleep2 2000;
-		classchange( 4_LGTSCIENCE, "#ep16_7689_01", bc_self );
-		classchange( 1_M_01, "#ep16_7689_02", bc_self );
+		cloakoffnpc "#ep16_7689_01", .@char_id;
+		cloakoffnpc "#ep16_7689_02", .@char_id;
 		npctalk "How did it go?", "#ep16_7689_02", bc_self;
 		sleep2 2000;
 		npctalk "Hum... Not as much as I have wanted, but I seem to have a clue now.", "#ep16_7689_01", bc_self;
@@ -1393,21 +1463,21 @@ OnTouch:
 		npctalk "It has been only a while...", "#ep16_7689_02", bc_self;
 		sleep2 3000;
 		npctalk "The drug worked wonders. Hahah... That lord had no tolerance to it as I was told.", "#ep16_7689_01", bc_self;
-		sleep2 3000;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : (Lord?)", bc_self;
+		sleep2 1000;
+		unittalk getcharid(3), "" + .@name$ + " : (Lord?)", bc_self;
 		sleep2 3000;
 		npctalk "What should we do now?", "#ep16_7689_02", bc_self;
 		sleep2 3000;
 		npctalk "Just leave him there. They will think that he is just drunk a little.", "#ep16_7689_01", bc_self;
 		sleep2 3000;
 		npctalk "Then, let's get prepared for the big event.", "#ep16_7689_01", bc_self;
-		sleep2 2000;
-		classchange( HIDDEN_WARP_NPC, "#ep16_7689_01", bc_self );
-		classchange( HIDDEN_WARP_NPC, "#ep16_7689_02", bc_self );
-		classchange( 4_EP16_SKIA, "Skia Nerius#ep16_7689", bc_self );
+		sleep2 1000;
+		cloakonnpc "#ep16_7689_01", .@char_id;
+		cloakonnpc "#ep16_7689_02", .@char_id;
+		cloakoffnpc "Skia Nerius#ep16_7689", .@char_id;
 		npctalk "Did you find Nyhill?", "Skia Nerius#ep16_7689", bc_self;
 		sleep2 1000;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : What the!", bc_self;
+		unittalk getcharid(3), "" + .@name$ + " : What the!", bc_self;
 		sleep2 2000;
 		npctalk "Why are you so surprised? What are you looking at?", "Skia Nerius#ep16_7689", bc_self;
 		sleep2 3000;
@@ -1416,28 +1486,35 @@ OnTouch:
 		npctalk "Would Nyhill be in that room? He told me that he didn't like to stay in the Royal Villa because of grandpa archduke.", "Skia Nerius#ep16_7689", bc_self;
 		sleep2 3000;
 		npctalk "Let's get into that room!", "Skia Nerius#ep16_7689", bc_self;
-		if (banquet_main_quest == 5) {
+		if (ep16_royal == 5) {
 			setquest 7690;// Where Is Nyhill?
 			erasequest 7689;// Find Nyhill
-			banquet_main_quest = 6;
+			ep16_royal = 6;
 		}
-		sleep2 2000;
-		classchange( HIDDEN_WARP_NPC, "Skia Nerius#ep16_7689", bc_self );
+		sleep2 3000;
 		setpcblock PCBLOCK_NPC, false;
+		cloakonnpc "Skia Nerius#ep16_7689", .@char_id;
 	}
 	end;
+OnInit:
+	cloakonnpc "Skia Nerius#ep16_7689";
+	cloakonnpc "#ep16_7689_02";
+	cloakonnpc "#ep16_7689_01";
+	end;
 }
-prt_cas,186,163,3	script	Skia Nerius#ep16_7689	HIDDEN_WARP_NPC,{ end; }
+prt_cas,186,163,3	script	Skia Nerius#ep16_7689	4_EP16_SKIA,{ end; }
+prt_cas,181,157,3	script	#ep16_7689_02	1_M_01,{ end; }
+prt_cas,179,158,4	script	#ep16_7689_01	4_LGTSCIENCE,{ end; }
 
-prt_cas,25,35,5	script	Skia Nerius#ep16_7690	HIDDEN_WARP_NPC,{
-	if (banquet_main_quest == 6) {
+prt_cas,25,35,5	script	Skia Nerius#ep16_7690	4_EP16_SKIA,{
+	if (ep16_royal == 6) {
 		cutin "ep16_nihi_miseria_heine01",2;
 		mes "[Nyhill]";
 		mes "...Who's there?";
 		mes "" + strcharinfo(0) + "...?";
 		mes "What are you doing here?";
 		next;
-		npctalk "...Ha...", "Unstable Nyhill#ep16_76", bc_self;
+		npctalk "...Ha...", "Unstable Nyhill#ep16_7690", bc_self;
 		cutin "ep16_nihi_miseria_heine04",2;
 		mes "[Nyhill]";
 		mes "...Am I drunk?";
@@ -1482,7 +1559,7 @@ prt_cas,25,35,5	script	Skia Nerius#ep16_7690	HIDDEN_WARP_NPC,{
 		mes "[Nyhill]";
 		mes "Well, then. Please excuse me.";
 		next;
-		classchange( HIDDEN_WARP_NPC, "Unstable Nyhill#ep16_76", bc_self );
+		cloakonnpc "Unstable Nyhill#ep16_7690", getcharid(0);
 		cutin "ep16_skia_nerius03",0;
 		mes "[Skia]";
 		mes "Whoa! He is fast.";
@@ -1495,47 +1572,38 @@ prt_cas,25,35,5	script	Skia Nerius#ep16_7690	HIDDEN_WARP_NPC,{
 		mes "You should go back to your room.";
 		erasequest 7690;// Where Is Nyhill?
 		setquest 7691;// Waiting for the Ritual
-		banquet_main_quest = 7;
+		ep16_royal = 7;
 		close3;
 	}
-	if (banquet_main_quest == 7) {
+	else {
 		if (strnpcinfo(0) == "Skia Nerius#ep16_7690")
 			npctalk "We should go back too.", "Skia Nerius#ep16_7690", bc_self;
 		end;
 	}
 }
-prt_cas,27,34,3	duplicate(Skia Nerius#ep16_7690)	Unstable Nyhill#ep16_76	HIDDEN_WARP_NPC
+prt_cas,27,34,3	duplicate(Skia Nerius#ep16_7690)	Unstable Nyhill#ep16_7690	4_EP16_NIHIL
 
 prt_cas,27,43,0	script	#ep16_evt_7690	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
-	if (banquet_main_quest == 6) {
+	if (ep16_royal == 6) {
+		cloakoffnpc "Unstable Nyhill#ep16_7690", getcharid(0);
+		cloakoffnpc "Skia Nerius#ep16_7690", getcharid(0);
 		setpcblock PCBLOCK_NPC, true;
-		classchange( 4_EP16_NIHIL, "Unstable Nyhill#ep16_76", bc_self );
-		classchange( 4_EP16_SKIA, "Skia Nerius#ep16_7690", bc_self );
 		sleep2 1000;
-		npctalk "Are you OK?", "Skia Nerius#ep16_7690", bc_self;
 		setpcblock PCBLOCK_NPC, false;
+		npctalk "Are you OK?", "Skia Nerius#ep16_7690", bc_self;
 	}
+	end;
+OnInit:
+	cloakonnpc "Skia Nerius#ep16_7690";
+	cloakonnpc "Unstable Nyhill#ep16_7690";
 	end;
 }
 
 // prt_lib
-prt_lib,9,24,0	script	prt_cas_20#prt_cas_21	WARPNPC,1,1,{
-OnTouch:
-	if (banquet_main_quest < 13) {
-		mes "[Guardian Knight]";
-		mes "You cannot go that way.";
-		close2;
-		warp "prt_lib",60,61;
-		end;
-	}
-	warp "prt_pri00",60,127;
-	end;
-}
-
 prt_lib,76,80,3	script	Lindt the Librarian#ep1	1_M_01,{
-	if (banquet_main_quest == 11) {
+	if (ep16_royal == 11) {
 		mes "[Librarian]";
 		mes "Do you want to take a look at the material?";
 		mes "It is still here since I haven't taken it away.";
@@ -1561,10 +1629,10 @@ prt_lib,76,80,3	script	Lindt the Librarian#ep1	1_M_01,{
 		mes "[Librarian]";
 		mes "That's why Archduke Stoltze gave up and left.";
 		mes "Since you have seen this, let me put this back in place.";
-		banquet_main_quest = 12;
+		ep16_royal = 12;
 		close;
 	}
-	if (banquet_main_quest == 24) {
+	if (ep16_royal == 22) {
 		mes "[Librarian]";
 		mes "Oh, you are here.";
 		mes "Archduke Grantz has been waiting for you for a while.";
@@ -1581,7 +1649,9 @@ prt_lib,76,80,3	script	Lindt the Librarian#ep1	1_M_01,{
 }
 
 prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
-	switch( banquet_main_quest ) {
+	if (ep16_royal < 8)
+		end;
+	switch( ep16_royal ) {
 	case 8:
 		if (getcharid(1) == 0 || is_party_leader() == false) {// solo instance
 			mes "^4d4dffIt is an event which proceeds as a memorial.";
@@ -1599,17 +1669,17 @@ prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
 		}
 		if (instance_create("Ritual of Blessing") < 0) {
 			mes "[Nillem]";
-			mes "Oh... It doesn't work well.";
-			mes "Wait, phew... Let me collect my strength again...";
+			mes "Hum? I don't know what is going on. We don't seem to be able to enter now.";
+			mes "It is a secret area which is made to open upon showing magical power.";
 			next;
 			mes "[Nillem]";
-			mes "... I'll make it work, wait a minute.";
+			mes "Let's wait until it stabilizes.";
 			close;
 		}
 		mes "[Nillem]";
 		mes "Whoa! The gate to the next area has been activated!";
 		mes "Well, let's get in there!";
-		classchange( PORTAL, "Room of Consciousness#e", bc_self );
+		cloakoffnpc "Room of Consciousness#evt_gate01", getcharid(0);
 		close;
 	case 9:
 		mes "[Nillem]";
@@ -1655,7 +1725,7 @@ prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
 		next;
 		mes "[Nillem]";
 		mes "I'll try to find a way to reactivate the gate.";
-		banquet_main_quest = 11;
+		ep16_royal = 11;
 		setquest 7694;// I'd Like to See that Too
 		close;
 	case 11:
@@ -1699,16 +1769,22 @@ prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
 		mes "He will guide you.";
 		erasequest 7694;// I'd Like to See that Too
 		setquest 7695;// Escape from the Past Memories of the Royal Family
-		banquet_main_quest = 13;
+		ep16_royal = 13;
 		close;
 	case 13:
 	case 14:
 	case 15:
 	case 16:
 	case 17:
+		mes "[Nillem]";
+		mes "Although there are direct gates installed in the palace for convenience,";
+		mes "There are passages you can walk directly in.";
+		next;
+		mes "[Nillem]";
+		mes "This is one of the rare chances to use the secret passage.";
+		mes "Hahahaha...";
+		close;
 	case 18:
-		end;
-	case 19:
 		mes "[Nillem]";
 		mes "Haha, shall I get ready?";
 		mes "Come here! ^4d4dffDimension Warper MkII^000000!!";
@@ -1718,42 +1794,40 @@ prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
 		mes "I wonder what we are going to see this time!";
 		setquest 7700;// Once More!
 		erasequest 7699;// To the Past
-		banquet_main_quest = 20;
-		classchange( PORTAL, "Dimension Warper MkII#e", bc_self );
+		cloakoffnpc "Dimension Warper MkII#ep16_lib", getcharid(0);
 		close;
+	case 19:
 	case 20:
 	case 21:
-	case 22:
-	case 23:
 		mes "[Nillem]";
-		mes "Haha, shall I get ready?";
-		mes "Come here!^4d4dffDimension Warper MkII^000000!!";
+		mes "We haven't solved all the secrets yet!";
+		mes "Well, we have to go back!";
 		next;
+		cloakoffnpc "Dimension Warper MkII#ep16_lib", getcharid(0);
 		mes "[Nillem]";
-		mes "Well, let's go, dear customer.";
-		mes "I wonder what we are going to see this time!";
-		classchange( PORTAL, "Dimension Warper MkII#e", bc_self );
+		mes "Let's finish it off this time!";
 		close;
-	case 24:
+	case 22:
 		mes "[Nillem]";
 		mes "What are you doing?";
 		mes "Go grill the librarian to dig out the truth!";
 		next;
+		cloakoffnpc "Kronecker G. Heine#ep16_lib01", getcharid(0);
 		mes "[Nillem]";
 		mes "What did we go through all the trouble for?";
 		mes "Look, there is Archduke Grantz.";
 		close;
-	case 25:
+	case 23:
 		mes "[Nillem]";
 		mes "^4d4dffThe Heine family will get the approval to enter the 'Past Memories of the Royal Family'^000000, right?";
 		mes "We will see each other more often from now on then.";
-		mes "Haha, this must be what others call the destiny-";
+		mes "Haha, this must be what others call the destiny-¡Ù";
 		next;
 		mes "[Nillem]";
 		mes "What are you doing?";
 		mes "Let's go see ^4d4dffDuke Friedrich to check if the approval has been issued!^000000";
 		close;
-	case 26:
+	default:
 		mes "[Nillem]";
 		mes "Today, we are going on a secret journey together again!";
 		mes "Hahaha. You'd better get excited!";
@@ -1764,17 +1838,17 @@ prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
 		mes "What would be waiting for us today?";
 		mes "I guess this would end up a failure again, though.";
 		mes "Hahaha-";
-		classchange( PORTAL, "Dimension Warper MkII#e", bc_self );
+		cloakoffnpc "Dimension Warper MkII#ep16_lib", getcharid(0);
 		close;
 	}
 }
 
-prt_lib,88,90,1	script	Room of Consciousness#e	HIDDEN_WARP_NPC,{
-	if (banquet_main_quest == 8) {
-		if (getcharid(1) == 0 || is_party_leader() == false) {
-			mes "^4d4dffOnly the party leader can enter MD [Ritual of Blessing].^000000";
-			close;
-		}
+prt_lib,88,90,1	script	Room of Consciousness#evt_gate01	PORTAL,{
+	if (getcharid(1) == 0 || is_party_leader() == false) {
+		mes "^4d4dffOnly the party leader can enter MD [Ritual of Blessing].^000000";
+		close;
+	}
+	if (ep16_royal == 8) {
 		mes "You can move to where the ritual of blessing is held.";
 		next;
 		if (select( "Enter.", "Do not enter." ) == 2) {
@@ -1788,23 +1862,35 @@ prt_lib,88,90,1	script	Room of Consciousness#e	HIDDEN_WARP_NPC,{
 		}
 		switch( instance_enter("Ritual of Blessing") ) {
 		case IE_OTHER:
-			mes "An unknown error occurred.";
+			mes "[Nillem]";
+			mes "Oh, well, the movement of magic seems uneasy.";
+			mes "Hum, shall we try again later?";
 			close;
-		case IE_NOINSTANCE:// todo
-			end;
+		case IE_NOINSTANCE:
+			mes "[Nillem]";
+			mes "The gate to the place where the ritual is held is not activated officially.";
+			mes "Wait a minute.";
+			close;
 		case IE_NOMEMBER:
-			end;
+			mes "^4d4dffThis is an event proceeding through memorial.";
+			mes "Only the party leader can enter.^000000";
+			close;
 		case IE_OK:
 			mapannounce "prt_lib", "Party member " + strcharinfo(0) + " of party's " + getpartyname( getcharid(1) ) + " enters Ritual of Blessing.", bc_map,0xFF99,FW_NORMAL,12;
 			//warp "2@mir",101,12;
 			end;
 		}
+		end;
 	}
+	npctalk "It cannot be used now!", "Mage Nillem#ep16_warp", bc_self;
+	end;
+OnInit:
+	cloakonnpc "Room of Consciousness#evt_gate01";
 	end;
 }
 
 prt_lib,56,61,4	script	Guardian Knight#ep16_ro	4_M_CRU,{
-	if (banquet_main_quest < 13)
+	if (ep16_royal < 13)
 		npctalk "On duty. No problem.", "", bc_self;
 	else {
 		mes "[Guardian Knight]";
@@ -1831,26 +1917,33 @@ prt_lib,56,61,4	script	Guardian Knight#ep16_ro	4_M_CRU,{
 prt_lib,88,80,0	script	#ep16_lib_evt01	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
-	if (banquet_main_quest == 9) {
-		classchange( 4_EP16_MAX, "Maximilian Roegenburg#e_prt_lib", bc_self );
-		classchange( 4_EP16_LOUVIERE, "Levuiere Wigner#ep16_li", bc_self );
-		classchange( 4_EP16_GRANZ, "Kronecker G. Heine#ep16_1", bc_self );
-		classchange( 4_EP16_NIHIL, "Nyhill M. Heine#ep16_li", bc_self );
-		classchange( 1_M_JOBTESTER, "Ian Walther#ep16_lib01", bc_self );
+	if (ep16_royal == 9) {
+		cloakoffnpc "Ian Walther#ep16_lib01", getcharid(0);
+		cloakoffnpc "Levuiere Wigner#ep16_lib01", getcharid(0);
+		cloakoffnpc "Maximilian Roegenburg#ep16_lib01", getcharid(0);
+		cloakoffnpc "Kronecker G. Heine#ep16_lib01", getcharid(0);
+		cloakoffnpc "Nyhill M. Heine#ep16_lib01", getcharid(0);
 		setpcblock PCBLOCK_NPC, true;
 		sleep2 2000;
 		npctalk "You are here at last.", "Ian Walther#ep16_lib01", bc_self;
 		sleep2 3000;
-		npctalk "I have something to tell you, special guest.", "Ian Walther#ep16_lib01", bc_self;
 		setpcblock PCBLOCK_NPC, false;
+		npctalk "I have something to tell you, special guest.", "Ian Walther#ep16_lib01", bc_self;
 	}
-	if (banquet_main_quest == 24)
-		classchange( 4_EP16_GRANZ, "Kronecker G. Heine#ep16_1", bc_self );
+	if (ep16_royal == 22)
+		cloakoffnpc "Kronecker G. Heine#ep16_lib01", getcharid(0);
+	end;
+OnInit:
+	cloakonnpc "Ian Walther#ep16_lib01";
+	cloakonnpc "Levuiere Wigner#ep16_lib01";
+	cloakonnpc "Maximilian Roegenburg#ep16_lib01";
+	cloakonnpc "Kronecker G. Heine#ep16_lib01";
+	cloakonnpc "Nyhill M. Heine#ep16_lib01";
 	end;
 }
 
-prt_lib,80,79,3	script	Kronecker G. Heine#ep16_1	HIDDEN_WARP_NPC,{
-	if (banquet_main_quest == 24) {
+prt_lib,80,79,3	script	Kronecker G. Heine#ep16_lib01	4_EP16_GRANZ,{
+	if (ep16_royal == 22) {
 		cutin "ep16_kronecker_granz_heine",2;
 		mes "[Kronecker]";
 		mes "Did you find out anything?";
@@ -1966,16 +2059,16 @@ prt_lib,80,79,3	script	Kronecker G. Heine#ep16_1	HIDDEN_WARP_NPC,{
 		mes "It is a shame, but you are the only hope left for us.";
 		mes "We are counting on you.";
 		erasequest 7703;// Who Knows the Truth
-		getitem 6919,30;// Honor Token
+		getitem 6919,30;// TokenOfHonor
 		getexp 800000,800000;
 		setquest 7706;// Nillem Is Not Almighty
-		banquet_main_quest = 25;
+		ep16_royal = 23;
 		next;
 		cutin "",255;
 		mes "^4d4dffFrom now on, you can get daily quests related to the past Room of Consciousness from Friedrich Stoltze.^000000";
 		close;
 	}
-	if (banquet_main_quest == 25) {
+	if (ep16_royal > 22) {
 		cutin "ep16_kronecker_granz_heine",2;
 		mes "[Kronecker G. Heine]";
 		mes "Then, I'll entrust the matter regarding this place to you and Nillem.";
@@ -1985,18 +2078,41 @@ prt_lib,80,79,3	script	Kronecker G. Heine#ep16_1	HIDDEN_WARP_NPC,{
 		mes "Please carry out this mission in secret.";
 		close3;
 	}
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	cloakonnpc "Kronecker G. Heine#ep16_lib02";
+	cloakonnpc "Nyhill M. Heine#ep16_lib01";
+	end;
 }
 
-prt_lib,81,79,5	script	Kronecker G. Heine#ep16_2	HIDDEN_WARP_NPC,{ end; }
-prt_lib,83,80,5	script	Nyhill M. Heine#ep16_li	HIDDEN_WARP_NPC,{ end; }
+prt_lib,81,79,5	script	Kronecker G. Heine#ep16_lib02	4_EP16_GRANZ,{ end; }
+prt_lib,83,80,5	script	Nyhill M. Heine#ep16_lib01	4_EP16_NIHIL,{ end; }
 
-prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
-	if (banquet_main_quest == 9) {
+prt_lib,85,82,5	script	Ian Walther#ep16_lib01	1_M_JOBTESTER,{
+	if (ep16_royal < 9) {
+		if (strnpcinfo(1) == "Ian Walther") {
+			npctalk "When you are disconcerted, you cannot find a word to say.", "Ian Walther#ep16_lib01", bc_self;
+			setpcblock PCBLOCK_NPC, true;
+			sleep2 3000;
+			setpcblock PCBLOCK_NPC, false;
+			npctalk "It describes how I feel now.", "Ian Walther#ep16_lib01", bc_self;
+		}
+		else if (strnpcinfo(1) == "Levuiere Wigner")
+			npctalk "...How will the things turn out from here...", "Levuiere Wigner#ep16_lib01", bc_self;
+		else
+			npctalk "Incredible.", "Maximilian Roegenburg#ep16_lib01", bc_self;
+		end;
+	}
+	.@char_id = getcharid(0);
+	if (ep16_royal == 9) {
+		.@name$ = strcharinfo(0);
+		.@account_id = getcharid(3);
 		mes "[Ian Walther]";
 		mes "We have been waiting for you because...";
 		mes "We wonder ^4d4dffif you have ever told anyone about the ritual^000000.";
 		next;
-		npctalk "...Strange, it is blank.", "Kronecker G. Heine#ep16_1", bc_self;
+		npctalk "...Strange, it is blank.", "Kronecker G. Heine#ep16_lib01", bc_self;
 		mes "[Ian Walther]";
 		mes "Only few people know about the Past Memories of the Royal Family and the Ritual of Blessing...";
 		next;
@@ -2008,8 +2124,8 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		mes "[Ian Walther]";
 		mes "Ah, it is....";
 		mes "That you are the only outsider who know about it, and there has been no precedent...";
-		npctalk "It is just circumstantial... Hum...", "Maximilian Roegenburg#e_prt_lib", bc_self;
-		npctalk ".....", "Nyhill M. Heine#ep16_li", bc_self;
+		npctalk "It is just circumstantial... Hum...", "Maximilian Roegenburg#ep16_lib01", bc_self;
+		npctalk ".....", "Nyhill M. Heine#ep16_lib01", bc_self;
 		next;
 		mes "[Nyhill]";
 		mes "I don't believe so.";
@@ -2023,12 +2139,12 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		mes "I understand how upset you all are due to this sudden incident.";
 		mes "But, please don't suspect an innocent person.";
 		next;
-		npctalk "Ha... What on earth!", "Kronecker G. Heine#ep16_1", bc_self;
+		npctalk "Ha... What on earth!", "Kronecker G. Heine#ep16_lib01", bc_self;
 		mes "[Nyhill]";
 		mes "That must be...";
 		next;
-		classchange( HIDDEN_WARP_NPC, "Kronecker G. Heine#ep16_1", bc_self );
-		classchange( 4_EP16_GRANZ, "Kronecker G. Heine#ep16_2", bc_self );
+		cloakonnpc "Kronecker G. Heine#ep16_lib01", .@char_id;
+		cloakoffnpc "Kronecker G. Heine#ep16_lib02", .@char_id;
 		mes "[Kronecker]";
 		mes "How troublesome.";
 		mes "Have you seen this document before?";
@@ -2044,8 +2160,8 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		mes "[Kronecker]";
 		mes "However, ^4d4dffTerra Gloria^000000 is gone...";
 		npctalk "Is Terra Gloria...?", "Ian Walther#ep16_lib01", bc_self;
-		npctalk "Is it gone? What happened...?", "Levuiere Wigner#ep16_li", bc_self;
-		npctalk "!!!!!", "Maximilian Roegenburg#e_prt_lib", bc_self;
+		npctalk "Is it gone? What happened...?", "Levuiere Wigner#ep16_lib01", bc_self;
+		npctalk "!!!!!", "Maximilian Roegenburg#ep16_lib01", bc_self;
 		next;
 		mes "[Kronecker]";
 		mes "It disappeared when we were taking care of fallen Peter.";
@@ -2061,7 +2177,7 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		mes "[Nyhill]";
 		mes "I am sorry to interrupt but I have something to tell you.";
 		next;
-		npctalk "What are you doing? Watch your manners.", "Kronecker G. Heine#ep16_2", bc_self;
+		npctalk "What are you doing? Watch your manners.", "Kronecker G. Heine#ep16_lib02", bc_self;
 		mes "[Nyhill]";
 		mes "...It is important. I was about to tell you about the cause of all these.";
 		next;
@@ -2069,14 +2185,15 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		mes "The cause of the incident?";
 		mes "You mean you know who have told the secret?";
 		next;
-		npctalk ".....", "Nyhill M. Heine#ep16_li", bc_self;
+		npctalk ".....", "Nyhill M. Heine#ep16_lib01", bc_self;
 		mes "[Nyhill]";
 		mes "The one who told about the ritual...";
+		sleep2 1000;
 		mes "Was me.";
-		sleep2 20;
+		sleep2 500;
 		npctalk "What?", "Ian Walther#ep16_lib01", bc_self;
-		npctalk "!!!", "Levuiere Wigner#ep16_li", bc_self;
-		npctalk "Ha!", "Maximilian Roegenburg#e_prt_lib", bc_self;
+		npctalk "!!!", "Levuiere Wigner#ep16_lib01", bc_self;
+		npctalk "Ha!", "Maximilian Roegenburg#ep16_lib01", bc_self;
 		mes "...So...";
 		next;
 		mes "[Nyhill]";
@@ -2090,7 +2207,7 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		mes "I believe it was me.";
 		mes "I have this piece of memory talking to someone while I was drunk.";
 		next;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : (Does it mean...)", bc_self;
+		unittalk .@account_id, "" + .@name$ + " : (Does it mean...)", bc_self;
 		mes "[Nyhill]";
 		mes "I believe it is how the story got out.";
 		mes "I am deeply ashamed.";
@@ -2099,7 +2216,7 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		mes "Oh my... Was it the lord of the Heine family...";
 		mes "Although us, the Walther family did not attend the Royal Assembly, we won't sit back and watch this matter!";
 		next;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : (He must have been drugged then.)", bc_self;
+		unittalk .@account_id, "" + .@name$ + " : (He must have been drugged then.)", bc_self;
 		mes "[Maximilian]";
 		mes "Ha, I have heard what people say about you. You really don't seem to be able to do anything right.";
 		mes "Why did you do such a thing?";
@@ -2108,7 +2225,7 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		mes "Did you want to be a king so badly?";
 		mes "Peter is a member of your own family!";
 		next;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : (They were looking for a target...)", bc_self;
+		unittalk .@account_id, "" + .@name$ + " : (They were looking for a target...)", bc_self;
 		mes "[Nyhill]";
 		mes "........Phew...";
 		mes "It is not that...";
@@ -2117,7 +2234,7 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		mes "Speak for yourself.";
 		mes "I need to know how useless you are.";
 		next;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : (It was just a misfortune that Nyhill was marked as the target...)", bc_self;
+		unittalk .@account_id, "" + .@name$ + " : (It was just a misfortune that Nyhill was marked as the target...)", bc_self;
 		mes "[Nyhill]";
 		mes "I have nothing to say about it.";
 		mes "However...";
@@ -2132,7 +2249,7 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		mes "[Nyhill]";
 		mes "I have told you that it isn't true!";
 		mes "..........";
-		unittalk getcharid(3), "" + strcharinfo(0) + " : ...Oh, my...", bc_self;
+		unittalk .@account_id, "" + .@name$ + " : ...Oh, my...", bc_self;
 		next;
 		select("Wait, may I interrupt?");
 		mes "[Ian Walther]";
@@ -2151,7 +2268,7 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		mes "[Maximilian]";
 		mes "Do you have a proof?";
 		mes "You didn't just come up with the story to help him out, right?";
-		unittalk getcharid(3), "" + strcharinfo(0) + " : (Skia will testify for him since we found him together.)", bc_self;
+		unittalk .@account_id, "" + .@name$ + " : (Skia will testify for him since we found him together.)", bc_self;
 		next;
 		select("Lady Nerius will testify...");
 		mes "[Ian Walther]";
@@ -2187,32 +2304,55 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		mes "[Ian Walther]";
 		mes "I'll see you later then.";
 		erasequest 7693;// Surprise Attack
-		banquet_main_quest = 10;
+		ep16_royal = 10;
 		close2;
-		setpcblock PCBLOCK_NPC, true;
 		npctalk "Magician! Activate the gate.", "Ian Walther#ep16_lib01", bc_self;
+		setpcblock PCBLOCK_NPC, true;
 		sleep2 2000;
 		npctalk "Oh, yes. The gate has been activated since others used it earlier.", "Mage Nillem#ep16_warp", bc_self;
 		sleep2 3000;
 		npctalk "Is that so? Well, then. Please excuse me.", "Ian Walther#ep16_lib01", bc_self;
-		sleep2 4000;
-		classchange( HIDDEN_WARP_NPC, "Maximilian Roegenburg#e_prt_lib", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Levuiere Wigner#ep16_li", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Ian Walther#ep16_lib01", bc_self );
-		npctalk "Nyhill, come with me.", "Kronecker G. Heine#ep16_2", bc_self;
-		sleep2 2000;
-		classchange( HIDDEN_WARP_NPC, "Kronecker G. Heine#ep16_2", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Nyhill M. Heine#ep16_li", bc_self );
+		sleep2 3000;
+		cloakonnpc "Ian Walther#ep16_lib01", .@char_id;
+		sleep2 500;
+		cloakonnpc "Levuiere Wigner#ep16_lib01", .@char_id;
+		cloakonnpc "Maximilian Roegenburg#ep16_lib01", .@char_id;
+		sleep2 500;
+		npctalk "Nyhill, come with me.", "Kronecker G. Heine#ep16_lib02", bc_self;
+		sleep2 3000;
 		setpcblock PCBLOCK_NPC, false;
+		cloakonnpc "Kronecker G. Heine#ep16_lib02", .@char_id;
+		cloakonnpc "Nyhill M. Heine#ep16_lib01", .@char_id;
+		end;
 	}
+	mes "[Ian Walther]";
+	mes "Let me fill you in with the details after proceeding with a discussion with my family.";
+	close2;
+	npctalk "Magician! Activate the gate.", "Ian Walther#ep16_lib01", bc_self;
+	setpcblock PCBLOCK_NPC, true;
+	sleep2 2000;
+	npctalk "Oh, yes. The gate has been activated since others used it earlier.", "Mage Nillem#ep16_warp", bc_self;
+	sleep2 3000;
+	npctalk "Is that so? Well, then. Please excuse me.", "Ian Walther#ep16_lib01", bc_self;
+	sleep2 3000;
+	cloakonnpc "Ian Walther#ep16_lib01", .@char_id;
+	sleep2 500;
+	cloakonnpc "Levuiere Wigner#ep16_lib01", .@char_id;
+	cloakonnpc "Maximilian Roegenburg#ep16_lib01", .@char_id;
+	sleep2 500;
+	npctalk "Nyhill, come with me.", "Kronecker G. Heine#ep16_lib02", bc_self;
+	sleep2 3000;
+	setpcblock PCBLOCK_NPC, false;
+	cloakonnpc "Kronecker G. Heine#ep16_lib02", .@char_id;
+	cloakonnpc "Nyhill M. Heine#ep16_lib01", .@char_id;
 	end;
 }
-prt_lib,91,78,2	duplicate(Ian Walther#ep16_lib01)	Levuiere Wigner#ep16_li	HIDDEN_WARP_NPC
-prt_lib,91,78,2	duplicate(Ian Walther#ep16_lib01)	Maximilian Roegenburg#e_prt_lib	HIDDEN_WARP_NPC
+prt_lib,91,78,2	duplicate(Ian Walther#ep16_lib01)	Levuiere Wigner#ep16_lib01	4_EP16_LOUVIERE
+prt_lib,91,78,2	duplicate(Ian Walther#ep16_lib01)	Maximilian Roegenburg#ep16_lib01	4_EP16_MAX
 
 
-prt_lib,94,82,3	script	Dimension Warper MkII#e	HIDDEN_WARP_NPC,{
-	if (banquet_main_quest < 20) {
+prt_lib,94,82,3	script	Dimension Warper MkII#ep16_lib	PORTAL,{
+	if (ep16_royal < 18) {
 		mes "[Nillem]";
 		mes "Wait, it is not ready yet.";
 		mes "Do not touch that.";
@@ -2236,11 +2376,14 @@ prt_lib,94,82,3	script	Dimension Warper MkII#e	HIDDEN_WARP_NPC,{
 	close2;
 	warp "prt_lib_q",89,43;
 	end;
+OnInit:
+	cloakonnpc "Dimension Warper MkII#ep16_lib";
+	end;
 }
 
 // Instance Room of conciousness, daily quest
 prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
-	if (banquet_main_quest == 20) {
+	if (ep16_royal == 18) {
 		mes "[Nillem]";
 		mes "Oh, we did it.";
 		mes "I don't know when, but it is the ^4d4dffPast Memories of the Royal Family^000000!";
@@ -2260,7 +2403,7 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 		npctalk "Humph-!", bc_self;
 		specialeffect EF_BEGINSPELL;
 		next;
-		classchange( 4_ENERGY_RED, "Swaying Space#evt_gate0", bc_self );
+		cloakoffnpc "Swaying Space#evt_gate02", getcharid(0);
 		mes "[Nillem]";
 		mes "Connect the spaces by force!";
 		mes "Well, let's see what has happened here.";
@@ -2268,16 +2411,16 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 		mes "[Nillem]";
 		mes "Are you ready?";
 		mes "Talk to me when you are ready-";
-		banquet_main_quest = 21;
+		ep16_royal = 19;
 		close;
 	}
-	if (banquet_main_quest == 21) {
+	if (ep16_royal == 19) {
+		cloakoffnpc "Swaying Space#evt_gate02", getcharid(0);
 		if (getcharid(1) == 0 || is_party_leader() == false) {
 			mes "^4d4dffIt is an event which proceeds as a memorial.";
 			mes "Only the party leader can proceed with a memorial event. Try again after forming a party.^000000";
 			close;
 		}
-		classchange( 4_ENERGY_RED, "Swaying Space#evt_gate0", bc_self );
 		mes "[Nillem]";
 		mes "Then let's go and take a look what has happened in the Room of Consciousness.";
 		mes "Since I am connecting the twisted time and space once more by force,";
@@ -2303,9 +2446,10 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 		mes "[Nillem]";
 		mes "Whoa! The gate to the next area has been activated!";
 		mes "Well, let's get in there!";
+		cloakoffnpc "Swaying Space#evt_gate02", getcharid(0);
 		close;
 	}
-	if (banquet_main_quest == 22) {
+	if (ep16_royal == 20) {
 		mes "[Nillem]";
 		mes "You are here now!";
 		mes "This place has been chaotic since you were gone.";
@@ -2339,16 +2483,16 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 		mes "What are you waiting for! Let's go out there!";
 		erasequest 7701;// Lost Imir Heart
 		setquest 7702;// Prontera at the Time
-		banquet_main_quest = 23;
+		ep16_royal = 21;
 		close;
 	}
-	if (banquet_main_quest == 23) {
+	if (ep16_royal == 21) {
 		mes "[Nillem]";
 		mes "Aren't we heading out?";
 		mes "Let's go!";
 		close;
 	}
-	if (banquet_main_quest == 24) {
+	if (ep16_royal == 22) {
 		mes "[Nillem]";
 		mes "Whoa, shall we organize the thoughts now?";
 		next;
@@ -2406,15 +2550,15 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 		mes "[Nillem]";
 		mes "Well, then get ready!";
 		mes "Three!";
-		sleep2 1000;
+		sleep2 2000;
 		mes "Two!";
 		sleep2 1000;
 		mes "One!";
-		sleep2 1000;
+		close2;
 		warp "prt_lib",88,80;
-		close;
+		end;
 	}
-	if (banquet_main_quest == 26) {
+	if (ep16_royal > 23) {
 		mes "[Nillem]";
 		mes "Hahaha, I like this place now.";
 		mes "My darling, what do you want me to do now?";
@@ -2494,7 +2638,7 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 				mes "[Nillem]";
 				mes "Whoa! The gate to the next area has been activated!";
 				mes "Well, let's get in there!";
-				classchange( 4_ENERGY_RED, "Swaying Space#evt_gate0", bc_self );
+				cloakoffnpc "Swaying Space#evt_gate02", getcharid(0);
 				close;
 			case 2:
 				mes "[Nillem]";
@@ -2531,51 +2675,18 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 	}
 }
 
-prt_lib_q,88,90,1	script	Swaying Space#evt_gate0	HIDDEN_WARP_NPC,{
-	if (banquet_main_quest == 21) {
-		if (getcharid(1) == 0 || is_party_leader() == false) {// solo instance
-			mes "^4d4dffOnly the party leader can enter MD [Room of Consciousness].^000000";
-			close;
-		}
-		mes "You can move to the place where the piece of Imir Heart was in the past.";
-		next;
-		if (select( "Enter.", "Do not enter." ) == 1) {
-			if (getcharid(1) == 0 || is_party_leader() == false) {
-				mes "^4d4dffOnly the party leader can enter MD [Room of Consciousness].^000000";
-				close;
-			}
-			switch( instance_enter("Room of Consciousness") ) {
-			case IE_OTHER:
-				mes "An unknown error occurred.";
-				close;
-			case IE_NOINSTANCE:
-				mes "[Nillem]";
-				mes "Hum, is it too difficult to connect it by force?";
-				mes "Wait a minute.";
-				close;
-			case IE_NOMEMBER:
-				end;
-			case IE_OK:
-				mapannounce strnpcinfo(4), "Party member " + strcharinfo(0) + " of party's " + getpartyname( getcharid(1) ) + " enters Room of Consciousness.", bc_map,0xFF99,FW_NORMAL,12;
-				//warp "1@mir",101,10;
-				end;
-			}
-		}
-		mes "[Nillem]";
-		mes "Hum, I have just torn and connected these spaces by force.";
-		mes "Such thing is possible since I am a genius!";
-		close;
-	}
-	if (banquet_main_quest == 25) {
+prt_lib_q,88,90,1	script	Swaying Space#evt_gate02	4_ENERGY_RED,{
+	if (checkquest(7706,PLAYTIME) > 0 || checkquest(7705,HUNTING) > 1) {
 		mes "The uneasy flow of magical power can be sensed near the twisted space.";
 		mes "The gap connected by force disappeared after serving its duty.";
+		cloakonnpc "Swaying Space#evt_gate02", getcharid(0);
 		close;
 	}
-	if (banquet_main_quest == 26) {
-		if (getcharid(1) == 0 || is_party_leader() == false) {// solo instance
-			mes "^4d4dffOnly the party leader can enter MD [Room of Consciousness].^000000";
-			close;
-		}
+	if (getcharid(1) == 0 || is_party_leader() == false) {// solo instance
+		mes "^4d4dffOnly the party leader can enter MD [Room of Consciousness].^000000";
+		close;
+	}
+	if ((ep16_royal == 19 && isbegin_quest(7700) == 1) || (ep16_royal > 19 && (checkquest(7705,HUNTING) == 0 || checkquest(7705,HUNTING) == 1))) {
 		mes "You can move to the place where the piece of Ymir Heart was in the past.";
 		next;
 		if (select( "Enter.", "Do not enter." ) == 2) {
@@ -2590,31 +2701,30 @@ prt_lib_q,88,90,1	script	Swaying Space#evt_gate0	HIDDEN_WARP_NPC,{
 		}
 		switch( instance_enter("Room of Consciousness") ) {
 		case IE_OTHER:
-			mes "An unknown error occurred.";
+			mes "[Nillem]";
+			mes "Oh, well, the movement of magic seems uneasy.";
+			mes "Hum, shall we try again later?";
 			close;
-		case IE_NOINSTANCE:// todo
+		case IE_NOINSTANCE:
+			mes "[Nillem]";
+			mes "Hum, is it too difficult to connect it by force?";
+			mes "Wait a minute.";
 			close;
 		case IE_NOMEMBER:
-			end;
+			mes "^4d4dffThis is an event proceeding through memorial.";
+			mes "Only the party leader can enter.^000000";
+			close;
 		case IE_OK:
 			mapannounce strnpcinfo(4), "Party member " + strcharinfo(0) + " of party's " + getpartyname( getcharid(1) ) + " enters Room of Consciousness.", bc_map,0xFF99,FW_NORMAL,12;
 			//warp "1@mir",101,10;
 			end;
 		}
 	}
-}
-
-prt_lib_q,9,25,0	script	prt_cas_27#prt_cas_28	WARPNPC,1,1,{
-OnTouch:
-	if (banquet_main_quest < 23) {
-		mes "There are more to find out.";
-		mes "Go back to Nillem.";
-		close;
-	}
-	warp "prt_q",155,354;
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
 	end;
 }
-
 
 prt_lib_q,110,58,4	script	Document#EP161DBOOK	CLEAR_NPC,{
 	mes "More than a half of this document is edited in black.";
@@ -2690,64 +2800,55 @@ prt_lib_q,110,58,4	script	Document#EP161DBOOK	CLEAR_NPC,{
 
 
 // Left side
-prt_cas,213,177,5	script	Royal Chef#ep16_1	1_ETC_01,3,3,{
-	if (banquet_main_quest >= 2) {
-		if (banquet_quest_cooking == 0) {
-			mes "[Royal Chef]";
-			mes "Hey, you! I have been looking for you!";
-			mes "What are you doing here?";
-			emotion ET_SURPRISE;
-			next;
-			mes "[Royal Chef]";
-			mes "The Head Chef has been waiting for you. He is enraged now!";
-			mes "Go to the kitchen now!";
-			banquet_quest_cooking = 1;
-			setquest 11394;// Call of the Royal Head Chef
-			close;
-		}
-		if (banquet_quest_cooking == 1) {
-			mes "[Royal Chef]";
-			mes "The Head Chef has been waiting for you. He is enraged now!";
-			mes "Go to the kitchen now!";
-			close;
-		}
-		if (banquet_quest_cooking == 15) {
-			mes "[Royal Chef]";
-			mes "I am living in a whirl of business!";
-			mes "I have been seeing too many people these days that I am even confused about the familiar faces now.";
-			next;
-			mes "[Royal Chef]";
-			mes "I am sorry about the misunderstanding.";
-			mes "I have been badgered by the Head Chef too much... Haha...";
-			emotion ET_PROFUSELY_SWEAT;
-			close;
-		}
+prt_cas,213,177,5	script	Royal Chef#ep16_1	1_ETC_01,4,4,{
+	if (ep16_royal >= 2) {
+		if (banquet_quest_cooking == 0)
+			callsub S_Text;
+	}
+	if (banquet_quest_cooking == 1) {
+		mes "[Royal Chef]";
+		mes "The Head Chef has been waiting for you. He is enraged now!";
+		mes "Go to the kitchen now!";
+		close;
+	}
+	if (banquet_quest_cooking > 22) {
+		mes "[Royal Chef]";
+		mes "I am living in a whirl of business!";
+		mes "I have been seeing too many people these days that I am even confused about the familiar faces now.";
+		next;
+		mes "[Royal Chef]";
+		mes "I am sorry about the misunderstanding.";
+		mes "I have been badgered by the Head Chef too much... Haha...";
+		emotion ET_PROFUSELY_SWEAT;
+		close;
 	}
 	mes "[Royal Chef]";
 	mes "I am living in a whirl of business!";
 	mes "I have been seeing too many people these days that I am even confused about the familiar faces now.";
 	close;
 
+S_Text:
+	mes "[Royal Chef]";
+	mes "Hey, you! I have been looking for you!";
+	mes "What are you doing here?";
+	emotion ET_SURPRISE;
+	next;
+	mes "[Royal Chef]";
+	mes "The Head Chef has been waiting for you. He is enraged now!";
+	mes "Go to the kitchen now!";
+	banquet_quest_cooking = 1;
+	setquest 11394;// Call of the Royal Head Chef
+	close;
+
 OnTouch:
-	if (banquet_quest_cooking == 0 && banquet_main_quest >= 2) {
-		mes "[Royal Chef]";
-		mes "Hey, you! I have been looking for you!";
-		mes "What are you doing here?";
-		emotion ET_SURPRISE;
-		next;
-		mes "[Royal Chef]";
-		mes "The Head Chef has been waiting for you. He is enraged now!";
-		mes "Go to the kitchen now!";
-		banquet_quest_cooking = 1;
-		setquest 11394;// Call of the Royal Head Chef
-		close;
-	}
+	if (banquet_quest_cooking == 0 && ep16_royal >= 2)
+		callsub S_Text;
 	end;
 }
 
 // Kitchen
 prt_cas,309,200,5	script	Royal Head Chef#ep16_1	4_EP16_COOK,{
-	if (banquet_quest_cooking == 0) {
+	if (ep16_royal < 2 || banquet_quest_cooking == 0) {
 		mes "[Head Chef]";
 		mes "Argh!";
 		mes "When will this special assistant chef arrive here?";
@@ -3031,7 +3132,7 @@ S_Dish:
 }
 
 prt_cas,319,211,3	script	Royal Sauce Master#ep16	4_M_ALCHE_B,{
-	if (banquet_main_quest < 2) {
+	if (ep16_royal < 2) {
 		mes "[Oriental Oyster]";
 		mes "Hum... How savory!";
 		mes "The perfect combinations is just divine...";
@@ -3820,17 +3921,22 @@ prt_cas,358,124,0	script	Grilled Griffon#ep16_1	4_EP16_FOOD,{
 	close;
 }
 
-prt_cas_q,30,128,0	script	#ep16_evt_neriusroom	HIDDEN_WARP_NPC,1,1,{
+prt_cas_q,30,128,0	script	#ep16_evt_neriusroom	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
-	if (banquet_main_quest == 16 || banquet_main_quest == 17) {
-		classchange( HIDDEN_WARP_NPC, "Skia Nerius#ep16_room01", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Spica Nerius#ep16_room01_a", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Bodyguard Crux#ep16_room01", bc_self );
-		classchange( 4_EP16_SPICA, "Spica Nerius#ep16_room01_b", bc_self );
+	if (ep16_royal == 15) {
+		cloakonnpc "Bodyguard Crux#ep16_room01", getcharid(0);
+		cloakonnpc "Spica Nerius#ep16_room01", getcharid(0);
+		cloakonnpc "Skia Nerius#ep16_room01", getcharid(0);
+		cloakoffnpc "Spica Nerius#ep16_room02", getcharid(0);
 	}
-	if (banquet_main_quest > 17)
-		classchange( HIDDEN_WARP_NPC, "Skia Nerius#ep16_room01", bc_self );
+	else if (ep16_royal > 2 && ep16_royal < 7) {
+		cloakonnpc "Bodyguard Crux#ep16_room01", getcharid(0);
+		cloakonnpc "Spica Nerius#ep16_room01", getcharid(0);
+		cloakonnpc "Skia Nerius#ep16_room01", getcharid(0);
+	}
+	else if (ep16_royal > 17)
+		cloakonnpc "Skia Nerius#ep16_room01", getcharid(0);
 	end;
 }
 
@@ -3845,13 +3951,15 @@ prt_cas_q,18,136,5	script	Skia Nerius#ep16_room01	4_EP16_SKIA,{
 }
 
 prt_cas_q,20,139,3	script	Spica Nerius#ep16_room01_a	4_EP16_SPICA,{
-	if (banquet_main_quest < 2) {
+	if (ep16_royal < 2) {
 		mes "[Spica]";
 		mes "Are you invited to the banquet?";
 		mes "This place is not the Banquet Hall.";
 		close3;
 	}
-	if (banquet_main_quest == 7) {
+	if (ep16_royal < 7)
+		end;
+	if (ep16_royal == 7) {
 		mes "[Spica]";
 		mes "I have heard the story briefly from Skia.";
 		mes "Lord Nyhill must have a constitutional weakness for alcohol.";
@@ -3882,73 +3990,71 @@ prt_cas_q,20,139,3	script	Spica Nerius#ep16_room01_a	4_EP16_SPICA,{
 		mes "...Anyways, I guess we have to warn the elders about this.";
 		close3;
 	}
-	if (banquet_main_quest == 16 || banquet_main_quest == 17)
+	if (ep16_royal < 17)
 		end;
-	if (banquet_main_quest > 17) {
-		mes "[Spica]";
-		mes "Sorry about all the trouble.";
-		mes "How unlucky of you to be involved in this mess.";
-		cutin "ep16_spica_nerius01",1;
-		next;
-		mes "[Spica]";
-		mes "Well, I am not doing well either.";
-		mes "The royal family is focusing on finding out who is pulling the strings.";
-		next;
-		mes "[Spica]";
-		mes "...All they can do is to sort out the puppets infiltrated into the palace.";
-		mes "But it is better than doing nothing.";
-		mes "Now... then.";
-		next;
-		select("Where is Skia?");
-		mes "[Spica]";
-		mes "She went to hang out with Lord Nyhill!";
-		mes "I don't know what she sees in the pretty boy with no substance.";
-		cutin "ep16_spica_nerius03",1;
-		next;
-		mes "[Spica]";
-		mes "Could it be...";
-		mes "Could it be that?";
-		mes "Is she enchanted by his looks?";
-		mes "Crux, you answer me!";
-		cutin "ep16_spica_nerius05",1;
-		next;
-		cutin "ep16_crux_findel03",2;
-		mes "[Crux]";
-		mes "Wha... What? Well...";
-		mes "It sounds plausible...";
-		mes "By the way, Lord Nyhill is under probation so he is not supposed to leave his room.";
-		next;
-		mes "[Spica]";
-		mes "Well, I stand corrected. She went to visit Nyhill in his room.";
-		mes "...Isn't it the same thing?";
-		cutin "ep16_spica_nerius06",1;
-		next;
-		select("Crux, cheer up...");
-		cutin "ep16_crux_findel03",2;
-		mes "[Crux]";
-		mes "Oh, are you leaving now?";
-		mes "It sure is wise of you to leave before the lady's head explodes.";
-		next;
-		cutin "ep16_crux_findel02",2;
-		mes "[Crux]";
-		mes "See you later.";
-		close2;
-		setpcblock PCBLOCK_NPC, true;
-		cutin "",255;
-		npctalk "Why are you letting the guest out?", "", bc_self;
-		sleep2 1000;
-		npctalk "Yes, yes, my lady. I am at your service. Where are you?", "Bodyguard Crux#ep16_room01", bc_self;
-		sleep2 3000;
-		npctalk "You are not the one I am looking for!", "", bc_self;
-		sleep2 3000;
-		npctalk "Shall I leave too?", "Bodyguard Crux#ep16_room01", bc_self;
-		sleep2 3000;
-		npctalk "I don't mean that!", "", bc_self;
-		sleep2 3000;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : (Oh my, I'd better get out now.)", bc_self;
-		setpcblock PCBLOCK_NPC, false;
-		end;
-	}
+	mes "[Spica]";
+	mes "Sorry about all the trouble.";
+	mes "How unlucky of you to be involved in this mess.";
+	cutin "ep16_spica_nerius01",1;
+	next;
+	mes "[Spica]";
+	mes "Well, I am not doing well either.";
+	mes "The royal family is focusing on finding out who is pulling the strings.";
+	next;
+	mes "[Spica]";
+	mes "...All they can do is to sort out the puppets infiltrated into the palace.";
+	mes "But it is better than doing nothing.";
+	mes "Now... then.";
+	next;
+	select("Where is Skia?");
+	mes "[Spica]";
+	mes "She went to hang out with Lord Nyhill!";
+	mes "I don't know what she sees in the pretty boy with no substance.";
+	cutin "ep16_spica_nerius03",1;
+	next;
+	mes "[Spica]";
+	mes "Could it be...";
+	mes "Could it be that?";
+	mes "Is she enchanted by his looks?";
+	mes "Crux, you answer me!";
+	cutin "ep16_spica_nerius05",1;
+	next;
+	cutin "ep16_crux_findel03",2;
+	mes "[Crux]";
+	mes "Wha... What? Well...";
+	mes "It sounds plausible...";
+	mes "By the way, Lord Nyhill is under probation so he is not supposed to leave his room.";
+	next;
+	mes "[Spica]";
+	mes "Well, I stand corrected. She went to visit Nyhill in his room.";
+	mes "...Isn't it the same thing?";
+	cutin "ep16_spica_nerius06",1;
+	next;
+	select("Crux, cheer up...");
+	cutin "ep16_crux_findel03",2;
+	mes "[Crux]";
+	mes "Oh, are you leaving now?";
+	mes "It sure is wise of you to leave before the lady's head explodes.";
+	next;
+	cutin "ep16_crux_findel02",2;
+	mes "[Crux]";
+	mes "See you later.";
+	close2;
+	setpcblock PCBLOCK_NPC, true;
+	cutin "",255;
+	npctalk "Why are you letting the guest out?", "", bc_self;
+	sleep2 1000;
+	npctalk "Yes, yes, my lady. I am at your service. Where are you?", "Bodyguard Crux#ep16_room01", bc_self;
+	sleep2 3000;
+	npctalk "You are not the one I am looking for!", "", bc_self;
+	sleep2 3000;
+	npctalk "Shall I leave too?", "Bodyguard Crux#ep16_room01", bc_self;
+	sleep2 3000;
+	npctalk "I don't mean that!", "", bc_self;
+	sleep2 3000;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : (Oh my, I'd better get out now.)", bc_self;
+	setpcblock PCBLOCK_NPC, false;
+	end;
 
 	if (banquet_nerius_quest == 0) {
 		mes "[Spica]";
@@ -4075,8 +4181,8 @@ prt_cas_q,21,140,3	script	Bodyguard Crux#ep16_room01	4_EP16_CRUX,{
 	close3;
 }
 
-prt_cas_q,23,133,2	script	Nyhill M. Heine#ep16_nr	HIDDEN_WARP_NPC,{
-	if (banquet_main_quest == 17) {
+prt_cas_q,23,133,2	script	Nyhill M. Heine#ep16_nroom01	4_EP16_NIHIL,{
+	if (ep16_royal == 16) {
 		cutin "ep16_nihi_miseria_heine01",2;
 		mes "[Nyhill]";
 		mes "We'd better move now since the situation doesn't look good.";
@@ -4084,8 +4190,8 @@ prt_cas_q,23,133,2	script	Nyhill M. Heine#ep16_nr	HIDDEN_WARP_NPC,{
 	}
 }
 
-prt_cas_q,18,136,3	script	Spica Nerius#ep16_room01_b	HIDDEN_WARP_NPC,{
-	if (banquet_main_quest == 16) {
+prt_cas_q,18,136,3	script	Spica Nerius#ep16_room02	4_EP16_SPICA,{
+	if (ep16_royal == 15) {
 		mes "[Spica]";
 		mes "You are rather slow-footed.";
 		mes "It has been a while since I got the message that you came back.";
@@ -4095,11 +4201,11 @@ prt_cas_q,18,136,3	script	Spica Nerius#ep16_room01_b	HIDDEN_WARP_NPC,{
 		mes "I invited you for no special reason.";
 		mes "Since they keep calling for meetings to discuss what has happened during the ritual.";
 		next;
+		cloakoffnpc "Nyhill M. Heine#ep16_nroom01", getcharid(0);
 		mes "[Spica]";
 		mes "There comes lord of the Heine family.";
 		mes "You seem to move around rather freely considering that you are under confinement.";
 		next;
-		classchange( 4_EP16_NIHIL, "Nyhill M. Heine#ep16_nr", bc_self );
 		mes "[Nyhill]";
 		mes "...?";
 		mes "" + strcharinfo(0) + ", I have something to tell you.";
@@ -4172,7 +4278,7 @@ prt_cas_q,18,136,3	script	Spica Nerius#ep16_room01_b	HIDDEN_WARP_NPC,{
 		cutin "ep16_nihi_miseria_heine04",2;
 		mes "[Nyhill]";
 		mes "To be exact, I volunteered since I heard that you were visiting the Nerius family.";
-		npctalk "...The room was stuffy.", "Nyhill M. Heine#ep16_nr";
+		npctalk "...The room was stuffy.", "Nyhill M. Heine#ep16_nroom01";
 		next;
 		cutin "ep16_skia_shadow03",0;
 		mes "[Skia]";
@@ -4202,12 +4308,12 @@ prt_cas_q,18,136,3	script	Spica Nerius#ep16_room01_b	HIDDEN_WARP_NPC,{
 		cutin "ep16_skia_shadow04",0;
 		mes "[Skia]";
 		mes "" + strcharinfo(0) + ", please come to see me again later!";
-		banquet_main_quest = 17;
+		ep16_royal = 16;
 		setquest 7698;// Heine Now
 		erasequest 7697;// Invitation from the Nerius
 		close3;
 	}
-	if (banquet_main_quest == 17) {
+	if (ep16_royal == 16) {
 		mes "[Skia]";
 		mes "I have to wait for Spica's return and change clothes.";
 		mes "I cannot leave now.";
@@ -4218,19 +4324,10 @@ prt_cas_q,18,136,3	script	Spica Nerius#ep16_room01_b	HIDDEN_WARP_NPC,{
 		mes "We will be in trouble.";
 		close3;
 	}
-}
-
-prt_cas_q,130,56,0	script	prt_cas_30#prt_cas_31	WARPNPC,1,1,{
-OnTouch:
-	if (banquet_main_quest >= 3 && banquet_main_quest <= 14) {
-		mes "It is locked.";
-		close;
-	}
-	if (banquet_main_quest == 15) {
-		mes "Let's first reply to the servant that the invitation will be accepted.";
-		close;
-	}
-	warp "prt_cas_q",30,128;
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	cloakonnpc "Nyhill M. Heine#ep16_nroom01";
 	end;
 }
 
@@ -5175,31 +5272,27 @@ veins,156,160,7	script	K#ep16wal	4_M_RASWORD,{
 	}
 }
 
-prt_cas_q,130,32,0	script	prt_cas_32#prt_cas_33	WARPNPC,1,1,{
-	end;
-OnTouch:
-	if (banquet_main_quest >= 8 && banquet_main_quest <= 16) {
-		mes "It is locked.";
-		close;
-	}
-	warp "prt_cas_q",30,78;
-	end;
-}
-
 prt_cas_q,30,78,0	script	#ep16_heine_evt01	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
-	if (banquet_main_quest < 17) {
-		classchange( HIDDEN_WARP_NPC, "Peter Heine#ep16_02", bc_self );	// known issue : npc is not hidden since the player is not in npc visual range
-		classchange( 4_M_3RDPRIN1, "Peter Heine#ep16_01", bc_self );
-		if (banquet_heine_quest == 0)
-			classchange( 4_EP16_NIHIL, "Nyhill M. Heine#ep16_01", bc_self );
+	if (ep16_royal == 2 && isbegin_quest(7683) == 0) {
+		cloakoffnpc "Nyhill M. Heine#ep16_01", getcharid(0);
+		cloakoffnpc "Peter Heine#ep16_01", getcharid(0);
+		cloakonnpc "Peter Heine#ep16_02", getcharid(0);
+	}
+	else if (ep16_royal < 10) {
+		cloakoffnpc "Peter Heine#ep16_01", getcharid(0);
+		cloakonnpc "Peter Heine#ep16_02", getcharid(0);
+	}
+	else if (ep16_royal > 9) {
+		cloakonnpc "Peter Heine#ep16_01", getcharid(0);
+		cloakoffnpc "Peter Heine#ep16_02", getcharid(0);
 	}
 	end;
 }
 
 prt_cas_q,9,90,3	script	Peter Heine#ep16_02	4_EP16_PETER,{
-	if (banquet_main_quest >= 17) {
+	if (ep16_royal > 8) {
 		mes "He is lying in bed, deeply wounded.";
 		mes "It doesn't seem that he is in the state to talk.";
 		close;
@@ -5208,19 +5301,19 @@ prt_cas_q,9,90,3	script	Peter Heine#ep16_02	4_EP16_PETER,{
 
 // Heine
 prt_cas_q,21,83,3	script	Friedrich S. Heine#ep16	4_EP16_STOLZ,{
-	if (banquet_main_quest < 2) {
+	if (ep16_royal < 2) {
 		cutin "ep16_friedrich_stolz_heine",1;
 		mes "[Friedrich]";
 		mes "How disrespectful of you to enter without permission.";
 		mes "Get out of here now.";
 		close3;
 	}
-	if (banquet_main_quest == 2) {
+	if (ep16_royal == 2) {
 		mes "[Friedrich]";
 		mes "Please, calm down.";
 		close;
 	}
-	if (banquet_main_quest < 17) {
+	if (ep16_royal < 8) {
 		cutin "ep16_friedrich_stolz_heine",1;
 		mes "[Friedrich]";
 		mes "Why don't you enjoy the banquet?";
@@ -5234,42 +5327,35 @@ prt_cas_q,21,83,3	script	Friedrich S. Heine#ep16	4_EP16_STOLZ,{
 		mes "Well, I guess I shouldn't talk more.";
 		close3;
 	}
-	if (banquet_main_quest == 17) {
+	if (ep16_royal < 16)
+		end;
+	if (ep16_royal == 16) {
 		cutin "ep16_friedrich_stolz_heine",1;
 		mes "[Friedrich]";
 		mes "You are here at last.";
 		mes "The archduke has been waiting for you.";
 		close3;
 	}
-	if (banquet_main_quest == 18) {
+	if (ep16_royal == 17) {
 		cutin "ep16_friedrich_stolz_heine",1;
 		mes "[Friedrich]";
 		mes "Nillem said he would visit your room after making all preparations. You may wait in your room.";
 		mes "We are counting on you.";
 		close3;
 	}
-	if (banquet_main_quest < 25)
+	if (ep16_royal < 23)
 		end;
-	if (banquet_main_quest == 25) {
-		switch( checkquest(7706,PLAYTIME) ) {
-		case -1:
-			end;
-		case 0:
-		case 1:
-			cutin "ep16_friedrich_stolz_heine",1;
-			mes "[Friedrich]";
-			mes "I have heard the story from my father.";
-			mes "I have received the approval for you to access the Past Memories of the Royal Family freely.";
-			next;
-			mes "[Friedrich]";
-			mes "Let's talk about the Past Memories of the Royal Family tomorrow";
-			mes "Since you must be tired going through all the trouble today.";
-			close3;
-		case 2:
-			erasequest 7706;// Nillem Is Not Almighty
-			banquet_main_quest = 26;
-			break;
-		}
+	if (ep16_royal == 23) {
+		cutin "ep16_friedrich_stolz_heine",1;
+		mes "[Friedrich]";
+		mes "I have heard the story from my father.";
+		mes "I have received the approval for you to access the Past Memories of the Royal Family freely.";
+		next;
+		mes "[Friedrich]";
+		mes "Let's talk about the Past Memories of the Royal Family tomorrow";
+		mes "Since you must be tired going through all the trouble today.";
+		ep16_royal = 24;
+		close3;
 	}
 	switch( checkquest(7706,PLAYTIME) ) {
 	case -1:
@@ -5317,7 +5403,7 @@ prt_cas_q,21,83,3	script	Friedrich S. Heine#ep16	4_EP16_STOLZ,{
 		mes "I hope it works this time.";
 		next;
 		mes "[Friedrich]";
-		mes "Please save the piece of Imir Heart from Valkyrie.";
+		mes "Please save the piece of Ymir Heart from Valkyrie.";
 		setquest 7705;// Hope You Cannot Let Go
 		close3;
 	case 0:
@@ -5363,25 +5449,25 @@ prt_cas_q,21,83,3	script	Friedrich S. Heine#ep16	4_EP16_STOLZ,{
 		mes "See you tomorrow then.";
 		setquest 7706;// Nillem Is Not Almighty
 		erasequest 7705;// Hope You Cannot Let Go
-		getitem 6919,10;// Honor Token
+		getitem 6919,10;// TokenOfHonor
 		getexp 400000,400000;
 		close3;
 	}
 }
 
-prt_cas_q,18,83,5	script	Peter Heine#ep16_01	HIDDEN_WARP_NPC,{
-	if (banquet_main_quest < 2) {
+prt_cas_q,18,83,5	script	Peter Heine#ep16_01	4_M_3RDPRIN1,{
+	if (ep16_royal < 2) {
 		mes "[Peter]";
 		mes "You must be the returned hero invited to the banquet.";
 		mes "This banquet is for you. Please enjoy.";
 		close;
 	}
-	if (banquet_main_quest == 2) {
+	if (ep16_royal == 2) {
 		mes "[Peter]";
 		mes "Haha... The archduke must be very angry.";
 		close;
 	}
-	if (banquet_main_quest < 17) {
+	if (ep16_royal < 8) {
 		cutin "ep16_petter_heine01",0;
 		mes "[Peter]";
 		mes "I have participated in the Royal Assembly, but I wonder if it has been the right decision.";
@@ -5402,12 +5488,12 @@ prt_cas_q,18,83,5	script	Peter Heine#ep16_01	HIDDEN_WARP_NPC,{
 }
 
 prt_cas_q,19,85,4	script	Kronecker G. Heine#ep16	4_EP16_GRANZ,{
-	if (banquet_main_quest < 2) {
+	if (ep16_royal < 2) {
 		mes "[Kronecker]";
 		mes "I have never allowed your visit.";
 		close;
 	}
-	if (banquet_main_quest == 2) {
+	if (ep16_royal == 2) {
 		if (banquet_heine_quest == 0) {
 			cutin "ep16_kronecker_granz_heine",2;
 			mes "[Kronecker]";
@@ -5564,7 +5650,7 @@ prt_cas_q,19,85,4	script	Kronecker G. Heine#ep16	4_EP16_GRANZ,{
 			end;
 		}
 	}
-	if (banquet_main_quest < 17) {
+	if (ep16_royal < 8) {
 		cutin "ep16_kronecker_granz_heine",2;
 		mes "[Kronecker]";
 		mes "The Royal Assembly will be over soon.";
@@ -5579,7 +5665,9 @@ prt_cas_q,19,85,4	script	Kronecker G. Heine#ep16	4_EP16_GRANZ,{
 		mes "Enjoy the banquet and go back to your room in time.";
 		close3;
 	}
-	if (banquet_main_quest == 17) {
+	if (ep16_royal < 16)	// door locked
+		end;
+	if (ep16_royal == 16) {
 		cutin "ep16_kronecker_granz_heine",2;
 		mes "[Kronecker]";
 		mes "I have been waiting for you.";
@@ -5665,39 +5753,35 @@ prt_cas_q,19,85,4	script	Kronecker G. Heine#ep16	4_EP16_GRANZ,{
 		mes "[Kronecker]";
 		mes "It must be useful to people like you.";
 		mes "I hope it helps.";
-		banquet_main_quest = 18;
+		ep16_royal = 17;
 		setquest 7699;// To the Past
 		erasequest 7698;// Heine Now
-		getitem 6919,20;// Honor Token
+		getitem 6919,20;// TokenOfHonor
 		getexp 400000,400000;
 		close3;
 	}
-	if (banquet_main_quest == 18) {
+	if (ep16_royal == 17) {
 		cutin "ep16_kronecker_granz_heine",2;
 		mes "[Kronecker]";
 		mes "The magician called Nillem will find you.";
 		mes "You may wait in your room.";
 		close3;
 	}
-	if (banquet_main_quest >= 19) {
-		cutin "ep16_kronecker_granz_heine",2;
-		mes "[Kronecker]";
-		mes "It is too early to lose our hope.";
-		mes "I believe you will do just fine.";
-		close3;
-	}
+	cutin "ep16_kronecker_granz_heine",2;
+	mes "[Kronecker]";
+	mes "It is too early to lose our hope.";
+	mes "I believe you will do just fine.";
+	close3;
 }
 
-prt_cas_q,22,80,3	script	Nyhill M. Heine#ep16_01	HIDDEN_WARP_NPC,{ end; }
+prt_cas_q,22,80,3	script	Nyhill M. Heine#ep16_01	4_EP16_NIHIL,{ end; }
 
 prt_cas_q,22,77,0	script	#ep16_heine_evt02	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
-	if (banquet_main_quest < 17)
-		classchange( HIDDEN_WARP_NPC, "Peter Heine#ep16_02", bc_self );	// custom - officially hidden from #ep16_heine_evt01. However the npc is not hidden when the player is not in npc visual range
-	if (banquet_heine_quest == 0 && banquet_main_quest == 2) {
-		setpcblock PCBLOCK_NPC, true;
+	if (ep16_royal == 2 && isbegin_quest(7683) == 0) {
 		npctalk "You are in no place to say such a thing!", "Kronecker G. Heine#ep16", bc_self;
+		setpcblock PCBLOCK_NPC, true;
 		sleep2 3000;
 		npctalk "I'll go back to the head house. Please give me your permission.", "Nyhill M. Heine#ep16_01", bc_self;
 		sleep2 3000;
@@ -5715,11 +5799,16 @@ OnTouch:
 		sleep2 3000;
 		npctalk "Watch your words, Nyhill.", "Friedrich S. Heine#ep16", bc_self;
 		sleep2 3000;
-		classchange( HIDDEN_WARP_NPC, "Nyhill M. Heine#ep16_01", bc_self );
-		sleep2 7000;
+		npctalk "You have never considered me as a member of the family.", "Nyhill M. Heine#ep16_0", bc_self;
+		sleep2 3000;
+		npctalk "However, I have to bear all the responsibilities. I can't take it anymore.", "Nyhill M. Heine#ep16_0", bc_self;
+		sleep2 1000;
+		cloakonnpc "Nyhill M. Heine#ep16_01", getcharid(0);
+		sleep2 500;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Oh, he left.", bc_self;
-		sleep2 2000;
-		npctalk "...That useless punk. He doesn't do any good!", "Kronecker G. Heine#ep16", bc_self;
+		sleep2 1000;
+		setpcblock PCBLOCK_NPC, false;
+		npctalk "...That useless punk. He doesn't do any good!", "Kronecker G. Heine#ep16_01", bc_self;
 		if (banquet_heine_quest == 0) {
 			banquet_heine_quest = 1;
 			setquest 7683;// Visit the Heines
@@ -5727,18 +5816,23 @@ OnTouch:
 		setpcblock PCBLOCK_NPC, false;
 	}
 	end;
+OnInit:
+	cloakonnpc "Nyhill M. Heine#ep16_01";
+	cloakonnpc "Peter Heine#ep16_01";
+	end;
 }
 
-prt_cas_q,144,38,3	script	Nyhill#ep16_7686	HIDDEN_WARP_NPC,{ end; }
-prt_cas_q,141,39,5	script	Skia#ep16_7686	HIDDEN_WARP_NPC,{ end; }
+prt_cas_q,144,38,3	script	Nyhill#ep16_7686	4_EP16_NIHIL,{ end; }
+prt_cas_q,141,39,5	script	Skia#ep16_7686	4_EP16_SKIA,{ end; }
 
-prt_cas_q,141,36,0	script	#ep16_evt_7686	HIDDEN_WARP_NPC,1,1,{
+prt_cas_q,141,36,0	script	#ep16_evt_7686	HIDDEN_WARP_NPC,3,1,{
 	end;
 OnTouch:
-	if (banquet_heine_quest >= 1 && isbegin_quest(7686) == 0) {
+	if (isbegin_quest(7683) == 2 && isbegin_quest(7686) == 0) {
+		cloakoffnpc "Skia#ep16_7686", getcharid(0);
+		cloakoffnpc "Nyhill#ep16_7686", getcharid(0);
 		setpcblock PCBLOCK_NPC, true;
-		classchange( 4_EP16_NIHIL, "Nyhill#ep16_7686", bc_self );
-		classchange( 4_EP16_SKIA, "Skia#ep16_7686", bc_self );
+		sleep2 2000;
 		npctalk "Are you the shadow princess whom people talk about?", "Nyhill#ep16_7686", bc_self;
 		sleep2 3000;
 		npctalk "It must be difficult for you too. Is it your first time attending the official event?", "Nyhill#ep16_7686", bc_self;
@@ -5784,23 +5878,29 @@ OnTouch:
 		npctalk "Oh, right. I was on my way to meet the hero!", "Skia#ep16_7686", bc_self;
 		sleep2 3000;
 		npctalk "Please excuse me now.", "Skia#ep16_7686", bc_self;
-		classchange( HIDDEN_WARP_NPC, "Skia#ep16_7686", bc_self );
+		sleep2 1000;
+		cloakonnpc "Skia#ep16_7686", getcharid(0);
 		sleep2 3000;
 		npctalk "...Skia... There is an interesting lady in the Nerius family.", "Nyhill#ep16_7686", bc_self;
-		classchange( HIDDEN_WARP_NPC, "Nyhill#ep16_7686", bc_self );
+		sleep2 3000;
+		setpcblock PCBLOCK_NPC, false;
+		cloakonnpc "Nyhill#ep16_7686", getcharid(0);
 		if (isbegin_quest(7686) == 0) {
 			setquest 7686;// Nyhill and Skia
 			completequest 7686;// Nyhill and Skia
 		}
-		setpcblock PCBLOCK_NPC, false;
 	}
+	end;
+OnInit:
+	cloakonnpc "Skia#ep16_7686";
+	cloakonnpc "Nyhill#ep16_7686";
 	end;
 }
 
 // Right Side
 // Roegenburg
 prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,1) == 0) {
 		mes "[Maximilian]";
 		mes "You seem to have a lot of luggage. Are you OK?";
 		mes "It looks a lot and large.";
@@ -5809,14 +5909,19 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 		mes "How about cutting down some?";
 		close;
 	}
-	if (banquet_main_quest < 2) {// pre-req
+	if (BaseLevel < 100) {
 		mes "[Maximilian]";
-		mes "How could you come in here?";
-		mes "Nobody can come into this place if you are not a staff. Please go outside.";
+		mes "The Roegenburg welcomes adventurers with various experiences, but it is somewhat early for us to work with you.";
+		mes "I hope I will see you later.";
 		close;
 	}
-
 	if (banquet_roegenburg_quest == 0) {
+		if (isbegin_quest(7682) != 1) {
+			mes "[Maximilian]";
+			mes "How could you come in here?";
+			mes "Nobody can come into this place if you are not a staff. Please go outside.";
+			close;
+		}
 		mes "[Maximilian]";
 		mes "Hello, adventurers. I am honored you have visited the ^0000cdRoegenburg^000000. I am ^0000cdMaximilian Roegenburg^000000.";
 		next;
@@ -12657,51 +12762,53 @@ prt_cas,97,216,2	script	Chamberlain#vip_alimi	4_M_RUSMAN2,{
 	close;
 }
 
-prt_cas,79,219,7	script	Banquet Hall Guest#ep16_1	4_F_MALAYA,{
+prt_cas,104,231,3	script	Banquet Hall Guest#ep16wig01	4_F_CHNDRESS3,{
 	mes "[Banquet Hall Guest]";
-	mes "Oh, aren't you the adventurer who has saved the world? Please visit Port Malaya someday. Everyone will welcome you there! Your story is known even to a far away place from here!";
+	mes "It is always my pleasure to attend a banquet. Traveling and learning about different cultures are always interesting. It just makes it better to have good music and delicious food.";
 	close;
 }
 
-prt_cas,81,235,3	script	Banquet Hall Guest#ep16_2	4_F_BRZ_WOMAN,{
-	mes "[Banquet Hall Guest]";
-	mes "The Palace of Rune-Midgarts is so big and glamourous. It somewhat feels exotic too. It's been a long way, but I am glad to be here.";
-	close;
-}
-
-prt_cas,87,231,5	script	Banquet Hall Guest#ep16_3	4_M_TWTEAMAN,{
-	mes "[Banquet Hall Guest]";
-	mes "I visited the Palace of Rune-Midgarts long time ago. It has changed a lot ever since. It has become much more glamourous and magnificent that I really enjoy being guided around this place.";
-	close;
-}
-
-prt_cas,88,246,7	script	Banquet Hall Guest#ep16_4	4_F_THAIGIRL,{
-	mes "[Banquet Hall Guest]";
-	mes "The music played by the music makes me so emotional. It is worthwhile to come here for this music alone.";
-	close;
-}
-
-prt_cas,103,232,3	script	Banquet Hall Guest#ep16_5	4_M_CHNOLD,{
+prt_cas,103,232,3	script	Banquet Hall Guest#ep16wig02	4_M_CHNOLD,{
 	mes "[Banquet Hall Guest]";
 	mes "It is always tiring to attend a banquet. I am still tired from the trip, it is just too painful to mingle with people... Phew...";
 	close;
 }
 
-prt_cas,114,226,5	script	Banquet Hall Guest#ep16_6	4_M_DEWWOMAN,{
+prt_cas,81,235,3	script	Banquet Hall Guest#ep16wig03	4_F_BRZ_WOMAN,{
+	mes "[Banquet Hall Guest]";
+	mes "The Palace of Rune Midgarts is so big and glamourous. It somewhat feels exotic too. It's been a long way, but I am glad to be here.";
+	close;
+}
+
+prt_cas,79,219,7	script	Banquet Hall Guest#ep16wig04	4_F_MALAYA,{
+	mes "[Banquet Hall Guest]";
+	mes "Oh, aren't you the adventurer who has saved the world? Please visit Portmalaya someday. Everyone will welcome you there! Your story is known even to a far away place from here!";
+	close;
+}
+
+prt_cas,88,246,7	script	Banquet Hall Guest#ep16wig05	4_F_THAIGIRL,{
+	mes "[Banquet Hall Guest]";
+	mes "The music played by the music makes me so emotional. It is worthwhile to come here for this music alone.";
+	close;
+}
+
+prt_cas,114,226,5	script	Banquet Hall Guest#ep16wig06	4_M_DEWWOMAN,{
 	mes "[Banquet Hall Guest]";
 	mes "Wait, I have been looking at the flowers here. Are they blinking? How wonderful!";
 	close;
 }
 
-prt_cas,86,251,5	script	Banquet Hall Guest#ep16_7	4_M_RUSMAN1,{
+prt_cas,87,231,5	script	Banquet Hall Guest#ep16wig07	4_M_TWTEAMAN,{
 	mes "[Banquet Hall Guest]";
-	if (banquet_main_quest == 0)
-		mes "There are a long of people here. I almost feel dizzy. However, still, I like the lively atmosphere.";
-	else
-		mes "It is always my pleasure to attend a banquet. Traveling and learning about different cultures are always interesting. It just makes it better to have good music and delicious food.";
+	mes "I visited the Palace of Rune Midgarts long time ago. It has changed a lot ever since. It has become much more glamourous and magnificent that I really enjoy being guided around this place.";
 	close;
 }
 
+prt_cas,86,251,5	script	Banquet Hall Guest#ep16wig08	4_M_RUSMAN1,{
+	mes "[Banquet Hall Guest]";
+	mes "There are a long of people here. I almost feel dizzy. However, still, I like the lively atmosphere.";
+	close;
+}
 
 prt_cas,72,227,5	script	Banquet Hall Guest#1	4_M_JPNOJI,{
 	mes "[Banquet Hall Guest]";
@@ -13437,37 +13544,8 @@ prt_cas,161,168,5	script	Royal Guardian Knight#0_left	4_M_CRU,{
 	}
 }
 
-prt_cas,152,163,0	script	prt_cas_1#0_left	WARPNPC,1,1,{
-OnTouch:
-	if (banquet_main_quest == 0) {
-		setpcblock PCBLOCK_NPC, true;
-		npctalk "That way is a royal villa for VIPs. Outsiders cannot access the place.", "Royal Guardian Knight#0_left", bc_self;
-		sleep2 3000;
-		npctalk "If you are invited, a servant should be there to greet you. Please be guided officially.", "Royal Guardian Knight#0_left", bc_self;
-		setpcblock PCBLOCK_NPC, false;
-		end;
-	}
-	warp "prt_cas_q",150,8;
-	end;
-}
-
-
 // Corridor right
 prt_cas,270,168,3	duplicate(Royal Guardian Knight#0_left)	Royal Guardian Knight#0_right	4_M_CRU
-
-prt_cas,278,163,0	script	prt_cas_2#0_right	WARPNPC,1,1,{
-OnTouch:
-	if (banquet_main_quest == 0) {
-		setpcblock PCBLOCK_NPC, true;
-		npctalk "That way is a royal villa for VIPs. Outsiders cannot access the place.", "Royal Guardian Knight#0_right", bc_self;
-		sleep2 3000;
-		npctalk "If you are invited, a servant should be there to greet you. Please be guided officially.", "Royal Guardian Knight#0_right", bc_self;
-		setpcblock PCBLOCK_NPC, false;
-		end;
-	}
-	warp "prt_cas_q",135,119;
-	end;
-}
 
 // Exchanges and enchants npc
 prt_cas,165,255,7	script	Commissary#ep16	4_M_JOB_KNIGHT2,{
@@ -13569,8 +13647,8 @@ prt_cas,180,275,5	script	Logistics Manager#sin	4_M_JOB_KNIGHT1,{
 	}
 	mes "[Sin the Logistics Manager]";
 	mes "Thank you. This is the thing I have promised.";
-	delitem 6919,30;// Honor Marks
-	getitem 22901,1;// Mysterious_Blue_Box
+	delitem 6919,30;// TokenOfHonor
+	getitem 22901,1;// BlueboxOfQuestions
 	close;
 }
 
@@ -13580,31 +13658,17 @@ prt_cas,180,264,3	script	Guardian Knight#ep16_pr_1	4_M_CRU,{
 }
 
 prt_cas,180,251,3	script	Guardian Knight#ep16_pr_2	4_M_CRU,{
-	setpcblock PCBLOCK_NPC, true;
 	npctalk "...On duty. No problem...", "Guardian Knight#ep16_pr_2", bc_self;
+	setpcblock PCBLOCK_NPC, true;
 	sleep2 2000;
-	npctalk "I want to go home now.", "Guardian Knight#ep16_pr_2", bc_self;
 	setpcblock PCBLOCK_NPC, false;
-	end;
-}
-
-prt_cas,188,258,0	script	#cas_prison	WARPNPC,1,1,{
-OnTouch_:
-	if (banquet_main_quest >= 2)
-		warp "prt_pri00",54,134;
-	else {
-		setpcblock PCBLOCK_NPC, true;
-		npctalk "You shouldn't enter the place like that.", "Guardian Knight#ep16_pr_1", bc_self;
-		sleep2 2000;
-		setpcblock PCBLOCK_NPC, false;
-		warp "prt_cas",182,258;
-	}
+	npctalk "I want to go home now.", "Guardian Knight#ep16_pr_2", bc_self;
 	end;
 }
 
 // Prontera of the past
 prt_q,157,334,3	script	Nillem#ep16_pprt01	4_M_JOB_WIZARD,{
-	if (banquet_main_quest == 23) {
+	if (ep16_royal == 21) {
 		mes "[Nillem]";
 		mes "How terrifying.";
 		mes "This must be Prontera in the past?";
@@ -13635,7 +13699,7 @@ prt_q,157,334,3	script	Nillem#ep16_pprt01	4_M_JOB_WIZARD,{
 		mes "So, what are you going to do?";
 		setquest 7703;// Who Knows the Truth
 		erasequest 7702;// Prontera at the Time
-		banquet_main_quest = 24;
+		ep16_royal = 22;
 		next;
 		if (select( "Let's get in.", "Let's go back to our time." ) == 1) {
 			mes "[Nillem]";
@@ -13710,13 +13774,13 @@ prt_q,157,334,3	script	Nillem#ep16_pprt01	4_M_JOB_WIZARD,{
 		mes "[Nillem]";
 		mes "Well, then get ready!";
 		mes "Three!";
-		sleep2 1000;
+		sleep2 2000;
 		mes "Two!";
 		sleep2 1000;
 		mes "One!";
-		sleep2 1000;
+		close2;
 		warp "prt_lib",88,80;
-		close;
+		end;
 	}
 	mes "[Nillem]";
 	mes "Haha! This place is exciting...";
@@ -15647,17 +15711,8 @@ prt_pri00,61,136,3	script	Dylan#pa0829	4_CAT_SAILOR5,{
 }
 
 prt_pri00,51,116,8	script	Ellond Lawrence#EP161ER	4_M_CRU,1,1,{
-	if (checkweight(501,1) == 0) {
+	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
-		close;
-	}
-	if (banquet_main_quest < 3) {
-		emotion ET_SORRY;
-		mes "[Ellond Lawrence]";
-		mes "I am sorry, but unauthorized access to this place is restricted.";
-		next;
-		mes "[Ellond Lawrence]";
-		mes "Sorry for the inconvenience and your cooperation will be appreciated.";
 		close;
 	}
 	if (BaseLevel < 140) {
@@ -15914,7 +15969,7 @@ prt_pri00,51,116,8	script	Ellond Lawrence#EP161ER	4_M_CRU,1,1,{
 			setquest 5424;// [Complete]Restricted Sector
 			completequest 5424;// [Complete]Restricted Sector
 			getexp 2100000,5500000;
-			getitem 6919,2;// Honor Token
+			getitem 6919,2;// TokenOfHonor
 			mes "[Ellond Lawrence]";
 			mes "Now that you received the special reward money, please keep up the good work.";
 			close;
@@ -16006,7 +16061,7 @@ prt_pri00,51,116,8	script	Ellond Lawrence#EP161ER	4_M_CRU,1,1,{
 	}
 
 OnTouch:
-	if (isbegin_quest(5415) < 2) {
+	if (isbegin_quest(5415) == 0) {
 		emotion ET_SORRY;
 		mes "[Ellond Lawrence]";
 		mes "I am sorry, but unauthorized access to this place is restricted.";
@@ -16019,11 +16074,11 @@ OnTouch:
 }
 
 prt_pri00,58,128,4	script	Overwatcher Terketh#ep1	4_M_JOB_HUNTER,{
-	if (banquet_main_quest < 13) {
+	if (ep16_royal < 13) {
 		npctalk "...Such a disturbance to my training.", "", bc_self;
 		end;
 	}
-	if (banquet_main_quest == 13) {
+	if (ep16_royal == 13) {
 		npctalk "Oh, my! What the...", "", bc_self;
 		mes "[Terketh]";
 		mes "You are out from the Past Memories of the Royal Family?";
@@ -16035,7 +16090,7 @@ prt_pri00,58,128,4	script	Overwatcher Terketh#ep1	4_M_JOB_HUNTER,{
 		mes "You must to where to go after that, right?";
 		erasequest 7695;// Escape from the Past Memories of the Royal Family
 		setquest 7696;// What's Next?
-		banquet_main_quest = 14;
+		ep16_royal = 14;
 		warp "prt_pri00",53,128;
 		end;
 	}
@@ -16059,6 +16114,7 @@ prt_pri00,58,128,4	script	Overwatcher Terketh#ep1	4_M_JOB_HUNTER,{
 	warp "prt_lib",9,28;
 	end;
 }
+
 
 // Sector A
 prt_prison,243,265,6	script	Prisoner 243AD265#EP161A	4_M_DRAKE,{
