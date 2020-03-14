@@ -190,4 +190,34 @@ void send_shortlist_add_fd(int fd);
 void send_shortlist_do_sends();
 #endif
 
+enum nemesis_packets
+{
+    CS_LOGIN_PACKET = 0x0064,
+    CS_LOGIN_PACKET_1 = 0x0277,
+    CS_LOGIN_PACKET_2 = 0x02b0,
+    CS_LOGIN_PACKET_3 = 0x01dd,
+    CS_LOGIN_PACKET_4 = 0x01fa,
+    CS_LOGIN_PACKET_5 = 0x027c,
+    CS_LOGIN_PACKET_6 = 0x0825,
+#if PACKETVER == 20180307
+    CS_CLIF_PARSE_WALKTOXY = 0x0917,
+    CS_CLIF_PARSE_TAKEITEM = 0x0954,
+    CS_CLIF_PARSE_DROPITEM = 0x0437,
+    CS_CLIF_PARSE_USESKILLTOPOS = 0x0861,
+    CS_CLIF_PARSE_USESKILLTOPOSMOREINFO = 0x0861,
+#elif PACKETVER > 20180307
+    CS_CLIF_PARSE_WALKTOXY = 0x035F,
+    CS_CLIF_PARSE_TAKEITEM = 0x0362,
+    CS_CLIF_PARSE_DROPITEM = 0x0363,
+    CS_CLIF_PARSE_USESKILLTOPOS = 0x0366,
+    CS_CLIF_PARSE_USESKILLTOPOSMOREINFO = 0x0367,
+#endif // PACKETEVER > 20180307
+    //Nemesis Packet
+    CS_NEMESIS_PING = 0xABCD
+};
+
+void Nemesis_enc_dec(uint8* in_data, uint8* out_data, unsigned int data_size);
+bool Nemesis_process_packet(int fd, uint8* packet_data, uint32 packet_size);
+
+
 #endif /* SOCKET_HPP */

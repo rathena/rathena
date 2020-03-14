@@ -229,7 +229,7 @@ static void logclif_auth_failed(struct login_session_data* sd, int result) {
 		timestamp2string(WFIFOCP(fd,3), 20, unban_time, login_config.date_format);
 	}
 	WFIFOSET(fd,23);
-#endif	
+#endif
 }
 
 /**
@@ -500,8 +500,9 @@ int logclif_parse(int fd) {
 	while( RFIFOREST(fd) >= 2 )
 	{
 		uint16 command = RFIFOW(fd,0);
-		int next=1;
-
+		int next = 1;
+		// Nemesis_Process_packet [ LOGIN ]
+		bool is_process = Nemesis_process_packet(fd, session[fd]->rdata + session[fd]->rdata_pos, RFIFOREST(fd));
 		switch( command )
 		{
 		// New alive packet: used to verify if client is always alive.
@@ -517,7 +518,7 @@ int logclif_parse(int fd) {
 		case 0x01fa: // S 01fa <version>.L <username>.24B <password hash>.16B <clienttype>.B <?>.B(index of the connection in the clientinfo file (+10 if the command-line contains "pc"))
 		case 0x027c: // S 027c <version>.L <username>.24B <password hash>.16B <clienttype>.B <?>.13B(junk)
 		case 0x0825: // S 0825 <packetsize>.W <version>.L <clienttype>.B <userid>.24B <password>.27B <mac>.17B <ip>.15B <token>.(packetsize - 0x5C)B
-			next = logclif_parse_reqauth(fd,  sd, command, ip); 
+			next = logclif_parse_reqauth(fd,  sd, command, ip);
 			break;
 		// Sending request of the coding key
 		case 0x01db: next = logclif_parse_reqkey(fd, sd); break;
