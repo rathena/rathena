@@ -223,14 +223,30 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 		if (nd->sc.option&OPTION_INVISIBLE)
 			return 1;
 
-		// note : disablenpc doesn't reset the previous trigger status on official
-		if( npc_ontouch_event(sd,nd) > 0 && npc_ontouch2_event(sd,nd) > 0 )
-		{ // failed to run OnTouch event, so just click the npc
-			if (sd->npc_id != 0)
-				return 0;
+		switch (nd->subtype) {
+		case NPCTYPE_WARP:
+			if ((!nd->trigger_on_hidden && (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]))) || pc_isdead(sd))
+				return 1;
+			if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(nd->u.warp.mapindex), sd->group_level))
+				return 1;
+			if (sd->count_rewarp > 10) {
+				ShowWarning("Prevented infinite warp loop for player (%d:%d). Please fix NPC: '%s', path: '%s'\n", sd->status.account_id, sd->status.char_id, nd->exname, nd->path);
+				sd->count_rewarp = 0;
+				return 1;
+			}
+			pc_setpos(sd, nd->u.warp.mapindex, nd->u.warp.x, nd->u.warp.y, CLR_OUTSIGHT);
+			break;
+		default:
+			// note : disablenpc doesn't reset the previous trigger status on official
+			if( npc_ontouch_event(sd,nd) > 0 && npc_ontouch2_event(sd,nd) > 0 )
+			{ // failed to run OnTouch event, so just click the npc
+				if (sd->npc_id != 0)
+					return 0;
 
-			pc_stop_walking(sd,1);
-			npc_click(sd,nd);
+				pc_stop_walking(sd,1);
+				npc_click(sd,nd);
+			}
+			break;
 		}
 	}
 	return 0;
@@ -4209,22 +4225,22 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 						args.skill_damage.caster = atoi(caster_constant);
 					else {
 						int64 val_tmp;
-						int val;
 
 						if (!script_get_constant(caster_constant, &val_tmp)) {
 							ShowError( "npc_parse_mapflag: Unknown constant '%s'. Skipping (file '%s', line '%d').\n", caster_constant, filepath, strline(buffer, start - buffer) );
 							break;
 						}
 
-						val = static_cast<int>(val_tmp);
-						args.skill_damage.caster = val;
+						args.skill_damage.caster = static_cast<uint16>(val_tmp);
 					}
 					
-					if (!args.skill_damage.caster)
+					if (args.skill_damage.caster == 0)
 						args.skill_damage.caster = BL_ALL;
 
-					for (int i = 0; i < SKILLDMG_MAX; i++)
+					for (int i = SKILLDMG_PC; i < SKILLDMG_MAX; i++)
 						args.skill_damage.rate[i] = cap_value(args.skill_damage.rate[i], -100, 100000);
+
+					trim(skill_name);
 
 					if (strcmp(skill_name, "all") == 0) // Adjust damage for all skills
 						map_setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
@@ -4233,7 +4249,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 					else { // Adjusted damage for specified skill
 						args.flag_val = 1;
 						map_setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
-						map_skill_damage_add(map_getmapdata(m), skill_name2id(skill_name), args.skill_damage.rate, args.skill_damage.caster);
+						map_skill_damage_add(map_getmapdata(m), skill_name2id(skill_name), &args);
 					}
 				}
 			}

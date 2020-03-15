@@ -8030,11 +8030,34 @@ void clif_pet_food(struct map_session_data *sd,int foodid,int fail)
 /// 01cd { <skill id>.L }*7
 void clif_autospell(struct map_session_data *sd,uint16 skill_lv)
 {
-	int fd;
-
 	nullpo_retv(sd);
 
-	fd=sd->fd;
+	int fd = sd->fd;
+
+#ifdef RENEWAL
+	uint16 autospell_skill[][2] = { 
+		{ MG_FIREBOLT, 0 }, { MG_COLDBOLT, 0 }, { MG_LIGHTNINGBOLT, 0 },
+		{ MG_SOULSTRIKE, 3 }, { MG_FIREBALL, 3 },
+		{ WZ_EARTHSPIKE, 6 }, { MG_FROSTDIVER, 6 },
+		{ MG_THUNDERSTORM, 9 }, { WZ_HEAVENDRIVE, 9 }
+	};
+	int count = 0;
+
+	WFIFOHEAD(fd, 2 * 6 + 4);
+	WFIFOW(fd, 0) = 0x442;
+
+	for (int i = 0; i < ARRAYLENGTH(autospell_skill); i++) {
+		if (skill_lv > autospell_skill[i][1] && pc_checkskill(sd, autospell_skill[i][0])) {
+			WFIFOW(fd, 8 + count * 2) = autospell_skill[i][0];
+			count++;
+		}
+	}
+
+	WFIFOW(fd, 2) = 8 + count * 2;
+	WFIFOL(fd, 4) = count;
+
+	WFIFOSET(fd, WFIFOW(fd, 2));
+#else
 	WFIFOHEAD(fd,packet_len(0x1cd));
 	WFIFOW(fd, 0)=0x1cd;
 
@@ -8068,6 +8091,8 @@ void clif_autospell(struct map_session_data *sd,uint16 skill_lv)
 		WFIFOL(fd,26)= 0x00000000;
 
 	WFIFOSET(fd,packet_len(0x1cd));
+#endif
+
 	sd->menuskill_id = SA_AUTOSPELL;
 	sd->menuskill_val = skill_lv;
 }
@@ -12190,7 +12215,11 @@ static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, struct map_ses
 		return;
 	}
 
-	if( hd->sc.data[SC_BASILICA] )
+#ifdef RENEWAL
+	if (hd->sc.data[SC_BASILICA_CELL])
+#else
+	if (hd->sc.data[SC_BASILICA])
+#endif
 		return;
 	lv = hom_checkskill(hd, skill_id);
 	if( skill_lv > lv )
@@ -12239,7 +12268,11 @@ static void clif_parse_UseSkillToPos_mercenary(struct mercenary_data *md, struct
 		return;
 	}
 
-	if( md->sc.data[SC_BASILICA] )
+#ifdef RENEWAL
+	if (md->sc.data[SC_BASILICA_CELL])
+#else
+	if (md->sc.data[SC_BASILICA])
+#endif
 		return;
 	lv = mercenary_checkskill(md, skill_id);
 	if( skill_lv > lv )
@@ -12317,8 +12350,10 @@ void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16
 	if( sd->sc.option&OPTION_COSTUME )
 		return;
 
+#ifndef RENEWAL
 	if( sd->sc.data[SC_BASILICA] && (skill_id != HP_BASILICA || sd->sc.data[SC_BASILICA]->val4 != sd->bl.id) )
 		return; // On basilica only caster can use Basilica again to stop it.
+#endif
 
 	if( sd->menuskill_id ) {
 		if( sd->menuskill_id == SA_TAMINGMONSTER ) {
@@ -12427,8 +12462,10 @@ static void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, uin
 	if( sd->sc.option&OPTION_COSTUME )
 		return;
 
+#ifndef RENEWAL
 	if( sd->sc.data[SC_BASILICA] && (skill_id != HP_BASILICA || sd->sc.data[SC_BASILICA]->val4 != sd->bl.id) )
 		return; // On basilica only caster can use Basilica again to stop it.
+#endif
 
 	if( sd->menuskill_id ) {
 		if( sd->menuskill_id == SA_TAMINGMONSTER ) {
@@ -18740,23 +18777,27 @@ int clif_skill_itemlistwindow( struct map_session_data *sd, uint16 skill_id, uin
 }
 
 /*==========================================
- * Select a skill into a given list (used by SC_AUTOSHADOWSPELL)
+ * Select a skill into a given list (used by SA_AUTOSPELL/SC_AUTOSHADOWSPELL)
  * 0443 <type>.L <skill_id>.W (CZ_SKILL_SELECT_RESPONSE)
  * RFIFOL(fd,2) - type (currently not used)
  *------------------------------------------*/
 void clif_parse_SkillSelectMenu(int fd, struct map_session_data *sd) {
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	//int type = RFIFOL(fd,info->pos[0]); //WHY_LOWERVER_COMPATIBILITY =  0x0, WHY_SC_AUTOSHADOWSPELL =  0x1,
-	if( sd->menuskill_id != SC_AUTOSHADOWSPELL )
-		return;
 
-	if( pc_istrading(sd) ) {
-		clif_skill_fail(sd,sd->ud.skill_id,USESKILL_FAIL_LEVEL,0);
-		clif_menuskill_clear(sd);
-		return;
-	}
+	if (sd->menuskill_id == SA_AUTOSPELL) {
+		sd->state.workinprogress = WIP_DISABLE_NONE;
+		skill_autospell(sd, RFIFOW(fd, info->pos[1]));
+	} else if (sd->menuskill_id == SC_AUTOSHADOWSPELL) {
+		if (pc_istrading(sd)) {
+			clif_skill_fail(sd, sd->ud.skill_id, USESKILL_FAIL_LEVEL, 0);
+			clif_menuskill_clear(sd);
+			return;
+		}
 
-	skill_select_menu(sd,RFIFOW(fd,info->pos[1]));
+		skill_select_menu(sd, RFIFOW(fd, info->pos[1]));
+	} else
+		return;
 
 	clif_menuskill_clear(sd);
 }

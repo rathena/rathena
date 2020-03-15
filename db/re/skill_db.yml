@@ -283,7 +283,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    AfterCastActDelay: 2000
+    AfterCastActDelay: 500
     Duration2: 10000
     Cooldown: 2000
     Requires:
@@ -577,27 +577,7 @@ Body:
         Reproduce: true
     CastCancel: true
     CastTime: 400
-    AfterCastActDelay:
-      - Level: 1
-        Time: 1200
-      - Level: 2
-        Time: 1200
-      - Level: 3
-        Time: 1600
-      - Level: 4
-        Time: 1600
-      - Level: 5
-        Time: 2000
-      - Level: 6
-        Time: 2000
-      - Level: 7
-        Time: 2400
-      - Level: 8
-        Time: 2400
-      - Level: 9
-        Time: 2800
-      - Level: 10
-        Time: 2500
+    AfterCastActDelay: 1400
     FixedCastTime: 100
     Requires:
       SpCost:
@@ -678,28 +658,8 @@ Body:
       - Level: 9
         Time: 3200
       - Level: 10
-        Time: 3520
-    AfterCastActDelay:
-      - Level: 1
-        Time: 1000
-      - Level: 2
-        Time: 1200
-      - Level: 3
-        Time: 1400
-      - Level: 4
-        Time: 1600
-      - Level: 5
-        Time: 1800
-      - Level: 6
-        Time: 2000
-      - Level: 7
-        Time: 2200
-      - Level: 8
-        Time: 2400
-      - Level: 9
-        Time: 2600
-      - Level: 10
-        Time: 2800
+        Time: 3200
+    AfterCastActDelay: 300
     FixedCastTime:
       - Level: 1
         Time: 160
@@ -720,7 +680,7 @@ Body:
       - Level: 9
         Time: 800
       - Level: 10
-        Time: 880
+        Time: 1200
     Requires:
       SpCost:
         - Level: 1
@@ -761,7 +721,7 @@ Body:
         Reproduce: true
     CastCancel: true
     CastTime: 640
-    AfterCastActDelay: 1500
+    AfterCastActDelay: 500
     Duration2:
       - Level: 1
         Time: 5500
@@ -871,69 +831,9 @@ Body:
         Plagiarism: true
         Reproduce: true
     CastCancel: true
-    CastTime:
-      - Level: 1
-        Time: 1280
-      - Level: 2
-        Time: 1280
-      - Level: 3
-        Time: 1280
-      - Level: 4
-        Time: 1280
-      - Level: 5
-        Time: 1280
-      - Level: 6
-        Time: 800
-      - Level: 7
-        Time: 800
-      - Level: 8
-        Time: 800
-      - Level: 9
-        Time: 800
-      - Level: 10
-        Time: 800
-    AfterCastActDelay:
-      - Level: 1
-        Time: 1500
-      - Level: 2
-        Time: 1500
-      - Level: 3
-        Time: 1500
-      - Level: 4
-        Time: 1500
-      - Level: 5
-        Time: 1500
-      - Level: 6
-        Time: 1000
-      - Level: 7
-        Time: 1000
-      - Level: 8
-        Time: 1000
-      - Level: 9
-        Time: 1000
-      - Level: 10
-        Time: 1000
-    FixedCastTime:
-      - Level: 1
-        Time: 320
-      - Level: 2
-        Time: 320
-      - Level: 3
-        Time: 320
-      - Level: 4
-        Time: 320
-      - Level: 5
-        Time: 320
-      - Level: 6
-        Time: 200
-      - Level: 7
-        Time: 200
-      - Level: 8
-        Time: 200
-      - Level: 9
-        Time: 200
-      - Level: 10
-        Time: 200
+    CastTime: 800
+    AfterCastActDelay: 700
+    FixedCastTime: 200
     Requires:
       SpCost: 25
   - Id: 18
@@ -1085,28 +985,8 @@ Body:
       - Level: 9
         Time: 3200
       - Level: 10
-        Time: 3520
-    AfterCastActDelay:
-      - Level: 1
-        Time: 1000
-      - Level: 2
-        Time: 1200
-      - Level: 3
-        Time: 1400
-      - Level: 4
-        Time: 1600
-      - Level: 5
-        Time: 1800
-      - Level: 6
-        Time: 2000
-      - Level: 7
-        Time: 2200
-      - Level: 8
-        Time: 2400
-      - Level: 9
-        Time: 2600
-      - Level: 10
-        Time: 2800
+        Time: 3200
+    AfterCastActDelay: 300
     FixedCastTime:
       - Level: 1
         Time: 160
@@ -1127,7 +1007,7 @@ Body:
       - Level: 9
         Time: 800
       - Level: 10
-        Time: 880
+        Time: 1200
     Requires:
       SpCost:
         - Level: 1
@@ -1207,28 +1087,8 @@ Body:
       - Level: 9
         Time: 3200
       - Level: 10
-        Time: 3520
-    AfterCastActDelay:
-      - Level: 1
-        Time: 1000
-      - Level: 2
-        Time: 1200
-      - Level: 3
-        Time: 1400
-      - Level: 4
-        Time: 1600
-      - Level: 5
-        Time: 1800
-      - Level: 6
-        Time: 2000
-      - Level: 7
-        Time: 2200
-      - Level: 8
-        Time: 2400
-      - Level: 9
-        Time: 2600
-      - Level: 10
-        Time: 2800
+        Time: 3200
+    AfterCastActDelay: 300
     FixedCastTime:
       - Level: 1
         Time: 160
@@ -1249,7 +1109,7 @@ Body:
       - Level: 9
         Time: 800
       - Level: 10
-        Time: 880
+        Time: 1200
     Requires:
       SpCost:
         - Level: 1
@@ -1329,7 +1189,7 @@ Body:
       - Level: 9
         Time: 5760
       - Level: 10
-        Time: 6400
+        Time: 4500
     AfterCastActDelay: 2000
     Duration1: 100
     FixedCastTime:
@@ -1352,7 +1212,7 @@ Body:
       - Level: 9
         Time: 1440
       - Level: 10
-        Time: 1600
+        Time: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -2259,10 +2119,12 @@ Body:
     SplashArea: 2
     ActiveInstance: 5
     Knockback: 2
-    CastTime: 350
+    CastTime: 500
+    Duration1: 1000
+    Cooldown: 1000
     FixedCastTime: 350
     Requires:
-      SpCost: 12
+      SpCost: 24
       Weapon:
         1hSpear: true
         2hSpear: true
@@ -2429,15 +2291,18 @@ Body:
       TargetTrap: true
     Range: -2
     Hit: Single
-    HitCount: 1
+    HitCount: 2
     Element: Weapon
-    SplashArea: 1
+    SplashArea: 2
     Knockback: 1
     CopyFlags:
       Skill:
         Plagiarism: true
         Reproduce: true
     CastTime: 350
+    AfterCastActDelay: 300
+    Duration1: 1000
+    Cooldown: 1000
     FixedCastTime: 350
     Requires:
       SpCost:
@@ -2481,15 +2346,28 @@ Body:
     Description: Impositio Manus
     MaxLevel: 5
     Type: Magic
-    TargetType: Support
+    TargetType: Self
     DamageFlags:
       NoDamage: true
-    Range: 9
     Hit: Single
     HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 3
+      - Level: 2
+        Area: 3
+      - Level: 3
+        Area: 7
+      - Level: 4
+        Area: 7
+      - Level: 5
+        Area: 15
     CastCancel: true
-    AfterCastActDelay: 3000
-    Duration1: 60000
+    CastTime: 1000
+    AfterCastActDelay: 1000
+    Duration1: 120000
+    Cooldown: 30000
+    FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
@@ -2510,20 +2388,19 @@ Body:
     TargetType: Support
     DamageFlags:
       NoDamage: true
+      Splash: true
     Flags:
       NoTargetSelf: true
     Range: 9
     Hit: Single
     HitCount: 1
+    SplashArea: -1
     CastCancel: true
-    AfterCastActDelay: 2000
-    Duration1:
-      - Level: 1
-        Time: 30000
-      - Level: 2
-        Time: 20000
-      - Level: 3
-        Time: 10000
+    CastTime: 1000
+    AfterCastActDelay: 1000
+    Duration1: 60000
+    Cooldown: 30000
+    FixedCastTime: 500
     Requires:
       SpCost: 8
   - Id: 68
@@ -2952,30 +2829,31 @@ Body:
         Plagiarism: true
         Reproduce: true
     CastCancel: true
-    CastTime: 12000
-    AfterCastActDelay: 4000
+    CastTime: 4000
+    AfterCastActDelay: 1000
     Duration1:
       - Level: 1
-        Time: 5000
+        Time: 4000
       - Level: 2
-        Time: 6000
+        Time: 5000
       - Level: 3
-        Time: 7000
+        Time: 6000
       - Level: 4
-        Time: 8000
+        Time: 7000
       - Level: 5
-        Time: 9000
+        Time: 8000
       - Level: 6
-        Time: 10000
+        Time: 9000
       - Level: 7
-        Time: 11000
+        Time: 10000
       - Level: 8
-        Time: 12000
+        Time: 11000
       - Level: 9
-        Time: 13000
+        Time: 12000
       - Level: 10
-        Time: 14000
-    FixedCastTime: 3000
+        Time: 13000
+    Cooldown: 6000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -3211,25 +3089,25 @@ Body:
     Hit: Multi_Hit
     HitCount:
       - Level: 1
-        Count: 1
+        Count: 2
       - Level: 2
-        Count: 1
+        Count: 3
       - Level: 3
-        Count: 2
+        Count: 3
       - Level: 4
-        Count: 2
+        Count: 4
       - Level: 5
-        Count: 3
+        Count: 4
       - Level: 6
-        Count: 3
+        Count: 5
       - Level: 7
-        Count: 4
+        Count: 5
       - Level: 8
-        Count: 4
+        Count: 6
       - Level: 9
-        Count: 5
+        Count: 6
       - Level: 10
-        Count: 5
+        Count: 7
       - Level: 11
         Count: 15
     Element: Fire
@@ -3261,28 +3139,28 @@ Body:
         Plagiarism: true
         Reproduce: true
     CastCancel: true
-    CastTime: 9600
-    AfterCastActDelay:
+    CastTime:
       - Level: 1
-        Time: 2000
+        Time: 9600
       - Level: 2
-        Time: 3000
+        Time: 9600
       - Level: 3
-        Time: 3000
+        Time: 9600
       - Level: 4
-        Time: 4000
+        Time: 9600
       - Level: 5
-        Time: 4000
+        Time: 9600
       - Level: 6
-        Time: 5000
+        Time: 9600
       - Level: 7
-        Time: 5000
+        Time: 9600
       - Level: 8
-        Time: 6000
+        Time: 9600
       - Level: 9
-        Time: 6000
+        Time: 9600
       - Level: 10
-        Time: 7000
+        Time: 6300
+    AfterCastActDelay: 1000
     Duration1:
       - Level: 1
         Time: 2000
@@ -3305,7 +3183,28 @@ Body:
       - Level: 10
         Time: 7000
     Duration2: 5000
-    FixedCastTime: 2400
+    Cooldown: 7000
+    FixedCastTime:
+      - Level: 1
+        Time: 2400
+      - Level: 2
+        Time: 2400
+      - Level: 3
+        Time: 2400
+      - Level: 4
+        Time: 2400
+      - Level: 5
+        Time: 2400
+      - Level: 6
+        Time: 2400
+      - Level: 7
+        Time: 2400
+      - Level: 8
+        Time: 2400
+      - Level: 9
+        Time: 2400
+      - Level: 10
+        Time: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -3413,7 +3312,7 @@ Body:
       - Level: 9
         Time: 4160
       - Level: 10
-        Time: 4480
+        Time: 3800
     FixedCastTime:
       - Level: 1
         Time: 400
@@ -3434,7 +3333,7 @@ Body:
       - Level: 9
         Time: 1040
       - Level: 10
-        Time: 1120
+        Time: 500
     Requires:
       SpCost:
         - Level: 1
@@ -3467,7 +3366,7 @@ Body:
       IsAutoShadowSpell: true
     Range: 9
     Hit: Multi_Hit
-    HitCount: -10
+    HitCount: -20
     Element: Wind
     CopyFlags:
       Skill:
@@ -3494,10 +3393,11 @@ Body:
       - Level: 9
         Time: 7040
       - Level: 10
-        Time: 6720
-    AfterCastActDelay: 5000
-    Duration1: 4000
+        Time: 4500
+    AfterCastActDelay: 1000
+    Duration1: 1000
     Duration2: 20000
+    Cooldown: 5000
     FixedCastTime:
       - Level: 1
         Time: 2400
@@ -3518,7 +3418,7 @@ Body:
       - Level: 9
         Time: 1760
       - Level: 10
-        Time: 1680
+        Time: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -3545,25 +3445,25 @@ Body:
       Id: Dummyskill
       Layout:
         - Level: 1
-          Size: 5
+          Size: 6
         - Level: 2
-          Size: 5
+          Size: 6
         - Level: 3
-          Size: 5
+          Size: 6
         - Level: 4
-          Size: 5
+          Size: 6
         - Level: 5
-          Size: 5
+          Size: 6
         - Level: 6
-          Size: 5
+          Size: 6
         - Level: 7
-          Size: 5
+          Size: 6
         - Level: 8
-          Size: 5
+          Size: 6
         - Level: 9
-          Size: 5
+          Size: 6
         - Level: 10
-          Size: 5
+          Size: 6
         - Level: 11
           Size: 7
         - Level: 12
@@ -3837,10 +3737,11 @@ Body:
       - Level: 9
         Time: 8960
       - Level: 10
-        Time: 9600
-    AfterCastActDelay: 5000
-    Duration1: 4600
+        Time: 6300
+    AfterCastActDelay: 1000
+    Duration1: 4500
     Duration2: 30000
+    Cooldown: 6000
     FixedCastTime:
       - Level: 1
         Time: 960
@@ -3861,7 +3762,7 @@ Body:
       - Level: 9
         Time: 2240
       - Level: 10
-        Time: 2400
+        Time: 1500
     Requires:
       SpCost: 78
     Unit:
@@ -3910,7 +3811,7 @@ Body:
       - Level: 4
         Time: 1792
       - Level: 5
-        Time: 2240
+        Time: 3200
     AfterCastActDelay:
       - Level: 1
         Time: 1000
@@ -3921,7 +3822,7 @@ Body:
       - Level: 4
         Time: 1600
       - Level: 5
-        Time: 1800
+        Time: 1400
       - Level: 6
         Time: 2000
       - Level: 7
@@ -3942,19 +3843,19 @@ Body:
       - Level: 4
         Time: 448
       - Level: 5
-        Time: 560
+        Time: 1200
     Requires:
       SpCost:
         - Level: 1
-          Amount: 12
-        - Level: 2
           Amount: 14
-        - Level: 3
-          Amount: 16
-        - Level: 4
+        - Level: 2
           Amount: 18
+        - Level: 3
+          Amount: 22
+        - Level: 4
+          Amount: 26
         - Level: 5
-          Amount: 20
+          Amount: 30
   - Id: 91
     Name: WZ_HEAVENDRIVE
     Description: Heaven's Drive
@@ -3993,8 +3894,18 @@ Body:
       - Level: 4
         Time: 2560
       - Level: 5
-        Time: 3200
-    AfterCastActDelay: 1000
+        Time: 1900
+    AfterCastActDelay:
+      - Level: 1
+        Time: 1000
+      - Level: 2
+        Time: 1000
+      - Level: 3
+        Time: 1000
+      - Level: 4
+        Time: 1000
+      - Level: 5
+        Time: 500
     Duration1: 100
     FixedCastTime:
       - Level: 1
@@ -4468,6 +4379,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
+    CastTime: 500
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
@@ -4481,7 +4393,7 @@ Body:
       - Level: 5
         Time: 40000
     Duration2: 5000
-    FixedCastTime: 1000
+    FixedCastTime: 300
     Requires:
       SpCost: 10
       ItemCost:
@@ -4766,6 +4678,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
+    CastTime: 500
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
@@ -4778,7 +4691,7 @@ Body:
         Time: 10000
       - Level: 5
         Time: 5000
-    FixedCastTime: 1000
+    FixedCastTime: 300
     Requires:
       SpCost: 10
       ItemCost:
@@ -4819,6 +4732,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
+    CastTime: 500
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
@@ -4831,7 +4745,7 @@ Body:
         Time: 80000
       - Level: 5
         Time: 100000
-    FixedCastTime: 1000
+    FixedCastTime: 300
     Requires:
       SpCost: 15
       ItemCost:
@@ -5056,8 +4970,8 @@ Body:
     Hit: Multi_Hit
     HitCount: -8
     Element: Weapon
-    AfterCastWalkDelay: 2000
     Duration2: 5000
+    Cooldown: 1000
     CastDelayFlags:
       IgnoreStatus: true
     Requires:
@@ -5295,25 +5209,25 @@ Body:
     CastTime: 500
     Duration1:
       - Level: 1
-        Time: 5000
+        Time: 11000
       - Level: 2
-        Time: 5500
+        Time: 10000
       - Level: 3
-        Time: 6000
+        Time: 9000
       - Level: 4
-        Time: 6500
+        Time: 8000
       - Level: 5
         Time: 7000
       - Level: 6
-        Time: 7500
+        Time: 6000
       - Level: 7
-        Time: 8000
+        Time: 5000
       - Level: 8
-        Time: 8500
+        Time: 4000
       - Level: 9
-        Time: 9000
+        Time: 3000
       - Level: 10
-        Time: 9500
+        Time: 2000
     Duration2: 20000
     Cooldown:
       - Level: 1
@@ -5335,7 +5249,7 @@ Body:
       - Level: 9
         Time: 11500
       - Level: 10
-        Time: 12000
+        Time: 2000
     FixedCastTime: 500
     Requires:
       SpCost:
@@ -5359,9 +5273,6 @@ Body:
           Amount: 28
         - Level: 10
           Amount: 30
-      ItemCost:
-        - Item: Red_Gemstone
-          Amount: 1
   - Id: 142
     Name: NV_FIRSTAID
     Description: First Aid
@@ -5573,12 +5484,17 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
+      Splash: true
     Flags:
       IsQuest: true
       AllowOnMado: true
     Hit: Single
     HitCount: 1
+    SplashArea: -1
+    CastTime: 1000
     Duration1: 300000
+    Cooldown: 30000
+    FixedCastTime: 300
     Requires:
       SpCost: 8
   - Id: 156
@@ -5598,8 +5514,8 @@ Body:
         Plagiarism: true
         Reproduce: true
     CastCancel: true
-    CastTime: 1600
-    FixedCastTime: 400
+    CastTime: 800
+    FixedCastTime: 200
     Requires:
       SpCost: 15
   - Id: 157
@@ -6402,6 +6318,7 @@ Body:
         Reproduce: true
     AfterCastActDelay: 500
     Duration1: 5000
+    Cooldown: 500
     Requires:
       SpCost: 16
   - Id: 213
@@ -6422,11 +6339,11 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    SplashArea: 4
+    SplashArea: 2
     Duration1: 5000
     Duration2: 20000
     Requires:
-      SpCost: 20
+      SpCost: 15
       Status:
         Hiding: true
   - Id: 215
@@ -7297,12 +7214,13 @@ Body:
         Plagiarism: true
         Reproduce: true
     CastDefenseReduction: 33
-    CastTime: 1500
-    AfterCastActDelay: 1500
+    CastTime: 1000
+    AfterCastActDelay: 500
     AfterCastWalkDelay: 800
     Duration1: 800
     Duration2: 20000
-    FixedCastTime: 1500
+    Cooldown: 1000
+    FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
@@ -7497,8 +7415,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    CastTime: 1000
-    FixedCastTime: 1000
+    FixedCastTime: 500
     Requires:
       SpCost: 5
   - Id: 263
@@ -7609,18 +7526,18 @@ Body:
         Time: 800
     FixedCastTime: 500
     Requires:
-      SpCost: 10
-      SpiritSphereCost:
+      SpCost:
         - Level: 1
-          Amount: 1
+          Amount: 12
         - Level: 2
-          Amount: 2
+          Amount: 16
         - Level: 3
-          Amount: 3
+          Amount: 20
         - Level: 4
-          Amount: 4
+          Amount: 24
         - Level: 5
-          Amount: 5
+          Amount: 28
+      SpiritSphereCost: 1
   - Id: 268
     Name: MO_STEELBODY
     Description: Mental Strength
@@ -7669,17 +7586,7 @@ Body:
         Time: 1100
       - Level: 5
         Time: 1300
-    Duration2:
-      - Level: 1
-        Time: 20000
-      - Level: 2
-        Time: 30000
-      - Level: 3
-        Time: 40000
-      - Level: 4
-        Time: 50000
-      - Level: 5
-        Time: 60000
+    Duration2: 10000
     Requires:
       SpCost: 10
       Weapon:
@@ -7760,7 +7667,7 @@ Body:
         Time: 1500
       - Level: 5
         Time: 1000
-    Duration1: 10000
+    Duration1: 3000
     Duration2: 300000
     FixedCastTime:
       - Level: 1
@@ -7822,15 +7729,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 11
+          Amount: 5
         - Level: 2
-          Amount: 12
+          Amount: 6
         - Level: 3
-          Amount: 13
+          Amount: 7
         - Level: 4
-          Amount: 14
+          Amount: 8
         - Level: 5
-          Amount: 15
+          Amount: 9
       Weapon:
         Fist: true
         Dagger: true
@@ -7875,15 +7782,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 11
+          Amount: 3
         - Level: 2
-          Amount: 12
+          Amount: 4
         - Level: 3
-          Amount: 13
+          Amount: 5
         - Level: 4
-          Amount: 14
+          Amount: 6
         - Level: 5
-          Amount: 15
+          Amount: 7
       Weapon:
         Fist: true
         Dagger: true
@@ -8022,22 +7929,23 @@ Body:
     HitCount: 1
     Element: Fire
     CastCancel: true
+    CastTime: 1000
     Duration1:
       - Level: 1
-        Time: 1200000
+        Time: 600000
       - Level: 2
-        Time: 1200000
+        Time: 900000
       - Level: 3
         Time: 1200000
       - Level: 4
-        Time: 1200000
+        Time: 1500000
       - Level: 5
         Time: 1800000
-    FixedCastTime: 3000
+    FixedCastTime: 1000
     Requires:
       SpCost: 40
       ItemCost:
-        - Item: Boody_Red
+        - Item: Scarlet_Pts
           Amount: 1
   - Id: 281
     Name: SA_FROSTWEAPON
@@ -8055,22 +7963,23 @@ Body:
     HitCount: 1
     Element: Water
     CastCancel: true
+    CastTime: 1000
     Duration1:
       - Level: 1
-        Time: 1200000
+        Time: 600000
       - Level: 2
-        Time: 1200000
+        Time: 900000
       - Level: 3
         Time: 1200000
       - Level: 4
-        Time: 1200000
+        Time: 1500000
       - Level: 5
         Time: 1800000
-    FixedCastTime: 3000
+    FixedCastTime: 1000
     Requires:
       SpCost: 40
       ItemCost:
-        - Item: Crystal_Blue
+        - Item: Indigo_Pts
           Amount: 1
   - Id: 282
     Name: SA_LIGHTNINGLOADER
@@ -8088,22 +7997,23 @@ Body:
     HitCount: 1
     Element: Wind
     CastCancel: true
+    CastTime: 1000
     Duration1:
       - Level: 1
-        Time: 1200000
+        Time: 600000
       - Level: 2
-        Time: 1200000
+        Time: 900000
       - Level: 3
         Time: 1200000
       - Level: 4
-        Time: 1200000
+        Time: 1500000
       - Level: 5
         Time: 1800000
-    FixedCastTime: 3000
+    FixedCastTime: 1000
     Requires:
       SpCost: 40
       ItemCost:
-        - Item: Wind_Of_Verdure
+        - Item: Yellow_Wish_Pts
           Amount: 1
   - Id: 283
     Name: SA_SEISMICWEAPON
@@ -8121,22 +8031,23 @@ Body:
     HitCount: 1
     Element: Earth
     CastCancel: true
+    CastTime: 1000
     Duration1:
       - Level: 1
-        Time: 1200000
+        Time: 600000
       - Level: 2
-        Time: 1200000
+        Time: 900000
       - Level: 3
         Time: 1200000
       - Level: 4
-        Time: 1200000
+        Time: 1500000
       - Level: 5
         Time: 1800000
-    FixedCastTime: 3000
+    FixedCastTime: 1000
     Requires:
       SpCost: 40
       ItemCost:
-        - Item: Yellow_Live
+        - Item: Lime_Green_Pts
           Amount: 1
   - Id: 284
     Name: SA_DRAGONOLOGY
@@ -8184,7 +8095,7 @@ Body:
         - Level: 5
           Amount: 40
       ItemCost:
-        - Item: Yellow_Gemstone
+        - Item: Blue_Gemstone
           Amount: 1
     Unit:
       Id: Volcano
@@ -8234,7 +8145,7 @@ Body:
         - Level: 5
           Amount: 40
       ItemCost:
-        - Item: Yellow_Gemstone
+        - Item: Blue_Gemstone
           Amount: 1
     Unit:
       Id: Deluge
@@ -8284,7 +8195,7 @@ Body:
         - Level: 5
           Amount: 40
       ItemCost:
-        - Item: Yellow_Gemstone
+        - Item: Blue_Gemstone
           Amount: 1
     Unit:
       Id: Violentgale
@@ -8624,9 +8535,11 @@ Body:
       AllowWhenPerforming: true
     Hit: Single
     HitCount: 1
-    Duration2: 5000
+    AfterCastActDelay: 300
+    Duration1: 300000
+    Cooldown: 300000
     Requires:
-      SpCost: 1
+      SpCost: 10
   - Id: 305
     Name: BD_ENCORE
     Description: Encore
@@ -8636,6 +8549,8 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
+    AfterCastActDelay: 300
+    Cooldown: 10000
     Requires:
       SpCost: 1
       Weapon:
@@ -8653,20 +8568,16 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
+    SplashArea: 4
+    CastTime: 1000
     Duration1: 60000
     Duration2: 15000
+    Cooldown: 20000
     Requires:
-      SpCost: 20
+      SpCost: 40
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Lullaby
-      Layout: 4
-      Interval: 6000
-      Target: Enemy
-      Flag:
-        Ensemble: true
   - Id: 307
     Name: BD_RICHMANKIM
     Description: Mental Sensing
@@ -8679,21 +8590,26 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
+    SplashArea: -1
+    CastTime: 1000
     Duration1: 60000
     Duration2: 60000
+    Cooldown: 20000
     Requires:
-      SpCost: 20
+      SpCost:
+        - Level: 1
+          Amount: 62
+        - Level: 2
+          Amount: 68
+        - Level: 3
+          Amount: 74
+        - Level: 4
+          Amount: 80
+        - Level: 5
+          Amount: 86
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Richmankim
-      Layout: 4
-      Interval: -1
-      Target: Enemy
-      Flag:
-        NoPc: true
-        Ensemble: true
   - Id: 308
     Name: BD_ETERNALCHAOS
     Description: Down Tempo
@@ -8706,21 +8622,16 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
+    SplashArea: 4
+    CastTime: 1000
     Duration1: 60000
     Duration2: 60000
+    Cooldown: 60000
     Requires:
-      SpCost: 30
+      SpCost: 120
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Eternalchaos
-      Layout: 4
-      Interval: -1
-      Target: Enemy
-      Flag:
-        Ensemble: true
-        RemovedByFireRain: true
   - Id: 309
     Name: BD_DRUMBATTLEFIELD
     Description: Battle Theme
@@ -8733,30 +8644,26 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
+    SplashArea: -1
+    CastTime: 1000
     Duration1: 60000
     Duration2: 60000
+    Cooldown: 20000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 38
-        - Level: 2
-          Amount: 41
-        - Level: 3
-          Amount: 44
-        - Level: 4
-          Amount: 47
-        - Level: 5
           Amount: 50
+        - Level: 2
+          Amount: 54
+        - Level: 3
+          Amount: 58
+        - Level: 4
+          Amount: 62
+        - Level: 5
+          Amount: 66
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Drumbattlefield
-      Layout: 4
-      Interval: -1
-      Target: Party
-      Flag:
-        Ensemble: true
   - Id: 310
     Name: BD_RINGNIBELUNGEN
     Description: Harmonic Lick
@@ -8769,30 +8676,26 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
+    SplashArea: -1
+    CastTime: 1000
     Duration1: 60000
     Duration2: 60000
+    Cooldown: 20000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 38
+          Amount: 64
         - Level: 2
-          Amount: 41
+          Amount: 60
         - Level: 3
-          Amount: 44
+          Amount: 56
         - Level: 4
-          Amount: 47
+          Amount: 52
         - Level: 5
-          Amount: 50
+          Amount: 48
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Ringnibelungen
-      Layout: 4
-      Interval: -1
-      Target: Party
-      Flag:
-        Ensemble: true
   - Id: 311
     Name: BD_ROKISWEIL
     Description: Classical Pluck
@@ -8805,20 +8708,16 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
-    Duration1: 60000
+    SplashArea: 4
+    CastTime: 1000
+    Duration1: 30000
     Duration2: 60000
+    Cooldown: 180000
     Requires:
-      SpCost: 15
+      SpCost: 180
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Rokisweil
-      Layout: 4
-      Interval: -1
-      Flag:
-        Ensemble: true
-        RemovedByFireRain: true
   - Id: 312
     Name: BD_INTOABYSS
     Description: Power Chord
@@ -8831,21 +8730,16 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
+    SplashArea: -1
+    CastTime: 1000
     Duration1: 60000
     Duration2: 60000
+    Cooldown: 20000
     Requires:
-      SpCost: 10
+      SpCost: 70
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Intoabyss
-      Layout: 4
-      Interval: -1
-      Target: Party
-      Flag:
-        NoMob: true
-        Ensemble: true
   - Id: 313
     Name: BD_SIEGFRIED
     Description: Acoustic Rhythm
@@ -8858,20 +8752,26 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
+    SplashArea: -1
+    CastTime: 1000
     Duration1: 60000
     Duration2: 60000
+    Cooldown: 20000
     Requires:
-      SpCost: 20
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 44
+        - Level: 3
+          Amount: 48
+        - Level: 4
+          Amount: 52
+        - Level: 5
+          Amount: 56
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Siegfried
-      Layout: 4
-      Interval: -1
-      Target: Party
-      Flag:
-        Ensemble: true
   - Id: 315
     Name: BA_MUSICALLESSON
     Description: Music Lessons
@@ -8887,22 +8787,13 @@ Body:
       AllowWhenPerforming: true
     Range: 9
     Hit: Single
-    HitCount: 1
+    HitCount: 2
     Element: Weapon
-    CastTime: 1200
+    CastTime: 500
+    AfterCastActDelay: 3000
     FixedCastTime: 300
     Requires:
-      SpCost:
-        - Level: 1
-          Amount: 1
-        - Level: 2
-          Amount: 3
-        - Level: 3
-          Amount: 5
-        - Level: 4
-          Amount: 7
-        - Level: 5
-          Amount: 9
+      SpCost: 12
       Weapon:
         Musical: true
       Ammo:
@@ -8912,40 +8803,34 @@ Body:
     Name: BA_DISSONANCE
     Description: Unchained Serenade
     MaxLevel: 5
-    Type: Misc
+    Type: Magic
     TargetType: Self
     DamageFlags:
       NoDamage: true
       IgnoreFlee: true
     Flags:
       IsSong: true
-      IgnoreLandProtector: true
     Hit: Multi_Hit
     HitCount: 1
+    SplashArea: 4
+    CastTime: 1000
     Duration1: 30000
     Duration2: 3000
+    Cooldown: 5000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 18
+          Amount: 35
         - Level: 2
-          Amount: 21
+          Amount: 38
         - Level: 3
-          Amount: 24
+          Amount: 41
         - Level: 4
-          Amount: 27
+          Amount: 44
         - Level: 5
-          Amount: 30
+          Amount: 47
       Weapon:
         Musical: true
-    Unit:
-      Id: Dissonance
-      Layout: 3
-      Interval: 3000
-      Target: Enemy
-      Flag:
-        Song: true
-        RemovedByFireRain: true
   - Id: 318
     Name: BA_FROSTJOKER
     Description: Unbarring Octave
@@ -8958,8 +8843,9 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    AfterCastActDelay: 4000
+    AfterCastActDelay: 300
     Duration2: 30000
+    Cooldown: 4000
     Requires:
       SpCost:
         - Level: 1
@@ -8982,298 +8868,13 @@ Body:
       NoDamage: true
     Flags:
       IsSong: true
-      IgnoreLandProtector: true
-    Hit: Single
-    HitCount: 1
-    Duration1: 60000
-    Duration2: 20000
-    Requires:
-      SpCost:
-        - Level: 1
-          Amount: 24
-        - Level: 2
-          Amount: 28
-        - Level: 3
-          Amount: 32
-        - Level: 4
-          Amount: 36
-        - Level: 5
-          Amount: 40
-        - Level: 6
-          Amount: 44
-        - Level: 7
-          Amount: 48
-        - Level: 8
-          Amount: 52
-        - Level: 9
-          Amount: 56
-        - Level: 10
-          Amount: 60
-      Weapon:
-        Musical: true
-        Whip: true
-    Unit:
-      Id: Whistle
-      Layout: 3
-      Interval: -1
-      Flag:
-        NoMob: true
-        Song: true
-  - Id: 320
-    Name: BA_ASSASSINCROSS
-    Description: Impressive Riff
-    MaxLevel: 10
-    Type: Misc
-    TargetType: Self
-    DamageFlags:
-      NoDamage: true
-    Flags:
-      IsSong: true
-      IgnoreLandProtector: true
-    Hit: Single
-    HitCount: 1
-    Duration1: 120000
-    Duration2: 20000
-    Requires:
-      SpCost:
-        - Level: 1
-          Amount: 38
-        - Level: 2
-          Amount: 41
-        - Level: 3
-          Amount: 44
-        - Level: 4
-          Amount: 47
-        - Level: 5
-          Amount: 50
-        - Level: 6
-          Amount: 53
-        - Level: 7
-          Amount: 56
-        - Level: 8
-          Amount: 59
-        - Level: 9
-          Amount: 62
-        - Level: 10
-          Amount: 65
-      Weapon:
-        Musical: true
-        Whip: true
-    Unit:
-      Id: Assassincross
-      Layout: 3
-      Interval: -1
-      Flag:
-        NoMob: true
-        Song: true
-  - Id: 321
-    Name: BA_POEMBRAGI
-    Description: Magic Strings
-    MaxLevel: 10
-    Type: Misc
-    TargetType: Self
-    DamageFlags:
-      NoDamage: true
-    Flags:
-      IsSong: true
-      IgnoreLandProtector: true
-    Hit: Single
-    HitCount: 1
-    Duration1: 180000
-    Duration2: 20000
-    Requires:
-      SpCost:
-        - Level: 1
-          Amount: 40
-        - Level: 2
-          Amount: 45
-        - Level: 3
-          Amount: 50
-        - Level: 4
-          Amount: 55
-        - Level: 5
-          Amount: 60
-        - Level: 6
-          Amount: 65
-        - Level: 7
-          Amount: 70
-        - Level: 8
-          Amount: 75
-        - Level: 9
-          Amount: 80
-        - Level: 10
-          Amount: 85
-      Weapon:
-        Musical: true
-        Whip: true
-    Unit:
-      Id: Poembragi
-      Layout: 3
-      Interval: -1
-      Flag:
-        NoMob: true
-        Song: true
-  - Id: 322
-    Name: BA_APPLEIDUN
-    Description: Song of Lutie
-    MaxLevel: 10
-    Type: Misc
-    TargetType: Self
-    DamageFlags:
-      NoDamage: true
-    Flags:
-      IsSong: true
-      IgnoreLandProtector: true
-    Hit: Single
-    HitCount: 1
-    Duration1: 180000
-    Duration2: 20000
-    Requires:
-      SpCost:
-        - Level: 1
-          Amount: 40
-        - Level: 2
-          Amount: 45
-        - Level: 3
-          Amount: 50
-        - Level: 4
-          Amount: 55
-        - Level: 5
-          Amount: 60
-        - Level: 6
-          Amount: 65
-        - Level: 7
-          Amount: 70
-        - Level: 8
-          Amount: 75
-        - Level: 9
-          Amount: 80
-        - Level: 10
-          Amount: 85
-      Weapon:
-        Musical: true
-        Whip: true
-    Unit:
-      Id: Appleidun
-      Layout: 3
-      Interval: 6000
-      Flag:
-        NoMob: true
-        Song: true
-        DualMode: true
-  - Id: 323
-    Name: DC_DANCINGLESSON
-    Description: Dance Lessons
-    MaxLevel: 10
-    Type: Weapon
-  - Id: 324
-    Name: DC_THROWARROW
-    Description: Slinging Arrow
-    MaxLevel: 5
-    Type: Weapon
-    TargetType: Attack
-    Flags:
-      AllowWhenPerforming: true
-    Range: 9
-    Hit: Single
-    HitCount: 1
-    Element: Weapon
-    CastTime: 1200
-    FixedCastTime: 300
-    Requires:
-      SpCost:
-        - Level: 1
-          Amount: 1
-        - Level: 2
-          Amount: 3
-        - Level: 3
-          Amount: 5
-        - Level: 4
-          Amount: 7
-        - Level: 5
-          Amount: 9
-      Weapon:
-        Whip: true
-      Ammo:
-        Arrow: true
-      AmmoAmount: 1
-  - Id: 325
-    Name: DC_UGLYDANCE
-    Description: Hip Shaker
-    MaxLevel: 5
-    Type: Misc
-    TargetType: Self
-    DamageFlags:
-      NoDamage: true
-    Flags:
-      IsSong: true
-      IgnoreLandProtector: true
-    Hit: Multi_Hit
-    HitCount: 1
-    Duration1: 30000
-    Duration2: 3000
-    Requires:
-      SpCost:
-        - Level: 1
-          Amount: 23
-        - Level: 2
-          Amount: 26
-        - Level: 3
-          Amount: 29
-        - Level: 4
-          Amount: 32
-        - Level: 5
-          Amount: 35
-      Weapon:
-        Whip: true
-    Unit:
-      Id: Uglydance
-      Layout: 3
-      Interval: 3000
-      Target: Enemy
-      Flag:
-        Dance: true
-  - Id: 326
-    Name: DC_SCREAM
-    Description: Dazzler
-    MaxLevel: 5
-    Type: Misc
-    TargetType: Self
-    DamageFlags:
-      NoDamage: true
-      Splash: true
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    AfterCastActDelay: 4000
-    Duration2: 5000
-    Requires:
-      SpCost:
-        - Level: 1
-          Amount: 12
-        - Level: 2
-          Amount: 14
-        - Level: 3
-          Amount: 16
-        - Level: 4
-          Amount: 18
-        - Level: 5
-          Amount: 20
-  - Id: 327
-    Name: DC_HUMMING
-    Description: Focus Ballet
-    MaxLevel: 10
-    Type: Misc
-    TargetType: Self
-    DamageFlags:
-      NoDamage: true
-    Flags:
-      IsSong: true
-      IgnoreLandProtector: true
-    Hit: Single
-    HitCount: 1
+    CastTime: 1000
     Duration1: 60000
     Duration2: 20000
+    Cooldown: 20000
     Requires:
       SpCost:
         - Level: 1
@@ -9299,16 +8900,9 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Humming
-      Layout: 3
-      Interval: -1
-      Flag:
-        NoMob: true
-        Dance: true
-  - Id: 328
-    Name: DC_DONTFORGETME
-    Description: Slow Grace
+  - Id: 320
+    Name: BA_ASSASSINCROSS
+    Description: Impressive Riff
     MaxLevel: 10
     Type: Misc
     TargetType: Self
@@ -9316,105 +8910,13 @@ Body:
       NoDamage: true
     Flags:
       IsSong: true
-      IgnoreLandProtector: true
     Hit: Single
     HitCount: 1
-    Duration1: 180000
+    SplashArea: -1
+    CastTime: 1000
+    Duration1: 60000
     Duration2: 20000
-    Requires:
-      SpCost:
-        - Level: 1
-          Amount: 28
-        - Level: 2
-          Amount: 31
-        - Level: 3
-          Amount: 34
-        - Level: 4
-          Amount: 37
-        - Level: 5
-          Amount: 40
-        - Level: 6
-          Amount: 43
-        - Level: 7
-          Amount: 46
-        - Level: 8
-          Amount: 49
-        - Level: 9
-          Amount: 52
-        - Level: 10
-          Amount: 55
-      Weapon:
-        Musical: true
-        Whip: true
-    Unit:
-      Id: Dontforgetme
-      Layout: 3
-      Interval: -1
-      Target: Enemy
-      Flag:
-        Dance: true
-  - Id: 329
-    Name: DC_FORTUNEKISS
-    Description: Lady Luck
-    MaxLevel: 10
-    Type: Misc
-    TargetType: Self
-    DamageFlags:
-      NoDamage: true
-    Flags:
-      IsSong: true
-      IgnoreLandProtector: true
-    Hit: Single
-    HitCount: 1
-    Duration1: 120000
-    Duration2: 20000
-    Requires:
-      SpCost:
-        - Level: 1
-          Amount: 43
-        - Level: 2
-          Amount: 46
-        - Level: 3
-          Amount: 49
-        - Level: 4
-          Amount: 52
-        - Level: 5
-          Amount: 55
-        - Level: 6
-          Amount: 58
-        - Level: 7
-          Amount: 61
-        - Level: 8
-          Amount: 64
-        - Level: 9
-          Amount: 67
-        - Level: 10
-          Amount: 70
-      Weapon:
-        Musical: true
-        Whip: true
-    Unit:
-      Id: Fortunekiss
-      Layout: 3
-      Interval: -1
-      Flag:
-        NoMob: true
-        Dance: true
-  - Id: 330
-    Name: DC_SERVICEFORYOU
-    Description: Gypsy's Kiss
-    MaxLevel: 10
-    Type: Misc
-    TargetType: Self
-    DamageFlags:
-      NoDamage: true
-    Flags:
-      IsSong: true
-      IgnoreLandProtector: true
-    Hit: Single
-    HitCount: 1
-    Duration1: 180000
-    Duration2: 20000
+    Cooldown: 20000
     Requires:
       SpCost:
         - Level: 1
@@ -9440,13 +8942,342 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Serviceforyou
-      Layout: 3
-      Interval: -1
-      Flag:
-        NoMob: true
-        Dance: true
+  - Id: 321
+    Name: BA_POEMBRAGI
+    Description: Magic Strings
+    MaxLevel: 10
+    Type: Misc
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsSong: true
+    Hit: Single
+    HitCount: 1
+    SplashArea: -1
+    CastTime: 1000
+    Duration1: 60000
+    Duration2: 20000
+    Cooldown: 20000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 65
+        - Level: 2
+          Amount: 70
+        - Level: 3
+          Amount: 75
+        - Level: 4
+          Amount: 80
+        - Level: 5
+          Amount: 85
+        - Level: 6
+          Amount: 90
+        - Level: 7
+          Amount: 95
+        - Level: 8
+          Amount: 100
+        - Level: 9
+          Amount: 105
+        - Level: 10
+          Amount: 110
+      Weapon:
+        Musical: true
+        Whip: true
+  - Id: 322
+    Name: BA_APPLEIDUN
+    Description: Song of Lutie
+    MaxLevel: 10
+    Type: Misc
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsSong: true
+    Hit: Single
+    HitCount: 1
+    SplashArea: -1
+    CastTime: 1000
+    Duration1: 60000
+    Duration2: 20000
+    Cooldown: 20000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 45
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 55
+        - Level: 5
+          Amount: 60
+        - Level: 6
+          Amount: 65
+        - Level: 7
+          Amount: 70
+        - Level: 8
+          Amount: 75
+        - Level: 9
+          Amount: 80
+        - Level: 10
+          Amount: 85
+      Weapon:
+        Musical: true
+        Whip: true
+  - Id: 323
+    Name: DC_DANCINGLESSON
+    Description: Dance Lessons
+    MaxLevel: 10
+    Type: Weapon
+  - Id: 324
+    Name: DC_THROWARROW
+    Description: Slinging Arrow
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Flags:
+      AllowWhenPerforming: true
+    Range: 9
+    Hit: Single
+    HitCount: 2
+    Element: Weapon
+    CastTime: 1200
+    FixedCastTime: 300
+    Requires:
+      SpCost: 12
+      Weapon:
+        Whip: true
+      Ammo:
+        Arrow: true
+      AmmoAmount: 1
+  - Id: 325
+    Name: DC_UGLYDANCE
+    Description: Hip Shaker
+    MaxLevel: 5
+    Type: Misc
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsSong: true
+    Hit: Multi_Hit
+    HitCount: 1
+    SplashArea: 4
+    CastTime: 1000
+    Duration1: 30000
+    Duration2: 3000
+    Cooldown: 20000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 23
+        - Level: 2
+          Amount: 26
+        - Level: 3
+          Amount: 29
+        - Level: 4
+          Amount: 32
+        - Level: 5
+          Amount: 35
+      Weapon:
+        Whip: true
+  - Id: 326
+    Name: DC_SCREAM
+    Description: Dazzler
+    MaxLevel: 5
+    Type: Misc
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    SplashArea: -1
+    AfterCastActDelay: 300
+    Duration2: 5000
+    Cooldown: 4000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 12
+        - Level: 2
+          Amount: 14
+        - Level: 3
+          Amount: 16
+        - Level: 4
+          Amount: 18
+        - Level: 5
+          Amount: 20
+  - Id: 327
+    Name: DC_HUMMING
+    Description: Focus Ballet
+    MaxLevel: 10
+    Type: Misc
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsSong: true
+    Hit: Single
+    HitCount: 1
+    SplashArea: -1
+    CastTime: 1000
+    Duration1: 60000
+    Duration2: 20000
+    Cooldown: 20000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 33
+        - Level: 2
+          Amount: 36
+        - Level: 3
+          Amount: 39
+        - Level: 4
+          Amount: 42
+        - Level: 5
+          Amount: 45
+        - Level: 6
+          Amount: 48
+        - Level: 7
+          Amount: 51
+        - Level: 8
+          Amount: 54
+        - Level: 9
+          Amount: 57
+        - Level: 10
+          Amount: 60
+      Weapon:
+        Musical: true
+        Whip: true
+  - Id: 328
+    Name: DC_DONTFORGETME
+    Description: Slow Grace
+    MaxLevel: 10
+    Type: Misc
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsSong: true
+    Hit: Single
+    HitCount: 1
+    SplashArea: 4
+    CastTime: 1000
+    Duration1: 60000
+    Duration2: 20000
+    Cooldown: 20000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 38
+        - Level: 2
+          Amount: 41
+        - Level: 3
+          Amount: 44
+        - Level: 4
+          Amount: 47
+        - Level: 5
+          Amount: 50
+        - Level: 6
+          Amount: 53
+        - Level: 7
+          Amount: 56
+        - Level: 8
+          Amount: 59
+        - Level: 9
+          Amount: 62
+        - Level: 10
+          Amount: 65
+      Weapon:
+        Musical: true
+        Whip: true
+  - Id: 329
+    Name: DC_FORTUNEKISS
+    Description: Lady Luck
+    MaxLevel: 10
+    Type: Misc
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsSong: true
+    Hit: Single
+    HitCount: 1
+    SplashArea: -1
+    CastTime: 1000
+    Duration1: 60000
+    Duration2: 20000
+    Cooldown: 20000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 40
+        - Level: 2
+          Amount: 45
+        - Level: 3
+          Amount: 50
+        - Level: 4
+          Amount: 55
+        - Level: 5
+          Amount: 60
+        - Level: 6
+          Amount: 65
+        - Level: 7
+          Amount: 70
+        - Level: 8
+          Amount: 75
+        - Level: 9
+          Amount: 80
+        - Level: 10
+          Amount: 85
+      Weapon:
+        Musical: true
+        Whip: true
+  - Id: 330
+    Name: DC_SERVICEFORYOU
+    Description: Gypsy's Kiss
+    MaxLevel: 10
+    Type: Misc
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsSong: true
+    Hit: Single
+    HitCount: 1
+    SplashArea: -1
+    CastTime: 1000
+    Duration1: 60000
+    Duration2: 20000
+    Cooldown: 20000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 60
+        - Level: 2
+          Amount: 63
+        - Level: 3
+          Amount: 66
+        - Level: 4
+          Amount: 69
+        - Level: 5
+          Amount: 72
+        - Level: 6
+          Amount: 75
+        - Level: 7
+          Amount: 78
+        - Level: 8
+          Amount: 81
+        - Level: 9
+          Amount: 84
+        - Level: 10
+          Amount: 87
+      Weapon:
+        Musical: true
+        Whip: true
   - Id: 331
     Name: NPC_RANDOMMOVE
     Description: Random Move
@@ -9958,7 +9789,7 @@ Body:
       - Level: 4
         Time: 40000
       - Level: 5
-        Time: 45000
+        Time: 60000
     Requires:
       SpCost:
         - Level: 1
@@ -10043,7 +9874,7 @@ Body:
       - Level: 4
         Time: 1400
       - Level: 5
-        Time: 1500
+        Time: 500
     Duration1:
       - Level: 1
         Time: 20000
@@ -10086,23 +9917,21 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-    Range: 4
     Hit: Single
     HitCount: 1
-    ActiveInstance: 1
-    Knockback: 2
     CastCancel: true
+    CastTime: 3000
     AfterCastActDelay:
       - Level: 1
-        Time: 2000
+        Time: 200
       - Level: 2
-        Time: 3000
+        Time: 400
       - Level: 3
-        Time: 4000
+        Time: 600
       - Level: 4
-        Time: 5000
+        Time: 800
       - Level: 5
-        Time: 6000
+        Time: 1000
     Duration1:
       - Level: 1
         Time: 20000
@@ -10125,44 +9954,30 @@ Body:
         Time: 35000
       - Level: 5
         Time: 40000
+    Cooldown: 30000
     FixedCastTime:
       - Level: 1
-        Time: 5000
+        Time: 200
       - Level: 2
-        Time: 6000
+        Time: 400
       - Level: 3
-        Time: 7000
+        Time: 600
       - Level: 4
-        Time: 8000
+        Time: 800
       - Level: 5
-        Time: 9000
+        Time: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 80
+          Amount: 40
         - Level: 2
-          Amount: 90
+          Amount: 50
         - Level: 3
-          Amount: 100
+          Amount: 60
         - Level: 4
-          Amount: 110
+          Amount: 70
         - Level: 5
-          Amount: 120
-      ItemCost:
-        - Item: Yellow_Gemstone
-          Amount: 1
-        - Item: Red_Gemstone
-          Amount: 1
-        - Item: Blue_Gemstone
-          Amount: 1
-        - Item: Holy_Water
-          Amount: 1
-    Unit:
-      Id: Basilica
-      Layout: 2
-      Interval: 300
-      Flag:
-        RangedSingleUnit: true
+          Amount: 80
   - Id: 363
     Name: HP_MEDITATIO
     Description: Meditatio
@@ -10231,19 +10046,13 @@ Body:
     Name: PA_PRESSURE
     Description: Gloria Domini
     MaxLevel: 5
-    Type: Misc
+    Type: Magic
     TargetType: Attack
-    DamageFlags:
-      IgnoreElement: true
-      IgnoreFlee: true
-      IgnoreDefCard: true
-    Flags:
-      IgnoreBgReduction: true
-      IgnoreGvgReduction: true
     Range: 9
     Hit: Multi_Hit
     HitCount: 1
-    CastTime: 1600
+    Element: Holy
+    CastTime: 1000
     AfterCastActDelay:
       - Level: 1
         Time: 2000
@@ -10254,7 +10063,7 @@ Body:
       - Level: 4
         Time: 3500
       - Level: 5
-        Time: 4000
+        Time: 1000
     Duration2:
       - Level: 1
         Time: 2000
@@ -10463,7 +10272,7 @@ Body:
           Amount: 20
         - Level: 10
           Amount: 22
-      SpiritSphereCost: 2
+      SpiritSphereCost: 1
   - Id: 373
     Name: PF_HPCONVERSION
     Description: Indulge
@@ -10474,17 +10283,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    AfterCastActDelay:
-      - Level: 1
-        Time: 1000
-      - Level: 2
-        Time: 1200
-      - Level: 3
-        Time: 1400
-      - Level: 4
-        Time: 1600
-      - Level: 5
-        Time: 1800
+    AfterCastActDelay: 500
     Requires:
       SpCost:
         - Level: 1
@@ -10571,7 +10370,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Poison
-    AfterCastActDelay: 2000
     Duration1:
       - Level: 1
         Time: 40000
@@ -10582,7 +10380,7 @@ Body:
       - Level: 4
         Time: 55000
       - Level: 5
-        Time: 60000
+        Time: 120000
     Duration2:
       - Level: 1
         Time: 20000
@@ -10594,6 +10392,7 @@ Body:
         Time: 50000
       - Level: 5
         Time: 60000
+    Cooldown: 2000
     Requires:
       SpCost:
         - Level: 1
@@ -10748,9 +10547,9 @@ Body:
     SplashArea: 1
     ActiveInstance: 14
     CastCancel: true
-    CastTime: 1000
-    AfterCastActDelay: 1500
-    FixedCastTime: 1000
+    CastTime: 500
+    AfterCastActDelay: 500
+    FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
@@ -11098,9 +10897,10 @@ Body:
       - Level: 9
         Time: 2880
       - Level: 10
-        Time: 3040
-    AfterCastActDelay: 2000
+        Time: 1500
+    AfterCastActDelay: 500
     AfterCastWalkDelay: 2000
+    Cooldown: 1500
     FixedCastTime:
       - Level: 1
         Time: 400
@@ -11121,7 +10921,7 @@ Body:
       - Level: 9
         Time: 720
       - Level: 10
-        Time: 760
+        Time: 500
     CastDelayFlags:
       IgnoreStatus: true
     Requires:
@@ -11239,7 +11039,7 @@ Body:
       - Level: 4
         Time: 450
       - Level: 5
-        Time: 500
+        Time: 250
     AfterCastActDelay:
       - Level: 1
         Time: 1200
@@ -11262,7 +11062,7 @@ Body:
       - Level: 4
         Time: 450
       - Level: 5
-        Time: 500
+        Time: 300
     Requires:
       SpCost:
         - Level: 1
@@ -11349,7 +11149,6 @@ Body:
     TargetType: Attack
     DamageFlags:
       Splash: true
-      SplashSplit: true
     Flags:
       TargetTrap: true
     Range: 9
@@ -11369,19 +11168,20 @@ Body:
     SplashArea: 1
     CastCancel: true
     CastTime: 800
-    AfterCastActDelay: 1000
+    AfterCastActDelay: 500
     Duration2: 20000
+    Cooldown: 1000
     FixedCastTime: 200
     Requires:
       SpCost:
         - Level: 1
-          Amount: 10
+          Amount: 30
         - Level: 2
-          Amount: 25
-        - Level: 3
           Amount: 40
+        - Level: 3
+          Amount: 50
         - Level: 4
-          Amount: 55
+          Amount: 60
         - Level: 5
           Amount: 70
   - Id: 401
@@ -11395,7 +11195,7 @@ Body:
     HitCount: 1
     CastCancel: true
     Duration1: 600000
-    FixedCastTime: 2000
+    FixedCastTime: 1000
     Requires:
       SpCost: 20
   - Id: 402
@@ -11442,7 +11242,7 @@ Body:
       NoDamage: true
     HitCount: 1
     CastCancel: true
-    FixedCastTime: 5000
+    FixedCastTime: 2500
     CastTimeFlags:
       IgnoreDex: true
       IgnoreStatus: true
@@ -11518,7 +11318,6 @@ Body:
     Element: Weapon
     SplashArea: 2
     CastTime: 250
-    AfterCastActDelay: 500
     Duration2:
       - Level: 1
         Time: 20000
@@ -11526,6 +11325,7 @@ Body:
         Time: 5000
       - Level: 3
         Time: 120000
+    Cooldown: 500
     FixedCastTime: 250
     Requires:
       SpCost:
@@ -13460,7 +13260,17 @@ Body:
     TargetType: Attack
     Flags:
       IncreaseGloomyDayDamage: true
-    Range: 4
+    Range:
+      - Level: 1
+        Size: 7
+      - Level: 2
+        Size: 7
+      - Level: 3
+        Size: 9
+      - Level: 4
+        Size: 9
+      - Level: 5
+        Size: 11
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon
@@ -13545,47 +13355,43 @@ Body:
     Name: HW_GRAVITATION
     Description: Gravitation Field
     MaxLevel: 5
-    Type: Misc
+    Type: Magic
     TargetType: Ground
     DamageFlags:
       NoDamage: true
-      IgnoreElement: true
-      IgnoreFlee: true
-      IgnoreDefCard: true
     Flags:
-      IgnoreBgReduction: true
-      IgnoreGvgReduction: true
       TargetEmperium: true
       IgnoreHovering: true
       TargetHidden: true
     Range: 18
     Hit: Single
     HitCount: 1
-    Element: Earth
     CastCancel: true
-    AfterCastActDelay: 2000
+    CastTime: 5000
+    AfterCastActDelay: 1000
     Duration1:
       - Level: 1
-        Time: 5000
+        Time: 2000
       - Level: 2
-        Time: 6000
+        Time: 2400
       - Level: 3
-        Time: 7000
+        Time: 2800
       - Level: 4
-        Time: 8000
+        Time: 3200
       - Level: 5
-        Time: 9000
-    FixedCastTime: 5000
+        Time: 3600
+    Cooldown: 5000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 20
-        - Level: 2
-          Amount: 40
-        - Level: 3
           Amount: 60
-        - Level: 4
+        - Level: 2
+          Amount: 70
+        - Level: 3
           Amount: 80
+        - Level: 4
+          Amount: 90
         - Level: 5
           Amount: 100
       ItemCost:
@@ -13594,12 +13400,10 @@ Body:
     Unit:
       Id: Gravitation
       Layout: 2
-      Interval: 500
+      Interval: 200
       Target: Enemy
       Flag:
-        NoOverlap: true
         PathCheck: true
-        DualMode: true
         RemovedByFireRain: true
   - Id: 485
     Name: WS_CARTTERMINATION
@@ -13711,20 +13515,6 @@ Body:
         Shotgun: true
         Grenade: true
         Huuma: true
-  - Id: 487
-    Name: CG_LONGINGFREEDOM
-    Description: Longing for Freedom
-    MaxLevel: 5
-    TargetType: Self
-    DamageFlags:
-      NoDamage: true
-    Flags:
-      AllowWhenPerforming: true
-    Hit: Single
-    HitCount: 1
-    Duration1: 180000
-    Requires:
-      SpCost: 15
   - Id: 488
     Name: CG_HERMODE
     Description: Wand of Hermode
@@ -13738,7 +13528,7 @@ Body:
       IgnoreLandProtector: true
     Hit: Single
     HitCount: 1
-    SplashArea: 1
+    SplashArea: 3
     Duration1:
       - Level: 1
         Time: 10000
@@ -13776,12 +13566,6 @@ Body:
       Weapon:
         Musical: true
         Whip: true
-    Unit:
-      Id: Hermode
-      Layout: 3
-      Interval: -1
-      Flag:
-        Ensemble: true
   - Id: 489
     Name: CG_TAROTCARD
     Description: Tarot Card of Fate
@@ -17326,8 +17110,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
-    CastTime: 250
-    FixedCastTime: 250
+    Cooldown: 500
     Requires:
       SpCost: 40
   - Id: 1002
@@ -17533,7 +17316,7 @@ Body:
     Duration2: 17000
     FixedCastTime: 200
     Requires:
-      SpCost: 40
+      SpCost: 20
   - Id: 1012
     Name: BS_UNFAIRLYTRICK
     Description: Unfair Trick
@@ -33111,6 +32894,18 @@ Body:
       IgnoreDex: true
       IgnoreStatus: true
       IgnoreItemBonus: true
+  - Id: 5068
+    Name: CG_SPECIALSINGER
+    Description: Skilled Special Singer
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Range: 1
+    Duration1: 10000
+    Cooldown: 60000
+    Requires:
+      SpCost: 1
   - Id: 5072
     Name: AB_VITUPERATUM
     Description: Vituperatum
