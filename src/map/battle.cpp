@@ -1278,6 +1278,12 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 #endif
 
+		if (!(flag&BF_MAGIC) && sc->data[SC_LUXANIMA]) {
+			damage += damage * sc->data[SC_LUXANIMA]->val3 / 100;
+			if (skill_id == 0 && rnd() % 100 < sc->data[SC_LUXANIMA]->val2)
+				skill_castend_damage_id(src, bl, RK_STORMBLAST, 1, gettick(), 0);
+		}
+
 		if( damage ) {
 			struct map_session_data *tsd = BL_CAST(BL_PC, src);
 			if( sc->data[SC_DEEPSLEEP] ) {
@@ -5712,11 +5718,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 				break;
 		}
 #endif
-		if (sc && sc->data[SC_LUXANIMA]) {
-			ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_LUXANIMA]->val3);
-			if (rnd() % 100 < sc->data[SC_LUXANIMA]->val2)
-				skill_castend_damage_id(src, target, RK_STORMBLAST, 1, gettick(), 0);
-		}
 	}
 
 	if(tsd) { // Card Fix for target (tsd), 2 is not added to the "left" flag meaning "target cards only"
