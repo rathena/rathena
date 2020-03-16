@@ -1278,11 +1278,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 #endif
 
-		if (!(flag&BF_MAGIC) && sc->data[SC_LUXANIMA]) {
+		if (!(flag&BF_MAGIC) && sc->data[SC_LUXANIMA])
 			damage += damage * sc->data[SC_LUXANIMA]->val3 / 100;
-			if (skill_id == 0 && rnd() % 100 < sc->data[SC_LUXANIMA]->val2)
-				skill_castend_damage_id(src, bl, RK_STORMBLAST, 1, gettick(), 0);
-		}
 
 		if( damage ) {
 			struct map_session_data *tsd = BL_CAST(BL_PC, src);
@@ -7761,6 +7758,10 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				clif_status_change(src, EFST_POSTDELAY, 1, skill_delayfix(src, r_skill, r_lv), 0, 0, 1);
 			}
 		}
+
+
+		if (skill_id == 0 && rnd() % 100 < sc->data[SC_LUXANIMA]->val2)
+			skill_castend_damage_id(src, target, RK_STORMBLAST, 1, gettick(), 0);
 
 		if (wd.flag & BF_WEAPON && src != target && damage > 0) {
 			if (battle_config.left_cardfix_to_right)
