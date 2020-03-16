@@ -238,7 +238,7 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 			mes "[Kuuga Gai]";
 			mes "All you need";
 			mes "to bring me is";
-			mes "^3355FF5 Cyfars^000000 and";
+			mes "^3355FF5 Jellopy^000000 and";
 			mes "^3355FF1 Phracon^000000.";
 			mes "Please get those";
 			mes "as quickly as you can!";
@@ -264,7 +264,7 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 			if (countitem(7053) < 5 || countitem(1010) < 1) {
 				mes "[Kuuga Gai]";
 				mes "Hurry and bring";
-				mes "^3355FF5 Cyfars^000000 and";
+				mes "^3355FF5 Jellopy^000000 and";
 				mes "^3355FF1 Phracon^000000 to me,";
 				mes "so that I can craft";
 				mes "my own Kunai to use";
@@ -335,7 +335,7 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 			mes "quiet as the falling shadows.";
 			callfunc "Job_Change",Job_Ninja;
 			set NINJ_Q,5;
-			delitem 7053,5; // Cyfar
+			delitem 909,5; // Jellopy
 			delitem 1010,1; // Phracon
 			getitem 13010,1;	// Asura
 			completequest 6018;
@@ -431,7 +431,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	881,{
 		mes "Great, I'm glad to";
 		mes "hear that. Please";
 		mes "help me find";
-		mes "^3355FF5 Cyfars^000000 and";
+		mes "^3355FF5 Jellopy^000000 and";
 		mes "^3355FF1 Phracon^000000.";
 		set NINJ_Q,2;
 		changequest 6015,6016;
@@ -441,7 +441,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	881,{
 		if (countitem(7053) < 5 || countitem(1010) < 1) {
 			mes "[Suspicious Man]";
 			mes "Please bring";
-			mes "^3355FF5 Cyfars^000000 and";
+			mes "^3355FF5 Jellopy^000000 and";
 			mes "^3355FF1 Phracon^000000 to me as";
 			mes "soon as you can. Then,";
 			mes "I can help you find";
@@ -526,7 +526,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	881,{
 		mes "return to Amatsu, so let";
 		mes "me send you there directly...";
 		delitem 1010,1;	// Phracon
-		delitem 7053,5;	// Cyfar
+		delitem 909,5;	// Jellopy
 		set NINJ_Q,3;
 		changequest 6016,6017;
 		close2;
