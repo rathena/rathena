@@ -19143,7 +19143,7 @@ Body:
       Critical: true
     Range: 7
     Hit: Multi_Hit
-    HitCount: 1
+    HitCount: -7
     Element: Weapon
     CopyFlags:
       Skill:
