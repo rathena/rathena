@@ -7759,10 +7759,6 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			}
 		}
 
-
-		if (skill_id == 0 && rnd() % 100 < sc->data[SC_LUXANIMA]->val2)
-			skill_castend_damage_id(src, target, RK_STORMBLAST, 1, gettick(), 0);
-
 		if (wd.flag & BF_WEAPON && src != target && damage > 0) {
 			if (battle_config.left_cardfix_to_right)
 				battle_drain(sd, target, wd.damage, wd.damage, tstatus->race, tstatus->class_);
