@@ -4,6 +4,7 @@
 #ifndef STATUS_HPP
 #define STATUS_HPP
 
+#include "../common/database.hpp"
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
 
@@ -58,6 +59,23 @@ struct refine_cost {
 /// Get refine chance
 int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched);
 int status_get_refine_cost(int weapon_lv, int type, bool what);
+
+/// Weapon attack modification for size
+struct s_sizefix_db {
+	uint16 small, medium, large;
+};
+
+class SizeFixDatabase : public TypesafeYamlDatabase<int32, s_sizefix_db> {
+public:
+	SizeFixDatabase() : TypesafeYamlDatabase("SIZE_FIX_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+};
+
+extern SizeFixDatabase size_fix_db;
 
 /// Status changes listing. These code are for use by the server.
 enum sc_type : int16 {
@@ -863,6 +881,8 @@ enum sc_type : int16 {
 	SC_EARTHSHAKER,
 	SC_WEAPONBLOCK_ON,
 	SC_SPORE_EXPLOSION,
+	SC_ADAPTATION,
+	SC_BASILICA_CELL, // Used in renewal mode for cell_basilica only
 
 	SC_ENTRY_QUEUE_APPLY_DELAY,
 	SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT,
@@ -2001,7 +2021,8 @@ enum efst_types : short{
 
 	EFST_MVPCARD_KIEL = 1229,
 
-	EFST_POWER_ACCELERATION = 1304,
+	EFST_HOMUN_TIME = 1303,
+	EFST_POWER_ACCELERATION,
 	EFST_MAX_HP_SP_AVOID,
 	EFST_ADD_ALL_STATE,
 	EFST_AID_PERIOD_POWER_ACCELERATION,
