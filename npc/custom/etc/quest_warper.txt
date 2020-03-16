@@ -700,8 +700,8 @@ function	script	QWS_Tarray	{
 	setarray @pTprice[@Ti], $QW_BW_PRICE;
 
 	setarray @pTmap$[@Ti], "prontera";
-	setarray @pTXcoords[@Ti], 156;
-	setarray @pTYcoords[@Ti], 187;
+	setarray @pTXcoords[@Ti], 117;
+	setarray @pTYcoords[@Ti], 75;
 
 	QWS_Make_Town_Menu 0;
 //----------------Alberta
@@ -836,7 +836,7 @@ function	script	QWS_Tarray	{
 
 	setarray @pTmap$[@Ti], "izlude";
 	setarray @pTXcoords[@Ti], 128;
-	setarray @pTYcoords[@Ti], 111;
+	setarray @pTYcoords[@Ti], 142;
 
 	QWS_Make_Town_Menu 11;
 //----------------Jawaii:
@@ -925,8 +925,8 @@ function	script	QWS_Tarray	{
 	setarray @pTprice[@Ti], $QW_BW_PRICE;
 
 	setarray @pTmap$[@Ti], "payon";
-	setarray @pTXcoords[@Ti], 152;
-	setarray @pTYcoords[@Ti], 75;
+	setarray @pTXcoords[@Ti], 173;
+	setarray @pTYcoords[@Ti], 102;
 
 	QWS_Make_Town_Menu 18;
 //----------------Rachel
@@ -952,8 +952,8 @@ function	script	QWS_Tarray	{
 	setarray @pTprice[@Ti], $QW_AW_PRICE;
 
 	setarray @pTmap$[@Ti], "umbala";
-	setarray @pTXcoords[@Ti], 130;
-	setarray @pTYcoords[@Ti], 130;
+	setarray @pTXcoords[@Ti], 96;
+	setarray @pTYcoords[@Ti], 152;
 
 	QWS_Make_Town_Menu 19;
 //----------------Veins
@@ -970,8 +970,8 @@ function	script	QWS_Tarray	{
 	setarray @pTprice[@Ti], $QW_AW_PRICE;
 
 	setarray @pTmap$[@Ti], "yuno";
-	setarray @pTXcoords[@Ti], 160;
-	setarray @pTYcoords[@Ti], 168;
+	setarray @pTXcoords[@Ti], 150;
+	setarray @pTYcoords[@Ti], 182;
 
 	QWS_Make_Town_Menu 20;
 //----------------Cancel
@@ -1634,24 +1634,24 @@ yuno_fild03,37,135,4	duplicate(Warpra#0)	Warpra#14	113
 alberta,32,240,4	script	Warpra#15	113,{ callfunc "QWS_Town_Warpra",1,"Alberta Town"; close; }
 aldebaran,146,118,4	script	Warpra#16	113,{ callfunc "QWS_Town_Warpra",2,"Aldebaran Town"; close; }
 ayothaya,216,171,5	script	Warpra#17	113,{ callfunc "QWS_Town_Warpra",4,"Ayothaya Town"; close; }
-amatsu,193,81,1	script	Warpra#18	113,{ callfunc "QWS_Town_Warpra",3,"Amatsu Town"; close; }
+amatsu,202,84,4	script	Warpra#18	113,{ callfunc "QWS_Town_Warpra",3,"Amatsu Town"; close; }
 comodo,195,158,4	script	Warpra#19	113,{ callfunc "QWS_Town_Warpra",5,"Comodo Town"; close; }
 einbroch,229,196,5	script	Warpra#20	113,{ callfunc "QWS_Town_Warpra",7,"Einbroch Town"; close; }
 einbech,173,131,5	script	Warpra#21	113,{ callfunc "QWS_Town_Warpra",6,"Einbech Town"; close; }
-geffen,116,66,4	script	Warpra#22	113,{ callfunc "QWS_Town_Warpra",8,"Geffen Town"; close; }
+geffen,123,72,4	script	Warpra#22	113,{ callfunc "QWS_Town_Warpra",8,"Geffen Town"; close; }
 gonryun,152,130,4	script	Warpra#23	113,{ callfunc "QWS_Town_Warpra",9,"Kunlun Town"; close; }
-hugel,90,127,5	script	Warpra#24	113,{ callfunc "QWS_Town_Warpra",10,"Hugel Town"; close; }
+hugel,101,151,4	script	Warpra#24	113,{ callfunc "QWS_Town_Warpra",10,"Hugel Town"; close; }
 jawaii,107,182,5	script	Warpra#25	113,{ callfunc "QWS_Town_Warpra",12,"Jawaii Town"; close; }
-izlude,132,116,4	script	Warpra#26	113,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
-lighthalzen,153,100,5	script	Warpra#27	113,{ callfunc "QWS_Town_Warpra",13,"Lighthalzen Town"; close; }
-louyang,211,106,4	script	Warpra#28	113,{ callfunc "QWS_Town_Warpra",14,"Luoyang Town"; close; }
-morocc,157,95,4	script	Warpra#29	113,{ callfunc "QWS_Town_Warpra",16,"Morocc Town"; close; }
+izlude,125,148,4	script	Warpra#26	113,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
+lighthalzen,155,102,5	script	Warpra#27	113,{ callfunc "QWS_Town_Warpra",13,"Lighthalzen Town"; close; }
+louyang,211,106,4	script	Warpra#28	113,{ callfunc "QWS_Town_Warpra",14,"Louyang Town"; close; }
+morocc,164,95,4	script	Warpra#29	113,{ callfunc "QWS_Town_Warpra",16,"Morocc Town"; close; }
 nif_fild01,319,77,1	script	Warpra#30	113,{ callfunc "QWS_Town_Warpra",17,"Niflheim Town"; close; }
 payon,183,110,4	script	Warpra#31	113,{ callfunc "QWS_Town_Warpra",18,"Payon Town"; close; }
-prontera,147,172,5	script	Warpra#32	113,{ callfunc "QWS_Town_Warpra",0,"Prontera Town"; close; }
-umbala,133,130,4	script	Warpra#33	113,{ callfunc "QWS_Town_Warpra",19,"Umbala Town"; close; }
-xmas,151,136,4	script	Warpra#34	113,{ callfunc "QWS_Town_Warpra",15,"Lutie Town"; close; }
-yuno,138,162,4	script	Warpra#35	113,{ callfunc "QWS_Town_Warpra",20,"Juno Town"; close; }
+prontera,105,78,6	script	Warpra#32	113,{ callfunc "QWS_Town_Warpra",0,"Prontera Town"; close; }
+umbala,86,152,6	script	Warpra#33	113,{ callfunc "QWS_Town_Warpra",19,"Umbala Town"; close; }
+xmas,150,136,4	script	Warpra#34	113,{ callfunc "QWS_Town_Warpra",15,"Lutie Town"; close; }
+yuno,141,187,6	script	Warpra#35	113,{ callfunc "QWS_Town_Warpra",20,"Juno Town"; close; }
 brasilis,201,222,4	script	Warpra#36	113,{ callfunc "QWS_Town_Warpra",21,"Brasilis Town"; close; }
 dicastes01,194,194,6	script	Warpra#37	113,{ callfunc "QWS_Town_Warpra",22,"El Dicastes Town"; close; }
 manuk,262,177,4	script	Warpra#38	113,{ callfunc "QWS_Town_Warpra",23,"Manuk Town"; close; }

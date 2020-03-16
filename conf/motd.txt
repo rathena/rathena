@@ -1,2 +1,8 @@
 // Internal default is limited to 128 lines.  If you need more, you will need to modify the MOTD_LINE_SIZE definition in pc.cpp
-Welcome to ChocobotRO! Enjoy! Please report any bugs you find to Eric in #ChocobotRO Discord.
+Welcome to ChocobotRO!
+
+Tips:
+- Use @commands to see list of available commands
+- Go to Criatura Academy in Izlude for new player items
+- Send a whisper to #global to use global chat
+- Find Warpras in various towns and dungeons to unlock teleport options
