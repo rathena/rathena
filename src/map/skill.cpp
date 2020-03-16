@@ -8257,6 +8257,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),unit_getdir(bl),(enum e_skill_blown)(BLOWN_IGNORE_NO_KNOCKBACK|BLOWN_DONT_SEND_PACKET));
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		clif_blown(src); // Always blow, otherwise it shows a casting animation. [Lemongrass]
+		status_change_end(src, SC_ROLLINGCUTTER, INVALID_TIMER);
 		break;
 
 	case TK_HIGHJUMP:
