@@ -1,0 +1,31 @@
+//===== rAthena Script =======================================
+//= Web Commander
+//===== By: ==================================================
+//= Akkarin, rAthena FluxCP
+//===== Description: =========================================
+//= Simple script to check sql table for commands to process.
+//= Data is input via FluxCP module and checked for unexecuted
+//= commands every 2 seconds.
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//============================================================
+
+-	script	Commands	-1,{
+OnInit:
+start:
+initnpctimer;
+end;
+OnTimer2000:
+set $@nb2,query_sql("SELECT COUNT(*) FROM cp_commands WHERE done=0",$@count);
+if($@count != 0) {
+	set $@nb,query_sql("SELECT command,id,account_id FROM cp_commands WHERE done=0",$@command$,$@id,$@account_id);
+	if(compare($@command$,"@")) {
+		attachrid($@account_id[0]);
+		atcommand $@command$[0];
+	} else charcommand $@command$[0];
+	query_sql("UPDATE cp_commands SET done='1' WHERE command='"+$@command$[0]+"' AND id='"+$@id[0]+"'");
+} else
+finish:
+stopnpctimer;
+goto start;
+}
