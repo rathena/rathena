@@ -25274,22 +25274,10 @@ Body:
         Reproduce: true
     Requires:
       SpCost: 1
-  - Id: 2417
-    Name: WM_DOMINION_IMPULSE
-    Description: Dominion Impulse
-    MaxLevel: 1
-    TargetType: Ground
-    DamageFlags:
-      NoDamage: true
-      Splash: true
-    Range: 11
-    Hit: Single
-    HitCount: 1
-    SplashArea: 5
-    AfterCastActDelay: 1000
-    FixedCastTime: -1
-    Requires:
-      SpCost: 10
+#  - Id: 2417 # Removed on kRO
+#    Name: WM_DOMINION_IMPULSE
+#    Description: Dominion Impulse
+#    MaxLevel: 1
   - Id: 2418
     Name: WM_SEVERE_RAINSTORM
     Description: Severe Rainstorm
