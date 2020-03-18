@@ -13804,11 +13804,8 @@ Body:
     Name: CR_ACIDDEMONSTRATION
     Description: Acid Demonstration
     MaxLevel: 10
-    Type: Misc
+    Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      IgnoreDefense: true
-      IgnoreFlee: true
     Range: 9
     Hit: Multi_Hit
     HitCount:
@@ -13835,32 +13832,19 @@ Body:
     Element: Weapon
     CastCancel: true
     AfterCastActDelay: 1000
+    Cooldown: 150
     FixedCastTime: 1000
     Requires:
-      SpCost: 30
+      SpCost: 50
       ItemCost:
         - Item: Fire_Bottle
           Amount: 1
         - Item: Acid_Bottle
           Amount: 1
-  - Id: 491
-    Name: CR_CULTIVATION
-    Description: Plant Cultivation
-    MaxLevel: 2
-    TargetType: Ground
-    DamageFlags:
-      NoDamage: true
-    Range: 1
-    Hit: Single
-    HitCount: 1
-    Duration1: 300000
-    Requires:
-      SpCost: 10
-      ItemCost:
-        - Item: Mushroom_Spore
-          Amount: 1
-        - Item: Stem
-          Amount: 1
+#  - Id: 491 # Removed on kRO
+#    Name: CR_CULTIVATION
+#    Description: Plant Cultivation
+#    MaxLevel: 2
   - Id: 492
     Name: ITEM_ENCHANTARMS
     Description: Weapon Enchantment
@@ -28123,10 +28107,11 @@ Body:
     Type: Weapon
     TargetType: Attack
     DamageFlags:
+      NoDamage: true
       Splash: true
     Range: 11
-    Hit: Single
-    HitCount: 3
+    Hit: Multi_Hit
+    HitCount: 2
     Element: Weapon
     SplashArea:
       - Level: 1
@@ -28155,7 +28140,8 @@ Body:
     CastCancel: true
     CastTime: 1500
     AfterCastActDelay: 500
-    Duration1: 2000
+    Duration1: 100
+    Duration2: 200
     Cooldown: 5000
     FixedCastTime: -1
     Requires:
@@ -28321,10 +28307,31 @@ Body:
     Flags:
       TargetTrap: true
       IgnoreLandProtector: true
-    Hit: Single
-    HitCount: 1
-    Element: Earth
+    Hit: Multi_Hit
+    HitCount: 2
+    Element: Weapon
     SplashArea: 2
+    ActiveInstance:
+      - Level: 1
+        Max: 5
+      - Level: 2
+        Max: 6
+      - Level: 3
+        Max: 6
+      - Level: 4
+        Max: 7
+      - Level: 5
+        Max: 7
+      - Level: 6
+        Max: 8
+      - Level: 7
+        Max: 8
+      - Level: 8
+        Max: 9
+      - Level: 9
+        Max: 9
+      - Level: 10
+        Max: 10
     CopyFlags:
       Skill:
         Reproduce: true
@@ -28524,28 +28531,11 @@ Body:
     Name: GN_HELLS_PLANT
     Description: Hell's Plant
     MaxLevel: 5
-    Type: Misc
-    TargetType: Ground
+    TargetType: Self
     DamageFlags:
       NoDamage: true
-      Splash: true
-    Flags:
-      IsTrap: true
-    Range: 9
     Hit: Single
     HitCount: 1
-    SplashArea: 1
-    ActiveInstance:
-      - Level: 1
-        Max: 2
-      - Level: 2
-        Max: 3
-      - Level: 3
-        Max: 4
-      - Level: 4
-        Max: 5
-      - Level: 5
-        Max: 6
     CopyFlags:
       Skill:
         Reproduce: true
@@ -28564,15 +28554,15 @@ Body:
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
-        Time: 14000
+        Time: 60000
       - Level: 2
-        Time: 21000
+        Time: 90000
       - Level: 3
-        Time: 28000
+        Time: 120000
       - Level: 4
-        Time: 35000
+        Time: 150000
       - Level: 5
-        Time: 42000
+        Time: 180000
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -28591,17 +28581,14 @@ Body:
           Amount: 1
     Unit:
       Id: Hells_Plant
-      Range: 1
-      Interval: 1000
+      Range: 2
+      Interval: 300 # !TODO: Confirm interval
       Target: Enemy
-      Flag:
-        NoReiteration: true
-        RemovedByFireRain: true
   - Id: 2491
     Name: GN_HELLS_PLANT_ATK
     Description: Hell's Plant Attack
     MaxLevel: 5
-    Type: Misc
+    Type: Weapon
     TargetType: Attack
     DamageFlags:
       IgnoreElement: true
@@ -28612,9 +28599,6 @@ Body:
       Skill:
         Reproduce: true
     Duration1: 20000
-    FixedCastTime: -1
-    Requires:
-      SpCost: 1
   - Id: 2492
     Name: GN_MANDRAGORA
     Description: Howling of Mandragora
@@ -28667,25 +28651,10 @@ Body:
       ItemCost:
         - Item: Mandragora_Flowerpot
           Amount: 1
-  - Id: 2493
-    Name: GN_SLINGITEM
-    Description: Sling Item
-    MaxLevel: 1
-    TargetType: Support
-    DamageFlags:
-      NoDamage: true
-    Flags:
-      NoTargetSelf: true
-    Range: 11
-    Hit: Single
-    HitCount: 1
-    Cooldown: 1000
-    FixedCastTime: -1
-    Requires:
-      SpCost: 4
-      Ammo:
-        Throwweapon: true
-      AmmoAmount: 1
+#  - Id: 2493 # Removed on kRO
+#    Name: GN_SLINGITEM
+#    Description: Sling Item
+#    MaxLevel: 1
   - Id: 2494
     Name: GN_CHANGEMATERIAL
     Description: Change Material
@@ -28712,21 +28681,10 @@ Body:
           Amount: 5
         - Level: 2
           Amount: 40
-  - Id: 2496
-    Name: GN_MAKEBOMB
-    Description: Create Bomb
-    MaxLevel: 2
-    TargetType: Self
-    DamageFlags:
-      NoDamage: true
-    Hit: Single
-    HitCount: 1
-    Requires:
-      SpCost:
-        - Level: 1
-          Amount: 5
-        - Level: 2
-          Amount: 40
+#  - Id: 2496 # Removed on kRO
+#    Name: GN_MAKEBOMB
+#    Description: Create Bomb
+#    MaxLevel: 2
   - Id: 2497
     Name: GN_S_PHARMACY
     Description: Special Pharmacy
@@ -28738,17 +28696,10 @@ Body:
     HitCount: 1
     Requires:
       SpCost: 12
-  - Id: 2498
-    Name: GN_SLINGITEM_RANGEMELEEATK
-    Description: Sling Item Attack
-    MaxLevel: 1
-    Type: Weapon
-    TargetType: Attack
-    Range: 11
-    Hit: Single
-    HitCount: 1
-    Requires:
-      SpCost: 1
+#  - Id: 2498 # Removed on kRO
+#    Name: GN_SLINGITEM_RANGEMELEEATK
+#    Description: Sling Item Attack
+#    MaxLevel: 1
   - Id: 2533
     Name: ALL_ODINS_RECALL
     Description: Odin's Recall
@@ -34180,7 +34131,7 @@ Body:
     Flags:
       NoTargetSelf: true
     Range: 3
-    Hit: Multi_Hit
+    Hit: Single
     HitCount: 1
     Cooldown: 1000 # !TODO: Confirm cooldown
     FixedCastTime: -1
