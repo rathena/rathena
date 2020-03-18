@@ -317,7 +317,7 @@ L_town:
 	callfunc "QWS_Tarray";
 	freeloop(1);
 	set .@menu$,"";
-	for(set .@i,0; .@i<35; set .@i,.@i+1)	// Expected maximum is 35
+	for(set .@i,0; .@i<40; set .@i,.@i+1)	// Expected maximum is 40
 		set .@menu$,.@menu$+@Tmenulist$[.@i]+":";
 	freeloop(0);
 	set @TWMenu,select(.@menu$);
@@ -561,7 +561,7 @@ stampcard:
 
 function	script	QWS_TownStamps	{
 	set @Tstamp,0;
-	set @MaxTstamp,30; //maximum number of towns
+	set @MaxTstamp,35; //maximum number of towns
 	set @binvalue,1;
 	set @Tstamploop,0;
 	do {
@@ -574,7 +574,7 @@ function	script	QWS_TownStamps	{
 
 function	script	QWS_DungeonStamps	{
 	set @Dstamp,0;
-	set @MaxDstamp,29; //maximum number of dungeons
+	set @MaxDstamp,30; //maximum number of dungeons
 	set @binvalue,1;
 	set @Dstamploop,0;
 	do {
@@ -718,8 +718,8 @@ function	script	QWS_Tarray	{
 	setarray @pTprice[@Ti], $QW_AW_PRICE;
 
 	setarray @pTmap$[@Ti], "aldebaran";
-	setarray @pTXcoords[@Ti], 145;
-	setarray @pTYcoords[@Ti], 120;
+	setarray @pTXcoords[@Ti], 140;
+	setarray @pTYcoords[@Ti], 116;
 
 	QWS_Make_Town_Menu 2;
 //----------------Amatsu:
@@ -736,8 +736,8 @@ function	script	QWS_Tarray	{
 	setarray @pTprice[@Ti], $QW_OW_PRICE;
 
 	setarray @pTmap$[@Ti], "ayothaya";
-	setarray @pTXcoords[@Ti], 150;
-	setarray @pTYcoords[@Ti], 57;
+	setarray @pTXcoords[@Ti], 216;
+	setarray @pTYcoords[@Ti], 173;
 
 	QWS_Make_Town_Menu 4;
 //----------------Brasilis:
@@ -745,8 +745,8 @@ function	script	QWS_Tarray	{
 	setarray @pTprice[@Ti], $QW_OW_PRICE;
 
 	setarray @pTmap$[@Ti], "brasilis";
-	setarray @pTXcoords[@Ti], 195;
-	setarray @pTYcoords[@Ti], 220;
+	setarray @pTXcoords[@Ti], 196;
+	setarray @pTYcoords[@Ti], 217;
 
 	QWS_Make_Town_Menu 21;
 //----------------Comodo:
@@ -754,8 +754,8 @@ function	script	QWS_Tarray	{
 	setarray @pTprice[@Ti], $QW_AW_PRICE;
 
 	setarray @pTmap$[@Ti], "comodo";
-	setarray @pTXcoords[@Ti], 188;
-	setarray @pTYcoords[@Ti], 161;
+	setarray @pTXcoords[@Ti], 190;
+	setarray @pTYcoords[@Ti], 149;
 
 	QWS_Make_Town_Menu 5;
 //----------------Dewata:
@@ -817,8 +817,8 @@ function	script	QWS_Tarray	{
 	setarray @pTprice[@Ti], $QW_OW_PRICE;
 
 	setarray @pTmap$[@Ti], "gonryun";
-	setarray @pTXcoords[@Ti], 150;
-	setarray @pTYcoords[@Ti], 130;
+	setarray @pTXcoords[@Ti], 159;
+	setarray @pTYcoords[@Ti], 117;
 
 	QWS_Make_Town_Menu 9;
 //----------------Hugel:
@@ -826,8 +826,8 @@ function	script	QWS_Tarray	{
 	setarray @pTprice[@Ti], $QW_AW_PRICE;
 
 	setarray @pTmap$[@Ti], "hugel";
-	setarray @pTXcoords[@Ti], 95;
-	setarray @pTYcoords[@Ti], 121;
+	setarray @pTXcoords[@Ti], 96;
+	setarray @pTYcoords[@Ti], 146;
 
 	QWS_Make_Town_Menu 10;
 //----------------Izlude:
@@ -844,26 +844,35 @@ function	script	QWS_Tarray	{
 	setarray @pTprice[@Ti], $QW_AW_PRICE;
 
 	setarray @pTmap$[@Ti], "jawaii";
-	setarray @pTXcoords[@Ti], 243;
-	setarray @pTYcoords[@Ti], 115;
+	setarray @pTXcoords[@Ti], 251;
+	setarray @pTYcoords[@Ti], 134;
 
 	QWS_Make_Town_Menu 12;
+//----------------Lasagna:
+	setarray @pTmenuitems$[@Ti], "Lasagna";
+	setarray @pTprice[@Ti], $QW_AW_PRICE;
+
+	setarray @pTmap$[@Ti], "lasagna";
+	setarray @pTXcoords[@Ti], 207;
+	setarray @pTYcoords[@Ti], 184;
+
+	QWS_Make_Town_Menu 31;
 //----------------Lighthalzen:
 	setarray @pTmenuitems$[@Ti], "Lighthalzen";
 	setarray @pTprice[@Ti], $QW_AW_PRICE;
 
 	setarray @pTmap$[@Ti], "lighthalzen";
-	setarray @pTXcoords[@Ti], 158;
-	setarray @pTYcoords[@Ti], 110;
+	setarray @pTXcoords[@Ti], 159;
+	setarray @pTYcoords[@Ti], 95;
 
 	QWS_Make_Town_Menu 13;
-//----------------Luoyang:
-	setarray @pTmenuitems$[@Ti], "Luoyang";
+//----------------Louyang:
+	setarray @pTmenuitems$[@Ti], "Louyang";
 	setarray @pTprice[@Ti], $QW_OW_PRICE;
 
 	setarray @pTmap$[@Ti], "louyang";
-	setarray @pTXcoords[@Ti], 210;
-	setarray @pTYcoords[@Ti], 108;
+	setarray @pTXcoords[@Ti], 217;
+	setarray @pTYcoords[@Ti], 101;
 
 	QWS_Make_Town_Menu 14;
 //----------------Lutie
@@ -875,6 +884,24 @@ function	script	QWS_Tarray	{
 	setarray @pTYcoords[@Ti], 131;
 
 	QWS_Make_Town_Menu 15;
+//----------------Malangdo:
+	setarray @pTmenuitems$[@Ti], "Malangdo";
+	setarray @pTprice[@Ti], $QW_AW_PRICE;
+
+	setarray @pTmap$[@Ti], "malangdo";
+	setarray @pTXcoords[@Ti], 140;
+	setarray @pTYcoords[@Ti], 114;
+
+	QWS_Make_Town_Menu 34;
+//----------------Malaya:
+	setarray @pTmenuitems$[@Ti], "Malaya";
+	setarray @pTprice[@Ti], $QW_AW_PRICE;
+
+	setarray @pTmap$[@Ti], "malaya";
+	setarray @pTXcoords[@Ti], 230;
+	setarray @pTYcoords[@Ti], 199;
+
+	QWS_Make_Town_Menu 32;
 //----------------Manuk
 	setarray @pTmenuitems$[@Ti], "Manuk";
 	setarray @pTprice[@Ti], $QW_OW_PRICE;
@@ -884,6 +911,15 @@ function	script	QWS_Tarray	{
 	setarray @pTYcoords[@Ti], 175;
 
 	QWS_Make_Town_Menu 23;
+//----------------Midgard Camp:
+	setarray @pTmenuitems$[@Ti], "Midgard Camp";
+	setarray @pTprice[@Ti], $QW_AW_PRICE;
+
+	setarray @pTmap$[@Ti], "mid_camp";
+	setarray @pTXcoords[@Ti], 179;
+	setarray @pTYcoords[@Ti], 251;
+
+	QWS_Make_Town_Menu 35;
 //----------------Mora
 	setarray @pTmenuitems$[@Ti], "Mora";
 	setarray @pTprice[@Ti], $QW_OW_PRICE;
@@ -907,8 +943,8 @@ function	script	QWS_Tarray	{
 	setarray @pTprice[@Ti], $QW_OW_PRICE;
 
 	setarray @pTmap$[@Ti], "moscovia";
-	setarray @pTXcoords[@Ti], 219;
-	setarray @pTYcoords[@Ti], 193;
+	setarray @pTXcoords[@Ti], 214;
+	setarray @pTYcoords[@Ti], 189;
 
 	QWS_Make_Town_Menu 25;
 //----------------Niflheim:
@@ -938,13 +974,22 @@ function	script	QWS_Tarray	{
 	setarray @pTYcoords[@Ti], 111;
 
 	QWS_Make_Town_Menu 26;
+//----------------Rockridge:
+	setarray @pTmenuitems$[@Ti], "Rockridge";
+	setarray @pTprice[@Ti], $QW_AW_PRICE;
+
+	setarray @pTmap$[@Ti], "harboro1";
+	setarray @pTXcoords[@Ti], 296;
+	setarray @pTYcoords[@Ti], 204;
+
+	QWS_Make_Town_Menu 33;
 //----------------Splendide
 	setarray @pTmenuitems$[@Ti], "Splendide";
 	setarray @pTprice[@Ti], $QW_OW_PRICE;
 
 	setarray @pTmap$[@Ti], "splendide";
-	setarray @pTXcoords[@Ti], 200;
-	setarray @pTYcoords[@Ti], 153;
+	setarray @pTXcoords[@Ti], 201;
+	setarray @pTYcoords[@Ti], 148;
 
 	QWS_Make_Town_Menu 27;
 //----------------Umbala:
@@ -962,7 +1007,7 @@ function	script	QWS_Tarray	{
 
 	setarray @pTmap$[@Ti], "veins";
 	setarray @pTXcoords[@Ti], 216;
-	setarray @pTYcoords[@Ti], 123;
+	setarray @pTYcoords[@Ti], 126;
 
 	QWS_Make_Town_Menu 28;
 //----------------Juno:
@@ -1279,7 +1324,7 @@ function	script	QWS_Darray	{
 	QWS_Make_Dungeon_Menu 15;
 
 //----------------LOUYANG DUNGEON
-	setarray @pDmenuitems$[@Di], "Luoyang Dungeon";
+	setarray @pDmenuitems$[@Di], "Louyang Dungeon";
 	setarray @pDprice[@Di], $QW_OW_PRICE;
 	setarray @pDfee$[@Di], "$QW_OW_FEE";
 	setarray @DLevels[@Di], 2;
@@ -1445,6 +1490,20 @@ function	script	QWS_Darray	{
 	setarray @DDepth[@Dref], 0, 1, 2;
 
 	QWS_Make_Dungeon_Menu 27;
+
+//----------------ICE DUNGEON
+	setarray @pDmenuitems$[@Di], "Ice Dungeon";
+	setarray @pDprice[@Di], $QW_OW_PRICE;
+	setarray @pDfee$[@Di], "$QW_OW_FEE";
+	setarray @DLevels[@Di], 3;
+
+	setarray @DGat$[@Dref], "ice_dun01", "ice_dun02", "ice_dun03";
+	setarray @DLevelName$[@Dref], "Carpenter's Shop in The Tree", "Level 2", "Level 3";
+	setarray @DXcoords[@Dref], 157, 151, 149;
+	setarray @DYcoords[@Dref], 15, 139, 24;
+	setarray @DDepth[@Dref], 0, 1, 2;
+
+	QWS_Make_Dungeon_Menu 29;
 
 //----------------Cancel
 	setarray @pDmenuitems$[@Di], "Cancel";
@@ -1633,18 +1692,18 @@ yuno_fild03,37,135,4	duplicate(Warpra#0)	Warpra#14	113
 
 alberta,32,240,4	script	Warpra#15	113,{ callfunc "QWS_Town_Warpra",1,"Alberta Town"; close; }
 aldebaran,146,118,4	script	Warpra#16	113,{ callfunc "QWS_Town_Warpra",2,"Aldebaran Town"; close; }
-ayothaya,216,171,5	script	Warpra#17	113,{ callfunc "QWS_Town_Warpra",4,"Ayothaya Town"; close; }
+ayothaya,212,174,5	script	Warpra#17	113,{ callfunc "QWS_Town_Warpra",4,"Ayothaya Town"; close; }
 amatsu,202,84,4	script	Warpra#18	113,{ callfunc "QWS_Town_Warpra",3,"Amatsu Town"; close; }
 comodo,195,158,4	script	Warpra#19	113,{ callfunc "QWS_Town_Warpra",5,"Comodo Town"; close; }
 einbroch,229,196,5	script	Warpra#20	113,{ callfunc "QWS_Town_Warpra",7,"Einbroch Town"; close; }
 einbech,173,131,5	script	Warpra#21	113,{ callfunc "QWS_Town_Warpra",6,"Einbech Town"; close; }
 geffen,123,72,4	script	Warpra#22	113,{ callfunc "QWS_Town_Warpra",8,"Geffen Town"; close; }
-gonryun,152,130,4	script	Warpra#23	113,{ callfunc "QWS_Town_Warpra",9,"Kunlun Town"; close; }
+gonryun,154,127,4	script	Warpra#23	113,{ callfunc "QWS_Town_Warpra",9,"Kunlun Town"; close; }
 hugel,101,151,4	script	Warpra#24	113,{ callfunc "QWS_Town_Warpra",10,"Hugel Town"; close; }
-jawaii,107,182,5	script	Warpra#25	113,{ callfunc "QWS_Town_Warpra",12,"Jawaii Town"; close; }
+jawaii,253,138,4	script	Warpra#25	113,{ callfunc "QWS_Town_Warpra",12,"Jawaii Town"; close; }
 izlude,125,148,4	script	Warpra#26	113,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
 lighthalzen,155,102,5	script	Warpra#27	113,{ callfunc "QWS_Town_Warpra",13,"Lighthalzen Town"; close; }
-louyang,211,106,4	script	Warpra#28	113,{ callfunc "QWS_Town_Warpra",14,"Louyang Town"; close; }
+louyang,211,106,6	script	Warpra#28	113,{ callfunc "QWS_Town_Warpra",14,"Louyang Town"; close; }
 morocc,164,95,4	script	Warpra#29	113,{ callfunc "QWS_Town_Warpra",16,"Morocc Town"; close; }
 nif_fild01,319,77,1	script	Warpra#30	113,{ callfunc "QWS_Town_Warpra",17,"Niflheim Town"; close; }
 payon,183,110,4	script	Warpra#31	113,{ callfunc "QWS_Town_Warpra",18,"Payon Town"; close; }
@@ -1662,6 +1721,11 @@ splendide,205,153,4	script	Warpra#42	113,{ callfunc "QWS_Town_Warpra",27,"Splend
 veins,214,123,4	script	Warpra#43	113,{ callfunc "QWS_Town_Warpra",28,"Veins Town"; close; }
 dewata,194,178,6	script	Warpra#44	113,{ callfunc "QWS_Town_Warpra",29,"Dewata Town"; close; }
 eclage,107,37,4	script	Warpra#45	113,{ callfunc "QWS_Town_Warpra",30,"Eclage Town"; close; }
+lasagna,205,188,4	script	Warpra#46	113,{ callfunc "QWS_Town_Warpra",31,"Lasagna Town"; close; }
+malaya,231,204,4	script	Warpra#47	113,{ callfunc "QWS_Town_Warpra",32,"Malaya Town"; close; }
+harboro1,291,203,6	script	Warpra#48	113,{ callfunc "QWS_Town_Warpra",33,"Rockridge Town"; close; }
+malangdo,128,116,6	script	Warpra#49	113,{ callfunc "QWS_Town_Warpra",34,"Malangdo Town"; close; }
+mid_camp,183,257,4	script	Warpra#50	113,{ callfunc "QWS_Town_Warpra",35,"Midgard Camp"; close; }
 
 abyss_02,274,266,1	script	Warpra Helper#0	112,{ callfunc "QWS_Dungeon_Warpra",0,"Abyss Lake"; close; }
 ama_dun02,192,118,5	script	Warpra Helper#1	112,{ callfunc "QWS_Dungeon_Warpra",1,"Amatsu Dungeon"; close; }
@@ -1679,7 +1743,7 @@ gon_dun01,167,273,4	script	Warpra Helper#12	112,{ callfunc "QWS_Dungeon_Warpra",
 juperos_02,127,154,5	script	Warpra Helper#13	112,{ callfunc "QWS_Dungeon_Warpra",14,"Juperos Cave"; close; }
 kh_dun01,14,224,3	script	Warpra Helper#14	112,{ callfunc "QWS_Dungeon_Warpra",28,"Kiel Dungeon"; close; }
 lhz_dun02,156,151,5	script	Warpra Helper#15	112,{ callfunc "QWS_Dungeon_Warpra",15,"Lighthalzen Bio Lab"; close; }
-lou_dun02,168,264,4	script	Warpra Helper#16	112,{ callfunc "QWS_Dungeon_Warpra",16,"Luoyang Dungeon"; close; }
+lou_dun02,168,264,4	script	Warpra Helper#16	112,{ callfunc "QWS_Dungeon_Warpra",16,"Louyang Dungeon"; close; }
 mag_dun02,46,41,3	script	Warpra Helper#17	112,{ callfunc "QWS_Dungeon_Warpra",17,"Magma Dungeon"; close; }
 odin_tem01,115,148,3	script	Warpra Helper#18	112,{ callfunc "QWS_Dungeon_Warpra",18,"Odin Temple"; close; }
 orcsdun01,185,11,3	script	Warpra Helper#19	112,{ callfunc "QWS_Dungeon_Warpra",19,"Orc Dungeon"; close; }
@@ -1692,3 +1756,4 @@ xmas_dun02,124,131,3	script	Warpra Helper#25	112,{ callfunc "QWS_Dungeon_Warpra"
 um_dun02,44,28,3	script	Warpra Helper#26	112,{ callfunc "QWS_Dungeon_Warpra",27,"Umbala Dungeon"; close; }
 tur_dun02,162,23,3	script	Warpra Helper#27	112,{ callfunc "QWS_Dungeon_Warpra",26,"Turtle Island Dungeon"; close; }
 prt_maze02,102,69,4	script	Warpra Helper#28	112,{ callfunc "QWS_Dungeon_Warpra",13,"Hidden Dungeon"; close; }
+ice_dun01,142,166,6	script	Warpra Helper#29	112,{ callfunc "QWS_Dungeon_Warpra",29,"Ice Dungeon"; close; }
