@@ -980,7 +980,7 @@ static int clif_setlevel(struct block_list* bl) {
 /*==========================================
  * Prepares 'unit standing/spawning' packet
  *------------------------------------------*/
-static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool spawn)
+static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool spawn, bool option, unsigned int option_val)
 {
 	struct map_session_data* sd;
 	struct status_change* sc = status_get_sc(bl);
@@ -995,6 +995,9 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	const char *name;
 #endif
 	sd = BL_CAST(BL_PC, bl);
+
+	if (!option)
+		option_val = ((sc) ? sc->option : 0);
 
 #if PACKETVER < 20091103
 	if(type)
@@ -1053,7 +1056,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFW(buf,10) = (sc)? sc->opt2 : 0;
 #if PACKETVER < 20091103
 	if (type&&spawn) { //uses an older and different packet structure
-		WBUFW(buf,12) = (sc)? sc->option : 0;
+		WBUFW(buf,12) = option_val;
 		WBUFW(buf,14) = vd->hair_style;
 		WBUFW(buf,16) = vd->weapon;
 		WBUFW(buf,18) = vd->head_bottom;
@@ -1062,18 +1065,18 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	} else {
 #endif
 #if PACKETVER >= 20091103
-		WBUFL(buf,12) = (sc)? sc->option : 0;
+		WBUFL(buf,12) = option_val;
 		offset+=2;
 		buf = WBUFP(buffer,offset);
 #elif PACKETVER >= 7
 		if (!type) {
-			WBUFL(buf,12) = (sc)? sc->option : 0;
+			WBUFL(buf,12) = option_val;
 			offset+=2;
 			buf = WBUFP(buffer,offset);
 		} else
-			WBUFW(buf,12) = (sc)? sc->option : 0;
+			WBUFW(buf,12) = option_val;
 #else
-		WBUFW(buf,12) = (sc)? sc->option : 0;
+		WBUFW(buf,12) = option_val;
 #endif
 		WBUFW(buf,14) = vd->class_;
 		WBUFW(buf,16) = vd->hair_style;
@@ -1455,7 +1458,7 @@ int clif_spawn(struct block_list *bl)
 	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
 		return 0;
 
-	len = clif_set_unit_idle(bl, buf, (bl->type == BL_NPC && vd->dead_sit ? false : true));
+	len = clif_set_unit_idle(bl, buf, (bl->type == BL_NPC && vd->dead_sit ? false : true), false, 0);
 	clif_send(buf, len, bl, AREA_WOS);
 	if (disguised(bl))
 		clif_setdisguise(bl, buf, len);
@@ -3937,57 +3940,60 @@ void clif_misceffect(struct block_list* bl,int type)
 /// Notifies clients in the area of a state change.
 /// 0119 <id>.L <body state>.W <health state>.W <effect state>.W <pk mode>.B (ZC_STATE_CHANGE)
 /// 0229 <id>.L <body state>.W <health state>.W <effect state>.L <pk mode>.B (ZC_STATE_CHANGE3)
-void clif_changeoption(struct block_list* bl)
+void clif_changeoption_target(struct block_list* bl, struct block_list *target)
 {
-	unsigned char buf[32];
-	struct status_change *sc;
-	struct map_session_data* sd;
-
 	nullpo_retv(bl);
-	sc = status_get_sc(bl);
-	if (!sc) return; //How can an option change if there's no sc?
-	sd = BL_CAST(BL_PC, bl);
 
+	struct status_change *sc = status_get_sc(bl);
+
+	if (!sc || (target && (target->type != BL_PC || bl->type != BL_NPC)))
+		return; //How can an option change if there's no sc?
+
+	struct map_session_data *sd = BL_CAST(BL_PC, bl);
+	unsigned char buf[32];
 #if PACKETVER >= 7
-	WBUFW(buf,0) = 0x229;
+	int cmd = 0x229;
+#else
+	int cmd = 0x119;
+#endif
+
+	WBUFW(buf,0) = cmd;
 	WBUFL(buf,2) = bl->id;
 	WBUFW(buf,6) = sc->opt1;
 	WBUFW(buf,8) = sc->opt2;
 	WBUFL(buf,10) = sc->option;
+#if PACKETVER >= 7
 	WBUFB(buf,14) = (sd)? sd->status.karma : 0;
-	if(disguised(bl)) {
-		clif_send(buf,packet_len(0x229),bl,AREA_WOS);
-		WBUFL(buf,2) = -bl->id;
-		clif_send(buf,packet_len(0x229),bl,SELF);
-		WBUFL(buf,2) = bl->id;
-		WBUFL(buf,10) = OPTION_INVISIBLE;
-		clif_send(buf,packet_len(0x229),bl,SELF);
-	} else
-		clif_send(buf,packet_len(0x229),bl,AREA);
 #else
-	WBUFW(buf,0) = 0x119;
-	WBUFL(buf,2) = bl->id;
-	WBUFW(buf,6) = sc->opt1;
-	WBUFW(buf,8) = sc->opt2;
-	WBUFW(buf,10) = sc->option;
 	WBUFB(buf,12) = (sd)? sd->status.karma : 0;
-	if(disguised(bl)) {
-		clif_send(buf,packet_len(0x119),bl,AREA_WOS);
-		WBUFL(buf,2) = -bl->id;
-		clif_send(buf,packet_len(0x119),bl,SELF);
-		WBUFL(buf,2) = bl->id;
-		WBUFW(buf,10) = OPTION_INVISIBLE;
-		clif_send(buf,packet_len(0x119),bl,SELF);
-	} else
-		clif_send(buf,packet_len(0x119),bl,AREA);
 #endif
+	if (!target) {
+		if (disguised(bl)) {
+			clif_send(buf,packet_len(cmd),bl,AREA_WOS);
+			WBUFL(buf,2) = -bl->id;
+			clif_send(buf,packet_len(cmd),bl,SELF);
+			WBUFL(buf,2) = bl->id;
+			WBUFL(buf,10) = OPTION_INVISIBLE;
+			clif_send(buf,packet_len(cmd),bl,SELF);
+		} else
+			clif_send(buf,packet_len(cmd),bl,AREA);
 
-	//Whenever we send "changeoption" to the client, the provoke icon is lost
-	//There is probably an option for the provoke icon, but as we don't know it, we have to do this for now
-	if (sc->data[SC_PROVOKE]) {
-		const struct TimerData *td = get_timer(sc->data[SC_PROVOKE]->timer);
+		//Whenever we send "changeoption" to the client, the provoke icon is lost
+		//There is probably an option for the provoke icon, but as we don't know it, we have to do this for now
+		if (sc->data[SC_PROVOKE]) {
+			const struct TimerData *td = get_timer(sc->data[SC_PROVOKE]->timer);
 
-		clif_status_change(bl, StatusIconChangeTable[SC_PROVOKE], 1, (!td ? INFINITE_TICK : DIFF_TICK(td->tick, gettick())), 0, 0, 0);
+			clif_status_change(bl, StatusIconChangeTable[SC_PROVOKE], 1, (!td ? INFINITE_TICK : DIFF_TICK(td->tick, gettick())), 0, 0, 0);
+		}
+	}
+	else {
+		if (disguised(bl)) {
+			WBUFL(buf,2) = -bl->id;
+			clif_send(buf,packet_len(cmd),target,SELF);
+			WBUFL(buf,2) = bl->id;
+			WBUFL(buf,10) = OPTION_INVISIBLE;
+		}
+		clif_send(buf,packet_len(cmd),target,SELF);
 	}
 }
 
@@ -4644,10 +4650,14 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 
 void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 {
+	nullpo_retv(bl);
+
 	uint8 buf[128];
 	struct unit_data *ud;
 	struct view_data *vd;
 	int len;
+	bool option = false;
+	unsigned int option_val = 0;
 
 	vd = status_get_viewdata(bl);
 	if (!vd || vd->class_ == JT_INVISIBLE)
@@ -4660,7 +4670,15 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 		return;
 
 	ud = unit_bl2ud(bl);
-	len = ( ud && ud->walktimer != INVALID_TIMER ) ? clif_set_unit_walking(bl,ud,buf) : clif_set_unit_idle(bl,buf,false);
+	if (sd && bl->type == BL_NPC) {	// npc option changed? 
+		npc_data* nd = BL_CAST(BL_NPC, bl);
+		option_val = nd->sc.option;
+		option = true;
+
+		if (std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), nd->bl.id) != sd->cloaked_npc.end())
+			option_val ^= OPTION_CLOAK;
+	}
+	len = ( ud && ud->walktimer != INVALID_TIMER ) ? clif_set_unit_walking(bl,ud,buf) : clif_set_unit_idle(bl,buf,false,option,option_val);
 	clif_send(buf,len,&sd->bl,SELF);
 
 	if (vd->cloth_color)
@@ -8030,11 +8048,34 @@ void clif_pet_food(struct map_session_data *sd,int foodid,int fail)
 /// 01cd { <skill id>.L }*7
 void clif_autospell(struct map_session_data *sd,uint16 skill_lv)
 {
-	int fd;
-
 	nullpo_retv(sd);
 
-	fd=sd->fd;
+	int fd = sd->fd;
+
+#ifdef RENEWAL
+	uint16 autospell_skill[][2] = { 
+		{ MG_FIREBOLT, 0 }, { MG_COLDBOLT, 0 }, { MG_LIGHTNINGBOLT, 0 },
+		{ MG_SOULSTRIKE, 3 }, { MG_FIREBALL, 3 },
+		{ WZ_EARTHSPIKE, 6 }, { MG_FROSTDIVER, 6 },
+		{ MG_THUNDERSTORM, 9 }, { WZ_HEAVENDRIVE, 9 }
+	};
+	int count = 0;
+
+	WFIFOHEAD(fd, 2 * 6 + 4);
+	WFIFOW(fd, 0) = 0x442;
+
+	for (int i = 0; i < ARRAYLENGTH(autospell_skill); i++) {
+		if (skill_lv > autospell_skill[i][1] && pc_checkskill(sd, autospell_skill[i][0])) {
+			WFIFOW(fd, 8 + count * 2) = autospell_skill[i][0];
+			count++;
+		}
+	}
+
+	WFIFOW(fd, 2) = 8 + count * 2;
+	WFIFOL(fd, 4) = count;
+
+	WFIFOSET(fd, WFIFOW(fd, 2));
+#else
 	WFIFOHEAD(fd,packet_len(0x1cd));
 	WFIFOW(fd, 0)=0x1cd;
 
@@ -8068,6 +8109,8 @@ void clif_autospell(struct map_session_data *sd,uint16 skill_lv)
 		WFIFOL(fd,26)= 0x00000000;
 
 	WFIFOSET(fd,packet_len(0x1cd));
+#endif
+
 	sd->menuskill_id = SA_AUTOSPELL;
 	sd->menuskill_val = skill_lv;
 }
@@ -12190,7 +12233,11 @@ static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, struct map_ses
 		return;
 	}
 
-	if( hd->sc.data[SC_BASILICA] )
+#ifdef RENEWAL
+	if (hd->sc.data[SC_BASILICA_CELL])
+#else
+	if (hd->sc.data[SC_BASILICA])
+#endif
 		return;
 	lv = hom_checkskill(hd, skill_id);
 	if( skill_lv > lv )
@@ -12239,7 +12286,11 @@ static void clif_parse_UseSkillToPos_mercenary(struct mercenary_data *md, struct
 		return;
 	}
 
-	if( md->sc.data[SC_BASILICA] )
+#ifdef RENEWAL
+	if (md->sc.data[SC_BASILICA_CELL])
+#else
+	if (md->sc.data[SC_BASILICA])
+#endif
 		return;
 	lv = mercenary_checkskill(md, skill_id);
 	if( skill_lv > lv )
@@ -12317,8 +12368,10 @@ void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16
 	if( sd->sc.option&OPTION_COSTUME )
 		return;
 
+#ifndef RENEWAL
 	if( sd->sc.data[SC_BASILICA] && (skill_id != HP_BASILICA || sd->sc.data[SC_BASILICA]->val4 != sd->bl.id) )
 		return; // On basilica only caster can use Basilica again to stop it.
+#endif
 
 	if( sd->menuskill_id ) {
 		if( sd->menuskill_id == SA_TAMINGMONSTER ) {
@@ -12427,8 +12480,10 @@ static void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, uin
 	if( sd->sc.option&OPTION_COSTUME )
 		return;
 
+#ifndef RENEWAL
 	if( sd->sc.data[SC_BASILICA] && (skill_id != HP_BASILICA || sd->sc.data[SC_BASILICA]->val4 != sd->bl.id) )
 		return; // On basilica only caster can use Basilica again to stop it.
+#endif
 
 	if( sd->menuskill_id ) {
 		if( sd->menuskill_id == SA_TAMINGMONSTER ) {
@@ -17482,7 +17537,6 @@ void clif_parse_bg_queue_apply_request(int fd, struct map_session_data *sd)
 
 	short type = RFIFOW(fd,2);
 	char name[NAME_LENGTH];
-	e_bg_queue_apply_ack result;
 
 	safestrncpy(name, RFIFOCP(fd, 4), NAME_LENGTH);
 
@@ -17491,20 +17545,16 @@ void clif_parse_bg_queue_apply_request(int fd, struct map_session_data *sd)
 		clif_bg_queue_apply_result(BG_APPLY_DUPLICATE, name, sd); // Duplicate application warning
 		return;
 	} else if (type == 1) // Solo
-		result = bg_queue_join(name, sd);
+		bg_queue_join_multi(name, sd, { sd });
 	else if (type == 2) // Party
-		result = bg_queue_join_party(name, sd);
+		bg_queue_join_party(name, sd);
 	else if (type == 4) // Guild
-		result = bg_queue_join_guild(name, sd);
+		bg_queue_join_guild(name, sd);
 	else {
 		ShowWarning("clif_parse_bg_queue_apply_request: Received invalid queue type: %d from player %s (AID:%d CID:%d).\n", type, sd->status.name, sd->status.account_id, sd->status.char_id);
 		clif_bg_queue_apply_result(BG_APPLY_INVALID_APP, name, sd); // Someone sent an invalid queue type packet
 		return;
 	}
-
-	clif_bg_queue_apply_result(result, name, sd);
-	if (result == BG_APPLY_ACCEPT)
-		clif_bg_queue_apply_notify(name, sd);
 }
 
 /// Outgoing battlegrounds queue apply result.
@@ -18745,23 +18795,27 @@ int clif_skill_itemlistwindow( struct map_session_data *sd, uint16 skill_id, uin
 }
 
 /*==========================================
- * Select a skill into a given list (used by SC_AUTOSHADOWSPELL)
+ * Select a skill into a given list (used by SA_AUTOSPELL/SC_AUTOSHADOWSPELL)
  * 0443 <type>.L <skill_id>.W (CZ_SKILL_SELECT_RESPONSE)
  * RFIFOL(fd,2) - type (currently not used)
  *------------------------------------------*/
 void clif_parse_SkillSelectMenu(int fd, struct map_session_data *sd) {
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	//int type = RFIFOL(fd,info->pos[0]); //WHY_LOWERVER_COMPATIBILITY =  0x0, WHY_SC_AUTOSHADOWSPELL =  0x1,
-	if( sd->menuskill_id != SC_AUTOSHADOWSPELL )
-		return;
 
-	if( pc_istrading(sd) ) {
-		clif_skill_fail(sd,sd->ud.skill_id,USESKILL_FAIL_LEVEL,0);
-		clif_menuskill_clear(sd);
-		return;
-	}
+	if (sd->menuskill_id == SA_AUTOSPELL) {
+		sd->state.workinprogress = WIP_DISABLE_NONE;
+		skill_autospell(sd, RFIFOW(fd, info->pos[1]));
+	} else if (sd->menuskill_id == SC_AUTOSHADOWSPELL) {
+		if (pc_istrading(sd)) {
+			clif_skill_fail(sd, sd->ud.skill_id, USESKILL_FAIL_LEVEL, 0);
+			clif_menuskill_clear(sd);
+			return;
+		}
 
-	skill_select_menu(sd,RFIFOW(fd,info->pos[1]));
+		skill_select_menu(sd, RFIFOW(fd, info->pos[1]));
+	} else
+		return;
 
 	clif_menuskill_clear(sd);
 }
