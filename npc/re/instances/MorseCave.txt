@@ -329,6 +329,7 @@ OnSoulDead:
 
 OnInstanceInit:
 	'map_rev$ = instance_mapname("1@rev");
+	'event_right = false;
 	'event_ended = false;
 	'boss_id = 0;
 	'monster_id[4] = 0;
@@ -629,23 +630,27 @@ OnTimer4000:
 OnTimer25000:
 	callsub( S_Spawn );
 OnTimer45000:
-	mapannounce 'map_rev$, "Morocc: My soldiers, make them suffer! Feast on their bodies and souls!", bc_map,0x00EBFF;
+	if ('event_right == false)
+		mapannounce 'map_rev$, "Morocc: My soldiers, make them suffer! Feast on their bodies and souls!", bc_map,0x00EBFF;
 	callsub( S_Spawn );
 OnTimer65000:
 	callsub( S_Spawn );
 OnTimer85000:
-	mapannounce 'map_rev$, "Morocc: Not enough. Make them feel terror!", bc_map,0x00EBFF;
+	if ('event_right == false)
+		mapannounce 'map_rev$, "Morocc: Not enough. Make them feel terror!", bc_map,0x00EBFF;
 	callsub( S_Spawn );
 OnTimer105000:
 	callsub( S_Spawn );
 OnTimer125000:
-	mapannounce 'map_rev$, "Morocc: Resist me! Fight to the death!", bc_map,0x00EBFF;
+	if ('event_right == false)
+		mapannounce 'map_rev$, "Morocc: Resist me! Fight to the death!", bc_map,0x00EBFF;
 	callsub( S_Spawn );
 OnTimer145000:
 	callsub( S_Spawn );
 OnTimer160000:
+	if ('event_right == false)
+		mapannounce 'map_rev$, "Morocc: Mwa hah hah, I can feel my power returning!", bc_map,0x00EBFF;
 	monster 'map_rev$,33,111,"Morocc's Archer Skeleton",3003,1, instance_npcname("#Battle_1RZ1") + "::OnMobDead";// EP14_MORS_MOB3
-	mapannounce 'map_rev$, "Morocc: Mwa hah hah, I can feel my power returning!", bc_map,0x00EBFF;
 	callsub( S_Spawn );
 OnTimer170000:
 	monster 'map_rev$,32,128,"Morocc's Archer Skeleton",3003,1, instance_npcname("#Battle_1RZ1") + "::OnMobDead";
@@ -700,6 +705,7 @@ OnTouch:
 	specialeffect EF_STORMGUST, AREA, instance_npcname("#RZ Memorial Effect 2");
 	setpcblock PCBLOCK_NPC, true;
 	sleep2 6000;
+	'event_right = true;
 	setpcblock (PCBLOCK_NPC ^ PCBLOCK_MOVE), false;
 	initnpctimer;
 	end;
@@ -1306,29 +1312,9 @@ S_Spawn:
 
 // Warps
 // Entrance -> Weakened Morocc
-1@rev,63,181,0	script	#RZ Move_30	WARPNPC,10,10,{
-	end;
-OnTouch:
-	warp 'map_rev$,103,177;
-	end;
-}
-1@rev,47,181,0	script	#RZ Move_31	WARPNPC,10,10,{
-	end;
-OnTouch:
-	warp 'map_rev$,103,177;
-	end;
-}
-1@rev,31,181,0	script	#RZ Move_32	WARPNPC,10,10,{
-	end;
-OnTouch:
-	warp 'map_rev$,103,177;
-	end;
-}
-/* Small issue: player need to move to be warped when npcs are enabled
 1@rev,63,181,0	warp2	#RZ Move_30	10,10,1@rev,103,177
 1@rev,47,181,0	warp2	#RZ Move_31	10,10,1@rev,103,177
 1@rev,31,181,0	warp2	#RZ Move_32	10,10,1@rev,103,177
-*/
 
 1@rev,106,183,0	script	#RZ Move_1	WARPNPC,10,10,{
 	end;
@@ -1360,8 +1346,8 @@ OnTouch:
 		if (strcharinfo(3,.@char_id[.@i]) == 'map_rev$) {
 			.@n = (.@index % .@size);
 			warp 'map_rev$, .@x[.@n], .@y[.@n], .@char_id[.@i];
-			.@index++;
 		}
+		.@index++;
 	}
 	end;
 }
