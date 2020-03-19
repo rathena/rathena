@@ -4749,6 +4749,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NPC_PETRIFYATTACK:
 	case NPC_CURSEATTACK:
 	case NPC_SLEEPATTACK:
+#ifdef RENEWAL
+	case CR_ACIDDEMONSTRATION:
+#endif
 	case LK_AURABLADE:
 	case LK_SPIRALPIERCE:
 	case ML_SPIRALPIERCE:
@@ -4779,7 +4782,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
 #ifndef RENEWAL
-	case CR_ACIDDEMONSTRATION:
 	case ASC_BREAKER:
 #endif
 	case HFLI_MOON:	//[orn]
