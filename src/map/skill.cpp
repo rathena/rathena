@@ -3551,6 +3551,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case EL_HURRICANE_ATK:
 		case KO_BAKURETSU:
 		case GN_CRAZYWEED_ATK:
+		case GN_HELLS_PLANT_ATK:
 		case SU_SV_ROOTTWIST_ATK:
 			dmg.dmotion = clif_skill_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,skill_id,-1,DMG_SPLASH);
 			break;
@@ -12589,9 +12590,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 
 	case GN_HELLS_PLANT:
-		if (sc && sc->data[SC_HELLS_PLANT])
+		if (sc && sc->data[type])
 			status_change_end(src, type, INVALID_TIMER);
-		else if ((sg = skill_unitsetting(src, skill_id, skill_lv, src->x, src->y, 0)) != nullptr)
+		if ((sg = skill_unitsetting(src, skill_id, skill_lv, src->x, src->y, 0)) != nullptr)
 			sc_start4(src, src, type, 100, skill_lv, 0, 0, sg->group_id, skill_get_time(skill_id, skill_lv));
 		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
 		break;
