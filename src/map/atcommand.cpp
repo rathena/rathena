@@ -10081,7 +10081,7 @@ ACMD_FUNC(adopt)
 	if (response < ADOPT_MORE_CHILDREN) { // No displaymessage for client-type responses
 #ifdef RENEWAL
 		if (response == ADOPT_NOT_NOVICE)
-			clif_displaymessage(fd, msg_txt(sd, 1505));
+			clif_displaymessage(fd, msg_txt(sd, 1513));
 		else
 #endif
 		clif_displaymessage(fd, msg_txt(sd, 744 + response - 1));
@@ -10105,7 +10105,7 @@ ACMD_FUNC(unadopt)
 	uint8 independent_baby = 0;
 
 	if (!message || !*message || sscanf(message, "%23s %1hhu", atcmd_player_name, &independent_baby) < 1) {
-		sprintf(atcmd_output, msg_txt(sd, 1509), command); // Usage: <char name> <independent_baby>
+		sprintf(atcmd_output, msg_txt(sd, 1517), command); // Usage: <char name> <independent_baby>
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
@@ -10118,14 +10118,14 @@ ACMD_FUNC(unadopt)
 	e_unadopt_responses response = pc_unadopt(sd, map_charid2sd(sd->status.partner_id), b_sd, independent_baby != 0);
 
 	if (response == UNADOPT_ALLOWED) {
-		clif_displaymessage(fd, msg_txt(sd, 1506)); // Baby has been disowned.
+		clif_displaymessage(fd, msg_txt(sd, 1514)); // Baby has been disowned.
 		return 0;
 	}
 
 	if (response == UNADOPT_CHARACTER_NOT_FOUND)
 		clif_displaymessage(fd, msg_txt(sd, 748)); // A Parent or Baby was not found.
 	else
-		clif_displaymessage(fd, msg_txt(sd, 1507 + response - 1));
+		clif_displaymessage(fd, msg_txt(sd, 1515 + response - 1));
 	return -1;
 }
 
@@ -10173,6 +10173,66 @@ ACMD_FUNC(resurrect) {
 	if (!pc_revive_item(sd))
 		return -1;
 
+	return 0;
+}
+
+ACMD_FUNC(quest) {
+	uint8 i;
+	int quest_id = 0;
+	nullpo_retr(-1, sd);
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if (!message || !*message || sscanf(message, "%11d", &quest_id) < 1 || quest_id == 0) {
+		sprintf(atcmd_output, msg_txt(sd,1505), command); // Usage: %s <quest ID>
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+	if (!quest_search(quest_id)) {
+		sprintf(atcmd_output,  msg_txt(sd,1506), quest_id); // Quest %d not found in DB.
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	const char* type[] = { "setquest", "erasequest", "completequest", "checkquest" };
+	ARR_FIND( 0, ARRAYLENGTH(type), i, strcmpi(command+1, type[i]) == 0 );
+
+	switch(i) {
+	case 0:
+		if (quest_check(sd, quest_id, HAVEQUEST) >= 0) {
+			sprintf(atcmd_output,  msg_txt(sd,1507), quest_id); // Character already has quest %d.
+			clif_displaymessage(fd, atcmd_output);
+			return -1;
+		}
+		quest_add(sd, quest_id);
+		pc_show_questinfo(sd);
+		break;
+	case 1:
+		if (quest_check(sd, quest_id, HAVEQUEST) < 0) {
+			sprintf(atcmd_output,  msg_txt(sd,1508), quest_id); // Character doesn't have quest %d.
+			clif_displaymessage(fd, atcmd_output);
+			return -1;
+		}
+		quest_delete(sd, quest_id);
+		pc_show_questinfo(sd);
+		break;
+	case 2:
+		if (quest_check(sd, quest_id, HAVEQUEST) < 0)
+			quest_add(sd, quest_id);
+		if (quest_check(sd, quest_id, HAVEQUEST) < 2)
+			quest_update_status(sd, quest_id, Q_COMPLETE);
+		pc_show_questinfo(sd);
+		break;
+	case 3:
+		sprintf(atcmd_output, msg_txt(sd,1509), quest_id); // Checkquest value for quest %d
+		clif_displaymessage(fd, atcmd_output);
+		sprintf(atcmd_output, msg_txt(sd,1510), quest_check(sd, quest_id, HAVEQUEST));	// HAVEQUEST : %d
+		clif_displaymessage(fd, atcmd_output);
+		sprintf(atcmd_output, msg_txt(sd,1511), quest_check(sd, quest_id, HUNTING));	// HUNTING   : %d
+		clif_displaymessage(fd, atcmd_output);
+		sprintf(atcmd_output, msg_txt(sd,1512), quest_check(sd, quest_id, PLAYTIME));	// PLAYTIME  : %d
+		clif_displaymessage(fd, atcmd_output);
+		break;
+	}
 	return 0;
 }
 
@@ -10479,6 +10539,10 @@ void atcommand_basecommands(void) {
 		ACMD_DEFR(changedress, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(camerainfo, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(resurrect, ATCMD_NOCONSOLE),
+		ACMD_DEF2("setquest", quest),
+		ACMD_DEF2("erasequest", quest),
+		ACMD_DEF2("completequest", quest),
+		ACMD_DEF2("checkquest", quest),
 	};
 	AtCommandInfo* atcommand;
 	int i;
