@@ -3572,7 +3572,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 #ifdef RENEWAL
 		case KN_BRANDISHSPEAR:
-			skillratio += -100 + 400 + 100 * skill_lv + sstatus->str; // !TODO: Confirm STR role
+			skillratio += -100 + 400 + 100 * skill_lv + sstatus->str * 3;
 			break;
 #else
 		case KN_BRANDISHSPEAR:
