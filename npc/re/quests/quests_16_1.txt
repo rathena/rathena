@@ -1602,7 +1602,7 @@ OnInit:
 }
 
 // prt_lib
-prt_lib,76,80,3	script	Lindt the Librarian#ep1	1_M_01,{
+prt_lib,76,80,3	script	Lindt the Librarian#ep16_lindt	1_M_01,{
 	if (ep16_royal == 11) {
 		mes "[Librarian]";
 		mes "Do you want to take a look at the material?";
@@ -1812,7 +1812,7 @@ prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
 		mes "What are you doing?";
 		mes "Go grill the librarian to dig out the truth!";
 		next;
-		cloakoffnpc "Kronecker G. Heine#ep16_lib01", getcharid(0);
+		cloakoffnpc "Kronecker G. Heine#ep16_01_lib01", getcharid(0);
 		mes "[Nillem]";
 		mes "What did we go through all the trouble for?";
 		mes "Look, there is Archduke Grantz.";
@@ -1889,7 +1889,7 @@ OnInit:
 	end;
 }
 
-prt_lib,56,61,4	script	Guardian Knight#ep16_ro	4_M_CRU,{
+prt_lib,56,61,4	script	Guardian Knight#ep16_roomguard	4_M_CRU,{
 	if (ep16_royal < 13)
 		npctalk "On duty. No problem.", "", bc_self;
 	else {
@@ -1921,7 +1921,7 @@ OnTouch:
 		cloakoffnpc "Ian Walther#ep16_lib01", getcharid(0);
 		cloakoffnpc "Levuiere Wigner#ep16_lib01", getcharid(0);
 		cloakoffnpc "Maximilian Roegenburg#ep16_lib01", getcharid(0);
-		cloakoffnpc "Kronecker G. Heine#ep16_lib01", getcharid(0);
+		cloakoffnpc "Kronecker G. Heine#ep16_01_lib01", getcharid(0);
 		cloakoffnpc "Nyhill M. Heine#ep16_lib01", getcharid(0);
 		setpcblock PCBLOCK_NPC, true;
 		sleep2 2000;
@@ -1931,18 +1931,18 @@ OnTouch:
 		npctalk "I have something to tell you, special guest.", "Ian Walther#ep16_lib01", bc_self;
 	}
 	if (ep16_royal == 22)
-		cloakoffnpc "Kronecker G. Heine#ep16_lib01", getcharid(0);
+		cloakoffnpc "Kronecker G. Heine#ep16_01_lib01", getcharid(0);
 	end;
 OnInit:
 	cloakonnpc "Ian Walther#ep16_lib01";
 	cloakonnpc "Levuiere Wigner#ep16_lib01";
 	cloakonnpc "Maximilian Roegenburg#ep16_lib01";
-	cloakonnpc "Kronecker G. Heine#ep16_lib01";
+	cloakonnpc "Kronecker G. Heine#ep16_01_lib01";
 	cloakonnpc "Nyhill M. Heine#ep16_lib01";
 	end;
 }
 
-prt_lib,80,79,3	script	Kronecker G. Heine#ep16_lib01	4_EP16_GRANZ,{
+prt_lib,80,79,3	script	Kronecker G. Heine#ep16_01_lib01	4_EP16_GRANZ,{
 	if (ep16_royal == 22) {
 		cutin "ep16_kronecker_granz_heine",2;
 		mes "[Kronecker]";
@@ -2081,12 +2081,12 @@ prt_lib,80,79,3	script	Kronecker G. Heine#ep16_lib01	4_EP16_GRANZ,{
 	end;
 OnInit:
 	cloakonnpc strnpcinfo(0);
-	cloakonnpc "Kronecker G. Heine#ep16_lib02";
+	cloakonnpc "Kronecker G. Heine#ep16_01_lib02";
 	cloakonnpc "Nyhill M. Heine#ep16_lib01";
 	end;
 }
 
-prt_lib,81,79,5	script	Kronecker G. Heine#ep16_lib02	4_EP16_GRANZ,{ end; }
+prt_lib,81,79,5	script	Kronecker G. Heine#ep16_01_lib02	4_EP16_GRANZ,{ end; }
 prt_lib,83,80,5	script	Nyhill M. Heine#ep16_lib01	4_EP16_NIHIL,{ end; }
 
 prt_lib,85,82,5	script	Ian Walther#ep16_lib01	1_M_JOBTESTER,{
@@ -2112,7 +2112,7 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	1_M_JOBTESTER,{
 		mes "We have been waiting for you because...";
 		mes "We wonder ^4d4dffif you have ever told anyone about the ritual^000000.";
 		next;
-		npctalk "...Strange, it is blank.", "Kronecker G. Heine#ep16_lib01", bc_self;
+		npctalk "...Strange, it is blank.", "Kronecker G. Heine#ep16_01_lib01", bc_self;
 		mes "[Ian Walther]";
 		mes "Only few people know about the Past Memories of the Royal Family and the Ritual of Blessing...";
 		next;
@@ -2139,12 +2139,12 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	1_M_JOBTESTER,{
 		mes "I understand how upset you all are due to this sudden incident.";
 		mes "But, please don't suspect an innocent person.";
 		next;
-		npctalk "Ha... What on earth!", "Kronecker G. Heine#ep16_lib01", bc_self;
+		npctalk "Ha... What on earth!", "Kronecker G. Heine#ep16_01_lib01", bc_self;
 		mes "[Nyhill]";
 		mes "That must be...";
 		next;
-		cloakonnpc "Kronecker G. Heine#ep16_lib01", .@char_id;
-		cloakoffnpc "Kronecker G. Heine#ep16_lib02", .@char_id;
+		cloakonnpc "Kronecker G. Heine#ep16_01_lib01", .@char_id;
+		cloakoffnpc "Kronecker G. Heine#ep16_01_lib02", .@char_id;
 		mes "[Kronecker]";
 		mes "How troublesome.";
 		mes "Have you seen this document before?";
@@ -2177,7 +2177,7 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	1_M_JOBTESTER,{
 		mes "[Nyhill]";
 		mes "I am sorry to interrupt but I have something to tell you.";
 		next;
-		npctalk "What are you doing? Watch your manners.", "Kronecker G. Heine#ep16_lib02", bc_self;
+		npctalk "What are you doing? Watch your manners.", "Kronecker G. Heine#ep16_01_lib02", bc_self;
 		mes "[Nyhill]";
 		mes "...It is important. I was about to tell you about the cause of all these.";
 		next;
@@ -2318,10 +2318,10 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	1_M_JOBTESTER,{
 		cloakonnpc "Levuiere Wigner#ep16_lib01", .@char_id;
 		cloakonnpc "Maximilian Roegenburg#ep16_lib01", .@char_id;
 		sleep2 500;
-		npctalk "Nyhill, come with me.", "Kronecker G. Heine#ep16_lib02", bc_self;
+		npctalk "Nyhill, come with me.", "Kronecker G. Heine#ep16_01_lib02", bc_self;
 		sleep2 3000;
 		setpcblock PCBLOCK_NPC, false;
-		cloakonnpc "Kronecker G. Heine#ep16_lib02", .@char_id;
+		cloakonnpc "Kronecker G. Heine#ep16_01_lib02", .@char_id;
 		cloakonnpc "Nyhill M. Heine#ep16_lib01", .@char_id;
 		end;
 	}
@@ -2340,10 +2340,10 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	1_M_JOBTESTER,{
 	cloakonnpc "Levuiere Wigner#ep16_lib01", .@char_id;
 	cloakonnpc "Maximilian Roegenburg#ep16_lib01", .@char_id;
 	sleep2 500;
-	npctalk "Nyhill, come with me.", "Kronecker G. Heine#ep16_lib02", bc_self;
+	npctalk "Nyhill, come with me.", "Kronecker G. Heine#ep16_01_lib02", bc_self;
 	sleep2 3000;
 	setpcblock PCBLOCK_NPC, false;
-	cloakonnpc "Kronecker G. Heine#ep16_lib02", .@char_id;
+	cloakonnpc "Kronecker G. Heine#ep16_01_lib02", .@char_id;
 	cloakonnpc "Nyhill M. Heine#ep16_lib01", .@char_id;
 	end;
 }
@@ -2802,16 +2802,16 @@ prt_lib_q,110,58,4	script	Document#EP161DBOOK	CLEAR_NPC,{
 // Left side
 prt_cas,213,177,5	script	Royal Chef#ep16_1	1_ETC_01,4,4,{
 	if (ep16_royal >= 2) {
-		if (banquet_quest_cooking == 0)
+		if (ep16_cookbs == 0)
 			callsub S_Text;
 	}
-	if (banquet_quest_cooking == 1) {
+	if (ep16_cookbs == 1) {
 		mes "[Royal Chef]";
 		mes "The Head Chef has been waiting for you. He is enraged now!";
 		mes "Go to the kitchen now!";
 		close;
 	}
-	if (banquet_quest_cooking > 22) {
+	if (ep16_cookbs > 22) {
 		mes "[Royal Chef]";
 		mes "I am living in a whirl of business!";
 		mes "I have been seeing too many people these days that I am even confused about the familiar faces now.";
@@ -2836,19 +2836,19 @@ S_Text:
 	mes "[Royal Chef]";
 	mes "The Head Chef has been waiting for you. He is enraged now!";
 	mes "Go to the kitchen now!";
-	banquet_quest_cooking = 1;
+	ep16_cookbs = 1;
 	setquest 11394;// Call of the Royal Head Chef
 	close;
 
 OnTouch:
-	if (banquet_quest_cooking == 0 && ep16_royal >= 2)
+	if (ep16_cookbs == 0 && ep16_royal >= 2)
 		callsub S_Text;
 	end;
 }
 
 // Kitchen
 prt_cas,309,200,5	script	Royal Head Chef#ep16_1	4_EP16_COOK,{
-	if (ep16_royal < 2 || banquet_quest_cooking == 0) {
+	if (ep16_royal < 2 || ep16_cookbs == 0) {
 		mes "[Head Chef]";
 		mes "Argh!";
 		mes "When will this special assistant chef arrive here?";
@@ -2856,7 +2856,7 @@ prt_cas,309,200,5	script	Royal Head Chef#ep16_1	4_EP16_COOK,{
 		cutin "ep16cook_king_1",2;
 		close3;
 	}
-	if (banquet_quest_cooking == 1) {
+	if (ep16_cookbs == 1) {
 		mes "[Head Chef]";
 		mes "Argh!";
 		mes "When will this special's assistant chef arrive here?";
@@ -2927,10 +2927,10 @@ prt_cas,309,200,5	script	Royal Head Chef#ep16_1	4_EP16_COOK,{
 		mes "Hurry up!";
 		erasequest 11394;// Call of the Royal Head Chef
 		setquest 11395;// Why Should I Prepare for the Banquets?
-		banquet_quest_cooking = 2;
+		ep16_cookbs = 2;
 		close3;
 	}
-	if (banquet_quest_cooking == 2 || banquet_quest_cooking == 3) {
+	if (ep16_cookbs < 12) {
 		mes "[Head Chef]";
 		mes "Isn't the sauce ready?";
 		mes "Go get the sauce from Oriental Oyster the sauce master!";
@@ -2942,7 +2942,7 @@ prt_cas,309,200,5	script	Royal Head Chef#ep16_1	4_EP16_COOK,{
 		mes "Hurry up!";
 		close3;
 	}
-	if (banquet_quest_cooking == 4) {
+	if (ep16_cookbs == 4) {
 		mes "[Head Chef]";
 		mes "Oh!";
 		mes "This exquisite taste made by the master!";
@@ -2954,17 +2954,17 @@ prt_cas,309,200,5	script	Royal Head Chef#ep16_1	4_EP16_COOK,{
 		mes "Go to the empty spot and get prepared.";
 		erasequest 11397;// Why Should I Prepare for the Banquets?
 		setquest 11398;// Why Should I Prepare for the Banquets?
-		banquet_quest_cooking = 5;
+		ep16_cookbs = 13;
 		close3;
 	}
-	if (banquet_quest_cooking == 5) {
+	if (ep16_cookbs == 13) {
 		mes "[Head Chef]";
 		mes "Let's start cooking now!";
 		mes "Go to the empty spot and get prepared.";
 		cutin "ep16cook_king_1",2;
 		close3;
 	}
-	if (banquet_quest_cooking == 6) {
+	if (ep16_cookbs == 14) {
 		mes "[Head Chef]";
 		mes "Now, you can bring this to the kitchen. That is the only thing left to do!";
 		cutin "ep16cook_king_1",2;
@@ -2977,7 +2977,7 @@ prt_cas,309,200,5	script	Royal Head Chef#ep16_1	4_EP16_COOK,{
 		mes "A Royal Chef must be able to fill the empty plates as fast as possible!";
 		close3;
 	}
-	if (banquet_quest_cooking >= 7 && banquet_quest_cooking <= 13) {
+	if (ep16_cookbs < 22) {
 		mes "[Head Chef]";
 		mes "Arghhhh!";
 		mes "The mind for cooking!";
@@ -2989,7 +2989,12 @@ prt_cas,309,200,5	script	Royal Head Chef#ep16_1	4_EP16_COOK,{
 		mes "I'll make the best dish!";
 		close3;
 	}
-	if (banquet_quest_cooking == 14) {
+	if (ep16_cookbs == 22) {
+		if (checkweight(1119,3) == 0) {
+			mes "- You have too many items in possession.";
+			mes "Please organize your inventory and try again. -";
+			close;
+		}
 		mes "[Head Chef]";
 		mes "Arghhhhh!";
 		mes "I am sorry!";
@@ -3013,7 +3018,7 @@ prt_cas,309,200,5	script	Royal Head Chef#ep16_1	4_EP16_COOK,{
 		getexp 700000,700000;
 		getitem 6919,10;// TokenOfHonor
 		completequest 11420;// Why Should I Prepare for the Banquets?
-		banquet_quest_cooking = 15;
+		ep16_cookbs = 23;
 		close3;
 	}
 	// daily
@@ -3059,18 +3064,18 @@ prt_cas,309,200,5	script	Royal Head Chef#ep16_1	4_EP16_COOK,{
 prt_cas,313,199,0	script	#ep16_1	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
-	if (banquet_quest_cooking < 5) {
+	if (ep16_royal < 2) {
 		mes "[Head Chef]";
 		mes "You there!";
 		mes "You are getting in the way!";
 		cutin "ep16cook_king_1",2;
 		close3;
 	}
-	if (banquet_quest_cooking == 5) {
+	if (ep16_cookbs == 13) {
 		callsub S_Dish;
 		erasequest 11398;// Why Should I Prepare for the Banquets?
 		setquest 11399;// Why Should I Prepare for the Banquets?
-		banquet_quest_cooking = 6;
+		ep16_cookbs = 14;
 		close3;
 	}
 	if (isbegin_quest(11423) == 1) {
@@ -3139,13 +3144,7 @@ prt_cas,319,211,3	script	Royal Sauce Master#ep16	4_M_ALCHE_B,{
 		mes "The perfect combinations is just divine...";
 		close;
 	}
-	if (banquet_quest_cooking < 2) {
-		mes "[Oriental Oyster]";
-		mes "I hope you don't waste your talent.";
-		mes "Why don't you become a master sauce maker?";
-		close;
-	}
-	if (banquet_quest_cooking == 2) {
+	if (ep16_cookbs == 2) {
 		mes "[Oriental Oyster]";
 		mes "What?";
 		mes "The sauce ran out?";
@@ -3166,14 +3165,43 @@ prt_cas,319,211,3	script	Royal Sauce Master#ep16	4_M_ALCHE_B,{
 		mes "[Oriental Oyster]";
 		mes "I cannot stop stirring the sauce. You can bring me the ingredient as I say the name.";
 		next;
+		mes "[Oriental Oyster]";
+		ep16_cookbs = 4;
 		erasequest 11395;// Why Should I Prepare for the Banquets?
 		setquest 11396;// Why Should I Prepare for the Banquets?
-		banquet_quest_cooking = 3;
-		callsub S_Result,1;
+		callsub S_Sauce;
+	}
+	if (ep16_cookbs == 3 || ep16_cookbs == 25) {
+		mes "[Oriental Oyster]";
+		mes "Oh my...";
+		mes "The ingredient is like the life for a sauce.";
+		mes "There shouldn't be a mistake.";
+		next;
+		mes "[Oriental Oyster]";
+		mes "Then, let's start over from the beginning!";
+		next;
+		ep16_cookbs++;
+		callsub S_Sauce;
+	}
+	if (ep16_cookbs == 4 || ep16_cookbs == 6 || ep16_cookbs == 8 || ep16_cookbs == 10 || ep16_cookbs == 26 || ep16_cookbs == 28 || ep16_cookbs == 30 || ep16_cookbs == 32) {
+		mes "[Oriental Oyster]";
+		mes "Bring me the ingredient!";
+		mes "The Head Chef is looking at me with the set of murderous eyes!";
 		close;
 	}
-	if (banquet_quest_cooking == 3) {
-		callsub S_Result;
+	if (ep16_cookbs == 5 || ep16_cookbs == 7 || ep16_cookbs == 9 || ep16_cookbs == 25 || ep16_cookbs == 27 || ep16_cookbs == 29 || ep16_cookbs == 31) {
+		mes "[Oriental Oyster]";
+		mes "Hum, very good!";
+		next;
+		ep16_cookbs++;
+		callsub S_Sauce;
+	}
+	if (ep16_cookbs == 11 || ep16_cookbs == 33) {
+		if (ep16_cookbs == 33 && checkweight(1119,3) == 0) {
+			mes "- You have too many items in possession.";
+			mes "Please organize your inventory and try again. -";
+			close;
+		}
 		mes "[Oriental Oyster]";
 		mes "Oh!";
 		mes "Very good!";
@@ -3183,12 +3211,20 @@ prt_cas,319,211,3	script	Royal Sauce Master#ep16	4_M_ALCHE_B,{
 		mes "[Oriental Oyster]";
 		mes "You seem to be talented in sauce making.";
 		mes "Why don't you become a master sauce maker?";
-		erasequest 11396;// Why Should I Prepare for the Banquets?
-		setquest 11397;// Why Should I Prepare for the Banquets?
-		banquet_quest_cooking = 4;
+		if (ep16_cookbs == 11) {
+			erasequest 11396;// Why Should I Prepare for the Banquets?
+			setquest 11397;// Why Should I Prepare for the Banquets?
+			ep16_cookbs = 12;
+		}
+		else {
+			erasequest 11421;// Banquet: Unexpected Sauce
+			setquest 11422;// Complete Today's Sauce
+			getitem 6919,4;// TokenOfHonor
+			ep16_cookbs = 23;
+		}
 		close;
 	}
-	if (banquet_quest_cooking == 4) {
+	if (ep16_cookbs == 12) {
 		mes "[Oriental Oyster]";
 		mes "Oh!";
 		mes "Very good!";
@@ -3199,17 +3235,9 @@ prt_cas,319,211,3	script	Royal Sauce Master#ep16	4_M_ALCHE_B,{
 		mes "Why don't you become a master sauce maker?";
 		close;
 	}
-	if (banquet_quest_cooking < 14) {
-		mes "[Oriental Oyster]";
-		mes "I hope you don't waste your talent.";
-		mes "Why don't you become a master sauce maker?";
-		close;
-	}
-
-	// daily
-	switch( checkquest(11422,PLAYTIME) ) {
-	case -1:
-		if (isbegin_quest(11421) == 0) {
+	if (ep16_cookbs == 23) {
+		switch( checkquest(11422,PLAYTIME) ) {// daily
+		case -1:
 			mes "[Oriental Oyster]";
 			mes "I knew you would come again!";
 			mes "That is the magic of the sauce!";
@@ -3217,81 +3245,34 @@ prt_cas,319,211,3	script	Royal Sauce Master#ep16	4_M_ALCHE_B,{
 			mes "[Oriental Oyster]";
 			mes "How about making a fabulous sauce today?";
 			next;
+			ep16_cookbs = 26;
 			setquest 11421;// Banquet: Unexpected Sauce
-			callsub S_Result,1;
-			close;
-		}
-		callsub S_Result;
-		mes "[Oriental Oyster]";
-		mes "Oh!";
-		mes "Very good!";
-		mes "Thanks to you, I could make the perfect sauce!";
-		mes "Bring it to the Head Chef now!";
-		next;
-		mes "[Oriental Oyster]";
-		mes "You seem to be talented in sauce making.";
-		mes "Why don't you become a master sauce maker?";
-		erasequest 11421;// Banquet: Unexpected Sauce
-		setquest 11422;// Complete Today's Sauce
-		getitem 6919,4;// TokenOfHonor
-		close;
-	case 0:
-	case 1:
-		mes "[Oriental Oyster]";
-		mes "Oh my!";
-		mes "The palate is very important for a chef.";
-		mes "When you are tired the palate doesn't work properly.";
-		next;
-		mes "[Oriental Oyster]";
-		mes "You seem very tired now.";
-		next;
-		mes "[Oriental Oyster]";
-		mes "If you want to make a perfect sauce, take some rest.";
-		close;
-	case 2:
-		mes "[Oriental Oyster]";
-		mes "Oh! You are here!";
-		mes "Did you take a rest? How about making the sauce again?";
-		erasequest 11422;// Complete Today's Sauce
-		close;
-	}
-
-S_Result:
-	if (getarg(0,0) == 0) {
-		for ( .@quest_id = 11428; .@quest_id < 11432; .@quest_id++ ) {
-			switch( isbegin_quest(.@quest_id) ) {
-			case 0:
-				continue;
-			case 1:
-				mes "[Oriental Oyster]";
-				mes "Bring me the ingredient!";
-				mes "The Head Chef is looking at me with the set of murderous eyes!";
-				close;
-			case 2:
-				break;
-			}
-			break;
-		}
-		if (.@quest_id == 11432) {
+			callsub S_Sauce;
+		case 0:
+		case 1:
 			mes "[Oriental Oyster]";
-			mes "Oh my...";
-			mes "The ingredient is like the life for a sauce.";
-			mes "There shouldn't be a mistake.";
+			mes "Oh my!";
+			mes "The palate is very important for a chef.";
+			mes "When you are tired the palate doesn't work properly.";
 			next;
 			mes "[Oriental Oyster]";
-			mes "Then, let's start over from the beginning!";
-			banquet_quest_sauce = 0;
-		}
-		else {
-			erasequest .@quest_id;
-			if (rand(100) < 30)	// finished
-				return;
+			mes "You seem very tired now.";
+			next;
 			mes "[Oriental Oyster]";
-			mes "Hum, very good!";
+			mes "If you want to make a perfect sauce, take some rest.";
+			close;
+		case 2:
+			mes "[Oriental Oyster]";
+			mes "Oh! You are here!";
+			mes "Did you take a rest? How about making the sauce again?";
+			erasequest 11422;// Complete Today's Sauce
+			close;
 		}
-		next;
 	}
-	callsub S_Sauce;
+	mes "[Oriental Oyster]";
+	mes "I hope you don't waste your talent.";
+	mes "Why don't you become a master sauce maker?";
+	close;
 
 S_Sauce:
 	mes "[Oriental Oyster]";
@@ -3317,12 +3298,18 @@ S_Sauce:
 }
 
 function	script	check_sauce	{
-	.@right_quest_id = getarg(0);
-	for ( .@quest_id = 11428; .@quest_id < 11432 && isbegin_quest(.@quest_id) == 0; .@quest_id++ )
-		continue;
-	if (.@quest_id == 11432)
-		return;
-	if (.@quest_id != .@right_quest_id) {
+	.@quest_id = getarg(0);
+	.@main_quest = (ep16_cookbs == 4 || ep16_cookbs == 6 || ep16_cookbs == 8 || ep16_cookbs == 10);
+	if (.@main_quest || ep16_cookbs == 26 || ep16_cookbs == 28 || ep16_cookbs == 30 || ep16_cookbs == 32) {
+		if (isbegin_quest(.@quest_id) > 0) {
+			mes "[Oriental Oyster]";
+			mes "Yes! That's it!";
+			mes "Bring it to me!";
+			emotion ET_SURPRISE, getnpcid(0, "Royal Sauce Master#ep16");
+			ep16_cookbs++;
+			erasequest .@quest_id;
+			close;
+		}
 		mes "[Oriental Oyster]";
 		mes "Argh!";
 		mes "The sauce is ruined!";
@@ -3330,14 +3317,27 @@ function	script	check_sauce	{
 		mes "[Oriental Oyster]";
 		mes "We cannot use this sauce now!";
 		mes "We should start again from the beginning!";
-		erasequest .@quest_id;
+		if (.@main_quest)
+			ep16_cookbs = 3;
+		else
+			ep16_cookbs = 25;
+		if (isbegin_quest(11428) > 0)
+			erasequest 11428;
+		if (isbegin_quest(11429) > 0)
+			erasequest 11429;
+		if (isbegin_quest(11430) > 0)
+			erasequest 11430;
+		if (isbegin_quest(11431) > 0)
+			erasequest 11431;
 		close;
 	}
-	mes "[Oriental Oyster]";
-	mes "Yes! That's it!";
-	mes "Bring it to me!";
-	emotion ET_SURPRISE, getnpcid(0, "Royal Sauce Master#ep16");
-	completequest .@quest_id;
+	return;
+}
+
+prt_cas,303,216,5	script	Muka Juice#ep16_1	4_ENERGY_BLUE,{
+	check_sauce(11428);
+	mes "The juice made of fresh Muka";
+	mes "It is refreshing.";
 	close;
 }
 
@@ -3348,13 +3348,6 @@ prt_cas,307,196,5	script	Poring Jelly#ep16_1	4_ENERGY_RED,{
 	close;
 }
 
-prt_cas,330,211,5	script	Giantaurus Butter#ep16_	4_ENERGY_YELLOW,{
-	check_sauce(11431);
-	mes "Giantaurus Milk Butter";
-	mes "It tastes surprisingly soft.";
-	close;
-}
-
 prt_cas,338,206,5	script	Shining Plant#ep16_1	4_ENERGY_WHITE,{
 	check_sauce(11430);
 	mes "The powder made of Shining Plant";
@@ -3362,31 +3355,15 @@ prt_cas,338,206,5	script	Shining Plant#ep16_1	4_ENERGY_WHITE,{
 	close;
 }
 
-prt_cas,303,216,5	script	Muka Juice#ep16_1	4_ENERGY_BLUE,{
-	check_sauce(11428);
-	mes "The juice made of fresh Muka";
-	mes "It is refreshing.";
+prt_cas,330,211,5	script	Giantaurus Butter#ep16_	4_ENERGY_YELLOW,{
+	check_sauce(11431);
+	mes "Giantaurus Milk Butter";
+	mes "It tastes surprisingly soft.";
 	close;
 }
 
 prt_cas,302,205,5	script	Dishwasher#ep16_1	4_M_ALCHE_D,{
-	if (banquet_quest_cooking < 13) {
-		mes "[Dishwasher]";
-		mes "Argh!";
-		npctalk "Argh!", "Dishwasher#ep16_1", bc_self;
-		next;
-		mes "[Dishwasher]";
-		mes "The housewife's eczema is back in action in my right hand!";
-		npctalk "The housewife's eczema is back in action in my right hand!", "Dishwasher#ep16_1", bc_self;
-		next;
-		mes "[Dishwasher]";
-		mes "Hode Cream!";
-		mes "Please give me the Hode Cream!";
-		mes "Arghhhhh!";
-		npctalk "Please give me the Hode Cream!", "Dishwasher#ep16_1", bc_self;
-		close;
-	}
-	if (banquet_quest_cooking == 13) {
+	if (ep16_cookbs == 21) {
 		if (countitem(6935) < 15) {
 			mes "[Dishwasher]";
 			mes "I wash the dishes again... Again... Again...";
@@ -3415,77 +3392,97 @@ prt_cas,302,205,5	script	Dishwasher#ep16_1	4_M_ALCHE_D,{
 		mes "[Dishwasher]";
 		mes "Oh... The Head Chef has been looking for you.";
 		mes "Is there any problem?";
-		delitem 6935,15;// High-Class Dish
+		delitem 6935,15;// Luxurious_Dish
 		erasequest 11419;// Why Should I Prepare for the Banquets?
 		setquest 11420;// Why Should I Prepare for the Banquets?
-		banquet_quest_cooking = 14;
+		ep16_cookbs = 22;
 		close;
 	}
-	if (banquet_quest_cooking == 14) {
+	if (ep16_cookbs == 22) {
 		mes "[Dishwasher]";
 		mes "Oh... The Head Chef has been looking for you.";
 		mes "Is there any problem?";
 		close;
 	}
-
-	switch( checkquest(11427,PLAYTIME) ) {
-	case -1:
-		if (isbegin_quest(11426) == 0) {
+	if (ep16_cookbs > 22) {
+		switch( checkquest(11427,PLAYTIME) ) {
+		case -1:
+			if (isbegin_quest(11426) == 0) {
+				mes "[Dishwasher]";
+				mes "Oh! Are you here to help me again?";
+				mes "Isn't a clean dish makes you feel clean?";
+				next;
+				mes "[Dishwasher]";
+				mes "Well, I guess it is just normal to feel that way!";
+				mes "With that spirit! Please bring me 15 more dishes to wash!";
+				next;
+				mes "[Dishwasher]";
+				mes "Please be careful with them, since those are some precious dishes!";
+				setquest 11426;// Banquet: Washing 15 Dishes
+				close;
+			}
+			if (countitem(6935) < 15) {
+				mes "[Dishwasher]";
+				mes "I wash the dishes again... Again... Again...";
+				mes "And it never ends!";
+				next;
+				mes "[Dishwasher]";
+				mes "However, this is the fate of a Dishwasher!";
+				next;
+				mes "[Dishwasher]";
+				mes "It is a fate!";
+				mes "I have to endure it!";
+				next;
+				mes "[Dishwasher]";
+				mes "Please bring me!";
+				mes "Please bring me about 15 more dishes to wash!";
+				next;
+				mes "[Dishwasher]";
+				mes "I'll get over it!";
+				mes "My fate!";
+				close;
+			}
+			if (checkweight(1119,3) == 0) {
+				mes "- You have too many items in possession.";
+				mes "Please organize your inventory and try again. -";
+				close;
+			}
 			mes "[Dishwasher]";
-			mes "Oh! Are you here to help me again?";
-			mes "Isn't a clean dish makes you feel clean?";
-			next;
+			mes "Hahaha... It is a new plate.";
+			mes "I'll make it squeaky clean like this!";
+			delitem 6935,15;// Luxurious_Dish
+			erasequest 11426;// Banquet: Washing 15 Dishes
+			setquest 11427;// Complete Today's Dish Collecting
+			getitem 6919,4;// TokenOfHonor
+			close;
+		case 0:
+		case 1:
 			mes "[Dishwasher]";
-			mes "Well, I guess it is just normal to feel that way!";
-			mes "With that spirit! Please bring me 15 more dishes to wash!";
-			next;
+			mes "Don't push yourself too hard.";
+			mes "Why don't you go take a rest and come back tomorrow?";
+			close;
+		case 2:
 			mes "[Dishwasher]";
-			mes "Please be careful with them, since those are some precious dishes!";
-			setquest 11426;// Banquet: Washing 15 Dishes
+			mes "Thank you for helping me last time!";
+			mes "It is very important to take enough rest after work.";
+			erasequest 11427;// Complete Today's Dish Collecting
 			close;
 		}
-		if (countitem(6935) < 15) {
-			mes "[Dishwasher]";
-			mes "I wash the dishes again... Again... Again...";
-			mes "And it never ends!";
-			next;
-			mes "[Dishwasher]";
-			mes "However, this is the fate of a Dishwasher!";
-			next;
-			mes "[Dishwasher]";
-			mes "It is a fate!";
-			mes "I have to endure it!";
-			next;
-			mes "[Dishwasher]";
-			mes "Please bring me!";
-			mes "Please bring me about 15 more dishes to wash!";
-			next;
-			mes "[Dishwasher]";
-			mes "I'll get over it!";
-			mes "My fate!";
-			close;
-		}
-		mes "[Dishwasher]";
-		mes "Hahaha... It is a new plate.";
-		mes "I'll make it squeaky clean like this!";
-		delitem 6935,15;// High-Class Dish
-		erasequest 11426;// Banquet: Washing 15 Dishes
-		setquest 11427;// Complete Today's Dish Collecting
-		getitem 6919,4;// TokenOfHonor
-		close;
-	case 0:
-	case 1:
-		mes "[Dishwasher]";
-		mes "Don't push yourself too hard.";
-		mes "Why don't you go take a rest and come back tomorrow?";
-		close;
-	case 2:
-		mes "[Dishwasher]";
-		mes "Thank you for helping me last time!";
-		mes "It is very important to take enough rest after work.";
-		erasequest 11427;// Complete Today's Dish Collecting
-		close;
 	}
+	mes "[Dishwasher]";
+	mes "Argh!";
+	npctalk "Argh!", "Dishwasher#ep16_1", bc_self;
+	next;
+	mes "[Dishwasher]";
+	mes "The housewife's eczema is back in action in my right hand!";
+	npctalk "The housewife's eczema is back in action in my right hand!", "Dishwasher#ep16_1", bc_self;
+	next;
+	mes "[Dishwasher]";
+	mes "Hode Cream!";
+	mes "Please give me the Hode Cream!";
+	mes "Arghhhhh!";
+	npctalk "Please give me the Hode Cream!", "Dishwasher#ep16_1", bc_self;
+	close;
 }
 
 prt_cas,315,204,1	script	Chef#ep16_1	4_COOK,{
@@ -3528,7 +3525,7 @@ prt_cas,313,194,3	script	Chef#ep16_6	4_COOK,{
 
 // Hall
 prt_cas,82,268,5	script	Mark Ishar#ep16_1	4_EP16_MARK,{
-	if (banquet_quest_cooking == 10) {
+	if (ep16_cookbs == 18) {
 		mes "[Mark]";
 		mes "Hello." + strcharinfo(0) + ".";
 		mes "Are you having a good time?";
@@ -3555,10 +3552,10 @@ prt_cas,82,268,5	script	Mark Ishar#ep16_1	4_EP16_MARK,{
 		cutin "acact_03",2;
 		erasequest 11416;// Why Should I Prepare for the Banquets?
 		setquest 11417;// Why Should I Prepare for the Banquets?
-		banquet_quest_cooking = 11;
+		ep16_cookbs = 19;
 		close3;
 	}
-	if (banquet_quest_cooking == 11) {
+	if (ep16_cookbs == 19) {
 		mes "[Mark]";
 		mes "Oh!";
 		mes "He...";
@@ -3575,7 +3572,7 @@ prt_cas,82,268,5	script	Mark Ishar#ep16_1	4_EP16_MARK,{
 		cutin "acact_03",2;
 		close3;
 	}
-	if (banquet_quest_cooking == 12) {
+	if (ep16_cookbs == 20) {
 		mes "[Mark]";
 		mes "" + strcharinfo(0) + ", please tell Tamarin that.";
 		mes "I hope to be able to get away from the preparation duty for the banquet.";
@@ -3593,14 +3590,14 @@ prt_cas,82,268,5	script	Mark Ishar#ep16_1	4_EP16_MARK,{
 }
 
 prt_cas,83,270,3	script	Alice Ishar#ep16_1	4_F_ACOLYTE,{
-	if (banquet_quest_cooking < 11) {
+	if (ep16_cookbs < 19) {
 		mes "[Alice]";
 		mes "Mark! You shouldn't put it there. Put it here...";
 		mes "Since we are working at the palace, we shouldn't overlook even the tiniest thing!";
 		cutin "acact_01",2;
 		close3;
 	}
-	if (banquet_quest_cooking == 11) {
+	if (ep16_cookbs == 19) {
 		mes "[Alice]";
 		mes "Hum... I know you are busy, but you shouldn't just make people work for no good reason since it is the business of the palace.";
 		cutin "acact_03",2;
@@ -3611,10 +3608,10 @@ prt_cas,83,270,3	script	Alice Ishar#ep16_1	4_F_ACOLYTE,{
 		cutin "acact_01",2;
 		erasequest 11417;// Why Should I Prepare for the Banquets?
 		setquest 11418;// Why Should I Prepare for the Banquets?
-		banquet_quest_cooking = 12;
+		ep16_cookbs = 20;
 		close3;
 	}
-	if (banquet_quest_cooking == 12) {
+	if (ep16_cookbs == 20) {
 		mes "[Alice]";
 		mes "I'll tell them about it. Would you let Tamarin know?";
 		mes "The preparation for the banquet doesn't end until the banquet is over.";
@@ -3630,13 +3627,13 @@ prt_cas,83,270,3	script	Alice Ishar#ep16_1	4_F_ACOLYTE,{
 }
 
 prt_cas,111,234,3	script	Magi Steen#ep16_1	4_F_PINKWOMAN,{
-	if (banquet_quest_cooking <= 8) {
+	if (ep16_cookbs < 17) {
 		mes "[Magi]";
 		mes "He... Hello...";
 		cutin "bu_maggi2",2;
 		close3;
 	}
-	if (banquet_quest_cooking == 9) {
+	if (ep16_cookbs == 17) {
 		mes "[Magi]";
 		mes "Ah...";
 		mes "Mark must be...";
@@ -3654,10 +3651,10 @@ prt_cas,111,234,3	script	Magi Steen#ep16_1	4_F_PINKWOMAN,{
 		cutin "bu_maggi2",2;
 		erasequest 11415;// Why Should I Prepare for the Banquets?
 		setquest 11416;// Why Should I Prepare for the Banquets?
-		banquet_quest_cooking = 10;
+		ep16_cookbs = 18;
 		close3;
 	}
-	if (banquet_quest_cooking == 10) {
+	if (ep16_cookbs == 18) {
 		mes "[Magi]";
 		mes "Ah...";
 		mes "Mark must be...";
@@ -3676,7 +3673,7 @@ prt_cas,111,234,3	script	Magi Steen#ep16_1	4_F_PINKWOMAN,{
 }
 
 prt_cas,111,235,3	script	Dyu Rianne#ep16_1	4_M_REDMAN,{
-	if (banquet_quest_cooking < 8) {
+	if (ep16_cookbs < 16) {
 		mes "[Dyu]";
 		mes "Yo! Who's this!";
 		mes "" + strcharinfo(0) + "!";
@@ -3692,7 +3689,7 @@ prt_cas,111,235,3	script	Dyu Rianne#ep16_1	4_M_REDMAN,{
 		cutin "bu_du2",2;
 		close3;
 	}
-	if (banquet_quest_cooking == 8) {
+	if (ep16_cookbs == 16) {
 		mes "[Dyu]";
 		mes "Yo! Who's this!";
 		mes "" + strcharinfo(0) + "!";
@@ -3733,10 +3730,10 @@ prt_cas,111,235,3	script	Dyu Rianne#ep16_1	4_M_REDMAN,{
 		mes "Magi, where did we see Mark?";
 		erasequest 11414;// Why Should I Prepare for the Banquets?
 		setquest 11415;// Why Should I Prepare for the Banquets?
-		banquet_quest_cooking = 9;
+		ep16_cookbs = 17;
 		close3;
 	}
-	if (banquet_quest_cooking == 9) {
+	if (ep16_cookbs == 17) {
 		mes "[Dyu]";
 		mes "Since Mark is working here as well. Why don't we ask him?";
 		cutin "bu_du3",2;
@@ -3755,7 +3752,7 @@ prt_cas,111,235,3	script	Dyu Rianne#ep16_1	4_M_REDMAN,{
 		mes "Magi, where did we see Mark?";
 		close3;
 	}
-	if (banquet_quest_cooking == 10) {
+	if (ep16_cookbs == 18) {
 		mes "[Dyu]";
 		mes "Did you hear?";
 		mes "Mark is on the stairs. Go up there and see him.";
@@ -3771,7 +3768,7 @@ prt_cas,111,235,3	script	Dyu Rianne#ep16_1	4_M_REDMAN,{
 
 // Dinner room
 prt_cas,361,142,5	script	Tamarin#ep16_1	4_EP16_TAMARIN,{
-	if (banquet_quest_cooking < 7) {
+	if (ep16_cookbs < 15) {
 		mes "[Tamarin]";
 		mes "Haaaaaaa!";
 		mes "What is going on...";
@@ -3780,7 +3777,7 @@ prt_cas,361,142,5	script	Tamarin#ep16_1	4_EP16_TAMARIN,{
 		cutin "tama_cook_4",2;
 		close3;
 	}
-	if (banquet_quest_cooking == 7) {
+	if (ep16_cookbs == 15) {
 		mes "[Tamarin]";
 		mes "Haaaaaaa!";
 		mes "What is going on...";
@@ -3827,10 +3824,10 @@ prt_cas,361,142,5	script	Tamarin#ep16_1	4_EP16_TAMARIN,{
 		cutin "tama_cook_3",2;
 		erasequest 11413;// Why Should I Prepare for the Banquets?
 		setquest 11414;// Why Should I Prepare for the Banquets?
-		banquet_quest_cooking = 8;
+		ep16_cookbs = 16;
 		close3;
 	}
-	if (banquet_quest_cooking >= 8 && banquet_quest_cooking <= 11) {
+	if (ep16_cookbs > 15 && ep16_cookbs < 20) {
 		mes "[Tamarin]";
 		mes "I think it is too late for me...";
 		mes "Hahahaha...";
@@ -3842,7 +3839,7 @@ prt_cas,361,142,5	script	Tamarin#ep16_1	4_EP16_TAMARIN,{
 		cutin "tama_cook_3",2;
 		close3;
 	}
-	if (banquet_quest_cooking == 12) {
+	if (ep16_cookbs == 20) {
 		mes "[Tamarin]";
 		mes "...Phew, that is my sister.";
 		mes "Well then." + strcharinfo(0) + ", why don't you come with me to enjoy the banquet...";
@@ -3859,10 +3856,10 @@ prt_cas,361,142,5	script	Tamarin#ep16_1	4_EP16_TAMARIN,{
 		cutin "tama_cook_3",2;
 		erasequest 11418;// Why Should I Prepare for the Banquets?
 		setquest 11419;// Why Should I Prepare for the Banquets?
-		banquet_quest_cooking = 13;
+		ep16_cookbs = 21;
 		close3;
 	}
-	if (banquet_quest_cooking == 13) {
+	if (ep16_cookbs == 21) {
 		mes "[Tamarin]";
 		mes "I guess we should finish what we have been doing!";
 		cutin "tama_cook_1",2;
@@ -3873,33 +3870,35 @@ prt_cas,361,142,5	script	Tamarin#ep16_1	4_EP16_TAMARIN,{
 		cutin "tama_cook_3",2;
 		close3;
 	}
-	if (banquet_quest_cooking == 14) {
+	if (ep16_cookbs == 22) {
 		mes "[Tamarin]";
 		mes "Hum... What am I supposed to do next...";
 		cutin "tama_cook_1",2;
 		close3;
 	}
-	if (banquet_quest_cooking == 15) {
-		mes "[Tamarin]";
-		mes "Whoa..." + strcharinfo(0) + ", thank you.";
-		mes "Now I have some room to breathe...";
-		cutin "tama_cook_3",2;
-		next;
-		mes "[Tamarin]";
-		mes "Oh... It was just impossible for me to quit...";
-		mes "When I was about to leave after reporting to the Head Chef, I was caught by Mark' brother.";
-		cutin "tama_cook_1",2;
-		next;
-		mes "[Tamarin]";
-		mes "I guess it would make my life much easier if I just give up.";
-		emotion ET_HNG;
-		cutin "tama_cook_3",2;
-		close3;
-	}
+	mes "[Tamarin]";
+	mes "Whoa..." + strcharinfo(0) + ", thank you.";
+	mes "Now I have some room to breathe...";
+	cutin "tama_cook_3",2;
+	next;
+	mes "[Tamarin]";
+	mes "Oh... It was just impossible for me to quit...";
+	mes "When I was about to leave after reporting to the Head Chef, I was caught by Mark' brother.";
+	cutin "tama_cook_1",2;
+	next;
+	mes "[Tamarin]";
+	mes "I guess it would make my life much easier if I just give up.";
+	emotion ET_HNG;
+	cutin "tama_cook_3",2;
+	close3;
 }
 
 prt_cas,358,124,0	script	Grilled Griffon#ep16_1	4_EP16_FOOD,{
-	if (banquet_quest_cooking == 6) {
+	if (ep16_royal < 2) {
+		mes "A tasty-looking Grilled Griffon.";
+		close;
+	}
+	if (ep16_cookbs == 14) {
 		mes "Place the dish carefully on the surface.";
 		next;
 		mes "[Tamarin]";
@@ -3909,10 +3908,15 @@ prt_cas,358,124,0	script	Grilled Griffon#ep16_1	4_EP16_FOOD,{
 		cutin "tama_cook_4",2;
 		erasequest 11399;// Why Should I Prepare for the Banquets?
 		setquest 11413;// Why Should I Prepare for the Banquets?
-		banquet_quest_cooking = 7;
+		ep16_cookbs = 15;
 		close3;
 	}
 	if (isbegin_quest(11424) == 1) {
+		if (checkweight(1119,3) == 0) {
+			mes "- You have too many items in possession.";
+			mes "Please organize your inventory and try again. -";
+			close;
+		}
 		mes "Place the dish carefully on the surface.";
 		erasequest 11424;// Banquet: Griffin Barbecue
 		setquest 11425;// Complete Today's Grilled Griffin
@@ -4509,7 +4513,7 @@ OnTouch:
 	end;
 }
 
-prt_cas_q,14,184,5	script	Isenhonor Walther#ep16w	4_M_1STPRIN1,{
+prt_cas_q,14,184,5	script	Isenhonor Walther#ep16wal	4_M_1STPRIN1,{
 	if (checkweight(1304,3) == 0) {
 		mes "[Isenhonor Walther]";
 		mes "You seem to have a lot of luggage. Are you OK?";
@@ -4839,7 +4843,7 @@ alberta,187,147,7	script	Guardian Knight#ep16wal	4_M_KNIGHT_SILVER,{
 	close;
 }
 
-alberta,48,30,7	script	Butler for the Walthers	4_M_MANAGER,{
+alberta,48,30,7	script	Butler for the Walthers#ep16wal	4_M_MANAGER,{
 	if (ep16_wal == 2) {
 		mes "[Butler for the Walthers]";
 		mes "What a fine day. However, the house feels to empty and lonely.";
@@ -5285,7 +5289,7 @@ prt_cas_q,9,90,3	script	Peter Heine#ep16_02	4_EP16_PETER,{
 }
 
 // Heine
-prt_cas_q,21,83,3	script	Friedrich S. Heine#ep16	4_EP16_STOLZ,{
+prt_cas_q,21,83,3	script	Friedrich S. Heine#ep16_01	4_EP16_STOLZ,{
 	if (ep16_royal < 2) {
 		cutin "ep16_friedrich_stolz_heine",1;
 		mes "[Friedrich]";
@@ -5472,7 +5476,7 @@ prt_cas_q,18,83,5	script	Peter Heine#ep16_01	4_M_3RDPRIN1,{
 	}
 }
 
-prt_cas_q,19,85,4	script	Kronecker G. Heine#ep16	4_EP16_GRANZ,{
+prt_cas_q,19,85,4	script	Kronecker G. Heine#ep16_01	4_EP16_GRANZ,{
 	if (ep16_royal < 2) {
 		mes "[Kronecker]";
 		mes "I have never allowed your visit.";
@@ -5779,16 +5783,16 @@ prt_cas_q,22,77,0	script	#ep16_heine_evt02	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
 	if (ep16_royal == 2 && isbegin_quest(7683) == 0) {
-		npctalk "You are in no place to say such a thing!", "Kronecker G. Heine#ep16", bc_self;
+		npctalk "You are in no place to say such a thing!", "Kronecker G. Heine#ep16_01", bc_self;
 		setpcblock PCBLOCK_NPC, true;
 		sleep2 3000;
 		npctalk "I'll go back to the head house. Please give me your permission.", "Nyhill M. Heine#ep16_01", bc_self;
 		sleep2 3000;
-		npctalk "Watch your manners. You are not a child anymore.", "Friedrich S. Heine#ep16", bc_self;
+		npctalk "Watch your manners. You are not a child anymore.", "Friedrich S. Heine#ep16_01", bc_self;
 		sleep2 3000;
 		npctalk "I have no reason to be here, you know.", "Nyhill M. Heine#ep16_01", bc_self;
 		sleep2 3000;
-		npctalk "It is your duty to stay here as a member of the family!", "Kronecker G. Heine#ep16", bc_self;
+		npctalk "It is your duty to stay here as a member of the family!", "Kronecker G. Heine#ep16_01", bc_self;
 		sleep2 3000;
 		npctalk "Member of the family? Since when have I been deemed as a member of the family?", "Nyhill M. Heine#ep16_01", bc_self;
 		sleep2 3000;
@@ -5796,7 +5800,7 @@ OnTouch:
 		sleep2 3000;
 		npctalk "Nyhill Mijeria, I am a miserable Heine who has nothing! You have given me such a name because I am useless!", "Nyhill M. Heine#ep16_01", bc_self;
 		sleep2 3000;
-		npctalk "Watch your words, Nyhill.", "Friedrich S. Heine#ep16", bc_self;
+		npctalk "Watch your words, Nyhill.", "Friedrich S. Heine#ep16_01", bc_self;
 		sleep2 3000;
 		npctalk "You have never considered me as a member of the family.", "Nyhill M. Heine#ep16_0", bc_self;
 		sleep2 3000;
@@ -5894,7 +5898,7 @@ OnInit:
 
 // Right Side
 // Roegenburg
-prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
+prt_cas_q,90,186,5	script	Maximilian Roegenburg#ep16lug	4_EP16_MAX,{
 	if (checkweight(1301,1) == 0) {
 		mes "[Maximilian]";
 		mes "You seem to have a lot of luggage. Are you OK?";
@@ -6978,7 +6982,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 	}
 }
 
-prt_cas_q,90,184,7	script	Helmut Roegenburg#ep16l	4_EP16_HELMUT,{
+prt_cas_q,90,184,7	script	Helmut Roegenburg#ep16lug	4_EP16_HELMUT,{
 	if (ep16_lug == 0) {
 		cutin "16hel",0;
 		mes "[Helmut]";
@@ -7385,7 +7389,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "[Myer]";
 		mes "Well, as much as needed?";
 		next;
-		emotion ET_HUK, getnpcid(0, "Maximilian Roegenburg#e");
+		emotion ET_HUK, getnpcid(0, "Maximilian Roegenburg#ep16lug");
 		emotion ET_HUK;
 		emotion ET_HUK, getnpcid(0, "Agnes Roegenburg#ep16lu");
 		cutin "16hel",0;
@@ -7818,7 +7822,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 	}
 }
 
-prt_cas_q,90,184,7	script	#ep16lug004	HIDDEN_WARP_NPC,5,5,{
+prt_cas_q,90,184,7	script	#ep16lug004	HIDDEN_NPC,5,5,{
 	end;
 OnTouch:
 	if (ep16_lug < 3)
@@ -8653,7 +8657,7 @@ OnInit:
 }
 
 // Richard
-prt_cas_q,80,80,4	script	Butler for the Richards	1_M_LIBRARYMASTER,{
+prt_cas_q,80,80,4	script	Butler for the Richards#EP161GAM	1_M_LIBRARYMASTER,{
 	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
@@ -10185,7 +10189,7 @@ prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
 		mes "[Levuiere]";
 		mes "^0000cdKatrin?^000000";
 		next;
-		emotion ET_HUK, getnpcid(0, "Catherine Wigner#ep16wi");
+		emotion ET_HUK, getnpcid(0, "Catherine Wigner#ep16wig");
 		mes "[Catherine]";
 		mes "^0000cdKatrin?^000000 Has something happened to my baby? I should get going...";
 		next;
@@ -10260,7 +10264,7 @@ prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
 	}
 }
 
-prt_cas_q,82,23,0	script	Catherine Wigner#ep16wi	1_F_LIBRARYGIRL,{
+prt_cas_q,82,23,0	script	Catherine Wigner#ep16wig	1_F_LIBRARYGIRL,{
 	if (ep16_wig == 0) {
 		mes "[Catherine]";
 		mes "Hello, dear adventurer. Welcome!";
@@ -12561,7 +12565,7 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 	close;
 }
 
-prt_cas,339,212,5	script	Dark and Damp Wall#ep16	HIDDEN_NPC,5,5,{
+prt_cas,339,212,5	script	Dark and Damp Wall#ep16wig	HIDDEN_NPC,5,5,{
 	callsub S_Talk;
 
 S_Talk:
@@ -13079,7 +13083,7 @@ prontera,68,68,5	script	Furniture Deliveryman#ep16wig	1_M_HOF,{
 
 // Others npcs
 // Banquet upper right
-prt_cas,165,245,0	script	Investigator Ryosun#ep1	4_M_ALCHE_A,{
+prt_cas,165,245,0	script	Investigator Ryosun#ep16	4_M_ALCHE_A,{
 	emotion ET_CRY;
 	mes "[Ryosun]";
 	mes "I finally have the strawberry cake no one has ever touched.";
@@ -13367,15 +13371,22 @@ prt_cas,113,243,3	script	Banquet Hall Aristocrat#1	4_F_01,{
 	close;
 }
 
-prt_cas,73,232,5	script	Banquet Hall Aristocrat#2	4_M_RUSMAN1,{
+prt_cas,70,239,5	script	Banquet Hall Aristocrat#2	4_M_04,{
+	mes "[Banquet Hall Aristocrat]";
+	mes "I know this banquet is held for someone else. However, it still is a great opportunity for me to meet someone I can spend my life with.";
+	close;
+}
+
+prt_cas,73,232,5	script	Banquet Hall Aristocrat#3	4_M_RUSMAN1,{
 	mes "[Banquet Hall Aristocrat]";
 	mes "Everyone else seems to love the banquet, but I don't. I am forced by my parents to come here. I really want to go home and take a rest now.";
 	close;
 }
 
-prt_cas,70,239,5	script	Banquet Hall Aristocrat#3	4_M_04,{
+prt_cas,99,247,3	script	Banquet Hall Aristocrat#4	4_M_MAYOR,{
 	mes "[Banquet Hall Aristocrat]";
-	mes "I know this banquet is held for someone else. However, it still is a great opportunity for me to meet someone I can spend my life with.";
+	mes "This band is pretty good.";
+	mes "I'd like to invite them to the royal villa for my party.";
 	close;
 }
 
@@ -13612,15 +13623,8 @@ prt_cas,107,222,1	script	Sophia#ep16wig	1_F_LIBRARYGIRL,{
 	close;
 }
 
-prt_cas,99,247,3	script	Banquet Hall Aristocrat	4_M_MAYOR,{
-	mes "[Banquet Hall Aristocrat]";
-	mes "This band is pretty good.";
-	mes "I'd like to invite them to the royal villa for my party.";
-	close;
-}
-
 // Library
-prt_cas,343,67,4	script	Uptight Librarian#ep16l	1_F_LIBRARYGIRL,{
+prt_cas,343,67,4	script	Uptight Librarian#ep16lug0	1_F_LIBRARYGIRL,{
 	if (checkweight(1304,3) == 0) {
 		mes "[Uptight Librarian]";
 		mes "If you are going to borrow a book, you'd better reduce your luggage. It seems that there is no space for a book.";
@@ -13911,7 +13915,7 @@ prt_cas,365,68,3	script	Taunting Man#ep16lug01	4_M_HUMAN_01,{ end; }
 
 
 
-prt_cas,218,182,3	script	Royal Guardian Knight#0	4_M_CRU,{
+prt_cas,218,182,3	script	Royal Guardian Knight#01	4_M_CRU,{
 	mes "[Royal Guardian Knight]";
 	npctalk "Would you attend the Banquet?", "", bc_self;
 	mes "Would you enter the Banquet Hall?";
@@ -14193,7 +14197,7 @@ prt_cas,367,123,7	script	Kid#ep16_etc04	4_M_ACROSS,{
 }
 
 // Corridor left
-prt_cas,161,168,5	script	Royal Guardian Knight#0_left	4_M_CRU,{
+prt_cas,161,168,5	script	Royal Guardian Knight#02	4_M_CRU,{
 	mes "[Guardian Knight]";
 	mes "You are a visitor to the Prontera Palace.";
 	mes "Do you need a guide?";
@@ -14217,7 +14221,7 @@ prt_cas,161,168,5	script	Royal Guardian Knight#0_left	4_M_CRU,{
 }
 
 // Corridor right
-prt_cas,270,168,3	duplicate(Royal Guardian Knight#0_left)	Royal Guardian Knight#0_right	4_M_CRU
+prt_cas,270,168,3	duplicate(Royal Guardian Knight#02)	Royal Guardian Knight#03	4_M_CRU
 
 // Exchanges and enchants npc
 prt_cas,165,255,7	script	Commissary#ep16	4_M_JOB_KNIGHT2,{
@@ -14324,17 +14328,17 @@ prt_cas,180,275,5	script	Logistics Manager#sin	4_M_JOB_KNIGHT1,{
 	close;
 }
 
-prt_cas,180,264,3	script	Guardian Knight#ep16_pr_1	4_M_CRU,{
-	npctalk "The Crusader's Office is at the end of the corridor.", "Guardian Knight#ep16_pr_1", bc_self;
+prt_cas,180,264,3	script	Guardian Knight#ep16_prigate01	4_M_CRU,{
+	npctalk "The Crusader's Office is at the end of the corridor.", "Guardian Knight#ep16_prigate01", bc_self;
 	end;
 }
 
-prt_cas,180,251,3	script	Guardian Knight#ep16_pr_2	4_M_CRU,{
-	npctalk "...On duty. No problem...", "Guardian Knight#ep16_pr_2", bc_self;
+prt_cas,180,251,3	script	Guardian Knight#ep16_prigate02	4_M_CRU,{
+	npctalk "...On duty. No problem...", "Guardian Knight#ep16_prigate02", bc_self;
 	setpcblock PCBLOCK_NPC, true;
 	sleep2 2000;
 	setpcblock PCBLOCK_NPC, false;
-	npctalk "I want to go home now.", "Guardian Knight#ep16_pr_2", bc_self;
+	npctalk "I want to go home now.", "Guardian Knight#ep16_prigate02", bc_self;
 	end;
 }
 
@@ -15599,7 +15603,7 @@ OnInit:
 }
 
 // Request 4
-prt_q,38,261,0	script	Married couple Quest _START#EP161QU04	HIDDEN_WARP_NPC,6,6,{
+prt_q,38,261,0	script	Married couple Quest_START#EP161QU04	HIDDEN_WARP_NPC,6,6,{
 	end;
 OnTouch:
 	if (isbegin_quest(5451) == 1) {
@@ -15776,23 +15780,6 @@ OnInit:
 }
 
 
-prt_q,111,166,0	script	Emergency Medicine#EP161BU05	HIDDEN_WARP_NPC,6,6,{
-	end;
-OnTouch:
-	if (isbegin_quest(5464) == 1)
-		cloakoffnpc "Female#EP161BU03", getcharid(0);
-	else if (isbegin_quest(5466) == 1) {
-		mes "It seems to be the bundle of medicine dropped by Ellie while running.";
-		next;
-		if (select( "Pick up.", "Leave it." ) == 1) {
-			erasequest 5466;
-			setquest 5467;
-			mes "You picked up the bundle of medicine. Bring it to Ellie in pain.";
-			close;
-		}
-	}
-	end;
-}
 
 prt_q,108,164,4	script	Female#EP161BU03	4W_F_01,{
 	if (checkweight(1301,1) == 0) {
@@ -15893,10 +15880,12 @@ OnInit:
 	end;
 }
 
-prt_q,111,166,0	script	Emergency Medicine#EP16	HIDDEN_WARP_NPC,6,6,{
+prt_q,111,166,0	script	Emergency Medicine#EP161BU05	HIDDEN_WARP_NPC,6,6,{
 	end;
 OnTouch:
-	if (isbegin_quest(5466) == 1) {
+	if (isbegin_quest(5464) == 1)
+		cloakoffnpc "Female#EP161BU03", getcharid(0);
+	else if (isbegin_quest(5466) == 1) {
 		mes "It seems to be the bundle of medicine dropped by Ellie while running.";
 		next;
 		if (select( "Pick up.", "Leave it." ) == 1) {
@@ -16827,7 +16816,7 @@ OnTouch:
 	end;
 }
 
-prt_pri00,58,128,4	script	Overwatcher Terketh#ep1	4_M_JOB_HUNTER,{
+prt_pri00,58,128,4	script	Overwatcher Terketh#ep16	4_M_JOB_HUNTER,{
 	if (ep16_royal < 13) {
 		npctalk "...Such a disturbance to my training.", "", bc_self;
 		end;
@@ -17231,7 +17220,7 @@ prt_prison,169,81,6	duplicate(Dark Shape#EP161A01)	Dark Shape#EP161A04	4_GHOST_S
 prt_prison,203,215,4	duplicate(Dark Shape#EP161A01)	Dark Shape#EP161A05	4_GHOST_STAND
 
 // Sector B
-prt_prison,267,184,8	script	Prisoner 267BD184#EP161	4_DRACULA,{
+prt_prison,267,184,8	script	Prisoner 267BD184#EP161B	4_DRACULA,{
 	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
@@ -17425,7 +17414,7 @@ prt_prison,267,184,8	script	Prisoner 267BD184#EP161	4_DRACULA,{
 }
 
 // Sector C
-prt_prison,265,154,4	script	Prisoner 265CM154#EP161	4_MOONLIGHT,{
+prt_prison,265,154,4	script	Prisoner 265CM154#EP161C	4_MOONLIGHT,{
 	if (checkweight(1301,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
