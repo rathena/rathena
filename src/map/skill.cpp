@@ -5128,7 +5128,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 			switch (skill_id) {
 				case GN_SPORE_EXPLOSION:
-					if (skill_area_temp[1] == bl->id)
+					if (flag&2 && skill_area_temp[1] == bl->id)
 						sflag |= 2048; // Flag for main target
 					break;
 			}
@@ -10681,6 +10681,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case GN_SPORE_EXPLOSION:
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		skill_castend_damage_id(src, bl, skill_id, skill_lv, tick, flag|1|2); // First attack to target
 		sc_start4(src, bl, type, 100, skill_lv, skill_id, src->id, 0, skill_get_time(skill_id, skill_lv));
 		break;
 	case GN_MANDRAGORA:

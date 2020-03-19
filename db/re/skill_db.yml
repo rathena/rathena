@@ -27919,8 +27919,7 @@ Body:
     CastCancel: true
     CastTime: 1500
     AfterCastActDelay: 500
-    Duration1: 100
-    Duration2: 200
+    Duration1: 500
     Cooldown: 5000
     FixedCastTime: -1
     Requires:
