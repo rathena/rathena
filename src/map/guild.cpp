@@ -376,8 +376,7 @@ void guild_makemember(struct guild_member *m,struct map_session_data *sd) {
 	m->gender		= sd->status.sex;
 	m->class_		= sd->status.class_;
 	m->lv			= sd->status.base_level;
-//	m->exp			= 0;
-//	m->exp_payper	= 0;
+	m->exp			= 0;
 	m->online		= 1;
 	m->position		= MAX_GUILDPOSITION-1;
 	safestrncpy(m->name,sd->status.name,NAME_LENGTH);

@@ -204,20 +204,20 @@ enum e_mapid {
 	MAPID_SHADOW_CHASER_T,
 //Baby 3-1 Jobs
 	MAPID_SUPER_BABY_E = JOBL_THIRD|MAPID_SUPER_BABY,
-	MAPID_BABY_RUNE,
+	MAPID_BABY_RUNE_KNIGHT,
 	MAPID_BABY_WARLOCK,
 	MAPID_BABY_RANGER,
-	MAPID_BABY_BISHOP,
+	MAPID_BABY_ARCH_BISHOP,
 	MAPID_BABY_MECHANIC,
-	MAPID_BABY_CROSS,
+	MAPID_BABY_GUILLOTINE_CROSS,
 	MAPID_BABY_STAR_EMPEROR,
 //Baby 3-2 Jobs
-	MAPID_BABY_GUARD = JOBL_THIRD|MAPID_BABY_CRUSADER,
+	MAPID_BABY_ROYAL_GUARD = JOBL_THIRD|MAPID_BABY_CRUSADER,
 	MAPID_BABY_SORCERER,
 	MAPID_BABY_MINSTRELWANDERER,
 	MAPID_BABY_SURA,
 	MAPID_BABY_GENETIC,
-	MAPID_BABY_CHASER,
+	MAPID_BABY_SHADOW_CHASER,
 	MAPID_BABY_SOUL_REAPER,
 };
 
@@ -337,7 +337,10 @@ enum e_element : int8{
 	ELE_GHOST,
 	ELE_UNDEAD,
 	ELE_ALL,
-	ELE_MAX
+	ELE_MAX,
+	ELE_WEAPON,
+	ELE_ENDOWED,
+	ELE_RANDOM,
 };
 
 #define MAX_ELE_LEVEL 4 /// Maximum Element level
@@ -438,6 +441,7 @@ enum _sp {
 	SP_ROULETTE_GOLD = 130,
 	SP_CASHPOINTS, SP_KAFRAPOINTS,
 	SP_PCDIECOUNTER, SP_COOKMASTERY,
+	SP_ACHIEVEMENT_LEVEL,
 
 	// Mercenaries
 	SP_MERCFLEE=165, SP_MERCKILLS=189, SP_MERCFAITH=190,
@@ -959,8 +963,6 @@ inline bool map_flag_gvg2_no_te(int16 m) {
 }
 
 extern char motd_txt[];
-extern char help_txt[];
-extern char help2_txt[];
 extern char charhelp_txt[];
 extern char channel_conf[];
 
@@ -1121,7 +1123,7 @@ void map_removemobs(int16 m); // [Wizputer]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 
-void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster);
+void map_skill_damage_add(struct map_data *m, uint16 skill_id, union u_mapflag_args *args);
 void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per);
 
 enum e_mapflag map_getmapflag_by_name(char* name);

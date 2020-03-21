@@ -112,6 +112,23 @@ public:
 
 extern AchievementDatabase achievement_db;
 
+struct s_achievement_level{
+	uint16 level;
+	uint16 points;
+};
+
+class AchievementLevelDatabase : public TypesafeYamlDatabase<uint16, s_achievement_level>{
+public:
+	AchievementLevelDatabase() : TypesafeYamlDatabase( "ACHIEVEMENT_LEVEL_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const YAML::Node& node );
+};
+
+extern AchievementLevelDatabase achievement_level_db;
+
 void achievement_get_reward(struct map_session_data *sd, int achievement_id, time_t rewarded);
 struct achievement *achievement_add(struct map_session_data *sd, int achievement_id);
 bool achievement_remove(struct map_session_data *sd, int achievement_id);

@@ -26,6 +26,11 @@
 //----------------------------------------------------------------------------
 // Normal
 //----------------------------------------------------------------------------
+308,1	//BD_ETERNALCHAOS
+311,1	//BD_ROKISWEIL
+317,1	//BA_DISSONANCE
+325,1	//DC_UGLYDANCE
+328,1	//DC_DONTFORGETME
 2422,1	//WM_LULLABY_DEEPSLEEP
 2423,1	//WM_SIRCLEOFNATURE
 2430,1	//WM_SATURDAY_NIGHT_FEVER
