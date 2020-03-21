@@ -523,31 +523,31 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 // Weapon/Armor Refiners
 //============================================================
 prt_in,63,60,0	script	Hollgrehenn	85,{
-	callfunc "refinemain","Hollgrehenn",0;
+	callfunc "refinemain","Hollgrehenn",1;
 	end;
 }
 morocc_in,73,38,6	script	Aragham	99,{
-	callfunc "refinemain","Aragham",0;
+	callfunc "refinemain","Aragham",1;
 	end;
 }
 payon,144,173,5	script	Antonio	88,{
-	callfunc "refinemain","Antonio",0;
+	callfunc "refinemain","Antonio",1;
 	end;
 }
 alberta_in,28,58,0	script	Fredrik	85,{
-	callfunc "refinemain","Fredrik",0;
+	callfunc "refinemain","Fredrik",1;
 	end;
 }
 yuno_in01,171,21,4	script	Lambert	88,{
-	callfunc "refinemain","Lambert",0;
+	callfunc "refinemain","Lambert",1;
 	end;
 }
 ein_in01,24,87,5	script	Manthasman	826,{
-	callfunc "refinemain","Manthasman Pruhag",0;
+	callfunc "refinemain","Manthasman Pruhag",1;
 	end;
 }
 lhz_in02,282,20,7	script	Fulerr	869,{
-	callfunc "refinemain","Fulerr",0;
+	callfunc "refinemain","Fulerr",1;
 	end;
 }
 
@@ -614,11 +614,11 @@ function	script	refinemain	{
 	.@material = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
 
 	switch (getequipweaponlv(.@part)) {
-		case 1: .@safe = 7; break;
-		case 2: .@safe = 6; break;
-		case 3: .@safe = 5; break;
+		case 1: .@safe = 10; break;
+		case 2: .@safe = 9; break;
+		case 3: .@safe = 8; break;
 		case 4:
-		default: .@safe = 4; break;
+		default: .@safe = 7; break;
 	}
 
 	// If the VIP system is enabled, the prices for non-VIP players are considerably higher.
