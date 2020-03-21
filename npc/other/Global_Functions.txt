@@ -770,3 +770,9 @@ function	script	F_IsCharm	{
 
 // temporary here
 -	script	dummy_npc	-1,{ end; }
+-	script	dummy_cloaked_npc	-1,{
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
+}

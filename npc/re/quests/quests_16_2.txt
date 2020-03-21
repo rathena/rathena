@@ -19,28 +19,28 @@ OnTouch:
 	if (banquet_main_quest < 18)	// pre-req : access to room of consciousness (first time)
 		end;
 	if (terra_gloria_main == 0) {
-		classchange( 4_EP16_NIHIL, "Nihil M. Heine#ep162_01", bc_self );
-		classchange( 4_EP16_SPICA, "Skia Nerius#ep162_02", bc_self );
+		cloakoffnpc "Nihil M. Heine#ep162_01", getcharid(0);
+		cloakoffnpc "Skia Nerius#ep162_02", getcharid(0);
 	}
 	else if (terra_gloria_main == 1 || terra_gloria_main == 2) {
-		classchange( 4_EP16_NIHIL, "Nihil M. Heine#ep162_01", bc_self );
-		classchange( 4_EP16_SPICA, "Skia Nerius#ep162_02", bc_self );
-		classchange( 4_EP16_SPICA, "Spica Nerius#ep162_01", bc_self );
+		cloakoffnpc "Nihil M. Heine#ep162_01", getcharid(0);
+		cloakoffnpc "Skia Nerius#ep162_02", getcharid(0);
+		cloakoffnpc "Spica Nerius#ep162_01", getcharid(0);
 	}
 	else if (terra_gloria_main == 6) {	// first back from Lighthalzen
-		classchange( 4_EP16_NIHIL, "Nihil M. Heine#ep162_01", bc_self );
-		classchange( 4_EP16_SPICA, "Spica Nerius#ep162_01", bc_self );
+		cloakoffnpc "Nihil M. Heine#ep162_01", getcharid(0);
+		cloakoffnpc "Spica Nerius#ep162_01", getcharid(0);
 	}
 	else if (terra_gloria_main == 23)
-		classchange( 4_EP16_SKIA, "Skia Nerius#ep162_01", bc_self );
+		cloakoffnpc "Skia Nerius#ep162_01", getcharid(0);
 	end;
 }
 
-prt_cas_q,18,37,5	duplicate(dummy_npc)	Skia Nerius#ep162_02	HIDDEN_WARP_NPC		// 4_EP16_SPICA
-prt_cas_q,23,33,2	duplicate(dummy_npc)	Crux#ep162_03	HIDDEN_WARP_NPC				// 4_EP16_CRUX
-prt_cas_q,23,32,3	duplicate(dummy_npc)	Kronecker G. Heine#ep162	HIDDEN_WARP_NPC		// 4_EP16_GRANZ
+prt_cas_q,18,37,5	duplicate(dummy_cloaked_npc)	Skia Nerius#ep162_02	4_EP16_SPICA
+prt_cas_q,23,33,2	duplicate(dummy_cloaked_npc)	Crux#ep162_03	4_EP16_CRUX
+prt_cas_q,23,32,3	duplicate(dummy_cloaked_npc)	Kronecker G. Heine#ep162	4_EP16_GRANZ
 
-prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_NIHIL
+prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	4_EP16_NIHIL,{
 	if (banquet_main_quest < 18)	// pre-req : access to room of consciousness (first time)
 		end;
 	if (terra_gloria_main == 0) {
@@ -94,7 +94,7 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_NI
 		sleep2 2000;
 		npctalk "She has arrived.", "Nihil M. Heine#ep162_01", bc_self;
 		npctalk "Thank you for coming.", "Spica Nerius#ep162_01", bc_self;
-		classchange( 4_EP16_SPICA, "Spica Nerius#ep162_01", bc_self );
+		cloakoffnpc "Spica Nerius#ep162_01", getcharid(0);
 		terra_gloria_main = 1;
 		sleep2 2000;
 		setpcblock PCBLOCK_NPC, false;
@@ -155,9 +155,9 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_NI
 		mes "Now, please excuse me.";
 		close2;
 		cutin "",255;
-		classchange( HIDDEN_WARP_NPC, "Nihil M. Heine#ep162_01", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Spica Nerius#ep162_01", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Skia Nerius#ep162_02", bc_self );
+		cloakonnpc "Nihil M. Heine#ep162_01", getcharid(0);
+		cloakonnpc "Spica Nerius#ep162_01", getcharid(0);
+		cloakonnpc "Skia Nerius#ep162_02", getcharid(0);
 		end;
 	}
 	if (terra_gloria_main == 6) {
@@ -208,7 +208,7 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_NI
 		cutin "ep16_spica_nerius06.bmp",1;
 		mes "[Spica]";
 		mes "Because I trust Crux.";
-		classchange( 4_EP16_CRUX, "Crux#ep162_03", bc_self );
+		cloakoffnpc "Crux#ep162_03", getcharid(0);
 		next;
 		cutin "ep16_crux_findel01.bmp",0;
 		mes "[Crux]";
@@ -322,7 +322,7 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_NI
 		mes "It depends on how the Schwartz government reacts to us.";
 		cutin "ep16_nihi_miseria_heine04.bmp",2;
 		next;
-		classchange( HIDDEN_WARP_NPC, "Crux#ep162_03", bc_self );
+		cloakonnpc "Crux#ep162_03", getcharid(0);
 		cutin "ep16_spica_nerius07.bmp",1;
 		mes "[Spica]";
 		mes "For that issue, please trust the next leader of the Nerius family.";
@@ -338,14 +338,14 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_NI
 		npctalk "I am going too.", "", bc_self;
 		sleep2 2000;
 		setpcblock PCBLOCK_NPC, false;
-		classchange( HIDDEN_WARP_NPC, "Nihil M. Heine#ep162_01", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Spica Nerius#ep162_01", bc_self );
+		cloakonnpc "Nihil M. Heine#ep162_01", getcharid(0);
+		cloakonnpc "Spica Nerius#ep162_01", getcharid(0);
 		cutin "",255;
 		end;
 	}
 }
 
-prt_cas_q,23,36,3	script	Spica Nerius#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_SPICA
+prt_cas_q,23,36,3	script	Spica Nerius#ep162_01	4_EP16_SPICA,{
 	if (banquet_main_quest < 18)
 		end;
 	if (terra_gloria_main == 1) {
@@ -465,14 +465,14 @@ prt_cas_q,23,36,3	script	Spica Nerius#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_SPIC
 		mes "Now, please excuse me.";
 		close2;
 		cutin "",255;
-		classchange( HIDDEN_WARP_NPC, "Nihil M. Heine#ep162_01", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Spica Nerius#ep162_01", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Skia Nerius#ep162_02", bc_self );
+		cloakonnpc "Nihil M. Heine#ep162_01", getcharid(0);
+		cloakonnpc "Spica Nerius#ep162_01", getcharid(0);
+		cloakonnpc "Skia Nerius#ep162_02", getcharid(0);
 		end;
 	}
 }
 
-prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_SKIA
+prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	4_EP16_SKIA,{
 	if (terra_gloria_main == 23) {
 		cutin "ep16_skia_nerius01.bmp",0;
 		mes "[Skia]";
@@ -540,7 +540,7 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_SKIA
 		}
 		cutin "ep16_spica_nerius01.bmp",1;
 		next;
-		classchange( 4_EP16_SPICA, "Spica Nerius#ep162_01", bc_self );
+		cloakoffnpc "Spica Nerius#ep162_01", getcharid(0);
 		npctalk "Could you tell me slowly?", "Spica Nerius#ep162_01", bc_self;
 		mes "Skia told Spica about her symptoms.";
 		next;
@@ -572,7 +572,7 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_SKIA
 		mes "[Bel]";
 		mes "Prince Grantz has arrived.";
 		next;
-		classchange( 4_EP16_GRANZ, "Kronecker G. Heine#ep16", bc_self );
+		cloakoffnpc "Kronecker G. Heine#ep16", getcharid(0);
 		mes "[Kronecker]";
 		mes "Hmm. The esteemed daughters of the Nerius family are here too.";
 		mes "First of all, " + strcharinfo(0) + " I have come to show my gratitude to you.";
@@ -637,7 +637,7 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_SKIA
 		mes "See you later. I will contact you.";
 		npctalk "I will be waiting.", "Kronecker G. Heine#ep16", bc_self;
 		next;
-		classchange( HIDDEN_WARP_NPC, "Kronecker G. Heine#ep16", bc_self );
+		cloakonnpc "Kronecker G. Heine#ep16", getcharid(0);
 		mes "[Spica]";
 		mes "Skia?";
 		mes "Why don't you have a quiet conversation with me?";
@@ -668,15 +668,22 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_SKIA
 		unittalk getcharid(3), "" + strcharinfo(0) + " : ....", bc_self;
 		sleep2 2000;
 		setpcblock PCBLOCK_NPC, false;
-		classchange( HIDDEN_WARP_NPC, "Skia Nerius#ep162_01", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Spica Nerius#ep162_01", bc_self );
+		cloakonnpc "Skia Nerius#ep162_01", getcharid(0);
+		cloakonnpc "Spica Nerius#ep162_01", getcharid(0);
 		end;
 	}
+	end;
+
+OnInit:
+	cloakonnpc "Nihil M. Heine#ep162_01";
+	cloakonnpc "Spica Nerius#ep162_01";
+	cloakonnpc "Skia Nerius#ep162_01";
+	end;
 }
 
 
 // Lighthalzen airport
-lhz_airport,187,40,6	duplicate(dummy_npc)	Skia#ep162_03	HIDDEN_WARP_NPC		// 4_EP16_SKIA
+lhz_airport,187,40,6	duplicate(dummy_cloaked_npc)	Skia#ep162_03	4_EP16_SKIA
 
 lhz_airport,189,39,3	script	Crux#ep162_01	4_EP16_CRUX,{
 	if (terra_gloria_main < 3) {
@@ -699,7 +706,7 @@ lhz_airport,189,39,3	script	Crux#ep162_01	4_EP16_CRUX,{
 		mes "Have you come alone?";
 		mes "I heard Skia was coming too ...";
 		next;
-		classchange( 4_EP16_SKIA, "Skia#ep162_03", bc_self );
+		cloakoffnpc "Skia#ep162_03", getcharid(0);
 		npctalk "I'm here!", "Skia#ep162_03", bc_self;
 		mes "[Crux]";
 		mes "Oh! You've arrived.";
@@ -755,7 +762,7 @@ lhz_airport,189,39,3	script	Crux#ep162_01	4_EP16_CRUX,{
 		setquest 7732;// Searching the suspect
 		terra_gloria_main = 4;
 		close2;
-		classchange( HIDDEN_WARP_NPC, "Skia#ep162_03", bc_self );
+		cloakonnpc "Skia#ep162_03", getcharid(0);
 		cutin "",255;
 		end;
 	}
@@ -856,8 +863,8 @@ lighthalzen,202,167,5	script	Skia#ep162_n	4_EP16_SKIA,{
 }
 
 // Event Top Side
-lighthalzen,177,294,5	duplicate(dummy_npc)	Man#ep162_01	HIDDEN_WARP_NPC		// 1_M_01
-lighthalzen,179,293,1	duplicate(dummy_npc)	Scientist#ep162_01	HIDDEN_WARP_NPC	// 4_LGTSCIENCE
+lighthalzen,177,294,5	duplicate(dummy_cloaked_npc)	Man#ep162_01	1_M_01
+lighthalzen,179,293,1	duplicate(dummy_cloaked_npc)	Scientist#ep162_01	4_LGTSCIENCE
 
 lighthalzen,186,293,0	script	#ep162_evt01	HIDDEN_WARP_NPC,2,2,{
 	end;
@@ -866,8 +873,8 @@ OnTouch:
 		setpcblock PCBLOCK_NPC, true;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : .....! Those people?!", bc_self;
 		sleep2 1000;
-		classchange( 1_M_01, "Man#ep162_01", bc_self );
-		classchange( 4_LGTSCIENCE, "Scientist#ep162_01", bc_self );
+		cloakoffnpc "Man#ep162_01", getcharid(0);
+		cloakoffnpc "Scientist#ep162_01", getcharid(0);
 		npctalk "Haven't we completed our business already?", "Scientist#ep162_01", bc_self;
 		sleep2 3000;
 		npctalk "Why did you come all the way here and call me out?", "Scientist#ep162_01", bc_self;
@@ -890,7 +897,7 @@ OnTouch:
 		sleep2 3000;
 		npctalk "I will wait.", "Man#ep162_01", bc_self;
 		sleep2 1000;
-		classchange( HIDDEN_WARP_NPC, "Man#ep162_01", bc_self );
+		cloakonnpc "Man#ep162_01", getcharid(0);
 		sleep2 1000;
 		npctalk "Hey, get rid of him.", "Scientist#ep162_01", bc_self;
 		sleep2 2000;
@@ -904,17 +911,17 @@ OnTouch:
 		terra_gloria_main = 5;
 		sleep2 3000;
 		setpcblock PCBLOCK_NPC, false;
-		classchange( HIDDEN_WARP_NPC, "Scientist#ep162_01", bc_self );
+		cloakonnpc "Scientist#ep162_01", getcharid(0);
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I must tell Skia about this and head to the slum right away!", bc_self;
 		end;
 	}
 }
 
 // Event Right Side
-lighthalzen,307,265,5	duplicate(dummy_npc)	Suspicious mercenary#ep	HIDDEN_WARP_NPC		// HEART_HUNTER_N
-lighthalzen,305,264,6	duplicate(dummy_npc)	Crux#ep162_02	HIDDEN_WARP_NPC				// 4_EP16_CRUX
+lighthalzen,307,265,5	duplicate(dummy_cloaked_npc)	Suspicious mercenary#ep	3454
+lighthalzen,305,264,6	duplicate(dummy_cloaked_npc)	Crux#ep162_02	4_EP16_CRUX
 
-lighthalzen,306,267,5	script	Skia#ep162_04	HIDDEN_WARP_NPC,{	// 4_EP16_SKIA
+lighthalzen,306,267,5	script	Skia#ep162_04	4_EP16_SKIA,{
 	if (terra_gloria_main == 6) {
 		cutin "ep16_skia_nerius01.bmp",0;
 		mes "[Skia]";
@@ -927,6 +934,11 @@ lighthalzen,306,267,5	script	Skia#ep162_04	HIDDEN_WARP_NPC,{	// 4_EP16_SKIA
 		mes "Let's go back.";
 		close3;
 	}
+	end;
+
+OnInit:
+	cloakonnpc "Skia#ep162_04";
+	end;
 }
 
 lighthalzen,309,263,3	script	Man#ep162_02	1_M_01,{
@@ -938,7 +950,7 @@ lighthalzen,309,263,3	script	Man#ep162_02	1_M_01,{
 		sleep2 1000;
 		npctalk "Who are you? Why do you call me?", "", bc_self;
 		sleep2 1000;
-		classchange( 3454, "Suspicious mercenary#ep", bc_self );
+		cloakoffnpc "Suspicious mercenary#ep", getcharid(0);
 		npctalk "We are in trouble.", "Suspicious mercenary#ep", bc_self;
 		sleep2 2000;
 		npctalk ".... Heart ... Heart Hunter! What is a Heart Hunter doing here?!", "", bc_self;
@@ -951,8 +963,8 @@ lighthalzen,309,263,3	script	Man#ep162_02	1_M_01,{
 		sleep2 2000;
 		npctalk "Now, die.", "Suspicious mercenary#ep", bc_self;
 		sleep2 500;
-		classchange( 4_EP16_SKIA, "Skia#ep162_04", bc_self );
-		classchange( 4_EP16_CRUX, "Crux#ep162_02", bc_self );
+		cloakoffnpc "Skia#ep162_04", getcharid(0);
+		cloakoffnpc "Crux#ep162_02", getcharid(0);
 		specialeffect EF_NPC_STOP, AREA, "Suspicious mercenary#ep";
 		specialeffect EF_HIT3, AREA, "Suspicious mercenary#ep";
 		sleep2 300;
@@ -977,7 +989,7 @@ lighthalzen,309,263,3	script	Man#ep162_02	1_M_01,{
 		specialeffect EF_GUARD, AREA, "Skia#ep162_04";
 		specialeffect EF_GUARD;
 		sleep2 1000;
-		classchange( HIDDEN_WARP_NPC, "Suspicious mercenary#ep", bc_self );
+		cloakonnpc "Suspicious mercenary#ep", getcharid(0);
 		monster "lighthalzen",307,265, "Suspicious mercenary", 3454,1, "Man#ep162_02::OnMobDead";
 		killmonster "lighthalzen", "Man#ep162_02::OnMobDead";
 		sleep2 2000;
@@ -1005,8 +1017,8 @@ lighthalzen,309,263,3	script	Man#ep162_02	1_M_01,{
 		npctalk "Yes, lady. See you in the palace.", "Crux#ep162_02", bc_self;
 		sleep2 2000;
 		setpcblock PCBLOCK_NPC, false;
-		classchange( HIDDEN_WARP_NPC, "Crux#ep162_02", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Man#ep162_02", bc_self );
+		cloakonnpc "Crux#ep162_02", getcharid(0);
+		cloakonnpc "Man#ep162_02", getcharid(0);
 		erasequest 7733;// Pursuit!
 		setquest 7734;// Arrest
 		terra_gloria_main = 6;
@@ -1121,14 +1133,14 @@ lhz_in02,238,150,0	script	#ep162_lhz_evt02	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
 	if (terra_gloria_main == 8) {
-		classchange( 4_EP16_SPICA, "Spica Nerius#ep162_02", bc_self );
-		classchange( 4_M_PHILOFONTES, "Philopontess#ep162_01", bc_self );
-		classchange( 4_EP16_CRUX, "Crux#ep162_05", bc_self );
+		cloakoffnpc "Spica Nerius#ep162_02", getcharid(0);
+		cloakoffnpc "Philopontess#ep162_01", getcharid(0);
+		cloakoffnpc "Crux#ep162_05", getcharid(0);
 	}
 	end;
 }
 
-lhz_in02,239,145,3	script	Spica Nerius#ep162_02	HIDDEN_WARP_NPC,{		// 4_EP16_SPICA
+lhz_in02,239,145,3	script	Spica Nerius#ep162_02	4_EP16_SPICA,{
 	if (terra_gloria_main == 8) {
 		cutin "ep16_spica_nerius01.bmp",1;
 		mes "[Spica]";
@@ -1149,7 +1161,7 @@ lhz_in02,239,145,3	script	Spica Nerius#ep162_02	HIDDEN_WARP_NPC,{		// 4_EP16_SPI
 	}
 }
 
-lhz_in02,237,146,6	script	Crux#ep162_05	HIDDEN_WARP_NPC,{		// 4_EP16_CRUX
+lhz_in02,237,146,6	script	Crux#ep162_05	4_EP16_CRUX,{
 	if (terra_gloria_main == 8) {
 		cutin "ep16_crux_findel01.bmp",2;
 		mes "[Crux]";
@@ -1166,7 +1178,7 @@ lhz_in02,237,146,6	script	Crux#ep162_05	HIDDEN_WARP_NPC,{		// 4_EP16_CRUX
 	}
 }
 
-lhz_in02,239,148,4	script	Philopontess#ep162_01	HIDDEN_WARP_NPC,{		// 4_M_PHILOFONTES
+lhz_in02,239,148,4	script	Philopontess#ep162_01	4_M_PHILOFONTES,{
 	if (terra_gloria_main == 8) {
 		cutin "ep16_tes01.bmp",2;
 		mes "[Tess]";
@@ -1355,7 +1367,7 @@ lhz_in02,239,148,4	script	Philopontess#ep162_01	HIDDEN_WARP_NPC,{		// 4_M_PHILOF
 		mes "Thank you for your support in advance.";
 		mes "I will go to the president for a report.";
 		next;
-		classchange( HIDDEN_WARP_NPC, "Philopontess#ep162_01", bc_self );
+		cloakonnpc "Philopontess#ep162_01", getcharid(0);
 		cutin "ep16_spica_nerius05.bmp",0;
 		mes "[Spica]";
 		mes "... What a straightforward man.";
@@ -1378,11 +1390,18 @@ lhz_in02,239,148,4	script	Philopontess#ep162_01	HIDDEN_WARP_NPC,{		// 4_M_PHILOF
 		npctalk "I will see you later.", "Crux#ep162_05", bc_self;
 		sleep2 2000;
 		setpcblock PCBLOCK_NPC, false;
-		classchange( HIDDEN_WARP_NPC, "Spica Nerius#ep162_02", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Crux#ep162_05", bc_self );
+		cloakonnpc "Spica Nerius#ep162_02", getcharid(0);
+		cloakonnpc "Crux#ep162_05", getcharid(0);
 		cutin "",255;
 		end;
 	}
+	end;
+
+OnInit:
+	cloakonnpc "Spica Nerius#ep162_02";
+	cloakonnpc "Crux#ep162_05";
+	cloakonnpc "Philopontess#ep162_01";
+	end;
 }
 
 
@@ -1391,7 +1410,7 @@ einbroch,239,269,0	script	#16nego15	HIDDEN_WARP_NPC,3,0,{
 	end;
 OnTouch:
 	if (terra_gloria_main > 9)
-		classchange( HIDDEN_WARP_NPC, "Unusual person#16nego01", bc_self );
+		cloakonnpc "Unusual person#16nego01", getcharid(0);
 	end;
 }
 einbroch,226,276,0	duplicate(#16nego15)	#16nego16	HIDDEN_WARP_NPC,3,0
@@ -1645,8 +1664,8 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		close2;
 		navigateto( "einbroch",267,268,NAV_NONE,1 );
 		cutin "",255;
-		classchange( HIDDEN_WARP_NPC, "Unusual person#16nego01", bc_self );
-		classchange( 4_M_LAZY, "Lazy#16nego06", bc_self );
+		cloakonnpc "Unusual person#16nego01", getcharid(0);
+		cloakoffnpc "Lazy#16nego06", getcharid(0);
 		end;
 	}
 	if (terra_gloria_main == 10) {
@@ -1656,8 +1675,8 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		close2;
 		navigateto( "einbroch",267,268,NAV_NONE,1 );
 		cutin "",255;
-		classchange( HIDDEN_WARP_NPC, "Unusual person#16nego01", bc_self );
-		classchange( 4_M_LAZY, "Lazy#16nego06", bc_self );
+		cloakonnpc "Unusual person#16nego01", getcharid(0);
+		cloakoffnpc "Lazy#16nego06", getcharid(0);
 		end;
 	}
 	if (terra_gloria_main == 11) {
@@ -1666,7 +1685,7 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		mes "Long time no see! I'm going to another mission spot. Got it? See you later!";
 		close2;
 		cutin "",255;
-		classchange( HIDDEN_WARP_NPC, "Unusual person#16nego01", bc_self );
+		cloakonnpc "Unusual person#16nego01", getcharid(0);
 		end;
 	}
 	if (terra_gloria_main < 17) {
@@ -1675,7 +1694,7 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		mes "Are you okay to be here now?";
 		close2;
 		cutin "",255;
-		classchange( HIDDEN_WARP_NPC, "Unusual person#16nego01", bc_self );
+		cloakonnpc "Unusual person#16nego01", getcharid(0);
 		end;
 	}
 	cutin "16lei_01.bmp",2;
@@ -1683,7 +1702,7 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 	mes "Long time no see! I'm going to another mission spot. Got it? See you later!";
 	close2;
 	cutin "",255;
-	classchange( HIDDEN_WARP_NPC, "Unusual person#16nego01", bc_self );
+	cloakonnpc "Unusual person#16nego01", getcharid(0);
 	end;
 
 OnInit:
@@ -1691,11 +1710,10 @@ OnInit:
 	end;
 }
 
-// Note: officially the npc 'Very small hole#16nego0' is enabled by default and 'Lazy#16nego06' is disabled by default
-einbroch,270,267,5	script	Very small hole#16nego0	HIDDEN_WARP_NPC,5,5,{		// 4_CRACK
+einbroch,270,267,5	script	Very small hole#16nego0	4_CRACK,5,5,{
 	if (terra_gloria_main != 10 && terra_gloria_main != 11) {
-		classchange( HIDDEN_WARP_NPC, "Very small hole#16nego0", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Lazy#16nego06", bc_self );
+		cloakonnpc "Very small hole#16nego0", getcharid(0);
+		cloakonnpc "Lazy#16nego06", getcharid(0);
 		end;
 	}
 	if (terra_gloria_main == 10) {
@@ -1708,16 +1726,14 @@ einbroch,270,267,5	script	Very small hole#16nego0	HIDDEN_WARP_NPC,5,5,{		// 4_CR
 	end;
 
 OnTouch:
-	if (terra_gloria_main == 10 || terra_gloria_main == 11) {
-		classchange( 4_CRACK, "Very small hole#16nego0", bc_self );
-		classchange( 4_M_LAZY, "Lazy#16nego06", bc_self );	// officially enabled by 'Unusual person#16nego01'
-	}
+	if (terra_gloria_main == 10 || terra_gloria_main == 11)
+		cloakoffnpc "Very small hole#16nego0", getcharid(0);
 	end;
 }
 
-einbroch,270,268,3	script	Lazy#16nego06	HIDDEN_WARP_NPC,{		// 4_M_LAZY
+einbroch,270,268,3	script	Lazy#16nego06	4_M_LAZY,{
 	if (terra_gloria_main != 10) {
-		classchange( HIDDEN_WARP_NPC, "Lazy#16nego06", bc_self );
+		cloakonnpc "Lazy#16nego06", getcharid(0);
 		end;
 	}
 	cutin "16lei_01.bmp",2;
@@ -1757,7 +1773,11 @@ einbroch,270,268,3	script	Lazy#16nego06	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 	terra_gloria_main = 11;
 	close2;
 	cutin "",255;
-	classchange( HIDDEN_WARP_NPC, "Lazy#16nego06", bc_self );
+	cloakonnpc "Lazy#16nego06", getcharid(0);
+	end;
+
+OnInit:
+	cloakonnpc "Lazy#16nego06";
 	end;
 }
 
@@ -1765,16 +1785,15 @@ einbroch,270,268,3	script	Lazy#16nego06	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 einbech,44,207,0	script	#16negobok06	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
-	// Note: 'Lazy#16nego01' is enabled by default officially. Player warped can talk with it but this npc is hidden when he enters in the area (except event)
 	if (terra_gloria_main == 0)
 		end;
-	classchange( 4_M_LAZY, "Lazy#16nego01", bc_self );
+	cloakonnpc "Lazy#16nego01", getcharid(0);
 	end;
 }
 einbech,66,208,0	duplicate(#16negobok06)	#16negobok13	HIDDEN_WARP_NPC,5,5
 einbech,90,218,0	duplicate(#16negobok06)	#16negobok14	HIDDEN_WARP_NPC,5,5
 
-einbech,46,208,3	script	Lazy#16nego01	HIDDEN_WARP_NPC,{		// 4_M_LAZY
+einbech,46,208,3	script	Lazy#16nego01	4_M_LAZY,{
 	if (terra_gloria_main < 9) {
 		cutin "16lei_01.bmp",2;
 		mes "[Someone crazy about Yuno]";
@@ -1787,7 +1806,7 @@ einbech,46,208,3	script	Lazy#16nego01	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		mes "He told me he'd come here. Maybe he's still in Einbroch train station? I have to go there again.";
 		close2;
 		cutin "",255;
-		classchange( HIDDEN_WARP_NPC, "Lazy#16nego01", bc_self );
+		cloakonnpc "Lazy#16nego01", getcharid(0);
 		end;
 	}
 	if (terra_gloria_main == 10 || terra_gloria_main == 11) {
@@ -1877,7 +1896,7 @@ einbech,46,208,3	script	Lazy#16nego01	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		cutin "",255;
 		viewpoint 1,74,129,1,0x4D4DFF00;
 		navigateto( "einbech",74,129,NAV_NONE,1 );
-		classchange( HIDDEN_WARP_NPC, "Lazy#16nego01", bc_self );
+		cloakonnpc "Lazy#16nego01", getcharid(0);
 		end;
 	}
 	if (terra_gloria_main == 12) {
@@ -1888,7 +1907,7 @@ einbech,46,208,3	script	Lazy#16nego01	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		cutin "",255;
 		viewpoint 1,74,129,1,0x4D4DFF00;
 		navigateto( "einbech",74,129,NAV_NONE,1 );
-		classchange( HIDDEN_WARP_NPC, "Lazy#16nego01", bc_self );
+		cloakonnpc "Lazy#16nego01", getcharid(0);
 		end;
 	}
 	if (terra_gloria_main < 17) {
@@ -1898,7 +1917,7 @@ einbech,46,208,3	script	Lazy#16nego01	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		mes "We must go to the rebellion.";
 		close2;
 		cutin "",255;
-		classchange( HIDDEN_WARP_NPC, "Lazy#16nego01", bc_self );
+		cloakonnpc "Lazy#16nego01", getcharid(0);
 		end;
 	}
 	cutin "16lei_01.bmp",2;
@@ -1906,7 +1925,7 @@ einbech,46,208,3	script	Lazy#16nego01	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 	mes "Long time no see! I'm going to another mission spot. Got it? See you later!";
 	close2;
 	cutin "",255;
-	classchange( HIDDEN_WARP_NPC, "Lazy#16nego01", bc_self );
+	cloakonnpc "Lazy#16nego01", getcharid(0);
 	end;
 }
 
@@ -1915,8 +1934,8 @@ einbech,94,127,0	script	#16negobok08	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
 	if (terra_gloria_main == 12) {
-		classchange( 4_M_LAZY, "Lazy#16nego02", bc_self );
-		classchange( 4_SOIL, "Enormous stack#16nego01", bc_self );
+		cloakoffnpc "Lazy#16nego02", getcharid(0);
+		cloakoffnpc "Enormous stack#16nego01", getcharid(0);
 	}
 	end;
 }
@@ -1924,10 +1943,10 @@ einbech,92,139,0	duplicate(#16negobok08)	#16negobok07	HIDDEN_WARP_NPC,5,5
 einbech,88,114,0	duplicate(#16negobok08)	#16negobok09	HIDDEN_WARP_NPC,5,5
 einbech,76,111,0	duplicate(#16negobok08)	#16negobok10	HIDDEN_WARP_NPC,5,5
 
-einbech,74,130,5	duplicate(dummy_npc)	Enormous stack#16nego01	HIDDEN_WARP_NPC		// 4_SOIL
-einbech,74,130,5	duplicate(dummy_npc)	Collapsed person#16nego	HIDDEN_WARP_NPC		// 4_M_FALLENGONY
+einbech,74,130,5	duplicate(dummy_cloaked_npc)	Enormous stack#16nego01	4_SOIL
+einbech,74,130,5	duplicate(dummy_cloaked_npc)	Collapsed person#16nego	4_M_FALLENGONY
 
-einbech,76,131,3	script	Lazy#16nego02	HIDDEN_WARP_NPC,{		// 4_M_LAZY
+einbech,76,131,3	script	Lazy#16nego02	4_M_LAZY,{
 	if (terra_gloria_main == 12) {
 		cutin "16lei_03.bmp",2;
 		mes "[Lazy]";
@@ -1943,8 +1962,8 @@ einbech,76,131,3	script	Lazy#16nego02	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		mes "If I get rid of this and that...!";
 		npctalk "Come and help me!", "", bc_self;
 		next;
-		classchange( HIDDEN_WARP_NPC, "Enormous stack#16nego01", bc_self );
-		classchange( 4_M_FALLENGONY, "Collapsed person#16nego", bc_self );
+		cloakonnpc "Enormous stack#16nego01", getcharid(0);
+		cloakoffnpc "Collapsed person#16nego", getcharid(0);
 		cutin "16lei_01.bmp",2;
 		mes "[Lazy]";
 		mes "Wow... I think today is a lucky day. This mission is going to be easier than we thought.";
@@ -2043,8 +2062,8 @@ einbech,76,131,3	script	Lazy#16nego02	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		close2;
 		cutin "",255;
 		navigateto( "einbech",217,82,NAV_NONE,1 );
-		classchange( HIDDEN_WARP_NPC, "Lazy#16nego02", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Collapsed person#16nego", bc_self );
+		cloakonnpc "Lazy#16nego02", getcharid(0);
+		cloakonnpc "Collapsed person#16nego", getcharid(0);
 		end;
 	}
 	if (terra_gloria_main == 13) {
@@ -2055,10 +2074,15 @@ einbech,76,131,3	script	Lazy#16nego02	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		cutin "",255;
 		viewpoint 1,217,82,1,0x4D4DFF00;
 		navigateto( "einbech",217,82,NAV_NONE,1 );
-		classchange( HIDDEN_WARP_NPC, "Lazy#16nego02", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Collapsed person#16nego", bc_self );
+		cloakonnpc "Lazy#16nego02", getcharid(0);
+		cloakonnpc "Collapsed person#16nego", getcharid(0);
 		end;
 	}
+	end;
+
+OnInit:
+	cloakonnpc "Lazy#16nego02";
+	end;
 }
 
 // rebel_in entrance
@@ -2077,18 +2101,21 @@ einbech,200,79,0	script	#16negobok12	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
 	if (terra_gloria_main == 13)
-		classchange( 4_M_LAZY, "Lazy#16nego03", bc_self );
+		cloakoffnpc "Lazy#16nego03", getcharid(0);
 	end;
 }
 
-einbech,218,82,5	script	Gonie#16nego02	HIDDEN_WARP_NPC,{		// 4_M_FALLENGONY
+einbech,218,82,5	script	Gonie#16nego02	4_M_FALLENGONY,{
 	cutin "16go_01.bmp",2;
 	mes "[??]";
 	mes "......";
 	close3;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
-einbech,217,82,3	script	Lazy#16nego03	HIDDEN_WARP_NPC,{		// 4_M_LAZY
+einbech,217,82,3	script	Lazy#16nego03	4_M_LAZY,{
 	if (terra_gloria_main == 13) {
 		cutin "16lei_01.bmp",2;
 		mes "[Lazy]";
@@ -2101,7 +2128,7 @@ einbech,217,82,3	script	Lazy#16nego03	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Arrgh...";
-		classchange( 4_M_FALLENGONY, "Gonie#16nego02", bc_self );
+		cloakoffnpc "Gonie#16nego02", getcharid(0);
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Oh, I feel alive now.", bc_self;
 		npctalk "You are exaggerating your pain.", "", bc_self;
 		next;
@@ -2163,7 +2190,7 @@ einbech,217,82,3	script	Lazy#16nego03	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		setquest 14598;// Invisible entrance
 		terra_gloria_main = 14;
 		close2;
-		classchange( HIDDEN_WARP_NPC, "Lazy#16nego03", bc_self );
+		cloakonnpc "Lazy#16nego03", getcharid(0);
 		cutin "",255;
 		end;
 	}
@@ -2173,9 +2200,13 @@ einbech,217,82,3	script	Lazy#16nego03	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		mes "What are you doing? Come in!";
 		close2;
 		cutin "",255;
-		classchange( HIDDEN_WARP_NPC, "Lazy#16nego03", bc_self );
+		cloakonnpc "Lazy#16nego03", getcharid(0);
 		end;
 	}
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 // rebel_in
@@ -2208,22 +2239,25 @@ rebel_in,24,45,3	script	Nemi#16nego01	4_M_MIDDLE,{
 rebel_in,21,41,0	script	#16negobok05	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
-	if (terra_gloria_main == 14)
-		classchange( 4_M_LAZY, "Lazy#16nego04", bc_self );
+	if (terra_gloria_main != 14)
+		cloakonnpc "Lazy#16nego04", getcharid(0);
 	end;
 }
 
-rebel_in,23,43,5	script	Gonie#16nego03	HIDDEN_WARP_NPC,{		// 4_M_FALLENGONY
+rebel_in,23,43,5	script	Gonie#16nego03	4_M_FALLENGONY,{
 	cutin "16go_01.bmp",2;
 	mes "[??]";
 	mes "......";
 	close2;
 	cutin "",255;
-	classchange( HIDDEN_WARP_NPC, "Gonie#16nego03", bc_self );
+	cloakonnpc "Gonie#16nego03", getcharid(0);
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
 	end;
 }
 
-rebel_in,23,42,3	script	Lucky#16nego01	HIDDEN_WARP_NPC,{		// 4_M_ROOKIE
+rebel_in,23,42,3	script	Lucky#16nego01	4_M_ROOKIE,{
 	if (terra_gloria_main < 15) {
 		cutin "16loo_01.bmp",0;
 		mes "[Lucky]";
@@ -2232,10 +2266,13 @@ rebel_in,23,42,3	script	Lucky#16nego01	HIDDEN_WARP_NPC,{		// 4_M_ROOKIE
 		warp "einbech",215,80;
 		end;
 	}
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
-// Officially enabled by default
-rebel_in,21,45,5	script	Lazy#16nego04	HIDDEN_WARP_NPC,{		// 4_M_LAZY
+rebel_in,21,45,5	script	Lazy#16nego04	4_M_LAZY,{
 	if (terra_gloria_main == 14) {
 		cutin "16lei_02.bmp",2;
 		mes "[Lazy]";
@@ -2397,7 +2434,7 @@ rebel_in,21,45,5	script	Lazy#16nego04	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		next;
 		mes "[Shopkeeper]";
 		mes "I won't tolerate you if you're playing shallow tricks.";
-		classchange( HIDDEN_WARP_NPC, "Nemi#16nego01", bc_self );
+		cloakonnpc "Nemi#16nego01", getcharid(0);
 		next;
 		cutin "16lei_02.bmp",2;
 		mes "[Lazy]";
@@ -2416,8 +2453,8 @@ rebel_in,21,45,5	script	Lazy#16nego04	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		sleep2 500;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : What! What is it? Why did you stop talking?", bc_self;
 		next;
-		classchange( 4_M_MIDDLE, "Nemi#16nego01", bc_self );
-		classchange( 4_M_FALLENGONY, "Gonie#16nego03", bc_self );
+		cloakoffnpc "Nemi#16nego01", getcharid(0);
+		cloakoffnpc "Gonie#16nego03", getcharid(0);
 		mes "[Shopkeeper]";
 		mes "Arrgh...";
 		next;
@@ -2433,7 +2470,7 @@ rebel_in,21,45,5	script	Lazy#16nego04	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		mes "Lucky?";
 		emotion ET_QUESTION;
 		next;
-		classchange( HIDDEN_WARP_NPC, "Eri#16nego01", bc_self );
+		cloakonnpc "Eri#16nego01", getcharid(0);
 		mes "[Shopkeeper]";
 		mes "Hey, what did you to this guy?";
 		next;
@@ -2466,8 +2503,8 @@ rebel_in,21,45,5	script	Lazy#16nego04	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		emotion ET_CRY;
 		next;
 		cutin "16loo_01.bmp",0;
-		classchange( 4_F_01, "Eri#16nego01", bc_self );
-		classchange( 4_M_ROOKIE, "Lucky#16nego01", bc_self );
+		cloakoffnpc "Eri#16nego01", getcharid(0);
+		cloakoffnpc "Lucky#16nego01", getcharid(0);
 		mes "[Lucky]";
 		mes "Nemi, what happened? Is Gonie dead?";
 		emotion ET_STARE_ABOUT, getnpcid(0, "Lucky#16nego01");
@@ -2631,9 +2668,9 @@ rebel_in,21,45,5	script	Lazy#16nego04	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		cutin "16lei_03.bmp",2;
 		mes "[Lazy]";
 		mes "Wait! They're sending us away like this? Seems like they are. Did I get it wrong?";
-		classchange( HIDDEN_WARP_NPC, "Nemi#16nego01", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Lucky#16nego01", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Gonie#16nego03", bc_self );
+		cloakonnpc "Nemi#16nego01", getcharid(0);
+		cloakonnpc "Lucky#16nego01", getcharid(0);
+		cloakonnpc "Gonie#16nego03", getcharid(0);
 		next;
 		mes "[Lazy]";
 		mes "Oops? They went inside! Come on!";
@@ -2669,8 +2706,8 @@ rebel_in,21,45,5	script	Lazy#16nego04	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		mes "Who kicks me out! That's impossible! I will lie down here! Come out!";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I am so ashamed...", bc_self;
 		next;
-		classchange( 4_M_MIDDLE, "Nemi#16nego01", bc_self );
-		classchange( 4_M_ROOKIE, "Lucky#16nego01", bc_self );
+		cloakoffnpc "Nemi#16nego01", getcharid(0);
+		cloakoffnpc "Lucky#16nego01", getcharid(0);
 		cutin "16loo_03.bmp",0;
 		mes "[Lucky]";
 		mes "Phew...";
@@ -2710,8 +2747,8 @@ rebel_in,21,45,5	script	Lazy#16nego04	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		cutin "16loo_01.bmp",0;
 		mes "[Lucky]";
 		mes "Follow me. It's this way.";
-		classchange( HIDDEN_WARP_NPC, "Lucky#16nego01", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Lazy#16nego04", bc_self );
+		cloakonnpc "Lucky#16nego01", getcharid(0);
+		cloakonnpc "Lazy#16nego04", getcharid(0);
 		erasequest 14598;// Invisible entrance
 		setquest 14599;// A glass of tea gratitude
 		terra_gloria_main = 15;
@@ -2750,7 +2787,7 @@ OnTouch:
 	end;
 }
 
-rebel_in,62,44,5	duplicate(dummy_npc)	Philopontess#ep162_02	HIDDEN_WARP_NPC		// 4_M_PHILOFONTES
+rebel_in,62,44,5	duplicate(dummy_cloaked_npc)	Philopontess#ep162_02	4_M_PHILOFONTES
 
 rebel_in,65,46,5	script	Rebellion Squadder#ep16	4_M_GUNSLINGER2,3,3,{
 	if (terra_gloria_main < 17) {
@@ -2764,7 +2801,7 @@ rebel_in,65,46,5	script	Rebellion Squadder#ep16	4_M_GUNSLINGER2,3,3,{
 		mes "Someone has come, and I think he is looking for you.";
 		mes "I let him come in, even though I had a bad feeling about it.";
 		next;
-		classchange( 4_M_PHILOFONTES, "Philopontess#ep162_02", bc_self );
+		cloakoffnpc "Philopontess#ep162_02", getcharid(0);
 		npctalk "Hoo ...", "Philopontess#ep162_02", bc_self;
 		mes "[Tess]";
 		mes "These people are really rude.";
@@ -2825,7 +2862,7 @@ rebel_in,65,46,5	script	Rebellion Squadder#ep16	4_M_GUNSLINGER2,3,3,{
 		mes "Now you know the direction.";
 		npctalk "I will be waiting in the hotel.", "Philopontess#ep162_02", bc_self;
 		close2;
-		classchange( HIDDEN_WARP_NPC, "Philopontess#ep162_02", bc_self );
+		cloakonnpc "Philopontess#ep162_02", getcharid(0);
 		if (.@s == 1)
 			warp "einbech",68,208;
 		end;
@@ -3015,11 +3052,11 @@ ein_in01,273,275,0	script	#ep162_evt04	HIDDEN_WARP_NPC,1,1,{
 OnTouch:
 	if (terra_gloria_main == 18) {
 		setpcblock PCBLOCK_NPC, true;
-		classchange( 4_EP16_NIHIL, "Nihil#ep162_02", bc_self );
-		classchange( 4_M_PHILOFONTES, "Philopontess#ep162_03", bc_self );
-		classchange( 4_EP16_SKIA, "Skia#ep162_05", bc_self );
-		classchange( 4_M_ROOKIE, "Rookie#ep162_01", bc_self );
-		classchange( 4_M_LAZY, "Lazy#ep162_01", bc_self );
+		cloakoffnpc "Nihil#ep162_02", getcharid(0);
+		cloakoffnpc "Philopontess#ep162_03", getcharid(0);
+		cloakoffnpc "Skia#ep162_05", getcharid(0);
+		cloakoffnpc "Rookie#ep162_01", getcharid(0);
+		cloakoffnpc "Lazy#ep162_01", getcharid(0);
 		npctalk "Mr. Lazy, was that a joke?", "Philopontess#ep162_03", bc_self;
 		sleep2 2000;
 		npctalk "Uhm? Break-in or ambush ...", "Lazy#ep162_01", bc_self;
@@ -3041,14 +3078,14 @@ OnTouch:
 		end;
 	}
 	if (terra_gloria_main == 22) {
-		classchange( 4_EP16_NIHIL, "Nihil#ep162_02", bc_self );
-		classchange( 4_M_PHILOFONTES, "Philopontess#ep162_03", bc_self );
-		classchange( 4_EP16_SKIA, "Skia#ep162_05", bc_self );
+		cloakoffnpc "Nihil#ep162_02", getcharid(0);
+		cloakoffnpc "Philopontess#ep162_03", getcharid(0);
+		cloakoffnpc "Skia#ep162_05", getcharid(0);
 	}
 	end;
 }
 
-ein_in01,269,285,5	script	Nihil#ep162_02	HIDDEN_WARP_NPC,{				// 4_EP16_NIHIL
+ein_in01,269,285,5	script	Nihil#ep162_02	4_EP16_NIHIL,{
 	if (terra_gloria_main == 18) {
 		mes "[Nihil]";
 		mes "Good to see you again.";
@@ -3230,9 +3267,12 @@ ein_in01,269,285,5	script	Nihil#ep162_02	HIDDEN_WARP_NPC,{				// 4_EP16_NIHIL
 	if (terra_gloria_main == 22)
 		callfunc( "F_Terra_Gloria_Inn" );
 	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
-ein_in01,274,278,3	script	Lazy#ep162_01	HIDDEN_WARP_NPC,{		// 4_M_LAZY
+ein_in01,274,278,3	script	Lazy#ep162_01	4_M_LAZY,{
 	if (terra_gloria_main == 18) {
 		cutin "16lei_01.bmp",2;
 		mes "[Lazy]";
@@ -3252,9 +3292,13 @@ ein_in01,274,278,3	script	Lazy#ep162_01	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		npctalk "Hey, Lazy! You are irresponsible!", "Rookie#ep162_01", bc_self;
 		end;
 	}
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
-ein_in01,272,282,3	script	Rookie#ep162_01	HIDDEN_WARP_NPC,{				// 4_M_ROOKIE
+ein_in01,272,282,3	script	Rookie#ep162_01	4_M_ROOKIE,{
 	if (terra_gloria_main == 18) {
 		npctalk "Adventurer, you're late.", "", bc_self;
 		end;
@@ -3270,9 +3314,13 @@ ein_in01,272,282,3	script	Rookie#ep162_01	HIDDEN_WARP_NPC,{				// 4_M_ROOKIE
 		mes "Let's get there before it's too late.";
 		close3;
 	}
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
-ein_in01,271,284,3	script	Skia#ep162_05	HIDDEN_WARP_NPC,{				// 4_EP16_SKIA
+ein_in01,271,284,3	script	Skia#ep162_05	4_EP16_SKIA,{
 	if (terra_gloria_main == 18) {
 		npctalk "Please listen to Nihil first.", "", bc_self;
 		end;
@@ -3284,9 +3332,13 @@ ein_in01,271,284,3	script	Skia#ep162_05	HIDDEN_WARP_NPC,{				// 4_EP16_SKIA
 		mes "Oh~ I'm excited to use a sword after such a long time!";
 		close3;
 	}
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
-ein_in01,269,282,1	script	Philopontess#ep162_03	HIDDEN_WARP_NPC,{		// 4_M_PHILOFONTES
+ein_in01,269,282,1	script	Philopontess#ep162_03	4_M_PHILOFONTES,{
 	if (terra_gloria_main == 18) {
 		npctalk "... Please talk to the Prince first.", "", bc_self;
 		end;
@@ -3299,6 +3351,10 @@ ein_in01,269,282,1	script	Philopontess#ep162_03	HIDDEN_WARP_NPC,{		// 4_M_PHILOF
 	}
 	if (terra_gloria_main == 22)
 		callfunc( "F_Terra_Gloria_Inn" );
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 
@@ -3353,7 +3409,7 @@ OnInit:
 	end;
 }
 
-que_swat,147,57,5	duplicate(dummy_npc)	Skia#ep162_07	HIDDEN_WARP_NPC		// 4_EP16_SKIA
+que_swat,147,57,5	duplicate(dummy_cloaked_npc)	Skia#ep162_07	4_EP16_SKIA
 
 que_swat,150,58,3	script	Rookie#ep162_03	4_M_ROOKIE,{
 	if (checkweight(501,1) == 0) {
@@ -3385,7 +3441,7 @@ que_swat,150,58,3	script	Rookie#ep162_03	4_M_ROOKIE,{
 		cutin "16loo_01.bmp",2;
 		mes "[Rookie]";
 		mes "Wow, welcome back.";
-		classchange( 4_EP16_SKIA, "Skia#ep162_07", bc_self );
+		cloakoffnpc "Skia#ep162_07", getcharid(0);
 		npctalk "Hero!", "Skia#ep162_07", bc_self;
 		next;
 		mes "[Skia]";
@@ -3417,7 +3473,7 @@ que_swat,150,58,3	script	Rookie#ep162_03	4_M_ROOKIE,{
 		mes "[Rookie]";
 		mes "Damn, go away!";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "Skia#ep162_07", bc_self );
+		cloakonnpc "Skia#ep162_07", getcharid(0);
 		warp "ein_fild04",279,339;
 		end;
 	}
@@ -4466,8 +4522,8 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[USU commander Elena]";
 			mes "So you're all here? I've heard the whole story.";
 			next;
-			classchange( 4_M_ILYA, "Ilya Lebedev#16.2rms", bc_self );
-			classchange( 4_F_ANYA, "Jana Levedeva#16.2rms", bc_self );
+			cloakoffnpc "Ilya Lebedev#16.2rms", getcharid(0);
+			cloakoffnpc "Jana Levedeva#16.2rms", getcharid(0);
 			cutin "",255;
 			mes "[Ilya Lebedev]";
 			mes "Yes.";
@@ -4566,8 +4622,8 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[Lebedev twins]";
 			mes "Yes!";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Ilya Lebedev#16.2rms", bc_self );
-			classchange( HIDDEN_WARP_NPC, "Jana Levedeva#16.2rms", bc_self );
+			cloakonnpc "Ilya Lebedev#16.2rms", getcharid(0);
+			cloakonnpc "Jana Levedeva#16.2rms", getcharid(0);
 			cutin "162elena_01.bmp",2;
 			mes "[USU commander Elena]";
 			mes "Phew...";
@@ -4911,7 +4967,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		mes "[Rebellion leader Rupert]";
 		mes "If I didn't see a ghost, you are living a pretty long life. Aren't you?";
 		next;
-		classchange( 4_M_REBELLION, "Rebellion Guard leader#4", bc_self );
+		cloakoffnpc "Rebellion Guard leader#4", getcharid(0);
 		mes "[Rebellion Guard leader Larcis]";
 		mes "Sir!";
 		next;
@@ -4977,7 +5033,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		mes "I think I have seen a phantom. Would you like to read it?";
 		emotion ET_HUM;
 		next;
-		classchange( 4_M_REBELLION, "Rebellion Guard leader#4", bc_self );
+		cloakoffnpc "Rebellion Guard leader#4", getcharid(0);
 		mes "[Rebellion Guard leader Larcis]";
 		mes "Yeah?";
 		mes "Yes! Sir!";
@@ -5023,7 +5079,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		mes "You don't have to come in, Rupert.";
 		mes "It was so noisy outside, so I came out. It was you.";
 		emotion ET_HNG, getnpcid(0, "Dien#162gmbs2");
-		classchange( 4_F_DIENE, "Dien#162gmbs2", bc_self );
+		cloakoffnpc "Dien#162gmbs2", getcharid(0);
 		erasequest 11460;// Doubt
 		setquest 11461;// Doubt
 		terra_gloria_lady_part = 8;
@@ -5039,7 +5095,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		mes "Where is Dien?";
 		mes "In the room?";
 		next;
-		classchange( 4_F_DIENE, "Dien#162gmbs2", bc_self );
+		cloakoffnpc "Dien#162gmbs2", getcharid(0);
 		mes "[Dien]";
 		mes "You don't have to come in, Rupert.";
 		mes "It was so noisy outside, so I came out. It was you.";
@@ -5047,9 +5103,9 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		close;
 	}
 	if (terra_gloria_lady_part == 9 || terra_gloria_lady_part == 10) {
-		classchange( 4_F_DIENE, "Dien#162gmbs2", bc_self );
+		cloakoffnpc "Dien#162gmbs2", getcharid(0);
 		if (terra_gloria_lady_part == 9) {
-			classchange( 4_M_REBELLION, "Rebellion Guard leader#4", bc_self );
+			cloakoffnpc "Rebellion Guard leader#4", getcharid(0);
 			mes "[Rebellion leader Rupert]";
 			mes "Guard leader!";
 			mes "What are you doing!";
@@ -5182,7 +5238,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 			cutin "ep162_dn01.bmp",2;
 			next;
 			cutin "",255;
-			classchange( HIDDEN_WARP_NPC, "Rebellion Guard leader#4", bc_self );
+			cloakonnpc "Rebellion Guard leader#4", getcharid(0);
 		}
 		mes "[Rebellion leader Rupert]";
 		mes "No...";
@@ -5216,7 +5272,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		npctalk "Dien : It's so important... It won't take long.", "Dien#162gmbs2", bc_self;
 		emotion ET_COMEON, getnpcid(0, "Dien#162gmbs2");
 		cutin "ep162_dn03.bmp",2;
-		classchange( HIDDEN_WARP_NPC, "Dien#162gmbs2", bc_self );
+		cloakonnpc "Dien#162gmbs2", getcharid(0);
 		if (terra_gloria_lady_part == 9) {
 			getitem 25155,10;	// Schwartz's_Honor_Token
 			getexp 200000,200000;
@@ -5239,7 +5295,7 @@ OnInit:
 	end;
 }
 
-rebel_in,119,68,7	script	Rebellion Guard leader#4	HIDDEN_WARP_NPC,{		// 4_M_REBELLION
+rebel_in,119,68,7	script	Rebellion Guard leader#4	4_M_REBELLION,{
 	if (terra_gloria_lady_part == 6 || terra_gloria_lady_part == 7) {
 		mes "[Rebellion Guard leader Larcis]";
 		mes "I read it, too. What you have said just now was written there.";
@@ -5253,9 +5309,13 @@ rebel_in,119,68,7	script	Rebellion Guard leader#4	HIDDEN_WARP_NPC,{		// 4_M_REBE
 		}
 		close;
 	}
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
-rebel_in,121,69,8	script	Dien#162gmbs2	HIDDEN_WARP_NPC,{		// 4_F_DIENE
+rebel_in,121,69,8	script	Dien#162gmbs2	4_F_DIENE,{
 	if (terra_gloria_lady_part == 8) {
 		mes "[Rebellion Guard leader Larcis]";
 		mes "Dien!";
@@ -5360,6 +5420,10 @@ rebel_in,121,69,8	script	Dien#162gmbs2	HIDDEN_WARP_NPC,{		// 4_F_DIENE
 		cutin "ep162_dn03.bmp",2;
 		close3;
 	}
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 rebel_in,118,70,3	script	Young Rebellion#162gmbs1	4_F_GUNSLINGER,{
@@ -5381,10 +5445,10 @@ rebel_in,114,75,5	script	Young Rebellion#162gmbs2	4_F_REBELLION,{
 	close;
 }
 // Main story
-rebel_in,91,60,3	duplicate(dummy_npc)	Senior#16nego01	HIDDEN_WARP_NPC			// 4_M_EINOLD
-rebel_in,84,60,7	duplicate(dummy_npc)	Senior#16nego02	HIDDEN_WARP_NPC			// 4_M_HUGRANFA
-rebel_in,87,58,8	duplicate(dummy_npc)	Senior#16nego03	HIDDEN_WARP_NPC			// 4_M_HUOLDARMY
-rebel_in,88,58,1	duplicate(dummy_npc)	Senior#16nego04	HIDDEN_WARP_NPC			// 4_M_SEAMAN
+rebel_in,91,60,3	duplicate(dummy_cloaked_npc)	Senior#16nego01	4_M_EINOLD
+rebel_in,84,60,7	duplicate(dummy_cloaked_npc)	Senior#16nego02	4_M_HUGRANFA
+rebel_in,87,58,8	duplicate(dummy_cloaked_npc)	Senior#16nego03	4_M_HUOLDARMY
+rebel_in,88,58,1	duplicate(dummy_cloaked_npc)	Senior#16nego04	4_M_SEAMAN
 
 rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 	if (checkweight(501,1) == 0) {
@@ -5441,12 +5505,12 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		mes "[Lucky]";
 		mes "I can't figure out what you want. Have a sit there anyway. I will give you a cup of tea that you desired.";
 		next;
-		classchange( 4_M_GUNSLINGER2, "Magenta#16nego01", bc_self );
+		cloakoffnpc "Magenta#16nego01", getcharid(0);
 		mes "[Magenta]";
 		mes "Lucky~~~ Where have you been!! I've been waiting for a while! I'm going out for a mission and wish me a good luck.";
 		npctalk "Come on. The spell of fortune~", "Magenta#16nego01", bc_self;
 		next;
-		classchange( 4_M_REBELLION3, "Denny#16nego03", bc_self );
+		cloakoffnpc "Denny#16nego03", getcharid(0);
 		mes "[Denny]";
 		mes "Rookie!!!! Help me arrange the warehouse quickly. There are bunch of them and I can't do it alone. Hurry up.";
 		npctalk "Hurry up! Lend me your magical hand!", "Denny#16nego03", bc_self;
@@ -5475,9 +5539,9 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		npctalk "Didn't you say you were in a hurry?", "Magenta#16nego01", bc_self;
 		sleep2 300;
 		npctalk "He says he's busy now! I will leave first so you have to come to me first!", "Denny#16nego03", bc_self;
-		classchange( HIDDEN_WARP_NPC, "Denny#16nego03", bc_self );
+		cloakonnpc "Denny#16nego03", getcharid(0);
 		npctalk "Lucky! Me first!!!", "Magenta#16nego01", bc_self;
-		classchange( HIDDEN_WARP_NPC, "Magenta#16nego01", bc_self );
+		cloakonnpc "Magenta#16nego01", getcharid(0);
 		next;
 		cutin "16lei_01.bmp",2;
 		mes "[Lazy]";
@@ -5485,8 +5549,8 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		npctalk "Maybe that's why your name is Lucky?", "", bc_self;
 		next;
 		cutin "",255;
-		classchange( 4_M_EINOLD, "Senior#16nego01", bc_self );
-		classchange( 4_M_SEAMAN, "Senior#16nego04", bc_self );
+		cloakoffnpc "Senior#16nego01", getcharid(0);
+		cloakoffnpc "Senior#16nego04", getcharid(0);
 		mes "[Senior]";
 		mes "Rookie, where have you been? Everyone's looking for you.";
 		next;
@@ -5497,7 +5561,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		sleep2 500;
 		npctalk "Don't you know Rookie is the busiest person here?", "Senior#16nego04", bc_self;
 		next;
-		classchange( 4_M_HUGRANFA, "Senior#16nego02", bc_self );
+		cloakoffnpc "Senior#16nego02", getcharid(0);
 		mes "[Senior]";
 		mes "Lucky, bring a cup of tea.";
 		npctalk "Mine too.", "Senior#16nego01", bc_self;
@@ -5506,7 +5570,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		sleep2 300;
 		npctalk "What? You, step outside.", "Senior#16nego01", bc_self;
 		next;
-		classchange( 4_M_HUOLDARMY, "Senior#16nego03", bc_self );
+		cloakoffnpc "Senior#16nego03", getcharid(0);
 		mes "[Senior]";
 		mes "Lucky, they are strangers. Who are they?";
 		npctalk "A cup of tea for me too.", "Senior#16nego03", bc_self;
@@ -5661,7 +5725,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		npctalk "Where are you going!", "Senior#16nego01", bc_self;
 		npctalk "That guy has a great sense and wits.", "", bc_self;
 		next;
-		classchange( HIDDEN_WARP_NPC, "Rookie#16nego02", bc_self );
+		cloakonnpc "Rookie#16nego02", getcharid(0);
 		cutin "16lei_01.bmp",2;
 		mes "[Lazy]";
 		mes "Hahaha! Nice to meet you. Did I surprise you by coming in all of a sudden in leisure hours?";
@@ -5694,7 +5758,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		mes "President? Since I heard that unpleasant word, let me wash my ears!";
 		npctalk "I am precious, so I should see and listen to good things.", "Senior#16nego04", bc_self;
 		sleep2 300;
-		classchange( HIDDEN_WARP_NPC, "Senior#16nego04", bc_self );
+		cloakonnpc "Senior#16nego04", getcharid(0);
 		next;
 		mes "[Senior]";
 		mes "What is a spoiled crow of the President doing here?";
@@ -5731,7 +5795,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		npctalk "Please... Let's just talk...", "", bc_self;
 		next;
 		cutin "16loo_02.bmp",0;
-		classchange( 4_M_ROOKIE, "Rookie#16nego02", bc_self );
+		cloakoffnpc "Rookie#16nego02", getcharid(0);
 		mes "[Rookie]";
 		mes "Drink tea, please.";
 		next;
@@ -5894,14 +5958,14 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		mes "Lucky, thanks for the tea. Send them now. Let the crow go back to its nest.";
 		npctalk "Make sure they never come back!!", "Senior#16nego01", bc_self;
 		next;
-		classchange( HIDDEN_WARP_NPC, "Senior#16nego01", bc_self );
+		cloakonnpc "Senior#16nego01", getcharid(0);
 		mes "[Senior]";
 		mes "We will never see them again. So send them gently. Rookie.";
 		npctalk "Do not make any fuss.", "Senior#16nego02", bc_self;
 		next;
-		classchange( HIDDEN_WARP_NPC, "Senior#16nego02", bc_self );
+		cloakonnpc "Senior#16nego02", getcharid(0);
 		sleep2 1000;
-		classchange( HIDDEN_WARP_NPC, "Senior#16nego03", bc_self );
+		cloakonnpc "Senior#16nego03", getcharid(0);
 		cutin "16lei_03.bmp",2;
 		mes "[Lazy]";
 		mes "Please, you can't leave like this...!!!";
@@ -6215,10 +6279,10 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		mes "Not a housekeeping. A sort of cleaning-up?";
 		next;
 		cutin "",255;
-		classchange( 4_M_EINOLD, "Senior#16nego01", bc_self );
-		classchange( 4_M_HUGRANFA, "Senior#16nego02", bc_self );
-		classchange( 4_M_HUOLDARMY, "Senior#16nego03", bc_self );
-		classchange( 4_M_SEAMAN, "Senior#16nego04", bc_self );
+		cloakoffnpc "Senior#16nego01", getcharid(0);
+		cloakoffnpc "Senior#16nego02", getcharid(0);
+		cloakoffnpc "Senior#16nego03", getcharid(0);
+		cloakoffnpc "Senior#16nego04", getcharid(0);
 		mes "[Senior]";
 		mes "Hey Rookie. Why did you bring those jerks in here? They are wandering around and humiliating us! Rookie, are you a spy from the government?";
 		emotion ET_FRET, getnpcid(0, "Senior#16nego01");
@@ -6275,7 +6339,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		sleep2 500;
 		npctalk "Get them out.", "Senior#16nego03", bc_self;
 		next;
-		classchange( 4_M_GONY, "Gonie#16nego04", bc_self );
+		cloakoffnpc "Gonie#16nego04", getcharid(0);
 		cutin "16go_03.bmp",2;
 		mes "[Gonie]";
 		mes "......";
@@ -6378,7 +6442,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		mes "But I will never trust you guys! I will keep my eyes on you!!!";
 		next;
 		cutin "16lei_02.bmp",2;
-		classchange( HIDDEN_WARP_NPC, "Senior#16nego01", bc_self );
+		cloakonnpc "Senior#16nego01", getcharid(0);
 		mes "[Lazy]";
 		mes "Oh, what a passionate propose. I've never had anything like this in my life. I feel a little shy.";
 		npctalk "That's so cool.", "", bc_self;
@@ -6392,9 +6456,9 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		sleep2 500;
 		npctalk "Well, I have to carry him.", "Senior#16nego04", bc_self;
 		next;
-		classchange( HIDDEN_WARP_NPC, "Senior#16nego02", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Senior#16nego03", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Senior#16nego04", bc_self );
+		cloakonnpc "Senior#16nego02", getcharid(0);
+		cloakonnpc "Senior#16nego03", getcharid(0);
+		cloakonnpc "Senior#16nego04", getcharid(0);
 		cutin "16go_03.bmp",2;
 		mes "[Gonie]";
 		mes "......";
@@ -6404,7 +6468,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		mes "Yes. Let me handle this place. You go inside and get ready.";
 		next;
 		cutin "16lei_01.bmp",0;
-		classchange( HIDDEN_WARP_NPC, "Gonie#16nego04", bc_self );
+		cloakonnpc "Gonie#16nego04", getcharid(0);
 		mes "[Lazy]";
 		mes "I've never imagined that this would be done so perfectly. I owe you for this. Thanks.";
 		npctalk "The happiness is always with me.", "", bc_self;
@@ -6498,7 +6562,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I think you are regarding him as an item.", bc_self;
 		next;
 		cutin "16go_03.bmp",2;
-		classchange( 4_M_GONY, "Gonie#16nego04", bc_self );
+		cloakoffnpc "Gonie#16nego04", getcharid(0);
 		mes "[Gonie]";
 		mes "......";
 		next;
@@ -6518,7 +6582,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		mes "[Rookie]";
 		mes "He says we have prepared someone to proceed the cooperation. If you go to the passage to the store, you can meet that person.";
 		npctalk "Thanks.", "Rookie#16nego02", bc_self;
-		classchange( HIDDEN_WARP_NPC, "Gonie#16nego04", bc_self );
+		cloakonnpc "Gonie#16nego04", getcharid(0);
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Yes. I will meet that person and listen.";
@@ -6562,7 +6626,7 @@ OnInit:
 	end;
 }
 // Old Lady Room - Outside
-rebel_in,121,43,5	duplicate(dummy_npc)	Rebellion Guard leader#1	HIDDEN_WARP_NPC		// 4_M_REBELLION
+rebel_in,121,43,5	duplicate(dummy_cloaked_npc)	Rebellion Guard leader#1	4_M_REBELLION
 
 function	script	F_TerraGloria_Lady	{
 	if (terra_gloria_main < 16 || terra_gloria_lady_part == 0) {
@@ -6587,7 +6651,7 @@ function	script	F_TerraGloria_Lady	{
 		mes "Although he sent you here, you cannot enter.";
 		mes "Please go back.";
 		next;
-		classchange( 4_M_REBELLION, "Rebellion Guard leader#1", bc_self );
+		cloakoffnpc "Rebellion Guard leader#1", getcharid(0);
 		mes "[Rebellion Guard leader]";
 		mes "Why is it so noisy here?";
 		npctalk "Rebellion Guard leader : Be quiet!", "Rebellion Guard leader#1", bc_self;
@@ -6656,7 +6720,7 @@ function	script	F_TerraGloria_Lady	{
 			mes "A good idea.";
 			mes "The exit is downstairs. Go there.";
 			npctalk "Rebellion Guard leader : Hey~ Hey~ Go away!", "Rebellion Guard leader#1", bc_self;
-			classchange( HIDDEN_WARP_NPC, "Rebellion Guard leader#1", bc_self );
+			cloakonnpc "Rebellion Guard leader#1", getcharid(0);
 			close;
 		}
 		mes "[Rebellion Guard leader Larcis]";
@@ -6690,7 +6754,7 @@ function	script	F_TerraGloria_Lady	{
 		mes "[Rebellion Guard leader Larcis]";
 		mes "If you behave rudely, you won't go back alive.";
 		npctalk "Rebellion Guard leader : If anything goes wrong, we will die together!", "Rebellion Guard leader#1", bc_self;
-		classchange( HIDDEN_WARP_NPC, "Rebellion Guard leader#1", bc_self );
+		cloakonnpc "Rebellion Guard leader#1", getcharid(0);
 		erasequest 11454;// Doubt
 		setquest 11455;// Doubt
 		terra_gloria_lady_part = 2;
@@ -7527,7 +7591,7 @@ rebel_in,210,89,5	script	Special Force commander	4_F_ESTLOVELOY,{
 		mes "I haven't seen you before.";
 		emotion ET_FRET;
 		next;
-		classchange( 4_M_REBELLION, "Rebellion Guard leader#3", bc_self );
+		cloakoffnpc "Rebellion Guard leader#3", getcharid(0);
 		cutin "",255;
 		mes "[Rebellion Guard leader Larcis]";
 		mes "Ah.. that is....";
@@ -7618,7 +7682,7 @@ rebel_in,210,89,5	script	Special Force commander	4_F_ESTLOVELOY,{
 		mes "[Special Force commander Erst]";
 		mes "Let's agree with it.";
 		mes "For now.";
-		classchange( HIDDEN_WARP_NPC, "Rebellion Guard leader#3", bc_self );
+		cloakonnpc "Rebellion Guard leader#3", getcharid(0);
 		erasequest 11457;// Doubt
 		setquest 11458;// Doubt
 		completequest 14613;// Erst on second floor
@@ -7647,7 +7711,7 @@ rebel_in,210,89,5	script	Special Force commander	4_F_ESTLOVELOY,{
 	end;
 }
 
-rebel_in,207,84,7	duplicate(dummy_npc)	Rebellion Guard leader#3	HIDDEN_WARP_NPC		// 4_M_REBELLION
+rebel_in,207,84,7	duplicate(dummy_cloaked_npc)	Rebellion Guard leader#3	4_M_REBELLION
 
 rebel_in,213,81,3	script	Rebellion#162gmbs2	4_F_REBELLION2,{
 	mes "[Rebellion]";
@@ -7697,7 +7761,7 @@ rebel_in,82,68,2	script	Arinoa Yurhik#TFQ01	4_F_GUNSLINGER,{
 		next;
 		switch( checkquest(5727,PLAYTIME) ) {
 		case -1:
-			classchange( 4_M_GUNSLINGER, "Arivero Yurhik#TFQ02", bc_self );
+			cloakoffnpc "Arivero Yurhik#TFQ02", getcharid(0);
 			npctalk "Are you the adventurer who is making a fuss in Clana Nemieri?", "Arivero Yurhik#TFQ02", bc_self;
 			mes "[Strange man]";
 			mes "Are you the adventurer who is making a fuss in Clana Nemieri?";
@@ -7714,7 +7778,7 @@ rebel_in,82,68,2	script	Arinoa Yurhik#TFQ01	4_F_GUNSLINGER,{
 		case 2:
 			mes "It is time. Let me talk to them now.";
 			next;
-			classchange( 4_M_GUNSLINGER, "Arivero Yurhik#TFQ02", bc_self );
+			cloakoffnpc "Arivero Yurhik#TFQ02", getcharid(0);
 			npctalk "Oops?! Here are you. Have you arrived already?", "Arivero Yurhik#TFQ02", bc_self;
 			mes "[Arivero Yurhik]";
 			mes "Oops?! Here are you. Have you arrived already?";
@@ -7725,7 +7789,7 @@ rebel_in,82,68,2	script	Arinoa Yurhik#TFQ01	4_F_GUNSLINGER,{
 		emotion ET_THINK;
 		mes "The poker-faced Gunslinger girl who was fishing around books and documents stole a glance at me. Then she resumed fishing around books and documents again.";
 		next;
-		classchange( 4_M_GUNSLINGER, "Arivero Yurhik#TFQ02", bc_self );
+		cloakoffnpc "Arivero Yurhik#TFQ02", getcharid(0);
 		npctalk "You have to talk to me. Not to the elder sister.", "Arivero Yurhik#TFQ02", bc_self;
 		mes "[Arivero Yurhik]";
 		mes "You have to talk to me. Not to the elder sister.";
@@ -7739,7 +7803,7 @@ rebel_in,82,68,2	script	Arinoa Yurhik#TFQ01	4_F_GUNSLINGER,{
 		emotion ET_THINK;
 		mes "The poker-faced Gunslinger girl who was fishing around books and documents stole a glance at me. Then she resumed fishing around books and documents again.";
 		next;
-		classchange( 4_M_GUNSLINGER, "Arivero Yurhik#TFQ02", bc_self );
+		cloakoffnpc "Arivero Yurhik#TFQ02", getcharid(0);
 		npctalk "Kahaha. Welcome, pal.", "Arivero Yurhik#TFQ02", bc_self;
 		mes "[Arivero Yurhik]";
 		mes "Kahaha. Welcome, pal.";
@@ -7756,7 +7820,7 @@ rebel_in,82,68,2	script	Arinoa Yurhik#TFQ01	4_F_GUNSLINGER,{
 		emotion ET_THINK;
 		mes "The poker-faced Gunslinger girl who was fishing around books and documents stole a glance at me. Then she resumed fishing around books and documents again.";
 		next;
-		classchange( 4_M_GUNSLINGER, "Arivero Yurhik#TFQ02", bc_self );
+		cloakoffnpc "Arivero Yurhik#TFQ02", getcharid(0);
 		npctalk "Have you brought the Star Crumb?", "Arivero Yurhik#TFQ02", bc_self;
 		mes "[Arivero Yurhik]";
 		mes "Have you brought the Star Crumb?";
@@ -7774,7 +7838,7 @@ rebel_in,82,68,2	script	Arinoa Yurhik#TFQ01	4_F_GUNSLINGER,{
 		emotion ET_THINK;
 		mes "The poker-faced Gunslinger girl is looking at books and documents, as usual.";
 		next;
-		classchange( 4_M_RUPERT, "Rebellion leader#TFQ15", bc_self );
+		cloakoffnpc "Rebellion leader#TFQ15", getcharid(0);
 		npctalk "I have seen you talking to that kid lately.";
 		mes "[Rebellion leader]";
 		mes "I have seen you talking to that kid lately. Do you care about her?";
@@ -7803,7 +7867,7 @@ rebel_in,82,68,2	script	Arinoa Yurhik#TFQ01	4_F_GUNSLINGER,{
 	close;
 }
 
-rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGER
+rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	4_M_GUNSLINGER,{
 	if (terra_gloria_main < 17)
 		end;
 	if (yurhik_quest == 0) {
@@ -7873,7 +7937,7 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGE
 			mes "[Arivero Yurhik]";
 			mes "I will be fully ready after 4:00 am tomorrow. Once you are ready after that time, tell my elder sister. Then I will get here quickly.";
 			close2;
-			classchange( HIDDEN_WARP_NPC, "Arivero Yurhik#TFQ02", bc_self );
+			cloakonnpc "Arivero Yurhik#TFQ02", getcharid(0);
 			end;
 		case 0:
 		case 1:
@@ -8068,7 +8132,7 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGE
 		mes "[Arivero Yurhik]";
 		mes "See you at the end of the freight train.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "Arivero Yurhik#TFQ02", bc_self );
+		cloakonnpc "Arivero Yurhik#TFQ02", getcharid(0);
 		end;
 	}
 	if (yurhik_quest == 4) {
@@ -8152,7 +8216,7 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGE
 		mes "Oh!";
 		mes "Hey, let's get down to the business. Bring the materials and see you in Lighthalzen.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "Arivero Yurhik#TFQ02", bc_self );
+		cloakonnpc "Arivero Yurhik#TFQ02", getcharid(0);
 		end;
 	}
 	if (yurhik_quest == 6) {
@@ -8202,7 +8266,7 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGE
 		mes "All we have to do is to insert the Star Crumb. So once you bring it, we can leave right away.";
 		mes "Regarding the location and required attribute stone, I will inform you then. I haven't finished collecting the information yet. I will count on you.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "Arivero Yurhik#TFQ02", bc_self );
+		cloakonnpc "Arivero Yurhik#TFQ02", getcharid(0);
 		end;
 	}
 	if (yurhik_quest == 7) {
@@ -8259,12 +8323,16 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGE
 		mes "[Arivero Yurhik]";
 		mes "See you in Yuno.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "Arivero Yurhik#TFQ02", bc_self );
+		cloakonnpc "Arivero Yurhik#TFQ02", getcharid(0);
 		end;
 	}
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
-rebel_in,78,63,6	script	Rebellion leader#TFQ15	HIDDEN_WARP_NPC,{		// 4_M_RUPERT
+rebel_in,78,63,6	script	Rebellion leader#TFQ15	4_M_RUPERT,{
 	if (yurhik_quest == 10) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "Ah! Sir, that's not what I am talking about.. You briefly reported to the Rebellion leader regarding what you did with Vero.";
@@ -8326,16 +8394,20 @@ rebel_in,78,63,6	script	Rebellion leader#TFQ15	HIDDEN_WARP_NPC,{		// 4_M_RUPERT
 		mes "[Rebellion leader]";
 		mes "Let's say this is a small compensation for your great work.";
 		next;
-		classchange( HIDDEN_WARP_NPC, "Rebellion leader#TFQ15", bc_self );
+		cloakonnpc "Rebellion leader#TFQ15", getcharid(0);
 		mes "The Rebellion leader disappeared like that.";
 		mes "What the hell happened to me?";
 		mes "I will remember this as a mission with various questions remaining.";
 		close;
 	}
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 
-einbech,212,212,6	script	Arivero Yurhik#TFQ04	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGER
+einbech,212,212,6	script	Arivero Yurhik#TFQ04	4_M_GUNSLINGER,{
 	if (yurhik_quest == 2) {
 		if (countitem(994) < 1) {
 			mes "[Arivero Yurhik]";
@@ -8355,7 +8427,7 @@ einbech,212,212,6	script	Arivero Yurhik#TFQ04	HIDDEN_WARP_NPC,{		// 4_M_GUNSLING
 		mes "[Arivero Yurhik]";
 		mes "Shall I try? Let's see. This seems to be the place the agent told us about. Now we have to break the Flame Heart you brought into pieces..";
 		next;
-		classchange( 2_MONEMUS, "Teleport Prohibition equipment#1", bc_self );
+		cloakoffnpc "Teleport Prohibition equipment#1", getcharid(0);
 		specialeffect EF_FLAMELAUNCHER, AREA, "Teleport Prohibition equipment#1";
 		mes "[Arivero Yurhik]";
 		mes "Yeah~ Great. It's a success.";
@@ -8434,7 +8506,7 @@ einbech,212,212,6	script	Arivero Yurhik#TFQ04	HIDDEN_WARP_NPC,{		// 4_M_GUNSLING
 		npctalk "Bang!", "Teleport Prohibition equipment#1", bc_self;
 		sleep2 2000;
 		specialeffect EF_LORD, AREA, "Teleport Prohibition equipment#1";
-		classchange( HIDDEN_WARP_NPC, "Teleport Prohibition equipment#1", bc_self );
+		cloakonnpc "Teleport Prohibition equipment#1", getcharid(0);
 		sleep2 1000;
 		mes "[Arivero Yurhik]";
 		mes "Great! We destroyed the equipment.";
@@ -8453,25 +8525,29 @@ einbech,212,212,6	script	Arivero Yurhik#TFQ04	HIDDEN_WARP_NPC,{		// 4_M_GUNSLING
 		mes "[Arivero Yurhik]";
 		mes "We destroyed the prohibition equipment. Now let's go back to Clana Nemieri.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "Arivero Yurhik#TFQ04", bc_self );
+		cloakonnpc "Arivero Yurhik#TFQ04", getcharid(0);
 		end;
 	}
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 einbech,215,210,0	script	Einbech Prohibition equipment	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
 	if (yurhik_quest < 4)
-		classchange( 4_M_GUNSLINGER, "Arivero Yurhik#TFQ04", bc_self );
+		cloakoffnpc "Arivero Yurhik#TFQ04", getcharid(0);
 	if (yurhik_quest == 3)
-		classchange( 2_MONEMUS, "Teleport Prohibition equipment#1", bc_self );
+		cloakoffnpc "Teleport Prohibition equipment#1", getcharid(0);
 	end;
 }
 
-einbech,215,210,4	duplicate(dummy_npc)	Teleport Prohibition equipment#1	HIDDEN_WARP_NPC		// 2_MONEMUS
+einbech,215,210,4	duplicate(dummy_cloaked_npc)	Teleport Prohibition equipment#1	2_MONEMUS
 
 
-lighthalzen,135,233,6	script	Arivero Yurhik#TFQ07	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGER
+lighthalzen,135,233,6	script	Arivero Yurhik#TFQ07	4_M_GUNSLINGER,{
 	if (yurhik_quest == 5) {
 		if (countitem(995) < 1 || countitem(996) < 3) {
 			mes "[Arivero Yurhik]";
@@ -8492,7 +8568,7 @@ lighthalzen,135,233,6	script	Arivero Yurhik#TFQ07	HIDDEN_WARP_NPC,{		// 4_M_GUNS
 			mes "Oops! There's someone passing by.";
 			mes "I might look suspicious, so I will hide myself.";
 			close2;
-			classchange( HIDDEN_WARP_NPC, "Arivero Yurhik#TFQ07", bc_self );
+			cloakonnpc "Arivero Yurhik#TFQ07", getcharid(0);
 			end;
 		}
 		mes "[Arivero Yurhik]";
@@ -8558,9 +8634,13 @@ lighthalzen,135,233,6	script	Arivero Yurhik#TFQ07	HIDDEN_WARP_NPC,{		// 4_M_GUNS
 		mes "To avoid getting caught, let's scatter.";
 		mes "See you in Clana Nemieri.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "Arivero Yurhik#TFQ07", bc_self );
+		cloakonnpc "Arivero Yurhik#TFQ07", getcharid(0);
 		end;
 	}
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 lighthalzen,137,231,0	script	Rihrtarzen Prohibition equipment 	HIDDEN_WARP_NPC,5,5,{
@@ -8569,7 +8649,7 @@ OnTouch:
 	if (yurhik_quest == 5) {
 		mes "Is this it? The mansion surrounded by water? According to the condition, it seems like it.";
 		next;
-		classchange( 4_M_GUNSLINGER, "Arivero Yurhik#TFQ07", bc_self );
+		cloakoffnpc "Arivero Yurhik#TFQ07", getcharid(0);
 		npctalk "Oops?! My hot friend has already arrived.", "Arivero Yurhik#TFQ07", bc_self;
 		mes "[Arivero Yurhik]";
 		mes "Oops?! My hot friend has already arrived.";
@@ -8578,10 +8658,10 @@ OnTouch:
 	end;
 }
 
-lighthalzen,137,231,0	duplicate(dummy_npc)	Teleport Prohibition equipment#2	HIDDEN_WARP_NPC		// 2_MONEMUS
+lighthalzen,137,231,0	duplicate(dummy_cloaked_npc)	Teleport Prohibition equipment#2	2_MONEMUS
 
 
-yuno,204,226,6	script	Arivero Yurhik#TFQ10	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGER
+yuno,204,226,6	script	Arivero Yurhik#TFQ10	4_M_GUNSLINGER,{
 	if (yurhik_quest == 8) {
 		mes "[Arivero Yurhik]";
 		mes "Welcome, pal! I have just arrived now. I summoned the equipment and mounted it to prevent from disappearing.";
@@ -8620,7 +8700,7 @@ yuno,204,226,6	script	Arivero Yurhik#TFQ10	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGER
 		npctalk "Bang!", "Teleport Prohibition equipment#3", bc_self;
 		sleep2 1000;
 		specialeffect EF_LORD, AREA, "Teleport Prohibition equipment#3";
-		classchange( HIDDEN_WARP_NPC, "Teleport Prohibition equipment#3", bc_self );
+		cloakonnpc "Teleport Prohibition equipment#3", getcharid(0);
 		mes "[Arivero Yurhik]";
 		mes "We destroyed the prohibition equipment and there appear to be.. no eyewitnesses. Just in case, let's scatter and move to Einbroch.";
 		next;
@@ -8633,26 +8713,30 @@ yuno,204,226,6	script	Arivero Yurhik#TFQ10	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGER
 		mes "Oh! I haven't told you the location.";
 		mes "It is the place where Einbroch Wind turbine is located. You bring three Flame Hearts and one remaining Great Nature. We will use them to destroy the equipment.";
 		next;
-		classchange( HIDDEN_WARP_NPC, "Arivero Yurhik#TFQ10", bc_self );
+		cloakonnpc "Arivero Yurhik#TFQ10", getcharid(0);
 		mes "Vero disappeared in a hurry, as if he was being chased by something. Take three Flame Hearts and one Great Nature and go to Einbroch.";
 		close;
 	}
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 yuno,206,224,0	script	Yuno Prohibition equipment	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
 	if (yurhik_quest == 8) {
-		classchange( 4_M_GUNSLINGER, "Arivero Yurhik#TFQ10", bc_self );
-		classchange( 2_MONEMUS, "Teleport Prohibition equipment#3", bc_self );
+		cloakoffnpc "Arivero Yurhik#TFQ10", getcharid(0);
+		cloakoffnpc "Teleport Prohibition equipment#3", getcharid(0);
 	}
 	end;
 }
 
-yuno,206,224,0	duplicate(dummy_npc)	Teleport Prohibition equipment#3	HIDDEN_WARP_NPC		// 2_MONEMUS
+yuno,206,224,0	duplicate(dummy_cloaked_npc)	Teleport Prohibition equipment#3	2_MONEMUS
 
 
-einbroch,262,42,4	script	Arivero Yurhik#TFQ13	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGER
+einbroch,262,42,4	script	Arivero Yurhik#TFQ13	4_M_GUNSLINGER,{
 	if (yurhik_quest == 9) {
 		mes "[Arivero Yurhik]";
 		mes "have you brought three Flame Hearts and one Great Nature?";
@@ -8671,7 +8755,7 @@ einbroch,262,42,4	script	Arivero Yurhik#TFQ13	HIDDEN_WARP_NPC,{		// 4_M_GUNSLING
 		mes "His voice betrays his panic. And he also asked me to do the job that he had been doing by himself. Is there something wrong? I was curious. I broke the Great Nature into pieces as he asked.";
 		next;
 		specialeffect EF_SEISMICWEAPON, AREA, "Teleport Prohibition equipment#4";
-		classchange( 2_MONEMUS, "Teleport Prohibition equipment#4", bc_self );
+		cloakoffnpc "Teleport Prohibition equipment#4", getcharid(0);
 		emotion ET_BLABLA;
 		mes "[Arivero Yurhik]";
 		mes "Now! Time to use the Flame Heart!";
@@ -8700,7 +8784,7 @@ einbroch,262,42,4	script	Arivero Yurhik#TFQ13	HIDDEN_WARP_NPC,{		// 4_M_GUNSLING
 		npctalk "Arrggh.. I can only go this far......", "", bc_self;
 		sleep2 1000;
 		specialeffect EF_LORD, AREA, "Teleport Prohibition equipment#4";
-		classchange( HIDDEN_WARP_NPC, "Teleport Prohibition equipment#4", bc_self );
+		cloakonnpc "Teleport Prohibition equipment#4", getcharid(0);
 		sleep2 1000;
 		mes "The equipment was destroyed quickly. Then I realized that Vero looked a bit abnormal. Is he sick or something?";
 		next;
@@ -8728,7 +8812,7 @@ einbroch,262,42,4	script	Arivero Yurhik#TFQ13	HIDDEN_WARP_NPC,{		// 4_M_GUNSLING
 		specialeffect EF_MAPPILLAR;
 		sleep2 4000;
 		npctalk "Oh..", "Arivero Yurhik#TFQ13", bc_self;
-		classchange( HIDDEN_WARP_NPC, "Arivero Yurhik#TFQ13", bc_self );
+		cloakonnpc "Arivero Yurhik#TFQ13", getcharid(0);
 		delitem 997,1;// Great Nature
 		delitem 994,3;// Flame Heart
 		erasequest 5736;	// To Einbroch
@@ -8738,19 +8822,23 @@ einbroch,262,42,4	script	Arivero Yurhik#TFQ13	HIDDEN_WARP_NPC,{		// 4_M_GUNSLING
 		mes "Vero's gone. Shall I go back to Clana Nemieri?";
 		close;
 	}
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 einbroch,260,40,0	script	Einbroch Prohibition equipment	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
 	if (yurhik_quest == 9) {
-		classchange( 4_M_GUNSLINGER, "Arivero Yurhik#TFQ13", bc_self );
+		cloakoffnpc "Arivero Yurhik#TFQ13", getcharid(0);
 		npctalk "Friend! You've arrived!", "Arivero Yurhik#TFQ13", bc_self;
 	}
 	end;
 }
 
-einbroch,260,40,0	duplicate(dummy_npc)	Teleport Prohibition equipment#4	HIDDEN_WARP_NPC		// 2_MONEMUS
+einbroch,260,40,0	duplicate(dummy_cloaked_npc)	Teleport Prohibition equipment#4	2_MONEMUS
 
 
 rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
@@ -9727,14 +9815,14 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 				}
 			}
 		case 1:
-			classchange( 4_CAT, "Charity#16.2rm", bc_self );
+			cloakoffnpc "Charity#16.2rm", getcharid(0);
 			mes "[Charity]";
 			mes "Meow~";
 			if (isbegin_quest(16041) == 1) {// daily
-				classchange( 4_F_REBELLION2, "Morana Rudel#16.2rm", bc_self );
+				cloakoffnpc "Morana Rudel#16.2rm", getcharid(0);
 				npctalk "Miss Charity! She's ruturned!", "Morana Rudel#16.2rm", bc_self;
 				sleep2 1000;
-				classchange( 4_M_REBELLION3, "Nice Looking Gun#16.2rm", bc_self );
+				cloakoffnpc "Nice Looking Gun#16.2rm", getcharid(0);
 				npctalk "Miss Charity! You are beautiful as usual!", "Nice Looking Gun#16.2rm", bc_self;
 				sleep2 1000;
 				npctalk "Miss Charity! I love you!!!", "Morana Rudel#16.2rm", bc_self;
@@ -9804,8 +9892,8 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 				sleep2 1000;
 				npctalk "Oh, Miss Charity. Look at her shape and voice. She is great!";
 			}
-			classchange( HIDDEN_WARP_NPC, "Morana Rudel#16.2rm", bc_self );
-			classchange( HIDDEN_WARP_NPC, "Nice Looking Gun#16.2rm", bc_self );
+			cloakonnpc "Morana Rudel#16.2rm", getcharid(0);
+			cloakonnpc "Nice Looking Gun#16.2rm", getcharid(0);
 			if (countitem(25162) > 0)
 				delitem 25162,1;	// Crispy_Anchovy
 			erasequest 16044;// In charge of Charity
@@ -9815,7 +9903,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 			next;
 			mes "[Charity]";
 			mes "Meow~";
-			classchange( HIDDEN_WARP_NPC, "Charity#16.2rm", bc_self );
+			cloakonnpc "Charity#16.2rm", getcharid(0);
 			close;
 		case 2:
 			end;
@@ -9876,9 +9964,9 @@ OnInit:
 }
 
 // Milo River - Cat Event
-rebel_in,105,28,5	duplicate(dummy_npc)	Morana Rudel#16.2rm	HIDDEN_WARP_NPC			// 4_F_REBELLION2
-rebel_in,104,24,7	duplicate(dummy_npc)	Nice Looking Gun#16.2rm	HIDDEN_WARP_NPC		// 4_M_REBELLION3
-rebel_in,106,25,3	duplicate(dummy_npc)	Charity#16.2rm	HIDDEN_WARP_NPC				// 4_CAT
+rebel_in,105,28,5	duplicate(dummy_cloaked_npc)	Morana Rudel#16.2rm	4_F_REBELLION2
+rebel_in,104,24,7	duplicate(dummy_cloaked_npc)	Nice Looking Gun#16.2rm	4_M_REBELLION3
+rebel_in,106,25,3	duplicate(dummy_cloaked_npc)	Charity#16.2rm	4_CAT
 
 // Milo - Cat
 einbech,34,209,3	script	Empty bench#16.2rm2	HIDDEN_NPC,{
@@ -9904,9 +9992,9 @@ einbech,34,209,3	script	Empty bench#16.2rm2	HIDDEN_NPC,{
 			close;
 		}
 		if (strnpcinfo(0) == "Empty bench#16.2rm2")
-			classchange( 4_CAT, "Charity#16.2rmb2", bc_self );
+			cloakoffnpc "Charity#16.2rmb2", getcharid(0);
 		else
-			classchange( 4_CAT, "Charity#16.2rmb3", bc_self );
+			cloakoffnpc "Charity#16.2rmb3", getcharid(0);
 		mes "[Charity]";
 		mes "Meow~";
 		next;
@@ -9920,9 +10008,9 @@ einbech,34,209,3	script	Empty bench#16.2rm2	HIDDEN_NPC,{
 		close2;
 	}
 	if (strnpcinfo(0) == "Empty bench#16.2rm2")
-		classchange( HIDDEN_WARP_NPC, "Charity#16.2rmb2", bc_self );
+		cloakonnpc "Charity#16.2rmb2", getcharid(0);
 	else
-		classchange( HIDDEN_WARP_NPC, "Charity#16.2rmb3", bc_self );
+		cloakonnpc "Charity#16.2rmb3", getcharid(0);
 	end;
 
 OnTimer30000:
@@ -9932,8 +10020,8 @@ OnTimer30000:
 }
 einbech,144,98,3	duplicate(Empty bench#16.2rm2)	Empty bench#16.2rm3	HIDDEN_NPC
 
-einbech,34,203,7	duplicate(dummy_npc)	Charity#16.2rmb2	HIDDEN_WARP_NPC		// 4_CAT
-einbech,141,98,5	duplicate(dummy_npc)	Charity#16.2rmb3	HIDDEN_WARP_NPC		// 4_CAT
+einbech,34,203,7	duplicate(dummy_cloaked_npc)	Charity#16.2rmb2	4_CAT
+einbech,141,98,5	duplicate(dummy_cloaked_npc)	Charity#16.2rmb3	4_CAT
 
 rebel_in,90,51,5	script	Rachel Smith#16.2rm	4_F_GUNSLINGER2,{
 	if (terra_gloria_main < 17) {
@@ -10758,9 +10846,9 @@ rebel_in,89,46,3	script	Rotten#16nego01	4_M_SITDOWN,{
 	close;
 }
 
-rebel_in,104,37,5	duplicate(dummy_npc)	Daryl#16nego01	HIDDEN_WARP_NPC		// 4_M_REBELLION2
-rebel_in,103,37,7	duplicate(dummy_npc)	Trainee#16nego01	HIDDEN_WARP_NPC		// 4_F_GUNSLINGER3
-rebel_in,104,39,5	duplicate(dummy_npc)	Trainee#16nego02	HIDDEN_WARP_NPC		// 4_M_GUNSLINGER3
+rebel_in,104,37,5	duplicate(dummy_cloaked_npc)	Daryl#16nego01	4_M_REBELLION2
+rebel_in,103,37,7	duplicate(dummy_cloaked_npc)	Trainee#16nego01	4_F_GUNSLINGER3
+rebel_in,104,39,5	duplicate(dummy_cloaked_npc)	Trainee#16nego02	4_M_GUNSLINGER3
 
 rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 	if (checkweight(25155,3) == 0 || (MaxWeight - Weight) < 1000) {
@@ -11012,7 +11100,7 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 		mes "[Master]";
 		mes "By the way, he should be here now.";
 		next;
-		classchange( 4_M_REBELLION2, "Daryl#16nego01", bc_self );
+		cloakoffnpc "Daryl#16nego01", getcharid(0);
 		mes "[Daryl]";
 		mes "I'm here.";
 		next;
@@ -11092,8 +11180,8 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 		mes "[Master]";
 		mes "We will keep your Lady for a while. You reflect on yourself in the training room for some time!";
 		next;
-		classchange( 4_F_GUNSLINGER3, "Trainee#16nego01", bc_self );
-		classchange( 4_F_GUNSLINGER3, "Trainee#16nego02", bc_self );
+		cloakoffnpc "Trainee#16nego01", getcharid(0);
+		cloakoffnpc "Trainee#16nego02", getcharid(0);
 		mes "[Master]";
 		mes "Trainees!!!";
 		npctalk "Yes!!", "Trainee#16nego01", bc_self;
@@ -11111,9 +11199,9 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 		npctalk "Let's go.", "Trainee#16nego01", bc_self;
 		npctalk "This time, I will make no mistake in shooting.", "Trainee#16nego02", bc_self;
 		next;
-		classchange( HIDDEN_WARP_NPC, "Trainee#16nego01", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Trainee#16nego02", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Daryl#16nego01", bc_self );
+		cloakonnpc "Trainee#16nego01", getcharid(0);
+		cloakonnpc "Trainee#16nego02", getcharid(0);
+		cloakonnpc "Daryl#16nego01", getcharid(0);
 		mes "[Master]";
 		mes "You must be so tired by now. Take some rest. Can we count on you tomorrow? If you are interested, come back to us after the dawn.";
 		emotion ET_SWEAT, playerattached();
@@ -11186,15 +11274,15 @@ ein_fild09,335,239,5	duplicate(Suspicious Heap of Earth#1)	Suspicious Heap of Ea
 ein_fild09,332,216,5	duplicate(Suspicious Heap of Earth#1)	Suspicious Heap of Earth#13	4_SOIL
 ein_fild09,135,305,5	duplicate(Suspicious Heap of Earth#1)	Suspicious Heap of Earth#14	4_SOIL
 
-rebel_in,90,60,3	duplicate(dummy_npc)	Magenta#16nego01	HIDDEN_WARP_NPC		// 4_M_GUNSLINGER2
-rebel_in,90,62,3	duplicate(dummy_npc)	Gonie#16nego04	HIDDEN_WARP_NPC			// 4_M_GONY
-rebel_in,94,71,5	duplicate(dummy_npc)	Denny#16nego01	HIDDEN_WARP_NPC			// 4_M_REBELLION3
-rebel_in,95,65,3	duplicate(dummy_npc)	Denny#16nego02	HIDDEN_WARP_NPC			// 4_M_REBELLION3
-rebel_in,90,62,3	duplicate(dummy_npc)	Denny#16nego03	HIDDEN_WARP_NPC			// 4_M_REBELLION3
-rebel_in,90,66,3	duplicate(dummy_npc)	Cyan#16nego01	HIDDEN_WARP_NPC			// 4_F_REBELLION3
-rebel_in,90,59,3	duplicate(dummy_npc)	Cyan#16nego02	HIDDEN_WARP_NPC			// 4_F_REBELLION3
+rebel_in,90,60,3	duplicate(dummy_cloaked_npc)	Magenta#16nego01	4_M_GUNSLINGER2
+rebel_in,90,62,3	duplicate(dummy_cloaked_npc)	Gonie#16nego04	4_M_GONY
+rebel_in,94,71,5	duplicate(dummy_cloaked_npc)	Denny#16nego01	4_M_REBELLION3
+rebel_in,95,65,3	duplicate(dummy_cloaked_npc)	Denny#16nego02	4_M_REBELLION3
+rebel_in,90,62,3	duplicate(dummy_cloaked_npc)	Denny#16nego03	4_M_REBELLION3
+rebel_in,90,66,3	duplicate(dummy_cloaked_npc)	Cyan#16nego01	4_F_REBELLION3
+rebel_in,90,59,3	duplicate(dummy_cloaked_npc)	Cyan#16nego02	4_F_REBELLION3
 
-rebel_in,87,68,5	duplicate(dummy_npc)	#16negofire	HIDDEN_WARP_NPC			// CLEAR_NPC
+rebel_in,87,68,5	duplicate(dummy_cloaked_npc)	#16negofire	CLEAR_NPC
 
 rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 	if (checkweight(501,1) == 0) {
@@ -11310,7 +11398,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "...You told me I had to come here, didn't you?";
 			next;
-			classchange( 4_M_REBELLION3, "Denny#16nego01", bc_self );
+			cloakoffnpc "Denny#16nego01", getcharid(0);
 			mes "[Denny]";
 			mes "Here come Denny again, the superstar!!!";
 			next;
@@ -11318,8 +11406,8 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Well, speak of the devil.";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Denny#16nego01", bc_self );
-			classchange( 4_M_REBELLION3, "Denny#16nego02", bc_self );
+			cloakonnpc "Denny#16nego01", getcharid(0);
+			cloakoffnpc "Denny#16nego02", getcharid(0);
 			mes "[Denny]";
 			mes "Yikes! It's cold!";
 			next;
@@ -11335,8 +11423,8 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "It's me.";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Denny#16nego02", bc_self );
-			classchange( 4_M_REBELLION3, "Denny#16nego03", bc_self );
+			cloakonnpc "Denny#16nego02", getcharid(0);
+			cloakoffnpc "Denny#16nego03", getcharid(0);
 			mes "[Denny]";
 			mes "Hey! How can you do this to me?";
 			emotion ET_FRET, getnpcid(0, "Denny#16nego03");
@@ -11534,7 +11622,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Denny]";
 				mes "I'm so sad!!!!!!";
 				next;
-				classchange( HIDDEN_WARP_NPC, "Denny#16nego03", bc_self );
+				cloakonnpc "Denny#16nego03", getcharid(0);
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "Phew, he's so rude. We have no choice. I will look for someone else to do it. You don't have to worry about this.";
@@ -11556,7 +11644,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Denny]";
 			mes "Yes! We will be waiting!";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Denny#16nego03", bc_self );
+			cloakonnpc "Denny#16nego03", getcharid(0);
 			cutin "16loo_01.bmp",2;
 			mes "[Rookie]";
 			mes "Be careful!";
@@ -11567,12 +11655,12 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Great job, adventurer. I must have been hard for you to take that job all of a sudden.";
 			next;
-			classchange( 4_M_REBELLION3, "Denny#16nego01", bc_self );
+			cloakoffnpc "Denny#16nego01", getcharid(0);
 			mes "[Denny]";
 			mes "Here come Denny again, the superstar!!!";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Denny#16nego01", bc_self );
-			classchange( 4_M_REBELLION3, "Denny#16nego03", bc_self );
+			cloakonnpc "Denny#16nego01", getcharid(0);
+			cloakoffnpc "Denny#16nego03", getcharid(0);
 			mes "[Denny]";
 			mes "Adventurer! Have you brought them all? Let me see.";
 			next;
@@ -11589,7 +11677,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Denny]";
 				mes "Superstar Denny is going home now!";
 				next;
-				classchange( HIDDEN_WARP_NPC, "Denny#16nego03", bc_self );
+				cloakonnpc "Denny#16nego03", getcharid(0);
 				cutin "16loo_01.bmp",2;
 				mes "[Rookie]";
 				mes "What kind of superstar is that? After all, we are counting on you. He is more persistent than he looks. So I am saying this for you.";
@@ -11608,7 +11696,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Denny]";
 				mes "Superstar Denny is going home now!";
 				next;
-				classchange( HIDDEN_WARP_NPC, "Denny#16nego03", bc_self );
+				cloakonnpc "Denny#16nego03", getcharid(0);
 				cutin "16loo_01.bmp",2;
 				mes "[Rookie]";
 				mes "What kind of superstar is that? After all, we are counting on you. He is more persistent than he looks. So I am saying this for you.";
@@ -11623,7 +11711,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Denny]";
 			mes "Then I will go and prepare for repairing! I will count on you again!";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Denny#16nego03", bc_self );
+			cloakonnpc "Denny#16nego03", getcharid(0);
 			cutin "16loo_03.bmp",2;
 			mes "[Rookie]";
 			mes "He went back only after saying what he wants. How spoiled! But I didn't educate him like that.";
@@ -11655,7 +11743,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "...You told me I had to come here, didn't you?";
 			next;
-			classchange( 4_F_REBELLION3, "Cyan#16nego02", bc_self );
+			cloakoffnpc "Cyan#16nego02", getcharid(0);
 			mes "[Cyan]";
 			mes "Yikes, it's so cold!";
 			next;
@@ -11674,16 +11762,16 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "Oh! When did I get dressed like this!";
 			emotion ET_HUK;
 			next;
-			classchange( HIDDEN_WARP_NPC, "Cyan#16nego02", bc_self );
-			classchange( 4_F_REBELLION3, "Cyan#16nego01", bc_self );
+			cloakonnpc "Cyan#16nego02", getcharid(0);
+			cloakoffnpc "Cyan#16nego01", getcharid(0);
 			mes "[Cyan]";
 			mes "Let's see... I thought so. The fireplace is weaker now. No firewood?";
 			next;
 			mes "[Rookie]";
 			mes "Well, it's true.";
 			next;
-			classchange( 4_F_REBELLION3, "Cyan#16nego02", bc_self );
-			classchange( HIDDEN_WARP_NPC, "Cyan#16nego01", bc_self );
+			cloakoffnpc "Cyan#16nego02", getcharid(0);
+			cloakonnpc "Cyan#16nego01", getcharid(0);
 			mes "[Cyan]";
 			mes "Once this last firewood is burnt out, I will die... Last... firewood...";
 			next;
@@ -11772,7 +11860,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Cyan]";
 				mes "My dear, come back if you miss me!";
 				next;
-				classchange( HIDDEN_WARP_NPC, "Cyan#16nego02", bc_self );
+				cloakonnpc "Cyan#16nego02", getcharid(0);
 				mes "[" + strcharinfo(0) + "]";
 				mes "Yes. I will.";
 				close3;
@@ -11818,7 +11906,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "Be careful, my dear~";
 			next;
 			cutin "16loo_01.bmp",2;
-			classchange( HIDDEN_WARP_NPC, "Cyan#16nego02", bc_self );
+			cloakonnpc "Cyan#16nego02", getcharid(0);
 			emotion ET_PROFUSELY_SWEAT, playerattached();
 			mes "[Rookie]";
 			mes "Phew... We will count on you anyway. Regardless of what that fellow told you, everyone will get a cold once the fire goes out.";
@@ -11829,7 +11917,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Adventurer, seems like you gave so much effort!";
 			next;
-			classchange( 4_F_REBELLION3, "Cyan#16nego02", bc_self );
+			cloakoffnpc "Cyan#16nego02", getcharid(0);
 			mes "[Cyan]";
 			mes "Welcome back, dear!!! Have you got them all for me? Right?";
 			next;
@@ -11843,7 +11931,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Cyan]";
 				mes "And don't forget to defeat about 10 Waste Stoves! I will be sleeping in by bed. It's so cold!";
 				next;
-				classchange( HIDDEN_WARP_NPC, "Cyan#16nego02", bc_self );
+				cloakonnpc "Cyan#16nego02", getcharid(0);
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "That's so spoiled. Adventurer, We will count on you again. If you don't bring them, Cyan will pester you all day long.";
@@ -11859,7 +11947,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Cyan]";
 				mes "Defeat ^0000cd10 Waste Stoves^000000. I will be sleeping in by bed. It's so cold!";
 				next;
-				classchange( HIDDEN_WARP_NPC, "Cyan#16nego02", bc_self );
+				cloakonnpc "Cyan#16nego02", getcharid(0);
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "That's so spoiled. Adventurer, We will count on you again. If you don't bring them, Cyan will pester you all day long.";
@@ -11868,7 +11956,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Cyan]";
 			mes "Wow! You've brought all of them! My dear, you are so reliable!";
 			next;
-			classchange( CLEAR_NPC, "#16negofire", bc_self );
+			cloakoffnpc "#16negofire", getcharid(0);
 			mes "[Cyan]";
 			mes "Okay. Put the wood and coal in... Fire!!!!!!!!";
 			specialeffect EF_FIREWALL, AREA, "#16negofire";
@@ -11912,8 +12000,8 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Cyan]";
 			mes "Now I will go in and sleep. See you!";
 			next;
-			classchange( HIDDEN_WARP_NPC, "#16negofire", bc_self );
-			classchange( HIDDEN_WARP_NPC, "Cyan#16nego02", bc_self );
+			cloakonnpc "#16negofire", getcharid(0);
+			cloakonnpc "Cyan#16nego02", getcharid(0);
 			mes "[Rookie]";
 			mes "Phew, I am exhausted as well. Please take a good rest now and come back after the ^0000cddawn^000000.";
 			erasequest 14604;// National Fuel Solar Fuel
@@ -11940,7 +12028,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "... You told me I had to come here, didn't you?";
 			next;
-			classchange( 4_M_GUNSLINGER2, "Magenta#16nego01", bc_self );
+			cloakoffnpc "Magenta#16nego01", getcharid(0);
 			mes "[Magenta]";
 			mes "Twinkle twinkle little star~ My shooting star, you are still beautiful.";
 			next;
@@ -12072,7 +12160,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Magenta]";
 				mes "I see... Please come back if you remember it later on. I will be waiting for you. Bye... then.";
 				next;
-				classchange( HIDDEN_WARP_NPC, "Magenta#16nego01", bc_self );
+				cloakonnpc "Magenta#16nego01", getcharid(0);
 				mes "[Rookie]";
 				mes "See you later. Be careful.";
 				close3;
@@ -12095,7 +12183,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Magenta]";
 			mes "Please bring ^0000cd 10 pieces of crystal and 10 pieces of black crystal^000000. You can get them by defeating ^0000cdObsidians and Minerals^000000. Be careful!";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Magenta#16nego01", bc_self );
+			cloakonnpc "Magenta#16nego01", getcharid(0);
 			mes "[Rookie]";
 			mes "Phew. He's so loud. I will count on you, adventurer.";
 			setquest 14605;// Sparkling things
@@ -12106,7 +12194,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Welcome back, adventurer. I know you are suffering from the weird guy.";
 			next;
-			classchange( 4_M_GUNSLINGER2, "Magenta#16nego01", bc_self );
+			cloakoffnpc "Magenta#16nego01", getcharid(0);
 			mes "[Magenta]";
 			mes "You've come! Have you brought everything I asked for? Let me see!";
 			next;
@@ -12120,7 +12208,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Magenta]";
 				mes "You can get them from ^0000cdObsidians and Mineral^000000. So defeat them. I have to go now. See you!";
 				next;
-				classchange( HIDDEN_WARP_NPC, "Magenta#16nego01", bc_self );
+				cloakonnpc "Magenta#16nego01", getcharid(0);
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "Phew, so complicated. We will count on you. That fellow is so persistent.";
@@ -12136,7 +12224,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Magenta]";
 				mes "Sorry to request you again, adventurer. Please defeat ^0000cd10 Obsidians and 10 Minerals^000000. I will count on you.";
 				next;
-				classchange( HIDDEN_WARP_NPC, "Magenta#16nego01", bc_self );
+				cloakonnpc "Magenta#16nego01", getcharid(0);
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "Phew, so complicated. We will count on you. That fellow is so persistent.";
@@ -12187,7 +12275,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Magenta]";
 			mes "Thank you so much! I should start working. Be careful!";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Magenta#16nego01", bc_self );
+			cloakonnpc "Magenta#16nego01", getcharid(0);
 			cutin "16loo_03.bmp",2;
 			mes "[Rookie]";
 			mes "That fellow is really loud, isn't he? I apologize on behalf of him. Please take a good rest and come back ^0000cdafter the dawn^000000.";
@@ -12213,7 +12301,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "...You told me I had to come here, didn't you?";
 			next;
-			classchange( 4_M_REBELLION3, "Denny#16nego01", bc_self );
+			cloakoffnpc "Denny#16nego01", getcharid(0);
 			mes "[Denny]";
 			mes "Here come Denny again, the superstar!!!";
 			next;
@@ -12235,7 +12323,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Denny]";
 			mes "Cheer up!";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Denny#16nego03", bc_self );
+			cloakonnpc "Denny#16nego03", getcharid(0);
 			mes "[Rookie]";
 			mes "Ouch, I'm so busy. Sorry to request you again. Go, adventurer!";
 			erasequest 14609;// Quiet time
@@ -12247,15 +12335,15 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Welcome back, adventurer. Thank you for your support. Our silly kid gave you some trouble.";
 			next;
-			classchange( 4_M_REBELLION3, "Denny#16nego01", bc_self );
+			cloakoffnpc "Denny#16nego01", getcharid(0);
 			mes "[Denny]";
 			mes "The adventurer is here?";
 			next;
 			mes "[Denny]";
 			mes "Here come Denny again, the superstar!!!";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Denny#16nego01", bc_self );
-			classchange( 4_M_REBELLION3, "Denny#16nego03", bc_self );
+			cloakonnpc "Denny#16nego01", getcharid(0);
+			cloakoffnpc "Denny#16nego03", getcharid(0);
 			mes "[Denny]";
 			mes "Adventurer! Have you brought them all? Let me see.";
 			next;
@@ -12272,7 +12360,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Denny]";
 				mes "Superstar Denny is going home now!";
 				next;
-				classchange( HIDDEN_WARP_NPC, "Denny#16nego03", bc_self );
+				cloakonnpc "Denny#16nego03", getcharid(0);
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "What a spoiled kid. I apologize on behalf of him. We will count on you for the rest items.";
@@ -12291,7 +12379,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Denny]";
 				mes "Superstar Denny is going home now!";
 				next;
-				classchange( HIDDEN_WARP_NPC, "Denny#16nego03", bc_self );
+				cloakonnpc "Denny#16nego03", getcharid(0);
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "What a spoiled kid. I apologize on behalf of him. We will count on you for the rest items.";
@@ -12306,7 +12394,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Denny]";
 			mes "Then I will go and prepare for repairing! I will count on you again!";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Denny#16nego03", bc_self );
+			cloakonnpc "Denny#16nego03", getcharid(0);
 			cutin "16loo_03.bmp",2;
 			mes "[Rookie]";
 			mes "He went back only after saying what he wants. How spoiled! But I didn't educate him like that.";
@@ -12336,7 +12424,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "...You told me I had to come here, didn't you?";
 			next;
-			classchange( 4_F_REBELLION3, "Cyan#16nego02", bc_self );
+			cloakoffnpc "Cyan#16nego02", getcharid(0);
 			mes "[Cyan]";
 			mes "Yikes, it's so cold!";
 			next;
@@ -12355,16 +12443,16 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "Oh! When did I get dressed like this!";
 			emotion ET_HUK;
 			next;
-			classchange( HIDDEN_WARP_NPC, "Cyan#16nego02", bc_self );
-			classchange( 4_F_REBELLION3, "Cyan#16nego01", bc_self );
+			cloakonnpc "Cyan#16nego02", getcharid(0);
+			cloakoffnpc "Cyan#16nego01", getcharid(0);
 			mes "[Cyan]";
 			mes "Let's see... I thought so. The fireplace is weaker now. No firewood?";
 			next;
 			mes "[Rookie]";
 			mes "Well, it's true.";
 			next;
-			classchange( 4_F_REBELLION3, "Cyan#16nego02", bc_self );
-			classchange( HIDDEN_WARP_NPC, "Cyan#16nego01", bc_self );
+			cloakoffnpc "Cyan#16nego02", getcharid(0);
+			cloakonnpc "Cyan#16nego01", getcharid(0);
 			mes "[Cyan]";
 			mes "Once this last firewood is burnt out, I will die... Last... firewood...";
 			next;
@@ -12477,7 +12565,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Cyan]";
 			mes "Be careful, my dear~";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Cyan#16nego02", bc_self );
+			cloakonnpc "Cyan#16nego02", getcharid(0);
 			emotion ET_SWEAT, playerattached();
 			mes "[Rookie]";
 			mes "Phew... We will count on you anyway. Regardless of what that fellow told you, everyone will get a cold once the fire goes out.";
@@ -12493,7 +12581,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Cyan]";
 			mes "What? Adventurer? My dear?";
 			next;
-			classchange( 4_F_REBELLION3, "Cyan#16nego02", bc_self );
+			cloakoffnpc "Cyan#16nego02", getcharid(0);
 			mes "[Cyan]";
 			mes "My dear~~~ You're late! I've been waiting for you for a long time! Have you brought the right one again? I mean, the firewood.";
 			next;
@@ -12507,7 +12595,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Cyan]";
 				mes "And don't forget to defeat about 10 Waste Stoves! I will be sleeping in by bed. It's so cold!";
 				next;
-				classchange( HIDDEN_WARP_NPC, "Cyan#16nego02", bc_self );
+				cloakonnpc "Cyan#16nego02", getcharid(0);
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "Sorry. Some of our kids are spoiled... We will count on you.";
@@ -12523,7 +12611,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Cyan]";
 				mes "Defeat ^0000cd10 Waste Stoves^000000. I will be sleeping in by bed. It's so cold!";
 				next;
-				classchange( HIDDEN_WARP_NPC, "Cyan#16nego02", bc_self );
+				cloakonnpc "Cyan#16nego02", getcharid(0);
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "Sorry. Some of our kids are spoiled... We will count on you.";
@@ -12532,9 +12620,9 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Cyan]";
 			mes "Burnt Tree and coal, you have everything! That's why I like you, dear!";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Cyan#16nego02", bc_self );
-			classchange( 4_F_REBELLION3, "Cyan#16nego01", bc_self );
-			classchange( CLEAR_NPC, "#16negofire", bc_self );
+			cloakonnpc "Cyan#16nego02", getcharid(0);
+			cloakoffnpc "Cyan#16nego01", getcharid(0);
+			cloakoffnpc "#16negofire", getcharid(0);
 			mes "[Cyan]";
 			mes "Okay. Put the wood and coal in... Fire!!!!!!!!";
 			specialeffect EF_FIREWALL, AREA, "#16negofire";
@@ -12542,14 +12630,14 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Cyan]";
 			mes "Oh, it's warm now. As warm as your love~";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Cyan#16nego01", bc_self );
-			classchange( 4_F_REBELLION3, "Cyan#16nego02", bc_self );
-			classchange( HIDDEN_WARP_NPC, "#16negofire", bc_self );
+			cloakonnpc "Cyan#16nego01", getcharid(0);
+			cloakoffnpc "Cyan#16nego02", getcharid(0);
+			cloakonnpc "#16negofire", getcharid(0);
 			next;
 			mes "[Cyan]";
 			mes "Thank you so much! I will count you again later on! MY DEAR!";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Cyan#16nego02", bc_self );
+			cloakonnpc "Cyan#16nego02", getcharid(0);
 			cutin "16loo_03.bmp",2;
 			mes "[Rookie]";
 			mes "There he leaves again without saying goodbye to you. Sorry about him. Some of our kids are spoiled. But not every Rebellion is like that.";
@@ -12579,7 +12667,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "...You told me I had to come here, didn't you?";
 			next;
-			classchange( 4_M_GUNSLINGER2, "Magenta#16nego01", bc_self );
+			cloakoffnpc "Magenta#16nego01", getcharid(0);
 			mes "[Magenta]";
 			mes "Wait!!! Adventurer! Please talk to me!";
 			next;
@@ -12595,7 +12683,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Magenta]";
 			mes "Eee you later! I have to go and arrange the stuffs I made. I will count on you!";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Magenta#16nego01", bc_self );
+			cloakonnpc "Magenta#16nego01", getcharid(0);
 			cutin "16loo_03.bmp",2;
 			mes "[Rookie]";
 			mes "Ouch, Sorry to request you again. It must be tough for you now.";
@@ -12608,7 +12696,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Welcome back, adventurer. Thank you for your support. That flake gave you some trouble.";
 			next;
-			classchange( 4_M_GUNSLINGER2, "Magenta#16nego01", bc_self );
+			cloakoffnpc "Magenta#16nego01", getcharid(0);
 			mes "[Magenta]";
 			mes "You've come! Have you brought everything I asked for? Let me see!";
 			next;
@@ -12622,7 +12710,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Magenta]";
 				mes "You can get them from ^0000cdObsidians and Mineral^000000. So defeat them. I have to go now. See you!";
 				next;
-				classchange( HIDDEN_WARP_NPC, "Magenta#16nego01", bc_self );
+				cloakonnpc "Magenta#16nego01", getcharid(0);
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "Sorry. Some of our kids are spoiled... We will count on you.";
@@ -12638,7 +12726,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 				mes "[Magenta]";
 				mes "Sorry to request you again, adventurer. Please defeat ^0000cd10 Obsidians and 10 Minerals^000000. I will count on you.";
 				next;
-				classchange( HIDDEN_WARP_NPC, "Magenta#16nego01", bc_self );
+				cloakonnpc "Magenta#16nego01", getcharid(0);
 				cutin "16loo_03.bmp",2;
 				mes "[Rookie]";
 				mes "Sorry. Some of our kids are spoiled... We will count on you.";
@@ -12650,7 +12738,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Magenta]";
 			mes "Thank you so much! Can I ask you for a favor again next time? This is great!!!";
 			next;
-			classchange( HIDDEN_WARP_NPC, "Magenta#16nego01", bc_self );
+			cloakonnpc "Magenta#16nego01", getcharid(0);
 			cutin "16loo_03.bmp",2;
 			mes "[Rookie]";
 			mes "There he leaves again without saying goodbye to you. Sorry about him. Some of our kids are spoiled. But not every Rebellion is like that.";
@@ -13490,8 +13578,8 @@ OnInit:
 	end;
 }
 
-rebel_in,70,75,1	duplicate(dummy_npc)	Ilya Lebedev#16.2rms	HIDDEN_WARP_NPC		// 4_M_ILYA
-rebel_in,69,75,1	duplicate(dummy_npc)	Jana Levedeva#16.2rms	HIDDEN_WARP_NPC		// 4_F_ANYA
+rebel_in,70,75,1	duplicate(dummy_cloaked_npc)	Ilya Lebedev#16.2rms	4_M_ILYA
+rebel_in,69,75,1	duplicate(dummy_cloaked_npc)	Jana Levedeva#16.2rms	4_F_ANYA
 
 prt_in,165,89,1	script	Librarian in charge of juveniles 	1_F_LIBRARYGIRL,{
 	setarray .@quest_id[0], 16021,16023;
