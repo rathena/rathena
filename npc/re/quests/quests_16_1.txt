@@ -2942,7 +2942,7 @@ prt_cas,309,200,5	script	Royal Head Chef#ep16_1	4_EP16_COOK,{
 		mes "Hurry up!";
 		close3;
 	}
-	if (ep16_cookbs == 4) {
+	if (ep16_cookbs == 12) {
 		mes "[Head Chef]";
 		mes "Oh!";
 		mes "This exquisite taste made by the master!";
@@ -13264,7 +13264,7 @@ prt_cas,89,238,5	script	Lin#ep16_etc02	4_F_ACROSS,{
 }
 
 prt_cas,78,255,3	script	Mayssel#ep16_etc05	4_F_MAYSEL,{
-	if ((eaclass()&EAJ_THIRDMASK) == EAJ_GUILLOTINE_CROSS_T) {
+	if ((eaclass()&EAJ_THIRDMASK) == EAJ_GUILLOTINE_CROSS) {
 		setpcblock PCBLOCK_NPC, true;
 		cutin "gc_mayssel01.bmp",1;
 		sleep2 100;
@@ -13307,7 +13307,7 @@ prt_cas,78,255,3	script	Mayssel#ep16_etc05	4_F_MAYSEL,{
 }
 
 prt_cas,78,252,2	script	Verkhasel#ep_etc06	4_M_GUILLOTINE,{
-	if ((eaclass()&EAJ_THIRDMASK) == EAJ_GUILLOTINE_CROSS_T) {
+	if ((eaclass()&EAJ_THIRDMASK) == EAJ_GUILLOTINE_CROSS) {
 		cutin "gc_verkhasel01.bmp",2;
 		mes "[Verkhasel]";
 		mes "...I don't like a crowded place like this, but I cannot help it when I am on a mission.";
@@ -13336,7 +13336,7 @@ prt_cas,78,252,2	script	Verkhasel#ep_etc06	4_M_GUILLOTINE,{
 }
 
 prt_cas,76,254,5	script	Vicente#ep16_etc07	4_M_HUMAN_02,{
-	if ((eaclass()&EAJ_THIRDMASK) == EAJ_SHADOW_CHASER_T) {
+	if ((eaclass()&EAJ_THIRDMASK) == EAJ_SHADOW_CHASER) {
 		cutin "sc_vicente01.bmp",2;
 		mes "[Vicente]";
 		mes "Oh, is it the first time since our last encounter for your class change?";
@@ -13790,8 +13790,10 @@ prt_cas,343,67,4	script	Uptight Librarian#ep16lug0	1_F_LIBRARYGIRL,{
 		next;
 		mes "[Uptight Librarian]";
 		mes "Then, enjoy the book!";
-		setquest 14500;// Complete checking out the book
-		completequest 14500;// Complete checking out the book
+		if (isbegin_quest(14500) == 0) {
+			setquest 14500;// Complete checking out the book
+			completequest 14500;// Complete checking out the book
+		}
 		getitem 6926,1;// Midgards_Histories
 		close;
 	}
@@ -14109,7 +14111,7 @@ prt_cas,379,124,3	script	Glamorous Girl#pop	4_F_ARUNA_POP,{
 }
 
 prt_cas,368,125,3	script	Dumk#ep16_etc03	4_M_SHADOWCHASER,{
-	if ((eaclass()&EAJ_THIRDMASK) == EAJ_SHADOW_CHASER_T) {
+	if ((eaclass()&EAJ_THIRDMASK) == EAJ_SHADOW_CHASER) {
 		mes "[Dumk]";
 		mes "Oh, who is this.";
 		mes "You are" + strcharinfo(0) + "the one who would lead to the highest peaks of dark art, right?";

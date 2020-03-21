@@ -68,7 +68,7 @@ OnTouch:
 	}
 	if (ep16_royal == 15) {
 		if (isbegin_quest(7697) < 1) {
-			mes "Let's first reply to the servernt that the invitation will be accepted.";
+			mes "Let's first reply to the servant that the invitation will be accepted.";
 			close;
 		}
 	}
