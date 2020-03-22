@@ -870,7 +870,18 @@ int pc_equippoint_sub(struct map_session_data *sd,struct item_data* id){
 int pc_equippoint(struct map_session_data *sd,int n){
 	nullpo_ret(sd);
 
-	return pc_equippoint_sub(sd,sd->inventory_data[n]);
+	// Start costume conversion logic (4)
+	int ep = pc_equippoint_sub(sd,sd->inventory_data[n]);
+	int char_id = 0;
+	if (battle_config.reserved_costume_id &&
+		sd->inventory.u.items_inventory[n].card[0] == CARD0_CREATE &&
+		(char_id = MakeDWord(sd->inventory.u.items_inventory[n].card[2],sd->inventory.u.items_inventory[n].card[3])) == battle_config.reserved_costume_id) {
+		if (ep&EQP_HEAD_TOP) { ep &= ~EQP_HEAD_TOP; ep |= EQP_COSTUME_HEAD_TOP; }
+		if (ep&EQP_HEAD_LOW) { ep &= ~EQP_HEAD_LOW; ep |= EQP_COSTUME_HEAD_LOW; }
+		if (ep&EQP_HEAD_MID) { ep &= ~EQP_HEAD_MID; ep |= EQP_COSTUME_HEAD_MID; }
+	}
+	return ep;
+	// End costume conversion logic (4)
 }
 
 /**
@@ -2582,7 +2593,7 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonu
 					unsigned int equip_pos_idx = 0;
 
 					// Create a list of all equipped positions to see if all items needed for the autobonus are still present [Playtester]
-					for (uint8 j = 0; j < EQI_MAX; j++) {
+					for (uint8 j = 0; j < EQI_MAX_BONUS; j++) {
 						if (sd->equip_index[j] >= 0)
 							equip_pos_idx |= sd->inventory.u.items_inventory[sd->equip_index[j]].equip;
 					}
@@ -2627,7 +2638,7 @@ void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonu
 		int j;
 		unsigned int equip_pos_idx = 0;
 		//Create a list of all equipped positions to see if all items needed for the autobonus are still present [Playtester]
-		for(j = 0; j < EQI_MAX; j++) {
+		for(j = 0; j < EQI_MAX_BONUS; j++) {
 			if(sd->equip_index[j] >= 0)
 				equip_pos_idx |= sd->inventory.u.items_inventory[sd->equip_index[j]].equip;
 		}
@@ -10126,7 +10137,7 @@ int pc_load_combo(struct map_session_data *sd) {
  *------------------------------------------*/
 bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswitch)
 {
-	int i, pos, flag = 0, iflag;
+	int i, pos, flag = 0, iflag, char_id = 0;
 	struct item_data *id;
 	uint8 res = ITEM_EQUIP_ACK_OK;
 	short* equip_index;

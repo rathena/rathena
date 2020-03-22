@@ -1950,6 +1950,14 @@ void map_reqnickdb(struct map_session_data * sd, int charid)
 
 	nullpo_retv(sd);
 
+	// Start costume conversion logic (3)
+	if( battle_config.reserved_costume_id && battle_config.reserved_costume_id == charid )
+	{
+		clif_solved_charname(sd->fd, charid, "Costume");
+		return;
+	}
+	// End costume conversion logic (3)
+
 	tsd = map_charid2sd(charid);
 	if( tsd )
 	{

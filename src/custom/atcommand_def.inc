@@ -9,3 +9,6 @@
  **/
 
 //ACMD_DEF(newcommand),
+
+// @costumeitem <item>
+ACMD_DEF2("costumeitem", item),

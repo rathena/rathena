@@ -3805,7 +3805,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	running_npc_stat_calc_event = false;
 
 	// Parse equipment
-	for (i = 0; i < EQI_MAX; i++) {
+	for (i = 0; i < EQI_MAX_BONUS; i++) {
 		current_equip_item_index = index = sd->equip_index[i]; // We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
 		current_equip_combo_pos = 0;
 		if (index < 0)

@@ -84,7 +84,8 @@ enum equip_index {
 	EQI_SHADOW_SHOES,
 	EQI_SHADOW_ACC_R,
 	EQI_SHADOW_ACC_L,
-	EQI_MAX
+	EQI_MAX,
+	EQI_MAX_BONUS = 10
 };
 
 enum prevent_logout_trigger {

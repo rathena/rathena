@@ -9,3 +9,6 @@
  **/
 
 //BUILDIN_DEF(example,""),
+
+// Costume System
+BUILDIN_DEF(costume,"i"),
