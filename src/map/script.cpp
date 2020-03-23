@@ -21400,11 +21400,12 @@ BUILDIN_FUNC(checkre)
 			#endif
 			break;
 		case 3:
-			#ifdef RENEWAL_EXP
-				script_pushint(st, 1);
-			#else
+			// Disable to boost quest EXP gain
+			//#ifdef RENEWAL_EXP
+			//	script_pushint(st, 1);
+			//#else
 				script_pushint(st, 0);
-			#endif
+			//#endif
 			break;
 		case 4:
 			#ifdef RENEWAL_LVDMG
