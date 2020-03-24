@@ -67,7 +67,7 @@ OnTimer1000:
 		if( $@FlaviusBG2_id1 ) { bg_destroy $@FlaviusBG2_id1; set $@FlaviusBG2_id1, 0; }
 		if( $@FlaviusBG2_id2 ) { bg_destroy $@FlaviusBG2_id2; set $@FlaviusBG2_id2, 0; }
 		if (getbattleflag("feature.bgqueue")) {
-			bg_unbook "bat_b01";
+			bg_unbook "bat_b02";
 			end;
 		} else
 			donpcevent "start#bat_b01::OnReadyCheck";

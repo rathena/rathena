@@ -47,6 +47,7 @@ struct s_battleground_map {
 /// Battlegrounds client interface queue system [MasterOfMuppets]
 struct s_battleground_queue {
 	int id; ///< Battlegrounds database ID
+	int queue_id; ///< Battleground queue ID
 	std::vector<map_session_data *> teama_members; ///< List of members on team A
 	std::vector<map_session_data *> teamb_members; ///< List of members on team B
 	int required_players; ///< Amount of players required on each side to start
@@ -109,8 +110,10 @@ public:
 
 extern BattlegroundDatabase battleground_db;
 extern std::unordered_map<int, std::shared_ptr<s_battleground_data>> bg_team_db;
+extern std::vector<std::shared_ptr<s_battleground_queue>> bg_queues;
 
 std::shared_ptr<s_battleground_type> bg_search_name(const char *name);
+std::shared_ptr<s_battleground_queue> bg_search_queue(int queue_id);
 void bg_send_dot_remove(struct map_session_data *sd);
 int bg_team_get_id(struct block_list *bl);
 struct map_session_data *bg_getavailablesd(s_battleground_data *bg);
@@ -129,9 +132,10 @@ bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map
 void bg_queue_join_party(const char *name, struct map_session_data *sd);
 void bg_queue_join_guild(const char *name, struct map_session_data *sd);
 void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vector<map_session_data *> list);
+void bg_queue_clear(s_battleground_queue *queue, bool ended);
 bool bg_queue_leave(struct map_session_data *sd);
 bool bg_queue_on_ready(const char *name, std::shared_ptr<s_battleground_queue> queue);
-void bg_queue_on_accept_invite(std::shared_ptr<s_battleground_queue> queue, struct map_session_data *sd);
+void bg_queue_on_accept_invite(struct map_session_data *sd);
 void bg_queue_start_battleground(s_battleground_queue *queue);
 bool bg_member_respawn(struct map_session_data *sd);
 void bg_send_message(struct map_session_data *sd, const char *mes, int len);

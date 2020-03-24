@@ -17540,8 +17540,8 @@ void clif_parse_bg_queue_apply_request(int fd, struct map_session_data *sd)
 
 	safestrncpy(name, RFIFOCP(fd, 4), NAME_LENGTH);
 
-	if (sd->bg_queue) {
-		ShowWarning("clif_parse_bg_queue_apply_request: Received duplicate queue application: %d from player %s (AID:%d CID:%d).\n", type, sd->status.name, sd->status.account_id, sd->status.char_id);
+	if (sd->bg_queue_id > 0) {
+		//ShowWarning("clif_parse_bg_queue_apply_request: Received duplicate queue application: %d from player %s (AID:%d CID:%d).\n", type, sd->status.name, sd->status.account_id, sd->status.char_id);
 		clif_bg_queue_apply_result(BG_APPLY_DUPLICATE, name, sd); // Duplicate application warning
 		return;
 	} else if (type == 1) // Solo
@@ -17580,9 +17580,9 @@ void clif_bg_queue_apply_notify(const char *name, struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 
-	std::shared_ptr<s_battleground_queue> queue = sd->bg_queue;
+	std::shared_ptr<s_battleground_queue> queue = bg_search_queue(sd->bg_queue_id);
 
-	if (!queue) {
+	if (queue == nullptr) {
 		ShowError("clif_bg_queue_apply_notify: Player is not in a battleground queue.\n");
 		return;
 	}
@@ -17622,8 +17622,10 @@ void clif_parse_bg_queue_cancel_request(int fd, struct map_session_data *sd)
 
 	bool success;
 
-	if (sd->bg_queue) {
-		if (sd->bg_queue->in_ready_state)
+	if (sd->bg_queue_id > 0) {
+		std::shared_ptr<s_battleground_queue> queue = bg_search_queue(sd->bg_queue_id);
+
+		if (queue && queue->in_ready_state)
 			return; // Make the cancel button do nothing if the entry window is open. Otherwise it'll crash the game when you click on both the queue status and entry status window.
 		else
 			success = bg_queue_leave(sd);
@@ -17661,11 +17663,11 @@ void clif_parse_bg_queue_lobby_reply(int fd, struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 
-	if(sd->bg_queue) {
+	if(sd->bg_queue_id > 0) {
 		uint8 result = RFIFOB(fd, 2);
 
 		if(result == 1) { // Accept
-			bg_queue_on_accept_invite(sd->bg_queue, sd);
+			bg_queue_on_accept_invite(sd);
 		} else if(result == 2) { // Decline
 			bg_queue_leave(sd);
 			clif_bg_queue_entry_init(sd);

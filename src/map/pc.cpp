@@ -1508,9 +1508,8 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->bonus_script.head = NULL;
 	sd->bonus_script.count = 0;
 
-	// Initialize BG queue pointer
-	sd->bg_queue = nullptr;
-	sd->bg_queue_accept_state = false;
+	// Initialize BG queue
+	sd->bg_queue_id = 0;
 
 #if PACKETVER >= 20150513
 	sd->hatEffectIDs = NULL;
