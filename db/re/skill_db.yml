@@ -6304,10 +6304,6 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      IgnoreFlee: true
-    Flags:
-      AllowWhenHidden: true
     Range: -1
     Hit: Single
     HitCount: 1
@@ -29411,7 +29407,22 @@ Body:
     Description: Light of Moon
     MaxLevel: 5
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    Duration1:
+      - Level: 1
+        Time: 20000
+      - Level: 2
+        Time: 30000
+      - Level: 3
+        Time: 40000
+      - Level: 4
+        Time: 50000
+      - Level: 5
+        Time: 60000
     Requires:
       SpCost: 40
   - Id: 2575
@@ -29419,15 +29430,28 @@ Body:
     Description: Lunar Stance
     MaxLevel: 3
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
     CastCancel: true
     Requires:
       SpCost: 10
   - Id: 2576
     Name: SJ_FULLMOONKICK
     Description: Full Moon Kick
-    MaxLevel: 7
+    MaxLevel: 10
+    Type: Weapon
     TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea: 3
     CastCancel: true
+    Duration1: 20000
+    Cooldown: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -29449,7 +29473,22 @@ Body:
     Description: Light of Star
     MaxLevel: 5
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    Duration1:
+      - Level: 1
+        Time: 20000
+      - Level: 2
+        Time: 30000
+      - Level: 3
+        Time: 40000
+      - Level: 4
+        Time: 50000
+      - Level: 5
+        Time: 60000
     Requires:
       SpCost: 40
   - Id: 2578
@@ -29457,6 +29496,10 @@ Body:
     Description: Star Stance
     MaxLevel: 3
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
     CastCancel: true
     Requires:
       SpCost: 10
@@ -29464,8 +29507,18 @@ Body:
     Name: SJ_NEWMOONKICK
     Description: New Moon Kick
     MaxLevel: 7
+    Type: Weapon
     TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea: 3
     CastCancel: true
+    CastTime: 1000
+    Duration1: 15000
+    Cooldown: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -29486,9 +29539,28 @@ Body:
     Name: SJ_FLASHKICK
     Description: Flash Kick
     MaxLevel: 7
+    Type: Weapon
     TargetType: Attack
     Range: 1
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
     CastCancel: true
+    Duration1:
+      - Level: 1
+        Time: 4000
+      - Level: 2
+        Time: 5000
+      - Level: 3
+        Time: 6000
+      - Level: 4
+        Time: 7000
+      - Level: 5
+        Time: 8000
+      - Level: 6
+        Time: 9000
+      - Level: 7
+        Time: 10000
     Requires:
       SpCost:
         - Level: 1
@@ -29507,10 +29579,21 @@ Body:
           Amount: 15
   - Id: 2581
     Name: SJ_STAREMPEROR
-    Description: Star Emperor
+    Description: Star Emperor Advent
     MaxLevel: 5
+    Type: Weapon
     TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea: 3
     CastCancel: true
+    AfterCastActDelay: 1000
+    Duration1: 7000
+    Cooldown: 10000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -29525,11 +29608,23 @@ Body:
           Amount: 90
   - Id: 2582
     Name: SJ_NOVAEXPLOSING
-    Description: Nova Explosing
+    Description: Nova Explosion
     MaxLevel: 5
+    Type: Misc
     TargetType: Attack
+    DamageFlags:
+      IgnoreElement: true
+      IgnoreFlee: true
+      IgnoreDefCard: true
     Range: 3
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    CastTime: 5000
+    AfterCastActDelay: 1000
+    Duration1: 2000
+    Cooldown: 20000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -29547,15 +29642,41 @@ Body:
     Description: Universe Stance
     MaxLevel: 3
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
     CastCancel: true
     Requires:
       SpCost: 10
   - Id: 2584
     Name: SJ_FALLINGSTAR
     Description: Falling Star
-    MaxLevel: 7
+    MaxLevel: 10
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    CastTime: 1000
+    Duration1: 126000
+    Cooldown:
+      - Level: 1
+        Time: 120000
+      - Level: 2
+        Time: 140000
+      - Level: 3
+        Time: 160000
+      - Level: 4
+        Time: 180000
+      - Level: 5
+        Time: 200000
+      - Level: 6
+        Time: 220000
+      - Level: 7
+        Time: 240000
+    FixedCastTime: 2000
     Requires:
       SpCost:
         - Level: 1
@@ -29577,8 +29698,16 @@ Body:
     Description: Gravity Control
     MaxLevel: 1
     TargetType: Attack
+    DamageFlags:
+      NoDamage: true
     Range: 9
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1: 5000
+    Cooldown: 20000
     Requires:
       SpCost: 80
   - Id: 2586
@@ -29586,16 +29715,52 @@ Body:
     Description: Book of Dimension
     MaxLevel: 5
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    Duration1: 60000
+    Duration2: 30000
+    Cooldown:
+      - Level: 1
+        Time: 150000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 90000
+      - Level: 4
+        Time: 60000
+      - Level: 5
+        Time: 30000
     Requires:
       SpCost: 40
   - Id: 2587
     Name: SJ_BOOKOFCREATINGSTAR
     Description: Book of Creating Star
     MaxLevel: 5
+    Type: Weapon
     TargetType: Ground
     Range: 7
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
     CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 6000
+      - Level: 2
+        Time: 7000
+      - Level: 3
+        Time: 8000
+      - Level: 4
+        Time: 9000
+      - Level: 5
+        Time: 10000
+    Cooldown: 15000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -29608,24 +29773,53 @@ Body:
           Amount: 65
         - Level: 5
           Amount: 70
+    Unit:
+      Id: Creatingstar
+      Layout: 2
+      Interval: -1
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+        NoKnockback: true
   - Id: 2588
     Name: SJ_DOCUMENT
-    Description: Document
+    Description: Document of Sun Moon and Star
     MaxLevel: 3
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    Cooldown: 60000
     Requires:
       SpCost: 60
   - Id: 2589
     Name: SJ_PURIFY
-    Description: Purify
+    Description: Purification of Sun Moon and Star
     MaxLevel: 1
   - Id: 2590
     Name: SJ_LIGHTOFSUN
     Description: Light of Sun
     MaxLevel: 5
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    Duration1:
+      - Level: 1
+        Time: 20000
+      - Level: 2
+        Time: 30000
+      - Level: 3
+        Time: 40000
+      - Level: 4
+        Time: 50000
+      - Level: 5
+        Time: 60000
     Requires:
       SpCost: 40
   - Id: 2591
@@ -29633,15 +29827,27 @@ Body:
     Description: Sun Stance
     MaxLevel: 3
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
     CastCancel: true
     Requires:
       SpCost: 10
   - Id: 2592
     Name: SJ_SOLARBURST
     Description: Solar Burst
-    MaxLevel: 7
+    MaxLevel: 10
+    Type: Weapon
     TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Multi_Hit
+    HitCount: -3
+    Element: Weapon
+    SplashArea: 3
     CastCancel: true
+    AfterCastActDelay: 500
     Requires:
       SpCost:
         - Level: 1
@@ -29662,18 +29868,35 @@ Body:
     Name: SJ_PROMINENCEKICK
     Description: Prominence Kick
     MaxLevel: 7
+    Type: Weapon
     TargetType: Attack
+    DamageFlags:
+      Splash: true
     Range: 1
+    Hit: Single
+    HitCount: 1
+    Element: Weapon
+    SplashArea: 1
     CastCancel: true
+    AfterCastActDelay: 1000
+    CastDelayFlags:
+      IgnoreStatus: true
     Requires:
       SpCost: 20
   - Id: 2594
     Name: SJ_FALLINGSTAR_ATK
     Description: Falling Star Attack
     MaxLevel: 7
-    TargetType: Attack
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
     Flags:
       IsChorus: true
+    Hit: Multi_Hit
+    HitCount: -3
+    Element: Weapon
+    SplashArea: 2
     CastCancel: true
     Requires:
       SpCost: 1
@@ -29681,19 +29904,44 @@ Body:
     Name: SJ_FALLINGSTAR_ATK2
     Description: Falling Star Attack 2
     MaxLevel: 7
+    Type: Weapon
     TargetType: Attack
+    DamageFlags:
+      Splash: true
     Flags:
       IsChorus: true
+    Range: 1
+    Hit: Multi_Hit
+    HitCount: -3
+    Element: Weapon
+    SplashArea: 2
     CastCancel: true
     Requires:
       SpCost: 1
   - Id: 2596
     Name: SP_SOULGOLEM
-    Description: Soul Golem
+    Description: Golem's Soul
     MaxLevel: 5
+    Type: Magic
     TargetType: Support
+    DamageFlags:
+      NoDamage: true
     Range: 9
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 240000
+      - Level: 5
+        Time: 300000
     Requires:
       SpCost:
         - Level: 1
@@ -29706,13 +29954,31 @@ Body:
           Amount: 100
         - Level: 5
           Amount: 50
+      SpiritSphereCost: 1
   - Id: 2597
     Name: SP_SOULSHADOW
-    Description: Soul Shadow
+    Description: Shadow's Soul
     MaxLevel: 5
+    Type: Magic
     TargetType: Support
+    DamageFlags:
+      NoDamage: true
     Range: 9
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 240000
+      - Level: 5
+        Time: 300000
     Requires:
       SpCost:
         - Level: 1
@@ -29725,13 +29991,31 @@ Body:
           Amount: 100
         - Level: 5
           Amount: 50
+      SpiritSphereCost: 1
   - Id: 2598
     Name: SP_SOULFALCON
-    Description: Soul Falcon
+    Description: Falcon's Soul
     MaxLevel: 5
+    Type: Magic
     TargetType: Support
+    DamageFlags:
+      NoDamage: true
     Range: 9
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 240000
+      - Level: 5
+        Time: 300000
     Requires:
       SpCost:
         - Level: 1
@@ -29744,13 +30028,31 @@ Body:
           Amount: 100
         - Level: 5
           Amount: 50
+      SpiritSphereCost: 1
   - Id: 2599
     Name: SP_SOULFAIRY
-    Description: Soul Fairy
+    Description: Fairy's Soul
     MaxLevel: 5
+    Type: Magic
     TargetType: Support
+    DamageFlags:
+      NoDamage: true
     Range: 9
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 180000
+      - Level: 4
+        Time: 240000
+      - Level: 5
+        Time: 300000
     Requires:
       SpCost:
         - Level: 1
@@ -29763,13 +30065,25 @@ Body:
           Amount: 100
         - Level: 5
           Amount: 50
+      SpiritSphereCost: 1
   - Id: 2600
     Name: SP_CURSEEXPLOSION
     Description: Curse Explosion
-    MaxLevel: 5
+    MaxLevel: 10
+    Type: Magic
     TargetType: Attack
+    DamageFlags:
+      Splash: true
     Range: 9
+    Hit: Multi_Hit
+    HitCount: -7
+    Element: Dark
+    SplashArea: 3
     CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 500
+    Cooldown: 1000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -29786,18 +30100,38 @@ Body:
     Name: SP_SOULCURSE
     Description: Soul Curse
     MaxLevel: 5
+    Type: Magic
     TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+      Splash: true
     Range: 9
+    Hit: Single
+    HitCount: 1
+    SplashArea: 3
     CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Duration1: 20000
+    Cooldown: 5000
+    FixedCastTime: 1000
     Requires:
       SpCost: 70
+      SpiritSphereCost: 3
   - Id: 2602
     Name: SP_SPA
     Description: Espa
-    MaxLevel: 5
+    MaxLevel: 10
+    Type: Magic
     TargetType: Attack
     Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Endowed
     CastCancel: true
+    CastTime: 500
+    Duration1: 5000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -29810,13 +30144,65 @@ Body:
           Amount: 64
         - Level: 5
           Amount: 68
+      SpiritSphereCost:
+        - Level: 1
+          Amount: 1
+        - Level: 2
+          Amount: 1
+        - Level: 3
+          Amount: 1
+        - Level: 4
+          Amount: 1
+        - Level: 5
+          Amount: 1
+        - Level: 6
+          Amount: 1
+        - Level: 7
+          Amount: 1
+        - Level: 8
+          Amount: 1
+        - Level: 9
+          Amount: 1
   - Id: 2603
     Name: SP_SHA
     Description: Esha
     MaxLevel: 5
+    Type: Magic
     TargetType: Attack
+    DamageFlags:
+      Splash: true
     Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Endowed
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
     CastCancel: true
+    CastTime: 500
+    AfterCastActDelay: 500
+    Duration1:
+      - Level: 1
+        Time: 3000
+      - Level: 2
+        Time: 4000
+      - Level: 3
+        Time: 5000
+      - Level: 4
+        Time: 6000
+      - Level: 5
+        Time: 7000
+    Duration2: 5000
+    Cooldown: 3000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -29829,13 +30215,40 @@ Body:
           Amount: 24
         - Level: 5
           Amount: 26
+      SpiritSphereCost: 1
   - Id: 2604
     Name: SP_SWHOO
     Description: Eswhoo
-    MaxLevel: 7
+    MaxLevel: 10
+    Type: Magic
     TargetType: Attack
+    DamageFlags:
+      Splash: true
     Range: 9
+    Hit: Multi_Hit
+    HitCount: -5
+    Element: Endowed
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 3
     CastCancel: true
+    CastTime: 500
+    AfterCastActDelay: 500
+    Duration1: 5000
+    Cooldown: 2000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -29852,13 +30265,85 @@ Body:
           Amount: 86
         - Level: 7
           Amount: 90
+      SpiritSphereCost:
+        - Level: 1
+          Amount: 2
+        - Level: 2
+          Amount: 2
+        - Level: 3
+          Amount: 2
+        - Level: 4
+          Amount: 2
+        - Level: 5
+          Amount: 2
+        - Level: 6
+          Amount: 2
+        - Level: 7
+          Amount: 2
+        - Level: 8
+          Amount: 2
+        - Level: 9
+          Amount: 2
+        - Level: 10
+          Amount: 1
   - Id: 2605
     Name: SP_SOULUNITY
     Description: Soul Unity
     MaxLevel: 7
+    Type: Magic
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
     Range: 11
+    Hit: Single
+    HitCount: 1
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+      - Level: 6
+        Area: 3
+      - Level: 7
+        Area: 4
     CastCancel: true
+    AfterCastActDelay: 1000
+    Duration1:
+      - Level: 1
+        Time: 30000
+      - Level: 2
+        Time: 60000
+      - Level: 3
+        Time: 90000
+      - Level: 4
+        Time: 120000
+      - Level: 5
+        Time: 150000
+      - Level: 6
+        Time: 180000
+      - Level: 7
+        Time: 210000
+    Cooldown:
+      - Level: 2
+        Time: 30000
+      - Level: 3
+        Time: 60000
+      - Level: 4
+        Time: 90000
+      - Level: 5
+        Time: 120000
+      - Level: 6
+        Time: 150000
+      - Level: 7
+        Time: 180000
+    FixedCastTime: 4000
     Requires:
       SpCost:
         - Level: 1
@@ -29875,13 +30360,24 @@ Body:
           Amount: 54
         - Level: 7
           Amount: 56
+      SpiritSphereCost: 10
   - Id: 2606
     Name: SP_SOULDIVISION
     Description: Soul Division
     MaxLevel: 5
+    Type: Magic
     TargetType: Attack
+    DamageFlags:
+      NoDamage: true
     Range: 9
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    CastTime: 500
+    AfterCastActDelay: 500
+    Duration1: 5000
+    Cooldown: 3000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
@@ -29894,12 +30390,42 @@ Body:
           Amount: 48
         - Level: 5
           Amount: 52
+      SpiritSphereCost: 1
   - Id: 2607
     Name: SP_SOULREAPER
     Description: Soul Reaper
     MaxLevel: 5
+    Type: Magic
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    CastTime: 3000
+    Duration1:
+      - Level: 1
+        Time: 90000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 150000
+      - Level: 4
+        Time: 180000
+      - Level: 5
+        Time: 210000
+    Cooldown:
+      - Level: 1
+        Time: 90000
+      - Level: 2
+        Time: 120000
+      - Level: 3
+        Time: 150000
+      - Level: 4
+        Time: 180000
+      - Level: 5
+        Time: 210000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -29912,13 +30438,24 @@ Body:
           Amount: 48
         - Level: 5
           Amount: 50
+      SpiritSphereCost: 2
   - Id: 2608
     Name: SP_SOULREVOLVE
-    Description: Soul Revolve
+    Description: Soul Revolution
     MaxLevel: 3
+    Type: Magic
     TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      PartyOnly: true
     Range: 9
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    AfterCastActDelay: 500
+    Cooldown: 3000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -29931,17 +30468,45 @@ Body:
     Name: SP_SOULCOLLECT
     Description: Soul Collect
     MaxLevel: 5
+    Type: Magic
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    Duration1:
+      - Level: 1
+        Time: 60000
+      - Level: 2
+        Time: 50000
+      - Level: 3
+        Time: 40000
+      - Level: 4
+        Time: 30000
+      - Level: 5
+        Time: 20000
+    Duration2: 600000
     Requires:
       SpCost: 100
   - Id: 2610
     Name: SP_SOULEXPLOSION
     Description: Soul Explosion
     MaxLevel: 5
+    Type: Misc
     TargetType: Attack
+    DamageFlags:
+      IgnoreElement: true
+      IgnoreFlee: true
+      IgnoreDefCard: true
     Range: 7
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 500
+    Cooldown: 60000
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -29954,17 +30519,25 @@ Body:
           Amount: 120
         - Level: 5
           Amount: 150
+      SpiritSphereCost: 10
   - Id: 2611
     Name: SP_SOULENERGY
-    Description: Soul Energy
+    Description: Soul Energy Research
     MaxLevel: 5
   - Id: 2612
     Name: SP_KAUTE
     Description: Kaute
     MaxLevel: 5
+    Type: Magic
     TargetType: Support
+    DamageFlags:
+      NoDamage: true
     Range: 7
+    Hit: Single
+    HitCount: 1
     CastCancel: true
+    AfterCastActDelay: 1000
+    Cooldown: 5000
     Requires:
       SpCost:
         - Level: 1
@@ -29977,6 +30550,7 @@ Body:
           Amount: 42
         - Level: 5
           Amount: 48
+      SpiritSphereCost: 5
   - Id: 3001
     Name: KO_YAMIKUMO
     Description: Shadow Hiding
