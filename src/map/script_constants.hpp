@@ -1546,6 +1546,35 @@
 	export_constant(SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT);
 	export_constant(SC_ADAPTATION);
 	export_constant(SC_BASILICA_CELL);
+	export_constant(SC_LIGHTOFMOON);
+	export_constant(SC_LIGHTOFSUN);
+	export_constant(SC_LIGHTOFSTAR);
+	export_constant(SC_LUNARSTANCE);
+	export_constant(SC_UNIVERSESTANCE);
+	export_constant(SC_SUNSTANCE);
+	export_constant(SC_FLASHKICK);
+	export_constant(SC_NEWMOON);
+	export_constant(SC_STARSTANCE);
+	export_constant(SC_DIMENSION);
+	export_constant(SC_DIMENSION1);
+	export_constant(SC_DIMENSION2);
+	export_constant(SC_CREATINGSTAR);
+	export_constant(SC_FALLINGSTAR);
+	export_constant(SC_NOVAEXPLOSING);
+	export_constant(SC_GRAVITYCONTROL);
+	export_constant(SC_SOULCOLLECT);
+	export_constant(SC_SOULREAPER);
+	export_constant(SC_SOULUNITY);
+	export_constant(SC_SOULSHADOW);
+	export_constant(SC_SOULFAIRY);
+	export_constant(SC_SOULFALCON);
+	export_constant(SC_SOULGOLEM);
+	export_constant(SC_SOULDIVISION);
+	export_constant(SC_SOULENERGY);
+	export_constant(SC_USE_SKILL_SP_SPA);
+	export_constant(SC_USE_SKILL_SP_SHA);
+	export_constant(SC_SP_SHA);
+	export_constant(SC_SOULCURSE);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -7689,6 +7718,7 @@
 	export_constant(UNT_FIRE_RAIN);
 	export_constant(UNT_CATNIPPOWDER);
 	export_constant(UNT_NYANGGRASS);
+	export_constant(UNT_CREATINGSTAR);
 	export_constant(UNT_GD_LEADERSHIP);
 	export_constant(UNT_GD_GLORYWOUNDS);
 	export_constant(UNT_GD_SOULCOLD);
