@@ -24608,6 +24608,40 @@ BUILDIN_FUNC(convertpcinfo) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(cloakoffnpc)
+{
+	if (npc_enable_target(script_getstr(st, 2), script_hasdata(st, 3) ? script_getnum(st, 3) : 0, 8))
+		return SCRIPT_CMD_SUCCESS;
+
+	return SCRIPT_CMD_FAILURE;
+}
+
+BUILDIN_FUNC(cloakonnpc)
+{
+	if (npc_enable_target(script_getstr(st, 2), script_hasdata(st, 3) ? script_getnum(st, 3) : 0, 16))
+		return SCRIPT_CMD_SUCCESS;
+
+	return SCRIPT_CMD_FAILURE;
+}
+
+BUILDIN_FUNC(isnpccloaked)
+{
+	struct npc_data *nd = npc_name2id(script_getstr(st, 2));
+
+	if (!nd) {
+		ShowError("buildin_isnpccloaked: %s is a non-existing NPC.\n", script_getstr(st, 2));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	map_session_data* sd;
+
+	if (!script_charid2sd(3, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	script_pushint(st, npc_is_cloaked(nd, sd));
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -25280,6 +25314,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(achievement_condition,"i"),
 	BUILDIN_DEF(getvariableofinstance,"ri"),
 	BUILDIN_DEF(convertpcinfo,"vi"),
+	BUILDIN_DEF(cloakoffnpc, "s?"),
+	BUILDIN_DEF(cloakonnpc, "s?"),
+	BUILDIN_DEF(isnpccloaked, "s?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
