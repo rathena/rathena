@@ -32,7 +32,7 @@ using namespace rathena;
 BattlegroundDatabase battleground_db;
 std::unordered_map<int, std::shared_ptr<s_battleground_data>> bg_team_db;
 std::vector<std::shared_ptr<s_battleground_queue>> bg_queues;
-int queue_id = 0;
+int bg_queue_count = 0;
 
 const std::string BattlegroundDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/battleground_db.yml";
@@ -1224,7 +1224,7 @@ static void bg_queue_create(int bg_id, int req_players)
 	auto queue = std::make_shared<s_battleground_queue>();
 
 	queue->id = bg_id;
-	queue->queue_id = ++queue_id;
+	queue->queue_id = ++bg_queue_count;
 	queue->required_players = req_players;
 	queue->accepted_players = 0;
 	queue->tid_expire = INVALID_TIMER;
