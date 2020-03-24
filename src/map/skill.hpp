@@ -646,6 +646,10 @@ enum e_require_state : uint8 {
 	ST_ELEMENTALSPIRIT,
 	ST_ELEMENTALSPIRIT2,
 	ST_PECO,
+	ST_SUNSTANCE,
+	ST_MOONSTANCE,
+	ST_STARSTANCE,
+	ST_UNIVERSESTANCE
 };
 
 /// List of Skills
@@ -2230,6 +2234,8 @@ enum e_skill_unit_id : uint16 {
 
 	UNT_CATNIPPOWDER,
 	UNT_NYANGGRASS,
+
+	UNT_CREATINGSTAR,
 
 	/**
 	 * Guild Auras

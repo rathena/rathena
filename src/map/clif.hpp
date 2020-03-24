@@ -631,7 +631,8 @@ void clif_statusupack(struct map_session_data *sd,int type,int ok,int val);	// s
 void clif_equipitemack(struct map_session_data *sd,int n,int pos,uint8 flag);	// self
 void clif_unequipitemack(struct map_session_data *sd,int n,int pos,int ok);	// self
 void clif_misceffect(struct block_list* bl,int type);	// area
-void clif_changeoption(struct block_list* bl);	// area
+void clif_changeoption_target(struct block_list* bl, struct block_list* target);
+#define clif_changeoption(bl) clif_changeoption_target(bl, NULL)	// area
 void clif_changeoption2(struct block_list* bl);	// area
 void clif_useitemack(struct map_session_data *sd,int index,int amount,bool ok);	// self
 void clif_GlobalMessage(struct block_list* bl, const char* message,enum send_target target);
@@ -713,6 +714,7 @@ void clif_skillunit_update(struct block_list* bl);
 void clif_autospell(struct map_session_data *sd,uint16 skill_lv);
 void clif_devotion(struct block_list *src, struct map_session_data *tsd);
 void clif_spiritball(struct block_list *bl);
+void clif_soulball(struct map_session_data *sd);
 void clif_combo_delay(struct block_list *bl,t_tick wait);
 void clif_bladestop(struct block_list *src, int dst_id, int active);
 void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_target target);
