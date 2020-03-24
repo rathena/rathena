@@ -6494,6 +6494,28 @@ while hidden then revealing.... you can wonder around =P
 This command will fully unload a NPC object and all of it's duplicates.
 
 ---------------------------------------
+ 
+*cloakonnpc "<NPC object name>"{,<character ID>};
+*cloakoffnpc "<NPC object name>"{,<character ID>};
+
+These commands will make the NPC object specified display as cloaked/uncloaked,
+even though not actually disabled.
+The player can interact with a NPC cloaked (via NPC click, monster event..)
+but the NPC trigger area is disabled.
+
+If <character ID> is given then the NPC will only display to the specified
+player until he/she leaves the map, logs out, or the npc option is changed.
+If no <character ID> is specified it will display to the area.
+
+---------------------------------------
+
+*isnpccloaked "<NPC object name>"{,<character ID>};
+
+Returns true if the NPC has been cloaked to the attached player or given
+<character ID>, false otherwise. This works in association with cloakonnpc
+when it is targetting a specific character.
+
+---------------------------------------
 
 *doevent "<NPC object name>::<event label>";
 
