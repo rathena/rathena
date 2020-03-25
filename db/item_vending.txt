@@ -1,0 +1,12 @@
+// Specific items for Vending System
+// Format: ItemID
+// Max items is equal MAX_INVENTORY ( 100 by default )
+
+// TCG Card
+7227
+// Mithril Coin
+674
+// Silver Coin
+675
+// Bronze Coin
+673

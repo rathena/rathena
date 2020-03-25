@@ -756,6 +756,12 @@ struct map_session_data {
 		t_tick tick;
 	} roulette;
 
+	/**
+	* Extended Vending system [Lilith]
+	**/
+	unsigned short vend_loot;
+	int vend_lvl;
+
 	unsigned short instance_id;
 	short setlook_head_top, setlook_head_mid, setlook_head_bottom, setlook_robe; ///< Stores 'setlook' script command values.
 

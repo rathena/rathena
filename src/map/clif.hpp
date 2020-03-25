@@ -1138,4 +1138,7 @@ void clif_equipswitch_reply( struct map_session_data* sd, bool failed );
 /// Pet evolution
 void clif_pet_evolution_result( struct map_session_data* sd, e_pet_evolution_result result );
 
+/// Extended Vending [Lilith]
+int clif_vend(struct map_session_data *sd, int skill_lv);
+
 #endif /* CLIF_HPP */
