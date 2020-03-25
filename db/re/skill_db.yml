@@ -21324,26 +21324,38 @@ Body:
         Area: 2
       - Level: 5
         Area: 3
-    CastTime:
+    CastTime: # !TODO: Confirm cast time
       - Level: 1
-        Time: 1400
+        Time: 1200
       - Level: 2
-        Time: 1600
+        Time: 1400
       - Level: 3
+        Time: 1600
+      - Level: 4
         Time: 1800
-    AfterCastActDelay:
+      - Level: 5
+        Time: 2000
+    AfterCastActDelay: # !TODO: Confirm after cast delay
       - Level: 1
         Time: 500
       - Level: 2
         Time: 1000
       - Level: 3
+        Time: 1500
+      - Level: 4
         Time: 2000
-    FixedCastTime:
+      - Level: 5
+        Time: 2500
+    FixedCastTime: # !TODO: Confirm fixed cast time
       - Level: 1
         Time: 600
       - Level: 2
-        Time: 400
+        Time: 500
       - Level: 3
+        Time: 400
+      - Level: 4
+        Time: 300
+      - Level: 5
         Time: 200
     Requires:
       SpCost:
