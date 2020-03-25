@@ -22,7 +22,7 @@
 	mes "Hey, there.";
 	mes "Have you ever heard that there";
 	mes "are totally different countries";
-	mes "than the Rune-Midgard Kingdom?";
+	mes "than the Rune-Midgarts Kingdom?";
 	next;
 	switch(select("About Amatsu...:Go to Amatsu:Cancel")) {
 	case 1:
@@ -45,7 +45,7 @@
 		next;
 		mes "[Walter Moers]";
 		mes "He passed away when he returned";
-		mes "to Rune-Midgard. Fortunately,";
+		mes "to Rune-Midgarts. Fortunately,";
 		mes "the map was given to our king, Tristan III.";
 		next;
 		mes "[Walter Moers]";
@@ -183,7 +183,7 @@ amatsu,179,107,4	script	John#ama	86,{
 	mes "[John]";
 	mes "At first, I thought, 'What";
 	mes "a great chance!' when the";
-	mes "trade between the Rune-Midgard";
+	mes "trade between the Rune-Midgarts";
 	mes "Kingdom and Amatsu started.";
 	next;
 	mes "[John]";

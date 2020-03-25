@@ -5,6 +5,7 @@
 #define DATABASE_HPP
 
 #include <unordered_map>
+#include <vector>
 
 #include <yaml-cpp/yaml.h>
 
@@ -12,6 +13,7 @@
 
 #include "cbasetypes.hpp"
 #include "core.hpp"
+#include "utilities.hpp"
 
 class YamlDatabase{
 // Internal stuff
@@ -46,6 +48,10 @@ protected:
 	bool asFloat(const YAML::Node &node, const std::string &name, float &out);
 	bool asDouble(const YAML::Node &node, const std::string &name, double &out);
 	bool asString(const YAML::Node &node, const std::string &name, std::string &out);
+	bool asUInt16Rate(const YAML::Node& node, const std::string& name, uint16& out, uint16 maximum=10000);
+	bool asUInt32Rate(const YAML::Node& node, const std::string& name, uint32& out, uint32 maximum=10000);
+
+	virtual void loadingFinished();
 
 public:
 	YamlDatabase( const std::string type_, uint16 version_, uint16 minimumVersion_ ){
@@ -82,11 +88,15 @@ public:
 		this->data.clear();
 	}
 
+	bool empty(){
+		return this->data.empty();
+	}
+
 	bool exists( keytype key ){
 		return this->find( key ) != nullptr;
 	}
 
-	std::shared_ptr<datatype> find( keytype key ){
+	virtual std::shared_ptr<datatype> find( keytype key ){
 		auto it = this->data.find( key );
 
 		if( it != this->data.end() ){
@@ -110,6 +120,73 @@ public:
 
 	size_t size(){
 		return this->data.size();
+	}
+
+	std::shared_ptr<datatype> random(){
+		if( this->empty() ){
+			return nullptr;
+		}
+
+		return rathena::util::umap_random( this->data );
+	}
+};
+
+template <typename keytype, typename datatype> class TypesafeCachedYamlDatabase : public TypesafeYamlDatabase<keytype, datatype>{
+private:
+	std::vector<std::shared_ptr<datatype>> cache;
+
+public:
+	TypesafeCachedYamlDatabase( const std::string type_, uint16 version_, uint16 minimumVersion_ ) : TypesafeYamlDatabase<keytype, datatype>( type_, version_, minimumVersion_ ){
+
+	}
+
+	TypesafeCachedYamlDatabase( const std::string& type_, uint16 version_ ) : TypesafeYamlDatabase<keytype, datatype>( type_, version_, version_ ){
+
+	}
+
+	void clear() override{
+		TypesafeYamlDatabase<keytype, datatype>::clear();
+
+		// Restore size after clearing
+		size_t cap = cache.capacity();
+
+		cache.clear();
+		cache.resize(cap, nullptr);
+	}
+
+	std::shared_ptr<datatype> find( keytype key ) override{
+		if( this->cache.empty() || key >= this->cache.capacity() ){
+			return TypesafeYamlDatabase<keytype, datatype>::find( key );
+		}else{
+			return cache[this->calculateCacheKey( key )];
+		}
+	}
+
+	virtual size_t calculateCacheKey( keytype key ){
+		return key;
+	}
+
+	void loadingFinished() override{
+		// Cache all known values
+		for (auto &pair : *this) {
+			// Calculate the key that should be used
+			size_t key = this->calculateCacheKey(pair.first);
+
+			// Check if the key fits into the current cache size
+			if (this->cache.capacity() < key) {
+				// Double the current size, so we do not have to resize that often
+				size_t new_size = key * 2;
+
+				// Very important => initialize everything to nullptr
+				this->cache.resize(new_size, nullptr);
+			}
+
+			// Insert the value into the cache
+			this->cache[key] = pair.second;
+		}
+
+		// Free the memory that was allocated too much
+		this->cache.shrink_to_fit();
 	}
 };
 

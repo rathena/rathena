@@ -41,8 +41,8 @@ struct s_npc_buy_list {
 
 struct npc_data {
 	struct block_list bl;
-	struct unit_data  ud; //Because they need to be able to move....
-	struct view_data *vd;
+	struct unit_data ud; //Because they need to be able to move....
+	struct view_data vd;
 	struct status_change sc; //They can't have status changes, but.. they want the visual opt values.
 	struct npc_data *master_nd;
 	short class_,speed,instance_id;
@@ -1142,8 +1142,27 @@ enum e_job_types
 	JT_4_F_EINRESERCHER,
 	JT_4_F_REINDEER,
 	JT_4_PIGOCTO,
-
-	JT_4_JP_16TH = 10343,
+	JT_4_ORK_HERO,
+	JT_4_JP_16TH,
+	JT_4_EP17_MASTER_A,
+	JT_4_EP17_BASIC_B,
+	JT_4_EP17_GUARD_B,
+	JT_4_EP17_BASIC_B_NG,
+	JT_4_EP17_GUARD_B_NG,
+	JT_4_EP17_SWEETY,
+	JT_4_EP17_BOY_A,
+	JT_4_EP17_BOY_B,
+	JT_4_EP17_TAMARIN,
+	JT_4_EP17_SCISSORE,
+	JT_4_EP17_TABLET,
+	JT_4_EP17_BUCKETS,
+	JT_4_EP17_CLEANER,
+	JT_4_EP17_BASKET,
+	JT_4_EP17_BROKENBETA,
+	JT_4_EP17_CLEANER_W,
+	JT_4_EP17_MERMAID,
+	JT_4_JP_AB_NPC_009,
+	JT_4_JP_AB_NPC_010,
 
 	JT_NEW_NPC_3RD_END = 19999,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
@@ -1195,7 +1214,6 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type);
 uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list);
 uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list);
 void npc_parse_mob2(struct spawn_data* mob);
-bool npc_viewisid(const char * viewid);
 struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y);
 int npc_globalmessage(const char* name,const char* mes);
 const char *npc_get_script_event_name(int npce_index);
@@ -1203,7 +1221,9 @@ const char *npc_get_script_event_name(int npce_index);
 void npc_setcells(struct npc_data* nd);
 void npc_unsetcells(struct npc_data* nd);
 bool npc_movenpc(struct npc_data* nd, int16 x, int16 y);
-bool npc_enable(const char* name, int flag);
+bool npc_is_cloaked(struct npc_data* nd, struct map_session_data* sd);
+bool npc_enable_target(const char* name, uint32 char_id, int flag);
+#define npc_enable(name, flag) npc_enable_target(name, 0, flag)
 void npc_setdisplayname(struct npc_data* nd, const char* newname);
 void npc_setclass(struct npc_data* nd, short class_);
 struct npc_data* npc_name2id(const char* name);
@@ -1248,7 +1268,7 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 extern struct npc_data* fake_nd;
 
 int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, unsigned short* item_list);
-bool npc_shop_discount(enum npc_subtype type, bool discount);
+bool npc_shop_discount(struct npc_data* nd);
 
 #if PACKETVER >= 20131223
 void npc_market_tosql(const char *exname, struct npc_item_list *list);

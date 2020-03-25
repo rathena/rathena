@@ -17,7 +17,7 @@
 prontera,151,190,6	script	Sample Instance	101,{
 	.@instance$ = "Abyss Lake Instance";
 
-	if (instance_id()) {  // ignore the console debug message (harmless)
+	if (instance_live_info(ILI_NAME, instance_id(IM_PARTY)) == .@instance$) {  // the instance "Abyss Lake Instance" is running
 		mes "[Sample Instance]";
 		mes "You are already part of an instance.";
 		next;
@@ -30,7 +30,13 @@ prontera,151,190,6	script	Sample Instance	101,{
 			emotion ET_CRY;
 			close;
 		}
-	} else {
+	}
+	else if (instance_id(IM_PARTY)) {	// another instance is running
+		mes "[Sample Instance]";
+		mes "You are part of the instance " + instance_live_info(ILI_NAME, instance_id(IM_PARTY)) + ".";
+		close;
+	}
+	else {
 		mes "[Sample Instance]";
 		mes "Would you like to try the sample instance in Abyss Lake 3?";
 		next;

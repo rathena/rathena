@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= tr0n
 //===== Current Version: =====================================
-//= 1.6.5
+//= 1.6.6
 //===== Description: =========================================
 //= Easily add collection and hunting quests.
 //===== Changelogs: ==========================================
@@ -16,6 +16,7 @@
 // 1.5.4 Added repeatable Quests
 // 1.6.4 Added party support
 // 1.6.5 Bug fixes for party support
+// 1.6.6 Bug fixes for delay time does not appear [mazvi]
 //============================================================
 prontera,129,215,5	script	Questboard	4_BOARD3,{
 
@@ -91,9 +92,8 @@ prontera,129,215,5	script	Questboard	4_BOARD3,{
 		set .@selection,select(.@collectmenu$);
 		if(.quest_repeat == true){
 			if(gettimetick(2) < getd(.@selection + "_collection_delay")){
-				set .@time_left, getd(.@selection + "_collection_delay")-gettimetick(2);
 				mes "[^FF7700Questboard^000000]";
-				mes "You have to wait ^0000FF"+Time2Str(.@time_left)+"^000000 to do this quest again.";
+				mes "You have to wait ^0000FF"+Time2Str(getd(.@selection + "_collection_delay"))+"^000000 to do this quest again.";
 				close;
 			}
 		}
@@ -145,9 +145,8 @@ prontera,129,215,5	script	Questboard	4_BOARD3,{
 		set .@selection,select(.@huntmenu$);
 		if(.quest_repeat == true){
 			if(gettimetick(2) < getd(.@selection + "_hunting_delay")){
-				set .@time_left, getd(.@selection + "_hunting_delay")-gettimetick(2);
 				mes "[^FF7700Questboard^000000]";
-				mes "You have to wait ^0000FF"+Time2Str(.@time_left)+"^000000 to do this quest again.";
+				mes "You have to wait ^0000FF"+Time2Str(getd(.@selection + "_hunting_delay"))+"^000000 to do this quest again.";
 				close;
 			}
 		}
