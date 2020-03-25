@@ -329,10 +329,8 @@ bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, int instanc
 		return false;
 
 	// Add timer
-	unsigned int duration = static_cast<unsigned int>(time(nullptr)) + db->limit * 1000;
-
-	idata->keep_limit = duration;
-	idata->keep_timer = add_timer(duration, instance_delete_timer, instance_id, 0);
+	idata->keep_limit = static_cast<unsigned int>(time(nullptr)) + db->limit;
+	idata->keep_timer = add_timer(gettick() + db->limit * 1000, instance_delete_timer, instance_id, 0);
 
 	switch(idata->mode) {
 		case IM_NONE:
@@ -378,10 +376,8 @@ bool instance_startidletimer(std::shared_ptr<s_instance_data> idata, int instanc
 		return false;
 
 	// Add the timer
-	unsigned int duration = static_cast<unsigned int>(time(nullptr)) + db->timeout * 1000;
-
-	idata->idle_limit = duration;
-	idata->idle_timer = add_timer(duration, instance_delete_timer, instance_id, 0);
+	idata->idle_limit = static_cast<unsigned int>(time(nullptr)) + db->timeout;
+	idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
 
 	switch(idata->mode) {
 		case IM_NONE:
@@ -636,11 +632,9 @@ int instance_addmap(int instance_id) {
 		return 0;
 
 	// Set to busy, update timers
-	unsigned int duration = static_cast<unsigned int>(time(nullptr)) + db->timeout * 1000;
-
 	idata->state = INSTANCE_BUSY;
-	idata->idle_limit = duration;
-	idata->idle_timer = add_timer(duration, instance_delete_timer, instance_id, 0);
+	idata->idle_limit = static_cast<unsigned int>(time(nullptr)) + db->timeout;
+	idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
 
 	int16 m;
 
@@ -1038,7 +1032,7 @@ void do_reload_instance(void)
 			std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
 
 			if (db)
-				idata->keep_limit = static_cast<unsigned int>(time(nullptr)) + db->limit * 1000;
+				idata->keep_limit = static_cast<unsigned int>(time(nullptr)) + db->limit;
 		}
 	}
 
