@@ -127,3 +127,6 @@ Thumbs.db
 
 # CMakeFiles
 /CMakeFiles/
+
+# ChocobotRO
+/data
