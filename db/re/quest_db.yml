@@ -344,7 +344,7 @@ Body:
     Title: Flaming Basin and Doom Prayers
     Drops:
       - Mob: FIRE_SAND_MAN
-        Item: Patrol_Journal
+        Item: PatrolLog
         Rate: 2000
   - Id: 1267
     Title: Flaming Basin and Doom Prayers
