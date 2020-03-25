@@ -2100,7 +2100,7 @@ OnTouch_:
 			ASSIN_Q3 = 2;
 			next;
 		}
-		else {
+		else if (ASSIN_Q3 != 2) {
 			mes "[Guildmaster]";
 			mes "Well, I talked too much.";
 			mes "Please take this first.";
@@ -2121,6 +2121,7 @@ OnTouch_:
 			case 5:
 				getitem 1252,1; //Katar
 			}
+			ASSIN_Q3 = 2;
 		}
 		mes "[Guildmaster]";
 		mes "Well, I am giving you a token. Please return to the Assassin expert, the Ferocious-Looking Huey, at the entrance.";
