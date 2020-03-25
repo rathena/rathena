@@ -5,8 +5,8 @@
 # Instance Settings
 #
 ###########################################################################
-# - Id                Unique Instance ID.
-#   Name              Unique Instance Name.
+# - Id                Instance ID.
+#   Name              Instance Name.
 #   TimeLimit         Total lifetime of instance in seconds. (Default: 3600)
 #   IdleTimeOut       Time before an idle instance is destroyed in seconds. (Default: 300)
 #   Enter:            Instance entrance coordinates.
