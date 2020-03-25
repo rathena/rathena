@@ -13770,67 +13770,6 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 
-	case SC_TOXIN:
-		if (sce->val4 >= 0) { // Damage is every 10 seconds including 3%sp drain.
-			map_freeblock_lock();
-			dounlock = true;
-			status_damage(bl, bl, 1, status->max_sp * 3 / 100, clif_damage(bl, bl, tick, status->amotion, status->dmotion + 500, 1, 1, DMG_NORMAL, 0, false), 0, 0);
-		}
-		break;
-
-	case SC_MAGICMUSHROOM:
-		if (sce->val4 >= 0) {
-			bool flag = 0;
-			int64 damage = status->max_hp * 3 / 100;
-			if (status->hp <= damage)
-				damage = status->hp - 1; // Cannot Kill
-
-			if (damage > 0) { // 3% Damage each 4 seconds
-				map_freeblock_lock();
-				status_zap(bl, damage, 0);
-				flag = !sc->data[type]; // Killed? Should not
-				map_freeblock_unlock();
-			}
-
-			if (!flag) { // Random Skill Cast
-				if (magic_mushroom_db.size() > 0 && sd && !pc_issit(sd)) { // Can't cast if sit
-					auto mushroom_spell = magic_mushroom_db.begin();
-
-					std::advance(mushroom_spell, rnd() % magic_mushroom_db.size());
-
-					uint16 mushroom_skill_id = mushroom_spell->second->skill_id;
-
-					if (!skill_get_index(mushroom_skill_id))
-						break;
-
-					unit_stop_attack(bl);
-					unit_skillcastcancel(bl, 1);
-
-					switch (skill_get_casttype(mushroom_skill_id)) { // Magic Mushroom skills are buffs or area damage
-					case CAST_GROUND:
-						skill_castend_pos2(bl, bl->x, bl->y, mushroom_skill_id, 1, tick, 0);
-						break;
-					case CAST_NODAMAGE:
-						skill_castend_nodamage_id(bl, bl, mushroom_skill_id, 1, tick, 0);
-						break;
-					case CAST_DAMAGE:
-						skill_castend_damage_id(bl, bl, mushroom_skill_id, 1, tick, 0);
-						break;
-					}
-				}
-				clif_emotion(bl, ET_SMILE);
-			}
-		}
-		break;
-
-	case SC_PYREXIA:
-		if (sce->val4 >= 0) {
-			map_freeblock_lock();
-			dounlock = true;
-			status_fix_damage(bl, bl, 100, clif_damage(bl, bl, tick, status->amotion, status->dmotion + 500, 100, 1, DMG_NORMAL, 0, false),0);
-		}
-		break;
-
 	case SC_DEATHHURT:
 		if (sce->val4 >= 0) {
 			if (status->hp < status->max_hp)
