@@ -1,0 +1,1257 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2019 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Homunculus Database
+###########################################################################
+#
+# Homunculus Settings
+#
+###########################################################################
+# - BaseClass               Base homunculus class.
+#   EvolutionClass          Evolution homunculus class.
+#   Name                    Name of homunculus.
+#   Food                    Homunculus food. (Default: Pet_Food)
+#   HungryDelay             Time interval in milliseconds after which the homunculus' hunger value is altered. (Default: 60000)
+#   Status:                 Homunculus stats.
+#     Race                  Homunculus race. (Default: Demihuman)
+#     Element               Homunculus element. (Default: Neutral)
+#     Size:                 Homunculus size.
+#       Base                Base size of the homunculus.
+#       Evolution           Evolution size of the homunculus.
+#     BaseAspd              Homunculus base ASPD. (Default: 700)
+#     Hp:                   HP stats.
+#       Base                Base HP.
+#       GrowthBonus:        Growth HP bonus.
+#         Min               Minimum Growth HP bonus.
+#         Max               Maximum Growth HP bonus.
+#       EvolutionBonus:     Evolution HP bonus.
+#         Min               Minimum Evolution HP bonus.
+#         Max               Maximum Evolution HP bonus.
+#     Sp:                   SP stats.
+#       Base                Base SP.
+#       GrowthBonus:        Growth SP bonus.
+#         Min               Minimum Growth SP bonus.
+#         Max               Maximum Growth SP bonus.
+#       EvolutionBonus:     Evolution SP bonus.
+#         Min               Minimum Evolution SP bonus.
+#         Max               Maximum Evolution SP bonus.
+#     Str:                  STR stats.
+#       Base                Base STR.
+#       GrowthBonus:        Growth STR bonus.
+#         Min               Minimum Growth STR bonus.
+#         Max               Maximum Growth STR bonus.
+#       EvolutionBonus:     Evolution STR bonus.
+#         Min               Minimum Evolution STR bonus.
+#         Max               Maximum Evolution STR bonus.
+#     Agi:                  AGI stats.
+#       Base                Base AGI.
+#       GrowthBonus:        Growth AGI bonus.
+#         Min               Minimum Growth AGI bonus.
+#         Max               Maximum Growth AGI bonus.
+#       EvolutionBonus:     Evolution AGI bonus.
+#         Min               Minimum Evolution AGI bonus.
+#         Max               Maximum Evolution AGI bonus.
+#     Vit:                  VIT stats.
+#       Base                Base VIT.
+#       GrowthBonus:        Growth VIT bonus.
+#         Min               Minimum Growth VIT bonus.
+#         Max               Maximum Growth VIT bonus.
+#       EvolutionBonus:     Evolution VIT bonus.
+#         Min               Minimum Evolution VIT bonus.
+#         Max               Maximum Evolution VIT bonus.
+#     Int:                  INT stats.
+#       Base                Base INT.
+#       GrowthBonus:        Growth INT bonus.
+#         Min               Minimum Growth INT bonus.
+#         Max               Maximum Growth INT bonus.
+#       EvolutionBonus:     Evolution INT bonus.
+#         Min               Minimum Evolution INT bonus.
+#         Max               Maximum Evolution INT bonus.
+#     Dex:                  DEX stats.
+#       Base                Base DEX.
+#       GrowthBonus:        Growth DEX bonus.
+#         Min               Minimum Growth DEX bonus.
+#         Max               Maximum Growth DEX bonus.
+#       EvolutionBonus:     Evolution DEX bonus.
+#         Min               Minimum Evolution DEX bonus.
+#         Max               Maximum Evolution DEX bonus.
+#     Luk:                  LUK stats.
+#       Base                Base LUK.
+#       GrowthBonus:        Growth LUK bonus.
+#         Min               Minimum Growth LUK bonus.
+#         Max               Maximum Growth LUK bonus.
+#       EvolutionBonus:     Evolution LUK bonus.
+#         Min               Minimum Evolution LUK bonus.
+#         Max               Maximum Evolution LUK bonus.
+#     SkillTree:            Skill tree for homunculus.
+#       - Skill             Skill name.
+#         MaxLevel          Maximum level of skill.
+#         RequiredLevel     Required base level of homunculus to learn. (Default: 0)
+#         RequiredIntimacy  Required intimacy of homunculus to learn. (Default: 0)
+#         Required:         Prerequisite skills. (Default: null)
+#           - Skill         Prerequisite skill name.
+#             Level         Level of prerequisite skill.
+###########################################################################
+
+Header:
+  Type: HOMUNCULUS_DB
+  Version: 1
+
+Body:
+  - BaseClass: Lif
+    EvolutionClass: Lif_H
+    Name: Lif
+    Status:
+      Race: Demihuman
+      Element: Neutral
+      Size:
+        Base: Small
+        Evolution: Medium
+      Hp:
+        Base: 150
+        GrowthBonus:
+          Min: 60
+          Max: 100
+        EvolutionBonus:
+          Min: 800
+          Max: 2400
+      Sp:
+        Base: 40
+        GrowthBonus:
+          Min: 4
+          Max: 9
+        EvolutionBonus:
+          Min: 220
+          Max: 480
+      Str:
+        Base: 17
+        GrowthBonus:
+          Min: 5
+          Max: 19
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Agi:
+        Base: 20
+        GrowthBonus:
+          Min: 5
+          Max: 19
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Vit:
+        Base: 15
+        GrowthBonus:
+          Min: 5
+          Max: 19
+        EvolutionBonus:
+          Min: 20
+          Max: 40
+      Int:
+        Base: 35
+        GrowthBonus:
+          Min: 4
+          Max: 20
+        EvolutionBonus:
+          Min: 30
+          Max: 50
+      Dex:
+        Base: 24
+        GrowthBonus:
+          Min: 6
+          Max: 20
+        EvolutionBonus:
+          Min: 20
+          Max: 50
+      Luk:
+        Base: 12
+        GrowthBonus:
+          Min: 6
+          Max: 20
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+    SkillTree:
+      - Skill: HLIF_HEAL
+        MaxLevel: 5
+      - Skill: HLIF_AVOID
+        MaxLevel: 5
+        Required:
+          - Skill: HLIF_HEAL
+            Level: 3
+      - Skill: HLIF_BRAIN
+        MaxLevel: 5
+        Required:
+          - Skill: HLIF_HEAL
+            Level: 5
+  - BaseClass: Amistr
+    EvolutionClass: Amistr_H
+    Name: Amistr
+    Food: Zargon
+    Status:
+      Race: Brute
+      Element: Neutral
+      Size:
+        Base: Small
+        Evolution: Medium
+      Hp:
+        Base: 320
+        GrowthBonus:
+          Min: 80
+          Max: 130
+        EvolutionBonus:
+          Min: 1600
+          Max: 3600
+      Sp:
+        Base: 10
+        GrowthBonus:
+          Min: 1
+          Max: 4
+        EvolutionBonus:
+          Min: 120
+          Max: 360
+      Str:
+        Base: 20
+        GrowthBonus:
+          Min: 8
+          Max: 20
+        EvolutionBonus:
+          Min: 20
+          Max: 50
+      Agi:
+        Base: 17
+        GrowthBonus:
+          Min: 4
+          Max: 20
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Vit:
+        Base: 35
+        GrowthBonus:
+          Min: 4
+          Max: 20
+        EvolutionBonus:
+          Min: 20
+          Max: 50
+      Int:
+        Base: 11
+        GrowthBonus:
+          Min: 1
+          Max: 10
+        EvolutionBonus:
+          Min: 20
+          Max: 50
+      Dex:
+        Base: 24
+        GrowthBonus:
+          Min: 3
+          Max: 19
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Luk:
+        Base: 12
+        GrowthBonus:
+          Min: 3
+          Max: 19
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+    SkillTree:
+      - Skill: HAMI_CASTLE
+        MaxLevel: 5
+      - Skill: HAMI_DEFENCE
+        MaxLevel: 5
+        Required:
+          - Skill: HAMI_CASTLE
+            Level: 5
+      - Skill: HAMI_SKIN
+        MaxLevel: 5
+        Required:
+          - Skill: HAMI_DEFENCE
+            Level: 3
+  - BaseClass: Filir
+    EvolutionClass: Filir_H
+    Name: Filir
+    Food: Garlet
+    Status:
+      Race: Brute
+      Element: Neutral
+      Size:
+        Base: Small
+        Evolution: Medium
+      Hp:
+        Base: 90
+        GrowthBonus:
+          Min: 45
+          Max: 75
+        EvolutionBonus:
+          Min: 1200
+          Max: 3200
+      Sp:
+        Base: 25
+        GrowthBonus:
+          Min: 3
+          Max: 6
+        EvolutionBonus:
+          Min: 200
+          Max: 400
+      Str:
+        Base: 29
+        GrowthBonus:
+          Min: 4
+          Max: 20
+        EvolutionBonus:
+          Min: 20
+          Max: 50
+      Agi:
+        Base: 35
+        GrowthBonus:
+          Min: 8
+          Max: 20
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Vit:
+        Base: 9
+        GrowthBonus:
+          Min: 1
+          Max: 10
+        EvolutionBonus:
+          Min: 20
+          Max: 50
+      Int:
+        Base: 8
+        GrowthBonus:
+          Min: 3
+          Max: 19
+        EvolutionBonus:
+          Min: 20
+          Max: 50
+      Dex:
+        Base: 30
+        GrowthBonus:
+          Min: 4
+          Max: 20
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Luk:
+        Base: 9
+        GrowthBonus:
+          Min: 3
+          Max: 19
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+    SkillTree:
+      - Skill: HFLI_MOON
+        MaxLevel: 5
+      - Skill: HFLI_FLEET
+        MaxLevel: 5
+        Required:
+          - Skill: HFLI_MOON
+            Level: 3
+      - Skill: HFLI_SPEED
+        MaxLevel: 5
+        Required:
+          - Skill: HFLI_FLEET
+            Level: 3
+  - BaseClass: Vanilmirth
+    EvolutionClass: Vanilmirth_H
+    Name: Vanilmirth
+    Food: Scell
+    Status:
+      Race: Formless
+      Element: Neutral
+      Size:
+        Base: Small
+        Evolution: Medium
+      Hp:
+        Base: 80
+        GrowthBonus:
+          Min: 30
+          Max: 150
+        EvolutionBonus:
+          Min: 1200
+          Max: 4800
+      Sp:
+        Base: 11
+        GrowthBonus:
+          Min: 0
+          Max: 7
+        EvolutionBonus:
+          Min: 480
+          Max: 640
+      Str:
+        Base: 11
+        GrowthBonus:
+          Min: 1
+          Max: 30
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Agi:
+        Base: 11
+        GrowthBonus:
+          Min: 1
+          Max: 30
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Vit:
+        Base: 11
+        GrowthBonus:
+          Min: 1
+          Max: 30
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Int:
+        Base: 11
+        GrowthBonus:
+          Min: 1
+          Max: 30
+        EvolutionBonus:
+          Min: 20
+          Max: 50
+      Dex:
+        Base: 11
+        GrowthBonus:
+          Min: 1
+          Max: 30
+        EvolutionBonus:
+          Min: 10
+          Max: 50
+      Luk:
+        Base: 11
+        GrowthBonus:
+          Min: 1
+          Max: 30
+        EvolutionBonus:
+          Min: 10
+          Max: 100
+    SkillTree:
+      - Skill: HVAN_CAPRICE
+        MaxLevel: 5
+      - Skill: HVAN_CHAOTIC
+        MaxLevel: 5
+        Required:
+          - Skill: HVAN_CAPRICE
+            Level: 3
+      - Skill: HVAN_INSTRUCT
+        MaxLevel: 5
+        Required:
+          - Skill: HVAN_CAPRICE
+            Level: 5
+  - BaseClass: Lif2
+    EvolutionClass: Lif_H2
+    Name: Lif
+    Status:
+      Race: Demihuman
+      Element: Neutral
+      Size:
+        Base: Small
+        Evolution: Medium
+      Hp:
+        Base: 150
+        GrowthBonus:
+          Min: 60
+          Max: 100
+        EvolutionBonus:
+          Min: 800
+          Max: 2400
+      Sp:
+        Base: 40
+        GrowthBonus:
+          Min: 4
+          Max: 9
+        EvolutionBonus:
+          Min: 220
+          Max: 480
+      Str:
+        Base: 17
+        GrowthBonus:
+          Min: 5
+          Max: 19
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Agi:
+        Base: 20
+        GrowthBonus:
+          Min: 5
+          Max: 19
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Vit:
+        Base: 15
+        GrowthBonus:
+          Min: 5
+          Max: 19
+        EvolutionBonus:
+          Min: 20
+          Max: 40
+      Int:
+        Base: 35
+        GrowthBonus:
+          Min: 4
+          Max: 20
+        EvolutionBonus:
+          Min: 30
+          Max: 50
+      Dex:
+        Base: 24
+        GrowthBonus:
+          Min: 6
+          Max: 20
+        EvolutionBonus:
+          Min: 20
+          Max: 50
+      Luk:
+        Base: 12
+        GrowthBonus:
+          Min: 6
+          Max: 20
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+    SkillTree:
+      - Skill: HLIF_HEAL
+        MaxLevel: 5
+      - Skill: HLIF_AVOID
+        MaxLevel: 5
+        Required:
+          - Skill: HLIF_HEAL
+            Level: 3
+      - Skill: HLIF_BRAIN
+        MaxLevel: 5
+        Required:
+          - Skill: HLIF_HEAL
+            Level: 5
+  - BaseClass: Amistr2
+    EvolutionClass: Amistr_H2
+    Name: Amistr
+    Food: Zargon
+    Status:
+      Race: Brute
+      Element: Neutral
+      Size:
+        Base: Small
+        Evolution: Medium
+      Hp:
+        Base: 320
+        GrowthBonus:
+          Min: 80
+          Max: 130
+        EvolutionBonus:
+          Min: 1600
+          Max: 3600
+      Sp:
+        Base: 10
+        GrowthBonus:
+          Min: 1
+          Max: 4
+        EvolutionBonus:
+          Min: 120
+          Max: 360
+      Str:
+        Base: 20
+        GrowthBonus:
+          Min: 8
+          Max: 20
+        EvolutionBonus:
+          Min: 20
+          Max: 50
+      Agi:
+        Base: 17
+        GrowthBonus:
+          Min: 4
+          Max: 20
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Vit:
+        Base: 35
+        GrowthBonus:
+          Min: 4
+          Max: 20
+        EvolutionBonus:
+          Min: 20
+          Max: 50
+      Int:
+        Base: 11
+        GrowthBonus:
+          Min: 1
+          Max: 10
+        EvolutionBonus:
+          Min: 20
+          Max: 50
+      Dex:
+        Base: 24
+        GrowthBonus:
+          Min: 3
+          Max: 19
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Luk:
+        Base: 12
+        GrowthBonus:
+          Min: 3
+          Max: 19
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+    SkillTree:
+      - Skill: HAMI_CASTLE
+        MaxLevel: 5
+      - Skill: HAMI_DEFENCE
+        MaxLevel: 5
+        Required:
+          - Skill: HAMI_CASTLE
+            Level: 5
+      - Skill: HAMI_SKIN
+        MaxLevel: 5
+        Required:
+          - Skill: HAMI_DEFENCE
+            Level: 3
+  - BaseClass: Filir2
+    EvolutionClass: Filir_H2
+    Name: Filir
+    Food: Garlet
+    Status:
+      Race: Brute
+      Element: Neutral
+      Size:
+        Base: Small
+        Evolution: Medium
+      Hp:
+        Base: 90
+        GrowthBonus:
+          Min: 45
+          Max: 75
+        EvolutionBonus:
+          Min: 1200
+          Max: 3200
+      Sp:
+        Base: 25
+        GrowthBonus:
+          Min: 3
+          Max: 6
+        EvolutionBonus:
+          Min: 200
+          Max: 400
+      Str:
+        Base: 29
+        GrowthBonus:
+          Min: 4
+          Max: 20
+        EvolutionBonus:
+          Min: 20
+          Max: 50
+      Agi:
+        Base: 35
+        GrowthBonus:
+          Min: 8
+          Max: 20
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Vit:
+        Base: 9
+        GrowthBonus:
+          Min: 1
+          Max: 10
+        EvolutionBonus:
+          Min: 20
+          Max: 50
+      Int:
+        Base: 8
+        GrowthBonus:
+          Min: 3
+          Max: 19
+        EvolutionBonus:
+          Min: 20
+          Max: 50
+      Dex:
+        Base: 30
+        GrowthBonus:
+          Min: 4
+          Max: 20
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Luk:
+        Base: 9
+        GrowthBonus:
+          Min: 3
+          Max: 19
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+    SkillTree:
+      - Skill: HFLI_MOON
+        MaxLevel: 5
+      - Skill: HFLI_FLEET
+        MaxLevel: 5
+        Required:
+          - Skill: HFLI_MOON
+            Level: 3
+      - Skill: HFLI_SPEED
+        MaxLevel: 5
+        Required:
+          - Skill: HFLI_FLEET
+            Level: 3
+  - BaseClass: Vanilmirth2
+    EvolutionClass: Vanilmirth_H2
+    Name: Vanilmirth
+    Food: Scell
+    Status:
+      Race: Formless
+      Element: Neutral
+      Size:
+        Base: Small
+        Evolution: Medium
+      Hp:
+        Base: 80
+        GrowthBonus:
+          Min: 30
+          Max: 150
+        EvolutionBonus:
+          Min: 1200
+          Max: 4800
+      Sp:
+        Base: 11
+        GrowthBonus:
+          Min: 0
+          Max: 7
+        EvolutionBonus:
+          Min: 480
+          Max: 640
+      Str:
+        Base: 11
+        GrowthBonus:
+          Min: 1
+          Max: 30
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Agi:
+        Base: 11
+        GrowthBonus:
+          Min: 1
+          Max: 30
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Vit:
+        Base: 11
+        GrowthBonus:
+          Min: 1
+          Max: 30
+        EvolutionBonus:
+          Min: 10
+          Max: 30
+      Int:
+        Base: 11
+        GrowthBonus:
+          Min: 1
+          Max: 30
+        EvolutionBonus:
+          Min: 20
+          Max: 50
+      Dex:
+        Base: 11
+        GrowthBonus:
+          Min: 1
+          Max: 30
+        EvolutionBonus:
+          Min: 10
+          Max: 50
+      Luk:
+        Base: 11
+        GrowthBonus:
+          Min: 1
+          Max: 30
+        EvolutionBonus:
+          Min: 10
+          Max: 100
+    SkillTree:
+      - Skill: HVAN_CAPRICE
+        MaxLevel: 5
+      - Skill: HVAN_CHAOTIC
+        MaxLevel: 5
+        Required:
+          - Skill: HVAN_CAPRICE
+            Level: 3
+      - Skill: HVAN_INSTRUCT
+        MaxLevel: 5
+        Required:
+          - Skill: HVAN_CAPRICE
+            Level: 5
+  - BaseClass: Eira
+    Name: Eira
+    Food: Small_Snow_Flower
+    Status:
+      Race: Angel
+      Element: Wind
+      Size:
+        Base: Medium
+        Evolution: Medium
+      Hp:
+        Base: 150
+        GrowthBonus:
+          Min: 40
+          Max: 160
+        EvolutionBonus:
+          Min: 1000
+          Max: 2000
+      Sp:
+        Base: 40
+        GrowthBonus:
+          Min: 20
+          Max: 42
+        EvolutionBonus:
+          Min: 10
+          Max: 200
+      Str:
+        Base: 17
+        GrowthBonus:
+          Min: 13
+          Max: 39
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Agi:
+        Base: 20
+        GrowthBonus:
+          Min: 28
+          Max: 42
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Vit:
+        Base: 15
+        GrowthBonus:
+          Min: 15
+          Max: 25
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Int:
+        Base: 35
+        GrowthBonus:
+          Min: 14
+          Max: 48
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Dex:
+        Base: 24
+        GrowthBonus:
+          Min: 16
+          Max: 36
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Luk:
+        Base: 12
+        GrowthBonus:
+          Min: 9
+          Max: 18
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+    SkillTree:
+      - Skill: MH_LIGHT_OF_REGENE
+        MaxLevel: 5
+        RequiredLevel: 128
+      - Skill: MH_OVERED_BOOST
+        MaxLevel: 5
+        RequiredLevel: 114
+      - Skill: MH_ERASER_CUTTER
+        MaxLevel: 5
+        RequiredLevel: 106
+      - Skill: MH_XENO_SLASHER
+        MaxLevel: 5
+        RequiredLevel: 121
+      - Skill: MH_SILENT_BREEZE
+        MaxLevel: 5
+        RequiredLevel: 137
+  - BaseClass: Bayeri
+    Name: Bayeri
+    Food: Fresh_Plant
+    Status:
+      Race: Brute
+      Element: Holy
+      Size:
+        Base: Medium
+        Evolution: Medium
+      Hp:
+        Base: 320
+        GrowthBonus:
+          Min: 90
+          Max: 360
+        EvolutionBonus:
+          Min: 1000
+          Max: 2000
+      Sp:
+        Base: 10
+        GrowthBonus:
+          Min: 48
+          Max: 52
+        EvolutionBonus:
+          Min: 10
+          Max: 200
+      Str:
+        Base: 20
+        GrowthBonus:
+          Min: 18
+          Max: 36
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Agi:
+        Base: 17
+        GrowthBonus:
+          Min: 8
+          Max: 36
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Vit:
+        Base: 35
+        GrowthBonus:
+          Min: 16
+          Max: 32
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Int:
+        Base: 11
+        GrowthBonus:
+          Min: 22
+          Max: 44
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Dex:
+        Base: 24
+        GrowthBonus:
+          Min: 12
+          Max: 24
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Luk:
+        Base: 12
+        GrowthBonus:
+          Min: 20
+          Max: 36
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+    SkillTree:
+      - Skill: MH_STAHL_HORN
+        MaxLevel: 5
+        RequiredLevel: 105
+      - Skill: MH_GOLDENE_FERSE
+        MaxLevel: 5
+        RequiredLevel: 112
+      - Skill: MH_STEINWAND
+        MaxLevel: 5
+        RequiredLevel: 121
+      - Skill: MH_HEILIGE_STANGE
+        MaxLevel: 5
+        RequiredLevel: 138
+      - Skill: MH_ANGRIFFS_MODUS
+        MaxLevel: 5
+        RequiredLevel: 130
+  - BaseClass: Sera
+    Name: Sera
+    Food: Apple_Pudding
+    Status:
+      Race: Insect
+      Element: Earth
+      Size:
+        Base: Medium
+        Evolution: Medium
+      Hp:
+        Base: 90
+        GrowthBonus:
+          Min: 60
+          Max: 240
+        EvolutionBonus:
+          Min: 1000
+          Max: 2000
+      Sp:
+        Base: 25
+        GrowthBonus:
+          Min: 36
+          Max: 64
+        EvolutionBonus:
+          Min: 10
+          Max: 200
+      Str:
+        Base: 29
+        GrowthBonus:
+          Min: 10
+          Max: 25
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Agi:
+        Base: 35
+        GrowthBonus:
+          Min: 16
+          Max: 32
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Vit:
+        Base: 9
+        GrowthBonus:
+          Min: 5
+          Max: 25
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Int:
+        Base: 8
+        GrowthBonus:
+          Min: 7
+          Max: 35
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Dex:
+        Base: 30
+        GrowthBonus:
+          Min: 28
+          Max: 40
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Luk:
+        Base: 9
+        GrowthBonus:
+          Min: 20
+          Max: 40
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+    SkillTree:
+      - Skill: MH_SUMMON_LEGION
+        MaxLevel: 5
+        RequiredLevel: 132
+      - Skill: MH_NEEDLE_OF_PARALYZE
+        MaxLevel: 5
+        RequiredLevel: 105
+      - Skill: MH_POISON_MIST
+        MaxLevel: 5
+        RequiredLevel: 116
+      - Skill: MH_PAIN_KILLER
+        MaxLevel: 5
+        RequiredLevel: 123
+  - BaseClass: Dieter
+    Name: Dieter
+    Food: Big_Cell
+    Status:
+      Race: Formless
+      Element: Fire
+      Size:
+        Base: Medium
+        Evolution: Medium
+      Hp:
+        Base: 80
+        GrowthBonus:
+          Min: 240
+          Max: 480
+        EvolutionBonus:
+          Min: 1000
+          Max: 2000
+      Sp:
+        Base: 11
+        GrowthBonus:
+          Min: 40
+          Max: 120
+        EvolutionBonus:
+          Min: 10
+          Max: 200
+      Str:
+        Base: 11
+        GrowthBonus:
+          Min: 20
+          Max: 40
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Agi:
+        Base: 11
+        GrowthBonus:
+          Min: 13
+          Max: 26
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Vit:
+        Base: 11
+        GrowthBonus:
+          Min: 18
+          Max: 36
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Int:
+        Base: 11
+        GrowthBonus:
+          Min: 15
+          Max: 40
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Dex:
+        Base: 11
+        GrowthBonus:
+          Min: 16
+          Max: 32
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Luk:
+        Base: 11
+        GrowthBonus:
+          Min: 4
+          Max: 16
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+    SkillTree:
+      - Skill: MH_MAGMA_FLOW
+        MaxLevel: 5
+        RequiredLevel: 122
+      - Skill: MH_GRANITIC_ARMOR
+        MaxLevel: 5
+        RequiredLevel: 116
+      - Skill: MH_LAVA_SLIDE
+        MaxLevel: 5
+        RequiredLevel: 109
+      - Skill: MH_PYROCLASTIC
+        MaxLevel: 5
+        RequiredLevel: 131
+      - Skill: MH_VOLCANIC_ASH
+        MaxLevel: 5
+        RequiredLevel: 102
+  - BaseClass: Eleanor
+    Name: Eleanor
+    Food: Bun_
+    Status:
+      Race: Demihuman
+      Element: Poison
+      Size:
+        Base: Medium
+        Evolution: Medium
+      Hp:
+        Base: 320
+        GrowthBonus:
+          Min: 60
+          Max: 300
+        EvolutionBonus:
+          Min: 1000
+          Max: 2000
+      Sp:
+        Base: 10
+        GrowthBonus:
+          Min: 10
+          Max: 20
+        EvolutionBonus:
+          Min: 10
+          Max: 200
+      Str:
+        Base: 20
+        GrowthBonus:
+          Min: 20
+          Max: 40
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Agi:
+        Base: 17
+        GrowthBonus:
+          Min: 10
+          Max: 50
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Vit:
+        Base: 35
+        GrowthBonus:
+          Min: 24
+          Max: 48
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Int:
+        Base: 11
+        GrowthBonus:
+          Min: 5
+          Max: 15
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Dex:
+        Base: 24
+        GrowthBonus:
+          Min: 12
+          Max: 36
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+      Luk:
+        Base: 12
+        GrowthBonus:
+          Min: 2
+          Max: 10
+        EvolutionBonus:
+          Min: 1
+          Max: 10
+    SkillTree:
+      - Skill: MH_STYLE_CHANGE
+        MaxLevel: 1
+        RequiredLevel: 100
+      - Skill: MH_SONIC_CRAW
+        MaxLevel: 5
+        RequiredLevel: 100
+      - Skill: MH_SILVERVEIN_RUSH
+        MaxLevel: 5
+        RequiredLevel: 114
+      - Skill: MH_MIDNIGHT_FRENZY
+        MaxLevel: 5
+        RequiredLevel: 128
+      - Skill: MH_TINDER_BREAKER
+        MaxLevel: 5
+        RequiredLevel: 100
+      - Skill: MH_CBC
+        MaxLevel: 5
+        RequiredLevel: 112
+      - Skill: MH_EQC
+        MaxLevel: 5
+        RequiredLevel: 133
