@@ -1766,3 +1766,12 @@ Bans or unbans a player from the specified channel.
 Binds or unbinds your global chat with the specified channel, which sends all global messages to the specified channel.
 
 ---------------------------------------
+
+@setquest <quest ID>
+@erasequest <quest ID>
+@completequest <quest ID>
+@checkquest <quest ID>
+
+Changes/checks the status of the specified quest ID.
+
+---------------------------------------

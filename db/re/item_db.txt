@@ -4736,14 +4736,14 @@
 6686,Brick,Brick,3,10,,2000,,,,,,,,,,,,,{},{},{}
 6687,Rope__,Rope,3,10,,2000,,,,,,,,,,,,,{},{},{}
 6688,Wood_,Wood,3,10,,2000,,,,,,,,,,,,,{},{},{}
-6689,Fire_Beetle_Shell,Fire Beetle Shell,3,10,,0,,,,,,,,,,,,,{},{},{}
-6690,Delicious_Stem,Delicious Stem,3,10,,0,,,,,,,,,,,,,{},{},{}
-6691,Fire_Feather,Fire Feather,3,10,,0,,,,,,,,,,,,,{},{},{}
-6692,Patrol_Journal,Patrol Journal,3,10,,1,,,,,,,,,,,,,{},{},{}
-6693,Stone_Blessing,Stone Blessing,3,10,,10,,,,,,,,,,,,,{},{},{}
-6694,Blood_of_The_Monster,Blood of The Monster,3,10,,10,,,,,,,,,,,,,{},{},{}
-6695,Tooth_Rock_Of_Fire_Golem,Tooth Rock Of Fire Golem,3,10,,100,,,,,,,,,,,,,{},{},{}
-6696,Fire_Frill,Fire Frill,3,10,,10,,,,,,,,,,,,,{},{},{}
+6689,BurningSkin,Burning Bug Skin,3,10,,0,,,,,,,,,,,,,{},{},{}
+6690,YummyStem,Yummy Stem,3,10,,0,,,,,,,,,,,,,{},{},{}
+6691,BurningFeather,Burning Feather,3,10,,0,,,,,,,,,,,,,{},{},{}
+6692,PatrolLog,Patrol Log,3,10,,1,,,,,,,,,,,,,{},{},{}
+6693,Stone_Of_Blessing,Stone Of Blessing,3,10,,10,,,,,,,,,,,,,{},{},{}
+6694,Monster_Blood,Monster Blood,3,10,,10,,,,,,,,,,,,,{},{},{}
+6695,ToothOfFlameGolem,Golem's Fiery Stone Tooth,3,10,,100,,,,,,,,,,,,,{},{},{}
+6696,ToothOfFlameFrilldora,Frilldora's Fiery Nape,3,10,,10,,,,,,,,,,,,,{},{},{}
 6698,Wooden_Axe,Wooden Axe,3,10,,1000,,,,,,,,,,,,,{},{},{}
 6699,Faith_Silence,Faith Silence,3,10,,0,,,,,,,,,,,,,{},{},{}
 6700,White_Snake_Scale,White Snake Scale,3,10,,0,,,,,,,,,,,,,{},{},{}
@@ -6824,7 +6824,7 @@
 12511,E_Siege_Teleport_Scroll,E Siege Teleport Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12512,E_Greed_Scroll,E Greed Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12513,E_Glass_Of_Illusion,E Glass Of Illusion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12514,E_Abrasive,E Abrasive,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ autobonus "{ bonus bCriticalRate,30;}",100,1000; },{},{}
+12514,E_Abrasive,E Abrasive,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_MAGICALATTHIT; sc_start SC_INCCRI,300000,30; },{},{}
 12515,E_Med_Life_Potion,E Med Life Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_HEAL3; sc_start2 SC_L_LIFEPOTION,600000,-7,4; },{},{}
 12516,E_Small_Life_Potion,E Small Life Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_HEAL3; sc_start2 SC_S_LIFEPOTION,600000,-5,5; },{},{}
 12517,E_Regeneration_Potion,E Regeneration Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}

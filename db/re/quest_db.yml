@@ -336,6 +336,42 @@ Body:
     TimeLimit: +23h
   - Id: 1263
     Title: Cursed Swordman
+  - Id: 1264
+    Title: Flaming Basin and Doom Prayers
+  - Id: 1265
+    Title: Flaming Basin and Doom Prayers
+  - Id: 1266
+    Title: Flaming Basin and Doom Prayers
+    Drops:
+      - Mob: FIRE_SAND_MAN
+        Item: Patrol_Journal
+        Rate: 2000
+  - Id: 1267
+    Title: Flaming Basin and Doom Prayers
+  - Id: 1268
+    Title: Flaming Basin and Doom Prayers
+    Targets:
+      - Mob: FIRE_SAND_MAN
+        Count: 20
+  - Id: 1269
+    Title: Flaming Basin and Doom Prayers
+    Targets:
+      - Mob: FIRE_FRILLDORA
+        Count: 20
+  - Id: 1270
+    Title: Flaming Basin and Doom Prayers
+  - Id: 1271
+    Title: Flaming Basin and Doom Prayers
+  - Id: 1272
+    Title: Flaming Basin and Doom Prayers
+  - Id: 1273
+    Title: Flaming Basin and Doom Prayers
+  - Id: 1274
+    Title: Flaming Basin and Doom Prayers
+  - Id: 1275
+    Title: Flaming Basin and Doom Prayers
+  - Id: 1297
+    Title: Flaming Basin and Doom Prayers
   - Id: 1298
     Title: Gas! Gas!
     Targets:

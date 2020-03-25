@@ -1128,7 +1128,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_bl
  *		UB_KNOCKABLE - can be knocked back / stopped
  *		UB_NO_KNOCKBACK_MAP - at WOE/BG map
  *		UB_MD_KNOCKBACK_IMMUNE - target is MD_KNOCKBACK_IMMUNE
- *		UB_TARGET_BASILICA - target is in Basilica area
+ *		UB_TARGET_BASILICA - target is in Basilica area (Pre-Renewal)
  *		UB_TARGET_NO_KNOCKBACK - target has 'special_state.no_knockback'
  *		UB_TARGET_TRAP - target is trap that cannot be knocked back
  */
@@ -1148,9 +1148,12 @@ enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag)
 			break;
 		case BL_PC: {
 				struct map_session_data *sd = BL_CAST(BL_PC, bl);
+
+#ifndef RENEWAL
 				// Basilica caster can't be knocked-back by normal monsters.
 				if( !(flag&0x4) && sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id)
 					return UB_TARGET_BASILICA;
+#endif
 				// Target has special_state.no_knockback (equip)
 				if( (flag&(0x1|0x2)) && !(flag&0x8) && sd->special_state.no_knockback )
 					return UB_TARGET_NO_KNOCKBACK;
@@ -1389,7 +1392,9 @@ int unit_can_move(struct block_list *bl) {
 		if( sc->cant.move // status placed here are ones that cannot be cached by sc->cant.move for they depend on other conditions other than their availability
 			|| sc->data[SC_SPIDERWEB]
 			|| (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
+#ifndef RENEWAL
 				!sc->data[SC_LONGING] ||
+#endif
 				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
 				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
 				) )
@@ -1799,10 +1804,12 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 			if (sc && sc->data[SC_RUN])
 				casttime = -1;
 		break;
+#ifndef RENEWAL
 		case HP_BASILICA:
 			if( sc && sc->data[SC_BASILICA] )
 				casttime = -1; // No Casting time on basilica cancel
 		break;
+#endif
 #ifndef RENEWAL_CAST
 		case KN_CHARGEATK:
 		{
@@ -1917,6 +1924,10 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 			if (!src->prev)
 				return 0;
+		} else if (sc->data[SC_NEWMOON] && skill_id != SJ_NEWMOONKICK) {
+			status_change_end(src, SC_NEWMOON, INVALID_TIMER);
+			if (!src->prev)
+				return 0; // Warped away!
 		}
 	}
 
@@ -2089,6 +2100,11 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 				return 0; // Warped away!
 		} else if (sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4&4)) {
 			status_change_end(src, SC_CLOAKINGEXCEED, INVALID_TIMER);
+
+			if (!src->prev)
+				return 0;
+		} else if (sc->data[SC_NEWMOON]) {
+			status_change_end(src, SC_NEWMOON, INVALID_TIMER);
 
 			if (!src->prev)
 				return 0;
@@ -2879,7 +2895,11 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 	if(sc && sc->count ) { // map-change/warp dispells.
 		status_change_end(bl, SC_BLADESTOP, INVALID_TIMER);
+#ifdef RENEWAL
+		status_change_end(bl, SC_BASILICA_CELL, INVALID_TIMER);
+#else
 		status_change_end(bl, SC_BASILICA, INVALID_TIMER);
+#endif
 		status_change_end(bl, SC_ANKLE, INVALID_TIMER);
 		status_change_end(bl, SC_TRICKDEAD, INVALID_TIMER);
 		status_change_end(bl, SC_BLADESTOP_WAIT, INVALID_TIMER);
@@ -2893,6 +2913,8 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
 		status_change_end(bl, SC_TINDER_BREAKER, INVALID_TIMER);
 		status_change_end(bl, SC_TINDER_BREAKER2, INVALID_TIMER);
+		status_change_end(bl, SC_FLASHKICK, INVALID_TIMER);
+		status_change_end(bl, SC_SOULUNITY, INVALID_TIMER);
 		status_change_end(bl, SC_HIDING, INVALID_TIMER);
 		// Ensure the bl is a PC; if so, we'll handle the removal of cloaking and cloaking exceed later
 		if ( bl->type != BL_PC ) {
@@ -2913,6 +2935,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 		status_change_end(bl, SC__MANHOLE, INVALID_TIMER);
 		status_change_end(bl, SC_VACUUM_EXTREME, INVALID_TIMER);
+		status_change_end(bl, SC_NEWMOON, INVALID_TIMER);
 		status_change_end(bl, SC_CURSEDCIRCLE_ATKER, INVALID_TIMER); // callme before warp
 		status_change_end(bl, SC_SUHIDE, INVALID_TIMER);
 	}
@@ -3251,6 +3274,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			pc_inventory_rental_clear(sd);
 			pc_delspiritball(sd, sd->spiritball, 1);
 			pc_delspiritcharm(sd, sd->spiritcharm, sd->spiritcharm_type);
+			pc_delsoulball(sd,sd->soulball, 1);
 
 			if( sd->st && sd->st->state != RUN ) {// free attached scripts that are waiting
 				script_free_state(sd->st);
