@@ -18918,10 +18918,32 @@ void clif_parse_MoveItem(int fd, struct map_session_data *sd) {
 	if (index < 0 || index >= MAX_INVENTORY)
 		return;
 
-	if ( sd->inventory.u.items_inventory[index].favorite && type == 1 )
+	if (sd->inventory.u.items_inventory[index].favorite && type == 1) {
+		int j;
 		sd->inventory.u.items_inventory[index].favorite = 0;
-	else if( type == 0 )
+		for (j = 0; j < MAX_FAVORITES; j++) 
+			if (sd->status.favs[j] == 
+			    (sd->inventory.u.items_inventory[index].nameid)) 
+				sd->status.favs[j] = 0;
+	}
+	else if (type == 0) {
+		int j;
 		sd->inventory.u.items_inventory[index].favorite = 1;
+		if (battle_config.persistent_favorites)
+			if (!(itemdb_isequip2(sd->inventory_data[index])
+			      && !(sd->inventory_data[index]->type==IT_AMMO))
+				|| battle_config.persistent_favorites_equipment) {
+				// Check if it already is part of the favorites
+				for (j = 0; (j < MAX_FAVORITES) 
+				     && (sd->status.favs[j] != (sd->inventory.u.items_inventory[index].nameid)); j++) { ; }
+				// If not then find an empty slot
+				if (!(j < MAX_FAVORITES))
+				for (j = 0; (j < MAX_FAVORITES) && (sd->status.favs[j] > 0); j++) { ; }
+
+			if (j < MAX_FAVORITES) { sd->status.favs[j] = 
+				(sd->inventory.u.items_inventory[index].nameid); };
+		}
+	}
 	else
 		return;/* nothing to do. */
 

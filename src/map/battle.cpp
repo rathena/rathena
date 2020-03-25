@@ -8907,6 +8907,8 @@ static const struct _battle_data {
 	{ "hom_idle_no_share",                  &battle_config.hom_idle_no_share,               0,      0,      INT_MAX,        },
 	{ "devotion_standup_fix",               &battle_config.devotion_standup_fix,            1,      0,      1,              },
 	{ "feature.bgqueue",                    &battle_config.feature_bgqueue,                 1,      0,      1,              },
+	{ "persistent_favorites",               &battle_config.persistent_favorites,            1,      0,      1, },
+	{ "persistent_favorites_equipment",     &battle_config.persistent_favorites_equipment,  1,      0,      1, },
 
 #include "../custom/battle_config_init.inc"
 };

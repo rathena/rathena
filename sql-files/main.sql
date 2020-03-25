@@ -1080,3 +1080,13 @@ CREATE TABLE IF NOT EXISTS `vendings` (
   `autotrade` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
+
+--
+-- Table structure for table `favorites`
+--
+
+CREATE TABLE IF NOT EXISTS `favorites` (
+  `char_id` int(11) unsigned NOT NULL default '0',
+  `nameid` smallint(5) unsigned NOT NULL default '0',
+  PRIMARY KEY (char_id,itemid)
+  ) ENGINE=MyISAM;

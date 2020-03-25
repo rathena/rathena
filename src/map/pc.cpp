@@ -4971,6 +4971,7 @@ enum e_additem_result pc_additem(struct map_session_data *sd,struct item *item,i
 		i = pc_search_inventory(sd,0);
 		if( i < 0 )
 			return ADDITEM_OVERITEM;
+		int j;
 
 		memcpy(&sd->inventory.u.items_inventory[i], item, sizeof(sd->inventory.u.items_inventory[0]));
 		// clear equip and favorite fields first, just in case
@@ -4980,6 +4981,12 @@ enum e_additem_result pc_additem(struct map_session_data *sd,struct item *item,i
 			sd->inventory.u.items_inventory[i].favorite = 0;
 		if( item->equipSwitch )
 			sd->inventory.u.items_inventory[i].equipSwitch = 0;
+
+		if (battle_config.persistent_favorites)
+			for (j = 0; j < MAX_FAVORITES; j++) {
+				if (sd->status.favs[j] == item->nameid) 
+					sd->inventory.u.items_inventory[i].favorite = 1;
+			}
 
 		sd->inventory.u.items_inventory[i].amount = amount;
 		sd->inventory_data[i] = id;
