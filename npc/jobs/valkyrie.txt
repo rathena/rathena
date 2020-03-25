@@ -66,7 +66,7 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 		mes "begin an entirely new life.";
 		mes "Honor to the warriors!";
 		next;
-		if (Weight > 0 || Zeny > 0 || checkcart() != 0 || checkfalcon() != 0 || checkriding() != 0) {
+		if (Zeny > 0 || checkcart() != 0 || checkfalcon() != 0 || checkriding() != 0) {
 			mes "[Valkyrie]";
 			mes "There are a few things you must";
 			mes "do before we start. You must";
