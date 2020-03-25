@@ -12973,11 +12973,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 
 	case GN_HELLS_PLANT:
-		if (sc && sc->data[type])
-			status_change_end(src, type, INVALID_TIMER);
+		skill_clear_unitgroup(src);
 		if ((sg = skill_unitsetting(src, skill_id, skill_lv, src->x, src->y, 0)) != nullptr)
 			sc_start4(src, src, type, 100, skill_lv, 0, 0, sg->group_id, skill_get_time(skill_id, skill_lv));
-		clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
 		break;
 
 	case SO_FIREWALK:
@@ -19047,11 +19045,15 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 		case SG_SUN_WARM:
 		case SG_MOON_WARM:
 		case SG_STAR_WARM:
+		case LG_BANDING:
+		case GN_HELLS_PLANT:
 			{
-				struct status_change *sc = NULL;
-				if( (sc = status_get_sc(src)) != NULL  && sc->data[SC_WARM] ) {
-					sc->data[SC_WARM]->val4 = 0;
-					status_change_end(src, SC_WARM, INVALID_TIMER);
+				status_change *sc = status_get_sc(src);
+				sc_type type = status_skill2sc(group->skill_id);
+
+				if (sc && sc->data[type]) {
+					sc->data[type]->val4 = 0;
+					status_change_end(src, type, INVALID_TIMER);
 				}
 			}
 			break;
@@ -19074,18 +19076,6 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 				if( (sc = status_get_sc(src)) != NULL && sc->data[SC_STEALTHFIELD_MASTER] ) {
 					sc->data[SC_STEALTHFIELD_MASTER]->val2 = 0;
 					status_change_end(src,SC_STEALTHFIELD_MASTER,INVALID_TIMER);
-				}
-			}
-			break;
-		case LG_BANDING:
-		case GN_HELLS_PLANT:
-			{
-				struct status_change *sc = status_get_sc(src);
-				sc_type type = status_skill2sc(group->skill_id);
-
-				if( sc && sc->data[type] ) {
-					sc->data[type]->val4 = 0;
-					status_change_end(src,type,INVALID_TIMER);
 				}
 			}
 			break;

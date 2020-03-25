@@ -13101,6 +13101,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 		case SC_WARM:
 		case SC__MANHOLE:
+		case SC_BANDING:
+		case SC_HELLS_PLANT:
 			if (sce->val4) { // Clear the group.
 				struct skill_unit_group* group = skill_id2group(sce->val4);
 				sce->val4 = 0;
@@ -13190,15 +13192,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			if( sce->val2 ) {
 				struct skill_unit_group* group = skill_id2group(sce->val2);
 				sce->val2 = 0;
-				if( group ) // Might have been cleared before status ended, e.g. land protector
-					skill_delunitgroup(group);
-			}
-			break;
-		case SC_BANDING:
-		case SC_HELLS_PLANT:
-			if(sce->val4) {
-				struct skill_unit_group *group = skill_id2group(sce->val4);
-				sce->val4 = 0;
 				if( group ) // Might have been cleared before status ended, e.g. land protector
 					skill_delunitgroup(group);
 			}
