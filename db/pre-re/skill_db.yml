@@ -28317,6 +28317,163 @@ Body:
     Element: Weapon
     Requires:
       SpCost: 1
+  - Id: 2574
+    Name: SJ_LIGHTOFMOON
+    Description: Light of Moon
+    MaxLevel: 1
+  - Id: 2575
+    Name: SJ_LUNARSTANCE
+    Description: Lunar Stance
+    MaxLevel: 1
+  - Id: 2576
+    Name: SJ_FULLMOONKICK
+    Description: Full Moon Kick
+    MaxLevel: 1
+  - Id: 2577
+    Name: SJ_LIGHTOFSTAR
+    Description: Light of Star
+    MaxLevel: 1
+  - Id: 2578
+    Name: SJ_STARSTANCE
+    Description: Star Stance
+    MaxLevel: 1
+  - Id: 2579
+    Name: SJ_NEWMOONKICK
+    Description: New Moon Kick
+    MaxLevel: 1
+  - Id: 2580
+    Name: SJ_FLASHKICK
+    Description: Flash Kick
+    MaxLevel: 1
+  - Id: 2581
+    Name: SJ_STAREMPEROR
+    Description: Star Emperor
+    MaxLevel: 1
+  - Id: 2582
+    Name: SJ_NOVAEXPLOSING
+    Description: Nova Explosion
+    MaxLevel: 1
+    Type: Misc
+  - Id: 2583
+    Name: SJ_UNIVERSESTANCE
+    Description: Universe Stance
+    MaxLevel: 1
+  - Id: 2584
+    Name: SJ_FALLINGSTAR
+    Description: Falling Star
+    MaxLevel: 1
+  - Id: 2585
+    Name: SJ_GRAVITYCONTROL
+    Description: Gravity Control
+    MaxLevel: 1
+  - Id: 2586
+    Name: SJ_BOOKOFDIMENSION
+    Description: Book of Dimension
+    MaxLevel: 1
+  - Id: 2587
+    Name: SJ_BOOKOFCREATINGSTAR
+    Description: Book of Creating Star
+    MaxLevel: 1
+  - Id: 2588
+    Name: SJ_DOCUMENT
+    Description: Document of Sun Moon and Star
+    MaxLevel: 1
+  - Id: 2589
+    Name: SJ_PURIFY
+    Description: Purification of Sun Moon and Star
+    MaxLevel: 1
+  - Id: 2590
+    Name: SJ_LIGHTOFSUN
+    Description: Light of Sun
+    MaxLevel: 1
+  - Id: 2591
+    Name: SJ_SUNSTANCE
+    Description: Sun Stance
+    MaxLevel: 1
+  - Id: 2592
+    Name: SJ_SOLARBURST
+    Description: Solar Burst
+    MaxLevel: 1
+  - Id: 2593
+    Name: SJ_PROMINENCEKICK
+    Description: Prominence Kick
+    MaxLevel: 1
+  - Id: 2594
+    Name: SJ_FALLINGSTAR_ATK
+    Description: Falling Star Attack
+    MaxLevel: 1
+  - Id: 2595
+    Name: SJ_FALLINGSTAR_ATK2
+    Description: Falling Star Attack 2
+    MaxLevel: 1
+  - Id: 2596
+    Name: SP_SOULGOLEM
+    Description: Golem's Soul
+    MaxLevel: 1
+  - Id: 2597
+    Name: SP_SOULSHADOW
+    Description: Shadow's Soul
+    MaxLevel: 1
+  - Id: 2598
+    Name: SP_SOULFALCON
+    Description: Falcon's Soul
+    MaxLevel: 1
+  - Id: 2599
+    Name: SP_SOULFAIRY
+    Description: Fairy's Soul
+    MaxLevel: 1
+  - Id: 2600
+    Name: SP_CURSEEXPLOSION
+    Description: Curse Explosion
+    MaxLevel: 1
+  - Id: 2601
+    Name: SP_SOULCURSE
+    Description: Soul Curse
+    MaxLevel: 1
+  - Id: 2602
+    Name: SP_SPA
+    Description: Espa
+    MaxLevel: 1
+  - Id: 2603
+    Name: SP_SHA
+    Description: Esha
+    MaxLevel: 1
+  - Id: 2604
+    Name: SP_SWHOO
+    Description: Eswhoo
+    MaxLevel: 1
+  - Id: 2605
+    Name: SP_SOULUNITY
+    Description: Soul Unity
+    MaxLevel: 1
+  - Id: 2606
+    Name: SP_SOULDIVISION
+    Description: Soul Division
+    MaxLevel: 1
+  - Id: 2607
+    Name: SP_SOULREAPER
+    Description: Soul Reaper
+    MaxLevel: 1
+  - Id: 2608
+    Name: SP_SOULREVOLVE
+    Description: Soul Revolution
+    MaxLevel: 1
+  - Id: 2609
+    Name: SP_SOULCOLLECT
+    Description: Soul Collect
+    MaxLevel: 1
+  - Id: 2610
+    Name: SP_SOULEXPLOSION
+    Description: Soul Explosion
+    MaxLevel: 1
+  - Id: 2611
+    Name: SP_SOULENERGY
+    Description: Soul Energy Research
+    MaxLevel: 1
+  - Id: 2612
+    Name: SP_KAUTE
+    Description: Kaute
+    MaxLevel: 1
   - Id: 3001
     Name: KO_YAMIKUMO
     Description: Shadow Hiding
