@@ -33,16 +33,15 @@
 -	script	Agit_Event	-1,{
 	end;
 
-OnClock2100:	//start time for Tuesday and Thursday
-OnClock2300:	//end time for Tuesday and Thursday
-OnClock1600:	//start time for Saturday
-OnClock1800:	//end time for Saturday
+OnClock0800:	//start time for Wednesday 7pm
+OnClock1000:	//end time for Wednesday 9pm
+OnClock2100:	//start time for Saturday 8am
+OnClock2300:	//end time for Saturday 10am
 
 OnAgitInit:
 	// starting time checks
-	if((gettime(DT_DAYOFWEEK)==TUESDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23) ||
-	   (gettime(DT_DAYOFWEEK)==THURSDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23) ||
-	   (gettime(DT_DAYOFWEEK)==SATURDAY) && (gettime(DT_HOUR)>=16 && gettime(DT_HOUR)<18)) {
+	if((gettime(DT_DAYOFWEEK)==WEDNESDAY) && (gettime(DT_HOUR)>=8 && gettime(DT_HOUR)<10) ||
+	   (gettime(DT_DAYOFWEEK)==FRIDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23)) {
 		if (!agitcheck()) {
 			AgitStart;
 			callsub S_DisplayOwners;
@@ -51,9 +50,8 @@ OnAgitInit:
 	}
 
 	// end time checks
-	if ((gettime(DT_DAYOFWEEK)==TUESDAY) && (gettime(DT_HOUR)==23) ||
-	    (gettime(DT_DAYOFWEEK)==THURSDAY) && (gettime(DT_HOUR)==23) ||
-	    (gettime(DT_DAYOFWEEK)==SATURDAY) && (gettime(DT_HOUR)==18)) { 
+	if ((gettime(DT_DAYOFWEEK)==WEDNESDAY) && (gettime(DT_HOUR)==10) ||
+	    (gettime(DT_DAYOFWEEK)==FRIDAY) && (gettime(DT_HOUR)==23)) {
 		if (agitcheck()) {
 			AgitEnd;
 			callsub S_DisplayOwners;

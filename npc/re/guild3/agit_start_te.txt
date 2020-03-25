@@ -9,17 +9,17 @@
 -	script	woe_TE_contoller	-1,{
 function WoeTimer;
 
-OnSun2000:// date woe start
+OnSun0700:// date woe start Sunday 6pm
 	if (agitcheck3() == 0)
 		agitstart3;
 	end;
-OnSun2100:// date woe end
+OnSun0800:// date woe end Sunday 7pm
 	if (agitcheck3() == 1)
 		agitend3;
 	end;
 
 OnAgitInit3:
-	WoeTimer( SUNDAY,20,21 );// <day>, <hour start>, <hour end>
+	WoeTimer( SUNDAY,7,8 );// <day>, <hour start>, <hour end>
 	end;
 
 function WoeTimer {
