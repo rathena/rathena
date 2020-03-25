@@ -8838,6 +8838,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if(md->db->skill[md->skill_idx].val[4] && tsce)
 				status_change_end(bl, type, INVALID_TIMER);
 
+			if (battle_config.npc_emotion_behavior && skill_id == NPC_EMOTION && md->db->skill[md->skill_idx].val[1] && md->db->skill[md->skill_idx].val[1] == 0x81)
+				break;
+
 			//If mode gets set by NPC_EMOTION then the target should be reset [Playtester]
 			if(skill_id == NPC_EMOTION && md->db->skill[md->skill_idx].val[1])
 				mob_unlocktarget(md,tick);
