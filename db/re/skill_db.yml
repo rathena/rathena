@@ -33955,35 +33955,65 @@ Body:
       - Level: 1
         Time: 1000
       - Level: 2
-        Time: 1100
+        Time: 1000
       - Level: 3
-        Time: 1200
+        Time: 1000
       - Level: 4
-        Time: 1300
+        Time: 1100
       - Level: 5
-        Time: 1400
+        Time: 1100
+      - Level: 6
+        Time: 1100
+      - Level: 7
+        Time: 1200
+      - Level: 8
+        Time: 1200
+      - Level: 9
+        Time: 1200
+      - Level: 10
+        Time: 1300
     Duration1:
       - Level: 1
         Time: 12000
       - Level: 2
-        Time: 14000
+        Time: 12000
       - Level: 3
-        Time: 16000
+        Time: 12000
       - Level: 4
-        Time: 18000
+        Time: 14000
       - Level: 5
-        Time: 20000
+        Time: 14000
+      - Level: 6
+        Time: 14000
+      - Level: 7
+        Time: 16000
+      - Level: 8
+        Time: 16000
+      - Level: 9
+        Time: 16000
+      - Level: 10
+        Time: 18000
     FixedCastTime:
       - Level: 1
         Time: 500
       - Level: 2
-        Time: 400
+        Time: 500
       - Level: 3
-        Time: 300
+        Time: 500
       - Level: 4
-        Time: 200
+        Time: 400
       - Level: 5
-        Time: 100
+        Time: 400
+      - Level: 6
+        Time: 400
+      - Level: 7
+        Time: 300
+      - Level: 8
+        Time: 300
+      - Level: 9
+        Time: 300
+      - Level: 10
+        Time: 200
     Requires:
       SpCost:
         - Level: 1
@@ -34085,13 +34115,23 @@ Body:
       - Level: 1
         Time: 1000
       - Level: 2
-        Time: 1200
+        Time: 1100
       - Level: 3
-        Time: 1400
+        Time: 1200
       - Level: 4
-        Time: 1600
+        Time: 1300
       - Level: 5
+        Time: 1400
+      - Level: 6
+        Time: 1500
+      - Level: 7
+        Time: 1600
+      - Level: 8
+        Time: 1700
+      - Level: 9
         Time: 1800
+      - Level: 10
+        Time: 1900
     Duration1:
       - Level: 1
         Time: 30000
@@ -34117,13 +34157,23 @@ Body:
       - Level: 1
         Time: 1000
       - Level: 2
-        Time: 800
+        Time: 900
       - Level: 3
-        Time: 600
+        Time: 800
       - Level: 4
-        Time: 400
+        Time: 700
       - Level: 5
+        Time: 600
+      - Level: 6
+        Time: 500
+      - Level: 7
+        Time: 400
+      - Level: 8
+        Time: 300
+      - Level: 9
         Time: 200
+      - Level: 10
+        Time: 100
     Requires:
       SpCost:
         - Level: 1
@@ -34190,7 +34240,7 @@ Body:
         - Level: 5
           Amount: 80
   - Id: 8023
-    Name: MH_OVERED_BOOST # !TODO: Confirm cooldown
+    Name: MH_OVERED_BOOST
     Description: Overed Boost
     MaxLevel: 5
     TargetType: Self
@@ -34200,7 +34250,7 @@ Body:
     HitCount: 1
     CastTime:
       - Level: 1
-        Time: 800
+        Time: 100
       - Level: 2
         Time: 700
       - Level: 3
@@ -34257,25 +34307,25 @@ Body:
     CastCancel: true
     CastTime:
       - Level: 1
-        Time: 1000
+        Time: 1500
       - Level: 2
         Time: 1500
       - Level: 3
-        Time: 2000
+        Time: 1500
       - Level: 4
-        Time: 2500
+        Time: 2000
       - Level: 5
-        Time: 3000
+        Time: 2000
       - Level: 6
-        Time: 3500
+        Time: 2000
       - Level: 7
-        Time: 4000
+        Time: 2500
       - Level: 8
-        Time: 4500
+        Time: 2500
       - Level: 9
-        Time: 5000
+        Time: 2500
       - Level: 10
-        Time: 5500
+        Time: 3000
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -34335,27 +34385,28 @@ Body:
         Area: 4
     CastTime:
       - Level: 1
-        Time: 1500
+        Time: 1700
       - Level: 2
-        Time: 2500
+        Time: 1900
       - Level: 3
-        Time: 3500
+        Time: 2100
       - Level: 4
-        Time: 4500
+        Time: 2300
       - Level: 5
-        Time: 5500
+        Time: 2500
       - Level: 6
-        Time: 6500
+        Time: 2700
       - Level: 7
-        Time: 7500
+        Time: 2900
       - Level: 8
-        Time: 8500
+        Time: 3100
       - Level: 9
-        Time: 9500
+        Time: 3300
       - Level: 10
-        Time: 10500
+        Time: 3500
     Duration1: 500
     Duration2: 120000
+    FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
@@ -34400,12 +34451,6 @@ Body:
         - Level: 9
           Size: 0
         - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
           Size: 0
       Interval: 1000
       Target: Enemy
@@ -34501,7 +34546,7 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
-    Cooldown: 1000 # !TODO: Confirm cooldown
+    Cooldown: 1000
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -34620,29 +34665,8 @@ Body:
     Hit: Single
     HitCount: 1
     Knockback: 3
-    CastTime: 500
     Duration1: 5000
-    FixedCastTime:
-      - Level: 1
-        Time: 200
-      - Level: 2
-        Time: 400
-      - Level: 3
-        Time: 600
-      - Level: 4
-        Time: 800
-      - Level: 5
-        Time: 1000
-      - Level: 6
-        Time: 1200
-      - Level: 7
-        Time: 14000
-      - Level: 8
-        Time: 1600
-      - Level: 9
-        Time: 1800
-      - Level: 10
-        Time: 2000
+    FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
@@ -34797,7 +34821,7 @@ Body:
       - Level: 6
         Time: 1200
       - Level: 7
-        Time: 14000
+        Time: 1400
       - Level: 8
         Time: 1600
       - Level: 9
@@ -34806,22 +34830,24 @@ Body:
         Time: 2000
     FixedCastTime:
       - Level: 1
-        Time: 1800
+        Time: 2000
       - Level: 2
-        Time: 1600
+        Time: 1800
       - Level: 3
-        Time: 1400
+        Time: 1600
       - Level: 4
-        Time: 1200
+        Time: 1400
       - Level: 5
-        Time: 1000
+        Time: 1200
       - Level: 6
-        Time: 800
+        Time: 1000
       - Level: 7
-        Time: 600
+        Time: 800
       - Level: 8
-        Time: 400
+        Time: 600
       - Level: 9
+        Time: 400
+      - Level: 10
         Time: 200
     Requires:
       SpCost:
@@ -34950,7 +34976,7 @@ Body:
           Amount: 50
       SpiritSphereCost: 1
   - Id: 8038
-    Name: MH_EQC # !TODO: Confirm cooldown and after skill delay
+    Name: MH_EQC
     Description: Eternal Quick Combo
     MaxLevel: 5
     Type: Weapon
@@ -35030,7 +35056,7 @@ Body:
       - Level: 4
         Time: 500
       - Level: 5
-        Time: -1
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
@@ -35095,45 +35121,45 @@ Body:
       - Level: 1
         Time: 5000
       - Level: 2
-        Time: 4500
+        Time: 5000
       - Level: 3
-        Time: 4000
+        Time: 5000
       - Level: 4
-        Time: 3500
+        Time: 4500
       - Level: 5
-        Time: 3000
+        Time: 4500
       - Level: 6
-        Time: 2500
+        Time: 4500
       - Level: 7
-        Time: 2000
+        Time: 4000
       - Level: 8
-        Time: 1500
+        Time: 4000
       - Level: 9
-        Time: 1000
+        Time: 4000
       - Level: 10
-        Time: 500
+        Time: 3500
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
-        Time: 12000
+        Time: 8000
       - Level: 2
-        Time: 14000
+        Time: 10000
       - Level: 3
-        Time: 16000
+        Time: 12000
       - Level: 4
-        Time: 18000
+        Time: 14000
       - Level: 5
-        Time: 20000
+        Time: 16000
       - Level: 6
-        Time: 22000
+        Time: 18000
       - Level: 7
-        Time: 24000
+        Time: 20000
       - Level: 8
-        Time: 26000
+        Time: 22000
       - Level: 9
-        Time: 28000
+        Time: 24000
       - Level: 10
-        Time: 30000
+        Time: 26000
     Duration2: 20000
     FixedCastTime: 1000
     Requires:
@@ -35181,12 +35207,6 @@ Body:
           Size: 3
         - Level: 10
           Size: 4
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 2000
       Target: Enemy
       Flag:
@@ -35266,9 +35286,9 @@ Body:
         - Level: 8
           Amount: 64
         - Level: 9
-          Amount: 68
+          Amount: 66
         - Level: 10
-          Amount: 72
+          Amount: 70
   - Id: 8043
     Name: MH_VOLCANIC_ASH
     Description: Volcanic Ash
