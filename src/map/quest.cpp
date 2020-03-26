@@ -69,7 +69,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 
 		double timediff = solve_time(const_cast<char *>(time.c_str()));
 
-		if (timediff == 0) {
+		if (timediff <= 0) {
 			this->invalidWarning(node["TimeLimit"], "Incorrect TimeLimit format %s given, skipping.\n", time.c_str());
 			return 0;
 		}
@@ -312,7 +312,7 @@ static time_t quest_time(std::shared_ptr<s_quest_db> qi)
 		struct tm *lt = localtime(&t);
 		uint32 time_today = lt->tm_hour * 3600 + lt->tm_min * 60 + lt->tm_sec;
 
-		if (time_today < qi->time)
+		if (time_today < (qi->time % 86400))
 			return static_cast<time_t>(t + qi->time - time_today);
 		else // Carry over to the next day
 			return static_cast<time_t>(t + 86400 + qi->time - time_today);
