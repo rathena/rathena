@@ -74,15 +74,9 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 		}
 
-		if (time.find("+") != std::string::npos)
-			quest->time = static_cast<time_t>(timediff);
-		else {
-			int32 zero, day, hour, minute, second;
-
-			split_time(static_cast<int32>(timediff), &zero, &zero, &day, &hour, &minute, &second);
-			quest->time = day * 86400 + hour * 3600 + minute * 60 + second;
+		quest->time = static_cast<time_t>(timediff);
+		if (time.find("+") == std::string::npos)
 			quest->time_at = true; // '+' not found, set to specific time
-		}
 	} else {
 		if (!exists) {
 			quest->time = 0;
