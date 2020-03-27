@@ -1575,6 +1575,7 @@
 	export_constant(SC_USE_SKILL_SP_SHA);
 	export_constant(SC_SP_SHA);
 	export_constant(SC_SOULCURSE);
+	export_constant(SC_HELLS_PLANT);
 	export_constant(SC_LUXANIMA);
 	export_constant(SC_REUSE_LIMIT_LUXANIMA);
 #ifdef RENEWAL

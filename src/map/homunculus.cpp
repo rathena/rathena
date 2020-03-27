@@ -1606,7 +1606,7 @@ void read_homunculus_expdb(void)
 		if (fp == NULL) {
 			if (i != 0)
 				continue;
-			ShowError("Can't read %s\n",line);
+			ShowError("read_homunculus_expdb: Can't read %s\n",line);
 			return;
 		}
 		while (fgets(line, sizeof(line), fp) && j < MAX_LEVEL) {
@@ -1618,7 +1618,7 @@ void read_homunculus_expdb(void)
 				break;
 		}
 		if (hexptbl[MAX_LEVEL - 1]) { // Last permitted level have to be 0!
-			ShowWarning("read_hexptbl: Reached max level in %s [%d]. Remaining lines were not read.\n ",path,MAX_LEVEL);
+			ShowWarning("read_homunculus_expdb: Reached max level in %s [%d]. Remaining lines were not read.\n ",path,MAX_LEVEL);
 			hexptbl[MAX_LEVEL - 1] = 0;
 		}
 		fclose(fp);
