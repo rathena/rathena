@@ -2340,12 +2340,12 @@ bool char_checkdb(void){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-	//checking global_acc_reg_str_table
+	//checking acc_reg_str_table
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`key`,`index`,`value` from `%s` LIMIT 1;", schema_config.acc_reg_str_table) ) {
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-	//checking global_acc_reg_num_table
+	//checking acc_reg_num_table
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`key`,`index`,`value` from `%s` LIMIT 1;", schema_config.acc_reg_num_table) ) {
 		Sql_ShowDebug(sql_handle);
 		return false;
