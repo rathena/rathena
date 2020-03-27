@@ -24,6 +24,8 @@
 //= DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 //= TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //============================================================
+//= Modified version that only allows 3rd job outfit change [Latiosu]
+//============================================================
 
 prontera,169,179,4	script	Dress Room#sc	4_M_OLIVER,{
 function RestrictClass;
@@ -31,9 +33,8 @@ function HasjROCostume;
 function ChangeAppr;
 
 function RestrictClass {
-	.@eaj = eaclass();
-	if(.@eaj&EAJ_BASEMASK == EAJ_NOVICE) return 0;
-	if(.@eaj&EAJL_2 && roclass(.@eaj|EAJL_UPPER) != -1){
+	.@eac = eaclass();
+	if(.@eac&EAJL_THIRD) {
 		return 1;
 	}
 	return 0;
@@ -50,7 +51,6 @@ function HasjROCostume {
 		case Job_Minstrel:
 		case Job_Wanderer:
 		case Job_Warlock:
-		// Uncomment lines below to enable certain job when their respective jRO costume is released and you patched the sprite in your client.
 		case Job_Sorcerer:
 		case Job_Sura:
 		case Job_Rune_Knight:
@@ -66,64 +66,39 @@ function ChangeAppr {
 		mes "You don't have enough Zeny.";
 		close;
 	}
-	switch(getarg(1)){
-		case 0: // Normal Mode
-			setlook LOOK_BODY2,0;
-			changebase getarg(0);
-			set baselook, getarg(0);
-			break;
-		case 1: // jRO Mode
-			if(!HasjROCostume()) return;
-			changebase roclass(eaclass()|EAJL_THIRD);
-			setlook LOOK_CLOTHES_COLOR,0;
-			setlook LOOK_BODY2,!(getlook(LOOK_BODY2));
-			//atcommand "@bodystyle " + !(getlook(LOOK_BODY2));
-			baselook = 0;
-			break;
-	}
+
+	changebase roclass(eaclass()|EAJL_THIRD);
+	setlook LOOK_CLOTHES_COLOR,0;
+	setlook LOOK_BODY2,!(getlook(LOOK_BODY2));
+	//atcommand "@bodystyle " + !(getlook(LOOK_BODY2));
+	baselook = 0;
+
 	Zeny -= .cost_dressroom;
 	mes .n$;
 	mes "Here you are!";
 	close;
 }
 
-	.@TYPE_CHANGEBASE = 0;
-	.@TYPE_SETLOOK = 1;
-
 	mes .n$;
 	if(!RestrictClass()){
-		mes "Your class isn't allowed to use this NPC.";
+		mes "Only third jobs are allowed to use my services.";
 		close;
 	}
-	mes "I can change your appearance to another class of your classline at a cost of ^FF0000" + callfunc("F_InsertComma",.cost_dressroom) + "^000000z!";
-	if(HasjROCostume()){
-		mes "I also have a brand new costume for your class!";
+	if(!HasjROCostume()){
+		mes "Sorry, I don't have a costume for your class right now.";
+		close;
 	}
-	mes "Which class do you want to change your appearance to?";
+	mes "I can change your appearance to an alternative costume " + (.cost_dressroom > 0 ? "at a cost of ^FF0000" + callfunc("F_InsertComma",.cost_dressroom) + "^000000z!" : "for free!");
+	mes "Which costume do you want to change into?";
 	next;
-	switch(select(jobname(roclass(eaclass()&EAJ_UPPERMASK)),jobname(roclass(eaclass()&EAJ_UPPERMASK|EAJL_UPPER)),jobname(roclass(eaclass()|EAJL_THIRD)),HasjROCostume() ? getlook(LOOK_BODY2) ? "Restore costume" : "New jRO costume" : "")) {
+	switch(select(getlook(LOOK_BODY2) ? "Restore costume" : "New jRO costume")) {
 		case 1:
-			ChangeAppr(roclass(eaclass()&EAJ_UPPERMASK),.@TYPE_CHANGEBASE);
-			break;
-		case 2:
-			ChangeAppr(roclass(eaclass()&EAJ_UPPERMASK|EAJL_UPPER),.@TYPE_CHANGEBASE);
-			break;
-		case 3:
-			ChangeAppr(roclass(eaclass()|EAJL_THIRD),.@TYPE_CHANGEBASE);
-			break;
-		case 4:
-			ChangeAppr(0,.@TYPE_SETLOOK);
+			ChangeAppr();
 			break;
 	}
 	close;
 
-OnPCLoginEvent:
-	if(baselook && .dress_perma){
-		changebase baselook;
-	}
-	end;
 OnInit:
 	.n$ = "[Dress Room]"; // NPC Name
-	.cost_dressroom = 4000; // Cost
-	.dress_perma = 1;
+	.cost_dressroom = 0; // Cost
 }
