@@ -2113,8 +2113,8 @@ Body:
     Flags:
       IncreaseGloomyDayDamage: true
     Range: -2
-    Hit: Single
-    HitCount: 1
+    Hit: Multi_Hit
+    HitCount: 3
     Element: Weapon
     SplashArea: 2
     ActiveInstance: 5
@@ -13584,11 +13584,8 @@ Body:
     Name: CR_ACIDDEMONSTRATION
     Description: Acid Demonstration
     MaxLevel: 10
-    Type: Misc
+    Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      IgnoreDefense: true
-      IgnoreFlee: true
     Range: 9
     Hit: Multi_Hit
     HitCount:
@@ -13615,32 +13612,19 @@ Body:
     Element: Weapon
     CastCancel: true
     AfterCastActDelay: 1000
+    Cooldown: 150
     FixedCastTime: 1000
     Requires:
-      SpCost: 30
+      SpCost: 50
       ItemCost:
         - Item: Fire_Bottle
           Amount: 1
         - Item: Acid_Bottle
           Amount: 1
-  - Id: 491
-    Name: CR_CULTIVATION
-    Description: Plant Cultivation
-    MaxLevel: 2
-    TargetType: Ground
-    DamageFlags:
-      NoDamage: true
-    Range: 1
-    Hit: Single
-    HitCount: 1
-    Duration1: 300000
-    Requires:
-      SpCost: 10
-      ItemCost:
-        - Item: Mushroom_Spore
-          Amount: 1
-        - Item: Stem
-          Amount: 1
+#  - Id: 491 # Removed on kRO
+#    Name: CR_CULTIVATION
+#    Description: Plant Cultivation
+#    MaxLevel: 2
   - Id: 492
     Name: ITEM_ENCHANTARMS
     Description: Weapon Enchantment
@@ -27826,10 +27810,11 @@ Body:
     Type: Weapon
     TargetType: Attack
     DamageFlags:
+      NoDamage: true
       Splash: true
     Range: 11
-    Hit: Single
-    HitCount: 3
+    Hit: Multi_Hit
+    HitCount: 2
     Element: Weapon
     SplashArea:
       - Level: 1
@@ -27858,7 +27843,7 @@ Body:
     CastCancel: true
     CastTime: 1500
     AfterCastActDelay: 500
-    Duration1: 2000
+    Duration1: 500
     Cooldown: 5000
     FixedCastTime: -1
     Requires:
@@ -28024,10 +28009,31 @@ Body:
     Flags:
       TargetTrap: true
       IgnoreLandProtector: true
-    Hit: Single
-    HitCount: 1
-    Element: Earth
+    Hit: Multi_Hit
+    HitCount: 2
+    Element: Weapon
     SplashArea: 2
+    ActiveInstance:
+      - Level: 1
+        Max: 5
+      - Level: 2
+        Max: 6
+      - Level: 3
+        Max: 6
+      - Level: 4
+        Max: 7
+      - Level: 5
+        Max: 7
+      - Level: 6
+        Max: 8
+      - Level: 7
+        Max: 8
+      - Level: 8
+        Max: 9
+      - Level: 9
+        Max: 9
+      - Level: 10
+        Max: 10
     CopyFlags:
       Skill:
         Reproduce: true
@@ -28227,28 +28233,11 @@ Body:
     Name: GN_HELLS_PLANT
     Description: Hell's Plant
     MaxLevel: 5
-    Type: Misc
-    TargetType: Ground
+    TargetType: Self
     DamageFlags:
       NoDamage: true
-      Splash: true
-    Flags:
-      IsTrap: true
-    Range: 9
     Hit: Single
     HitCount: 1
-    SplashArea: 1
-    ActiveInstance:
-      - Level: 1
-        Max: 2
-      - Level: 2
-        Max: 3
-      - Level: 3
-        Max: 4
-      - Level: 4
-        Max: 5
-      - Level: 5
-        Max: 6
     CopyFlags:
       Skill:
         Reproduce: true
@@ -28267,15 +28256,15 @@ Body:
     AfterCastActDelay: 500
     Duration1:
       - Level: 1
-        Time: 14000
+        Time: 60000
       - Level: 2
-        Time: 21000
+        Time: 90000
       - Level: 3
-        Time: 28000
+        Time: 120000
       - Level: 4
-        Time: 35000
+        Time: 150000
       - Level: 5
-        Time: 42000
+        Time: 180000
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -28294,17 +28283,14 @@ Body:
           Amount: 1
     Unit:
       Id: Hells_Plant
-      Range: 1
-      Interval: 1000
+      Range: 2
+      Interval: 300 # !TODO: Confirm interval
       Target: Enemy
-      Flag:
-        NoReiteration: true
-        RemovedByFireRain: true
   - Id: 2491
     Name: GN_HELLS_PLANT_ATK
     Description: Hell's Plant Attack
     MaxLevel: 5
-    Type: Misc
+    Type: Weapon
     TargetType: Attack
     DamageFlags:
       IgnoreElement: true
@@ -28315,9 +28301,6 @@ Body:
       Skill:
         Reproduce: true
     Duration1: 20000
-    FixedCastTime: -1
-    Requires:
-      SpCost: 1
   - Id: 2492
     Name: GN_MANDRAGORA
     Description: Howling of Mandragora
@@ -28370,25 +28353,10 @@ Body:
       ItemCost:
         - Item: Mandragora_Flowerpot
           Amount: 1
-  - Id: 2493
-    Name: GN_SLINGITEM
-    Description: Sling Item
-    MaxLevel: 1
-    TargetType: Support
-    DamageFlags:
-      NoDamage: true
-    Flags:
-      NoTargetSelf: true
-    Range: 11
-    Hit: Single
-    HitCount: 1
-    Cooldown: 1000
-    FixedCastTime: -1
-    Requires:
-      SpCost: 4
-      Ammo:
-        Throwweapon: true
-      AmmoAmount: 1
+#  - Id: 2493 # Removed on kRO
+#    Name: GN_SLINGITEM
+#    Description: Sling Item
+#    MaxLevel: 1
   - Id: 2494
     Name: GN_CHANGEMATERIAL
     Description: Change Material
@@ -28415,21 +28383,10 @@ Body:
           Amount: 5
         - Level: 2
           Amount: 40
-  - Id: 2496
-    Name: GN_MAKEBOMB
-    Description: Create Bomb
-    MaxLevel: 2
-    TargetType: Self
-    DamageFlags:
-      NoDamage: true
-    Hit: Single
-    HitCount: 1
-    Requires:
-      SpCost:
-        - Level: 1
-          Amount: 5
-        - Level: 2
-          Amount: 40
+#  - Id: 2496 # Removed on kRO
+#    Name: GN_MAKEBOMB
+#    Description: Create Bomb
+#    MaxLevel: 2
   - Id: 2497
     Name: GN_S_PHARMACY
     Description: Special Pharmacy
@@ -28441,17 +28398,10 @@ Body:
     HitCount: 1
     Requires:
       SpCost: 12
-  - Id: 2498
-    Name: GN_SLINGITEM_RANGEMELEEATK
-    Description: Sling Item Attack
-    MaxLevel: 1
-    Type: Weapon
-    TargetType: Attack
-    Range: 11
-    Hit: Single
-    HitCount: 1
-    Requires:
-      SpCost: 1
+#  - Id: 2498 # Removed on kRO
+#    Name: GN_SLINGITEM_RANGEMELEEATK
+#    Description: Sling Item Attack
+#    MaxLevel: 1
   - Id: 2533
     Name: ALL_ODINS_RECALL
     Description: Odin's Recall
@@ -33916,9 +33866,11 @@ Body:
   - Id: 8019
     Name: MH_NEEDLE_OF_PARALYZE
     Description: Needle of Paralyze
-    MaxLevel: 5
+    MaxLevel: 10
     Type: Weapon
     TargetType: Attack
+    DamageFlags:
+      IgnoreDefense: true
     Range: 5
     Hit: Single
     HitCount: 1
@@ -33927,47 +33879,86 @@ Body:
       - Level: 1
         Time: 1000
       - Level: 2
-        Time: 1100
+        Time: 1000
       - Level: 3
-        Time: 1200
+        Time: 1000
       - Level: 4
-        Time: 1300
+        Time: 1100
       - Level: 5
-        Time: 1400
-    AfterCastActDelay: 2000
+        Time: 1100
+      - Level: 6
+        Time: 1100
+      - Level: 7
+        Time: 1200
+      - Level: 8
+        Time: 1200
+      - Level: 9
+        Time: 1200
+      - Level: 10
+        Time: 1300
     Duration1:
       - Level: 1
         Time: 12000
       - Level: 2
-        Time: 14000
+        Time: 12000
       - Level: 3
-        Time: 16000
+        Time: 12000
       - Level: 4
-        Time: 18000
+        Time: 14000
       - Level: 5
-        Time: 20000
+        Time: 14000
+      - Level: 6
+        Time: 14000
+      - Level: 7
+        Time: 16000
+      - Level: 8
+        Time: 16000
+      - Level: 9
+        Time: 16000
+      - Level: 10
+        Time: 18000
     FixedCastTime:
       - Level: 1
         Time: 500
       - Level: 2
-        Time: 400
+        Time: 500
       - Level: 3
-        Time: 300
+        Time: 500
       - Level: 4
-        Time: 200
+        Time: 400
       - Level: 5
-        Time: 100
+        Time: 400
+      - Level: 6
+        Time: 400
+      - Level: 7
+        Time: 300
+      - Level: 8
+        Time: 300
+      - Level: 9
+        Time: 300
+      - Level: 10
+        Time: 200
     Requires:
       SpCost:
         - Level: 1
-          Amount: 48
+          Amount: 42
         - Level: 2
-          Amount: 60
+          Amount: 48
         - Level: 3
-          Amount: 72
+          Amount: 54
         - Level: 4
-          Amount: 84
+          Amount: 60
         - Level: 5
+          Amount: 66
+        - Level: 6
+          Amount: 72
+        - Level: 7
+          Amount: 78
+        - Level: 8
+          Amount: 84
+        - Level: 9
+          Amount: 90
+        - Level: 10
           Amount: 96
   - Id: 8020
     Name: MH_POISON_MIST
@@ -34037,46 +34028,76 @@ Body:
   - Id: 8021
     Name: MH_PAIN_KILLER
     Description: Pain Killer
-    MaxLevel: 5
+    MaxLevel: 10
     TargetType: Support
     DamageFlags:
       NoDamage: true
-    Range: 1
+    Range: 5
     Hit: Single
     HitCount: 1
     CastTime:
       - Level: 1
         Time: 1000
       - Level: 2
-        Time: 1200
+        Time: 1100
       - Level: 3
-        Time: 1400
+        Time: 1200
       - Level: 4
-        Time: 1600
+        Time: 1300
       - Level: 5
+        Time: 1400
+      - Level: 6
+        Time: 1500
+      - Level: 7
+        Time: 1600
+      - Level: 8
+        Time: 1700
+      - Level: 9
         Time: 1800
+      - Level: 10
+        Time: 1900
     Duration1:
       - Level: 1
-        Time: 20000
-      - Level: 2
         Time: 30000
-      - Level: 3
+      - Level: 2
         Time: 40000
-      - Level: 4
+      - Level: 3
         Time: 50000
-      - Level: 5
+      - Level: 4
         Time: 60000
+      - Level: 5
+        Time: 70000
+      - Level: 6
+        Time: 80000
+      - Level: 7
+        Time: 90000
+      - Level: 8
+        Time: 100000
+      - Level: 9
+        Time: 110000
+      - Level: 10
+        Time: 120000
     FixedCastTime:
       - Level: 1
         Time: 1000
       - Level: 2
-        Time: 800
+        Time: 900
       - Level: 3
-        Time: 600
+        Time: 800
       - Level: 4
-        Time: 400
+        Time: 700
       - Level: 5
+        Time: 600
+      - Level: 6
+        Time: 500
+      - Level: 7
+        Time: 400
+      - Level: 8
+        Time: 300
+      - Level: 9
         Time: 200
+      - Level: 10
+        Time: 100
     Requires:
       SpCost:
         - Level: 1
@@ -34089,6 +34110,16 @@ Body:
           Amount: 60
         - Level: 5
           Amount: 64
+        - Level: 6
+          Amount: 68
+        - Level: 7
+          Amount: 72
+        - Level: 8
+          Amount: 76
+        - Level: 9
+          Amount: 80
+        - Level: 10
+          Amount: 84
   - Id: 8022
     Name: MH_LIGHT_OF_REGENE
     Description: Light of Regene
@@ -34143,7 +34174,7 @@ Body:
     HitCount: 1
     CastTime:
       - Level: 1
-        Time: 800
+        Time: 100
       - Level: 2
         Time: 700
       - Level: 3
@@ -34189,36 +34220,36 @@ Body:
   - Id: 8024
     Name: MH_ERASER_CUTTER
     Description: Eraser Cutter
-    MaxLevel: 5
+    MaxLevel: 10
     Type: Magic
     TargetType: Attack
+    DamageFlags:
+      IgnoreDefense: true
     Range: 7
     Hit: Multi_Hit
     HitCount: -6
-    Element:
-      - Level: 1
-        Element: Wind
-      - Level: 2
-        Element: Neutral
-      - Level: 3
-        Element: Wind
-      - Level: 4
-        Element: Neutral
-      - Level: 5
-        Element: Wind
     CastCancel: true
     CastTime:
       - Level: 1
-        Time: 1000
+        Time: 1500
       - Level: 2
         Time: 1500
       - Level: 3
-        Time: 2000
+        Time: 1500
       - Level: 4
-        Time: 2500
+        Time: 2000
       - Level: 5
+        Time: 2000
+      - Level: 6
+        Time: 2000
+      - Level: 7
+        Time: 2500
+      - Level: 8
+        Time: 2500
+      - Level: 9
+        Time: 2500
+      - Level: 10
         Time: 3000
-    AfterCastActDelay: 2000
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -34232,65 +34263,95 @@ Body:
           Amount: 40
         - Level: 5
           Amount: 45
+        - Level: 6
+          Amount: 50
+        - Level: 7
+          Amount: 55
+        - Level: 8
+          Amount: 60
+        - Level: 9
+          Amount: 65
+        - Level: 10
+          Amount: 70
   - Id: 8025
     Name: MH_XENO_SLASHER
     Description: Xeno Slasher
-    MaxLevel: 5
+    MaxLevel: 10
     Type: Magic
     TargetType: Ground
     DamageFlags:
       Splash: true
+      IgnoreDefense: true
     Range: 7
     Hit: Multi_Hit
     HitCount: -6
-    Element:
-      - Level: 1
-        Element: Wind
-      - Level: 2
-        Element: Neutral
-      - Level: 3
-        Element: Wind
-      - Level: 4
-        Element: Neutral
-      - Level: 5
-        Element: Wind
+    Element: Wind
     SplashArea:
       - Level: 1
-        Area: 2
+        Area: 1
       - Level: 2
-        Area: 2
+        Area: 1
       - Level: 3
-        Area: 3
+        Area: 1
       - Level: 4
-        Area: 3
+        Area: 2
       - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 3
+      - Level: 8
+        Area: 3
+      - Level: 9
+        Area: 3
+      - Level: 10
         Area: 4
     CastTime:
       - Level: 1
-        Time: 1500
+        Time: 1700
       - Level: 2
-        Time: 2500
+        Time: 1900
       - Level: 3
-        Time: 3500
+        Time: 2100
       - Level: 4
-        Time: 4500
+        Time: 2300
       - Level: 5
-        Time: 5500
-    AfterCastActDelay: 5000
+        Time: 2500
+      - Level: 6
+        Time: 2700
+      - Level: 7
+        Time: 2900
+      - Level: 8
+        Time: 3100
+      - Level: 9
+        Time: 3300
+      - Level: 10
+        Time: 3500
     Duration1: 500
     Duration2: 120000
     FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 90
+          Amount: 85
         - Level: 2
-          Amount: 100
+          Amount: 90
         - Level: 3
-          Amount: 110
+          Amount: 95
         - Level: 4
-          Amount: 120
+          Amount: 100
         - Level: 5
+          Amount: 105
+        - Level: 6
+          Amount: 110
+        - Level: 7
+          Amount: 115
+        - Level: 8
+          Amount: 120
+        - Level: 9
+          Amount: 125
+        - Level: 10
           Amount: 130
     Unit:
       Id: Dummyskill
@@ -34314,12 +34375,6 @@ Body:
         - Level: 9
           Size: 0
         - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
           Size: 0
       Interval: 1000
       Target: Enemy
@@ -34402,7 +34457,6 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 1000
-    FixedCastTime: 500
     Requires:
       SpCost: 35
   - Id: 8028
@@ -34413,10 +34467,10 @@ Body:
     TargetType: Attack
     Flags:
       NoTargetSelf: true
-    Range: 1
-    Hit: Multi_Hit
+    Range: 3
+    Hit: Single
     HitCount: 1
-    AfterCastActDelay: 1000
+    Cooldown: 1000
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -34434,111 +34488,131 @@ Body:
   - Id: 8029
     Name: MH_SILVERVEIN_RUSH
     Description: Silver Bain Rush
-    MaxLevel: 5
+    MaxLevel: 10
     Type: Weapon
     TargetType: Self
     Flags:
       NoTargetSelf: true
-    Range: 1
+    Range: 3
     Hit: Single
     HitCount: 1
     Duration1: 5000
-    Cooldown: 2000
+    Cooldown: 1500
     FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
-          Amount: 10
+          Amount: 17
         - Level: 2
-          Amount: 15
+          Amount: 19
         - Level: 3
-          Amount: 20
+          Amount: 21
         - Level: 4
-          Amount: 25
+          Amount: 23
         - Level: 5
-          Amount: 30
+          Amount: 25
+        - Level: 6
+          Amount: 27
+        - Level: 7
+          Amount: 29
+        - Level: 8
+          Amount: 31
+        - Level: 9
+          Amount: 33
+        - Level: 10
+          Amount: 35
       SpiritSphereCost: 1
   - Id: 8030
     Name: MH_MIDNIGHT_FRENZY
     Description: Midnight Frenzy
-    MaxLevel: 5
+    MaxLevel: 10
     Type: Weapon
     TargetType: Self
     Flags:
       NoTargetSelf: true
-    Range: 1
+    Range: 3
     Hit: Single
     HitCount: 1
     Duration1: 10000
-    Cooldown: 2000
+    Cooldown: 1500
     FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
-          Amount: 8
+          Amount: 18
         - Level: 2
-          Amount: 16
+          Amount: 21
         - Level: 3
           Amount: 24
         - Level: 4
-          Amount: 32
+          Amount: 27
         - Level: 5
-          Amount: 40
-      SpiritSphereCost: 2
+          Amount: 30
+        - Level: 6
+          Amount: 33
+        - Level: 7
+          Amount: 36
+        - Level: 8
+          Amount: 39
+        - Level: 9
+          Amount: 42
+        - Level: 10
+          Amount: 45
+      SpiritSphereCost: 1
   - Id: 8031
     Name: MH_STAHL_HORN
     Description: Steel Horn
-    MaxLevel: 5
+    MaxLevel: 10
     Type: Weapon
     TargetType: Attack
     Range:
       - Level: 1
         Size: 5
       - Level: 2
-        Size: 6
+        Size: 5
       - Level: 3
-        Size: 7
+        Size: 6
       - Level: 4
-        Size: 8
+        Size: 6
       - Level: 5
+        Size: 7
+      - Level: 6
+        Size: 7
+      - Level: 7
+        Size: 8
+      - Level: 8
+        Size: 8
+      - Level: 9
+        Size: 9
+      - Level: 10
         Size: 9
     Hit: Single
     HitCount: 1
     Knockback: 3
-    CastTime:
-      - Level: 1
-        Time: 800
-      - Level: 2
-        Time: 600
-      - Level: 3
-        Time: 400
-      - Level: 4
-        Time: 200
-    AfterCastActDelay: 3000
     Duration1: 5000
-    FixedCastTime:
-      - Level: 1
-        Time: 200
-      - Level: 2
-        Time: 400
-      - Level: 3
-        Time: 600
-      - Level: 4
-        Time: 800
-      - Level: 5
-        Time: 1000
+    FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
-          Amount: 40
+          Amount: 43
         - Level: 2
-          Amount: 45
+          Amount: 46
         - Level: 3
-          Amount: 50
+          Amount: 49
         - Level: 4
-          Amount: 55
+          Amount: 52
         - Level: 5
-          Amount: 60
+          Amount: 55
+        - Level: 6
+          Amount: 58
+        - Level: 7
+          Amount: 61
+        - Level: 8
+          Amount: 64
+        - Level: 9
+          Amount: 67
+        - Level: 10
+          Amount: 70
   - Id: 8032
     Name: MH_GOLDENE_FERSE
     Description: Golden Heel
@@ -34626,11 +34700,12 @@ Body:
   - Id: 8034
     Name: MH_HEILIGE_STANGE
     Description: Holy Pole
-    MaxLevel: 5
+    MaxLevel: 10
     Type: Magic
     TargetType: Attack
     DamageFlags:
       Splash: true
+      IgnoreDefense: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -34646,6 +34721,16 @@ Body:
         Area: 1
       - Level: 5
         Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 2
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 3
     CastTime:
       - Level: 1
         Time: 200
@@ -34657,30 +34742,59 @@ Body:
         Time: 800
       - Level: 5
         Time: 1000
-    AfterCastActDelay: 5000
+      - Level: 6
+        Time: 1200
+      - Level: 7
+        Time: 1400
+      - Level: 8
+        Time: 1600
+      - Level: 9
+        Time: 1800
+      - Level: 10
+        Time: 2000
     FixedCastTime:
       - Level: 1
-        Time: 1800
+        Time: 2000
       - Level: 2
-        Time: 1600
+        Time: 1800
       - Level: 3
-        Time: 1400
+        Time: 1600
       - Level: 4
-        Time: 1200
+        Time: 1400
       - Level: 5
+        Time: 1200
+      - Level: 6
         Time: 1000
+      - Level: 7
+        Time: 800
+      - Level: 8
+        Time: 600
+      - Level: 9
+        Time: 400
+      - Level: 10
+        Time: 200
     Requires:
       SpCost:
         - Level: 1
-          Amount: 60
+          Amount: 48
         - Level: 2
-          Amount: 68
+          Amount: 54
         - Level: 3
-          Amount: 76
+          Amount: 60
         - Level: 4
-          Amount: 84
+          Amount: 66
         - Level: 5
-          Amount: 100
+          Amount: 72
+        - Level: 6
+          Amount: 78
+        - Level: 7
+          Amount: 84
+        - Level: 8
+          Amount: 90
+        - Level: 9
+          Amount: 96
+        - Level: 10
+          Amount: 102
   - Id: 8035
     Name: MH_ANGRIFFS_MODUS
     Description: Attack Mode
@@ -34789,7 +34903,7 @@ Body:
     Name: MH_EQC
     Description: Eternal Quick Combo
     MaxLevel: 5
-    Type: Misc
+    Type: Weapon
     TargetType: Self
     Flags:
       NoTargetSelf: true
@@ -34866,7 +34980,7 @@ Body:
       - Level: 4
         Time: 500
       - Level: 5
-        Time: -1
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
@@ -34917,7 +35031,7 @@ Body:
   - Id: 8041
     Name: MH_LAVA_SLIDE
     Description: Lava Slide
-    MaxLevel: 5
+    MaxLevel: 10
     Type: Weapon
     TargetType: Ground
     DamageFlags:
@@ -34931,39 +35045,69 @@ Body:
       - Level: 1
         Time: 5000
       - Level: 2
-        Time: 4500
+        Time: 5000
       - Level: 3
-        Time: 4000
+        Time: 5000
       - Level: 4
-        Time: 3500
+        Time: 4500
       - Level: 5
-        Time: 3000
+        Time: 4500
+      - Level: 6
+        Time: 4500
+      - Level: 7
+        Time: 4000
+      - Level: 8
+        Time: 4000
+      - Level: 9
+        Time: 4000
+      - Level: 10
+        Time: 3500
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
-        Time: 12000
+        Time: 8000
       - Level: 2
-        Time: 14000
+        Time: 10000
       - Level: 3
-        Time: 16000
+        Time: 12000
       - Level: 4
-        Time: 18000
+        Time: 14000
       - Level: 5
+        Time: 16000
+      - Level: 6
+        Time: 18000
+      - Level: 7
         Time: 20000
+      - Level: 8
+        Time: 22000
+      - Level: 9
+        Time: 24000
+      - Level: 10
+        Time: 26000
     Duration2: 20000
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 30
-        - Level: 2
-          Amount: 35
-        - Level: 3
           Amount: 40
-        - Level: 4
+        - Level: 2
           Amount: 45
-        - Level: 5
+        - Level: 3
           Amount: 50
+        - Level: 4
+          Amount: 55
+        - Level: 5
+          Amount: 60
+        - Level: 6
+          Amount: 65
+        - Level: 7
+          Amount: 70
+        - Level: 8
+          Amount: 75
+        - Level: 9
+          Amount: 80
+        - Level: 10
+          Amount: 85
     Unit:
       Id: Lava_Slide
       Layout:
@@ -34972,27 +35116,21 @@ Body:
         - Level: 2
           Size: 1
         - Level: 3
-          Size: 2
+          Size: 1
         - Level: 4
           Size: 2
         - Level: 5
-          Size: 3
+          Size: 2
         - Level: 6
-          Size: 0
+          Size: 2
         - Level: 7
-          Size: 0
+          Size: 3
         - Level: 8
-          Size: 0
+          Size: 3
         - Level: 9
-          Size: 0
+          Size: 3
         - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
+          Size: 4
       Interval: 2000
       Target: Enemy
       Flag:
@@ -35002,7 +35140,7 @@ Body:
   - Id: 8042
     Name: MH_PYROCLASTIC
     Description: Pyroclastic
-    MaxLevel: 5
+    MaxLevel: 10
     TargetType: Self
     DamageFlags:
       NoDamage: true
@@ -35020,18 +35158,38 @@ Body:
         Time: 2500
       - Level: 5
         Time: 3000
+      - Level: 6
+        Time: 3500
+      - Level: 7
+        Time: 4000
+      - Level: 8
+        Time: 4500
+      - Level: 9
+        Time: 5000
+      - Level: 10
+        Time: 5500
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
         Time: 60000
       - Level: 2
-        Time: 90000
+        Time: 80000
       - Level: 3
-        Time: 120000
+        Time: 100000
       - Level: 4
-        Time: 150000
+        Time: 120000
       - Level: 5
+        Time: 140000
+      - Level: 6
+        Time: 160000
+      - Level: 7
         Time: 180000
+      - Level: 8
+        Time: 200000
+      - Level: 9
+        Time: 220000
+      - Level: 10
+        Time: 240000
     FixedCastTime: 200
     Requires:
       SpCost:
@@ -35045,6 +35203,16 @@ Body:
           Amount: 44
         - Level: 5
           Amount: 52
+        - Level: 6
+          Amount: 56
+        - Level: 7
+          Amount: 60
+        - Level: 8
+          Amount: 64
+        - Level: 9
+          Amount: 66
+        - Level: 10
+          Amount: 70
   - Id: 8043
     Name: MH_VOLCANIC_ASH
     Description: Volcanic Ash
