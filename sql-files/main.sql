@@ -675,17 +675,7 @@ CREATE TABLE IF NOT EXISTS `interlog` (
   `log` varchar(255) NOT NULL default '',
   PRIMARY KEY (`id`),
   INDEX `time` (`time`)
-) ENGINE=MyISAM; 
-
---
--- Table structure for table `interreg`
---
-
-CREATE TABLE IF NOT EXISTS `interreg` (
-  `varname` varchar(11) NOT NULL,
-  `value` varchar(20) NOT NULL,
-   PRIMARY KEY (`varname`)
-) ENGINE=InnoDB;
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `inventory`
