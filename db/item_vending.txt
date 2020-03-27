@@ -3,10 +3,10 @@
 // Max items is equal MAX_INVENTORY ( 100 by default )
 
 // TCG Card
-7227
+//7227
 // Mithril Coin
-674
+//674
 // Silver Coin
-675
+//675
 // Bronze Coin
-673
+//673
