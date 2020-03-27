@@ -26,6 +26,8 @@
 #include "party.hpp"
 #include "pc.hpp"
 
+static int split_exact_quest_time(char* modif_p, int* day, int* hour, int* minute, int *second);
+
 const std::string QuestDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/quest_db.yml";
 }
@@ -67,16 +69,26 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "TimeLimit", time))
 			return 0;
 
-		double timediff = solve_time(const_cast<char *>(time.c_str()));
+		if (time.find("+") != std::string::npos) {
+			double timediff = solve_time(const_cast<char *>(time.c_str()));
 
-		if (timediff <= 0) {
-			this->invalidWarning(node["TimeLimit"], "Incorrect TimeLimit format %s given, skipping.\n", time.c_str());
-			return 0;
+			if (timediff <= 0) {
+				this->invalidWarning(node["TimeLimit"], "Incorrect TimeLimit format %s given, skipping.\n", time.c_str());
+				return 0;
+			}
+			quest->time = static_cast<time_t>(timediff);
+		}
+		else {// '+' not found, set to specific time
+			int32 day, hour, minute, second;
+
+			if (split_exact_quest_time(const_cast<char *>(time.c_str()), &day, &hour, &minute, &second) == 0) {
+				this->invalidWarning(node["TimeLimit"], "Incorrect TimeLimit format %s given, skipping.\n", time.c_str());
+				return 0;
+			}
+			quest->time = day * 86400 + hour * 3600 + minute * 60 + second;
+			quest->time_at = true;
 		}
 
-		quest->time = static_cast<time_t>(timediff);
-		if (time.find("+") == std::string::npos)
-			quest->time_at = true; // '+' not found, set to specific time
 	} else {
 		if (!exists) {
 			quest->time = 0;
@@ -251,6 +263,47 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 	return 1;
 }
 
+
+static int split_exact_quest_time(char* modif_p, int* day, int* hour, int* minute, int *second) {
+	int d = -1, h = -1, mn = -1, s = -1;
+
+	nullpo_retr(0, modif_p);
+
+	while (modif_p[0] != '\0') {
+		int value = atoi(modif_p);
+
+		if (modif_p[0] == '-' || modif_p[0] == '+')
+			modif_p++;
+		while (modif_p[0] >= '0' && modif_p[0] <= '9')
+			modif_p++;
+		if (modif_p[0] == 's') {
+			s = value;
+			modif_p++;
+		} else if (modif_p[0] == 'm' && modif_p[1] == 'n') {
+			mn = value;
+			modif_p = modif_p + 2;
+		} else if (modif_p[0] == 'h') {
+			h = value;
+			modif_p++;
+		} else if (modif_p[0] == 'd' || modif_p[0] == 'j') {
+			d = value;
+			modif_p++;
+		} else if (modif_p[0] != '\0') {
+			modif_p++;
+		}
+	}
+
+	if (h < 0 || h > 23 || mn > 59 || s > 59)	// hour is required
+		return 0;
+
+	*day = max(0,d);
+	*hour = h;
+	*minute = max(0,mn);
+	*second = max(0,s);
+
+	return 1;
+}
+
 /**
  * Searches a quest by ID.
  * @param quest_id : ID to lookup
@@ -296,12 +349,12 @@ int quest_pc_login(struct map_session_data *sd)
  */
 static time_t quest_time(std::shared_ptr<s_quest_db> qi)
 {
-	if (!qi || qi->time <= 0)
+	if (!qi || qi->time < 0)
 		return 0;
 
-	if (!qi->time_at)
+	if (!qi->time_at && qi->time > 0)
 		return time(nullptr) + qi->time;
-	else {
+	else if (qi->time_at) {
 		time_t t = time(nullptr);
 		struct tm *lt = localtime(&t);
 		uint32 time_today = lt->tm_hour * 3600 + lt->tm_min * 60 + lt->tm_sec;
