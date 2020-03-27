@@ -320,7 +320,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 		{
 			// Encoded password
 			if( sd->passwdenc != 0 ){
-				ShowError( "Account '%s' could not be created, because client side password encryption is enabled.\n", sd->userid );
+				ShowError( "Account '%s' could not be created because client side password encryption is enabled.\n", sd->userid );
 				return 0; // unregistered id
 			}
 
