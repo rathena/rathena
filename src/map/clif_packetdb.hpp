@@ -1968,7 +1968,19 @@
 	parseable_packet(0x08fb,6,NULL,2);
 	parseable_packet(0x0907,5,clif_parse_MoveItem,2,4);
 	packet(0x0908,5);
-	parseable_packet(0x08d7,28,NULL,2,4);
+	parseable_packet(0x08D7,28,clif_parse_bg_queue_apply_request,2,4);
+	packet(0x08D8,27);
+	packet(0x08D9,30);
+	parseable_packet(0x08DA,26,clif_parse_bg_queue_cancel_request,2);
+	packet(0x08DB,27);
+	packet(0x08DC,26);
+	parseable_packet(0x08DD,27,clif_parse_dull,2,3);
+	packet(0x08DE,27);
+	packet(0x08DF,50);
+	parseable_packet(0x08E0,51,clif_parse_bg_queue_lobby_reply,2,3,27);
+	packet(0x08E1,51);
+	parseable_packet(0x090A,26,clif_parse_bg_queue_request_queue_number,2);
+	packet(0x090E,2);
 	packet(0x0977,14); //Monster HP Bar
 	parseable_packet(0x0916,26,clif_parse_GuildInvite2,2);
 	parseable_packet(0x091d,41,clif_parse_PartyBookingRegisterReq,2,4,6);

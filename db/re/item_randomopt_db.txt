@@ -39,25 +39,25 @@ RDMOPT_ATTR_TOLERACE_UNDEAD,{ bonus2 bSubEle,Ele_Undead,getrandomoptinfo(ROA_VAL
 RDMOPT_ATTR_TOLERACE_ALL,{ bonus2 bSubEle,Ele_All,getrandomoptinfo(ROA_VALUE); }
 // TODO: Confirm if damage reduction is implemented correctly.
 // kRO desc : <ELEMENT> 몬스터로부터 받는 물리 데미지 %d%% 감소.
-RDMOPT_DAMAGE_PROPERTY_NOTHING_USER,{ bonus3 bSubEle,Ele_Neutral,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_NOTHING_USER,{ bonus2 bSubDefEle,Ele_Neutral,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET,{ bonus2 bAddEle,Ele_Neutral,getrandomoptinfo(ROA_VALUE); }
-RDMOPT_DAMAGE_PROPERTY_WATER_USER,{ bonus3 bSubEle,Ele_Water,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_WATER_USER,{ bonus2 bSubDefEle,Ele_Water,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_DAMAGE_PROPERTY_WATER_TARGET,{ bonus2 bAddEle,Ele_Water,getrandomoptinfo(ROA_VALUE); }
-RDMOPT_DAMAGE_PROPERTY_GROUND_USER,{ bonus3 bSubEle,Ele_Earth,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_GROUND_USER,{ bonus2 bSubDefEle,Ele_Earth,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET,{ bonus2 bAddEle,Ele_Earth,getrandomoptinfo(ROA_VALUE); }
-RDMOPT_DAMAGE_PROPERTY_FIRE_USER,{ bonus3 bSubEle,Ele_Fire,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_FIRE_USER,{ bonus2 bSubDefEle,Ele_Fire,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET,{ bonus2 bAddEle,Ele_Fire,getrandomoptinfo(ROA_VALUE); }
-RDMOPT_DAMAGE_PROPERTY_WIND_USER,{ bonus3 bSubEle,Ele_Wind,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_WIND_USER,{ bonus2 bSubDefEle,Ele_Wind,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_DAMAGE_PROPERTY_WIND_TARGET,{ bonus2 bAddEle,Ele_Wind,getrandomoptinfo(ROA_VALUE); }
-RDMOPT_DAMAGE_PROPERTY_POISON_USER,{ bonus3 bSubEle,Ele_Poison,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_POISON_USER,{ bonus2 bSubDefEle,Ele_Poison,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_DAMAGE_PROPERTY_POISON_TARGET,{ bonus2 bAddEle,Ele_Poison,getrandomoptinfo(ROA_VALUE); }
-RDMOPT_DAMAGE_PROPERTY_SAINT_USER,{ bonus3 bSubEle,Ele_Holy,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_SAINT_USER,{ bonus2 bSubDefEle,Ele_Holy,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET,{ bonus2 bAddEle,Ele_Holy,getrandomoptinfo(ROA_VALUE); }
-RDMOPT_DAMAGE_PROPERTY_DARKNESS_USER,{ bonus3 bSubEle,Ele_Dark,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_DARKNESS_USER,{ bonus2 bSubDefEle,Ele_Dark,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET,{ bonus2 bAddEle,Ele_Dark,getrandomoptinfo(ROA_VALUE); }
-RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_USER,{ bonus3 bSubEle,Ele_Ghost,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_USER,{ bonus2 bSubDefEle,Ele_Ghost,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET,{ bonus2 bAddEle,Ele_Ghost,getrandomoptinfo(ROA_VALUE); }
-RDMOPT_DAMAGE_PROPERTY_UNDEAD_USER,{ bonus3 bSubEle,Ele_Undead,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_UNDEAD_USER,{ bonus2 bSubDefEle,Ele_Undead,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET,{ bonus2 bAddEle,Ele_Undead,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_MDAMAGE_PROPERTY_NOTHING_USER,{ bonus3 bSubEle,Ele_Neutral,getrandomoptinfo(ROA_VALUE),BF_MAGIC; }
 RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET,{ bonus2 bMagicAddEle,Ele_Neutral,getrandomoptinfo(ROA_VALUE); }

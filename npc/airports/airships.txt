@@ -339,7 +339,7 @@ airplane,80,71,2	script	Zerta#01airplane	834,{
 	mes "I am currently on a";
 	mes "sacred journey, offering";
 	mes "prayer for the sake of the";
-	mes "Rune-Midgard continent.";
+	mes "Midgard continent.";
 	close;
 }
 

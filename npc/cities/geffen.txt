@@ -609,13 +609,13 @@ geffen_in,27,134,5	script	Waitress#elen	91,{
 		next;
 		mes "[Elenore]";
 		mes "Well...";
-		mes "I hear there's this person somewhere in Rune-Midgard...";
+		mes "I hear there's this person somewhere in Rune-Midgarts...";
 		next;
 		mes "[Elenore]";
 		if (Sex == SEX_MALE)
 			mes "Tell me, have you ever heard of "+strcharinfo(0)+"? He's supposed to be the suavest hero around!";
 		else
-			mes "Have you ever heard of "+strcharinfo(0)+"? People say she's one of the prettiest girls in all of Rune-Midgard!";
+			mes "Have you ever heard of "+strcharinfo(0)+"? People say she's one of the prettiest girls in all of Rune-Midgarts!";
 		break;
 	case 4:
 		switch(rand(1,2)) {
@@ -743,7 +743,7 @@ geffen_in,70,67,3	script	Waitress#elise	90,{
 		mes "The Rune-Midgarts Kingdom?";
 		next;
 		mes "[Elisa]";
-		mes "I hear that it was originally called the Rune-Midgard Kingdom, after our continent. However, for some reason, the name was changed to 'Rune-Midgarts.'";
+		mes "I hear that it was originally called the Rune-Midgarts Kingdom, after our continent. However, for some reason, the name was changed to 'Rune-Midgarts.'";
 		next;
 		mes "[Elisa]";
 		mes "It was obviously a wise decision, since too many people kept confusing the our continent with our kingdom. Weird, huh?";
@@ -877,16 +877,16 @@ geffen_in,79,76,2	script	Merchant Daven	120,{
 
 geffen_in,114,73,5	script	Hadenheim	709,{
 	mes "[Hans Hadenheim]";
-	mes "Man, the Rune-Midgard continent sure is big! How's it going, youngster?";
+	mes "Man, the Midgard continent sure is big! How's it going, youngster?";
 	next;
 	mes "[Hans Hadenheim]";
-	mes "This Geffen sure is strange. But it was worth it to travel here all the way from the Schubaltzwald Republic.";
+	mes "This Geffen sure is strange. But it was worth it to travel here all the way from the Schwarzwald Republic.";
 	next;
-	if (select("Schubaltzwald Republic?:So, why are you traveling?") == 1) {
+	if (select("Schwarzwald Republic?:So, why are you traveling?") == 1) {
 		mes "[Hans Hadenheim]";
 		mes "You...";
 		mes "Don't know the";
-		mes "Schubaltzwald Republic?";
+		mes "Schwarzwald Republic?";
 		next;
 		mes "[Hans Hadenheim]";
 		mes "You know, ally of the Rune-Midgarts Kingdom. Um... Our capital city is Juno?";
@@ -1122,7 +1122,7 @@ geffen_in,39,127,2	script	Psychic Advisor	704,{
 			mes "First off, be accountable for your own money and use a budget that works for you. A good rule of thumb? For every ten zeny you earn, put one zeny aside and either save it or invest it for later.";
 			next;
 			mes "[Psychic Advisor]";
-			mes "And whatever you do, don't work as a psychic advisor in Rune-Midgard. The real cash, apparently, is in discovering new countries. Why didn't I do that?!";
+			mes "And whatever you do, don't work as a psychic advisor in Rune-Midgarts. The real cash, apparently, is in discovering new countries. Why didn't I do that?!";
 			next;
 			break;
 		case 3:

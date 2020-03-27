@@ -179,7 +179,7 @@ OnTouch:
     mes "We couldn't communicate with them either, and one of them seemed furious after looking around and finding out that its fellows are defeated.";
     next;
     mes "[" + strcharinfo(0) + "]";
-    mes "They look as if they are incarnation of Morroc.";
+    mes "They look as if they are incarnation of Morocc.";
     mes "Is the King of Domons after the Orb?";
     mes "Or is it just a coincidence?";
     next;
@@ -366,7 +366,7 @@ OnMyMobDead:
 	select("I fought with monsters.");
 	cutin "hisie03",0;
 	mes "[Hisie]";
-	mes "Monsters? Subordinates of Morroc?";
+	mes "Monsters? Subordinates of Morocc?";
 	mes "What you were trying to kill were our soldiers, the Laphines!!";
 	mes "What on earth happened there?";
 	npcskill "AL_HEAL",9,99,80;
@@ -387,7 +387,7 @@ OnMyMobDead:
 	next;
 	cutin "",255;
 	mes "[Loki]";
-	mes "Shenime is one of the subordinates of Morroc.";
+	mes "Shenime is one of the subordinates of Morocc.";
 	mes "His power enbales him to control another person directly or mentally influence that person indirectly through a part of his body.";
 	next;
 	select("Now that I think about it...");
@@ -455,7 +455,7 @@ OnMyMobDead:
 	cutin "",255;
 	mes "[Loki]";
 	mes "Don't worry about us.";
-	mes "Our target is Morroc, the King of Demons.";
+	mes "Our target is Morocc, the King of Demons.";
 	mes "It's good enough that we found an evidence here.";
 	next;
 	cutin "hisie01",0;

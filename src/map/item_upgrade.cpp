@@ -308,13 +308,13 @@ void s_item_upgrade_db::setPlayerInfo(map_session_data * sd, uint16 target_index
 	pc_setregstr(sd, add_str("@last_lapine_uniqueid$"), unique_id);
 
 	int key_opt_id = 0, key_opt_value = 0, key_opt_param = 0;
-	script_cleararray_pc(sd, "@last_lapine_option_id", (void*)0);
-	script_cleararray_pc(sd, "@last_lapine_option_value", (void*)0);
-	script_cleararray_pc(sd, "@last_lapine_option_param", (void*)0);
+	script_cleararray_pc(sd, "@last_lapine_option_id");
+	script_cleararray_pc(sd, "@last_lapine_option_value");
+	script_cleararray_pc(sd, "@last_lapine_option_param");
 
 	for (int i = 0; i < MAX_ITEM_RDM_OPT; i++) {
-		script_setarray_pc(sd, "@last_lapine_option_id", i, (void*)(intptr_t)it->option[i].id, &key_opt_id);
-		script_setarray_pc(sd, "@last_lapine_option_value", i, (void*)(intptr_t)it->option[i].value, &key_opt_value);
-		script_setarray_pc(sd, "@last_lapine_option_param", i, (void*)(intptr_t)it->option[i].param, &key_opt_param);
+		script_setarray_pc(sd, "@last_lapine_option_id", i, (intptr_t)it->option[i].id, &key_opt_id);
+		script_setarray_pc(sd, "@last_lapine_option_value", i, (intptr_t)it->option[i].value, &key_opt_value);
+		script_setarray_pc(sd, "@last_lapine_option_param", i, (intptr_t)it->option[i].param, &key_opt_param);
 	}
 }
