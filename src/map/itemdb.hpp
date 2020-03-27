@@ -14,7 +14,7 @@
 /// The maximum number of item delays
 #define MAX_ITEMDELAYS	10
 ///Designed for search functions, species max number of matches to display.
-#define MAX_SEARCH	5
+#define MAX_SEARCH	10
 ///Maximum amount of items a combo may require
 #define MAX_ITEMS_PER_COMBO 6
 
