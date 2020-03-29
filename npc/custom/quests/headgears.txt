@@ -12,6 +12,7 @@
 //= [5594] Donut In Mouth
 //= [5403] Fish in Mouth
 //= [5361] Gangster Scarf
+//= [18813] New Wave Sunglasses
 //============================================================
 //= ## Release 2 ##
 //============================================================
@@ -426,6 +427,85 @@ gef_tower,70,172,4	script	Gangster Mage#Hat5361	679,{
 			delitem 7097,50;//Burning Heart
 			Zeny -= 30000;
 			getitem 5361,1;
+			mes "["+ .@npc_name$ +"]";
+			mes "If you need another, come find me.";
+			close;
+		}
+		else {
+			mes "["+ .@npc_name$ +"]";
+			mes "You don't have enough items";
+			mes "for me to create it.";
+			close;
+		}
+	case 2:
+		mes "["+ .@npc_name$ +"]";
+		mes "Come find me when you're ready.";
+		close;
+	}
+}
+
+//============================================================
+//= [18813] New Wave Sunglasses
+//============================================================
+verus04,62,227,4	script	Euphoric Inventor#customhat9	851,{
+	.@npc_name$ = "Euphoric Inventor";
+	.@item_name$ = "New Wave Sunglasses";
+    if (!isbegin_quest(13185) || !isbegin_quest(11379) || !isbegin_quest(12347)) {
+        mes "["+ .@npc_name$ +"]";
+        mes "Come find me once you have";
+        mes "conquered the following instances:";
+        mes "^FF0000Charleston Crisis^000000";
+	    mes "^FF0000Central Laboratory^000000";
+	    mes "^FF0000Last Room^000000";
+        close;
+    } else {
+        mes "["+ .@npc_name$ +"]";
+        mes "I see you have emerged victorious";
+        mes "over various hardships.";
+        next;
+    }
+	mes "["+ .@npc_name$ +"]";
+	mes "I can create ^0000FF"+ .@item_name$ +"^000000 for you with:";
+	mes "^3355FF1 Emergency Mado Gear^000000";
+	mes "^3355FF1 Reinforced Parts - Engine^000000";
+	mes "^3355FF50 Oil Bottle^000000";
+	mes "^3355FF1 Flame Thrower^000000";
+	mes "^3355FF1 Red Glasses^000000";
+	mes "^3355FF2 Electric Wire^000000";
+	mes "^3355FF3 Charleston Component^000000";
+    mes "^3355FF5 Transparent Plate (Red)^000000";
+    mes "^3355FF10 Broken Engine^000000";
+    mes "^3355FF80 Used Iron Plate^000000";
+    mes "^3355FF50 Fragment^000000";
+    mes "^3355FF5 Gold^000000";
+    mes "^3355FF300 Steel^000000";
+    mes "^3355FF1,000,000 Zeny^000000";
+	next;
+	switch(select("Construct ^FF0000"+ .@item_name$ +"^000000 :Quit")) {
+		case 1:
+		if (countitem(23277) >= 1 && countitem(20733) >= 1 && countitem(6216) >= 50
+		&& countitem(2139) >= 1 && countitem(5288) >= 1 && countitem(1971) >= 2
+		&& countitem(6752) >= 3 && countitem(7353) >= 5 && countitem(6750) >= 10
+        && countitem(7319) >= 80 && countitem(7094) >= 50 && countitem(969) >= 5
+        && countitem(999) >= 300) {
+			mes "["+ .@npc_name$ +"]";
+			mes "Here you are, it's all yours.";
+			next;
+			delitem 23277,1;	//Emergency Mado Gear
+			delitem 20733,1;	//Reinforced Parts - Engine
+			delitem 6216,50;	//Oil Bottle
+			delitem 2139,1;	    //Flame Thrower
+			delitem 5288,1;		//Red Glasses
+			delitem 1971,2;	    //Electric Wire
+			delitem 6752,3;		//Charleston Component
+            delitem 7353,5;		//Transparent Plate (Red)
+            delitem 6750,10;	//Broken Engine
+            delitem 7319,80;	//Used Iron Plate
+            delitem 7094,50;	//Fragment
+            delitem 969,5;		//Gold
+            delitem 999,300;	//Steel
+            Zeny -= 1000000;
+			getitem 18813,1;
 			mes "["+ .@npc_name$ +"]";
 			mes "If you need another, come find me.";
 			close;
