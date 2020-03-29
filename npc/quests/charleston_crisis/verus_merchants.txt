@@ -5,7 +5,7 @@
 //===== Current Version: =========================================|
 //= 1.0 Initial Version                                          =|
 //= 1.1 Script Clean-up                                          =|
-//= 1.2 Verus Enchants ( custom mes )                            =|            
+//= 1.2 Verus Enchants ( custom mes )                            =|
 //================================================================|
 //= Verus Merchants / Verus Enchants                             =|
 //================================================================|
@@ -17,7 +17,7 @@ verus04,63,112,3	script	Mass Charleston#exchanger	4_F_CHARLESTON01,{
 	if (MaxWeight - Weight < 5000) {
 		mes "You are overweight please ensure that you have enough space.";
 		close;
-	}	
+	}
 	disable_items;
 	cutin "dalle03.bmp",2;
 	mes "[ ^0000FFMass Charleston^000000 ]";
@@ -42,15 +42,15 @@ verus04,63,112,3	script	Mass Charleston#exchanger	4_F_CHARLESTON01,{
 			mes "[ ^0000FFMass Charleston^000000 ]";
 			mes "Oh, haven't you heard the news? Oops, my bad. Please forget I said that.";
 			close3;
-			
+
 		case 2:
 			.@item = 15111;
 			break;
-			
+
 		case 3:
 			.@item = 15110;
 			break;
-			
+
 		case 4:
 			mes "[ ^0000FFMass Charleston^000000 ]";
 			mes "The last masterpiece of the Charleston Factory! You'll never find such equipment anywhere else!";
@@ -95,7 +95,7 @@ verus04,63,112,3	script	Mass Charleston#exchanger	4_F_CHARLESTON01,{
 			mes "[ ^0000FFMass Charleston^000000 ]";
 			mes "Thank you for you transaction.";
 			getitem atoi(.bunker_data$[.@s]),1;
-			close3;		
+			close3;
 	}
 	mes "[ ^0000FFMass Charleston^000000 ]";
 	mes "<ITEM>" +getitemname(.@item)+ "<INFO>"+.@item+"</INFO></ITEM>";
@@ -120,7 +120,7 @@ verus04,63,112,3	script	Mass Charleston#exchanger	4_F_CHARLESTON01,{
 	mes "Thank you for you transaction.";
 	getitem .@item,1;
 	close3;
-			
+
 OnInit:
 	.item_price = 3999999;
 	setarray .bunker_data$,
@@ -172,7 +172,7 @@ verus04,69,108,5	script	Mass Charleston#exchanger_2	4_F_CHARLESTON01,{
 	delitem .component_id,.price;
 	getitem .item_list[.@s],1;
 	close3;
-	
+
 OnInit:
 	.component_id = 6752;
 	.price = 10;
@@ -197,13 +197,13 @@ disable_items;
 			mes "[ Mass Charleston ]";
 			mes "Rest assured. My upgrade technology does not involve accidental damage on the item's ^0000FFUpgrade Level^000000 or ^0000FFEquipped Cards.^000000";
 			close;
-		
+
 		case 2:
 			required_check(.required_id,.required_amount,.zeny_require);
 			mes "[ Mass Charleston ]";
 			mes "Please select what Charleston Equipment you want to add abilities to.";
 			next;
-			switch(select("Armor:Garments:Shoes:Accessory")){	
+			switch(select("Armor:Garments:Shoes:Accessory")){
 				case 1:
 					.@charleston_id = getequipid(EQI_ARMOR);
 					@charleston_id = .@charleston_id;
@@ -211,13 +211,13 @@ disable_items;
 						case 15110:
 							callsub Verus_Enchant,0,1,EQI_ARMOR;
 							end;
-							
+
 						case 15111:
 							callsub Verus_Enchant,1,1,EQI_ARMOR;
 							end;
 					}
 					break;
-					
+
 				case 2:
 					.@charleston_id = getequipid(EQI_GARMENT);
 					@charleston_id = .@charleston_id;
@@ -225,10 +225,10 @@ disable_items;
 						case 20732:
 						case 20733:
 							callsub Verus_Enchant,2,1,EQI_GARMENT;
-							end;	
+							end;
 					}
 					break;
-							
+
 				case 3:
 					.@charleston_id = getequipid(EQI_SHOES);
 					@charleston_id = .@charleston_id;
@@ -239,7 +239,7 @@ disable_items;
 							end;
 						}
 						break;
-						
+
 				case 4:
 					.@charleston_id = getequipid(EQI_ACC_L);
 					@charleston_id = .@charleston_id;
@@ -250,19 +250,19 @@ disable_items;
 							end;
 						}
 						break;
-					
+
 					}
 			mes "[ Mass Charleston ]";
 			mes "You are not wearing a Charleston Product.";
 			mes "Please talk to me again when you wore it.";
 			end;
-			
+
 		case 3:
 			required_check(.required_id,.required_amount,.zeny_require);
 			mes "[ Mass Charleston ]";
 			mes "Please select what Charleston Equipment you want to add abilities to.";
 			next;
-			switch(select("Armor:Garments:Shoes:Accessory")){	
+			switch(select("Armor:Garments:Shoes:Accessory")){
 				case 1:
 					callsub Verus_Reset,EQI_ARMOR;
 					end;
@@ -277,14 +277,14 @@ disable_items;
 					end;
 			}
 	}
-	
+
 Verus_Reset:
 	.@part = getarg(0);
 	.@equip_id = getequipid(.@part);
 	.@equip_refine = getequiprefinerycnt(.@part);
 	.@equip_name$ = getitemname(.@equip_id);
 	setarray .@equip_card[0], getequipcardid(.@part,0),getequipcardid(.@part,1),getequipcardid(.@part,2),getequipcardid(.@part,3);
-	
+
 	mes "[ Mass Charleston ]";
 	mes "*Beep* *Beep* Detecting Product Name:";
 	mes "^0000FF"+.@equip_name$+"^000000";
@@ -322,7 +322,7 @@ Verus_Reset:
 	mes "[ Mass Charleston ]";
 	mes "Abilities successfully removed.";
 	end;
-	
+
 Verus_Enchant:
 	.@enchant_type = getarg(0);
 	.@max_slots = getarg(1);
@@ -359,7 +359,7 @@ if (.@equip_card[3] == 0 && .@max_slots < 4) {
 if(select("Continue:Cancel") == 2){
 	mes "[ Mass Charleston ]";
 	mes "Come back again Dear Customer.";
-	close;	
+	close;
 }
 switch(.@enchant_type){
 	case 0:
@@ -377,7 +377,7 @@ switch(.@enchant_type){
 		}
 		setarray .@rand_enchant,4750,4751,4730,4731,4869,4872,4860,4762,4763;
 		break;
-		
+
 	case 1:
 		if(.@equip_refine >= 9){
 			mes "[ Mass Charleston ]";
@@ -393,7 +393,7 @@ switch(.@enchant_type){
 		}
 		setarray .@rand_enchant,4750,4751,4730,4731,4869,4872,4860,4762,4763;
 		break;
-		
+
 	case 2:
 		if(.@equip_refine >= 9){
 			setarray .@rand_enchant,4701,4702,4711,4712,4721,4722,4731,4732,4741,4742,4751,4752,4832,4833,4834;
@@ -401,7 +401,7 @@ switch(.@enchant_type){
 		}
 		setarray .@rand_enchant,4700,4701,4710,4711,4720,4721,4730,4731,4740,4741,4750,4751,4832;
 		break;
-		
+
 	case 3:
 		if(.@equip_refine >= 9){
 			setarray .@rand_enchant,4701,4702,4721,4722,4731,4732,4741,4742,4814,4815,4869,4872;
@@ -409,11 +409,11 @@ switch(.@enchant_type){
 		}
 		setarray .@rand_enchant,4700,4701,4720,4721,4730,4731,4740,4741,4815,4869;
 		break;
-	
+
 	case 4:
 		setarray .@rand_enchant,4700,4701,4710,4711,4720,4721,4730,4731,4740,4741,4815,4869;
 		break;
-		
+
 	default:
 		mes " - Error -";
 		mes "Report to the GM";

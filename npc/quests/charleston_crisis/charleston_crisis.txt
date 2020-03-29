@@ -38,26 +38,26 @@ verus04,81,112,4	script	Dimensional Device#charleston	10007,{
 					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
 					mes "Unknown Error Has Occurred.";
 					close3;
-					
+
 				case -2:
 					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
 					mes "Party Is Non-Existent.";
 					close3;
-					
+
 				case -3:
 					mes "Party Name: "+.@party_name$;
 					mes "Party Leader: "+strcharinfo(0);
 					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
 					mes "Party already have instance.";
 					close3;
-					
+
 				case -4:
 					mes "Party Name: "+.@party_name$;
 					mes "Party Leader: "+strcharinfo(0);
 					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
 					mes "^0000ff"+.@md_name$+" ^000000 is currently full.";
 					close3;
-					
+
 				default:
 					break;
 			}
@@ -66,7 +66,7 @@ verus04,81,112,4	script	Dimensional Device#charleston	10007,{
 			'cc_map$ = instance_mapname("1@mcd");
 			mes "- Preparing the dimensional device. -";
 			break;
-			
+
 		case 2:
 			switch(instance_enter(.@md_name$)){
 				case 3:
@@ -82,13 +82,13 @@ verus04,81,112,4	script	Dimensional Device#charleston	10007,{
 					break;
 			}
 			break;
-			
+
 		case 3:
 			break;
 	}
 	end;
-	
-	
+
+
 OnInit:
 	.charleston_crisis = 13184;
 	.charleston_cd = 13185;
@@ -172,7 +172,7 @@ OnTouch:
 		mes "[ ^0000FFCharleston 1^000000 ]";
 		mes "Follow the leftward hallway, and remember that only you can protect yourself.";
 		close3;
-	}		
+	}
 }
 1@mcd,116,213,5	script	Dr. Ve#center_lab	4_M_DOCTOR,2,3,{
 	if(!'party_leader){
@@ -185,7 +185,7 @@ OnTouch:
 	}
 	mes "- He's busy scribbling something. I shouldn't disturb him. -";
 	end;
-	
+
 OnTouch:
 	if('party_leader){
 		if('cc_progress == 1){
@@ -273,7 +273,7 @@ OnTouch:
 		viewpoint 1,86,231,7,0x00FF00;
 		viewpoint 1,172,198,8,0x00FF00;
 		viewpoint 1,126,84,9,0x00FF00;
-		close3;		
+		close3;
 	}
 	cutin "dalle01",2;
 	switch('cc_progress){
@@ -281,7 +281,7 @@ OnTouch:
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "Please talk to Dr. Ve first.";
 			close3;
-			
+
 		case 2:
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "Let me explain what to do. Oh, let me close the factory entrance first, least something might barge in uninvited.";
@@ -326,7 +326,7 @@ OnTouch:
 			viewpoint 1,130,124,5,0x00FF00;
 			viewpoint 1,54,108,6,0x00FF00;
 			close3;
-			
+
 		case 3:
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "Steps and Locksteps are creating a mess inside the factory. Please destroy ^ff00003 Locksteps^000000 first I can tell you their estimated locations.";
@@ -338,7 +338,7 @@ OnTouch:
 			viewpoint 1,130,124,5,0x00FF00;
 			viewpoint 1,54,108,6,0x00FF00;
 			close3;
-			
+
 		case 4:
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "Whew, things seem to be settled for now. Let me disarm the alert mode and reactivate Charleston 2.";
@@ -366,7 +366,7 @@ OnTouch:
 			instance_hide("Backup Generator#power_02",4);
 			instance_hide("Backup Generator#power_03",4);
 			close3;
-			
+
 		case 5:
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "I'm afraid we need more power to reactivate the main computer. Let me tell you the location of one of the backup generators.";
@@ -374,7 +374,7 @@ OnTouch:
 			viewpoint 1,172,198,8,0x00FF00;
 			viewpoint 1,126,84,9,0x00FF00;
 			close3;
-			
+
 		case 6:
 			.@nale$ = instance_npcname("Charleston 2#center_lab");
 			.@ve$ = instance_npcname("Dr. Ve#center_lab");
@@ -392,7 +392,7 @@ OnTouch:
 			mes "89% of the main computer data has been restored. Reactivating Charleston 2 and the Charleston Factory.";
 			npctalk "Charleston 1 : 89% of the main computer data has been restored. Reactivating Charleston 2 and the Charleston Factory.";
 			emotion ET_SURPRISE;
-			next;		
+			next;
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "Oh, Charleston 2 is awake!";
 			npctalk "Charleston 1 : Oh, Charleston 2 is awake!";
@@ -464,7 +464,7 @@ OnTouch:
 			emotion ET_THINK,.@nale$;
 			next;
 			cutin "dalle01",2;
-			mes "[ ^0000FFCharleston 1^000000 ]";			
+			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "I'm the only one in this world who can truly understand you. We're twins.";
 			//npctalk "Charleston 1 : I'm the only one in this world who can truly understand you. We're twins.";
 			next;
@@ -508,7 +508,7 @@ OnTouch:
 			mes "Her Longevity device is discharged; she won't make it far. Please follow here.";
 			instance_hide(strnpcinfo(0),5);
 			instance_hide("Charleston 1#center_lab_2",4);
-			close3;		
+			close3;
 	}
 end;
 }
@@ -563,10 +563,10 @@ end;
 		npctalk "Charleston 1 : It takes enormous amounts of power and data processing to process the factory data.",.@dalle$;
 		sleep 2000;
 		npctalk "Charleston 2 : Grr, you can't stop me!",.@nale$;
-		sleep 1000;		
+		sleep 1000;
 		donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummon";
 		end;
-		
+
 	OnSummon:
 		'mob_count = 7;
 		.@cc_map$ = instance_mapname("1@mcd");
@@ -575,7 +575,7 @@ end;
 		areamonster .@cc_map$,139,219,151,207,"T-TYPE",3128,2,instance_npcname(strnpcinfo(0))+"::OnMobKill";
 		monster .@cc_map$,144,218,"N-TYPE",3127,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
 		end;
-		
+
 	OnMobKill:
 		'mob_count -= 1;
 		if('mob_count == 0){
@@ -727,12 +727,12 @@ end;
 	cutin "",255;
 	instance_hide("Charleston 1#center_lab_3",1);
 	instance_hide("charleston_warp#cc_warp_6",4);
-	instance_hide("charleston_warp#cc_warp_7",4);	
+	instance_hide("charleston_warp#cc_warp_7",4);
 	instance_hide("Charleston 1#core_1",4);
 	instance_hide("Charleston 2#core_1",4);
 	instance_hide("core_talk_trigger",4);
 	end;
-		
+
 }
 1@mcd,146,214,4	script	Charleston 1#center_lab_3	4_F_CHARLESTON01,{ end; }
 1@mcd,128,127,0	script	core_talk_trigger	HIDDEN_WARP_NPC,5,5,{
@@ -788,7 +788,7 @@ OnTouch:
 1@mcd,132,129,4	script	Charleston 1#core_1	4_F_CHARLESTON01,{
 	if('cc_progress < 10) end;
 	cutin "dalle01",2;
-	if(!'party_leader){	
+	if(!'party_leader){
 		mes "[ ^0000FFCharleston 1^000000 ]";
 		mes "This Core in the center powers the entire factory.";
 		close;
@@ -847,7 +847,7 @@ OnTouch:
 	close3;
 }
 1@mcd,1,1,0	script	final_battle_trigger	HIDDEN_WARP_NPC,{
-	OnStart:	
+	OnStart:
 		.@dalle$ = instance_npcname("Charleston 1#core_2");
 		.@nale$ = instance_npcname("Charleston 2#core_2");
 		.@three$ = instance_npcname("Charleston 3#core_1");
@@ -867,7 +867,7 @@ OnTouch:
 		npctalk "Charleston 2 : .....!",.@nale$;
 		movenpc .@dalle$,133,148;
 		sleep 3000;
-		npctalk "Charleston 1 : Hey, did you have to push me?",.@dalle$;	
+		npctalk "Charleston 1 : Hey, did you have to push me?",.@dalle$;
 		sleep 3000;
 		npctalk "Charleston 2 : Push the lever to the center and flip the power switch.",.@nale$;
 		sleep 2000;
@@ -901,7 +901,7 @@ OnTouch:
 		instance_hide("Charleston 3#core_1",5);
 		donpcevent instance_npcname("charleston_3_boss") + "::OnSummon";
 		end;
-		
+
 	OnEnding:
 		.@dalle$ = instance_npcname("Charleston 1#core_2");
 		.@nale$ = instance_npcname("Charleston 2#core_2");
@@ -967,15 +967,15 @@ OnTouch:
 		sleep 3000;
 		instance_hide("Charleston 2#core_2",5);
 		instance_hide("Charleston 2#core_3",4);
-		end;	
+		end;
 }
 1@mcd,1,1,0	script	charleston_3_boss	HIDDEN_WARP_NPC,{
 	OnSummon:
 		.@dead$ = instance_npcname(strnpcinfo(0))+"::OnBossDead";
 		'BossID = monster('cc_map$,130,153,"Charleston 3",3124,1,.@dead$);
 		end;
-		
-		
+
+
 	OnBossDead:
 		sleep 3000;
 		donpcevent instance_npcname("final_battle_trigger")+"::OnEnding";
@@ -1062,7 +1062,7 @@ OnTouch:
 		mes "Charleston 2 is standing still, her system is in Sleep mode. For a moment, her eyes gleamed with unshed tears.";
 	}
 	close3;
-	
+
 OnTouch:
 	.@ve$ = instance_npcname("Dr. Ve#center_lab_3");
 	if('cc_progress > 10)
@@ -1115,7 +1115,7 @@ OnTouch:
 	movenpc instance_npcname("Dr. Ve#center_lab_3"),116,213,3;
 	end;
 }
-	
+
 //= Monster Spawn
 1@mcd,127,264,0	script	charleston_mob_1	HIDDEN_WARP_NPC,4,4,{ OnTouch: charleston_mob(1,strnpcinfo(0)); }
 1@mcd,67,234,0	script	charleston_mob_2	HIDDEN_WARP_NPC,4,4,{ OnTouch: donpcevent instance_npcname("charleston_gate_keeper")+"::OnSummonGate_1"; charleston_mob(2,strnpcinfo(0)); }
@@ -1134,7 +1134,7 @@ OnTouch:
 		monster .@cc_map$,0,0,"--ja--",3128,20,.@spawn$;
 		monster .@cc_map$,0,0,"--ja--",3125,60,.@spawn$;
 		end;
-		
+
 	OnSpawnDead:
 		if('cc_progress >= 7) end;
 		.@cc_map$ = instance_mapname("1@mcd");
@@ -1142,7 +1142,7 @@ OnTouch:
 			case 0:
 				monster .@cc_map$,0,0,"--ja--",3128,1,.@spawn$;
 				break;
-				
+
 			case 1:
 				monster .@cc_map$,0,0,"--ja--",3125,1,.@spawn$;
 				break;
@@ -1153,10 +1153,10 @@ OnTouch:
 	OnInstanceInit:
 		.@cc_map$ = instance_mapname("1@mcd");
 		.@spawn$ = instance_npcname(strnpcinfo(0))+"::OnSpawnDead";
-		monster .@cc_map$,0,0,"--ja--",3128,20,.@spawn$;	
+		monster .@cc_map$,0,0,"--ja--",3128,20,.@spawn$;
 		monster .@cc_map$,0,0,"--ja--",3125,10,.@spawn$;
 		end;
-		
+
 	OnSpawnDead:
 		if('cc_progress >= 7) end;
 		.@cc_map$ = instance_mapname("1@mcd");
@@ -1164,7 +1164,7 @@ OnTouch:
 			case 0:
 				monster .@cc_map$,0,0,"--ja--",3128,1,.@spawn$;
 				break;
-				
+
 			case 1:
 				monster .@cc_map$,0,0,"--ja--",3125,1,.@spawn$;
 				break;
@@ -1174,7 +1174,7 @@ OnTouch:
 1@mcd,1,1,0	script	charleston_gate_keeper	HIDDEN_WARP_NPC,{
 	OnSummonGate_1: monster 'cc_map$,23,275,"Gate Keeper",3127,1,instance_npcname(strnpcinfo(0))+"::OnGate_1"; end;
 	OnSummonGate_2: monster 'cc_map$,33,59,"Gate Keeper",3127,1,instance_npcname(strnpcinfo(0))+"::OnGate_2"; end;
-	OnSummonGate_3: monster 'cc_map$,239,29,"Gate Keeper",3127,1,instance_npcname(strnpcinfo(0))+"::OnGate_3"; end;	
+	OnSummonGate_3: monster 'cc_map$,239,29,"Gate Keeper",3127,1,instance_npcname(strnpcinfo(0))+"::OnGate_3"; end;
 	OnSummonGate_4: monster 'cc_map$,281,184,"Gate Keeper",3127,1,instance_npcname(strnpcinfo(0))+"::OnGate_4"; end;
 	OnGate_1: mapannounce 'cc_map$, "Charleston 1 : Gate 1 has been disarmed. Please move southwest for the next gate.",bc_map,"0xFFFF00"; instance_hide("charleston_warp#cc_warp_1",4); end;
 	OnGate_2: mapannounce 'cc_map$, "Charleston 1 : Gate 2 has been disarmed. Please move southeast for the next gate.",bc_map,"0xFFFF00"; instance_hide("charleston_warp#cc_warp_2",4); end;
@@ -1193,20 +1193,20 @@ OnTouch:
 		monster .@cc_map$,130,124,"--ja--",3126,1,instance_npcname(strnpcinfo(0))+"::OnLockStep";
 		monster .@cc_map$,54,108,"--ja--",3126,1,instance_npcname(strnpcinfo(0))+"::OnLockStep";
 		end;
-		
+
 	OnLockStep:
 		'cc_security++;
 		if('cc_security == 3){
 			donpcevent instance_npcname("charleston_system_security") + "::OnLockDone";
 		}
 		end;
-	
+
 	OnLockDone:
 		'lock_hunt = 0;
 		initnpctimer;
 		killmonster 'cc_map$,instance_npcname(strnpcinfo(0))+"::OnLockStep";
 		end;
-		
+
 	OnTimer1000:
 		'cc_progress = 4;
 		mapannounce 'cc_map$, "Charleston 1 : *Mic*, Mic test.",bc_map,"0xFFFF00";
@@ -1225,7 +1225,7 @@ OnTouch_:
 	mes "- You turned on the generator. The sound of turning wheels can be heard. -";
 	'cc_power++;
 	close2;
-	if(.@x == 126){.@z = 9; .@gen$ = "3"; } else if(.@x == 172){.@z = 8; .@gen$ = "2"; } else if(.@x == 86){.@z = 7; .@gen$ = "1";}	
+	if(.@x == 126){.@z = 9; .@gen$ = "3"; } else if(.@x == 172){.@z = 8; .@gen$ = "2"; } else if(.@x == 86){.@z = 7; .@gen$ = "1";}
 	viewpoint 2,.@x,.@y,.@z,0x00FF00;
 	setd("'" + "cc_gen_" + .@gen$, 0);
 	if('cc_power == 3){
@@ -1273,15 +1273,15 @@ OnTouch_:
 	if('cc_gen_2 == 1){
 		viewpoint 1,172,198,8,0x00FF00;
 	}
-	if('cc_gen_3 == 1){			
+	if('cc_gen_3 == 1){
 		viewpoint 1,126,84,9,0x00FF00;
 	}
 	end;
 }
 1@mcd,58,72,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_2	WARPNPC,1,2
 1@mcd,104,50,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_3	WARPNPC,1,2
-1@mcd,218,211,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_4	WARPNPC,1,2	
-1@mcd,211,195,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_5	WARPNPC,1,2	
+1@mcd,218,211,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_4	WARPNPC,1,2
+1@mcd,211,195,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_5	WARPNPC,1,2
 1@mcd,141,199,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_6	WARPNPC,1,2
 1@mcd,142,203,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_7	WARPNPC,1,2
 1@mcd,130,127,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_8	WARPNPC,1,2
@@ -1293,13 +1293,13 @@ OnTouch_:
 	switch(.@step_hunt){
 		case -1:
 			break;
-			
+
 		case 0:
 		case 1:
 			mes "[ ^0000FFMain Computer^000000 ]";
 			mes "In order to reduce the Main Computer load, you need to eliminate the outage control ^0000FFcontrol device^000000 or more";
 			end;
-			
+
 		case 2:
 			mes "[ ^0000FFMain Computer^000000 ]";
 			mes "The control device has been reduced and attempts to regain control.";
@@ -1325,13 +1325,13 @@ OnTouch_:
 			mes "Requires ^ff000050 Steps^000000 to be disposed.";
 			setquest 13187;
 			end;
-		
+
 		case 0:
 		case 1:
 			mes "[ ^0000FFMain Computer^000000 ]";
 			mes "Continuous processing control devices.";
 			close;
-			
+
 		case 2:
 			mes "[ ^0000FFMain Computer^000000 ]";
 			mes "Check the No. 2 machine, found that some of the data is damaged, try to lift the connection failed.";
@@ -1348,7 +1348,7 @@ OnTouch_:
 			erasequest 13188;
 			setquest 13187;
 			end;
-	}		
+	}
 }
 
 1@mcd,77,167,5	script	Shalosh#exit	4_F_SHALOSH,{
@@ -1361,7 +1361,7 @@ OnTouch_:
 			mes "[ ^0000FFShalosh^000000 ]";
 			mes "Ferre came with me, but I haven't seen him. No, thanks; I know he'll come back to me.";
 			close3;
-			
+
 		case 2:
 			mes "[ ^0000FFShalosh^000000 ]";
 			mes "I only invited NewOZ. Well, I guess I shouldn't have opened the door for the robot who needed closure.";
@@ -1369,7 +1369,7 @@ OnTouch_:
 			mes "[ ^0000FFShalosh^000000 ]";
 			mes "You can try, but you can't change anything. How futile it is!";
 			close3;
-			
+
 		case 3:
 			if('cc_progress > 10){
 				mes "[ ^0000FFShalosh^000000 ]";
@@ -1385,7 +1385,7 @@ OnTouch_:
 			mes "The voice of this place has not disappeared.";
 			mes "What happened?";
 			close3;
-	}			
+	}
 }
 1@mcd,176,179,5	script	NewOz#extra	4_M_NEWOZ,{
 	cutin "nines01.bmp",0;
@@ -1438,26 +1438,26 @@ verus04,81,112,4	script	Dimensional Device#charleston	10007,{
 					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
 					mes "Unknown Error Has Occurred.";
 					close3;
-					
+
 				case -2:
 					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
 					mes "Party Is Non-Existent.";
 					close3;
-					
+
 				case -3:
 					mes "Party Name: "+.@party_name$;
 					mes "Party Leader: "+strcharinfo(0);
 					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
 					mes "Party already have instance.";
 					close3;
-					
+
 				case -4:
 					mes "Party Name: "+.@party_name$;
 					mes "Party Leader: "+strcharinfo(0);
 					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
 					mes "^0000ff"+.@md_name$+" ^000000 is currently full.";
 					close3;
-					
+
 				default:
 					break;
 			}
@@ -1466,7 +1466,7 @@ verus04,81,112,4	script	Dimensional Device#charleston	10007,{
 			'cc_map$ = instance_mapname("1@mcd");
 			mes "- Preparing the dimensional device. -";
 			break;
-			
+
 		case 2:
 			switch(instance_enter(.@md_name$)){
 				case 3:
@@ -1482,13 +1482,13 @@ verus04,81,112,4	script	Dimensional Device#charleston	10007,{
 					break;
 			}
 			break;
-			
+
 		case 3:
 			break;
 	}
 	end;
-	
-	
+
+
 OnInit:
 	.charleston_crisis = 13184;
 	.charleston_cd = 13185;
@@ -1572,7 +1572,7 @@ OnTouch:
 		mes "[ ^0000FFCharleston 1^000000 ]";
 		mes "Follow the leftward hallway, and remember that only you can protect yourself.";
 		close3;
-	}		
+	}
 }
 1@mcd,116,213,5	script	Dr. Ve#center_lab	4_M_DOCTOR,2,3,{
 	if(!'party_leader){
@@ -1585,7 +1585,7 @@ OnTouch:
 	}
 	mes "- He's busy scribbling something. I shouldn't disturb him. -";
 	end;
-	
+
 OnTouch:
 	if('party_leader){
 		if('cc_progress == 1){
@@ -1673,7 +1673,7 @@ OnTouch:
 		viewpoint 1,86,231,7,0x00FF00;
 		viewpoint 1,172,198,8,0x00FF00;
 		viewpoint 1,126,84,9,0x00FF00;
-		close3;		
+		close3;
 	}
 	cutin "dalle01",2;
 	switch('cc_progress){
@@ -1681,7 +1681,7 @@ OnTouch:
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "Please talk to Dr. Ve first.";
 			close3;
-			
+
 		case 2:
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "Let me explain what to do. Oh, let me close the factory entrance first, least something might barge in uninvited.";
@@ -1726,7 +1726,7 @@ OnTouch:
 			viewpoint 1,130,124,5,0x00FF00;
 			viewpoint 1,54,108,6,0x00FF00;
 			close3;
-			
+
 		case 3:
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "Steps and Locksteps are creating a mess inside the factory. Please destroy ^ff00003 Locksteps^000000 first I can tell you their estimated locations.";
@@ -1738,7 +1738,7 @@ OnTouch:
 			viewpoint 1,130,124,5,0x00FF00;
 			viewpoint 1,54,108,6,0x00FF00;
 			close3;
-			
+
 		case 4:
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "Whew, things seem to be settled for now. Let me disarm the alert mode and reactivate Charleston 2.";
@@ -1766,7 +1766,7 @@ OnTouch:
 			instance_hide("Backup Generator#power_02",4);
 			instance_hide("Backup Generator#power_03",4);
 			close3;
-			
+
 		case 5:
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "I'm afraid we need more power to reactivate the main computer. Let me tell you the location of one of the backup generators.";
@@ -1774,7 +1774,7 @@ OnTouch:
 			viewpoint 1,172,198,8,0x00FF00;
 			viewpoint 1,126,84,9,0x00FF00;
 			close3;
-			
+
 		case 6:
 			.@nale$ = instance_npcname("Charleston 2#center_lab");
 			.@ve$ = instance_npcname("Dr. Ve#center_lab");
@@ -1792,7 +1792,7 @@ OnTouch:
 			mes "89% of the main computer data has been restored. Reactivating Charleston 2 and the Charleston Factory.";
 			npctalk "Charleston 1 : 89% of the main computer data has been restored. Reactivating Charleston 2 and the Charleston Factory.";
 			emotion ET_SURPRISE;
-			next;		
+			next;
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "Oh, Charleston 2 is awake!";
 			npctalk "Charleston 1 : Oh, Charleston 2 is awake!";
@@ -1864,7 +1864,7 @@ OnTouch:
 			emotion ET_THINK,.@nale$;
 			next;
 			cutin "dalle01",2;
-			mes "[ ^0000FFCharleston 1^000000 ]";			
+			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "I'm the only one in this world who can truly understand you. We're twins.";
 			//npctalk "Charleston 1 : I'm the only one in this world who can truly understand you. We're twins.";
 			next;
@@ -1908,7 +1908,7 @@ OnTouch:
 			mes "Her Longevity device is discharged; she won't make it far. Please follow here.";
 			instance_hide(strnpcinfo(0),5);
 			instance_hide("Charleston 1#center_lab_2",4);
-			close3;		
+			close3;
 	}
 end;
 }
@@ -1963,10 +1963,10 @@ end;
 		npctalk "Charleston 1 : It takes enormous amounts of power and data processing to process the factory data.",.@dalle$;
 		sleep 2000;
 		npctalk "Charleston 2 : Grr, you can't stop me!",.@nale$;
-		sleep 1000;		
+		sleep 1000;
 		donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummon";
 		end;
-		
+
 	OnSummon:
 		'mob_count = 7;
 		.@cc_map$ = instance_mapname("1@mcd");
@@ -1975,7 +1975,7 @@ end;
 		areamonster .@cc_map$,139,219,151,207,"T-TYPE",3128,2,instance_npcname(strnpcinfo(0))+"::OnMobKill";
 		monster .@cc_map$,144,218,"N-TYPE",3127,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
 		end;
-		
+
 	OnMobKill:
 		'mob_count -= 1;
 		if('mob_count == 0){
@@ -2127,12 +2127,12 @@ end;
 	cutin "",255;
 	instance_hide("Charleston 1#center_lab_3",1);
 	instance_hide("charleston_warp#cc_warp_6",4);
-	instance_hide("charleston_warp#cc_warp_7",4);	
+	instance_hide("charleston_warp#cc_warp_7",4);
 	instance_hide("Charleston 1#core_1",4);
 	instance_hide("Charleston 2#core_1",4);
 	instance_hide("core_talk_trigger",4);
 	end;
-		
+
 }
 1@mcd,146,214,4	script	Charleston 1#center_lab_3	4_F_CHARLESTON01,{ end; }
 1@mcd,128,127,0	script	core_talk_trigger	HIDDEN_WARP_NPC,5,5,{
@@ -2188,7 +2188,7 @@ OnTouch:
 1@mcd,132,129,4	script	Charleston 1#core_1	4_F_CHARLESTON01,{
 	if('cc_progress < 10) end;
 	cutin "dalle01",2;
-	if(!'party_leader){	
+	if(!'party_leader){
 		mes "[ ^0000FFCharleston 1^000000 ]";
 		mes "This Core in the center powers the entire factory.";
 		close;
@@ -2247,7 +2247,7 @@ OnTouch:
 	close3;
 }
 1@mcd,1,1,0	script	final_battle_trigger	HIDDEN_WARP_NPC,{
-	OnStart:	
+	OnStart:
 		.@dalle$ = instance_npcname("Charleston 1#core_2");
 		.@nale$ = instance_npcname("Charleston 2#core_2");
 		.@three$ = instance_npcname("Charleston 3#core_1");
@@ -2267,7 +2267,7 @@ OnTouch:
 		npctalk "Charleston 2 : .....!",.@nale$;
 		movenpc .@dalle$,133,148;
 		sleep 3000;
-		npctalk "Charleston 1 : Hey, did you have to push me?",.@dalle$;	
+		npctalk "Charleston 1 : Hey, did you have to push me?",.@dalle$;
 		sleep 3000;
 		npctalk "Charleston 2 : Push the lever to the center and flip the power switch.",.@nale$;
 		sleep 2000;
@@ -2301,7 +2301,7 @@ OnTouch:
 		instance_hide("Charleston 3#core_1",5);
 		donpcevent instance_npcname("charleston_3_boss") + "::OnSummon";
 		end;
-		
+
 	OnEnding:
 		.@dalle$ = instance_npcname("Charleston 1#core_2");
 		.@nale$ = instance_npcname("Charleston 2#core_2");
@@ -2367,15 +2367,15 @@ OnTouch:
 		sleep 3000;
 		instance_hide("Charleston 2#core_2",5);
 		instance_hide("Charleston 2#core_3",4);
-		end;	
+		end;
 }
 1@mcd,1,1,0	script	charleston_3_boss	HIDDEN_WARP_NPC,{
 	OnSummon:
 		.@dead$ = instance_npcname(strnpcinfo(0))+"::OnBossDead";
 		'BossID = monster('cc_map$,130,153,"Charleston 3",3124,1,.@dead$);
 		end;
-		
-		
+
+
 	OnBossDead:
 		sleep 3000;
 		donpcevent instance_npcname("final_battle_trigger")+"::OnEnding";
@@ -2462,7 +2462,7 @@ OnTouch:
 		mes "Charleston 2 is standing still, her system is in Sleep mode. For a moment, her eyes gleamed with unshed tears.";
 	}
 	close3;
-	
+
 OnTouch:
 	.@ve$ = instance_npcname("Dr. Ve#center_lab_3");
 	if('cc_progress > 10)
@@ -2515,7 +2515,7 @@ OnTouch:
 	movenpc instance_npcname("Dr. Ve#center_lab_3"),116,213,3;
 	end;
 }
-	
+
 //= Monster Spawn
 1@mcd,127,264,0	script	charleston_mob_1	HIDDEN_WARP_NPC,4,4,{ OnTouch: charleston_mob(1,strnpcinfo(0)); }
 1@mcd,67,234,0	script	charleston_mob_2	HIDDEN_WARP_NPC,4,4,{ OnTouch: donpcevent instance_npcname("charleston_gate_keeper")+"::OnSummonGate_1"; charleston_mob(2,strnpcinfo(0)); }
@@ -2534,7 +2534,7 @@ OnTouch:
 		monster .@cc_map$,0,0,"--ja--",3128,20,.@spawn$;
 		monster .@cc_map$,0,0,"--ja--",3125,60,.@spawn$;
 		end;
-		
+
 	OnSpawnDead:
 		if('cc_progress >= 7) end;
 		.@cc_map$ = instance_mapname("1@mcd");
@@ -2542,7 +2542,7 @@ OnTouch:
 			case 0:
 				monster .@cc_map$,0,0,"--ja--",3128,1,.@spawn$;
 				break;
-				
+
 			case 1:
 				monster .@cc_map$,0,0,"--ja--",3125,1,.@spawn$;
 				break;
@@ -2553,10 +2553,10 @@ OnTouch:
 	OnInstanceInit:
 		.@cc_map$ = instance_mapname("1@mcd");
 		.@spawn$ = instance_npcname(strnpcinfo(0))+"::OnSpawnDead";
-		monster .@cc_map$,0,0,"--ja--",3128,20,.@spawn$;	
+		monster .@cc_map$,0,0,"--ja--",3128,20,.@spawn$;
 		monster .@cc_map$,0,0,"--ja--",3125,10,.@spawn$;
 		end;
-		
+
 	OnSpawnDead:
 		if('cc_progress >= 7) end;
 		.@cc_map$ = instance_mapname("1@mcd");
@@ -2564,7 +2564,7 @@ OnTouch:
 			case 0:
 				monster .@cc_map$,0,0,"--ja--",3128,1,.@spawn$;
 				break;
-				
+
 			case 1:
 				monster .@cc_map$,0,0,"--ja--",3125,1,.@spawn$;
 				break;
@@ -2574,7 +2574,7 @@ OnTouch:
 1@mcd,1,1,0	script	charleston_gate_keeper	HIDDEN_WARP_NPC,{
 	OnSummonGate_1: monster 'cc_map$,23,275,"Gate Keeper",3127,1,instance_npcname(strnpcinfo(0))+"::OnGate_1"; end;
 	OnSummonGate_2: monster 'cc_map$,33,59,"Gate Keeper",3127,1,instance_npcname(strnpcinfo(0))+"::OnGate_2"; end;
-	OnSummonGate_3: monster 'cc_map$,239,29,"Gate Keeper",3127,1,instance_npcname(strnpcinfo(0))+"::OnGate_3"; end;	
+	OnSummonGate_3: monster 'cc_map$,239,29,"Gate Keeper",3127,1,instance_npcname(strnpcinfo(0))+"::OnGate_3"; end;
 	OnSummonGate_4: monster 'cc_map$,281,184,"Gate Keeper",3127,1,instance_npcname(strnpcinfo(0))+"::OnGate_4"; end;
 	OnGate_1: mapannounce 'cc_map$, "Charleston 1 : Gate 1 has been disarmed. Please move southwest for the next gate.",bc_map,"0xFFFF00"; instance_hide("charleston_warp#cc_warp_1",4); end;
 	OnGate_2: mapannounce 'cc_map$, "Charleston 1 : Gate 2 has been disarmed. Please move southeast for the next gate.",bc_map,"0xFFFF00"; instance_hide("charleston_warp#cc_warp_2",4); end;
@@ -2593,20 +2593,20 @@ OnTouch:
 		monster .@cc_map$,130,124,"--ja--",3126,1,instance_npcname(strnpcinfo(0))+"::OnLockStep";
 		monster .@cc_map$,54,108,"--ja--",3126,1,instance_npcname(strnpcinfo(0))+"::OnLockStep";
 		end;
-		
+
 	OnLockStep:
 		'cc_security++;
 		if('cc_security == 3){
 			donpcevent instance_npcname("charleston_system_security") + "::OnLockDone";
 		}
 		end;
-	
+
 	OnLockDone:
 		'lock_hunt = 0;
 		initnpctimer;
 		killmonster 'cc_map$,instance_npcname(strnpcinfo(0))+"::OnLockStep";
 		end;
-		
+
 	OnTimer1000:
 		'cc_progress = 4;
 		mapannounce 'cc_map$, "Charleston 1 : *Mic*, Mic test.",bc_map,"0xFFFF00";
@@ -2625,7 +2625,7 @@ OnTouch_:
 	mes "- You turned on the generator. The sound of turning wheels can be heard. -";
 	'cc_power++;
 	close2;
-	if(.@x == 126){.@z = 9; .@gen$ = "3"; } else if(.@x == 172){.@z = 8; .@gen$ = "2"; } else if(.@x == 86){.@z = 7; .@gen$ = "1";}	
+	if(.@x == 126){.@z = 9; .@gen$ = "3"; } else if(.@x == 172){.@z = 8; .@gen$ = "2"; } else if(.@x == 86){.@z = 7; .@gen$ = "1";}
 	viewpoint 2,.@x,.@y,.@z,0x00FF00;
 	setd("'" + "cc_gen_" + .@gen$, 0);
 	if('cc_power == 3){
@@ -2673,15 +2673,15 @@ OnTouch_:
 	if('cc_gen_2 == 1){
 		viewpoint 1,172,198,8,0x00FF00;
 	}
-	if('cc_gen_3 == 1){			
+	if('cc_gen_3 == 1){
 		viewpoint 1,126,84,9,0x00FF00;
 	}
 	end;
 }
 1@mcd,58,72,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_2	WARPNPC,1,2
 1@mcd,104,50,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_3	WARPNPC,1,2
-1@mcd,218,211,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_4	WARPNPC,1,2	
-1@mcd,211,195,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_5	WARPNPC,1,2	
+1@mcd,218,211,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_4	WARPNPC,1,2
+1@mcd,211,195,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_5	WARPNPC,1,2
 1@mcd,141,199,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_6	WARPNPC,1,2
 1@mcd,142,203,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_7	WARPNPC,1,2
 1@mcd,130,127,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_8	WARPNPC,1,2
@@ -2693,13 +2693,13 @@ OnTouch_:
 	switch(.@step_hunt){
 		case -1:
 			break;
-			
+
 		case 0:
 		case 1:
 			mes "[ ^0000FFMain Computer^000000 ]";
 			mes "In order to reduce the Main Computer load, you need to eliminate the outage control ^0000FFcontrol device^000000 or more";
 			end;
-			
+
 		case 2:
 			mes "[ ^0000FFMain Computer^000000 ]";
 			mes "The control device has been reduced and attempts to regain control.";
@@ -2725,13 +2725,13 @@ OnTouch_:
 			mes "Requires ^ff000050 Steps^000000 to be disposed.";
 			setquest 13187;
 			end;
-		
+
 		case 0:
 		case 1:
 			mes "[ ^0000FFMain Computer^000000 ]";
 			mes "Continuous processing control devices.";
 			close;
-			
+
 		case 2:
 			mes "[ ^0000FFMain Computer^000000 ]";
 			mes "Check the No. 2 machine, found that some of the data is damaged, try to lift the connection failed.";
@@ -2748,7 +2748,7 @@ OnTouch_:
 			erasequest 13188;
 			setquest 13187;
 			end;
-	}		
+	}
 }
 
 1@mcd,77,167,5	script	Shalosh#exit	4_F_SHALOSH,{
@@ -2761,7 +2761,7 @@ OnTouch_:
 			mes "[ ^0000FFShalosh^000000 ]";
 			mes "Ferre came with me, but I haven't seen him. No, thanks; I know he'll come back to me.";
 			close3;
-			
+
 		case 2:
 			mes "[ ^0000FFShalosh^000000 ]";
 			mes "I only invited NewOZ. Well, I guess I shouldn't have opened the door for the robot who needed closure.";
@@ -2769,7 +2769,7 @@ OnTouch_:
 			mes "[ ^0000FFShalosh^000000 ]";
 			mes "You can try, but you can't change anything. How futile it is!";
 			close3;
-			
+
 		case 3:
 			if('cc_progress > 10){
 				mes "[ ^0000FFShalosh^000000 ]";
@@ -2785,7 +2785,7 @@ OnTouch_:
 			mes "The voice of this place has not disappeared.";
 			mes "What happened?";
 			close3;
-	}			
+	}
 }
 1@mcd,176,179,5	script	NewOz#extra	4_M_NEWOZ,{
 	cutin "nines01.bmp",0;
@@ -2838,26 +2838,26 @@ verus04,81,112,4	script	Dimensional Device#charleston	10007,{
 					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
 					mes "Unknown Error Has Occurred.";
 					close3;
-					
+
 				case -2:
 					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
 					mes "Party Is Non-Existent.";
 					close3;
-					
+
 				case -3:
 					mes "Party Name: "+.@party_name$;
 					mes "Party Leader: "+strcharinfo(0);
 					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
 					mes "Party already have instance.";
 					close3;
-					
+
 				case -4:
 					mes "Party Name: "+.@party_name$;
 					mes "Party Leader: "+strcharinfo(0);
 					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed!";
 					mes "^0000ff"+.@md_name$+" ^000000 is currently full.";
 					close3;
-					
+
 				default:
 					break;
 			}
@@ -2866,7 +2866,7 @@ verus04,81,112,4	script	Dimensional Device#charleston	10007,{
 			'cc_map$ = instance_mapname("1@mcd");
 			mes "- Preparing the dimensional device. -";
 			break;
-			
+
 		case 2:
 			switch(instance_enter(.@md_name$)){
 				case 3:
@@ -2882,13 +2882,13 @@ verus04,81,112,4	script	Dimensional Device#charleston	10007,{
 					break;
 			}
 			break;
-			
+
 		case 3:
 			break;
 	}
 	end;
-	
-	
+
+
 OnInit:
 	.charleston_crisis = 13184;
 	.charleston_cd = 13185;
@@ -2972,7 +2972,7 @@ OnTouch:
 		mes "[ ^0000FFCharleston 1^000000 ]";
 		mes "Follow the leftward hallway, and remember that only you can protect yourself.";
 		close3;
-	}		
+	}
 }
 1@mcd,116,213,5	script	Dr. Ve#center_lab	4_M_DOCTOR,2,3,{
 	if(!'party_leader){
@@ -2985,7 +2985,7 @@ OnTouch:
 	}
 	mes "- He's busy scribbling something. I shouldn't disturb him. -";
 	end;
-	
+
 OnTouch:
 	if('party_leader){
 		if('cc_progress == 1){
@@ -3073,7 +3073,7 @@ OnTouch:
 		viewpoint 1,86,231,7,0x00FF00;
 		viewpoint 1,172,198,8,0x00FF00;
 		viewpoint 1,126,84,9,0x00FF00;
-		close3;		
+		close3;
 	}
 	cutin "dalle01",2;
 	switch('cc_progress){
@@ -3081,7 +3081,7 @@ OnTouch:
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "Please talk to Dr. Ve first.";
 			close3;
-			
+
 		case 2:
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "Let me explain what to do. Oh, let me close the factory entrance first, least something might barge in uninvited.";
@@ -3126,7 +3126,7 @@ OnTouch:
 			viewpoint 1,130,124,5,0x00FF00;
 			viewpoint 1,54,108,6,0x00FF00;
 			close3;
-			
+
 		case 3:
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "Steps and Locksteps are creating a mess inside the factory. Please destroy ^ff00003 Locksteps^000000 first I can tell you their estimated locations.";
@@ -3138,7 +3138,7 @@ OnTouch:
 			viewpoint 1,130,124,5,0x00FF00;
 			viewpoint 1,54,108,6,0x00FF00;
 			close3;
-			
+
 		case 4:
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "Whew, things seem to be settled for now. Let me disarm the alert mode and reactivate Charleston 2.";
@@ -3166,7 +3166,7 @@ OnTouch:
 			instance_hide("Backup Generator#power_02",4);
 			instance_hide("Backup Generator#power_03",4);
 			close3;
-			
+
 		case 5:
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "I'm afraid we need more power to reactivate the main computer. Let me tell you the location of one of the backup generators.";
@@ -3174,7 +3174,7 @@ OnTouch:
 			viewpoint 1,172,198,8,0x00FF00;
 			viewpoint 1,126,84,9,0x00FF00;
 			close3;
-			
+
 		case 6:
 			.@nale$ = instance_npcname("Charleston 2#center_lab");
 			.@ve$ = instance_npcname("Dr. Ve#center_lab");
@@ -3192,7 +3192,7 @@ OnTouch:
 			mes "89% of the main computer data has been restored. Reactivating Charleston 2 and the Charleston Factory.";
 			npctalk "Charleston 1 : 89% of the main computer data has been restored. Reactivating Charleston 2 and the Charleston Factory.";
 			emotion ET_SURPRISE;
-			next;		
+			next;
 			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "Oh, Charleston 2 is awake!";
 			npctalk "Charleston 1 : Oh, Charleston 2 is awake!";
@@ -3264,7 +3264,7 @@ OnTouch:
 			emotion ET_THINK,.@nale$;
 			next;
 			cutin "dalle01",2;
-			mes "[ ^0000FFCharleston 1^000000 ]";			
+			mes "[ ^0000FFCharleston 1^000000 ]";
 			mes "I'm the only one in this world who can truly understand you. We're twins.";
 			//npctalk "Charleston 1 : I'm the only one in this world who can truly understand you. We're twins.";
 			next;
@@ -3308,7 +3308,7 @@ OnTouch:
 			mes "Her Longevity device is discharged; she won't make it far. Please follow here.";
 			instance_hide(strnpcinfo(0),5);
 			instance_hide("Charleston 1#center_lab_2",4);
-			close3;		
+			close3;
 	}
 end;
 }
@@ -3363,10 +3363,10 @@ end;
 		npctalk "Charleston 1 : It takes enormous amounts of power and data processing to process the factory data.",.@dalle$;
 		sleep 2000;
 		npctalk "Charleston 2 : Grr, you can't stop me!",.@nale$;
-		sleep 1000;		
+		sleep 1000;
 		donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummon";
 		end;
-		
+
 	OnSummon:
 		'mob_count = 7;
 		.@cc_map$ = instance_mapname("1@mcd");
@@ -3375,7 +3375,7 @@ end;
 		areamonster .@cc_map$,139,219,151,207,"T-TYPE",3128,2,instance_npcname(strnpcinfo(0))+"::OnMobKill";
 		monster .@cc_map$,144,218,"N-TYPE",3127,1,instance_npcname(strnpcinfo(0))+"::OnMobKill";
 		end;
-		
+
 	OnMobKill:
 		'mob_count -= 1;
 		if('mob_count == 0){
@@ -3527,12 +3527,12 @@ end;
 	cutin "",255;
 	instance_hide("Charleston 1#center_lab_3",1);
 	instance_hide("charleston_warp#cc_warp_6",4);
-	instance_hide("charleston_warp#cc_warp_7",4);	
+	instance_hide("charleston_warp#cc_warp_7",4);
 	instance_hide("Charleston 1#core_1",4);
 	instance_hide("Charleston 2#core_1",4);
 	instance_hide("core_talk_trigger",4);
 	end;
-		
+
 }
 1@mcd,146,214,4	script	Charleston 1#center_lab_3	4_F_CHARLESTON01,{ end; }
 1@mcd,128,127,0	script	core_talk_trigger	HIDDEN_WARP_NPC,5,5,{
@@ -3588,7 +3588,7 @@ OnTouch:
 1@mcd,132,129,4	script	Charleston 1#core_1	4_F_CHARLESTON01,{
 	if('cc_progress < 10) end;
 	cutin "dalle01",2;
-	if(!'party_leader){	
+	if(!'party_leader){
 		mes "[ ^0000FFCharleston 1^000000 ]";
 		mes "This Core in the center powers the entire factory.";
 		close;
@@ -3647,7 +3647,7 @@ OnTouch:
 	close3;
 }
 1@mcd,1,1,0	script	final_battle_trigger	HIDDEN_WARP_NPC,{
-	OnStart:	
+	OnStart:
 		.@dalle$ = instance_npcname("Charleston 1#core_2");
 		.@nale$ = instance_npcname("Charleston 2#core_2");
 		.@three$ = instance_npcname("Charleston 3#core_1");
@@ -3667,7 +3667,7 @@ OnTouch:
 		npctalk "Charleston 2 : .....!",.@nale$;
 		movenpc .@dalle$,133,148;
 		sleep 3000;
-		npctalk "Charleston 1 : Hey, did you have to push me?",.@dalle$;	
+		npctalk "Charleston 1 : Hey, did you have to push me?",.@dalle$;
 		sleep 3000;
 		npctalk "Charleston 2 : Push the lever to the center and flip the power switch.",.@nale$;
 		sleep 2000;
@@ -3701,7 +3701,7 @@ OnTouch:
 		instance_hide("Charleston 3#core_1",5);
 		donpcevent instance_npcname("charleston_3_boss") + "::OnSummon";
 		end;
-		
+
 	OnEnding:
 		.@dalle$ = instance_npcname("Charleston 1#core_2");
 		.@nale$ = instance_npcname("Charleston 2#core_2");
@@ -3767,15 +3767,15 @@ OnTouch:
 		sleep 3000;
 		instance_hide("Charleston 2#core_2",5);
 		instance_hide("Charleston 2#core_3",4);
-		end;	
+		end;
 }
 1@mcd,1,1,0	script	charleston_3_boss	HIDDEN_WARP_NPC,{
 	OnSummon:
 		.@dead$ = instance_npcname(strnpcinfo(0))+"::OnBossDead";
 		'BossID = monster('cc_map$,130,153,"Charleston 3",3124,1,.@dead$);
 		end;
-		
-		
+
+
 	OnBossDead:
 		sleep 3000;
 		donpcevent instance_npcname("final_battle_trigger")+"::OnEnding";
@@ -3862,7 +3862,7 @@ OnTouch:
 		mes "Charleston 2 is standing still, her system is in Sleep mode. For a moment, her eyes gleamed with unshed tears.";
 	}
 	close3;
-	
+
 OnTouch:
 	.@ve$ = instance_npcname("Dr. Ve#center_lab_3");
 	if('cc_progress > 10)
@@ -3915,7 +3915,7 @@ OnTouch:
 	movenpc instance_npcname("Dr. Ve#center_lab_3"),116,213,3;
 	end;
 }
-	
+
 //= Monster Spawn
 1@mcd,127,264,0	script	charleston_mob_1	HIDDEN_WARP_NPC,4,4,{ OnTouch: charleston_mob(1,strnpcinfo(0)); }
 1@mcd,67,234,0	script	charleston_mob_2	HIDDEN_WARP_NPC,4,4,{ OnTouch: donpcevent instance_npcname("charleston_gate_keeper")+"::OnSummonGate_1"; charleston_mob(2,strnpcinfo(0)); }
@@ -3934,7 +3934,7 @@ OnTouch:
 		monster .@cc_map$,0,0,"--ja--",3128,20,.@spawn$;
 		monster .@cc_map$,0,0,"--ja--",3125,60,.@spawn$;
 		end;
-		
+
 	OnSpawnDead:
 		if('cc_progress >= 7) end;
 		.@cc_map$ = instance_mapname("1@mcd");
@@ -3942,7 +3942,7 @@ OnTouch:
 			case 0:
 				monster .@cc_map$,0,0,"--ja--",3128,1,.@spawn$;
 				break;
-				
+
 			case 1:
 				monster .@cc_map$,0,0,"--ja--",3125,1,.@spawn$;
 				break;
@@ -3953,10 +3953,10 @@ OnTouch:
 	OnInstanceInit:
 		.@cc_map$ = instance_mapname("1@mcd");
 		.@spawn$ = instance_npcname(strnpcinfo(0))+"::OnSpawnDead";
-		monster .@cc_map$,0,0,"--ja--",3128,20,.@spawn$;	
+		monster .@cc_map$,0,0,"--ja--",3128,20,.@spawn$;
 		monster .@cc_map$,0,0,"--ja--",3125,10,.@spawn$;
 		end;
-		
+
 	OnSpawnDead:
 		if('cc_progress >= 7) end;
 		.@cc_map$ = instance_mapname("1@mcd");
@@ -3964,7 +3964,7 @@ OnTouch:
 			case 0:
 				monster .@cc_map$,0,0,"--ja--",3128,1,.@spawn$;
 				break;
-				
+
 			case 1:
 				monster .@cc_map$,0,0,"--ja--",3125,1,.@spawn$;
 				break;
@@ -3974,7 +3974,7 @@ OnTouch:
 1@mcd,1,1,0	script	charleston_gate_keeper	HIDDEN_WARP_NPC,{
 	OnSummonGate_1: monster 'cc_map$,23,275,"Gate Keeper",3127,1,instance_npcname(strnpcinfo(0))+"::OnGate_1"; end;
 	OnSummonGate_2: monster 'cc_map$,33,59,"Gate Keeper",3127,1,instance_npcname(strnpcinfo(0))+"::OnGate_2"; end;
-	OnSummonGate_3: monster 'cc_map$,239,29,"Gate Keeper",3127,1,instance_npcname(strnpcinfo(0))+"::OnGate_3"; end;	
+	OnSummonGate_3: monster 'cc_map$,239,29,"Gate Keeper",3127,1,instance_npcname(strnpcinfo(0))+"::OnGate_3"; end;
 	OnSummonGate_4: monster 'cc_map$,281,184,"Gate Keeper",3127,1,instance_npcname(strnpcinfo(0))+"::OnGate_4"; end;
 	OnGate_1: mapannounce 'cc_map$, "Charleston 1 : Gate 1 has been disarmed. Please move southwest for the next gate.",bc_map,"0xFFFF00"; instance_hide("charleston_warp#cc_warp_1",4); end;
 	OnGate_2: mapannounce 'cc_map$, "Charleston 1 : Gate 2 has been disarmed. Please move southeast for the next gate.",bc_map,"0xFFFF00"; instance_hide("charleston_warp#cc_warp_2",4); end;
@@ -3993,20 +3993,20 @@ OnTouch:
 		monster .@cc_map$,130,124,"--ja--",3126,1,instance_npcname(strnpcinfo(0))+"::OnLockStep";
 		monster .@cc_map$,54,108,"--ja--",3126,1,instance_npcname(strnpcinfo(0))+"::OnLockStep";
 		end;
-		
+
 	OnLockStep:
 		'cc_security++;
 		if('cc_security == 3){
 			donpcevent instance_npcname("charleston_system_security") + "::OnLockDone";
 		}
 		end;
-	
+
 	OnLockDone:
 		'lock_hunt = 0;
 		initnpctimer;
 		killmonster 'cc_map$,instance_npcname(strnpcinfo(0))+"::OnLockStep";
 		end;
-		
+
 	OnTimer1000:
 		'cc_progress = 4;
 		mapannounce 'cc_map$, "Charleston 1 : *Mic*, Mic test.",bc_map,"0xFFFF00";
@@ -4025,7 +4025,7 @@ OnTouch_:
 	mes "- You turned on the generator. The sound of turning wheels can be heard. -";
 	'cc_power++;
 	close2;
-	if(.@x == 126){.@z = 9; .@gen$ = "3"; } else if(.@x == 172){.@z = 8; .@gen$ = "2"; } else if(.@x == 86){.@z = 7; .@gen$ = "1";}	
+	if(.@x == 126){.@z = 9; .@gen$ = "3"; } else if(.@x == 172){.@z = 8; .@gen$ = "2"; } else if(.@x == 86){.@z = 7; .@gen$ = "1";}
 	viewpoint 2,.@x,.@y,.@z,0x00FF00;
 	setd("'" + "cc_gen_" + .@gen$, 0);
 	if('cc_power == 3){
@@ -4073,15 +4073,15 @@ OnTouch_:
 	if('cc_gen_2 == 1){
 		viewpoint 1,172,198,8,0x00FF00;
 	}
-	if('cc_gen_3 == 1){			
+	if('cc_gen_3 == 1){
 		viewpoint 1,126,84,9,0x00FF00;
 	}
 	end;
 }
 1@mcd,58,72,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_2	WARPNPC,1,2
 1@mcd,104,50,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_3	WARPNPC,1,2
-1@mcd,218,211,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_4	WARPNPC,1,2	
-1@mcd,211,195,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_5	WARPNPC,1,2	
+1@mcd,218,211,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_4	WARPNPC,1,2
+1@mcd,211,195,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_5	WARPNPC,1,2
 1@mcd,141,199,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_6	WARPNPC,1,2
 1@mcd,142,203,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_7	WARPNPC,1,2
 1@mcd,130,127,0	duplicate(charleston_warp#cc_warp_1)	charleston_warp#cc_warp_8	WARPNPC,1,2
@@ -4093,13 +4093,13 @@ OnTouch_:
 	switch(.@step_hunt){
 		case -1:
 			break;
-			
+
 		case 0:
 		case 1:
 			mes "[ ^0000FFMain Computer^000000 ]";
 			mes "In order to reduce the Main Computer load, you need to eliminate the outage control ^0000FFcontrol device^000000 or more";
 			end;
-			
+
 		case 2:
 			mes "[ ^0000FFMain Computer^000000 ]";
 			mes "The control device has been reduced and attempts to regain control.";
@@ -4125,13 +4125,13 @@ OnTouch_:
 			mes "Requires ^ff000050 Steps^000000 to be disposed.";
 			setquest 13187;
 			end;
-		
+
 		case 0:
 		case 1:
 			mes "[ ^0000FFMain Computer^000000 ]";
 			mes "Continuous processing control devices.";
 			close;
-			
+
 		case 2:
 			mes "[ ^0000FFMain Computer^000000 ]";
 			mes "Check the No. 2 machine, found that some of the data is damaged, try to lift the connection failed.";
@@ -4148,7 +4148,7 @@ OnTouch_:
 			erasequest 13188;
 			setquest 13187;
 			end;
-	}		
+	}
 }
 
 1@mcd,77,167,5	script	Shalosh#exit	4_F_SHALOSH,{
@@ -4161,7 +4161,7 @@ OnTouch_:
 			mes "[ ^0000FFShalosh^000000 ]";
 			mes "Ferre came with me, but I haven't seen him. No, thanks; I know he'll come back to me.";
 			close3;
-			
+
 		case 2:
 			mes "[ ^0000FFShalosh^000000 ]";
 			mes "I only invited NewOZ. Well, I guess I shouldn't have opened the door for the robot who needed closure.";
@@ -4169,7 +4169,7 @@ OnTouch_:
 			mes "[ ^0000FFShalosh^000000 ]";
 			mes "You can try, but you can't change anything. How futile it is!";
 			close3;
-			
+
 		case 3:
 			if('cc_progress > 10){
 				mes "[ ^0000FFShalosh^000000 ]";
@@ -4185,7 +4185,7 @@ OnTouch_:
 			mes "The voice of this place has not disappeared.";
 			mes "What happened?";
 			close3;
-	}			
+	}
 }
 1@mcd,176,179,5	script	NewOz#extra	4_M_NEWOZ,{
 	cutin "nines01.bmp",0;
