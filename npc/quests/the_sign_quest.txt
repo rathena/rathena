@@ -60,7 +60,7 @@ OnInit:
 	
 	// Set the time zone of the server.
 	// - Not official but seemed like a nice way to handle it.
-	set $timezonestring$,"^FF0000GMT^000000";
+	set $timezonestring$,"^FF0000AEDT^000000";
 	end;
 }
 
