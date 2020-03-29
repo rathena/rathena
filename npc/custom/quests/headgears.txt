@@ -58,9 +58,9 @@
 //============================================================
 alberta,176,211,4	script	Musketeer Lucan#Hat5469	635,{
 	.@npc_name$ = "Lucan";
-	.@item_name$ = "Musketeer Hat";
+	.@item_id = 5469;
 	mes "["+ .@npc_name$ +"]";
-	mes "I can create ^FF0000"+ .@item_name$ +"^000000 for you with:";
+	mes "I can create <ITEM>"+ getitemname(.@item_id) +"<INFO>"+ .@item_id +"</INFO></ITEM> for you with:";
 	mes "^3355FF1 Hat [1]^000000";
 	mes "^3355FF50 Golden Feather^000000";
 	mes "^3355FF100 Soft Feather^000000";
@@ -69,7 +69,7 @@ alberta,176,211,4	script	Musketeer Lucan#Hat5469	635,{
 	mes "^3355FF15 Soft Silk^000000";
 	mes "^3355FF1 Rapier [3]^000000";
 	next;
-	switch(select("Construct ^FF0000"+ .@item_name$ +"^000000 :Quit")) {
+	switch(select("Construct ^FF0000"+ getitemname(.@item_id) +"^000000 :Quit")) {
 		case 1:
 		if (countitem(2221) >= 1 && countitem(6394) >= 50 && countitem(7063) >= 100
 		&& countitem(6393) >= 30 && countitem(975) >= 2 && countitem(7166) >= 15
@@ -84,7 +84,7 @@ alberta,176,211,4	script	Musketeer Lucan#Hat5469	635,{
 			delitem 975,2;		//Scarlet Dyestuff
 			delitem 7166,15;	//Soft Silk
 			delitem 1111,1;		//Rapier [3]
-			getitem 5469,1;
+			getitem .@item_id,1;
 			mes "["+ .@npc_name$ +"]";
 			mes "If you need another, come find me.";
 			close;
@@ -107,15 +107,15 @@ alberta,176,211,4	script	Musketeer Lucan#Hat5469	635,{
 //============================================================
 yuno_fild08,261,157,4	script	Peko#Hat5286	428,{
 	.@npc_name$ = "Peko";
-	.@item_name$ = "Pecopeco Hairband";
+	.@item_id = 5286;
 	mes "["+ .@npc_name$ +"]";
-	mes "I can create ^FF0000"+ .@item_name$ +"^000000 for you with:";
+	mes "I can create <ITEM>"+ getitemname(.@item_id) +"<INFO>"+ .@item_id +"</INFO></ITEM> for you with:";
 	mes "^3355FF1000 PecoPeco Feather^000000";
 	mes "^3355FF1 PecoPeco Egg Card^000000";
 	mes "^3355FF1 PecoPeco Card^000000";
 	mes "^3355FF500,000 Zeny^000000";
 	next;
-	switch(select("Construct ^FF0000"+ .@item_name$ +"^000000 :Quit")) {
+	switch(select("Construct ^FF0000"+ getitemname(.@item_id) +"^000000 :Quit")) {
 		case 1:
 		if (countitem(7101) >= 1000 && countitem(4007) >= 1 && countitem(4031) >= 1
 		&& Zeny >= 500000) {
@@ -126,7 +126,7 @@ yuno_fild08,261,157,4	script	Peko#Hat5286	428,{
 			delitem 4007,1;		//PecoPeco Egg Card
 			delitem 4031,1;		//PecoPeco Card
 			Zeny -= 500000;
-			getitem 5286,1;
+			getitem .@item_id,1;
 			mes "["+ .@npc_name$ +"]";
 			mes "If you need another, come find me.";
 			close;
@@ -149,9 +149,9 @@ yuno_fild08,261,157,4	script	Peko#Hat5286	428,{
 //============================================================
 c_tower1,257,37,6	script	Rideword#Hat5208	1195,{
 	.@npc_name$ = "Rideword";
-	.@item_name$ = "Rideword Hat";
+	.@item_id = 5208;
 	mes "["+ .@npc_name$ +"]";
-	mes "I can create ^FF0000"+ .@item_name$ +"^000000 for you with:";
+	mes "I can create <ITEM>"+ getitemname(.@item_id) +"<INFO>"+ .@item_id +"</INFO></ITEM> for you with:";
 	mes "^3355FF100 Worn Out Page^000000";
 	mes "^3355FF2 Book of Billows^000000";
 	mes "^3355FF2 Book of Mother Earth^000000";
@@ -159,7 +159,7 @@ c_tower1,257,37,6	script	Rideword#Hat5208	1195,{
 	mes "^3355FF1 Book of Gust Wind^000000";
 	mes "^3355FF200 Bookclip in Memory^000000";
 	next;
-	switch(select("Construct ^FF0000"+ .@item_name$ +"^000000 :Quit")) {
+	switch(select("Construct ^FF0000"+ getitemname(.@item_id) +"^000000 :Quit")) {
 		case 1:
 		if (countitem(1097) >= 100 && countitem(1553) >= 2 && countitem(1554) >= 2
 		&& countitem(1555) >= 1 && countitem(1556) >= 1 && countitem(7015) >= 200) {
@@ -172,7 +172,7 @@ c_tower1,257,37,6	script	Rideword#Hat5208	1195,{
 			delitem 1555,1;		//Book of Blazing Sun
 			delitem 1556,1;		//Book of Gust Wind
 			delitem 7015,200;	//Bookclip in Memory
-			getitem 5208,1;
+			getitem .@item_id,1;
 			mes "["+ .@npc_name$ +"]";
 			mes "If you need another, come find me.";
 			close;
@@ -195,16 +195,16 @@ c_tower1,257,37,6	script	Rideword#Hat5208	1195,{
 //============================================================
 veins,108,63,6	script	Tres#Hat5360	497,{
 	.@npc_name$ = "Tres";
-	.@item_name$ = "Wickebine's Black Cat Ears";
+	.@item_id = 5360;
 	mes "["+ .@npc_name$ +"]";
-	mes "I can create ^FF0000"+ .@item_name$ +"^000000 for you with:";
+	mes "I can create <ITEM>"+ getitemname(.@item_id) +"<INFO>"+ .@item_id +"</INFO></ITEM> for you with:";
 	mes "^3355FF500 Black Cat Doll^000000";
 	mes "^3355FF100 Handcuffs^000000";
 	mes "^3355FF1 Fortune Sword^000000";
 	mes "^3355FF1 Black Cat Ears^000000";
 	mes "^3355FF2,000,000 Zeny^000000";
 	next;
-	switch(select("Construct ^FF0000"+ .@item_name$ +"^000000 :Quit")) {
+	switch(select("Construct ^FF0000"+ getitemname(.@item_id) +"^000000 :Quit")) {
 		case 1:
 		if (countitem(7206) >= 500 && countitem(7345) >= 100 && countitem(1223) >= 1
 		&& countitem(5057) >= 1 && Zeny >= 2000000) {
@@ -216,7 +216,7 @@ veins,108,63,6	script	Tres#Hat5360	497,{
 			delitem 1223,1;		//Fortune Sword
 			delitem 5057,1;		//Black Cat Ears
 			Zeny -= 2000000;
-			getitem 5360,1;
+			getitem .@item_id,1;
 			mes "["+ .@npc_name$ +"]";
 			mes "If you need another, come find me.";
 			close;
@@ -239,16 +239,16 @@ veins,108,63,6	script	Tres#Hat5360	497,{
 //============================================================
 lighthalzen,96,125,6	script	Fashionable Lady#Hat5288	895,{
 	.@npc_name$ = "Fashionable Lady";
-	.@item_name$ = "Red Glasses";
+	.@item_id = 5288;
 	mes "["+ .@npc_name$ +"]";
-	mes "I can create ^FF0000"+ .@item_name$ +"^000000 for you with:";
+	mes "I can create <ITEM>"+ getitemname(.@item_id) +"<INFO>"+ .@item_id +"</INFO></ITEM> for you with:";
 	mes "^3355FF120 Red Frame^000000";
 	mes "^3355FF5 Forbidden Red Candle^000000";
 	mes "^3355FF1 Angled Glasses^000000";
 	mes "^3355FF1 Binoculars^000000";
 	mes "^3355FF850,000 Zeny^000000";
 	next;
-	switch(select("Construct ^FF0000"+ .@item_name$ +"^000000 :Quit")) {
+	switch(select("Construct ^FF0000"+ getitemname(.@item_id) +"^000000 :Quit")) {
 		case 1:
 		if (countitem(734) >= 120 && countitem(660) >= 5 && countitem(2276) >= 1
 		&& countitem(2296) >= 1 && Zeny >= 850000) {
@@ -260,7 +260,7 @@ lighthalzen,96,125,6	script	Fashionable Lady#Hat5288	895,{
 			delitem 2276,1;		//Angled Glasses
 			delitem 2296,1;		//Binoculars
 			Zeny -= 850000;
-			getitem 5288,1;
+			getitem .@item_id,1;
 			mes "["+ .@npc_name$ +"]";
 			mes "If you need another, come find me.";
 			close;
@@ -283,14 +283,14 @@ lighthalzen,96,125,6	script	Fashionable Lady#Hat5288	895,{
 //============================================================
 // amatsu,259,191,4	script	Asami#Hat18677	757,{
 // 	.@npc_name$ = "Asami";
-// 	.@item_name$ = "Cherry Twig in Mouth";
+// 	.@item_id = 18677;
 // 	mes "["+ .@npc_name$ +"]";
-// 	mes "I can create ^FF0000"+ .@item_name$ +"^000000 for you with:";
+// 	mes "I can create <ITEM>"+ getitemname(.@item_id) +"<INFO>"+ .@item_id +"</INFO></ITEM> for you with:";
 // 	mes "^3355FF200 Thin Trunk^000000";
 // 	mes "^3355FF30 Beautiful Flower^000000";
 // 	mes "^3355FF50 White Herb^000000";
 // 	next;
-// 	switch(select("Construct ^FF0000"+ .@item_name$ +"^000000 :Quit")) {
+// 	switch(select("Construct ^FF0000"+ getitemname(.@item_id) +"^000000 :Quit")) {
 // 		case 1:
 // 		if (countitem(7186) >= 200 && countitem(6511) >= 30 && countitem(509) >= 50) {
 // 			mes "["+ .@npc_name$ +"]";
@@ -299,7 +299,7 @@ lighthalzen,96,125,6	script	Fashionable Lady#Hat5288	895,{
 // 			delitem 7186,200;	//Thin Trunk
 // 			delitem 6511,30;	//Beautiful Flower
 // 			delitem 509,50;		//White Herb
-// 			getitem 18677,1;
+// 			getitem .@item_id,1;
 // 			mes "["+ .@npc_name$ +"]";
 // 			mes "If you need another, come find me.";
 // 			close;
@@ -322,14 +322,14 @@ lighthalzen,96,125,6	script	Fashionable Lady#Hat5288	895,{
 //============================================================
 einbech,143,86,6	script	Filthy Baker#Hat5594	779,{
 	.@npc_name$ = "Filthy Baker";
-	.@item_name$ = "Donut In Mouth";
+	.@item_id = 5594;
 	mes "["+ .@npc_name$ +"]";
-	mes "I can create ^FF0000"+ .@item_name$ +"^000000 for you with:";
+	mes "I can create <ITEM>"+ getitemname(.@item_id) +"<INFO>"+ .@item_id +"</INFO></ITEM> for you with:";
 	mes "^3355FF100 Flexible Tube^000000";
 	mes "^3355FF100 Mud Lump^000000";
 	mes "^3355FF30 Sticky Mucus^000000";
 	next;
-	switch(select("Construct ^FF0000"+ .@item_name$ +"^000000 :Quit")) {
+	switch(select("Construct ^FF0000"+ getitemname(.@item_id) +"^000000 :Quit")) {
 		case 1:
 		if (countitem(7325) >= 100 && countitem(7004) >= 150 && countitem(938) >= 200) {
 			mes "["+ .@npc_name$ +"]";
@@ -338,7 +338,7 @@ einbech,143,86,6	script	Filthy Baker#Hat5594	779,{
 			delitem 7325,100;	//Flexible Tube
 			delitem 7004,150;	//Mud Lump
 			delitem 938,200;	//Sticky Mucus
-			getitem 5594,1;
+			getitem .@item_id,1;
 			mes "["+ .@npc_name$ +"]";
 			mes "If you need another, come find me.";
 			close;
@@ -361,15 +361,15 @@ einbech,143,86,6	script	Filthy Baker#Hat5594	779,{
 //============================================================
 alberta,212,29,5	script	Seafood Aficionado#Hat5403	547,{
 	.@npc_name$ = "Seafood Aficionado";
-	.@item_name$ = "Fish in Mouth";
+	.@item_id = 5403;
 	mes "["+ .@npc_name$ +"]";
-	mes "I can create ^FF0000"+ .@item_name$ +"^000000 for you with:";
+	mes "I can create <ITEM>"+ getitemname(.@item_id) +"<INFO>"+ .@item_id +"</INFO></ITEM> for you with:";
 	mes "^3355FF10 Rotten Fish^000000";
 	mes "^3355FF300 Fish Tail^000000";
 	mes "^3355FF200 Ancient Tooth^000000";
 	mes "^3355FF5 Cobaltblue Dyestuff^000000";
 	next;
-	switch(select("Construct ^FF0000"+ .@item_name$ +"^000000 :Quit")) {
+	switch(select("Construct ^FF0000"+ getitemname(.@item_id) +"^000000 :Quit")) {
 		case 1:
 		if (countitem(624) >= 10 && countitem(1023) >= 300 && countitem(1053) >= 200
 		&& countitem(978) >= 5) {
@@ -380,7 +380,7 @@ alberta,212,29,5	script	Seafood Aficionado#Hat5403	547,{
 			delitem 1023,300;	//Fish Tail
 			delitem 1053,200;	//Ancient Tooth
 			delitem 978,5;		//Cobaltblue Dyestuff
-			getitem 5403,1;
+			getitem .@item_id,1;
 			mes "["+ .@npc_name$ +"]";
 			mes "If you need another, come find me.";
 			close;
@@ -403,9 +403,9 @@ alberta,212,29,5	script	Seafood Aficionado#Hat5403	547,{
 //============================================================
 gef_tower,70,172,4	script	Gangster Mage#Hat5361	679,{
 	.@npc_name$ = "Gangster Mage";
-	.@item_name$ = "Gangster Scarf";
+	.@item_id = 5361;
 	mes "["+ .@npc_name$ +"]";
-	mes "I can create ^FF0000"+ .@item_name$ +"^000000 for you with:";
+	mes "I can create <ITEM>"+ getitemname(.@item_id) +"<INFO>"+ .@item_id +"</INFO></ITEM> for you with:";
 	mes "^3355FF1 Gangster Mask^000000";
 	mes "^3355FF1 Scarlet Dyestuff^000000";
 	mes "^3355FF1 Sucsamad^000000";
@@ -413,7 +413,7 @@ gef_tower,70,172,4	script	Gangster Mage#Hat5361	679,{
 	mes "^3355FF50 Burning Heart^000000";
 	mes "^3355FF30,000 Zeny^000000";
 	next;
-	switch(select("Construct ^FF0000"+ .@item_name$ +"^000000 :Quit")) {
+	switch(select("Construct ^FF0000"+ getitemname(.@item_id) +"^000000 :Quit")) {
 		case 1:
 		if (countitem(2265) >= 1 && countitem(975) >= 1 && countitem(1236) >= 1
 		&& countitem(719) >= 1 && countitem(7097) >= 50 && Zeny >= 30000) {
@@ -426,7 +426,7 @@ gef_tower,70,172,4	script	Gangster Mage#Hat5361	679,{
 			delitem 719,1;	//Amethyst
 			delitem 7097,50;//Burning Heart
 			Zeny -= 30000;
-			getitem 5361,1;
+			getitem .@item_id,1;
 			mes "["+ .@npc_name$ +"]";
 			mes "If you need another, come find me.";
 			close;
@@ -449,7 +449,7 @@ gef_tower,70,172,4	script	Gangster Mage#Hat5361	679,{
 //============================================================
 verus04,62,227,4	script	Euphoric Inventor#customhat9	851,{
 	.@npc_name$ = "Euphoric Inventor";
-	.@item_name$ = "New Wave Sunglasses";
+	.@item_id = 18813;
 	if (!isbegin_quest(13185) || !isbegin_quest(11379) || !isbegin_quest(12347)) {
 		mes "["+ .@npc_name$ +"]";
 		mes "Come find me once you have";
@@ -481,7 +481,7 @@ verus04,62,227,4	script	Euphoric Inventor#customhat9	851,{
 	mes "^3355FF200 Steel^000000";
 	mes "^3355FF1,000,000 Zeny^000000";
 	next;
-	switch(select("Construct ^FF0000"+ .@item_name$ +"^000000 :Quit")) {
+	switch(select("Construct ^FF0000"+ getitemname(.@item_id) +"^000000 :Quit")) {
 		case 1:
 		if (countitem(23277) >= 1 && countitem(20733) >= 1 && countitem(6216) >= 50
 		&& countitem(2139) >= 1 && countitem(5288) >= 1 && countitem(1971) >= 2
@@ -505,7 +505,7 @@ verus04,62,227,4	script	Euphoric Inventor#customhat9	851,{
 			delitem 969,5;		//Gold
 			delitem 999,200;	//Steel
 			Zeny -= 1000000;
-			getitem 18813,1;
+			getitem .@item_id,1;
 			mes "["+ .@npc_name$ +"]";
 			mes "If you need another, come find me.";
 			close;
