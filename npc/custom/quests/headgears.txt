@@ -465,7 +465,7 @@ verus04,62,227,4	script	Euphoric Inventor#customhat9	851,{
 		next;
 	}
 	mes "["+ .@npc_name$ +"]";
-	mes "I can create ^0000FF"+ .@item_name$ +"^000000 for you with:";
+	mes "I can create <ITEM>"+ getitemname(.@item_id) +"<INFO>"+ .@item_id +"</INFO></ITEM> for you with:";
 	mes "^3355FF1 Emergency Mado Gear^000000";
 	mes "^3355FF1 Reinforced Parts - Engine^000000";
 	mes "^3355FF50 Oil Bottle^000000";
