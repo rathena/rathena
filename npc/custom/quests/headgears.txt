@@ -487,7 +487,7 @@ verus04,62,227,4	script	Euphoric Inventor#customhat9	851,{
 		&& countitem(2139) >= 1 && countitem(5288) >= 1 && countitem(1971) >= 2
 		&& countitem(6752) >= 3 && countitem(7353) >= 5 && countitem(6750) >= 10
 		&& countitem(7319) >= 80 && countitem(7094) >= 50 && countitem(969) >= 5
-		&& countitem(999) >= 200) {
+		&& countitem(999) >= 200 && Zeny >= 1000000) {
 			mes "["+ .@npc_name$ +"]";
 			mes "Here you are, it's all yours.";
 			next;
