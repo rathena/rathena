@@ -1221,7 +1221,7 @@ OnTouch:
 1@mcd,172,198,5	script	Backup Generator#power_01	CLEAR_NPC,2,2,{
 	end;
 OnTouch_:
-	getmapxy .@map$,.@x,.@y,UNITTYPE_NPC,strnpcinfo(0);
+	getmapxy .@map$,.@x,.@y,BL_NPC,strnpcinfo(0);
 	mes "- You turned on the generator. The sound of turning wheels can be heard. -";
 	'cc_power++;
 	close2;
