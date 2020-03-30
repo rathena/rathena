@@ -70,7 +70,7 @@ verus04,75,114,5	script	Charleston#charleston2	4_F_CHARLESTON02,{
 		next;
 		mes "[Charleston]";
 		mes "Even when our city is in desolation, a promising future awaits you.";
-		getexp 1800000,600000;
+		getexp 1800000,1000000;
 		setquest 13185;
 		erasequest 13184;
 		erasequest 13186;
