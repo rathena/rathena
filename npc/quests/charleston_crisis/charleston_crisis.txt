@@ -158,7 +158,7 @@ verus04,81,113,1	script	Teleport Machine#machine	PORTAL,{
 
 					mes "^ff0000Portal opened!^000000";
 				case 2:
-					getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
+					getmapxy(.@map$, .@x, .@y, BL_PC);
 					save .@map$, .@x, .@y;
 					//RATHENA
 					switch(instance_enter(.@md_name$))
@@ -228,7 +228,7 @@ OnTouch:
 			mes "A number of robots have appeared in front of us, we are busy helping you eliminate them.";
 			npctalk "A number of robots have appeared in front of us, we are busy helping you eliminate them.";
 			cutin "dalle01.bmp",2;
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			next;
 			mes "[Charleston]";
 			mes "Apparently something or someone has been controlling to the maximum creation of this factory of robots, that one day in the past was the one that gave life to Juperos.";
@@ -237,12 +237,12 @@ OnTouch:
 			mes "[Charleston]";
 			mes "It is said that the name of this maximum creation was Charleston.";
 			npctalk "It is said that the name of this maximum creation was Charleston.";
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			next;
 			mes "[Charleston]";
 			mes "Please help us know what happens to Charleston.";
 			npctalk "Please help us know what happens to Charleston.";
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			setd "."+instance_id(),1;
 			close2;
 			donpcevent instance_npcname("Charleston#0_00y", instance_id()) + "::OnAnnounce";
@@ -383,7 +383,7 @@ OnChat1:
 			npctalk "I will indicate in your map the coordinates where these robots are to destroy them.";
 			next;
 			setd "."+instance_id(),2;
-			emotion e_what;
+			emotion ET_QUESTION;
 			donpcevent instance_npcname("#systemsecurity", instance_id()) + "::OnEnable";
 			viewpoint 1,84,226,0,0x00FF00;
 			viewpoint 1,126,84,1,0x00FF00;
@@ -416,7 +416,7 @@ OnChat1:
 			mes "[Charleston]";
 			mes "Okay, you've already destroyed the security system, now we've discovered that there's a serious problem.";
 			npctalk "Okay, you've already destroyed the security system, now we've discovered that there's a serious problem.";
-			emotion e_dum;
+			emotion ET_HUM;
 			next;
 			cutin "dalle03.bmp",2;
 			mes "[Charleston]";
@@ -471,7 +471,7 @@ OnChat1:
 			mes "[Charleston]";
 			mes "After unlocking it we will have direct access to where Charleston is located.";
 			npctalk "After unlocking it we will have direct access to where Charleston is located.";
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			next;
 			mes "[Charleston]";
 			mes "The big robot...";
@@ -486,7 +486,7 @@ OnChat1:
 			mes "[Charleston]";
 			mes "I know what you feel, but still we must know what is happening with the great creation of Father";
 			npctalk "I know what you feel, but still we must know what is happening with the great creation of Father";
-			emotion e_sob;
+			emotion ET_CRY;
 			next;
 			cutin "nale03.bmp",0;
 			mes "[Charleston No.2]";
@@ -547,7 +547,7 @@ OnChat1:
 			mes "[Charleston]";
 			mes "Already released the security system there are still several things that we have to take care of.";
 			npctalk "Already released the security system there are still several things that we have to take care of.";
-			emotion e_dum;
+			emotion ET_HUM;
 			next;
 			mes "[Charleston]";
 			mes "If we fail to stop this crisis, the laboratory will collapse at any time.";
@@ -600,7 +600,7 @@ OnChat5:
 	end;
 OnChat8:
 	setd "."+instance_id(),1;
-	emotion e_what;
+	emotion ET_QUESTION;
 	npctalk "Okay, please come with me to tell you where the robots in the security system are located.";
 	end;
 OnCompleteSetp1:
@@ -616,7 +616,7 @@ OnCompleteSetp2:
 		cutin "nale04.bmp",0;
 		mes "[Charleston No.2]";
 		mes "All this confuses me a lot.";
-		emotion e_spin;
+		emotion ET_CONFUSE;
 		next;
 		mes "I do not know why we have to go through all this, if only I had the necessary power.";
 		close2;
@@ -634,7 +634,7 @@ OnEnable:
 	end;
 OnChat2:
 	npctalk "...but... Charleston is...";
-	emotion e_dots;
+	emotion ET_THINK;
 	end;
 OnChat3:
 	npctalk "Okay, I'll do my best to approach that dreadful thing.";
@@ -647,7 +647,7 @@ OnChat3:
 		mes "[Charleston No.2]";
 		mes "The gears down here ... they seem to have something stuck.";
 		npctalk "The gears down here ... they seem to have something stuck.";
-		emotion e_ag;
+		emotion ET_ANGER;
 		next;
 		cutin "dalle01.bmp",2;
 		mes "[Charleston]";
