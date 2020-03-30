@@ -1835,8 +1835,8 @@ malaya,231,204,4	script	Warpra#47	113,{ callfunc "QWS_Town_Warpra",32,"Malaya To
 harboro1,291,203,6	script	Warpra#48	113,{ callfunc "QWS_Town_Warpra",33,"Rockridge Town"; close; }
 malangdo,128,116,6	script	Warpra#49	113,{ callfunc "QWS_Town_Warpra",34,"Malangdo Town"; close; }
 mid_camp,183,257,4	script	Warpra#50	113,{ callfunc "QWS_Town_Warpra",35,"Midgard Camp"; close; }
-verus04,123,210,5	script	Warpra#51	113,{ callfunc "QWS_Town_Warpra",36,"Verus Town"; close; }
 prontera,149,178,6	duplicate(Warpra#0)	Warpra#51	113
+verus04,123,210,5	script	Warpra#52	113,{ callfunc "QWS_Town_Warpra",36,"Verus Town"; close; }
 
 abyss_02,274,266,1	script	Warpra Helper#0	112,{ callfunc "QWS_Dungeon_Warpra",0,"Abyss Lake"; close; }
 ama_dun02,192,118,5	script	Warpra Helper#1	112,{ callfunc "QWS_Dungeon_Warpra",1,"Amatsu Dungeon"; close; }
