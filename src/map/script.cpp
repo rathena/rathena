@@ -10415,6 +10415,10 @@ BUILDIN_FUNC(getexp)
 		job = (int) cap_value(job * bonus, 0, INT_MAX);
 
 	pc_gainexp(sd, NULL, base, job, 1);
+#ifdef RENEWAL
+	if (base && sd->hd)
+		hom_gainexp(sd->hd, base * battle_config.homunculus_exp_gain / 100); // Homunculus only receive 10% of EXP
+#endif
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -14975,8 +14979,7 @@ BUILDIN_FUNC(checkequipedcard)
 
 BUILDIN_FUNC(jump_zero)
 {
-	int sel;
-	sel=script_getnum(st,2);
+	int64 sel=script_getnum64(st,2);
 	if(!sel) {
 		int pos;
 		if( !data_islabel(script_getdata(st,3)) ){
@@ -19584,10 +19587,10 @@ BUILDIN_FUNC(changequest)
 BUILDIN_FUNC(checkquest)
 {
 	struct map_session_data *sd;
-	enum quest_check_type type = HAVEQUEST;
+	e_quest_check_type type = HAVEQUEST;
 
 	if( script_hasdata(st, 3) )
-		type = (enum quest_check_type)script_getnum(st, 3);
+		type = (e_quest_check_type)script_getnum(st, 3);
 
 	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
@@ -19603,12 +19606,11 @@ BUILDIN_FUNC(checkquest)
 BUILDIN_FUNC(isbegin_quest)
 {
 	struct map_session_data *sd;
-	int i;
 
 	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	i = quest_check(sd, script_getnum(st, 2), (enum quest_check_type) HAVEQUEST);
+	int i = quest_check(sd, script_getnum(st, 2), HAVEQUEST);
 	script_pushint(st, i + (i < 1));
 
 	return SCRIPT_CMD_SUCCESS;
@@ -24621,6 +24623,40 @@ BUILDIN_FUNC(convertpcinfo) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(cloakoffnpc)
+{
+	if (npc_enable_target(script_getstr(st, 2), script_hasdata(st, 3) ? script_getnum(st, 3) : 0, 8))
+		return SCRIPT_CMD_SUCCESS;
+
+	return SCRIPT_CMD_FAILURE;
+}
+
+BUILDIN_FUNC(cloakonnpc)
+{
+	if (npc_enable_target(script_getstr(st, 2), script_hasdata(st, 3) ? script_getnum(st, 3) : 0, 16))
+		return SCRIPT_CMD_SUCCESS;
+
+	return SCRIPT_CMD_FAILURE;
+}
+
+BUILDIN_FUNC(isnpccloaked)
+{
+	struct npc_data *nd = npc_name2id(script_getstr(st, 2));
+
+	if (!nd) {
+		ShowError("buildin_isnpccloaked: %s is a non-existing NPC.\n", script_getstr(st, 2));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	map_session_data* sd;
+
+	if (!script_charid2sd(3, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	script_pushint(st, npc_is_cloaked(nd, sd));
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -25293,6 +25329,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(achievement_condition,"i"),
 	BUILDIN_DEF(getvariableofinstance,"ri"),
 	BUILDIN_DEF(convertpcinfo,"vi"),
+	BUILDIN_DEF(cloakoffnpc, "s?"),
+	BUILDIN_DEF(cloakonnpc, "s?"),
+	BUILDIN_DEF(isnpccloaked, "s?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

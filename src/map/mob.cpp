@@ -2534,8 +2534,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	) { //Experience calculation.
 		int bonus = 100; //Bonus on top of your share (common to all attackers).
 		int pnum = 0;
+#ifndef RENEWAL
 		if (md->sc.data[SC_RICHMANKIM])
 			bonus += md->sc.data[SC_RICHMANKIM]->val2;
+#else
+		if (sd && sd->sc.data[SC_RICHMANKIM])
+			bonus += sd->sc.data[SC_RICHMANKIM]->val2;
+#endif
 		if(sd) {
 			temp = status_get_class(&md->bl);
 			if(sd->sc.data[SC_MIRACLE]) i = 2; //All mobs are Star Targets
@@ -2602,7 +2607,11 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				base_exp = (unsigned int)cap_value(exp, 1, UINT_MAX);
 			}
 
-			if (map_getmapflag(m, MF_NOJOBEXP) || !md->db->job_exp || md->dmglog[i].flag == MDLF_HOMUN) //Homun earned job-exp is always lost.
+			if (map_getmapflag(m, MF_NOJOBEXP) || !md->db->job_exp
+#ifndef RENEWAL
+				|| md->dmglog[i].flag == MDLF_HOMUN // Homun earned job-exp is always lost.
+#endif
+			)
 				job_exp = 0;
 			else {
 				double exp = apply_rate2(md->db->job_exp, per, 1);
@@ -2643,8 +2652,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					flag = 0;
 				}
 			}
-			if(base_exp && md->dmglog[i].flag == MDLF_HOMUN) //tmpsd[i] is null if it has no homunc.
+#ifdef RENEWAL
+			if (base_exp && tmpsd[i] && tmpsd[i]->hd)
+				hom_gainexp(tmpsd[i]->hd, base_exp * battle_config.homunculus_exp_gain / 100); // Homunculus only receive 10% of EXP
+#else
+			if (base_exp && md->dmglog[i].flag == MDLF_HOMUN) //tmpsd[i] is null if it has no homunc.
 				hom_gainexp(tmpsd[i]->hd, base_exp);
+#endif
 			if(flag) {
 				if(base_exp || job_exp) {
 					if( md->dmglog[i].flag != MDLF_PET || battle_config.pet_attack_exp_to_master ) {
@@ -4621,9 +4635,10 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Options")) {
-		for (const auto &optionNode : node["Options"]) {
-			std::string option = optionNode.first.as<std::string>();
-			std::string option_constant = "OPTION_" + option;
+		const YAML::Node &optionNode = node["Options"];
+
+		for (const auto &it : optionNode) {
+			std::string option = it.first.as<std::string>(), option_constant = "OPTION_" + option;
 			int64 constant;
 
 			if (!script_get_constant(option_constant.c_str(), &constant)) {
@@ -4633,7 +4648,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 			bool active;
 
-			if (!this->asBool(node, option, active))
+			if (!this->asBool(optionNode, option, active))
 				continue;
 
 #ifdef NEW_CARTS

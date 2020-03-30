@@ -64,22 +64,15 @@ iz_int04,51,30,0	duplicate(iz_int#intro_evt02)	iz_int04#intro_evt02	HIDDEN_WARP_
 
 //== Wounded Swordsman (iz_int) =================================
 iz_int,56,32,3	script	Wounded Swordsman#intro_npc01_iz_int	4_TOWER_01,5,5,{
-	@intro_npc01 = 1;
 	npctalk "Oh...", "", bc_self;
-	classchange HIDDEN_WARP_NPC, "", bc_self;// todo: classchange self remain on map
-	classchange 4_TOWER_02, "Wounded Swordsman#intro_npc02_" + strnpcinfo(4), bc_self;
+	cloakonnpc strnpcinfo(0), getcharid(0);
+	cloakoffnpc "Wounded Swordsman#intro_npc02_" + strnpcinfo(4), getcharid(0);
 	end;
 
 OnTouch:
-	if (@intro_npc01 == 0) {
-		npctalk "Urgh... please... help me...", "", bc_self;
-		sleep2 500;
-		npctalk "In order to talk with me.. click my body..", "", bc_self;
-	}
-	else {// debug
-		classchange HIDDEN_WARP_NPC, "", bc_self;
-		classchange 4_TOWER_02, "Wounded Swordsman#intro_npc02_" + strnpcinfo(4), bc_self;
-	}
+	npctalk "Urgh... please... help me...", "", bc_self;
+	sleep2 500;
+	npctalk "In order to talk with me.. click my body..", "", bc_self;
 	end;
 
 OnInit:
@@ -91,7 +84,7 @@ iz_int02,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsm
 iz_int03,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsman#intro_npc01_iz_int03	4_TOWER_01,5,5
 iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsman#intro_npc01_iz_int04	4_TOWER_01,5,5
 
-iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	HIDDEN_WARP_NPC,{
+iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	4_TOWER_02,{
 	if (isbegin_quest(21001) == 0) {
 		mes "[Wounded]";
 		mes "Wow! Thanks a lot!";
@@ -126,12 +119,13 @@ iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	HIDDEN_WARP_NPC,{
 
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(21001) && Class == Job_Novice" );
+	cloakonnpc strnpcinfo(0);
 	end;
 }
-iz_int01,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int01	HIDDEN_WARP_NPC
-iz_int02,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int02	HIDDEN_WARP_NPC
-iz_int03,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int03	HIDDEN_WARP_NPC
-iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int04	HIDDEN_WARP_NPC
+iz_int01,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int01	4_TOWER_02
+iz_int02,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int02	4_TOWER_02
+iz_int03,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int03	4_TOWER_02
+iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int04	4_TOWER_02
 
 // - Captain Carocc (Ship)
 // -----------------------------------------------------------------------------
@@ -288,7 +282,7 @@ int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
 		mes "[Lumin]";
 		mes "Yes.";
 		next;
-		classchange HIDDEN_WARP_NPC, "", bc_self;// todo: classchange self remain on map
+		cloakonnpc strnpcinfo(0), getcharid(0);
 		cutin "fly_trock.bmp",2;
 		mes "[Captain Carocc]";
 		mes "Oh boy.";
@@ -312,7 +306,7 @@ int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
 	mes ".....";
 	mes "....So?";
 	next;
-	classchange HIDDEN_WARP_NPC, "", bc_self;// todo: classchange self remain on map
+	cloakonnpc strnpcinfo(0), getcharid(0);
 	mes "- Lu just walked away with a cynical look on his face.";
 	next;
 	cutin "fly_trock.bmp",2;

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20191220
+//= 20200324
 //===== Description: =========================================
 //= Explanation of the skill_db.yml file and structure.
 //============================================================
@@ -71,7 +71,7 @@ IsSong						- Song/Dance skill.
 IsEnsemble					- Ensemble skill.
 IsTrap						- Trap skill.
 TargetSelf					- Damages/targets self.
-NoTargetSelf				- Cannot target self. If TargetType is Self_Skill, changes to Attack_Skill.
+NoTargetSelf				- Cannot target self. If TargetType is Self, changes to Attack.
 PartyOnly					- Usable on party (and enemies if offensive).
 GuildOnly					- Usable on guild (and enemies if offensive).
 NoTargetEnemy				- Disable on enemies (for non-offensive).
@@ -100,8 +100,8 @@ TargetHidden				- Target enemy with OPTION_HIDE.
 IncreaseGloomyDayDamage		- Increase SC_GLOOMYDAY_SK damage.
 IncreaseDanceWithWugDamage	- Increase SC_DANCEWITHWUG damage.
 IgnoreWugBite				- Ignore RA_WUGBITE.
-IgnoreAutoGuard			- Not blocked by SC_AUTOGUARD (Weapon_Skill only).
-IgnoreCicada				- Not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (Weapon_Skill only).
+IgnoreAutoGuard			- Not blocked by SC_AUTOGUARD (When TargetType is Weapon only).
+IgnoreCicada				- Not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (When TargetType is Weapon only).
 
 ---------------------------------------
 
@@ -128,9 +128,9 @@ Sequence Map Form
 
 Hit: Skill hit type.
 
-Normal	- Passive/No damage skill. (Default)
-Single	- Single hit.
-Repeat	- Multiple hits.
+Normal		- Passive/No damage skill. (Default)
+Single		- Single hit.
+Multi_Hit	- Multiple hits.
 
 ---------------------------------------
 

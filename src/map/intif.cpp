@@ -2041,15 +2041,15 @@ void intif_parse_questlog(int fd)
 		}
 	} else {
 		struct quest *received = (struct quest *)RFIFOP(fd,8);
-		int i, k = num_received;
+		int k = num_received;
 
 		if(sd->quest_log)
 			RECREATE(sd->quest_log, struct quest, num_received);
 		else
 			CREATE(sd->quest_log, struct quest, num_received);
 
-		for(i = 0; i < num_received; i++) {
-			if(quest_search(received[i].quest_id) == &quest_dummy) {
+		for(int i = 0; i < num_received; i++) {
+			if(!quest_search(received[i].quest_id)) {
 				ShowError("intif_parse_QuestLog: quest %d not found in DB.\n", received[i].quest_id);
 				continue;
 			}

@@ -6494,6 +6494,28 @@ while hidden then revealing.... you can wonder around =P
 This command will fully unload a NPC object and all of it's duplicates.
 
 ---------------------------------------
+ 
+*cloakonnpc "<NPC object name>"{,<character ID>};
+*cloakoffnpc "<NPC object name>"{,<character ID>};
+
+These commands will make the NPC object specified display as cloaked/uncloaked,
+even though not actually disabled.
+The player can interact with a NPC cloaked (via NPC click, monster event..)
+but the NPC trigger area is disabled.
+
+If <character ID> is given then the NPC will only display to the specified
+player until he/she leaves the map, logs out, or the npc option is changed.
+If no <character ID> is specified it will display to the area.
+
+---------------------------------------
+
+*isnpccloaked "<NPC object name>"{,<character ID>};
+
+Returns true if the NPC has been cloaked to the attached player or given
+<character ID>, false otherwise. This works in association with cloakonnpc
+when it is targetting a specific character.
+
+---------------------------------------
 
 *doevent "<NPC object name>::<event label>";
 
@@ -9390,6 +9412,9 @@ Note: 'bg_reserve' and 'bg_unbook' prevent the Battlegrounds queue from joining 
 Same as 'bg_leave' but slaps the player with a deserter status so they can't enter another queue for the time
 defined in battleground_db (10 minutes by default).
 
+With the Battleground Queue System, it will also warp the player to their previous position when they joined or
+to their save point if the map had MF_NOSAVE.
+
 ---------------------------------------
 
 *bg_warp <Battle Group>,"<map name>",<x>,<y>;
@@ -9450,6 +9475,9 @@ OnTimer1000:
 *bg_leave {<char_id>};
 
 Removes attached player from their Battle Group.
+
+With the Battleground Queue System, it will also warp the player to their previous position when they joined or
+to their save point if the map had MF_NOSAVE.
 
 ---------------------------------------
 
