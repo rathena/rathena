@@ -76,6 +76,11 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asInt32(node, "MinPlayers", min))
 			return 0;
 
+		if (min < 1) {
+			this->invalidWarning(node["MinPlayers"], "Minimum players %d cannot be less than 1, capping to 1.\n", min);
+			min = 1;
+		}
+
 		if (min * 2 > MAX_BG_MEMBERS) {
 			this->invalidWarning(node["MinPlayers"], "Minimum players %d exceeds MAX_BG_MEMBERS, capping to %d.\n", min, MAX_BG_MEMBERS / 2);
 			min = MAX_BG_MEMBERS / 2;
@@ -92,6 +97,11 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 
 		if (!this->asInt32(node, "MaxPlayers", max))
 			return 0;
+
+		if (max < 1) {
+			this->invalidWarning(node["MaxPlayers"], "Maximum players %d cannot be less than 1, capping to 1.\n", max);
+			max = 1;
+		}
 
 		if (max * 2 > MAX_BG_MEMBERS) {
 			this->invalidWarning(node["MaxPlayers"], "Maximum players %d exceeds MAX_BG_MEMBERS, capping to %d.\n", max, MAX_BG_MEMBERS / 2);
@@ -849,7 +859,7 @@ void bg_queue_join_party(const char *name, struct map_session_data *sd)
 			clif_bg_queue_apply_result(BG_APPLY_PLAYER_COUNT, name, sd);
 			return; // Too many party members online
 		}
-		
+
 		std::vector<struct map_session_data *> list;
 
 		for (const auto &it : p->party.member) {
@@ -952,19 +962,23 @@ void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vec
 			continue;
 
 		// Make sure there's enough space on one side to join as a party/guild in this queue
-		if (queue->teama_members.size() + list.size() > bg->required_players && queue->teamb_members.size() + list.size() > bg->required_players) {
+		if (queue->teama_members.size() + list.size() > bg->max_players && queue->teamb_members.size() + list.size() > bg->max_players) {
 			break;
 		}
 
 		bool r = rnd() % 2 != 0;
 		std::vector<map_session_data *>* team = r ? &queue->teamb_members : &queue->teama_members;
 
+		// If one team has lesser members try to balance
+		if (queue->teama_members.size() < queue->teamb_members.size() && r)
+			team = &queue->teama_members;
+
 		// If the designated team is full, put the player into the other team
-		if (team->size() + list.size() > bg->required_players) {
+		if (team->size() + list.size() > bg->max_players) {
 			team = r ? &queue->teama_members : &queue->teamb_members;
 		}
 
-		while (!list.empty() && team->size() < bg->required_players) {
+		while (!list.empty() && team->size() < bg->max_players) {
 			struct map_session_data *sd2 = list.back();
 
 			list.pop_back();
@@ -982,21 +996,19 @@ void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vec
 		}
 
 		// Enough players have joined
-		if (queue->teamb_members.size() >= bg->required_players && queue->teama_members.size() >= bg->required_players) {
-			if (queue->map && queue->map->isReserved) { // Battleground is already active
-				for (auto &pl_sd : *team) {
-					if (queue->map->mapid == pl_sd->mapindex)
-						continue;
+		if (queue->map && queue->map->isReserved) { // Battleground is already active
+			for (auto &pl_sd : *team) {
+				if (queue->map->mapid == pl_sd->mapindex)
+					continue;
 
-					std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, queue->id);
+				std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, queue->id);
 
-					clif_bg_queue_entry_init(pl_sd);
-					bg_team_join(queue->id, pl_sd, true);
-					pc_setpos(sd, bgteam->cemetery.map, bgteam->cemetery.x, bgteam->cemetery.y, CLR_TELEPORT);
-				}
-			} else
-				bg_queue_on_ready(name, queue);
-		}
+				clif_bg_queue_entry_init(pl_sd);
+				bg_team_join(queue->id, pl_sd, true);
+				pc_setpos(sd, bgteam->cemetery.map, bgteam->cemetery.x, bgteam->cemetery.y, CLR_TELEPORT);
+			}
+		} else if (queue->teamb_members.size() >= bg->required_players && queue->teama_members.size() >= bg->required_players)
+			bg_queue_on_ready(name, queue);
 
 		return;
 	}
