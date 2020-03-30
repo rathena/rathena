@@ -84,3 +84,4 @@ ecl_in01,45,60,4	duplicate(Healer)	Healer#ecl	909
 malangdo,132,114,6	duplicate(Healer)	Healer#mal	909
 malaya,227,204,6	duplicate(Healer)	Healer#ma	909
 mora,55,152,4	duplicate(Healer)	Healer#mora	909
+verus04,120,210,5	duplicate(Healer)	Healer#verus	909
