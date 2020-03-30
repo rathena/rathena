@@ -77,6 +77,13 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Name", name))
 			return 0;
 
+		for (const auto &instance : instance_db) {
+			if (instance.second->name.compare(name) == 0) {
+				this->invalidWarning(node["Name"], "Instance name %s already exists, skipping.\n", name.c_str());
+				return 0;
+			}
+		}
+
 		instance->name = name;
 	}
 
