@@ -33,6 +33,7 @@
 ///Enum of item id (for hardcoded purpose)
 enum item_itemid
 {
+	ITEMID_DUMMY						= 499,
 	ITEMID_RED_POTION					= 501,
 	ITEMID_YELLOW_POTION				= 503,
 	ITEMID_WHITE_POTION					= 504,
@@ -175,21 +176,10 @@ enum genetic_item_list
 	ITEMID_VITATA500,
 	ITEMID_CONCENTRATED_CEROMAIN_SOUP,
 	ITEMID_CURE_FREE					= 12475,
-	ITEMID_APPLE_BOMB					= 13260,
-	ITEMID_COCONUT_BOMB,
-	ITEMID_MELON_BOMB,
-	ITEMID_PINEAPPLE_BOMB,
-	ITEMID_BANANA_BOMB,
-	ITEMID_BLACK_LUMP,
+	ITEMID_BLACK_LUMP					= 13265,
 	ITEMID_BLACK_HARD_LUMP,
 	ITEMID_VERY_HARD_LUMP,
 	ITEMID_MYSTERIOUS_POWDER,
-	ITEMID_HP_INC_POTS_TO_THROW			= 13275,
-	ITEMID_HP_INC_POTM_TO_THROW,
-	ITEMID_HP_INC_POTL_TO_THROW,
-	ITEMID_SP_INC_POTS_TO_THROW,
-	ITEMID_SP_INC_POTM_TO_THROW,
-	ITEMID_SP_INC_POTL_TO_THROW,
 };
 
 ///Guillotine Cross
@@ -861,6 +851,9 @@ struct item_data
 	struct item_combo **combos;
 	unsigned char combos_count;
 	short delay_sc; ///< Use delay group if any instead using player's item_delay data [Cydh]
+
+	bool isStackable();
+	int inventorySlotNeeded(int quantity);
 };
 
 // Struct for item random option [Secret]
@@ -913,7 +906,6 @@ struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_dropeffect(n) (itemdb_search(n)->flag.dropEffect)
 const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (enum e_item_ammo ammo);
-bool itemdb_is_spellbook2(unsigned short nameid);
 
 struct s_item_group_entry *itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group);
 unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);

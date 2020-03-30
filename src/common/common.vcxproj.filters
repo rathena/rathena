@@ -145,9 +145,9 @@
     <ClCompile Include="utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClInclude Include="winapi.cpp">
+    <ClCompile Include="winapi.cpp">
       <Filter>Source Files</Filter>
-    </ClInclude>
+    </ClCompile>
     <ClCompile Include="utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

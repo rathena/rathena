@@ -160,8 +160,6 @@ struct map_cache_map_info {
 };
 
 char motd_txt[256] = "conf/motd.txt";
-char help_txt[256] = "conf/help.txt";
-char help2_txt[256] = "conf/help2.txt";
 char charhelp_txt[256] = "conf/charhelp.txt";
 char channel_conf[256] = "conf/channels.conf";
 
@@ -491,6 +489,8 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_WARM]->val4), bl->m, x1-x0, y1-y0);
 				if (sc->data[SC_BANDING])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_BANDING]->val4), bl->m, x1-x0, y1-y0);
+				if (sc->data[SC_HELLS_PLANT])
+					skill_unit_move_unit_group(skill_id2group(sc->data[SC_HELLS_PLANT]->val4), bl->m, x1-x0, y1-y0);
 
 				if (sc->data[SC_NEUTRALBARRIER_MASTER])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_NEUTRALBARRIER_MASTER]->val2), bl->m, x1-x0, y1-y0);
@@ -2060,8 +2060,11 @@ int map_quit(struct map_session_data *sd) {
 	if (sd->npc_id)
 		npc_event_dequeue(sd);
 
-	if( sd->bg_id )
-		bg_team_leave(sd,1);
+	if (sd->bg_id)
+		bg_team_leave(sd, true, true);
+
+	if (sd->bg_queue != nullptr)
+		bg_queue_leave(sd);
 
 	if( sd->status.clan_id )
 		clan_member_left(sd);
@@ -2145,6 +2148,10 @@ int map_quit(struct map_session_data *sd) {
 			status_change_end(&sd->bl, SC_GLASTHEIM_STATE, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_GLASTHEIM_ITEMDEF, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_GLASTHEIM_HPSP, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULGOLEM, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULSHADOW, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULFALCON, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULFAIRY, INVALID_TIMER);
 		}
 	}
 
@@ -2981,6 +2988,9 @@ const char* map_mapid2mapname(int m)
 
 	struct map_data *mapdata = map_getmapdata(m);
 
+	if (!mapdata)
+		return "";
+
 	if (mapdata->instance_id) { // Instance map check
 		struct instance_data *im = &instance_data[mapdata->instance_id];
 
@@ -3682,15 +3692,10 @@ void map_data_copy(struct map_data *dst_map, struct map_data *src_map) {
 	dst_map->skill_duration.insert(src_map->skill_duration.begin(), src_map->skill_duration.end());
 
 	dst_map->zone = src_map->zone;
-	dst_map->qi_count = 0;
-	dst_map->qi_data = NULL;
 
 	// Mimic questinfo
-	if (src_map->qi_count) {
-		dst_map->qi_count = src_map->qi_count;
-		CREATE(dst_map->qi_data, struct questinfo, dst_map->qi_count);
-		memcpy(dst_map->qi_data, src_map->qi_data, dst_map->qi_count * sizeof(struct questinfo));
-	}
+	if (!src_map->qi_data.empty())
+		src_map->qi_data = dst_map->qi_data;
 }
 
 /**
@@ -3708,8 +3713,6 @@ void map_data_copyall (void) {
 	}
 }
 
-#define NO_WATER 1000000
-
 /*
  * Reads from the .rsw for each map
  * Returns water height (or NO_WATER if file doesn't exist) or other error is encountered.
@@ -3719,7 +3722,7 @@ void map_data_copyall (void) {
 int map_waterheight(char* mapname)
 {
 	char fn[256];
- 	char *rsw, *found;
+ 	char *found;
 
 	//Look up for the rsw
 	sprintf(fn, "data\\%s.rsw", mapname);
@@ -3728,15 +3731,7 @@ int map_waterheight(char* mapname)
 	if (found) strcpy(fn, found); // replace with real name
 
 	// read & convert fn
-	rsw = (char *) grfio_read (fn);
-	if (rsw)
-	{	//Load water height from file
-		int wh = (int) *(float*)(rsw+166); //FIXME Casting between integer* and float* which have an incompatible binary data representation.
-		aFree(rsw);
-		return wh;
-	}
-	ShowWarning("Failed to find water level for (%s)\n", mapname, fn);
-	return NO_WATER;
+	return grfio_read_rsw_water_level( fn );
 }
 
 /*==================================
@@ -3771,7 +3766,7 @@ int map_readgat (struct map_data* m)
 		uint32 type = *(uint32*)( gat + off + 16 );
 		off += 20;
 
-		if( type == 0 && water_height != NO_WATER && height > water_height )
+		if( type == 0 && water_height != RSW_NO_WATER && height > water_height )
 			type = 3; // Cell is 0 (walkable) but under water level, set to 3 (walkable water)
 
 		m->cell[xy] = map_gat2cell(type);
@@ -3905,8 +3900,6 @@ int map_readallmaps (void)
 
 		memset(&mapdata->save, 0, sizeof(struct point));
 		mapdata->damage_adjust = {};
-		mapdata->qi_count = 0;
-		mapdata->qi_data = NULL;
 		mapdata->channel = NULL;
 	}
 
@@ -4083,10 +4076,6 @@ int map_config_read(const char *cfgName)
 			save_settings = cap_value(atoi(w2),CHARSAVE_NONE,CHARSAVE_ALL);
 		else if (strcmpi(w1, "motd_txt") == 0)
 			safestrncpy(motd_txt, w2, sizeof(motd_txt));
-		else if (strcmpi(w1, "help_txt") == 0)
-			safestrncpy(help_txt, w2, sizeof(help_txt));
-		else if (strcmpi(w1, "help2_txt") == 0)
-			safestrncpy(help2_txt, w2, sizeof(help2_txt));
 		else if (strcmpi(w1, "charhelp_txt") == 0)
 			safestrncpy(charhelp_txt, w2, sizeof(charhelp_txt));
 		else if (strcmpi(w1, "channel_conf") == 0)
@@ -4353,110 +4342,31 @@ int log_sql_init(void)
 	return 0;
 }
 
-struct questinfo *map_add_questinfo(int m, struct questinfo *qi) {
-	unsigned short i;
+void map_remove_questinfo(int m, struct npc_data *nd) {
 	struct map_data *mapdata = map_getmapdata(m);
+	struct s_questinfo *qi;
 
-	/* duplicate, override */
-	for(i = 0; i < mapdata->qi_count; i++) {
-		if( &mapdata->qi_data[i] && mapdata->qi_data[i].nd == qi->nd && mapdata->qi_data[i].quest_id == qi->quest_id)
-			break;
-	}
+	nullpo_retv(nd);
+	nullpo_retv(mapdata);
 
-	if( i == mapdata->qi_count )
-		RECREATE(mapdata->qi_data, struct questinfo, ++mapdata->qi_count);
-	else { // clear previous criteria on override
-		if (mapdata->qi_data[i].jobid)
-			aFree(mapdata->qi_data[i].jobid);
-		mapdata->qi_data[i].jobid = NULL;
-		mapdata->qi_data[i].jobid_count = 0;
-		if (mapdata->qi_data[i].req)
-			aFree(mapdata->qi_data[i].req);
-		mapdata->qi_data[i].req = NULL;
-		mapdata->qi_data[i].req_count = 0;
-	}
-
-	memcpy(&mapdata->qi_data[i], qi, sizeof(struct questinfo));
-	return &mapdata->qi_data[i];
-}
-
-bool map_remove_questinfo(int m, struct npc_data *nd) {
-	unsigned short i, c;
-	struct map_data *mapdata = map_getmapdata(m);
-
-	for(i = 0; i < mapdata->qi_count; i++) {
-		struct questinfo *qi = &mapdata->qi_data[i];
-		if( qi->nd == nd ) {
-			if (qi->jobid)
-				aFree(qi->jobid);
-			qi->jobid = NULL;
-			qi->jobid_count = 0;
-
-			if (qi->req)
-				aFree(qi->req);
-			qi->req = NULL;
-			qi->req_count = 0;
-
-			memset(&mapdata->qi_data[i], 0, sizeof(mapdata->qi_data[i]));
+	for (int i = 0; i < mapdata->qi_data.size(); i++) {
+		qi = &mapdata->qi_data[i];
+		if (qi && qi->nd == nd) {
+			script_free_code(qi->condition);
+			mapdata->qi_data.erase(mapdata->qi_data.begin() + i);
 		}
 	}
-
-	// Move next data to empty slot
-	for(i = 0, c = 0; i < mapdata->qi_count; i++) {
-		struct questinfo *qi = &mapdata->qi_data[i];
-		if (!qi || !qi->nd)
-			continue;
-
-		if (i != c) {
-			mapdata->qi_data[c] = mapdata->qi_data[i];
-			memset(&mapdata->qi_data[i], 0, sizeof(mapdata->qi_data[i]));
-		}
-
-		c++;
-	}
-
-	if (!(mapdata->qi_count = c)) {
-		aFree(mapdata->qi_data);
-		mapdata->qi_data = NULL;
-	}
-	else
-		RECREATE(mapdata->qi_data, struct questinfo, mapdata->qi_count);
-
-	return true;
 }
 
 static void map_free_questinfo(struct map_data *mapdata) {
-	unsigned short i;
-	if (!mapdata)
-		return;
+	nullpo_retv(mapdata);
 
-	for(i = 0; i < mapdata->qi_count; i++) {
-		if (mapdata->qi_data[i].jobid)
-			aFree(mapdata->qi_data[i].jobid);
-		mapdata->qi_data[i].jobid = NULL;
-		mapdata->qi_data[i].jobid_count = 0;
-		if (mapdata->qi_data[i].req)
-			aFree(mapdata->qi_data[i].req);
-		mapdata->qi_data[i].req = NULL;
-		mapdata->qi_data[i].req_count = 0;
-	}
-	aFree(mapdata->qi_data);
-	mapdata->qi_data = NULL;
-	mapdata->qi_count = 0;
-}
-
-struct questinfo *map_has_questinfo(int m, struct npc_data *nd, int quest_id) {
-	unsigned short i;
-	struct map_data *mapdata = map_getmapdata(m);
-
-	for (i = 0; i < mapdata->qi_count; i++) {
-		struct questinfo *qi = &mapdata->qi_data[i];
-		if (qi->nd == nd && qi->quest_id == quest_id) {
-			return qi;
-		}
+	for (const auto &it : mapdata->qi_data) {
+		if (it.condition)
+			script_free_code(it.condition);
 	}
 
-	return NULL;
+	mapdata->qi_data.clear();
 }
 
 /**
@@ -4522,25 +4432,19 @@ int cleanup_sub(struct block_list *bl, va_list ap)
  * Add new skill damage adjustment entry for a map
  * @param m: Map data
  * @param skill_id: Skill ID
- * @param pc: Rate to PC
- * @param mobs: Rate to Monster
- * @param boss: Rate to Boss-monster
- * @param other: Rate to Other target
- * @param caster: Caster type
+ * @param args: Mapflag arguments
  */
-void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster) {
-	struct s_skill_damage entry = {};
+void map_skill_damage_add(struct map_data *m, uint16 skill_id, union u_mapflag_args *args) {
+	nullpo_retv(m);
+	nullpo_retv(args);
 
-	for (int i = 0; i < SKILLDMG_MAX; i++)
-		entry.rate[i] = rate[i];
-	entry.caster = caster;
-
-	if (m->skill_damage.find(skill_id) != m->skill_damage.end()) {
-		m->skill_damage[skill_id] = entry;
+	if (m->skill_damage.find(skill_id) != m->skill_damage.end()) { // Entry exists
+		args->skill_damage.caster |= m->skill_damage[skill_id].caster;
+		m->skill_damage[skill_id] = args->skill_damage;
 		return;
 	}
 
-	m->skill_damage.insert({ skill_id, entry });
+	m->skill_damage.insert({ skill_id, args->skill_damage }); // Add new entry
 }
 
 /**
@@ -4550,6 +4454,8 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG
  * @param per: Skill duration adjustment value in percent
  */
 void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per) {
+	nullpo_retv(mapd);
+
 	if (mapd->skill_duration.find(skill_id) != mapd->skill_duration.end()) // Entry exists
 		mapd->skill_duration[skill_id] += per;
 	else // Update previous entry
@@ -4609,7 +4515,7 @@ static int map_mapflag_pvp_stop_sub(struct block_list *bl, va_list ap)
 enum e_mapflag map_getmapflag_by_name(char* name)
 {
 	char flag_constant[255];
-	int mapflag;
+	int64 mapflag;
 
 	safesnprintf(flag_constant, sizeof(flag_constant), "mf_%s", name);
 
@@ -4920,13 +4826,13 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				nullpo_retr(false, args);
 
 				if (!args->flag_val) { // Signifies if it's a single skill or global damage adjustment
-					if (!args->skill_damage.caster) {
+					if (args->skill_damage.caster == 0) {
 						ShowError("map_setmapflag: Skill damage adjustment without casting type for map %s.\n", mapdata->name);
 						return false;
 					}
 
-					mapdata->damage_adjust.caster = args->skill_damage.caster;
-					for (int i = 0; i < SKILLDMG_MAX; i++)
+					mapdata->damage_adjust.caster |= args->skill_damage.caster;
+					for (int i = SKILLDMG_PC; i < SKILLDMG_MAX; i++)
 						mapdata->damage_adjust.rate[i] = cap_value(args->skill_damage.rate[i], -100, 100000);
 				}
 			}
@@ -5229,7 +5135,6 @@ int do_init(int argc, char *argv[])
 	LOG_CONF_NAME="conf/log_athena.conf";
 	MAP_CONF_NAME = "conf/map_athena.conf";
 	BATTLE_CONF_FILENAME = "conf/battle_athena.conf";
-	ATCOMMAND_CONF_FILENAME = "conf/atcommand_athena.conf";
 	SCRIPT_CONF_NAME = "conf/script_athena.conf";
 	GRF_PATH_FILENAME = "conf/grf-files.txt";
 	safestrncpy(console_log_filepath, "./log/map-msg_log.log", sizeof(console_log_filepath));
@@ -5342,9 +5247,9 @@ int do_init(int argc, char *argv[])
 	do_init_elemental();
 	do_init_quest();
 	do_init_achievement();
+	do_init_battleground();
 	do_init_npc();
 	do_init_unit();
-	do_init_battleground();
 	do_init_duel();
 	do_init_vending();
 	do_init_buyingstore();

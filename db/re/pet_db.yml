@@ -1146,30 +1146,15 @@ Body:
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus2 bSubRace,RC_Brute,3;
       }
-#  - Mob: BACSOJIN2
-#    TameItem: Shiny_Wing_Gown
-#    EggItem: Bacsojin_Egg
-#    EquipItem: Round_Hair_Ornament
-#    FoodItem: Traditional_Cookie
-#    Fullness: 7
-#    IntimacyFed: 10
-#    CaptureRate: 2000
-#    SpecialPerformance: false
-#    Script: >
-#      .@i = getpetinfo(PETINFO_INTIMATE);
-#      
-#      if (.@i >= PET_INTIMATE_LOYAL) {
-#        bonus bMaxSPRate,5;
-#        bonus bDelayrate,-3;
-#      } else if (.@i >= PET_INTIMATE_CORDIAL) {
-#        bonus bMaxSPRate,4;
-#        bonus bDelayrate,-2;
-#      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
-#        bonus bMaxSPRate,3;
-#        bonus bDelayrate,-1;
-#      } else {
-#        bonus bMaxSPRate,2;
-#      }
+  - Mob: BACSOJIN_
+    TameItem: Shiny_Wing_Gown
+    EggItem: Bacsojin_Egg
+    EquipItem: Round_Hair_Ornament
+    FoodItem: Traditional_Cookie
+    Fullness: 7
+    IntimacyFed: 10
+    CaptureRate: 2000
+    SpecialPerformance: false
   - Mob: IMP
     TameItem: Flaming_Ice
     EggItem: Imp_Egg
@@ -2071,9 +2056,32 @@ Body:
       } else {
         bonus bMdef,4;
       }
+#  - Mob: BACSOJIN2
+#    EggItem: Bacsojin2_Egg_
+#    FoodItem: Luxurious_Pet_Food
+#    Fullness: 7
+#    IntimacyFed: 10
+#    CaptureRate: 0
+#    SpecialPerformance: false
+#    AllowAutoFeed: true
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#        bonus bMaxSPRate,5;
+#        bonus bDelayrate,-3;
+#      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+#        bonus bMaxSPRate,4;
+#        bonus bDelayrate,-2;
+#      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#        bonus bMaxSPRate,3;
+#        bonus bDelayrate,-1;
+#      } else {
+#        bonus bMaxSPRate,2;
+#      }
 #  - Mob: ORK_HERO2
 #    EggItem: Orc_Hero_Egg_
-#    FoodItem: Traditional_Cookie
+#    FoodItem: Luxurious_Pet_Food
 #    Fullness: 2
 #    HungryDelay: 120
 #    IntimacyFed: 15

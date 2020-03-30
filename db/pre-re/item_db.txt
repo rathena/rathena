@@ -436,7 +436,7 @@
 1085,Mage_Test_2,Unknown Test Tube,3,0,,10,,,,,,,,,,,,,{},{},{}
 1086,Mage_Test_3,Unknown Test Tube,3,0,,10,,,,,,,,,,,,,{},{},{}
 1087,Mage_Test_4,Unknown Test Tube,3,0,,10,,,,,,,,,,,,,{},{},{}
-1088,Morocc_Potion,Morroc Solution,3,0,,10,,,,,,,,,,,,,{},{},{}
+1088,Morocc_Potion,Morocc Solution,3,0,,10,,,,,,,,,,,,,{},{},{}
 1089,Payon_Potion,Payon Solution,3,0,,10,,,,,,,,,,,,,{},{},{}
 1090,Mage_Test_Etc,Unknown Test Tube,3,0,,10,,,,,,,,,,,,,{},{},{}
 1091,Merchant_Box_Etc,Delivery Box,3,0,,10,,,,,,,,,,,,,{},{},{}
@@ -742,8 +742,8 @@
 1470,Brionac,Brionac,5,20,,3000,190,,3,0,0x00004082,7,2,34,4,48,1,5,{ bonus bAtkEle,Ele_Holy; skill "AL_HEAL",5; bonus3 bAutoSpell,"MG_SOULSTRIKE",3,100; bonus2 bAddClass,Class_Boss,5; },{},{}
 1471,Hell_Fire,Hellfire,5,20,,3500,200,,3,0,0x00004082,7,2,34,4,48,1,5,{ bonus bAtkEle,Ele_Fire; bonus3 bAutoSpell,"MG_FIREBALL",3,100; bonus bStr,3; },{},{}
 // 2-Handed Staffs
-1472,Staff_Of_Soul,Soul Staff,5,20,,1400,25,,1,0,0x00810204,7,2,34,3,73,1,10,{ bonus bInt,5; bonus bAgi,2; bonus bMatkRate,15; },{},{}
-1473,Wizardy_Staff,Wizardry Staff,5,20,,2400,120,,1,0,0x00810204,7,2,34,4,90,1,10,{ bonus bInt,6; bonus bDex,2; bonus bMatkRate,15; },{},{}
+1472,Staff_Of_Soul,Soul Staff,5,20,,1400,25,,1,0,0x00810204,7,2,34,3,73,1,23,{ bonus bInt,5; bonus bAgi,2; bonus bMatkRate,15; },{},{}
+1473,Wizardy_Staff,Wizardry Staff,5,20,,2400,120,,1,0,0x00810204,7,2,34,4,90,1,23,{ bonus bInt,6; bonus bDex,2; bonus bMatkRate,15; },{},{}
 // 2-Handed Spears
 1474,Gae_Bolg,Gae Bolg,5,20,,2000,160,,3,0,0x00004082,7,2,34,4,60,1,5,{ bonus bIgnoreDefRace,RC_Dragon; bonus2 bAddClass,Class_Boss,10; },{},{}
 1475,Horseback_Lance,Equestrian's Spear,5,20,,3700,200,,4,0,0x00004082,7,2,34,4,75,1,5,{},{},{}
@@ -2572,7 +2572,7 @@
 5389,Angel_Spirit,Angel Spirit,4,20,,200,,0,,0,0xFFFFFFFF,7,2,512,,30,0,394,{ bonus bStr,2; bonus bHit,15; },{},{}
 5390,Santa_Hat_2,Frozen Twin Pompom,4,20,,100,,2,,0,0xFFFFFFFF,7,2,256,,0,1,395,{ bonus2 bResEff, Eff_Freeze, 3000; },{},{}
 5391,Toast_C,Toast,4,20,,0,,0,,0,0xFFFFFFFF,7,2,1,,0,0,188,{ bonus bMaxHP,100; bonus2 bAddMonsterDropItem,617,10; },{},{}
-5392,Louyang_Cap,Louyang NewYear Hat,4,20,,300,,3,,1,0xFFFFFFFF,7,2,256,,0,1,396,{ bonus bLuk,2; },{},{}
+5392,Louyang_Cap,Luoyang NewYear Hat,4,20,,300,,3,,1,0xFFFFFFFF,7,2,256,,0,1,396,{ bonus bLuk,2; },{},{}
 5393,Valentine_Hat,Love Valentine's Hat,4,20,,200,,2,,0,0xFFFFFFFF,7,2,256,,0,0,397,{ bonus bMaxSPrate, 7; bonus bMaxHPrate, 7; },{},{}
 5394,Bubblegum_Lower,Bubblegum,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1,,0,0,0,{},{},{}
 5395,Tiraya_Bonnet,Striped Hat,4,20,,500,,2,,1,0xFFFFFFFF,7,2,256,,50,1,398,{ bonus bMaxHP,100+(getrefine()*20); bonus bLuk,3; },{},{}
@@ -3067,7 +3067,7 @@
 6026,Marriage_Covenant,Written Oath Of Marriage,3,0,,10,,,,,,,,,,,,,{},{},{}
 6027,Crystal_Of_Feardoom,Crystal Of Feardom,3,0,,0,,,,,,,,,,,,,{},{},{}
 6028,Seal_Scroll,Sealed Scroll,3,0,,0,,,,,,,,,,,,,{},{},{}
-6029,Morocc_Tracing_Log,Morroc Tracing Log,3,0,,0,,,,,,,,,,,,,{},{},{}
+6029,Morocc_Tracing_Log,Morocc Tracing Log,3,0,,0,,,,,,,,,,,,,{},{},{}
 6030,Glitering_PaperA,Glittering Paper,3,0,,10,,,,,,,,,,,,,{},{},{}
 6031,Glitering_PaperB,Glittering Paper,3,0,,10,,,,,,,,,,,,,{},{},{}
 6032,Horn_Of_Hilsrion,Horn of Hillslion,3,500,,10,,,,,,,,,,,,,{},{},{}
@@ -3771,7 +3771,7 @@
 7332,Slate,Complete Tablet,3,0,,0,,,,,,,,,,,,,{},{},{}
 7333,Piece_Of_Slate_1,Prontera Tablet,3,0,,0,,,,,,,,,,,,,{},{},{}
 7334,Piece_Of_Slate_2,Payon Tablet,3,0,,0,,,,,,,,,,,,,{},{},{}
-7335,Piece_Of_Slate_3,Morroc Tablet,3,0,,0,,,,,,,,,,,,,{},{},{}
+7335,Piece_Of_Slate_3,Morocc Tablet,3,0,,0,,,,,,,,,,,,,{},{},{}
 7336,Piece_Of_Slate_4,Geffen Tablet,3,0,,0,,,,,,,,,,,,,{},{},{}
 7337,Eye_Of_Hellion,Eye of Hellion,3,0,,0,,,,,,,,,,,,,{},{},{}
 7338,RO_Transportation_Card,One-way Ticket,3,0,,0,,,,,,,,,,,,,{},{},{}
@@ -3968,11 +3968,11 @@
 7529,Stolen_Sandals,Stolen Sandal,3,0,,0,,,,,,,,,,,,,{},{},{}
 7530,Travel_Brochure_01,Travel Brochure [Amatsu],3,0,,0,,,,,,,,,,,,,{},{},{}
 7531,Travel_Brochure_02,Travel Brochure [Kunlun],3,0,,0,,,,,,,,,,,,,{},{},{}
-7532,Travel_Brochure_03,Travel Brochure [Louyang],3,0,,0,,,,,,,,,,,,,{},{},{}
+7532,Travel_Brochure_03,Travel Brochure [Luoyang],3,0,,0,,,,,,,,,,,,,{},{},{}
 7533,Travel_Brochure_04,Travel Brochure [Ayothaya],3,0,,0,,,,,,,,,,,,,{},{},{}
 7534,Photo_Album_01,Amatsu Completed Photo Album,3,0,,0,,,,,,,,,,,,,{},{},{}
 7535,Photo_Album_02,Kunlun Completed Photo Album,3,0,,0,,,,,,,,,,,,,{},{},{}
-7536,Photo_Album_03,Louyang Completed Photo Album,3,0,,0,,,,,,,,,,,,,{},{},{}
+7536,Photo_Album_03,Luoyang Completed Photo Album,3,0,,0,,,,,,,,,,,,,{},{},{}
 7537,Photo_Album_04,Ayothaya Completed Photo Album,3,0,,0,,,,,,,,,,,,,{},{},{}
 7538,Sifted_Sand,Sand for Work,3,0,,0,,,,,,,,,,,,,{},{},{}
 7539,Poring_Coin,Poring Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
@@ -4616,7 +4616,7 @@
 12046,Int_Dish01,Grape Juice Herbal Tea,0,2000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INTFOOD,1200000,1; percentheal 0,5; },{},{}
 12047,Int_Dish02,Autumn Red Tea,0,4000,,500,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INTFOOD,1200000,2; percentheal 0,5; },{},{}
 12048,Int_Dish03,Honey Herbal Tea,0,6000,,500,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INTFOOD,1200000,3; percentheal 0,5; },{},{}
-12049,Int_Dish04,Morroc Fruit Wine,0,8000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INTFOOD,1200000,4; percentheal 0,5; },{},{}
+12049,Int_Dish04,Morocc Fruit Wine,0,8000,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INTFOOD,1200000,4; percentheal 0,5; },{},{}
 12050,Int_Dish05,Mastela Fruit Wine,0,10000,,400,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INTFOOD,1200000,5; percentheal 0,10; },{},{}
 12051,Vit_Dish01,Steamed Crab Nippers,0,2000,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_VITFOOD,1200000,1; percentheal 5,0; },{},{}
 12052,Vit_Dish02,Assorted Seafood,0,4000,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_VITFOOD,1200000,2; percentheal 5,0; },{},{}
@@ -4885,7 +4885,7 @@
 12317,Powder_Snow,Snow Powder,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12318,Little_Heart,Small Hearts,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12319,Strawberry_Cake,Rune Strawberry Cake,2,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,600000,5; sc_start SC_MATKPOTION,600000,5; },{},{}
-12320,Pineapple_Juice,Schwartzwald Pine Jubilee,2,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHIT,600000,10; sc_start SC_INCFLEE2,600000,20; },{},{}
+12320,Pineapple_Juice,Schwarzwald Pine Jubilee,2,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHIT,600000,10; sc_start SC_INCFLEE2,600000,20; },{},{}
 12321,Spicy_Sandwich,Arunafeltz Desert Sandwich,2,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCCRI,600000,7; },{},{}
 12322,Chocolate_Pie,Chocolate Pie,0,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 5,5; },{},{}
 12323,N_Fly_Wing,Novice Fly Wing,11,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "AL_TELEPORT",1; },{},{}
@@ -5017,7 +5017,7 @@
 12449,F_Luk_Dish10_,F Luk Dish10,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12450,F_Vit_Dish10_,F Vit Dish10,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12451,F_WOB_Rune,F WOB Rune,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12452,F_WOB_Schwaltz,F WOB Schwaltz,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12452,F_WOB_Schwaltz,F WOB Schwarz,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12453,F_WOB_Rachel,F WOB Rachel,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12454,F_WOB_Local,F WOB Local,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12456,F_Greed_Scroll,F Greed Scroll,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
