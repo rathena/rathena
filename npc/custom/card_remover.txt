@@ -72,18 +72,15 @@ prt_in,28,73,4	script	Wise Old Woman#eAcustom	78,{
 			close;
 		}
 		mes "[Wise Old Woman]";
-		mes "Before I begin, I must warn you--I may fail. If I do, I may destroy the cards, the item, or both. I do not give refunds. That being said, which is more important to you: The cards, or the item?";
+		mes "Before I begin, I must warn you--I may fail. If I do, your items and cards are safe but your investment is lost. I do not give refunds.";
 		next;
-		switch(select("I changed my mind about this.:The item.:The cards.")) {
+		switch(select("I changed my mind about this.:Continue.")) {
 		case 1:
 			mes "[Wise Old Woman]";
 			mes "Very well. Return at once if you seek my services.";
 			close;
 		case 2:
-			set .@failtype,1;
 			break;
-		case 3:
-			set .@failtype,2;
 		}
 		mes "[Wise Old Woman]";
 		mes "Very well. I shall begin.";
