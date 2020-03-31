@@ -139,7 +139,7 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 
 			int16 m = map_mapname2mapid(map.c_str());
 
-			if (m == 0) {
+			if (m == -1) {
 				this->invalidWarning(enterNode["Map"], "Map %s is not a valid map, skipping.\n", map.c_str());
 				return 0;
 			}
@@ -167,25 +167,31 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "AdditionalMaps")) {
-		for (const YAML::Node &map_list : node["AdditionalMaps"]) {
-			std::string map;
+		const YAML::Node &mapNode = node["AdditionalMaps"];
 
-			if (!this->asString(map_list, "Map", map))
-				return 0;
-
+		for (const auto &mapIt : mapNode) {
+			std::string map = mapIt.first.as<std::string>();
 			int16 m = map_mapname2mapid(map.c_str());
 
 			if (m == instance->enter.map) {
-				this->invalidWarning(map_list, "Additional Map %s is already listed as the EnterMap.\n", map.c_str());
+				this->invalidWarning(mapNode, "Additional Map %s is already listed as the EnterMap.\n", map.c_str());
 				continue;
 			}
 
-			if (!m) {
-				this->invalidWarning(map_list, "Additional Map %s is not a valid map, skipping.\n", map.c_str());
+			if (m == -1) {
+				this->invalidWarning(mapNode, "Additional Map %s is not a valid map, skipping.\n", map.c_str());
 				return 0;
 			}
 
-			instance->maplist.push_back(m);
+			bool active;
+
+			if (!this->asBool(mapNode, map, active))
+				return 0;
+
+			if (active)
+				instance->maplist.push_back(m);
+			else
+				instance->maplist.erase(util::vector_get(instance->maplist, m));
 		}
 	}
 

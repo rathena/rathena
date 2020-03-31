@@ -31,7 +31,6 @@
 #     X               X Coordinate where players start.
 #     Y               Y Coordinate where players start.
 #   AdditionalMaps:   List of maps that are part of an instance. (Optional)
-#     - Map           Map name.
 ###########################################################################
 
 Header:
@@ -47,11 +46,11 @@ Body:
       X: 50
       Y: 355
     AdditionalMaps:
-      - Map: 2@tower
-      - Map: 3@tower
-      - Map: 4@tower
-      - Map: 5@tower
-      - Map: 6@tower
+      2@tower: true
+      3@tower: true
+      4@tower: true
+      5@tower: true
+      6@tower: true
   - Id: 2
     Name: Sealed Catacomb
     TimeLimit: 7200
@@ -60,7 +59,7 @@ Body:
       X: 100
       Y: 224
     AdditionalMaps:
-      - Map: 2@cata
+      2@cata: true
   - Id: 3
     Name: Orc's Memory
     Enter:
@@ -68,7 +67,7 @@ Body:
       X: 179
       Y: 15
     AdditionalMaps:
-      - Map: 2@orcs
+      2@orcs: true
   - Id: 4
     Name: Nidhoggur's Nest
     TimeLimit: 14400
@@ -77,4 +76,4 @@ Body:
       X: 32
       Y: 36
     AdditionalMaps:
-      - Map: 2@nyd
+      2@nyd: true

@@ -31,7 +31,6 @@
 #     X               X Coordinate where players start.
 #     Y               Y Coordinate where players start.
 #   AdditionalMaps:   List of maps that are part of an instance. (Optional)
-#     - Map           Map name.
 ###########################################################################
 
 Header:

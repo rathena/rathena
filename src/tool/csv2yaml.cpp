@@ -2571,7 +2571,7 @@ static bool instance_readdb_sub(char* str[], int columns, int current) {
 				continue;
 
 			body << YAML::BeginMap;
-			body << YAML::Key << "Map" << YAML::Value << str[i];
+			body << YAML::Key << str[i] << YAML::Value << "true";
 			body << YAML::EndMap;
 		}
 
