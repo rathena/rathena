@@ -21707,9 +21707,11 @@ template<typename T, size_t S> bool SkillDatabase::parseNode(std::string nodeNam
 		for (size_t i = 0; i < S; i++)
 			arr[i] = value;
 	} else {
-		uint16 skill_lv;
+		uint16 max_level = 0;
 
 		for (const YAML::Node &it : node[nodeName]) {
+			uint16 skill_lv;
+
 			if (!this->asUInt16(it, "Level", skill_lv))
 				continue;
 
@@ -21722,11 +21724,12 @@ template<typename T, size_t S> bool SkillDatabase::parseNode(std::string nodeNam
 				continue;
 
 			arr[skill_lv - 1] = value;
+			max_level = max(max_level, skill_lv);
 		}
 
 		// Fill remaining array values with last value
-		for (size_t i = skill_lv - 1; i < S; i++)
-			arr[i] = value;
+		for (size_t i = max_level + 1; i < S; i++)
+			arr[i] = arr[max_level - 1];
 	}
 
 	return true;
