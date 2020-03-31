@@ -9746,7 +9746,7 @@
 18547,Campus_Festival,Campus Festival,4,20,,100,,0,,0,0xFFFFFFFF,63,2,256,,0,1,721,{},{},{}
 18548,Tiny_Hat,Tiny Hat,4,20,,30,,0,,0,0xFFFFFFFF,63,2,256,,0,1,722,{ bonus bInt,1; bonus bAgi,1; },{},{}
 18549,Nabi_Hair_Pin,Butterfly Hairpin,4,20,,200,,3,,1,0xFFFFFFFF,63,2,256,,20,1,723,{ bonus bInt,1; bonus bAgi,1; bonus bMdef,3; bonus2 bAddRace,RC_Plant,5; bonus2 bMagicAddRace,RC_Plant,5; bonus2 bSubRace,RC_Plant,5; bonus3 bAddMonsterDropItem,709,RC_Plant,30; },{},{}
-18550,Asgard_Blessing,Asgard Blessing,4,20,,300,,3,,1,0xFFFFFFFF,63,2,256,,30,1,724,{ bonus bAllStats,2; bonus2 bSubEle,Ele_All,5; bonus2 bHPRegenRate,(MaxHp/100),10000; },{},{}
+18550,Asgard_Blessing,Asgard Blessing,4,20,,300,,3,,1,0xFFFFFFFF,63,2,256,,30,1,724,{ bonus bAllStats,2; bonus2 bSubEle,Ele_All,5; bonus2 bRegenPercentHP,2,10000; bonus2 bRegenPercentSP,1,10000; },{},{}
 18551,Galaxy_Circlet,Galaxy Circlet,4,20,,1000,,5,,1,0xFFFFFFFF,63,2,256,,50,1,725,{ .@r = getrefine(); .@a = .@r*10; .@b = .@r/2; bonus bMdef,5; bonus bMaxHP,.@a; bonus bMaxSP,.@a; bonus2 bSubEle,Ele_Earth,.@b; bonus2 bSubEle,Ele_Fire,.@b; bonus2 bSubEle,Ele_Water,.@b; },{},{}
 18552,Proba_Angel_Blessing,Proba Angel Blessing,4,20,,1200,,0,,1,0xFFFFFFFF,63,2,256,,10,1,444,{ bonus bLuk,2; },{},{}
 18553,Mini_Tree,Mini Tree,4,20,,50,,5,,0,0xFFFFFFFF,63,2,256,,0,1,727,{ bonus2 bResEff,Eff_Stun,20; bonus2 bResEff,Eff_Curse,20; bonus2 bResEff,Eff_Blind,20; bonus2 bResEff,Eff_Confusion,20; bonus2 bAddMonsterDropItem,529,300; bonus2 bAddMonsterDropItem,529,644; },{},{}
