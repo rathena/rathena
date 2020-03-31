@@ -191,7 +191,7 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 			if (active)
 				instance->maplist.push_back(m);
 			else
-				instance->maplist.erase(util::vector_get(instance->maplist, m));
+				util::vector_erase_if_exists(instance->maplist, m);
 		}
 	}
 
