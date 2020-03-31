@@ -3211,7 +3211,6 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 	// Skill specific direction
 	switch (skill_id) {
 		case MG_FIREWALL:
-		case GN_WALLOFTHORN:
 		case EL_FIRE_MANTLE:
 			dir = unit_getdir(target); // Backwards
 			break;
@@ -14803,7 +14802,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 				break;
 			if (status_bl_has_mode(bl,MD_STATUS_IMMUNE))
 				break; // This skill doesn't affect to Boss monsters. [iRO Wiki]
-			skill_blown(&unit->bl, bl, skill_get_blewcount(sg->skill_id, sg->skill_lv), -1, BLOWN_NONE);
+			skill_blown(&unit->bl, bl, skill_get_blewcount(sg->skill_id, sg->skill_lv), unit_getdir(bl), BLOWN_IGNORE_NO_KNOCKBACK);
 			skill_addtimerskill(ss, tick + 100, bl->id, unit->bl.x, unit->bl.y, sg->skill_id, sg->skill_lv, skill_get_type(sg->skill_id), 4|SD_LEVEL);
 			break;
 
