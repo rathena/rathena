@@ -1387,6 +1387,29 @@ static void clif_spiritcharm_single(int fd, struct map_session_data *sd)
 	WFIFOSET(fd, packet_len(0x08cf));
 }
 
+
+/// Notifies the client of an object's souls.
+/// Note: Spirit spheres and Soul spheres work on
+/// seprate systems officially, but both send out
+/// the same packet which leads to confusion on how
+/// much soul energy a Soul Reaper acturally has
+/// should the player also have spirit spheres.
+/// They will likely create a new packet for this soon
+/// to seprate the animations for spirit and soul spheres.
+/// For now well use this and replace it later when possible. [Rytech]
+///
+/// 01d0 <id>.L <amount>.W (ZC_SPIRITS)
+/// 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
+static void clif_soulball_single(int fd, struct map_session_data *sd)
+{
+	WFIFOHEAD(fd, packet_len(0x1d0));
+	WFIFOW(fd,0)=0x1d0;
+	WFIFOL(fd,2)=sd->bl.id;
+	WFIFOW(fd,6)=sd->soulball;
+	WFIFOSET(fd, packet_len(0x1d0));
+}
+
+
 /*==========================================
  * Run when player changes map / refreshes
  * Tells its client to display all weather settings being used by this map
@@ -1476,6 +1499,8 @@ int clif_spawn(struct block_list *bl)
 
 			if (sd->spiritball > 0)
 				clif_spiritball(&sd->bl);
+			if (sd->soulball > 0)
+				clif_soulball(sd);
 			if(sd->state.size==SZ_BIG) // tiny/big players [Valaris]
 				clif_specialeffect(bl,EF_GIANTBODY2,AREA);
 			else if(sd->state.size==SZ_MEDIUM)
@@ -4608,6 +4633,33 @@ void clif_storageclose(struct map_session_data* sd)
 	WFIFOSET(fd,packet_len(0xf8));
 }
 
+
+/// Notifies clients in an area of an object's souls.
+/// Note: Spirit spheres and Soul spheres work on
+/// seprate systems officially, but both send out
+/// the same packet which leads to confusion on how
+/// much soul energy a Soul Reaper acturally has
+/// should the player also have spirit spheres.
+/// They will likely create a new packet for this soon
+/// to seprate the animations for spirit and soul spheres.
+/// For now well use this and replace it later when possible. [Rytech]
+/// 
+/// 01d0 <id>.L <amount>.W (ZC_SPIRITS)
+/// 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
+void clif_soulball(struct map_session_data *sd)
+{
+	unsigned char buf[8];
+
+	nullpo_retv(sd);
+
+	WBUFW(buf,0)=0x1d0;
+	WBUFL(buf,2)=sd->bl.id;
+	WBUFW(buf,6)=sd->soulball;
+	clif_send(buf,packet_len(0x1d0),&sd->bl,AREA);
+	return;
+}
+
+
 /*==========================================
  * Server tells 'sd' player client the abouts of 'dstsd' player
  *------------------------------------------*/
@@ -4629,6 +4681,8 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 		clif_spiritball_single(sd->fd, dstsd);
 	if (dstsd->spiritcharm_type != CHARM_TYPE_NONE && dstsd->spiritcharm > 0)
 		clif_spiritcharm_single(sd->fd, dstsd);
+	if (dstsd->soulball > 0)
+		clif_soulball_single(sd->fd, dstsd);
 	if( (sd->status.party_id && dstsd->status.party_id == sd->status.party_id) || //Party-mate, or hpdisp setting.
 		(sd->bg_id && sd->bg_id == dstsd->bg_id) || //BattleGround
 		pc_has_permission(sd, PC_PERM_VIEW_HPMETER)
@@ -6026,6 +6080,10 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, t
 		return;
 
 	nullpo_retv(bl);
+
+	// Statuses with an infinite duration, but still needs a duration sent to display properly.
+	if (type == EFST_LUNARSTANCE || type == EFST_UNIVERSESTANCE || type == EFST_SUNSTANCE || type == EFST_STARSTANCE)
+		tick = 200;
 
 #if PACKETVER >= 20120618
 	if (flag && battle_config.display_status_timers)
@@ -9503,6 +9561,8 @@ void clif_refresh(struct map_session_data *sd)
 		clif_spiritball_single(sd->fd, sd);
 	if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
 		clif_spiritcharm_single(sd->fd, sd);
+	if (sd->soulball)
+		clif_soulball_single(sd->fd, sd);
 	if (sd->vd.cloth_color)
 		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
 	if (sd->vd.body_style)
@@ -10705,7 +10765,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(!sd->state.autotrade && mapdata->flag[MF_LOADEVENT]) // Lance
 		npc_script_event(sd, NPCE_LOADMAP);
 
-	if (pc_checkskill(sd, SG_DEVIL) && pc_is_maxjoblv(sd))
+	if (pc_checkskill(sd, SG_DEVIL) && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)))
 		clif_status_load(&sd->bl, EFST_DEVIL1, 1);  //blindness [Komurka]
 
 	if (sd->sc.opt2) //Client loses these on warp.
@@ -10985,7 +11045,7 @@ void clif_parse_QuitGame(int fd, struct map_session_data *sd)
 {
 	/*	Rovert's prevent logout option fixed [Valaris]	*/
 	//int type = RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]);
-	if( !sd->sc.data[SC_CLOAKING] && !sd->sc.data[SC_HIDING] && !sd->sc.data[SC_CHASEWALK] && !sd->sc.data[SC_CLOAKINGEXCEED] && !sd->sc.data[SC_SUHIDE] &&
+	if( !sd->sc.data[SC_CLOAKING] && !sd->sc.data[SC_HIDING] && !sd->sc.data[SC_CHASEWALK] && !sd->sc.data[SC_CLOAKINGEXCEED] && !sd->sc.data[SC_SUHIDE] && !sd->sc.data[SC_NEWMOON] &&
 		(!battle_config.prevent_logout || sd->canlog_tick == 0 || DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout) )
 	{
 		set_eof(fd);
@@ -11221,7 +11281,8 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		(sd->sc.data[SC_AUTOCOUNTER] && action_type != 0x07) ||
 		 sd->sc.data[SC_BLADESTOP] ||
 		 sd->sc.data[SC__MANHOLE] ||
-		 sd->sc.data[SC_SUHIDE] ))
+		 sd->sc.data[SC_SUHIDE] ||
+		 sd->sc.data[SC_GRAVITYCONTROL]))
 		return;
 
 	if(action_type != 0x00 && action_type != 0x07)
@@ -11348,7 +11409,7 @@ void clif_parse_Restart(int fd, struct map_session_data *sd)
 		break;
 	case 0x01:
 		/*	Rovert's Prevent logout option - Fixed [Valaris]	*/
-		if( !sd->sc.data[SC_CLOAKING] && !sd->sc.data[SC_HIDING] && !sd->sc.data[SC_CHASEWALK] && !sd->sc.data[SC_CLOAKINGEXCEED] && !sd->sc.data[SC_SUHIDE] &&
+		if( !sd->sc.data[SC_CLOAKING] && !sd->sc.data[SC_HIDING] && !sd->sc.data[SC_CHASEWALK] && !sd->sc.data[SC_CLOAKINGEXCEED] && !sd->sc.data[SC_SUHIDE] && !sd->sc.data[SC_NEWMOON] &&
 			(!battle_config.prevent_logout || sd->canlog_tick == 0 || DIFF_TICK(gettick(), sd->canlog_tick) > battle_config.prevent_logout) )
 		{	//Send to char-server for character selection.
 			pc_damage_log_clear(sd,0);
@@ -16868,25 +16929,24 @@ void clif_quest_send_list(struct map_session_data *sd)
 	WFIFOL(fd, 4) = limit;
 
 	for (i = 0; i < limit; i++) {
-		struct quest_db *qi = quest_search(sd->quest_log[i].quest_id);
+		std::shared_ptr<s_quest_db> qi = quest_search(sd->quest_log[i].quest_id);
 
 		WFIFOL(fd, offset) = sd->quest_log[i].quest_id;
 		offset += 4;
 		WFIFOB(fd, offset) = sd->quest_log[i].state;
 		offset++;
-		WFIFOL(fd, offset) = sd->quest_log[i].time - qi->time;
+		WFIFOL(fd, offset) = static_cast<uint32>(sd->quest_log[i].time - qi->time);
 		offset += 4;
-		WFIFOL(fd, offset) = sd->quest_log[i].time;
+		WFIFOL(fd, offset) = static_cast<uint32>(sd->quest_log[i].time);
 		offset += 4;
-		WFIFOW(fd, offset) = qi->objectives_count;
+		WFIFOW(fd, offset) = static_cast<uint16>(qi->objectives.size());
 		offset += 2;
 		
-		if( qi->objectives_count > 0 ){
-			int j;
+		if (!qi->objectives.empty()) {
 			struct mob_db *mob;
 
-			for( j = 0; j < qi->objectives_count; j++ ){
-				mob = mob_db(qi->objectives[j].mob);
+			for (int j = 0; j < qi->objectives.size(); j++) {
+				mob = mob_db(qi->objectives[j]->mob_id);
 
 #if PACKETVER >= 20150513
 				WFIFOL(fd, offset) = sd->quest_log[i].quest_id * 1000 + j;
@@ -16894,7 +16954,7 @@ void clif_quest_send_list(struct map_session_data *sd)
 				WFIFOL(fd, offset) = 0; // TODO: Find info - mobType
 				offset += 4;
 #endif
-				WFIFOL(fd, offset) = qi->objectives[j].mob;
+				WFIFOL(fd, offset) = qi->objectives[j]->mob_id;
 				offset += 4;
 #if PACKETVER >= 20150513
 				WFIFOW(fd, offset) = 0; // TODO: Find info - levelMin
@@ -16904,7 +16964,7 @@ void clif_quest_send_list(struct map_session_data *sd)
 #endif
 				WFIFOW(fd, offset) = sd->quest_log[i].count[j];
 				offset += 2;
-				WFIFOW(fd, offset) = qi->objectives[j].count;
+				WFIFOW(fd, offset) = qi->objectives[j]->count;
 				offset += 2;
 				safestrncpy((char*)WFIFOP(fd, offset), mob->jname, NAME_LENGTH);
 				offset += NAME_LENGTH;
@@ -16937,7 +16997,7 @@ void clif_quest_send_list(struct map_session_data *sd)
 void clif_quest_send_mission(struct map_session_data *sd)
 {
 	int fd = sd->fd;
-	int i, j, limit = 0;
+	int limit = 0;
 	int len = sd->avail_quests*104+8;
 	struct mob_db *mob;
 
@@ -16947,18 +17007,18 @@ void clif_quest_send_mission(struct map_session_data *sd)
 	WFIFOW(fd, 2) = len;
 	WFIFOL(fd, 4) = limit;
 
-	for (i = 0; i < limit; i++) {
-		struct quest_db *qi = quest_search(sd->quest_log[i].quest_id);
+	for (int i = 0; i < limit; i++) {
+		std::shared_ptr<s_quest_db> qi = quest_search(sd->quest_log[i].quest_id);
 
 		WFIFOL(fd, i*104+8) = sd->quest_log[i].quest_id;
-		WFIFOL(fd, i*104+12) = sd->quest_log[i].time - qi->time;
-		WFIFOL(fd, i*104+16) = sd->quest_log[i].time;
-		WFIFOW(fd, i*104+20) = qi->objectives_count;
+		WFIFOL(fd, i*104+12) = static_cast<uint32>(sd->quest_log[i].time - qi->time);
+		WFIFOL(fd, i*104+16) = static_cast<uint32>(sd->quest_log[i].time);
+		WFIFOW(fd, i*104+20) = static_cast<uint16>(qi->objectives.size());
 
-		for (j = 0 ; j < qi->objectives_count; j++) {
-			WFIFOL(fd, i*104+22+j*30) = qi->objectives[j].mob;
+		for (int j = 0 ; j < qi->objectives.size(); j++) {
+			WFIFOL(fd, i*104+22+j*30) = qi->objectives[j]->mob_id;
 			WFIFOW(fd, i*104+26+j*30) = sd->quest_log[i].count[j];
-			mob = mob_db(qi->objectives[j].mob);
+			mob = mob_db(qi->objectives[j]->mob_id);
 			safestrncpy(WFIFOCP(fd, i*104+28+j*30), mob->jname, NAME_LENGTH);
 		}
 	}
@@ -16974,8 +17034,7 @@ void clif_quest_send_mission(struct map_session_data *sd)
 void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 {
 	int fd = sd->fd;
-	int i, offset;
-	struct quest_db *qi = quest_search(qd->quest_id);
+	std::shared_ptr<s_quest_db> qi = quest_search(qd->quest_id);
 #if PACKETVER >= 20150513
 	int cmd = 0x9f9;
 #else
@@ -16986,11 +17045,11 @@ void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 	WFIFOW(fd, 0) = cmd;
 	WFIFOL(fd, 2) = qd->quest_id;
 	WFIFOB(fd, 6) = qd->state;
-	WFIFOB(fd, 7) = qd->time - qi->time;
-	WFIFOL(fd, 11) = qd->time;
-	WFIFOW(fd, 15) = qi->objectives_count;
+	WFIFOB(fd, 7) = static_cast<uint8>(qd->time - qi->time);
+	WFIFOL(fd, 11) = static_cast<uint32>(qd->time);
+	WFIFOW(fd, 15) = static_cast<uint16>(qi->objectives.size());
 
-	for (i = 0, offset = 17; i < qi->objectives_count; i++) {
+	for (int i = 0, offset = 17; i < qi->objectives.size(); i++) {
 		struct mob_db *mob;
 #if PACKETVER >= 20150513
 		WFIFOL(fd, offset) = qd->quest_id * 1000 + i;
@@ -16998,7 +17057,7 @@ void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 		WFIFOL(fd, offset) = 0; // TODO: Find info - mobType
 		offset += 4;
 #endif
-		WFIFOL(fd, offset) = qi->objectives[i].mob;
+		WFIFOL(fd, offset) = qi->objectives[i]->mob_id;
 		offset += 4;
 #if PACKETVER >= 20150513
 		WFIFOW(fd, offset) = 0; // TODO: Find info - levelMin
@@ -17008,7 +17067,7 @@ void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 #endif
 		WFIFOW(fd, offset) = qd->count[i];
 		offset += 2;
-		mob = mob_db(qi->objectives[i].mob);
+		mob = mob_db(qi->objectives[i]->mob_id);
 		safestrncpy(WFIFOCP(fd, offset), mob->jname, NAME_LENGTH);
 		offset += NAME_LENGTH;
 	}
@@ -17016,16 +17075,16 @@ void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 	WFIFOSET(fd, packet_len(cmd));
 
 #if PACKETVER >= 20150513
-	int len = 4 + qi->objectives_count * 12;
+	int len = 4 + qi->objectives.size() * 12;
 
 	WFIFOHEAD(fd, len);
 	WFIFOW(fd, 0) = 0x8fe;
 	WFIFOW(fd, 2) = len;
 
-	for( i = 0, offset = 4; i < qi->objectives_count; i++, offset += 12 ){
+	for (int i = 0, offset = 4; i < qi->objectives.size(); i++, offset += 12) {
 		WFIFOL(fd, offset) = qd->quest_id * 1000 + i;
-		WFIFOL(fd, offset+4) = qi->objectives[i].mob;
-		WFIFOW(fd, offset + 10) = qi->objectives[i].count;
+		WFIFOL(fd, offset+4) = qi->objectives[i]->mob_id;
+		WFIFOW(fd, offset + 10) = qi->objectives[i]->count;
 		WFIFOW(fd, offset + 12) = qd->count[i];
 	}
 
@@ -17054,9 +17113,9 @@ void clif_quest_delete(struct map_session_data *sd, int quest_id)
 void clif_quest_update_objective(struct map_session_data *sd, struct quest *qd, int mobid)
 {
 	int fd = sd->fd;
-	int i, offset;
-	struct quest_db *qi = quest_search(qd->quest_id);
-	int len = qi->objectives_count * 12 + 6;
+	int offset = 6;
+	std::shared_ptr<s_quest_db> qi = quest_search(qd->quest_id);
+	int len = qi->objectives.size() * 12 + 6;
 #if PACKETVER >= 20150513
 	int cmd = 0x9fa;
 #else
@@ -17065,20 +17124,20 @@ void clif_quest_update_objective(struct map_session_data *sd, struct quest *qd, 
 
 	WFIFOHEAD(fd, len);
 	WFIFOW(fd, 0) = cmd;
-	WFIFOW(fd, 4) = qi->objectives_count;
+	WFIFOW(fd, 4) = static_cast<uint16>(qi->objectives.size());
 
-	for (i = 0, offset = 6; i < qi->objectives_count; i++) {
-		if (mobid == 0 || mobid == qi->objectives[i].mob) {
+	for (int i = 0; i < qi->objectives.size(); i++) {
+		if (mobid == 0 || mobid == qi->objectives[i]->mob_id) {
 			WFIFOL(fd, offset) = qd->quest_id;
 			offset += 4;
 #if PACKETVER >= 20150513
 			WFIFOL(fd, offset) = qd->quest_id * 1000 + i;
 			offset += 4;
 #else
-			WFIFOL(fd, offset) = qi->objectives[i].mob;
+			WFIFOL(fd, offset) = qi->objectives[i].mob_id;
 			offset += 4;
 #endif
-			WFIFOW(fd, offset) = qi->objectives[i].count;
+			WFIFOW(fd, offset) = qi->objectives[i]->count;
 			offset += 2;
 			WFIFOW(fd, offset) = qd->count[i];
 			offset += 2;

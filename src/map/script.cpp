@@ -10415,6 +10415,10 @@ BUILDIN_FUNC(getexp)
 		job = (int) cap_value(job * bonus, 0, INT_MAX);
 
 	pc_gainexp(sd, NULL, base, job, 1);
+#ifdef RENEWAL
+	if (base && sd->hd)
+		hom_gainexp(sd->hd, base * battle_config.homunculus_exp_gain / 100); // Homunculus only receive 10% of EXP
+#endif
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -19583,10 +19587,10 @@ BUILDIN_FUNC(changequest)
 BUILDIN_FUNC(checkquest)
 {
 	struct map_session_data *sd;
-	enum quest_check_type type = HAVEQUEST;
+	e_quest_check_type type = HAVEQUEST;
 
 	if( script_hasdata(st, 3) )
-		type = (enum quest_check_type)script_getnum(st, 3);
+		type = (e_quest_check_type)script_getnum(st, 3);
 
 	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
@@ -19602,12 +19606,11 @@ BUILDIN_FUNC(checkquest)
 BUILDIN_FUNC(isbegin_quest)
 {
 	struct map_session_data *sd;
-	int i;
 
 	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	i = quest_check(sd, script_getnum(st, 2), (enum quest_check_type) HAVEQUEST);
+	int i = quest_check(sd, script_getnum(st, 2), HAVEQUEST);
 	script_pushint(st, i + (i < 1));
 
 	return SCRIPT_CMD_SUCCESS;

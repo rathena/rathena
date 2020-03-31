@@ -489,6 +489,8 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_WARM]->val4), bl->m, x1-x0, y1-y0);
 				if (sc->data[SC_BANDING])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_BANDING]->val4), bl->m, x1-x0, y1-y0);
+				if (sc->data[SC_HELLS_PLANT])
+					skill_unit_move_unit_group(skill_id2group(sc->data[SC_HELLS_PLANT]->val4), bl->m, x1-x0, y1-y0);
 
 				if (sc->data[SC_NEUTRALBARRIER_MASTER])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_NEUTRALBARRIER_MASTER]->val2), bl->m, x1-x0, y1-y0);
@@ -2146,6 +2148,10 @@ int map_quit(struct map_session_data *sd) {
 			status_change_end(&sd->bl, SC_GLASTHEIM_STATE, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_GLASTHEIM_ITEMDEF, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_GLASTHEIM_HPSP, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULGOLEM, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULSHADOW, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULFALCON, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULFAIRY, INVALID_TIMER);
 		}
 	}
 
