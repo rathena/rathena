@@ -178,9 +178,9 @@ namespace rathena {
 		/**
 		 * Determine if a value exists in the vector and then erase it
 		 * @param vector: Vector to erase value from
-		 * @param index: Value to remove
+		 * @param value: Value to remove
 		 */
-		template <typename K> void vector_erase_if_exists(std::vector<K> &vector, V value) {
+		template <typename K, typename V> void vector_erase_if_exists(std::vector<K> &vector, V value) {
 			auto it = std::find(vector.begin(), vector.end(), value);
 
 			if (it != vector.end()) {
