@@ -11839,7 +11839,7 @@ static unsigned int pc_calc_basehp(uint16 level, uint16 job_id) {
 	double base_hp = 35 + level * (job->hp_multiplicator / 100.);
 
 #ifndef RENEWAL
-	if(level >= 10 && (class_ == JOB_NINJA || class_ == JOB_GUNSLINGER)) base_hp += 90;
+	if(level >= 10 && (job_id == JOB_NINJA || job_id == JOB_GUNSLINGER)) base_hp += 90;
 #endif
 	for (uint16 i = 2; i <= level; i++)
 		base_hp += floor(((job->hp_factor / 100.) * i) + 0.5); //Don't have round()
