@@ -10051,7 +10051,7 @@ ACMD_FUNC(clonestat) {
 		clonestat_check(dex, PARAM_DEX);
 		clonestat_check(luk, PARAM_LUK);
 
-		for (i = 0; i < PARAM_MAX; i++) {
+		for (i = 0; i < PARAM_MAX - 1; i++) {
 			clif_updatestatus(sd, SP_STR + i);
 			clif_updatestatus(sd, SP_USTR + i);
 		}
