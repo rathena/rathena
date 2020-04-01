@@ -61,6 +61,8 @@
 
 using namespace rathena;
 
+JobDatabase job_db;
+
 int pc_split_atoui(char* str, unsigned int* val, char sep, int max);
 static inline bool pc_attendance_rewarded_today( struct map_session_data* sd );
 
@@ -87,8 +89,6 @@ int pc_expiration_tid = INVALID_TIMER;
 struct fame_list smith_fame_list[MAX_FAME_LIST];
 struct fame_list chemist_fame_list[MAX_FAME_LIST];
 struct fame_list taekwon_fame_list[MAX_FAME_LIST];
-
-struct s_job_info job_info[CLASS_COUNT];
 
 const std::string AttendanceDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/attendance.yml";
@@ -2219,7 +2219,9 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 
 	skill_point = pc_calc_skillpoint(sd);
 
-	novice_skills = job_info[pc_class2idx(JOB_NOVICE)].max_level[1] - 1;
+	std::shared_ptr<s_job_info> novice_job = job_db.find(JOB_NOVICE);
+
+	novice_skills = novice_job->max_job_level - 1;
 
 	// limit 1st class and above to novice job levels
 	if(skill_point < novice_skills && (sd->class_&MAPID_BASEMASK) != MAPID_SUMMONER)
@@ -2235,9 +2237,11 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 			if (sd->class_&JOBL_THIRD)
 			{
 				// if neither 2nd nor 3rd jobchange levels are known, we have to assume a default for 2nd
-				if (!sd->change_level_3rd)
-					sd->change_level_2nd = job_info[pc_class2idx(pc_mapid2jobid(sd->class_&MAPID_UPPERMASK, sd->status.sex))].max_level[1];
-				else
+				if (!sd->change_level_3rd) {
+					std::shared_ptr<s_job_info> job = job_db.find(pc_mapid2jobid(sd->class_&MAPID_UPPERMASK, sd->status.sex));
+
+					sd->change_level_2nd = job->max_job_level;
+				} else
 					sd->change_level_2nd = 1 + skill_point + sd->status.skill_point
 						- (sd->status.job_level - 1)
 						- (sd->change_level_3rd - 1)
@@ -7231,11 +7235,13 @@ void pc_lostexp(struct map_session_data *sd, unsigned int base_exp, unsigned int
 
 /**
  * Returns max base level for this character's class.
- * @param class_: Player's class
+ * @param job_id: Player's class
  * @return Max Base Level
  */
-static unsigned int pc_class_maxbaselv(unsigned short class_) {
-	return job_info[pc_class2idx(class_)].max_level[0];
+uint32 JobDatabase::get_maxBaseLv(uint16 job_id) {
+	std::shared_ptr<s_job_info> job = job_db.find(job_id);
+
+	return job ? job->max_base_level : 0;
 }
 
 /**
@@ -7244,16 +7250,18 @@ static unsigned int pc_class_maxbaselv(unsigned short class_) {
  * @return Max Base Level
  **/
 unsigned int pc_maxbaselv(struct map_session_data *sd){
-	return pc_class_maxbaselv(sd->status.class_);
+	return job_db.get_maxBaseLv(sd->status.class_);
 }
 
 /**
  * Returns max job level for this character's class.
- * @param class_: Player's class
+ * @param job_id: Player's class
  * @return Max Job Level
  */
-static unsigned int pc_class_maxjoblv(unsigned short class_) {
-	return job_info[pc_class2idx(class_)].max_level[1];
+uint32 JobDatabase::get_maxJobLv(uint16 job_id) {
+	std::shared_ptr<s_job_info> job = job_db.find(job_id);
+
+	return job ? job->max_job_level : 0;
 }
 
 /**
@@ -7262,7 +7270,7 @@ static unsigned int pc_class_maxjoblv(unsigned short class_) {
  * @return Max Job Level
  **/
 unsigned int pc_maxjoblv(struct map_session_data *sd){
-	return pc_class_maxjoblv(sd->status.class_);
+	return job_db.get_maxJobLv(sd->status.class_);
 }
 
 /**
@@ -7286,6 +7294,18 @@ bool pc_is_maxjoblv(struct map_session_data *sd) {
 }
 
 /**
+ * Returns base experience for this character's class.
+ * @param job_id: Player's class
+ * @param level: Player's level
+ * @return Base EXP
+ */
+int64 JobDatabase::get_baseExp(uint16 job_id, uint32 level) {
+	std::shared_ptr<s_job_info> job = job_db.find(job_id);
+
+	return job ? job->exp_table[0][level - 1] : 0;
+}
+
+/**
  * Base exp needed for player to level up.
  * @param sd
  * @return Base EXP needed for next base level
@@ -7296,7 +7316,19 @@ unsigned int pc_nextbaseexp(struct map_session_data *sd){
 		return 0;
 	if (pc_is_maxbaselv(sd))
 		return MAX_LEVEL_BASE_EXP; // On max level, player's base EXP limit is 99,999,999
-	return job_info[pc_class2idx(sd->status.class_)].exp_table[0][sd->status.base_level-1];
+	return static_cast<uint32>(job_db.get_baseExp(sd->status.class_, sd->status.base_level));
+}
+
+/**
+ * Returns job experience for this character's class.
+ * @param job_id: Player's class
+ * @param level: Player's level
+ * @return Job EXP
+ */
+int64 JobDatabase::get_jobExp(uint16 job_id, uint32 level) {
+	std::shared_ptr<s_job_info> job = job_db.find(job_id);
+
+	return job ? job->exp_table[1][level - 1] : 0;
 }
 
 /**
@@ -7310,7 +7342,53 @@ unsigned int pc_nextjobexp(struct map_session_data *sd){
 		return 0;
 	if (pc_is_maxjoblv(sd))
 		return MAX_LEVEL_JOB_EXP; // On max level, player's job EXP limit is 999,999,999
-	return job_info[pc_class2idx(sd->status.class_)].exp_table[1][sd->status.job_level-1];
+	return static_cast<uint32>(job_db.get_jobExp(sd->status.class_, sd->status.job_level));
+}
+
+/**
+ * Returns base HP for this character's class.
+ * @param job_id: Player's class
+ * @param level: Player's level
+ * @return Base HP
+ */
+uint32 JobDatabase::get_baseHp(uint16 job_id, uint32 level) {
+	std::shared_ptr<s_job_info> job = job_db.find(job_id);
+
+	return job ? job->base_hp[level] : 0;
+}
+
+/**
+ * Returns base SP for this character's class.
+ * @param job_id: Player's class
+ * @param level: Player's level
+ * @return Base SP
+ */
+uint32 JobDatabase::get_baseSp(uint16 job_id, uint32 level) {
+	std::shared_ptr<s_job_info> job = job_db.find(job_id);
+
+	return job ? job->base_sp[level] : 0;
+}
+
+/**
+ * Returns max weight base for this character's class.
+ * @param job_id: Player's class
+ * @return Max weight base
+ */
+int32 JobDatabase::get_maxWeight(uint16 job_id) {
+	std::shared_ptr<s_job_info> job = job_db.find(job_id);
+
+	return job ? job->max_weight_base : 0;
+}
+
+/**
+ * Returns job stat bonus for this character's class.
+ * @param job_id: Player's job
+ * @return Job Bonus array
+ */
+std::vector<uint8> JobDatabase::get_jobBonus(uint16 job_id) {
+	std::shared_ptr<s_job_info> job = job_db.find(job_id);
+
+	return job ? job->job_bonus : std::vector<uint8> (0);
 }
 
 /// Returns the value of the specified stat.
@@ -11596,22 +11674,6 @@ int pc_split_str(char *str,char **val,int num)
 	return i;
 }
 
-int pc_split_atoi(char* str, int* val, char sep, int max)
-{
-	int i,j;
-	for (i=0; i<max; i++) {
-		if (!str) break;
-		val[i] = atoi(str);
-		str = strchr(str,sep);
-		if (str)
-			*str++=0;
-	}
-	//Zero up the remaining.
-	for(j=i; j < max; j++)
-		val[j] = 0;
-	return i;
-}
-
 int pc_split_atoui(char* str, unsigned int* val, char sep, int max)
 {
 	static int warning=0;
@@ -11684,11 +11746,11 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 		ShowWarning("pc_readdb_skilltree: Skill %hu's level %hu exceeds job %d's max level %hu. Capping skill level.\n", skill_id, skill_lv, class_, skill_lv_max);
 		skill_lv = skill_lv_max;
 	}
-	if (baselv > (baselv_max = pc_class_maxbaselv(class_))) {
+	if (baselv > (baselv_max = job_db.get_maxBaseLv(class_))) {
 		ShowWarning("pc_readdb_skilltree: Skill %hu's base level requirement %d exceeds job %d's max base level %d. Capping skill base level.\n", skill_id, baselv, class_, baselv_max);
 		baselv = baselv_max;
 	}
-	if (joblv > (joblv_max = pc_class_maxjoblv(class_))) {
+	if (joblv > (joblv_max = job_db.get_maxJobLv(class_))) {
 		ShowWarning("pc_readdb_skilltree: Skill %hu's job level requirement %d exceeds job %d's max job level %d. Capping skill job level.\n", skill_id, joblv, class_, joblv_max);
 		joblv = joblv_max;
 	}
@@ -11768,38 +11830,35 @@ static bool pc_readdb_levelpenalty(char* fields[], int columns, int current)
 
 /** [Cydh]
 * Calculates base hp of player. Reference: http://irowiki.org/wiki/Max_HP
-* @param level Base level of player
-* @param class_ Job ID @see enum e_job
+* @param level: Base level of player
+* @param job_id: Job ID @see enum e_job
 * @return base_hp
 */
-static unsigned int pc_calc_basehp(uint16 level, uint16 class_) {
-	double base_hp;
-	uint16 i, idx = pc_class2idx(class_);
+static unsigned int pc_calc_basehp(uint16 level, uint16 job_id) {
+	std::shared_ptr<s_job_info> job = job_db.find(job_id);
+	double base_hp = 35 + level * (job->hp_multiplicator / 100.);
 
-	base_hp = 35 + level * (job_info[idx].hp_multiplicator/100.);
 #ifndef RENEWAL
 	if(level >= 10 && (class_ == JOB_NINJA || class_ == JOB_GUNSLINGER)) base_hp += 90;
 #endif
-	for (i = 2; i <= level; i++)
-		base_hp += floor(((job_info[idx].hp_factor/100.) * i) + 0.5); //Don't have round()
-	if (class_ == JOB_SUMMONER)
+	for (uint16 i = 2; i <= level; i++)
+		base_hp += floor(((job->hp_factor / 100.) * i) + 0.5); //Don't have round()
+	if (job_id == JOB_SUMMONER)
 		base_hp += floor((base_hp / 2) + 0.5);
 	return (unsigned int)base_hp;
 }
 
 /** [Playtester]
 * Calculates base sp of player.
-* @param level Base level of player
-* @param class_ Job ID @see enum e_job
+* @param level: Base level of player
+* @param job_id: Job ID @see enum e_job
 * @return base_sp
 */
-static unsigned int pc_calc_basesp(uint16 level, uint16 class_) {
-	double base_sp;
-	uint16 idx = pc_class2idx(class_);
+static unsigned int pc_calc_basesp(uint16 level, uint16 job_id) {
+	std::shared_ptr<s_job_info> job = job_db.find(job_id);
+	double base_sp = 10 + floor(level * (job->sp_factor / 100.));
 
-	base_sp = 10 + floor(level * (job_info[idx].sp_factor / 100.));
-
-	switch (class_) {
+	switch (job_id) {
 		case JOB_NINJA:
 			if (level >= 10)
 				base_sp -= 22;
@@ -11820,242 +11879,403 @@ static unsigned int pc_calc_basesp(uint16 level, uint16 class_) {
 	return (unsigned int)base_sp;
 }
 
-//Reading job_db1.txt line, (class,weight,HPFactor,HPMultiplicator,SPFactor,aspd/lvl...)
-static bool pc_readdb_job1(char* fields[], int columns, int current){
-	int idx, class_;
-	unsigned int i;
-
-	class_ = atoi(fields[0]);
-
-	if (!pcdb_checkid(class_)) {
-		ShowWarning("status_readdb_job1: Invalid job class %d specified.\n", class_);
-		return false;
-	}
-	idx = pc_class2idx(class_);
-
-	job_info[idx].max_weight_base = atoi(fields[1]);
-	job_info[idx].hp_factor  = atoi(fields[2]);
-	job_info[idx].hp_multiplicator = atoi(fields[3]);
-	job_info[idx].sp_factor  = atoi(fields[4]);
-
-#ifdef RENEWAL_ASPD
-	for(i = 0; i <= MAX_WEAPON_TYPE; i++)
-#else
-	for(i = 0; i < MAX_WEAPON_TYPE; i++)
-#endif
-	{
-		job_info[idx].aspd_base[i] = atoi(fields[i+5]);
-	}
-
-	return true;
-}
-
-//Reading job_db2.txt line (class,JobLv1,JobLv2,JobLv3,...)
-static bool pc_readdb_job2(char* fields[], int columns, int current)
-{
-	int idx, class_, i;
-
-	class_ = atoi(fields[0]);
-
-	if(!pcdb_checkid(class_))
-	{
-		ShowWarning("status_readdb_job2: Invalid job class %d specified.\n", class_);
-		return false;
-	}
-	idx = pc_class2idx(class_);
-
-	for(i = 1; i < columns; i++)
-	{
-		job_info[idx].job_bonus[i-1] = atoi(fields[i]);
-	}
-	return true;
-}
-
-//Reading job_exp.txt line
-//Max Level,Class list,Type (0 - Base Exp; 1 - Job Exp),Exp/lvl...
-static bool pc_readdb_job_exp(char* fields[], int columns, int current)
-{
-	int idx, i, type;
-	int job_id,job_count,jobs[CLASS_COUNT];
-	unsigned int ui, maxlvl;
-
-	maxlvl = atoi(fields[0]);
-	if(maxlvl > MAX_LEVEL || maxlvl<1){
-		ShowError("pc_readdb_job_exp: Invalid maxlevel %d specified.\n", maxlvl);
-		return false;
-	}
-	if((maxlvl+3) > columns){ //nb values = (maxlvl-startlvl)+1-index1stvalue
-		ShowError("pc_readdb_job_exp: Number of columns %d defined is too low for max level %d.\n",columns,maxlvl);
-		return false;
-	}
-	type = atoi(fields[2]);
-	if(type < 0 || type > 1){
-		ShowError("pc_readdb_job_exp: Invalid type %d specified.\n", type);
-		return false;
-	}
-	job_count = pc_split_atoi(fields[1],jobs,':',CLASS_COUNT);
-	if (job_count < 1)
-		return false;
-	job_id = jobs[0];
-	if(!pcdb_checkid(job_id)){
-		ShowError("pc_readdb_job_exp: Invalid job class %d specified.\n", job_id);
-		return false;
-	}
-	idx = pc_class2idx(job_id);
-
-	job_info[idx].max_level[type] = maxlvl;
-	for(i=0; i<maxlvl; i++)
-		job_info[idx].exp_table[type][i] = ((uint32) atoi(fields[3+i]));
-	//Reverse check in case the array has a bunch of trailing zeros... [Skotlex]
-	//The reasoning behind the -2 is this... if the max level is 5, then the array
-	//should look like this:
-	//0: x, 1: x, 2: x: 3: x 4: 0 <- last valid value is at 3.
-	while ((ui = job_info[idx].max_level[type]) >= 2 && job_info[idx].exp_table[type][ui-2] <= 0)
-		job_info[idx].max_level[type]--;
-	if (job_info[idx].max_level[type] < maxlvl) {
-		ShowWarning("pc_readdb_job_exp: Specified max %u for job %d, but that job's exp table only goes up to level %u.\n", maxlvl, job_id, job_info[idx].max_level[type]);
-		ShowInfo("Filling the missing values with the last exp entry.\n");
-		//Fill the requested values with the last entry.
-		ui = (job_info[idx].max_level[type] <= 2? 0: job_info[idx].max_level[type]-2);
-		for (; ui+2 < maxlvl; ui++)
-			job_info[idx].exp_table[type][ui] = job_info[idx].exp_table[type][ui-1];
-		job_info[idx].max_level[type] = maxlvl;
-	}
-//	ShowInfo("%s - Class %d: %d\n", type?"Job":"Base", job_id, job_info[idx].max_level[type]);
-	for (i = 1; i < job_count; i++) {
-		job_id = jobs[i];
-		if (!pcdb_checkid(job_id)) {
-			ShowError("pc_readdb_job_exp: Invalid job ID %d.\n", job_id);
-			continue;
-		}
-		idx = pc_class2idx(job_id);
-		memcpy(job_info[idx].exp_table[type], job_info[pc_class2idx(jobs[0])].exp_table[type], sizeof(job_info[pc_class2idx(jobs[0])].exp_table[type]));
-		job_info[idx].max_level[type] = maxlvl;
-//		ShowInfo("%s - Class %d: %u\n", type?"Job":"Base", job_id, job_info[idx].max_level[type]);
-	}
-	return true;
+const std::string JobDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/job_db.yml";
 }
 
 /**
-* #ifdef HP_SP_TABLES, reads 'job_basehpsp_db.txt to replace hp/sp results from formula
-* startlvl,endlvl,class,type,values...
-*/
-#ifdef HP_SP_TABLES
-static bool pc_readdb_job_basehpsp(char* fields[], int columns, int current)
-{
-	int i, startlvl, endlvl;
-	int job_count,jobs[CLASS_COUNT];
-	short type;
+ * Reads and parses an entry from the job_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
+	std::string job_name;
 
-	startlvl = atoi(fields[0]);
-	if(startlvl<1){
-		ShowError("pc_readdb_job_basehpsp: Invalid start level %d specified.\n", startlvl);
-		return false;
-	}
-	endlvl = atoi(fields[1]);
-	if(endlvl<1 || endlvl<startlvl){
-		ShowError("pc_readdb_job_basehpsp: Invalid end level %d specified.\n", endlvl);
-		return false;
-	}
-	if((endlvl-startlvl+1+4) > columns){ //nb values = (maxlvl-startlvl)+1-index1stvalue
-		ShowError("pc_readdb_job_basehpsp: Number of columns %d (needs %d) defined is too low for start level %d, max level %d.\n",columns,(endlvl-startlvl+1+4),startlvl,endlvl);
-		return false;
-	}
-	type = atoi(fields[3]);
-	if(type < 0 || type > 1){
-		ShowError("pc_readdb_job_basehpsp: Invalid type %d specified.\n", type);
-		return false;
+	if (!this->asString(node, "Job", job_name))
+		return 0;
+
+	std::string job_name_constant = "JOB_" + job_name;
+	int64 job_id;
+
+	if (!script_get_constant(job_name_constant.c_str(), &job_id)) {
+		this->invalidWarning(node["Job"], "Job %s does not exist.\n", job_name.c_str());
+		return 0;
 	}
 
-	job_count = pc_split_atoi(fields[2],jobs,':',CLASS_COUNT);
-	if (job_count < 1)
-		return false;
+	std::shared_ptr<s_job_info> job = this->find(static_cast<uint16>(job_id));
+	bool exists = job != nullptr;
 
-	for (i = 0; i < job_count; i++) {
-		int idx, job_id = jobs[i], use_endlvl;
-		if (!pcdb_checkid(job_id)) {
-			ShowError("pc_readdb_job_basehpsp: Invalid job class %d specified.\n", job_id);
-			return false;
-		}
-		idx = pc_class2idx(job_id);
-		if (startlvl > job_info[idx].max_level[0]) {
-			ShowError("pc_readdb_job_basehpsp: Invalid start level %d specified.\n", startlvl);
-			return false;
-		}
-		//Just read until available max level for this job, don't use MAX_LEVEL!
-		use_endlvl = endlvl;
-		if (use_endlvl > job_info[idx].max_level[0])
-			use_endlvl = job_info[idx].max_level[0];
-		
-		if(type == 0) {	//hp type
-			uint16 j;
-			for(j = 0; j < use_endlvl; j++) {
-				if (atoi(fields[j+4])) {
-					uint16 lvl_idx = startlvl-1+j;
-					job_info[idx].base_hp[lvl_idx] = atoi(fields[j+4]);
-					//Tells if this HP is lower than previous level (but not for 99->100)
-					if (lvl_idx-1 >= 0 && lvl_idx != 99 && job_info[idx].base_hp[lvl_idx] < job_info[idx].base_hp[lvl_idx-1])
-						ShowInfo("pc_readdb_job_basehpsp: HP value at entry %d col %d is lower than previous level (job=%d,lvl=%d,oldval=%d,val=%d).\n",
-							current,j+4,job_id,lvl_idx+1,job_info[idx].base_hp[lvl_idx-1],job_info[idx].base_hp[lvl_idx]);
-				}
-			}
-		}
-		else { //sp type
-			uint16 j;
-			for(j = 0; j < use_endlvl; j++) {
-				if (atoi(fields[j+4])) {
-					uint16 lvl_idx = startlvl-1+j;
-					job_info[idx].base_sp[lvl_idx] = atoi(fields[j+4]);
-					//Tells if this SP is lower than previous level (but not for 99->100)
-					if (lvl_idx-1 >= 0 && lvl_idx != 99 && job_info[idx].base_sp[lvl_idx] < job_info[idx].base_sp[lvl_idx-1])
-						ShowInfo("pc_readdb_job_basehpsp: SP value at entry %d col %d is lower than previous level (job=%d,lvl=%d,oldval=%d,val=%d).\n",
-							current,j+4,job_id,lvl_idx+1,job_info[idx].base_sp[lvl_idx-1],job_info[idx].base_sp[lvl_idx]);
-				}
-			}
-		}
+	if (!exists)
+		job = std::make_shared<s_job_info>();
+
+	if (this->nodeExists(node, "MaxWeight")) {
+		int32 weight;
+
+		if (!this->asInt32(node, "MaxWeight", weight))
+			return 0;
+
+		job->max_weight_base = weight;
+	} else {
+		if (!exists)
+			job->max_weight_base = 20000;
 	}
-	return true;
-}
+
+	if (this->nodeExists(node, "HPFactor")) {
+		int32 hp;
+
+		if (!this->asInt32(node, "HPFactor", hp))
+			return 0;
+
+		job->hp_factor = hp;
+	} else {
+		if (!exists)
+			job->hp_factor = 20000;
+	}
+
+	if (this->nodeExists(node, "HPMultiplicator")) {
+		int32 hp;
+
+		if (!this->asInt32(node, "HPMultiplicator", hp))
+			return 0;
+
+		job->hp_multiplicator = hp;
+	} else {
+		if (!exists)
+			job->hp_multiplicator = 500;
+	}
+
+	if (this->nodeExists(node, "SPFactor")) {
+		int32 sp;
+
+		if (!this->asInt32(node, "SPFactor", sp))
+			return 0;
+
+		job->sp_factor = sp;
+	} else {
+		if (!exists)
+			job->sp_factor = 100;
+	}
+
+	if (this->nodeExists(node, "BaseASPD")) {
+		const YAML::Node &aspdNode = node["BaseASPD"];
+		bool shield =
+#ifdef RENEWAL
+			true;
+#else
+			false;
 #endif
 
-/** [Cydh]
-* Reads 'job_param_db.txt' to check max. param each job and store them to job_info[].max_param.*
-*/
-static bool pc_readdb_job_param(char* fields[], int columns, int current)
-{
-	int64 class_tmp;
-	int idx, class_;
-	uint16 str, agi, vit, int_, dex, luk;
+		if (!exists) {
+			job->aspd_base.resize(MAX_WEAPON_TYPE + shield);
+			for (size_t i = 0; i < job->aspd_base.size(); i++)
+				job->aspd_base[i] = 2000;
+		}
 
-	script_get_constant(trim(fields[0]),&class_tmp);
-	class_ = static_cast<int>(class_tmp);
+		for (const auto &aspdit : aspdNode) {
+			std::string weapon = aspdit.first.as<std::string>(), weapon_constant = "W_" + weapon;
+			int64 constant;
 
-	if ((idx = pc_class2idx(class_)) < 0) {
-		ShowError("pc_readdb_job_param: Invalid job '%s'. Skipping!",fields[0]);
-		return false;
+			if (!script_get_constant(weapon_constant.c_str(), &constant) || constant < W_FIST || constant > MAX_WEAPON_TYPE + shield) {
+				this->invalidWarning(aspdNode["BaseASPD"], "Invalid weapon type %s specified for %s, skipping.\n", weapon.c_str(), job_name.c_str());
+				continue;
+			}
+
+			int16 aspd;
+
+			if (!this->asInt16(aspdNode, weapon.c_str(), aspd))
+				return 0;
+
+			job->aspd_base[static_cast<int16>(constant)] = aspd;
+		}
 	}
-	str = cap_value(atoi(fields[1]),10,SHRT_MAX);
-	agi = atoi(fields[2]) ? cap_value(atoi(fields[2]),10,SHRT_MAX) : str;
-	vit = atoi(fields[3]) ? cap_value(atoi(fields[3]),10,SHRT_MAX) : str;
-	int_ = atoi(fields[4]) ? cap_value(atoi(fields[4]),10,SHRT_MAX) : str;
-	dex = atoi(fields[5]) ? cap_value(atoi(fields[5]),10,SHRT_MAX) : str;
-	luk = atoi(fields[6]) ? cap_value(atoi(fields[6]),10,SHRT_MAX) : str;
 
-	job_info[idx].max_param.str = str;
-	job_info[idx].max_param.agi = agi;
-	job_info[idx].max_param.vit = vit;
-	job_info[idx].max_param.int_ = int_;
-	job_info[idx].max_param.dex = dex;
-	job_info[idx].max_param.luk = luk;
-	
-	return true;
+	if (this->nodeExists(node, "BonusStats")) {
+		if (!exists)
+			job->job_bonus.resize(job->max_job_level);
+
+		for (const YAML::Node &levelNode : node["Level"]) {
+			int32 level;
+
+			if (!this->asInt32(levelNode, "Level", level))
+				return 0;
+
+			if (level < 1 || level > MAX_LEVEL) {
+				this->invalidWarning(levelNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
+				return 0;
+			}
+			
+			std::string stat;
+
+			if (!this->asString(levelNode, "Bonus", stat))
+				return 0;
+
+			std::string stat_constant = "PARAM_" + stat;
+			int64 constant;
+
+			if (!script_get_constant(stat_constant.c_str(), &constant) || constant < PARAM_STR || constant > PARAM_LUK) {
+				this->invalidWarning(levelNode["Bonus"], "Invalid bonus stat %s specified for %s, skipping.\n", stat.c_str(), job_name.c_str());
+				continue;
+			}
+
+			job->job_bonus[level - 1] = static_cast<unsigned char>(constant);
+		}
+	}
+
+	if (this->nodeExists(node, "MaxStats")) {
+		const YAML::Node &statNode = node["MaxStats"];
+
+		for (const auto &statit : statNode) {
+			std::string stat = statit.first.as<std::string>(), stat_constant = "PARAM_" + stat;
+			int64 constant;
+
+			if (!script_get_constant(stat_constant.c_str(), &constant) || constant < PARAM_STR || constant > PARAM_LUK) {
+				this->invalidWarning(statNode["Bonus"], "Invalid max stat %s specified for %s, skipping.\n", stat.c_str(), job_name.c_str());
+				continue;
+			}
+
+			int16 max;
+
+			if (!this->asInt16(statNode, stat.c_str(), max))
+				return 0;
+
+			if (stat.find("Str") != std::string::npos)
+				job->max_param.str = max;
+			else if (stat.find("Agi") != std::string::npos)
+				job->max_param.agi = max;
+			else if (stat.find("Vit") != std::string::npos)
+				job->max_param.vit = max;
+			else if (stat.find("Int") != std::string::npos)
+				job->max_param.int_ = max;
+			else if (stat.find("Dex") != std::string::npos)
+				job->max_param.dex = max;
+			else if (stat.find("Luk") != std::string::npos)
+				job->max_param.luk = max;
+		}
+	}
+
+	if (!exists)
+		this->put(static_cast<uint16>(job_id), job);
+
+	return 1;
 }
+
+const std::string JobExpDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/job_exp_db.yml";
+}
+
+/**
+* Reads and parses an entry from the job_exp_db.
+* @param node: YAML node containing the entry.
+* @return count of successfully parsed rows
+*/
+uint64 JobExpDatabase::parseBodyNode(const YAML::Node &node) {
+	//int exp_group;
+
+	//if (!this->asInt32(node, "ExpGroup", exp_group))
+	//	return 0;
+
+	if (this->nodeExists(node, "Jobs")) {
+		const YAML::Node &jobsNode = node["Jobs"];
+
+		for (const auto &jobit : jobsNode) {
+			std::string job_name = jobit.first.as<std::string>(), job_name_constant = "JOB_" + job_name;
+			int64 constant;
+
+			if (!script_get_constant(job_name_constant.c_str(), &constant)) {
+				this->invalidWarning(node["Job"], "Job %s does not exist.\n", job_name.c_str());
+				return 0;
+			}
+
+			std::shared_ptr<s_job_info> job = job_db.find(static_cast<uint16>(constant));
+
+			if (job == nullptr) {
+				this->invalidWarning(node["Job"], "Job %s has not been previously parsed from the job_db.yml.\n", job_name.c_str());
+				continue;
+			}
+
+			if (this->nodeExists(node, "MaxBaseLevel")) {
+				uint16 level;
+
+				if (!this->asUInt16(node, "MaxBaseLevel", level))
+					return 0;
+
+				if (level < 1 || level > MAX_LEVEL) {
+					this->invalidWarning(node["MaxBaseLevel"], "MaxBaseLevel must be between 1~MAX_LEVEL for %s, capping to MAX_LEVEL.\n", job_name.c_str());
+					level = MAX_LEVEL;
+				}
+
+				job->max_base_level = level;
+			} else
+				job->max_base_level = MAX_LEVEL;
+
+			if (this->nodeExists(node, "BaseExp")) {
+				for (const YAML::Node &bexpNode : node["BaseExp"]) {
+					int32 level;
+
+					if (!this->asInt32(bexpNode, "Level", level))
+						return 0;
+
+					if (level < 1 || level > MAX_LEVEL) {
+						this->invalidWarning(bexpNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
+						return 0;
+					}
+
+					if (this->nodeExists(bexpNode, "Exp")) {
+						int64 exp;
+
+						if (!this->asInt64(bexpNode, "Exp", exp))
+							return 0;
+
+						job->exp_table[0][level] = exp;
+					}
+				}
+			}
+
+			if (this->nodeExists(node, "MaxJobLevel")) {
+				uint16 level;
+
+				if (!this->asUInt16(node, "MaxJobLevel", level))
+					return 0;
+
+				if (level < 1 || level > MAX_LEVEL) {
+					this->invalidWarning(node["MaxJobLevel"], "MaxJobLevel must be between 1~MAX_LEVEL for %s, capping to MAX_LEVEL.\n", job_name.c_str());
+					level = MAX_LEVEL;
+				}
+
+				job->max_job_level = level;
+			} else
+				job->max_job_level = MAX_LEVEL;
+
+			if (this->nodeExists(node, "JobExp")) {
+				for (const YAML::Node &jexpNode : node["JobExp"]) {
+					int32 level;
+
+					if (!this->asInt32(jexpNode, "Level", level))
+						return 0;
+
+					if (level < 1 || level > MAX_LEVEL) {
+						this->invalidWarning(jexpNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
+						return 0;
+					}
+
+					if (this->nodeExists(jexpNode, "Exp")) {
+						int64 exp;
+
+						if (!this->asInt64(jexpNode, "Exp", exp))
+							return 0;
+
+						job->exp_table[1][level] = exp;
+					}
+				}
+			}
+		}
+	}
+
+	return 1;
+}
+
+JobExpDatabase job_exp_db;
+
+const std::string JobBaseHPSPDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/job_basehpsp_db.yml";
+}
+
+/**
+ * Reads and parses an entry from the job_basehpsp_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 JobBaseHPSPDatabase::parseBodyNode(const YAML::Node &node) {
+	//int base_group;
+
+	//if (!this->asInt32(node, "BaseGroup", base_group))
+	//	return 0;
+
+	if (this->nodeExists(node, "Jobs")) {
+		const YAML::Node &jobsNode = node["Jobs"];
+
+		for (const auto &jobit : jobsNode) {
+			std::string job_name = jobit.first.as<std::string>(), job_name_constant = "JOB_" + job_name;
+			int64 constant;
+
+			if (!script_get_constant(job_name_constant.c_str(), &constant)) {
+				this->invalidWarning(node["Job"], "Job %s does not exist.\n", job_name.c_str());
+				return 0;
+			}
+
+			std::shared_ptr<s_job_info> job = job_db.find(static_cast<uint16>(constant));
+
+			if (job == nullptr) {
+				this->invalidWarning(node["Job"], "Job %s has not been previously parsed from the job_db.yml.\n", job_name.c_str());
+				continue;
+			}
+
+			if (this->nodeExists(node, "BaseHp")) {
+				job->base_hp.resize(job->max_base_level, 1);
+
+				for (const YAML::Node &bhpNode : node["BaseHp"]) {
+					int32 level;
+
+					if (!this->asInt32(bhpNode, "Level", level))
+						return 0;
+
+					if (level < 1 || level > MAX_LEVEL) {
+						this->invalidWarning(bhpNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
+						return 0;
+					}
+
+#ifdef HP_SP_TABLES
+					if (this->nodeExists(bhpNode, "Hp")) {
+						uint32 points;
+
+						if (!this->asUInt32(bhpNode, "Hp", points))
+							return 0;
+
+						job->base_hp[level - 1] = points;
+					}
+#endif
+				}
+			}
+
+			if (this->nodeExists(node, "BaseSp")) {
+				job->base_sp.resize(job->max_base_level, 1);
+
+				for (const YAML::Node &bspNode : node["BaseSp"]) {
+					int32 level;
+
+					if (!this->asInt32(bspNode, "Level", level))
+						return 0;
+
+					if (level < 1 || level > MAX_LEVEL) {
+						this->invalidWarning(bspNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
+						return 0;
+					}
+
+#ifdef HP_SP_TABLES
+					if (this->nodeExists(bspNode, "Sp")) {
+						uint32 points;
+
+						if (!this->asUInt32(bspNode, "Sp", points))
+							return 0;
+
+						job->base_sp[level - 1] = points;
+					}
+#endif
+				}
+			}
+		}
+	}
+
+	return 1;
+}
+
+JobBaseHPSPDatabase job_basehpsp_db;
 
 /**
  * Read job_noenter_map.txt
  **/
 static bool pc_readdb_job_noenter_map(char *str[], int columns, int current) {
-	int idx, class_ = -1;
+	int class_ = -1;
 	int64 class_tmp;
 
 	if (ISDIGIT(str[0][0])) {
@@ -12068,13 +12288,20 @@ static bool pc_readdb_job_noenter_map(char *str[], int columns, int current) {
 		class_ = static_cast<int>(class_tmp);
 	}
 
-	if (!pcdb_checkid(class_) || (idx = pc_class2idx(class_)) < 0) {
+	if (!pcdb_checkid(class_)) {
 		ShowError("pc_readdb_job_noenter_map: Invalid job %d specified.\n", class_);
 		return false;
 	}
 
-	job_info[idx].noenter_map.zone = atoi(str[1]);
-	job_info[idx].noenter_map.group_lv = atoi(str[2]);
+	std::shared_ptr<s_job_info> job = job_db.find(class_);
+
+	if (job == nullptr) {
+		ShowError("pc_readdb_job_noenter_map: Job %d data not initialized.\n", class_);
+		return false;
+	}
+
+	job->noenter_map.zone = atoi(str[1]);
+	job->noenter_map.group_lv = atoi(str[2]);
 	return true;
 }
 
@@ -12112,12 +12339,9 @@ static int pc_read_statsdb(const char *basedir, int last_s, bool silent){
 
 /*==========================================
  * pc DB reading.
- * job_exp.txt		- required experience values
+ * job_db.yml		- Job values
  * skill_tree.txt	- skill tree for every class
  * attr_fix.txt		- elemental adjustment table
- * job_db1.txt		- job,weight,hp_factor,hp_multiplicator,sp_factor,aspds/lvl
- * job_db2.txt		- job,stats bonuses/lvl
- * job_maxhpsp_db.txt	- strtlvl,maxlvl,job,type,values/lvl (values=hp|sp)
  *------------------------------------------*/
 void pc_readdb(void) {
 	int i, k, s = 1;
@@ -12128,7 +12352,7 @@ void pc_readdb(void) {
 	};
 		
 	//reset
-	memset(job_info,0,sizeof(job_info)); // job_info table
+	job_db.clear(); // job_info table
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 	sv_readdb(db_path, DBPATH "level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 0);
@@ -12151,6 +12375,11 @@ void pc_readdb(void) {
 
 	 // reset then read statspoint
 	memset(statp,0,sizeof(statp));
+
+	job_db.load();
+	job_exp_db.load();
+	job_basehpsp_db.load();
+
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[i])+1);
 		uint8 n2 = (uint8)(strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1);
@@ -12167,20 +12396,7 @@ void pc_readdb(void) {
 		}
 
 		s = pc_read_statsdb(dbsubpath2,s,i > 0);
-		if (i == 0)
-#ifdef RENEWAL_ASPD // Paths are hardcoded here to specifically pick the correct database
-			sv_readdb(dbsubpath1, "re/job_db1.txt",',',6+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, false);
-#else
-			sv_readdb(dbsubpath1, "pre-re/job_db1.txt",',',5+MAX_WEAPON_TYPE,5+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, false);
-#endif
-		else
-			sv_readdb(dbsubpath1, "job_db1.txt",',',5+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, true);
-		sv_readdb(dbsubpath1, "job_db2.txt",',',1,1+MAX_LEVEL,CLASS_COUNT,&pc_readdb_job2, i > 0);
-		sv_readdb(dbsubpath2, "job_exp.txt",',',4,1000+3,CLASS_COUNT*2,&pc_readdb_job_exp, i > 0); //support till 1000lvl
-#ifdef HP_SP_TABLES
-		sv_readdb(dbsubpath2, "job_basehpsp_db.txt", ',', 4, 4+500, CLASS_COUNT*2, &pc_readdb_job_basehpsp, i > 0); //Make it support until lvl 500!
-#endif
-		sv_readdb(dbsubpath2, "job_param_db.txt", ',', 2, PARAM_MAX+1, CLASS_COUNT, &pc_readdb_job_param, i > 0);
+
 		sv_readdb(dbsubpath2, "job_noenter_map.txt", ',', 3, 3, CLASS_COUNT, &pc_readdb_job_noenter_map, i > 0);
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
@@ -12201,24 +12417,31 @@ void pc_readdb(void) {
 	
 	//Checking if all class have their data
 	for (i = 0; i < JOB_MAX; i++) {
-		int idx;
-		uint16 j;
 		if (!pcdb_checkid(i))
 			continue;
 		if (i == JOB_WEDDING || i == JOB_XMAS || i == JOB_SUMMER || i == JOB_HANBOK || i == JOB_OKTOBERFEST || i == JOB_SUMMER2)
 			continue; //Classes that do not need exp tables.
-		idx = pc_class2idx(i);
-		if (!job_info[idx].max_level[0])
+
+		std::shared_ptr<s_job_info> job = job_db.find(i);
+		uint16 maxBaseLv = job->max_base_level, maxJobLv = job->max_job_level;
+
+		if (!maxBaseLv)
 			ShowWarning("Class %s (%d) does not have a base exp table.\n", job_name(i), i);
-		if (!job_info[idx].max_level[1])
+		if (!maxJobLv)
 			ShowWarning("Class %s (%d) does not have a job exp table.\n", job_name(i), i);
 		
 		//Init and checking the empty value of Base HP/SP [Cydh]
-		for (j = 0; j < (job_info[idx].max_level[0] ? job_info[idx].max_level[0] : MAX_LEVEL); j++) {
-			if (job_info[idx].base_hp[j] == 0)
-				job_info[idx].base_hp[j] = pc_calc_basehp(j+1,i);
-			if (job_info[idx].base_sp[j] == 0)
-				job_info[idx].base_sp[j] = pc_calc_basesp(j+1,i);
+		if (job->base_hp.size() == 0)
+			job->base_hp.resize(maxBaseLv);
+		for (uint16 j = 0; j < maxBaseLv; j++) {
+			if (job->base_hp[j] == 0)
+				job->base_hp[j] = pc_calc_basehp(j + 1, i);
+		}
+		if (job->base_sp.size() == 0)
+			job->base_sp.resize(maxJobLv);
+		for (uint16 j = 0; j < maxJobLv; j++) {
+			if (job->base_sp[j] == 0)
+				job->base_sp[j] = pc_calc_basesp(j + 1, i);
 		}
 	}
 }
@@ -12888,24 +13111,28 @@ void pc_cell_basilica(struct map_session_data *sd) {
 
 /** [Cydh]
  * Get maximum specified parameter for specified class
- * @param class_: sd->class
- * @param sex: sd->status.sex
- * @param flag: parameter will be checked
+ * @param sd: Player data
+ * @param param: Max parameter to check
  * @return max_param
  */
-short pc_maxparameter(struct map_session_data *sd, enum e_params param) {
-	int idx = -1, class_ = sd->class_;
+uint16 pc_maxparameter(struct map_session_data *sd, e_params param) {
+	nullpo_retr(0, sd);
 
-	if ((idx = pc_class2idx(pc_mapid2jobid(class_,sd->status.sex))) >= 0) {
-		short max_param = 0;
+	int class_ = sd->class_;
+	std::shared_ptr<s_job_info> job = job_db.find(pc_mapid2jobid(class_,sd->status.sex));
+
+	if (job && param) {
+		uint16 max_param = 0;
+
 		switch (param) {
-			case PARAM_STR: max_param = job_info[idx].max_param.str; break;
-			case PARAM_AGI: max_param = job_info[idx].max_param.agi; break;
-			case PARAM_VIT: max_param = job_info[idx].max_param.vit; break;
-			case PARAM_INT: max_param = job_info[idx].max_param.int_; break;
-			case PARAM_DEX: max_param = job_info[idx].max_param.dex; break;
-			case PARAM_LUK: max_param = job_info[idx].max_param.luk; break;
+			case PARAM_STR: max_param = job->max_param.str; break;
+			case PARAM_AGI: max_param = job->max_param.agi; break;
+			case PARAM_VIT: max_param = job->max_param.vit; break;
+			case PARAM_INT: max_param = job->max_param.int_; break;
+			case PARAM_DEX: max_param = job->max_param.dex; break;
+			case PARAM_LUK: max_param = job->max_param.luk; break;
 		}
+
 		if (max_param > 0)
 			return max_param;
 	}
@@ -13171,8 +13398,6 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
  * @return 1 if job is allowed, 0 otherwise
  **/
 bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
-	uint16 idx = 0;
-
 	// Map is other map server.
 	// !FIXME: Currently, a map-server doesn't recognized map's attributes on other server, so we assume it's fine to warp.
 	if (m < 0)
@@ -13186,16 +13411,17 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
 	if (!pcdb_checkid(jobid))
 		return false;
 
-	idx = pc_class2idx(jobid);
-	if (!job_info[idx].noenter_map.zone || group_lv > job_info[idx].noenter_map.group_lv)
+	std::shared_ptr<s_job_info> job = job_db.find(jobid);
+
+	if (!job->noenter_map.zone || group_lv > job->noenter_map.group_lv)
 		return true;
 
-	if ((job_info[idx].noenter_map.zone&1 && !mapdata_flag_vs2(mapdata)) || // Normal
-		(job_info[idx].noenter_map.zone&2 && mapdata->flag[MF_PVP]) || // PVP
-		(job_info[idx].noenter_map.zone&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
-		(job_info[idx].noenter_map.zone&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
-		(job_info[idx].noenter_map.zone&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(job_info[idx].noenter_map.zone&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
+	if ((job->noenter_map.zone&1 && !mapdata_flag_vs2(mapdata)) || // Normal
+		(job->noenter_map.zone&2 && mapdata->flag[MF_PVP]) || // PVP
+		(job->noenter_map.zone&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
+		(job->noenter_map.zone&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
+		(job->noenter_map.zone&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
+		(job->noenter_map.zone&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
 		)
 		return false;
 

@@ -3898,6 +3898,7 @@
 	export_constant(W_DOUBLE_DA);
 	export_constant(W_DOUBLE_SA);
 	export_constant(MAX_WEAPON_TYPE_ALL);
+	export_constant(W_SHIELD);
 
 	/* ammunition types */
 	export_constant(A_ARROW);
@@ -7733,6 +7734,14 @@
 	export_constant(BG_INFO_MAX_LEVEL);
 	export_constant(BG_INFO_MAPS);
 	export_constant(BG_INFO_DESERTER_TIME);
+
+	/* stats */
+	export_constant(PARAM_STR);
+	export_constant(PARAM_AGI);
+	export_constant(PARAM_VIT);
+	export_constant(PARAM_INT);
+	export_constant(PARAM_DEX);
+	export_constant(PARAM_LUK);
 
 	#undef export_constant
 	#undef export_constant2

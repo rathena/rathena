@@ -7,6 +7,7 @@
 #include <memory>
 #include <vector>
 
+#include "../common/database.hpp"
 #include "../common/mmo.hpp" // JOB_*, MAX_FAME_LIST, struct fame_list, struct mmo_charstatus
 #include "../common/strlib.hpp"// StringBuf
 #include "../common/timer.hpp"
@@ -603,8 +604,8 @@ struct map_session_data {
 	int eventtimer[MAX_EVENTTIMER];
 	unsigned short eventcount; // [celest]
 
-	unsigned char change_level_2nd; // job level when changing from 1st to 2nd class [jobchange_level in global_reg_value]
-	unsigned char change_level_3rd; // job level when changing from 2nd to 3rd class [jobchange_level_3rd in global_reg_value]
+	uint16 change_level_2nd; // job level when changing from 1st to 2nd class [jobchange_level in global_reg_value]
+	uint16 change_level_3rd; // job level when changing from 2nd to 3rd class [jobchange_level_3rd in global_reg_value]
 
 	char fakename[NAME_LENGTH]; // fake names [Valaris]
 
@@ -816,6 +817,7 @@ enum weapon_type {
 	W_DOUBLE_DA, // dagger + axe
 	W_DOUBLE_SA, // sword + axe
 	MAX_WEAPON_TYPE_ALL,
+	W_SHIELD = MAX_WEAPON_TYPE,
 };
 
 #define WEAPON_TYPE_ALL ((1<<MAX_WEAPON_TYPE)-1)
@@ -866,17 +868,13 @@ enum item_check {
 };
 
 struct s_job_info {
-	unsigned int base_hp[MAX_LEVEL], base_sp[MAX_LEVEL]; //Storage for the first calculation with hp/sp factor and multiplicator
+	std::vector<uint32> base_hp, base_sp; //Storage for the first calculation with hp/sp factor and multiplicator
 	int hp_factor, hp_multiplicator, sp_factor;
 	int max_weight_base;
-	char job_bonus[MAX_LEVEL];
-#ifdef RENEWAL_ASPD
-	int aspd_base[MAX_WEAPON_TYPE+1];
-#else
-	int aspd_base[MAX_WEAPON_TYPE];	//[blackhole89]
-#endif
-	uint32 exp_table[2][MAX_LEVEL];
-	uint32 max_level[2];
+	std::vector<uint8> job_bonus;
+	std::vector<int16> aspd_base;
+	int64 exp_table[2][MAX_LEVEL];
+	uint16 max_base_level, max_job_level;
 	struct s_params {
 		uint16 str, agi, vit, int_, dex, luk;
 	} max_param;
@@ -885,7 +883,50 @@ struct s_job_info {
 		uint8 group_lv;
 	} noenter_map;
 };
-extern struct s_job_info job_info[CLASS_COUNT];
+
+class JobDatabase : public TypesafeYamlDatabase<uint16, s_job_info> {
+public:
+	JobDatabase() : TypesafeYamlDatabase("JOB_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+
+	// Extras
+	uint32 get_maxBaseLv(uint16 job_id);
+	uint32 get_maxJobLv(uint16 job_id);
+	int64 get_baseExp(uint16 job_id, uint32 level);
+	int64 get_jobExp(uint16 job_id, uint32 level);
+	uint32 get_baseHp(uint16 job_id, uint32 level);
+	uint32 get_baseSp(uint16 job_id, uint32 level);
+	int32 get_maxWeight(uint16 job_id);
+	std::vector<uint8> get_jobBonus(uint16 job_id);
+};
+
+extern JobDatabase job_db;
+
+class JobExpDatabase : public YamlDatabase {
+public:
+	JobExpDatabase() : YamlDatabase("JOB_EXP_DB", 1) {
+
+	}
+
+	void clear() { };
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+};
+
+class JobBaseHPSPDatabase : public YamlDatabase {
+public:
+	JobBaseHPSPDatabase() : YamlDatabase("JOB_BASEHPSP_DB", 1) {
+
+	}
+
+	void clear() { };
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+};
 
 #define EQP_WEAPON EQP_HAND_R
 #define EQP_SHIELD EQP_HAND_L
@@ -945,8 +986,8 @@ static inline bool pc_hasprogress(struct map_session_data *sd, enum e_wip_block 
 }
 
 /// Enum of Player's Parameter
-enum e_params {
-	PARAM_STR = 0,
+enum e_params : uint8 {
+	PARAM_STR = 1,
 	PARAM_AGI,
 	PARAM_VIT,
 	PARAM_INT,
@@ -954,7 +995,7 @@ enum e_params {
 	PARAM_LUK,
 	PARAM_MAX
 };
-short pc_maxparameter(struct map_session_data *sd, enum e_params param);
+uint16 pc_maxparameter(struct map_session_data *sd, e_params param);
 short pc_maxaspd(struct map_session_data *sd);
 
 /**
@@ -1044,7 +1085,6 @@ public:
 extern AttendanceDatabase attendance_db;
 
 void pc_set_reg_load(bool val);
-int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
 int pc_get_group_level(struct map_session_data *sd);
 int pc_get_group_id(struct map_session_data *sd);

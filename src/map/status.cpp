@@ -2617,16 +2617,16 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 int status_base_amotion_pc(struct map_session_data* sd, struct status_data* status)
 {
 	int amotion;
-	int classidx = pc_class2idx(sd->status.class_);
+	std::shared_ptr<s_job_info> job = job_db.find(sd->status.class_);
 #ifdef RENEWAL_ASPD
 	int16 skill_lv, val = 0;
 	float temp_aspd = 0;
 
-	amotion = job_info[classidx].aspd_base[sd->weapontype1]; // Single weapon
+	amotion = job->aspd_base[sd->weapontype1]; // Single weapon
 	if (sd->status.shield)
-		amotion += job_info[classidx].aspd_base[MAX_WEAPON_TYPE];
+		amotion += job->aspd_base[MAX_WEAPON_TYPE];
 	else if (sd->weapontype2 && sd->equip_index[EQI_HAND_R] != sd->equip_index[EQI_HAND_L])
-		amotion += job_info[classidx].aspd_base[sd->weapontype2] / 4; // Dual-wield
+		amotion += job->aspd_base[sd->weapontype2] / 4; // Dual-wield
 
 	switch(sd->status.weapon) {
 		case W_BOW:
@@ -2664,8 +2664,8 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 
 	// Base weapon delay
 	amotion = (sd->status.weapon < MAX_WEAPON_TYPE)
-	 ? (job_info[classidx].aspd_base[sd->status.weapon]) // Single weapon
-	 : (job_info[classidx].aspd_base[sd->weapontype1] + job_info[classidx].aspd_base[sd->weapontype2]) * 7 / 10; // Dual-wield
+	 ? (job->aspd_base[sd->status.weapon]) // Single weapon
+	 : (job->aspd_base[sd->weapontype1] + job->aspd_base[sd->weapontype2]) * 7 / 10; // Dual-wield
 
 	// Percentual delay reduction from stats
 	amotion -= amotion * (4 * status->agi + status->dex) / 1000;
@@ -3536,22 +3536,19 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
  * @return max The max value of HP or SP
  */
 static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP) {
-	double dmax = 0;
-	uint16 idx, level, job_id;
-
 	nullpo_ret(sd);
 
-	job_id = pc_mapid2jobid(sd->class_,sd->status.sex);
-	idx = pc_class2idx(job_id);
-	level = umax(sd->status.base_level,1);
+	double dmax = 0;
+	uint32 level = umax(sd->status.base_level,1);
+	std::shared_ptr<s_job_info> job = job_db.find(pc_mapid2jobid(sd->class_, sd->status.sex));
 
 	if (isHP) { //Calculates MaxHP
-		dmax = job_info[idx].base_hp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:(pc_is_taekwon_ranker(sd))?3:1);
+		dmax = job->base_hp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:(pc_is_taekwon_ranker(sd))?3:1);
 		dmax += status_get_hpbonus(&sd->bl,STATUS_BONUS_FIX);
 		dmax += (int64)(dmax * status_get_hpbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
 	}
 	else { //Calculates MaxSP
-		dmax = job_info[idx].base_sp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:(pc_is_taekwon_ranker(sd))?3:1);
+		dmax = job->base_sp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:(pc_is_taekwon_ranker(sd))?3:1);
 		dmax += status_get_spbonus(&sd->bl,STATUS_BONUS_FIX);
 		dmax += (int64)(dmax * status_get_spbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
 	}
@@ -3580,7 +3577,7 @@ bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_o
 	sc = &sd->sc;
 	b_max_weight = sd->max_weight; // Store max weight for later comparison
 	b_weight = sd->weight; // Store current weight for later comparison
-	sd->max_weight = job_info[pc_class2idx(sd->status.class_)].max_weight_base + sd->status.str * 300; // Recalculate max weight
+	sd->max_weight = job_db.get_maxWeight(pc_mapid2jobid(sd->class_, sd->status.sex)) + sd->status.str * 300; // Recalculate max weight
 
 	if (flag&CALCWT_ITEM) {
 		sd->weight = 0; // Reset current weight
@@ -4136,17 +4133,18 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 // ----- STATS CALCULATION -----
 
 	// Job bonuses
-	index = pc_class2idx(sd->status.class_);
-	for(i=0;i<(int)sd->status.job_level && i<MAX_LEVEL;i++) {
-		if(!job_info[index].job_bonus[i])
-			continue;
-		switch(job_info[index].job_bonus[i]) {
-			case 1: base_status->str++; break;
-			case 2: base_status->agi++; break;
-			case 3: base_status->vit++; break;
-			case 4: base_status->int_++; break;
-			case 5: base_status->dex++; break;
-			case 6: base_status->luk++; break;
+	std::vector<uint8> job_bonus = job_db.get_jobBonus(pc_mapid2jobid(sd->status.class_, sd->status.sex));
+
+	if (!job_bonus.empty()) {
+		for (i = 0; i < sd->status.job_level && i < MAX_LEVEL; i++) {
+			switch (job_bonus[i]) {
+			case PARAM_STR: base_status->str++; break;
+			case PARAM_AGI: base_status->agi++; break;
+			case PARAM_VIT: base_status->vit++; break;
+			case PARAM_INT: base_status->int_++; break;
+			case PARAM_DEX: base_status->dex++; break;
+			case PARAM_LUK: base_status->luk++; break;
+			}
 		}
 	}
 

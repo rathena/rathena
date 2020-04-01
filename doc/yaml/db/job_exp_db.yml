@@ -1,0 +1,19 @@
+###########################################################################
+# Job Experience Group Database
+###########################################################################
+#
+# Job Experience Group Settings
+#
+###########################################################################
+# - ExpGroup                 Experience group ID.
+#   Jobs:                    Jobs associate to experience group.
+#     Job: bool              Job associated to experience group.
+#   MaxBaseLevel             Maximum base level. (Default: MAX_LEVEL)
+#   BaseExp:                 Base experience per level.
+#     - Level                Base level.
+#       Exp                  Base experience.
+#   MaxJobLevel              Maximum job level. (Default: MAX_LEVEL)
+#   JobExp:                  Job experience per level.
+#     - Level                Job level.
+#       Exp                  Job experience.
+###########################################################################

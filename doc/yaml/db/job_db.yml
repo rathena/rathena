@@ -1,0 +1,25 @@
+###########################################################################
+# Job Database
+###########################################################################
+#
+# Job Settings
+#
+###########################################################################
+# - Job                      Job identifier.
+#   MaxWeight                Base maximum weight. (Default: 20000)
+#   HPFactor                 Base HP factor. (Default: 20000)
+#   HPMultiplicator          Base HP rate numerator. (Default: 500)
+#   SPFactor                 Base SP factor. (Default: 100)
+#   BaseASPD:                Base ASPD for each weapon type. (Default: 2000)
+#     Weapon: Rate           Weapon type with associated ASPD.
+#   BonusStats:              Job level bonus stats.
+#     - Level                Job level.
+#       Bonus                Bonus stat.
+#   MaxStats:                Maximum stats applicable.
+#     Str                    Strength.
+#     Agi                    Agility.
+#     Vit                    Vitality.
+#     Int                    Intelligence.
+#     Dex                    Dexterity.
+#     Luk                    Luck.
+###########################################################################

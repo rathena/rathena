@@ -2707,7 +2707,7 @@ ACMD_FUNC(stat_all)
 {
 	int value = 0;
 	uint8 count, i;
-	unsigned short *status[PARAM_MAX], max_status[PARAM_MAX];
+	unsigned short *status[PARAM_MAX - 1], max_status[PARAM_MAX - 1];
  	//we don't use direct initialization because it isn't part of the c standard.
 	nullpo_retr(-1, sd);
 
