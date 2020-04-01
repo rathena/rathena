@@ -15255,9 +15255,10 @@ int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 
 		struct map_session_data* tsd;
 		switch (skill_id) {
 			case PR_BENEDICTIO:
+			case WM_GREAT_ECHO:
 				for (i = 0; i < c; i++) {
 					if ((tsd = map_id2sd(p_sd[i])) != NULL)
-						status_charge(&tsd->bl, 0, 10);
+						status_charge(&tsd->bl, 0, (skill_id == PR_BENEDICTIO) ? 10 : skill_get_sp(skill_id, skill_lv) / 2);
 				}
 				return c;
 			case AB_ADORAMUS:
@@ -15287,7 +15288,7 @@ int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 
 	memset (p_sd, 0, sizeof(p_sd));
 	i = map_foreachinallrange(skill_check_condition_char_sub, &sd->bl, range, BL_PC, &sd->bl, &c, &p_sd, skill_id);
 
-	if ( skill_id != PR_BENEDICTIO && skill_id != AB_ADORAMUS && skill_id != WL_COMET ) //Apply the average lv to encore skills.
+	if ( skill_id != PR_BENEDICTIO && skill_id != AB_ADORAMUS && skill_id != WL_COMET && skill_id != WM_GREAT_ECHO ) //Apply the average lv to encore skills.
 		*skill_lv = (i+(*skill_lv))/(c+1); //I know c should be one, but this shows how it could be used for the average of n partners.
 	return c;
 }
@@ -15517,7 +15518,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 	sd->state.arrow_atk = require.ammo?1:0;
 
 	// perform skill-group checks
-	if(inf2[INF2_ISCHORUS]) {
+	if(skill_id != WM_GREAT_ECHO && inf2[INF2_ISCHORUS]) {
 		if (skill_check_pc_partner(sd, skill_id, &skill_lv, AREA_SIZE, 0) < 1) {
 		    clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		    return false;
@@ -16090,10 +16091,10 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			}
 			break;
 		case WM_GREAT_ECHO: {
-				int count = skill_check_pc_partner(sd, skill_id, &skill_lv, AREA_SIZE, 0);
+				int count = skill_check_pc_partner(sd, skill_id, &skill_lv, AREA_SIZE, 1);
 
 				if (count > 0)
-					require.sp -= require.sp * 50 * count / 100; // -50% each W/M in the party.
+					require.sp -= require.sp * 20 * count / 100; // -20% each W/M in the party.
 			}
 			break;
 		case SO_FIREWALK:
