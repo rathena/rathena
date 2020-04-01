@@ -59,7 +59,7 @@ This list contains all available constants referenced in the 'bonus' commands.
 	ATF_LONG	= Trigger on ranged attacks
 	
 	Skill/attack type criteria: (Default: Physical/weapon)
-	ATF_SKILL	=
+	ATF_SKILL	= Trigger on magic/misc skills
 	ATF_WEAPON	= Trigger on weapon skill / physical attacks
 	ATF_MAGIC	= Trigger on magic skills
 	ATF_MISC	= Trigger on misc skills
@@ -311,7 +311,7 @@ bonus4 bAddEffWhenHit,eff,n,atf,t;	Adds a n/100% chance to cause status eff for 
                               		  ATF_SHORT  = trigger on melee attacks
                               		  ATF_LONG   = trigger on ranged attacks
                               		 Skill/attack type criteria: (Default: Physical/weapon)
-									  ATF_SKILL  =
+									  ATF_SKILL  = trigger on magic/misc skills
                               		  ATF_WEAPON = trigger on weapon skill / physical attacks
                               		  ATF_MAGIC  = trigger on magic skills
                               		  ATF_MISC   = trigger on misc skills
