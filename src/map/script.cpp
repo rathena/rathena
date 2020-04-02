@@ -20063,7 +20063,7 @@ BUILDIN_FUNC(bg_info)
 			size_t i;
 
 			for (i = 0; i < bg->maps.size(); i++)
-				setd_sub_str(st, nullptr, ".@bgmaps$", i, map_mapid2mapname(bg->maps[i].mapid), nullptr);
+				setd_sub_str(st, nullptr, ".@bgmaps$", i, mapindex_id2name(bg->maps[i].mapindex), nullptr);
 			setd_sub_num(st, nullptr, ".@bgmapscount", 0, i, nullptr);
 			script_pushint(st, i);
 			break;
