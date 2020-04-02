@@ -15258,7 +15258,7 @@ int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 
 			case WM_GREAT_ECHO:
 				for (i = 0; i < c; i++) {
 					if ((tsd = map_id2sd(p_sd[i])) != NULL)
-						status_charge(&tsd->bl, 0, (skill_id == PR_BENEDICTIO) ? 10 : skill_get_sp(skill_id, skill_lv) / 2);
+						status_charge(&tsd->bl, 0, (skill_id == PR_BENEDICTIO) ? 10 : skill_get_sp(skill_id, *skill_lv) / 2);
 				}
 				return c;
 			case AB_ADORAMUS:
