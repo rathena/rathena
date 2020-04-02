@@ -27,6 +27,7 @@
 #include "mercenary.hpp"
 #include "party.hpp"
 #include "pc.hpp"
+#include "pc_groups.hpp"
 #include "pet.hpp"
 #include "quest.hpp"
 #include "status.hpp"
@@ -1274,6 +1275,9 @@ int intif_parse_WisMessage(int fd)
 		return 0;
 	}
 	if(sd->state.ignoreAll) {
+		if(pc_has_permission(sd, PC_PERM_HIDE_SESSION))
+			intif_wis_reply(id,1);
+		else
 		intif_wis_reply(id, 2);
 		return 0;
 	}
@@ -1285,6 +1289,9 @@ int intif_parse_WisMessage(int fd)
 
 	if (i < MAX_IGNORE_LIST && sd->ignore[i].name[0] != '\0')
 	{	//Ignored
+		if(pc_has_permission(sd, PC_PERM_HIDE_SESSION))
+			intif_wis_reply(id,1);
+		else
 		intif_wis_reply(id, 2);
 		return 0;
 	}
