@@ -21727,7 +21727,7 @@ template<typename T, size_t S> bool SkillDatabase::parseNode(std::string nodeNam
 			max_level = max(max_level, skill_lv);
 		}
 
-		size_t i = max_level - 1, j;
+		size_t i = max_level, j;
 
 		// Check for linear change with increasing steps until we reach half of the data acquired.
 		for (size_t step = 1; step <= i / 2; step++) {
