@@ -246,8 +246,6 @@ Body:
     Jobs:
       Supernovice: true
       Super_Baby: true
-      Super_Novice_E: true
-      Super_Baby_E: true
     BaseHp:
       - Level: 1
         Hp: 40
@@ -5953,8 +5951,6 @@ Body:
       Novice_High: true
       Baby: true
       Super_Baby: true
-      Super_Novice_E: true
-      Super_Baby_E: true
     BaseSp:
       - Level: 1
         Sp: 11

@@ -12416,32 +12416,34 @@ void pc_readdb(void) {
 	battle_config.use_statpoint_table = k; //restore setting
 	
 	//Checking if all class have their data
-	for (i = 0; i < JOB_MAX; i++) {
-		if (!pcdb_checkid(i))
+	for (auto &jobIt : job_db) {
+		uint16 job_id = jobIt.first;
+
+		if (!pcdb_checkid(job_id))
 			continue;
-		if (i == JOB_WEDDING || i == JOB_XMAS || i == JOB_SUMMER || i == JOB_HANBOK || i == JOB_OKTOBERFEST || i == JOB_SUMMER2)
+		if (job_id == JOB_WEDDING || job_id == JOB_XMAS || job_id == JOB_SUMMER || job_id == JOB_HANBOK || job_id == JOB_OKTOBERFEST || job_id == JOB_SUMMER2)
 			continue; //Classes that do not need exp tables.
 
-		std::shared_ptr<s_job_info> job = job_db.find(i);
+		std::shared_ptr<s_job_info> job = jobIt.second;
 		uint16 maxBaseLv = job->max_base_level, maxJobLv = job->max_job_level;
 
 		if (!maxBaseLv)
-			ShowWarning("Class %s (%d) does not have a base exp table.\n", job_name(i), i);
+			ShowWarning("Class %s (%d) does not have a base exp table.\n", job_name(job_id), job_id);
 		if (!maxJobLv)
-			ShowWarning("Class %s (%d) does not have a job exp table.\n", job_name(i), i);
+			ShowWarning("Class %s (%d) does not have a job exp table.\n", job_name(job_id), job_id);
 		
 		//Init and checking the empty value of Base HP/SP [Cydh]
 		if (job->base_hp.size() == 0)
 			job->base_hp.resize(maxBaseLv);
 		for (uint16 j = 0; j < maxBaseLv; j++) {
 			if (job->base_hp[j] == 0)
-				job->base_hp[j] = pc_calc_basehp(j + 1, i);
+				job->base_hp[j] = pc_calc_basehp(j + 1, job_id);
 		}
 		if (job->base_sp.size() == 0)
 			job->base_sp.resize(maxJobLv);
 		for (uint16 j = 0; j < maxJobLv; j++) {
 			if (job->base_sp[j] == 0)
-				job->base_sp[j] = pc_calc_basesp(j + 1, i);
+				job->base_sp[j] = pc_calc_basesp(j + 1, job_id);
 		}
 	}
 }
