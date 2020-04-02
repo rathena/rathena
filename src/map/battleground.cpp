@@ -185,9 +185,9 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asString(location, "Map", map_name))
 					return 0;
 
-				map_entry.mapid = map_mapname2mapid(map_name.c_str());
+				map_entry.mapindex = mapindex_name2id(map_name.c_str());
 
-				if (map_entry.mapid == -1) {
+				if (map_entry.mapindex == 0) {
 					this->invalidWarning(location["Map"], "Invalid battleground map name %s, skipping.\n", map_name.c_str());
 					return 0;
 				}
@@ -721,7 +721,7 @@ bool bg_player_is_in_bg_map(struct map_session_data *sd)
 
 	for (const auto &pair : battleground_db) {
 		for (const auto &it : pair.second->maps) {
-			if (it.mapid == sd->bl.m)
+			if (it.mapindex == sd->mapindex)
 				return true;
 		}
 	}
@@ -804,11 +804,11 @@ bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map
  */
 bool bg_queue_reservation(const char *name, bool state)
 {
-	int16 mapid = map_mapname2mapid(name);
+	uint16 mapindex = mapindex_name2id(name);
 
 	for (auto &pair : battleground_db) {
 		for (auto &map : pair.second->maps) {
-			if (map.mapid == mapid) {
+			if (map.mapindex == mapindex) {
 				map.isReserved = state;
 				if (!state) {
 					for (auto &queue : bg_queues) {
@@ -998,7 +998,7 @@ void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vec
 		// Enough players have joined
 		if (queue->map && queue->map->isReserved) { // Battleground is already active
 			for (auto &pl_sd : *team) {
-				if (queue->map->mapid == pl_sd->mapindex)
+				if (queue->map->mapindex == pl_sd->mapindex)
 					continue;
 
 				std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, queue->id);
@@ -1178,7 +1178,7 @@ void bg_queue_on_accept_invite(struct map_session_data *sd)
 	}
 
 	queue->accepted_players++;
-	clig_bg_queue_ack_lobby(true, map_mapid2mapname(queue->map->mapid), map_mapid2mapname(queue->map->mapid), sd);
+	clig_bg_queue_ack_lobby(true, mapindex_id2name(queue->map->mapindex), mapindex_id2name(queue->map->mapindex), sd);
 
 	if (queue->accepted_players == queue->required_players * 2) {
 		if (queue->tid_expire != INVALID_TIMER) {
@@ -1204,7 +1204,7 @@ void bg_queue_start_battleground(s_battleground_queue *queue)
 		return;
 	}
 
-	uint16 map_idx = map_id2index(queue->map->mapid);
+	uint16 map_idx = queue->map->mapindex;
 	int bg_team_1 = bg_create(map_idx, &queue->map->team1);
 	int bg_team_2 = bg_create(map_idx, &queue->map->team2);
 

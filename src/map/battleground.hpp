@@ -38,7 +38,7 @@ struct s_battleground_team {
 
 struct s_battleground_map {
 	int id; ///< Battleground ID
-	int16 mapid; ///< ID of the map
+	uint16 mapindex; ///< Index of the map
 	s_battleground_team team1, team2; ///< Team data
 	std::string bgcallscript; ///< Script to be called when players join the battleground
 	bool isReserved; ///< Reserve BG maps that are used so that the system won't create multiple BG instances on the same map
