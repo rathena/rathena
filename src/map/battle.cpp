@@ -8875,6 +8875,7 @@ static const struct _battle_data {
 	{ "boss_nopc_idleskill_rate",           &battle_config.boss_nopc_idleskill_rate,        100,    0,    100,              },
 	{ "boss_nopc_move_rate",                &battle_config.boss_nopc_move_rate,             100,    0,    100,              },
 	{ "hom_idle_no_share",                  &battle_config.hom_idle_no_share,               0,      0,      INT_MAX,        },
+	{ "idletime_hom_option",                &battle_config.idletime_hom_option,             0x25,   1,      INT_MAX,        },
 	{ "devotion_standup_fix",               &battle_config.devotion_standup_fix,            1,      0,      1,              },
 	{ "feature.bgqueue",                    &battle_config.feature_bgqueue,                 1,      0,      1,              },
 	{ "homunculus_exp_gain",                &battle_config.homunculus_exp_gain,             10,     0,      100,            },
