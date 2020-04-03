@@ -7288,6 +7288,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			val = max( val, 75 );
 		if( sc->data[SC_CLOAKINGEXCEED] )
 			val = max( val, sc->data[SC_CLOAKINGEXCEED]->val3);
+		if (sc->data[SC_PARALYSE])
+			val = max(val, 50);
 		if( sc->data[SC_HOVERING] )
 			val = max( val, 10 );
 		if( sc->data[SC_GN_CARTBOOST] )
@@ -7318,8 +7320,6 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 	// GetSpeed()
 	if( sd && pc_iscarton(sd) )
 		speed += speed * (50 - 5 * pc_checkskill(sd,MC_PUSHCART)) / 100;
-	if( sc->data[SC_PARALYSE] )
-		speed += speed * 50 / 100;
 	if( speed_rate != 100 )
 		speed = speed * speed_rate / 100;
 	if( sc->data[SC_STEELBODY] )
