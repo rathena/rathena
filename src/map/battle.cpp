@@ -5539,10 +5539,7 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 			rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id,true);
 		if( rdamage > 0 ) {
 			struct block_list *d_bl = battle_check_devotion(src);
-			status_change *sc = status_get_sc(src);
 
-			if (sc && sc->data[SC_VENOMBLEED])
-				rdamage -= rdamage * sc->data[SC_VENOMBLEED]->val2 / 100;
 			if (tsc->data[SC_MAXPAIN]) {
 				tsc->data[SC_MAXPAIN]->val2 = (int)rdamage;
 				skill_castend_damage_id(target, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, wd->flag);
@@ -7237,13 +7234,20 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 		}
 	}
 
-	if (ssc && ssc->data[SC_INSPIRATION]) {
-		rdamage += damage / 100;
+	if (ssc) {
+		if (ssc->data[SC_INSPIRATION]) {
+			rdamage += damage / 100;
 #ifdef RENEWAL
-		rdamage = cap_value(rdamage, 1, max_damage);
+			rdamage = cap_value(rdamage, 1, max_damage);
 #else
-		rdamage = i64max(rdamage,1);
+			rdamage = i64max(rdamage, 1);
 #endif
+		}
+
+		if (ssc->data[SC_VENOMBLEED])
+			rdamage -= rdamage * ssc->data[SC_VENOMBLEED]->val2 / 100;
+		if (ssc->data[SC_DARKCROW])
+			rdamage -= rdamage * ssc->data[SC_DARKCROW]->val3 / 100;
 	}
 
 	if (sc && sc->data[SC_KYOMU] && (!ssc || !ssc->data[SC_SHIELDSPELL_DEF])) // Nullify reflecting ability except for Shield Spell - Def
