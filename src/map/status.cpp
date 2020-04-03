@@ -10134,7 +10134,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 				if (poison_level > 0) {
 					tick += 30000; // Base of 30 seconds
-					tick += poison_level * 15; // Additional 15 seconds per level
+					tick += poison_level * 15 * 1000; // Additional 15 seconds per level
 				}
 			}
 			break;
