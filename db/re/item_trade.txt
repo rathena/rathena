@@ -436,7 +436,6 @@
 5279,507,100	// Drooping_Kitty_C
 5280,507,100	// Magestic_Goat_C
 5281,507,100	// Deviruchi_Cap_C
-5283,1,100	// Chick_Hat
 5286,507,100	// Pecopeco_Hairband
 5288,507,100	// Red_Glasses
 5293,507,100	// Ramen_Hat
@@ -447,12 +446,9 @@
 5309,475,100	// Mahican
 5312,1,100	// Ayothaya_Hat
 5313,1,100	// Diadem
-5314,507,100	// Hockey_Mask
-5315,507,100	// Observer
 5318,467,100	// Poring_Party_Hat
 5319,1,100	// Hellomother_Hat
 5320,475,100	// Champion_Wreath
-5322,475,100	// Scarf
 5323,475,100	// Misstrance_Crown
 5324,1,100	// Little_Angel_Doll
 5325,1,100	// Robo_Eye
@@ -473,16 +469,11 @@
 5344,1,100	// Binit_Doll_Hat
 5345,1,100	// Debril_Doll_Hat
 5346,507,100	// Gf_Recruiter_Hat
-5357,475,100	// Wings_Of_Victory
-5359,1,100	// J_Captain_Hat
 5360,1,100	// Whikebain_Ears
-5361,1,100	// Gang_Scarf
-5362,1,100	// Ninja_Scroll
 5363,1,100	// Helm_Of_Abyss
 5365,1,100	// Fried_Egg
 5368,475,100	// White_Wing
 5369,475,100	// Dark_Wing
-5372,1,100	// Drooping_White_Kitty
 5373,1,100	// Darkness_Helm
 5375,1,100	// L_Orc_Hero_Helm
 5378,1,100	// Rabbit_Ear_Hat
@@ -490,7 +481,6 @@
 5381,1,100	// Santa_Poring_Hat
 5382,1,100	// Bell_Ribbon
 5384,1,100	// Santa_Hat_1
-5389,1,100	// Angel_Spirit
 5391,507,100	// Toast_C
 5393,1,100	// Valentine_Hat
 5394,507,100	// Bubblegum_Lower
@@ -504,8 +494,6 @@
 5413,467,100	// Popcorn_Hat
 5414,467,100	// Campfire_Hat
 5419,1,100	// Evolved_Leaf
-5420,1,100	// Mask_Of_Ifrit
-5421,1,100	// Ifrit's_Ear
 5423,9,100	// Lovecap_China
 5428,475,100	// Bread_Bag1
 5430,1,100	// Sacred_Torch_Coronet
@@ -517,23 +505,18 @@
 5453,475,100	// Dragonhelm_Copper
 5460,499,100	// Adv_Dragon_Skull
 5461,499,100	// Adv_Whisper_Mask
-5462,507,100	// Spiked_Scarf
-5463,507,100	// Rainbow_Scarf
 5464,1,100	// Zaha_Doll_Hat
-5467,1,100	// Helm_Of_Dragoon
 5469,1,100	// Noble_Hat
 5476,1,100	// Hairband_Of_Grandpeco
 5479,1,100	// Shaman's_Hair_Ornament
 5480,1,100	// Bizofnil_Wing_Deco
 5481,1,100	// Hermose_Cap
 5482,1,100	// Dark_Knight_Mask
-5483,1,100	// Odin_Mask
 5492,507,100	// Boy's_Cap_I
 5493,507,100	// Ulle_Cap_I
 5494,507,100	// Spinx_Helm_I
 5495,1,100	// Power_Of_Thor
 5497,1,100	// King_Tiger_Doll_Hat
-5498,1,100	// Wondering_Wolf_Helm
 5502,1,100	// Necromencer's_Hood
 5503,1,100	// Rabbit_Magic_Hat
 5508,1,100	// Shark_Hat
@@ -560,7 +543,6 @@
 5554,1,100	// Octopus_Hat
 5555,1,100	// Leaf_Cat_Hat
 5556,1,100	// Fur_Seal_Hat
-5557,1,100	// Wild_Rose_Hat
 5565,1,100	// Dragon_Arhat_Mask
 5566,1,100	// Tiger_Arhat_Mask
 5567,1,100	// Bright_Fury
@@ -573,7 +555,6 @@
 5584,1,100	// Majestic_Evil_Horn
 5585,1,100	// Rune_Hairband
 5587,499,100	// Mosquito_Coil_1Use
-5592,475,100	// Sigrun's_Wing
 5593,1,100	// K_Rabbit_Bonnet
 5594,1,100	// Donut_In_Mouth
 5596,507,100	// 4Leaf_Clover_In_Mouth
@@ -633,14 +614,6 @@
 5858,1,100	// Victory_FB_Hat
 5859,1,100	// Glory_FB_Hat
 5864,475,100	// Shadow_Booster
-5900,467,100	// Divine Guard Hat
-5901,467,100	// Focus Beret
-5902,467,100	// Harvester Hat
-5903,467,100	// Deadman Bandana
-5904,467,100	// Inconspicuous Hat
-5905,467,100	// Lyrica Hat
-5906,467,100	// Oni Horns
-5907,467,100	// Sea Captain Hat
 6000,475,100	// Dark_Ashes
 6005,467,100	// New_Year_Rice_Cake
 6006,499,100	// Rice_Cake_Delivery_Box
@@ -3971,7 +3944,6 @@
 18580,1,100	// Yggdrasil_Crown
 18595,1,100	// Horn_Of_Ancient
 18596,1,100	// Sprout_Hat
-18597,1,100	// Mercury_Helm
 18599,1,100	// Black_Devil_Mask
 18600,1,100	// Cat_Ears_Beret
 18601,1,100	// Red_Bread_Hat
@@ -4132,7 +4104,6 @@
 20211,467,100	// C_Chicken_Hat__
 20227,467,100	// C_Husky_Hat
 20228,467,100	// C_Pig_MoneyBox
-20285,1,100	// C_Blossom_Fluttering
 20702,499,100	// TE_Woe_Muffler
 20703,499,100	// TE_Woe_Manteau
 20704,499,100	// TE_Woe_Magic_Manteau
