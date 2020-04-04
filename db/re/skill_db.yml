@@ -2124,7 +2124,7 @@ Body:
     Cooldown: 1000
     FixedCastTime: 350
     Requires:
-      SpCost: 24
+      SpCost: 12
       Weapon:
         1hSpear: true
         2hSpear: true
