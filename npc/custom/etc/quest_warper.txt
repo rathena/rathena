@@ -1174,8 +1174,8 @@ function	script	QWS_Darray	{
 
 	setarray @DGat$[@Dref], "c_tower1", "c_tower2", "c_tower3", "c_tower4", "alde_dun01", "alde_dun02", "alde_dun03", "alde_dun04";
 	setarray @DLevelName$[@Dref], "Clock Tower Level 1", "Clock Tower Level 2", "Clock Tower Level 3", "Clock Tower Level 4", "Basement 1F", "Basement 2F", "Basement 3F", "Basement 4F";
-	setarray @DXcoords[@Dref], 200, 268, 64, 32, 197, 262, 276, 122;
-	setarray @DYcoords[@Dref], 163, 26, 148, 63, 25, 41, 53, 125;
+	setarray @DXcoords[@Dref], 200, 268, 64, 32, 168, 262, 276, 122;
+	setarray @DYcoords[@Dref], 163, 26, 148, 63, 154, 41, 53, 125;
 	setarray @DDepth[@Dref], 0, 1, 2, 3, 1, 2, 3, 4;
 
 	QWS_Make_Dungeon_Menu 5;
