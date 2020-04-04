@@ -1,0 +1,104 @@
+-   script	Donor Rewards Redeemer::donation	987,{
+	// ----------------- NPC Settings -----------------
+	// --- SET THESE BEFORE LOADING THE SCRIPT! ---
+
+	// Server Name
+	set .serverName$,"ChocobotRO";
+
+	// NPC Name to display during chat.
+	// Default: "[Donor Rewards Redeemer]"
+	set .npcName$,"[Donor Rewards Redeemer]";
+
+	// DO NOT CHANGE THIS!
+	// Default: "cp_redeemlog"
+	set .redeemTable$,"cp_credits";
+	set .itemTable$,"cp_redeemlog";
+
+	// Display Credits to FluxCP Creators?
+	// Help promote our product if its useful.
+	// 0 = Disable. 1 = Enable.
+	// Default: 1
+	set .showCredits,0;
+
+	// Max number of unique items to redeem at a time.
+	// DO NOT RAISE THIS VALUE ABOVE 128 WITHOUT
+	// MAKING THE NECESSARY SCRIPT ENGINE MODS
+	// FOR SCRIPT ARRAY SIZING! DANGEROUS!
+	// Default: 128
+	set .numRedemptionsSimul,128;
+	// --------------- End NPC Settings ---------------
+
+	// ----------------- Begin Script -----------------
+	mes .npcName$;
+	mes "Well hello there " + (Sex ? "good sir!" : "young madam!");
+	mes "How may I be of assistance to you on this fine day?";
+	next;
+	prompt("I wish to redeem donation credits:I wish to redeem items:Who might you be?");
+	mes .npcName$;
+	switch(@menu) {
+		case 1:
+			query_sql("SELECT `balance` FROM `" + escape_sql(.redeemTable$) + "` WHERE `account_id` = " + getcharid(3) + " LIMIT 0,30", .@credits);
+			if (.@credits > 0) {
+				mes "You currently have " + .@credits + " donation credits.";
+				mes "How many Donation Credits do you wish to redeem?";
+				next;
+				mes .npcName$;
+				input .@withdrawCredits,1,.@credits;
+				query_sql("UPDATE `" + escape_sql(.redeemTable$) + "` SET `balance` = `balance` - " + .@withdrawCredits + " WHERE `account_id` = " + getcharid(3) + "");
+				set #CASHPOINTS,#CASHPOINTS + .@withdrawCredits;
+				mes .@withdrawCredits + "x " ;
+			} else {
+				mes "My records indicate that there are no rewards awaiting to be redeemed.";
+				mes "My deepest apologies for the misunderstanding.";
+			}
+		break;
+		case 2:
+			query_sql "SELECT `id`, `nameid`, `quantity` FROM `" + escape_sql(.itemTable$) + "` WHERE `account_id` = " + getcharid(3) + " AND `redeemed` = 0 LIMIT " + .numRedemptionsSimul,.@id,.@nameid,.@quantity;
+			if (getarraysize(.@id) > 0) {
+				mes "Items Pending Redemption: " + getarraysize(.@id);
+				for (set .@i,0; .@i < getarraysize(.@id); set .@i,.@i+1)
+					if (checkweight(.@nameid[.@i],.@quantity[.@i]) == 0) {
+						mes "I'm terribly sorry, but you are carrying too much to accept " + (.@i ? "any more of " : " ") + "your rewards at this time.";
+						mes "Please come back with fewer items.";
+					} else {
+						query_sql "UPDATE `" + escape_sql(.itemTable$) + "` SET `char_id` = " + getcharid(0) + ", `redeemed` = 1, `redemption_date` = NOW() WHERE `id` = " + .@id[.@i];
+						getitem .@nameid[.@i],.@quantity[.@i];
+						mes .@quantity[.@i] + "x " + getitemname(.@nameid[.@i]);
+					}
+				if (.@i == getarraysize(.@id)) {
+					mes "Thank you for your patronage " + (Sex ? "fine sir." : "ma'am.");
+					mes "Please enjoy your stay on " + .serverName$ + "!";
+				}
+				if (.showCredits)
+					callfunc "F_FluxCredits";
+			} else {
+				mes "My records indicate that there are no rewards awaiting to be redeemed.";
+				mes "My deepest apologies for the misunderstanding.";
+			}
+		break;
+		case 3:
+			mes "I am here to allow for the redemption of rewards for donations to " + .serverName$ + ".";
+			mes "Donations may be made to the server via the control panel.";
+		break;
+	}
+	close;
+	// ------------------ End Script ------------------
+}
+
+// ------------ Credits to FluxCP Creators ------------
+// - Please do not modify or delete this function or  -
+// - its contents. To disable the credits from being  -
+// - shown, set .showCredits to 0 in the NPC Settings -
+// - at the top of this file.                         -
+// ----------------------------------------------------
+
+function	script	F_FluxCredits	{
+	mes "-----------------------------------";
+	mes "Powered by Flux Control Panel.";
+	mes "Copyright © 2008-2012 Matthew Harris and Nikunj Mehta.";
+	mes "http://fluxcp.googlecode.com/";
+	return;
+}
+
+prontera,123,68,4	duplicate(donation)	Donor Rewards Redeemer#1	987
+izlude,119,153,4	duplicate(donation)	Donor Rewards Redeemer#2	987
