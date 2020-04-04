@@ -1,4 +1,4 @@
--   script	Donor Rewards Redeemer::donation	987,{
+-	script	Donor Rewards Redeemer::donation	987,{
 	// ----------------- NPC Settings -----------------
 	// --- SET THESE BEFORE LOADING THE SCRIPT! ---
 
@@ -39,14 +39,15 @@
 		case 1:
 			query_sql("SELECT `balance` FROM `" + escape_sql(.redeemTable$) + "` WHERE `account_id` = " + getcharid(3) + " LIMIT 0,30", .@credits);
 			if (.@credits > 0) {
-				mes "You currently have " + .@credits + " donation credits.";
+				mes "I can give you Choco Points in exchange for Donation Credits.";
 				mes "How many Donation Credits do you wish to redeem?";
 				next;
 				mes .npcName$;
-				input .@withdrawCredits,1,.@credits;
+				mes "You currently have " + .@credits + " donation credits.";
+				input .@withdrawCredits,0,.@credits;
 				query_sql("UPDATE `" + escape_sql(.redeemTable$) + "` SET `balance` = `balance` - " + .@withdrawCredits + " WHERE `account_id` = " + getcharid(3) + "");
 				set #CASHPOINTS,#CASHPOINTS + .@withdrawCredits;
-				mes .@withdrawCredits + "x " ;
+				mes "Here are your " + .@withdrawCredits + " Choco Points.";
 			} else {
 				mes "My records indicate that there are no rewards awaiting to be redeemed.";
 				mes "My deepest apologies for the misunderstanding.";
@@ -101,4 +102,4 @@ function	script	F_FluxCredits	{
 }
 
 prontera,123,68,4	duplicate(donation)	Donor Rewards Redeemer#1	987
-izlude,119,153,4	duplicate(donation)	Donor Rewards Redeemer#2	987
+izlude,135,152,5	duplicate(donation)	Donor Rewards Redeemer#2	987
