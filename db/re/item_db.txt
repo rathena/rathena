@@ -9445,7 +9445,7 @@
 17226,Infinite_Concentration_Potion_,Infinite Concentration Potion,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ rentitem 12884,604800; },{},{}
 17227,Infinite_Awakening_Potion_,Infinite Awakening Potion,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ rentitem 12885,604800; },{},{}
 17228,Infinite_Berserk_Potion_,Infinite Berserk Potion,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ rentitem 12886,604800; },{},{}
-17229,Infinite_Flywing_Box,Infinite Flywing Box,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ rentitem 12887,604800; },{},{}
+17229,Infinite_Flywing_Box,Infinite Flywing Box,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ rentitem 12887,86400; },{},{}
 17230,Valerian_Scroll,Valerian Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Valerian_Scroll); },{},{}
 17231,Refinement_Ore_Box,Refinement Ore Box,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,1; getitem 7620,1; },{},{}
 17232,Refinement_Box_7,Refinement box(7),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 6230,1; getitem 6234,1; },{},{}
