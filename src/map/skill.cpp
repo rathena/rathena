@@ -11022,11 +11022,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 		}
 		break;
+	case WM_REVERBERATION:
+		flag |= 1; // Prevent ammo consumption
 	case EL_FIRE_MANTLE:
 	case EL_WATER_BARRIER:
 	case EL_ZEPHYR:
 	case EL_POWER_OF_GAIA:
-	case WM_REVERBERATION:
 		clif_skill_damage(src, bl, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SINGLE);
 		skill_unitsetting(src,skill_id,skill_lv,bl->x,bl->y,0);
 		break;
