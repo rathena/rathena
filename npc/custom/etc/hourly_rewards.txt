@@ -141,9 +141,9 @@ end;
 OnHourlyRewardsProgress:
 	.@hoursPlayed = #Hourly_Rewards_Check/2;
 	if (.@hoursPlayed >= 3) {
-		message "[Hourly Rewards]: You have earned all 3 hourly rewards today. Total Points: "+ #HourlyRewardPoints;
+		message strcharinfo(0),"[Hourly Rewards]: You have earned all 3 hourly rewards today. Total Points: "+ #HourlyRewardPoints;
 	} else {
-		message "[Hourly Rewards]: You have earned "+ .@hoursPlayed +" out of 3 hourly rewards today. Total Points: "+ #HourlyRewardPoints;
+		message strcharinfo(0),"[Hourly Rewards]: You have earned "+ .@hoursPlayed +" out of 3 hourly rewards today. Total Points: "+ #HourlyRewardPoints;
 	}
 end;
 
