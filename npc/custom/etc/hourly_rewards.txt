@@ -1,0 +1,171 @@
+//===== rAthena Script =======================================
+//= saders Hourly Rewards
+//===== By: ==================================================
+//= Sader1992
+//https://rathena.org/board/profile/30766-sader1992/
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//https://rathena.org/board/files/file/3647-saders-hourly-rewards/
+//https://github.com/sader1992/sader_scripts
+//===== Description: =========================================
+//==== all the configuration are in the last
+//==== support gepard / ip / or without them
+//==== if you use ip/gepard sql will be used for that
+//==== can add minimem level to get the rewards
+//==== can change the time
+//==== can ban the vending from the rewards (it will reset after relogin)
+//==== can add rewards else then variable
+//==== there is a shop npc for the variable
+//==== you can make it only for vip
+//==== can ban idle players for X time from the Hourly Rewards
+//==== player can ban his char from getting the reward by @HourlyBan (it will reset after relogin)
+//============================================================
+//==== please send me a message if you find error
+//==== if you like my work maybe consider support me at paypal
+//==== sader1992@gmail.com
+//============================================================
+//==== 1.1 FIX Critical issue with gepard/ip and compatibility with my other scripts
+//==== 1.2 FIX GrPard Variable
+//============================================================
+-	script	Hourly_Rewards	-1,{
+
+OnHourlyRewards:
+	if(#Hourly_Ban){
+		message strcharinfo(0),"[Hourly Rewards]: You are currently ineligible for hourly rewards. Please re-login to become eligible.";
+		addtimer .s_time, strnpcinfo(3)+"::OnHourlyRewards";
+		end;
+	}
+	if(.s_idle){
+		if(checkidle() > .s_idle_time){
+			message strcharinfo(0),"[Hourly Rewards]: No hourly rewards can be earned while idle.";
+			addtimer .s_time, strnpcinfo(3)+"::OnHourlyRewards";
+			end;
+		}
+	}
+	if(.s_vip){
+		if(!vip_status(VIP_STATUS_ACTIVE)){
+			message strcharinfo(0),"[Hourly Rewards]: As a VIP player, you can receive hourly rewards.";
+			addtimer .s_time, strnpcinfo(3)+"::OnHourlyRewards";
+			end;
+		}
+	}
+	if(BaseLevel < .s_hourly_level){
+		message strcharinfo(0),"[Hourly Rewards]: Players level "+.s_hourly_level+" or higher can earn hourly rewards.";
+		addtimer .s_time, strnpcinfo(3)+"::OnHourlyRewards";
+		end;
+	}
+	if(.s_vending){
+		if(checkvending() & .s_vending){
+			message strcharinfo(0),"[Hourly Rewards]: Venders are ineligible for hourly rewards.";
+			if(.s_GePard_ip){
+				query_logsql("DELETE FROM `hourly_rewards_log` WHERE `account_id`= '"+getcharid(3)+"'");
+			}
+			#Hourly_Rewards_Check = 0;
+			#Hourly_Ban = 1;
+			addtimer .s_time, strnpcinfo(3)+"::OnHourlyRewards";
+			end;
+		}
+	}
+	#Hourly_Rewards_Check += 1;
+	if(.s_GePard_ip == 1){
+		query_sql("SELECT `last_unique_id` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'", .@s_last_unique_id$);
+		query_logsql("SELECT value FROM `hourly_rewards_log` WHERE unique_id = '"+.@s_last_unique_id$+"'", .@s_GePard);
+		if(.@s_GePard >= #Hourly_Rewards_Check){
+			message strcharinfo(0),"[Hourly Rewards]: You have already earned hourly rewards on this PC today.";
+			#Hourly_Rewards_Check -= 1;
+			addtimer .s_time, strnpcinfo(3)+"::OnHourlyRewards";
+			end;
+		}
+		if(.@s_GePard == 0){
+			query_logsql("INSERT INTO `hourly_rewards_log` (`unique_id`,`ip`,`index`,`value`, `account_id`, `char_id`, `char_name`) VALUES ('"+.@s_last_unique_id$+"', '"+getcharip()+"', '0', '"+#Hourly_Rewards_Check+"', '"+getcharid(3)+"', '"+getcharid(0)+"', '"+strcharinfo(0)+"')");
+		}
+		query_logsql("UPDATE `hourly_rewards_log` SET `value` = '"+#Hourly_Rewards_Check+"' WHERE `unique_id`= '"+.@s_last_unique_id$+"'");
+	}else if(.s_GePard_ip == 2){
+		query_logsql("SELECT value FROM `hourly_rewards_log` WHERE ip = '"+getcharip()+"'", .@s_ip);
+		if(.@s_ip >= #Hourly_Rewards_Check){
+			message strcharinfo(0),"[Hourly Rewards]: You have already earned hourly rewards on this PC today.";
+			#Hourly_Rewards_Check -= 1;
+			addtimer .s_time, strnpcinfo(3)+"::OnHourlyRewards";
+			end;
+		}
+		if(.@s_ip == 0){
+			query_logsql("INSERT INTO `hourly_rewards_log` (`unique_id`,`ip`,`index`,`value`, `account_id`, `char_id`, `char_name`) VALUES ('"+.@s_last_unique_id$+"', '"+getcharip()+"', '0', '"+#Hourly_Rewards_Check+"', '"+getcharid(3)+"', '"+getcharid(0)+"', '"+strcharinfo(0)+"')");
+		}
+		query_logsql("UPDATE `hourly_rewards_log` SET `value` = '"+#Hourly_Rewards_Check+"' WHERE `ip`= '"+getcharip()+"'");
+	}
+	callsub Process_Reward;
+	addtimer .s_time, strnpcinfo(3)+"::OnHourlyRewards";
+end;
+
+OnHourlyBan:
+	if(!#Hourly_Ban){
+		message strcharinfo(0),"[Hourly Rewards]: You are currently ineligible for hourly rewards. Please re-login to become eligible.";
+		if(.s_GePard_ip){
+		query_logsql("DELETE FROM `hourly_rewards_log` WHERE `account_id`= '"+getcharid(3)+"'");
+		}
+		#Hourly_Rewards_Check = 0;
+		#Hourly_Ban = 1;
+		addtimer .s_time, strnpcinfo(3)+"::OnHourlyRewards";
+	}
+end;
+
+OnHourlyUnban:
+	#Hourly_Ban = 0;
+end;
+
+OnClock0000:
+	// Reset all player variables when server reaches next day
+	query_sql("UPDATE `acc_reg_num` SET `value` = 0 WHERE `key` = '#Hourly_Rewards_Check'");
+end;
+
+OnPCLogoutEvent:
+	if(.s_GePard_ip){
+		query_logsql("DELETE FROM `hourly_rewards_log` WHERE `account_id`= '"+getcharid(3)+"'");
+	}
+	if(#Hourly_Ban == 1){
+		#Hourly_Ban = 0;
+	}
+end;
+
+OnPCLoginEvent:
+	addtimer .s_time, strnpcinfo(3)+"::OnHourlyRewards";
+end;
+
+OnInit:
+	.s_idle = 1; //	ban hourly rewards from idle players ? 0 no / 1 yes {if player didn't move for x time he wont get hourly reward}  , DEFAULT = 0
+	.s_idle_time = 1800; //	this the time for idle in seconds  , DEFAULT = 1800 (30 min)
+	.s_vip = 0; //	1 = only for VIP / 0 = for everyone  , DEFAULT = 0
+	.s_time = 1800000; //	1000 = 1 sec | 60000 = 1 min | 3600000 = 1 hr  , DEFAULT = 3600000 (1 hr)
+	.s_hourly_level = 0; //	Minimum level to earn Hourly rewards / 0 = no minimum level  , DEFAULT 0
+	.s_GePard_ip = 0; //	0 = no Gepard / 1 = Gepard / 2 = IP  , DEFAULT 0
+	.s_vending = 6; //	DEFAULT 7 / 0 = will give the reward even if vending / 1 = no normal vending / 2 = no @autotrade / 4 = no buyingstore | Example: if you want to ban normal vend and buying store you add the numbers 1+4=5
+	if(.s_GePard_ip > 0){
+		query_logsql("CREATE TABLE IF NOT EXISTS `hourly_rewards_log` (`unique_id` INT( 11 ) UNSIGNED NOT NULL DEFAULT  '0',`ip` VARCHAR(100) NOT NULL,`index` INT NOT NULL, `value` INT NOT NULL,`account_id` INT NOT NULL,`char_id` INT NOT NULL,`char_name` VARCHAR(30) NOT NULL) ENGINE=MyISAM");
+	}
+	bindatcmd("hourlyunban",strnpcinfo(3)+"::OnHourlyUnban",99,99);
+	bindatcmd("hourlyban",strnpcinfo(3)+"::OnHourlyBan",0,99);
+end;
+
+Process_Reward:
+	//put the Hourly Rewards here
+	if (#Hourly_Rewards_Check == 2) {
+		message strcharinfo(0),"[Hourly Rewards]: You've earned an hourly reward (1/3).";
+		#HourlyRewards += 75;
+	} else if (#Hourly_Rewards_Check == 4) {
+		message strcharinfo(0),"[Hourly Rewards]: You've earned an hourly reward (2/3).";
+		#HourlyRewards += 75;
+	} else if (#Hourly_Rewards_Check == 6) {
+		message strcharinfo(0),"[Hourly Rewards]: You've earned an hourly reward (3/3).";
+		#HourlyRewards += 150;
+	}
+	//getitem 905,1; //	if you want to add items as reward you can add them here like that
+	//getexp 10000,5000; //	if you wanna add exp as reward add them here like that
+	//if(#Hourly_Rewards_Check == 5){getitem 905,1;} //	like this you can add reward for Xhr and this reward will be given for that X in this example 5 mean that the player did pass 5hr
+	//if(#Hourly_Rewards_Check >= 5){getitem 905,1;} //	like this you can add reward for Xhr and this reward will be given for that X in this example 5 mean that the player did pass 5hr or more
+return;
+
+}
+
+prontera,105,70,7	pointshop	Hourly Rewards Shop	859,#HourlyRewards:no,40000:300,6240:200,6241:200,7621:60,12209:3,14536:15,12710:20,17314:105,17229:30,6417:30

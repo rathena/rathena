@@ -2830,7 +2830,7 @@
 14533,475,100	// Battle_Manual100
 14534,475,100	// Small_Life_Potion
 14535,475,100	// Med_Life_Potion
-14536,475,100	// Abrasive
+14536,1,100	// Abrasive
 14537,475,100	// Regeneration_Potion
 14538,475,100	// Glass_Of_Illusion
 14539,475,100	// Shadow_Armor_S
@@ -4775,3 +4775,4 @@
 //32021,499,100	//
 //32202,507,100	//
 //32221,499,100	//
+40000,9,100	// Choco_Point_Voucher
