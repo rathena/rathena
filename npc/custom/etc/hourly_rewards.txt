@@ -151,13 +151,13 @@ end;
 Process_Reward:
 	//put the Hourly Rewards here
 	if (#Hourly_Rewards_Check == 2) {
-		message strcharinfo(0),"[Hourly Rewards]: You've earned an hourly reward (1/3).";
+		message strcharinfo(0),"[Hourly Rewards]: You've earned 75 hourly reward points (1/3).";
 		#HourlyRewardPoints += 75;
 	} else if (#Hourly_Rewards_Check == 4) {
-		message strcharinfo(0),"[Hourly Rewards]: You've earned an hourly reward (2/3).";
+		message strcharinfo(0),"[Hourly Rewards]: You've earned 75 hourly reward points (2/3).";
 		#HourlyRewardPoints += 75;
 	} else if (#Hourly_Rewards_Check == 6) {
-		message strcharinfo(0),"[Hourly Rewards]: You've earned an hourly reward (3/3).";
+		message strcharinfo(0),"[Hourly Rewards]: You've earned 150 hourly reward points (3/3).";
 		#HourlyRewardPoints += 150;
 	}
 	//getitem 905,1; //	if you want to add items as reward you can add them here like that
@@ -168,4 +168,4 @@ return;
 
 }
 
-prontera,105,70,7	pointshop	Hourly Rewards Shop	859,#HourlyRewardPoints:no,40000:300,6240:200,6241:200,7621:60,12209:3,14536:15,12710:20,17314:105,17229:30,6417:30
+prontera,105,70,6	pointshop	Hourly Rewards Shop	667,#HourlyRewardPoints:no,40000:300,6240:200,6241:200,17314:105,17229:30,6417:30,12710:20,14536:15,7621:60,12209:3
