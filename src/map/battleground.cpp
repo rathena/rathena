@@ -1060,6 +1060,12 @@ void bg_queue_clear(s_battleground_queue *queue, bool ended)
 			queue->map = nullptr;
 		}
 
+		for (const auto &sd : queue->teama_members)
+			sd->bg_queue_id = 0;
+
+		for (const auto &sd : queue->teamb_members)
+			sd->bg_queue_id = 0;
+
 		queue->teama_members.clear();
 		queue->teamb_members.clear();
 		queue->teama_members.shrink_to_fit();
