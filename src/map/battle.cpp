@@ -7168,8 +7168,11 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	sc = status_get_sc(bl);
 	ssc = status_get_sc(src);
 
-	if (sc && sc->data[SC_WHITEIMPRISON])
-		return 0; // White Imprison does not reflect any damage
+	if (sc) { // These statuses do not reflect any damage
+		if (sc->data[SC_WHITEIMPRISON] || sc->data[SC_DARKCROW] ||
+			(sc->data[SC_KYOMU] && (!ssc || !ssc->data[SC_SHIELDSPELL_DEF]))) // Nullify reflecting ability except for Shield Spell - Def
+				return 0;
+	}
 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
 		if ( (skill_get_inf2(skill_id, INF2_ISTRAP) || !status_reflect) && sd && sd->bonus.short_weapon_damage_return ) {
@@ -7243,18 +7246,13 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 			rdamage = i64max(rdamage, 1);
 #endif
 		}
-
-		if (ssc->data[SC_VENOMBLEED])
-			rdamage -= rdamage * ssc->data[SC_VENOMBLEED]->val2 / 100;
-		if (ssc->data[SC_DARKCROW])
-			rdamage -= rdamage * ssc->data[SC_DARKCROW]->val3 / 100;
 	}
 
-	if (sc && sc->data[SC_KYOMU] && (!ssc || !ssc->data[SC_SHIELDSPELL_DEF])) // Nullify reflecting ability except for Shield Spell - Def
-		rdamage = 0;
-
-	if (sc && sc->data[SC_MAXPAIN]) {
-		rdamage = damage * sc->data[SC_MAXPAIN]->val1 * 10 / 100;
+	if (sc) {
+		if (sc->data[SC_VENOMBLEED])
+			rdamage -= rdamage * ssc->data[SC_VENOMBLEED]->val2 / 100;
+		if (sc->data[SC_MAXPAIN])
+			rdamage = damage * sc->data[SC_MAXPAIN]->val1 * 10 / 100;
 	}
 
 	return cap_value(min(rdamage,max_damage),INT_MIN,INT_MAX);

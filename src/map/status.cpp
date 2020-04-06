@@ -9378,12 +9378,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_PYREXIA:
 	case SC_OBLIVIONCURSE:
 	case SC_LEECHESEND:
-		{ // It doesn't stack or even renew
-			int i = SC_TOXIN;
-			for(; i<= SC_LEECHESEND; i++)
-				if(sc->data[i])	return 0;
+		// It doesn't stack or even renew
+		for (int i = SC_TOXIN; i <= SC_LEECHESEND; i++) {
+			if (sc->data[i])
+				return 0;
 		}
-	break;
+		break;
 	case SC_SATURDAYNIGHTFEVER:
 		if (sc->data[SC_BERSERK] || sc->data[SC_INSPIRATION])
 			return 0;
@@ -11658,7 +11658,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_DARKCROW:
 			val2 = 30 * val1; // ATK bonus
-			val3 = 10 * val1; // Reflect damage reduction !TODO: Confirm rate
 			break;
 		case SC_UNLIMIT:
 			val2 = 50 * val1;
