@@ -32,7 +32,6 @@ using namespace rathena;
 BattlegroundDatabase battleground_db;
 std::unordered_map<int, std::shared_ptr<s_battleground_data>> bg_team_db;
 std::vector<std::shared_ptr<s_battleground_queue>> bg_queues;
-int bg_queue_count = 0;
 
 const std::string BattlegroundDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/battleground_db.yml";
@@ -303,7 +302,7 @@ std::shared_ptr<s_battleground_type> bg_search_name(const char *name)
 std::shared_ptr<s_battleground_queue> bg_search_queue(int queue_id)
 {
 	for (const auto &queue : bg_queues) {
-		if (queue_id == queue->queue_id)
+		if (queue_id == queue->id)
 			return queue;
 	}
 
@@ -540,7 +539,6 @@ int bg_create(uint16 mapindex, s_battleground_team* team)
 	bg->cemetery.y = team->warp_y;
 	bg->logout_event = team->quit_event.c_str();
 	bg->die_event = team->death_event.c_str();
-	bg->members.clear();
 
 	return bg->id;
 }
@@ -970,12 +968,15 @@ void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vec
 		std::vector<map_session_data *>* team = r ? &queue->teamb_members : &queue->teama_members;
 
 		// If one team has lesser members try to balance
-		if (queue->teama_members.size() < queue->teamb_members.size() && r)
+		if (queue->teama_members.size() < queue->teamb_members.size() && r) {
 			team = &queue->teama_members;
+			r = false;
+		}
 
 		// If the designated team is full, put the player into the other team
 		if (team->size() + list.size() > bg->max_players) {
 			team = r ? &queue->teama_members : &queue->teamb_members;
+			r = !r;
 		}
 
 		while (!list.empty() && team->size() < bg->max_players) {
@@ -989,7 +990,7 @@ void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vec
 			if (!bg_queue_check_joinable(bg, sd2, name))
 				continue;
 
-			sd2->bg_queue_id = queue->queue_id;
+			sd2->bg_queue_id = queue->id;
 			team->push_back(sd2);
 			clif_bg_queue_apply_result(BG_APPLY_ACCEPT, name, sd2);
 			clif_bg_queue_apply_notify(name, sd2);
@@ -997,14 +998,22 @@ void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vec
 
 		// Enough players have joined
 		if (queue->map && queue->map->isReserved) { // Battleground is already active
+			int bg_id = mapreg_readreg(add_str(r ? queue->map->team2.bg_id_var.c_str() : queue->map->team1.bg_id_var.c_str()));
+
 			for (auto &pl_sd : *team) {
 				if (queue->map->mapindex == pl_sd->mapindex)
 					continue;
 
-				std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, queue->id);
+				std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, bg_id);
+
+				if (bgteam == nullptr) {
+					team->erase(std::find(team->begin(), team->end(), pl_sd));
+					clif_bg_queue_apply_result(BG_APPLY_RECONNECT, name, sd);
+					return;
+				}
 
 				clif_bg_queue_entry_init(pl_sd);
-				bg_team_join(queue->id, pl_sd, true);
+				bg_team_join(bg_id, pl_sd, true);
 				pc_setpos(sd, bgteam->cemetery.map, bgteam->cemetery.x, bgteam->cemetery.y, CLR_TELEPORT);
 			}
 		} else if (queue->teamb_members.size() >= bg->required_players && queue->teama_members.size() >= bg->required_players)
@@ -1097,7 +1106,7 @@ bool bg_queue_leave(struct map_session_data *sd)
 		return false;
 
 	for (auto &queue : bg_queues) {
-		if (sd->bg_queue_id == queue->queue_id) {
+		if (sd->bg_queue_id == queue->id) {
 			if (!bg_queue_leave_sub(sd, queue->teama_members) && !bg_queue_leave_sub(sd, queue->teamb_members)) {
 				ShowError("bg_queue_leave: Couldn't find player %s in battlegrounds queue.\n", sd->status.name);
 				return false;
@@ -1236,7 +1245,6 @@ static void bg_queue_create(int bg_id, int req_players)
 	auto queue = std::make_shared<s_battleground_queue>();
 
 	queue->id = bg_id;
-	queue->queue_id = ++bg_queue_count;
 	queue->required_players = req_players;
 	queue->accepted_players = 0;
 	queue->tid_expire = INVALID_TIMER;
