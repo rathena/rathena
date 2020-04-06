@@ -2297,6 +2297,8 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 			body << YAML::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_unit->second.unit_layout_type); i++) {
+				if (it_unit->second.unit_layout_type[i] == 0 && i + 1 > 5)
+					continue;
 				body << YAML::BeginMap;
 				body << YAML::Key << "Level" << YAML::Value << i + 1;
 				body << YAML::Key << "Size" << YAML::Value << it_unit->second.unit_layout_type[i];
@@ -2314,6 +2316,8 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 			body << YAML::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_unit->second.unit_range); i++) {
+				if (it_unit->second.unit_range[i] == 0 && i + 1 > 5)
+					continue;
 				body << YAML::BeginMap;
 				body << YAML::Key << "Level" << YAML::Value << i + 1;
 				body << YAML::Key << "Size" << YAML::Value << it_unit->second.unit_range[i];

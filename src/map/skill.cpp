@@ -21707,6 +21707,8 @@ template<typename T, size_t S> bool SkillDatabase::parseNode(std::string nodeNam
 		for (size_t i = 0; i < S; i++)
 			arr[i] = value;
 	} else {
+		uint16 max_level = 0;
+
 		for (const YAML::Node &it : node[nodeName]) {
 			uint16 skill_lv;
 
@@ -21722,7 +21724,39 @@ template<typename T, size_t S> bool SkillDatabase::parseNode(std::string nodeNam
 				continue;
 
 			arr[skill_lv - 1] = value;
+			max_level = max(max_level, skill_lv);
 		}
+
+		size_t i = max_level, j;
+
+		// Check for linear change with increasing steps until we reach half of the data acquired.
+		for (size_t step = 1; step <= i / 2; step++) {
+			int diff = arr[i - 1] - arr[i - step - 1];
+
+			for (j = i - 1; j >= step; j--) {
+				if ((arr[j] - arr[j - step]) != diff)
+					break;
+			}
+
+			if (j >= step) // No match, try next step.
+				continue;
+
+			for (; i < MAX_SKILL_LEVEL; i++) { // Apply linear increase
+				arr[i] = arr[i - step] + diff;
+
+				if (arr[i] < 1 && arr[i - 1] >= 0) { // Check if we have switched from + to -, cap the decrease to 0 in said cases.
+					arr[i] = 1;
+					diff = 0;
+					step = 1;
+				}
+			}
+
+			return true;
+		}
+
+		// Unable to determine linear trend, fill remaining array values with last value
+		for (; i < S; i++)
+			arr[i] = arr[max_level - 1];
 	}
 
 	return true;
