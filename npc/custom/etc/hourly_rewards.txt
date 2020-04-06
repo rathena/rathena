@@ -131,6 +131,21 @@ end;
 
 OnPCLoginEvent:
 	addtimer .s_time, strnpcinfo(3)+"::OnHourlyRewards";
+	if (#Hourly_Rewards_Check < 6) {
+		message strcharinfo(0),"[Hourly Rewards]: You are currently earning hourly rewards. See details with @hourlyrewards";
+	} else {
+		message strcharinfo(0),"[Hourly Rewards]: You have earned today's hourly rewards.";
+	}
+end;
+
+OnHourlyRewardsProgress:
+	.@hoursPlayed = #Hourly_Rewards_Check/2;
+	if (.@hoursPlayed >= 3) {
+		dispbottom "[Hourly Rewards]: You have earned all 3 hourly rewards today.",0x00FFFF;
+	} else {
+		dispbottom "[Hourly Rewards]: You have earned "+ .@hoursPlayed +" out of 3 hourly rewards today.",0x00FFFF;
+	}
+	dispbottom "[Hourly Rewards]: Total Points: "+ #HourlyRewardPoints,0x00FFFF;
 end;
 
 OnInit:
@@ -145,7 +160,8 @@ OnInit:
 		query_logsql("CREATE TABLE IF NOT EXISTS `hourly_rewards_log` (`unique_id` INT( 11 ) UNSIGNED NOT NULL DEFAULT  '0',`ip` VARCHAR(100) NOT NULL,`index` INT NOT NULL, `value` INT NOT NULL,`account_id` INT NOT NULL,`char_id` INT NOT NULL,`char_name` VARCHAR(30) NOT NULL) ENGINE=MyISAM");
 	}
 	bindatcmd("hourlyunban",strnpcinfo(3)+"::OnHourlyUnban",99,99);
-	bindatcmd("hourlyban",strnpcinfo(3)+"::OnHourlyBan",0,99);
+	bindatcmd("hourlyban",strnpcinfo(3)+"::OnHourlyBan",99,99);
+	bindatcmd("hourlyrewards",strnpcinfo(3)+"::OnHourlyRewardsProgress");
 end;
 
 Process_Reward:
