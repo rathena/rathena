@@ -132,7 +132,7 @@ end;
 OnPCLoginEvent:
 	addtimer .s_time, strnpcinfo(3)+"::OnHourlyRewards";
 	if (#Hourly_Rewards_Check < 6) {
-		message strcharinfo(0),"[Hourly Rewards]: You are currently earning hourly rewards. See details with @hourlyrewards";
+		message strcharinfo(0),"[Hourly Rewards]: You are currently earning hourly rewards. Type @hourlyrewards to see progress.";
 	} else {
 		message strcharinfo(0),"[Hourly Rewards]: You have earned today's hourly rewards.";
 	}
@@ -141,11 +141,10 @@ end;
 OnHourlyRewardsProgress:
 	.@hoursPlayed = #Hourly_Rewards_Check/2;
 	if (.@hoursPlayed >= 3) {
-		dispbottom "[Hourly Rewards]: You have earned all 3 hourly rewards today.",0x00FFFF;
+		message "[Hourly Rewards]: You have earned all 3 hourly rewards today. Total Points: "+ #HourlyRewardPoints;
 	} else {
-		dispbottom "[Hourly Rewards]: You have earned "+ .@hoursPlayed +" out of 3 hourly rewards today.",0x00FFFF;
+		message "[Hourly Rewards]: You have earned "+ .@hoursPlayed +" out of 3 hourly rewards today. Total Points: "+ #HourlyRewardPoints;
 	}
-	dispbottom "[Hourly Rewards]: Total Points: "+ #HourlyRewardPoints,0x00FFFF;
 end;
 
 OnInit:
