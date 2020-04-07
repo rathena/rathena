@@ -1451,8 +1451,6 @@ void initChangeTables(void)
 
 	StatusChangeFlagTable[SC_HALLUCINATIONWALK_POSTDELAY] |= SCB_SPEED|SCB_ASPD;
 	StatusChangeFlagTable[SC_PARALYSE] |= SCB_SPEED;
-	StatusChangeFlagTable[SC_PYREXIA] |= SCB_CRI|SCB_BATK;
-	StatusChangeFlagTable[SC_OBLIVIONCURSE] |= SCB_REGEN;
 	StatusChangeFlagTable[SC_BANDING_DEFENCE] |= SCB_SPEED;
 	StatusChangeFlagTable[SC_SHIELDSPELL_DEF] |= SCB_WATK;
 	StatusChangeFlagTable[SC_SHIELDSPELL_REF] |= SCB_DEF;
@@ -1674,7 +1672,6 @@ void initChangeTables(void)
 #endif
 	StatusChangeStateTable[SC__BLOODYLUST]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC_DEATHBOUND]			|= SCS_NOCAST;
-	StatusChangeStateTable[SC_OBLIVIONCURSE]		|= SCS_NOCAST;
 	StatusChangeStateTable[SC_WHITEIMPRISON]		|= SCS_NOCAST;
 	StatusChangeStateTable[SC__SHADOWFORM]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC__INVISIBILITY]		|= SCS_NOCAST;
@@ -5004,7 +5001,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		(bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
 		sc->data[SC_EXTREMITYFIST] && (!sc->data[SC_SPIRIT] || sc->data[SC_SPIRIT]->val2 != SL_MONK)) ||
 #endif
-		sc->data[SC_OBLIVIONCURSE] || sc->data[SC_VITALITYACTIVATION])
+		sc->data[SC_VITALITYACTIVATION])
 		regen->flag &= ~RGN_SP;
 
 	if (sc->data[SC_TENSIONRELAX]) {
@@ -6385,8 +6382,6 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 #endif
 	if (sc->data[SC_SUNSTANCE])
 		batk += batk * sc->data[SC_SUNSTANCE]->val2 / 100;
-	if (sc->data[SC_PYREXIA])
-		batk += batk * sc->data[SC_PYREXIA]->val2 / 100;
 
 	return (unsigned short)cap_value(batk,0,USHRT_MAX);
 }
@@ -6663,8 +6658,6 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 		critical += sc->data[SC_BEYONDOFWARCRY]->val3;
 	if (sc->data[SC_SOULSHADOW])
 		critical += 10 * sc->data[SC_SOULSHADOW]->val3;
-	if (sc->data[SC_PYREXIA])
-		critical += critical * sc->data[SC_PYREXIA]->val2 / 100;
 
 	return (short)cap_value(critical,10,SHRT_MAX);
 }
@@ -8632,20 +8625,6 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 		case SC_FREEZING:
 			tick_def2 = (status->vit + status->dex)*50;
 			break;
-		case SC_OBLIVIONCURSE: // 100% - (100 - 0.8 x INT)
-			sc_def = status->int_*80;
-			sc_def = max(sc_def, 500); // minimum of 5% resist
-			tick_def = 0;
-			//Fall through
-		case SC_TOXIN:
-		case SC_PARALYSE:
-		case SC_VENOMBLEED:
-		case SC_MAGICMUSHROOM:
-		case SC_DEATHHURT:
-		case SC_PYREXIA:
-		case SC_LEECHESEND:
-			tick_def2 = (status->vit + status->luk) * 500;
-			break;
 		case SC_BITE: // {(Base Success chance) - (Target's AGI / 4)}
 			sc_def2 = status->agi*25;
 			break;
@@ -10422,7 +10401,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 30; // Reflect damage % reduction
 			break;
 		case SC_MAGICMUSHROOM:
-			val2 = 10; // Skill delay % reduction
+			val2 = 10; // After-cast delay % reduction
 			break;
 
 		case SC_CONFUSION:
@@ -11062,10 +11041,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 10 + 2 * val1; // Chance
 			val4 = tick / 5000;
 			tick_time = 5000; // [GodLesZ] tick time
-			break;
-		case SC_OBLIVIONCURSE:
-			val4 = tick / 3000;
-			tick_time = 3000; // [GodLesZ] tick time
 			break;
 		case SC_CLOAKINGEXCEED:
 			val2 = (val1 + 1) / 2; // Hits
@@ -13947,14 +13922,6 @@ TIMER_FUNC(status_change_timer){
 		if(--(sce->val4) > 0) {
 			status_heal(bl,0,60,0);
 			sc_timer_next(10000+tick);
-		}
-		break;
-
-	case SC_OBLIVIONCURSE:
-		if( --(sce->val4) >= 0 ) {
-			clif_emotion(bl,ET_QUESTION);
-			sc_timer_next(3000 + tick);
-			return 0;
 		}
 		break;
 

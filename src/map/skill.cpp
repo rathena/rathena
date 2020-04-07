@@ -17515,8 +17515,6 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 					break;
 			}
 		}
-		if (sc->data[SC_MAGICMUSHROOM])
-			time -= time * sc->data[SC_MAGICMUSHROOM]->val2 / 100;
 	}
 
 	if (!(delaynodex&2)) {
@@ -17525,6 +17523,8 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 				time -= time * sc->data[SC_POEMBRAGI]->val3 / 100;
 			if (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 3 && skill_get_type(skill_id) == BF_MAGIC && skill_get_ele(skill_id, skill_lv) == ELE_WIND)
 				time /= 2; // After Delay of Wind element spells reduced by 50%.
+			if (sc->data[SC_MAGICMUSHROOM])
+				time -= time * sc->data[SC_MAGICMUSHROOM]->val2 / 100;
 		}
 	}
 

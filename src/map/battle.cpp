@@ -1610,8 +1610,9 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		if (sc->data[SC_POISONINGWEAPON] && (flag&BF_SHORT) && (!skill_id || skill_id == GC_VENOMPRESSURE) && damage > 0) {
 			damage += damage * 10 / 100;
-			if (rnd()%100 < sc->data[SC_POISONINGWEAPON]->val3) // !TODO: Confirm if player is given Poison applied to caster or normal SC_POISON.
-				sc_start(src,src,(sc_type)sc->data[SC_POISONINGWEAPON]->val2,100,sc->data[SC_POISONINGWEAPON]->val1,skill_get_time2(GC_POISONINGWEAPON, 1));
+			// !TODO: Confirm if this still happens
+			//if (rnd()%100 < sc->data[SC_POISONINGWEAPON]->val3)
+			//	sc_start(src,src,(sc_type)sc->data[SC_POISONINGWEAPON]->val2,100,sc->data[SC_POISONINGWEAPON]->val1,skill_get_time2(GC_POISONINGWEAPON, 1));
 		}
 
 		if( sc->data[SC__DEADLYINFECT] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT && damage > 0 && rnd()%100 < 30 + 10 * sc->data[SC__DEADLYINFECT]->val1 )
@@ -4854,6 +4855,11 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 			RE_ALLATK_ADDRATE(wd, sc->data[SC_GVG_GIANT]->val3);
 		}
 
+		if (sc->data[SC_PYREXIA]) {
+			ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_PYREXIA]->val2);
+			RE_ALLATK_ADDRATE(wd, sc->data[SC_PYREXIA]->val2);
+		}
+
 		if (sc->data[SC_MIRACLE])
 			anger_id = 2; // Always treat all monsters as star flagged monster when in miracle state
 	}
@@ -5707,6 +5713,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 				wd.damage2 = (int)floor((float)((wd.damage2 * 140) / 100 * (100 + sd->bonus.crit_atk_rate)) / 100);
 		} else
 			wd.damage = (int)floor((float)(wd.damage * 140) / 100);
+		if (sc && sc->data[SC_PYREXIA])
+			wd.damage += wd.damage * sc->data[SC_PYREXIA]->val2 / 100;
 	}
 #endif
 
@@ -7168,10 +7176,15 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	sc = status_get_sc(bl);
 	ssc = status_get_sc(src);
 
-	if (sc) { // These statuses do not reflect any damage
-		if (sc->data[SC_WHITEIMPRISON] || sc->data[SC_DARKCROW] ||
+	if (sc) { // These statuses do not reflect any damage (off the target)
+		if (sc->data[SC_WHITEIMPRISON] ||
 			(sc->data[SC_KYOMU] && (!ssc || !ssc->data[SC_SHIELDSPELL_DEF]))) // Nullify reflecting ability except for Shield Spell - Def
 				return 0;
+	}
+
+	if (ssc) { // These statuses do not do any damage (to the caster)
+		if (ssc->data[SC_DARKCROW])
+			return 0;
 	}
 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
@@ -7246,11 +7259,11 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 			rdamage = i64max(rdamage, 1);
 #endif
 		}
+		if (ssc->data[SC_VENOMBLEED])
+			rdamage -= rdamage * ssc->data[SC_VENOMBLEED]->val2 / 100;
 	}
 
 	if (sc) {
-		if (sc->data[SC_VENOMBLEED])
-			rdamage -= rdamage * ssc->data[SC_VENOMBLEED]->val2 / 100;
 		if (sc->data[SC_MAXPAIN])
 			rdamage = damage * sc->data[SC_MAXPAIN]->val1 * 10 / 100;
 	}
