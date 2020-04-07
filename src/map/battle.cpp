@@ -6878,6 +6878,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				// AD benefits from endow/element but damage is forced back to neutral
 				md.damage = battle_attr_fix(src, target, md.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 			}
+			// Fall through
 #else
 		case CR_ACIDDEMONSTRATION:
 			if(tstatus->vit+sstatus->int_) //crash fix
