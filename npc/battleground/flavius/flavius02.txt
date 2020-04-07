@@ -193,6 +193,8 @@ OnMyMobDead:
 		bg_warp $@FlaviusBG2_id1,"bat_b02",10,290;
 		bg_warp $@FlaviusBG2_id2,"bat_b02",390,10;
 		donpcevent "#bat_b02_timer::OnEnable";
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_b02", true;
 	}
 	end;
 }
@@ -227,6 +229,8 @@ OnMyMobDead:
 		bg_warp $@FlaviusBG2_id1,"bat_b02",10,290;
 		bg_warp $@FlaviusBG2_id2,"bat_b02",390,10;
 		donpcevent "#bat_b02_timer::OnEnable";
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_b02", true;
 	}
 	end;
 }

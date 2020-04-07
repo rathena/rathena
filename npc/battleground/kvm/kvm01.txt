@@ -292,6 +292,8 @@ OnStop:
 	bg_warp $@KvM01BG_id1,"bat_c01",53,128;
 	bg_warp $@KvM01BG_id2,"bat_c01",146,55;
 	donpcevent "KvM01_BG_Out::OnBegin";
+	if (getbattleflag("feature.bgqueue"))
+		bg_reserve "bat_c01", true;
 	end;
 }
 

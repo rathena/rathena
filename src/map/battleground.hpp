@@ -54,6 +54,7 @@ struct s_battleground_queue {
 	int max_players; ///< Maximum amount of players on each side
 	int accepted_players; ///< Amount of players who accepted the offer to enter the battleground
 	bool in_ready_state; ///< Is this BG queue waiting for players to enter the BG?
+	bool ended; ///< If the BG has ended (script in prize giving state).
 	int tid_expire; ///< Timer ID associated with the time out at the ready to enter window
 	int tid_start; ///< Timer ID associated with the start delay
 	int tid_requeue; ///< Timer ID associated with requeuing this group if all BG maps are reserved
@@ -98,6 +99,13 @@ enum e_bg_info : uint16 {
 	BG_INFO_DESERTER_TIME,
 };
 
+/// Enum of Battlegrounds state
+enum e_bg_state : uint8 {
+	BG_STATE_NORMAL = 0,
+	BG_STATE_PRIZE,
+	BG_STATE_CLEAR,
+};
+
 class BattlegroundDatabase : public TypesafeYamlDatabase<uint32, s_battleground_type> {
 public:
 	BattlegroundDatabase() : TypesafeYamlDatabase("BATTLEGROUND_DB", 1) {
@@ -118,9 +126,9 @@ void bg_send_dot_remove(struct map_session_data *sd);
 int bg_team_get_id(struct block_list *bl);
 struct map_session_data *bg_getavailablesd(s_battleground_data *bg);
 
-bool bg_queue_reservation(const char *name, bool state);
-#define bg_queue_reserve(name) (bg_queue_reservation(name, true))
-#define bg_queue_unbook(name) (bg_queue_reservation(name, false))
+bool bg_queue_reservation(const char *name, bool state, bool ended);
+#define bg_queue_reserve(name, end) (bg_queue_reservation(name, true, end))
+#define bg_queue_unbook(name) (bg_queue_reservation(name, false, false))
 
 int bg_create(uint16 mapindex, s_battleground_team* team);
 bool bg_team_join(int bg_id, struct map_session_data *sd, bool is_queue);
@@ -132,7 +140,7 @@ bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map
 void bg_queue_join_party(const char *name, struct map_session_data *sd);
 void bg_queue_join_guild(const char *name, struct map_session_data *sd);
 void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vector<map_session_data *> list);
-void bg_queue_clear(s_battleground_queue *queue, bool ended);
+void bg_queue_clear(s_battleground_queue *queue, bool state);
 bool bg_queue_leave(struct map_session_data *sd);
 bool bg_queue_on_ready(const char *name, std::shared_ptr<s_battleground_queue> queue);
 void bg_queue_on_accept_invite(struct map_session_data *sd);

@@ -799,9 +799,10 @@ bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map
  * Mark a map as reserved for a Battleground
  * @param name: Battleground map name
  * @param state: Whether to mark reserved or not
+ * @param ended: Whether the Battleground event is complete; players getting prize
  * @return True on success or false otherwise
  */
-bool bg_queue_reservation(const char *name, bool state)
+bool bg_queue_reservation(const char *name, bool state, bool ended)
 {
 	uint16 mapindex = mapindex_name2id(name);
 
@@ -809,10 +810,12 @@ bool bg_queue_reservation(const char *name, bool state)
 		for (auto &map : pair.second->maps) {
 			if (map.mapindex == mapindex) {
 				map.isReserved = state;
-				if (!state) {
-					for (auto &queue : bg_queues) {
-						if (queue->map == &map)
+				for (auto &queue : bg_queues) {
+					if (queue->map == &map) {
+						if (!state)
 							bg_queue_clear(queue.get(), true);
+						if (ended) // The ended flag is applied from bg_reserve (bg_unbook clears it for the next queue)
+							queue->ended = true;
 					}
 				}
 				return true;
@@ -955,9 +958,7 @@ void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vec
 	}
 
 	for (const auto &queue : bg_queues) {
-		if (queue->id != bg->id)
-			continue;
-		if (queue->in_ready_state)
+		if (queue->id != bg->id || queue->in_ready_state || queue->ended)
 			continue;
 
 		// Make sure there's enough space on one side to join as a party/guild in this queue
@@ -1030,9 +1031,9 @@ void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vec
 /**
  * Clear Battleground queue for next one
  * @param queue: Queue to clean up
- * @param ended: If a Battleground has ended through normal means (by script command bg_unbook)
+ * @param state: If a Battleground has ended through normal means (by script command bg_unbook)
  */
-void bg_queue_clear(s_battleground_queue *queue, bool ended)
+void bg_queue_clear(s_battleground_queue *queue, bool state)
 {
 	if (!queue)
 		return;
@@ -1055,7 +1056,7 @@ void bg_queue_clear(s_battleground_queue *queue, bool ended)
 	queue->in_ready_state = false;
 	queue->accepted_players = 0; // Reset the queue count
 
-	if (ended) {
+	if (state) {
 		if (queue->map != nullptr) {
 			queue->map->isReserved = false; // Remove reservation to free up for future queue
 			queue->map = nullptr;
@@ -1071,6 +1072,7 @@ void bg_queue_clear(s_battleground_queue *queue, bool ended)
 		queue->teamb_members.clear();
 		queue->teama_members.shrink_to_fit();
 		queue->teamb_members.shrink_to_fit();
+		queue->ended = false;
 	}
 }
 
@@ -1120,7 +1122,7 @@ bool bg_queue_leave(struct map_session_data *sd)
 			} else {
 				queue->in_ready_state = false;
 
-				if (queue->teama_members.empty() && queue->teamb_members.empty()) // If there are no players left in the queue, discard it
+				if (queue->map && queue->map->isReserved && queue->teama_members.empty() && queue->teamb_members.empty()) // If there are no players left in the queue (that hasn't started), discard it
 					bg_queue_clear(queue.get(), true);
 
 				return true;

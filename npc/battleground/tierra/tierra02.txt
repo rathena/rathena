@@ -182,6 +182,8 @@ OnMyMobDead:
 		mapannounce "bat_a02", "Croix Vintenar Swandery: We destroyed Guillaume's Food Storage. We won that! Wow!",bc_map,"0xFFCE00";
 		bg_warp $@TierraBG2_id1,"bat_a02",50,374;
 		bg_warp $@TierraBG2_id2,"bat_a02",42,16;
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_a02", true;
 	}
 	end;
 }
@@ -205,6 +207,8 @@ OnMyMobDead:
 		mapannounce "bat_a02", "Guillaume Vintenar Axl Rose : We destroyed Croix's Food Storage. We won that! Wow!",bc_map,"0xFFCE00";
 		bg_warp $@TierraBG2_id1,"bat_a02",50,374;
 		bg_warp $@TierraBG2_id2,"bat_a02",42,16;
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_a02", true;
 	}
 	end;
 }
