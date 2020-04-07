@@ -2920,7 +2920,7 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 			element = sstatus->rhw.ele;
 		else
 			element = sstatus->lhw.ele;
-		if(is_skill_using_arrow(src, skill_id) && sd && sd->bonus.arrow_ele && weapon_position == EQI_HAND_R)
+		if(is_skill_using_arrow(src, skill_id) && sd && sd->bonus.arrow_ele > ELE_NONE && sd->bonus.arrow_ele < ELE_ALL && weapon_position == EQI_HAND_R)
 			element = sd->bonus.arrow_ele;
 		if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm >= MAX_SPIRITCHARM)
 			element = sd->spiritcharm_type; // Summoning 10 spiritcharm will endow your weapon
