@@ -2732,12 +2732,12 @@ int map_addinstancemap(int src_m, int instance_id)
 	// Alter the name
 	// Due to this being custom we only worry about preserving as many characters as necessary for accurate map distinguishing
 	// This also allows us to maintain complete independence with main map functions
-	if((strchr(iname,'@') == NULL) && strlen(iname) > 8) {
-		memmove(iname, iname+(strlen(iname)-9), strlen(iname));
-		snprintf(dst_map->name, sizeof(dst_map->name),"%d#%s", instance_id, iname);
+	if ((strchr(iname, '@') == NULL) && strlen(iname) > 8) {
+		memmove(iname, iname + (strlen(iname) - 9), strlen(iname));
+		snprintf(dst_map->name, sizeof(dst_map->name), "%d#%s", (instance_id % 1000), iname);
 	} else
-		snprintf(dst_map->name, sizeof(dst_map->name),"%.3d%s", instance_id, iname);
-	dst_map->name[MAP_NAME_LENGTH-1] = '\0';
+		snprintf(dst_map->name, sizeof(dst_map->name), "%.3d%s", (instance_id % 1000), iname);
+	dst_map->name[MAP_NAME_LENGTH - 1] = '\0';
 
 	dst_map->m = dst_m;
 	dst_map->instance_id = instance_id;
