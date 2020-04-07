@@ -17134,7 +17134,7 @@ void clif_quest_update_objective(struct map_session_data *sd, struct quest *qd, 
 			WFIFOL(fd, offset) = qd->quest_id * 1000 + i;
 			offset += 4;
 #else
-			WFIFOL(fd, offset) = qi->objectives[i].mob_id;
+			WFIFOL(fd, offset) = qi->objectives[i]->mob_id;
 			offset += 4;
 #endif
 			WFIFOW(fd, offset) = qi->objectives[i]->count;

@@ -1260,10 +1260,6 @@ Body:
           Size: 2
         - Level: 11
           Size: 3
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 1000
       Target: Enemy
       Flag:
@@ -3466,10 +3462,6 @@ Body:
           Size: 6
         - Level: 11
           Size: 7
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Range: 1
       Interval: 1250
       Target: Enemy
@@ -3562,12 +3554,6 @@ Body:
           Size: 2
         - Level: 10
           Size: 2
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: -1
       Flag:
         PathCheck: true
@@ -8255,22 +8241,6 @@ Body:
           Size: 4
         - Level: 5
           Size: 5
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: -1
       Flag:
         PathCheck: true
@@ -15368,12 +15338,6 @@ Body:
           Size: 3
         - Level: 10
           Size: 4
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: -1
       Flag:
         PathCheck: true
@@ -15586,22 +15550,6 @@ Body:
           Size: 2
         - Level: 5
           Size: 3
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 1000
       Target: Enemy
       Flag:
@@ -16233,12 +16181,6 @@ Body:
           Size: 5
         - Level: 10
           Size: 13
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 1000
       Flag:
         NoOverlap: true
@@ -26494,22 +26436,6 @@ Body:
           Size: 4
         - Level: 5
           Size: 4
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 1000
       Target: Enemy
       Flag:
@@ -26590,22 +26516,6 @@ Body:
           Size: 4
         - Level: 5
           Size: 4
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 1000
       Target: Enemy
       Flag:
@@ -26747,22 +26657,6 @@ Body:
           Size: 4
         - Level: 5
           Size: 5
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 500
       Target: Enemy
       Flag:
@@ -27022,22 +26916,6 @@ Body:
           Size: 2
         - Level: 5
           Size: 3
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 500
       Target: Enemy
       Flag:
@@ -28767,22 +28645,6 @@ Body:
           Size: 3
         - Level: 5
           Size: 3
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 500
       Target: Enemy
       Flag:
@@ -30811,12 +30673,6 @@ Body:
           Size: 1
         - Level: 10
           Size: 2
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: 1000
       Target: Enemy
       Flag:
@@ -32393,22 +32249,6 @@ Body:
           Size: 2
         - Level: 5
           Size: 3
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: -1
       Target: Enemy
       Flag:
@@ -33077,22 +32917,6 @@ Body:
           Size: 3
         - Level: 5
           Size: 4
-        - Level: 6
-          Size: 0
-        - Level: 7
-          Size: 0
-        - Level: 8
-          Size: 0
-        - Level: 9
-          Size: 0
-        - Level: 10
-          Size: 0
-        - Level: 11
-          Size: 0
-        - Level: 12
-          Size: 0
-        - Level: 13
-          Size: 0
       Interval: -1
       Target: Enemy
       Flag:
