@@ -5292,7 +5292,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 		break;
 
-#ifndef RENEWAL
+#ifdef RENEWAL
 	case KN_BRANDISHSPEAR:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
@@ -7589,6 +7589,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), 0, splash_target(src),
 			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 0,
 			skill_castend_damage_id);
+		break;
 #else
 	case KN_BRANDISHSPEAR:
 #endif
