@@ -271,7 +271,7 @@ static TIMER_FUNC(instance_delete_timer){
 static TIMER_FUNC(instance_subscription_timer){
 	int instance_id = instance_wait.id[0];
 
-	if (instance_id == 0 || instance_wait.id.empty())
+	if (instance_id <= 0 || instance_wait.id.empty())
 		return 0;
 
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
@@ -552,7 +552,7 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 				ShowError("instance_create: Character %d not found for instance '%s'.\n", owner_id, name);
 				return -2;
 			}
-			if (sd->instance_id)
+			if (sd->instance_id > 0)
 				return -3; // Player already instancing
 			break;
 		case IM_PARTY:
@@ -560,7 +560,7 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 				ShowError("instance_create: Party %d not found for instance '%s'.\n", owner_id, name);
 				return -2;
 			}
-			if (pd->instance_id)
+			if (pd->instance_id > 0)
 				return -3; // Party already instancing
 			break;
 		case IM_GUILD:
@@ -568,7 +568,7 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 				ShowError("instance_create: Guild %d not found for instance '%s'.\n", owner_id, name);
 				return -2;
 			}
-			if (gd->instance_id)
+			if (gd->instance_id > 0)
 				return -3; // Guild already instancing
 			break;
 		case IM_CLAN:
@@ -576,7 +576,7 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 				ShowError("instance_create: Clan %d not found for instance '%s'.\n", owner_id, name);
 				return -2;
 			}
-			if (cd->instance_id)
+			if (cd->instance_id > 0)
 				return -3; // Clan already instancing
 			break;
 		default:
@@ -630,7 +630,7 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
  * @return 0 on failure or map count on success
  */
 int instance_addmap(int instance_id) {
-	if (instance_id == 0)
+	if (instance_id <= 0)
 		return 0;
 
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
@@ -886,7 +886,7 @@ e_instance_enter instance_enter(struct map_session_data *sd, int instance_id, co
 	struct clan *cd;
 	e_instance_mode mode;
 
-	if (instance_id == 0) // Default party checks will be used
+	if (instance_id <= 0) // Default party checks will be used
 		mode = IM_PARTY;
 	else {
 		idata = util::umap_find(instances, instance_id);
@@ -1056,7 +1056,7 @@ void do_reload_instance(void)
 	for (sd = (TBL_PC *)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC *)mapit_next(iter)) {
 		struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-		if (sd && mapdata->instance_id) {
+		if (sd && mapdata->instance_id > 0) {
 			struct party_data *pd;
 			struct guild *gd;
 			struct clan *cd;
@@ -1088,7 +1088,7 @@ void do_reload_instance(void)
 					instance_id = cd->instance_id;
 					break;
 				default:
-					ShowError("do_reload_instance: Unexpected instance mode for instance %s (id=%u, mode=%u).\n", (db) ? db->name.c_str() : "Unknown", mapdata->instance_id, (uint8)idata->mode);
+					ShowError("do_reload_instance: Unexpected instance mode for instance %s (id=%d, mode=%u).\n", (db) ? db->name.c_str() : "Unknown", mapdata->instance_id, (uint8)idata->mode);
 					continue;
 			}
 			if (db && instance_enter(sd, instance_id, db->name.c_str(), -1, -1) == IE_OK) { // All good

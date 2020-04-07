@@ -2171,12 +2171,12 @@ int map_quit(struct map_session_data *sd) {
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-	if( mapdata->instance_id )
+	if( mapdata->instance_id > 0 )
 		instance_delusers(mapdata->instance_id);
 
 	unit_remove_map_pc(sd,CLR_RESPAWN);
 
-	if( mapdata->instance_id ) { // Avoid map conflicts and warnings on next login
+	if( mapdata->instance_id > 0 ) { // Avoid map conflicts and warnings on next login
 		int16 m;
 		struct point *pt;
 		if( mapdata->save.map )
@@ -2694,7 +2694,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 /*==========================================
  * Add an instance map
  *------------------------------------------*/
-int map_addinstancemap(int src_m, unsigned short instance_id)
+int map_addinstancemap(int src_m, int instance_id)
 {
 	if(src_m < 0)
 		return -1;
@@ -2734,9 +2734,9 @@ int map_addinstancemap(int src_m, unsigned short instance_id)
 	// This also allows us to maintain complete independence with main map functions
 	if((strchr(iname,'@') == NULL) && strlen(iname) > 8) {
 		memmove(iname, iname+(strlen(iname)-9), strlen(iname));
-		snprintf(dst_map->name, sizeof(dst_map->name),"%hu#%s", instance_id, iname);
+		snprintf(dst_map->name, sizeof(dst_map->name),"%d#%s", instance_id, iname);
 	} else
-		snprintf(dst_map->name, sizeof(dst_map->name),"%.3hu%s", instance_id, iname);
+		snprintf(dst_map->name, sizeof(dst_map->name),"%.3d%s", instance_id, iname);
 	dst_map->name[MAP_NAME_LENGTH-1] = '\0';
 
 	dst_map->m = dst_m;
@@ -2830,7 +2830,7 @@ int map_delinstancemap(int m)
 {
 	struct map_data *mapdata = map_getmapdata(m);
 
-	if(m < 0 || !mapdata->instance_id)
+	if(m < 0 || mapdata->instance_id <= 0)
 		return 0;
 
 	// Kick everyone out
@@ -2973,7 +2973,7 @@ void map_removemobs(int16 m)
 		return; //Mobs are already scheduled for removal
 
 	// Don't remove mobs on instance map
-	if (mapdata->instance_id)
+	if (mapdata->instance_id > 0)
 		return;
 
 	mapdata->mob_delete_timer = add_timer(gettick()+battle_config.mob_remove_delay, map_removemobs_timer, m, 0);
@@ -2992,7 +2992,7 @@ const char* map_mapid2mapname(int m)
 	if (!mapdata)
 		return "";
 
-	if (mapdata->instance_id) { // Instance map check
+	if (mapdata->instance_id > 0) { // Instance map check
 		std::shared_ptr<s_instance_data> idata = util::umap_find(instances, map[m].instance_id);
 
 		if (!idata) // This shouldn't happen but if it does give them the map we intended to give

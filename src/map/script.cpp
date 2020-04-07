@@ -20106,27 +20106,27 @@ int script_instancegetid(struct script_state* st, e_instance_mode mode)
 		if (sd) {
 			switch (mode) {
 				case IM_CHAR:
-					if (sd->instance_id)
+					if (sd->instance_id > 0)
 						instance_id = sd->instance_id;
 					break;
 				case IM_PARTY: {
 					struct party_data *pd = party_search(sd->status.party_id);
 
-					if (pd && pd->instance_id)
+					if (pd && pd->instance_id > 0)
 						instance_id = pd->instance_id;
 				}
 					break;
 				case IM_GUILD: {
 					struct guild *gd = guild_search(sd->status.guild_id);
 
-					if (gd && gd->instance_id)
+					if (gd && gd->instance_id > 0)
 						instance_id = gd->instance_id;
 				}
 					break;
 				case IM_CLAN: {
 					struct clan *cd = clan_search(sd->status.clan_id);
 
-					if (cd && cd->instance_id)
+					if (cd && cd->instance_id > 0)
 						instance_id = cd->instance_id;
 				}
 					break;
@@ -20253,7 +20253,7 @@ BUILDIN_FUNC(instance_enter)
 BUILDIN_FUNC(instance_npcname)
 {
 	const char *str;
-	int instance_id = 0;
+	int instance_id;
 	struct npc_data *nd;
 
 	str = script_getstr(st,2);
@@ -20262,9 +20262,9 @@ BUILDIN_FUNC(instance_npcname)
 	else
 		instance_id = script_instancegetid(st);
 
-	if( instance_id && (nd = npc_name2id(str)) != NULL ) {
+	if( instance_id > 0 && (nd = npc_name2id(str)) != NULL ) {
 		static char npcname[NAME_LENGTH];
-		snprintf(npcname, sizeof(npcname), "dup_%hu_%d", instance_id, nd->bl.id);
+		snprintf(npcname, sizeof(npcname), "dup_%d_%d", instance_id, nd->bl.id);
 		script_pushconststr(st,npcname);
 	} else {
 		ShowError("buildin_instance_npcname: Invalid instance NPC (instance_id: %d, NPC name: \"%s\".)\n", instance_id, str);
@@ -20284,7 +20284,7 @@ BUILDIN_FUNC(instance_mapname)
 {
  	const char *str;
 	int16 m;
-	int instance_id = 0;
+	int instance_id;
 
 	str = script_getstr(st,2);
 
@@ -20294,7 +20294,7 @@ BUILDIN_FUNC(instance_mapname)
 		instance_id = script_instancegetid(st);
 
 	// Check that instance mapname is a valid map
-	if(instance_id == 0 || (m = instance_mapid(map_mapname2mapid(str), instance_id)) < 0)
+	if(instance_id <= 0 || (m = instance_mapid(map_mapname2mapid(str), instance_id)) < 0)
 		script_pushconststr(st, "");
 	else
 		script_pushconststr(st, map_getmapdata(m)->name);
@@ -20333,7 +20333,7 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 	unsigned int m = va_arg(ap,unsigned int);
 	int x = va_arg(ap,int);
 	int y = va_arg(ap,int);
-	int instance_id = va_arg(ap,unsigned int);
+	int instance_id = va_arg(ap, int);
 	struct map_session_data *sd;
 
 	nullpo_retr(0, bl);
@@ -20389,7 +20389,7 @@ BUILDIN_FUNC(instance_warpall)
 	else
 		instance_id = script_instancegetid(st, IM_PARTY);
 
-	if( instance_id == 0 || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapid(m, instance_id)) < 0)
+	if( instance_id <= 0 || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapid(m, instance_id)) < 0)
 		return SCRIPT_CMD_FAILURE;
 
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
@@ -20421,12 +20421,12 @@ BUILDIN_FUNC(instance_announce) {
 	int            fontAlign   = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontAlign
 	int            fontY       = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY
 
-	if (instance_id == 0)
+	if (instance_id <= 0)
 		instance_id = script_instancegetid(st);
 
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
-	if (instance_id == 0 || !idata) {
+	if (instance_id <= 0 || !idata) {
 		ShowError("buildin_instance_announce: Instance not found.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
