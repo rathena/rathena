@@ -1046,7 +1046,11 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		status_change_end(target, SC_SAFETYWALL, INVALID_TIMER);
 	}
 
-	if (sc->data[SC_NEUTRALBARRIER] && ((d->flag&(BF_LONG|BF_MAGIC)) == BF_LONG || skill_id == CR_ACIDDEMONSTRATION)) {
+	if (sc->data[SC_NEUTRALBARRIER] && ((d->flag&(BF_LONG|BF_MAGIC)) == BF_LONG
+#ifndef RENEWAL
+		|| skill_id == CR_ACIDDEMONSTRATION
+#endif
+		)) {
 		d->dmg_lv = ATK_MISS;
 		return false;
 	}
