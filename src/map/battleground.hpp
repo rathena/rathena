@@ -46,6 +46,7 @@ struct s_battleground_map {
 
 /// Battlegrounds client interface queue system [MasterOfMuppets]
 struct s_battleground_queue {
+	int queue_id; ///< Battlegrounds Queue ID
 	int id; ///< Battlegrounds database ID
 	std::vector<map_session_data *> teama_members; ///< List of members on team A
 	std::vector<map_session_data *> teamb_members; ///< List of members on team B

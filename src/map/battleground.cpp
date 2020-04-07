@@ -32,6 +32,7 @@ using namespace rathena;
 BattlegroundDatabase battleground_db;
 std::unordered_map<int, std::shared_ptr<s_battleground_data>> bg_team_db;
 std::vector<std::shared_ptr<s_battleground_queue>> bg_queues;
+int bg_queue_count = 1;
 
 const std::string BattlegroundDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/battleground_db.yml";
@@ -302,7 +303,7 @@ std::shared_ptr<s_battleground_type> bg_search_name(const char *name)
 std::shared_ptr<s_battleground_queue> bg_search_queue(int queue_id)
 {
 	for (const auto &queue : bg_queues) {
-		if (queue_id == queue->id)
+		if (queue_id == queue->queue_id)
 			return queue;
 	}
 
@@ -990,7 +991,7 @@ void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vec
 			if (!bg_queue_check_joinable(bg, sd2, name))
 				continue;
 
-			sd2->bg_queue_id = queue->id;
+			sd2->bg_queue_id = queue->queue_id;
 			team->push_back(sd2);
 			clif_bg_queue_apply_result(BG_APPLY_ACCEPT, name, sd2);
 			clif_bg_queue_apply_notify(name, sd2);
@@ -998,7 +999,7 @@ void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vec
 
 		// Enough players have joined
 		if (queue->map && queue->map->isReserved) { // Battleground is already active
-			int bg_id = mapreg_readreg(add_str(r ? queue->map->team2.bg_id_var.c_str() : queue->map->team1.bg_id_var.c_str()));
+			int bg_id = static_cast<int>(mapreg_readreg(add_str(r ? queue->map->team2.bg_id_var.c_str() : queue->map->team1.bg_id_var.c_str())));
 
 			for (auto &pl_sd : *team) {
 				if (queue->map->mapindex == pl_sd->mapindex)
@@ -1112,7 +1113,7 @@ bool bg_queue_leave(struct map_session_data *sd)
 		return false;
 
 	for (auto &queue : bg_queues) {
-		if (sd->bg_queue_id == queue->id) {
+		if (sd->bg_queue_id == queue->queue_id) {
 			if (!bg_queue_leave_sub(sd, queue->teama_members) && !bg_queue_leave_sub(sd, queue->teamb_members)) {
 				ShowError("bg_queue_leave: Couldn't find player %s in battlegrounds queue.\n", sd->status.name);
 				return false;
@@ -1250,6 +1251,7 @@ static void bg_queue_create(int bg_id, int req_players)
 {
 	auto queue = std::make_shared<s_battleground_queue>();
 
+	queue->queue_id = bg_queue_count++;
 	queue->id = bg_id;
 	queue->required_players = req_players;
 	queue->accepted_players = 0;
