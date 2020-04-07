@@ -1336,6 +1336,9 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				status_change_end(bl,SC_VOICEOFSIREN,INVALID_TIMER);
 		}
 
+		if (sc->data[SC_DARKCROW] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT)
+			damage += damage * sc->data[SC_DARKCROW]->val2 / 100;
+
 		// Damage reductions
 		// Assumptio increases DEF on RE mode, otherwise gives a reduction on the final damage. [Igniz]
 #ifndef RENEWAL
@@ -1436,9 +1439,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			damage -= sc->data[SC_PAIN_KILLER]->val3;
 			damage = i64max(damage, 1);
 		}
-
-		if( sc->data[SC_DARKCROW] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT )
-			damage += damage * sc->data[SC_DARKCROW]->val2 / 100;
 
 		if( (sce=sc->data[SC_MAGMA_FLOW]) && (rnd()%100 <= sce->val2) )
 			skill_castend_damage_id(bl,src,MH_MAGMA_FLOW,sce->val1,gettick(),0);
@@ -7177,14 +7177,9 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	ssc = status_get_sc(src);
 
 	if (sc) { // These statuses do not reflect any damage (off the target)
-		if (sc->data[SC_WHITEIMPRISON] ||
+		if (sc->data[SC_WHITEIMPRISON] || sc->data[SC_DARKCROW] ||
 			(sc->data[SC_KYOMU] && (!ssc || !ssc->data[SC_SHIELDSPELL_DEF]))) // Nullify reflecting ability except for Shield Spell - Def
 				return 0;
-	}
-
-	if (ssc) { // These statuses do not do any damage (to the caster)
-		if (ssc->data[SC_DARKCROW])
-			return 0;
 	}
 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
