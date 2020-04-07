@@ -1031,9 +1031,9 @@ void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vec
 /**
  * Clear Battleground queue for next one
  * @param queue: Queue to clean up
- * @param state: If a Battleground has ended through normal means (by script command bg_unbook)
+ * @param ended: If a Battleground has ended through normal means (by script command bg_unbook)
  */
-void bg_queue_clear(s_battleground_queue *queue, bool state)
+void bg_queue_clear(s_battleground_queue *queue, bool ended)
 {
 	if (!queue)
 		return;
@@ -1056,7 +1056,7 @@ void bg_queue_clear(s_battleground_queue *queue, bool state)
 	queue->in_ready_state = false;
 	queue->accepted_players = 0; // Reset the queue count
 
-	if (state) {
+	if (ended) {
 		if (queue->map != nullptr) {
 			queue->map->isReserved = false; // Remove reservation to free up for future queue
 			queue->map = nullptr;

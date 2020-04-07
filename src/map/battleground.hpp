@@ -99,13 +99,6 @@ enum e_bg_info : uint16 {
 	BG_INFO_DESERTER_TIME,
 };
 
-/// Enum of Battlegrounds state
-enum e_bg_state : uint8 {
-	BG_STATE_NORMAL = 0,
-	BG_STATE_PRIZE,
-	BG_STATE_CLEAR,
-};
-
 class BattlegroundDatabase : public TypesafeYamlDatabase<uint32, s_battleground_type> {
 public:
 	BattlegroundDatabase() : TypesafeYamlDatabase("BATTLEGROUND_DB", 1) {
@@ -140,7 +133,7 @@ bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map
 void bg_queue_join_party(const char *name, struct map_session_data *sd);
 void bg_queue_join_guild(const char *name, struct map_session_data *sd);
 void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vector<map_session_data *> list);
-void bg_queue_clear(s_battleground_queue *queue, bool state);
+void bg_queue_clear(s_battleground_queue *queue, bool ended);
 bool bg_queue_leave(struct map_session_data *sd);
 bool bg_queue_on_ready(const char *name, std::shared_ptr<s_battleground_queue> queue);
 void bg_queue_on_accept_invite(struct map_session_data *sd);
