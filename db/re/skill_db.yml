@@ -19498,7 +19498,7 @@ Body:
       - Level: 5
         Area: 3
     AfterCastActDelay: 200
-    Duration1: 3000
+    Duration1: 5000
     FixedCastTime: -1
     Requires:
       SpCost: 5
