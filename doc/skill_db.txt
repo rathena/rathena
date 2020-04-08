@@ -693,6 +693,10 @@ Mado				- Requires OPTION_MADOGEAR.
 ElementalSpirit		- Requires an Elemental Spirit to be summoned.
 ElementalSpirit2	- Requires an Elemental Spirit to be summoned and will be removed after.
 Peco				- Requires OPTION_RIDING.
+Sunstance			- Requires Sun/Universe Stance status be active.
+Moonstance			- Requires Moon/Universe Stance status be active.
+Starstance			- Requires Star/Universe Stance status be active.
+Universestance		- Requires Universe Stance status be active.
 
 ------------------
 

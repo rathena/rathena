@@ -1270,6 +1270,10 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	else if (strcmpi(split[10], "elementalspirit") == 0) entry.state = ST_ELEMENTALSPIRIT;
 	else if (strcmpi(split[10], "elementalspirit2") == 0) entry.state = ST_ELEMENTALSPIRIT2;
 	else if (strcmpi(split[10], "peco") == 0) entry.state = ST_PECO;
+	else if (strcmpi(split[10], "sunstance") == 0) entry.state = ST_SUNSTANCE;
+	else if (strcmpi(split[10], "moonstance") == 0) entry.state = ST_MOONSTANCE;
+	else if (strcmpi(split[10], "starstance") == 0) entry.state = ST_STARSTANCE;
+	else if (strcmpi(split[10], "universestance") == 0) entry.state = ST_UNIVERSESTANCE;
 	else entry.state = ST_NONE;	// Unknown or no state
 
 	trim(split[11]);
