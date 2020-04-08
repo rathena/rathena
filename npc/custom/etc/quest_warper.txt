@@ -2124,8 +2124,8 @@ menu_item:
 		set @Ii,@Ii+1;
 		return;
 	}
-	if (@pIprice[@Ii] != 0)&&($QW_MapUserShow == 0) set @Imenulist$[@Ij], @pImenuitems$[@Ii]+" -> "+@pIprice[@Ii];
-	if (@pIprice[@Ii] == 0)&&($QW_MapUserShow == 0) set @Imenulist$[@Ij], @pImenuitems$[@Ii];
+	if (@pIprice[@Ii] != 0) set @Imenulist$[@Ij], @pImenuitems$[@Ii]+" -> "+@pIprice[@Ii];
+	if (@pIprice[@Ii] == 0) set @Imenulist$[@Ij], @pImenuitems$[@Ii];
 	set @Imenuref[@Ij],@Ii;
 	set @Ij,@Ij+1;
 	set @Ii,@Ii+1;
