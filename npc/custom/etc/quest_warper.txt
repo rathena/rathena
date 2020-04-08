@@ -2126,8 +2126,6 @@ menu_item:
 	}
 	if (@pIprice[@Ii] != 0)&&($QW_MapUserShow == 0) set @Imenulist$[@Ij], @pImenuitems$[@Ii]+" -> "+@pIprice[@Ii];
 	if (@pIprice[@Ii] == 0)&&($QW_MapUserShow == 0) set @Imenulist$[@Ij], @pImenuitems$[@Ii];
-	if (@pIprice[@Ii] != 0)&&($QW_MapUserShow == 1) set @Imenulist$[@Ij], @pImenuitems$[@Ii]+" ["+getmapusers(@pImap$[@Ii])+"]"+" -> "+@pIprice[@Ii];
-	if (@pIprice[@Ii] == 0)&&($QW_MapUserShow == 1) set @Imenulist$[@Ij], @pImenuitems$[@Ii]+" ["+getmapusers(@pImap$[@Ii])+"]";
 	set @Imenuref[@Ij],@Ii;
 	set @Ij,@Ij+1;
 	set @Ii,@Ii+1;
@@ -2386,7 +2384,7 @@ prt_lib_q,85,87,6	script	Warpra#instance_13	113,{ callfunc "QWS_Instance_Warpra"
 // alberta,32,240,4	script	Warpra#instance_15	113,{ callfunc "QWS_Instance_Warpra",15,"Cor Mission"; close; } // TODO: Add Illusion EP
 // alberta,32,240,4	script	Warpra#instance_16	113,{ callfunc "QWS_Instance_Warpra",16,"OS Mission"; close; } // TODO: Add Illusion EP
 dali02,46,135,4	script	Warpra#instance_17	113,{ callfunc "QWS_Instance_Warpra",17,"Ghost Palace"; close; }
-moc_para01,28,98,6	script	Warpra#instance_18	113,{ callfunc "QWS_Instance_Warpra",18,"Nightmarish Jitterbug"; close; }
+moc_para01,28,98,4	script	Warpra#instance_18	113,{ callfunc "QWS_Instance_Warpra",18,"Nightmarish Jitterbug"; close; }
 dali02,138,86,4	script	Warpra#instance_19	113,{ callfunc "QWS_Instance_Warpra",19,"Airship Assault"; close; }
 ma_fild02,320,320,4	script	Warpra#instance_20	113,{ callfunc "QWS_Instance_Warpra",20,"Buwaya Cave"; close; }
 verus04,69,115,6	script	Warpra#instance_21	113,{ callfunc "QWS_Instance_Warpra",21,"Charleston Crisis"; close; }
