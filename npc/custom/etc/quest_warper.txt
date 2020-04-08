@@ -71,13 +71,13 @@
 function	script	Q_Warpra	{
 	mes "[Warpra]";
 	mes "Hello,";
-	mes "I can warp you to any town or dungeon, but you need to unlock them first by visiting us.";
+	mes "I can warp you to any town, dungeon or instance, but you need to unlock them first by visiting us.";
 	mes "What do you need?";
 	
 	if(getarg(0) == 0) callfunc "QWS_MMarray",0;
 	if(getarg(0) == 1) callfunc "QWS_MMarray",1;
 	
-	set @MMenu,select(@Mmenulist$[0],@Mmenulist$[1],@Mmenulist$[2],@Mmenulist$[3],@Mmenulist$[4],@Mmenulist$[5],@Mmenulist$[6],@Mmenulist$[7],@Mmenulist$[8],@Mmenulist$[9],@Mmenulist$[10],@Mmenulist$[11]);
+	set @MMenu,select(@Mmenulist$[0],@Mmenulist$[1],@Mmenulist$[2],@Mmenulist$[3],@Mmenulist$[4],@Mmenulist$[5],@Mmenulist$[6],@Mmenulist$[7],@Mmenulist$[8],@Mmenulist$[9],@Mmenulist$[10],@Mmenulist$[11],@Mmenulist$[12]);
 
 	switch(@Mmenuref[@MMenu-1]+1){
 	case 1: goto GM_Menu;
@@ -88,13 +88,14 @@ function	script	Q_Warpra	{
 		end;
 	case 3: goto L_town;
 	case 4: goto L_dungeon;
-	case 5: goto L_FewWarps;
-	case 6: goto L_NoUnlock;
-	case 7: goto L_heal_Full;
-	case 8: goto L_heal_Part;
-	case 9: goto L_Storage;
-	case 10: goto L_GStorage;
-	case 11:
+	case 5: goto L_instance;
+	case 6: goto L_FewWarps;
+	case 7: goto L_NoUnlock;
+	case 8: goto L_heal_Full;
+	case 9: goto L_heal_Part;
+	case 10: goto L_Storage;
+	case 11: goto L_GStorage;
+	case 12:
 	default:
 		goto L_end;
 	}
@@ -105,6 +106,7 @@ GM_Menu:
 	next;
 	mes "Town warping = "+(($QW_TW_OFF)?"^FF0000 Off":"^00FF00 On")+"^000000";
 	mes "Dungeon warping = "+(($QW_DW_OFF)?"^FF0000 Off":"^00FF00 On")+"^000000";
+	mes "Instance warping = "+(($QW_IW_OFF)?"^FF0000 Off":"^00FF00 On")+"^000000";
 	mes "Dungeon Depth limit is "+(($QW_DL)?"^00FF00 On":"^FF0000 Off")+"^000000";
 	mes "If on Dungeon Depth limit is set to ^0000FF"+$QW_DDL+"^000000";
 	mes "Show Map Users = "+(($QW_MapUserShow)?"^00FF00 On":"^FF0000 Off")+"^000000";
@@ -117,30 +119,31 @@ GM_Menu:
 	mes "Guild Storage = "+(($QW_GStor)?"^00FF00 On":"^FF0000 Off")+"^000000";
 	mes "Kafra points collect = "+(($QW_KPoint)?"^00FF00 On":"^FF0000 Off")+"^000000";
 
-	switch(select("Town Warping","Dungeon Warping","Dungeon Level Limit","Show Map Users","Healing full","Healing partly","Storage","Guild Storage","Kafra points collect","Set Prices","Special Warp","Exit")) {
+	switch(select("Town Warping","Dungeon Warping","Instance Warping","Dungeon Level Limit","Show Map Users","Healing full","Healing partly","Storage","Guild Storage","Kafra points collect","Set Prices","Special Warp","Exit")) {
 	case 1: set $QW_TW_OFF,($QW_TW_OFF)?0:1; goto GM_Menu;
 	case 2: set $QW_DW_OFF,($QW_DW_OFF)?0:1; goto GM_Menu;
-	case 3: goto DungeonLevelLimit;
-	case 4: set $QW_MapUserShow,($QW_MapUserShow)?0:1; goto GM_Menu;
-	case 5:
+	case 3: set $QW_IW_OFF,($QW_IW_OFF)?0:1; goto GM_Menu;
+	case 4: goto DungeonLevelLimit;
+	case 5: set $QW_MapUserShow,($QW_MapUserShow)?0:1; goto GM_Menu;
+	case 6:
 		if ($QW_HF == 0) {
 			set $QW_HF,1;
 			set $QW_HP,0;
 		}
 		else set $QW_HF,0;
 		goto GM_Menu;
-	case 6:
+	case 7:
 		if ($QW_HP == 0) {
 			set $QW_HP,1;
 			set $QW_HF,0;
 		}
 		else set $QW_HP,0;
 		goto GM_Menu;
-	case 7: set $QW_Stor,($QW_Stor)?0:1; goto GM_Menu;
-	case 8: set $QW_GStor,($QW_GStor)?0:1; goto GM_Menu;
-	case 9: set $QW_KPoint,($QW_KPoint)?0:1; goto GM_Menu;
-	case 10: goto Setprice;
-	case 11: goto SpecialWarpMenu;
+	case 8: set $QW_Stor,($QW_Stor)?0:1; goto GM_Menu;
+	case 9: set $QW_GStor,($QW_GStor)?0:1; goto GM_Menu;
+	case 10: set $QW_KPoint,($QW_KPoint)?0:1; goto GM_Menu;
+	case 11: goto Setprice;
+	case 12: goto SpecialWarpMenu;
 	default:
 		close;
 		end;
@@ -170,7 +173,7 @@ Setprice:
 	if ($QW_S_PRICE == 60) mes "Storage = ^0000FF Kafra Mode ^000000";
 	mes "Guild Storage = "+(($QW_GS_PRICE)?"^00FF00"+$QW_GS_PRICE:"^FF0000Free")+"^000000";
 	
-	switch(select("Basic - Warps","Advanced - Warps","Overseas - Warps","Basic Dungeon warp fee","Advanced Dungeon warp fee","Overseas Dungeon warp fee","Full Healing","Part Healing","Storage","Guild Storage","Back","Exit")) {
+	switch(select("Basic - Warps","Advanced - Warps","Overseas - Warps","Basic Dungeon warp fee","Advanced Dungeon warp fee","Overseas Dungeon warp fee","Instance warp fee","Full Healing","Part Healing","Storage","Guild Storage","Back","Exit")) {
 	case 1:
 		next;
 		mes "Basic - Warps are = "+(($QW_BW_PRICE)?"^00FF00"+$QW_BW_PRICE:"^FF0000Free")+"^000000";
@@ -215,11 +218,17 @@ Setprice:
 		goto Setprice;
 	case 7:
 		next;
+		mes "Instance - Warps are = "+(($QW_IW_PRICE)?"^00FF00"+$QW_IW_PRICE:"^FF0000Free")+"^000000";
+		mes "Instance - Warps are all instance entrances.";
+		input $QW_IW_PRICE;
+		goto Setprice;
+	case 8:
+		next;
 		mes "Full Healing = "+(($QW_HF_PRICE)?"^00FF00"+$QW_HF_PRICE:"^FF0000Free")+"^000000";
 		mes "Instant full healing 1 price.";
 		input $QW_HF_PRICE;
 		goto Setprice;
-	case 8:
+	case 9:
 		next;
 		mes "^FF0000HP ^000000Part Healing = "+(($QW_HP_H_PRICE)?"^00FF00"+$QW_HP_H_PRICE+"^000000 a point":"^FF0000Free^000000");
 		mes "^FF0000SP ^000000Part Healing = "+(($QW_HP_S_PRICE)?"^00FF00"+$QW_HP_S_PRICE+"^000000 a point":"^FF0000Free^000000");
@@ -229,7 +238,7 @@ Setprice:
 		input $QW_HP_H_PRICE;
 		input $QW_HP_S_PRICE;
 		goto Setprice;
-	case 9:
+	case 10:
 		next;
 		if ($QW_S_PRICE && $QW_S_PRICE != 60) mes "Storage = ^00FF00 "+$QW_S_PRICE+" ^000000";
 		if (!$QW_S_PRICE) mes "Storage = ^FF0000 Free ^000000";
@@ -237,13 +246,13 @@ Setprice:
 		mes "Storage cost, if set to 60 Kafra pricing will be handled.";
 		input $QW_S_PRICE;
 		goto Setprice;
-	case 10:
+	case 11:
 		next;
 		mes "Guild Storage = "+(($QW_GS_PRICE)?"^00FF00"+$QW_GS_PRICE:"^FF0000Free")+"^000000";
 		mes "Guild Storage, free on Guild Kafras.";
 		input $QW_GS_PRICE;
 		goto Setprice;
-	case 11:
+	case 12:
 		goto GM_Menu;
 	default:
 		close;
@@ -338,7 +347,7 @@ L_dungeon:
 	callfunc "QWS_Darray";
 	freeloop(1);
 	set .@menu$,"";
-	for(set .@i,0; .@i<35; set .@i,.@i+1)	// Expected maximum is 35
+	for(set .@i,0; .@i<40; set .@i,.@i+1)	// Expected maximum is 40
 		set .@menu$,.@menu$+@Dmenulist$[.@i]+":";
 	freeloop(0);
 	set @DWMenu,select(.@menu$);
@@ -368,6 +377,27 @@ L_dungeon:
 	warp @DGat$[@Darrayref],@DXcoords[@Darrayref],@DYcoords[@Darrayref];
 	close2;
 	set Zeny, Zeny+@pTprice[@Tmenuref[@DWMenu-1]];
+	end;
+
+//===========================Instances=================================
+
+L_instance:
+	callfunc "QWS_Iarray";
+	freeloop(1);
+	set .@menu$,"";
+	for(set .@i,0; .@i<30; set .@i,.@i+1)	// Expected maximum is 30
+		set .@menu$,.@menu$+@Imenulist$[.@i]+":";
+	freeloop(0);
+	set @IWMenu,select(.@menu$);
+
+	if (@Imenuref[@IWMenu-1] == 57005) goto L_end; // 57005='dead' in hex
+
+	if(Zeny<@pIprice[@Imenuref[@IWMenu-1]]) callsub L_Short_on_zeny,0;
+	set Zeny, Zeny-@pIprice[@Imenuref[@IWMenu-1]];
+	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@pIprice[@Imenuref[@IWMenu-1]]/16);
+	warp @pImap$[@Imenuref[@IWMenu-1]],@pIXcoords[@Imenuref[@IWMenu-1]],@pIYcoords[@Imenuref[@IWMenu-1]];
+	close2;
+	set Zeny, Zeny+@pIprice[@Imenuref[@IWMenu-1]];
 	end;
 
 //=============================Healing=============================
@@ -551,11 +581,17 @@ stampcard:
 		emotion ET_SMILE;
 	}
 	next;
-	mes "Let me check what dungeons you have.";
+	mes "Let me check what Dungeons you have.";
 	callfunc "QWS_DungeonStamps";
 	mes "You collected^00FF00 "+@Dstamp+" of "+@MaxDstamp+" ^000000Dungeons.";
 	mes "To unlock a dungeon, search for my colleagues.";
 	mes "You can usually find them near the middle or end of the dungeon.";
+	next;
+	mes "Let me check what Instances you have.";
+	callfunc "QWS_InstanceStamps";
+	mes "You collected^00FF00 "+@Istamp+" of "+@MaxIstamp+" ^000000Instances.";
+	mes "To unlock an instance, search for my colleagues.";
+	mes "You can find them near the entrance of the instance.";
 	return;
 }
 
@@ -585,12 +621,25 @@ function	script	QWS_DungeonStamps	{
 	return;
 }
 
+function	script	QWS_InstanceStamps	{
+	set @Istamp,0;
+	set @MaxIstamp,30; //maximum number of instances
+	set @binvalue,1;
+	set @Istamploop,0;
+	do {
+		if ((@binvalue & ##QWS_I_Unlock) == @binvalue) set @Istamp,@Istamp+1;
+		set @binvalue, @binvalue *2;
+		set @Istamploop, @Istamploop + 1;
+	} while (@Istamploop < @MaxIstamp);
+	return;
+}
+
 //======================Main=Menu=Array============================
 
 function	script	QWS_MMarray	{
 
 	// Currently 9 items
-	setarray @pMmenuitems$[0], "GameMaster Menu", $QW_SP_Warpname$, "Warp to Towns", "Warp to Dungeons", "Why so few warps?", "Why don't you unlock this location?", "Heal", "Heal", "Storage", "Guild Storage", "Cancel";
+	setarray @pMmenuitems$[0], "GameMaster Menu", $QW_SP_Warpname$, "Warp to Towns", "Warp to Dungeons", "Warp to Instances", "Why so few warps?", "Why don't you unlock this location?", "Heal", "Heal", "Storage", "Guild Storage", "Cancel";
 	set @Mi,0; // loop counter
 	set @Mj,0; // menu line counter
 
@@ -619,6 +668,13 @@ function	script	QWS_MMarray	{
 	set @Mi,@Mi+1;
 //----------------Dungeon-Warp
 	if ($QW_DW_OFF == 0) {
+		set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+		set @Mmenuref[@Mj],@Mi;
+		set @Mj,@Mj+1;
+	}
+	set @Mi,@Mi+1;
+//----------------Instance-Warp
+	if ($QW_IW_OFF == 0) {
 		set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
 		set @Mmenuref[@Mj],@Mi;
 		set @Mj,@Mj+1;
@@ -1692,6 +1748,391 @@ function	script	QWS_DLarray	{
 	return;
 }
 
+//======================Instance=Menu=Array============================
+// Adding a instance:
+//	setarray @pImenuitems$[@Ii], "Hazy Forest";// Name of Instance shown in Instance select Menu
+//	setarray @pIprice[@Ii], $QW_IW_PRICE;	// Warp prices: Instance ($QW_IW_PRICE)
+//
+//	setarray @pImap$[@Ii], "prontera";	// Map name
+//	setarray @pIXcoords[@Ii], 156;		// X warp coords
+//	setarray @pIYcoords[@Ii], 187;		// Y warp coords
+//
+//	QWS_Make_Instance_Menu 0;	// Use a free number
+//
+// Adding a warpra:
+//	map,x,y,facing	script	Warpra#example	113,{
+//		callfunc "QWS_Instance_Warpra",<instance number>,"Your Instance";
+//		close;
+//	}
+//	Instance number is the same as "QWS_Make_Instance_Menu".
+//==================================================================
+
+function	script	QWS_Iarray	{
+	function QWS_Make_Instance_Menu;
+
+	set @Ii,0; // loop counter
+	set @Ij,0; // menu lines counter
+
+//----------------[30+] Orc Memory Dungeon:
+	setarray @pImenuitems$[@Ii], "[30+] Orc Memory Dungeon";
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
+
+	setarray @pImap$[@Ii], "gef_fild10";
+	setarray @pIXcoords[@Ii], 240;
+	setarray @pIYcoords[@Ii], 198;
+
+	QWS_Make_Instance_Menu 0;
+//----------------[50+] Endless Tower:
+	setarray @pImenuitems$[@Ii], "[50+] Endless Tower";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "e_tower";
+	setarray @pIXcoords[@Ii], 72;
+	setarray @pIYcoords[@Ii], 112;
+
+	QWS_Make_Instance_Menu 1;
+//----------------[60+] Octopus Cave:
+	setarray @pImenuitems$[@Ii], "[60+] Octopus Cave";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "mal_dun01";
+	setarray @pIXcoords[@Ii], 152;
+	setarray @pIYcoords[@Ii], 230;
+
+	QWS_Make_Instance_Menu 2;
+//----------------[60+] Overlook Water Dungeon:
+	setarray @pImenuitems$[@Ii], "[60+] Overlook Water Dungeon";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "gef_fild07";
+	setarray @pIXcoords[@Ii], 272;
+	setarray @pIYcoords[@Ii], 290;
+
+	QWS_Make_Instance_Menu 3;
+//----------------[70+] Nidhoggur's Nest:
+	setarray @pImenuitems$[@Ii], "[70+] Nidhoggur's Nest";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "nyd_dun02";
+	setarray @pIXcoords[@Ii], 95;
+	setarray @pIYcoords[@Ii], 193;
+
+	QWS_Make_Instance_Menu 4;
+//----------------[75+] Sealed Shrine:
+	setarray @pImenuitems$[@Ii], "[75+] Sealed Shrine";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "monk_test";
+	setarray @pIXcoords[@Ii], 306;
+	setarray @pIYcoords[@Ii], 143;
+
+	QWS_Make_Instance_Menu 5;
+//----------------[80+] Half-moon in the Daytime:
+	setarray @pImenuitems$[@Ii], "[80+] Half-moon in the Daytime";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "alberta";
+	setarray @pIXcoords[@Ii], 32;
+	setarray @pIYcoords[@Ii], 240;
+
+	QWS_Make_Instance_Menu 6;
+//----------------[95+] Hazy Forest:
+	setarray @pImenuitems$[@Ii], "[95+] Hazy Forest";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "bif_fild01";
+	setarray @pIXcoords[@Ii], 161;
+	setarray @pIYcoords[@Ii], 334;
+
+	QWS_Make_Instance_Menu 7;
+//----------------[99+] Geffen Magic Tournament:
+	setarray @pImenuitems$[@Ii], "[99+] Geffen Magic Tournament";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "dali";
+	setarray @pIXcoords[@Ii], 94;
+	setarray @pIYcoords[@Ii], 141;
+
+	QWS_Make_Instance_Menu 8;
+//----------------[99+] Sara's Memory:
+	setarray @pImenuitems$[@Ii], "[99+] Sara's Memory";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "dali";
+	setarray @pIXcoords[@Ii], 133;
+	setarray @pIYcoords[@Ii], 108;
+
+	QWS_Make_Instance_Menu 9;
+//----------------[100+] Bangungot Hospital:
+	setarray @pImenuitems$[@Ii], "[100+] Bangungot Hospital";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "ma_dun01";
+	setarray @pIXcoords[@Ii], 151;
+	setarray @pIYcoords[@Ii], 8;
+
+	QWS_Make_Instance_Menu 10;
+//----------------[100+] Heart Hunter War Base:
+	setarray @pImenuitems$[@Ii], "[100+] Heart Hunter War Base";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "alberta";
+	setarray @pIXcoords[@Ii], 32;
+	setarray @pIYcoords[@Ii], 240;
+
+	QWS_Make_Instance_Menu 11;
+//----------------[100+] Infinite Space:
+	setarray @pImenuitems$[@Ii], "[100+] Infinite Space";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "cmd_fild07";
+	setarray @pIXcoords[@Ii], 53;
+	setarray @pIYcoords[@Ii], 273;
+
+	QWS_Make_Instance_Menu 12;
+//----------------[100+] Room of Consciousness:
+	setarray @pImenuitems$[@Ii], "[100+] Room of Consciousness";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "prt_lib_q";
+	setarray @pIXcoords[@Ii], 90;
+	setarray @pIYcoords[@Ii], 80;
+
+	QWS_Make_Instance_Menu 13;
+//----------------[100+] Werner's Laboratory:
+	setarray @pImenuitems$[@Ii], "[100+] Werner's Laboratory";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "alberta";
+	setarray @pIXcoords[@Ii], 32;
+	setarray @pIYcoords[@Ii], 240;
+
+	QWS_Make_Instance_Menu 14;
+//----------------[110+] Cor Mission:
+	setarray @pImenuitems$[@Ii], "[110+] Cor Mission";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "alberta";
+	setarray @pIXcoords[@Ii], 32;
+	setarray @pIYcoords[@Ii], 240;
+
+	QWS_Make_Instance_Menu 15;
+//----------------[110+] OS Mission:
+	setarray @pImenuitems$[@Ii], "[110+] OS Mission";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "alberta";
+	setarray @pIXcoords[@Ii], 32;
+	setarray @pIYcoords[@Ii], 240;
+
+	QWS_Make_Instance_Menu 16;
+//----------------[120+] Ghost Palace:
+	setarray @pImenuitems$[@Ii], "[120+] Ghost Palace";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "dali02";
+	setarray @pIXcoords[@Ii], 46;
+	setarray @pIYcoords[@Ii], 128;
+
+	QWS_Make_Instance_Menu 17;
+//----------------[120+] Nightmarish Jitterbug:
+	setarray @pImenuitems$[@Ii], "[120+] Nightmarish Jitterbug";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "moc_para01";
+	setarray @pIXcoords[@Ii], 28;
+	setarray @pIYcoords[@Ii], 91;
+
+	QWS_Make_Instance_Menu 18;
+//----------------[125+] Airship Assault:
+	setarray @pImenuitems$[@Ii], "[125+] Airship Assault";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "dali02";
+	setarray @pIXcoords[@Ii], 137;
+	setarray @pIYcoords[@Ii], 82;
+
+	QWS_Make_Instance_Menu 19;
+//----------------[130+] Buwaya Cave:
+	setarray @pImenuitems$[@Ii], "[130+] Buwaya Cave";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "ma_fild02";
+	setarray @pIXcoords[@Ii], 316;
+	setarray @pIYcoords[@Ii], 317;
+
+	QWS_Make_Instance_Menu 20;
+//----------------[130+] Charleston Crisis:
+	setarray @pImenuitems$[@Ii], "[130+] Charleston Crisis";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "verus04";
+	setarray @pIXcoords[@Ii], 78;
+	setarray @pIYcoords[@Ii], 118;
+
+	QWS_Make_Instance_Menu 21;
+//----------------[130+] Devil's Tower:
+	setarray @pImenuitems$[@Ii], "[130+] Devil's Tower";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "dali02";
+	setarray @pIXcoords[@Ii], 137;
+	setarray @pIYcoords[@Ii], 115;
+
+	QWS_Make_Instance_Menu 22;
+//----------------[130+] Fall of Glast Heim:
+	setarray @pImenuitems$[@Ii], "[130+] Fall of Glast Heim";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "alberta";
+	setarray @pIXcoords[@Ii], 32;
+	setarray @pIYcoords[@Ii], 240;
+
+	QWS_Make_Instance_Menu 23;
+//----------------[130+] Old Glast Heim:
+	setarray @pImenuitems$[@Ii], "[130+] Old Glast Heim";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "glast_01";
+	setarray @pIXcoords[@Ii], 204;
+	setarray @pIYcoords[@Ii], 268;
+
+	QWS_Make_Instance_Menu 24;
+//----------------[140+] Bakonawa Lake:
+	setarray @pImenuitems$[@Ii], "[140+] Bakonawa Lake";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "ma_scene01";
+	setarray @pIXcoords[@Ii], 172;
+	setarray @pIYcoords[@Ii], 175;
+
+	QWS_Make_Instance_Menu 25;
+//----------------[140+] Central Laboratory:
+	setarray @pImenuitems$[@Ii], "[140+] Central Laboratory";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "verus01";
+	setarray @pIXcoords[@Ii], 150;
+	setarray @pIYcoords[@Ii], 150;
+
+	QWS_Make_Instance_Menu 26;
+//----------------[140+] Faceworm's Nest:
+	setarray @pImenuitems$[@Ii], "[140+] Faceworm's Nest";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "dali";
+	setarray @pIXcoords[@Ii], 85;
+	setarray @pIYcoords[@Ii], 64;
+
+	QWS_Make_Instance_Menu 27;
+//----------------[140+] Horror Toy Factory:
+	setarray @pImenuitems$[@Ii], "[140+] Horror Toy Factory";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "xmas";
+	setarray @pIXcoords[@Ii], 234;
+	setarray @pIYcoords[@Ii], 298;
+
+	QWS_Make_Instance_Menu 28;
+//----------------[140+] Last Room:
+	setarray @pImenuitems$[@Ii], "[140+] Last Room";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "un_myst";
+	setarray @pIXcoords[@Ii], 158;
+	setarray @pIYcoords[@Ii], 38;
+
+	QWS_Make_Instance_Menu 29;
+//----------------[140+] Malangdo Culvert:
+	setarray @pImenuitems$[@Ii], "[140+] Malangdo Culvert";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "mal_in01";
+	setarray @pIXcoords[@Ii], 164;
+	setarray @pIYcoords[@Ii], 21;
+
+	QWS_Make_Instance_Menu 30;
+//----------------[145+] Sarah and Fenrir:
+	setarray @pImenuitems$[@Ii], "[145+] Sarah and Fenrir";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "dali02";
+	setarray @pIXcoords[@Ii], 92;
+	setarray @pIYcoords[@Ii], 141;
+
+	QWS_Make_Instance_Menu 31;
+//----------------[145+] Sky Fortress:
+	setarray @pImenuitems$[@Ii], "[145+] Sky Fortress";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "alberta";
+	setarray @pIXcoords[@Ii], 32;
+	setarray @pIYcoords[@Ii], 240;
+
+	QWS_Make_Instance_Menu 32;
+//----------------[150+] Wolfchev's Laboratory:
+	setarray @pImenuitems$[@Ii], "[150+] Wolfchev's Laboratory";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "lhz_dun04";
+	setarray @pIXcoords[@Ii], 148;
+	setarray @pIYcoords[@Ii], 269;
+
+	QWS_Make_Instance_Menu 33;
+//----------------[160+] Flame Cave Instances:
+	setarray @pImenuitems$[@Ii], "[160+] Flame Cave Instances";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "moro_cav";
+	setarray @pIXcoords[@Ii], 55;
+	setarray @pIYcoords[@Ii], 60;
+
+	QWS_Make_Instance_Menu 34;
+//----------------[170+] Bioresearch Laboratory:
+	setarray @pImenuitems$[@Ii], "[170+] Bioresearch Laboratory";
+	setarray @pIprice[@Ii], $QW_BW_PRICE;
+
+	setarray @pImap$[@Ii], "alberta";
+	setarray @pIXcoords[@Ii], 32;
+	setarray @pIYcoords[@Ii], 240;
+
+	QWS_Make_Instance_Menu 35;
+//----------------Cancel
+	setarray @pImenuitems$[@Ii], "Cancel";
+	setarray @pIprice[@Ii], 0;
+
+	set @Imenulist$[@Ij],@pImenuitems$[@Ii];
+	set @Imenuref[@Ij],57005; // 57005='dead' in hex
+	return;
+
+
+//----------------Make Instance Menu Function
+
+function	QWS_Make_Instance_Menu	{
+	set @tempinstancemenubin,1;
+	if (getarg(0) == 0) goto menu_item;
+	set @temploopinstancemenu,0;
+	do {
+		set @tempinstancemenubin, @tempinstancemenubin * 2;
+		set @temploopinstancemenu, @temploopinstancemenu + 1;
+		}while (getarg(0) > @temploopinstancemenu);
+// check marker and make menu item
+menu_item:
+	if ((@tempinstancemenubin & ##QWS_I_Unlock) != @tempinstancemenubin) {
+		set @Ii,@Ii+1;
+		return;
+	}
+	if (@pIprice[@Ii] != 0)&&($QW_MapUserShow == 0) set @Imenulist$[@Ij], @pImenuitems$[@Ii]+" -> "+@pIprice[@Ii];
+	if (@pIprice[@Ii] == 0)&&($QW_MapUserShow == 0) set @Imenulist$[@Ij], @pImenuitems$[@Ii];
+	if (@pIprice[@Ii] != 0)&&($QW_MapUserShow == 1) set @Imenulist$[@Ij], @pImenuitems$[@Ii]+" ["+getmapusers(@pImap$[@Ii])+"]"+" -> "+@pIprice[@Ii];
+	if (@pIprice[@Ii] == 0)&&($QW_MapUserShow == 1) set @Imenulist$[@Ij], @pImenuitems$[@Ii]+" ["+getmapusers(@pImap$[@Ii])+"]";
+	set @Imenuref[@Ij],@Ii;
+	set @Ij,@Ij+1;
+	set @Ii,@Ii+1;
+	return;
+}
+}
+
 //================Dungeon=Warpras=That=Only=Unlock=================
 
 function	script	QWS_Dungeon_Warpra	{
@@ -1781,9 +2222,55 @@ binget:
 	return 0;
 }
 }
+
+//==========================Instance=Warpras===========================
+
+function	script	QWS_Instance_Warpra	{
+	function QWS_I_getbin;
+	function QWS_I_setbin;
+	
+	if ((QWS_I_getbin(getarg(0)) == 0) && (getarg(1) != "")) {
+		mes "[Warpra]";
+		mes getarg(1)+" unlocked!";
+		QWS_I_setbin(getarg(0));
+		return;
+	} else if (QWS_I_getbin(getarg(0)) == 1) {
+		callfunc "Q_Warpra",0;
+	} else
+		debugmes "QWS_Instance_Warpra error, improper syntax ?";
+	return;
+
+function	QWS_I_setbin	{
+	set @tempsetbindata,1;
+	if (getarg(0) == 0) goto binset;
+	set @temploopsetbin,0;
+	do {
+		set @tempsetbindata, @tempsetbindata * 2;
+		set @temploopsetbin, @temploopsetbin + 1;
+	} while (getarg(0) > @temploopsetbin);
+binset:
+	set ##QWS_I_Unlock,(##QWS_I_Unlock | @tempsetbindata);
+	return;
+}
+
+function	QWS_I_getbin	{
+	set @tempgetbindata,1;
+	if (getarg(0) == 0) goto binget;
+	set @temploopgetbin,0;
+	do {
+		set @tempgetbindata, @tempgetbindata * 2;
+		set @temploopgetbin, @temploopgetbin + 1;
+	} while (getarg(0) > @temploopgetbin);
+binget:
+	if ((@tempgetbindata & ##QWS_I_Unlock) == @tempgetbindata) return 1;
+	return 0;
+}
+}
+
 //============================Warpras==============================
 
 -	script	Warpra#0	-1,{ callfunc "Q_Warpra",1; }
+// Convenience
 alb2trea,73,101,4	duplicate(Warpra#0)	Warpra#1	113
 ama_fild01,178,325,1	duplicate(Warpra#0)	Warpra#2	113
 gef_fild10,71,339,4	duplicate(Warpra#0)	Warpra#3	113
@@ -1799,6 +2286,7 @@ tur_dun01,148,239,4	duplicate(Warpra#0)	Warpra#12	113
 valkyrie,48,35,8	duplicate(Warpra#0)	Warpra#13	113
 yuno_fild03,37,135,4	duplicate(Warpra#0)	Warpra#14	113
 
+// Towns
 alberta,32,240,4	script	Warpra#15	113,{ callfunc "QWS_Town_Warpra",1,"Alberta Town"; close; }
 aldebaran,146,118,4	script	Warpra#16	113,{ callfunc "QWS_Town_Warpra",2,"Aldebaran Town"; close; }
 ayothaya,212,174,5	script	Warpra#17	113,{ callfunc "QWS_Town_Warpra",4,"Ayothaya Town"; close; }
@@ -1838,6 +2326,7 @@ mid_camp,183,257,4	script	Warpra#50	113,{ callfunc "QWS_Town_Warpra",35,"Midgard
 prontera,149,178,6	duplicate(Warpra#0)	Warpra#51	113
 verus04,123,210,5	script	Warpra#52	113,{ callfunc "QWS_Town_Warpra",36,"Verus Town"; close; }
 
+// Dungeons
 abyss_02,274,266,1	script	Warpra Helper#0	112,{ callfunc "QWS_Dungeon_Warpra",0,"Abyss Lake"; close; }
 ama_dun02,192,118,5	script	Warpra Helper#1	112,{ callfunc "QWS_Dungeon_Warpra",1,"Amatsu Dungeon"; close; }
 anthell02,170,165,3	script	Warpra Helper#2	112,{ callfunc "QWS_Dungeon_Warpra",2,"Ant Hell Dungeon"; close; }
@@ -1875,3 +2364,41 @@ abbey01,324,101,4	script	Warpra Helper#33	112,{ callfunc "QWS_Dungeon_Warpra",33
 ra_san01,144,16,4	script	Warpra Helper#34	112,{ callfunc "QWS_Dungeon_Warpra",34,"Rachel Sanctuary"; close; }
 dic_dun01,295,103,4	script	Warpra Helper#35	112,{ callfunc "QWS_Dungeon_Warpra",35,"Scaraba Hole Dungeon"; close; }
 thor_v02,190,64,4	script	Warpra Helper#36	112,{ callfunc "QWS_Dungeon_Warpra",36,"Thor Volcano"; close; }
+
+// Instances
+gef_fild10,244,206,4	script	Warpra#instance_0	113,{ callfunc "QWS_Instance_Warpra",0,"Orc Memory Dungeon"; close; }
+e_tower,82,110,4	script	Warpra#instance_1	113,{ callfunc "QWS_Instance_Warpra",1,"Endless Tower"; close; }
+mal_dun01,155,235,4	script	Warpra#instance_2	113,{ callfunc "QWS_Instance_Warpra",2,"Octopus Cave"; close; }
+// gef_fild07,260,290,4	script	Warpra#instance_3	113,{ callfunc "QWS_Instance_Warpra",3,"Overlook Water Dungeon"; close; } // TODO: Add instance
+nyd_dun02,90,199,6	script	Warpra#instance_4	113,{ callfunc "QWS_Instance_Warpra",4,"Nidhoggur's Nest"; close; }
+monk_test,311,149,4	script	Warpra#instance_5	113,{ callfunc "QWS_Instance_Warpra",5,"Sealed Shrine"; close; }
+// alberta,32,240,4	script	Warpra#instance_6	113,{ callfunc "QWS_Instance_Warpra",6,"Half-moon in the Daytime"; close; } // TODO: Add EDDA EP
+bif_fild01,156,338,6	script	Warpra#instance_7	113,{ callfunc "QWS_Instance_Warpra",7,"Hazy Forest"; close; }
+dali,93,148,6	script	Warpra#instance_8	113,{ callfunc "QWS_Instance_Warpra",8,"Geffen Magic Tournament"; close; }
+dali,132,115,6	script	Warpra#instance_9	113,{ callfunc "QWS_Instance_Warpra",9,"Sara's Memory"; close; }
+ma_dun01,147,15,6	script	Warpra#instance_10	113,{ callfunc "QWS_Instance_Warpra",10,"Bangungot Hospital"; close; }
+// alberta,32,240,4	script	Warpra#instance_11	113,{ callfunc "QWS_Instance_Warpra",11,"Heart Hunter War Base"; close; } // TODO: Add Terra Gloria EP
+// cmd_fild07,55,278,5	script	Warpra#instance_12	113,{ callfunc "QWS_Instance_Warpra",12,"Infinite Space"; close; } // TODO: Add instance
+prt_lib_q,85,87,6	script	Warpra#instance_13	113,{ callfunc "QWS_Instance_Warpra",13,"Room of Consciousness"; close; }
+// alberta,32,240,4	script	Warpra#instance_14	113,{ callfunc "QWS_Instance_Warpra",14,"Werner's Laboratory"; close; } // TODO: Add Terra Gloria EP
+// alberta,32,240,4	script	Warpra#instance_15	113,{ callfunc "QWS_Instance_Warpra",15,"Cor Mission"; close; } // TODO: Add Illusion EP
+// alberta,32,240,4	script	Warpra#instance_16	113,{ callfunc "QWS_Instance_Warpra",16,"OS Mission"; close; } // TODO: Add Illusion EP
+dali02,46,135,4	script	Warpra#instance_17	113,{ callfunc "QWS_Instance_Warpra",17,"Ghost Palace"; close; }
+moc_para01,28,98,6	script	Warpra#instance_18	113,{ callfunc "QWS_Instance_Warpra",18,"Nightmarish Jitterbug"; close; }
+dali02,138,86,4	script	Warpra#instance_19	113,{ callfunc "QWS_Instance_Warpra",19,"Airship Assault"; close; }
+ma_fild02,320,320,4	script	Warpra#instance_20	113,{ callfunc "QWS_Instance_Warpra",20,"Buwaya Cave"; close; }
+verus04,69,115,6	script	Warpra#instance_21	113,{ callfunc "QWS_Instance_Warpra",21,"Charleston Crisis"; close; }
+dali02,142,116,4	script	Warpra#instance_22	113,{ callfunc "QWS_Instance_Warpra",22,"Devil's Tower"; close; }
+// alberta,32,240,4	script	Warpra#instance_23	113,{ callfunc "QWS_Instance_Warpra",23,"Fall of Glast Heim"; close; } // TODO: Add EDDA EP
+glast_01,207,275,5	script	Warpra#instance_24	113,{ callfunc "QWS_Instance_Warpra",24,"Old Glast Heim"; close; }
+ma_scene01,170,178,6	script	Warpra#instance_25	113,{ callfunc "QWS_Instance_Warpra",25,"Bakonawa Lake"; close; }
+verus01,146,154,6	script	Warpra#instance_26	113,{ callfunc "QWS_Instance_Warpra",26,"Central Laboratory"; close; }
+dali,80,65,6	script	Warpra#instance_27	113,{ callfunc "QWS_Instance_Warpra",27,"Faceworm's Nest"; close; }
+xmas,239,301,4	script	Warpra#instance_28	113,{ callfunc "QWS_Instance_Warpra",28,"Horror Toy Factory"; close; }
+un_myst,156,41,6	script	Warpra#instance_29	113,{ callfunc "QWS_Instance_Warpra",29,"Last Room"; close; }
+mal_in01,166,34,6	script	Warpra#instance_30	113,{ callfunc "QWS_Instance_Warpra",30,"Malangdo Culvert"; close; }
+dali02,101,144,4	script	Warpra#instance_31	113,{ callfunc "QWS_Instance_Warpra",31,"Sarah and Fenrir"; close; }
+// alberta,32,240,4	script	Warpra#instance_32	113,{ callfunc "QWS_Instance_Warpra",32,"Sky Fortress"; close; } // TODO: Add instance
+lhz_dun04,148,269,4	script	Warpra#instance_33	113,{ callfunc "QWS_Instance_Warpra",33,"Wolfchev's Laboratory"; close; }
+moro_cav,48,71,6	script	Warpra#instance_34	113,{ callfunc "QWS_Instance_Warpra",34,"Flame Cave Instances"; close; }
+// alberta,32,240,4	script	Warpra#instance_35	113,{ callfunc "QWS_Instance_Warpra",35,"Bioresearch Laboratory"; close; } // TODO: Add EDDA EP
