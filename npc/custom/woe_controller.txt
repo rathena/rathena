@@ -32,7 +32,7 @@ prontera,123,83,4	script	WOE Information	835,{
 OnAgitStart:
 	while(agitcheck() || agitcheck2() || agitcheck3()) {
 		sleep 425;
-		specialeffect EF_BEGINSPELL6;
+		specialeffect EF_BOWLINGBASH;
 	}
 	end;
 }
