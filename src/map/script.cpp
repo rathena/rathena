@@ -20476,7 +20476,7 @@ BUILDIN_FUNC(instance_check_party)
 	for( i = 0; i < MAX_PARTY; i++ ) {
 		struct map_session_data *pl_sd;
 		if( (pl_sd = p->data[i].sd) )
-			if(map_id2bl(pl_sd->bl.id)) {
+			if(map_id2bl(pl_sd->bl.id) && !pl_sd->state.autotrade) {
 				if(pl_sd->status.base_level < min) {
 					script_pushint(st, 0);
 					return SCRIPT_CMD_SUCCESS;
