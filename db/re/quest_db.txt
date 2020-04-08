@@ -3283,7 +3283,7 @@
 13185,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Charleston Factory - Hold"
 13186,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Charleston Factory - Complete"
 13187,0,3125,50,0,0,0,0,0,0,0,0,0,0,0,0,0,"Deal with the Staff"
-13188,72000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Deal with the Staff - Hold"
+13188,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Deal with the Staff - Hold"
 
 // Episode 15.2 Krotzel's Request
 13195,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Monthly Brigan"

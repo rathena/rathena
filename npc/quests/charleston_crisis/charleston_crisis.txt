@@ -66,7 +66,7 @@ verus04,75,114,5	script	Charleston#charleston2	4_F_CHARLESTON02,{
 		}
 	} else {
 		mes "[Charleston]";
-		mes "Thank you for your help, loved to be. I know now that a better future awaits the planet.";
+		mes "Thank you for your help, kind one. I know now that a better future awaits the planet.";
 		next;
 		mes "[Charleston]";
 		mes "Even when our city is in desolation, a promising future awaits you.";
@@ -79,7 +79,7 @@ verus04,75,114,5	script	Charleston#charleston2	4_F_CHARLESTON02,{
 }
 verus04,81,113,1	script	Teleport Machine#machine	PORTAL,{
 	if (BaseLevel < 130) {
-		mes "^ff0000It is not yet time for you to enter here, go and gain more experience.^000000";
+		mes "^ff0000It is not yet time for you to enter here, come back when you are stronger.^000000";
 		close;
 	}
 	//if the instance quest isn't set, check for reentering one
@@ -95,14 +95,14 @@ verus04,81,113,1	script	Teleport Machine#machine	PORTAL,{
 		if (.@charleston_time == 2) {
 			//remove it
 			erasequest 13185;
-			mes "^ff0000Looks like you're ready to enter again, hu?^000000";
+			mes "^ff0000Looks like you're ready to enter again, huh?^000000";
 			close;
 		}
 		//RATHENA
 		else  if (.@charleston_time == 1 || .@charleston_time == 0) {
 		//HERCULES
 		//else if (.@charleston_time == 1) {
-			mes "^ff0000It is not yet time for you to enter here, go and gain more experience.^000000";
+			mes "^ff0000It is not yet time for you to enter here, come back later.^000000";
 			close;
 		}
 		//RATHENA
@@ -123,7 +123,7 @@ verus04,81,113,1	script	Teleport Machine#machine	PORTAL,{
 			{
 				if(.@can_enter == -1)
 				{
-					mes "I can do nothing for you, sorry.";
+					mes "I can't help you, sorry.";
 					close;
 				}
 				set .@menu$, ":Enter Charleston Crisis.";
@@ -159,11 +159,10 @@ verus04,81,113,1	script	Teleport Machine#machine	PORTAL,{
 					mes "^ff0000Portal opened!^000000";
 				case 2:
 					getmapxy(.@map$, .@x, .@y, BL_PC);
-					save .@map$, .@x, .@y;
 					//RATHENA
 					switch(instance_enter(.@md_name$))
 					{
-						case 0:
+						case IE_OK:
 							mes "[Teleport Machine]";
 							mes "Get ready to enter!";
 							mapannounce "verus04",strcharinfo(0)+", member of the party "+.@p_name$+" entered the instance "+.@md_name$+".",bc_map,"0x00ff99";
@@ -173,14 +172,14 @@ verus04,81,113,1	script	Teleport Machine#machine	PORTAL,{
 								set charlestonins,0;
 							}
 							close;
-						case 1:
+						case IE_NOMEMBER:
 							mes "Only the registered members can enter the instance "+.@md_name$+".";
 							close;
-						case 2:
+						case IE_NOINSTANCE:
 							mes "The memorial dungeon "+.@md_name$+" does not exist.";
 							mes "The party leader did not generate the dungeon yet.";
 							close;
-						case 3:
+						case IE_OTHER:
 							mes "Unknown Error...!";
 							close;
 					}
@@ -218,7 +217,7 @@ OnTouch:
 	if ((getvariableofnpc(getd("."+instance_id()),instance_npcname("Charleston#0_00y"))) == 1) {
 		cutin "dalle01.bmp",2;
 		mes "[Charleston]";
-		mes "Good luck and watch out front.";
+		mes "Good luck and keep your eyes forward.";
 		close2;
 		cutin "dalle01.bmp",255;
 		end;
@@ -275,11 +274,11 @@ OnTimer5000:
 
 1@mcd,116,213,5	script	Scientist#1_00y	4_M_DOCTOR,2,3,{
 	if ((getvariableofnpc(getd("."+instance_id()),instance_npcname("Charleston#1_00y", instance_id()))) == 0) {
-		mes "Help us with the robots please.";
+		mes "Help us stave off the robots please.";
 		close;
 	}
 	else if ((getvariableofnpc(getd("."+instance_id()),instance_npcname("Charleston#1_00y", instance_id()))) > 0) {
-		mes "Give us your power to see what happens to the great Charleston robot..";
+		mes "Lend us your strength and see what happens to the great Charleston..";
 		close;
 	}
 OnTouch:
@@ -651,17 +650,17 @@ OnChat3:
 		next;
 		cutin "dalle01.bmp",2;
 		mes "[Charleston]";
-		mes "We have to be very careful about what we touch, this can be harmful.";
+		mes "We have to be very careful about what we touch, it could be dangerous.";
 		donpcevent instance_npcname("Charleston#4_00p", instance_id()) + "::OnChat1";
 		next;
 		cutin "nale03.bmp",0;
 		mes "[Charleston No.2]";
-		mes "But what is that ... looks ... a robot.";
-		npctalk "But what is that ... looks ... a robot.";
+		mes "But what is that ... it looks ... like another robot.";
+		npctalk "But what is that ... it looks ... like another robot.";
 		next;
 		mes "[Charleston No.2]";
-		mes "There were also robots here!";
-		npctalk "There were also robots here!";
+		mes "There were other robots here!";
+		npctalk "There were other robots here!";
 		donpcevent instance_npcname("#step34_00p", instance_id()) + "::OnEnable";
 		close2;
 		cutin "dalle01.bmp",255;
@@ -679,19 +678,19 @@ OnChat1:
 	npctalk "Be very careful with those robots!";
 	end;
 OnChat2:
-	npctalk "But there was more, does not this have no end ?!";
+	npctalk "But there was more, does this have no end ?!";
 	end;
 OnChat3:
-	npctalk "As it was to suppose of this legendary factory, they do not stop to leave.";
+	npctalk "As was expected of this legendary factory, they never give up.";
 	end;
 OnChat4:
-	npctalk "Fast adventurers, defeat the robots";
+	npctalk "Quickly, adventurers, defeat the robots";
 	end;
 OnChat5:
-	npctalk "I see that they diminish, go on!";
+	npctalk "They are diminishing, keep going!";
 	end;
 OnChat6:
-	npctalk "Almost ... Almost ... there are almost none left, they are amazing!";
+	npctalk "Nearly ... Nearly ... there are almost none left, you're amazing!";
 	end;
 OnChat7:
 	npctalk "CHAT NOT FOUND, IF YOU READ THIS REPORT TO A GAME MASTER";
@@ -714,16 +713,16 @@ OnEnable:
 	enablenpc instance_npcname(strnpcinfo(0), instance_id());
 	end;
 OnChat1:
-	npctalk "We have to be very careful what we touch, this can be harmful.";
+	npctalk "We have to be very careful what we touch, it could be dangerous.";
 	end;
 OnChat2:
-	npctalk "It can not be, there are robots!";
+	npctalk "It can't be ... there are more!";
 	end;
 OnChat3:
-	npctalk "They do not stop going out, that fear!";
+	npctalk "They won't stop coming!";
 	end;
 OnChat4:
-	npctalk "I see the robots shrink, protect Charleston!";
+	npctalk "I see the robots are diminishing, protect Charleston!";
 	end;
 }
 
@@ -1778,13 +1777,13 @@ OnChat13:
 1@mcd,121,215,4	script	Charleston No.2#8_00p	4_F_CHARLESTON02,{
 	if(charlestonins == 0) {
 		cutin "nale04.bmp",0;
-		mes "Go talk to the Scientist please, he have something to tell you.";
+		mes "Go talk to the Scientist please, he has something to tell you.";
 		close2;
 		cutin "nale04.bmp",255;
 		end;
 	} else {
 		cutin "nale04.bmp",0;
-		mes "If you do not find Shalosh, I think she was near here, she's a beautiful lady in black.";
+		mes "Please find Shalosh, I think she was near here, she's a beautiful lady in black.";
 		close2;
 		cutin "nale04.bmp",255;
 		end;
@@ -1864,7 +1863,7 @@ OnEnable:
 	mes "[Shalosh]";
 	mes "......";
 	next;
-	switch(select("No, nothing...","What do you think of the factory?","Scientist sent me to you"))
+	switch(select("No, nothing...","What do you think of the factory?","The Scientist sent me to you"))
 	{
 		case 1:
 			mes "[Shalosh]";
@@ -1874,24 +1873,26 @@ OnEnable:
 			end;
 		case 2:
 			mes "[Shalosh]";
-			mes "I did not expect it to continue working, how well they are here.";
+			mes "I did not expect it to continue operating...";
 			close2;
 			cutin "shaloshi01.bmp",255;
 			end;
 		case 3:
 			if(charlestonins == 0) {
 				mes "[Shalosh]";
-				mes "Please do not talk nonsense, help stop the crisis and then come with me.";
+				mes "Please do not talk nonsense, help stop the crisis and then speak with the Scientist.";
 				close2;
 				cutin "shaloshi01.bmp",255;
 				end;
 			} else {
 				mes "[Shalosh]";
-				mes "Great job, they have done away with the great robot Charleston.";
+				mes "Great, they have done away with the great robot Charleston.";
 				next;
 				mes "[Shalosh]";
-				mes "I see you collected some junk, have a spare.";
-				getitem 6752,3; //Charleston Parts
+				mes "I see you collected some junk, have some more.";
+				getitem 6752,rand(3,4); //Charleston Parts
+				getitem 6961,rand(0,3); //Huge Metal Scrap
+				getitem 6752,rand(1,4); //Old Fuel Tank
 				erasequest 13184;
 				setquest 13186;
 				close2;
