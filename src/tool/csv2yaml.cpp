@@ -51,6 +51,8 @@
 
 using namespace rathena;
 
+#define MAX_MAP_PER_INSTANCE 255
+
 #ifndef WIN32
 int getch( void ){
     struct termios oldattr, newattr;
@@ -100,6 +102,7 @@ static bool skill_parse_row_copyabledb(char* split[], int columns, int current);
 static bool skill_parse_row_nonearnpcrangedb(char* split[], int columns, int current);
 static bool skill_parse_row_skilldb(char* split[], int columns, int current);
 static bool quest_read_db(char *split[], int columns, int current);
+static bool instance_readdb_sub(char* str[], int columns, int current);
 
 // Constants for conversion
 std::unordered_map<uint16, std::string> aegis_itemnames;
@@ -356,6 +359,12 @@ int do_init( int argc, char** argv ){
 
 	if (!process("QUEST_DB", 1, root_paths, "quest_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3 + MAX_QUEST_OBJECTIVES * 2 + MAX_QUEST_DROPS * 3, 100, -1, &quest_read_db, false);
+	})) {
+		return 0;
+	}
+
+	if (process("INSTANCE_DB", 1, root_paths, "instance_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 7, 7 + MAX_MAP_PER_INSTANCE, -1, &instance_readdb_sub, false);
 	})) {
 		return 0;
 	}
@@ -2527,6 +2536,46 @@ static bool quest_read_db(char *split[], int columns, int current) {
 			body << YAML::Key << "Item" << YAML::Value << *item_name;
 			//body << YAML::Key << "Count" << YAML::Value << 1; // Default is 1
 			body << YAML::Key << "Rate" << YAML::Value << atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 4)]);
+			body << YAML::EndMap;
+		}
+
+		body << YAML::EndSeq;
+	}
+
+	body << YAML::EndMap;
+
+	return true;
+}
+
+// Copied and adjusted from instance.cpp
+static bool instance_readdb_sub(char* str[], int columns, int current) {
+	body << YAML::BeginMap;
+	body << YAML::Key << "Id" << YAML::Value << atoi(str[0]);
+	body << YAML::Key << "Name" << YAML::Value << str[1];
+	if (atoi(str[2]) != 3600)
+		body << YAML::Key << "TimeLimit" << YAML::Value << atoi(str[2]);
+	if (atoi(str[3]) != 300)
+		body << YAML::Key << "IdleTimeOut" << YAML::Value << atoi(str[3]);
+	body << YAML::Key << "Enter";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Map" << YAML::Value << str[4];
+	body << YAML::Key << "X" << YAML::Value << atoi(str[5]);
+	body << YAML::Key << "Y" << YAML::Value << atoi(str[6]);
+	body << YAML::EndMap;
+
+	if (columns > 7) {
+		body << YAML::Key << "AdditionalMaps";
+		body << YAML::BeginSeq;
+
+		for (int i = 7; i < columns; i++) {
+			if (!strlen(str[i]))
+				continue;
+
+			if (strcmpi(str[4], str[i]) == 0)
+				continue;
+
+			body << YAML::BeginMap;
+			body << YAML::Key << str[i] << YAML::Value << "true";
 			body << YAML::EndMap;
 		}
 

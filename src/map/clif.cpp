@@ -17793,26 +17793,25 @@ void clif_font(struct map_session_data *sd)
 /// Required to start the instancing information window on Client
 /// This window re-appears each "refresh" of client automatically until the keep_limit reaches 0.
 /// S 0x2cb <Instance name>.61B <Standby Position>.W
-void clif_instance_create(unsigned short instance_id, int num)
+void clif_instance_create(int instance_id, int num)
 {
 #if PACKETVER >= 20071128
-	struct instance_db *db = NULL;
 	struct map_session_data *sd = NULL;
 	enum send_target target = PARTY;
 	unsigned char buf[65];
 
-	instance_getsd(instance_id, &sd, &target);
+	instance_getsd(instance_id, sd, &target);
 
 	if (!sd)
 		return;
 
-	db = instance_searchtype_db(instance_data[instance_id].type);
+	std::shared_ptr<s_instance_db> db = instance_db.find(util::umap_find(instances, instance_id)->id);
 
 	if (!db)
 		return;
 
 	WBUFW(buf,0) = 0x2cb;
-	safestrncpy(WBUFCP(buf,2), StringBuf_Value(db->name), INSTANCE_NAME_LENGTH);
+	safestrncpy(WBUFCP(buf,2), db->name.c_str(), INSTANCE_NAME_LENGTH);
 	WBUFW(buf,63) = num;
 	clif_send(buf,packet_len(0x2cb),&sd->bl,target);
 #endif
@@ -17822,14 +17821,14 @@ void clif_instance_create(unsigned short instance_id, int num)
 
 /// To announce Instancing queue creation if no maps available
 /// S 0x2cc <Standby Position>.W
-void clif_instance_changewait(unsigned short instance_id, int num)
+void clif_instance_changewait(int instance_id, int num)
 {
 #if PACKETVER >= 20071128
 	struct map_session_data *sd = NULL;
 	enum send_target target = PARTY;
 	unsigned char buf[4];
 
-	instance_getsd(instance_id, &sd, &target);
+	instance_getsd(instance_id, sd, &target);
 
 	if (!sd)
 		return;
@@ -17844,26 +17843,25 @@ void clif_instance_changewait(unsigned short instance_id, int num)
 
 /// Notify the current status to members
 /// S 0x2cd <Instance Name>.61B <Instance Remaining Time>.L <Instance Noplayers close time>.L
-void clif_instance_status(unsigned short instance_id, unsigned int limit1, unsigned int limit2)
+void clif_instance_status(int instance_id, unsigned int limit1, unsigned int limit2)
 {
 #if PACKETVER >= 20071128
-	struct instance_db *db = NULL;
 	struct map_session_data *sd = NULL;
 	enum send_target target = PARTY;
 	unsigned char buf[71];
 
-	instance_getsd(instance_id, &sd, &target);
+	instance_getsd(instance_id, sd, &target);
 
 	if (!sd)
 		return;
 
-	db = instance_searchtype_db(instance_data[instance_id].type);
+	std::shared_ptr<s_instance_db> db = instance_db.find(util::umap_find(instances, instance_id)->id);
 
 	if (!db)
 		return;
 
 	WBUFW(buf,0) = 0x2cd;
-	safestrncpy(WBUFCP(buf,2), StringBuf_Value(db->name), INSTANCE_NAME_LENGTH);
+	safestrncpy(WBUFCP(buf,2), db->name.c_str(), INSTANCE_NAME_LENGTH);
 	WBUFL(buf,63) = limit1;
 	WBUFL(buf,67) = limit2;
 	clif_send(buf,packet_len(0x2cd),&sd->bl,target);
@@ -17879,14 +17877,14 @@ void clif_instance_status(unsigned short instance_id, unsigned int limit1, unsig
 /// 2 = The Memorial Dungeon's entry time limit expired; it has been destroyed
 /// 3 = The Memorial Dungeon has been removed.
 /// 4 = Create failure (removes the instance window)
-void clif_instance_changestatus(unsigned int instance_id, int type, unsigned int limit)
+void clif_instance_changestatus(int instance_id, e_instance_notify type, unsigned int limit)
 {
 #if PACKETVER >= 20071128
 	struct map_session_data *sd = NULL;
 	enum send_target target = PARTY;
 	unsigned char buf[10];
 
-	instance_getsd(instance_id, &sd, &target);
+	instance_getsd(instance_id, sd, &target);
 
 	if (!sd)
 		return;
