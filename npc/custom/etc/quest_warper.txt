@@ -385,7 +385,7 @@ L_instance:
 	callfunc "QWS_Iarray";
 	freeloop(1);
 	set .@menu$,"";
-	for(set .@i,0; .@i<30; set .@i,.@i+1)	// Expected maximum is 30
+	for(set .@i,0; .@i<40; set .@i,.@i+1)	// Expected maximum is 40
 		set .@menu$,.@menu$+@Imenulist$[.@i]+":";
 	freeloop(0);
 	set @IWMenu,select(.@menu$);
@@ -623,7 +623,7 @@ function	script	QWS_DungeonStamps	{
 
 function	script	QWS_InstanceStamps	{
 	set @Istamp,0;
-	set @MaxIstamp,30; //maximum number of instances
+	set @MaxIstamp,26; //maximum number of instances
 	set @binvalue,1;
 	set @Istamploop,0;
 	do {
