@@ -1786,7 +1786,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 0;
 //----------------[50+] Endless Tower:
 	setarray @pImenuitems$[@Ii], "[50+] Endless Tower";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "e_tower";
 	setarray @pIXcoords[@Ii], 72;
@@ -1795,7 +1795,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 1;
 //----------------[60+] Octopus Cave:
 	setarray @pImenuitems$[@Ii], "[60+] Octopus Cave";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "mal_dun01";
 	setarray @pIXcoords[@Ii], 152;
@@ -1804,7 +1804,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 2;
 //----------------[60+] Overlook Water Dungeon:
 	setarray @pImenuitems$[@Ii], "[60+] Overlook Water Dungeon";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "gef_fild07";
 	setarray @pIXcoords[@Ii], 272;
@@ -1813,7 +1813,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 3;
 //----------------[70+] Nidhoggur's Nest:
 	setarray @pImenuitems$[@Ii], "[70+] Nidhoggur's Nest";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "nyd_dun02";
 	setarray @pIXcoords[@Ii], 95;
@@ -1822,7 +1822,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 4;
 //----------------[75+] Sealed Shrine:
 	setarray @pImenuitems$[@Ii], "[75+] Sealed Shrine";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "monk_test";
 	setarray @pIXcoords[@Ii], 306;
@@ -1831,7 +1831,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 5;
 //----------------[80+] Half-moon in the Daytime:
 	setarray @pImenuitems$[@Ii], "[80+] Half-moon in the Daytime";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "alberta";
 	setarray @pIXcoords[@Ii], 32;
@@ -1840,7 +1840,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 6;
 //----------------[95+] Hazy Forest:
 	setarray @pImenuitems$[@Ii], "[95+] Hazy Forest";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "bif_fild01";
 	setarray @pIXcoords[@Ii], 161;
@@ -1849,7 +1849,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 7;
 //----------------[99+] Geffen Magic Tournament:
 	setarray @pImenuitems$[@Ii], "[99+] Geffen Magic Tournament";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "dali";
 	setarray @pIXcoords[@Ii], 94;
@@ -1858,7 +1858,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 8;
 //----------------[99+] Sara's Memory:
 	setarray @pImenuitems$[@Ii], "[99+] Sara's Memory";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "dali";
 	setarray @pIXcoords[@Ii], 133;
@@ -1867,7 +1867,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 9;
 //----------------[100+] Bangungot Hospital:
 	setarray @pImenuitems$[@Ii], "[100+] Bangungot Hospital";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "ma_dun01";
 	setarray @pIXcoords[@Ii], 151;
@@ -1876,7 +1876,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 10;
 //----------------[100+] Heart Hunter War Base:
 	setarray @pImenuitems$[@Ii], "[100+] Heart Hunter War Base";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "alberta";
 	setarray @pIXcoords[@Ii], 32;
@@ -1885,7 +1885,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 11;
 //----------------[100+] Infinite Space:
 	setarray @pImenuitems$[@Ii], "[100+] Infinite Space";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "cmd_fild07";
 	setarray @pIXcoords[@Ii], 53;
@@ -1894,7 +1894,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 12;
 //----------------[100+] Room of Consciousness:
 	setarray @pImenuitems$[@Ii], "[100+] Room of Consciousness";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "prt_lib_q";
 	setarray @pIXcoords[@Ii], 90;
@@ -1903,7 +1903,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 13;
 //----------------[100+] Werner's Laboratory:
 	setarray @pImenuitems$[@Ii], "[100+] Werner's Laboratory";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "alberta";
 	setarray @pIXcoords[@Ii], 32;
@@ -1912,7 +1912,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 14;
 //----------------[110+] Cor Mission:
 	setarray @pImenuitems$[@Ii], "[110+] Cor Mission";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "alberta";
 	setarray @pIXcoords[@Ii], 32;
@@ -1921,7 +1921,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 15;
 //----------------[110+] OS Mission:
 	setarray @pImenuitems$[@Ii], "[110+] OS Mission";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "alberta";
 	setarray @pIXcoords[@Ii], 32;
@@ -1930,7 +1930,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 16;
 //----------------[120+] Ghost Palace:
 	setarray @pImenuitems$[@Ii], "[120+] Ghost Palace";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "dali02";
 	setarray @pIXcoords[@Ii], 46;
@@ -1939,7 +1939,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 17;
 //----------------[120+] Nightmarish Jitterbug:
 	setarray @pImenuitems$[@Ii], "[120+] Nightmarish Jitterbug";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "moc_para01";
 	setarray @pIXcoords[@Ii], 28;
@@ -1948,7 +1948,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 18;
 //----------------[125+] Airship Assault:
 	setarray @pImenuitems$[@Ii], "[125+] Airship Assault";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "dali02";
 	setarray @pIXcoords[@Ii], 137;
@@ -1957,7 +1957,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 19;
 //----------------[130+] Buwaya Cave:
 	setarray @pImenuitems$[@Ii], "[130+] Buwaya Cave";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "ma_fild02";
 	setarray @pIXcoords[@Ii], 316;
@@ -1966,7 +1966,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 20;
 //----------------[130+] Charleston Crisis:
 	setarray @pImenuitems$[@Ii], "[130+] Charleston Crisis";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "verus04";
 	setarray @pIXcoords[@Ii], 78;
@@ -1975,7 +1975,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 21;
 //----------------[130+] Devil's Tower:
 	setarray @pImenuitems$[@Ii], "[130+] Devil's Tower";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "dali02";
 	setarray @pIXcoords[@Ii], 137;
@@ -1984,7 +1984,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 22;
 //----------------[130+] Fall of Glast Heim:
 	setarray @pImenuitems$[@Ii], "[130+] Fall of Glast Heim";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "alberta";
 	setarray @pIXcoords[@Ii], 32;
@@ -1993,7 +1993,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 23;
 //----------------[130+] Old Glast Heim:
 	setarray @pImenuitems$[@Ii], "[130+] Old Glast Heim";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "glast_01";
 	setarray @pIXcoords[@Ii], 204;
@@ -2002,7 +2002,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 24;
 //----------------[140+] Bakonawa Lake:
 	setarray @pImenuitems$[@Ii], "[140+] Bakonawa Lake";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "ma_scene01";
 	setarray @pIXcoords[@Ii], 172;
@@ -2011,7 +2011,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 25;
 //----------------[140+] Central Laboratory:
 	setarray @pImenuitems$[@Ii], "[140+] Central Laboratory";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "verus01";
 	setarray @pIXcoords[@Ii], 150;
@@ -2020,7 +2020,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 26;
 //----------------[140+] Faceworm's Nest:
 	setarray @pImenuitems$[@Ii], "[140+] Faceworm's Nest";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "dali";
 	setarray @pIXcoords[@Ii], 85;
@@ -2029,7 +2029,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 27;
 //----------------[140+] Horror Toy Factory:
 	setarray @pImenuitems$[@Ii], "[140+] Horror Toy Factory";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "xmas";
 	setarray @pIXcoords[@Ii], 234;
@@ -2038,7 +2038,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 28;
 //----------------[140+] Last Room:
 	setarray @pImenuitems$[@Ii], "[140+] Last Room";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "un_myst";
 	setarray @pIXcoords[@Ii], 158;
@@ -2047,7 +2047,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 29;
 //----------------[140+] Malangdo Culvert:
 	setarray @pImenuitems$[@Ii], "[140+] Malangdo Culvert";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "mal_in01";
 	setarray @pIXcoords[@Ii], 164;
@@ -2056,7 +2056,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 30;
 //----------------[145+] Sarah and Fenrir:
 	setarray @pImenuitems$[@Ii], "[145+] Sarah and Fenrir";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "dali02";
 	setarray @pIXcoords[@Ii], 92;
@@ -2065,7 +2065,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 31;
 //----------------[145+] Sky Fortress:
 	setarray @pImenuitems$[@Ii], "[145+] Sky Fortress";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "alberta";
 	setarray @pIXcoords[@Ii], 32;
@@ -2074,7 +2074,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 32;
 //----------------[150+] Wolfchev's Laboratory:
 	setarray @pImenuitems$[@Ii], "[150+] Wolfchev's Laboratory";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "lhz_dun04";
 	setarray @pIXcoords[@Ii], 148;
@@ -2083,7 +2083,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 33;
 //----------------[160+] Flame Cave Instances:
 	setarray @pImenuitems$[@Ii], "[160+] Flame Cave Instances";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "moro_cav";
 	setarray @pIXcoords[@Ii], 55;
@@ -2092,7 +2092,7 @@ function	script	QWS_Iarray	{
 	QWS_Make_Instance_Menu 34;
 //----------------[170+] Bioresearch Laboratory:
 	setarray @pImenuitems$[@Ii], "[170+] Bioresearch Laboratory";
-	setarray @pIprice[@Ii], $QW_BW_PRICE;
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "alberta";
 	setarray @pIXcoords[@Ii], 32;
