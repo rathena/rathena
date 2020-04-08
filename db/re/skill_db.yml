@@ -2113,7 +2113,7 @@ Body:
     HitCount: 3
     Element: Weapon
     SplashArea: 2
-    ActiveInstance: 5
+    ActiveInstance: 3
     Knockback: 2
     CastTime: 500
     Duration1: 1000
