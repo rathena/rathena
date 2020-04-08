@@ -286,6 +286,7 @@ Body:
       Map: 1@swat
       X: 73
       Y: 118
+# There is officially only one (buggy) instance 'Werner Laboratory central room'
   - Id: 36
     Name: Werner Laboratory central room#1
     Enter:
