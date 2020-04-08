@@ -149,7 +149,7 @@ end;
 
 OnInit:
 	.s_idle = 1; //	ban hourly rewards from idle players ? 0 no / 1 yes {if player didn't move for x time he wont get hourly reward}  , DEFAULT = 0
-	.s_idle_time = 1800; //	this the time for idle in seconds  , DEFAULT = 1800 (30 min)
+	.s_idle_time = 3600; //	this the time for idle in seconds  , DEFAULT = 1800 (30 min)
 	.s_vip = 0; //	1 = only for VIP / 0 = for everyone  , DEFAULT = 0
 	.s_time = 1800000; //	1000 = 1 sec | 60000 = 1 min | 3600000 = 1 hr  , DEFAULT = 3600000 (1 hr)
 	.s_hourly_level = 0; //	Minimum level to earn Hourly rewards / 0 = no minimum level  , DEFAULT 0
