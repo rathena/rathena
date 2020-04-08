@@ -137,7 +137,7 @@
 1240,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Shop guide"
 
 // Ghost Palace memorial
-1261,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Cursed Swordman"
+1261,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Cursed Swordman"
 1263,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Cursed Swordman"
 
 1264,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flaming Basin and Doom Prayers"
@@ -519,7 +519,7 @@
 3132,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Z Gang Wanted - Find the Z Gang's Agit"
 3133,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Z Gang Wanted - Agit Found!"
 3134,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Z Gang Wanted - Clean Sweep of Z Gang"
-3135,259200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Nidhoggur's Nest"
+3135,230400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Nidhoggur's Nest"
 3136,14400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Nidhoggur's Nest Time Limit"
 
 3200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Job changes to Rune knight - Recommendation for Rune knight"
@@ -832,7 +832,7 @@
 5109,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Light but Unconfirmed Rumor"
 5110,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"The Rumored Character"
 5111,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"To the Lab..."
-5112,259200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Laboratory Restricted Access"
+5112,230400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Laboratory Restricted Access"
 5113,0,1646,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"[Rest] Lord Knight"
 5114,0,2235,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"[Rest] Paladin"
 5115,0,1649,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"[Rest] High Priest"
@@ -1615,7 +1615,7 @@
 7573,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Magic Swordman Thanatos"
 7574,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Thanatos Tower"
 7576,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Morocc castle seal"
-7577,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Space distortion"
+7577,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Space distortion"
 
 // Episode 14.3
 7578,0,3061,1,0,0,0,0,3061,6392,10000,0,0,0,0,0,0,"Rampaging Box"
@@ -2078,7 +2078,7 @@
 9173,72000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Tutorial Timer Cooldown"
 
 9222,0,2327,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"Get Rid of Bangungot from Hospital 2F"
-9223,604800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Will there be Peace at the Hospital?"
+9223,331200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Will there be Peace at the Hospital?"
 9224,3600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Explore Hospital 2F"
 
 9225,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Mystery Robbery Incident 1"
@@ -2160,12 +2160,12 @@
 9312,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Encounter Lydia"
 9313,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Encounter Fenrir"
 9314,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Encounter Loki"
-9315,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Exploring the dimensional gap"
-9316,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Re-exploring the crack of spaces"
+9315,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Exploring the dimensional gap"
+9316,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Re-exploring the crack of spaces"
 
 // EP14.3 Morse's Cave
 9318,0,3000,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"Pursuing Hiding Morocc"
-9319,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Pursuing Hiding Morocc Continues"
+9319,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Pursuing Hiding Morocc Continues"
 
 //9327,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,""
 //9328,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,""
@@ -2178,7 +2178,7 @@
 
 // Sarah Fenrir memorial
 9335,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Search for shards of Gigantes"
-9336,604800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Go back to Professor Bernhard"
+9336,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Go back to Professor Bernhard"
 9337,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Wrapping up the Adventure"
 
 // Rockridge
@@ -2661,7 +2661,7 @@
 11378,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Trick or treat" // Halloween Event 2013
 
 // Episode 15.2 The Last Room Instance
-11379,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Final Room"
+11379,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Final Room"
 11380,0,3254,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"Final Room"
 11381,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Vestige"
 11382,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Vestige"
@@ -2988,12 +2988,12 @@
 12268,0,2187,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hunt dark coelacanth"
 12269,0,2190,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hunt Cruel coelacanth"
 12270,0,2189,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hunt mutation coelacanth"
-12271,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"In progress general culvert single day service"
-12272,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"In progress hard culvert single day service"
+12271,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"In progress general culvert single day service"
+12272,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"In progress hard culvert single day service"
 12273,579600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"In progress general culvert weekly service"
 12274,579600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"In progress hard culvert weekly service"
 
-12278,604800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Towards Bakonawa Lake..."
+12278,331200‬,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Towards Bakonawa Lake..."
 12279,0,2322,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"Get Rid of Bakonawa"
 
 12280,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"A suspicious prisoner"
@@ -3036,7 +3036,7 @@
 
 // Old Glast Heim
 12316,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Meeting Hugin"
-12317,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Trace of Time Travel"
+12317,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Trace of Time Travel"
 12318,0,2475,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"Corrupted Soul Hunt"
 12319,0,2476,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"Amdarais Hunt"
 12320,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Time Traveler"
@@ -3044,7 +3044,7 @@
 12322,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Space Distortion"
 
 // Faceworm's Nest
-12325,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Faceworm's Nest after-effects"
+12325,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Faceworm's Nest after-effects"
 12326,86400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"The owner of old ring"
 12327,86400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"The memory of old photo album"
 12328,86400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Dol-Seoi's Sorrow"
@@ -3052,7 +3052,7 @@
 
 // Horror Toy Factory - Ep 14.2
 12330,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Skull-faced Girl"
-12331,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Trail of Toy Factory"
+12331,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Trail of Toy Factory"
 
 12334,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Trace of Time Travel"
 12335,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Space Distortion"
@@ -3069,7 +3069,7 @@
 
 // Episode 15.2: Central Laboratory
 12346,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Strange Ancient Science"
-12347,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Trace of Laboratory Access"
+12347,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Trace of Laboratory Access"
 
 12363,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"?????? ?? ??"
 
@@ -3277,10 +3277,10 @@
 13168,3600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Rake horn Scaraba Story - Wait"
 
 13181,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Nightmarish Jitterbug"
-13182,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Nightmarish Jitterbug: Waiting"
+13182,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Nightmarish Jitterbug: Waiting"
 13183,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Nightmarish Jitterbug: Completed"
 13184,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Charleston Factory"
-13185,72000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Charleston Factory - Hold"
+13185,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Charleston Factory - Hold"
 13186,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Charleston Factory - Complete"
 13187,0,3125,50,0,0,0,0,0,0,0,0,0,0,0,0,0,"Deal with the Staff"
 13188,72000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Deal with the Staff - Hold"
@@ -3507,11 +3507,11 @@
 15001,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hold your breath"
 
 // Heroes' Trail Part 1 - Sara's Memory
-15002,72000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial dungeon: Sara's Memory"
+15002,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial dungeon: Sara's Memory"
 15003,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Adventurer leon"
 
 // Episode 14.3: Isle of Bios
-15005,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Isle of Bios"
+15005,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Isle of Bios"
 15006,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Isle of Bios Exploration"
 15007,300,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Isle of Bios"
 15008,300,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Isle of Bios"
@@ -3536,7 +3536,7 @@
 //15045,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,""
 
 // Episode 15.1 : Airship Assault instance
-15050,82800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Airship Assault"
+15050,23:59,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Airship Assault"
 15051,300,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Airship Assault"
 // 15052,300,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Memorial Dungeon: Airship Assault"
 
@@ -4027,7 +4027,7 @@
 60189,0,1365,100,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hunting Apocalypse"
 60190,0,1365,150,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hunting Apocalypse"
 
-60200,604800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Endless Tower Effect"
+60200,331200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Endless Tower Effect"
 60201,14400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Endless Tower Time Limit"
 60211,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Thor Volcano base camp"
 60212,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Thor Volcano base camp"
