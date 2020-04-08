@@ -164,6 +164,8 @@ Setprice:
 	mes "Advanced Dungeon level warp fee = "+(($QW_AW_FEE)?"^00FF00"+$QW_AW_FEE:"^FF0000NO")+"^000000 zeny per level";
 	mes "Overseas Dungeon level warp fee = "+(($QW_OW_FEE)?"^00FF00"+$QW_OW_FEE:"^FF0000NO")+"^000000 zeny per level";
 
+	mes "Instance - Warps are = "+(($QW_IW_PRICE)?"^00FF00"+$QW_IW_PRICE:"^FF0000Free")+"^000000";
+
 	mes "Full Healing = "+(($QW_HF_PRICE)?"^00FF00"+$QW_HF_PRICE:"^FF0000Free")+"^000000";
 	mes "^FF0000HP ^000000Part Healing = "+(($QW_HP_H_PRICE)?"^00FF00"+$QW_HP_H_PRICE+"^000000 a point":"^FF0000Free^000000");
 	mes "^FF0000SP ^000000Part Healing = "+(($QW_HP_S_PRICE)?"^00FF00"+$QW_HP_S_PRICE+"^000000 a point":"^FF0000Free^000000");
