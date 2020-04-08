@@ -134,16 +134,16 @@ OnPCLoginEvent:
 	if (#Hourly_Rewards_Check < 6) {
 		message strcharinfo(0),"[Hourly Rewards]: You are currently earning hourly rewards. Type @hourlyrewards to see progress.";
 	} else {
-		.@remainingTime = (23 - gettime(DT_HOUR)) +" hr "+ (59 - gettime(DT_MINUTE)) +" min";
-		message strcharinfo(0),"[Hourly Rewards]: You have earned today's hourly rewards. Rewards reset in "+ .@remainingTime +". Total Points: "+ #HourlyRewardPoints;
+		.@remainingTime$ = (23 - gettime(DT_HOUR)) +" hr "+ (59 - gettime(DT_MINUTE)) +" min";
+		message strcharinfo(0),"[Hourly Rewards]: You have earned today's hourly rewards. Rewards reset in "+ .@remainingTime$ +". Total Points: "+ #HourlyRewardPoints;
 	}
 end;
 
 OnHourlyRewardsProgress:
 	.@hoursPlayed = #Hourly_Rewards_Check/2;
 	if (.@hoursPlayed >= 3) {
-		.@remainingTime = (23 - gettime(DT_HOUR)) +" hr "+ (59 - gettime(DT_MINUTE)) +" min";
-		message strcharinfo(0),"[Hourly Rewards]: You have earned today's hourly rewards. Rewards reset in "+ .@remainingTime +". Total Points: "+ #HourlyRewardPoints;
+		.@remainingTime$ = (23 - gettime(DT_HOUR)) +" hr "+ (59 - gettime(DT_MINUTE)) +" min";
+		message strcharinfo(0),"[Hourly Rewards]: You have earned today's hourly rewards. Rewards reset in "+ .@remainingTime$ +". Total Points: "+ #HourlyRewardPoints;
 	} else {
 		message strcharinfo(0),"[Hourly Rewards]: You have earned "+ .@hoursPlayed +" out of 3 hourly rewards today. Total Points: "+ #HourlyRewardPoints;
 	}
