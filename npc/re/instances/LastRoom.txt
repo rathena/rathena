@@ -12,7 +12,7 @@ un_myst,163,38,5	script	Mark	4_M_BLUEMAN,{
 	mes "[Mark]";
 	cutin "bu_mark1.bmp",0;
 
-	if (BaseLevel < 150) {
+	if (BaseLevel < 140) {
 		mes "It's dangerous here.";
 		mes "It would be better to come back next time when we are stronger.";
 		close3;

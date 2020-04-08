@@ -2395,7 +2395,7 @@ ma_scene01,170,178,6	script	Warpra#instance_25	113,{ callfunc "QWS_Instance_Warp
 verus01,146,154,6	script	Warpra#instance_26	113,{ callfunc "QWS_Instance_Warpra",26,"Central Laboratory"; close; }
 dali,80,65,6	script	Warpra#instance_27	113,{ callfunc "QWS_Instance_Warpra",27,"Faceworm's Nest"; close; }
 xmas,239,301,4	script	Warpra#instance_28	113,{ callfunc "QWS_Instance_Warpra",28,"Horror Toy Factory"; close; }
-un_myst,156,41,6	script	Warpra#instance_29	113,{ callfunc "QWS_Instance_Warpra",29,"Last Room"; close; }
+un_myst,156,41,4	script	Warpra#instance_29	113,{ callfunc "QWS_Instance_Warpra",29,"Last Room"; close; }
 mal_in01,166,34,6	script	Warpra#instance_30	113,{ callfunc "QWS_Instance_Warpra",30,"Malangdo Culvert"; close; }
 dali02,101,144,4	script	Warpra#instance_31	113,{ callfunc "QWS_Instance_Warpra",31,"Sarah and Fenrir"; close; }
 // alberta,32,240,4	script	Warpra#instance_32	113,{ callfunc "QWS_Instance_Warpra",32,"Sky Fortress"; close; } // TODO: Add instance
