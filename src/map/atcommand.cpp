@@ -4027,11 +4027,11 @@ ACMD_FUNC(reload) {
 		map_msg_reload();
 		clif_displaymessage(fd, msg_txt(sd,463)); // Message configuration has been reloaded.
 	} else if (strstr(command, "questdb") || strncmp(message, "questdb", 3) == 0) {
-		do_reload_quest();
-		clif_displaymessage(fd, msg_txt(sd,1377)); // Quest database has been reloaded.
+		if (quest_db.reload())
+			clif_displaymessage(fd, msg_txt(sd,1377)); // Quest database has been reloaded.
 	} else if (strstr(command, "instancedb") || strncmp(message, "instancedb", 4) == 0) {
-		instance_reload();
-		clif_displaymessage(fd, msg_txt(sd,516)); // Instance database has been reloaded.
+		if (instance_db.reload())
+			clif_displaymessage(fd, msg_txt(sd,516)); // Instance database has been reloaded.
 	} else if (strstr(command, "achievementdb") || strncmp(message, "achievementdb", 4) == 0) {
 		achievement_db_reload();
 		clif_displaymessage(fd, msg_txt(sd,771)); // Achievement database has been reloaded.
