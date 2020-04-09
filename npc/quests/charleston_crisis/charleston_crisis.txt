@@ -1892,29 +1892,21 @@ OnEnable:
 					mes "[Shalosh]";
 					mes "I see you have collected some junk... have some more.";
 
-					// Get list of party members char IDs and account IDs
-					getpartymember getcharid(1),1,.@partymembercid;
-					getpartymember getcharid(1),2,.@partymemberaid;
-					.@count = $@partymembercount;
+					// Deliver reward and update quest for all members in instance
+					getitem 6752,rand(3,4); //Charleston Parts
+					getitem 6961,rand(0,3); //Huge Metal Scrap
+					getitem 6752,rand(1,4); //Old Fuel Tank
+					erasequest 13184;
+					setquest 13186;
+					
+					// Undo addrid(1)
+					.@leaderid = getcharid(3);
+					detachrid();
+					attachrid(.@leaderid);
 
-					// Deliver reward to all online party members in instance
-					for (.@i = 0; .@i < .@count; .@i++) {
-						.@cid = .@partymembercid[.@i];
-						.@aid = .@partymemberaid[.@i];
-						if (strcharinfo(3,.@cid) == "1@mcd") {
-							// Get item will only send to online members
-							getitem 6752,rand(3,4),.@aid; //Charleston Parts
-							getitem 6961,rand(0,3),.@aid; //Huge Metal Scrap
-							getitem 6752,rand(1,4),.@aid; //Old Fuel Tank
-
-							// Update quest
-							erasequest 13184,.@cid;
-							setquest 13186,.@cid;
-						}
-					}
 					close2;
 					cutin "shaloshi01.bmp",255;
-					warp "verus04",107,124;
+					instance_warpall "verus04",107,124;
 					instance_destroy instance_id();
 					end;
 				}
