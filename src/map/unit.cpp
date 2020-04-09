@@ -120,6 +120,8 @@ int unit_walktoxy_sub(struct block_list *bl)
 	if (bl->type == BL_PC) {
 		((TBL_PC *)bl)->head_dir = 0;
 		clif_walkok((TBL_PC*)bl);
+	}else if( bl->type == BL_NPC ){
+		unit_refresh( bl, true );
 	}
 	clif_move(ud);
 
@@ -410,6 +412,10 @@ static TIMER_FUNC(unit_walktoxy_timer){
 	ud->walktimer = INVALID_TIMER;
 
 	if (bl->x == ud->to_x && bl->y == ud->to_y) {
+		if( bl->type == BL_NPC ){
+			unit_refresh( bl, false );
+		}
+
 		if (ud->walk_done_event[0]){
 			char walk_done_event[EVENT_NAME_LENGTH];
 
@@ -3158,7 +3164,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
  * Refresh the area with a change in display of a unit.
  * @bl: Object to update
  */
-void unit_refresh(struct block_list *bl) {
+void unit_refresh(struct block_list *bl, bool walking) {
 	nullpo_retv(bl);
 
 	if (bl->m < 0)
@@ -3170,7 +3176,7 @@ void unit_refresh(struct block_list *bl) {
 	// Probably need to use another flag or other way to refresh it
 	if (mapdata->users) {
 		clif_clearunit_area(bl, CLR_TRICKDEAD); // Fade out
-		clif_spawn(bl); // Fade in
+		clif_spawn(bl,walking); // Fade in
 	}
 }
 
