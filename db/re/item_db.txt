@@ -4791,8 +4791,8 @@
 6747,Iron_Artifacts_,Steel Artifact,3,10,,0,,,,,,,,,,,,,{},{},{}
 6748,Daily_Report_He_And_His_Team,Daily Report He And His Team,3,10,,0,,,,,,,,,,,,,{},{},{}
 6749,Operation_Control_Device,Operation Control Device,3,10,,0,,,,,,,,,,,,,{},{},{}
-6750,Failed_Engine,Failed Engine,3,10,,10,,,,,,,,,,,,,{},{},{}
-6751,Crushed_Can_Iron_Plate,Crushed Can Iron Plate,3,10,,10,,,,,,,,,,,,,{},{},{}
+6750,Wrong_Engine,Broken Engine,3,10,,10,,,,,,,,,,,,,{},{},{}
+6751,Distorted_Iron_Plate,Dented Iron Plate,3,10,,10,,,,,,,,,,,,,{},{},{}
 6752,Charleston_Parts,Charleston Parts,3,10,,10,,,,,,,,,,,,,{},{},{}
 6753,Token_Of_Destruction,Token Of Destruction,3,10,,0,,,,,,,,,,,,,{},{},{}
 6754,Collected_Medicinal_Herbs,Collected Medicinal Herbs,3,10,,0,,,,,,,,,,,,,{},{},{}
