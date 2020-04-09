@@ -1968,7 +1968,19 @@
 	parseable_packet(0x08fb,6,NULL,2);
 	parseable_packet(0x0907,5,clif_parse_MoveItem,2,4);
 	packet(0x0908,5);
-	parseable_packet(0x08d7,28,NULL,2,4);
+	parseable_packet(0x08D7,28,clif_parse_bg_queue_apply_request,2,4);
+	packet(0x08D8,27);
+	packet(0x08D9,30);
+	parseable_packet(0x08DA,26,clif_parse_bg_queue_cancel_request,2);
+	packet(0x08DB,27);
+	packet(0x08DC,26);
+	parseable_packet(0x08DD,27,clif_parse_dull,2,3);
+	packet(0x08DE,27);
+	packet(0x08DF,50);
+	parseable_packet(0x08E0,51,clif_parse_bg_queue_lobby_reply,2,3,27);
+	packet(0x08E1,51);
+	parseable_packet(0x090A,26,clif_parse_bg_queue_request_queue_number,2);
+	packet(0x090E,2);
 	packet(0x0977,14); //Monster HP Bar
 	parseable_packet(0x0916,26,clif_parse_GuildInvite2,2);
 	parseable_packet(0x091d,41,clif_parse_PartyBookingRegisterReq,2,4,6);
@@ -2193,6 +2205,12 @@
 	packet(0x09DA,-1);
 #endif
 
+// 2014-10-08Ragexe
+#if PACKETVER >= 20141008
+	parseable_packet(0x9FB, -1, clif_parse_pet_evolution, 2, 4); // CZ_PET_EVOLUTION
+	packet(0x09FC, 6); // ZC_PET_EVOLUTION_RESULT
+#endif
+
 // 2014-10-16Ragexe
 #if PACKETVER >= 20141016
 	packet(0x09DF,7);
@@ -2284,9 +2302,6 @@
 	parseable_packet(0x0A2E,6,clif_parse_change_title,0); // CZ_REQ_CHANGE_TITLE
 	packet(0x0A2F,7); // ZC_ACK_CHANGE_TITLE
 	packet(0x0A30,106); // ZC_ACK_REQNAMEALL2
-	// Pet Evolution System
-	parseable_packet(0x09FB,-1,clif_parse_dull,0); // CZ_PET_EVOLUTION
-	packet(0x09FC,6); // ZC_PET_EVOLUTION_RESULT
 
 	// Quest UI
 	packet(0x08FE,-1); // ZC_HUNTING_QUEST_INFO

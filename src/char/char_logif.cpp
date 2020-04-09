@@ -178,7 +178,7 @@ void chlogif_prepsend_global_accreg(void) {
 	}
 }
 
-void chlogif_send_global_accreg(const char *key, unsigned int index, intptr_t val, bool is_string) {
+void chlogif_send_global_accreg(const char *key, unsigned int index, int64 int_value, const char* string_value, bool is_string) {
 	int nlen = WFIFOW(login_fd, 2);
 	size_t len;
 
@@ -197,26 +197,25 @@ void chlogif_send_global_accreg(const char *key, unsigned int index, intptr_t va
 	nlen += 4;
 
 	if( is_string ) {
-		WFIFOB(login_fd, nlen) = val ? 2 : 3;
+		WFIFOB(login_fd, nlen) = string_value ? 2 : 3;
 		nlen += 1;
 
-		if( val ) {
-			char *sval = (char*)val;
-			len = strlen(sval)+1;
+		if( string_value ) {
+			len = strlen(string_value)+1;
 
 			WFIFOB(login_fd, nlen) = (unsigned char)len; // won't be higher; the column size is 254
 			nlen += 1;
 
-			safestrncpy(WFIFOCP(login_fd,nlen), sval, len);
+			safestrncpy(WFIFOCP(login_fd,nlen), string_value, len);
 			nlen += len;
 		}
 	} else {
-		WFIFOB(login_fd, nlen) = val ? 0 : 1;
+		WFIFOB(login_fd, nlen) = int_value ? 0 : 1;
 		nlen += 1;
 
-		if( val ) {
-			WFIFOL(login_fd, nlen) = (int)val;
-			nlen += 4;
+		if( int_value ) {
+			WFIFOQ(login_fd, nlen) = int_value;
+			nlen += 8;
 		}
 	}
 
@@ -361,8 +360,9 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, map_server[server_id].fd > 0 && map_server[server_id].map[0] );
 		// continued from char_auth_ok...
 		if( server_id == ARRAYLENGTH(map_server) || //server not online, bugreport:2359
-			(charserv_config.max_connect_user == 0 && sd->group_id != charserv_config.gm_allow_group) ||
-			( charserv_config.max_connect_user > 0 && char_count_users() >= charserv_config.max_connect_user && sd->group_id != charserv_config.gm_allow_group ) ) {
+			(((charserv_config.max_connect_user == 0 || charserv_config.char_maintenance == 1) ||
+			(charserv_config.max_connect_user > 0 && char_count_users() >= charserv_config.max_connect_user)) &&
+			sd->group_id < charserv_config.gm_allow_group)) {
 			// refuse connection (over populated)
 			chclif_reject(u_fd,0);
 		} else {

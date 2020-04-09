@@ -51,6 +51,7 @@ struct s_item_group_db *itemdb_group_exists(unsigned short group_id) {
 
 /**
  * Check if an item exists in a group
+ * @param group_id: Item Group ID
  * @param nameid: Item to check for in group
  * @return True if item is in group, else false
  */
@@ -68,6 +69,30 @@ bool itemdb_group_item_exists(unsigned short group_id, unsigned short nameid)
 				return true;
 	}
 	return false;
+}
+
+/**
+ * Check if an item exists from a group in a player's inventory
+ * @param group_id: Item Group ID
+ * @return Item's index if found or -1 otherwise
+ */
+int16 itemdb_group_item_exists_pc(struct map_session_data *sd, unsigned short group_id)
+{
+	struct s_item_group_db *group = (struct s_item_group_db *)uidb_get(itemdb_group, group_id);
+
+	if (!group)
+		return -1;
+
+	for (int i = 0; i < MAX_ITEMGROUP_RANDGROUP; i++) {
+		for (int j = 0; j < group->random[i].data_qty; j++) {
+			int16 item_position = pc_search_inventory(sd, group->random[i].data[j].nameid);
+
+			if (item_position != -1)
+				return item_position;
+		}
+	}
+
+	return -1;
 }
 
 /**
@@ -114,6 +139,10 @@ static struct item_data* itemdb_searchname1(const char *str, bool aegis_only)
 struct item_data* itemdb_searchname(const char *str)
 {
 	return itemdb_searchname1(str, false);
+}
+
+struct item_data* itemdb_search_aegisname( const char *str ){
+	return itemdb_searchname1( str, true );
 }
 
 /**
@@ -410,7 +439,7 @@ static void itemdb_create_dummy(void) {
 	CREATE(dummy_item, struct item_data, 1);
 
 	memset(dummy_item, 0, sizeof(struct item_data));
-	dummy_item->nameid = 500;
+	dummy_item->nameid = ITEMID_DUMMY;
 	dummy_item->weight = 1;
 	dummy_item->value_sell = 1;
 	dummy_item->type = IT_ETC; //Etc item
@@ -473,18 +502,8 @@ bool itemdb_isequip2(struct item_data *id) {
 bool itemdb_isstackable2(struct item_data *id)
 {
 	nullpo_ret(id);
-	switch(id->type) {
-		case IT_WEAPON:
-		case IT_ARMOR:
-		case IT_PETEGG:
-		case IT_PETARMOR:
-		case IT_SHADOWGEAR:
-			return false;
-		default:
-			return true;
-	}
+	return id->isStackable();
 }
-
 
 /*==========================================
  * Trade Restriction functions [Skotlex]
@@ -542,6 +561,12 @@ bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(st
 			return false;
 	}
 	return true;
+}
+
+bool itemdb_ishatched_egg(struct item* item) {
+	if (item && item->card[0] == CARD0_PET && item->attribute == 1)
+		return true;
+	return false;
 }
 
 /** Specifies if item-type should drop unidentified.
@@ -609,8 +634,14 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	if( ISDIGIT(str[0][0]) ){
 		group_id = atoi(str[0]);
 	}else{
+		int64 group_tmp;
+
 		// Try to parse group id as constant
-		script_get_constant(str[0], &group_id);
+		if (!script_get_constant(str[0], &group_tmp)) {
+			ShowError("itemdb_read_group: Unknown group constant \"%s\".\n", str[0]);
+			return false;
+		}
+		group_id = static_cast<int>(group_tmp);
 	}
 
 	// Check the group id
@@ -805,7 +836,7 @@ static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
 	else if( ISDIGIT(str[2][0]) )
 		id->delay_sc = atoi(str[2]);
 	else{ // Try read sc group id from const db
-		int constant;
+		int64 constant;
 
 		if( !script_get_constant(trim(str[2]), &constant) ){
 			ShowWarning("itemdb_read_itemdelay: Invalid sc group \"%s\" for item id %hu.\n", str[2], nameid);
@@ -919,7 +950,7 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	struct item_data *id;
 
 	if (!(id = itemdb_exists(nameid))) {
-		ShowError("itemdb_read_flag: Invalid item item with id %hu\n", nameid);
+		ShowError("itemdb_read_flag: Invalid item id %hu\n", nameid);
 		return true;
 	}
 	
@@ -1603,23 +1634,10 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 		(id->flag.no_equip&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
 		(id->flag.no_equip&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
 		(id->flag.no_equip&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(id->flag.no_equip&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
+		(id->flag.no_equip&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
 		)
 		return true;
 	return false;
-}
-
-/**
-* Check if item is available in spellbook_db or not
-* @param nameid
-* @return True if item is spellbook; False if not
-*/
-bool itemdb_is_spellbook2(unsigned short nameid) {
-	unsigned char i;
-	if (!nameid || !itemdb_exists(nameid) || !skill_spellbook_count)
-		return false;
-	ARR_FIND(0, MAX_SKILL_SPELLBOOK_DB, i, skill_spellbook_db[i].nameid == nameid);
-	return i == MAX_SKILL_SPELLBOOK_DB ? false : true;
 }
 
 /**
@@ -1695,7 +1713,13 @@ static bool itemdb_read_randomopt(const char* basedir, bool silent) {
 				id = atoi(str[0]);
 			}
 			else {
-				script_get_constant(str[0], &id);
+				int64 id_tmp;
+
+				if (!script_get_constant(str[0], &id_tmp)) {
+					ShowError("itemdb_read_randopt: Unknown random option constant \"%s\".\n", str[0]);
+					continue;
+				}
+				id = static_cast<int>(id_tmp);
 			}
 
 			if (id < 0) {
@@ -1757,14 +1781,18 @@ struct s_random_opt_group *itemdb_randomopt_group_exists(int id) {
  * @author [Cydh]
  **/
 static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
-	int id = 0, i;
+	int64 id_tmp;
+	int id = 0;
+	int i;
 	unsigned short rate = (unsigned short)strtoul(str[1], NULL, 10);
 	struct s_random_opt_group *g = NULL;
 
-	if (!script_get_constant(str[0], &id)) {
+	if (!script_get_constant(str[0], &id_tmp)) {
 		ShowError("itemdb_read_randomopt_group: Invalid ID for Random Option Group '%s'.\n", str[0]);
 		return false;
 	}
+
+	id = static_cast<int>(id_tmp);
 
 	if ((columns-2)%3 != 0) {
 		ShowError("itemdb_read_randomopt_group: Invalid column entries '%d'.\n", columns);
@@ -1785,8 +1813,10 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 		int j, k;
 		memset(&g->entries[i].option, 0, sizeof(g->entries[i].option));
 		for (j = 0, k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k+=3) {
+			int64 randid_tmp;
 			int randid = 0;
-			if (!script_get_constant(str[k], &randid) || !itemdb_randomopt_exists(randid)) {
+
+			if (!script_get_constant(str[k], &randid_tmp) || ((randid = static_cast<int>(randid_tmp)) && !itemdb_randomopt_exists(randid))) {
 				ShowError("itemdb_read_randomopt_group: Invalid random group id '%s' in column %d!\n", str[k], k+1);
 				continue;
 			}
@@ -1946,6 +1976,24 @@ static int itemdb_randomopt_free(DBKey key, DBData *data, va_list ap) {
 	return 1;
 }
 
+bool item_data::isStackable()
+{
+	switch (this->type) {
+		case IT_WEAPON:
+		case IT_ARMOR:
+		case IT_PETEGG:
+		case IT_PETARMOR:
+		case IT_SHADOWGEAR:
+			return false;
+	}
+	return true;
+}
+
+int item_data::inventorySlotNeeded(int quantity)
+{
+	return (this->flag.guid || !this->isStackable()) ? quantity : 1;
+}
+
 /**
 * Reload Item DB
 */
@@ -1974,21 +2022,21 @@ void itemdb_reload(void) {
 	iter = mapit_geteachpc();
 	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) ) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
-		pc_setinventorydata(sd);
-		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
-		/* clear combo bonuses */
-		if( sd->combos.count ) {
+
+		if( sd->combos.count ) { // clear combo bonuses
 			aFree(sd->combos.bonus);
 			aFree(sd->combos.id);
 			aFree(sd->combos.pos);
-			sd->combos.bonus = NULL;
-			sd->combos.id = NULL;
-			sd->combos.pos = NULL;
+			sd->combos.bonus = nullptr;
+			sd->combos.id = nullptr;
+			sd->combos.pos = nullptr;
 			sd->combos.count = 0;
-			if( pc_load_combo(sd) > 0 )
-				status_calc_pc(sd, SCO_FORCE);
 		}
 
+		pc_setinventorydata(sd);
+		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
+		pc_load_combo(sd); // Check to see if new combos are available
+		status_calc_pc(sd, SCO_FORCE); // 
 	}
 	mapit_free(iter);
 }

@@ -33,6 +33,7 @@
 ///Enum of item id (for hardcoded purpose)
 enum item_itemid
 {
+	ITEMID_DUMMY						= 499,
 	ITEMID_RED_POTION					= 501,
 	ITEMID_YELLOW_POTION				= 503,
 	ITEMID_WHITE_POTION					= 504,
@@ -87,7 +88,6 @@ enum item_itemid
 	ITEMID_COATING_BOTTLE				= 7139,
 	ITEMID_FRAGMENT_OF_CRYSTAL			= 7321,
 	ITEMID_SKULL_						= 7420,
-	ITEMID_TOKEN_OF_SIEGFRIED			= 7621,
 	ITEMID_TRAP_ALLOY					= 7940,
 	ITEMID_MERCENARY_RED_POTION			= 12184,
 	ITEMID_MERCENARY_BLUE_POTION		= 12185,
@@ -176,12 +176,7 @@ enum genetic_item_list
 	ITEMID_VITATA500,
 	ITEMID_CONCENTRATED_CEROMAIN_SOUP,
 	ITEMID_CURE_FREE					= 12475,
-	ITEMID_APPLE_BOMB					= 13260,
-	ITEMID_COCONUT_BOMB,
-	ITEMID_MELON_BOMB,
-	ITEMID_PINEAPPLE_BOMB,
-	ITEMID_BANANA_BOMB,
-	ITEMID_BLACK_LUMP,
+	ITEMID_BLACK_LUMP					= 13265,
 	ITEMID_BLACK_HARD_LUMP,
 	ITEMID_VERY_HARD_LUMP,
 	ITEMID_MYSTERIOUS_POWDER,
@@ -726,6 +721,7 @@ enum e_random_item_group {
 	IG_SANTA_GIFT,
 	IG_PRIZEOFHERO,
 	IG_PRIVATE_AIRSHIP,
+	IG_TOKEN_OF_SIEGFRIED,
 };
 
 /// Enum for bound/sell restricted selling
@@ -855,6 +851,9 @@ struct item_data
 	struct item_combo **combos;
 	unsigned char combos_count;
 	short delay_sc; ///< Use delay group if any instead using player's item_delay data [Cydh]
+
+	bool isStackable();
+	int inventorySlotNeeded(int quantity);
 };
 
 // Struct for item random option [Secret]
@@ -883,6 +882,7 @@ struct s_random_opt_group {
 };
 
 struct item_data* itemdb_searchname(const char *name);
+struct item_data* itemdb_search_aegisname( const char *str );
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
 struct item_data* itemdb_search(unsigned short nameid);
 struct item_data* itemdb_exists(unsigned short nameid);
@@ -906,7 +906,6 @@ struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_dropeffect(n) (itemdb_search(n)->flag.dropEffect)
 const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (enum e_item_ammo ammo);
-bool itemdb_is_spellbook2(unsigned short nameid);
 
 struct s_item_group_entry *itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group);
 unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
@@ -925,6 +924,7 @@ bool itemdb_canguildstore_sub(struct item_data *itd, int gmlv, int unused);
 bool itemdb_canmail_sub(struct item_data *itd, int gmlv, int unused);
 bool itemdb_canauction_sub(struct item_data *itd, int gmlv, int unused);
 bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(struct item_data*, int, int));
+bool itemdb_ishatched_egg(struct item* item);
 #define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
 #define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)
 #define itemdb_canpartnertrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_canpartnertrade_sub)
@@ -946,6 +946,7 @@ struct item_combo *itemdb_combo_exists(unsigned short combo_id);
 
 struct s_item_group_db *itemdb_group_exists(unsigned short group_id);
 bool itemdb_group_item_exists(unsigned short group_id, unsigned short nameid);
+int16 itemdb_group_item_exists_pc(struct map_session_data *sd, unsigned short group_id);
 char itemdb_pc_get_itemgroup(uint16 group_id, bool identify, struct map_session_data *sd);
 
 bool itemdb_parse_roulette_db(void);
