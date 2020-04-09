@@ -2569,7 +2569,7 @@ static bool instance_readdb_sub(char* str[], int columns, int current) {
 
 	if (columns > 7) {
 		body << YAML::Key << "AdditionalMaps";
-		body << YAML::BeginSeq;
+		body << YAML::BeginMap;
 
 		for (int i = 7; i < columns; i++) {
 			if (!strlen(str[i]))
@@ -2578,12 +2578,10 @@ static bool instance_readdb_sub(char* str[], int columns, int current) {
 			if (strcmpi(str[4], str[i]) == 0)
 				continue;
 
-			body << YAML::BeginMap;
 			body << YAML::Key << str[i] << YAML::Value << "true";
-			body << YAML::EndMap;
 		}
 
-		body << YAML::EndSeq;
+		body << YAML::EndMap;
 	}
 
 	body << YAML::EndMap;
