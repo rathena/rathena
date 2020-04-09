@@ -19933,8 +19933,7 @@ BUILDIN_FUNC(bg_getareausers)
 {
 	const char *str = script_getstr(st, 3);
 	int16 m, x0, y0, x1, y1;
-	int bg_id = script_getnum(st, 2);
-	int i = 0, c = 0;
+	int bg_id = script_getnum(st, 2), c = 0;
 	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
 
 	if (!bg || (m = map_mapname2mapid(str)) < 0) {
