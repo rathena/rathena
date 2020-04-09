@@ -43,6 +43,7 @@ struct achievement;
 struct guild_log_entry;
 enum e_guild_storage_log : uint16;
 enum e_bg_queue_apply_ack : uint16;
+enum e_instance_notify : uint8;
 
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
@@ -835,10 +836,10 @@ void clif_bg_queue_lobby_notify(const char *name, struct map_session_data *sd);
 void clig_bg_queue_ack_lobby(bool result, const char *name, const char *lobbyname, struct map_session_data *sd);
 
 // Instancing
-void clif_instance_create(unsigned short instance_id, int num);
-void clif_instance_changewait(unsigned short instance_id, int num);
-void clif_instance_status(unsigned short instance_id, unsigned int limit1, unsigned int limit2);
-void clif_instance_changestatus(unsigned int instance_id, int type, unsigned int limit);
+void clif_instance_create(int instance_id, int num);
+void clif_instance_changewait(int instance_id, int num);
+void clif_instance_status(int instance_id, unsigned int limit1, unsigned int limit2);
+void clif_instance_changestatus(int instance_id, e_instance_notify type, unsigned int limit);
 
 // Custom Fonts
 void clif_font(struct map_session_data *sd);
