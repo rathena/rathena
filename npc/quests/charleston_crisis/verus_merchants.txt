@@ -196,6 +196,7 @@ disable_items;
 			next;
 			mes "[ Mass Charleston ]";
 			mes "Rest assured. My upgrade technology does not involve accidental damage on the item's ^0000FFUpgrade Level^000000 or ^0000FFEquipped Cards.^000000";
+			mes "Adding abilities will not destroy your item. I can also reset all abilities on an item if you wish.";
 			close;
 
 		case 2:
