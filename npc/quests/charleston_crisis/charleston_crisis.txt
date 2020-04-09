@@ -1800,7 +1800,7 @@ OnEnable:
 1@mcd,116,213,5	script	Scientist#5_00a	4_M_DOCTOR,{
 	if(charlestonins == 0) {
 		mes "[Scientist]";
-		mes "Ey...";
+		mes "Ah...";
 		next;
 		mes "[Scientist]";
 		mes "Thank you so much for everything you have done for my daughters..";
@@ -1843,10 +1843,10 @@ OnEnable:
 		mes "I hope everything is back to normal now.";
 		next;
 		mes "[Scientist]";
-		mes "Please look for ^5533ffShalosh ^000000, and comment on what has happened, she is inside the building.";
+		mes "Please look for ^5533ffShalosh ^000000, and tell her what has happened, she is inside this factory.";
 		next;
 		mes "[Scientist]";
-		mes "It is a lady dressed in black, you will recognize her immediately.";
+		mes "She is a lady dressed in black, you will recognize her immediately.";
 		close;
 	}
 OnInstanceInit:
@@ -1878,27 +1878,57 @@ OnEnable:
 			cutin "shaloshi01.bmp",255;
 			end;
 		case 3:
-			if(charlestonins == 0) {
+			if (is_party_leader()) {
+				if (charlestonins == 0) {
+					mes "[Shalosh]";
+					mes "Please do not talk nonsense, help stop the crisis and then speak with the Scientist.";
+					close2;
+					cutin "shaloshi01.bmp",255;
+					end;
+				} else {
+					mes "[Shalosh]";
+					mes "Great, they have done away with the great robot Charleston.";
+					next;
+					mes "[Shalosh]";
+					mes "I see you have collected some junk... have some more.";
+
+					// Get list of party members char IDs and account IDs
+					getpartymember getcharid(1),1,.@partymembercid;
+					getpartymember getcharid(1),2,.@partymemberaid;
+					.@count = $@partymembercount;
+
+					// Deliver reward to all online party members in instance
+					for (.@i = 0; .@i < .@count; .@i++) {
+						.@cid = .@partymembercid[.@i];
+						.@aid = .@partymemberaid[.@i];
+						if (strcharinfo(3,.@cid) == "1@mcd") {
+							// Get item will only send to online members
+							getitem 6752,rand(3,4),.@aid; //Charleston Parts
+							getitem 6961,rand(0,3),.@aid; //Huge Metal Scrap
+							getitem 6752,rand(1,4),.@aid; //Old Fuel Tank
+
+							// Update quest
+							erasequest 13184,.@cid;
+							setquest 13186,.@cid;
+						}
+					}
+					close2;
+					cutin "shaloshi01.bmp",255;
+					warp "verus04",107,124;
+					instance_destroy instance_id();
+					end;
+				}
+			} else if (charlestonins == 0) {
 				mes "[Shalosh]";
-				mes "Please do not talk nonsense, help stop the crisis and then speak with the Scientist.";
+				mes "Please do not talk nonsense, help stop the crisis and then go see the Scientist.";
 				close2;
 				cutin "shaloshi01.bmp",255;
 				end;
 			} else {
 				mes "[Shalosh]";
-				mes "Great, they have done away with the great robot Charleston.";
-				next;
-				mes "[Shalosh]";
-				mes "I see you collected some junk, have some more.";
-				getitem 6752,rand(3,4); //Charleston Parts
-				getitem 6961,rand(0,3); //Huge Metal Scrap
-				getitem 6752,rand(1,4); //Old Fuel Tank
-				erasequest 13184;
-				setquest 13186;
+				mes "Tell your party leader to speak with me...";
 				close2;
 				cutin "shaloshi01.bmp",255;
-				warp "verus04",107,124;
-				instance_destroy instance_id();
 				end;
 			}
 	}
