@@ -46,12 +46,12 @@ verus01,153,155,5	script	Temporary Dimension-mov#pa0829_01	PORTAL,{
 }
 
 verus01,149,155,5	script	Civilization Explorer#pa0829_01	4_LGTSCIENCE,{
-	if (BaseLevel < 135) {
+	if (BaseLevel < 140) {
 		mes "[Civilization Explorer]";
 		mes "Well... I don't know if you can come in handy, it seems that there is still a gap!";
 		next;
 		mes "[Civilization Explorer]";
-		mes "When you become stronger, come back to me. You should be almost level 135!";
+		mes "When you become stronger, come back to me. You should be almost level 140!";
 		close;
 	}
 	mes "^ff0000Taming monsters will impede progress in this dungeon. Please take note of this.^000000";
@@ -728,7 +728,7 @@ OnStart:
 	mapannounce 'map_name$, "MA-4885: 1 second remaining", bc_map, 0xffff00,FW_NORMAL,13,0;
 	sleep 1000;
 	donpcevent instance_npcname("#npc_con10") + "::OnStart";
-	mapannounce 'map_name$, "MA-4885: Temporarily shutting down main power for syntonization with transformed phase.", bc_map, 0xffff00,FW_NORMAL,13,0;
+	mapannounce 'map_name$, "MA-4885: Temporarily shutting down main power for synchronization with transformed phase.", bc_map, 0xffff00,FW_NORMAL,13,0;
 	sleep 3000;
 	'bool_event = false;
 	end;
