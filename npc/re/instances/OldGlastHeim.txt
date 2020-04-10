@@ -88,32 +88,66 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 			mes "Why don't you make a party with more than 1 person and talk to me again?";
 			close;
 		}
-		if (is_party_leader() == true)
-			.@menu$ = "Generate Time Gap";
+		if (is_party_leader() == true) {
+			.@menu$ = "Generate Time Gap ^00FF00(Normal)^000000";
+			.@menu_hard$ = "Generate Time Gap ^FF0000(Hard)^000000";
+		}
 		else {
 			mes "[Hugin]";
 			mes "Have we met before? No way. It's my first time seeing you. What do you want?";
 		}
 		if (isbegin_quest(12318) == 0)
 			setquest 12318;// Corrupted Soul Hunt
-		switch( select( .@menu$, "Enter Old Glast Heim", "Cancel" ) ) {
+		switch( select( .@menu$, .@menu_hard$, "Enter Old Glast Heim", "Cancel" ) ) {
 		case 1:
 			switch( instance_create(.@md_name$) ) {
 			case -3:
-				dispbottom "Memorial Dungeon, 'Old Glast Heim' is already in progress.",0xFFFFFF;
+				dispbottom "Memorial Dungeon, 'Old Glast Heim (Normal)' is already in progress.",0xFFFFFF;
 				close;
 			case -4:
 			case -2:
 			case -1:
 				mes "Party Name: " + getpartyname( getcharid(1) );
 				mes "Party Leader: " + strcharinfo(0);
-				mes "^0000ff" + .@md_name$ + "^000000 - time gap generation failed.";
+				mes "^0000ff" + .@md_name$ + " (Normal)^000000 - time gap generation failed.";
 				close;
 			}
+			// Normal difficulty monsters start at ID 2464
+			// Hard difficulty monsters start at ID 3139
+			'mobOffset = 0;
 			mes "[Hugin]";
 			mes "After the time gap opens, please tell me again.";
 			close;
 		case 2:
+			mes "[Hugin]";
+			mes "^FF0000Hard^000000 difficulty is much more challenging than ^00FF00Normal^000000 difficulty.";
+			mes "Although it comes with far greater rewards.";
+			mes "Are you sure you want to take it on?";
+			switch( select( "Yes", "Cancel" ) ) {
+				case 1:
+					break;
+				case 2:
+					close;
+			}
+			switch( instance_create(.@md_name$) ) {
+			case -3:
+				dispbottom "Memorial Dungeon, 'Old Glast Heim (Hard)' is already in progress.",0xFFFFFF;
+				close;
+			case -4:
+			case -2:
+			case -1:
+				mes "Party Name: " + getpartyname( getcharid(1) );
+				mes "Party Leader: " + strcharinfo(0);
+				mes "^0000ff" + .@md_name$ + " (Hard)^000000 - time gap generation failed.";
+				close;
+			}
+			// Normal difficulty monsters start at ID 2464
+			// Hard difficulty monsters start at ID 3139
+			'mobOffset = 675;
+			mes "[Hugin]";
+			mes "After the time gap opens, please tell me again.";
+			close;
+		case 3:
 			switch( instance_enter(.@md_name$) ) {
 			case IE_OTHER:
 				mes "[Hugin]";
@@ -133,7 +167,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 				// warp "1@gl_k",150,20;
 				end;
 			}
-		case 3:
+		case 4:
 			close;
 		}
 	case 0:
@@ -453,40 +487,40 @@ OnTimer92000:
 	hideonnpc instance_npcname("Khalitzburg Knightage#22");
 
 	.@label$ = instance_npcname("#talkinstance1") + "::OnMyMobDead";
-	monster 'map_name$[0],145,59,"Abysmal Knight",2470,1,.@label$;// MG_KNIGHT_OF_ABYSS
-	monster 'map_name$[0],154,59,"Abysmal Knight",2470,1,.@label$;
-	monster 'map_name$[0],145,69,"Abysmal Knight",2470,1,.@label$;
-	monster 'map_name$[0],154,69,"Abysmal Knight",2470,1,.@label$;
-	monster 'map_name$[0],145,79,"Abysmal Knight",2470,1,.@label$;
-	monster 'map_name$[0],154,79,"Abysmal Knight",2470,1,.@label$;
-	monster 'map_name$[0],145,89,"Abysmal Knight",2470,1,.@label$;
-	monster 'map_name$[0],154,89,"Abysmal Knight",2470,1,.@label$;
-	monster 'map_name$[0],145,99,"Abysmal Knight",2470,1,.@label$;
-	monster 'map_name$[0],154,99,"Abysmal Knight",2470,1,.@label$;
+	monster 'map_name$[0],145,59,"Abysmal Knight",2470+'mobOffset,1,.@label$;// MG_KNIGHT_OF_ABYSS
+	monster 'map_name$[0],154,59,"Abysmal Knight",2470+'mobOffset,1,.@label$;
+	monster 'map_name$[0],145,69,"Abysmal Knight",2470+'mobOffset,1,.@label$;
+	monster 'map_name$[0],154,69,"Abysmal Knight",2470+'mobOffset,1,.@label$;
+	monster 'map_name$[0],145,79,"Abysmal Knight",2470+'mobOffset,1,.@label$;
+	monster 'map_name$[0],154,79,"Abysmal Knight",2470+'mobOffset,1,.@label$;
+	monster 'map_name$[0],145,89,"Abysmal Knight",2470+'mobOffset,1,.@label$;
+	monster 'map_name$[0],154,89,"Abysmal Knight",2470+'mobOffset,1,.@label$;
+	monster 'map_name$[0],145,99,"Abysmal Knight",2470+'mobOffset,1,.@label$;
+	monster 'map_name$[0],154,99,"Abysmal Knight",2470+'mobOffset,1,.@label$;
 
-	monster 'map_name$[0],145,54,"Khalitzburg",2471,1,.@label$;// G_MG_KHALITZBURG
+	monster 'map_name$[0],145,54,"Khalitzburg",2471+'mobOffset,1,.@label$;// G_MG_KHALITZBURG
 	unittalk $@mobid[0],"Water... Someone give me water...";
-	monster 'map_name$[0],154,54,"Khalitzburg",2471,1,.@label$;
+	monster 'map_name$[0],154,54,"Khalitzburg",2471+'mobOffset,1,.@label$;
 	unittalk $@mobid[0],"Kkkrrrruughgh...";
-	monster 'map_name$[0],145,64,"Khalitzburg",2471,1,.@label$;
+	monster 'map_name$[0],145,64,"Khalitzburg",2471+'mobOffset,1,.@label$;
 	unittalk $@mobid[0],"Sir Heinrich. Save me...";
-	monster 'map_name$[0],154,64,"Khalitzburg",2471,1,.@label$;
+	monster 'map_name$[0],154,64,"Khalitzburg",2471+'mobOffset,1,.@label$;
 	unittalk $@mobid[0],"I miss my sister...";
-	monster 'map_name$[0],145,74,"Khalitzburg",2471,1,.@label$;
+	monster 'map_name$[0],145,74,"Khalitzburg",2471+'mobOffset,1,.@label$;
 	unittalk $@mobid[0],"Don't leave me alone, help me.";
-	monster 'map_name$[0],154,74,"Khalitzburg",2471,1,.@label$;
+	monster 'map_name$[0],154,74,"Khalitzburg",2471+'mobOffset,1,.@label$;
 	unittalk $@mobid[0],"Aaarrrrrhhhh";
-	monster 'map_name$[0],145,84,"Khalitzburg",2471,1,.@label$;
+	monster 'map_name$[0],145,84,"Khalitzburg",2471+'mobOffset,1,.@label$;
 	unittalk $@mobid[0],"I am so thirsty.";
-	monster 'map_name$[0],154,84,"Khalitzburg",2471,1,.@label$;
+	monster 'map_name$[0],154,84,"Khalitzburg",2471+'mobOffset,1,.@label$;
 	unittalk $@mobid[0],"Oh...No...I can't die yet...";
-	monster 'map_name$[0],145,94,"Khalitzburg",2471,1,.@label$;
+	monster 'map_name$[0],145,94,"Khalitzburg",2471+'mobOffset,1,.@label$;
 	unittalk $@mobid[0],"I feel sick to my stomach urrgg";
-	monster 'map_name$[0],154,94,"Khalitzburg",2471,1,.@label$;
+	monster 'map_name$[0],154,94,"Khalitzburg",2471+'mobOffset,1,.@label$;
 	unittalk $@mobid[0],"Can someone...";
-	monster 'map_name$[0],145,104,"Khalitzburg",2471,1,.@label$;
+	monster 'map_name$[0],145,104,"Khalitzburg",2471+'mobOffset,1,.@label$;
 	unittalk $@mobid[0],"Arrgg... My body";
-	monster 'map_name$[0],154,104,"Khalitzburg",2471,1,.@label$;
+	monster 'map_name$[0],154,104,"Khalitzburg",2471+'mobOffset,1,.@label$;
 	unittalk $@mobid[0],"My throat is burning!";
 	end;
 OnTimer94000:
@@ -623,11 +657,11 @@ OnStart:
 
 	// note: x17 MG_GHOUL / x17 MG_ZOMBIE / x17 MG_WRAITH
 	.@label$ = instance_npcname("#ghmemorialmob01") + "::OnMyMobDead";
-	areamonster 'map_name$[0],76,99,87,10,"Grand Chamberlain in pain",2466,14,.@label$;
-	areamonster 'map_name$[0],67,39,12, 6,"Corrupted Monk",2465,17,.@label$;
-	areamonster 'map_name$[0],67,39,12, 6,"Grand Chamberlain in pain",2466,3,.@label$;
-	areamonster 'map_name$[0],32,75,51,58,"Corrupted Steward",2464,5,.@label$;
-	areamonster 'map_name$[0],45,84,6,137,"Corrupted Steward",2464,12,.@label$;
+	areamonster 'map_name$[0],76,99,87,10,"Grand Chamberlain in pain",2466+'mobOffset,14,.@label$;
+	areamonster 'map_name$[0],67,39,12, 6,"Corrupted Monk",2465+'mobOffset,17,.@label$;
+	areamonster 'map_name$[0],67,39,12, 6,"Grand Chamberlain in pain",2466+'mobOffset,3,.@label$;
+	areamonster 'map_name$[0],32,75,51,58,"Corrupted Steward",2464+'mobOffset,5,.@label$;
+	areamonster 'map_name$[0],45,84,6,137,"Corrupted Steward",2464+'mobOffset,12,.@label$;
 	end;
 OnMyMobDead:
 	.@label$ = instance_npcname("#ghmemorialmob01") + "::OnMyMobDead";
@@ -702,10 +736,10 @@ OnStart:
 
 	// note: x34 MG_ZOMBIE / x35 MG_GHOUL
 	.@label$ = instance_npcname("#ghmemorialmob02") + "::OnMyMobDead";
-	areamonster 'map_name$[0],236,12,288,52,"Outraged Refiner",2466,18,.@label$;// MG_GHOUL
-	areamonster 'map_name$[0],236,12,288,52,"Decomposed Blacksmith",2464,17,.@label$;// MG_ZOMBIE
-	areamonster 'map_name$[0],242,71,286,145,"Outraged Refiner",2466,17,.@label$;
-	areamonster 'map_name$[0],242,71,286,145,"Decomposed Blacksmith",2464,17,.@label$;
+	areamonster 'map_name$[0],236,12,288,52,"Outraged Refiner",2466+'mobOffset,18,.@label$;// MG_GHOUL
+	areamonster 'map_name$[0],236,12,288,52,"Decomposed Blacksmith",2464+'mobOffset,17,.@label$;// MG_ZOMBIE
+	areamonster 'map_name$[0],242,71,286,145,"Outraged Refiner",2466+'mobOffset,17,.@label$;
+	areamonster 'map_name$[0],242,71,286,145,"Decomposed Blacksmith",2464+'mobOffset,17,.@label$;
 	end;
 OnMyMobDead:
 	.@label$ = instance_npcname("#ghmemorialmob02") + "::OnMyMobDead";
@@ -776,7 +810,7 @@ OnTouch_:
 	else .@mobs = 7;
 	getmapxy .@map$,.@x,.@y, BL_NPC;
 	specialeffect EF_VENOMDUST;
-	monster .@map$,.@x,.@y,"Maggot",2467,.@mobs;
+	monster .@map$,.@x,.@y,"Maggot",2467+'mobOffset,.@mobs;
 	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
@@ -818,12 +852,12 @@ OnEnable:
 
 	// note: x50 MG_RAYDRIC / x50 MG_RAYDRIC_ARCHER
 	.@label$ = instance_npcname("#ghmemorialmob03") + "::OnMyMobDead";
-	areamonster 'map_name$[0],16,186,43,280,"Outraged Archer",2469,25,.@label$;
-	areamonster 'map_name$[0],44,191,89,225,"Hungry Palace Guard",2468,25,.@label$;
-	areamonster 'map_name$[0],115,215,188,273,"Corrupted Palace Guard",2468,20,.@label$;
-	areamonster 'map_name$[0],108,232,193,281,"Corrupted Palace Guard",2468,5,.@label$;
-	areamonster 'map_name$[0],158,236,230,250,"Wandering Archer",2469,12,.@label$;
-	areamonster 'map_name$[0],65,231,155,256,"Wandering Archer",2469,13,.@label$;
+	areamonster 'map_name$[0],16,186,43,280,"Outraged Archer",2469+'mobOffset,25,.@label$;
+	areamonster 'map_name$[0],44,191,89,225,"Hungry Palace Guard",2468+'mobOffset,25,.@label$;
+	areamonster 'map_name$[0],115,215,188,273,"Corrupted Palace Guard",2468+'mobOffset,20,.@label$;
+	areamonster 'map_name$[0],108,232,193,281,"Corrupted Palace Guard",2468+'mobOffset,5,.@label$;
+	areamonster 'map_name$[0],158,236,230,250,"Wandering Archer",2469+'mobOffset,12,.@label$;
+	areamonster 'map_name$[0],65,231,155,256,"Wandering Archer",2469+'mobOffset,13,.@label$;
 	end;
 OnMyMobDead:
 	.@label$ = instance_npcname("#ghmemorialmob03") + "::OnMyMobDead";
@@ -942,7 +976,7 @@ OnTimer38000:
 	end;
 OnStart:
 	enablenpc instance_npcname("#ghmemorialmob04");
-	monster 'map_name$[0],150,259,"Corrupted Soul",2475,1, instance_npcname("#ghmemorialmob04") + "::OnMyMobDead";// MG_CORRUPTION_ROOT
+	monster 'map_name$[0],150,259,"Corrupted Soul",2475+'mobOffset,1, instance_npcname("#ghmemorialmob04") + "::OnMyMobDead";// MG_CORRUPTION_ROOT
 	unittalk $@mobid[0],"Grrrrrrhh~~~";
 	end;
 OnMyMobDead:
@@ -1131,7 +1165,7 @@ OnMyMobDead:
 
 		.@r = rand(4) * 2;
 		setarray .@coord[0], 41,146, 58,44, 122,148, 131,64;
-		monster 'map_name$[1],.@coord[.@r],.@coord[.@r+1], "1st Commander of Destruction",2473,1, instance_npcname("#ghmemorialmob05") + "::OnBossDead";
+		monster 'map_name$[1],.@coord[.@r],.@coord[.@r+1], "1st Commander of Destruction",2473+'mobOffset,1, instance_npcname("#ghmemorialmob05") + "::OnBossDead";
 	}
 	end;
 
@@ -1157,50 +1191,50 @@ OnStart:
 
 	// Fix spawn
 	.@label$ = instance_npcname("#ghmemorialmob06") + "::OnMyMobDead";
-	monster 'map_name$[1],252, 75, "Corrupted Palace Guard",2468,1, .@label$;
-	monster 'map_name$[1],253, 76, "Corrupted Palace Guard",2468,1, .@label$;
-	monster 'map_name$[1],247, 77, "Corrupted Palace Guard",2468,1, .@label$;
-	monster 'map_name$[1],248, 80, "Corrupted Palace Guard",2468,1, .@label$;
-	monster 'map_name$[1],236,100, "Corrupted Palace Guard",2468,1, .@label$;
-	monster 'map_name$[1],240,100, "Corrupted Palace Guard",2468,1, .@label$;
-	monster 'map_name$[1],242,100, "Corrupted Palace Guard",2468,1, .@label$;
-	monster 'map_name$[1],244,100, "Corrupted Palace Guard",2468,1, .@label$;
-	monster 'map_name$[1],199,111, "Corrupted Palace Guard",2468,1, .@label$;
-	monster 'map_name$[1],181,107, "Wandering Archer",2469,1, .@label$;
-	monster 'map_name$[1],177,110, "Wandering Archer",2469,1, .@label$;
-	monster 'map_name$[1],236, 27, "Wandering Archer",2469,1, .@label$;
-	monster 'map_name$[1],242, 27, "Wandering Archer",2469,1, .@label$;
-	monster 'map_name$[1],252, 26, "Wandering Archer",2469,1, .@label$;
-	monster 'map_name$[1],172,130, "Wandering Archer",2469,1, .@label$;
-	monster 'map_name$[1],171,127, "Wandering Archer",2469,1, .@label$;
-	monster 'map_name$[1],173,127, "Wandering Archer",2469,1, .@label$;
-	monster 'map_name$[1],177, 69, "Corrupted Abysmal Knight",2470,1, .@label$;
-	monster 'map_name$[1],186, 66, "Corrupted Abysmal Knight",2470,1, .@label$;
-	monster 'map_name$[1],189, 67, "Corrupted Abysmal Knight",2470,1, .@label$;
-	monster 'map_name$[1],190, 68, "Corrupted Abysmal Knight",2470,1, .@label$;
-	monster 'map_name$[1],257,157, "Corrupted Abysmal Knight",2470,1, .@label$;
-	monster 'map_name$[1],246,159, "Corrupted Abysmal Knight",2470,1, .@label$;
-	monster 'map_name$[1],237,158, "Corrupted Abysmal Knight",2470,1, .@label$;
-	monster 'map_name$[1],206,159, "Corrupted Abysmal Knight",2470,1, .@label$;
-	monster 'map_name$[1],172,120, "Corrupted Abysmal Knight",2470,1, .@label$;
-	monster 'map_name$[1],226, 30, "Suffered Khalitzburg",2471,1, .@label$;
-	monster 'map_name$[1],226, 38, "Suffered Khalitzburg",2471,1, .@label$;
-	monster 'map_name$[1],228, 29, "Suffered Khalitzburg",2471,1, .@label$;
-	monster 'map_name$[1],226, 63, "Suffered Khalitzburg",2471,1, .@label$;
-	monster 'map_name$[1],268,137, "Suffered Khalitzburg",2471,1, .@label$;
-	monster 'map_name$[1],263,138, "Suffered Khalitzburg",2471,1, .@label$;
-	monster 'map_name$[1],259,138, "Suffered Khalitzburg",2471,1, .@label$;
-	monster 'map_name$[1],259,138, "Suffered Khalitzburg",2471,1, .@label$;
-	monster 'map_name$[1],187,121, "Suffered Khalitzburg",2471,1, .@label$;
-	monster 'map_name$[1],265, 52, "Bloody Knight",2472,1, .@label$;
-	monster 'map_name$[1],265, 55, "Bloody Knight",2472,1, .@label$; 
-	monster 'map_name$[1],264, 79, "Bloody Knight",2472,1, .@label$; 
-	monster 'map_name$[1],225, 92, "Bloody Knight",2472,1, .@label$; 
-	monster 'map_name$[1],237, 92, "Bloody Knight",2472,1, .@label$; 
-	monster 'map_name$[1],249, 92, "Bloody Knight",2472,1, .@label$; 
-	monster 'map_name$[1],256, 93, "Bloody Knight",2472,1, .@label$; 
-	monster 'map_name$[1],264,100, "Bloody Knight",2472,1, .@label$;
-	monster 'map_name$[1],181,120, "Bloody Knight",2472,1, .@label$;
+	monster 'map_name$[1],252, 75, "Corrupted Palace Guard",2468+'mobOffset,1, .@label$;
+	monster 'map_name$[1],253, 76, "Corrupted Palace Guard",2468+'mobOffset,1, .@label$;
+	monster 'map_name$[1],247, 77, "Corrupted Palace Guard",2468+'mobOffset,1, .@label$;
+	monster 'map_name$[1],248, 80, "Corrupted Palace Guard",2468+'mobOffset,1, .@label$;
+	monster 'map_name$[1],236,100, "Corrupted Palace Guard",2468+'mobOffset,1, .@label$;
+	monster 'map_name$[1],240,100, "Corrupted Palace Guard",2468+'mobOffset,1, .@label$;
+	monster 'map_name$[1],242,100, "Corrupted Palace Guard",2468+'mobOffset,1, .@label$;
+	monster 'map_name$[1],244,100, "Corrupted Palace Guard",2468+'mobOffset,1, .@label$;
+	monster 'map_name$[1],199,111, "Corrupted Palace Guard",2468+'mobOffset,1, .@label$;
+	monster 'map_name$[1],181,107, "Wandering Archer",2469+'mobOffset,1, .@label$;
+	monster 'map_name$[1],177,110, "Wandering Archer",2469+'mobOffset,1, .@label$;
+	monster 'map_name$[1],236, 27, "Wandering Archer",2469+'mobOffset,1, .@label$;
+	monster 'map_name$[1],242, 27, "Wandering Archer",2469+'mobOffset,1, .@label$;
+	monster 'map_name$[1],252, 26, "Wandering Archer",2469+'mobOffset,1, .@label$;
+	monster 'map_name$[1],172,130, "Wandering Archer",2469+'mobOffset,1, .@label$;
+	monster 'map_name$[1],171,127, "Wandering Archer",2469+'mobOffset,1, .@label$;
+	monster 'map_name$[1],173,127, "Wandering Archer",2469+'mobOffset,1, .@label$;
+	monster 'map_name$[1],177, 69, "Corrupted Abysmal Knight",2470+'mobOffset,1, .@label$;
+	monster 'map_name$[1],186, 66, "Corrupted Abysmal Knight",2470+'mobOffset,1, .@label$;
+	monster 'map_name$[1],189, 67, "Corrupted Abysmal Knight",2470+'mobOffset,1, .@label$;
+	monster 'map_name$[1],190, 68, "Corrupted Abysmal Knight",2470+'mobOffset,1, .@label$;
+	monster 'map_name$[1],257,157, "Corrupted Abysmal Knight",2470+'mobOffset,1, .@label$;
+	monster 'map_name$[1],246,159, "Corrupted Abysmal Knight",2470+'mobOffset,1, .@label$;
+	monster 'map_name$[1],237,158, "Corrupted Abysmal Knight",2470+'mobOffset,1, .@label$;
+	monster 'map_name$[1],206,159, "Corrupted Abysmal Knight",2470+'mobOffset,1, .@label$;
+	monster 'map_name$[1],172,120, "Corrupted Abysmal Knight",2470+'mobOffset,1, .@label$;
+	monster 'map_name$[1],226, 30, "Suffered Khalitzburg",2471+'mobOffset,1, .@label$;
+	monster 'map_name$[1],226, 38, "Suffered Khalitzburg",2471+'mobOffset,1, .@label$;
+	monster 'map_name$[1],228, 29, "Suffered Khalitzburg",2471+'mobOffset,1, .@label$;
+	monster 'map_name$[1],226, 63, "Suffered Khalitzburg",2471+'mobOffset,1, .@label$;
+	monster 'map_name$[1],268,137, "Suffered Khalitzburg",2471+'mobOffset,1, .@label$;
+	monster 'map_name$[1],263,138, "Suffered Khalitzburg",2471+'mobOffset,1, .@label$;
+	monster 'map_name$[1],259,138, "Suffered Khalitzburg",2471+'mobOffset,1, .@label$;
+	monster 'map_name$[1],259,138, "Suffered Khalitzburg",2471+'mobOffset,1, .@label$;
+	monster 'map_name$[1],187,121, "Suffered Khalitzburg",2471+'mobOffset,1, .@label$;
+	monster 'map_name$[1],265, 52, "Bloody Knight",2472+'mobOffset,1, .@label$;
+	monster 'map_name$[1],265, 55, "Bloody Knight",2472+'mobOffset,1, .@label$;
+	monster 'map_name$[1],264, 79, "Bloody Knight",2472+'mobOffset,1, .@label$;
+	monster 'map_name$[1],225, 92, "Bloody Knight",2472+'mobOffset,1, .@label$;
+	monster 'map_name$[1],237, 92, "Bloody Knight",2472+'mobOffset,1, .@label$;
+	monster 'map_name$[1],249, 92, "Bloody Knight",2472+'mobOffset,1, .@label$;
+	monster 'map_name$[1],256, 93, "Bloody Knight",2472+'mobOffset,1, .@label$;
+	monster 'map_name$[1],264,100, "Bloody Knight",2472+'mobOffset,1, .@label$;
+	monster 'map_name$[1],181,120, "Bloody Knight",2472+'mobOffset,1, .@label$;
 	end;
 
 OnMyMobDead:
@@ -1210,7 +1244,7 @@ OnMyMobDead:
 
 		.@r = rand(4) * 2;
 		setarray .@coord[0], 166,119, 211,45, 227,139, 245,74;
-		monster 'map_name$[1],.@coord[.@r],.@coord[.@r+1], "2nd Commander of Destruction",2474,1, instance_npcname("#ghmemorialmob06") + "::OnBossDead";
+		monster 'map_name$[1],.@coord[.@r],.@coord[.@r+1], "2nd Commander of Destruction",2474+'mobOffset,1, instance_npcname("#ghmemorialmob06") + "::OnBossDead";
 	}
 	end;
 
@@ -1262,7 +1296,7 @@ OnTouch_:
 	else .@mobs = 7;
 	getmapxy .@map$,.@x,.@y, BL_NPC;
 	specialeffect EF_VENOMDUST;
-	monster .@map$,.@x,.@y,"Maggot",2467,.@mobs;
+	monster .@map$,.@x,.@y,"Maggot",2467+'mobOffset,.@mobs;
 	initnpctimer;
 	end;
 OnTimer45000:
@@ -1446,7 +1480,7 @@ OnTimer80000:
 	end;
 OnStart:
 	enablenpc instance_npcname("#ghmemorialmob07");
-	monster 'map_name$[1],158,255,"Amdarais",2476,1,instance_npcname("#ghmemorialmob07") + "::OnMyMobDead";// MG_AMDARAIS
+	monster 'map_name$[1],158,255,"Amdarais",2476+'mobOffset,1,instance_npcname("#ghmemorialmob07") + "::OnMyMobDead";// MG_AMDARAIS
 	'boss_id = $@mobid[0];
 	unittalk 'boss_id, "Run away... run away from me...";
 	initnpctimer;
@@ -1507,38 +1541,38 @@ OnTimer5000:
 		break;
 	case 8:
 		donpcevent instance_npcname("Varmundt's Ghost#Buff3") + "::OnEvent";
-		areamonster 'map_name$[1],140,220,175,255,"Suffered Khalitzburg",2471,6, instance_npcname("#ghmemorialmob08") + "::OnMobDead";
+		areamonster 'map_name$[1],140,220,175,255,"Suffered Khalitzburg",2471+'mobOffset,6, instance_npcname("#ghmemorialmob08") + "::OnMobDead";
 		break;
 	case 7:
 		donpcevent instance_npcname("Varmundt's Ghost#Buff3") + "::OnEvent";
-		areamonster 'map_name$[1],140,220,175,255,"Abysmal Knight",2470,6, instance_npcname("#ghmemorialmob08") + "::OnMobDead";
+		areamonster 'map_name$[1],140,220,175,255,"Abysmal Knight",2470+'mobOffset,6, instance_npcname("#ghmemorialmob08") + "::OnMobDead";
 		break;
 	case 6:
 		donpcevent instance_npcname("Varmundt's Ghost#Buff3") + "::OnEvent";
-		areamonster 'map_name$[1],140,220,175,255,"Bloody Knight",2472,6, instance_npcname("#ghmemorialmob08") + "::OnMobDead";
+		areamonster 'map_name$[1],140,220,175,255,"Bloody Knight",2472+'mobOffset,6, instance_npcname("#ghmemorialmob08") + "::OnMobDead";
 		break;
 	case 5:
 		donpcevent instance_npcname("Varmundt's Ghost#Buff2") + "::OnEvent";
 		break;
 	case 4:
 		donpcevent instance_npcname("Varmundt's Ghost#Buff3") + "::OnEvent";
-		areamonster 'map_name$[1],140,220,175,255,"Wandering Archer",2469,6, instance_npcname("#ghmemorialmob08") + "::OnMobDead";
+		areamonster 'map_name$[1],140,220,175,255,"Wandering Archer",2469+'mobOffset,6, instance_npcname("#ghmemorialmob08") + "::OnMobDead";
 		break;
 	case 3:
 		donpcevent instance_npcname("Varmundt's Ghost#Buff1") + "::OnEvent";
 		donpcevent instance_npcname("Varmundt's Ghost#Buff3") + "::OnEvent";
-		areamonster 'map_name$[1],140,220,175,255,"Bloody Knight",2472,6, instance_npcname("#ghmemorialmob08") + "::OnMobDead";
+		areamonster 'map_name$[1],140,220,175,255,"Bloody Knight",2472+'mobOffset,6, instance_npcname("#ghmemorialmob08") + "::OnMobDead";
 		break;
 	case 2:
 		donpcevent instance_npcname("Varmundt's Ghost#Buff1") + "::OnEvent";
 		donpcevent instance_npcname("Varmundt's Ghost#Buff3") + "::OnEvent";
-		areamonster 'map_name$[1],140,220,175,255,"Abysmal Knight",2470,6, instance_npcname("#ghmemorialmob08") + "::OnMobDead";
+		areamonster 'map_name$[1],140,220,175,255,"Abysmal Knight",2470+'mobOffset,6, instance_npcname("#ghmemorialmob08") + "::OnMobDead";
 		break;
 	case 1:
 	case 0:
 		donpcevent instance_npcname("Varmundt's Ghost#Buff1") + "::OnEvent";
 		donpcevent instance_npcname("Varmundt's Ghost#Buff4") + "::OnEvent";
-		areamonster 'map_name$[1],140,220,175,255,"Wandering Archer",2469,6, instance_npcname("#ghmemorialmob08") + "::OnMobDead";
+		areamonster 'map_name$[1],140,220,175,255,"Wandering Archer",2469+'mobOffset,6, instance_npcname("#ghmemorialmob08") + "::OnMobDead";
 		break;
 	}
 	end;
