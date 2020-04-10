@@ -350,13 +350,14 @@ OnMyMobDead:
 	if ('reward == 1) {
 		mes "[Vrid]";
 		mes "I came by";
-		mes "this Hero Token by accident.";
+		mes "these Hero Tokens by accident.";
 		mes "I want to give it to you. You deserve it.";
 		next;
 		mes "[Vrid]";
 		mes "Let's get out of this creepy place!";
 		close2;
-		getitem 6684,1;// Token Of Hero
+		getitem 6684,2;// Token Of Hero
+		getitem 22537,1;// Prize of Hero
 		if (ep14_3_isle == 0)
 			ep14_3_isle = 1;
 		if (checkquest(15007,PLAYTIME) == 0 || checkquest(15007,PLAYTIME) == 1)
