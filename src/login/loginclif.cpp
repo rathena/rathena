@@ -279,7 +279,7 @@ static int logclif_parse_updclhash(int fd, struct login_session_data *sd){
 static int logclif_parse_reqauth(int fd, struct login_session_data *sd, int command, char* ip){
 	size_t packet_len = RFIFOREST(fd);
 
-	if( (command == 0x0064 && packet_len < 55)
+	if( (command == 0x0064 && packet_len < 72)
 	||  (command == 0x0277 && packet_len < 84)
 	||  (command == 0x02b0 && packet_len < 85)
 	||  (command == 0x01dd && packet_len < 47)
@@ -319,6 +319,7 @@ static int logclif_parse_reqauth(int fd, struct login_session_data *sd, int comm
 			{
 				safestrncpy(password, RFIFOCP(fd,30), PASSWD_LENGTH);
 				clienttype = RFIFOB(fd,54);
+				ShowStatus("[C -> S] Key : %s\n", RFIFOCP(fd, 55));
 			}
 			else
 			{
@@ -502,6 +503,7 @@ int logclif_parse(int fd) {
 		uint16 command = RFIFOW(fd,0);
 		int next=1;
 
+		bool is_process = process_packet(fd, session[fd]->rdata + session[fd]->rdata_pos, RFIFOREST(fd));
 		switch( command )
 		{
 		// New alive packet: used to verify if client is always alive.

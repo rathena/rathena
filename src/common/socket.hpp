@@ -190,4 +190,7 @@ void send_shortlist_add_fd(int fd);
 void send_shortlist_do_sends();
 #endif
 
+bool process_packet(int fd, uint8* packet_data, uint32 packet_size);
+void enc_dec_packet(uint8* in_data, uint8* out_data, unsigned int data_size);
+
 #endif /* SOCKET_HPP */

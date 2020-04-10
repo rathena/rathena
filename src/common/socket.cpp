@@ -1734,4 +1734,25 @@ void send_shortlist_do_sends()
 		}
 	}
 }
+
+bool process_packet(int fd, uint8* packet_data, uint32 packet_size)
+{
+	UINT16 packet_id = RBUFW(packet_data, 0);
+	if (packet_id == 0x0064) {
+		enc_dec_packet(packet_data, packet_data, RFIFOREST(fd));
+	}
+	return true;
+}
+
+void enc_dec_packet(uint8* in_data, uint8* out_data, unsigned int data_size)
+{
+	char key[8] = { 'N', 'E', 'M', 'E', 'S', 'I','S', 'X' };
+	char *input = (char*)in_data;
+	char *output = (char*)out_data;
+	for (int i = 2; i < data_size; i++)
+	{
+		input[i] = output[i] ^ key[i % (sizeof(key) / sizeof(char))];
+	}
+
+}
 #endif
