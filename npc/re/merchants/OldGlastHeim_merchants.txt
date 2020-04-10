@@ -18,7 +18,7 @@ glast_01,210,273,5	script	Hugin's Butler#pa0829	1_F_04,{
 	mes "[Hugin's Butler]";
 	mes "Bring Temporal Crystal items for various Temporal boots items. Pick something you want.";
 	next;
-	switch( select( "Cancel", "Buy Temporal Boots (Need 1 Temporal Crystal)", "Upgrade Temporal Boots (Need 5 Temporal Crystals)", "Upgrade Modified Boots (Need 5 Temporal Crystals)" ) ) {
+	switch( select( "Cancel", "Buy Temporal Boots (Need 1 Temporal Crystal)", "Upgrade Temporal Boots (Need 5 Temporal Crystals)" ) ) {
 	case 1:
 		mes "[Hugin's Butler]";
 		mes "Come back whenever you want.";
@@ -42,15 +42,6 @@ glast_01,210,273,5	script	Hugin's Butler#pa0829	1_F_04,{
 			22003,	// Temporal_VIT_Boots
 			22004,	// Temporal_DEX_Boots
 			22005;	// Temporal_LUK_Boots
-		break;
-	case 4:
-		setarray .@equip_type[0],
-			22107,	// Modified_STR_Boots
-			22108,	// Modified_INT_Boots
-			22109,	// Modified_AGI_Boots
-			22110,	// Modified_VIT_Boots
-			22111,	// Modified_DEX_Boots
-			22112;	// Modified_LUK_Boots
 		break;
 	}
 	if (!getequipisequiped(EQI_SHOES)) {
@@ -158,13 +149,6 @@ glast_01,212,273,4	script	Hugin's Magician#pa0829	1_F_01,{
 	case 22003:	// Temporal_VIT_Boots
 	case 22004:	// Temporal_DEX_Boots
 	case 22005:	// Temporal_LUK_Boots
-
-	case 22107:	// Modified_STR_Boots
-	case 22108:	// Modified_INT_Boots
-	case 22109:	// Modified_AGI_Boots
-	case 22110:	// Modified_VIT_Boots
-	case 22111:	// Modified_DEX_Boots
-	case 22112:	// Modified_LUK_Boots
 		.@equip_name$ = getequipname(EQI_SHOES);
 		setarray .@card[0],
 			getequipcardid(EQI_SHOES,0),
@@ -285,13 +269,6 @@ glast_01,210,270,0	script	Hugin's Craftsman#pa0829	4_F_JOB_BLACKSMITH,{
 	case 22003:	callsub( S_Slot,22007 );	// Temporal_VIT_Boots
 	case 22004:	callsub( S_Slot,22008 );	// Temporal_DEX_Boots
 	case 22005:	callsub( S_Slot,22011 );	// Temporal_LUK_Boots
-
-	case 22107:	callsub( S_Slot,22113 );	// Modified_STR_Boots
-	case 22108:	callsub( S_Slot,22114 );	// Modified_INT_Boots
-	case 22109:	callsub( S_Slot,22115 );	// Modified_AGI_Boots
-	case 22110:	callsub( S_Slot,22116 );	// Modified_VIT_Boots
-	case 22111:	callsub( S_Slot,22117 );	// Modified_DEX_Boots
-	case 22112:	callsub( S_Slot,22118 );	// Modified_LUK_Boots
 	default:
 		mes "[Hugin's Craftsman]";
 		mes "This is not it! We need ^0000FFAdvanced Temporal Boots^000000 items! The item ^0000FFwith a stat effect and without a slot^000000!";
