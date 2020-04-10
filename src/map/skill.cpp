@@ -1953,15 +1953,15 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 
 			uint16 n = skill_lv;
 
-			for (const auto &it : statuses) {
-				enum sc_type status = static_cast<sc_type>(it.first);
+			for (const auto &it : status_db) {
+				sc_type status = static_cast<sc_type>(it.first);
 
 				if (n <= 0)
 					break;
 				if (!tsc->data[status])
 					continue;
 				
-				if (status_sc_get_flag(status)&SCF_NO_BANISHING_BUSTER)
+				if (it.second->flag.test(SCF_NO_BANISHING_BUSTER))
 					continue;
 
 				switch (status) {
@@ -2574,7 +2574,7 @@ int skill_break_equip(struct block_list *src, struct block_list *bl, unsigned sh
 			else if (rnd()%10000 >= rate)
 				where&=~where_list[i];
 			else if (!sd) //Cause Strip effect.
-				sc_start(src,bl,scatk[i],100,0,skill_get_time(status_sc_get_skill(scatk[i]),1));
+				sc_start(src,bl,scatk[i],100,0,skill_get_time(status_db.getSkill(scatk[i]),1));
 		}
 	}
 	if (!where) //Nothing to break.
@@ -4187,7 +4187,7 @@ static TIMER_FUNC(skill_timerskill){
 				case PR_LEXDIVINA:
 					if (src->type == BL_MOB) {
 						// Monsters use the default duration when casting Lex Divina
-						sc_start(src, target, skill_get_sc(skl->skill_id), skl->type, skl->skill_lv, skill_get_time2(status_sc_get_skill(skill_get_sc(skl->skill_id)), 1));
+						sc_start(src, target, skill_get_sc(skl->skill_id), skl->type, skl->skill_lv, skill_get_time2(status_db.getSkill(skill_get_sc(skl->skill_id)), 1));
 						break;
 					}
 					// Fall through
@@ -4580,15 +4580,15 @@ static int skill_tarotcard(struct block_list* src, struct block_list *target, ui
 	{
 		enum sc_type sc[] = { SC_STOP, SC_FREEZE, SC_STONE };
 		uint8 rand_eff = rnd() % 3;
-		int time = ((rand_eff == 0) ? skill_get_time2(skill_id, skill_lv) : skill_get_time2(status_sc_get_skill(sc[rand_eff]), 1));
+		int time = ((rand_eff == 0) ? skill_get_time2(skill_id, skill_lv) : skill_get_time2(status_db.getSkill(sc[rand_eff]), 1));
 		sc_start(src, target, sc[rand_eff], 100, skill_lv, time);
 		break;
 	}
 	case 9: // DEATH - curse, coma and poison
 	{
 		status_change_start(src, target, SC_COMA, 10000, skill_lv, 0, src->id, 0, 0, SCSTART_NONE);
-		sc_start(src, target, SC_CURSE, 100, skill_lv, skill_get_time2(status_sc_get_skill(SC_CURSE), 1));
-		sc_start2(src, target, SC_POISON, 100, skill_lv, src->id, skill_get_time2(status_sc_get_skill(SC_POISON), 1));
+		sc_start(src, target, SC_CURSE, 100, skill_lv, skill_get_time2(status_db.getSkill(SC_CURSE), 1));
+		sc_start2(src, target, SC_POISON, 100, skill_lv, src->id, skill_get_time2(status_db.getSkill(SC_POISON), 1));
 		break;
 	}
 	case 10: // TEMPERANCE - confusion
@@ -4602,7 +4602,7 @@ static int skill_tarotcard(struct block_list* src, struct block_list *target, ui
 		clif_damage(src, target, tick, 0, 0, 6666, 0, DMG_NORMAL, 0, false);
 		sc_start(src, target, SC_INCATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
 		sc_start(src, target, SC_INCMATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
-		sc_start(src, target, SC_CURSE, skill_lv, 100, skill_get_time2(status_sc_get_skill(SC_CURSE), 1));
+		sc_start(src, target, SC_CURSE, skill_lv, 100, skill_get_time2(status_db.getSkill(SC_CURSE), 1));
 		break;
 	}
 	case 12: // THE TOWER - 4444 damage
@@ -4613,7 +4613,7 @@ static int skill_tarotcard(struct block_list* src, struct block_list *target, ui
 	}
 	case 13: // THE STAR - stun
 	{
-		sc_start(src, target, SC_STUN, 100, skill_lv, skill_get_time2(status_sc_get_skill(SC_STUN), 1));
+		sc_start(src, target, SC_STUN, 100, skill_lv, skill_get_time2(status_db.getSkill(SC_STUN), 1));
 		break;
 	}
 	default: // THE SUN - atk, matk, hit, flee and def reduced, immune to more tarot card effects
@@ -8337,13 +8337,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 
 			//Statuses that can't be Dispelled
-			for(const auto &it : statuses) {
-				enum sc_type status = static_cast<sc_type>(it.first);
+			for (const auto &it : status_db) {
+				sc_type status = static_cast<sc_type>(it.first);
 
 				if (!tsc->data[status])
 					continue;
 
-				if (status_sc_get_flag(status)&SCF_NO_DISPELL)
+				if (it.second->flag.test(SCF_NO_DISPELL))
 					continue;
 				switch (status) {
 					// bugreport:4888 these songs may only be dispelled if you're not in their song area anymore
@@ -9784,13 +9784,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 
 			//Statuses change that can't be removed by Cleareance
-			for(const auto &it : statuses) {
-				enum sc_type status = static_cast<sc_type>(it.first);
+			for (const auto &it : status_db) {
+				sc_type status = static_cast<sc_type>(it.first);
 
 				if (!tsc->data[status])
 					continue;
 
-				if (status_sc_get_flag(status)&SCF_NO_CLEARANCE)
+				if (it.second->flag.test(SCF_NO_CLEARANCE))
 					continue;
 
 				switch (status) {
@@ -20335,7 +20335,7 @@ void skill_toggle_magicpower(struct block_list *bl, uint16 skill_id)
 			status_change_end(bl, SC_MAGICPOWER, INVALID_TIMER);
 		} else {
 			sc->data[SC_MAGICPOWER]->val4 = 1;
-			status_calc_bl(bl, status_sc_get_flag(SC_MAGICPOWER));
+			status_calc_bl(bl, status_db.getCalcFlag(SC_MAGICPOWER));
 #ifndef RENEWAL
 			if(bl->type == BL_PC){// update current display.
 				clif_updatestatus(((TBL_PC *)bl),SP_MATK1);

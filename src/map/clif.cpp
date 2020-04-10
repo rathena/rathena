@@ -4008,7 +4008,7 @@ void clif_changeoption_target(struct block_list* bl, struct block_list *target)
 		if (sc->data[SC_PROVOKE]) {
 			const struct TimerData *td = get_timer(sc->data[SC_PROVOKE]->timer);
 
-			clif_status_change(bl, status_sc_get_icon(SC_PROVOKE), 1, (!td ? INFINITE_TICK : DIFF_TICK(td->tick, gettick())), 0, 0, 0);
+			clif_status_change(bl, status_db.getIcon(SC_PROVOKE), 1, (!td ? INFINITE_TICK : DIFF_TICK(td->tick, gettick())), 0, 0, 0);
 		}
 	}
 	else {
@@ -6200,15 +6200,15 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 
 		if( spheres_sent && type >= SC_SPHERE_1 && type <= SC_SPHERE_5 ){
 #if PACKETVER > 20120418
-			clif_efst_status_change(tbl, bl->id, AREA_WOS, status_sc_get_icon(type), tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
+			clif_efst_status_change(tbl, bl->id, AREA_WOS, status_db.getIcon(type), tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
 #else
-			clif_status_change_sub(tbl, bl->id, status_sc_get_icon(type), 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, AREA_WOS);
+			clif_status_change_sub(tbl, bl->id, status_db.getIcon(type), 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, AREA_WOS);
 #endif
 		}else{
 #if PACKETVER > 20120418
-			clif_efst_status_change(tbl, bl->id, target, status_sc_get_icon(type), tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
+			clif_efst_status_change(tbl, bl->id, target, status_db.getIcon(type), tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
 #else
-			clif_status_change_sub(tbl, bl->id, status_sc_get_icon(type), 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
+			clif_status_change_sub(tbl, bl->id, status_db.getIcon(type), 1, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
 #endif
 		}
 	}

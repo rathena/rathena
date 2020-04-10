@@ -3995,8 +3995,8 @@ ACMD_FUNC(reload) {
 		}
 		clif_displaymessage(fd, msg_txt(sd,255)); // Battle configuration has been reloaded.
 	} else if (strstr(command, "statusdb") || strncmp(message, "statusdb", 3) == 0) {
-		status_reloaddb();
-		clif_displaymessage(fd, msg_txt(sd,256)); // Status database has been reloaded.
+		if (status_db.reload())
+			clif_displaymessage(fd, msg_txt(sd,256)); // Status database has been reloaded.
 	} else if (strstr(command, "pcdb") || strncmp(message, "pcdb", 2) == 0) {
 		pc_readdb();
 		clif_displaymessage(fd, msg_txt(sd,257)); // Player database has been reloaded.

@@ -11598,9 +11598,11 @@ BUILDIN_FUNC(sc_start)
 	else
 		bl = map_id2bl(st->rid);
 
-	if(tick == 0 && val1 > 0 && type > SC_NONE && type < SC_MAX && status_sc_get_skill(type) != 0)
+	uint16 skill_id = status_db.getSkill(type);
+
+	if(tick == 0 && val1 > 0 && type > SC_NONE && type < SC_MAX && skill_id > 0)
 	{// When there isn't a duration specified, try to get it from the skill_db
-		tick = skill_get_time(status_sc_get_skill(type), val1);
+		tick = skill_get_time(skill_id, val1);
 	}
 
 	if(potion_flag == 1 && potion_target) { //skill.cpp set the flags before running the script, this is a potion-pitched effect.

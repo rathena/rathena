@@ -2490,7 +2490,7 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, s
 		flag |= ATF_WEAPON; //Default type: weapon.
 
 	if (!duration)
-		duration = (unsigned int)skill_get_time2(status_sc_get_skill(sc), 7);
+		duration = (unsigned int)skill_get_time2(status_db.getSkill(sc), 7);
 
 	for (auto &it : effect) {
 		if (it.sc == sc && it.flag == flag) {
@@ -2532,7 +2532,7 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
 	}
 
 	if (!duration)
-		duration = (unsigned int)skill_get_time2(status_sc_get_skill(sc), 7);
+		duration = (unsigned int)skill_get_time2(status_db.getSkill(sc), 7);
 
 	for (auto &it : effect) {
 		if (it.sc == sc && it.skill_id == skill_id && it.target == target) {
@@ -5862,10 +5862,10 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		if (sd->sc.count) { // Cancel some map related stuff.
 			if (sd->sc.data[SC_JAILED])
 				return SETPOS_MAPINDEX; //You may not get out!
-			for (const auto &it : statuses) {
-				enum sc_type status = static_cast<sc_type>(it.first);
+			for (const auto &it : status_db) {
+				sc_type status = static_cast<sc_type>(it.first);
 
-				if (sd->sc.data[status] && status_sc_get_flag(status)&SCF_REM_ON_MAPWARP)
+				if (sd->sc.data[status] && it.second->flag.test(SCF_REM_ON_MAPWARP))
 					status_change_end(&sd->bl, status, INVALID_TIMER);
 			}
 			if (sd->sc.data[SC_KNOWLEDGE]) {
@@ -6187,17 +6187,17 @@ static void pc_checkallowskill(struct map_session_data *sd)
 	if(!sd->sc.count)
 		return;
 
-	for (const auto &it : statuses) {
-		enum sc_type status = static_cast<sc_type>(it.first);
+	for (const auto &it : status_db) {
+		sc_type status = static_cast<sc_type>(it.first);
 
-		if (status_sc_get_flag(status)&SCF_REQUIRE_WEAPON) { // Skills requiring specific weapon types
+		if (it.second->flag.test(SCF_REQUIRE_WEAPON)) { // Skills requiring specific weapon types
 			if (status == SC_DANCING && !battle_config.dancing_weaponswitch_fix)
 				continue;
-			if (sd->sc.data[status] && !pc_check_weapontype(sd, skill_get_weapontype(status_sc_get_skill(status))))
+			if (sd->sc.data[status] && !pc_check_weapontype(sd, skill_get_weapontype(it.second->skill_id)))
 				status_change_end(&sd->bl, status, INVALID_TIMER);
 		}
 
-		if (status_sc_get_flag(status)&SCF_REQUIRE_SHIELD) { // Skills requiring a shield
+		if (it.second->flag.test(SCF_REQUIRE_SHIELD)) { // Skills requiring a shield
 			if (sd->sc.data[status] && sd->status.shield <= 0)
 				status_change_end(&sd->bl, status, INVALID_TIMER);
 		}
@@ -9424,13 +9424,13 @@ void pc_setoption(struct map_session_data *sd,int type)
 		if( (type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR)) || (!(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR) ) {
 			status_calc_pc(sd,SCO_NONE);
 			if (sd->sc.count) {
-				for (const auto &it : statuses) {
-					enum sc_type status = static_cast<sc_type>(it.first);
+				for (const auto &it : status_db) {
+					sc_type status = static_cast<sc_type>(it.first);
 
 					if (sd->sc.data[status]) {
-						int skill_id;
+						uint16 skill_id = it.second->skill_id;
 
-						if (status_sc_get_flag(status)&SCF_REM_ON_MADOGEAR || ((skill_id = status_sc_get_skill(status)) >= 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO) && skill_get_sc(skill_id) != SC_NONE))
+						if (it.second->flag.test(SCF_REM_ON_MADOGEAR) || (skill_id > 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO) && skill_get_sc(skill_id) != SC_NONE))
 							status_change_end(&sd->bl, status, INVALID_TIMER);
 					}
 				}

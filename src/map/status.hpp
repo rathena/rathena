@@ -5,6 +5,7 @@
 #define STATUS_HPP
 
 #include <algorithm>
+#include <bitset>
 #include <memory>
 #include <unordered_map>
 
@@ -2124,7 +2125,7 @@ enum e_sc_opt2 : uint16 {
 };
 
 ///opt3: (SHOW_EFST_*)
-enum e_sc_opt3 : int64 {
+enum e_sc_opt3 : uint32 {
 	OPT3_NORMAL			= 0x0,
 	OPT3_QUICKEN		= 0x00000001,
 	OPT3_OVERTHRUST		= 0x00000002,
@@ -2148,7 +2149,7 @@ enum e_sc_opt3 : int64 {
 };
 
 ///Option (EFFECTSTATE_*)
-enum e_option : int64 {
+enum e_option : uint32 {
 	OPTION_NOTHING		= 0x0,
 	OPTION_SIGHT		= 0x00000001,
 	OPTION_HIDE			= 0x00000002,
@@ -2201,7 +2202,7 @@ enum manner_flags
 };
 
 /// Status Change State Flags
-enum e_scs_flag : int64 {
+enum e_scs_flag : uint32 {
 	SCS_NONE				= 0x0,
 	SCS_NOMOVECOND			= 0x00001, ///< cond flag for SCS_NOMOVE
 	SCS_NOMOVE				= 0x00002, ///< unit unable to move
@@ -2225,7 +2226,7 @@ enum e_scs_flag : int64 {
 };
 
 ///Define flags for the status_calc_bl function. [Skotlex]
-enum e_scb_flag : int64 {
+enum e_scb_flag : uint32 {
 	SCB_NONE	= 0x0,
 	SCB_BASE	= 0x00000001,
 	SCB_MAXHP	= 0x00000002,
@@ -2319,62 +2320,60 @@ enum e_status_bonus {
 };
 
 ///Enum of Status Change Flags [Cydh]
-enum e_status_change_flag : int64 {
-	SCF_NONE				= 0x0,
-	SCF_BLEFFECT			= 0x00000001,
-	SCF_DISPLAY_PC			= 0x00000002,
-	SCF_PERMANENT			= 0x00000004,
-	SCF_NO_CLEARBUFF		= 0x00000008,
-	SCF_NO_REM_ONDEAD		= 0x00000010,
-	SCF_REM_ON_MADOGEAR		= 0x00000020,
-	SCF_NO_DISPELL			= 0x00000040,
-	SCF_NO_CLEARANCE		= 0x00000080,
-	SCF_NO_BANISHING_BUSTER = 0x00000100,
-	SCF_NO_SAVE				= 0x00000200,
-	SCF_REM_ON_DAMAGED		= 0x00000400,
-	SCF_REM_ON_REFRESH		= 0x00000800,
-	SCF_REM_ON_LUXANIMA		= 0x00001000,
-	SCF_STOP_ATTACKING		= 0x00002000,
-	SCF_STOP_CASTING		= 0x00004000,
-	SCF_STOP_WALKING		= 0x00008000,
-	SCF_BOSS_RESIST			= 0x00010000,
-	SCF_MVP_RESIST			= 0x00020000,
-	SCF_SET_STAND			= 0x00040000,
-	SCF_FAILED_MADO			= 0x00080000,
-	SCF_DEBUFF				= 0x00100000,
-	SCF_FAILED_IMMUNITY		= 0x00200000,
-	SCF_REM_ON_CHANGEMAP	= 0x00400000,
-	SCF_REM_ON_MAPWARP		= 0x00800000,
-	SCF_REM_CHEM_PROTECT	= 0x01000000,
-	SCF_OVERLAP_FAIL		= 0x02000000,
-	SCF_OPT_CHANGEOPTION	= 0x04000000,
-	SCF_OPT_CHANGELOOK		= 0x08000000,
-	SCF_TRIGGER_ONTOUCH_	= 0x10000000,
-	SCF_DISPLAY_NPC			= 0x20000000,
-	SCF_REQUIRE_WEAPON		= 0x40000000,
-	SCF_REQUIRE_SHIELD		= 0x80000000,
+enum e_status_change_flag : uint16 {
+	SCF_NONE = 0,
+	SCF_BLEFFECT,
+	SCF_DISPLAY_PC,
+	SCF_PERMANENT,
+	SCF_NO_CLEARBUFF,
+	SCF_NO_REM_ONDEAD,
+	SCF_REM_ON_MADOGEAR,
+	SCF_NO_DISPELL,
+	SCF_NO_CLEARANCE,
+	SCF_NO_BANISHING_BUSTER,
+	SCF_NO_SAVE,
+	SCF_REM_ON_DAMAGED,
+	SCF_REM_ON_REFRESH,
+	SCF_REM_ON_LUXANIMA,
+	SCF_STOP_ATTACKING,
+	SCF_STOP_CASTING,
+	SCF_STOP_WALKING,
+	SCF_BOSS_RESIST,
+	SCF_MVP_RESIST,
+	SCF_SET_STAND,
+	SCF_FAILED_MADO,
+	SCF_DEBUFF,
+	SCF_FAILED_IMMUNITY,
+	SCF_REM_ON_CHANGEMAP,
+	SCF_REM_ON_MAPWARP,
+	SCF_REM_CHEM_PROTECT,
+	SCF_OVERLAP_FAIL,
+	SCF_OPT_CHANGEOPTION,
+	SCF_OPT_CHANGELOOK,
+	SCF_TRIGGER_ONTOUCH_,
+	SCF_DISPLAY_NPC,
+	SCF_REQUIRE_WEAPON,
+	SCF_REQUIRE_SHIELD,
 	SCF_MAX
 };
 
-#define SCF_OPT_FLAGS (SCF_OPT_CHANGEOPTION|SCF_OPT_CHANGELOOK|SCF_TRIGGER_ONTOUCH_)
-
 /// Struct of SC configs [Cydh]
 struct s_status_change_db {
-	enum sc_type type;			///< SC_
-	enum efst_type icon;		///< EFST_
-	int64 state;				///< SCS_
-	int64 calc_flag;			///< SCB_ flags
+	sc_type type;				///< SC_
+	efst_type icon;				///< EFST_
+	uint32 state;				///< SCS_
+	uint32 calc_flag;			///< SCB_ flags
 	uint16 opt1;				///< OPT1_
 	uint16 opt2;				///< OPT2_
-	int64 opt3;					///< OPT1_
-	int64 look;					///, OPTION_ Changelook
-	int64 flag;					///< SCF_ Flags, enum e_status_change_flag
+	uint32 opt3;				///< OPT3_
+	uint32 look;				///, OPTION_ Changelook
+	std::bitset<SCF_MAX> flag;	///< SCF_ Flags, enum e_status_change_flag
 	bool display;				///< Display status effect/icon (for certain state)
 	uint16 skill_id;			///< Associated skill for (addeff) duration lookups
 	std::vector<sc_type> end;	///< List of SC that will be ended when this SC is activated
 	std::vector<sc_type> fail;	///< List of SC that causing this SC cannot be activated
 	bool end_return;			///< After SC ends the SC from end list, it does nothing
-	struct script_code *script;	///< Executes this script when SC is active
+	script_code *script;		///< Executes this script when SC starts
 	t_tick min_duration;		///< Minimum duration effect (after all status reduction)
 	uint16 min_rate;			///< Minimum rate to be applied (after all status reduction)
 	uint32 disabledon;			///< SC disabled on map zones
@@ -2386,7 +2385,34 @@ struct s_status_change_db {
 	}
 };
 
-extern std::unordered_map<int64, std::shared_ptr<s_status_change_db>> statuses;
+class StatusDatabase : public TypesafeYamlDatabase<int32, s_status_change_db> {
+public:
+	StatusDatabase() : TypesafeYamlDatabase("STATUS_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+
+	// Extras
+	efst_type getIcon(sc_type type);
+	uint32 getState(sc_type type);
+	uint32 getCalcFlag(sc_type type);
+	uint16 getOpt1(sc_type type);
+	uint16 getOpt2(sc_type type);
+	uint32 getOpt3(sc_type type);
+	uint32 getOption(sc_type type);
+	std::bitset<SCF_MAX> getFlag(sc_type type);
+	t_tick getMinDuration(sc_type type);
+	uint16 getMinRate(sc_type type);
+	script_code *getScript(sc_type type);
+	bool getEndReturn(sc_type type);
+	std::vector<sc_type> getEnd(sc_type type);
+	std::vector<sc_type> getFail(sc_type type);
+	uint16 getSkill(sc_type type);
+};
+
+extern StatusDatabase status_db;
 
 /// Enum for status_calc_weight and status_calc_cart_weight
 enum e_status_calc_weight_opt {
@@ -2704,14 +2730,9 @@ unsigned short status_base_matk_max(struct block_list *bl, const struct status_d
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status, int level);
 
 // Status changes accessors for StatusChange database
-enum efst_type status_sc_get_icon(enum sc_type sc);
-int64 status_sc_get_calc_flag(enum sc_type sc);
-int64 status_sc_get_flag(enum sc_type sc);
-uint16 status_sc_get_skill(enum sc_type sc_type);
 uint16 status_efst_get_bl_type(enum efst_type efst);
 
 void status_readdb(void);
-void status_reloaddb(void);
 void do_init_status(void);
 void do_final_status(void);
 

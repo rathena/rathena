@@ -2896,10 +2896,10 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 	ud->attackabletime = ud->canmove_tick /*= ud->canact_tick*/ = gettick();
 
 	if(sc && sc->count ) { // map-change/warp dispells.
-		for (const auto &it : statuses) {
-			enum sc_type status = static_cast<sc_type>(it.first);
+		for (const auto &it : status_db) {
+			sc_type status = static_cast<sc_type>(it.first);
 
-			if (!sc->data[status] || !(status_sc_get_flag(status)&SCF_REM_ON_CHANGEMAP))
+			if (!sc->data[status] || !(it.second->flag.test(SCF_REM_ON_CHANGEMAP)))
 				continue;
 			status_change_end(bl, status, INVALID_TIMER);
 		}

@@ -66,9 +66,6 @@ bool running_npc_stat_calc_event; /// Indicate if OnPCStatCalcEvent is running.
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
 short current_equip_opt_index; /// Contains random option index of an equipped item. [Secret]
 
-/// Status Change DB
-std::unordered_map<int64, std::shared_ptr<s_status_change_db>> statuses;
-
 /// Determine who will receive a clif_status_change packet for effects that require one to display correctly
 static uint16 StatusRelevantBLTypes[EFST_MAX];
 
@@ -78,36 +75,6 @@ static uint16 StatusRelevantBLTypes[EFST_MAX];
  * @return True if type is in range, false otherwise
  **/
 #define CHK_SC(type) ( ((type) > SC_NONE && (type) < SC_MAX) )
-
-/**
- * Check if SC has entry in statuses
- * @param type SC Type
- * @return Entry of sc data in statuses
- **/
-bool status_sc_exists(enum sc_type type)
-{
-	return statuses.find(type) != statuses.end();
-}
-
-/**
- * Return a status by type
- */
-std::shared_ptr<s_status_change_db> &status_get(enum sc_type type)
-{
-	return statuses[type];
-}
-
-/**
- * Get SC name (Debug Only)
- * @param type
- * @return SC name or UNKNOWN_SC if not found
- **/
-//static const char *status_sc_get_name(enum sc_type type) {
-//	struct s_status_change_db *sc = status_sc_exists(type);
-//	if (!sc || !sc->name || !StringBuf_Length(sc->name))
-//		return "UNKNOWN_SC";
-//	return StringBuf_Value(sc->name);
-//}
 
 static unsigned short status_calc_str(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_agi(struct block_list *,struct status_change *,int);
@@ -147,7 +114,7 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
 static int status_get_sc_interval(enum sc_type type);
 
 static bool status_change_isDisabledOnMap_(std::shared_ptr<s_status_change_db> scdb, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
-#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_(status_get(type), mapdata_flag_vs2((m)), m->flag[MF_PVP] != 0, mapdata_flag_gvg2_no_te((m)), m->flag[MF_BATTLEGROUND] != 0, (m->zone << 3) != 0, mapdata_flag_gvg2_te((m))) )
+#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_(status_db.find(type), mapdata_flag_vs2((m)), m->flag[MF_PVP] != 0, mapdata_flag_gvg2_no_te((m)), m->flag[MF_BATTLEGROUND] != 0, (m->zone << 3) != 0, mapdata_flag_gvg2_te((m))) )
 
 const std::string SizeFixDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/size_fix.yml";
@@ -244,115 +211,146 @@ uint64 SizeFixDatabase::parseBodyNode(const YAML::Node &node) {
 SizeFixDatabase size_fix_db;
 
 /**
- * Validates the variable of sc data by 'type'
- * @param type SC type
- * @param var Variable of s_status_change_db
- * @param ret Returns this value if the data is not found
- * @return True value of 'var'
- **/
-#define CHK_SC2(type, var, ret) {\
-	auto scdb = status_get((type));\
-	if (!scdb)\
-		return (ret);\
-	return (scdb)->var;\
-}
-
-/**
- * Get icon id of SC
+ * Get icon ID of SC
  * @param type: SC type
  * @return EFST ID
  **/
-enum efst_type status_sc_get_icon(enum sc_type type) { CHK_SC2(type, icon, EFST_BLANK); }
+efst_type StatusDatabase::getIcon(sc_type type) {
+	std::shared_ptr<s_status_change_db> status = status_db.find(type);
+
+	return status ? status->icon : EFST_BLANK;
+}
 
 /**
  * Get state flags of SC (SCS value)
  * @param type: SC type
  * @return state: State value
  **/
-int64 status_sc_get_state(enum sc_type type) { CHK_SC2(type, state, SCS_NONE); }
+uint32 StatusDatabase::getState(sc_type type) {
+	std::shared_ptr<s_status_change_db> status = status_db.find(type);
+
+	return status ? status->state : SCS_NONE;
+}
 
 /**
  * Get flag of SC (SCB value) for status_calc_ flag
  * @param type: SC type
  * @return cal_flag: Calc value 
  **/
-int64 status_sc_get_calc_flag(enum sc_type type) { CHK_SC2(type, calc_flag, SCB_NONE); }
+uint32 StatusDatabase::getCalcFlag(sc_type type) {
+	std::shared_ptr<s_status_change_db> status = status_db.find(type);
+
+	return status ? status->calc_flag : SCB_NONE;
+}
 
 /**
  * Get Opt1 of SC
  * @param type: SC type
  * @return opt1: OPT1 value
  **/
-uint16 status_sc_get_opt1(enum sc_type type) { CHK_SC2(type, opt1, OPT1_NONE); }
+uint16 StatusDatabase::getOpt1(sc_type type) {
+	std::shared_ptr<s_status_change_db> status = status_db.find(type);
+
+	return status ? status->opt1 : OPT1_NONE;
+}
 
 /**
  * Get Opt2 of SC
  * @param type: SC type
  * @return opt2: OPT2 value
  **/
-uint16 status_sc_get_opt2(enum sc_type type) { CHK_SC2(type, opt2, OPT2_NONE); }
+uint16 StatusDatabase::getOpt2(sc_type type) {
+	std::shared_ptr<s_status_change_db> status = status_db.find(type);
+
+	return status ? status->opt2 : OPT2_NONE;
+}
 
 /**
  * Get Opt3 of SC
  * @param type: SC type
  * @return opt3: OPT3 value
  **/
-int64 status_sc_get_opt3(enum sc_type type) { CHK_SC2(type, opt3, OPT3_NORMAL); }
+uint32 StatusDatabase::getOpt3(sc_type type) {
+	std::shared_ptr<s_status_change_db> status = status_db.find(type);
+
+	return status ? status->opt3 : OPT3_NORMAL;
+}
 
 /**
  * Get Option look of SC
  * @param type: SC type
  * @return look: OPTION_ value
  **/
-int64 status_sc_get_look(enum sc_type type) { CHK_SC2(type, look, OPTION_NOTHING); }
+uint32 StatusDatabase::getOption(sc_type type) {
+	std::shared_ptr<s_status_change_db> status = status_db.find(type);
+
+	return status ? status->look : OPTION_NOTHING;
+}
 
 /**
- * Get SC's option flags (SCO value)
+ * Get SC's option flags (SCF value)
  * @param type: SC type
  * @return flags: Option flags for SC
  **/
-int64 status_sc_get_flag(enum sc_type type) { CHK_SC2(type, flag, SCB_NONE); }
+std::bitset<SCF_MAX> StatusDatabase::getFlag(sc_type type) {
+	std::shared_ptr<s_status_change_db> status = status_db.find(type);
+
+	return status ? status->flag : SCF_NONE;
+}
 
 /**
  * Get SC's minimum duration after sc_def calculation
  * @param type: SC type
  * @return minimum duration in ms
  **/
-t_tick status_sc_get_min_duration(enum sc_type type) { CHK_SC2(type, min_duration, 0); }
+t_tick StatusDatabase::getMinDuration(sc_type type) {
+	std::shared_ptr<s_status_change_db> status = status_db.find(type);
+
+	return status ? status->min_duration : 0;
+}
 
 /**
  * Get SC's minimum rate after sc_def calculation
  * @param type: SC type
  * @return minimum rate 0 ~ 10000
  **/
-uint32 status_sc_get_min_rate(enum sc_type type) { CHK_SC2(type, min_rate, 0); }
+uint16 StatusDatabase::getMinRate(sc_type type) {
+	std::shared_ptr<s_status_change_db> status = status_db.find(type);
+
+	return status ? status->min_rate : 0;
+}
 
 /**
  * Get SC's attached script
  * @param type: SC type
  * @return script code
  **/
-struct script_code *status_sc_get_script(enum sc_type type) { CHK_SC2(type, script, NULL); }
+script_code *StatusDatabase::getScript(sc_type type) {
+	std::shared_ptr<s_status_change_db> status = status_db.find(type);
+
+	return status ? status->script : nullptr;
+}
 
 /**
  * Will the SC stop its init after ends other SC in end_list?
  * @param sc: SC type
  * @return True: Stop, False: Continue
  **/
-bool status_sc_get_end_return(enum sc_type type) { CHK_SC2(type, end_return, false); }
+bool StatusDatabase::getEndReturn(sc_type type) {
+	std::shared_ptr<s_status_change_db> status = status_db.find(type);
+
+	return status ? status->end_return : false;
+}
 
 /**
  * Get SC's END list
  * @param sc: SC type
  * @return End list
  **/
-std::vector<sc_type> status_sc_get_end_list(enum sc_type type) {
-	auto sc = status_get(type);
+std::vector<sc_type> StatusDatabase::getEnd(sc_type type) {
+	std::shared_ptr<s_status_change_db> status = status_db.find(type);
 
-	if (!sc || sc->end.empty())
-		return {};
-
-	return sc->end;
+	return status ? status->end : std::vector<sc_type> {};
 }
 
 /**
@@ -360,13 +358,10 @@ std::vector<sc_type> status_sc_get_end_list(enum sc_type type) {
  * @param sc: SC type
  * @return Fail list
  **/
-std::vector<sc_type> status_sc_get_fail_list(enum sc_type type) {
-	auto sc = status_get(type);
+std::vector<sc_type> StatusDatabase::getFail(sc_type type) {
+	std::shared_ptr<s_status_change_db> status = status_db.find(type);
 
-	if (!sc || sc->fail.empty())
-		return {};
-
-	return sc->fail;
+	return status ? status->fail : std::vector<sc_type> {};
 }
 
 /**
@@ -386,13 +381,10 @@ uint16 status_efst_get_bl_type(enum efst_type efst) {
  * @param sc The status to look up
  * @return A skill associated with the status
  **/
-uint16 status_sc_get_skill(enum sc_type sc_type) {
-	if (sc_type <= SC_NONE || sc_type >= SC_MAX) {
-		ShowError("status_sc_get_skill: Unsupported status change id %d\n", sc_type);
-		return 0;
-	}
+uint16 StatusDatabase::getSkill(sc_type type) {
+	std::shared_ptr<s_status_change_db> status = status_db.find(type);
 
-	CHK_SC2(sc_type, skill_id, 0);
+	return status ? status->skill_id : 0;
 }
 
 /** Creates dummy status */
@@ -627,12 +619,13 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		if( sc ) {
 			struct status_change_entry *sce;
 
-			for (const auto &it : statuses) {
-				enum sc_type type = static_cast<sc_type>(it.first);
+			for (const auto &it : status_db) {
+				sc_type type = static_cast<sc_type>(it.first);
 
-				if (status_sc_get_flag(type)&SCF_REM_ON_DAMAGED)
+				if (it.second->flag.test(SCF_REM_ON_DAMAGED)) {
 					if (type != SC_STONE || (type == SC_STONE && sc->data[SC_STONE] && sc->opt1 == OPT1_STONE))
 						status_change_end(target, type, INVALID_TIMER);
+				}
 			}
 			if ((sce=sc->data[SC_ENDURE]) && !sce->val4) {
 				/** [Skotlex]
@@ -2784,11 +2777,11 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	pc_bonus_script(sd);
 
 	if (sd->sc.count) { // Script bonus from SC [Cydh]
-		for (const auto &it : statuses) {
-			enum sc_type type = static_cast<sc_type>(it.first);
-			struct script_code *script = nullptr;
+		for (const auto &it : status_db) {
+			sc_type type = static_cast<sc_type>(it.first);
+			script_code *script;
 
-			if (!sc->data[type] || !(script = status_sc_get_script(type)))
+			if (!sc->data[type] || !(script = status_db.getScript(type)))
 				continue;
 			run_script(script, 0, sd->bl.id, 0);
 			if (!calculating)
@@ -7237,7 +7230,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 		return tick?tick:1; // This should not happen in current implementation, but leave it anyway
 
 	// Status that are blocked by Golden Thief Bug card or Wand of Hermode
-	if (status_isimmune(bl) && status_sc_get_flag(type)&SCF_FAILED_IMMUNITY)
+	if (status_isimmune(bl) && status_db.getFlag(type).test(SCF_FAILED_IMMUNITY))
 		return 0;
 
 	rate = cap_value(rate, 0, 10000);
@@ -7486,11 +7479,13 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 		if(rate > 0 && rate%10 != 0) rate += (10 - rate%10);
 	}
 
+	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
+
 	// Cap minimum rate
-	if ((min_rate = status_sc_get_min_rate(type)))
+	if ((min_rate = scdb->min_rate))
 		rate = max(rate, min_rate);
 	// Cap minimum duration
-	if ((min_dur = status_sc_get_min_duration(type)))
+	if ((min_dur = scdb->min_duration))
 		tick = i64max(tick, min_dur);
 
 	if (rate < 10000 && (rate <= 0 || !(rnd()%10000 < rate)))
@@ -7681,11 +7676,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	int opt_flag, undead_flag, val_flag = 0, tick_time = 0;
 	bool sc_isnew = true;
 	int64 calc_flag;
+	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
 
 	nullpo_ret(bl);
 	sc = status_get_sc(bl);
 	status = status_get_status_data(bl);
-	auto scdb = status_get(type);
 
 	if( type <= SC_NONE || type >= SC_MAX || !scdb ) {
 		ShowError("status_change_start: Invalid status change (%d)!\n", type);
@@ -7709,15 +7704,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 //		if (status_get_race2(bl) == RC2_GVG && status_sc2scb_flag(type)&SCB_MAXHP) return 0;
 
 	// Fail if Madogear is active
-	if (sc->option&OPTION_MADOGEAR && scdb->flag&SCF_FAILED_MADO)
+	if (sc->option&OPTION_MADOGEAR && scdb->flag.test(SCF_FAILED_MADO))
 		return 0;
 
 	// Check for Boss resistances
-	if(status->mode&MD_STATUS_IMMUNE && !(flag&SCSTART_NOAVOID) && scdb->flag&SCF_BOSS_RESIST)
+	if(status->mode&MD_STATUS_IMMUNE && !(flag&SCSTART_NOAVOID) && scdb->flag.test(SCF_BOSS_RESIST))
 		return 0;
 
 	// Check for MVP resistance
-	if(status->mode&MD_MVP && !(flag&SCSTART_NOAVOID) && scdb->flag&SCF_MVP_RESIST)
+	if(status->mode&MD_MVP && !(flag&SCSTART_NOAVOID) && scdb->flag.test(SCF_MVP_RESIST))
 		return 0;
 
 	// Check failing SCs from list
@@ -7997,7 +7992,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	std::vector<sc_type> list;
 
 	if (type == SC_BERSERK && val3 == SC__BLOODYLUST) //There is some reasons that using SC_BERSERK first before SC__BLOODYLUST itself on Akinari's fix
-		list = status_sc_get_end_list(SC__BLOODYLUST);
+		list = status_db.getEnd(SC__BLOODYLUST);
 	else
 		list = scdb->end;
 
@@ -8020,13 +8015,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				}
 			}
 		}
-		if (isRemoving && status_sc_get_end_return(type))
+		if (isRemoving && status_db.getEndReturn(type))
 			return 0;
 	}
 
 	// Check for overlapping fails
 	if( (sce = sc->data[type]) ) {
-		if (scdb->flag&SCF_OVERLAP_FAIL)
+		if (scdb->flag.test(SCF_OVERLAP_FAIL))
 			return 0;
 		switch( type ) {
 			case SC_MERC_FLEEUP:
@@ -8718,7 +8713,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				while( i >= 0 ) {
 					enum sc_type type2 = types[i];
 					if( d_sc->data[type2] )
-						status_change_start(d_bl, bl, type2, 10000, d_sc->data[type2]->val1, 0, 0, (type2 == SC_REFLECTSHIELD ? 1 : 0), skill_get_time(status_sc_get_skill(type2),d_sc->data[type2]->val1), (type2 == SC_DEFENDER) ? SCSTART_NOAVOID : SCSTART_NOAVOID|SCSTART_NOICON);
+						status_change_start(d_bl, bl, type2, 10000, d_sc->data[type2]->val1, 0, 0, (type2 == SC_REFLECTSHIELD ? 1 : 0), skill_get_time(status_db.getSkill(type2),d_sc->data[type2]->val1), (type2 == SC_DEFENDER) ? SCSTART_NOAVOID : SCSTART_NOAVOID|SCSTART_NOICON);
 					i--;
 				}
 			}
@@ -10139,7 +10134,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	/* [Ind] */
-	if (scdb->flag&(SCF_DISPLAY_PC|SCF_DISPLAY_NPC)) {
+	if (scdb->flag.test(SCF_DISPLAY_PC) || scdb->flag.test(SCF_DISPLAY_NPC)) {
 		int dval1 = 0, dval2 = 0, dval3 = 0;
 
 		switch (type) {
@@ -10159,15 +10154,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	//SC that force player to stand if is sitting
-	if (scdb->flag&SCF_SET_STAND && sd && pc_issit(sd))
+	if (scdb->flag.test(SCF_SET_STAND) && sd && pc_issit(sd))
 		pc_setstand(sd, true);
 
 	//SC that make stop attacking [LuzZza]
-	if (scdb->flag&SCF_STOP_ATTACKING)
+	if (scdb->flag.test(SCF_STOP_ATTACKING))
 		unit_stop_attack(bl);
 
 	//SC that make stop walking
-	if (scdb->flag&SCF_STOP_WALKING) {
+	if (scdb->flag.test(SCF_STOP_WALKING)) {
 		switch (type) {
 			case SC_ANKLE:
 				if (battle_config.skill_trap_type || !map_flag_gvg(bl->m))
@@ -10200,10 +10195,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	//SC that make stop casting
-	if (battle_config.sc_castcancel&bl->type && scdb->flag&SCF_STOP_CASTING)
+	if (battle_config.sc_castcancel&bl->type && scdb->flag.test(SCF_STOP_CASTING))
 		unit_skillcastcancel(bl,0);
 
-	opt_flag = scdb->flag&SCF_OPT_FLAGS;
+	opt_flag = scdb->flag.test(SCF_OPT_CHANGEOPTION) | scdb->flag.test(SCF_OPT_CHANGELOOK) | scdb->flag.test(SCF_TRIGGER_ONTOUCH_);
 	sc->opt1 = scdb->opt1;
 	sc->opt2 |= scdb->opt2;
 	sc->opt3 |= scdb->opt3;
@@ -10231,9 +10226,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	// On Aegis, when turning on a status change, first goes the option packet, then the sc packet.
-	if (scdb->flag) {
+	if (opt_flag > 0) {
 		clif_changeoption(bl);
-		if(sd && (opt_flag&SCF_OPT_CHANGELOOK)) {
+		if(sd && (scdb->flag.test(SCF_OPT_CHANGELOOK))) {
 			clif_changelook(bl,LOOK_BASE,vd->class_);
 			clif_changelook(bl,LOOK_WEAPON,0);
 			clif_changelook(bl,LOOK_SHIELD,0);
@@ -10259,7 +10254,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		calc_flag&=~SCB_BODY;
 	}*/
 
-	if (!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && scdb->flag&(SCF_DISPLAY_PC|SCF_DISPLAY_NPC))) {
+	if (!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && scdb->flag.test(SCF_DISPLAY_PC) || scdb->flag.test(SCF_DISPLAY_NPC))) {
 		int status_icon = scdb->icon;
 
 #if PACKETVER < 20151104
@@ -10403,7 +10398,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 	}
 
-	if( scdb->flag&SCF_TRIGGER_ONTOUCH_ && sd && !sd->npc_ontouch_.empty() )
+	if( scdb->flag.test(SCF_TRIGGER_ONTOUCH_) && sd && !sd->npc_ontouch_.empty() )
 		npc_touchnext_areanpc(sd,false); // Run OnTouch_ on next char in range
 
 	return 1;
@@ -10440,16 +10435,14 @@ int status_change_clear(struct block_list* bl, int type)
 	if (!sc->count)
 		return 0;
 
-	for (const auto &it : statuses) {
-		enum sc_type status = static_cast<sc_type>(it.first);
+	for (const auto &it : status_db) {
+		sc_type status = static_cast<sc_type>(it.first);
 
 		if (!sc->data[status])
 			continue;
 
-		enum e_scb_flag sc_flag = static_cast<e_scb_flag>(status_sc_get_flag(status));
-
 		if (type == 0) { // Type 0: PC killed
-			if (sc_flag&SCF_NO_REM_ONDEAD) {
+			if (it.second->flag.test(SCF_NO_REM_ONDEAD)) {
 				switch (status) {
 					case SC_ELEMENTALCHANGE: // Only when its Holy or Dark that it doesn't dispell on death
 						if (sc->data[status]->val2 != ELE_HOLY && sc->data[status]->val2 != ELE_DARK)
@@ -10460,7 +10453,7 @@ int status_change_clear(struct block_list* bl, int type)
 			}
 		}
 
-		if (type == 3 && sc_flag&SCF_PERMANENT)
+		if (type == 3 && it.second->flag.test(SCF_PERMANENT))
 			continue;
 
 		status_change_end(bl, status, INVALID_TIMER);
@@ -10500,13 +10493,13 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	struct status_data *status;
 	struct view_data *vd;
 	int opt_flag = 0;
-	enum e_scb_flag calc_flag = SCB_NONE;
+	e_scb_flag calc_flag = SCB_NONE;
+	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
 
 	nullpo_ret(bl);
 
 	sc = status_get_sc(bl);
 	status = status_get_status_data(bl);
-	auto scdb = status_get(type);
 
 	if(type < 0 || type >= SC_MAX || !sc || !(sce = sc->data[type]) || !scdb)
 		return 0;
@@ -10585,7 +10578,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 	sc->data[type] = NULL;
 
-	if (scdb->flag&(SCF_DISPLAY_PC|SCF_DISPLAY_NPC))
+	if (scdb->flag.test(SCF_DISPLAY_PC) || scdb->flag.test(SCF_DISPLAY_NPC))
 		status_display_remove(bl,type);
 
 	vd = status_get_viewdata(bl);
@@ -11083,7 +11076,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	}
 
 	// Reset the options as needed
-	opt_flag = scdb->flag&SCF_OPT_FLAGS;
+	opt_flag = scdb->flag.test(SCF_OPT_CHANGEOPTION) | scdb->flag.test(SCF_OPT_CHANGELOOK) | scdb->flag.test(SCF_TRIGGER_ONTOUCH_);
 	switch (type) {
 		case SC_SWOO:
 		case SC_SKA:
@@ -11137,11 +11130,11 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 	clif_status_change(bl,status_icon,0,0,0,0,0);
 
-	if( opt_flag&SCF_OPT_CHANGEOPTION ) // bugreport:681
+	if( opt_flag == SCF_OPT_CHANGEOPTION ) // bugreport:681
 		clif_changeoption2(bl);
-	else if(opt_flag) {
+	else if(opt_flag > 0) {
 		clif_changeoption(bl);
-		if (sd && (opt_flag&SCF_OPT_CHANGELOOK)) {
+		if (sd && scdb->flag.test(SCF_OPT_CHANGELOOK)) {
 			clif_changelook(bl,LOOK_BASE,sd->vd.class_);
 			clif_get_weapon_view(sd,&sd->vd.weapon,&sd->vd.shield);
 			clif_changelook(bl,LOOK_WEAPON,sd->vd.weapon);
@@ -11232,7 +11225,7 @@ TIMER_FUNC(status_change_timer){
 		if (!sc->data[SC_CHASEWALK2]) {
 			sc_start(bl,bl, SC_CHASEWALK2,100,1<<(sce->val1-1),
 				(t_tick)(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_ROGUE?10:1) // SL bonus -> x10 duration
-				*skill_get_time2(status_sc_get_skill(type),sce->val1));
+				*skill_get_time2(status_db.getSkill(type),sce->val1));
 		}
 		sc_timer_next(sce->val2+tick);
 		return 0;
@@ -11286,11 +11279,14 @@ TIMER_FUNC(status_change_timer){
 			}
 			status_change_end(bl, SC_AETERNA, INVALID_TIMER);
 			sc->opt1 = OPT1_STONE;
-			status_calc_state(bl,sc,static_cast<e_scs_flag>(status_sc_get_state(SC_STONE)),1);
+
+			std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
+
+			status_calc_state(bl,sc,static_cast<e_scs_flag>(scdb->state),1);
 			clif_changeoption(bl);
 			sc_timer_next(min(sce->val4, interval) + tick);
 			sce->val4 -= interval; //Remaining time
-			status_calc_bl(bl, status_sc_get_calc_flag(type));
+			status_calc_bl(bl, scdb->calc_flag);
 			return 0;
 		}
 		if (sce->val4 >= 0 && !(sce->val3) && status->hp > status->max_hp / 4) {
@@ -12217,7 +12213,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 			rnd()%100 < 100 - tsc->data[SC__SHADOWFORM]->val1 * 10 ) { // [100 - (Skill Level x 10)] %
 				status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 				if (battle_check_target(src, bl, BCT_ENEMY) > 0)
-					skill_attack(BF_MAGIC, src, src, bl, status_sc_get_skill(type), 1, tick, 0);
+					skill_attack(BF_MAGIC, src, src, bl, status_db.getSkill(type), 1, tick, 0);
 		}
 		break;
 	case SC_SIGHTBLASTER:
@@ -12274,10 +12270,9 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 		return;
 
 	//Clears buffs with specified flag and type
-	for (const auto &it : statuses) {
-		enum sc_type status = static_cast<sc_type>(it.first);
-
-		enum e_scb_flag flag = static_cast<e_scb_flag>(status_sc_get_flag(status));
+	for (const auto &it : status_db) {
+		sc_type status = static_cast<sc_type>(it.first);
+		e_scb_flag flag = static_cast<e_scb_flag>(it.second->calc_flag);
 
 		if (!sc->data[status] || flag&SCF_NO_CLEARBUFF) //Skip status with SCF_NO_CLEARBUFF, no matter what
 			continue;
@@ -12690,15 +12685,15 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 		bool mapIsBG = mapdata->flag[MF_BATTLEGROUND] != 0;
 		bool mapIsTE = mapdata_flag_gvg2_te(mapdata);
 
-		for (const auto &it : statuses) {
-			enum sc_type status = static_cast<sc_type>(it.first);
-			auto scdb = status_get(status);
+		for (const auto &it : status_db) {
+			sc_type type = static_cast<sc_type>(it.first);
+			std::shared_ptr<s_status_change_db> scdb;
 
-			if (!sc->data[status] || !scdb || !scdb->disabledon)
+			if (!sc->data[type] || !(scdb = status_db.find(type)) || scdb->disabledon == 0)
 				continue;
 
 			if (status_change_isDisabledOnMap_(scdb, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapdata->zone, mapIsTE))
-				status_change_end(bl, status, INVALID_TIMER);
+				status_change_end(bl, type, INVALID_TIMER);
 		}
 	}
 }
@@ -12873,408 +12868,422 @@ static bool status_readdb_attrfix(const char *basedir,bool silent)
 	return true;
 }
 
-static void yaml_invalid_warning(const char* fmt, const YAML::Node &node, const std::string &file) {
-	YAML::Emitter out;
-	out << node;
-	ShowWarning(fmt, file.c_str());
-	ShowMessage("%s\n", out.c_str());
+const std::string StatusDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/status_db.yml";
 }
 
 /**
-* Reads and parses an entry from the status_db.
-* @param node: YAML node containing the entry.
-* @param n: The sequential index of the current entry.
-* @param source: The source YAML file.
-* @return True on successful parse or false otherwise
-*/
-bool status_read_status_db_sub(const YAML::Node &node, int n, const std::string &source)
-{
-	int64 sc_id = 0;
-	std::string name;
-	bool existing = false;
+ * Reads and parses an entry from status_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
+	std::string status_name;
 
-	try {
-		name = node["Status"].as<std::string>();
-	}
-	catch (...) {
-		yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid Name field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-		return false;
-	}
-	if (name.compare(0, 3, "SC_")) {
-		ShowWarning("status_read_status_db_sub: Invalid status Name %s. Expected a constant with 'SC_' prefix in \"%s\", skipping.\n", name.c_str(), source.c_str());
-		return false;
-	}
-	if (!script_get_constant(name.c_str(), &sc_id) || !CHK_SC(sc_id)) {
-		ShowWarning("status_read_status_db_sub: Invalid status Name %s. Non-existent constant in \"%s\", skipping.\n", name.c_str(), source.c_str());
-		return false;
+	if (!this->asString(node, "Status", status_name))
+		return 0;
+
+	std::string status_constant = "SC_" + status_name;
+	int64 constant;
+
+	if (!script_get_constant(status_constant.c_str(), &constant)) {
+		this->invalidWarning(node["Status"], "Invalid Status %s, skipping.\n", status_name.c_str());
+		return 0;
 	}
 
-	if (status_sc_exists((sc_type)sc_id)) {
-		if (source.find("import") != std::string::npos) // Import file read-in, free previous value and store new value
-			existing = true;
-		else { // Normal file read-in
-			ShowWarning("status_read_status_db_sub: Duplicate status %s (%d).\n", name.c_str(), sc_id);
-			return false;
-		}
+	if (!CHK_SC(constant)) {
+		this->invalidWarning(node["Status"], "Status %s is out of bounds, skipping.\n", status_name.c_str());
+		return 0;
 	}
 
-	if (!existing)
-		statuses[sc_id] = std::make_shared<s_status_change_db>();
-	auto &entry = statuses[sc_id];
+	int status_id = static_cast<int32>(constant);
+	std::shared_ptr<s_status_change_db> status = this->find(status_id);
+	bool exists = status != nullptr;
 
-	entry->type = (sc_type)sc_id;
-	entry->icon = EFST_BLANK;
-	entry->script = nullptr;
-
-	if (node["Icon"]) {
-		try {
-			std::string icon = node["Icon"].as<std::string>();
-			int64 icon_id = -1;
-
-			if (!script_get_constant(icon.c_str(), &icon_id) || icon_id <= EFST_BLANK || icon_id >= EFST_MAX)
-				ShowWarning("status_read_status_db_sub: Invalid status Icon %s. Non-existent constant in \"%s\", defaulting to EFST_BLANK.\n", icon.c_str(), source.c_str());
-			else
-				entry->icon = static_cast<efst_type>(icon_id);
-		}
-		catch (...) {
-			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid Icon field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
+	if (!exists) {
+		status = std::make_shared<s_status_change_db>();
+		status->type = static_cast<sc_type>(status_id);
 	}
 
-	if (node["DurationLookup"]) {
-		try {
-			std::string skill = node["DurationLookup"].as<std::string>();
-			int skill_id, idx;
+	if (this->nodeExists(node, "Icon")) {
+		std::string icon_name;
 
-			if (!(skill_id = skill_name2id(skill.c_str())) || !(idx = skill_get_index(skill_id)))
-				ShowWarning("status_read_status_db_sub: Invalid status DurationLookup %s. Non-existent constant in \"%s\", skipping.\n", skill.c_str(), source.c_str());
-			else
-				entry->skill_id = skill_id;
+		if (!this->asString(node, "Icon", icon_name))
+			return 0;
+
+		std::string icon_name_constant = "EFST_" + icon_name;
+		int64 constant;
+
+		if (!script_get_constant(icon_name_constant.c_str(), &constant)) {
+			this->invalidWarning(node["Icon"], "Icon %s is invalid, defaulting to EFST_BLANK.\n", icon_name.c_str());
+			constant = EFST_BLANK;
 		}
-		catch (...) {
-			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid DurationLookup field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
+		
+		if (constant < EFST_BLANK || constant >= EFST_MAX) {
+			this->invalidWarning(node["Icon"], "Icon %s is out of bounds, defaulting to EFST_BLANK.\n", icon_name.c_str());
+			constant = EFST_BLANK;
 		}
+
+		status->icon = static_cast<efst_type>(constant);
+	} else {
+		if (!exists)
+			status->icon = EFST_BLANK;
 	}
 
-	if (node["SCS"]) {
-		try {
-			const YAML::Node scs_list = node["SCS"];
+	if (this->nodeExists(node, "DurationLookup")) {
+		std::string skill_name;
 
-			if (scs_list.IsSequence()) {
-				for (int i = 0; i < scs_list.size(); i++) {
-					std::string scs = scs_list[i].as<std::string>();
-					int64 scs_id = -1;
+		if (!this->asString(node, "DurationLookup", skill_name))
+			return 0;
 
-					if (!script_get_constant(scs.c_str(), &scs_id) || scs_id < SCS_NONE || scs_id >= SCS_MAX) {
-						ShowWarning("status_read_status_db_sub: Invalid status SCS %s. Non-existent constant in \"%s\", skipping.\n", scs.c_str(), source.c_str());
-						continue;
-					}
+		uint16 skill_id = skill_name2id(skill_name.c_str());
 
-					entry->state |= scs_id;
-				}
-			} else
-				ShowWarning("status_read_status_db_sub: Invalid status SCS format for status %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
-		}
-		catch (...) {
-			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid SCS field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
+		if (skill_id == 0)
+			this->invalidWarning(node["DurationLookup"], "DurationLookup skill %s is invalid, defaulting to none.\n", skill_name.c_str());
+
+		status->skill_id = skill_id;
+	} else {
+		if (!exists)
+			status->skill_id = 0;
 	}
 
-	if (node["SCB"]) {
-		try {
-			const YAML::Node scb_list = node["SCB"];
+	if (this->nodeExists(node, "States")) {
+		const YAML::Node &stateNode = node["States"];
 
-			if (scb_list.IsSequence()) {
-				for (int i = 0; i < scb_list.size(); i++) {
-					std::string scb = scb_list[i].as<std::string>();
-					int64 scb_id = -1;
+		for (const auto &it : stateNode) {
+			std::string state = it.first.as<std::string>(), state_constant = "SCS_" + state;
+			int64 constant;
 
-					if (!script_get_constant(scb.c_str(), &scb_id) || scb_id < SCB_NONE || scb_id >= SCB_MAX) {
-						ShowWarning("status_read_status_db_sub: Invalid status SCB %s. Non-existent constant in \"%s\", skipping.\n", scb.c_str(), source.c_str());
-						continue;
-					}
-
-					entry->calc_flag |= scb_id;
-				}
-			} else
-				ShowWarning("status_read_status_db_sub: Invalid status SCB format for status %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
-		}
-		catch (...) {
-			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid SCB field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["OPT1"]) {
-		try {
-			std::string opt = node["OPT1"].as<std::string>();
-			int64 opt_id = -1;
-
-			if (!script_get_constant(opt.c_str(), &opt_id) || opt_id < OPT1_NONE || opt_id >= OPT1_MAX) {
-				ShowWarning("status_read_status_db_sub: Invalid status OPT1 %s. Non-existent constant in \"%s\", defaulting to OPT1_NONE.\n", opt.c_str(), source.c_str());
-				entry->opt1 = OPT1_NONE;
-			} else
-				entry->opt1 = static_cast<e_sc_opt1>(opt_id);
-		}
-		catch (...) {
-			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid OPT1 field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["OPT2"]) {
-		try {
-			const YAML::Node opt_list = node["OPT2"];
-
-			if (opt_list.IsSequence()) {
-				for (int i = 0; i < opt_list.size(); i++) {
-					std::string opt = opt_list[i].as<std::string>();
-					int64 opt_id = -1;
-
-					if (!script_get_constant(opt.c_str(), &opt_id) || opt_id < OPT2_NONE || opt_id >= OPT2_MAX) {
-						ShowWarning("status_read_status_db_sub: Invalid status OPT2 %s. Non-existent constant in \"%s\", skipping.\n", opt.c_str(), source.c_str());
-						continue;
-					}
-
-					entry->opt2 |= opt_id;
-				}
-			} else
-				ShowWarning("status_read_status_db_sub: Invalid status OPT2 format for status %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
-		}
-		catch (...) {
-			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid OPT2 field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["OPT3"]) {
-		try {
-			const YAML::Node opt_list = node["OPT3"];
-
-			if (opt_list.IsSequence()) {
-				for (int i = 0; i < opt_list.size(); i++) {
-					std::string opt = opt_list[i].as<std::string>();
-					int64 opt_id = -1;
-
-					if (!script_get_constant(opt.c_str(), &opt_id) || opt_id < OPT3_NORMAL || opt_id >= OPT3_MAX) {
-						ShowWarning("status_read_status_db_sub: Invalid status OPT3 %s. Non-existent constant in \"%s\", skipping.\n", opt.c_str(), source.c_str());
-						continue;
-					}
-
-					entry->opt3 |= opt_id;
-				}
-			} else
-				ShowWarning("status_read_status_db_sub: Invalid status OPT3 format for status %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
-		}
-		catch (...) {
-			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid OPT3 field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["Option"]) {
-		try {
-			const YAML::Node option_list = node["Option"];
-
-			if (option_list.IsSequence()) {
-				for (int i = 0; i < option_list.size(); i++) {
-					std::string option = option_list[i].as<std::string>();
-					int64 option_id = -1;
-
-					if (!script_get_constant(option.c_str(), &option_id) || option_id < OPTION_NOTHING || option_id >= OPTION_MAX) {
-						ShowWarning("status_read_status_db_sub: Invalid status Option %s. Non-existent constant in \"%s\", skipping.\n", option.c_str(), source.c_str());
-						continue;
-					}
-
-					entry->look |= option_id;
-				}
-			} else
-				ShowWarning("status_read_status_db_sub: Invalid status Option format for status %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
-		}
-		catch (...) {
-			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid Option field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["Flag"]) {
-		try {
-			const YAML::Node flag_list = node["Flag"];
-
-			if (flag_list.IsSequence()) {
-				for (int i = 0; i < flag_list.size(); i++) {
-					std::string flag = flag_list[i].as<std::string>();
-					int64 flag_id = -1;
-
-					if (!script_get_constant(flag.c_str(), &flag_id) || flag_id < SCF_NONE || flag_id >= SCF_MAX) {
-						ShowWarning("status_read_status_db_sub: Invalid status Flag %s. Non-existent constant in \"%s\", skipping.\n", flag.c_str(), source.c_str());
-						continue;
-					}
-
-					entry->flag |= flag_id;
-				}
-			} else
-				ShowWarning("status_read_status_db_sub: Invalid status Flag format for status %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
-		}
-		catch (...) {
-			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid Flag field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["MinRate"]) {
-		try {
-			entry->min_rate = node["MinRate"].as<uint16>();
-		}
-		catch (...) {
-			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid MinRate field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["MinDuration"]) {
-		try {
-			entry->min_duration = node["MinDuration"].as<t_tick>();
-		}
-		catch (...) {
-			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid MinDuration field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["Fail"]) {
-		try {
-			const YAML::Node fail_list = node["Fail"];
-
-			if (fail_list.IsSequence()) {
-				for (int i = 0; i < fail_list.size(); i++) {
-					std::string fail_sc = fail_list[i].as<std::string>();
-					int64 fail_sc_id;
-
-					if (!script_get_constant(fail_sc.c_str(), &fail_sc_id) || !CHK_SC(fail_sc_id)) {
-						ShowWarning("status_read_status_db_sub: Invalid status Fail SC %s. Non-existent constant in \"%s\", skipping.\n", fail_sc.c_str(), source.c_str());
-						continue;
-					}
-
-					entry->fail.push_back((sc_type)fail_sc_id);
-				}
-			} else
-				ShowWarning("status_read_status_db_sub: Invalid status Fail format for status %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
-		}
-		catch (...) {
-			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid Fail field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["End"]) {
-		try {
-			const YAML::Node end_list = node["End"];
-
-			if (end_list.IsSequence()) {
-				for (int i = 0; i < end_list.size(); i++) {
-					std::string end_sc = end_list[i].as<std::string>();
-					int64 end_sc_id;
-
-					if (!script_get_constant(end_sc.c_str(), &end_sc_id) || !CHK_SC(end_sc_id)) {
-						ShowWarning("status_read_status_db_sub: Invalid status End SC %s. Non-existent constant in \"%s\", skipping.\n", end_sc.c_str(), source.c_str());
-						continue;
-					}
-
-					entry->end.push_back((sc_type)end_sc_id);
-				}
-			} else
-				ShowWarning("status_read_status_db_sub: Invalid status End format for status %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
-		}
-		catch (...) {
-			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid End field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["EndReturn"]) {
-		try {
-			entry->end_return = node["EndReturn"].as<bool>();
-		}
-		catch (...) {
-			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid EndReturn field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["DisabledOn"]) {
-		try {
-			const YAML::Node disabledon_list = node["DisabledOn"];
-
-			if (disabledon_list.IsSequence()) {
-				for (int i = 0; i < disabledon_list.size(); i++) {
-					int disabledon_id = disabledon_list[i].as<int>();
-
-					if (disabledon_id <= 0) {
-						ShowWarning("status_read_status_db_sub: Invalid status DisabledOn %d. Non-existent constant in \"%s\", skipping.\n", disabledon_id, source.c_str());
-						continue;
-					}
-
-					entry->disabledon |= disabledon_id;
-				}
-			} else
-				ShowWarning("status_read_status_db_sub: Invalid status DisabledOn format for status %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
-		}
-		catch (...) {
-			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid DisabledOn field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["Script"]) {
-		try {
-			std::string script_str = node["Script"].as<std::string>();
-			struct script_code *script = parse_script(script_str.c_str(), source.c_str(), 0, 0);
-
-			if (script) {
-				entry->script = script;
-				entry->calc_flag |= SCB_BASE; // Ask to recalculate
+			if (!script_get_constant(state_constant.c_str(), &constant)) {
+				this->invalidWarning(stateNode, "State %s is invalid, skipping.\n", state.c_str());
+				return 0;
 			}
+
+			if (constant < SCS_NONE || constant >= SCS_MAX) {
+				this->invalidWarning(stateNode, "State %s is out of bounds, skipping.\n", state.c_str());
+				continue;
+			}
+
+			bool active;
+
+			if (!this->asBool(stateNode, state, active))
+				return 0;
+
+			if (active)
+				status->state |= static_cast<e_scs_flag>(constant);
+			else
+				status->state &= ~static_cast<e_scs_flag>(constant);
 		}
-		catch (...) {
-			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid Script field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
+	} else {
+		if (!exists)
+			status->state = SCS_NONE;
+	}
+
+	if (this->nodeExists(node, "CalcFlags")) {
+		const YAML::Node &flagNode = node["CalcFlags"];
+
+		for (const auto &it : flagNode) {
+			std::string flag = it.first.as<std::string>(), flag_constant = "SCB_" + flag;
+			int64 constant;
+
+			if (!script_get_constant(flag_constant.c_str(), &constant)) {
+				this->invalidWarning(flagNode, "CalcFlag %s is invalid, skipping.\n", flag.c_str());
+				return 0;
+			}
+
+			if (constant < SCB_NONE || constant >= SCB_MAX) {
+				if (constant != SCB_ALL) {
+					this->invalidWarning(flagNode, "CalcFlag %s is out of bounds, skipping.\n", flag.c_str());
+					continue;
+				}
+			}
+
+			bool active;
+
+			if (!this->asBool(flagNode, flag, active))
+				return 0;
+
+			if (active)
+				status->calc_flag |= static_cast<e_scb_flag>(constant);
+			else
+				status->calc_flag &= ~static_cast<e_scb_flag>(constant);
+		}
+	} else {
+		if (!exists)
+			status->calc_flag = SCB_NONE;
+	}
+
+	if (this->nodeExists(node, "Opt1")) {
+		std::string opt;
+
+		if (!this->asString(node, "Opt1", opt))
+			return 0;
+
+		std::string opt_constant = "OPT1_" + opt;
+		int64 constant;
+
+		if (!script_get_constant(opt_constant.c_str(), &constant)) {
+			this->invalidWarning(node["Opt1"], "Opt1 %s is invalid, defaulting to OPT1_NONE.\n", opt.c_str());
+			constant = OPT1_NONE;
+		}
+
+		status->opt1 = static_cast<e_sc_opt1>(constant);
+	} else {
+		if (!exists)
+			status->opt1 = OPT1_NONE;
+	}
+
+	if (this->nodeExists(node, "Opt2")) {
+		const YAML::Node &optNode = node["Opt2"];
+
+		for (const auto &it : optNode) {
+			std::string opt = it.first.as<std::string>(), opt_constant = "OPT2_" + opt;
+			int64 constant;
+
+			if (!script_get_constant(opt_constant.c_str(), &constant)) {
+				this->invalidWarning(optNode, "Opt2 %s is invalid, skipping.\n", opt.c_str());
+				return 0;
+			}
+
+			if (constant < OPT2_NONE || constant >= OPT2_MAX) {
+				this->invalidWarning(optNode, "Opt2 %s is out of bounds, skipping.\n", opt.c_str());
+				continue;
+			}
+
+			bool active;
+
+			if (!this->asBool(optNode, opt, active))
+				return 0;
+
+			if (active)
+				status->opt2 |= static_cast<e_sc_opt2>(constant);
+			else
+				status->opt2 &= ~static_cast<e_sc_opt2>(constant);
+		}
+	} else {
+		if (!exists)
+			status->opt2 = OPT2_NONE;
+	}
+
+	if (this->nodeExists(node, "Opt3")) {
+		const YAML::Node &optNode = node["Opt3"];
+
+		for (const auto &it : optNode) {
+			std::string opt = it.first.as<std::string>(), opt_constant = "OPT3_" + opt;
+			int64 constant;
+
+			if (!script_get_constant(opt_constant.c_str(), &constant)) {
+				this->invalidWarning(optNode, "Opt3 %s is invalid, skipping.\n", opt.c_str());
+				return 0;
+			}
+
+			if (constant < OPT3_NORMAL || constant >= OPT3_MAX) {
+				this->invalidWarning(optNode, "Opt3 %s is out of bounds, skipping.\n", opt.c_str());
+				continue;
+			}
+
+			bool active;
+
+			if (!this->asBool(optNode, opt, active))
+				return 0;
+
+			if (active)
+				status->opt3 |= static_cast<e_sc_opt3>(constant);
+			else
+				status->opt3 &= ~static_cast<e_sc_opt3>(constant);
+		}
+	} else {
+		if (!exists)
+			status->opt3 = OPT3_NORMAL;
+	}
+
+	if (this->nodeExists(node, "Options")) {
+		const YAML::Node &optionNode = node["Options"];
+
+		for (const auto &it : optionNode) {
+			std::string option = it.first.as<std::string>(), option_constant = "OPTION_" + option;
+			int64 constant;
+
+			if (!script_get_constant(option_constant.c_str(), &constant)) {
+				this->invalidWarning(optionNode, "Option %s is invalid, skipping.\n", option.c_str());
+				return 0;
+			}
+
+			if (constant < OPTION_NOTHING || constant >= OPTION_MAX) {
+				this->invalidWarning(optionNode, "Option %s is out of bounds, skipping.\n", option.c_str());
+				continue;
+			}
+
+			bool active;
+
+			if (!this->asBool(optionNode, option, active))
+				return 0;
+
+			if (active)
+				status->look |= static_cast<e_option>(constant);
+			else
+				status->look &= ~static_cast<e_option>(constant);
+		}
+	} else {
+		if (!exists)
+			status->look = OPTION_NOTHING;
+	}
+
+	if (this->nodeExists(node, "Flags")) {
+		const YAML::Node &flagNode = node["Flags"];
+
+		for (const auto &it : flagNode) {
+			std::string flag = it.first.as<std::string>(), flag_constant = "SCF_" + flag;
+			int64 constant;
+
+			if (!script_get_constant(flag_constant.c_str(), &constant)) {
+				this->invalidWarning(flagNode, "Flag %s is invalid, skipping.\n", flag.c_str());
+				return 0;
+			}
+
+			if (constant < SCF_NONE || constant >= SCF_MAX) {
+				this->invalidWarning(flagNode, "Flag %s is out of bounds, skipping.\n", flag.c_str());
+				continue;
+			}
+
+			bool active;
+
+			if (!this->asBool(flagNode, flag, active))
+				return 0;
+
+			if (active)
+				status->flag.set(static_cast<e_status_change_flag>(constant));
+			else
+				status->flag.reset(static_cast<e_status_change_flag>(constant));
 		}
 	}
 
-	StatusRelevantBLTypes[entry->icon] = BL_PC;
-	if (entry->flag&SCF_BLEFFECT && entry->icon != EFST_BLANK)
-		StatusRelevantBLTypes[entry->icon] |= BL_SCEFFECT;
+	if (this->nodeExists(node, "MinRate")) {
+		uint16 rate;
 
-	return true;
+		if (!this->asUInt16(node, "MinRate", rate))
+			return 0;
+
+		status->min_rate = rate;
+	} else {
+		if (!exists)
+			status->min_rate = 0;
+	}
+	
+	if (this->nodeExists(node, "MinDuration")) {
+		int64 duration;
+
+		if (!this->asInt64(node, "MinDuration", duration))
+			return 0;
+
+		status->min_duration = static_cast<t_tick>(duration);
+	} else {
+		if (!exists)
+			status->min_duration = 0;
+	}
+
+	if (this->nodeExists(node, "Fail")) {
+		const YAML::Node &failNode = node["Fail"];
+
+		for (const auto &it : failNode) {
+			std::string fail = it.first.as<std::string>(), fail_constant = "SC_" + fail;
+			int64 constant;
+
+			if (!script_get_constant(fail_constant.c_str(), &constant)) {
+				this->invalidWarning(failNode, "Fail status %s is invalid, skipping.\n", fail.c_str());
+				return 0;
+			}
+
+			if (!CHK_SC(constant)) {
+				this->invalidWarning(failNode, "Fail status %s is out of bounds, skipping.\n", fail.c_str());
+				continue;
+			}
+
+			bool active;
+
+			if (!this->asBool(failNode, fail, active))
+				return 0;
+
+			if (active)
+				status->fail.push_back(static_cast<sc_type>(constant));
+			else
+				util::vector_erase_if_exists(status->fail, static_cast<sc_type>(constant));
+		}
+	}
+
+	if (this->nodeExists(node, "End")) {
+		const YAML::Node &endNode = node["End"];
+
+		for (const auto &it : endNode) {
+			std::string end = it.first.as<std::string>(), end_constant = "SC_" + end;
+			int64 constant;
+
+			if (!script_get_constant(end_constant.c_str(), &constant)) {
+				this->invalidWarning(endNode, "End status %s is invalid, skipping.\n", end.c_str());
+				return 0;
+			}
+
+			if (!CHK_SC(constant)) {
+				this->invalidWarning(endNode, "End status %s is out of bounds, skipping.\n", end.c_str());
+				continue;
+			}
+
+			bool active;
+
+			if (!this->asBool(endNode, end, active))
+				return 0;
+
+			if (active)
+				status->end.push_back(static_cast<sc_type>(constant));
+			else
+				util::vector_erase_if_exists(status->end, static_cast<sc_type>(constant));
+		}
+	}
+
+	if (this->nodeExists(node, "EndReturn")) {
+		bool end;
+
+		if (!this->asBool(node, "EndReturn", end))
+			return 0;
+
+		status->end_return = end;
+	} else {
+		if (!exists)
+			status->end_return = false;
+	}
+
+	if (this->nodeExists(node, "Script")) {
+		std::string script_str;
+
+		if (!this->asString(node, "Script", script_str))
+			return 0;
+
+		script_code *script = parse_script(script_str.c_str(), this->getCurrentFile().c_str(), 0, 0);
+
+		if (script == nullptr) {
+			this->invalidWarning(node["Script"], "Unable to parse Script string, skipping.\n");
+			return 0;
+		}
+
+		status->script = script;
+		status->calc_flag |= SCB_BASE; // Ask to recalculate
+	} else {
+		if (!exists)
+			status->script = nullptr;
+	}
+
+	if (!exists) {
+		this->put(status_id, status);
+
+		StatusRelevantBLTypes[status->icon] = BL_PC;
+		if (status->flag.test(SCF_BLEFFECT) && status->icon != EFST_BLANK)
+			StatusRelevantBLTypes[status->icon] |= BL_SCEFFECT;
+	}
+
+	return 1;
 }
 
-/**
- * Loads statuses from the status db.
- **/
-static void status_readdb_status(const std::string &directory, const std::string &file) {
-	const std::string current_file = directory + "/" + file;
-	YAML::Node config;
-	int count = 0;
-
-	try {
-		config = YAML::LoadFile(current_file);
-	}
-	catch (...) {
-		ShowError("Failed to read '" CL_WHITE "%s" CL_RESET "'.\n", current_file.c_str());
-		return;
-	}
-
-	for (const auto &node : config["Body"]) {
-		if (node.IsDefined() && status_read_status_db_sub(node, count, current_file))
-			count++;
-	}
-
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, current_file.c_str());
-}
+StatusDatabase status_db;
 
 /**
  * Sets defaults in tables and starts read db functions
@@ -13336,7 +13345,6 @@ void status_readdb(void)
 		}
 
 		status_readdb_attrfix(dbsubpath2,i > 0); // !TODO use sv_readdb ?
-		status_readdb_status(dbsubpath2, "status_db.yml");
 
 		status_yaml_readdb_refine(dbsubpath2, "refine_db.yml");
 
@@ -13344,22 +13352,15 @@ void status_readdb(void)
 		aFree(dbsubpath2);
 	}
 
-	if (!battle_config.display_hallucination) { // Disable Hallucination.
-		auto sc = status_get(SC_HALLUCINATION);
-
-		if (sc)
-			sc->icon = EFST_BLANK;
-	}
-
 	size_fix_db.load();
-}
+	status_db.load();
 
-/**
- * Reload status dbs
- **/
-void status_reloaddb(void) {
-	statuses.clear();
-	status_readdb();
+	if (!battle_config.display_hallucination) { // Disable Hallucination.
+		std::shared_ptr<s_status_change_db> scdb = status_db.find(SC_HALLUCINATION);
+
+		if (scdb)
+			scdb->icon = EFST_BLANK;
+	}
 }
 
 /**
@@ -13377,6 +13378,5 @@ void do_init_status(void) {
 
 /** Destroy status data */
 void do_final_status(void) {
-	statuses.clear();
 	ers_destroy(sc_data_ers);
 }
