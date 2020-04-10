@@ -317,7 +317,7 @@ S_Slot:
 	close;
 }
 
-glast_01,196,273,5	script	Portrait Collector#pcollector	4_M_OILMAN,{
+glast_01,190,273,5	script	Portrait Collector#pcollector	4_M_OILMAN,{
 	disable_items;
 	if (MaxWeight - Weight < 1000) {
 		mes "Your bag is too heavy. Reduce some weight and come back.";
@@ -341,7 +341,7 @@ glast_01,196,273,5	script	Portrait Collector#pcollector	4_M_OILMAN,{
 		case 2:
 			mes "[Portrait Collector]";
 			mes "How would you like to pay for your <ITEM>"+ getitemname(4608) +"<INFO>4608</INFO></ITEM>?";
-			cutin "ë°±ìƒ‰ì˜ê¸°ì‚¬ë‹¨ì¹´ë“œ",3;
+			cutin "¹é»öÀÇ±â»ç´ÜÄ«µå",3;
 			next;
 			switch (select("^7777776,000 Coagulated Spells^000000", "^777777700 Contaminated Magics^000000", "End Conversation")) {
 				case 1:
@@ -373,7 +373,7 @@ glast_01,196,273,5	script	Portrait Collector#pcollector	4_M_OILMAN,{
 		case 3:
 			mes "[Portrait Collector]";
 			mes "How would you like to pay for your <ITEM>"+ getitemname(4609) +"<INFO>4609</INFO></ITEM>?";
-			cutin "ì¹¼ë¦¬ì¸ ê¸°ì‚¬ë‹¨ì¹´ë“œ",3;
+			cutin "Ä®¸®Ã÷±â»ç´ÜÄ«µå",3;
 			next;
 			switch (select("^77777710,000 Coagulated Spells^000000", "^7777771,000 Contaminated Magics^000000", "End Conversation")) {
 				case 1:
