@@ -487,11 +487,14 @@ L_Reset_Enchant:
 	mes "I can reset enchantments on any equipment you have without fail, except accessories with 3 enchantments.";
 	next;
 	mes "[Black Beard Joe]";
-	mes "Be warned, this will also destory any cards on the equipment.";
+	mes "Be warned, this will ^FF0000destroy any cards^000000 on the equipment.";
 	mes "The refinement level will be untouched.";
 	next;
 	mes "[Black Beard Joe]";
-	mes "To continue, I need ^0000FF200^000000 Bloody Coins, 1 Bloodstained Letter and 1 Unsent Letter.";
+	mes "To continue, I need the following items:";
+	mes "^0000FF200^000000 Bloody Coins";
+	mes "^0000FF1^000000 Bloodstained Letter";
+	mes "^0000FF1^000000 Unsent Letter";
 	next;
 	if (select("Continue", "Cancel") == 2) {
 		mes "[Black Beard Joe]";
@@ -550,9 +553,9 @@ L_Reset_Enchant:
 
 	// Confirm player wants to proceed again
 	mes "[Black Beard Joe]";
-	mes "Are you sure you want me to reset your "+ getitemname(.@equip_id) +"?";
+	mes "Are you sure you want me to reset your ^FF0000"+ getitemname(.@equip_id) +"^000000?";
 	next;
-	if (select("Yes, do it", "No, I've changed my mind") == 2) {
+	if (select("Yes, please continue", "No, I changed my mind") == 2) {
 		mes "[Black Beard Joe]";
 		mes "Fine with me. Let me know if you want to reset your equipment.";
 		close;
