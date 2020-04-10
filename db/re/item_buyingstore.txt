@@ -870,7 +870,7 @@
 11557	//TE_White_Potion
 11558	//TE_White_Slim_Potion
 6607	//Temporal_Crystal
-6608	//Coagulated_Spell
+6608  // Coagulated_Spell
 6609	//Glast_Decayed_Nail
 6610	//Glast_Horrendous_Mouth
 6611	//Colorful_Key
