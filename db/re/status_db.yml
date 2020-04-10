@@ -7105,7 +7105,7 @@ Body:
 
   - Status: Weaponblock_On
     Icon: Weaponblock_On
-    CalcFlags:
+    Flags:
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
