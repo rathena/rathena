@@ -273,6 +273,8 @@ Body:
     DurationLookup: KN_TWOHANDQUICKEN
     CalcFlags:
       Aspd: true
+      Hit: true
+      Cri: true
     Opt3:
       Quicken: true
     Flags:
@@ -375,6 +377,7 @@ Body:
     DurationLookup: AL_ANGELUS
     CalcFlags:
       Def2: true
+      MaxHp: true
     Opt2:
       Angelus: true
     Flags:
@@ -388,6 +391,7 @@ Body:
       Str: true
       Int: true
       Dex: true
+      Hit: true
     Flags:
       Boss_Resist: true
       Failed_Immunity: true
@@ -408,6 +412,7 @@ Body:
     CalcFlags:
       Agi: true
       Speed: true
+      Aspd: true
     Flags:
       Failed_Mado: true
       Failed_Immunity: true
@@ -451,6 +456,9 @@ Body:
   - Status: Impositio
     Icon: Impositio
     DurationLookup: PR_IMPOSITIO
+    CalcFlags:
+      Watk: true
+      Matk: true
     Flags:
       Failed_Immunity: true
     End:
@@ -518,6 +526,7 @@ Body:
     DurationLookup: BS_ADRENALINE
     CalcFlags:
       Aspd: true
+      Hit: true
     Flags:
       Require_Weapon: true
     Fail:
@@ -567,6 +576,7 @@ Body:
     DurationLookup: MC_LOUD
     CalcFlags:
       Str: true
+      Batk: true
 
   - Status: Energycoat
     Icon: Energycoat
@@ -966,7 +976,7 @@ Body:
     Icon: Propertyfire
     DurationLookup: SA_FLAMELAUNCHER
     CalcFlags:
-      Atk_Ele: true
+      All: true
     Flags:
       No_Rem_Ondead: true
 
@@ -974,7 +984,7 @@ Body:
     Icon: Propertywater
     DurationLookup: SA_FROSTWEAPON
     CalcFlags:
-      Atk_Ele: true
+      All: true
     Flags:
       No_Rem_Ondead: true
 
@@ -982,7 +992,7 @@ Body:
     Icon: Propertywind
     DurationLookup: SA_LIGHTNINGLOADER
     CalcFlags:
-      Atk_Ele: true
+      All: true
     Flags:
       No_Rem_Ondead: true
 
@@ -990,7 +1000,7 @@ Body:
     Icon: Propertyground
     DurationLookup: SA_SEISMICWEAPON
     CalcFlags:
-      Atk_Ele: true
+      All: true
     Flags:
       No_Rem_Ondead: true
 
@@ -999,6 +1009,7 @@ Body:
     DurationLookup: SA_VOLCANO
     CalcFlags:
       Watk: true
+      Matk: true
     Flags:
       No_Save: true
       No_Clearance: true
@@ -1133,8 +1144,10 @@ Body:
       Debuff: true
 
   - Status: Assumptio
-    Icon: Assumptio2
+    Icon: Assumptio_Buff
     DurationLookup: HP_ASSUMPTIO
+    CalcFlags:
+      Def: true
     Opt3:
       Assumptio: true
     Flags:
@@ -1143,10 +1156,11 @@ Body:
       Kaite: true
 
   - Status: Basilica
+    Icon: Basilica_Buff
     DurationLookup: HP_BASILICA
+    CalcFlags:
+      All: true
     States:
-      NoMove: true
-      NoMoveCond: true
       NoAttack: true
     Flags:
       No_Save: true
@@ -1537,18 +1551,18 @@ Body:
       No_Clearance: true
 
   - Status: Gravitation
-    Icon: Gravitation
-    DurationLookup: HW_GRAVITATION
-    States:
-      NoMove: true
-      NoMoveCond: true
-      NoConsumeItem: true
-      NoConsumeItemCond: true
-    CalcFlags:
-      Aspd: true
-    Flags:
-      No_Save: true
-      No_Clearance: true
+#    Icon: Gravitation
+#    DurationLookup: HW_GRAVITATION
+#    States:
+#      NoMove: true
+#      NoMoveCond: true
+#      NoConsumeItem: true
+#      NoConsumeItemCond: true
+#    CalcFlags:
+#      Aspd: true
+#    Flags:
+#      No_Save: true
+#      No_Clearance: true
 
   - Status: Maxoverthrust
     Icon: Overthrustmax
@@ -1560,12 +1574,11 @@ Body:
     End:
       Overthrust: true
 
-#  - Status: Longing
-#    Icon: Longing
-#    DurationLookup: CG_LONGINGFREEDOM
-#    CalcFlags:
-#      Speed: true
-#      Aspd: true
+  - Status: Longing
+    Icon: Ensemblefatigue
+    DurationLookup: CG_SPECIALSINGER
+    States:
+      NoMove: true
 
   - Status: Hermode
     Icon: Hermode
@@ -1711,6 +1724,8 @@ Body:
   - Status: Nibelungen
     Icon: Ringnibelungen
     DurationLookup: BD_RINGNIBELUNGEN
+    CalcFlags:
+      All: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -1727,6 +1742,8 @@ Body:
   - Status: Rokisweil
     Icon: Rokisweil
     DurationLookup: BD_ROKISWEIL
+    States:
+      NoCast: true
     Flags:
       Boss_Resist: true
       No_Dispell: true
@@ -1880,7 +1897,7 @@ Body:
     Icon: Fortunekiss
     DurationLookup: DC_FORTUNEKISS
     CalcFlags:
-      Cri: true
+      All: true
     Flags:
       No_Rem_Ondead: true
       No_Clearance: true
@@ -2410,6 +2427,7 @@ Body:
       Flee: true
       Speed: true
       Aspd: true
+      Batk: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -2550,6 +2568,7 @@ Body:
       No_Clearance: true
 
   - Status: Enchantarms
+    Icon: Weaponproperty
     DurationLookup: ITEM_ENCHANTARMS
     CalcFlags:
       Atk_Ele: true
@@ -4445,9 +4464,7 @@ Body:
     DurationLookup: SR_GENTLETOUCH_CHANGE
     CalcFlags:
       Watk: true
-      Mdef: true
       Aspd: true
-      MaxHp: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -5573,8 +5590,6 @@ Body:
   - Status: Tinder_Breaker
     Icon: Tinder_Breaker
     DurationLookup: MH_TINDER_BREAKER
-    States:
-      NoMove: true
     CalcFlags:
       Flee: true
     Flags:
@@ -5584,8 +5599,6 @@ Body:
   - Status: Tinder_Breaker2
     Icon: Tinder_Breaker_Postdelay
     DurationLookup: MH_TINDER_BREAKER
-    States:
-      NoMove: true
     CalcFlags:
       Flee: true
     Flags:
@@ -7092,9 +7105,17 @@ Body:
 
   - Status: Weaponblock_On
     Icon: Weaponblock_On
+    CalcFlags:
+      No_Dispell: true
+      No_Banishing_Buster: true
+      No_Clearance: true
+      No_Rem_Ondead: true
+      Permanent: true
+      No_Clearbuff: true
 
   - Status: Spore_Explosion
     Icon: Spore_Explosion
+    DurationLookup: GN_SPORE_EXPLOSION
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -7102,6 +7123,7 @@ Body:
 
   - Status: Adaptation
     Icon: Adaptation
+    DurationLookup: BD_ADAPTATION
 
   - Status: Basilica_Cell
     States:
@@ -7135,24 +7157,28 @@ Body:
 
   - Status: Lightofmoon
     Icon: Lightofmoon
+    DurationLookup: SJ_LIGHTOFMOON
     End:
       Lunarstance: true
       Universestance: true
 
   - Status: Lightofsun
     Icon: Lightofsun
+    DurationLookup: SJ_LIGHTOFSUN
     End:
       Lightofsun: true
       Universestance: true
 
   - Status: Lightofstar
     Icon: Lightofstar
+    DurationLookup: SJ_LIGHTOFSTAR
     End:
       Starstance: true
       Universestance: true
 
   - Status: Lunarstance
     Icon: Lunarstance
+    DurationLookup: SJ_LUNARSTANCE
     CalcFlags:
       MaxHp: true
     End:
@@ -7162,6 +7188,7 @@ Body:
 
   - Status: Universestance
     Icon: Universestance
+    DurationLookup: SJ_UNIVERSESTANCE
     CalcFlags:
       Str: true
       Agi: true
@@ -7176,6 +7203,7 @@ Body:
 
   - Status: Sunstance
     Icon: Sunstance
+    DurationLookup: SJ_SUNSTANCE
     CalcFlags:
       Batk: true
       Watk: true
@@ -7186,11 +7214,13 @@ Body:
 
   - Status: Flashkick
     Icon: Flashkick
+    DurationLookup: SJ_FLASHKICK
     Flags:
       Rem_On_Changemap: true
     
   - Status: Newmoon
     Icon: Newmoon
+    DurationLookup: SJ_NEWMOONKICK
     States:
       NoPickItem: true
     Options:
@@ -7207,6 +7237,7 @@ Body:
 
   - Status: Starstance
     Icon: Starstance
+    DurationLookup: SJ_STARSTANCE
     CalcFlags:
       Aspd: true
     End:
@@ -7216,6 +7247,7 @@ Body:
 
   - Status: Dimension
     Icon: Dimension
+    DurationLookup: SJ_BOOKOFDIMENSION
     Flags:
       No_Clearance: true
 
@@ -7225,6 +7257,7 @@ Body:
 
   - Status: Creatingstar
     Icon: Creatingstar
+    DurationLookup: SJ_BOOKOFCREATINGSTAR
     CalcFlags:
       Speed: true
     Flags:
@@ -7234,9 +7267,11 @@ Body:
 
   - Status: Fallingstar
     Icon: Fallingstar
+    DurationLookup: SJ_FALLINGSTAR
 
   - Status: Novaexplosing
     Icon: Novaexplosing
+    DurationLookup: SJ_NOVAEXPLOSING
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -7244,15 +7279,22 @@ Body:
 
   - Status: Gravitycontrol
     Icon: Gravitycontrol
+    DurationLookup: SJ_GRAVITYCONTROL
+    States:
+      NoMove: true
+      NoCast: true
 
   - Status: Soulcollect
     Icon: Soulcollect
+    DurationLookup: SP_SOULCOLLECT
 
   - Status: Soulreaper
     Icon: Soulreaper
+    DurationLookup: SP_SOULREAPER
 
   - Status: Soulunity
     Icon: Soulunity
+    DurationLookup: SP_SOULUNITY
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -7260,6 +7302,7 @@ Body:
 
   - Status: Soulshadow
     Icon: Soulshadow
+    DurationLookup: SP_SOULSHADOW
     CalcFlags:
       Aspd: true
       Cri: true
@@ -7276,6 +7319,7 @@ Body:
 
   - Status: Soulfairy
     Icon: Soulfairy
+    DurationLookup: SP_SOULFAIRY
     CalcFlags:
       Matk: true
     Flags:
@@ -7291,6 +7335,7 @@ Body:
 
   - Status: Soulfalcon
     Icon: Soulfalcon
+    DurationLookup: SP_SOULFALCON
     CalcFlags:
       Watk: true
       Hit: true
@@ -7307,6 +7352,7 @@ Body:
 
   - Status: Soulgolem
     Icon: Soulgolem
+    DurationLookup: SP_SOULGOLEM
     CalcFlags:
       Def: true
       Mdef: true
@@ -7323,6 +7369,7 @@ Body:
 
   - Status: Souldivision
     Icon: Souldivision
+    DurationLookup: SP_SOULDIVISION
 
   - Status: Soulenergy
 
@@ -7342,6 +7389,7 @@ Body:
 
   - Status: Sp_Sha
     Icon: Sp_Sha
+    DurationLookup: SP_SHA
     CalcFlags:
       Flee: true
     Flags:
@@ -7354,6 +7402,7 @@ Body:
     Icon: Soulcurse
 
   - Status: Hells_Plant
+    DurationLookup: GN_HELLS_PLANT
     Flags:
       No_Save: true
       Rem_On_Changemap: true
