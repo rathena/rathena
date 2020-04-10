@@ -121,6 +121,13 @@ int unit_walktoxy_sub(struct block_list *bl)
 		((TBL_PC *)bl)->head_dir = 0;
 		clif_walkok((TBL_PC*)bl);
 	}
+#if PACKETVER >= 20170726
+	// If this is a walking NPC and it will use a player sprite
+	else if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->class_ ) ){
+		// Respawn the NPC as player unit
+		unit_refresh( bl, true );
+	}
+#endif
 	clif_move(ud);
 
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
@@ -410,6 +417,14 @@ static TIMER_FUNC(unit_walktoxy_timer){
 	ud->walktimer = INVALID_TIMER;
 
 	if (bl->x == ud->to_x && bl->y == ud->to_y) {
+#if PACKETVER >= 20170726
+		// If this was a walking NPC and it used a player sprite
+		if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->class_ ) ){
+			// Respawn the NPC as NPC unit
+			unit_refresh( bl, false );
+		}
+#endif
+
 		if (ud->walk_done_event[0]){
 			char walk_done_event[EVENT_NAME_LENGTH];
 
@@ -3158,7 +3173,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
  * Refresh the area with a change in display of a unit.
  * @bl: Object to update
  */
-void unit_refresh(struct block_list *bl) {
+void unit_refresh(struct block_list *bl, bool walking) {
 	nullpo_retv(bl);
 
 	if (bl->m < 0)
@@ -3170,7 +3185,7 @@ void unit_refresh(struct block_list *bl) {
 	// Probably need to use another flag or other way to refresh it
 	if (mapdata->users) {
 		clif_clearunit_area(bl, CLR_TRICKDEAD); // Fade out
-		clif_spawn(bl); // Fade in
+		clif_spawn(bl,walking); // Fade in
 	}
 }
 

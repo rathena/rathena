@@ -9764,9 +9764,6 @@ Body:
       NoDamage: true
       IgnoreDefense: true
       IgnoreFlee: true
-    Flags:
-      IgnoreAutoGuard: true
-      IgnoreCicada: true
     Hit: Single
     HitCount: 1
     CastCancel: true
@@ -12988,6 +12985,9 @@ Body:
     Flags:
       AllowOnMado: true
     Range: -2
+    Flags:
+      IgnoreAutoGuard: true
+      IgnoreCicada: true
     Hit: Single
     HitCount: 1
     Element: Weapon
