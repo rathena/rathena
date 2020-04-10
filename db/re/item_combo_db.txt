@@ -1178,6 +1178,7 @@
 24396:24397:24398,{ .@r = getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES); bonus bMatk,.@r*2; if (.@r >= 25) { bonus bMatkRate,5; } else if (.@r >= 23) { bonus bMatkRate,2; } }
 24399:24400,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES); if (.@r >= 16) { bonus bDef,100; bonus bMaxHPrate,4; bonus bMaxSPrate,4; } else { bonus bDef,50; bonus bMaxHPrate,2; bonus bMaxSPrate,2; } }
 24416:24417:24418:24419:24420:24421,{ bonus bAspd,2; bonus bVariableCastrate,-10; bonus2 bIgnoreDefRaceRate,RC_All,70; bonus2 bIgnoreMdefRaceRate,RC_All,70; bonus2 bIgnoreDefRaceRate,RC_Player,-70; bonus2 bIgnoreMdefRaceRate,RC_Player,-70; }
+25069:25070:25071,{ bonus bDelayrate,-2; }
 27101:28510,{ bonus bMatkRate,(getrefine()/3); }
 27102:28510,{ bonus bFlee2,5; }
 27103:28510,{ bonus2 bAddClass,Class_All,(getrefine()/3); }

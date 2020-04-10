@@ -4973,6 +4973,8 @@
 6960,Air_Stronghold_Key,Sky Fortress Key,3,10,,10,,,,,,,,,,,,,{},{},{}
 6961,Huge_Metal_Scrap,Huge Metal Scrap,3,10,0,1000,,,,,,,,,,,,,{},{},{}
 6962,Old_Fuel,Old Fuel,3,10,0,100,,,,,,,,,,,,,{},{},{}
+6963,HPdrainStone_Robe,HP Absorption Stone (Garment),3,10,,100,,,,,,,,,,,,,{ bonus2 bHPDrainRate,10,1; },{},{}
+6964,SPdrainStone_Robe,SP Absorption Stone (Garment),3,10,,100,,,,,,,,,,,,,{ bonus2 bSPDrainRate,10,1; },{},{}
 
 6965,Fire_Property_Reactor_Blueprint,Fire Property Reactor Blueprint,3,0,,10,,,,,,,,,,,,,{},{},{}
 6966,Water_Property_Reactor_Blueprint,Water Property Reactor Blueprint,3,0,,10,,,,,,,,,,,,,{},{},{}
@@ -4996,6 +4998,7 @@
 6984,SP_Reactor_Blueprint,SP Reactor Blueprint,3,0,,10,,,,,,,,,,,,,{},{},{}
 6985,Frozen_Reactor_Blueprint,Frozen Reactor Blueprint,3,0,,10,,,,,,,,,,,,,{},{},{}
 6986,ASPD_Reactor_Blueprint,ASPD Reactor Blueprint,3,0,,10,,,,,,,,,,,,,{},{},{}
+6999,HPdrainStone_Top,HP Absorption Stone (Upper),3,10,,100,,,,,,,,,,,,,{ bonus2 bHPDrainRate,10,3; },{},{}
 
 //
 7001,Mould_Powder,Mould Powder,3,466,,10,,,,,,,,,,,,,{},{},{}
@@ -11567,7 +11570,7 @@
 22859,October_Gift_Box,October Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12529,5; },{},{}
 22860,November_Gift_Box,November Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ rentitem callfunc("F_Rand",2566,2856,2857,15023),1209600; },{},{}
 22861,December_Gift_Box,December Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 22869,10; },{},{}
-22868,Enchant_Stone_Box5,Costume Enchantment Stone Box 5,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6908,6943,6944,6945,6946,6947,6948,6949,6950,6951),1; },{},{}
+22868,Enchant_Stone_Box5,Costume Enchantment Stone Box 5,18,20,,10,,,,,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box5); },{},{}
 22869,Lucky_Roulette_Tickets,Lucky Roulette Ticket,2,10,,100,,,,,0xFFFFFFFF,63,2,,,50,,,{ RouletteBronze++; },{},{}
 22870,Xmas_Package_14,Christmas Package,3,0,,10,,,,0,,,,,,,,,{},{},{}
 22873,Sealed_Beelzebub_Scroll_II,Sealed Beelzebub Scroll II,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",22875,6238,6239,6228,6232,24231,24232,17474,6635),1; },{},{}
@@ -11589,9 +11592,12 @@
 22899,Parchment_City,Parchment City,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "AL_INCAGI",1; heal -15,0; },{},{}
 22901,Question_Old_Blue_Box,Mysterious Blue Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc("F_Mysterious_box"); },{},{}
 22902,Sealed_Card_Album_Scroll_II,Sealed Card Album Scroll II,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6238,6239,17474,22829,24243,24244,24245),1; },{},{}
+22905,Enchant_Stone_Box6,Costume Enchantment Stone Box 6,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box6); },{},{}
+22953,Enchant_Stone_Box7,Costume Enchantment Stone Box 7,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box7); },{},{}
 22984,Kahluna_Milk,Kahluna Milk,0,6,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DORAM_BUF_01, 180000, 0; },{},{}
 22985,Basil,Basil,0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DORAM_BUF_02, 180000, 0; },{},{}
 //
+23001,Enchant_Stone_Box8,Costume Enchantment Stone Box 8,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box8); },{},{}
 23012,S_Small_Mana_Potion,[Sale] Small Mana Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus2 bRegenPercentSP,5,5000;",600,9; /* fix me: unknown flag and specialeffect ; disabled when LK_BERSERK */ },{},{}
 23016,Cursed_Fragment,Cursed Fragment,2,1,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc("F_Cursed_Fragment"); },{},{}
 23038,S_Slim_White_Box,[Sale] Slim White Potion Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 11573,200; },{},{}
@@ -11600,16 +11606,19 @@
 23046,S_Mystic_Powder,[Sale] Mystic Powder,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus bFlee,20; bonus bLuk,10;",300,9; /* fix me: unknown flag and specialeffect */ },{},{}
 23047,S_Blessing_Tyr,[Sale] Blessing of Tyr,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_FLEEFOOD,300000,30; sc_start SC_HITFOOD,300000,30; sc_start SC_ATKPOTION,300000,20; sc_start SC_MATKPOTION,300000,20; },{},{}
 23048,S_Resilience_Potion,[Sale] Resilience Enhancement Potion,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus bAddItemHealRate,20;",1800,9; /* fix me: unknown flag and specialeffect */ },{},{}
+23058,Enchant_Stone_Box9,Costume Enchantment Stone Box 9,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box9); },{},{}
 23076,Build_Up_Potion_SS,Build Up Potion SS,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if (strcharinfo(3) == "slabw01") { bonus_script "{ bonus bAspd,10; }",10; } },{},{}
 23077,Build_Up_Potion_SC,Build Up Potion SC,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if (strcharinfo(3) == "slabw01") { bonus_script "{ bonus bCritical,30; }",10; } },{},{}
 23078,Build_Up_Potion_AC,Build Up Potion AC,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if (strcharinfo(3) == "slabw01") { bonus_script "{ bonus bVariableCastrate,-80; }",10; } },{},{}
 23080,Cursed_Crystal,Cursed Crystal,2,1,,500,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc("F_Cursed_Crystal"); },{},{}
+23086,Enchant_Stone_Box10,Costume Enchantment Stone Box 10,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box10); },{},{}
 23087,Small_Leather_Bag,Small Leather Bag,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 25180,1; getitem 25181,1; getitem 25182,1; getitem 25183,1; getitem 25184,1; getitem 25185,1; },{},{}
 23123,Bullet_Case_Flare,Flare Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13228,500; },{},{}
 23124,Bullet_Case_Lighting,Lightning Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13229,500; },{},{}
 23125,Bullet_Case_Ice,Ice Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13230,500; },{},{}
 23126,Bullet_Case_Poison,Poison Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13231,500; },{},{}
 23127,Bullet_Case_Blind,Blind Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13232,500; },{},{}
+23174,Enchant_Stone_Box11,Costume Enchantment Stone Box 11,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box11); },{},{}
 23177,Kafra_Card_,Kafra Card,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashStore"; },{},{}
 23188,Unprocessed_Parts,Unprocessed Parts,2,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1632; },{},{}
 23189,Small_Needle_Kit,Small Needle Kit,2,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1622; },{},{}
@@ -11627,8 +11636,12 @@
 23280,N_Fly_Wing_,Novice Fly Wing,11,10,,0,,,,,0xFFFFFFFF,63,2,,,1:98,,,{ itemskill "AL_TELEPORT",1; },{},{}
 23288,Compressed_Wing_Of_Fly,Compressed Fly Wing,11,1000,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "AL_TELEPORT",1; },{},{}
 //
+23299,Enchant_Stone_Box12,Costume Enchantment Stone Box 12,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box12); },{},{}
 23307,S_Shining_Def_Scroll,[Sale] Shining Defense Scroll,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus bDef,500; bonus bMdef,200;",600; /* fix me: unknown flag and specialeffect */ },{},{}
 23340,S_Megaphone,[Sale] Megaphone,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ input .@megaphone$; announce strcharinfo(0) + ": " + .@megaphone$,bc_all,0xFF0000; },{},{}
+23524,Enchant_Stone_Box13,Costume Enchantment Stone Box 13,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box13); },{},{}
+23629,Enchant_Stone_Box14,Costume Enchantment Stone Box 14,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box14); },{},{}
+23682,Enchant_Stone_Box15,Costume Enchantment Stone Box 15,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box15); },{},{}
 //===================================================================
 // Shadow Equipments
 //===================================================================
@@ -12056,6 +12069,25 @@
 24421,S_Temporal_Transcendent_Pendant,Temporal Transcendent Shadow Pendant,12,0,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ bonus bBaseAtk,15; },{},{}
 24423,S_Tempest_Weapon,Tempest Shadow Weapon,12,0,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ bonus2 bIgnoreDefClassRate,Class_Normal,5+(getrefine()/2); },{},{}
 24424,S_Tempest_Armor,Tempest Shadow Armor,12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ bonus2 bIgnoreDefClassRate,Class_Normal,5+(getrefine()/2); },{},{}
+
+25000,SPdrainStone_Top,SP Absorption Stone (Upper),3,10,,100,,,,,,,,,,,,,{ bonus2 bSPDrainRate,10,1; },{},{}
+25001,DEFStone_Middle,Def Stone(Middle),6,10,,100,,,,,,,,,,,,,{ bonus bDef,20; },{},{}
+25002,ChangeLUK_Middle,LUK Exchange Stone(Middle),3,10,,100,,,,,,,,,,,,,{ bonus bStr,-3; bonus bLuk,3; },{},{}
+25003,ChangeSTR_Middle,STR Exchange Stone(Middle),3,10,,100,,,,,,,,,,,,,{ bonus bStr,3; bonus bInt,-3; },{},{}
+25004,ChangeAGI_Middle,AGI Exchange Stone(Middle),3,10,,100,,,,,,,,,,,,,{ bonus bAgi,3; bonus bLuk,-3; },{},{}
+25005,ChangeINT_Middle,INT Exchange Stone(Middle),3,10,,100,,,,,,,,,,,,,{ bonus bDex,-3; bonus bInt,3; },{},{}
+25006,ChangeVIT_Middle,VIT Exchange Stone(Middle),3,10,,100,,,,,,,,,,,,,{ bonus bAgi,-3; bonus bVit,3; },{},{}
+25007,ChangeDEX_Middle,DEX Exchange Stone(Middle),3,10,,100,,,,,,,,,,,,,{ bonus bDex,3; bonus bVit,-3; },{},{}
+25008,ChangeVIT_Bottom,VIT Exchange Stone(Lower),3,10,,100,,,,,,,,,,,,,{ bonus bAgi,-3; bonus bVit,3; },{},{}
+25009,ChangeAGI_Bottom,AGI Exchange Stone(Lower),3,10,,100,,,,,,,,,,,,,{ bonus bAgi,3; bonus bLuk,-3; },{},{}
+25010,ChangeDEX_Bottom,DEX Exchange Stone(Lower),3,10,,100,,,,,,,,,,,,,{ bonus bDex,3; bonus bVit,-3; },{},{}
+25011,ChangeLUK_Bottom,LUK Exchange Stone(Lower),3,10,,100,,,,,,,,,,,,,{ bonus bStr,-3; bonus bLuk,3; },{},{}
+25012,ChangeSTR_Bottom,STR Exchange Stone(Lower),3,10,,100,,,,,,,,,,,,,{ bonus bStr,3; bonus bInt,-3; },{},{}
+25013,ChangeINT_Bottom,INT Exchange Stone(Lower),3,10,,100,,,,,,,,,,,,,{ bonus bDex,-3; bonus bInt,3; },{},{}
+25014,MDEFStone_Bottom,Mdef Stone(Lower),6,10,,100,,,,,,,,,,,,,{ bonus bMdef,4; },{},{}
+25015,EXPStone_Bottom,EXP Stone(Lower),6,10,,100,,,,,,,,,,,,,{ bonus2 bExpAddClass,Class_All,2; },{},{}
+25016,ATKStone_Bottom,ATK Stone (Lower),3,10,,100,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,1; },{},{}
+25017,MATKStone_Bottom,MATK Stone (Lower),3,10,,100,,,,,,,,,,,,,{ bonus bMatkRate,1; },{},{}
 //===================================================================
 // New etc.
 //===================================================================
@@ -12066,6 +12098,22 @@
 25047,Kahlunac,Kahlunac,3,0,,0,,,,,,,,,,,,,{},{},{}
 25048,Hearty_Lunchbox,Hearty Lunchbox,3,0,,0,,,,,,,,,,,,,{},{},{}
 25049,Basilac_Clam,Basilac Clam,3,0,,0,,,,,,,,,,,,,{},{},{}
+
+25058,TwinkleEffect_Top,Twinkle Effect (Upper),3,10,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
+25059,GhostEffect_Middle,Ghost Effect (Middle),3,10,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
+25060,Critical_Stone,Critical Stone (Middle),3,10,,100,,,,,,,,,,,,,{ bonus bCritAtkRate,3; },{},{}
+25061,Range_Stone,Range Stone (Middle),3,10,,100,,,,,,,,,,,,,{ bonus bLongAtkRate,3; },{},{}
+25062,Greed_Stone,Greed Stone (Lower),3,10,,100,,,,,,,,,,,,,{ skill "BS_GREED",1; },{},{}
+25063,MaxHP2_Stone,Health Stone (Lower),3,10,,100,,,,,,,,,,,,,{ bonus bMaxHP,100; if (BaseLevel >= 120) { bonus bMaxHPrate,2; } },{},{}
+25064,MaxSP2_Stone,Magic Stone (Lower),3,10,,100,,,,,,,,,,,,,{ bonus bMaxSP,50; if (BaseLevel >= 120) { bonus bMaxSPrate,2; } },{},{}
+25065,Detoxify_Stone,Detoxify Stone (Lower),3,10,,100,,,,,,,,,,,,,{ skill "TF_DETOXIFY",1; },{},{}
+25067,CastingStone_Robe,Casting Stone (Garment),3,10,,100,,,,,,,,,,,,,{ bonus bFixedCast,-500; },{},{}
+25068,ASPDStone_Top,ASPD Stone (Upper),3,10,,100,,,,,,,,,,,,,{ bonus bAspd,1; },{},{}
+25069,ReloadStone_Top,Reload Stone (Upper),3,10,,100,,,,,,,,,,,,,{ bonus bDelayrate,-1; },{},{}
+25070,ReloadStone_Middle,Reload Stone (Middle),3,10,,100,,,,,,,,,,,,,{ bonus bDelayrate,-1; },{},{}
+25071,ReloadStone_Bottom,Reload Stone (Lower),3,10,,100,,,,,,,,,,,,,{ bonus bDelayrate,-1; },{},{}
+25072,Kyrie_Stone,Kyrie Stone (Lower),3,10,,100,,,,,,,,,,,,,{ skill "PR_KYRIE",1; },{},{}
+
 25127,Silent_Energy_Particle,Silent Energy Particle,3,0,,0,,,,,,,,,,,,,{},{},{}
 25128,Weak_Energy_Particle,Weak Energy Particle,3,0,,0,,,,,,,,,,,,,{},{},{}
 25129,Unstable_Energy_Particle,Unstable Energy Particle,3,0,,0,,,,,,,,,,,,,{},{},{}
@@ -13486,6 +13534,10 @@
 //===================================================================
 32350,Farthezan,Farthezan,5,20,,1100,130:180,,1,2,0x00004000,56,2,2,4,170,1,2,{ .@r = getrefine(); bonus2 bSkillAtk,"PA_PRESSURE",40; bonus bVariableCastrate,-.@r; if (.@r>=9) bonus2 bSkillAtk,"LG_RAYOFGENESIS",30; if (.@r>=11) { bonus2 bSkillAtk,"LG_RAYOFGENESIS",20; bonus2 bSkillAtk,"PA_PRESSURE",20; } },{},{}
 32351,Estal,Estal,5,20,,700,195,,1,2,0x00040000,56,2,2,4,170,1,2,{ .@r = getrefine(); bonus2 bSkillCooldown,"GN_SPORE_EXPLOSION",-1000; bonus bBaseAtk,4*.@r; if (.@r>=11) .@val = 50; else if (.@r>=9) .@val = 30; bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",.@val; },{},{}
+
+//100052,Enchant_Stone_Box19,Costume Enchantment Stone Box 19,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box19); },{},{}
+//100202,Enchant_Stone_Box20,Costume Enchantment Stone Box 20,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box20); },{},{}
+//100314,Enchant_Stone_Box21,Costume Enchantment Stone Box 21,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box21); },{},{}
 // Costumes
 //440000,C_SharkHead,Costume Shark Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,5120,,1,0,1919,{},{},{}
 //440002,C_Happy_Cat_TW,Costume Happy Cat,4,0,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,0,1980,{},{},{}
