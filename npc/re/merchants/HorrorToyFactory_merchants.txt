@@ -492,9 +492,9 @@ L_Reset_Enchant:
 	next;
 	mes "[Black Beard Joe]";
 	mes "To continue, I need the following items:";
-	mes "^0000FF200^000000 Bloody Coins";
-	mes "^0000FF1^000000 Bloodstained Letter";
-	mes "^0000FF1^000000 Unsent Letter";
+	mes "^0000FF200 Bloody Coins";
+	mes "^0000FF1 Bloodstained Letter";
+	mes "^0000FF1 Unsent Letter^000000";
 	next;
 	if (select("Continue", "Cancel") == 2) {
 		mes "[Black Beard Joe]";
@@ -523,7 +523,7 @@ L_Reset_Enchant:
 	// Check if equipment can be reset
 	if (.@equipped == 0) {
 		mes "[Black Beard Joe]";
-		mes "You aren't wearing anything I can reset...";
+		mes "Wait a second, you aren't wearing anything I can reset...";
 		close;
 	}
 	.@part = .@indices[ select(.@menu$) ];
