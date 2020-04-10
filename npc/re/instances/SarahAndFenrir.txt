@@ -204,7 +204,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 		mes "[Chief Assistant]";
 		mes "Sarah's earrings we have discovered at the archaeological site must certainly have great potential.";
 		next;
-		switch( select( "Enchant Sarah's earrings", "Initialize enchantment on Sarah's earrings", "Exit conversation" ) ) {
+		switch( select( "Enchant Sarah's earrings", "Reset enchantments on Sarah's earrings", "Exit conversation" ) ) {
 		case 1:
 			mes "[Chief Assistant]";
 			mes "2 enchantments are possible on one earring.";
@@ -228,19 +228,15 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			}
 			mes "[Chief Assistant]";
 			mes "You must equip the item to make enchantment possible.";
-			mes "Which column do you wish to enchant?";
+			mes "Which column's earring do you wish to enchant?";
 			next;
 			if (select( "Left column", "Right column" ) == 1) {
 				.@part = EQI_ACC_L;
 				.@column$ = "left";
-				.@bonus_size = 4;		// 4 possibilities
-				.@bonus_chance = 20;	// 20% per possibility
 			}
 			else {
 				.@part = EQI_ACC_R;
 				.@column$ = "right";
-				.@bonus_size = 6;		// 6 possibilities
-				.@bonus_chance = 10;	// 10% per possibility
 			}
 			.@equip_id = getequipid(.@part);
 			if (.@equip_id != .@sarah_item_id) {
@@ -258,11 +254,13 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 				mes "[Chief Assistant]";
 				mes "Sarah's Earring is currently in a state of enchantment in slot 4.";
 				.@slot = 3;
+				.@bonus_size = 4;		// 4 possibilities
 			}
 			else {// none enchant
 				mes "[Chief Assistant]";
 				mes "Sarah's Earring is currently in a state without enchantment.";
 				.@slot = 4;
+				.@bonus_size = 6;		// 6 possibilities
 			}
 			next;
 			mes "[Chief Assistant]";
@@ -316,10 +314,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			}
 			next;
 			mes "[Chief Assistant]";
-			mes "4 shards of Gigantes is required for one enchantment.";
-			next;
-			mes "[Chief Assistant]";
-			mes "Because enchantment is a high risk process, there is risk of Sarah's earring being destroyed.";
+			mes "4 shards of Gigantes is required for one enchantment. There isn't any risk of Sarah's earring being destroyed.";
 			mes "Do you still want to do it?";
 			next;
 			if (select( "No", "Yes" ) == 1) {
@@ -350,18 +345,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 				close;
 
 			delequip .@part;
-			.@r = rand(100);
-			for ( .@i = 0; .@i < .@bonus_size && (.@bonus_chance * (.@i+1)) < .@r; .@i++ );
-			if (.@i == .@bonus_size) {
-				specialeffect2 EF_CRASHEARTH;
-				specialeffect2 EF_MAXPOWER;
-				mes "[Chief Assistant]";
-				mes "Sadly... it is..";
-				mes "destroyed...";
-				mes "Whew.. ";
-				mes "enchantment is not an easy task..";
-				close;
-			}
+			.@r = rand(.@bonus_size);
 			.@card[.@slot-1] = .@bonus[.@i];
 			specialeffect2 EF_ANGEL2;
 			getitem2 .@sarah_item_id,1,1,0,0,.@card[0],.@card[1],.@card[2],.@card[3];
@@ -370,7 +354,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			close;
 		case 2:
 			mes "[Chief Assistant]";
-			mes "Which earring do you wish to initialize?";
+			mes "Which earring do you wish to reset?";
 			next;
 			switch( select( "The left earring of Sarah", "The right earring of Sarah", "Quit" ) ) {
 			case 1:
@@ -383,21 +367,21 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 				break;
 			case 3:
 				mes "[Chief Assistant]";
-				mes "If you want to initialize an enchantment on Sarah's earrings, come and find me again.";
+				mes "If you want to reset enchantments on Sarah's earrings, come and find me again.";
 				close;
 			}
 			mes "[Chief Assistant]";
-			mes "On Sarah's earring. 1 shard of Gigantes is required to initialize the enchantment..";
+			mes "On Sarah's earring. 1 shard of Gigantes is required to reset enchantments.";
 			next;
 			if (countitem(6803) < 1) {
 				mes "[Chief Assistant]";
 				mes "There are not enough shards of Gigantes.";
-				mes "You will need them in order for initialization to take place.";
+				mes "You will need them in order for the reset to take place.";
 				close;
 			}
 			mes "[Chief Assistant]";
-			mes "You must equip the item to make initialization possible.";
-			mes "Which column's earring do you wish to initialize?";
+			mes "You must equip the item to make resetting possible.";
+			mes "Which column's earring do you wish to reset?";
 			next;
 			if (select( "Left column", "Right column" ) == 1) {
 				.@part = EQI_ACC_L;
@@ -411,27 +395,27 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 			setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 			if (.@equip_id == -1) {
 				mes "[Chief Assistant]";
-				mes "To initialize an enchantment, the relevant column must be equipped with gear.";
+				mes "To reset enchantments, the relevant column must be equipped with gear.";
 				close;
 			}
 			if (.@equip_id != .@sarah_item_id) {
 				mes "[Chief Assistant]";
-				mes "To initialize an enchantment, the relevant column must be equipped with Sarah's earring.";
+				mes "To reset an enchantments, the relevant column must be equipped with Sarah's earring.";
 				close;
 			}
 			if (getequipcardid(.@part,3) < 1) {
 				mes "[Chief Assistant]";
-				mes "Sarah's earring without an enchantment cannot be initialized.";
+				mes "Sarah's earring without an enchantment cannot be reset.";
 				close;
 			}
 			mes "[Chief Assistant]";
 			mes "You have selected Sarah's " + .@sarah_earring$ + " earring on the " + .@column$ + " column.";
-			mes "It is impossible to restore abilities that are gone after initialization.";
+			mes "It is impossible to restore abilities that are gone after resetting.";
 			mes "Do you still want to proceed?";
 			next;
 			if (select( "No", "Yes" ) == 2) {
 				mes "[Chief Assistant]";
-				mes "Yes sir. Initialization will start.";
+				mes "Yes sir. Resetting will start.";
 				next;
 				progressbar "000000",5;
 				specialeffect2 EF_MAGICALATTHIT;
@@ -446,7 +430,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 				delequip .@part;
 				getitem .@sarah_item_id,1;
 				mes "[Chief Assistant]";
-				mes "Initialization completed.";
+				mes "Resetting completed.";
 				mes "Please find me if you need me.";
 			}
 			close;
