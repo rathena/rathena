@@ -316,3 +316,98 @@ S_Slot:
 	}
 	close;
 }
+
+glast_01,196,273,5	script	Portrait Collector#pcollector	4_M_OILMAN,{
+	disable_items;
+	if (MaxWeight - Weight < 1000) {
+		mes "Your bag is too heavy. Reduce some weight and come back.";
+		close;
+	}
+	mes "[Portrait Collector]";
+	mes "I have been collecting these portraits for a year now...";
+	mes "It is time to show my collection to the world.";
+	next;
+	mes "[Portrait Collector]";
+	mes "I'm willing to sell them for Coagulated Spells or Contaminated Magics.";
+	next;
+	switch (select("Ask about pricing", "Purchase White Knight Card", "Purchase Knight Khalitzburg Card", "End Conversation")) {
+		case 1:
+			mes "[Portrait Collector]";
+			mes "The price of a White Knight Card is 6,000 Coagulated Spells or 700 Contaminated Magics.";
+			next;
+			mes "[Portrait Collector]";
+			mes "The price of a Khalitzburg Knight Card is 10,000 Coagulated Spells or 1,000 Contaminated Magics.";
+			close;
+		case 2:
+			mes "[Portrait Collector]";
+			mes "How would you like to pay for your <ITEM>"+ getitemname(4608) +"<INFO>4608</INFO></ITEM>?";
+			cutin "백색의기사단카드",3;
+			next;
+			switch (select("^7777776,000 Coagulated Spells^000000", "^777777700 Contaminated Magics^000000", "End Conversation")) {
+				case 1:
+					if (countitem(6608) < 6000) {
+						mes "[Portrait Collector]";
+						mes "You don't have enough Coagulated Spells, please check your inventory.";
+						close;
+					}
+					mes "[Portrait Collector]";
+					mes "Here you are. Please take care of it.";
+					delitem 6608,6000; // Coagulated Spells
+					getitem 4608,1; // White Knight Card
+					close;
+				case 2:
+					if (countitem(6755) < 700) {
+						mes "[Portrait Collector]";
+						mes "You don't have enough Contaminated Magics, please check your inventory.";
+						close;
+					}
+					mes "[Portrait Collector]";
+					mes "Here you are. Please take care of it.";
+					delitem 6755,700; // Contaminated Magics
+					getitem 4608,1; // White Knight Card
+					close;
+				case 3:
+					break;
+			}
+			break;
+		case 3:
+			mes "[Portrait Collector]";
+			mes "How would you like to pay for your <ITEM>"+ getitemname(4609) +"<INFO>4609</INFO></ITEM>?";
+			cutin "칼리츠기사단카드",3;
+			next;
+			switch (select("^77777710,000 Coagulated Spells^000000", "^7777771,000 Contaminated Magics^000000", "End Conversation")) {
+				case 1:
+					if (countitem(6608) < 10000) {
+						mes "[Portrait Collector]";
+						mes "You don't have enough Coagulated Spells, please check your inventory.";
+						close;
+					}
+					mes "[Portrait Collector]";
+					mes "Here you are. Please take care of it.";
+					delitem 6608,10000; // Coagulated Spells
+					getitem 4609,1; // Khalitzburg Knight Card
+					close;
+				case 2:
+					if (countitem(6755) < 1000) {
+						mes "[Portrait Collector]";
+						mes "You don't have enough Contaminated Magics, please check your inventory.";
+						close;
+					}
+					mes "[Portrait Collector]";
+					mes "Here you are. Please take care of it.";
+					delitem 6755,1000; // Contaminated Magics
+					getitem 4609,1; // Khalitzburg Knight Card
+					close;
+				case 3:
+					break;
+			}
+			break;
+		case 4:
+			break;
+	}
+	mes "[Portrait Collector]";
+	mes "Come back if you decide you do want to purchase one.";
+	close2;
+	cutin "",255;
+	end;
+}
