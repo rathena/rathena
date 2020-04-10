@@ -194,7 +194,7 @@ xmas,240,294,3	script	Black Beard Joe#pa0829	4_M_05,{
 		mes "I will take 15 Bloody Coins for each try. I will enchant one slot amount for every 15 Coins. Of course, 3 is the maximum.";
 		next;
 		mes "[Black Beard Joe]";
-		mes "Well, it is so natural that the destruction rate will get higher as the upgrade level increases. I would recommend you to stop first or second try, tee-hee.";
+		mes "Enchanting won't fail but you may not get the ability you want.";
 		close;
 	case 2:
 		.@eq_num = EQI_ACC_R;
@@ -262,17 +262,17 @@ xmas,240,294,3	script	Black Beard Joe#pa0829	4_M_05,{
 		}
 		if (.@card[3] == 0) {
 			.@slot_num = 3;
-			mes "Okay, let's try the first enchantment. Usually, they are not broken. About 95% success rate?";
-			.@string$ = "You blow hot and cold, this fickle friend.!";
+			mes "Okay, let's try the first enchantment.";
+			.@string$ = "You blow hot and cold, this fickle friend!";
 		}
 		else if (.@card[2] == 0) {
 			.@slot_num = 2;
-			mes "Ho~ Second enchantment. Now it became dangerous. The success rate is about 70%. Do you want continue? The whole accessory will be blown if fail.";// custom
-			.@string$ = "You blow hot and cold, this fickle friend.!";
+			mes "Ho~ Second enchantment.";// custom
+			.@string$ = "You blow hot and cold, this fickle friend!";
 		}
 		else if (.@card[1] == 0) {
 			.@slot_num = 1;
-			mes "This is the last enchantment. Will you keep going? At this time, ^ff0000the success rate is below 50%^000000. Of course, it would be great if it is successfull... Hmm, I will follow your descision, but keep that in mind.";// custom
+			mes "This is the last enchantment.";// custom
 			.@string$ = "Wise! The third enchantment is too greedy.";// custom translation
 		}
 		else {
@@ -327,11 +327,11 @@ xmas,240,294,3	script	Black Beard Joe#pa0829	4_M_05,{
 	}
 	mes "[Black Beard Joe]";
 	if (.@slot_num == 3)
-		setarray .@range[0],550,1050;
+		setarray .@range[0],601,1050;
 	else if (.@slot_num == 2)
-		setarray .@range[0],450,1125;
+		setarray .@range[0],601,1125;
 	else if (.@slot_num == 1)
-		setarray .@range[0],1,1161;
+		setarray .@range[0],601,1161;
 	else {
 		mes "There is a problem, please come back again!";// custom
 		close;
@@ -476,6 +476,6 @@ xmas,240,294,3	script	Black Beard Joe#pa0829	4_M_05,{
 		specialeffect2 EF_REPAIRWEAPON;
 		close;
 	}
-	mes "Hmm.. By the way, you need to fill up Bloody Coins. You cannot even pay for the fee.";
+	mes "Hmm... you need more Bloody Coins. You can't even pay the fee.";
 	close;
 }
