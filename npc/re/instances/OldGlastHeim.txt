@@ -89,7 +89,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 			close;
 		}
 		if (is_party_leader() == true) {
-			.@menu$ = "Generate Time Gap ^00FF00(Normal)^000000";
+			.@menu$ = "Generate Time Gap ^0000FF(Normal)^000000";
 			.@menu_hard$ = "Generate Time Gap ^FF0000(Hard)^000000";
 		}
 		else {
@@ -120,7 +120,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 			close;
 		case 2:
 			mes "[Hugin]";
-			mes "^FF0000Hard^000000 difficulty is much more challenging than ^00FF00Normal^000000 difficulty.";
+			mes "^FF0000Hard^000000 difficulty is much more challenging than ^0000FFNormal^000000 difficulty.";
 			mes "Although it comes with far greater rewards.";
 			mes "Are you sure you want to take it on?";
 			switch( select( "Yes", "Cancel" ) ) {
