@@ -485,12 +485,20 @@ xmas,240,294,3	script	Black Beard Joe#pa0829	4_M_05,{
 L_Reset_Enchant:
 	mes "[Black Beard Joe]";
 	mes "I can reset enchantments on any equipment you have without fail, except accessories with 3 enchantments.";
-	mes "Be warned, this will also destory any cards on the equipment. The refinement level will be untouched.";
+	next;
+	mes "[Black Beard Joe]";
+	mes "Be warned, this will also destory any cards on the equipment.";
+	mes "The refinement level will be untouched.";
+	next;
+	mes "[Black Beard Joe]";
 	mes "To continue, I need ^0000FF200^000000 Bloody Coins, 1 Bloodstained Letter and 1 Unsent Letter.";
 	next;
-	if (select("Continue", "End conversation") == 2)
+	if (select("Continue", "Cancel") == 2) {
+		mes "[Black Beard Joe]";
+		mes "Fine with me. Let me know if you want to reset your equipment.";
 		close;
-	if (countitem(7642) < 200 && countitem(7643) < 1 && countitem(7644) < 1) {
+	}
+	if (countitem(7642) < 200 || countitem(7643) < 1 || countitem(7644) < 1) {
 		mes "[Black Beard Joe]";
 		mes "You don't have the items I need to continue.";
 		close;
@@ -540,6 +548,17 @@ L_Reset_Enchant:
 	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]))
 		close;
 
+	// Confirm player wants to proceed again
+	mes "[Black Beard Joe]";
+	mes "Are you sure you want me to reset your "+ getitemname(.@equip_id) +"?";
+	next;
+	if (select("Yes, do it", "No, I've changed my mind") == 2) {
+		mes "[Black Beard Joe]";
+		mes "Fine with me. Let me know if you want to reset your equipment.";
+		close;
+	}
+
+	// Reset equipment
 	.@refine = getequiprefinerycnt(.@part);
 	specialeffect2 EF_ANGEL2;
 	mes "[Black Beard Joe]";
