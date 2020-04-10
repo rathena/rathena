@@ -8473,12 +8473,12 @@ verus01,151,173,3	script	Fruit#Verus	4_F_FRUIT,{
 		}
 		next;
 		if (select( "Exchange", "Quit." ) == 1) {
-			if (countitem(6827) < 17) {
+			if (countitem(6827) < 10) {
 				mes "[Fruit]";
 				mes "Not enough!!!";
 				close3;
 			}
-			delitem 6827,17;// Intact Machine Component
+			delitem 6827,10;// Intact Machine Component
 			getitem .@item_id,1;// Runaway Chip
 			close3;
 		}
