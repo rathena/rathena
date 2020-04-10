@@ -100,7 +100,8 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 			setquest 12318;// Corrupted Soul Hunt
 		switch( select( .@menu$, .@menu_hard$, "Enter Old Glast Heim", "Cancel" ) ) {
 		case 1:
-			switch( instance_create(.@md_name$) ) {
+			.@instance_id = instance_create(.@md_name$);
+			switch(.@instance_id) {
 			case -3:
 				dispbottom "Memorial Dungeon, 'Old Glast Heim (Normal)' is already in progress.",0xFFFFFF;
 				close;
@@ -114,7 +115,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 			}
 			// Normal difficulty monsters start at ID 2464
 			// Hard difficulty monsters start at ID 3139
-			'mobOffset = 0;
+			set getvariableofinstance('mobOffset, .@instance_id), 0;
 			mes "[Hugin]";
 			mes "After the time gap opens, please tell me again.";
 			close;
@@ -129,7 +130,8 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 				case 2:
 					close;
 			}
-			switch( instance_create(.@md_name$) ) {
+			.@instance_id = instance_create(.@md_name$);
+			switch(.@instance_id) {
 			case -3:
 				dispbottom "Memorial Dungeon, 'Old Glast Heim (Hard)' is already in progress.",0xFFFFFF;
 				close;
@@ -143,7 +145,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 			}
 			// Normal difficulty monsters start at ID 2464
 			// Hard difficulty monsters start at ID 3139
-			'mobOffset = 675;
+			set getvariableofinstance('mobOffset, .@instance_id), 675;
 			mes "[Hugin]";
 			mes "After the time gap opens, please tell me again.";
 			close;
