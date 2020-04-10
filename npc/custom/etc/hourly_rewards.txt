@@ -62,7 +62,6 @@ OnHourlyRewards:
 			if(.s_GePard_ip){
 				query_logsql("DELETE FROM `hourly_rewards_log` WHERE `account_id`= '"+getcharid(3)+"'");
 			}
-			#Hourly_Rewards_Check = 0;
 			#Hourly_Ban = 1;
 			addtimer .s_time, strnpcinfo(3)+"::OnHourlyRewards";
 			end;
@@ -105,7 +104,6 @@ OnHourlyBan:
 		if(.s_GePard_ip){
 		query_logsql("DELETE FROM `hourly_rewards_log` WHERE `account_id`= '"+getcharid(3)+"'");
 		}
-		#Hourly_Rewards_Check = 0;
 		#Hourly_Ban = 1;
 		addtimer .s_time, strnpcinfo(3)+"::OnHourlyRewards";
 	}
@@ -116,7 +114,9 @@ OnHourlyUnban:
 end;
 
 OnClock0000:
-	// Reset all player variables when server reaches next day
+	// Reset all OFFLINE player variables when server reaches next day
+	query_sql("UPDATE `acc_reg_num` SET `value` = 0 WHERE `key` = '#Hourly_Rewards_Check'");
+	// Equivalent reset for ONLINE players
 	addrid(0);
 	#Hourly_Rewards_Check = 0;
 end;
