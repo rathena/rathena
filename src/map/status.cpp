@@ -66,6 +66,8 @@ bool running_npc_stat_calc_event; /// Indicate if OnPCStatCalcEvent is running.
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
 short current_equip_opt_index; /// Contains random option index of an equipped item. [Secret]
 
+uint16 SCDisabled[SC_MAX]; ///< List of disabled SC on map zones. [Cydh]
+
 /// Determine who will receive a clif_status_change packet for effects that require one to display correctly
 static uint16 StatusRelevantBLTypes[EFST_MAX];
 
@@ -113,8 +115,8 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type);
 static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP);
 static int status_get_sc_interval(enum sc_type type);
 
-static bool status_change_isDisabledOnMap_(std::shared_ptr<s_status_change_db> scdb, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
-#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_(status_db.find(type), mapdata_flag_vs2((m)), m->flag[MF_PVP] != 0, mapdata_flag_gvg2_no_te((m)), m->flag[MF_BATTLEGROUND] != 0, (m->zone << 3) != 0, mapdata_flag_gvg2_te((m))) )
+static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
+#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_(type, mapdata_flag_vs2((m)), m->flag[MF_PVP] != 0, mapdata_flag_gvg2_no_te((m)), m->flag[MF_BATTLEGROUND] != 0, (m->zone << 3) != 0, mapdata_flag_gvg2_te((m))) )
 
 const std::string SizeFixDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/size_fix.yml";
@@ -12650,17 +12652,17 @@ int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched)
  * @param mapIsTE: If the map us WOE TE
  * @return True - SC disabled on map; False - SC not disabled on map/Invalid SC
  */
-static bool status_change_isDisabledOnMap_(std::shared_ptr<s_status_change_db> scdb, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE)
+static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE)
 {
-	if (!scdb || !scdb->disabledon)
+	if (!CHK_SC(type))
 		return false;
 
-	if ((!mapIsVS && scdb->disabledon&1) ||
-		(mapIsPVP && scdb->disabledon&2) ||
-		(mapIsGVG && scdb->disabledon&4) ||
-		(mapIsBG && scdb->disabledon&8) ||
-		(mapIsTE && scdb->disabledon&16) ||
-		(scdb->disabledon&(mapZone)))
+	if ((!mapIsVS && SCDisabled[type]&1) ||
+		(mapIsPVP && SCDisabled[type]&2) ||
+		(mapIsGVG && SCDisabled[type]&4) ||
+		(mapIsBG && SCDisabled[type]&8) ||
+		(mapIsTE && SCDisabled[type]&16) ||
+		(SCDisabled[type]&(mapZone)))
 	{
 		return true;
 	}
@@ -12687,15 +12689,41 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 
 		for (const auto &it : status_db) {
 			sc_type type = static_cast<sc_type>(it.first);
-			std::shared_ptr<s_status_change_db> scdb;
 
-			if (!sc->data[type] || !(scdb = status_db.find(type)) || scdb->disabledon == 0)
+			if (!sc->data[type] || !SCDisabled[type])
 				continue;
 
-			if (status_change_isDisabledOnMap_(scdb, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapdata->zone, mapIsTE))
+			if (status_change_isDisabledOnMap_(type, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapdata->zone, mapIsTE))
 				status_change_end(bl, type, INVALID_TIMER);
 		}
 	}
+}
+
+/**
+ * Read status_disabled.txt file
+ * @param str: Fields passed from sv_readdb
+ * @param columns: Columns passed from sv_readdb function call
+ * @param current: Current row being read into SCDisabled array
+ * @return True - Successfully stored, False - Invalid SC
+ */
+static bool status_readdb_status_disabled(char **str, int columns, int current)
+{
+	int64 type = SC_NONE;
+
+	if (ISDIGIT(str[0][0]))
+		type = atoi(str[0]);
+	else {
+		if (!script_get_constant(str[0], &type))
+			type = SC_NONE;
+	}
+
+	if (type <= SC_NONE || type >= SC_MAX) {
+		ShowError("status_readdb_status_disabled: Invalid SC with type %s.\n", str[0]);
+		return false;
+	}
+
+	SCDisabled[type] = (unsigned int)atol(str[1]);
+	return true;
 }
 
 /**
@@ -13345,6 +13373,7 @@ void status_readdb(void)
 		}
 
 		status_readdb_attrfix(dbsubpath2,i > 0); // !TODO use sv_readdb ?
+		sv_readdb(dbsubpath1, "status_disabled.txt", ',', 2, 2, -1, &status_readdb_status_disabled, i > 0);
 
 		status_yaml_readdb_refine(dbsubpath2, "refine_db.yml");
 
@@ -13367,6 +13396,9 @@ void status_readdb(void)
  * Status db init and destroy.
  */
 void do_init_status(void) {
+	memset(SCDisabled, 0, sizeof(SCDisabled));
+	memset(StatusRelevantBLTypes, 0, sizeof(StatusRelevantBLTypes));
+
 	add_timer_func_list(status_change_timer,"status_change_timer");
 	add_timer_func_list(status_natural_heal_timer,"status_natural_heal_timer");
 	initDummyData();

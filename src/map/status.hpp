@@ -2376,7 +2376,6 @@ struct s_status_change_db {
 	script_code *script;		///< Executes this script when SC starts
 	t_tick min_duration;		///< Minimum duration effect (after all status reduction)
 	uint16 min_rate;			///< Minimum rate to be applied (after all status reduction)
-	uint32 disabledon;			///< SC disabled on map zones
 
 	~s_status_change_db()
 	{
