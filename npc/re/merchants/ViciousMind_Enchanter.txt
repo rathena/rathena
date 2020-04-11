@@ -1,0 +1,322 @@
+//===== rAthena Script =======================================
+//= Vicious Mind Weapon Random Option Enchanter
+//===== By ===================================================
+//= llchrisll
+//===== Version ==============================================
+//= 1.0 - Initial Version
+//===== Tested With ==========================================
+//= rAthena 03/26/2018 Revision
+//= GIT Hash: 333f0dddc8353663eacba0423751988c9bc38e34
+//===== Description ==========================================
+//= This script handles the random options for the Vicious Mind Weapons
+//  until rAthena changes the way the Random Option Database is handled.
+//= Instead of defining every possible random option for each option slot
+//  this enchanter will be used.
+//===== Comments =============================================
+//= ...
+//===== Credits ==============================================
+//= NovaRo for their Information regarding the possible Options.
+//============================================================
+prontera,158,179,4	script	Vicious Mind Enchanter	101,{
+
+mes .n$;
+mes "Hello, "+strcharinfo(0)+"!";
+mes "What can I do for you?";
+if(select("- Enchant Vicious Weapons:- Nevermind") - 1) close;
+next;
+mes .n$;
+mes "To apply an random properity to an Vicious Weapon, you need to have it equipped in your right hand.";
+mes "Also be warned, that what you get and with which value is completely random!";
+next;
+mes .n$;
+mes "First, let's see what you have equipped...:";
+next;
+set .@part,EQI_HAND_R; // Save equip location
+mes .n$;
+if(!getequipid(.@part)) {
+	mes "You don't have anything equipped!";
+	close;
+}
+switch(getequipid(.@part)) {
+	case 1400: // Spear
+	case 1450: // Lance
+	case 1800: // Knuckle
+	case 13455: // Saber
+	case 16041: // Mace
+	case 18121: // Bow
+	case 21016: // Two-Handed Sword
+	case 28008: // Katar
+	case 28107: // Two-Handed Axe
+	case 28706: // Dagger
+	set .@Type$,"P";
+	break;
+
+	case 1600: // Rod
+	case 2026: // Two-Handed Staff
+	case 28605: // Book
+	set .@Type$,"M";
+	break;
+
+	case 1900: // Violin
+	case 1996: // Wire
+	case 13128: // Revolver
+	case 13328: // Huuma Shuriken
+	set .@Type$,"R";
+	break;
+
+	default:
+	mes "This is not an Vicious Weapon, please be sure to equip one and come back again.";
+	close;
+}
+mes "Equipped Weapon: "+getitemname(getequipid(.@part));
+set .@ropt1,getequiprandomoption(.@part,0,ROA_ID);
+set .@ropt2,getequiprandomoption(.@part,1,ROA_ID);
+set .@ropt3,getequiprandomoption(.@part,2,ROA_ID);
+if(.@ropt1 || .@ropt2 || .@ropt2) {
+	mes " ";
+	mes "I'm sorry, but this weapon already has bonus properities applied.";
+	mes "Please choose a different one.";
+	close;
+}
+next;
+// Randomize each Option Slot:
+// Random Option 1
+set .@Opt1,rand(getarraysize(getd(".RandOpt1_"+.@Type$)));
+if(getd(".RandOpt1_"+.@Type$+"_MinV["+.@Opt1+"]") != getd(".RandOpt1_"+.@Type$+"_MaxV["+.@Opt1+"]"))
+	set .@Opt1_V,rand(getd(".RandOpt1_"+.@Type$+"_MinV["+.@Opt1+"]"),getd(".RandOpt1_"+.@Type$+"_MaxV["+.@Opt1+"]"));
+else
+	set .@Opt1_V,getd(".RandOpt1_"+.@Type$+"_MaxV["+.@Opt1+"]");
+
+// Random Option 2
+set .@Opt2,rand(getarraysize(getd(".RandOpt2_"+.@Type$)));
+if(getd(".RandOpt2_"+.@Type$+"_MinV["+.@Opt2+"]") != getd(".RandOpt2_"+.@Type$+"_MaxV["+.@Opt2+"]"))
+	set .@Opt2_V,rand(getd(".RandOpt2_"+.@Type$+"_MinV["+.@Opt2+"]"),getd(".RandOpt2_"+.@Type$+"_MaxV["+.@Opt2+"]"));
+else
+	set .@Opt2_V,getd(".RandOpt2_"+.@Type$+"_MaxV["+.@Opt2+"]");
+
+// Random Option 3
+set .@Opt3,rand(getarraysize(getd(".RandOpt3_"+.@Type$)));
+if(getd(".RandOpt3_"+.@Type$+"_MinV["+.@Opt3+"]") != getd(".RandOpt3_"+.@Type$+"_MaxV["+.@Opt3+"]"))
+	set .@Opt3_V,rand(getd(".RandOpt3_"+.@Type$+"_MinV["+.@Opt3+"]"),getd(".RandOpt3_"+.@Type$+"_MaxV["+.@Opt3+"]"));
+else
+	set .@Opt3_V,getd(".RandOpt3_"+.@Type$+"_MaxV["+.@Opt3+"]");
+
+// Apply options to equipped weapon
+setrandomoption(.@part,0,getd(".RandOpt1_"+.@Type$+"["+.@Opt1+"]"),.@Opt1_V,0);
+setrandomoption(.@part,1,getd(".RandOpt2_"+.@Type$+"["+.@Opt2+"]"),.@Opt2_V,0);
+setrandomoption(.@part,2,getd(".RandOpt3_"+.@Type$+"["+.@Opt3+"]"),.@Opt3_V,0);
+mes .n$;
+mes "Random bonus properities have been applied on your \""+getitemname(getequipid(.@part))+"\" successfully.";
+end;
+
+OnInit:
+set .n$,"[Vicious Enchanter]";
+// ========= Random Option Slot 1 =========
+// - Physical
+setarray .RandOpt1_P[0],RDMOPT_WEAPON_ATTR_NOTHING, // Weapon Element - Neutral
+					    RDMOPT_WEAPON_ATTR_WATER,	// Weapon Element - Water
+					    RDMOPT_WEAPON_ATTR_GROUND,	// Weapon Element - Earth
+					    RDMOPT_WEAPON_ATTR_FIRE,	// Weapon Element - Fire
+					    RDMOPT_WEAPON_ATTR_WIND,	// Weapon Element - Wind
+					    RDMOPT_WEAPON_ATTR_SAINT,	// Weapon Element - Holy
+					    RDMOPT_WEAPON_ATTR_DARKNESS,// Weapon Element - Dark
+					    RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET,	 	// Damage to Neutral Element
+					    RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET,	 	// Damage to Earth Element
+					    RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET,		 	// Damage to Fire Element
+					    RDMOPT_DAMAGE_PROPERTY_WATER_TARGET,	 	// Damage to Water Element
+					    RDMOPT_DAMAGE_PROPERTY_WIND_TARGET,		 	// Damage to Wind Element
+					    RDMOPT_DAMAGE_PROPERTY_POISON_TARGET,	 	// Damage to Poison Element
+					    RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET,	 	// Damage to Holy Element
+					    RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET,	 	// Damage to Dark Element
+					    RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET,	// Damage to Ghost Element
+					    RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET,		// Damage to Undead Element
+					    RDMOPT_HEAL_MODIFY_PERCENT, // Heal Power %
+					    RDMOPT_WEAPON_INDESTRUCTIBLE, // Weapon Instructible
+					    RDMOPT_DAMAGE_SIZE_PERFECT; // Size will be ignored
+					    // ToDo: // Recover 1000 of Damage lost from size penalties
+
+// - Magical
+setarray .RandOpt1_M[0],RDMOPT_WEAPON_ATTR_NOTHING, // Weapon Element - Neutral
+					    RDMOPT_WEAPON_ATTR_WATER,	// Weapon Element - Water
+					    RDMOPT_WEAPON_ATTR_GROUND,	// Weapon Element - Earth
+					    RDMOPT_WEAPON_ATTR_FIRE,	// Weapon Element - Fire
+					    RDMOPT_WEAPON_ATTR_WIND,	// Weapon Element - Wind
+					    RDMOPT_WEAPON_ATTR_SAINT,	// Weapon Element - Holy
+					    RDMOPT_WEAPON_ATTR_DARKNESS,// Weapon Element - Dark
+					    RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET,	 	// Damage to Neutral Element
+					    RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET,	 	// Damage to Earth Element
+					    RDMOPT_MDAMAGE_PROPERTY_FIRE_TARGET,	 	// Damage to Fire Element
+					    RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET,	 	// Damage to Water Element
+					    RDMOPT_MDAMAGE_PROPERTY_WIND_TARGET,	 	// Damage to Wind Element
+					    RDMOPT_MDAMAGE_PROPERTY_POISON_TARGET,		// Damage to Poison Element
+					    RDMOPT_MDAMAGE_PROPERTY_SAINT_TARGET,		// Damage to Holy Element
+					    RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET,	// Damage to Dark Element
+					    RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET,	// Damage to Ghost Element
+					    RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET,	 	// Damage to Undead Element
+					    RDMOPT_HEAL_MODIFY_PERCENT, // Heal Power %
+					    RDMOPT_WEAPON_INDESTRUCTIBLE, // Weapon Instructible
+					    RDMOPT_DAMAGE_SIZE_PERFECT; // Size will be ignored
+					    // ToDo: // Recover 1000 of Damage lost from size penalties
+
+// - Ranged
+setarray .RandOpt1_R[0],RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET,	 	// Damage to Neutral Element
+					    RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET,		// Damage to Earth Element
+					    RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET,		 	// Damage to Fire Element
+					    RDMOPT_DAMAGE_PROPERTY_WATER_TARGET,		// Damage to Water Element
+					    RDMOPT_DAMAGE_PROPERTY_WIND_TARGET,		 	// Damage to Wind Element
+					    RDMOPT_DAMAGE_PROPERTY_POISON_TARGET,		// Damage to Poison Element
+					    RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET,		// Damage to Holy Element
+					    RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET,	 	// Damage to Dark Element
+					    RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET,	// Damage to Ghost Element
+					    RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET,		// Damage to Undead Element
+					    RDMOPT_HEAL_MODIFY_PERCENT, // Heal Power %
+					    RDMOPT_WEAPON_INDESTRUCTIBLE, // Weapon Instructible
+					    RDMOPT_DAMAGE_SIZE_PERFECT; // Size will be ignored
+					    // ToDo: // Recover 1000 of Damage lost from size penalties
+
+// - Values
+// Note: When MinV and MaxV are the same, rand() will not be used!
+setarray .RandOpt1_P_MinV[0],0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,20,0,0;
+setarray .RandOpt1_P_MaxV[0],0,0,0,0,0,0,0,20,20,20,20,20,20,20,20,20,20,20,0,0;
+setarray .RandOpt1_M_MinV[0],0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,20,0,0;
+setarray .RandOpt1_M_MaxV[0],0,0,0,0,0,0,0,20,20,20,20,20,20,20,20,20,20,20,0,0;
+setarray .RandOpt1_R_MinV[0],1,1,1,1,1,1,1,1,1,1,20,0,0;
+setarray .RandOpt1_R_MaxV[0],20,20,20,20,20,20,20,20,20,20,20,0,0;
+
+// ========= Random Option Slot 2 =========
+// - Physical
+setarray .RandOpt2_P[0],RDMOPT_RACE_DAMAGE_NOTHING,	// Damage to Neutral Race
+					    RDMOPT_RACE_DAMAGE_UNDEAD,	// Damage to Undead Race
+					    RDMOPT_RACE_DAMAGE_ANIMAL,	// Damage to Animal Race
+					    RDMOPT_RACE_DAMAGE_PLANT,	// Damage to Plant Race
+					    RDMOPT_RACE_DAMAGE_INSECT,	// Damage to Insect Race
+					    RDMOPT_RACE_DAMAGE_FISHS,	// Damage to Fish Race
+					    RDMOPT_RACE_DAMAGE_DEVIL,	// Damage to Demon Race
+					    RDMOPT_RACE_DAMAGE_HUMAN,	// Damage to Human Race
+					    RDMOPT_RACE_DAMAGE_ANGEL,	// Damage to Angel Race
+					    RDMOPT_RACE_DAMAGE_DRAGON,	// Damage to Dragon Race
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_NOTHING,	// Bypass DEF of Neutral Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_UNDEAD,	// Bypass DEF of Undead Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_ANIMAL,	// Bypass DEF of Animal Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_PLANT,	// Bypass DEF of Plant Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_INSECT,	// Bypass DEF of Insect Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_FISHS,	// Bypass DEF of Fish Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_DEVIL,	// Bypass DEF of Demon Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_HUMAN,	// Bypass DEF of Human Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_ANGEL,	// Bypass DEF of Angel Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_DRAGON,	// Bypass DEF of Dragon Race
+					    RDMOPT_CLASS_DAMAGE_NORMAL_TARGET,	// Bypass DEF of Normal Class Enemies
+					    RDMOPT_CLASS_DAMAGE_BOSS_TARGET; // Damage to Boss monsters
+
+// - Magical
+setarray .RandOpt2_M[0],RDMOPT_RACE_MDAMAGE_NOTHING,// Damage to Neutral Race
+					    RDMOPT_RACE_MDAMAGE_UNDEAD,	// Damage to Undead Race
+					    RDMOPT_RACE_MDAMAGE_ANIMAL,	// Damage to Animal Race
+					    RDMOPT_RACE_MDAMAGE_PLANT,	// Damage to Plant Race
+					    RDMOPT_RACE_MDAMAGE_INSECT,	// Damage to Insect Race
+					    RDMOPT_RACE_MDAMAGE_FISHS,	// Damage to Fish Race
+					    RDMOPT_RACE_MDAMAGE_DEVIL,	// Damage to Devil Race
+					    RDMOPT_RACE_MDAMAGE_HUMAN,	// Damage to Human Race
+					    RDMOPT_RACE_MDAMAGE_ANGEL,	// Damage to Angel Race
+					    RDMOPT_RACE_MDAMAGE_DRAGON,	// Damage to Dragon Race
+						RDMOPT_RACE_IGNORE_MDEF_PERCENT_NOTHING,	// Bypass MDEF of Neutral Race
+					    RDMOPT_RACE_IGNORE_MDEF_PERCENT_UNDEAD,	// Bypass MDEF of Undead Race
+					    RDMOPT_RACE_IGNORE_MDEF_PERCENT_ANIMAL,	// Bypass MDEF of Animal Race
+					    RDMOPT_RACE_IGNORE_MDEF_PERCENT_PLANT,	// Bypass MDEF of Plant Race
+					    RDMOPT_RACE_IGNORE_MDEF_PERCENT_INSECT,	// Bypass MDEF of Insect Race
+					    RDMOPT_RACE_IGNORE_MDEF_PERCENT_FISHS,	// Bypass MDEF of Fish Race
+					    RDMOPT_RACE_IGNORE_MDEF_PERCENT_DEVIL,	// Bypass MDEF of Demon Race
+					    RDMOPT_RACE_IGNORE_MDEF_PERCENT_HUMAN,	// Bypass MDEF of Human Race
+					    RDMOPT_RACE_IGNORE_MDEF_PERCENT_ANGEL,	// Bypass MDEF of Angel Race
+					    RDMOPT_RACE_IGNORE_MDEF_PERCENT_DRAGON,	// Bypass MDEF of Dragon Race
+						RDMOPT_CLASS_MDAMAGE_NORMAL,	// Bypass MDEF of Normal Class Enemies
+					    RDMOPT_CLASS_MDAMAGE_BOSS; // Damage to Boss monsters
+
+// - Ranged
+setarray .RandOpt2_R[0],RDMOPT_RACE_DAMAGE_NOTHING,	// Damage to Neutral Race
+					    RDMOPT_RACE_DAMAGE_UNDEAD,	// Damage to Undead Race
+					    RDMOPT_RACE_DAMAGE_ANIMAL,	// Damage to Animal Race
+					    RDMOPT_RACE_DAMAGE_PLANT,	// Damage to Plant Race
+					    RDMOPT_RACE_DAMAGE_INSECT,	// Damage to Insect Race
+					    RDMOPT_RACE_DAMAGE_FISHS,	// Damage to Fish Race
+					    RDMOPT_RACE_DAMAGE_DEVIL,	// Damage to Demon Race
+					    RDMOPT_RACE_DAMAGE_HUMAN,	// Damage to Human Race
+					    RDMOPT_RACE_DAMAGE_ANGEL,	// Damage to Angel Race
+					    RDMOPT_RACE_DAMAGE_DRAGON,	// Damage to Dragon Race
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_NOTHING,	// Bypass DEF of Neutral Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_UNDEAD,	// Bypass DEF of Undead Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_ANIMAL,	// Bypass DEF of Animal Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_PLANT,	// Bypass DEF of Plant Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_INSECT,	// Bypass DEF of Insect Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_FISHS,	// Bypass DEF of Fish Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_DEVIL,	// Bypass DEF of Demon Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_HUMAN,	// Bypass DEF of Human Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_ANGEL,	// Bypass DEF of Angel Race
+					    RDMOPT_RACE_IGNORE_DEF_PERCENT_DRAGON,	// Bypass DEF of Dragon Race
+					    RDMOPT_CLASS_DAMAGE_NORMAL_TARGET,	// Bypass DEF of Normal Class Enemies
+					    RDMOPT_CLASS_DAMAGE_BOSS_TARGET; // Damage to Boss monsters
+
+// - Values
+// Note: When MinV and MaxV are the same, rand() will not be used!
+setarray .RandOpt2_P_MinV[0],1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,16,20;
+setarray .RandOpt2_P_MaxV[0],20,20,20,20,20,20,20,20,20,20,30,30,30,30,30,30,30,30,30,30,25,20;
+setarray .RandOpt2_M_MinV[0],1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,16,20;
+setarray .RandOpt2_M_MaxV[0],20,20,20,20,20,20,20,20,20,20,30,30,30,30,30,30,30,30,30,30,25,20;
+setarray .RandOpt2_R_MinV[0],1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,16,20;
+setarray .RandOpt2_R_MaxV[0],20,20,20,20,20,20,20,20,20,20,30,30,30,30,30,30,30,30,30,30,25,20;
+
+// ========= Random Option Slot 3 =========
+// - Physical
+setarray .RandOpt3_P[0],RDMOPT_VAR_STRAMOUNT, // STR
+					    RDMOPT_VAR_AGIAMOUNT, // AGI
+					    RDMOPT_VAR_VITAMOUNT, // VIT
+					    RDMOPT_VAR_INTAMOUNT, // INT
+					    RDMOPT_VAR_DEXAMOUNT, // DEX
+					    RDMOPT_VAR_LUKAMOUNT, // LUK
+					    RDMOPT_VAR_ATTPOWER,  // ATK
+					    RDMOPT_VAR_CRITICALSUCCESSVALUE, // Crit Chance
+					    RDMOPT_DAMAGE_CRI_TARGET,	// Crit Damage %
+					    RDMOPT_VAR_PLUSASPDPERCENT,	// ASPD %
+						RDMOPT_DEC_SPELL_CAST_TIME,	// Variable Cast Time -%
+					    RDMOPT_DEC_SPELL_DELAY_TIME,// Cast Delay -%
+					    RDMOPT_DEC_SP_CONSUMPTION;	// Skill SP Cost -%
+
+// - Magical
+setarray .RandOpt3_M[0],RDMOPT_VAR_STRAMOUNT, // STR
+					    RDMOPT_VAR_AGIAMOUNT, // AGI
+					    RDMOPT_VAR_VITAMOUNT, // VIT
+					    RDMOPT_VAR_INTAMOUNT, // INT
+					    RDMOPT_VAR_DEXAMOUNT, // DEX
+					    RDMOPT_VAR_LUKAMOUNT, // LUK
+					    RDMOPT_VAR_ATTMPOWER, // MATK
+						RDMOPT_DEC_SPELL_CAST_TIME,	// Variable Cast Time -%
+					    RDMOPT_DEC_SPELL_DELAY_TIME,// Cast Delay -%
+					    RDMOPT_DEC_SP_CONSUMPTION;	// Skill SP Cost -%
+
+// - Ranged
+setarray .RandOpt3_R[0],RDMOPT_VAR_STRAMOUNT, // STR
+					    RDMOPT_VAR_AGIAMOUNT, // AGI
+					    RDMOPT_VAR_VITAMOUNT, // VIT
+					    RDMOPT_VAR_INTAMOUNT, // INT
+					    RDMOPT_VAR_DEXAMOUNT, // DEX
+					    RDMOPT_VAR_LUKAMOUNT, // LUK
+					    RDMOPT_VAR_ATTPOWER,  // ATK
+						RDMOPT_VAR_ATTMPOWER, // MATK
+					    RDMOPT_VAR_CRITICALSUCCESSVALUE, // Crit Chance
+					    RDMOPT_DAMAGE_CRI_TARGET,	// Crit Damage %
+					    RDMOPT_VAR_PLUSASPDPERCENT,	// ASPD %
+						RDMOPT_DEC_SPELL_CAST_TIME,	// Variable Cast Time -%
+					    RDMOPT_DEC_SPELL_DELAY_TIME,// Cast Delay -%
+					    RDMOPT_DEC_SP_CONSUMPTION,	// Skill SP Cost -%
+						RDMOPT_RANGE_ATTACK_DAMAGE_TARGET; // Ranged Damage +%
+
+// - Values
+// Note: When MinV and MaxV are the same, rand() will not be used!
+setarray .RandOpt3_P_MinV[0],1,1,1,1,1,1,4,10,1,1,1,5,5;
+setarray .RandOpt3_P_MaxV[0],10,10,10,10,10,10,47,19,20,5,20,20,5;
+setarray .RandOpt3_M_MinV[0],1,1,1,1,1,1,4,1,5,5;
+setarray .RandOpt3_M_MaxV[0],10,10,10,10,10,10,50,20,20,5;
+setarray .RandOpt3_R_MinV[0],1,1,1,1,1,1,4,4,10,1,1,1,5,5,13;
+setarray .RandOpt3_R_MaxV[0],10,10,10,10,10,10,47,50,19,20,5,20,20,5,20;
+end;
+}

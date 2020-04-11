@@ -4972,7 +4972,7 @@
 6956,Captured_Sheep,Captured Sheep,3,10,,0,,,,,,,,,,,,,{},{},{}
 6957,Lamb_Fleece,Lamb Fleece,3,10,,0,,,,,,,,,,,,,{},{},{}
 6958,Lamb_Horns,Lamb Horns,3,10,,0,,,,,,,,,,,,,{},{},{}
-6960,Air_Stronghold_Key,Sky Fortress Key,3,10,,10,,,,,,,,,,,,,{},{},{}
+6960,Sky_Fortress_Key,Sky Fortress Key,3,600,,10,,,,,,,,,,,,,{},{},{}
 6961,Huge_Metal_Scrap,Huge Metal Scrap,3,10,0,1000,,,,,,,,,,,,,{},{},{}
 6962,Old_Fuel,Old Fuel,3,10,0,100,,,,,,,,,,,,,{},{},{}
 
@@ -12782,6 +12782,9 @@
 //===================================================================
 // More Costumes
 //===================================================================
+31024,Immortal_Cursed_Knight_Card,Immortal Cursed Knight Card,6,20,,10,,,,,,,,2,,,,,{ bonus bAtkRate,10; bonus5 bAutoSpell,2066,5,20,ATF_WEAPON,1; },{},{}
+31025,Immortal_Wind_Ghost_Card,Immortal Wind Ghost Card,6,20,,10,,,,,,,,2,,,,,{ bonus bMatkRate,10; bonus5 bAutoSpell,2450,5,20,ATF_MAGIC,1; },{},{}
+31026,Stephen_Jack_Ernest_Wolf_Card,Stephen Jack Ernest Wolf Card,6,20,,10,,,,,,,,2,,,,,{ bonus5 bAutoSpellWhenHit,2443,5,35,ATF_WEAPON,0; bonus5 bAutoSpellWhenHit,2444,5,80,ATF_MAGIC,0; autobonus "{ bonus bFlee,200; }",30,10000,BF_WEAPON; autobonus "{ bonus bSpeedRate,10; }",25,10000,BF_MAGIC; },{},{}
 31027,C_Pretty_Bear,Costume Pretty Bear,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1480,{},{},{}
 31028,C_Black_Cat_Hood,Costume Black Cat Hood,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1481,{},{},{}
 31029,C_Pig_Nose,Costume Pig Nose,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1482,{},{},{}
