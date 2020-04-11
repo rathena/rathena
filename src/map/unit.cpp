@@ -126,8 +126,8 @@ int unit_walktoxy_sub(struct block_list *bl)
 	else if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->class_ ) ){
 		// Respawn the NPC as player unit
 		unit_refresh( bl, true );
-#endif
 	}
+#endif
 	clif_move(ud);
 
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)

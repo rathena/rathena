@@ -34273,25 +34273,25 @@ Body:
       Id: Dummyskill
       Range:
         - Level: 1
-          Size: 2
+          Size: 1
         - Level: 2
-          Size: 2
+          Size: 1
         - Level: 3
-          Size: 3
+          Size: 1
         - Level: 4
-          Size: 3
+          Size: 2
         - Level: 5
-          Size: 4
+          Size: 2
         - Level: 6
-          Size: 0
+          Size: 2
         - Level: 7
-          Size: 0
+          Size: 3
         - Level: 8
-          Size: 0
+          Size: 3
         - Level: 9
-          Size: 0
+          Size: 3
         - Level: 10
-          Size: 0
+          Size: 4
       Interval: 1000
       Target: Enemy
       Flag:
