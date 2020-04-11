@@ -24,7 +24,7 @@
 	mes "to my homeland, Kunlun.";
 	mes "It is my honor to guide";
 	mes "such distinguished quests from";
-	mes "the Rune-Midgard kingdom.";
+	mes "the Rune-Midgarts kingdom.";
 	next;
 	switch(select("About Kunlun:Visit Kunlun:Cancel")) {
 	case 1:
@@ -134,7 +134,7 @@ gon_fild01,255,79,7	script	Kunlun Envoy#gon2	776,{
 	mes "[Wa Bai Hu]";
 	mes "So, did you enjoy your trip?";
 	mes "I guess it's the time for you to";
-	mes "go home. The ship to Rune-Midgard is ready to depart at any time.";
+	mes "go home. The ship to Rune-Midgarts is ready to depart at any time.";
 	next;
 	if (select("Go back to Alberta:Cancel") == 1) {
 		mes "[Wa Bai Hu]";

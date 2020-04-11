@@ -10,7 +10,7 @@
 #ifdef WIN32
 	#include <conio.h>
 #else
-	#include <sys/poll.h>
+	#include <poll.h>
 #endif
 
 #include "cbasetypes.hpp"
@@ -23,7 +23,6 @@ const char* MAP_CONF_NAME;
 const char* INTER_CONF_NAME;
 const char* LOG_CONF_NAME;
 const char* BATTLE_CONF_FILENAME;
-const char* ATCOMMAND_CONF_FILENAME;
 const char* SCRIPT_CONF_NAME;
 const char* GRF_PATH_FILENAME;
 //char confs
@@ -147,10 +146,6 @@ int cli_get_options(int argc, char ** argv) {
 				else if (strcmp(arg, "battle-config") == 0) {
 					if (opt_has_next_value(arg, i, argc))
 						BATTLE_CONF_FILENAME = argv[++i];
-				}
-				else if (strcmp(arg, "atcommand-config") == 0) {
-					if (opt_has_next_value(arg, i, argc))
-						ATCOMMAND_CONF_FILENAME = argv[++i];
 				}
 				else if (strcmp(arg, "script-config") == 0) {
 					if (opt_has_next_value(arg, i, argc))

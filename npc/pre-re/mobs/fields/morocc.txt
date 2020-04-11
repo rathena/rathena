@@ -9,11 +9,11 @@
 //===== Additional Comments: =================================
 //= 1.1 Official kRO 10.1 spawns [Playtester]
 //= 1.2 More accurate spawns [Playtester]
-//= 1.3 Added Morroc field 20, 21, and 22 spawns, as [L0ne_W0lf]
+//= 1.3 Added Morocc field 20, 21, and 22 spawns, as [L0ne_W0lf]
 //= 1.4 Updated spawns to reflect episode 12.1. [L0ne_W0lf]
 //= 1.5 Fixed Pheeroni spawn location. [Kisuka]
-//= 1.6 Added Satan MOrroc static spawn. [L0ne_W0lf]
-//=     Added 30s spawn time for all Morroc Shadows.
+//= 1.6 Added Satan Morocc static spawn. [L0ne_W0lf]
+//=     Added 30s spawn time for all Morocc Shadows.
 //= 1.7 Corrected MVP spawn variance. [L0ne_W0lf]
 //============================================================
 
@@ -299,10 +299,10 @@ moc_fild20,0,0	monster	Drops	1113,30
 moc_fild20,0,0	monster	Scorpion	1001,70
 moc_fild20,0,0	monster	Picky	1050,50
 moc_fild20,0,0	monster	Picky	1049,50
-moc_fild20,0,0	monster	Morroc's Shadow	1918,1,30000,0,0
-moc_fild20,0,0	monster	Morroc's Shadow	1919,1,30000,0,0
-moc_fild20,0,0	monster	Morroc's Shadow	1920,1,30000,0,0
-moc_fild20,0,0	monster	Morroc's Shadow	1921,1,30000,0,0
+moc_fild20,0,0	monster	Morocc's Shadow	1918,1,30000,0,0
+moc_fild20,0,0	monster	Morocc's Shadow	1919,1,30000,0,0
+moc_fild20,0,0	monster	Morocc's Shadow	1920,1,30000,0,0
+moc_fild20,0,0	monster	Morocc's Shadow	1921,1,30000,0,0
 
 //==================================================
 // moc_fild21 - Dimensional Gorge
@@ -310,16 +310,16 @@ moc_fild20,0,0	monster	Morroc's Shadow	1921,1,30000,0,0
 moc_fild21,0,0	monster	Golem	1040,61
 moc_fild21,0,0	monster	Stalactic Golem	1278,46
 moc_fild21,0,0	monster	Lava Golem	1366,46
-moc_fild21,0,0	monster	Morroc's Shadow	1918,46,30000,0,0
-moc_fild21,0,0	monster	Morroc's Shadow	1919,46,30000,0,0
-moc_fild21,0,0	monster	Morroc's Shadow	1920,46,30000,0,0
-moc_fild21,0,0	monster	Morroc's Shadow	1921,34,30000,0,0
+moc_fild21,0,0	monster	Morocc's Shadow	1918,46,30000,0,0
+moc_fild21,0,0	monster	Morocc's Shadow	1919,46,30000,0,0
+moc_fild21,0,0	monster	Morocc's Shadow	1920,46,30000,0,0
+moc_fild21,0,0	monster	Morocc's Shadow	1921,34,30000,0,0
 
 //==================================================
 // moc_fild22 - Dimensional Gorge
 //==================================================
-moc_fild22,0,0	monster	Morroc's Shadow	1918,60,30000,0,0
-moc_fild22,0,0	monster	Morroc's Shadow	1919,60,30000,0,0
-moc_fild22,0,0	monster	Morroc's Shadow	1920,60,30000,0,0
-moc_fild22,0,0	monster	Morroc's Shadow	1921,25,30000,0,0
-moc_fild22,0,0	monster	Wounded Satan Morroc	1917,1,43200000,3600000
+moc_fild22,0,0	monster	Morocc's Shadow	1918,60,30000,0,0
+moc_fild22,0,0	monster	Morocc's Shadow	1919,60,30000,0,0
+moc_fild22,0,0	monster	Morocc's Shadow	1920,60,30000,0,0
+moc_fild22,0,0	monster	Morocc's Shadow	1921,25,30000,0,0
+moc_fild22,0,0	monster	Wounded Satan Morocc	1917,1,43200000,3600000

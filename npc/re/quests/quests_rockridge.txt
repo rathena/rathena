@@ -163,8 +163,7 @@ OnTouch:
 	end;
 
 OnInit:
-	questinfo 7790, QTYPE_QUEST, 1;
-	setquestinfo_level 7790,100,175;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 100 && !isbegin_quest(7790)" );
 	end;
 }
 
@@ -238,9 +237,9 @@ harboro1,80,218,5	script	Costello#harboro1	10210,{
 		mes "[Costello]";
 		mes "Go to the Sheriff and tell him that you came to help with the Buffalo Bandits situation. He'll tell you what to do.";
 		mes "Please help Pink Rose? I mean, Rock Ridge.";
+		rock_main_quest = 2;
 		erasequest 7791;
 		setquest 7792;// Problems in Rock Ridge 2
-		rock_main_quest = 2;
 		next;
 		select("Who's the sheriff?");
 		mes "[Costello]";
@@ -307,9 +306,9 @@ harboro1,80,218,5	script	Costello#harboro1	10210,{
 		next;
 		mes "^4d4dffCostello is looking around him and babbling anxiously.";
 		mes "I should go tell Wyatt that Costello wants to hear what the bandits have to say.^000000";
+		rock_main_quest = 4;
 		erasequest 7793;
 		setquest 7794;// Expected Response
-		rock_main_quest = 4;
 		close;
 	}
 	if (rock_main_quest == 4 || rock_main_quest == 5) {
@@ -417,10 +416,7 @@ harboro1,80,218,5	script	Costello#harboro1	10210,{
 	close;
 
 OnInit:
-	questinfo 7792, QTYPE_QUEST, 1;
-	setquestinfo_req 7792,7791,1;
-	questinfo 7794, QTYPE_QUEST, 1;
-	setquestinfo_req 7794,7793,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 1 || rock_main_quest == 3" );
 	end;
 }
 
@@ -539,9 +535,9 @@ har_in01,20,30,5	script	Wyatt Warp#har_in01	10211,{
 		mes "If you don't think you can find it, then just follow the railroad.";
 		mes "We'll wait for him by the train.";
 		mes "Let's go see how ugly that leader of the Buffalo Bandits, ^4d4dffJohnny James^000000, is.";
+		rock_main_quest = 5;
 		erasequest 7794;// Expected Response
 		setquest 7795;// Negotiation on the Railroad
-		rock_main_quest = 5;
 		close;
 	}
 	if (rock_main_quest == 5) {
@@ -598,6 +594,7 @@ har_in01,20,30,5	script	Wyatt Warp#har_in01	10211,{
 		mes "but Ivoka has a different idea.";
 		mes "Let's listen to what he has to say.";
 		rock_main_quest = 7;
+		questinfo_refresh();	// the update of the variable refreshes questinfo
 		close;
 	}
 	if (rock_main_quest == 7) {
@@ -627,9 +624,9 @@ har_in01,20,30,5	script	Wyatt Warp#har_in01	10211,{
 		next;
 		mes "[Wyatt Warp]";
 		mes "Who knows? You might find something to use against the Buffalo Bandits.";
+		rock_main_quest = 10;
 		erasequest 7798;
 		setquest 7799;// Shawn McCurdy's Weapon 1
-		rock_main_quest = 10;
 		close;
 	}
 	if (rock_main_quest == 10) {
@@ -729,9 +726,9 @@ har_in01,20,30,5	script	Wyatt Warp#har_in01	10211,{
 		mes "Now go to ^4d4dffShawn McCurdy^000000, will you?";
 		mes "We're almost done with the bandits!";
 		mes "Hang in there!";
+		rock_main_quest = 16;
 		erasequest 7804;// Location of the Ores
 		setquest 7805;// Location of the Ores 2
-		rock_main_quest = 16;
 		close;
 	}
 	if (rock_main_quest == 16) {
@@ -801,14 +798,14 @@ har_in01,20,30,5	script	Wyatt Warp#har_in01	10211,{
 		mes "Here, you've earned it.";
 		mes "Be proud of yourself.";
 		mes "And this is reward money.";
+		rock_main_quest = 22;
 		delitem 25248,1;// Purple_Ore_Crate
+		erasequest 7808;// Case Solved
 		setquest 9457;// Solved Anyway
 		completequest 9457;// Solved Anyway
-		completequest 7808;// Case Solved
 		getitem .@item_id[.@s],1;// Sheriff's_Left_Badge
 		getitem 25250,200;// Rock_Ridge_Coin
 		getexp 2500000,1200000;
-		rock_main_quest = 22;
 		close;
 	}
 	mes "[Wyatt Warp]";
@@ -818,18 +815,9 @@ har_in01,20,30,5	script	Wyatt Warp#har_in01	10211,{
 	close;
 
 OnInit:
-	questinfo 7793, QTYPE_QUEST, 1;
-	setquestinfo_req 7793,7792,1;
-	questinfo 7795, QTYPE_QUEST, 1;
-	setquestinfo_req 7795,7794,1;
-	questinfo 7797, QTYPE_QUEST, 1;
-	setquestinfo_req 7797,7796,1;
-	questinfo 7799, QTYPE_QUEST, 1;
-	setquestinfo_req 7799,7798,1;
-	questinfo 7809, QTYPE_QUEST, 1;
-	setquestinfo_req 7809,7803,1;
-	questinfo 7805, QTYPE_QUEST, 1;
-	setquestinfo_req 7805,7804,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW,
+		"rock_main_quest == 2 || rock_main_quest == 4 || rock_main_quest == 6 || rock_main_quest == 9 || rock_main_quest == 15 || rock_main_quest == 21" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 14 && isbegin_quest(7809) == 0 && countitem(25247) > 0" );
 	end;
 }
 
@@ -918,9 +906,9 @@ har_in01,14,24,5	script	Ivoka Skudi#rr03	10212,{
 		mes "Ivoka's right.";
 		mes "Let the spy see you talk to Johnny.";
 		mes "And convince Johnny that Albert has given up on you.";
+		rock_main_quest = 8;
 		erasequest 7796;
 		setquest 7797;// Hear Me Out 1
-		rock_main_quest = 8;
 		close;
 	}
 	if (rock_main_quest == 8) {
@@ -956,8 +944,7 @@ har_in01,14,24,5	script	Ivoka Skudi#rr03	10212,{
 	close;
 
 OnInit:
-	questinfo 7797, QTYPE_QUEST, 1;
-	setquestinfo_req 7797,7796,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 6 || rock_main_quest == 7" );
 	end;
 }
 
@@ -1026,7 +1013,7 @@ har_in01,89,26,5	script	Johnny James#har_in01	10213,{
 		setpcblock PCBLOCK_NPC, true;
 		npctalk "You sneaky bastards, how dare you show up again? Go to hell!", "", bc_self;
 		sleep2 2000;
-		classchange( 10212, "Ivoka Skudi#har02", bc_self );
+		cloakoffnpc  "Ivoka Skudi#har02", getcharid(0);
 		setpcblock PCBLOCK_NPC, false;
 		npctalk "Ah, you'd better show some respect to our future mayor.", "Ivoka Skudi#har02", bc_self;
 		mes "[Ivoka Skudi]";
@@ -1134,9 +1121,9 @@ har_in01,89,26,5	script	Johnny James#har_in01	10213,{
 		mes "...Damn it!";
 		mes "Don't come back until you have ^4d4dffAlbert's mane^000000 to show to me, got it?";
 		mes "Now get outta here!";
+		rock_main_quest = 9;
 		erasequest 7797;
 		setquest 7798;// Perfectly Prime
-		rock_main_quest = 9;
 		close;
 	}
 	if (rock_main_quest < 14) {
@@ -1187,10 +1174,10 @@ har_in01,89,26,5	script	Johnny James#har_in01	10213,{
 		mes "It'll take many of you wimps to lift the elevator.";
 		mes "Good luck.";
 		mes "And don't forget to tell the sheriff I cooperated.";
+		rock_main_quest = 15;
 		delitem 25249,1;// Buffalo_Bandit_Mane
 		erasequest 7803;// Happy for Broken Trust
 		setquest 7804;// Location of the Ores
-		rock_main_quest = 15;
 		close;
 	}
 	if (rock_main_quest == 15) {
@@ -1205,47 +1192,55 @@ har_in01,89,26,5	script	Johnny James#har_in01	10213,{
 	close;
 
 OnInit:
-	questinfo 7798, QTYPE_QUEST, 1;
-	setquestinfo_req 7798,7797,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 8 || rock_main_quest == 14" );
 	end;
 }
 
-har_in01,88,22,6	script	Ivoka Skudi#har02	HIDDEN_WARP_NPC,{
+har_in01,88,22,6	script	Ivoka Skudi#har02	10212,{
 	if (rock_main_quest == 9) {
 		mes "[Ivoka Skudi]";
 		mes "(Whispering) He's more simpleminded than I thought. Let's go report to the Sheriff.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "Ivoka Skudi#har02", bc_self );
+		cloakonnpc  "Ivoka Skudi#har02", getcharid(0);
 		end;
 	}
+	end;
+OnInit:
+	cloakonnpc  "Ivoka Skudi#har02";
+	end;
 }
 
 // Fild 1
-rockrdg1,160,306,3	script	Johnny James#revt04	HIDDEN_WARP_NPC,{ end; }
-rockrdg1,168,306,3	duplicate(Johnny James#revt04)	Albert Ford#revt08	HIDDEN_WARP_NPC
-rockrdg1,156,302,7	duplicate(Johnny James#revt04)	Ivoka Skudi#revt02	HIDDEN_WARP_NPC
-rockrdg1,156,306,5	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt01	HIDDEN_WARP_NPC
-rockrdg1,161,302,1	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt02	HIDDEN_WARP_NPC
-rockrdg1,164,306,3	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt03	HIDDEN_WARP_NPC
+rockrdg1,160,306,3	script	Johnny James#revt04	10213,{
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
+}
+rockrdg1,168,306,3	duplicate(Johnny James#revt04)	Albert Ford#revt08	10214
+rockrdg1,156,302,7	duplicate(Johnny James#revt04)	Ivoka Skudi#revt02	10212
+rockrdg1,156,306,5	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt01	10212
+rockrdg1,161,302,1	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt02	10212
+rockrdg1,164,306,3	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt03	10212
 
 rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 	if (rock_main_quest == 5) {
 		setpcblock PCBLOCK_NPC, true;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I think this is the place, but maybe I came too early.", bc_self;
 		sleep2 3000;
-		classchange( 10213, "Johnny James#revt04", bc_self );
+		cloakoffnpc "Johnny James#revt04", getcharid(0);
 		emotion ET_QUESTION, getnpcid(0, "Johnny James#revt04");
 		sleep2 200;
 		npctalk "Who's this? You're not the one I was expecting.", "Johnny James#revt04", bc_self;
 		sleep2 1000;
-		classchange( 10214, "Albert Ford#revt08", bc_self );
+		cloakoffnpc "Albert Ford#revt08", getcharid(0);
 		npctalk "Hey Boss, I told you not to go without me.", "Albert Ford#revt08", bc_self;
 		sleep2 2000;
 		npctalk "Mm? I don't remember if Costello looks like that.", "Albert Ford#revt08", bc_self;
 		sleep2 1500;
 		npctalk "Hey, I'm having an important meeting here. Scram!", "Johnny James#revt04", bc_self;
 		sleep2 3000;
-		classchange( 10211, "Wyatt Warp#revt03", bc_self );
+		cloakoffnpc "Wyatt Warp#revt03", getcharid(0);
 		npctalk "Johnny James? You shouldn't be so rude to the Officer.", "Wyatt Warp#revt03", bc_self;
 		sleep2 2500;
 		npctalk "Ah, the sheriff's here. Who's that with you? I told you I wanted to talk to the mayor.", "Johnny James#revt04", bc_self;
@@ -1277,14 +1272,14 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 		sleep2 500;
 		specialeffect EF_SCREEN_QUAKE,AREA,"Johnny James#revt04";
 		sleep2 200;
-		classchange( 10212, "Ivoka Skudi#revt02", bc_self );
+		cloakoffnpc "Ivoka Skudi#revt02", getcharid(0);
 		npctalk "Freeze!", "Ivoka Skudi#revt02", bc_self;
 		sleep2 800;
 		specialeffect EF_NPC_STOP,AREA,"Johnny James#revt04";
 		sleep2 200;
-		classchange( 10212, "Cactus Gunslinger#revt01", bc_self );
-		classchange( 10212, "Cactus Gunslinger#revt02", bc_self );
-		classchange( 10212, "Cactus Gunslinger#revt03", bc_self );
+		cloakoffnpc "Cactus Gunslinger#revt01", getcharid(0);
+		cloakoffnpc "Cactus Gunslinger#revt02", getcharid(0);
+		cloakoffnpc "Cactus Gunslinger#revt03", getcharid(0);
 		npctalk "Freeze!", "Cactus Gunslinger#revt01", bc_self;
 		npctalk "You're trapped", "Cactus Gunslinger#revt03", bc_self;
 		npctalk "Buffaloes!", "Cactus Gunslinger#revt02", bc_self;
@@ -1307,7 +1302,7 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 		sleep2 2000;
 		npctalk "I-I'll go bring the rest of our gang!", "Albert Ford#revt08", bc_self;
 		sleep2 1000;
-		classchange( HIDDEN_WARP_NPC, "Albert Ford#revt08", bc_self );
+		cloakonnpc "Albert Ford#revt08", getcharid(0);
 		npctalk "WHAT?", "Johnny James#revt04", bc_self;
 		sleep2 1000;
 		npctalk "ALBERT!", "Johnny James#revt04", bc_self;
@@ -1332,29 +1327,28 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 		sleep2 1000;
 		npctalk "Guys, let's go!", "Ivoka Skudi#revt02", bc_self;
 		sleep2 2000;
-		classchange( HIDDEN_WARP_NPC, "Ivoka Skudi#revt02", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Cactus Gunslinger#revt01", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Cactus Gunslinger#revt02", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Cactus Gunslinger#revt03", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Johnny James#revt04", bc_self );
+		cloakonnpc "Ivoka Skudi#revt02", getcharid(0);
+		cloakonnpc "Cactus Gunslinger#revt01", getcharid(0);
+		cloakonnpc "Cactus Gunslinger#revt02", getcharid(0);
+		cloakonnpc "Cactus Gunslinger#revt03", getcharid(0);
+		cloakonnpc "Johnny James#revt04", getcharid(0);
 		sleep2 2000;
 		npctalk "Let's go back, shall we?", "Wyatt Warp#revt03", bc_self;
+		rock_main_quest = 6;
 		erasequest 7795;
 		setquest 7796;// Unexpected Arrest
-		rock_main_quest = 6;
 		setpcblock PCBLOCK_NPC, false;
-		close;
+		end;
 	}
 	mes "It's worthless and abandoned.";
 	close;
 
 OnInit:
-	questinfo 7796, QTYPE_QUEST, 1;
-	setquestinfo_req 7796,7795,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 5" );
 	end;
 }
 
-rockrdg1,153,303,5	script	Wyatt Warp#revt03	HIDDEN_WARP_NPC,{
+rockrdg1,153,303,5	script	Wyatt Warp#revt03	10211,{
 	if (rock_main_quest == 6) {
 		mes "[Wyatt Warp]";
 		mes "Ivoka's plan worked flawlessly.";
@@ -1371,9 +1365,13 @@ rockrdg1,153,303,5	script	Wyatt Warp#revt03	HIDDEN_WARP_NPC,{
 		mes "[Wyatt Warp]";
 		mes "Let's go back to my office.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc  "Wyatt Warp#revt03", getcharid(0);
 		end;
 	}
+	end;
+OnInit:
+	cloakonnpc "Wyatt Warp#revt03";
+	end;
 }
 
 harboro1,288,193,5	script	Shawn McCurdy#harboro1	10215,{
@@ -1462,9 +1460,9 @@ harboro1,288,193,5	script	Shawn McCurdy#harboro1	10215,{
 		mes "[Shawn McCurdy]";
 		mes "The entrance to the second floor of the mine is ^4d4dfffarther south from the main entrance of the mine^000000.";
 		mes "I need to make some arrangements. I'll meet you there.";
+		rock_main_quest = 11;
 		erasequest 7799;
 		setquest 7800;// Shawn McCurdy's Weapon 2
-		rock_main_quest = 11;
 		close;
 	}
 	if (rock_main_quest == 11) {
@@ -1507,8 +1505,7 @@ harboro1,288,193,5	script	Shawn McCurdy#harboro1	10215,{
 	end;
 
 OnInit:
-	questinfo 7800, QTYPE_QUEST, 1;
-	setquestinfo_req 7800,7799,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 10" );
 	end;
 }
 
@@ -1594,8 +1591,7 @@ rockrdg2,347,216,5	script	Shawn McCurdy#rockrdg2	10215,{
 	close;
 
 OnInit:
-	questinfo 7801, QTYPE_QUEST, 1;
-	setquestinfo_req 7801,7800,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 11 || rock_main_quest == 12" );
 	end;
 }
 
@@ -1610,9 +1606,9 @@ rockmi2,10,86,5	script	Shawn McCurdy#rockmi2	10215,{
 		mes "[Shawn McCurdy]";
 		mes "In the meantime, I'll check the pulley that we need to use to go back up.";
 		mes "We made it in a hurry, so it's a bit unsafe sometimes. Hah hah.";
+		rock_main_quest = 12;
 		erasequest 7800;
 		setquest 7801;// Shawn McCurdy's Weapon 3
-		rock_main_quest = 12;
 		close;
 	}
 	if (rock_main_quest == 12) {
@@ -1652,9 +1648,9 @@ rockmi2,10,86,5	script	Shawn McCurdy#rockmi2	10215,{
 		mes "[Shawn McCurdy]";
 		mes "The bandits might stand guard around the mine.";
 		mes "Please be careful.";
+		rock_main_quest = 17;
 		erasequest 7805;// Location of the Ores 2
 		setquest 7806;// Location of the Ores 3
-		rock_main_quest = 17;
 		close;
 	}
 	if (rock_main_quest == 17) {
@@ -1709,8 +1705,7 @@ rockmi2,10,86,5	script	Shawn McCurdy#rockmi2	10215,{
 	end;
 
 OnInit:
-	questinfo 7801, QTYPE_QUEST, 1;
-	setquestinfo_req 7801,7800,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 11 || rock_main_quest == 16" );
 	end;
 }
 
@@ -1765,14 +1760,14 @@ rockrdg2,279,313,3	script	Concaved Rock#revt09	4_ENERGY_RED,{
 			close;
 		}
 		npctalk "Boss? Is that you, Boss?", "Albert Ford#rockrdg2", bc_self;
-		classchange( 10214, "Albert Ford#rockrdg2", bc_self );
+		cloakoffnpc "Albert Ford#rockrdg2", getcharid(0);
 		close;
 	}
 	if (rock_main_quest == 14) {
 		if (countitem(25249) < 1) {
 			mes "I knocked on the signaling rock, and Albert Ford came out running.";
 			npctalk "Who are you?!", "Albert Ford#rockrdg2", bc_self;
-			classchange( 10214, "Albert Ford#rockrdg2", bc_self );
+			cloakoffnpc "Albert Ford#rockrdg2", getcharid(0);
 			close;
 		}
 		mes "I don't have to use this right now.";
@@ -1785,7 +1780,7 @@ rockrdg2,279,313,3	script	Concaved Rock#revt09	4_ENERGY_RED,{
 		}
 		mes "I knocked on the signaling rock, and Albert Ford came out running.";
 		npctalk "Who are you?!", "Albert Ford#rockrdg2", bc_self;
-		classchange( 10214, "Albert Ford#rockrdg2", bc_self );
+		cloakoffnpc "Albert Ford#rockrdg2", getcharid(0);
 		close;
 	}
 	mes "This rock creates a deep, echoing sound when struck.";
@@ -1793,7 +1788,7 @@ rockrdg2,279,313,3	script	Concaved Rock#revt09	4_ENERGY_RED,{
 	close;
 }
 
-rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
+rockrdg2,295,309,3	script	Albert Ford#rockrdg2	10214,{
 	disable_items;
 	.@account_id = getcharid(3);
 	.@player_name$ = strcharinfo(0);
@@ -1985,7 +1980,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 		setquest 7803;// Happy for Broken Trust
 		rock_main_quest = 14;
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc strnpcinfo(0), getcharid(0);
 		end;
 	}
 	if (rock_main_quest == 14 && countitem(25249) < 1) {
@@ -2003,7 +1998,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 		mes "Here, take it.";
 		getitem 25249,1;// Buffalo_Bandit_Mane
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc strnpcinfo(0), getcharid(0);
 		end;
 	}
 	if (rock_main_quest == 20 && checkquest(7807,HUNTING) == 2) {
@@ -2015,7 +2010,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 			mes "What? What is it?";
 			mes "Don't call me unless you have something to tell me!";
 			close2;
-			classchange( HIDDEN_WARP_NPC, "", bc_self );
+			cloakonnpc strnpcinfo(0), getcharid(0);
 			end;
 		}
 		mes "[Albert Ford]";
@@ -2116,10 +2111,14 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 			setquest 7808;// Case Solved
 			rock_main_quest = 21;
 			close2;
-			classchange( HIDDEN_WARP_NPC, "", bc_self );
+			cloakonnpc strnpcinfo(0), getcharid(0);
 		}
 		end;
 	}
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 
@@ -2362,8 +2361,11 @@ rockrdg1,341,133,3	script	Mrs. Cacturon#rrrem01	10220,{
 		close;
 	}
 	end;
-
-// fix me : questinfo when main quest completed only, playtime 2 or hunting 2
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 22 && (!isbegin_quest(16078) || (checkquest(16078,HUNTING) == 2 && countitem(25246) >= 5))" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 22 && checkquest(16080,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 22 && checkquest(16079,PLAYTIME) == 2" );
+	end;
 }
 
 rockrdg1,339,134,3	script	Little Lecter#rrrem02	10222,{
@@ -2417,7 +2419,7 @@ function	script	F_cacturon	{
 		}
 		if (getstrlen(strnpcinfo(2)) < 3)
 			.@string$ = "_bis";
-		classchange( HIDDEN_WARP_NPC, "Suspicious Sand Mound#" + strnpcinfo(2) + .@string$, bc_self );
+		cloakonnpc "Suspicious Sand Mound#" + strnpcinfo(2) + .@string$, getcharid(0);
 		close;
 	}
 	mes "- Someone must have piled this mound of sand. -";
@@ -3301,7 +3303,35 @@ harboro1,357,155,3	script	Steel Vigilante#1	4_M_MASKMAN,{
 		else npctalk "Enthusiastic Job Seeker: I want to work, too!", "Enthusiastic Job Seeker#11";
 		end;
 	}
-	getexp 8640,0;	// fix me: seem to be (base exp = count * mob base exp, job exp = count * mob job exp)
+	switch(.@quest_id) {
+	case 12391:// Buffaloes with Rifles
+		.@mob_id = 3736;
+		.@count = 15;
+		break;
+	case 12392:// Punishing the Red Masks
+		.@mob_id = 3737;
+		.@count = 15;
+		break;
+	case 12393:// Eye Patch Desperadoes
+		.@mob_id = 3738;
+		.@count = 15;
+		break;
+	case 12394:// Exterminate Gray Four-legged Beasts
+		.@mob_id = 3739;
+		.@count = 20;
+		break;
+	case 12395:// Exterminate Swamp Arclouzes
+		.@mob_id = 3787;
+		.@count = 10;
+		break;
+	case 12396:// Exterminate Brown Rats
+		.@mob_id = 3788;
+		.@count = 10;
+		break;
+	}
+	.@base_exp = getmonsterinfo(.@mob_id, MOB_BASEEXP) * .@count;
+	.@job_exp = getmonsterinfo(.@mob_id, MOB_JOBEXP) * .@count;
+	getexp .@base_exp, .@job_exp;
 	getitem 25250,2;// Rock Ridge Coin
 	erasequest .@quest_id;
 	setquest 12390;// Relieved for Now
@@ -3401,7 +3431,27 @@ harboro1,357,152,3	script	Steel Vigilante#2	4_M_ACROSS,{
 			end;
 		}
 	}
-	getexp 50800,47160;// fix me: seem to be (base exp = count * mob base exp, job exp = count * mob job exp)
+	switch(.@quest_id) {
+	case 12399:// Hunt Heinous Criminals
+		.@mob_id = 3747;
+		.@count = 10;
+		break;
+	case 12400:// Hunt Heinous Criminals
+		.@mob_id = 3748;
+		.@count = 10;
+		break;
+	case 12401:// Hunt Heinous Criminals
+		.@mob_id = 3749;
+		.@count = 10;
+		break;
+	case 12402:// Eliminate Dangerous Gas
+		.@mob_id = 3740;
+		.@count = 10;
+		break;
+	}
+	.@base_exp = getmonsterinfo(.@mob_id, MOB_BASEEXP) * .@count;
+	.@job_exp = getmonsterinfo(.@mob_id, MOB_JOBEXP) * .@count;
+	getexp .@base_exp, .@job_exp;
 	getitem 25250,3;// Rock Ridge Coin
 	erasequest .@quest_id;
 	setquest 12398;// You're Good
@@ -4319,7 +4369,11 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 	}
 	end;
 
-// fix me : questinfo when playtime 2
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 22 && !isbegin_quest(14672) && checkquest(14673,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 22 && checkquest(14672,HUNTING) == 2 && countitem(25277) > 9 && countitem(6213) > 0" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 22 && checkquest(14673,PLAYTIME) == 2" );
+	end;
 }
 
 harboro2,166,80,5	script	Traces of Fire#srdg01	4_TRACE,{
@@ -4471,15 +4525,14 @@ rockrdg2,295,328,5	script	Frail Ghast#rockdaily	10231,{
 	end;
 
 OnInit:
-	questinfo 1298, QTYPE_QUEST, 1;
-	// fix me: questinfo 9457
-	// on hunting == -1
-	// on hunting == 2
-	// on playtime == 2
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 22 && !isbegin_quest(1298) && checkquest(1299,PLAYTIME) == -1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 22 && checkquest(1298,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "rock_main_quest == 22 && checkquest(1299,PLAYTIME) == 2" );
 	end;
 }
 
-// fix me: incomplete, missing quest 1323 (same text)
+
+// Mrs. McPhy
 harboro1,347,65,3	script	Mrs. McPhy#rockdaily	1_F_MERCHANT_02,{
 	if (BaseLevel < 100) {
 		mes "[Mrs. McPhy]";
@@ -4495,7 +4548,6 @@ harboro1,347,65,3	script	Mrs. McPhy#rockdaily	1_F_MERCHANT_02,{
 		mes "Grr, I can't believe you! You're getting only half your dinner tonight!";
 		close;
 	}
-
 	switch( checkquest(1329,PLAYTIME) ) {
 	case -1:
 		break;
@@ -4516,29 +4568,91 @@ harboro1,347,65,3	script	Mrs. McPhy#rockdaily	1_F_MERCHANT_02,{
 			mes "We have no one else to turn to. Please come back if you change your mind.";
 			close;
 		}
-		if (rand(2) == 0) {
-			.@quest_id = 1325;
+		.@r = rand(4);
+		if (.@r == 0)
+			.@string$ = "glove";
+		else if (.@r == 1)
+			.@string$ = "alarm clock";
+		else if (.@r == 2)
 			.@string$ = "spoon";
-		}
-		else {
-			.@quest_id = 1326;
+		else
 			.@string$ = "hat";
-		}
 		mes "[Mrs. McPhy]";
 		mes "Today Spotty took a " + .@string$ + ". Could you look for it? It may be easily replaceable, but I can't keep buying things every time Spotty takes something.";
 		next;
 		mes "[Mrs. McPhy]";
 		mes "Go outside the village and talk to my husband. He'll tell you where it might be.";
 		erasequest 1329;// Spotty in the Dreamland
-		setquest .@quest_id;// Spotty, No!
+		setquest rand(1323,1327);// Spotty, No!
+		if (isbegin_quest(1330))	// debug
+			erasequest 1330;
+		if (isbegin_quest(1322) == 0) {	// debug
+			setquest 1322;
+			completequest 1322;
+		}
+		setquest 1330;// Spotty's Holes
 		close;
 	}
+	for ( .@quest_id = 1321; .@quest_id < 1329; .@quest_id++ ) {
+		if (isbegin_quest(.@quest_id) == 1)
+			break;
+	}
 
-	if (isbegin_quest(1330) == 0) {
-		if (isbegin_quest(1321) == 1) {// debug: player can't finish the quest on official
-			setquest 1330;
-			end;
-		}
+	switch( .@quest_id ) {
+	case 1321:
+	case 1323:
+	case 1324:
+	case 1325:
+	case 1326:
+	case 1327:
+		mes "[Mrs. McPhy]";
+		mes "Spotty would be a perfect dog if he doesn't take things out of the house. Sigh...";
+		if (isbegin_quest(1330) == 0)	// debug
+			setquest 1330;// Spotty's Holes
+		close;
+
+	case 1322:// First time doing the quest
+		mes "[Mrs. McPhy]";
+		mes "Adventurer, we've found the ring!";
+		mes "After all the time we spent searching the village, we've found it inside his house.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "By the way, what's that shining thing in your hand?";
+		next;
+		select("Show what's in your hand.");
+		mes "[Mrs. McPhy]";
+		mes "This is a Rock Ridge Coin. You can use it like money inside the village. I wasn't comfortable letting you help us for free. I'm glad you can at least have this.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "That Rock Ridge Coin is yours. Thank you for helping us.";
+		erasequest 1330;// Spotty's Holes
+		completequest 1322;// Found Something
+		getitem 25250,1;// Rock Ridge Coin
+		setquest 1329;// Spotty in the Dreamland
+		next;
+		mes "[Mrs. McPhy]";
+		mes "And, mm... Do you mind helping us again tomorrow? Spotty keeps taking things from the house to the wasteland, and we need them back.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "Spotty tired itself out and fell asleep. Could you come back tomorrow after 4:00 a.m.? We'll have something to give you next time.";
+		close;
+
+	case 1328:
+		mes "[Mrs. McPhy]";
+		mes "You've found it! Thank you so much. We've been trying to correct Spotty's behavior, and it's difficult.";
+		next;
+		mes "[Mrs. McPhy]";
+		mes "Here's the Rock Ridge Coin we promised. Thank you for searching the wasteland for us.";
+		erasequest 1328;// Found Missing Items
+		erasequest 1330;// Spotty's Holes
+		getitem 25250,1;// Rock Ridge Coin
+		setquest 1329;// Spotty in the Dreamland
+		next;
+		mes "[Mrs. McPhy]";
+		mes "Could you come back again? If you're not busy, you're welcome anytime after 4:00 a.m each day.";
+		close;
+
+	default:// first time
 		mes "[Mrs. McPhy]";
 		mes "How many times do I have to tell you to keep your dog away from our things? Do you really want me to send it away on a ship?";
 		next;
@@ -4644,72 +4758,34 @@ harboro1,347,65,3	script	Mrs. McPhy#rockdaily	1_F_MERCHANT_02,{
 		mes "S-should I? Uh, mm... Okay.";
 		close;
 	}
-	if (isbegin_quest(1321) == 1 || isbegin_quest(1325) == 1 || isbegin_quest(1326) == 1) {
-		mes "[Mrs. McPhy]";
-		mes "Spotty would be a perfect dog if he doesn't take things out of the house. Sigh...";
-		close;
-	}
-	if (isbegin_quest(1322) == 1) {// First time doing the quest
-		mes "[Mrs. McPhy]";
-		mes "Adventurer, we've found the ring!";
-		mes "After all the time we spent searching the village, we've found it inside his house.";
-		next;
-		mes "[Mrs. McPhy]";
-		mes "By the way, what's that shining thing in your hand?";
-		next;
-		select("Show what's in your hand.");
-		mes "[Mrs. McPhy]";
-		mes "This is a Rock Ridge Coin. You can use it like money inside the village. I wasn't comfortable letting you help us for free. I'm glad you can at least have this.";
-		next;
-		mes "[Mrs. McPhy]";
-		mes "That Rock Ridge Coin is yours. Thank you for helping us.";
-		erasequest 1322;// Found Something
-		completequest 1330;// Spotty's Holes
-		getitem 25250,1;// Rock Ridge Coin
-		setquest 1329;// Spotty in the Dreamland
-		next;
-		mes "[Mrs. McPhy]";
-		mes "And, mm... Do you mind helping us again tomorrow? Spotty keeps taking things from the house to the wasteland, and we need them back.";
-		next;
-		mes "[Mrs. McPhy]";
-		mes "Spotty tired itself out and fell asleep. Could you come back tomorrow after 4:00 a.m.? We'll have something to give you next time.";
-		close;
-	}
-	if (isbegin_quest(1328) == 1) {
-		mes "[Mrs. McPhy]";
-		mes "You've found it! Thank you so much. We've been trying to correct Spotty's behavior, and it's difficult.";
-		next;
-		mes "[Mrs. McPhy]";
-		mes "Here's the Rock Ridge Coin we promised. Thank you for searching the wasteland for us.";
-		erasequest 1328;// Found Missing Items
-		setquest 1329;// Spotty in the Dreamland
-		getitem 25250,1;// Rock Ridge Coin
-		next;
-		mes "[Mrs. McPhy]";
-		mes "Could you come back again? If you're not busy, you're welcome anytime after 4:00 a.m each day.";
-		close;
-	}
 	end;
 
 OnInit:
-	questinfo 1321, QTYPE_QUEST, 1;
-	setquestinfo_level 1321,100,175;
-	questinfo 1329, QTYPE_QUEST, 1;
-	setquestinfo_req 1329,1322,1;
-	// questinfo if playtime == 2
+	questinfo( QTYPE_QUEST, QMARK_YELLOW,
+		"BaseLevel > 99 && checkquest(1329,PLAYTIME) == -1 && !isbegin_quest(1321) && !isbegin_quest(1322) && !isbegin_quest(1323) && !isbegin_quest(1324) && !isbegin_quest(1325) && !isbegin_quest(1326) && !isbegin_quest(1327) && !isbegin_quest(1328)" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 99 && (isbegin_quest(1322) == 1 || isbegin_quest(1328) == 1)" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel > 99 && checkquest(1329,PLAYTIME) == 2" );
 	end;
 }
 
 rockrdg1,36,250,5	script	Mr. McPhy#rkdlout	4W_M_02,{
-	if (isbegin_quest(1321) == 1) {
+	for ( .@quest_id = 1321; .@quest_id < 1330; .@quest_id++ ) {
+		if (isbegin_quest(.@quest_id) == 1)
+			break;
+	}
+	switch( .@quest_id ) {
+	case 1321:
 		mes "[Mr. McPhy]";
 		mes "My wife said Spotty went out the back door and ran straight past the barbed-wire fence.";
 		next;
 		mes "[Mr. McPhy]";
 		mes "But he couldn't have gone too far because he came back to me pretty quickly. Why don't you walk along the fence and look for holes with white hair floating around them?";
 		close;
-	}
-	if (isbegin_quest(1325) == 1 || isbegin_quest(1326) == 1) {
+	case 1323:
+	case 1324:
+	case 1325:
+	case 1326:
+	case 1327:
 		mes "[Mr. McPhy]";
 		mes "My wife sent me here to give you directions, but I have no idea where he might have been.";
 		next;
@@ -4719,13 +4795,13 @@ rockrdg1,36,250,5	script	Mr. McPhy#rkdlout	4W_M_02,{
 		mes "[Mr. McPhy]";
 		mes "And he doesn't seem to venture out too far. It's probably because he's still young. I've marked three possible locations in the middle of your map. You don't have to look further than those locations.";
 		close;
-	}
-	if (isbegin_quest(1322) == 1 || isbegin_quest(1328) == 1) {
+	case 1322:
+	case 1328:
 		mes "[Mr. McPhy]";
 		mes "Did you find something? Then let's go back!";
+		cloakonnpc strnpcinfo(0), getcharid(0);
 		close;
-	}
-	if (isbegin_quest(1329) == 1) {
+	case 1329:
 		mes "[Mr. McPhy]";
 		mes "Ah, Adventurer. Shhh! Please keep your voice down: the Buffalo Bandits might hear us.";
 		next;
@@ -4738,138 +4814,107 @@ rockrdg1,36,250,5	script	Mr. McPhy#rkdlout	4W_M_02,{
 		mes "[Mr. McPhy]";
 		mes "She didn't say anything when I quit my job because I was too scared of the Buffalo Bandits. She's a good woman.";
 		close;
+	default:
+		mes "[Mr. McPhy]";
+		mes "*Gasp* Buffalo Bandits!";
+		close2;
+		cloakonnpc strnpcinfo(0), getcharid(0);
+		end;
 	}
-	mes "[Mr. McPhy]";
-	mes "*Gasp* Buffalo Bandits!";
-	close2;
-	classchange( HIDDEN_WARP_NPC, "", bc_self );
 	end;
 
-// OnInit:
-// 	questinfo 1321, QTYPE_QUEST, 1;// fix me: quest ID
-// 	end;
-}
-
-rockrdg1,43,145,3	script	Hole#rkq1321	4_CRACK,{
-	if (isbegin_quest(1321) == 1) {
-		mes "- There's a hole in the ground.";
-		mes "It has something shining inside it,";
-		next;
-		mes "But it's not a gold ring.";
-		mes "I should take it with me for now. -";
-		erasequest 1321;// Spotty and Her Ring
-		setquest 1322;// Found Something
-		close;
-	}
-	mes "- There's a hole in the ground.";
-	mes "It only has a stone sticking out of the ground inside it. -";
-	close;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(1321) > 0" );
+	end;
 }
 
 rockrdg1,170,233,3	script	Hole#rkdqgd1	4_CRACK,{
-	if (isbegin_quest(1321) == 0) {
+	setarray .@list[0],1321,1323,1324,1325,1326,1327;
+	.@size = getarraysize(.@list);
+	for ( .@i = 0; .@i < .@size; .@i++ ) {
+		if (isbegin_quest(.@list[.@i]))
+			break;
+	}
+	if (.@list[.@i] == 0) {
 		mes "- There's a hole in the ground.";
 		mes "It has a little bit of white hair scattered inside it. -";
 		close;
 	}
 	mes "- There's a hole in the ground.";
-	mes "It's empty. -";
+	if (strnpcinfo(2) == "rkdqgd3")
+		mes "It only has wet soil inside it. -";
+	else
+		mes "It's empty. -";
 	next;
 	mes "- I don't have to search farther than this. -";
 	close;
 
 OnInit:
-	// questinfo , QTYPE_QUEST, 1;// fix me: 1321 required ?
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(1330) > 0" );
 	end;
 }
+rockrdg1,183,143,3	duplicate(Hole#rkdqgd1)	Hole#rkdqgd2	4_CRACK
+rockrdg1,215,72,3	duplicate(Hole#rkdqgd1)	Hole#rkdqgd3	4_CRACK
 
-rockrdg1,183,143,3	script	Hole#rkdqgd2	4_CRACK,{
-	if (isbegin_quest(1321) == 0) {
-		mes "- There's a hole in the ground.";
+
+rockrdg1,43,145,3	script	Hole#rkq1321	4_CRACK,{
+	.@quest_id_npc = atoi( replacestr(strnpcinfo(2), "rkq", "") ) ;
+	setarray .@list[0],1321,1323,1324,1325,1326,1327;
+	.@size = getarraysize(.@list);
+	for ( .@i = 0; .@i < .@size; .@i++ ) {
+		if (isbegin_quest(.@list[.@i]))
+			break;
+	}
+
+	mes "- There's a hole in the ground.";
+	if (.@list[.@i] == 0) {
 		mes "It has a little bit of white hair scattered inside it. -";
 		close;
 	}
-	mes "- There's a hole in the ground.";
-	mes "It's empty. -";
-	next;
-	mes "- I don't have to search farther than this. -";
-	close;
-
-OnInit:
-	// questinfo , QTYPE_QUEST, 1;// fix me: 1321 required ?
-	end;
-}
-
-rockrdg1,215,72,3	script	Hole#rkdqgd3	4_CRACK,{
-	if (isbegin_quest(1321) == 0) {
-		mes "- There's a hole in the ground.";
-		mes "It has a little bit of white hair scattered inside it. -";
-		close;
-	}
-	mes "- There's a hole in the ground.";
-	mes "It only has wet soil inside it. -";
-	next;
-	mes "- I don't have to search farther than this. -";
-	close;
-
-OnInit:
-	// questinfo , QTYPE_QUEST, 1;// fix me: 1321 required ?
-	end;
-}
-
-rockrdg1,58,195,3	script	Hole#rkq1324	4_CRACK,{
-	mes "- There's a hole in the ground.";
-	mes "It has a tumbleweed rolling around inside it. -";
-	close;
-}
-
-rockrdg1,109,60,3	script	Hole#rkq1326	4_CRACK,{
-	if (isbegin_quest(1326) == 1) {
-		mes "- There's a hole in the ground.";
+	if (.@list[.@i] == .@quest_id_npc) {
+		if (.@list[.@i] == 1321) {
+			mes "It has something shining inside it,";
+			next;
+			mes "But it's not a gold ring.";
+			mes "I should take it with me for now. -";
+			erasequest 1321;
+			setquest 1322;// Found Something
+			close;
+		}
 		mes "It has something inside it. -";
 		next;
 		mes "- This must be what Mr. McPhy is looking for. I should bring it to her. -";
-		erasequest 1326;// Spotty, No!
+		erasequest .@list[.@i];
 		setquest 1328;// Found Missing Items
 		close;
 	}
-	mes "- There's a hole in the ground.";
-	mes "It has a little bit of white hair scattered inside it. -";
-	close;
-}
-
-rockrdg1,71,149,3	script	Hole#rkq1325	4_CRACK,{
-	if (isbegin_quest(1325) == 1) {
-		mes "- There's a hole in the ground.";
-		mes "It has something inside it. -";
-		next;
-		mes "- This must be what Mr. McPhy is looking for. I should bring it to her. -";
-		erasequest 1325;// Spotty, No!
-		setquest 1328;// Found Missing Items
+	switch( .@list[.@i] ) {
+	case 1321:
+		mes "It only has a stone sticking out of the ground inside it. -";
 		close;
-	}
-	mes "- There's a hole in the ground.";
-	mes "A small insect is scuttling around inside it. -";
-	close;
-}
-
-rockrdg1,100,230,3	script	Hole#rkq1323	4_CRACK,{
-	if (isbegin_quest(1323) == 1) {
-		mes "- There's a hole in the ground.";
-		mes "It has something inside it. -";
-		next;
-		mes "- This must be what Mr. McPhy is looking for. I should bring it to her. -";
-		erasequest 1323;// Spotty, No!
-		setquest 1328;// Found Missing Items
+	case 1323:
+		mes "It has a small animal bone inside it. -";
+		close;
+	case 1324:
+		mes "It has a tumbleweed rolling around inside it. -";
+		close;
+	case 1325:
+		mes "A small insect is scuttling around inside it. -";
+		close;
+	case 1326:
+		mes "It only has weeds growing inside it. -";
+		close;
+	case 1327:
+		mes "It's only filled with dust. -";
 		close;
 	}
 }
+rockrdg1,100,230,3	duplicate(Hole#rkq1321)	Hole#rkq1323	4_CRACK
+rockrdg1,58,195,3	duplicate(Hole#rkq1321)	Hole#rkq1324	4_CRACK
+rockrdg1,71,149,3	duplicate(Hole#rkq1321)	Hole#rkq1325	4_CRACK
+rockrdg1,109,60,3	duplicate(Hole#rkq1321)	Hole#rkq1326	4_CRACK
+rockrdg1,191,101,3	duplicate(Hole#rkq1321)	Hole#rkq1327	4_CRACK
 
-rockrdg1,100,230,3	script	Unknown #50572	4_CRACK,{
-	mes "- There's a hole in the ground.";
-	mes "It has a little bit of white hair scattered inside it. -";
-	close;
-}
 
 // Mr. McPhy quests
 harboro1,345,61,3	script	Spotty#rockdaily	4_DOG01,{
@@ -4880,17 +4925,17 @@ harboro1,345,61,3	script	Spotty#rockdaily	4_DOG01,{
 }
 
 harboro1,344,61,5	script	Mr. McPhy#rockdaily	4W_M_02,{
-	switch( isbegin_quest(1330) ) {
-	case 0:// First time
-		mes "[Mr. McPhy]";
-		mes "Spotty, do you want a treat? Hmm?";
-		close;
-	case 1:
-		if (isbegin_quest(1321) == 1) {
+	switch( isbegin_quest(1322) ) {
+	case 0:
+		if (isbegin_quest(1321) == 0) {
 			mes "[Mr. McPhy]";
-			mes "My wife and I decided to check the village separately, but I'm not sure if we'd be done before you're back.";
+			mes "Spotty, do you want a treat? Hmm?";
 			close;
 		}
+		mes "[Mr. McPhy]";
+		mes "My wife and I decided to check the village separately, but I'm not sure if we'd be done before you're back.";
+		close;
+	case 1:
 		mes "[Mr. McPhy]";
 		mes "Oh, poor Spotty. You're itching from losing so much hair. Do you want your daddy to brush you?";
 		close;
@@ -4985,11 +5030,10 @@ harboro1,344,61,5	script	Mr. McPhy#rockdaily	4W_M_02,{
 	}
 	end;
 
-// OnInit:
-	// fix me: questinfo 1331, QTYPE_QUEST, 1;
-	// playtime == 2
-	// display when hunting completed
-	// end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW,
+		"isbegin_quest(1322) == 2 && (checkquest(1332,PLAYTIME) == 2 || checkquest(1332,PLAYTIME) == -1 && (checkquest(1331,HUNTING) == -1 || checkquest(1331,HUNTING) == 2))" );
+	end;
 }
 
 // Misc NPCs
@@ -5009,7 +5053,7 @@ rockrdg1,330,104,3	script	Curt Snake#rockc05	10218,{
 
 rockrdg1,299,82,3	script	Tagliatelle#rockc07	4_DR_M_02,{
 	mes "[Tagliatelle]";
-	mes "I love traveling. I had fun traveling in Pa-sta, and I'm determined to spend the rest of my life traveling in Rune Midgarts and other cities and villages that I can reach from the kingdom.";
+	mes "I love traveling. I had fun traveling in Pa-sta, and I'm determined to spend the rest of my life traveling in Rune-Midgarts and other cities and villages that I can reach from the kingdom.";
 	next;
 	mes "[Tagliatelle]";
 	mes "I like being in new places and talking to the residents. I can learn many things from the way they live.";
