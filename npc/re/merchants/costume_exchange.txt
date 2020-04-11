@@ -3,6 +3,11 @@
 //===== Description: =========================================
 //= [Official Conversion]
 //= Costumes Exchange NPC in Malangdo.
+//= The database of the following box are left empty 
+//= until high items ID are supported:
+//=   Enchant_Stone_Box19
+//=   Enchant_Stone_Box20
+//=   Enchant_Stone_Box21
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
 //============================================================
