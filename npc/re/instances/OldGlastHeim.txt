@@ -115,6 +115,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 			}
 			// Normal difficulty monsters start at ID 2464
 			// Hard difficulty monsters start at ID 3139
+			set getvariableofinstance('hardMode, .@instance_id), 0;
 			set getvariableofinstance('mobOffset, .@instance_id), 0;
 			mes "[Hugin]";
 			mes "After the time gap opens, please tell me again.";
@@ -145,6 +146,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 			}
 			// Normal difficulty monsters start at ID 2464
 			// Hard difficulty monsters start at ID 3139
+			set getvariableofinstance('hardMode, .@instance_id), 1;
 			set getvariableofinstance('mobOffset, .@instance_id), 675;
 			mes "[Hugin]";
 			mes "After the time gap opens, please tell me again.";
@@ -905,11 +907,20 @@ OnTimer5000:
 	if (isbegin_quest(12320) == 0) {
 		setquest 12320;// Time Traveler
 		completequest 12320;
-		getexp 250000,250000;
+		if ('hardMode == 1) {
+			getexp 500000,500000;
+		} else {
+			getexp 250000,250000;
+		}
 	}
 	mes "This item has an extraordinary aura with it. Can be very useful for someone special.";
 	getitem 6607,1;// Temporal_Crystal
-	getitem 6608,1;// Coagulated_Spell
+	if ('hardMode == 1) {
+		getitem 6607,rand(1,4); // Extra Temporal_Crystal
+		getitem 6755,1; // Contaminated_Magic
+	} else {
+		getitem 6608,1;// Coagulated_Spell
+	}
 	close3;
 }
 
@@ -1637,12 +1648,21 @@ OnTimer10000:
 			setquest 12321;// Time Conqueror
 			completequest 12321;
 			getitem 6607,5;// Temporal_Crystal
-			getitem 6608,5;// Coagulated_Spell
-			getexp 350000,350000;
+			if ('hardMode == 1) {
+				getitem 6755,5;// Contaminated_Magic
+				getexp 700000,700000;
+			} else {
+				getitem 6608,5;// Coagulated_Spell
+				getexp 350000,350000;
+			}
 		}
 		else {
 			getitem 6607,1;// Temporal_Crystal
-			getitem 6608,1;// Coagulated_Spell
+			if ('hardMode == 1) {
+				getitem 6755,1;// Contaminated_Magic
+			} else {
+				getitem 6608,1;// Coagulated_Spell
+			}
 		}
 		next;
 		mes "[Hugin]";
