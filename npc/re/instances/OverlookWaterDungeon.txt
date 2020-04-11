@@ -1,0 +1,188 @@
+//===== rAthena Script =======================================
+//= Overlook Water Dungeon mobs
+//===== By: ==================================================
+//= Alayne
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Spawns monsters in Overlook Water Dungeon
+//===== Additional Comments: =================================
+//= 1.0
+//= 1.1 - Modified to Zeny cost and character-based cooldown (latiosu) 
+//============================================================
+
+gef_fild07,264,286,0	script	Overlook Water Dungeon::ovwadu	2_BULLETIN_BOARD,{
+    mes "[Overlook Water Dungeon]";
+    mes "This is the entrance to Overlook Water Dungeon.";
+    mes "^FF0000Restricted Level: 30+^000000";
+    mes "^FF0000Cooldown: 20hrs^000000";
+    next;
+    mes "[Overlook Water Dungeon]";
+    mes "Would you like to enter in the Overlook Water Dungeon?";
+    mes "It'll cost you ^FF0000" + .cost + "z^000000 to enter.";
+    if (select("Enter","Leave") == 1) {
+        if (BaseLevel < 30) {
+            next;
+            mes "[Overlook Water Dungeon]";
+            mes "Sorry, this dungeon is restricted to level 30+";
+            close;
+        } else if (Zeny < .cost) {
+            mes "[Overlook Water Dungeon]";
+            mes "Sorry, you don't have enough zeny to enter.";
+            close;
+        }
+        Zeny -= .cost;
+        set OWD_Cooldown, gettimetick(2) + 86400; // 20 hour delay
+        warp .owdMap$, .owdX, .owdY;
+	}
+	close;
+	
+OnInit:
+	set .cost = 500000;
+	set .owdMap$, "iz_dun00t";
+	set .owdX, 168;
+	set .owdY, 168;
+	setarray .level[0],30;
+	end;
+}
+
+iz_dun00t,174,169,0	script	Overlook Water Dungeon::ovwadub	2_BULLETIN_BOARD,{
+	if(OWDCurQuest == -1)
+	{
+		set OWDCurQuest, 0;
+	}
+	if(checkquest(.questIds[OWDCurQuest]) == -1)
+	{
+		setquest .questIds[OWDCurQuest];	
+	}
+	if(OWDCurQuest >= getarraysize(.questsIds))
+	{
+		mes "[Quest Board]";
+		set .@ok, 1;
+		for(set .@i,0; .@i<getarraysize(.questIds); set .@i,.@i+1)
+		{
+			if(checkquest(.questIds[.@i]) != 2)
+			{
+				set .@ok, 0;
+			}
+		}
+		if(OWDQuest == 1)
+		{
+			set .@ok, 0;
+		}
+		if(.@ok == 1)
+		{
+			mes "You've completed all quests.";
+			mes "Choose a reward.";
+			for(set .@i,0; .@i<getarraysize(.finalRewardItem); set .@i,.@i+1)
+			{
+				set .@menu$, .@menu$ + (.@i == 0 ? "" : ":") + " " + getitemname(.finalRewardItem[.@i]);
+			}
+			set .@choice, select(.@menu$) - 1;
+			getitem .finalRewardItem[.@choice], 1;
+			set OWDQuest, 1;
+		}
+		else
+		{
+			mes "You've already completed this quest.";
+		}
+	}
+	else if(checkquest(.questIds[OWDCurQuest]) < 2)
+	{
+		if(checkquest(.questIds[OWDCurQuest], HUNTING) == 2)
+		{
+			completequest .questIds[OWDCurQuest];
+			
+			mes "[Quest Board]";
+			mes "Please, choose a reward.";
+			set .@menu$, "";
+			for(set .@i,OWDCurQuest * 2; .@i<(OWDCurQuest * 2 + 2); set .@i,.@i+1)
+			{
+				if(.rewardItem[.@i] != .@lastItem)
+				{
+					set .@menu$, .@menu$ + (.@i == (OWDCurQuest * 2) ? "" : ":") + " " + getitemname(.rewardItem[.@i]);
+					set .@lastItem, .rewardItem[.@i];
+					set .@tempRewId[getarraysize(.@tempRewId)], .@lastItem;
+				}
+			}
+			set .@choice, select(.@menu$) - 1;
+			next;
+			mes "[Quest Board]";
+			mes "Quest complete. Reward: " + getitemname(.@tempRewId[.@choice]);
+			getitem .@tempRewId[.@choice], 1;
+			getexp .rewardExp[OWDCurQuest * 2], .rewardExp[OWDCurQuest * 2 + 1];
+			set OWDCurQuest, OWDCurQuest + 1;
+		}
+		else
+		{
+			callsub OnDisplayReq;
+		}
+	}
+	close;
+
+OnDisplayReq:
+	mes "Kill those monsters to get a reward:";
+	for(set .@i,OWDCurQuest * 4; .@i<OWDCurQuest * 4 + 4; set .@i,.@i+2)
+	{
+		mes " " + .mobReq[.@i + 1] + " " + strmobinfo(1, .mobReq[.@i]);
+	}
+	return;	
+	
+OnInit:
+	setarray .mobReq[0],2512,20,2506,20,2515,40,2504,40,2510,60,2508,60,2505,80,2511,80,2513,100,2509,100;
+	setarray .rewardExp[0],60600,68040,88695,99900,155700,174960,218475,245925,335340,377190;
+	setarray .rewardItem[0],2102,2104,2504,2506,985,985,2608,2608,2608,985;
+	setarray .finalRewardItem[0],4027,4049,4024,4035,4045,4055,4091,4093,4199,4105,4077,4084,4089,4111,4125;
+	setarray .questIds[0],40000,40001,40002,40003,40004;
+	end;
+}
+
+// Monsters
+iz_dun00t,0,0	monster	Aged Hydra	2503,15
+iz_dun00t,0,0	monster	Aged Plankton	2512,65
+iz_dun00t,0,0	monster	Aged Kukre	2504,15
+iz_dun00t,0,0	monster	Aged Marina	2506,45
+iz_dun00t,0,0	monster	Aged Vadon	2515,15
+
+iz_dun01t,0,0	monster	Aged Hydra	2503,30
+iz_dun01t,0,0	monster	Aged Plankton	2512,10
+iz_dun01t,0,0	monster	Aged Kukre	2504,15
+iz_dun01t,0,0	monster	Aged Marina	2506,50
+iz_dun01t,0,0	monster	Aged Vadon	2515,60
+iz_dun01t,0,0	monster	Aged Cornutus	2501,15
+  
+iz_dun02t,0,0	monster	Aged Hydra	2503,40
+iz_dun02t,0,0	monster	Aged Marse	2508,40
+iz_dun02t,0,0	monster	Aged Cornutus	2501,60
+iz_dun02t,0,0	monster	Aged Obeaune	2510,40
+iz_dun02t,0,0	monster	Aged Merman	2509,1
+   
+iz_dun03t,0,0	monster	Aged Hydra	2503,10
+iz_dun03t,0,0	monster	Aged Hydra	2503,5,300000 // 5min
+iz_dun03t,0,0	monster	Aged Marine Sphere	2507,20
+iz_dun03t,0,0	monster	Aged Phen	2511,45
+iz_dun03t,0,0	monster	Aged Marc	2505,40
+iz_dun03t,0,0	monster	Aged Swordfish	2514,40
+iz_dun03t,0,0	monster	Aged Merman	2509,3,1800000 //30 min
+  
+iz_dun04t,0,0	monster	Aged Hydra	2503,18,300000 // 5min
+iz_dun04t,0,0	monster	Aged Marine Sphere	2507,10
+iz_dun04t,0,0	monster	Aged Swordfish	2514,10
+iz_dun04t,0,0	monster	Aged Deviace	2502,3
+iz_dun04t,0,0	monster	Aged Merman	2509,40
+iz_dun04t,0,0	monster	Aged Merman	2509,12,150000 //2.30 min
+iz_dun04t,0,0	monster	Aged Strouff	2513,50,600000 //10 min
+
+// Warps
+iz_dun00t,352,342,0	warp	izd02t	5,2,iz_dun01t,253,252
+iz_dun00t,39,41,0	warp	izd03t	5,2,iz_dun01t,41,37
+iz_dun01t,118,170,0	warp	izd04t	5,2,iz_dun02t,236,204
+iz_dun01t,253,258,0	warp	izd02t-1	2,2,iz_dun00t,352,337
+iz_dun01t,41,32,0	warp	izd03t-1	2,2,iz_dun00t,39,46
+iz_dun02t,236,198,0	warp	izd04t-1	5,3,iz_dun01t,118,165
+iz_dun02t,339,331,0	warp	izd05t	2,2,iz_dun03t,32,63
+iz_dun03t,264,245,0	warp	izd06t	1,2,iz_dun04t,26,27
+iz_dun03t,29,63,0	warp	izd05t-1	2,2,iz_dun02t,339,328
+iz_dun04t,26,24,0	warp	izd06t-1	2,2,iz_dun03t,261,245
