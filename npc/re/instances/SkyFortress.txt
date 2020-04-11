@@ -619,120 +619,178 @@ dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
 1@sthb,190,54,0	warp2	#sthd_move_02_02	2,2,1@sthd,103,71
 
 // Main event - step 1
-1@sthb,64,67,4	duplicate(dummy_sth)	Stefan.J.E.Wolf#sthd_01	4_AS_RAGGED_GOLEM
+1@sthb,64,67,4	script	Stefan.J.E.Wolf#sthd_01	4_AS_RAGGED_GOLEM,{
+	end;
+OnStart:
+	enablenpc instance_npcname("Stefan.J.E.Wolf#sthd_01");
+	initnpctimer;
+	end;
+OnTimer1000:
+	npctalk "Stefan: ~Grunts~";
+	end;
+OnTimer3000:
+	npctalk "Earnest: What a bunch of menacing worms...!";
+	end;
+OnTimer5000:
+	mapannounce 'sthb_map$, "Stefan Jack Earnest Wolf: Guard...the Sky Fortress...Immortal...beings...", bc_map,0xEBFF;
+	end;
+OnTimer6000:
+	donpcevent instance_npcname("#sthd_event_2") + "::OnStart";
+	end;
+OnTimer7000:
+	disablenpc instance_npcname("Stefan.J.E.Wolf#sthd_01");
+	stopnpctimer;
+	end;
+}
+
 1@sthb,64,67,4	duplicate(dummy_sth)	Stefan.J.E.Wolf#sthd_02	4_AS_RAGGED_GOLEM
 
 1@sthb,56,71,0	script	#sthd_event_1	HIDDEN_WARP_NPC,8,8,{
 	end;
 OnTouch:
-	if ('sky_status == 0) {
-		'sky_status = 1;
-		.@stefan$ = instance_npcname("Stefan.J.E.Wolf#sthd_01");
+	disablenpc instance_npcname("#sthd_event_1");
+	.@stefan$ = instance_npcname("Stefan.J.E.Wolf#sthd_01");
+	setpcblock PCBLOCK_NPC, true;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Is this what caused the invasion into Prontera? Inside the Sky Fortress?";
+	sleep2 2000;
+	enablenpc .@stefan$;
+	sleep2 2000;
+	cutin "stephan_j_e_w.bmp",2;
+	npctalk "Wolf: Trespassers... Sky Fortress...", .@stefan$;
+	specialeffect2 EF_LOCKON;
+	sleep2 2000;
+	npctalk "Jack: Bijou...told me...to impede the intruders...", .@stefan$;
+	sleep2 2000;
+	unittalk getcharid(3), "" + strcharinfo(0) + " : What's that...huge lump?";
+	npctalk "Earnest: Little...human...Greenhorn...Away...", .@stefan$;
+	sleep2 2000;
+	setpcblock PCBLOCK_NPC, false;
+	cutin "",255;
+	specialeffect2 EF_LOCKON;
+	donpcevent instance_npcname("#sthd_event_1_boss") + "::OnStefanHp";
+	disablenpc .@stefan$;
+	end;
+}
 
-		setpcblock PCBLOCK_NPC, true;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : Is this what caused the invasion into Prontera? Inside the Sky Fortress?";
-		sleep2 4000;
-		cutin "stephan_j_e_w.bmp",2;
-		npctalk "Wolf: Trespassers... Sky Fortress...", .@stefan$;
-		specialeffect2 EF_LOCKON;
-		sleep2 2000;
-		npctalk "Jack: Bijou...told me...to impede the intruders...", .@stefan$;
-		sleep2 2000;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : What's that...huge lump?";
-		sleep2 200;
-		npctalk "Earnest: Little...human...Greenhorn...Away...", .@stefan$;
-		sleep2 1800;
-		setpcblock PCBLOCK_NPC, false;
-		cutin "",255;
-		specialeffect2 EF_LOCKON;
-		monster 'sthb_map$,64,67, "Stefan.J.E.Wolf",3484,1, instance_npcname("#sthd_event_2") + "::OnMobDead";	// AS_D_RAGGED_GOLEM
-		'boss_id = $@mobid[0];
-		donpcevent instance_npcname("#sthd_event_2") + "::OnStefanHp";
-		disablenpc instance_npcname("#sthd_event_1");
-		disablenpc .@stefan$;
-	}
+1@sthb,1,1,0	script	#sthd_event_1_boss	HIDDEN_WARP_NPC,{
+	end;
+OnStefanHp:
+	enablenpc instance_npcname("#sthd_event_1_boss");
+	monster 'sthb_map$,64,67, "Stefan.J.E.Wolf",3484,1, instance_npcname("#sthd_event_1_boss") + "::OnMobDead";	// AS_D_RAGGED_GOLEM
+	'boss_id = $@mobid[0];
+	initnpctimer;
+	end;
+OnTimer2000:
+	getunitdata 'boss_id, .@data;
+	if (.@data[UMOB_HP] >= 19000000)
+		end;
+	// fall through
+OnMobDead:
+	stopnpctimer;
+	killmonster 'sthb_map$, instance_npcname("#sthd_event_1_boss") + "::OnMobDead";
+	donpcevent instance_npcname("Stefan.J.E.Wolf#sthd_01") + "::OnStart";
+	disablenpc instance_npcname("#sthd_event_1_boss");
+	end;
+OnTimer3000:
+	initnpctimer;
 	end;
 }
 
 // 1@sthb,68,65,0	script	#sthd_event_2	HIDDEN_WARP_NPC,{	// official coord
 1@sthb,1,1,0	script	#sthd_event_2	HIDDEN_WARP_NPC,{
 	end;
-OnStefanHp:
+OnStart:
 	enablenpc instance_npcname("#sthd_event_2");
 	initnpctimer;
+	.@label$ = instance_npcname("#sthd_event_2") + "::OnMobDead";
+	monster 'sthb_map$,48,75,"Immortal Zombie Soldier",3476,1, .@label$;// AS_ZOMBIE
+	monster 'sthb_map$,56,75,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,63,74,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,63,67,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,63,61,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,56,60,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,48,60,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,48,67,"Immortal Zombie Soldier",3476,1, .@label$;
 	end;
-OnTimer1000:
-	getunitdata 'boss_id, .@data;
-	if ((.@data[UMOB_MAXHP] - .@data[UMOB_HP]) < (.@data[UMOB_MAXHP] / 10))	// lower than 90% hpmax ? 90% of 20M hp
+OnTimer3000:
+	if (mobcount( 'sthb_map$, instance_npcname("#sthd_event_2") + "::OnMobDead" ) > 0) {
 		initnpctimer;
-	else {
-		stopnpctimer;
-		killmonster 'sthb_map$, instance_npcname("#sthd_event_2") + "::OnMobDead";
-		donpcevent instance_npcname("#sthd_event_3") + "::OnEvent";
-		disablenpc instance_npcname("#sthd_event_2");
+		end;
 	}
+	stopnpctimer;
+	disablenpc instance_npcname("#sthd_event_2");
+	donpcevent instance_npcname("#sthd_event_3") + "::OnStart";
 	end;
 OnMobDead:
-	stopnpctimer;
-	donpcevent instance_npcname("#sthd_event_3") + "::OnEvent";
-	disablenpc instance_npcname("#sthd_event_2");
 	end;
 }
 
 // 1@sthb,68,66,0	script	#sthd_event_3	HIDDEN_WARP_NPC,{	// official coord
 1@sthb,1,1,0	script	#sthd_event_3	HIDDEN_WARP_NPC,{
 	end;
-OnEvent:
+OnStart:
 	enablenpc instance_npcname("#sthd_event_3");
-	specialeffect EF_FLASHER;
 	initnpctimer;
+	.@label$ = instance_npcname("#sthd_event_3") + "::OnMobDead";
+	monster 'sthb_map$,48,75,"Immortal Zombie Soldier",3476,1, .@label$;// AS_ZOMBIE
+	monster 'sthb_map$,56,75,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,63,74,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,63,67,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,63,61,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,56,60,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,48,60,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,48,67,"Immortal Zombie Soldier",3476,1, .@label$;
 	end;
-OnTimer1500:
-	enablenpc instance_npcname("Stefan.J.E.Wolf#sthd_01");
-	end;
-OnTimer2500:
-	npctalk "Stefan: ~Grunts~", instance_npcname("Stefan.J.E.Wolf#sthd_01");
-	end;
-OnTimer4000:
-	npctalk "Earnest: What a bunch of menacing worms...!", instance_npcname("Stefan.J.E.Wolf#sthd_01");
-	mapannounce 'sthb_map$, "Stefan Jack Earnest Wolf: Guard...the Sky Fortress...Immortal...beings...", bc_map,0xEBFF;
+OnTimer3000:
+	if (mobcount( 'sthb_map$, instance_npcname("#sthd_event_3") + "::OnMobDead" ) > 0) {
+		initnpctimer;
+		end;
+	}
+	stopnpctimer;
+	disablenpc instance_npcname("#sthd_event_3");
 	donpcevent instance_npcname("#sthd_event_4") + "::OnStart";
 	end;
-OnTimer5000:
-	disablenpc instance_npcname("#sthd_event_3");
-	disablenpc instance_npcname("Stefan.J.E.Wolf#sthd_01");
-	stopnpctimer;
+OnMobDead:
 	end;
 }
-
-// official npc, overlap #sthd_event_1 range : the killer directly trigger the next event for now
-// 1@sthb,64,67,0	script	#Stefan_Action1	HIDDEN_WARP_NPC,8,8,{ end; }
 
 // 1@sthb,68,67,0	script	#sthd_event_4	HIDDEN_WARP_NPC,{	// official coord
 1@sthb,1,1,0	script	#sthd_event_4	HIDDEN_WARP_NPC,{
 	end;
 OnStart:
 	enablenpc instance_npcname("#sthd_event_4");
-	callsub S_Spawn;
-OnMobDead:
-	if (mobcount( 'sthb_map$, instance_npcname("#sthd_event_4") + "::OnMobDead" ) > 0)
+	initnpctimer;
+	.@label$ = instance_npcname("#sthd_event_4") + "::OnMobDead";
+	monster 'sthb_map$,48,75,"Immortal Zombie Soldier",3476,1, .@label$;// AS_ZOMBIE
+	monster 'sthb_map$,56,75,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,63,74,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,63,67,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,63,61,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,56,60,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,48,60,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,48,67,"Immortal Zombie Soldier",3476,1, .@label$;
+	monster 'sthb_map$,56,79,"Sky Fortress Key Keeper",3478,1, .@label$;	// AS_ZOMBIE_SLAUGHTER
+	end;
+OnTimer3000:
+	if (mobcount( 'sthb_map$, instance_npcname("#sthd_event_4") + "::OnMobDead" ) > 0) {
+		initnpctimer;
 		end;
-	'sky_status++;
-	switch( 'sky_status ) {
-	case 2:
-		callsub S_Spawn;
-	case 3:
-		monster 'sthb_map$,56,79,"Sky Fortress Key Keeper",3478,1, instance_npcname("#sthd_event_4") + "::OnMobDead";	// AS_ZOMBIE_SLAUGHTER
-		callsub S_Spawn;
-	case 4:
-		// enablenpc instance_npcname("#Stefan_Action1");
-		enablenpc instance_npcname("Stefan.J.E.Wolf#sthd_02");
-		disablenpc instance_npcname("#sthd_event_4");
-		break;
 	}
-	// disablenpc instance_npcname("#Stefan_Action1");
+	stopnpctimer;
+	disablenpc instance_npcname("#sthd_event_4");
+	enablenpc instance_npcname("#Stefan_Action1");
+	enablenpc instance_npcname("Stefan.J.E.Wolf#sthd_02");
+	end;
+OnMobDead:
+	end;
+}
+
+1@sthb,64,67,0	script	#Stefan_Action1	HIDDEN_WARP_NPC,8,8,{
+	end;
+OnTouch:
+	disablenpc instance_npcname("#Stefan_Action1");
 	setpcblock PCBLOCK_NPC, true;
-	sleep2 2000;
+	sleep2 1000;
 	cutin "stephan_j_e_w.bmp",2;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : I believe that huge Golem is what plays an important role in the Sky Fortress.";
 	sleep2 2000;
@@ -743,11 +801,11 @@ OnMobDead:
 	sleep2 2000;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : Let's head to top! I believe there must be something there.";
 	sleep2 2000;
-	specialeffect2 EF_LOCKON;
-	sleep2 1000;
 	setpcblock PCBLOCK_NPC, false;
+	specialeffect2 EF_LOCKON;
 	specialeffect EF_BAKU,AREA, instance_npcname("Stefan.J.E.Wolf#sthd_02");
 	cutin "",255;
+
 	disablenpc instance_npcname("Stefan.J.E.Wolf#sthd_02");
 	for ( .@i = 1; .@i <= 6; .@i++ ) {
 		enablenpc instance_npcname("Desactivated Warp#sthd_mov_" + .@i);
@@ -756,7 +814,6 @@ OnMobDead:
 	enablenpc instance_npcname("#sthd_move_01_01");
 	enablenpc instance_npcname("#sthd_move_02_01");
 	enablenpc instance_npcname("#sthd_move_02_02");
-	enablenpc instance_npcname("#chest_spawn");
 
 	enablenpc instance_npcname("#Stefan_Action2");	// 2nd map
 	enablenpc instance_npcname("Stefan.J.E.Wolf#sthd_03");
@@ -767,17 +824,6 @@ OnMobDead:
 
 	// Room Shuffle
 	donpcevent instance_npcname("#sthd_key_control") + "::OnShuffle";
-	end;
-S_Spawn:
-	.@label$ = instance_npcname("#sthd_event_4") + "::OnMobDead";
-	monster 'sthb_map$,48,75,"Immortal Zombie Soldier",3476,1, .@label$;// AS_ZOMBIE
-	monster 'sthb_map$,56,75,"Immortal Zombie Soldier",3476,1, .@label$;
-	monster 'sthb_map$,63,74,"Immortal Zombie Soldier",3476,1, .@label$;
-	monster 'sthb_map$,63,67,"Immortal Zombie Soldier",3476,1, .@label$;
-	monster 'sthb_map$,63,61,"Immortal Zombie Soldier",3476,1, .@label$;
-	monster 'sthb_map$,56,60,"Immortal Zombie Soldier",3476,1, .@label$;
-	monster 'sthb_map$,48,60,"Immortal Zombie Soldier",3476,1, .@label$;
-	monster 'sthb_map$,48,67,"Immortal Zombie Soldier",3476,1, .@label$;
 	end;
 }
 
@@ -811,7 +857,7 @@ OnShuffle:
 }
 
 
-// Warp outside
+// Room exit
 1@sthc,66,88,0	script	#sthd_move_back_a_1	WARPNPC,2,2,{
 	end;
 OnTouch:
@@ -834,7 +880,7 @@ OnTouch:
 1@sthc,66,6,0	duplicate(#sthd_move_back_a_1)	#sthd_move_back_a_5	WARPNPC,2,2
 1@sthc,15,88,0	duplicate(#sthd_move_back_a_1)	#sthd_move_back_a_6	WARPNPC,2,2
 
-// Warp entrance
+// Room entrance
 1@sthb,34,86,1	script	Activated Warp#sthd_mov_1	1_SHADOW_NPC,{
 	if (select( "Don't step into the warp.", "Step into the warp." ) == 1) {
 		mes "- Dreary warp -";
@@ -897,7 +943,8 @@ OnTouch:
 1@sthc,66,94,0	script	#sthd_event_13	HIDDEN_WARP_NPC,8,8,{
 	end;
 OnTouch:
-	.@label$ = instance_npcname("#chest_spawn") + "::OnTreasure1";
+	disablenpc instance_npcname("#sthd_event_13");
+	.@label$ = instance_npcname("#sthd_event_13") + "::OnMobDead";
 	monster 'sthc_map$,62,108,"Immortal Nightmare Shadow",3481,1, .@label$;// AS_EVIL_SHADOW1
 	monster 'sthc_map$,70,108,"Immortal Nightmare Shadow",3481,1, .@label$;
 	monster 'sthc_map$,70,101,"Immortal Nightmare Shadow",3481,1, .@label$;
@@ -908,14 +955,25 @@ OnTouch:
 	monster 'sthc_map$,61,127,"Immortal Nightmare Shadow",3481,1, .@label$;
 	monster 'sthc_map$,61,101,"Immortal Nightmare Shadow",3481,1, .@label$;
 	monster 'sthc_map$,62,116,"Immortal Nightmare Shadow",3481,1, .@label$;
-	disablenpc instance_npcname("#sthd_event_13");
+	initnpctimer;
+	end;
+OnTimer2000:
+	if (mobcount( 'sthc_map$, instance_npcname("#sthd_event_13") + "::OnMobDead" ) > 0) {
+		initnpctimer;
+		end;
+	}
+	stopnpctimer;
+	enablenpc instance_npcname("Sky Fortress Gold Treasure#1");
+	end;
+OnMobDead:
 	end;
 }
 
 1@sthc,116,94,0	script	#sthd_event_14	HIDDEN_WARP_NPC,8,8,{
 	end;
 OnTouch:
-	.@label$ = instance_npcname("#chest_spawn") + "::OnTreasure2";
+	disablenpc instance_npcname("#sthd_event_14");
+	.@label$ = instance_npcname("#sthd_event_14") + "::OnMobDead";
 	monster 'sthc_map$,112,101, "Immortal Angry Shadow",3482,1, .@label$;// AS_EVIL_SHADOW2
 	monster 'sthc_map$,120,101, "Immortal Angry Shadow",3482,1, .@label$;
 	monster 'sthc_map$,119,110, "Immortal Angry Shadow",3482,1, .@label$;
@@ -926,14 +984,25 @@ OnTouch:
 	monster 'sthc_map$,110,130, "Immortal Angry Shadow",3482,1, .@label$;
 	monster 'sthc_map$,111,120, "Immortal Angry Shadow",3482,1, .@label$;
 	monster 'sthc_map$,120,130, "Immortal Angry Shadow",3482,1, .@label$;
-	disablenpc instance_npcname("#sthd_event_14");
+	initnpctimer;
+	end;
+OnTimer2000:
+	if (mobcount( 'sthc_map$, instance_npcname("#sthd_event_14") + "::OnMobDead" ) > 0) {
+		initnpctimer;
+		end;
+	}
+	stopnpctimer;
+	enablenpc instance_npcname("Sky Fortress Gold Treasure#2");
+	end;
+OnMobDead:
 	end;
 }
 
 1@sthc,115,12,0	script	#sthd_event_15	HIDDEN_WARP_NPC,8,8,{
 	end;
 OnTouch:
-	.@label$ = instance_npcname("#chest_spawn") + "::OnTreasure3";
+	disablenpc instance_npcname("#sthd_event_15");
+	.@label$ = instance_npcname("#sthd_event_15") + "::OnMobDead";
 	monster 'sthc_map$,120,27, "Immortal Nightmare Shadow",3481,1, .@label$;// AS_EVIL_SHADOW1
 	monster 'sthc_map$,120,19, "Immortal Nightmare Shadow",3481,1, .@label$;
 	monster 'sthc_map$,111,27, "Immortal Nightmare Shadow",3481,1, .@label$;
@@ -944,14 +1013,25 @@ OnTouch:
 	monster 'sthc_map$,119,36, "Immortal Nightmare Shadow",3481,1, .@label$;
 	monster 'sthc_map$,119,45, "Immortal Nightmare Shadow",3481,1, .@label$;
 	monster 'sthc_map$,116,18, "Immortal Nightmare Shadow",3481,1, .@label$;
-	disablenpc instance_npcname("#sthd_event_15");
+	initnpctimer;
+	end;
+OnTimer2000:
+	if (mobcount( 'sthc_map$, instance_npcname("#sthd_event_15") + "::OnMobDead" ) > 0) {
+		initnpctimer;
+		end;
+	}
+	stopnpctimer;
+	enablenpc instance_npcname("Sky Fortress Gold Treasure#3");
+	end;
+OnMobDead:
 	end;
 }
 
 1@sthc,66,12,0	script	#sthd_event_16	HIDDEN_WARP_NPC,8,8,{
 	end;
 OnTouch:
-	.@label$ = instance_npcname("#chest_spawn") + "::OnTreasure4";
+	disablenpc instance_npcname("#sthd_event_16");
+	.@label$ = instance_npcname("#sthd_event_16") + "::OnMobDead";
 	monster 'sthc_map$,70,18, "Immortal Angry Shadow",3482,1, .@label$;// AS_EVIL_SHADOW2
 	monster 'sthc_map$,61,18, "Immortal Angry Shadow",3482,1, .@label$;
 	monster 'sthc_map$,65,34, "Immortal Angry Shadow",3482,1, .@label$;
@@ -962,7 +1042,17 @@ OnTouch:
 	monster 'sthc_map$,62,47, "Immortal Angry Shadow",3482,1, .@label$;
 	monster 'sthc_map$,61,30, "Immortal Angry Shadow",3482,1, .@label$;
 	monster 'sthc_map$,64,50, "Immortal Angry Shadow",3482,1, .@label$;
-	disablenpc instance_npcname("#sthd_event_16");
+	initnpctimer;
+	end;
+OnTimer2000:
+	if (mobcount( 'sthc_map$, instance_npcname("#sthd_event_16") + "::OnMobDead" ) > 0) {
+		initnpctimer;
+		end;
+	}
+	stopnpctimer;
+	enablenpc instance_npcname("Sky Fortress Gold Treasure#4");
+	end;
+OnMobDead:
 	end;
 }
 
@@ -970,18 +1060,14 @@ OnTouch:
 1@sthc,15,94,0	script	#sthd_event_17	HIDDEN_WARP_NPC,8,8,{
 	end;
 OnTouch:
-	enablenpc instance_npcname("Sky Fortress Treasure Box");
+	disablenpc instance_npcname("#sthd_event_17");
+	donpcevent instance_npcname("Sky Fortress Treasure Box") + "::OnStart";	// enabled regardless of the monster count
 	monster 'sthc_map$,19,106, "Immortal Death Shadow",3483,1;// AS_EVIL_SHADOW3
 	monster 'sthc_map$,12,105, "Immortal Death Shadow",3483,1;
-	monster 'sthc_map$,14,115, "Immortal Death Shadow",3483,1;
-	monster 'sthc_map$,19,119, "Immortal Death Shadow",3483,1;
-	monster 'sthc_map$,13,116, "Immortal Death Shadow",3483,1;
-	monster 'sthc_map$,18,127, "Immortal Death Shadow",3483,1;
-	monster 'sthc_map$,19,128, "Immortal Death Shadow",3483,1;
-	monster 'sthc_map$,12,126, "Immortal Death Shadow",3483,1;
-	monster 'sthc_map$,20,119, "Immortal Death Shadow",3483,1;
-	monster 'sthc_map$,11,127, "Immortal Death Shadow",3483,1;
-	disablenpc instance_npcname("#sthd_event_17");
+	areamonster 'sthc_map$,11,113,15,117, "Immortal Death Shadow",3483,2;
+	areamonster 'sthc_map$,18,116,22,120, "Immortal Death Shadow",3483,2;
+	areamonster 'sthc_map$,10,125,14,129, "Immortal Death Shadow",3483,2;
+	areamonster 'sthc_map$,17,125,21,129, "Immortal Death Shadow",3483,2;
 	end;
 }
 
@@ -989,39 +1075,14 @@ OnTouch:
 1@sthc,16,11,0	script	#sthd_event_18	HIDDEN_WARP_NPC,8,8,{
 	end;
 OnTouch:
-	enablenpc instance_npcname("Wind Ghost in Experiment");
+	disablenpc instance_npcname("#sthd_event_18");
+	donpcevent instance_npcname("Wind Ghost in Experiment") + "::OnStart";	// enabled regardless of the monster count
 	monster 'sthc_map$,19,21, "Immortal Death Shadow",3483,1;// AS_EVIL_SHADOW3
 	monster 'sthc_map$,12,21, "Immortal Death Shadow",3483,1;
-	monster 'sthc_map$,11,30, "Immortal Death Shadow",3483,1;
-	monster 'sthc_map$,10,31, "Immortal Death Shadow",3483,1;
-	monster 'sthc_map$,16,38, "Immortal Death Shadow",3483,1;
-	monster 'sthc_map$,15,38, "Immortal Death Shadow",3483,1;
-	monster 'sthc_map$,15,45, "Immortal Death Shadow",3483,1;
-	monster 'sthc_map$,14,45, "Immortal Death Shadow",3483,1;
-	monster 'sthc_map$,19,31, "Immortal Death Shadow",3483,1;
-	monster 'sthc_map$,19,32, "Immortal Death Shadow",3483,1;
-	disablenpc instance_npcname("#sthd_event_18");
-	end;
-}
-
-1@sthc,1,1,0	script	#chest_spawn	HIDDEN_WARP_NPC,{
-	end;
-OnTreasure1: callsub( S_Treasure,1 );
-OnTreasure2: callsub( S_Treasure,2 );
-OnTreasure3: callsub( S_Treasure,3 );
-OnTreasure4: callsub( S_Treasure,4 );
-S_Treasure:
-	.@num = getarg(0);
-	if (mobcount( 'sthc_map$, instance_npcname("#chest_spawn") + "::OnTreasure" + .@num ) < 1)	// todo it seems there is a random delay of ~0-2 seconds
-		enablenpc instance_npcname("Sky Fortress Gold Treasure#" + .@num);
-	end;
-OnKnightB:
-	if (mobcount( 'sthc_map$, instance_npcname("#chest_spawn") + "::OnKnightB" ) < 1)
-		mapannounce 'sthc_map$, "Stefan Jack Earnest Wolf: Fell down... Immortal Cursed Knight... Sad... Will kill... The intruder...", bc_map,0xEBFF;
-	end;
-OnWindDead:
-	if (mobcount( 'sthc_map$, instance_npcname("#chest_spawn") + "::OnWindDead" ) < 1)
-		mapannounce 'sthc_map$, "Stefan Jack Earnest Wolf: Experiment... Became stronger... Immortal Wind Ghost...is dead...Death to all...", bc_map,0xEBFF;
+	areamonster 'sthc_map$,9,28,13,32, "Immortal Death Shadow",3483,2;
+	areamonster 'sthc_map$,17,29,21,33, "Immortal Death Shadow",3483,2;
+	areamonster 'sthc_map$,13,35,17,39, "Immortal Death Shadow",3483,2;
+	areamonster 'sthc_map$,13,43,17,47, "Immortal Death Shadow",3483,2;
 	end;
 }
 
@@ -1038,6 +1099,11 @@ OnWindDead:
 	if (is_party_leader() == false) {
 		mes "- Those other than the party leader -";
 		mes "- don't seem to be able to open the box. -";
+		close;
+	}
+	if (checkweight(1001,1) == 0) {
+		mes "- It's full of items -";
+		mes "- so you can't open the box. -";
 		close;
 	}
 	donpcevent instance_npcname( strnpcinfo(0) ) + "::OnBar";
@@ -1078,6 +1144,11 @@ OnBar:
 		mes "- don't seem to be able to open the box. -";
 		close;
 	}
+	if (checkweight(1001,1) == 0) {
+		mes "- It's full of items -";
+		mes "- so you can't open the box. -";
+		close;
+	}
 	mes "- The treasure box is opening up -";
 	mes "- and something suddenly -";
 	mes "- showed up in the front. -";
@@ -1085,26 +1156,56 @@ OnBar:
 	specialeffect EF_LOCKON;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : You may have touched something wrong...";
 	disablenpc instance_npcname("Sky Fortress Treasure Box");
+	stopnpctimer;
 	donpcevent instance_npcname("Immortal Cursed Knight#") + "::OnEvent";
 	close;
+OnStart:
+	enablenpc instance_npcname("Sky Fortress Treasure Box");
+	initnpctimer;
+	end;
+OnTimer8000:
+	specialeffect EF_LIGHTSPHERE2;
+	end;
+OnTimer9000:
+	initnpctimer;
+	end;
 }
 
 1@sthc,16,129,4	script	Immortal Cursed Knight#	4_AS_BLOODY_KNIGHT,{
 	end;
 OnEvent:
 	enablenpc instance_npcname("Immortal Cursed Knight#");
+	sleep 2000;
+	npctalk "Immortal Cursed Knight: What kind of intruder is trying to wake me up...";
+	sleep 2000;
+	npctalk "Immortal Cursed Knight: Doom to the petty thief coveting the treasure at the fortress...";
+	sleep 2000;
+	disablenpc instance_npcname("Immortal Cursed Knight#");
+	monster 'sthc_map$,16,129,"Immortal Cursed Knight",3474,1, instance_npcname("Immortal Cursed Knight#") + "::OnKnightB";	// AS_BLOODY_KNIGHT
+	'cursed_knight = $@mobid[0];
 	initnpctimer;
 	end;
 OnTimer2000:
-	npctalk "Immortal Cursed Knight: What kind of intruder is trying to wake me up...";
+	if (mobcount('sthd_map$, instance_npcname("Immortal Cursed Knight#") + "::OnKnightB") < 1) {
+		stopnpctimer;
+		'cursed_knight = 0;
+		mapannounce 'sthc_map$, "Stefan Jack Earnest Wolf: Fell down... Immortal Cursed Knight... Sad... Will kill... The intruder...", bc_map,0xEBFF;
+		end;
+	}
+	if ('cursed_knight > 0) {
+		.@r = rand(30);
+		if (.@r == 0)
+			unittalk 'cursed_knight, "Immortal Cursed Knight: Glory to Bijou! Death to the intruders!";
+		else if (.@r == 1)
+			unittalk 'cursed_knight, "Immortal Cursed Knight: The perishable is nothing but a handful of ash before the Immortal Knight!";
+		else if (.@r == 2)
+			unittalk 'cursed_knight, "Immortal Cursed Knight: I can't...I can't seem to control the power!";
+	}
 	end;
-OnTimer4000:
-	npctalk "Immortal Cursed Knight: Doom to the petty thief coveting the treasure at the fortress...";
+OnTimer3000:
+	initnpctimer;
 	end;
-OnTimer6000:
-	disablenpc instance_npcname("Immortal Cursed Knight#");
-	monster 'sthc_map$,16,129,"Immortal Cursed Knight",3474,1, instance_npcname("#chest_spawn") + "::OnKnightB";	// AS_BLOODY_KNIGHT
-	stopnpctimer;
+OnKnightB:
 	end;
 }
 
@@ -1127,26 +1228,55 @@ OnTimer6000:
 	specialeffect EF_LOCKON;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : What...what is this?";
 	donpcevent instance_npcname("Immortal Wind Ghost#01") + "::OnEvent";
+	stopnpctimer;
 	disablenpc instance_npcname("Wind Ghost in Experiment");
 	close;
+OnStart:
+	enablenpc instance_npcname("Wind Ghost in Experiment");
+	initnpctimer;
+	end;
+OnTimer8000:
+	specialeffect EF_LIGHTSPHERE2;
+	end;
+OnTimer9000:
+	initnpctimer;
+	end;
 }
 
 1@sthc,15,49,4	script	Immortal Wind Ghost#01	4_AS_WIND_GHOST,{
 	end;
 OnEvent:
 	enablenpc instance_npcname("Immortal Wind Ghost#01");
+	sleep 2000;
+	npctalk "Immortal Wind Ghost: Foolish human...You're praying for death...";
+	sleep 2000;
+	npctalk "Immortal Wind Ghost: The power boiling inside my body...It sure feels good...";
+	sleep 2000;
+	disablenpc instance_npcname("Immortal Wind Ghost#01");
+	monster 'sthc_map$,15,49,"Immortal Wind Ghost",3475,1, instance_npcname("Immortal Wind Ghost#01") + "::OnWindDead";	// AS_WIND_GHOST
+	'wind_ghost = $@mobid[0];
 	initnpctimer;
 	end;
 OnTimer2000:
-	npctalk "Immortal Wind Ghost: Foolish human...You're praying for death...";
+	if (mobcount('sthd_map$, instance_npcname("Immortal Wind Ghost#01") + "::OnWindDead") < 1) {
+		stopnpctimer;
+		'wind_ghost = 0;
+		mapannounce 'sthc_map$, "Stefan Jack Earnest Wolf: Experiment... Became stronger... Immortal Wind Ghost...is dead...Death to all...", bc_map,0xEBFF;
+		end;
+	}
+	if ('wind_ghost > 0) {
+		if (.@r == 0)
+			unittalk 'wind_ghost, "Immortal Wind Ghost: I feel more power filling up inside...";
+		else if (.@r == 1)
+			unittalk 'wind_ghost, "Immortal Wind Ghost: I will kill you slowly...from the deep side of your lung...";
+		else if (.@r == 2)
+			unittalk 'wind_ghost, "Immortal Wind Ghost: Only death awaits the humans who dare to go against me...";
+	}
 	end;
-OnTimer4000:
-	npctalk "Immortal Wind Ghost: The power boiling inside my body...It sure feels good...";
+OnTimer3000:
+	initnpctimer;
 	end;
-OnTimer6000:
-	stopnpctimer;
-	monster 'sthc_map$,15,49,"Immortal Wind Ghost",3475,1, instance_npcname("#chest_spawn") + "::OnWindDead";	// AS_WIND_GHOST
-	disablenpc instance_npcname("Immortal Wind Ghost#01");
+OnWindDead:
 	end;
 }
 
@@ -1495,7 +1625,7 @@ OnEvent:
 		.@size = 25 - .@i;
 		.@r = rand(.@size);
 		.@npc_num = 'npc_index[.@r];
-		donpcevent instance_npcname(.@npc_num + "#pantheon_effect") + "::OnEvent";
+		donpcevent instance_npcname("#pantheon_damage" + .@npc_num) + "::OnEvent";
 		'npc_index[.@r] = 'npc_index[ .@size-1 ];
 		'npc_index[ .@size-1 ] = .@npc_num;
 	}
@@ -1506,50 +1636,6 @@ OnTimer6000:
 	end;
 }
 
-// Additional npcs to simulate earthquake on random spot
-1@sthd,94,119,0	script	1#pantheon_effect	HIDDEN_WARP_NPC,{
-	end;
-OnEvent:
-	specialeffect EF_GUMGANG4;
-	initnpctimer;
-	// progressbar_npc "000000",3;	// officially non-visible, replaced by initnpctimer
-	end;
-OnTimer3000:	// note: the timer continue and end after boss dead
-	stopnpctimer;
-	specialeffect EF_NPC_EARTHQUAKE;
-	donpcevent instance_npcname("#pantheon_damage" + strnpcinfo(1)) + "::OnEvent";
-	end;
-}
-1@sthd,96,109,0	duplicate(1#pantheon_effect)	2#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,104,110,0	duplicate(1#pantheon_effect)	3#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,110,110,0	duplicate(1#pantheon_effect)	4#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,113,117,0	duplicate(1#pantheon_effect)	5#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,112,103,0	duplicate(1#pantheon_effect)	6#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,104,103,0	duplicate(1#pantheon_effect)	7#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,97,103,0	duplicate(1#pantheon_effect)	8#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,92,97,0	duplicate(1#pantheon_effect)	9#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,99,95,0	duplicate(1#pantheon_effect)	10#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,108,95,0	duplicate(1#pantheon_effect)	11#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,116,95,0	duplicate(1#pantheon_effect)	12#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,112,87,0	duplicate(1#pantheon_effect)	13#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,104,88,0	duplicate(1#pantheon_effect)	14#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,95,87,0	duplicate(1#pantheon_effect)	15#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,96,78,0	duplicate(1#pantheon_effect)	16#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,94,72,0	duplicate(1#pantheon_effect)	17#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,104,81,0	duplicate(1#pantheon_effect)	18#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,111,81,0	duplicate(1#pantheon_effect)	19#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,114,72,0	duplicate(1#pantheon_effect)	20#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,100,71,0	duplicate(1#pantheon_effect)	21#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,91,101,0	duplicate(1#pantheon_effect)	22#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,117,101,0	duplicate(1#pantheon_effect)	23#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,117,90,0	duplicate(1#pantheon_effect)	24#pantheon_effect	HIDDEN_WARP_NPC
-1@sthd,90,90,0	duplicate(1#pantheon_effect)	25#pantheon_effect	HIDDEN_WARP_NPC
-// 1@sthd,100,71,0	duplicate(1#pantheon_effect)	23#pantheon_effect	HIDDEN_WARP_NPC
-// 1@sthd,91,101,0	duplicate(1#pantheon_effect)	24#pantheon_effect	HIDDEN_WARP_NPC
-// 1@sthd,117,101,0	duplicate(1#pantheon_effect)	25#pantheon_effect	HIDDEN_WARP_NPC
-// 1@sthd,117,90,0	duplicate(1#pantheon_effect)	26#pantheon_effect	HIDDEN_WARP_NPC
-// 1@sthd,90,90,0	duplicate(1#pantheon_effect)	27#pantheon_effect	HIDDEN_WARP_NPC
-
 // Kill the player
 1@sthd,94,119,0	script	#pantheon_damage1	HIDDEN_WARP_NPC,4,4,{
 	end;
@@ -1557,12 +1643,17 @@ OnTouch:
 	unitkill getcharid(3);
 	end;
 OnEvent:
-	enablenpc instance_npcname( strnpcinfo(0) );
+	specialeffect EF_GUMGANG4;
+	progressbar_npc "000000",4;
+	specialeffect EF_NPC_EARTHQUAKE;
+	cloakoffnpc instance_npcname( strnpcinfo(0) );
 	initnpctimer;
 	end;
 OnTimer1000:
+	cloakonnpc instance_npcname( strnpcinfo(0) );
+	end;
+OnTimer2000:
 	stopnpctimer;
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 1@sthd,96,109,0	duplicate(#pantheon_damage1)	#pantheon_damage2	HIDDEN_WARP_NPC,4,4
@@ -1665,19 +1756,20 @@ OnTimer3000:
 	end;
 
 OnInstanceInit:
-	'sky_status = 0;
 	'status_event = 0;
 	'sthb_map$ = instance_mapname("1@sthb");
 	'sthc_map$ = instance_mapname("1@sthc");
 	'sthd_map$ = instance_mapname("1@sthd");
 
-	// warps
+	// Warps
 	disablenpc instance_npcname("#sthd_move_01_01");
 	disablenpc instance_npcname("#sthd_move_02_01");
 	disablenpc instance_npcname("#sthd_move_02_02");
 
+	disablenpc instance_npcname("#sthd_event_1_boss");
+	disablenpc instance_npcname("Stefan.J.E.Wolf#sthd_01");
 	disablenpc instance_npcname("Stefan.J.E.Wolf#sthd_02");
-	// disablenpc instance_npcname("#Stefan_Action1");
+	disablenpc instance_npcname("#Stefan_Action1");
 
 	for ( .@i = 1; .@i <= 6; .@i++ ) {
 		disablenpc instance_npcname("Activated Warp#sthd_mov_" + .@i);
@@ -1693,7 +1785,6 @@ OnInstanceInit:
 
 	disablenpc instance_npcname("#sthd_key_control");
 
-	disablenpc instance_npcname("#chest_spawn");
 	disablenpc instance_npcname("Sky Fortress Gold Treasure#1");
 	disablenpc instance_npcname("Sky Fortress Gold Treasure#2");
 	disablenpc instance_npcname("Sky Fortress Gold Treasure#3");
@@ -1712,8 +1803,6 @@ OnInstanceInit:
 	disablenpc instance_npcname("#stefan_boss_status");
 	disablenpc instance_npcname("Sky Fortress Escape Warp");
 	for ( .@i = 1; .@i <= 25; .@i++ )
-		disablenpc instance_npcname("#pantheon_damage" + .@i);
-	for ( .@i = 1; .@i <= 25; .@i++ )	// unofficial npc, hideonnpc to display the effect
-		hideonnpc instance_npcname(.@i + "#pantheon_effect");
+		cloakonnpc instance_npcname("#pantheon_damage" + .@i);
 	end;
 }
