@@ -12121,6 +12121,11 @@
 25131,Fallen_Energy_Particle,Fallen Energy Particle,3,0,,0,,,,,,,,,,,,,{},{},{}
 25132,Pumpkin_Deco,Pumpkin Deco,3,0,,0,,,,,,,,,,,,,{},{},{}
 25133,Dried_White_Stem,Dried White Stem,3,0,,0,,,,,,,,,,,,,{},{},{}
+25136,ElectricEffect_Middle,Electric Effect (Middle),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
+25137,GreenFloor_Bottom,Green Floor Effect (Lower),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
+25138,ShrinkEffect_Middle,Shrink Effect (Middle),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
+25139,Identify_Stone,Identify Stone (Lower),3,20,,100,,,,,,,,,,,,,{ skill "MC_IDENTIFY",1; },{},{}
+25141,EXPStone_Middle,Experience Stone (Middle),3,20,,100,,,,,,,,,,,,,{ bonus2 bExpAddRace,RC_All,2; },{},{}
 25142,Doram_Token,Doram Token,3,,0,0,,,,,,,,,,,,,{},{},{}
 25143,Gift_Stuffed_Doll,Gift Stuffed Doll,3,0,,0,,,,,,,,,,,,,{},{},{}
 25144,Bridge_Postured_Doll,Bridge Postured Doll,3,0,,0,,,,,,,,,,,,,{},{},{}
@@ -12147,6 +12152,15 @@
 25165,High_Class_Tea,High Class Tea,3,0,,0,,,,,,,,,,,,,{},{},{}
 25166,Very_Shining_Ring,Very Shining Ring,3,0,,0,,,,,,,,,,,,,{},{},{}
 25167,Old_Letter,Old Letter,3,0,,0,,,,,,,,,,,,,{},{},{}
+25170,MinorCastingStone_Robe,Minor Casting Stone (Garment),3,20,,100,,,,,,,,,,,,,{ bonus bFixedCast,-300; },{},{}
+25171,EXPStone_Top,Experience Stone (Upper),3,20,,100,,,,,,,,,,,,,{ bonus2 bExpAddRace,RC_All,2; },{},{}
+25172,CastingStone_Top,Variable Casting Stone (Upper),3,20,,100,,,,,,,,,,,,,{ bonus bVariableCastrate,-3; },{},{}
+25173,CastingStone_Middle,Variable Casting Stone (Middle),3,20,,100,,,,,,,,,,,,,{ bonus bVariableCastrate,-3; },{},{}
+25174,CastingStone_Bottom,Variable Casting Stone (Lower),3,20,,100,,,,,,,,,,,,,{ bonus bVariableCastrate,-3; },{},{}
+25175,LexAeternaStone_Middle,Lex Aeterna Stone (Middle),3,20,,100,,,,,,,,,,,,,{ bonus3 bAutoSpell,"PR_LEXAETERNA",1,10; },{},{}
+25176,BlueAuraEffect_Middle,Blue Aura Effect (Middle),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
+25177,ShadowEffect_Middle,Shadow Effect (Middle),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
+25178,PinkGlowEffect_Middle,Pink Glow Effect (Middle),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
 25179,Blessing_Star,Blessing Star,3,0,,0,,,,,,,,,,,,,{},{},{}
 25180,Old_Rings,Old Rings,3,0,,0,,,,,,,,,,,,,{},{},{}
 25181,Wood_Rosary,Wood Rosary,3,0,,0,,,,,,,,,,,,,{},{},{}
@@ -12155,7 +12169,15 @@
 25184,Portable_Sewingbox,Portable Sewingbox,3,0,,0,,,,,,,,,,,,,{},{},{}
 25185,Locket_Pendant,Locket Pendant,3,0,,0,,,,,,,,,,,,,{},{},{}
 25187,Slug_Bullet,Slug Bullet,3,1200,,1200,,,,,,,,,,,,,{},{},{}
+25205,ShrinkEffect_Bottom,Shrink Effect (Lower),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
+25206,ElectricEffect_Top,,3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
 25223,Para_Team_Coin,Eden Group Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
+25224,WhiteBodyEffect_Middle,White Body Effect (Middle),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
+25225,ExplodingEffect_Middle,Crimson Wave Effect (Middle),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
+25226,WaterFieldEffect_Bottom,Water Field Effect (Lower),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
+25227,Heal_Stone,Heal Stone (Lower),3,20,,100,,,,,,,,,,,,,{ skill "AL_HEAL",1; },{},{}
+25228,Teleport_Stone,Teleport Stone (Lower),3,20,,100,,,,,,,,,,,,,{ skill "AL_TELEPORT",1; },{},{}
+25229,Steal_Stone,Steal Stone (Lower),3,20,,100,,,,,,,,,,,,,{ skill "TF_STEAL",1; },{},{}
 25231,Suspicious_Bottle,Suspicious Bottle,3,1000,,10,,,,,,,,,,,,,{},{},{}
 25232,Cheap_Lubricant,Cheap Lubricant,3,1000,,10,,,,,,,,,,,,,{},{},{}
 25233,Cotton_Tufts,Cotton Tufts,3,1000,,10,,,,,,,,,,,,,{},{},{}
@@ -12183,11 +12205,52 @@
 25284,Swamp_Bug_Shell,Swamp Bug Shell,3,0,,10,,,,,,,,,,,,,{},{},{}
 25285,Brown_Rat_Tail,Brown Rat Tail,3,0,,10,,,,,,,,,,,,,{},{},{}
 25290,Sweets_Festival_Coin,Sweets Festival Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
+25302,DoubleAttack_Stone,Double Attack Stone (Garment),3,20,,100,,,,,,,,,,,,,{ skill "TF_DOUBLE",3; bonus bDoubleRate,15; },{},{}
+25303,Critical_Stone_Robe,Critical Stone (Garment),3,20,,100,,,,,,,,,,,,,{ bonus bVariableCastrate,-20; },{},{}
+25304,Critical_Stone_Top,Critical Stone (Upper),3,20,,100,,,,,,,,,,,,,{ bonus bCritAtkRate,3; },{},{}
+25305,Critical_Stone_Bottom,Critical Stone (Lower),3,20,,100,,,,,,,,,,,,,{ bonus bCritAtkRate,3; },{},{}
+25306,CastStone_Robe,Variable Casting Stone (Garment),3,20,,100,,,,,,,,,,,,,{ bonus bVariableCastrate,-10; },{},{}
 25375,Powerful_Soul_Essence,Powerful Soul Essence,3,0,,0,,,,,,,,,,,,,{},{},{}
 25377,Luxurious_Pet_Food,Luxurious Pet Food,3,0,,10,,,,,,,,,,,,,{},{},{}
+25409,Champion_Stone_Upper,Champion Stone (Upper),3,20,,100,,,,,,,,,,,,,{ bonus bHit,getskilllv("MO_IRONHAND")*2; },{},{}
+25410,Champion_Stone_Middle,Champion Stone (Middle),3,20,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("MO_DODGE")*2; },{},{}
+25411,Champion_Stone_Lower,Champion Stone (Lower),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"MO_CHAINCOMBO",20; },{},{}
+25412,Sura_Stone_Robe,Sura Stone (Garment),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15; },{},{}
+25413,Sniper_Stone_Upper,Sniper Stone (Upper),3,20,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("HT_STEELCROW")*2; },{},{}
+25414,Sniper_Stone_Middle,Sniper Stone (Middle),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillFixedCast,"SN_SHARPSHOOTING",-500; },{},{}
+25415,Sniper_Stone_Lower,Sniper Stone (Lower),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"AC_SHOWER",20; },{},{}
+25416,Ranger_Stone_Robe,Ranger Stone (Garment),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"RA_ARROWSTORM",10; },{},{}
+25417,Scholar_Stone_Upper,Scholar Stone (Upper),3,20,,100,,,,,,,,,,,,,{ bonus bDelayrate,-getskilllv("SA_ADVANCEDBOOK"); },{},{}
+25418,Scholar_Stone_Middle,Scholar Stone (Middle),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillFixedCast,"PF_DOUBLECASTING",-400; },{},{}
+25419,Scholar_Stone_Lower,Scholar Stone (Lower),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"MG_FIREBOLT",20; bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",20; bonus2 bSkillAtk,"MG_COLDBOLT",20; },{},{}
+25420,Sorcerer_Stone_Robe,Sorcerer Stone (Garment),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",10; },{},{}
+25445,LK_Stone_Upper,Lord Knight Stone (Upper),3,20,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("KN_SPEARMASTERY")*2; },{},{}
+25446,LK_Stone_Middle,Lord Knight Stone (Middle),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"LK_SPIRALPIERCE",15; },{},{}
+25447,LK_Stone_Lower,Lord Knight Stone (Lower),3,20,,100,,,,,,,,,,,,,{ bonus bAspdRate,getskilllv("KN_CAVALIERMASTERY"); },{},{}
+25448,RK_Stone_Robe,Rune Knight Stone (Garment),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"RK_DRAGONBREATH",10; },{},{}
+25449,Genetic_Stone_Robe,Genetic Stone (Garment),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"GN_CARTCANNON",10; },{},{}
+25450,Creator_Stone_Upper,Creator Stone (Upper),3,20,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("AM_LEARNINGPOTION")*2; },{},{}
+25451,Creator_Stone_Middle,Creator Stone (Middle),3,20,,100,,,,,,,,,,,,,{ bonus bHealPower,getskilllv("AM_POTIONPITCHER")*2; },{},{}
+25452,Creator_Stone_Lower,Creator Stone (Lower),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"AM_ACIDTERROR",20; },{},{}
+25453,HW_Stone_Upper,High Wizard Stone (Upper),3,20,,100,,,,,,,,,,,,,{ bonus bMatk,getskilllv("HW_MAGICPOWER")*2; },{},{}
+25454,HW_Stone_Middle,High Wizard Stone (Middle),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WZ_METEOR",20; },{},{}
+25455,HW_Stone_Lower,High Wizard Stone (Lower),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WZ_FIREPILLAR",20; },{},{}
+25456,Warlock_Stone_Robe,Warlock Stone (Garment),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WL_CRIMSONROCK",10; },{},{}
 //
 25464,World_Moving_Rights,World Moving Rights,3,20,,0,,,,,,,,,,,,,{},{},{}
 //
+25490,Stalker_Stone_Upper,Stalker Stone (Upper),3,20,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("RG_INTIMIDATE")*2; },{},{}
+25491,Stalker_Stone_Middle,Stalker Stone (Middle),3,20,,100,,,,,,,,,,,,,{ bonus bHit,getskilllv("AC_VULTURE")*2; },{},{}
+25492,Stalker_Stone_Lower,Stalker Stone (Lower),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"RG_BACKSTAP",20; },{},{}
+25493,SC_Stone_Robe,Shadow Chaser Stone (Garment),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SC_TRIANGLESHOT",15; },{},{}
+25494,Mastersmith_Stone_Upper,Mastersmith Stone (Upper),3,20,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("BS_WEAPONRESEARCH")*2; },{},{}
+25495,Mastersmith_Stone_Middle,Mastersmith Stone (Middle),3,20,,100,,,,,,,,,,,,,{ bonus bHit,getskilllv("BS_SKINTEMPER")*3; },{},{}
+25496,Mastersmith_Stone_Lower,Mastersmith Stone (Lower),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WS_CARTTERMINATION",20; },{},{}
+25497,Mechanic_Stone_Robe,Mechanic Stone (Garment),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"NC_AXETORNADO",15; },{},{}
+25498,CG_Stone_Upper,Clown Gypsy Stone (Upper),3,20,,100,,,,,,,,,,,,,{ bonus bBaseAtk,(getskilllv("DC_DANCINGLESSON")+getskilllv("BA_MUSICALLESSON"))*2; },{},{}
+25499,CG_Stone_Middle,Clown Gypsy Stone (Middle),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"BA_MUSICALSTRIKE",20; bonus2 bSkillAtk,"DC_THROWARROW",20; },{},{}
+25500,CG_Stone_Lower,Clown Gypsy Stone (Lower),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"CG_ARROWVULCAN",20; },{},{}
+25501,WM_Stone_Robe,Wanderer Minstrel Stone (Garment),3,20,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15; },{},{}
 25670,M_M_Defense,Modification Module (Defense),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); .@def = 25; if (.@r >= 9) { .@def += 20; } else if (.@r >= 7) { .@def += 10; } bonus bDef,.@def; },{},{}
 25671,M_M_Magic_Defense,Modification Module (Magic Defense),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); .@mdef = 2; if (.@r >= 9) { .@mdef += 6; } else if (.@r >= 7) { .@mdef += 3; } bonus bMDef,.@mdef; },{},{}
 25672,M_M_Vit,Modification Module (Vit),6,20,,10,,,,,,,,,,,,,{ bonus bVit,3; },{},{}

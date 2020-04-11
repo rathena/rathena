@@ -1178,7 +1178,39 @@
 24396:24397:24398,{ .@r = getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES); bonus bMatk,.@r*2; if (.@r >= 25) { bonus bMatkRate,5; } else if (.@r >= 23) { bonus bMatkRate,2; } }
 24399:24400,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES); if (.@r >= 16) { bonus bDef,100; bonus bMaxHPrate,4; bonus bMaxSPrate,4; } else { bonus bDef,50; bonus bMaxHPrate,2; bonus bMaxSPrate,2; } }
 24416:24417:24418:24419:24420:24421,{ bonus bAspd,2; bonus bVariableCastrate,-10; bonus2 bIgnoreDefRaceRate,RC_All,70; bonus2 bIgnoreMdefRaceRate,RC_All,70; bonus2 bIgnoreDefRaceRate,RC_Player,-70; bonus2 bIgnoreMdefRaceRate,RC_Player,-70; }
+25015:25141:25171,{ bonus2 bExpAddRace,RC_All,3; }
+25060:25304:25305,{ bonus bCritAtkRate,6; }
+25060:25303:25304:25305,{ bonus bCritical,10; }
 25069:25070:25071,{ bonus bDelayrate,-2; }
+25172:25173:25174,{ bonus bVariableCastrate,-6; }
+25306:25172:25173:25174,{ bonus bVariableCastrate,-5; }
+25412:25409,{ bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",10; }
+25412:25410,{ bonus2 bFixedCastrate,"CH_SOULCOLLECT",-40; }
+25412:25411,{ bonus4 bAutoSpellOnSkill,"SR_RAMPAGEBLASTER","CH_SOULCOLLECT",1,300; }
+25416:25413,{ bonus2 bSkillAtk,"RA_ARROWSTORM",15; }
+25416:25414,{ bonus bVariableCastrate,-10; }
+25416:25415,{ autobonus3 "{ bonus bLongAtkRate,5; }",1000,60000,"SN_WINDWALK"; }
+25420:25417,{ bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15; }
+25420:25418,{ bonus2 bSkillCooldown,"SO_WARMER",-15000; }
+25420:25419,{ bonus2 bSkillCooldown,"SO_PSYCHIC_WAVE",-2000; }
+25448:25445,{ bonus2 bSkillAtk,"RK_DRAGONBREATH",10; }
+25448:25446,{ bonus2 bSkillUseSPrate,"RK_DRAGONBREATH",10; }
+25448:25447,{ bonus bDelayrate,-15; }
+25449:25450,{ bonus2 bSkillAtk,"GN_CARTCANNON",15; }
+25449:25451,{ bonus2 bSkillCooldown,"GN_MANDRAGORA",-3000; }
+25449:25452,{ bonus bLongAtkRate,5; }
+25456:25453,{ bonus2 bSkillAtk,"WL_CRIMSONROCK",15; }
+25456:25454,{ bonus bFixedCast,-100*getskilllv("HW_SOULDRAIN"); }
+25456:25455,{ bonus2 bMagicAtkEle,Ele_Fire,5; }
+25493:25490,{ bonus2 bSkillAtk,"SC_TRIANGLESHOT",15; }
+25493:25491,{ bonus bLongAtkRate,10; }
+25493:25492,{ bonus2 bSkillUseSPrate,"SC_TRIANGLESHOT",10; }
+25497:25494,{ bonus2 bSPDrainRate,20,1; }
+25497:25495,{ bonus2 bSkillCooldown,"NC_AXETORNADO",-1000; }
+25497:25496,{ bonus2 bSkillAtk,"NC_AXETORNADO",15; }
+25501:25498,{ bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15; }
+25501:25499,{ bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1000; }
+25501:25500,{ bonus bFixedCast,-500; }
 27101:28510,{ bonus bMatkRate,(getrefine()/3); }
 27102:28510,{ bonus bFlee2,5; }
 27103:28510,{ bonus2 bAddClass,Class_All,(getrefine()/3); }
