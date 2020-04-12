@@ -132,7 +132,7 @@ e_tower,76,79,0	script	Cellar Protection Stone	2_MONEMUS,{
 			npctalk .instance_name$ + " doesn't exist for Party - "+getpartyname( .@party_id );
 		}
 		else{
-			getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
+			getmapxy(.@map$, .@x, .@y, BL_PC);
 			save .@map$, .@x, .@y;
 			//RATHENA
 			switch(instance_enter(.instance_name$)) {
