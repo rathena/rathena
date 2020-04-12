@@ -451,7 +451,7 @@
 5320,475,100	// Champion_Wreath
 5323,475,100	// Misstrance_Crown
 5324,1,100	// Little_Angel_Doll
-5325,1,100	// Robo_Eye
+5325,1,100	// Robo_Eye_1
 5326,507,100	// Masquerade_C
 5327,507,100	// Orc_Hero_Helm_C
 5328,507,100	// Evil_Wing_Ears_C
