@@ -362,7 +362,7 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 		20098,		// C_Vampire_Hairband
 		20171,		// C_Sepia_Cap
 		20174,		// C_Halloween_Hat_Orange
-		20395,
+		20395,		// C_BlackWitchHat
 		20482,		// C_Heaven_Cage
 		20533,		// C_PinkButterfly_Wing_T
 		20535,		// C_Digital_Space
@@ -394,7 +394,7 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 	.@box_list[14] = 100314;		// Enchant_Stone_Box21
 	setarray .@item_list_14[0],
 		20257,		// C_Black_Rabbit_Bonnet
-		20486,
+		20486,		// C_Twin_Margaret
 		20570,		// C_HeartChocoBag
 		20572,		// C_WingOfHeart
 		31382,		// C_Cat_Ears_Punkish
@@ -433,10 +433,10 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 		31479,		// C_ManyStars_TW
 		31568,		// C_Floating_Ball_TW
 		31611,		// C_Dark_Snake_Lord_Stall
-		31671,
+		31671,		// Costume_Twin_Cannon
 		31673,		// C_Picnic_Basket
 		31688,		// C_Poring_On_Shoulder
-		31735,
+		31735,		// Costume_Yawata_Seal
 		31787,		// C_SavageB_On_Shoulder
 		31798,		// C_Baby_Panda
 		31799,		// C_Pretty_Bear_WH
@@ -450,7 +450,7 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 	setarray .@item_list_17[0],
 		20592,		// C_Santa_Backpack
 		31509,		// C_Fawn_Ear
-		31559,	
+		31559,		// C_Royalguard_Necklace
 		440002;		// C_Happy_Cat_TW
 
 	while(1) {
