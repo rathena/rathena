@@ -36,7 +36,7 @@ gef_fild07,264,286,0	script	Overlook Water Dungeon::ovwadu	2_BULLETIN_BOARD,{
 		if (gettimetick(2) < OWD_Cooldown) {
 			mes "[Overlook Water Dungeon]";
 			mes "You have been into the dungeon recently.";
-			mes "Cooldown remaining: "+ gettimestr("%Hhrs %Mmin", 10, OWD_Cooldown - gettimetick(2));
+			mes "Cooldown remaining: "+ gettimestr("%Hhr %Mmin", 20, OWD_Cooldown - gettimetick(2));
 			close;
 		}
 		Zeny -= .cost;
