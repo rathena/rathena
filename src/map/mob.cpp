@@ -2440,7 +2440,6 @@ int mob_getdroprate(struct block_list *src, struct mob_db *mob, int base_rate, i
 			drop_rate += status_get_luk(src) * battle_config.drops_by_luk / 100;
 		if (battle_config.drops_by_luk2) // Drops affected by luk as a % increase [Skotlex]
 			drop_rate += (int)(0.5 + drop_rate * status_get_luk(src) * battle_config.drops_by_luk2 / 10000.);
-	}
 
 	if (src->type == BL_PC) { // Player specific drop rate adjustments
 		struct map_session_data *sd = map_id2sd(src->id);
@@ -2476,6 +2475,7 @@ int mob_getdroprate(struct block_list *src, struct mob_db *mob, int base_rate, i
 		if ((drop_rate_base < cap) && (drop_rate_bonus > cap)) {
 			drop_rate = cap;
 		}
+	}
 	}
 
 	drop_rate = min(drop_rate, 10000); // Cap it to 100%
