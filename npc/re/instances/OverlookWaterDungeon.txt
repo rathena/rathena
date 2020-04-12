@@ -73,7 +73,7 @@ function	script	OWD_Quest_Board	{
 		setquest .questIds[OWDCurQuest];
 	}
 	// Check if quest chain is complete
-	if (OWDCurQuest > getarraysize(.questIds)) {
+	if (OWDCurQuest >= getarraysize(.questIds)) {
 		mes "[Quest Board]";
 		.@complete = 1;
 		for (.@i = 0; .@i < getarraysize(.questIds); .@i++) {
@@ -98,8 +98,6 @@ function	script	OWD_Quest_Board	{
 	} else if (checkquest(.questIds[OWDCurQuest]) < 2) {
 		// Grant reward for each stage of the quest chain
 		if (checkquest(.questIds[OWDCurQuest], HUNTING) == 2) {
-			completequest .questIds[OWDCurQuest];
-
 			mes "[Quest Board]";
 			mes "Please, choose a reward.";
 			.@menu$ = "";
@@ -112,6 +110,7 @@ function	script	OWD_Quest_Board	{
 			mes "Quest complete. Reward: " + .rewardItemQty[.@choice] + "x " + getitemname(.rewardItem[.@choice]);
 			getitem .rewardItem[.@choice], .rewardItemQty[.@choice];
 			getexp .rewardExp[OWDCurQuest * 2], .rewardExp[OWDCurQuest * 2 + 1];
+			completequest .questIds[OWDCurQuest];
 			OWDCurQuest += 1;
 		} else {
 			callsub OnDisplayReq;
