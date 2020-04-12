@@ -16,7 +16,7 @@
 //
 //============================================================
 
-cmd_fild07,60,274,3	script	Relic Enforcer::alareen	4_M_ATEIL,{
+cmd_fild07,60,274,5	script	Relic Enforcer::alareen	4_F_SHADOWCHASER,{
 	disable_items;
 	mes "[Relic Enforcer]";
 	if (countitem(.reqId) >= .reqCountEnchant) {
