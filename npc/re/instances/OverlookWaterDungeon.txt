@@ -33,6 +33,12 @@ gef_fild07,264,286,0	script	Overlook Water Dungeon::ovwadu	2_BULLETIN_BOARD,{
             mes "Sorry, you don't have enough zeny to enter.";
             close;
         }
+		if (gettimetick(2) < OWD_Cooldown) {
+			mes "[Overlook Water Dungeon]";
+            mes "You have been into the dungeon recently.";
+			mes "Come back when your cooldown has completed.";
+            close;
+		}
         Zeny -= .cost;
         set OWD_Cooldown, gettimetick(2) + 86400; // 20 hour delay
         warp .owdMap$, .owdX, .owdY;
@@ -40,7 +46,7 @@ gef_fild07,264,286,0	script	Overlook Water Dungeon::ovwadu	2_BULLETIN_BOARD,{
 	close;
 	
 OnInit:
-	set .cost, 500000;
+	set .cost, 300000;
 	set .owdMap$, "iz_dun00t";
 	set .owdX, 168;
 	set .owdY, 168;
@@ -86,7 +92,7 @@ iz_dun00t,174,169,0	script	Overlook Water Dungeon::ovwadub	2_BULLETIN_BOARD,{
 		}
 		else
 		{
-			mes "You've already completed this quest.";
+			mes "Please complete your current quest before receiving another.";
 		}
 	}
 	else if(checkquest(.questIds[OWDCurQuest]) < 2)
@@ -123,7 +129,7 @@ iz_dun00t,174,169,0	script	Overlook Water Dungeon::ovwadub	2_BULLETIN_BOARD,{
 	close;
 
 OnDisplayReq:
-	mes "Kill those monsters to get a reward:";
+	mes "Kill these monsters to get a reward:";
 	for(set .@i,OWDCurQuest * 4; .@i<OWDCurQuest * 4 + 4; set .@i,.@i+2)
 	{
 		mes " " + .mobReq[.@i + 1] + " " + strmobinfo(1, .mobReq[.@i]);
