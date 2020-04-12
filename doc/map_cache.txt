@@ -69,14 +69,23 @@ Then maps are stored one right after another:
 
 New instructions for adding maps
 ------------------------------------------------------------------------------
+
+[Part 1 - Server]
 1. Add new map files into rathena/data directory (.gat, .rsw, .gnd)
 2. Check that conf/grf-files.txt has data_dir defined with rathena/data as an absolute path
 3. Add new map entries into conf/maps_athena.conf
-4. Add new map ids into db/import/map_index.txt
-5. Add new resource mappings into rathena/data/resnametable.txt
-6. Run `./mapcache.exe -grf conf/grf-files.txt -list map_index.txt -cache map_cache.dat -rebuild`
-7. Copy locally created rathena/map_cache.dat into remote rathena/db/import/map_cache.dat
-8. Restart remote server with `./athena-start restart`
+4. Add new map ids into db/map_index.txt
+5. Temporarily add new map ids into db/import/map_index.txt as well for building purposes only (bug?)
+6. Add new resource mappings into rathena/data/resnametable.txt
+7. Run `./mapcache.exe -grf conf/grf-files.txt -list map_index.txt -cache db/import/map_cache.dat -rebuild`
+8. Copy locally created rathena/db/import/map_cache.dat into remote rathena/db/import/map_cache.dat
+9. Restart remote server with `./athena-start restart`
+
+[Part 2 - Client]
+1. Add new map files into data/ directory (.gat, .rsw, .gnd, .bmp)
+2. Add new resource mappings into data/resnametable.txt
+3. Add new map names into data/mapnametable.txt
+4. (Optional) If you want to hide the minimap add an entry into data/exceptionminimapnametable.txt
 
 Notes:
 A) If server reports that map files have been removed from maplist, it means that map was not detected in map_cache.dat in import folder (most likely).
