@@ -40,86 +40,82 @@ gef_fild07,264,286,0	script	Overlook Water Dungeon::ovwadu	2_BULLETIN_BOARD,{
 			close;
 		}
 		Zeny -= .cost;
-		set OWD_Cooldown, gettimetick(2) + 86400; // 20 hour delay
-		set OWDCurQuest, 0;
+		OWD_Cooldown = gettimetick(2) + 86400; // 20 hour delay
 		warp .owdMap$, .owdX, .owdY;
 	}
 	close;
 	
 OnInit:
-	set .cost, 300000;
-	set .owdMap$, "iz_dun00t";
-	set .owdX, 168;
-	set .owdY, 168;
+	.cost = 300000;
+	.owdMap$ = "iz_dun00t";
+	.owdX = 168;
+	.owdY = 168;
 	setarray .level[0],30;
 	end;
 }
 
 iz_dun00t,174,169,0	script	Overlook Water Dungeon::ovwadub	2_BULLETIN_BOARD,{
-	if(checkquest(.questIds[OWDCurQuest]) == -1)
-	{
+	mes "[Quest Board]";
+	mes "What would you like to do?";
+	next;
+	if (select("Receive/Complete Quest", "Leave") == 2) {
+		mes "[Quest Board]";
+		mes "You will not be able to re-enter for 20 hours and will need to pay the entry fee again.";
+		mes "Are you sure you want to leave?";
+		if (select("Stay", "Leave") == 2) {
+			warp "SavePoint",0,0;
+		}
+		close;
+	}
+	// Assign current quest to player if they have not received it
+	if (checkquest(.questIds[OWDCurQuest]) == -1) {
 		setquest .questIds[OWDCurQuest];	
 	}
-	if(OWDCurQuest >= getarraysize(.questsIds))
-	{
+	// Check if quest chain is complete
+	if (OWDCurQuest >= getarraysize(.questsIds)) {
 		mes "[Quest Board]";
-		set .@ok, 1;
-		for(set .@i,0; .@i<getarraysize(.questIds); set .@i,.@i+1)
-		{
-			if(checkquest(.questIds[.@i]) != 2)
-			{
-				set .@ok, 0;
+		.@complete = 1;
+		for (.@i = 0; .@i < getarraysize(.questIds); .@i++) {
+			if (checkquest(.questIds[.@i]) != 2) {
+				.@complete = 0;
 			}
 		}
-		if(OWDQuest == 1)
-		{
-			set .@ok, 0;
-		}
-		if(.@ok == 1)
-		{
+		// Grant reward if complete and allow player to restart quest chain
+		if (.@complete == 1) {
 			mes "You've completed all quests.";
 			mes "Choose a reward.";
-			for(set .@i,0; .@i<getarraysize(.finalRewardItem); set .@i,.@i+1)
-			{
-				set .@menu$, .@menu$ + (.@i == 0 ? "" : ":") + " " + getitemname(.finalRewardItem[.@i]);
+			for (.@i = 0; .@i < getarraysize(.finalRewardItem); .@i++) {
+				.@menu$ = .@menu$ + (.@i == 0 ? "" : ":") + " " + getitemname(.finalRewardItem[.@i]);
 			}
-			set .@choice, select(.@menu$) - 1;
+			.@choice = select(.@menu$) - 1;
 			getitem .finalRewardItem[.@choice], 1;
-			set OWDQuest, 1;
+			OWDCurQuest = 0;
+		} else {
+			mes "Please complete your current quest.";
 		}
-		else
-		{
-			mes "Please complete your current quest before receiving another.";
-		}
-	}
-	else if(checkquest(.questIds[OWDCurQuest]) < 2)
-	{
-		if(checkquest(.questIds[OWDCurQuest], HUNTING) == 2)
-		{
+	} else if (checkquest(.questIds[OWDCurQuest]) < 2) {
+		// Grant reward for each stage of the quest chain
+		if (checkquest(.questIds[OWDCurQuest], HUNTING) == 2) {
 			completequest .questIds[OWDCurQuest];
 			
 			mes "[Quest Board]";
 			mes "Please, choose a reward.";
-			set .@menu$, "";
-			for(set .@i,OWDCurQuest * 2; .@i<(OWDCurQuest * 2 + 2); set .@i,.@i+1)
-			{
-				if(.rewardItem[.@i] != .@lastItem)
-				{
-					set .@menu$, .@menu$ + (.@i == (OWDCurQuest * 2) ? "" : ":") + " " + getitemname(.rewardItem[.@i]);
-					set .@lastItem, .rewardItem[.@i];
-					set .@tempRewId[getarraysize(.@tempRewId)], .@lastItem;
+			.@menu$ = "";
+			for (.@i = OWDCurQuest * 2; .@i < (OWDCurQuest * 2 + 2); .@i++) {
+				if (.rewardItem[.@i] != .@lastItem) {
+					.@menu$ = .@menu$ + (.@i == (OWDCurQuest * 2) ? "" : ":") + " " + getitemname(.rewardItem[.@i]);
+					.@lastItem = .rewardItem[.@i];
+					.@tempRewId[getarraysize(.@tempRewId)] = .@lastItem;
 				}
 			}
-			set .@choice, select(.@menu$) - 1;
+			.@choice = select(.@menu$) - 1;
 			next;
 			mes "[Quest Board]";
 			mes "Quest complete. Reward: " + getitemname(.@tempRewId[.@choice]);
 			getitem .@tempRewId[.@choice], 1;
 			getexp .rewardExp[OWDCurQuest * 2], .rewardExp[OWDCurQuest * 2 + 1];
-			set OWDCurQuest, OWDCurQuest + 1;
-		}
-		else
-		{
+			OWDCurQuest += 1;
+		} else {
 			callsub OnDisplayReq;
 		}
 	}
@@ -127,8 +123,7 @@ iz_dun00t,174,169,0	script	Overlook Water Dungeon::ovwadub	2_BULLETIN_BOARD,{
 
 OnDisplayReq:
 	mes "Kill these monsters to get a reward:";
-	for(set .@i,OWDCurQuest * 4; .@i<OWDCurQuest * 4 + 4; set .@i,.@i+2)
-	{
+	for (.@i = OWDCurQuest * 4; .@i < OWDCurQuest * 4 + 4; .@i += 2)	{
 		mes " " + .mobReq[.@i + 1] + " " + strmobinfo(1, .mobReq[.@i]);
 	}
 	return;	
@@ -141,6 +136,8 @@ OnInit:
 	setarray .questIds[0],50531,50532,50533,50534,50535;
 	end;
 }
+
+// Quest Board
 
 // Monsters
 iz_dun00t,0,0	monster	Aged Hydra	2503,15
