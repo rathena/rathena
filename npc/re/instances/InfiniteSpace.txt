@@ -30,7 +30,8 @@ OnStart:
 	if( .@instance_delay > 0 )
 	{
 		mes "^0055FF[ "+.instance_name$+" ]^000000";
-		mes "You have to wait: ^FF0000"+.@instance_delay+" seconds.^000000";
+		mes "You cannot re-enter until cooldown has finished:";
+		mes "^FF0000"+ gettimestr("%ddays %Hh %Mm %Ss", 30, .@instance_delay) +"^000000";
 		close;
 	}
 
@@ -46,9 +47,7 @@ OnStart:
 	switch( select(
 		(( .@party_id && .@is_leader && !.@has_instance )?"Create " + .instance_name$:""),
 		(( .@party_id && .@is_leader && .@has_instance )?"Destroy " + .instance_name$:""),
-
-	"Nevermind."
-		)){
+		"Nevermind.")){
 	case 1:
 		getpartymember .@party_id,2;
 		if( .min_party_member >= 1 ){
@@ -96,7 +95,7 @@ OnStart:
 			mes "^FF0000[ Reason: ]^000000";
 			if( .@fail & 1 ) mes "^777777You must be Level: "+.base_level[0]+" - "+.base_level[1]+"^000000";
 			if( .@fail & 2 ) mes "^777777You need "+ .instance_zeny +" Zeny^000000";
-			if( .@fail & 4 ) mes "^777777You still have cooldown.^000000";
+			if( .@fail & 4 ) mes "^777777You are still awaiting the cooldown.^000000";
 			break;
 		}
 
