@@ -1,0 +1,49 @@
+  //===== rAthena Script =======================================
+//= Overlook Water Dungeon mobs
+//===== By: ==================================================
+//= Alayne
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Spawns monsters in Overlook Water Dungeon
+//===== Additional Comments: =================================
+//= 1.0 Initial version
+//= 1.1 Updated spawn amounts to match iRO DB and fix typo
+//============================================================
+
+iz_dun00t,0,0	monster	Aged Hydra	2503,15
+iz_dun00t,0,0	monster	Aged Plankton	2512,65
+iz_dun00t,0,0	monster	Aged Kukre	2504,15
+iz_dun00t,0,0	monster	Aged Marina	2506,45
+iz_dun00t,0,0	monster	Aged Vadon	2515,15
+
+iz_dun01t,0,0	monster	Aged Hydra	2503,30
+iz_dun01t,0,0	monster	Aged Plankton	2512,10
+iz_dun01t,0,0	monster	Aged Kukre	2504,15
+iz_dun01t,0,0	monster	Aged Marina	2506,50
+iz_dun01t,0,0	monster	Aged Vadon	2515,60
+iz_dun01t,0,0	monster	Aged Cornutus	2501,15
+
+iz_dun02t,0,0	monster	Aged Hydra	2503,40
+iz_dun02t,0,0	monster	Aged Marse	2508,40
+iz_dun02t,0,0	monster	Aged Cornutus	2501,60
+iz_dun02t,0,0	monster	Aged Obeaune	2510,40
+iz_dun02t,0,0	monster	Aged Merman	2509,1
+
+iz_dun03t,0,0	monster	Aged Hydra	2503,10
+iz_dun03t,0,0	monster	Aged Hydra	2503,30,300000 // 5min
+iz_dun03t,0,0	monster	Aged Marine Sphere	2507,20
+iz_dun03t,0,0	monster	Aged Phen	2511,45
+iz_dun03t,0,0	monster	Aged Marc	2505,40
+iz_dun03t,0,0	monster	Aged Swordfish	2514,40
+iz_dun03t,0,0	monster	Aged Merman	2509,3,1800000 //30 min
+
+iz_dun04t,0,0	monster	Aged Hydra	2503,18,300000 // 5min
+iz_dun04t,0,0	monster	Aged Marine Sphere	2507,10
+iz_dun04t,0,0	monster	Aged Swordfish	2514,10
+iz_dun04t,0,0	monster	Aged Deviace	2502,3
+iz_dun04t,0,0	monster	Aged Merman	2509,40
+iz_dun04t,0,0	monster	Aged Merman	2509,12,150000 //2.30 min
+iz_dun04t,0,0	monster	Aged Strouf	2513,50,600000 //10 min

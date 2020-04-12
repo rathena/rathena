@@ -1,0 +1,24 @@
+//===== rAthena Script =======================================
+//= Overlook Water Dungeon Warp Script
+//===== By: ==================================================
+//= Alayne
+//===== Current Version: =====================================
+//= 1.
+//===== Compatible With: =====================================
+//= rAthena Project;
+//===== Description: =========================================
+//= Warp Points for Overlook Water Dungeon
+//===== Additional Comments: =================================
+//= 1.0
+//============================================================
+
+iz_dun00t,352,342,0	warp	izd02t	5,2,iz_dun01t,253,252
+iz_dun00t,39,41,0	warp	izd03t	5,2,iz_dun01t,41,37
+iz_dun01t,118,170,0	warp	izd04t	5,2,iz_dun02t,236,204
+iz_dun01t,253,258,0	warp	izd02t-1	2,2,iz_dun00t,352,337
+iz_dun01t,41,32,0	warp	izd03t-1	2,2,iz_dun00t,39,46
+iz_dun02t,236,198,0	warp	izd04t-1	5,3,iz_dun01t,118,165
+iz_dun02t,339,331,0	warp	izd05t	2,2,iz_dun03t,32,63
+iz_dun03t,264,245,0	warp	izd06t	1,2,iz_dun04t,26,27
+iz_dun03t,29,63,0	warp	izd05t-1	2,2,iz_dun02t,339,328
+iz_dun04t,26,24,0	warp	izd06t-1	2,2,iz_dun03t,261,245
