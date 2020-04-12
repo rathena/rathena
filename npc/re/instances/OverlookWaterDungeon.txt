@@ -139,12 +139,12 @@ OnInit:
 
 // Quest Board Duplicates
 -	script	Overlook Water Dungeon#0	-1,{ callfunc "OWD_Quest_Board"; }
-iz_dun00t,174,169,DIR_SOUTHWEST	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#1	2_BULLETIN_BOARD
-iz_dun01t,257,253,DIR_SOUTHWEST	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#2	2_BULLETIN_BOARD
-iz_dun01t,46,43,DIR_SOUTHWEST	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#3	2_BULLETIN_BOARD
-iz_dun02t,238,216,DIR_SOUTHWEST	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#4	2_BULLETIN_BOARD
-iz_dun03t,34,57,DIR_SOUTHWEST	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#5	2_BULLETIN_BOARD
-iz_dun04t,24,35,DIR_SOUTHEAST	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#6	2_BULLETIN_BOARD
+iz_dun00t,174,169,0	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#1	2_BULLETIN_BOARD
+iz_dun01t,257,253,4	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#2	2_BULLETIN_BOARD
+iz_dun01t,46,43,4	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#3	2_BULLETIN_BOARD
+iz_dun02t,238,216,4	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#4	2_BULLETIN_BOARD
+iz_dun03t,34,57,4	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#5	2_BULLETIN_BOARD
+iz_dun04t,24,35,6	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#6	2_BULLETIN_BOARD
 
 // Monsters
 iz_dun00t,0,0	monster	Aged Hydra	2503,15
