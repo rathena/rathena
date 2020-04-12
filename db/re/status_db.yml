@@ -22,7 +22,7 @@
 # Status Change Settings
 #
 ###########################################################################
-# - Status                    Unique status change.
+# - Status                    Status change name.
 #   Icon                      Status change icon. (Default: Blank)
 #   DurationLookup            Default status change duration. (Default: 0)
 #   States                    Status change state to determine player states. (Default: None)
