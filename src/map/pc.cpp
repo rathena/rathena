@@ -5865,7 +5865,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 			for (const auto &it : status_db) {
 				sc_type status = static_cast<sc_type>(it.first);
 
-				if (sd->sc.data[status] && it.second->flag.test(SCF_REM_ON_MAPWARP))
+				if (sd->sc.data[status] && it.second->flag[SCF_REM_ON_MAPWARP])
 					status_change_end(&sd->bl, status, INVALID_TIMER);
 			}
 			if (sd->sc.data[SC_KNOWLEDGE]) {
@@ -6190,14 +6190,14 @@ static void pc_checkallowskill(struct map_session_data *sd)
 	for (const auto &it : status_db) {
 		sc_type status = static_cast<sc_type>(it.first);
 
-		if (it.second->flag.test(SCF_REQUIRE_WEAPON)) { // Skills requiring specific weapon types
+		if (it.second->flag[SCF_REQUIRE_WEAPON]) { // Skills requiring specific weapon types
 			if (status == SC_DANCING && !battle_config.dancing_weaponswitch_fix)
 				continue;
 			if (sd->sc.data[status] && !pc_check_weapontype(sd, skill_get_weapontype(it.second->skill_id)))
 				status_change_end(&sd->bl, status, INVALID_TIMER);
 		}
 
-		if (it.second->flag.test(SCF_REQUIRE_SHIELD)) { // Skills requiring a shield
+		if (it.second->flag[SCF_REQUIRE_SHIELD]) { // Skills requiring a shield
 			if (sd->sc.data[status] && sd->status.shield <= 0)
 				status_change_end(&sd->bl, status, INVALID_TIMER);
 		}
@@ -9430,7 +9430,7 @@ void pc_setoption(struct map_session_data *sd,int type)
 					if (sd->sc.data[status]) {
 						uint16 skill_id = it.second->skill_id;
 
-						if (it.second->flag.test(SCF_REM_ON_MADOGEAR) || (skill_id > 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO) && skill_get_sc(skill_id) != SC_NONE))
+						if (it.second->flag[SCF_REM_ON_MADOGEAR] || (skill_id > 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO) && skill_get_sc(skill_id) != SC_NONE))
 							status_change_end(&sd->bl, status, INVALID_TIMER);
 					}
 				}

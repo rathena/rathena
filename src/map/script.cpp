@@ -11658,7 +11658,7 @@ BUILDIN_FUNC(sc_end)
 		if (!sc)
 			return SCRIPT_CMD_SUCCESS;
 
-		if (status_db.getFlag((sc_type)type).test(SCF_NO_CLEARBUFF))
+		if (status_db.getFlag((sc_type)type)[SCF_NO_CLEARBUFF])
 			return SCRIPT_CMD_SUCCESS;
 
 		struct status_change_entry *sce = sc ? sc->data[type] : NULL;

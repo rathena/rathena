@@ -624,7 +624,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			for (const auto &it : status_db) {
 				sc_type type = static_cast<sc_type>(it.first);
 
-				if (it.second->flag.test(SCF_REM_ON_DAMAGED)) {
+				if (it.second->flag[SCF_REM_ON_DAMAGED]) {
 					if (type != SC_STONE || (type == SC_STONE && sc->data[SC_STONE] && sc->opt1 == OPT1_STONE))
 						status_change_end(target, type, INVALID_TIMER);
 				}
@@ -7232,7 +7232,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 		return tick?tick:1; // This should not happen in current implementation, but leave it anyway
 
 	// Status that are blocked by Golden Thief Bug card or Wand of Hermode
-	if (status_isimmune(bl) && status_db.getFlag(type).test(SCF_FAILED_IMMUNITY))
+	if (status_isimmune(bl) && status_db.getFlag(type)[SCF_FAILED_IMMUNITY])
 		return 0;
 
 	rate = cap_value(rate, 0, 10000);
@@ -7675,8 +7675,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	struct status_change_entry* sce;
 	struct status_data *status;
 	struct view_data *vd;
-	int opt_flag, undead_flag, val_flag = 0, tick_time = 0;
-	bool sc_isnew = true;
+	int undead_flag, val_flag = 0, tick_time = 0;
+	bool sc_isnew = true, opt_flag = false;
 	int64 calc_flag;
 	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
 
@@ -7706,15 +7706,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 //		if (status_get_race2(bl) == RC2_GVG && status_sc2scb_flag(type)&SCB_MAXHP) return 0;
 
 	// Fail if Madogear is active
-	if (sc->option&OPTION_MADOGEAR && scdb->flag.test(SCF_FAILED_MADO))
+	if (sc->option&OPTION_MADOGEAR && scdb->flag[SCF_FAILED_MADO])
 		return 0;
 
 	// Check for Boss resistances
-	if(status->mode&MD_STATUS_IMMUNE && !(flag&SCSTART_NOAVOID) && scdb->flag.test(SCF_BOSS_RESIST))
+	if(status->mode&MD_STATUS_IMMUNE && !(flag&SCSTART_NOAVOID) && scdb->flag[SCF_BOSS_RESIST])
 		return 0;
 
 	// Check for MVP resistance
-	if(status->mode&MD_MVP && !(flag&SCSTART_NOAVOID) && scdb->flag.test(SCF_MVP_RESIST))
+	if(status->mode&MD_MVP && !(flag&SCSTART_NOAVOID) && scdb->flag[SCF_MVP_RESIST])
 		return 0;
 
 	// Check failing SCs from list
@@ -7805,21 +7805,22 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_STRIPWEAPON:
 			if (sd && !(flag&SCSTART_LOADED)) { // Apply sc anyway if loading saved sc_data
 				short i;
-				opt_flag = 0; // Reuse to check success condition.
+
 				if(sd->bonus.unstripable_equip&EQP_WEAPON)
 					return 0;
 				i = sd->equip_index[EQI_HAND_L];
 				if (i>=0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_WEAPON) {
-					opt_flag|=1;
+					opt_flag = true;
 					pc_unequipitem(sd,i,3); // Left-hand weapon
 				}
 
 				i = sd->equip_index[EQI_HAND_R];
 				if (i>=0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_WEAPON) {
-					opt_flag|=2;
+					opt_flag = true;
 					pc_unequipitem(sd,i,3);
 				}
-				if (!opt_flag) return 0;
+				if (!opt_flag)
+					return 0;
 			}
 			if (tick == 1) return 1; // Minimal duration: Only strip without causing the SC
 			break;
@@ -8023,7 +8024,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Check for overlapping fails
 	if( (sce = sc->data[type]) ) {
-		if (scdb->flag.test(SCF_OVERLAP_FAIL))
+		if (scdb->flag[SCF_OVERLAP_FAIL])
 			return 0;
 		switch( type ) {
 			case SC_MERC_FLEEUP:
@@ -10136,7 +10137,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	/* [Ind] */
-	if (scdb->flag.test(SCF_DISPLAY_PC) || scdb->flag.test(SCF_DISPLAY_NPC)) {
+	if (scdb->flag[SCF_DISPLAY_PC] || scdb->flag[SCF_DISPLAY_NPC]) {
 		int dval1 = 0, dval2 = 0, dval3 = 0;
 
 		switch (type) {
@@ -10156,15 +10157,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	//SC that force player to stand if is sitting
-	if (scdb->flag.test(SCF_SET_STAND) && sd && pc_issit(sd))
+	if (scdb->flag[SCF_SET_STAND] && sd && pc_issit(sd))
 		pc_setstand(sd, true);
 
 	//SC that make stop attacking [LuzZza]
-	if (scdb->flag.test(SCF_STOP_ATTACKING))
+	if (scdb->flag[SCF_STOP_ATTACKING])
 		unit_stop_attack(bl);
 
 	//SC that make stop walking
-	if (scdb->flag.test(SCF_STOP_WALKING)) {
+	if (scdb->flag[SCF_STOP_WALKING]) {
 		switch (type) {
 			case SC_ANKLE:
 				if (battle_config.skill_trap_type || !map_flag_gvg(bl->m))
@@ -10197,10 +10198,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	//SC that make stop casting
-	if (battle_config.sc_castcancel&bl->type && scdb->flag.test(SCF_STOP_CASTING))
+	if (battle_config.sc_castcancel&bl->type && scdb->flag[SCF_STOP_CASTING])
 		unit_skillcastcancel(bl,0);
 
-	opt_flag = scdb->flag.test(SCF_OPT_CHANGEOPTION) | scdb->flag.test(SCF_OPT_CHANGELOOK) | scdb->flag.test(SCF_TRIGGER_ONTOUCH_);
+	opt_flag = (scdb->flag[SCF_OPT_CHANGEOPTION] | scdb->flag[SCF_OPT_CHANGELOOK]);
 	sc->opt1 = scdb->opt1;
 	sc->opt2 |= scdb->opt2;
 	sc->opt3 |= scdb->opt3;
@@ -10216,21 +10217,21 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_DANCING:
 			if ((val1&0xFFFF) != CG_MOONLIT)
 				sc->opt3 |= OPT3_MOONLIT;
-			opt_flag = 0;
+			opt_flag = false;
 			break;
 		case SC_INCATKRATE:
 			// Simulate Explosion Spirits effect for NPC_POWERUP [Skotlex]
 			if (bl->type != BL_MOB) {
-				opt_flag = 0;
+				opt_flag = false;
 				break;
 			}
 			break;
 	}
 
 	// On Aegis, when turning on a status change, first goes the option packet, then the sc packet.
-	if (opt_flag > 0) {
+	if (opt_flag) {
 		clif_changeoption(bl);
-		if(sd && (scdb->flag.test(SCF_OPT_CHANGELOOK))) {
+		if(sd && scdb->flag[SCF_OPT_CHANGELOOK]) {
 			clif_changelook(bl,LOOK_BASE,vd->class_);
 			clif_changelook(bl,LOOK_WEAPON,0);
 			clif_changelook(bl,LOOK_SHIELD,0);
@@ -10256,7 +10257,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		calc_flag&=~SCB_BODY;
 	}*/
 
-	if (!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && scdb->flag.test(SCF_DISPLAY_PC) || scdb->flag.test(SCF_DISPLAY_NPC))) {
+	if (!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && scdb->flag[SCF_DISPLAY_PC] || scdb->flag[SCF_DISPLAY_NPC])) {
 		int status_icon = scdb->icon;
 
 #if PACKETVER < 20151104
@@ -10400,7 +10401,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 	}
 
-	if( scdb->flag.test(SCF_TRIGGER_ONTOUCH_) && sd && !sd->npc_ontouch_.empty() )
+	if( scdb->flag[SCF_TRIGGER_ONTOUCH_] && sd && !sd->npc_ontouch_.empty() )
 		npc_touchnext_areanpc(sd,false); // Run OnTouch_ on next char in range
 
 	return 1;
@@ -10444,7 +10445,7 @@ int status_change_clear(struct block_list* bl, int type)
 			continue;
 
 		if (type == 0) { // Type 0: PC killed
-			if (it.second->flag.test(SCF_NO_REM_ONDEAD)) {
+			if (it.second->flag[SCF_NO_REM_ONDEAD]) {
 				switch (status) {
 					case SC_ELEMENTALCHANGE: // Only when its Holy or Dark that it doesn't dispell on death
 						if (sc->data[status]->val2 != ELE_HOLY && sc->data[status]->val2 != ELE_DARK)
@@ -10455,7 +10456,7 @@ int status_change_clear(struct block_list* bl, int type)
 			}
 		}
 
-		if (type == 3 && it.second->flag.test(SCF_NO_CLEARBUFF))
+		if (type == 3 && it.second->flag[SCF_NO_CLEARBUFF])
 			continue;
 
 		status_change_end(bl, status, INVALID_TIMER);
@@ -10494,7 +10495,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	struct status_change_entry *sce;
 	struct status_data *status;
 	struct view_data *vd;
-	int opt_flag = 0;
+	bool opt_flag = false;
 	e_scb_flag calc_flag = SCB_NONE;
 	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
 
@@ -10580,7 +10581,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 	sc->data[type] = NULL;
 
-	if (scdb->flag.test(SCF_DISPLAY_PC) || scdb->flag.test(SCF_DISPLAY_NPC))
+	if (scdb->flag[SCF_DISPLAY_PC] || scdb->flag[SCF_DISPLAY_NPC])
 		status_display_remove(bl,type);
 
 	vd = status_get_viewdata(bl);
@@ -11078,20 +11079,16 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	}
 
 	// Reset the options as needed
-	opt_flag = scdb->flag.test(SCF_OPT_CHANGEOPTION) | scdb->flag.test(SCF_OPT_CHANGELOOK) | scdb->flag.test(SCF_TRIGGER_ONTOUCH_);
+	opt_flag = (scdb->flag[SCF_OPT_CHANGEOPTION] | scdb->flag[SCF_OPT_CHANGELOOK]);
 	switch (type) {
-		case SC_SWOO:
-		case SC_SKA:
-			opt_flag = SCF_OPT_CHANGEOPTION;
- 			break;
 		case SC_DANCING:
 			if ((sce->val1&0xFFFF) == CG_MOONLIT)
 				sc->opt3 &= ~OPT3_MOONLIT;
-			opt_flag = 0;
+			opt_flag = false;
 			break;
 		case SC_INCATKRATE: // Simulated Explosion spirits effect.
 			if (bl->type != BL_MOB) {
-				opt_flag = 0;
+				opt_flag = false;
 				break;
 			}
 			break;
@@ -11132,11 +11129,11 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 	clif_status_change(bl,status_icon,0,0,0,0,0);
 
-	if( opt_flag == SCF_OPT_CHANGEOPTION ) // bugreport:681
+	if (scdb->flag[SCF_OPT_CHANGEOPTION]) // bugreport:681
 		clif_changeoption2(bl);
-	else if(opt_flag > 0) {
+	else if(opt_flag) {
 		clif_changeoption(bl);
-		if (sd && scdb->flag.test(SCF_OPT_CHANGELOOK)) {
+		if (sd) {
 			clif_changelook(bl,LOOK_BASE,sd->vd.class_);
 			clif_get_weapon_view(sd,&sd->vd.weapon,&sd->vd.shield);
 			clif_changelook(bl,LOOK_WEAPON,sd->vd.weapon);
@@ -11160,7 +11157,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	if (scdb->look&OPTION_HIDE) // Out of hiding, invoke on place.
 		skill_unit_move(bl,gettick(),1);
 
-	if (opt_flag&SCF_TRIGGER_ONTOUCH_ && sd && !sd->state.warping && map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC))
+	if (scdb->flag[SCF_TRIGGER_ONTOUCH_] && sd && !sd->state.warping && map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC))
 		npc_touch_areanpc(sd,bl->m,bl->x,bl->y); // Trigger on-touch event.
 
 	ers_free(sc_data_ers, sce);
@@ -13304,7 +13301,7 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 		this->put(status_id, status);
 
 		StatusRelevantBLTypes[status->icon] = BL_PC;
-		if (status->flag.test(SCF_BLEFFECT) && status->icon != EFST_BLANK)
+		if (status->flag[SCF_BLEFFECT] && status->icon != EFST_BLANK)
 			StatusRelevantBLTypes[status->icon] |= BL_SCEFFECT;
 	}
 

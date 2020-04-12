@@ -2350,6 +2350,8 @@ Body:
       Speed: true
     Opt3:
       OverThrust: true
+    Flags:
+      Opt_Changeoption: true
 
   - Status: Ska
     DurationLookup: SL_SKA
@@ -2360,6 +2362,8 @@ Body:
       Aspd: true
     Opt3:
       SteelBody: true
+    Flags:
+      Opt_Changeoption: true
 
   - Status: Earthscroll
     Icon: Earthscroll

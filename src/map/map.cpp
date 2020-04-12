@@ -2095,14 +2095,14 @@ int map_quit(struct map_session_data *sd) {
 						break;
 				}
 				//Status that are not saved
-				if (flag.test(SCF_NO_SAVE)) {
+				if (flag[SCF_NO_SAVE]) {
 					status_change_end(&sd->bl,status,INVALID_TIMER);
 					continue;
 				}
 				//Removes status by config
 				if (battle_config.debuff_on_logout) {
-					if (battle_config.debuff_on_logout&1 && flag.test(SCF_DEBUFF) || //Removes debuffs
-						(battle_config.debuff_on_logout&2 && !(flag.test(SCF_DEBUFF)))) //Removes buffs
+					if (battle_config.debuff_on_logout&1 && flag[SCF_DEBUFF] || //Removes debuffs
+						(battle_config.debuff_on_logout&2 && !(flag[SCF_DEBUFF]))) //Removes buffs
 					{
 						status_change_end(&sd->bl,status,INVALID_TIMER);
 						continue;
