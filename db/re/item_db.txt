@@ -1305,7 +1305,7 @@
 2021,Ganbantein,Ganbantein,5,0,,2000,100:320,,1,0,0x00000200,56,2,2,4,100,1,10,{ bonus bInt,25; bonus bDex,25; bonus3 bAddEff,Eff_Poison,1000,ATF_MAGIC; bonus3 bAutoSpell,"AB_SILENTIUM",1,100; bonus bUnbreakableWeapon; },{},{}
 2022,Staff_Of_Geffen,Staff of Geffen,5,20,,1000,100:300,,1,1,0x00000200,18,2,34,1,150,1,23,{ bonus bInt,20; },{},{}
 2023,Thanos_Rod,Thanos Two-Handed Staff,5,10,,1400,120:250,,1,1,0x00018314,56,2,34,4,120,1,23,{ bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bHealPower,18; bonus bMagicHPGainValue,500; bonus bMagicSPGainValue,50; bonus2 bHPLossRate,100,10000; },{},{ heal -1000,0; }
-2024,Infinity_Two-handed_Stick,Infinity Two-handed Stick,5,10,,500,30:170,,,1,0x810200,56,2,34,4,100,1,23,{},{},{}
+2024,Infinity_Staff,Infinity Staff,5,10,,500,30:170,,,1,0x810200,56,2,34,4,100,1,23,{},{},{}
 2025,Crimson_Two-Handed_Staff,Crimson Two-Handed Staff,5,20,,1000,100,,1,2,0x800200,63,2,34,3,70,1,23,{ .@r = getrefine(); bonus bInt,5; bonus bMatk,150+((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); },{},{}
 2026,Staff_of_Vicious_Mind,Staff of Vicious Mind,5,20,,1000,100:200,,1,1,0x00810204,63,2,34,4,160,1,23,{ bonus bMatk,pow(min(getrefine(),15),2); bonus bInt,6; bonus bUnbreakableWeapon; },{},{}
 2027,Sunflower_Kid,Sunflower Kid,5,10,,1500,150:320,,,2,0x00000200,56,2,34,4,170,1,23,{ bonus bInt,5; .@r = getrefine(); bonus bMatkRate,(.@r/2); bonus bDelayrate,(.@r*-1); bonus bUnbreakableWeapon; },{},{}
@@ -7427,7 +7427,7 @@
 13122,ALTAIR_ARES,Altair & Ares,5,1450000,,1000,200,,9,0,0x40000000,63,2,34,3,140,1,17,{ bonus bHit,5; bonus bDelayrate,10; bonus bLongAtkRate,30; },{},{}
 13124,ALTAIR_ARES_,Altair & Ares,5,1450000,,1000,200,,9,1,0x40000000,63,2,34,3,140,1,17,{ bonus bHit,5; bonus bDelayrate,10; bonus bLongAtkRate,30; },{},{}
 13125,Metal_Revolver,Metal Revolver,5,0,,0,30,,7,1,0x41000000,63,2,34,3,1,1,17,{ bonus bBaseAtk,getrefine(); bonus bLongAtkRate,1; if (BaseLevel >= 20 && BaseLevel <= 120) { bonus bBaseAtk,3*(BaseLevel/10); } },{},{}
-13126,Infinity_Pistol,Infinity Pistol,5,10,,500,175,,7,1,0x40000000,63,2,34,4,100,0,17,{},{},{}
+13126,Infinity_Handgun,Infinity Handgun,5,10,,500,175,,7,1,0x40000000,63,2,34,4,100,0,17,{},{},{}
 13127,Crimson_Revolver,Crimson Revolver,5,20,,1000,100,,7,2,0x41000000,63,2,34,3,70,1,17,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); },{},{}
 13128,Revolver_of_Vicious_Mind,Revolver of Vicious Mind,5,20,,1500,150,,7,1,0x41000000,63,2,34,4,160,1,17,{ bonus bAtk,pow(min(getrefine(),15),2); },{},{}
 13129,Unity_Revolver,Unity Revolver,5,20,,500,95,,7,1,0x41000000,63,2,34,3,1,1,17,{ bonus bBaseAtk,pow(getrefine(),2)*125/100; },{},{}
@@ -12384,7 +12384,7 @@
 28102,Half_BF_Two_Handed_Axe1,Half BF Two Handed Axe1,5,20,,0,200,,1,0,0x000444A2,63,2,34,3,80,1,7,{ bonus bStr,3; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player,30; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player,10; bonus bUnbreakableWeapon; },{},{}
 28103,Ru_Blue_Axe_M,Blue Twohand Axe,5,10,,3000,330,,1,1,0x00000400,56,2,34,3,1,1,7,{ bonus bStr,5; bonus bVit,5; },{},{}
 28104,Ru_Gold_Axe_M,Ru Gold Axe M,5,0,,3000,330,,1,2,0x00000400,56,2,34,3,120,1,7,{ bonus bStr,8; bonus bVit,8; },{},{}
-28105,Infinity_Axe,Infinity Axe,5,10,,500,265,,1,1,0x000444A2,56,2,34,4,100,1,7,{},{},{}
+28105,Infinity_Two-Handed_Axe,Infinity Two-Handed Axe,5,10,,500,265,,1,1,0x000444A2,56,2,34,4,100,1,7,{},{},{}
 28106,Crimson_Two-Handed_Axe,Crimson Two-Handed Axe,5,20,,2000,200,,1,2,0x000444A2,63,2,34,3,70,1,7,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bUnbreakableWeapon; },{},{}
 28107,Two_Handed_Axe_of_Vicious_Mind,Two Handed Axe of Vicious Mind,5,20,,2500,250,,1,1,0x000444A2,63,2,34,4,160,1,7,{ bonus bAtk,pow(min(getrefine(),15),2); bonus bUnbreakableWeapon; },{},{}
 28110,Unity_Two-Handed_Axe,Unity Two-Handed Axe,5,20,,1000,190,,1,1,0x000444A2,63,2,34,3,1,1,7,{ bonus bBaseAtk,pow(getrefine(),2)*125/100; },{},{}

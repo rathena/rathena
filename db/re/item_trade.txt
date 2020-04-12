@@ -186,7 +186,7 @@
 2015,1,100	// Upg_Staff
 2018,499,100	// Metal_Staff
 2019,499,100	// TE_Woe_Two_Hand_Staff
-2024,467,100	// Infinity_Two-handed_Stick
+2024,467,100	// Infinity_Staff
 2030,467,100	// Unity_Two-Handed_Staff
 //2033,499,100	//
 //2040,499,100	//
@@ -1766,7 +1766,7 @@
 13118,499,100	// Tiny_Flame
 13119,467,100	// Freedom_Flame
 13125,499,100	// Metal_Revolver
-13126,467,100	// Infinity_Pistol
+13126,467,100	// Infinity_Handgun
 13129,467,100	// Unity_Revolver
 //13132,499,100	//
 //13136,499,100	//
@@ -4676,7 +4676,7 @@
 //28024,499,100	//
 //28027,499,100	//
 //28040,499,100	//
-28105,467,100	// Infinity_Axe
+28105,467,100	// Infinity_Two-Handed_Axe
 28110,467,100	// Unity_Two-Handed_Axe
 //28113,499,100	//
 //28120,499,100	//
