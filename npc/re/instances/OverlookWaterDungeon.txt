@@ -160,7 +160,7 @@ iz_dun02t,0,0	monster	Aged Obeaune	2510,40
 iz_dun02t,0,0	monster	Aged Merman	2509,1
    
 iz_dun03t,0,0	monster	Aged Hydra	2503,10
-iz_dun03t,0,0	monster	Aged Hydra	2503,5,300000 // 5min
+iz_dun03t,0,0	monster	Aged Hydra	2503,30,300000 // 5min
 iz_dun03t,0,0	monster	Aged Marine Sphere	2507,20
 iz_dun03t,0,0	monster	Aged Phen	2511,45
 iz_dun03t,0,0	monster	Aged Marc	2505,40
@@ -173,7 +173,7 @@ iz_dun04t,0,0	monster	Aged Swordfish	2514,10
 iz_dun04t,0,0	monster	Aged Deviace	2502,3
 iz_dun04t,0,0	monster	Aged Merman	2509,40
 iz_dun04t,0,0	monster	Aged Merman	2509,12,150000 //2.30 min
-iz_dun04t,0,0	monster	Aged Strouff	2513,50,600000 //10 min
+iz_dun04t,0,0	monster	Aged Strouf	2513,50,600000 //10 min
 
 // Warps
 iz_dun00t,352,342,0	warp	izd02t	5,2,iz_dun01t,253,252
