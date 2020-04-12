@@ -66,3 +66,17 @@ Then maps are stored one right after another:
 <short> Y size
 <long> compressed cell data length
 <variable> compressed cell data
+
+New instructions for adding maps
+------------------------------------------------------------------------------
+1. Add new map files into rathena/data directory (.gat, .rsw, .gnd)
+2. Check that conf/grf-files.txt has data_dir defined with rathena/data as an absolute path
+3. Add new map entries into conf/maps_athena.conf
+4. Add new map ids into db/import/map_index.txt
+5. Add new resource mappings into rathena/data/resnametable.txt
+6. Run `./mapcache.exe -grf conf/grf-files.txt -list map_index.txt -cache map_cache.dat -rebuild`
+7. Copy locally created rathena/map_cache.dat into remote rathena/db/import/map_cache.dat
+8. Restart remote server with `./athena-start restart`
+
+Notes:
+A) If server reports that map files have been removed from maplist, it means that map was not detected in map_cache.dat in import folder (most likely).
