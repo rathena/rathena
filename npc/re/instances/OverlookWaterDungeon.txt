@@ -10,7 +10,7 @@
 //= Spawns monsters in Overlook Water Dungeon
 //===== Additional Comments: =================================
 //= 1.0
-//= 1.1 - Modified to Zeny cost and character-based cooldown (latiosu) 
+//= 1.1 - Modified to Zeny cost and character-based cooldown (latiosu)
 //============================================================
 
 gef_fild07,264,286,0	script	Overlook Water Dungeon::ovwadu	2_BULLETIN_BOARD,{
@@ -40,11 +40,11 @@ gef_fild07,264,286,0	script	Overlook Water Dungeon::ovwadu	2_BULLETIN_BOARD,{
 			close;
 		}
 		Zeny -= .cost;
-		OWD_Cooldown = gettimetick(2) + 86400; // 20 hour delay
+		OWD_Cooldown = gettimetick(2) + 72000; // 20 hour delay
 		warp .owdMap$, .owdX, .owdY;
 	}
 	close;
-	
+
 OnInit:
 	.cost = 300000;
 	.owdMap$ = "iz_dun00t";
@@ -70,7 +70,7 @@ function	script	OWD_Quest_Board	{
 	}
 	// Assign current quest to player if they have not received it
 	if (checkquest(.questIds[OWDCurQuest]) == -1) {
-		setquest .questIds[OWDCurQuest];	
+		setquest .questIds[OWDCurQuest];
 	}
 	// Check if quest chain is complete
 	if (OWDCurQuest > getarraysize(.questsIds)) {
@@ -99,7 +99,7 @@ function	script	OWD_Quest_Board	{
 		// Grant reward for each stage of the quest chain
 		if (checkquest(.questIds[OWDCurQuest], HUNTING) == 2) {
 			completequest .questIds[OWDCurQuest];
-			
+
 			mes "[Quest Board]";
 			mes "Please, choose a reward.";
 			.@menu$ = "";
@@ -125,11 +125,11 @@ function	script	OWD_Quest_Board	{
 
 OnDisplayReq:
 	mes "Kill these monsters to get a reward:";
-	for (.@i = OWDCurQuest * 4; .@i < OWDCurQuest * 4 + 4; .@i += 2)	{
+	for (.@i = OWDCurQuest * 4; .@i < OWDCurQuest * 4 + 4; .@i += 2) {
 		mes " " + .mobReq[.@i + 1] + " " + strmobinfo(1, .mobReq[.@i]);
 	}
-	return;	
-	
+	return;
+
 OnInit:
 	setarray .mobReq[0],2512,20,2506,20,2515,40,2504,40,2510,60,2508,60,2505,80,2511,80,2513,100,2509,100;
 	setarray .rewardExp[0],60600,68040,88695,99900,155700,174960,218475,245925,335340,377190;
@@ -161,13 +161,13 @@ iz_dun01t,0,0	monster	Aged Kukre	2504,15
 iz_dun01t,0,0	monster	Aged Marina	2506,50
 iz_dun01t,0,0	monster	Aged Vadon	2515,60
 iz_dun01t,0,0	monster	Aged Cornutus	2501,15
-  
+
 iz_dun02t,0,0	monster	Aged Hydra	2503,40
 iz_dun02t,0,0	monster	Aged Marse	2508,40
 iz_dun02t,0,0	monster	Aged Cornutus	2501,60
 iz_dun02t,0,0	monster	Aged Obeaune	2510,40
 iz_dun02t,0,0	monster	Aged Merman	2509,1
-   
+
 iz_dun03t,0,0	monster	Aged Hydra	2503,10
 iz_dun03t,0,0	monster	Aged Hydra	2503,30,300000 // 5min
 iz_dun03t,0,0	monster	Aged Marine Sphere	2507,20
@@ -175,7 +175,7 @@ iz_dun03t,0,0	monster	Aged Phen	2511,45
 iz_dun03t,0,0	monster	Aged Marc	2505,40
 iz_dun03t,0,0	monster	Aged Swordfish	2514,40
 iz_dun03t,0,0	monster	Aged Merman	2509,3,1800000 //30 min
-  
+
 iz_dun04t,0,0	monster	Aged Hydra	2503,18,300000 // 5min
 iz_dun04t,0,0	monster	Aged Marine Sphere	2507,10
 iz_dun04t,0,0	monster	Aged Swordfish	2514,10
