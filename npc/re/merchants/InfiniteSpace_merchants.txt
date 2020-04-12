@@ -99,7 +99,7 @@ S_BuyInfinityItem:
 	mes "[Relic Enforcer]";
 	mes "So you want to buy an item?";
 	mes "It'll cost you " + .reqCountBuy + " " + getitemname(.reqId) + " for an item.";
-	setarray .@items[0],1938,1994,2024,7042,13126,13323,16038,18128,21014,28105,28703,15141,22075,19033,20079;
+	setarray .@items[0],1938,1994,2024,13126,13323,16038,18128,21014,28105,28703,15141,22075,19033;
 	for(.@i = 0; .@i<getarraysize(.@items); ++.@i)
 	{
 		.@menu$ += getitemname(.@items[.@i])+":";
