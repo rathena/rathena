@@ -10,3 +10,4 @@
 // Use the base folder, not the data\ path.
 //-----------------------------------------
 //data_dir: C:\Program Files\Gravity\RO\
+data_dir: D:\Latios\Downloads\ChocobotRODevelopment\rathena\
