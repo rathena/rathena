@@ -40,7 +40,7 @@ gef_fild07,264,286,0	script	Overlook Water Dungeon::ovwadu	2_BULLETIN_BOARD,{
 	close;
 	
 OnInit:
-	set .cost = 500000;
+	set .cost, 500000;
 	set .owdMap$, "iz_dun00t";
 	set .owdX, 168;
 	set .owdY, 168;
