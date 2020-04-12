@@ -265,12 +265,12 @@ OnInit:
 		}
 	}
 	mes "[Angel Pori Pori]";
-	mes "Om nom nom.  If you give me a yummy Dark Ash I'll warp you down to the 40th floor.";
+	mes "Om nom nom.  If you give me a yummy "+ getitemname('EC_AshID) +" I'll warp you down to the 40th floor.";
 	next;
 	if(select("40th Level::Cancel") == 2) close;
 	if(countitem('EC_AshID) < 1){
 		mes "[Angel Pori Pori]";
-		mes "Aww, you don't have a Dark Ash.  Come back when you do.";
+		mes "Aww, you don't have a "+ getitemname('EC_AshID) +".  Come back when you do.";
 		close;
 	}
 	if('EC_Floor >= 41) {
@@ -280,7 +280,7 @@ OnInit:
 	}
 	if(getpartyleader(getcharid(1),2) != getcharid(0)){
 		mes "[Angel Pori Pori]";
-		mes "Only the party leader can give me a Dark Ash.";
+		mes "Only the party leader can give me a "+ getitemname('EC_AshID) +".";
 		close;
 	}
 	set 'EC_Floor,41;
