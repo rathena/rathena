@@ -9,7 +9,7 @@
 // mapname <- map will use index of previous map +1
 // Note that map index 0 is special and reserved for "error" status. 
 
-alb_ship 1
+alb_ship	1
 alb2trea
 alberta
 alberta_in
@@ -1053,7 +1053,7 @@ star_in
 //======================================================================================
 
 // Gramps Instance Maps
-eabyss_01l      1250
+eabyss_01l	1250
 eabyss_01m
 eabyss_01h
 eabyss_03l
@@ -1118,14 +1118,14 @@ emos_dun02m
 emos_dun02h
 
 // Overlook Water Dungeon
-iz_dun00t 1350
+iz_dun00t	1350
 iz_dun01t
 iz_dun02t
 iz_dun03t
 iz_dun04t
 
 // Endless Cellar
-1@new 1355
+1@new	1355
 2@new
 3@new
 4@new
