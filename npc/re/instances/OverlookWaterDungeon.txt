@@ -10,21 +10,22 @@
 //= Spawns monsters in Overlook Water Dungeon
 //===== Additional Comments: =================================
 //= 1.0
-//= 1.1 - Modified to Zeny cost and character-based cooldown (latiosu)
+//= 1.1 Modify messaging, use character-based cooldown, fixed
+//      final reward bug, add duplicate boards
 //============================================================
 
 gef_fild07,264,286,0	script	Overlook Water Dungeon::ovwadu	2_BULLETIN_BOARD,{
 	mes "[Overlook Water Dungeon]";
 	mes "This is the entrance to Overlook Water Dungeon.";
-	mes "^FF0000Restricted Level: 30+^000000";
-	mes "^FF0000Cooldown: 20hrs^000000";
+	mes "^FF0000Restricted Level: "+ .level[0] +" - "+ .level[1] +"^000000";
+	mes "^FF0000Cooldown: "+ gettimestr("%H hours", 21, .owdDelay) +"^000000";
 	next;
 	mes "[Overlook Water Dungeon]";
 	mes "Would you like to enter in the Overlook Water Dungeon?";
 	mes "It'll cost you ^FF0000" + .cost + "z^000000 to enter.";
 	next;
 	if (select("Enter","Leave") == 1) {
-		if (BaseLevel < 30) {
+		if (BaseLevel < .level[0] || BaseLevel > .level[1]) {
 			mes "[Overlook Water Dungeon]";
 			mes "Sorry, this dungeon is restricted to level "+ .level[0] +" - "+ .level[1];
 			close;
@@ -40,7 +41,7 @@ gef_fild07,264,286,0	script	Overlook Water Dungeon::ovwadu	2_BULLETIN_BOARD,{
 			close;
 		}
 		Zeny -= .cost;
-		OWD_Cooldown = gettimetick(2) + 72000; // 20 hour delay
+		OWD_Cooldown = gettimetick(2) + .owdDelay;
 		warp .owdMap$, .owdX, .owdY;
 	}
 	close;
@@ -50,6 +51,7 @@ OnInit:
 	.owdMap$ = "iz_dun00t";
 	.owdX = 168;
 	.owdY = 168;
+	.owdDelay = 72000; // 20 hour delay
 	setarray .level[0],30,175;
 	end;
 }
@@ -60,7 +62,8 @@ function	script	OWD_Quest_Board	{
 	next;
 	if (select("Receive/Complete Quest", "Leave") == 2) {
 		mes "[Quest Board]";
-		mes "You will not be able to re-enter for 20 hours and will need to pay the entry fee again.";
+		mes "You will need to pay the entry fee again and will not be able to re-enter for:";
+		mes "^FF0000"+ gettimestr("%H hours", 21, getvariableofnpc(.owdDelay, "Overlook Water Dungeon::ovwadu")) +"^000000";
 		mes "Are you sure you want to leave?";
 		next;
 		if (select("Stay", "Leave") == 2) {
