@@ -2378,7 +2378,7 @@ dali,93,148,6	script	Warpra#instance_8	113,{ callfunc "QWS_Instance_Warpra",8,"G
 dali,132,115,6	script	Warpra#instance_9	113,{ callfunc "QWS_Instance_Warpra",9,"Sara's Memory"; close; }
 ma_dun01,147,15,6	script	Warpra#instance_10	113,{ callfunc "QWS_Instance_Warpra",10,"Bangungot Hospital"; close; }
 // alberta,32,240,4	script	Warpra#instance_11	113,{ callfunc "QWS_Instance_Warpra",11,"Heart Hunter War Base"; close; } // TODO: Add Terra Gloria EP
-// cmd_fild07,55,278,5	script	Warpra#instance_12	113,{ callfunc "QWS_Instance_Warpra",12,"Infinite Space"; close; } // TODO: Add instance
+cmd_fild07,55,278,5	script	Warpra#instance_12	113,{ callfunc "QWS_Instance_Warpra",12,"Infinite Space"; close; }
 prt_lib_q,85,87,6	script	Warpra#instance_13	113,{ callfunc "QWS_Instance_Warpra",13,"Room of Consciousness"; close; }
 // alberta,32,240,4	script	Warpra#instance_14	113,{ callfunc "QWS_Instance_Warpra",14,"Werner's Laboratory"; close; } // TODO: Add Terra Gloria EP
 // alberta,32,240,4	script	Warpra#instance_15	113,{ callfunc "QWS_Instance_Warpra",15,"Cor Mission"; close; } // TODO: Add Illusion EP
