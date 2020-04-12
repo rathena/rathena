@@ -69,15 +69,15 @@ function	script	OWD_Quest_Board	{
 		close;
 	}
 	// Assign current quest to player if they have not received it
-	if (checkquest(.questIds[OWDCurQuest]) == -1) {
-		setquest .questIds[OWDCurQuest];
+	if (checkquest($@owdQuestIds[OWDCurQuest]) == -1) {
+		setquest $@owdQuestIds[OWDCurQuest];
 	}
 	// Check if quest chain is complete
 	if (OWDCurQuest > getarraysize(.questsIds)) {
 		mes "[Quest Board]";
 		.@complete = 1;
-		for (.@i = 0; .@i < getarraysize(.questIds); .@i++) {
-			if (checkquest(.questIds[.@i]) != 2) {
+		for (.@i = 0; .@i < getarraysize($@owdQuestIds); .@i++) {
+			if (checkquest($@owdQuestIds[.@i]) != 2) {
 				.@complete = 0;
 				break;
 			}
@@ -86,27 +86,27 @@ function	script	OWD_Quest_Board	{
 		if (.@complete == 1) {
 			mes "You've completed all quests.";
 			mes "Choose a reward.";
-			for (.@i = 0; .@i < getarraysize(.finalRewardItem); .@i++) {
-				.@menu$ = .@menu$ + (.@i == 0 ? "" : ":") + " " + getitemname(.finalRewardItem[.@i]);
+			for (.@i = 0; .@i < getarraysize($@owdFinalRewardItem); .@i++) {
+				.@menu$ = .@menu$ + (.@i == 0 ? "" : ":") + " " + getitemname($@owdFinalRewardItem[.@i]);
 			}
 			.@choice = select(.@menu$) - 1;
-			getitem .finalRewardItem[.@choice], 1;
+			getitem $@owdFinalRewardItem[.@choice], 1;
 			OWDCurQuest = 0;
 		} else {
 			mes "Please complete your current quest.";
 		}
-	} else if (checkquest(.questIds[OWDCurQuest]) < 2) {
+	} else if (checkquest($@owdQuestIds[OWDCurQuest]) < 2) {
 		// Grant reward for each stage of the quest chain
-		if (checkquest(.questIds[OWDCurQuest], HUNTING) == 2) {
-			completequest .questIds[OWDCurQuest];
+		if (checkquest($@owdQuestIds[OWDCurQuest], HUNTING) == 2) {
+			completequest $@owdQuestIds[OWDCurQuest];
 
 			mes "[Quest Board]";
 			mes "Please, choose a reward.";
 			.@menu$ = "";
 			for (.@i = OWDCurQuest * 2; .@i < (OWDCurQuest * 2 + 2); .@i++) {
-				if (.rewardItem[.@i] != .@lastItem) {
-					.@menu$ = .@menu$ + (.@i == (OWDCurQuest * 2) ? "" : ":") + " " + getitemname(.rewardItem[.@i]);
-					.@lastItem = .rewardItem[.@i];
+				if ($@owdRewardItem[.@i] != .@lastItem) {
+					.@menu$ = .@menu$ + (.@i == (OWDCurQuest * 2) ? "" : ":") + " " + getitemname($@owdRewardItem[.@i]);
+					.@lastItem = $@owdRewardItem[.@i];
 					.@tempRewId[getarraysize(.@tempRewId)] = .@lastItem;
 				}
 			}
@@ -115,7 +115,7 @@ function	script	OWD_Quest_Board	{
 			mes "[Quest Board]";
 			mes "Quest complete. Reward: " + getitemname(.@tempRewId[.@choice]);
 			getitem .@tempRewId[.@choice], 1;
-			getexp .rewardExp[OWDCurQuest * 2], .rewardExp[OWDCurQuest * 2 + 1];
+			getexp $@owdRewardExp[OWDCurQuest * 2], $@owdRewardExp[OWDCurQuest * 2 + 1];
 			OWDCurQuest += 1;
 		} else {
 			callsub OnDisplayReq;
@@ -126,16 +126,16 @@ function	script	OWD_Quest_Board	{
 OnDisplayReq:
 	mes "Kill these monsters to get a reward:";
 	for (.@i = OWDCurQuest * 4; .@i < OWDCurQuest * 4 + 4; .@i += 2) {
-		mes " " + .mobReq[.@i + 1] + " " + strmobinfo(1, .mobReq[.@i]);
+		mes " " + $@owdMobReq[.@i + 1] + " " + strmobinfo(1, $@owdMobReq[.@i]);
 	}
 	return;
 
 OnInit:
-	setarray .mobReq[0],2512,20,2506,20,2515,40,2504,40,2510,60,2508,60,2505,80,2511,80,2513,100,2509,100;
-	setarray .rewardExp[0],60600,68040,88695,99900,155700,174960,218475,245925,335340,377190;
-	setarray .rewardItem[0],2102,2104,2504,2506,985,985,2608,2608,2608,985;
-	setarray .finalRewardItem[0],4027,4049,4024,4035,4045,4055,4091,4093,4199,4105,4077,4084,4089,4111,4125;
-	setarray .questIds[0],50531,50532,50533,50534,50535;
+	setarray $@owdMobReq[0],2512,20,2506,20,2515,40,2504,40,2510,60,2508,60,2505,80,2511,80,2513,100,2509,100;
+	setarray $@owdRewardExp[0],60600,68040,88695,99900,155700,174960,218475,245925,335340,377190;
+	setarray $@owdRewardItem[0],2102,2104,2504,2506,985,985,2608,2608,2608,985;
+	setarray $@owdFinalRewardItem[0],4027,4049,4024,4035,4045,4055,4091,4093,4199,4105,4077,4084,4089,4111,4125;
+	setarray $@owdQuestIds[0],50531,50532,50533,50534,50535;
 	end;
 }
 
