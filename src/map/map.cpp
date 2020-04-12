@@ -2101,8 +2101,8 @@ int map_quit(struct map_session_data *sd) {
 				}
 				//Removes status by config
 				if (battle_config.debuff_on_logout) {
-					if (battle_config.debuff_on_logout&1 && !(flag.test(SCF_DEBUFF)) || //Removes buffs
-						(battle_config.debuff_on_logout&2 && flag.test(SCF_DEBUFF))) //Removes debuffs
+					if (battle_config.debuff_on_logout&1 && flag.test(SCF_DEBUFF) || //Removes debuffs
+						(battle_config.debuff_on_logout&2 && !(flag.test(SCF_DEBUFF)))) //Removes buffs
 					{
 						status_change_end(&sd->bl,status,INVALID_TIMER);
 						continue;

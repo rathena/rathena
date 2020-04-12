@@ -479,7 +479,6 @@ Body:
       No_Save: true
       No_Clearance: true
       Failed_Immunity: true
-      No_Save: true
 
   - Status: Kyrie
     Icon: Kyrie
@@ -727,11 +726,11 @@ Body:
     CalcFlags:
       Watk: true
     Flags:
+      Debuff: true
       Boss_Resist: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
-      No_Save: true
 
   - Status: Stripshield
     Icon: Noequipshield
@@ -739,11 +738,11 @@ Body:
     CalcFlags:
       Def: true
     Flags:
+      Debuff: true
       Boss_Resist: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
-      No_Save: true
 
   - Status: Striparmor
     Icon: Noequiparmor
@@ -751,11 +750,11 @@ Body:
     CalcFlags:
       Vit: true
     Flags:
+      Debuff: true
       Boss_Resist: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
-      No_Save: true
 
   - Status: Striphelm
     Icon: Noequiphelm
@@ -763,11 +762,11 @@ Body:
     CalcFlags:
       Int: true
     Flags:
+      Debuff: true
       Boss_Resist: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
-      No_Save: true
 
   - Status: Cp_Weapon
     Icon: Protectweapon
@@ -921,6 +920,7 @@ Body:
     CalcFlags:
       Regen: true
     Flags:
+      Debuff: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -934,7 +934,7 @@ Body:
     Opt3:
       ExplosionSpirits: true
     Flags:
-      No_Save: true
+      Debuff: true
       No_Clearance: true
 
   - Status: Combo
@@ -1135,7 +1135,6 @@ Body:
       Aspd: true
     Flags:
       No_Save: true
-      Debuff: true
 
   - Status: Assumptio
     Icon: Assumptio
@@ -1301,7 +1300,7 @@ Body:
     Opt3:
       Undead: true
     Flags:
-      No_Save: true
+      Debuff: true
       No_Clearance: true
     End:
       Blessing: true
@@ -1382,6 +1381,8 @@ Body:
 
   - Status: Orcish
     DurationLookup: SA_REVERSEORCISH
+    Flags:
+      Debuff: true
     Options:
       Orcish: true
 
@@ -2317,10 +2318,10 @@ Body:
     Icon: Gs_Gatlingfever
     DurationLookup: GS_GATLINGFEVER
     CalcFlags:
-      Batk: true
       Flee: true
       Speed: true
       Aspd: true
+      Batk: true
     Flags:
       No_Dispell: true
       No_Banishing_Buster: true
@@ -2479,6 +2480,7 @@ Body:
   - Status: Criticalwound
     Icon: Criticalwound
     Flags:
+      Debuff: true
       No_Dispell: true
       No_Banishing_Buster: true
 
@@ -2489,6 +2491,7 @@ Body:
     Icon: Slowcast
     DurationLookup: NPC_SLOWCAST
     Flags:
+      Debuff: true
       No_Rem_Ondead: true
       No_Clearbuff: true
       No_Dispell: true
@@ -4799,6 +4802,7 @@ Body:
       Int: true
       Luk: true
     Flags:
+      Debuff: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -4833,6 +4837,7 @@ Body:
       Watk: true
     Flags:
       Debuff: true
+      No_Save: true
 
   - Status: Circle_Of_Fire
     Icon: Circle_Of_Fire
@@ -5874,6 +5879,7 @@ Body:
     Flags:
       Bleffect: true
       Display_Pc: true
+      Debuff: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -5884,7 +5890,6 @@ Body:
     CalcFlags:
       Speed: true
     Flags:
-      No_Save: true
       Debuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -5894,7 +5899,6 @@ Body:
     Icon: H_Mine
     DurationLookup: RL_H_MINE
     Flags:
-      No_Save: true
       Debuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6491,6 +6495,7 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
+      No_Save: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6502,6 +6507,7 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
+      No_Save: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6513,6 +6519,7 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
+      No_Save: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6524,6 +6531,7 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
+      No_Save: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6535,6 +6543,7 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
+      No_Save: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6546,6 +6555,7 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
+      No_Save: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6557,6 +6567,7 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
+      No_Save: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6568,6 +6579,7 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
+      No_Save: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6579,6 +6591,7 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
+      No_Save: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
