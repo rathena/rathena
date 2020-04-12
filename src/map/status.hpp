@@ -2291,7 +2291,7 @@ enum e_status_change_clear_buffs_flags : int64 {
 };
 
 ///Enum for bonus_script's flag [Cydh]
-enum e_bonus_script_flags : int64 {
+enum e_bonus_script_flags : uint32 {
 	BSF_REM_ON_DEAD				= 0x001, ///< Removed when dead
 	BSF_REM_ON_DISPELL			= 0x002, ///< Removed by Dispell
 	BSF_REM_ON_CLEARANCE		= 0x004, ///< Removed by Clearance
@@ -2324,7 +2324,6 @@ enum e_status_change_flag : uint16 {
 	SCF_NONE = 0,
 	SCF_BLEFFECT,
 	SCF_DISPLAY_PC,
-	SCF_PERMANENT,
 	SCF_NO_CLEARBUFF,
 	SCF_NO_REM_ONDEAD,
 	SCF_REM_ON_MADOGEAR,

@@ -601,7 +601,6 @@ Body:
     Icon: Weightover50
     Flags:
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Save: true
       No_Dispell: true
@@ -612,7 +611,6 @@ Body:
     Icon: Weightover90
     Flags:
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       Stop_Attacking: true
       No_Save: true
@@ -1048,7 +1046,6 @@ Body:
       NoChatCond: true
     Flags:
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -3004,10 +3001,12 @@ Body:
   - Status: Reuse_Refresh
     Icon: Reuse_Refresh
     Flags:
+      No_Rem_Ondead: true
+      No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
-      No_Rem_Ondead: true
+      Overlap_Fail: true
 
   - Status: Giantgrowth
     Icon: Giantgrowth
@@ -5332,13 +5331,11 @@ Body:
 
   - Status: Push_Cart
     Icon: On_Push_Cart
-    DurationLookup: SO_EARTH_INSIGNIA
     CalcFlags:
       Speed: true
     Flags:
       Display_Pc: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -5481,7 +5478,6 @@ Body:
     DurationLookup: MH_STYLE_CHANGE
     Flags:
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -5775,7 +5771,6 @@ Body:
     Icon: Monster_Transform
     Flags:
       Display_Pc: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -5807,7 +5802,6 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -5820,7 +5814,6 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -5978,7 +5971,6 @@ Body:
       Opt_Changelook: true
       Stop_Attacking: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -5989,7 +5981,6 @@ Body:
       No_Save: true
       Display_Pc: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6001,7 +5992,6 @@ Body:
       No_Save: true
       Display_Pc: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6052,7 +6042,6 @@ Body:
     Flags:
       Bleffect: true
       Display_Pc: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6427,7 +6416,6 @@ Body:
     Flags:
       Display_Pc: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true
@@ -6492,7 +6480,6 @@ Body:
     Icon: Active_Monster_Transform
     Flags:
       Display_Pc: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6504,7 +6491,6 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6516,7 +6502,6 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6528,7 +6513,6 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6540,7 +6524,6 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6552,7 +6535,6 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6564,7 +6546,6 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6576,7 +6557,6 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6588,7 +6568,6 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6600,7 +6579,6 @@ Body:
       Bleffect: true
       Display_Pc: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6653,7 +6631,6 @@ Body:
       Display_Pc: true
       Display_Npc: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6668,7 +6645,6 @@ Body:
       MaxSp: true
     Flags:
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6683,7 +6659,6 @@ Body:
       MaxSp: true
     Flags:
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6698,7 +6673,6 @@ Body:
       MaxSp: true
     Flags:
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6713,7 +6687,6 @@ Body:
       MaxSp: true
     Flags:
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6730,7 +6703,6 @@ Body:
       Luk: true
     Flags:
       No_Rem_Ondead: true
-      Permanent: true
       No_Clearbuff: true
       No_Dispell: true
       No_Banishing_Buster: true
@@ -6766,6 +6738,8 @@ Body:
 
   - Status: Maxpain
     Icon: Maxpain
+    Flags:
+      Bleffect: true
 
   - Status: Armor_Element_Earth
     CalcFlags:
@@ -6788,7 +6762,6 @@ Body:
   - Status: Dailysendmailcnt
     Icon: Dailysendmailcnt
     Flags:
-      Permanent: true
       No_Rem_Ondead: true
       No_Clearbuff: true
       No_Dispell: true
@@ -6908,7 +6881,6 @@ Body:
       Opt_Changelook: true
       Stop_Attacking: true
       No_Rem_Ondead: true
-      Permanent: true
       No_Dispell: true
       No_Banishing_Buster: true
       No_Clearance: true

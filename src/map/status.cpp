@@ -10455,7 +10455,7 @@ int status_change_clear(struct block_list* bl, int type)
 			}
 		}
 
-		if (type == 3 && it.second->flag.test(SCF_PERMANENT))
+		if (type == 3 && it.second->flag.test(SCF_NO_CLEARBUFF))
 			continue;
 
 		status_change_end(bl, status, INVALID_TIMER);
@@ -12300,7 +12300,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 
 	//Removes bonus_script
 	if (bl->type == BL_PC) {
-		int64 i = 0;
+		uint32 i = 0;
 
 		if (type&SCCB_BUFFS)    i |= BSF_REM_BUFF;
 		if (type&SCCB_DEBUFFS)  i |= BSF_REM_DEBUFF;
