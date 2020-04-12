@@ -14,34 +14,35 @@
 //============================================================
 
 gef_fild07,264,286,0	script	Overlook Water Dungeon::ovwadu	2_BULLETIN_BOARD,{
-    mes "[Overlook Water Dungeon]";
-    mes "This is the entrance to Overlook Water Dungeon.";
-    mes "^FF0000Restricted Level: 30+^000000";
-    mes "^FF0000Cooldown: 20hrs^000000";
-    next;
-    mes "[Overlook Water Dungeon]";
-    mes "Would you like to enter in the Overlook Water Dungeon?";
-    mes "It'll cost you ^FF0000" + .cost + "z^000000 to enter.";
-    if (select("Enter","Leave") == 1) {
-        if (BaseLevel < 30) {
-            next;
-            mes "[Overlook Water Dungeon]";
-            mes "Sorry, this dungeon is restricted to level 30+";
-            close;
-        } else if (Zeny < .cost) {
-            mes "[Overlook Water Dungeon]";
-            mes "Sorry, you don't have enough zeny to enter.";
-            close;
-        }
+	mes "[Overlook Water Dungeon]";
+	mes "This is the entrance to Overlook Water Dungeon.";
+	mes "^FF0000Restricted Level: 30+^000000";
+	mes "^FF0000Cooldown: 20hrs^000000";
+	next;
+	mes "[Overlook Water Dungeon]";
+	mes "Would you like to enter in the Overlook Water Dungeon?";
+	mes "It'll cost you ^FF0000" + .cost + "z^000000 to enter.";
+	if (select("Enter","Leave") == 1) {
+		if (BaseLevel < 30) {
+			next;
+			mes "[Overlook Water Dungeon]";
+			mes "Sorry, this dungeon is restricted to level 30+";
+			close;
+		} else if (Zeny < .cost) {
+			mes "[Overlook Water Dungeon]";
+			mes "Sorry, you don't have enough zeny to enter.";
+			close;
+		}
 		if (gettimetick(2) < OWD_Cooldown) {
 			mes "[Overlook Water Dungeon]";
-            mes "You have been into the dungeon recently.";
+			mes "You have been into the dungeon recently.";
 			mes "Come back when your cooldown has completed.";
-            close;
+			close;
 		}
-        Zeny -= .cost;
-        set OWD_Cooldown, gettimetick(2) + 86400; // 20 hour delay
-        warp .owdMap$, .owdX, .owdY;
+		Zeny -= .cost;
+		set OWD_Cooldown, gettimetick(2) + 86400; // 20 hour delay
+		set OWDCurQuest, 0;
+		warp .owdMap$, .owdX, .owdY;
 	}
 	close;
 	
@@ -55,10 +56,6 @@ OnInit:
 }
 
 iz_dun00t,174,169,0	script	Overlook Water Dungeon::ovwadub	2_BULLETIN_BOARD,{
-	if(OWDCurQuest == -1)
-	{
-		set OWDCurQuest, 0;
-	}
 	if(checkquest(.questIds[OWDCurQuest]) == -1)
 	{
 		setquest .questIds[OWDCurQuest];	
