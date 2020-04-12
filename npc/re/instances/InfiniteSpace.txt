@@ -811,7 +811,7 @@ disablenpc instance_npcname(strnpcinfo(0));
 end;
 }
 
-
+// Warps
 1@infi,29,31,5	warp	iswarp#1	2,2,1@infi,29,36
 1@infi,29,63,5	warp	iswarp#2	2,2,1@infi,29,68
 1@infi,29,95,5	warp	iswarp#3	2,2,1@infi,29,100
@@ -861,3 +861,13 @@ end;
 1@infi,365,267,5	warp	iswarp#47	2,2,1@infi,365,272
 1@infi,365,299,5	warp	iswarp#48	2,2,1@infi,365,305
 1@infi,365,331,5	warp	iswarp#49	2,2,1@infi,365,337
+
+// Map Flags
+1@infi	mapflag	nowarp
+1@infi	mapflag	nowarpto
+1@infi	mapflag	noteleport
+1@infi	mapflag	nosave	SavePoint
+1@infi	mapflag	nomemo
+1@infi	mapflag	nobranch
+1@infi	mapflag	noicewall
+1@infi	mapflag	monster_noteleport
