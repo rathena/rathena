@@ -32,7 +32,7 @@ e_tower,76,79,0	script	Cellar Protection Stone	2_MONEMUS,{
 	next;
 	switch( select(
 		( .@party_id && .@is_leader && !.@has_instance )?"Enter " + .instance_name$:"",
-		( .@party_id && .@has_instance )?"Return " + .instance_name$:"",
+		( .@party_id && .@has_instance )?"Enter " + .instance_name$:"",
 		( .@party_id && .@is_leader && .@has_instance )?"Destroy " + .instance_name$:"",
 	"Nevermind."
 		)){
@@ -40,7 +40,8 @@ e_tower,76,79,0	script	Cellar Protection Stone	2_MONEMUS,{
 		set .@instance_delay, ( instance_delay_cellar - gettimetick(2) );
 		if( .@has_instance == 0 && .@instance_delay > 0 )
 		{
-			mes "You have to wait : ^FF0000"+.@instance_delay+" seconds.^000000";
+			mes "You cannot re-enter until cooldown has finished:";
+			mes "^FF0000"+ gettimestr("%ddays %Hh %Mm %Ss", 30, .@instance_delay) +"^000000";
 			close;
 		}
 		getpartymember .@party_id,2;
@@ -188,7 +189,7 @@ OnInit:
 	set .map_size, getarraysize( .map$ );
 	set .min_party_member, 1;
 	set .instance_zeny, 0;
-	set .instance_delay, 331200;
+	set .instance_delay, 331200; // 3 days 20 hrs
 	set .instance_name$, "Endless Cellar";
 	end;
 }
