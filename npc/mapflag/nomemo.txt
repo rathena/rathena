@@ -118,93 +118,94 @@ thor_camp	mapflag	nomemo
 moc_para01	mapflag	nomemo
 
 // Fields  ===================
-alb2trea	mapflag	nomemo
-ayo_fild02	mapflag	nomemo
-cmd_fild01	mapflag	nomemo
-cmd_fild02	mapflag	nomemo
-cmd_fild03	mapflag	nomemo
-cmd_fild04	mapflag	nomemo
-cmd_fild05	mapflag	nomemo
-cmd_fild06	mapflag	nomemo
-cmd_fild07	mapflag	nomemo
-cmd_fild08	mapflag	nomemo
-cmd_fild09	mapflag	nomemo
-gef_fild02	mapflag	nomemo
-gef_fild03	mapflag	nomemo
-gef_fild06	mapflag	nomemo
-gef_fild08	mapflag	nomemo
-gef_fild10	mapflag	nomemo
-gef_fild11	mapflag	nomemo
-gef_fild12	mapflag	nomemo
-gef_fild14	mapflag	nomemo
-glast_01	mapflag	nomemo
-hu_fild01	mapflag	nomemo
-hu_fild05	mapflag	nomemo
-izlu2dun	mapflag	nomemo
-mjolnir_01	mapflag	nomemo
-mjolnir_02	mapflag	nomemo
-mjolnir_03	mapflag	nomemo
-mjolnir_04	mapflag	nomemo
-mjolnir_05	mapflag	nomemo
-mjolnir_07	mapflag	nomemo
-mjolnir_08	mapflag	nomemo
-mjolnir_10	mapflag	nomemo
-mjolnir_11	mapflag	nomemo
-moc_fild01	mapflag	nomemo
-moc_fild02	mapflag	nomemo
-moc_fild03	mapflag	nomemo
+// alb2trea	mapflag	nomemo
+ayo_fild02	mapflag	nomemo // Ayothaya Dungeon Quest
+// cmd_fild01	mapflag	nomemo
+// cmd_fild02	mapflag	nomemo
+// cmd_fild03	mapflag	nomemo
+// cmd_fild04	mapflag	nomemo
+// cmd_fild05	mapflag	nomemo
+// cmd_fild06	mapflag	nomemo
+// cmd_fild07	mapflag	nomemo
+// cmd_fild08	mapflag	nomemo
+// cmd_fild09	mapflag	nomemo
+// gef_fild02	mapflag	nomemo
+gef_fild03	mapflag	nomemo // Orc Hero
+// gef_fild06	mapflag	nomemo
+// gef_fild08	mapflag	nomemo
+gef_fild10	mapflag	nomemo // Orc Lord
+// gef_fild11	mapflag	nomemo
+gef_fild12	mapflag	nomemo // Orc Hero
+// gef_fild14	mapflag	nomemo
+// glast_01	mapflag	nomemo
+// hu_fild01	mapflag	nomemo
+// hu_fild05	mapflag	nomemo
+// izlu2dun	mapflag	nomemo
+// mjolnir_01	mapflag	nomemo
+// mjolnir_02	mapflag	nomemo
+// mjolnir_03	mapflag	nomemo
+mjolnir_04	mapflag	nomemo // Mistress
+// mjolnir_05	mapflag	nomemo
+// mjolnir_07	mapflag	nomemo
+// mjolnir_08	mapflag	nomemo
+// mjolnir_10	mapflag	nomemo
+// mjolnir_11	mapflag	nomemo
+// moc_fild01	mapflag	nomemo
+// moc_fild02	mapflag	nomemo
+// moc_fild03	mapflag	nomemo
 //moc_fild04	mapflag	nomemo
 //moc_fild05	mapflag	nomemo
 //moc_fild08	mapflag	nomemo
-moc_fild09	mapflag	nomemo
+// moc_fild09	mapflag	nomemo
 //moc_fild13	mapflag	nomemo
 //moc_fild14	mapflag	nomemo
-moc_fild15	mapflag	nomemo
-moc_fild16	mapflag	nomemo
-moc_fild17	mapflag	nomemo
-moc_fild18	mapflag	nomemo
-moc_fild20	mapflag	nomemo
-moc_fild21	mapflag	nomemo
-moc_fild22	mapflag	nomemo
-nif_fild01	mapflag	nomemo
-nif_fild02	mapflag	nomemo
-pay_fild02	mapflag	nomemo
-pay_fild04	mapflag	nomemo
-pay_fild05	mapflag	nomemo
-pay_fild09	mapflag	nomemo
-pay_fild10	mapflag	nomemo
-pay_fild11	mapflag	nomemo
-prt_fild00	mapflag	nomemo
-prt_fild03	mapflag	nomemo
-prt_fild04	mapflag	nomemo
-prt_fild09	mapflag	nomemo
-prt_fild10	mapflag	nomemo
-prt_fild11	mapflag	nomemo
-prt_monk	mapflag	nomemo
-um_fild01	mapflag	nomemo
-um_fild02	mapflag	nomemo
-um_fild03	mapflag	nomemo
-yuno_fild02	mapflag	nomemo
-yuno_fild03	mapflag	nomemo
-yuno_fild04	mapflag	nomemo
-yuno_fild05	mapflag	nomemo
-yuno_fild07	mapflag	nomemo
-yuno_fild08	mapflag	nomemo
-yuno_fild09	mapflag	nomemo
-yuno_fild10	mapflag	nomemo
-ra_fild01	mapflag	nomemo
-ra_fild02	mapflag	nomemo
-ra_fild03	mapflag	nomemo
-ra_fild04	mapflag	nomemo
-ra_fild05	mapflag	nomemo
-ra_fild06	mapflag	nomemo
-ra_fild10	mapflag	nomemo
-ve_fild01	mapflag	nomemo
-ve_fild02	mapflag	nomemo
-ve_fild03	mapflag	nomemo
-ve_fild04	mapflag	nomemo
-ve_fild06	mapflag	nomemo
+// moc_fild15	mapflag	nomemo
+// moc_fild16	mapflag	nomemo
+moc_fild17	mapflag	nomemo // Phreeoni
+// moc_fild18	mapflag	nomemo
+// moc_fild20	mapflag	nomemo
+moc_fild21	mapflag	nomemo // Satan Morroc
+moc_fild22	mapflag	nomemo // Wounded Morroc
+// nif_fild01	mapflag	nomemo
+// nif_fild02	mapflag	nomemo
+// pay_fild02	mapflag	nomemo
+// pay_fild04	mapflag	nomemo
+// pay_fild05	mapflag	nomemo
+// pay_fild09	mapflag	nomemo
+pay_fild10	mapflag	nomemo // Eddga
+// pay_fild11	mapflag	nomemo
+// prt_fild00	mapflag	nomemo
+// prt_fild03	mapflag	nomemo
+// prt_fild04	mapflag	nomemo
+// prt_fild09	mapflag	nomemo
+// prt_fild10	mapflag	nomemo
+// prt_fild11	mapflag	nomemo
+// prt_monk	mapflag	nomemo
+// um_fild01	mapflag	nomemo
+// um_fild02	mapflag	nomemo
+// um_fild03	mapflag	nomemo
+// yuno_fild02	mapflag	nomemo
+// yuno_fild03	mapflag	nomemo
+// yuno_fild04	mapflag	nomemo
+// yuno_fild05	mapflag	nomemo
+// yuno_fild07	mapflag	nomemo
+// yuno_fild08	mapflag	nomemo
+// yuno_fild09	mapflag	nomemo
+// yuno_fild10	mapflag	nomemo
+// ra_fild01	mapflag	nomemo
+// ra_fild02	mapflag	nomemo
+ra_fild03	mapflag	nomemo // Atroce
+ra_fild04	mapflag	nomemo // Atroce
+// ra_fild05	mapflag	nomemo
+// ra_fild06	mapflag	nomemo
+// ra_fild10	mapflag	nomemo
+ve_fild01	mapflag	nomemo // Atroce
+ve_fild02	mapflag	nomemo // Atroce
+// ve_fild03	mapflag	nomemo
+// ve_fild04	mapflag	nomemo
+// ve_fild06	mapflag	nomemo
 cave	mapflag	nomemo
+xmas_fild01  mapflag nomemo // Garm
 
 // Job Quests ================
 // First Job Class
