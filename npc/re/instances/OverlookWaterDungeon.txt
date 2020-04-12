@@ -22,11 +22,11 @@ gef_fild07,264,286,0	script	Overlook Water Dungeon::ovwadu	2_BULLETIN_BOARD,{
 	mes "[Overlook Water Dungeon]";
 	mes "Would you like to enter in the Overlook Water Dungeon?";
 	mes "It'll cost you ^FF0000" + .cost + "z^000000 to enter.";
+	next;
 	if (select("Enter","Leave") == 1) {
 		if (BaseLevel < 30) {
-			next;
 			mes "[Overlook Water Dungeon]";
-			mes "Sorry, this dungeon is restricted to level 30+";
+			mes "Sorry, this dungeon is restricted to level "+ .level[0] +" - "+ .level[1];
 			close;
 		} else if (Zeny < .cost) {
 			mes "[Overlook Water Dungeon]";
@@ -36,7 +36,7 @@ gef_fild07,264,286,0	script	Overlook Water Dungeon::ovwadu	2_BULLETIN_BOARD,{
 		if (gettimetick(2) < OWD_Cooldown) {
 			mes "[Overlook Water Dungeon]";
 			mes "You have been into the dungeon recently.";
-			mes "Come back when your cooldown has completed.";
+			mes "Cooldown remaining: "+ gettimestr("%Hhrs %Mmin", 10, OWD_Cooldown - gettimetick(2));
 			close;
 		}
 		Zeny -= .cost;
@@ -50,7 +50,7 @@ OnInit:
 	.owdMap$ = "iz_dun00t";
 	.owdX = 168;
 	.owdY = 168;
-	setarray .level[0],30;
+	setarray .level[0],30,175;
 	end;
 }
 
@@ -62,6 +62,7 @@ function	script	OWD_Quest_Board	{
 		mes "[Quest Board]";
 		mes "You will not be able to re-enter for 20 hours and will need to pay the entry fee again.";
 		mes "Are you sure you want to leave?";
+		next;
 		if (select("Stay", "Leave") == 2) {
 			warp "SavePoint",0,0;
 		}
@@ -72,12 +73,13 @@ function	script	OWD_Quest_Board	{
 		setquest .questIds[OWDCurQuest];	
 	}
 	// Check if quest chain is complete
-	if (OWDCurQuest >= getarraysize(.questsIds)) {
+	if (OWDCurQuest > getarraysize(.questsIds)) {
 		mes "[Quest Board]";
 		.@complete = 1;
 		for (.@i = 0; .@i < getarraysize(.questIds); .@i++) {
 			if (checkquest(.questIds[.@i]) != 2) {
 				.@complete = 0;
+				break;
 			}
 		}
 		// Grant reward if complete and allow player to restart quest chain
@@ -139,7 +141,7 @@ OnInit:
 
 // Quest Board Duplicates
 -	script	Overlook Water Dungeon#0	-1,{ callfunc "OWD_Quest_Board"; }
-iz_dun00t,174,169,0	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#1	2_BULLETIN_BOARD
+iz_dun00t,172,171,0	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#1	2_BULLETIN_BOARD
 iz_dun01t,257,253,4	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#2	2_BULLETIN_BOARD
 iz_dun01t,46,43,4	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#3	2_BULLETIN_BOARD
 iz_dun02t,238,216,4	duplicate(Overlook Water Dungeon#0)	Overlook Water Dungeon#4	2_BULLETIN_BOARD
