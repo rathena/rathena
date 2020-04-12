@@ -234,7 +234,7 @@ S_Disenchant:
 				close;
 			}
 
-			if(rand(100) <= .breakRateDeletion)
+			if(rand(100) < .breakRateDeletion)
 			{
 				specialeffect 155;
 				next;
@@ -742,6 +742,6 @@ OnInit:
 	set .reqCountEnchant, 20;
 	set .reqCountDeletion, 30;
 	set .reqCountBuy, 50;
-	set .breakRateDeletion, 30;
+	set .breakRateDeletion, 0;
 	end;
 }
