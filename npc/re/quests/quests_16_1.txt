@@ -2347,7 +2347,7 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	1_M_JOBTESTER,{
 	cloakonnpc "Nyhill M. Heine#ep16_lib01", .@char_id;
 	end;
 }
-prt_lib,91,78,2	duplicate(Ian Walther#ep16_lib01)	Levuiere Wigner#ep16_lib01	4_EP16_LOUVIERE
+prt_lib,88,83,4	duplicate(Ian Walther#ep16_lib01)	Levuiere Wigner#ep16_lib01	4_EP16_LOUVIERE
 prt_lib,91,78,2	duplicate(Ian Walther#ep16_lib01)	Maximilian Roegenburg#ep16_lib01	4_EP16_MAX
 
 
