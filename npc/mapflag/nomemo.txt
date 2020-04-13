@@ -119,7 +119,6 @@ moc_para01	mapflag	nomemo
 
 // Fields  ===================
 // alb2trea	mapflag	nomemo
-ayo_fild02	mapflag	nomemo // Ayothaya Dungeon Quest
 // cmd_fild01	mapflag	nomemo
 // cmd_fild02	mapflag	nomemo
 // cmd_fild03	mapflag	nomemo
@@ -130,12 +129,9 @@ ayo_fild02	mapflag	nomemo // Ayothaya Dungeon Quest
 // cmd_fild08	mapflag	nomemo
 // cmd_fild09	mapflag	nomemo
 // gef_fild02	mapflag	nomemo
-gef_fild03	mapflag	nomemo // Orc Hero
 // gef_fild06	mapflag	nomemo
 // gef_fild08	mapflag	nomemo
-gef_fild10	mapflag	nomemo // Orc Lord
 // gef_fild11	mapflag	nomemo
-gef_fild12	mapflag	nomemo // Orc Hero
 // gef_fild14	mapflag	nomemo
 // glast_01	mapflag	nomemo
 // hu_fild01	mapflag	nomemo
@@ -144,7 +140,6 @@ gef_fild12	mapflag	nomemo // Orc Hero
 // mjolnir_01	mapflag	nomemo
 // mjolnir_02	mapflag	nomemo
 // mjolnir_03	mapflag	nomemo
-mjolnir_04	mapflag	nomemo // Mistress
 // mjolnir_05	mapflag	nomemo
 // mjolnir_07	mapflag	nomemo
 // mjolnir_08	mapflag	nomemo
@@ -161,18 +156,14 @@ mjolnir_04	mapflag	nomemo // Mistress
 //moc_fild14	mapflag	nomemo
 // moc_fild15	mapflag	nomemo
 // moc_fild16	mapflag	nomemo
-moc_fild17	mapflag	nomemo // Phreeoni
 // moc_fild18	mapflag	nomemo
 // moc_fild20	mapflag	nomemo
-moc_fild21	mapflag	nomemo // Satan Morroc
-moc_fild22	mapflag	nomemo // Wounded Morroc
 // nif_fild01	mapflag	nomemo
 // nif_fild02	mapflag	nomemo
 // pay_fild02	mapflag	nomemo
 // pay_fild04	mapflag	nomemo
 // pay_fild05	mapflag	nomemo
 // pay_fild09	mapflag	nomemo
-pay_fild10	mapflag	nomemo // Eddga
 // pay_fild11	mapflag	nomemo
 // prt_fild00	mapflag	nomemo
 // prt_fild03	mapflag	nomemo
@@ -194,18 +185,40 @@ pay_fild10	mapflag	nomemo // Eddga
 // yuno_fild10	mapflag	nomemo
 // ra_fild01	mapflag	nomemo
 // ra_fild02	mapflag	nomemo
-ra_fild03	mapflag	nomemo // Atroce
-ra_fild04	mapflag	nomemo // Atroce
 // ra_fild05	mapflag	nomemo
 // ra_fild06	mapflag	nomemo
 // ra_fild10	mapflag	nomemo
-ve_fild01	mapflag	nomemo // Atroce
-ve_fild02	mapflag	nomemo // Atroce
 // ve_fild03	mapflag	nomemo
 // ve_fild04	mapflag	nomemo
 // ve_fild06	mapflag	nomemo
+
+// Custom to block only MVP/Quest fields
+// Unknown
 cave	mapflag	nomemo
-xmas_fild01  mapflag nomemo // Garm
+// Ayothaya Dungeon Quest
+ayo_fild02	mapflag	nomemo 
+// Orc Hero
+gef_fild03	mapflag	nomemo 
+gef_fild12	mapflag	nomemo 
+// Orc Lord
+gef_fild10	mapflag	nomemo 
+// Mistress
+mjolnir_04	mapflag	nomemo 
+// Phreeoni
+moc_fild17	mapflag	nomemo 
+// Satan Morroc
+moc_fild21	mapflag	nomemo 
+// Wounded Morroc
+moc_fild22	mapflag	nomemo 
+// Eddga
+pay_fild10	mapflag	nomemo
+// Atroce
+ra_fild03	mapflag	nomemo
+ra_fild04	mapflag	nomemo
+ve_fild01	mapflag	nomemo
+ve_fild02	mapflag	nomemo
+// Garm
+xmas_fild01  mapflag nomemo
 
 // Job Quests ================
 // First Job Class
