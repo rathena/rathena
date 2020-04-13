@@ -82,10 +82,6 @@ function	script	OWD_Quest_Board	{
 		}
 		close;
 	}
-	// Assign current quest to player if they have not received it
-	if (isbegin_quest(.@questIds[OWDCurQuest]) == 0) {
-		setquest .@questIds[OWDCurQuest];
-	}
 	// Check if quest chain is complete
 	if (OWDCurQuest >= getarraysize(.@questIds)) {
 		mes "[Quest Board]";
@@ -115,6 +111,10 @@ function	script	OWD_Quest_Board	{
 		erasequest .@questIds[OWDCurQuest];
 		OWDCurQuest += 1;
 	} else {
+		// Assign current quest to player if they have not received it
+		if (isbegin_quest(.@questIds[OWDCurQuest]) == 0) {
+			setquest .@questIds[OWDCurQuest];
+		}
 		mes "Kill these monsters to get a reward:";
 		for (.@i = OWDCurQuest * 4; .@i < OWDCurQuest * 4 + 4; .@i += 2) {
 			mes .@mobReq[.@i + 1] + " " + strmobinfo(1, .@mobReq[.@i]);
