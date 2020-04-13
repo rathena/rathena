@@ -71,7 +71,8 @@ function	script	OWD_Quest_Board	{
 	mes "[Quest Board]";
 	mes "What would you like to do?";
 	next;
-	if (select("Receive/Complete Quest", "Leave") == 2) {
+	.@select = select("Receive Quest", "Turn-in Quest", "Leave");
+	if (.@select == 3) {
 		mes "[Quest Board]";
 		mes "You will need to pay the entry fee again and will not be able to re-enter for: ^FF000020 hours^000000";
 		mes "";
@@ -79,6 +80,16 @@ function	script	OWD_Quest_Board	{
 		next;
 		if (select("Stay", "Leave") == 2) {
 			warp "SavePoint",0,0;
+		}
+		close;
+	} else if (.@select == 1) {
+		if (isbegin_quest(.@questIds[OWDCurQuest]) == 0) {
+			setquest .@questIds[OWDCurQuest];
+		}
+		mes "[Quest Board]";
+		mes "Kill these monsters to get a reward:";
+		for (.@i = OWDCurQuest * 4; .@i < OWDCurQuest * 4 + 4; .@i += 2) {
+			mes .@mobReq[.@i + 1] + " " + strmobinfo(1, .@mobReq[.@i]);
 		}
 		close;
 	}
@@ -111,14 +122,8 @@ function	script	OWD_Quest_Board	{
 		erasequest .@questIds[OWDCurQuest];
 		OWDCurQuest += 1;
 	} else {
-		// Assign current quest to player if they have not received it
-		if (isbegin_quest(.@questIds[OWDCurQuest]) == 0) {
-			setquest .@questIds[OWDCurQuest];
-		}
-		mes "Kill these monsters to get a reward:";
-		for (.@i = OWDCurQuest * 4; .@i < OWDCurQuest * 4 + 4; .@i += 2) {
-			mes .@mobReq[.@i + 1] + " " + strmobinfo(1, .@mobReq[.@i]);
-		}
+		mes "[Quest Board]";
+		mes "Please complete your current quest.";
 	}
 	close;
 }
