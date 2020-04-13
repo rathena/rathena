@@ -30,8 +30,8 @@ OnStart:
 
 	set .@npcname$, "[Scientist Doyeon]";
 	mes .@npcname$;
-	mes "Did you ever heard about the Sky Fortress";
-	mes "That's known to be the craddle of all plagues that spread around the world...";
+	mes "Did you ever hear about the Sky Fortress?";
+	mes "It's known to be the cradle of all plagues that spread around the world...";
 	next;
 	switch( select(
 		(( .@party_id && .@sf_leader && !.@has_instance )?"Create " + .instance_name$:""),
@@ -41,8 +41,12 @@ OnStart:
 	case 1:
 		if( .@instance_delay > 0 )
 		{
-			mes "You have to wait : ^FF0000"+.@instance_delay+" Seconds.^000000";
-			close;
+			.@days = .@instance_delay / 86400;
+			.@hours = .@instance_delay / 3600 % 24;
+			.@mins = .@instance_delay / 60 % 60;
+			.@secs = .@instance_delay % 60;
+			mes "You cannot re-enter until cooldown has finished:";
+			mes "^FF0000"+.@days+"days "+.@hours+"h "+.@mins+"m "+.@secs+"s^000000";
 		}
 		getpartymember .@party_id,2;
 		if( .min_party_member >= 1 ){
@@ -66,7 +70,7 @@ OnStart:
 		for(set .@i,0; .@i<getarraysize(.map$); set .@i,.@i+1)
 		{
 			if (.map$[.@i] != "" && getmapusers(instance_mapname(.map$[.@i], -1)) > 0) {
-				mes "Another team is already in the " + .instance_name$ + ". I can't send you there, sorry.";
+				mes "Another team is already in the " + .instance_name$ + ". I can't send you there yet, sorry.";
 				//close;
 			}
 		}
@@ -117,7 +121,7 @@ OnStart:
 					set instance_delay_skyf, ( .@gettimetick + ( .instance_delay ));
 					set Zeny, Zeny - .instance_zeny;
 					set SF_INSTANCE_ID, .@instance;
-					dispbottom "["+.instance_name$+"] -"+ .instance_zeny +" Zeny and Instance Cooldown Applied.";
+					dispbottom "["+.instance_name$+"] - "+ .instance_zeny +" Zeny and Instance Cooldown Applied.";
 				}
 			attachrid( .@origin );
 			npctalk .instance_name$ + " has been generated for Party - " + getpartyname( .@party_id );
@@ -137,10 +141,6 @@ OnStart:
 			//}
 			//instance_set_timeout .instance_delay,300,.@instance;
 			//instance_init(.@instance);
-
-			//disable unused npcs for now
-			disablenpc instance_npcname( "sfwarp#1", instance_id() );
-			disablenpc instance_npcname( "sfwarp#2", instance_id() );
 
 			next;
 			mes "^0055FF[ "+.instance_name$+" ]^000000";
@@ -181,7 +181,7 @@ OnInit:
 
 prt_q,243,74,3	script	Dimensional Device::alasfdd	PORTAL,{
 	if( SF_INSTANCE_ID <= 0 ){
-		mes "The device doesn't seems to work. You can't seem to enter.";
+		mes "The device doesn't seem to work. You can't enter.";
 		close;
 	}
 	else{
@@ -234,6 +234,10 @@ OnInstanceInit:
 	//apply mapflags
 	//setmapflag .@map$,mf_nomobloot;
 	//setmapflag .@map$,mf_nomvploot;
+
+	//disable unused npcs for now
+	disablenpc instance_npcname( "sfwarp#1", instance_id() );
+	disablenpc instance_npcname( "sfwarp#2", instance_id() );
 
 	set 'instance_sf_level, 0;
 	set 'randomPop, 0;
@@ -541,7 +545,7 @@ function	summon_guardian	{
 				setarray .@coordinate,103,114,103,114;
 				break;
 			default:
-				instance_announce instance_id(), "[ Sky Fortress ] : Cleared!! Congratulation!!",bc_map,0x00FF99;
+				instance_announce instance_id(), "[ Sky Fortress ] : Cleared!! Congratulations!!",bc_map,0x00FF99;
 				return;
 		}
 	}
@@ -653,7 +657,7 @@ OnTimer10000:
 	set 'timerCount, 'timerCount + 10;
 	if('timerCount == $sf_timer_delay)
 	{
-		instance_announce instance_id(), "[ Sky Fortress ] The Dimension collapse! I have to get you out of there!", bc_map, 0xFF0000;
+		instance_announce instance_id(), "[ Sky Fortress ] The Dimension is collapsing! I have to get you out of there!", bc_map, 0xFF0000;
 		sleep 5000;
 		getpartymember getcharid(1),2;
 		for( set .@i, 0; .@i < $@partymembercount; set .@i, .@i+1 )
@@ -806,9 +810,9 @@ OnTouch:
 			instance_announce instance_id(), "What a bunch of...Annoying worms!", bc_map, 0x0000FF;
 			sleep2 1500;
 
-			charcommand "#me " + strcharinfo(0) + " I believe that huge golem play an important role here...";
+			charcommand "#me " + strcharinfo(0) + " I believe that huge Golem plays an important role here...";
 
-			instance_announce instance_id(), "Subordinates of the Sky Fortress...Stop them...Bijou's order!", bc_map, 0x0000FF;
+			instance_announce instance_id(), "Defenders of the Sky Fortress...Stop them...Bijou's order!", bc_map, 0x0000FF;
 			sleep2 1500;
 
 			cutin "", 255;
@@ -848,11 +852,11 @@ OnTouch:
 		instance_announce instance_id(), "Filthy humans! Stop them! Guard...The Holy Fortress!", bc_map, 0x0000FF;
 		sleep2 1500;
 
-		charcommand "#me " + strcharinfo(0) + " It's extremly vigilante...";
+		charcommand "#me " + strcharinfo(0) + " They're extremely vigilant...";
 		sleep2 1500;
-		charcommand "#me " + strcharinfo(0) + " I thinks there must be something";
+		charcommand "#me " + strcharinfo(0) + " I think there must be something to be discovered";
 		sleep2 1500;
-		charcommand "#me " + strcharinfo(0) + " if we follow those Golem's traces.";
+		charcommand "#me " + strcharinfo(0) + " if we follow the Golem's traces.";
 		sleep2 1500;
 
 		disablenpc strnpcinfo(3);
@@ -978,14 +982,14 @@ OnTouch:
 	if('talking == 0)
 	{
 		set 'talking, 1;
-		charcommand "#me " + strcharinfo(0) + " So this is finally the last...I suppose he must be the cause of Prontera invasion isn't he?";
+		charcommand "#me " + strcharinfo(0) + " So this is finally the end...I suppose he is the cause of the Prontera invasion, isn't he?";
 		sleep2 1500;
 
 		cutin "stephan_j_e_w", 2;
 		instance_announce instance_id(), "[Wolf] Adventurers...A bunch of foolish greenhorns!", bc_map, 0x0000FF;
 		sleep2 1500;
 
-		instance_announce instance_id(), "[Jack] I must follow orders...From Bijou!", bc_map, 0x0000FF;
+		instance_announce instance_id(), "[Jack] I must follow orders...For Bijou!", bc_map, 0x0000FF;
 		sleep2 1500;
 
 		charcommand "#me " + strcharinfo(0) + " Bijou? So was the golem the mere guardian around here? Is that it?";
@@ -994,13 +998,13 @@ OnTouch:
 		instance_announce instance_id(), "[Stefan] Growl!", bc_map, 0x0000FF;
 		sleep2 1500;
 
-		instance_announce instance_id(), "[Earnest] Filthy worms...Can't lead life as intended. Immortal power...My body...", bc_map, 0x0000FF;
+		instance_announce instance_id(), "[Earnest] Filthy worms...Can't lead the life I longed. This immortal power...My body...", bc_map, 0x0000FF;
 		sleep2 1500;
 
 		charcommand "#me " + strcharinfo(0) + " I'd better defeat it first.";
 		sleep2 1500;
 
-		instance_announce instance_id(), "[Stefan J.E Wolf] Soldiers...Bijou's Fortress...Cut them all...I'll step up...I'll kill them...All", bc_map, 0x0000FF;
+		instance_announce instance_id(), "[Stefan J.E Wolf] Soldiers...Bijou's Fortress...Cut them down...I'll go...I'll kill them...All", bc_map, 0x0000FF;
 		sleep2 1500;
 
 		disablenpc strnpcinfo(3);
