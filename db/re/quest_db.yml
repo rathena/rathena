@@ -9637,22 +9637,22 @@ Body:
   - Id: 60495
     Title: Hunting Timer 2
     TimeLimit: +4h
-  - Id: 60485
+  - Id: 60502
     Title: Wanderer Hunting
     Targets:
       - Mob: WANDER_MAN
         Count: 400
-  - Id: 60485
+  - Id: 60508
     Title: Waste Stove Hunting
     Targets:
       - Mob: WASTE_STOVE
         Count: 400
-  - Id: 60485
+  - Id: 60594
     Title: Isilla Hunting
     Targets:
       - Mob: ISILLA
         Count: 400
-  - Id: 60485
+  - Id: 60602
     Title: Bathory Hunting
     Targets:
       - Mob: BATHORY
