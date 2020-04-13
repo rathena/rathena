@@ -879,7 +879,21 @@ OnPoripori:
 	instance_announce .@i,"Pori Pori: What..... what is happening?  How could I..... lose.....",bc_map,0xFFD700;
 	sleep2 5000;
 	instance_announce .@i,"Pori Pori: I'll return when I've healed, then..... then you'll all suffer!!!",bc_map,0xFFD700;
+	sleep2 5000;
 	enablenpc instance_npcname("EC_Arc_Pori", instance_id());
+	instance_announce .@i,"Arc Pori Pori: You defeated Pori Pori! Come find me quickly for your reward!",bc_map,0x00D7FF;
+	sleep2 30000;
+	instance_announce .@i,"Arc Pori Pori: Quick, speak to me before the dark energy expels everyone!",bc_map,0x00D7FF;
+	sleep2 30000;
+	instance_announce .@i,"Arc Pori Pori: Oh no! There's too much dark energy, everyone is about to be expelled!",bc_map,0x00D7FF;
+	sleep2 5000;
+	getpartymember getcharid(1),2;
+	for( set .@i, 0; .@i < $@partymembercount; set .@i, .@i+1 ) {
+		if( attachrid( $@partymemberaid[.@i] ) && EC_INSTANCE_ID > 0){
+			set EC_INSTANCE_ID, -1;
+		}
+	}
+	instance_destroy instance_id();
 	end;
 }
 
@@ -903,6 +917,7 @@ OnPoripori:
 	mes "[Arc Pori Pori]";
 	mes "Farewell, young adventurer. I wish you good luck in the future.";
 	close2;
+	set EC_INSTANCE_ID, -1;
 	charcommand("#load " + strcharinfo(0));
 	end;
 
