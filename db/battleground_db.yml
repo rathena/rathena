@@ -38,12 +38,14 @@
 #         RespawnY    Y coordinate for warping on death.
 #         DeathEvent  NPC event triggered when a player dies.
 #         QuitEvent   NPC event triggered when a player quits.
+#         ActiveEvent NPC event triggered when a player joints an active battleground.
 #         Variable    Name of BG ID variable used in the battleground script.
 #       TeamB:        TeamB settings.
 #         RespawnX    X coordinate for warping on death.
 #         RespawnY    Y coordinate for warping on death.
 #         DeathEvent  NPC event triggered when a player dies.
 #         QuitEvent   NPC event triggered when a player quits.
+#         ActiveEvent NPC event triggered when a player joints an active battleground.
 #         Variable    Name of BG ID variable used in the battleground script.
 ###########################################################################
 
@@ -122,12 +124,14 @@ Body:
           RespawnY: 129
           DeathEvent: "KvM01_BG::OnGuillaumeDie"
           QuitEvent: "KvM01_BG::OnGuillaumeQuit"
+          ActiveEvent: "KvM01_BG::OnGuillaumeActive"
           Variable: "$@KvM01BG_id1"
         TeamB:
           RespawnX: 147
           RespawnY: 55
           DeathEvent: "KvM01_BG::OnCroixDie"
           QuitEvent: "KvM01_BG::OnCroixQuit"
+          ActiveEvent: "KvM01_BG::OnCroixActive"
           Variable: "$@KvM01BG_id2"
   - Id: 4
     Name: "KVM (Level 60~79)"
@@ -142,12 +146,14 @@ Body:
           RespawnY: 129
           DeathEvent: "KvM02_BG::OnGuillaumeDie"
           QuitEvent: "KvM02_BG::OnGuillaumeQuit"
+          ActiveEvent: "KvM02_BG::OnGuillaumeActive"
           Variable: "$@KvM02BG_id1"
         TeamB:
           RespawnX: 147
           RespawnY: 55
           DeathEvent: "KvM02_BG::OnCroixDie"
           QuitEvent: "KvM02_BG::OnCroixQuit"
+          ActiveEvent: "KvM02_BG::OnCroixActive"
           Variable: "$@KvM02BG_id2"
   - Id: 5
     Name: "KVM (Level 59 and below"
@@ -161,12 +167,14 @@ Body:
           RespawnY: 129
           DeathEvent: "KvM03_BG::OnGuillaumeDie"
           QuitEvent: "KvM03_BG::OnGuillaumeQuit"
+          ActiveEvent: "KvM03_BG::OnGuillaumeActive"
           Variable: "$@KvM03BG_id1"
         TeamB:
           RespawnX: 147
           RespawnY: 55
           DeathEvent: "KvM03_BG::OnCroixDie"
           QuitEvent: "KvM03_BG::OnCroixQuit"
+          ActiveEvent: "KvM03_BG::OnCroixActive"
           Variable: "$@KvM03BG_id2"
 
 Footer:

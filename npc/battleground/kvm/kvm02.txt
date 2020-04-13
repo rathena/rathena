@@ -155,6 +155,14 @@ OnCroixDie:
 	}
 	end;
 
+OnGuillaumeActive:
+	bg_warp $@KvM02BG_id1,"bat_c02",62,119;
+	end;
+
+OnCroixActive:
+	bg_warp $@KvM02BG_id2,"bat_c02",137,64;
+	end;
+
 OnStart:
 	disablenpc "KVM Officer#KVM02A";
 	disablenpc "KVM Officer#KVM02B";

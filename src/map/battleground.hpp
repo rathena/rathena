@@ -27,12 +27,14 @@ struct s_battleground_data {
 	struct point cemetery; ///< Respawn point for players who die
 	std::string logout_event; ///< NPC Event to call on log out events
 	std::string die_event; ///< NPC Event to call on death events
+	std::string active_event; ///< NPC Event to call on players joining an active battleground
 };
 
 struct s_battleground_team {
 	int16 warp_x, warp_y; ///< Team respawn coordinates
 	std::string quit_event, ///< Team NPC Event to call on log out events
 		death_event, ///< Team NPC Event to call on death events
+		active_event, ///< Team NPC Event to call on players joining an active battleground
 		bg_id_var; ///< Team NPC variable name
 };
 

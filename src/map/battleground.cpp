@@ -256,6 +256,18 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 						}
 					}
 
+					if (this->nodeExists(team[it], "ActiveEvent")) {
+						if (!this->asString(team[it], "ActiveEvent", team_ptr->active_event))
+							return 0;
+
+						team_ptr->active_event.resize(EVENT_NAME_LENGTH);
+
+						if (team_ptr->active_event.find("::On") == std::string::npos) {
+							this->invalidWarning(team["ActiveEvent"], "Battleground ActiveEvent label %s should begin with '::On', skipping.\n", team_ptr->active_event.c_str());
+							return 0;
+						}
+					}
+
 					if (this->nodeExists(team[it], "Variable")) {
 						if (!this->asString(team[it], "Variable", team_ptr->bg_id_var))
 							return 0;
@@ -540,6 +552,7 @@ int bg_create(uint16 mapindex, s_battleground_team* team)
 	bg->cemetery.y = team->warp_y;
 	bg->logout_event = team->quit_event.c_str();
 	bg->die_event = team->death_event.c_str();
+	bg->active_event = team->active_event.c_str();
 
 	return bg->id;
 }
@@ -724,39 +737,38 @@ static TIMER_FUNC(bg_on_ready_active)
 
 	queue->tid_active = INVALID_TIMER;
 
-	int bg_team_1 = static_cast<int>(mapreg_readreg(add_str(queue->map->team1.bg_id_var.c_str())));
-	int bg_team_2 = static_cast<int>(mapreg_readreg(add_str(queue->map->team2.bg_id_var.c_str())));
+	int bg_id_team_1 = static_cast<int>(mapreg_readreg(add_str(queue->map->team1.bg_id_var.c_str())));
+	std::shared_ptr<s_battleground_data> bgteam_1 = util::umap_find(bg_team_db, bg_id_team_1);
 
 	for (auto &sd : queue->teama_members) {
 		if (queue->map->mapindex == sd->mapindex)
 			continue;
 
-		std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, bg_team_1);
-
-		if (bgteam == nullptr) {
+		if (bgteam_1 == nullptr) {
 			queue->teama_members.erase(std::find(queue->teama_members.begin(), queue->teama_members.end(), sd));
-			return 0;
+			continue;
 		}
 
 		clif_bg_queue_entry_init(sd);
-		bg_team_join(bg_team_1, sd, true);
-		pc_setpos(sd, bgteam->cemetery.map, bgteam->cemetery.x, bgteam->cemetery.y, CLR_TELEPORT);
+		bg_team_join(bg_id_team_1, sd, true);
+		npc_event_do(bgteam_1->active_event.c_str());
 	}
+
+	int bg_id_team_2 = static_cast<int>(mapreg_readreg(add_str(queue->map->team2.bg_id_var.c_str())));
+	std::shared_ptr<s_battleground_data> bgteam_2 = util::umap_find(bg_team_db, bg_id_team_2);
 
 	for (auto &sd : queue->teamb_members) {
 		if (queue->map->mapindex == sd->mapindex)
 			continue;
 
-		std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, bg_team_2);
-
-		if (bgteam == nullptr) {
+		if (bgteam_2 == nullptr) {
 			queue->teamb_members.erase(std::find(queue->teamb_members.begin(), queue->teamb_members.end(), sd));
-			return 0;
+			continue;
 		}
 
 		clif_bg_queue_entry_init(sd);
-		bg_team_join(bg_team_2, sd, true);
-		pc_setpos(sd, bgteam->cemetery.map, bgteam->cemetery.x, bgteam->cemetery.y, CLR_TELEPORT);
+		bg_team_join(bg_id_team_2, sd, true);
+		npc_event_do(bgteam_2->active_event.c_str());
 	}
 
 	return 0;

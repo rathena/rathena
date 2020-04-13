@@ -38,12 +38,14 @@
 #         RespawnY    Y coordinate for warping on death.
 #         DeathEvent  NPC event triggered when a player dies.
 #         QuitEvent   NPC event triggered when a player quits.
+#         ActiveEvent NPC event triggered when a player joints an active battleground.
 #         Variable    Name of BG ID variable used in the battleground script.
 #       TeamB:        TeamB settings.
 #         RespawnX    X coordinate for warping on death.
 #         RespawnY    Y coordinate for warping on death.
 #         DeathEvent  NPC event triggered when a player dies.
 #         QuitEvent   NPC event triggered when a player quits.
+#         ActiveEvent NPC event triggered when a player joints an active battleground.
 #         Variable    Name of BG ID variable used in the battleground script.
 ###########################################################################
 
