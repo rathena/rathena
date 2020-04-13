@@ -1784,15 +1784,24 @@ function	script	QWS_Iarray	{
 	setarray @pIYcoords[@Ii], 198;
 
 	QWS_Make_Instance_Menu 0;
+//----------------[30+] Overlook Water Dungeon:
+	setarray @pImenuitems$[@Ii], "[30+] Overlook Water Dungeon";
+	setarray @pIprice[@Ii], $QW_IW_PRICE;
+
+	setarray @pImap$[@Ii], "gef_fild07";
+	setarray @pIXcoords[@Ii], 272;
+	setarray @pIYcoords[@Ii], 290;
+
+	QWS_Make_Instance_Menu 1;
 //----------------[50+] Endless Tower:
-	setarray @pImenuitems$[@Ii], "[50+] Endless Tower";
+	setarray @pImenuitems$[@Ii], "[50+] Endless Tower & Endless Cellar";
 	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
 	setarray @pImap$[@Ii], "e_tower";
 	setarray @pIXcoords[@Ii], 72;
 	setarray @pIYcoords[@Ii], 112;
 
-	QWS_Make_Instance_Menu 1;
+	QWS_Make_Instance_Menu 2;
 //----------------[60+] Octopus Cave:
 	setarray @pImenuitems$[@Ii], "[60+] Octopus Cave";
 	setarray @pIprice[@Ii], $QW_IW_PRICE;
@@ -1800,15 +1809,6 @@ function	script	QWS_Iarray	{
 	setarray @pImap$[@Ii], "mal_dun01";
 	setarray @pIXcoords[@Ii], 152;
 	setarray @pIYcoords[@Ii], 230;
-
-	QWS_Make_Instance_Menu 2;
-//----------------[60+] Overlook Water Dungeon:
-	setarray @pImenuitems$[@Ii], "[60+] Overlook Water Dungeon";
-	setarray @pIprice[@Ii], $QW_IW_PRICE;
-
-	setarray @pImap$[@Ii], "gef_fild07";
-	setarray @pIXcoords[@Ii], 272;
-	setarray @pIYcoords[@Ii], 290;
 
 	QWS_Make_Instance_Menu 3;
 //----------------[70+] Nidhoggur's Nest:
@@ -2367,9 +2367,9 @@ thor_v02,190,64,4	script	Warpra Helper#36	112,{ callfunc "QWS_Dungeon_Warpra",36
 
 // Instances
 gef_fild10,244,206,4	script	Warpra#instance_0	113,{ callfunc "QWS_Instance_Warpra",0,"Orc Memory Dungeon"; close; }
-e_tower,82,110,4	script	Warpra#instance_1	113,{ callfunc "QWS_Instance_Warpra",1,"Endless Tower"; close; }
-mal_dun01,155,235,4	script	Warpra#instance_2	113,{ callfunc "QWS_Instance_Warpra",2,"Octopus Cave"; close; }
-gef_fild07,260,290,4	script	Warpra#instance_3	113,{ callfunc "QWS_Instance_Warpra",3,"Overlook Water Dungeon"; close; }
+gef_fild07,260,290,4	script	Warpra#instance_1	113,{ callfunc "QWS_Instance_Warpra",1,"Overlook Water Dungeon"; close; }
+e_tower,82,110,4	script	Warpra#instance_2	113,{ callfunc "QWS_Instance_Warpra",2,"Endless Tower & Endless Cellar"; close; }
+mal_dun01,155,235,4	script	Warpra#instance_3	113,{ callfunc "QWS_Instance_Warpra",3,"Octopus Cave"; close; }
 nyd_dun02,90,199,6	script	Warpra#instance_4	113,{ callfunc "QWS_Instance_Warpra",4,"Nidhoggur's Nest"; close; }
 monk_test,311,149,4	script	Warpra#instance_5	113,{ callfunc "QWS_Instance_Warpra",5,"Sealed Shrine"; close; }
 // alberta,32,240,4	script	Warpra#instance_6	113,{ callfunc "QWS_Instance_Warpra",6,"Half-moon in the Daytime"; close; } // TODO: Add EDDA EP
