@@ -17625,7 +17625,7 @@ void clif_parse_bg_queue_cancel_request(int fd, struct map_session_data *sd)
 	if (sd->bg_queue_id > 0) {
 		std::shared_ptr<s_battleground_queue> queue = bg_search_queue(sd->bg_queue_id);
 
-		if (queue && queue->in_ready_state)
+		if (queue && queue->state == QUEUE_STATE_SETUP_DELAY)
 			return; // Make the cancel button do nothing if the entry window is open. Otherwise it'll crash the game when you click on both the queue status and entry status window.
 		else
 			success = bg_queue_leave(sd);
@@ -17677,7 +17677,7 @@ void clif_parse_bg_queue_lobby_reply(int fd, struct map_session_data *sd)
 
 /// Plays a gong sound, signaling that someone has accepted the invite to enter a battleground.
 /// 0x8e1 <result>.B <battleground name>.24B <lobby name>.24B (ZC_REPLY_ACK_LOBBY_ADMISSION)
-void clig_bg_queue_ack_lobby(bool result, const char *name, const char *lobbyname, struct map_session_data *sd)
+void clif_bg_queue_ack_lobby(bool result, const char *name, const char *lobbyname, struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 

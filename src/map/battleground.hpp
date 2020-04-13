@@ -44,6 +44,14 @@ struct s_battleground_map {
 	bool isReserved; ///< Reserve BG maps that are used so that the system won't create multiple BG instances on the same map
 };
 
+/// Enum for queue state tracking
+enum e_queue_state : uint16 {
+	QUEUE_STATE_SETUP = 0, ///< The initial setup of a queue (a required amount of players hasn't been met)
+	QUEUE_STATE_SETUP_DELAY, ///< The initial setup of a queue but a required amount of players have accepted and the delay timer is active
+	QUEUE_STATE_ACTIVE, ///< The queue is active script side and more players can join (players may or may not be on the field)
+	QUEUE_STATE_ENDED, ///< The queue is no longer joinable (players are getting prizes)
+};
+
 /// Battlegrounds client interface queue system [MasterOfMuppets]
 struct s_battleground_queue {
 	int queue_id; ///< Battlegrounds Queue ID
@@ -53,11 +61,11 @@ struct s_battleground_queue {
 	int required_players; ///< Amount of players required on each side to start
 	int max_players; ///< Maximum amount of players on each side
 	int accepted_players; ///< Amount of players who accepted the offer to enter the battleground
-	bool in_ready_state; ///< Is this BG queue waiting for players to enter the BG?
-	bool ended; ///< If the BG has ended (script in prize giving state).
+	e_queue_state state; ///< See @e_queue_state
 	int tid_expire; ///< Timer ID associated with the time out at the ready to enter window
 	int tid_start; ///< Timer ID associated with the start delay
 	int tid_requeue; ///< Timer ID associated with requeuing this group if all BG maps are reserved
+	int tid_active; ///< Timer ID associated with players joining an active BG
 	s_battleground_map *map; ///< Map this BG queue has been assigned to
 };
 
