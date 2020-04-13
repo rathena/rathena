@@ -210,7 +210,7 @@ Body:
   - Id: 23
     Name: Infinite Space
     Enter:
-      Map: 1@info
+      Map: 1@infi
       X: 29
       Y: 4
   - Id: 24
