@@ -15,11 +15,6 @@
 //= 1.0  First Release
 //=====================================================================================================
 
-
-
-// = Settings
-// ====================================================================================================
-
 e_tower,76,79,0	script	Cellar Protection Stone	2_MONEMUS,{
 	set .@party_id, getcharid(1);
 	set .@is_leader, ( getcharid(0) == getpartyleader(.@party_id,2) );
@@ -40,8 +35,12 @@ e_tower,76,79,0	script	Cellar Protection Stone	2_MONEMUS,{
 		set .@instance_delay, ( instance_delay_cellar - gettimetick(2) );
 		if( .@has_instance == 0 && .@instance_delay > 0 )
 		{
+			.@days = .@instance_delay / 86400;
+			.@hours = .@instance_delay / 3600 % 24;
+			.@mins = .@instance_delay / 60 % 60;
+			.@secs = .@instance_delay % 60;
 			mes "You cannot re-enter until cooldown has finished:";
-			mes "^FF0000"+ gettimestr("%ddays %Hh %Mm %Ss", 30, .@instance_delay) +"^000000";
+			mes "^FF0000 "+.@days+"days "+.@hours+"h "+.@mins+"m "+.@secs+"s^000000";
 			close;
 		}
 		getpartymember .@party_id,2;
@@ -53,7 +52,7 @@ e_tower,76,79,0	script	Cellar Protection Stone	2_MONEMUS,{
 					set .@member_count, .@member_count + 1;
 					if( BaseLevel < .base_level[0] || BaseLevel > .base_level[1] ) set .@fail, .@fail|1;
 					if( Zeny < .instance_zeny ) set .@fail, .@fail|2;
-					if( instance_delay_arena > .@gettimetick ) set .@fail, .@fail|4;
+					if( .@instance_delay > .@gettimetick ) set .@fail, .@fail|4;
 					if( .@fail ){
 						set .@name$, strcharinfo(0);
 						break;
@@ -757,8 +756,6 @@ function	EC_Spawns	{
 }
 
 OnInit:
-	set .rewardAmt, 15;
-	set .rewardPartialAmt, 1;
 	end;
 
 OnInstanceInit:
@@ -883,13 +880,6 @@ OnPoripori:
 	sleep2 5000;
 	instance_announce .@i,"Pori Pori: I'll return when I've healed, then..... then you'll all suffer!!!",bc_map,0xFFD700;
 	enablenpc instance_npcname("EC_Arc_Pori", instance_id());
-	sleep2 15000;
-	getpartymember getcharid(1),2;
-	for( set .@i, 0; .@i < $@partymembercount; set .@i, .@i+1 )
-		if( attachrid( $@partymemberaid[.@i] ) && EC_INSTANCE_ID > 0){
-			set EC_INSTANCE_ID, -1;
-		}
-	instance_destroy instance_id();
 	end;
 }
 
