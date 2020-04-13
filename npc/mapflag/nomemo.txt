@@ -6,10 +6,10 @@
 //= 2.0
 //===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Prevents players from using /memo on a map.
 //= Also disables marriage warp skills.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.6a Added up to Hugel maps. [Lupus]
 //= 1.6b Added job_knt map. [Samuray22]
 //= 1.7 Added all novice maps. [L0ne_W0lf]
@@ -196,20 +196,20 @@ moc_para01	mapflag	nomemo
 // Unknown
 cave	mapflag	nomemo
 // Ayothaya Dungeon Quest
-ayo_fild02	mapflag	nomemo 
+ayo_fild02	mapflag	nomemo
 // Orc Hero
-gef_fild03	mapflag	nomemo 
-gef_fild12	mapflag	nomemo 
+gef_fild03	mapflag	nomemo
+gef_fild12	mapflag	nomemo
 // Orc Lord
-gef_fild10	mapflag	nomemo 
+gef_fild10	mapflag	nomemo
 // Mistress
-mjolnir_04	mapflag	nomemo 
+mjolnir_04	mapflag	nomemo
 // Phreeoni
-moc_fild17	mapflag	nomemo 
+moc_fild17	mapflag	nomemo
 // Satan Morroc
-moc_fild21	mapflag	nomemo 
+moc_fild21	mapflag	nomemo
 // Wounded Morroc
-moc_fild22	mapflag	nomemo 
+moc_fild22	mapflag	nomemo
 // Eddga
 pay_fild10	mapflag	nomemo
 // Atroce
