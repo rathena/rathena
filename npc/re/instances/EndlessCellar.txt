@@ -40,7 +40,7 @@ e_tower,76,79,0	script	Cellar Protection Stone	2_MONEMUS,{
 			.@mins = .@instance_delay / 60 % 60;
 			.@secs = .@instance_delay % 60;
 			mes "You cannot re-enter until cooldown has finished:";
-			mes "^FF0000 "+.@days+"days "+.@hours+"h "+.@mins+"m "+.@secs+"s^000000";
+			mes "^FF0000"+.@days+"days "+.@hours+"h "+.@mins+"m "+.@secs+"s^000000";
 			close;
 		}
 		getpartymember .@party_id,2;
