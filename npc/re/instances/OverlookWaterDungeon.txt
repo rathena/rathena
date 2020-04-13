@@ -41,7 +41,7 @@ gef_fild07,264,286,0	script	Overlook Water Dungeon::ovwadu	2_BULLETIN_BOARD,{
 			.@secs = .@cooldown % 60;
 			mes "[Overlook Water Dungeon]";
 			mes "You have been into the dungeon recently.";
-			mes "Cooldown remaining: "+.@hours+"hr "+.@mins+"m "+.@secs+"s";
+			mes "Cooldown remaining: ^FF0000"+.@hours+"hr "+.@mins+"m "+.@secs+"s^000000";
 			close;
 		}
 		Zeny -= .cost;
@@ -96,7 +96,6 @@ function	script	OWD_Quest_Board	{
 		}
 		.@choice = select(.@menu$) - 1;
 		getitem .@finalRewardItem[.@choice], 1;
-		erasequest .@questIds[OWDCurQuest];
 		// Reset player's quest chain
 		OWDCurQuest = 0;
 	} else if (checkquest(.@questIds[OWDCurQuest], HUNTING) == 2 || checkquest(.@questIds[OWDCurQuest]) == 2) {
