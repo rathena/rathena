@@ -34,10 +34,14 @@ gef_fild07,264,286,0	script	Overlook Water Dungeon::ovwadu	2_BULLETIN_BOARD,{
 			mes "Sorry, you don't have enough zeny to enter.";
 			close;
 		}
-		if (gettimetick(2) < OWD_Cooldown) {
+		.@cooldown = OWD_Cooldown - gettimetick(2);
+		if (.@cooldown > 0) {
+			.@hours = .@cooldown / 3600;
+			.@mins = .@cooldown / 60 % 60;
+			.@secs = .@cooldown % 60;
 			mes "[Overlook Water Dungeon]";
 			mes "You have been into the dungeon recently.";
-			mes "Cooldown remaining: "+ gettimestr("%Hhr %Mmin", 20, OWD_Cooldown - gettimetick(2));
+			mes "Cooldown remaining: "+.@hours+"hr "+.@mins+"m "+.@secs+"s";
 			close;
 		}
 		Zeny -= .cost;
