@@ -69,8 +69,8 @@ function	script	OWD_Quest_Board	{
 	next;
 	if (select("Receive/Complete Quest", "Leave") == 2) {
 		mes "[Quest Board]";
-		mes "You will need to pay the entry fee again and will not be able to re-enter for:";
-		mes "^FF000020 hours^000000";
+		mes "You will need to pay the entry fee again and will not be able to re-enter for: ^FF000020 hours^000000";
+		mes "";
 		mes "Are you sure you want to leave?";
 		next;
 		if (select("Stay", "Leave") == 2) {
@@ -85,26 +85,16 @@ function	script	OWD_Quest_Board	{
 	// Check if quest chain is complete
 	if (OWDCurQuest >= getarraysize(.@questIds)) {
 		mes "[Quest Board]";
-		.@complete = 1;
-		for (.@i = 0; .@i < getarraysize(.@questIds); .@i++) {
-			if (checkquest(.@questIds[.@i]) != 2) {
-				.@complete = 0;
-				break;
-			}
+		mes "You've completed all quests.";
+		mes "Choose a reward.";
+		for (.@i = 0; .@i < getarraysize(.@finalRewardItem); .@i++) {
+			.@menu$ += (.@i == 0 ? "" : ":") + getitemname(.@finalRewardItem[.@i]);
 		}
-		// Grant reward if complete and allow player to restart quest chain
-		if (.@complete == 1) {
-			mes "You've completed all quests.";
-			mes "Choose a reward.";
-			for (.@i = 0; .@i < getarraysize(.@finalRewardItem); .@i++) {
-				.@menu$ += (.@i == 0 ? "" : ":") + getitemname(.@finalRewardItem[.@i]);
-			}
-			.@choice = select(.@menu$) - 1;
-			getitem .@finalRewardItem[.@choice], 1;
-			OWDCurQuest = 0;
-		} else {
-			mes "Please complete your current quest.";
-		}
+		.@choice = select(.@menu$) - 1;
+		getitem .@finalRewardItem[.@choice], 1;
+		erasequest .@questIds[OWDCurQuest];
+		// Reset player's quest chain
+		OWDCurQuest = 0;
 	} else if (checkquest(.@questIds[OWDCurQuest]) < 2) {
 		// Grant reward for each stage of the quest chain
 		if (checkquest(.@questIds[OWDCurQuest], HUNTING) == 2) {
@@ -120,7 +110,7 @@ function	script	OWD_Quest_Board	{
 			mes "Quest complete. Reward: " + .@rewardItemQty[.@choice] + "x " + getitemname(.@rewardItem[.@choice]);
 			getitem .@rewardItem[.@choice], .@rewardItemQty[.@choice];
 			getexp .@rewardExp[OWDCurQuest * 2], .@rewardExp[OWDCurQuest * 2 + 1];
-			completequest .@questIds[OWDCurQuest];
+			erasequest .@questIds[OWDCurQuest];
 			OWDCurQuest += 1;
 		} else {
 			mes "Kill these monsters to get a reward:";
@@ -128,6 +118,9 @@ function	script	OWD_Quest_Board	{
 				mes .@mobReq[.@i + 1] + " " + strmobinfo(1, .@mobReq[.@i]);
 			}
 		}
+	} else {
+		mes "[Quest Board]";
+		mes "Please complete your current quest.";
 	}
 	close;
 }
