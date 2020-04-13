@@ -8938,7 +8938,7 @@ with the given character id.
 *instance_create("<instance name>"{,<instance mode>{,<owner id>}});
 
 Creates an instance for the <owner id> of <mode>. The instance name, along with
-all other instance data, is read from 'db/(pre-)re/instance_db.txt'. Upon success,
+all other instance data, is read from 'db/(pre-)re/instance_db.yml'. Upon success,
 the command generates a unique instance ID, duplicates all listed maps and NPCs,
 sets the alive time, and triggers the "OnInstanceInit" label in all NPCs inside
 the instance.
@@ -8971,7 +8971,7 @@ This will also trigger the "OnInstanceDestroy" label in all NPCs inside the inst
 Warps the attached player to the specified <instance id>. If no ID is specified,
 the IM_PARTY instance the invoking player is attached to is used.
 
-The map and coordinates are located in 'db/(pre-)re/instance_db.txt'.
+The map and coordinates are located in 'db/(pre-)re/instance_db.yml'.
 
 The command returns IE_OK upon success, and these values upon failure:
  IE_NOMEMBER:	Party/Guild/Clan not found (for party/guild/clan modes).

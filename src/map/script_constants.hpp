@@ -1575,6 +1575,7 @@
 	export_constant(SC_USE_SKILL_SP_SHA);
 	export_constant(SC_SP_SHA);
 	export_constant(SC_SOULCURSE);
+	export_constant(SC_HELLS_PLANT);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -7316,6 +7317,13 @@
 	export_constant(HAT_EF_2019RTC2ST_TW);
 	export_constant(HAT_EF_2019RTC3ST_TW);
 	export_constant(HAT_EF_CONS_OF_WIND);
+	export_constant(HAT_EF_MAPLE_FALLS);
+	export_constant(HAT_EF_BJ_HEADSETB);
+	export_constant(HAT_EF_VIP_HAIR);
+	export_constant(HAT_EF_C_MAGIC_HEIR_TW);
+	export_constant(HAT_EF_C_SUDDEN_WEALTH_TW);
+	export_constant(HAT_EF_C_ROMANCE_ROSE_TW);
+	export_constant(HAT_EF_C_DISAPEAR_TIME_TW);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
@@ -7553,6 +7561,10 @@
 	export_constant(ST_ELEMENTALSPIRIT);
 	export_constant(ST_ELEMENTALSPIRIT2);
 	export_constant(ST_PECO);
+	export_constant(ST_SUNSTANCE);
+	export_constant(ST_MOONSTANCE);
+	export_constant(ST_STARSTANCE);
+	export_constant(ST_UNIVERSESTANCE);
 
 	/* skill unit flags */
 	export_constant(UF_NOENEMY);

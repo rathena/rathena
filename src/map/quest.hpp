@@ -4,14 +4,17 @@
 #ifndef QUEST_HPP
 #define QUEST_HPP
 
+#include <string>
+
 #include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
 #include "../common/strlib.hpp"
 
 #include "map.hpp"
 
 struct map_session_data;
 
-struct quest_dropitem {
+struct s_quest_dropitem {
 	uint16 nameid;
 	uint16 count;
 	uint16 rate;
@@ -21,46 +24,53 @@ struct quest_dropitem {
 	//bool isGUID;
 };
 
-struct quest_objective {
-	uint16 mob;
+struct s_quest_objective {
+	uint16 mob_id;
 	uint16 count;
 };
 
-struct quest_db {
-	// TODO: find out if signed or unsigned in client
-	int id;
-	unsigned int time;
-	bool time_type;
-	uint8 objectives_count;
-	struct quest_objective *objectives;
-	uint8 dropitem_count;
-	struct quest_dropitem *dropitem;
-	StringBuf name;
+struct s_quest_db {
+	int32 id;
+	time_t time;
+	bool time_at;
+	std::vector<std::shared_ptr<s_quest_objective>> objectives;
+	std::vector<std::shared_ptr<s_quest_dropitem>> dropitem;
+	std::string name;
 };
 
-extern struct quest_db quest_dummy;	///< Dummy entry for invalid quest lookups
-
 // Questlog check types
-enum quest_check_type {
+enum e_quest_check_type : uint8 {
 	HAVEQUEST, ///< Query the state of the given quest
 	PLAYTIME,  ///< Check if the given quest has been completed or has yet to expire
 	HUNTING,   ///< Check if the given hunting quest's requirements have been met
 };
 
-int quest_pc_login(TBL_PC *sd);
+class QuestDatabase : public TypesafeYamlDatabase<uint32, s_quest_db> {
+public:
+	QuestDatabase() : TypesafeYamlDatabase("QUEST_DB", 1) {
 
-int quest_add(TBL_PC * sd, int quest_id);
-int quest_delete(TBL_PC * sd, int quest_id);
-int quest_change(TBL_PC * sd, int qid1, int qid2);
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+	bool reload();
+};
+
+extern QuestDatabase quest_db;
+
+int quest_pc_login(struct map_session_data *sd);
+
+int quest_add(struct map_session_data *sd, int quest_id);
+int quest_delete(struct map_session_data *sd, int quest_id);
+int quest_change(struct map_session_data *sd, int qid1, int qid2);
 int quest_update_objective_sub(struct block_list *bl, va_list ap);
-void quest_update_objective(TBL_PC * sd, int mob_id);
-int quest_update_status(TBL_PC * sd, int quest_id, enum quest_state status);
-int quest_check(TBL_PC * sd, int quest_id, enum quest_check_type type);
+void quest_update_objective(struct map_session_data *sd, int mob_id);
+int quest_update_status(struct map_session_data *sd, int quest_id, e_quest_state status);
+int quest_check(struct map_session_data *sd, int quest_id, e_quest_check_type type);
 
-struct quest_db *quest_search(int quest_id);
+std::shared_ptr<s_quest_db> quest_search(int quest_id);
 
 void do_init_quest(void);
 void do_final_quest(void);
-void do_reload_quest(void);
 
 #endif /* QUEST_HPP */
