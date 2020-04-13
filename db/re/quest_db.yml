@@ -9647,6 +9647,9 @@ Body:
     Targets:
       - Mob: WASTE_STOVE
         Count: 400
+  - Id: 60574
+    Title: Reset Stone Hunting Timer
+    TimeLimit: +3h
   - Id: 60594
     Title: Isilla Hunting
     Targets:
@@ -9657,6 +9660,14 @@ Body:
     Targets:
       - Mob: BATHORY
         Count: 400
+  - Id: 60810
+    Title: Limited VIP Access
+    TimeLimit: +3d
+  - Id: 60819
+    Title: Hunting Daily Timer
+    TimeLimit: +16h
+  - Id: 62837
+    Title: Gramps GM Notice
 
 # Convert to YML using CSV2YAML tool (remove done items)
 # 60443,0,1193,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Alarm Hunting"
@@ -9767,7 +9778,7 @@ Body:
 # 60571,0,1256,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Pest Hunting"
 # 60572,0,1148,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Medusa Hunting"
 # 60573,0,1989,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hillslion Hunting"
-# 60574,10800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Reset Stone Hunting Timer"
+# DONE 60574,10800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Reset Stone Hunting Timer"
 # 60575,0,1282,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Kobold Archer Hunting"
 # 60576,0,1390,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Violy Hunting"
 # 60579,0,1715,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Novus (Red) Hunting"
@@ -9799,12 +9810,12 @@ Body:
 # 60611,0,1884,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Mavka Hunting"
 # 60612,0,1995,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Pinguicula Hunting"
 # 60614,0,1775,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Snowier Hunting"
-# 60810,259200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Limited VIP Access"
+# DONE 60810,259200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Limited VIP Access"
 # 60815,0,1682,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Remover Hunting"
 # 60816,0,1132,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Khalitzburg Hunting"
 # 60817,0,1408,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Bloody Butterfly Hunting"
 # 60818,0,1866,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hell Poodle Hunting"
-# 60819,57600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hunting Daily Timer"
+# DONE 60819,57600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hunting Daily Timer"
 # 60820,0,1213,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"High Orc Hunting"
 # 60821,0,1319,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Freezer Hunting"
 # 60822,0,2013,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Draco Hunting"
@@ -9852,4 +9863,4 @@ Body:
 # 60869,0,2367,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Lichtern (Blue) Hunting"
 # 62832,0,2073,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Toucan Hunting"
 # 62833,0,2199,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Siorava Hunting"
-# 62837,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Gramps GM Notice"
+# DONE 62837,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Gramps GM Notice"
