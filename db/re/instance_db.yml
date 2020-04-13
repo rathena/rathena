@@ -258,7 +258,7 @@ Body:
       Map: 1@mcd
       X: 127
       Y: 282
- - Id: 31
+  - Id: 31
     Name: Ritual of Blessing
     Enter:
       Map: 2@mir
