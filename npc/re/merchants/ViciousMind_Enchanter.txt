@@ -17,7 +17,7 @@
 //===== Credits ==============================================
 //= NovaRo for their Information regarding the possible Options.
 //============================================================
-prontera,158,179,4	script	Vicious Mind Enchanter	101,{
+prt_q,250,86,4	script	Vicious Mind Enchanter	101,{
 
 mes .n$;
 mes "Hello, "+strcharinfo(0)+"!";
