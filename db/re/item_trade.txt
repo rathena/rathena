@@ -924,7 +924,7 @@
 6747,499,100	// Iron_Artifacts_
 6748,507,100	// Daily_Report_He_And_His_Team
 6749,507,100	// Operation_Control_Device
-6752,467,100	// Charleston_Parts
+6752,1,100	// Charleston_Parts
 6753,467,100	// Token_Of_Destruction
 6754,507,100	// Collected_Medicinal_Herbs
 6756,507,100	// Cohesive_Energy

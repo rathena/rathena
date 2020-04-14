@@ -38,7 +38,7 @@
 //25641
 //25642
 //---2018 / 03 / 14 - �����Ϻ�ǰ �߰�
-6752	//Charleston_Parts
+6752  // Charleston_Parts
 //---2018 / 03 / 05 - �Ϸ��� ������ �� ��������� ���渶����ȸ��ȭ �߰�
 6671	//Geffen_Coin_Magic_Tournament
 6672	//Shard_of_Gray
