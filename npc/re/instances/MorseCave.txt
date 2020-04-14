@@ -1341,7 +1341,7 @@ OnTouch:
 	getpartymember getcharid(1), 2, .@account_id;
 
 	for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
-		if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == true)
+		if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == false)
 			continue;
 		if (strcharinfo(3,.@char_id[.@i]) == 'map_rev$) {
 			.@n = (.@index % .@size);
