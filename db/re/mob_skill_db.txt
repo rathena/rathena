@@ -11977,39 +11977,39 @@
 3452,ZOMBIE_GUARD@NPC_UNDEADATTACK,attack,347,4,2000,0,5000,yes,target,always,,,,,,,,
 3452,ZOMBIE_GUARD@NPC_POISONATTACK,attack,188,3,500,800,5000,yes,target,always,,,,,,,,
 3452,ZOMBIE_GUARD@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,,,,,,,,
-/*
-3473,AS_RAGGED_GOLEM@SO_ELECTRICWALK,attack,2444,5,2000,0,5000,yes,self,always,,,,,,,,// officially 744 NPC_ELECTRICWALK
-3473,AS_RAGGED_GOLEM@SO_FIREWALK,attack,2443,5,2000,0,5000,yes,self,always,,,,,,,,// officially 745 NPC_FIREWALK
-3473,AS_RAGGED_GOLEM@GC_HALLUCINATIONWALK,anytarget,2035,5,10000,800,500000,yes,self,always,,,,,,,,// officially 743 NPC_HALLUCINATIONWALK
-3474,AS_BLOODY_KNIGHT@RK_PHANTOMTHRUST,attack,2020,5,2000,1000,5000,no,target,always,,,,,,,,// officially 741 NPC_PHANTOMTHRUST
-3474,AS_BLOODY_KNIGHT@RK_IGNITIONBREAK@,attack,2006,5,1000,3000,5000,no,self,always,,,,,,,,// officially 740 NPC_IGNITIONBREAK
-3475,AS_WIND_GHOST@HT_SHOCKWAVE,attack,118,5,500,0,300000,yes,target,always,,,,,,,,
-3475,AS_WIND_GHOST@SO_CLOUD_KILL,chase,2450,5,10000,0,5000,yes,target,always,,,,,,,,// officially 739 NPC_CLOUD_KILL
-3475,AS_WIND_GHOST@SO_CLOUD_KILL,attack,2450,5,2000,0,5000,yes,target,always,,,,,,,,// officially 739 NPC_CLOUD_KILL
-3475,AS_WIND_GHOST@SO_POISON_BUSTER,attack,2448,2,1000,1000,5000,no,target,always,,,,,,,,// officially 742 NPC_POISON_BUSTER
-3476,AS_ZOMBIE@NPC_POISON,attack,176,1,500,800,5000,no,target,always,,,,,,,,
-3476,AS_ZOMBIE@NPC_UNDEADATTACK,attack,347,1,2000,0,5000,yes,target,always,,,,,,,,
-3478,AS_ZOMBIE_SLAUGHTER@NPC_BLINDATTACK,attack,177,5,500,0,5000,yes,target,always,,,,,,,,
-3478,AS_ZOMBIE_SLAUGHTER@NPC_POISON,attack,176,5,500,800,5000,yes,target,always,,,,,,,,
-3478,AS_ZOMBIE_SLAUGHTER@AS_SONICBLOW,attack,136,5,1000,800,5000,yes,target,always,,,,,,,,
-3478,AS_ZOMBIE_SLAUGHTER@NPC_COMBOATTACK,attack,171,1,500,700,5000,yes,target,always,,,,,,,,
-3479,AS_ZOMBIE_MASTER@KN_BRANDISHSPEAR,attack,57,5,500,1000,5000,no,target,always,,,,,,,,
-3479,AS_ZOMBIE_MASTER@NPC_POISON,attack,176,3,500,800,5000,no,target,always,,,,,,,,
-3479,AS_ZOMBIE_MASTER@NPC_UNDEADATTACK,attack,347,3,2000,0,5000,no,target,always,,,,,,,,
-3480,AS_CURSED_SOLDIER@NPC_BLINDATTACK,attack,177,5,500,0,5000,yes,target,always,,,,,,,,
-3480,AS_CURSED_SOLDIER@AC_DOUBLE,attack,46,5,500,0,5000,yes,target,always,,,,,,,,
-3480,AS_CURSED_SOLDIER@NPC_MAGICALATTACK,attack,192,1,500,800,5000,no,target,always,,,,,,,,
-3480,AS_CURSED_SOLDIER@AC_SHOWER,attack,47,3,500,0,5000,yes,target,always,,,,,,,,
-3481,AS_EVIL_SHADOW1@NPC_PIERCINGATT,attack,158,1,4000,0,5000,no,target,always,,,,,,,,
-3481,AS_EVIL_SHADOW1@NPC_CURSEATTACK,attack,181,5,3500,0,20000,no,target,always,,,,,,,,
-3482,AS_EVIL_SHADOW2@NPC_DARKSTRIKE,attack,340,1,3000,0,5000,no,target,always,,,,,,,,
-3483,AS_EVIL_SHADOW3@NPC_CRITICALSLASH,anytarget,170,1,3000,0,5000,no,target,always,,,,,,,,
-3483,AS_EVIL_SHADOW3@NPC_PETRIFYATTACK,attack,180,5,3500,0,5000,no,target,always,,,,,,,,
-3485,AS_D_CURSED_SOLDIER@NPC_BLINDATTACK,attack,177,5,500,0,5000,yes,target,always,,,,,,,,
-3485,AS_D_CURSED_SOLDIER@AC_DOUBLE,attack,46,5,500,0,5000,yes,target,always,,,,,,,,
-3485,AS_D_CURSED_SOLDIER@NPC_MAGICALATTACK,attack,192,1,500,800,5000,no,target,always,,,,,,,,
-3485,AS_D_CURSED_SOLDIER@AC_SHOWER,attack,47,3,500,0,5000,yes,target,always,,,,,,,,
-*/
+
+//3473,AS_RAGGED_GOLEM@SO_ELECTRICWALK,attack,2444,5,2000,0,5000,yes,self,always,,,,,,,,// officially 744 NPC_ELECTRICWALK
+//3473,AS_RAGGED_GOLEM@SO_FIREWALK,attack,2443,5,2000,0,5000,yes,self,always,,,,,,,,// officially 745 NPC_FIREWALK
+//3473,AS_RAGGED_GOLEM@GC_HALLUCINATIONWALK,anytarget,2035,5,10000,800,500000,yes,self,always,,,,,,,,// officially 743 NPC_HALLUCINATIONWALK
+//3474,AS_BLOODY_KNIGHT@RK_PHANTOMTHRUST,attack,2020,5,2000,1000,5000,no,target,always,,,,,,,,// officially 741 NPC_PHANTOMTHRUST
+//3474,AS_BLOODY_KNIGHT@RK_IGNITIONBREAK@,attack,2006,5,1000,3000,5000,no,self,always,,,,,,,,// officially 740 NPC_IGNITIONBREAK
+//3475,AS_WIND_GHOST@HT_SHOCKWAVE,attack,118,5,500,0,300000,yes,target,always,,,,,,,,
+//3475,AS_WIND_GHOST@SO_CLOUD_KILL,chase,2450,5,10000,0,5000,yes,target,always,,,,,,,,// officially 739 NPC_CLOUD_KILL
+//3475,AS_WIND_GHOST@SO_CLOUD_KILL,attack,2450,5,2000,0,5000,yes,target,always,,,,,,,,// officially 739 NPC_CLOUD_KILL
+//3475,AS_WIND_GHOST@SO_POISON_BUSTER,attack,2448,2,1000,1000,5000,no,target,always,,,,,,,,// officially 742 NPC_POISON_BUSTER
+//3476,AS_ZOMBIE@NPC_POISON,attack,176,1,500,800,5000,no,target,always,,,,,,,,
+//3476,AS_ZOMBIE@NPC_UNDEADATTACK,attack,347,1,2000,0,5000,yes,target,always,,,,,,,,
+//3478,AS_ZOMBIE_SLAUGHTER@NPC_BLINDATTACK,attack,177,5,500,0,5000,yes,target,always,,,,,,,,
+//3478,AS_ZOMBIE_SLAUGHTER@NPC_POISON,attack,176,5,500,800,5000,yes,target,always,,,,,,,,
+//3478,AS_ZOMBIE_SLAUGHTER@AS_SONICBLOW,attack,136,5,1000,800,5000,yes,target,always,,,,,,,,
+//3478,AS_ZOMBIE_SLAUGHTER@NPC_COMBOATTACK,attack,171,1,500,700,5000,yes,target,always,,,,,,,,
+//3479,AS_ZOMBIE_MASTER@KN_BRANDISHSPEAR,attack,57,5,500,1000,5000,no,target,always,,,,,,,,
+//3479,AS_ZOMBIE_MASTER@NPC_POISON,attack,176,3,500,800,5000,no,target,always,,,,,,,,
+//3479,AS_ZOMBIE_MASTER@NPC_UNDEADATTACK,attack,347,3,2000,0,5000,no,target,always,,,,,,,,
+//3480,AS_CURSED_SOLDIER@NPC_BLINDATTACK,attack,177,5,500,0,5000,yes,target,always,,,,,,,,
+//3480,AS_CURSED_SOLDIER@AC_DOUBLE,attack,46,5,500,0,5000,yes,target,always,,,,,,,,
+//3480,AS_CURSED_SOLDIER@NPC_MAGICALATTACK,attack,192,1,500,800,5000,no,target,always,,,,,,,,
+//3480,AS_CURSED_SOLDIER@AC_SHOWER,attack,47,3,500,0,5000,yes,target,always,,,,,,,,
+//3481,AS_EVIL_SHADOW1@NPC_PIERCINGATT,attack,158,1,4000,0,5000,no,target,always,,,,,,,,
+//3481,AS_EVIL_SHADOW1@NPC_CURSEATTACK,attack,181,5,3500,0,20000,no,target,always,,,,,,,,
+//3482,AS_EVIL_SHADOW2@NPC_DARKSTRIKE,attack,340,1,3000,0,5000,no,target,always,,,,,,,,
+//3483,AS_EVIL_SHADOW3@NPC_CRITICALSLASH,anytarget,170,1,3000,0,5000,no,target,always,,,,,,,,
+//3483,AS_EVIL_SHADOW3@NPC_PETRIFYATTACK,attack,180,5,3500,0,5000,no,target,always,,,,,,,,
+//3485,AS_D_CURSED_SOLDIER@NPC_BLINDATTACK,attack,177,5,500,0,5000,yes,target,always,,,,,,,,
+//3485,AS_D_CURSED_SOLDIER@AC_DOUBLE,attack,46,5,500,0,5000,yes,target,always,,,,,,,,
+//3485,AS_D_CURSED_SOLDIER@NPC_MAGICALATTACK,attack,192,1,500,800,5000,no,target,always,,,,,,,,
+//3485,AS_D_CURSED_SOLDIER@AC_SHOWER,attack,47,3,500,0,5000,yes,target,always,,,,,,,,
+
 3487,IMMORTAL_CORPS1@NPC_PIERCINGATT,chase,158,5,500,500,5000,no,target,always,,,,,,,,
 3487,IMMORTAL_CORPS1@NPC_CRITICALWOUND,attack,673,1,500,500,5000,yes,target,always,,,,,,,,
 3487,IMMORTAL_CORPS1@NPC_COMBOATTACK,attack,171,5,3000,500,5000,yes,target,always,,,,,,,6,
