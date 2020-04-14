@@ -33,7 +33,7 @@
 #   Options                   Special option/client effect when a status change is active. (Default: Nothing)
 #   Flags                     Special flags which trigger during certain events.  (Default: None)
 #   MinRate                   Minimum rate after status change reduction (10000 = 100%). (Default: 0)
-#   MinDuration               Minimum duration in milliseconds after status change reduction. (Default: 0)
+#   MinDuration               Minimum duration in milliseconds after status change reduction. (Default: 1)
 #   Fail                      List of Status Changes that causes the status to fail to activate. (Default: nullptr)
 #   End                       List of Status Changes that will end when the status activates. (Default: nullptr)
 #   EndReturn                 If the status has an End list and succeeds to remove these status changes, it won't give its effect. (Default: false)
@@ -3321,7 +3321,7 @@ Body:
   - Status: Stasis
     Icon: Stasis
     DurationLookup: WL_STASIS
-    MinDuration: 5000
+    MinDuration: 10000
 
   - Status: Sphere_1
     Icon: Summon1

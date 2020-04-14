@@ -308,7 +308,7 @@ std::bitset<SCF_MAX> StatusDatabase::getFlag(sc_type type) {
 t_tick StatusDatabase::getMinDuration(sc_type type) {
 	std::shared_ptr<s_status_change_db> status = status_db.find(type);
 
-	return status ? status->min_duration : 0;
+	return status ? status->min_duration : 1;
 }
 
 /**
@@ -7220,9 +7220,6 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 	///				2500ms -> tick_def2=2000 -> 500ms
 	int sc_def2 = 0, tick_def2 = 0;
 
-	uint16 min_rate = 0;
-	t_tick min_dur = 0;
-
 	struct status_data *status, *status_src;
 	struct status_change *sc;
 	struct map_session_data *sd;
@@ -7484,11 +7481,9 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 	std::shared_ptr<s_status_change_db> scdb = status_db.find(type);
 
 	// Cap minimum rate
-	if ((min_rate = scdb->min_rate))
-		rate = max(rate, min_rate);
+	rate = max(rate, scdb->min_rate);
 	// Cap minimum duration
-	if ((min_dur = scdb->min_duration))
-		tick = i64max(tick, min_dur);
+	tick = i64max(tick, scdb->min_duration);
 
 	if (rate < 10000 && (rate <= 0 || !(rnd()%10000 < rate)))
 		return 0;
@@ -13204,7 +13199,7 @@ uint64 StatusDatabase::parseBodyNode(const YAML::Node &node) {
 		status->min_duration = static_cast<t_tick>(duration);
 	} else {
 		if (!exists)
-			status->min_duration = 0;
+			status->min_duration = 1;
 	}
 
 	if (this->nodeExists(node, "Fail")) {
