@@ -1046,7 +1046,11 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		status_change_end(target, SC_SAFETYWALL, INVALID_TIMER);
 	}
 
-	if (sc->data[SC_NEUTRALBARRIER] && (d->flag&(BF_LONG|BF_MAGIC)) == BF_LONG) {
+	if (sc->data[SC_NEUTRALBARRIER] && ((d->flag&(BF_LONG|BF_MAGIC)) == BF_LONG
+#ifndef RENEWAL
+		|| skill_id == CR_ACIDDEMONSTRATION
+#endif
+		)) {
 		d->dmg_lv = ATK_MISS;
 		return false;
 	}
@@ -6878,7 +6882,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				// AD benefits from endow/element but damage is forced back to neutral
 				md.damage = battle_attr_fix(src, target, md.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 			}
+			// Fall through
 #else
+		case CR_ACIDDEMONSTRATION:
 			if(tstatus->vit+sstatus->int_) //crash fix
 				md.damage = (int)((int64)7*tstatus->vit*sstatus->int_*sstatus->int_ / (10*(tstatus->vit+sstatus->int_)));
 			else
@@ -8820,8 +8826,8 @@ static const struct _battle_data {
 	{ "feature.roulette",                   &battle_config.feature_roulette,                1,      0,      1,              },
 	{ "monster_hp_bars_info",               &battle_config.monster_hp_bars_info,            1,      0,      1,              },
 	{ "min_body_style",                     &battle_config.min_body_style,                  0,      0,      SHRT_MAX,       },
-	{ "max_body_style",                     &battle_config.max_body_style,                  4,      0,      SHRT_MAX,       },
-	{ "save_body_style",                    &battle_config.save_body_style,                 0,      0,      1,              },
+	{ "max_body_style",                     &battle_config.max_body_style,                  1,      0,      SHRT_MAX,       },
+	{ "save_body_style",                    &battle_config.save_body_style,                 1,      0,      1,              },
 	{ "monster_eye_range_bonus",            &battle_config.mob_eye_range_bonus,             0,      0,      10,             },
 	{ "monster_stuck_warning",              &battle_config.mob_stuck_warning,               0,      0,      1,              },
 	{ "skill_eightpath_algorithm",          &battle_config.skill_eightpath_algorithm,       1,      0,      1,              },

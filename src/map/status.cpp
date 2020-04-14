@@ -9998,6 +9998,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SOULCOLLECT:
 			val2 = 5 + 3 * val2; // Max Soul Sphere's.
 			val3 = tick > 0 ? tick : 60000;
+			tick_time = tick;
+			tick = INFINITE_TICK;
 			break;
 		case SC_SP_SHA:
 			val2 = 50; // Move speed reduction
@@ -12141,8 +12143,11 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_SOULCOLLECT:
 		pc_addsoulball(sd, skill_get_time2(SP_SOULCOLLECT, sce->val1), sce->val2);
-		sc_timer_next(sce->val3 + tick);
-		return 0;
+		if( sd->soulball < sce->val2 ){
+			sc_timer_next(sce->val3 + tick);
+			return 0;
+		}
+		break;
 	}
 
 	// If status has an interval and there is at least 100ms remaining time, wait for next interval
