@@ -3791,9 +3791,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 					}
 				}
 				break;
-			case SR_TIGERCANNON:
-				status_zap(bl, 0, damage * 10 / 100);
-				break;
 		}
 		if( sd )
 			skill_onskillusage(sd, bl, skill_id, tick);
