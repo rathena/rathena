@@ -7273,6 +7273,7 @@ Body:
   - Status: Soulcollect
     Icon: Soulcollect
     DurationLookup: SP_SOULCOLLECT
+    MinDuration: 1000
 
   - Status: Soulreaper
     Icon: Soulreaper
