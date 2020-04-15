@@ -160,9 +160,10 @@ int npc_isnear_sub(struct block_list* bl, va_list args) {
 			if (skill->unit_nonearnpc_type&SKILL_NONEAR_TOMB && nd->subtype == NPCTYPE_TOMB)
 				return 1;
 		}
+		return 0;
 	}
 
-    return 0;
+	return 1;
 }
 
 bool npc_isnear(struct block_list * bl) {
