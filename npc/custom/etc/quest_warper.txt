@@ -95,7 +95,8 @@ function	script	Q_Warpra	{
 	case 9: goto L_heal_Part;
 	case 10: goto L_Storage;
 	case 11: goto L_GStorage;
-	case 12:
+	case 12: goto L_identify;
+	case 13:
 	default:
 		goto L_end;
 	}
@@ -174,8 +175,9 @@ Setprice:
 	if (!$QW_S_PRICE) mes "Storage = ^FF0000 Free ^000000";
 	if ($QW_S_PRICE == 60) mes "Storage = ^0000FF Kafra Mode ^000000";
 	mes "Guild Storage = "+(($QW_GS_PRICE)?"^00FF00"+$QW_GS_PRICE:"^FF0000Free")+"^000000";
+	mes "Identify All = "+(($QW_ID_PRICE)?"^00FF00"+$QW_ID_PRICE:"^FF0000Free")+"^000000";
 	
-	switch(select("Basic - Warps","Advanced - Warps","Overseas - Warps","Basic Dungeon warp fee","Advanced Dungeon warp fee","Overseas Dungeon warp fee","Instance warp fee","Full Healing","Part Healing","Storage","Guild Storage","Back","Exit")) {
+	switch(select("Basic - Warps","Advanced - Warps","Overseas - Warps","Basic Dungeon warp fee","Advanced Dungeon warp fee","Overseas Dungeon warp fee","Instance warp fee","Full Healing","Part Healing","Storage","Guild Storage","Identify All","Back","Exit")) {
 	case 1:
 		next;
 		mes "Basic - Warps are = "+(($QW_BW_PRICE)?"^00FF00"+$QW_BW_PRICE:"^FF0000Free")+"^000000";
@@ -255,6 +257,12 @@ Setprice:
 		input $QW_GS_PRICE;
 		goto Setprice;
 	case 12:
+		next;
+		mes "Identify All = "+(($QW_ID_PRICE)?"^00FF00"+$QW_ID_PRICE:"^FF0000Free")+"^000000";
+		mes "Identify price per 1 item.";
+		input $QW_ID_PRICE;
+		goto Setprice;
+	case 13:
 		goto GM_Menu;
 	default:
 		close;
@@ -538,6 +546,23 @@ L_end:
 	close;
 	end;
 
+//=============================Identify=============================
+L_identify:
+	.@numItems = identifyall(false);
+	@identifyprice = .@numItems * $QW_ID_PRICE;
+	mes "[Warpra]";
+	mes "I can identify all the items in your inventory for you.";
+	mes "You have "+.@numItems+" unidentified items.";
+	mes "It will cost "+@identifyprice+" zeny to identify them all.";
+	mes "";
+	mes "Would you like me to identify them?";
+	if (select("Yes", "No") == 2) goto L_end;
+	if (Zeny < @identifyprice) callsub L_Short_on_zeny, 5;
+	identifyall(true);
+	Zeny -= @identifyprice;
+	close;
+	end;
+
 //============================Few=Warp=============================
 L_FewWarps:
 	next;
@@ -567,6 +592,7 @@ L_Short_on_zeny:
 	case 2: mes "You don't seem to have "+@fee+" zeny to pay the storage fee."; break;
 	case 3: mes "You don't seem to have "+$QW_GS_PRICE+" zeny to pay the guild storage fee."; break;
 	case 4: mes "You don't seem to have "+@healfee+" zeny to pay for your healing."; break;
+	case 5: mes "You don't seem to have "+@identifyprice+" zeny to pay for the identifying."; break;
 	}
 	close;
 	end;
@@ -641,7 +667,7 @@ function	script	QWS_InstanceStamps	{
 function	script	QWS_MMarray	{
 
 	// Currently 9 items
-	setarray @pMmenuitems$[0], "GameMaster Menu", $QW_SP_Warpname$, "Warp to Towns", "Warp to Dungeons", "Warp to Instances", "Why so few warps?", "Why don't you unlock this location?", "Heal", "Heal", "Storage", "Guild Storage", "Cancel";
+	setarray @pMmenuitems$[0], "GameMaster Menu", $QW_SP_Warpname$, "Warp to Towns", "Warp to Dungeons", "Warp to Instances", "Why so few warps?", "Why don't you unlock this location?", "Heal", "Heal", "Storage", "Guild Storage", "Identify All", "Cancel";
 	set @Mi,0; // loop counter
 	set @Mj,0; // menu line counter
 
