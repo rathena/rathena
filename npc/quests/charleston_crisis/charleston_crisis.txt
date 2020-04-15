@@ -1896,7 +1896,7 @@ OnEnable:
 					addrid(1);
 					getitem 6752,rand(3,4); //Charleston Parts
 					getitem 6961,rand(0,3); //Huge Metal Scrap
-					getitem 6752,rand(1,4); //Old Fuel Tank
+					getitem 6962,rand(1,4); //Old Fuel Tank
 					erasequest 13184;
 					setquest 13186;
 					
