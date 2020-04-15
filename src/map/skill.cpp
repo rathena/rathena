@@ -3227,7 +3227,6 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 	// Skill specific direction
 	switch (skill_id) {
 		case MG_FIREWALL:
-		case GN_WALLOFTHORN:
 		case EL_FIRE_MANTLE:
 			dir = unit_getdir(target); // Backwards
 			break;
@@ -3807,9 +3806,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 						clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 					}
 				}
-				break;
-			case SR_TIGERCANNON:
-				status_zap(bl, 0, damage * 10 / 100);
 				break;
 		}
 		if( sd )
@@ -5309,7 +5305,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 		break;
 
-#ifndef RENEWAL
+#ifdef RENEWAL
 	case KN_BRANDISHSPEAR:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
@@ -7606,6 +7602,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), 0, splash_target(src),
 			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 0,
 			skill_castend_damage_id);
+		break;
 #else
 	case KN_BRANDISHSPEAR:
 #endif
@@ -7735,21 +7732,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SJ_STARSTANCE:
 	case SJ_UNIVERSESTANCE:
 	case SJ_SUNSTANCE:
+	case SP_SOULCOLLECT:
 		if( tsce )
 		{
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,status_change_end(bl, type, INVALID_TIMER));
 			map_freeblock_unlock();
 			return 0;
 		}
-		clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		break;
-	case SP_SOULCOLLECT:
-		if (tsce) {
-			clif_skill_nodamage(src, bl, skill_id, skill_lv, status_change_end(bl, type, INVALID_TIMER));
-			map_freeblock_unlock();
-			return 0;
+
+		if( skill_id == SP_SOULCOLLECT ){
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, pc_checkskill(sd, SP_SOULENERGY), max(1000, skill_get_time(skill_id, skill_lv))));
+		}else{
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		}
-		clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, pc_checkskill(sd,SP_SOULENERGY), max(1000, skill_get_time(skill_id, skill_lv))));
 		break;
 	case SL_KAITE:
 	case SL_KAAHI:
@@ -8816,7 +8811,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				status_change_end(bl, type, INVALID_TIMER);
 
 			//If mode gets set by NPC_EMOTION then the target should be reset [Playtester]
-			if(skill_id == NPC_EMOTION && md->db->skill[md->skill_idx].val[1])
+			if(!battle_config.npc_emotion_behavior && skill_id == NPC_EMOTION && md->db->skill[md->skill_idx].val[1])
 				mob_unlocktarget(md,tick);
 
 			if(md->db->skill[md->skill_idx].val[1] || md->db->skill[md->skill_idx].val[2])
@@ -8827,7 +8822,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					skill_get_time(skill_id, skill_lv));
 
 			//Reset aggressive state depending on resulting mode
-			md->state.aggressive = status_has_mode(&md->status,MD_ANGRY)?1:0;
+			if (!battle_config.npc_emotion_behavior)
+				md->state.aggressive = status_has_mode(&md->status,MD_ANGRY)?1:0;
 		}
 		break;
 
@@ -14820,7 +14816,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 				break;
 			if (status_bl_has_mode(bl,MD_STATUS_IMMUNE))
 				break; // This skill doesn't affect to Boss monsters. [iRO Wiki]
-			skill_blown(&unit->bl, bl, skill_get_blewcount(sg->skill_id, sg->skill_lv), -1, BLOWN_NONE);
+			skill_blown(&unit->bl, bl, skill_get_blewcount(sg->skill_id, sg->skill_lv), unit_getdir(bl), BLOWN_IGNORE_NO_KNOCKBACK);
 			skill_addtimerskill(ss, tick + 100, bl->id, unit->bl.x, unit->bl.y, sg->skill_id, sg->skill_lv, skill_get_type(sg->skill_id), 4|SD_LEVEL);
 			break;
 
@@ -21724,6 +21720,8 @@ template<typename T, size_t S> bool SkillDatabase::parseNode(std::string nodeNam
 		for (size_t i = 0; i < S; i++)
 			arr[i] = value;
 	} else {
+		uint16 max_level = 0;
+
 		for (const YAML::Node &it : node[nodeName]) {
 			uint16 skill_lv;
 
@@ -21739,7 +21737,39 @@ template<typename T, size_t S> bool SkillDatabase::parseNode(std::string nodeNam
 				continue;
 
 			arr[skill_lv - 1] = value;
+			max_level = max(max_level, skill_lv);
 		}
+
+		size_t i = max_level, j;
+
+		// Check for linear change with increasing steps until we reach half of the data acquired.
+		for (size_t step = 1; step <= i / 2; step++) {
+			int diff = arr[i - 1] - arr[i - step - 1];
+
+			for (j = i - 1; j >= step; j--) {
+				if ((arr[j] - arr[j - step]) != diff)
+					break;
+			}
+
+			if (j >= step) // No match, try next step.
+				continue;
+
+			for (; i < MAX_SKILL_LEVEL; i++) { // Apply linear increase
+				arr[i] = arr[i - step] + diff;
+
+				if (arr[i] < 1 && arr[i - 1] >= 0) { // Check if we have switched from + to -, cap the decrease to 0 in said cases.
+					arr[i] = 1;
+					diff = 0;
+					step = 1;
+				}
+			}
+
+			return true;
+		}
+
+		// Unable to determine linear trend, fill remaining array values with last value
+		for (; i < S; i++)
+			arr[i] = arr[max_level - 1];
 	}
 
 	return true;

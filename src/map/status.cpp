@@ -581,7 +581,7 @@ void initChangeTables(void)
 #ifndef RENEWAL
 			EFST_ASSUMPTIO		, SCB_NONE );
 #else
-			EFST_ASSUMPTIO_BUFF	, SCB_DEF2 );
+			EFST_ASSUMPTIO_BUFF	, SCB_DEF );
 #endif
 #ifdef RENEWAL
 	set_sc( HP_BASILICA			, SC_BASILICA	, EFST_BASILICA_BUFF	, SCB_ALL );
@@ -718,7 +718,12 @@ void initChangeTables(void)
 
 	set_sc( CASH_BLESSING		, SC_BLESSING		, EFST_BLESSING		, SCB_STR|SCB_INT|SCB_DEX );
 	set_sc( CASH_INCAGI		, SC_INCREASEAGI	, EFST_INC_AGI, SCB_AGI|SCB_SPEED );
-	set_sc( CASH_ASSUMPTIO		, SC_ASSUMPTIO		, EFST_ASSUMPTIO		, SCB_NONE );
+	set_sc( CASH_ASSUMPTIO		, SC_ASSUMPTIO		,
+#ifndef RENEWAL
+			EFST_ASSUMPTIO		, SCB_NONE );
+#else
+			EFST_ASSUMPTIO_BUFF	, SCB_DEF );
+#endif
 
 	set_sc( ALL_PARTYFLEE		, SC_PARTYFLEE		, EFST_PARTYFLEE		, SCB_NONE );
 	set_sc( ALL_ODINS_POWER		, SC_ODINS_POWER	, EFST_ODINS_POWER	, SCB_WATK|SCB_MATK|SCB_MDEF|SCB_DEF );
@@ -6920,7 +6925,10 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 
 	if(sc->data[SC_DRUMBATTLE])
 		def += sc->data[SC_DRUMBATTLE]->val3;
-#ifndef RENEWAL
+#ifdef RENEWAL
+	if (sc->data[SC_ASSUMPTIO])
+		def += sc->data[SC_ASSUMPTIO]->val1 * 50;
+#else
 	if(sc->data[SC_DEFENCE])
 		def += sc->data[SC_DEFENCE]->val2;
 #endif
@@ -7016,8 +7024,6 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 #ifdef RENEWAL
 	if (sc->data[SC_SKA])
 		def2 += 80;
-	if (sc->data[SC_ASSUMPTIO])
-		def2 += sc->data[SC_ASSUMPTIO]->val1 * 50;
 #endif
 	if(sc->data[SC_ANGELUS])
 #ifdef RENEWAL /// The VIT stat bonus is boosted by angelus [RENEWAL]
@@ -11964,6 +11970,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SOULCOLLECT:
 			val2 = 5 + 3 * val2; // Max Soul Sphere's.
 			val3 = tick > 0 ? tick : 60000;
+			tick_time = tick;
+			tick = INFINITE_TICK;
 			break;
 		case SC_SP_SHA:
 			val2 = 50; // Move speed reduction
@@ -14584,8 +14592,11 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_SOULCOLLECT:
 		pc_addsoulball(sd, skill_get_time2(SP_SOULCOLLECT, sce->val1), sce->val2);
-		sc_timer_next(sce->val3 + tick);
-		return 0;
+		if( sd->soulball < sce->val2 ){
+			sc_timer_next(sce->val3 + tick);
+			return 0;
+		}
+		break;
 	case SC_HELPANGEL:
 		if (--(sce->val4) >= 0) {
 			status_heal(bl, 1000, 350, 2);
