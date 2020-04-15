@@ -61,12 +61,15 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 		entry->result = code;
 	}
 
+	if (exists && this->nodeExists(node, "ClearTargetItem")) {
+		ShowNotice("item_upgrade: Cleared all items in TargetItem. Upgrade ID: %d\n", id);
+		if (!entry->targets.empty())
+			entry->targets.clear();
+	}
+
 	if (this->nodeExists(node, "TargetItem")) {
 		const YAML::Node& targetNode = node["TargetItem"];
 		unsigned int itemid;
-
-		if (!entry->targets.empty())
-			entry->targets.clear();
 
 		for (const YAML::Node &target : targetNode) {
 			if (!this->asUInt32(target, "Item", itemid))
@@ -76,6 +79,13 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 				this->invalidWarning(target, "Unknown item with ID %u.\n", itemid);
 				continue;
 			}*/
+
+			if (exists && this->nodeExists(target, "Remove")) {
+				entry->targets.erase(std::remove_if(entry->targets.begin(), entry->targets.end(), [&itemid](const unsigned int &x) { return x == itemid; }));
+				ShowNotice("item_upgrade: Removed '%d' from TargetItem. Upgrade ID: %d\n", itemid, id);
+				continue;
+			}
+
 			entry->targets.push_back(itemid);
 		}
 	}

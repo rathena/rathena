@@ -4916,7 +4916,8 @@ IG_PhysicalMagical_Mix,24398,1,1,1,0,0,0 // 매지컬 아머 쉐도우
 IG_PhysicalMagical_Mix,24396,1,1,1,0,0,0 // 매지컬 슈즈 쉐도우
 IG_PhysicalMagical_Mix,24397,1,1,1,0,0,0 // 매지컬 쉴드 쉐도우
 
-IG_Silver_Statue,28945,1,1,1,0,0,0 // 피빛의 기사의 방패
+IG_Silver_Statue,28942,900,1,1,0,0,0 // 저주받은 기사의 방패
+IG_Silver_Statue,28945,99,1,1,0,0,0 // 피빛의 기사의 방패
 IG_Silver_Statue,28946,1,1,1,0,0,0 // 정화된 기사의 방패
 
 IG_Stability_Shadow_Box,24352,1,1,1,0,0,0 // S_Plasterer's_Armor_II
@@ -4940,7 +4941,7 @@ IG_Gemstone_S_Conversion_Box,24336,1,1,1,0,0,0 // 젬스톤 쉴드 쉐도우 II
 IG_Status_S_Conversion_Box,24339,1,1,1,0,0,0 // 올마이티 이어링 쉐도우
 IG_Status_S_Conversion_Box,24340,1,1,1,0,0,0 // 올마이티 펜던트 쉐도우
 
-// TODO: Need 'yellow' shadow equipment as seen on https://ro.gnjoy.com.tw/notice/notice_view.aspx?id=1154
+//! TODO: http://ro.gnjoy.com/news/probability/View.asp?seq=3954787
 IG_Shadow_Exchange_Box,24018,1,1,1,0,0,0
 IG_Shadow_Exchange_Box,24019,1,1,1,0,0,0
 IG_Shadow_Exchange_Box,24020,1,1,1,0,0,0
@@ -5382,8 +5383,7 @@ IG_Shadow_Exchange_Box,24473,1,1,1,0,0,0
 IG_Shadow_Exchange_Box,24474,1,1,1,0,0,0
 IG_Shadow_Exchange_Box,24475,1,1,1,0,0,0
 
-//!TODO : as item directly or boxes?
-//http://www.inven.co.kr/board/ro/1951/4571
+//!TODO http://ro.gnjoy.com/news/probability/View.asp?&seq=3954790
 IG_Costume_Enchant_Stone_Box,22826,1,1,1,0,0,0 // 의상 인챈트 스톤 상자4
 IG_Costume_Enchant_Stone_Box,22868,1,1,1,0,0,0 // 의상 인챈트 스톤 상자5
 IG_Costume_Enchant_Stone_Box,22905,1,1,1,0,0,0 // 의상 인챈트 스톤 상자6
@@ -5420,7 +5420,7 @@ IG_EnchantStone_Recipe_9m,23629,1,1,1,0,0,0 // 의상 인챈트 스톤 상자14
 IG_EnchantStone_Recipe_9m,23682,1,1,1,0,0,0 // 의상 인챈트 스톤 상자15
 IG_EnchantStone_Recipe_9m,23770,1,1,1,0,0,0 // 의상 인챈트 스톤 상자16
 
-// http://ro.gnjoy.com/news/probability/View.asp?category=6&seq=3955672
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955672
 IG_Class_Shadow_Pendant,24250,1,1,1,0,0,0
 IG_Class_Shadow_Pendant,24251,1,1,1,0,0,0
 IG_Class_Shadow_Pendant,24252,1,1,1,0,0,0
@@ -5428,7 +5428,7 @@ IG_Class_Shadow_Pendant,24253,1,1,1,0,0,0
 IG_Class_Shadow_Pendant,24254,1,1,1,0,0,0
 IG_Class_Shadow_Pendant,24255,1,1,1,0,0,0
 
-// http://ro.gnjoy.com/news/probability/View.asp?category=6&seq=3955674
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955674
 IG_Class_Shadow_Earring,24246,1,1,1,0,0,0
 IG_Class_Shadow_Earring,24247,1,1,1,0,0,0
 IG_Class_Shadow_Earring,24248,1,1,1,0,0,0
@@ -5436,7 +5436,7 @@ IG_Class_Shadow_Earring,24249,1,1,1,0,0,0
 IG_Class_Shadow_Earring,28391,1,1,1,0,0,0
 IG_Class_Shadow_Earring,28392,1,1,1,0,0,0
 
-// http://ro.gnjoy.com/news/probability/View.asp?category=6&seq=3955671
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955671
 IG_Class_Shadow_Shield,24301,1,1,1,0,0,0
 IG_Class_Shadow_Shield,24302,1,1,1,0,0,0
 IG_Class_Shadow_Shield,24303,1,1,1,0,0,0
@@ -5457,7 +5457,7 @@ IG_Class_Shadow_Shield,24317,1,1,1,0,0,0
 IG_Class_Shadow_Shield,24318,1,1,1,0,0,0
 IG_Class_Shadow_Shield,24319,1,1,1,0,0,0
 
-// http://ro.gnjoy.com/news/probability/View.asp?category=6&seq=3955669
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955669
 IG_Class_Shadow_Shoes,24256,1,1,1,0,0,0
 IG_Class_Shadow_Shoes,24257,1,1,1,0,0,0
 IG_Class_Shadow_Shoes,24258,1,1,1,0,0,0
@@ -5479,7 +5479,7 @@ IG_Class_Shadow_Shoes,24411,1,1,1,0,0,0
 IG_Class_Shadow_Shoes,24413,1,1,1,0,0,0
 IG_Class_Shadow_Shoes,24415,1,1,1,0,0,0
 
-// http://ro.gnjoy.com/news/probability/View.asp?category=6&seq=3955664
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955664
 IG_Class_Shadow_Armor,24269,1,1,1,0,0,0
 IG_Class_Shadow_Armor,24270,1,1,1,0,0,0
 IG_Class_Shadow_Armor,24271,1,1,1,0,0,0
@@ -5501,7 +5501,7 @@ IG_Class_Shadow_Armor,24410,1,1,1,0,0,0
 IG_Class_Shadow_Armor,24412,1,1,1,0,0,0
 IG_Class_Shadow_Armor,24414,1,1,1,0,0,0
 
-// http://ro.gnjoy.com/news/probability/View.asp?category=6&seq=3955662
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955662
 IG_Class_Shadow_Weapon,24282,1,1,1,0,0,0
 IG_Class_Shadow_Weapon,24283,1,1,1,0,0,0
 IG_Class_Shadow_Weapon,24284,1,1,1,0,0,0
@@ -5522,6 +5522,7 @@ IG_Class_Shadow_Weapon,24298,1,1,1,0,0,0
 IG_Class_Shadow_Weapon,24299,1,1,1,0,0,0
 IG_Class_Shadow_Weapon,24300,1,1,1,0,0,0
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3954791
 IG_Costume_Exchange_Box,19876,1,1,1,0,0,0
 IG_Costume_Exchange_Box,19654,1,1,1,0,0,0
 IG_Costume_Exchange_Box,19608,1,1,1,0,0,0
@@ -6300,3 +6301,12 @@ IG_Costume_Enchant_Stone_Box19,25017,370,1,1	// 마공스톤(하단)
 IG_Costume_Enchant_Stone_Box19,25304,370,1,1	// 크리티컬스톤(상단)
 IG_Costume_Enchant_Stone_Box19,25060,370,1,1	// 크리티컬스톤(중단)
 IG_Costume_Enchant_Stone_Box19,25305,370,1,1	// 크리티컬스톤(하단)
+
+IG_PERFECTSIZE_MIX,24425,1 // 퍼펙트 사이즈 웨폰 쉐도우
+IG_PERFECTSIZE_MIX,24426,1 // 퍼펙트 사이즈 아머 쉐도우
+
+IG_MAGICPIERCING_MIX,24427,1 // 매직 엑소시스트 커럽트 웨폰 쉐도우
+IG_MAGICPIERCING_MIX,24428,1 // 매직 바이브레이션 드래곤킬러 웨폰 쉐도우
+IG_MAGICPIERCING_MIX,24429,1 // 매직 시저스 헌팅 웨폰 쉐도우
+IG_MAGICPIERCING_MIX,24430,1 // 매직 피싱 인섹트 웨폰 쉐도우
+IG_MAGICPIERCING_MIX,24431,1 // 매직 액서큐서너 홀리워터 웨폰 쉐도우

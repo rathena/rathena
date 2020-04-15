@@ -12,7 +12,9 @@
 #   SourceItem:         # List of item required
 #     - Item:           # (int) Item ID for source
 #       Amount:         # (int) Item amount will be consumed (Default: 1)
+#       Remove:         # (optional, any) Remove this item from the list while importing
 #   Reward:             # (string) Script on synthesis success
+#   ClearSourceItem:    # (optional, any) Can be used to clear SourceItem list while importing
 ###########################################################################
 
 Header:

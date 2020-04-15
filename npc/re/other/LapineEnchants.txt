@@ -218,7 +218,7 @@ function	script	F_Lapine_Ancient_Hero_Wisdom	{
 }
 
 function	script	F_Lapine_ILL_Piece_A	{
-	.@r = rand(320); // No rates info
+	.@r = rand(320); //! TODO: Official Rates info
 		 if (.@r < 100) { set getarg(0), RDMOPT_VAR_MAXHPAMOUNT; set getarg(1), rand(100,1500); if (rand(100) < 80) return; }
 	else if (.@r < 200) { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,3); if (rand(100) < 80) return; }
 	else if (.@r < 210) { set getarg(0), RDMOPT_DEC_SP_CONSUMPTION; set getarg(1), rand(1,10); }
@@ -233,7 +233,7 @@ function	script	F_Lapine_ILL_Piece_A	{
 	else if (.@r < 300) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(1,10); }
 	else if (.@r < 310) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(1,10); }
 	else if (.@r < 320) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(1,10); }
-	.@r = rand(170); // No rates info
+	.@r = rand(170); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(2), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(3), rand(1,10); }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_RACE_DAMAGE_UNDEAD; set getarg(3), rand(1,10); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_RACE_DAMAGE_ANIMAL; set getarg(3), rand(1,10); }
@@ -255,7 +255,7 @@ function	script	F_Lapine_ILL_Piece_A	{
 }
 
 function	script	F_Lapine_ILL_Piece_B	{
-	.@r = rand(320); // No rates info
+	.@r = rand(320); //! TODO: Official Rates info
 		 if (.@r < 100) { set getarg(0), RDMOPT_VAR_MAXHPAMOUNT; set getarg(1), rand(100,1500); if (rand(100) < 80) return; }
 	else if (.@r < 200) { set getarg(0), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(1), rand(3,5); if (rand(100) < 80) return; }
 	else if (.@r < 210) { set getarg(0), RDMOPT_DEC_SP_CONSUMPTION; set getarg(1), rand(1,10); }
@@ -270,7 +270,7 @@ function	script	F_Lapine_ILL_Piece_B	{
 	else if (.@r < 300) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(1,10); }
 	else if (.@r < 310) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(1,10); }
 	else if (.@r < 320) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(1,10); }
-	.@r = rand(150); // No rates info
+	.@r = rand(150); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(2), RDMOPT_RACE_MDAMAGE_NOTHING; set getarg(3), rand(1,10); }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_RACE_MDAMAGE_UNDEAD; set getarg(3), rand(1,10); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_RACE_MDAMAGE_ANIMAL; set getarg(3), rand(1,10); }
@@ -289,9 +289,10 @@ function	script	F_Lapine_ILL_Piece_B	{
 	return;
 }
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3999573
 function	script	F_Lapine_Gemstone_Of_Time	{
 	// Option:1
-	.@r = rand(170); // No rates info
+	.@r = rand(170);
 		 if (.@r < 10)  { set getarg(0), RDMOPT_VAR_ATTPOWER; set getarg(1), rand(3,20); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,3); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_VAR_ATTMPOWER; set getarg(1), rand(3,20); }
@@ -309,6 +310,7 @@ function	script	F_Lapine_Gemstone_Of_Time	{
 	else if (.@r < 150) { set getarg(0), RDMOPT_HEAL_VALUE; set getarg(1), rand(3,20); }
 	else if (.@r < 160) { set getarg(0), RDMOPT_RANGE_ATTACK_DAMAGE_TARGET; set getarg(1), rand(3,20); }
 	else if (.@r < 170) { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(3,20); }
+	if (rand(2) == 1) return;
 	// Option: 2
 	.@r = rand(280);
 		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_ATTPOWER; set getarg(3), rand(3,20); }
@@ -342,9 +344,10 @@ function	script	F_Lapine_Gemstone_Of_Time	{
 	return;
 }
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3999574
 function	script	F_Lapine_Time_Unseal_Key	{
 	// Option:1
-	.@r = rand(170); // No rates info
+	.@r = rand(170);
 	if (.@r < 10)  { set getarg(0), RDMOPT_VAR_ATTPOWER; set getarg(1), rand(5,40); return; }
 	if (.@r < 20)  { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,6); return; }
 	if (.@r < 30)  { set getarg(0), RDMOPT_VAR_ATTMPOWER; set getarg(1), rand(5,40); return; }
@@ -367,14 +370,14 @@ function	script	F_Lapine_Time_Unseal_Key	{
 
 function	script	F_Lapine_Magma_Essence	{
 	// Option:1
-	.@r = rand(40); // No rates info
+	.@r = rand(40); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(0), RDMOPT_VAR_MAXHPAMOUNT; set getarg(1), rand(150,350); }
 	else if (.@r < 20) { set getarg(0), RDMOPT_VAR_MAXSPAMOUNT; set getarg(1), rand(25,50); }
 	else if (.@r < 30) { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,5); }
 	else if (.@r < 40) { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,5); }
 
 	// Option:2
-	.@r = rand(260); // No rates info
+	.@r = rand(260); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(2), RDMOPT_VAR_HPACCELERATION; set getarg(3), rand(15,50); }
 	else if (.@r < 20) { set getarg(2), RDMOPT_VAR_SPACCELERATION; set getarg(3), rand(15,50); }
 	else if (.@r < 30) { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(5,15); }
@@ -403,7 +406,7 @@ function	script	F_Lapine_Magma_Essence	{
 	else if (.@r < 260) { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_USER; set getarg(3), rand(5,10); }
 
 	// Option:3
-	.@r = rand(80); // No rates info
+	.@r = rand(80); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(4), RDMOPT_VAR_MAXHPAMOUNT; set getarg(5), rand(150,300); }
 	else if (.@r < 20) { set getarg(4), RDMOPT_VAR_MAXSPAMOUNT; set getarg(5), rand(25,50); }
 	else if (.@r < 30) { set getarg(4), RDMOPT_RACE_TOLERACE_NOTHING; set getarg(5), rand(3,7); }
@@ -418,7 +421,7 @@ function	script	F_Lapine_Magma_Essence	{
 	else if (.@r < 120) { set getarg(4), RDMOPT_RACE_TOLERACE_DRAGON; set getarg(5), rand(3,7); }
 
 	// Option:4
-	.@r = rand(70); // No rates info
+	.@r = rand(70); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(6), RDMOPT_BODY_INDESTRUCTIBLE; }
 	else if (.@r < 20) { set getarg(6), RDMOPT_WEAPON_ATTR_WATER; }
 	else if (.@r < 30) { set getarg(6), RDMOPT_WEAPON_ATTR_GROUND; }
@@ -431,7 +434,7 @@ function	script	F_Lapine_Magma_Essence	{
 
 // Normal Modification Part (Physical)
 function	script	F_Lapine_EP17_1_SPC05	{
-	.@r = rand(140); // No rates info
+	.@r = rand(140); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(3,15); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(3,15); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(3,15); }
@@ -446,7 +449,7 @@ function	script	F_Lapine_EP17_1_SPC05	{
 	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,5); }
 	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(1), rand(3,10); }
 	else if (.@r < 140) { set getarg(0), RDMOPT_VAR_CRITICALSUCCESSVALUE; set getarg(1), rand(3,10); }
-	.@r = rand(180); // No rates info
+	.@r = rand(180); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_PLUSASPD; set getarg(3), 1; }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(5,15); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_DAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(3,10); }
@@ -470,7 +473,7 @@ function	script	F_Lapine_EP17_1_SPC05	{
 
 // Advanced Modification Part (Physical)
 function	script	F_Lapine_EP17_1_SPC06	{
-	.@r = rand(140); // No rates info
+	.@r = rand(140); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(3,20); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(3,20); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(3,20); }
@@ -485,7 +488,7 @@ function	script	F_Lapine_EP17_1_SPC06	{
 	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,10); }
 	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(1), rand(3,15); }
 	else if (.@r < 140) { set getarg(0), RDMOPT_VAR_CRITICALSUCCESSVALUE; set getarg(1), rand(3,15); }
-	.@r = rand(190); // No rates info
+	.@r = rand(190); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_PLUSASPD; set getarg(3), 1; }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(5,30); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_DAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(3,15); }
@@ -510,7 +513,7 @@ function	script	F_Lapine_EP17_1_SPC06	{
 
 // Premium Modification Part (Physical)
 function	script	F_Lapine_EP17_1_SPC07	{
-	.@r = rand(140); // No rates info
+	.@r = rand(140); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(5,25); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(5,25); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(5,25); }
@@ -525,7 +528,7 @@ function	script	F_Lapine_EP17_1_SPC07	{
 	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(3,15); }
 	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(1), rand(3,20); }
 	else if (.@r < 140) { set getarg(0), RDMOPT_VAR_CRITICALSUCCESSVALUE; set getarg(1), rand(3,20); }
-	.@r = rand(200); // No rates info
+	.@r = rand(200); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_PLUSASPD; set getarg(3), rand(1,2); }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(5,45); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_DAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(3,20); }
@@ -551,7 +554,7 @@ function	script	F_Lapine_EP17_1_SPC07	{
 
 // Normal Modification Part (Magic)
 function	script	F_Lapine_EP17_1_SPC08	{
-	.@r = rand(130); // No rates info
+	.@r = rand(130); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(3,15); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(3,15); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(3,15); }
@@ -565,7 +568,7 @@ function	script	F_Lapine_EP17_1_SPC08	{
 	else if (.@r < 110) { set getarg(0), RDMOPT_VAR_MATTPOWER; set getarg(1), rand(5,20); }
 	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_MAGICATKPERCENT; set getarg(1), rand(1,5); }
 	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(3,10); }
-	.@r = rand(160); // No rates info
+	.@r = rand(160); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_PLUSASPD; set getarg(3), 1; }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(5,15); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_MDAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(3,10); }
@@ -587,7 +590,7 @@ function	script	F_Lapine_EP17_1_SPC08	{
 
 // Advanced Modification Part (Magic)
 function	script	F_Lapine_EP17_1_SPC09	{
-	.@r = rand(130); // No rates info
+	.@r = rand(130); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(3,20); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(3,20); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(3,20); }
@@ -601,7 +604,7 @@ function	script	F_Lapine_EP17_1_SPC09	{
 	else if (.@r < 110) { set getarg(0), RDMOPT_VAR_MATTPOWER; set getarg(1), rand(15,40); }
 	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_MAGICATKPERCENT; set getarg(1), rand(1,10); }
 	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(3,10); }
-	.@r = rand(190); // No rates info
+	.@r = rand(190); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_PLUSASPD; set getarg(3), 1; }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(5,30); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_MDAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(3,15); }
@@ -624,7 +627,7 @@ function	script	F_Lapine_EP17_1_SPC09	{
 
 // Premium Modification Part (Magic)
 function	script	F_Lapine_EP17_1_SPC10	{
-	.@r = rand(130); // No rates info
+	.@r = rand(130); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(5,25); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(5,25); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(5,25); }
@@ -638,7 +641,7 @@ function	script	F_Lapine_EP17_1_SPC10	{
 	else if (.@r < 110) { set getarg(0), RDMOPT_VAR_MATTPOWER; set getarg(1), rand(20,60); }
 	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_MAGICATKPERCENT; set getarg(1), rand(3,15); }
 	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(3,10); }
-	.@r = rand(180); // No rates info
+	.@r = rand(180); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_PLUSASPD; set getarg(3), rand(1,2); }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(5,45); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_MDAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(3,20); }
@@ -661,7 +664,7 @@ function	script	F_Lapine_EP17_1_SPC10	{
 }
 
 function	script	F_Lapine_Charleston_Parts_W	{
-	.@r = rand(2600); // NO rate info
+	.@r = rand(2600); //! TODO: Official Rates info
 	if (.@r < 100) {
 		.@option = RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET;
 		.@value = rand(1,20);
@@ -749,7 +752,7 @@ function	script	F_Lapine_Charleston_Parts_W	{
 }
 
 function	script	F_Lapine_Charleston_Parts_R	{
-	.@r = rand(2500); // NO rate info
+	.@r = rand(2500); //! TODO: Official Rates info
 	if (.@r < 100) {
 		.@option = RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET;
 		.@value = rand(1,20);
@@ -834,7 +837,7 @@ function	script	F_Lapine_Charleston_Parts_R	{
 }
 
 function	script	F_Lapine_Gray_Charcoal_Range	{
-	.@r = rand(150); // No rates info
+	.@r = rand(150); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,20); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,20); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,20); }
@@ -851,7 +854,7 @@ function	script	F_Lapine_Gray_Charcoal_Range	{
 	else if (.@r < 140) { set getarg(0), RDMOPT_RANGE_ATTACK_DAMAGE_TARGET; set getarg(1), rand(5,10); }
 	else if (.@r < 150) { set getarg(0), RDMOPT_WEAPON_INDESTRUCTIBLE; set getarg(1), 1; }
 
-	.@r = rand(140); // No rates info
+	.@r = rand(140); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(2), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(3), rand(1,20); }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_RACE_DAMAGE_UNDEAD; set getarg(3), rand(1,20); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_RACE_DAMAGE_ANIMAL; set getarg(3), rand(1,20); }
@@ -871,7 +874,7 @@ function	script	F_Lapine_Gray_Charcoal_Range	{
 }
 
 function	script	F_Lapine_Gray_Charcoal_Magic	{
-	.@r = rand(140); // No rates info
+	.@r = rand(140); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,20); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,20); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,20); }
@@ -887,7 +890,7 @@ function	script	F_Lapine_Gray_Charcoal_Magic	{
 	else if (.@r < 130) { set getarg(0), RDMOPT_DEC_SP_CONSUMPTION; set getarg(1), rand(5,10); }
 	else if (.@r < 140) { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(1,5); }
 
-	.@r = rand(140); // No rates info
+	.@r = rand(140); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(2), RDMOPT_RACE_MDAMAGE_NOTHING; set getarg(3), rand(1,20); }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_RACE_MDAMAGE_UNDEAD; set getarg(3), rand(1,20); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_RACE_MDAMAGE_ANIMAL; set getarg(3), rand(1,20); }
@@ -907,7 +910,7 @@ function	script	F_Lapine_Gray_Charcoal_Magic	{
 }
 
 function	script	F_Lapine_Gray_Charcoal_Melee	{
-	.@r = rand(190); // No rates info
+	.@r = rand(190); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,20); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,20); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,20); }
@@ -928,7 +931,7 @@ function	script	F_Lapine_Gray_Charcoal_Melee	{
 	else if (.@r < 180) { set getarg(0), RDMOPT_BODY_ATTR_SAINT; set getarg(1), 1; }
 	else if (.@r < 190) { set getarg(0), RDMOPT_BODY_ATTR_DARKNESS; set getarg(1), 1; }
 
-	.@r = rand(150); // No rates info
+	.@r = rand(150); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(2), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(3), rand(1,20); }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_RACE_DAMAGE_UNDEAD; set getarg(3), rand(1,20); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_RACE_DAMAGE_ANIMAL; set getarg(3), rand(1,20); }
@@ -952,7 +955,7 @@ function	script	F_Lapine_Gray_Charcoal_Melee	{
 * Geffen Magic Scroll Accessory
 */
 function	script	F_Lapine_Geffen_Magic_Scroll2	{
-	.@r = rand(130); // No rates info
+	.@r = rand(130); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(3,5); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(1), rand(5,7); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_DAMAGE_CRI_TARGET; set getarg(1), rand(5,8); }
@@ -960,14 +963,14 @@ function	script	F_Lapine_Geffen_Magic_Scroll2	{
 	else if (.@r < 50)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_USER; set getarg(1), rand(3,5); }
 	else if (.@r < 60)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WIND_USER; set getarg(1), rand(3,5); }
 	else if (.@r < 70)  { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_USER; set getarg(1), rand(3,5); }
-	else if (.@r < 80)  { set getarg(0), RDMOPT_ATTR_TOLERACE_ALL; set getarg(1), rand(1,3); } // it's must be all elements except neutral: RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING
+	else if (.@r < 80)  { set getarg(0), RDMOPT_ATTR_TOLERACE_ALL; set getarg(1), rand(1,3); } // FIXME: To all element except neutral. Change to RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING after #3993
 	else if (.@r < 90)  { set getarg(0), RDMOPT_DEC_SP_CONSUMPTION; set getarg(1), rand(3,5); }
 	else if (.@r < 100) { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,3); }
 	else if (.@r < 110) { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,3); }
 	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,3); }
 	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_MAGICATKPERCENT; set getarg(1), rand(1,3); }
 
-	.@r = rand(130); // No rates info
+	.@r = rand(130); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(3), rand(3,5); }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(3), rand(5,7); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_DAMAGE_CRI_TARGET; set getarg(3), rand(5,8); }
@@ -975,7 +978,7 @@ function	script	F_Lapine_Geffen_Magic_Scroll2	{
 	else if (.@r < 50)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_WATER_USER; set getarg(3), rand(3,5); }
 	else if (.@r < 60)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_WIND_USER; set getarg(3), rand(3,5); }
 	else if (.@r < 70)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_GROUND_USER; set getarg(3), rand(3,5); }
-	else if (.@r < 80)  { set getarg(2), RDMOPT_ATTR_TOLERACE_ALL; set getarg(3), rand(1,3); } // it's must be all elements except neutral: RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING
+	else if (.@r < 80)  { set getarg(2), RDMOPT_ATTR_TOLERACE_ALL; set getarg(3), rand(1,3); } // FIXME: To all element except neutral. Change to RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING after #3993
 	else if (.@r < 90)  { set getarg(2), RDMOPT_DEC_SP_CONSUMPTION; set getarg(3), rand(3,5); }
 	else if (.@r < 100) { set getarg(2), RDMOPT_VAR_MAXHPPERCENT; set getarg(3), rand(1,3); }
 	else if (.@r < 110) { set getarg(2), RDMOPT_VAR_MAXSPPERCENT; set getarg(3), rand(1,3); }
@@ -989,7 +992,7 @@ function	script	F_Lapine_Geffen_Magic_Scroll2	{
 * Geffen Magic Scroll Armor
 */
 function	script	F_Lapine_Geffen_Magic_Scroll	{
-	.@r = rand(80); // No rates info
+	.@r = rand(80); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(0), RDMOPT_VAR_STRAMOUNT; set getarg(1), rand(1,4); }
 	else if (.@r < 20) { set getarg(0), RDMOPT_VAR_AGIAMOUNT; set getarg(1), rand(1,4); }
 	else if (.@r < 30) { set getarg(0), RDMOPT_VAR_VITAMOUNT; set getarg(1), rand(1,4); }
@@ -999,7 +1002,7 @@ function	script	F_Lapine_Geffen_Magic_Scroll	{
 	else if (.@r < 70) { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(3,5); }
 	else if (.@r < 80) { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(3,5); }
 
-	.@r = rand(150); // No rates info
+	.@r = rand(150); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_MAXHPAMOUNT; set getarg(3), rand(50,100); }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_MAXSPAMOUNT; set getarg(3), rand(50,100); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(3), rand(15,30); }
@@ -1391,18 +1394,19 @@ function	script	F_Lapine_Gold_Statue	{
 	return;
 }
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3954806
 function	script	F_Lapine_Shadow_Refine_Hammer	{
-	.@r = rand(1000); // No rates info
-		 if (.@r < 20)  { set getarg(0), 1; return; }
-	else if (.@r < 30)  { set getarg(0), 2; return; }
-	else if (.@r < 80)  { set getarg(0), 3; return; }
-	else if (.@r < 700) { set getarg(0), 4; return; }
-	else if (.@r < 80)  { set getarg(0), 5; return; }
-	else if (.@r < 40)  { set getarg(0), 6; return; }
-	else if (.@r < 20)  { set getarg(0), 7; return; }
-	else if (.@r < 15)  { set getarg(0), 8; return; }
-	else if (.@r < 10)  { set getarg(0), 9; return; }
-	else                { set getarg(0), 10; return; }
+	.@r = rand(10000);
+		 if (.@r < 440)  { set getarg(0), 1; return; }
+	else if (.@r < 1319) { set getarg(0), 2; return; }
+	else if (.@r < 3022) { set getarg(0), 3; return; }
+	else if (.@r < 6538) { set getarg(0), 4; return; }
+	else if (.@r < 8296) { set getarg(0), 5; return; }
+	else if (.@r < 9175) { set getarg(0), 6; return; }
+	else if (.@r < 9615) { set getarg(0), 7; return; }
+	else if (.@r < 9835) { set getarg(0), 8; return; }
+	else if (.@r < 9945) { set getarg(0), 9; return; }
+	else                 { set getarg(0), 10; return; }
 	return;
 }
 
@@ -1411,8 +1415,9 @@ function	script	F_Lapine_Shadow_9_Refine_Hammer	{
 	return;
 }
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3964879
 function	script	F_Lapine_Magic_Cat_Hand	{
-	.@r = rand(160); // No rates info
+	.@r = rand(160);
 	if (.@r < 10)  { set getarg(0), RDMOPT_VAR_STRAMOUNT; set getarg(1), rand(1,7); }
 	if (.@r < 20)  { set getarg(0), RDMOPT_VAR_AGIAMOUNT; set getarg(1), rand(1,7); }
 	if (.@r < 30)  { set getarg(0), RDMOPT_VAR_VITAMOUNT; set getarg(1), rand(1,7); }
@@ -1430,7 +1435,7 @@ function	script	F_Lapine_Magic_Cat_Hand	{
 	if (.@r < 150) { set getarg(0), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(1), rand(5,20); }
 	if (.@r < 160) { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(5,10); }
 
-	.@r = rand(80); // No rates info
+	.@r = rand(80);
 	if (.@r < 10) { set getarg(2), RDMOPT_HEAL_VALUE; set getarg(3), rand(5,15); }
 	if (.@r < 20) { set getarg(2), RDMOPT_HEAL_MODIFY_PERCENT; set getarg(3), rand(5,15); }
 	if (.@r < 30) { set getarg(2), RDMOPT_VAR_ATKPERCENT; set getarg(3), rand(1,7); }
@@ -1443,17 +1448,18 @@ function	script	F_Lapine_Magic_Cat_Hand	{
 	return;
 }
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3999577
 function	script	F_Lapine_Candy_Pouch_Blessing_Scroll_W	{
-	.@r = rand(70); // No rates info
+	.@r = rand(70);
 		 if (.@r < 10)  { set getarg(0), RDMOPT_VAR_STRAMOUNT; set getarg(1), rand(1,3); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_VAR_AGIAMOUNT; set getarg(1), rand(1,3); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_VAR_VITAMOUNT; set getarg(1), rand(1,3); }
 	else if (.@r < 40)  { set getarg(0), RDMOPT_VAR_INTAMOUNT; set getarg(1), rand(1,3); }
 	else if (.@r < 50)  { set getarg(0), RDMOPT_VAR_DEXAMOUNT; set getarg(1), rand(1,3); }
 	else if (.@r < 60)  { set getarg(0), RDMOPT_VAR_LUKAMOUNT; set getarg(1), rand(1,3); }
-	else if (.@r < 70)  { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(1,5); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(1,3); }
 
-	.@r = rand(220); // No rates info
+	.@r = rand(220);
 		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(3), rand(1,15); }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(1,20); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(3), rand(1,7); }
@@ -1480,17 +1486,18 @@ function	script	F_Lapine_Candy_Pouch_Blessing_Scroll_W	{
 	return;
 }
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3999578
 function	script	F_Lapine_Candy_Pouch_Blessing_Scroll_R	{
-	.@r = rand(70); // No rates info
+	.@r = rand(70);
 		 if (.@r < 10)  { set getarg(0), RDMOPT_VAR_STRAMOUNT; set getarg(1), rand(1,3); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_VAR_AGIAMOUNT; set getarg(1), rand(1,3); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_VAR_VITAMOUNT; set getarg(1), rand(1,3); }
 	else if (.@r < 40)  { set getarg(0), RDMOPT_VAR_INTAMOUNT; set getarg(1), rand(1,3); }
 	else if (.@r < 50)  { set getarg(0), RDMOPT_VAR_DEXAMOUNT; set getarg(1), rand(1,3); }
 	else if (.@r < 60)  { set getarg(0), RDMOPT_VAR_LUKAMOUNT; set getarg(1), rand(1,3); }
-	else if (.@r < 70)  { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(1,5); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(1,3); }
 
-	.@r = rand(220); // No rates info
+	.@r = rand(220);
 		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(3), rand(1,15); }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(1,20); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(3), rand(1,7); }
@@ -1517,17 +1524,18 @@ function	script	F_Lapine_Candy_Pouch_Blessing_Scroll_R	{
 	return;
 }
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3999579
 function	script	F_Lapine_Candy_Pouch_Blessing_Scroll_M	{
-	.@r = rand(70); // No rates info
+	.@r = rand(70);
 		 if (.@r < 10)  { set getarg(0), RDMOPT_VAR_STRAMOUNT; set getarg(1), rand(1,3); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_VAR_AGIAMOUNT; set getarg(1), rand(1,3); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_VAR_VITAMOUNT; set getarg(1), rand(1,3); }
 	else if (.@r < 40)  { set getarg(0), RDMOPT_VAR_INTAMOUNT; set getarg(1), rand(1,3); }
 	else if (.@r < 50)  { set getarg(0), RDMOPT_VAR_DEXAMOUNT; set getarg(1), rand(1,3); }
 	else if (.@r < 60)  { set getarg(0), RDMOPT_VAR_LUKAMOUNT; set getarg(1), rand(1,3); }
-	else if (.@r < 70)  { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(1,5); }
+	else if (.@r < 70)  { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(1,3); }
 
-	.@r = rand(220); // No rates info
+	.@r = rand(220);
 		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_MDEFPOWER; set getarg(3), rand(1,15); }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(3), rand(1,20); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET; set getarg(3), rand(1,7); }
@@ -1555,7 +1563,7 @@ function	script	F_Lapine_Candy_Pouch_Blessing_Scroll_M	{
 }
 
 function	script	F_Lapine_Grown_Gunslinger	{
-	.@r = rand(160); // No rates info
+	.@r = rand(160); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(0), RDMOPT_VAR_STRAMOUNT; set getarg(1), rand(1,7); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_VAR_AGIAMOUNT; set getarg(1), rand(1,7); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_VAR_VITAMOUNT; set getarg(1), rand(1,7); }
@@ -1573,7 +1581,7 @@ function	script	F_Lapine_Grown_Gunslinger	{
 	else if (.@r < 150) { set getarg(0), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(1), rand(5,20); }
 	else if (.@r < 160) { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(5,10); }
 
-	.@r = rand(80); // No rates info
+	.@r = rand(80); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(2), RDMOPT_HEAL_VALUE; set getarg(3), rand(5,15); }
 	else if (.@r < 20) { set getarg(2), RDMOPT_HEAL_MODIFY_PERCENT; set getarg(3), rand(1,7); }
 	else if (.@r < 30) { set getarg(2), RDMOPT_VAR_ATKPERCENT; set getarg(3), rand(1,7); }
@@ -1586,9 +1594,10 @@ function	script	F_Lapine_Grown_Gunslinger	{
 	return;
 }
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3964871
 function	script	F_Lapine_Uniform_Repair_Kits	{
 	// Option:1
-	.@r = rand(90); // No rates info
+	.@r = rand(90);
 		 if (.@r < 10)  { set getarg(0), RDMOPT_BODY_ATTR_WATER; set getarg(1), rand(1,3); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_BODY_ATTR_GROUND; set getarg(1), rand(1,3); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_BODY_ATTR_FIRE; set getarg(1), rand(1,3); }
@@ -1599,7 +1608,7 @@ function	script	F_Lapine_Uniform_Repair_Kits	{
 	else if (.@r < 80)  { set getarg(0), RDMOPT_VAR_MDEFPOWER; set getarg(1), rand(5,15); }
 	else if (.@r < 90)  { set getarg(0), RDMOPT_BODY_INDESTRUCTIBLE; set getarg(1), 1; }
 
-	.@r = rand(220); // No rates info
+	.@r = rand(220);
 		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_STRAMOUNT; set getarg(3), rand(1,4); }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AGIAMOUNT; set getarg(3), rand(1,4); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_VAR_VITAMOUNT; set getarg(3), rand(1,4); }
@@ -1609,9 +1618,10 @@ function	script	F_Lapine_Uniform_Repair_Kits	{
 	return;
 }
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3964872
 function	script	F_Lapine_Magical_Booster_Enchant	{
 	// Option:1
-	.@r = rand(160); // No rates info
+	.@r = rand(160);
 		 if (.@r < 10)  { set getarg(0), RDMOPT_VAR_STRAMOUNT; set getarg(1), 1; }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_VAR_AGIAMOUNT; set getarg(1), 1; }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_VAR_VITAMOUNT; set getarg(1), 1; }
@@ -1629,7 +1639,7 @@ function	script	F_Lapine_Magical_Booster_Enchant	{
 	else if (.@r < 150) { set getarg(0), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(1), rand(5,20); }
 	else if (.@r < 160) { set getarg(0), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(1), rand(1,2); }
 	// Option:2
-	.@r = rand(140); // No rates info
+	.@r = rand(140);
 		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_STRAMOUNT; set getarg(3), 1; }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AGIAMOUNT; set getarg(3), 1; }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_VAR_VITAMOUNT; set getarg(3), 1; }
@@ -1662,8 +1672,9 @@ function	script	F_Lapine_Metal_Rifine_Ticket	{
 	return;
 }
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3999572
 function	script	F_Lapine_Fan_Modification_Kits	{
-	.@r = rand(130); // No rates info
+	.@r = rand(130);
 		 if (.@r < 10)  { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(3,5); }
 	else if (.@r < 20)  { set getarg(0), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(1), rand(5,8); }
 	else if (.@r < 30)  { set getarg(0), RDMOPT_DAMAGE_CRI_TARGET; set getarg(1), rand(5,8); }
@@ -1671,13 +1682,13 @@ function	script	F_Lapine_Fan_Modification_Kits	{
 	else if (.@r < 50)  { set getarg(0), RDMOPT_ATTR_TOLERACE_GROUND; set getarg(1), rand(3,5); }
 	else if (.@r < 60)  { set getarg(0), RDMOPT_ATTR_TOLERACE_FIRE; set getarg(1), rand(3,5); }
 	else if (.@r < 70)  { set getarg(0), RDMOPT_ATTR_TOLERACE_WIND; set getarg(1), rand(3,5); }
-	else if (.@r < 80)  { set getarg(0), RDMOPT_ATTR_TOLERACE_ALL; set getarg(1), rand(1,3); } // To all element except neutral
+	else if (.@r < 80)  { set getarg(0), RDMOPT_ATTR_TOLERACE_ALL; set getarg(1), rand(1,3); } // FIXME: To all element except neutral. Change to RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING after #3993
 	else if (.@r < 90)  { set getarg(0), RDMOPT_DEC_SP_CONSUMPTION; set getarg(1), rand(3,5); }
 	else if (.@r < 100) { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,1); }
 	else if (.@r < 110) { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,3); }
 	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,3); }
 	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_MAGICATKPERCENT; set getarg(1), rand(1,3); }
-	.@r = rand(130); // No rates info
+	.@r = rand(130);
 		 if (.@r < 10)  { set getarg(2), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(3), rand(3,5); }
 	else if (.@r < 20)  { set getarg(2), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(3), rand(5,8); }
 	else if (.@r < 30)  { set getarg(2), RDMOPT_DAMAGE_CRI_TARGET; set getarg(3), rand(5,8); }
@@ -1685,7 +1696,7 @@ function	script	F_Lapine_Fan_Modification_Kits	{
 	else if (.@r < 50)  { set getarg(2), RDMOPT_ATTR_TOLERACE_GROUND; set getarg(3), rand(3,5); }
 	else if (.@r < 60)  { set getarg(2), RDMOPT_ATTR_TOLERACE_FIRE; set getarg(3), rand(3,5); }
 	else if (.@r < 70)  { set getarg(2), RDMOPT_ATTR_TOLERACE_WIND; set getarg(3), rand(3,5); }
-	else if (.@r < 80)  { set getarg(2), RDMOPT_ATTR_TOLERACE_ALL; set getarg(3), rand(1,3); } // To all element except neutral
+	else if (.@r < 80)  { set getarg(2), RDMOPT_ATTR_TOLERACE_ALL; set getarg(3), rand(1,3); } // FIXME: To all element except neutral. Change to RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING after #3993
 	else if (.@r < 90)  { set getarg(2), RDMOPT_DEC_SP_CONSUMPTION; set getarg(3), rand(3,5); }
 	else if (.@r < 100) { set getarg(2), RDMOPT_VAR_MAXHPPERCENT; set getarg(3), rand(1,1); }
 	else if (.@r < 110) { set getarg(2), RDMOPT_VAR_MAXSPPERCENT; set getarg(3), rand(1,3); }
@@ -1694,9 +1705,10 @@ function	script	F_Lapine_Fan_Modification_Kits	{
 	return;
 }
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955672
 function	script	F_Lapine_Class_Shadow_Pendant_Options	{
 	// Refine
-	.@r = rand(10000); // No rates info
+	.@r = rand(10000);
 		 if (.@r < 5005) { set getarg(0), 1; }
 	else if (.@r < 7507) { set getarg(0), 2; }
 	else if (.@r < 8758) { set getarg(0), 3; }
@@ -1718,9 +1730,10 @@ function	script	F_Lapine_Class_Shadow_Pendant_Options	{
 	return;
 }
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955674
 function	script	F_Lapine_Class_Shadow_Earring_Options	{
 	// Refine
-	.@r = rand(10000); // No rates info
+	.@r = rand(10000);
 		 if (.@r < 5005) { set getarg(0), 1; }
 	else if (.@r < 7507) { set getarg(0), 2; }
 	else if (.@r < 8758) { set getarg(0), 3; }
@@ -1742,9 +1755,10 @@ function	script	F_Lapine_Class_Shadow_Earring_Options	{
 	return;
 }
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955671
 function	script	F_Lapine_Class_Shadow_Shield_Options	{
 	// Refine
-	.@r = rand(10000); // No rates info
+	.@r = rand(10000);
 		 if (.@r < 5005) { set getarg(0), 1; }
 	else if (.@r < 7507) { set getarg(0), 2; }
 	else if (.@r < 8758) { set getarg(0), 3; }
@@ -1766,9 +1780,10 @@ function	script	F_Lapine_Class_Shadow_Shield_Options	{
 	return;
 }
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955669
 function	script	F_Lapine_Class_Shadow_Shoes_Options	{
 	// Refine
-	.@r = rand(10000); // No rates info
+	.@r = rand(10000);
 		 if (.@r < 5005) { set getarg(0), 1; }
 	else if (.@r < 7507) { set getarg(0), 2; }
 	else if (.@r < 8758) { set getarg(0), 3; }
@@ -1790,9 +1805,10 @@ function	script	F_Lapine_Class_Shadow_Shoes_Options	{
 	return;
 }
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955664
 function	script	F_Lapine_Class_Shadow_Armor_Options	{
 	// Refine
-	.@r = rand(10000); // No rates info
+	.@r = rand(10000);
 		 if (.@r < 5005) { set getarg(0), 1; }
 	else if (.@r < 7507) { set getarg(0), 2; }
 	else if (.@r < 8758) { set getarg(0), 3; }
@@ -1814,9 +1830,10 @@ function	script	F_Lapine_Class_Shadow_Armor_Options	{
 	return;
 }
 
+// http://ro.gnjoy.com/news/probability/View.asp?seq=3955662
 function	script	F_Lapine_Class_Shadow_Weapon_Options	{
 	// Refine
-	.@r = rand(10000); // No rates info
+	.@r = rand(10000);
 		 if (.@r < 5005) { set getarg(0), 1; }
 	else if (.@r < 7507) { set getarg(0), 2; }
 	else if (.@r < 8758) { set getarg(0), 3; }
@@ -1854,7 +1871,7 @@ function	script	F_Lapine_Grace_Refine_Ticket	{
 }
 
 function	script	F_Lapine_Imperial_Convert1	{
-	.@r = rand(100); // No rates info
+	.@r = rand(100); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,5); return; }
 	else if (.@r < 20) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,5); return; }
 	else if (.@r < 30) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,5); return; }
@@ -1869,7 +1886,7 @@ function	script	F_Lapine_Imperial_Convert1	{
 }
 
 function	script	F_Lapine_Imperial_Convert2	{
-	.@r = rand(100); // No rates info
+	.@r = rand(100); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,5); return; }
 	else if (.@r < 20) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,5); return; }
 	else if (.@r < 30) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,5); return; }
@@ -1884,12 +1901,12 @@ function	script	F_Lapine_Imperial_Convert2	{
 }
 
 function	script	F_Lapine_Imperial_Convert3	{
-	.@r = rand(80); // No rates info
+	.@r = rand(80); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(0), RDMOPT_ATTR_TOLERACE_FIRE; set getarg(1), rand(1,5); return; }
 	else if (.@r < 20) { set getarg(0), RDMOPT_ATTR_TOLERACE_WIND; set getarg(1), rand(1,5); return; }
 	else if (.@r < 30) { set getarg(0), RDMOPT_ATTR_TOLERACE_GROUND; set getarg(1), rand(1,5); return; }
 	else if (.@r < 40) { set getarg(0), RDMOPT_ATTR_TOLERACE_WATER; set getarg(1), rand(1,5); return; }
-	else if (.@r < 50) { set getarg(0), RDMOPT_ATTR_TOLERACE_ALL; set getarg(1), rand(1,5); return; } // All elements except neutral
+	else if (.@r < 50) { set getarg(0), RDMOPT_ATTR_TOLERACE_ALL; set getarg(1), rand(1,5); return; } // FIXME: To all element except neutral. Change to RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING after #3993
 	else if (.@r < 60) { set getarg(0), RDMOPT_DEC_SP_CONSUMPTION; set getarg(1), rand(1,5); return; }
 	else if (.@r < 70) { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,5); return; }
 	else if (.@r < 80) { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,5); return; }
@@ -1897,7 +1914,7 @@ function	script	F_Lapine_Imperial_Convert3	{
 }
 
 function	script	F_Lapine_Imperial_Convert4	{
-	.@r = rand(100); // No rates info
+	.@r = rand(100); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,5); return; }
 	else if (.@r < 20) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,5); return; }
 	else if (.@r < 30) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,5); return; }
@@ -1912,7 +1929,7 @@ function	script	F_Lapine_Imperial_Convert4	{
 }
 
 function	script	F_Lapine_Grace_Convert1	{
-	.@r = rand(100); // No rates info
+	.@r = rand(100); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,5); }
 	else if (.@r < 20) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,5); }
 	else if (.@r < 30) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,5); }
@@ -1923,7 +1940,7 @@ function	script	F_Lapine_Grace_Convert1	{
 	else if (.@r < 80) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(1,5); }
 	else if (.@r < 90) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(1,5); }
 	else if (.@r < 100) { set getarg(0), RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(1,5); }
-	.@r = rand(130); // No rates info
+	.@r = rand(130); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(2), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(3), rand(1,5); }
 	else if (.@r < 20) { set getarg(2), RDMOPT_RACE_DAMAGE_UNDEAD; set getarg(3), rand(1,5); }
 	else if (.@r < 30) { set getarg(2), RDMOPT_RACE_DAMAGE_ANIMAL; set getarg(3), rand(1,5); }
@@ -1941,7 +1958,7 @@ function	script	F_Lapine_Grace_Convert1	{
 }
 
 function	script	F_Lapine_Grace_Convert2	{
-	.@r = rand(100); // No rates info
+	.@r = rand(100); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET; set getarg(1), rand(1,5); }
 	else if (.@r < 20) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET; set getarg(1), rand(1,5); }
 	else if (.@r < 30) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET; set getarg(1), rand(1,5); }
@@ -1952,7 +1969,7 @@ function	script	F_Lapine_Grace_Convert2	{
 	else if (.@r < 80) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET; set getarg(1), rand(1,5); }
 	else if (.@r < 90) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET; set getarg(1), rand(1,5); }
 	else if (.@r < 100) { set getarg(0), RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET; set getarg(1), rand(1,5); }
-	.@r = rand(130); // No rates info
+	.@r = rand(130); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(2), RDMOPT_RACE_MDAMAGE_NOTHING; set getarg(3), rand(1,5); }
 	else if (.@r < 20) { set getarg(2), RDMOPT_RACE_MDAMAGE_UNDEAD; set getarg(3), rand(1,5); }
 	else if (.@r < 30) { set getarg(2), RDMOPT_RACE_MDAMAGE_ANIMAL; set getarg(3), rand(1,5); }
@@ -1970,16 +1987,16 @@ function	script	F_Lapine_Grace_Convert2	{
 }
 
 function	script	F_Lapine_Grace_Convert3	{
-	.@r = rand(80); // No rates info
+	.@r = rand(80); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(0), RDMOPT_ATTR_TOLERACE_WATER; set getarg(1), rand(1,5); }
 	else if (.@r < 20) { set getarg(0), RDMOPT_ATTR_TOLERACE_GROUND; set getarg(1), rand(1,5); }
 	else if (.@r < 30) { set getarg(0), RDMOPT_ATTR_TOLERACE_FIRE; set getarg(1), rand(1,5); }
 	else if (.@r < 40) { set getarg(0), RDMOPT_ATTR_TOLERACE_WIND; set getarg(1), rand(1,5); }
-	else if (.@r < 50) { set getarg(0), RDMOPT_ATTR_TOLERACE_ALL; set getarg(1), rand(1,5); }
+	else if (.@r < 50) { set getarg(0), RDMOPT_ATTR_TOLERACE_ALL; set getarg(1), rand(1,5); } // FIXME: To all element except neutral. Change to RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING after #3993
 	else if (.@r < 60) { set getarg(0), RDMOPT_DEC_SP_CONSUMPTION; set getarg(1), rand(1,5); }
 	else if (.@r < 70) { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,5); }
 	else if (.@r < 80) { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,5); }
-	.@r = rand(130); // No rates info
+	.@r = rand(130); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(2), RDMOPT_DAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(1,5); }
 	else if (.@r < 20) { set getarg(2), RDMOPT_DAMAGE_SIZE_LARGE_TARGET; set getarg(3), rand(1,5); }
 	else if (.@r < 30) { set getarg(2), RDMOPT_DAMAGE_SIZE_MIDIUM_USER; set getarg(3), rand(1,5); }
@@ -1997,16 +2014,16 @@ function	script	F_Lapine_Grace_Convert3	{
 }
 
 function	script	F_Lapine_Grace_Convert4	{
-	.@r = rand(80); // No rates info
+	.@r = rand(80); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(0), RDMOPT_ATTR_TOLERACE_WATER; set getarg(1), rand(1,5); }
 	else if (.@r < 20) { set getarg(0), RDMOPT_ATTR_TOLERACE_GROUND; set getarg(1), rand(1,5); }
 	else if (.@r < 30) { set getarg(0), RDMOPT_ATTR_TOLERACE_FIRE; set getarg(1), rand(1,5); }
 	else if (.@r < 40) { set getarg(0), RDMOPT_ATTR_TOLERACE_WIND; set getarg(1), rand(1,5); }
-	else if (.@r < 50) { set getarg(0), RDMOPT_ATTR_TOLERACE_ALL; set getarg(1), rand(1,5); }
+	else if (.@r < 50) { set getarg(0), RDMOPT_ATTR_TOLERACE_ALL; set getarg(1), rand(1,5); } // FIXME: To all element except neutral. Change to RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING after #3993
 	else if (.@r < 60) { set getarg(0), RDMOPT_DEC_SP_CONSUMPTION; set getarg(1), rand(1,5); }
 	else if (.@r < 70) { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,5); }
 	else if (.@r < 80) { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,5); }
-	.@r = rand(130); // No rates info
+	.@r = rand(130); //! TODO: Official Rates info
 		 if (.@r < 10) { set getarg(2), RDMOPT_MDAMAGE_SIZE_SMALL_TARGET; set getarg(3), rand(1,5); }
 	else if (.@r < 20) { set getarg(2), RDMOPT_MDAMAGE_SIZE_LARGE_TARGET; set getarg(3), rand(1,5); }
 	else if (.@r < 30) { set getarg(2), RDMOPT_MDAMAGE_SIZE_MIDIUM_USER; set getarg(3), rand(1,5); }
@@ -2025,7 +2042,7 @@ function	script	F_Lapine_Grace_Convert4	{
 
 function	script	F_Lapine_Shadow_Random_Mix	{
 	// Option:1
-	.@r = rand(200); // No rates info
+	.@r = rand(200); //! TODO: Official Rates info
 	if (.@r < 10)  { set getarg(0), RDMOPT_VAR_ATTPOWER; set getarg(1), rand(1,15); return; }
 	if (.@r < 20)  { set getarg(0), RDMOPT_VAR_ATTMPOWER; set getarg(1), rand(1,15); return; }
 	if (.@r < 30)  { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,3); return; }
@@ -2049,32 +2066,32 @@ function	script	F_Lapine_Shadow_Random_Mix	{
 	return;
 }
 
-// TODO
+//! TODO
 function	script	F_Lapine_Ein_Ddbox	{
 	return;
 }
 
-// TODO
+//! TODO
 function	script	F_Lapine_Ein_Ddbox2	{
 	return;
 }
 
-// TODO
+//! TODO
 function	script	F_Lapine_Abyss_Ddbox	{
 	return;
 }
 
-// TODO
+//! TODO
 function	script	F_Lapine_Abyss_Ddbox2	{
 	return;
 }
 
-// TODO
+//! TODO
 function	script	F_Lapine_Abyss_Ddbox3	{
 	return;
 }
 
-// TODO
+//! TODO
 function	script	F_Lapine_Abyss_Ddbox4	{
 	return;
 }

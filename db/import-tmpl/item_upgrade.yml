@@ -12,7 +12,9 @@
 #   NotSocketEnchantItem: # (bool) Target item must not has enchant stone (default: true)
 #   TargetItem:           # List of possible item to be upgraded
 #     - Item:             # (int) Target's Item ID
+#       Remove:           # (optional, any) Remove this item from the list while importing
 #   Result:               # (string) Script on upgrade success
+#   ClearTargetItem:      # (optional, any) Can be used to clear TargetItem list while importing
 ###########################################################################
 
 Header:

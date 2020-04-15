@@ -12,7 +12,9 @@
 #   SourceItem:         # List of item required
 #     - Item:           # (int) Item ID for source
 #       Amount:         # (int) Item amount will be consumed (Default: 1)
+#       Remove:         # (optional, any) Remove this item from the list while importing
 #   Reward:             # (string) Script on synthesis success
+#   ClearSourceItem:    # (optional, any) Can be used to clear SourceItem list while importing
 ###########################################################################
 
 Header:
@@ -77,7 +79,7 @@ Body:
   - Item: 24072
   - Item: 24073
   - Item: 24074
-  Reward: getitem(24426,1);
+  Reward: getgroupitem(IG_PERFECTSIZE_MIX);
 - Id: 100011 # MagicPiercing_Mix
   SourceNeeded: 2
   NeedRefineMin: 7
@@ -92,7 +94,7 @@ Body:
   - Item: 24177
   - Item: 24178
   - Item: 24179
-  Reward: getitem(24436,1);
+  Reward: getgroupitem(IG_MAGICPIERCING_MIX);
 - Id: 100000 # IDTest_Special
   SourceNeeded: 3
   SourceItem:

@@ -783,6 +783,8 @@ enum e_random_item_group {
 	IG_COSTUME_ENCHANT_STONE_BOX17,
 	IG_COSTUME_ENCHANT_STONE_BOX18,
 	IG_COSTUME_ENCHANT_STONE_BOX19,
+	IG_PERFECTSIZE_MIX,
+	IG_MAGICPIERCING_MIX,
 };
 
 /// Enum for bound/sell restricted selling

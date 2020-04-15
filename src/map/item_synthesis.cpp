@@ -58,12 +58,17 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 	}
 
+	if (exists && this->nodeExists(node, "ClearSourceItem")) {
+		ShowNotice("item_synthesis: Cleared all items in SourceItem. Synthesis ID: %d\n", id);
+		if (!entry->sources.empty())
+			entry->sources.clear();
+	}
+
 	if (this->nodeExists(node, "SourceItem")) {
 		const YAML::Node& sourceNode = node["SourceItem"];
 
-		if (!entry->sources.empty())
-			entry->sources.clear();
-		entry->sources.reserve(entry->source_needed);
+		if (!exists)
+			entry->sources.reserve(entry->source_needed);
 
 		for (const YAML::Node &source : sourceNode) {
 			s_item_synthesis_source source_item = {};
@@ -76,10 +81,28 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 				continue;
 			}*/
 
+			if (exists && this->nodeExists(source, "Remove")) {
+				entry->sources.erase(std::remove_if(entry->sources.begin(), entry->sources.end(), [&source_item](const s_item_synthesis_source &x) { return x.nameid == source_item.nameid; }));
+				ShowNotice("item_synthesis: Removed '%d' from SourceItem. Synthesis ID: %d\n", source_item.nameid, id);
+				continue;
+			}
+
 			if (this->nodeExists(source, "Amount"))
 				this->asUInt16(source, "Amount", source_item.amount);
 
-			entry->sources.push_back(source_item);
+			if (entry->sources.end() == std::find_if(
+				entry->sources.begin(), entry->sources.end(), [&source_item](s_item_synthesis_source &x)
+			{
+				if (x.nameid == source_item.nameid) {
+					printf("changed %d from %d", x.nameid, x.amount);
+					x.amount = source_item.amount;
+					printf(" to %d\n", x.amount);
+					return true;
+				}
+				return false;
+			}
+			))
+				entry->sources.push_back(source_item);
 		}
 	}
 

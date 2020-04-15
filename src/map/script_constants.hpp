@@ -5031,6 +5031,8 @@
 	export_constant(IG_COSTUME_ENCHANT_STONE_BOX17);
 	export_constant(IG_COSTUME_ENCHANT_STONE_BOX18);
 	export_constant(IG_COSTUME_ENCHANT_STONE_BOX19);
+	export_constant(IG_PERFECTSIZE_MIX);
+	export_constant(IG_MAGICPIERCING_MIX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
