@@ -552,6 +552,11 @@ L_end:
 L_identify:
 	next;
 	.@numItems = identifyall(false);
+	if (.@numItems == 0) {
+		mes "[Warpra]";
+		mes "You don't have any items that need identifying.";
+		close;
+	}
 	@identifyprice = .@numItems * $QW_ID_PRICE;
 	mes "[Warpra]";
 	mes "I can identify all unidentified items in your inventory for you.";
@@ -561,6 +566,9 @@ L_identify:
 	if (Zeny < @identifyprice) callsub L_Short_on_zeny, 5;
 	identifyall(true);
 	Zeny -= @identifyprice;
+	next;
+	mes "[Warpra]";
+	mes "I've identified "+.@numItems+" items for you.";
 	close;
 	end;
 
