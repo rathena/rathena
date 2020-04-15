@@ -77,7 +77,7 @@ function	script	Q_Warpra	{
 	if(getarg(0) == 0) callfunc "QWS_MMarray",0;
 	if(getarg(0) == 1) callfunc "QWS_MMarray",1;
 	
-	set @MMenu,select(@Mmenulist$[0],@Mmenulist$[1],@Mmenulist$[2],@Mmenulist$[3],@Mmenulist$[4],@Mmenulist$[5],@Mmenulist$[6],@Mmenulist$[7],@Mmenulist$[8],@Mmenulist$[9],@Mmenulist$[10],@Mmenulist$[11],@Mmenulist$[12]);
+	set @MMenu,select(@Mmenulist$[0],@Mmenulist$[1],@Mmenulist$[2],@Mmenulist$[3],@Mmenulist$[4],@Mmenulist$[5],@Mmenulist$[6],@Mmenulist$[7],@Mmenulist$[8],@Mmenulist$[9],@Mmenulist$[10],@Mmenulist$[11],@Mmenulist$[12],@Mmenulist$[13]);
 
 	switch(@Mmenuref[@MMenu-1]+1){
 	case 1: goto GM_Menu;
@@ -119,8 +119,9 @@ GM_Menu:
 	mes "Storage = "+(($QW_Stor)?"^00FF00 On":"^FF0000 Off")+"^000000";
 	mes "Guild Storage = "+(($QW_GStor)?"^00FF00 On":"^FF0000 Off")+"^000000";
 	mes "Kafra points collect = "+(($QW_KPoint)?"^00FF00 On":"^FF0000 Off")+"^000000";
+	mes "Identify All = "+(($QW_Identify)?"^00FF00 On":"^FF0000 Off")+"^000000";
 
-	switch(select("Town Warping","Dungeon Warping","Instance Warping","Dungeon Level Limit","Show Map Users","Healing full","Healing partly","Storage","Guild Storage","Kafra points collect","Set Prices","Special Warp","Exit")) {
+	switch(select("Town Warping","Dungeon Warping","Instance Warping","Dungeon Level Limit","Show Map Users","Healing full","Healing partly","Storage","Guild Storage","Kafra points collect","Identify All","Set Prices","Special Warp","Exit")) {
 	case 1: set $QW_TW_OFF,($QW_TW_OFF)?0:1; goto GM_Menu;
 	case 2: set $QW_DW_OFF,($QW_DW_OFF)?0:1; goto GM_Menu;
 	case 3: set $QW_IW_OFF,($QW_IW_OFF)?0:1; goto GM_Menu;
@@ -143,8 +144,9 @@ GM_Menu:
 	case 8: set $QW_Stor,($QW_Stor)?0:1; goto GM_Menu;
 	case 9: set $QW_GStor,($QW_GStor)?0:1; goto GM_Menu;
 	case 10: set $QW_KPoint,($QW_KPoint)?0:1; goto GM_Menu;
-	case 11: goto Setprice;
-	case 12: goto SpecialWarpMenu;
+	case 11: set $QW_Identify,($QW_Identify)?0:1; goto GM_Menu;
+	case 12: goto Setprice;
+	case 13: goto SpecialWarpMenu;
 	default:
 		close;
 		end;
@@ -666,7 +668,6 @@ function	script	QWS_InstanceStamps	{
 
 function	script	QWS_MMarray	{
 
-	// Currently 9 items
 	setarray @pMmenuitems$[0], "GameMaster Menu", $QW_SP_Warpname$, "Warp to Towns", "Warp to Dungeons", "Warp to Instances", "Why so few warps?", "Why don't you unlock this location?", "Heal", "Heal", "Storage", "Guild Storage", "Identify All", "Cancel";
 	set @Mi,0; // loop counter
 	set @Mj,0; // menu line counter
@@ -743,6 +744,13 @@ function	script	QWS_MMarray	{
 	set @Mi,@Mi+1;
 //----------------GuildStorage
 	if ($QW_GStor == 1) {
+		set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
+		set @Mmenuref[@Mj],@Mi;
+		set @Mj,@Mj+1;
+	}
+	set @Mi,@Mi+1;
+//----------------IdentifyAll
+	if ($QW_Identify == 1) {
 		set @Mmenulist$[@Mj],@pMmenuitems$[@Mi];
 		set @Mmenuref[@Mj],@Mi;
 		set @Mj,@Mj+1;
