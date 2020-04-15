@@ -186,4 +186,4 @@ return;
 
 }
 
-prontera,105,70,6	pointshop	Hourly Rewards Shop	667,#HourlyRewardPoints:no,40000:300,6240:200,6241:200,17314:105,17229:30,6417:30,12710:20,14536:15,7621:60,12209:3
+prontera,102,81,6	pointshop	Hourly Rewards Shop	667,#HourlyRewardPoints:no,40000:300,6240:200,6241:200,17314:105,17229:30,6417:30,12710:20,14536:15,7621:60,12209:3
