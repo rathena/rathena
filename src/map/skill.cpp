@@ -2948,7 +2948,6 @@ int skill_is_combo(uint16 skill_id) {
 		case TK_COUNTER:
 		case TK_JUMPKICK:
 		case HT_POWER:
-		case GC_WEAPONCRUSH:
 		case SR_DRAGONCOMBO:
 			return 1;
 		case SR_FALLENEMPIRE:
@@ -4845,6 +4844,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NC_POWERSWING:
 	case NC_MAGMA_ERUPTION:
 	case GC_CROSSIMPACT:
+	case GC_WEAPONCRUSH:
 	case GC_VENOMPRESSURE:
 	case SC_TRIANGLESHOT:
 	case SC_FEINTBOMB:
@@ -5687,13 +5687,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			}
 
 		}
-		break;
-
-	case GC_WEAPONCRUSH:
-		if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == GC_WEAPONBLOCKING )
-			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		else if( sd )
-			clif_skill_fail(sd,skill_id,USESKILL_FAIL_GC_WEAPONBLOCKING,0);
 		break;
 
 	case GC_CROSSRIPPERSLASHER:
@@ -15485,6 +15478,7 @@ static bool skill_check_condition_sc_required(struct map_session_data *sd, unsig
 				}
 				break;
 			case GC_COUNTERSLASH:
+			case GC_WEAPONCRUSH:
 				if (!sc->data[SC_WEAPONBLOCK_ON]) {
 					clif_skill_fail(sd, skill_id, USESKILL_FAIL_GC_WEAPONBLOCKING, 0);
 					return false;
@@ -16046,12 +16040,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		case GC_HALLUCINATIONWALK:
 			if( sc && (sc->data[SC_HALLUCINATIONWALK] || sc->data[SC_HALLUCINATIONWALK_POSTDELAY]) ) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				return false;
-			}
-			break;
-		case GC_WEAPONCRUSH:
-			if( !(sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == GC_WEAPONBLOCKING) ) {
-				clif_skill_fail(sd, skill_id, USESKILL_FAIL_GC_WEAPONBLOCKING, 0);
 				return false;
 			}
 			break;
