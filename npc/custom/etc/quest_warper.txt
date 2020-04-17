@@ -1124,7 +1124,7 @@ function	script	QWS_Tarray	{
 	QWS_Make_Town_Menu 36;
 
 //----------------Juno:
-	setarray @pTmenuitems$[@Ti], "Juno";
+	setarray @pTmenuitems$[@Ti], "Yuno";
 	setarray @pTprice[@Ti], $QW_AW_PRICE;
 
 	setarray @pTmap$[@Ti], "yuno";
@@ -1254,6 +1254,20 @@ function	script	QWS_Darray	{
 
 	QWS_Make_Dungeon_Menu 3;
 
+//----------------BIFROST TOWER
+	setarray @pDmenuitems$[@Di], "Bifrost Tower";
+	setarray @pDprice[@Di], $QW_OW_PRICE;
+	setarray @pDfee$[@Di], "$QW_OW_FEE";
+	setarray @DLevels[@Di], 4;
+
+	setarray @DGat$[@Dref], "ecl_tdun01", "ecl_tdun02", "ecl_tdun03", "ecl_tdun04";
+	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3", "Level 4";
+	setarray @DXcoords[@Dref], 56, 64, 45, 31;
+	setarray @DYcoords[@Dref], 13, 89, 12, 25;
+	setarray @DDepth[@Dref], 0, 1, 2, 2;
+
+	QWS_Make_Dungeon_Menu 30;
+
 //----------------BYALAN
 	setarray @pDmenuitems$[@Di], "Byalan Dungeon";
 	setarray @pDprice[@Di], $QW_BW_PRICE;
@@ -1366,20 +1380,6 @@ function	script	QWS_Darray	{
 
 	QWS_Make_Dungeon_Menu 11;
 
-//----------------KUNLUN DUNGEON
-	setarray @pDmenuitems$[@Di], "Kunlun Dungeon";
-	setarray @pDprice[@Di], $QW_OW_PRICE;
-	setarray @pDfee$[@Di], "$QW_OW_FEE";
-	setarray @DLevels[@Di], 3;
-
-	setarray @DGat$[@Dref], "gon_dun01", "gon_dun02", "gon_dun03";
-	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3";
-	setarray @DXcoords[@Dref], 143, 17, 68;
-	setarray @DYcoords[@Dref], 59, 114, 9;
-	setarray @DDepth[@Dref], 0, 1, 2;
-
-	QWS_Make_Dungeon_Menu 12;
-
 //----------------HIDDEN DUNGEON
 	setarray @pDmenuitems$[@Di], "Hidden Dungeon";
 	setarray @pDprice[@Di], $QW_BW_PRICE;
@@ -1393,6 +1393,20 @@ function	script	QWS_Darray	{
 	setarray @DDepth[@Dref], 0, 1, 2;
 
 	QWS_Make_Dungeon_Menu 13;
+
+//----------------ICE DUNGEON
+	setarray @pDmenuitems$[@Di], "Ice Dungeon";
+	setarray @pDprice[@Di], $QW_OW_PRICE;
+	setarray @pDfee$[@Di], "$QW_OW_FEE";
+	setarray @DLevels[@Di], 3;
+
+	setarray @DGat$[@Dref], "ice_dun01", "ice_dun02", "ice_dun03";
+	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3";
+	setarray @DXcoords[@Dref], 157, 151, 149;
+	setarray @DYcoords[@Dref], 15, 139, 24;
+	setarray @DDepth[@Dref], 0, 1, 2;
+
+	QWS_Make_Dungeon_Menu 29;
 
 //----------------JUPEROS CAVE
 	setarray @pDmenuitems$[@Di], "Juperos Cave";
@@ -1421,6 +1435,34 @@ function	script	QWS_Darray	{
 	setarray @DDepth[@Dref], 0, 1;
 
 	QWS_Make_Dungeon_Menu 28;
+
+//----------------KUNLUN DUNGEON
+	setarray @pDmenuitems$[@Di], "Kunlun Dungeon";
+	setarray @pDprice[@Di], $QW_OW_PRICE;
+	setarray @pDfee$[@Di], "$QW_OW_FEE";
+	setarray @DLevels[@Di], 3;
+
+	setarray @DGat$[@Dref], "gon_dun01", "gon_dun02", "gon_dun03";
+	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3";
+	setarray @DXcoords[@Dref], 143, 17, 68;
+	setarray @DYcoords[@Dref], 59, 114, 9;
+	setarray @DDepth[@Dref], 0, 1, 2;
+
+	QWS_Make_Dungeon_Menu 12;
+
+//----------------LASAGNA DUNGEON
+	setarray @pDmenuitems$[@Di], "Lasagna Dungeon";
+	setarray @pDprice[@Di], $QW_OW_PRICE;
+	setarray @pDfee$[@Di], "$QW_OW_FEE";
+	setarray @DLevels[@Di], 3;
+
+	setarray @DGat$[@Dref], "lasa_dun01", "lasa_dun02", "lasa_dun03";
+	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3";
+	setarray @DXcoords[@Dref], 24, 22, 190;
+	setarray @DYcoords[@Dref], 143, 171, 18;
+	setarray @DDepth[@Dref], 0, 1, 2;
+
+	QWS_Make_Dungeon_Menu 31;
 
 //----------------LIGHTHALZEN BIO LAB
 	setarray @pDmenuitems$[@Di], "Lighthalzen Bio Lab";
@@ -1463,6 +1505,34 @@ function	script	QWS_Darray	{
 	setarray @DDepth[@Dref], 0, 1;
 
 	QWS_Make_Dungeon_Menu 17;
+
+//----------------MOSCOVIA DUNGEON
+	setarray @pDmenuitems$[@Di], "Moscovia Dungeon";
+	setarray @pDprice[@Di], $QW_OW_PRICE;
+	setarray @pDfee$[@Di], "$QW_OW_FEE";
+	setarray @DLevels[@Di], 3;
+
+	setarray @DGat$[@Dref], "mosk_dun01", "mosk_dun02", "mosk_dun03";
+	setarray @DLevelName$[@Dref], "Level 1 - Les", "Level 2 - Temny", "Level 3 - Dremuci";
+	setarray @DXcoords[@Dref], 189, 165, 32;
+	setarray @DYcoords[@Dref], 45, 30, 135;
+	setarray @DDepth[@Dref], 0, 1, 2;
+
+	QWS_Make_Dungeon_Menu 32;
+
+//----------------NAMELESS ISLAND
+	setarray @pDmenuitems$[@Di], "Nameless Island";
+	setarray @pDprice[@Di], $QW_OW_PRICE;
+	setarray @pDfee$[@Di], "$QW_OW_FEE";
+	setarray @DLevels[@Di], 4;
+
+	setarray @DGat$[@Dref], "nameless_n", "abbey01", "abbey02", "abbey03";
+	setarray @DLevelName$[@Dref], "Island", "Abbey 1", "Abbey 2", "Abbey 3";
+	setarray @DXcoords[@Dref], 257, 51, 149, 119;
+	setarray @DYcoords[@Dref], 216, 12, 11, 8;
+	setarray @DDepth[@Dref], 0, 1, 2, 3;
+
+	QWS_Make_Dungeon_Menu 33;
 
 //----------------ODIN TEMPLE
 	setarray @pDmenuitems$[@Di], "Odin Temple";
@@ -1520,6 +1590,34 @@ function	script	QWS_Darray	{
 
 	QWS_Make_Dungeon_Menu 21;
 
+//----------------RACHEL SANCTUARY
+	setarray @pDmenuitems$[@Di], "Rachel Sanctuary";
+	setarray @pDprice[@Di], $QW_OW_PRICE;
+	setarray @pDfee$[@Di], "$QW_OW_FEE";
+	setarray @DLevels[@Di], 5;
+
+	setarray @DGat$[@Dref], "ra_san01", "ra_san02", "ra_san03", "ra_san04", "ra_san05";
+	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3", "Level 4", "Level 5";
+	setarray @DXcoords[@Dref], 139, 213, 10, 119, 150;
+	setarray @DYcoords[@Dref], 135, 9, 149, 110, 11;
+	setarray @DDepth[@Dref], 0, 1, 2, 3, 4;
+
+	QWS_Make_Dungeon_Menu 34;
+
+//----------------SCARABA HOLE DUNGEON
+	setarray @pDmenuitems$[@Di], "Scaraba Hole Dungeon";
+	setarray @pDprice[@Di], $QW_OW_PRICE;
+	setarray @pDfee$[@Di], "$QW_OW_FEE";
+	setarray @DLevels[@Di], 2;
+
+	setarray @DGat$[@Dref], "dic_dun01", "dic_dun02";
+	setarray @DLevelName$[@Dref], "Level 1", "Level 2";
+	setarray @DXcoords[@Dref], 366, 102;
+	setarray @DYcoords[@Dref], 45, 144;
+	setarray @DDepth[@Dref], 0, 1;
+
+	QWS_Make_Dungeon_Menu 35;
+
 //----------------SPHINX
 	setarray @pDmenuitems$[@Di], "Sphinx Dungeon";
 	setarray @pDprice[@Di], $QW_BW_PRICE;
@@ -1562,6 +1660,20 @@ function	script	QWS_Darray	{
 
 	QWS_Make_Dungeon_Menu 24;
 
+//----------------THOR VOLCANO
+	setarray @pDmenuitems$[@Di], "Thor Volcano";
+	setarray @pDprice[@Di], $QW_OW_PRICE;
+	setarray @pDfee$[@Di], "$QW_OW_FEE";
+	setarray @DLevels[@Di], 3;
+
+	setarray @DGat$[@Dref], "thor_v01", "thor_v02", "thor_v03";
+	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3";
+	setarray @DXcoords[@Dref], 21, 78, 35;
+	setarray @DYcoords[@Dref], 229, 203, 262;
+	setarray @DDepth[@Dref], 0, 1, 2;
+
+	QWS_Make_Dungeon_Menu 36;
+
 //----------------TOY FACTORY
 	setarray @pDmenuitems$[@Di], "Toy Factory Dungeon";
 	setarray @pDprice[@Di], $QW_AW_PRICE;
@@ -1603,118 +1715,6 @@ function	script	QWS_Darray	{
 	setarray @DDepth[@Dref], 0, 1, 2;
 
 	QWS_Make_Dungeon_Menu 27;
-
-//----------------ICE DUNGEON
-	setarray @pDmenuitems$[@Di], "Ice Dungeon";
-	setarray @pDprice[@Di], $QW_OW_PRICE;
-	setarray @pDfee$[@Di], "$QW_OW_FEE";
-	setarray @DLevels[@Di], 3;
-
-	setarray @DGat$[@Dref], "ice_dun01", "ice_dun02", "ice_dun03";
-	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3";
-	setarray @DXcoords[@Dref], 157, 151, 149;
-	setarray @DYcoords[@Dref], 15, 139, 24;
-	setarray @DDepth[@Dref], 0, 1, 2;
-
-	QWS_Make_Dungeon_Menu 29;
-
-//----------------BIFROST TOWER
-	setarray @pDmenuitems$[@Di], "Bifrost Tower";
-	setarray @pDprice[@Di], $QW_OW_PRICE;
-	setarray @pDfee$[@Di], "$QW_OW_FEE";
-	setarray @DLevels[@Di], 4;
-
-	setarray @DGat$[@Dref], "ecl_tdun01", "ecl_tdun02", "ecl_tdun03", "ecl_tdun04";
-	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3", "Level 4";
-	setarray @DXcoords[@Dref], 56, 64, 45, 31;
-	setarray @DYcoords[@Dref], 13, 89, 12, 25;
-	setarray @DDepth[@Dref], 0, 1, 2, 2;
-
-	QWS_Make_Dungeon_Menu 30;
-
-//----------------LASAGNA DUNGEON
-	setarray @pDmenuitems$[@Di], "Lasagna Dungeon";
-	setarray @pDprice[@Di], $QW_OW_PRICE;
-	setarray @pDfee$[@Di], "$QW_OW_FEE";
-	setarray @DLevels[@Di], 3;
-
-	setarray @DGat$[@Dref], "lasa_dun01", "lasa_dun02", "lasa_dun03";
-	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3";
-	setarray @DXcoords[@Dref], 24, 22, 190;
-	setarray @DYcoords[@Dref], 143, 171, 18;
-	setarray @DDepth[@Dref], 0, 1, 2;
-
-	QWS_Make_Dungeon_Menu 31;
-
-//----------------MOSCOVIA DUNGEON
-	setarray @pDmenuitems$[@Di], "Moscovia Dungeon";
-	setarray @pDprice[@Di], $QW_OW_PRICE;
-	setarray @pDfee$[@Di], "$QW_OW_FEE";
-	setarray @DLevels[@Di], 3;
-
-	setarray @DGat$[@Dref], "mosk_dun01", "mosk_dun02", "mosk_dun03";
-	setarray @DLevelName$[@Dref], "Level 1 - Les", "Level 2 - Temny", "Level 3 - Dremuci";
-	setarray @DXcoords[@Dref], 189, 165, 32;
-	setarray @DYcoords[@Dref], 45, 30, 135;
-	setarray @DDepth[@Dref], 0, 1, 2;
-
-	QWS_Make_Dungeon_Menu 32;
-
-//----------------NAMELESS ISLAND
-	setarray @pDmenuitems$[@Di], "Nameless Island";
-	setarray @pDprice[@Di], $QW_OW_PRICE;
-	setarray @pDfee$[@Di], "$QW_OW_FEE";
-	setarray @DLevels[@Di], 4;
-
-	setarray @DGat$[@Dref], "nameless_n", "abbey01", "abbey02", "abbey03";
-	setarray @DLevelName$[@Dref], "Island", "Abbey 1", "Abbey 2", "Abbey 3";
-	setarray @DXcoords[@Dref], 257, 51, 149, 119;
-	setarray @DYcoords[@Dref], 216, 12, 11, 8;
-	setarray @DDepth[@Dref], 0, 1, 2, 3;
-
-	QWS_Make_Dungeon_Menu 33;
-
-//----------------RACHEL SANCTUARY
-	setarray @pDmenuitems$[@Di], "Rachel Sanctuary";
-	setarray @pDprice[@Di], $QW_OW_PRICE;
-	setarray @pDfee$[@Di], "$QW_OW_FEE";
-	setarray @DLevels[@Di], 5;
-
-	setarray @DGat$[@Dref], "ra_san01", "ra_san02", "ra_san03", "ra_san04", "ra_san05";
-	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3", "Level 4", "Level 5";
-	setarray @DXcoords[@Dref], 139, 213, 10, 119, 150;
-	setarray @DYcoords[@Dref], 135, 9, 149, 110, 11;
-	setarray @DDepth[@Dref], 0, 1, 2, 3, 4;
-
-	QWS_Make_Dungeon_Menu 34;
-
-//----------------SCARABA HOLE DUNGEON
-	setarray @pDmenuitems$[@Di], "Scaraba Hole Dungeon";
-	setarray @pDprice[@Di], $QW_OW_PRICE;
-	setarray @pDfee$[@Di], "$QW_OW_FEE";
-	setarray @DLevels[@Di], 2;
-
-	setarray @DGat$[@Dref], "dic_dun01", "dic_dun02";
-	setarray @DLevelName$[@Dref], "Level 1", "Level 2";
-	setarray @DXcoords[@Dref], 366, 102;
-	setarray @DYcoords[@Dref], 45, 144;
-	setarray @DDepth[@Dref], 0, 1;
-
-	QWS_Make_Dungeon_Menu 35;
-
-//----------------THOR VOLCANO
-	setarray @pDmenuitems$[@Di], "Thor Volcano";
-	setarray @pDprice[@Di], $QW_OW_PRICE;
-	setarray @pDfee$[@Di], "$QW_OW_FEE";
-	setarray @DLevels[@Di], 3;
-
-	setarray @DGat$[@Dref], "thor_v01", "thor_v02", "thor_v03";
-	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3";
-	setarray @DXcoords[@Dref], 21, 78, 35;
-	setarray @DYcoords[@Dref], 229, 203, 262;
-	setarray @DDepth[@Dref], 0, 1, 2;
-
-	QWS_Make_Dungeon_Menu 36;
 
 //----------------Cancel
 	setarray @pDmenuitems$[@Di], "Cancel";
