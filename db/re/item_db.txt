@@ -12761,7 +12761,7 @@
 31006,LoVA_Hades_Card,LoVA Hades Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bSubRace,RC_Undead,10; },{},{}
 31007,LoVA_Realization_Hades_Card,LoVA Realization Hades Card,6,20,,10,,,,,,,,16,,,,,{ bonus bDefEle,Ele_Undead; bonus2 bSubRace,RC_Undead,10; },{},{}
 31008,LoVA_Lulu_Card,LoVA Lulu Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bHPRegenRate,BaseLevel,10000; if(getrefine()>=7) { bonus bAtk,6*(readparam(bStr)/60); bonus bMaxHPrate,readparam(bStr)/60; } },{},{}
-31009,LoVA_Realization_Lulu_Card,LoVA Realization Lulu Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bHPRegenRate,1+BaseLevel,10000; if(getrefine()>=7) { bonus bAtk,6*(readparam(bStr)/20); bonus bMaxHPrate,readparam(bStr)/20; } },{},{}
+31009,LoVA_Realization_Lulu_Card,LoVA Realization Lulu Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bHPRegenRate,BaseLevel,10000; if(getrefine()>=7) { bonus bAtk,6*(readparam(bStr)/20); bonus bMaxHPrate,readparam(bStr)/20; } },{},{}
 31010,LoVA_Kima_Card,LoVA Kima Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bSPRegenRate,BaseLevel/6,10000; if(getrefine()>=7) { bonus bMatk,6*(readparam(bInt)/30); bonus bMaxSPrate,readparam(bInt)/30; } },{},{}
 31011,LoVA_Realization_Kima_Card,LoVA Realization Kima Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bSPRegenRate,BaseLevel/2,10000; if(getrefine()>=7) { bonus bMatk,6*(readparam(bInt)/10); bonus bMaxSPrate,readparam(bInt)/10; } },{},{}
 31012,LoVA_Bahamut_Card,LoVA Bahamut Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,"RK_DRAGONBREATH",5; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",5; if(getrefine()>=7) { bonus bDelayrate,-1; } },{},{}
