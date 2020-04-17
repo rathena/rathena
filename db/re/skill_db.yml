@@ -21257,19 +21257,31 @@ Body:
         Time: 1600
       - Level: 3
         Time: 1800
+      - Level: 4
+        Time: 2000
+      - Level: 5
+        Time: 2200
     AfterCastActDelay:
       - Level: 1
-        Time: 500
+        Time: 1000
       - Level: 2
         Time: 1000
       - Level: 3
-        Time: 2000
+        Time: 1000
+      - Level: 4
+        Time: 1000
+      - Level: 5
+        Time: 1000
     FixedCastTime:
       - Level: 1
         Time: 600
       - Level: 2
         Time: 400
       - Level: 3
+        Time: 400
+      - Level: 4
+        Time: 200
+      - Level: 5
         Time: 200
     Requires:
       SpCost:
