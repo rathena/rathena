@@ -3791,9 +3791,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 					}
 				}
 				break;
-			case SR_TIGERCANNON:
-				status_zap(bl, 0, damage * 10 / 100);
-				break;
 		}
 		if( sd )
 			skill_onskillusage(sd, bl, skill_id, tick);
@@ -7718,21 +7715,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SJ_STARSTANCE:
 	case SJ_UNIVERSESTANCE:
 	case SJ_SUNSTANCE:
+	case SP_SOULCOLLECT:
 		if( tsce )
 		{
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,status_change_end(bl, type, INVALID_TIMER));
 			map_freeblock_unlock();
 			return 0;
 		}
-		clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		break;
-	case SP_SOULCOLLECT:
-		if (tsce) {
-			clif_skill_nodamage(src, bl, skill_id, skill_lv, status_change_end(bl, type, INVALID_TIMER));
-			map_freeblock_unlock();
-			return 0;
+
+		if( skill_id == SP_SOULCOLLECT ){
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, pc_checkskill(sd, SP_SOULENERGY), max(1000, skill_get_time(skill_id, skill_lv))));
+		}else{
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		}
-		clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, pc_checkskill(sd,SP_SOULENERGY), max(1000, skill_get_time(skill_id, skill_lv))));
 		break;
 	case SL_KAITE:
 	case SL_KAAHI:

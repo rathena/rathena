@@ -10562,7 +10562,8 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 		sd->state.autobonus &= ~sd->inventory.u.items_inventory[n].equip; //Check for activated autobonus [Inkfish]
 
 	sd->inventory.u.items_inventory[n].equip = 0;
-	pc_checkallowskill(sd);
+	if (!(flag & 4))
+		pc_checkallowskill(sd);
 	iflag = sd->npc_item_flag;
 
 	/* check for combos (MUST be before status_calc_pc) */
