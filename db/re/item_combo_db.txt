@@ -1192,7 +1192,7 @@
 27116:27117,{ bonus bCritical,2; bonus bCritAtkRate,2; }
 27147:27148,{ bonus bDelayrate,-3; }
 27163:27165,{ bonus bDelayrate,-3; bonus bVit,2; bonus bInt,2; bonus bAgi,2; bonus bDex,2; }
-27166:27167,{ bonus2 bSubEle,Ele_Neutral,5; bonus2 bMagicAddSize,Size_All,10; }
+27166:27167,{ bonus2 bSubEle,Ele_Neutral,5; bonus2 bMagicAddEle,Ele_Fire,10; }
 27170:27171,{ bonus bStr,3; bonus2 bAddClass,Class_All,3; }
 27170:27172,{ bonus2 bAddSize,Size_Small,15; bonus2 bMagicAddSize,Size_Small,15; }
 27170:27173,{ bonus2 bSkillAtk,"GS_SPREADATTACK",50; }
