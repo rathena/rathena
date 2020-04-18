@@ -28258,11 +28258,9 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      IgnoreElement: true
-      IgnoreDefCard: true
     Hit: Single
     HitCount: 1
+    Element: Weapon
     CopyFlags:
       Skill:
         Reproduce: true
@@ -34260,7 +34258,6 @@ Body:
         Time: 3500
     Duration1: 500
     Duration2: 120000
-    FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
