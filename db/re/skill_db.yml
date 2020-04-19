@@ -31871,10 +31871,8 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-      Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea: 3
     Duration1: 900000
     FixedCastTime: -1
     Requires:

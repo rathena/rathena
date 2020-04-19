@@ -1324,7 +1324,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 							skill_get_time2(ASC_EDP,sce->val1));
 
 					if ((sce = sc->data[SC_LUXANIMA]) && rnd() % 100 < sce->val2)
-						skill_castend_damage_id(src, bl, RK_STORMBLAST, 1, tick, 0);
+						skill_castend_nodamage_id(src, bl, RK_STORMBLAST, 1, tick, 0);
 				}
 			}
 			break;
