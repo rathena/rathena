@@ -6067,7 +6067,13 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				ad.damage = sstatus->rhw.atk * 20 * skill_lv;
 				break;
 			default: {
-				if (sstatus->matk_max > sstatus->matk_min) {
+                if (skill_id == NPC_EARTHQUAKE) { // should be 'is magic atk based on user physical atk?'
+                    if (sstatus->rhw.atk2 > sstatus->rhw.atk) {
+                        MATK_ADD(sstatus->rhw.atk + rnd() % (sstatus->rhw.atk2 - sstatus->rhw.atk))
+                    } else {
+                        MATK_ADD(sstatus->rhw.atk)
+                    }
+                } else if (sstatus->matk_max > sstatus->matk_min) {
 					MATK_ADD(sstatus->matk_min+rnd()%(sstatus->matk_max-sstatus->matk_min));
 				} else {
 					MATK_ADD(sstatus->matk_min);
