@@ -73,10 +73,10 @@ function	script	Q_Warpra	{
 	mes "Hello,";
 	mes "I can warp you to any town, dungeon or instance, but you need to unlock them first by visiting us.";
 	mes "What do you need?";
-	
+
 	if(getarg(0) == 0) callfunc "QWS_MMarray",0;
 	if(getarg(0) == 1) callfunc "QWS_MMarray",1;
-	
+
 	set @MMenu,select(@Mmenulist$[0],@Mmenulist$[1],@Mmenulist$[2],@Mmenulist$[3],@Mmenulist$[4],@Mmenulist$[5],@Mmenulist$[6],@Mmenulist$[7],@Mmenulist$[8],@Mmenulist$[9],@Mmenulist$[10],@Mmenulist$[11],@Mmenulist$[12],@Mmenulist$[13]);
 
 	switch(@Mmenuref[@MMenu-1]+1){
@@ -178,7 +178,7 @@ Setprice:
 	if ($QW_S_PRICE == 60) mes "Storage = ^0000FF Kafra Mode ^000000";
 	mes "Guild Storage = "+(($QW_GS_PRICE)?"^00FF00"+$QW_GS_PRICE:"^FF0000Free")+"^000000";
 	mes "Identify All = "+(($QW_ID_PRICE)?"^00FF00"+$QW_ID_PRICE:"^FF0000Free")+"^000000 zeny per item";
-	
+
 	switch(select("Basic - Warps","Advanced - Warps","Overseas - Warps","Basic Dungeon warp fee","Advanced Dungeon warp fee","Overseas Dungeon warp fee","Instance warp fee","Full Healing","Part Healing","Storage","Guild Storage","Identify All","Back","Exit")) {
 	case 1:
 		next;
@@ -432,7 +432,7 @@ L_heal_Part:
 	if (@healchoice == 2) callsub PHeal,1,0;
 	if (@healchoice == 3) callsub PHeal,0,1;
 	goto L_end;
-	
+
 PHeal:
 	next;
 	set @Hp, MaxHp-Hp;
@@ -445,7 +445,7 @@ PHeal:
 	set @total, @HpPrice+@SpPrice;
 	mes "for a total of "+@total+" zeny";
     	if (select("Heal me","Let me see the choices again")==2) goto L_heal_Part;
-    	
+
     	if(getarg(0) == 1)set @HpPrice, (MaxHp-Hp)*$QW_HP_H_PRICE;
 	if(getarg(1) == 1)set @SpPrice, (MaxSp-Sp)*$QW_HP_S_PRICE;
 	set @healfee, @HpPrice+@SpPrice;
@@ -543,7 +543,7 @@ L_GStorage:
 	close2;
 	guildopenstorage;
 	end;
-	
+
 L_end:
 	close;
 	end;
@@ -591,7 +591,7 @@ L_NoUnlock:
 	mes "I don't unlock this location, my assistant deeper in the dungeon will unlock this place.";
 	close;
 	end;
-	
+
 //=========================Short=On=Zeny===========================
 L_Short_on_zeny:
 	next;
@@ -605,7 +605,7 @@ L_Short_on_zeny:
 	}
 	close;
 	end;
-	
+
 //===========================Stamp=Card============================
 stampcard:
 // Counting of the amount of places you have unlocked
@@ -1227,10 +1227,10 @@ function	script	QWS_Darray	{
 	QWS_Make_Dungeon_Menu 1;
 
 //----------------ANT HELL
-	setarray @pDmenuitems$[@Di], "Ant Hell Dungeon"; 
+	setarray @pDmenuitems$[@Di], "Ant Hell Dungeon";
 	setarray @pDprice[@Di], $QW_BW_PRICE;
 	setarray @pDfee$[@Di], "$QW_BW_FEE";
-	setarray @DLevels[2], 2;
+	setarray @DLevels[@Di], 2;
 
 	setarray @DGat$[@Dref], "anthell01", "anthell02";
 	setarray @DLevelName$[@Dref], "Level 1", "Level 2";
@@ -1244,7 +1244,7 @@ function	script	QWS_Darray	{
 	setarray @pDmenuitems$[@Di], "Ayothaya Dungeon";
 	setarray @pDprice[@Di], $QW_OW_PRICE;
 	setarray @pDfee$[@Di], "$QW_OW_FEE";
-	setarray @DLevels[3], 2;
+	setarray @DLevels[@Di], 2;
 
 	setarray @DGat$[@Dref], "ayo_dun01", "ayo_dun02";
 	setarray @DLevelName$[@Dref], "Level 1", "Level 2";
@@ -1272,7 +1272,7 @@ function	script	QWS_Darray	{
 	setarray @pDmenuitems$[@Di], "Byalan Dungeon";
 	setarray @pDprice[@Di], $QW_BW_PRICE;
 	setarray @pDfee$[@Di], "$QW_BW_FEE";
-	setarray @DLevels[4], 5;
+	setarray @DLevels[@Di], 5;
 
 	setarray @DGat$[@Dref], "iz_dun00", "iz_dun01", "iz_dun02", "iz_dun03", "iz_dun04";
 	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3", "Level 4", "Level 5";
@@ -1286,7 +1286,7 @@ function	script	QWS_Darray	{
 	setarray @pDmenuitems$[@Di], "Clock Tower Dungeon";
 	setarray @pDprice[@Di], $QW_AW_PRICE;
 	setarray @pDfee$[@Di], "$QW_AW_FEE";
-	setarray @DLevels[5], 8;
+	setarray @DLevels[@Di], 8;
 
 	setarray @DGat$[@Dref], "c_tower1", "c_tower2", "c_tower3", "c_tower4", "alde_dun01", "alde_dun02", "alde_dun03", "alde_dun04";
 	setarray @DLevelName$[@Dref], "Clock Tower Level 1", "Clock Tower Level 2", "Clock Tower Level 3", "Clock Tower Level 4", "Basement 1F", "Basement 2F", "Basement 3F", "Basement 4F";
@@ -1300,7 +1300,7 @@ function	script	QWS_Darray	{
 	setarray @pDmenuitems$[@Di], "Coal Mine Dungeon";
 	setarray @pDprice[@Di], $QW_AW_PRICE;
 	setarray @pDfee$[@Di], "$QW_AW_FEE";
-	setarray @DLevels[6], 3;
+	setarray @DLevels[@Di], 3;
 
 	setarray @DGat$[@Dref], "mjo_dun01", "mjo_dun02", "mjo_dun03";
 	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3";
@@ -1314,7 +1314,7 @@ function	script	QWS_Darray	{
 	setarray @pDmenuitems$[@Di], "Culvert Dungeon";
 	setarray @pDprice[@Di], $QW_BW_PRICE;
 	setarray @pDfee$[@Di], "$QW_BW_FEE";
-	setarray @DLevels[7], 4;
+	setarray @DLevels[@Di], 4;
 
 	setarray @DGat$[@Dref], "prt_sewb1", "prt_sewb2", "prt_sewb3", "prt_sewb4";
 	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3", "Level 4";
@@ -1328,7 +1328,7 @@ function	script	QWS_Darray	{
 	setarray @pDmenuitems$[@Di], "Einbech Dungeon";
 	setarray @pDprice[@Di], $QW_AW_PRICE;
 	setarray @pDfee$[@Di], "$QW_AW_FEE";
-	setarray @DLevels[8], 2;
+	setarray @DLevels[@Di], 2;
 
 	setarray @DGat$[@Dref], "ein_dun01", "ein_dun02";
 	setarray @DLevelName$[@Dref], "Level 1", "Level 2";
@@ -1342,7 +1342,7 @@ function	script	QWS_Darray	{
 	setarray @pDmenuitems$[@Di], "Gefenia Dungeon";
 	setarray @pDprice[@Di], $QW_BW_PRICE;
 	setarray @pDfee$[@Di], "$QW_BW_FEE";
-	setarray @DLevels[9], 4;
+	setarray @DLevels[@Di], 4;
 
 	setarray @DGat$[@Dref], "gefenia01", "gefenia02", "gefenia03", "gefenia04";
 	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3", "Level 4";
@@ -2182,7 +2182,7 @@ menu_item:
 function	script	QWS_Dungeon_Warpra	{
 	function QWS_D_getbin;
 	function QWS_D_setbin;
-	
+
 	if ((QWS_D_getbin(getarg(0)) == 0) && (getarg(1) != "")) {
 		mes "[Warpra]";
 		mes getarg(1)+" unlocked!";
@@ -2228,7 +2228,7 @@ binget:
 function	script	QWS_Town_Warpra	{
 	function QWS_T_getbin;
 	function QWS_T_setbin;
-	
+
 	if ((QWS_T_getbin(getarg(0)) == 0) && (getarg(1) != "")) {
 		mes "[Warpra]";
 		mes getarg(1)+" unlocked!";
@@ -2272,7 +2272,7 @@ binget:
 function	script	QWS_Instance_Warpra	{
 	function QWS_I_getbin;
 	function QWS_I_setbin;
-	
+
 	if ((QWS_I_getbin(getarg(0)) == 0) && (getarg(1) != "")) {
 		mes "[Warpra]";
 		mes getarg(1)+" unlocked!";
