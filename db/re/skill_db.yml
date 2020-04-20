@@ -25103,7 +25103,6 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    ActiveInstance: 3
     CopyFlags:
       Skill:
         Reproduce: true

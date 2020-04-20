@@ -2920,7 +2920,7 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 			element = sstatus->rhw.ele;
 		else
 			element = sstatus->lhw.ele;
-		if(is_skill_using_arrow(src, skill_id) && sd && sd->bonus.arrow_ele > ELE_NONE && sd->bonus.arrow_ele < ELE_ALL && weapon_position == EQI_HAND_R)
+		if(is_skill_using_arrow(src, skill_id) && sd && weapon_position == EQI_HAND_R)
 			element = sd->bonus.arrow_ele;
 		if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm >= MAX_SPIRITCHARM)
 			element = sd->spiritcharm_type; // Summoning 10 spiritcharm will endow your weapon
@@ -2943,6 +2943,11 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 		case LG_HESPERUSLIT:
 			if (sc && sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 4)
 				element = ELE_HOLY;
+			break;
+		case WM_REVERBERATION:
+		case WM_REVERBERATION_MAGIC:
+			if (sd)
+				element = sd->bonus.arrow_ele;
 			break;
 		case SJ_PROMINENCEKICK:
  				element = ELE_FIRE;
