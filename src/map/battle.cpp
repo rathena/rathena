@@ -1301,9 +1301,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 #endif
 
-		if (!(flag&BF_MAGIC) && sc->data[SC_LUXANIMA])
-			damage += damage * sc->data[SC_LUXANIMA]->val3 / 100;
-
 		if( damage ) {
 			struct map_session_data *tsd = BL_CAST(BL_PC, src);
 			if( sc->data[SC_DEEPSLEEP] ) {
@@ -1624,6 +1621,9 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 			if (hd && (rnd()%100<50) ) hom_addspiritball(hd, 10); // According to WarpPortal, this is a flat 50% chance
 		}
+
+		if (!(flag & BF_MAGIC) && sc->data[SC_LUXANIMA])
+			damage += damage * sc->data[SC_LUXANIMA]->val3 / 100;
 	} //End of caster SC_ check
 
 	if (tsc && tsc->count) {
