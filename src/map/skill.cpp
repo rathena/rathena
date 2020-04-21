@@ -5616,7 +5616,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 	case RK_STORMBLAST:
-	case WM_REVERBERATION_MAGIC:
 		if( flag&1 )
 			skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
 		else {
@@ -6009,6 +6008,16 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				flag |= 8; // Only apply Combo bonus when Tiger Cannon is not used through Flash Combo
 			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+		}
+		break;
+
+	case WM_REVERBERATION:
+		if (flag & 1) {
+			skill_attack(skill_get_type(WM_REVERBERATION_MAGIC), src, src, bl, WM_REVERBERATION_MAGIC, skill_lv, tick, flag);
+			battle_consume_ammo(sd, skill_id, skill_lv); // Consume here since Magic/Misc attacks reset arrow_atk
+		} else {
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		}
 		break;
 
@@ -7512,13 +7521,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if( !i && ( skill_id == NC_AXETORNADO || skill_id == SR_SKYNETBLOW || skill_id == KO_HAPPOKUNAI ) )
 			clif_skill_damage(src,src,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SINGLE);
 	}
-		break;
-
-
-	case WM_REVERBERATION:
-		skill_area_temp[1] = 0;
-		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(bl), src, WM_REVERBERATION_MAGIC, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		break;
 
 	case RK_IGNITIONBREAK:

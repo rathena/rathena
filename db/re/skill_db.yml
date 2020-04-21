@@ -25084,7 +25084,6 @@ Body:
     MaxLevel: 5
     TargetType: Attack
     DamageFlags:
-      NoDamage: true
       Splash: true
     Flags:
       IsTrap: true
