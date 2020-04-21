@@ -1576,6 +1576,8 @@
 	export_constant(SC_SP_SHA);
 	export_constant(SC_SOULCURSE);
 	export_constant(SC_HELLS_PLANT);
+	export_constant(SC_INCREASE_MAXHP);
+	export_constant(SC_INCREASE_MAXSP);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
