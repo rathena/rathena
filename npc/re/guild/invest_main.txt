@@ -79,7 +79,7 @@ OnClock1235:	// Open dungeons on Friday (at least 31 minutes after investments c
 	if (gettime(DT_DAYOFWEEK) == FRIDAY && !agitcheck())
 		donpcevent "#fund_master::OnResult";
 	end;
-OnClock2000:	// Close dungeons on Tuesday (1 hour before WoE)
+OnClock2200:	// Close dungeons on Tuesday (1 hour before WoE)
 	if (gettime(DT_DAYOFWEEK) == TUESDAY)
 		donpcevent "#fund_master::OnReset";
 	end;
