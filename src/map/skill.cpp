@@ -15443,55 +15443,45 @@ int skill_isammotype(struct map_session_data *sd, unsigned short skill_id)
 * @return True if condition is met, False otherwise
 **/
 static bool skill_check_condition_sc_required(struct map_session_data *sd, unsigned short skill_id, struct s_skill_condition *require) {
-	struct status_change *sc = NULL;
-
-	if (require->status.empty())
+	if (require == nullptr || require->status.empty())
 		return true;
 
 	nullpo_ret(sd);
 
-	if (!require)
-		return false;
+	status_change *sc = &sd->sc;
 
-	if (!(sc = &sd->sc)) {
+	if (sc == nullptr) {
 		clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 		return false;
 	}
 
-	/* May has multiple requirements */
+	// May have multiple requirements
 	for (const auto &reqStatus : require->status) {
 		if (reqStatus == SC_NONE)
 			continue;
 
+		useskill_fail_cause cause;
+
 		switch (reqStatus) {
-			/* Official fail msg */
+			// Official fail message
 			case SC_PUSH_CART:
-				if (!sc->data[SC_PUSH_CART]) {
-					clif_skill_fail(sd, skill_id, USESKILL_FAIL_CART, 0);
-					return false;
-				}
+				cause = USESKILL_FAIL_CART;
 				break;
 			case SC_POISONINGWEAPON:
-				if (!sc->data[SC_POISONINGWEAPON]) {
-					clif_skill_fail(sd, skill_id, USESKILL_FAIL_GC_POISONINGWEAPON, 0);
-					return false;
-				}
+				cause = USESKILL_FAIL_GC_POISONINGWEAPON;
 				break;
-			case GC_COUNTERSLASH:
-			case GC_WEAPONCRUSH:
-				if (!sc->data[SC_WEAPONBLOCK_ON]) {
-					clif_skill_fail(sd, skill_id, USESKILL_FAIL_GC_WEAPONBLOCKING, 0);
-					return false;
-				}
+			case SC_WEAPONBLOCK_ON:
+				cause = USESKILL_FAIL_GC_WEAPONBLOCKING;
 				break;
 			default:
-				if (!sc->data[reqStatus]) {
-					clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
-					return false;
-				}
+				cause = USESKILL_FAIL_LEVEL;
 				break;
 		}
+
+		clif_skill_fail(sd, skill_id, cause, 0);
+		return false;
 	}
+
 	return true;
 }
 
