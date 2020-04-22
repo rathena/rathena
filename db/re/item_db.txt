@@ -740,7 +740,7 @@
 1394,Upg_Two_Handed_Axe,Upg Two Handed Axe,5,20,,2000,110,,1,1,0x000444A2,63,2,34,3,1,1,7,{ bonus bBaseAtk,(getrefine()*14); if(BaseLevel>70) bonus bBaseAtk,(((BaseLevel-70)/10)*10); bonus bUnbreakableWeapon; },{},{}
 1395,Velum_Buster,Vellum Buster,5,20,,2500,50,,1,0,0x000444A2,63,2,34,4,95,1,7,{ bonus bUnbreakableWeapon; bonus3 bSPVanishRaceRate,RC_Player,1000,10; },{},{}
 1396,Velum_Guillotine,Vellum Guillotine,5,20,,5500,300,,1,0,0x000444A2,63,2,34,4,95,1,7,{ bonus bUnbreakableWeapon; bonus2 bAddRace,RC_Player,40; bonus2 bIgnoreDefRaceRate,RC_Player,30; .@r = getrefine(); if(.@r>=6) { bonus2 bSkillAtk,"NC_AXEBOOMERANG",80; bonus2 bSkillAtk,"NC_POWERSWING",80; } if(.@r>=9) { bonus2 bAddRace,RC_Player,60; } },{},{}
-1397,Bradium_Stonehammer_,Bradium Stonehammer,5,20,,2700,210,,1,2,0x000444A2,63,2,34,4,75,1,7,{ bonus bUnbreakableWeapon; },{},{}
+1397,Bradium_Stonehammer_,Bradium Stone Hammer,5,20,,2700,210,,1,2,0x00000400,2,2,34,4,75,1,7,{ bonus3 bAddEffOnSkill,"BS_HAMMERFALL",Eff_Stun,500+(200*getrefine()); },{},{}
 1398,Metal_Two_Handed_Axe,Metal Two Handed Axe,5,20,,0,105,,1,1,0x000444A2,63,2,34,3,1,1,7,{ bonus bUnbreakableWeapon; bonus bBaseAtk,(getrefine()*7); .@i = min(BaseLevel/10,12); if(.@i>2) bonus bBaseAtk,((.@i-2)*5); },{},{}
 1399,TE_Woe_Two_Handed_Axe,TE Woe Two Handed Axe,5,0,,0,150,,1,0,0x000444A2,63,2,34,3,40,1,7,{ bonus bUnbreakableWeapon; bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Stun,3000; },{},{}
 //===================================================================
