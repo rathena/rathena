@@ -15478,8 +15478,10 @@ static bool skill_check_condition_sc_required(struct map_session_data *sd, unsig
 				break;
 		}
 
-		clif_skill_fail(sd, skill_id, cause, 0);
-		return false;
+		if (!sc->data[reqStatus]) {
+			clif_skill_fail(sd, skill_id, cause, 0);
+			return false;
+		}
 	}
 
 	return true;
