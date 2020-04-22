@@ -65,11 +65,13 @@ Body:
           RespawnX: 50
           RespawnY: 374
           QuitEvent: "start#bat_a01::OnGuillaumeQuit"
+          ActiveEvent: "start#bat_a01::OnGuillaumeActive"
           Variable: "$@TierraBG1_id1"
         TeamB:
           RespawnX: 42
           RespawnY: 16
           QuitEvent: "start#bat_a01::OnCroixQuit"
+          ActiveEvent: "start#bat_a01::OnCroixActive"
           Variable: "$@TierraBG1_id2"
       - Map: "bat_a02"
         StartEvent: "start#bat_a02::OnReadyCheck"
@@ -77,11 +79,13 @@ Body:
           RespawnX: 50
           RespawnY: 374
           QuitEvent: "start#bat_a02::OnGuillaumeQuit"
+          ActiveEvent: "start#bat_a02::OnGuillaumeActive"
           Variable: "$@TierraBG2_id1"
         TeamB:
           RespawnX: 42
           RespawnY: 16
           QuitEvent: "start#bat_a02::OnCroixQuit"
+          ActiveEvent: "start#bat_a02::OnCroixActive"
           Variable: "$@TierraBG2_id2"
   - Id: 2
     Name: "Flavius"
@@ -94,11 +98,13 @@ Body:
           RespawnX: 10
           RespawnY: 290
           QuitEvent: "start#bat_b01::OnGuillaumeQuit"
+          ActiveEvent: "start#bat_b01::OnGuillaumeActive"
           Variable: "$@FlaviusBG1_id1"
         TeamB:
           RespawnX: 390
           RespawnY: 10
           QuitEvent: "start#bat_b01::OnCroixQuit"
+          ActiveEvent: "start#bat_b01::OnCroixActive"
           Variable: "$@FlaviusBG1_id2"
       - Map: "bat_b02"
         StartEvent: "start#bat_b02::OnReadyCheck"
@@ -106,11 +112,13 @@ Body:
           RespawnX: 10
           RespawnY: 290
           QuitEvent: "start#bat_b02::OnGuillaumeQuit"
+          ActiveEvent: "start#bat_b02::OnGuillaumeActive"
           Variable: "$@FlaviusBG2_id1"
         TeamB:
           RespawnX: 390
           RespawnY: 10
           QuitEvent: "start#bat_b02::OnCroixQuit"
+          ActiveEvent: "start#bat_b02::OnCroixActive"
           Variable: "$@FlaviusBG2_id2"
   - Id: 3
     Name: "KVM (Level 80 and up)"

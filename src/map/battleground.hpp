@@ -67,7 +67,6 @@ struct s_battleground_queue {
 	int tid_expire; ///< Timer ID associated with the time out at the ready to enter window
 	int tid_start; ///< Timer ID associated with the start delay
 	int tid_requeue; ///< Timer ID associated with requeuing this group if all BG maps are reserved
-	int tid_active; ///< Timer ID associated with players joining an active BG
 	s_battleground_map *map; ///< Map this BG queue has been assigned to
 };
 

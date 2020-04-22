@@ -149,6 +149,14 @@ OnReset:
 	bg_warp $@FlaviusBG2_id2,"bat_b02",311,224;
 	end;
 
+OnGuillaumeActive:
+	bg_warp $@FlaviusBG2_id1,"bat_b02",87,75;
+	end;
+
+OnCroixActive:
+	bg_warp $@FlaviusBG2_id2,"bat_b02",311,224;
+	end;
+
 OnGuillaumeQuit:
 OnCroixQuit:
 	if (getbattleflag("feature.bgqueue"))

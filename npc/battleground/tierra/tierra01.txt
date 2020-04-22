@@ -126,6 +126,14 @@ OnEnable:
 	disablenpc "Croix Vintenar#a01_b";
 	end;
 
+OnGuillaumeActive:
+	bg_warp $@TierraBG1_id1,"bat_a01",352,342;
+	end;
+
+OnCroixActive:
+	bg_warp $@TierraBG1_id2,"bat_a01",353,52;
+	end;
+
 OnGuillaumeQuit:
 OnCroixQuit:
 	if (getbattleflag("feature.bgqueue"))
