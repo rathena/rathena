@@ -1377,6 +1377,9 @@ void initChangeTables(void)
 
 	StatusIconChangeTable[SC_ANCILLA] = EFST_ANCILLA;
 	StatusIconChangeTable[SC_WEAPONBLOCK_ON] = EFST_WEAPONBLOCK_ON;
+	StatusIconChangeTable[SC_REF_T_POTION] = EFST_REF_T_POTION;
+	StatusIconChangeTable[SC_ADD_ATK_DAMAGE] = EFST_ADD_ATK_DAMAGE;
+	StatusIconChangeTable[SC_ADD_MATK_DAMAGE] = EFST_ADD_MATK_DAMAGE;
 
 	// Battleground Queue
 	StatusIconChangeTable[SC_ENTRY_QUEUE_APPLY_DELAY] = EFST_ENTRY_QUEUE_APPLY_DELAY;

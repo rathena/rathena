@@ -1625,6 +1625,11 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 			if (hd && (rnd()%100<50) ) hom_addspiritball(hd, 10); // According to WarpPortal, this is a flat 50% chance
 		}
+
+		if (flag & BF_WEAPON && (sce = sc->data[SC_ADD_ATK_DAMAGE]))
+			damage += damage * sce->val1 / 100;
+		if (flag & BF_MAGIC && (sce = sc->data[SC_ADD_MATK_DAMAGE]))
+			damage += damage * sce->val1 / 100;
 	} //End of caster SC_ check
 
 	if (tsc && tsc->count) {
@@ -7201,6 +7206,9 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 
 	if (sc && sc->data[SC_WHITEIMPRISON])
 		return 0; // White Imprison does not reflect any damage
+
+	if (ssc->data[SC_REF_T_POTION])
+		return 0;
 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
 		if ( (skill_get_inf2(skill_id, INF2_ISTRAP) || !status_reflect) && sd && sd->bonus.short_weapon_damage_return ) {
