@@ -1009,7 +1009,7 @@ static void battle_absorb_damage(struct block_list *bl, struct Damage *d) {
  * @param skill_lv: Skill level
  * @return True: Damage inflicted, False: Missed
  **/
-bool battle_check_sc(struct block_list *src, struct block_list *target, struct status_change *sc, struct Damage *d, int64 damage, uint16 skill_id, uint16 skill_lv) {
+bool battle_status_block_damage(struct block_list *src, struct block_list *target, struct status_change *sc, struct Damage *d, int64 damage, uint16 skill_id, uint16 skill_lv) {
 	if (!src || !target || !sc || !d)
 		return true;
 
@@ -1169,7 +1169,9 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 	}
 
 	// Other
-	if (sc->data[SC_HERMODE] && flag&BF_MAGIC || sc->data[SC_TATAMIGAESHI] && (flag&(BF_MAGIC | BF_LONG)) == BF_LONG)
+	if ((sc->data[SC_HERMODE] && flag&BF_MAGIC) ||
+		(sc->data[SC_TATAMIGAESHI] && (flag&(BF_MAGIC | BF_LONG)) == BF_LONG) ||
+		(sc->data[SC_MEIKYOUSISUI] && rnd() % 100 < 40)) // custom value
 		return false;
 
 	if ((sce = sc->data[SC_PARRYING]) && flag&BF_WEAPON && skill_id != WS_CARTTERMINATION && rnd() % 100 < sce->val2) {
@@ -1216,9 +1218,6 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 			status_change_end(target, SC_BUNSINJYUTSU, INVALID_TIMER);
 		return false;
 	}
-
-	if (sc->data[SC_MEIKYOUSISUI] && rnd()%100 < 40) // custom value
-		return false;
 
 	return true;
 }
@@ -1292,7 +1291,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		return damage;
 
 	if( sc && sc->count ) {
-		if (!battle_check_sc(src, bl, sc, d, damage, skill_id, skill_lv)) // Statuses that reduce damage to 0.
+		if (!battle_status_block_damage(src, bl, sc, d, damage, skill_id, skill_lv)) // Statuses that reduce damage to 0.
 			return 0;
 
 		// Damage increasing effects
@@ -5125,7 +5124,7 @@ static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,s
 	if (attack_hits && target->type == BL_MOB) {
 		struct status_change *sc = status_get_sc(target);
 
-		if (sc && !battle_check_sc(src, target, sc, wd, 1, skill_id, skill_lv)) { // Statuses that reduce damage to 0.
+		if (sc && !battle_status_block_damage(src, target, sc, wd, 1, skill_id, skill_lv)) { // Statuses that reduce damage to 0.
 			wd->damage = wd->damage2 = 0;
 			return;
 		}
