@@ -266,7 +266,6 @@ struct Script_Config script_config = {
 	"OnPCLoadMapEvent", //loadmap_event_name
 	"OnPCBaseLvUpEvent", //baselvup_event_name
 	"OnPCJobLvUpEvent", //joblvup_event_name
-	"OnPCStatCalcEvent", //stat_calc_event_name
 	// NPC related
 	"OnTouch_",	//ontouch_event_name (runs on first visible char to enter area, picks another char if the first char leaves)
 	"OnTouch",	//ontouch2_event_name (run whenever a char walks into the OnTouch area)
@@ -23768,13 +23767,8 @@ BUILDIN_FUNC(achievementadd) {
 	}
 
 	if( !sd->state.pc_loaded ){
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementadd: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	if (achievement_add(sd, achievement_id))
@@ -23805,13 +23799,8 @@ BUILDIN_FUNC(achievementremove) {
 	}
 
 	if( !sd->state.pc_loaded ){
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementremove: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	if (achievement_remove(sd, achievement_id))
@@ -23842,13 +23831,8 @@ BUILDIN_FUNC(achievementinfo) {
 
 	if( !sd->state.pc_loaded ){
 		script_pushint(st, false);
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementinfo: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	script_pushint(st, achievement_check_progress(sd, achievement_id, script_getnum(st, 3)));
@@ -23875,13 +23859,8 @@ BUILDIN_FUNC(achievementcomplete) {
 	}
 	
 	if( !sd->state.pc_loaded ){
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementcomplete: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
@@ -23913,13 +23892,8 @@ BUILDIN_FUNC(achievementexists) {
 
 	if( !sd->state.pc_loaded ){
 		script_pushint(st, false);
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementexists: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id && sd->achievement_data.achievements[i].completed > 0 );
@@ -23951,13 +23925,8 @@ BUILDIN_FUNC(achievementupdate) {
 	}
 
 	if( !sd->state.pc_loaded ){
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementupdate: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
