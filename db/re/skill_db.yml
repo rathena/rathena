@@ -27975,6 +27975,7 @@ Body:
     Flags:
       TargetTrap: true
       IgnoreLandProtector: true
+    Range: 5
     Hit: Multi_Hit
     HitCount: 2
     Element: Weapon
