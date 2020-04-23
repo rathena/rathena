@@ -1147,8 +1147,8 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_SPL_MATK] = EFST_SPL_MATK;
 	StatusIconChangeTable[SC_ATKPOTION] = EFST_PLUSATTACKPOWER;
 	StatusIconChangeTable[SC_MATKPOTION] = EFST_PLUSMAGICPOWER;
-	StatusIconChangeTable[SC_INCREASE_MAXHP] |= EFST_ATKER_ASPD;
-	StatusIconChangeTable[SC_INCREASE_MAXSP] |= EFST_ATKER_MOVESPEED;
+	StatusIconChangeTable[SC_INCREASE_MAXHP] = EFST_ATKER_ASPD;
+	StatusIconChangeTable[SC_INCREASE_MAXSP] = EFST_ATKER_MOVESPEED;
 
 	/* Cash Items */
 	StatusIconChangeTable[SC_FOOD_STR_CASH] = EFST_FOOD_STR_CASH;
