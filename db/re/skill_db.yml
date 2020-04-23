@@ -28754,6 +28754,7 @@ Body:
     MaxLevel: 1
     Type: Weapon
     TargetType: Self
+    Range: -9
     Hit: Single
     HitCount: 1
     Element: Weapon
