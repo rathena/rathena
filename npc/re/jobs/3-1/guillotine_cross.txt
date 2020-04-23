@@ -738,7 +738,7 @@ job3_guil01,82,95,3	script	Daora#3rdgc02	940,{
 			mes "Everyone is waiting for you.";
 			close;
 		}
-	} else if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Baby_Cross) {
+	} else if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Baby_Guillotine_Cross) {
 		if (Sex == SEX_MALE) {
 			mes "Oh~ you're good-looking~!";
 			mes "It's worthwhile to open a pub~";
@@ -3755,7 +3755,7 @@ job3_guil01,148,53,3	script	Bercasell#3rdgc16	467,{
 			mes "Get out of here now!!!";
 			close;
 		}
-	} else if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Baby_Cross) {
+	} else if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Baby_Guillotine_Cross) {
 		mes "Don't pursue only strength.";
 		mes "You'll get tired.";
 		mes "It's no better than living.";

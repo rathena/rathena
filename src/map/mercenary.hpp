@@ -50,7 +50,7 @@ struct mercenary_data {
 
 	struct s_mercenary_db *db;
 	struct s_mercenary mercenary;
-	char blockskill[MAX_SKILL];
+	std::vector<uint16> blockskill;
 
 	int masterteleport_timer;
 	struct map_session_data *master;

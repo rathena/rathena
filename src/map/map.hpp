@@ -204,20 +204,20 @@ enum e_mapid {
 	MAPID_SHADOW_CHASER_T,
 //Baby 3-1 Jobs
 	MAPID_SUPER_BABY_E = JOBL_THIRD|MAPID_SUPER_BABY,
-	MAPID_BABY_RUNE,
+	MAPID_BABY_RUNE_KNIGHT,
 	MAPID_BABY_WARLOCK,
 	MAPID_BABY_RANGER,
-	MAPID_BABY_BISHOP,
+	MAPID_BABY_ARCH_BISHOP,
 	MAPID_BABY_MECHANIC,
-	MAPID_BABY_CROSS,
+	MAPID_BABY_GUILLOTINE_CROSS,
 	MAPID_BABY_STAR_EMPEROR,
 //Baby 3-2 Jobs
-	MAPID_BABY_GUARD = JOBL_THIRD|MAPID_BABY_CRUSADER,
+	MAPID_BABY_ROYAL_GUARD = JOBL_THIRD|MAPID_BABY_CRUSADER,
 	MAPID_BABY_SORCERER,
 	MAPID_BABY_MINSTRELWANDERER,
 	MAPID_BABY_SURA,
 	MAPID_BABY_GENETIC,
-	MAPID_BABY_CHASER,
+	MAPID_BABY_SHADOW_CHASER,
 	MAPID_BABY_SOUL_REAPER,
 };
 
@@ -337,7 +337,10 @@ enum e_element : int8{
 	ELE_GHOST,
 	ELE_UNDEAD,
 	ELE_ALL,
-	ELE_MAX
+	ELE_MAX,
+	ELE_WEAPON,
+	ELE_ENDOWED,
+	ELE_RANDOM,
 };
 
 #define MAX_ELE_LEVEL 4 /// Maximum Element level
@@ -745,7 +748,7 @@ struct map_data {
 	int mob_delete_timer;	// Timer ID for map_removemobs_timer [Skotlex]
 
 	// Instance Variables
-	unsigned short instance_id;
+	int instance_id;
 	int instance_src_map;
 
 	/* rAthena Local Chat */
@@ -960,8 +963,6 @@ inline bool map_flag_gvg2_no_te(int16 m) {
 }
 
 extern char motd_txt[];
-extern char help_txt[];
-extern char help2_txt[];
 extern char charhelp_txt[];
 extern char channel_conf[];
 
@@ -1034,7 +1035,7 @@ void map_clearflooritem(struct block_list* bl);
 int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false);
 
 // instances
-int map_addinstancemap(const char *name, unsigned short instance_id);
+int map_addinstancemap(int src_m, int instance_id);
 int map_delinstancemap(int m);
 void map_data_copyall(void);
 void map_data_copy(struct map_data *dst_map, struct map_data *src_map);
@@ -1122,7 +1123,7 @@ void map_removemobs(int16 m); // [Wizputer]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 
-void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster);
+void map_skill_damage_add(struct map_data *m, uint16 skill_id, union u_mapflag_args *args);
 void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per);
 
 enum e_mapflag map_getmapflag_by_name(char* name);

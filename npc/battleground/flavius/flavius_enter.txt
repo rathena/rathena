@@ -1,21 +1,18 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= BattleGround System - Flavius Entrance NPCs
-//===== By: ================================================== 
-//= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 1.0
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Flavius Battleground Entrance NPCs
-//===== Additional Comments: ================================= 
-//= 1.0 First Version.
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [L0ne_W0lf]
+//= 1.1 Added battle_config checks to allow this script to use the new queue interface or the previous method. [Aleos]
 //============================================================
 
 // Flavius Officer - Guillaume
 //============================================================
 bat_room,133,178,5	script	Flavius Officer#01a	418,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
 	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
@@ -83,6 +80,8 @@ bat_room,133,178,5	script	Flavius Officer#01a	418,{
 }
 
 bat_room,133,121,1	script	Flavius Officer#01b	414,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
 	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
@@ -163,35 +162,22 @@ bat_room,135,178,5	script	Guillaume Knight#3	417,{
 	mes "The crystals are immune to every type of skill; your physical attacks are the only choice for destroying your enemy's crystal.";
 	next;
 	mes "[Guillaume Knight]";
-	mes "Please remember: when you join a battle, you will be receiving a token which indicates the set duration for which you cannot participate in the same type of battle.";
-	mes "You may check the duration by pressing the Alt+U keys.";
+	if (getbattleflag("feature.bgqueue"))
+		mes "If you are ready, start by clicking the ^0000FFbattle button from the interface^000000.";
+	else {
+		mes "Please remember: when you join a battle, you will be receiving a token which indicates the set duration for which you cannot participate in the same type of battle.";
+		mes "You may check the duration by pressing the Alt+U keys.";
+	}
 	next;
 	mes "[Guillaume Knight]";
-	mes "Are you ready for battle? Then apply with the recruiter next to me!";
+	if (getbattleflag("feature.bgqueue"))
+		mes "Please bear in mind once you cancel, ^0000FFyou may not reapply for 1 minute^000000!";
+	else
+		mes "Are you ready for battle? Then apply with the recruiter next to me!";
 	close;
 }
 
-bat_room,151,178,5	script	Guillaume Knight#4	417,{
-	mes "[Guillaume Knight]";
-	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destroying their crystal.";
-	next;
-	mes "[Guillaume Knight]";
-	mes "The crystals for both armies are protected by special barricades that cannot be destroyed by direct attacks.";
-	next;
-	mes "[Guillaume Knight]";
-	mes "But they can be removed by destroying the Guardians that protect the enemy army base.";
-	next;
-	mes "[Guillaume Knight]";
-	mes "The crystals are immune to every type of skill; your physical attacks are the only choice for destroying your enemy's crystal.";
-	next;
-	mes "[Guillaume Knight]";
-	mes "Please remember: when you join a battle, you will be receiving a token which indicates the set duration for which you cannot participate in the same type of battle.";
-	mes "You may check the duration by pressing the Alt+U keys.";
-	next;
-	mes "[Guillaume Knight]";
-	mes "Are you ready for battle? Then apply with the recruiter next to me!";
-	close;
-}
+bat_room,151,178,5	duplicate(Guillaume Knight#3)	Guillaume Knight#4	417
 
 bat_room,135,121,1	script	Croix Knight#3	413,{
 	mes "[Croix Knight]";
@@ -207,39 +193,28 @@ bat_room,135,121,1	script	Croix Knight#3	413,{
 	mes "The crystals are immune to every type of skill; your physical attacks are the only choice for destroying your enemy's crystal.";
 	next;
 	mes "[Croix Knight]";
-	mes "Please remember: when you join a battle, you will be receiving a token which indicates the set duration for which you cannot participate in the same type of battle.";
-	mes "You may check the duration by pressing the Alt+U keys.";
+	if (getbattleflag("feature.bgqueue"))
+		mes "If you are ready, start by clicking the ^0000FFbattle button from the interface^000000.";
+	else {
+		mes "Please remember: when you join a battle, you will be receiving a token which indicates the set duration for which you cannot participate in the same type of battle.";
+		mes "You may check the duration by pressing the Alt+U keys.";
+	}
 	next;
 	mes "[Croix Knight]";
-	mes "Are you ready for battle? Then apply with the recruiter next to me!";
+	if (getbattleflag("feature.bgqueue"))
+		mes "Please bear in mind once you cancel, ^0000FFyou may not reapply for 1 minute^000000!";
+	else
+		mes "Are you ready for battle? Then apply with the recruiter next to me!";
 	close;
 }
 
-bat_room,151,121,1	script	Croix Knight#4	413,{
-	mes "[Croix Knight]";
-	mes "The objective of the Flavius Battle is to score 2 points before your enemy by destroying their crystal.";
-	next;
-	mes "[Croix Knight]";
-	mes "The crystals for both armies are protected by special barricades that cannot be destroyed by direct attacks.";
-	next;
-	mes "[Croix Knight]";
-	mes "But they can be removed by destroying the Guardians that protect the enemy army base.";
-	next;
-	mes "[Croix Knight]";
-	mes "The crystals are immune to every type of skill; your physical attacks are the only choice for destroying your enemy's crystal.";
-	next;
-	mes "[Croix Knight]";
-	mes "Please remember: when you join a battle, you will be receiving a token which indicates the set duration for which you cannot participate in the same type of battle.";
-	mes "You may check the duration by pressing the Alt+U keys.";
-	next;
-	mes "[Croix Knight]";
-	mes "Are you ready for battle? Then apply with the recruiter next to me!";
-	close;
-}
+bat_room,151,121,1	duplicate(Croix Knight#3)	Croix Knight#4	413
 
 // Flavius Officer - Croix
 //============================================================
 bat_room,148,178,5	script	Flavius Officer#02a	418,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
 	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
@@ -307,6 +282,8 @@ bat_room,148,178,5	script	Flavius Officer#02a	418,{
 }
 
 bat_room,148,121,1	script	Flavius Officer#02b	414,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
 	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
