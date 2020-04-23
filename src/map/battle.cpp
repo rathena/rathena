@@ -7255,7 +7255,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 #endif
 		}
 		if (ssc->data[SC_VENOMBLEED])
-			rdamage -= rdamage * ssc->data[SC_VENOMBLEED]->val2 / 100;
+			rdamage -= damage * ssc->data[SC_VENOMBLEED]->val2 / 100;
 	}
 
 	if (sc) {
