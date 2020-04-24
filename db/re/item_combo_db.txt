@@ -200,8 +200,8 @@
 2399:2553,{ bonus bAgi,5; bonus bFlee,15; }
 2399:2553:5467,{ bonus2 bSubRace,RC_Dragon,20; }
 2408:2655,{ bonus bBaseAtk,50; bonus2 bAddDefMonster,1196,20; bonus2 bAddDefMonster,1197,20; }
-2408:15040,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bMatkRate,5+.@r; }
-2424:2528,{ bonus bHPrecovRate,5; bonus bBaseAtk,10; }
+2408:15040,{ .@r = getequiprefinerycnt(EQI_SHOES); bonus bBaseAtk,5+.@r; }
+2424:2528,{ bonus bHPrecovRate,5; bonus bMaxHPrate,10; }
 2425:2529,{ bonus bFlee,10; }
 2425:2530,{ bonus bFlee,10; }
 2425:2551,{ bonus bFlee,10; }
