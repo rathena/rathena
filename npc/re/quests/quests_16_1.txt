@@ -13447,7 +13447,7 @@ prt_cas,98,248,5	script	Cat#ep16bgm	4_CAT,{
 	close;
 }
 
-prt_cas,90,121,5	script	Hiba Ajif#ep16	4_M_REDSWORD,{
+prt_cas,98,231,5	script	Hiba Ajif#ep16	4_M_REDSWORD,{
 	mes "[Hiba Ajif]";
 	mes "Since Ashbacuum has been taken care of, I want to go home and take a nap. However, they are holding me here.";
 	next;
@@ -13463,13 +13463,13 @@ prt_cas,90,121,5	script	Hiba Ajif#ep16	4_M_REDSWORD,{
 	close;
 }
 
-prt_cas,94,118,3	script	Avidal the Advisor#ep16	4_M_SAGE_C,{
+prt_cas,100,231,3	script	Avidal the Advisor#ep16	4_M_SAGE_C,{
 	mes "[Avidal the Advisor]";
 	mes "I have spent too much time in the tension between the two races. It just feels like I am dreaming to be in a happy and relaxing place like this. This must be what they call peace, right?";
 	close;
 }
 
-prt_cas,85,118,7	script	Instructor Igrid#ep16	4_M_CRU,{
+prt_cas,97,229,7	script	Instructor Igrid#ep16	4_M_CRU,{
 	mes "[Instructor Igrid]";
 	mes "If they really want to do something for us, they really let us take a rest.";
 	mes "Only the ones who don't work in the field like an event like this. It is true.";

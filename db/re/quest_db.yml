@@ -2297,7 +2297,7 @@ Body:
     Title: Lowly Standards
     Drops:
       - Mob: WATCHER
-        Item: Red_Eye
+        Item: Red_Eyes
         Rate: 2000
   - Id: 5429
     Title: "[Stand by]Lowly Standards"
@@ -2306,7 +2306,7 @@ Body:
     Title: "[Repeat]Lowly Standards"
     Drops:
       - Mob: WATCHER
-        Item: Red_Eye
+        Item: Red_Eyes
         Rate: 2000
   - Id: 5431
     Title: Clean Life
@@ -2330,7 +2330,7 @@ Body:
     Title: Refreshing Prison Life
     Drops:
       - Mob: FROZENWOLF
-        Item: Dehumidifiers
+        Item: Desiccant
         Rate: 2000
   - Id: 5440
     Title: "[Stand by]Refreshing Prison Life"
@@ -2339,7 +2339,7 @@ Body:
     Title: "[Repeat]Refreshing Prison Life"
     Drops:
       - Mob: FROZENWOLF
-        Item: Dehumidifiers
+        Item: Desiccant
         Rate: 2000
   - Id: 5442
     Title: Suppressing Darkness
@@ -6229,7 +6229,7 @@ Body:
     Title: Why Should I Prepare for the Banquets?
     Drops:
       - Mob: GLASS_PLATE
-        Item: Advanced_Dish
+        Item: Luxurious_Dish
         Rate: 3000
   - Id: 11420
     Title: Why Should I Prepare for the Banquets?
@@ -6249,7 +6249,7 @@ Body:
     Title: "Banquet: Washing 15 Dishes"
     Drops:
       - Mob: GLASS_PLATE
-        Item: Advanced_Dish
+        Item: Luxurious_Dish
         Rate: 3000
   - Id: 11427
     Title: Complete Today's Dish Collecting
@@ -7981,7 +7981,7 @@ Body:
     Title: Please Find the Token of Memory
     Drops:
       - Mob: MEDUSA
-        Item: Stone_That_Contained_Sea
+        Item: Filled_With_SeaStones
         Rate: 3000
   - Id: 14488
     Title: Please Deliver My Love
@@ -7991,7 +7991,7 @@ Body:
     Title: My Love Once More
     Drops:
       - Mob: MEDUSA
-        Item: Stone_That_Contained_Sea
+        Item: Filled_With_SeaStones
         Rate: 3000
   - Id: 14491
     Title: I Have to Turn It Down Again
@@ -8002,7 +8002,7 @@ Body:
     Title: Today I Feel
     Drops:
       - Mob: MEDUSA
-        Item: Stone_That_Contained_Sea
+        Item: Filled_With_SeaStones
         Rate: 3000
   - Id: 14494
     Title: I Have to Turn It Down Again
