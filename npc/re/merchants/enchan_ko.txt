@@ -151,6 +151,9 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 			}
 			break;
 		}
+		set .@equip_refine, getequiprefinerycnt(.@part);
+		setarray .@equip_card[0], getequipcardid(.@part,0),getequipcardid(.@part,1),getequipcardid(.@part,2),getequipcardid(.@part,3);
+		copyarray .@card[0], .@equip_card[0], 4;
 		set .@select,1;
 		break;
 	case 3:
@@ -209,6 +212,10 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 			set .@equip_id,15056; //Special_Ninja_Suit_
 			break;
 		}
+		set .@equip_refine, getequiprefinerycnt(.@part);
+		setarray .@equip_card[0], getequipcardid(.@part,0),getequipcardid(.@part,1),getequipcardid(.@part,2),getequipcardid(.@part,3);
+		copyarray .@card[0], .@equip_card[0], 4;
+
 		mes "[Artisan Tene]";
 		mes "You want to reset ^44B7BC" + getitemname(.@equip_id) + "^000000?";
 		next;
@@ -253,20 +260,17 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 		close;
 	}
 
-	set .@equip_refine, getequiprefinerycnt(.@part);
-	setarray .@equip_card[0], getequipcardid(.@part,0),getequipcardid(.@part,1),getequipcardid(.@part,2),getequipcardid(.@part,3);
-
 	// Initialization
 	if (.@select == 2) {
-		if (.@sot03_ck) {
-			if (.@equip_card[2] < 4700) { // Armor Enchant System
+		if (.@sot03_ck) {// reset only 3rd slot
+			if (callfunc("F_IsCharm",.@equip_card[2]) == false) { // Armor Enchant System
 				mes "[Artisan Tene]";
 				mes "The third slot is is not enchanted. Please check again."; //custom translation
 				close;
 			}
 			set .@equip_card[2],0;
 		} else {
-			if (.@equip_card[3] < 4700) { // Armor Enchant System
+			if (callfunc("F_IsCharm",.@equip_card[3]) == false) { // Armor Enchant System
 				mes "[Artisan Tene]";
 				mes "This equipment is is not enchanted. Please check again."; //custom translation
 				close;
@@ -276,8 +280,12 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 		}
 		progressbar "ffff00",2;
 		set Zeny, Zeny - 100000;
-		delequip .@part;
 
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+			close;
+
+		delequip .@part;
 //		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
 		getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
 
@@ -294,8 +302,8 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 	else                           set .@ko_type01,5;
 
 	//custom translations
-	if (.@equip_card[3] >= 4700) { // Armor Enchant System
-		if (.@equip_card[2] >= 4700) {
+	if (callfunc("F_IsCharm",.@equip_card[3]) == true) { // Armor Enchant System
+		if (callfunc("F_IsCharm",.@equip_card[2]) == true) {
 			mes "[Artisan Tene]";
 			mes "This equipment cannot be further enchanted.";
 			next;
@@ -516,6 +524,11 @@ que_ng,75,20,3	script	Artisan Tene#ko	762,{
 		set .@equip_card[2], .@enchant;
 	progressbar "ffff00",2;
 	set Zeny, Zeny - 100000;
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+		close;
+
 	delequip .@part;
 
 //	GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]

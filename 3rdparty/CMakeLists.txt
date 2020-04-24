@@ -48,8 +48,6 @@ endmacro( CONFIGURE_WITH_LOCAL_OR_SYSTEM )
 
 
 add_subdirectory( libconfig )
-add_subdirectory( msinttypes )
-add_subdirectory( mt19937ar )
 add_subdirectory( mysql )
 add_subdirectory( pcre )
 add_subdirectory( zlib )

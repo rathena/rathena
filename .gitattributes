@@ -1,10 +1,12 @@
 *        text=auto
-*.c      diff=cpp
+*.cpp diff=cpp
+*.yml diff text eol=lf
 *.sln    merge=union
 *.vcproj merge=union
 *.vcxproj merge=union
 *.sln text eol=crlf
 *.bat text eol=crlf
+athena-start text eol=lf
 configure text eol=lf
 configure.in text eol=lf
 Makefile text eol=lf

@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifdef PCRE_SUPPORT
@@ -7,14 +7,13 @@
 
 #include "../../3rdparty/pcre/include/pcre.h"
 
-#include "../common/timer.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
+#include "../common/malloc.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
 #include "mob.hpp" // struct mob_data
 #include "pc.hpp" // struct map_session_data
-
 
 /**
  *  Written by MouseJstr in a vision... (2/21/2005)
@@ -77,7 +76,7 @@ struct pcrematch_set {
 	struct pcrematch_set* prev;
 	struct pcrematch_set* next;
 	struct pcrematch_entry* head;
-	int setid;
+	int64 setid;
 };
 
 /* 
@@ -111,7 +110,7 @@ void finalize_pcrematch_entry(struct pcrematch_entry* e)
 /**
  * Lookup (and possibly create) a new set of patterns by the set id
  */
-static struct pcrematch_set* lookup_pcreset(struct npc_data* nd, int setid) 
+static struct pcrematch_set* lookup_pcreset(struct npc_data* nd, int64 setid) 
 {
 	struct pcrematch_set *pcreset;
 	struct npc_parse *npcParse = (struct npc_parse *) nd->chatdb;
@@ -152,7 +151,7 @@ static struct pcrematch_set* lookup_pcreset(struct npc_data* nd, int setid)
  *
  * if the setid does not exist, this will silently return
  */
-static void activate_pcreset(struct npc_data* nd, int setid)
+static void activate_pcreset(struct npc_data* nd, int64 setid)
 {
 	struct pcrematch_set *pcreset;
 	struct npc_parse *npcParse = (struct npc_parse *) nd->chatdb;
@@ -185,7 +184,7 @@ static void activate_pcreset(struct npc_data* nd, int setid)
  *
  * if the setid does not exist, this will silently return
  */
-static void deactivate_pcreset(struct npc_data* nd, int setid)
+static void deactivate_pcreset(struct npc_data* nd, int64 setid)
 {
 	struct pcrematch_set *pcreset;
 	struct npc_parse *npcParse = (struct npc_parse *) nd->chatdb;
@@ -221,7 +220,7 @@ static void deactivate_pcreset(struct npc_data* nd, int setid)
 /**
  * delete a set of patterns.
  */
-static void delete_pcreset(struct npc_data* nd, int setid)
+static void delete_pcreset(struct npc_data* nd, int64 setid)
 {
 	int active = 1;
 	struct pcrematch_set *pcreset;
@@ -301,7 +300,7 @@ static struct pcrematch_entry* create_pcrematch_entry(struct pcrematch_set* set)
 /**
  * define/compile a new pattern
  */
-void npc_chat_def_pattern(struct npc_data* nd, int setid, const char* pattern, const char* label)
+void npc_chat_def_pattern(struct npc_data* nd, int64 setid, const char* pattern, const char* label)
 {
 	const char *err;
 	int erroff;
@@ -373,10 +372,10 @@ int npc_chat_sub(struct block_list* bl, va_list ap)
 				// save out the matched strings
 				for (i = 0; i < r; i++)
 				{
-					char var[6], val[255];
+					char var[255], val[255];
 					snprintf(var, sizeof(var), "$@p%i$", i);
 					pcre_copy_substring(msg, offsets, r, i, val, sizeof(val));
-					set_var(sd, var, val);
+					set_var_str( sd, var, val );
 				}
 				
 				// find the target label.. this sucks..
@@ -401,7 +400,7 @@ int npc_chat_sub(struct block_list* bl, va_list ap)
 
 int buildin_defpattern(struct script_state* st)
 {
-	int setid = conv_num(st,& (st->stack->stack_data[st->start+2]));
+	int64 setid = conv_num64(st,& (st->stack->stack_data[st->start+2]));
 	const char* pattern = conv_str(st,& (st->stack->stack_data[st->start+3]));
 	const char* label = conv_str(st,& (st->stack->stack_data[st->start+4]));
 	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
@@ -413,7 +412,7 @@ int buildin_defpattern(struct script_state* st)
 
 int buildin_activatepset(struct script_state* st)
 {
-	int setid = conv_num(st,& (st->stack->stack_data[st->start+2]));
+	int64 setid = conv_num64(st,& (st->stack->stack_data[st->start+2]));
 	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
 	
 	activate_pcreset(nd, setid);
@@ -423,7 +422,7 @@ int buildin_activatepset(struct script_state* st)
 
 int buildin_deactivatepset(struct script_state* st)
 {
-	int setid = conv_num(st,& (st->stack->stack_data[st->start+2]));
+	int64 setid = conv_num64(st,& (st->stack->stack_data[st->start+2]));
 	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
 	
 	deactivate_pcreset(nd, setid);
@@ -433,7 +432,7 @@ int buildin_deactivatepset(struct script_state* st)
 
 int buildin_deletepset(struct script_state* st)
 {
-	int setid = conv_num(st,& (st->stack->stack_data[st->start+2]));
+	int64 setid = conv_num64(st,& (st->stack->stack_data[st->start+2]));
 	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
 	
 	delete_pcreset(nd, setid);

@@ -1,15 +1,17 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _BATTLE_HPP_
-#define _BATTLE_HPP_
+#ifndef BATTLE_HPP
+#define BATTLE_HPP
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
+#include <bitset>
 
-#include "../config/core.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
+#include "../config/core.hpp"
 
 #include "map.hpp" //ELE_MAX
+#include "skill.hpp"
 
 //fwd declaration
 struct map_session_data;
@@ -30,6 +32,7 @@ enum damage_lv : uint8 {
 
 /// Flag of the final calculation
 enum e_battle_flag : uint16 {
+	BF_NONE		= 0x0000, /// None
 	BF_WEAPON	= 0x0001, /// Weapon attack
 	BF_MAGIC	= 0x0002, /// Magic attack
 	BF_MISC		= 0x0004, /// Misc attack
@@ -62,6 +65,8 @@ enum e_battle_check_target : uint32 {
 	BCT_NOGUILD		= BCT_ALL&~BCT_GUILD,			///< Except guildmates
 	BCT_NOPARTY		= BCT_ALL&~BCT_PARTY,			///< Except party members
 	BCT_NOENEMY		= BCT_ALL&~BCT_ENEMY,			///< Except enemy
+	BCT_ALLY		= BCT_PARTY|BCT_GUILD,
+	BCT_FRIEND		= BCT_NOENEMY,
 };
 
 /// Damage structure
@@ -82,35 +87,33 @@ struct Damage {
 	bool isspdamage; /// Display blue damage numbers in clif_damage
 };
 
-//(Used in read pc.c,) attribute table (battle_attr_fix)
-extern int attr_fix_table[4][ELE_MAX][ELE_MAX];
+//(Used in read pc.cpp) attribute table (battle_attr_fix)
+extern int attr_fix_table[MAX_ELE_LEVEL][ELE_MAX][ELE_MAX];
 
 // Damage Calculation
 
 struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,uint16 skill_id,uint16 skill_lv,int flag);
-struct Damage battle_calc_attack_plant(struct Damage wd, struct block_list *src,struct block_list *target, uint16 skill_id, uint16 skill_lv);
 
 int64 battle_calc_return_damage(struct block_list *bl, struct block_list *src, int64 *, int flag, uint16 skill_id, bool status_reflect);
 
 void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rdamage, int64 ldamage, int race, int class_);
-bool battle_vanish(struct map_session_data *sd, struct block_list *target, struct Damage *wd);
 
 int battle_attr_ratio(int atk_elem,int def_type, int def_lv);
 int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 damage,int atk_elem,int def_type, int def_lv);
-int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_list *target, int nk, int s_ele, int s_ele_, int64 damage, int left, int flag);
+int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_list *target, std::bitset<NK_MAX> nk, int s_ele, int s_ele_, int64 damage, int left, int flag);
 
 // Final calculation Damage
 int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Damage *d,int64 damage,uint16 skill_id,uint16 skill_lv);
 int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag);
 int64 battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag);
 
-void battle_damage(struct block_list *src, struct block_list *target, int64 damage, int delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, unsigned int tick, bool spdamage);
-int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, int ddelay, bool additional_effects, bool spdamage);
+void battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool spdamage);
+int battle_delay_damage (t_tick tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, t_tick ddelay, bool additional_effects, bool spdamage);
 
 int battle_calc_chorusbonus(struct map_session_data *sd);
 
 // Summary normal attack treatment (basic attack)
-enum damage_lv battle_weapon_attack( struct block_list *bl,struct block_list *target,unsigned int tick,int flag);
+enum damage_lv battle_weapon_attack( struct block_list *bl,struct block_list *target,t_tick tick,int flag);
 
 // Accessors
 struct block_list* battle_get_master(struct block_list *src);
@@ -144,7 +147,7 @@ struct Battle_Config
 	int enable_critical;
 	int mob_critical_rate;
 	int critical_rate;
-	int enable_baseatk;
+	int enable_baseatk, enable_baseatk_renewal;
 	int enable_perfect_flee;
 	int cast_rate, delay_rate;
 	int delay_dependon_dex, delay_dependon_agi;
@@ -229,7 +232,6 @@ struct Battle_Config
 	int pet_attack_support;
 	int pet_damage_support;
 	int pet_support_min_friendly;	//[Skotlex]
-	int pet_equip_min_friendly;
 	int pet_support_rate;
 	int pet_attack_exp_to_master;
 	int pet_attack_exp_rate;
@@ -262,9 +264,14 @@ struct Battle_Config
 	int natural_healsp_interval;
 	int natural_heal_skill_interval;
 	int natural_heal_weight_rate;
+	int natural_heal_weight_rate_renewal;
 	int arrow_decrement;
+	int ammo_unequip;
+	int ammo_check_weapon;
 	int max_aspd;
 	int max_walk_speed;	//Maximum walking speed after buffs [Skotlex]
+	int max_hp_lv99;
+	int max_hp_lv150;
 	int max_hp;
 	int max_sp;
 	int max_lv, aura_lv;
@@ -341,6 +348,8 @@ struct Battle_Config
 
 	int prevent_logout;	// Added by RoVeRT
 	int prevent_logout_trigger;
+	int land_protector_behavior;
+	int npc_emotion_behavior;
 
 	int alchemist_summon_reward;	// [Valaris]
 	int drops_by_luk;
@@ -349,6 +358,8 @@ struct Battle_Config
 	int equip_self_break_rate; //Natural & Penalty skills break rate
 	int equip_skill_break_rate; //Offensive skills break rate
 	int multi_level_up;
+	int multi_level_up_base;
+	int multi_level_up_job;
 	int max_exp_gain_rate; //Max amount of exp bar % you can get in one go.
 	int pk_mode;
 	int pk_mode_mes;
@@ -365,7 +376,6 @@ struct Battle_Config
 	int skill_removetrap_type;
 	int disp_experience;
 	int disp_zeny;
-	int castle_defense_rate;
 	int backstab_bow_penalty;
 	int hp_rate;
 	int sp_rate;
@@ -619,6 +629,7 @@ struct Battle_Config
 	int mvp_exp_reward_message;
 	int can_damage_skill; //Which BL types can damage traps
 	int atcommand_levelup_events;
+	int atcommand_disable_npc;
 	int block_account_in_same_party;
 	int tarotcard_equal_chance; //Official or equal chance for each card
 	int change_party_leader_samemap;
@@ -637,7 +648,33 @@ struct Battle_Config
 	int allow_bound_sell;
 	int event_refine_chance;
 	int autoloot_adjust;
+	int feature_petevolution;
+	int feature_pet_autofeed;
+	int feature_pet_autofeed_rate;
+	int pet_autofeed_always;
 	int broadcast_hide_name;
+	int skill_drop_items_full;
+	int switch_remove_edp;
+	int feature_homunculus_autofeed;
+	int feature_homunculus_autofeed_rate;
+	int summoner_trait;
+	int homunculus_autofeed_always;
+	int feature_attendance;
+	int feature_privateairship;
+	int rental_transaction;
+	int min_shop_buy;
+	int min_shop_sell;
+	int feature_equipswitch;
+	int pet_walk_speed;
+	int blacksmith_fame_refine_threshold;
+	int mob_nopc_idleskill_rate;
+	int mob_nopc_move_rate;
+	int boss_nopc_idleskill_rate;
+	int boss_nopc_move_rate;
+	int hom_idle_no_share;
+	int devotion_standup_fix;
+	int feature_bgqueue;
+	int homunculus_exp_gain;
 
 #include "../custom/battle_config_struct.inc"
 };
@@ -658,4 +695,4 @@ struct block_list* battle_getenemyarea(struct block_list *src, int x, int y, int
  **/
 int battle_damage_area( struct block_list *bl, va_list ap);
 
-#endif /* _BATTLE_HPP_ */
+#endif /* BATTLE_HPP */

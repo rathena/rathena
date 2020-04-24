@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "int_mercenary.hpp"
@@ -6,11 +6,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/mmo.h"
-#include "../common/strlib.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h"
-#include "../common/sql.h"
+#include "../common/mmo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/sql.hpp"
+#include "../common/strlib.hpp"
 
 #include "char.hpp"
 #include "inter.hpp"
@@ -73,7 +73,7 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 	if( merc->mercenary_id == 0 )
 	{ // Create new DB entry
 		if( SQL_ERROR == Sql_Query(sql_handle,
-			"INSERT INTO `%s` (`char_id`,`class`,`hp`,`sp`,`kill_counter`,`life_time`) VALUES ('%d','%d','%u','%u','%u','%u')",
+			"INSERT INTO `%s` (`char_id`,`class`,`hp`,`sp`,`kill_counter`,`life_time`) VALUES ('%d','%d','%u','%u','%u','%" PRtf "')",
 			schema_config.mercenary_db, merc->char_id, merc->class_, merc->hp, merc->sp, merc->kill_count, merc->life_time) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -83,7 +83,7 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 			merc->mercenary_id = (int)Sql_LastInsertId(sql_handle);
 	}
 	else if( SQL_ERROR == Sql_Query(sql_handle,
-		"UPDATE `%s` SET `char_id` = '%d', `class` = '%d', `hp` = '%u', `sp` = '%u', `kill_counter` = '%u', `life_time` = '%u' WHERE `mer_id` = '%d'",
+		"UPDATE `%s` SET `char_id` = '%d', `class` = '%d', `hp` = '%u', `sp` = '%u', `kill_counter` = '%u', `life_time` = '%" PRtf "' WHERE `mer_id` = '%d'",
 		schema_config.mercenary_db, merc->char_id, merc->class_, merc->hp, merc->sp, merc->kill_count, merc->life_time, merc->mercenary_id) )
 	{ // Update DB entry
 		Sql_ShowDebug(sql_handle);
@@ -117,7 +117,7 @@ bool mapif_mercenary_load(int merc_id, uint32 char_id, struct s_mercenary *merc)
 	Sql_GetData(sql_handle,  1, &data, NULL); merc->hp = atoi(data);
 	Sql_GetData(sql_handle,  2, &data, NULL); merc->sp = atoi(data);
 	Sql_GetData(sql_handle,  3, &data, NULL); merc->kill_count = atoi(data);
-	Sql_GetData(sql_handle,  4, &data, NULL); merc->life_time = atoi(data);
+	Sql_GetData(sql_handle,  4, &data, NULL); merc->life_time = strtoll( data, nullptr, 10 );
 	Sql_FreeResult(sql_handle);
 	if( charserv_config.save_log )
 		ShowInfo("Mercenary loaded (ID: %d / Class: %d / CID: %d).\n", merc->mercenary_id, merc->class_, merc->char_id);

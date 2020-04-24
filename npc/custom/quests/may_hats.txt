@@ -18,7 +18,7 @@ gonryun,187,140,4	script	Yakima	850,{
 	mes "[Yakima]";
 	mes callfunc("F_Hi");
 	mes "I can make some items for you.";
-	mes "They are quite rare novadays...";
+	mes "They are quite rare nowadays...";
 	specialeffect EF_HITBODY;
 	next;
 	menu "Bird Nest",-,"Lion Mask",M_2,"Skeleton Manteau",M_3,"Fashion Hip Sack",M_4,"Sales Banner",M_5,"Leave",M_EXIT;
@@ -107,8 +107,8 @@ M_3:
 
 M_4:
 	mes "[Yakima]";
-	mes "It's a fresh style! Ancessory and a bag all in one! You'd get +2 STR... It's different from that sabby nest!";
-	mes "It fits to Merchant classonly.";
+	mes "It's a fresh style! Accessory and a bag all in one! You'd get +2 STR... It's different from that sabby nest!";
+	mes "It fits to Merchant class only.";
 	emotion ET_SMILE;
 	next;
 	mes "[Yakima]";

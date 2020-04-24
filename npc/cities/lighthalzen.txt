@@ -149,7 +149,7 @@ lighthalzen,233,121,3	script	Kariya#li_01	72,{
 	mes "Still, it's a fitting";
 	mes "name for the wealthiest";
 	mes "and most luxurious city in";
-	mes "all the Schwaltzvalt Republic.";
+	mes "all the Schwarzwald Republic.";
 	mes "So how do you like this place?";
 	close;
 }
@@ -202,7 +202,7 @@ lighthalzen,89,73,3	script	Sameer#zen15	854,{
 	mes "of morality. In fact, I have";
 	mes "no need for a woman. All";
 	mes "I need are my ship models,";
-	mes "teen novels and dominos.";
+	mes "teen novels and dominoes.";
 	next;
 	mes "[Sameer]";
 	mes "I'm a completely well";
@@ -450,7 +450,7 @@ lighthalzen,138,50,7	script	Mauro#zen3	847,{
 	mes "[Mauro]";
 	mes "Bah! If it weren't for";
 	mes "us, Lighthalzen wouldn't";
-	mes "be as properous as it is";
+	mes "be as prosperous as it is";
 	mes "today! Those kids don't";
 	mes "know that they owe their";
 	mes "lives of luxury to us...";
@@ -462,7 +462,7 @@ lighthalzen,132,103,5	script	Sefith#li_01	734,{
 	mes "Good looks. Intelligence.";
 	mes "Excellent manners. A strong,";
 	mes "manly chin and overpowering,";
-	mes "piercing eyes. Perfectly balanced passion and charimsma. All the";
+	mes "piercing eyes. Perfectly balanced passion and charisma. All the";
 	mes "good things that ladies want.";
 	next;
 	mes "[Sefith]";
@@ -485,7 +485,7 @@ lighthalzen,239,64,5	script	Jade#zen2	862,{
 	next;
 	mes "[Jade]";
 	mes "So are you from";
-	mes "Rune-Midgard?";
+	mes "Rune-Midgarts?";
 	mes "What do you think";
 	mes "of our city with its";
 	mes "advanced technology";
@@ -525,7 +525,7 @@ lhz_in02,34,212,4	script	Maggie#05	91,{
 	mes "amount for the lease and the";
 	mes "laws here won't let me raise";
 	mes "the price of my flowers. Why";
-	mes "are the city officals so greedy?";
+	mes "are the city officials so greedy?";
 	close;
 }
 
@@ -633,7 +633,7 @@ lighthalzen,182,102,3	script	Lucius#zen5	866,{
 	mes "You seem to be fairly";
 	mes "well-off. Money is good";
 	mes "to have, but be careful not";
-	mes "to become obssessed with it.";
+	mes "to become obsessed with it.";
 	next;
 	mes "[Lucius]";
 	mes "When you have the chance,";
@@ -877,7 +877,7 @@ lhz_in02,287,273,3	script	Customer#amano11	50,{
 	mes "[Terry]";
 	mes "Yeah, this is a real cozy";
 	mes "joint. I recommend it to";
-	mes "all you tourists, acutally.";
+	mes "all you tourists, actually.";
 	mes "Now why don't you kick";
 	mes "back and chill with me?";
 	close;
@@ -1499,7 +1499,7 @@ lhz_in01,116,45,7	script	Joshua#aya	704,{
 	mes "complexion and smooth";
 	mes "skin. That's right. Come";
 	mes "right to Joshua, babes.";
-	mes "I got my pheremone spray";
+	mes "I got my pheromone spray";
 	mes "on and I'm ready to cruise~";
 	close;
 }
@@ -1556,7 +1556,7 @@ lhz_in03,193,25,2	script	Bartender#12	61,{
 	mes "on the verge of bein' totally";
 	mes "ghetto, but we're proud to";
 	mes "have the best rum in all of";
-	mes "Rune-Midgard. It's true~";
+	mes "Midgard. It's true~";
 	next;
 	mes "[Tony]";
 	mes "Just a sip of this";
@@ -1949,7 +1949,7 @@ OnTouch_:
 
 lhz_in01,24,140,3	script	Regenschirm Guard#40	4_M_LGTGUARD,{
 	mes "[Regenschirm Guard]";
-	if (lhz_sincube > 10 && countitem(2657) > 0) {// Lab_Passport
+	if ((MISC_QUEST&512) && countitem(2657) > 0) {// Lab_Passport
 		mes "Do you wish to";
 		mes "go underground?";
 		next;
@@ -2040,13 +2040,13 @@ lhz_in02,21,38,7	script	Bank Clerk#1::BankClerk	86,{
 lhz_in02,21,25,7	duplicate(BankClerk)	Bank Clerk#2	86
 lhz_in02,34,22,1	duplicate(BankClerk)	Bank Clerk#3	755
 
-// Lightalzen Prison Area -------------------------------------------------------------
+// Lighthalzen Prison Area -------------------------------------------------------------
 
 lhz_in02,145,177,0	script	Togii#07	849,{
 	mes "[Togii]";
 	mes "Oooh yeah...";
 	mes "Goes down smooth.";
-	mes "Morroc whiskey's the best!";
+	mes "Morocc whiskey's the best!";
 	mes "^333333*Hiccup*^000000 Whoa, this stuff";
 	mes "really works fast! Heh heh~";
 	close;
@@ -2612,7 +2612,7 @@ lighthalzen,176,65,5	script	Kimmy#zen3	862,{
 	mes "beautiful clothing and";
 	mes "accessory shops. This";
 	mes "place is heaven to a";
-	mes "trendsetter like me~!";
+	mes "trend-setter like me~!";
 	next;
 	mes "[Kimmy]";
 	mes "I don't know if you";
@@ -2678,13 +2678,13 @@ lhz_in02,267,25,4	script	Diana#npc	747,{
 	next;
 	mes "[Diana]";
 	mes "Oh, I was born";
-	mes "and raised in Morroc.";
+	mes "and raised in Morocc.";
 	next;
 	mes "[Shop Assistant]";
 	mes "Ah yes, I've heard many";
 	mes "good things about that town.";
 	mes "You've certainly proven that";
-	mes "people from Morroc truly have";
+	mes "people from Morocc truly have";
 	mes "good taste. Now, this Stiletto";
 	mes "is a steal at 39,800 zeny...";
 	next;
@@ -2812,7 +2812,7 @@ lighthalzen,77,203,3	script	Victor Perfecto#zen9	869,{
 	mes "Still, it's pretty";
 	mes "depressing to think";
 	mes "that the beauty of nature";
-	mes "can be manmade and";
+	mes "can be man-made and";
 	mes "equated to zeny, you know?";
 	close;
 }

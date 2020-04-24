@@ -1,11 +1,11 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef CHANNEL_H
-#define	CHANNEL_H
+#ifndef CHANNEL_HPP
+#define CHANNEL_HPP
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
 
 //namespace rA {
 
@@ -40,8 +40,8 @@ enum Channel_Type {
 struct Channel {
 	//unsigned short id;			  ///< Channel ID (unused yet)
 	char name[CHAN_NAME_LENGTH];  ///< Channel Name
-	char pass[CHAN_NAME_LENGTH];  ///< Channe display name
-	char alias[CHAN_NAME_LENGTH]; ///< Password
+	char pass[CHAN_NAME_LENGTH];  ///< Password
+	char alias[CHAN_NAME_LENGTH]; ///< Channel display name
 	enum Channel_Type type;		  ///< Channel type @see enum Channel_Type
 	unsigned long color;		  ///< Channel color in BGR
 	unsigned char opt;			  ///< Channel options @see enum Channel_Opt
@@ -128,4 +128,4 @@ int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *opti
 void do_init_channel(void);
 void do_final_channel(void);
 
-#endif	/* CHANNEL_H */
+#endif /* CHANNEL_HPP */

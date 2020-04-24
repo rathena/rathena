@@ -1,2 +1,4 @@
-//import: db/import/item_groupid.txt
-
+// Item Group Database
+//
+// Structure of Database:
+// GroupID,ItemID,Rate{,Amount,Random,isAnnounced,Duration,GUID,isBound,isNamed}

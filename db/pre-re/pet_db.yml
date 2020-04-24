@@ -1,0 +1,867 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2019 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Pre-Renewal Pet Database
+###########################################################################
+#
+# Pet Settings
+#
+###########################################################################
+# - Mob                      Monster that can be used as pet
+#   TameItem                 Pet Tame Item.
+#   EggItem                  Pet Egg Item.
+#   EquipItem                Pet Accessory Item. (Default: 0)
+#   FoodItem                 Pet Food Item. (Default: 0)
+#   Fullness                 The amount of hunger is decreased every [HungryDelay] seconds.
+#   HungryDelay              The amount of time in seconds it takes for hunger to decrease after feeding. (Default: 60)
+#   HungerIncrease           The amount of hunger that is increased every time the pet is fed (Default: 20)
+#   IntimacyStart            Amount of Intimacy the pet starts with. (Default: 250)
+#   IntimacyFed              Amount of Intimacy that is increased when fed. (Default: 50)
+#   IntimacyOverfed          Amount of Intimacy that is increased when over-fed. (Default: -100)
+#   IntimacyHungry           Amount of Intimacy that is increased when the pet is hungry. (Default: -5)
+#   IntimacyOwnerDie         Amount of Intimacy that is increased when the pet owner dies. (Default: -20)
+#   CaptureRate              Capture success rate. (10000 = 100%)
+#   SpecialPerformance       If a pet has a Special Performance. (Default: true)
+#   AttackRate               Rate of which the pet will attack [requires at least pet_support_min_friendly intimacy]. (10000 = 100%)
+#   RetaliateRate            Rate of which the pet will retaliate when master is being attacked [requires at least pet_support_min_friendly intimacy]. (10000 = 100%)
+#   ChangeTargetRate         Rate of which the pet will change its attack target. (10000 = 100%)
+#   AllowAutoFeed            Allows turning automatic pet feeding on. (Default: false)
+#   Script                   Bonus script to execute when the pet is alive. (Default: null)
+#   SupportScript            Bonus script to execute when pet_status_support is enabled. (Default: null)
+#   Evolution:               Pet evolution settings. (Optional) (Default: null)
+#     - Target               Mob this pet can evolve to.
+#       ItemRequirements:      Item requirements for evolving this pet.
+#         - Item               Self-explanatory
+#           Amount
+###########################################################################
+
+Header:
+  Type: PET_DB
+  Version: 1
+
+Body:
+  - Mob: PORING
+    TameItem: Unripe_Apple
+    EggItem: Poring_Egg
+    EquipItem: Backpack
+    FoodItem: Apple_Juice
+    Fullness: 3
+    IntimacyFed: 50
+    CaptureRate: 2000
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bLuk,2;
+        bonus bCritical,1;
+      }
+  - Mob: DROPS
+    TameItem: Orange_Juice
+    EggItem: Drops_Egg
+    EquipItem: Backpack
+    FoodItem: Yellow_Herb
+    Fullness: 4
+    IntimacyFed: 40
+    CaptureRate: 1500
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bHit,3;
+        bonus bAtk,3;
+      }
+  - Mob: POPORING
+    TameItem: Bitter_Herb
+    EggItem: Poporing_Egg
+    EquipItem: Backpack
+    FoodItem: Green_Herb
+    Fullness: 5
+    IntimacyFed: 30
+    CaptureRate: 1000
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bLuk,2;
+        bonus2 bSubEle,Ele_Poison,10;
+      }
+  - Mob: LUNATIC
+    TameItem: Rainbow_Carrot
+    EggItem: Lunatic_Egg
+    EquipItem: Silk_Ribbon
+    FoodItem: Carrot_Juice
+    Fullness: 4
+    IntimacyFed: 40
+    CaptureRate: 1500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bCritical,2;
+        bonus bAtk,2;
+      }
+  - Mob: PICKY
+    TameItem: Earthworm_The_Dude
+    EggItem: Picky_Egg
+    EquipItem: Tiny_Egg_Shell
+    FoodItem: Red_Herb
+    Fullness: 4
+    IntimacyFed: 40
+    CaptureRate: 2000
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bStr,1;
+        bonus bAtk,5;
+      }
+  - Mob: CHONCHON
+    TameItem: Rotten_Fish
+    EggItem: Chonchon_Egg
+    EquipItem: Monster_Oxygen_Mask
+    FoodItem: Pet_Food
+    Fullness: 6
+    IntimacyFed: 30
+    CaptureRate: 1500
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bAgi,1;
+        bonus bFlee,2;
+      }
+  - Mob: STEEL_CHONCHON
+    TameItem: Lusty_Iron
+    EggItem: Steel_Chonchon_Egg
+    EquipItem: Monster_Oxygen_Mask
+    FoodItem: Iron_Ore
+    Fullness: 5
+    IntimacyFed: 20
+    CaptureRate: 1000
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bFlee,6;
+        bonus bAgi,-1;
+      }
+  - Mob: HUNTER_FLY
+    TameItem: Monster_Juice
+    EggItem: Hunter_Fly_Egg
+    EquipItem: Monster_Oxygen_Mask
+    FoodItem: Red_Gemstone
+    Fullness: 5
+    IntimacyFed: 10
+    CaptureRate: 500
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bFlee,-5;
+        bonus bFlee2,2;
+      }
+  - Mob: SAVAGE_BABE
+    TameItem: Sweet_Milk
+    EggItem: Savage_Bebe_Egg
+    EquipItem: Green_Lace
+    FoodItem: Pet_Food
+    Fullness: 7
+    IntimacyFed: 40
+    CaptureRate: 1500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bVit,1;
+        bonus bMaxHP,50;
+      }
+  - Mob: DESERT_WOLF_B
+    TameItem: Well_Dried_Bone
+    EggItem: Baby_Desert_Wolf_Egg
+    EquipItem: Transparent_Headgear
+    FoodItem: Pet_Food
+    Fullness: 6
+    IntimacyFed: 40
+    CaptureRate: 1000
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bInt,1;
+        bonus bMaxSP,50;
+      }
+  - Mob: ROCKER
+    TameItem: Singing_Flower
+    EggItem: Rocker_Egg
+    EquipItem: Rocker_Glasses
+    FoodItem: Pet_Food
+    Fullness: 1
+    IntimacyFed: 30
+    CaptureRate: 1500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bHPrecovRate,5;
+        bonus bMaxHP,25;
+      }
+  - Mob: SPORE
+    TameItem: Dew_Laden_Moss
+    EggItem: Spore_Egg
+    EquipItem: Bark_Shorts
+    FoodItem: Pet_Food
+    Fullness: 3
+    IntimacyFed: 30
+    CaptureRate: 1500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bHit,5;
+        bonus bAtk,-2;
+      }
+  - Mob: POISON_SPORE
+    TameItem: Deadly_Noxious_Herb
+    EggItem: Poison_Spore_Egg
+    EquipItem: Bark_Shorts
+    FoodItem: Pet_Food
+    Fullness: 3
+    IntimacyFed: 20
+    CaptureRate: 1000
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bStr,1;
+        bonus bInt,1;
+      }
+  - Mob: PECOPECO
+    TameItem: Fatty_Chubby_Earthworm
+    EggItem: PecoPeco_Egg
+    EquipItem: Battered_Pot
+    FoodItem: Pet_Food
+    Fullness: 4
+    IntimacyFed: 30
+    CaptureRate: 1000
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bMaxHP,150;
+        bonus bMaxSP,-10;
+      }
+  - Mob: SMOKIE
+    TameItem: Baked_Yam
+    EggItem: Smokie_Egg
+    EquipItem: Red_Muffler
+    FoodItem: Pet_Food
+    Fullness: 4
+    IntimacyFed: 30
+    CaptureRate: 1000
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bAgi,1;
+        bonus bFlee2,1;
+      }
+  - Mob: YOYO
+    TameItem: Tropical_Banana
+    EggItem: Yoyo_Egg
+    EquipItem: Monkey_Circlet
+    FoodItem: Banana_Juice
+    Fullness: 5
+    IntimacyFed: 20
+    CaptureRate: 1000
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bCritical,3;
+        bonus bLuk,-1;
+      }
+  - Mob: ORK_WARRIOR
+    TameItem: Horror_Of_Tribe
+    EggItem: Orc_Warrior_Egg
+    EquipItem: Wild_Flower
+    FoodItem: Pet_Food
+    Fullness: 5
+    IntimacyFed: 20
+    CaptureRate: 500
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bAtk,10;
+        bonus bDef,-3;
+      }
+  - Mob: MUNAK
+    TameItem: No_Recipient
+    EggItem: Munak_Egg
+    EquipItem: Punisher
+    FoodItem: Pet_Food
+    Fullness: 3
+    IntimacyFed: 20
+    CaptureRate: 500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bInt,1;
+        bonus bDef,1;
+      }
+  - Mob: DOKEBI
+    TameItem: Old_Broom
+    EggItem: Dokkaebi_Egg
+    EquipItem: Wig
+    FoodItem: Pet_Food
+    Fullness: 4
+    IntimacyFed: 20
+    CaptureRate: 500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bMatkRate,1;
+        bonus bAtkRate,-1;
+      }
+  - Mob: SOHEE
+    TameItem: Silver_Knife_Of_Chaste
+    EggItem: Sohee_Egg
+    EquipItem: Golden_Bell
+    FoodItem: Pet_Food
+    Fullness: 3
+    IntimacyFed: 10
+    CaptureRate: 500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bStr,1;
+        bonus bDex,1;
+      }
+  - Mob: ISIS
+    TameItem: Armlet_Of_Obedience
+    EggItem: Isis_Egg
+    EquipItem: Queen's_Hair_Ornament
+    FoodItem: Pet_Food
+    Fullness: 3
+    IntimacyFed: 10
+    CaptureRate: 500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bMatkRate,-1;
+        bonus bAtkRate,1;
+      }
+  - Mob: PETIT
+    TameItem: Shining_Stone
+    EggItem: Green_Petite_Egg
+    EquipItem: Stellar_Hairpin
+    FoodItem: Pet_Food
+    Fullness: 4
+    IntimacyFed: 20
+    CaptureRate: 500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bDef,-2;
+        bonus bMdef,-2;
+        bonus bAspdRate,1;
+      }
+  - Mob: DEVIRUCHI
+    TameItem: Contracts_In_Shadow
+    EggItem: Deviruchi_Egg
+    EquipItem: Pacifier
+    FoodItem: Shoot
+    Fullness: 2
+    IntimacyFed: 10
+    CaptureRate: 500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bMatkRate,1;
+        bonus bAtkRate,1;
+        bonus bMaxHPrate,-3;
+        bonus bMaxSPrate,-3;
+      }
+  - Mob: BAPHOMET_
+    TameItem: Book_Of_Devil
+    EggItem: Bapho_Jr._Egg
+    EquipItem: Skull_Helm
+    FoodItem: Honey
+    Fullness: 2
+    IntimacyFed: 10
+    CaptureRate: 200
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bDef,1;
+        bonus bMdef,1;
+        bonus2 bResEff,Eff_Stun,-100;
+      }
+  - Mob: BON_GUN
+    TameItem: Heart_Of_Her
+    EggItem: Bongun_Egg
+    EquipItem: Sword_Of_Grave_Keeper
+    FoodItem: Pet_Food
+    Fullness: 4
+    IntimacyFed: 30
+    CaptureRate: 500
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bVit,1;
+        bonus2 bResEff,Eff_Stun,100;
+      }
+  - Mob: ZHERLTHSH
+    TameItem: Prohibition_Red_Candle
+    EggItem: Zherlthsh_Egg
+    FoodItem: Immortal_Heart
+    Fullness: 7
+    IntimacyFed: 10
+    CaptureRate: 300
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus2 bAddRace,RC_Demihuman,2;
+        bonus2 bMagicAddRace,RC_DemiHuman,2;
+        bonus2 bAddRace,RC_Player,2;
+        bonus2 bMagicAddRace,RC_Player,2;
+      }
+  - Mob: ALICE
+    TameItem: Sway_Apron
+    EggItem: Alice_Egg
+    FoodItem: White_Potion
+    Fullness: 2
+    IntimacyFed: 20
+    CaptureRate: 800
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bMdef,1;
+        bonus2 bSubRace,RC_DemiHuman,1;
+        bonus2 bSubRace,RC_Player,1;
+      }
+  - Mob: EVENT_RICECAKE
+    EggItem: Rice_Cake_Egg
+    FoodItem: Green_Herb
+    Fullness: 3
+    IntimacyFed: 50
+    CaptureRate: 2000
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus2 bSubEle,Ele_Neutral,1;
+        bonus bMaxHPrate,-1;
+      }
+  - Mob: GOBLINE_XMAS
+    TameItem: Sweet_Candy_Striper
+    EggItem: Santa_Goblin_Egg
+    FoodItem: Scell
+    Fullness: 3
+    IntimacyFed: 50
+    CaptureRate: 2000
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bMaxHP,30;
+        bonus2 bSubEle,Ele_Water,1;
+      }
+  - Mob: CHUNG_E
+    TameItem: Tantanmen
+    EggItem: Chung_E_Egg
+    FoodItem: Bun_
+    Fullness: 3
+    IntimacyFed: 50
+    CaptureRate: 2000
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bDef,1;
+        bonus2 bSubRace,RC_DemiHuman,1;
+        bonus2 bSubRace,RC_Player,1;
+      }
+  - Mob: ECLIPSE_P
+    EggItem: Spring_Rabbit_Egg
+    FoodItem: Bok_Choy
+    Fullness: 3
+    IntimacyFed: 50
+    CaptureRate: 2000
+    SpecialPerformance: false
+  - Mob: GOBLIN_1
+    TameItem: Knife_Goblin_Ring
+    EggItem: Knife_Goblin_Egg
+    FoodItem: Green_Apple
+    Fullness: 3
+    IntimacyFed: 50
+    CaptureRate: 800
+    SpecialPerformance: false
+  - Mob: GOBLIN_2
+    TameItem: Flail_Goblin_Ring
+    EggItem: Flail_Goblin_Egg
+    FoodItem: Green_Apple
+    Fullness: 3
+    IntimacyFed: 50
+    CaptureRate: 800
+    SpecialPerformance: false
+  - Mob: GOBLIN_4
+    TameItem: Hammer_Goblin_Ring
+    EggItem: Hammer_Goblin_Egg
+    FoodItem: Green_Apple
+    Fullness: 3
+    IntimacyFed: 50
+    CaptureRate: 800
+    SpecialPerformance: false
+  - Mob: DELETER_
+    TameItem: Holy_Marble
+    EggItem: Red_Deleter_Egg
+    FoodItem: Whole_Barbecue
+    Fullness: 4
+    IntimacyFed: 20
+    CaptureRate: 800
+    SpecialPerformance: false
+  - Mob: DIABOLIC
+    TameItem: Red_Burning_Stone
+    EggItem: Diabolic_Egg
+    FoodItem: Meat_Veg_Skewer
+    Fullness: 2
+    IntimacyFed: 10
+    CaptureRate: 800
+    SpecialPerformance: false
+  - Mob: WANDER_MAN
+    TameItem: Skull_Of_Vagabond
+    EggItem: Wanderer_Egg
+    FoodItem: Spirit_Liquor
+    Fullness: 2
+    IntimacyFed: 20
+    CaptureRate: 800
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bAgi,3;
+        bonus bDex,1;
+      }
+  - Mob: P_CHUNG_E
+    EggItem: New_Year_Doll_Egg
+    FoodItem: Mojji
+    Fullness: 3
+    IntimacyFed: 30
+    CaptureRate: 800
+    SpecialPerformance: false
+  - Mob: GOLEM
+    TameItem: Magical_Lithography
+    EggItem: Golem_Egg
+    EquipItem: Windup_Spring
+    FoodItem: Mystic_Stone
+    Fullness: 7
+    IntimacyFed: 20
+    CaptureRate: 500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bMaxHP,100;
+        bonus bFlee,-5;
+      }
+  - Mob: MARIONETTE
+    TameItem: Delicious_Shaved_Ice
+    EggItem: Marionette_Egg
+    EquipItem: Star_Hairband
+    FoodItem: Small_Snow_Flower
+    Fullness: 3
+    IntimacyFed: 10
+    CaptureRate: 500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bSPrecovRate,3;
+      }
+  - Mob: MEDUSA
+    TameItem: Splendid_Mirror
+    EggItem: Medusa_Egg
+    EquipItem: Queen's_Coronet
+    FoodItem: Apple_Pudding
+    Fullness: 3
+    IntimacyFed: 10
+    CaptureRate: 200
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bVit,1;
+        bonus2 bResEff,Eff_Stone,500;
+      }
+  - Mob: WHISPER
+    TameItem: Fit_Pipe
+    EggItem: Whisper_Egg
+    EquipItem: Spirit_Chain_
+    FoodItem: Damp_Darkness
+    Fullness: 7
+    IntimacyFed: 20
+    CaptureRate: 500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bFlee,7;
+        bonus bDef,-3;
+      }
+  - Mob: GOBLIN_LEADER
+    TameItem: Staff_Of_Leader
+    EggItem: Goblin_Leader_Egg
+    EquipItem: Nice_Badge
+    FoodItem: Big_Cell
+    Fullness: 7
+    IntimacyFed: 10
+    CaptureRate: 50
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus2 bAddRace,RC_DemiHuman,3;
+        bonus2 bAddRace,RC_Player,3;
+      }
+  - Mob: SUCCUBUS
+    TameItem: Boy's_Naivety
+    EggItem: Succubus_Egg
+    EquipItem: Black_Butterfly_Mask
+    FoodItem: Vital_Flower_
+    Fullness: 3
+    IntimacyFed: 10
+    CaptureRate: 200
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus2 bHpDrainRate,50,5;
+      }
+  - Mob: INCUBUS
+    TameItem: Gril's_Naivety
+    EggItem: Incubus_Egg
+    EquipItem: Ball_Mask
+    FoodItem: Vital_Flower
+    Fullness: 3
+    IntimacyFed: 10
+    CaptureRate: 50
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bMaxSPRate,3;
+      }
+  - Mob: NIGHTMARE_TERROR
+    TameItem: Hell_Contract
+    EggItem: Nightmare_Terror_Egg
+    EquipItem: Hell_Horn
+    FoodItem: Fresh_Plant
+    Fullness: 3
+    IntimacyFed: 10
+    CaptureRate: 200
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus2 bResEff,Eff_Sleep,10000;
+      }
+  - Mob: SHINOBI
+    TameItem: Kuloren
+    EggItem: Shinobi_Egg
+    EquipItem: Wine_On_Sleeve
+    FoodItem: Grilled_Rice_Cake
+    Fullness: 7
+    IntimacyFed: 20
+    CaptureRate: 500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bAgi,2;
+      }
+  - Mob: MIYABI_NINGYO
+    TameItem: Gril_Doll
+    EggItem: Miyabi_Ningyo_Egg
+    EquipItem: Summer_Fan
+    FoodItem: Well_Ripened_Berry
+    Fullness: 3
+    IntimacyFed: 15
+    CaptureRate: 200
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bInt,1;
+        bonus bCastrate,-3;
+      }
+  - Mob: WICKED_NYMPH
+    TameItem: Charming_Lotus
+    EggItem: Wicked_Nymph_Egg
+    EquipItem: Jade_Trinket
+    FoodItem: Morning_Dew
+    Fullness: 3
+    IntimacyFed: 15
+    CaptureRate: 500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bMaxSP,30;
+        bonus bSPrecovRate,5;
+      }
+  - Mob: STONE_SHOOTER
+    TameItem: Oilpalm_Coconut
+    EggItem: Stone_Shooter_Egg
+    EquipItem: Apro_Hair
+    FoodItem: Plant_Neutrient
+    Fullness: 7
+    IntimacyFed: 20
+    CaptureRate: 500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus2 bSubEle,Ele_Fire,3;
+      }
+  - Mob: DULLAHAN
+    TameItem: Luxury_Whisky_Bottle
+    EggItem: Dullahan_Egg
+    EquipItem: Death_Coil
+    FoodItem: Sunset_On_The_Rock
+    Fullness: 3
+    IntimacyFed: 10
+    CaptureRate: 200
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bCritAtkRate,5;
+      }
+  - Mob: LOLI_RURI
+    TameItem: Very_Red_Juice
+    EggItem: Loli_Ruri_Egg
+    EquipItem: Fashionable_Glasses
+    FoodItem: Pumpkin_Pie_
+    Fullness: 3
+    IntimacyFed: 15
+    CaptureRate: 200
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bMaxHPRate,3;
+        bonus3 bAutoSpellWhenHit,"AL_HEAL",1,10;
+      }
+  - Mob: CIVIL_SERVANT
+    TameItem: Fan_Of_Wind
+    EggItem: Civil_Servant_Egg
+    EquipItem: Golden_Earing
+    FoodItem: Flavored_Alcohol
+    Fullness: 3
+    IntimacyFed: 10
+    CaptureRate: 500
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus bMaxSP,10;
+      }
+  - Mob: LEAF_CAT
+    TameItem: Very_Soft_Plant
+    EggItem: Leaf_Cat_Egg
+    EquipItem: Green_Lucky_Bag
+    FoodItem: Fish_With_Blue_Back
+    Fullness: 7
+    IntimacyFed: 20
+    CaptureRate: 200
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus2 bSubRace,RC_Brute,3;
+      }
+  - Mob: BACSOJIN_
+    TameItem: Shiny_Wing_Gown
+    EggItem: Bacsojin_Egg
+    EquipItem: Round_Hair_Ornament
+    FoodItem: Traditional_Cookie
+    Fullness: 7
+    IntimacyFed: 10
+    CaptureRate: 2000
+    SpecialPerformance: false
+  - Mob: IMP
+    TameItem: Flaming_Ice
+    EggItem: Imp_Egg
+    EquipItem: Horn_Protector
+    FoodItem: Flame_Gemstone
+    Fullness: 3
+    IntimacyFed: 10
+    CaptureRate: 200
+    SpecialPerformance: false
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if( .@i >= PET_INTIMATE_LOYAL ){
+        bonus2 bSubEle,Ele_Fire,2;
+        bonus2 bAddEle,Ele_Fire,2;
+      }

@@ -22,7 +22,7 @@
 	mes "Hey, there.";
 	mes "Have you ever heard that there";
 	mes "are totally different countries";
-	mes "than the Rune-Midgard Kingdom?";
+	mes "than the Rune-Midgarts Kingdom?";
 	next;
 	switch(select("About Amatsu...:Go to Amatsu:Cancel")) {
 	case 1:
@@ -45,7 +45,7 @@
 		next;
 		mes "[Walter Moers]";
 		mes "He passed away when he returned";
-		mes "to Rune-Midgard. Fortunately,";
+		mes "to Rune-Midgarts. Fortunately,";
 		mes "the map was given to our king, Tristan III.";
 		next;
 		mes "[Walter Moers]";
@@ -181,9 +181,9 @@ amatsu,179,107,4	script	John#ama	86,{
 	mes "business here...";
 	next;
 	mes "[John]";
-	mes "Af first, I thought, 'What";
+	mes "At first, I thought, 'What";
 	mes "a great chance!' when the";
-	mes "trade between the Rune-Midgard";
+	mes "trade between the Rune-Midgarts";
 	mes "Kingdom and Amatsu started.";
 	next;
 	mes "[John]";
@@ -545,9 +545,9 @@ amatsu,262,197,1	script	Legendary Tree	111,{
 	}
 	else if (jap_tree == 3) {
 		mes "^3355FFUnlike other cherry trees,";
-		mes "this tree has a strong fragnance.";
+		mes "this tree has a strong fragrance.";
 		mes "I just fell into a relaxed";
-		mes "mood. The fragnance eased";
+		mes "mood. The fragrance eased";
 		mes "my burdens and I felt";
 		mes "very comfortable.^000000";
 		next;
@@ -559,7 +559,7 @@ amatsu,262,197,1	script	Legendary Tree	111,{
 		close;
 	}
 	else if (jap_tree == 4) {
-		mes "^3355FFThis strong fragnance";
+		mes "^3355FFThis strong fragrance";
 		mes "is making me dizzy. Not like";
 		mes "other cherry trees, this tree's";
 		mes "shimmering white petals";
@@ -569,7 +569,7 @@ amatsu,262,197,1	script	Legendary Tree	111,{
 		mes "being drained if I stay here";
 		mes "longer. After a glimpse of";
 		mes "the cherry tree, I thought to";
-		mes "mayself, 'I must get out of here quickly.'^000000";
+		mes "myself, 'I must get out of here quickly.'^000000";
 		close;
 	}
 	mes "^3355FFThere was a cherry tree";

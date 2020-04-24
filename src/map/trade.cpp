@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "trade.hpp"
@@ -6,20 +6,20 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../common/nullpo.h"
-#include "../common/socket.h"
+#include "../common/nullpo.hpp"
+#include "../common/socket.hpp"
 
+#include "atcommand.hpp"
+#include "battle.hpp"
+#include "chrif.hpp"
 #include "clif.hpp"
+#include "intif.hpp"
 #include "itemdb.hpp"
+#include "log.hpp"
 #include "path.hpp"
 #include "pc.hpp"
-#include "chrif.hpp"
-#include "storage.hpp"
-#include "intif.hpp"
-#include "atcommand.hpp"
-#include "log.hpp"
 #include "pc_groups.hpp"
-#include "battle.hpp"
+#include "storage.hpp"
 
 #define TRADE_DISTANCE 2 ///Max distance from traders to enable a trade to take place.
 
@@ -32,7 +32,7 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 {
 	nullpo_retv(sd);
 
-	if (map[sd->bl.m].flag.notrade) {
+	if (map_getmapflag(sd->bl.m, MF_NOTRADE)) {
 		clif_displaymessage (sd->fd, msg_txt(sd,272));
 		return; //Can't trade in notrade mapflag maps.
 	}
@@ -385,6 +385,9 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 		return;
 	}
 
+	if (itemdb_ishatched_egg(item))
+		return;
+
 	if( item->expire_time ) { // Rental System
 		clif_displaymessage (sd->fd, msg_txt(sd,260));
 		clif_tradeitemok(sd, index+2, 1);
@@ -394,6 +397,11 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 	if( ((item->bound == BOUND_ACCOUNT || item->bound > BOUND_GUILD) || (item->bound == BOUND_GUILD && sd->status.guild_id != target_sd->status.guild_id)) && !pc_can_give_bounded_items(sd) ) { // Item Bound
 		clif_displaymessage(sd->fd, msg_txt(sd,293));
 		clif_tradeitemok(sd, index+2, 1);
+		return;
+	}
+
+	if( item->equipSwitch ){
+		clif_msg(sd, C_ITEM_EQUIP_SWITCH);
 		return;
 	}
 

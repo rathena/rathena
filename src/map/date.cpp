@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "date.hpp"
@@ -123,6 +123,8 @@ int date_get( enum e_date_type type )
 			return date_get_year();
 		case DT_DAYOFYEAR:
 			return date_get_dayofyear();
+		case DT_YYYYMMDD:
+			return date_get( DT_YEAR ) * 10000 + date_get( DT_MONTH ) * 100 + date_get(DT_DAYOFMONTH);
 		default:
 			return -1;
 	}
@@ -133,7 +135,7 @@ int date_get( enum e_date_type type )
  */
 bool is_day_of_sun(void)
 {
-	return date_get_dayofyear()%2 == 0;
+	return (date_get_dayofyear()+1)%2 == 0;
 }
 
 /*
@@ -141,7 +143,7 @@ bool is_day_of_sun(void)
  */
 bool is_day_of_moon(void)
 {
-	return date_get_dayofyear()%2 == 1;
+	return (date_get_dayofyear()+1)%2 == 1;
 }
 
 /*
@@ -149,5 +151,5 @@ bool is_day_of_moon(void)
  */
 bool is_day_of_star(void)
 {
-	return date_get_dayofyear()%5 == 0;
+	return (date_get_dayofyear()+1)%5 == 0;
 }

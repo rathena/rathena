@@ -20,7 +20,7 @@ prontera,132,217,5	script	Banker	109,{
 	mes "[Banker]";
 	mes "Welcome to the First Bank of Prontera. How can I help you today?";
 	next;
-	switch(select("I'd like to make a deposit.:I'd like to make a withdrawl.:What's my current balance?:Cancel")) {
+	switch(select("I'd like to make a deposit.:I'd like to make a withdrawal.:What's my current balance?:Cancel")) {
 	case 1:
 		mes "[Banker]";
 		mes "Very well... How much would you like to deposit? The maximum you can deposit at once is 999,999 Zeny.";
@@ -71,12 +71,12 @@ prontera,132,217,5	script	Banker	109,{
 		}
 		else if ((@cost > Zeny) && ((Zeny + @withdrawl) > @cost)) {
 			mes "[Banker]";
-			mes "You don't have the Zeny for the transaction fee right now. Would you like me to take the fee directly from your withdrawl?";
+			mes "You don't have the Zeny for the transaction fee right now. Would you like me to take the fee directly from your withdrawal?";
 			next;
 			switch(select("Yes please.:No, Thanks")){
 			case 1:
 				mes "[Banker]";
-				mes "Removing " + @cost + " from your withdrawl to cover the deposit fee...";
+				mes "Removing " + @cost + " from your withdrawal to cover the deposit fee...";
 				set @withdrawl,@withdrawl - @cost;
 				set #bankstorage,#bankstorage - @cost;
 				set @cost,0;

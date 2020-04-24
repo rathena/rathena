@@ -259,7 +259,7 @@ L_ITEM_1a:
 	close;
 L_ITEM_2a:
 	mes "[Pac]";
-	mes "Oh, dear. You need 300 Jellopys...";
+	mes "Oh, dear. You need 300 Jellopies...";
 	close;
 L1_29:
 	mes "[Pac]";
@@ -312,7 +312,7 @@ L2:
 	menu "Poring Hat",L2_26,"Sphinx Hat",L2_29;
 L2_26:
 	mes "[Pac]";
-	mes "You need 1 Poring Doll and 300 Jellopys for Poring Hat.";
+	mes "You need 1 Poring Doll and 300 Jellopies for Poring Hat.";
 	close;
 L2_29:
 	mes "[Pac]";

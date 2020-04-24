@@ -1,13 +1,14 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CHRIF_HPP_
-#define _CHRIF_HPP_
+#ifndef CHRIF_HPP
+#define CHRIF_HPP
 
 #include <time.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/socket.h" // enum chrif_req_op
+#include "../common/cbasetypes.hpp"
+#include "../common/timer.hpp" // t_tick
+#include "../common/socket.hpp" // enum chrif_req_op
 
 //fwd declaration
 struct map_session_data;
@@ -30,7 +31,7 @@ struct auth_node {
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 	struct map_session_data *sd;	//Data from logged on char.
 	struct mmo_charstatus *char_dat;	//Data from char server.
-	unsigned int node_created; //timestamp for node timeouts
+	t_tick node_created; //timestamp for node timeouts
 	enum sd_state state; //To track whether player was login in/out or changing maps.
 };
 
@@ -68,7 +69,6 @@ int chrif_req_login_operation(int aid, const char* character_name, enum chrif_re
 int chrif_updatefamelist(struct map_session_data *sd);
 int chrif_buildfamelist(void);
 int chrif_save_scdata(struct map_session_data *sd);
-int chrif_ragsrvinfo(int base_rate,int job_rate, int drop_rate);
 int chrif_char_offline(struct map_session_data *sd);
 int chrif_char_offline_nsd(uint32 account_id, uint32 char_id);
 int chrif_char_reset_offline(void);
@@ -92,4 +92,4 @@ void do_init_chrif(void);
 
 int chrif_flush_fifo(void);
 
-#endif /* _CHRIF_HPP_ */
+#endif /* CHRIF_HPP */

@@ -38,7 +38,7 @@ function Dyes;
 		case 1:
 			mes .n$;
 			mes "Life may have gotten a bit better, but when I look at all of the orders I've received... Whew!";
-			mes "It seems that the young women of Rune Midgard must be very well off these days.";
+			mes "It seems that the young women of Rune-Midgarts must be very well off these days.";
 			next;
 			mes .n$;
 			mes "Not that I think that they are indulging in anything luxurious, mind you.";

@@ -1,12 +1,13 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _SCRIPT_HPP_
-#define _SCRIPT_HPP_
+#ifndef SCRIPT_HPP
+#define SCRIPT_HPP
 
-#include "../common/cbasetypes.h"
-#include "../common/db.h"
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/db.hpp"
+#include "../common/mmo.hpp"
+#include "../common/timer.hpp"
 
 #define NUM_WHISPER_VAR 10
 
@@ -45,10 +46,11 @@
 /// Pushes a copy of the data in the target index
 #define script_pushcopy(st,i) push_copy((st)->stack, (st)->start + (i))
 
-#define script_isstring(st,i) data_isstring(script_getdata(st,i))
-#define script_isint(st,i) data_isint(script_getdata(st,i))
+#define script_isstring(st,i) data_isstring(get_val(st, script_getdata(st,i)))
+#define script_isint(st,i) data_isint(get_val(st, script_getdata(st,i)))
 
 #define script_getnum(st,val) conv_num(st, script_getdata(st,val))
+#define script_getnum64(st,val) conv_num64(st, script_getdata(st,val))
 #define script_getstr(st,val) conv_str(st, script_getdata(st,val))
 #define script_getref(st,val) ( script_getdata(st,val)->ref )
 // Returns name of currently running function
@@ -158,7 +160,6 @@ struct Script_Config {
 	const char *loadmap_event_name;
 	const char *baselvup_event_name;
 	const char *joblvup_event_name;
-	const char *stat_calc_event_name;
 
 	// NPC related
 	const char* ontouch_event_name;
@@ -378,10 +379,12 @@ enum petinfo_types {
 	PETINFO_HUNGRY,
 	PETINFO_RENAMED,
 	PETINFO_LEVEL,
-	PETINFO_BLOCKID
+	PETINFO_BLOCKID,
+	PETINFO_EGGID,
+	PETINFO_FOODID
 };
 
-enum questinfo_types {
+enum e_questinfo_types {
 	QTYPE_QUEST = 0,
 	QTYPE_QUEST2,
 	QTYPE_JOB,
@@ -389,10 +392,22 @@ enum questinfo_types {
 	QTYPE_EVENT,
 	QTYPE_EVENT2,
 	QTYPE_WARG,
-	// 7 = free
-	QTYPE_WARG2 = 8,
-	// 9 - 9998 = free
+	QTYPE_CLICKME = QTYPE_WARG,
+	QTYPE_DAILYQUEST,
+	QTYPE_WARG2,
+	QTYPE_EVENT3 = QTYPE_WARG2,
+	QTYPE_JOBQUEST,
+	QTYPE_JUMPING_PORING,
+	// 11 - 9998 = free
 	QTYPE_NONE = 9999
+};
+
+enum e_questinfo_markcolor : uint8 {
+	QMARK_NONE = 0,
+	QMARK_YELLOW,
+	QMARK_GREEN,
+	QMARK_PURPLE,
+	QMARK_MAX
 };
 
 #ifndef WIN32
@@ -409,16 +424,6 @@ enum questinfo_types {
 	#define FW_EXTRABOLD        800
 	#define FW_HEAVY            900
 #endif
-
-enum getmapxy_types {
-	UNITTYPE_PC = 0,
-	UNITTYPE_NPC,
-	UNITTYPE_PET,
-	UNITTYPE_MOB,
-	UNITTYPE_HOM,
-	UNITTYPE_MER,
-	UNITTYPE_ELEM,
-};
 
 enum unitdata_mobtypes {
 	UMOB_SIZE = 0,
@@ -470,6 +475,9 @@ enum unitdata_mobtypes {
 	UMOB_AMOTION,
 	UMOB_ADELAY,
 	UMOB_DMOTION,
+	UMOB_TARGETID,
+	UMOB_ROBE,
+	UMOB_BODY2,
 };
 
 enum unitdata_homuntypes {
@@ -512,6 +520,7 @@ enum unitdata_homuntypes {
 	UHOM_AMOTION,
 	UHOM_ADELAY,
 	UHOM_DMOTION,
+	UHOM_TARGETID,
 };
 
 enum unitdata_pettypes {
@@ -591,6 +600,7 @@ enum unitdata_merctypes {
 	UMER_AMOTION,
 	UMER_ADELAY,
 	UMER_DMOTION,
+	UMER_TARGETID,
 };
 
 enum unitdata_elemtypes {
@@ -632,11 +642,11 @@ enum unitdata_elemtypes {
 	UELE_AMOTION,
 	UELE_ADELAY,
 	UELE_DMOTION,
+	UELE_TARGETID,
 };
 
 enum unitdata_npctypes {
-	UNPC_DISPLAY = 0,
-	UNPC_LEVEL,
+	UNPC_LEVEL = 0,
 	UNPC_HP,
 	UNPC_MAXHP,
 	UNPC_MAPID,
@@ -668,6 +678,19 @@ enum unitdata_npctypes {
 	UNPC_AMOTION,
 	UNPC_ADELAY,
 	UNPC_DMOTION,
+	UNPC_SEX,
+	UNPC_CLASS,
+	UNPC_HAIRSTYLE,
+	UNPC_HAIRCOLOR,
+	UNPC_HEADBOTTOM,
+	UNPC_HEADMIDDLE,
+	UNPC_HEADTOP,
+	UNPC_CLOTHCOLOR,
+	UNPC_SHIELD,
+	UNPC_WEAPON,
+	UNPC_ROBE,
+	UNPC_BODY2,
+	UNPC_DEADSIT,
 };
 
 enum navigation_service {
@@ -696,6 +719,12 @@ enum instance_info_type {
 	IIT_ENTER_Y,
 	IIT_MAPCOUNT,
 	IIT_MAP
+};
+
+enum e_instance_live_info_type : uint8 {
+	ILI_NAME,
+	ILI_MODE,
+	ILI_OWNER
 };
 
 enum vip_status_type {
@@ -1865,7 +1894,110 @@ enum e_hat_effects {
 	HAT_EF_QSCARABA,
 	HAT_EF_FSTONE,
 	HAT_EF_MAGICCIRCLE,
+	HAT_EF_GODCLASS,
+	HAT_EF_GODCLASS2,
+	HAT_EF_LEVEL99_RED,
+	HAT_EF_LEVEL99_ULTRAMARINE,
+	HAT_EF_LEVEL99_CYAN,
+	HAT_EF_LEVEL99_LIME,
+	HAT_EF_LEVEL99_VIOLET,
+	HAT_EF_LEVEL99_LILAC,
+	HAT_EF_LEVEL99_SUN_ORANGE,
+	HAT_EF_LEVEL99_DEEP_PINK,
+	HAT_EF_LEVEL99_BLACK,
+	HAT_EF_LEVEL99_WHITE,
+	HAT_EF_LEVEL160_RED,
+	HAT_EF_LEVEL160_ULTRAMARINE,
+	HAT_EF_LEVEL160_CYAN,
+	HAT_EF_LEVEL160_LIME,
+	HAT_EF_LEVEL160_VIOLET,
+	HAT_EF_LEVEL160_LILAC,
+	HAT_EF_LEVEL160_SUN_ORANGE,
+	HAT_EF_LEVEL160_DEEP_PINK,
+	HAT_EF_LEVEL160_BLACK,
+	HAT_EF_LEVEL160_WHITE,
+	HAT_EF_FULL_BLOOMCHERRY_TREE,
+	HAT_EF_C_BLESSINGS_OF_SOUL,
+	HAT_EF_MANYSTARS,
+	HAT_EF_SUBJECT_AURA_GOLD,
+	HAT_EF_SUBJECT_AURA_WHITE,
+	HAT_EF_SUBJECT_AURA_RED,
+	HAT_EF_C_SHINING_ANGEL_WING,
+	HAT_EF_MAGIC_STAR_TW,
+	HAT_EF_DIGITAL_SPACE,
+	HAT_EF_SLEIPNIR,
+	HAT_EF_C_MAPLE_WHICH_FALLS_RD,
+	HAT_EF_MAGICCIRCLERAINBOW,
+	HAT_EF_SNOWFLAKE_TIARA,
+	HAT_EF_MIDGARTS_GLORY,
+	HAT_EF_LEVEL99_TIGER,
+	HAT_EF_LEVEL160_TIGER,
+	HAT_EF_FLUFFYWING,
+	HAT_EF_C_GHOST_EFFECT,
+	HAT_EF_C_POPPING_PORING_AURA,
+	HAT_EF_RESONATETAEGO,
+	HAT_EF_99LV_RUNE_RED,
+	HAT_EF_99LV_ROYAL_GUARD_BLUE,
+	HAT_EF_99LV_WARLOCK_VIOLET,
+	HAT_EF_99LV_SORCERER_LBLUE,
+	HAT_EF_99LV_RANGER_GREEN,
+	HAT_EF_99LV_MINSTREL_PINK,
+	HAT_EF_99LV_ARCHBISHOP_WHITE,
+	HAT_EF_99LV_GUILL_SILVER,
+	HAT_EF_99LV_SHADOWC_BLACK,
+	HAT_EF_99LV_MECHANIC_GOLD,
+	HAT_EF_99LV_GENETIC_YGREEN,
+	HAT_EF_160LV_RUNE_RED,
+	HAT_EF_160LV_ROYAL_G_BLUE,
+	HAT_EF_160LV_WARLOCK_VIOLET,
+	HAT_EF_160LV_SORCERER_LBLUE,
+	HAT_EF_160LV_RANGER_GREEN,
+	HAT_EF_160LV_MINSTREL_PINK,
+	HAT_EF_160LV_ARCHB_WHITE,
+	HAT_EF_160LV_GUILL_SILVER,
+	HAT_EF_160LV_SHADOWC_BLACK,
+	HAT_EF_160LV_MECHANIC_GOLD,
+	HAT_EF_160LV_GENETIC_YGREEN,
+	HAT_EF_WATER_BELOW3,
+	HAT_EF_WATER_BELOW4,
+	HAT_EF_C_VALKYRIE_WING,
+	HAT_EF_2019RTC_CELEAURA_TW,
+	HAT_EF_2019RTC1ST_TW,
+	HAT_EF_2019RTC2ST_TW,
+	HAT_EF_2019RTC3ST_TW,
+	HAT_EF_CONS_OF_WIND,
+	HAT_EF_MAPLE_FALLS,
+	HAT_EF_BJ_HEADSETB,
+	HAT_EF_VIP_HAIR,
+	HAT_EF_C_MAGIC_HEIR_TW,
+	HAT_EF_C_SUDDEN_WEALTH_TW,
+	HAT_EF_C_ROMANCE_ROSE_TW,
+	HAT_EF_C_DISAPEAR_TIME_TW,
 	HAT_EF_MAX
+};
+
+enum e_convertpcinfo_type : uint8 {
+	CPC_NAME      = 0,
+	CPC_CHAR      = 1,
+	CPC_ACCOUNT   = 2
+};
+
+/**
+ * Player blocking actions related flags.
+ */
+enum e_pcblock_action_flag : uint16 {
+	PCBLOCK_MOVE     = 0x001,
+	PCBLOCK_ATTACK   = 0x002,
+	PCBLOCK_SKILL    = 0x004,
+	PCBLOCK_USEITEM  = 0x008,
+	PCBLOCK_CHAT     = 0x010,
+	PCBLOCK_IMMUNE   = 0x020,
+	PCBLOCK_SITSTAND = 0x040,
+	PCBLOCK_COMMANDS = 0x080,
+	PCBLOCK_NPCCLICK = 0x100,
+	PCBLOCK_NPC      = 0x18D,
+	PCBLOCK_EMOTION  = 0x200,
+	PCBLOCK_ALL      = 0x3FF,
 };
 
 /**
@@ -1886,14 +2018,19 @@ bool is_number(const char *p);
 struct script_code* parse_script(const char* src,const char* file,int line,int options);
 void run_script(struct script_code *rootscript,int pos,int rid,int oid);
 
-int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const void* value, struct reg_db *ref);
-int set_var(struct map_session_data *sd, char *name, void *val);
-int conv_num(struct script_state *st,struct script_data *data);
+bool set_reg_num(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const int64 value, struct reg_db *ref);
+bool set_reg_str(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const char* value, struct reg_db* ref);
+bool set_var_str(struct map_session_data *sd, const char* name, const char* val);
+bool clear_reg( struct script_state* st, struct map_session_data* sd, int64 num, const char* name, struct reg_db *ref );
+int64 conv_num64(struct script_state *st, struct script_data *data);
+int conv_num(struct script_state *st, struct script_data *data);
 const char* conv_str(struct script_state *st,struct script_data *data);
 void pop_stack(struct script_state* st, int start, int end);
-int run_script_timer(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(run_script_timer);
 void script_stop_sleeptimers(int id);
 struct linkdb_node *script_erase_sleepdb(struct linkdb_node *n);
+void script_attach_state(struct script_state* st);
+void script_detach_rid(struct script_state* st);
 void run_script_main(struct script_state *st);
 
 void script_stop_scriptinstances(struct script_code *code);
@@ -1906,13 +2043,15 @@ struct DBMap* script_get_label_db(void);
 struct DBMap* script_get_userfunc_db(void);
 void script_run_autobonus(const char *autobonus, struct map_session_data *sd, unsigned int pos);
 
-bool script_get_parameter(const char* name, int* value);
-bool script_get_constant(const char* name, int* value);
-void script_set_constant(const char* name, int value, bool isparameter, bool deprecated);
+const char* script_get_constant_str(const char* prefix, int64 value);
+bool script_get_parameter(const char* name, int64* value);
+bool script_get_constant(const char* name, int64* value);
+void script_set_constant_(const char* name, int64 value, const char* constant_name, bool isparameter, bool deprecated);
+#define script_set_constant(name, value, isparameter, deprecated) script_set_constant_(name, value, NULL, isparameter, deprecated)
 void script_hardcoded_constants(void);
 
-void script_cleararray_pc(struct map_session_data* sd, const char* varname, void* value);
-void script_setarray_pc(struct map_session_data* sd, const char* varname, uint32 idx, void* value, int* refcache);
+void script_cleararray_pc(struct map_session_data* sd, const char* varname);
+void script_setarray_pc(struct map_session_data* sd, const char* varname, uint32 idx, int64 value, int* refcache);
 
 int script_config_read(const char *cfgName);
 void do_init_script(void);
@@ -1921,8 +2060,8 @@ int add_str(const char* p);
 const char* get_str(int id);
 void script_reload(void);
 
-// @commands (script based)
-void setd_sub(struct script_state *st, struct map_session_data *sd, const char *varname, int elem, void *value, struct reg_db *ref);
+void setd_sub_num( struct script_state* st, struct map_session_data* sd, const char* varname, int elem, int64 value, struct reg_db* ref );
+void setd_sub_str( struct script_state* st, struct map_session_data* sd, const char* varname, int elem, const char* value, struct reg_db* ref );
 
 /**
  * Array Handling
@@ -1943,10 +2082,6 @@ int script_reg_destroy(DBKey key, DBData *data, va_list ap);
 void script_generic_ui_array_expand(unsigned int plus);
 unsigned int *script_array_cpy_list(struct script_array *sa);
 
-#ifdef BETA_THREAD_TEST
-void queryThread_log(char * entry, int length);
-#endif
-
 bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen);
 
-#endif /* _SCRIPT_HPP_ */
+#endif /* SCRIPT_HPP */

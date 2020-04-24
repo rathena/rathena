@@ -1,36 +1,37 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "intif.hpp"
 
 #include <stdlib.h>
 
-#include "../common/showmsg.h"
-#include "../common/socket.h"
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/strlib.h"
-#include "../common/mmo.h"
-#include "../common/timer.h"
+#include "../common/malloc.hpp"
+#include "../common/mmo.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
-#include "map.hpp"
+#include "achievement.hpp"
 #include "battle.hpp"
 #include "chrif.hpp"
 #include "clan.hpp"
-#include "guild.hpp"
 #include "clif.hpp"
-#include "pc.hpp"
-#include "storage.hpp"
-#include "party.hpp"
-#include "pet.hpp"
-#include "mercenary.hpp"
-#include "homunculus.hpp"
 #include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
+#include "log.hpp"
 #include "mail.hpp"
+#include "map.hpp"
+#include "mercenary.hpp"
+#include "party.hpp"
+#include "pc.hpp"
+#include "pc_groups.hpp"
+#include "pet.hpp"
 #include "quest.hpp"
 #include "status.hpp"
-#include "achievement.hpp"
-#include "log.hpp"
+#include "storage.hpp"
 
 /// Received packet Lengths from inter-server
 static const int packet_len_table[] = {
@@ -205,6 +206,10 @@ int intif_rename(struct map_session_data *sd, int type, char *name)
  */
 int intif_broadcast(const char* mes, int len, int type)
 {
+	nullpo_ret(mes);
+	if (len < 2)
+		return 0;
+
 	int lp = (type|BC_COLOR_MASK) ? 4 : 0;
 
 	// Send to the local players
@@ -246,6 +251,10 @@ int intif_broadcast(const char* mes, int len, int type)
  */
 int intif_broadcast2(const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY)
 {
+	nullpo_ret(mes);
+	if (len < 2)
+		return 0;
+
 	// Send to the local players
 	clif_broadcast2(NULL, mes, len, fontColor, fontType, fontSize, fontAlign, fontY, ALL_CLIENT);
 
@@ -428,7 +437,7 @@ int intif_saveregistry(struct map_session_data *sd)
 		++len;
 
 		if (!lValid) { //this is sql colum size, must be retrive from config
-			ShowError("intif_saveregistry: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%d\n", sd->status.account_id, sd->status.char_id, varname, len);
+			ShowError("intif_saveregistry: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%" PRIuPTR "\n", sd->status.account_id, sd->status.char_id, varname, len);
 			continue;
 		}
 		WFIFOB(inter_fd, plen) = (unsigned char)len; // won't be higher; the column size is 32
@@ -450,7 +459,7 @@ int intif_saveregistry(struct map_session_data *sd)
 				lValid = script_check_RegistryVariableLength(1,p->value,&len);
 				++len;
 				if ( !lValid ) { // error can't be higher; the column size is 254. (nb the transmission limit with be fixed with protobuf revamp)
-					ShowDebug( "intif_saveregistry: Variable value length is too long (aid: %d, cid: %d): '%s' sz=%d to be saved with current system and will be truncated\n",sd->status.account_id, sd->status.char_id,p->value,len);
+					ShowDebug( "intif_saveregistry: Variable value length is too long (aid: %d, cid: %d): '%s' sz=%" PRIuPTR " to be saved with current system and will be truncated\n",sd->status.account_id, sd->status.char_id,p->value,len);
 					len = 254;
 					p->value[len - 1] = '\0'; //this is backward for old char-serv but new one doesn't need this
 				}
@@ -471,8 +480,8 @@ int intif_saveregistry(struct map_session_data *sd)
 			plen += 1;
 
 			if( p->value ) {
-				WFIFOL(inter_fd, plen) = p->value;
-				plen += 4;
+				WFIFOQ(inter_fd, plen) = p->value;
+				plen += 8;
 			} else {
 				script_reg_destroy_single(sd,key.i64,&p->flag);
 			}
@@ -690,9 +699,14 @@ int intif_party_changemap(struct map_session_data *sd,int online)
 	if(!sd)
 		return 0;
 
-	if( (m=map_mapindex2mapid(sd->mapindex)) >= 0 && map[m].instance_id )
-		mapindex = map[map[m].instance_src_map].index;
-	else
+	if ((m = map_mapindex2mapid(sd->mapindex)) >= 0) {
+		struct map_data *mapdata = map_getmapdata(m);
+
+		if (mapdata->instance_id)
+			mapindex = map_getmapdata(mapdata->instance_src_map)->index;
+		else
+			mapindex = sd->mapindex;
+	} else
 		mapindex = sd->mapindex;
 
 	WFIFOHEAD(inter_fd,19);
@@ -1261,7 +1275,7 @@ int intif_parse_WisMessage(int fd)
 		return 0;
 	}
 	if(sd->state.ignoreAll) {
-		intif_wis_reply(id, 2);
+		intif_wis_reply(id, (pc_has_permission(sd, PC_PERM_HIDE_SESSION))?1:2);
 		return 0;
 	}
 	wisp_source = RFIFOCP(fd,12); // speed up [Yor]
@@ -1272,7 +1286,7 @@ int intif_parse_WisMessage(int fd)
 
 	if (i < MAX_IGNORE_LIST && sd->ignore[i].name[0] != '\0')
 	{	//Ignored
-		intif_wis_reply(id, 2);
+		intif_wis_reply(id, (pc_has_permission(sd, PC_PERM_HIDE_SESSION))?1:2);
 		return 0;
 	}
 	//Success to send whisper.
@@ -1394,7 +1408,7 @@ void intif_parse_Registers(int fd)
 	
 	if( RFIFOW(fd, 14) ) {
 		char key[32];
-		unsigned int index;
+		uint32 index;
 		int max = RFIFOW(fd, 14), cursor = 16, i;
 
 		/**
@@ -1415,7 +1429,7 @@ void intif_parse_Registers(int fd)
 				safestrncpy(sval, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 				cursor += RFIFOB(fd, cursor) + 1;
 
-				set_reg(NULL,sd,reference_uid(add_str(key), index), key, (void*)sval, NULL);
+				set_reg_str( NULL, sd, reference_uid( add_str( key ), index ), key, sval, NULL );
 			}
 		/**
 		 * Vessel!
@@ -1425,17 +1439,17 @@ void intif_parse_Registers(int fd)
 		 **/
 		} else {
 			for(i = 0; i < max; i++) {
-				int ival;
+				int64 ival;
 				safestrncpy(key, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 				cursor += RFIFOB(fd, cursor) + 1;
 
 				index = RFIFOL(fd, cursor);
 				cursor += 4;
 
-				ival = RFIFOL(fd, cursor);
-				cursor += 4;
+				ival = RFIFOQ(fd, cursor);
+				cursor += 8;
 
-				set_reg(NULL,sd,reference_uid(add_str(key), index), key, (void*)__64BPRTSIZE(ival), NULL);
+				set_reg_num( NULL, sd, reference_uid( add_str( key ), index ), key, ival, NULL );
 			}
 		}
 	}
@@ -1483,7 +1497,7 @@ int intif_parse_LoadGuildStorage(int fd)
 		return 0;
 	}
 	if (RFIFOW(fd,2)-13 != sizeof(struct s_storage)) {
-		ShowError("intif_parse_LoadGuildStorage: data size error %d %d\n",RFIFOW(fd,2)-13 , sizeof(struct s_storage));
+		ShowError("intif_parse_LoadGuildStorage: data size error %d %" PRIuPTR "\n",RFIFOW(fd,2)-13 , sizeof(struct s_storage));
 		gstor->status = false;
 		return 0;
 	}
@@ -1533,7 +1547,7 @@ int intif_parse_PartyInfo(int fd)
 	}
 
 	if( RFIFOW(fd,2) != 8+sizeof(struct party) )
-		ShowError("intif: party info : data size error (char_id=%d party_id=%d packet_len=%d expected_len=%d)\n", RFIFOL(fd,4), RFIFOL(fd,8), RFIFOW(fd,2), 8+sizeof(struct party));
+		ShowError("intif: party info : data size error (char_id=%d party_id=%d packet_len=%d expected_len=%" PRIuPTR ")\n", RFIFOL(fd,4), RFIFOL(fd,8), RFIFOW(fd,2), 8+sizeof(struct party));
 	party_recv_info((struct party *)RFIFOP(fd,8), RFIFOL(fd,4));
 	return 1;
 }
@@ -1632,7 +1646,7 @@ int intif_parse_GuildInfo(int fd)
 		return 0;
 	}
 	if( RFIFOW(fd,2)!=sizeof(struct guild)+4 )
-		ShowError("intif: guild info : data size error Gid: %d recv size: %d Expected size: %d\n",RFIFOL(fd,4),RFIFOW(fd,2),sizeof(struct guild)+4);
+		ShowError("intif: guild info : data size error Gid: %d recv size: %d Expected size: %" PRIuPTR "\n",RFIFOL(fd,4),RFIFOW(fd,2),sizeof(struct guild)+4);
 	guild_recv_info((struct guild *)RFIFOP(fd,4));
 	return 1;
 }
@@ -1755,7 +1769,7 @@ int intif_parse_GuildMemberInfoChanged(int fd)
 int intif_parse_GuildPosition(int fd)
 {
 	if( RFIFOW(fd,2)!=sizeof(struct guild_position)+12 )
-		ShowError("intif: guild info : data size error\n %d %d %d",RFIFOL(fd,4),RFIFOW(fd,2),sizeof(struct guild_position)+12);
+		ShowError("intif: guild info : data size error %d %d %" PRIuPTR "\n",RFIFOL(fd,4),RFIFOW(fd,2),sizeof(struct guild_position)+12);
 	guild_position_changed(RFIFOL(fd,4),RFIFOL(fd,8),(struct guild_position *)RFIFOP(fd,12));
 	return 1;
 }
@@ -1858,7 +1872,7 @@ int intif_parse_RecvPetData(int fd)
 	len=RFIFOW(fd,2);
 	if(sizeof(struct s_pet)!=len-9) {
 		if(battle_config.etc_log)
-			ShowError("intif: pet data: data size error %d %d\n",sizeof(struct s_pet),len-9);
+			ShowError("intif: pet data: data size error %" PRIuPTR " %d\n",sizeof(struct s_pet),len-9);
 	}
 	else{
 		memcpy(&p,RFIFOP(fd,9),sizeof(struct s_pet));
@@ -1933,7 +1947,7 @@ int intif_parse_CreateHomunculus(int fd)
 	len=RFIFOW(fd,2)-9;
 	if(sizeof(struct s_homunculus)!=len) {
 		if(battle_config.etc_log)
-			ShowError("intif: create homun data: data size error %d != %d\n",sizeof(struct s_homunculus),len);
+			ShowError("intif: create homun data: data size error %" PRIuPTR " != %d\n",sizeof(struct s_homunculus),len);
 		return 0;
 	}
 	hom_recv_data(RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,9), RFIFOB(fd,8)) ;
@@ -1953,7 +1967,7 @@ int intif_parse_RecvHomunculusData(int fd)
 
 	if(sizeof(struct s_homunculus)!=len) {
 		if(battle_config.etc_log)
-			ShowError("intif: homun data: data size error %d %d\n",sizeof(struct s_homunculus),len);
+			ShowError("intif: homun data: data size error %" PRIuPTR " %d\n",sizeof(struct s_homunculus),len);
 		return 0;
 	}
 	hom_recv_data(RFIFOL(fd,4), (struct s_homunculus*)RFIFOP(fd,9), RFIFOB(fd,8));
@@ -2028,15 +2042,15 @@ void intif_parse_questlog(int fd)
 		}
 	} else {
 		struct quest *received = (struct quest *)RFIFOP(fd,8);
-		int i, k = num_received;
+		int k = num_received;
 
 		if(sd->quest_log)
 			RECREATE(sd->quest_log, struct quest, num_received);
 		else
 			CREATE(sd->quest_log, struct quest, num_received);
 
-		for(i = 0; i < num_received; i++) {
-			if(quest_search(received[i].quest_id) == &quest_dummy) {
+		for(int i = 0; i < num_received; i++) {
+			if(!quest_search(received[i].quest_id)) {
 				ShowError("intif_parse_QuestLog: quest %d not found in DB.\n", received[i].quest_id);
 				continue;
 			}
@@ -2145,13 +2159,12 @@ void intif_parse_achievements(int fd)
 			CREATE(sd->achievement_data.achievements, struct achievement, num_received);
 
 		for (i = 0; i < num_received; i++) {
+			std::shared_ptr<s_achievement_db> adb = achievement_db.find( received[i].achievement_id );
 
-			if (!achievement_exists(received[i].achievement_id)) {
-				ShowError("intif_parse_achievementlog: Achievement %d not found in DB.\n", received[i].achievement_id);
+			if (!adb) {
+				ShowError("intif_parse_achievements: Achievement %d not found in achievement_db.\n", received[i].achievement_id);
 				continue;
 			}
-
-			auto &adb = achievement_get(received[i].achievement_id);
 
 			received[i].score = adb->score;
 
@@ -2167,11 +2180,17 @@ void intif_parse_achievements(int fd)
 				memmove(&sd->achievement_data.achievements[k], &sd->achievement_data.achievements[sd->achievement_data.incompleteCount], sizeof(struct achievement) * (num_received - k));
 			sd->achievement_data.achievements = (struct achievement *)aRealloc(sd->achievement_data.achievements, sizeof(struct achievement) * sd->achievement_data.count);
 		}
-		achievement_level(sd, false); // Calculate level info but don't give any AG_GOAL_ACHIEVE achievements
-		achievement_get_titles(sd->status.char_id); // Populate the title list for completed achievements
-		clif_achievement_update(sd, NULL, 0);
-		clif_achievement_list_all(sd);
 	}
+
+	// Check all conditions and counters on login
+	for( int group = AG_NONE + 1; group < AG_MAX; group++ ){
+		achievement_update_objective( sd, static_cast<e_achievement_group>( group ), 0 );
+	}
+
+	achievement_level(sd, false); // Calculate level info but don't give any AG_GOAL_ACHIEVE achievements
+	achievement_get_titles(sd->status.char_id); // Populate the title list for completed achievements
+	clif_achievement_update(sd, NULL, 0);
+	clif_achievement_list_all(sd);
 }
 
 /**
@@ -2263,7 +2282,7 @@ int intif_achievement_reward(struct map_session_data *sd, struct s_achievement_d
  * Request to update inbox
  * @param char_id : Player ID linked with box
  * @param flag 0 Update Inbox | 1 OpenMail
- * @return 0=errur, 1=msg_sent
+ * @return 0=error, 1=msg_sent
  */
 int intif_Mail_requestinbox(uint32 char_id, unsigned char flag, enum mail_inbox_type type)
 {
@@ -2301,7 +2320,7 @@ int intif_parse_Mail_inboxreceived(int fd)
 
 	if (RFIFOW(fd,2) - 10 != sizeof(struct mail_data))
 	{
-		ShowError("intif_parse_Mail_inboxreceived: data size error %d %d\n", RFIFOW(fd,2) - 10, sizeof(struct mail_data));
+		ShowError("intif_parse_Mail_inboxreceived: data size error %d %" PRIuPTR "\n", RFIFOW(fd,2) - 10, sizeof(struct mail_data));
 		return 0;
 	}
 
@@ -2309,11 +2328,12 @@ int intif_parse_Mail_inboxreceived(int fd)
 	memcpy(&sd->mail.inbox, RFIFOP(fd,10), sizeof(struct mail_data));
 	sd->mail.changed = false; // cache is now in sync
 
-	if (flag){
 #if PACKETVER >= 20150513
-		// Refresh top right icon
-		clif_Mail_new(sd, 0, NULL, NULL);
+	// Refresh top right icon
+	clif_Mail_new(sd, 0, NULL, NULL);
 #endif
+
+	if (flag){
 		clif_Mail_refreshinbox(sd,static_cast<mail_inbox_type>(RFIFOB(fd,9)),0);
 	}else if( battle_config.mail_show_status && ( battle_config.mail_show_status == 1 || sd->mail.inbox.unread ) )
 	{
@@ -2376,7 +2396,7 @@ int intif_parse_Mail_getattach(int fd)
 
 	if (RFIFOW(fd, 2) - 16 != sizeof(struct item)*MAIL_MAX_ITEM)
 	{
-		ShowError("intif_parse_Mail_getattach: data size error %d %d\n", RFIFOW(fd, 2) - 16, sizeof(struct item));
+		ShowError("intif_parse_Mail_getattach: data size error %d %" PRIuPTR "\n", RFIFOW(fd, 2) - 16, sizeof(struct item));
 		return 0;
 	}
 
@@ -2558,7 +2578,7 @@ static void intif_parse_Mail_send(int fd)
 
 	if( RFIFOW(fd,2) - 4 != sizeof(struct mail_message) )
 	{
-		ShowError("intif_parse_Mail_send: data size error %d %d\n", RFIFOW(fd,2) - 4, sizeof(struct mail_message));
+		ShowError("intif_parse_Mail_send: data size error %d %" PRIuPTR "\n", RFIFOW(fd,2) - 4, sizeof(struct mail_message));
 		return;
 	}
 
@@ -2719,7 +2739,7 @@ static void intif_parse_Auction_register(int fd)
 
 	if( RFIFOW(fd,2) - 4 != sizeof(struct auction_data) )
 	{
-		ShowError("intif_parse_Auction_register: data size error %d %d\n", RFIFOW(fd,2) - 4, sizeof(struct auction_data));
+		ShowError("intif_parse_Auction_register: data size error %d %" PRIuPTR "\n", RFIFOW(fd,2) - 4, sizeof(struct auction_data));
 		return;
 	}
 
@@ -2929,7 +2949,7 @@ int intif_parse_mercenary_received(int fd)
 	if( sizeof(struct s_mercenary) != len )
 	{
 		if( battle_config.etc_log )
-			ShowError("intif: create mercenary data size error %d != %d\n", sizeof(struct s_mercenary), len);
+			ShowError("intif: create mercenary data size error %" PRIuPTR " != %d\n", sizeof(struct s_mercenary), len);
 		return 0;
 	}
 
@@ -3054,7 +3074,7 @@ int intif_parse_elemental_received(int fd)
 	if( sizeof(struct s_elemental) != len )
 	{
 		if( battle_config.etc_log )
-			ShowError("intif: create elemental data size error %d != %d\n", sizeof(struct s_elemental), len);
+			ShowError("intif: create elemental data size error %" PRIuPTR " != %d\n", sizeof(struct s_elemental), len);
 		return 0;
 	}
 
@@ -3151,7 +3171,7 @@ int intif_parse_elemental_saved(int fd)
  * @param group_lv : requesting player lv
  * @param query : name or aid of player we want info
  * @param type : 1 - Only return account id & userid, 0 - Full info
- * @return : 0=errur, 1=msg sent
+ * @return : 0=error, 1=msg sent
  */
 int intif_request_accinfo(int u_fd, int aid, int group_lv, char* query, char type) {
 
@@ -3221,12 +3241,12 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned sh
 
 	// Should not be here!
 	if (type == ITEMOBTAIN_TYPE_NPC) {
-		intif_broadcast_obtain_special_item_npc(sd, nameid, NULL /*wisp_server_name*/);
+		intif_broadcast_obtain_special_item_npc(sd, nameid);
 		return 0;
 	}
 
 	// Send local
-	clif_broadcast_obtain_special_item(sd->status.name, nameid, sourceid, (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type, NULL);
+	clif_broadcast_obtain_special_item(sd->status.name, nameid, sourceid, (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
 
 	if (CheckForCharServer())
 		return 0;
@@ -3255,11 +3275,11 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned sh
  * @param srcname Source name
  * @return
  **/
-int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid, const char *srcname) {
+int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid) {
 	nullpo_retr(0, sd);
 
 	// Send local
-	clif_broadcast_obtain_special_item(sd->status.name, nameid, 0, ITEMOBTAIN_TYPE_NPC, srcname);
+	clif_broadcast_obtain_special_item(sd->status.name, nameid, 0, ITEMOBTAIN_TYPE_NPC);
 
 	if (CheckForCharServer())
 		return 0;
@@ -3274,7 +3294,6 @@ int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigne
 	WFIFOW(inter_fd, 6) = 0;
 	WFIFOB(inter_fd, 8) = ITEMOBTAIN_TYPE_NPC;
 	safestrncpy(WFIFOCP(inter_fd, 9), sd->status.name, NAME_LENGTH);
-	safestrncpy(WFIFOCP(inter_fd, 9 + NAME_LENGTH), srcname, NAME_LENGTH);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
 
 	return 1;
@@ -3287,13 +3306,13 @@ int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigne
  **/
 void intif_parse_broadcast_obtain_special_item(int fd) {
 	int type = RFIFOB(fd, 8);
-	char name[NAME_LENGTH], srcname[NAME_LENGTH];
+	char name[NAME_LENGTH];
 
 	safestrncpy(name, RFIFOCP(fd, 9), NAME_LENGTH);
 	if (type == ITEMOBTAIN_TYPE_NPC)
 		safestrncpy(name, RFIFOCP(fd, 9 + NAME_LENGTH), NAME_LENGTH);
 
-	clif_broadcast_obtain_special_item(name, RFIFOW(fd, 4), RFIFOW(fd, 6), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type, srcname);
+	clif_broadcast_obtain_special_item(name, RFIFOW(fd, 4), RFIFOW(fd, 6), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
 }
 
 /*==========================================
@@ -3422,7 +3441,7 @@ static bool intif_parse_StorageReceived(int fd)
 		}
 	}
 	if (RFIFOW(fd,2)-10 != sz_stor) {
-		ShowError("intif_parse_StorageReceived: data size error %d %d\n",RFIFOW(fd,2)-10 , sz_stor);
+		ShowError("intif_parse_StorageReceived: data size error %d %" PRIuPTR "\n",RFIFOW(fd,2)-10 , sz_stor);
 		stor->status = false;
 		return false;
 	}

@@ -103,7 +103,7 @@ L_Treat:
 	emotion ET_CONGRATULATION;
 	next;
 	mes "[Hallows' Eve Event]";
-	mes "Enjoy the rest of your halloween.";
+	mes "Enjoy the rest of your Halloween.";
 	emotion ET_SCISSOR, playerattached();
 	close;
 

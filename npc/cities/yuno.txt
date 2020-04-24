@@ -236,7 +236,7 @@ yuno,157,205,4	script	Juno Artisan#juno	54,{
 		close;
 	case 4:
 		mes "[Artisan]";
-		mes "Although Juno is known as a city of Sages, I hope you understand that ordinary people live and propser here as well. Please enjoy the unique atmosphere that Juno has to offer.";
+		mes "Although Juno is known as a city of Sages, I hope you understand that ordinary people live and prosper here as well. Please enjoy the unique atmosphere that Juno has to offer.";
 		close;
 	}
 }
@@ -367,7 +367,7 @@ yuno,142,183,5	script	Airship Representative	100,{
 	mes "[Airship Representative]";
 	mes "The teleport fee is 1,800 zeny, regardless of where you want to go. Please let me know your desired destination.";
 	next;
-	switch(select("Prontera:Izlude:Geffen:Morroc:Payon:Alberta:Comodo:Cancel")) {
+	switch(select("Prontera:Izlude:Geffen:Morocc:Payon:Alberta:Comodo:Cancel")) {
 		case 1: callsub S_Warp,"prontera",116,72;
 		case 2: if (checkre(0)) callsub S_Warp,"izlude",128,98; else callsub S_Warp,"izlude",94,103;
 		case 3: callsub S_Warp,"geffen",120,39;

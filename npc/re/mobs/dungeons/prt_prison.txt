@@ -1,0 +1,12 @@
+//===== rAthena Script =======================================
+//= Episode 16.1 Monsters Spawn Script
+//===== Description: =========================================
+//= Spawns monsters in prt_prison.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+// Prontera Underground Prison
+prt_prison,0,0	monster	Frozen Wolf	3442,20
+prt_prison,0,0	monster	Taffy	3443,50
+prt_prison,0,0	monster	Watcher 	3444,30

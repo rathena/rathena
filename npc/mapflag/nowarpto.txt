@@ -161,3 +161,22 @@ bossnia_01	mapflag	nowarpto
 bossnia_02	mapflag	nowarpto
 bossnia_03	mapflag	nowarpto
 bossnia_04	mapflag	nowarpto
+
+// RWC Maps ===============
+2009rwc_01	mapflag	nowarpto
+2009rwc_02	mapflag	nowarpto
+2009rwc_03	mapflag	nowarpto
+2009rwc_04	mapflag	nowarpto
+2009rwc_05	mapflag	nowarpto
+2009rwc_06	mapflag	nowarpto
+2009rwc_07	mapflag	nowarpto
+2009rwc_08	mapflag	nowarpto
+2009rwc_f01	mapflag	nowarpto
+2012rwc_01	mapflag	nowarpto
+2012rwc_02	mapflag	nowarpto
+2012rwc_03	mapflag	nowarpto
+2012rwc_04	mapflag	nowarpto
+2012rwc_05	mapflag	nowarpto
+2012rwc_06	mapflag	nowarpto
+2012rwc_07	mapflag	nowarpto
+2012rwc_08	mapflag	nowarpto

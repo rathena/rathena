@@ -93,7 +93,7 @@ sub Chk { my($raA,$raB) = @_;
 }
 
 sub Script_GetCmd {
-	my @aSct_src = ("../src/map/script.c","../src/custom/script_def.inc");
+	my @aSct_src = ("../src/map/script.cpp","../src/custom/script_def.inc");
 	my @aDef_sct = ();
 	foreach my $sSct_srcf (@aSct_src){
 		unless(open FILE_SRC, "<$sSct_srcf") { 
@@ -173,7 +173,7 @@ sub Script_Chk { my ($raDef_sct) = @_;
 }
 
 sub Atc_GetCmd {
-	my @aAct_src = ("../src/map/atcommand.c","../src/custom/atcommand_def.inc");
+	my @aAct_src = ("../src/map/atcommand.cpp","../src/custom/atcommand_def.inc");
 	my @aDef_act = ();
 	foreach my $sAct_srcf (@aAct_src){
 		unless(open FILE_SRC, "<$sAct_srcf"){

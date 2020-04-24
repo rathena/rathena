@@ -302,7 +302,7 @@ poring_w01,96,97,3	script	Sweet Devi#wop	738,{
 	}
 
 OnPCLogoutEvent:
-	getmapxy .@map$,.@x,.@y,UNITTYPE_PC;
+	getmapxy .@map$,.@x,.@y;
 	if (.@map$ == "poring_w02") {
 		if (WoP_SaveMap$ != "") {
 			savepoint WoP_SaveMap$,WoP_SaveMap_X,WoP_SaveMap_Y,1,1;
@@ -316,7 +316,7 @@ OnPCLogoutEvent:
 	end;
 
 OnPCDieEvent:
-	getmapxy .@map$,.@x,.@y,UNITTYPE_PC;
+	getmapxy .@map$,.@x,.@y;
 	if (.@map$ == "poring_w02" && wop_team) {
 		if (getsavepoint(0) != "poring_w02" && WoP_SaveMap$ == "") {
 			set WoP_SaveMap$,getsavepoint(0);
@@ -333,7 +333,7 @@ OnPCDieEvent:
 	end;
 
 OnPCKillEvent:
-	getmapxy .@map$,.@x,.@y,UNITTYPE_PC;
+	getmapxy .@map$,.@x,.@y;
 	if (.@map$ == "poring_w02" && wop_team) {
 		getnameditem 7773,rid2name(killedrid);
 	}
@@ -648,7 +648,7 @@ poring_w02,26,181,3	script	Mr. Doppel#wop_team_a	739,{
 			mes "If you don't get there in time, you won't make it to the battle.";
 			close;
 		case 2:
-			if ((getpartyleader(getcharid(1),2) == getcharid(0))) {
+			if (is_party_leader() == true) {
 				mes "[Mr. Doppel]";
 				mes "So, you are the leader. Before going to the battlefield, you should check all your members.";
 				next;
@@ -680,7 +680,7 @@ poring_w02,26,181,3	script	Mr. Doppel#wop_team_a	739,{
 		}
 	}
 	else {
-		if ((getpartyleader(getcharid(1),2) == getcharid(0))) {
+		if (is_party_leader() == true) {
 			if ($@wop_team_a == 0) {
 				mes "[Mr. Doppel]";
 				mes "So, you are the party leader of Angeling Team.";
@@ -779,7 +779,7 @@ poring_w02,170,181,3	script	Mr. Doppel#wop_team_d	739,{
 			mes "If you don't get there in time, you won't make it to the battle.";
 			close;
 		case 2:
-			if ((getpartyleader(getcharid(1),2) == getcharid(0))) {
+			if (is_party_leader() == true) {
 				mes "[Mr. Doppel]";
 				mes "So, you are the leader. Before going to the battlefield, you should check all your members.";
 				next;
@@ -809,7 +809,7 @@ poring_w02,170,181,3	script	Mr. Doppel#wop_team_d	739,{
 			}
 		}
 	} else {
-		if ((getpartyleader(getcharid(1),2) == getcharid(0))) {
+		if (is_party_leader() == true) {
 			if ($@wop_team_d == 0) {
 				mes "[Mr. Doppel]";
 				mes "So, you are the party leader of Deviling Team.";

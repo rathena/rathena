@@ -1,0 +1,3570 @@
+//===== rAthena Script =======================================
+//= Morocc Quest NPCs
+//===== Description: =========================================
+//= [Official Conversion]
+//= Quest NPCs related to Morocc.
+//===== Changelogs: ==========================================
+//= 1.0 Succession of the Prince removed in ep16.1 [Capuche]
+//= 1.1 Moved renewal specific npcs [zackdreaver]
+//============================================================
+
+// Stop Post Quest
+// ============================================================
+moc_ruins,113,181,4	duplicate(William)	William#moc	89
+
+// Binoculars Quest
+// ============================================================
+moc_ruins,118,176,4	duplicate(Alchemist)	Alchemist#moc	64
+
+// Resurrection of Satan Morocc
+// ============================================================
+
+morocc,176,103,3	duplicate(Continental Official)	Continental Official#mor	754
+
+// Succession of the Prince
+// ============================================================
+prontera,153,353,4	script	Messenger#prince1	105,{
+	if (nk_prince == 0) {
+		if (rebirth_moc_edq > 1) {
+			mes "[Messenger]";
+			mes "I am a messenger from the Royal court, sent to find a reliable adventurer. This is all about the very important issues of our nation.";
+			next;
+			if (aru_monas > 23) {
+				mes "[Messenger]";
+				mes "It might have brought national disorder, but people are all wary about the rebirth of the devil. We are in the perfect times to process this issue without making any additional fuss.";
+				next;
+				mes "[Messenger]";
+				mes "Oh, I don't want you to panic too much... Hmm... what I want to say is, Tristan the third, the ruler of Rune-Midgarts...";
+				next;
+				switch(select("Passed away?:Came for a celebration again?")) {
+				case 1:
+					emotion ET_SURPRISE;
+					mes "[Messenger]";
+					mes "You already know about that...";
+					mes "Then, I don't need to give";
+					mes "you any further explanation.";
+					next;
+					mes "[Messenger]";
+					mes "The King's position cannot";
+					mes "be empty for too long.";
+					mes "Now, the debate over selecting our next King is actively in progress. Please give us a hand with this, for the tomorrow of Rune-Midgarts.";
+					set nk_prince,1;
+					setquest 10000;
+					close;
+				case 2:
+					mes "[Messenger]";
+					mes "...";
+					next;
+					mes "[Messenger]";
+					mes "What are you thinking?";
+					mes "Do you really think a celebration is momentous for a nation right now?";
+					next;
+					mes "[Messenger]";
+					mes "Yeah...";
+					mes "It's quite natural for you to expect nothing. I still don't know how to express this to you. Don't be too perplexed.";
+					next;
+					mes "[Messenger]";
+					mes "Tristan the 3rd, the ruler of Rune-Midgarts...";
+					next;
+					mes "[Messenger]";
+					mes "...";
+					mes "has passed away.";
+					next;
+					mes "[Messenger]";
+					mes "To prevent the people's disorder, it won't yet be announced. The Court is focused on selecting the next king right now. They are very busy considering it.";
+					next;
+					mes "[Messenger]";
+					mes "You can learn more details in court. My mission is only to deliver this message to a reliable and brave adventurer.";
+					next;
+					mes "[Messenger]";
+					mes "Please...Please...";
+					mes "Lend a hand for the future";
+					mes "of the Rune-Midgarts kingdom.";
+					set nk_prince,1;
+					setquest 10000;
+					close;
+				}
+			}
+			else {
+				mes "[Messenger]";
+				mes "It might have brought national disorder, but people are all wary about the rebirth of the devil. We are in the perfect times to process this issue without making any additional fuss.";
+				next;
+				mes "[Messenger]";
+				mes "The King hasn't appeared";
+				mes "in public for some time.";
+				mes "Many are curious about the situation.";
+				next;
+				mes "[Messenger]";
+				mes "I hate my duty to deliver";
+				mes "this sorrowful reality to others.";
+				mes "I think you already have a clue from my words...";
+				next;
+				mes "[Messenger]";
+				mes "King Tristan...";
+				next;
+				mes "[Messenger]";
+				mes "King Tristan...";
+				mes "...passed away...";
+				mes "...after a long time of suffering acutely from illness.";
+				next;
+				mes "[Messenger]";
+				mes "The Royal Court is now in the process of selecting the next king. My mission is to find a devoted adventurer and send them to court.";
+				next;
+				mes "[Messenger]";
+				mes "They will let you know what";
+				mes "you have to do in court.";
+				mes "I hope you will help bring";
+				mes "peace to Rune-Midgarts.";
+				set nk_prince,1;
+				setquest 10000;
+				close;
+			}
+		}
+		else {
+			mes "[Messenger]";
+			mes "I am a messenger of Rune-Midgarts.";
+			mes "Is there something special";
+			mes "in this country?";
+			next;
+			mes "[Messenger]";
+			mes "Haven't you seen something mysterious? Or heard some gossip?";
+			close;
+		}
+	}
+	else if (nk_prince == 1) {
+		mes "[Messenger]";
+		mes "I want you to go to the Prontera Royal Court to help in the next King's selection.";
+		next;
+		mes "[Messenger]";
+		mes "I will stay here to find other adventurers. May your heart bring great glory to Rune-Midgarts!";
+		close;
+	}
+	else {
+		mes "[Messenger]";
+		mes "I am on a mission now. I think you may be looking for a different location. Ask others.";
+		close;
+	}
+}
+
+prt_castle,117,163,5	script	Inspector#prince	755,{
+	if (checkquest(10004) == 0 || checkquest(10004) == 1) {
+		mes "[Inspector]";
+		mes "Judge!";
+		mes "How goes it? I don't think it is easy to meet seven candidates and appraise them.";
+		next;
+		mes "[Inspector]";
+		mes "Ha. Are you done?";
+		mes "You are a fast worker, getting the job done!";
+		next;
+		mes "[Inspector]";
+		mes "Let me have the scoop on the candidates~";
+		next;
+		mes "-I talked about my impression";
+		mes "of the candidates for prince,";
+		mes "to the Inspector, right away.";
+		mes "I'm sure, I only give clear";
+		mes "and concise facts to him.-";
+		next;
+		mes "[Inspector]";
+		mes "Hmm... is that so? What you've said has helped me a lot. Thank you for your hard work.";
+		next;
+		mes "[Inspector]";
+		mes "By the way, I happened";
+		mes "to hear a rumor about";
+		mes "Prince Eigen Ahrum of the Walter family. Could you appraise all the candidates, one more time? I need this done urgently.";
+		next;
+		mes "[Inspector]";
+		mes "Now the whole picture may change... Others must probably be the same. But I worry about Eigen Ahrum because I can't neglect any rumors about any candidate.";
+		next;
+		mes "[Inspector]";
+		mes "Okay, so... please go in there one more time.";
+		completequest 10004;
+		setquest 10018;
+		setquest 10019;
+		setquest 10020;
+		setquest 10021;
+		setquest 10022;
+		close;
+	}
+	if (nk_prince < 2) {
+		mes "[Inspector]";
+		mes "What's wrong with you?";
+		mes "This is not an open area!";
+		next;
+		switch(select("Alright, Alright.:The Messenger directed me here.")) {
+		case 1:
+			mes "[Inspector]";
+			mes "If you know it, why are you here? Get out of here!";
+			close2;
+			warp "prontera",155,353;
+			end;
+		case 2:
+			if (nk_prince == 0) {
+				mes "[Inspector]";
+				mes "I don't think";
+				mes "that he is an experienced appraiser...";
+				close;
+			}
+			mes "[Inspector]";
+			mes "......";
+			next;
+			if (BaseLevel > 89) {
+				mes "[Inspector]";
+				mes "The Messenger checked only for your physical aptitude, and simply sent a warrior to Court. That's what his duty is all about.";
+				next;
+				mes "[Inspector]";
+				mes "Checking your qualification is a matter that concerns me.";
+				next;
+				mes "[Inspector]";
+				mes "Hmm...";
+				next;
+				mes "[Inspector]";
+				mes "You are an experienced traveler. You have enough strength, but... The Court doesn't choose a person based only on his or her great strength and battle experience.";
+				next;
+				mes "[Inspector]";
+				mes "To check someone's quality";
+				mes "you have to have enough";
+				mes "personality about you.";
+				next;
+				mes "[Inspector]";
+				mes "In that sense, I want to do a simple experiment.";
+				mes "Let's test you.";
+				next;
+				mes "[Inspector]";
+				mes "This won't be complicated. You are just needed to give a quick answer, frankly please, after each given situation.";
+				next;
+				mes "[Inspector]";
+				mes "kay, let's start. Get ready. Listen carefully and answer.";
+				next;
+				mes "[Inspector]";
+				mes "What do you think is the";
+				mes "most important thing to consider";
+				mes "as a leader of a hunt party?";
+				next;
+				switch(select("Strength and characteristics of the monster.:Efficiency of the hunt.:What we can get from the hunt.")) {
+				case 1:
+					set .@int,.@int+10;
+					break;
+				case 2:
+					set .@solid,.@solid+10;
+					break;
+				case 3:
+					set .@brave,.@brave+10;
+					break;
+				}
+				mes "[Inspector]";
+				mes "What if we lose a party member";
+				mes "during battle?";
+				next;
+				switch(select("Keep fighting until we can do it.:Find a new place and try differently.:Stop hunting and replenish.")) {
+				case 1:
+					set .@brave,.@brave+10;
+					break;
+				case 2:
+					set .@int,.@int+10;
+					break;
+				case 3:
+					set .@solid,.@solid+10;
+					break;
+				}
+				mes "[Inspector]";
+				mes "What you get as a result of the hunt...";
+				next;
+				switch(select("Share it as agreed prior.:I don't want to care for sharing.:Give it to the member that needs it.")) {
+				case 1:
+					set .@int,.@int+10;
+					break;
+				case 2:
+					set .@solid,.@solid+10;
+					break;
+				case 3:
+					set .@brave,.@brave+10;
+					break;
+				}
+				mes "[Inspector]";
+				mes "What type of job class member";
+				mes "has to be cured while the enemy still lives?";
+				next;
+				switch(select("Priest, healer class.:Hunter, damage dealer.:Lord Knight, tanker.")) {
+				case 1:
+					set .@int,.@int+10;
+					break;
+				case 2:
+					set .@brave,.@brave+10;
+					break;
+				case 3:
+					set .@solid,.@solid+10;
+					break;
+				}
+				mes "[Inspector]";
+				mes "Whom do you want to befriend the most?";
+				next;
+				switch(select("A strong person.:An experienced person.:A kind person.")) {
+				case 1:
+					set .@brave,.@brave+10;
+					break;
+				case 2:
+					set .@int,.@int+10;
+					break;
+				case 3:
+					set .@solid,.@solid+10;
+					break;
+				}
+				mes "[Inspector]";
+				mes "What was your ability that helped";
+				mes "you the most during your training?";
+				next;
+				switch(select("Relationships with people.:Plenty of information gathering.:Discernment and driving force.")) {
+				case 1:
+					set .@solid,.@solid+10;
+					break;
+				case 2:
+					set .@int,.@int+10;
+					break;
+				case 3:
+					set .@brave,.@brave+10;
+					break;
+				}
+				mes "[Inspector]";
+				mes "How do you give encouragement to others, usually?";
+				next;
+				switch(select("Refer to a past failure.:Hesitating is the worst thing.:You are not alone.")) {
+				case 1:
+					set .@int,.@int+10;
+					break;
+				case 2:
+					set .@brave,.@brave+10;
+					break;
+				case 3:
+					set .@solid,.@solid+10;
+					break;
+				}
+				mes "[Inspector]";
+				mes "What is an ultimate virtue";
+				mes "in your life?";
+				next;
+				switch(select("Growth of oneself.:World peace.:The pursuit of truth.")) {
+				case 1:
+					set .@brave,.@brave+10;
+					break;
+				case 2:
+					set .@solid,.@solid+10;
+					break;
+				case 3:
+					set .@int,.@int+10;
+					break;
+				}
+				mes "[Inspector]";
+				mes "What would you want to keep";
+				mes "the most if you were on a ";
+				mes "deserted island?";
+				next;
+				switch(select("Map:Flint:Weapon")) {
+				case 1:
+					set .@int,.@int+10;
+					break;
+				case 2:
+					set .@solid,.@solid+10;
+					break;
+				case 3:
+					set .@brave,.@brave+10;
+					break;
+				}
+				mes "[Inspector]";
+				mes "What type of story do you like the most?";
+				next;
+				switch(select("Love story.:Heroic epic.:Religious tale.")) {
+				case 1:
+					set .@solid,.@solid+10;
+					break;
+				case 2:
+					set .@brave,.@brave+10;
+					break;
+				case 3:
+					set .@int,.@int+10;
+					break;
+				}
+				mes "[Inspector]";
+				mes "You've come to engage the";
+				mes "new monster in a new area.";
+				mes "What do you do?";
+				next;
+				switch(select("Attack first.:Observe from a distance.:Flee away.")) {
+				case 1:
+					set .@brave,.@brave+10;
+					break;
+				case 2:
+					set .@int,.@int+10;
+					break;
+				case 3:
+					set .@solid,.@solid+10;
+					break;
+				}
+				mes "[Inspector]";
+				mes "What has to be done first when";
+				mes "ruling the Rune-Midgarts kingdom?";
+				next;
+				switch(select("Dominate countries by reinforcing militia.:Advancement of economy and technology.:Keep public security firm.")) {
+				case 1:
+					set .@brave,.@brave+10;
+					break;
+				case 2:
+					set .@int,.@int+10;
+					break;
+				case 3:
+					set .@solid,.@solid+10;
+					break;
+				}
+				mes "[Inspector]";
+				mes "Your humanity test is done.";
+				mes "You have been living...";
+				next;
+				if (.@brave > 50) {
+					if (.@int > 30) {
+						mes "[Inspector]";
+						mes "with strong conviction,";
+						mes "and reasonable judgement,";
+						mes "so far.";
+						next;
+					}
+					else if (.@solid > 30) {
+						mes "[Inspector]";
+						mes "with strong bravery,";
+						mes "but also you've had a";
+						mes "temperate life.";
+						next;
+					}
+					else {
+						mes "[Inspector]";
+						mes "with a decisive mind.";
+						mes "You could overcome hardships with it.";
+						next;
+					}
+				}
+				else if (.@int > 50) {
+					if (.@brave > 30) {
+						mes "[Inspector]";
+						mes "with firmness,";
+						mes "and reasonable judgement,";
+						mes "so far.";
+						next;
+					}
+					else if (.@solid > 30) {
+						mes "[Inspector]";
+						mes "with reasonable judgement";
+						mes "and a harmonic sensibility,";
+						mes "so far.";
+						next;
+					}
+					else {
+						mes "[Inspector]";
+						mes "with a calm and prudent decision.";
+						mes "I think you could also have had many good experiences.";
+						next;
+					}
+				}
+				else if (.@solid > 50) {
+					if (.@brave > 30) {
+						mes "[Inspector]";
+						mes "with strong bravery,";
+						mes "but also you've had a";
+						mes "temperate life.";
+						next;
+					}
+					else if (.@int > 30) {
+						mes "[Inspector]";
+						mes "with reasonable judgement";
+						mes "and peaceful sensibility,";
+						mes "so far.";
+						next;
+					}
+					else {
+						mes "[Inspector]";
+						mes "...Erm, actually...";
+						mes "You didn't distort to either way...";
+						mes "and stability and harmony were";
+						mes "an important virtue in your life.";
+						next;
+					}
+				}
+				mes "[Inspector]";
+				mes "I think you are";
+				mes "qualified enough to evaluate others. I apologize for my rude behavior to you in the beginning.";
+				next;
+				mes "[Inspector]";
+				mes "So, I ask you to do us a favor. You have become a regular adventurer appraiser.";
+				next;
+				mes "[Inspector]";
+				mes "Ah, you've spent a long time with me. You must be very tired. Before starting work, if you need some preparation, take off now and come back to me later. I will be waiting here for you.";
+				next;
+				set nk_prince,4;
+				changequest 10000,10003;
+				close;
+			}
+			else {
+				mes "[Inspector]";
+				mes "I don't think you are";
+				mes "an experienced adventurer...";
+				mes "And this is an important issue for the nation. I can't give this job to anyone like you.";
+				next;
+				mes "[Inspector]";
+				mes "But, if you prove yourself a strong adventurer, then I will let you pass the first qualification test.";
+				next;
+				mes "[Inspector]";
+				mes "Have you heard of Glastheim? In that area, there are monsters named Knights of Abyss.";
+				next;
+				mes "[Inspector]";
+				mes "After beating the knights of abyss";
+				mes "bring 2 ^ff0000Reins^000000.";
+				mes "If you can do this mission,";
+				mes "I will respect your strength.";
+				set nk_prince,2;
+				changequest 10000,10001;
+				next;
+				mes "[Inspector]";
+				mes "Let's continue our talk";
+				mes "after getting the 2 Reins.";
+				mes "Ciao...";
+				close;
+			}
+		}
+	}
+	else if (nk_prince == 2) {
+		mes "[Inspector]";
+		mes "Ahh, you came to meet me before huh? I guess you've already been to Glastheim.";
+		next;
+		mes "[Inspector]";
+		mes "Do you have the 2 reins I mentioned?";
+		next;
+		if (countitem(1064) > 1) {
+			mes "[Inspector]";
+			mes "Ooh!";
+			mes "Frankly, I didn't expect you to bring them. You are great.";
+			next;
+			mes "[Inspector]";
+			mes "Alright, good. You proved your strength for yourself. Now you passed one exam. All but one.";
+			delitem 1064,2; //Reins
+			set nk_prince,3;
+			changequest 10001,10002;
+			next;
+			mes "[Inspector]";
+			mes "The judge to appraise princes should build up his character too. Strength cannot cover everything. Personality should come along with it";
+			next;
+			mes "[Inspector]";
+			mes "In a sense, the next examination is to test your character. It is just a series of simple questions, but relax first, and be prepared mentally... then come and talk to me again.";
+			close;
+		}
+		else {
+			mes "[Inspector]";
+			mes "You've never even taken such a dangerous mission before! How dare you think you could come to this place? I don't think you can take the job of evaluating princes.";
+			next;
+			mes "[Inspector]";
+			mes "Now, you can come back later.";
+			close;
+		}
+	}
+	else if (nk_prince == 3) {
+		mes "[Inspector]";
+		mes "Now are you ready?";
+		mes "This test is not that hard though...";
+		next;
+		mes "[Inspector]";
+		mes "This is done to know your attitude and behavior in certain situations. Listen carefully to my questions, and answer frankly in regards to the episodes of your trip.";
+		next;
+		mes "[Inspector]";
+		mes "Now, let me begin.";
+		next;
+		mes "[Inspector]";
+		mes "What do you think is the";
+		mes "most important thing to consider";
+		mes "as a leader of a hunt party?";
+		next;
+		switch(select("Strength and characteristics of the monster.:Efficiency of the hunt.:What we can get from the hunt.")) {
+		case 1:
+			set .@int,.@int+10;
+			break;
+		case 2:
+			set .@solid,.@solid+10;
+			break;
+		case 3:
+			set .@brave,.@brave+10;
+			break;
+		}
+		mes "[Inspector]";
+		mes "What if we lose a party member";
+		mes "during battle?";
+		next;
+		switch(select("Keep fighting until we can do it.:Find a new place and try differently.:Stop hunting and replenish.")) {
+		case 1:
+			set .@brave,.@brave+10;
+			break;
+		case 2:
+			set .@int,.@int+10;
+			break;
+		case 3:
+			set .@solid,.@solid+10;
+			break;
+		}
+		mes "[Inspector]";
+		mes "What you get as a result of the hunt...";
+		next;
+		switch(select("Share it as agreed prior.:I don't want to care for sharing.:Give it to the member that needs it.")) {
+		case 1:
+			set .@int,.@int+10;
+			break;
+		case 2:
+			set .@solid,.@solid+10;
+			break;
+		case 3:
+			set .@brave,.@brave+10;
+			break;
+		}
+		mes "[Inspector]";
+		mes "What type of job class member";
+		mes "has to be cured while the enemy still lives?";
+		next;
+		switch(select("Priest, healer class.:Hunter, damage dealer.:Lord Knight, tanker.")) {
+		case 1:
+			set .@int,.@int+10;
+			break;
+		case 2:
+			set .@brave,.@brave+10;
+			break;
+		case 3:
+			set .@solid,.@solid+10;
+			break;
+		}
+		mes "[Inspector]";
+		mes "Whom do you want to befriend the most?";
+		next;
+		switch(select("A strong person.:An experienced person.:A kind person.")) {
+		case 1:
+			set .@brave,.@brave+10;
+			break;
+		case 2:
+			set .@int,.@int+10;
+			break;
+		case 3:
+			set .@solid,.@solid+10;
+			break;
+		}
+		mes "[Inspector]";
+		mes "What was your ability that helped";
+		mes "you the most during your training?";
+		next;
+		switch(select("Relationships with people.:Plenty of information gathering.:Discernment and driving force.")) {
+		case 1:
+			set .@solid,.@solid+10;
+			break;
+		case 2:
+			set .@int,.@int+10;
+			break;
+		case 3:
+			set .@brave,.@brave+10;
+			break;
+		}
+		mes "[Inspector]";
+		mes "How do you give encouragement to others, usually?";
+		next;
+		switch(select("Refer to a past failure.:Hesitating is the worst thing.:You are not alone.")) {
+		case 1:
+			set .@int,.@int+10;
+			break;
+		case 2:
+			set .@brave,.@brave+10;
+			break;
+		case 3:
+			set .@solid,.@solid+10;
+			break;
+		}
+		mes "[Inspector]";
+		mes "What is an ultimate virtue";
+		mes "in your life?";
+		next;
+		switch(select("Growth of oneself.:World peace.:The pursuit of truth.")) {
+		case 1:
+			set .@brave,.@brave+10;
+			break;
+		case 2:
+			set .@solid,.@solid+10;
+			break;
+		case 3:
+			set .@int,.@int+10;
+			break;
+		}
+		mes "[Inspector]";
+		mes "What would you want to keep";
+		mes "the most if you were on a ";
+		mes "deserted island?";
+		next;
+		switch(select("Map:Flint:Weapon")) {
+		case 1:
+			set .@int,.@int+10;
+			break;
+		case 2:
+			set .@solid,.@solid+10;
+			break;
+		case 3:
+			set .@brave,.@brave+10;
+			break;
+		}
+		mes "[Inspector]";
+		mes "What type of story do you like the most?";
+		next;
+		switch(select("Love story.:Heroic epic.:Religious tale.")) {
+		case 1:
+			set .@solid,.@solid+10;
+			break;
+		case 2:
+			set .@brave,.@brave+10;
+			break;
+		case 3:
+			set .@int,.@int+10;
+			break;
+		}
+		mes "[Inspector]";
+		mes "You've come to engage the";
+		mes "new monster in a new area.";
+		mes "What do you do?";
+		next;
+		switch(select("Attack first.:Observe from a distance.:Flee away.")) {
+		case 1:
+			set .@brave,.@brave+10;
+			break;
+		case 2:
+			set .@int,.@int+10;
+			break;
+		case 3:
+			set .@solid,.@solid+10;
+			break;
+		}
+		mes "[Inspector]";
+		mes "What has to be done first when";
+		mes "ruling the Rune-Midgarts kingdom?";
+		next;
+		switch(select("Dominate countries by reinforcing militia.:Advancement of economy and technology.:Keep public security firm.")) {
+		case 1:
+			set .@brave,.@brave+10;
+			break;
+		case 2:
+			set .@int,.@int+10;
+			break;
+		case 3:
+			set .@solid,.@solid+10;
+			break;
+		}
+		mes "[Inspector]";
+		mes "Your humanity test is done.";
+		mes "You have been living...";
+		next;
+		if (.@brave > 50) {
+			if (.@int > 30) {
+				mes "[Inspector]";
+				mes "with strong conviction,";
+				mes "and reasonable judgement,";
+				mes "so far.";
+				next;
+			}
+			else if (.@solid > 30) {
+				mes "[Inspector]";
+				mes "with strong bravery,";
+				mes "but also you've had a";
+				mes "temperate life.";
+				next;
+			}
+			else {
+				mes "[Inspector]";
+				mes "with a decisive mind.";
+				mes "You could overcome hardships with it.";
+				next;
+			}
+		}
+		else if (.@int > 50) {
+			if (.@brave > 30) {
+				mes "[Inspector]";
+				mes "with firmness,";
+				mes "and reasonable judgement,";
+				mes "so far.";
+				next;
+			}
+			else if (.@solid > 30) {
+				mes "[Inspector]";
+				mes "with reasonable judgement";
+				mes "and a harmonic sensibility,";
+				mes "so far.";
+				next;
+			}
+			else {
+				mes "[Inspector]";
+				mes "with a calm and prudent decision.";
+				mes "I think you could also have had many good experiences.";
+				next;
+			}
+		}
+		else if (.@solid > 50) {
+			if (.@brave > 30) {
+				mes "[Inspector]";
+				mes "with strong bravery,";
+				mes "but also you've had a";
+				mes "temperate life.";
+				next;
+			}
+			else if (.@int > 30) {
+				mes "[Inspector]";
+				mes "with reasonable judgement";
+				mes "and peaceful sensibility,";
+				mes "so far.";
+				next;
+			}
+			else {
+				mes "[Inspector]";
+				mes "...Erm, actually...";
+				mes "You didn't distort to either way...";
+				mes "and stability and harmony were";
+				mes "an important virtue in your life.";
+				next;
+			}
+		}
+		mes "[Inspector]";
+		mes "I think you are";
+		mes "qualified enough to evaluate others. I apologize for my rude behavior to you in the beginning.";
+		next;
+		mes "[Inspector]";
+		mes "So, I ask you to do us a favor. You have become a regular adventurer appraiser.";
+		next;
+		mes "[Inspector]";
+		mes "Ah, you've spent a long time with me. You must be very tired. Before starting work, if you need some preparation, take off now and come back to me later. I will be waiting here for you.";
+		next;
+		set nk_prince,4;
+		changequest 10002,10003;
+		close;
+	}
+	else if (nk_prince == 4) {
+		mes "[Inspector]";
+		mes "Welcome...";
+		mes "I will give you some";
+		mes "instructions on what to do,";
+		mes "and what one has to be careful with, when dealing with princes. Pay attention to me.";
+		next;
+		mes "[Inspector]";
+		mes "I will answer your questions first.";
+		next;
+		while(1) {
+			switch(select("What should I do, exactly?:The King died because of his illness?:Is my mission confidential??:I have no more questions.")) {
+			case 1:
+				mes "[Inspector]";
+				mes "We have seven candidates from seven families. One per each family. The candidates are all in the same place, where I will introduce them to you.";
+				next;
+				mes "[Inspector]";
+				mes "You have to meet the candidates one by one, and ask some questions about their quality; or observe their actions, then come back to me and explain all that you observed in detail.";
+				next;
+				mes "[Inspector]";
+				mes "The original rule is that the quality of princes has to be appraised by royal families for a long time, and one has to be elected by internal ordinance.";
+				next;
+				mes "[Inspector]";
+				mes "Because of the resurrection of the devil Satan Morocc, people are too uneasy to follow regular announcements, and the atmosphere of the kingdom is not stable.";
+				next;
+				mes "[Inspector]";
+				mes "Each kingdom is busy preventing the interference of Satan Morocc too.";
+				next;
+				mes "[Inspector]";
+				mes "So this time, the Court decided to change its ways, giving the opportunity to appraise the candidates to famous and devoted adventurers like yourself. That's why you are here.";
+				next;
+				set .@prince,1;
+				break;
+			case 2:
+				mes "[Inspector]";
+				mes "How absurd that you ask that!! I already told you clearly that King Tristan died of illness, didn't I?";
+				next;
+				mes "[Inspector]";
+				mes "Don't you have anything else to be curious about?";
+				next;
+				break;
+			case 3:
+				mes "[Inspector]";
+				mes "Sure...";
+				mes "It's natural to announce the death of the King. But the atmosphere of the nation is not ripe for it. This is our only alternative for now.";
+				next;
+				mes "[Inspector]";
+				mes "Princes cannot go outside on their own will. People cannot go to the place where the princes are.";
+				next;
+				break;
+			case 4:
+				if (.@prince == 1) {
+					mes "[Inspector]";
+					mes "I think this is enough";
+					mes "instruction for this.";
+					mes "Now I will let you know";
+					mes "where you can meet the princes.";
+					next;
+					mes "[Inspector]";
+					mes "When you get to the medic officer's room, a soldier will be standing on a strange spot. You can find that there isn't a door there.";
+					next;
+					mes "[Inspector]";
+					mes "Behind the soldier, you can find a secret door. If you talk to the soldier, the soldier will allow you to get in.";
+					next;
+					mes "[Inspector]";
+					mes "As I have expressed, this is a very important issue for the Rune-Midgarts kingdom. Although I've stressed this point repeateadly, I cannot stress it enough.";
+					next;
+					mes "[Inspector]";
+					mes "Please behave accordingly.";
+					mes "Thanks for your effort.";
+					set nk_prince,5;
+					completequest 10003;
+					setquest 10005;
+					setquest 10006;
+					setquest 10007;
+					setquest 10008;
+					setquest 10009;
+					setquest 10010;
+					setquest 10011;
+					close;
+				}
+				else {
+					mes "[Inspector]";
+					mes "You got instructions as to what you should do, didn't you? This issue is not that worthless that you can take it with ease! Pay attention to this!";
+					next;
+					mes "[Inspector]";
+					mes "If you are not motivated to do it, I will find another adventurer. You can go back to your business, if you want to.";
+					next;
+				}
+				break;
+			}
+		}
+	}
+	else if (nk_prince == 7) {
+		mes "[Inspector]";
+		mes "How is it going?";
+		mes "Grading someone is not a piece of cake. It's real hard work indeed. You do the hard work for our country.";
+		next;
+		if ((nkprince_eisen == 15) && (checkquest(10025) == 0 || checkquest(10025) == 1)) {
+			mes "-I tell him about the Ahrum and Ernst accident.-";
+			next;
+			mes "[Inspector]";
+			mes "What!? I can't believe it!";
+			mes "Wha-, that's so...";
+			next;
+			mes "[Inspector]";
+			mes "By Ernst's hand...?";
+			mes "Yes...?";
+			next;
+			mes "[Inspector]";
+			mes "You've fulfilled the job as";
+			mes "adventurer appraiser fully.";
+			mes "I really appreciate your assistance thus far. Due to your help, the future of the kingdom is indebted to you.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "(He doesn't seem to be suprised too much.. Could there be a reason? Now I am suspicious...)";
+			next;
+			mes "[Inspector]";
+			mes "Hey, the things you experienced here cannot be disclosed to others. You understand that this situation is fully confidential.";
+			next;
+			mes "[Inspector]";
+			mes "So, keep up the good work.";
+			mes "For the Kingdom of Rune-Midgarts!";
+			if (checkre(3)) {
+				if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 40000,0;
+				else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 45000,0;
+				else if ((BaseLevel > 90) && (BaseLevel < 96)) getexp 50000,0;
+				else if ((BaseLevel > 95) && (BaseLevel < 99)) getexp 55000,0;
+				else if (BaseLevel > 99) getexp 110000,0;
+				else getexp 30000,0;
+			} else {
+				if ((BaseLevel > 80) && (BaseLevel < 86)) getexp 400000,0;
+				else if ((BaseLevel > 85) && (BaseLevel < 91)) getexp 450000,0;
+				else if ((BaseLevel > 90) && (BaseLevel < 96)) getexp 500000,0;
+				else if ((BaseLevel > 95) && (BaseLevel < 99)) getexp 550000,0;
+				else if (BaseLevel >= 99) getexp 1100000,0;
+				else getexp 300000,0;
+			}
+			set nk_prince,8;
+			completequest 10025;
+			close;
+		}
+		else {
+			mes "[Inspector]";
+			mes "Then, let me hit the road..";
+			close;
+		}
+	}
+	else if ((nk_prince == 8) || (nk_prince == 9)) {
+		mes "[Inspector]";
+		mes "All for the glory";
+		mes "of Rune-Midgarts!";
+		close;
+	}
+	else {
+		mes "[Inspector]";
+		mes "Hello, appraiser.";
+		mes "I hope you are able to finish your mission perfectly. Have you met with all the princes, like I told you to?";
+		if (nkprince_eisen != 10)
+			close;
+		next;
+		switch(select("Yes.:No.")) {
+		case 1:
+			set .@prin1,checkquest(10005);
+			set .@prin2,checkquest(10006);
+			set .@prin3,checkquest(10007);
+			set .@prin4,checkquest(10008);
+			set .@prin5,checkquest(10009);
+			set .@prin6,checkquest(10010);
+			set .@prin7,checkquest(10011);
+			if (.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7 == 14) {
+				mes "[Inspector]";
+				mes "Very well.";
+				mes "I like hearing about the princes.";
+				completequest 10004;
+				setquest 10004;
+			} else {
+				mes "[Inspector]";
+				mes "Are you sure?";
+				mes "Please check on all the princes.";
+			}
+			close;
+		case 2:
+			set .@prin1,checkquest(10005);
+			set .@prin2,checkquest(10006);
+			set .@prin3,checkquest(10007);
+			set .@prin4,checkquest(10008);
+			set .@prin5,checkquest(10009);
+			set .@prin6,checkquest(10010);
+			set .@prin7,checkquest(10011);
+			if (.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7 == 14) {
+				mes "[Inspector]";
+				mes "Don't be coy. I'm sure you have done it already.";
+				completequest 10004;
+				setquest 10004;
+			} else {
+				mes "[Inspector]";
+				mes "My investigations on all the princes are done.";
+			}
+			close;
+		}
+	}
+}
+
+prt_castle,272,375,4	script	Prince	881,{
+	if (nk_prince > 6) {
+		mes "-Obssessed with making";
+		mes "lock and key.-";
+		close;
+	}
+	if (checkquest(10020) == 2) {
+		mes "[Erich]";
+		mes "...What bad luck I have!";
+		mes "But he insists me to be corrupted, knowing how it would be...";
+		close;
+	}
+	else if (checkquest(10020) == 0 || checkquest(10020) == 1) {
+		mes "[Erich]";
+		mes "These days, I have bad luck... Only harrassments happen to me...";
+		close;
+	}
+	if (nk_prince < 5) {
+		mes "[Prince]";
+		mes "Who are you?";
+		mes "I don't think you are eligible";
+		mes "to be entering this room?";
+		next;
+		mes "[Prince]";
+		mes "I order you out of";
+		mes "my sight.";
+		close;
+	}
+	else if (nk_prince == 5) {
+		mes "[Prince]";
+		mes "Who are you?";
+		mes "Someone must have been instructed about the presence of the hidden entrance. Unless... Are you the adventurer appraiser?";
+		next;
+		select("Yes, I am.");
+		mes "[Prince]";
+		mes "Are you?... Do me a favor then. I am a legitimate son from the Nerius family. My name is Erich. You can call me Prince Erich.";
+		next;
+		mes "[Erich]";
+		mes "My full name is...";
+		next;
+		mes "[Erich]";
+		mes "That's enough.";
+		mes "You can ask information about me to my servant. I will take a rest.";
+		set nk_prince,6;
+		completequest 10011;
+		set .@prin1,checkquest(10005);
+		set .@prin2,checkquest(10006);
+		set .@prin3,checkquest(10007);
+		set .@prin4,checkquest(10008);
+		set .@prin5,checkquest(10009);
+		set .@prin6,checkquest(10010);
+		set .@prin7,checkquest(10011);
+		if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+			setquest 10012;
+		}
+		close;
+	}
+	else {
+		mes "[Erich]";
+		mes "......My conscience!";
+		mes "It doesn't work well...";
+		next;
+		mes "-He seems to be so obssessed to care about anything else.-";
+		close;
+	}
+}
+
+prt_castle,274,372,4	script	Servant#hans	48,{
+	if (checkquest(10020) == 2) {
+		mes "[Hans]";
+		mes "Ahh... mmm... I...";
+		mes "I... am so, sorry!";
+		mes "I... think I made a big mistake with the appraiser!";
+		next;
+		mes "[Hans]";
+		mes "My prince didn't do anything wrong but, anyways, I apologize for anything to you!";
+		close;
+	}
+	else if (checkquest(10020) == 0 || checkquest(10020) == 1) {
+		mes "Incessantly...-";
+		mes "-He has jitters whenever I react to him. His actions give me a feeling of pity.-";
+		close;
+	}
+	if (nk_prince == 6) {
+		mes "[Hans]";
+		mes "How are you doing, sir?";
+		mes "My name is Hans, servant of Prince Erich.";
+		next;
+		mes "[Hans]";
+		mes "What can I do for you?";
+		next;
+		switch(select("Prince Erich told me to meet you.:Nothing much.")) {
+		case 1:
+			mes "[Hans]";
+			mes "Did Prince Erich...?";
+			next;
+			select("I want to listen to a story of him.");
+			mes "[Hans]";
+			mes "Ahh, I see.";
+			mes "Frankly, Prince Erich is not interested in regime that much.";
+			next;
+			mes "[Hans]";
+			mes "He writes in his journal daily. On his wedding day, he jotted down: 'Like, nothing special happened today'. He doesn't care about current events or human relationships.";
+			next;
+			mes "[Hans]";
+			mes "What he likes is making locks.";
+			mes "He is eccentric, isn't he?";
+			mes "He is a kind of jester.";
+			next;
+			mes "[Hans]";
+			mes "He doesn't like classy costumes either. He didn't even bring a dress suit here. And as soon as he got here, he was immersed in making a lock and key, like that.";
+			next;
+			mes "[Hans]";
+			mes "I don't think I have the proper expression for you... I don't think I have something special to say about him to you. You can just appraise him as you see him...";
+			next;
+			mes "[Hans]";
+			mes "That's all I can say about this.";
+			mes "Huh...~";
+			next;
+			emotion ET_SURPRISE;
+			mes "[Hans]";
+			mes "Ah, Prince!";
+			mes "You can cut your finger!";
+			next;
+			mes "[Erich]";
+			mes ".........";
+			next;
+			mes "[Hans]";
+			mes "...Hmm he cannot even hear...";
+			mes "Oooooh...";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "......";
+			close;
+		case 2:
+			mes "[Hans]";
+			mes "Did you meet the other princes?";
+			next;
+			mes "[Hans]";
+			mes "Although you may ask something, you will not hear anything special from him now.";
+			close;
+		}
+	}
+	else {
+		mes "[Hans]";
+		mes "Hello?";
+		mes "Are you the new adventurer appraiser??";
+		close;
+	}
+}
+
+prt_castle,339,202,3	script	Prince#urgen	989,{
+	if (nk_prince > 6) {
+		mes "[Urugen]";
+		mes "...It is not beautiful.";
+		mes "It discomforts me...";
+		close;
+	}
+	if (checkquest(10021) == 2) {
+		mes "[Urugen]";
+		mes " feel very much displeased. Hey, what are you looking at? Get out!";
+		next;
+		mes "[Urugen]";
+		mes "My beautiful body isn't in perfect condition right now. I don't want to show it to anyone today.";
+		close;
+	}
+	else if (checkquest(10021) == 0 || checkquest(10021) == 1) {
+		mes "[Urugen]";
+		mes "...What? What did you...";
+		mes "just say to me?... Huh?";
+		close;
+	}
+	if (nk_prince < 5) {
+		mes "[Prince]";
+		mes "Huuuuuuu";
+		mes "The position is not suitable for you.";
+		next;
+		mes "[Prince]";
+		mes "Get away from me, as soon as you can.";
+		close;
+	}
+	else if (nk_prince > 4) {
+		mes "[Prince]";
+		mes "La~ lalalala~ lalala~";
+		mes "Are you the person, supposed to look me over and appraise my quality?";
+		next;
+		mes "[Prince]";
+		mes "The daffodil you are gazing at is called Urugen. It bloomed at Wigner family.";
+		next;
+		mes "[Urugen]";
+		mes "I usually don't let anyone hear my beautiful voice, but this time, I will give a special service for you.";
+		next;
+		mes "[Urugen]";
+		mes "listen...";
+		mes "Let me answer with my";
+		mes "unforgettable, clear and beautiful voice.";
+		next;
+		while(1) {
+			switch(select("I want to know your background.:Let me know your view of the nation.:What are your hobbies or tastes?:Let me leave.")) {
+			case 1:
+				mes "[Urugen]";
+				mes "My dashing face from";
+				mes "childhood brought envy and jealousy from men, and endless proposals from women. I felt sick with it, so I came to be away from people.";
+				next;
+				mes "[Urugen]";
+				mes "My beautiful person";
+				mes "shouldn't bear stuff like that sometimes.";
+				next;
+				mes "[Urugen]";
+				mes "I became timid, gradually, in phases. I feel awe from men and women both, regardless of sexuality.";
+				set .@p_a,1;
+				next;
+				break;
+			case 2:
+				mes "[Urugen]";
+				mes "People should do what they are supposed to do. That's the source of drive for a nation. For me, my existence will be enough, for the nation.";
+				next;
+				mes "[Urugen]";
+				mes "The presence of such a gorgeous king like me will be the light for people and the hope and reason for their lives.";
+				set .@p_b,1;
+				next;
+				break;
+			case 3:
+				mes "[Urugen]";
+				mes "For sure, taking care of my body. Humans should pursue beauty. It's quite natural, isn't it?";
+				next;
+				mes "[Urugen]";
+				mes "In every case, there is an exception, like you in this court. Can you stand away from me a bit more? Because of your odor, I can hardly breathe.";
+				set .@p_c,1;
+				next;
+				break;
+			case 4:
+				mes "[Urugen]";
+				mes "Your spirit must be so strong. Looking over my beauty so long a time, you haven't lost your spirit yet.";
+				if (.@p_a + .@p_b + .@p_c == 3) {
+					completequest 10009;
+				}
+				completequest 10011;
+				set .@prin1,checkquest(10005);
+				set .@prin2,checkquest(10006);
+				set .@prin3,checkquest(10007);
+				set .@prin4,checkquest(10008);
+				set .@prin5,checkquest(10009);
+				set .@prin6,checkquest(10010);
+				set .@prin7,checkquest(10011);
+				if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+					setquest 10012;
+				}
+				close;
+			}
+		}
+	}
+}
+
+prt_castle,289,201,3	script	Prince#helmut	991,{
+	if (nk_prince > 6) {
+		mes "[Helmut]";
+		mes "Such an idiot. I should have killed him earlier. Now I feel relieved.";
+		close;
+	}
+	if (checkquest(10022) == 2) {
+		mes "[Helmut]";
+		mes "Damn... Damn it!";
+		mes "Novice of Walter!!";
+		mes "How can I deal with this stress? Damn! Hell!";
+		close;
+	}
+	else if (checkquest(10022) == 0 || checkquest(10022) == 1) {
+		mes "-He is so blushed,";
+		mes "evidently shown on his face.-";
+		close;
+	}
+	if (nk_prince < 5) {
+		mes "[Helmut]";
+		mes "You are not supposed to be here!";
+		mes "Can't you keep away from me!";
+		close;
+	}
+	else if (nk_prince > 4) {
+		mes "[Helmut]";
+		mes "Are you the new appraiser? I am fed up with the many visitors! Let's take up the main subject!";
+		next;
+		mes "-What subject should I start with?-";
+		next;
+		switch(select("Your background...:Your ambition...:Your view of the nation...:I want to meet others first.")) {
+		case 1:
+			mes "[Helmut]";
+			mes "I don't know how others react but, I feel very uptight with your question. I shouldn't, but, I don't have a different view!";
+			next;
+			mes "[Helmut]";
+			mes "I am the prince; if you grumble, you become prince! I feel tiresome with this kind of questioning.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "............";
+			mes "Yes, I understand. Go ahead...";
+			next;
+			mes "[Helmut]";
+			mes "I am Helmut from Roewenburg.";
+			mes "What I like is smelling blood in the battlefield, and I enjoy festivals too.";
+			next;
+			mes "[Helmut]";
+			mes "What I hate is sticking to formality, and talking much. As for ambition? What am I going to do when I become... king...?? I am asked this question many times.";
+			next;
+			mes "[Helmut]";
+			mes "When I become king, I will reinforce our troops and conquer continent after unification of continent; I will eradicate all the monsters that are harmful to my people!";
+			next;
+			mes "[Helmut]";
+			mes "~Kuffkuff~! I have a sore throat! It's been a while since I've used my throat. ~Kuffkuff~!";
+			next;
+			mes "[Helmut]";
+			mes "Hey Calbern!";
+			mes "Bring beer! Beer!";
+			next;
+			mes "[Helmut]";
+			mes "Why are you still standing there? I have nothing else to say to you! Stand back!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "......";
+			completequest 10010;
+			set .@prin1,checkquest(10005);
+			set .@prin2,checkquest(10006);
+			set .@prin3,checkquest(10007);
+			set .@prin4,checkquest(10008);
+			set .@prin5,checkquest(10009);
+			set .@prin6,checkquest(10010);
+			set .@prin7,checkquest(10011);
+			if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+				setquest 10012;
+			}
+			close;
+		case 2:
+			mes "[Helmut]";
+			mes "I don't know how others react but, I feel very uptight with your question. I shouldn't, but, I don't have a different view!";
+			next;
+			mes "[Helmut]";
+			mes "I am the prince; if you grumble, you become prince! I feel tiresome with this kind of questioning.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "............";
+			mes "Yes, I understand. Go ahead...";
+			next;
+			mes "[Helmut]";
+			mes "I am Helmut from Roewenburg.";
+			mes "What I like is smelling blood in the battlefield, and I enjoy festivals too.";
+			next;
+			mes "[Helmut]";
+			mes "What I hate is sticking to formality, and talking much. As for ambition? What am I going to do when I become... king...?? I am asked this question many times.";
+			next;
+			mes "[Helmut]";
+			mes "When I become king, I will reinforce our troops and conquer continent after unification of continent; I will eradicate all the monsters that are harmful to my people!";
+			next;
+			mes "[Helmut]";
+			mes "~Kuffkuff~! I have a sore throat! It's been a while since I've used my throat. ~Kuffkuff~!";
+			next;
+			mes "[Helmut]";
+			mes "Hey Calbern!";
+			mes "Bring beer! Beer!";
+			next;
+			mes "[Helmut]";
+			mes "Why are you still standing there? I have nothing else to say to you! Stand back!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "......";
+			completequest 10010;
+			set .@prin1,checkquest(10005);
+			set .@prin2,checkquest(10006);
+			set .@prin3,checkquest(10007);
+			set .@prin4,checkquest(10008);
+			set .@prin5,checkquest(10009);
+			set .@prin6,checkquest(10010);
+			set .@prin7,checkquest(10011);
+			if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+				setquest 10012;
+			}
+			close;
+		case 3:
+			mes "[Helmut]";
+			mes "I don't know how others react but, I feel very uptight with your question. I shouldn't, but, I don't have a different view!";
+			next;
+			mes "[Helmut]";
+			mes "I am the prince; if you grumble, you become prince! I feel tiresome with this kind of questioning.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "............";
+			mes "Yes, I understand. Go ahead...";
+			next;
+			mes "[Helmut]";
+			mes "I am Helmut from Roewenburg.";
+			mes "What I like is smelling blood in the battlefield, and I enjoy festivals too.";
+			next;
+			mes "[Helmut]";
+			mes "What I hate is sticking to formality, and talking much. As for ambition? What am I going to do when I become... king...?? I am asked this question many times.";
+			next;
+			mes "[Helmut]";
+			mes "When I become king, I will reinforce our troops and conquer continent after unification of continent; I will eradicate all the monsters that are harmful to my people!";
+			next;
+			mes "[Helmut]";
+			mes "~Kuffkuff~! I have a sore throat! It's been a while since I've used my throat. ~Kuffkuff~!";
+			next;
+			mes "[Helmut]";
+			mes "Hey Calbern!";
+			mes "Bring beer! Beer!";
+			next;
+			mes "[Helmut]";
+			mes "Why are you still standing there? I have nothing else to say to you! Stand back!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "......";
+			completequest 10010;
+			set .@prin1,checkquest(10005);
+			set .@prin2,checkquest(10006);
+			set .@prin3,checkquest(10007);
+			set .@prin4,checkquest(10008);
+			set .@prin5,checkquest(10009);
+			set .@prin6,checkquest(10010);
+			set .@prin7,checkquest(10011);
+			if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+				setquest 10012;
+			}
+			close;
+		case 4:
+			mes "[" + strcharinfo(0) + "]";
+			mes "No, Prince,";
+			mes "I will be back later.";
+			next;
+			mes "[Helmut]";
+			mes "Alright, up to you.";
+			mes "Hey! Hey Calbern!";
+			mes "Move your ass here with beer!";
+			mes "Do you want to be beaten down?";
+			close;
+		}
+	}
+}
+
+prt_castle,288,208,4	script	Calbern	962,{
+	mes "[Calbern]";
+	mes "How are you doing, sir?";
+	mes "I am the servant of Prince Helmut...";
+	mes "Calbern.";
+	next;
+	mes "[Helmut]";
+	mes "Hey Calbern!";
+	mes "Bring beer! Beer!";
+	next;
+	mes "[Calbern]";
+	mes "Oops, I am so sorry.";
+	mes "I got business...";
+	close;
+}
+
+prt_castle,391,205,3	script	Prince#poe	993,{
+	if (nk_prince > 6) {
+		mes "[Poe]";
+		mes "Whatever the condition is, he is just a loser in the match of life.";
+		close;
+	}
+	if (checkquest(10018) == 2) {
+		mes "[Poe]";
+		mes "He gave up without any challenge. That's not what the man has to do. He is not as good as me. But okay. I am disappointed in him. Eigen Ahrum.";
+		close;
+	}
+	else if (checkquest(10018) == 0 || checkquest(10018) == 1) {
+		mes "[Poe]";
+		mes "......";
+		close;
+	}
+	if (nk_prince < 5) {
+		mes "[Prince]";
+		mes "Hi, how are you?";
+		mes "I don't think you deserve";
+		mes "to be here.";
+		mes "What about setting straight your genealogy first and then come?";
+		close;
+	}
+	else if (nk_prince > 4) {
+		mes "[Prince]";
+		mes "Come here.";
+		mes "You are the adventurer!";
+		mes "I love the challenge of hard trips too. Talkative old men and their adventures... You can't make me stop adventuring...";
+		next;
+		mes "[Prince]";
+		mes "My name is Poe.";
+		mes "I am the prince of the Richard family. Remember me, and be my supporter...";
+		next;
+		mes "[Poe]";
+		mes "Above all, I want to";
+		mes "test your ability as an adventurer. The ability test is not so serious. I just want to know how accurate your intuition is... That's all.";
+		next;
+		mes "[Poe]";
+		mes "I don't want to talk with";
+		mes "a person of low intuition.";
+		mes "Let me explain briefly,";
+		mes "and test your own intuition.";
+		next;
+		mes "[Poe]";
+		mes "My card has numbers from 1 to 13. You give me an answer about the card number I pick, whether it's a lesser or higher number.";
+		next;
+		mes "[Poe]";
+		mes "Ah, of course, 7 is the middle number. 7 means no success or no failure. The goal of this game is to give the right answer 2 times in a row. Let's begin!";
+		next;
+		while(.@wincount < 2) {
+			set .@card,rand(1,13);
+			mes "[Poe]";
+			mes "Yes, now choose one";
+			mes "from higher and lower.";
+			mes "Just one.";
+			next;
+			switch(select("Higher:Lower")) {
+			case 1:
+				mes "[Poe]";
+				mes "Hmm... higher?...";
+				mes "I now pick a card!";
+				next;
+				mes "[Poe]";
+				mes "It is..." + .@card + "!!";
+				next;
+				if (.@card > 7) {
+					set .@wincount,.@wincount+1;
+					mes "[Poe]";
+					mes "Whooah, you gave the right answer!";
+					if (.@wincount == 2) {
+						mes "You won 2 times in a row right?...";
+						next;
+						break;
+					}
+					else {
+						mes "But you just gave the correct answer 1 time, as of yet.";
+						next;
+					}
+				}
+				else if (.@card == 7) {
+					mes "[Poe]";
+					mes "This game is a draw.";
+					mes "Do better next time.";
+					next;
+				}
+				else {
+					mes "[Poe]";
+					mes "Wrong...";
+					mes "Visit Hollgrehenn and ask him to refine your luck.";
+					close;
+				}
+				break;
+			case 2:
+				mes "[Poe]";
+				mes "Eh, lower?...";
+				mes "Look at my card!";
+				next;
+				mes "[Poe]";
+				mes "It is..." + .@card + "!!";
+				next;
+				if (.@card < 7) {
+					set .@wincount,.@wincount+1;
+					mes "[Poe]";
+					mes "Whooah, you gave the right answer!";
+					if (.@wincount == 2) {
+						mes "You won 2 times in a row right?...";
+						next;
+						break;
+					}
+					else {
+						mes "But you just gave the correct answer 1 time, as of yet.";
+						next;
+					}
+				}
+				else if (.@card == 7) {
+					mes "[Poe]";
+					mes "This game is a draw.";
+					mes "Do better next time.";
+					next;
+				}
+				else {
+					mes "[Poe]";
+					mes "Wrong...";
+					mes "Visit Hollgrehenn and ask him to refine your luck.";
+					close;
+				}
+				break;
+			}
+		}
+		mes "[Poe]";
+		mes "Good, it's natural for me to disclose my words to such a high-intuitive person that likes pulling out all the cards.";
+		next;
+		mes "[Poe]";
+		mes "I could know about you with shown cards, very well, but let me share my hidden card this time! Ask me whatever you want to know.";
+		next;
+		mes "[Poe]";
+		mes "So... What do you want to know?!";
+		next;
+		while(1) {
+			switch(select("Your background story...:Your view of the nation...:Hobbies and interests...:I will come by later.")) {
+			case 1:
+				mes "[Poe]";
+				mes "My background...";
+				mes "Past stories.";
+				mes "I don't give it importance at all, so I can't remember it clearly...";
+				next;
+				mes "[Poe]";
+				mes "Can I just say I am a survivor from many matches and battles. That is quite fit for me. Hahahahaha!";
+				next;
+				mes "[Poe]";
+				mes "I've had to cope with many accidents and challenges... from which I have survived, and have been pursuing new things. Life means...";
+				next;
+				mes "[Poe]";
+				mes "Never let yourself down with given cards, and aim at deadly strokes!";
+				next;
+				mes "[Poe]";
+				mes "......";
+				next;
+				mes "[Poe]";
+				mes "Hey it's cool, huh?";
+				mes "We have same tastes, haven't we?";
+				set .@p_a,1;
+				next;
+				break;
+			case 2:
+				mes "[Poe]";
+				mes "My opinion is a nation should provide the minimum guard for people, to guarantee respective freedom..";
+				next;
+				mes "[Poe]";
+				mes "Men should challenge the stuff that they can be passionate about, so the free action of people should not be obstructed by their nation.";
+				next;
+				mes "[Poe]";
+				mes "If I were King, all the restrictions would be removed and liberal life would be allowed to everyone in an invulnerable range.";
+				next;
+				mes "[Poe]";
+				mes "Coming to think of my family, my people are so conservative and not flexible.";
+				next;
+				mes "[Poe]";
+				mes "They keep saying to not do this and that, that is dangerous and this is natural... The nagging has been endless all throughout my life...";
+				next;
+				mes "[Poe]";
+				mes "Ah, those last words";
+				mes "are off-the-record.";
+				mes "I don't want to be bothered by my family.";
+				set .@p_b,1;
+				next;
+				break;
+			case 3:
+				mes "[Poe]";
+				mes "Experiencing anything new!";
+				mes "I don't care what it is!";
+				next;
+				mes "[Poe]";
+				mes "If our time is the exploring age, I possibly am the captain of an exploring group! Unexplored, pathfinding, investigating... Those are my middle names. How about you??";
+				next;
+				mes "[Poe]";
+				mes "But many say, about my character, that I am addicted to gambling. I am just full of a challenging spirit and I like raking in money! I am a free-spirited normal man.";
+				set .@p_c,1;
+				next;
+				break;
+			case 4:
+				mes "[Poe]";
+				mes "Alright,";
+				mes "let's meet next at some more exciting and dangerous spot.";
+				if (.@p_a + .@p_b + .@p_c == 3) {
+					completequest 10007;
+				}
+				set .@prin1,checkquest(10005);
+				set .@prin2,checkquest(10006);
+				set .@prin3,checkquest(10007);
+				set .@prin4,checkquest(10008);
+				set .@prin5,checkquest(10009);
+				set .@prin6,checkquest(10010);
+				set .@prin7,checkquest(10011);
+				if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+					setquest 10012;
+				}
+				close;
+			}
+		}
+	}
+}
+
+prt_castle,364,375,4	script	Prince#peter	987,{
+	if (nk_prince > 6) {
+		mes "[Peter]";
+		mes "Appraiser.";
+		mes "Have you met the little girl in Aldebaran?";
+		next;
+		switch(select("Yes, I saw her for you.:No, I don't want to.")) {
+		case 1:
+			if (checkquest(10014) == 0 || checkquest(10014) == 1) {
+				mes "[Peter]";
+				mes "I am glad that the girl liked it. Once I got cured, I wanted to go meet with her.";
+				next;
+				mes "[Peter]";
+				mes "Anyhow, thanks for your good work. I really feel sorry about bothering you with trifle things. This is my sense of gratitude. Don't feel so much burden and take this.";
+				completequest 10014;
+				getitem 644,1; //Gift_Box
+				close;
+			}
+			mes "[Peter]";
+			mes "Thinking about the little girl calms me. I still can't believe my eyes. My prince Ahrum who just passed away...~";
+			close;
+		case 2:
+			if (checkquest(10014) == 0 || checkquest(10014) == 1) {
+				mes "[Peter]";
+				mes "As you said.";
+				mes "I've heard that her life is like a flower when I lost it.";
+				mes "I will go see her on my own.";
+				next;
+				mes "[Peter]";
+				mes "I really feel sorry about bothering you with trifle things. Please take this.";
+				completequest 10014;
+				getitem 644,1; //Gift_Box
+				close;
+			}
+			mes "[Peter]";
+			mes "Never mind.";
+			mes "I still can't believe my eyes. My prince Ahrum who just passed away...~~";
+			close;
+		}
+	}
+	if (checkquest(10019) == 2) {
+		mes "[Peter]";
+		mes "Child... What the heck happened to you?...";
+		close;
+	}
+	else if (checkquest(10019) == 0 || checkquest(10019) == 1) {
+		mes "[Peter]";
+		mes "......";
+		close;
+	}
+	if (checkquest(10008) == 2) {
+		set .@quest, checkquest(10014);
+		if (.@quest == 2) {
+			mes "[Peter]";
+			mes "I really appreciate it.";
+			mes "You are so kind.";
+			close;
+		}
+		else if (.@quest == 0 || .@quest == 1) {
+			mes "[Peter]";
+			mes "I am glad that the girl liked it. Once I got cured, I wanted to go meet with her.";
+			next;
+			mes "[Peter]";
+			mes "Anyhow, thanks for your good work. I really feel sorry about bothering you with trifle things. This is my sense of gratitude. Don't feel so much burden and take this.";
+			completequest 10014;
+			getitem 644,1; //Gift_Box
+			close;
+		}
+		else {
+			mes "[Peter]";
+			mes "Do you have any more";
+			mes "business, appraiser?";
+			close;
+		}
+	}
+	else {
+		if (nk_prince < 4) {
+			mes "[Prince]";
+			mes "I think you are not allowed";
+			mes "to be here.";
+			close;
+		}
+		else if (nk_prince > 4) {
+			mes "[Prince]";
+			mes "Hello,";
+			mes "I am Peter, from the family of Heine. I am glad to meet you.";
+			next;
+			mes "[Peter]";
+			mes "Now, where shall we start?";
+			next;
+			while(1) {
+				switch(select("Your background story...:Your view of the nation...:Hobbies and interests...:I will come by later.")) {
+				case 1:
+					mes "[Peter]";
+					mes "My family was not that influential. My childhood was not that abundant; I had to seek jobs and make money from part-time jobs.";
+					next;
+					mes "[Peter]";
+					mes "But it helped me to check people's lives; the full particulars. That's my good side.";
+					next;
+					mes "[Peter]";
+					mes "Was it enough for your question?";
+					next;
+					break;
+				case 2:
+					mes "[Peter]";
+					mes "I guess the important thing is if people fulfill themselves in their field, then only supplements of support is needed from the nation's side.";
+					mes "What I want to say, in short, is the nation does not reign. People need to keep peace with people.";
+					next;
+					mes "[Peter]";
+					mes "Accordingly, I will take benefits away from the difference of classes. It is not an equality issue, but for the ascension of national power.";
+					next;
+					break;
+				case 3:
+					mes "[Peter]";
+					mes "I only like reading books as a hobby. I think men should go forward; they need to have a striving attitude.";
+					next;
+					break;
+				case 4:
+					mes "[Peter]";
+					mes "Ah, is that it?";
+					next;
+					mes "[Peter]";
+					mes "Then I have a favor to ask of you... Can you listen to my story?";
+					next;
+					mes "[Peter]";
+					mes "Originally, I didn't like growing a beard... but I had one opportunity to change... My thoughts recently are that someone has offered me the chance.";
+					next;
+					mes "[Peter]";
+					mes "It is because of an unknown girl's letter...";
+					next;
+					mes "[Peter]";
+					mes "What she told me in the letter was that my image was too sharp, and if I grew my beard, the contour of my face would be quite hidden; and it would look far better.";
+					next;
+					mes "[Peter]";
+					mes "I want to repay her.";
+					mes "Because her words helped me much. Nothing special, but maybe a small bunch of flowers.";
+					next;
+					mes "[Peter]";
+					mes "Would you take these flowers and give thanks to that girl somewhere in Al de Baran?";
+					completequest 10008;
+					next;
+					switch(select("Okay, no problem.:Please ask it of another.")) {
+					case 1:
+						mes "[Peter]";
+						mes "Yeah, thank you very much.";
+						mes "Please take care.";
+						getitem 744,1; //Bunch_Of_Flowers
+						setquest 10013;
+						set .@prin1,checkquest(10005);
+						set .@prin2,checkquest(10006);
+						set .@prin3,checkquest(10007);
+						set .@prin4,checkquest(10008);
+						set .@prin5,checkquest(10009);
+						set .@prin6,checkquest(10010);
+						set .@prin7,checkquest(10011);
+						if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+							setquest 10012;
+						}
+						close;
+					case 2:
+						mes "[Peter]";
+						mes "I understand you...";
+						mes "I know you have your";
+						mes "own business.";
+						setquest 10013;
+						set .@prin1,checkquest(10005);
+						set .@prin2,checkquest(10006);
+						set .@prin3,checkquest(10007);
+						set .@prin4,checkquest(10008);
+						set .@prin5,checkquest(10009);
+						set .@prin6,checkquest(10010);
+						set .@prin7,checkquest(10011);
+						if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+							setquest 10012;
+						}
+						close;
+					}
+				}
+			}
+		}
+	}
+}
+
+aldebaran,132,184,3	script	Girl#prince	96,{
+	if (checkquest(10013) == 0 || checkquest(10013) == 1) {
+		if (countitem(744) > 0) {
+			mes "[Girl]";
+			mes "Wooah, Uncle Peter sent these flowers";
+			mes "for me?";
+			mes "Hmmm~ They smell really good.";
+			next;
+			mes "[Girl]";
+			mes "Hehe~ You must be a friend of Peter's.";
+			mes "When you have a chance to meet him";
+			mes "later, please give my regards to uncle Peter.";
+			mes "Tell him that I loved the flowers so so much...";
+			mes "Okay, see you later.";
+			next;
+			mes "[Girl]";
+			mes "I will go home early and";
+			mes "Put these flowers in a vase.";
+			mes "Lalala~";
+			delitem 744,1; //Bunch_Of_Flowers
+			changequest 10013,10014;
+			close;
+		}
+		else {
+			mes "[Girl]";
+			mes "Hey you, have you heard the story of Daddy-Long-Legs? ... ...";
+			close;
+		}
+	}
+	else {
+		mes "[Girl]";
+		mes "Hey you, have you heard the story of Daddy-Long-Legs? ... ...";
+		close;
+	}
+}
+
+prt_castle,314,373,4	script	Prince#eisen	983,{
+	if (nkprince_eisen > 2) {
+		if (nkprince_eisen == 3) {
+			mes "[Ahrum]";
+			mes "How is Ernst ...?";
+			mes "He is so serious about everything. He doesn't make trouble or have outbursts... He can be kind of weird.";
+			next;
+			mes "[Ahrum]";
+			mes "We were close friends. Unlike me, he is kind and compassionate; a distinct official of public affairs. When he has to be strict, he turns strict with everyone.";
+			set nkprince_eisen,4;
+			close;
+		}
+		else if (nkprince_eisen == 4) {
+			mes "[Ahrum]";
+			mes "I am Eigen Ahrum,";
+			mes "I will be the light of Rune-Midgarts.";
+			close;
+		}
+		else if (nkprince_eisen == 5) {
+			mes "[Ahrum]";
+			mes "Whoever be the king, let's make Rune-Midgarts... the best country in the world, by helping each other.";
+			next;
+			mes "[Ernst]";
+			mes "We can make it.";
+			mes "No, we shall make it. For Brother and I together, we shall make it.";
+			next;
+			mes "[Ahrum]";
+			mes "But... If I am to reign, or help you; and if I am corrupted... you kill me... by your hand.";
+			next;
+			mes "[Ahrum]";
+			mes "In the opposite case, I will kill you too, you understand? So don't ever stray, and do not ever forget your determination.";
+			next;
+			mes "[Ernst]";
+			mes "Brother, you think about hell. It will never happen, so... Don't talk that way.";
+			next;
+			mes "[Ahrum]";
+			mes "It is an assumption.";
+			mes "Don't take it too seriously.";
+			next;
+			mes "[Ernst]";
+			mes "Alright, alright. Don't";
+			mes "take it the wrong way.";
+			mes "I have been acting for Brother and Kingdom, and I will be the same ever after.";
+			next;
+			emotion ET_SURPRISE;
+			mes "[Ahrum]";
+			mes "Ah, the appraiser has come.";
+			mes "How could you appear so suddenly? Ern and I were in the middle of conversation.";
+			next;
+			mes "[Ernst]";
+			mes "What's wrong, brother? We were not talking about anything bad. We were just making our resolution firm.";
+			next;
+			mes "[Ahrum]";
+			mes "You came here in good timing. We've just decided to kill the other... if one of us is corrupt.";
+			next;
+			mes "[Ernst]";
+			mes "Brother?!";
+			next;
+			mes "[Ahrum]";
+			mes "By all means, be the witness of this agreement. You cannot say no. Because it is a very good thing, in some respects, for your work, isn't it?";
+			next;
+			mes "[Ernst]";
+			mes "Br...Brother. You are way too suppressive. Our appraiser must have his own position and opinion.";
+			next;
+			mes "[Ahrum]";
+			mes "You still have a weak personality. I am not forcing something so difficult on him! Who cares? I take silence as a positive answer! My bid is successful! And our promise is formed too!";
+			next;
+			mes "[Ernst]";
+			mes "Haah...haha... Appraiser, I deeply apologize for offending you. Sorry, but there is no possibility of fulfilling this promise. So, just don't take this situation seriously... You know... When pigs fly... ~";
+			next;
+			mes "[Ernst]";
+			mes "Now, let me return to my room. Keep up the good work, appraiser.";
+			donpcevent "Prince#another_ern::OnDisable";
+			set nkprince_eisen,6;
+			close;
+		}
+		else if (nkprince_eisen == 6) {
+			mes "[Ahrum]";
+			mes "I heard that one person";
+			mes "from my family is coming today. But I haven't found him yet.";
+			next;
+			mes "[Ahrum]";
+			mes "I worry about your words...";
+			mes "What do you want to say this time?...";
+			mes "Have you seen him, appraiser?";
+			set nkprince_eisen,7;
+			changequest 10012,10016;
+			close;
+		}
+		else if (nkprince_eisen == 7) {
+			mes "[Ahrum]";
+			mes "Aahh...boring, boring.";
+			mes "I am in real penance right now!";
+			close;
+		}
+		else if (nkprince_eisen == 8) {
+			mes "[Ahrum]";
+			mes "You come here so often.";
+			mes "I know you are a faithful person, engaged in a very important issue for the kingdom, but you come here more than is necessary...";
+			next;
+			switch(select("I have something...:Is that so? Then, see you later.")) {
+			case 1:
+				mes "[" + strcharinfo(0) + "]";
+				mes "I saw a person from the Walter family.";
+				next;
+				mes "[Ahrum]";
+				mes "Oh! really?";
+				mes "why didn't he come to me?";
+				next;
+				mes "[" + strcharinfo(0) + "]";
+				mes "-I tell Ahrum the story.-";
+				next;
+				mes "[Ahrum]";
+				mes "......";
+				next;
+				mes "[Ahrum]";
+				mes "What! Are you 100% sure about your story? Ahhhh...";
+				next;
+				mes "[Ahrum]";
+				mes "......";
+				next;
+				mes "[Ahrum]";
+				mes "I am very sorry, but I want to be left alone. Leave me alone, right now!";
+				set nkprince_eisen,9;
+				close2;
+				warp "prt_castle",318,273;
+				end;
+			case 2:
+				mes "[Ahrum]";
+				mes "Okay, good riddance.";
+				close;
+			}
+		}
+		else if ((nkprince_eisen == 9) || (nkprince_eisen == 10) || (nkprince_eisen == 11) || (nkprince_eisen == 12)) {
+			mes "[Ahrum]";
+			mes "I am very sorry, but I want to be left alone. Leave me alone, right now!";
+			close2;
+			warp "prt_castle",318,273;
+			end;
+		}
+		else if (nkprince_eisen == 13) {
+			mes "[Ahrum]";
+			mes "I told you that I don't want to be king, and I don't have any intention to change my mind!";
+			next;
+			mes "[Ernst]";
+			mes "Brother! I don't know why you are suffering so much! Are you this weak a creature?!";
+			next;
+			mes "[Ahrum]";
+			mes "Suffering? Me?..Aaahhh... It looks so...? Yeahh... Yes, it does. Stressful...Huhuhu...Hahaha!!";
+			next;
+			mes "[Ernst]";
+			mes "Brother, Ahrum...?";
+			next;
+			mes "[Ahrum]";
+			mes "...Is it only me that gets away... Anyhow, I am a disqualified person ... huhuhu. But, I've made a decision.";
+			next;
+			mes "[Ahrum]";
+			mes "Ernst.";
+			next;
+			mes "[Ernst]";
+			mes "Yes?... Yes?";
+			next;
+			mes "[Ahrum]";
+			mes "Take this.";
+			next;
+			mes "- swish. - ";
+			next;
+			mes "- Ahrum casually throws a Bazerald to Ernst.-";
+			next;
+			mes "[Ernst]";
+			mes "Eh?... What's this about?... A Bazerald of Walter family?...Why?";
+			next;
+			mes "[Ahrum]";
+			mes "Now this is perfect timing. Even our witness is here! Ern, you remember our promise clearly, right?";
+			next;
+			mes "[Ernst]";
+			mes "What? Promise? Witness?...Ahh... Re-really...";
+			next;
+			mes "[Ahrum]";
+			mes "Yes, really. Now is the time.";
+			next;
+			mes "[Ernst]";
+			mes "Nonsense! Do you think I can do that to you?!";
+			next;
+			mes "[Ahrum]";
+			mes "Idiot! Being King should be followed by decisive action. I have no chances to be King. Corruption, and living like that, is worse than being killed by you...";
+			next;
+			mes "[Ernst]";
+			mes "B-but, you can live as you are! As if nothing happened. You are just needed to return to the way you were before. Brother, let me help you. Tell me everything you hide...";
+			next;
+			mes "[Ahrum]";
+			mes "This is so moronic! Can you say that you are kingly?! Are you showing me sympathy now? You should be a man of sense! If not, you are not eligible as a king candidate!";
+			next;
+			mes "[Ernst]";
+			mes "Bu...but!";
+			next;
+			mes "[Ahrum]";
+			mes "Talking back and forth is of no use! I cannot help it. If you keep insisting instead of trying to be a man of sense, then such a person should not be a king.";
+			next;
+			mes "[Ahrum]";
+			mes "Ghh?! Brother?!";
+			next;
+			mes "(dagger thrusting sound)";
+			specialeffect EF_HIT2;
+			set nkprince_eisen,14;
+			donpcevent "Prince#another_ern::OnDisable";
+			donpcevent "Prince#another_ern1::OnEnable";
+			close;
+		}
+		else if (nkprince_eisen == 14) {
+			mes "[Ernst]";
+			mes "Bbb... Brother?... You... told me ";
+			mes "you would kill me... You just wanted to be killed";
+			mes "by me?... Bbb...brother?...";
+			next;
+			mes "[Ahrum]";
+			mes "Huhu... Not at all. I just wanted to kill you... That's it... Good job, Ern... This is legal self-defense, killing a villain... right?";
+			next;
+			mes "[Ernst]";
+			mes "B..Brother... even now it is not too late! If you go to a medic, you can be restored!";
+			next;
+			mes "[Ahrum]";
+			mes "It's too late... Once your vital organs are stabbed... I wonder how could I stay alive... or even how I could come back to life... I don't need to live.";
+			next;
+			mes "[Ernst]";
+			mes "B..Brother....How...how could you?!";
+			next;
+			mes "[Ahrum]";
+			mes "Goodbye, my brother... Be King, and change this nation. You... You can make it...guk...";
+			next;
+			mes "[Ernst]";
+			mes "...Brother...Brother... Why... Why... How can your face look so satisfied? How...? Brother...";
+			next;
+			mes "[Ahrum]";
+			mes "Huhu...You don't need to know that. By the way, you kept your promise... You should be king... But if you are lost, and stray, I will come kill you at any time... from hell!!";
+			next;
+			mes "[Ernst]";
+			mes "I...I don't know! I don't know what's going on!";
+			next;
+			mes "[Ahrum]";
+			mes "You don't need to... What you have to know about is that there was a sacrifice from me. To make my death meaningful, you should be a good king. That's my conviction... That's it..guk..! Don't lose my words... gukkuk.";
+			next;
+			mes "[Ernst]";
+			mes "Idiot... Moron...";
+			next;
+			mes "[Ahrum]";
+			mes "Ahh... Appraiser, do you know what you have to do? Be mindful of your words. About what you saw, what you heard... You must not tell all of your experience to the inspector.";
+			next;
+			mes "[Ahrum]";
+			mes "Ern killed a villain here who bullied around.. I had no chance... He showed decisive action, and that will deserve him the right to be king...";
+			next;
+			mes "[Ahrum]";
+			mes "If you react wrongfully to this incident, my death will be worthless...kuk... Do you understand?";
+			next;
+			switch(select("... Okay I will follow your will...:......")) {
+			case 1:
+				mes "[" + strcharinfo(0) + "]";
+				mes "... Okay, I will follow your will. Don't worry...";
+				next;
+				break;
+			case 2:
+				mes "[" + strcharinfo(0) + "]";
+				mes "......";
+				next;
+				mes "[Ahrum]";
+				mes "Ignorance... is positive... It means... My bid... is successful...";
+				next;
+				break;
+			}
+			mes "[Ahrum]";
+			mes "Now... I can die... with peace... Thank... you very... much, both... of you.";
+			next;
+			mes "[Ernst]";
+			mes "Brother...";
+			next;
+			mes "[Ahrum]";
+			mes "Then, perpetually... Bye... Sorry ... now I can't go fishing.";
+			next;
+			mes "[Ernst]";
+			mes "B...bro?";
+			next;
+			mes "[Ahrum]";
+			mes "......";
+			next;
+			mes "[Ernst]";
+			mes "B... bro, brother!";
+			next;
+			mes "[Ahrum]";
+			mes "......";
+			next;
+			mes "[Ernst]";
+			mes "Brotherrrrrrrr!!!";
+			next;
+			set nkprince_eisen,15;
+			set nk_prince,7;
+			donpcevent "Prince#another_ern1::OnDisable";
+			changequest 10024,10025;
+			close2;
+			warp "prt_castle",318,273;
+			end;
+		}
+	}
+	if (nk_prince < 5) {
+		mes "[Prince]";
+		mes "You are not allowed to be here.";
+		mes "Hmmm...";
+		next;
+		mes "[Prince]";
+		mes "Get out of my way.";
+		mes "I don't want to confront you.";
+		close;
+	}
+	else if (nk_prince > 4) {
+		mes "[Prince]";
+		mes "Are you the new adventurer appraiser? I am Eigen Ahrum from the Walter family. You can call me Prince Ahrum, for short, at your convenience.";
+		next;
+		mes "[Ahrum]";
+		mes "I hope you ask me short and simple questions. Long questions don't always mean special and good answers.";
+		next;
+		while(1) {
+			mes "-What shall I ask...-";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I'd like to ask about...";
+			next;
+			switch(select("Your background story...:Your view of the nation...:Your hobbies or interests...:Never mind, I'll come by later.")) {
+			case 1:
+				mes "[Ahrum]";
+				mes "You aren't just trying to dissolve your curiosity about the king's family, are you?";
+				next;
+				mes "[Ahrum]";
+				mes "From my childhood, I liked to experience many things and learn them. As a result, I should bear interference from my family. To them, I was not a decent noble family member.";
+				next;
+				mes "[Ahrum]";
+				mes "But I am not sensitive to that, and I think a good king should neglect those trifles.";
+				next;
+				mes "[Ahrum]";
+				mes "Others can say that my behavior makes them embarrased, but if something ends well, they are all satisfied in the end. Am I wrong?";
+				next;
+				mes "[Ahrum]";
+				mes "Although I've skipped some lessons in life, I can back up missing lessons easily. Who cares who can swear to me as King! This is how I am.";
+				next;
+				mes "[Ahrum]";
+				mes "Ern nags me a lot";
+				mes "about this, but I don't make an issue in any case. Such a fastidious jerk.";
+				next;
+				mes "[Ahrum]";
+				mes "Like I said, I've been growing up with his scolds. I feel his words were harsher than others who shut their mouth after I accomplish something.";
+				next;
+				mes "[Ahrum]";
+				mes "He always says that results cannot be everything that matter.";
+				next;
+				mes "[Ahrum]";
+				mes "Before everything else, it is luck and glory for me, that I could be born in Walter, a distinguished noble family.";
+				next;
+				mes "[Ahrum]";
+				mes "Of course, my abilities";
+				mes "are underestimated because of my background. In other respects, I feel sad about it.";
+				next;
+				mes "[Ahrum]";
+				mes "In the coming age, people will talk about me as Eigen Ahrum from the Walter family, not Eigen Ahrum of Walter.";
+				next;
+				mes "[Ahrum]";
+				mes "The Walter family itself has high distinction and fame, but I will make the name shine further, and others will be proud of me.";
+				next;
+				break;
+			case 2:
+				mes "[Ahrum]";
+				mes "The nation I organize";
+				mes "will not be harmonious";
+				mes "with pastel color of fairy";
+				mes "tales.";
+				next;
+				mes "[Ahrum]";
+				mes "For sure, losers and depressed people have their own faults, like lesser challenges for their lives.";
+				next;
+				mes "[Ahrum]";
+				mes "I have some belief in the benefit of unlimited competition. Frankly, I don't like this king election system from noble families.";
+				next;
+				mes "[Ahrum]";
+				mes "Although all these";
+				mes "status system fade away";
+				mes "I will be the king, with my sole capability and aptitude! Hahaha.";
+				emotion ET_SMILE;
+				next;
+				mes "[Ahrum]";
+				mes "I know quite well about";
+				mes "other king cadidates, personally.";
+				mes "But I can't find one distinguished person who can lead this kingdom well.";
+				next;
+				mes "[Ahrum]";
+				mes "I'm not saying they aren't outstanding, but considering the current situation of Rune-Midgarts, they don't seem to be astonishing leaders.";
+				next;
+				mes "[Ahrum]";
+				mes "For this reason, I assure you that no candidate is fit for the position among them. If I have to pick someone who can be a match for me, I can say that one is Ernst.";
+				next;
+				mes "[Ahrum]";
+				mes "He has a soft personality and thinks too long about things, but I admit many merits to him. I can say he is a fairly high-standard candidate.";
+				next;
+				mes "[Ahrum]";
+				mes "........";
+				next;
+				mes "[Ahrum]";
+				mes "Hmm, I was too talkative.";
+				mes "I apologize for my redundant words, hahaha.";
+				next;
+				break;
+			case 3:
+				mes "[Ahrum]";
+				mes "I enjoy activities.";
+				mes "I can't stand passive games,";
+				mes "like card and board games";
+				mes "I think those games are";
+				mes "quite fit for the scholar type people.";
+				next;
+				mes "[Ahrum]";
+				mes "My brother Ern can stick to something for a long time, like books or study.";
+				next;
+				mes "[Ahrum]";
+				mes "Once I become king,";
+				mes "I won't handle documents";
+				mes "while sitting all day.";
+				next;
+				mes "[Ahrum]";
+				mes "It's very hard for me to do that.";
+				next;
+				break;
+			case 4:
+				mes "[Ahrum]";
+				mes "Okay...";
+				mes "as you please.";
+				if (nkprince_eisen == 2) {
+					set nkprince_eisen,3;
+				}
+				else {
+					set nkprince_eisen,1;
+				}
+				completequest 10005;
+				set .@prin1,checkquest(10005);
+				set .@prin2,checkquest(10006);
+				set .@prin3,checkquest(10007);
+				set .@prin4,checkquest(10008);
+				set .@prin5,checkquest(10009);
+				set .@prin6,checkquest(10010);
+				set .@prin7,checkquest(10011);
+				if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+					setquest 10012;
+				}
+				close;
+			}
+		}
+	}
+}
+
+prt_castle,368,312,4	script	Prince#ern	985,{
+	if (checkquest(10024) == 2) {
+		mes "[Ernst]";
+		mes "...brother, if you want...";
+		mes "...Ah, please leave here.";
+		mes "I don't want to see anyone.";
+		close;
+	}
+	else if (checkquest(10024) == 0 || checkquest(10024) == 1) {
+		mes "[Ernst]";
+		mes "...Brother Ahrum...";
+		close;
+	}
+	if (nkprince_eisen > 2) {
+		if (nkprince_eisen == 3) {
+			mes "[Ernst]";
+			mes "Did you meet my brother Ahrum? He is a great man. Really.";
+			next;
+			mes "He tries to deal with things too tough that sometimes makes things into a problem. But even at those moments, he is willing to listen to my words; so we seldom seem to be in serious trouble.";
+			next;
+			mes "[Ernst]";
+			mes "That can only be that way, because we two have been so close to each other.";
+			next;
+			mes "[Ernst]";
+			mes "Brother Ahrum has been blaming me for that, I think unnecessarily too long. But he listens to me and acts as I advise.";
+			next;
+			mes "[Ernst]";
+			mes "Isn't he a great person?";
+			mes "He is a trustworthy and instructive person.";
+			close;
+		}
+		else if (nkprince_eisen == 5) {
+			mes "[Ernst]";
+			mes "Ah, now I am going to have a plan with Bro Ahrum";
+			mes "If you don't have a important issue with me, I shall go. ";
+			close;
+		}
+		else if (nkprince_eisen == 6) {
+			mes "[Ernst]";
+			mes "Ah, I heard person from Walter came in here. Have you seen him?";
+			next;
+			mes "[Ernst]";
+			mes "It seems that even brother Ahrum hasn't met with him. Hmm...";
+			set nkprince_eisen,7;
+			changequest 10012,10016;
+			close;
+		}
+		else if (nkprince_eisen == 9) {
+			mes "[Ernst]";
+			mes "Welcome, judge.";
+			mes "We meet quite open";
+			mes "Why don't you slow down your work?";
+			next;
+			mes "[Ernst]";
+			mes "Hmm...I don't have any more words to say. Moreover, Ahrum seems to be strange these days. I worry about that. I hope it's not a big deal.";
+			set nkprince_eisen,10;
+			changequest 10017,10004;
+			close;
+		}
+		else if ((nkprince_eisen == 10) || (nkprince_eisen == 11) || (nkprince_eisen == 12)) {
+			mes "[Ernst]";
+			mes "Ahrum is getting weird.";
+			mes "It's not a normal change, but a real corruption. I feel uneasy about it.";
+			next;
+			mes "[Ernst]";
+			mes "This isn't happening.";
+			mes "I believe Ahrum will be restored as he was. However, I don't feel good.";
+			close;
+		}
+		else if (nkprince_eisen == 15) {
+			mes "[Ernst]";
+			mes "Ah...";
+			mes "Brother Ahrum...";
+			mes "Eigen Ahrum...yes, sir.";
+			next;
+			mes "[Ernst]";
+			mes "......";
+			next;
+			mes "[Ernst]";
+			mes "Please leave here. I don't want to see anyone.";
+			close;
+		}
+		else {
+			mes "[Ernst]";
+			mes "Welcome, appraiser.";
+			mes "Thank you for your hard work. It's hard to judge others, isn't it?";
+			close;
+		}
+	}
+	if (nk_prince < 5) {
+		mes "[Prince]";
+		mes "You are not a adventurer judge";
+		mes "I think you shouldn't be here.";
+		close;
+	}
+	else if (nk_prince > 4) {
+		mes "[Prince]";
+		mes "Hi";
+		mes "you are the judege.";
+		mes "I am Ernst, prince of Geoborg.";
+		next;
+		mes "[Ernst]";
+		mes "I think it's hard work that judges people's talents. I will do my best to help you.";
+		next;
+		mes "[Ernst]";
+		mes "Well, thank you.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "(He seems to have a polite personality as a candidate for King)";
+		next;
+		while(1) {
+			mes "-Well, what questions.-";
+			next;
+			switch(select("backgroud first.:I want to know your spirit of nationalism.: Your habbit and tastes.:I will be back.")) {
+			case 1:
+				mes "[Ernst]";
+				mes "Since I was young, I have grown up with a royal education. I haven't quarreled with others seriously, but I was not very polite either.";
+				next;
+				mes "[Ernst]";
+				mes "People thought that I was timid, but that's because I didn't want to be shun from others.";
+				next;
+				mes "[Ernst]";
+				mes "Of course, we got an exception... Eigen.";
+				next;
+				mes "[Ernst]";
+				mes "Eigen Ahrum can be the exception. He is not polite, but he makes sense from others with exact confirmation.";
+				next;
+				mes "[Ernst]";
+				mes "I think that is a great ability, and I should learn it. But, it is not only about results, but also a courtesy matter. We should keep something that we have to do.";
+				next;
+				mes "[Ernst]";
+				mes "For me, the process was more important than the result. Now, I take them as equal virtue. I didn't take results significantly. Ahrum taught me, who used to consider the result as nothing.";
+				break;
+			case 2:
+				mes "[Ernst]";
+				mes "The spirit of nationalism when I become King?";
+				next;
+				mes "[Ernst]";
+				mes "You might believe the power of a king is unlimited, but as one man, it has a limitation.";
+				next;
+				mes "[Ernst]";
+				mes "Both normal public and prominent people take charge of the society that gathers that wisdom is easier than doing things on your own.";
+				next;
+				mes "[Ernst]";
+				mes "Ahrum will help me to supplement any shortcomings. Not only Ahrum, but all ministers and cabinet members; and the public is my master.";
+				next;
+				mes "[Ernst]";
+				mes "It is my fortune that I got many masters beside Ahrum. It is also good for my country.";
+				next;
+				break;
+			case 3:
+				mes "[Ernst]";
+				mes "II don't have special habits. I am just willing to learn and read books.";
+				next;
+				mes "[Ernst]";
+				mes "And I also love to talk with Ahrum. Ahrum is clever enough to generate new ideas that I can follow.";
+				next;
+				mes "[Ernst]";
+				mes "Well, to tell the truth, going fishing with Ahrum is better. Although, we are too busy to go fishing because of all these kingdom issues.";
+				next;
+				mes "[Ernst]";
+				mes "We promised to go fishing after the taking of the throne... Let's see...";
+				next;
+				mes "[Ernst]";
+				mes "Hmm...is that enough?";
+				next;
+				break;
+			case 4:
+				mes "[Ernst]";
+				mes "Yes, then, see you later.";
+				if (nkprince_eisen == 1) {
+					set nkprince_eisen,3;
+				}
+				else {
+					set nkprince_eisen,2;
+				}
+				completequest 10006;
+				set .@prin1,checkquest(10005);
+				set .@prin2,checkquest(10006);
+				set .@prin3,checkquest(10007);
+				set .@prin4,checkquest(10008);
+				set .@prin5,checkquest(10009);
+				set .@prin6,checkquest(10010);
+				set .@prin7,checkquest(10011);
+				if ((.@prin1 + .@prin2 + .@prin3 + .@prin4 + .@prin5 + .@prin6 + .@prin7) == 14) {
+					setquest 10012;
+				}
+				close;
+			}
+		}
+	}
+}
+
+prt_castle,163,319,0	script	#twonoble	-1,3,3,{
+OnTouch:
+	if (nkprince_eisen == 7) {
+		donpcevent "Young Noble#valter::OnEnable";
+		donpcevent "Aged Noble#rihart::OnEnable";
+		mes "[Aged Noble]";
+		mes "You don't have to worry.";
+		mes "Once my Eigen Ahrum is chosen to be king, the Richard family will be a second magnate.";
+		next;
+		mes "[A man of Riehart Family]";
+		mes "Hehe, Ahrum is the most favorable and influential candidate already. You would be so amazing were you to fulfill this.";
+		next;
+		mes "[A man of Walter Family]";
+		mes "Although Ahrum is a strong candidate, the prince of Gaebolg has a high reputation for his virtues too. For sure, it is better to confirm things.";
+		next;
+		mes "[A man of Walter Family]";
+		mes "So, are you on the project of Prince Ernst's poisoning?";
+		next;
+		mes "[A man of Riehart Family]";
+		mes "Of course. Even an autopsy will not find it. ... You don't have to worry.";
+		next;
+		mes "[A man of Walter Family]";
+		mes "Ahrum will be elected, once the termination of prince Ernst happens, and then...";
+		next;
+		mes "[A man of Riehart Family]";
+		mes "both family will lead this country, huhuhu.";
+		next;
+		mes "[A man of Walter Family]";
+		mes "You must know what Walter and Gaebolg did. Both families stayed on top of the country.";
+		next;
+		mes "[A man of Riehart Family]";
+		mes "The weakest one of the seven families, Gaebolg Family, took power by uniting with Schmidt and Walter.";
+		next;
+		mes "[A man of Walter Family]";
+		mes "Yes, that's why the union of Walter and Gaebolg is perfect. Moreover, Ahrum and Ernst... It's obviously the second coming of Schmidt and Heinrich.";
+		next;
+		mes "[A man of Walter Family]";
+		mes "That's why the Walter family and the Gaebolg Family can't exist together. Their co-existence will bring destruction as it has done in the past.";
+		next;
+		mes "[A man of Riehart Family]";
+		mes "Thanks for that. It's good to go. All the people who know of the past will deny to be in league with Ahrum or Ernst.";
+		next;
+		mes "[A man of Walter Family]";
+		mes "Anyway, we got a little bit more time. Keep the secret thoroughly; not to tell anyone.";
+		next;
+		mes "[A man of Riehart Family]";
+		mes "Yes. For the glory of Rune-Midgarts.";
+		next;
+		mes "[A man of Walter Family]";
+		mes "All the glory for Rune-Midgarts...";
+		mes "Hmm?";
+		next;
+		emotion ET_SURPRISE;
+		mes "[A man of Walter Family]";
+		mes "Quiet... Someone comes.";
+		mes "Ok... take care.";
+		next;
+		mes "[A man of Riehart Family]";
+		mes "Never mind...";
+		donpcevent "Young Noble#valter::OnDisable";
+		donpcevent "Aged Noble#rihart::OnDisable";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "(Walter is the name of Ahrum.";
+		mes "Richard is the name of Poe.)";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "(Is this the conspiracy of two families? What the hell..)";
+		changequest 10016,10017;
+		set nkprince_eisen,8;
+		close;
+	}
+}
+
+prt_castle,156,325,4	script	Young Noble#valter	86,{
+	mes "[Young Noble Walter]";
+	mes "Step aside.";
+	mes "How dare you talk to him.";
+	close;
+
+OnInit:
+	disablenpc "Young Noble#valter";
+	end;
+
+OnEnable:
+	enablenpc "Young Noble#valter";
+	end;
+
+OnDisable:
+	disablenpc "Young Noble#valter";
+	end;
+}
+
+prt_castle,157,323,3	script	Aged Noble#rihart	880,{
+	mes "[Aged Noble Richard]";
+	mes "Hmm-hmm.";
+	mes "What an indecorous person!";
+	close;
+
+OnInit:
+	disablenpc "Aged Noble#rihart";
+	end;
+
+OnEnable:
+	enablenpc "Aged Noble#rihart";
+	end;
+
+OnDisable:
+	disablenpc "Aged Noble#rihart";
+	end;
+}
+
+prt_castle,314,371,0	script	Prince#another_ern	985,{
+	if (nkprince_eisen == 13) {
+		mes "[Ahrum]";
+		mes "I told you that I don't want to be king, and I don't have any intention to change my mind!";
+		next;
+		mes "[Ernst]";
+		mes "Brother! I don't know why you are suffering so much! Are you this weak a creature?!";
+		next;
+		mes "[Ahrum]";
+		mes "Suffering? Me?..Aaahhh... It looks so...? Yeahh... Yes, it does. Stressful...Huhuhu...Hahaha!!";
+		next;
+		mes "[Ernst]";
+		mes "Brother, Ahrum...?";
+		next;
+		mes "[Ahrum]";
+		mes "...Is it only me that gets away... Anyhow, I am a disqualified person ... huhuhu. But, I've made a decision.";
+		next;
+		mes "[Ahrum]";
+		mes "Ernst.";
+		next;
+		mes "[Ernst]";
+		mes "Yes?... Yes?";
+		next;
+		mes "[Ahrum]";
+		mes "Take this.";
+		next;
+		mes "- swish. - ";
+		next;
+		mes "- Ahrum casually throws a Bazerald to Ernst.-";
+		next;
+		mes "[Ernst]";
+		mes "Eh?... What's this about?... A Bazerald of Walter family?...Why?";
+		next;
+		mes "[Ahrum]";
+		mes "Now this is perfect timing. Even our witness is here! Ern, you remember our promise clearly, right?";
+		next;
+		mes "[Ernst]";
+		mes "What? Promise? Witness?...Ahh... Re-really...";
+		next;
+		mes "[Ahrum]";
+		mes "Yes, really. Now is the time.";
+		next;
+		mes "[Ernst]";
+		mes "Nonsense! Do you think I can do that to you?!";
+		next;
+		mes "[Ahrum]";
+		mes "Idiot! Being King should be followed by decisive action. I have no chances to be King. Corruption, and living like that, is worse than being killed by you...";
+		next;
+		mes "[Ernst]";
+		mes "B-but, you can live as you are! As if nothing happened. You are just needed to return to the way you were before. Brother, let me help you. Tell me everything you hide...";
+		next;
+		mes "[Ahrum]";
+		mes "This is so moronic! Can you say that you are kingly?! Are you showing me sympathy now? You should be a man of sense! If not, you are not eligible as a king candidate!";
+		next;
+		mes "[Ernst]";
+		mes "Bu...but!";
+		next;
+		mes "[Ahrum]";
+		mes "Talking back and forth is of no use! I cannot help it. If you keep insisting instead of trying to be a man of sense, then such a person should not be a king.";
+		next;
+		mes "[Ahrum]";
+		mes "Ghh?! Brother?!";
+		next;
+		mes "(dagger thrusting sound)";
+		specialeffect EF_HIT2;
+		set nkprince_eisen,14;
+		donpcevent "Prince#another_ern::OnDisable";
+		donpcevent "Prince#another_ern1::OnEnable";
+		close;
+	}
+	if (nkprince_eisen == 5) {
+		mes "[Ahrum]";
+		mes "Whoever be the king,";
+		mes "let's make Rune-Midgarts...";
+		mes "the best country in the world, by helping each other.";
+		next;
+		mes "[Ernst]";
+		mes "We can make it.";
+		mes "No, we shall make it. For Brother and I together, we shall make it.";
+		next;
+		mes "[Ahrum]";
+		mes "But... If I am to reign, or help you; and if I am corrupted... you kill me... by your hand.";
+		next;
+		mes "[Ahrum]";
+		mes "In the opposite case, I will kill you too, you understand? So don't ever stray, and do not ever forget your determination.";
+		next;
+		mes "[Ernst]";
+		mes "Brother, you think about hell.";
+		mes "It will never happen, so...";
+		mes "Don't talk that way.";
+		next;
+		mes "[Ahrum]";
+		mes "It is an assumption.";
+		mes "Don't take it too seriously.";
+		next;
+		mes "[Ernst]";
+		mes "Alright, alright. Don't";
+		mes "take it the wrong way.";
+		mes "I have been acting for Brother and Kingdom, and I will be the same ever after.";
+		next;
+		emotion ET_SURPRISE;
+		mes "[Ahrum]";
+		mes "Ah, the appraiser has come.";
+		mes "How could you appear so suddenly? Ern and I were in the middle of conversation.";
+		next;
+		mes "[Ernst]";
+		mes "What's wrong, brother? We were not talking about anything bad. We were just making our resolution firm.";
+		next;
+		mes "[Ahrum]";
+		mes "You came here in good timing.";
+		mes "We've just decided to kill";
+		mes "the other... if one of us is";
+		mes "corrupt.";
+		next;
+		mes "[Ernst]";
+		mes "Brother?!";
+		next;
+		mes "[Ahrum]";
+		mes "By all means, be the witness of this agreement. You cannot say no. Because it is a very good thing, in some respects, for your work, isn't it?";
+		next;
+		mes "[Ernst]";
+		mes "Br...Brother. You are way too suppressive. Our appraiser must have his own position and opinion.";
+		next;
+		mes "[Ahrum]";
+		mes "You still have a weak personality. I am not forcing something so difficult on him! Who cares? I take silence as a positive answer! My bid is successful! And our promise is formed too!";
+		next;
+		mes "[Ernst]";
+		mes "Haah...haha... Appraiser, I deeply apologize for offending you. Sorry, but there is no possibility of fulfilling this promise. So, just don't take this situation seriously... You know... When pigs fly... ~";
+		next;
+		mes "[Ernst]";
+		mes "Now, let me return to my room. Keep up the good work, appraiser.";
+		donpcevent "Prince#another_ern::OnDisable";
+		set nkprince_eisen,6;
+		close;
+	}
+
+OnInit:
+	disablenpc "Prince#another_ern";
+	end;
+
+OnEnable:
+	enablenpc "Prince#another_ern";
+	end;
+
+OnDisable:
+	disablenpc "Prince#another_ern";
+	end;
+}
+
+prt_castle,314,372,0	script	Prince#another_ern1	985,{
+	if (nkprince_eisen == 14) {
+		mes "[Ernst]";
+		mes "Bbb... Brother?... You... told me you would kill me... You just wanted to be killed by me??... Bbb...brother?...";
+		next;
+		mes "[Ahrum]";
+		mes "Huhu... Not at all. I just wanted to kill you... That's it... Good job, Ern... This is legal, self-defense; killing a villain... right?";
+		next;
+		mes "[Ernst]";
+		mes "B..Brother... even now it is not too late! If you go to a medic, you can be restored!";
+		next;
+		mes "[Ahrum]";
+		mes "It's too late... Once your vital organs are stabbed... I wonder how could I stay alive... or even how I could come back to life... I don't need to live.";
+		next;
+		mes "[Ernst]";
+		mes "B..Brother....How...how could you?!";
+		next;
+		mes "[Ahrum]";
+		mes "Goodbye, my brother... Be King, and change this nation. You... You can make it...guk...";
+		next;
+		mes "[Ernst]";
+		mes "...Brother...Brother... Why... Why... How can your face look so satisfied? How...? Brother...";
+		next;
+		mes "[Ahrum]";
+		mes "Huhu...You don't need to know that. By the way, you kept your promise... You should be king... But if you are lost, and stray, I will come kill you at any time... from hell!!";
+		next;
+		mes "[Ernst]";
+		mes "I...I don't know! I don't know what's going on!";
+		next;
+		mes "[Ahrum]";
+		mes "You don't need to... What you have to know about is that there was a sacrifice from me. To make my death meaningful, you should be a good king. That's my conviction... That's it..guk..! Don't lose my words... gukkuk.";
+		next;
+		mes "[Ernst]";
+		mes "Idiot... Moron...";
+		next;
+		mes "[Ahrum]";
+		mes "Ahh... Appraiser, do you know what you have to do? Be mindful of your words. About what you saw, what you heard... You must not tell all of your experience to the inspector.";
+		next;
+		mes "[Ahrum]";
+		mes "Ern killed a villain here who bullied around.. I had no chance... He showed decisive action, and that will deserve him the right to be king...";
+		next;
+		mes "[Ahrum]";
+		mes "If you react wrongfully to this incident, my death will be worthless...kuk... Do you understand?";
+		next;
+		switch(select("... Okay I will follow your will...:......")) {
+		case 1:
+			mes "[" + strcharinfo(0) + "]";
+			mes "... Okay, I will follow your will. Don't worry...";
+			next;
+			break;
+		case 2:
+			mes "[" + strcharinfo(0) + "]";
+			mes "......";
+			next;
+			mes "[Ahrum]";
+			mes "Ignorance... is positive... It means... My bid... is successful...";
+			next;
+			break;
+		}
+		mes "[Ahrum]";
+		mes "Now... I can die... with peace... Thank... you very... much, both... of you.";
+		next;
+		mes "[Ernst]";
+		mes "Brother...";
+		next;
+		mes "[Ahrum]";
+		mes "Then, perpetually... Bye... Sorry ... now I can't go fishing.";
+		next;
+		mes "[Ernst]";
+		mes "B...bro?";
+		next;
+		mes "[Ahrum]";
+		mes "......";
+		next;
+		mes "[Ernst]";
+		mes "B... bro, brother!";
+		next;
+		mes "[Ahrum]";
+		mes "......";
+		next;
+		mes "[Ernst]";
+		mes "Brotherrrrrrrr!!!";
+		next;
+		set nkprince_eisen,15;
+		set nk_prince,7;
+		donpcevent "Prince#another_ern1::OnDisable";
+		changequest 10024,10025;
+		close2;
+		warp "prt_castle",318,273;
+		end;
+	}
+
+OnInit:
+	disablenpc "Prince#another_ern1";
+	end;
+
+OnEnable:
+	enablenpc "Prince#another_ern1";
+	end;
+
+OnDisable:
+	disablenpc "Prince#another_ern1";
+	end;
+}
+
+prt_castle,272,372,1	script	Prince#eisen1	983,{
+	mes "[Ahrum]";
+	mes "Moron. You'll never be a king. All throughout your life... Don't you know it? Such a junk addict!!";
+	next;
+	mes "[Erich]";
+	mes "...I am not trying to be, but swear words don't make me feel very good. What's wrong with you all of a sudden?";
+	next;
+	mes "[Ahrum]";
+	mes "I am just fed up with you. Even a jerk like you is a candidate for king? I feel sick and nauseated about this king succession.";
+	next;
+	mes "[Erich]";
+	mes "Yeah, it's not that wrong. But I am the representative of the Nerious family. I cannot stand for your insults.";
+	next;
+	mes "[Erich]";
+	mes "Is your family aware of your crazy actions? You are ruining your name, and of your family.";
+	next;
+	mes "[Ahrum]";
+	mes "...! Yes... I give a crap. No... My existence too! Kukuku...hahahahaha!";
+	next;
+	mes "[Ahrum]";
+	mes "Yes, you and I are both disqualified! Hahahaha!! The freaking addict reveals the truth! Yes, hahahahahaha!!";
+	next;
+	mes "[Erich]";
+	mes "... Crazy jerk. Beat it. I don't want to talk with you anymore.";
+	next;
+	mes "[Ahrum]";
+	mes "Yes, I am going now. Family shame?!! Hahahaha... What is a family!! Kkkkkk!! Very interesting!";
+	next;
+	mes "-Ahrum, seems to be out of his mind, as he approaches the door-";
+	next;
+	mes "[Erich]";
+	mes "...Nuts.";
+	completequest 10020;
+	set .@er1,checkquest(10018);
+	set .@er2,checkquest(10019);
+	set .@er3,checkquest(10020);
+	set .@er4,checkquest(10021);
+	set .@er5,checkquest(10022);
+	if ((.@er1 + .@er2 + .@er3 + .@er4 + .@er5) == 10) {
+		setquest 10023;
+		set nkprince_eisen,11;
+	}
+	donpcevent "Prince#eisen1::OnDisable";
+	close;
+
+OnInit:
+	disablenpc "Prince#eisen1";
+	end;
+
+OnEnable:
+	enablenpc "Prince#eisen1";
+	end;
+
+OnDisable:
+	disablenpc "Prince#eisen1";
+	end;
+}
+
+prt_castle,336,202,7	script	Prince#eisen2	983,{
+	mes "[Urugen]";
+	mes "What did you say? Ahrum?";
+	mes "Hey! What did you just say to me? Ahrum?!";
+	next;
+	mes "[Ahrum]";
+	mes "I can say it a zillion times! Urugen, you are not beautiful at all! Not even a bit! In fact, your look is very ugly and obscene!";
+	next;
+	mes "[Urugen]";
+	mes "That's very rude! How could a dirty germ like you talk like that to me!";
+	mes "you like germ can talk like that";
+	mes "to me!";
+	next;
+	mes "[Ahrum]";
+	mes "Dirty? Yes, I am. I am dirty. But it is not a problem of mine. Everything is dirty! I cannot stand it anymore!";
+	next;
+	mes "[Urugen]";
+	mes "Hm! I can agree with your words, the world is obscene, but you cannot bring me down to that level! I cannot forgive your words! Never, ever!";
+	next;
+	mes "[Ahrum]";
+	mes "What if you can't forgive me? What shall you do? That's good. Are you gonna kill me? Will you kill me? Kill me? Haha? You are being called beautiful only when calling yourself!";
+	next;
+	mes "[Urugen]";
+	mes "Akk! I cannot stand this! Such low behavior and words ...? You are no prince. I don't want to face you anymore! Get out of here!";
+	next;
+	mes "[Ahrum]";
+	mes "You don't have enough quality. You don't have belief to eliminate evil. By will, you are rubbish. I don't want to be with rubbish either! Stay in your world forever and never come out of it!";
+	next;
+	mes "-Ahrum strides out of the room, grumbling...-";
+	next;
+	mes "[Urugen]";
+	mes "...You are so low. I misjudged you. You are not of the few that have an artistic view. I totally saw you the wrong way.";
+	completequest 10021;
+	set .@er1,checkquest(10018);
+	set .@er2,checkquest(10019);
+	set .@er3,checkquest(10020);
+	set .@er4,checkquest(10021);
+	set .@er5,checkquest(10022);
+	if ((.@er1 + .@er2 + .@er3 + .@er4 + .@er5) == 10) {
+		setquest 10023;
+		set nkprince_eisen,11;
+	}
+	donpcevent "Prince#eisen2::OnDisable";
+	close;
+
+OnInit:
+	disablenpc "Prince#eisen2";
+	end;
+
+OnEnable:
+	enablenpc "Prince#eisen2";
+	end;
+
+OnDisable:
+	disablenpc "Prince#eisen2";
+	end;
+}
+
+prt_castle,286,201,7	script	Prince#eisen3	983,{
+	mes "[Ahrum]";
+	mes "Military maniac! Jerk! Do you think power can solve everything? In all situations, do you think people can live peacefully?!";
+	next;
+	mes "[Helmut]";
+	mes "You are fully violent now.";
+	mes "By your theory, you are also not eligible for the king's quality!";
+	next;
+	mes "[Ahrum]";
+	mes "Yes, you talk well. Bah!";
+	mes "I don't have quality!!";
+	mes "But you are worse than me! King candidate?? You are just a war monger!";
+	next;
+	mes "[Helmut]";
+	mes "You have come here to offend me? Do you think you can beat me, Eigen Ahrum?!";
+	next;
+	mes "[Ahrum]";
+	mes "Fight? That's so rubbish. I don't care for it. I just came here to shoot what I want to say to you. I don't even feel like fighting with you. I am leaving!";
+	next;
+	mes "[Helmut]";
+	mes "Hold on, coward! Are you fleeing now?! Such a coward! Let's finish our battle!";
+	next;
+	mes "[Ahrum]";
+	mes "Coward.. that's a very nice word. Yes, I am. I am leaving. Ta-tah! You are worse than a bad coward...like me! Bye-bye war monger!";
+	next;
+	mes "-Ahrum grins with a vague feeling towards an irritated Helmut, and leaves the room.-";
+	next;
+	mes "[Helmut]";
+	mes "That is... such a villain!!!";
+	completequest 10022;
+	set .@er1,checkquest(10018);
+	set .@er2,checkquest(10019);
+	set .@er3,checkquest(10020);
+	set .@er4,checkquest(10021);
+	set .@er5,checkquest(10022);
+	if ((.@er1 + .@er2 + .@er3 + .@er4 + .@er5) == 10) {
+		setquest 10023;
+		set nkprince_eisen,11;
+	}
+	donpcevent "Prince#eisen3::OnDisable";
+	close;
+
+OnInit:
+	disablenpc "Prince#eisen3";
+	end;
+
+OnEnable:
+	enablenpc "Prince#eisen3";
+	end;
+
+OnDisable:
+	disablenpc "Prince#eisen3";
+	end;
+}
+
+prt_castle,388,205,6	script	Prince#eisen4	983,{
+	mes "[Ahrum]";
+	mes "You always care about gambling. But, why don't you care about your surrondings first, eh? Young master of Richard?";
+	next;
+	mes "[Poe]";
+	mes "Why are you teasing me, now? At least I feel I have dice with higher numbers than you... You don't think so?";
+	next;
+	mes "[Ahrum]";
+	mes "Posh! You keep talking about dice. Listen. You can feel that I roll lower numbers of dice than you... But you have already failed before the roll of your dice! Do you know that?!";
+	next;
+	mes "[Poe]";
+	mes "What are you talking about? I can't get you. I've lost to whom? I don't know why you are talking like that.";
+	next;
+	mes "[Ahrum]";
+	mes "You can't know it! So what?! If you know, what can you do? You have too much pride over everything. Do you think you can foster a deeply rotten tree, to become a healthy tree?!";
+	next;
+	mes "[Poe]";
+	mes "If you want to say something, you have to say it clearly. Are you announcing a loss and defeat? Is my luck so dreadful, Eigen Ahrum?";
+	next;
+	mes "[Ahrum]";
+	mes "Yes, I announce my defeat. But it is not to you. You are a loser like me. Before getting into important business, you are ruined by an environmental element.";
+	next;
+	mes "[Poe]";
+	mes "...What the hell are you talking about? Environment? I totally don't get you. It is never clear.";
+	next;
+	mes "[Ahrum]";
+	mes "You'd better not understand it. If you know this, you will lose your health. Don't care for it... for the rest of your life!!";
+	next;
+	mes "[Poe]";
+	mes "Ho- hold! Look, Ahrum!";
+	mes "Hold on! Eigen Ahrum! Hey!";
+	next;
+	mes "-Ahrum totally neglects the";
+	mes "voice calling him and leaves the room, with a lonely countenance.-";
+	next;
+	mes "[Poe]";
+	mes "What... What. It's not fun.";
+	mes "I totally couldn't get him.";
+	completequest 10018;
+	set .@er1,checkquest(10018);
+	set .@er2,checkquest(10019);
+	set .@er3,checkquest(10020);
+	set .@er4,checkquest(10021);
+	set .@er5,checkquest(10022);
+	if ((.@er1 + .@er2 + .@er3 + .@er4 + .@er5) == 10) {
+		setquest 10023;
+		set nkprince_eisen,11;
+	}
+	donpcevent "Prince#eisen4::OnDisable";
+	close;
+
+OnInit:
+	disablenpc "Prince#eisen4";
+	end;
+
+OnEnable:
+	enablenpc "Prince#eisen4";
+	end;
+
+OnDisable:
+	disablenpc "Prince#eisen4";
+	end;
+}
+
+prt_castle,364,372,1	script	Prince#eisen5	983,{
+	mes "[Ahrum]";
+	mes "Peter, what will you do if your work doesn't mean anything?";
+	next;
+	mes "[Peter]";
+	mes "...I don't know what you are talking about, but meaningless things do not exist. I don't think you know about that.";
+	next;
+	mes "[Ahrum]";
+	mes "Buzzzz. You are wrong. There is a thing that is meaningless itself. Clearly speaking, the action becomes meaningless without knowing its meaning...";
+	next;
+	mes "[Peter]";
+	mes "Are you trying to explain... clearly? It's getting more complicated. What exactly do you want to say? Let me get it directly.";
+	next;
+	mes "[Ahrum]";
+	mes "...Whatever I do or do not do, I am just being manipulated by some thing. To make it worse, I hurt others as I am in that some thing only.";
+	next;
+	mes "[Peter]";
+	mes "......";
+	next;
+	mes "[Ahrum]";
+	mes "The worst thing is, I feel I just become timid with knowing and understanding the some thing itself..";
+	next;
+	mes "[Ahrum]";
+	mes "But it is the same with you. If you really want to express gratitude towards the girl, you should have visited her in person. You couldn't do it, could you?";
+	next;
+	mes "[Peter]";
+	mes "...Ahrum, what's wrong with you? You are not the Ahrum I know. What's made you like this?";
+	next;
+	mes "[Ahrum]";
+	mes "Hmph..The some thing. Nothing. It's meaningless. Reality, that's all. It was nice talking to you. Bye-bye, and live like what you used to live like, ever after.";
+	next;
+	mes "[Peter]";
+	mes "......Eigen Ahrum. You...";
+	next;
+	mes "-Ahrum shows a gloomy facial expression and leaves the room.-";
+	next;
+	mes "[Peter]";
+	mes "......";
+	completequest 10019;
+	set .@er1,checkquest(10018);
+	set .@er2,checkquest(10019);
+	set .@er3,checkquest(10020);
+	set .@er4,checkquest(10021);
+	set .@er5,checkquest(10022);
+	if ((.@er1 + .@er2 + .@er3 + .@er4 + .@er5) == 10) {
+		setquest 10023;
+		set nkprince_eisen,11;
+	}
+	donpcevent "Prince#eisen5::OnDisable";
+	close;
+
+OnInit:
+	disablenpc "Prince#eisen5";
+	end;
+
+OnEnable:
+	enablenpc "Prince#eisen5";
+	end;
+
+OnDisable:
+	disablenpc "Prince#eisen5";
+	end;
+}
+
+prt_castle,368,310,1	script	Prince#eisen6	983,{
+	mes "[Ernst]";
+	mes "Bro, tell me again. You just said something?";
+	next;
+	mes "[Ahrum]";
+	mes "Ok. Let me tell you. This Rune-Midgarts is rubbish. You and I struggle in the dump of trash, and we are all same with it, even if it cannot be recycled.";
+	next;
+	mes "[Ernst]";
+	mes "Brother, what's wrong? Are you insane?";
+	next;
+	mes "[Ahrum]";
+	mes "Insane? I am fully sane....J.m...I am just fed up with this disgusting reality, my lovely brother.";
+	next;
+	mes "[Ernst]";
+	mes "Reality? What reality? What did you perceive? You are not like as you are. I totally can't help you!";
+	next;
+	mes "[Ahrum]";
+	mes "I am as I usually am, Ernst. Just, reality is dirty, and I realized that I am trapped in the crap. I can't get out of here.";
+	next;
+	mes "[Ernst]";
+	mes "Liar! You always told me that you have possibilities in your book! You always behaved proudly!";
+	next;
+	mes "[Ahrum]";
+	mes "Shut up.";
+	next;
+	mes "[Ernst]";
+	mes "It's dirty and not good. That's why we should correct it. We already know about this situation, but why do you act like this!!";
+	next;
+	mes "[Ahrum]";
+	mes "...I told you, don't make noise!";
+	next;
+	mes "[Ernst]";
+	mes "No. Corruption is mutually agreed, and you brought me here, and because of your presence, I can depend on you!";
+	next;
+	mes "[Ahrum]";
+	mes "Shut up Shut up!!!!!!!!!!!!";
+	next;
+	mes "[Ernst]";
+	mes "......!";
+	next;
+	mes "[Ahrum]";
+	mes "Meaningless actions cannot be welcomed! Being manipulated by dirt is disgusting. I was ignorant, I felt that I acted by my will, but now I realize I was manipulated!";
+	next;
+	mes "[Ahrum]";
+	mes "King?! What's that for?! That's nothing! Even if we make a new world, nothing is changed!! We are like in a play. A picture is someone's intention... only drawn!! Right?!";
+	next;
+	mes "[Ernst]";
+	mes "What are you talking about? I totally can't understand! Are you saying you are not in the status quo? Yes? What the heck are you talking about!";
+	next;
+	mes "[Ahrum]";
+	mes "Shut up! Without knowing anything, you don't know when you can be killed. You don't get me yet.... ah...! You need to not know this!";
+	next;
+	mes "[Ernst]";
+	mes "Br...Brother, will you keep insisting on this? Our relationship is this short?";
+	next;
+	mes "[Ahrum]";
+	mes "Shut up! If you are not contented, you can kill me as we promised! You... me... me...!! I don't wanna talk about it any more, I am going back to my room!";
+	next;
+	mes "[Ernst]";
+	mes "Ah. Hold on a moment Brother! Ahrum!";
+	next;
+	mes "[Ahrum]";
+	mes "I... don't know! King... you!";
+	next;
+	mes "-Ahrum blushes";
+	mes "and leaves the room. He seems to be utterly fatigued.-";
+	next;
+	mes "[Ernst]";
+	mes "Ahrum... Ahrum...";
+	changequest 10023,10024;
+	set nkprince_eisen,13;
+	donpcevent "Prince#eisen6::OnDisable";
+	close;
+
+OnInit:
+	disablenpc "Prince#eisen6";
+	end;
+
+OnEnable:
+	enablenpc "Prince#eisen6";
+	end;
+
+OnDisable:
+	disablenpc "Prince#eisen6";
+	end;
+}
+
+prt_castle,318,276,0	script	#eisen	45,1,1,{
+OnTouch_:
+	if ((nkprince_eisen == 4) || (nkprince_eisen == 5)) {
+		donpcevent "Prince#another_ern::OnEnable";
+		set nkprince_eisen,5;
+		warp "prt_castle",318,368;
+	}
+	else if ((nkprince_eisen == 9) || (nkprince_eisen == 10) || (nkprince_eisen == 11) || (nkprince_eisen == 12)) {
+		set .@armkoe,rand(1,4);
+		if (.@armkoe == 1) {
+			mes "-You can hear Ahrum's voice";
+			mes "before going into his room";
+			mes "It's coming from inside.-";
+			next;
+			mes "[Ahrum]";
+			mes "I cannot have that qualification. I was raised in such a dirty place. I was so ignorant!";
+			next;
+			mes "[Ahrum]";
+			mes "What's the capacity of a king? And what is clean politics...? Ahhhhhhhhhhh!!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "......";
+			close2;
+		}
+		else if (.@armkoe == 2) {
+			mes "-You can hear Ahrum's voice";
+			mes "before going into his room";
+			mes "It's coming from inside.-";
+			next;
+			mes "[Ahrum]";
+			mes "Proud family?... Famous...";
+			mes "Birth?... King's family? ...What's all that about?";
+			next;
+			mes "[Ahrum]";
+			mes "To brother Ernst, from my family. It's sin. And I am a part of the sin. As a part of the family. Family's sin. Equal to my sin.";
+			next;
+			mes "[Ahrum]";
+			mes "I cannot... cover it anymore... Ern... I hope even you...";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "......";
+			close2;
+		}
+		else if (.@armkoe == 3) {
+			mes "-You can hear Ahrum's voice";
+			mes "before going into his room";
+			mes "It's coming from inside.-";
+			next;
+			mes "[Ahrum]";
+			mes "In the end, I am just being used... I make the most of my exertions and become the lead. That's all a part of the scenario...";
+			next;
+			mes "[Ahrum]";
+			mes "Damn it! Damn...!!";
+			mes "I cannot accept it. Never. Never!";
+			next;
+			mes "[Ahrum]";
+			mes "My ancestor ^FF0000Schmidt^000000... What shall you do with this situation? No...were you just used like me... by others?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "......";
+			close2;
+		}
+		else if (.@armkoe == 4) {
+			mes "- I could hear Ahrum's voice ";
+			mes "before getting into his room";
+			mes "It was coming from inside.-";
+			next;
+			mes "[Ahrum]";
+			mes "No, it's no good... No... In this phase, I will be the king. I shouldn't be the king... Ern... You should not forget the meaning of a real king.";
+			next;
+			mes "[Ahrum]";
+			mes "For the real king's appearance... I am going tonight.... to darkness for you. ...Ahhhhhhhh!!!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "......";
+			close2;
+		}
+		warp "prt_castle",318,368;
+	}
+	else if (nkprince_eisen == 13) {
+		donpcevent "Prince#another_ern::OnEnable";
+		warp "prt_castle",318,368;
+	}
+	else if (nkprince_eisen == 15) {
+		warp "prt_castle",318,309;
+	}
+	else {
+		warp "prt_castle",318,368;
+	}
+	end;
+}
+
+prt_castle,336,276,0	script	#ern	45,1,1,{
+OnTouch_:
+	if (checkquest(10023) == 0 || checkquest(10023) == 1) {
+		donpcevent "Prince#eisen6::OnEnable";
+	}
+	warp "prt_castle",368,308;
+	end;
+}
+
+prt_castle,300,276,0	script	#erich	45,1,1,{
+OnTouch_:
+	if (checkquest(10020) == 0 || checkquest(10020) == 1) {
+		donpcevent "Prince#eisen1::OnEnable";
+	}
+	warp "prt_castle",274,368;
+	end;
+}
+
+prt_castle,330,271,0	script	#helmut	45,1,1,{
+OnTouch_:
+	if (checkquest(10022) == 0 || checkquest(10022) == 1) {
+		donpcevent "Prince#eisen3::OnEnable";
+	}
+	warp "prt_castle",290,208;
+	end;
+}
+
+prt_castle,348,271,0	script	#poe	45,1,1,{
+OnTouch_:
+	if (checkquest(10018) == 0 || checkquest(10018) == 1) {
+		donpcevent "Prince#eisen4::OnEnable";
+	}
+	warp "prt_castle",390,208;
+	end;
+}
+
+prt_castle,354,276,0	script	#peter	45,1,1,{
+OnTouch_:
+	if (checkquest(10019) == 0 || checkquest(10019) == 1) {
+		donpcevent "Prince#eisen5::OnEnable";
+	}
+	warp "prt_castle",366,368;
+	end;
+}
+
+prt_castle,310,271,0	script	#urgen	45,1,1,{
+OnTouch_:
+	if (checkquest(10021) == 0 || checkquest(10021) == 1) {
+		donpcevent "Prince#eisen2::OnEnable";
+	}
+	warp "prt_castle",340,208;
+	end;
+}
+
+prt_castle,317,364,0	warp	#eisen2	1,1,prt_castle,318,273
+prt_castle,317,304,0	warp	eisen22	1,1,prt_castle,318,273
+prt_castle,367,304,0	warp	#ern2	1,1,prt_castle,336,273
+prt_castle,273,364,0	warp	#erich2	1,1,prt_castle,300,273
+prt_castle,289,213,0	warp	#helmut2	1,1,prt_castle,330,274
+prt_castle,389,213,0	warp	#poe2	1,1,prt_castle,348,274
+prt_castle,365,364,0	warp	#peter2	1,1,prt_castle,354,273
+prt_castle,340,213,0	warp	#urgen2	1,1,prt_castle,310,274
+prt_castle,163,312,0	warp	#class2	1,1,prt_castle,221,343
+prt_castle,221,347,0	warp	#class	1,1,prt_castle,163,316
+prt_castle,225,338,0	warp	#room11	1,1,prt_castle,275,283
+prt_castle,273,284,0	warp	#room21	1,1,prt_castle,221,338
+prt_castle,225,318,0	warp	#room12	1,1,prt_castle,276,263
+prt_castle,273,264,0	warp	#room22	1,1,prt_castle,221,318
+prt_castle,221,308,0	warp	#princeout	1,1,prt_castle,176,167
+
+prt_castle,176,170,5	script	Guard#princein	105,{
+	if (nk_prince > 4) {
+		mes "[Guard of a strange place]";
+		mes "You can go to the room where princes gather, through the hidden door. For security reasons, it is totally guarded and hidden.";
+		next;
+		mes "[Guard of a strange place]";
+		mes "Let me open the door.";
+		close2;
+		warp "prt_castle",220,312;
+		end;
+	}
+	else {
+		mes "[Guard of a strange place]";
+		mes "I just came here to rest. For location information, you can ask it of others.";
+		close;
+	}
+}
+
+prt_castle,121,168,0	script	#arm	111,4,4,{
+OnTouch:
+	if (nk_prince == 8) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "..............";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Milk is all spilt.";
+		mes "Just forget about it.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Who is going to have the throne instead of him?";
+		next;
+		set nk_prince,9;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh no...";
+		close;
+	}
+}
+
+prt_castle,316,313,0	script	#arm1	111,3,3,{
+OnTouch:
+	if (nkprince_eisen > 14) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "..............";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What thoughts did he have, and how did he decide to become King in this room?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What situation...";
+		mes "pulled him back to an irreparable place?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I can't ask him anymore, and there are no clues left. Just what's left is...";
+		next;
+		mes "[Ahrum]";
+		mes "~~If you react wrongfully to this incident, my death will be worthless...kuk... Do you understand?~~";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "..............";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "...Keeping silent for him.";
+		mes "Taking the burden that he left... all throughout my life.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "...Rest in peace.";
+		close;
+	}
+	end;
+}

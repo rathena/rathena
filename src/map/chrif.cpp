@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "chrif.hpp"
@@ -6,34 +6,34 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/socket.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/ers.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/ers.hpp"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
-#include "map.hpp"
 #include "battle.hpp"
 #include "clan.hpp"
 #include "clif.hpp"
+#include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
+#include "instance.hpp"
 #include "intif.hpp"
+#include "log.hpp"
+#include "map.hpp"
+#include "mercenary.hpp"
 #include "npc.hpp"
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "pet.hpp"
-#include "homunculus.hpp"
-#include "instance.hpp"
-#include "mercenary.hpp"
-#include "elemental.hpp"
 #include "script.hpp" // script_config
 #include "storage.hpp"
-#include "guild.hpp"
-#include "log.hpp"
 
-static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data);
+static TIMER_FUNC(check_connect_char_server);
 
 static struct eri *auth_db_ers; //For reutilizing player login structures.
 static DBMap* auth_db; // int id -> struct auth_node*
@@ -43,7 +43,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 	60, 3,-1,-1,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
 	 6,-1,18, 7,-1,39,30, 10,	// 2b00-2b07: U->2b00, U->2b01, U->2b02, U->2b03, U->2b04, U->2b05, U->2b06, U->2b07
 	 6,30, 10, -1,86, 7,44,34,	// 2b08-2b0f: U->2b08, U->2b09, U->2b0a, U->2b0b, U->2b0c, U->2b0d, U->2b0e, U->2b0f
-	11,10,10, 0,11, -1,266,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, F->2b13, U->2b14, U->2b15, U->2b16, U->2b17
+	11,10,10, 0,11, -1, 0,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, F->2b13, U->2b14, U->2b15, F->2b16, U->2b17
 	 2,10, 2,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
 	-1,10, 8, 2, 2,14,19,19,	// 2b20-2b27: U->2b20, U->2b21, U->2b22, U->2b23, U->2b24, U->2b25, U->2b26, U->2b27
 	-1, 0, 6,15, 0, 6,-1,-1,	// 2b28-2b2f: U->2b28, F->2b29, U->2b2a, U->2b2b, F->2b2c, U->2b2d, U->2b2e, U->2b2f
@@ -80,7 +80,6 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b13: Outgoing, chrif_update_ip -> 'tell the change of map-server IP'
 //2b14: Incoming, chrif_accountban -> 'not sure: kick the player with message XY'
 //2b15: Outgoing, chrif_skillcooldown_save -> request to save skillcooldown
-//2b16: Outgoing, chrif_ragsrvinfo -> 'sends base / job / drop rates ....'
 //2b17: Outgoing, chrif_char_offline -> 'tell the charserver that the char is now offline'
 //2b18: Outgoing, chrif_char_reset_offline -> 'set all players OFF!'
 //2b19: Outgoing, chrif_char_online -> 'tell the charserver that the char .. is online'
@@ -109,7 +108,6 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 
 int chrif_connected = 0;
 int char_fd = -1;
-int srvinfo;
 static char char_ip_str[128];
 static uint32 char_ip = 0;
 static uint16 char_port = 6121;
@@ -236,12 +234,12 @@ bool chrif_auth_finished(struct map_session_data* sd) {
 }
 // sets char-server's user id
 void chrif_setuserid(char *id) {
-	memcpy(userid, id, NAME_LENGTH);
+	safestrncpy(userid, id, NAME_LENGTH);
 }
 
 // sets char-server's password
 void chrif_setpasswd(char *pwd) {
-	memcpy(passwd, pwd, NAME_LENGTH);
+	safestrncpy(passwd, pwd, NAME_LENGTH);
 }
 
 // security check, prints warning if using default password
@@ -312,7 +310,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 
 	chrif_bsdata_save(sd, ((flag&CSAVE_QUITTING) && !(flag&CSAVE_AUTOTRADE)));
 
-	if (&sd->storage && sd->storage.dirty)
+	if (sd->storage.dirty)
 		storage_storagesave(sd);
 	if (flag&CSAVE_INVENTORY)
 		intif_storage_save(sd,&sd->inventory);
@@ -322,7 +320,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	//For data sync
 	if (sd->state.storage_flag == 2)
 		storage_guild_storagesave(sd->status.account_id, sd->status.guild_id, flag);
-	if (&sd->premiumStorage && sd->premiumStorage.dirty)
+	if (sd->premiumStorage.dirty)
 		storage_premiumStorage_save(sd);
 
 	if (flag&CSAVE_QUITTING)
@@ -341,7 +339,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	WFIFOB(char_fd,12) = (flag&CSAVE_QUIT) ? 1 : 0; //Flag to tell char-server this character is quitting.
 
 	// If the user is on a instance map, we have to fake his current position
-	if( map[sd->bl.m].instance_id ){
+	if( map_getmapdata(sd->bl.m)->instance_id ){
 		struct mmo_charstatus status;
 
 		// Copy the whole status
@@ -395,17 +393,15 @@ int chrif_connect(int fd) {
 
 // sends maps to char-server
 int chrif_sendmap(int fd) {
-	int i;
-
 	ShowStatus("Sending maps to char server...\n");
 
 	// Sending normal maps, not instances
 	WFIFOHEAD(fd, 4 + instance_start * 4);
 	WFIFOW(fd,0) = 0x2afa;
-	for(i = 0; i < instance_start; i++)
-		WFIFOW(fd,4+i*4) = map[i].index;
-	WFIFOW(fd,2) = 4 + i * 4;
-	WFIFOSET(fd,WFIFOW(fd,2));
+	for (int i = 0; i < instance_start; i++)
+		WFIFOW(fd, 4 + i * 4) = map[i].index;
+	WFIFOW(fd, 2) = 4 + instance_start * 4;
+	WFIFOSET(fd, WFIFOW(fd, 2));
 
 	return 0;
 }
@@ -492,6 +488,7 @@ int chrif_changemapserverack(uint32 account_id, int login_id1, int login_id2, ui
 	if ( !login_id1 ) {
 		ShowError("map server change failed.\n");
 		clif_authfail_fd(node->fd, 0);
+		chrif_char_offline(node->sd);
 	} else
 		clif_changemapserver(node->sd, map_index, x, y, ntohl(ip), ntohs(port));
 
@@ -585,7 +582,7 @@ void chrif_on_ready(void) {
 	do_reconnect_storage();
 
 	//Re-save any guild castles that were modified in the disconnection time.
-	guild_castle_reconnect(-1, 0, 0);
+	guild_castle_reconnect(-1, CD_NONE, 0);
 	
 	// Charserver is ready for loading autotrader
 	if (!char_init_done)
@@ -694,7 +691,7 @@ void chrif_authok(int fd) {
 
 	//Check if both servers agree on the struct's size
 	if( RFIFOW(fd,2) - 25 != sizeof(struct mmo_charstatus) ) {
-		ShowError("chrif_authok: Data size mismatch! %d != %d\n", RFIFOW(fd,2) - 25, sizeof(struct mmo_charstatus));
+		ShowError("chrif_authok: Data size mismatch! %d != %" PRIuPTR "\n", RFIFOW(fd,2) - 25, sizeof(struct mmo_charstatus));
 		return;
 	}
 
@@ -799,7 +796,7 @@ int auth_db_cleanup_sub(DBKey key, DBData *data, va_list ap) {
 	return 0;
 }
 
-int auth_db_cleanup(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(auth_db_cleanup){
 	chrif_check(0);
 	auth_db->foreach(auth_db, auth_db_cleanup_sub);
 	return 0;
@@ -1307,7 +1304,7 @@ int chrif_updatefamelist_ack(int fd) {
 int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the player and sends it to the char-server for saving. [Skotlex]
 #ifdef ENABLE_SC_SAVING
 	int i, count=0;
-	unsigned int tick;
+	t_tick tick;
 	struct status_change_data data;
 	struct status_change *sc = &sd->sc;
 	const struct TimerData *timer;
@@ -1332,7 +1329,7 @@ int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the
 			else
 				data.tick = 0; //Negative tick does not necessarily mean that sc has expired
 		} else
-			data.tick = -1; //Infinite duration
+			data.tick = INFINITE_TICK; //Infinite duration
 		data.type = i;
 		data.val1 = sc->data[i]->val1;
 		data.val2 = sc->data[i]->val2;
@@ -1353,7 +1350,7 @@ int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the
 int chrif_skillcooldown_save(struct map_session_data *sd) {
 	int i, count = 0;
 	struct skill_cooldown_data data;
-	unsigned int tick;
+	t_tick tick;
 	const struct TimerData *timer;
 
 	chrif_check(-1);
@@ -1449,24 +1446,6 @@ int chrif_skillcooldown_load(int fd) {
 	}
 	return 0;
 }
-
-/*==========================================
- * Send rates and motd to char server [Wizputer]
- * S 2b16 <base rate>.L <job rate>.L <drop rate>.L
- *------------------------------------------*/
-int chrif_ragsrvinfo(int base_rate, int job_rate, int drop_rate) {
-	chrif_check(-1);
-
-	WFIFOHEAD(char_fd,14);
-	WFIFOW(char_fd,0) = 0x2b16;
-	WFIFOL(char_fd,2) = base_rate;
-	WFIFOL(char_fd,6) = job_rate;
-	WFIFOL(char_fd,10) = drop_rate;
-	WFIFOSET(char_fd,14);
-
-	return 0;
-}
-
 
 /*=========================================
  * Tell char-server charcter disconnected [Wizputer]
@@ -1683,7 +1662,7 @@ int chrif_bsdata_save(struct map_session_data *sd, bool quit) {
 	WFIFOL(char_fd, 4) = sd->status.char_id;
 
 	if (sd->bonus_script.count) {
-		unsigned int tick = gettick();
+		t_tick tick = gettick();
 		struct linkdb_node *node = NULL;
 
 		for (node = sd->bonus_script.head; node && i < MAX_PC_BONUS_SCRIPT; node = node->next) {
@@ -1705,7 +1684,7 @@ int chrif_bsdata_save(struct map_session_data *sd, bool quit) {
 		}
 
 		if (i != sd->bonus_script.count && sd->bonus_script.count > MAX_PC_BONUS_SCRIPT)
-			ShowWarning("Only allowed to save %d (mmo.h::MAX_PC_BONUS_SCRIPT) bonus script each player.\n", MAX_PC_BONUS_SCRIPT);
+			ShowWarning("Only allowed to save %d (mmo.hpp::MAX_PC_BONUS_SCRIPT) bonus script each player.\n", MAX_PC_BONUS_SCRIPT);
 	}
 
 	WFIFOB(char_fd, 8) = i;
@@ -1746,7 +1725,7 @@ int chrif_bsdata_received(int fd) {
 			if (bs->script_str[0] == '\0' || !bs->tick)
 				continue;
 
-			if (!(entry = pc_bonus_script_add(sd, bs->script_str, bs->tick, (enum si_type)bs->icon, bs->flag, bs->type)))
+			if (!(entry = pc_bonus_script_add(sd, bs->script_str, bs->tick, (enum efst_types)bs->icon, bs->flag, bs->type)))
 				continue;
 
 			linkdb_insert(&sd->bonus_script.head, (void *)((intptr_t)entry), entry);
@@ -1849,7 +1828,7 @@ int chrif_parse(int fd) {
 }
 
 // unused
-int send_usercount_tochar(int tid, unsigned int tick, int id, intptr_t data) {
+TIMER_FUNC(send_usercount_tochar){
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,4);
@@ -1896,7 +1875,7 @@ int send_users_tochar(void) {
  * timerFunction
   * Chk the connection to char server, (if it down)
  *------------------------------------------*/
-static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data) {
+static TIMER_FUNC(check_connect_char_server){
 	static int displayed = 0;
 	if ( char_fd <= 0 || session[char_fd] == NULL ) {
 		if ( !displayed ) {
@@ -1916,12 +1895,6 @@ static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_
 
 		chrif_connect(char_fd);
 		chrif_connected = (chrif_state == 2);
-		srvinfo = 0;
-	} else {
-		if (srvinfo == 0) {
-			chrif_ragsrvinfo(battle_config.base_exp_rate, battle_config.job_exp_rate, battle_config.item_rate_common);
-			srvinfo = 1;
-		}
 	}
 	if ( chrif_isconnected() )
 		displayed = 0;
@@ -1988,13 +1961,13 @@ void do_final_chrif(void) {
  *------------------------------------------*/
 void do_init_chrif(void) {
 	if(sizeof(struct mmo_charstatus) > 0xFFFF){
-		ShowError("mmo_charstatus size = %d is too big to be transmitted. (must be below 0xFFFF)\n",
+		ShowError("mmo_charstatus size = %" PRIuPTR " is too big to be transmitted. (must be below 0xFFFF)\n",
 			sizeof(struct mmo_charstatus));
 		exit(EXIT_FAILURE);
 	}
 
 	if (sizeof(struct s_storage) > 0xFFFF) {
-		ShowError("s_storage size = %d is too big to be transmitted. (must be below 0xFFFF)\n", sizeof(struct s_storage));
+		ShowError("s_storage size = %" PRIuPTR " is too big to be transmitted. (must be below 0xFFFF)\n", sizeof(struct s_storage));
 		exit(EXIT_FAILURE);
 	}
 
