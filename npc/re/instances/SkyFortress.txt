@@ -1265,6 +1265,7 @@ OnTimer2000:
 		end;
 	}
 	if ('wind_ghost > 0) {
+		.@r = rand(30);
 		if (.@r == 0)
 			unittalk 'wind_ghost, "Immortal Wind Ghost: I feel more power filling up inside...";
 		else if (.@r == 1)
