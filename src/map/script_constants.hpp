@@ -1576,6 +1576,8 @@
 	export_constant(SC_SP_SHA);
 	export_constant(SC_SOULCURSE);
 	export_constant(SC_HELLS_PLANT);
+	export_constant(SC_INCREASE_MAXHP);
+	export_constant(SC_INCREASE_MAXSP);
 	export_constant(SC_REF_T_POTION);
 	export_constant(SC_ADD_ATK_DAMAGE);
 	export_constant(SC_ADD_MATK_DAMAGE);

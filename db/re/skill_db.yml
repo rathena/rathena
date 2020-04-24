@@ -2110,7 +2110,7 @@ Body:
       IncreaseGloomyDayDamage: true
     Range: -2
     Hit: Multi_Hit
-    HitCount: 3
+    HitCount: -3
     Element: Weapon
     SplashArea: 2
     ActiveInstance: 3
