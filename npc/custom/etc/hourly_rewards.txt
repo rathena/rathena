@@ -4,8 +4,8 @@
 //= Sader1992
 //https://rathena.org/board/profile/30766-sader1992/
 //===== Current Version: =====================================
-//= 1.2
-//===== Compatible With: ===================================== 
+//= 1.3
+//===== Compatible With: =====================================
 //= rAthena Project
 //https://rathena.org/board/files/file/3647-saders-hourly-rewards/
 //https://github.com/sader1992/sader_scripts
@@ -28,6 +28,7 @@
 //============================================================
 //==== 1.1 FIX Critical issue with gepard/ip and compatibility with my other scripts
 //==== 1.2 FIX GrPard Variable
+//==== 1.3 Revised for ChocobotRO
 //============================================================
 -	script	Hourly_Rewards	-1,{
 
@@ -142,11 +143,13 @@ end;
 
 OnHourlyRewardsProgress:
 	.@remainingTime$ = "Rewards reset in "+ (23 - gettime(DT_HOUR)) +"h"+ (59 - gettime(DT_MINUTE)) +"m";
+	.@remainingTicksForReward = .s_ticks_per_hour - (#Hourly_Rewards_Check % .s_ticks_per_hour);
+	.@nextTime$ = "Next reward in "+ .@remainingTicksForReward +"0m";
 	.@hoursPlayed = #Hourly_Rewards_Check/2;
 	if (.@hoursPlayed >= 3) {
 		message strcharinfo(0),"[Hourly Rewards]: You have earned today's hourly rewards | Total Points: "+ #HourlyRewardPoints +" | "+ .@remainingTime$;
 	} else {
-		message strcharinfo(0),"[Hourly Rewards]: You have earned "+ .@hoursPlayed +" out of 3 hourly rewards today | Total Points: "+ #HourlyRewardPoints +" | "+ .@remainingTime$;
+		message strcharinfo(0),"[Hourly Rewards]: You have earned "+ .@hoursPlayed +" out of 3 hourly rewards today | Total Points: "+ #HourlyRewardPoints +" | "+ .@remainingTime$ +" | "+ .@nextTime$;
 	}
 end;
 
@@ -154,7 +157,8 @@ OnInit:
 	.s_idle = 1; //	ban hourly rewards from idle players ? 0 no / 1 yes {if player didn't move for x time he wont get hourly reward}  , DEFAULT = 0
 	.s_idle_time = 3600; //	this the time for idle in seconds  , DEFAULT = 1800 (30 min)
 	.s_vip = 0; //	1 = only for VIP / 0 = for everyone  , DEFAULT = 0
-	.s_time = 1800000; //	1000 = 1 sec | 60000 = 1 min | 3600000 = 1 hr  , DEFAULT = 3600000 (1 hr)
+	.s_time = 600000; //	1000 = 1 sec | 60000 = 1 min | 3600000 = 1 hr  , DEFAULT = 3600000 (1 hr)
+	.s_ticks_per_hour = 3600000 / .s_time; // Multiply with #Hourly_Rewards_Check to check number of hours
 	.s_hourly_level = 0; //	Minimum level to earn Hourly rewards / 0 = no minimum level  , DEFAULT 0
 	.s_GePard_ip = 0; //	0 = no Gepard / 1 = Gepard / 2 = IP  , DEFAULT 0
 	.s_vending = 6; //	DEFAULT 7 / 0 = will give the reward even if vending / 1 = no normal vending / 2 = no @autotrade / 4 = no buyingstore | Example: if you want to ban normal vend and buying store you add the numbers 1+4=5
@@ -168,13 +172,13 @@ end;
 
 Process_Reward:
 	//put the Hourly Rewards here
-	if (#Hourly_Rewards_Check == 2) {
+	if (#Hourly_Rewards_Check == 1 * .s_ticks_per_hour) {
 		message strcharinfo(0),"[Hourly Rewards]: You've earned 75 hourly reward points (1/3).";
 		#HourlyRewardPoints += 75;
-	} else if (#Hourly_Rewards_Check == 4) {
+	} else if (#Hourly_Rewards_Check == 2 * .s_ticks_per_hour) {
 		message strcharinfo(0),"[Hourly Rewards]: You've earned 75 hourly reward points (2/3).";
 		#HourlyRewardPoints += 75;
-	} else if (#Hourly_Rewards_Check == 6) {
+	} else if (#Hourly_Rewards_Check == 3 * .s_ticks_per_hour) {
 		message strcharinfo(0),"[Hourly Rewards]: You've earned 150 hourly reward points (3/3).";
 		#HourlyRewardPoints += 150;
 	}
