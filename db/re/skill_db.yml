@@ -2109,8 +2109,8 @@ Body:
     Flags:
       IncreaseGloomyDayDamage: true
     Range: -2
-    Hit: Multi_Hit
-    HitCount: -3
+    Hit: Single
+    HitCount: 1
     Element: Weapon
     SplashArea: 2
     ActiveInstance: 3
