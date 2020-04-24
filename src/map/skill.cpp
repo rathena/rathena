@@ -6074,9 +6074,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case RL_QD_SHOT:
-		if ((tsc && !tsc->data[SC_C_MARKER]) || skill_area_temp[1] == bl->id)
+		if (skill_area_temp[1] == bl->id)
 			break;
-		if (flag&1)
+		if (flag&1 && tsc && tsc->data[SC_C_MARKER])
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION);
 		break;
 	case RL_D_TAIL:
