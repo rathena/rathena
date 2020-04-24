@@ -1,4 +1,4 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Euphy's WOE Controller
 //===== Changelogs: ==========================================
 //= 1.3a Initial SVN release [Euphy]
@@ -12,7 +12,7 @@
 //= 1.7 Removed direct SQL access [Lemongrass]
 //= 1.8 Fixed invalid checkweight usage [Lemongrass]
 //= 1.9 Fixed reward handout for multiple characters on the same account [Lemongrass]
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= A controller for War of Emperium designed for
 //= simplicity and ease of use.
 //= Many concepts taken from ToastOfDoom's script,
@@ -49,10 +49,10 @@ OnInit:
 //  Configuration settings.
 // -----------------------------------------------------------
 
-	set .CastleWarp,0;		// 1: Always enable all castle warps. | 0: Warp only to active castles.
+	set .CastleWarp,1;		// 1: Always enable all castle warps. | 0: Warp only to active castles.
 	set .AutoKick,1;		// Automatically kick players from inactive castles during WOE? (1:yes / 0:no)
 	set .NoOwner,0; 		// Automatically kick players from unconquered castles outside of WOE? (1:yes / 0:no)
-	set .ExitWarp,0;		// Warp all players from castles when WOE ends? (1:yes / 0:no)
+	set .ExitWarp,1;		// Warp all players from castles when WOE ends? (1:yes / 0:no)
 	set .GMAccess,99;		// GM level required to access Session Manager.
 
 // -----------------------------------------------------------
