@@ -95,10 +95,12 @@ Dependents: A list of achievement IDs that need to be completed before this achi
 Example:
   // Player must complete achievements 10001 and 10002 first.
   Dependents:
-    - Id: 0
-      AchievementId: 10001
-    - Id: 1
-      AchievementId: 10002
+    10001: true
+    10002: true
+
+  // Used with the import, dependent achievements can be disabled. The player now only requires completion of achievement 10001.
+  Dependents:
+    10002: false
 
 ---------------------------------------
 

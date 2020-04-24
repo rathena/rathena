@@ -225,26 +225,31 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 	}
 
 	if( this->nodeExists( node, "Dependents" ) ){
-		for( const YAML::Node& subNode : node["Dependents"] ){
+		const YAML::Node &dependentNode = node["Dependents"];
+
+		for( const auto it : dependentNode ){
 			if (achievement->dependent_ids.size() >= MAX_ACHIEVEMENT_DEPENDENTS) {
-				this->invalidWarning(subNode["Id"], "Maximum amount (%d) of dependent achievements reached, skipping.\n", MAX_ACHIEVEMENT_DEPENDENTS);
+				this->invalidWarning(dependentNode, "Maximum amount (%d) of dependent achievements reached, skipping.\n", MAX_ACHIEVEMENT_DEPENDENTS);
 				break;
 			}
 
-			uint32 dependent_achievement_id;
-
-			if( !this->asUInt32( subNode, "Id", dependent_achievement_id ) ){
-				return 0;
-			}
-
+			uint32 dependent_achievement_id = it.first.as<uint32>();
 			auto dependent_achievement = std::find(achievement->dependent_ids.begin(), achievement->dependent_ids.end(), dependent_achievement_id);
 
 			if (dependent_achievement != achievement->dependent_ids.end()) {
-				this->invalidWarning(subNode, "Dependent achievement %d is already part of the list, skipping.\n", dependent_achievement_id);
+				this->invalidWarning(dependentNode, "Dependent achievement %d is already part of the list, skipping.\n", dependent_achievement_id);
 				continue;
 			}
 
-			achievement->dependent_ids.push_back(dependent_achievement_id);
+			bool active;
+
+			if (!this->asBool(dependentNode, std::to_string(dependent_achievement_id), active))
+				return 0;
+
+			if (active)
+				achievement->dependent_ids.push_back(dependent_achievement_id);
+			else
+				util::vector_erase_if_exists(achievement->dependent_ids, dependent_achievement_id);
 		}
 	}
 

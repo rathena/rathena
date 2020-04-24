@@ -540,15 +540,13 @@ static bool upgrade_achievement_db(std::string file) {
 
 		if (input["Dependent"].IsDefined()) {
 			body << YAML::Key << "Dependents";
-			body << YAML::BeginSeq;
+			body << YAML::BeginMap;
 
 			for (const auto &it : input["Dependent"]) {
-				body << YAML::BeginMap;
-				body << YAML::Key << "Id" << YAML::Value << it["Id"];
-				body << YAML::EndMap;
+				body << YAML::Key << it["Id"] << YAML::Value << true;
 			}
 
-			body << YAML::EndSeq;
+			body << YAML::EndMap;
 		}
 
 		if (input["Reward"].IsDefined()) {
