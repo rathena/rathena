@@ -11544,7 +11544,7 @@
 22814,Cat_Hand_Ticket,Cat Hand Ticket,3,10,,0,,,,,,,,,,,,,{},{},{}
 22822,Summer_Vacation_Costumes,Summer Vacation Costumes,2,,,100,,,,0,0xFFFFFFFF,63,2,,,1,,,{ sc_start SC_DRESSUP,600000,1; },{},{}
 22823,Sealed_Sniper_Scroll,Sealed Sniper Scroll,2,10,,10,,,,,,,,,,,,,{ /*getitem callfunc("F_Rand",4491,6228,6232,24196, Hasty Shadow Armor, 19882, 17474, 6635),1;*/ },{},{}
-22826,Enchant_Stone_Box4,Costume Enchantment Stone Box 4,18,10,,100,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getitem callfunc("F_Rand",6636,6637,6638,6639,6640,6641,6642,6643,6644,6645,6740,6741,6742,6743,6744,6745,6790,6791,6792,6908),1; },{},{}
+22826,Enchant_Stone_Box4,Costume Enchantment Stone Box 4,2,10,,100,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getitem callfunc("F_Rand",6636,6637,6638,6639,6640,6641,6642,6643,6644,6645,6740,6741,6742,6743,6744,6745,6790,6791,6792,6908),1; },{},{}
 22827,Shadow_Cube,Shadow Cube,2,10,,10,,,,,,,,,,,,,{/*No Info*/},{},{}
 22828,Sealed_Album_Scroll,Sealed Album Scroll,2,10,,100,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getitem callfunc("F_Rand",22829,6232,6228,24208,24209,17474/*,Enchanted Letter*/),1; },{},{}
 22829,Sealed_Card_Album,Sealed Card Album,2,10,,100,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getitem callfunc("F_Rand",4488,4497,4486,4480,4485,4539,4487,4494,4538,4489,4490,4482,4503,4483,4491),1; },{},{}
@@ -11570,7 +11570,7 @@
 22859,October_Gift_Box,October Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12529,5; },{},{}
 22860,November_Gift_Box,November Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ rentitem callfunc("F_Rand",2566,2856,2857,15023),1209600; },{},{}
 22861,December_Gift_Box,December Gift Box,2,10,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 22869,10; },{},{}
-22868,Enchant_Stone_Box5,Costume Enchantment Stone Box 5,18,20,,10,,,,,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box5); },{},{}
+22868,Enchant_Stone_Box5,Costume Enchantment Stone Box 5,2,20,,10,,,,,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box5); },{},{}
 22869,Lucky_Roulette_Tickets,Lucky Roulette Ticket,2,10,,100,,,,,0xFFFFFFFF,63,2,,,50,,,{ RouletteBronze++; },{},{}
 22870,Xmas_Package_14,Christmas Package,3,0,,10,,,,0,,,,,,,,,{},{},{}
 22873,Sealed_Beelzebub_Scroll_II,Sealed Beelzebub Scroll II,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",22875,6238,6239,6228,6232,24231,24232,17474,6635),1; },{},{}
@@ -11592,12 +11592,12 @@
 22899,Parchment_City,Parchment City,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "AL_INCAGI",1; heal -15,0; },{},{}
 22901,Question_Old_Blue_Box,Mysterious Blue Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc("F_Mysterious_box"); },{},{}
 22902,Sealed_Card_Album_Scroll_II,Sealed Card Album Scroll II,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6238,6239,17474,22829,24243,24244,24245),1; },{},{}
-22905,Enchant_Stone_Box6,Costume Enchantment Stone Box 6,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box6); },{},{}
-22953,Enchant_Stone_Box7,Costume Enchantment Stone Box 7,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box7); },{},{}
+22905,Enchant_Stone_Box6,Costume Enchantment Stone Box 6,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box6); },{},{}
+22953,Enchant_Stone_Box7,Costume Enchantment Stone Box 7,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box7); },{},{}
 22984,Kahluna_Milk,Kahluna Milk,0,6,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DORAM_BUF_01, 180000, 0; },{},{}
 22985,Basil,Basil,0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DORAM_BUF_02, 180000, 0; },{},{}
 //
-23001,Enchant_Stone_Box8,Costume Enchantment Stone Box 8,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box8); },{},{}
+23001,Enchant_Stone_Box8,Costume Enchantment Stone Box 8,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box8); },{},{}
 23012,S_Small_Mana_Potion,[Sale] Small Mana Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus2 bRegenPercentSP,5,5000;",600,9; /* fix me: unknown flag and specialeffect ; disabled when LK_BERSERK */ },{},{}
 23016,Cursed_Fragment,Cursed Fragment,2,1,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc("F_Cursed_Fragment"); },{},{}
 23038,S_Slim_White_Box,[Sale] Slim White Potion Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 11573,200; },{},{}
@@ -11606,19 +11606,19 @@
 23046,S_Mystic_Powder,[Sale] Mystic Powder,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus bFlee,20; bonus bLuk,10;",300,9; /* fix me: unknown flag and specialeffect */ },{},{}
 23047,S_Blessing_Tyr,[Sale] Blessing of Tyr,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_FLEEFOOD,300000,30; sc_start SC_HITFOOD,300000,30; sc_start SC_ATKPOTION,300000,20; sc_start SC_MATKPOTION,300000,20; },{},{}
 23048,S_Resilience_Potion,[Sale] Resilience Enhancement Potion,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus bAddItemHealRate,20;",1800,9; /* fix me: unknown flag and specialeffect */ },{},{}
-23058,Enchant_Stone_Box9,Costume Enchantment Stone Box 9,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box9); },{},{}
+23058,Enchant_Stone_Box9,Costume Enchantment Stone Box 9,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box9); },{},{}
 23076,Build_Up_Potion_SS,Build Up Potion SS,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if (strcharinfo(3) == "slabw01") { bonus_script "{ bonus bAspd,10; }",10; } },{},{}
 23077,Build_Up_Potion_SC,Build Up Potion SC,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if (strcharinfo(3) == "slabw01") { bonus_script "{ bonus bCritical,30; }",10; } },{},{}
 23078,Build_Up_Potion_AC,Build Up Potion AC,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if (strcharinfo(3) == "slabw01") { bonus_script "{ bonus bVariableCastrate,-80; }",10; } },{},{}
 23080,Cursed_Crystal,Cursed Crystal,2,1,,500,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc("F_Cursed_Crystal"); },{},{}
-23086,Enchant_Stone_Box10,Costume Enchantment Stone Box 10,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box10); },{},{}
+23086,Enchant_Stone_Box10,Costume Enchantment Stone Box 10,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box10); },{},{}
 23087,Small_Leather_Bag,Small Leather Bag,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 25180,1; getitem 25181,1; getitem 25182,1; getitem 25183,1; getitem 25184,1; getitem 25185,1; },{},{}
 23123,Bullet_Case_Flare,Flare Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13228,500; },{},{}
 23124,Bullet_Case_Lighting,Lightning Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13229,500; },{},{}
 23125,Bullet_Case_Ice,Ice Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13230,500; },{},{}
 23126,Bullet_Case_Poison,Poison Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13231,500; },{},{}
 23127,Bullet_Case_Blind,Blind Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13232,500; },{},{}
-23174,Enchant_Stone_Box11,Costume Enchantment Stone Box 11,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box11); },{},{}
+23174,Enchant_Stone_Box11,Costume Enchantment Stone Box 11,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box11); },{},{}
 23177,Kafra_Card_,Kafra Card,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashStore"; },{},{}
 23188,Unprocessed_Parts,Unprocessed Parts,2,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1632; },{},{}
 23189,Small_Needle_Kit,Small Needle Kit,2,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1622; },{},{}
@@ -11636,12 +11636,12 @@
 23280,N_Fly_Wing_,Novice Fly Wing,11,10,,0,,,,,0xFFFFFFFF,63,2,,,1:98,,,{ itemskill "AL_TELEPORT",1; },{},{}
 23288,Compressed_Wing_Of_Fly,Compressed Fly Wing,11,1000,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "AL_TELEPORT",1; },{},{}
 //
-23299,Enchant_Stone_Box12,Costume Enchantment Stone Box 12,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box12); },{},{}
+23299,Enchant_Stone_Box12,Costume Enchantment Stone Box 12,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box12); },{},{}
 23307,S_Shining_Def_Scroll,[Sale] Shining Defense Scroll,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus bDef,500; bonus bMdef,200;",600; /* fix me: unknown flag and specialeffect */ },{},{}
 23340,S_Megaphone,[Sale] Megaphone,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ input .@megaphone$; announce strcharinfo(0) + ": " + .@megaphone$,bc_all,0xFF0000; },{},{}
-23524,Enchant_Stone_Box13,Costume Enchantment Stone Box 13,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box13); },{},{}
-23629,Enchant_Stone_Box14,Costume Enchantment Stone Box 14,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box14); },{},{}
-23682,Enchant_Stone_Box15,Costume Enchantment Stone Box 15,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box15); },{},{}
+23524,Enchant_Stone_Box13,Costume Enchantment Stone Box 13,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box13); },{},{}
+23629,Enchant_Stone_Box14,Costume Enchantment Stone Box 14,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box14); },{},{}
+23682,Enchant_Stone_Box15,Costume Enchantment Stone Box 15,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box15); },{},{}
 //===================================================================
 // Shadow Equipments
 //===================================================================
@@ -12206,7 +12206,7 @@
 25285,Brown_Rat_Tail,Brown Rat Tail,3,0,,10,,,,,,,,,,,,,{},{},{}
 25290,Sweets_Festival_Coin,Sweets Festival Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
 25302,DoubleAttack_Stone,Double Attack Stone (Garment),3,20,,100,,,,,,,,,,,,,{ skill "TF_DOUBLE",3; bonus bDoubleRate,15; },{},{}
-25303,Critical_Stone_Robe,Critical Stone (Garment),3,20,,100,,,,,,,,,,,,,{ bonus bVariableCastrate,-20; },{},{}
+25303,Critical_Stone_Robe,Critical Stone (Garment),3,20,,100,,,,,,,,,,,,,{ bonus bCritAtkRate,20; },{},{}
 25304,Critical_Stone_Top,Critical Stone (Upper),3,20,,100,,,,,,,,,,,,,{ bonus bCritAtkRate,3; },{},{}
 25305,Critical_Stone_Bottom,Critical Stone (Lower),3,20,,100,,,,,,,,,,,,,{ bonus bCritAtkRate,3; },{},{}
 25306,CastStone_Robe,Variable Casting Stone (Garment),3,20,,100,,,,,,,,,,,,,{ bonus bVariableCastrate,-10; },{},{}
@@ -13598,9 +13598,9 @@
 32350,Farthezan,Farthezan,5,20,,1100,130:180,,1,2,0x00004000,56,2,2,4,170,1,2,{ .@r = getrefine(); bonus2 bSkillAtk,"PA_PRESSURE",40; bonus bVariableCastrate,-.@r; if (.@r>=9) bonus2 bSkillAtk,"LG_RAYOFGENESIS",30; if (.@r>=11) { bonus2 bSkillAtk,"LG_RAYOFGENESIS",20; bonus2 bSkillAtk,"PA_PRESSURE",20; } },{},{}
 32351,Estal,Estal,5,20,,700,195,,1,2,0x00040000,56,2,2,4,170,1,2,{ .@r = getrefine(); bonus2 bSkillCooldown,"GN_SPORE_EXPLOSION",-1000; bonus bBaseAtk,4*.@r; if (.@r>=11) .@val = 50; else if (.@r>=9) .@val = 30; bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",.@val; },{},{}
 
-//100052,Enchant_Stone_Box19,Costume Enchantment Stone Box 19,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box19); },{},{}
-//100202,Enchant_Stone_Box20,Costume Enchantment Stone Box 20,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box20); },{},{}
-//100314,Enchant_Stone_Box21,Costume Enchantment Stone Box 21,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box21); },{},{}
+//100052,Enchant_Stone_Box19,Costume Enchantment Stone Box 19,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box19); },{},{}
+//100202,Enchant_Stone_Box20,Costume Enchantment Stone Box 20,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box20); },{},{}
+//100314,Enchant_Stone_Box21,Costume Enchantment Stone Box 21,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box21); },{},{}
 // Costumes
 //440000,C_SharkHead,Costume Shark Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,5120,,1,0,1919,{},{},{}
 //440002,C_Happy_Cat_TW,Costume Happy Cat,4,0,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,0,1980,{},{},{}
