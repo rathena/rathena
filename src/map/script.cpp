@@ -266,7 +266,6 @@ struct Script_Config script_config = {
 	"OnPCLoadMapEvent", //loadmap_event_name
 	"OnPCBaseLvUpEvent", //baselvup_event_name
 	"OnPCJobLvUpEvent", //joblvup_event_name
-	"OnPCStatCalcEvent", //stat_calc_event_name
 	// NPC related
 	"OnTouch_",	//ontouch_event_name (runs on first visible char to enter area, picks another char if the first char leaves)
 	"OnTouch",	//ontouch2_event_name (run whenever a char walks into the OnTouch area)
@@ -19933,8 +19932,7 @@ BUILDIN_FUNC(bg_getareausers)
 {
 	const char *str = script_getstr(st, 3);
 	int16 m, x0, y0, x1, y1;
-	int bg_id = script_getnum(st, 2);
-	int i = 0, c = 0;
+	int bg_id = script_getnum(st, 2), c = 0;
 	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
 
 	if (!bg || (m = map_mapname2mapid(str)) < 0) {
@@ -19947,12 +19945,8 @@ BUILDIN_FUNC(bg_getareausers)
 	x1 = script_getnum(st,6);
 	y1 = script_getnum(st,7);
 
-	for( i = 0; i < bg->members.size(); i++ )
-	{
-		struct map_session_data *sd;
-		if( (sd = bg->members[i].sd) == NULL )
-			continue;
-		if( sd->bl.m != m || sd->bl.x < x0 || sd->bl.y < y0 || sd->bl.x > x1 || sd->bl.y > y1 )
+	for (const auto &member : bg->members) {
+		if( member.sd->bl.m != m || member.sd->bl.x < x0 || member.sd->bl.y < y0 || member.sd->bl.x > x1 || member.sd->bl.y > y1 )
 			continue;
 		c++;
 	}
@@ -19981,7 +19975,7 @@ BUILDIN_FUNC(bg_updatescore)
 
 BUILDIN_FUNC(bg_get_data)
 {
-	int bg_id = script_getnum(st,2), type = script_getnum(st,3), i;
+	int bg_id = script_getnum(st,2), type = script_getnum(st,3), i = 0;
 	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
 
 	if (bg) {
@@ -19990,8 +19984,8 @@ BUILDIN_FUNC(bg_get_data)
 			script_pushint(st, bg->members.size());
 			break;
 		case 1:
-			for (i = 0; bg->members[i].sd != NULL; i++)
-				mapreg_setreg(reference_uid(add_str("$@arenamembers"), i), bg->members[i].sd->bl.id);
+			for (const auto &member : bg->members)
+				mapreg_setreg(reference_uid(add_str("$@arenamembers"), i++), member.sd->bl.id);
 			mapreg_setreg(add_str("$@arenamemberscount"), i);
 			script_pushint(st, i);
 			break;
@@ -20476,7 +20470,7 @@ BUILDIN_FUNC(instance_check_party)
 	for( i = 0; i < MAX_PARTY; i++ ) {
 		struct map_session_data *pl_sd;
 		if( (pl_sd = p->data[i].sd) )
-			if(map_id2bl(pl_sd->bl.id)) {
+			if(map_id2bl(pl_sd->bl.id) && !pl_sd->state.autotrade) {
 				if(pl_sd->status.base_level < min) {
 					script_pushint(st, 0);
 					return SCRIPT_CMD_SUCCESS;
@@ -20537,7 +20531,7 @@ BUILDIN_FUNC(instance_check_guild)
 		struct map_session_data *pl_sd;
 
 		if ((pl_sd = g->member[i].sd)) {
-			if (map_id2bl(pl_sd->bl.id)) {
+			if (map_id2bl(pl_sd->bl.id) && !pl_sd->state.autotrade) {
 				if (pl_sd->status.base_level < min) {
 					script_pushint(st, 0);
 					return SCRIPT_CMD_SUCCESS;
@@ -20599,7 +20593,7 @@ BUILDIN_FUNC(instance_check_clan)
 		struct map_session_data *pl_sd;
 
 		if ((pl_sd = cd->members[i])) {
-			if (map_id2bl(pl_sd->bl.id)) {
+			if (map_id2bl(pl_sd->bl.id) && !pl_sd->state.autotrade) {
 				if (pl_sd->status.base_level < min) {
 					script_pushint(st, 0);
 					return SCRIPT_CMD_SUCCESS;
@@ -23773,13 +23767,8 @@ BUILDIN_FUNC(achievementadd) {
 	}
 
 	if( !sd->state.pc_loaded ){
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementadd: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	if (achievement_add(sd, achievement_id))
@@ -23810,13 +23799,8 @@ BUILDIN_FUNC(achievementremove) {
 	}
 
 	if( !sd->state.pc_loaded ){
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementremove: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	if (achievement_remove(sd, achievement_id))
@@ -23847,13 +23831,8 @@ BUILDIN_FUNC(achievementinfo) {
 
 	if( !sd->state.pc_loaded ){
 		script_pushint(st, false);
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementinfo: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	script_pushint(st, achievement_check_progress(sd, achievement_id, script_getnum(st, 3)));
@@ -23880,13 +23859,8 @@ BUILDIN_FUNC(achievementcomplete) {
 	}
 	
 	if( !sd->state.pc_loaded ){
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementcomplete: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
@@ -23918,13 +23892,8 @@ BUILDIN_FUNC(achievementexists) {
 
 	if( !sd->state.pc_loaded ){
 		script_pushint(st, false);
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementexists: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id && sd->achievement_data.achievements[i].completed > 0 );
@@ -23956,13 +23925,8 @@ BUILDIN_FUNC(achievementupdate) {
 	}
 
 	if( !sd->state.pc_loaded ){
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementupdate: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
