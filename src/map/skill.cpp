@@ -1947,7 +1947,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			if (status_isimmune(bl))
 				break;
 
-			if ((dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) || rnd()%100 >= 50 + 10 * skill_lv) {
+			if ((dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) || rnd()%100 >= 50 + 5 * skill_lv) {
 				if (sd)
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
@@ -2060,9 +2060,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 	case RL_AM_BLAST:
 		sc_start(src,bl,SC_ANTI_M_BLAST,20 + 10 * skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	case RL_HAMMER_OF_GOD:
-		sc_start(src,bl,SC_STUN,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 	case SU_SCRATCH:
 		sc_start2(src, bl, SC_BLEEDING, skill_lv * 10 + 70, skill_lv, src->id, skill_get_time(skill_id, skill_lv));
@@ -3212,7 +3209,6 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 	// Skill specific direction
 	switch (skill_id) {
 		case MG_FIREWALL:
-		case GN_WALLOFTHORN:
 		case EL_FIRE_MANTLE:
 			dir = unit_getdir(target); // Backwards
 			break;
@@ -3793,9 +3789,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 					}
 				}
 				break;
-			case SR_TIGERCANNON:
-				status_zap(bl, 0, damage * 10 / 100);
-				break;
 		}
 		if( sd )
 			skill_onskillusage(sd, bl, skill_id, tick);
@@ -4162,16 +4155,6 @@ int skill_area_sub_count (struct block_list *src, struct block_list *target, uin
 						return 1;
 				}
 			}
-		case RL_D_TAIL:
-			if (src->type != BL_PC)
-				return 0;
-			{
-				struct status_change *tsc = status_get_sc(target);
-				// Only counts marked target with SC_C_MARKER
-				if (!tsc || !tsc->data[SC_C_MARKER])
-					return 0;
-			}
-			break;
 	}
 	return 1;
 }
@@ -5159,7 +5142,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case RL_FIREDANCE:
 	case RL_S_STORM:
 	case RL_R_TRIP:
-	case RL_HAMMER_OF_GOD:
 	case MH_XENO_SLASHER:
 	case NC_ARMSCANNON:
 	case SU_SCRATCH:
@@ -5294,7 +5276,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 		break;
 
-#ifndef RENEWAL
+#ifdef RENEWAL
 	case KN_BRANDISHSPEAR:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
@@ -6219,11 +6201,31 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case RL_QD_SHOT:
-	case RL_D_TAIL:
-		if (!sd || (tsc && tsc->data[SC_C_MARKER])) {
-			if (skill_id == RL_QD_SHOT && skill_area_temp[1] == bl->id )
-				break;
+		if (skill_area_temp[1] == bl->id)
+			break;
+		if (flag&1 && tsc && tsc->data[SC_C_MARKER])
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION);
+		break;
+	case RL_D_TAIL:
+	case RL_HAMMER_OF_GOD:
+		if (flag&1)
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION);
+		else {
+			if (sd && tsc && tsc->data[SC_C_MARKER]) {
+				int i;
+
+				ARR_FIND(0, MAX_SKILL_CRIMSON_MARKER, i, sd->c_marker[i] == bl->id);
+
+				if (i < MAX_SKILL_CRIMSON_MARKER)
+					flag |= 8;
+			}
+
+			if (skill_id == RL_HAMMER_OF_GOD)
+				clif_skill_poseffect(src, skill_id, 1, bl->x, bl->y, gettick());
+			else
+				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		}
 		break;
 
@@ -7584,6 +7586,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), 0, splash_target(src),
 			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 0,
 			skill_castend_damage_id);
+		break;
 #else
 	case KN_BRANDISHSPEAR:
 #endif
@@ -7712,21 +7715,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SJ_STARSTANCE:
 	case SJ_UNIVERSESTANCE:
 	case SJ_SUNSTANCE:
+	case SP_SOULCOLLECT:
 		if( tsce )
 		{
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,status_change_end(bl, type, INVALID_TIMER));
 			map_freeblock_unlock();
 			return 0;
 		}
-		clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		break;
-	case SP_SOULCOLLECT:
-		if (tsce) {
-			clif_skill_nodamage(src, bl, skill_id, skill_lv, status_change_end(bl, type, INVALID_TIMER));
-			map_freeblock_unlock();
-			return 0;
+
+		if( skill_id == SP_SOULCOLLECT ){
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, pc_checkskill(sd, SP_SOULENERGY), max(1000, skill_get_time(skill_id, skill_lv))));
+		}else{
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		}
-		clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, pc_checkskill(sd,SP_SOULENERGY), max(1000, skill_get_time(skill_id, skill_lv))));
 		break;
 	case SL_KAITE:
 	case SL_KAAHI:
@@ -8794,7 +8795,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				status_change_end(bl, type, INVALID_TIMER);
 
 			//If mode gets set by NPC_EMOTION then the target should be reset [Playtester]
-			if(skill_id == NPC_EMOTION && md->db->skill[md->skill_idx].val[1])
+			if(!battle_config.npc_emotion_behavior && skill_id == NPC_EMOTION && md->db->skill[md->skill_idx].val[1])
 				mob_unlocktarget(md,tick);
 
 			if(md->db->skill[md->skill_idx].val[1] || md->db->skill[md->skill_idx].val[2])
@@ -8805,7 +8806,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					skill_get_time(skill_id, skill_lv));
 
 			//Reset aggressive state depending on resulting mode
-			md->state.aggressive = status_has_mode(&md->status,MD_ANGRY)?1:0;
+			if (!battle_config.npc_emotion_behavior)
+				md->state.aggressive = status_has_mode(&md->status,MD_ANGRY)?1:0;
 		}
 		break;
 
@@ -11360,9 +11362,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		}
 		break;
-	case RL_D_TAIL:
-		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-		break;
 	case RL_QD_SHOT:
 		if (sd) {
 			skill_area_temp[1] = bl->id;
@@ -11668,20 +11667,6 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 					return USESKILL_FAIL_MAX;
 			}
 			break;
-		case RL_D_TAIL:
-			if (src) {
-				int count = 0;
-
-				if (battle_config.skill_wall_check)
-					count = map_foreachinshootrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, gettick(), BCT_ENEMY, skill_area_sub_count);
-				else
-					count = map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, gettick(), BCT_ENEMY, skill_area_sub_count);
-
-				if (!count) {
-					return USESKILL_FAIL_LEVEL;
-				}
-			}
-			break;
 	}
 
 	if (inf&INF_ATTACK_SKILL ||
@@ -11838,22 +11823,6 @@ TIMER_FUNC(skill_castend_id){
 			case SU_CN_POWDERING:
 				ud->skillx = target->x;
 				ud->skilly = target->y;
-				ud->skilltimer = tid;
-				return skill_castend_pos(tid,tick,id,data);
-			case RL_HAMMER_OF_GOD:
-				if ((sc = status_get_sc(target)) && sc->data[SC_C_MARKER]) {
-					ud->skillx = target->x;
-					ud->skilly = target->y;
-				} else {
-					int splash = skill_get_splash(ud->skill_id, ud->skill_lv); // !TODO: What's the random AoE size?
-
-					ud->skillx = target->x + splash;
-					ud->skilly = target->y + splash;
-					if (!map_random_dir(target, &ud->skillx, &ud->skilly)) {
-						ud->skillx = target->x;
-						ud->skilly = target->y;
-					}
-				}
 				ud->skilltimer = tid;
 				return skill_castend_pos(tid,tick,id,data);
 		}
@@ -14755,7 +14724,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 				break;
 			if (status_bl_has_mode(bl,MD_STATUS_IMMUNE))
 				break; // This skill doesn't affect to Boss monsters. [iRO Wiki]
-			skill_blown(&unit->bl, bl, skill_get_blewcount(sg->skill_id, sg->skill_lv), -1, BLOWN_NONE);
+			skill_blown(&unit->bl, bl, skill_get_blewcount(sg->skill_id, sg->skill_lv), unit_getdir(bl), BLOWN_IGNORE_NO_KNOCKBACK);
 			skill_addtimerskill(ss, tick + 100, bl->id, unit->bl.x, unit->bl.y, sg->skill_id, sg->skill_lv, skill_get_type(sg->skill_id), 4|SD_LEVEL);
 			break;
 
@@ -16614,6 +16583,7 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 #ifdef RENEWAL
 		switch(skill_id) { // 2016-10-26 kRO update made these skills require an extra ammo to cast
 			case WM_SEVERE_RAINSTORM:
+			case RL_FIREDANCE:
 			case RL_R_TRIP:
 			case RL_FIRE_RAIN:
 				extra_ammo = 1;
@@ -21641,6 +21611,8 @@ template<typename T, size_t S> bool SkillDatabase::parseNode(std::string nodeNam
 		for (size_t i = 0; i < S; i++)
 			arr[i] = value;
 	} else {
+		uint16 max_level = 0;
+
 		for (const YAML::Node &it : node[nodeName]) {
 			uint16 skill_lv;
 
@@ -21656,7 +21628,39 @@ template<typename T, size_t S> bool SkillDatabase::parseNode(std::string nodeNam
 				continue;
 
 			arr[skill_lv - 1] = value;
+			max_level = max(max_level, skill_lv);
 		}
+
+		size_t i = max_level, j;
+
+		// Check for linear change with increasing steps until we reach half of the data acquired.
+		for (size_t step = 1; step <= i / 2; step++) {
+			int diff = arr[i - 1] - arr[i - step - 1];
+
+			for (j = i - 1; j >= step; j--) {
+				if ((arr[j] - arr[j - step]) != diff)
+					break;
+			}
+
+			if (j >= step) // No match, try next step.
+				continue;
+
+			for (; i < MAX_SKILL_LEVEL; i++) { // Apply linear increase
+				arr[i] = arr[i - step] + diff;
+
+				if (arr[i] < 1 && arr[i - 1] >= 0) { // Check if we have switched from + to -, cap the decrease to 0 in said cases.
+					arr[i] = 1;
+					diff = 0;
+					step = 1;
+				}
+			}
+
+			return true;
+		}
+
+		// Unable to determine linear trend, fill remaining array values with last value
+		for (; i < S; i++)
+			arr[i] = arr[max_level - 1];
 	}
 
 	return true;
