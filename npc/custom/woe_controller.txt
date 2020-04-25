@@ -288,10 +288,12 @@ OnReward:
 				if ((.Options&8) && !(.Options&4)) {
 					set .@ip$, replacestr(getcharip(.@aid[.@j]),".","a");
 					if (getd(".@ip_"+.@i+"_"+.@ip$)) continue;
-					setd ".@ip_"+.@i+"_"+.@ip$,1;
 				}
 				if (.Options&2) {
-					.@charid = .@cid[.@j];
+					if((.Options&8) && !(.Options&4) && isloggedin(.@aid[.@j]) && getcharid(2,convertpcinfo(.@aid[.@j],CPC_NAME)) == .@gid)
+						.@charid = convertpcinfo(.@aid[.@j],CPC_CHAR);
+					else
+						.@charid = .@cid[.@j];
 					.@sender$ = "no-reply";
 					.@title$ = "** Siege Reward: "+getcastlename(.Castles$[.@i])+" **";
 					.@body$ = "Brave one,\r\n \r\n Congratulations!\r\n Your guild has successfully occupied\r\n territory in the War of Emperium on\r\n "+.@str$+".\r\n \r\n \r\n \r\n \r\n [ Your reward is attached. ]";
@@ -301,10 +303,11 @@ OnReward:
 					else
 						mail .@charid, .@sender$, .@title$, .@body$, .reward_zeny;
 
-					if (PACKETVER < 20150513 && !getd(".@str_"+.@cid[.@j]) && isloggedin(.@aid[.@j],.@cid[.@j])) {
-						setd ".@str_"+.@cid[.@j],1;
+					if (!getd(".@str_"+.@charid) && isloggedin(.@aid[.@j],.@charid)) {
+						setd ".@str_"+.@charid,1;
 						message rid2name(.@aid[.@j]),"You've got mail!";
 					}
+					if(.Options&8) setd ".@ip_"+.@i+"_"+.@ip$,1;
 				}
 				else if (isloggedin(.@aid[.@j],.@cid[.@j])) {
 					attachrid( .@aid[.@j], true );
@@ -318,6 +321,7 @@ OnReward:
 					}
 					Zeny += .reward_zeny;
 					dispbottom "You have been rewarded for conquering " + .@castle_name$ + ".";
+					if(.Options&8) setd ".@ip_"+.@i+"_"+.@ip$,1;
 					detachrid;
 				}
 			}
