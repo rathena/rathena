@@ -4517,11 +4517,13 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 200 * skill_lv;
 			break;
 		case RL_FIREDANCE:
-			skillratio += -100 + 200 * skill_lv;
-			skillratio += (sd ? pc_checkskill(sd, GS_DESPERADO) * 50 : 0);
+			skillratio += 100 + 100 * skill_lv;
+			skillratio += (sd ? pc_checkskill(sd, GS_DESPERADO) * 20 : 0);
+			RE_LVL_DMOD(100);
 			break;
 		case RL_BANISHING_BUSTER:
-			skillratio += -100 + 2000 + 300 * skill_lv;
+			skillratio += -100 + 1000 + 200 * skill_lv;
+			RE_LVL_DMOD(100);
 			break;
 		case RL_S_STORM:
 			skillratio += -100 + 1700 + 200 * skill_lv;
@@ -4534,10 +4536,14 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio *= 2 + tstatus->size;
 			break;
 		case RL_D_TAIL:
-			skillratio += -100 + 4000 + 1000 * skill_lv;
+			skillratio += -100 + 500 + 200 * skill_lv;
+			if (sd && (wd->miscflag & 8))
+				skillratio *= 2;
+			RE_LVL_DMOD(100);
 			break;
 		case RL_R_TRIP:
-			skillratio += -100 + 1000 + 300 * skill_lv;
+			skillratio += -100 + 350 * skill_lv;
+			RE_LVL_DMOD(100);
 			break;
 		case RL_R_TRIP_PLUSATK:
 			skillratio += -100 + 300 + 300 * skill_lv;
@@ -4549,13 +4555,14 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += -100 + 200 + 200 * skill_lv;
 			break;
 		case RL_HAMMER_OF_GOD:
-			skillratio += -100 + 2800 + 1400 * skill_lv;
+			skillratio += -100 + 100 * skill_lv;
 			if (sd) {
-				if (tsc && tsc->data[SC_C_MARKER])
-					skillratio += 100 * sd->spiritball_old;
-				else if (sd->spiritball_old)
-					skillratio += 10 * sd->spiritball_old;
+				if (wd->miscflag & 8)
+					skillratio += 400 * sd->spiritball_old;
+				else
+					skillratio += 150 * sd->spiritball_old;
 			}
+			RE_LVL_DMOD(100);
 			break;
 		case RL_FIRE_RAIN:
 		case RL_AM_BLAST:
@@ -7490,7 +7497,12 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 						}
 						break;
 					case W_GRENADE:
-						if (sd->inventory_data[index]->look != A_GRENADE) {
+						if (sd->inventory_data[index]->look !=
+#ifdef RENEWAL
+							A_BULLET) {
+#else
+							A_GRENADE) {
+#endif
 							clif_skill_fail(sd,0,USESKILL_FAIL_NEED_MORE_BULLET,0);
 							return ATK_NONE;
 						}
