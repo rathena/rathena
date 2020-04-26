@@ -308,7 +308,7 @@ OnInit:
 
 epay_dun00l,22,186,3	duplicate(Return to Eden#template)	Return to Eden#paydun00l	707
 egef_dun03m,136,117,3	duplicate(Return to Eden#template)	Return to Eden#gefdun03m	707
-eabyss_03h,113,25,3	duplicate(Return to Eden#template)	Return to Eden#abyss_03h	707
+eabyss_03h,113,26,3	duplicate(Return to Eden#template)	Return to Eden#abyss_03h	707
 
 //==================================================
 // 70 ~ 100
