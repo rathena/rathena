@@ -12100,7 +12100,7 @@
 25049,Basilac_Clam,Basilac Clam,3,0,,0,,,,,,,,,,,,,{},{},{}
 
 25058,TwinkleEffect_Top,Twinkle Effect (Upper),3,10,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
-25059,GhostEffect_Middle,Ghost Effect (Middle),3,10,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
+25059,GhostEffect_Middle,Ghost Effect (Middle),3,10,,100,,,,,,,,,,,,,{ hateffect HAT_EF_C_GHOST_EFFECT,true; },{},{ hateffect HAT_EF_C_GHOST_EFFECT,false; }
 25060,Critical_Stone,Critical Stone (Middle),3,10,,100,,,,,,,,,,,,,{ bonus bCritAtkRate,3; },{},{}
 25061,Range_Stone,Range Stone (Middle),3,10,,100,,,,,,,,,,,,,{ bonus bLongAtkRate,3; },{},{}
 25062,Greed_Stone,Greed Stone (Lower),3,10,,100,,,,,,,,,,,,,{ skill "BS_GREED",1; },{},{}
@@ -12121,9 +12121,9 @@
 25131,Fallen_Energy_Particle,Fallen Energy Particle,3,0,,0,,,,,,,,,,,,,{},{},{}
 25132,Pumpkin_Deco,Pumpkin Deco,3,0,,0,,,,,,,,,,,,,{},{},{}
 25133,Dried_White_Stem,Dried White Stem,3,0,,0,,,,,,,,,,,,,{},{},{}
-25136,ElectricEffect_Middle,Electric Effect (Middle),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
-25137,GreenFloor_Bottom,Green Floor Effect (Lower),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
-25138,ShrinkEffect_Middle,Shrink Effect (Middle),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
+25136,ElectricEffect_Middle,Electric Effect (Middle),3,20,,100,,,,,,,,,,,,,{ hateffect HAT_EF_ELECTRIC,true; },{},{ hateffect HAT_EF_ELECTRIC,false; }
+25137,GreenFloor_Bottom,Green Floor Effect (Lower),3,20,,100,,,,,,,,,,,,,{ hateffect HAT_EF_GREEN_FLOOR,true; },{},{ hateffect HAT_EF_GREEN_FLOOR,false; }
+25138,ShrinkEffect_Middle,Shrink Effect (Middle),3,20,,100,,,,,,,,,,,,,{ hateffect HAT_EF_SHRINK,true; },{},{ hateffect HAT_EF_SHRINK,false; }
 25139,Identify_Stone,Identify Stone (Lower),3,20,,100,,,,,,,,,,,,,{ skill "MC_IDENTIFY",1; },{},{}
 25141,EXPStone_Middle,Experience Stone (Middle),3,20,,100,,,,,,,,,,,,,{ bonus2 bExpAddRace,RC_All,2; },{},{}
 25142,Doram_Token,Doram Token,3,,0,0,,,,,,,,,,,,,{},{},{}
@@ -12169,12 +12169,12 @@
 25184,Portable_Sewingbox,Portable Sewingbox,3,0,,0,,,,,,,,,,,,,{},{},{}
 25185,Locket_Pendant,Locket Pendant,3,0,,0,,,,,,,,,,,,,{},{},{}
 25187,Slug_Bullet,Slug Bullet,3,1200,,1200,,,,,,,,,,,,,{},{},{}
-25205,ShrinkEffect_Bottom,Shrink Effect (Lower),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
-25206,ElectricEffect_Top,,3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
+25205,ShrinkEffect_Bottom,Shrink Effect (Lower),3,20,,100,,,,,,,,,,,,,{ hateffect HAT_EF_SHRINK,true; },{},{ hateffect HAT_EF_SHRINK,false; }
+25206,ElectricEffect_Top,Electric Effect (Upper),3,20,,100,,,,,,,,,,,,,{ hateffect HAT_EF_ELECTRIC,true; },{},{ hateffect HAT_EF_ELECTRIC,false; }
 25223,Para_Team_Coin,Eden Group Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
-25224,WhiteBodyEffect_Middle,White Body Effect (Middle),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
+25224,WhiteBodyEffect_Middle,White Body Effect (Middle),3,20,,100,,,,,,,,,,,,,{ hateffect HAT_EF_WHITEBODY,true; },{},{ hateffect HAT_EF_WHITEBODY,false; }
 25225,ExplodingEffect_Middle,Crimson Wave Effect (Middle),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
-25226,WaterFieldEffect_Bottom,Water Field Effect (Lower),3,20,,100,,,,,,,,,,,,,{ /* todo */ },{},{}
+25226,WaterFieldEffect_Bottom,Water Field Effect (Lower),3,20,,100,,,,,,,,,,,,,{ hateffect HAT_EF_WATER_BELOW2,true; },{},{ hateffect HAT_EF_WATER_BELOW2,false; }
 25227,Heal_Stone,Heal Stone (Lower),3,20,,100,,,,,,,,,,,,,{ skill "AL_HEAL",1; },{},{}
 25228,Teleport_Stone,Teleport Stone (Lower),3,20,,100,,,,,,,,,,,,,{ skill "AL_TELEPORT",1; },{},{}
 25229,Steal_Stone,Steal Stone (Lower),3,20,,100,,,,,,,,,,,,,{ skill "TF_STEAL",1; },{},{}
