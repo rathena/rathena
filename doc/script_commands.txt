@@ -9320,8 +9320,7 @@ QMARK_PURPLE - Purple Marker
 *waitingroom2bg_single(<battle group>,{"<map name>",<x>,<y>{,"<npc name>"}});
 
 Adds the first waiting player from the chat room of the given NPC to an existing battleground group.
-The player will also be warped to the default spawn point of the battle group or to the specified coordinates
-<x> and <y> on the given <map>.
+The player will also be warped to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
 
 ---------------------------------------
 
@@ -9365,8 +9364,7 @@ Returns battle group ID on success. Returns 0 on failure.
 
 *bg_join(<battle group>,{"<map name>",{<x>,<y>{,<char id>}});
 
-Adds an attached player or <char id> if specified to an existing battleground group. The player will also be warped
-to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
+Adds an attached player or <char id> if specified to an existing battleground group. The player will also be warped to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
 
 Returns true on success. Returns false on failure.
 
@@ -9374,36 +9372,12 @@ Returns true on success. Returns false on failure.
 
 *bg_team_setxy <Battle Group ID>,<x>,<y>;
 
-Updates the respawn point of the given Battle Group to x,y on the same map. <Battle Group ID> can be retrieved
-using getcharid(4).
+Updates the respawn point of the given Battle Group to x,y on the same map. <Battle Group ID> can be retrieved using getcharid(4).
 
 Example:
 	bg_team_setxy getcharid(4),56,212;
 	mapannounce "bat_a01", "Group [1] has taken the work shop, and will now respawn there.",bc_map,"0xFFCE00";
 	end;
-
----------------------------------------
-
-*bg_reserve("<battleground_name>");
-
-Reserves a slot for the given Battleground for the Battleground UI System.
-
-Note: 'bg_reserve' and 'bg_unbook' prevent the Battlegrounds queue from joining players in an active Battleground.
-
----------------------------------------
-
-*bg_unbook("<battleground_name>");
-
-Removes a spot for the given Battleground for the Battleground UI System.
-
-Note: 'bg_reserve' and 'bg_unbook' prevent the Battlegrounds queue from joining players in an active Battleground.
-
----------------------------------------
-
-*bg_desert({<char_id>});
-
-Same as 'bg_leave' but slaps the player with a deserter status so they can't enter another queue for the time
-defined in battleground_db (10 minutes by default).
 
 ---------------------------------------
 
@@ -9507,21 +9481,6 @@ map within the specified rectangular area.
 This command will force the update of the displayed scoreboard.
 It is only usable when the map is defined as a Type 2 Battleground:
 mapflag	<map name>	battleground	2
-
----------------------------------------
-
-*bg_info("<battleground name>", <type>);
-
-Retrieves data related to given <battleground name> from the database. Requires feature.bgqueue
-to be enabled. <Type> can be one of the following:
-
-	BG_INFO_ID: Battleground ID.
-	BG_INFO_REQUIRED_PLAYERS: Required players to start a battleground (per side).
-	BG_INFO_MAX_PLAYERS: Maximum players allowed in a battleground.
-	BG_INFO_MIN_LEVEL: Minimum level allowed to join a battleground.
-	BG_INFO_MAX_LEVEL: Maximum level allowed to join a battleground.
-	BG_INFO_MAPS: Number of maps in a battleground. Stores an array of map names in @bgmaps[] and a count in @bgmapscount.
-	BG_INFO_DESERTER_TIME: Amount of time in seconds a player is marked deserter.
 
 ---------------------------------------
 

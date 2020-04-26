@@ -884,9 +884,6 @@ enum sc_type : int16 {
 	SC_ADAPTATION,
 	SC_BASILICA_CELL, // Used in renewal mode for cell_basilica only
 
-	SC_ENTRY_QUEUE_APPLY_DELAY,
-	SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT,
-
 	// Star Emperor
 	SC_LIGHTOFMOON,
 	SC_LIGHTOFSUN,

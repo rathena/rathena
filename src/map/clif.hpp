@@ -34,7 +34,7 @@ struct s_vending;
 struct party;
 struct party_data;
 struct guild;
-struct s_battleground_data;
+struct battleground_data;
 struct quest;
 struct party_booking_ad_info;
 struct sale_item_data;
@@ -42,7 +42,6 @@ struct mail_message;
 struct achievement;
 struct guild_log_entry;
 enum e_guild_storage_log : uint16;
-enum e_bg_queue_apply_ack : uint16;
 enum e_instance_notify : uint8;
 
 enum e_PacketDBVersion { // packet DB
@@ -822,18 +821,11 @@ void clif_guild_xy_remove(struct map_session_data *sd);
 void clif_bg_hp(struct map_session_data *sd);
 void clif_bg_xy(struct map_session_data *sd);
 void clif_bg_xy_remove(struct map_session_data *sd);
-void clif_bg_message(struct s_battleground_data *bg, int src_id, const char *name, const char *mes, int len);
+void clif_bg_message(struct battleground_data *bg, int src_id, const char *name, const char *mes, int len);
 void clif_bg_updatescore(int16 m);
 void clif_bg_updatescore_single(struct map_session_data *sd);
 void clif_sendbgemblem_area(struct map_session_data *sd);
 void clif_sendbgemblem_single(int fd, struct map_session_data *sd);
-
-// Battleground Queue
-void clif_bg_queue_apply_result(e_bg_queue_apply_ack result, const char *name, struct map_session_data *sd);
-void clif_bg_queue_apply_notify(const char *name, struct map_session_data *sd);
-void clif_bg_queue_entry_init(struct map_session_data *sd);
-void clif_bg_queue_lobby_notify(const char *name, struct map_session_data *sd);
-void clig_bg_queue_ack_lobby(bool result, const char *name, const char *lobbyname, struct map_session_data *sd);
 
 // Instancing
 void clif_instance_create(int instance_id, int num);
