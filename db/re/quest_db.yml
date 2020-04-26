@@ -9603,10 +9603,7 @@ Body:
     Title: Bathroom Ghost
   - Id: 60355
     Title: Bathroom Ghost
-  - Id: 62238
-    Title: Midgardian Mercenary timer
-    TimeLimit: +1h
-    - Id: 60443
+  - Id: 60443
     Title: Alarm Hunting
     Targets:
       - Mob: ALARM
@@ -10543,6 +10540,9 @@ Body:
     Targets:
       - Mob: LICHTERN_B
         Count: 400
+  - Id: 62238
+    Title: Midgardian Mercenary timer
+    TimeLimit: +1h
   - Id: 62832
     Title: Toucan Hunting
     Targets:
