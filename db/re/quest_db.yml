@@ -9606,22 +9606,169 @@ Body:
   - Id: 62238
     Title: Midgardian Mercenary timer
     TimeLimit: +1h
+    - Id: 60443
+    Title: Alarm Hunting
+    Targets:
+      - Mob: ALARM
+        Count: 400
   - Id: 60444
     Title: Hunting Timer 1
     TimeLimit: +4h
+  - Id: 60445
+    Title: Desert Wolf Hunting
+    Targets:
+      - Mob: DESERT_WOLF
+        Count: 400
+  - Id: 60446
+    Title: Ragged Zombie Hunting
+    Targets:
+      - Mob: RAGGED_ZOMBIE
+        Count: 400
+  - Id: 60447
+    Title: Cecil Damon Hunting
+    Targets:
+      - Mob: SHECIL
+        Count: 400
   - Id: 60449
     Title: Hunting Timer 3
     TimeLimit: +4h
   - Id: 60450
     Title: Hunting Timer 4
     TimeLimit: +4h
-  - Id: 60444
-    Title: Hunting Timer 1
-    TimeLimit: +4h
+  - Id: 60451
+    Title: Enchanted Peach Tree Hunting
+    Targets:
+      - Mob: LIVE_PEACH_TREE
+        Count: 400
+  - Id: 60452
+    Title: Zipper Bear Hunting
+    Targets:
+      - Mob: ZIPPER_BEAR
+        Count: 400
+  - Id: 60453
+    Title: Succubus Hunting
+    Targets:
+      - Mob: SUCCUBUS
+        Count: 400
+  - Id: 60454
+    Title: Incubus Hunting
+    Targets:
+      - Mob: INCUBUS
+        Count: 400
+  - Id: 60455
+    Title: Uni-horn Scaraba Hunting
+    Targets:
+      - Mob: HORN_SCARABA
+        Count: 400
+  - Id: 60456
+    Title: Horn Scaraba Hunting
+    Targets:
+      - Mob: HORN_SCARABA2
+        Count: 400
+  - Id: 60459
+    Title: Gazeti Hunting
+    Targets:
+      - Mob: GAZETI
+        Count: 400
+  - Id: 60460
+    Title: Ice Titan Hunting
+    Targets:
+      - Mob: ICE_TITAN
+        Count: 400
+  - Id: 60461
+    Title: Skogul Hunting
+    Targets:
+      - Mob: SKOGUL
+        Count: 400
+  - Id: 60462
+    Title: Frus Hunting
+    Targets:
+      - Mob: FRUS
+        Count: 400
+  - Id: 60463
+    Title: Antler Scaraba Hunting
+    Targets:
+      - Mob: ANTLER_SCARABA
+        Count: 400
+  - Id: 60464
+    Title: Rake Horn Scaraba Hunting
+    Targets:
+      - Mob: RAKE_SCARABA
+        Count: 400
+  - Id: 60465
+    Title: Poisonous Toad Hunting
+    Targets:
+      - Mob: POISON_TOAD
+        Count: 400
+  - Id: 60466
+    Title: Firelock Soldier Hunting
+    Targets:
+      - Mob: ANTIQUE_FIRELOCK
+        Count: 400
+  - Id: 60467
+    Title: Dullahan Hunting
+    Targets:
+      - Mob: DULLAHAN
+        Count: 400
+  - Id: 60468
+    Title: Loli Ruri Hunting
+    Targets:
+      - Mob: LOLI_RURI
+        Count: 400
+  - Id: 60469
+    Title: Acidus (Gold) Hunting
+    Targets:
+      - Mob: ACIDUS
+        Count: 400
   - Id: 60470
     Title: Acidus (Blue) Hunting
     Targets:
       - Mob: ACIDUS_
+        Count: 400
+  - Id: 60476
+    Title: Mineral Hunting
+    Targets:
+      - Mob: MINERAL
+        Count: 400
+  - Id: 60477
+    Title: Obsidian Hunting
+    Targets:
+      - Mob: OBSIDIAN
+        Count: 400
+  - Id: 60478
+    Title: Ferus (Red) Hunting
+    Targets:
+      - Mob: FERUS
+        Count: 400
+  - Id: 60479
+    Title: Ferus (Green) Hunting
+    Targets:
+      - Mob: FERUS_
+        Count: 400
+  - Id: 60480
+    Title: Laurell Weinder Hunting
+    Targets:
+      - Mob: RAWREL
+        Count: 400
+  - Id: 60481
+    Title: Armeyer Dinze Hunting
+    Targets:
+      - Mob: ARMAIA
+        Count: 400
+  - Id: 60482
+    Title: Egnigem Cenia Hunting
+    Targets:
+      - Mob: YGNIZEM
+        Count: 400
+  - Id: 60483
+    Title: Errende Ebecee Hunting
+    Targets:
+      - Mob: EREND
+        Count: 400
+  - Id: 60484
+    Title: Kavach Icarus Hunting
+    Targets:
+      - Mob: KAVAC
         Count: 400
   - Id: 60485
     Title: Wickebine Tres Hunting
@@ -9634,233 +9781,777 @@ Body:
   - Id: 60487
     Title: Hunting Timer 6
     TimeLimit: +4h
+  - Id: 60488
+    Title: Solider Hunting
+    Targets:
+      - Mob: SOLIDER
+        Count: 400
+  - Id: 60489
+    Title: Permeter Hunting
+    Targets:
+      - Mob: PERMETER
+        Count: 400
+  - Id: 60490
+    Title: Aliot Hunting
+    Targets:
+      - Mob: ALIOT
+        Count: 400
+  - Id: 60491
+    Title: Aliza Hunting
+    Targets:
+      - Mob: ALIZA
+        Count: 400
+  - Id: 60492
+    Title: Centipede Hunting
+    Targets:
+      - Mob: CENTIPEDE
+        Count: 400
+  - Id: 60493
+    Title: Bradium Golem Hunting
+    Targets:
+      - Mob: BRADIUM_GOLEM
+        Count: 400
   - Id: 60495
     Title: Hunting Timer 2
     TimeLimit: +4h
+  - Id: 60501
+    Title: Raydric Hunting
+    Targets:
+      - Mob: RAYDRIC
+        Count: 400
   - Id: 60502
     Title: Wanderer Hunting
     Targets:
       - Mob: WANDER_MAN
+        Count: 400
+  - Id: 60503
+    Title: Muscipular Hunting
+    Targets:
+      - Mob: MUSCIPULAR
+        Count: 400
+  - Id: 60504
+    Title: Drosera Hunting
+    Targets:
+      - Mob: DROSERA
+        Count: 400
+  - Id: 60505
+    Title: Ancient Tree Hunting
+    Targets:
+      - Mob: ANCIENT_TREE
+        Count: 400
+  - Id: 60506
+    Title: Phylla Hunting
+    Targets:
+      - Mob: PHYLLA
+        Count: 400
+  - Id: 60507
+    Title: Teddy Bear Hunting
+    Targets:
+      - Mob: TEDDY_BEAR
         Count: 400
   - Id: 60508
     Title: Waste Stove Hunting
     Targets:
       - Mob: WASTE_STOVE
         Count: 400
+  - Id: 60509
+    Title: Dimik (Green) Hunting
+    Targets:
+      - Mob: DIMIK_1
+        Count: 400
+  - Id: 60510
+    Title: Dimik (Blue) Hunting
+    Targets:
+      - Mob: DIMIK_2
+        Count: 400
+  - Id: 60511
+    Title: Dimik (Orange) Hunting
+    Targets:
+      - Mob: DIMIK_3
+        Count: 400
+  - Id: 60512
+    Title: Dimik (Red) Hunting
+    Targets:
+      - Mob: DIMIK_4
+        Count: 400
+  - Id: 60513
+    Title: Knocker Hunting
+    Targets:
+      - Mob: KNOCKER
+        Count: 400
+  - Id: 60514
+    Title: Imp Hunting
+    Targets:
+      - Mob: IMP
+        Count: 400
+  - Id: 60515
+    Title: Anopheles Hunting
+    Targets:
+      - Mob: ANOPHELES
+        Count: 400
+  - Id: 60516
+    Title: Roween Hunting
+    Targets:
+      - Mob: ROWEEN
+        Count: 400
+  - Id: 60517
+    Title: Agav Hunting
+    Targets:
+      - Mob: AGAV
+        Count: 400
+  - Id: 60518
+    Title: Echio Hunting
+    Targets:
+      - Mob: ECHIO
+        Count: 400
+  - Id: 60519
+    Title: Cecil Damon Hunting
+    Targets:
+      - Mob: SHECIL
+        Count: 400
+  - Id: 60520
+    Title: Eremes Guile Hunting
+    Targets:
+      - Mob: EREMES
+        Count: 400
+  - Id: 60521
+    Title: Margaretha Sorin Hunting
+    Targets:
+      - Mob: MAGALETA
+        Count: 400
+  - Id: 60522
+    Title: Seyren Windsor Hunting
+    Targets:
+      - Mob: SEYREN
+        Count: 400
+  - Id: 60523
+    Title: Kathryne Keyron Hunting
+    Targets:
+      - Mob: KATRINN
+        Count: 400
+  - Id: 60524
+    Title: Howard Alt-Eisen Hunting
+    Targets:
+      - Mob: HARWORD
+        Count: 400
+  - Id: 60525
+    Title: Metaling Hunting
+    Targets:
+      - Mob: METALING
+        Count: 400
+  - Id: 60526
+    Title: Porcellio Hunting
+    Targets:
+      - Mob: PORCELLIO
+        Count: 400
+  - Id: 60527
+    Title: Venatu (Purple) Hunting
+    Targets:
+      - Mob: VENATU_1
+        Count: 400
+  - Id: 60528
+    Title: Venatu (Green) Hunting
+    Targets:
+      - Mob: VENATU_2
+        Count: 400
+  - Id: 60529
+    Title: Venatu (Orange) Hunting
+    Targets:
+      - Mob: VENATU_3
+        Count: 400
+  - Id: 60530
+    Title: Venatu (Blue) Hunting
+    Targets:
+      - Mob: VENATU_4
+        Count: 400
+  - Id: 60531
+    Title: Banshee Hunting
+    Targets:
+      - Mob: BANSHEE
+        Count: 400
+  - Id: 60532
+    Title: Necromancer Hunting
+    Targets:
+      - Mob: NECROMANCER
+        Count: 400
+  - Id: 60535
+    Title: Gargoyle Hunting
+    Targets:
+      - Mob: GARGOYLE
+        Count: 400
+  - Id: 60536
+    Title: Arclouze Hunting
+    Targets:
+      - Mob: ARCLOUSE
+        Count: 400
+  - Id: 60537
+    Title: Stem Worm Hunting
+    Targets:
+      - Mob: STEM_WORM
+        Count: 400
+  - Id: 60538
+    Title: Rafflesia Hunting
+    Targets:
+      - Mob: RAFFLESIA
+        Count: 400
+  - Id: 60539
+    Title: Ancient Mimic Hunting
+    Targets:
+      - Mob: ANCIENT_MIMIC
+        Count: 400
+  - Id: 60540
+    Title: Death Word Hunting
+    Targets:
+      - Mob: DEATHWORD
+        Count: 400
+  - Id: 60541
+    Title: Tatacho Hunting
+    Targets:
+      - Mob: TATACHO
+        Count: 400
+  - Id: 60542
+    Title: Dolomedes Hunting
+    Targets:
+      - Mob: DOLOMEDES
+        Count: 400
+  - Id: 60543
+    Title: Kobold (Axe) Hunting
+    Targets:
+      - Mob: KOBOLD_1
+        Count: 400
+  - Id: 60544
+    Title: Kobold (Hammer) Hunting
+    Targets:
+      - Mob: KOBOLD_2
+        Count: 400
+  - Id: 60545
+    Title: Kobold (Mace) Hunting
+    Targets:
+      - Mob: KOBOLD_3
+        Count: 400
+  - Id: 60546
+    Title: Kasa Hunting
+    Targets:
+      - Mob: KASA
+        Count: 400
+  - Id: 60547
+    Title: Salamander Hunting
+    Targets:
+      - Mob: SALAMANDER
+        Count: 400
+  - Id: 60549
+    Title: Marionette Hunting
+    Targets:
+      - Mob: MARIONETTE
+        Count: 400
+  - Id: 60550
+    Title: Deviruchi Hunting
+    Targets:
+      - Mob: DEVIRUCHI
+        Count: 400
+  - Id: 60551
+    Title: Arclouze Hunting
+    Targets:
+      - Mob: ARCLOUSE
+        Count: 400
+  - Id: 60552
+    Title: Ancient Mummy Hunting
+    Targets:
+      - Mob: ANCIENT_MUMMY
+        Count: 400
+  - Id: 60553
+    Title: Deleter (Sky) Hunting
+    Targets:
+      - Mob: DELETER
+        Count: 400
+  - Id: 60554
+    Title: Deleter (Ground) Hunting
+    Targets:
+      - Mob: DELETER_
+        Count: 400
+  - Id: 60555
+    Title: Hodremlin Hunting
+    Targets:
+      - Mob: HODREMLIN
+        Count: 400
+  - Id: 60556
+    Title: Seeker Hunting
+    Targets:
+      - Mob: SEEKER
+        Count: 400
+  - Id: 60557
+    Title: Skel Prisoner Hunting
+    Targets:
+      - Mob: SKEL_PRISONER
+        Count: 400
+  - Id: 60558
+    Title: Injustice Hunting
+    Targets:
+      - Mob: INJUSTICE
+        Count: 400
+  - Id: 60559
+    Title: Dark Pinguicula Hunting
+    Targets:
+      - Mob: PINGUICULA_D
+        Count: 400
+  - Id: 60560
+    Title: Naga Hunting
+    Targets:
+      - Mob: NAGA
+        Count: 400
+  - Id: 60561
+    Title: Lude Hunting
+    Targets:
+      - Mob: LUDE
+        Count: 400
+  - Id: 60562
+    Title: Heirozoist Hunting
+    Targets:
+      - Mob: HYLOZOIST
+        Count: 400
+  - Id: 60565
+    Title: Magmaring Hunting
+    Targets:
+      - Mob: MAGMARING
+        Count: 400
+  - Id: 60570
+    Title: Hill Wind Hunting
+    Targets:
+      - Mob: HILL_WIND_1
+        Count: 400
+  - Id: 60571
+    Title: Pest Hunting
+    Targets:
+      - Mob: PEST
+        Count: 400
+  - Id: 60572
+    Title: Medusa Hunting
+    Targets:
+      - Mob: MEDUSA
+        Count: 400
+  - Id: 60573
+    Title: Hillslion Hunting
+    Targets:
+      - Mob: HILLSRION
+        Count: 400
   - Id: 60574
     Title: Reset Stone Hunting Timer
     TimeLimit: +3h
+  - Id: 60575
+    Title: Kobold Archer Hunting
+    Targets:
+      - Mob: KOBOLD_ARCHER
+        Count: 400
+  - Id: 60576
+    Title: Violy Hunting
+    Targets:
+      - Mob: VIOLY
+        Count: 400
+  - Id: 60579
+    Title: Novus (Red) Hunting
+    Targets:
+      - Mob: NOVUS
+        Count: 400
+  - Id: 60580
+    Title: Archdam Hunting
+    Targets:
+      - Mob: ARCHDAM
+        Count: 400
+  - Id: 60581
+    Title: Nepenthes Hunting
+    Targets:
+      - Mob: NEPENTHES
+        Count: 400
+  - Id: 60582
+    Title: Angra Mantis Hunting
+    Targets:
+      - Mob: ANGRA_MANTIS
+        Count: 400
+  - Id: 60583
+    Title: Pom Spider Hunting
+    Targets:
+      - Mob: POM_SPIDER
+        Count: 400
+  - Id: 60584
+    Title: Novus (Yellow) Hunting
+    Targets:
+      - Mob: NOVUS_
+        Count: 400
+  - Id: 60585
+    Title: Cornus Hunting
+    Targets:
+      - Mob: CORNUS
+        Count: 400
+  - Id: 60586
+    Title: Miming Hunting
+    Targets:
+      - Mob: MIMING
+        Count: 400
+  - Id: 60587
+    Title: Little Fatum Hunting
+    Targets:
+      - Mob: LITTLE_FATUM
+        Count: 400
+  - Id: 60588
+    Title: Heater Hunting
+    Targets:
+      - Mob: HEATER
+        Count: 400
+  - Id: 60589
+    Title: Assaulter Hunting
+    Targets:
+      - Mob: ASSULTER
+        Count: 400
+  - Id: 60590
+    Title: Blazer Hunting
+    Targets:
+      - Mob: BLAZZER
+        Count: 400
+  - Id: 60591
+    Title: Lava Golem Hunting
+    Targets:
+      - Mob: LAVA_GOLEM
+        Count: 400
+  - Id: 60592
+    Title: Owl Baron Hunting
+    Targets:
+      - Mob: OWL_BARON
+        Count: 400
+  - Id: 60593
+    Title: Vanberk Hunting
+    Targets:
+      - Mob: VANBERK
+        Count: 400
   - Id: 60594
     Title: Isilla Hunting
     Targets:
       - Mob: ISILLA
+        Count: 400
+  - Id: 60595
+    Title: Ragged Zombie Hunting
+    Targets:
+      - Mob: RAGGED_ZOMBIE
+        Count: 400
+  - Id: 60596
+    Title: Zombie Slaughter Hunting
+    Targets:
+      - Mob: ZOMBIE_SLAUGHTER
+        Count: 400
+  - Id: 60601
+    Title: Uzhas Hunting
+    Targets:
+      - Mob: UZHAS
         Count: 400
   - Id: 60602
     Title: Bathory Hunting
     Targets:
       - Mob: BATHORY
         Count: 400
+  - Id: 60603
+    Title: Nightmare Terror Hunting
+    Targets:
+      - Mob: NIGHTMARE_TERROR
+        Count: 400
+  - Id: 60604
+    Title: Anolian Hunting
+    Targets:
+      - Mob: ANOLIAN
+        Count: 400
+  - Id: 60605
+    Title: Lady Solace Hunting
+    Targets:
+      - Mob: SOLACE
+        Count: 400
+  - Id: 60608
+    Title: Rybio Hunting
+    Targets:
+      - Mob: RYBIO
+        Count: 400
+  - Id: 60609
+    Title: Alicel Hunting
+    Targets:
+      - Mob: ALICEL
+        Count: 400
+  - Id: 60610
+    Title: Petite (Ground) Hunting
+    Targets:
+      - Mob: PETIT
+        Count: 400
+  - Id: 60611
+    Title: Mavka Hunting
+    Targets:
+      - Mob: MAVKA
+        Count: 400
+  - Id: 60612
+    Title: Pinguicula Hunting
+    Targets:
+      - Mob: PINGUICULA
+        Count: 400
+  - Id: 60614
+    Title: Snowier Hunting
+    Targets:
+      - Mob: SNOWIER
+        Count: 400
   - Id: 60810
     Title: Limited VIP Access
     TimeLimit: +3d
+  - Id: 60815
+    Title: Remover Hunting
+    Targets:
+      - Mob: REMOVAL
+        Count: 400
+  - Id: 60816
+    Title: Khalitzburg Hunting
+    Targets:
+      - Mob: KHALITZBURG
+        Count: 400
+  - Id: 60817
+    Title: Bloody Butterfly Hunting
+    Targets:
+      - Mob: BLOOD_BUTTERFLY
+        Count: 400
+  - Id: 60818
+    Title: Hell Poodle Hunting
+    Targets:
+      - Mob: HELL_POODLE
+        Count: 400
   - Id: 60819
     Title: Hunting Daily Timer
     TimeLimit: +16h
+  - Id: 60820
+    Title: High Orc Hunting
+    Targets:
+      - Mob: HIGH_ORC
+        Count: 400
+  - Id: 60821
+    Title: Freezer Hunting
+    Targets:
+      - Mob: FREEZER
+        Count: 400
+  - Id: 60822
+    Title: Draco Hunting
+    Targets:
+      - Mob: DRACO
+        Count: 400
+  - Id: 60824
+    Title: Holden Hunting
+    Targets:
+      - Mob: MOLE
+        Count: 400
+  - Id: 60825
+    Title: Elder Hunting
+    Targets:
+      - Mob: ELDER
+        Count: 400
+  - Id: 60826
+    Title: Parus Hunting
+    Targets:
+      - Mob: PARUS
+        Count: 400
+  - Id: 60827
+    Title: Siroma Hunting
+    Targets:
+      - Mob: SIROMA
+        Count: 400
+  - Id: 60828
+    Title: Zombie Prisoner Hunting
+    Targets:
+      - Mob: ZOMBIE_PRISONER
+        Count: 400
+  - Id: 60830
+    Title: Evil Druid Hunting
+    Targets:
+      - Mob: EVIL_DRUID
+        Count: 400
+  - Id: 60831
+    Title: Abysmal Knight Hunting
+    Targets:
+      - Mob: KNIGHT_OF_ABYSS
+        Count: 400
+  - Id: 60832
+    Title: Shinobi Hunting
+    Targets:
+      - Mob: SHINOBI
+        Count: 400
+  - Id: 60833
+    Title: Harpy Hunting
+    Targets:
+      - Mob: HARPY
+        Count: 400
+  - Id: 60834
+    Title: Kapha Hunting
+    Targets:
+      - Mob: KAPHA
+        Count: 400
+  - Id: 60835
+    Title: Flame Skull Hunting
+    Targets:
+      - Mob: FLAME_SKULL
+        Count: 400
+  - Id: 60836
+    Title: Aunoe Hunting
+    Targets:
+      - Mob: AUNOE
+        Count: 400
+  - Id: 60837
+    Title: Fanat Hunting
+    Targets:
+      - Mob: FANAT
+        Count: 400
+  - Id: 60838
+    Title: The Paper Hunting
+    Targets:
+      - Mob: THE_PAPER
+        Count: 400
+  - Id: 60839
+    Title: Tengu Hunting
+    Targets:
+      - Mob: TENGU
+        Count: 400
+  - Id: 60840
+    Title: Headless Mule Hunting
+    Targets:
+      - Mob: HEADLESS_MULE
+        Count: 400
+  - Id: 60841
+    Title: Dark Priest Hunting
+    Targets:
+      - Mob: DARK_PRIEST
+        Count: 400
+  - Id: 60842
+    Title: Anubis Hunting
+    Targets:
+      - Mob: ANUBIS
+        Count: 400
+  - Id: 60843
+    Title: Yao Jun Hunting
+    Targets:
+      - Mob: HYEGUN
+        Count: 400
+  - Id: 60844
+    Title: Mao Guai Hunting
+    Targets:
+      - Mob: CIVIL_SERVANT
+        Count: 400
+  - Id: 60845
+    Title: Gajomart Hunting
+    Targets:
+      - Mob: GAJOMART
+        Count: 400
+  - Id: 60846
+    Title: Cendrawasih Hunting
+    Targets:
+      - Mob: CENDRAWASIH
+        Count: 400
+  - Id: 60848
+    Title: Wraith Dead Hunting
+    Targets:
+      - Mob: WRAITH_DEAD
+        Count: 400
+  - Id: 60849
+    Title: Centipede Larva Hunting
+    Targets:
+      - Mob: CENTIPEDE_LARVA
+        Count: 400
+  - Id: 60851
+    Title: Pasana Hunting
+    Targets:
+      - Mob: PASANA
+        Count: 400
+  - Id: 60853
+    Title: Wakwak Hunting
+    Targets:
+      - Mob: WAKWAK
+        Count: 400
+  - Id: 60854
+    Title: Tikbalang Hunting
+    Targets:
+      - Mob: TIKBALANG
+        Count: 400
+  - Id: 60855
+    Title: Sleeper Hunting
+    Targets:
+      - Mob: SLEEPER
+        Count: 400
+  - Id: 60856
+    Title: Cenere Hunting
+    Targets:
+      - Mob: CENERE
+        Count: 400
+  - Id: 60857
+    Title: Antique Book Hunting
+    Targets:
+      - Mob: ANTIQUE_BOOK
+        Count: 400
+  - Id: 60858
+    Title: Punk Hunting
+    Targets:
+      - Mob: PUNK
+        Count: 400
+  - Id: 60859
+    Title: Menblatt Hunting
+    Targets:
+      - Mob: MENBLATT
+        Count: 400
+  - Id: 60860
+    Title: Lichtern (Green) Hunting
+    Targets:
+      - Mob: LICHTERN_G
+        Count: 400
+  - Id: 60861
+    Title: Bungisngis Hunting
+    Targets:
+      - Mob: BUNGISNGIS
+        Count: 400
+  - Id: 60862
+    Title: Engkanto Hunting
+    Targets:
+      - Mob: ENGKANTO
+        Count: 400
+  - Id: 60863
+    Title: Petal Hunting
+    Targets:
+      - Mob: PETAL
+        Count: 400
+  - Id: 60864
+    Title: Breeze Hunting
+    Targets:
+      - Mob: BREEZE
+        Count: 400
+  - Id: 60865
+    Title: Neraid Hunting
+    Targets:
+      - Mob: NERAID
+        Count: 400
+  - Id: 60866
+    Title: Sedora Hunting
+    Targets:
+      - Mob: SEDORA
+        Count: 400
+  - Id: 60867
+    Title: Ancient Worm Hunting
+    Targets:
+      - Mob: ANCIENT_WORM
+        Count: 400
+  - Id: 60868
+    Title: Lichtern (Red) Hunting
+    Targets:
+      - Mob: LICHTERN_R
+        Count: 400
+  - Id: 60869
+    Title: Lichtern (Blue) Hunting
+    Targets:
+      - Mob: LICHTERN_B
+        Count: 400
+  - Id: 62832
+    Title: Toucan Hunting
+    Targets:
+      - Mob: TOUCAN
+        Count: 400
+  - Id: 62833
+    Title: Siorava Hunting
+    Targets:
+      - Mob: SIORAVA
+        Count: 400
   - Id: 62837
     Title: Gramps GM Notice
-
-# Convert to YML using CSV2YAML tool (remove done items)
-# 60443,0,1193,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Alarm Hunting"
-# DONE 60444,14400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hunting Timer 1"
-# 60445,0,1106,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Desert Wolf Hunting"
-# 60446,0,1865,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ragged Zombie Hunting"
-# 60447,0,1638,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Cecil Damon Hunting"
-# DONE 60449,14400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hunting Timer 3"
-# DONE 60450,14400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hunting Timer 4"
-# 60451,0,1410,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Enchanted Peach Tree Hunting"
-# 60452,0,1417,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Zipper Bear Hunting"
-# 60453,0,1370,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Succubus Hunting"
-# 60454,0,1374,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Incubus Hunting"
-# 60455,0,2083,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Uni-horn Scaraba Hunting"
-# 60456,0,2084,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Horn Scaraba Hunting"
-# 60459,0,1778,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Gazeti Hunting"
-# 60460,0,1777,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ice Titan Hunting"
-# 60461,0,1752,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Skogul Hunting"
-# 60462,0,1753,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Frus Hunting"
-# 60463,0,2085,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Antler Scaraba Hunting"
-# 60464,0,2086,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Rake Horn Scaraba Hunting"
-# 60465,0,1402,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Poisonous Toad Hunting"
-# 60466,0,1403,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Firelock Soldier Hunting"
-# 60467,0,1504,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Dullahan Hunting"
-# 60468,0,1505,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Loli Ruri Hunting"
-# 60469,0,1713,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Acidus (Gold) Hunting"
-# DONE 60470,0,1716,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Acidus (Blue) Hunting"
-# 60476,0,1614,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Mineral Hunting"
-# 60477,0,1615,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Obsidian Hunting"
-# 60478,0,1714,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ferus (Red) Hunting"
-# 60479,0,1717,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ferus (Green) Hunting"
-# 60480,0,1657,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Laurell Weinder Hunting"
-# 60481,0,1654,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Armeyer Dinze Hunting"
-# 60482,0,1652,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Egnigem Cenia Hunting"
-# 60483,0,1655,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Errende Ebecee Hunting"
-# 60484,0,1656,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Kavach Icarus Hunting"
-# DONE 60485,0,1653,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Wickebine Tres Hunting"
-# DONE 60486,14400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hunting Timer 5"
-# DONE 60487,14400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hunting Timer 6"
-# 60488,0,1316,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Solider Hunting"
-# 60489,0,1314,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Permeter Hunting"
-# 60490,0,1736,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Aliot Hunting"
-# 60491,0,1737,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Aliza Hunting"
-# 60492,0,1987,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Centipede Hunting"
-# 60493,0,2024,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Bradium Golem Hunting"
-# DONE 60495,14400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hunting Timer 2"
-# 60501,0,1163,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Raydric Hunting"
-# DONE 60502,0,1208,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Wanderer Hunting"
-# 60503,0,1780,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Muscipular Hunting"
-# 60504,0,1781,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Drosera Hunting"
-# 60505,0,2019,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ancient Tree Hunting"
-# 60506,0,2021,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Phylla Hunting"
-# 60507,0,1622,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Teddy Bear Hunting"
-# DONE 60508,0,1617,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Waste Stove Hunting"
-# 60509,0,1670,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Dimik (Green) Hunting"
-# 60510,0,1671,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Dimik (Blue) Hunting"
-# 60511,0,1672,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Dimik (Orange) Hunting"
-# 60512,0,1673,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Dimik (Red) Hunting"
-# 60513,0,1838,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Knocker Hunting"
-# 60514,0,1837,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Imp Hunting"
-# 60515,0,1627,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Anopheles Hunting"
-# 60516,0,1782,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Roween Hunting"
-# 60517,0,1769,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Agav Hunting"
-# 60518,0,1770,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Echio Hunting"
-# 60519,0,1638,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Cecil Damon Hunting"
-# 60520,0,1635,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Eremes Guile Hunting"
-# 60521,0,1637,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Margaretha Sorin Hunting"
-# 60522,0,1634,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Seyren Windsor Hunting"
-# 60523,0,1639,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Kathryne Keyron Hunting"
-# 60524,0,1636,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Howard Alt-Eisen Hunting"
-# 60525,0,1613,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Metaling Hunting"
-# 60526,0,1619,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Porcellio Hunting"
-# 60527,0,1676,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Venatu (Purple) Hunting"
-# 60528,0,1677,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Venatu (Green) Hunting"
-# 60529,0,1678,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Venatu (Orange) Hunting"
-# 60530,0,1679,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Venatu (Blue) Hunting"
-# 60531,0,1867,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Banshee Hunting"
-# 60532,0,1870,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Necromancer Hunting"
-# 60535,0,1253,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Gargoyle Hunting"
-# 60536,0,1194,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Arclouze Hunting"
-# 60537,0,1215,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Stem Worm Hunting"
-# 60538,0,1162,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Rafflesia Hunting"
-# 60539,0,1699,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ancient Mimic Hunting"
-# 60540,0,1698,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Death Word Hunting"
-# 60541,0,1986,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Tatacho Hunting"
-# 60542,0,2092,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Dolomedes Hunting"
-# 60543,0,1133,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Kobold (Axe) Hunting"
-# 60544,0,1134,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Kobold (Hammer) Hunting"
-# 60545,0,1135,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Kobold (Mace) Hunting"
-# 60546,0,1833,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Kasa Hunting"
-# 60547,0,1831,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Salamander Hunting"
-# 60549,0,1143,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Marionette Hunting"
-# 60550,0,1109,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Deviruchi Hunting"
-# 60551,0,1194,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Arclouze Hunting"
-# 60552,0,1297,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ancient Mummy Hunting"
-# 60553,0,1384,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Deleter (Sky) Hunting"
-# 60554,0,1385,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Deleter (Ground) Hunting"
-# 60555,0,1773,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hodremlin Hunting"
-# 60556,0,1774,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Seeker Hunting"
-# 60557,0,1196,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Skel Prisoner Hunting"
-# 60558,0,1257,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Injustice Hunting"
-# 60559,0,2015,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Dark Pinguicula Hunting"
-# 60560,0,1993,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Naga Hunting"
-# 60561,0,1509,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Lude Hunting"
-# 60562,0,1510,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Heirozoist Hunting"
-# 60565,0,1836,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Magmaring Hunting"
-# 60570,0,1680,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hill Wind Hunting"
-# 60571,0,1256,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Pest Hunting"
-# 60572,0,1148,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Medusa Hunting"
-# 60573,0,1989,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hillslion Hunting"
-# DONE 60574,10800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Reset Stone Hunting Timer"
-# 60575,0,1282,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Kobold Archer Hunting"
-# 60576,0,1390,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Violy Hunting"
-# 60579,0,1715,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Novus (Red) Hunting"
-# 60580,0,1668,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Archdam Hunting"
-# 60581,0,1988,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Nepenthes Hunting"
-# 60582,0,2133,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Angra Mantis Hunting"
-# 60583,0,2132,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Pom Spider Hunting"
-# 60584,0,1718,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Novus (Yellow) Hunting"
-# 60585,0,1992,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Cornus Hunting"
-# 60586,0,2137,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Miming Hunting"
-# 60587,0,2136,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Little Fatum Hunting"
-# 60588,0,1318,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Heater Hunting"
-# 60589,0,1315,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Assaulter Hunting"
-# 60590,0,1367,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Blazer Hunting"
-# 60591,0,1366,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Lava Golem Hunting"
-# 60592,0,1295,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Owl Baron Hunting"
-# 60593,0,1771,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Vanberk Hunting"
-# DONE 60594,0,1772,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Isilla Hunting"
-# 60595,0,1865,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ragged Zombie Hunting"
-# 60596,0,1864,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Zombie Slaughter Hunting"
-# 60601,0,1883,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Uzhas Hunting"
-# DONE 60602,0,1102,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Bathory Hunting"
-# 60603,0,1379,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Nightmare Terror Hunting"
-# 60604,0,1206,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Anolian Hunting"
-# 60605,0,1703,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Lady Solace Hunting"
-# 60608,0,1201,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Rybio Hunting"
-# 60609,0,1735,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Alicel Hunting"
-# 60610,0,1155,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Petite (Ground) Hunting"
-# 60611,0,1884,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Mavka Hunting"
-# 60612,0,1995,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Pinguicula Hunting"
-# 60614,0,1775,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Snowier Hunting"
-# DONE 60810,259200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Limited VIP Access"
-# 60815,0,1682,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Remover Hunting"
-# 60816,0,1132,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Khalitzburg Hunting"
-# 60817,0,1408,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Bloody Butterfly Hunting"
-# 60818,0,1866,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hell Poodle Hunting"
-# DONE 60819,57600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hunting Daily Timer"
-# 60820,0,1213,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"High Orc Hunting"
-# 60821,0,1319,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Freezer Hunting"
-# 60822,0,2013,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Draco Hunting"
-# 60824,0,1628,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Holden Hunting"
-# 60825,0,1377,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Elder Hunting"
-# 60826,0,2134,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Parus Hunting"
-# 60827,0,1776,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Siroma Hunting"
-# 60828,0,1197,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Zombie Prisoner Hunting"
-# 60830,0,1117,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Evil Druid Hunting"
-# 60831,0,1219,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Abysmal Knight Hunting"
-# 60832,0,1401,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Shinobi Hunting"
-# 60833,0,1376,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Harpy Hunting"
-# 60834,0,1406,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Kapha Hunting"
-# 60835,0,1869,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Flame Skull Hunting"
-# 60836,0,1796,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Aunoe Hunting"
-# 60837,0,1797,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Fanat Hunting"
-# 60838,0,1375,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"The Paper Hunting"
-# 60839,0,1405,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Tengu Hunting"
-# 60840,0,2071,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Headless Mule Hunting"
-# 60841,0,1198,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Dark Priest Hunting"
-# 60842,0,1098,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Anubis Hunting"
-# 60843,0,1512,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Yao Jun Hunting"
-# 60844,0,1513,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Mao Guai Hunting"
-# 60845,0,1309,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Gajomart Hunting"
-# 60846,0,2153,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Cendrawasih Hunting"
-# 60848,0,1291,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Wraith Dead Hunting"
-# 60849,0,1999,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Centipede Larva Hunting"
-# 60851,0,1154,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Pasana Hunting"
-# 60853,0,2315,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Wakwak Hunting"
-# 60854,0,2313,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Tikbalang Hunting"
-# 60855,0,1386,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Sleeper Hunting"
-# 60856,0,2365,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Cenere Hunting"
-# 60857,0,2366,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Antique Book Hunting"
-# 60858,0,1199,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Punk Hunting"
-# 60859,0,2363,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Menblatt Hunting"
-# 60860,0,2370,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Lichtern (Green) Hunting"
-# 60861,0,2309,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Bungisngis Hunting"
-# 60862,0,2310,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Engkanto Hunting"
-# 60863,0,2364,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Petal Hunting"
-# 60864,0,1692,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Breeze Hunting"
-# 60865,0,1255,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Neraid Hunting"
-# 60866,0,2204,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Sedora Hunting"
-# 60867,0,1305,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Ancient Worm Hunting"
-# 60868,0,2369,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Lichtern (Red) Hunting"
-# 60869,0,2367,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Lichtern (Blue) Hunting"
-# 62832,0,2073,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Toucan Hunting"
-# 62833,0,2199,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Siorava Hunting"
-# DONE 62837,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Gramps GM Notice"
