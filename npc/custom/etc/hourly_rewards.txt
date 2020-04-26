@@ -133,7 +133,7 @@ end;
 
 OnPCLoginEvent:
 	addtimer .s_time, strnpcinfo(3)+"::OnHourlyRewards";
-	if (#Hourly_Rewards_Check < 6) {
+	if (#Hourly_Rewards_Check < .s_ticks_per_hour * 3) {
 		message strcharinfo(0),"[Hourly Rewards]: You are currently earning hourly rewards. Type @hourlyrewards to see progress.";
 	} else {
 		.@remainingTime$ = "Rewards reset in "+ (23 - gettime(DT_HOUR)) +"h"+ (59 - gettime(DT_MINUTE)) +"m";
@@ -145,7 +145,7 @@ OnHourlyRewardsProgress:
 	.@remainingTime$ = "Rewards reset in "+ (23 - gettime(DT_HOUR)) +"h"+ (59 - gettime(DT_MINUTE)) +"m";
 	.@remainingTicksForReward = .s_ticks_per_hour - (#Hourly_Rewards_Check % .s_ticks_per_hour);
 	.@nextTime$ = "Next reward in "+ .@remainingTicksForReward +"0m";
-	.@hoursPlayed = #Hourly_Rewards_Check/2;
+	.@hoursPlayed = #Hourly_Rewards_Check / .s_ticks_per_hour;
 	if (.@hoursPlayed >= 3) {
 		message strcharinfo(0),"[Hourly Rewards]: You have earned today's hourly rewards | Total Points: "+ #HourlyRewardPoints +" | "+ .@remainingTime$;
 	} else {
