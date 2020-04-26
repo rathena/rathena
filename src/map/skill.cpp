@@ -1947,7 +1947,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			if (status_isimmune(bl))
 				break;
 
-			if ((dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) || rnd()%100 >= 50 + 10 * skill_lv) {
+			if ((dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) || rnd()%100 >= 50 + 5 * skill_lv) {
 				if (sd)
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
@@ -2059,9 +2059,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 	case RL_AM_BLAST:
 		sc_start(src,bl,SC_ANTI_M_BLAST,20 + 10 * skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	case RL_HAMMER_OF_GOD:
-		sc_start(src,bl,SC_STUN,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 	case SU_SCRATCH:
 		sc_start2(src, bl, SC_BLEEDING, skill_lv * 10 + 70, skill_lv, src->id, skill_get_time(skill_id, skill_lv));
@@ -4157,16 +4154,6 @@ int skill_area_sub_count (struct block_list *src, struct block_list *target, uin
 						return 1;
 				}
 			}
-		case RL_D_TAIL:
-			if (src->type != BL_PC)
-				return 0;
-			{
-				struct status_change *tsc = status_get_sc(target);
-				// Only counts marked target with SC_C_MARKER
-				if (!tsc || !tsc->data[SC_C_MARKER])
-					return 0;
-			}
-			break;
 	}
 	return 1;
 }
@@ -5154,7 +5141,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case RL_FIREDANCE:
 	case RL_S_STORM:
 	case RL_R_TRIP:
-	case RL_HAMMER_OF_GOD:
 	case MH_XENO_SLASHER:
 	case NC_ARMSCANNON:
 	case SU_SCRATCH:
@@ -6222,11 +6208,31 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case RL_QD_SHOT:
-	case RL_D_TAIL:
-		if (!sd || (tsc && tsc->data[SC_C_MARKER])) {
-			if (skill_id == RL_QD_SHOT && skill_area_temp[1] == bl->id )
-				break;
+		if (skill_area_temp[1] == bl->id)
+			break;
+		if (flag&1 && tsc && tsc->data[SC_C_MARKER])
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION);
+		break;
+	case RL_D_TAIL:
+	case RL_HAMMER_OF_GOD:
+		if (flag&1)
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION);
+		else {
+			if (sd && tsc && tsc->data[SC_C_MARKER]) {
+				int i;
+
+				ARR_FIND(0, MAX_SKILL_CRIMSON_MARKER, i, sd->c_marker[i] == bl->id);
+
+				if (i < MAX_SKILL_CRIMSON_MARKER)
+					flag |= 8;
+			}
+
+			if (skill_id == RL_HAMMER_OF_GOD)
+				clif_skill_poseffect(src, skill_id, 1, bl->x, bl->y, gettick());
+			else
+				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		}
 		break;
 
@@ -11437,9 +11443,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		}
 		break;
-	case RL_D_TAIL:
-		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-		break;
 	case RL_QD_SHOT:
 		if (sd) {
 			skill_area_temp[1] = bl->id;
@@ -11745,20 +11748,6 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 					return USESKILL_FAIL_MAX;
 			}
 			break;
-		case RL_D_TAIL:
-			if (src) {
-				int count = 0;
-
-				if (battle_config.skill_wall_check)
-					count = map_foreachinshootrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, gettick(), BCT_ENEMY, skill_area_sub_count);
-				else
-					count = map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, gettick(), BCT_ENEMY, skill_area_sub_count);
-
-				if (!count) {
-					return USESKILL_FAIL_LEVEL;
-				}
-			}
-			break;
 	}
 
 	if (inf&INF_ATTACK_SKILL ||
@@ -11915,22 +11904,6 @@ TIMER_FUNC(skill_castend_id){
 			case SU_CN_POWDERING:
 				ud->skillx = target->x;
 				ud->skilly = target->y;
-				ud->skilltimer = tid;
-				return skill_castend_pos(tid,tick,id,data);
-			case RL_HAMMER_OF_GOD:
-				if ((sc = status_get_sc(target)) && sc->data[SC_C_MARKER]) {
-					ud->skillx = target->x;
-					ud->skilly = target->y;
-				} else {
-					int splash = skill_get_splash(ud->skill_id, ud->skill_lv); // !TODO: What's the random AoE size?
-
-					ud->skillx = target->x + splash;
-					ud->skilly = target->y + splash;
-					if (!map_random_dir(target, &ud->skillx, &ud->skilly)) {
-						ud->skillx = target->x;
-						ud->skilly = target->y;
-					}
-				}
 				ud->skilltimer = tid;
 				return skill_castend_pos(tid,tick,id,data);
 		}
@@ -16694,6 +16667,7 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 #ifdef RENEWAL
 		switch(skill_id) { // 2016-10-26 kRO update made these skills require an extra ammo to cast
 			case WM_SEVERE_RAINSTORM:
+			case RL_FIREDANCE:
 			case RL_R_TRIP:
 			case RL_FIRE_RAIN:
 				extra_ammo = 1;

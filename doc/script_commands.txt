@@ -958,13 +958,6 @@ mapflag for it to work is because, otherwise, it'd be server-wide and trigger
 every time a player would change maps. Imagine the server load with 1,000 players
 (oh the pain...)
 
-OnPCStatCalcEvent:
-
-This special label triggers when a player's stats are recalculated, such as when
-changing stats, equipment, or maps, as well as when logging in, leveling up, and
-mounting a job mount. This can be used to grant additional item bonuses to certain
-player groups, for instance.
-
 OnWhisperGlobal:
 
 This special label triggers when a player whispers the NPC, and will run with the
