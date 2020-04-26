@@ -723,7 +723,7 @@ bat_a02,45,19,3	script	Croix Vintenar#a02_b	415,{
 			callfunc "F_BG_Badge",1,"Croix","Tierra";
 	}
 	bg_leave;
-	if (!getbattleflag("feature.bgqueue"))
+	if (getbattleflag("feature.bgqueue"))
 		warp "bat_room",154,150;
 	end;
 

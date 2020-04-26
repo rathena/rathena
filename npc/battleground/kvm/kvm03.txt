@@ -374,8 +374,8 @@ bat_c03,51,130,5	script	KVM Officer#KVM03A	419,{
 		}
 		bg_leave;
 		set Bat_Team,0;
-		if (!getbattleflag("feature.bgqueue"))
-			warp "bat_room",154,150;
+	if (!getbattleflag("feature.bgqueue"))
+		warp "bat_room",154,150;
 	}
 	end;
 }

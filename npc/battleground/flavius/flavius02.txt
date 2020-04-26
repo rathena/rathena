@@ -539,8 +539,7 @@ bat_b02,10,294,3	script	Vintenar#bat_b02_aover	419,{
 		close;
 	}
 	bg_leave;
-	if (!getbattleflag("feature.bgqueue"))
-		warp "bat_room",154,150;
+	warp "bat_room",154,150;
 	end;
 
 OnInit:
@@ -564,8 +563,7 @@ bat_b02,389,14,3	script	Vintenar#bat_b02_bover	415,{
 		close;
 	}
 	bg_leave;
-	if (!getbattleflag("feature.bgqueue"))
-		warp "bat_room",154,150;
+	warp "bat_room",154,150;
 	end;
 
 OnInit:

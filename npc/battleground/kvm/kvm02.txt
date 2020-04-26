@@ -375,8 +375,8 @@ bat_c02,51,130,5	script	KVM Officer#KVM02A	419,{
 		set Bat_Team,0;
 		if (!getbattleflag("feature.bgqueue"))
 			warp "bat_room",154,150;
+		end;
 	}
-	end;
 }
 bat_c02,148,53,1	duplicate(KVM Officer#KVM02A)	KVM Officer#KVM02B	415
 
