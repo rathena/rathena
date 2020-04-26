@@ -693,7 +693,7 @@
 // 2-Handed Axes
 //===================================================================
 1333,Golden_Wrench,Golden Wrench,5,,,5500,220,,1,2,0x00000400,56,2,2,4,170,1,6,{ .@r = getrefine(); bonus bUnbreakableWeapon; bonus2 bAddClass,Class_all,5; bonus bBaseAtk,4*.@r; if (.@r>=11) .@val = 35; else if (.@r>=9) .@val = 20; bonus2 bSkillAtk,"NC_AXEBOOMERANG",.@val; bonus2 bSkillAtk,"NC_POWERSWING",.@val; },{},{}
-1336,Guardian_Knight_Axe,Guardian Knight Axe,,0,,1500,210,,1,2,0xFFFFFBFF,56,2,2,4,170,1,6,{ bonus bUnbreakableWeapon; bonus2 bAddClass,Class_All,5; .@r = getrefine(); bonus bLongAtkRate,.@r; if(.@r >= 9){ bonus2 bSkillAtk,"NC_POWERSWING",20; } if(.@r >= 11){ bonus2 bAddRace,RC_Undead,20; bonus2 bAddRace,RC_Angel,20; } },{},{}
+1336,Guardian_Knight_Axe,Guardian Knight Axe,5,0,,1500,210,,1,2,0xFFFFFBFF,56,2,2,4,170,1,6,{ bonus bUnbreakableWeapon; bonus2 bAddClass,Class_All,5; .@r = getrefine(); bonus bLongAtkRate,.@r; if(.@r >= 9){ bonus2 bSkillAtk,"NC_POWERSWING",20; } if(.@r >= 11){ bonus2 bAddRace,RC_Undead,20; bonus2 bAddRace,RC_Angel,20; } },{},{}
 1351,Battle_Axe,Battle Axe,5,5400,,1500,80,,1,3,0x000444A2,63,2,34,1,3,1,7,{},{},{}
 1352,Battle_Axe_,Battle Axe,5,5400,,1500,80,,1,4,0x000444A2,63,2,34,1,3,1,7,{},{},{}
 1353,Battle_Axe__,Battle Axe,5,5400,,1500,80,,1,0,0x000444A2,63,2,34,1,3,1,7,{},{},{}
