@@ -256,11 +256,11 @@ S_CheckLevel:
 	close;
 
 OnInit:
-	setarray .Gramps_MapName$, "Payon Dungeon", "Geffen Dungeon", "Moscovia Dungeon";
-	setarray .Gramps_MapWarp$, "epay_dun00l", "egef_dun03m", "emos_dun02h";
-	setarray .Gramps_MapX, 22, 138, 156;
-	setarray .Gramps_MapY, 181, 117, 47;
-	setarray .Gramps_Turn, 60602, 1102, 60508, 1617, 60594, 1772, 60502, 1208, 60470, 1716, 60485, 1653;
+	setarray .Gramps_MapName$, "Payon Dungeon", "Geffen Dungeon", "Abyss Lake Dungeon";
+	setarray .Gramps_MapWarp$, "epay_dun00l", "egef_dun03m", "eabyss_03h";
+	setarray .Gramps_MapX, 22, 138, 115;
+	setarray .Gramps_MapY, 181, 117, 28;
+	setarray .Gramps_Turn, 60537, 1215, 60589, 1315, 60490, 1736, 60849, 1999, 60586, 2137, 60845, 1309;
 	setarray .monster_id,  1193,  1106,  1410,  1417,  1370,  1374,  2083,  2084,  1778,
 			 1777,  1752,  1753,  2085,  2086,  1402,  1403,  1504,  1505,  1713,  1716,
 			 1614,  1615,  1714,  1717,  1657,  1654,  1652,  1655,  1656,  1653,  1316,
@@ -308,22 +308,22 @@ OnInit:
 
 epay_dun00l,22,186,3	duplicate(Return to Eden#template)	Return to Eden#paydun00l	707
 egef_dun03m,136,117,3	duplicate(Return to Eden#template)	Return to Eden#gefdun03m	707
-emos_dun02h,155,44,3	duplicate(Return to Eden#template)	Return to Eden#mosdun02h	707
+eabyss_03h,113,25,3	duplicate(Return to Eden#template)	Return to Eden#abyss_03h	707
 
 //==================================================
 // 70 ~ 100
 //==================================================
-epay_dun00l,0,0,0,0	monster	Bathory	1102,50,0,0,0
-epay_dun00l,0,0,0,0	monster	Waste Stove	1617,50,0,0,0
+epay_dun00l,0,0,0,0	monster	Stem Worm	1215,50,0,0,0
+epay_dun00l,0,0,0,0	monster	Assaulter	1315,50,0,0,0
 
 //==================================================
 // 101 ~ 125
 //==================================================
-egef_dun03m,0,0,0,0	monster	Isilla	1772,50,0,0,0
-egef_dun03m,0,0,0,0	monster	Wanderman	1208,50,0,0,0
+egef_dun03m,0,0,0,0	monster	Aliot	1736,50,0,0,0
+egef_dun03m,0,0,0,0	monster	Centipede Larva	1999,50,0,0,0
 
 //==================================================
 // 126 ~ 150
 //==================================================
-emos_dun02h,0,0,0,0	monster	Acidus	1716,50,0,0,0
-emos_dun02h,0,0,0,0	monster	Whikebain	1653,50,0,0,0
+eabyss_03h,0,0,0,0	monster	Miming	2137,50,0,0,0
+eabyss_03h,0,0,0,0	monster	Gajomart	1309,50,0,0,0
