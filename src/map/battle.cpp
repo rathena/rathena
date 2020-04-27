@@ -2392,7 +2392,7 @@ bool is_infinite_defense(struct block_list *target, int flag)
 	if(target->type == BL_SKILL) {
 		TBL_SKILL *su = ((TBL_SKILL*)target);
 
-		if (su && su->group && (su->group->skill_id == WM_REVERBERATION || su->group->skill_id == NPC_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD))
+		if (su && su->group && (su->group->skill_id == NPC_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD))
 			return true;
 	}
 
@@ -2947,11 +2947,6 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 		case LG_HESPERUSLIT:
 			if (sc && sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 4)
 				element = ELE_HOLY;
-			break;
-		case WM_REVERBERATION:
-		case WM_REVERBERATION_MAGIC:
-			if (sd)
-				element = sd->bonus.arrow_ele;
 			break;
 		case SJ_PROMINENCEKICK:
  				element = ELE_FIRE;
@@ -5967,6 +5962,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			if (mflag&ELE_DARK)
 				s_ele = ELE_DARK;
 			break;
+		case WM_REVERBERATION_MAGIC:
+			if (sd)
+				s_ele = sd->bonus.arrow_ele;
+			break;
 		case SO_PSYCHIC_WAVE:
 			if( sc && sc->count ) {
 				if( sc->data[SC_HEATER_OPTION] )
@@ -8042,7 +8041,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			if( !su || !su->group)
 				return 0;
 			if( skill_get_inf2(su->group->skill_id, INF2_ISTRAP) && su->group->unit_id != UNT_USED_TRAPS) {
-				if (!skill_id || su->group->skill_id == WM_REVERBERATION || su->group->skill_id == NPC_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD) {
+				if (!skill_id || su->group->skill_id == NPC_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD) {
 					;
 				}
 				else if (skill_get_inf2(skill_id, INF2_TARGETTRAP)) { // Only a few skills can target traps

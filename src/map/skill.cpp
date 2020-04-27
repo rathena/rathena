@@ -5995,12 +5995,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case WM_REVERBERATION:
-		if (flag & 1) {
+		if (flag & 1)
 			skill_attack(skill_get_type(WM_REVERBERATION_MAGIC), src, src, bl, WM_REVERBERATION_MAGIC, skill_lv, tick, flag);
-			battle_consume_ammo(sd, skill_id, skill_lv); // Consume here since Magic/Misc attacks reset arrow_atk
-		} else {
+		else {
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+			battle_consume_ammo(sd, skill_id, skill_lv); // Consume here since Magic/Misc attacks reset arrow_atk
 		}
 		break;
 
