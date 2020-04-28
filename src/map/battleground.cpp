@@ -986,6 +986,8 @@ void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vec
 			// If one team has lesser members try to balance (on an active BG)
 			if (r && queue->teama_members.size() < queue->teamb_members.size())
 				team = &queue->teama_members;
+			else if (!r && queue->teamb_members.size() < queue->teama_members.size())
+				team = &queue->teamb_members;
 		} else {
 			// If the designated team is full, put the player into the other team
 			if (team->size() + list.size() > bg->required_players)
