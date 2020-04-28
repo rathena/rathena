@@ -3902,7 +3902,9 @@ static int skill_check_unit_range_sub(struct block_list *bl, va_list ap)
 		case HT_BLASTMINE:
 		case HT_CLAYMORETRAP:
 		case HT_TALKIEBOX:
+#ifndef RENEWAL
 		case HP_BASILICA:
+#endif
 		case RA_ELECTRICSHOCKER:
 		case RA_CLUSTERBOMB:
 		case RA_MAGENTATRAP:
@@ -12375,6 +12377,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case WE_CALLPARENT:
 	case WE_CALLBABY:
 	case SA_LANDPROTECTOR:
+#ifndef RENEWAL
 	case BD_LULLABY:
 	case BD_RICHMANKIM:
 	case BD_ETERNALCHAOS:
@@ -12393,6 +12396,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case DC_DONTFORGETME:
 	case DC_FORTUNEKISS:
 	case DC_SERVICEFORYOU:
+#endif
 	case CG_MOONLIT:
 	case GS_DESPERADO:
 	case NJ_KAENSIN:
