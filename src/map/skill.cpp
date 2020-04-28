@@ -7529,6 +7529,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SJ_STAREMPEROR:
 	case SJ_FALLINGSTAR_ATK:
 	{
+		struct status_change *sc = status_get_sc(src);
 		int starget = BL_CHAR|BL_SKILL;
 
 		if (skill_id == SR_HOWLINGOFLION)
