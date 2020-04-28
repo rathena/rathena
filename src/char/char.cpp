@@ -1708,6 +1708,10 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.bonus_script_db, char_id) )
 		Sql_ShowDebug(sql_handle);
 
+	/* Quest Data */
+	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.quest_db, char_id))
+		Sql_ShowDebug(sql_handle);
+
 	/* Achievement Data */
 	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.achievement_table, char_id))
 		Sql_ShowDebug(sql_handle);
@@ -2336,12 +2340,12 @@ bool char_checkdb(void){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-	//checking global_acc_reg_str_table
+	//checking acc_reg_str_table
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`key`,`index`,`value` from `%s` LIMIT 1;", schema_config.acc_reg_str_table) ) {
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-	//checking global_acc_reg_num_table
+	//checking acc_reg_num_table
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`key`,`index`,`value` from `%s` LIMIT 1;", schema_config.acc_reg_num_table) ) {
 		Sql_ShowDebug(sql_handle);
 		return false;

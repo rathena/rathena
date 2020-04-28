@@ -748,7 +748,7 @@ struct map_data {
 	int mob_delete_timer;	// Timer ID for map_removemobs_timer [Skotlex]
 
 	// Instance Variables
-	unsigned short instance_id;
+	int instance_id;
 	int instance_src_map;
 
 	/* rAthena Local Chat */
@@ -1035,7 +1035,7 @@ void map_clearflooritem(struct block_list* bl);
 int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false);
 
 // instances
-int map_addinstancemap(const char *name, unsigned short instance_id);
+int map_addinstancemap(int src_m, int instance_id);
 int map_delinstancemap(int m);
 void map_data_copyall(void);
 void map_data_copy(struct map_data *dst_map, struct map_data *src_map);
@@ -1123,7 +1123,7 @@ void map_removemobs(int16 m); // [Wizputer]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 
-void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster);
+void map_skill_damage_add(struct map_data *m, uint16 skill_id, union u_mapflag_args *args);
 void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per);
 
 enum e_mapflag map_getmapflag_by_name(char* name);
