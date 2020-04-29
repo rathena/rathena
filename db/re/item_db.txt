@@ -9743,7 +9743,7 @@
 18536,Foxtail,Foxtail,4,20,,100,,0,,0,0xFFFFFFFF,63,2,1,,0,0,711,{ bonus bMatk,10; bonus bFixedCast,-100; },{},{}
 18537,Malangdo_Hat,Malangdo Hat,4,20,,100,,5,,1,0xFFFFFFFF,63,2,256,,0,1,726,{ bonus bFlee,6; },{},{}
 18538,Devil_Whisper,Spirit Whispers,4,20,,300,,3,,0,0xFFFFFFFF,63,2,512,,0,0,712,{ bonus bUnbreakableHelm; bonus bMdef,3; bonus2 bSubRace,RC_Angel,1; bonus2 bSubRace,RC_Demon,1; bonus3 bAddMonsterDropItem,12020,RC_Angel,400; bonus3 bAddMonsterDropItem,523,RC_Demon,400; },{},{}
-18539,Skull_Cap,Skull Cap,4,40,,200,,5,,1,0xFFFFFFFF,63,2,256,,10,1,713,{ bonus bMatkRate,2; .@r = getrefine(); if(.@r >= 5) { bonus bMatkRate,3; } if(.@r >= 7) { bonus bMatkRate,3; } },{},{}
+18539,Skull_Cap,Skull Cap,4,40,,200,,5,,1,0xFFFFFFFF,63,2,256,,10,1,713,{ .@rate = 2; .@r = getrefine(); if(.@r >= 5) .@rate += 3; if(.@r >= 7) .@rate += 3; bonus bMatkRate, .@rate; },{},{}
 18540,Demon_Mask,Demon Mask,4,20,,1000,,3,,0,0xFFFFFFFF,63,2,513,,10,0,714,{ bonus2 bSPLossRate,1,2000; bonus bAspdRate,1; },{},{}
 18541,Little_Feather_Hat,Little Feather Hat,4,20,,500,,1,,1,0xFFFFFFFF,63,2,256,,30,1,715,{ bonus bDex,2; bonus bCritAtkRate,10; },{},{}
 18542,Benevolent_Guardian,Benevolent Guardian,4,20,,500,,10,,1,0xFFFFFFFF,63,2,768,,10,1,716,{ bonus bHealPower2,5; bonus bAddItemHealRate,5; bonus bHealPower,(getrefine()>6)?5:2; },{},{}
