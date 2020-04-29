@@ -7519,7 +7519,17 @@ Body:
           Amount: 24
         - Level: 5
           Amount: 28
-      SpiritSphereCost: 1
+      SpiritSphereCost:
+        - Level: 1
+          Amount: 1
+        - Level: 2
+          Amount: 2
+        - Level: 3
+          Amount: 3
+        - Level: 4
+          Amount: 4
+        - Level: 5
+          Amount: 5
   - Id: 268
     Name: MO_STEELBODY
     Description: Mental Strength
