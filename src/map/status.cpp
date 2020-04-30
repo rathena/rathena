@@ -4586,7 +4586,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->bonus.crit_atk_rate += 2 * sc->data[SC_FORTUNE]->val1;
 #endif
 		if (sc->data[SC_PYREXIA] && sc->data[SC_PYREXIA]->val3 == 0)
-			sd->bonus.crit_atk_rate += sc->data[SC_PYREXIA]->val2 / 100;
+			sd->bonus.crit_atk_rate += sc->data[SC_PYREXIA]->val2;
 	}
 	status_cpy(&sd->battle_status, base_status);
 
