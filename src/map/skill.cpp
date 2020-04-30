@@ -2969,7 +2969,6 @@ int skill_is_combo(uint16 skill_id) {
 		case TK_COUNTER:
 		case TK_JUMPKICK:
 		case HT_POWER:
-		case GC_WEAPONCRUSH:
 		case SR_DRAGONCOMBO:
 			return 1;
 		case SR_FALLENEMPIRE:
@@ -4859,6 +4858,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NC_POWERSWING:
 	case NC_MAGMA_ERUPTION:
 	case GC_CROSSIMPACT:
+	case GC_WEAPONCRUSH:
 	case GC_VENOMPRESSURE:
 	case SC_TRIANGLESHOT:
 	case SC_FEINTBOMB:
@@ -5701,13 +5701,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			}
 
 		}
-		break;
-
-	case GC_WEAPONCRUSH:
-		if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == GC_WEAPONBLOCKING )
-			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		else if( sd )
-			clif_skill_fail(sd,skill_id,USESKILL_FAIL_GC_WEAPONBLOCKING,0);
 		break;
 
 	case GC_CROSSRIPPERSLASHER:
@@ -11502,11 +11495,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			// Main target always receives damage
 			clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_LEVEL);
-		}
-		else {
+		} else {
 			clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
 			map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		}
+		status_change_end(src, SC_QD_SHOT_READY, INVALID_TIMER); // End here to prevent spamming of the skill onto the target.
 		skill_area_temp[0] = 0;
 		skill_area_temp[1] = 0;
 		break;
@@ -15507,54 +15500,47 @@ int skill_isammotype(struct map_session_data *sd, unsigned short skill_id)
 * @return True if condition is met, False otherwise
 **/
 static bool skill_check_condition_sc_required(struct map_session_data *sd, unsigned short skill_id, struct s_skill_condition *require) {
-	struct status_change *sc = NULL;
-
-	if (require->status.empty())
+	if (require == nullptr || require->status.empty())
 		return true;
 
 	nullpo_ret(sd);
 
-	if (!require)
-		return false;
+	status_change *sc = &sd->sc;
 
-	if (!(sc = &sd->sc)) {
+	if (sc == nullptr) {
 		clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 		return false;
 	}
 
-	/* May has multiple requirements */
+	// May have multiple requirements
 	for (const auto &reqStatus : require->status) {
 		if (reqStatus == SC_NONE)
 			continue;
 
+		useskill_fail_cause cause;
+
 		switch (reqStatus) {
-			/* Official fail msg */
+			// Official fail message
 			case SC_PUSH_CART:
-				if (!sc->data[SC_PUSH_CART]) {
-					clif_skill_fail(sd, skill_id, USESKILL_FAIL_CART, 0);
-					return false;
-				}
+				cause = USESKILL_FAIL_CART;
 				break;
 			case SC_POISONINGWEAPON:
-				if (!sc->data[SC_POISONINGWEAPON]) {
-					clif_skill_fail(sd, skill_id, USESKILL_FAIL_GC_POISONINGWEAPON, 0);
-					return false;
-				}
+				cause = USESKILL_FAIL_GC_POISONINGWEAPON;
 				break;
-			case GC_COUNTERSLASH:
-				if (!sc->data[SC_WEAPONBLOCK_ON]) {
-					clif_skill_fail(sd, skill_id, USESKILL_FAIL_GC_WEAPONBLOCKING, 0);
-					return false;
-				}
+			case SC_WEAPONBLOCK_ON:
+				cause = USESKILL_FAIL_GC_WEAPONBLOCKING;
 				break;
 			default:
-				if (!sc->data[reqStatus]) {
-					clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
-					return false;
-				}
+				cause = USESKILL_FAIL_LEVEL;
 				break;
 		}
+
+		if (!sc->data[reqStatus]) {
+			clif_skill_fail(sd, skill_id, cause, 0);
+			return false;
+		}
 	}
+
 	return true;
 }
 
@@ -16104,12 +16090,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		case GC_HALLUCINATIONWALK:
 			if( sc && (sc->data[SC_HALLUCINATIONWALK] || sc->data[SC_HALLUCINATIONWALK_POSTDELAY]) ) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				return false;
-			}
-			break;
-		case GC_WEAPONCRUSH:
-			if( !(sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == GC_WEAPONBLOCKING) ) {
-				clif_skill_fail(sd, skill_id, USESKILL_FAIL_GC_WEAPONBLOCKING, 0);
 				return false;
 			}
 			break;

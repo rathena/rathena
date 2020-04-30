@@ -19339,6 +19339,8 @@ Body:
     FixedCastTime: -1
     Requires:
       SpCost: 20
+      Status:
+        Weaponblock_On: true
   - Id: 2031
     Name: GC_VENOMPRESSURE
     Description: Venom Pressure
