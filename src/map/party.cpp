@@ -1000,7 +1000,7 @@ int party_skill_check(struct map_session_data *sd, int party_id, uint16 skill_id
 				break;
 			case MO_COMBOFINISH: //Increase Counter rate of Star Gladiators
 				if((p_sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR
-					&& sd->sc.data[SC_READYCOUNTER]
+					&& p_sd->sc.data[SC_READYCOUNTER]
 					&& pc_checkskill(p_sd,SG_FRIEND)) {
 					sc_start4(&p_sd->bl,&p_sd->bl,SC_SKILLRATE_UP,100,TK_COUNTER,
 						50+50*pc_checkskill(p_sd,SG_FRIEND), //+100/150/200% rate
@@ -1089,7 +1089,7 @@ void party_exp_share(struct party_data* p, struct block_list* src, unsigned int 
 
 	// count the number of players eligible for exp sharing
 	for (i = c = 0; i < MAX_PARTY; i++) {
-		if( (sd[c] = p->data[i].sd) == NULL || sd[c]->bl.m != src->m || pc_isdead(sd[c]) || (battle_config.idle_no_share && pc_isidle(sd[c])) )
+		if( (sd[c] = p->data[i].sd) == NULL || sd[c]->bl.m != src->m || pc_isdead(sd[c]) || (battle_config.idle_no_share && pc_isidle_party(sd[c])) )
 			continue;
 		c++;
 	}
@@ -1151,7 +1151,7 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 				if (i >= MAX_PARTY)
 					i = 0;	// reset counter to 1st person in party so it'll stop when it reaches "itemc"
 
-				if( (psd = p->data[i].sd) == NULL || sd->bl.m != psd->bl.m || pc_isdead(psd) || (battle_config.idle_no_share && pc_isidle(psd)) )
+				if( (psd = p->data[i].sd) == NULL || sd->bl.m != psd->bl.m || pc_isdead(psd) || (battle_config.idle_no_share && pc_isidle_party(psd)) )
 					continue;
 
 				if (pc_additem(psd,item,item->amount,LOG_TYPE_PICKDROP_PLAYER))
@@ -1168,7 +1168,7 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 
 			//Collect pick candidates
 			for (i = 0; i < MAX_PARTY; i++) {
-				if( (psd[count] = p->data[i].sd) == NULL || psd[count]->bl.m != sd->bl.m || pc_isdead(psd[count]) || (battle_config.idle_no_share && pc_isidle(psd[count])) )
+				if( (psd[count] = p->data[i].sd) == NULL || psd[count]->bl.m != sd->bl.m || pc_isdead(psd[count]) || (battle_config.idle_no_share && pc_isidle_party(psd[count])) )
 					continue;
 
 				count++;
@@ -1222,7 +1222,7 @@ int party_sub_count(struct block_list *bl, va_list ap)
 	if (sd->state.autotrade)
 		return 0;
 
-	if (battle_config.idle_no_share && pc_isidle(sd))
+	if (battle_config.idle_no_share && pc_isidle_party(sd))
 		return 0;
 
 	return 1;
@@ -1263,7 +1263,7 @@ int party_sub_count_banding(struct block_list *bl, va_list ap)
 	if (sd->state.autotrade)
 		return 0;
 
-	if (battle_config.idle_no_share && pc_isidle(sd))
+	if (battle_config.idle_no_share && pc_isidle_party(sd))
 		return 0;
 
 	if ((sd->class_&MAPID_THIRDMASK) != MAPID_ROYAL_GUARD)

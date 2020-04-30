@@ -60,7 +60,7 @@
 in_hunter,99,99,4	script	Hunter Info#hnt::HntNotice	727,{
 	mes "============ Notice ============";
 	mes "We would like to inform that the Hunter Job Change Location";
-	mes "has been moved to ^ff0000Hugel^000000 in the Schwaltzvalt Republic.";
+	mes "has been moved to ^ff0000Hugel^000000 in the Schwarzwald Republic.";
 	next;
 	mes "You can now use the Hugel airline, so please use the airship to visit Hugel.";
 	next;
