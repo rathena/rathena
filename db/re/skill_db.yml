@@ -29405,6 +29405,12 @@ Body:
           Amount: 55
         - Level: 7
           Amount: 60
+        - Level: 5
+          Amount: 65
+        - Level: 6
+          Amount: 70
+        - Level: 7
+          Amount: 75
       State: Moonstance
   - Id: 2577
     Name: SJ_LIGHTOFSTAR
@@ -29636,6 +29642,12 @@ Body:
           Amount: 65
         - Level: 7
           Amount: 70
+        - Level: 8
+          Amount: 75
+        - Level: 9
+          Amount: 80
+        - Level: 10
+          Amount: 85
       State: Starstance
   - Id: 2585
     Name: SJ_GRAVITYCONTROL
@@ -29812,6 +29824,12 @@ Body:
           Amount: 49
         - Level: 7
           Amount: 52
+        - Level: 8
+          Amount: 55
+        - Level: 9
+          Amount: 58
+        - Level: 10
+          Amount: 61
       State: Sunstance
   - Id: 2593
     Name: SJ_PROMINENCEKICK
@@ -30048,6 +30066,16 @@ Body:
           Amount: 65
         - Level: 5
           Amount: 70
+        - Level: 6
+          Amount: 75
+        - Level: 7
+          Amount: 80
+        - Level: 8
+          Amount: 85
+        - Level: 9
+          Amount: 90
+        - Level: 10
+          Amount: 95
   - Id: 2601
     Name: SP_SOULCURSE
     Description: Soul Curse
@@ -30207,6 +30235,12 @@ Body:
         Area: 2
       - Level: 7
         Area: 3
+      - Level: 8
+        Area: 3
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 4
     CastCancel: true
     CastTime: 500
     AfterCastActDelay: 500
@@ -30229,6 +30263,12 @@ Body:
           Amount: 86
         - Level: 7
           Amount: 90
+        - Level: 8
+          Amount: 94
+        - Level: 9
+          Amount: 98
+        - Level: 10
+          Amount: 102
       SpiritSphereCost:
         - Level: 1
           Amount: 2
