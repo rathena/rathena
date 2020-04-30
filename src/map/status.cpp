@@ -62,7 +62,6 @@ static struct status_data dummy_status;
 short current_equip_item_index; /// Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
 unsigned int current_equip_combo_pos; /// For combo items we need to save the position of all involved items here
 int current_equip_card_id; /// To prevent card-stacking (from jA) [Skotlex]
-bool running_npc_stat_calc_event; /// Indicate if OnPCStatCalcEvent is running.
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
 short current_equip_opt_index; /// Contains random option index of an equipped item. [Secret]
 
@@ -1018,7 +1017,6 @@ void initChangeTables(void)
 
 	/* Rebellion */
 	add_sc( RL_MASS_SPIRAL		, SC_BLEEDING );
-	add_sc( RL_HAMMER_OF_GOD	, SC_STUN );
 	set_sc( RL_H_MINE		, SC_H_MINE		, EFST_H_MINE		, SCB_NONE);
 	set_sc( RL_B_TRAP		, SC_B_TRAP		, EFST_B_TRAP		, SCB_SPEED );
 	set_sc( RL_E_CHAIN		, SC_E_CHAIN	, EFST_E_CHAIN	, SCB_NONE );
@@ -1151,6 +1149,8 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_SPL_MATK] = EFST_SPL_MATK;
 	StatusIconChangeTable[SC_ATKPOTION] = EFST_PLUSATTACKPOWER;
 	StatusIconChangeTable[SC_MATKPOTION] = EFST_PLUSMAGICPOWER;
+	StatusIconChangeTable[SC_INCREASE_MAXHP] = EFST_ATKER_ASPD;
+	StatusIconChangeTable[SC_INCREASE_MAXSP] = EFST_ATKER_MOVESPEED;
 
 	/* Cash Items */
 	StatusIconChangeTable[SC_FOOD_STR_CASH] = EFST_FOOD_STR_CASH;
@@ -1441,6 +1441,8 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_GEFFEN_MAGIC1] |= SCB_ALL;
 	StatusChangeFlagTable[SC_GEFFEN_MAGIC2] |= SCB_ALL;
 	StatusChangeFlagTable[SC_GEFFEN_MAGIC3] |= SCB_ALL;
+	StatusChangeFlagTable[SC_INCREASE_MAXHP] |= SCB_MAXHP|SCB_REGEN;
+	StatusChangeFlagTable[SC_INCREASE_MAXSP] |= SCB_MAXSP|SCB_REGEN;
 
 	/* Cash Items */
 	StatusChangeFlagTable[SC_FOOD_STR_CASH] |= SCB_STR;
@@ -3362,13 +3364,6 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 	} else if (type == STATUS_BONUS_RATE) {
 		struct status_change *sc = status_get_sc(bl);
 
-		//Only for BL_PC
-		if (bl->type == BL_PC) {
-			struct map_session_data *sd = map_id2sd(bl->id);
-			bonus += sd->hprate;
-			bonus -= 100; //Default hprate is 100, so it should be add 0%
-		}
-
 		//Bonus by SC
 		if (sc) {
 			//Increasing
@@ -3394,8 +3389,6 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += (2 + sc->data[SC_RAISINGDRAGON]->val1);
 			if(sc->data[SC_GT_REVITALIZE])
 				bonus += sc->data[SC_GT_REVITALIZE]->val2;
-			if(sc->data[SC_MUSTLE_M])
-				bonus += sc->data[SC_MUSTLE_M]->val1;
 			if(sc->data[SC_ANGRIFFS_MODUS])
 				bonus += (5 * sc->data[SC_ANGRIFFS_MODUS]->val1);
 			if(sc->data[SC_PETROLOGY_OPTION])
@@ -3422,8 +3415,6 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus -= sc->data[SC_BEYONDOFWARCRY]->val4;
 			if(sc->data[SC__WEAKNESS])
 				bonus -= sc->data[SC__WEAKNESS]->val2;
-			if(sc->data[SC_MYSTERIOUS_POWDER])
-				bonus -= sc->data[SC_MYSTERIOUS_POWDER]->val1;
 			if(sc->data[SC_EQC])
 				bonus -= sc->data[SC_EQC]->val3;
 		}
@@ -3432,6 +3423,40 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 	}
 
 	return min(bonus,INT_MAX);
+}
+
+/**
+* HP bonus rate from equipment
+*/
+static int status_get_hpbonus_equip(TBL_PC *sd) {
+	int bonus = 0;
+
+	bonus += sd->hprate;
+
+	return bonus -= 100; //Default hprate is 100, so it should be add 0%
+}
+
+/**
+* HP bonus rate from usable items
+*/
+static int status_get_hpbonus_item(block_list *bl) {
+	int bonus = 0;
+
+	struct status_change *sc = status_get_sc(bl);
+
+	//Bonus by SC
+	if (sc) {
+		if (sc->data[SC_INCREASE_MAXHP])
+			bonus += sc->data[SC_INCREASE_MAXHP]->val1;
+		if (sc->data[SC_MUSTLE_M])
+			bonus += sc->data[SC_MUSTLE_M]->val1;
+
+		if (sc->data[SC_MYSTERIOUS_POWDER])
+			bonus -= sc->data[SC_MYSTERIOUS_POWDER]->val1;
+	}
+
+	// Max rate reduce is -100%
+	return cap_value(bonus, -100, INT_MAX);
 }
 
 /**
@@ -3500,9 +3525,6 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 			struct map_session_data *sd = map_id2sd(bl->id);
 			uint8 i;
 
-			bonus += sd->sprate;
-			bonus -= 100; //Default sprate is 100, so it should be add 0%
-
 			if((i = pc_checkskill(sd,HP_MEDITATIO)) > 0)
 				bonus += i;
 			if((i = pc_checkskill(sd,HW_SOULDRAIN)) > 0)
@@ -3525,18 +3547,47 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += sc->data[SC_SERVICE4U]->val2;
 			if(sc->data[SC_MERC_SPUP])
 				bonus += sc->data[SC_MERC_SPUP]->val2;
-			if(sc->data[SC_LIFE_FORCE_F])
-				bonus += sc->data[SC_LIFE_FORCE_F]->val1;
-			if(sc->data[SC_VITATA_500])
-				bonus += sc->data[SC_VITATA_500]->val2;
-			if (sc->data[SC_ENERGY_DRINK_RESERCH])
-				bonus += sc->data[SC_ENERGY_DRINK_RESERCH]->val3;
 		}
 		// Max rate reduce is -100%
 		bonus = cap_value(bonus,-100,INT_MAX);
 	}
 
 	return min(bonus,INT_MAX);
+}
+
+/**
+* SP bonus rate from equipment
+*/
+static int status_get_spbonus_equip(TBL_PC *sd) {
+	int bonus = 0;
+
+	bonus += sd->sprate;
+
+	return bonus -= 100; //Default sprate is 100, so it should be add 0%
+}
+
+/**
+* SP bonus rate from usable items
+*/
+static int status_get_spbonus_item(block_list *bl) {
+	int bonus = 0;
+
+	struct status_change *sc = status_get_sc(bl);
+
+	//Bonus by SC
+	if (sc) {
+		if (sc->data[SC_INCREASE_MAXSP])
+			bonus += sc->data[SC_INCREASE_MAXSP]->val1;
+		if (sc->data[SC_LIFE_FORCE_F])
+			bonus += sc->data[SC_LIFE_FORCE_F]->val1;
+		if (sc->data[SC_VITATA_500])
+			bonus += sc->data[SC_VITATA_500]->val2;
+		if (sc->data[SC_ENERGY_DRINK_RESERCH])
+			bonus += sc->data[SC_ENERGY_DRINK_RESERCH]->val3;
+	}
+
+	// Max rate reduce is -100%
+	return cap_value(bonus, -100, INT_MAX);
 }
 
 /**
@@ -3558,13 +3609,21 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
 	level = umax(sd->status.base_level,1);
 
 	if (isHP) { //Calculates MaxHP
+		double equip_bonus = 0, item_bonus = 0;
 		dmax = job_info[idx].base_hp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:(pc_is_taekwon_ranker(sd))?3:1);
 		dmax += status_get_hpbonus(&sd->bl,STATUS_BONUS_FIX);
+		equip_bonus = (dmax * status_get_hpbonus_equip(sd) / 100);
+		item_bonus = (dmax * status_get_hpbonus_item(&sd->bl) / 100);
+		dmax += equip_bonus + item_bonus;
 		dmax += (int64)(dmax * status_get_hpbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
 	}
 	else { //Calculates MaxSP
+		double equip_bonus = 0, item_bonus = 0;
 		dmax = job_info[idx].base_sp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:(pc_is_taekwon_ranker(sd))?3:1);
 		dmax += status_get_spbonus(&sd->bl,STATUS_BONUS_FIX);
+		equip_bonus = (dmax * status_get_spbonus_equip(sd) / 100);
+		item_bonus = (dmax * status_get_spbonus_item(&sd->bl) / 100);
+		dmax += equip_bonus + item_bonus;
 		dmax += (int64)(dmax * status_get_spbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
 	}
 
@@ -3857,10 +3916,6 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	pc_delautobonus(sd, sd->autobonus, true);
 	pc_delautobonus(sd, sd->autobonus2, true);
 	pc_delautobonus(sd, sd->autobonus3, true);
-
-	running_npc_stat_calc_event = true;
-	npc_script_event(sd, NPCE_STATCALC);
-	running_npc_stat_calc_event = false;
 
 	// Parse equipment
 	for (i = 0; i < EQI_MAX; i++) {
@@ -4905,6 +4960,12 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 		val = 0;
 		if( (skill=pc_checkskill(sd,SM_RECOVERY)) > 0 )
 			val += skill*5 + skill*status->max_hp/500;
+
+		if (sc && sc->count) {
+			if (sc->data[SC_INCREASE_MAXHP])
+				val += val * sc->data[SC_INCREASE_MAXHP]->val2 / 100;
+		}
+
 		sregen->hp = cap_value(val, 0, SHRT_MAX);
 
 		val = 0;
@@ -4920,6 +4981,8 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 				val *= 150 / 100;
 			if (sc->data[SC_ANCILLA])
 				val += sc->data[SC_ANCILLA]->val2 / 100;
+			if (sc->data[SC_INCREASE_MAXSP])
+				val += val * sc->data[SC_INCREASE_MAXSP]->val2 / 100;
 		}
 
 		sregen->sp = cap_value(val, 0, SHRT_MAX);

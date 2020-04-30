@@ -10728,6 +10728,8 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 	if (battle_config.idletime_option&IDLE_ATCOMMAND)
 		sd->idletime = last_tick;
+	if (battle_config.hom_idle_no_share && sd->hd && battle_config.idletime_hom_option&IDLE_ATCOMMAND)
+		sd->idletime_hom = last_tick;
 
 	//Clearing these to be used once more.
 	memset(command, '\0', sizeof(command));
