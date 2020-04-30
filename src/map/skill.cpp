@@ -11408,11 +11408,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			// Main target always receives damage
 			clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_LEVEL);
-		}
-		else {
+		} else {
 			clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
 			map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		}
+		status_change_end(src, SC_QD_SHOT_READY, INVALID_TIMER); // End here to prevent spamming of the skill onto the target.
 		skill_area_temp[0] = 0;
 		skill_area_temp[1] = 0;
 		break;

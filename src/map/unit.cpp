@@ -1595,12 +1595,14 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 				if (sc && sc->data[SC_WEAPONBLOCK_ON]) {
 					if ((target = map_id2bl(sc->data[SC_WEAPONBLOCK_ON]->val1)) == nullptr)
 						return 0;
+					combo = 1;
 				}
 				break;
 			case RL_QD_SHOT:
 				if (sc && sc->data[SC_QD_SHOT_READY]) {
 					if ((target = map_id2bl(sc->data[SC_QD_SHOT_READY]->val1)) == nullptr)
 						return 0;
+					combo = 1;
 				}
 				break;
 			case WE_MALE:
