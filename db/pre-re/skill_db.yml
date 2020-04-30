@@ -19244,10 +19244,10 @@ Body:
           Amount: 70
         - Level: 4
           Amount: 80
-#  - Id: 2049 # Removed on kRO
-#    Name: AB_EUCHARISTICA
-#    Description: Eucharistica
-#    MaxLevel: 10
+  - Id: 2049 # Removed on kRO
+    Name: AB_EUCHARISTICA
+    Description: Eucharistica
+    MaxLevel: 10
   - Id: 2050
     Name: AB_RENOVATIO
     Description: Renovatio
@@ -27233,10 +27233,25 @@ Body:
       ItemCost:
         - Item: Mandragora_Flowerpot
           Amount: 1
-#  - Id: 2493 # Removed on kRO
-#    Name: GN_SLINGITEM
-#    Description: Sling Item
-#    MaxLevel: 1
+  - Id: 2493 # Removed on kRO
+    Name: GN_SLINGITEM
+    Description: Sling Item
+    MaxLevel: 1
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      NoTargetSelf: true
+    Range: 11
+    Hit: Single
+    HitCount: 1
+    Cooldown: 1000
+    FixedCastTime: -1
+    Requires:
+      SpCost: 4
+      Ammo:
+        Throwweapon: true
+      AmmoAmount: 1
   - Id: 2494
     Name: GN_CHANGEMATERIAL
     Description: Change Material
@@ -27263,10 +27278,21 @@ Body:
           Amount: 5
         - Level: 2
           Amount: 40
-#  - Id: 2496 # Removed on kRO
-#    Name: GN_MAKEBOMB
-#    Description: Create Bomb
-#    MaxLevel: 2
+  - Id: 2496 # Removed on kRO
+    Name: GN_MAKEBOMB
+    Description: Create Bomb
+    MaxLevel: 2
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 5
+        - Level: 2
+          Amount: 40
   - Id: 2497
     Name: GN_S_PHARMACY
     Description: Special Pharmacy
@@ -27278,10 +27304,17 @@ Body:
     HitCount: 1
     Requires:
       SpCost: 12
-#  - Id: 2498 # Removed on kRO
-#    Name: GN_SLINGITEM_RANGEMELEEATK
-#    Description: Sling Item Attack
-#    MaxLevel: 1
+  - Id: 2498 # Removed on kRO
+    Name: GN_SLINGITEM_RANGEMELEEATK
+    Description: Sling Item Attack
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Attack
+    Range: 11
+    Hit: Single
+    HitCount: 1
+    Requires:
+      SpCost: 1
   - Id: 2533
     Name: ALL_ODINS_RECALL
     Description: Odin's Recall

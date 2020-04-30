@@ -4525,6 +4525,16 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->magic_addrace[RC_DRAGON]+=skill;
 		sd->subrace[RC_DRAGON]+=skill;
 	}
+	if ((skill = pc_checkskill(sd, AB_EUCHARISTICA)) > 0) {
+		sd->right_weapon.addrace[RC_DEMON] += skill;
+		sd->right_weapon.addele[ELE_DARK] += skill;
+		sd->left_weapon.addrace[RC_DEMON] += skill;
+		sd->left_weapon.addele[ELE_DARK] += skill;
+		sd->magic_addrace[RC_DEMON] += skill;
+		sd->magic_addele[ELE_DARK] += skill;
+		sd->subrace[RC_DEMON] += skill;
+		sd->subele[ELE_DARK] += skill;
+	}
 
 	if(sc->count) {
 		if(sc->data[SC_CONCENTRATE]) { // Update the card-bonus data

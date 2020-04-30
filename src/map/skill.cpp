@@ -446,6 +446,8 @@ unsigned short skill_dummy2skill_id(unsigned short skill_id) {
 			return GN_CRAZYWEED;
 		case GN_HELLS_PLANT_ATK:
 			return GN_HELLS_PLANT;
+		case GN_SLINGITEM_RANGEMELEEATK:
+			return GN_SLINGITEM;
 		case RL_R_TRIP_PLUSATK:
 			return RL_R_TRIP;
 		case NPC_MAXPAIN_ATK:
@@ -1866,6 +1868,28 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 	case SO_VARETYR_SPEAR:
 		sc_start(src,bl, SC_STUN, 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
+		break;
+	case GN_SLINGITEM_RANGEMELEEATK:
+		if( sd ) {
+			switch( sd->itemid ) {	// Starting SCs here instead of do it in skill_additional_effect to simplify the code.
+				case ITEMID_COCONUT_BOMB:
+					sc_start(src,bl, SC_STUN, 5 + sd->status.job_level / 2, skill_lv, 1000 * sd->status.job_level / 3);
+					sc_start2(src,bl, SC_BLEEDING, 3 + sd->status.job_level / 2, skill_lv, src->id, 1000 * status_get_lv(src) / 4 + sd->status.job_level / 3);
+					break;
+				case ITEMID_MELON_BOMB:
+					sc_start4(src, bl, SC_MELON_BOMB, 100, skill_lv, 20 + sd->status.job_level, 10 + sd->status.job_level / 2, 0, 1000 * status_get_lv(src) / 4);
+					break;
+				case ITEMID_BANANA_BOMB:
+					{
+						uint16 duration = (battle_config.banana_bomb_duration ? battle_config.banana_bomb_duration : 1000 * sd->status.job_level / 4);
+
+						sc_start(src,bl, SC_BANANA_BOMB_SITDOWN, status_get_lv(src) + sd->status.job_level + sstatus->dex / 6 - status_get_lv(bl) - tstatus->agi / 4 - tstatus->luk / 5, skill_lv, duration);
+						sc_start(src,bl, SC_BANANA_BOMB, 100, skill_lv, 30000);
+						break;
+					}
+			}
+			sd->itemid = -1;
+		}
 		break;
 	case GN_HELLS_PLANT_ATK:
 		sc_start(src,bl, SC_STUN,  20 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
@@ -3595,6 +3619,9 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case GN_FIRE_EXPANSION_ACID:
 			dmg.dmotion = clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, CR_ACIDDEMONSTRATION, skill_lv, DMG_MULTI_HIT);
 			break;
+		case GN_SLINGITEM_RANGEMELEEATK:
+			dmg.dmotion = clif_skill_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,GN_SLINGITEM,-2,DMG_SINGLE);
+			break;
 		case EL_STONE_RAIN:
 			dmg.dmotion = clif_skill_damage(dsrc,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,skill_id,-1,(flag&1)?DMG_MULTI_HIT:DMG_SPLASH);
 			break;
@@ -4847,6 +4874,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SR_GENTLETOUCH_QUIET:
 	case WM_SEVERE_RAINSTORM_MELEE:
 	case WM_GREAT_ECHO:
+	case GN_SLINGITEM_RANGEMELEEATK:
 	case KO_SETSUDAN:
 	case RL_MASS_SPIRAL:
 	case RL_BANISHING_BUSTER:
@@ -11072,7 +11100,63 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 		}
 		break;
+	case GN_SLINGITEM:
+		if( sd ) {
+			int ammo_id;
+
+			i = sd->equip_index[EQI_AMMO];
+			if( i < 0 )
+				break; // No ammo.
+			ammo_id = sd->inventory_data[i]->nameid;
+			if( ammo_id <= 0 )
+				break;
+			sd->itemid = ammo_id;
+			if( itemdb_group_item_exists(IG_BOMB, ammo_id) ) {
+				if(battle_check_target(src,bl,BCT_ENEMY) > 0) {// Only attack if the target is an enemy.
+					if( ammo_id == ITEMID_PINEAPPLE_BOMB )
+						map_foreachincell(skill_area_sub,bl->m,bl->x,bl->y,BL_CHAR,src,GN_SLINGITEM_RANGEMELEEATK,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
+					else
+						skill_attack(BF_WEAPON,src,src,bl,GN_SLINGITEM_RANGEMELEEATK,skill_lv,tick,flag);
+				} else //Otherwise, it fails, shows animation and removes items.
+					clif_skill_fail(sd,GN_SLINGITEM_RANGEMELEEATK,USESKILL_FAIL,0);
+			} else if (itemdb_group_item_exists(IG_THROWABLE, ammo_id)) {
+				switch (ammo_id) {
+					case ITEMID_HP_INC_POTS_TO_THROW: // MaxHP +(500 + Thrower BaseLv * 10 / 3) and heals 1% MaxHP
+						sc_start2(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 1, 500000);
+						status_percent_heal(bl, 1, 0);
+						break;
+					case ITEMID_HP_INC_POTM_TO_THROW: // MaxHP +(1500 + Thrower BaseLv * 10 / 3) and heals 2% MaxHP
+						sc_start2(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 2, 500000);
+						status_percent_heal(bl, 2, 0);
+						break;
+					case ITEMID_HP_INC_POTL_TO_THROW: // MaxHP +(2500 + Thrower BaseLv * 10 / 3) and heals 5% MaxHP
+						sc_start2(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 3, 500000);
+						status_percent_heal(bl, 5, 0);
+						break;
+					case ITEMID_SP_INC_POTS_TO_THROW: // MaxSP +(Thrower BaseLv / 10 - 5)% and recovers 2% MaxSP
+						sc_start2(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 1, 500000);
+						status_percent_heal(bl, 0, 2);
+						break;
+					case ITEMID_SP_INC_POTM_TO_THROW: // MaxSP +(Thrower BaseLv / 10)% and recovers 4% MaxSP
+						sc_start2(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 2, 500000);
+						status_percent_heal(bl, 0, 4);
+						break;
+					case ITEMID_SP_INC_POTL_TO_THROW: // MaxSP +(Thrower BaseLv / 10 + 5)% and recovers 8% MaxSP
+						sc_start2(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 3, 500000);
+						status_percent_heal(bl, 0, 8);
+						break;
+					default:
+						if (dstsd)
+							run_script(sd->inventory_data[i]->script, 0, dstsd->bl.id, fake_nd->bl.id);
+						break;
+				}
+			}
+		}
+		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);// This packet is received twice actually, I think it is to show the animation.
+		break;
 	case GN_MIX_COOKING:
+	case GN_MAKEBOMB:
 	case GN_S_PHARMACY:
 		if( sd ) {
 			int qty = 1;
@@ -11080,7 +11164,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			sd->skill_lv_old = skill_lv;
 			if( skill_id != GN_S_PHARMACY && skill_lv > 1 )
 				qty = 10;
-			clif_cooking_list(sd,(skill_id - GN_MIX_COOKING) + 27,skill_id,qty,6);
+			clif_cooking_list(sd,(skill_id - GN_MIX_COOKING) + 27,skill_id,qty,skill_id==GN_MAKEBOMB?5:6);
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
@@ -15516,6 +15600,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			}
 			break;
 		case GN_MIX_COOKING:
+		case GN_MAKEBOMB:
 		case GN_S_PHARMACY:
 		case GN_CHANGEMATERIAL:
 			if( sd->menuskill_id != skill_id )
@@ -16542,6 +16627,7 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 			}
 			break;
 		case GN_MIX_COOKING:
+		case GN_MAKEBOMB:
 		case GN_S_PHARMACY:
 		case GN_CHANGEMATERIAL:
 			if( sd->menuskill_id != skill_id )
@@ -19922,7 +20008,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 		} while( j >= 0 && x > 0 );
 	}
 
-	if ((equip = (itemdb_isequip(nameid) && skill_id != GN_CHANGEMATERIAL )))
+	if ((equip = (itemdb_isequip(nameid) && skill_id != GN_CHANGEMATERIAL && skill_id != GN_MAKEBOMB  )))
 		wlv = itemdb_wlv(nameid);
 
 	if (!equip) {
@@ -20065,6 +20151,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 						case ITEMID_SP_INCREASE_POTION_MEDIUM:
 							difficulty += 15;
 							break;
+						case ITEMID_BANANA_BOMB:
 						case ITEMID_HP_INCREASE_POTION_MEDIUM:
 						case ITEMID_SP_INCREASE_POTION_LARGE:
 						case ITEMID_VITATA500:
@@ -20094,6 +20181,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 					make_per = 10000;
 				}
 				break;
+			case GN_MAKEBOMB:
 			case GN_MIX_COOKING:
 				{
 					int difficulty = 30 + rnd()%120; // Random number between (30 ~ 150)
@@ -20102,13 +20190,24 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 					qty = ~(5 + rnd()%5) + 1;
 
 					switch(nameid){// difficulty factor
+						case ITEMID_APPLE_BOMB:
+							difficulty += 5;
+							break;
+						case ITEMID_COCONUT_BOMB:
+						case ITEMID_MELON_BOMB:
+							difficulty += 10;
+							break;
 						case ITEMID_SAVAGE_FULL_ROAST:
 						case ITEMID_COCKTAIL_WARG_BLOOD:
 						case ITEMID_MINOR_STEW:
 						case ITEMID_SIROMA_ICED_TEA:
 						case ITEMID_DROSERA_HERB_SALAD:
 						case ITEMID_PETITE_TAIL_NOODLES:
+						case ITEMID_PINEAPPLE_BOMB:
 							difficulty += 15;
+							break;
+						case ITEMID_BANANA_BOMB:
+							difficulty += 20;
 							break;
 					}
 
@@ -20232,7 +20331,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 			tmp_item.amount = 0;
 
 			for (i = 0; i < qty; i++) {	//Apply quantity modifiers.
-				if ((skill_id == GN_MIX_COOKING || skill_id == GN_S_PHARMACY) && make_per > 1) {
+				if ((skill_id == GN_MIX_COOKING || skill_id == GN_MAKEBOMB || skill_id == GN_S_PHARMACY) && make_per > 1) {
 					tmp_item.amount = qty;
 					break;
 				}
@@ -20335,7 +20434,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 					map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 				}
 			}
-			if (skill_id == GN_MIX_COOKING || skill_id ==  GN_S_PHARMACY) {
+			if (skill_id == GN_MIX_COOKING || skill_id == GN_MAKEBOMB || skill_id ==  GN_S_PHARMACY) {
 				clif_produceeffect(sd,6,nameid);
 				clif_misceffect(&sd->bl,5);
 				clif_msg_skill(sd,skill_id,ITEM_PRODUCE_SUCCESS);
@@ -20399,6 +20498,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 					clif_msg_skill(sd,skill_id,ITEM_PRODUCE_FAIL);
 				}
 				break;
+			case GN_MAKEBOMB:
 			case GN_S_PHARMACY:
 			case GN_CHANGEMATERIAL:
 				clif_produceeffect(sd,7,nameid);
