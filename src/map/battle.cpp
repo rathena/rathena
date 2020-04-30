@@ -1111,7 +1111,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	map_session_data *sd = map_id2sd(target->id);
 
 	// ATK_MISS Type
-	if ((sce = sc->data[SC_AUTOGUARD]) && flag&BF_WEAPON && rnd() % 100 < sce->val2 && !skill_db.find(skill_id)->inf2[INF2_IGNOREAUTOGUARD]) {
+	if ((sce = sc->data[SC_AUTOGUARD]) && flag&BF_WEAPON && rnd() % 100 < sce->val2 && !skill_get_inf2(skill_id, INF2_IGNOREAUTOGUARD)) {
 		status_change_entry *sce_d = sc->data[SC_DEVOTION];
 		block_list *d_bl;
 		int delay;
@@ -1203,7 +1203,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 		return false;
 	}
 
-	if (((sce = sc->data[SC_UTSUSEMI]) || sc->data[SC_BUNSINJYUTSU]) && flag&BF_WEAPON && !skill_db.find(skill_id)->inf2[INF2_IGNORECICADA]) {
+	if (((sce = sc->data[SC_UTSUSEMI]) || sc->data[SC_BUNSINJYUTSU]) && flag&BF_WEAPON && !skill_get_inf2(skill_id, INF2_IGNORECICADA)) {
 		skill_additional_effect(src, target, skill_id, skill_lv, flag, ATK_BLOCK, gettick());
 		if (!status_isdead(src))
 			skill_counter_additional_effect(src, target, skill_id, skill_lv, flag, gettick());
