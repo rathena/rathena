@@ -19037,7 +19037,11 @@ void clif_parse_reqworldinfo(int fd,struct map_session_data *sd) {
 /// Enable playing abilities of a player if map is done loading.
 /// 0447 (CZ_BLOCKING_PLAY_CANCEL)
 void clif_parse_blocking_playcancel(int fd,struct map_session_data *sd) {
-	status_change_end(&sd->bl, SC_BLOCKING_PLAY, INVALID_TIMER);
+	if (sd == nullptr)
+		return;
+
+	if (sd->state.warping == 0)
+		status_change_end(&sd->bl, SC_BLOCKING_PLAY, INVALID_TIMER);
 }
 
 /// req world info (CZ_CLIENT_VERSION)
