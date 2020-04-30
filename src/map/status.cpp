@@ -12042,14 +12042,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				tick = tick_time + max(val4, 0);
 				break;
 			case SC_DEATHHURT:
-				if (sc->data[type]->val3 == 1)
+				if (val3 == 1)
 					break;
 				tick_time = tick;
 				tick = tick_time + max(val4, 0);
 			case SC_MAGICMUSHROOM:
 			case SC_PYREXIA:
 			case SC_LEECHESEND:
-				if (sc->data[type]->val3 == 0)
+				if (val3 == 0)
 					break;
 				tick_time = tick;
 				tick = tick_time + max(val4, 0);
