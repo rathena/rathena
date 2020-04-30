@@ -30096,6 +30096,16 @@ Body:
           Amount: 64
         - Level: 5
           Amount: 68
+        - Level: 6
+          Amount: 72
+        - Level: 7
+          Amount: 76
+        - Level: 8
+          Amount: 80
+        - Level: 9
+          Amount: 84
+        - Level: 10
+          Amount: 88
       SpiritSphereCost:
         - Level: 1
           Amount: 1
