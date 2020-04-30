@@ -29405,11 +29405,11 @@ Body:
           Amount: 55
         - Level: 7
           Amount: 60
-        - Level: 5
+        - Level: 8
           Amount: 65
-        - Level: 6
+        - Level: 9
           Amount: 70
-        - Level: 7
+        - Level: 10
           Amount: 75
       State: Moonstance
   - Id: 2577
