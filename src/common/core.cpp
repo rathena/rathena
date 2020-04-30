@@ -33,6 +33,7 @@ void (*shutdown_callback)(void) = NULL;
 
 int runflag = CORE_ST_RUN;
 char db_path[12] = "db"; /// relative path for db from server
+char conf_path[12] = "conf"; /// relative path for conf from server
 
 char *SERVER_NAME = NULL;
 char SERVER_TYPE = ATHENA_SERVER_NONE;
@@ -364,7 +365,7 @@ int main (int argc, char **argv)
 
 	// Main runtime cycle
 	while (runflag != CORE_ST_STOP) { 
-		int next = do_timer(gettick_nocache());
+		t_tick next = do_timer(gettick_nocache());
 		do_sockets(next);
 	}
 

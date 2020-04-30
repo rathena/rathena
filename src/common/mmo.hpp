@@ -10,6 +10,7 @@
 
 #include "cbasetypes.hpp"
 #include "db.hpp"
+#include "timer.hpp" // t_tick
 
 #ifndef PACKETVER
 	#error Please define PACKETVER in src/config/packets.hpp
@@ -53,7 +54,7 @@
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1201 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1250 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
@@ -68,7 +69,6 @@
 #define MAX_GUILDLEVEL 50 ///Max Guild level
 #define MAX_GUARDIANS 8	///Local max per castle. If this value is increased, need to add more fields on MySQL `guild_castle` table [Skotlex]
 #define MAX_QUEST_OBJECTIVES 3 ///Max quest objectives for a quest
-#define MAX_QUEST_DROPS 3 ///Max quest drops for a quest
 #define MAX_PC_BONUS_SCRIPT 50 ///Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 #define MAX_ITEM_RDM_OPT 5	 /// Max item random option [Napster]
 #define DB_NAME_LEN 256 //max len of dbs
@@ -151,7 +151,6 @@
 #define EL_CLASS_MAX (EL_CLASS_BASE+MAX_ELEMENTAL_CLASS-1)
 
 //Achievement System
-#define MAX_ACHIEVEMENT_RANK 20 /// Maximum achievement level
 #define MAX_ACHIEVEMENT_OBJECTIVES 10 /// Maximum different objectives in achievement_db.yml
 #define MAX_ACHIEVEMENT_DEPENDENTS 20 /// Maximum different dependents in achievement_db.yml
 #define ACHIEVEMENT_NAME_LENGTH 50 /// Max Achievement Name length
@@ -212,7 +211,7 @@ enum e_mode {
 #define CL_MASK 0xF000000
 
 // Questlog states
-enum quest_state {
+enum e_quest_state : uint8 {
 	Q_INACTIVE, ///< Inactive quest (the user can toggle between active and inactive quests)
 	Q_ACTIVE,   ///< Active quest
 	Q_COMPLETE, ///< Completed quest
@@ -221,9 +220,9 @@ enum quest_state {
 /// Questlog entry
 struct quest {
 	int quest_id;                    ///< Quest ID
-	unsigned int time;               ///< Expiration time
+	uint32 time;                     ///< Expiration time
 	int count[MAX_QUEST_OBJECTIVES]; ///< Kill counters of each quest objective
-	enum quest_state state;          ///< Current quest state
+	e_quest_state state;             ///< Current quest state
 };
 
 struct s_item_randomoption {
@@ -254,6 +253,7 @@ struct item {
 	unsigned int expire_time;
 	char favorite, bound;
 	uint64 unique_id;
+	unsigned int equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
 };
 
 //Equip position constants
@@ -321,7 +321,7 @@ struct script_reg_state {
 
 struct script_reg_num {
 	struct script_reg_state flag;
-	int value;
+	int64 value;
 };
 
 struct script_reg_str {
@@ -332,13 +332,14 @@ struct script_reg_str {
 //For saving status changes across sessions. [Skotlex]
 struct status_change_data {
 	unsigned short type; //SC_type
-	long val1, val2, val3, val4, tick; //Remaining duration.
+	long val1, val2, val3, val4;
+	t_tick tick; //Remaining duration.
 };
 
 #define MAX_BONUS_SCRIPT_LENGTH 512
 struct bonus_script_data {
 	char script_str[MAX_BONUS_SCRIPT_LENGTH]; //< Script string
-	uint32 tick; ///< Tick
+	t_tick tick; ///< Tick
 	uint16 flag; ///< Flags @see enum e_bonus_script_flags
 	int16 icon; ///< Icon SI
 	uint8 type; ///< 0 - None, 1 - Buff, 2 - Debuff
@@ -346,7 +347,7 @@ struct bonus_script_data {
 
 struct skill_cooldown_data {
 	unsigned short skill_id;
-	long tick;
+	t_tick tick;
 };
 
 enum storage_type {
@@ -404,6 +405,7 @@ struct s_pet {
 	char name[NAME_LENGTH];
 	char rename_flag;
 	char incubate;
+	bool autofeed;
 };
 
 struct s_homunculus {	//[orn]
@@ -445,7 +447,7 @@ struct s_mercenary {
 	short class_;
 	int hp, sp;
 	unsigned int kill_count;
-	unsigned int life_time;
+	t_tick life_time;
 };
 
 struct s_elemental {
@@ -455,7 +457,7 @@ struct s_elemental {
 	enum e_mode mode;
 	int hp, sp, max_hp, max_sp, matk, atk, atk2;
 	short hit, flee, amotion, def, mdef;
-	int life_time;
+	t_tick life_time;
 };
 
 struct s_friend {
@@ -624,7 +626,6 @@ struct guild_member {
 	uint32 account_id, char_id;
 	short hair,hair_color,gender,class_,lv;
 	uint64 exp;
-	int exp_payper;
 	short online,position;
 	char name[NAME_LENGTH];
 	struct map_session_data *sd;
@@ -908,22 +909,22 @@ enum e_job {
 	JOB_MECHANIC2,
 	JOB_MECHANIC_T2,
 
-	JOB_BABY_RUNE = 4096,
+	JOB_BABY_RUNE_KNIGHT = 4096,
 	JOB_BABY_WARLOCK,
 	JOB_BABY_RANGER,
-	JOB_BABY_BISHOP,
+	JOB_BABY_ARCH_BISHOP,
 	JOB_BABY_MECHANIC,
-	JOB_BABY_CROSS,
-	JOB_BABY_GUARD,
+	JOB_BABY_GUILLOTINE_CROSS,
+	JOB_BABY_ROYAL_GUARD,
 	JOB_BABY_SORCERER,
 	JOB_BABY_MINSTREL,
 	JOB_BABY_WANDERER,
 	JOB_BABY_SURA,
 	JOB_BABY_GENETIC,
-	JOB_BABY_CHASER,
+	JOB_BABY_SHADOW_CHASER,
 
-	JOB_BABY_RUNE2,
-	JOB_BABY_GUARD2,
+	JOB_BABY_RUNE_KNIGHT2,
+	JOB_BABY_ROYAL_GUARD2,
 	JOB_BABY_RANGER2,
 	JOB_BABY_MECHANIC2,
 
@@ -1024,7 +1025,7 @@ struct clan{
 #error MAX_ZENY is too big
 #endif
 
-// This sanity check is required, because some other places(like skill.c) rely on this
+// This sanity check is required, because some other places(like skill.cpp) rely on this
 #if MAX_PARTY < 2
 #error MAX_PARTY is too small, you need at least 2 players for a party
 #endif

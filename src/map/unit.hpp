@@ -39,9 +39,9 @@ struct unit_data {
 	bool stepaction; //Action should be executed on step [Playtester]
 	int steptimer; //Timer that triggers the action [Playtester]
 	uint16 stepskill_id, stepskill_lv; //Remembers skill that should be casted on step [Playtester]
-	unsigned int attackabletime;
-	unsigned int canact_tick;
-	unsigned int canmove_tick;
+	t_tick attackabletime;
+	t_tick canact_tick;
+	t_tick canmove_tick;
 	bool immune_attack; ///< Whether the unit is immune to attacks
 	uint8 dir;
 	unsigned char walk_count;
@@ -79,7 +79,7 @@ unsigned short
 		cloth_color,
 		body_style;
 	char sex;
-	unsigned dead_sit : 2;
+	unsigned dead_sit : 2; // 0: Standing, 1: Dead, 2: Sitting
 };
 
 /// Enum for unit_blown_immune
@@ -117,7 +117,7 @@ TIMER_FUNC(unit_delay_walktobl_timer);
 int unit_stop_walking(struct block_list *bl,int type);
 int unit_can_move(struct block_list *bl);
 int unit_is_walking(struct block_list *bl);
-int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int type);
+int unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int type);
 
 int unit_escape(struct block_list *bl, struct block_list *target, short dist);
 
@@ -161,6 +161,7 @@ void unit_dataset(struct block_list *bl);
 // Remove unit
 struct unit_data* unit_bl2ud(struct block_list *bl);
 void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype);
+void unit_refresh(struct block_list *bl, bool walking = false);
 void unit_free_pc(struct map_session_data *sd);
 #define unit_remove_map(bl,clrtype) unit_remove_map_(bl,clrtype,__FILE__,__LINE__,__func__)
 int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, int line, const char* func);

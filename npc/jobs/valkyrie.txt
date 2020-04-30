@@ -373,7 +373,7 @@ valkyrie,44,33,5	script	Teleporter	124,{
 		mes "Honorable one,";
 		mes "which place do you wish to go?";
 		next;
-		switch(select("Prontera:Morroc:Payon:Geffen:Alberta:Izlude:Al De Baran:Comodo:Juno")) {
+		switch(select("Prontera:Morocc:Payon:Geffen:Alberta:Izlude:Al De Baran:Comodo:Juno")) {
 		case 1: callsub S_Warpchar,"prontera",116,72;
 		case 2: callsub S_Warpchar,"morocc",156,46;
 		case 3: callsub S_Warpchar,"payon",69,100;

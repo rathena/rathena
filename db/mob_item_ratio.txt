@@ -18,7 +18,7 @@
 //
 // Notes:
 // - By default you can list up to 10 MonsterIDs per ItemID.
-//   It can be changed in src/map/mob.c by adjusting MAX_ITEMRATIO_MOBS.
+//   It can be changed in src/map/mob.cpp by adjusting MAX_ITEMRATIO_MOBS.
 // - Only ItemIDs up to MAX_ITEMDB are supported (default: 32768).
 // - Does not override item_drop_*_min/max settings.
 // - Does not affect card/item-granted drops. To adjust card/item-granted

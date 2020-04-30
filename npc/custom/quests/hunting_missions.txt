@@ -23,7 +23,7 @@
 //=     Syntax updates and style cleaning.
 //============================================================
 
-prontera,152,187,6	script	Hunting Missions	951,{
+prontera,152,187,6	script	Hunting Missions	4_F_EDEN_MASTER,{
 function Chk;
 	mes "[Hunting Missions]";
 	mes "Hello, " + strcharinfo(0) + "!";
@@ -39,11 +39,11 @@ function Chk;
 		#Mission_Delay = 1;
 		close;
 	}
-	mes rand(2) ? "Working hard, as always..." : "Not slacking, I hope...";
+	mes F_Rand("Working hard, as always...", "Not slacking, I hope...");
 	mes "Is there anything I can help";
 	mes "you with?";
 	mes " ";
-	mes "^777777~ You've completed " + callfunc("F_InsertPlural",Mission_Total,"mission",0,"^0055FF%d^777777 %s") + ". ~^000000";
+	mes "^777777~ You've completed " + F_InsertPlural(Mission_Total,"mission",0,"^0055FF%d^777777 %s") + ". ~^000000";
 	next;
 	switch(select(
 		((!Mission0) ? " ~ New Mission::" : ": ~ Mission Status: ~ Abandon Mission") +
@@ -65,12 +65,12 @@ function Chk;
 					emotion ET_SCRATCH;
 					#Mission_Count = 0;
 				}
-				@hm_char_del_check = 1;
+				@hm_char_del_check = true;
 			}
 			close;
 		}
 		if (#Mission_Delay > gettimetick(2) && .Delay) {
-			mes "I'm afraid you'll have to wait " + callfunc("Time2Str",#Mission_Delay) + " before taking another mission.";
+			mes "I'm afraid you'll have to wait " + Time2Str(#Mission_Delay) + " before taking another mission.";
 			close;
 		}
 		mes "You must hunt:";
@@ -99,7 +99,7 @@ function Chk;
 		if (.Reset < 0 && .Delay)
 			mes "Your delay time will not be reset.";
 		else if (.Reset > 0)
-			mes "It will cost " + callfunc("F_InsertComma",.Reset) + " Zeny.";
+			mes "It will cost " + F_InsertComma(.Reset) + " Zeny.";
 		next;
 		switch(select(" ~ Abandon...: ~ ^777777Cancel^000000")) {
 		case 1:
@@ -159,7 +159,7 @@ function Chk;
 	end;
 
 Mission_Status:
-	@f = 0;
+	@f = false;
 	deletearray .@j[0], getarraysize(.@j);
 	for (.@i = 0; .@i < .Quests; .@i++) {
 		.@j[.@i] = getd("Mission" + .@i);
@@ -179,11 +179,11 @@ Mission_Status:
 	mes "[Hunting Missions]";
 	mes "Mission rewards:";
 	mes " > Mission Points: ^0055FF" + .@Mission_Points + "^000000";
-	mes " > Base Experience: ^0055FF" + callfunc("F_InsertComma",.@Base_Exp) + "^000000";
-	mes " > Job Experience: ^0055FF" + callfunc("F_InsertComma",.@Job_Exp) + "^000000";
-	mes " > Zeny: ^0055FF" + callfunc("F_InsertComma",.@Zeny) + "^000000";
+	mes " > Base Experience: ^0055FF" + F_InsertComma(.@Base_Exp) + "^000000";
+	mes " > Job Experience: ^0055FF" + F_InsertComma(.@Job_Exp) + "^000000";
+	mes " > Zeny: ^0055FF" + F_InsertComma(.@Zeny) + "^000000";
 	if (@f) {
-		@f = 0;
+		@f = false;
 		return;
 	}
 	next;
@@ -235,35 +235,32 @@ Mission_Info:
 
 function Chk {
 	if (getarg(0) < getarg(1)) {
-		@f = 1;
+		@f = true;
 		return "^FF0000";
 	} else
 		return "^00FF00";
 }
 
 OnBuyItem:
-	@cost = 0;
-	for (.@i = 0; .@i < getarraysize(@bought_nameid); .@i++)
-		for (.@j = 0; .@j < getarraysize(.Shop); .@j += 2)
-			if (@bought_nameid[.@i] == .Shop[.@j]) {
-				set @cost, @cost + (.Shop[.@j+1] * @bought_quantity[.@i]);
-				break;
-			}
+	.@size = getarraysize(@bought_nameid);
+	for (.@i = 0; .@i < .@size; .@i++) {
+		.@j = inarray(.Shop, @bought_nameid[.@i]);
+		.@cost += (.Shop[.@j+1] * @bought_quantity[.@i]);
+	}
 	mes "[Hunting Missions]";
-	if (@cost > #Mission_Points)
+	if (.@cost > #Mission_Points)
 		mes "You don't have enough Mission Points.";
 	else {
-		for (.@i = 0; .@i < getarraysize(@bought_nameid); .@i++) {
+		for (.@i = 0; .@i < .@size; .@i++) {
 			getitem @bought_nameid[.@i], @bought_quantity[.@i];
 			dispbottom "Purchased " + @bought_quantity[.@i] + "x " + getitemname(@bought_nameid[.@i]) + ".";
 		}
-		#Mission_Points -= @cost;
+		#Mission_Points -= .@cost;
 		mes "Deal completed.";
 		emotion ET_MONEY;
 	}
-	@cost = 0;
-	deletearray @bought_nameid[0], getarraysize(@bought_nameid);
-	deletearray @bought_quantity[0], getarraysize(@bought_quantity);
+	deletearray @bought_nameid[0], .@size;
+	deletearray @bought_quantity[0], .@size;
 	close;
 
 OnNPCKillEvent:
@@ -280,7 +277,7 @@ OnNPCKillEvent:
 		}
 	} else if (.Party) {
 		.@mob = killedrid;
-		getmapxy(.@map1$,.@x1,.@y1,UNITTYPE_PC);
+		getmapxy(.@map1$,.@x1,.@y1);
 		getpartymember getcharid(1),1;
 		getpartymember getcharid(1),2;
 		for (.@i = 0; .@i < $@partymembercount; .@i++) {
@@ -290,7 +287,7 @@ OnNPCKillEvent:
 				set .@HP, readparam(HP, $@partymembercid[.@i]);
 
 				if (.@Mission_Count && .@Mission0 && .@HP > 0) {
-					getmapxy(.@map2$,.@x2,.@y2,UNITTYPE_PC);
+					getmapxy(.@map2$,.@x2,.@y2,BL_PC,rid2name($@partymemberaid[.@i]));
 					if ((.@map1$ == .@map2$ || .Party == 1) && (distance(.@x1,.@y1,.@x2,.@y2) <= 30 || .Party < 3)) {
 						for (.@j = 0; .@j < .Quests; .@j++) {
 							.@my_mob_id = getvar( getd("Mission"+.@j),$@partymembercid[.@i] );

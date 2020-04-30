@@ -385,6 +385,9 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 		return;
 	}
 
+	if (itemdb_ishatched_egg(item))
+		return;
+
 	if( item->expire_time ) { // Rental System
 		clif_displaymessage (sd->fd, msg_txt(sd,260));
 		clif_tradeitemok(sd, index+2, 1);
@@ -394,6 +397,11 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 	if( ((item->bound == BOUND_ACCOUNT || item->bound > BOUND_GUILD) || (item->bound == BOUND_GUILD && sd->status.guild_id != target_sd->status.guild_id)) && !pc_can_give_bounded_items(sd) ) { // Item Bound
 		clif_displaymessage(sd->fd, msg_txt(sd,293));
 		clif_tradeitemok(sd, index+2, 1);
+		return;
+	}
+
+	if( item->equipSwitch ){
+		clif_msg(sd, C_ITEM_EQUIP_SWITCH);
 		return;
 	}
 
