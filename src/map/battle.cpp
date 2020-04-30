@@ -5455,8 +5455,8 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				if (sd) {
 					if (battle_config.finger_offensive_type)
 						wd.div_ = 1;
-					else if (sd->spiritball_old < wd.div_)
-						wd.div_ = sd->spiritball_old;
+					else if ((sd->spiritball + sd->spiritball_old) < wd.div_)
+						wd.div_ = sd->spiritball + sd->spiritball_old;
 				}
 				break;
 
