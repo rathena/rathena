@@ -792,7 +792,7 @@
 1443,Crimson_Spear,Crimson Spear,5,20,,900,90,,3,2,0x00004082,63,2,2,3,70,1,4,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); },{},{}
 1446,Requiem_Spear,Requiem Spear,5,20,,1000,130,,3,,0x00004080,63,2,2,4,100,1,4,{ .@r = getrefine(); .@b = 40; bonus bUnbreakableWeapon; if(.@r>=5){ .@b += (.@r-5)*15+20; } bonus2 bAddRace2,RC2_BioLab,.@b; },{},{}
 1447,Poison_Forged_Spear,Poison Forged Spear,5,0,,500,150,,3,3,0x00004080,58,2,2,4,100,1,4,{ bonus bAtkEle,Ele_Poison; bonus bCritical,10; skill "TF_DOUBLE",5; bonus bDoubleRate,25; bonus2 bAddEff,Eff_Poison,1000; bonus2 bAddEff2,Eff_Poison,300; },{},{}
-1448,Musou_Yari,Musou Yari,5,0,,2000,140,,3,3,0x00004082,63,2,2,3,50,1,4,{ .@r = getrefine(); if(.@r >= 7){ bonus2 bAddRace,RC_Insect,10; bonus2 bAddRace,RC_Plant,10; bonus2 bAddEle,Ele_Wind,10; bonus2 bAddEle,Ele_Earth,10; } if(.@r >= 9){ bonus2 bAddRace,RC_Insect,15; bonus2 bAddRace,RC_Plant,15; bonus2 bAddEle,Ele_Wind,15; bonus2 bAddEle,Ele_Earth,15; } },{},{}
+1448,Warrior's_Spear,Warrior's Spear,5,0,,2000,140,,3,3,0x00004082,63,2,2,3,50,1,4,{ .@r = getrefine(); if(.@r >= 7){ bonus2 bAddRace,RC_Insect,10; bonus2 bAddRace,RC_Plant,10; bonus2 bAddEle,Ele_Wind,10; bonus2 bAddEle,Ele_Earth,10; } if(.@r >= 9){ bonus2 bAddRace,RC_Insect,15; bonus2 bAddRace,RC_Plant,15; bonus2 bAddEle,Ele_Wind,15; bonus2 bAddEle,Ele_Earth,15; } },{},{}
 1449,Gelerdria_,Gelerdria,5,20,,700,145,,3,3,0x00004082,63,2,2,4,48,1,4,{ bonus bAtkEle,Ele_Earth; bonus bMaxHP,800; bonus bMaxSP,-50; },{},{}
 //===================================================================
 // 2-Handed Spears
@@ -13446,7 +13446,7 @@
 32231,Schmidt_Insignia_Rigid_Body,King Schmidt's Rigid Body Insignia,4,0,0,200,,10,,1,0xFFFFFFFF,63,2,128,,150,,,{ bonus bMaxHPrate,10; },{},{}
 32232,Schmidt_Insignia_Flash,King Schmidt's Flash Insignia,4,0,0,200,,10,,1,0xFFFFFFFF,63,2,128,,150,,,{ bonus bAspdRate,5; },{},{}
 32233,Schmidt_Insignia_Celestial,King Schmidt's Celestial Insignia,4,0,,200,,10,,1,0xFFFFFFFF,63,2,128,,150,,,{ bonus bLongAtkRate,7; },{},{}
-32234,Warriors'_Ring,Warriors' Ring,4,0,,300,,0,,1,0xFFFFFFFF,63,2,136,,100,,,{ bonus2 bAddClass,Class_All,5; bonus2 bMagicAddEle,Class_All,5; bonus2 bAddEle,Ele_Wind,10; bonus2 bAddEle,Ele_Earth,10; bonus2 bSubEle,Ele_Wind,5; bonus2 bSubEle,Ele_Earth,5; },{},{}
+32234,Warrior's_Ring,Warrior's Ring,4,0,,300,,0,,1,0xFFFFFFFF,63,2,136,,100,,,{ bonus2 bAddClass,Class_All,5; bonus2 bMagicAddEle,Class_All,5; bonus2 bAddEle,Ele_Wind,10; bonus2 bAddEle,Ele_Earth,10; bonus2 bSubEle,Ele_Wind,5; bonus2 bSubEle,Ele_Earth,5; },{},{}
 32237,Celine's_Brooch,Celine's Brooch,4,10,,500,,0,,1,0xFFFFFFFE,63,2,136,,100,0,0,{ bonus bMatkRate,5; bonus bVariableCastrate,-10; },{},{}
 32238,Illusion_Morpheus's_Ring,Illusion Morpheus's Ring,4,20,,100,,0,,1,0xFFFFFFFF,63,2,8,,130,0,0,{ bonus bInt,3; bonus bMaxSPrate,5; },{},{}
 32239,Illusion_Morpheus's_Bracelet,Illusion Morpheus's Bracelet,4,20,,100,,0,,1,0xFFFFFFFF,63,2,128,,130,0,0,{ bonus bInt,3; bonus bMaxSPrate,5; },{},{}
