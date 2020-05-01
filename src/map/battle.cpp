@@ -7269,8 +7269,8 @@ int64 battle_calc_return_damage(struct block_list *bl, struct block_list *src, i
 			if (sc->data[SC_REFLECTDAMAGE] && !skill_get_inf2(skill_id, INF2_ISTRAP)) {
 				if (rnd() % 100 <= sc->data[SC_REFLECTDAMAGE]->val1 * 10 + 30) {
 					rdamage += damage * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
-					max_damage = max_damage * status_get_lv(bl) / 100;
 #ifdef RENEWAL
+					max_damage = max_damage * status_get_lv(bl) / 100;
 					rdamage = cap_value(rdamage, 1, max_damage);
 #endif
 					if (--(sc->data[SC_REFLECTDAMAGE]->val3) < 1)
