@@ -3907,6 +3907,14 @@ Name is optional, and defaults to the attached player if omitted.
 
 ---------------------------------------
 
+*checkidlehom({"<Player Name>"})
+
+Returns the time, in seconds, that the specified player has been idle for homunculus item/exp share.
+Name is optional, and defaults to the attached player if omitted.
+This will only work if 'hom_idle_no_share' and 'idletime_hom_option' are enabled (see '/conf/battle/homunc.conf').
+
+---------------------------------------
+
 *agitcheck()
 *agitcheck2()
 *agitcheck3()
