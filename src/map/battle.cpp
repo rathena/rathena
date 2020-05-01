@@ -7233,74 +7233,84 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, int64 *dmg, int flag, uint16 skill_id, bool status_reflect){
-	struct map_session_data* sd;
-	int64 rdamage = 0, damage = *dmg;
-	struct status_change *sc, *ssc;
-#ifdef RENEWAL
-	int max_damage = status_get_max_hp(bl);
-#endif
-
-	sd = BL_CAST(BL_PC, bl);
-	sc = status_get_sc(bl);
-	ssc = status_get_sc(src);
-
-	if (sc && sc->data[SC_WHITEIMPRISON])
-		return 0; // White Imprison does not reflect any damage
-
-	if (sc && sc->data[SC_KYOMU] && (!ssc || !ssc->data[SC_SHIELDSPELL_DEF])) // Nullify reflecting ability except for Shield Spell - Def
+int64 battle_calc_return_damage(struct block_list *bl, struct block_list *src, int64 *dmg, int flag, uint16 skill_id, bool status_reflect) {
+	if (bl == nullptr || src == nullptr)
 		return 0;
 
-	if (flag & BF_SHORT) {//Bounces back part of the damage.
-		if ( (skill_get_inf2(skill_id, INF2_ISTRAP) || !status_reflect) && sd && sd->bonus.short_weapon_damage_return ) {
-			rdamage += damage * sd->bonus.short_weapon_damage_return / 100;
-		else if( status_reflect && sc && sc->count ) {
-			if( sc->data[SC_REFLECTSHIELD] ) {
-				struct status_change_entry *sce_d;
-				struct block_list *d_bl = NULL;
+	map_session_data *sd = BL_CAST(BL_PC, bl);
+	status_change *sc = status_get_sc(bl), *ssc = status_get_sc(src);
 
-				if( (sce_d = sc->data[SC_DEVOTION]) && (d_bl = map_id2bl(sce_d->val1)) &&
-					((d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == bl->id) ||
-					(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce_d->val2] == bl->id)) )
-				{ //Don't reflect non-skill attack if has SC_REFLECTSHIELD from Devotion bonus inheritance
-					if( (!skill_id && battle_config.devotion_rdamage_skill_only && sc->data[SC_REFLECTSHIELD]->val4) ||
-						!check_distance_bl(bl,d_bl,sce_d->val3) )
+	if (sc) {
+		if (sc->data[SC_WHITEIMPRISON])
+			return 0; // White Imprison does not reflect any damage
+		if (sc->data[SC_KYOMU] && (ssc == nullptr || !ssc->data[SC_SHIELDSPELL_DEF])) // Nullify reflecting ability except for Shield Spell - Def
+			return 0;
+	}
+
+	int64 rdamage = 0, damage = *dmg;
+#ifdef RENEWAL
+	int64 max_damage = status_get_max_hp(bl);
+#endif
+
+	if (flag & BF_SHORT) { // Bounces back part of the damage.
+		if (!status_reflect && sd && sd->bonus.short_weapon_damage_return)
+			rdamage += damage * sd->bonus.short_weapon_damage_return / 100;
+		else if (status_reflect && sc && sc->count) {
+			if (sc->data[SC_REFLECTSHIELD]) {
+				status_change_entry *sce_d = sc->data[SC_DEVOTION];
+				block_list *d_bl = map_id2bl(sce_d->val1);
+
+				// Don't reflect non-skill attack if has SC_REFLECTSHIELD from Devotion bonus inheritance
+				if (sce_d && d_bl && ((d_bl->type == BL_MER && ((TBL_MER *)d_bl)->master && ((TBL_MER *)d_bl)->master->bl.id == bl->id) || (d_bl->type == BL_PC && ((TBL_PC *)d_bl)->devotion[sce_d->val2] == bl->id))) {
+					if ((skill_id == 0 && battle_config.devotion_rdamage_skill_only && sc->data[SC_REFLECTSHIELD]->val4) || !check_distance_bl(bl, d_bl, sce_d->val3))
 						return 0;
 				}
 			}
-			if( sc->data[SC_REFLECTDAMAGE] && !skill_get_inf2(skill_id, INF2_ISTRAP)) {
-				if( rnd()%100 <= sc->data[SC_REFLECTDAMAGE]->val1*10 + 30 ){
+			if (sc->data[SC_REFLECTDAMAGE] && !skill_get_inf2(skill_id, INF2_ISTRAP)) {
+				if (rnd() % 100 <= sc->data[SC_REFLECTDAMAGE]->val1 * 10 + 30) {
+					rdamage += damage * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
+					max_damage = max_damage * status_get_lv(bl) / 100;
 #ifdef RENEWAL
-					max_damage = (int64)max_damage * status_get_lv(bl) / 100;
+					rdamage = cap_value(rdamage, 1, max_damage);
 #endif
-					rdamage += (*dmg) * sc->data[SC_REFLECTDAMAGE]->val2 / 100;
-					if( --(sc->data[SC_REFLECTDAMAGE]->val3) < 1)
-						status_change_end(bl,SC_REFLECTDAMAGE,INVALID_TIMER);
+					if (--(sc->data[SC_REFLECTDAMAGE]->val3) < 1)
+						status_change_end(bl, SC_REFLECTDAMAGE, INVALID_TIMER);
 				}
 			} else {
-				if ( sc->data[SC_REFLECTSHIELD] && skill_id != WS_CARTTERMINATION ) {
+				if (sc->data[SC_REFLECTSHIELD] && skill_id != WS_CARTTERMINATION) {
 					// Don't reflect non-skill attack if has SC_REFLECTSHIELD from Devotion bonus inheritance
-					if (!skill_id && battle_config.devotion_rdamage_skill_only && sc->data[SC_REFLECTSHIELD]->val4)
+					if (skill_id == 0 && battle_config.devotion_rdamage_skill_only && sc->data[SC_REFLECTSHIELD]->val4)
 						return 0;
-					else
+					else {
 						rdamage += damage * sc->data[SC_REFLECTSHIELD]->val2 / 100;
+#ifdef RENEWAL
+						rdamage = cap_value(rdamage, 1, max_damage);
+#endif
+					}
 				}
 
-				if (sc->data[SC_DEATHBOUND] && skill_id != WS_CARTTERMINATION && skill_id != GN_HELLS_PLANT_ATK && !status_bl_has_mode(src,MD_STATUS_IMMUNE)) {
-					if (distance_bl(src,bl) <= 0 || !map_check_dir(map_calc_dir(bl,src->x,src->y), unit_getdir(bl))) {
+				if (sc->data[SC_DEATHBOUND] && skill_id != WS_CARTTERMINATION && skill_id != GN_HELLS_PLANT_ATK && !status_bl_has_mode(src, MD_STATUS_IMMUNE)) {
+					if (distance_bl(src, bl) <= 0 || !map_check_dir(map_calc_dir(bl, src->x, src->y), unit_getdir(bl))) {
 						int64 rd1 = 0;
 
-						rd1 = min(damage,status_get_max_hp(bl)) * sc->data[SC_DEATHBOUND]->val2 / 100; // Amplify damage.
+						rd1 = min(damage, status_get_max_hp(bl)) * sc->data[SC_DEATHBOUND]->val2 / 100; // Amplify damage.
 						*dmg = rd1 * 30 / 100; // Received damage = 30% of amplified damage.
 						clif_skill_damage(src, bl, gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, sc->data[SC_DEATHBOUND]->val1, DMG_SINGLE);
 						skill_blown(bl, src, skill_get_blewcount(RK_DEATHBOUND, 1), unit_getdir(src), BLOWN_NONE);
 						status_change_end(bl, SC_DEATHBOUND, INVALID_TIMER);
 						rdamage += rd1 * 70 / 100; // Target receives 70% of the amplified damage. [Rytech]
+#ifdef RENEWAL
+						rdamage = cap_value(rdamage, 1, max_damage);
+#endif
 					}
 				}
 
-				if( sc->data[SC_SHIELDSPELL_DEF] && sc->data[SC_SHIELDSPELL_DEF]->val1 == 2 && !status_bl_has_mode(src,MD_STATUS_IMMUNE) )
+				if (sc->data[SC_SHIELDSPELL_DEF] && sc->data[SC_SHIELDSPELL_DEF]->val1 == 2 && !status_bl_has_mode(src, MD_STATUS_IMMUNE)) {
 					rdamage += damage * sc->data[SC_SHIELDSPELL_DEF]->val2 / 100;
+#ifdef RENEWAL
+					rdamage = cap_value(rdamage, 1, max_damage);
+#endif
+				}
 			}
 		}
 	} else {
@@ -7308,17 +7318,21 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 			rdamage += damage * sd->bonus.long_weapon_damage_return / 100;
 	}
 
-	if (ssc && ssc->data[SC_INSPIRATION])
+	if (ssc && ssc->data[SC_INSPIRATION]) {
 		rdamage += damage / 100;
-
-	if (sc && sc->data[SC_MAXPAIN])
-		rdamage += damage * sc->data[SC_MAXPAIN]->val1 * 10 / 100;
-
 #ifdef RENEWAL
-		return cap_value(rdamage, 0, max_damage);
-#else
-		return i64max(rdamage, 0);
+		rdamage = cap_value(rdamage, 1, max_damage);
 #endif
+	}
+
+	if (sc && sc->data[SC_MAXPAIN]) {
+		rdamage += damage * sc->data[SC_MAXPAIN]->val1 * 10 / 100;
+#ifdef RENEWAL
+		rdamage = cap_value(rdamage, 1, max_damage);
+#endif
+	}
+
+	return i64max(rdamage, 1); // Always deal at least 1 damage
 }
 
 /**
