@@ -81,9 +81,9 @@
 1659:5920,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillUseSP,"AL_HEAL",6*.@r; bonus2 bSkillUseSP,"AB_CHEAL",10*.@r; bonus2 bSkillUseSP,"AB_HIGHNESSHEAL",14*.@r; }
 1660:2471:2569:15029,{ bonus bHealPower,45; bonus2 bSkillUseSP,"AL_HEAL",-50; bonus3 bAutoSpellWhenHit,"AB_SILENTIUM",1,100; bonus2 bSkillCooldown,"AB_CLEARANCE",-3000; bonus2 bSkillCooldown,"AB_LAUDAAGNUS",-3000; bonus2 bSkillCooldown,"AB_LAUDARAMUS",-3000; }
 1668:15089,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bDelayrate,-10-min(.@r,10); }
-1670:2968,{ bonus bMatkRate,getequiprefinerycnt(EQI_HAND_R)*5; }
-1670:2968:2969,{ bonus bMatkRate,-(getequiprefinerycnt(EQI_HAND_R)*5); }
-1670:2969,{ bonus bMatkRate,getequiprefinerycnt(EQI_HAND_R)*5; }
+1670:2968,{ bonus bMatk,getequiprefinerycnt(EQI_HAND_R)*5; }
+1670:2968:2969,{ bonus bMatk,-(getequiprefinerycnt(EQI_HAND_R)*5); }
+1670:2969,{ bonus bMatk,getequiprefinerycnt(EQI_HAND_R)*5; }
 1718:1774,{ bonus bLongAtkRate,50; }
 1723:2718,{ bonus bDex,1; bonus bMaxSP,50; bonus bSPrecovRate,10; }
 1724:5467,{ bonus bAspd,1; bonus bFlee2,3; }
@@ -1276,6 +1276,10 @@
 1598:4037,{ bonus bAspdRate,5; }
 1598:4117,{ bonus bAspdRate,5; }
 1598:4037:4117,{ bonus bAspd,1; }
-//[TODO] Warrior's Sword, Warrior's Gun, Warrior's Mace, Warrior's Staff, Warrior's Bow combo with Warrior's Ring
+//[TODO]Warrior's Sword:32234,{ bonus2 bAddRace,RC_Insect,20; bonus2 bAddRace,RC_Plant,20; bonus2 bMagicAddRace,RC_Insect,20; bonus2 bMagicAddRace,RC_Plant,20; bonus2 bAddEle,Ele_Wind,20; bonus2 bAddEle,Ele_Earth,20; bonus2 bMagicAddEle,Ele_Wind,15; bonus2 bMagicAddEle,Ele_Earth,20; }
+//[TODO]Warrior's Gun:32234,{ bonus2 bAddRace,RC_Insect,20; bonus2 bAddRace,RC_Plant,20; bonus2 bMagicAddRace,RC_Insect,20; bonus2 bMagicAddRace,RC_Plant,20; bonus2 bAddEle,Ele_Wind,20; bonus2 bAddEle,Ele_Earth,20; bonus2 bMagicAddEle,Ele_Wind,15; bonus2 bMagicAddEle,Ele_Earth,20; }
+//[TODO]Warrior's Mace:32234,{ bonus2 bAddRace,RC_Insect,20; bonus2 bAddRace,RC_Plant,20; bonus2 bMagicAddRace,RC_Insect,20; bonus2 bMagicAddRace,RC_Plant,20; bonus2 bAddEle,Ele_Wind,20; bonus2 bAddEle,Ele_Earth,20; bonus2 bMagicAddEle,Ele_Wind,15; bonus2 bMagicAddEle,Ele_Earth,20; }
+//[TODO]Warrior's Staff:32234,{ bonus2 bAddRace,RC_Insect,20; bonus2 bAddRace,RC_Plant,20; bonus2 bMagicAddRace,RC_Insect,20; bonus2 bMagicAddRace,RC_Plant,20; bonus2 bAddEle,Ele_Wind,20; bonus2 bAddEle,Ele_Earth,20; bonus2 bMagicAddEle,Ele_Wind,15; bonus2 bMagicAddEle,Ele_Earth,20; }
+//[TODO]Warrior's Bow:32234,{ bonus2 bAddRace,RC_Insect,20; bonus2 bAddRace,RC_Plant,20; bonus2 bMagicAddRace,RC_Insect,20; bonus2 bMagicAddRace,RC_Plant,20; bonus2 bAddEle,Ele_Wind,20; bonus2 bAddEle,Ele_Earth,20; bonus2 bMagicAddEle,Ele_Wind,15; bonus2 bMagicAddEle,Ele_Earth,20; }
 1448:32234,{ bonus2 bAddRace,RC_Insect,20; bonus2 bAddRace,RC_Plant,20; bonus2 bMagicAddRace,RC_Insect,20; bonus2 bMagicAddRace,RC_Plant,20; bonus2 bAddEle,Ele_Wind,20; bonus2 bAddEle,Ele_Earth,20; bonus2 bMagicAddEle,Ele_Wind,15; bonus2 bMagicAddEle,Ele_Earth,20; }
 29176:32234,{ bonus2 bAddRace,RC_Insect,15; bonus2 bAddRace,RC_Plant,15; bonus2 bMagicAddRace,RC_Insect,15; bonus2 bMagicAddRace,RC_Plant,15; bonus2 bAddEle,Ele_Wind,15; bonus2 bAddEle,Ele_Earth,15; bonus2 bMagicAddEle,Ele_Wind,15; bonus2 bMagicAddEle,Ele_Earth,15; }
