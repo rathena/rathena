@@ -12696,6 +12696,7 @@
 29151,Aquarius_Stone,Aquarius Stone,6,10,,0,,,,,0xFFFFFFFF,63,2,64,,,,,{ bonus bVit,1; },{},{}
 29152,Scorpio_Stone,Scorpio Stone,6,10,,0,,,,,0xFFFFFFFF,63,2,64,,,,,{ bonus bDex,1; },{},{}
 29153,Taurus_Stone,Taurus Stone,6,10,,0,,,,,0xFFFFFFFF,63,2,64,,,,,{ bonus bLuk,1; },{},{}
+29176,Tenji,Tenji,6,10,,0,,,,,0xFFFFFFFF,63,2,64,,,,,{ bonus2 bAddRace,RC_Insect,15; bonus2 bAddRace,RC_Plant,15; bonus2 bMagicAddRace,RC_Insect,15; bonus2 bMagicAddRace,RC_Plant,15; bonus2 bAddEle,Ele_Wind,15; bonus2 bAddEle,Ele_Earth,15; bonus2 bMagicAddEle,Ele_Wind,15; bonus2 bMagicAddEle,Ele_Earth,15; /*[TODO] Confirm Tenchi bonus [Start]*/ },{},{}
 29310,Racing_RK_1,Racing(Rune Knight) 1Lv,6,20,,0,,,,,,,,,,,,,{},{},{}
 29311,Racing_RK_2,Racing(Rune Knight) 2Lv,6,20,,0,,,,,,,,,,,,,{},{},{}
 29312,Racing_RK_3,Racing(Rune Knight) 3Lv,6,20,,0,,,,,,,,,,,,,{},{},{}
@@ -13446,7 +13447,7 @@
 32231,Schmidt_Insignia_Rigid_Body,King Schmidt's Rigid Body Insignia,4,0,0,200,,10,,1,0xFFFFFFFF,63,2,128,,150,,,{ bonus bMaxHPrate,10; },{},{}
 32232,Schmidt_Insignia_Flash,King Schmidt's Flash Insignia,4,0,0,200,,10,,1,0xFFFFFFFF,63,2,128,,150,,,{ bonus bAspdRate,5; },{},{}
 32233,Schmidt_Insignia_Celestial,King Schmidt's Celestial Insignia,4,0,,200,,10,,1,0xFFFFFFFF,63,2,128,,150,,,{ bonus bLongAtkRate,7; },{},{}
-32234,Warrior's_Ring,Warrior's Ring,4,0,,300,,0,,1,0xFFFFFFFF,63,2,136,,100,,,{ bonus2 bAddClass,Class_All,5; bonus2 bMagicAddEle,Class_All,5; bonus2 bAddEle,Ele_Wind,10; bonus2 bAddEle,Ele_Earth,10; bonus2 bSubEle,Ele_Wind,5; bonus2 bSubEle,Ele_Earth,5; },{},{}
+32234,Warrior's_Ring,Warrior's Ring,4,0,,300,,0,,1,0xFFFFFFFF,63,2,136,,100,,,{ bonus2 bAddClass,Class_All,5; bonus2 bMagicAddClass,Class_All,5; bonus2 bAddEle,Ele_Wind,10; bonus2 bAddEle,Ele_Earth,10; bonus2 bMagicAddEle,Ele_Wind,10; bonus2 bMagicAddEle,Ele_Earth,10; bonus2 bSubEle,Ele_Wind,5; bonus2 bSubEle,Ele_Earth,5; },{},{}
 32237,Celine's_Brooch,Celine's Brooch,4,10,,500,,0,,1,0xFFFFFFFE,63,2,136,,100,0,0,{ bonus bMatkRate,5; bonus bVariableCastrate,-10; },{},{}
 32238,Illusion_Morpheus's_Ring,Illusion Morpheus's Ring,4,20,,100,,0,,1,0xFFFFFFFF,63,2,8,,130,0,0,{ bonus bInt,3; bonus bMaxSPrate,5; },{},{}
 32239,Illusion_Morpheus's_Bracelet,Illusion Morpheus's Bracelet,4,20,,100,,0,,1,0xFFFFFFFF,63,2,128,,130,0,0,{ bonus bInt,3; bonus bMaxSPrate,5; },{},{}
