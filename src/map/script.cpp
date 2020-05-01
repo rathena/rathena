@@ -16756,6 +16756,23 @@ BUILDIN_FUNC(md5)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(getd)
+{
+	char varname[100];
+	const char* buffer;
+	int elem;
+
+	buffer = script_getstr(st, 2);
+
+	if (sscanf(buffer, "%99[^[][%11d]", varname, &elem) < 2)
+		elem = 0;
+
+	// Push the 'pointer' so it's more flexible [Lance]
+	push_val(st->stack, C_NAME, reference_uid(add_str(varname), elem));
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 // [zBuffer] List of dynamic var commands --->
 /**
  * setd "<variable name>",<value>{,<char_id>};
@@ -16780,6 +16797,41 @@ BUILDIN_FUNC(setd)
 		setd_sub_str( st, sd, varname, elem, script_getstr( st, 3 ), NULL );
 	} else {
 		setd_sub_num( st, sd, varname, elem, script_getnum64( st, 3 ), NULL );
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+
+BUILDIN_FUNC(getd2) {
+	char varname[100];
+	const char* buffer = script_getstr(st, 2);
+	int elem = script_getnum(st, 3);
+
+	// Push the 'pointer' so it's more flexible [Lance]
+	push_val(st->stack, C_NAME, reference_uid(add_str(varname), elem));
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(setd2)
+{
+	TBL_PC* sd = NULL;
+	char varname[100];
+	const char* buffer;
+	int elem = script_getnum(st, 3);
+	buffer = script_getstr(st, 2);
+
+	if (not_server_variable(*varname)) {
+		if (!script_charid2sd(4, sd))
+			return SCRIPT_CMD_FAILURE;
+	}
+
+	if (is_string_variable(varname)) {
+		setd_sub_str(st, sd, varname, elem, script_getstr(st, 3), NULL);
+	}
+	else {
+		setd_sub_num(st, sd, varname, elem, script_getnum64(st, 3), NULL);
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -16896,23 +16948,6 @@ BUILDIN_FUNC(escape_sql)
 	esc_str = (char*)aMalloc(len*2+1);
 	Sql_EscapeStringLen(mmysql_handle, esc_str, str, len);
 	script_pushstr(st, esc_str);
-	return SCRIPT_CMD_SUCCESS;
-}
-
-BUILDIN_FUNC(getd)
-{
-	char varname[100];
-	const char *buffer;
-	int elem;
-
-	buffer = script_getstr(st, 2);
-
-	if(sscanf(buffer, "%99[^[][%11d]", varname, &elem) < 2)
-		elem = 0;
-
-	// Push the 'pointer' so it's more flexible [Lance]
-	push_val(st->stack, C_NAME, reference_uid(add_str(varname), elem));
-
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -25308,6 +25343,11 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(cloakoffnpc, "s?"),
 	BUILDIN_DEF(cloakonnpc, "s?"),
 	BUILDIN_DEF(isnpccloaked, "s?"),
+
+	// icero
+	BUILDIN_DEF(getd2, "si"),
+	BUILDIN_DEF(setd2, "siv?"),
+
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
