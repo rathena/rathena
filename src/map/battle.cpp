@@ -4425,9 +4425,9 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case GN_SPORE_EXPLOSION:
-			if (wd->miscflag & 2048)
-				skillratio += 200; // Target
-			skillratio += -100 + 180 * skill_lv + sstatus->int_;
+			skillratio += -100 + 180 * skill_lv;
+			if (wd->miscflag & 8)
+				skillratio += 200 + sstatus->int_; // Target receives extra damage
 			RE_LVL_DMOD(100);
 			break;
 		case GN_WALLOFTHORN:
