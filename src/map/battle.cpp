@@ -1016,6 +1016,63 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	status_change_entry *sce;
 	int flag = d->flag;
 
+	// SC Types that must be first because they may or may not block damage
+	if ((sce = sc->data[SC_KYRIE]) && damage > 0) {
+		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		if (flag & BF_WEAPON || skill_id == TF_THROWSTONE) {
+			if (sce->val2 >= 0)
+				damage = 0;
+			else
+				damage = -sce->val2;
+		}
+		if ((--sce->val3) <= 0 || (sce->val2 <= 0) || skill_id == AL_HOLYLIGHT)
+			status_change_end(target, SC_KYRIE, INVALID_TIMER);
+	}
+
+	if ((sce = sc->data[SC_P_ALTER]) && damage > 0) {
+		clif_specialeffect(target, EF_GUARD, AREA);
+		sce->val3 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		if (sce->val3 >= 0)
+			damage = 0;
+		else
+			damage = -sce->val3;
+		if (sce->val3 <= 0)
+			status_change_end(target, SC_P_ALTER, INVALID_TIMER);
+	}
+
+	if ((sce = sc->data[SC_TUNAPARTY]) && damage > 0) {
+		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		if (sce->val2 >= 0)
+			damage = 0;
+		else
+			damage = -sce->val2;
+		if (sce->val2 <= 0)
+			status_change_end(target, SC_TUNAPARTY, INVALID_TIMER);
+	}
+
+	if ((sce = sc->data[SC_DIMENSION1]) && damage > 0) {
+		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		if (sce->val2 >= 0)
+			damage = 0;
+		else
+			damage = -sce->val2;
+		if (sce->val2 <= 0)
+			status_change_end(target, SC_DIMENSION1, INVALID_TIMER);
+	}
+
+	if ((sce = sc->data[SC_DIMENSION2]) && damage > 0) {
+		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
+		if (sce->val2 >= 0)
+			damage = 0;
+		else
+			damage = -sce->val2;
+		if (sce->val2 <= 0)
+			status_change_end(target, SC_DIMENSION2, INVALID_TIMER);
+	}
+
+	if (damage == 0)
+		return false;
+
 	// ATK_BLOCK Type
 	if ((sce = sc->data[SC_SAFETYWALL]) && (flag&(BF_SHORT | BF_MAGIC)) == BF_SHORT) {
 		skill_unit_group *group = skill_id2group(sce->val3);
@@ -1108,8 +1165,6 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 		return false;
 	}
 
-	map_session_data *sd = map_id2sd(target->id);
-
 	// ATK_MISS Type
 	if ((sce = sc->data[SC_AUTOGUARD]) && flag&BF_WEAPON && rnd() % 100 < sce->val2 && !skill_get_inf2(skill_id, INF2_IGNOREAUTOGUARD)) {
 		status_change_entry *sce_d = sc->data[SC_DEVOTION];
@@ -1123,6 +1178,9 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			delay = 200;
 		else
 			delay = 100;
+
+		map_session_data *sd = map_id2sd(target->id);
+
 		if (sd && pc_issit(sd))
 			pc_setstand(sd, true);
 		if (sce_d && (d_bl = map_id2bl(sce_d->val1)) &&
@@ -1180,6 +1238,8 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	}
 
 	if (sc->data[SC_DODGE] && (flag&BF_LONG || sc->data[SC_SPURT]) && rnd() % 100 < 20) {
+		map_session_data *sd = map_id2sd(target->id);
+
 		if (sd && pc_issit(sd))
 			pc_setstand(sd, true); //Stand it to dodge.
 		clif_skill_nodamage(target, target, TK_DODGE, 1, 1);
@@ -1486,60 +1546,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			status_change_end(bl, SC_BITE, INVALID_TIMER);
 			status_change_end(bl, SC_ANKLE, INVALID_TIMER);
 			status_change_end(bl, SC_ELECTRICSHOCKER, INVALID_TIMER);
-		}
-
-		//Finally Kyrie because it may, or not, reduce damage to 0.
-		if((sce = sc->data[SC_KYRIE]) && damage > 0){
-			sce->val2 -= (int)cap_value(damage,INT_MIN,INT_MAX);
-			if(flag&BF_WEAPON || skill_id == TF_THROWSTONE){
-				if(sce->val2>=0)
-					damage=0;
-				else
-				  	damage=-sce->val2;
-			}
-			if((--sce->val3)<=0 || (sce->val2<=0) || skill_id == AL_HOLYLIGHT)
-				status_change_end(bl, SC_KYRIE, INVALID_TIMER);
-		}
-
-		if ((sce = sc->data[SC_P_ALTER]) && damage > 0) {
-			clif_specialeffect(bl, EF_GUARD, AREA);
-			sce->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX);
-			if (sce->val3 >= 0)
-				damage = 0;
-			else
-				damage = -sce->val3;
-			if (sce->val3 <= 0)
-				status_change_end(bl, SC_P_ALTER, INVALID_TIMER);
-		}
-
-		if ((sce = sc->data[SC_TUNAPARTY]) && damage > 0) {
-			sce->val2 -= (int)cap_value(damage, INT_MIN, INT_MAX);
-			if (sce->val2 >= 0)
-				damage = 0;
-			else
-			  	damage = -sce->val2;
-			if (sce->val2 <= 0)
-				status_change_end(bl, SC_TUNAPARTY, INVALID_TIMER);
-		}
-
-		if ((sce = sc->data[SC_DIMENSION1]) && damage > 0) {
-			sce->val2 -= (int)cap_value(damage, INT_MIN, INT_MAX);
-			if (sce->val2 >= 0)
-				damage = 0;
-			else
-				damage = -sce->val2;
-			if (sce->val2 <= 0)
-				status_change_end(bl, SC_DIMENSION1, INVALID_TIMER);
-		}
-
-		if ((sce = sc->data[SC_DIMENSION2]) && damage > 0) {
-			sce->val2 -= (int)cap_value(damage, INT_MIN, INT_MAX);
-			if (sce->val2 >= 0)
-				damage = 0;
-			else
-				damage = -sce->val2;
-			if (sce->val2 <= 0)
-				status_change_end(bl, SC_DIMENSION2, INVALID_TIMER);
 		}
 
 		if (!damage)
