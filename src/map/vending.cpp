@@ -350,8 +350,11 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 		i++; // item successfully added
 	}
 
-	if( i != j )
-		clif_displaymessage (sd->fd, msg_txt(sd,266)); //"Some of your items cannot be vended and were removed from the shop."
+	if (i != j) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 266)); //"Some of your items cannot be vended and were removed from the shop."
+		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0); // custom reply packet
+		return 5;
+	}
 
 	if( i == 0 ) { // no valid item found
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0); // custom reply packet
