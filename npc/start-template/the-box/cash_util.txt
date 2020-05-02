@@ -1,0 +1,35 @@
+function	script	IsCashEnough	{
+	if(#CASHPOINTS >= getarg(0))
+	return;
+	else{
+		freeloop(0);
+		clear;
+		if(getarg(1) != "")
+		mes getarg(1);
+		else
+		mes "[ระบบ]";
+		mes "ต้องการ: " + getarg(0) + " Cash";
+		mes " ";
+		callfunc("MyCash",0);
+		cutin "",255;
+		close2;
+		end;
+	}
+}
+
+function	script	MyCash	{
+	if(getarg(0) <= 0)
+	mes "^69149eคุณมี: " + #CASHPOINTS + " Cash^000000";
+	dispbottom "คุณมี: " + #CASHPOINTS + " Cash";
+	return;
+}
+
+function	script	AddMyCash	{
+	#CASHPOINTS += getarg(0);
+	return;
+}
+
+function	script	UseMyCash	{
+	#CASHPOINTS -= getarg(0);
+	return;
+}

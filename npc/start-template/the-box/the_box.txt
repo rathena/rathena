@@ -1,0 +1,805 @@
+function	script	IsTypeItem	{
+	.@item = getarg(0);
+	.@type = getarg(1);
+	if(.@type == 0){//isETC
+		if(getiteminfo(.@item,2)== 3
+				&& .@item!= 984//Oridecon
+				&& .@item!= 985//Elunium
+				&& .@item!= 706//Four Leaf Clover
+				&& .@item!= 6379//Cash Coin
+				&& .@item!= 1010//Phracon
+				&& .@item!= 1011//Emveretarcon
+				&& .@item!= 7559//THE BOX Key
+				&& .@item!= 6418//Casino Coin
+				)
+		return true;
+		else if(getiteminfo(.@item,2)== 6 && !compare(getitemname(.@item),"Card"))
+		return true;
+		else if(getiteminfo(.@item,2)== 10)
+		return true;
+	}
+	else if(.@type == 1){//Healing, Usable
+		if(getiteminfo(.@item,2)== 0
+				|| getiteminfo(.@item,2)== 2
+				|| getiteminfo(.@item,2)== 11
+				|| getiteminfo(.@item,2)== 18)
+		return true;
+	}
+	else if(.@type == 2){//Etc item
+		if(getiteminfo(.@item,2)== 3)
+		return true;
+	}
+	else if(.@type == 3){//Armor/Garment/Boots/Headgear/Accessory
+		if(getiteminfo(.@item,2)== 4)
+		return true;
+	}
+	else if(.@type == 4){//Weapon
+		if(getiteminfo(.@item,2)== 5)
+		return true;
+	}
+	else if(.@type == 5){//Card
+		if(getiteminfo(.@item,2)== 6)
+		return true;
+	}
+	else if(.@type == 6){//Pet egg
+		if(getiteminfo(.@item,2)== 7)
+		return true;
+	}
+	else if(.@type == 7){//Pet equipment
+		if(getiteminfo(.@item,2)== 8)
+		return true;
+	}
+	else if(.@type == 8){//Ammo
+		if(getiteminfo(.@item,2)== 10)
+		return true;
+	}
+	else if(.@type == 9){//Shadow Equipment
+		if(getiteminfo(.@item,2)== 12)
+		return true;
+	}
+	return false;
+}
+
+function	script	CurrentBoonType	{
+	if($boonType == 1)
+	return "ยาและของกดใช้";
+	else if($boonType == 2)
+	return "ของที่ใช้ไม่ได้";
+	else if($boonType == 3)
+	return "อุปกรณ์สวมใส่";
+	else if($boonType == 4)
+	return "อาวุธ";
+	else if($boonType == 5)
+	return "การ์ด";
+	else if($boonType == 6)
+	return "ไข่สัตว์เลี้ยง";
+	else if($boonType == 7)
+	return "อุปกรณ์สัตว์เลี้ยง";
+	else if($boonType == 8)
+	return "กระสุน";
+	else if($boonType == 9)
+	return "อุปกรณ์สวมใส่ Shadow";
+	return "ได้ของทุกอย่างเท่า ๆ กัน";
+}
+
+prontera,147,171,6	script	กล่องปริศนาที่ 1	10033,{
+	.@npcName$ = "[กล่องปริศนาที่ 1]";
+	.@lowestItem = 500;
+	.@highestItemId = 32351;
+	.@etcCount = 0;
+	.@targetItem = 7559;
+	.@luckyItem = 706;
+	mes "ใช้ 1 " +getitemname(7559);
+	getinventorylist;
+	.@maxCount = 100 - @inventorylist_count;
+	if(.@maxCount <= 0){
+		clear;
+		mes "โปรดเคลียร์ช่องเก็บของก่อน";
+		close;
+	}
+	mes "คุณมีไอเท็มในตัวละคร: " + @inventorylist_count + "/100";
+	mes " ";
+	mes "โอกาสได้รับ ภายในชั่วโมงนี้: ^4286f4" +callfunc("CurrentBoonType") + "^000000";
+	mes " ";
+	if(#isKillETCItem)
+	mes "•คุณ ^009702ไม่รับ^000000 ของที่ใช้ไม่ได้";
+	else
+	mes "•คุณ ^009702รับ^000000 ของที่ใช้ไม่ได้";
+	next;
+	menu "แลก 1 อัน",L_1,"แลกทั้งหมด",L_2,"ตั้งค่า",L_3,"เพิ่มแต้มบุญ",L_6,"เพิ่ม % Drop",L_AddDropRate,"เพิ่มอัตราการเกิดมอนฯ",L_FasterMonsterSpawnRate,"แลก Potion",L_Potion,"แลก Slim Potion",L_SlimPotion;
+	
+	L_FasterMonsterSpawnRate:
+	mes "ต้องการทำให้มอนฯ เกิดเร็วขึ้นกี่เท่า";
+	mes "^4d71ff• อัตราจะเหลือเท่าเดิมทุก ๆ ต้นชั่วโมง^000000";
+	mes "^4d71ff• หากมีคนกด x ที่มากกว่าไปแล้ว แล้วเรากด x น้อยกว่า จะกดไม่ได้และไม่เสียอะไร^000000";
+	next;
+	menu "1.5 เท่า (25 Cash)",L_MX1,"2 เท่า (50 Cash)",L_MX2;
+	
+	L_MX1:
+	if($addSpawnRateLevel>= 1){
+		mes "มีคนกด x ที่ระดับสูงกว่าหรือเท่านี้ให้แล้ว";
+		close;
+	}
+	.@cashToAddSpawn = 25;
+	callfunc("IsCashEnough",.@cashToAddSpawn,.@npcName$);
+	$addSpawnRateLevel = 1;
+	setbattleflag("mob_spawn_delay",75,false);
+	setbattleflag("plant_spawn_delay",75,false);
+	setbattleflag("boss_spawn_delay",75,false);
+	callfunc("UseMyCash",.@cashToAddSpawn);
+	callfunc("MyCash",1);
+	mes "เรียบร้อย";
+	announce "ผู้เพิ่มอัตราการเกิดมอนฯ: " +strcharinfo(0) + " เพิ่ม 1.5 เท่าภายในชั่วโมงนี้!",bc_all,0xff7130;
+	close;
+	end;
+	
+	L_MX2:
+	if($addSpawnRateLevel>= 2){
+		mes "มีคนกด x ที่ระดับสูงกว่าหรือเท่านี้ให้แล้ว";
+		close;
+	}
+	.@cashToAddSpawn = 50;
+	callfunc("IsCashEnough",.@cashToAddSpawn,.@npcName$);
+	$addSpawnRateLevel = 2;
+	setbattleflag("mob_spawn_delay",50,false);
+	setbattleflag("plant_spawn_delay",50,false);
+	setbattleflag("boss_spawn_delay",50,false);
+	callfunc("UseMyCash",.@cashToAddSpawn);
+	callfunc("MyCash",1);
+	mes "เรียบร้อย";
+	announce "ผู้เพิ่มอัตราการเกิดมอนฯ: " +strcharinfo(0) + " เพิ่ม " + $addSpawnRateLevel + " เท่าภายในชั่วโมงนี้!",bc_all,0xff7130;
+	close;
+	end;
+
+	L_AddDropRate:
+	mes "ต้องการเพิ่มอัตราการดรอปกี่เท่า";
+	mes "^4d71ff• ไม่ทับกับสิ่งใด ๆ เลยเช็คได้โดยพิมพ์ @mi 1039 ในช่องสนทนา^000000";
+	mes "^4d71ff• อัตราจะเหลือเท่าเดิมทุก ๆ ต้นชั่วโมง^000000";
+	mes "^4d71ff• หากมีคนกด x ที่มากกว่าไปแล้ว แล้วเรากด x น้อยกว่า จะกดไม่ได้และไม่เสียอะไร^000000";
+	next;
+	menu "2 เท่า (5 Cash)",L_X2,"3 เท่า (25 Cash)",L_X3,"4 เท่า (50 Cash)",L_X4,"5 เท่า (100 Cash)",L_X5,"6 เท่า (200 Cash)",L_X6,"7 เท่า (250 Cash)",L_X7,"8 เท่า (300 Cash)",L_X8,"9 เท่า (350 Cash)",L_X9,"10 เท่า (400 Cash)",L_X10;
+	
+	L_X2:
+	if($addDropRateLevel>= 1){
+		mes "มีคนกด x ที่ระดับสูงกว่าหรือเท่านี้ให้แล้ว";
+		close;
+	}
+	.@cashToAddDrop = 5;
+	callfunc("IsCashEnough",.@cashToAddDrop,.@npcName$);
+	$addDropRateLevel = 1;
+	setbattleflag("item_rate_common",200,true);
+	setbattleflag("item_rate_common_boss",200,true);
+	setbattleflag("item_rate_common_mvp",200,true);
+	callfunc("UseMyCash",.@cashToAddDrop);
+	callfunc("MyCash",1);
+	mes "เรียบร้อย";
+	announce "ผู้เพิ่มอัตราการ Drop: " +strcharinfo(0) + " เพิ่มอัตรา Drop " + (1 + $addDropRateLevel) + " เท่าภายในชั่วโมงนี้!",bc_all,0xff7130;
+	close;
+	end;
+	L_X3:
+	if($addDropRateLevel>= 2){
+		mes "มีคนกด x ที่ระดับสูงกว่าหรือเท่านี้ให้แล้ว";
+		close;
+	}
+	.@cashToAddDrop = 25;
+	callfunc("IsCashEnough",.@cashToAddDrop,.@npcName$);
+	$addDropRateLevel = 2;
+	setbattleflag("item_rate_common",300,true);
+	setbattleflag("item_rate_common_boss",300,true);
+	setbattleflag("item_rate_common_mvp",300,true);
+	callfunc("UseMyCash",.@cashToAddDrop);
+	callfunc("MyCash",1);
+	mes "เรียบร้อย";
+	announce "ผู้เพิ่มอัตราการ Drop: " +strcharinfo(0) + " เพิ่มอัตรา Drop " + (1 + $addDropRateLevel) + " เท่าภายในชั่วโมงนี้!",bc_all,0xff7130;
+	close;
+	end;
+	L_X4:
+	if($addDropRateLevel>= 3){
+		mes "มีคนกด x ที่ระดับสูงกว่าหรือเท่านี้ให้แล้ว";
+		close;
+	}
+	.@cashToAddDrop = 50;
+	callfunc("IsCashEnough",.@cashToAddDrop,.@npcName$);
+	$addDropRateLevel = 3;
+	setbattleflag("item_rate_common",400,true);
+	setbattleflag("item_rate_common_boss",400,true);
+	setbattleflag("item_rate_common_mvp",400,true);
+	callfunc("UseMyCash",.@cashToAddDrop);
+	callfunc("MyCash",1);
+	mes "เรียบร้อย";
+	announce "ผู้เพิ่มอัตราการ Drop: " +strcharinfo(0) + " เพิ่มอัตรา Drop " + (1 + $addDropRateLevel) + " เท่าภายในชั่วโมงนี้!",bc_all,0xff7130;
+	close;
+	end;
+	L_X5:
+	if($addDropRateLevel>= 4){
+		mes "มีคนกด x ที่ระดับสูงกว่าหรือเท่านี้ให้แล้ว";
+		close;
+	}
+	.@cashToAddDrop = 100;
+	callfunc("IsCashEnough",.@cashToAddDrop,.@npcName$);
+	$addDropRateLevel = 4;
+	setbattleflag("item_rate_common",500,true);
+	setbattleflag("item_rate_common_boss",500,true);
+	setbattleflag("item_rate_common_mvp",500,true);
+	callfunc("UseMyCash",.@cashToAddDrop);
+	callfunc("MyCash",1);
+	mes "เรียบร้อย";
+	announce "ผู้เพิ่มอัตราการ Drop: " +strcharinfo(0) + " เพิ่มอัตรา Drop " + (1 + $addDropRateLevel) + " เท่าภายในชั่วโมงนี้!",bc_all,0xff7130;
+	close;
+	end;
+	L_X6:
+	if($addDropRateLevel>= 5){
+		mes "มีคนกด x ที่ระดับสูงกว่าหรือเท่านี้ให้แล้ว";
+		close;
+	}
+	.@cashToAddDrop = 200;
+	callfunc("IsCashEnough",.@cashToAddDrop,.@npcName$);
+	$addDropRateLevel = 5;
+	setbattleflag("item_rate_common",600,true);
+	setbattleflag("item_rate_common_boss",600,true);
+	setbattleflag("item_rate_common_mvp",600,true);
+	callfunc("UseMyCash",.@cashToAddDrop);
+	callfunc("MyCash",1);
+	mes "เรียบร้อย";
+	announce "ผู้เพิ่มอัตราการ Drop: " +strcharinfo(0) + " เพิ่มอัตรา Drop " + (1 + $addDropRateLevel) + " เท่าภายในชั่วโมงนี้!",bc_all,0xff7130;
+	close;
+	end;
+	L_X7:
+	if($addDropRateLevel>= 6){
+		mes "มีคนกด x ที่ระดับสูงกว่าหรือเท่านี้ให้แล้ว";
+		close;
+	}
+	.@cashToAddDrop = 250;
+	callfunc("IsCashEnough",.@cashToAddDrop,.@npcName$);
+	$addDropRateLevel = 6;
+	setbattleflag("item_rate_common",700,true);
+	setbattleflag("item_rate_common_boss",700,true);
+	setbattleflag("item_rate_common_mvp",700,true);
+	callfunc("UseMyCash",.@cashToAddDrop);
+	callfunc("MyCash",1);
+	mes "เรียบร้อย";
+	announce "ผู้เพิ่มอัตราการ Drop: " +strcharinfo(0) + " เพิ่มอัตรา Drop " + (1 + $addDropRateLevel) + " เท่าภายในชั่วโมงนี้!",bc_all,0xff7130;
+	close;
+	end;
+	L_X8:
+	if($addDropRateLevel>= 7){
+		mes "มีคนกด x ที่ระดับสูงกว่าหรือเท่านี้ให้แล้ว";
+		close;
+	}
+	.@cashToAddDrop = 300;
+	callfunc("IsCashEnough",.@cashToAddDrop,.@npcName$);
+	$addDropRateLevel = 7;
+	setbattleflag("item_rate_common",800,true);
+	setbattleflag("item_rate_common_boss",800,true);
+	setbattleflag("item_rate_common_mvp",800,true);
+	callfunc("UseMyCash",.@cashToAddDrop);
+	callfunc("MyCash",1);
+	mes "เรียบร้อย";
+	announce "ผู้เพิ่มอัตราการ Drop: " +strcharinfo(0) + " เพิ่มอัตรา Drop " + (1 + $addDropRateLevel) + " เท่าภายในชั่วโมงนี้!",bc_all,0xff7130;
+	close;
+	end;
+	L_X9:
+	if($addDropRateLevel>= 8){
+		mes "มีคนกด x ที่ระดับสูงกว่าหรือเท่านี้ให้แล้ว";
+		close;
+	}
+	.@cashToAddDrop = 350;
+	callfunc("IsCashEnough",.@cashToAddDrop,.@npcName$);
+	$addDropRateLevel = 8;
+	setbattleflag("item_rate_common",900,true);
+	setbattleflag("item_rate_common_boss",900,true);
+	setbattleflag("item_rate_common_mvp",900,true);
+	callfunc("UseMyCash",.@cashToAddDrop);
+	callfunc("MyCash",1);
+	mes "เรียบร้อย";
+	announce "ผู้เพิ่มอัตราการ Drop: " +strcharinfo(0) + " เพิ่มอัตรา Drop " + (1 + $addDropRateLevel) + " เท่าภายในชั่วโมงนี้!",bc_all,0xff7130;
+	close;
+	end;
+	L_X10:
+	if($addDropRateLevel>= 9){
+		mes "มีคนกด x ที่ระดับสูงกว่าหรือเท่านี้ให้แล้ว";
+		close;
+	}
+	.@cashToAddDrop = 400;
+	callfunc("IsCashEnough",.@cashToAddDrop,.@npcName$);
+	$addDropRateLevel = 9;
+	setbattleflag("item_rate_common",1000,true);
+	setbattleflag("item_rate_common_boss",1000,true);
+	setbattleflag("item_rate_common_mvp",1000,true);
+	callfunc("UseMyCash",.@cashToAddDrop);
+	callfunc("MyCash",1);
+	mes "เรียบร้อย";
+	announce "ผู้เพิ่มอัตราการ Drop: " +strcharinfo(0) + " เพิ่มอัตรา Drop " + (1 + $addDropRateLevel) + " เท่าภายในชั่วโมงนี้!",bc_all,0xff7130;
+	close;
+	end;
+	
+	L_Potion:
+	mes "เลือกชนิด Potion";
+	next;
+	menu "แลก Red Potion",L_RedPotion,"แลก Orange Potion",L_OrangePotion,"แลก Yellow Potion",L_YellowPotion,"แลก White Potion",L_WhitePotion,"แลก Blue Potion",L_BluePotion,"แลก Green Potion",L_GreenPotion;
+	
+	L_SlimPotion:
+	mes "เลือกชนิด Slim Potion";
+	next;
+	menu "แลก Red Slim Potion",L_RedSlimPotion,"แลก Yellow Slim Potion",L_YellowSlimPotion,"แลก White Slim Potion",L_WhiteSlimPotion;
+	
+	L_WhiteSlimPotion:
+	mes "โปรดใส่จำนวน";
+	mes "อัตราแลก: ^0097021 THE BOX Key : 1 White Slim Potion^000000";
+	mes "ไม่แลกใส่ 0";
+	input .@potionExchange;
+	if(.@potionExchange <= 0)
+	close;
+	if(countitem(.@targetItem) < .@potionExchange)
+	{
+		mes "คุณมีของไม่พอแลก";
+		close;
+	}
+	delitem .@targetItem,.@potionExchange;
+	getitem 547,.@potionExchange;
+	mes "เรียบร้อย";
+	close;
+	
+	L_YellowSlimPotion:
+	mes "โปรดใส่จำนวน";
+	mes "อัตราแลก: ^0097021 THE BOX Key : 1 Yellow Slim Potion^000000";
+	mes "ไม่แลกใส่ 0";
+	input .@potionExchange;
+	if(.@potionExchange <= 0)
+	close;
+	if(countitem(.@targetItem) < .@potionExchange)
+	{
+		mes "คุณมีของไม่พอแลก";
+		close;
+	}
+	delitem .@targetItem,.@potionExchange;
+	getitem 546,.@potionExchange;
+	mes "เรียบร้อย";
+	close;
+	
+	L_RedSlimPotion:
+	mes "โปรดใส่จำนวน";
+	mes "อัตราแลก: ^0097021 THE BOX Key : 1 Red Slim Potion^000000";
+	mes "ไม่แลกใส่ 0";
+	input .@potionExchange;
+	if(.@potionExchange <= 0)
+	close;
+	if(countitem(.@targetItem) < .@potionExchange)
+	{
+		mes "คุณมีของไม่พอแลก";
+		close;
+	}
+	delitem .@targetItem,.@potionExchange;
+	getitem 545,.@potionExchange;
+	mes "เรียบร้อย";
+	close;
+	
+	L_GreenPotion:
+	mes "โปรดใส่จำนวน";
+	mes "อัตราแลก: ^0097021 THE BOX Key : 1 Green Potion^000000";
+	mes "ไม่แลกใส่ 0";
+	input .@potionExchange;
+	if(.@potionExchange <= 0)
+	close;
+	if(countitem(.@targetItem) < .@potionExchange)
+	{
+		mes "คุณมีของไม่พอแลก";
+		close;
+	}
+	delitem .@targetItem,.@potionExchange;
+	getitem 506,.@potionExchange;
+	mes "เรียบร้อย";
+	close;
+	
+	L_BluePotion:
+	mes "โปรดใส่จำนวน";
+	mes "อัตราแลก: ^0097021 THE BOX Key : 1 Blue Potion^000000";
+	mes "ไม่แลกใส่ 0";
+	input .@bluePotionExchange;
+	if(.@bluePotionExchange <= 0)
+	close;
+	if(countitem(.@targetItem) < .@bluePotionExchange)
+	{
+		mes "คุณมีของไม่พอแลก";
+		close;
+	}
+	delitem .@targetItem,.@bluePotionExchange;
+	getitem 505,.@bluePotionExchange;
+	mes "เรียบร้อย";
+	close;
+	
+	L_WhitePotion:
+	mes "โปรดใส่จำนวน";
+	mes "อัตราแลก: ^0097021 THE BOX Key : 1 White Potion^000000";
+	mes "ไม่แลกใส่ 0";
+	input .@potionExchange;
+	if(.@potionExchange <= 0)
+	close;
+	if(countitem(.@targetItem) < .@potionExchange)
+	{
+		mes "คุณมีของไม่พอแลก";
+		close;
+	}
+	delitem .@targetItem,.@potionExchange;
+	getitem 504,.@potionExchange;
+	mes "เรียบร้อย";
+	close;
+	
+	L_YellowPotion:
+	mes "โปรดใส่จำนวน";
+	mes "อัตราแลก: ^0097021 THE BOX Key : 1 Yellow Potion^000000";
+	mes "ไม่แลกใส่ 0";
+	input .@potionExchange;
+	if(.@potionExchange <= 0)
+	close;
+	if(countitem(.@targetItem) < .@potionExchange)
+	{
+		mes "คุณมีของไม่พอแลก";
+		close;
+	}
+	delitem .@targetItem,.@potionExchange;
+	getitem 503,.@potionExchange;
+	mes "เรียบร้อย";
+	close;
+	
+	L_OrangePotion:
+	mes "โปรดใส่จำนวน";
+	mes "อัตราแลก: ^0097021 THE BOX Key : 1 Orange Potion^000000";
+	mes "ไม่แลกใส่ 0";
+	input .@potionExchange;
+	if(.@potionExchange <= 0)
+	close;
+	if(countitem(.@targetItem) < .@potionExchange)
+	{
+		mes "คุณมีของไม่พอแลก";
+		close;
+	}
+	delitem .@targetItem,.@potionExchange;
+	getitem 502,.@potionExchange;
+	mes "เรียบร้อย";
+	close;
+	
+	L_RedPotion:
+	mes "โปรดใส่จำนวน";
+	mes "อัตราแลก: ^0097021 THE BOX Key : 1 Red Potion^000000";
+	mes "ไม่แลกใส่ 0";
+	input .@potionExchange;
+	if(.@potionExchange <= 0)
+	close;
+	if(countitem(.@targetItem) < .@potionExchange)
+	{
+		mes "คุณมีของไม่พอแลก";
+		close;
+	}
+	delitem .@targetItem,.@potionExchange;
+	getitem 501,.@potionExchange;
+	mes "เรียบร้อย";
+	close;
+
+	L_3:
+	mes "โปรดเลือกการตั้งค่า";
+	next;
+	menu "ฉันต้องการรับของที่ใช้ไม่ได้",L_4,"ฉันไม่ต้องการรับของที่ใช้ไม่ได้",L_5;
+	
+	L_4:
+	mes "^2e76e6ตั้งค่า:^000000 รับของที่ใช้ไม่ได้";
+	mes "^30bb0bสถานะ:^000000 รับ";
+	mes " ";
+	mes "ปล.ของจำเป็นสำหรับโลกของ THE BOX ทุกอย่างเช่น Elunium";
+	mes "ที่อยู่ในหมวดกดใช้ไม่ได้จะยังคง รับได้ปกติหาก สถานะเป็น 'ไม่รับ'";
+	#isKillETCItem = 0;
+	close;
+	
+	L_5:
+	mes "^2e76e6ตั้งค่า:^000000 รับของที่ใช้ไม่ได้";
+	mes "^30bb0bสถานะ:^000000 ไม่รับ";
+	mes " ";
+	mes "ปล.ของจำเป็นสำหรับโลกของ THE BOX ทุกอย่างเช่น Elunium";
+	mes "ที่อยู่ในหมวดกดใช้ไม่ได้จะยังคง รับได้ปกติหาก สถานะเป็น 'ไม่รับ'";
+	#isKillETCItem = 1;
+	close;
+	
+	L_6:
+	mes "ใช้ 5 Cash";
+	mes "ผู้อุทิศบุญได้รับ: ^30bb0bDROP คูณ 2 จำนวน 1 ชั่วโมง^000000";
+	mes "ข้าน้อยขอพรว่า.. ให้ภายในชั่วโมงนี้อุทิศแด่";
+	next;
+	menu "ยาและของกดใช้",L_BOON1
+	,"ของที่ใช้ไม่ได้",L_BOON2
+	,"อุปกรณ์สวมใส่",L_BOON3
+	,"อาวุธ",L_BOON4
+	,"การ์ด",L_BOON5
+	,"ไข่สัตว์เลี้ยง",L_BOON6
+	,"อุปกรณ์สัตว์เลี้ยง",L_BOON7
+	,"กระสุน",L_BOON8
+	,"อุปกรณ์สวมใส่ Shadow",L_BOON9
+	,"เอาทุกอย่างเหมือนเดิม",L_BOON10;
+	
+	L_BOON1:
+	callfunc("IsCashEnough",5,.@npcName$);
+	callfunc("UseMyCash",5);
+	callfunc("MyCash",1);
+	$boonType = 1;
+	sc_start SC_ITEMBOOST,3600000,200;
+	mes "เรียบร้อย";
+	announce "ผู้อุทิศบุญกุศล: " +strcharinfo(0) + " | ได้อุทิศว่า: 'ข้าน้อยขอพรว่า.. ให้ภายในชั่วโมงนี้อุทิศแด่ ยาและของกดใช้'",bc_all,0xff7130;
+	close;
+	
+	L_BOON2:
+	callfunc("IsCashEnough",5,.@npcName$);
+	callfunc("UseMyCash",5);
+	callfunc("MyCash",1);
+	$boonType = 2;
+	sc_start SC_ITEMBOOST,3600000,200;
+	mes "เรียบร้อย";
+	announce "ผู้อุทิศบุญกุศล: " +strcharinfo(0) + " | ได้อุทิศว่า: 'ข้าน้อยขอพรว่า.. ให้ภายในชั่วโมงนี้อุทิศแด่ ของที่ใช้ไม่ได้'",bc_all,0xff7130;
+	close;
+	L_BOON3:
+	callfunc("IsCashEnough",5,.@npcName$);
+	callfunc("UseMyCash",5);
+	callfunc("MyCash",1);
+	$boonType = 3;
+	sc_start SC_ITEMBOOST,3600000,200;
+	mes "เรียบร้อย";
+	announce "ผู้อุทิศบุญกุศล: " +strcharinfo(0) + " | ได้อุทิศว่า: 'ข้าน้อยขอพรว่า.. ให้ภายในชั่วโมงนี้อุทิศแด่ อุปกรณ์สวมใส่'",bc_all,0xff7130;
+	close;
+	L_BOON4:
+	callfunc("IsCashEnough",5,.@npcName$);
+	callfunc("UseMyCash",5);
+	callfunc("MyCash",1);
+	$boonType = 4;
+	sc_start SC_ITEMBOOST,3600000,200;
+	mes "เรียบร้อย";
+	announce "ผู้อุทิศบุญกุศล: " +strcharinfo(0) + " | ได้อุทิศว่า: 'ข้าน้อยขอพรว่า.. ให้ภายในชั่วโมงนี้อุทิศแด่ อาวุธ'",bc_all,0xff7130;
+	close;
+	L_BOON5:
+	callfunc("IsCashEnough",5,.@npcName$);
+	callfunc("UseMyCash",5);
+	callfunc("MyCash",1);
+	$boonType = 5;
+	sc_start SC_ITEMBOOST,3600000,200;
+	mes "เรียบร้อย";
+	announce "ผู้อุทิศบุญกุศล: " +strcharinfo(0) + " | ได้อุทิศว่า: 'ข้าน้อยขอพรว่า.. ให้ภายในชั่วโมงนี้อุทิศแด่ การ์ด'",bc_all,0xff7130;
+	close;
+	L_BOON6:
+	callfunc("IsCashEnough",5,.@npcName$);
+	callfunc("UseMyCash",5);
+	callfunc("MyCash",1);
+	$boonType = 6;
+	sc_start SC_ITEMBOOST,3600000,200;
+	mes "เรียบร้อย";
+	announce "ผู้อุทิศบุญกุศล: " +strcharinfo(0) + " | ได้อุทิศว่า: 'ข้าน้อยขอพรว่า.. ให้ภายในชั่วโมงนี้อุทิศแด่ ไข่สัตว์เลี้ยง'",bc_all,0xff7130;
+	close;
+	L_BOON7:
+	callfunc("IsCashEnough",5,.@npcName$);
+	callfunc("UseMyCash",5);
+	callfunc("MyCash",1);
+	$boonType = 7;
+	sc_start SC_ITEMBOOST,3600000,200;
+	mes "เรียบร้อย";
+	announce "ผู้อุทิศบุญกุศล: " +strcharinfo(0) + " | ได้อุทิศว่า: 'ข้าน้อยขอพรว่า.. ให้ภายในชั่วโมงนี้อุทิศแด่ อุปกรณ์สัตว์เลี้ยง'",bc_all,0xff7130;
+	close;
+	L_BOON8:
+	callfunc("IsCashEnough",5,.@npcName$);
+	callfunc("UseMyCash",5);
+	callfunc("MyCash",1);
+	$boonType = 8;
+	sc_start SC_ITEMBOOST,3600000,200;
+	mes "เรียบร้อย";
+	announce "ผู้อุทิศบุญกุศล: " +strcharinfo(0) + " | ได้อุทิศว่า: 'ข้าน้อยขอพรว่า.. ให้ภายในชั่วโมงนี้อุทิศแด่ กระสุน'",bc_all,0xff7130;
+	close;
+	L_BOON9:
+	callfunc("IsCashEnough",5,.@npcName$);
+	callfunc("UseMyCash",5);
+	callfunc("MyCash",1);
+	$boonType = 9;
+	sc_start SC_ITEMBOOST,3600000,200;
+	mes "เรียบร้อย";
+	announce "ผู้อุทิศบุญกุศล: " +strcharinfo(0) + " | ได้อุทิศว่า: 'ข้าน้อยขอพรว่า.. ให้ภายในชั่วโมงนี้อุทิศแด่ อุปกรณ์สวมใส่ Shadow'",bc_all,0xff7130;
+	close;
+	L_BOON10:
+	callfunc("IsCashEnough",5,.@npcName$);
+	callfunc("UseMyCash",5);
+	callfunc("MyCash",1);
+	$boonType = 0;
+	sc_start SC_ITEMBOOST,3600000,200;
+	mes "เรียบร้อย";
+	announce "ผู้อุทิศบุญกุศล: " +strcharinfo(0) + " | ได้อุทิศว่า: 'ข้าน้อยขอพรว่า.. ให้ภายในชั่วโมงนี้อุทิศแด่ เอาทุกอย่างเหมือนเดิม'",bc_all,0xff7130;
+	close;
+	
+	L_1:
+	.@boonCount = 4;
+	.@luckyCount = countitem(.@luckyItem);
+	.@itemNeed = countitem(.@targetItem);
+	if(.@itemNeed<= 0){
+		mes getitemname(7559) + " ไม่พอ";
+		close;
+	}
+	delitem .@targetItem,1;
+	.@sum = rand(.@lowestItem,.@highestItemId);
+	freeloop(1);
+	while(getiteminfo(.@sum,0)==-1)
+	.@sum = rand(.@lowestItem,.@highestItemId);
+	while(callfunc("IsTypeItem",.@sum,0)
+	&& .@luckyCount > 0){
+		dispbottom "ปัดเป่าด้วย Clover สี่แฉก..";
+		.@luckyCount--;
+		.@sum = rand(.@lowestItem,.@highestItemId);
+		while(getiteminfo(.@sum,0)==-1)
+		.@sum = rand(.@lowestItem,.@highestItemId);
+	}
+	if($boonType){
+		while(!callfunc("IsTypeItem",.@sum,$boonType)
+		&& .@boonCount > 0){
+			dispbottom "แต้มบุญทำงาน..";
+			.@boonCount--;
+			.@sum = rand(.@lowestItem,.@highestItemId);
+			while(getiteminfo(.@sum,0)==-1)
+			.@sum = rand(.@lowestItem,.@highestItemId);
+		}
+	}
+	freeloop(0);
+	if(.@sum== 12023)
+	getrandgroupitem(IG_GiftBoxChina,1);
+	else
+	{
+		if(#isKillETCItem
+				&& callfunc("IsTypeItem",.@sum,0))
+		.@etcCount++;
+		else
+		getitem .@sum,1;
+	}
+	if(#isKillETCItem)
+	dispbottom "ระบบ: ไม่รับของที่กดใช้ไม่ได้ ได้ทำงานไปทั้งหมด " + .@etcCount + " ชิ้น";
+	mes "เรียบร้อย";
+	close;
+	
+	L_2:
+	.@itemNeed = countitem(.@targetItem);
+	freeloop(1);
+	while(.@itemNeed>= 1 && .@maxCount > 0){
+		.@luckyCount = countitem(.@luckyItem);
+		.@boonCount = 4;
+		.@sum = rand(.@lowestItem,.@highestItemId);
+		if(checkweight(909,1)){
+			.@itemNeed--;
+			delitem .@targetItem,1;
+			while(getiteminfo(.@sum,0)==-1)
+			.@sum = rand(.@lowestItem,.@highestItemId);
+			while(.@luckyCount > 0
+			&& callfunc("IsTypeItem",.@sum,0)){
+				dispbottom "ปัดเป่าด้วย Clover สี่แฉก..";
+				.@luckyCount--;
+				.@sum = rand(.@lowestItem,.@highestItemId);
+				while(getiteminfo(.@sum,0)==-1)
+				.@sum = rand(.@lowestItem,.@highestItemId);
+			}
+			if($boonType){
+				while(!callfunc("IsTypeItem",.@sum,$boonType)
+				&& .@boonCount > 0){
+					dispbottom "แต้มบุญทำงาน..";
+					.@boonCount--;
+					.@sum = rand(.@lowestItem,.@highestItemId);
+					while(getiteminfo(.@sum,0)==-1)
+					.@sum = rand(.@lowestItem,.@highestItemId);
+				}
+			}
+			if(.@sum== 12023)
+			getrandgroupitem(IG_GiftBoxChina,1);
+			else
+			{
+				if(#isKillETCItem
+						&&callfunc("IsTypeItem",.@sum,0))
+				.@etcCount++;
+				else{
+					.@maxCount--;
+					getitem .@sum,1;
+				}
+			}
+		}
+		else{
+			.@itemNeed = 0;
+			break;
+		}
+	}
+	freeloop(0);
+	if(#isKillETCItem)
+	dispbottom "ระบบ: ไม่รับของที่กดใช้ไม่ได้ ได้ทำงานไปทั้งหมด " + .@etcCount + " ชิ้น";
+	mes "เรียบร้อย";
+	close;
+	
+OnClock0000:
+OnClock0100:
+OnClock0200:
+OnClock0300:
+OnClock0400:
+OnClock0500:
+OnClock0600:
+OnClock0700:
+OnClock0800:
+OnClock0900:
+OnClock1000:
+OnClock1100:
+OnClock1200:
+OnClock1300:
+OnClock1400:
+OnClock1500:
+OnClock1600:
+OnClock1700:
+OnClock1800:
+OnClock1900:
+OnClock2000:
+OnClock2100:
+OnClock2200:
+OnClock2300:
+	$boonType = 0;
+	$addDropRateLevel = 0;
+	$addSpawnRateLevel = 0;
+OnInit:
+	if($addSpawnRateLevel == 1){
+		setbattleflag("mob_spawn_delay",75,false);
+		setbattleflag("plant_spawn_delay",75,false);
+		setbattleflag("boss_spawn_delay",75,false);
+	}
+	else if($addSpawnRateLevel == 2){
+		setbattleflag("mob_spawn_delay",50,false);
+		setbattleflag("plant_spawn_delay",50,false);
+		setbattleflag("boss_spawn_delay",50,false);
+	}
+	else{
+		setbattleflag("mob_spawn_delay",100,false);
+		setbattleflag("plant_spawn_delay",100,false);
+		setbattleflag("boss_spawn_delay",100,false);
+	}
+	if($addDropRateLevel == 1){
+		setbattleflag("item_rate_common",200,true);
+		setbattleflag("item_rate_common_boss",200,true);
+		setbattleflag("item_rate_common_mvp",200,true);
+	}
+	else if($addDropRateLevel == 2){
+		setbattleflag("item_rate_common",300,true);
+		setbattleflag("item_rate_common_boss",300,true);
+		setbattleflag("item_rate_common_mvp",300,true);
+	}
+	else if($addDropRateLevel == 3){
+		setbattleflag("item_rate_common",400,true);
+		setbattleflag("item_rate_common_boss",400,true);
+		setbattleflag("item_rate_common_mvp",400,true);
+	}
+	else if($addDropRateLevel == 4){
+		setbattleflag("item_rate_common",500,true);
+		setbattleflag("item_rate_common_boss",500,true);
+		setbattleflag("item_rate_common_mvp",500,true);
+	}
+	else if($addDropRateLevel == 5){
+		setbattleflag("item_rate_common",600,true);
+		setbattleflag("item_rate_common_boss",600,true);
+		setbattleflag("item_rate_common_mvp",600,true);
+	}
+	else if($addDropRateLevel == 6){
+		setbattleflag("item_rate_common",700,true);
+		setbattleflag("item_rate_common_boss",700,true);
+		setbattleflag("item_rate_common_mvp",700,true);
+	}
+	else if($addDropRateLevel == 7){
+		setbattleflag("item_rate_common",800,true);
+		setbattleflag("item_rate_common_boss",800,true);
+		setbattleflag("item_rate_common_mvp",800,true);
+	}
+	else if($addDropRateLevel == 8){
+		setbattleflag("item_rate_common",900,true);
+		setbattleflag("item_rate_common_boss",900,true);
+		setbattleflag("item_rate_common_mvp",900,true);
+	}
+	else if($addDropRateLevel == 9){
+		setbattleflag("item_rate_common",1000,true);
+		setbattleflag("item_rate_common_boss",1000,true);
+		setbattleflag("item_rate_common_mvp",1000,true);
+	}
+	else{
+		setbattleflag("item_rate_common",100,true);
+		setbattleflag("item_rate_common_boss",100,true);
+		setbattleflag("item_rate_common_mvp",100,true);
+	}
+	end;
+}
