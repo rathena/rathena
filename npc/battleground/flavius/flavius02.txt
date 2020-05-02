@@ -190,6 +190,8 @@ OnMyMobDead:
 			enablenpc "Guillaume Vintenar#b02_a";
 			enablenpc "Croix Vintenar#b02_b";
 			donpcevent "time#bat_b02::OnStop";
+			if (getbattleflag("feature.bgqueue"))
+				bg_reserve "bat_b02", true;
 		}
 		else {
 			set $@Croix_ScoreBG2,1;
@@ -201,8 +203,6 @@ OnMyMobDead:
 		bg_warp $@FlaviusBG2_id1,"bat_b02",10,290;
 		bg_warp $@FlaviusBG2_id2,"bat_b02",390,10;
 		donpcevent "#bat_b02_timer::OnEnable";
-		if (getbattleflag("feature.bgqueue"))
-			bg_reserve "bat_b02", true;
 	}
 	end;
 }
