@@ -177,6 +177,16 @@ Developers can get up and running quickly with a Dockerized development environm
 #### Tips & tricks for local development :beginner:
 
 - Ensure you don't have a database running locally and listening on port `3306` this will cause the database container to fail starting up.
+- To connect a client on the same machine to the server, add these values to their respective configuration files:
+```
+// Add below two lines into conf/import/char_conf.txt
+login_ip: 127.0.0.1
+char_ip: 127.0.0.1
+
+// Add below two lines into conf/import/map_conf.txt
+char_ip: 127.0.0.1
+map_ip: 127.0.0.1
+```
 - All file edits within the repository are reflected inside the container, so you can develop in your preferred text editor or IDE.
 - Connect to the local database with following credentials:
   - Host: `localhost`
