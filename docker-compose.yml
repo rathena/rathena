@@ -24,6 +24,7 @@ services:
         volumes:
             - ".:/rathena" # mount directory inside container
             - "./tools/docker_db.conf:/rathena/conf/import/inter_conf.txt" # load db connection
+        init: true # helps with signal forwarding and process reaping
         tty: true
         stdin_open: true
         build:
