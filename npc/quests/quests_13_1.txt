@@ -1132,33 +1132,33 @@ function	script	Guard_13_1	{
 	end;
 }
 
-lhz_in01,115,250,3	script	Guard#ep13_1-1	899,2,2,{
+lhz_in01,115,250,3	script	Guard#ep13_1-1	899,2,4,{
 	callfunc "Guard_13_1",0,108,252;
 OnTouch:
 	callfunc "Guard_13_1",1,108,252;
 }
-lhz_in01,115,252,3	duplicate(Guard#ep13_1-1)	Guard#ep13_1-2	899,2,2
+lhz_in01,115,252,3	duplicate(Guard#ep13_1-1)	Guard#ep13_1-2	899
 
-lhz_in01,147,252,7	script	Guard#ep13_1-3	899,2,2,{
+lhz_in01,147,252,7	script	Guard#ep13_1-3	899,2,4,{
 	callfunc "Guard_13_1",0,152,252;
 OnTouch:
 	callfunc "Guard_13_1",1,152,252;
 }
-lhz_in01,147,250,7	duplicate(Guard#ep13_1-3)	Guard#ep13_1-4	899,2,2
+lhz_in01,147,250,7	duplicate(Guard#ep13_1-3)	Guard#ep13_1-4	899
 
-lhz_in01,124,234,5	script	Guard#ep13_1-5	899,2,2,{
+lhz_in01,124,234,5	script	Guard#ep13_1-5	899,4,2,{
 	callfunc "Guard_13_1",0,123,229;
 OnTouch:
 	callfunc "Guard_13_1",1,123,229;
 }
-lhz_in01,121,234,5	duplicate(Guard#ep13_1-5)	Guard#ep13_1-6	899,2,2
+lhz_in01,121,234,5	duplicate(Guard#ep13_1-5)	Guard#ep13_1-6	899
 
-lhz_in01,137,234,5	script	Guard#ep13_1-7	899,2,2,{
+lhz_in01,137,234,5	script	Guard#ep13_1-7	899,4,2,{
 	callfunc "Guard_13_1",0,139,228;
 OnTouch:
 	callfunc "Guard_13_1",1,139,228;
 }
-lhz_in01,140,234,5	duplicate(Guard#ep13_1-7)	Guard#ep13_1-8	899,2,2
+lhz_in01,140,234,5	duplicate(Guard#ep13_1-7)	Guard#ep13_1-8	899
 
 lhz_in01,130,232,5	script	Guard#ep13_1-9	899,{
 	if (ep13_ryu > 19) {
