@@ -4525,6 +4525,16 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->magic_addrace[RC_DRAGON]+=skill;
 		sd->subrace[RC_DRAGON]+=skill;
 	}
+	if ((skill = pc_checkskill(sd, AB_EUCHARISTICA)) > 0) {
+		sd->right_weapon.addrace[RC_DEMON] += skill;
+		sd->right_weapon.addele[ELE_DARK] += skill;
+		sd->left_weapon.addrace[RC_DEMON] += skill;
+		sd->left_weapon.addele[ELE_DARK] += skill;
+		sd->magic_addrace[RC_DEMON] += skill;
+		sd->magic_addele[ELE_DARK] += skill;
+		sd->subrace[RC_DEMON] += skill;
+		sd->subele[ELE_DARK] += skill;
+	}
 
 	if(sc->count) {
 		if(sc->data[SC_CONCENTRATE]) { // Update the card-bonus data
@@ -5655,7 +5665,12 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			// Absolute ASPD % modifiers
 			amotion = amotion * status->aspd_rate / 1000;
 			if (sd->ud.skilltimer != INVALID_TIMER && (skill_lv = pc_checkskill(sd, SA_FREECAST)) > 0)
+#ifdef RENEWAL_ASPD
+				amotion = amotion * 5 * (skill_lv + 10) / 100;
+#else
 				amotion += (2000 - amotion) * ( 55 - 5 * ( skill_lv + 1 ) ) / 100; //Increases amotion to reduce ASPD to the corresponding absolute percentage for each level (overriding other adjustments)
+#endif
+
 #ifdef RENEWAL_ASPD
 			// RE ASPD % modifier
 			amotion += (max(0xc3 - amotion, 2) * (status->aspd_rate2 + status_calc_aspd(bl, sc, false))) / 100;
