@@ -3398,7 +3398,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 30;
 #endif
 			if(sc->data[SC_LUNARSTANCE])
-				bonus += bonus * sc->data[SC_LUNARSTANCE]->val2 / 100;
+				bonus += sc->data[SC_LUNARSTANCE]->val2;
 
 			//Decreasing
 			if(sc->data[SC_VENOMBLEED])
@@ -7549,6 +7549,8 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 			bonus += sc->data[SC_INCREASEAGI]->val1;
 		if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ASPDRATE)
 			bonus += 20;
+		if (sc->data[SC_STARSTANCE])
+			bonus += sc->data[SC_STARSTANCE]->val2;
 
 		struct map_session_data* sd = BL_CAST(BL_PC, bl);
 		uint8 skill_lv;
