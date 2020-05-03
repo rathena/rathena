@@ -1,0 +1,40 @@
+//===== rAthena Script =======================================
+//= Star Emperor Job Quest
+//===== Description: =========================================
+//= [Official Conversion]
+//= Job change Quest from Star Gladiator -> Star Emperor.
+//===== Changelogs: ==========================================
+//= 0.0 Placeholder version. [Latiosu]
+//============================================================
+
+payon,171,171,4	script	Man in Unique Outfit	4_M_SE_STAR,{
+	mes "[Nelson]";
+	mes "I heard there's no place to hide anything sharp ...";
+	mes "People always make such a fuss when they train outside.";
+	mes "What are you staring at me for?";
+	if (Class == Job_Star_Gladiator && BaseLevel >= 99 && JobLevel >= 50) {
+		next;
+		mes "[Nelson]";
+		mes "You seem strong enough ...";
+		mes "I can change you into a Star Emperor.";
+		mes "How about it?";
+		next;
+		if (select("I'm not ready yet.", "Change me into a Star Emperor.") == 2) {
+			mes "[Nelson]";
+			mes "With great power comes great responsibility.";
+			mes "Be careful out there.";
+			jobchange Job_Star_Emperor;
+		} else {
+			mes "[Nelson]";
+			mes "Let me know when you are ready.";
+		}
+	}
+	close;
+}
+
+mjolnir_03,236,185,3	script	Mountain Keeper	1_M_ORIENT01,{
+	mes "[Mountain Keeper]";
+	mes "Hello~";
+	mes "Nice weather isn't it?";
+	close;
+}
