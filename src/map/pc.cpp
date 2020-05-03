@@ -838,7 +838,7 @@ bool pc_can_sell_item(struct map_session_data *sd, struct item *item, enum npc_s
 				return true;
 			else if (!item->bound) {
 				struct item_data *itd = itemdb_search(item->nameid);
-				if (itd && itd->flag.trade_restriction&8 && battle_config.allow_bound_sell&ISR_SELLABLE)
+				if (itd)
 					return true;
 			}
 			break;
