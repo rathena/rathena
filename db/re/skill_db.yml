@@ -29859,7 +29859,7 @@ Body:
   - Id: 2594
     Name: SJ_FALLINGSTAR_ATK
     Description: Falling Star Attack
-    MaxLevel: 7
+    MaxLevel: 10
     Type: Weapon
     TargetType: Self
     DamageFlags:
@@ -29877,7 +29877,7 @@ Body:
   - Id: 2595
     Name: SJ_FALLINGSTAR_ATK2
     Description: Falling Star Attack 2
-    MaxLevel: 7
+    MaxLevel: 10
     Type: Weapon
     TargetType: Attack
     DamageFlags:
