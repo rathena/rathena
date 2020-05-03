@@ -14622,17 +14622,16 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_CREATINGSTAR:
 		if (--(sce->val4) >= 0) { // Needed to check who the caster is and what AoE is giving the status.
-			struct block_list *star_caster = map_id2bl(sce->val2), *star_aoe = map_id2bl(sce->val3);
+			struct block_list *star_caster = map_id2bl(sce->val2);
+			struct skill_unit *star_aoe = (struct skill_unit *)map_id2bl(sce->val3);
 
-			if (!star_caster || status_isdead(star_caster) || star_caster->m != bl->m)
+			if (star_caster == nullptr || status_isdead(star_caster) || star_caster->m != bl->m || star_aoe == nullptr)
 				break;
 
-			map_freeblock_lock();
-			if (star_aoe)
-				skill_attack(BF_WEAPON,star_caster,star_aoe,bl,SJ_BOOKOFCREATINGSTAR,sce->val1,tick,0);
-			if (sc->data[type])
-				sc_timer_next(500 + tick);
-			map_freeblock_unlock();
+			sc_timer_next(500 + tick);
+
+			// Attack after timer to prevent errors
+			skill_attack(BF_WEAPON, star_caster, &star_aoe->bl, bl, SJ_BOOKOFCREATINGSTAR, sce->val1, tick, 0);
 			return 0;
 		}
 		break;
