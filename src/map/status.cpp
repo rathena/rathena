@@ -3398,7 +3398,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 30;
 #endif
 			if(sc->data[SC_LUNARSTANCE])
-				bonus += bonus * sc->data[SC_LUNARSTANCE]->val2 / 100;
+				bonus += sc->data[SC_LUNARSTANCE]->val2;
 
 			//Decreasing
 			if(sc->data[SC_VENOMBLEED])
