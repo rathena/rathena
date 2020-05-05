@@ -848,14 +848,11 @@ void initChangeTables(void)
 	/* Warlock */
 	add_sc( WL_WHITEIMPRISON	, SC_WHITEIMPRISON	);
 	set_sc_with_vfx( WL_FROSTMISTY	, SC_FREEZING		, EFST_FROSTMISTY		, SCB_ASPD|SCB_SPEED|SCB_DEF );
-	add_sc( WL_JACKFROST        , SC_FREEZE		  );
 	set_sc( WL_MARSHOFABYSS		, SC_MARSHOFABYSS	, EFST_MARSHOFABYSS	, SCB_AGI|SCB_DEX|SCB_SPEED );
 	set_sc( WL_RECOGNIZEDSPELL	, SC_RECOGNIZEDSPELL	, EFST_RECOGNIZEDSPELL	, SCB_MATK);
 	add_sc( WL_SIENNAEXECRATE   , SC_STONE		  );
 	set_sc( WL_STASIS			, SC_STASIS		, EFST_STASIS		, SCB_NONE );
-	add_sc( WL_CRIMSONROCK      , SC_STUN         );
-	set_sc( WL_HELLINFERNO      , SC_BURNING         , EFST_BURNT           , SCB_MDEF );
-	set_sc( WL_COMET            , SC_BURNING         , EFST_BURNT           , SCB_MDEF );
+	set_sc( WL_COMET            , SC_MAGIC_POISON		, EFST_MAGIC_POISON	, SCB_ALL );
 	set_sc( WL_TELEKINESIS_INTENSE	, SC_TELEKINESIS_INTENSE, EFST_TELEKINESIS_INTENSE, SCB_MATK );
 
 	/* Ranger */
@@ -4655,6 +4652,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		if (sc->data[SC_FORTUNE])
 			sd->bonus.crit_atk_rate += 2 * sc->data[SC_FORTUNE]->val1;
 #endif
+		if (sc->data[SC_MAGIC_POISON])
+			sd->subele[ELE_ALL] -= sc->data[SC_MAGIC_POISON]->val2;
 	}
 	status_cpy(&sd->battle_status, base_status);
 
@@ -10235,7 +10234,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_MAGICPOWER:
 			// val1: Skill lv
 			val2 = 1; // Lasts 1 invocation
-			val3 = 5*val1; // Matk% increase
+#ifdef RENEWAL
+			val3 = 10 * val1; // Matk% increase
+#else
+			val3 = 5 * val; // Matk% increase
+#endif
 			val4 = 0; // 0 = ready to be used, 1 = activated and running
 			break;
 		case SC_SACRIFICE:
@@ -11792,6 +11795,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_NEUTRALBARRIER:
 			val2 = 10 + val1 * 5; // Def/Mdef
 			tick = INFINITE_TICK;
+			break;
+		case SC_MAGIC_POISON:
+			val2 = 50; // Attribute Reduction
 			break;
 
 		/* Rebellion */

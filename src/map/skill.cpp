@@ -1685,20 +1685,12 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case AB_ADORAMUS:
 		sc_start(src,bl, SC_ADORAMUS, skill_lv * 4 + (sd ? sd->status.job_level : 50) / 2, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
-	case WL_CRIMSONROCK:
-		sc_start(src,bl, SC_STUN, 40, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
 	case WL_COMET:
+		sc_start(src, bl, status_skill2sc(skill_id), 50, skill_lv, 10000); // !TODO: What's the rate?
+		break;
 	case NPC_COMET:
 		sc_start4(src,bl,SC_BURNING,100,skill_lv,1000,src->id,0,skill_get_time(skill_id,skill_lv));
 		break;
-	case WL_EARTHSTRAIN:
-		if (dmg_lv != ATK_DEF) // Only strip if we make a successful hit.
-			break;
-
-		skill_strip_equip(src, bl, skill_id, skill_lv);
-		break;
-	case WL_JACKFROST:
 	case NPC_JACKFROST:
 		sc_start(src,bl,SC_FREEZE,200,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
@@ -2816,13 +2808,6 @@ bool skill_strip_equip(struct block_list *src, struct block_list *target, uint16
 		case SC_STRIPACCESSARY:
 			location = EQP_ACC;
 			break;
-		case WL_EARTHSTRAIN:
-			location = EQP_SHIELD|EQP_ARMOR|EQP_HELM;
-			if (skill_lv >= 4)
-				location |= EQP_WEAPON;
-			if (skill_lv >= 5)
-				location |= EQP_ACC;
-			break;
 	}
 
 	for (uint8 i = 0; i < ARRAYLENGTH(pos); i++) {
@@ -3492,10 +3477,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	dmg_type = (skill_id == 0) ? DMG_SPLASH : skill_get_hit(skill_id);
 
 	switch( skill_id ) {
-		case WL_HELLINFERNO:
-			if (dmg.dmg_lv == ATK_DEF && !(flag&ELE_DARK)) // Burning only starts if the fire attack successfully lands
-				sc_start4(src, bl, SC_BURNING, 55 + 5 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time(skill_id, skill_lv));
-			break;
 		case SC_TRIANGLESHOT:
 			if( rnd()%100 > (1 + skill_lv) )
 				dmg.blewcount = 0;
@@ -5806,18 +5787,20 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			int i;
 
 			skill_toggle_magicpower(src, skill_id); // No hit will be amplified
-			// Priority is to release SpellBook
-			if( sc && sc->data[SC_FREEZE_SP] )
-			{ // SpellBook
-				uint16 pres_skill_id, pres_skill_lv, point, s = 0;
-				int spell[SC_MAXSPELLBOOK-SC_SPELLBOOK1 + 1];
-				int cooldown;
+			if (skill_lv == 1) { // SpellBook
+				if (sc && !sc->data[SC_FREEZE_SP])
+					break;
+
+				int spell[SC_MAXSPELLBOOK-SC_SPELLBOOK1 + 1], s = 0;
 
 				for(i = SC_MAXSPELLBOOK; i >= SC_SPELLBOOK1; i--) // List all available spell to be released
-					if( sc->data[i] ) spell[s++] = i;
+					if( sc->data[i] )
+						spell[s++] = i;
 
 				if ( s == 0 )
 					break;
+
+				uint16 pres_skill_id, pres_skill_lv, point;
 
 				i = spell[s==1?0:rnd()%s];// Random select of spell to be released.
 				if(sc->data[i] ){// Now extract the data from the preserved spell
@@ -5857,24 +5840,23 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				sd->ud.canact_tick = i64max(tick + skill_delayfix(src, pres_skill_id, pres_skill_lv), sd->ud.canact_tick);
 				clif_status_change(src, EFST_POSTDELAY, 1, skill_delayfix(src, pres_skill_id, pres_skill_lv), 0, 0, 0);
 
-				cooldown = pc_get_skillcooldown(sd,pres_skill_id, pres_skill_lv);
-				if( cooldown )
+				int cooldown = pc_get_skillcooldown(sd,pres_skill_id, pres_skill_lv);
+
+				if( cooldown > 0 )
 					skill_blockpc_start(sd, pres_skill_id, cooldown);
 			}
 			else
 			{ // Summon Balls
-				int j = 0, k;
-				int spheres[5] = { 0, 0, 0, 0, 0 },
-					positions[5] = {-1,-1,-1,-1,-1 };
+				int j = 0, spheres[5] = { 0, 0, 0, 0, 0 }, positions[5] = {-1, -1, -1, -1, -1 };
 
-				for( i = SC_SPHERE_1; i <= SC_SPHERE_5; i++ )
-					if( sc && sc->data[i] )
-					{
+				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++) {
+					if (sc && sc->data[i]) {
 						spheres[j] = i;
 						positions[j] = sc->data[i]->val2;
 						sc->data[i]->val2--; // Prepares for next position
 						j++;
 					}
+				}
 
 				if( j == 0 )
 				{ // No Spheres
@@ -5883,15 +5865,15 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				}
 
 				// Sphere Sort
-				for( i = 0; i <= j - 2; i++ )
-					for( k = i + 1; k <= j - 1; k++ )
-						if( positions[i] > positions[k] )
-						{
-							SWAP(positions[i],positions[k]);
-							SWAP(spheres[i],spheres[k]);
+				for (i = 0; i <= j - 2; i++) {
+					for (int k = i + 1; k <= j - 1; k++) {
+						if (positions[i] > positions[k]) {
+							SWAP(positions[i], positions[k]);
+							SWAP(spheres[i], spheres[k]);
 						}
+					}
+				}
 
-				if( skill_lv == 1 ) j = 1; // Limit only to one ball
 				for( i = 0; i < j; i++ )
 				{
 					int skele = WL_RELEASE - 5 + sc->data[spheres[i]]->val1 - WLS_FIRE; // Convert Ball Element into Skill ATK for balls
@@ -5905,7 +5887,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 	case WL_FROSTMISTY:
 		// Causes Freezing status through walls.
-		sc_start(src,bl,status_skill2sc(skill_id),20+12*skill_lv+(sd ? sd->status.job_level : 50)/5,skill_lv,skill_get_time(skill_id,skill_lv));
+		sc_start(src, bl, status_skill2sc(skill_id), 25 + 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
+		sc_start(src, bl, SC_MISTY_FROST, 25 + 5 * skill_lv, skill_lv, skill_get_time2(skill_id, skill_lv)); // !TODO: What's the rate?
 		// Doesn't deal damage through non-shootable walls.
 		if( !battle_config.skill_wall_check || (battle_config.skill_wall_check && path_search(NULL,src->m,src->x,src->y,bl->x,bl->y,1,CELL_CHKWALL)) )
 			skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag|SD_ANIMATION);
@@ -10099,13 +10082,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_TOTARGET,0);
 		break;
 
-	case WL_FROSTMISTY:
-		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-		map_foreachinallrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY,skill_castend_damage_id);
-		break;
-
 	case WL_JACKFROST:
 	case NPC_JACKFROST:
+	case WL_HELLINFERNO:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		map_foreachinrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 		break;
@@ -10150,26 +10129,32 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case WL_SUMMONWB:
 	case WL_SUMMONSTONE:
 		{
-			short element = 0, sctype = 0, pos = -1;
+			// pos is used in val2 for SC to indicate the order of this ball.
+			short element = 0, pos = -1, amount = (skill_lv == 1) ? 1 : 5;
+			sc_type sctype = SC_NONE;
 			struct status_change *sc = status_get_sc(src);
 
 			if( !sc )
 				break;
 
-			for( i = SC_SPHERE_1; i <= SC_SPHERE_5; i++ ) {
-				if( !sctype && !sc->data[i] )
-					sctype = i; // Take the free SC
-				if( sc->data[i] )
-					pos = max(sc->data[i]->val2,pos);
+			if (skill_lv == 1) {
+				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++) {
+					if (!sctype && !sc->data[i])
+						sctype = static_cast<sc_type>(i); // Take the free SC
+					if (sc->data[i])
+						pos = max(sc->data[i]->val2, pos);
+				}
+
+				if (sctype == SC_NONE) {
+					if (sd) // No free slots to put SC
+						clif_skill_fail(sd, skill_id, USESKILL_FAIL_SUMMON, 0);
+					break;
+				}
+			} else {
+				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++)
+					status_change_end(src, static_cast<sc_type>(i), INVALID_TIMER);
 			}
 
-			if( !sctype ) {
-				if( sd ) // No free slots to put SC
-					clif_skill_fail(sd,skill_id,USESKILL_FAIL_SUMMON,0);
-				break;
-			}
-
-			pos++; // Used in val2 for SC. Indicates the order of this ball
 			switch( skill_id ) { // Set val1. The SC element for this ball
 				case WL_SUMMONFB:    element = WLS_FIRE;  break;
 				case WL_SUMMONBL:    element = WLS_WIND;  break;
@@ -10177,26 +10162,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				case WL_SUMMONSTONE: element = WLS_STONE; break;
 			}
 
-			sc_start4(src,src,(enum sc_type)sctype,100,element,pos,skill_lv,0,skill_get_time(skill_id,skill_lv));
+			for (i = 0; i < amount; i++)
+				sc_start4(src,src,sctype,100,element,++pos,skill_lv,0,skill_get_time(skill_id,skill_lv));
 			clif_skill_nodamage(src,bl,skill_id,0,0);
 		}
 		break;
 
-	case WL_READING_SB:
-		if( sd ) {
-			struct status_change *sc = status_get_sc(bl);
-
-			for( i = SC_SPELLBOOK1; i <= SC_MAXSPELLBOOK; i++)
-				if( sc && !sc->data[i] )
-					break;
-			if( i == SC_MAXSPELLBOOK ) {
-				clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_READING, 0);
+	case WL_READING_SB_READING:
+		if (sd) {
+			if (pc_checkskill(sd, WL_READING_SB) == 0 || skill_lv < 1 || skill_lv > 10) {
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_SPELLBOOK_READING, 0);
 				break;
 			}
 
-			sc_start(src,bl, SC_STOP, 100, skill_lv, INFINITE_TICK); //Can't move while selecting a spellbook.
-			clif_spellbook_list(sd);
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			skill_spellbook(sd, ITEMID_WL_MB_SG + skill_lv - 1);
 		}
 		break;
 
@@ -11942,6 +11922,7 @@ TIMER_FUNC(skill_castend_id){
 				}
 			case GN_WALLOFTHORN:
 			case SC_ESCAPE:
+			case WL_FROSTMISTY:
 			case SU_CN_POWDERING:
 				ud->skillx = target->x;
 				ud->skilly = target->y;
@@ -12798,6 +12779,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case NC_COLDSLOWER:
 	case RK_DRAGONBREATH:
 	case RK_DRAGONBREATH_WATER:
+	case WL_FROSTMISTY:
 	case RL_HAMMER_OF_GOD:
 		// Cast center might be relevant later (e.g. for knockback direction)
 		skill_area_temp[4] = x;
@@ -15313,8 +15295,8 @@ int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 		if (*c >= 2) // Check for two companions for Benedictio. [Skotlex]
 			return 0;
 	}
-	else if (is_chorus || skill_id == WL_COMET) {
-		if (*c == MAX_PARTY) // Check for partners for Chorus or Comet; Cap if the entire party is accounted for.
+	else if (is_chorus) {
+		if (*c == MAX_PARTY) // Check for partners for Chorus; Cap if the entire party is accounted for.
 			return 0;
 	}
 	else if (*c >= 1) // Check for one companion for all other cases.
@@ -15349,11 +15331,6 @@ int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 			case AB_ADORAMUS:
 			// Adoramus does not consume Blue Gemstone when there is at least 1 Priest class next to the caster
 				if( (tsd->class_&MAPID_UPPERMASK) == MAPID_PRIEST )
-					p_sd[(*c)++] = tsd->bl.id;
-				return 1;
-			case WL_COMET:
-			// Comet does not consume Red Gemstones when there is at least 1 Warlock class next to the caster
-				if( ( sd->class_&MAPID_THIRDMASK ) == MAPID_WARLOCK )
 					p_sd[(*c)++] = tsd->bl.id;
 				return 1;
 			default: //Warning: Assuming Ensemble Dance/Songs for code speed. [Skotlex]
@@ -15438,7 +15415,7 @@ int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 
 	memset (p_sd, 0, sizeof(p_sd));
 	i = map_foreachinallrange(skill_check_condition_char_sub, &sd->bl, range, BL_PC, &sd->bl, &c, &p_sd, skill_id);
 
-	if ( skill_id != PR_BENEDICTIO && skill_id != AB_ADORAMUS && skill_id != WL_COMET ) //Apply the average lv to encore skills.
+	if ( skill_id != PR_BENEDICTIO && skill_id != AB_ADORAMUS ) //Apply the average lv to encore skills.
 		*skill_lv = (i+(*skill_lv))/(c+1); //I know c should be one, but this shows how it could be used for the average of n partners.
 	return c;
 }
@@ -16048,8 +16025,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				}
 			}
 			break;
-		case AB_ADORAMUS: // bugreport:7647 mistress card DOES remove requirements for gemstones from Adoramus and Comet -helvetica
-		case WL_COMET:
+		case AB_ADORAMUS: // bugreport:7647 mistress card DOES remove requirements for gemstones from Adoramus -helvetica
 			if( skill_check_pc_partner(sd,skill_id,&skill_lv,1,0) <= 0 && require.itemid[0]
 				&& sd->special_state.no_gemstone == 0
 				&& ((i = pc_search_inventory(sd,require.itemid[0])) < 0 || sd->inventory.u.items_inventory[i].amount < require.amount[0]) ) {
@@ -17045,10 +17021,6 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 							break;
 						case AB_ADORAMUS:
 							if( itemdb_group_item_exists(IG_GEMSTONE, skill->require.itemid[i]) && (sd->special_state.no_gemstone == 2 || skill_check_pc_partner(sd,skill_id,&skill_lv, 1, 2)) )
-								continue;
-							break;
-						case WL_COMET:
-							if( itemdb_group_item_exists(IG_GEMSTONE, skill->require.itemid[i]) && (sd->special_state.no_gemstone == 2 || skill_check_pc_partner(sd,skill_id,&skill_lv, 1, 0)) )
 								continue;
 							break;
 					}
@@ -20670,31 +20642,26 @@ int skill_magicdecoy(struct map_session_data *sd, unsigned short nameid) {
 	return 0;
 }
 
-// Warlock Spellbooks. [LimitLine/3CeAM]
+/**
+ * Process Warlock Spellbooks
+ * @param sd: Player data
+ * @param nameid: Spellbook item used
+ */
 void skill_spellbook(struct map_session_data *sd, unsigned short nameid) {
 	nullpo_retv(sd);
 
 	if (reading_spellbook_db.empty())
 		return;
 
-	int i;
 	struct status_change *sc = status_get_sc(&sd->bl);
 
-	status_change_end(&sd->bl, SC_STOP, INVALID_TIMER);
-
-	for (i = SC_SPELLBOOK1; i <= SC_MAXSPELLBOOK; i++) {
-		// No further checks needed
-		if( !sc ){
+	for (int i = SC_SPELLBOOK1; i <= SC_MAXSPELLBOOK; i++) {
+		if (sc == nullptr || sc->data[i] == nullptr)
 			break;
+		if (i == SC_MAXSPELLBOOK) {
+			clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_READING, 0);
+			return;
 		}
-
-		if( !sc->data[i] )
-			break;
-	}
-
-	if( i > SC_MAXSPELLBOOK ) {
-		clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_READING, 0);
-		return;
 	}
 
 	std::shared_ptr<s_skill_spellbook_db> spell = reading_spellbook_db.findBook(nameid);
@@ -20704,7 +20671,7 @@ void skill_spellbook(struct map_session_data *sd, unsigned short nameid) {
 
 	uint16 skill_id = spell->skill_id, skill_lv = pc_checkskill(sd, skill_id);
 
-	if (!skill_lv) { // Caster hasn't learned the skill
+	if (skill_lv == 0) { // Caster hasn't learned the skill
 		sc_start(&sd->bl,&sd->bl, SC_SLEEP, 100, 1, skill_get_time(WL_READING_SB, pc_checkskill(sd, WL_READING_SB)));
 		clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_DIFFICULT_SLEEP, 0);
 		return;
@@ -20717,7 +20684,7 @@ void skill_spellbook(struct map_session_data *sd, unsigned short nameid) {
 			clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_PRESERVATION_POINT, 0);
 			return;
 		}
-		for (i = SC_MAXSPELLBOOK; i >= SC_SPELLBOOK1; i--) { // This is how official saves spellbook. [malufett]
+		for (int i = SC_MAXSPELLBOOK; i >= SC_SPELLBOOK1; i--) { // This is how official saves spellbook. [malufett]
 			if (!sc->data[i]) {
 				sc->data[SC_FREEZE_SP]->val2 += points; // increase points
 				sc_start4(&sd->bl,&sd->bl, (sc_type)i, 100, skill_id, skill_lv, points, 0, INFINITE_TICK);

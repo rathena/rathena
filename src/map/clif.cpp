@@ -12909,9 +12909,6 @@ void clif_parse_SelectArrow(int fd,struct map_session_data *sd) {
 		case SA_CREATECON:
 			skill_produce_mix(sd,SA_CREATECON,nameid,0,0,0,1,-1);
 			break;
-		case WL_READING_SB:
-			skill_spellbook(sd,nameid);
-			break;
 		case GC_POISONINGWEAPON:
 			skill_poisoningweapon(sd,nameid);
 			break;
@@ -18706,46 +18703,7 @@ void clif_millenniumshield(struct block_list *bl, short shields) {
 	clif_send(buf,packet_len(0x440),bl,AREA);
 #endif
 }
-/**
- * Warlock
- **/
-/*==========================================
- * Spellbook list [LimitLine/3CeAM]
- *------------------------------------------*/
-int clif_spellbook_list(struct map_session_data *sd)
-{
-	int i, c;
-	int fd;
 
-	nullpo_ret(sd);
-
-	fd = sd->fd;
-	WFIFOHEAD(fd, 8 * 8 + 8);
-	WFIFOW(fd,0) = 0x1ad;
-
-	for( i = 0, c = 0; i < MAX_INVENTORY; i ++ )
-	{
-		if( reading_spellbook_db.findBook(sd->inventory.u.items_inventory[i].nameid) )
-		{
-			WFIFOW(fd, c * 2 + 4) = sd->inventory.u.items_inventory[i].nameid;
-			c++;
-		}
-	}
-
-	if( c > 0 )
-	{
-		WFIFOW(fd,2) = c * 2 + 4;
-		WFIFOSET(fd, WFIFOW(fd, 2));
-		sd->menuskill_id = WL_READING_SB;
-		sd->menuskill_val = c;
-	}
-	else{
-		status_change_end(&sd->bl,SC_STOP,INVALID_TIMER);
-		clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK, 0);
-	}
-
-	return 1;
-}
 /**
  * Mechanic
  **/

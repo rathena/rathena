@@ -4288,23 +4288,23 @@
 6186,Monkey_Wrench,Monkey Wrench,3,500,,10,,,,,,,,,,,,,{},{},{}
 6187,Blank_Card,Blank Card,3,20,,10,,,,,,,,,,,,,{},{},{}
 6188,Slot_Coupon,Slotting Advertisement,3,20,,10,,,,,,,,,,,,,{},{},{}
-6189,Magic_Book_FB,Spell Book (Fire Bolt),3,0,,0,,,,,,,,,,,,,{},{},{}
-6190,Magic_Book_CB,Spell Book (Cold Bolt),3,0,,0,,,,,,,,,,,,,{},{},{}
-6191,Magic_Book_LB,Spell Book (Lightening Bolt),3,0,,0,,,,,,,,,,,,,{},{},{}
-6192,Magic_Book_SG,Spell Book (Storm Gust),3,0,,0,,,,,,,,,,,,,{},{},{}
-6193,Magic_Book_LOV,Spell Book (Lord Of Vermilion),3,0,,0,,,,,,,,,,,,,{},{},{}
-6194,Magic_Book_MS,Spell Book (Meteor Storm),3,0,,0,,,,,,,,,,,,,{},{},{}
-6195,Magic_Book_CM,Spell Book (Comet),3,0,,0,,,,,,,,,,,,,{},{},{}
-6196,Magic_Book_TV,Spell Book (Tetra Vortex),3,0,,0,,,,,,,,,,,,,{},{},{}
-6197,Magic_Book_TS,Spell Book (Thunder Storm),3,0,,0,,,,,,,,,,,,,{},{},{}
-6198,Magic_Book_JT,Spell Book (Jupitel Thunder),3,0,,0,,,,,,,,,,,,,{},{},{}
-6199,Magic_Book_WB,Spell Book (Water Ball),3,0,,0,,,,,,,,,,,,,{},{},{}
-6200,Magic_Book_HD,Spell Book (Heaven's Drive),3,0,,0,,,,,,,,,,,,,{},{},{}
-6201,Magic_Book_ES,Spell Book (Earth Spike),3,0,,0,,,,,,,,,,,,,{},{},{}
-6202,Magic_Book_ES_,Spell Book (Earth Strain),3,0,,0,,,,,,,,,,,,,{},{},{}
-6203,Magic_Book_CL,Spell Book (Chain Lightning),3,0,,0,,,,,,,,,,,,,{},{},{}
-6204,Magic_Book_CR,Spell Book (Crimson Rock),3,0,,0,,,,,,,,,,,,,{},{},{}
-6205,Magic_Book_DL,Spell Book (Drain Life),3,0,,0,,,,,,,,,,,,,{},{},{}
+6189,Magic_Book_FB,Old Spell Book (Fire Bolt),3,0,,0,,,,,,,,,,,,,{},{},{}
+6190,Magic_Book_CB,Old Spell Book (Cold Bolt),3,0,,0,,,,,,,,,,,,,{},{},{}
+6191,Magic_Book_LB,Old Spell Book (Lightening Bolt),3,0,,0,,,,,,,,,,,,,{},{},{}
+6192,Magic_Book_SG,Old Spell Book (Storm Gust),3,0,,0,,,,,,,,,,,,,{},{},{}
+6193,Magic_Book_LOV,Old Spell Book (Lord Of Vermilion),3,0,,0,,,,,,,,,,,,,{},{},{}
+6194,Magic_Book_MS,Old Spell Book (Meteor Storm),3,0,,0,,,,,,,,,,,,,{},{},{}
+6195,Magic_Book_CM,Old Spell Book (Comet),3,0,,0,,,,,,,,,,,,,{},{},{}
+6196,Magic_Book_TV,Old Spell Book (Tetra Vortex),3,0,,0,,,,,,,,,,,,,{},{},{}
+6197,Magic_Book_TS,Old Spell Book (Thunder Storm),3,0,,0,,,,,,,,,,,,,{},{},{}
+6198,Magic_Book_JT,Old Spell Book (Jupitel Thunder),3,0,,0,,,,,,,,,,,,,{},{},{}
+6199,Magic_Book_WB,Old Spell Book (Water Ball),3,0,,0,,,,,,,,,,,,,{},{},{}
+6200,Magic_Book_HD,Old Spell Book (Heaven's Drive),3,0,,0,,,,,,,,,,,,,{},{},{}
+6201,Magic_Book_ES,Old Spell Book (Earth Spike),3,0,,0,,,,,,,,,,,,,{},{},{}
+6202,Magic_Book_ES_,Old Spell Book (Earth Strain),3,0,,0,,,,,,,,,,,,,{},{},{}
+6203,Magic_Book_CL,Old Spell Book (Chain Lightning),3,0,,0,,,,,,,,,,,,,{},{},{}
+6204,Magic_Book_CR,Old Spell Book (Crimson Rock),3,0,,0,,,,,,,,,,,,,{},{},{}
+6205,Magic_Book_DL,Old Spell Book (Drain Life),3,0,,0,,,,,,,,,,,,,{},{},{}
 6206,I_Love_You,I Love You,3,0,,0,,,,,,,,,,,,,{},{},{}
 6207,Thank_You,Thank You,3,0,,0,,,,,,,,,,,,,{},{},{}
 6208,I_Respect_You,I Respect You,3,0,,0,,,,,,,,,,,,,{},{},{}
@@ -13457,3 +13457,15 @@
 //===================================================================
 32350,Farthezan,Farthezan,5,20,,1100,130:180,,1,2,0x00004000,56,2,2,4,170,1,2,{ .@r = getrefine(); bonus2 bSkillAtk,"PA_PRESSURE",40; bonus bVariableCastrate,-.@r; if (.@r>=9) bonus2 bSkillAtk,"LG_RAYOFGENESIS",30; if (.@r>=11) { bonus2 bSkillAtk,"LG_RAYOFGENESIS",20; bonus2 bSkillAtk,"PA_PRESSURE",20; } },{},{}
 32351,Estal,Estal,5,20,,700,195,,1,2,0x00040000,56,2,2,4,170,1,2,{ .@r = getrefine(); bonus2 bSkillCooldown,"GN_SPORE_EXPLOSION",-1000; bonus bBaseAtk,4*.@r; if (.@r>=11) .@val = 50; else if (.@r>=9) .@val = 30; bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",.@val; },{},{}
+
+// Warlock Spell Books
+//100065,WL_MB_SG,Spell Book (Storm Gust),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,1; },{},{}
+//100066,WL_MB_LOV,Spell Book (Lord of Vermilion),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,2; },{},{}
+//100067,WL_MB_MS,Spell Book (Meteor Storm),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,3; },{},{}
+//100068,WL_MB_DL,Spell Book (Drain Life),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,4; },{},{}
+//100069,WL_MB_JF,Spell Book (Jack Frost),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,5; },{},{}
+//100070,WL_MB_ES,Spell Book (Earth Strain),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,6; },{},{}
+//100071,WL_MB_CR,Spell Book (Crimson Rock),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,7; },{},{}
+//100072,WL_MB_CL,Spell Book (Chain Lightning),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,8; },{},{}
+//100073,WL_MB_CM,Spell Book (Comet),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,9; },{},{}
+//100074,WL_MB_TV,Spell Book (Tetra Vortex),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,10; },{},{}
