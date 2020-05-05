@@ -12940,7 +12940,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			}
 			map_foreachinallrange(unit_changetarget, src, AREA_SIZE, BL_MOB, src, &group->unit->bl); // Release all targets against the caster
 			skill_blown(src, src, skill_get_blewcount(skill_id, skill_lv), unit_getdir(src), BLOWN_IGNORE_NO_KNOCKBACK); // Don't stop the caster from backsliding if special_state.no_knockback is active
-			clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,skill_get_time2(skill_id,skill_lv)));
+			clif_skill_nodamage(src, src, skill_id, skill_lv, 0);
+			sc_start(src, src, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
 		break;
 
@@ -19149,6 +19150,7 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 					status_change_end(target, SC_SPIDERWEB, INVALID_TIMER);
 			}
 		}
+			break;
 		case SG_SUN_WARM:
 		case SG_MOON_WARM:
 		case SG_STAR_WARM:
