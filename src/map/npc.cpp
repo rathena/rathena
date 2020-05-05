@@ -1006,6 +1006,10 @@ int npc_event(struct map_session_data* sd, const char* eventname, int ontouch)
 		return ontouch;
 	}
 
+	// Don't trigger OnTouch or OnTouch_ event if player is talking to a NPC
+	if (ontouch > 0 && sd->npc_id > 0)
+		return 0;
+
 	if (ontouch == 1) { // OnTouch_
 		if (pc_ishiding(sd))
 			return 0;
