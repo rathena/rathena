@@ -17,3 +17,14 @@
 //	script_pushint(st,1);
 //	return 0;
 //}
+// Custom Spellbook for Warlock Update
+BUILDIN_FUNC(spellbookcast)
+{
+	TBL_PC* sd;
+
+	if(!(script_rid2sd(sd)))
+		return SCRIPT_CMD_FAILURE;
+
+	skill_castend_nodamage_id(&sd->bl,&sd->bl,WL_READING_SB,1,gettick(),script_getnum(st,2));
+	return SCRIPT_CMD_SUCCESS;
+}

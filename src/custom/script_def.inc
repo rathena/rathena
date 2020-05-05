@@ -9,3 +9,5 @@
  **/
 
 //BUILDIN_DEF(example,""),
+// Custom Spellbook for Warlock Update
+BUILDIN_DEF(spellbookcast,"i"), //add this

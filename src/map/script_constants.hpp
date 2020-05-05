@@ -1578,6 +1578,8 @@
 	export_constant(SC_HELLS_PLANT);
 	export_constant(SC_INCREASE_MAXHP);
 	export_constant(SC_INCREASE_MAXSP);
+	export_constant(SC_MISTY_FROST);
+	export_constant(SC_MAGIC_POISON);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif

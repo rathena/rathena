@@ -847,15 +847,13 @@ void initChangeTables(void)
 
 	/* Warlock */
 	add_sc( WL_WHITEIMPRISON	, SC_WHITEIMPRISON	);
-	set_sc_with_vfx( WL_FROSTMISTY	, SC_FREEZING		, EFST_FROSTMISTY		, SCB_ASPD|SCB_SPEED|SCB_DEF );
-	add_sc( WL_JACKFROST        , SC_FREEZE		  );
+	set_sc_with_vfx( WL_FROSTMISTY       , SC_MISTY_FROST		 , EFST_MISTY_FROST		, SCB_NONE  );
+	set_sc_with_vfx( WL_JACKFROST        , SC_MISTY_FROST		 , EFST_MISTY_FROST		, SCB_NONE  );
 	set_sc( WL_MARSHOFABYSS		, SC_MARSHOFABYSS	, EFST_MARSHOFABYSS	, SCB_AGI|SCB_DEX|SCB_SPEED );
 	set_sc( WL_RECOGNIZEDSPELL	, SC_RECOGNIZEDSPELL	, EFST_RECOGNIZEDSPELL	, SCB_MATK);
 	add_sc( WL_SIENNAEXECRATE   , SC_STONE		  );
 	set_sc( WL_STASIS			, SC_STASIS		, EFST_STASIS		, SCB_NONE );
-	add_sc( WL_CRIMSONROCK      , SC_STUN         );
-	set_sc( WL_HELLINFERNO      , SC_BURNING         , EFST_BURNT           , SCB_MDEF );
-	set_sc( WL_COMET            , SC_BURNING         , EFST_BURNT           , SCB_MDEF );
+	set_sc_with_vfx( WL_COMET            , SC_MAGIC_POISON         , EFST_MAGIC_POISON           , SCB_ALL );
 	set_sc( WL_TELEKINESIS_INTENSE	, SC_TELEKINESIS_INTENSE, EFST_TELEKINESIS_INTENSE, SCB_MATK );
 
 	/* Ranger */
@@ -1597,6 +1595,8 @@ void initChangeTables(void)
 	StatusDisplayType[SC_ANTI_M_BLAST]	  = BL_PC;
 	StatusDisplayType[SC_SPRITEMABLE]     = BL_PC;
 	StatusDisplayType[SC_SV_ROOTTWIST]    = BL_PC;
+	StatusDisplayType[SC_MISTY_FROST]    = BL_PC;
+	StatusDisplayType[SC_MAGIC_POISON]    = BL_PC;
 
 	// Costumes
 	StatusDisplayType[SC_MOONSTAR] = BL_PC;

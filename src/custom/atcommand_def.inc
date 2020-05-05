@@ -9,3 +9,5 @@
  **/
 
 //ACMD_DEF(newcommand),
+// Custom Spellbook for Warlock Update
+ACMD_DEF(memorizeskill),

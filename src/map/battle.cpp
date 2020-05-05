@@ -1570,6 +1570,9 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if( sc->data[SC__DEADLYINFECT] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT && damage > 0 && rnd()%100 < 30 + 10 * sc->data[SC__DEADLYINFECT]->val1 )
 			status_change_spread(bl, src, 1); // Deadly infect attacked side
 
+		if ( sc->data[SC_MAGIC_POISON] )
+			damage += damage * 50 / 100;
+
 	} //End of target SC_ check
 
 	//SC effects from caster side.
@@ -6322,21 +6325,21 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 300 + 40 * skill_lv;
 						break;
 					case WL_SOULEXPANSION:
-						skillratio += -100 + (skill_lv + 4) * 100 + status_get_int(src);
+						skillratio += -100 + 750 + 150 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case WL_FROSTMISTY:
-						skillratio += 100 + 100 * skill_lv;
+						skillratio += -100 + 200 + 100 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case WL_JACKFROST:
 					case NPC_JACKFROST:
-						if (tsc && tsc->data[SC_FREEZING]) {
-							skillratio += 900 + 300 * skill_lv;
+						if (tsc && tsc->data[SC_MISTY_FROST]) {
+							skillratio += -100 + 1200 + 600 * skill_lv;
 							RE_LVL_DMOD(100);
 						} else {
-							skillratio += 400 + 100 * skill_lv;
-							RE_LVL_DMOD(150);
+							skillratio += -100 + 1000 + 300 * skill_lv;
+							RE_LVL_DMOD(100);
 						}
 						break;
 					case WL_DRAINLIFE:
@@ -6344,45 +6347,21 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case WL_CRIMSONROCK:
-						skillratio += 1200 + 300 * skill_lv;
+						skillratio += -100 + 700 + 600 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case WL_HELLINFERNO:
-						skillratio += -100 + 300 * skill_lv;
+						skillratio += -100 + 600 * skill_lv;
 						RE_LVL_DMOD(100);
-						// Shadow: MATK [{( Skill Level x 300 ) x ( Caster Base Level / 100 ) x 4/5 }] %
-						// Fire : MATK [{( Skill Level x 300 ) x ( Caster Base Level / 100 ) /5 }] %
+						// Shadow: MATK [{( Skill Level x 400 ) x ( Caster Base Level / 100 ) x 4/5 }] %
+						// Fire : MATK [{( Skill Level x 600 ) x ( Caster Base Level / 100 ) /5 }] %
 						if (mflag&ELE_DARK)
-							skillratio *= 4;
-						skillratio /= 5;
+							skillratio /= 2;//1800
+						skillratio = (skillratio / 3) * 2; //200 / 2 = 100 * 3 = 300
 						break;
 					case WL_COMET:
-						i = (sc ? distance_xy(target->x, target->y, sc->comet_x, sc->comet_y) : 8);
-						if (i <= 3)
 							skillratio += 2400 + 500 * skill_lv; // 7 x 7 cell
-						else if (i <= 5)
-							skillratio += 1900 + 500 * skill_lv; // 11 x 11 cell
-						else if (i <= 7)
-							skillratio += 1400 + 500 * skill_lv; // 15 x 15 cell
-						else
-							skillratio += 900 + 500 * skill_lv; // 19 x 19 cell
-
-						if (sd && sd->status.party_id) {
-							struct map_session_data* psd;
-							int p_sd[MAX_PARTY], c;
-
-							c = 0;
-							memset(p_sd, 0, sizeof(p_sd));
-							party_foreachsamemap(skill_check_condition_char_sub, sd, 3, &sd->bl, &c, &p_sd, skill_id);
-							c = (c > 1 ? rnd()%c : 0);
-
-							if( (psd = map_id2sd(p_sd[c])) && pc_checkskill(psd,WL_COMET) > 0 ){
-								skillratio = skill_lv * 400; //MATK [{( Skill Level x 400 ) x ( Caster's Base Level / 120 )} + 2500 ] %
-								RE_LVL_DMOD(120);
-								skillratio += 2500;
-								status_zap(&psd->bl, 0, skill_get_sp(skill_id, skill_lv) / 2);
-							}
-						}
+						RE_LVL_DMOD(100);
 						break;
 					case WL_CHAINLIGHTNING_ATK:
 						skillratio += 400 + 100 * skill_lv;
@@ -6391,7 +6370,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += 100 * mflag;
 						break;
 					case WL_EARTHSTRAIN:
-						skillratio += 1900 + 100 * skill_lv;
+						skillratio += 1000 + 600 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case WL_TETRAVORTEX_FIRE:
