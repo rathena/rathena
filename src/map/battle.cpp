@@ -449,16 +449,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #else
 					damage += (int64)((damage*sc->data[SC_VOLCANO]->val3) / 100);
 #endif
-				if (src->type == BL_PC) {
-					map_session_data *sd = map_id2sd(src->id);
-
-					if (sd && sd->spiritcharm_type == CHARM_TYPE_WATER && sd->spiritcharm > MAX_SPIRITCHARM)
-#ifdef RENEWAL
-						ratio += 30;
-#else
-						damage += damage * 30 / 100;
-#endif
-				}
 				break;
 			case ELE_WIND:
 				if (sc->data[SC_VIOLENTGALE])
@@ -467,16 +457,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #else
 					damage += (int64)((damage*sc->data[SC_VIOLENTGALE]->val3) / 100);
 #endif
-				if (src->type == BL_PC) {
-					map_session_data *sd = map_id2sd(src->id);
-
-					if (sd && sd->spiritcharm_type == CHARM_TYPE_LAND && sd->spiritcharm > MAX_SPIRITCHARM)
-#ifdef RENEWAL
-						ratio += 30;
-#else
-						damage += damage * 30 / 100;
-#endif
-				}
 				break;
 			case ELE_WATER:
 				if (sc->data[SC_DELUGE])
@@ -485,32 +465,10 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #else
 					damage += (int64)((damage*sc->data[SC_DELUGE]->val3) / 100);
 #endif
-				if (src->type == BL_PC) {
-					map_session_data *sd = map_id2sd(src->id);
-
-					if (sd && sd->spiritcharm_type == CHARM_TYPE_WIND && sd->spiritcharm > MAX_SPIRITCHARM)
-#ifdef RENEWAL
-						ratio += 30;
-#else
-						damage += damage * 30 / 100;
-#endif
-				}
 				break;
 			case ELE_GHOST:
 				if (sc->data[SC_TELEKINESIS_INTENSE])
 					ratio += sc->data[SC_TELEKINESIS_INTENSE]->val3;
-				break;
-			case ELE_EARTH:
-				if (src->type == BL_PC) {
-					map_session_data *sd = map_id2sd(src->id);
-
-					if (sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > MAX_SPIRITCHARM)
-#ifdef RENEWAL
-						ratio += 30;
-#else
-						damage += damage * 30 / 100;
-#endif
-				}
 				break;
 		}
 	}
@@ -1940,6 +1898,15 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 	if((skill = pc_checkskill(sd,BS_WEAPONRESEARCH)) > 0)
 		damage += (skill * 2);
 #endif
+
+	// Kagerou/Oboro Spirit Charm bonus
+	if (sd->spiritcharm >= MAX_SPIRITCHARM) {
+		if ((sd->spiritcharm_type == CHARM_TYPE_FIRE && status->def_ele == ELE_EARTH) ||
+			(sd->spiritcharm_type == CHARM_TYPE_WATER && status->def_ele == ELE_FIRE) ||
+			(sd->spiritcharm_type == CHARM_TYPE_LAND && status->def_ele == ELE_WIND) ||
+			(sd->spiritcharm_type == CHARM_TYPE_WIND && status->def_ele == ELE_WATER))
+			damage += damage * 30 / 100;
+	}
 
 	if(type == 0)
 		weapon = sd->weapontype1;
@@ -3380,7 +3347,7 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 					sstatus->batk + sstatus->rhw.atk + (index >= 0 && sd->inventory_data[index] ?
 						sd->inventory_data[index]->atk : 0)) * (skill_lv + 5) / 5;
 				if (sc && sc->data[SC_KAGEMUSYA])
-					damagevalue += damagevalue * 20 / 100;
+					damagevalue += damagevalue * sc->data[SC_KAGEMUSYA]->val2 / 100;
 				ATK_ADD(wd->damage, wd->damage2, damagevalue);
 #ifdef RENEWAL
 				ATK_ADD(wd->weaponAtk, wd->weaponAtk2, damagevalue);
@@ -4518,13 +4485,13 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			if(tsc && tsc->data[SC_JYUMONJIKIRI])
 				skillratio += skill_lv * status_get_lv(src);
 			if (sc && sc->data[SC_KAGEMUSYA])
-				skillratio += skillratio * 20 / 100;
+				skillratio += skillratio * sc->data[SC_KAGEMUSYA]->val2 / 100;
 			break;
 		case KO_HUUMARANKA:
 			skillratio += -100 + 150 * skill_lv + sstatus->str + (sd ? pc_checkskill(sd,NJ_HUUMA) * 100 : 0);
 			RE_LVL_DMOD(100);
 			if (sc && sc->data[SC_KAGEMUSYA])
-				skillratio += skillratio * 20 / 100;
+				skillratio += skillratio * sc->data[SC_KAGEMUSYA]->val2 / 100;
 			break;
 		case KO_SETSUDAN:
 			skillratio += 100 * (skill_lv - 1);
@@ -4541,7 +4508,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(120);
 			skillratio += 10 * (sd ? sd->status.job_level : 1);
 			if (sc && sc->data[SC_KAGEMUSYA])
-				skillratio += skillratio * 20 / 100;
+				skillratio += skillratio * sc->data[SC_KAGEMUSYA]->val2 / 100;
 			break;
 		case KO_MAKIBISHI:
 			skillratio += -100 + 20 * skill_lv;
