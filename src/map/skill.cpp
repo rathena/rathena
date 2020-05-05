@@ -10186,7 +10186,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 
 			for( i = SC_SPHERE_1; i <= SC_SPHERE_5; i++ ) {
-						if( !sctype && !sc->data[i] )//
+				if( !sctype && !sc->data[i] )
 					sctype = i; // Take the free SC
 				if( sc->data[i] )
 					pos = max(sc->data[i]->val2,pos);
@@ -10225,7 +10225,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_READING, 0);
 				break;
 			}
-
+			//This is the old spell book clif
 			//sc_start(src,bl, SC_STOP, 100, skill_lv, INFINITE_TICK); //Can't move while selecting a spellbook.
 			//clif_spellbook_list(sd);
 			skill_spellbook(sd,flag);
