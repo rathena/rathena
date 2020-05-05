@@ -1244,16 +1244,17 @@ void bg_queue_on_accept_invite(struct map_session_data *sd)
 	queue->accepted_players++;
 	clif_bg_queue_ack_lobby(true, mapindex_id2name(queue->map->mapindex), mapindex_id2name(queue->map->mapindex), sd);
 
-	if (queue->tid_expire != INVALID_TIMER) {
-		delete_timer(queue->tid_expire, bg_on_ready_expire);
-		queue->tid_expire = INVALID_TIMER;
-	}
-
 	if (queue->state == QUEUE_STATE_ACTIVE) // Battleground is already active
 		bg_send_active(queue);
 	else if (queue->state == QUEUE_STATE_SETUP_DELAY) {
-		if (queue->accepted_players == queue->required_players * 2)
+		if (queue->accepted_players == queue->required_players * 2) {
+			if (queue->tid_expire != INVALID_TIMER) {
+				delete_timer(queue->tid_expire, bg_on_ready_expire);
+				queue->tid_expire = INVALID_TIMER;
+			}
+
 			queue->tid_start = add_timer(gettick() + battleground_db.find(queue->id)->start_delay * 1000, bg_on_ready_start, 0, (intptr_t)queue.get());
+		}
 	}
 }
 
