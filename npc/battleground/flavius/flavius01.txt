@@ -395,9 +395,9 @@ OnStop:
 	end;
 }
 
-bat_b01,389,10,0	script	bat_b01_rp1_b_warp	45,9,9,{
+bat_b01,389,10,0	script	bat_b01_rp1_b_warp	45,10,10,{
 OnInit:
-	disablenpc "bat_b01_rp1_a_warp";
+	disablenpc "bat_b01_rp1_b_warp";
 	end;
 
 OnTouch:
@@ -502,6 +502,8 @@ OnTimer1830000:
 	bg_warp $@FlaviusBG1_id2,"bat_b01",390,10;
 	enablenpc "Vintenar#bat_b01_aover";
 	enablenpc "Vintenar#bat_b01_bover";
+	if (getbattleflag("feature.bgqueue"))
+		bg_reserve "bat_b01", true;
 	end;
 
 OnTimer1900000:
