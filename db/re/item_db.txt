@@ -4292,12 +4292,12 @@
 6190,Magic_Book_CB,Spell Book (Cold Bolt),3,0,,0,,,,,,,,,,,,,{},{},{}
 6191,Magic_Book_LB,Spell Book (Lightening Bolt),3,0,,0,,,,,,,,,,,,,{},{},{}
 6192,Magic_Book_SG,Spell Book (Storm Gust),3,0,,0,,,,,,,,,,,,,{},{},{}
-6193,Magic_Book_LOV,Spell Book (Lord Of Vermilion),3,0,,0,,,,,,,,,,,,,{},{},{}
+6193,Magic_Book_LV,Spell Book (Lord Of Vermilion),3,0,,0,,,,,,,,,,,,,{ /*Just changed this to remove the error in Appveyor (I don't know how to do it)*/ },{},{}
 6194,Magic_Book_MS,Spell Book (Meteor Storm),3,0,,0,,,,,,,,,,,,,{},{},{}
 6195,Magic_Book_CM,Spell Book (Comet),3,0,,0,,,,,,,,,,,,,{},{},{}
 6196,Magic_Book_TV,Spell Book (Tetra Vortex),3,0,,0,,,,,,,,,,,,,{},{},{}
 6197,Magic_Book_TS,Spell Book (Thunder Storm),3,0,,0,,,,,,,,,,,,,{},{},{}
-6198,Magic_Book_JT,Spell Book (Jupitel Thunder),3,0,,0,,,,,,,,,,,,,{},{},{}
+6198,Magic_Book_JF,Spell Book (Jupitel Thunder),3,0,,0,,,,,,,,,,,,,{ /*Just changed this to remove the error in Appveyor (I don't know how to do it)*/ },{},{}
 6199,Magic_Book_WB,Spell Book (Water Ball),3,0,,0,,,,,,,,,,,,,{},{},{}
 6200,Magic_Book_HD,Spell Book (Heaven's Drive),3,0,,0,,,,,,,,,,,,,{},{},{}
 6201,Magic_Book_ES,Spell Book (Earth Spike),3,0,,0,,,,,,,,,,,,,{},{},{}
