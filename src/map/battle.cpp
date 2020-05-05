@@ -6322,7 +6322,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 300 + 40 * skill_lv;
 						break;
 					case WL_SOULEXPANSION:
-						skillratio += -100 + (skill_lv + 4) * 100 + status_get_int(src);
+						skillratio += -100 + 750 + 150 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case WL_FROSTMISTY:
