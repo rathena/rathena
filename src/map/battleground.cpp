@@ -331,7 +331,12 @@ struct map_session_data* bg_getavailablesd(s_battleground_data *bg)
 {
 	nullpo_retr(nullptr, bg);
 
-	return (bg->members.size() != 0) ? bg->members[0].sd : nullptr;
+	for (const auto &member : bg->members) {
+		if (member.sd != nullptr)
+			return member.sd;
+	}
+
+	return nullptr;
 }
 
 /**
@@ -607,7 +612,7 @@ void bg_send_message(struct map_session_data *sd, const char *mes, int len)
 {
 	nullpo_retv(sd);
 
-	if (!sd->bg_id)
+	if (sd->bg_id == 0)
 		return;
 	
 	std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, sd->bg_id);

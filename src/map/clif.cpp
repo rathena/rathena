@@ -609,13 +609,13 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 		if( sd && sd->bg_id > 0 && (bg = util::umap_find(bg_team_db, sd->bg_id)))
 		{
 			for (const auto &member : bg->members) {
-				if(member.sd == nullptr || !(fd = sd->fd) )
+				if((sd = member.sd) == nullptr || (fd = sd->fd) == 0)
 					continue;
-				if(member.sd->bl.id == bl->id && (type == BG_WOS || type == BG_SAMEMAP_WOS || type == BG_AREA_WOS) )
+				if(sd->bl.id == bl->id && (type == BG_WOS || type == BG_SAMEMAP_WOS || type == BG_AREA_WOS) )
 					continue;
-				if( type != BG && type != BG_WOS && member.sd->bl.m != bl->m )
+				if( type != BG && type != BG_WOS && sd->bl.m != bl->m )
 					continue;
-				if( (type == BG_AREA || type == BG_AREA_WOS) && (member.sd->bl.x < x0 || member.sd->bl.y < y0 || member.sd->bl.x > x1 || member.sd->bl.y > y1) )
+				if( (type == BG_AREA || type == BG_AREA_WOS) && (sd->bl.x < x0 || sd->bl.y < y0 || sd->bl.x > x1 || sd->bl.y > y1) )
 					continue;
 				WFIFOHEAD(fd,len);
 				memcpy(WFIFOP(fd,0), buf, len);
