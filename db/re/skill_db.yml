@@ -29454,6 +29454,12 @@ Body:
           Amount: 55
         - Level: 7
           Amount: 60
+        - Level: 8
+          Amount: 65
+        - Level: 9
+          Amount: 70
+        - Level: 10
+          Amount: 75
       State: Moonstance
   - Id: 2577
     Name: SJ_LIGHTOFSTAR
@@ -29652,8 +29658,7 @@ Body:
     HitCount: 1
     CastCancel: true
     CastTime: 1000
-    Duration1: 126000
-    Cooldown:
+    Duration1:
       - Level: 1
         Time: 120000
       - Level: 2
@@ -29668,6 +29673,12 @@ Body:
         Time: 220000
       - Level: 7
         Time: 240000
+      - Level: 8
+        Time: 260000
+      - Level: 9
+        Time: 280000
+      - Level: 10
+        Time: 300000
     FixedCastTime: 2000
     Requires:
       SpCost:
@@ -29685,6 +29696,12 @@ Body:
           Amount: 65
         - Level: 7
           Amount: 70
+        - Level: 8
+          Amount: 75
+        - Level: 9
+          Amount: 80
+        - Level: 10
+          Amount: 85
       State: Starstance
   - Id: 2585
     Name: SJ_GRAVITYCONTROL
@@ -29861,6 +29878,12 @@ Body:
           Amount: 49
         - Level: 7
           Amount: 52
+        - Level: 8
+          Amount: 55
+        - Level: 9
+          Amount: 58
+        - Level: 10
+          Amount: 61
       State: Sunstance
   - Id: 2593
     Name: SJ_PROMINENCEKICK
@@ -29885,7 +29908,7 @@ Body:
   - Id: 2594
     Name: SJ_FALLINGSTAR_ATK
     Description: Falling Star Attack
-    MaxLevel: 7
+    MaxLevel: 10
     Type: Weapon
     TargetType: Self
     DamageFlags:
@@ -29903,7 +29926,7 @@ Body:
   - Id: 2595
     Name: SJ_FALLINGSTAR_ATK2
     Description: Falling Star Attack 2
-    MaxLevel: 7
+    MaxLevel: 10
     Type: Weapon
     TargetType: Attack
     DamageFlags:
@@ -30097,6 +30120,16 @@ Body:
           Amount: 65
         - Level: 5
           Amount: 70
+        - Level: 6
+          Amount: 75
+        - Level: 7
+          Amount: 80
+        - Level: 8
+          Amount: 85
+        - Level: 9
+          Amount: 90
+        - Level: 10
+          Amount: 95
   - Id: 2601
     Name: SP_SOULCURSE
     Description: Soul Curse
@@ -30145,6 +30178,16 @@ Body:
           Amount: 64
         - Level: 5
           Amount: 68
+        - Level: 6
+          Amount: 72
+        - Level: 7
+          Amount: 76
+        - Level: 8
+          Amount: 80
+        - Level: 9
+          Amount: 84
+        - Level: 10
+          Amount: 88
       SpiritSphereCost:
         - Level: 1
           Amount: 1
@@ -30246,6 +30289,12 @@ Body:
         Area: 2
       - Level: 7
         Area: 3
+      - Level: 8
+        Area: 3
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 4
     CastCancel: true
     CastTime: 500
     AfterCastActDelay: 500
@@ -30268,6 +30317,12 @@ Body:
           Amount: 86
         - Level: 7
           Amount: 90
+        - Level: 8
+          Amount: 94
+        - Level: 9
+          Amount: 98
+        - Level: 10
+          Amount: 102
       SpiritSphereCost:
         - Level: 1
           Amount: 2
