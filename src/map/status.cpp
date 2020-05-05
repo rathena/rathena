@@ -10237,7 +10237,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 #ifdef RENEWAL
 			val3 = 10 * val1; // Matk% increase
 #else
-			val3 = 5 * val; // Matk% increase
+			val3 = 5 * val1; // Matk% increase
 #endif
 			val4 = 0; // 0 = ready to be used, 1 = activated and running
 			break;
