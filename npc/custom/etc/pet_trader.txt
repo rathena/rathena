@@ -31,7 +31,7 @@ prontera,210,209,6	script	Pet Trader	4_M_JPNOJI,{
 		.@menu$ = "";
 		.@ticketIndices = 0;
 		.@count = 0;
-		for (.@i = 0; .@i < getarraysize(.tickets) && .@count < 10; .@i++) {
+		for (.@i = 0; .@i < getarraysize(.tickets); .@i++) {
 			if (countitem(.tickets[.@i]) > 0) {
 				.@menu$ += getitemname(.tickets[.@i]) + ":";
 				.@ticketIndices[.@count++] = .@i;
