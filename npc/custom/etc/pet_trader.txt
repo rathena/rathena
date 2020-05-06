@@ -12,14 +12,21 @@
 //= 1.0 First version [Latiosu]
 //============================================================
 
-prontera,210,209,6	script	Pet Ticket Exchanger	4_M_JPNOJI,{
+prontera,210,209,6	script	Pet Trader	4_M_JPNOJI,{
 
 	disable_items;
-	mes "[Pet Ticket Exchanger]";
-	mes "Good day, young one. If you have any Cute Pet Exchange Tickets, I can exchange them to eggs for you.";
-	mes "Would you like that?";
+	mes "[Pet Trader]";
+	mes "Making a living through business ain't easy.";
+	mes "I get real bad motion sickness, yet today I got caught up in a storm on my way here.";
 	next;
-	switch (select("Yes, please.:No thanks.")) {
+	mes "[Pet Trader]";
+	mes "It was such a horrible experience. Thanks to that, I don't feel so good. Ughh...";
+	next;
+	mes "[Pet Trader]";
+	mes "Anyway, did you come here looking for a Cute Pet?";
+	mes "You've brought a ticket with you, right?";
+	next;
+	switch (select("Examine your tickets:Cancel")) {
 	case 1:
 		.@menu$ = "";
 		.@ticketIndices = 0;
@@ -32,42 +39,36 @@ prontera,210,209,6	script	Pet Ticket Exchanger	4_M_JPNOJI,{
 		}
 
 		if (.@count == 0) {
-			mes "[Pet Ticket Exchanger]";
-			mes "You don't seem to have any tickets I can exchange.";
+			mes "[Pet Trader]";
+			mes "I don't think you've got the stuff I want.";
 			close;
 		}
 
-		mes "[Pet Ticket Exchanger]";
-		mes "Very well. Which ticket shall I exchange for you?";
+		mes "[Pet Trader]";
+		mes "Which ticket do you want to exchange?";
 		next;
 		.@index = .@ticketIndices[select(.@menu$) - 1];
 
-		mes "[Pet Ticket Exchanger]";
-		mes "I can exchange your "+ getitemname(.tickets[.@index]) +" for one ^0000FF"+ getitemname(.eggs[.@index]) +"^000000.";
-		mes "How does that sound?";
+		mes "[Pet Trader]";
+		mes "Great!";
+		mes "^0000FF"+ getitemname(.eggs[.@index]) +"^000000";
+		mes "Are you sure you want this pet?";
 		next;
-
-		if (select("Yes, I'll take it.:No thanks.") == 2) {
-			mes "[Pet Ticket Exchanger]";
-			mes "Very well. Come see me if you change your mind.";
-			close;
-		}
-
+		if (select("Yes:No") == 2) close;
 		if (!checkweight(.eggs[.@index], 1)) {
-			mes "^3355FFWait a moment!";
-			mes "I can't give you this egg because you're carrying too much stuff.";
-			mes "Put your extra items in storage and come back.";
+			mes "You're carrying too much stuff!";
+			mes "Come back when you've made some space.";
 			close;
 		}
 
-		mes "[Pet Ticket Exchanger]";
-		mes "Here is your ^0000FF"+ getitemname(.eggs[.@index]) +"^000000. Take good care of it.";
+		mes "[Pet Trader]";
+		mes "Here's your pet~";
 		delitem .tickets[.@index], 1;
 		getitem .eggs[.@index], 1;
 		close;
 	case 2:
-		mes "[Pet Ticket Exchanger]";
-		mes "Very well. Come see me when you would like to exchange a ticket.";
+		mes "[Pet Trader]";
+		mes "So you want hear about the land across the sea, but I ain't feeling so well today.";
 		close;
 	}
 	end;
