@@ -19680,7 +19680,7 @@ Body:
         Time: 55000
       - Level: 10
         Time: 60000
-    Cooldown: 2000
+    Cooldown: 2500
     FixedCastTime: -1
     Requires:
       SpCost:
