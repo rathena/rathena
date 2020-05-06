@@ -12478,8 +12478,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case SO_WATER_INSIGNIA:
 	case SO_WIND_INSIGNIA:
 	case SO_EARTH_INSIGNIA:
-	case KO_HUUMARANKA:
-	case KO_BAKURETSU:
 	case KO_ZENKAI:
 	case MH_LAVA_SLIDE:
 	case MH_VOLCANIC_ASH:
