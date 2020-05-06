@@ -266,7 +266,6 @@ struct Script_Config script_config = {
 	"OnPCLoadMapEvent", //loadmap_event_name
 	"OnPCBaseLvUpEvent", //baselvup_event_name
 	"OnPCJobLvUpEvent", //joblvup_event_name
-	"OnPCStatCalcEvent", //stat_calc_event_name
 	// NPC related
 	"OnTouch_",	//ontouch_event_name (runs on first visible char to enter area, picks another char if the first char leaves)
 	"OnTouch",	//ontouch2_event_name (run whenever a char walks into the OnTouch area)
@@ -385,7 +384,7 @@ static struct linkdb_node *sleep_db; // int oid -> struct script_state *
  *------------------------------------------*/
 const char* parse_subexpr(const char* p,int limit);
 int run_func(struct script_state *st);
-unsigned short script_instancegetid(struct script_state *st, enum instance_mode mode = IM_NONE);
+int script_instancegetid(struct script_state *st, e_instance_mode mode = IM_NONE);
 
 const char* script_op2name(int op)
 {
@@ -2759,9 +2758,10 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 					if (data->ref)
 						n = data->ref->vars;
 					else {
-						unsigned short instance_id = script_instancegetid(st);
-						if (instance_id != 0)
-							n = instance_data[instance_id].regs.vars;
+						std::shared_ptr<s_instance_data> idata = util::umap_find(instances, script_instancegetid(st));
+
+						if (idata)
+							n = idata->regs.vars;
 					}
 					if (n)
 						data->u.str = (char*)i64db_get(n,reference_getuid(data));
@@ -2824,9 +2824,10 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 						if (data->ref)
 							n = data->ref->vars;
 						else {
-							unsigned short instance_id = script_instancegetid(st);
-							if (instance_id != 0)
-								n = instance_data[instance_id].regs.vars;
+							std::shared_ptr<s_instance_data> idata = util::umap_find(instances, script_instancegetid(st));
+
+							if (idata)
+								n = idata->regs.vars;
 						}
 						if (n)
 							data->u.num = i64db_i64get(n,reference_getuid(data));
@@ -3071,10 +3072,10 @@ struct reg_db *script_array_src(struct script_state *st, struct map_session_data
 				if (ref)
 					src = ref;
 				else {
-					unsigned short instance_id = script_instancegetid(st);
+					std::shared_ptr<s_instance_data> idata = util::umap_find(instances, script_instancegetid(st));
 
-					if (instance_id != 0)
-						src = &instance_data[instance_id].regs;
+					if (idata)
+						src = &idata->regs;
 				}
 				break;
 			}
@@ -3198,11 +3199,10 @@ bool set_reg_str( struct script_state* st, struct map_session_data* sd, int64 nu
 				if( ref ){
 					src = ref;
 				}else{
-					unsigned short instance_id = script_instancegetid( st );
+					std::shared_ptr<s_instance_data> idata = util::umap_find(instances, script_instancegetid(st));
 
-					if( instance_id != 0 ){
-						src = &instance_data[instance_id].regs;
-					}
+					if (idata)
+						src = &idata->regs;
 				}
 
 				if( src ){
@@ -3293,11 +3293,10 @@ bool set_reg_num( struct script_state* st, struct map_session_data* sd, int64 nu
 				if( ref ){
 					src = ref;
 				}else{
-					unsigned short instance_id = script_instancegetid( st );
+					std::shared_ptr<s_instance_data> idata = util::umap_find(instances, script_instancegetid(st));
 
-					if( instance_id != 0 ){
-						src = &instance_data[instance_id].regs;
-					}
+					if (idata)
+						src = &idata->regs;
 				}
 
 				if( src ){
@@ -17385,6 +17384,17 @@ BUILDIN_FUNC(checkidle)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(checkidlehom)
+{
+	TBL_PC *sd = NULL;
+
+	if( script_nick2sd(2,sd) )
+		script_pushint(st, DIFF_TICK(last_tick, sd->idletime_hom));
+	else
+		script_pushint(st, 0);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 BUILDIN_FUNC(searchitem)
 {
 	struct script_data* data = script_getdata(st, 2);
@@ -19587,10 +19597,10 @@ BUILDIN_FUNC(changequest)
 BUILDIN_FUNC(checkquest)
 {
 	struct map_session_data *sd;
-	enum quest_check_type type = HAVEQUEST;
+	e_quest_check_type type = HAVEQUEST;
 
 	if( script_hasdata(st, 3) )
-		type = (enum quest_check_type)script_getnum(st, 3);
+		type = (e_quest_check_type)script_getnum(st, 3);
 
 	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
@@ -19606,12 +19616,11 @@ BUILDIN_FUNC(checkquest)
 BUILDIN_FUNC(isbegin_quest)
 {
 	struct map_session_data *sd;
-	int i;
 
 	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	i = quest_check(sd, script_getnum(st, 2), (enum quest_check_type) HAVEQUEST);
+	int i = quest_check(sd, script_getnum(st, 2), HAVEQUEST);
 	script_pushint(st, i + (i < 1));
 
 	return SCRIPT_CMD_SUCCESS;
@@ -19934,8 +19943,7 @@ BUILDIN_FUNC(bg_getareausers)
 {
 	const char *str = script_getstr(st, 3);
 	int16 m, x0, y0, x1, y1;
-	int bg_id = script_getnum(st, 2);
-	int i = 0, c = 0;
+	int bg_id = script_getnum(st, 2), c = 0;
 	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
 
 	if (!bg || (m = map_mapname2mapid(str)) < 0) {
@@ -19948,12 +19956,8 @@ BUILDIN_FUNC(bg_getareausers)
 	x1 = script_getnum(st,6);
 	y1 = script_getnum(st,7);
 
-	for( i = 0; i < bg->members.size(); i++ )
-	{
-		struct map_session_data *sd;
-		if( (sd = bg->members[i].sd) == NULL )
-			continue;
-		if( sd->bl.m != m || sd->bl.x < x0 || sd->bl.y < y0 || sd->bl.x > x1 || sd->bl.y > y1 )
+	for (const auto &member : bg->members) {
+		if( member.sd->bl.m != m || member.sd->bl.x < x0 || member.sd->bl.y < y0 || member.sd->bl.x > x1 || member.sd->bl.y > y1 )
 			continue;
 		c++;
 	}
@@ -19982,7 +19986,7 @@ BUILDIN_FUNC(bg_updatescore)
 
 BUILDIN_FUNC(bg_get_data)
 {
-	int bg_id = script_getnum(st,2), type = script_getnum(st,3), i;
+	int bg_id = script_getnum(st,2), type = script_getnum(st,3), i = 0;
 	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
 
 	if (bg) {
@@ -19991,8 +19995,8 @@ BUILDIN_FUNC(bg_get_data)
 			script_pushint(st, bg->members.size());
 			break;
 		case 1:
-			for (i = 0; bg->members[i].sd != NULL; i++)
-				mapreg_setreg(reference_uid(add_str("$@arenamembers"), i), bg->members[i].sd->bl.id);
+			for (const auto &member : bg->members)
+				mapreg_setreg(reference_uid(add_str("$@arenamembers"), i++), member.sd->bl.id);
 			mapreg_setreg(add_str("$@arenamemberscount"), i);
 			script_pushint(st, i);
 			break;
@@ -20092,9 +20096,9 @@ BUILDIN_FUNC(bg_info)
  * @param mode: Instance mode
  * @return instance ID on success or 0 otherwise
  */
-unsigned short script_instancegetid(struct script_state* st, enum instance_mode mode)
+int script_instancegetid(struct script_state* st, e_instance_mode mode)
 {
-	unsigned short instance_id = 0;
+	int instance_id = 0;
 
 	if (mode == IM_NONE) {
 		struct npc_data *nd = map_id2nd(st->oid);
@@ -20107,27 +20111,27 @@ unsigned short script_instancegetid(struct script_state* st, enum instance_mode 
 		if (sd) {
 			switch (mode) {
 				case IM_CHAR:
-					if (sd->instance_id)
+					if (sd->instance_id > 0)
 						instance_id = sd->instance_id;
 					break;
 				case IM_PARTY: {
 					struct party_data *pd = party_search(sd->status.party_id);
 
-					if (pd && pd->instance_id)
+					if (pd && pd->instance_id > 0)
 						instance_id = pd->instance_id;
 				}
 					break;
 				case IM_GUILD: {
 					struct guild *gd = guild_search(sd->status.guild_id);
 
-					if (gd && gd->instance_id)
+					if (gd && gd->instance_id > 0)
 						instance_id = gd->instance_id;
 				}
 					break;
 				case IM_CLAN: {
 					struct clan *cd = clan_search(sd->status.clan_id);
 
-					if (cd && cd->instance_id)
+					if (cd && cd->instance_id > 0)
 						instance_id = cd->instance_id;
 				}
 					break;
@@ -20146,11 +20150,11 @@ unsigned short script_instancegetid(struct script_state* st, enum instance_mode 
  *------------------------------------------*/
 BUILDIN_FUNC(instance_create)
 {
-	enum instance_mode mode = IM_PARTY;
+	e_instance_mode mode = IM_PARTY;
 	int owner_id = 0;
 
 	if (script_hasdata(st, 3)) {
-		mode = static_cast<instance_mode>(script_getnum(st, 3));
+		mode = static_cast<e_instance_mode>(script_getnum(st, 3));
 
 		if (mode < IM_NONE || mode >= IM_MAX) {
 			ShowError("buildin_instance_create: Unknown instance mode %d for '%s'\n", mode, script_getstr(st, 2));
@@ -20201,7 +20205,7 @@ BUILDIN_FUNC(instance_create)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_destroy)
 {
-	unsigned short instance_id;
+	int instance_id;
 
 	if( script_hasdata(st,2) )
 		instance_id = script_getnum(st,2);
@@ -20209,7 +20213,7 @@ BUILDIN_FUNC(instance_destroy)
 		instance_id = script_instancegetid(st);
 
 	if( instance_id == 0 ) {
-		ShowError("buildin_instance_destroy: Trying to destroy invalid instance %hu.\n", instance_id);
+		ShowError("buildin_instance_destroy: Trying to destroy invalid instance %d.\n", instance_id);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -20230,7 +20234,7 @@ BUILDIN_FUNC(instance_enter)
 	struct map_session_data *sd = NULL;
 	int x = script_hasdata(st,3) ? script_getnum(st, 3) : -1;
 	int y = script_hasdata(st,4) ? script_getnum(st, 4) : -1;
-	unsigned short instance_id;
+	int instance_id;
 
 	if (script_hasdata(st, 6))
 		instance_id = script_getnum(st, 6);
@@ -20254,7 +20258,7 @@ BUILDIN_FUNC(instance_enter)
 BUILDIN_FUNC(instance_npcname)
 {
 	const char *str;
-	unsigned short instance_id = 0;
+	int instance_id;
 	struct npc_data *nd;
 
 	str = script_getstr(st,2);
@@ -20263,12 +20267,12 @@ BUILDIN_FUNC(instance_npcname)
 	else
 		instance_id = script_instancegetid(st);
 
-	if( instance_id && (nd = npc_name2id(str)) != NULL ) {
+	if( instance_id > 0 && (nd = npc_name2id(str)) != NULL ) {
 		static char npcname[NAME_LENGTH];
-		snprintf(npcname, sizeof(npcname), "dup_%hu_%d", instance_id, nd->bl.id);
+		snprintf(npcname, sizeof(npcname), "dup_%d_%d", instance_id, nd->bl.id);
 		script_pushconststr(st,npcname);
 	} else {
-		ShowError("buildin_instance_npcname: Invalid instance NPC (instance_id: %hu, NPC name: \"%s\".)\n", instance_id, str);
+		ShowError("buildin_instance_npcname: Invalid instance NPC (instance_id: %d, NPC name: \"%s\".)\n", instance_id, str);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -20285,7 +20289,7 @@ BUILDIN_FUNC(instance_mapname)
 {
  	const char *str;
 	int16 m;
-	unsigned short instance_id = 0;
+	int instance_id;
 
 	str = script_getstr(st,2);
 
@@ -20295,7 +20299,7 @@ BUILDIN_FUNC(instance_mapname)
 		instance_id = script_instancegetid(st);
 
 	// Check that instance mapname is a valid map
-	if(!instance_id || (m = instance_mapname2mapid(str,instance_id)) < 0)
+	if(instance_id <= 0 || (m = instance_mapid(map_mapname2mapid(str), instance_id)) < 0)
 		script_pushconststr(st, "");
 	else
 		script_pushconststr(st, map_getmapdata(m)->name);
@@ -20320,7 +20324,7 @@ BUILDIN_FUNC(instance_id)
 		}
 	}
 
-	script_pushint(st, script_instancegetid(st, static_cast<instance_mode>(mode)));
+	script_pushint(st, script_instancegetid(st, static_cast<e_instance_mode>(mode)));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -20334,9 +20338,8 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 	unsigned int m = va_arg(ap,unsigned int);
 	int x = va_arg(ap,int);
 	int y = va_arg(ap,int);
-	unsigned short instance_id = va_arg(ap,unsigned int);
-	struct map_session_data *sd = NULL;
-	int owner_id = 0;
+	int instance_id = va_arg(ap, int);
+	struct map_session_data *sd;
 
 	nullpo_retr(0, bl);
 
@@ -20344,8 +20347,15 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 		return 0;
 
 	sd = (TBL_PC *)bl;
-	owner_id = instance_data[instance_id].owner_id;
-	switch(instance_data[instance_id].mode) {
+
+	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
+
+	if (!idata)
+		return 0;
+
+	int owner_id = idata->owner_id;
+
+	switch(idata->mode) {
 		case IM_NONE:
 			break;
 		case IM_CHAR:
@@ -20371,8 +20381,8 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 
 BUILDIN_FUNC(instance_warpall)
 {
-	int16 m, i;
-	unsigned short instance_id;
+	int16 m;
+	int instance_id;
 	const char *mapn;
 	int x, y;
 
@@ -20384,11 +20394,18 @@ BUILDIN_FUNC(instance_warpall)
 	else
 		instance_id = script_instancegetid(st, IM_PARTY);
 
-	if( !instance_id || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapname2mapid(map_getmapdata(m)->name,instance_id)) < 0)
+	if( instance_id <= 0 || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapid(m, instance_id)) < 0)
 		return SCRIPT_CMD_FAILURE;
 
-	for(i = 0; i < instance_data[instance_id].cnt_map; i++)
-		map_foreachinmap(buildin_instance_warpall_sub, instance_data[instance_id].map[i]->m, BL_PC, map_id2index(m), x, y, instance_id);
+	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
+
+	if (!idata) {
+		ShowError("buildin_instance_warpall: Instance is not found.\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	for(const auto &it : idata->map)
+		map_foreachinmap(buildin_instance_warpall_sub, it.m, BL_PC, map_id2index(m), x, y, instance_id);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -20400,7 +20417,7 @@ BUILDIN_FUNC(instance_warpall)
  * Using 0 for <instance id> will auto-detect the id.
  *------------------------------------------*/
 BUILDIN_FUNC(instance_announce) {
-	unsigned short instance_id = script_getnum(st,2);
+	int instance_id            = script_getnum(st,2);
 	const char     *mes        = script_getstr(st,3);
 	int            flag        = script_getnum(st,4);
 	const char     *fontColor  = script_hasdata(st,5) ? script_getstr(st,5) : NULL;
@@ -20408,20 +20425,19 @@ BUILDIN_FUNC(instance_announce) {
 	int            fontSize    = script_hasdata(st,7) ? script_getnum(st,7) : 12;    // default fontSize
 	int            fontAlign   = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontAlign
 	int            fontY       = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY
-	int i;
 
-	if( instance_id == 0 ) {
+	if (instance_id <= 0)
 		instance_id = script_instancegetid(st);
-	}
 
-	if( !instance_id && &instance_data[instance_id] != NULL) {
-		ShowError("buildin_instance_announce: Intance is not found.\n");
+	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
+
+	if (instance_id <= 0 || !idata) {
+		ShowError("buildin_instance_announce: Instance not found.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	for( i = 0; i < instance_data[instance_id].cnt_map; i++ )
-		map_foreachinmap(buildin_announce_sub, instance_data[instance_id].map[i]->m, BL_PC,
-						 mes, strlen(mes)+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
+	for (const auto &it : idata->map)
+		map_foreachinmap(buildin_announce_sub, it.m, BL_PC, mes, strlen(mes)+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -20439,7 +20455,7 @@ BUILDIN_FUNC(instance_announce) {
 BUILDIN_FUNC(instance_check_party)
 {
 	int amount, min, max, i, party_id, c = 0;
-	struct party_data *p = NULL;
+	struct party_data *p;
 
 	amount = script_hasdata(st,3) ? script_getnum(st,3) : 1; // Amount of needed Partymembers for the Instance.
 	min = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
@@ -20465,7 +20481,7 @@ BUILDIN_FUNC(instance_check_party)
 	for( i = 0; i < MAX_PARTY; i++ ) {
 		struct map_session_data *pl_sd;
 		if( (pl_sd = p->data[i].sd) )
-			if(map_id2bl(pl_sd->bl.id)) {
+			if(map_id2bl(pl_sd->bl.id) && !pl_sd->state.autotrade) {
 				if(pl_sd->status.base_level < min) {
 					script_pushint(st, 0);
 					return SCRIPT_CMD_SUCCESS;
@@ -20526,7 +20542,7 @@ BUILDIN_FUNC(instance_check_guild)
 		struct map_session_data *pl_sd;
 
 		if ((pl_sd = g->member[i].sd)) {
-			if (map_id2bl(pl_sd->bl.id)) {
+			if (map_id2bl(pl_sd->bl.id) && !pl_sd->state.autotrade) {
 				if (pl_sd->status.base_level < min) {
 					script_pushint(st, 0);
 					return SCRIPT_CMD_SUCCESS;
@@ -20588,7 +20604,7 @@ BUILDIN_FUNC(instance_check_clan)
 		struct map_session_data *pl_sd;
 
 		if ((pl_sd = cd->members[i])) {
-			if (map_id2bl(pl_sd->bl.id)) {
+			if (map_id2bl(pl_sd->bl.id) && !pl_sd->state.autotrade) {
 				if (pl_sd->status.base_level < min) {
 					script_pushint(st, 0);
 					return SCRIPT_CMD_SUCCESS;
@@ -20621,9 +20637,9 @@ BUILDIN_FUNC(instance_info)
 	const char* name = script_getstr(st, 2);
 	int type = script_getnum(st, 3);
 	int index = 0;
-	struct instance_db *db = instance_searchname_db(name);
+	std::shared_ptr<s_instance_db> db = instance_search_db_name(name);
 
-	if( !db ){
+	if (!db) {
 		ShowError( "buildin_instance_info: Unknown instance name \"%s\".\n", name );
 		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
@@ -20640,7 +20656,7 @@ BUILDIN_FUNC(instance_info)
 			script_pushint(st, db->timeout);
 			break;
 		case IIT_ENTER_MAP:
-			script_pushstrcopy(st, StringBuf_Value(db->enter.mapname));
+			script_pushstrcopy(st, map_mapid2mapname(db->enter.map));
 			break;
 		case IIT_ENTER_X:
 			script_pushint(st, db->enter.x);
@@ -20649,7 +20665,7 @@ BUILDIN_FUNC(instance_info)
 			script_pushint(st, db->enter.y);
 			break;
 		case IIT_MAPCOUNT:
-			script_pushint(st, db->maplist_count);
+			script_pushint(st, db->maplist.size());
 			break;
 		case IIT_MAP:
 			if( !script_hasdata(st, 4) || script_isstring(st, 4) ){
@@ -20672,7 +20688,7 @@ BUILDIN_FUNC(instance_info)
 				return SCRIPT_CMD_FAILURE;
 			}
 
-			script_pushstrcopy(st, StringBuf_Value(db->maplist[index]));
+			script_pushstrcopy(st, map_mapid2mapname(db->maplist[index]));
 			break;
 
 		default:
@@ -20706,14 +20722,14 @@ BUILDIN_FUNC(instance_live_info)
 	else
 		id = script_getnum(st, 3);
 
-	struct instance_db *db = nullptr;
-	struct instance_data *im = nullptr;
+	std::shared_ptr<s_instance_db> db = nullptr;
+	std::shared_ptr<s_instance_data> im = nullptr;
 
-	if (id > 0 && id < MAX_INSTANCE_DATA) {
-		im = &instance_data[id];
+	if (id > 0 && id < INT_MAX) {
+		im = util::umap_find(instances, id);
 
 		if (im)
-			db = instance_searchtype_db(im->type);
+			db = instance_db.find(im->id);
 	}
 
 	if (!im || !db) {
@@ -20726,7 +20742,7 @@ BUILDIN_FUNC(instance_live_info)
 
 	switch( type ) {
 	case ILI_NAME:
-		script_pushstrcopy(st, StringBuf_Value(db->name));
+		script_pushstrcopy(st, db->name.c_str());
 		break;
 	case ILI_MODE:
 		script_pushint(st, im->mode);
@@ -23762,13 +23778,8 @@ BUILDIN_FUNC(achievementadd) {
 	}
 
 	if( !sd->state.pc_loaded ){
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementadd: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	if (achievement_add(sd, achievement_id))
@@ -23799,13 +23810,8 @@ BUILDIN_FUNC(achievementremove) {
 	}
 
 	if( !sd->state.pc_loaded ){
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementremove: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	if (achievement_remove(sd, achievement_id))
@@ -23836,13 +23842,8 @@ BUILDIN_FUNC(achievementinfo) {
 
 	if( !sd->state.pc_loaded ){
 		script_pushint(st, false);
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementinfo: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	script_pushint(st, achievement_check_progress(sd, achievement_id, script_getnum(st, 3)));
@@ -23869,13 +23870,8 @@ BUILDIN_FUNC(achievementcomplete) {
 	}
 	
 	if( !sd->state.pc_loaded ){
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementcomplete: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
@@ -23907,13 +23903,8 @@ BUILDIN_FUNC(achievementexists) {
 
 	if( !sd->state.pc_loaded ){
 		script_pushint(st, false);
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementexists: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id && sd->achievement_data.achievements[i].completed > 0 );
@@ -23945,13 +23936,8 @@ BUILDIN_FUNC(achievementupdate) {
 	}
 
 	if( !sd->state.pc_loaded ){
-		if( !running_npc_stat_calc_event ){
-			ShowError( "buildin_achievementupdate: call was too early. Character %s(CID: '%u') was not loaded yet.\n", sd->status.name, sd->status.char_id );
-			return SCRIPT_CMD_FAILURE;
-		}else{
-			// Simply ignore it on the first call, because the status will be recalculated after loading anyway
-			return SCRIPT_CMD_SUCCESS;
-		}
+		// Simply ignore it on the first call, because the status will be recalculated after loading anyway
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
@@ -24534,16 +24520,16 @@ BUILDIN_FUNC(getvariableofinstance)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	unsigned short instance_id = script_getnum(st, 3);
+	int instance_id = script_getnum(st, 3);
 
-	if (instance_id == 0 || instance_id > MAX_INSTANCE_DATA) {
+	if (instance_id <= 0) {
 		ShowError("buildin_getvariableofinstance: Invalid instance ID %d.\n", instance_id);
 		script_pushnil(st);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	struct instance_data *im = &instance_data[instance_id];
+	std::shared_ptr<s_instance_data> im = util::umap_find(instances, instance_id);
 
 	if (im->state != INSTANCE_BUSY) {
 		ShowError("buildin_getvariableofinstance: Unknown instance ID %d.\n", instance_id);
@@ -25107,6 +25093,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(checkvending,"?"),
 	BUILDIN_DEF(checkchatting,"?"),
 	BUILDIN_DEF(checkidle,"?"),
+	BUILDIN_DEF(checkidlehom,"?"),
 	BUILDIN_DEF(openmail,"?"),
 	BUILDIN_DEF(openauction,"?"),
 	BUILDIN_DEF(checkcell,"siii"),

@@ -1046,7 +1046,11 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		status_change_end(target, SC_SAFETYWALL, INVALID_TIMER);
 	}
 
-	if (sc->data[SC_NEUTRALBARRIER] && (d->flag&(BF_LONG|BF_MAGIC)) == BF_LONG) {
+	if (sc->data[SC_NEUTRALBARRIER] && ((d->flag&(BF_LONG|BF_MAGIC)) == BF_LONG
+#ifndef RENEWAL
+		|| skill_id == CR_ACIDDEMONSTRATION
+#endif
+		)) {
 		d->dmg_lv = ATK_MISS;
 		return false;
 	}
@@ -1167,7 +1171,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		if( sc->data[SC_WEAPONBLOCKING] && flag&(BF_SHORT|BF_WEAPON) && rnd()%100 < sc->data[SC_WEAPONBLOCKING]->val2 ) {
 			clif_skill_nodamage(bl,src,GC_WEAPONBLOCKING,sc->data[SC_WEAPONBLOCKING]->val1,1);
-			sc_start(src, bl, SC_WEAPONBLOCK_ON, 100, 0, skill_get_time2(GC_WEAPONBLOCKING, 1));
+			sc_start(src, bl, SC_WEAPONBLOCK_ON, 100, src->id, skill_get_time2(GC_WEAPONBLOCKING, 1));
 			d->dmg_lv = ATK_BLOCK;
 			return 0;
 		}
@@ -3489,7 +3493,11 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 		{
 			wd->div_ = skill_get_num(GS_CHAINACTION,skill_lv);
 			wd->type = DMG_MULTI_HIT;
-			sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill_get_time(RL_QD_SHOT,1));
+
+			status_data *status = status_get_status_data(src);
+
+			if (status && status->amotion > 70) // Only triggers if ASPD < 193
+				sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill_get_time(RL_QD_SHOT,1));
 		}
 		else if(sc && sc->data[SC_FEARBREEZE] && sd->weapontype1==W_BOW
 			&& (i = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[i] && sd->inventory.u.items_inventory[i].amount > 1)
@@ -3774,7 +3782,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case MO_FINGEROFFENSIVE:
 #ifdef RENEWAL
-			skillratio += 500 + skill_lv * 2;
+			skillratio += 500 + skill_lv * 200;
 			if (tsc && tsc->data[SC_BLADESTOP])
 				skillratio += skillratio / 2;
 #else
@@ -4442,6 +4450,35 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 700 + 100 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
+		case GN_SLINGITEM_RANGEMELEEATK:
+			if( sd ) {
+				switch( sd->itemid ) {
+					case ITEMID_APPLE_BOMB:
+						skillratio += 200 + status_get_str(src) + status_get_dex(src);
+						break;
+					case ITEMID_COCONUT_BOMB:
+					case ITEMID_PINEAPPLE_BOMB:
+						skillratio += 700 + status_get_str(src) + status_get_dex(src);
+						break;
+					case ITEMID_MELON_BOMB:
+						skillratio += 400 + status_get_str(src) + status_get_dex(src);
+						break;
+					case ITEMID_BANANA_BOMB:
+						skillratio += 777 + status_get_str(src) + status_get_dex(src);
+						break;
+					case ITEMID_BLACK_LUMP:
+						skillratio += -100 + (status_get_str(src) + status_get_agi(src) + status_get_dex(src)) / 3;
+						break;
+					case ITEMID_BLACK_HARD_LUMP:
+						skillratio += -100 + (status_get_str(src) + status_get_agi(src) + status_get_dex(src)) / 2;
+						break;
+					case ITEMID_VERY_HARD_LUMP:
+						skillratio += -100 + status_get_str(src) + status_get_agi(src) + status_get_dex(src);
+						break;
+				}
+				RE_LVL_DMOD(100);
+			}
+			break;
 		case GN_HELLS_PLANT_ATK:
 			skillratio += -100 + 500 * skill_lv + sstatus->int_ * (10 - (sd ? pc_checkskill(sd, AM_CANNIBALIZE) : 0)); // !TODO: Confirm INT and Cannibalize bonus
 			RE_LVL_DMOD(100);
@@ -4526,11 +4563,13 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 200 * skill_lv;
 			break;
 		case RL_FIREDANCE:
-			skillratio += -100 + 200 * skill_lv;
-			skillratio += (sd ? pc_checkskill(sd, GS_DESPERADO) * 50 : 0);
+			skillratio += 100 + 100 * skill_lv;
+			skillratio += (sd ? pc_checkskill(sd, GS_DESPERADO) * 20 : 0);
+			RE_LVL_DMOD(100);
 			break;
 		case RL_BANISHING_BUSTER:
-			skillratio += -100 + 2000 + 300 * skill_lv;
+			skillratio += -100 + 1000 + 200 * skill_lv;
+			RE_LVL_DMOD(100);
 			break;
 		case RL_S_STORM:
 			skillratio += -100 + 1700 + 200 * skill_lv;
@@ -4543,10 +4582,14 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio *= 2 + tstatus->size;
 			break;
 		case RL_D_TAIL:
-			skillratio += -100 + 4000 + 1000 * skill_lv;
+			skillratio += -100 + 500 + 200 * skill_lv;
+			if (sd && (wd->miscflag & 8))
+				skillratio *= 2;
+			RE_LVL_DMOD(100);
 			break;
 		case RL_R_TRIP:
-			skillratio += -100 + 1000 + 300 * skill_lv;
+			skillratio += -100 + 350 * skill_lv;
+			RE_LVL_DMOD(100);
 			break;
 		case RL_R_TRIP_PLUSATK:
 			skillratio += -100 + 300 + 300 * skill_lv;
@@ -4558,13 +4601,14 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += -100 + 200 + 200 * skill_lv;
 			break;
 		case RL_HAMMER_OF_GOD:
-			skillratio += -100 + 2800 + 1400 * skill_lv;
+			skillratio += -100 + 100 * skill_lv;
 			if (sd) {
-				if (tsc && tsc->data[SC_C_MARKER])
-					skillratio += 100 * sd->spiritball_old;
-				else if (sd->spiritball_old)
-					skillratio += 10 * sd->spiritball_old;
+				if (wd->miscflag & 8)
+					skillratio += 400 * sd->spiritball_old;
+				else
+					skillratio += 150 * sd->spiritball_old;
 			}
+			RE_LVL_DMOD(100);
 			break;
 		case RL_FIRE_RAIN:
 		case RL_AM_BLAST:
@@ -5459,8 +5503,12 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 			}
 				break;
 			case MO_FINGEROFFENSIVE:
-				if (sd && battle_config.finger_offensive_type)
-					wd.div_ = 1;
+				if (sd) {
+					if (battle_config.finger_offensive_type)
+						wd.div_ = 1;
+					else if ((sd->spiritball + sd->spiritball_old) < wd.div_)
+						wd.div_ = sd->spiritball + sd->spiritball_old;
+				}
 				break;
 
 			case KN_PIERCE:
@@ -6245,14 +6293,14 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 #ifdef RENEWAL
 					case WZ_HEAVENDRIVE:
-						skillratio += -100 + skill_lv * 100 + skill_lv * 25;
+						skillratio += 25;
 						break;
 					case WZ_METEOR:
 						skillratio += 25;
 						break;
 					case WZ_VERMILION:
 						if(sd)
-							skillratio += 25 + skill_lv * 5;
+							skillratio += 300 + skill_lv * 100;
 						else
 							skillratio += 20 * skill_lv - 20; //Monsters use old formula
 						break;
@@ -6858,7 +6906,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				// AD benefits from endow/element but damage is forced back to neutral
 				md.damage = battle_attr_fix(src, target, md.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 			}
+			// Fall through
 #else
+		case CR_ACIDDEMONSTRATION:
 			if(tstatus->vit+sstatus->int_) //crash fix
 				md.damage = (int)((int64)7*tstatus->vit*sstatus->int_*sstatus->int_ / (10*(tstatus->vit+sstatus->int_)));
 			else
@@ -7469,7 +7519,12 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 						}
 						break;
 					case W_GRENADE:
-						if (sd->inventory_data[index]->look != A_GRENADE) {
+						if (sd->inventory_data[index]->look !=
+#ifdef RENEWAL
+							A_BULLET) {
+#else
+							A_GRENADE) {
+#endif
 							clif_skill_fail(sd,0,USESKILL_FAIL_NEED_MORE_BULLET,0);
 							return ATK_NONE;
 						}
@@ -8702,6 +8757,7 @@ static const struct _battle_data {
 	{ "mail_show_status",                   &battle_config.mail_show_status,                0,      0,      2,              },
 	{ "client_limit_unit_lv",               &battle_config.client_limit_unit_lv,            0,      0,      BL_ALL,         },
 	{ "land_protector_behavior",            &battle_config.land_protector_behavior,         0,      0,      1,              },
+	{ "npc_emotion_behavior",               &battle_config.npc_emotion_behavior,            0,      0,      1,              },
 // BattleGround Settings
 	{ "bg_update_interval",                 &battle_config.bg_update_interval,              1000,   100,    INT_MAX,        },
 	{ "bg_short_attack_damage_rate",        &battle_config.bg_short_damage_rate,            80,     0,      INT_MAX,        },
@@ -8786,7 +8842,7 @@ static const struct _battle_data {
 	{ "fame_pharmacy_10",                   &battle_config.fame_pharmacy_10,                50,     0,      INT_MAX,        },
 	{ "mail_delay",                         &battle_config.mail_delay,                      1000,   1000,   INT_MAX,        },
 	{ "at_monsterignore",                   &battle_config.autotrade_monsterignore,         0,      0,      1,              },
-	{ "idletime_option",                    &battle_config.idletime_option,                 0x25,   1,      INT_MAX,        },
+	{ "idletime_option",                    &battle_config.idletime_option,                 0x1F,   0x1,    0xFFF,          },
 	{ "spawn_direction",                    &battle_config.spawn_direction,                 0,      0,      1,              },
 	{ "arrow_shower_knockback",             &battle_config.arrow_shower_knockback,          1,      0,      1,              },
 	{ "devotion_rdamage_skill_only",        &battle_config.devotion_rdamage_skill_only,     1,      0,      1,              },
@@ -8805,8 +8861,8 @@ static const struct _battle_data {
 	{ "feature.roulette",                   &battle_config.feature_roulette,                1,      0,      1,              },
 	{ "monster_hp_bars_info",               &battle_config.monster_hp_bars_info,            1,      0,      1,              },
 	{ "min_body_style",                     &battle_config.min_body_style,                  0,      0,      SHRT_MAX,       },
-	{ "max_body_style",                     &battle_config.max_body_style,                  4,      0,      SHRT_MAX,       },
-	{ "save_body_style",                    &battle_config.save_body_style,                 0,      0,      1,              },
+	{ "max_body_style",                     &battle_config.max_body_style,                  1,      0,      SHRT_MAX,       },
+	{ "save_body_style",                    &battle_config.save_body_style,                 1,      0,      1,              },
 	{ "monster_eye_range_bonus",            &battle_config.mob_eye_range_bonus,             0,      0,      10,             },
 	{ "monster_stuck_warning",              &battle_config.mob_stuck_warning,               0,      0,      1,              },
 	{ "skill_eightpath_algorithm",          &battle_config.skill_eightpath_algorithm,       1,      0,      1,              },
@@ -8860,6 +8916,7 @@ static const struct _battle_data {
 	{ "boss_nopc_idleskill_rate",           &battle_config.boss_nopc_idleskill_rate,        100,    0,    100,              },
 	{ "boss_nopc_move_rate",                &battle_config.boss_nopc_move_rate,             100,    0,    100,              },
 	{ "hom_idle_no_share",                  &battle_config.hom_idle_no_share,               0,      0,      INT_MAX,        },
+	{ "idletime_hom_option",                &battle_config.idletime_hom_option,             0x1F,   0x1,    0xFFF,          },
 	{ "devotion_standup_fix",               &battle_config.devotion_standup_fix,            1,      0,      1,              },
 	{ "feature.bgqueue",                    &battle_config.feature_bgqueue,                 1,      0,      1,              },
 	{ "homunculus_exp_gain",                &battle_config.homunculus_exp_gain,             10,     0,      100,            },

@@ -27,7 +27,7 @@ struct skill_unit;
 struct skill_unit_group;
 struct status_change_entry;
 
-#define MAX_SKILL_PRODUCE_DB	280 /// Max Produce DB
+#define MAX_SKILL_PRODUCE_DB	281 /// Max Produce DB
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
 #define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
 #define MAX_ARROW_RESULT		5 /// Max Arrow results/created
@@ -1176,7 +1176,7 @@ enum e_skill {
 	CG_HERMODE,
 	CG_TAROTCARD,
 	CR_ACIDDEMONSTRATION,
-	CR_CULTIVATION,
+	CR_CULTIVATION, // Removed on kRO (renewal)
 	ITEM_ENCHANTARMS,
 	TK_MISSION,
 	SL_HIGH,
@@ -1760,12 +1760,12 @@ enum e_skill {
 	GN_HELLS_PLANT,
 	GN_HELLS_PLANT_ATK,
 	GN_MANDRAGORA,
-	GN_SLINGITEM,
+	GN_SLINGITEM, // Removed on kRO
 	GN_CHANGEMATERIAL,
 	GN_MIX_COOKING,
-	GN_MAKEBOMB,
+	GN_MAKEBOMB, // Removed on kRO
 	GN_S_PHARMACY,
-	GN_SLINGITEM_RANGEMELEEATK,
+	GN_SLINGITEM_RANGEMELEEATK, // Removed on kRO
 
 	AB_SECRAMENT = 2515,
 	WM_SEVERE_RAINSTORM_MELEE,
