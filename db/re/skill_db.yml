@@ -8756,7 +8756,7 @@ Body:
     HitCount: 2
     Element: Weapon
     CastTime: 500
-    AfterCastActDelay: 3000
+    AfterCastActDelay: 300
     FixedCastTime: 300
     Requires:
       SpCost: 12
