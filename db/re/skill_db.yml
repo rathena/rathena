@@ -13591,10 +13591,24 @@ Body:
           Amount: 1
         - Item: Acid_Bottle
           Amount: 1
-#  - Id: 491 # Removed on kRO
-#    Name: CR_CULTIVATION
-#    Description: Plant Cultivation
-#    MaxLevel: 2
+  - Id: 491 # Removed on kRO
+    Name: CR_CULTIVATION
+    Description: Plant Cultivation
+    MaxLevel: 2
+    TargetType: Ground
+    DamageFlags:
+      NoDamage: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    Duration1: 300000
+    Requires:
+      SpCost: 10
+      ItemCost:
+        - Item: Mushroom_Spore
+          Amount: 1
+        - Item: Stem
+          Amount: 1
   - Id: 492
     Name: ITEM_ENCHANTARMS
     Description: Weapon Enchantment
@@ -19367,6 +19381,8 @@ Body:
     FixedCastTime: -1
     Requires:
       SpCost: 20
+      Status:
+        Weaponblock_On: true
   - Id: 2031
     Name: GC_VENOMPRESSURE
     Description: Venom Pressure
@@ -20052,10 +20068,10 @@ Body:
           Amount: 70
         - Level: 4
           Amount: 80
-#  - Id: 2049 # Removed on kRO
-#    Name: AB_EUCHARISTICA
-#    Description: Eucharistica
-#    MaxLevel: 10
+  - Id: 2049 # Removed on kRO
+    Name: AB_EUCHARISTICA
+    Description: Eucharistica
+    MaxLevel: 10
   - Id: 2050
     Name: AB_RENOVATIO
     Description: Renovatio
@@ -28361,10 +28377,25 @@ Body:
       ItemCost:
         - Item: Mandragora_Flowerpot
           Amount: 1
-#  - Id: 2493 # Removed on kRO
-#    Name: GN_SLINGITEM
-#    Description: Sling Item
-#    MaxLevel: 1
+  - Id: 2493 # Removed on kRO
+    Name: GN_SLINGITEM
+    Description: Sling Item
+    MaxLevel: 1
+    TargetType: Support
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      NoTargetSelf: true
+    Range: 11
+    Hit: Single
+    HitCount: 1
+    Cooldown: 1000
+    FixedCastTime: -1
+    Requires:
+      SpCost: 4
+      Ammo:
+        Throwweapon: true
+      AmmoAmount: 1
   - Id: 2494
     Name: GN_CHANGEMATERIAL
     Description: Change Material
@@ -28391,10 +28422,21 @@ Body:
           Amount: 5
         - Level: 2
           Amount: 40
-#  - Id: 2496 # Removed on kRO
-#    Name: GN_MAKEBOMB
-#    Description: Create Bomb
-#    MaxLevel: 2
+  - Id: 2496 # Removed on kRO
+    Name: GN_MAKEBOMB
+    Description: Create Bomb
+    MaxLevel: 2
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 5
+        - Level: 2
+          Amount: 40
   - Id: 2497
     Name: GN_S_PHARMACY
     Description: Special Pharmacy
@@ -28406,10 +28448,17 @@ Body:
     HitCount: 1
     Requires:
       SpCost: 12
-#  - Id: 2498 # Removed on kRO
-#    Name: GN_SLINGITEM_RANGEMELEEATK
-#    Description: Sling Item Attack
-#    MaxLevel: 1
+  - Id: 2498 # Removed on kRO
+    Name: GN_SLINGITEM_RANGEMELEEATK
+    Description: Sling Item Attack
+    MaxLevel: 1
+    Type: Weapon
+    TargetType: Attack
+    Range: 11
+    Hit: Single
+    HitCount: 1
+    Requires:
+      SpCost: 1
   - Id: 2533
     Name: ALL_ODINS_RECALL
     Description: Odin's Recall
@@ -29447,6 +29496,12 @@ Body:
           Amount: 55
         - Level: 7
           Amount: 60
+        - Level: 8
+          Amount: 65
+        - Level: 9
+          Amount: 70
+        - Level: 10
+          Amount: 75
       State: Moonstance
   - Id: 2577
     Name: SJ_LIGHTOFSTAR
@@ -29645,8 +29700,7 @@ Body:
     HitCount: 1
     CastCancel: true
     CastTime: 1000
-    Duration1: 126000
-    Cooldown:
+    Duration1:
       - Level: 1
         Time: 120000
       - Level: 2
@@ -29661,6 +29715,12 @@ Body:
         Time: 220000
       - Level: 7
         Time: 240000
+      - Level: 8
+        Time: 260000
+      - Level: 9
+        Time: 280000
+      - Level: 10
+        Time: 300000
     FixedCastTime: 2000
     Requires:
       SpCost:
@@ -29678,6 +29738,12 @@ Body:
           Amount: 65
         - Level: 7
           Amount: 70
+        - Level: 8
+          Amount: 75
+        - Level: 9
+          Amount: 80
+        - Level: 10
+          Amount: 85
       State: Starstance
   - Id: 2585
     Name: SJ_GRAVITYCONTROL
@@ -29854,6 +29920,12 @@ Body:
           Amount: 49
         - Level: 7
           Amount: 52
+        - Level: 8
+          Amount: 55
+        - Level: 9
+          Amount: 58
+        - Level: 10
+          Amount: 61
       State: Sunstance
   - Id: 2593
     Name: SJ_PROMINENCEKICK
@@ -29878,7 +29950,7 @@ Body:
   - Id: 2594
     Name: SJ_FALLINGSTAR_ATK
     Description: Falling Star Attack
-    MaxLevel: 7
+    MaxLevel: 10
     Type: Weapon
     TargetType: Self
     DamageFlags:
@@ -29896,7 +29968,7 @@ Body:
   - Id: 2595
     Name: SJ_FALLINGSTAR_ATK2
     Description: Falling Star Attack 2
-    MaxLevel: 7
+    MaxLevel: 10
     Type: Weapon
     TargetType: Attack
     DamageFlags:
@@ -30090,6 +30162,16 @@ Body:
           Amount: 65
         - Level: 5
           Amount: 70
+        - Level: 6
+          Amount: 75
+        - Level: 7
+          Amount: 80
+        - Level: 8
+          Amount: 85
+        - Level: 9
+          Amount: 90
+        - Level: 10
+          Amount: 95
   - Id: 2601
     Name: SP_SOULCURSE
     Description: Soul Curse
@@ -30138,6 +30220,16 @@ Body:
           Amount: 64
         - Level: 5
           Amount: 68
+        - Level: 6
+          Amount: 72
+        - Level: 7
+          Amount: 76
+        - Level: 8
+          Amount: 80
+        - Level: 9
+          Amount: 84
+        - Level: 10
+          Amount: 88
       SpiritSphereCost:
         - Level: 1
           Amount: 1
@@ -30239,6 +30331,12 @@ Body:
         Area: 2
       - Level: 7
         Area: 3
+      - Level: 8
+        Area: 3
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 4
     CastCancel: true
     CastTime: 500
     AfterCastActDelay: 500
@@ -30261,6 +30359,12 @@ Body:
           Amount: 86
         - Level: 7
           Amount: 90
+        - Level: 8
+          Amount: 94
+        - Level: 9
+          Amount: 98
+        - Level: 10
+          Amount: 102
       SpiritSphereCost:
         - Level: 1
           Amount: 2

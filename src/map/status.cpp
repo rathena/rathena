@@ -3399,7 +3399,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 30;
 #endif
 			if(sc->data[SC_LUNARSTANCE])
-				bonus += bonus * sc->data[SC_LUNARSTANCE]->val2 / 100;
+				bonus += sc->data[SC_LUNARSTANCE]->val2;
 			if (sc->data[SC_LUXANIMA])
 				bonus += sc->data[SC_LUXANIMA]->val3;
 
@@ -4529,6 +4529,16 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->left_weapon.addrace[RC_DRAGON]+=skill;
 		sd->magic_addrace[RC_DRAGON]+=skill;
 		sd->subrace[RC_DRAGON]+=skill;
+	}
+	if ((skill = pc_checkskill(sd, AB_EUCHARISTICA)) > 0) {
+		sd->right_weapon.addrace[RC_DEMON] += skill;
+		sd->right_weapon.addele[ELE_DARK] += skill;
+		sd->left_weapon.addrace[RC_DEMON] += skill;
+		sd->left_weapon.addele[ELE_DARK] += skill;
+		sd->magic_addrace[RC_DEMON] += skill;
+		sd->magic_addele[ELE_DARK] += skill;
+		sd->subrace[RC_DEMON] += skill;
+		sd->subele[ELE_DARK] += skill;
 	}
 
 	if(sc->count) {
@@ -5666,7 +5676,12 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			// Absolute ASPD % modifiers
 			amotion = amotion * status->aspd_rate / 1000;
 			if (sd->ud.skilltimer != INVALID_TIMER && (skill_lv = pc_checkskill(sd, SA_FREECAST)) > 0)
+#ifdef RENEWAL_ASPD
+				amotion = amotion * 5 * (skill_lv + 10) / 100;
+#else
 				amotion += (2000 - amotion) * ( 55 - 5 * ( skill_lv + 1 ) ) / 100; //Increases amotion to reduce ASPD to the corresponding absolute percentage for each level (overriding other adjustments)
+#endif
+
 #ifdef RENEWAL_ASPD
 			// RE ASPD % modifier
 			amotion += (max(0xc3 - amotion, 2) * (status->aspd_rate2 + status_calc_aspd(bl, sc, false))) / 100;
@@ -7474,8 +7489,6 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 			bonus += sc->data[sc_val]->val1;
 		if (sc->data[SC_ATTHASTE_CASH])
 			bonus += sc->data[SC_ATTHASTE_CASH]->val1;
-		if (sc->data[SC_HEAT_BARREL])
-			bonus += sc->data[SC_HEAT_BARREL]->val1;
 	} else {
 		if (sc->data[SC_DONTFORGETME])
 			bonus -= sc->data[SC_DONTFORGETME]->val2 / 10;
@@ -7545,6 +7558,8 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 			bonus += sc->data[SC_INCREASEAGI]->val1;
 		if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ASPDRATE)
 			bonus += 20;
+		if (sc->data[SC_STARSTANCE])
+			bonus += sc->data[SC_STARSTANCE]->val2;
 
 		struct map_session_data* sd = BL_CAST(BL_PC, bl);
 		uint8 skill_lv;
@@ -7583,6 +7598,8 @@ static short status_calc_fix_aspd(struct block_list *bl, struct status_change *s
 		aspd -= sc->data[SC_MTF_ASPD2]->val1;
 	if (sc->data[SC_SOULSHADOW])
 		aspd -= 10 * sc->data[SC_SOULSHADOW]->val2;
+	if (sc->data[SC_HEAT_BARREL])
+		aspd -= sc->data[SC_HEAT_BARREL]->val1 * 10;
 
 	return cap_value(aspd, 0, 2000); // Will be recap for proper bl anyway
 }
@@ -14624,17 +14641,16 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_CREATINGSTAR:
 		if (--(sce->val4) >= 0) { // Needed to check who the caster is and what AoE is giving the status.
-			struct block_list *star_caster = map_id2bl(sce->val2), *star_aoe = map_id2bl(sce->val3);
+			struct block_list *star_caster = map_id2bl(sce->val2);
+			struct skill_unit *star_aoe = (struct skill_unit *)map_id2bl(sce->val3);
 
-			if (!star_caster || status_isdead(star_caster) || star_caster->m != bl->m)
+			if (star_caster == nullptr || status_isdead(star_caster) || star_caster->m != bl->m || star_aoe == nullptr)
 				break;
 
-			map_freeblock_lock();
-			if (star_aoe)
-				skill_attack(BF_WEAPON,star_caster,star_aoe,bl,SJ_BOOKOFCREATINGSTAR,sce->val1,tick,0);
-			if (sc->data[type])
-				sc_timer_next(500 + tick);
-			map_freeblock_unlock();
+			sc_timer_next(500 + tick);
+
+			// Attack after timer to prevent errors
+			skill_attack(BF_WEAPON, star_caster, &star_aoe->bl, bl, SJ_BOOKOFCREATINGSTAR, sce->val1, tick, 0);
 			return 0;
 		}
 		break;
