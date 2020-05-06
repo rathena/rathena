@@ -3322,9 +3322,9 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 350 * skill_lv + (skill_lv > 4 ? 250 : 0);
 #ifndef HP_SP_TABLES
 			if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
-				bonus += 2000; //Super novice lvl 99 hp bonus
+				bonus += 2000; // Supernovice lvl99 hp bonus.
 			if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 150)
-				bonus += 2000; //Supernovice lvl150 hp bonus
+				bonus += 2000; // Supernovice lvl150 hp bonus.
 #endif
 		}
 
