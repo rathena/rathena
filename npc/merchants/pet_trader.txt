@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Pet Ticket Exchange NPC
+//= Pet Trader NPC
 //===== By: ==================================================
 //= Latiosu
 //===== Current Version: =====================================
@@ -7,6 +7,7 @@
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
+//= [Official Conversion]
 //= Exchanges Cute Pet Tickets for Pet Eggs.
 //===== Additional Comments: =================================
 //= 1.0 First version [Latiosu]
