@@ -924,6 +924,8 @@ enum sc_type : int16 {
 	SC_INCREASE_MAXHP, // EFST_ATKER_ASPD
 	SC_INCREASE_MAXSP, // EFST_ATKER_MOVESPEED
 
+	SC_HELPANGEL,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
