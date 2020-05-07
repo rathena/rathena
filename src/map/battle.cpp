@@ -1002,7 +1002,7 @@ static void battle_absorb_damage(struct block_list *bl, struct Damage *d) {
  * Check for active statuses that block damage
  * @param src: Attacker
  * @param target: Target of attack
- * @param sc: STatus Change
+ * @param sc: Status Change data
  * @param d: Damage data
  * @param damage: Damage received
  * @param skill_id: Skill ID
