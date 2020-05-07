@@ -5525,10 +5525,9 @@ static void mob_load(void)
 	};
 
 	// First we parse all the possible monsters to add additional data in the second loop
-	if( db_use_sqldbs ){
+	if( db_use_sqldbs )
 		mob_read_sqldb();
-		mob_read_sqlskilldb();
-	}else{
+	else
 		for(int i = 0; i < ARRAYLENGTH(dbsubpath); i++){
 			int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
 			char* dbsubpath2 = (char*)aMalloc(n2+1);
@@ -5564,9 +5563,10 @@ static void mob_load(void)
 
 		sv_readdb(dbsubpath1, "mob_chat_db.txt", '#', 3, 3, -1, &mob_parse_row_chatdb, silent);
 
-		if( !db_use_sqldbs ){
+		if( db_use_sqldbs )
+			mob_read_sqlskilldb();
+		else
 			mob_readskilldb(dbsubpath2, silent);
-		}
 
 		sv_readdb(dbsubpath2, "mob_race2_db.txt", ',', 2, MAX_RACE2_MOBS, -1, &mob_readdb_race2, silent);
 		sv_readdb(dbsubpath1, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio, silent);
