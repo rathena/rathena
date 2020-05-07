@@ -5527,7 +5527,7 @@ static void mob_load(void)
 	// First we parse all the possible monsters to add additional data in the second loop
 	if( db_use_sqldbs )
 		mob_read_sqldb();
-	else
+	else {
 		for(int i = 0; i < ARRAYLENGTH(dbsubpath); i++){
 			int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
 			char* dbsubpath2 = (char*)aMalloc(n2+1);
