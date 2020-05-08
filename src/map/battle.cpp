@@ -3112,6 +3112,13 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 #endif
 		}
 
+		if (skill_id == NV_BREAKTHROUGH) {
+			ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv + (skill_lv > 4 ? 25 : 0));
+#ifdef RENEWAL
+			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, 15 * skill_lv + (skill_lv > 4 ? 25 : 0));
+#endif
+		}
+
 		switch(skill_id) {
 			case RA_WUGDASH:
 			case RA_WUGSTRIKE:

@@ -33561,6 +33561,31 @@ Body:
     FixedCastTime: 2000
     Requires:
       SpCost: 70
+  - Id: 5075
+    Name: NV_BREAKTHROUGH
+    Description: Break Through
+    MaxLevel: 5
+  - Id: 5076
+    Name: NV_HELPANGEL
+    Description: Help Angel
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    SplashArea: 7
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1: 20000
+    Cooldown: 300000
+    Requires:
+      SpCost: 1
+  - Id: 5077
+    Name: NV_TRANSCENDENCE
+    Description: Transcendence
+    MaxLevel: 5
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
