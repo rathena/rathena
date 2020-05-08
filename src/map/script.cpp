@@ -15076,10 +15076,7 @@ BUILDIN_FUNC(npctalk)
 		}
 		safesnprintf(message, sizeof(message), "%s", str);
 		if (target != SELF)
-			if (script_hasdata(st, 5))
-				clif_messagecolor(&nd->bl, color, message, true, target);
-			else
-				clif_messagecolor(&nd->bl, color_table[COLOR_WHITE], message, false, target);
+			clif_messagecolor(&nd->bl, color, message, swapColorBits, target);
 		else {
 			TBL_PC *sd = map_id2sd(st->rid);
 			if (sd == NULL)
