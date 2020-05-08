@@ -15048,19 +15048,16 @@ BUILDIN_FUNC(npctalk)
 {
 	struct npc_data* nd = NULL;
 	const char* str = script_getstr(st,2);
-	int color = color_table[COLOR_WHITE];
-	bool swapColorBits = false;
+	int color = 0xFFFFFF;
 
 	if (script_hasdata(st, 3) && strlen(script_getstr(st,3)) > 0)
 		nd = npc_name2id(script_getstr(st, 3));
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);
 
-	if (script_hasdata(st, 5)) {
-             swapColorBits = true;
-             color = script_getnum(st, 5);
-	}
-	
+	if (script_hasdata(st, 5))
+		color = script_getnum(st, 5);
+
 	if (nd != NULL) {
 		send_target target = AREA;
 		char message[CHAT_SIZE_MAX];
@@ -15076,12 +15073,12 @@ BUILDIN_FUNC(npctalk)
 		}
 		safesnprintf(message, sizeof(message), "%s", str);
 		if (target != SELF)
-			clif_messagecolor(&nd->bl, color, message, swapColorBits, target);
+			clif_messagecolor(&nd->bl, color, message, true, target);
 		else {
 			TBL_PC *sd = map_id2sd(st->rid);
 			if (sd == NULL)
 				return SCRIPT_CMD_FAILURE;
-			clif_messagecolor_target(&nd->bl, color, message, swapColorBits, target, sd);
+			clif_messagecolor_target(&nd->bl, color, message, true, target, sd);
 		}
 	}
 	return SCRIPT_CMD_SUCCESS;
