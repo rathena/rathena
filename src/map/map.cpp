@@ -2716,6 +2716,7 @@ int map_duplicate(int src_m)
 		return -1;
 	}
 
+	//#TODO clear the $map_duplicate_list$ on server restart.
 	mapreg_setregstr(reference_uid(add_str("$map_duplicate_list$"), mapduplicate), dst_map->name);
 	mapduplicate++;
 	map_num++;
