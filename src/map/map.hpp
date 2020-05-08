@@ -1027,6 +1027,7 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag);
 int map_quit(struct map_session_data *);
 // npc
 bool map_addnpc(int16 m,struct npc_data *);
+int map_duplicate(int src_m);
 
 // map item
 TIMER_FUNC(map_clearflooritem_timer);

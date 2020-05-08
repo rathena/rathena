@@ -15392,6 +15392,19 @@ BUILDIN_FUNC(mapid2name)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(mapduplicate)
+{
+	const char* map_name = script_getstr(st, 2);
+	int m;
+	if ((m = map_duplicate(map_mapname2mapid(map_name))) == -1) {
+		script_pushconststr(st, "");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushconststr(st, map_mapid2mapname(m));
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  * Allows player to write NPC logs (i.e. Bank NPC, etc) [Lupus]
  *------------------------------------------*/

@@ -3114,6 +3114,12 @@ map ID doesn't exist.
 
 ---------------------------------------
 
+*mapduplicate("<map name>")
+
+Returns the new map name if successed , and Empty string if failed.
+
+---------------------------------------
+
 *getgmlevel({<char_id>})
 
 This function will return the (GM) level associated with the player group to which

@@ -2692,6 +2692,69 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 }
 
 /*==========================================
+ * duplicate a map , return the new map id.
+ *------------------------------------------*/
+int mapduplicate = 0;
+int map_duplicate(int src_m)
+{
+	if (src_m < 0)
+		return -1;
+
+	const char* name = map_mapid2mapname(src_m);
+	int16 dst_m = map_num + 1;
+	if (dst_m > MAX_MAP_PER_SERVER) {
+		ShowError("map_duplicate: the server already reched the max map id \"%s\"\n", name);
+		return -1;
+	}
+
+	struct map_data* src_map = map_getmapdata(src_m);
+	struct map_data* dst_map = map_getmapdata(dst_m);
+	snprintf(dst_map->name, sizeof(dst_map->name), "%d#%s", mapduplicate + 1, name);
+
+	if (strlen(dst_map->name) < MAP_NAME_LENGTH) {
+		ShowError("map_duplicate: can't add long map name \"%s\" source map \"%s\"\n", dst_map->name, name);
+		return -1;
+	}
+
+	mapreg_setregstr(reference_uid(add_str("$map_duplicate_list$"), mapduplicate), dst_map->name);
+	mapduplicate++;
+	map_num++;
+	dst_map->m = dst_m;
+	dst_map->users = 0;
+	dst_map->xs = src_map->xs;
+	dst_map->ys = src_map->ys;
+	dst_map->bxs = src_map->bxs;
+	dst_map->bys = src_map->bys;
+	dst_map->iwall_num = src_map->iwall_num;
+
+	memset(dst_map->npc, 0, sizeof(dst_map->npc));
+	dst_map->npc_num = 0;
+	dst_map->npc_num_area = 0;
+	dst_map->npc_num_warp = 0;
+
+	// Reallocate cells
+	size_t num_cell = dst_map->xs * dst_map->ys;
+
+	CREATE(dst_map->cell, struct mapcell, num_cell);
+	memcpy(dst_map->cell, src_map->cell, num_cell * sizeof(struct mapcell));
+
+	size_t size = dst_map->bxs * dst_map->bys * sizeof(struct block_list*);
+
+	dst_map->block = (struct block_list**)aCalloc(1, size);
+	dst_map->block_mob = (struct block_list**)aCalloc(1, size);
+
+	dst_map->index = mapindex_addmap(-1, dst_map->name);
+	dst_map->channel = NULL;
+	dst_map->mob_delete_timer = INVALID_TIMER;
+
+	ShowInfo("[map_duplicate] Created map '%s' ('%d') from map '%s' ('%d')\n", dst_map->name, dst_map->m, map_mapid2mapname(src_m), src_map->m);
+
+	map_addmap2db(dst_map);
+
+	return dst_m;
+}
+
+/*==========================================
  * Add an instance map
  *------------------------------------------*/
 int map_addinstancemap(int src_m, int instance_id)
