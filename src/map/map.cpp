@@ -2692,7 +2692,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 }
 
 /*==========================================
- * duplicate a map , return the new map id.
+ * duplicate a map , return the new map id , and -1 if failed.
  *------------------------------------------*/
 int mapduplicate = 0;
 int map_duplicate(int src_m)
@@ -2711,7 +2711,7 @@ int map_duplicate(int src_m)
 	struct map_data* dst_map = map_getmapdata(dst_m);
 	snprintf(dst_map->name, sizeof(dst_map->name), "%d#%s", mapduplicate + 1, name);
 
-	if (strlen(dst_map->name) < MAP_NAME_LENGTH) {
+	if (strlen(dst_map->name) > MAP_NAME_LENGTH) {
 		ShowError("map_duplicate: can't add long map name \"%s\" source map \"%s\"\n", dst_map->name, name);
 		return -1;
 	}
