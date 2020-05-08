@@ -15081,10 +15081,7 @@ BUILDIN_FUNC(npctalk)
 			TBL_PC *sd = map_id2sd(st->rid);
 			if (sd == NULL)
 				return SCRIPT_CMD_FAILURE;
-			if (script_hasdata(st, 5))
-				clif_messagecolor_target(&nd->bl, color, message, true, target, sd);
-			else
-				clif_messagecolor_target(&nd->bl, color_table[COLOR_WHITE], message, false, target, sd);
+			clif_messagecolor_target(&nd->bl, color, message, swapColorBits, target, sd);
 		}
 	}
 	return SCRIPT_CMD_SUCCESS;
