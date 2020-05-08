@@ -15056,9 +15056,11 @@ BUILDIN_FUNC(npctalk)
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);
 
-	if (script_hasdata(st, 5))
-		color = script_getnum(st, 5); //Color
-
+	if (script_hasdata(st, 5)) {
+             swapColorBits = true;
+             color = script_getnum(st, 5);
+	}
+	
 	if (nd != NULL) {
 		send_target target = AREA;
 		char message[CHAT_SIZE_MAX];
