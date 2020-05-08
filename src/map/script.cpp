@@ -15048,7 +15048,8 @@ BUILDIN_FUNC(npctalk)
 {
 	struct npc_data* nd = NULL;
 	const char* str = script_getstr(st,2);
-	int color = 0;
+	int color = color_table[COLOR_WHITE];
+	bool swapColorBits = false;
 
 	if (script_hasdata(st, 3) && strlen(script_getstr(st,3)) > 0)
 		nd = npc_name2id(script_getstr(st, 3));
