@@ -2702,14 +2702,35 @@ int map_duplicate(int src_m)
 
 	const char* name = map_mapid2mapname(src_m);
 	int16 dst_m = map_num + 1;
-	if (dst_m > MAX_MAP_PER_SERVER) {
+	if (map_num > MAX_MAP_PER_SERVER) {
 		ShowError("map_duplicate: the server already reched the max map id \"%s\"\n", name);
 		return -1;
 	}
 
 	struct map_data* src_map = map_getmapdata(src_m);
 	struct map_data* dst_map = map_getmapdata(dst_m);
-	snprintf(dst_map->name, sizeof(dst_map->name), "%d#%s", mapduplicate + 1, name);
+
+	//duplicate maps use alphabet instead of numbers.
+	//this help distinguish between instances maps and duplicated maps.
+	//also helps maps name size.
+	const char* alphabet = "abcdefghijklmnopqrstuvwxyz";
+	size_t abc_size = strlen(alphabet);
+	std::string addiotion = "";
+	int count = mapduplicate;
+
+	//still need adjustment.
+	if (count >= (abc_size* (abc_size+1) )) {	//handles aaa to zzz
+		int b = abc_size * abc_size;
+		addiotion += alphabet[static_cast<int>(count / b) - 1];
+		count -= b * static_cast<int>(count / b);
+	}
+	if (count >= abc_size) {	//handles aa to zz
+		addiotion += alphabet[static_cast<int>(count / abc_size) - 1];
+		count -= abc_size * static_cast<int>(count / abc_size);
+	}
+
+	addiotion += alphabet[count];
+	snprintf(dst_map->name, sizeof(dst_map->name), "%s#%s", addiotion.c_str(), name);
 
 	if (strlen(dst_map->name) > MAP_NAME_LENGTH) {
 		ShowError("map_duplicate: can't add long map name \"%s\" source map \"%s\"\n", dst_map->name, name);
@@ -2717,7 +2738,7 @@ int map_duplicate(int src_m)
 	}
 
 	//#TODO clear the $map_duplicate_list$ on server restart.
-	mapreg_setregstr(reference_uid(add_str("$map_duplicate_list$"), mapduplicate), dst_map->name);
+	//mapreg_setregstr(reference_uid(add_str("$map_duplicate_list$"), mapduplicate), dst_map->name);
 	mapduplicate++;
 	map_num++;
 	dst_map->m = dst_m;
