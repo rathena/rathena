@@ -7,6 +7,7 @@
 #include <stdarg.h>// va_list
 
 #include "cbasetypes.hpp"
+#include "database.hpp"
 
 // Return codes
 #define SQL_ERROR -1
@@ -62,6 +63,43 @@ typedef enum SqlDataType SqlDataType;
 typedef struct Sql Sql;
 typedef struct SqlStmt SqlStmt;
 
+enum e_server_mode : uint8 {
+	MODE_PRERENEWAL = 0,
+	MODE_RENEWAL,
+	MODE_BOTH,
+};
+
+enum e_sql_database : uint8 {
+	SQLDB_LOGIN = 0x1,
+	SQLDB_CHAR = 0x2,
+	SQLDB_MAP = 0x4,
+	SQLDB_LOG = 0x8,
+
+	SQLDB_NORMAL = SQLDB_LOGIN | SQLDB_CHAR | SQLDB_MAP, // All except log
+};
+
+struct s_sql_update_db {
+	int32 id;
+	std::string script;
+	e_server_mode mode;
+	uint8 database;
+	bool skip;
+	std::string patchdate;
+};
+
+class SqlUpdateDatabase : public TypesafeYamlDatabase<int32, s_sql_update_db> {
+public:
+	SqlUpdateDatabase() : TypesafeYamlDatabase("SQL_UPDATE_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+};
+
+extern SqlUpdateDatabase sql_update_db;
+
+void Sql_UpgradesChecker(Sql *sql_handle, e_sql_database schema);
 
 /// Allocates and initializes a new Sql handle.
 struct Sql* Sql_Malloc(void);

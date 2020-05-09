@@ -7,6 +7,8 @@
 #include "winapi.hpp"
 #endif
 
+#include <fstream>
+#include <iomanip>
 #include <mysql.h>
 #include <stdlib.h>// strtoul
 
@@ -1044,6 +1046,232 @@ void Sql_inter_server_read(const char* cfgName, bool first) {
 
 	return;
 }
+
+/**
+ * Automatically upgrade the SQL tables.
+ * @param sql_handle: SQL Connection
+ * @param schema: Schema
+ */
+void Sql_UpgradesChecker(Sql *sql_handle, e_sql_database schema) {
+	if (sql_handle == nullptr) {
+		ShowError("Sql_UpgradesChecker: The SQL connection has not been made yet.\n");
+		return;
+	}
+
+	if (sql_update_db.empty())
+		sql_update_db.load();
+
+	std::vector<int32> new_updates, skipped_updates;
+
+	for (const auto &updateIt : sql_update_db) {
+		std::shared_ptr<s_sql_update_db> update = updateIt.second;
+
+		if (!update->patchdate.empty()) // Already applied
+			continue;
+
+		if (update->mode != MODE_BOTH) { // Only apply to specific mode
+#ifdef RENEWAL
+			uint8 compiledMode = MODE_RENEWAL;
+			std::string mode = "Renewal";
+#else
+			uint8 compiledMode = MODE_PRERENEWAL;
+			std::string mode = "Prerenewal"
+#endif
+
+			if (compiledMode != update->mode) {
+				ShowError("Sql_UpgradesChecker: The server's current mode of '%s' differs from the mode '%s' provided by the update. Skipping.\n", mode.c_str(), update->mode == MODE_RENEWAL ? "Renewal" : "Prerenewal");
+				continue;
+			}
+		}
+
+		if (!(update->database & schema)) // Only apply to the specific schema
+			continue;
+
+		if (update->skip) { // Skip an update if flagged to do so
+			skipped_updates.push_back(update->id);
+			continue;
+		}
+
+		if (SQL_ERROR == Sql_QueryStr(sql_handle, update->script.c_str())) { // Execute SQL update
+			Sql_ShowDebug(sql_handle);
+			continue;
+		}
+
+		new_updates.push_back(update->id);
+	}
+
+	if (!(schema & SQLDB_LOG) && !skipped_updates.empty()) {
+		size_t count = skipped_updates.size();
+
+		ShowSQL("Detected %zu skipped " CL_WHITE "SQL update%s" CL_RESET "\n", count, count > 1 ? "s" : "");
+		for (const auto &skipIt : skipped_updates)
+			ShowSQL("-- '" CL_WHITE "Update %d" CL_RESET "' has been skipped.\n", skipIt);
+	}
+
+	if (!new_updates.empty()) {
+		std::string save_file;
+
+		if (schema & SQLDB_LOGIN)
+			save_file = "sql-files/saves/login-update_db.yml";
+		else if (schema & SQLDB_CHAR)
+			save_file = "sql-files/saves/char-update_db.yml";
+		else if (schema & SQLDB_MAP)
+			save_file = "sql-files/saves/map-update_db.yml";
+		else
+			save_file = "sql-files/saves/log-update_db.yml";
+
+		std::ofstream save;
+
+		save.open(save_file);
+
+		if (!save.is_open()) {
+			ShowError("Sql_UpgradesChecker: Failed to open '%s'.\n", save_file.c_str());
+			return;
+		}
+
+		size_t count = new_updates.size();
+		YAML::Emitter output(save);
+
+		output << YAML::Comment("THIS FILE IS USED AS A LOG FOR SQL UPDATES.") << YAML::Newline;
+		output << YAML::Comment("DO NOT TOUCH THE CONTENT OF THIS FILE AS IT IS AUTOMATICALLY GENERATED.") << YAML::Newline;
+		output << YAML::BeginMap;
+		output << YAML::Key << "Header";
+		output << YAML::BeginMap;
+		output << YAML::Key << "Type" << YAML::Value << "SQL_UPDATE_DB";
+		output << YAML::Key << "Version" << YAML::Value << 1;
+		output << YAML::EndMap;
+		output << YAML::Newline;
+		output << YAML::Key << "Body";
+		output << YAML::BeginSeq;
+
+		ShowSQL("Detected %zu new " CL_WHITE "SQL update%s" CL_RESET "\n", count, count > 1 ? "s" : "");
+		for (const auto &newIt : new_updates) {
+			ShowSQL("-- '" CL_WHITE "Update %d" CL_RESET "' has been applied.\n", newIt);
+
+			time_t now = time(nullptr);
+
+			output << YAML::BeginMap;
+			output << YAML::Key << "Id" << YAML::Value << newIt;
+			output << YAML::Key << "PatchDate" << YAML::Value << trim(asctime(localtime(&now)));
+			output << YAML::EndMap;
+		}
+
+		output << YAML::EndSeq;
+		output << YAML::EndMap;
+		output << YAML::Newline;
+		save.close();
+	}
+
+	new_updates.clear();
+	skipped_updates.clear();
+}
+
+const std::string SqlUpdateDatabase::getDefaultLocation() {
+	return "sql-files/sql_update_db.yml";
+}
+
+/**
+ * Reads and parses an entry from the sql-files/sql_update_db.
+ * @param node: YAML node containing the entry.
+ * @param handle: SQL handle
+ * @return count of successfully parsed rows
+ */
+uint64 SqlUpdateDatabase::parseBodyNode(const YAML::Node &node) {
+	int32 id;
+
+	if (!this->asInt32(node, "Id", id))
+		return 0;
+
+	std::shared_ptr<s_sql_update_db> update = this->find(id);
+	bool exists = update != nullptr;
+
+	if (!exists) {
+		if (!this->nodesExist(node, { "Script" }))
+			return 0;
+
+		update = std::make_shared<s_sql_update_db>();
+		update->id = id;
+	}
+
+	if (this->nodeExists(node, "Script")) {
+		std::string script;
+
+		if (!this->asString(node, "Script", script))
+			return 0;
+
+		update->script = script;
+	}
+
+	if (this->nodeExists(node, "Mode")) {
+		std::string mode;
+
+		if (!this->asString(node, "Mode", mode))
+			return 0;
+
+		if (mode.compare("Prerenewal") == 0)
+			update->mode = MODE_PRERENEWAL;
+		else if (mode.compare("Renewal") == 0)
+			update->mode = MODE_RENEWAL;
+		else {
+			this->invalidWarning(node["Mode"], "Invalid mode '%s' given. Skipping.\n", mode.c_str());
+			return 0;
+		}
+	} else {
+		if (!exists)
+			update->mode = MODE_BOTH;
+	}
+
+	if (this->nodeExists(node, "Database")) {
+		std::string database;
+
+		if (!this->asString(node, "Database", database))
+			return 0;
+
+		if (database.compare("Login") == 0)
+			update->database = SQLDB_LOGIN;
+		else if (database.compare("Char") == 0)
+			update->database = SQLDB_CHAR;
+		else if (database.compare("Map") == 0)
+			update->database = SQLDB_MAP;
+		else if (database.compare("Log") == 0)
+			update->database = SQLDB_LOG;
+		else {
+			this->invalidWarning(node["Database"], "Invalid database '%s' given. Skipping.\n", database.c_str());
+			return 0;
+		}
+	} else {
+		if (!exists)
+			update->database = SQLDB_NORMAL;
+	}
+
+	if (this->nodeExists(node, "Skip")) {
+		bool skip;
+
+		if (!this->asBool(node, "Skip", skip))
+			return 0;
+
+		update->skip = skip;
+	} else {
+		if (!exists)
+			update->skip = false;
+	}
+
+	if (this->nodeExists(node, "PatchDate")) {
+		std::string patchdate;
+
+		if (!this->asString(node, "PatchDate", patchdate))
+			return 0;
+
+		update->patchdate = patchdate;
+	}
+
+	if (!exists)
+		this->put(id, update);
+
+	return 1;
+}
+
+SqlUpdateDatabase sql_update_db;
 
 void Sql_Init(void) {
 	Sql_inter_server_read(SQL_CONF_NAME,true);
