@@ -11,6 +11,12 @@ LOGIN_OBJ = $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
 LOGIN_DIR_OBJ = $(LOGIN_OBJ:%=obj/%)
 LOGIN_H = $(shell ls *.hpp)
 
+YAML_CPP_OBJ = $(shell find ../../3rdparty/yaml-cpp/ -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g" )
+YAML_CPP_DIR_OBJ = $(YAML_CPP_OBJ:%=obj/%)
+YAML_CPP_AR = ../../3rdparty/yaml-cpp/obj/yaml-cpp.a
+YAML_CPP_H = $(shell find ../../3rdparty/yaml-cpp/ -type f -name "*.h")
+YAML_CPP_INCLUDE = -I../../3rdparty/yaml-cpp/include
+
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
 	SERVER_DEPENDS=login-server
@@ -69,3 +75,6 @@ $(COMMON_AR):
 
 $(LIBCONFIG_AR):
 	@$(MAKE) -C ../../3rdparty/libconfig
+
+$(YAML_CPP_AR):
+	@$(MAKE) -C ../../3rdparty/yaml-cpp
