@@ -30115,6 +30115,18 @@ Body:
     Name: AB_CONVENIO
     Description: Convenio
     MaxLevel: 1
+  - Id: 5075
+    Name: NV_BREAKTHROUGH
+    Description: Break Through
+    MaxLevel: 1
+  - Id: 5076
+    Name: NV_HELPANGEL
+    Description: Help Angel
+    MaxLevel: 1
+  - Id: 5077
+    Name: NV_TRANSCENDENCE
+    Description: Transcendence
+    MaxLevel: 1
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
