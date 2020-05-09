@@ -6595,7 +6595,7 @@ talking - that is, above their head and in the chat window.
 The display name of the NPC won't get appended in front of the message.
 If the <NPC name> option is given and not empty, then that NPC will display the message,
 else the attached NPC will display the message,
-the color format is in RGB (0xRRGGBB). The color White by default.
+the color format is in RGB (0xRRGGBB). The color is White by default.
 
 Target for <flag>:
 - bc_all  : Broadcast message is sent server-wide (only in the chat window).
