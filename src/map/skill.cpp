@@ -595,27 +595,43 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 	if( (!heal || (target && target->type == BL_MER)) && skill_id != NPC_EVILLAND )
 		hp >>= 1;
 
-	if (sd && ((skill = pc_checkskill(sd, SU_POWEROFSEA)) > 0)) {
+	if (sd) {
+		if (pc_checkskill(sd, SU_POWEROFSEA) > 0) {
 #ifdef RENEWAL
-		hp_bonus += 10;
+			hp_bonus += 10;
 #else
-		hp += hp * 10 / 100;
+			hp += hp * 10 / 100;
 #endif
 
-		if (pc_checkskill(sd, SU_TUNABELLY) == 5 && pc_checkskill(sd, SU_TUNAPARTY) == 5 && pc_checkskill(sd, SU_BUNCHOFSHRIMP) == 5 && pc_checkskill(sd, SU_FRESHSHRIMP) == 5)
+			if (pc_checkskill(sd, SU_TUNABELLY) == 5 && pc_checkskill(sd, SU_TUNAPARTY) == 5 && pc_checkskill(sd, SU_BUNCHOFSHRIMP) == 5 && pc_checkskill(sd, SU_FRESHSHRIMP) == 5)
 #ifdef RENEWAL
-			hp_bonus += 20;
+				hp_bonus += 20;
 #else
-			hp += hp * 20 / 100;
+				hp += hp * 20 / 100;
 #endif
-	}
+		}
 
-	if (sd && (skill = pc_skillheal_bonus(sd, skill_id)))
+		if ((skill = pc_checkskill(sd, NV_BREAKTHROUGH)) > 0)
+#ifdef RENEWAL
+			hp_bonus += 2;
+#else
+			hp += hp * skill * 2 / 100;
+#endif
+
+		if ((skill = pc_checkskill(sd, NV_TRANSCENDENCE)) > 0)
+#ifdef RENEWAL
+			hp_bonus += 3;
+#else
+			hp += hp * skill * 3 / 100;
+#endif
+
+	if (skill = pc_skillheal_bonus(sd, skill_id))
 #ifdef RENEWAL
 		hp_bonus += skill;
 #else
 		hp += hp * skill / 100;
 #endif
+	}
 
 	if (tsd && (skill = pc_skillheal2_bonus(tsd, skill_id)))
 #ifdef RENEWAL
@@ -7682,6 +7698,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case CASH_INCAGI:
 	case CASH_ASSUMPTIO:
 	case WM_FRIGG_SONG:
+	case NV_HELPANGEL:
 		if( sd == NULL || sd->status.party_id == 0 || (flag & 1) )
 			clif_skill_nodamage(bl, bl, skill_id, skill_lv, sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		else if( sd )
@@ -12470,8 +12487,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case SO_WATER_INSIGNIA:
 	case SO_WIND_INSIGNIA:
 	case SO_EARTH_INSIGNIA:
-	case KO_HUUMARANKA:
-	case KO_BAKURETSU:
 	case KO_ZENKAI:
 	case MH_LAVA_SLIDE:
 	case MH_VOLCANIC_ASH:
@@ -12896,7 +12911,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			}
 			map_foreachinallrange(unit_changetarget, src, AREA_SIZE, BL_MOB, src, &group->unit->bl); // Release all targets against the caster
 			skill_blown(src, src, skill_get_blewcount(skill_id, skill_lv), unit_getdir(src), BLOWN_IGNORE_NO_KNOCKBACK); // Don't stop the caster from backsliding if special_state.no_knockback is active
-			clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,skill_get_time2(skill_id,skill_lv)));
+			clif_skill_nodamage(src, src, skill_id, skill_lv, 0);
+			sc_start(src, src, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
 		break;
 
@@ -19070,6 +19086,7 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 					status_change_end(target, SC_SPIDERWEB, INVALID_TIMER);
 			}
 		}
+			break;
 		case SG_SUN_WARM:
 		case SG_MOON_WARM:
 		case SG_STAR_WARM:

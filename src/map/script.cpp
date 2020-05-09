@@ -25291,9 +25291,9 @@ struct script_function buildin_func[] = {
 
 
 	BUILDIN_DEF(getequiprefinecost,"iii?"),
-	BUILDIN_DEF2(round, "round", "i"),
-	BUILDIN_DEF2(round, "ceil", "i"),
-	BUILDIN_DEF2(round, "floor", "i"),
+	BUILDIN_DEF2(round, "round", "ii"),
+	BUILDIN_DEF2(round, "ceil", "ii"),
+	BUILDIN_DEF2(round, "floor", "ii"),
 	BUILDIN_DEF(getequiptradability, "i?"),
 	BUILDIN_DEF(mail, "isss*"),
 	BUILDIN_DEF(open_roulette,"?"),
