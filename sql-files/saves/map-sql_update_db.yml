@@ -1,6 +1,43 @@
-# THIS FILE IS USED AS TRACKER FOR SQL UPDATES.
+# THIS FILE IS USED AS A LOG FOR SQL UPDATES.
 # DO NOT TOUCH THE CONTENT OF THIS FILE AS IT IS AUTOMATICALLY GENERATED.
 
 Header:
   Type: SQL_UPDATE_DB
   Version: 1
+Body:
+  - Id: 1
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 2
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 3
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 4
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 5
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 6
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 7
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 8
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 9
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 10
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 11
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 12
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 13
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 14
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 15
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 16
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 17
+    PatchDate: Fri May  8 22:32:13 2020
+  - Id: 18
+    PatchDate: Fri May  8 22:32:13 2020
