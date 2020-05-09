@@ -1112,13 +1112,13 @@ void Sql_UpgradesChecker(Sql *sql_handle, e_sql_database schema) {
 		std::string save_file;
 
 		if (schema & SQLDB_LOGIN)
-			save_file = "sql-files/saves/login-update_db.yml";
+			save_file = "sql-files/saves/login-sql_update_db.yml";
 		else if (schema & SQLDB_CHAR)
-			save_file = "sql-files/saves/char-update_db.yml";
+			save_file = "sql-files/saves/char-sql_update_db.yml";
 		else if (schema & SQLDB_MAP)
-			save_file = "sql-files/saves/map-update_db.yml";
+			save_file = "sql-files/saves/map-sql_update_db.yml";
 		else
-			save_file = "sql-files/saves/log-update_db.yml";
+			save_file = "sql-files/saves/log-sql_update_db.yml";
 
 		std::ofstream save;
 
