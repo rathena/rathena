@@ -2,7 +2,7 @@
 Welcome to ChocobotRO!
 
 Tips:
-- Use @commands to see list of available commands
+- Type @commands to view all available commands
 - Go to Criatura Academy in Izlude for new player items
-- Send a whisper to #global to use global chat
+- Send a whisper to #main to use global chat
 - Find Warpras in various towns and dungeons to unlock teleport options
