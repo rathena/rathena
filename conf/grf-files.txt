@@ -4,7 +4,7 @@
 //-----------------------------------------
 //grf: C:\Program Files\Gravity\RO\rdata.grf
 //grf: C:\Program Files\Gravity\RO\data.grf
-
+//grf: C:\Users\Wellin\Desktop\client\house.grf
 //-----------------------------------------
 // Data Directory
 // Use the base folder, not the data\ path.

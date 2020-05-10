@@ -1,0 +1,5 @@
+login_server_db: rathena
+ipban_db_db: rathena
+char_server_db: rathena
+map_server_db: rathena
+log_db_db: rathena_logs

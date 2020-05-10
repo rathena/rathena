@@ -22,7 +22,7 @@
 #define MAP_AMATSU "amatsu"
 #define MAP_GONRYUN "gonryun"
 #define MAP_UMBALA "umbala"
-#define MAP_NIFLHEIM "niflheim"
+#define MAP_PRTBAR "prtbar"
 #define MAP_LOUYANG "louyang"
 #define MAP_JAWAII "jawaii"
 #define MAP_AYOTHAYA "ayothaya"
@@ -32,7 +32,7 @@
 #define MAP_HUGEL "hugel"
 #define MAP_RACHEL "rachel"
 #define MAP_VEINS "veins"
-#define MAP_JAIL "sec_pri"
+#define MAP_LUNASHOP "lunashop"
 #ifdef RENEWAL
 	#define MAP_NOVICE "iz_int"
 #else

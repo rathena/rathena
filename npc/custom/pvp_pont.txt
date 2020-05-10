@@ -1,0 +1,52 @@
+-	shop	custom_seller2	-1,501:500
+prontera,147,162,6	script	Pvp Shop	429,{
+	mes "[Pvp Shop]";
+	mes "Te vendere articulos por puntos PvP.";
+	mes "Cada Asesinato te da un punto, con los cuales puedes comprar los siguientes item!";
+	next;
+	mes "[Pvp Shop]";
+	mes "Tu Actualmente tienes [^0000ff"+pvp_points+"^000000] puntos Pvp para gastar.";
+	callshop "custom_seller2",1;
+	npcshopattach "custom_seller2";
+	end;
+	
+OnBuyItem:
+	for(set .@i,0; .@i<getarraysize(.customs); set .@i,.@i+1) {
+		for(set .@d,0; .@d<getarraysize(@bought_nameid); set .@d,.@d+1) {
+			if(@bought_nameid[.@d]==.customs[.@i]) {
+				if(checkweight(@bought_nameid[.@d],@bought_quantity[.@d])) {
+					if(pvp_points >= .Price[.@i]*@bought_quantity[.@d]) {
+						set pvp_points, pvp_points - .Price[.@i]*@bought_quantity[.@d];
+						getitem @bought_nameid[.@d],@bought_quantity[.@d];
+					} else dispbottom "You don't have enough Pvp points to purchase that item.";
+				} else dispbottom "Purchasing these items will put you over the weight limit!";
+			}
+		}
+	}
+	deletearray @bought_quantity, getarraysize(@bought_quantity);
+	deletearray @bought_nameid, getarraysize(@bought_nameid);
+	close;
+
+OnPCKillEvent:
+	if( strcharinfo(3) != .map$ ) end;
+	copyarray( @killed$[1], @killed$[0], .saved_l-1 );
+	@killed$ = ""+killedrid;
+	if( countstr( implode( @killed$, "|" ), ""+killedrid, 0 ) <= .rstrk_l ) {
+		pvp_points++;
+		dispbottom "Has ganado un punto! tienes en total ["+pvp_points+"] puntos de pvp.";
+	}
+	end;
+	
+	
+OnInit:
+	set .map$, "guild_vs3";
+	set .saved_l, 3; //Length of saved ids can be up to 127.
+	set .rstrk_l, 2; //Level of restriction.
+	setarray .customs[0],  12103, 607, 678; // Enter the ID of customs here...
+	setarray .Price[0],    20   , 40 , 300; // Price for each custom here...
+	npcshopitem "custom_seller2", 0  ,   0; // Don't touch any coding beyond here..
+	for( set .i,0; .customs[.i]; set .i,.i+1 )
+		npcshopadditem "custom_seller2",.customs[.i],.Price[.i];
+		waitingroom "Pvp Points",0;
+	end;
+}

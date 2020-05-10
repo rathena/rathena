@@ -1769,7 +1769,7 @@
 4128,Golden_Bug_Card,Golden Thief Bug Card,6,20,,10,,,,,,,,32,,,,,{ bonus bNoMagicDamage,100; bonus bUseSPrate,100; },{},{}
 4129,Baphomet__Card,Bapho Jr. Card,6,20,,10,,,,,,,,4,,,,,{ bonus bAgi,3; bonus bCritical,1; },{},{}
 4130,Scorpion_King_Card,Scorpion King Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bAddEle,Ele_Undead,20; },{},{}
-4131,Moonlight_Flower_Card,Moonlight Flower Card,6,20,,10,,,,,,,,64,,,,,{ bonus bSpeedRate,25; },{},{}
+4131,Moonlight_Flower_Card,Moonlight Flower Card,6,20,,10,,,,,,,,64,,,,,{ bonus bSpeedRate,40; },{},{}
 4132,Mistress_Card,Mistress Card,6,20,,10,,,,,,,,769,,,,,{ bonus bNoGemStone; bonus bUseSPrate,25; },{},{}
 4133,Daydric_Card,Raydric Card,6,20,,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Neutral,20; },{},{}
 4134,Dracula_Card,Dracula Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bSPDrainRate,100,5; },{},{}
@@ -2744,7 +2744,7 @@
 5561,Rabbit_Magic_Hat_J,Magic Rabbit Hat,4,0,,800,,1,,0,0xFFFFFFFF,7,2,256,,0,1,497,{ bonus bInt,1; bonus bMaxSP,50; bonus4 bAutoSpellWhenHit,"MG_FIREBOLT",3,10,3; bonus4 bAutoSpellWhenHit,"MG_COLDBOLT",3,10,3; bonus4 bAutoSpellWhenHit,"MG_LIGHTNINGBOLT",3,10,3; bonus3 bAutoSpellWhenHit,"AL_HEAL",1,10; },{},{}
 5562,Good_Wedding_Veil_J,Luxurious Wedding Veil,4,0,,500,,0,,1,0xFFFFFFFF,7,2,768,,45,0,489,{ bonus bMdef,10; bonus bCastRate,-3; bonus bUseSPrate,-5; },{},{}
 //5563,Dolor_Hat,Dolor Hat,4,20,,100,,1,,1,0xFFFFFFFF,7,2,256,,0,0,547,{},{},{}
-5564,Crown_Of_Deceit,Crown of Deceit,4,20,,300,,3,,1,0xFFFFFFFF,7,2,768,,85,1,544,{ bonus bInt,4; bonus bCastRate,-10; },{},{}
+//5564,Crown_Of_Deceit,Crown Of Fallen,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1204,,0,0,544,{},{},{}
 5565,Dragon_Arhat_Mask,Dragon Arhat Mask,4,0,,0,,5,,0,0xFFFFFFFF,7,2,513,,1,0,545,{ bonus2 bAddRace,RC_DemiHuman,10; bonus2 bAddRace,RC_Player,10; },{},{}
 5566,Tiger_Arhat_Mask,Tiger Arhat Mask,4,0,,0,,1,,0,0xFFFFFFFF,7,2,513,,1,0,546,{ bonus2 bAddRace,RC_DemiHuman,2; bonus2 bAddRace,RC_Player,2; },{},{}
 5567,Bright_Fury,Bright Fury,4,20,,300,,1,,1,0xFFFFFFFF,7,2,256,,1,1,548,{ bonus bStr,1; bonus2 bAddClass,Class_All,2; bonus bAspdRate,2; },{},{}
@@ -3164,7 +3164,7 @@
 6123,Surface_Paint,Surface Paint,3,200,,30,,,,,,,,,,,,,{},{},{}
 6124,Wolf's_Flute,Wolf Flute,3,10,,0,,,,,,,,,,,,,{},{},{}
 6125,Lucky_Box,Spring Time Box,3,10,,0,,,,,,,,,,,,,{},{},{}
-6126,Happy_Box,Summer Happy Box,3,10,,0,,,,,,,,,,,,,{},{},{}
+//6126,Happy_Box,Summer Happy Box,3,10,,0,,,,,,,,,,,,,{},{},{}
 6127,Purification_Stone,Purification Stone,3,0,,0,,,,,,,,,,,,,{},{},{}
 6128,Guillotine_Antidote,Antidote,3,0,,0,,,,,,,,,,,,,{},{},{}
 6129,Ticket_Nightmare,Nightmare Terror Exchange Coupon,3,0,,0,,,,,,,,,,,,,{},{},{}
@@ -4839,8 +4839,8 @@
 12271,Mre_A,Military Ration A,0,2,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 5,0; },{},{}
 12272,Mre_B,Military Ration B,2,2,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHIT,600000,33; },{},{}
 12273,Mre_C,Military Ration C,2,2,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCFLEE,600000,33; },{},{}
-12274,Gold_Pill_1,Daehwandan,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_INCREASE_MAXHP,3600000,5,10; percentheal 10,0; },{},{}
-12275,Gold_Pill_2,Taecheongdan,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start2 SC_INCREASE_MAXSP,3600000,5,10; percentheal 0,10; },{},{}
+12274,Gold_Pill_1,Daehwandan,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMHPRATE,3600000,5; percentheal 10,0; },{},{}
+12275,Gold_Pill_2,Taecheongdan,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMSPRATE,3600000,5; percentheal 0,10; },{},{}
 12276,Mimic_Scroll,Mimic Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ mercenary_create 2058,1800000; },{},{}
 12277,Disguise_Scroll,Disguise Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ mercenary_create 2059,1800000; },{},{}
 12278,Alice_Scroll,Alice Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ mercenary_create 2060,1800000; },{},{}
@@ -6004,7 +6004,7 @@
 13986,Bulging_Head_Box_1m,JJangu Magic Powder Box 30 Days,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ rentitem 12309,2592000; },{},{}
 13987,Ori_Stone_5_Box,Rough Oridecon 5 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 756,5; },{},{}
 13988,Ori_Stone_50_Box,Rough Oridecon 50 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 756,50; },{},{}
-13989,Acidbomb_10_Box,Acid Bomb 10 Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7135,10; getitem 7136,10; },{},{}
+13989,Acidbomb_50_Box,Acid Bomb 50 Box,18,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7135,50; getitem 7136,50; },{},{}
 13990,Job_Manual50_Box,JOB Battle Manual Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 14592,10; },{},{}
 13991,Tiger_Mask_Box,Tiger Mask Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5098,1; },{},{}
 13992,Cat_Hat_Box,Pussy Cat Bell Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 5099,1; },{},{}
@@ -6590,4 +6590,160 @@
 19506,T_Valkyrie_Feather_Band,T Valkyrie Feather Band,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,1,300,{},{},{}
 19507,Fine_Sun,Clear Sun,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,1,0,654,{},{},{}
 
+//Balloons//
+29500,225,Savage Babe Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1978,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29501,225,Savage Babe Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1978,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29502,226,Deviruchi Babe Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1979,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29503,226,Deviruchi Babe Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1979,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29504,227,Marina Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1980,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29505,227,Marina Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1980,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29506,228,Teddy Bear Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1981,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29507,228,Teddy Bear Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1981,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29508,229,Lunatic Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1982,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29509,229,Lunatic Balloons,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1982,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29510,230,Angeling Poring Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1983,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29511,230,Angeling Poring Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1983,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29512,231,Ghostring Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1984,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29513,231,Ghostring Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1984,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29514,232,Deviling Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1985,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29515,232,Deivling Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1985,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29516,233,Valkyrie Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1986,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29517,233,Valkyrie Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1986,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29518,234,Moonlight Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1987,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29519,234,Moonlight Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1987,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29520,235,Eddga Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1988,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29521,235,Eddga Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1988,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29522,236,Osiris Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1989,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29523,236,Osiris Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1989,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29524,237,Dark Lord Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1990,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29525,237,Dark Lord Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1990,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29526,Colored_Poring_Balloons,Colored Poring Balloons,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1991,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29527,Colored_Poring_Balloons,Colored Poring Balloons,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1991,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29528,deviruchi_balloon,Deviruchi Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1992,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29529,deviruchi_balloon,Deviruchi Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1992,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29530,Flying_Deviruchi_Balloon,Flying Deviruchi Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1993,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29531,Flying_Deviruchi_Balloon,Flying Deviruchi Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1993,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29532,Flying_Deviruchi_Balloon_2,Flying Deviruchi Balloon 2,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1994,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29533,Flying_Deviruchi_Balloon_2,Flying Deviruchi Balloon 2,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1994,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29534,celebi_balloon,Celebi Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1995,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29535,celebi_balloon,Celebi Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1995,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29536,Flying_Panda_Balloon,Flying Panda Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1996,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29537,Flying_Panda_Balloon,Flying Panda Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1996,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29538,Flying_Sheep,Flying Sheep,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1997,{ bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
+29539,Jinn_Marin_Balloon,Jinn Marin Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1998,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29540,Jinn_Marin_Balloon,Jinn Marin Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1998,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29541,Jinn_Poring_Balloon,Jinn Poring Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1999,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29542,Jinn_Poring_Balloon,Jinn Poring Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,1999,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29543,Long_Octopus_Balloon,Long Octopus Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,2000,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29544,Long_Octopus_Balloon,Long Octopus Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,2000,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29545,Pikachu_Balloon,Pikachu Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,2001,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29546,Pikachu_Balloon,Pikachu Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,2001,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29547,Boo_ghost_balloon,Boo Ghost Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,2002,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+29548,Boo_ghost_balloon,Boo Ghost Balloon,4,0,,0,10,0,,1,0xFFFFFFFE,7,2,512,,0,0,2002,{  bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Wind,3; },{},{}
+
+// - Mi Coleccion - //
+31500,fallen_gladiator_wings,Fallen Gladiator Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,733,{},{},{}
+31501,fallen_gladiator_crown,Fallen Gladiator Crown,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1882,{},{},{}
+31502,fallen_gladiator_aura,Fallen Gladiator Aura,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1883,{},{},{}
+31503,wings_fallen,Wings Of Fallen,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1884,{},{},{}
+//31504,crown_fallen,Crown Of Fallen,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1204,,0,0,544,{},{},{}
+31505,aura_fallen,Aura Of Fallen,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1886,{},{},{}
+31506,emp_wings,Emperor Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1887,{},{},{}
+31507,emp_helm,Emperor Helm,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1888,{},{},{}
+31508,emp_shoulder,Emperor Shoulder,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1889,{},{},{}
+31509,inf_wings,Infinity Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1890,{},{},{}
+31510,inf_helm,Infinity Crown,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1891,{},{},{}
+31511,inf_shoulder,Infinity Shoulder,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1892,{},{},{}
+31512,onyx_wings,Onyx Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1893,{},{},{}
+31513,onyx_dh,Onyx Dragon Helm,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1894,{},{},{}
+31514,onyx_blindfold,Onyx Blindfold,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1895,{},{},{}
+31515,epic_neko_wings,Epic Neko Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1896,{},{},{}
+31516,epic_neko_ears,Epic Neko Ears,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1897,{},{},{}
+31517,epic_neko_taurus,Epic Neko Taurus,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1898,{},{},{}
+31518,epic_inu_wings,Epic Inu Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1899,{},{},{}
+31519,epic_inu_ears,Epic Inu Ears,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1900,{},{},{}
+31520,epic_inu_taurus,Epic Neko Taurus,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1901,{},{},{}
+31521,eme_wings,Emerald Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1902,{},{},{}
+31522,eme_dh,Emerald Dowry Hat,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1903,{},{},{}
+//31523,eme_blindfold,Emerald Blinfold,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1904,{},{},{}
+31524,sapphire_wings,Sapphire Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1905,{},{},{}
+31525,sap_th,Sapphire Traveler Hat,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1906,{},{},{}
+31526,sapphire_blindfold,Sapphire Blindfold,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1907,{},{},{}
+31527,gaw,God Angel Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1908,{},{},{}
+31528,gac,God Angel Crown,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1909,{},{},{}
+31529,gaa,God Angel Aura,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1910,{},{},{}
+//31530,imperial_wings,Imperial Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1911,{},{},{}
+31531,imperial_crown,Imperial Crown,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1912,{},{},{}
+31532,imperial_winged,Imperial Winged,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1913,{},{},{}
+31533,ddw,Dark Devil Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1914,{},{},{}
+31534,ddh,Dark Devil Horn,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1915,{},{},{}
+31535,ddt,Dark Devil Tail,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1916,{},{},{}
+31536,gdw,Grand Deadly Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1917,{},{},{}
+31537,gdc,Grand Deadly Crown,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1918,{},{},{}
+31538,gda,Grand Deadly Aura,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1919,{},{},{}
+31539,black_pw,Black Perfect Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1920,{},{},{}
+31540,black_pc,Black Perfect Crown,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1921,{},{},{}
+31541,black_pa,Black Perfect Aura,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1922,{},{},{}
+31542,blue_pw,Blue Perfect Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1923,{},{},{}
+31543,blue_pc,Blue Perfect Crown,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1924,{},{},{}
+31544,blue_pa,Blue Perfect Aura,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1925,{},{},{}
+31545,cyan_pw,Cyan Perfect Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1926,{},{},{}
+31546,cyan_pc,Cyan Perfect Crown,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1927,{},{},{}
+31547,cyan_pa,Cyan Perfect Aura,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1928,{},{},{}
+31548,dpurple_pw,Purple Perfect Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1929,{},{},{}
+31549,dpurple_pc,Purple Perfect Crown,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1930,{},{},{}
+31550,dpurple_pa,Purple Perfect Aura,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1931,{},{},{}
+31551,gold_pw,Gold Perfect Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1932,{},{},{}
+31552,gold_pc,Gold Perfect Crown,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1933,{},{},{}
+31553,gold_pa,Gold Perfect Aura,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1934,{},{},{}
+31554,green_pw,Green Perfect Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1935,{},{},{}
+31555,green_pc,Green Perfect Crown,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1936,{},{},{}
+31556,green_pa,Green Perfect Aura,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1937,{},{},{}
+31557,pink_pw,Pink Perfect Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1938,{},{},{}
+31558,pink_pc,Pink Perfect Crown,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1939,{},{},{}
+31559,pink_pa,Pink Perfect Aura,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1940,{},{},{}
+31560,rain_pw,Rainbow Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1941,{},{},{}
+31561,rain_pc,Rainbow Crown,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1942,{},{},{}
+31562,rain_pa,Rainbow Aura,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1943,{},{},{}
+31563,rainbow_pw,Rainbow Perfect Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1944,{},{},{}
+31564,rainbow_pc,Rainbow Perfect Crown,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1945,{},{},{}
+31565,rainbow_pa,Rainbow Perfect Aura,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1946,{},{},{}
+31566,red_pw,Red Perfect Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1947,{},{},{}
+31567,red_pc,Red Perfect Crown,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1948,{},{},{}
+31568,red_pa,Red Perfect Aura,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1949,{},{},{}
+31569,white,White Perfect Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1950,{},{},{}
+31570,white_pc,White Perfect Crown,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1951,{},{},{}
+31571,white_pa,White Perfect Aura,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1952,{},{},{}
+
+
+//Regular Costume//
+31600,209,Orange Pirate Jacket,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1953,{},{},{}
+31601,210,Pink Pirate Jacket,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1954,{},{},{}
+31602,211,Purple Pirate Jacket,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1955,{},{},{}
+31603,212,Jeans Pirate Jacket,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1956,{},{},{}
+31604,213,Bluesky Pirate Jacket,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1957,{},{},{}
+31605,214,Green Pirate Jacket,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1958,{},{},{}
+31606,215,Oliva Pirate Jacket,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1959,{},{},{}
+30607,216,White Pirate Jacket,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1960,{},{},{}
+31608,217,Black Pirate Jacket,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1961,{},{},{}
+31609,218,Gold Pirate Jacket,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1962,{},{},{}
+31610,ch_ears,Chesire Ears,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1963,{},{},{}
+31611,ch_tail,Chesire Tail,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1964,{},{},{}
+31612,epic_idun_wings,Epic Idun Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1965,{},{},{}
+31613,epic_idun_ears,Epic Idun Ears,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1966,{},{},{}
+31614,epic_idun_taurus,Epic Idun Taurus,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1967,{},{},{}
+31615,v_wings,Venom Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1968,{},{},{}
+31616,p_vod,Purple Valkyrie Of Desteny,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1969,{},{},{}
+31617,g_vod,Green Valkyrie Of Desteny,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1970,{},{},{}
+31618,g_mg,Golden Magestic Gout,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1971,{},{},{}
+31619,v_vh,Venom Valkyrie Helm,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1024,,0,0,1972,{},{},{}
+31620,fire_scarf,Fire Scarf,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1973,{},{},{}
+31621,v_blind,Venom Blindfold,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1974,{},{},{}
+31622,ga_wings,Gold False Wings,4,0,,0,,0,,0,0xFFFFFFFF,7,2,4096,,0,0,1975,{},{},{}
+31623,v_aura,Venom Aura,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1976,{},{},{}
+31624,elec_aura,Electric Aura,4,0,,0,,0,,0,0xFFFFFFFF,7,2,2048,,0,0,1977,{},{},{}
+
 22777,Gift_Buff_Set,Gift Buff Set,2,10,,100,,,,0,0xFFFFFFFF,63,2,,,1,,,{},{},{}
+
+// ID,AegisName,Name,Type,Buy,Sell,Weight,ATK,DEF,Range,Slots,Job,Class,Gender,Loc,wLV,eLV[:maxLevel],Refineable,View,{ Script },{ OnEquip_Script },{ OnUnequip_Script }
+

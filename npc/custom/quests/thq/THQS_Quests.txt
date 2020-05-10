@@ -21,7 +21,7 @@
 
 ///////Job list 1///////
 //1-1
-mjolnir_09,187,189,6	script	Old Man	107,{
+mjolnir_09,147,152,6	script	Old Man	107,{
 	if (one_qset==1) goto N_QuestStart;
 	mes "[Old Man]";
 	mes "Eh! Can't and old man walk in peace anymore?!";

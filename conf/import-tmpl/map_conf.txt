@@ -1,0 +1,4 @@
+userid: username
+passwd: password
+char_ip: 25.129.85.94
+map_ip: 25.129.85.94

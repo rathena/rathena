@@ -1,0 +1,5 @@
+userid: username
+passwd: password
+login_ip: 25.129.85.94
+char_ip: 25.129.85.94
+server_name: Tester-RO

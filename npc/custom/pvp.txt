@@ -1,0 +1,96 @@
+prontera,153,169,3    script    PvP Battle Room#01::pvparena    810,{
+
+    waitingroom "PVP Room",0;
+
+mes "[PvP Battle Room]";
+mes "Pilih Ruangan";
+menu    
+    "All Class [" + getmapusers("pvp_y_1-2") + "]",pvp1,
+    "Non Donate [" + getmapusers("pvp_n_8-5") + "]",spvp,
+    "Trans Class [" + getmapusers("guild_vs1") + "]",pvp2,
+    "Guild vs Guild [" + getmapusers("guild_vs3") + "]",gvg1,
+    "Novice [" + getmapusers("guild_vs2") + "]",novc;
+
+
+pvp1:
+    warp "pvp_y_1-2",0,0;
+    announce ""+ strcharinfo(0) +" Has Entered The PVP Room.",bc_all; 
+    close;
+gvg1:
+    warp "",0,0;
+    announce ""+ strcharinfo(0) +" Has Entered The GVG Room.",bc_all; 
+    close;
+pvp2:
+    if(Class >= 4008 && Class <= 4021){
+    warp "guild_vs1",0,0;
+    announce ""+ strcharinfo(0) +" Has Entered The PVP Room Trans Class.",bc_all; 
+    close;
+    }
+    mes "Trans Class Only.";
+    close;
+spvp:
+    if(countitem(20450) > 0 || countitem(32171) > 0 || countitem(32423) > 0 || countitem(32422) > 0 || countitem(32424) > 0 || countitem(32440) > 0 || countitem(32441) > 0 || countitem(32442) > 0 || countitem(32210) > 0 || countitem(32214) > 0 || countitem(32202) > 0) goto donator;
+    warp "pvp_n_8-5",0,0;
+    announce ""+ strcharinfo(0) +" Has Entered The PVP Room Non Donate.",bc_all; 
+    close;
+novc:
+    if (Class != 0) goto nchamp;
+    warp "guild_vs2",0,0;
+        announce ""+ strcharinfo(0) +" Has Entered The PVP Room Novice.",bc_all; 
+    close;
+
+    nchamp:
+        next;
+        mes "[PvP Warper]";
+        mes "You're not a Novice.";
+        close;
+        
+donator:
+    mes "You are a donator you are not allowed to this room";
+      close;
+}
+
+//Mapflag
+guild_vs1    mapflag    pvp
+guild_vs1    mapflag    nocommand    90
+pvp_y_1-2    mapflag    nocommand    90
+guild_vs3    mapflag    gvg
+guild_vs3    mapflag    nocommand    90
+
+guild_vs2    mapflag    pvp
+guild_vs2    mapflag    nocommand    90
+
+
+//====================================================================================
+///Duplicates
+morocc,152,94,0    duplicate(pvparena)    PvP Battle Room#2    810
+geffen,127,63,0    duplicate(pvparena)    PvP Battle Room#3    810
+alberta,114,64,0    duplicate(pvparena)    PvP Battle Room#5    810
+izlude,123,147,0    duplicate(pvparena)    PvP Battle Room#6    810
+aldebaran,134,113,0    duplicate(pvparena)    PvP Battle Room#7    810
+xmas,141,127,0    duplicate(pvparena)    PvP Battle Room#8    810
+comodo,194,158,0    duplicate(pvparena)    PvP Battle Room#9    810
+yuno,150,184,0    duplicate(pvparena)    PvP Battle Room#10    810
+amatsu,101,143,0    duplicate(pvparena)    PvP Battle Room#11    810
+gonryun,152,114,0    duplicate(pvparena)    PvP Battle Room#12    810
+umbala,126,137,0    duplicate(pvparena)    PvP Battle Room#13    810
+louyang,214,106,0    duplicate(pvparena)    PvP Battle Room#14    810
+ayothaya,154,116,0    duplicate(pvparena)    PvP Battle Room#15    810
+einbroch,68,203,0    duplicate(pvparena)    PvP Battle Room#16    810
+lighthalzen,150,91,0    duplicate(pvparena)    PvP Battle Room#17    810
+jawaii,206,208,0    duplicate(pvparena)    PvP Battle Room#18    810
+hugel,99,161,4    duplicate(pvparena)    PvP Battle Room#19    810
+rachel,123,142,0    duplicate(pvparena)    PvP Battle Room#20    810
+veins,211,119,0    duplicate(pvparena)    PvP Battle Room#21    810
+brasilis,191,185,0    duplicate(pvparena)    PvP Battle Room#22    810
+dewata,191,185,0    duplicate(pvparena)    PvP Battle Room#23    810
+dicastes01,199,194,0    duplicate(pvparena)    PvP Battle Room#24    810
+malangdo,200,149,0    duplicate(pvparena)    PvP Battle Room#25    810
+malaya,271,364,0    duplicate(pvparena)    PvP Battle Room#26    810
+mora,121,113,0    duplicate(pvparena)    PvP Battle Room#27    810
+splendide,191,152,0    duplicate(pvparena)    PvP Battle Room#28    810
+eclage,277,289,0    duplicate(pvparena)    PvP Battle Room#29    810
+moscovia,217,193,0    duplicate(pvparena)    PvP Battle Room#30    810
+louyang,91,245,0    duplicate(pvparena)    PvP Battle Room#31    810
+moscovia,173,77,0    duplicate(pvparena)    PvP Battle Room#32    810
+manuk,292,181,0    duplicate(pvparena)    PvP Battle Room#33    810

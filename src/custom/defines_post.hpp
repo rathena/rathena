@@ -9,6 +9,9 @@
  * For detailed guidance on these check http://rathena.org/wiki/SRC/config/
  **/
 
+#ifdef OFFICIAL_GUILD_STORAGE
+#undef OFFICIAL_GUILD_STORAGE
+#endif
 
 
 #endif /* CONFIG_CUSTOM_DEFINES_POST_HPP */

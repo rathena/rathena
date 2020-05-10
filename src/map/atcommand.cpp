@@ -1830,7 +1830,7 @@ ACMD_FUNC(bodystyle)
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (!(sd->class_ & JOBL_THIRD) || (sd->class_ & MAPID_THIRDMASK) == MAPID_SUPER_NOVICE_E || (sd->class_ & MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || (sd->class_ & MAPID_THIRDMASK) == MAPID_SOUL_REAPER) {
+	if (!(sd->class_&JOBL_THIRD)) {
 		clif_displaymessage(fd, msg_txt(sd,740));	// This job has no alternate body styles.
 		return -1;
 	}
@@ -1949,43 +1949,43 @@ ACMD_FUNC(go)
 		{ MAP_PRONTERA,    156, 191 }, //  0=Prontera
 		{ MAP_MORROC,      156,  93 }, //  1=Morroc
 		{ MAP_GEFFEN,      119,  59 }, //  2=Geffen
-		{ MAP_PAYON,       162, 233 }, //  3=Payon
-		{ MAP_ALBERTA,     192, 147 }, //  4=Alberta
+		{ MAP_PAYON,       175, 100 }, //  3=Payon
+		{ MAP_ALBERTA,      27, 235 }, //  4=Alberta
 #ifdef RENEWAL
 		{ MAP_IZLUDE,      128, 146 }, //  5=Izlude (Renewal)
 #else
 		{ MAP_IZLUDE,      128, 114 }, //  5=Izlude
 #endif
-		{ MAP_ALDEBARAN,   140, 131 }, //  6=Al de Baran
+		{ MAP_ALDEBARAN,   140, 113 }, //  6=Al de Baran
 		{ MAP_LUTIE,       147, 134 }, //  7=Lutie
-		{ MAP_COMODO,      209, 143 }, //  8=Comodo
+		{ MAP_COMODO,      189, 150 }, //  8=Comodo
 		{ MAP_YUNO,        157,  51 }, //  9=Yuno
-		{ MAP_AMATSU,      198,  84 }, // 10=Amatsu
-		{ MAP_GONRYUN,     160, 120 }, // 11=Gonryun
-		{ MAP_UMBALA,       89, 157 }, // 12=Umbala
-		{ MAP_NIFLHEIM,     21, 153 }, // 13=Niflheim
-		{ MAP_LOUYANG,     217,  40 }, // 14=Louyang
+		{ MAP_AMATSU,      223, 229 }, // 10=Amatsu
+		{ MAP_GONRYUN,     159, 116 }, // 11=Gonryun
+		{ MAP_UMBALA,       94, 151 }, // 12=Umbala
+		{ MAP_PRTBAR  ,     25,  44 }, // 13=prtbar
+		{ MAP_LOUYANG,     217,  99 }, // 14=Louyang
 #ifdef RENEWAL
 		{ MAP_NOVICE,       18, 26  }, // 15=Training Grounds (Renewal)
 #else
 		{ MAP_NOVICE,       53, 111 }, // 15=Training Grounds
 #endif
-		{ MAP_JAIL,         23,  61 }, // 16=Prison
-		{ MAP_JAWAII,      249, 127 }, // 17=Jawaii
-		{ MAP_AYOTHAYA,    151, 117 }, // 18=Ayothaya
+		{ MAP_LUNASHOP,     56,  27 }, // 16=lunashop
+		{ MAP_JAWAII,      250, 183 }, // 17=Jawaii
+		{ MAP_AYOTHAYA,    208, 202 }, // 18=Ayothaya
 		{ MAP_EINBROCH,     64, 200 }, // 19=Einbroch
 		{ MAP_LIGHTHALZEN, 158,  92 }, // 20=Lighthalzen
 		{ MAP_EINBECH,      70,  95 }, // 21=Einbech
-		{ MAP_HUGEL,        96, 145 }, // 22=Hugel
+		{ MAP_HUGEL,        63,  65 }, // 22=Hugel
 		{ MAP_RACHEL,      130, 110 }, // 23=Rachel
 		{ MAP_VEINS,       216, 123 }, // 24=Veins
 		{ MAP_MOSCOVIA,    223, 184 }, // 25=Moscovia
 		{ MAP_MIDCAMP,     180, 240 }, // 26=Midgard Camp
 		{ MAP_MANUK,       282, 138 }, // 27=Manuk
 		{ MAP_SPLENDIDE,   201, 147 }, // 28=Splendide
-		{ MAP_BRASILIS,    182, 239 }, // 29=Brasilis
+		{ MAP_BRASILIS,    195, 217 }, // 29=Brasilis
 		{ MAP_DICASTES,    198, 187 }, // 30=El Dicastes
-		{ MAP_MORA,         44, 151 }, // 31=Mora
+		{ MAP_MORA,         44, 120 }, // 31=Mora
 		{ MAP_DEWATA,      200, 180 }, // 32=Dewata
 		{ MAP_MALANGDO,    140, 114 }, // 33=Malangdo Island
 		{ MAP_MALAYA,      242, 211 }, // 34=Malaya Port
@@ -2060,7 +2060,7 @@ ACMD_FUNC(go)
 		town = 11;
 	} else if (strncmp(map_name, "umbala", 3) == 0) {
 		town = 12;
-	} else if (strncmp(map_name, "niflheim", 3) == 0) {
+	} else if (strncmp(map_name, "prtbar", 3) == 0) {
 		town = 13;
 	} else if (strncmp(map_name, "louyang", 3) == 0) {
 		town = 14;
@@ -2068,9 +2068,9 @@ ACMD_FUNC(go)
 	           strncmp(map_name, "startpoint", 3) == 0 ||
 	           strncmp(map_name, "beginning", 3) == 0) {
 		town = 15;
-	} else if (strncmp(map_name, "sec_pri", 3) == 0 ||
-	           strncmp(map_name, "prison", 3) == 0 ||
-	           strncmp(map_name, "jail", 3) == 0) {
+	} else if (strncmp(map_name, "lunashop", 3) == 0 ||
+	           strncmp(map_name, "lunashop", 3) == 0 ||
+	           strncmp(map_name, "lunashop", 3) == 0) {
 		town = 16;
 	} else if (strncmp(map_name, "jawaii", 3) == 0) {
 		town = 17;
@@ -4030,8 +4030,8 @@ ACMD_FUNC(reload) {
 		if (quest_db.reload())
 			clif_displaymessage(fd, msg_txt(sd,1377)); // Quest database has been reloaded.
 	} else if (strstr(command, "instancedb") || strncmp(message, "instancedb", 4) == 0) {
-		if (instance_db.reload())
-			clif_displaymessage(fd, msg_txt(sd,516)); // Instance database has been reloaded.
+		instance_reload();
+		clif_displaymessage(fd, msg_txt(sd,516)); // Instance database has been reloaded.
 	} else if (strstr(command, "achievementdb") || strncmp(message, "achievementdb", 4) == 0) {
 		achievement_db_reload();
 		clif_displaymessage(fd, msg_txt(sd,771)); // Achievement database has been reloaded.
@@ -4932,14 +4932,14 @@ ACMD_FUNC(jail)
 
 	switch(rnd() % 2) { //Jail Locations
 	case 0:
-		m_index = mapindex_name2id(MAP_JAIL);
-		x = 24;
-		y = 75;
+		m_index = mapindex_name2id(MAP_LUNASHOP);
+		x = 56;
+		y = 27;
 		break;
 	default:
-		m_index = mapindex_name2id(MAP_JAIL);
-		x = 49;
-		y = 75;
+		m_index = mapindex_name2id(MAP_LUNASHOP);
+		x = 56;
+		y = 27;
 		break;
 	}
 
@@ -5052,12 +5052,12 @@ ACMD_FUNC(jailfor) {
 	// Jail locations, add more as you wish.
 	switch(rnd()%2) {
 		case 1: // Jail #1
-			m_index = mapindex_name2id(MAP_JAIL);
-			x = 49; y = 75;
+			m_index = mapindex_name2id(MAP_LUNASHOP);
+			x = 56; y = 27;
 			break;
 		default: // Default Jail
-			m_index = mapindex_name2id(MAP_JAIL);
-			x = 24; y = 75;
+			m_index = mapindex_name2id(MAP_LUNASHOP);
+			x = 57; y = 27;
 			break;
 	}
 
@@ -8758,6 +8758,150 @@ ACMD_FUNC(ksprotection)
 	}
 	return 0;
 }
+
+
+/* @whosell - List who is vending the item (amount, price, and location).
+ * revamped by VoidLess, original by zephyrus_cr
+ *------------------------------------------*/
+ACMD_FUNC(whosell)
+{
+	char item_name[100];
+	int item_id = 0, j, count = 0, sat_num = 0;
+	int s_type = 1; // search bitmask: 0-name,1-id, 2-card, 4-refine
+	int refine = 0,card_id = 0;
+	bool flag = 1; // place dot on the minimap?
+	struct map_session_data* pl_sd;
+	struct s_mapiterator* iter;
+	unsigned int MinPrice = battle_config.vending_max_value, MaxPrice = 0;
+	struct item_data *item_data;
+	static char atcmd_output[CHAT_SIZE_MAX];
+
+	if (!*message) {
+		clif_displaymessage(fd, "Use: @whosell <item_id> or @whosell <name>");
+		return -1;
+	}
+	if (sscanf(message, "+%d %d[%d]", &refine, &item_id, &card_id) == 3){
+		s_type = 1+2+4;
+	}
+	else if (sscanf(message, "+%d %d", &refine, &item_id) == 2){
+		s_type = 1+4;
+	}
+	else if (sscanf(message, "+%d [%d]", &refine, &card_id) == 2){
+		s_type = 2+4;
+	}
+	else if (sscanf(message, "%d[%d]", &item_id, &card_id) == 2){
+		s_type = 1+2;
+	}
+	else if (sscanf(message, "[%d]", &card_id) == 1){
+		s_type = 2;
+	}
+	else if (sscanf(message, "+%d", &refine) == 1){
+		s_type = 4;
+	}
+	else if (sscanf(message, "%d", &item_id) == 1 && item_id == atoi(message)){
+		s_type = 1;
+	}
+	else if (sscanf(message, "%99[^\n]", item_name) == 1){
+		s_type = 1;
+	if ((item_data = itemdb_searchname(item_name)) == NULL){
+		clif_displaymessage(fd, "Not found item with this name");
+		return -1;
+	}
+		item_id = item_data->nameid;
+	} else {
+		clif_displaymessage(fd, "Use: @whosell <item_id> or @whosell <name>");
+		return -1;
+	}
+
+	//check card
+	if(s_type & 2 && ((item_data = itemdb_exists(card_id)) == NULL || item_data->type != IT_CARD)){
+		clif_displaymessage(fd, "Not found a card with than ID");
+		return -1;
+	}
+	//check item
+	if(s_type & 1 && (item_data = itemdb_exists(item_id)) == NULL){
+		clif_displaymessage(fd, "Not found an item with than ID");
+		return -1;
+	}
+	//check refine
+	if(s_type & 4){
+		if (refine<0 || refine>10){
+			clif_displaymessage(fd, "Refine out of bounds: 0 - 10");
+			return -1;
+		}
+		/*if(item_data->type != IT_WEAPON && item_data->type != IT_ARMOR){
+			clif_displaymessage(fd, "Use refine only with weapon or armor");
+			return -1;
+		}*/
+	}
+	iter = mapit_getallusers();
+	for (pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter)) 
+	{
+	if (pl_sd->vender_id ) {	 // check if player is vending
+		for (j = 0; j < pl_sd->vend_num; j++) {
+			if ((item_data = itemdb_exists(pl_sd->cart.u.items_cart[pl_sd->vending[j].index].nameid)) == NULL)
+				continue;
+			if(s_type & 1 && pl_sd->cart.u.items_cart[pl_sd->vending[j].index].nameid != item_id)
+				continue;
+			if(s_type & 2 && ((item_data->type != IT_ARMOR && item_data->type != IT_WEAPON) ||
+					(pl_sd->cart.u.items_cart[pl_sd->vending[j].index].card[0] != card_id &&
+					pl_sd->cart.u.items_cart[pl_sd->vending[j].index].card[1] != card_id &&
+					pl_sd->cart.u.items_cart[pl_sd->vending[j].index].card[2] != card_id &&
+					pl_sd->cart.u.items_cart[pl_sd->vending[j].index].card[3] != card_id)))
+				continue;
+			if(s_type & 4 && ((item_data->type != IT_ARMOR && item_data->type != IT_WEAPON) || pl_sd->cart.u.items_cart[pl_sd->vending[j].index].refine != refine))
+				continue;
+			if(item_data->type == IT_ARMOR)
+				snprintf(atcmd_output, CHAT_SIZE_MAX, "+%d %s[%d] | Price %ud | Amount %d | %s[%d,%d] | %s",pl_sd->cart.u.items_cart[pl_sd->vending[j].index].refine
+					,item_data->jname
+					,pl_sd->cart.u.items_cart[pl_sd->vending[j].index].card[0]
+					,pl_sd->vending[j].value
+					,pl_sd->vending[j].amount
+					,mapindex_id2name(pl_sd->mapindex)
+					,pl_sd->bl.x,pl_sd->bl.y
+					,pl_sd->message);
+			else if(item_data->type == IT_WEAPON)
+				snprintf(atcmd_output, CHAT_SIZE_MAX, "+%d %s[%d,%d,%d,%d] | Price %ud | Amount %d | %s[%d,%d] | %s",pl_sd->cart.u.items_cart[pl_sd->vending[j].index].refine
+					,item_data->jname
+					,pl_sd->cart.u.items_cart[pl_sd->vending[j].index].card[0]
+					,pl_sd->cart.u.items_cart[pl_sd->vending[j].index].card[1]
+					,pl_sd->cart.u.items_cart[pl_sd->vending[j].index].card[2]
+					,pl_sd->cart.u.items_cart[pl_sd->vending[j].index].card[3]
+					,pl_sd->vending[j].value
+					,pl_sd->vending[j].amount
+					,mapindex_id2name(pl_sd->mapindex)
+					,pl_sd->bl.x,pl_sd->bl.y
+					,pl_sd->message);
+			else
+				snprintf(atcmd_output, CHAT_SIZE_MAX, "%s | Price %ud | Amount %d | %s[%d,%d] | %s",item_data->jname
+					,pl_sd->vending[j].value
+					,pl_sd->vending[j].amount
+					,mapindex_id2name(pl_sd->mapindex)
+					,pl_sd->bl.x, pl_sd->bl.y
+					,pl_sd->message);
+			if(pl_sd->vending[j].value < MinPrice) MinPrice = pl_sd->vending[j].value;
+			if(pl_sd->vending[j].value > MaxPrice) MaxPrice = pl_sd->vending[j].value;
+			clif_displaymessage(fd, atcmd_output);
+			count++;
+			flag = 1;
+		}
+			if (flag && pl_sd->mapindex == sd->mapindex) {
+				clif_viewpoint(sd, 1, 1, pl_sd->bl.x, pl_sd->bl.y, ++sat_num, 0xFFFFFF);
+				flag = 0;
+			}
+		}
+	}
+	mapit_free(iter);
+	if(count > 0) {
+		snprintf(atcmd_output, CHAT_SIZE_MAX, "================== Found %d entries. ==================", count, MinPrice, MaxPrice);
+		clif_displaymessage(fd, atcmd_output);
+	} else
+		clif_displaymessage(fd, "Nadie lo esta vendiendo ahora!.");
+
+	return 0;
+}
+
+
 /*==========================================
  * Map Kill Steal Protection Setting
  *------------------------------------------*/
@@ -10213,6 +10357,8 @@ ACMD_FUNC(quest) {
 	return 0;
 }
 
+
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -10500,7 +10646,8 @@ void atcommand_basecommands(void) {
 		ACMD_DEFR(channel,ATCMD_NOSCRIPT),
 		ACMD_DEF(fontcolor),
 		ACMD_DEF(langtype),
-#ifdef VIP_ENABLE
+		
+		#ifdef VIP_ENABLE
 		ACMD_DEF(vip),
 		ACMD_DEF(showrate),
 #endif
@@ -10520,6 +10667,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("erasequest", quest),
 		ACMD_DEF2("completequest", quest),
 		ACMD_DEF2("checkquest", quest),
+		ACMD_DEF (whosell),
 	};
 	AtCommandInfo* atcommand;
 	int i;
@@ -10728,8 +10876,6 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 	if (battle_config.idletime_option&IDLE_ATCOMMAND)
 		sd->idletime = last_tick;
-	if (battle_config.hom_idle_no_share && sd->hd && battle_config.idletime_hom_option&IDLE_ATCOMMAND)
-		sd->idletime_hom = last_tick;
 
 	//Clearing these to be used once more.
 	memset(command, '\0', sizeof(command));

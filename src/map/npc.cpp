@@ -16,7 +16,6 @@
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
-#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "battle.hpp"
@@ -33,8 +32,6 @@
 #include "pc.hpp"
 #include "pet.hpp"
 #include "script.hpp" // script_config
-
-using namespace rathena;
 
 struct npc_data* fake_nd;
 
@@ -160,10 +157,9 @@ int npc_isnear_sub(struct block_list* bl, va_list args) {
 			if (skill->unit_nonearnpc_type&SKILL_NONEAR_TOMB && nd->subtype == NPCTYPE_TOMB)
 				return 1;
 		}
-		return 0;
 	}
 
-	return 1;
+    return 0;
 }
 
 bool npc_isnear(struct block_list * bl) {
@@ -3429,11 +3425,8 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		case NPCTYPE_POINTSHOP:
 		case NPCTYPE_MARKETSHOP:
 			++npc_shop;
-			safestrncpy( nd->u.shop.pointshop_str, dnd->u.shop.pointshop_str, strlen( dnd->u.shop.pointshop_str ) );
-			nd->u.shop.itemshop_nameid = dnd->u.shop.itemshop_nameid;
 			nd->u.shop.shop_item = dnd->u.shop.shop_item;
 			nd->u.shop.count = dnd->u.shop.count;
-			nd->u.shop.discount =  dnd->u.shop.discount;
 			break;
 
 		case NPCTYPE_WARP:
@@ -3496,7 +3489,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 	char newname[NPC_NAME_LENGTH+1];
 	struct map_data *mapdata = map_getmapdata(m);
 
-	if( mapdata->instance_id <= 0 )
+	if( mapdata->instance_id == 0 )
 		return 1;
 
 	snprintf(newname, ARRAYLENGTH(newname), "dup_%d_%d", mapdata->instance_id, snd->bl.id);
@@ -3507,17 +3500,15 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 
 	if( snd->subtype == NPCTYPE_WARP ) { // Adjust destination, if instanced
 		struct npc_data *wnd = NULL; // New NPC
-		std::shared_ptr<s_instance_data> idata = util::umap_find(instances, mapdata->instance_id);
-		int dm = map_mapindex2mapid(snd->u.warp.mapindex), imap = 0;
-
+		struct instance_data *im = &instance_data[mapdata->instance_id];
+		int dm = map_mapindex2mapid(snd->u.warp.mapindex), imap = 0, i;
 		if( dm < 0 ) return 1;
 
-		for (const auto &it : idata->map) {
-			if (it.m && map_mapname2mapid(map_getmapdata(it.src_m)->name) == dm) {
-				imap = map_mapname2mapid(map_getmapdata(it.m)->name);
+		for(i = 0; i < im->cnt_map; i++)
+			if(im->map[i]->m && map_mapname2mapid(map_getmapdata(im->map[i]->src_m)->name) == dm) {
+				imap = map_mapname2mapid(map_getmapdata(im->map[i]->m)->name);
 				break; // Instance map matches destination, update to instance map
 			}
-		}
 
 		if(!imap)
 			imap = map_mapname2mapid(map_getmapdata(dm)->name);
@@ -4602,6 +4593,8 @@ const char *npc_get_script_event_name(int npce_index)
 		return script_config.kill_pc_event_name;
 	case NPCE_KILLNPC:
 		return script_config.kill_mob_event_name;
+	case NPCE_STATCALC:
+		return script_config.stat_calc_event_name;
 	default:
 		ShowError("npc_get_script_event_name: npce_index is outside the array limits: %d (max: %d).\n", npce_index, NPCE_MAX);
 		return NULL;

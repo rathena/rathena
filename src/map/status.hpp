@@ -23,7 +23,7 @@ struct status_change;
  * Changing this limit requires edits to refine_db.txt
  **/
 #ifdef RENEWAL
-#	define MAX_REFINE 20
+#	define MAX_REFINE 10
 #else
 #	define MAX_REFINE 10
 #endif
@@ -921,10 +921,6 @@ enum sc_type : int16 {
 	SC_SOULCURSE,
 
 	SC_HELLS_PLANT,
-	SC_INCREASE_MAXHP, // EFST_ATKER_ASPD
-	SC_INCREASE_MAXSP, // EFST_ATKER_MOVESPEED
-
-	SC_HELPANGEL,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -2086,6 +2082,7 @@ enum e_joint_break : uint8 {
 extern short current_equip_item_index;
 extern unsigned int current_equip_combo_pos;
 extern int current_equip_card_id;
+extern bool running_npc_stat_calc_event;
 extern short current_equip_opt_index;
 
 //Status change option definitions (options are what makes status changes visible to chars

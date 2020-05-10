@@ -1,0 +1,23 @@
+prontera,150,150,6 script  Aura NPC   700,{
+
+    mes "[Aura NPC]";    if(BaseLevel < 99 && JobLevel < 70) {
+    mes "I can't help you!";        close;    }
+    mes "Please choose an aura from the list!";
+    switch(select("Aura 1:Aura 2:Aura 3:Aura 4: Aura 5: Aura 6"))
+  {		    case 1:		    next;		    mes "[Aura NPC]";	
+    mes "Your Aura was set to #1";		    aura 586,-1,-1;	
+    close;	
+  case 2:		    next;		    mes "[Aura NPC]";
+    mes "Your Aura was set to #2";		    aura 586,362,-1;
+    close;		   			 case 3:		    next;	
+    mes "[Aura NPC]";		    mes "Your Aura was set to #3";	
+    aura 586,362,240;		    close;		   	
+  case 4:		    next;		    mes "[Aura NPC]";	
+    mes "Your Aura was set to #4";		
+    aura 418,-1,-1;		    close;		  
+  case 5:		    next;		    mes "[Aura NPC]";	
+    mes "Your Aura was set to #5";		    aura 486,-1,-1;	
+    close;		   			 case 6:		    next;
+    mes "[Aura NPC]";		    mes "Your Aura was set to #6";	
+    aura 485,-1,-1;		    close;    }}
+  

@@ -21,7 +21,7 @@
 //= 1.7 Rescripted to official 10.3 standards. [L0ne_W0lf]
 //============================================================
 
-yuno,153,47,4	script	Juno Guide#yuno	700,{
+yuno,165,50,4	script	Juno Guide#yuno	700,{
 	mes "[Ms. Yoon]";
 	mes "A place that takes the vision of the future, and gives it form in the present. Welcome to";
 	mes "the city of Juno!";

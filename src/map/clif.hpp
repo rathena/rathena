@@ -43,7 +43,6 @@ struct achievement;
 struct guild_log_entry;
 enum e_guild_storage_log : uint16;
 enum e_bg_queue_apply_ack : uint16;
-enum e_instance_notify : uint8;
 
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
@@ -589,7 +588,7 @@ void clif_clearflooritem(struct flooritem_data *fitem, int fd);
 void clif_clearunit_single(int id, clr_type type, int fd);
 void clif_clearunit_area(struct block_list* bl, clr_type type);
 void clif_clearunit_delayed(struct block_list* bl, clr_type type, t_tick tick);
-int clif_spawn(struct block_list *bl, bool walking = false);	//area
+int clif_spawn(struct block_list *bl);	//area
 void clif_walkok(struct map_session_data *sd);	// self
 void clif_move(struct unit_data *ud); //area
 void clif_changemap(struct map_session_data *sd, short m, int x, int y);	//self
@@ -836,10 +835,10 @@ void clif_bg_queue_lobby_notify(const char *name, struct map_session_data *sd);
 void clig_bg_queue_ack_lobby(bool result, const char *name, const char *lobbyname, struct map_session_data *sd);
 
 // Instancing
-void clif_instance_create(int instance_id, int num);
-void clif_instance_changewait(int instance_id, int num);
-void clif_instance_status(int instance_id, unsigned int limit1, unsigned int limit2);
-void clif_instance_changestatus(int instance_id, e_instance_notify type, unsigned int limit);
+void clif_instance_create(unsigned short instance_id, int num);
+void clif_instance_changewait(unsigned short instance_id, int num);
+void clif_instance_status(unsigned short instance_id, unsigned int limit1, unsigned int limit2);
+void clif_instance_changestatus(unsigned int instance_id, int type, unsigned int limit);
 
 // Custom Fonts
 void clif_font(struct map_session_data *sd);

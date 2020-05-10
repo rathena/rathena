@@ -48,4 +48,6 @@ prontera,170,180,1	script	Stylist#custom_stylist	122,{
 			break;
 		}
 	}
+	OnInit:
+	waitingroom "         [Stylist]",0;
 }

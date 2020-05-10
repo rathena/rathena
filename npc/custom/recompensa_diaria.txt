@@ -1,0 +1,145 @@
+//===== rAthena Script =======================================
+//= Daily Reward
+//===== By ===================================================
+//= llchrisll
+//===== Version ==============================================
+//= 1.0 - Initial Version
+//===== Tested With ==========================================
+//= rAthena 12/24/2017 Revision
+//= GIT Hash: ae69e506263f9b183c945f49b1d88c5fc2b73a6a
+//===== Description ==========================================
+//= Simple Daily Reward Script
+//= Config:
+//  You can add more than the given values, even more variables, see the config
+//===== Comments =============================================
+//= I'm not adding an IP Check, too lazy for that
+//============================================================
+-	script	DailyLogin	-1,{
+
+OnPCLoginEvent:
+if(#DailyReward > gettimetick(2)) {
+	dispbottom .n$+": You can't currently recieve the Daily Reward, you still have to wait "+callfunc("Time2Str",#DailyReward);
+	end;
+}
+set #DailyReward,0;
+announce .n$+": Stay active for "+( (.rew_login%3600 == 0)?.rew_login/3600+" Hour(s)":.rew_login/60+" Minute(s)")+" to recieve the Daily Reward.",bc_self;
+attachnpctimer;
+initnpctimer;
+end;
+
+OnTimer60000: // Every Minute
+stopnpctimer;
+set @daily,@daily + 60;
+if(@daily == .rew_login) {
+	set @daily,0;
+	if(.rew_type == 2)
+		set @DailyReward,DT_DAYOFMONTH;
+	else 
+		set @DailyReward,Daily + 1;
+	announce .n$+": You can now recieve your Daily Reward. Please visit me for that.",.bc_self;
+	end;
+}
+attachnpctimer;
+initnpctimer;
+end;
+
+OnInit:
+set .n$,"[Recompensa Diaria]";
+set .rew_time,86400; // Timer until next Reward in seconds
+// How long does someone have to stay online to recieve the reward in seconds
+// Default: 3600 = 1 Hour
+// Minimum: 60 = 1 Minute, because the Timer checks every Minute
+set .rew_login,3600;
+// Reward Type:
+// 1 = Continues Reward
+// 2 = Depending on day
+set .rew_type,1;
+end;
+}
+prontera,147,153,6	script	Recompensa Diaria	72,{
+
+mes .n$;
+mes "Welcome, "+strcharinfo(0)+"!";
+if(!@DailyReward) {
+	mes "I'm sorry, but you can't recieve your Daily Reward yet. You still have to wait for "+callfunc("Time2Str",(getvariableofnpc(.rew_login,"DailyLogin")-@daily)+gettimetick(2));
+	close;
+}
+mes "The reward for today is:";
+set .@Day,@DailyReward;
+for ( set .@r,0; .@r < getarraysize(getd(".rew_day"+.@Day)); set .@r,.@r + 2) {
+	if(getd(".rew_day"+.@Day+"["+.@r+"]") == 1) {
+		mes "Zeny: "+getd(".rew_day"+.@Day+"["+(.@r+1)+"]");
+		set Zeny,Zeny + getd(".rew_day"+.@Day+"["+(.@r+1)+"]");
+	
+	} else if(getd(".rew_day"+.@Day+"["+.@r+"]") >= 501 ) {
+		mes getd(".rew_day"+.@Day+"["+(.@r+1)+"]")+"x "+getitemname(getd(".rew_day"+.@Day+"["+.@r+"]"));
+		getitem getd(".rew_day"+.@Day+"["+.@r+"]"),getd(".rew_day"+.@Day+"["+(.@r+1)+"]");
+	
+	} else {
+		mes getd(".rew_day"+.@Day+"["+(.@r+1)+"]")+"x "+.rew_vard$[getd(".rew_day"+.@Day+"["+.@r+"]")-1];
+		setd(""+.rew_varn$[getd(".rew_day"+.@Day+"["+.@r+"]")-1]),getd(""+.rew_varn$[getd(".rew_day"+.@Day+"["+.@r+"]")-1]) + getd(".rew_day"+.@Day+"["+(.@r+1)+"]");
+	}
+}
+set #DailyReward,gettimetick(2) + .rew_time;
+if(getvariableofnpc(.rew_type,"DailyLogin") == 1)
+	set Daily,@DailyReward;
+set @DailyReward,0;
+mes " ";
+mes "You have collected your daily reward. See you next time.";
+close;
+
+OnInit:
+set .n$,"["+strnpcinfo(0)+"]";
+// Display Name of Variables for Players
+setarray .rew_vard$[1],"Cash Points","Kafra Points"," PvP Points","WoE Points","Event Points";
+// Variable Names
+setarray .rew_varn$[1],"#CASHPOINTS","#KAFRAPOINTS","PvPPoints","WoEPoints","EventPoints";
+// ======= Reward Settings =======
+// - Identifiers:
+// 1 = Zeny
+// 2 = Cash Points
+// 3 = Kafra Points
+// 4 = PvP Points
+// 5 = WoE Points
+// 6 = Event Points
+// For Items = Item ID
+// Note: You can add more Variables if you want and rename the current ones of course
+// But remember to note it like above for better overview which Identfier it has
+// The Idenfier is the "Index" of the Array + 1, see above
+// Example: Variable for Quest Points, add it after the last Value of each Array
+//          .rew_vard$ = "Quest Points" > Display Name for Players
+//			.rew_varn$ = "QuestPoints" > Variable Name for the Script
+//          The Idenfier for it would be 7, so the Index would be 6
+setarray .rew_day1[0],1,5000,12863,5,2,5;
+setarray .rew_day2[0],1,15000,12899,5,3,10;
+setarray .rew_day3[0],1,10000,12902,5,2,50;
+setarray .rew_day4[0],1,5000,512,100,2,5;
+setarray .rew_day5[0],1,5000,512,100,2,5;
+setarray .rew_day6[0],1,5000,512,100,2,5;
+setarray .rew_day7[0],1,5000,512,100,2,5;
+setarray .rew_day8[0],1,5000,512,100,2,5;
+setarray .rew_day9[0],1,5000,512,100,2,5;
+setarray .rew_day10[0],1,5000,512,100,2,5;
+setarray .rew_day11[0],1,5000,512,100,2,5;
+setarray .rew_day12[0],1,5000,512,100,2,5;
+setarray .rew_day13[0],1,5000,512,100,2,5;
+setarray .rew_day14[0],1,5000,512,100,2,5;
+setarray .rew_day15[0],1,5000,512,100,2,5;
+setarray .rew_day16[0],1,5000,512,100,2,5;
+setarray .rew_day17[0],1,5000,512,100,2,5;
+setarray .rew_day18[0],1,5000,512,100,2,5;
+setarray .rew_day19[0],1,5000,512,100,2,5;
+setarray .rew_day20[0],1,5000,512,100,2,5;
+setarray .rew_day21[0],1,5000,512,100,2,5;
+setarray .rew_day22[0],1,5000,512,100,2,5;
+setarray .rew_day23[0],1,5000,512,100,2,5;
+setarray .rew_day24[0],1,5000,512,100,2,5;
+setarray .rew_day25[0],1,5000,512,100,2,5;
+setarray .rew_day26[0],1,5000,512,100,2,5;
+setarray .rew_day27[0],1,5000,512,100,2,5;
+setarray .rew_day28[0],1,5000,512,100,2,5;
+setarray .rew_day29[0],1,5000,512,100,2,5;
+setarray .rew_day30[0],1,5000,512,100,2,5;
+setarray .rew_day31[0],1,5000,512,100,2,5;
+end;
+}

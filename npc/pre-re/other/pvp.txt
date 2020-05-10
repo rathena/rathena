@@ -15,7 +15,7 @@
 
 // PVP Warpers
 //============================================================ 
-pvp_y_room,86,85,4	script	Fight Square Reception#8	105,{
+//prontera,158,173,4	script	Fight Square Reception#8	105,{
 	callfunc "F_PVP_FSRS";
 	end;
 

@@ -1,0 +1,31 @@
+ -	script	Tool Dealer::Tool Dealer	4_m_catman1,{
+	waitingroom "[Tool Dealer]",0;
+	mes "Que Quieres Comprar?";
+	close2;
+	
+	switch( select("^FF0000~~Vender^000000",
+	               "Consumibles", 
+	               "Miscellaneous",
+	               "Flechas/Municiones",
+	               "^009900Pet Armor^000000",
+	               "No Gracias" ))
+	{
+		next;
+		case 1: callshop "sell",2; break;
+		case 2: callshop "Consumable",1; break;
+		case 3: callshop "Miscellaneous",1; break;
+		case 4: callshop "Arrow/Ammunition",1; break;
+		case 5: callshop "Pet Armor",1; break;
+		case 6: mes "Okay, Que tengas Buen dia"; close; break;
+	}
+	end;
+}
+
+-	shop	Tool Dealer#shop::Consumable	-1,611:-1,1750:-1,501:-1,502:-1,503:-1,504:-1,506:-1,568:-1,533:-1,645:-1,656:-1,657:-1,601:-1,602:-1,1065:-1,610:-1
+-	shop	Tool Dealer#shop::Miscellaneous	-1,713:-1,984:25000-1,985:25000-1,717:-1,716:-1,715:3000,12020:-1,523:-1,993:-1,992:-1,991:-1,990:-1,12042:25000,12057:25000,12052:25000,12047:25000,12062:25000,12067:25000
+-	shop	Tool Dealer#shop::Arrow/Ammunition	-1,1750:-1,1751:-1,1752:-1,1753:-1,1754:-1,1755:-1,1756:-1,1772:-1,1757:-1,1767:-1,13200:-1,13201:-1,13202:-1,13203:-1,13207:-1,13204:-1,13250:-1,13251:-1,13252:-1,13253:-1,13254:-1
+-	shop	sell	-1,512:-1
+
+-	shop	Tool Dealer#shop::Pet Armor	-1,10013:-1,10017:500000,10010:500000,10037:500000,10024:500000,10016:500000,10023:500000,10015:500000,10025:500000,10038:500000,10029:500000,10034:500000,10018:500000,10002:500000,10004:500000,10027:500000,10008:500000,10006:500000,10019:500000,10031:500000,10014:-1,10007:500000,10001:500000,10011:500000,10012:500000,10003:500000,10005:500000,10009:500000
+
+prontera,165,191,4	duplicate(Tool Dealer)	Tool Dealer#pront	4_m_catman1

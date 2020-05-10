@@ -258,8 +258,8 @@
 
 // USA 4th Anniversary Event Items
 5305,475,100	// Pirate Dagger
-5373,73,100	// Dark Randgris Helm
-7773,499,100	// Wat Badge
+5373,73,100		// Dark Randgris Helm
+7773,89,100		// Wat Badge
 7875,467,100	// Pirate Treasure
 
 // Moscovia Quest Items -----
@@ -430,8 +430,8 @@
 2539,467,100	// Commander's Manteau
 2540,467,100	// Sheriff's Manteau
 2733,467,100	// Sheriff Badge
-7828,467,100	// Bravery Badge
-7829,467,100	// Valor Badge
+7828,89,100		// Bravery Badge
+7829,89,100		// Valor Badge
 13036,467,100	// Brave Assassin's Damascus
 13037,467,100	// Valorous Assassin's Damascus
 13108,467,100	// Soldier Revolver
@@ -457,44 +457,44 @@
 6051,499,100	// Gray Hollow
 
 // Battleground Rewards (Krieger Von Midgard)
-1187,499,100	// Glorious Claymore
-1281,499,100	// Glorious Bloody Roar
-1282,499,100	// Glorious Jamadhar
-1310,499,100	// Glorious Cleaver
-1382,499,100	// Glorious Two-Handed Axe
-1426,499,100	// Glorious Spear
-1486,499,100	// Glorious Lance
-1546,499,100	// Glorious Morning Star
-1576,499,100	// Glorious Tablet
-1577,499,100	// Glorious Apocalypse
-1640,499,100	// Glorious Arc Wand
-1641,499,100	// Glorious Cure Wand
-1743,499,100	// Glorious Hunter Bow
-1826,499,100	// Glorious Claw
-1827,499,100	// Glorious Fist
-1927,499,100	// Glorious Guitar
-1981,499,100	// Glorious Lariat
-2002,499,100	// Glorious Destruction Staff
-2394,499,100	// Glorious Suit
-2395,499,100	// Glorious Popularized Suit
-2396,499,100	// Glorious Mass-Production Suit
-2444,499,100	// Glorious Shoes
-2445,499,100	// Glorious Popularized Shoes
-2446,499,100	// Glorious Mass-Production Shoes
-2549,499,100	// Glorious Muffler
-2772,499,100	// Glorious Ring
-2773,499,100	// Glorious Mass-Production Ring
-2774,499,100	// Glorious Popularized Ring
-13042,499,100	// Glorious Gladius
-13110,499,100	// Glorious Pistol
-13176,499,100	// Glorious Rifle
-13177,499,100	// Glorious Gatling Gun
-13178,499,100	// Glorious Shotgun
-13179,499,100	// Glorious Grenade Launcher
-13307,499,100	// Glorious Shuriken
-13416,499,100	// Glorious Flamberge
-13417,499,100	// Glorious Rapier
-13418,499,100	// Glorious Holy Avenger
+1187,467,100	// Glorious Claymore
+1281,472,100	// Glorious Bloody Roar
+1282,467,100	// Glorious Jamadhar
+1310,467,100	// Glorious Cleaver
+1382,467,100	// Glorious Two-Handed Axe
+1426,467,100	// Glorious Spear
+1486,467,100	// Glorious Lance
+1546,467,100	// Glorious Morning Star
+1576,467,100	// Glorious Tablet
+1577,467,100	// Glorious Apocalypse
+1640,467,100	// Glorious Arc Wand
+1641,467,100	// Glorious Cure Wand
+1743,467,100	// Glorious Hunter Bow
+1826,467,100	// Glorious Claw
+1827,467,100	// Glorious Fist
+1927,467,100	// Glorious Guitar
+1981,467,100	// Glorious Lariat
+2002,467,100	// Glorious Destruction Staff
+2394,467,100	// Glorious Suit
+2395,467,100	// Glorious Popularized Suit
+2396,467,100	// Glorious Mass-Production Suit
+2444,467,100	// Glorious Shoes
+2445,467,100	// Glorious Popularized Shoes
+2446,467,100	// Glorious Mass-Production Shoes
+2549,467,100	// Glorious Muffler
+2772,467,100	// Glorious Ring
+2773,467,100	// Glorious Mass-Production Ring
+2774,467,100	// Glorious Popularized Ring
+13042,467,100	// Glorious Gladius
+13110,467,100	// Glorious Pistol
+13176,467,100	// Glorious Rifle
+13177,467,100	// Glorious Gatling Gun
+13178,467,100	// Glorious Shotgun
+13179,467,100	// Glorious Grenade Launcher
+13307,467,100	// Glorious Shuriken
+13416,467,100	// Glorious Flamberge
+13417,467,100	// Glorious Rapier
+13418,467,100	// Glorious Holy Avenger
 
 // Episode 13.2
 6074,499,100	// Bazett's Order

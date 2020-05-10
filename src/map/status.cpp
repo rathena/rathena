@@ -62,6 +62,7 @@ static struct status_data dummy_status;
 short current_equip_item_index; /// Contains inventory index of an equipped item. To pass it into the EQUP_SCRIPT [Lupus]
 unsigned int current_equip_combo_pos; /// For combo items we need to save the position of all involved items here
 int current_equip_card_id; /// To prevent card-stacking (from jA) [Skotlex]
+bool running_npc_stat_calc_event; /// Indicate if OnPCStatCalcEvent is running.
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
 short current_equip_opt_index; /// Contains random option index of an equipped item. [Secret]
 
@@ -1017,6 +1018,7 @@ void initChangeTables(void)
 
 	/* Rebellion */
 	add_sc( RL_MASS_SPIRAL		, SC_BLEEDING );
+	add_sc( RL_HAMMER_OF_GOD	, SC_STUN );
 	set_sc( RL_H_MINE		, SC_H_MINE		, EFST_H_MINE		, SCB_NONE);
 	set_sc( RL_B_TRAP		, SC_B_TRAP		, EFST_B_TRAP		, SCB_SPEED );
 	set_sc( RL_E_CHAIN		, SC_E_CHAIN	, EFST_E_CHAIN	, SCB_NONE );
@@ -1099,10 +1101,6 @@ void initChangeTables(void)
 	set_sc( SP_SOULREAPER	, SC_SOULREAPER		, EFST_SOULREAPER	, SCB_NONE );
 	set_sc( SP_SOULCOLLECT	, SC_SOULCOLLECT	, EFST_SOULCOLLECT	, SCB_NONE );
 
-#ifdef RENEWAL
-	set_sc( NV_HELPANGEL			, SC_HELPANGEL		, EFST_HELPANGEL	, SCB_NONE );
-#endif
-
 	/* Storing the target job rather than simply SC_SPIRIT simplifies code later on */
 	SkillStatusChangeTable[skill_get_index(SL_ALCHEMIST)]	= (sc_type)MAPID_ALCHEMIST,
 	SkillStatusChangeTable[skill_get_index(SL_MONK)]		= (sc_type)MAPID_MONK,
@@ -1149,8 +1147,6 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_SPL_MATK] = EFST_SPL_MATK;
 	StatusIconChangeTable[SC_ATKPOTION] = EFST_PLUSATTACKPOWER;
 	StatusIconChangeTable[SC_MATKPOTION] = EFST_PLUSMAGICPOWER;
-	StatusIconChangeTable[SC_INCREASE_MAXHP] = EFST_ATKER_ASPD;
-	StatusIconChangeTable[SC_INCREASE_MAXSP] = EFST_ATKER_MOVESPEED;
 
 	/* Cash Items */
 	StatusIconChangeTable[SC_FOOD_STR_CASH] = EFST_FOOD_STR_CASH;
@@ -1441,8 +1437,6 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_GEFFEN_MAGIC1] |= SCB_ALL;
 	StatusChangeFlagTable[SC_GEFFEN_MAGIC2] |= SCB_ALL;
 	StatusChangeFlagTable[SC_GEFFEN_MAGIC3] |= SCB_ALL;
-	StatusChangeFlagTable[SC_INCREASE_MAXHP] |= SCB_MAXHP|SCB_REGEN;
-	StatusChangeFlagTable[SC_INCREASE_MAXSP] |= SCB_MAXSP|SCB_REGEN;
 
 	/* Cash Items */
 	StatusChangeFlagTable[SC_FOOD_STR_CASH] |= SCB_STR;
@@ -3303,11 +3297,11 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 		//Only for BL_PC
 		if (bl->type == BL_PC) {
 			struct map_session_data *sd = map_id2sd(bl->id);
-			uint16 skill_lv;
+			uint8 i;
 
 			bonus += sd->bonus.hp;
-			if ((skill_lv = pc_checkskill(sd,CR_TRUST)) > 0)
-				bonus += skill_lv * 200;
+			if ((i = pc_checkskill(sd,CR_TRUST)) > 0)
+				bonus += i * 200;
 			if (pc_checkskill(sd,SU_SPRITEMABLE) > 0)
 				bonus += 1000;
 			if (pc_checkskill(sd, SU_POWEROFSEA) > 0) {
@@ -3316,10 +3310,6 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 					pc_checkskill(sd, SU_GROOMING) + pc_checkskill(sd, SU_PURRING) + pc_checkskill(sd, SU_SHRIMPARTY)) > 19)
 						bonus += 2000;
 			}
-			if ((skill_lv = pc_checkskill(sd, NV_BREAKTHROUGH)) > 0)
-				bonus += 350 * skill_lv + (skill_lv > 4 ? 250 : 0);
-			if ((skill_lv = pc_checkskill(sd, NV_TRANSCENDENCE)) > 0)
-				bonus += 350 * skill_lv + (skill_lv > 4 ? 250 : 0);
 #ifndef HP_SP_TABLES
 			if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
 				bonus += 2000; // Supernovice lvl99 hp bonus.
@@ -3364,6 +3354,13 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 	} else if (type == STATUS_BONUS_RATE) {
 		struct status_change *sc = status_get_sc(bl);
 
+		//Only for BL_PC
+		if (bl->type == BL_PC) {
+			struct map_session_data *sd = map_id2sd(bl->id);
+			bonus += sd->hprate;
+			bonus -= 100; //Default hprate is 100, so it should be add 0%
+		}
+
 		//Bonus by SC
 		if (sc) {
 			//Increasing
@@ -3389,6 +3386,8 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += (2 + sc->data[SC_RAISINGDRAGON]->val1);
 			if(sc->data[SC_GT_REVITALIZE])
 				bonus += sc->data[SC_GT_REVITALIZE]->val2;
+			if(sc->data[SC_MUSTLE_M])
+				bonus += sc->data[SC_MUSTLE_M]->val1;
 			if(sc->data[SC_ANGRIFFS_MODUS])
 				bonus += (5 * sc->data[SC_ANGRIFFS_MODUS]->val1);
 			if(sc->data[SC_PETROLOGY_OPTION])
@@ -3406,7 +3405,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 30;
 #endif
 			if(sc->data[SC_LUNARSTANCE])
-				bonus += sc->data[SC_LUNARSTANCE]->val2;
+				bonus += bonus * sc->data[SC_LUNARSTANCE]->val2 / 100;
 
 			//Decreasing
 			if(sc->data[SC_VENOMBLEED])
@@ -3415,6 +3414,8 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus -= sc->data[SC_BEYONDOFWARCRY]->val4;
 			if(sc->data[SC__WEAKNESS])
 				bonus -= sc->data[SC__WEAKNESS]->val2;
+			if(sc->data[SC_MYSTERIOUS_POWDER])
+				bonus -= sc->data[SC_MYSTERIOUS_POWDER]->val1;
 			if(sc->data[SC_EQC])
 				bonus -= sc->data[SC_EQC]->val3;
 		}
@@ -3423,40 +3424,6 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 	}
 
 	return min(bonus,INT_MAX);
-}
-
-/**
-* HP bonus rate from equipment
-*/
-static int status_get_hpbonus_equip(TBL_PC *sd) {
-	int bonus = 0;
-
-	bonus += sd->hprate;
-
-	return bonus -= 100; //Default hprate is 100, so it should be add 0%
-}
-
-/**
-* HP bonus rate from usable items
-*/
-static int status_get_hpbonus_item(block_list *bl) {
-	int bonus = 0;
-
-	struct status_change *sc = status_get_sc(bl);
-
-	//Bonus by SC
-	if (sc) {
-		if (sc->data[SC_INCREASE_MAXHP])
-			bonus += sc->data[SC_INCREASE_MAXHP]->val1;
-		if (sc->data[SC_MUSTLE_M])
-			bonus += sc->data[SC_MUSTLE_M]->val1;
-
-		if (sc->data[SC_MYSTERIOUS_POWDER])
-			bonus -= sc->data[SC_MYSTERIOUS_POWDER]->val1;
-	}
-
-	// Max rate reduce is -100%
-	return cap_value(bonus, -100, INT_MAX);
 }
 
 /**
@@ -3475,15 +3442,15 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 		//Only for BL_PC
 		if (bl->type == BL_PC) {
 			struct map_session_data *sd = map_id2sd(bl->id);
-			uint16 skill_lv;
+			uint8 i;
 
 			bonus += sd->bonus.sp;
-			if ((skill_lv = pc_checkskill(sd,SL_KAINA)) > 0)
-				bonus += 30 * skill_lv;
-			if ((skill_lv = pc_checkskill(sd,RA_RESEARCHTRAP)) > 0)
-				bonus += 200 + 20 * skill_lv;
-			if ((skill_lv = pc_checkskill(sd,WM_LESSON)) > 0)
-				bonus += 30 * skill_lv;
+			if ((i = pc_checkskill(sd,SL_KAINA)) > 0)
+				bonus += 30 * i;
+			if ((i = pc_checkskill(sd,RA_RESEARCHTRAP)) > 0)
+				bonus += 200 + 20 * i;
+			if ((i = pc_checkskill(sd,WM_LESSON)) > 0)
+				bonus += 30 * i;
 			if (pc_checkskill(sd,SU_SPRITEMABLE) > 0)
 				bonus += 100;
 			if (pc_checkskill(sd, SU_POWEROFSEA) > 0) {
@@ -3492,10 +3459,6 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 					pc_checkskill(sd, SU_GROOMING) + pc_checkskill(sd, SU_PURRING) + pc_checkskill(sd, SU_SHRIMPARTY)) > 19)
 						bonus += 200;
 			}
-			if ((skill_lv = pc_checkskill(sd, NV_BREAKTHROUGH)) > 0)
-				bonus += 30 * skill_lv + (skill_lv > 4 ? 50 : 0);
-			if ((skill_lv = pc_checkskill(sd, NV_TRANSCENDENCE)) > 0)
-				bonus += 30 * skill_lv + (skill_lv > 4 ? 50 : 0);
 		}
 
 		//Bonus by SC
@@ -3525,6 +3488,9 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 			struct map_session_data *sd = map_id2sd(bl->id);
 			uint8 i;
 
+			bonus += sd->sprate;
+			bonus -= 100; //Default sprate is 100, so it should be add 0%
+
 			if((i = pc_checkskill(sd,HP_MEDITATIO)) > 0)
 				bonus += i;
 			if((i = pc_checkskill(sd,HW_SOULDRAIN)) > 0)
@@ -3547,47 +3513,18 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += sc->data[SC_SERVICE4U]->val2;
 			if(sc->data[SC_MERC_SPUP])
 				bonus += sc->data[SC_MERC_SPUP]->val2;
+			if(sc->data[SC_LIFE_FORCE_F])
+				bonus += sc->data[SC_LIFE_FORCE_F]->val1;
+			if(sc->data[SC_VITATA_500])
+				bonus += sc->data[SC_VITATA_500]->val2;
+			if (sc->data[SC_ENERGY_DRINK_RESERCH])
+				bonus += sc->data[SC_ENERGY_DRINK_RESERCH]->val3;
 		}
 		// Max rate reduce is -100%
 		bonus = cap_value(bonus,-100,INT_MAX);
 	}
 
 	return min(bonus,INT_MAX);
-}
-
-/**
-* SP bonus rate from equipment
-*/
-static int status_get_spbonus_equip(TBL_PC *sd) {
-	int bonus = 0;
-
-	bonus += sd->sprate;
-
-	return bonus -= 100; //Default sprate is 100, so it should be add 0%
-}
-
-/**
-* SP bonus rate from usable items
-*/
-static int status_get_spbonus_item(block_list *bl) {
-	int bonus = 0;
-
-	struct status_change *sc = status_get_sc(bl);
-
-	//Bonus by SC
-	if (sc) {
-		if (sc->data[SC_INCREASE_MAXSP])
-			bonus += sc->data[SC_INCREASE_MAXSP]->val1;
-		if (sc->data[SC_LIFE_FORCE_F])
-			bonus += sc->data[SC_LIFE_FORCE_F]->val1;
-		if (sc->data[SC_VITATA_500])
-			bonus += sc->data[SC_VITATA_500]->val2;
-		if (sc->data[SC_ENERGY_DRINK_RESERCH])
-			bonus += sc->data[SC_ENERGY_DRINK_RESERCH]->val3;
-	}
-
-	// Max rate reduce is -100%
-	return cap_value(bonus, -100, INT_MAX);
 }
 
 /**
@@ -3609,21 +3546,13 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
 	level = umax(sd->status.base_level,1);
 
 	if (isHP) { //Calculates MaxHP
-		double equip_bonus = 0, item_bonus = 0;
 		dmax = job_info[idx].base_hp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:(pc_is_taekwon_ranker(sd))?3:1);
 		dmax += status_get_hpbonus(&sd->bl,STATUS_BONUS_FIX);
-		equip_bonus = (dmax * status_get_hpbonus_equip(sd) / 100);
-		item_bonus = (dmax * status_get_hpbonus_item(&sd->bl) / 100);
-		dmax += equip_bonus + item_bonus;
 		dmax += (int64)(dmax * status_get_hpbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
 	}
 	else { //Calculates MaxSP
-		double equip_bonus = 0, item_bonus = 0;
 		dmax = job_info[idx].base_sp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:(pc_is_taekwon_ranker(sd))?3:1);
 		dmax += status_get_spbonus(&sd->bl,STATUS_BONUS_FIX);
-		equip_bonus = (dmax * status_get_spbonus_equip(sd) / 100);
-		item_bonus = (dmax * status_get_spbonus_item(&sd->bl) / 100);
-		dmax += equip_bonus + item_bonus;
 		dmax += (int64)(dmax * status_get_spbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
 	}
 
@@ -3916,6 +3845,10 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	pc_delautobonus(sd, sd->autobonus, true);
 	pc_delautobonus(sd, sd->autobonus2, true);
 	pc_delautobonus(sd, sd->autobonus3, true);
+
+	running_npc_stat_calc_event = true;
+	npc_script_event(sd, NPCE_STATCALC);
+	running_npc_stat_calc_event = false;
 
 	// Parse equipment
 	for (i = 0; i < EQI_MAX; i++) {
@@ -4537,16 +4470,6 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->magic_addrace[RC_DRAGON]+=skill;
 		sd->subrace[RC_DRAGON]+=skill;
 	}
-	if ((skill = pc_checkskill(sd, AB_EUCHARISTICA)) > 0) {
-		sd->right_weapon.addrace[RC_DEMON] += skill;
-		sd->right_weapon.addele[ELE_DARK] += skill;
-		sd->left_weapon.addrace[RC_DEMON] += skill;
-		sd->left_weapon.addele[ELE_DARK] += skill;
-		sd->magic_addrace[RC_DEMON] += skill;
-		sd->magic_addele[ELE_DARK] += skill;
-		sd->subrace[RC_DEMON] += skill;
-		sd->subele[ELE_DARK] += skill;
-	}
 
 	if(sc->count) {
 		if(sc->data[SC_CONCENTRATE]) { // Update the card-bonus data
@@ -4970,12 +4893,6 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 		val = 0;
 		if( (skill=pc_checkskill(sd,SM_RECOVERY)) > 0 )
 			val += skill*5 + skill*status->max_hp/500;
-
-		if (sc && sc->count) {
-			if (sc->data[SC_INCREASE_MAXHP])
-				val += val * sc->data[SC_INCREASE_MAXHP]->val2 / 100;
-		}
-
 		sregen->hp = cap_value(val, 0, SHRT_MAX);
 
 		val = 0;
@@ -4991,8 +4908,6 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 				val *= 150 / 100;
 			if (sc->data[SC_ANCILLA])
 				val += sc->data[SC_ANCILLA]->val2 / 100;
-			if (sc->data[SC_INCREASE_MAXSP])
-				val += val * sc->data[SC_INCREASE_MAXSP]->val2 / 100;
 		}
 
 		sregen->sp = cap_value(val, 0, SHRT_MAX);
@@ -5584,8 +5499,6 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 
 				// Any +MATK you get from skills and cards, including cards in weapon, is added here.
 				if (sd) {
-					uint16 skill_lv;
-
 					if (sd->bonus.ematk > 0)
 						status->matk_min += sd->bonus.ematk;
 					if (pc_checkskill(sd, SU_POWEROFLAND) > 0) {
@@ -5593,8 +5506,6 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 						pc_checkskill(sd, SU_CHATTERING) + pc_checkskill(sd, SU_MEOWMEOW) + pc_checkskill(sd, SU_NYANGGRASS)) > 19)
 							status->matk_min += status->matk_min * 20 / 100;
 					}
-					if ((skill_lv = pc_checkskill(sd, NV_TRANSCENDENCE)) > 0)
-						status->matk_min += 15 * skill_lv + (skill_lv > 4 ? 25 : 0);
 				}
 
 				status->matk_min = status_calc_ematk(bl, sc, status->matk_min);
@@ -5681,12 +5592,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			// Absolute ASPD % modifiers
 			amotion = amotion * status->aspd_rate / 1000;
 			if (sd->ud.skilltimer != INVALID_TIMER && (skill_lv = pc_checkskill(sd, SA_FREECAST)) > 0)
-#ifdef RENEWAL_ASPD
-				amotion = amotion * 5 * (skill_lv + 10) / 100;
-#else
 				amotion += (2000 - amotion) * ( 55 - 5 * ( skill_lv + 1 ) ) / 100; //Increases amotion to reduce ASPD to the corresponding absolute percentage for each level (overriding other adjustments)
-#endif
-
 #ifdef RENEWAL_ASPD
 			// RE ASPD % modifier
 			amotion += (max(0xc3 - amotion, 2) * (status->aspd_rate2 + status_calc_aspd(bl, sc, false))) / 100;
@@ -7494,6 +7400,8 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 			bonus += sc->data[sc_val]->val1;
 		if (sc->data[SC_ATTHASTE_CASH])
 			bonus += sc->data[SC_ATTHASTE_CASH]->val1;
+		if (sc->data[SC_HEAT_BARREL])
+			bonus += sc->data[SC_HEAT_BARREL]->val1;
 	} else {
 		if (sc->data[SC_DONTFORGETME])
 			bonus -= sc->data[SC_DONTFORGETME]->val2 / 10;
@@ -7563,8 +7471,6 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 			bonus += sc->data[SC_INCREASEAGI]->val1;
 		if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ASPDRATE)
 			bonus += 20;
-		if (sc->data[SC_STARSTANCE])
-			bonus += sc->data[SC_STARSTANCE]->val2;
 
 		struct map_session_data* sd = BL_CAST(BL_PC, bl);
 		uint8 skill_lv;
@@ -7603,8 +7509,6 @@ static short status_calc_fix_aspd(struct block_list *bl, struct status_change *s
 		aspd -= sc->data[SC_MTF_ASPD2]->val1;
 	if (sc->data[SC_SOULSHADOW])
 		aspd -= 10 * sc->data[SC_SOULSHADOW]->val2;
-	if (sc->data[SC_HEAT_BARREL])
-		aspd -= sc->data[SC_HEAT_BARREL]->val1 * 10;
 
 	return cap_value(aspd, 0, 2000); // Will be recap for proper bl anyway
 }
@@ -11616,10 +11520,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			clif_status_change(bl,EFST_ACTIVE_MONSTER_TRANSFORM,1,0,1002,0,0);
 			break;
 		case SC_KAGEMUSYA:
-			val2 = 20; // Damage increase bonus
+			val2 = tick/1000;
 			val3 = val1 * 2;
 			tick_time = 1000;
-			val4 = tick / tick_time;
 			break;
 		case SC_ZANGETSU:
 			if( status_get_hp(bl) % 2 == 0 )
@@ -11974,10 +11877,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val1 = 15; // Heal Power rate bonus
 			val2 = 30; // SP Recovery rate bonus
 			break;
-		case SC_HELPANGEL:
-			tick_time = 1000;
-			val4 = tick / tick_time;
-			break;
 
 		case SC_SUNSTANCE:
 			val2 = 2 + val1; // ATK Increase
@@ -12051,8 +11950,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SOULCOLLECT:
 			val2 = 5 + 3 * val2; // Max Soul Sphere's.
 			val3 = tick > 0 ? tick : 60000;
-			tick_time = tick;
-			tick = INFINITE_TICK;
 			break;
 		case SC_SP_SHA:
 			val2 = 50; // Move speed reduction
@@ -14483,7 +14380,7 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 	case SC_KAGEMUSYA:
-		if( --(sce->val4) >= 0 ) {
+		if( --(sce->val2) >= 0 ) {
 			if(!status_charge(bl, 0, 1)) break;
 			sc_timer_next(1000+tick);
 			return 0;
@@ -14645,16 +14542,17 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_CREATINGSTAR:
 		if (--(sce->val4) >= 0) { // Needed to check who the caster is and what AoE is giving the status.
-			struct block_list *star_caster = map_id2bl(sce->val2);
-			struct skill_unit *star_aoe = (struct skill_unit *)map_id2bl(sce->val3);
+			struct block_list *star_caster = map_id2bl(sce->val2), *star_aoe = map_id2bl(sce->val3);
 
-			if (star_caster == nullptr || status_isdead(star_caster) || star_caster->m != bl->m || star_aoe == nullptr)
+			if (!star_caster || status_isdead(star_caster) || star_caster->m != bl->m)
 				break;
 
-			sc_timer_next(500 + tick);
-
-			// Attack after timer to prevent errors
-			skill_attack(BF_WEAPON, star_caster, &star_aoe->bl, bl, SJ_BOOKOFCREATINGSTAR, sce->val1, tick, 0);
+			map_freeblock_lock();
+			if (star_aoe)
+				skill_attack(BF_WEAPON,star_caster,star_aoe,bl,SJ_BOOKOFCREATINGSTAR,sce->val1,tick,0);
+			if (sc->data[type])
+				sc_timer_next(500 + tick);
+			map_freeblock_unlock();
 			return 0;
 		}
 		break;
@@ -14672,18 +14570,8 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_SOULCOLLECT:
 		pc_addsoulball(sd, skill_get_time2(SP_SOULCOLLECT, sce->val1), sce->val2);
-		if( sd->soulball < sce->val2 ){
-			sc_timer_next(sce->val3 + tick);
-			return 0;
-		}
-		break;
-	case SC_HELPANGEL:
-		if (--(sce->val4) >= 0) {
-			status_heal(bl, 1000, 350, 2);
-			sc_timer_next(1000 + tick);
-			return 0;
-		}
-		break;
+		sc_timer_next(sce->val3 + tick);
+		return 0;
 	}
 
 	// If status has an interval and there is at least 100ms remaining time, wait for next interval

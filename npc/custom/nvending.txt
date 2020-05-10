@@ -1,0 +1,14 @@
+//////////////////////
+
+//Script whipped up by [GM]Xeon ;D
+//No street chatrooms + vends - Prontera edition
+
+prontera,1,1,1	script	NoChatVendPront	-1,{
+OnWhisperGlobal:
+if (!getgmlevel()) end;
+OnInit:
+
+	setcell "prontera.gat",134,190,177,217,cell_novending,0;
+	
+end;
+}

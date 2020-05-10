@@ -1,0 +1,19 @@
+prontera,147,170,6 script Vending Engine 835,{
+
+end;
+
+OnInit:
+
+setcell "prontera",143,65,126,165,cell_novending,0;
+
+end;
+
+}
+
+market mapflag autotrade
+
+market mapflag novending
+
+market mapflag nopenalty
+
+market mapflag nobranch

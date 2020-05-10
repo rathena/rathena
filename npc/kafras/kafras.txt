@@ -121,13 +121,13 @@ aldebaran,143,119,4	script	Kafra Employee::kaf_aldebaran	113,{
 	mes "you with convenient services.";
 	mes "How may I be of assistance?";
 	callfunc "F_Kafra",5,0,1,20,600;
-	savepoint "aldebaran",143,109,1,1;
+	savepoint "aldebaran",140,113,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Al De Baran";
 }
 
 // Geffen
 //============================================================
-geffen,120,62,0	script	Kafra Employee::kaf_geffen	115,{
+geffen,115,72,6	script	Kafra Employee::kaf_geffen	115,{
 	cutin "kafra_03",2;
 	callfunc "F_KafSet";
 	mes "[Kafra Employee]";
@@ -136,7 +136,7 @@ geffen,120,62,0	script	Kafra Employee::kaf_geffen	115,{
 	mes "are always on your side.";
 	mes "So how can I help you?";
 	callfunc "F_Kafra",5,0,0,30,750;
-	savepoint "geffen",119,40,1,1;
+	savepoint "geffen",119,68,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Geffen";
 }
 
@@ -166,7 +166,7 @@ morocc,156,97,4	script	Kafra Employee::kaf_morocc	113,{
 	mes "you with convenient services.";
 	mes "How may I be of assistance?";
 	callfunc "F_Kafra",5,0,0,60,930;
-	savepoint "morocc",156,46,1,1;
+	savepoint "morocc",156,90,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Morocc";
 }
 
@@ -196,7 +196,7 @@ payon,181,104,4	script	Kafra Employee::kaf_payon	113,{
 	mes "you with convenient services.";
 	mes "How may I be of assistance?";
 	callfunc "F_Kafra",5,0,1,60,930;
-	savepoint "payon",160,58,1,1;
+	savepoint "payon",172,102,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Payon";
 }
 
@@ -230,7 +230,7 @@ pay_arche,55,123,0	script	Kafra Employee::kaf_payon3	4_F_KAFRA1,{
 
 // Prontera
 //============================================================
-prontera,152,326,3	script	Kafra Employee::kaf_prontera	112,{
+prontera,155,188,3	script	Kafra Employee::kaf_prontera	112,{
 	cutin "kafra_06",2;
 	callfunc "F_KafSet";
 	mes "[Kafra Employee]";
@@ -241,7 +241,7 @@ prontera,152,326,3	script	Kafra Employee::kaf_prontera	112,{
 	mes "you. So how can I be";
 	mes "of service today?";
 	callfunc "F_Kafra",5,0,0,40,800;
-	savepoint "prontera",157,327,1,1;
+	savepoint "prontera",156,190,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Prontera";
 }
 
@@ -302,7 +302,7 @@ prontera,146,89,6	script	Kafra Employee::kaf_prontera5	117,{
 
 // Juno
 //============================================================
-yuno,152,187,4	script	Kafra Employee::kaf_yuno	860,{
+yuno,150,45,6	script	Kafra Employee::kaf_yuno	860,{
 	cutin "kafra_08",2;
 	callfunc "F_KafSet";
 	mes "[Kafra Employee]";
@@ -311,7 +311,7 @@ yuno,152,187,4	script	Kafra Employee::kaf_yuno	860,{
 	mes "you with convenient services.";
 	mes "How may I be of assistance?";
 	callfunc "F_Kafra",5,0,0,40,800;
-	savepoint "yuno",158,125,1,1;
+	savepoint "yuno",158,51,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Juno";
 }
 
@@ -343,7 +343,7 @@ yuno,277,221,4	script	Kafra Employee::kaf_yuno3	861,{
 
 // Alberta
 //============================================================
-alberta,28,229,0	script	Kafra Employee::kaf_alberta	116,{
+alberta,22,244,6	script	Kafra Employee::kaf_alberta	116,{
 	cutin "kafra_02",2;
 	callfunc "F_KafSet";
 	mes "[Kafra Employee]";
@@ -353,28 +353,13 @@ alberta,28,229,0	script	Kafra Employee::kaf_alberta	116,{
 	mes "always ready to serve you.";
 	mes "How can I help you today?";
 	callfunc "F_Kafra",5,0,0,50,850;
-	savepoint "alberta",31,231,1,1;
-	callfunc "F_KafEnd",0,1,"in the city of Alberta";
-}
-
-alberta,113,60,6	script	Kafra Employee::kaf_alberta2	112,{
-	cutin "kafra_06",2;
-	callfunc "F_KafSet";
-	mes "[Kafra Employee]";
-	mes "Welcome to the";
-	mes "Kafra Corporation~";
-	mes "The Kafra Services are";
-	mes "always here to support";
-	mes "you. So how can I be";
-	mes "of service today?";
-	callfunc "F_Kafra",5,0,0,50,850;
-	savepoint "alberta",117,57,1,1;
+	savepoint "alberta",36,236,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Alberta";
 }
 
 // Comodo
 //============================================================
-comodo,195,150,4	script	Kafra Employee::kaf_comodo	721,{
+comodo,195,150,4	script	Kafra Employee::kaf_comodo	116,{
 	cutin "kafra_07",2;
 	callfunc "F_KafSet";
 	mes "[Kafra Employee]";
@@ -384,11 +369,11 @@ comodo,195,150,4	script	Kafra Employee::kaf_comodo	721,{
 	mes "service is always";
 	mes "on your side~";
 	callfunc "F_Kafra",5,0,1,80,1000;
-	savepoint "comodo",204,143,1,1;
+	savepoint "comodo",190,149,1,1;
 	callfunc "F_KafEnd",0,1,"in the town of Comodo";
 }
 
-cmd_fild07,136,134,4	script	Kafra Employee::kaf_cmd_fild07	721,{
+cmd_fild07,136,134,4	script	Kafra Employee::kaf_cmd_fild07	116,{
 	cutin "kafra_07",2;
 	callfunc "F_KafSet";
 	mes "[Kafra Employee]";
@@ -426,13 +411,76 @@ cmd_fild07,136,134,4	script	Kafra Employee::kaf_cmd_fild07	721,{
 moscovia,223,191,3	script	Kafra Employee::kaf_mosk	114,{
 	cutin "kafra_04",2;
 	callfunc "F_Kafra",0,3,0,80,700;
-	savepoint "moscovia",221,194,1,1;
+	savepoint "moscovia",223,184,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Moscovia";
+}
+
+// Mid_Camp
+//============================================================
+mid_camp,188,250,4	script	Kafra Employee::kaf_mid_camp	114,{
+	cutin "kafra_04",2;
+	callfunc "F_Kafra",0,3,0,80,700;
+	savepoint "mid_camp",180,240,1,1;
+	callfunc "F_KafEnd",0,1,"in the Midgar Expedition Camp";
+}
+
+// Manuk
+//============================================================
+manuk,289,144,4	script	Kafra Employee::kaf_manuk	114,{
+	cutin "kafra_04",2;
+	callfunc "F_Kafra",0,3,0,80,700;
+	savepoint "manuk",282,138,1,1;
+	callfunc "F_KafEnd",0,1,"in the Manuk";
+}
+
+// Splendide
+//============================================================
+splendide,192,153,6	script	Kafra Employee::kaf_splendide	114,{
+	cutin "kafra_04",2;
+	callfunc "F_Kafra",0,3,0,80,700;
+	savepoint "splendide",201,147,1,1;
+	callfunc "F_KafEnd",0,1,"in the Manuk";
+}
+
+// Dicastes01
+//============================================================
+dicastes01,198,196,6	script	Kafra Employee::kaf_dicastes01	114,{
+	cutin "kafra_04",2;
+	callfunc "F_Kafra",0,3,0,80,700;
+	savepoint "dicastes01",198,187,1,1;
+	callfunc "F_KafEnd",0,1,"in the Sapha Capital";
+}
+
+// Mora
+//============================================================
+mora,49,126,4	script	Kafra Employee::kaf_mora	114,{
+	cutin "kafra_04",2;
+	callfunc "F_Kafra",0,3,0,80,700;
+	savepoint "mora",44,120,1,1;
+	callfunc "F_KafEnd",0,1,"in the Mora Village";
+}
+
+// Dewata
+//============================================================
+dewata,199,185,4	script	Kafra Employee::kaf_dewata	114,{
+	cutin "kafra_04",2;
+	callfunc "F_Kafra",0,3,0,80,700;
+	savepoint "dewata",199,181,1,1;
+	callfunc "F_KafEnd",0,1,"in the Dewata";
+}
+
+// Brasilis
+//============================================================
+brasilis,196,222,5	script	Kafra Employee::kaf_brasilis	114,{
+	cutin "kafra_04",2;
+	callfunc "F_Kafra",0,3,0,80,700;
+	savepoint "brasilis",196,215,1,1;
+	callfunc "F_KafEnd",0,1,"in the Brasilis";
 }
 
 // Amatsu
 //============================================================
-amatsu,102,149,4	script	Kafra Employee::kaf_amatsu	116,{
+amatsu,226,236,3	script	Kafra Employee::kaf_amatsu	116,{
 	cutin "kafra_02",2;
 	mes "[Kafra Employee]";
 	mes "Welcome to the";
@@ -441,13 +489,13 @@ amatsu,102,149,4	script	Kafra Employee::kaf_amatsu	116,{
 	mes "always ready to serve you.";
 	mes "How can I help you today?";
 	callfunc "F_Kafra",5,3,1,50,700;
-	savepoint "amatsu",116,94,1,1;
+	savepoint "amatsu",223,230,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Amatsu";
 }
 
 // Ayothaya
 //============================================================
-ayothaya,212,169,5	script	Kafra Employee::kaf_ayothaya	116,{
+ayothaya,213,198,4	script	Kafra Employee::kaf_ayothaya	116,{
 	cutin "kafra_02",2;
 	mes "[Kafra Employee]";
 	mes "Welcome to the";
@@ -456,13 +504,13 @@ ayothaya,212,169,5	script	Kafra Employee::kaf_ayothaya	116,{
 	mes "always ready to serve you.";
 	mes "How can I help you today?";
 	callfunc "F_Kafra",5,3,1,50,700;
-	savepoint "ayothaya",149,69,1,1;
+	savepoint "ayothaya",208,202,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Ayothaya";
 }
 
 // Einbech
 //============================================================
-einbech,181,132,5	script	Kafra Employee#ein3::kaf_einbech	860,{
+einbech,56,34,6	script	Kafra Employee#ein3::kaf_einbech	860,{
 	cutin "kafra_08",2;
 	mes "[Kafra Employee]";
 	mes "Welcome~!";
@@ -470,9 +518,52 @@ einbech,181,132,5	script	Kafra Employee#ein3::kaf_einbech	860,{
 	mes "are always on your side.";
 	mes "So how can I help you?";
 	callfunc "F_Kafra",5,4,1,40,850;
-	savepoint "einbech",182,124,1,1;
+	savepoint "einbech",62,37,1,1;
 	callfunc "F_KafEnd",0,1,"in the town of Einbech";
 }
+
+// Hugel
+//============================================================
+hugel,93,153,6	script	Kafra Employee#ein3::kaf_hugel	860,{
+	cutin "kafra_08",2;
+	mes "[Kafra Employee]";
+	mes "Welcome~!";
+	mes "The Kafra Services";
+	mes "are always on your side.";
+	mes "So how can I help you?";
+	callfunc "F_Kafra",5,4,1,40,850;
+	savepoint "hugel",96,145,1,1;
+	callfunc "F_KafEnd",0,1,"in the Quaint Garden Village";
+}
+
+// Rachell
+//============================================================
+rachel,129,119,5	script	Kafra Employee#ein3::kaf_rachel	860,{
+	cutin "kafra_08",2;
+	mes "[Kafra Employee]";
+	mes "Welcome~!";
+	mes "The Kafra Services";
+	mes "are always on your side.";
+	mes "So how can I help you?";
+	callfunc "F_Kafra",5,4,1,40,850;
+	savepoint "rachel",130,110,1,1;
+	callfunc "F_KafEnd",0,1,"in the Capital of Arunafelz";
+}
+
+// Veins
+//============================================================
+veins,223,134,4	script	Kafra Employee#ein3::kaf_veins	860,{
+	cutin "kafra_08",2;
+	mes "[Kafra Employee]";
+	mes "Welcome~!";
+	mes "The Kafra Services";
+	mes "are always on your side.";
+	mes "So how can I help you?";
+	callfunc "F_Kafra",5,4,1,40,850;
+	savepoint "veins",217,128,1,1;
+	callfunc "F_KafEnd",0,1,"in the Cayon Village";
+}
+
 
 // Einbroch
 //============================================================
@@ -498,7 +589,7 @@ einbroch,59,203,6	script	Kafra Employee#ein1::kaf_einbroch2	861,{
 	mes "are always on your side.";
 	mes "How may I assist you?";
 	callfunc "F_Kafra",5,4,1,50,800;
-	savepoint "einbroch",240,197,1,1;
+	savepoint "einbroch",64,196,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Einbroch";
 }
 
@@ -513,7 +604,7 @@ gonryun,159,122,4	script	Kafra Employee::kaf_gonryun	116,{
 	mes "always ready to serve you.";
 	mes "How can I help you today?";
 	callfunc "F_Kafra",5,3,1,50,700;
-	savepoint "gonryun",160,62,1,1;
+	savepoint "gonryun",159,115,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Kunlun";
 }
 
@@ -567,13 +658,13 @@ louyang,210,104,5	script	Kafra Employee::kaf_louyang	4_F_KAFRA2,{
 	mes "always ready to serve you.";
 	mes "How can I help you today?";
 	callfunc "F_Kafra",5,3,1,50,700;
-	savepoint "louyang",217,92,1,1;
+	savepoint "louyang",217,100,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Luoyang";
 }
 
 // Umbala
 //============================================================
-umbala,87,160,4	script	Kafra Employee::kaf_umbala	721,{
+umbala,87,160,4	script	Kafra Employee::kaf_umbala	4_F_KAFRA2,{
 	cutin "kafra_07",2;
 	callfunc "F_KafSet";
 	mes "[Kafra Employee]";
@@ -583,7 +674,7 @@ umbala,87,160,4	script	Kafra Employee::kaf_umbala	721,{
 	mes "service is always";
 	mes "on your side~";
 	callfunc "F_Kafra",5,0,1,80,0;
-	savepoint "umbala",126,131,1,1;
+	savepoint "umbala",93,152,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Umbala";
 }
 
@@ -593,6 +684,21 @@ niflheim,202,180,3	script	Kafra Employee::kaf_niflheim	791,{
 	callfunc "F_Kafra",1,2,1,150,0;
 	savepoint "niflheim",192,182,1,1;
 	callfunc "F_KafEnd",1,1,"in the city of Niflheim";
+}
+
+// Jawaii
+//============================================================
+jawaii,259,182,4	script	Kafra Employee::kaf_jawaii	113,{
+	cutin "kafra_05",2;
+	callfunc "F_KafSet";
+	mes "[Kafra Employee]";
+	mes "The Kafra Corporation";
+	mes "is always working to provide";
+	mes "you with convenient services.";
+	mes "How may I be of assistance?";
+	callfunc "F_Kafra",5,0,1,60,930;
+	savepoint "jawaii",250,183,1,1;
+	callfunc "F_KafEnd",0,1,"in the Honeymoon Island";
 }
 
 // Dungeons and Fields
@@ -646,7 +752,7 @@ mjolnir_02,83,362,4	script	Kafra Employee::kaf_mjolnir_02	116,{
 }
 
 // - Morocc Ruins
-moc_ruins,59,157,5	script	Kafra Employee::moc_ruins	114,{
+moc_ruins,156,97,5	script	Kafra Employee::moc_ruins	114,{
 	cutin "kafra_04",2;
 	mes "[Kafra Employee]";
 	mes "Welcome!";
@@ -656,7 +762,7 @@ moc_ruins,59,157,5	script	Kafra Employee::moc_ruins	114,{
 	mes "with its excellent service. So";
 	mes "what can I do for you today?";
 	callfunc "F_Kafra",5,2,1,90,1200;
-	savepoint "moc_ruins",41,141,1,1;
+	savepoint "moc_ruins",156,90,1,1;
 	callfunc "F_KafEnd",0,1,"at the Pyramids";
 }
 

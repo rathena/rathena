@@ -1,0 +1,88 @@
+
+
+prtbar,41,34,4	script	Zeny Exchange	46,{
+function int__;
+
+do{
+	callsub exchange_rate;
+	.@menu = select( "Zeny to Coin","Coin to Zeny","Close" );
+	switch( .@menu ){
+		Case 1:
+			mes "Convert Zeny to which Coins ?";
+			.@coin = select( implode( .coin_name$,":" ) ) - 1;
+			if( Zeny <  .value[.@coin] ){
+				mes "^FF0000[ERROR]^000000 You didnt have enough zeny.";
+			}else{
+				.@maximum = Zeny / .value[.@coin];
+				mes "You can get maximum of ^FF0000"+int__( .@maximum )+" x "+getitemname( .coin_id[.@coin] )+"^000000";
+				input .@amount,0,.@maximum;
+				if( .@amount )
+					if( checkweight( .coin_id[.@coin],.@amount ) ){
+						.@total = ( .@amount * .value[.@coin] );
+						Zeny -= .@total;
+						getitem .coin_id[.@coin],.@amount;
+						message strcharinfo(0),"Exchanged "+int__( .@total )+" Zeny to "+int__( .@amount )+" "+getitemname( .coin_id[.@coin] )+"^000000";
+					}else{
+						mes "^FF0000[ERROR]^000000 You cant take this much.";
+					}
+			}
+			break;
+		Case 2:
+			mes "Convert which Coins to Zeny ?";
+			.@coin = select( implode( .coin_name$,":" ) ) - 1;
+			if( !countitem( .coin_id[.@coin] ) ){
+				mes "^FF0000[ERROR]^000000 You didnt have any "+getitemname( .coin_id[.@coin] )+".";
+			}else if( ( .max_zeny - Zeny ) < .value[.@coin] ){
+				mes "^FF0000[ERROR]^000000 No puedes cambiar este Coin ya que excederá el límite de Zeny.";
+			}else{
+				.@maximum = (( .max_zeny - Zeny ) / .value[.@coin] );
+				if( .@maximum > countitem( .coin_id[.@coin] ) ) .@maximum = countitem( .coin_id[.@coin] );
+				mes "Puedes intercambiar un máximo de ^FF0000"+int__( .@maximum )+" x "+getitemname( .coin_id[.@coin] )+"^000000 a zeny";
+				input .@amount,0,.@maximum;
+				if( .@amount ){
+					.@total = ( .@amount * .value[.@coin] );
+					Zeny += .@total;
+					delitem .coin_id[.@coin],.@amount;
+					message strcharinfo(0),"Exchanged "+int__( .@amount )+" "+getitemname( .coin_id[.@coin] )+" to "+int__( .@total )+" Zeny^000000";
+				}
+			}
+			break;
+		default: break;
+	}
+	next;
+}while( .@menu != 3 );
+mes "Gracias.";
+close;
+
+exchange_rate:
+	mes "Exchange Rate :";
+	for( .@i = 0; .@i < .coin_size; .@i++ )
+		mes "^777777 > "+.coin_name$[.@i]+" - "+int__( .value[.@i] )+" z^000000";
+	return;
+	
+OnInit:
+// server max zeny
+.max_zeny = 2147483647;
+// coin list + name + value
+setarray .coin_name$,"Silver","Platinum";
+setarray .coin_id,675,677;
+setarray .value,1000000,50000000;
+
+.coin_size = getarraysize( .coin_name$ );
+waitingroom "  [Zeny Exchange]",0;
+end;
+
+
+// credits to annieruru
+function	int__	{
+	set .@num, atoi(""+getarg(0));
+	if ( .@num == 0 || .@num >= 2147483647 ) return getarg(0);
+	set .@l, getstrlen(""+.@num);
+	for ( set .@i,0; .@i < .@l; set .@i, .@i + 1 ) {
+		set .@num$, .@num % pow(10,.@i+1) / pow(10,.@i) + .@num$;
+			if ( (.@i+1) % 3 == 0 && .@i+1 != .@l ) set .@num$, ","+ .@num$;
+	}
+	return .@num$;
+}
+
+}

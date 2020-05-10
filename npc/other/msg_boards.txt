@@ -240,12 +240,6 @@ aldebaran,217,222,1	script	Sign#Alde5	111,{
 
 // Alberta
 //============================================================
-alberta,35,241,1	script	Billboard#Alb1	111,{
-	mes "^993300- The Billboard Reads -^000000";
-	mes "Welcome to Alberta, the Merchant's paradise.";
-	close;
-}
-
 alberta,37,39,1	script	Billboard#Alb2	111,{
 	mes "^993300- The Billboard Reads -^000000";
 	mes "Welcome.";

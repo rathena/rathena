@@ -15,10 +15,12 @@
 
 -	script	Healer	-1,{
 
-	.@Price = 0;	// Zeny required for heal
-	.@Buffs = 0;	// Also buff players? (1: yes / 0: no)
-	.@Delay = 0;	// Heal delay, in seconds
 
+	.@Price = 0;	// Zeny required for heal
+	.@Buffs = 1;	// Also buff players? (1: yes / 0: no)
+	.@Delay = 0;	// Heal delay, in seconds
+	emotion e_lv;
+	
 	if (@HD > gettimetick(2))
 		end;
 	if (.@Price) {
@@ -36,51 +38,54 @@
 		sc_start SC_INCREASEAGI,240000,10;
 		specialeffect2 EF_BLESSING;
 		sc_start SC_BLESSING,240000,10;
+		//repairall
+		if( getbrokenid(1) ) repairall;
+getinventorylist;
+while( .@i < @inventorylist_count ){
+	if ( !@inventorylist_identify[.@i] ){
+		delitem2 @inventorylist_id[.@i],1,0,0,0,0,0,0,0;
+		getitem @inventorylist_id[.@i],1;
+	}
+	.@i++;
+}
 	}
 	if (.@Delay)
 		@HD = gettimetick(2) + .@Delay;
 	end;
 }
 
-
 // Duplicates
 //============================================================
-alberta,25,240,6	duplicate(Healer)	Healer#alb	909
-aldebaran,135,118,6	duplicate(Healer)	Healer#alde	909
-amatsu,200,79,4	duplicate(Healer)	Healer#ama	909
-ayothaya,207,169,6	duplicate(Healer)	Healer#ayo	909
-comodo,184,158,6	duplicate(Healer)	Healer#com	909
-einbech,57,36,6	duplicate(Healer)	Healer#einbe	909
-einbroch,57,202,6	duplicate(Healer)	Healer#einbr	909
-geffen,115,72,6	duplicate(Healer)	Healer#gef	909
-gonryun,156,122,6	duplicate(Healer)	Healer#gon	909
-hugel,89,150,6	duplicate(Healer)	Healer#hug	909
-izlude,121,150,6	duplicate(Healer)	Healer#izl	909	//Pre-RE: (125,118)
-jawaii,250,139,4	duplicate(Healer)	Healer#jaw	909
-lighthalzen,152,100,6	duplicate(Healer)	Healer#lhz	909
-louyang,226,103,4	duplicate(Healer)	Healer#lou	909
-manuk,272,144,6	duplicate(Healer)	Healer#man	909
-mid_camp,203,289,6	duplicate(Healer)	Healer#mid	909
-moc_ruins,72,164,4	duplicate(Healer)	Healer#moc	909
-morocc,153,97,6	duplicate(Healer)	Healer#mor	909
-moscovia,220,191,4	duplicate(Healer)	Healer#mos	909
-niflheim,212,182,5	duplicate(Healer)	Healer#nif	909
-payon,179,106,4	duplicate(Healer)	Healer#pay	909
-prontera,162,193,4	duplicate(Healer)	Healer#prt	909
-rachel,125,116,6	duplicate(Healer)	Healer#rac	909
-splendide,201,153,4	duplicate(Healer)	Healer#spl	909
-thor_camp,249,74,4	duplicate(Healer)	Healer#thor	909
-umbala,105,148,3	duplicate(Healer)	Healer#umb	909
-veins,217,121,4	duplicate(Healer)	Healer#ve	909
-xmas,143,136,4	duplicate(Healer)	Healer#xmas	909
-yuno,164,45,4	duplicate(Healer)	Healer#yuno	909
-
-// Duplicates (Renewal)
-//============================================================
-brasilis,194,221,6	duplicate(Healer)	Healer#bra	909
-dewata,195,187,4	duplicate(Healer)	Healer#dew	909
-dicastes01,201,194,4	duplicate(Healer)	Healer#dic	909
-ecl_in01,45,60,4	duplicate(Healer)	Healer#ecl	909
-malangdo,132,114,6	duplicate(Healer)	Healer#mal	909
-malaya,227,204,6	duplicate(Healer)	Healer#ma	909
-mora,55,152,4	duplicate(Healer)	Healer#mora	909
+alberta,25,240,6	duplicate(Healer)	Healer#alb	721
+aldebaran,135,118,6	duplicate(Healer)	Healer#alde	721
+amatsu,219,235,6	duplicate(Healer)	Healer#ama	721
+ayothaya,202,208,6	duplicate(Healer)	Healer#ayo	721
+comodo,184,158,6	duplicate(Healer)	Healer#com	721
+einbech,57,36,6	duplicate(Healer)	Healer#einbe	721
+einbroch,57,202,6	duplicate(Healer)	Healer#einbr	721
+geffen,115,67,6	duplicate(Healer)	Healer#gef	721
+gonryun,156,122,6	duplicate(Healer)	Healer#gon	721
+hugel,89,150,6	duplicate(Healer)	Healer#hug	721
+izlude,121,116,6	duplicate(Healer)	Healer#izl	721	//Pre-RE: (125,118)
+jawaii,247,188,4	duplicate(Healer)	Healer#jaw	721
+lighthalzen,152,100,6	duplicate(Healer)	Healer#lhz	721
+louyang,226,103,4	duplicate(Healer)	Healer#lou	721
+manuk,272,144,6	duplicate(Healer)	Healer#man	721
+mid_camp,173,247,6	duplicate(Healer)	Healer#mid	721
+moc_ruins,72,164,4	duplicate(Healer)	Healer#moc	721
+morocc,153,97,6	duplicate(Healer)	Healer#mor	721
+moscovia,220,191,4	duplicate(Healer)	Healer#mos	721
+niflheim,212,182,5	duplicate(Healer)	Healer#nif	721
+payon,179,106,4	duplicate(Healer)	Healer#pay	721
+prontera,151,184,6	duplicate(Healer)	Healer#prt	721
+rachel,125,116,6	duplicate(Healer)	Healer#rac	721
+splendide,201,153,4	duplicate(Healer)	Healer#spl	721
+thor_camp,249,74,4	duplicate(Healer)	Healer#thor	721
+umbala,105,148,3	duplicate(Healer)	Healer#umb	721
+veins,211,134,6	duplicate(Healer)	Healer#ve	721
+xmas,143,136,4	duplicate(Healer)	Healer#xmas	721
+yuno,164,45,4	duplicate(Healer)	Healer#yuno	721
+dicastes01,201,194,4	duplicate(Healer)	Healer#dic	721
+brasilis,190,222,6	duplicate(Healer)	Healer#bra	721
+mora,39,125,4	duplicate(Healer)	Healer#mora	721
+dewata,195,186,6	duplicate(Healer)	Healer#dew	721

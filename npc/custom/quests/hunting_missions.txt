@@ -23,7 +23,7 @@
 //=     Syntax updates and style cleaning.
 //============================================================
 
-prontera,152,187,6	script	Hunting Missions	4_F_EDEN_MASTER,{
+prontera,155,171,	script	Hunting Missions	89,{
 function Chk;
 	mes "[Hunting Missions]";
 	mes "Hello, " + strcharinfo(0) + "!";

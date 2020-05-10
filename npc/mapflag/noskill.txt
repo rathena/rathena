@@ -30,3 +30,7 @@ p_track01	mapflag	noskill
 p_track02	mapflag	noskill
 
 //evt_zombie	mapflag	noskill
+
+//Venzone===================
+//lunashop02	mapflag	noskill
+//lunashop	mapflag	noskill
