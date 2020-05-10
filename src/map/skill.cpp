@@ -2659,6 +2659,9 @@ int skill_break_equip(struct block_list *src, struct block_list *bl, unsigned sh
 				case W_2HSTAFF:
 				case W_BOOK: //Rods and Books can't be broken [Skotlex]
 				case W_HUUMA:
+				case W_DOUBLE_AA:	// Axe usage during dual wield should also prevent breaking [Neutral]
+				case W_DOUBLE_DA:
+				case W_DOUBLE_SA:
 					where &= ~EQP_WEAPON;
 			}
 		}
