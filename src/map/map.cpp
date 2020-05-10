@@ -2710,8 +2710,8 @@ int map_duplicate(int src_m)
 	struct map_data* src_map = map_getmapdata(src_m);
 	struct map_data* dst_map = map_getmapdata(dst_m);
 
-	//duplicate maps use alphabet instead of numbers.
-	//this help distinguish between instances maps and duplicated maps.
+	//duplicated maps use alphabet instead of numbers.
+	//this help distinguish duplicated maps from instances maps.
 	//also helps maps name size.
 	const char* alphabet = "abcdefghijklmnopqrstuvwxyz";
 	size_t abc_size = strlen(alphabet);
@@ -2724,14 +2724,11 @@ int map_duplicate(int src_m)
 	}
 
 	snprintf(dst_map->name, sizeof(dst_map->name), "%s#%s", addiotion.c_str(), name);
-
 	if (strlen(dst_map->name) > MAP_NAME_LENGTH) {
 		ShowError("map_duplicate: can't add long map name \"%s\" source map \"%s\"\n", dst_map->name, name);
 		return -1;
 	}
 
-	//#TODO clear the $map_duplicate_list$ on server restart.
-	//mapreg_setregstr(reference_uid(add_str("$map_duplicate_list$"), mapduplicate), dst_map->name);
 	mapduplicate++;
 	map_num++;
 	dst_map->m = dst_m;

@@ -3116,15 +3116,22 @@ map ID doesn't exist.
 
 *mapduplicate("<map name>")
 
-This command allows you to duplicate a map using npc,
-Without adding the map files to the client , it work the same as
-The map duplication in the instance system,
+This command allows you to duplicate a map using script,
+Without adding a copy of the map files to the client ,
+It work the same as map duplication in the instance system,
 The duplicate map will be have no map data (aka npcs and mapflags),
-Duplicate Maps are removed on the server restart.
-'$map_duplicate_list$' Global Variable will have a list of all the
-map duplicate names.
+Duplicated Maps are removed on the server restart.
 
 Returns the new map name if successed , and Empty string if failed.
+
+Example:
+	//warp to the duplicated map.
+	warp $mymap$,150,180;
+	end;
+
+	OnInterIfInitOnce:
+		//duplicate prontera once on the server start.
+		$mymap$ = mapduplicate("prontera");
 
 ---------------------------------------
 
