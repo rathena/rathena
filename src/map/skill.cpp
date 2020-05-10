@@ -2657,6 +2657,9 @@ int skill_break_equip(struct block_list *src, struct block_list *bl, unsigned sh
 				case W_2HSTAFF:
 				case W_BOOK: //Rods and Books can't be broken [Skotlex]
 				case W_HUUMA:
+				case W_DOUBLE_AA:	// Axe usage during dual wield should also prevent breaking [Neutral]
+				case W_DOUBLE_DA:
+				case W_DOUBLE_SA:
 					where &= ~EQP_WEAPON;
 			}
 		}
@@ -8563,7 +8566,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case TF_BACKSLIDING: //This is the correct implementation as per packet logging information. [Skotlex]
 		skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),unit_getdir(bl),(enum e_skill_blown)(BLOWN_IGNORE_NO_KNOCKBACK|BLOWN_DONT_SEND_PACKET));
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+#ifdef RENEWAL
 		clif_blown(src); // Always blow, otherwise it shows a casting animation. [Lemongrass]
+#endif
 		break;
 
 	case TK_HIGHJUMP:
