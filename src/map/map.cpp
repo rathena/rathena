@@ -2717,19 +2717,12 @@ int map_duplicate(int src_m)
 	size_t abc_size = strlen(alphabet);
 	std::string addiotion = "";
 	int count = mapduplicate;
-
-	//still need adjustment.
-	if (count >= (abc_size* (abc_size+1) )) {	//handles aaa to zzz
-		int b = abc_size * abc_size;
-		addiotion += alphabet[static_cast<int>(count / b) - 1];
-		count -= b * static_cast<int>(count / b);
-	}
-	if (count >= abc_size) {	//handles aa to zz
-		addiotion += alphabet[static_cast<int>(count / abc_size) - 1];
-		count -= abc_size * static_cast<int>(count / abc_size);
+	while (count >= 0) {
+		int r = count % abc_size;
+		addiotion += alphabet[r];
+		count = static_cast<int>(count /abc_size )-1;
 	}
 
-	addiotion += alphabet[count];
 	snprintf(dst_map->name, sizeof(dst_map->name), "%s#%s", addiotion.c_str(), name);
 
 	if (strlen(dst_map->name) > MAP_NAME_LENGTH) {
