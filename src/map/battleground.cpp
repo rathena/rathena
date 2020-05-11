@@ -698,11 +698,15 @@ static TIMER_FUNC(bg_on_ready_expire)
 
 	std::string bg_name = battleground_db.find(queue->id)->name;
 
-	for (const auto &sd : queue->teama_members)
+	for (const auto &sd : queue->teama_members) {
 		clif_bg_queue_apply_result(BG_APPLY_QUEUE_FINISHED, bg_name.c_str(), sd);
+		clif_bg_queue_entry_init(sd);
+	}
 
-	for (const auto &sd : queue->teamb_members)
+	for (const auto &sd : queue->teamb_members) {
 		clif_bg_queue_apply_result(BG_APPLY_QUEUE_FINISHED, bg_name.c_str(), sd);
+		clif_bg_queue_entry_init(sd);
+	}
 
 	bg_queue_clear(queue, true);
 	return 0;

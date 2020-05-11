@@ -370,6 +370,7 @@ static TIMER_FUNC(pc_on_expire_active)
 	sd->tid_queue_active = INVALID_TIMER;
 
 	bg_queue_leave(sd);
+	clif_bg_queue_entry_init(sd);
 	return 0;
 }
 
