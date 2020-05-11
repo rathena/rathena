@@ -1214,7 +1214,7 @@ void bg_join_active(map_session_data *sd, std::shared_ptr<s_battleground_queue> 
 
 		clif_bg_queue_entry_init(pl_sd);
 		bg_team_join(bg_id_team_1, pl_sd, true);
-		npc_event_do(bgteam_1->active_event.c_str());
+		npc_event(pl_sd, bgteam_1->active_event.c_str(), 0);
 		return;
 	}
 
@@ -1234,7 +1234,7 @@ void bg_join_active(map_session_data *sd, std::shared_ptr<s_battleground_queue> 
 
 		clif_bg_queue_entry_init(pl_sd);
 		bg_team_join(bg_id_team_2, pl_sd, true);
-		npc_event_do(bgteam_2->active_event.c_str());
+		npc_event(pl_sd, bgteam_2->active_event.c_str(), 0);
 		return;
 	}
 
