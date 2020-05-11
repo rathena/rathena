@@ -595,27 +595,43 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 	if( (!heal || (target && target->type == BL_MER)) && skill_id != NPC_EVILLAND )
 		hp >>= 1;
 
-	if (sd && ((skill = pc_checkskill(sd, SU_POWEROFSEA)) > 0)) {
+	if (sd) {
+		if (pc_checkskill(sd, SU_POWEROFSEA) > 0) {
 #ifdef RENEWAL
-		hp_bonus += 10;
+			hp_bonus += 10;
 #else
-		hp += hp * 10 / 100;
+			hp += hp * 10 / 100;
 #endif
 
-		if (pc_checkskill(sd, SU_TUNABELLY) == 5 && pc_checkskill(sd, SU_TUNAPARTY) == 5 && pc_checkskill(sd, SU_BUNCHOFSHRIMP) == 5 && pc_checkskill(sd, SU_FRESHSHRIMP) == 5)
+			if (pc_checkskill(sd, SU_TUNABELLY) == 5 && pc_checkskill(sd, SU_TUNAPARTY) == 5 && pc_checkskill(sd, SU_BUNCHOFSHRIMP) == 5 && pc_checkskill(sd, SU_FRESHSHRIMP) == 5)
 #ifdef RENEWAL
-			hp_bonus += 20;
+				hp_bonus += 20;
 #else
-			hp += hp * 20 / 100;
+				hp += hp * 20 / 100;
 #endif
-	}
+		}
 
-	if (sd && (skill = pc_skillheal_bonus(sd, skill_id)))
+		if ((skill = pc_checkskill(sd, NV_BREAKTHROUGH)) > 0)
+#ifdef RENEWAL
+			hp_bonus += 2;
+#else
+			hp += hp * skill * 2 / 100;
+#endif
+
+		if ((skill = pc_checkskill(sd, NV_TRANSCENDENCE)) > 0)
+#ifdef RENEWAL
+			hp_bonus += 3;
+#else
+			hp += hp * skill * 3 / 100;
+#endif
+
+	if (skill = pc_skillheal_bonus(sd, skill_id))
 #ifdef RENEWAL
 		hp_bonus += skill;
 #else
 		hp += hp * skill / 100;
 #endif
+	}
 
 	if (tsd && (skill = pc_skillheal2_bonus(tsd, skill_id)))
 #ifdef RENEWAL
@@ -2246,10 +2262,12 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				!battle_check_range(bl, tbl, skill_get_range2(src, skill, autospl_skill_lv, true)))
 				continue;
 
-			if (skill == AS_SONICBLOW)
-				pc_stop_attack(sd); //Special case, Sonic Blow autospell should stop the player attacking.
-			else if (skill == PF_SPIDERWEB) //Special case, due to its nature of coding.
+			if (skill == PF_SPIDERWEB) //Special case, due to its nature of coding.
 				type = CAST_GROUND;
+#ifndef RENEWAL
+			else if (skill == AS_SONICBLOW)
+				pc_stop_attack(sd); //Special case, Sonic Blow autospell should stop the player attacking.
+#endif
 
 			sd->state.autocast = 1;
 			skill_consume_requirement(sd,skill,autospl_skill_lv,1);
@@ -2635,6 +2653,9 @@ int skill_break_equip(struct block_list *src, struct block_list *bl, unsigned sh
 				case W_2HSTAFF:
 				case W_BOOK: //Rods and Books can't be broken [Skotlex]
 				case W_HUUMA:
+				case W_DOUBLE_AA:	// Axe usage during dual wield should also prevent breaking [Neutral]
+				case W_DOUBLE_DA:
+				case W_DOUBLE_SA:
 					where &= ~EQP_WEAPON;
 			}
 		}
@@ -7673,6 +7694,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case CASH_INCAGI:
 	case CASH_ASSUMPTIO:
 	case WM_FRIGG_SONG:
+	case NV_HELPANGEL:
 		if( sd == NULL || sd->status.party_id == 0 || (flag & 1) )
 			clif_skill_nodamage(bl, bl, skill_id, skill_lv, sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		else if( sd )
@@ -8531,7 +8553,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case TF_BACKSLIDING: //This is the correct implementation as per packet logging information. [Skotlex]
 		skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),unit_getdir(bl),(enum e_skill_blown)(BLOWN_IGNORE_NO_KNOCKBACK|BLOWN_DONT_SEND_PACKET));
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+#ifdef RENEWAL
 		clif_blown(src); // Always blow, otherwise it shows a casting animation. [Lemongrass]
+#endif
 		break;
 
 	case TK_HIGHJUMP:
@@ -12459,8 +12483,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case SO_WATER_INSIGNIA:
 	case SO_WIND_INSIGNIA:
 	case SO_EARTH_INSIGNIA:
-	case KO_HUUMARANKA:
-	case KO_BAKURETSU:
 	case KO_ZENKAI:
 	case MH_LAVA_SLIDE:
 	case MH_VOLCANIC_ASH:
