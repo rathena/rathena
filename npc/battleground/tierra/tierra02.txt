@@ -126,11 +126,11 @@ OnEnable:
 	end;
 
 OnGuillaumeActive:
-	bg_warp $@TierraBG2_id1,"bat_a02",352,342;
+	warp "bat_a02",352,342;
 	end;
 
 OnCroixActive:
-	bg_warp $@TierraBG2_id2,"bat_a02",353,52;
+	warp "bat_a02",353,52;
 	end;
 
 OnGuillaumeQuit:

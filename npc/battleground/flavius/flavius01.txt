@@ -149,11 +149,11 @@ OnReset:
 	end;
 
 OnGuillaumeActive:
-	bg_warp $@FlaviusBG1_id1,"bat_b01",87,75;
+	warp "bat_b01",87,75;
 	end;
 
 OnCroixActive:
-	bg_warp $@FlaviusBG1_id2,"bat_b01",311,224;
+	warp "bat_b01",311,224;
 	end;
 
 OnGuillaumeQuit:

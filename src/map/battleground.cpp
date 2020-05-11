@@ -1190,45 +1190,52 @@ bool bg_queue_on_ready(const char *name, std::shared_ptr<s_battleground_queue> q
 
 /**
  * Send a player into an active Battleground
+ * @param sd: Player to send in
  * @param queue: Queue data
  */
-void bg_send_active(std::shared_ptr<s_battleground_queue> queue)
+void bg_join_active(map_session_data *sd, std::shared_ptr<s_battleground_queue> queue)
 {
-	if (queue == nullptr)
+	if (sd == nullptr || queue == nullptr)
 		return;
 
 	int bg_id_team_1 = static_cast<int>(mapreg_readreg(add_str(queue->map->team1.bg_id_var.c_str())));
 	std::shared_ptr<s_battleground_data> bgteam_1 = util::umap_find(bg_team_db, bg_id_team_1);
 
-	for (auto &sd : queue->teama_members) {
-		if (queue->map->mapindex == sd->mapindex)
+	for (auto &pl_sd : queue->teama_members) {
+		if (sd != pl_sd)
 			continue;
 
 		if (bgteam_1 == nullptr) {
-			queue->teama_members.erase(std::find(queue->teama_members.begin(), queue->teama_members.end(), sd));
-			continue;
+			bg_queue_leave(sd);
+			clif_bg_queue_apply_result(BG_APPLY_RECONNECT, battleground_db.find(queue->id)->name.c_str(), sd);
+			clif_bg_queue_entry_init(sd);
+			return;
 		}
 
-		clif_bg_queue_entry_init(sd);
-		bg_team_join(bg_id_team_1, sd, true);
+		clif_bg_queue_entry_init(pl_sd);
+		bg_team_join(bg_id_team_1, pl_sd, true);
 		npc_event_do(bgteam_1->active_event.c_str());
+		return;
 	}
 
 	int bg_id_team_2 = static_cast<int>(mapreg_readreg(add_str(queue->map->team2.bg_id_var.c_str())));
 	std::shared_ptr<s_battleground_data> bgteam_2 = util::umap_find(bg_team_db, bg_id_team_2);
 
-	for (auto &sd : queue->teamb_members) {
-		if (queue->map->mapindex == sd->mapindex)
+	for (auto &pl_sd : queue->teamb_members) {
+		if (sd != pl_sd)
 			continue;
 
 		if (bgteam_2 == nullptr) {
-			queue->teamb_members.erase(std::find(queue->teamb_members.begin(), queue->teamb_members.end(), sd));
-			continue;
+			bg_queue_leave(sd);
+			clif_bg_queue_apply_result(BG_APPLY_RECONNECT, battleground_db.find(queue->id)->name.c_str(), sd);
+			clif_bg_queue_entry_init(sd);
+			return;
 		}
 
-		clif_bg_queue_entry_init(sd);
-		bg_team_join(bg_id_team_2, sd, true);
+		clif_bg_queue_entry_init(pl_sd);
+		bg_team_join(bg_id_team_2, pl_sd, true);
 		npc_event_do(bgteam_2->active_event.c_str());
+		return;
 	}
 
 	return;
@@ -1254,7 +1261,7 @@ void bg_queue_on_accept_invite(struct map_session_data *sd)
 	clif_bg_queue_ack_lobby(true, mapindex_id2name(queue->map->mapindex), mapindex_id2name(queue->map->mapindex), sd);
 
 	if (queue->state == QUEUE_STATE_ACTIVE) // Battleground is already active
-		bg_send_active(queue);
+		bg_join_active(sd, queue);
 	else if (queue->state == QUEUE_STATE_SETUP_DELAY) {
 		if (queue->accepted_players == queue->required_players * 2) {
 			if (queue->tid_expire != INVALID_TIMER) {
