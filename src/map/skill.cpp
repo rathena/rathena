@@ -19091,7 +19091,6 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 		case SG_MOON_WARM:
 		case SG_STAR_WARM:
 		case LG_BANDING:
-		case GN_HELLS_PLANT:
 			{
 				status_change *sc = status_get_sc(src);
 				sc_type type = status_skill2sc(group->skill_id);
