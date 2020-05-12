@@ -25475,7 +25475,7 @@ Body:
         Whip: true
       ItemCost:
         - Item: Protect_Neck_Candy
-          Amount: 1
+          Amount: 2
   - Id: 2423
     Name: WM_SIRCLEOFNATURE
     Description: Circle of Nature's Sound
