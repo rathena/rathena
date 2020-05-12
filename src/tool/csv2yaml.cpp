@@ -1565,8 +1565,6 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 			body << YAML::Key << "TargetManHole" << YAML::Value << "true";
 		if (inf3_val & 0x10000)
 			body << YAML::Key << "TargetHidden" << YAML::Value << "true";
-		if (inf3_val & 0x20000)
-			body << YAML::Key << "IncreaseGloomyDayDamage" << YAML::Value << "true";
 		if (inf3_val & 0x80000)
 			body << YAML::Key << "IgnoreWugBite" << YAML::Value << "true";
 		if (inf3_val & 0x100000)

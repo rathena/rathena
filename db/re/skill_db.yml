@@ -2106,8 +2106,6 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: -2
     Hit: Multi_Hit
     HitCount: -3
@@ -7080,8 +7078,6 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range:
       - Level: 1
         Size: 3
@@ -10990,7 +10986,6 @@ Body:
     TargetType: Attack
     Flags:
       TargetTrap: true
-      IncreaseGloomyDayDamage: true
     Range: 5
     Hit: Multi_Hit
     HitCount: 5
@@ -13224,8 +13219,6 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range:
       - Level: 1
         Size: 7
@@ -17551,8 +17544,6 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: 5
     Hit: Multi_Hit
     HitCount: -5
@@ -23118,8 +23109,6 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: 1
     Hit: Single
     HitCount: 5
@@ -25562,17 +25551,7 @@ Body:
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
-    Duration1:
-      - Level: 1
-        Time: 30000
-      - Level: 2
-        Time: 45000
-      - Level: 3
-        Time: 60000
-      - Level: 4
-        Time: 75000
-      - Level: 5
-        Time: 90000
+    Duration1: 60000
     Cooldown: 10000
     FixedCastTime: 500
     Requires:
@@ -35898,8 +35877,6 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: -2
     Hit: Single
     HitCount: 1
@@ -35924,7 +35901,6 @@ Body:
     TargetType: Attack
     Flags:
       TargetTrap: true
-      IncreaseGloomyDayDamage: true
     Range: 5
     Hit: Multi_Hit
     HitCount: 5

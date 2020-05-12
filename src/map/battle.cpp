@@ -4843,10 +4843,6 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 #endif
 			}
 		}
-		if (sc->data[SC_GLOOMYDAY_SK] && skill_get_inf2(skill_id, INF2_INCREASEGLOOMYDAYDAMAGE)) {
-			ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_GLOOMYDAY_SK]->val2);
-			RE_ALLATK_ADDRATE(wd, sc->data[SC_GLOOMYDAY_SK]->val2);
-		}
 		if(sc->data[SC_ZENKAI] && sstatus->rhw.ele == sc->data[SC_ZENKAI]->val2) {
 			ATK_ADD(wd->damage, wd->damage2, 200);
 #ifdef RENEWAL

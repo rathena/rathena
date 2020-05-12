@@ -2071,8 +2071,6 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: -2
     Hit: Single
     HitCount: 1
@@ -6699,8 +6697,6 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range:
       - Level: 1
         Size: 3
@@ -10658,7 +10654,6 @@ Body:
       IgnoreDefense: true
     Flags:
       TargetTrap: true
-      IncreaseGloomyDayDamage: true
     Range: 5
     Hit: Multi_Hit
     HitCount: 5
@@ -12834,8 +12829,6 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: 4
     Hit: Multi_Hit
     HitCount: 5
@@ -16847,8 +16840,6 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: 5
     Hit: Multi_Hit
     HitCount: -5
@@ -32134,8 +32125,6 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: -2
     Hit: Single
     HitCount: 1
@@ -32160,7 +32149,6 @@ Body:
       IgnoreDefense: true
     Flags:
       TargetTrap: true
-      IncreaseGloomyDayDamage: true
     Range: 5
     Hit: Multi_Hit
     HitCount: 5

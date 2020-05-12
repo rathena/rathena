@@ -7516,7 +7516,6 @@
 	export_constant(INF2_ALLOWONMADO);
 	export_constant(INF2_TARGETMANHOLE);
 	export_constant(INF2_TARGETHIDDEN);
-	export_constant(INF2_INCREASEGLOOMYDAYDAMAGE);
 	export_constant(INF2_IGNOREWUGBITE);
 	export_constant(INF2_IGNOREAUTOGUARD);
 	export_constant(INF2_IGNORECICADA);
