@@ -2186,8 +2186,8 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 	if( sd == NULL ) sd = map_charid2sd(dlist->third_charid);
 	test_autoloot = sd 
 		&& (drop_rate <= sd->state.autoloot || pc_isautolooting(sd, ditem->item_data.nameid))
-		&& (battle_config.idle_no_autoloot == 0 || DIFF_TICK(last_tick, sd->idletime) < battle_config.idle_no_autoloot)
-		&& (battle_config.homunculus_autoloot?(battle_config.hom_idle_no_share == 0 || !pc_isidle_hom(sd)):!flag);
+		&& (flag?(battle_config.homunculus_autoloot?(battle_config.hom_idle_no_share == 0 || !pc_isidle_hom(sd)):0):
+			(battle_config.idle_no_autoloot == 0 || DIFF_TICK(last_tick, sd->idletime) < battle_config.idle_no_autoloot));
 #ifdef AUTOLOOT_DISTANCE
 		test_autoloot = test_autoloot && sd->bl.m == md->bl.m
 		&& check_distance_blxy(&sd->bl, dlist->x, dlist->y, AUTOLOOT_DISTANCE);
@@ -3768,7 +3768,7 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 			}
 		}
 		//Skill used. Post-setups...
-		if ( ms[ i ].msg_id ){ //Display color message [SnakeDrak]
+		if ( ms[i].msg_id ){ //Display color message [SnakeDrak]
 			struct mob_chat *mc = mob_chat(ms[i].msg_id);
 
 			if (mc) {
@@ -5525,10 +5525,9 @@ static void mob_load(void)
 	};
 
 	// First we parse all the possible monsters to add additional data in the second loop
-	if( db_use_sqldbs ){
+	if( db_use_sqldbs )
 		mob_read_sqldb();
-		mob_read_sqlskilldb();
-	}else{
+	else {
 		for(int i = 0; i < ARRAYLENGTH(dbsubpath); i++){
 			int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
 			char* dbsubpath2 = (char*)aMalloc(n2+1);
@@ -5553,7 +5552,7 @@ static void mob_load(void)
 		char* dbsubpath1 = (char*)aMalloc(n1+1);
 		char* dbsubpath2 = (char*)aMalloc(n2+1);
 		bool silent = i > 0;
-		
+
 		if(i==0) {
 			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
 			safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
@@ -5561,14 +5560,16 @@ static void mob_load(void)
 			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
-		
-		if( !db_use_sqldbs ){
+
+		sv_readdb(dbsubpath1, "mob_chat_db.txt", '#', 3, 3, -1, &mob_parse_row_chatdb, silent);
+
+		if( db_use_sqldbs )
+			mob_read_sqlskilldb();
+		else
 			mob_readskilldb(dbsubpath2, silent);
-		}
 
 		sv_readdb(dbsubpath2, "mob_race2_db.txt", ',', 2, MAX_RACE2_MOBS, -1, &mob_readdb_race2, silent);
 		sv_readdb(dbsubpath1, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio, silent);
-		sv_readdb(dbsubpath1, "mob_chat_db.txt", '#', 3, 3, -1, &mob_parse_row_chatdb, silent);
 		sv_readdb(dbsubpath2, "mob_random_db.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
 		sv_readdb(dbsubpath2, "mob_branch.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
 		sv_readdb(dbsubpath2, "mob_poring.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
@@ -5577,7 +5578,7 @@ static void mob_load(void)
 		sv_readdb(dbsubpath1, "mob_mission.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
 		sv_readdb(dbsubpath1, "mob_classchange.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
 		sv_readdb(dbsubpath2, "mob_drop.txt", ',', 3, 5, -1, &mob_readdb_drop, silent);
-		
+
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}

@@ -1171,7 +1171,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		if( sc->data[SC_WEAPONBLOCKING] && flag&(BF_SHORT|BF_WEAPON) && rnd()%100 < sc->data[SC_WEAPONBLOCKING]->val2 ) {
 			clif_skill_nodamage(bl,src,GC_WEAPONBLOCKING,sc->data[SC_WEAPONBLOCKING]->val1,1);
-			sc_start(src, bl, SC_WEAPONBLOCK_ON, 100, 0, skill_get_time2(GC_WEAPONBLOCKING, 1));
+			sc_start(src, bl, SC_WEAPONBLOCK_ON, 100, src->id, skill_get_time2(GC_WEAPONBLOCKING, 1));
 			d->dmg_lv = ATK_BLOCK;
 			return 0;
 		}
@@ -1905,6 +1905,15 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 	if((skill = pc_checkskill(sd,BS_WEAPONRESEARCH)) > 0)
 		damage += (skill * 2);
 #endif
+
+	// Kagerou/Oboro Spirit Charm bonus
+	if (sd->spiritcharm >= MAX_SPIRITCHARM) {
+		if ((sd->spiritcharm_type == CHARM_TYPE_FIRE && status->def_ele == ELE_EARTH) ||
+			(sd->spiritcharm_type == CHARM_TYPE_WATER && status->def_ele == ELE_FIRE) ||
+			(sd->spiritcharm_type == CHARM_TYPE_LAND && status->def_ele == ELE_WIND) ||
+			(sd->spiritcharm_type == CHARM_TYPE_WIND && status->def_ele == ELE_WATER))
+			damage += damage * 30 / 100;
+	}
 
 	if(type == 0)
 		weapon = sd->weapontype1;
@@ -3110,6 +3119,13 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 #endif
 		}
 
+		if (skill_id == NV_BREAKTHROUGH) {
+			ATK_ADD(wd->damage, wd->damage2, 15 * skill_lv + (skill_lv > 4 ? 25 : 0));
+#ifdef RENEWAL
+			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, 15 * skill_lv + (skill_lv > 4 ? 25 : 0));
+#endif
+		}
+
 		switch(skill_id) {
 			case RA_WUGDASH:
 			case RA_WUGSTRIKE:
@@ -3344,6 +3360,8 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 #endif
 					sstatus->batk + sstatus->rhw.atk + (index >= 0 && sd->inventory_data[index] ?
 						sd->inventory_data[index]->atk : 0)) * (skill_lv + 5) / 5;
+				if (sc && sc->data[SC_KAGEMUSYA])
+					damagevalue += damagevalue * sc->data[SC_KAGEMUSYA]->val2 / 100;
 				ATK_ADD(wd->damage, wd->damage2, damagevalue);
 #ifdef RENEWAL
 				ATK_ADD(wd->weaponAtk, wd->weaponAtk2, damagevalue);
@@ -3490,7 +3508,11 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 		{
 			wd->div_ = skill_get_num(GS_CHAINACTION,skill_lv);
 			wd->type = DMG_MULTI_HIT;
-			sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill_get_time(RL_QD_SHOT,1));
+
+			status_data *status = status_get_status_data(src);
+
+			if (status && status->amotion > 70) // Only triggers if ASPD < 193
+				sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill_get_time(RL_QD_SHOT,1));
 		}
 		else if(sc && sc->data[SC_FEARBREEZE] && sd->weapontype1==W_BOW
 			&& (i = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[i] && sd->inventory.u.items_inventory[i].amount > 1)
@@ -3775,7 +3797,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case MO_FINGEROFFENSIVE:
 #ifdef RENEWAL
-			skillratio += 500 + skill_lv * 2;
+			skillratio += 500 + skill_lv * 200;
 			if (tsc && tsc->data[SC_BLADESTOP])
 				skillratio += skillratio / 2;
 #else
@@ -4032,6 +4054,9 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 #endif
 			break;
 #ifdef RENEWAL
+		case NJ_SYURIKEN:
+			skillratio += 5 * skill_lv;
+			break;
 		case NJ_KUNAI:
 			skillratio += -100 + 100 * skill_lv;
 			break;
@@ -4433,6 +4458,35 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 700 + 100 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
+		case GN_SLINGITEM_RANGEMELEEATK:
+			if( sd ) {
+				switch( sd->itemid ) {
+					case ITEMID_APPLE_BOMB:
+						skillratio += 200 + status_get_str(src) + status_get_dex(src);
+						break;
+					case ITEMID_COCONUT_BOMB:
+					case ITEMID_PINEAPPLE_BOMB:
+						skillratio += 700 + status_get_str(src) + status_get_dex(src);
+						break;
+					case ITEMID_MELON_BOMB:
+						skillratio += 400 + status_get_str(src) + status_get_dex(src);
+						break;
+					case ITEMID_BANANA_BOMB:
+						skillratio += 777 + status_get_str(src) + status_get_dex(src);
+						break;
+					case ITEMID_BLACK_LUMP:
+						skillratio += -100 + (status_get_str(src) + status_get_agi(src) + status_get_dex(src)) / 3;
+						break;
+					case ITEMID_BLACK_HARD_LUMP:
+						skillratio += -100 + (status_get_str(src) + status_get_agi(src) + status_get_dex(src)) / 2;
+						break;
+					case ITEMID_VERY_HARD_LUMP:
+						skillratio += -100 + status_get_str(src) + status_get_agi(src) + status_get_dex(src);
+						break;
+				}
+				RE_LVL_DMOD(100);
+			}
+			break;
 		case GN_HELLS_PLANT_ATK:
 			skillratio += -100 + 500 * skill_lv + sstatus->int_ * (10 - (sd ? pc_checkskill(sd, AM_CANNIBALIZE) : 0)); // !TODO: Confirm INT and Cannibalize bonus
 			RE_LVL_DMOD(100);
@@ -4466,13 +4520,18 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 700;
 			break;
 		case KO_JYUMONJIKIRI:
-			skillratio += -100 + 150 * skill_lv;
+			skillratio += -100 + 200 * skill_lv;
 			RE_LVL_DMOD(120);
 			if(tsc && tsc->data[SC_JYUMONJIKIRI])
 				skillratio += skill_lv * status_get_lv(src);
+			if (sc && sc->data[SC_KAGEMUSYA])
+				skillratio += skillratio * sc->data[SC_KAGEMUSYA]->val2 / 100;
 			break;
 		case KO_HUUMARANKA:
-			skillratio += -100 + 150 * skill_lv + sstatus->agi + sstatus->dex + (sd ? pc_checkskill(sd,NJ_HUUMA) * 100 : 0);
+			skillratio += -100 + 150 * skill_lv + sstatus->str + (sd ? pc_checkskill(sd,NJ_HUUMA) * 100 : 0);
+			RE_LVL_DMOD(100);
+			if (sc && sc->data[SC_KAGEMUSYA])
+				skillratio += skillratio * sc->data[SC_KAGEMUSYA]->val2 / 100;
 			break;
 		case KO_SETSUDAN:
 			skillratio += 100 * (skill_lv - 1);
@@ -4488,6 +4547,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + (sd ? pc_checkskill(sd,NJ_TOBIDOUGU) : 1) * (50 + sstatus->dex / 4) * skill_lv * 4 / 10;
 			RE_LVL_DMOD(120);
 			skillratio += 10 * (sd ? sd->status.job_level : 1);
+			if (sc && sc->data[SC_KAGEMUSYA])
+				skillratio += skillratio * sc->data[SC_KAGEMUSYA]->val2 / 100;
 			break;
 		case KO_MAKIBISHI:
 			skillratio += -100 + 20 * skill_lv;
@@ -4658,10 +4719,10 @@ static int64 battle_calc_skill_constant_addition(struct Damage* wd, struct block
 			else
 				atk = sstatus->matk_min;
 			break;
-#endif
 		case NJ_SYURIKEN:
 			atk = 4 * skill_lv;
 			break;
+#endif
 #ifdef RENEWAL
 		case HT_FREEZINGTRAP:
 			if(sd)
@@ -5442,8 +5503,12 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 			}
 				break;
 			case MO_FINGEROFFENSIVE:
-				if (sd)
-					wd.div_ = (battle_config.finger_offensive_type)?1:sd->spiritball_old;
+				if (sd) {
+					if (battle_config.finger_offensive_type)
+						wd.div_ = 1;
+					else if ((sd->spiritball + sd->spiritball_old) < wd.div_)
+						wd.div_ = sd->spiritball + sd->spiritball_old;
+				}
 				break;
 
 			case KN_PIERCE:
@@ -6179,17 +6244,17 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case NJ_KOUENKA:
 						skillratio -= 10;
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > 0)
-							skillratio += 20 * sd->spiritcharm;
+							skillratio += 10 * sd->spiritcharm;
 						break;
 					case NJ_KAENSIN:
 						skillratio -= 50;
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > 0)
-							skillratio += 10 * sd->spiritcharm;
+							skillratio += 20 * sd->spiritcharm;
 						break;
 					case NJ_BAKUENRYU:
 						skillratio += 50 + 150 * skill_lv;
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > 0)
-							skillratio += 15 * sd->spiritcharm;
+							skillratio += 100 * sd->spiritcharm;
 						break;
 					case NJ_HYOUSENSOU:
 #ifdef RENEWAL
@@ -6198,12 +6263,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += 2 * skill_lv;
 #endif
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_WATER && sd->spiritcharm > 0)
-							skillratio += 5 * sd->spiritcharm;
+							skillratio += 20 * sd->spiritcharm;
 						break;
 					case NJ_HYOUSYOURAKU:
 						skillratio += 50 * skill_lv;
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_WATER && sd->spiritcharm > 0)
-							skillratio += 25 * sd->spiritcharm;
+							skillratio += 100 * sd->spiritcharm;
 						break;
 					case NJ_RAIGEKISAI:
 #ifdef RENEWAL
@@ -6212,12 +6277,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 60 + 40 * skill_lv;
 #endif
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_WIND && sd->spiritcharm > 0)
-							skillratio += 15 * sd->spiritcharm;
+							skillratio += 20 * sd->spiritcharm;
 						break;
 					case NJ_KAMAITACHI:
 						skillratio += 100 * skill_lv;
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_WIND && sd->spiritcharm > 0)
-							skillratio += 10 * sd->spiritcharm;
+							skillratio += 100 * sd->spiritcharm;
 						break;
 					case NJ_HUUJIN:
 #ifdef RENEWAL
@@ -6234,14 +6299,14 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 #ifdef RENEWAL
 					case WZ_HEAVENDRIVE:
-						skillratio += 125;
+						skillratio += 25;
 						break;
 					case WZ_METEOR:
 						skillratio += 25;
 						break;
 					case WZ_VERMILION:
 						if(sd)
-							skillratio += 25 + skill_lv * 5;
+							skillratio += 300 + skill_lv * 100;
 						else
 							skillratio += 20 * skill_lv - 20; //Monsters use old formula
 						break;
@@ -8812,7 +8877,7 @@ static const struct _battle_data {
 	{ "fame_pharmacy_10",                   &battle_config.fame_pharmacy_10,                50,     0,      INT_MAX,        },
 	{ "mail_delay",                         &battle_config.mail_delay,                      1000,   1000,   INT_MAX,        },
 	{ "at_monsterignore",                   &battle_config.autotrade_monsterignore,         0,      0,      1,              },
-	{ "idletime_option",                    &battle_config.idletime_option,                 0x25,   1,      INT_MAX,        },
+	{ "idletime_option",                    &battle_config.idletime_option,                 0x1F,   0x1,    0xFFF,          },
 	{ "spawn_direction",                    &battle_config.spawn_direction,                 0,      0,      1,              },
 	{ "arrow_shower_knockback",             &battle_config.arrow_shower_knockback,          1,      0,      1,              },
 	{ "devotion_rdamage_skill_only",        &battle_config.devotion_rdamage_skill_only,     1,      0,      1,              },
@@ -8886,6 +8951,7 @@ static const struct _battle_data {
 	{ "boss_nopc_idleskill_rate",           &battle_config.boss_nopc_idleskill_rate,        100,    0,    100,              },
 	{ "boss_nopc_move_rate",                &battle_config.boss_nopc_move_rate,             100,    0,    100,              },
 	{ "hom_idle_no_share",                  &battle_config.hom_idle_no_share,               0,      0,      INT_MAX,        },
+	{ "idletime_hom_option",                &battle_config.idletime_hom_option,             0x1F,   0x1,    0xFFF,          },
 	{ "devotion_standup_fix",               &battle_config.devotion_standup_fix,            1,      0,      1,              },
 	{ "feature.bgqueue",                    &battle_config.feature_bgqueue,                 1,      0,      1,              },
 	{ "homunculus_exp_gain",                &battle_config.homunculus_exp_gain,             10,     0,      100,            },

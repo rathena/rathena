@@ -1578,6 +1578,7 @@
 	export_constant(SC_HELLS_PLANT);
 	export_constant(SC_INCREASE_MAXHP);
 	export_constant(SC_INCREASE_MAXSP);
+	export_constant(SC_HELPANGEL);
 	export_constant(SC_SOUNDOFDESTRUCTION);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
