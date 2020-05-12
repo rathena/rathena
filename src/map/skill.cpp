@@ -10154,16 +10154,32 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case WL_SUMMONSTONE:
 		{
 			// pos is used in val2 for SC to indicate the order of this ball.
-			short element = 0, pos = -1, amount = (skill_lv == 1) ? 1 : 5;
-			sc_type sctype = SC_NONE;
+			short element = 0, pos = -1;
 			struct status_change *sc = status_get_sc(src);
 
-			if( !sc )
+			if (!sc)
 				break;
 
+			switch (skill_id) { // Set val1. The SC element for this ball
+				case WL_SUMMONFB:
+					element = WLS_FIRE;
+					break;
+				case WL_SUMMONBL:
+					element = WLS_WIND;
+					break;
+				case WL_SUMMONWB:
+					element = WLS_WATER;
+					break;
+				case WL_SUMMONSTONE:
+					element = WLS_STONE;
+					break;
+			}
+
 			if (skill_lv == 1) {
+				sc_type sctype = SC_NONE;
+
 				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++) {
-					if (!sctype && !sc->data[i])
+					if (sctype == SC_NONE && !sc->data[i])
 						sctype = static_cast<sc_type>(i); // Take the free SC
 					if (sc->data[i])
 						pos = max(sc->data[i]->val2, pos);
@@ -10174,21 +10190,17 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 						clif_skill_fail(sd, skill_id, USESKILL_FAIL_SUMMON, 0);
 					break;
 				}
+
+				sc_start4(src, src, static_cast<sc_type>(i), 100, element, ++pos, skill_lv, 0, skill_get_time(skill_id, skill_lv));
 			} else {
 				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++)
 					status_change_end(src, static_cast<sc_type>(i), INVALID_TIMER);
+
+				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++)
+					sc_start4(src, src, static_cast<sc_type>(i), 100, element, ++pos, skill_lv, 0, skill_get_time(skill_id, skill_lv));
 			}
 
-			switch( skill_id ) { // Set val1. The SC element for this ball
-				case WL_SUMMONFB:    element = WLS_FIRE;  break;
-				case WL_SUMMONBL:    element = WLS_WIND;  break;
-				case WL_SUMMONWB:    element = WLS_WATER; break;
-				case WL_SUMMONSTONE: element = WLS_STONE; break;
-			}
-
-			for (i = 0; i < amount; i++)
-				sc_start4(src,src,sctype,100,element,++pos,skill_lv,0,skill_get_time(skill_id,skill_lv));
-			clif_skill_nodamage(src,bl,skill_id,0,0);
+			clif_skill_nodamage(src, bl, skill_id, 0, 0);
 		}
 		break;
 
