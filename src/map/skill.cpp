@@ -3566,7 +3566,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			else // the central target doesn't display an animation
 				dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, -2, DMG_SPLASH); // needs -2(!) as skill level
 			break;
-		case WL_HELLINFERNO:
 		case SR_EARTHSHAKER:
 			dmg.dmotion = clif_skill_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,1,skill_id,-2,DMG_SINGLE);
 			break;
@@ -5915,8 +5914,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag|SD_ANIMATION);
 		break;
 	case WL_HELLINFERNO:
-		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
-		skill_addtimerskill(src,tick + 200,bl->id,0,0,skill_id,skill_lv,BF_MAGIC,flag|ELE_DARK);
+		if (flag & 1) {
+			skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
+			skill_addtimerskill(src, tick + 300, bl->id, 0, 0, skill_id, skill_lv, BF_MAGIC, flag | ELE_DARK);
+		} else {
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+		}
 		break;
 	case RA_WUGSTRIKE:
 		if( sd && pc_isridingwug(sd) ){
@@ -10108,7 +10112,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case WL_JACKFROST:
 	case NPC_JACKFROST:
-	case WL_HELLINFERNO:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		map_foreachinrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 		break;
@@ -10193,7 +10196,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 				sc_start4(src, src, static_cast<sc_type>(i), 100, element, ++pos, skill_lv, 0, skill_get_time(skill_id, skill_lv));
 			} else {
-				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++)
+				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++) // Removes any previous types
 					status_change_end(src, static_cast<sc_type>(i), INVALID_TIMER);
 
 				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++)
