@@ -4298,7 +4298,7 @@ void clif_tradeadditem( struct map_session_data* sd, struct map_session_data* ts
 	if( index ){
 		index = server_index( index );
 
-		if( index < 0 || index >= MAX_INVENTORY || sd->inventory.u.items_inventory[index].nameid <= 0 || sd->inventory_data[index] == nullptr ){
+		if( index >= MAX_INVENTORY || sd->inventory.u.items_inventory[index].nameid <= 0 || sd->inventory_data[index] == nullptr ){
 			return;
 		}
 
@@ -16546,7 +16546,7 @@ void clif_parse_npccashshop_buy( int fd, struct map_session_data *sd ){
 	int s_itl = sizeof( struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub );
 
 	if( p->packetLength < sizeof( struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM ) || p->packetLength != sizeof( struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM ) + p->count * s_itl ){
-		ShowWarning( "Player %u sent incorrect cash shop buy packet (len %u:%u)!\n", sd->status.char_id, p->packetLength, sizeof( struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM ) + p->count * s_itl );
+		ShowWarning( "Player %u sent incorrect cash shop buy packet (len %u:%" PRIdPTR ")!\n", sd->status.char_id, p->packetLength, sizeof( struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM ) + p->count * s_itl );
 		return;
 	}
 
@@ -16562,7 +16562,7 @@ void clif_parse_cashshop_buy( int fd, struct map_session_data *sd ){
 	int s_itl = sizeof( struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub );
 
 	if( p->packetLength < sizeof( struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST ) || p->packetLength != sizeof( struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST ) + p->count * s_itl ){
-		ShowWarning( "Player %u sent incorrect cash shop buy packet (len %u:%u)!\n", sd->status.char_id, p->packetLength, sizeof( struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST ) + p->count * s_itl );
+		ShowWarning( "Player %u sent incorrect cash shop buy packet (len %u:%" PRIdPTR ")!\n", sd->status.char_id, p->packetLength, sizeof( struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST ) + p->count * s_itl );
 		return;
 	}
 
@@ -18015,7 +18015,7 @@ static void clif_parse_ReqOpenBuyingStore( int fd, struct map_session_data* sd )
 	// TODO: Make this check global for all variable length packets.
 	// minimum packet length
 	if( p->packetLength < sizeof( struct PACKET_CZ_REQ_OPEN_BUYING_STORE ) ){
-		ShowError( "clif_parse_ReqOpenBuyingStore: Malformed packet (expected length=%u, length=%u, account_id=%d).\n", sizeof( struct PACKET_CZ_REQ_OPEN_BUYING_STORE ), p->packetLength, sd->bl.id );
+		ShowError( "clif_parse_ReqOpenBuyingStore: Malformed packet (expected length=%" PRIdPTR ", length=%u, account_id=%d).\n", sizeof( struct PACKET_CZ_REQ_OPEN_BUYING_STORE ), p->packetLength, sd->bl.id );
 		return;
 	}
 
@@ -18027,7 +18027,7 @@ static void clif_parse_ReqOpenBuyingStore( int fd, struct map_session_data* sd )
 	int packet_len = p->packetLength - sizeof( struct PACKET_CZ_REQ_OPEN_BUYING_STORE );
 
 	if( packet_len % sizeof( struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub ) ){
-		ShowError( "clif_parse_ReqOpenBuyingStore: Unexpected item list size %u (account_id=%d, block size=%u)\n", packet_len, sd->bl.id, sizeof( struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub ) );
+		ShowError( "clif_parse_ReqOpenBuyingStore: Unexpected item list size %u (account_id=%d, block size=%" PRIdPTR ")\n", packet_len, sd->bl.id, sizeof( struct PACKET_CZ_REQ_OPEN_BUYING_STORE_sub ) );
 		return;
 	}
 
@@ -18189,7 +18189,7 @@ static void clif_parse_ReqTradeBuyingStore( int fd, struct map_session_data* sd 
 
 	// minimum packet length
 	if( p->packetLength < sizeof( struct PACKET_CZ_REQ_TRADE_BUYING_STORE ) ){
-		ShowError( "clif_parse_ReqTradeBuyingStore: Malformed packet (expected length=%u, length=%u, account_id=%d).\n", sizeof( struct PACKET_CZ_REQ_TRADE_BUYING_STORE ), p->packetLength, sd->bl.id );
+		ShowError( "clif_parse_ReqTradeBuyingStore: Malformed packet (expected length=%" PRIdPTR ", length=%u, account_id=%d).\n", sizeof( struct PACKET_CZ_REQ_TRADE_BUYING_STORE ), p->packetLength, sd->bl.id );
 		return;
 	}
 
@@ -18197,7 +18197,7 @@ static void clif_parse_ReqTradeBuyingStore( int fd, struct map_session_data* sd 
 	int packet_len = p->packetLength - sizeof( struct PACKET_CZ_REQ_TRADE_BUYING_STORE );
 
 	if( packet_len % sizeof( struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub ) ){
-		ShowError( "clif_parse_ReqTradeBuyingStore: Unexpected item list size %u (account_id=%d, buyer_id=%d, block size=%u)\n", packet_len, sd->bl.id, p->AID, sizeof( struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub ) );
+		ShowError( "clif_parse_ReqTradeBuyingStore: Unexpected item list size %u (account_id=%d, buyer_id=%d, block size=%" PRIdPTR ")\n", packet_len, sd->bl.id, p->AID, sizeof( struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub ) );
 		return;
 	}
 
@@ -18296,7 +18296,7 @@ static void clif_parse_SearchStoreInfo( int fd, struct map_session_data *sd ){
 
 	// minimum packet length
 	if( p->packetLength < sizeof( struct PACKET_CZ_SEARCH_STORE_INFO ) ){
-		ShowError( "clif_parse_SearchStoreInfo: Malformed packet (expected length=%u, length=%u, account_id=%d).\n", sizeof( struct PACKET_CZ_SEARCH_STORE_INFO ), p->packetLength, sd->bl.id );
+		ShowError( "clif_parse_SearchStoreInfo: Malformed packet (expected length=%" PRIdPTR ", length=%u, account_id=%d).\n", sizeof( struct PACKET_CZ_SEARCH_STORE_INFO ), p->packetLength, sd->bl.id );
 		return;
 	}
 
@@ -18304,7 +18304,7 @@ static void clif_parse_SearchStoreInfo( int fd, struct map_session_data *sd ){
 	int packet_len = p->packetLength - sizeof( struct PACKET_CZ_SEARCH_STORE_INFO );
 
 	if( packet_len % sizeof( struct PACKET_CZ_SEARCH_STORE_INFO_item ) ){
-		ShowError( "clif_parse_SearchStoreInfo: Unexpected item list size %u (account_id=%d, block size=%u)\n", packet_len, sd->bl.id, sizeof( struct PACKET_CZ_SEARCH_STORE_INFO_item ) );
+		ShowError( "clif_parse_SearchStoreInfo: Unexpected item list size %u (account_id=%d, block size=%" PRIdPTR ")\n", packet_len, sd->bl.id, sizeof( struct PACKET_CZ_SEARCH_STORE_INFO_item ) );
 		return;
 	}
 

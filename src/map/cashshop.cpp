@@ -580,12 +580,12 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, s
 			continue;
 
 		if (!pet_create_egg(sd, nameid)) {
-			unsigned short get_amt = quantity, j;
+			unsigned short get_amt = quantity;
 
 			if (id->flag.guid || !itemdb_isstackable2(id))
 				get_amt = 1;
 
-			for (j = 0; j < quantity; j += get_amt) {
+			for (uint32 j = 0; j < quantity; j += get_amt) {
 				struct item item_tmp = { 0 };
 
 				item_tmp.nameid = nameid;

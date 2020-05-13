@@ -173,14 +173,14 @@ void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned
 	// validate lists
 	for( i = 0; i < item_count; i++ ) {
 		if( !itemdb_exists(itemlist[i].itemId) ) {
-			ShowWarning("searchstore_query: Client resolved item %hu is not known.\n", itemlist[i]);
+			ShowWarning("searchstore_query: Client resolved item %hu is not known.\n", itemlist[i].itemId);
 			clif_search_store_info_failed(sd, SSI_FAILED_NOTHING_SEARCH_ITEM);
 			return;
 		}
 	}
 	for( i = 0; i < card_count; i++ ) {
 		if( !itemdb_exists(cardlist[i].itemId) ) {
-			ShowWarning("searchstore_query: Client resolved card %hu is not known.\n", cardlist[i]);
+			ShowWarning("searchstore_query: Client resolved card %hu is not known.\n", cardlist[i].itemId);
 			clif_search_store_info_failed(sd, SSI_FAILED_NOTHING_SEARCH_ITEM);
 			return;
 		}
