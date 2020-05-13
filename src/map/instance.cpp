@@ -733,7 +733,7 @@ int16 instance_mapid(int16 m, int instance_id)
 				snprintf(alt_name, sizeof(alt_name), "%d#%s", (instance_id % 1000), iname);
 			}
 			else
-				snprintf(alt_name, sizeof(alt_name), "%.3d%s", instance_id, iname);
+				snprintf(alt_name, sizeof(alt_name), "%.3d%s", (instance_id % 1000), iname);
 			return map_mapname2mapid(alt_name);
 		}
 	}
