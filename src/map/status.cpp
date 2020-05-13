@@ -11365,7 +11365,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 50 * val1; // HP recovery rate
 			break;
 		case SC_SONGOFMANA:
-			status_heal(bl, 0, (val1 <= 2 ? 10 : val1 <= 4 ? 15 : 20), 1);
+			status_heal(bl, 0, status->max_sp * (val1 <= 2 ? 10 : val1 <= 4 ? 15 : 20) / 100, 1);
 			val3 = 50 * val1;
 			break;
 		case SC_SATURDAYNIGHTFEVER:
