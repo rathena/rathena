@@ -25513,7 +25513,7 @@ Body:
     Description: Improvised Song
     MaxLevel: 5
     Type: Magic
-    TargetType: Self
+    TargetType: Attack
     DamageFlags:
       NoDamage: true
     Range: 9
