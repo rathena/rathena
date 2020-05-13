@@ -531,6 +531,7 @@ uint16 SKILL_MAX_DB(void);
 int skill_isammotype(struct map_session_data *sd, unsigned short skill_id);
 TIMER_FUNC(skill_castend_id);
 TIMER_FUNC(skill_castend_pos);
+TIMER_FUNC( skill_keep_using );
 int skill_castend_map( struct map_session_data *sd,uint16 skill_id, const char *map);
 
 int skill_cleartimerskill(struct block_list *src);

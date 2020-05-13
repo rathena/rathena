@@ -676,6 +676,8 @@ struct Battle_Config
 	int devotion_standup_fix;
 	int feature_bgqueue;
 	int homunculus_exp_gain;
+	int ping_timer_interval;
+	int ping_time;
 
 #include "../custom/battle_config_struct.inc"
 };

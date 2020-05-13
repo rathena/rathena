@@ -419,7 +419,7 @@
 	packet(0x01fa,48);
 	packet(0x01fb,56);
 	packet(0x01fc,-1);
-	parseable_packet(0x01fd,4,clif_parse_RepairItem,2);
+	parseable_packet(0x01fd,4,clif_parse_RepairItem);
 	packet(0x01fe,5);
 	packet(0x01ff,10);
 	packet(0x0200,26);
@@ -1074,12 +1074,12 @@
 
 // 2007-05-07aSakexe
 #if PACKETVER >= 20070507
-	parseable_packet(0x01fd,15,clif_parse_RepairItem,2,4,6,7,9,11,13);
+	parseable_packet(0x01fd,15,clif_parse_RepairItem);
 #endif
 
 // 2007-02-27aSakexe to 2007-10-02aSakexe
 #if PACKETVER >= 20070227
-	parseable_packet(0x0288,10,clif_parse_cashshop_buy,2,4,6);
+	parseable_packet(0x0288,10,clif_parse_npccashshop_buy,2,4,6);
 	packet(0x0289,12);
 	packet(0x02a6,22);
 	packet(0x02a7,22);
@@ -1505,7 +1505,7 @@
 	//packet(0x07d4,4);
 	//packet(0x07d5,4);
 	//packet(0x07d6,4);
-	//packet(0x0447,2);
+	parseable_packet( 0x0447, 2, clif_parse_blocking_playcancel );
 #endif
 
 // 2009-06-03aRagexeRE
@@ -1815,7 +1815,7 @@
 
 // 2010-11-24aRagexeRE
 #if PACKETVER >= 20101124
-	parseable_packet(0x0288,-1,clif_parse_cashshop_buy,2,4,8,10);
+	parseable_packet(0x0288,-1,clif_parse_npccashshop_buy,2,4,8,10);
 	parseable_packet(0x0436,19,clif_parse_WantToConnection,2,6,10,14,18);
 	parseable_packet(0x035f,5,clif_parse_WalkToXY,2);
 	parseable_packet(0x0360,6,clif_parse_TickSend,2);
@@ -1915,11 +1915,11 @@
 
 // 2012-04-10aRagexeRE
 #if PACKETVER >= 20120410
-	parseable_packet(0x01fd,15,clif_parse_RepairItem,2,4,6,7,9,11,13);
+	parseable_packet(0x01fd,15,clif_parse_RepairItem);
 	parseable_packet(0x089c,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x0885,5,clif_parse_HomMenu,2,4);
 	parseable_packet(0x0961,36,clif_parse_StoragePassword,2,4,20);
-	parseable_packet(0x0288,-1,clif_parse_cashshop_buy,2,4,8,10);
+	parseable_packet(0x0288,-1,clif_parse_npccashshop_buy,2,4,8,10);
 	parseable_packet(0x091c,26,clif_parse_PartyInvite2,2);
 	parseable_packet(0x094b,19,clif_parse_WantToConnection,2,6,10,14,18);
 	parseable_packet(0x0369,7,clif_parse_ActionRequest,2,6);
@@ -2049,7 +2049,7 @@
 // 2013-03-20Ragexe (Judas)
 #if PACKETVER >= 20130320
 	parseable_packet(0x014f,6,clif_parse_GuildRequestInfo,2);
-	parseable_packet(0x01fd,15,clif_parse_RepairItem,2,4,6,7,9,11,13);
+	parseable_packet(0x01fd,15,clif_parse_RepairItem);
 	//parseable_packet(0x0281,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
 	parseable_packet(0x035f,6,clif_parse_ReqClickBuyingStore,2);
 	parseable_packet(0x0363,6,clif_parse_TickSend,2);
@@ -2437,6 +2437,36 @@
 // 2018-04-18bRagexeRE
 #if PACKETVER >= 20180418
 	packet(0x0ADD, 22);
+#endif
+
+#if PACKETVER >= 20180704
+	parseable_packet( 0x018e, sizeof( struct PACKET_CZ_REQMAKINGITEM ), clif_parse_ProduceMix );
+	parseable_packet( 0x01ae, 6, clif_parse_SelectArrow );
+	parseable_packet( 0x01fd, sizeof( struct PACKET_CZ_REQ_ITEMREPAIR ), clif_parse_RepairItem );
+	parseable_packet( 0x025b, sizeof( struct PACKET_CZ_REQ_MAKINGITEM ), clif_parse_Cooking );
+	// this is done in clif_shuffle
+	//parseable_packet( 0x083C, sizeof( struct PACKET_CZ_SSILIST_ITEM_CLICK ), clif_parse_SearchStoreInfoListItemClick );
+	parseable_packet( 0x0A49, sizeof( struct PACKET_CZ_PRIVATE_AIRSHIP_REQUEST ), clif_parse_private_airship_request );
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20181002 || PACKETVER_RE_NUM >= 20181002 || PACKETVER_ZERO_NUM >= 20181010
+	parseable_packet( 0x0B10, sizeof( struct PACKET_CZ_START_USE_SKILL ), clif_parse_StartUseSkillToId );
+	parseable_packet( 0x0B11, sizeof( struct PACKET_CZ_STOP_USE_SKILL ), clif_parse_StopUseSkillToId );
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20181031 || PACKETVER_RE_NUM >= 20181031 || PACKETVER_ZERO_NUM >= 20181114
+	parseable_packet( 0x0B14, sizeof( struct PACKET_CZ_INVENTORY_EXPAND ), clif_parse_dull );
+	parseable_packet( 0x0B16, sizeof( struct PACKET_CZ_INVENTORY_EXPAND_CONFIRMED ), clif_parse_dull );
+	parseable_packet( 0x0B19, sizeof( struct PACKET_CZ_INVENTORY_EXPAND_REJECTED ), clif_parse_dull );
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20190227 || PACKETVER_RE_NUM >= 20190220 || PACKETVER_ZERO_NUM >= 20190220
+	parseable_packet( 0x0B1C, sizeof( struct PACKET_CZ_PING ), clif_parse_dull );
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190508 || PACKETVER_ZERO_NUM >= 20190605
+	parseable_packet( 0x0B21, sizeof( struct PACKET_CZ_SHORTCUT_KEY_CHANGE2 ), clif_parse_Hotkey );
+	parseable_packet( 0x0B22, sizeof( struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE2 ), clif_parse_HotkeyRowShift );
 #endif
 
 #endif /* CLIF_PACKETDB_HPP */

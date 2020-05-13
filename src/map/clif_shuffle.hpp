@@ -4749,7 +4749,7 @@
 	parseable_packet(0x0819,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	parseable_packet(0x0835,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0838,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x083C,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x083C,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick);
 #endif
 
 #endif /* CLIF_SHUFFLE_HPP */

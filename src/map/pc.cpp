@@ -752,12 +752,12 @@ void pc_inventory_rentals(struct map_session_data *sd)
 		if( sd->inventory.u.items_inventory[i].expire_time <= time(NULL) ) {
 			if (sd->inventory_data[i]->unequip_script)
 				run_script(sd->inventory_data[i]->unequip_script, 0, sd->bl.id, fake_nd->bl.id);
-			clif_rental_expired(sd->fd, i, sd->inventory.u.items_inventory[i].nameid);
+			clif_rental_expired(sd, i, sd->inventory.u.items_inventory[i].nameid);
 			pc_delitem(sd, i, sd->inventory.u.items_inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
 		} else {
 			unsigned int expire_tick = (unsigned int)(sd->inventory.u.items_inventory[i].expire_time - time(NULL));
 
-			clif_rental_time(sd->fd, sd->inventory.u.items_inventory[i].nameid, (int)expire_tick);
+			clif_rental_time(sd, sd->inventory.u.items_inventory[i].nameid, (int)expire_tick);
 			next_tick = umin(expire_tick * 1000U, next_tick);
 			c++;
 		}
@@ -1471,6 +1471,11 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->expiration_tid = INVALID_TIMER;
 	sd->autotrade_tid = INVALID_TIMER;
 	sd->respawn_tid = INVALID_TIMER;
+
+	sd->skill_keep_using.tid = INVALID_TIMER;
+	sd->skill_keep_using.skill_id = 0;
+	sd->skill_keep_using.level = 0;
+	sd->skill_keep_using.target = 0;
 
 #ifdef SECURE_NPCTIMEOUT
 	// Initialize to defaults/expected
@@ -4985,11 +4990,11 @@ enum e_additem_result pc_additem(struct map_session_data *sd,struct item *item,i
 	/* rental item check */
 	if( item->expire_time ) {
 		if( time(NULL) > item->expire_time ) {
-			clif_rental_expired(sd->fd, i, sd->inventory.u.items_inventory[i].nameid);
+			clif_rental_expired(sd, i, sd->inventory.u.items_inventory[i].nameid);
 			pc_delitem(sd, i, sd->inventory.u.items_inventory[i].amount, 1, 0, LOG_TYPE_OTHER);
 		} else {
 			unsigned int seconds = (unsigned int)( item->expire_time - time(NULL) );
-			clif_rental_time(sd->fd, sd->inventory.u.items_inventory[i].nameid, seconds);
+			clif_rental_time(sd, sd->inventory.u.items_inventory[i].nameid, seconds);
 			pc_inventory_rental_add(sd, seconds);
 		}
 	}
@@ -5497,7 +5502,7 @@ enum e_additem_result pc_cart_additem(struct map_session_data *sd,struct item *i
 			return ADDITEM_OVERAMOUNT; // no slot
 
 		sd->cart.u.items_cart[i].amount += amount;
-		clif_cart_additem(sd,i,amount,0);
+		clif_cart_additem(sd,i,amount);
 	}
 	else
 	{// item not stackable or not present, add it
@@ -5509,7 +5514,7 @@ enum e_additem_result pc_cart_additem(struct map_session_data *sd,struct item *i
 		sd->cart.u.items_cart[i].id = 0;
 		sd->cart.u.items_cart[i].amount = amount;
 		sd->cart_num++;
-		clif_cart_additem(sd,i,amount,0);
+		clif_cart_additem(sd,i,amount);
 	}
 	sd->cart.u.items_cart[i].favorite = 0; // clear
 	sd->cart.u.items_cart[i].equipSwitch = 0;
@@ -5618,7 +5623,7 @@ void pc_getitemfromcart(struct map_session_data *sd,int idx,int amount)
 	else {
 		clif_cart_delitem(sd, idx, amount);
 		clif_additem(sd, idx, amount, flag);
-		clif_cart_additem(sd, idx, amount, 0);
+		clif_cart_additem(sd, idx, amount);
 	}
 }
 
