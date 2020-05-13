@@ -4844,6 +4844,16 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 #endif
 			}
 		}
+		if (sc->data[SC_DANCEWITHWUG]) {
+			if (skill_get_inf2(skill_id, INF2_INCREASEDANCEWITHWUGDAMAGE)) {
+				ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_DANCEWITHWUG]->val1 * 10 * battle_calc_chorusbonus(sd));
+				RE_ALLATK_ADDRATE(wd, sc->data[SC_DANCEWITHWUG]->val1 * 10 * battle_calc_chorusbonus(sd));
+			}
+			ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_DANCEWITHWUG]->val1 * 2 * battle_calc_chorusbonus(sd));
+#ifdef RENEWAL
+			ATK_ADDRATE(wd->equipAtk, wd->equipAtk2, sc->data[SC_DANCEWITHWUG]->val1 * 2 * battle_calc_chorusbonus(sd));
+#endif
+		}
 		if(sc->data[SC_ZENKAI] && sstatus->rhw.ele == sc->data[SC_ZENKAI]->val2) {
 			ATK_ADD(wd->damage, wd->damage2, 200);
 #ifdef RENEWAL

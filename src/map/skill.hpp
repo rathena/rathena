@@ -101,6 +101,7 @@ enum e_skill_inf2 : uint8 {
 	INF2_ALLOWONMADO, // Skill that can be used while on Madogear
 	INF2_TARGETMANHOLE, // Skill that can be used to target while under SC__MANHOLE effect
 	INF2_TARGETHIDDEN, // Skill that affects hidden targets
+	INF2_INCREASEDANCEWITHWUGDAMAGE, // Skill that is affected by SC_DANCEWITHWUG
 	INF2_IGNOREWUGBITE, // Skill blocked by RA_WUGBITE
 	INF2_IGNOREAUTOGUARD , // Skill is not blocked by SC_AUTOGUARD (physical-skill only)
 	INF2_IGNORECICADA, // Skill is not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (physical-skill only)

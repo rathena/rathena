@@ -19860,6 +19860,7 @@ Body:
       IgnoreFlee: true
     Flags:
       AllowOnWarg: true
+      IncreaseDanceWithWugDamage: true
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -19881,6 +19882,7 @@ Body:
       AllowOnWarg: true
       IgnoreAutoGuard: true
       IgnoreCicada: true
+      IncreaseDanceWithWugDamage: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -19910,6 +19912,7 @@ Body:
       AlterRangeVulture: true
       IgnoreAutoGuard: true
       IgnoreCicada: true
+      IncreaseDanceWithWugDamage: true
     Range: 9
     Hit: Single
     HitCount: 1
