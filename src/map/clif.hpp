@@ -1029,7 +1029,7 @@ void clif_search_store_info_click_ack(struct map_session_data* sd, short x, shor
 
 /// Cash Shop
 void clif_cashshop_result( struct map_session_data* sd, unsigned short item_id, uint16 result );
-void clif_cashshop_open( struct map_session_data* sd );
+void clif_cashshop_open( struct map_session_data* sd, int tab );
 
 void clif_display_pinfo(struct map_session_data *sd, int type);
 

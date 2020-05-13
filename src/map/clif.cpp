@@ -16324,18 +16324,36 @@ void clif_parse_Auction_buysell(int fd, struct map_session_data* sd)
 /// CASH/POINT SHOP
 ///
 
-void clif_cashshop_open( struct map_session_data* sd ){
-	WFIFOHEAD( sd->fd, 10 );
-	WFIFOW( sd->fd, 0 ) = 0x845;
-	WFIFOL( sd->fd, 2 ) = sd->cashPoints;
-	WFIFOL( sd->fd, 6 ) = sd->kafraPoints;
-	WFIFOSET( sd->fd, 10 );
+void clif_cashshop_open( struct map_session_data* sd, int tab ){
+	nullpo_retv( sd );
+
+	struct PACKET_ZC_SE_CASHSHOP_OPEN p;
+
+	p.packetType = HEADER_ZC_SE_CASHSHOP_OPEN;
+	p.cashPoints = sd->cashPoints;
+	p.kafraPoints = sd->kafraPoints;
+#if PACKETVER_MAIN_NUM >= 20200129 || PACKETVER_RE_NUM >= 20200205 || PACKETVER_ZERO_NUM >= 20191224
+	p.tab = tab;
+#endif
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 }
 
 void clif_parse_cashshop_open_request( int fd, struct map_session_data* sd ){
+	nullpo_retv( sd );
+
+	int tab = 0;
+
+#if PACKETVER >= 20191224
+	struct PACKET_CZ_SE_CASHSHOP_OPEN2* p = (struct PACKET_CZ_SE_CASHSHOP_OPEN2*)RFIFOP( fd, 0 );
+
+	tab = p->tab;
+#endif
+
 	sd->state.cashshop_open = true;
 	sd->npc_shopid = -1; // Set npc_shopid when using cash shop from "cash shop" button [Aelys|Susu] bugreport:96
-	clif_cashshop_open( sd );
+
+	clif_cashshop_open( sd, tab );
 }
 
 void clif_parse_cashshop_close( int fd, struct map_session_data* sd ){

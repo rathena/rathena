@@ -2469,4 +2469,12 @@
 	parseable_packet( 0x0B22, sizeof( struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE2 ), clif_parse_HotkeyRowShift, 0 );
 #endif
 
+#if PACKETVER >= 20190724
+	parseable_packet( 0x0b4c, 2, clif_parse_dull, 0 );
+#endif
+
+#if PACKETVER >= 20191224
+	parseable_packet( HEADER_CZ_SE_CASHSHOP_OPEN2, sizeof( struct PACKET_CZ_SE_CASHSHOP_OPEN2 ), clif_parse_cashshop_open_request, 0 );
+#endif
+
 #endif /* CLIF_PACKETDB_HPP */
