@@ -730,7 +730,7 @@ int16 instance_mapid(int16 m, int instance_id)
 
 			if (!(strchr(iname, '@')) && strlen(iname) > 8) {
 				memmove((void*)iname, iname + (strlen(iname) - 9), strlen(iname));
-				snprintf(alt_name, sizeof(alt_name), "%d#%s", instance_id, iname);
+				snprintf(alt_name, sizeof(alt_name), "%d#%s", (instance_id % 1000), iname);
 			}
 			else
 				snprintf(alt_name, sizeof(alt_name), "%.3d%s", instance_id, iname);
