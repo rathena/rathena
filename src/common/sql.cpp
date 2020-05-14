@@ -3,6 +3,7 @@
 
 #include "sql.hpp"
 
+#include <map>
 #ifdef WIN32
 #include "winapi.hpp"
 #endif
@@ -1062,8 +1063,9 @@ void Sql_UpgradesChecker(Sql *sql_handle, e_sql_database schema) {
 		sql_update_db.load();
 
 	std::vector<int32> new_updates, skipped_updates;
+	std::map<int32, std::shared_ptr<s_sql_update_db>> ordered_sql_update_db(sql_update_db.begin(), sql_update_db.end()); // Create an ordered list (by ID) to make sure updates are applied sequentially
 
-	for (const auto &updateIt : sql_update_db) {
+	for (const auto &updateIt : ordered_sql_update_db) {
 		std::shared_ptr<s_sql_update_db> update = updateIt.second;
 
 		if (!update->patchdate.empty()) // Already applied
@@ -1162,6 +1164,7 @@ void Sql_UpgradesChecker(Sql *sql_handle, e_sql_database schema) {
 		save.close();
 	}
 
+	ordered_sql_update_db.clear();
 	new_updates.clear();
 	skipped_updates.clear();
 }
