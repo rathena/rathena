@@ -26706,8 +26706,8 @@ Body:
     DamageFlags:
       Splash: true
     Range: 11
-    Hit: Single
-    HitCount: 3
+    Hit: Multi_Hit
+    HitCount: 2
     Element: Weapon
     SplashArea:
       - Level: 1
