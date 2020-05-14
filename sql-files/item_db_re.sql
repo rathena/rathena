@@ -13490,3 +13490,10 @@ REPLACE INTO `item_db_re` VALUES (32302,'Crimson_Rose','Crimson Rose',5,20,NULL,
 REPLACE INTO `item_db_re` VALUES (32350,'Farthezan','Farthezan',5,20,NULL,1100,'130:180',NULL,1,2,0x00004000,56,2,2,4,'170',1,2,'.@r = getrefine(); bonus2 bSkillAtk,"PA_PRESSURE",40; bonus bVariableCastrate,-.@r; if (.@r>=9) bonus2 bSkillAtk,"LG_RAYOFGENESIS",30; if (.@r>=11) { bonus2 bSkillAtk,"LG_RAYOFGENESIS",20; bonus2 bSkillAtk,"PA_PRESSURE",20; }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (32351,'Estal','Estal',5,20,NULL,700,'195',NULL,1,2,0x00040000,56,2,2,4,'170',1,2,'.@r = getrefine(); bonus2 bSkillCooldown,"GN_SPORE_EXPLOSION",-1000; bonus bBaseAtk,4*.@r; if (.@r>=11) .@val = 50; else if (.@r>=9) .@val = 30; bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",.@val;',NULL,NULL);
 
+#REPLACE INTO `item_db_re` VALUES (100231,'Ref_T_Potion','Golden X',0,10,NULL,30,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_REF_T_POTION,30000,0;',NULL,NULL);
+#REPLACE INTO `item_db_re` VALUES (100232,'Add_Atk_Potion','Red Herb Activator',0,10,NULL,30,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_ADD_ATK_DAMAGE,500000,15;',NULL,NULL);
+#REPLACE INTO `item_db_re` VALUES (100233,'Add_Matk_Potion','Blue Herb Activator',0,10,NULL,30,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_ADD_MATK_DAMAGE,500000,15;',NULL,NULL);
+#REPLACE INTO `item_db_re` VALUES (1100003,'Concentrated_R_P','Concentrated Red Potion',0,10,NULL,2,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'120',NULL,NULL,'itemheal rand(655,675),0;',NULL,NULL);
+#REPLACE INTO `item_db_re` VALUES (1100004,'Concentrated_B_P','Concentrated Blue Potion',0,10,NULL,2,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'120',NULL,NULL,'itemheal 0,rand(340,360);',NULL,NULL);
+#REPLACE INTO `item_db_re` VALUES (1100005,'Concentrated_G_P','Concentrated Gold Potion',0,10,NULL,2,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'180',NULL,NULL,'itemheal rand(2730,2750),0;',NULL,NULL);
+
