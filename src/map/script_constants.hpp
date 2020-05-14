@@ -1579,6 +1579,9 @@
 	export_constant(SC_INCREASE_MAXHP);
 	export_constant(SC_INCREASE_MAXSP);
 	export_constant(SC_HELPANGEL);
+	export_constant(SC_REF_T_POTION);
+	export_constant(SC_ADD_ATK_DAMAGE);
+	export_constant(SC_ADD_MATK_DAMAGE);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif

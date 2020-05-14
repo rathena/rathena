@@ -11274,7 +11274,6 @@ Body:
     TargetType: Self
     DamageFlags:
       Splash: true
-      IgnoreAtkCard: true
     Flags:
       TargetTrap: true
       IgnoreAutoGuard: true
@@ -27991,6 +27990,7 @@ Body:
     Flags:
       TargetTrap: true
       IgnoreLandProtector: true
+    Range: 5
     Hit: Multi_Hit
     HitCount: 2
     Element: Weapon
@@ -28178,15 +28178,9 @@ Body:
     Name: GN_FIRE_EXPANSION_ACID
     Description: Fire Expansion Acid
     MaxLevel: 10
-    Type: Misc
+    Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      IgnoreDefense: true
-      IgnoreFlee: true
-    Flags:
-      IgnoreBgReduction: true
-      IgnoreGvgReduction: true
-    Range: 11
+    Range: 9
     Hit: Multi_Hit
     HitCount:
       - Level: 1
@@ -28274,11 +28268,9 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      IgnoreElement: true
-      IgnoreDefCard: true
     Hit: Single
     HitCount: 1
+    Element: Weapon
     CopyFlags:
       Skill:
         Reproduce: true
@@ -34494,7 +34486,6 @@ Body:
         Time: 3500
     Duration1: 500
     Duration2: 120000
-    FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
