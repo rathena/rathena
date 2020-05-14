@@ -139,13 +139,6 @@ OnReset:
 	donpcevent "guardian#bat_b01_b::OnEnable";
 	donpcevent "cell#bat_b01_a::OnRed";
 	donpcevent "cell#bat_b01_b::OnRed";
-	donpcevent "time#bat_b01::OnEnable";
-	disablenpc "Guillaume Vintenar#b01_a";
-	disablenpc "Croix Vintenar#b01_b";
-	disablenpc "Vintenar#bat_b01_aover";
-	disablenpc "Vintenar#bat_b01_bover";
-	bg_warp $@FlaviusBG1_id1,"bat_b01",87,75;
-	bg_warp $@FlaviusBG1_id2,"bat_b01",311,224;
 	end;
 
 OnGuillaumeActive:
@@ -181,6 +174,7 @@ OnKill:
 	end;
 
 OnMyMobDead:
+	debugmes "killed crystal";
 	if (mobcount("bat_b01","OBJ#bat_b01_a::OnMyMobDead") < 1) {
 		mapannounce "bat_b01", "Guillaume's Crystal has been destroyed.",bc_map,"0xFFCE00";
 		if ($@Croix_ScoreBG1 > 0) {

@@ -140,13 +140,6 @@ OnReset:
 	donpcevent "guardian#bat_b02_b::OnEnable";
 	donpcevent "cell#bat_b02_a::OnRed";
 	donpcevent "cell#bat_b02_b::OnRed";
-	donpcevent "time#bat_b02::OnEnable";
-	disablenpc "Guillaume Vintenar#b02_a";
-	disablenpc "Croix Vintenar#b02_b";
-	disablenpc "Vintenar#bat_b02_aover";
-	disablenpc "Vintenar#bat_b02_bover";
-	bg_warp $@FlaviusBG2_id1,"bat_b02",87,75;
-	bg_warp $@FlaviusBG2_id2,"bat_b02",311,224;
 	end;
 
 OnGuillaumeActive:
