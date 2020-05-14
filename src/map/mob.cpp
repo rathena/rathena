@@ -5563,7 +5563,7 @@ static void mob_load(void)
 
 		sv_readdb(dbsubpath1, "mob_chat_db.txt", '#', 3, 3, -1, &mob_parse_row_chatdb, silent);
 
-		if( db_use_sqldbs )
+		if( db_use_sqldbs && i == 0 )
 			mob_read_sqlskilldb();
 		else
 			mob_readskilldb(dbsubpath2, silent);
