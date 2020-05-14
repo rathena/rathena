@@ -1729,8 +1729,8 @@ REPLACE INTO `item_db_re` VALUES (2471,'Shoes_Of_Affection','Shoes Of Affection'
 REPLACE INTO `item_db_re` VALUES (2472,'Shoes_Of_Judgement','Shoes Of Judgement',4,20,NULL,300,NULL,12,NULL,0,0x00000100,63,2,64,NULL,'100',1,0,'bonus2 bSkillAtk,"AB_JUDEX",30; bonus2 bSkillUseSP,"AB_JUDEX",-40; bonus bMaxSP,150;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2473,'Para_Team_Boots4','Eden Team Boots IV',4,0,NULL,0,NULL,20,NULL,0,0xFFFFFFFF,63,2,64,NULL,'60',0,0,'bonus bAgi,1; bonus bVit,1; bonus bHPrecovRate,28; bonus bSPrecovRate,12;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2474,'Lehmannza_Shoes','Lehmannza Shoes',4,20,NULL,500,NULL,3,NULL,1,0xFFFFFFFF,63,2,64,NULL,'60',1,0,'bonus bMdef,3;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2475,'Ur_Greave','Ur\'s Greaves',4,20,NULL,900,NULL,32,NULL,1,0x00000080,56,2,64,NULL,'100',1,0,'bonus bMaxSP,40; .@r = getrefine(); bonus bMaxHPrate,(.@r<=7?.@r-7:1);',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2476,'Peuz_Greave','Peuz\'s Greaves',4,20,NULL,900,NULL,32,NULL,1,0x00000080,56,2,64,NULL,'100',1,0,'bonus bMaxSP,40; .@r = getrefine(); bonus bAgi,(.@r<=7?.@r-7:1);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2475,'Ur_Greave','Ur\'s Greaves',4,20,NULL,900,NULL,32,NULL,1,0x00000080,56,2,64,NULL,'100',1,0,'bonus bMaxSP,40; .@r = getrefine(); if(.@r>7) bonus bMaxHPrate,.@r-7;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2476,'Peuz_Greave','Peuz\'s Greaves',4,20,NULL,900,NULL,32,NULL,1,0x00000080,56,2,64,NULL,'100',1,0,'bonus bMaxSP,40; .@r = getrefine(); if(.@r>7) bonus bAgi,.@r-7;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2477,'Sabah_Shoes','Sapha Shoes',4,20,NULL,400,NULL,18,NULL,1,0x00001000,63,2,64,NULL,'100',1,0,'bonus bMaxSP,30; bonus bLuk,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2478,'Nab_Shoes','Nab Shoes',4,20,NULL,400,NULL,18,NULL,1,0x00001000,63,2,64,NULL,'100',1,0,'bonus bFlee,3; bonus bInt,2;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2479,'White_Wing_Boots','White Wing Boots',4,20,NULL,400,NULL,18,NULL,1,0x00000800,63,2,64,NULL,'100',1,0,'bonus bAgi,2; bonus2 bSkillUseSP,"RA_AIMEDBOLT",10;',NULL,NULL);
