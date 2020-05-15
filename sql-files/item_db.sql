@@ -774,8 +774,8 @@ REPLACE INTO `item_db` VALUES (1469,'Longinus\'s_Spear','Longinus\'s Spear',5,20
 REPLACE INTO `item_db` VALUES (1470,'Brionac','Brionac',5,20,NULL,3000,190,NULL,3,0,0x00004082,7,2,34,4,48,1,5,'bonus bAtkEle,Ele_Holy; skill "AL_HEAL",5; bonus3 bAutoSpell,"MG_SOULSTRIKE",3,100; bonus2 bAddClass,Class_Boss,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1471,'Hell_Fire','Hellfire',5,20,NULL,3500,200,NULL,3,0,0x00004082,7,2,34,4,48,1,5,'bonus bAtkEle,Ele_Fire; bonus3 bAutoSpell,"MG_FIREBALL",3,100; bonus bStr,3;',NULL,NULL);
 # 2-Handed Staffs
-REPLACE INTO `item_db` VALUES (1472,'Staff_Of_Soul','Soul Staff',5,20,NULL,1400,25,NULL,1,0,0x00810204,7,2,34,3,73,1,10,'bonus bInt,5; bonus bAgi,2; bonus bMatkRate,15;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (1473,'Wizardy_Staff','Wizardry Staff',5,20,NULL,2400,120,NULL,1,0,0x00810204,7,2,34,4,90,1,10,'bonus bInt,6; bonus bDex,2; bonus bMatkRate,15;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (1472,'Staff_Of_Soul','Soul Staff',5,20,NULL,1400,25,NULL,1,0,0x00810204,7,2,34,3,73,1,23,'bonus bInt,5; bonus bAgi,2; bonus bMatkRate,15;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (1473,'Wizardy_Staff','Wizardry Staff',5,20,NULL,2400,120,NULL,1,0,0x00810204,7,2,34,4,90,1,23,'bonus bInt,6; bonus bDex,2; bonus bMatkRate,15;',NULL,NULL);
 # 2-Handed Spears
 REPLACE INTO `item_db` VALUES (1474,'Gae_Bolg','Gae Bolg',5,20,NULL,2000,160,NULL,3,0,0x00004082,7,2,34,4,60,1,5,'bonus bIgnoreDefRace,RC_Dragon; bonus2 bAddClass,Class_Boss,10;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1475,'Horseback_Lance','Equestrian\'s Spear',5,20,NULL,3700,200,NULL,4,0,0x00004082,7,2,34,4,75,1,5,NULL,NULL,NULL);
@@ -4871,8 +4871,8 @@ REPLACE INTO `item_db` VALUES (12270,'Tasty_Major','Tasty White Ration',2,2,NULL
 REPLACE INTO `item_db` VALUES (12271,'Mre_A','Military Ration A',0,2,NULL,70,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 5,0;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12272,'Mre_B','Military Ration B',2,2,NULL,70,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_INCHIT,600000,33;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12273,'Mre_C','Military Ration C',2,2,NULL,70,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_INCFLEE,600000,33;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (12274,'Gold_Pill_1','Daehwandan',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_INCMHPRATE,3600000,5; percentheal 10,0;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (12275,'Gold_Pill_2','Taecheongdan',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_INCMSPRATE,3600000,5; percentheal 0,10;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (12274,'Gold_Pill_1','Daehwandan',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start2 SC_INCREASE_MAXHP,3600000,5,10; percentheal 10,0;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (12275,'Gold_Pill_2','Taecheongdan',0,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start2 SC_INCREASE_MAXSP,3600000,5,10; percentheal 0,10;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12276,'Mimic_Scroll','Mimic Scroll',2,2,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'mercenary_create 2058,1800000;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12277,'Disguise_Scroll','Disguise Scroll',2,2,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'mercenary_create 2059,1800000;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12278,'Alice_Scroll','Alice Scroll',2,2,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'mercenary_create 2060,1800000;',NULL,NULL);

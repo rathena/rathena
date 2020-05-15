@@ -5,7 +5,7 @@ out=npc/scripts_custom.conf
 printf "\n" >> $out
 echo "// Custom Scripts" >> $out
 
-find npc/custom \( -name "*.txt" -and -not -wholename "*/battleground/*" \) | xargs -I % echo "npc: %" >> $out
+find npc/custom \( -name "*.txt" \) | xargs -I % echo "npc: %" >> $out
 
 echo "// Test Scripts" >> $out
 

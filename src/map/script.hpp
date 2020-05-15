@@ -160,7 +160,6 @@ struct Script_Config {
 	const char *loadmap_event_name;
 	const char *baselvup_event_name;
 	const char *joblvup_event_name;
-	const char *stat_calc_event_name;
 
 	// NPC related
 	const char* ontouch_event_name;
@@ -1967,6 +1966,13 @@ enum e_hat_effects {
 	HAT_EF_2019RTC2ST_TW,
 	HAT_EF_2019RTC3ST_TW,
 	HAT_EF_CONS_OF_WIND,
+	HAT_EF_MAPLE_FALLS,
+	HAT_EF_BJ_HEADSETB,
+	HAT_EF_VIP_HAIR,
+	HAT_EF_C_MAGIC_HEIR_TW,
+	HAT_EF_C_SUDDEN_WEALTH_TW,
+	HAT_EF_C_ROMANCE_ROSE_TW,
+	HAT_EF_C_DISAPEAR_TIME_TW,
 	HAT_EF_MAX
 };
 

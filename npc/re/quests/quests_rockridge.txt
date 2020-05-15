@@ -1013,7 +1013,7 @@ har_in01,89,26,5	script	Johnny James#har_in01	10213,{
 		setpcblock PCBLOCK_NPC, true;
 		npctalk "You sneaky bastards, how dare you show up again? Go to hell!", "", bc_self;
 		sleep2 2000;
-		classchange( 10212, "Ivoka Skudi#har02", bc_self );
+		cloakoffnpc  "Ivoka Skudi#har02", getcharid(0);
 		setpcblock PCBLOCK_NPC, false;
 		npctalk "Ah, you'd better show some respect to our future mayor.", "Ivoka Skudi#har02", bc_self;
 		mes "[Ivoka Skudi]";
@@ -1196,42 +1196,51 @@ OnInit:
 	end;
 }
 
-har_in01,88,22,6	script	Ivoka Skudi#har02	HIDDEN_WARP_NPC,{
+har_in01,88,22,6	script	Ivoka Skudi#har02	10212,{
 	if (rock_main_quest == 9) {
 		mes "[Ivoka Skudi]";
 		mes "(Whispering) He's more simpleminded than I thought. Let's go report to the Sheriff.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "Ivoka Skudi#har02", bc_self );
+		cloakonnpc  "Ivoka Skudi#har02", getcharid(0);
 		end;
 	}
+	end;
+OnInit:
+	cloakonnpc  "Ivoka Skudi#har02";
+	end;
 }
 
 // Fild 1
-rockrdg1,160,306,3	script	Johnny James#revt04	HIDDEN_WARP_NPC,{ end; }
-rockrdg1,168,306,3	duplicate(Johnny James#revt04)	Albert Ford#revt08	HIDDEN_WARP_NPC
-rockrdg1,156,302,7	duplicate(Johnny James#revt04)	Ivoka Skudi#revt02	HIDDEN_WARP_NPC
-rockrdg1,156,306,5	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt01	HIDDEN_WARP_NPC
-rockrdg1,161,302,1	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt02	HIDDEN_WARP_NPC
-rockrdg1,164,306,3	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt03	HIDDEN_WARP_NPC
+rockrdg1,160,306,3	script	Johnny James#revt04	10213,{
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
+}
+rockrdg1,168,306,3	duplicate(Johnny James#revt04)	Albert Ford#revt08	10214
+rockrdg1,156,302,7	duplicate(Johnny James#revt04)	Ivoka Skudi#revt02	10212
+rockrdg1,156,306,5	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt01	10212
+rockrdg1,161,302,1	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt02	10212
+rockrdg1,164,306,3	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt03	10212
 
 rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 	if (rock_main_quest == 5) {
 		setpcblock PCBLOCK_NPC, true;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I think this is the place, but maybe I came too early.", bc_self;
 		sleep2 3000;
-		classchange( 10213, "Johnny James#revt04", bc_self );
+		cloakoffnpc "Johnny James#revt04", getcharid(0);
 		emotion ET_QUESTION, getnpcid(0, "Johnny James#revt04");
 		sleep2 200;
 		npctalk "Who's this? You're not the one I was expecting.", "Johnny James#revt04", bc_self;
 		sleep2 1000;
-		classchange( 10214, "Albert Ford#revt08", bc_self );
+		cloakoffnpc "Albert Ford#revt08", getcharid(0);
 		npctalk "Hey Boss, I told you not to go without me.", "Albert Ford#revt08", bc_self;
 		sleep2 2000;
 		npctalk "Mm? I don't remember if Costello looks like that.", "Albert Ford#revt08", bc_self;
 		sleep2 1500;
 		npctalk "Hey, I'm having an important meeting here. Scram!", "Johnny James#revt04", bc_self;
 		sleep2 3000;
-		classchange( 10211, "Wyatt Warp#revt03", bc_self );
+		cloakoffnpc "Wyatt Warp#revt03", getcharid(0);
 		npctalk "Johnny James? You shouldn't be so rude to the Officer.", "Wyatt Warp#revt03", bc_self;
 		sleep2 2500;
 		npctalk "Ah, the sheriff's here. Who's that with you? I told you I wanted to talk to the mayor.", "Johnny James#revt04", bc_self;
@@ -1263,14 +1272,14 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 		sleep2 500;
 		specialeffect EF_SCREEN_QUAKE,AREA,"Johnny James#revt04";
 		sleep2 200;
-		classchange( 10212, "Ivoka Skudi#revt02", bc_self );
+		cloakoffnpc "Ivoka Skudi#revt02", getcharid(0);
 		npctalk "Freeze!", "Ivoka Skudi#revt02", bc_self;
 		sleep2 800;
 		specialeffect EF_NPC_STOP,AREA,"Johnny James#revt04";
 		sleep2 200;
-		classchange( 10212, "Cactus Gunslinger#revt01", bc_self );
-		classchange( 10212, "Cactus Gunslinger#revt02", bc_self );
-		classchange( 10212, "Cactus Gunslinger#revt03", bc_self );
+		cloakoffnpc "Cactus Gunslinger#revt01", getcharid(0);
+		cloakoffnpc "Cactus Gunslinger#revt02", getcharid(0);
+		cloakoffnpc "Cactus Gunslinger#revt03", getcharid(0);
 		npctalk "Freeze!", "Cactus Gunslinger#revt01", bc_self;
 		npctalk "You're trapped", "Cactus Gunslinger#revt03", bc_self;
 		npctalk "Buffaloes!", "Cactus Gunslinger#revt02", bc_self;
@@ -1293,7 +1302,7 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 		sleep2 2000;
 		npctalk "I-I'll go bring the rest of our gang!", "Albert Ford#revt08", bc_self;
 		sleep2 1000;
-		classchange( HIDDEN_WARP_NPC, "Albert Ford#revt08", bc_self );
+		cloakonnpc "Albert Ford#revt08", getcharid(0);
 		npctalk "WHAT?", "Johnny James#revt04", bc_self;
 		sleep2 1000;
 		npctalk "ALBERT!", "Johnny James#revt04", bc_self;
@@ -1318,11 +1327,11 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 		sleep2 1000;
 		npctalk "Guys, let's go!", "Ivoka Skudi#revt02", bc_self;
 		sleep2 2000;
-		classchange( HIDDEN_WARP_NPC, "Ivoka Skudi#revt02", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Cactus Gunslinger#revt01", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Cactus Gunslinger#revt02", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Cactus Gunslinger#revt03", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Johnny James#revt04", bc_self );
+		cloakonnpc "Ivoka Skudi#revt02", getcharid(0);
+		cloakonnpc "Cactus Gunslinger#revt01", getcharid(0);
+		cloakonnpc "Cactus Gunslinger#revt02", getcharid(0);
+		cloakonnpc "Cactus Gunslinger#revt03", getcharid(0);
+		cloakonnpc "Johnny James#revt04", getcharid(0);
 		sleep2 2000;
 		npctalk "Let's go back, shall we?", "Wyatt Warp#revt03", bc_self;
 		rock_main_quest = 6;
@@ -1339,7 +1348,7 @@ OnInit:
 	end;
 }
 
-rockrdg1,153,303,5	script	Wyatt Warp#revt03	HIDDEN_WARP_NPC,{
+rockrdg1,153,303,5	script	Wyatt Warp#revt03	10211,{
 	if (rock_main_quest == 6) {
 		mes "[Wyatt Warp]";
 		mes "Ivoka's plan worked flawlessly.";
@@ -1356,9 +1365,13 @@ rockrdg1,153,303,5	script	Wyatt Warp#revt03	HIDDEN_WARP_NPC,{
 		mes "[Wyatt Warp]";
 		mes "Let's go back to my office.";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc  "Wyatt Warp#revt03", getcharid(0);
 		end;
 	}
+	end;
+OnInit:
+	cloakonnpc "Wyatt Warp#revt03";
+	end;
 }
 
 harboro1,288,193,5	script	Shawn McCurdy#harboro1	10215,{
@@ -1747,14 +1760,14 @@ rockrdg2,279,313,3	script	Concaved Rock#revt09	4_ENERGY_RED,{
 			close;
 		}
 		npctalk "Boss? Is that you, Boss?", "Albert Ford#rockrdg2", bc_self;
-		classchange( 10214, "Albert Ford#rockrdg2", bc_self );
+		cloakoffnpc "Albert Ford#rockrdg2", getcharid(0);
 		close;
 	}
 	if (rock_main_quest == 14) {
 		if (countitem(25249) < 1) {
 			mes "I knocked on the signaling rock, and Albert Ford came out running.";
 			npctalk "Who are you?!", "Albert Ford#rockrdg2", bc_self;
-			classchange( 10214, "Albert Ford#rockrdg2", bc_self );
+			cloakoffnpc "Albert Ford#rockrdg2", getcharid(0);
 			close;
 		}
 		mes "I don't have to use this right now.";
@@ -1767,7 +1780,7 @@ rockrdg2,279,313,3	script	Concaved Rock#revt09	4_ENERGY_RED,{
 		}
 		mes "I knocked on the signaling rock, and Albert Ford came out running.";
 		npctalk "Who are you?!", "Albert Ford#rockrdg2", bc_self;
-		classchange( 10214, "Albert Ford#rockrdg2", bc_self );
+		cloakoffnpc "Albert Ford#rockrdg2", getcharid(0);
 		close;
 	}
 	mes "This rock creates a deep, echoing sound when struck.";
@@ -1775,7 +1788,7 @@ rockrdg2,279,313,3	script	Concaved Rock#revt09	4_ENERGY_RED,{
 	close;
 }
 
-rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
+rockrdg2,295,309,3	script	Albert Ford#rockrdg2	10214,{
 	disable_items;
 	.@account_id = getcharid(3);
 	.@player_name$ = strcharinfo(0);
@@ -1967,7 +1980,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 		setquest 7803;// Happy for Broken Trust
 		rock_main_quest = 14;
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc strnpcinfo(0), getcharid(0);
 		end;
 	}
 	if (rock_main_quest == 14 && countitem(25249) < 1) {
@@ -1985,7 +1998,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 		mes "Here, take it.";
 		getitem 25249,1;// Buffalo_Bandit_Mane
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc strnpcinfo(0), getcharid(0);
 		end;
 	}
 	if (rock_main_quest == 20 && checkquest(7807,HUNTING) == 2) {
@@ -1997,7 +2010,7 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 			mes "What? What is it?";
 			mes "Don't call me unless you have something to tell me!";
 			close2;
-			classchange( HIDDEN_WARP_NPC, "", bc_self );
+			cloakonnpc strnpcinfo(0), getcharid(0);
 			end;
 		}
 		mes "[Albert Ford]";
@@ -2098,10 +2111,14 @@ rockrdg2,295,309,3	script	Albert Ford#rockrdg2	HIDDEN_WARP_NPC,{
 			setquest 7808;// Case Solved
 			rock_main_quest = 21;
 			close2;
-			classchange( HIDDEN_WARP_NPC, "", bc_self );
+			cloakonnpc strnpcinfo(0), getcharid(0);
 		}
 		end;
 	}
+	end;
+OnInit:
+	cloakonnpc strnpcinfo(0);
+	end;
 }
 
 
@@ -2402,7 +2419,7 @@ function	script	F_cacturon	{
 		}
 		if (getstrlen(strnpcinfo(2)) < 3)
 			.@string$ = "_bis";
-		classchange( HIDDEN_WARP_NPC, "Suspicious Sand Mound#" + strnpcinfo(2) + .@string$, bc_self );
+		cloakonnpc "Suspicious Sand Mound#" + strnpcinfo(2) + .@string$, getcharid(0);
 		close;
 	}
 	mes "- Someone must have piled this mound of sand. -";
@@ -4782,7 +4799,7 @@ rockrdg1,36,250,5	script	Mr. McPhy#rkdlout	4W_M_02,{
 	case 1328:
 		mes "[Mr. McPhy]";
 		mes "Did you find something? Then let's go back!";
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc strnpcinfo(0), getcharid(0);
 		close;
 	case 1329:
 		mes "[Mr. McPhy]";
@@ -4801,7 +4818,7 @@ rockrdg1,36,250,5	script	Mr. McPhy#rkdlout	4W_M_02,{
 		mes "[Mr. McPhy]";
 		mes "*Gasp* Buffalo Bandits!";
 		close2;
-		classchange( HIDDEN_WARP_NPC, "", bc_self );
+		cloakonnpc strnpcinfo(0), getcharid(0);
 		end;
 	}
 	end;

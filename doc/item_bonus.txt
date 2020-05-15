@@ -25,7 +25,8 @@ This list contains all available constants referenced in the 'bonus' commands.
 	RC_Insect, RC_Plant, RC_Player, RC_Undead, RC_All
 
 * Monster Race (mr)
-	RC2_Goblin, RC2_Kobold, RC2_Orc, RC2_Golem, RC2_Guardian, RC2_Ninja
+	RC2_Goblin, RC2_Kobold, RC2_Orc, RC2_Golem, RC2_Guardian, RC2_Ninja,
+	RC2_BioLab, RC2_SCARABA, RC2_FACEWORM, RC2_THANATOS, RC2_CLOCKTOWER, RC2_ROCKRIDGE
 	See 'db/(pre-)re/mob_race2_db.txt'
 
 * Class (c)
@@ -58,6 +59,7 @@ This list contains all available constants referenced in the 'bonus' commands.
 	ATF_LONG	= Trigger on ranged attacks
 	
 	Skill/attack type criteria: (Default: Physical/weapon)
+	ATF_SKILL	= Trigger on magic/misc skills
 	ATF_WEAPON	= Trigger on weapon skill / physical attacks
 	ATF_MAGIC	= Trigger on magic skills
 	ATF_MISC	= Trigger on misc skills
@@ -274,7 +276,6 @@ Ignore Def
 ----------
 bonus bIgnoreDefEle,e;  		Disregard DEF against enemies of element e
 bonus bIgnoreDefRace,r; 		Disregard DEF against enemies of race r
-bonus2 bIgnoreDefRaceRate,r,n;  	Disregard n% of the target's DEF if the target belongs to race r
 bonus bIgnoreDefClass,c;		Disregard DEF against enemies of class c
 bonus bIgnoreMDefRace,r;		Disregard MDEF against enemies of race r
 bonus2 bIgnoreDefRaceRate,r,n; 	Disregard n% of the target's DEF if the target belongs to race r
@@ -310,6 +311,7 @@ bonus4 bAddEffWhenHit,eff,n,atf,t;	Adds a n/100% chance to cause status eff for 
                               		  ATF_SHORT  = trigger on melee attacks
                               		  ATF_LONG   = trigger on ranged attacks
                               		 Skill/attack type criteria: (Default: Physical/weapon)
+                             		  ATF_SKILL  = trigger on magic/misc skills
                               		  ATF_WEAPON = trigger on weapon skill / physical attacks
                               		  ATF_MAGIC  = trigger on magic skills
                               		  ATF_MISC   = trigger on misc skills
