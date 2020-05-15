@@ -4971,15 +4971,9 @@
 6956,Captured_Sheep,Captured Sheep,3,10,,0,,,,,,,,,,,,,{},{},{}
 6957,Lamb_Fleece,Lamb Fleece,3,10,,0,,,,,,,,,,,,,{},{},{}
 6958,Lamb_Horns,Lamb Horns,3,10,,0,,,,,,,,,,,,,{},{},{}
-<<<<<<< HEAD
-6960,Key_Air_Fortress,Key Air Fortress,3,10,,10,,,,,,,,,,,,,{},{},{}
+6960,Air_Stronghold_Key,Sky Fortress Key,3,10,,10,,,,,,,,,,,,,{},{},{}
 6961,LargeScrap,Huge Metal Scrap,3,10,0,1000,,,,,,,,,,,,,{},{},{}
 6962,OldTank,Old Fuel,3,10,0,100,,,,,,,,,,,,,{},{},{}
-=======
-6960,Air_Stronghold_Key,Sky Fortress Key,3,10,,10,,,,,,,,,,,,,{},{},{}
-6961,Huge_Metal_Scrap,Huge Metal Scrap,3,10,0,1000,,,,,,,,,,,,,{},{},{}
-6962,Old_Fuel,Old Fuel,3,10,0,100,,,,,,,,,,,,,{},{},{}
->>>>>>> master
 
 6965,Reactor_P_FIRE_,Fire Property Reactor Blueprint,3,0,,10,,,,,,,,,,,,,{},{},{}
 6966,Reactor_P_WATER_,Water Property Reactor Blueprint,3,0,,10,,,,,,,,,,,,,{},{},{}
