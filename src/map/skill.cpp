@@ -20164,26 +20164,28 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 							break;
 					}
 
-					make_per = status->int_ + status->dex / 2 + status->luk + sd->status.job_level + (30 + rnd() % 120) + // (Caster's INT) + (Caster's DEX / 2) + (Caster's LUK) + (Caster's Job Level) + Random number between (30 ~ 150) +
-						sd->status.base_level + 5 * (pc_checkskill(sd, AM_LEARNINGPOTION) - 20) + pc_checkskill(sd, CR_FULLPROTECTION) * (6 + rnd() % 4); // (Caster's Base Level - 100) + (5 x (Potion Research - 20)) + (Full Chemical Protection Skill Level) x (Random number between 6 ~ 10)
+					make_per = status->int_ + status->dex / 2 + status->luk + sd->status.job_level + (30 + rnd() % 120 + 1) + // Caster's INT + (Caster's DEX / 2) + Caster's LUK + Caster's Job Level + Random number between (30 ~ 150) +
+						sd->status.base_level + 5 * (pc_checkskill(sd, AM_LEARNINGPOTION) - 20) + pc_checkskill(sd, CR_FULLPROTECTION) * (6 + rnd() % 4 + 1); // Caster's Base Level + (5 x (Potion Research Skill Level - 20)) + (Full Chemical Protection Skill Level x Random number between (6 ~ 10))
 					make_per -= difficulty;
 					qty = production_count[skill_lv - 1];
 
 					// Determine quantity from difficulty
-					if (make_per < 400)
+					if (make_per >= 400)
 						qty -= 3;
-					else if (make_per < 300)
+					else if (make_per >= 300)
 						qty -= 4;
-					else if (make_per < 100)
+					else if (make_per >= 100)
 						qty -= 5;
-					else if (make_per < 1)
+					else if (make_per >= 1)
 						qty -= 6;
+
+					make_per = 100000; // Adjust success back to 100% for crafting
 				}
 				break;
 			case GN_MAKEBOMB:
 			case GN_MIX_COOKING:
 				{
-					int difficulty = 30 + rnd() % 120; // Random number between (30 ~ 150)
+					int difficulty = 30 + rnd() % 120 + 1; // Random number between (30 ~ 150)
 
 					switch (nameid) { // Item difficulty factor
 						// GN_MAKEBOMB
@@ -20216,6 +20218,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 					if (skill_lv > 1) {
 						make_per -= difficulty;
 
+						// Determine quantity from difficulty
 						if (make_per >= 30)
 							qty = 10 + rnd() % 2;
 						else if (make_per >= 10)
@@ -20224,16 +20227,14 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 							qty = 8;
 						else if (make_per >= -30)
 							qty = 5;
-						else {
+						else
 							qty = 0;
-							make_per = 100000; // Adjust success back to 100% for crafting
-						}
 					} else {
 						if (make_per < difficulty)
 							qty = 0;
-
-						make_per = 100000; // Adjust success back to 100% for crafting
 					}
+
+					make_per = 100000; // Adjust success back to 100% for crafting
 				}
 				break;
 			default:
