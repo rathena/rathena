@@ -20170,14 +20170,14 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 					qty = production_count[skill_lv - 1];
 
 					// Determine quantity from difficulty
-					if (make_per >= 400)
-						qty -= 3;
-					else if (make_per >= 300)
-						qty -= 4;
-					else if (make_per >= 100)
-						qty -= 5;
-					else if (make_per >= 1)
+					if (make_per < 1)
 						qty -= 6;
+					else if (make_per < 100)
+						qty -= 5;
+					else if (make_per < 300)
+						qty -= 4;
+					else if (make_per < 400)
+						qty -= 3;
 
 					make_per = 100000; // Adjust success back to 100% for crafting
 				}
