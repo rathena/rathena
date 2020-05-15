@@ -26856,6 +26856,27 @@ BUILDIN_FUNC(isdead) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/// Displays the button 'close' on the npc dialog and clear the cutin
+BUILDIN_FUNC(close3)
+{
+	TBL_PC* sd;
+
+	if( !script_rid2sd(sd) )
+		return SCRIPT_CMD_SUCCESS;
+
+	if( !st->mes_active ) {
+		st->state = END; // Keep backwards compatibility.
+		ShowWarning("Incorrect use of 'close3' command!\n");
+		script_reportsrc(st);
+	} else {
+		st->state = CLOSE3;
+		st->mes_active = 0;
+	}
+	clif_scriptclose(sd, st->oid);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -27609,6 +27630,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getfame, "?"),
 	BUILDIN_DEF(getfamerank, "?"),
 	BUILDIN_DEF(isdead, "?"),
+	BUILDIN_DEF(close3,""),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
