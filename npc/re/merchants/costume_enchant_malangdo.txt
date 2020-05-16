@@ -1,0 +1,529 @@
+//===== rAthena Script =======================================
+//= Malangdo Costume Enchant
+//===== Changelogs: ==========================================
+//= 1.0 First version.
+//============================================================
+
+mal_in01,22,112,2	script	Aver De Dosh	505,{
+	disable_items;
+	mes "[Aver De Dosh]";
+	mes "Hello and welcome to Costume Enchant Shop.";
+	mes "My name is Aver De Dosh and I am here to enchant your costume headgears.";
+	next;
+	mes "[Aver De Dosh]";
+	mes "Bring me the required enchant stones and the selected costume headgears so that I can complete the upgrade for you!";
+	next;
+	switch (select ("Apply Ability", "End Conversation")) {
+	case 1:
+		mes "[Aver De Dosh]";
+		mes "What part of costume headgear do you want to strengthen?";
+		next;
+		switch (select ("Costume Upper Headgear", "Costume Middle Headgear", "Costume Lower Headgear")) {
+			case 1:	
+				.@equip_id = getequipid(EQI_COSTUME_HEAD_TOP);
+				
+				switch (.@equip_id) {
+				case 19597:		case 19602:		case 19608:
+				case 19654:		case 19677:		case 19712:
+				case 19721:		case 19840:		case 19876:
+				case 19884:		case 19907:		case 19915:
+				case 20007:		case 20008:		case 20009:
+				case 20011:		case 20012:		case 20018:
+				case 20036:		case 20038:		case 20113:
+				case 20160:		case 20227:		case 20266:
+				case 20273:		case 20278:		case 20377:
+				case 20398:		case 20317:		case 20449:
+				case 20450:		case 20451:		case 20491:
+				case 20495:		case 20496:		case 20498:
+				case 20499:		case 31027:		case 31028:
+				case 31040:		case 31041:		case 31042:
+				case 31043:		case 31044:		case 31045:
+				case 31046:		case 31048:		case 31062:
+				case 31068:		case 31092:		case 31123:
+				case 31160:		case 31163:		case 31165:
+				case 31166:		case 31182:		case 31185:
+				case 31188:		case 31190:		case 31119:
+				case 31392:		case 31394:		case 31396:
+				case 31397:		case 31405:		case 31448:
+				case 31573:		case 31560:		case 31562:
+				case 31564:		case 31565:
+				break;
+				case -1:
+					mes "[Aver De Dosh]";
+					mes "Are you wearing the item?";
+					close;				
+				default:
+					mes "[Aver De Dosh]";
+					mes "This is not the right costume upper headgear.";
+					close;
+				}	
+
+				.@equip_name$ = getequipname(EQI_COSTUME_HEAD_TOP);
+				
+				setarray .@card[0], 
+					getequipcardid(EQI_COSTUME_HEAD_TOP,0), 
+					getequipcardid(EQI_COSTUME_HEAD_TOP,1), 
+					getequipcardid(EQI_COSTUME_HEAD_TOP,2), 
+					getequipcardid(EQI_COSTUME_HEAD_TOP,3);
+				
+				setarray .@stone[0],
+					6636, //str +1					
+					6637, //int +1
+					6638, //agi +1
+					6639, //dex +1
+					6640, //vit +1
+					6641, //luk +1
+					6716, //crit +1
+					6790, //largesize +1%
+					6791, //medsize +1%
+					6792, //smallsize +1%
+					6943, //atk +1%
+					6944, //matk +1%
+					25000, //spdrain +1%
+					25068; //aspd +1
+					
+				setarray .@enchant[0], 
+					4700, //str +1
+					4710, //int +1
+					4730, //agi +1
+					4720, //dex +1
+					4740, //vit +1
+					4750, //luk +1
+					4926, //crit +1
+					4936, //largesize +1%
+					4937, //medsize +1%
+					4938, //smallsize +1%
+					4882, //atk +1%
+					4883, //matk +1%
+					4993, //spdrain +1%
+					4807; //aspd +1
+					
+				setarray .@enchant_list$[0],
+					"STR Stone",
+					"INT Stone",
+					"AGI Stone",
+					"DEX Stone",
+					"VIT Stone",
+					"LUK Stone",
+					"CRIT Stone",
+					"Big Stone",
+					"Medium Stone",
+					"Small Stone",
+					"ATK Stone",
+					"MATK Stone",
+					"SP Absorption Stone",
+					"ASPD Stone"; 
+					
+				mes "[Aver De Dosh]";
+				mes "Wow~ This ^0000FF"+getitemname (.@equip_id)+"^000000 looks perfect on you!!!";
+				mes "What kind of stone do you want to use for the upgrade?";
+				next;
+				for (.@a = 0; .@a < getarraysize(.@enchant_list$); ++.@a)
+					.@menu$ += .@enchant_list$[.@a] + " " + "(" + countitem(.@stone[.@a]) + " " + "Left" + ")" + ":";
+				.@type = select (.@menu$) - 1;
+				
+				mes "^FF0000[WARNING]^000000";
+				mes "------------------------";
+				mes "^FF0000I am going to implement the special effect of "+getitemname (.@stone[.@type])+" on your costume upper headgear.^000000";
+				mes "------------------------";
+				mes "^FF0000This upgrade has a success rate of 50%.^000000";
+				mes "------------------------";
+				mes "^FF0000The costume will not be destroyed upon failure but the enchant stone will be consumed.^000000";
+				mes "------------------------";
+				mes "^FF0000Any previous ability on this costume will be removed upon success.^000000";
+				mes "------------------------";		
+				mes "^FF0000Are you sure about enchanting this costume?^000000";
+				next;
+				if (select( "Yes", "No" ) == 2) 
+					close;
+					
+				if (countitem(.@stone[.@type]) < 1) {
+					mes "[Aver De Dosh]";
+					mes "You do not have adequate quantity of ^0000FF"+getitemname (.@stone[.@type])+".^000000";
+					close;
+				}
+						
+				//Need confirmation:Enchants can be overlapped?
+			/*	if (.@card[0] > 0) {
+					mes "[Aver De Dosh]";
+					mes "Your ^0000FF"+getitemname (.@equip_id)+"^000000 is already enchanted.";
+					close;
+				}	*/					
+					
+				delitem	.@stone[.@type],1;
+				if (rand (1,100) < 50) {
+					mes "[Aver De Dosh]";
+					mes "Oh No!!! I failed to enchant it!!";
+					mes "Better luck next time!!";
+					close;
+				} 
+				else {
+					delequip EQI_COSTUME_HEAD_TOP;	
+					getitem2 .@equip_id,1,1,0,0,.@enchant[.@type],.@card[1],.@card[2],.@card[3];
+					mes "[Aver De Dosh]";
+					mes "Wow....Elegance!!";
+					mes "This is perfect...Wow..";
+					close;
+				} 
+											
+			case 2:
+				.@equip_id = getequipid(EQI_COSTUME_HEAD_MID);
+				
+				switch (.@equip_id) {
+				case 19603:		case 20005:		case 20010:
+				case 20145:		case 20146:		case 20147:
+				case 20149:		case 20314:		case 20318:
+				case 20430:		case 31047:		case 31120:
+				case 31122:		case 31146:		case 31167:
+				case 31168:		case 31183:		case 31184:
+				case 31186:		case 31187:		case 31391:
+				case 31398:		case 31399:		case 20246:
+				case 31449:		case 31463:		case 31561:
+				case 31563:		case 31574:		
+				break;
+				case -1:
+					mes "[Aver De Dosh]";
+					mes "Are you wearing the item?";
+					close;				
+				default:
+					mes "[Aver De Dosh]";
+					mes "This is not the right costume middle headgear.";
+					close;
+				}				
+
+				.@equip_name$ = getequipname(EQI_COSTUME_HEAD_MID);
+				
+				setarray .@card[0], 
+					getequipcardid(EQI_COSTUME_HEAD_MID,0), 
+					getequipcardid(EQI_COSTUME_HEAD_MID,1), 
+					getequipcardid(EQI_COSTUME_HEAD_MID,2), 
+					getequipcardid(EQI_COSTUME_HEAD_MID,3);
+				
+				setarray .@stone[0],				
+					6945, //str +1					
+					6946, //int +1
+					6947, //agi +1
+					6948, //dex +1
+					6949, //vit +1
+					6950, //luk +1
+					6642, //atk +1%
+					6643, //matk +1%
+					6717, //hp +50
+					6742, //recoverhp +10 10s
+					6743, //maxhp +1%
+					6744; //maxsp +1%
+					
+				setarray .@enchant[0], 
+					4700, //str +1
+					4710, //int +1
+					4730, //agi +1
+					4720, //dex +1
+					4740, //vit +1
+					4750, //luk +1
+					4882, //atk +1%
+					4883, //matk +1%
+					4927, //hp +50
+					4931, //recoverhp +10 10s
+					4861, //maxhp +1%
+					4929; //maxsp +1%
+					
+				setarray .@enchant_list$[0],
+					"STR Stone",
+					"INT Stone",
+					"AGI Stone",
+					"DEX Stone",
+					"VIT Stone",
+					"LUK Stone",
+					"ATK Stone",
+					"MATK Stone",
+					"HP+50 Stone",
+					"Recovery Stone",
+					"HP+1% Stone",
+					"SP+1% Stone";
+					
+				mes "[Aver De Dosh]";
+				mes "Wow~ This ^0000FF"+getitemname (.@equip_id)+"^000000 looks perfect on you!!!";
+				mes "What kind of stone do you want to use for the upgrade?";
+				next;
+				for (.@a = 0; .@a < getarraysize(.@enchant_list$); ++.@a)
+					.@menu$ += .@enchant_list$[.@a] + " " + "(" + countitem(.@stone[.@a]) + " " + "Left" + ")" + ":";
+				.@type = select (.@menu$) - 1;
+				
+				mes "^FF0000[WARNING]^000000";
+				mes "------------------------";
+				mes "^FF0000I am going to implement the special effect of "+getitemname (.@stone[.@type])+" on your costume middle headgear.^000000";
+				mes "------------------------";
+				mes "^FF0000This upgrade has a success rate of 50%.^000000";
+				mes "------------------------";
+				mes "^FF0000The costume will not be destroyed upon failure but the enchant stone will be consumed.^000000";
+				mes "------------------------";
+				mes "^FF0000Any previous ability on this costume will be removed upon success.^000000";
+				mes "------------------------";		
+				mes "^FF0000Are you sure about enchanting this costume?^000000";
+				next;
+		
+				if (select( "Yes", "No" ) == 2) 
+					close;		
+						
+				if (countitem(.@stone[.@type]) < 1) {
+					mes "[Aver De Dosh]";
+					mes "You do not have adequate quantity of ^0000FF"+getitemname (.@stone[.@type])+".^000000";
+					close;
+				}
+					
+			//Need confirmation:Enchants can be overlapped?
+			/*	if (.@card[1] > 0) {
+					mes "[Aver De Dosh]";
+					mes "Your ^0000FF"+getitemname (.@equip_id)+"^000000 is already enchanted.";
+					close;
+				}	*/				
+ 					
+				delitem	.@stone[.@type],1;
+				if (rand (1,100) < 50) {
+					mes "[Aver De Dosh]";
+					mes "Oh No!!! I failed to enchant it!!";
+					mes "Better luck next time!!";
+					close;
+				}
+				else {
+					delequip EQI_COSTUME_HEAD_MID;	
+					getitem2 .@equip_id,1,1,0,0,.@card[0],.@enchant[.@type],.@card[2],.@card[3];
+					mes "[Aver De Dosh]";
+					mes "Wow....Elegance!!";
+					mes "This is perfect...Wow..";
+					close;
+				}
+		
+			case 3:				
+				.@equip_id = getequipid(EQI_COSTUME_HEAD_LOW);
+				
+				switch (.@equip_id) {
+			  /*case 5914:*/	case 19513:		case 19514:
+				case 19552:		case 19553:		case 19584:
+				case 19604:		case 19636:		case 19764:
+				case 19783:		case 19785:		case 19952:
+				case 20034:		case 20071:		case 20132:
+				case 20285:		case 20315:		case 20363:
+				case 20370:		case 20405:		case 20407:
+				case 20497:		case 31029:		case 31055:
+				case 31087:		case 31121:		case 31162:
+				case 31164:		case 31181:		case 31189:
+				case 31393:		case 31395:		case 31399:
+				case 31438:		case 31453:		case 31572:
+				case 31575:		case 31559:		case 31566:
+				break;
+				case -1:
+					mes "[Aver De Dosh]";
+					mes "Are you wearing the item?";
+					close;						
+				default:
+					mes "[Aver De Dosh]";
+					mes "This is not the right costume lower headgear.";
+					close;
+				}
+		
+				.@equip_name$ = getequipname(EQI_COSTUME_HEAD_LOW);
+				
+				setarray .@card[0], 
+					getequipcardid(EQI_COSTUME_HEAD_LOW,0), 
+					getequipcardid(EQI_COSTUME_HEAD_LOW,1), 
+					getequipcardid(EQI_COSTUME_HEAD_LOW,2), 
+					getequipcardid(EQI_COSTUME_HEAD_LOW,3);
+				
+				setarray .@stone[0],				
+					6644, //hit +1					
+					6645, //flee +1
+					6718, //sp +10
+					6951; //hp +1%
+					
+				setarray .@enchant[0], 
+					4884, //hit +1
+					4859, //flee +1
+					4928, //sp +10
+					4861; //hp +1%
+				
+				setarray .@enchant_list$[0],
+					"HIT Stone",
+					"FLEE Stone",
+					"SP+10 Stone",
+					"HP+1% Stone";
+		
+				mes "[Aver De Dosh]";
+				mes "Wow~ This ^0000FF"+getitemname (.@equip_id)+"^000000 looks perfect on you!!!";
+				mes "What kind of stone do you want to use for the upgrade?";
+				next;
+				for (.@a = 0; .@a < getarraysize(.@enchant_list$); ++.@a)
+					.@menu$ += .@enchant_list$[.@a] + " " + "(" + countitem(.@stone[.@a]) + " " + "Left" + ")" + ":";
+				.@type = select (.@menu$) - 1;
+				
+
+				mes "^FF0000[WARNING]^000000";
+				mes "------------------------";
+				mes "^FF0000I am going to implement the special effect of "+getitemname (.@stone[.@type])+" on your costume lower headgear.^000000";
+				mes "------------------------";
+				mes "^FF0000This upgrade has a success rate of 50%.^000000";
+				mes "------------------------";
+				mes "^FF0000The costume will not be destroyed upon failure but the enchant stone will be consumed.^000000";
+				mes "------------------------";
+				mes "^FF0000Any previous ability on this costume will be removed upon success.^000000";
+				mes "------------------------";		
+				mes "^FF0000Are you sure about enchanting this costume?^000000";
+				next;
+		
+				if (select( "Yes", "No" ) == 2) 
+					close;	
+
+				if (countitem(.@stone[.@type]) < 1) {
+					mes "[Aver De Dosh]";
+					mes "You do not have adequate quantity of ^0000FF"+getitemname (.@stone[.@type])+".^000000";
+					close;
+				}	
+					
+				//Need confirmation:Enchants can be overlapped?
+			/*	if (.@card[2] > 0) {
+					mes "[Aver De Dosh]";
+					mes "Your ^0000FF"+getitemname (.@equip_id)+"^000000 is already enchanted.";
+					close;
+				}	*/					
+				
+				delitem	.@stone[.@type],1;
+				if (rand (1,100) < 50) {
+					mes "[Aver De Dosh]";
+					mes "Oh No!!! I failed to enchant it!!";
+					mes "Better luck next time!!";
+					close;
+				} 
+				else {
+					delequip EQI_COSTUME_HEAD_LOW;	
+					getitem2 .@equip_id,1,1,0,0,.@card[0],.@card[1],.@enchant[.@type],.@card[3];
+					mes "[Aver De Dosh]";
+					mes "Wow....Elegance!!";
+					mes "This is perfect...Wow..";
+					close;
+				}					
+			}
+	
+	case 2:
+		mes "[Aver De Dosh]";
+		mes "Alright, come again when you have changed your mind.";
+		close;
+	}
+}	
+
+
+mal_in01,20,107,2	script	Lace La Zard	614,{
+	disable_items;
+	mes "[Lace La Zard]";
+	mes "Welcome to Fashion Stone!!";
+	mes "My name is Lace La Zard who will make your 'Power Shoulder' dream come true.";
+	next;
+	mes "[Lace La Zard]";
+	mes "Bring your Costume Garment and Garment Stone, I will complete the perfect upgrade for you!";
+	mes "I found this formula while working on my own humble body upgrading.";
+	next;
+	switch (select ("Apply Ability", "End Conversation")) {
+	case 1:
+		.@equip_id = getequipid(EQI_COSTUME_GARMENT);
+		
+		switch (.@equip_id) {
+		case 20500:		case 20502:		case 20504:
+		case 20507:		case 20509:		case 20510:
+		case 20511:		case 20512:		case 20516:
+		case 20600:		case 20727:		case 20730:
+		case 20737:		case 20746:		case 20761:
+		case 20762:		case 20763:		case 20764:
+		break;
+		case -1:
+			mes "[Lace La Zard]";
+			mes "Are you wearing the item?";
+			close;				
+		default:
+			mes "[Lace La Zard]";
+			mes "I am sorry. Please wear the proper costume garment.";
+			close;
+		}
+		
+		.@equip_name$ = getequipname(EQI_COSTUME_GARMENT);
+		
+		.@refine = getequiprefinerycnt(EQI_COSTUME_GARMENT);
+		
+		setarray .@card[0], 
+			getequipcardid(EQI_COSTUME_GARMENT,0), 
+			getequipcardid(EQI_COSTUME_GARMENT,1), 
+			getequipcardid(EQI_COSTUME_GARMENT,2), 
+			getequipcardid(EQI_COSTUME_GARMENT,3);
+		
+		setarray .@stone[0],
+			6908, //aspd +1
+			6963, //hpdrain 1%
+			6964; //spdrain 1%
+		
+		setarray .@enchant[0],
+			4807, //aspd +1
+			4992, //hpdrain 1%
+			4993; //spdrain 1% 
+			
+		setarray .@enchant_list$[0],
+			"ASPD Stone",
+			"HP Absorption Stone",
+			"SP Absorption Stone";			
+	
+		mes "[Lace La Zard]";
+		mes "Wow ^0000FF" + .@equip_name$ + "!!!^000000. You got some sense there don't you?";
+		mes "Great!!! I'm fully ready for this upgrade.";
+		next;
+		for (.@a = 0; .@a < getarraysize(.@enchant_list$); ++.@a)
+			.@menu$ += .@enchant_list$[.@a] + " " + "(" + countitem(.@stone[.@a]) + " " + "Left" + ")" + ":";
+		.@type = select (.@menu$) - 1;
+				
+		mes "^FF0000[WARNING]^000000";
+		mes "------------------------";
+		mes "^FF0000I am going to implement the special effect of "+getitemname (.@stone[.@type])+" on your costume garment.^000000";
+		mes "------------------------";
+		mes "^FF0000This upgrade has a success rate of 50%.^000000";
+		mes "------------------------";
+		mes "^FF0000The costume will not be destroyed upon failure but the enchant stone will be consumed.^000000";
+		mes "------------------------";
+		mes "^FF0000Any previous ability on this costume will be removed upon success.^000000";
+		mes "------------------------";		
+		mes "^FF0000Are you sure about enchanting this costume?^000000";
+		next;
+		
+		if (select( "Yes", "No" ) == 2) 
+			close;	
+			
+		if (countitem (.@stone[.@type]) < 1) {
+			mes "[Lace La Zard]";
+			mes "You do not have adequate quantity of ^0000FF"+getitemname (.@stone[.@type])+".^000000";
+			close;
+		}
+			
+		//Need confirmation:Enchants can be overlapped?
+	/* 	if (.@card[0] > 1) {
+			mes "[Lace La Zard]";
+			mes "This costume garment already enchanted. I cannot upgrade it any further.";
+			close;
+		}	*/	
+		
+		delitem	.@stone[.@type],1;
+		if (rand (1,100) < 50) {
+			mes "[Lace La Zard]";
+			mes "Oh No!!! I failed to enchant it!!";
+			mes "Better luck next time!!";
+			close;
+		} 
+		else {
+			delequip EQI_COSTUME_GARMENT;	
+			getitem2 .@equip_id,1,1,.@refine,0,.@enchant[.@type],.@card[1],.@card[2],.@card[3];
+			mes "[Lace La Zard]";
+			mes "Beautiful!!!";
+			mes "Did I really made this by myself??!!";
+			close;
+		}
+	
+	case 2:
+		mes "[Lace La Zard]";
+		mes "Please come back when you are ready for this great offer!";
+		close;
+	}
+}
