@@ -450,6 +450,8 @@ public:
 	uint64 parseBodyNode(const YAML::Node& node);
 };
 
+extern AbraDatabase abra_db;
+
 struct s_skill_improvise_db {
 	uint16 skill_id, per;
 };
@@ -463,6 +465,8 @@ public:
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
 };
+
+extern ImprovisedSongDatabase improvised_song_db;
 
 void do_init_skill(void);
 void do_final_skill(void);
