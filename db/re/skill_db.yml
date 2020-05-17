@@ -2381,16 +2381,13 @@ Body:
     Description: Suffragium
     MaxLevel: 3
     Type: Magic
-    TargetType: Support
+    TargetType: Self
     DamageFlags:
       NoDamage: true
       Splash: true
-    Flags:
-      NoTargetSelf: true
-    Range: 9
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 18
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
