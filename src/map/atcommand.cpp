@@ -5835,7 +5835,7 @@ ACMD_FUNC(useskill)
 		return -1;
 	}
 
-	if (!skill_id) {
+	if (!skill_id || !skill_db.find(skill_id)) {
 		clif_displaymessage(fd, msg_txt(sd, 198)); // This skill number doesn't exist.
 		return -1;
 	}
