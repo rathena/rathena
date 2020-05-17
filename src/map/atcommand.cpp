@@ -3923,14 +3923,20 @@ ACMD_FUNC(reload) {
 		clif_displaymessage(fd, msg_txt(sd,97)); // Item database has been reloaded.
 	} else if (strstr(command, "mobdb") || strncmp(message, "mobdb", 3) == 0) {
 		mob_reload();
-		pet_db.reload();
+		if (pet_db.load())
+			pet_db.reload();
+		else
+			clif_displaymessage(fd, msg_txt(sd, 1037)); // A database has failed to load and was haulted, please check the map-server console.
 		hom_reload();
 		mercenary_readdb();
 		mercenary_read_skilldb();
 		reload_elementaldb();
 		clif_displaymessage(fd, msg_txt(sd,98)); // Monster database has been reloaded.
 	} else if (strstr(command, "skilldb") || strncmp(message, "skilldb", 4) == 0) {
-		skill_reload();
+		if (skill_db.load() && abra_db.load() && improvised_song_db.load() && magic_mushroom_db.load() && reading_spellbook_db.load())
+			skill_reload();
+		else
+			clif_displaymessage(fd, msg_txt(sd, 1037)); // A database has failed to load and was haulted, please check the map-server console.
 		hom_reload_skill();
 		reload_elemental_skilldb();
 		mercenary_read_skilldb();
@@ -3945,7 +3951,10 @@ ACMD_FUNC(reload) {
 
 		config_destroy(&run_test);
 
-		atcommand_doload();
+		if (atcommand_alias_db.load())
+			atcommand_doload();
+		else
+			clif_displaymessage(fd, msg_txt(sd, 1037)); // A database has failed to load and was haulted, please check the map-server console.
 		pc_groups_reload();
 		clif_displaymessage(fd, msg_txt(sd,254)); // GM command configuration has been reloaded.
 	} else if (strstr(command, "battleconf") || strncmp(message, "battleconf", 3) == 0) {
@@ -4027,17 +4036,28 @@ ACMD_FUNC(reload) {
 		map_msg_reload();
 		clif_displaymessage(fd, msg_txt(sd,463)); // Message configuration has been reloaded.
 	} else if (strstr(command, "questdb") || strncmp(message, "questdb", 3) == 0) {
-		if (quest_db.reload())
-			clif_displaymessage(fd, msg_txt(sd,1377)); // Quest database has been reloaded.
+		if (quest_db.load()) {
+			quest_db.reload();
+			clif_displaymessage(fd, msg_txt(sd, 1377)); // Quest database has been reloaded.
+		} else
+			clif_displaymessage(fd, msg_txt(sd, 1037)); // A database has failed to load and was haulted, please check the map-server console.
 	} else if (strstr(command, "instancedb") || strncmp(message, "instancedb", 4) == 0) {
-		if (instance_db.reload())
-			clif_displaymessage(fd, msg_txt(sd,516)); // Instance database has been reloaded.
+		if (instance_db.load()) {
+			clif_displaymessage(fd, msg_txt(sd, 516)); // Instance database has been reloaded.
+		} else
+			clif_displaymessage(fd, msg_txt(sd, 1037)); // A database has failed to load and was haulted, please check the map-server console.
 	} else if (strstr(command, "achievementdb") || strncmp(message, "achievementdb", 4) == 0) {
-		achievement_db_reload();
-		clif_displaymessage(fd, msg_txt(sd,771)); // Achievement database has been reloaded.
+		if (achievement_db.load()) {
+			achievement_db_reload();
+			clif_displaymessage(fd, msg_txt(sd, 771)); // Achievement database has been reloaded.
+		} else
+			clif_displaymessage(fd, msg_txt(sd, 1037)); // A database has failed to load and was haulted, please check the map-server console.
 	} else if (strstr(command, "attendancedb") || strncmp(message, "attendancedb", 4) == 0) {
-		attendance_db.reload();
-		clif_displaymessage(fd, msg_txt(sd, 795)); // Attendance database has been reloaded.
+		if (attendance_db.load()) {
+			attendance_db.reload();
+			clif_displaymessage(fd, msg_txt(sd, 795)); // Attendance database has been reloaded.
+		} else
+			clif_displaymessage(fd, msg_txt(sd, 1037)); // A database has failed to load and was haulted, please check the map-server console.
 	}
 
 	return 0;
