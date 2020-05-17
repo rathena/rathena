@@ -8556,7 +8556,7 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 60000
@@ -8610,7 +8610,7 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 60000
@@ -8642,7 +8642,7 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 60000
@@ -8696,7 +8696,7 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 60000
@@ -8718,7 +8718,7 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 60000
@@ -8836,7 +8836,7 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 20000
@@ -8878,7 +8878,7 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 20000
@@ -8920,7 +8920,7 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 20000
@@ -8962,7 +8962,7 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 20000
@@ -9088,7 +9088,7 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 20000
@@ -9172,7 +9172,7 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 20000
@@ -9214,7 +9214,7 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 20000
