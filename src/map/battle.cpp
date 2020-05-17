@@ -7256,7 +7256,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	if (sc && sc->data[SC_WHITEIMPRISON])
 		return 0; // White Imprison does not reflect any damage
 
-	if (ssc && ssc->data[SC_REF_T_POTION])
+	if (ssc && (ssc->data[SC_REF_T_POTION] || ssc->data[SC_HELLS_PLANT]))
 		return 0;
 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
