@@ -5697,10 +5697,9 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		ATK_RATE(wd.damage, wd.damage2, ratio);
 		RE_ALLATK_RATE(&wd, ratio);
 
-		ratio = battle_calc_skill_constant_addition(&wd, src, target, skill_id, skill_lv); // other skill bonuses
+		int bonus_damage = battle_calc_skill_constant_addition(&wd, src, target, skill_id, skill_lv); // other skill bonuses
 
-		ATK_ADD(wd.damage, wd.damage2, ratio);
-		RE_ALLATK_ADD(&wd, ratio);
+		ATK_ADD(wd.damage, wd.damage2, bonus_damage);
 
 #ifdef RENEWAL
 		if(skill_id == HW_MAGICCRASHER) { // Add weapon attack for MATK onto Magic Crasher
@@ -5736,8 +5735,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		battle_attack_sc_bonus(&wd, src, target, skill_id, skill_lv);
 
 		if (sd) { //monsters, homuns and pets have their damage computed directly
-			wd.damage = wd.statusAtk + wd.weaponAtk + wd.equipAtk + wd.masteryAtk;
-			wd.damage2 = wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2 + wd.masteryAtk2;
+			wd.damage = wd.statusAtk + wd.weaponAtk + wd.equipAtk + wd.masteryAtk + bonus_damage;
+			wd.damage2 = wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2 + wd.masteryAtk2 + bonus_damage;
 			if(wd.flag&BF_LONG && (skill_id != RA_WUGBITE && skill_id != RA_WUGSTRIKE)) //Long damage rate addition doesn't use weapon + equip attack
 				ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.long_attack_atk_rate);
 		}
