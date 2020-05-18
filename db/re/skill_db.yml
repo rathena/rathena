@@ -10360,62 +10360,21 @@ Body:
     Name: ASC_BREAKER
     Description: Soul Destroyer
     MaxLevel: 10
-    Type: Misc
+    Type: Weapon
     TargetType: Attack
     DamageFlags:
-      IgnoreAtkCard: true
-      IgnoreDefense: true
-      IgnoreFlee: true
+      Critical: true
     Range: 9
     Hit: Single
     HitCount: 1
     Element: Weapon
     CastCancel: true
     CastTime: 250
-    AfterCastActDelay:
-      - Level: 1
-        Time: 1000
-      - Level: 2
-        Time: 1200
-      - Level: 3
-        Time: 1400
-      - Level: 4
-        Time: 1600
-      - Level: 5
-        Time: 1800
-      - Level: 6
-        Time: 2000
-      - Level: 7
-        Time: 2200
-      - Level: 8
-        Time: 2400
-      - Level: 9
-        Time: 2600
-      - Level: 10
-        Time: 2800
+    AfterCastActDelay: 2000
+    Cooldown: 150
     FixedCastTime: 250
     Requires:
-      SpCost:
-        - Level: 1
-          Amount: 20
-        - Level: 2
-          Amount: 20
-        - Level: 3
-          Amount: 20
-        - Level: 4
-          Amount: 20
-        - Level: 5
-          Amount: 20
-        - Level: 6
-          Amount: 30
-        - Level: 7
-          Amount: 30
-        - Level: 8
-          Amount: 30
-        - Level: 9
-          Amount: 30
-        - Level: 10
-          Amount: 30
+      SpCost: 20
   - Id: 380
     Name: SN_SIGHT
     Description: Falcon Eyes
@@ -19091,7 +19050,9 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    Range: 3
+    DamageFlags:
+      Critical: true
+    Range: 7
     Hit: Multi_Hit
     HitCount: -7
     Element: Weapon
@@ -19109,11 +19070,12 @@ Body:
         Time: 1000
       - Level: 5
         Time: 500
+    Cooldown: 700
     FixedCastTime: -1
     CastDelayFlags:
       IgnoreStatus: true
     Requires:
-      SpCost: 25
+      SpCost: 40
       State: Move_Enable
   - Id: 2023
     Name: GC_DARKILLUSION
@@ -19463,13 +19425,13 @@ Body:
       - Level: 2
         Area: 1
       - Level: 3
-        Area: 1
-      - Level: 4
-        Area: 1
-      - Level: 5
         Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
     AfterCastActDelay: 200
-    Duration1: 3000
+    Duration1: 5000
     FixedCastTime: -1
     Requires:
       SpCost: 5
@@ -19495,7 +19457,8 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    AfterCastActDelay: 1000
+    AfterCastActDelay: 500
+    Cooldown: 500
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -31587,7 +31550,7 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    Duration1: 5000
+    Duration1: 10000
     Cooldown: 60000
     FixedCastTime: -1
     Requires:
