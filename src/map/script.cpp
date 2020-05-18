@@ -15048,11 +15048,15 @@ BUILDIN_FUNC(npctalk)
 {
 	struct npc_data* nd = NULL;
 	const char* str = script_getstr(st,2);
+	int color = 0xFFFFFF;
 
 	if (script_hasdata(st, 3) && strlen(script_getstr(st,3)) > 0)
 		nd = npc_name2id(script_getstr(st, 3));
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);
+
+	if (script_hasdata(st, 5))
+		color = script_getnum(st, 5);
 
 	if (nd != NULL) {
 		send_target target = AREA;
@@ -15069,12 +15073,12 @@ BUILDIN_FUNC(npctalk)
 		}
 		safesnprintf(message, sizeof(message), "%s", str);
 		if (target != SELF)
-			clif_messagecolor(&nd->bl, color_table[COLOR_WHITE], message, false, target);
+			clif_messagecolor(&nd->bl, color, message, true, target);
 		else {
 			TBL_PC *sd = map_id2sd(st->rid);
 			if (sd == NULL)
 				return SCRIPT_CMD_FAILURE;
-			clif_messagecolor_target(&nd->bl, color_table[COLOR_WHITE], message, false, target, sd);
+			clif_messagecolor_target(&nd->bl, color, message, true, target, sd);
 		}
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -24950,7 +24954,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(atcommand,"charcommand","s"), // [MouseJstr]
 	BUILDIN_DEF(movenpc,"sii?"), // [MouseJstr]
 	BUILDIN_DEF(message,"ss"), // [MouseJstr]
-	BUILDIN_DEF(npctalk,"s??"), // [Valaris]
+	BUILDIN_DEF(npctalk,"s???"), // [Valaris]
 	BUILDIN_DEF(chatmes,"s?"), // [Jey]
 	BUILDIN_DEF(mobcount,"ss"),
 	BUILDIN_DEF(getlook,"i?"),
@@ -25291,9 +25295,9 @@ struct script_function buildin_func[] = {
 
 
 	BUILDIN_DEF(getequiprefinecost,"iii?"),
-	BUILDIN_DEF2(round, "round", "i"),
-	BUILDIN_DEF2(round, "ceil", "i"),
-	BUILDIN_DEF2(round, "floor", "i"),
+	BUILDIN_DEF2(round, "round", "ii"),
+	BUILDIN_DEF2(round, "ceil", "ii"),
+	BUILDIN_DEF2(round, "floor", "ii"),
 	BUILDIN_DEF(getequiptradability, "i?"),
 	BUILDIN_DEF(mail, "isss*"),
 	BUILDIN_DEF(open_roulette,"?"),

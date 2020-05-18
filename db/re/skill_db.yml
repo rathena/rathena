@@ -2381,16 +2381,13 @@ Body:
     Description: Suffragium
     MaxLevel: 3
     Type: Magic
-    TargetType: Support
+    TargetType: Self
     DamageFlags:
       NoDamage: true
       Splash: true
-    Flags:
-      NoTargetSelf: true
-    Range: 9
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 18
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
@@ -8556,7 +8553,7 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 60000
@@ -8610,7 +8607,7 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 60000
@@ -8642,7 +8639,7 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 60000
@@ -8696,7 +8693,7 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 60000
@@ -8718,7 +8715,7 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 60000
@@ -8756,7 +8753,7 @@ Body:
     HitCount: 2
     Element: Weapon
     CastTime: 500
-    AfterCastActDelay: 3000
+    AfterCastActDelay: 300
     FixedCastTime: 300
     Requires:
       SpCost: 12
@@ -8836,7 +8833,7 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 20000
@@ -8878,7 +8875,7 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 20000
@@ -8920,7 +8917,7 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 20000
@@ -8962,7 +8959,7 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 20000
@@ -9088,7 +9085,7 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 20000
@@ -9172,7 +9169,7 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 20000
@@ -9214,7 +9211,7 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 20000
@@ -9900,26 +9897,15 @@ Body:
         Time: 1000
     Duration1:
       - Level: 1
-        Time: 20000
+        Time: 60000
       - Level: 2
-        Time: 25000
+        Time: 90000
       - Level: 3
-        Time: 30000
+        Time: 120000
       - Level: 4
-        Time: 35000
+        Time: 150000
       - Level: 5
-        Time: 40000
-    Duration2:
-      - Level: 1
-        Time: 20000
-      - Level: 2
-        Time: 25000
-      - Level: 3
-        Time: 30000
-      - Level: 4
-        Time: 35000
-      - Level: 5
-        Time: 40000
+        Time: 180000
     Cooldown: 30000
     FixedCastTime:
       - Level: 1
@@ -11274,7 +11260,6 @@ Body:
     TargetType: Self
     DamageFlags:
       Splash: true
-      IgnoreAtkCard: true
     Flags:
       TargetTrap: true
       IgnoreAutoGuard: true
@@ -15474,7 +15459,6 @@ Body:
         Time: 4000
       - Level: 10
         Time: 4400
-    AfterCastActDelay: 1000
     FixedCastTime:
       - Level: 1
         Time: 200
@@ -19723,7 +19707,7 @@ Body:
         Time: 55000
       - Level: 10
         Time: 60000
-    Cooldown: 2000
+    Cooldown: 2500
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -21319,17 +21303,18 @@ Body:
         Time: 2000
       - Level: 5
         Time: 2200
-    AfterCastActDelay:
+    AfterCastActDelay: 1000
+    Cooldown:
       - Level: 1
-        Time: 1000
+        Time: 150
       - Level: 2
-        Time: 1000
+        Time: 200
       - Level: 3
-        Time: 1000
+        Time: 300
       - Level: 4
-        Time: 1000
+        Time: 450
       - Level: 5
-        Time: 1000
+        Time: 650 
     FixedCastTime:
       - Level: 1
         Time: 600
@@ -28033,6 +28018,7 @@ Body:
     Flags:
       TargetTrap: true
       IgnoreLandProtector: true
+    Range: 5
     Hit: Multi_Hit
     HitCount: 2
     Element: Weapon
@@ -28220,15 +28206,9 @@ Body:
     Name: GN_FIRE_EXPANSION_ACID
     Description: Fire Expansion Acid
     MaxLevel: 10
-    Type: Misc
+    Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      IgnoreDefense: true
-      IgnoreFlee: true
-    Flags:
-      IgnoreBgReduction: true
-      IgnoreGvgReduction: true
-    Range: 11
+    Range: 9
     Hit: Multi_Hit
     HitCount:
       - Level: 1
@@ -28316,11 +28296,9 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      IgnoreElement: true
-      IgnoreDefCard: true
     Hit: Single
     HitCount: 1
+    Element: Weapon
     CopyFlags:
       Skill:
         Reproduce: true
@@ -30677,26 +30655,56 @@ Body:
   - Id: 3004
     Name: KO_JYUMONJIKIRI
     Description: Cross Slash
-    MaxLevel: 5
+    MaxLevel: 10
     Type: Weapon
     TargetType: Attack
     Range:
       - Level: 1
-        Size: 3
+        Size: 4
       - Level: 2
         Size: 4
       - Level: 3
-        Size: 5
+        Size: 4
       - Level: 4
-        Size: 6
+        Size: 5
       - Level: 5
+        Size: 5
+      - Level: 6
+        Size: 5
+      - Level: 7
+        Size: 6
+      - Level: 8
+        Size: 6
+      - Level: 9
+        Size: 6
+      - Level: 10
         Size: 7
     Hit: Multi_Hit
     HitCount: -2
     Element: Weapon
     AfterCastActDelay: 500
     Duration1: 3000
-    Cooldown: 5000
+    Cooldown: # !TODO: Confirm cooldown
+      - Level: 1
+        Time: 4000
+      - Level: 2
+        Time: 3900
+      - Level: 3
+        Time: 3800
+      - Level: 4
+        Time: 3700
+      - Level: 5
+        Time: 3600
+      - Level: 6
+        Time: 3500
+      - Level: 7
+        Time: 3400
+      - Level: 8
+        Time: 3300
+      - Level: 9
+        Time: 3200
+      - Level: 10
+        Time: 3100
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -30710,6 +30718,16 @@ Body:
           Amount: 16
         - Level: 5
           Amount: 18
+        - Level: 6
+          Amount: 20
+        - Level: 7
+          Amount: 22
+        - Level: 8
+          Amount: 24
+        - Level: 9
+          Amount: 26
+        - Level: 10
+          Amount: 28
   - Id: 3005
     Name: KO_SETSUDAN
     Description: Soul Cutter
@@ -30739,7 +30757,7 @@ Body:
     Description: Kunai Explosion
     MaxLevel: 5
     Type: Weapon
-    TargetType: Ground
+    TargetType: Attack
     DamageFlags:
       Splash: true
       IgnoreFlee: true
@@ -30835,7 +30853,7 @@ Body:
           Amount: 20
       Ammo:
         Kunai: true
-      AmmoAmount: 8
+      AmmoAmount: 2
   - Id: 3008
     Name: KO_MUCHANAGE
     Description: Rapid Throw
@@ -30932,52 +30950,42 @@ Body:
   - Id: 3009
     Name: KO_HUUMARANKA
     Description: Swirling Petal
-    MaxLevel: 5
+    MaxLevel: 10
     Type: Weapon
-    TargetType: Ground
+    TargetType: Attack
     DamageFlags:
       Splash: true
-    Range:
-      - Level: 1
-        Size: 9
-      - Level: 2
-        Size: 10
-      - Level: 3
-        Size: 11
-      - Level: 4
-        Size: 12
-      - Level: 5
-        Size: 13
+    Range: 11
     Hit: Multi_Hit
     HitCount: -5
     Element: Weapon
     SplashArea: 3
-    CastTime:
-      - Level: 1
-        Time: 1000
-      - Level: 2
-        Time: 1200
-      - Level: 3
-        Time: 1400
-      - Level: 4
-        Time: 1600
-      - Level: 5
-        Time: 1800
-    AfterCastActDelay: 1000
+    CastTime: 1500
+    AfterCastActDelay: 500
     Duration1: 100
     Cooldown: 3000
     FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
-          Amount: 24
+          Amount: 22
         - Level: 2
-          Amount: 28
+          Amount: 24
         - Level: 3
-          Amount: 32
+          Amount: 26
         - Level: 4
-          Amount: 36
+          Amount: 28
         - Level: 5
+          Amount: 30
+        - Level: 6
+          Amount: 32
+        - Level: 7
+          Amount: 34
+        - Level: 8
+          Amount: 36
+        - Level: 9
+          Amount: 38
+        - Level: 10
           Amount: 40
       Weapon:
         Huuma: true
@@ -33571,6 +33579,31 @@ Body:
     FixedCastTime: 2000
     Requires:
       SpCost: 70
+  - Id: 5075
+    Name: NV_BREAKTHROUGH
+    Description: Break Through
+    MaxLevel: 5
+  - Id: 5076
+    Name: NV_HELPANGEL
+    Description: Help Angel
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Hit: Single
+    HitCount: 1
+    SplashArea: 7
+    CastCancel: true
+    AfterCastActDelay: 500
+    Duration1: 20000
+    Cooldown: 300000
+    Requires:
+      SpCost: 1
+  - Id: 5077
+    Name: NV_TRANSCENDENCE
+    Description: Transcendence
+    MaxLevel: 5
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
@@ -34479,7 +34512,6 @@ Body:
         Time: 3500
     Duration1: 500
     Duration2: 120000
-    FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1

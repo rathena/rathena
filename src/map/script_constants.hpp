@@ -1579,6 +1579,10 @@
 	export_constant(SC_HELLS_PLANT);
 	export_constant(SC_INCREASE_MAXHP);
 	export_constant(SC_INCREASE_MAXSP);
+	export_constant(SC_HELPANGEL);
+	export_constant(SC_REF_T_POTION);
+	export_constant(SC_ADD_ATK_DAMAGE);
+	export_constant(SC_ADD_MATK_DAMAGE);
 	export_constant(SC_LUXANIMA);
 	export_constant(SC_REUSE_LIMIT_LUXANIMA);
 #ifdef RENEWAL
