@@ -2106,8 +2106,6 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: -2
     Hit: Multi_Hit
     HitCount: -3
@@ -2381,16 +2379,13 @@ Body:
     Description: Suffragium
     MaxLevel: 3
     Type: Magic
-    TargetType: Support
+    TargetType: Self
     DamageFlags:
       NoDamage: true
       Splash: true
-    Flags:
-      NoTargetSelf: true
-    Range: 9
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 18
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
@@ -7080,8 +7075,6 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range:
       - Level: 1
         Size: 3
@@ -8556,9 +8549,9 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
-    Duration1: 60000
+    Duration1: 180000
     Duration2: 60000
     Cooldown: 20000
     Requires:
@@ -8610,9 +8603,9 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
-    Duration1: 60000
+    Duration1: 180000
     Duration2: 60000
     Cooldown: 20000
     Requires:
@@ -8642,7 +8635,7 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
     Duration1: 60000
     Duration2: 60000
@@ -8696,9 +8689,9 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
-    Duration1: 60000
+    Duration1: 180000
     Duration2: 60000
     Cooldown: 20000
     Requires:
@@ -8718,9 +8711,9 @@ Body:
       IsEnsemble: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
-    Duration1: 60000
+    Duration1: 180000
     Duration2: 60000
     Cooldown: 20000
     Requires:
@@ -8836,9 +8829,9 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
-    Duration1: 60000
+    Duration1: 180000
     Duration2: 20000
     Cooldown: 20000
     Requires:
@@ -8878,9 +8871,9 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
-    Duration1: 60000
+    Duration1: 180000
     Duration2: 20000
     Cooldown: 20000
     Requires:
@@ -8920,9 +8913,9 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
-    Duration1: 60000
+    Duration1: 180000
     Duration2: 20000
     Cooldown: 20000
     Requires:
@@ -8962,9 +8955,9 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
-    Duration1: 60000
+    Duration1: 180000
     Duration2: 20000
     Cooldown: 20000
     Requires:
@@ -9088,9 +9081,9 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
-    Duration1: 60000
+    Duration1: 180000
     Duration2: 20000
     Cooldown: 20000
     Requires:
@@ -9172,9 +9165,9 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
-    Duration1: 60000
+    Duration1: 180000
     Duration2: 20000
     Cooldown: 20000
     Requires:
@@ -9214,9 +9207,9 @@ Body:
       IsSong: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 15
     CastTime: 1000
-    Duration1: 60000
+    Duration1: 180000
     Duration2: 20000
     Cooldown: 20000
     Requires:
@@ -10367,62 +10360,21 @@ Body:
     Name: ASC_BREAKER
     Description: Soul Destroyer
     MaxLevel: 10
-    Type: Misc
+    Type: Weapon
     TargetType: Attack
     DamageFlags:
-      IgnoreAtkCard: true
-      IgnoreDefense: true
-      IgnoreFlee: true
+      Critical: true
     Range: 9
     Hit: Single
     HitCount: 1
     Element: Weapon
     CastCancel: true
     CastTime: 250
-    AfterCastActDelay:
-      - Level: 1
-        Time: 1000
-      - Level: 2
-        Time: 1200
-      - Level: 3
-        Time: 1400
-      - Level: 4
-        Time: 1600
-      - Level: 5
-        Time: 1800
-      - Level: 6
-        Time: 2000
-      - Level: 7
-        Time: 2200
-      - Level: 8
-        Time: 2400
-      - Level: 9
-        Time: 2600
-      - Level: 10
-        Time: 2800
+    AfterCastActDelay: 2000
+    Cooldown: 150
     FixedCastTime: 250
     Requires:
-      SpCost:
-        - Level: 1
-          Amount: 20
-        - Level: 2
-          Amount: 20
-        - Level: 3
-          Amount: 20
-        - Level: 4
-          Amount: 20
-        - Level: 5
-          Amount: 20
-        - Level: 6
-          Amount: 30
-        - Level: 7
-          Amount: 30
-        - Level: 8
-          Amount: 30
-        - Level: 9
-          Amount: 30
-        - Level: 10
-          Amount: 30
+      SpCost: 20
   - Id: 380
     Name: SN_SIGHT
     Description: Falcon Eyes
@@ -10979,7 +10931,6 @@ Body:
     TargetType: Attack
     Flags:
       TargetTrap: true
-      IncreaseGloomyDayDamage: true
     Range: 5
     Hit: Multi_Hit
     HitCount: 5
@@ -13212,8 +13163,6 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range:
       - Level: 1
         Size: 7
@@ -17443,6 +17392,8 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
+    DamageFlags:
+      Critical: true
     Range:
       - Level: 1
         Size: 7
@@ -17539,12 +17490,33 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
-    Range: 5
+    DamageFlags:
+      Splash: true
+    Range: 7
     Hit: Multi_Hit
     HitCount: -5
     Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 1
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 2
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 3
     CastTime:
       - Level: 1
         Time: 1000
@@ -17579,33 +17551,50 @@ Body:
     Description: Wind Cutter
     MaxLevel: 5
     Type: Weapon
-    TargetType: Ground
+    TargetType: Self
     DamageFlags:
       Splash: true
-    Range: 1
     Hit: Single
     HitCount: 1
-    Element: Wind
-    SplashArea: 2
-    Knockback: 3
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
     CopyFlags:
       Skill:
         Reproduce: true
-    Duration1: 15000
-    Cooldown: 2000
-    FixedCastTime: -1
+    AfterCastActDelay: 1000
+    Cooldown:
+      - Level: 1
+        Time: 800
+      - Level: 2
+        Time: 650
+      - Level: 3
+        Time: 500
+      - Level: 4
+        Time: 350
+      - Level: 5
+        Time: 200
     Requires:
       SpCost:
         - Level: 1
-          Amount: 20
+          Amount: 34
         - Level: 2
-          Amount: 24
+          Amount: 38
         - Level: 3
-          Amount: 28
+          Amount: 42
         - Level: 4
-          Amount: 32
+          Amount: 46
         - Level: 5
-          Amount: 36
+          Amount: 50
       Weapon:
         Dagger: true
         1hSword: true
@@ -17620,6 +17609,7 @@ Body:
     TargetType: Self
     DamageFlags:
       Splash: true
+      Critical: true
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -17770,7 +17760,7 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 1000
-    Duration1: 180000
+    Duration1: 900000
     Duration2: 60000
     FixedCastTime: -1
     Requires:
@@ -17823,7 +17813,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    Duration1: 180000
+    Duration1: 900000
     FixedCastTime: 1000
     CastTimeFlags:
       IgnoreDex: true
@@ -17841,7 +17831,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    Duration1: 180000
+    Duration1: 900000
     Duration2: 10000
     FixedCastTime: 2000
     CastTimeFlags:
@@ -17860,7 +17850,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    Duration1: 180000
+    Duration1: 900000
     FixedCastTime: -1
     Requires:
       SpCost: 1
@@ -17872,13 +17862,13 @@ Body:
     TargetType: Self
     DamageFlags:
       Splash: true
+      Critical: true
     Flags:
       TargetTrap: true
     Hit: Single
     HitCount: 1
     Element: Weapon
     SplashArea: 3
-    Knockback: 7
     CastTime: 2000
     FixedCastTime: -1
     Requires:
@@ -17893,9 +17883,8 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
     CastCancel: true
-    Duration1: 180000
+    Duration1: 900000
     FixedCastTime: -1
     Requires:
       SpCost: 1
@@ -17911,7 +17900,7 @@ Body:
     HitCount: 1
     Element: Holy
     CastCancel: true
-    Duration1: 180000
+    Duration1: 900000
     FixedCastTime: -1
     Requires:
       SpCost: 1
@@ -19103,7 +19092,9 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    Range: 3
+    DamageFlags:
+      Critical: true
+    Range: 7
     Hit: Multi_Hit
     HitCount: -7
     Element: Weapon
@@ -19121,11 +19112,12 @@ Body:
         Time: 1000
       - Level: 5
         Time: 500
+    Cooldown: 700
     FixedCastTime: -1
     CastDelayFlags:
       IgnoreStatus: true
     Requires:
-      SpCost: 25
+      SpCost: 40
       State: Move_Enable
   - Id: 2023
     Name: GC_DARKILLUSION
@@ -19475,13 +19467,13 @@ Body:
       - Level: 2
         Area: 1
       - Level: 3
-        Area: 1
-      - Level: 4
-        Area: 1
-      - Level: 5
         Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
     AfterCastActDelay: 200
-    Duration1: 3000
+    Duration1: 5000
     FixedCastTime: -1
     Requires:
       SpCost: 5
@@ -19507,7 +19499,8 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    AfterCastActDelay: 1000
+    AfterCastActDelay: 500
+    Cooldown: 500
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -20671,9 +20664,9 @@ Body:
       IgnoreDefCard: true
     Flags:
       AllowOnWarg: true
-      IncreaseDanceWithWugDamage: true
       IgnoreAutoGuard: true
       IgnoreCicada: true
+      IncreaseDanceWithWugDamage: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -20701,9 +20694,9 @@ Body:
       IgnoreDefCard: true
     Flags:
       AlterRangeVulture: true
-      IncreaseDanceWithWugDamage: true
       IgnoreAutoGuard: true
       IgnoreCicada: true
+      IncreaseDanceWithWugDamage: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -23109,8 +23102,6 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: 1
     Hit: Single
     HitCount: 5
@@ -24845,21 +24836,11 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea:
-      - Level: 1
-        Area: 7
-      - Level: 2
-        Area: 8
-      - Level: 3
-        Area: 9
-      - Level: 4
-        Area: 10
-      - Level: 5
-        Area: 11
+    SplashArea: -1
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
-    Duration1: 60000
+    Duration1: 180000
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -24886,21 +24867,11 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea:
-      - Level: 1
-        Area: 7
-      - Level: 2
-        Area: 8
-      - Level: 3
-        Area: 9
-      - Level: 4
-        Area: 10
-      - Level: 5
-        Area: 11
+    SplashArea: -1
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
-    Duration1: 60000
+    Duration1: 180000
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -24927,21 +24898,11 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea:
-      - Level: 1
-        Area: 7
-      - Level: 2
-        Area: 8
-      - Level: 3
-        Area: 9
-      - Level: 4
-        Area: 10
-      - Level: 5
-        Area: 11
+    SplashArea: -1
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
-    Duration1: 60000
+    Duration1: 180000
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -24968,21 +24929,11 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea:
-      - Level: 1
-        Area: 7
-      - Level: 2
-        Area: 8
-      - Level: 3
-        Area: 9
-      - Level: 4
-        Area: 10
-      - Level: 5
-        Area: 11
+    SplashArea: -1
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
-    Duration1: 60000
+    Duration1: 180000
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -25023,7 +24974,7 @@ Body:
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 2000
-    Duration1: 60000
+    Duration1: 180000
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -25091,7 +25042,7 @@ Body:
       Skill:
         Reproduce: true
     CastCancel: true
-    CastTime: # !TODO: Confirm all times
+    CastTime: # !TODO: Confirm cast times
       - Level: 1
         Time: 1000
       - Level: 2
@@ -25112,28 +25063,8 @@ Body:
         Time: 5000
       - Level: 10
         Time: 5500
-    AfterCastActDelay: 1000
-    Cooldown:
-      - Level: 1
-        Time: 1000
-      - Level: 2
-        Time: 1500
-      - Level: 3
-        Time: 2000
-      - Level: 4
-        Time: 2500
-      - Level: 5
-        Time: 3000
-      - Level: 6
-        Time: 3500
-      - Level: 7
-        Time: 4000
-      - Level: 8
-        Time: 4500
-      - Level: 9
-        Time: 5000
-      - Level: 10
-        Time: 5500
+    AfterCastActDelay: 500
+    Cooldown: 2500
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -25161,44 +25092,33 @@ Body:
     Name: WM_REVERBERATION
     Description: Reverberation
     MaxLevel: 5
-    TargetType: Ground
+    TargetType: Attack
     DamageFlags:
-      NoDamage: true
       Splash: true
     Flags:
       IsTrap: true
     Range: 9
     Hit: Single
     HitCount: 1
-    SplashArea: 2
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
     CopyFlags:
       Skill:
         Reproduce: true
     CastCancel: true
-    CastTime:
-      - Level: 1
-        Time: 1100
-      - Level: 2
-        Time: 1200
-      - Level: 3
-        Time: 1300
-      - Level: 4
-        Time: 1400
-      - Level: 5
-        Time: 1500
-    AfterCastActDelay: 1000
-    Duration1:
-      - Level: 1
-        Time: 9000
-      - Level: 2
-        Time: 10000
-      - Level: 3
-        Time: 11000
-      - Level: 4
-        Time: 12000
-      - Level: 5
-        Time: 13000
-    FixedCastTime: -1
+    CastTime: 1000
+    AfterCastActDelay: 500
+    Cooldown: 150
+    FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
@@ -25211,13 +25131,10 @@ Body:
           Amount: 42
         - Level: 5
           Amount: 48
-    Unit:
-      Id: Reverberation
-      Interval: 1000
-      Target: Enemy
-      Flag:
-        NoKnockback: true
-  - Id: 2415
+      Ammo:
+        Arrow: true
+      AmmoAmount: 10
+  - Id: 2415 # Removed on kRO
     Name: WM_REVERBERATION_MELEE
     Description: Reverberation Melee
     MaxLevel: 5
@@ -25225,7 +25142,6 @@ Body:
     TargetType: Attack
     DamageFlags:
       Splash: true
-      SplashSplit: true
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -25241,18 +25157,12 @@ Body:
     MaxLevel: 5
     Type: Magic
     TargetType: Attack
-    DamageFlags:
-      Splash: true
-      SplashSplit: true
-    Hit: Single
-    HitCount: 1
-    SplashArea: 2
+    Hit: Multi_Hit
+    HitCount: 10
     CopyFlags:
       Skill:
         Reproduce: true
-    Requires:
-      SpCost: 1
-  - Id: 2417
+  - Id: 2417 # Removed on kRO
     Name: WM_DOMINION_IMPULSE
     Description: Dominion Impulse
     MaxLevel: 1
@@ -25390,7 +25300,7 @@ Body:
         Whip: true
       ItemCost:
         - Item: Protect_Neck_Candy
-          Amount: 1
+          Amount: 2
     Unit:
       Id: Netherworld
       Range: 1
@@ -25508,7 +25418,7 @@ Body:
     Name: WM_LULLABY_DEEPSLEEP
     Description: Deep Sleep Lullaby
     MaxLevel: 5
-    TargetType: Self
+    TargetType: Attack
     DamageFlags:
       NoDamage: true
       Splash: true
@@ -25516,19 +25426,19 @@ Body:
     HitCount: 1
     SplashArea:
       - Level: 1
-        Area: 5
+        Area: 1
       - Level: 2
-        Area: 6
+        Area: 1
       - Level: 3
-        Area: 7
+        Area: 1
       - Level: 4
-        Area: 8
+        Area: 2
       - Level: 5
-        Area: 9
+        Area: 2
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
-    Duration1:
+    Duration1: # !TODO: What's the updated duration?
       - Level: 1
         Time: 12000
       - Level: 2
@@ -25556,6 +25466,9 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+      ItemCost:
+        - Item: Protect_Neck_Candy
+          Amount: 2
   - Id: 2423
     Name: WM_SIRCLEOFNATURE
     Description: Circle of Nature's Sound
@@ -25566,21 +25479,11 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea:
-      - Level: 1
-        Area: 3
-      - Level: 2
-        Area: 4
-      - Level: 3
-        Area: 5
-      - Level: 4
-        Area: 6
-      - Level: 5
-        Area: 7
+    SplashArea: -1
     CastCancel: true
     CastTime: 2000
     AfterCastActDelay: 1000
-    Duration1: 60000
+    Duration1: 180000
     Cooldown: 15000
     FixedCastTime: -1
     Requires:
@@ -25603,7 +25506,7 @@ Body:
     Description: Improvised Song
     MaxLevel: 5
     Type: Magic
-    TargetType: Self
+    TargetType: Attack
     DamageFlags:
       NoDamage: true
     Range: 9
@@ -25641,17 +25544,7 @@ Body:
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
-    Duration1:
-      - Level: 1
-        Time: 30000
-      - Level: 2
-        Time: 45000
-      - Level: 3
-        Time: 60000
-      - Level: 4
-        Time: 75000
-      - Level: 5
-        Time: 90000
+    Duration1: 60000
     Cooldown: 10000
     FixedCastTime: 500
     Requires:
@@ -25722,7 +25615,7 @@ Body:
           Amount: 120
       ItemCost:
         - Item: Protect_Neck_Candy
-          Amount: 1
+          Amount: 2
   - Id: 2427
     Name: WM_SONG_OF_MANA
     Description: Song of Mana
@@ -25749,17 +25642,7 @@ Body:
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
-    Duration1:
-      - Level: 1
-        Time: 30000
-      - Level: 2
-        Time: 60000
-      - Level: 3
-        Time: 90000
-      - Level: 4
-        Time: 120000
-      - Level: 5
-        Time: 150000
+    Duration1: 120000
     Cooldown: 90000
     FixedCastTime: 500
     Requires:
@@ -25777,6 +25660,9 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+      ItemCost:
+        - Item: Protect_Neck_Candy
+          Amount: 1
   - Id: 2428
     Name: WM_DANCE_WITH_WUG
     Description: Dance With A Warg
@@ -25813,17 +25699,7 @@ Body:
       - Level: 5
         Time: 3500
     AfterCastActDelay: 1000
-    Duration1:
-      - Level: 1
-        Time: 30000
-      - Level: 2
-        Time: 60000
-      - Level: 3
-        Time: 90000
-      - Level: 4
-        Time: 120000
-      - Level: 5
-        Time: 150000
+    Duration1: 120000
     Cooldown: 90000
     FixedCastTime: 500
     Requires:
@@ -25841,30 +25717,32 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+      ItemCost:
+        - Item: Protect_Neck_Candy
+          Amount: 1
   - Id: 2429
     Name: WM_SOUND_OF_DESTRUCTION
     Description: Sound of Destruction
     MaxLevel: 5
-    TargetType: Ground
+    TargetType: Self
     DamageFlags:
+      NoDamage: true
       Splash: true
-      IgnoreFlee: true
     Flags:
       IsChorus: true
-    Range: 9
     Hit: Single
     HitCount: 1
     SplashArea:
       - Level: 1
-        Area: 4
+        Area: 5
       - Level: 2
-        Area: 4
+        Area: 5
       - Level: 3
-        Area: 5
-      - Level: 4
-        Area: 5
-      - Level: 5
         Area: 6
+      - Level: 4
+        Area: 6
+      - Level: 5
+        Area: 7
     CastCancel: true
     CastTime:
       - Level: 2
@@ -25876,18 +25754,8 @@ Body:
       - Level: 5
         Time: 2000
     AfterCastActDelay: 1000
-    Duration1: 5000
-    Cooldown:
-      - Level: 1
-        Time: 6000
-      - Level: 2
-        Time: 7000
-      - Level: 3
-        Time: 8000
-      - Level: 4
-        Time: 9000
-      - Level: 5
-        Time: 10000
+    Duration1: 10000
+    Cooldown: 60000
     FixedCastTime: 500
     Requires:
       SpCost:
@@ -25904,6 +25772,9 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+      ItemCost:
+        - Item: Protect_Neck_Candy
+          Amount: 10
   - Id: 2430
     Name: WM_SATURDAY_NIGHT_FEVER
     Description: Saturday Night Fever
@@ -25962,7 +25833,7 @@ Body:
         Time: 4000
       - Level: 5
         Time: 2000
-    Cooldown: 180000
+    Cooldown: 60000
     FixedCastTime: 1000
     Requires:
       SpCost:
@@ -25979,6 +25850,9 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+      ItemCost:
+        - Item: Protect_Neck_Candy
+          Amount: 5
   - Id: 2431
     Name: WM_LERADS_DEW
     Description: Lerad's Dew
@@ -26005,17 +25879,7 @@ Body:
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
-    Duration1:
-      - Level: 1
-        Time: 20000
-      - Level: 2
-        Time: 30000
-      - Level: 3
-        Time: 40000
-      - Level: 4
-        Time: 50000
-      - Level: 5
-        Time: 60000
+    Duration1: 120000
     Cooldown: 180000
     FixedCastTime: 500
     Requires:
@@ -26033,6 +25897,9 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+      ItemCost:
+        - Item: Protect_Neck_Candy
+          Amount: 1
   - Id: 2432
     Name: WM_MELODYOFSINK
     Description: Melody of Sink
@@ -26070,7 +25937,7 @@ Body:
         Time: 50000
       - Level: 5
         Time: 60000
-    Cooldown: 180000
+    Cooldown: 20000
     FixedCastTime: 500
     Requires:
       SpCost:
@@ -26087,6 +25954,9 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+      ItemCost:
+        - Item: Protect_Neck_Candy
+          Amount: 2
   - Id: 2433
     Name: WM_BEYOND_OF_WARCRY
     Description: Warcry of Beyond
@@ -26124,7 +25994,7 @@ Body:
         Time: 50000
       - Level: 5
         Time: 60000
-    Cooldown: 180000
+    Cooldown: 20000
     FixedCastTime: 500
     Requires:
       SpCost:
@@ -26141,6 +26011,9 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+      ItemCost:
+        - Item: Protect_Neck_Candy
+          Amount: 2
   - Id: 2434
     Name: WM_UNLIMITED_HUMMING_VOICE
     Description: Unlimited Humming Voice
@@ -26205,6 +26078,9 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+      ItemCost:
+        - Item: Protect_Neck_Candy
+          Amount: 5
   - Id: 2516
     Name: WM_SEVERE_RAINSTORM_MELEE
     Description: Severe Rainstorm Melee
@@ -31716,7 +31592,7 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
-    Duration1: 5000
+    Duration1: 10000
     Cooldown: 60000
     FixedCastTime: -1
     Requires:
@@ -31905,11 +31781,9 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-      Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea: 3
-    Duration1: 60000
+    Duration1: 900000
     FixedCastTime: -1
     Requires:
       SpCost: 1
@@ -35986,8 +35860,6 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: -2
     Hit: Single
     HitCount: 1
@@ -36012,7 +35884,6 @@ Body:
     TargetType: Attack
     Flags:
       TargetTrap: true
-      IncreaseGloomyDayDamage: true
     Range: 5
     Hit: Multi_Hit
     HitCount: 5
