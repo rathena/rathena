@@ -616,7 +616,7 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 	clif_instance_create(instance_id, instance_wait.id.size());
 	instance_subscription_timer(0,0,0,0);
 
-	ShowInfo("[Instance] Created: %s (%d).\n", name, instance_id);
+	ShowInfo("[Instance] Created: %s (%d)\n", name, instance_id);
 
 	// Start the instance timer on instance creation
 	instance_startkeeptimer(entry, instance_id);
@@ -708,11 +708,13 @@ int instance_addmap(int instance_id) {
  * Returns an instance map ID
  * @param m: Source map ID
  * @param instance_id: Instance to search
- * @return Map ID in this instance
+ * @return Map ID in this instance or -1 on failure
  */
 int16 instance_mapid(int16 m, int instance_id)
 {
-	if(m < 0) {
+	const char *name = map_mapid2mapname(m);
+
+	if (name == nullptr) {
 		ShowError("instance_mapid: Map ID %d does not exist.\n", m);
 		return -1;
 	}
@@ -722,18 +724,17 @@ int16 instance_mapid(int16 m, int instance_id)
 	if(!idata || idata->state != INSTANCE_BUSY)
 		return -1;
 
-	const char *iname = map_mapid2mapname(m);
-
 	for (const auto &it : idata->map) {
 		if (it.src_m == m) {
-			char alt_name[MAP_NAME_LENGTH];
+			char iname[MAP_NAME_LENGTH], alt_name[MAP_NAME_LENGTH];
+
+			strcpy(iname, name);
 
 			if (!(strchr(iname, '@')) && strlen(iname) > 8) {
-				memmove((void*)iname, iname + (strlen(iname) - 9), strlen(iname));
-				snprintf(alt_name, sizeof(alt_name), "%d#%s", instance_id, iname);
-			}
-			else
-				snprintf(alt_name, sizeof(alt_name), "%.3d%s", instance_id, iname);
+				memmove(iname, iname + (strlen(iname) - 9), strlen(iname));
+				snprintf(alt_name, sizeof(alt_name), "%d#%s", (instance_id % 1000), iname);
+			} else
+				snprintf(alt_name, sizeof(alt_name), "%.3d%s", (instance_id % 1000), iname);
 			return map_mapname2mapid(alt_name);
 		}
 	}
@@ -847,7 +848,7 @@ bool instance_destroy(int instance_id)
 	if( idata->regs.arrays )
 		idata->regs.arrays->destroy(idata->regs.arrays, script_free_array_db);
 
-	ShowInfo("[Instance] Destroyed %d.\n", instance_id);
+	ShowInfo("[Instance] Destroyed: %s (%d)\n", instance_db.find(idata->id)->name.c_str(), instance_id);
 
 	instances.erase(instance_id);
 
