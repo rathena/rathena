@@ -1582,6 +1582,7 @@
 	export_constant(SC_REF_T_POTION);
 	export_constant(SC_ADD_ATK_DAMAGE);
 	export_constant(SC_ADD_MATK_DAMAGE);
+	export_constant(SC_SOUNDOFDESTRUCTION);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -7518,7 +7519,6 @@
 	export_constant(INF2_ALLOWONMADO);
 	export_constant(INF2_TARGETMANHOLE);
 	export_constant(INF2_TARGETHIDDEN);
-	export_constant(INF2_INCREASEGLOOMYDAYDAMAGE);
 	export_constant(INF2_INCREASEDANCEWITHWUGDAMAGE);
 	export_constant(INF2_IGNOREWUGBITE);
 	export_constant(INF2_IGNOREAUTOGUARD);
