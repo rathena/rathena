@@ -23237,7 +23237,6 @@ static void skill_readdb(void)
 void skill_reload (void) {
 	skill_db.clear();
 	abra_db.clear();
-	improvised_song_db.clear();
 	magic_mushroom_db.clear();
 	reading_spellbook_db.clear();
 	skill_readdb();
