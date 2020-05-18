@@ -928,6 +928,7 @@ enum sc_type : int16 {
 	SC_ADD_MATK_DAMAGE,
 
 	SC_HELPANGEL,
+	SC_SOUNDOFDESTRUCTION,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
