@@ -116,7 +116,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 				continue;
 			}
 
-			std::shared_ptr<achievement_target> target = rathena::util::umap_find( achievement->targets, targetId );
+			std::shared_ptr<achievement_target> target = rathena::util::map_find( achievement->targets, targetId );
 			bool targetExists = target != nullptr;
 
 			if( !targetExists ){
