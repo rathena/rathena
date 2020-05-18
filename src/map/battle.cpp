@@ -852,6 +852,8 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					}
 				}
 #ifndef RENEWAL
+				if (flag & BF_SHORT)
+					cardfix = cardfix * (100 + sd->bonus.short_attack_atk_rate) / 100;
 				if( flag&BF_LONG )
 					cardfix = cardfix * (100 + sd->bonus.long_attack_atk_rate) / 100;
 #endif
@@ -2575,6 +2577,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 #ifdef RENEWAL
 			case ASC_BREAKER:
 #endif
+			case RK_IGNITIONBREAK:
 			case GC_CROSSIMPACT:
 				cri /= 2;
 				break;
@@ -2865,7 +2868,8 @@ static bool attack_ignores_def(struct Damage* wd, struct block_list *src, struct
 			} else if (weapon_position == EQI_HAND_L)
 				return true;
 		}
-	}
+	} else if (skill_id == RK_WINDCUTTER && sd && sd->status.weapon == W_2HSWORD)
+		return true;
 
 	return nk[NK_IGNOREDEFENSE] != 0;
 }
@@ -2956,6 +2960,22 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 		case LK_SPIRALPIERCE:
 			if (!sd)
 				element = ELE_NEUTRAL; //forced neutral for monsters
+			break;
+		case RK_DRAGONBREATH:
+			if (sc) {
+				if (sc->data[SC_LUXANIMA]) // Lux Anima has priority over Giant Growth
+					element = ELE_DARK;
+				else if (sc->data[SC_GIANTGROWTH])
+					element = ELE_HOLY;
+			}
+			break;
+		case RK_DRAGONBREATH_WATER:
+			if (sc) {
+				if (sc->data[SC_LUXANIMA]) // Lux Anima has priority over Fighting Spirit
+					element = ELE_NEUTRAL;
+				else if (sc->data[SC_FIGHTINGSPIRIT])
+					element = ELE_GHOST;
+			}
 			break;
 		case LG_HESPERUSLIT:
 			if (sc && sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 4)
@@ -3541,6 +3561,10 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 	}
 
 	switch (skill_id) {
+		case RK_WINDCUTTER:
+			if (sd && sd->weapontype1 == W_2HSWORD)
+				wd->div_ = 2;
+			break;
 		case RA_AIMEDBOLT:
 			wd->div_ = 2 + tstatus->size + rnd()%2;
 			break;
@@ -4098,42 +4122,34 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += ((skill_lv - 1) % 5 + 1) * 100;
 			break;
 		case RK_SONICWAVE:
-			skillratio += -100 + (skill_lv + 7) * 100; // ATK = {((Skill Level + 7) x 100) x (1 + [(Caster's Base Level - 100) / 200])} %
-			skillratio = skillratio * (100 + (status_get_lv(src) - 100) / 2) / 100;
+			skillratio += -100 + 500 + 100 * skill_lv;
+			RE_LVL_DMOD(100);
 			break;
 		case RK_HUNDREDSPEAR:
-			skillratio += 500 + (80 * skill_lv);
-			if (sd) {
-				short index = sd->equip_index[EQI_HAND_R];
-
-				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON)
-					skillratio += max(10000 - sd->inventory_data[index]->weight, 0) / 10;
+			skillratio += -100 + 600 + 200 * skill_lv;
+			if (sd)
 				skillratio += 50 * pc_checkskill(sd,LK_SPIRALPIERCE);
-			} // (1 + [(Casters Base Level - 100) / 200])
-			skillratio = skillratio * (100 + (status_get_lv(src) - 100) / 2) / 100;
+			RE_LVL_DMOD(100);
 			break;
 		case RK_WINDCUTTER:
-			skillratio += -100 + (skill_lv + 2) * 50;
+			if (sd) {
+				if (sd->weapontype1 == W_2HSWORD)
+					skillratio += -100 + 250 * skill_lv;
+				else if (sd->weapontype1 == W_1HSPEAR || sd->weapontype1 == W_2HSPEAR)
+					skillratio += -100 + 400 * skill_lv;
+				else
+					skillratio += -100 + 300 * skill_lv;
+			} else
+				skillratio += -100 + 300 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case RK_IGNITIONBREAK:
-			// 3x3 cell Damage = ATK [{(Skill Level x 300) x (1 + [(Caster's Base Level - 100) / 100])}] %
-			// 7x7 cell Damage = ATK [{(Skill Level x 250) x (1 + [(Caster's Base Level - 100) / 100])}] %
-			// 11x11 cell Damage = ATK [{(Skill Level x 200) x (1 + [(Caster's Base Level - 100) / 100])}] %
-			i = distance_bl(src,target);
-			if (i < 2)
-				skillratio += -100 + 300 * skill_lv;
-			else if (i < 4)
-				skillratio += -100 + 250 * skill_lv;
-			else
-				skillratio += -100 + 200 * skill_lv;
-			skillratio = skillratio * status_get_lv(src) / 100;
-			// Elemental check, 1.5x damage if your weapon element is fire.
-			if (sstatus->rhw.ele == ELE_FIRE)
-				skillratio += 100 * skill_lv;
+			skillratio += -100 + 400 * skill_lv;
+			RE_LVL_DMOD(100);
 			break;
 		case RK_STORMBLAST:
 			skillratio += -100 + (((sd) ? pc_checkskill(sd,RK_RUNEMASTERY) : 0) + status_get_str(src) / 8) * 100; // ATK = [{Rune Mastery Skill Level + (Caster's STR / 8)} x 100] %
+			RE_LVL_DMOD(100);
 			break;
 		case RK_PHANTOMTHRUST: // ATK = [{(Skill Level x 50) + (Spear Master Level x 10)} x Caster's Base Level / 150] %
 			skillratio += -100 + 50 * skill_lv + 10 * (sd ? pc_checkskill(sd,KN_SPEARMASTERY) : 5);
@@ -5570,6 +5586,9 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 			case LK_SPIRALPIERCE:
 				if (!sd) wd.flag = (wd.flag&~(BF_RANGEMASK|BF_WEAPONMASK))|BF_LONG|BF_MISC;
 				break;
+			case RK_WINDCUTTER:
+				if (sd && (sd->status.weapon == W_1HSPEAR || sd->status.weapon == W_2HSPEAR))
+					wd.flag |= BF_LONG;
 
 			// The number of hits is set to 3 by default for use in Inspiration status.
 			// When in Banding, the number of hits is equal to the number of Royal Guards in Banding.
@@ -5615,7 +5634,10 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 			rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id,true);
 		if( rdamage > 0 ) {
 			struct block_list *d_bl = battle_check_devotion(src);
+			status_change *sc = status_get_sc(src);
 
+			if (sc && sc->data[SC_VITALITYACTIVATION])
+				rdamage /= 2;
 			if (tsc->data[SC_MAXPAIN]) {
 				tsc->data[SC_MAXPAIN]->val2 = (int)rdamage;
 				skill_castend_damage_id(target, src, NPC_MAXPAIN_ATK, tsc->data[SC_MAXPAIN]->val1, tick, wd->flag);
@@ -5751,6 +5773,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		if (sd) { //monsters, homuns and pets have their damage computed directly
 			wd.damage = wd.statusAtk + wd.weaponAtk + wd.equipAtk + wd.masteryAtk;
 			wd.damage2 = wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2 + wd.masteryAtk2;
+			if (wd.flag & BF_SHORT)
+				ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.short_attack_atk_rate);
 			if(wd.flag&BF_LONG && (skill_id != RA_WUGBITE && skill_id != RA_WUGSTRIKE)) //Long damage rate addition doesn't use weapon + equip attack
 				ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.long_attack_atk_rate);
 		}
@@ -7691,10 +7715,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			} else
 				status_change_end(src,SC_SPELLFIST,INVALID_TIMER);
 		}
-		if (sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rnd()%100 < sc->data[SC_GIANTGROWTH]->val2 && !is_infinite_defense(target, wd.flag) && !vellum_damage) {
-			wd.damage <<= 1; // Double Damage
-			skill_break_equip(src, src, EQP_WEAPON, 10, BCT_SELF); // Break chance happens on successful damage increase
-		}
+		if (sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rnd()%100 < sc->data[SC_GIANTGROWTH]->val2 && !is_infinite_defense(target, wd.flag) && !vellum_damage)
+			wd.damage += wd.damage * 150 / 100; // 2.5 times damage
 
 		if( sd && battle_config.arrow_decrement && sc->data[SC_FEARBREEZE] && sc->data[SC_FEARBREEZE]->val4 > 0) {
 			short idx = sd->equip_index[EQI_AMMO];

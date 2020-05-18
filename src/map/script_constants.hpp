@@ -671,6 +671,7 @@
 	export_constant2("bUnbreakableArmor",SP_UNBREAKABLE_ARMOR);
 	export_constant2("bUnbreakableHelm",SP_UNBREAKABLE_HELM);
 	export_constant2("bUnbreakableShield",SP_UNBREAKABLE_SHIELD);
+	export_constant2("bShortAtkRate",SP_SHORT_ATK_RATE);
 	export_constant2("bLongAtkRate",SP_LONG_ATK_RATE);
 	export_constant2("bCritAtkRate",SP_CRIT_ATK_RATE);
 	export_constant2("bCriticalAddRace",SP_CRITICAL_ADDRACE);
@@ -1583,6 +1584,8 @@
 	export_constant(SC_ADD_ATK_DAMAGE);
 	export_constant(SC_ADD_MATK_DAMAGE);
 	export_constant(SC_SOUNDOFDESTRUCTION);
+	export_constant(SC_LUXANIMA);
+	export_constant(SC_REUSE_LIMIT_LUXANIMA);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif

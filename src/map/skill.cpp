@@ -1343,6 +1343,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					if((sce=sc->data[SC_EDP]))
 						sc_start4(src,bl,SC_DPOISON,sce->val2, sce->val1,src->id,0,0,
 							skill_get_time2(ASC_EDP,sce->val1));
+
+					if ((sce = sc->data[SC_LUXANIMA]) && rnd() % 100 < sce->val2)
+						skill_castend_nodamage_id(src, bl, RK_STORMBLAST, 1, tick, 0);
 				}
 			}
 			break;
@@ -1692,9 +1695,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case NPC_CRITICALWOUND:
 		sc_start(src,bl,SC_CRITICALWOUND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
-	case RK_WINDCUTTER:
-		sc_start(src,bl,SC_FEAR,3+2*skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
-		break;
 	case RK_DRAGONBREATH:
 		sc_start4(src,bl,SC_BURNING,15,skill_lv,1000,src->id,0,skill_get_time(skill_id,skill_lv));
 		break;
@@ -2033,6 +2033,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					case SC_DRESSUP:		case SC_HANBOK:			case SC_OKTOBERFEST:
 					case SC_LHZ_DUN_N1:		case SC_LHZ_DUN_N2:			case SC_LHZ_DUN_N3:			case SC_LHZ_DUN_N4:
 					case SC_ENTRY_QUEUE_APPLY_DELAY:	case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
+					case SC_REUSE_LIMIT_LUXANIMA:
 						continue;
 					case SC_WHISTLE:		case SC_ASSNCROS:		case SC_POEMBRAGI:
 					case SC_APPLEIDUN:		case SC_HUMMING:		case SC_DONTFORGETME:
@@ -4862,7 +4863,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case MO_TRIPLEATTACK:
-	case RK_WINDCUTTER:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag|SD_ANIMATION);
 		break;
 
@@ -5112,6 +5112,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NPC_REVERBERATION_ATK:
 	case NPC_ARROWSTORM:
 	case RK_IGNITIONBREAK:
+	case RK_HUNDREDSPEAR:
 	case AB_JUDEX:
 	case AB_ADORAMUS:
 	case WL_SOULEXPANSION:
@@ -5560,8 +5561,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case RK_DRAGONBREATH:
 		if( tsc && tsc->data[SC_HIDING] )
 			clif_skill_nodamage(src,src,skill_id,skill_lv,1);
-		else
+		else {
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
+		}
 		break;
 
 	case NPC_SELFDESTRUCTION:
@@ -5619,16 +5621,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		status_change_end(src, SC_HIDING, INVALID_TIMER);
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-	case RK_HUNDREDSPEAR:
-		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		if(rnd()%100 < (10 + 3*skill_lv)) {
-			int skill_req = ((sd) ? pc_checkskill(sd,KN_SPEARBOOMERANG) : skill_get_max(KN_SPEARBOOMERANG));
-			if( !skill_req )
-				break; // Spear Boomerang auto cast chance only works if you have Spear Boomerang.
-			skill_blown(src,bl,6,-1,BLOWN_NONE);
-			skill_castend_damage_id(src,bl,KN_SPEARBOOMERANG,skill_req,tick,0);
-		}
-		break;
 	case RK_PHANTOMTHRUST:
 		unit_setdir(src,map_calc_dir(src, bl->x, bl->y));
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -5637,6 +5629,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		if( battle_check_target(src,bl,BCT_ENEMY) > 0 )
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
+	case RK_WINDCUTTER:
 	case RK_STORMBLAST:
 		if( flag&1 )
 			skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
@@ -7516,6 +7509,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	//List of self skills that give damage around caster
 	case ASC_METEORASSAULT:
 	case GS_SPREADATTACK:
+	case RK_WINDCUTTER:
 	case RK_STORMBLAST:
 	case NC_AXETORNADO:
 	case GC_COUNTERSLASH:
@@ -7560,7 +7554,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		i = map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), starget,
 				src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-		if( !i && ( skill_id == NC_AXETORNADO || skill_id == SR_SKYNETBLOW || skill_id == KO_HAPPOKUNAI ) )
+		if( !i && ( skill_id == RK_WINDCUTTER || skill_id == NC_AXETORNADO || skill_id == SR_SKYNETBLOW || skill_id == KO_HAPPOKUNAI ) )
 			clif_skill_damage(src,src,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SINGLE);
 	}
 		break;
@@ -8498,6 +8492,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_WEDDING:		case SC_XMAS:			case SC_SUMMER:
 					case SC_DRESSUP:		case SC_HANBOK:			case SC_OKTOBERFEST:
 					case SC_LHZ_DUN_N1:		case SC_LHZ_DUN_N2:			case SC_LHZ_DUN_N3:			case SC_LHZ_DUN_N4:
+					case SC_REUSE_LIMIT_LUXANIMA:
 						continue;
 					case SC_WHISTLE:
 					case SC_ASSNCROS:
@@ -9632,7 +9627,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case RK_ENCHANTBLADE:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
-			sc_start2(src,bl,type,100,skill_lv,((100+20*skill_lv)*status_get_lv(src))/150+sstatus->int_,skill_get_time(skill_id,skill_lv)));
+			sc_start2(src,bl,type,100,skill_lv,((100+20*skill_lv)*status_get_lv(src))/100+sstatus->int_,skill_get_time(skill_id,skill_lv)));
 		break;
 	case RK_DRAGONHOWLING:
 		if( flag&1)
@@ -9657,6 +9652,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			map_foreachinrange(skill_area_sub, bl,i,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 		}
 		break;
+	case RK_LUXANIMA:
+		status_change_clear_buffs(bl, SCCB_LUXANIMA); // For bonus_script
 	case RK_GIANTGROWTH:
 	case RK_STONEHARDSKIN:
 	case RK_VITALITYACTIVATION:
@@ -9690,57 +9687,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
  		break;
 
 	case RK_FIGHTINGSPIRIT: {
-			// val1: ATKBonus: Caster: 70 + 7 * PartyMember. Member: (70 + 7 * PartyMember) / 2
+			uint8 runemastery_skill_lv = (sd ? pc_checkskill(sd, RK_RUNEMASTERY) : skill_get_max(RK_RUNEMASTERY));
+
+			// val1: ATKBonus: ? // !TODO: Confirm new ATK formula
 			// val2: ASPD boost: [RK_RUNEMASTERYlevel * 4 / 10] * 10 ==> RK_RUNEMASTERYlevel * 4
-			if( flag&1 ) {
-				if( skill_area_temp[1] == bl->id )
-					sc_start2(src,bl,type,100,70 + 7 * skill_area_temp[0],4 * ((sd) ? pc_checkskill(sd,RK_RUNEMASTERY) : skill_get_max(RK_RUNEMASTERY)),skill_area_temp[4]);
-				else
-					sc_start(src,bl,type,100,skill_area_temp[3],skill_area_temp[4]);
-			} else {
-				if( sd && sd->status.party_id ) {
-					skill_area_temp[0] = party_foreachsamemap(skill_area_sub,sd,skill_get_splash(skill_id,skill_lv),src,skill_id,skill_lv,tick,BCT_PARTY,skill_area_sub_count);
-					skill_area_temp[1] = src->id;
-					skill_area_temp[3] = (70 + 7 * skill_area_temp[0]) / 2;
-					skill_area_temp[4] = skill_get_time(skill_id,skill_lv);
-					party_foreachsamemap(skill_area_sub,sd,skill_get_splash(skill_id,skill_lv),src,skill_id,skill_lv,tick,flag|BCT_PARTY|1,skill_castend_nodamage_id);
-				}
-				else
-					sc_start2(src,bl,type,100,77,4 * ((sd) ? pc_checkskill(sd,RK_RUNEMASTERY) : skill_get_max(RK_RUNEMASTERY)),skill_get_time(skill_id,skill_lv));
-				clif_skill_nodamage(src,bl,skill_id,1,1);
-			}
+			sc_start2(src,bl,type,100,70 + 7 * runemastery_skill_lv,4 * runemastery_skill_lv,skill_get_time(skill_id,skill_lv));
+			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+			break;
 		}
-		break;
-
-	case RK_LUXANIMA:
-		{
-			sc_type runes[] = { SC_MILLENNIUMSHIELD, SC_REFRESH, SC_GIANTGROWTH, SC_STONEHARDSKIN, SC_VITALITYACTIVATION, SC_ABUNDANCE };
-
-			if (sd == NULL || sd->status.party_id == 0 || flag&1) {
-				if (src->id == bl->id) // Don't give it back to the RK
-					break;
-
-				sc_start(src, bl, runes[skill_area_temp[5]], 100, skill_lv, skill_get_time(skill_id, skill_lv));
-				status_change_clear_buffs(bl, SCCB_LUXANIMA); // For bonus_script
-			} else if (sd) { // Find which SC is going to be given
-				int recent = 0, result = -1;
-
-				for (i = 0; i < ARRAYLENGTH(runes); i++) {
-					if (sd->sc.data[runes[i]] && ((sd->sc.data[runes[i]]->timer * (runes[i] == SC_REFRESH? 3 : 1)) > recent || recent == 0)) {
-						recent = sd->sc.data[runes[i]]->timer;
-						result = i;
-					}
-				}
-
-				if (result != -1) {
-					skill_area_temp[5] = result;
-					status_change_end(src, runes[result], INVALID_TIMER);
-					party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
-					clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
-				}
-			}
-		}
-		break;
 
 	case GC_ROLLINGCUTTER:
 		{
@@ -10028,6 +9982,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_DRESSUP:		case SC_HANBOK:			case SC_OKTOBERFEST:
 					case SC_LHZ_DUN_N1:		case SC_LHZ_DUN_N2:			case SC_LHZ_DUN_N3:			case SC_LHZ_DUN_N4:
 					case SC_ENTRY_QUEUE_APPLY_DELAY:	case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
+					case SC_REUSE_LIMIT_LUXANIMA:
 					continue;
 				case SC_ASSUMPTIO:
 					if( bl->type == BL_MOB )
@@ -12722,11 +12677,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		}
 		break;
 
-	case RK_WINDCUTTER:
-		clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SINGLE);
 	case AC_SHOWER:
-		if (skill_id == AC_SHOWER)
-			status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER);
+		status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER);
 	case MA_SHOWER:
 	case NC_COLDSLOWER:
 	case RK_DRAGONBREATH:
@@ -19821,7 +19773,6 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 	int i, sc, ele, idx, equip, wlv, make_per = 0, flag = 0, skill_lv = 0;
 	int num = -1; // exclude the recipe
 	struct status_data *status;
-	struct item_data* data;
 
 	nullpo_ret(sd);
 
@@ -19868,32 +19819,6 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 			pc_delitem(sd,j,1,1,0,LOG_TYPE_PRODUCE);
 			ele = ele_table[slot[i]-ITEMID_FLAME_HEART];
 		}
-	}
-
-	if (skill_id == RK_RUNEMASTERY) {
-		int temp_qty, runemastery_skill_lv = pc_checkskill(sd,skill_id);
-		data = itemdb_search(nameid);
-
-		if (runemastery_skill_lv >= 10) temp_qty = 1 + rnd()%3;
-		else if (runemastery_skill_lv > 4) temp_qty = 1 + rnd()%2;
-		else temp_qty = 1;
-
-		if (data->stack.inventory) {
-			for (i = 0; i < MAX_INVENTORY; i++) {
-				if (sd->inventory.u.items_inventory[i].nameid == nameid) {
-					if (sd->inventory.u.items_inventory[i].amount >= data->stack.amount) {
-						clif_msg(sd,RUNE_CANT_CREATE);
-						return 0;
-					} else {
-						// The amount fits, say we got temp_qty 4 and 19 runes, we trim temp_qty to 1.
-						if (temp_qty + sd->inventory.u.items_inventory[i].amount >= data->stack.amount)
-							temp_qty = data->stack.amount - sd->inventory.u.items_inventory[i].amount;
-					}
-					break;
-				}
-			}
-		}
-		qty = temp_qty;
 	}
 
 	for (i = 0; i < MAX_PRODUCE_RESOURCE; i++) {
@@ -20004,7 +19929,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 				break;
 
 			case RK_RUNEMASTERY: {
-					int A = 100 * (51 + 2 * pc_checkskill(sd, skill_id));
+					int A = 100 * (30 + 2 * pc_checkskill(sd, skill_id));
 					int B = 100 * status->dex / 30 + 10 * (status->luk + sd->status.job_level);
 					int C = 100 * cap_value(sd->itemid,0,100); //itemid depend on makerune()
 					int D = 0;
@@ -20032,6 +19957,15 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 							break; //not specified =-15%
 					}
 					make_per = A + B + C + D;
+
+					uint8 runemastery_skill_lv = pc_checkskill(sd,skill_id);
+
+					if (runemastery_skill_lv > 9)
+						qty = 2 + rnd() % 5; // 2~6
+					else if (runemastery_skill_lv > 4)
+						qty = 2 + rnd() % 3; // 2~4
+					else
+						qty = 2;
 				}
 				break;
 

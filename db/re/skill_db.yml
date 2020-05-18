@@ -17392,6 +17392,8 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
+    DamageFlags:
+      Critical: true
     Range:
       - Level: 1
         Size: 7
@@ -17488,10 +17490,33 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
-    Range: 5
+    DamageFlags:
+      Splash: true
+    Range: 7
     Hit: Multi_Hit
     HitCount: -5
     Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 1
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 2
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 3
     CastTime:
       - Level: 1
         Time: 1000
@@ -17526,33 +17551,50 @@ Body:
     Description: Wind Cutter
     MaxLevel: 5
     Type: Weapon
-    TargetType: Ground
+    TargetType: Self
     DamageFlags:
       Splash: true
-    Range: 1
     Hit: Single
     HitCount: 1
-    Element: Wind
-    SplashArea: 2
-    Knockback: 3
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
     CopyFlags:
       Skill:
         Reproduce: true
-    Duration1: 15000
-    Cooldown: 2000
-    FixedCastTime: -1
+    AfterCastActDelay: 1000
+    Cooldown:
+      - Level: 1
+        Time: 800
+      - Level: 2
+        Time: 650
+      - Level: 3
+        Time: 500
+      - Level: 4
+        Time: 350
+      - Level: 5
+        Time: 200
     Requires:
       SpCost:
         - Level: 1
-          Amount: 20
+          Amount: 34
         - Level: 2
-          Amount: 24
+          Amount: 38
         - Level: 3
-          Amount: 28
+          Amount: 42
         - Level: 4
-          Amount: 32
+          Amount: 46
         - Level: 5
-          Amount: 36
+          Amount: 50
       Weapon:
         Dagger: true
         1hSword: true
@@ -17567,6 +17609,7 @@ Body:
     TargetType: Self
     DamageFlags:
       Splash: true
+      Critical: true
     Hit: Single
     HitCount: 1
     Element: Weapon
@@ -17717,7 +17760,7 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 1000
-    Duration1: 180000
+    Duration1: 900000
     Duration2: 60000
     FixedCastTime: -1
     Requires:
@@ -17770,7 +17813,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    Duration1: 180000
+    Duration1: 900000
     FixedCastTime: 1000
     CastTimeFlags:
       IgnoreDex: true
@@ -17788,7 +17831,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    Duration1: 180000
+    Duration1: 900000
     Duration2: 10000
     FixedCastTime: 2000
     CastTimeFlags:
@@ -17807,7 +17850,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastCancel: true
-    Duration1: 180000
+    Duration1: 900000
     FixedCastTime: -1
     Requires:
       SpCost: 1
@@ -17819,13 +17862,13 @@ Body:
     TargetType: Self
     DamageFlags:
       Splash: true
+      Critical: true
     Flags:
       TargetTrap: true
     Hit: Single
     HitCount: 1
     Element: Weapon
     SplashArea: 3
-    Knockback: 7
     CastTime: 2000
     FixedCastTime: -1
     Requires:
@@ -17840,9 +17883,8 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
     CastCancel: true
-    Duration1: 180000
+    Duration1: 900000
     FixedCastTime: -1
     Requires:
       SpCost: 1
@@ -17858,7 +17900,7 @@ Body:
     HitCount: 1
     Element: Holy
     CastCancel: true
-    Duration1: 180000
+    Duration1: 900000
     FixedCastTime: -1
     Requires:
       SpCost: 1
@@ -31739,11 +31781,9 @@ Body:
     TargetType: Self
     DamageFlags:
       NoDamage: true
-      Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea: 3
-    Duration1: 60000
+    Duration1: 900000
     FixedCastTime: -1
     Requires:
       SpCost: 1
