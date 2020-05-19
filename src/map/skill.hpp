@@ -27,7 +27,7 @@ struct skill_unit;
 struct skill_unit_group;
 struct status_change_entry;
 
-#define MAX_SKILL_PRODUCE_DB	280 /// Max Produce DB
+#define MAX_SKILL_PRODUCE_DB	281 /// Max Produce DB
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
 #define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
 #define MAX_ARROW_RESULT		5 /// Max Arrow results/created
@@ -101,7 +101,6 @@ enum e_skill_inf2 : uint8 {
 	INF2_ALLOWONMADO, // Skill that can be used while on Madogear
 	INF2_TARGETMANHOLE, // Skill that can be used to target while under SC__MANHOLE effect
 	INF2_TARGETHIDDEN, // Skill that affects hidden targets
-	INF2_INCREASEGLOOMYDAYDAMAGE, // Skill that affects SC_GLOOMYDAY_SK
 	INF2_INCREASEDANCEWITHWUGDAMAGE, // Skill that is affected by SC_DANCEWITHWUG
 	INF2_IGNOREWUGBITE, // Skill blocked by RA_WUGBITE
 	INF2_IGNOREAUTOGUARD , // Skill is not blocked by SC_AUTOGUARD (physical-skill only)
@@ -1176,7 +1175,7 @@ enum e_skill {
 	CG_HERMODE,
 	CG_TAROTCARD,
 	CR_ACIDDEMONSTRATION,
-	CR_CULTIVATION,
+	CR_CULTIVATION, // Removed on kRO (renewal)
 	ITEM_ENCHANTARMS,
 	TK_MISSION,
 	SL_HIGH,
@@ -1693,9 +1692,9 @@ enum e_skill {
 	WM_LESSON = 2412,
 	WM_METALICSOUND,
 	WM_REVERBERATION,
-	WM_REVERBERATION_MELEE,
+	WM_REVERBERATION_MELEE, // Removed on kRO
 	WM_REVERBERATION_MAGIC,
-	WM_DOMINION_IMPULSE,
+	WM_DOMINION_IMPULSE, // Removed on kRO
 	WM_SEVERE_RAINSTORM,
 	WM_POEMOFNETHERWORLD,
 	WM_VOICEOFSIREN,
@@ -1760,12 +1759,12 @@ enum e_skill {
 	GN_HELLS_PLANT,
 	GN_HELLS_PLANT_ATK,
 	GN_MANDRAGORA,
-	GN_SLINGITEM,
+	GN_SLINGITEM, // Removed on kRO
 	GN_CHANGEMATERIAL,
 	GN_MIX_COOKING,
-	GN_MAKEBOMB,
+	GN_MAKEBOMB, // Removed on kRO
 	GN_S_PHARMACY,
-	GN_SLINGITEM_RANGEMELEEATK,
+	GN_SLINGITEM_RANGEMELEEATK, // Removed on kRO
 
 	AB_SECRAMENT = 2515,
 	WM_SEVERE_RAINSTORM_MELEE,
@@ -1957,6 +1956,10 @@ enum e_skill {
 
 	AB_VITUPERATUM = 5072,
 	AB_CONVENIO,
+	ALL_LIGHTNING_STORM,
+	NV_BREAKTHROUGH,
+	NV_HELPANGEL,
+	NV_TRANSCENDENCE,
 
 	HLIF_HEAL = 8001,
 	HLIF_AVOID,
@@ -2291,7 +2294,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	uint64 parseBodyNode(const YAML::Node &node);
 };
 
 extern MagicMushroomDatabase magic_mushroom_db;

@@ -1574,10 +1574,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 			target_id = src->id;
 
 		combo = 1;
-	} else if ( target_id == src->id &&
-		inf&INF_SELF_SKILL &&
-		(skill->inf2[INF2_NOTARGETSELF] ||
-		(skill_id == RL_QD_SHOT && sc && sc->data[SC_QD_SHOT_READY])) ) {
+	} else if (target_id == src->id && inf&INF_SELF_SKILL && skill->inf2[INF2_NOTARGETSELF]) {
 		target_id = ud->target; // Auto-select target. [Skotlex]
 		combo = 1;
 	}
@@ -1592,6 +1589,20 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 				if (sc && sc->data[SC_BLADESTOP]) {
 					if ((target=map_id2bl(sc->data[SC_BLADESTOP]->val4)) == NULL)
 						return 0;
+				}
+				break;
+			case GC_WEAPONCRUSH:
+				if (sc && sc->data[SC_WEAPONBLOCK_ON]) {
+					if ((target = map_id2bl(sc->data[SC_WEAPONBLOCK_ON]->val1)) == nullptr)
+						return 0;
+					combo = 1;
+				}
+				break;
+			case RL_QD_SHOT:
+				if (sc && sc->data[SC_QD_SHOT_READY]) {
+					if ((target = map_id2bl(sc->data[SC_QD_SHOT_READY]->val1)) == nullptr)
+						return 0;
+					combo = 1;
 				}
 				break;
 			case WE_MALE:
@@ -2946,7 +2957,6 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_CAMOUFLAGE, INVALID_TIMER);
 		status_change_end(bl, SC_NEUTRALBARRIER_MASTER, INVALID_TIMER);
 		status_change_end(bl, SC_STEALTHFIELD_MASTER, INVALID_TIMER);
-		status_change_end(bl, SC_HELLS_PLANT, INVALID_TIMER);
 		status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 		status_change_end(bl, SC__MANHOLE, INVALID_TIMER);
 		status_change_end(bl, SC_VACUUM_EXTREME, INVALID_TIMER);
