@@ -6164,6 +6164,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 #endif
 				}
 				break;
+			case NPC_DARKBREATH:
+				ad.damage = tstatus->hp * (skill_lv <= 5 ? 100 / (2 * 6 - skill_lv) : 50) / 100;
+				break;
 			case PF_SOULBURN:
 				ad.damage = tstatus->sp * 2;
 				break;
@@ -6906,9 +6909,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			break;
 		case NPC_SMOKING:
 			md.damage = 3;
-			break;
-		case NPC_DARKBREATH:
-			md.damage = tstatus->max_hp * skill_lv * 10 / 100;
 			break;
 		case NPC_EVILLAND:
 			md.damage = skill_calc_heal(src,target,skill_id,skill_lv,false);
