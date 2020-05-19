@@ -17636,14 +17636,14 @@ int skill_autospell(struct map_session_data *sd, uint16 skill_id)
 {
 	nullpo_ret(sd);
 
-	if (SKILL_CHK_GUILD(skill_id))
+	if (skill_id == 0 || skill_get_index_(skill_id, true, __FUNCTION__, __FILE__, __LINE__) == 0 || SKILL_CHK_GUILD(skill_id))
 		return 0;
 
 	uint16 lv = pc_checkskill(sd, skill_id), skill_lv = sd->menuskill_val;
-
-	if(!skill_lv || !lv) return 0; // Player must learn the skill before doing auto-spell [Lance]
-
 	uint16 maxlv = 1;
+
+	if (skill_lv == 0 || lv == 0)
+		return 0; // Player must learn the skill before doing auto-spell [Lance]
 
 #ifdef RENEWAL
 	if ((skill_id == MG_COLDBOLT || skill_id == MG_FIREBOLT || skill_id == MG_LIGHTNINGBOLT) && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_SAGE)
