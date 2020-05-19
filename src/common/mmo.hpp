@@ -964,8 +964,7 @@ enum e_job {
 enum e_sex {
 	SEX_FEMALE = 0,
 	SEX_MALE,
-	SEX_SERVER,
-	SEX_ACCOUNT = 99
+	SEX_SERVER
 };
 
 /// Item Bound Type

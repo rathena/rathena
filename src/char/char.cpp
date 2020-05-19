@@ -857,42 +857,24 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
  *
  * @retval SEX_MALE if the per-character sex is male
  * @retval SEX_FEMALE if the per-character sex is female
- * @retval SEX_ACCOUNT if the per-character sex is not defined or the current PACKETVER doesn't support it.
  */
-int char_mmo_gender(const struct char_session_data *sd, const struct mmo_charstatus *p, char sex)
-{
+int char_mmo_gender( const struct char_session_data *sd, const struct mmo_charstatus *p, char sex ){
+	switch( sex ){
 #if PACKETVER >= 20141016
-	(void)sd; (void)p; // Unused
-	switch (sex) {
 		case 'M':
 			return SEX_MALE;
 		case 'F':
 			return SEX_FEMALE;
-		case 'U':
-		default:
-			return SEX_ACCOUNT;
-	}
 #else
-	if (sex == 'M' || sex == 'F') {
-		if (!sd) {
-			// sd is not available, there isn't much we can do. Just return and print a warning.
-			ShowWarning("Character '%s' (CID: %d, AID: %d) has sex '%c', but PACKETVER does not support per-character sex. Defaulting to 'U'.\n",
-					p->name, p->char_id, p->account_id, sex);
-			return SEX_ACCOUNT;
-		}
-		if ((sex == 'M' && sd->sex == SEX_FEMALE)
-		 || (sex == 'F' && sd->sex == SEX_MALE)) {
-			ShowWarning("Changing sex of character '%s' (CID: %d, AID: %d) to 'U' due to incompatible PACKETVER.\n", p->name, p->char_id, p->account_id);
-			chlogif_parse_ackchangecharsex(p->char_id, sd->sex);
-		} else {
-			ShowInfo("Resetting sex of character '%s' (CID: %d, AID: %d) to 'U' due to incompatible PACKETVER.\n", p->name, p->char_id, p->account_id);
-		}
-		if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `sex` = 'U' WHERE `char_id` = '%d'", schema_config.char_db, p->char_id)) {
-			Sql_ShowDebug(sql_handle);
-		}
-	}
-	return SEX_ACCOUNT;
+		case 'M':
+		case 'F':
+			// No matter what the database says, always return the account gender
+			return sd->sex;
 #endif
+		default:
+			ShowWarning( "Found unknown gender '%c' for character '%s' (CID: %d, AID: %d), returning account gender...\n", sex, p->name, p->char_id, p->account_id );
+			return sd->sex;
+	}
 }
 
 int char_mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p);
@@ -1380,22 +1362,14 @@ int char_check_char_name(char * name, char * esc_name)
 //-----------------------------------
 // Function to create a new character
 //-----------------------------------
-#if PACKETVER >= 20120307
-#if PACKETVER >= 20151001
-int char_make_new_char_sql(struct char_session_data* sd, char* name_, int slot, int hair_color, int hair_style, short start_job, short unknown, int sex) { // TODO: Unknown byte
-#else
-int char_make_new_char_sql(struct char_session_data* sd, char* name_, int slot, int hair_color, int hair_style) {
-#endif
-	int str = 1, agi = 1, vit = 1, int_ = 1, dex = 1, luk = 1;
-#else
-int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style) {
-#endif
+int char_make_new_char( struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style, short start_job, int sex ){
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
 	struct point tmp_start_point[MAX_STARTPOINT];
 	struct startitem tmp_start_items[MAX_STARTITEM];
 	uint32 char_id;
 	int flag, k, start_point_idx = rnd() % charserv_config.start_point_count;
+	int status_points;
 
 	safestrncpy(name, name_, NAME_LENGTH);
 	normalize_name(name,TRIM_CHARS);
@@ -1410,32 +1384,53 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 	if( flag < 0 )
 		return flag;
 
-	//check other inputs
-#if PACKETVER >= 20120307
+	// Check inputs from the client - never trust it!
+
+	// Check the slot
+	if( slot < 0 || slot >= sd->char_slots ){
+		return -4; // invalid slot
+	}
+
+	// Check gender
 #if PACKETVER >= 20151001
-	switch(sex) {
-			case SEX_FEMALE:
-				sex = 'F';
-				break;
-			case SEX_MALE:
-				sex = 'M';
-				break;
-			default:
-				sex = 'U';
-				break;
+	switch( sex ){
+		case SEX_FEMALE:
+			sex = 'F';
+			break;
+		case SEX_MALE:
+			sex = 'M';
+			break;
+		default:
+			ShowWarning( "Received unsupported gender '%d'...\n", sex );
+			return -2; // invalid input
 	}
 #endif
-	if(slot < 0 || slot >= sd->char_slots)
-#else
-	if((slot < 0 || slot >= sd->char_slots) // slots
-	|| (str + agi + vit + int_ + dex + luk != 6*5 ) // stats
-	|| (str < 1 || str > 9 || agi < 1 || agi > 9 || vit < 1 || vit > 9 || int_ < 1 || int_ > 9 || dex < 1 || dex > 9 || luk < 1 || luk > 9) // individual stat values
-	|| (str + int_ != 10 || agi + luk != 10 || vit + dex != 10) ) // pairs
-#endif
-#if PACKETVER >= 20100413
-		return -4; // invalid slot
-#else
+
+	// Check status values
+#if PACKETVER < 20120307
+	// All stats together always have to add up to a total of 30 points
+	if( ( str + agi + vit + int_ + dex + luk ) != 30 ){
 		return -2; // invalid input
+	}
+
+	// No status can be below 1
+	if( str < 1 || agi < 1 || vit < 1 || int_ < 1 || dex < 1 || luk < 1 ){
+		return -2; // invalid input
+	}
+
+	// No status can be higher than 9
+	if( str > 9 || agi > 9 || vit > 9 || int_ > 9 || dex > 9 || luk > 9 ){
+		return -2; // invalid input
+	}
+
+	// The status pairs always have to add up to a total of 10 points
+	if( ( str + int_ ) != 10 || ( agi + luk ) != 10 || ( vit + dex ) != 10 ){
+		return -2; // invalid input
+	}
+
+	status_points = 0;
+#else
+	status_points = 48;
 #endif
 
 	// check the number of already existing chars in this account
@@ -1479,28 +1474,12 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 #endif
 
 	//Insert the new char entry to the database
-#if PACKETVER >= 20151001
 	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `class`, `zeny`, `status_point`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`, `sex`) VALUES ("
 		"'%d', '%d', '%s', '%d', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%u', '%u', '%u', '%u', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d', '%c')",
-		schema_config.char_db, sd->account_id , slot, esc_name, start_job, charserv_config.start_zeny, 48, str, agi, vit, int_, dex, luk,
+		schema_config.char_db, sd->account_id , slot, esc_name, start_job, charserv_config.start_zeny, status_points, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
 		mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, sex) )
-#elif PACKETVER >= 20120307
-	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `status_point`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
-		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
-		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%u', '%u', '%u', '%u', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
-		schema_config.char_db, sd->account_id , slot, esc_name, charserv_config.start_zeny, 48, str, agi, vit, int_, dex, luk,
-		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
-		mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y) )
-#else
-	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
-		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
-		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%u', '%u', '%u', '%u', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
-		schema_config.char_db, sd->account_id , slot, esc_name, charserv_config.start_zeny, str, agi, vit, int_, dex, luk,
-		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
-		mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y) )
-#endif
 	{
 		Sql_ShowDebug(sql_handle);
 		return -2; //No, stop the procedure!
