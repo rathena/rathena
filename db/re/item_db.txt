@@ -7044,23 +7044,23 @@
 //===================================================================
 // Rune Knight's Rune Stones
 //===================================================================
-12725,Runstone_Nosiege,Nauthiz Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_REFRESH",1; },{},{}
-12726,Runstone_Rhydo,Raido Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_CRUSHSTRIKE",1; },{},{}
-12727,Runstone_Verkana,Berkana Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_MILLENNIUMSHIELD",1; },{},{}
-12728,Runstone_Isia,Isa Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_VITALITYACTIVATION",1; },{},{}
-12729,Runstone_Asir,Othila Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_FIGHTINGSPIRIT",1; },{},{}
-12730,Runstone_Urj,Uruz Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_ABUNDANCE",1; },{},{}
-12731,Runstone_Turisus,Thurisaz Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_GIANTGROWTH",1; },{},{}
-12732,Runstone_Pertz,Wyrd Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_STORMBLAST",1; },{},{}
-12733,Runstone_Hagalas,Hagalaz Rune,2,100,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_STONEHARDSKIN",1; },{},{}
+12725,Runstone_Nosiege,Nauthiz Rune,2,100,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_REFRESH",1; },{},{}
+12726,Runstone_Rhydo,Raido Rune,2,100,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_CRUSHSTRIKE",1; },{},{}
+12727,Runstone_Verkana,Berkana Rune,2,100,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_MILLENNIUMSHIELD",1; },{},{}
+12728,Runstone_Isia,Isa Rune,2,100,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_VITALITYACTIVATION",1; },{},{}
+12729,Runstone_Asir,Othila Rune,2,100,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_FIGHTINGSPIRIT",1; },{},{}
+12730,Runstone_Urj,Uruz Rune,2,100,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_ABUNDANCE",1; },{},{}
+12731,Runstone_Turisus,Thurisaz Rune,2,100,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_GIANTGROWTH",1; },{},{}
+12732,Runstone_Pertz,Wyrd Rune,2,100,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_STORMBLAST",1; },{},{}
+12733,Runstone_Hagalas,Hagalaz Rune,2,100,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_STONEHARDSKIN",1; },{},{}
 //===================================================================
 // Rune Knight Rune Ores
 //===================================================================
-12734,Runstone_Quality,Luxurious Rune,0,2,,100,,,,,0x00000080,56,2,,,,,,{ makerune 5; },{},{}
-12735,Runstone_Ancient,Ancient Rune,0,2,,100,,,,,0x00000080,56,2,,,,,,{ makerune 11; },{},{}
-12736,Runstone_Mystic,Mystic Rune,0,2,,100,,,,,0x00000080,56,2,,,,,,{ makerune 14; },{},{}
-12737,Runstone_Ordinary,General Rune,0,2,,100,,,,,0x00000080,56,2,,,,,,{ makerune 2; },{},{}
-12738,Runstone_Rare,Rare Rune,0,2,,100,,,,,0x00000080,56,2,,,,,,{ makerune 8; },{},{}
+12734,Runstone_Quality,Luxurious Rune,0,2,,100,,,,,0x00000080,56,2,,,,,,{ makerune 8; },{},{}
+12735,Runstone_Ancient,Ancient Rune,0,2,,100,,,,,0x00000080,56,2,,,,,,{ makerune 30; },{},{}
+12736,Runstone_Mystic,Mystic Rune,0,2,,100,,,,,0x00000080,56,2,,,,,,{ makerune 60; },{},{}
+12737,Runstone_Ordinary,General Rune,0,2,,100,,,,,0x00000080,56,2,,,,,,{ makerune 4; },{},{}
+12738,Runstone_Rare,Rare Rune,0,2,,100,,,,,0x00000080,56,2,,,,,,{ makerune 15; },{},{}
 //===================================================================
 // More usable items
 //===================================================================
@@ -10122,7 +10122,7 @@
 19092,Machoman_Glasses_,Machoman's Glasses,4,36000,,100,,1,,1,0xFFFFFFFE,63,2,512,,0,0,92,{},{},{}
 19093,Spinning_Eyes_,Geek Glasses,4,20000,,100,,1,,1,0xFFFFFFFF,63,2,512,,0,0,27,{ bonus2 bResEff,Eff_Blind,800; },{},{}
 19094,Mr_Smile_,Mr. Smile,4,60,,100,,1,,1,0xFFFFFFFF,63,2,513,,0,0,65,{},{},{}
-19095,Happy_Balloon,Happy Balloon,4,0,,10,,0,,0,0xFFFFFFFF,63,2,1,,1,0,1289,{ bonus2 bDropAddRace,RC_All,5; bonus2 bExpAddRace,RC_All,5; },{},{}
+19095,Happy_Balloon_K,Happy Balloon,4,0,,10,,0,,0,0xFFFFFFFF,63,2,1,,1,0,1289,{ bonus2 bDropAddRace,RC_All,10; bonus2 bExpAddRace,RC_All,5; },{},{}
 19101,Glastheim_Observer,Glastheim Observer,4,20,,100,,0,,0,0xFFFFFFFF,63,2,1,,80,1,1041,{ bonus2 bAddClass,Class_All,2; bonus bDelayrate,-5; },{},{}
 19102,Pale_Moon_Hat,Pale Moon Hat,4,20,,500,,2,,1,0xFFFFFFFF,63,2,256,,30,1,913,{ bonus bFlee,20; bonus2 bAddRace2,RC2_THANATOS,5; bonus2 bSubRace2,RC2_THANATOS,5; bonus2 bMagicAddRace2,RC2_THANATOS,5; if(getrefine()>4) { bonus2 bAddRace2,RC2_THANATOS,10; bonus2 bSubRace2,RC2_THANATOS,10; bonus2 bMagicAddRace2,RC2_THANATOS,10; } if(getrefine()>6) { bonus2 bAddRace2,RC2_THANATOS,15; bonus2 bSubRace2,RC2_THANATOS,15; bonus2 bMagicAddRace2,RC2_THANATOS,15; } if(getrefine()>8) { bonus2 bAddRace2,RC2_THANATOS,20; bonus2 bSubRace2,RC2_THANATOS,20; bonus2 bMagicAddRace2,RC2_THANATOS,20; } /* skill 3044,1; */ },{},{}
 19109,Valhalla_Idol,Valhalla Idol,4,0,,300,,2,,0,0xFFFFFFFF,63,2,512,,70,0,1423,{ bonus bMaxSP,50; bonus4 bAutoSpellWhenHit,"MG_SAFETYWALL",10,50,0; hateffect(HAT_EF_VALHALLA_IDOL,true); },{},{ hateffect(HAT_EF_VALHALLA_IDOL,false); }
@@ -11371,7 +11371,7 @@
 22536,WorkerScroll_B,Scroll Summoning Workers(Female),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 22537,PrizeOfHero,Prize Of Hero,2,0,,100,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getrandgroupitem(IG_PrizeOfHero,1); },{},{}
 22538,Hanbok_bag,Hanbok bag,2,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_HANBOK,600000,0; },{},{}
-22540,Runstone_Lux,Lux Anima Runestone,11,2,,100,,,,,0xFFFFFFFF,56,2,,,,,,{ itemskill "RK_LUXANIMA",1; },{},{}
+22540,Runstone_Lux,Lux Anima Runestone,11,2,,10,,,,,0xFFFFFFFF,56,2,,,,,,{ itemskill "RK_LUXANIMA",1; },{},{}
 22541,PC_Room_Coupon_Box_VI,PC Room Coupon Box VI,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 22542,Center_Potion_B,Concentration Potion,2,10,,100,,,,0,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,4; },{},{}
 22543,Berserk_Potion_B,Berserk Potion,2,10,,200,,,,0,0x6,63,2,,,,,,{ sc_start SC_ASPDPOTION2,1800000,9; },{},{}
