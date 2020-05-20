@@ -4850,17 +4850,23 @@ ACMD_FUNC(servertime)
 		else
 			clif_displaymessage(fd, msg_txt(sd,232)); // Game time: The game is in permanent night.
 	} else if (battle_config.night_duration == 0)
-		if (night_flag == 1 && (timer_data = get_timer(day_timer_tid)) != nullptr) { // we start with night
-			sprintf(temp, msg_txt(sd,233), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in night for %s.
-			clif_displaymessage(fd, temp);
-			clif_displaymessage(fd, msg_txt(sd,234)); // Game time: After, the game will be in permanent daylight.
+		if (night_flag == 1) { // we start with night
+			if ((timer_data = get_timer(day_timer_tid)) != nullptr) {
+				sprintf(temp, msg_txt(sd,233), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in night for %s.
+				clif_displaymessage(fd, temp);
+				clif_displaymessage(fd, msg_txt(sd,234)); // Game time: After, the game will be in permanent daylight.
+			} else
+				clif_displaymessage(fd, msg_txt(sd,232)); // Game time: The game is in permanent night.
 		} else
 			clif_displaymessage(fd, msg_txt(sd,231)); // Game time: The game is in permanent daylight.
 	else if (battle_config.day_duration == 0)
-		if (night_flag == 0 && (timer_data = get_timer(night_timer_tid)) != nullptr) { // we start with day
-			sprintf(temp, msg_txt(sd,235), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in daylight for %s.
-			clif_displaymessage(fd, temp);
-			clif_displaymessage(fd, msg_txt(sd,236)); // Game time: After, the game will be in permanent night.
+		if (night_flag == 0) { // we start with day
+			if ((timer_data = get_timer(night_timer_tid)) != nullptr) {
+				sprintf(temp, msg_txt(sd,235), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in daylight for %s.
+				clif_displaymessage(fd, temp);
+				clif_displaymessage(fd, msg_txt(sd,236)); // Game time: After, the game will be in permanent night.
+			} else
+				clif_displaymessage(fd, msg_txt(sd,231)); // Game time: The game is in permanent daylight.
 		} else
 			clif_displaymessage(fd, msg_txt(sd,232)); // Game time: The game is in permanent night.
 	else {
