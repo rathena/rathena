@@ -5517,6 +5517,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case NPC_DARKBREATH:
 		clif_emotion(src,ET_ANGER);
+		if (rnd() % 2 == 0)
+			break; // 50% chance
 	case SN_FALCONASSAULT:
 #ifndef RENEWAL
 	case PA_PRESSURE:
