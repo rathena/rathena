@@ -6997,7 +6997,7 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
 	if(sc->data[SC__UNLUCKY])
 		flee2 -= flee2 * sc->data[SC__UNLUCKY]->val2 / 100;
 	if (sc->data[SC_HISS])
-		flee2 += sc->data[SC_HISS]->val2;
+		flee2 += sc->data[SC_HISS]->val2*10;
 	if (sc->data[SC_DORAM_FLEE2])
 		flee2 += sc->data[SC_DORAM_FLEE2]->val1;
 
