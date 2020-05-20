@@ -60,8 +60,7 @@ OnTimer1000:
 	stopnpctimer;
 	if (!getbattleflag("feature.bgqueue"))
 		initnpctimer;
-	set .@chk_bat_a01,getmapusers("bat_a01");
-	if (.@chk_bat_a01 < 1) {
+	if (bg_get_data($@TierraBG1_id1, 0) == 0 && bg_get_data($@TierraBG1_id2, 0) == 0) {
 		set $@TierraBG1,0; set $@TierraBG1_Victory, 0;
 		if( $@TierraBG1_id1 ) { bg_destroy $@TierraBG1_id1; set $@TierraBG1_id1, 0; }
 		if( $@TierraBG1_id2 ) { bg_destroy $@TierraBG1_id2; set $@TierraBG1_id2, 0; }

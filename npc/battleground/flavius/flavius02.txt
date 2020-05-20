@@ -61,8 +61,7 @@ OnTimer1000:
 	stopnpctimer;
 	if (!getbattleflag("feature.bgqueue"))
 		initnpctimer;
-	set .@chk_bat_a01,getmapusers("bat_b02");
-	if (.@chk_bat_a01 < 1) {
+	if (bg_get_data($@FlaviusBG2_id1, 0) == 0 && bg_get_data($@FlaviusBG2_id2, 0) == 0) {
 		set $@FlaviusBG2, 0;
 		if( $@FlaviusBG2_id1 ) { bg_destroy $@FlaviusBG2_id1; set $@FlaviusBG2_id1, 0; }
 		if( $@FlaviusBG2_id2 ) { bg_destroy $@FlaviusBG2_id2; set $@FlaviusBG2_id2, 0; }
