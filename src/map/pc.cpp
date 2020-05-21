@@ -868,6 +868,24 @@ bool pc_can_give_bounded_items(struct map_session_data *sd)
 	return pc_has_permission(sd, PC_PERM_TRADE_BOUNDED);
 }
 
+/**
+ * Determine if an item in a player's inventory is tradeable based on several merits.
+ * Checks for item_trade, bound, and rental restrictions.
+ * @param sd: Player data
+ * @param index: Item inventory index
+ * @return True if the item can be traded or false otherwise
+ */
+bool pc_can_trade_item(map_session_data *sd, int index) {
+	if (sd && index >= 0) {
+		return (sd->inventory.u.items_inventory[index].expire_time == 0 &&
+			(sd->inventory.u.items_inventory[index].bound == 0 || pc_can_give_bounded_items(sd)) &&
+			itemdb_cantrade(&sd->inventory.u.items_inventory[index], pc_get_group_level(sd), pc_get_group_level(sd))
+			);
+	}
+
+	return false;
+}
+
 /*==========================================
  * Prepares character for saving.
  * @param sd

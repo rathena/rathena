@@ -2910,6 +2910,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_option_id5[]        - fifth array of random option IDs
 @inventorylist_option_value5[]     - fifth array of random option values
 @inventorylist_option_parameter5[] - fifth array of random option parameters
+@inventorylist_tradable            - Returns if an item is tradable or not (Pass item_trade.txt, bound, and rental restrictions).
 
 This could be handy to save/restore a character's inventory, since no other
 command returns such a complete set of data, and could also be the only way to
@@ -4798,8 +4799,9 @@ for special cases such as removing a status change or resetting a variable or st
 of the player.
 
 This command can not be used to rent stackable items. Rental items cannot be
-dropped, traded, sold to NPCs, or placed in guild storage. (i.e. trade mask 75)
+dropped, traded, or placed in guild storage. (i.e. trade mask 67)
 Note: 'delitem' in an NPC script can still remove rental items.
+Note: 'countitem' will not count any item with a rental timer.
 
 ---------------------------------------
 
