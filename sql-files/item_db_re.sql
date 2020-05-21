@@ -7076,23 +7076,23 @@ REPLACE INTO `item_db_re` VALUES (12724,'Poison_Fatigue','Venom Bleed',2,2,NULL,
 #===================================================================
 # Rune Knight's Rune Stones
 #===================================================================
-REPLACE INTO `item_db_re` VALUES (12725,'Runstone_Nosiege','Nauthiz Rune',2,100,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_REFRESH",1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12726,'Runstone_Rhydo','Raido Rune',2,100,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_CRUSHSTRIKE",1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12727,'Runstone_Verkana','Berkana Rune',2,100,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_MILLENNIUMSHIELD",1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12728,'Runstone_Isia','Isa Rune',2,100,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_VITALITYACTIVATION",1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12729,'Runstone_Asir','Othila Rune',2,100,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_FIGHTINGSPIRIT",1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12730,'Runstone_Urj','Uruz Rune',2,100,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_ABUNDANCE",1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12731,'Runstone_Turisus','Thurisaz Rune',2,100,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_GIANTGROWTH",1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12732,'Runstone_Pertz','Wyrd Rune',2,100,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_STORMBLAST",1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12733,'Runstone_Hagalas','Hagalaz Rune',2,100,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_STONEHARDSKIN",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12725,'Runstone_Nosiege','Nauthiz Rune',2,100,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_REFRESH",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12726,'Runstone_Rhydo','Raido Rune',2,100,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_CRUSHSTRIKE",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12727,'Runstone_Verkana','Berkana Rune',2,100,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_MILLENNIUMSHIELD",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12728,'Runstone_Isia','Isa Rune',2,100,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_VITALITYACTIVATION",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12729,'Runstone_Asir','Othila Rune',2,100,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_FIGHTINGSPIRIT",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12730,'Runstone_Urj','Uruz Rune',2,100,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_ABUNDANCE",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12731,'Runstone_Turisus','Thurisaz Rune',2,100,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_GIANTGROWTH",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12732,'Runstone_Pertz','Wyrd Rune',2,100,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_STORMBLAST",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12733,'Runstone_Hagalas','Hagalaz Rune',2,100,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'if ((eaclass()&EAJ_THIRDMASK) == EAJ_RUNE_KNIGHT) unitskilluseid getcharid(3),"RK_STONEHARDSKIN",1;',NULL,NULL);
 #===================================================================
 # Rune Knight Rune Ores
 #===================================================================
-REPLACE INTO `item_db_re` VALUES (12734,'Runstone_Quality','Luxurious Rune',0,2,NULL,100,NULL,NULL,NULL,NULL,0x00000080,56,2,NULL,NULL,NULL,NULL,NULL,'makerune 5;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12735,'Runstone_Ancient','Ancient Rune',0,2,NULL,100,NULL,NULL,NULL,NULL,0x00000080,56,2,NULL,NULL,NULL,NULL,NULL,'makerune 11;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12736,'Runstone_Mystic','Mystic Rune',0,2,NULL,100,NULL,NULL,NULL,NULL,0x00000080,56,2,NULL,NULL,NULL,NULL,NULL,'makerune 14;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12737,'Runstone_Ordinary','General Rune',0,2,NULL,100,NULL,NULL,NULL,NULL,0x00000080,56,2,NULL,NULL,NULL,NULL,NULL,'makerune 2;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12738,'Runstone_Rare','Rare Rune',0,2,NULL,100,NULL,NULL,NULL,NULL,0x00000080,56,2,NULL,NULL,NULL,NULL,NULL,'makerune 8;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12734,'Runstone_Quality','Luxurious Rune',0,2,NULL,100,NULL,NULL,NULL,NULL,0x00000080,56,2,NULL,NULL,NULL,NULL,NULL,'makerune 8;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12735,'Runstone_Ancient','Ancient Rune',0,2,NULL,100,NULL,NULL,NULL,NULL,0x00000080,56,2,NULL,NULL,NULL,NULL,NULL,'makerune 30;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12736,'Runstone_Mystic','Mystic Rune',0,2,NULL,100,NULL,NULL,NULL,NULL,0x00000080,56,2,NULL,NULL,NULL,NULL,NULL,'makerune 60;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12737,'Runstone_Ordinary','General Rune',0,2,NULL,100,NULL,NULL,NULL,NULL,0x00000080,56,2,NULL,NULL,NULL,NULL,NULL,'makerune 4;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12738,'Runstone_Rare','Rare Rune',0,2,NULL,100,NULL,NULL,NULL,NULL,0x00000080,56,2,NULL,NULL,NULL,NULL,NULL,'makerune 15;',NULL,NULL);
 #===================================================================
 # More usable items
 #===================================================================
@@ -10154,7 +10154,7 @@ REPLACE INTO `item_db_re` VALUES (19091,'Opera_Ghost_Mask_','Opera Phantom Mask'
 REPLACE INTO `item_db_re` VALUES (19092,'Machoman_Glasses_','Machoman\'s Glasses',4,36000,NULL,100,NULL,1,NULL,1,0xFFFFFFFE,63,2,512,NULL,'0',0,92,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19093,'Spinning_Eyes_','Geek Glasses',4,20000,NULL,100,NULL,1,NULL,1,0xFFFFFFFF,63,2,512,NULL,'0',0,27,'bonus2 bResEff,Eff_Blind,800;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19094,'Mr_Smile_','Mr. Smile',4,60,NULL,100,NULL,1,NULL,1,0xFFFFFFFF,63,2,513,NULL,'0',0,65,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (19095,'Happy_Balloon','Happy Balloon',4,0,NULL,10,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'1',0,1289,'bonus2 bDropAddRace,RC_All,5; bonus2 bExpAddRace,RC_All,5;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (19095,'Happy_Balloon_K','Happy Balloon',4,0,NULL,10,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'1',0,1289,'bonus2 bDropAddRace,RC_All,10; bonus2 bExpAddRace,RC_All,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19101,'Glastheim_Observer','Glastheim Observer',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'80',1,1041,'bonus2 bAddClass,Class_All,2; bonus bDelayrate,-5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19102,'Pale_Moon_Hat','Pale Moon Hat',4,20,NULL,500,NULL,2,NULL,1,0xFFFFFFFF,63,2,256,NULL,'30',1,913,'bonus bFlee,20; bonus2 bAddRace2,RC2_THANATOS,5; bonus2 bSubRace2,RC2_THANATOS,5; bonus2 bMagicAddRace2,RC2_THANATOS,5; if(getrefine()>4) { bonus2 bAddRace2,RC2_THANATOS,10; bonus2 bSubRace2,RC2_THANATOS,10; bonus2 bMagicAddRace2,RC2_THANATOS,10; } if(getrefine()>6) { bonus2 bAddRace2,RC2_THANATOS,15; bonus2 bSubRace2,RC2_THANATOS,15; bonus2 bMagicAddRace2,RC2_THANATOS,15; } if(getrefine()>8) { bonus2 bAddRace2,RC2_THANATOS,20; bonus2 bSubRace2,RC2_THANATOS,20; bonus2 bMagicAddRace2,RC2_THANATOS,20; } /* skill 3044,1; */',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19109,'Valhalla_Idol','Valhalla Idol',4,0,NULL,300,NULL,2,NULL,0,0xFFFFFFFF,63,2,512,NULL,'70',0,1423,'bonus bMaxSP,50; bonus4 bAutoSpellWhenHit,"MG_SAFETYWALL",10,50,0; hateffect(HAT_EF_VALHALLA_IDOL,true);',NULL,'hateffect(HAT_EF_VALHALLA_IDOL,false);');
@@ -11403,7 +11403,7 @@ REPLACE INTO `item_db_re` VALUES (22535,'WorkerScroll_A','Scroll Summoning Worke
 REPLACE INTO `item_db_re` VALUES (22536,'WorkerScroll_B','Scroll Summoning Workers(Female)',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22537,'PrizeOfHero','Prize Of Hero',2,0,NULL,100,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,'1',NULL,NULL,'getrandgroupitem(IG_PrizeOfHero,1);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22538,'Hanbok_bag','Hanbok bag',2,0,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_HANBOK,600000,0;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (22540,'Runstone_Lux','Lux Anima Runestone',11,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,56,2,NULL,NULL,NULL,NULL,NULL,'itemskill "RK_LUXANIMA",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22540,'Runstone_Lux','Lux Anima Runestone',11,2,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,56,2,NULL,NULL,NULL,NULL,NULL,'itemskill "RK_LUXANIMA",1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22541,'PC_Room_Coupon_Box_VI','PC Room Coupon Box VI',18,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22542,'Center_Potion_B','Concentration Potion',2,10,NULL,100,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_ASPDPOTION0,1800000,4;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22543,'Berserk_Potion_B','Berserk Potion',2,10,NULL,200,NULL,NULL,NULL,0,0x6,63,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_ASPDPOTION2,1800000,9;',NULL,NULL);

@@ -5835,6 +5835,14 @@ ACMD_FUNC(useskill)
 		return -1;
 	}
 
+	if (!skill_id || !skill_db.find(skill_id)) {
+		clif_displaymessage(fd, msg_txt(sd, 198)); // This skill number doesn't exist.
+		return -1;
+	}
+
+	if (!skill_lv)
+		skill_lv = 1;
+
 	if(!strcmp(atcmd_player_name,"self"))
 		pl_sd = sd; //quick keyword
 	else if ( (pl_sd = map_nick2sd(atcmd_player_name,true)) == NULL ){
