@@ -57,20 +57,19 @@ OnStop:
 
 OnTimer1000:
 	stopnpctimer;
-	if (!getbattleflag("feature.bgqueue"))
-		initnpctimer;
-	if (bg_get_data($@TierraBG2_id1, 0) == 0 && bg_get_data($@TierraBG2_id2, 0) == 0) {
-		set $@TierraBG2,0; set $@TierraBG2_Victory, 0;
-		if( $@TierraBG2_id1 ) { bg_destroy $@TierraBG2_id1; set $@TierraBG2_id1, 0; }
-		if( $@TierraBG2_id2 ) { bg_destroy $@TierraBG2_id2; set $@TierraBG2_id2, 0; }
-		if (getbattleflag("feature.bgqueue")) {
+	if (!bg_get_data($@TierraBG2_id1, 0) && !bg_get_data($@TierraBG2_id2, 0)) {
+		donpcevent "countdown#bat_a02::OnStop";
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_a02", true;
+		mapwarp "bat_a02","bat_room",154,150;
+		$@TierraBG2 = 0; $@TierraBG2_Victory = 0;
+		if( $@TierraBG2_id1 ) { bg_destroy $@TierraBG2_id1; $@TierraBG2_id1 = 0; }
+		if( $@TierraBG2_id2 ) { bg_destroy $@TierraBG2_id2; $@TierraBG2_id2 = 0; }
+		if (getbattleflag("feature.bgqueue"))
 			bg_unbook "bat_a02";
-			end;
-		} else
-			donpcevent "start#bat_a02::OnReadyCheck";
+		end;
 	}
-	if (getbattleflag("feature.bgqueue"))
-		initnpctimer;
+	initnpctimer;
 	end;
 }
 
@@ -374,8 +373,10 @@ bat_a02,185,270,1	script	Guillaume Blacksmith#a02	851,{
 				mes "[Guillaume Blacksmith]";
 				mes "Wow! It's done.";
 				mes "We are relieved.";
-				delitem 7049,50; //Stone
-				donpcevent "barricade#bat_a02_a::OnEnable";
+				if (mobcount("bat_a02","barricade#bat_a02_a::OnMyMobDead") < 17) {
+					delitem 7049,50; //Stone
+					donpcevent "barricade#bat_a02_a::OnEnable";
+				}
 				close2;
 				disablenpc "Guillaume Blacksmith#a02";
 				end;
@@ -458,8 +459,10 @@ bat_a02,170,121,5	script	Croix Blacksmith#bat_a02	851,{
 				mes "[Croix Blacksmith]";
 				mes "Wow! It's done.";
 				mes "We are relieved.";
-				delitem 7049,50; //Stone
-				donpcevent "barricade#bat_a02_b::OnEnable";
+				if (mobcount("bat_a02","barricade#bat_a02_b::OnMyMobDead") < 17) {
+					delitem 7049,50; //Stone
+					donpcevent "barricade#bat_a02_b::OnEnable";
+				}
 				close2;
 				disablenpc "Croix Blacksmith#bat_a02";
 				end;
@@ -534,7 +537,7 @@ OnInit:
 	disablenpc "bat_a02_rp1_a_warp";
 	end;
 
-OnTouch_:
+OnTouch:
 	percentheal 100,100;
 	warp "bat_a02",352,342;
 	end;

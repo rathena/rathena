@@ -58,20 +58,18 @@ OnStop:
 
 OnTimer1000:
 	stopnpctimer;
-	if (!getbattleflag("feature.bgqueue"))
-		initnpctimer;
 	if (bg_get_data($@TierraBG1_id1, 0) == 0 && bg_get_data($@TierraBG1_id2, 0) == 0) {
-		set $@TierraBG1,0; set $@TierraBG1_Victory, 0;
-		if( $@TierraBG1_id1 ) { bg_destroy $@TierraBG1_id1; set $@TierraBG1_id1, 0; }
-		if( $@TierraBG1_id2 ) { bg_destroy $@TierraBG1_id2; set $@TierraBG1_id2, 0; }
-		if (getbattleflag("feature.bgqueue")) {
+		donpcevent "countdown#bat_a01::OnStop";
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_a01", true;
+		$@TierraBG1 = 0; $@TierraBG1_Victory = 0;
+		if( $@TierraBG1_id1 ) { bg_destroy $@TierraBG1_id1; $@TierraBG1_id1 = 0; }
+		if( $@TierraBG1_id2 ) { bg_destroy $@TierraBG1_id2; $@TierraBG1_id2 = 0; }
+		if (getbattleflag("feature.bgqueue"))
 			bg_unbook "bat_a01";
-			end;
-		} else
-			donpcevent "start#bat_a01::OnReadyCheck";
+		end;
 	}
-	if (getbattleflag("feature.bgqueue"))
-		initnpctimer;
+	initnpctimer;
 	end;
 }
 
@@ -375,8 +373,10 @@ bat_a01,185,270,1	script	Guillaume Blacksmith#a01	851,{
 				mes "[Guillaume Blacksmith]";
 				mes "Wow! It's done.";
 				mes "We are relieved.";
-				delitem 7049,50; //Stone
-				donpcevent "barricade#bat_a01_a::OnEnable";
+				if (mobcount("bat_a01","barricade#bat_a01_a::OnMyMobDead") < 17) {
+					delitem 7049,50; //Stone
+					donpcevent "barricade#bat_a01_a::OnEnable";
+				}
 				close2;
 				disablenpc "Guillaume Blacksmith#a01";
 				end;
@@ -459,8 +459,10 @@ bat_a01,170,121,5	script	Croix Blacksmith#bat_a01	851,{
 				mes "[Croix Blacksmith]";
 				mes "Wow! It's done.";
 				mes "We are relieved.";
-				delitem 7049,50; //Stone
-				donpcevent "barricade#bat_a01_b::OnEnable";
+				if (mobcount("bat_a01","barricade#bat_a01_b::OnMyMobDead") < 17) {
+					delitem 7049,50; //Stone
+					donpcevent "barricade#bat_a01_b::OnEnable";
+				}
 				close2;
 				disablenpc "Croix Blacksmith#bat_a01";
 				end;
@@ -535,7 +537,7 @@ OnInit:
 	disablenpc "bat_a01_rp1_a_warp";
 	end;
 
-OnTouch_:
+OnTouch:
 	percentheal 100,100;
 	warp "bat_a01",352,342;
 	end;

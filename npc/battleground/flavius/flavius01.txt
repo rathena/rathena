@@ -58,23 +58,20 @@ OnStop:
 
 OnTimer1000:
 	stopnpctimer;
-	if (!getbattleflag("feature.bgqueue"))
-		initnpctimer;
 	if (bg_get_data($@FlaviusBG1_id1, 0) == 0 && bg_get_data($@FlaviusBG1_id2, 0) == 0) {
-		set $@FlaviusBG1, 0;
-		if( $@FlaviusBG1_id1 ) { bg_destroy $@FlaviusBG1_id1; set $@FlaviusBG1_id1, 0; }
-		if( $@FlaviusBG1_id2 ) { bg_destroy $@FlaviusBG1_id2; set $@FlaviusBG1_id2, 0; }
-		if (getbattleflag("feature.bgqueue")) {
+		donpcevent "countdown#bat_b01::OnStop";
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_b01", true;
+		$@FlaviusBG1 = 0;
+		if( $@FlaviusBG1_id1 ) { bg_destroy $@FlaviusBG1_id1; $@FlaviusBG1_id1 = 0; }
+		if( $@FlaviusBG1_id2 ) { bg_destroy $@FlaviusBG1_id2; $@FlaviusBG1_id2 = 0; }
+		if (getbattleflag("feature.bgqueue"))
 			bg_unbook "bat_b01";
-			end;
-		} else
-			donpcevent "start#bat_b01::OnReadyCheck";
+		end;
 	}
-	if (getbattleflag("feature.bgqueue"))
-		initnpctimer;
+	initnpctimer;
 	end;
 }
-
 
 // Flavius Battleground Engine
 //============================================================

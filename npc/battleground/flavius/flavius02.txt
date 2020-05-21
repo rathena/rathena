@@ -59,20 +59,18 @@ OnStop:
 
 OnTimer1000:
 	stopnpctimer;
-	if (!getbattleflag("feature.bgqueue"))
-		initnpctimer;
 	if (bg_get_data($@FlaviusBG2_id1, 0) == 0 && bg_get_data($@FlaviusBG2_id2, 0) == 0) {
-		set $@FlaviusBG2, 0;
-		if( $@FlaviusBG2_id1 ) { bg_destroy $@FlaviusBG2_id1; set $@FlaviusBG2_id1, 0; }
-		if( $@FlaviusBG2_id2 ) { bg_destroy $@FlaviusBG2_id2; set $@FlaviusBG2_id2, 0; }
-		if (getbattleflag("feature.bgqueue")) {
+		donpcevent "countdown#bat_b02::OnStop";
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_b02", true;
+		$@FlaviusBG2 = 0;
+		if( $@FlaviusBG2_id1 ) { bg_destroy $@FlaviusBG2_id1; $@FlaviusBG2_id1 = 0; }
+		if( $@FlaviusBG2_id2 ) { bg_destroy $@FlaviusBG2_id2; $@FlaviusBG2_id2 = 0; }
+		if (getbattleflag("feature.bgqueue"))
 			bg_unbook "bat_b02";
-			end;
-		} else
-			donpcevent "start#bat_b01::OnReadyCheck";
+		end;
 	}
-	if (getbattleflag("feature.bgqueue"))
-		initnpctimer;
+	initnpctimer;
 	end;
 }
 
@@ -88,7 +86,7 @@ OnReadyCheck:
 	if( $@FlaviusBG2 )
 		end;
 	if (!getbattleflag("feature.bgqueue")) {
-			set .@Guillaume, getwaitingroomstate(0,"Lieutenant Huvas");
+		set .@Guillaume, getwaitingroomstate(0,"Lieutenant Huvas");
 		set .@Croix, getwaitingroomstate(0,"Lieutenant Yukon");
 		if( !.@Guillaume && !.@Croix ) {
 			donpcevent "#bat_b02_timer::OnStop";
@@ -101,8 +99,8 @@ OnReadyCheck:
 	set $@FlaviusBG2_Victory, 0;
 	set $@Croix_ScoreBG2, 0;
 	set $@Guill_ScoreBG2, 0;
-
 	bg_updatescore "bat_b02",$@Guill_ScoreBG2,$@Croix_ScoreBG2;
+
 	if (!getbattleflag("feature.bgqueue")) {
 		donpcevent "Lieutenant Huvas::OnEnterBG";
 		donpcevent "Lieutenant Yukon::OnEnterBG";
@@ -402,14 +400,14 @@ OnTouch:
 bat_b02,87,76,0	script	A_CODE#bat_b02	-1,5,5,{
 OnTouch:
 	if (checkquest(2070) < 0)
-		//setquest 2070;
+		setquest 2070;
 	end;
 }
 
 bat_b02,312,224,0	script	B_CODE#bat_b02	-1,5,5,{
 OnTouch:
 	if (checkquest(2070) < 0)
-		//setquest 2070;
+		setquest 2070;
 	end;
 }
 
