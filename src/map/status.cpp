@@ -13428,9 +13428,12 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_BLOODSUCKER:
 			if( sce->val2 ) {
 				struct block_list *src = map_id2bl(sce->val2);
-				if(src) {
+
+				if (src && !status_isdead(src)) {
 					struct status_change *sc2 = status_get_sc(src);
-					sc2->bs_counter--;
+
+					if (sc2)
+						sc2->bs_counter--;
 				}
 			}
 			break;

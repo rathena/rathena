@@ -150,7 +150,8 @@ void script_set_constant_( const char* name, int64 value, const char* constant_n
 }
 
 const char* constant_lookup( int32 value, const char* prefix ){
-	nullpo_retr( nullptr, prefix );
+	if (prefix == nullptr)
+		return nullptr;
 
 	for( auto const& pair : constants ){
 		// Same prefix group and same value
@@ -163,7 +164,8 @@ const char* constant_lookup( int32 value, const char* prefix ){
 }
 
 int64 constant_lookup_int(const char* constant) {
-	nullpo_retr(-100, constant);
+	if (constant == nullptr)
+		return -100;
 
 	for (auto const &pair : constants) {
 		if (strlen(pair.first) == strlen(constant) && strncasecmp(pair.first, constant, strlen(constant)) == 0) {
