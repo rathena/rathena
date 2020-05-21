@@ -125,18 +125,31 @@ bool YamlDatabase::load(const std::string& path) {
 
 	this->parseImports( rootNode );
 
+	this->loadingFinished();
+
 	return true;
+}
+
+void YamlDatabase::loadingFinished(){
+	// Does nothing by default, just for hooking
 }
 
 void YamlDatabase::parse( const YAML::Node& rootNode ){
 	uint64 count = 0;
 
 	if( this->nodeExists( rootNode, "Body" ) ){
-		for( const YAML::Node &node : rootNode["Body"] ){
+		const YAML::Node& bodyNode = rootNode["Body"];
+		size_t childNodesCount = bodyNode.size();
+		size_t childNodesProgressed = 0;
+		const char* fileName = this->currentFile.c_str();
+
+		for( const YAML::Node &node : bodyNode ){
 			count += this->parseBodyNode( node );
+
+			ShowStatus( "Loading [%" PRIdPTR "/%" PRIdPTR "] entries from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++childNodesProgressed, childNodesCount, fileName );
 		}
 
-		ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", count, this->currentFile.c_str());
+		ShowStatus( "Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\n", count, fileName );
 	}
 }
 
@@ -235,6 +248,42 @@ bool YamlDatabase::asDouble(const YAML::Node &node, const std::string &name, dou
 
 bool YamlDatabase::asString(const YAML::Node &node, const std::string &name, std::string &out) {
 	return asType<std::string>(node, name, out);
+}
+
+bool YamlDatabase::asUInt16Rate( const YAML::Node& node, const std::string& name, uint16& out, uint16 maximum ){
+	if( this->asUInt16( node, name, out ) ){
+		if( out > maximum ){
+			this->invalidWarning( node[name], "Node \"%s\" with value %" PRIu16 " exceeds maximum of %" PRIu16 ".\n", name.c_str(), out, maximum );
+
+			return false;
+		}else if( out == 0 ){
+			this->invalidWarning( node[name], "Node \"%s\" needs to be at least 1.\n", name.c_str() );
+
+			return false;
+		}else{
+			return true;
+		}
+	}else{
+		return false;
+	}
+}
+
+bool YamlDatabase::asUInt32Rate( const YAML::Node& node, const std::string& name, uint32& out, uint32 maximum ){
+	if( this->asUInt32( node, name, out ) ){
+		if( out > maximum ){
+			this->invalidWarning( node[name], "Node \"%s\" with value %" PRIu32 " exceeds maximum of %" PRIu32 ".\n", name.c_str(), out, maximum );
+
+			return false;
+		}else if( out == 0 ){
+			this->invalidWarning( node[name], "Node \"%s\" needs to be at least 1.\n", name.c_str() );
+
+			return false;
+		}else{
+			return true;
+		}
+	}else{
+		return false;
+	}
 }
 
 void YamlDatabase::invalidWarning( const YAML::Node &node, const char* fmt, ... ){

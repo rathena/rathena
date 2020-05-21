@@ -250,8 +250,6 @@ void char_set_all_offline_sql(void){
 	//Set all players to 'OFFLINE'
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online` = '0'", schema_config.char_db) )
 		Sql_ShowDebug(sql_handle);
-	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online` = '0'", schema_config.guild_member_db) )
-		Sql_ShowDebug(sql_handle);
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `connect_member` = '0'", schema_config.guild_db) )
 		Sql_ShowDebug(sql_handle);
 }
@@ -467,14 +465,14 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 		}
 
 		StringBuf_Clear(&buf);
-		StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `friend_account`, `friend_id`) VALUES ", schema_config.friend_db);
+		StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `friend_id`) VALUES ", schema_config.friend_db);
 		for( i = 0, count = 0; i < MAX_FRIENDS; ++i )
 		{
 			if( p->friends[i].char_id > 0 )
 			{
 				if( count )
 					StringBuf_AppendStr(&buf, ",");
-				StringBuf_Printf(&buf, "('%d','%d','%d')", char_id, p->friends[i].account_id, p->friends[i].char_id);
+				StringBuf_Printf(&buf, "('%d','%d')", char_id, p->friends[i].char_id);
 				count++;
 			}
 		}
@@ -1186,8 +1184,8 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	StringBuf_Printf(&msg_buf, " %d skills", skill_count);
 
 	//read friends
-	//`friends` (`char_id`, `friend_account`, `friend_id`)
-	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT c.`account_id`, c.`char_id`, c.`name` FROM `%s` c LEFT JOIN `%s` f ON f.`friend_account` = c.`account_id` AND f.`friend_id` = c.`char_id` WHERE f.`char_id`=? LIMIT %d", schema_config.char_db, schema_config.friend_db, MAX_FRIENDS)
+	//`friends` (`char_id`, `friend_id`)
+	if( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT c.`account_id`, c.`char_id`, c.`name` FROM `%s` c LEFT JOIN `%s` f ON f.`friend_id` = c.`char_id` WHERE f.`char_id`=? LIMIT %d", schema_config.char_db, schema_config.friend_db, MAX_FRIENDS)
 	||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 	||	SQL_ERROR == SqlStmt_Execute(stmt)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT,    &tmp_friend.account_id, 0, NULL, NULL)
@@ -1708,6 +1706,10 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 
 	/* bonus_scripts */
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.bonus_script_db, char_id) )
+		Sql_ShowDebug(sql_handle);
+
+	/* Quest Data */
+	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.quest_db, char_id))
 		Sql_ShowDebug(sql_handle);
 
 	/* Achievement Data */
@@ -2299,7 +2301,7 @@ bool char_checkdb(void){
 		schema_config.party_db, schema_config.pet_db, schema_config.friend_db, schema_config.mail_db, 
                 schema_config.auction_db, schema_config.quest_db, schema_config.homunculus_db, schema_config.skill_homunculus_db,
                 schema_config.mercenary_db, schema_config.mercenary_owner_db,
-		schema_config.elemental_db, schema_config.ragsrvinfo_db, schema_config.skillcooldown_db, schema_config.bonus_script_db,
+		schema_config.elemental_db, schema_config.skillcooldown_db, schema_config.bonus_script_db,
 		schema_config.clan_table, schema_config.clan_alliance_table, schema_config.mail_attachment_db, schema_config.achievement_table
 	};
 	ShowInfo("Start checking DB integrity\n");
@@ -2338,12 +2340,12 @@ bool char_checkdb(void){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-	//checking global_acc_reg_str_table
+	//checking acc_reg_str_table
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`key`,`index`,`value` from `%s` LIMIT 1;", schema_config.acc_reg_str_table) ) {
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-	//checking global_acc_reg_num_table
+	//checking acc_reg_num_table
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`key`,`index`,`value` from `%s` LIMIT 1;", schema_config.acc_reg_num_table) ) {
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -2402,9 +2404,7 @@ bool char_checkdb(void){
 		return false;
 	}
 	//checking guild_member_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`account_id`,`char_id`,`hair`,"
-			"`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`name`"
-			" FROM `%s` LIMIT 1;", schema_config.guild_member_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `guild_id`,`char_id`,`exp`,`position` FROM `%s` LIMIT 1;", schema_config.guild_member_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -2431,7 +2431,7 @@ bool char_checkdb(void){
 		return false;
 	}
 	//checking friend_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`friend_account`,`friend_id` FROM `%s` LIMIT 1;", schema_config.friend_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `char_id`,`friend_id` FROM `%s` LIMIT 1;", schema_config.friend_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -2491,11 +2491,6 @@ bool char_checkdb(void){
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `ele_id`,`char_id`,`class`,`mode`,`hp`,`sp`,`max_hp`,`max_sp`,"
 		"`atk1`,`atk2`,`matk`,`aspd`,`def`,`mdef`,`flee`,`hit`,`life_time` "
 		" FROM `%s` LIMIT 1;", schema_config.elemental_db) ){
-		Sql_ShowDebug(sql_handle);
-		return false;
-	}
-	//checking ragsrvinfo_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `index`,`name`,`exp`,`jexp`,`drop` FROM `%s` LIMIT 1;", schema_config.ragsrvinfo_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -2686,7 +2681,6 @@ void char_set_default_sql(){
 	safestrncpy(schema_config.skill_homunculus_db,"skill_homunculus",sizeof(schema_config.skill_homunculus_db));
 	safestrncpy(schema_config.mercenary_db,"mercenary",sizeof(schema_config.mercenary_db));
 	safestrncpy(schema_config.mercenary_owner_db,"mercenary_owner",sizeof(schema_config.mercenary_owner_db));
-	safestrncpy(schema_config.ragsrvinfo_db,"ragsrvinfo",sizeof(schema_config.ragsrvinfo_db));
 	safestrncpy(schema_config.skillcooldown_db,"skillcooldown",sizeof(schema_config.skillcooldown_db));
 	safestrncpy(schema_config.bonus_script_db,"bonus_script",sizeof(schema_config.bonus_script_db));
 	safestrncpy(schema_config.char_reg_num_table,"char_reg_num",sizeof(schema_config.char_reg_num_table));
@@ -3129,9 +3123,6 @@ void do_final(void)
 	do_final_chmapif();
 	do_final_chlogif();
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s`", schema_config.ragsrvinfo_db) )
-		Sql_ShowDebug(sql_handle);
-
 	char_db_->destroy(char_db_, NULL);
 	online_char_db->destroy(online_char_db, NULL);
 	auth_db->destroy(auth_db, NULL);
@@ -3275,7 +3266,7 @@ int do_init(int argc, char **argv)
 		Sql_ShowDebug(sql_handle);
 
 	//guildmemberdb clean
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id` = '0' AND `account_id` = '0' AND `char_id` = '0'", schema_config.guild_member_db) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id` = '0' AND `char_id` = '0'", schema_config.guild_member_db) )
 		Sql_ShowDebug(sql_handle);
 
 	set_defaultparse(chclif_parse);

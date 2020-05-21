@@ -1142,7 +1142,7 @@ alberta_in,23,104,4	script	Grandpa Turtle#tur	120,{
 			mes "After we made camp on shore and explored the island, we learned something quite remarkable.";
 			next;
 			mes "[Gotanblue]";
-			mes "There was a man who had actually made it to Turtle Island before us. His records, however, never reached Rune-Midgard. He was a great swordmaster known simply as ^3355FFOne^000000.";
+			mes "There was a man who had actually made it to Turtle Island before us. His records, however, never reached Rune-Midgarts. He was a great swordmaster known simply as ^3355FFOne^000000.";
 			next;
 			mes "[Gotanblue]";
 			mes "According to his records, he had traveled alone to find Turtle Island and made it by himself. But we couldn't find any sign of him anywhere...";
@@ -1175,7 +1175,7 @@ alberta_in,23,104,4	script	Grandpa Turtle#tur	120,{
 			mes "As we struggled with the fog, we lost our comrades one by one. In the end, Jornadan, the drunken old man you met, and myself were the only ones who were able to return home to Alberta.";
 			next;
 			mes "[Gotanblue]";
-			mes "We were the only ones who did not give in to despair, and doggedly held onto our hopes. Still, it was by pure luck that we found a way back to Rune-Midgard.";
+			mes "We were the only ones who did not give in to despair, and doggedly held onto our hopes. Still, it was by pure luck that we found a way back to Rune-Midgarts.";
 			next;
 			mes "[Gotanblue]";
 			mes "Well, that's my story. You know, if you want to learn more about Turtle Island, why don't you speak to the scholar on the eastern port of Alberta?";
@@ -1397,7 +1397,7 @@ alberta,246,117,4	script	Voyage log#tur	111,{
 				next;
 				mes "[Voyage Log]";
 				mes "XO / X date";
-				mes "Well, it wasn't exactly like the bananas we have in Rune-Midgard, but it was very similar.";
+				mes "Well, it wasn't exactly like the bananas we have in Rune-Midgarts, but it was very similar.";
 				next;
 				mes "[Voyage Log]";
 				mes "O / O date";

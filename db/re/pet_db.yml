@@ -66,7 +66,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bLuk,3;
+        bonus bCritical,1;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bLuk,2;
         bonus bCritical,1;
       }
@@ -89,7 +92,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bHit,5;
+        bonus bAtk,5;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bHit,3;
         bonus bAtk,3;
       }
@@ -125,7 +131,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bLuk,3;
+        bonus2 bSubEle,Ele_Poison,15;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bLuk,2;
         bonus2 bSubEle,Ele_Poison,10;
       }
@@ -141,7 +150,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bCritical,3;
+        bonus bAtk,3;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bCritical,2;
         bonus bAtk,2;
       }
@@ -168,7 +180,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bStr,2;
+        bonus bAtk,8;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bStr,1;
         bonus bAtk,5;
       }
@@ -183,7 +198,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bAgi,2;
+        bonus bFlee,3;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bAgi,1;
         bonus bFlee,2;
       }
@@ -198,9 +216,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bFlee,9;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bFlee,6;
-        bonus bAgi,-1;
       }
   - Mob: HUNTER_FLY
     TameItem: Monster_Juice
@@ -213,8 +232,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
-        bonus bFlee,-5;
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bFlee2,2;
+        bonus bHit,1;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bFlee2,2;
       }
   - Mob: SAVAGE_BABE
@@ -229,7 +250,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bVit,2;
+        bonus bMaxHP,75;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bVit,1;
         bonus bMaxHP,50;
       }
@@ -256,7 +280,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bInt,2;
+        bonus bMaxSP,75;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bInt,1;
         bonus bMaxSP,50;
       }
@@ -272,7 +299,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bHPrecovRate,6;
+        bonus bMaxHP,38;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bHPrecovRate,5;
         bonus bMaxHP,25;
       }
@@ -299,9 +329,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bHit,8;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bHit,5;
-        bonus bAtk,-2;
       }
   - Mob: POISON_SPORE
     TameItem: Deadly_Noxious_Herb
@@ -315,7 +346,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bStr,2;
+        bonus bInt,2;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bStr,1;
         bonus bInt,1;
       }
@@ -330,9 +364,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bMaxHP,200;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bMaxHP,150;
-        bonus bMaxSP,-10;
       }
     Evolution:
       - Target: GRAND_PECO
@@ -358,7 +393,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bAgi,2;
+        bonus bFlee2,1;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bAgi,1;
         bonus bFlee2,1;
       }
@@ -373,9 +411,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bCritical,5;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bCritical,3;
-        bonus bLuk,-1;
       }
     Evolution:
       - Target: CHOCO
@@ -399,9 +438,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bAtk,15;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bAtk,10;
-        bonus bDef,-3;
       }
     Evolution:
       - Target: HIGH_ORC
@@ -428,7 +468,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bInt,2;
+        bonus bDef,2;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bInt,1;
         bonus bDef,1;
       }
@@ -444,9 +487,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bMatkRate,2;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bMatkRate,1;
-        bonus bAtkRate,-1;
       }
     Evolution:
       - Target: AM_MUT
@@ -471,7 +515,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bStr,2;
+        bonus bDex,2;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bStr,1;
         bonus bDex,1;
       }
@@ -487,8 +534,9 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
-        bonus bMatkRate,-1;
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bAtkRate,2;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bAtkRate,1;
       }
     Evolution:
@@ -514,9 +562,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
-        bonus bDef,-2;
-        bonus bMdef,-2;
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bAgi,1;
+        bonus bAspdRate,1;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bAspdRate,1;
       }
     Evolution:
@@ -542,11 +591,14 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bMaxHPrate,1;
+        bonus bMaxSPrate,1;
         bonus bMatkRate,1;
         bonus bAtkRate,1;
-        bonus bMaxHPrate,-3;
-        bonus bMaxSPrate,-3;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bMatkRate,1;
+        bonus bAtkRate,1;
       }
     Evolution:
       - Target: DIABOLIC2
@@ -571,10 +623,14 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bDef,2;
+        bonus bMdef,2;
+        bonus2 bResEff,Eff_Stun,200;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bDef,1;
         bonus bMdef,1;
-        bonus2 bResEff,Eff_Stun,-100;
+        bonus2 bResEff,Eff_Stun,100;
       }
   - Mob: BON_GUN
     TameItem: Heart_Of_Her
@@ -587,7 +643,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bVit,2;
+        bonus2 bResEff,Eff_Stun,200;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bVit,1;
         bonus2 bResEff,Eff_Stun,100;
       }
@@ -613,7 +672,12 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus2 bAddRace,RC_Demihuman,3;
+        bonus2 bMagicAddRace,RC_DemiHuman,3;
+        bonus2 bAddRace,RC_Player,3;
+        bonus2 bMagicAddRace,RC_Player,3;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus2 bAddRace,RC_Demihuman,2;
         bonus2 bMagicAddRace,RC_DemiHuman,2;
         bonus2 bAddRace,RC_Player,2;
@@ -630,11 +694,26 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bMdef,2;
+        bonus2 bSubRace,RC_DemiHuman,2;
+        bonus2 bSubRace,RC_Player,2;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bMdef,1;
         bonus2 bSubRace,RC_DemiHuman,1;
         bonus2 bSubRace,RC_Player,1;
       }
+    Evolution:
+      - Target: ALIZA
+        ItemRequirements:
+          - Item: Alice's_Apron
+            Amount: 500
+          - Item: Green_Herb
+            Amount: 200
+          - Item: Elunium
+            Amount: 30
+          - Item: Alice_Card
+            Amount: 1
   - Mob: EVENT_RICECAKE
     EggItem: Rice_Cake_Egg
     FoodItem: Green_Herb
@@ -644,9 +723,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus2 bSubEle,Ele_Neutral,2;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus2 bSubEle,Ele_Neutral,1;
-        bonus bMaxHPrate,-1;
       }
   - Mob: GOBLINE_XMAS
     TameItem: Sweet_Candy_Striper
@@ -659,7 +739,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bMaxHP,45;
+        bonus2 bSubEle,Ele_Water,2;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bMaxHP,30;
         bonus2 bSubEle,Ele_Water,1;
       }
@@ -674,7 +757,11 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bDef,2;
+        bonus2 bSubRace,RC_DemiHuman,2;
+        bonus2 bSubRace,RC_Player,2;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bDef,1;
         bonus2 bSubRace,RC_DemiHuman,1;
         bonus2 bSubRace,RC_Player,1;
@@ -737,10 +824,22 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bAgi,4;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bAgi,3;
-        bonus bDex,1;
       }
+#    Evolution:
+#      - Target: WANDER_MAN_H
+#        ItemRequirements:
+#          - Item: Skull
+#            Amount: 500
+#          - Item: Sacred_Marks
+#            Amount: 50
+#          - Item: Transparent_Cloth
+#            Amount: 100
+#          - Item: Wander_Man_Card
+#            Amount: 1
   - Mob: P_CHUNG_E
     EggItem: New_Year_Doll_Egg
     FoodItem: Mojji
@@ -760,9 +859,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bMaxHP,150;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bMaxHP,100;
-        bonus bFlee,-5;
       }
   - Mob: MARIONETTE
     TameItem: Delicious_Shaved_Ice
@@ -776,8 +876,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
-        bonus bSPrecovRate,3;
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        autobonus "{ bonus2 bSubEle,Ele_Neutral,2; heal 100,0; }",100,5000,BF_SHORT|BF_NORMAL;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+        autobonus "{ bonus2 bSubEle,Ele_Neutral,2; heal 100,0; }",100,3000,BF_SHORT|BF_NORMAL;
       }
   - Mob: MEDUSA
     TameItem: Splendid_Mirror
@@ -791,7 +893,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bVit,2;
+        bonus2 bResEff,Eff_Stone,800;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bVit,1;
         bonus2 bResEff,Eff_Stone,500;
       }
@@ -807,9 +912,12 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bFlee,10;
+        skill "TF_HIDING",1;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bFlee,7;
-        bonus bDef,-3;
+        skill "TF_HIDING",1;
       }
   - Mob: GOBLIN_LEADER
     TameItem: Staff_Of_Leader
@@ -823,7 +931,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus2 bAddRace,RC_DemiHuman,5;
+        bonus2 bAddRace,RC_Player,5;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus2 bAddRace,RC_DemiHuman,3;
         bonus2 bAddRace,RC_Player,3;
       }
@@ -839,9 +950,11 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus2 bHPDrainRate,30,5;
         bonus bMaxHPrate,1;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+        bonus2 bHPDrainRate,30,5;
       }
   - Mob: INCUBUS
     TameItem: Gril's_Naivety
@@ -855,8 +968,11 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bMaxSPRate,5;
+        bonus2 bSPDrainRate,30,1;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bMaxSPRate,3;
         bonus2 bSPDrainRate,30,1;
       }
   - Mob: NIGHTMARE_TERROR
@@ -871,9 +987,23 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus2 bResEff,Eff_Sleep,10000;
+        bonus bInt,1;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus2 bResEff,Eff_Sleep,10000;
       }
+#    Evolution:
+#      - Target: NIGHTMARE_TERROR_H
+#        ItemRequirements:
+#          - Item: Burning_Horse_Shoe
+#            Amount: 500
+#          - Item: Blue_Herb
+#            Amount: 100
+#          - Item: Shell
+#            Amount: 100
+#          - Item: Nightmare_Card
+#            Amount: 1
   - Mob: SHINOBI
     TameItem: Kuloren
     EggItem: Shinobi_Egg
@@ -886,7 +1016,9 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bAgi,3;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bAgi,2;
       }
   - Mob: MIYABI_NINGYO
@@ -901,7 +1033,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bInt,2;
+        bonus bCastrate,-5;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bInt,1;
         bonus bCastrate,-3;
       }
@@ -917,7 +1052,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bMaxSP,45;
+        bonus bSPrecovRate,8;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bMaxSP,30;
         bonus bSPrecovRate,5;
       }
@@ -933,7 +1071,9 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus2 bSubEle,Ele_Fire,5;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus2 bSubEle,Ele_Fire,3;
       }
   - Mob: DULLAHAN
@@ -948,7 +1088,9 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bCritAtkRate,8;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bCritAtkRate,5;
       }
   - Mob: LOLI_RURI
@@ -963,7 +1105,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bMaxHPRate,5;
+        bonus3 bAutoSpellWhenHit,"AL_HEAL",2,10;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bMaxHPRate,3;
         bonus3 bAutoSpellWhenHit,"AL_HEAL",1,10;
       }
@@ -979,7 +1124,9 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bMaxSP,15;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bMaxSP,10;
       }
   - Mob: LEAF_CAT
@@ -994,7 +1141,9 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus2 bSubRace,RC_Brute,5;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus2 bSubRace,RC_Brute,3;
       }
   - Mob: BACSOJIN_
@@ -1018,9 +1167,12 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
-        bonus2 bSubEle,Ele_Fire,2;
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus2 bSubEle,Ele_Fire,3;
         bonus2 bAddEle,Ele_Fire,2;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+        bonus2 bSubEle,Ele_Fire,2;
+        bonus2 bAddEle,Ele_Fire,1;
       }
   - Mob: E_CRAMP
     TameItem: Leaf_Cat_Ball
@@ -1059,8 +1211,9 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
-        bonus2 bExpAddRace,RC_All,5;
+      if (.@i >= PET_INTIMATE_CORDIAL) {
+        /* bonus2 bExpAddRace,RC_All,5; */
+        bonus bMatkRate,2;
       }
   - Mob: TIKBALANG
     TameItem: Tikbalang_Belt
@@ -1072,7 +1225,7 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus2 bAddDamageClass,2317,10;
         bonus2 bAddDamageClass,2318,10;
         bonus2 bAddDamageClass,2319,10;
@@ -1082,6 +1235,18 @@ Body:
         bonus2 bAddDamageClass,2327,10;
         bonus2 bAddDamageClass,2332,10;
         bonus2 bAddDamageClass,2333,10;
+        bonus bMdef,5;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+        bonus2 bAddDamageClass,2317,10;
+        bonus2 bAddDamageClass,2318,10;
+        bonus2 bAddDamageClass,2319,10;
+        bonus2 bAddDamageClass,2320,10;
+        bonus2 bAddDamageClass,2321,10;
+        bonus2 bAddDamageClass,2322,10;
+        bonus2 bAddDamageClass,2327,10;
+        bonus2 bAddDamageClass,2332,10;
+        bonus2 bAddDamageClass,2333,10;
+        bonus bMdef,3;
       }
   - Mob: MARIN
     TameItem: Juicy_Fruit
@@ -1104,7 +1269,9 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bHPrecovRate,75;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bHPrecovRate,50;
       }
   - Mob: NINE_TAIL
@@ -1117,10 +1284,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bCritical,3;
         bonus bHit,2;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bCritical,2;
         bonus bHit,2;
       }
@@ -1145,10 +1312,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus Dex,2;
         bonus bHit,1;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bDex,1;
         bonus bHit,1;
       }
@@ -1173,9 +1340,9 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bHit,5;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bHit,4;
       }
     Evolution:
@@ -1199,8 +1366,10 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_CORDIAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bMaxSP,150;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bMaxSP,100;
       }
     Evolution:
       - Target: XM_TEDDY_BEAR
@@ -1213,8 +1382,28 @@ Body:
             Amount: 50
           - Item: Teddy_Bear_Card
             Amount: 1
+      - Target: ALIOT
+        ItemRequirements:
+          - Item: Screw
+            Amount: 500
+          - Item: Honey
+            Amount: 100
+          - Item: White_Jewel
+            Amount: 10
+          - Item: Teddy_Bear_Card
+            Amount: 1
+      - Target: ALICEL
+        ItemRequirements:
+          - Item: Screw
+            Amount: 500
+          - Item: Honey
+            Amount: 100
+          - Item: Bloody_Page
+            Amount: 50
+          - Item: Teddy_Bear_Card
+            Amount: 1
 
-  # Pet Evolution, most are dummy values
+  # Pet Evolution
   - Mob: MASTERING
     EggItem: Mastering_Egg
     FoodItem: Pet_Food
@@ -1227,16 +1416,16 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bLuk,3;
         bonus bCritical,3;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bLuk,3;
         bonus bCritical,2;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bLuk,3;
         bonus bCritical,1;
-      }else{
+      } else {
         bonus bLuk,2;
         bonus bCritical,1;
       }
@@ -1263,20 +1452,20 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bHPrecovRate,20;
         bonus bMaxHP,70;
         bonus2 bAddRace,RC_Plant,6;
         bonus2 bMagicAddRace,RC_Plant,6;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bHPrecovRate,15;
         bonus bMaxHP,55;
         bonus2 bAddRace,RC_Plant,3;
         bonus2 bMagicAddRace,RC_Plant,3;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bHPrecovRate,10;
         bonus bMaxHP,38;
-      }else{
+      } else {
         bonus bHPrecovRate,5;
         bonus bMaxHP,25;
       }
@@ -1292,16 +1481,16 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bMaxHPrate,2;
         bonus bHealPower,8;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bMaxHPrate,2;
         bonus bHealPower,6;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bMaxHPrate,1;
         bonus bHealPower,4;
-      }else{
+      } else {
         bonus bMaxHPrate,1;
         bonus bHealPower,2;
       }
@@ -1317,19 +1506,19 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bCritical,6;
         bonus bHit,6;
-        autobonus "{ bonus bHPRegenRate,500,1000; bonus bSPRegenRate,20,1000; }",30,5000,BF_WEAPON|BF_SHORT;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+        autobonus "{ bonus2 bHPRegenRate,500,1000; bonus2 bSPRegenRate,20,1000; }",30,5000,BF_WEAPON|BF_SHORT;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bCritical,5;
         bonus bHit,5;
-        autobonus "{ bonus bHPRegenRate,400,1000; bonus bSPRegenRate,10,1000; }",30,5000,BF_WEAPON|BF_SHORT;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+        autobonus "{ bonus2 bHPRegenRate,400,1000; bonus2 bSPRegenRate,10,1000; }",30,5000,BF_WEAPON|BF_SHORT;
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bCritical,4;
         bonus bHit,4;
-        autobonus "{ bonus bHPRegenRate,300,1000; }",20,5000,BF_WEAPON|BF_SHORT;
-      }else{
+        autobonus "{ bonus2 bHPRegenRate,300,1000; }",20,5000,BF_WEAPON|BF_SHORT;
+      } else {
         bonus bCritical,3;
         bonus bHit,3;
       }
@@ -1345,16 +1534,16 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bMaxHP,200;
         bonus bVit,2;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bMaxHP,100;
         bonus bVit,2;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bMaxHP,50;
         bonus bVit,2;
-      }else{
+      } else {
         bonus bMaxHP,50;
         bonus bVit,1;
       }
@@ -1370,19 +1559,27 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
-        bonus bMaxHP,200;
-        bonus bVit,2;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
-        bonus bMaxHP,100;
-        bonus bVit,2;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
-        bonus bMaxHP,50;
-        bonus bVit,2;
-      }else{
-        bonus bMaxHP,50;
-        bonus bVit,1;
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bAtk,25;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bAtk,20;
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bAtk,15;
+      } else {
+        bonus bAtk,10;
+        bonus bDef,-3;
       }
+#    Evolution:
+#      - Target: ORK_HERO2
+#        ItemRequirements:
+#          - Item: Powerful_Soul_Essence
+#            Amount: 30
+#          - Item: Orc_Warrior_Card
+#            Amount: 10
+#          - Item: Orc_Baby_Card
+#            Amount: 10
+#          - Item: Voucher_Of_Orcish_Hero
+#            Amount: 10
   - Mob: CHOCO
     EggItem: Choco_Egg
     FoodItem: Pet_Food
@@ -1395,16 +1592,16 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bCritical,9;
         bonus bLongAtkRate,3;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bCritical,7;
         bonus bLongAtkRate,2;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bCritical,5;
         bonus bLongAtkRate,1;
-      }else{
+      } else {
         bonus bCritical,3;
       }
   - Mob: ANCIENT_MUMMY
@@ -1419,17 +1616,17 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bHit,6;
-        bonus2 bAddClass,Class_All,6;
-        bonus2 bMagicAddClass,Class_All,6;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+        bonus2 bAddClass,Class_Dragon,6;
+        bonus2 bMagicAddClass,Class_Dragon,6;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bHit,6;
-        bonus2 bAddClass,Class_All,3;
-        bonus2 bMagicAddClass,Class_All,3;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+        bonus2 bAddClass,Class_Dragon,3;
+        bonus2 bMagicAddClass,Class_Dragon,3;
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bHit,5;
-      }else{
+      } else {
         bonus bHit,4;
       }
   - Mob: AM_MUT
@@ -1444,13 +1641,13 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bMatkRate,4;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bMatkRate,3;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bMatkRate,2;
-      }else{
+      } else {
         bonus bMatkRate,1;
       }
   - Mob: CAT_O_NINE_TAIL
@@ -1465,18 +1662,18 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bCritical,5;
         bonus bHit,5;
-        autobonus "{ bonus bHPRegenRate,400,1000; }",20,5000,BF_WEAPON|BF_SHORT;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+        autobonus "{ bonus2 bHPRegenRate,400,1000; }",20,5000,BF_WEAPON|BF_SHORT;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bCritical,4;
         bonus bHit,4;
-        autobonus "{ bonus bHPRegenRate,300,1000; }",20,5000,BF_WEAPON|BF_SHORT;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+        autobonus "{ bonus2 bHPRegenRate,300,1000; }",20,5000,BF_WEAPON|BF_SHORT;
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bCritical,3;
         bonus bHit,3;
-      }else{
+      } else {
         bonus bCritical,2;
         bonus bHit,2;
       }
@@ -1503,14 +1700,15 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bMaxHP,400;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bMaxHP,300;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bMaxHP,200;
-      }else{
+      } else {
         bonus bMaxHP,150;
+        bonus bMaxSP,-10;
       }
   - Mob: HYEGUN
     EggItem: Hyegun_Egg
@@ -1524,18 +1722,18 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bVit,4;
         bonus2 bResEff,Eff_Stun,400;
-        bonus2 bSPDrainRate,20,1;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+        bonus2 bSPDrainRate,10,1;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bVit,3;
         bonus2 bResEff,Eff_Stun,300;
         bonus2 bSPDrainRate,10,1;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bVit,2;
         bonus2 bResEff,Eff_Stun,200;
-      }else{
+      } else {
         bonus bVit,1;
         bonus2 bResEff,Eff_Stun,100;
       }
@@ -1551,18 +1749,18 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bDex,2;
         bonus bHit,2;
         bonus bCritAtkRate,9;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bDex,2;
         bonus bHit,2;
         bonus bCritAtkRate,7;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bDex,2;
         bonus bHit,1;
-      }else{
+      } else {
         bonus bDex,1;
         bonus bHit,1;
       }
@@ -1578,15 +1776,15 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bMaxSP,150;
-        autobonus "{ bonus bSPRegenRate,40,1000; }",30,5000,BF_MAGIC;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+        autobonus "{ bonus2 bSPRegenRate,40,1000; }",30,5000,BF_MAGIC;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bMaxSP,150;
-        autobonus "{ bonus bSPRegenRate,30,1000; }",30,5000,BF_MAGIC;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+        autobonus "{ bonus2 bSPRegenRate,30,1000; }",30,5000,BF_MAGIC;
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bMaxSP,100;
-      }else{
+      } else {
         bonus bMaxSP,50;
       }
   - Mob: DR_EGGRING
@@ -1601,16 +1799,16 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bHit,9;
         bonus bAtk,9;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bHit,7;
         bonus bAtk,7;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bHit,5;
         bonus bAtk,5;
-      }else{
+      } else {
         bonus bHit,3;
         bonus bAtk,3;
       }
@@ -1626,20 +1824,20 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bCritical,5;
         bonus bAtk,5;
         bonus2 bAddRace,RC_Formless,6;
         bonus2 bMagicAddRace,RC_Formless,6;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bCritical,4;
         bonus bAtk,4;
         bonus2 bAddRace,RC_Formless,3;
         bonus2 bMagicAddRace,RC_Formless,3;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bCritical,3;
         bonus bAtk,3;
-      }else{
+      } else {
         bonus bCritical,2;
         bonus bAtk,2;
       }
@@ -1655,13 +1853,13 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bAtkRate,4;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bAtkRate,3;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bAtkRate,2;
-      }else{
+      } else {
         bonus bAtkRate,1;
       }
   - Mob: DIABOLIC2
@@ -1676,18 +1874,24 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_CORDIAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bAtkRate,2;
+        bonus bMatkRate,2;
+        bonus bMaxHPrate,2;
+        bonus bMaxSPrate,2;
+        bonus5 bAutoSpell,"MG_FIREBOLT",3,50,BF_WEAPON|BF_SHORT,1;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bAtkRate,2;
         bonus bMatkRate,2;
         bonus bMaxHPrate,1;
         bonus bMaxSPrate,1;
         bonus5 bAutoSpell,"MG_FIREBOLT",3,50,BF_WEAPON|BF_SHORT,1;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
         bonus bAtkRate,1;
         bonus bMatkRate,1;
         bonus bMaxHPrate,1;
         bonus bMaxSPrate,1;
-      }else{
+      } else {
         bonus bAtkRate,1;
         bonus bMatkRate,1;
       }
@@ -1703,16 +1907,16 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_LOYAL ){
+      if (.@i >= PET_INTIMATE_LOYAL) {
         bonus bAspdRate,3;
         bonus bAgi,3;
-      }else if( .@i >= PET_INTIMATE_CORDIAL ){
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bAspdRate,2;
         bonus bAgi,2;
-      }else if( .@i >= PET_INTIMATE_NEUTRAL ){
-        bonus bAspdRate,2;
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bAspdRate,1;
         bonus bAgi,1;
-      }else{
+      } else {
         bonus bAspdRate,1;
       }
   - Mob: SWEETS_DROPS
@@ -1727,7 +1931,174 @@ Body:
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
-      if( .@i >= PET_INTIMATE_CORDIAL ){
-        /* bonus2 bExpAddClass,Class_All,3; */
+      if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus2 bExpAddClass,Class_All,1;
       }
+#  - Mob: NIGHTMARE_TERROR_H
+#    EggItem: Rigid_Nightmare_Terror_Egg
+#    FoodItem: Pet_Food
+#    Fullness: 2
+#    HungryDelay: 120
+#    IntimacyFed: 15
+#    CaptureRate: 0
+#    SpecialPerformance: false
+#    AllowAutoFeed: true
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#        bonus bInt,4;
+#        bonus bMaxSPrate,3;
+#        bonus2 bResEff,Eff_Sleep,10000;
+#      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+#        bonus bInt,3;
+#        bonus bMaxSPrate,1;
+#        bonus2 bResEff,Eff_Sleep,10000;
+#      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#        bonus bInt,3;
+#      } else {
+#        bonus bInt,1;
+#      }
+#  - Mob: WANDER_MAN_H
+#    EggItem: Contaminated_Wanderer_Egg
+#    FoodItem: Pet_Food
+#    Fullness: 2
+#    HungryDelay: 120
+#    IntimacyFed: 15
+#    CaptureRate: 0
+#    SpecialPerformance: false
+#    AllowAutoFeed: true
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#        bonus bAgi,4;
+#        bonus bCritical,3;
+#        bonus bCritAtkRate,7;
+#      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+#        bonus bAgi,4;
+#        bonus bCritical,2;
+#        bonus bCritAtkRate,5;
+#      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#        bonus bAgi,4;
+#        bonus bCritical,1;
+#      } else {
+#        bonus bAgi,4;
+#      }
+  - Mob: ALIOT
+    EggItem: Aliot_Egg
+    FoodItem: Pet_Food
+    Fullness: 2
+    HungryDelay: 120
+    IntimacyFed: 15
+    CaptureRate: 0
+    SpecialPerformance: false
+    AllowAutoFeed: true
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bAspdRate,5;
+        bonus bHit,12;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bAspdRate,4;
+        bonus bHit,9;
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bAspdRate,3;
+        bonus bHit,6;
+      } else {
+        bonus bAspdRate,2;
+      }
+  - Mob: ALICEL
+    EggItem: Alicel_Egg
+    FoodItem: Pet_Food
+    Fullness: 2
+    HungryDelay: 120
+    IntimacyFed: 15
+    CaptureRate: 0
+    SpecialPerformance: false
+    AllowAutoFeed: true
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bCastrate,-5;
+        bonus2 bMagicAddEle,Ele_Neutral,5;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bCastrate,-4;
+        bonus2 bMagicAddEle,Ele_Neutral,3;
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bCastrate,-3;
+      } else {
+        bonus bCastrate,-2;
+      }
+  - Mob: ALIZA
+    EggItem: Aliza_Egg
+    FoodItem: Pet_Food
+    Fullness: 2
+    HungryDelay: 120
+    IntimacyFed: 15
+    CaptureRate: 0
+    SpecialPerformance: false
+    AllowAutoFeed: true
+    Script: >
+      .@i = getpetinfo(PETINFO_INTIMATE);
+      
+      if (.@i >= PET_INTIMATE_LOYAL) {
+        bonus bMdef,7;
+        bonus bHealPower,6;
+      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bMdef,6;
+        bonus bHealPower,4;
+      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bMdef,5;
+        bonus bHealPower,2;
+      } else {
+        bonus bMdef,4;
+      }
+#  - Mob: BACSOJIN2
+#    EggItem: Bacsojin2_Egg_
+#    FoodItem: Luxurious_Pet_Food
+#    Fullness: 7
+#    IntimacyFed: 10
+#    CaptureRate: 0
+#    SpecialPerformance: false
+#    AllowAutoFeed: true
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#        bonus bMaxSPRate,5;
+#        bonus bDelayrate,-3;
+#      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+#        bonus bMaxSPRate,4;
+#        bonus bDelayrate,-2;
+#      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#        bonus bMaxSPRate,3;
+#        bonus bDelayrate,-1;
+#      } else {
+#        bonus bMaxSPRate,2;
+#      }
+#  - Mob: ORK_HERO2
+#    EggItem: Orc_Hero_Egg_
+#    FoodItem: Luxurious_Pet_Food
+#    Fullness: 2
+#    HungryDelay: 120
+#    IntimacyFed: 15
+#    CaptureRate: 0
+#    SpecialPerformance: false
+#    AllowAutoFeed: true
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#        bonus bAtkRate,7;
+#        bonus bCritAtkRate,3;
+#      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+#        bonus bAtkRate,4;
+#        bonus bCritAtkRate,1;
+#      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#        bonus bAtkRate,2;
+#      } else {
+#        bonus bAtkRate,1;
+#      }

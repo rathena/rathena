@@ -40,8 +40,8 @@ enum Channel_Type {
 struct Channel {
 	//unsigned short id;			  ///< Channel ID (unused yet)
 	char name[CHAN_NAME_LENGTH];  ///< Channel Name
-	char pass[CHAN_NAME_LENGTH];  ///< Channe display name
-	char alias[CHAN_NAME_LENGTH]; ///< Password
+	char pass[CHAN_NAME_LENGTH];  ///< Password
+	char alias[CHAN_NAME_LENGTH]; ///< Channel display name
 	enum Channel_Type type;		  ///< Channel type @see enum Channel_Type
 	unsigned long color;		  ///< Channel color in BGR
 	unsigned char opt;			  ///< Channel options @see enum Channel_Opt

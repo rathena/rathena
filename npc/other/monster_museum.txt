@@ -33,18 +33,18 @@ yuno_in03,32,15,3	script	Museum Guide	67,{
 		mes "the Sages of the Schweicherbil";
 		mes "Magic Academy after researching";
 		mes "every creature dwelling in the";
-		mes "Rune-Midgard continent.";
+		mes "Midgard continent.";
 		next;
 		mes "[Cenia]";
 		mes "In this museum, you can see every";
-		mes "single monster in Rune-Midgard,";
+		mes "single monster in Midgard,";
 		mes "even the ones you hardly ever encounter.";
 		next;
 		mes "[Cenia]";
 		mes "The glass tubes holding monsters";
 		mes "was developed with the latest";
 		mes "technology as a part of the";
-		mes "Schwartz Project. Rest assured,";
+		mes "Schwarz Project. Rest assured,";
 		mes "you'll be well protected.";
 		next;
 		break;
@@ -375,7 +375,7 @@ yuno_in03,18,108,1	script	#TRI_JOINT	111,{
 	mes "instead of eyes so that it can";
 	mes "live in dark places.";
 	next;
-	mes "Recently, since many Tri Joints have been discovered inside many caves, Sages are very excited to study them to learn more about the evolution of monsters in Rune-Midgard.";
+	mes "Recently, since many Tri Joints have been discovered inside many caves, Sages are very excited to study them to learn more about the evolution of monsters in Midgard.";
 	close;
 }
 	
@@ -548,7 +548,7 @@ yuno_in03,46,112,1	script	#RAFFLESIA	111,{
 	mes "A puffy, leafy monster";
 	mes "threatened with extinction.";
 	mes "Rafflesia is the rarest";
-	mes "monster in Rune-Midgard and";
+	mes "monster in Midgard and";
 	mes "is thus protected by law.";
 	next;
 	mes "Due to this situation, most Sages";
