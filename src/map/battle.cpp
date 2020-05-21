@@ -3846,11 +3846,11 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 #endif
 			break;
 		case MO_EXTREMITYFIST:
+			skillratio += 100 * (7 + sstatus->sp / 10);			
 #ifdef RENEWAL
 			if (wd->miscflag&1)
-				skillratio += 100; // More than 5 spirit balls active
+				skillratio *= 2; // More than 5 spirit balls active
 #endif
-			skillratio += 100 * (7 + sstatus->sp / 10);
 			skillratio = min(500000,skillratio); //We stop at roughly 50k SP for overflow protection
 			break;
 		case MO_TRIPLEATTACK:
@@ -6164,6 +6164,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 #endif
 				}
 				break;
+			case NPC_DARKBREATH:
+				ad.damage = tstatus->hp * (skill_lv <= 5 ? 100 / (2 * 6 - skill_lv) : 50) / 100;
+				break;
 			case PF_SOULBURN:
 				ad.damage = tstatus->sp * 2;
 				break;
@@ -6906,9 +6909,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			break;
 		case NPC_SMOKING:
 			md.damage = 3;
-			break;
-		case NPC_DARKBREATH:
-			md.damage = tstatus->max_hp * skill_lv * 10 / 100;
 			break;
 		case NPC_EVILLAND:
 			md.damage = skill_calc_heal(src,target,skill_id,skill_lv,false);
