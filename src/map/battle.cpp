@@ -6919,7 +6919,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			nk.set(NK_IGNOREFLEE);
 			nk.set(NK_IGNOREELEMENT); //These two are not properties of the weapon based part.
 			break;
-#ifndef RENEWAL
 		case HW_GRAVITATION:
 			md.damage = 200 + 200 * skill_lv;
 			md.dmotion = 0; //No flinch animation
@@ -7260,9 +7259,6 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 			(sc->data[SC_KYOMU] && (!ssc || !ssc->data[SC_SHIELDSPELL_DEF]))) // Nullify reflecting ability except for Shield Spell - Def
 				return 0;
 	}
-
-	if (ssc && ssc->data[SC_REF_T_POTION])
-		return 0;
 
 	if (ssc && ssc->data[SC_REF_T_POTION])
 		return 0;

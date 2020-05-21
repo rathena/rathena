@@ -6798,8 +6798,6 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 		critical += 10 * sc->data[SC_SOULSHADOW]->val3;
 	if(sc->data[SC_BEYONDOFWARCRY])
 		critical += sc->data[SC_BEYONDOFWARCRY]->val3;
-	if (sc->data[SC_SOULSHADOW])
-		critical += 10 * sc->data[SC_SOULSHADOW]->val3;
 
 	return (short)cap_value(critical,10,SHRT_MAX);
 }
