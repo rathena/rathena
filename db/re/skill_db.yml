@@ -18030,6 +18030,7 @@ Body:
       Splash: true
     Flags:
       AlterRangeRadius: true
+    Range: 11
     Hit: Multi_Hit
     HitCount:
       - Level: 1
