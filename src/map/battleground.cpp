@@ -815,7 +815,13 @@ bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map
 
 	if (bg_player_is_in_bg_map(sd)) { // Is the player currently in a battleground map? Reject them.
 		clif_bg_queue_apply_result(BG_APPLY_NONE, name, sd);
-		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You may not join a battleground queue when you're in a battleground map.
+		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
+		return false;
+	}
+
+	if (battle_config.bgqueue_nowarp_mapflag > 0 && map_getmapflag(sd->bl.m, MF_NOWARP)) { // Check player's current position for mapflag check
+		clif_bg_queue_apply_result(BG_APPLY_NONE, name, sd);
+		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
 		return false;
 	}
 
@@ -1203,6 +1209,14 @@ void bg_join_active(map_session_data *sd, std::shared_ptr<s_battleground_queue> 
 	if (sd == nullptr || queue == nullptr)
 		return;
 
+	// Check player's current position for mapflag check
+	if (battle_config.bgqueue_nowarp_mapflag > 0 && map_getmapflag(sd->bl.m, MF_NOWARP)) {
+		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
+		bg_queue_leave(sd);
+		clif_bg_queue_entry_init(sd);
+		return;
+	}
+
 	int bg_id_team_1 = static_cast<int>(mapreg_readreg(add_str(queue->map->team1.bg_id_var.c_str())));
 	std::shared_ptr<s_battleground_data> bgteam_1 = util::umap_find(bg_team_db, bg_id_team_1);
 
@@ -1247,6 +1261,43 @@ void bg_join_active(map_session_data *sd, std::shared_ptr<s_battleground_queue> 
 }
 
 /**
+ * Check to see if any players in the queue are on a map with MF_NOWARP and remove them from the queue
+ * @param queue: Queue data
+ * @return True if the player is on a map with MF_NOWARP or false otherwise
+ */
+bool bg_mapflag_check(std::shared_ptr<s_battleground_queue> queue) {
+	if (battle_config.bgqueue_nowarp_mapflag == 0)
+		return false;
+
+	bool found = false;
+
+	for (const auto &sd : queue->teama_members) {
+		if (map_getmapflag(sd->bl.m, MF_NOWARP)) {
+			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
+			bg_queue_leave(sd);
+			clif_bg_queue_entry_init(sd);
+			queue->accepted_players--;
+			found = true;
+		}
+	}
+
+	for (const auto &sd : queue->teamb_members) {
+		if (map_getmapflag(sd->bl.m, MF_NOWARP)) {
+			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
+			bg_queue_leave(sd);
+			clif_bg_queue_entry_init(sd);
+			queue->accepted_players--;
+			found = true;
+		}
+	}
+
+	if (found)
+		queue->state = QUEUE_STATE_SETUP; // Make sure queue is put back in this state if player requirement count is not met.
+
+	return found;
+}
+
+/**
  * Update the Battleground queue when the player accepts the invite
  * @param queue: Battleground queue
  * @param sd: Player data
@@ -1274,6 +1325,10 @@ void bg_queue_on_accept_invite(struct map_session_data *sd)
 				queue->tid_expire = INVALID_TIMER;
 			}
 
+			// Check player's current position for mapflag check
+			if (battle_config.bgqueue_nowarp_mapflag > 0 && bg_mapflag_check(queue))
+				return;
+
 			queue->tid_start = add_timer(gettick() + battleground_db.find(queue->id)->start_delay * 1000, bg_on_ready_start, 0, (intptr_t)queue.get());
 		}
 	}
@@ -1293,16 +1348,20 @@ void bg_queue_start_battleground(s_battleground_queue *queue)
 		return;
 	}
 
+	// Check player's current position for mapflag check
+	if (battle_config.bgqueue_nowarp_mapflag > 0 && bg_mapflag_check(std::shared_ptr<s_battleground_queue>(queue)))
+		return;
+
 	uint16 map_idx = queue->map->mapindex;
 	int bg_team_1 = bg_create(map_idx, &queue->map->team1);
 	int bg_team_2 = bg_create(map_idx, &queue->map->team2);
 
-	for (auto &sd : queue->teama_members) {
+	for (const auto &sd : queue->teama_members) {
 		clif_bg_queue_entry_init(sd);
 		bg_team_join(bg_team_1, sd, true);
 	}
 
-	for (auto &sd : queue->teamb_members) {
+	for (const auto &sd : queue->teamb_members) {
 		clif_bg_queue_entry_init(sd);
 		bg_team_join(bg_team_2, sd, true);
 	}
