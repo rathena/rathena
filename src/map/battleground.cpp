@@ -795,17 +795,22 @@ bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map
 {
 	nullpo_retr(false, sd);
 
-	if (bg->min_lvl && sd->status.base_level < bg->min_lvl) { // Check min level if min_lvl isn't 0
+	if ((sd->class_ & MAPID_UPPERMASK) == MAPID_NOVICE) { // Check class requirement
+		clif_bg_queue_apply_result(BG_APPLY_PLAYER_CLASS, name, sd);
+		return false;
+	}
+
+	if (bg->min_lvl > 0 && sd->status.base_level < bg->min_lvl) { // Check minimum level requirement
 		clif_bg_queue_apply_result(BG_APPLY_PLAYER_LEVEL, name, sd);
 		return false;
 	}
 
-	if (bg->max_lvl && sd->status.base_level > bg->max_lvl) { // Check max level if max_lvl isn't 0
+	if (bg->max_lvl > 0 && sd->status.base_level > bg->max_lvl) { // Check maximum level requirement
 		clif_bg_queue_apply_result(BG_APPLY_PLAYER_LEVEL, name, sd);
 		return false;
 	}
 
-	if (!bg_queue_check_status(sd, name))
+	if (!bg_queue_check_status(sd, name)) // Check status blocks
 		return false;
 
 	if (bg_player_is_in_bg_map(sd)) { // Is the player currently in a battleground map? Reject them.
@@ -814,7 +819,7 @@ bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map
 		return false;
 	}
 
-	return true; // Return true if all conditions are met.
+	return true;
 }
 
 /**
