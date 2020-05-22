@@ -676,6 +676,7 @@ struct Battle_Config
 	int devotion_standup_fix;
 	int feature_bgqueue;
 	int homunculus_exp_gain;
+	int rental_item_novalue;
 
 #include "../custom/battle_config_struct.inc"
 };

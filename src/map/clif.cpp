@@ -2038,9 +2038,13 @@ void clif_selllist(struct map_session_data *sd)
 			if( !pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i], nd->subtype))
 				continue;
 
-			val=sd->inventory_data[i]->value_sell;
-			if( val < 0 )
-				continue;
+			if (battle_config.rental_item_novalue && sd->inventory.u.items_inventory[i].expire_time)
+				val = 0;
+			else {
+				val = sd->inventory_data[i]->value_sell;
+				if( val < 0 )
+					continue;
+			}
 			WFIFOW(fd,4+c*10)=i+2;
 			WFIFOL(fd,6+c*10)=val;
 			WFIFOL(fd,10+c*10)=pc_modifysellvalue(sd,val);

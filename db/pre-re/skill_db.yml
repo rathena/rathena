@@ -2071,8 +2071,6 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: -2
     Hit: Single
     HitCount: 1
@@ -5838,11 +5836,8 @@ Body:
     Name: NPC_DARKBREATH
     Description: Dark Breath
     MaxLevel: 5
-    Type: Misc
+    Type: Magic
     TargetType: Attack
-    DamageFlags:
-      IgnoreFlee: true
-      IgnoreDefCard: true
     Flags:
       IsNpc: true
     Range: 9
@@ -6699,8 +6694,6 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range:
       - Level: 1
         Size: 3
@@ -10658,7 +10651,6 @@ Body:
       IgnoreDefense: true
     Flags:
       TargetTrap: true
-      IncreaseGloomyDayDamage: true
     Range: 5
     Hit: Multi_Hit
     HitCount: 5
@@ -12834,8 +12826,6 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: 4
     Hit: Multi_Hit
     HitCount: 5
@@ -16847,8 +16837,6 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: 5
     Hit: Multi_Hit
     HitCount: -5
@@ -19889,9 +19877,9 @@ Body:
       IgnoreDefCard: true
     Flags:
       AllowOnWarg: true
-      IncreaseDanceWithWugDamage: true
       IgnoreAutoGuard: true
       IgnoreCicada: true
+      IncreaseDanceWithWugDamage: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -19919,9 +19907,9 @@ Body:
       IgnoreDefCard: true
     Flags:
       AlterRangeVulture: true
-      IncreaseDanceWithWugDamage: true
       IgnoreAutoGuard: true
       IgnoreCicada: true
+      IncreaseDanceWithWugDamage: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -24313,7 +24301,7 @@ Body:
         Reproduce: true
     Requires:
       SpCost: 1
-  - Id: 2417
+  - Id: 2417 # Removed on kRO
     Name: WM_DOMINION_IMPULSE
     Description: Dominion Impulse
     MaxLevel: 1
@@ -24326,6 +24314,7 @@ Body:
     HitCount: 1
     SplashArea: 5
     AfterCastActDelay: 1000
+    FixedCastTime: -1
     Requires:
       SpCost: 10
   - Id: 2418
@@ -26706,8 +26695,8 @@ Body:
     DamageFlags:
       Splash: true
     Range: 11
-    Hit: Single
-    HitCount: 3
+    Hit: Multi_Hit
+    HitCount: 2
     Element: Weapon
     SplashArea:
       - Level: 1
@@ -30115,6 +30104,18 @@ Body:
     Name: AB_CONVENIO
     Description: Convenio
     MaxLevel: 1
+  - Id: 5075
+    Name: NV_BREAKTHROUGH
+    Description: Break Through
+    MaxLevel: 1
+  - Id: 5076
+    Name: NV_HELPANGEL
+    Description: Help Angel
+    MaxLevel: 1
+  - Id: 5077
+    Name: NV_TRANSCENDENCE
+    Description: Transcendence
+    MaxLevel: 1
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
@@ -32124,8 +32125,6 @@ Body:
     TargetType: Attack
     DamageFlags:
       NoDamage: true
-    Flags:
-      IncreaseGloomyDayDamage: true
     Range: -2
     Hit: Single
     HitCount: 1
@@ -32150,7 +32149,6 @@ Body:
       IgnoreDefense: true
     Flags:
       TargetTrap: true
-      IncreaseGloomyDayDamage: true
     Range: 5
     Hit: Multi_Hit
     HitCount: 5
