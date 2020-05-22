@@ -169,7 +169,7 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 		bg->start_delay = delay;
 	} else {
 		if (!exists)
-			bg->start_delay = 30;
+			bg->start_delay = 0;
 	}
 
 	if (this->nodeExists(node, "Locations")) {
