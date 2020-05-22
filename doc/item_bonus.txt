@@ -25,7 +25,8 @@ This list contains all available constants referenced in the 'bonus' commands.
 	RC_Insect, RC_Plant, RC_Player, RC_Undead, RC_All
 
 * Monster Race (mr)
-	RC2_Goblin, RC2_Kobold, RC2_Orc, RC2_Golem, RC2_Guardian, RC2_Ninja
+	RC2_Goblin, RC2_Kobold, RC2_Orc, RC2_Golem, RC2_Guardian, RC2_Ninja,
+	RC2_BioLab, RC2_SCARABA, RC2_FACEWORM, RC2_THANATOS, RC2_CLOCKTOWER, RC2_ROCKRIDGE
 	See 'db/(pre-)re/mob_race2_db.txt'
 
 * Class (c)
@@ -58,12 +59,13 @@ This list contains all available constants referenced in the 'bonus' commands.
 	ATF_LONG	= Trigger on ranged attacks
 	
 	Skill/attack type criteria: (Default: Physical/weapon)
+	ATF_SKILL	= Trigger on magic/misc skills
 	ATF_WEAPON	= Trigger on weapon skill / physical attacks
 	ATF_MAGIC	= Trigger on magic skills
 	ATF_MISC	= Trigger on misc skills
 
 * Other values:
-	Skill (sk): see 'db/(pre-)re/skill_db.txt' (NOTE: Both skill IDs and names, in quotes, are supported.)
+	Skill (sk): see 'db/(pre-)re/skill_db.yml' (NOTE: Both skill IDs and names, in quotes, are supported.)
 	Monster id (mid): see 'db/(pre-)re/mob_db.txt'
 	Item id (iid): see 'db/(pre-)re/item_db.txt'
 	Item group (ig): see 'db/(pre-)re/item_group_db.txt' and the constants in 'db/const.txt', prefixed with IG_*
@@ -166,7 +168,8 @@ bonus2 bSkillUseSPrate,sk,n;		Decreases SP consumption of skill sk by n%
 Atk/Def
 -------
 bonus2 bSkillAtk,sk,n;    		Increases damage of skill sk by n%
-bonus bLongAtkRate,n;     		Increases damage of ranged attacks by n%
+bonus bShortAtkRate,n;			Increases damage of short ranged attacks by n%
+bonus bLongAtkRate,n;     		Increases damage of long ranged attacks by n%
 bonus bCritAtkRate,n;     		Increases critical damage by +n%
 bonus bCriticalDef,n;     		Decreases the chance of being hit by critical hits by n%
 bonus2 bWeaponAtk,w,n;    		Adds n ATK when weapon of type w is equipped
@@ -274,7 +277,6 @@ Ignore Def
 ----------
 bonus bIgnoreDefEle,e;  		Disregard DEF against enemies of element e
 bonus bIgnoreDefRace,r; 		Disregard DEF against enemies of race r
-bonus2 bIgnoreDefRaceRate,r,n;  	Disregard n% of the target's DEF if the target belongs to race r
 bonus bIgnoreDefClass,c;		Disregard DEF against enemies of class c
 bonus bIgnoreMDefRace,r;		Disregard MDEF against enemies of race r
 bonus2 bIgnoreDefRaceRate,r,n; 	Disregard n% of the target's DEF if the target belongs to race r
@@ -310,6 +312,7 @@ bonus4 bAddEffWhenHit,eff,n,atf,t;	Adds a n/100% chance to cause status eff for 
                               		  ATF_SHORT  = trigger on melee attacks
                               		  ATF_LONG   = trigger on ranged attacks
                               		 Skill/attack type criteria: (Default: Physical/weapon)
+                             		  ATF_SKILL  = trigger on magic/misc skills
                               		  ATF_WEAPON = trigger on weapon skill / physical attacks
                               		  ATF_MAGIC  = trigger on magic skills
                               		  ATF_MISC   = trigger on misc skills

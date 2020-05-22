@@ -51,6 +51,8 @@
 
 using namespace rathena;
 
+#define MAX_MAP_PER_INSTANCE 255
+
 #ifndef WIN32
 int getch( void ){
     struct termios oldattr, newattr;
@@ -70,6 +72,7 @@ int getch( void ){
 #define MAX_SKILL_ITEM_REQUIRE	10
 #define MAX_SKILL_STATUS_REQUIRE 3
 #define MAX_SKILL_EQUIP_REQUIRE 10
+#define MAX_QUEST_DROPS 3
 
 struct s_skill_unit_csv : s_skill_db {
 	std::string target_str;
@@ -86,9 +89,8 @@ std::unordered_map<uint16, s_skill_db> skill_nearnpc;
 // Forward declaration of conversion functions
 static bool guild_read_guildskill_tree_db( char* split[], int columns, int current );
 static bool pet_read_db( const char* file );
-static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current);
+static bool skill_parse_row_magicmushroomdb(char *split[], int column, int current);
 static bool skill_parse_row_abradb(char* split[], int columns, int current);
-static bool skill_parse_row_improvisedb(char* split[], int columns, int current);
 static bool skill_parse_row_spellbookdb(char* split[], int columns, int current);
 static bool mob_readdb_mobavail(char *str[], int columns, int current);
 static bool skill_parse_row_requiredb(char* split[], int columns, int current);
@@ -98,6 +100,8 @@ static bool skill_parse_row_unitdb(char* split[], int columns, int current);
 static bool skill_parse_row_copyabledb(char* split[], int columns, int current);
 static bool skill_parse_row_nonearnpcrangedb(char* split[], int columns, int current);
 static bool skill_parse_row_skilldb(char* split[], int columns, int current);
+static bool quest_read_db(char *split[], int columns, int current);
+static bool instance_readdb_sub(char* str[], int columns, int current);
 
 // Constants for conversion
 std::unordered_map<uint16, std::string> aegis_itemnames;
@@ -146,7 +150,8 @@ void script_set_constant_( const char* name, int64 value, const char* constant_n
 }
 
 const char* constant_lookup( int32 value, const char* prefix ){
-	nullpo_retr( nullptr, prefix );
+	if (prefix == nullptr)
+		return nullptr;
 
 	for( auto const& pair : constants ){
 		// Same prefix group and same value
@@ -159,7 +164,8 @@ const char* constant_lookup( int32 value, const char* prefix ){
 }
 
 int64 constant_lookup_int(const char* constant) {
-	nullpo_retr(-100, constant);
+	if (constant == nullptr)
+		return -100;
 
 	for (auto const &pair : constants) {
 		if (strlen(pair.first) == strlen(constant) && strncasecmp(pair.first, constant, strlen(constant)) == 0) {
@@ -308,7 +314,7 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (!process("MAGIC_MUSHROOM_DB", 1, root_paths, "magicmushroom_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("MAGIC_MUSHROOM_DB", 1, root_paths, "magicmushroom_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1, 1, -1, &skill_parse_row_magicmushroomdb, false);
 	})) {
 		return 0;
@@ -317,12 +323,6 @@ int do_init( int argc, char** argv ){
 	if (!process("ABRA_DB", 1, root_paths, "abra_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3, 3, -1, &skill_parse_row_abradb, false);
 	})) {
-		return 0;
-	}
-
-	if (!process("IMPROVISED_SONG_DB", 1, root_paths, "skill_improvise_db", [](const std::string& path, const std::string& name_ext) -> bool {
-		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 2, 2, -1, &skill_parse_row_improvisedb, false);
-	}, "improvise_db")) {
 		return 0;
 	}
 
@@ -349,6 +349,18 @@ int do_init( int argc, char** argv ){
 	if (!process("SKILL_DB", 1, { path_db_import }, "skill_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 18, 18, -1, &skill_parse_row_skilldb, false);
 	})){
+		return 0;
+	}
+
+	if (!process("QUEST_DB", 1, root_paths, "quest_db", [](const std::string &path, const std::string &name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3 + MAX_QUEST_OBJECTIVES * 2 + MAX_QUEST_DROPS * 3, 100, -1, &quest_read_db, false);
+	})) {
+		return 0;
+	}
+
+	if (process("INSTANCE_DB", 1, root_paths, "instance_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 7, 7 + MAX_MAP_PER_INSTANCE, -1, &instance_readdb_sub, false);
+	})) {
 		return 0;
 	}
 
@@ -855,7 +867,7 @@ static bool pet_read_db( const char* file ){
 }
 
 // Copied and adjusted from skill.cpp
-static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current)
+static bool skill_parse_row_magicmushroomdb(char *split[], int column, int current)
 {
 	uint16 skill_id = atoi(split[0]);
 	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
@@ -908,25 +920,6 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current)
 		body << YAML::EndSeq;
 	}
 
-	body << YAML::EndMap;
-
-	return true;
-}
-
-// Copied and adjusted from skill.cpp
-static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
-{
-	uint16 skill_id = atoi(split[0]);
-	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
-
-	if (skill_name == nullptr) {
-		ShowError("Skill name for Improvised Song skill ID %hu is not known.\n", skill_id);
-		return false;
-	}
-
-	body << YAML::BeginMap;
-	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
-	body << YAML::Key << "Probability" << YAML::Value << atoi(split[1]) / 10;
 	body << YAML::EndMap;
 
 	return true;
@@ -1253,6 +1246,10 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	else if (strcmpi(split[10], "elementalspirit") == 0) entry.state = ST_ELEMENTALSPIRIT;
 	else if (strcmpi(split[10], "elementalspirit2") == 0) entry.state = ST_ELEMENTALSPIRIT2;
 	else if (strcmpi(split[10], "peco") == 0) entry.state = ST_PECO;
+	else if (strcmpi(split[10], "sunstance") == 0) entry.state = ST_SUNSTANCE;
+	else if (strcmpi(split[10], "moonstance") == 0) entry.state = ST_MOONSTANCE;
+	else if (strcmpi(split[10], "starstance") == 0) entry.state = ST_STARSTANCE;
+	else if (strcmpi(split[10], "universestance") == 0) entry.state = ST_UNIVERSESTANCE;
 	else entry.state = ST_NONE;	// Unknown or no state
 
 	trim(split[11]);
@@ -1570,8 +1567,6 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 			body << YAML::Key << "TargetManHole" << YAML::Value << "true";
 		if (inf3_val & 0x10000)
 			body << YAML::Key << "TargetHidden" << YAML::Value << "true";
-		if (inf3_val & 0x20000)
-			body << YAML::Key << "IncreaseGloomyDayDamage" << YAML::Value << "true";
 		if (inf3_val & 0x40000)
 			body << YAML::Key << "IncreaseDanceWithWugDamage" << YAML::Value << "true";
 		if (inf3_val & 0x80000)
@@ -2289,6 +2284,8 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 			body << YAML::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_unit->second.unit_layout_type); i++) {
+				if (it_unit->second.unit_layout_type[i] == 0 && i + 1 > 5)
+					continue;
 				body << YAML::BeginMap;
 				body << YAML::Key << "Level" << YAML::Value << i + 1;
 				body << YAML::Key << "Size" << YAML::Value << it_unit->second.unit_layout_type[i];
@@ -2306,6 +2303,8 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 			body << YAML::BeginSeq;
 
 			for (size_t i = 0; i < ARRAYLENGTH(it_unit->second.unit_range); i++) {
+				if (it_unit->second.unit_range[i] == 0 && i + 1 > 5)
+					continue;
 				body << YAML::BeginMap;
 				body << YAML::Key << "Level" << YAML::Value << i + 1;
 				body << YAML::Key << "Size" << YAML::Value << it_unit->second.unit_range[i];
@@ -2381,6 +2380,179 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 				body << YAML::Value << "HiddenTrap" << YAML::Value << "true";
 
 			body << YAML::EndMap;
+		}
+
+		body << YAML::EndMap;
+	}
+
+	body << YAML::EndMap;
+
+	return true;
+}
+
+// Copied and adjusted from quest.cpp
+static bool quest_read_db(char *split[], int columns, int current) {
+	int quest_id = atoi(split[0]);
+
+	if (quest_id < 0 || quest_id >= INT_MAX) {
+		ShowError("quest_read_db: Invalid quest ID '%d'.\n", quest_id);
+		return false;
+	}
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Id" << YAML::Value << quest_id;
+
+	std::string title = split[17];
+	
+	if (columns > 18) { // If the title has a comma in it, concatenate
+		int col = 18;
+
+		while (col < columns) {
+			title += ',' + std::string(split[col]);
+			col++;
+		}
+	}
+
+	title.erase(std::remove(title.begin(), title.end(), '"'), title.end()); // Strip double quotes out
+	body << YAML::Key << "Title" << YAML::Value << title;
+
+	if (strchr(split[1], ':') == NULL) {
+		uint32 time = atoi(split[1]);
+
+		if (time > 0) {
+			int day = time / 86400;
+
+			time %= (24 * 3600);
+			int hour = time / 3600;
+
+			time %= 3600;
+			int minute = time / 60;
+
+			time %= 60;
+			int second = time;
+
+			std::string output = "+";
+
+			if (day > 0)
+				output += std::to_string(day) + "d";
+			if (hour > 0)
+				output += std::to_string(hour) + "h";
+			if (minute > 0)
+				output += std::to_string(minute) + "mn";
+			if (second > 0)
+				output += std::to_string(second) + "s";
+
+			body << YAML::Key << "TimeLimit" << YAML::Value << output;
+		}
+	} else {
+		if (*split[1]) {
+			std::string time_str(split[1]), hour = time_str.substr(0, time_str.find(':')), output = {};
+
+			time_str.erase(0, 3); // Remove "HH:"
+
+			if (std::stoi(hour) > 0)
+				output = std::to_string(std::stoi(hour)) + "h";
+			if (std::stoi(time_str) > 0)
+				output += std::to_string(std::stoi(time_str)) + "mn";
+
+			body << YAML::Key << "TimeLimit" << YAML::Value << output; // No quests in TXT format had days, default to 0
+		}
+	}
+
+	if (atoi(split[2]) > 0) {
+		body << YAML::Key << "Targets";
+		body << YAML::BeginSeq;
+
+		for (size_t i = 0; i < MAX_QUEST_OBJECTIVES; i++) {
+			int32 mob_id = (int32)atoi(split[i * 2 + 2]), count = atoi(split[i * 2 + 3]);
+
+			if (!mob_id || !count)
+				continue;
+
+			std::string *mob_name = util::umap_find(aegis_mobnames, static_cast<uint16>(mob_id));
+
+			if (!mob_name) {
+				ShowError("quest_read_db: Invalid mob-class %hu, target not read.\n", mob_id);
+				continue;
+			}
+
+			body << YAML::BeginMap;
+			body << YAML::Key << "Mob" << YAML::Value << *mob_name;
+			body << YAML::Key << "Count" << YAML::Value << count;
+			body << YAML::EndMap;
+		}
+
+		body << YAML::EndSeq;
+	}
+
+	if (atoi(split[2 * MAX_QUEST_OBJECTIVES + 2]) > 0) {
+		body << YAML::Key << "Drops";
+		body << YAML::BeginSeq;
+
+		for (size_t i = 0; i < MAX_QUEST_DROPS; i++) {
+			int32 mob_id = (int32)atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 2)]), nameid = (uint16)atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 3)]);
+
+			if (!mob_id || !nameid)
+				continue;
+
+			std::string *mob_name = util::umap_find(aegis_mobnames, static_cast<uint16>(mob_id));
+
+			if (!mob_name) {
+				ShowError("quest_read_db: Invalid mob-class %hu, drop not read.\n", mob_id);
+				continue;
+			}
+
+			std::string *item_name = util::umap_find(aegis_itemnames, static_cast<uint16>(nameid));
+
+			if (!item_name) {
+				ShowError("quest_read_db: Invalid item name %hu, drop not read.\n", nameid);
+				return false;
+			}
+
+			body << YAML::BeginMap;
+			body << YAML::Key << "Mob" << YAML::Value << *mob_name;
+			body << YAML::Key << "Item" << YAML::Value << *item_name;
+			//body << YAML::Key << "Count" << YAML::Value << 1; // Default is 1
+			body << YAML::Key << "Rate" << YAML::Value << atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 4)]);
+			body << YAML::EndMap;
+		}
+
+		body << YAML::EndSeq;
+	}
+
+	body << YAML::EndMap;
+
+	return true;
+}
+
+// Copied and adjusted from instance.cpp
+static bool instance_readdb_sub(char* str[], int columns, int current) {
+	body << YAML::BeginMap;
+	body << YAML::Key << "Id" << YAML::Value << atoi(str[0]);
+	body << YAML::Key << "Name" << YAML::Value << str[1];
+	if (atoi(str[2]) != 3600)
+		body << YAML::Key << "TimeLimit" << YAML::Value << atoi(str[2]);
+	if (atoi(str[3]) != 300)
+		body << YAML::Key << "IdleTimeOut" << YAML::Value << atoi(str[3]);
+	body << YAML::Key << "Enter";
+	body << YAML::BeginMap;
+	body << YAML::Key << "Map" << YAML::Value << str[4];
+	body << YAML::Key << "X" << YAML::Value << atoi(str[5]);
+	body << YAML::Key << "Y" << YAML::Value << atoi(str[6]);
+	body << YAML::EndMap;
+
+	if (columns > 7) {
+		body << YAML::Key << "AdditionalMaps";
+		body << YAML::BeginMap;
+
+		for (int i = 7; i < columns; i++) {
+			if (!strlen(str[i]))
+				continue;
+
+			if (strcmpi(str[4], str[i]) == 0)
+				continue;
+
+			body << YAML::Key << str[i] << YAML::Value << "true";
 		}
 
 		body << YAML::EndMap;

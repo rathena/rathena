@@ -958,13 +958,6 @@ mapflag for it to work is because, otherwise, it'd be server-wide and trigger
 every time a player would change maps. Imagine the server load with 1,000 players
 (oh the pain...)
 
-OnPCStatCalcEvent:
-
-This special label triggers when a player's stats are recalculated, such as when
-changing stats, equipment, or maps, as well as when logging in, leveling up, and
-mounting a job mount. This can be used to grant additional item bonuses to certain
-player groups, for instance.
-
 OnWhisperGlobal:
 
 This special label triggers when a player whispers the NPC, and will run with the
@@ -3433,7 +3426,7 @@ recalculating guardians' HP.
 This function returns the level of the skill <skill id> of the guild <guild id>.
 If the guild does not have that skill, 0 is returned.
 If the guild does not exist, -1 is returned.
-Refer to 'db/(pre-)re/skill_db.txt' for the full list of skills. (GD_* are guild skills)
+Refer to 'db/(pre-)re/skill_db.yml' for the full list of skills. (GD_* are guild skills)
 
 ---------------------------------------
 
@@ -3466,7 +3459,7 @@ mes "You have " + getMapGuildUsers("prontera",getcharid(2)) + " guild members in
 
 This function returns the level of the specified skill that the invoking
 character has. If they don't have the skill, 0 will be returned. The full list
-of character skills is available in 'db/(pre-)re/skill_db.txt'.
+of character skills is available in 'db/(pre-)re/skill_db.yml'.
 
 There are two main uses for this function, it can check whether the character
 has a skill or not, and it can tell you if the level is high enough.
@@ -3911,6 +3904,14 @@ Examples:
 
 Returns the time, in seconds, that the specified player has been idle.
 Name is optional, and defaults to the attached player if omitted.
+
+---------------------------------------
+
+*checkidlehom({"<Player Name>"})
+
+Returns the time, in seconds, that the specified player has been idle for homunculus item/exp share.
+Name is optional, and defaults to the attached player if omitted.
+This will only work if 'hom_idle_no_share' and 'idletime_hom_option' are enabled (see '/conf/battle/homunc.conf').
 
 ---------------------------------------
 
@@ -5582,7 +5583,7 @@ levels. This refers to the invoking character and will only work if the invoking
 character is a member of a guild AND its guild master, otherwise no failure
 message will be given and no error will occur, but nothing will happen - same
 about the guild skill trying to exceed the possible maximum. The full list of
-guild skills is available in 'db/(pre-)re/skill_db.txt', these are all the GD_ skills at
+guild skills is available in 'db/(pre-)re/skill_db.yml', these are all the GD_ skills at
 the end.
 
 // This would give your character's guild one level of Approval (GD_APPROVAL ID
@@ -5969,7 +5970,7 @@ These commands will give the invoking character a specified skill. This is also
 used for item scripts.
 
 Level is obvious. Skill id is the ID number of the skill in question as per
-'db/(pre-)re/skill_db.txt'. It is not known for certain whether this can be used to give
+'db/(pre-)re/skill_db.yml'. It is not known for certain whether this can be used to give
 a character a monster's skill, but you're welcome to try with the numbers given
 in 'db/(pre-)re/mob_skill_db.txt'.
 
@@ -6595,13 +6596,14 @@ Returns true if the command was executed on the other NPC successfully, false if
 
 ---------------------------------------
 
-*npctalk "<message>"{,"<NPC name>","<flag>"};
+*npctalk "<message>"{,"<NPC name>",<flag>{,<color>}};
 
 This command will display a message as if the NPC object running it was a player
 talking - that is, above their head and in the chat window.
 The display name of the NPC won't get appended in front of the message.
 If the <NPC name> option is given and not empty, then that NPC will display the message,
-else the attached NPC will display the message.
+else the attached NPC will display the message,
+the color format is in RGB (0xRRGGBB). The color is White by default.
 
 Target for <flag>:
 - bc_all  : Broadcast message is sent server-wide (only in the chat window).
@@ -8938,7 +8940,7 @@ with the given character id.
 *instance_create("<instance name>"{,<instance mode>{,<owner id>}});
 
 Creates an instance for the <owner id> of <mode>. The instance name, along with
-all other instance data, is read from 'db/(pre-)re/instance_db.txt'. Upon success,
+all other instance data, is read from 'db/(pre-)re/instance_db.yml'. Upon success,
 the command generates a unique instance ID, duplicates all listed maps and NPCs,
 sets the alive time, and triggers the "OnInstanceInit" label in all NPCs inside
 the instance.
@@ -8971,7 +8973,7 @@ This will also trigger the "OnInstanceDestroy" label in all NPCs inside the inst
 Warps the attached player to the specified <instance id>. If no ID is specified,
 the IM_PARTY instance the invoking player is attached to is used.
 
-The map and coordinates are located in 'db/(pre-)re/instance_db.txt'.
+The map and coordinates are located in 'db/(pre-)re/instance_db.yml'.
 
 The command returns IE_OK upon success, and these values upon failure:
  IE_NOMEMBER:	Party/Guild/Clan not found (for party/guild/clan modes).
@@ -9700,7 +9702,7 @@ when pet performance is activated.
 
 This will make the pet use a specified support skill on the owner whenever the
 HP and SP are below the given percent values, with a specified delay time
-between activations. The skill numbers are as per 'db/(pre-)re/skill_db.txt'.
+between activations. The skill numbers are as per 'db/(pre-)re/skill_db.yml'.
 
 It's not quite certain who's stats will be used for the skills cast, the
 character's or the pets. Probably, Skotlex can answer that question.

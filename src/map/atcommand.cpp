@@ -1309,7 +1309,7 @@ ACMD_FUNC(heal)
 	}
 
 	if ( hp < 0 && sp <= 0 ) {
-		status_damage(NULL, &sd->bl, -hp, -sp, 0, 0);
+		status_damage(NULL, &sd->bl, -hp, -sp, 0, 0, 0);
 		clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, DMG_ENDURE, 0, false);
 		clif_displaymessage(fd, msg_txt(sd,156)); // HP or/and SP modified.
 		return 0;
@@ -1320,7 +1320,7 @@ ACMD_FUNC(heal)
 		if (hp > 0)
 			status_heal(&sd->bl, hp, 0, 0);
 		else {
-			status_damage(NULL, &sd->bl, -hp, 0, 0, 0);
+			status_damage(NULL, &sd->bl, -hp, 0, 0, 0, 0);
 			clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, DMG_ENDURE, 0, false);
 		}
 	}
@@ -1329,7 +1329,7 @@ ACMD_FUNC(heal)
 		if (sp > 0)
 			status_heal(&sd->bl, 0, sp, 0);
 		else
-			status_damage(NULL, &sd->bl, 0, -sp, 0, 0);
+			status_damage(NULL, &sd->bl, 0, -sp, 0, 0, 0);
 	}
 
 	clif_displaymessage(fd, msg_txt(sd,156)); // HP or/and SP modified.
@@ -1830,7 +1830,7 @@ ACMD_FUNC(bodystyle)
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (!(sd->class_&JOBL_THIRD)) {
+	if (!(sd->class_ & JOBL_THIRD) || (sd->class_ & MAPID_THIRDMASK) == MAPID_SUPER_NOVICE_E || (sd->class_ & MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || (sd->class_ & MAPID_THIRDMASK) == MAPID_SOUL_REAPER) {
 		clif_displaymessage(fd, msg_txt(sd,740));	// This job has no alternate body styles.
 		return -1;
 	}
@@ -3490,6 +3490,28 @@ ACMD_FUNC(spiritball)
 	return 0;
 }
 
+ACMD_FUNC(soulball)
+{
+	uint32 max_soulballs = min(ARRAYLENGTH(sd->soul_timer), 0x7FFF);
+	int number;
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message || (number = atoi(message)) < 0 || number > max_soulballs) {
+		char msg[CHAT_SIZE_MAX];
+		safesnprintf(msg, sizeof(msg), "Usage: @soulball <number: 0-%d>", max_soulballs);
+		clif_displaymessage(fd, msg);
+		return -1;
+	}
+
+	if (sd->soulball > 0)
+		pc_delsoulball(sd, sd->soulball, 1);
+	sd->soulball = number;
+	clif_soulball(sd);
+	// no message, player can see the difference
+
+	return 0;
+}
+
 /*==========================================
  *
  *------------------------------------------*/
@@ -4005,11 +4027,11 @@ ACMD_FUNC(reload) {
 		map_msg_reload();
 		clif_displaymessage(fd, msg_txt(sd,463)); // Message configuration has been reloaded.
 	} else if (strstr(command, "questdb") || strncmp(message, "questdb", 3) == 0) {
-		do_reload_quest();
-		clif_displaymessage(fd, msg_txt(sd,1377)); // Quest database has been reloaded.
+		if (quest_db.reload())
+			clif_displaymessage(fd, msg_txt(sd,1377)); // Quest database has been reloaded.
 	} else if (strstr(command, "instancedb") || strncmp(message, "instancedb", 4) == 0) {
-		instance_reload();
-		clif_displaymessage(fd, msg_txt(sd,516)); // Instance database has been reloaded.
+		if (instance_db.reload())
+			clif_displaymessage(fd, msg_txt(sd,516)); // Instance database has been reloaded.
 	} else if (strstr(command, "achievementdb") || strncmp(message, "achievementdb", 4) == 0) {
 		achievement_db_reload();
 		clif_displaymessage(fd, msg_txt(sd,771)); // Achievement database has been reloaded.
@@ -4829,18 +4851,22 @@ ACMD_FUNC(servertime)
 			clif_displaymessage(fd, msg_txt(sd,232)); // Game time: The game is in permanent night.
 	} else if (battle_config.night_duration == 0)
 		if (night_flag == 1) { // we start with night
-			timer_data = get_timer(day_timer_tid);
-			sprintf(temp, msg_txt(sd,233), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in night for %s.
-			clif_displaymessage(fd, temp);
-			clif_displaymessage(fd, msg_txt(sd,234)); // Game time: After, the game will be in permanent daylight.
+			if ((timer_data = get_timer(day_timer_tid)) != nullptr) {
+				sprintf(temp, msg_txt(sd,233), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in night for %s.
+				clif_displaymessage(fd, temp);
+				clif_displaymessage(fd, msg_txt(sd,234)); // Game time: After, the game will be in permanent daylight.
+			} else
+				clif_displaymessage(fd, msg_txt(sd,232)); // Game time: The game is in permanent night.
 		} else
 			clif_displaymessage(fd, msg_txt(sd,231)); // Game time: The game is in permanent daylight.
 	else if (battle_config.day_duration == 0)
 		if (night_flag == 0) { // we start with day
-			timer_data = get_timer(night_timer_tid);
-			sprintf(temp, msg_txt(sd,235), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in daylight for %s.
-			clif_displaymessage(fd, temp);
-			clif_displaymessage(fd, msg_txt(sd,236)); // Game time: After, the game will be in permanent night.
+			if ((timer_data = get_timer(night_timer_tid)) != nullptr) {
+				sprintf(temp, msg_txt(sd,235), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in daylight for %s.
+				clif_displaymessage(fd, temp);
+				clif_displaymessage(fd, msg_txt(sd,236)); // Game time: After, the game will be in permanent night.
+			} else
+				clif_displaymessage(fd, msg_txt(sd,231)); // Game time: The game is in permanent daylight.
 		} else
 			clif_displaymessage(fd, msg_txt(sd,232)); // Game time: The game is in permanent night.
 	else {
@@ -5812,6 +5838,14 @@ ACMD_FUNC(useskill)
 		clif_displaymessage(fd, msg_txt(sd,1165)); // Usage: @useskill <skill ID> <skill level> <char name>
 		return -1;
 	}
+
+	if (!skill_id || !skill_db.find(skill_id)) {
+		clif_displaymessage(fd, msg_txt(sd, 198)); // This skill number doesn't exist.
+		return -1;
+	}
+
+	if (!skill_lv)
+		skill_lv = 1;
 
 	if(!strcmp(atcmd_player_name,"self"))
 		pl_sd = sd; //quick keyword
@@ -10289,6 +10323,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(questskill),
 		ACMD_DEF(lostskill),
 		ACMD_DEF(spiritball),
+		ACMD_DEF(soulball),
 		ACMD_DEF(party),
 		ACMD_DEF(guild),
 		ACMD_DEF(breakguild),
@@ -10705,6 +10740,8 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 	if (battle_config.idletime_option&IDLE_ATCOMMAND)
 		sd->idletime = last_tick;
+	if (battle_config.hom_idle_no_share && sd->hd && battle_config.idletime_hom_option&IDLE_ATCOMMAND)
+		sd->idletime_hom = last_tick;
 
 	//Clearing these to be used once more.
 	memset(command, '\0', sizeof(command));
