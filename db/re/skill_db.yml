@@ -18084,6 +18084,7 @@ Body:
     TargetType: Attack
     DamageFlags:
       Splash: true
+    Range: 11
     Hit: Multi_Hit
     HitCount: -5
     Element: Water
