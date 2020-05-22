@@ -853,7 +853,7 @@ void initChangeTables(void)
 	set_sc( WL_RECOGNIZEDSPELL	, SC_RECOGNIZEDSPELL	, EFST_RECOGNIZEDSPELL	, SCB_MATK);
 	add_sc( WL_SIENNAEXECRATE   , SC_STONE		  );
 	set_sc( WL_STASIS			, SC_STASIS		, EFST_STASIS		, SCB_NONE );
-	set_sc( WL_COMET            , SC_MAGIC_POISON		, EFST_MAGIC_POISON	, SCB_ALL );
+	set_sc_with_vfx( WL_COMET   , SC_MAGIC_POISON	, EFST_MAGIC_POISON	, SCB_ALL );
 	set_sc( WL_TELEKINESIS_INTENSE	, SC_TELEKINESIS_INTENSE, EFST_TELEKINESIS_INTENSE, SCB_MATK );
 
 	/* Ranger */
@@ -1383,7 +1383,6 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_REF_T_POTION] = EFST_REF_T_POTION;
 	StatusIconChangeTable[SC_ADD_ATK_DAMAGE] = EFST_ADD_ATK_DAMAGE;
 	StatusIconChangeTable[SC_ADD_MATK_DAMAGE] = EFST_ADD_MATK_DAMAGE;
-	StatusIconChangeTable[SC_MISTY_FROST] = EFST_MISTY_FROST;
 
 	// Battleground Queue
 	StatusIconChangeTable[SC_ENTRY_QUEUE_APPLY_DELAY] = EFST_ENTRY_QUEUE_APPLY_DELAY;
@@ -1606,6 +1605,8 @@ void initChangeTables(void)
 	StatusDisplayType[SC_ANTI_M_BLAST]	  = BL_PC;
 	StatusDisplayType[SC_SPRITEMABLE]     = BL_PC;
 	StatusDisplayType[SC_SV_ROOTTWIST]    = BL_PC;
+	StatusDisplayType[SC_MISTY_FROST]     = BL_PC;
+	StatusDisplayType[SC_MAGIC_POISON]    = BL_PC;
 
 	// Costumes
 	StatusDisplayType[SC_MOONSTAR] = BL_PC;
