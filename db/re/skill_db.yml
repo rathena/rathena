@@ -18984,19 +18984,7 @@ Body:
     Name: WL_READING_SB
     Description: Reading Spellbook
     MaxLevel: 1
-    Type: Magic
-    TargetType: Self
-    DamageFlags:
-      NoDamage: true
-    Hit: Single
-    HitCount: 1
-    CastCancel: true
-    CastTime: 5000
-    AfterCastActDelay: 500
     Duration1: 30000
-    FixedCastTime: 1000
-    Requires:
-      SpCost: 40
   - Id: 2232
     Name: WL_FREEZE_SP
     Description: Freeze Spell
