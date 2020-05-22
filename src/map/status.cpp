@@ -3319,9 +3319,8 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 1000;
 			if (pc_checkskill(sd, SU_POWEROFSEA) > 0) {
 				bonus += 1000;
-				if ((pc_checkskill(sd, SU_TUNABELLY) + pc_checkskill(sd, SU_TUNAPARTY) + pc_checkskill(sd, SU_BUNCHOFSHRIMP) + pc_checkskill(sd, SU_FRESHSHRIMP) +
-					pc_checkskill(sd, SU_GROOMING) + pc_checkskill(sd, SU_PURRING) + pc_checkskill(sd, SU_SHRIMPARTY)) > 19)
-						bonus += 3000;
+				if (pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20)
+					bonus += 3000;
 			}
 			if ((skill_lv = pc_checkskill(sd, NV_BREAKTHROUGH)) > 0)
 				bonus += 350 * skill_lv + (skill_lv > 4 ? 250 : 0);
@@ -3497,9 +3496,8 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 100;
 			if (pc_checkskill(sd, SU_POWEROFSEA) > 0) {
 				bonus += 100;
-				if ((pc_checkskill(sd, SU_TUNABELLY) + pc_checkskill(sd, SU_TUNAPARTY) + pc_checkskill(sd, SU_BUNCHOFSHRIMP) + pc_checkskill(sd, SU_FRESHSHRIMP) +
-					pc_checkskill(sd, SU_GROOMING) + pc_checkskill(sd, SU_PURRING) + pc_checkskill(sd, SU_SHRIMPARTY)) > 19)
-						bonus += 300;
+				if (pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20)
+					bonus += 300;
 			}
 			if ((skill_lv = pc_checkskill(sd, NV_BREAKTHROUGH)) > 0)
 				bonus += 30 * skill_lv + (skill_lv > 4 ? 50 : 0);
@@ -5622,11 +5620,8 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 
 					if (sd->bonus.ematk > 0)
 						status->matk_min += sd->bonus.ematk;
-					if (pc_checkskill(sd, SU_POWEROFLAND) > 0) {
-						if ((pc_checkskill(sd, SU_SV_STEMSPEAR) + pc_checkskill(sd, SU_CN_POWDERING) + pc_checkskill(sd, SU_CN_METEOR) + pc_checkskill(sd, SU_SV_ROOTTWIST) +
-						pc_checkskill(sd, SU_CHATTERING) + pc_checkskill(sd, SU_MEOWMEOW) + pc_checkskill(sd, SU_NYANGGRASS)) > 19)
-							status->matk_min += status->matk_min * 20 / 100;
-					}
+					if (pc_checkskill(sd, SU_POWEROFLAND) > 0 && pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20)
+						status->matk_min += status->matk_min * 20 / 100;
 					if ((skill_lv = pc_checkskill(sd, NV_TRANSCENDENCE)) > 0)
 						status->matk_min += 15 * skill_lv + (skill_lv > 4 ? 25 : 0);
 				}
@@ -11988,13 +11983,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					val2 += rnd() % (max - min); // Heal
 
 				if (sd) {
-					if (pc_checkskill(sd, SU_POWEROFSEA)) {
+					if (pc_checkskill(sd, SU_POWEROFSEA) > 0) {
 						val2 += val2 * 10 / 100;
-						if ((pc_checkskill(sd, SU_TUNABELLY) + pc_checkskill(sd, SU_TUNAPARTY) + pc_checkskill(sd, SU_BUNCHOFSHRIMP) + pc_checkskill(sd, SU_FRESHSHRIMP) +
-							pc_checkskill(sd, SU_GROOMING) + pc_checkskill(sd, SU_PURRING) + pc_checkskill(sd, SU_SHRIMPARTY)) > 19)
-								val2 += val2 * 20 / 100;
+						if (pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20)
+							val2 += val2 * 20 / 100;
 					}
-					if (pc_checkskill(sd, SU_SPIRITOFSEA))
+					if (pc_checkskill(sd, SU_SPIRITOFSEA) > 0)
 						val2 *= 2; // Doubles HP
 				}
 				tick_time = 10000 - ((val1 - 1) * 1000);
