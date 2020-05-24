@@ -142,11 +142,11 @@ bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map
 void bg_queue_join_party(const char *name, struct map_session_data *sd);
 void bg_queue_join_guild(const char *name, struct map_session_data *sd);
 void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vector<map_session_data *> list);
-void bg_queue_clear(s_battleground_queue *queue, bool ended);
+void bg_queue_clear(std::shared_ptr<s_battleground_queue> queue, bool ended);
 bool bg_queue_leave(struct map_session_data *sd);
 bool bg_queue_on_ready(const char *name, std::shared_ptr<s_battleground_queue> queue);
 void bg_queue_on_accept_invite(struct map_session_data *sd);
-void bg_queue_start_battleground(s_battleground_queue *queue);
+void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue);
 bool bg_member_respawn(struct map_session_data *sd);
 void bg_send_message(struct map_session_data *sd, const char *mes, int len);
 

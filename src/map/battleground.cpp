@@ -668,14 +668,18 @@ TIMER_FUNC(bg_send_xy_timer)
  */
 static TIMER_FUNC(bg_on_ready_loopback)
 {
-	s_battleground_queue *queue = (s_battleground_queue*)data;
+	int queue_id = (int)data;
+	std::shared_ptr<s_battleground_queue> queue = bg_search_queue(queue_id);
 
-	nullpo_retr(1, queue);
+	if (queue == nullptr) {
+		ShowError("bg_on_ready_loopback: Invalid battleground queue %d.\n", queue_id);
+		return 1;
+	}
 
 	std::shared_ptr<s_battleground_type> bg = battleground_db.find(queue->id);
 
 	if (bg) {
-		bg_queue_on_ready(bg->name.c_str(), std::shared_ptr<s_battleground_queue>(queue));
+		bg_queue_on_ready(bg->name.c_str(), queue);
 		return 0;
 	} else {
 		ShowError("bg_on_ready_loopback: Can't find battleground %d in the battlegrounds database.\n", queue->id);
@@ -692,9 +696,13 @@ static TIMER_FUNC(bg_on_ready_loopback)
  */
 static TIMER_FUNC(bg_on_ready_expire)
 {
-	s_battleground_queue *queue = (s_battleground_queue*)data;
+	int queue_id = (int)data;
+	std::shared_ptr<s_battleground_queue> queue = bg_search_queue(queue_id);
 
-	nullpo_retr(1, queue);
+	if (queue == nullptr) {
+		ShowError("bg_on_ready_expire: Invalid battleground queue %d.\n", queue_id);
+		return 1;
+	}
 
 	std::string bg_name = battleground_db.find(queue->id)->name;
 
@@ -721,9 +729,13 @@ static TIMER_FUNC(bg_on_ready_expire)
  */
 static TIMER_FUNC(bg_on_ready_start)
 {
-	s_battleground_queue *queue = (s_battleground_queue*)data;
+	int queue_id = (int)data;
+	std::shared_ptr<s_battleground_queue> queue = bg_search_queue(queue_id);
 
-	nullpo_retr(1, queue);
+	if (queue == nullptr) {
+		ShowError("bg_on_ready_start: Invalid battleground queue %d.\n", queue_id);
+		return 1;
+	}
 
 	queue->tid_start = INVALID_TIMER;
 	bg_queue_start_battleground(queue);
@@ -848,7 +860,7 @@ bool bg_queue_reservation(const char *name, bool state, bool ended)
 						if (ended) // The ended flag is applied from bg_reserve (bg_unbook clears it for the next queue)
 							queue->state = QUEUE_STATE_ENDED;
 						if (!state)
-							bg_queue_clear(queue.get(), true);
+							bg_queue_clear(queue, true);
 					}
 				}
 				return true;
@@ -1054,9 +1066,9 @@ void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vec
  * @param queue: Queue to clean up
  * @param ended: If a Battleground has ended through normal means (by script command bg_unbook)
  */
-void bg_queue_clear(s_battleground_queue *queue, bool ended)
+void bg_queue_clear(std::shared_ptr<s_battleground_queue> queue, bool ended)
 {
-	if (!queue)
+	if (queue == nullptr)
 		return;
 
 	if (queue->tid_requeue != INVALID_TIMER) {
@@ -1143,7 +1155,7 @@ bool bg_queue_leave(struct map_session_data *sd)
 				return false;
 			} else {
 				if ((queue->state == QUEUE_STATE_SETUP || queue->state == QUEUE_STATE_SETUP_DELAY) && queue->teama_members.empty() && queue->teamb_members.empty()) // If there are no players left in the queue (that hasn't started), discard it
-					bg_queue_clear(queue.get(), true);
+					bg_queue_clear(queue, true);
 
 				return true;
 			}
@@ -1183,12 +1195,12 @@ bool bg_queue_on_ready(const char *name, std::shared_ptr<s_battleground_queue> q
 	}
 
 	if (!map_reserved) { // All the battleground maps are reserved. Set a timer to check for an open battleground every 10 seconds.
-		queue->tid_requeue = add_timer(gettick() + 10000, bg_on_ready_loopback, 0, (intptr_t)queue.get());
+		queue->tid_requeue = add_timer(gettick() + 10000, bg_on_ready_loopback, 0, (intptr_t)queue->queue_id);
 		return false;
 	}
 
 	queue->state = QUEUE_STATE_SETUP_DELAY;
-	queue->tid_expire = add_timer(gettick() + 20000, bg_on_ready_expire, 0, (intptr_t)queue.get());
+	queue->tid_expire = add_timer(gettick() + 20000, bg_on_ready_expire, 0, (intptr_t)queue->queue_id);
 
 	for (const auto &sd : queue->teama_members)
 		clif_bg_queue_lobby_notify(name, sd);
@@ -1266,7 +1278,7 @@ void bg_join_active(map_session_data *sd, std::shared_ptr<s_battleground_queue> 
  * @return True if the player is on a map with MF_NOWARP or false otherwise
  */
 bool bg_mapflag_check(std::shared_ptr<s_battleground_queue> queue) {
-	if (battle_config.bgqueue_nowarp_mapflag == 0)
+	if (queue == nullptr || battle_config.bgqueue_nowarp_mapflag == 0)
 		return false;
 
 	bool found = false;
@@ -1329,7 +1341,7 @@ void bg_queue_on_accept_invite(struct map_session_data *sd)
 			if (battle_config.bgqueue_nowarp_mapflag > 0 && bg_mapflag_check(queue))
 				return;
 
-			queue->tid_start = add_timer(gettick() + battleground_db.find(queue->id)->start_delay * 1000, bg_on_ready_start, 0, (intptr_t)queue.get());
+			queue->tid_start = add_timer(gettick() + battleground_db.find(queue->id)->start_delay * 1000, bg_on_ready_start, 0, (intptr_t)queue->queue_id);
 		}
 	}
 }
@@ -1338,8 +1350,11 @@ void bg_queue_on_accept_invite(struct map_session_data *sd)
  * Begin the Battleground from the given queue
  * @param queue: Battleground queue
  */
-void bg_queue_start_battleground(s_battleground_queue *queue)
+void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue)
 {
+	if (queue == nullptr)
+		return;
+
 	std::shared_ptr<s_battleground_type> bg = battleground_db.find(queue->id);
 
 	if (!bg) {
@@ -1349,7 +1364,7 @@ void bg_queue_start_battleground(s_battleground_queue *queue)
 	}
 
 	// Check player's current position for mapflag check
-	if (battle_config.bgqueue_nowarp_mapflag > 0 && bg_mapflag_check(std::shared_ptr<s_battleground_queue>(queue)))
+	if (battle_config.bgqueue_nowarp_mapflag > 0 && bg_mapflag_check(queue))
 		return;
 
 	uint16 map_idx = queue->map->mapindex;
