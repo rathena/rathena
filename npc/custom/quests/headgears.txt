@@ -281,41 +281,41 @@ lighthalzen,96,125,6	script	Fashionable Lady#Hat5288	895,{
 //============================================================
 //= [18677] Cherry Twig in Mouth
 //============================================================
-// amatsu,259,191,4	script	Asami#Hat18677	757,{
-// 	.@npc_name$ = "Asami";
-// 	.@item_id = 18677;
-// 	mes "["+ .@npc_name$ +"]";
-// 	mes "I can create <ITEM>"+ getitemname(.@item_id) +"<INFO>"+ .@item_id +"</INFO></ITEM> for you with:";
-// 	mes "^3355FF200 Thin Trunk^000000";
-// 	mes "^3355FF30 Beautiful Flower^000000";
-// 	mes "^3355FF50 White Herb^000000";
-// 	next;
-// 	switch(select("Construct ^FF0000"+ getitemname(.@item_id) +"^000000 :Quit")) {
-// 		case 1:
-// 		if (countitem(7186) >= 200 && countitem(6511) >= 30 && countitem(509) >= 50) {
-// 			mes "["+ .@npc_name$ +"]";
-// 			mes "Here you are, it's all yours.";
-// 			next;
-// 			delitem 7186,200;	//Thin Trunk
-// 			delitem 6511,30;	//Beautiful Flower
-// 			delitem 509,50;		//White Herb
-// 			getitem .@item_id,1;
-// 			mes "["+ .@npc_name$ +"]";
-// 			mes "If you need another, come find me.";
-// 			close;
-// 		}
-// 		else {
-// 			mes "["+ .@npc_name$ +"]";
-// 			mes "You don't have enough items";
-// 			mes "for me to create it.";
-// 			close;
-// 		}
-// 	case 2:
-// 		mes "["+ .@npc_name$ +"]";
-// 		mes "Come find me when you're ready.";
-// 		close;
-// 	}
-// }
+amatsu,259,191,4	script	Asami#Hat18677	757,{
+	.@npc_name$ = "Asami";
+	.@item_id = 18677;
+	mes "["+ .@npc_name$ +"]";
+	mes "I can create <ITEM>"+ getitemname(.@item_id) +"<INFO>"+ .@item_id +"</INFO></ITEM> for you with:";
+	mes "^3355FF200 Thin Trunk^000000";
+	mes "^3355FF30 Beautiful Flower^000000";
+	mes "^3355FF50 White Herb^000000";
+	next;
+	switch(select("Construct ^FF0000"+ getitemname(.@item_id) +"^000000 :Quit")) {
+		case 1:
+		if (countitem(7186) >= 200 && countitem(6511) >= 30 && countitem(509) >= 50) {
+			mes "["+ .@npc_name$ +"]";
+			mes "Here you are, it's all yours.";
+			next;
+			delitem 7186,200;	//Thin Trunk
+			delitem 6511,30;	//Beautiful Flower
+			delitem 509,50;		//White Herb
+			getitem .@item_id,1;
+			mes "["+ .@npc_name$ +"]";
+			mes "If you need another, come find me.";
+			close;
+		}
+		else {
+			mes "["+ .@npc_name$ +"]";
+			mes "You don't have enough items";
+			mes "for me to create it.";
+			close;
+		}
+	case 2:
+		mes "["+ .@npc_name$ +"]";
+		mes "Come find me when you're ready.";
+		close;
+	}
+}
 
 //============================================================
 //= [5594] Donut In Mouth
