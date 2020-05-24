@@ -27,6 +27,11 @@
 
 #undef DEFINE_PACKET_HEADER
 
+// NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
+#if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
+	#pragma pack( push, 1 )
+#endif
+
 struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub{
 	uint32 itemId;
 	uint32 amount;
@@ -40,6 +45,11 @@ struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST{
 	uint32 kafraPoints;
 	struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub items[];
 } __attribute__((packed));
+
+// NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
+#if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
+	#pragma pack( pop )
+#endif
 
 #pragma warning( pop )
 
