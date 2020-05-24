@@ -156,6 +156,27 @@ matrix:
          - cd cbuild
          - cmake -G "Unix Makefiles" ..
          - make || travis_terminate 1
+# Unit tests
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - g++-5
+      env:
+         - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5"
+      script:
+         - mkdir cbuild
+         - cd cbuild
+         - cmake -G "Unix Makefiles" -DTESTING=ON ..
+         - make || travis_terminate 1
+         - cd ..
+         # running tests for all server types.
+         - ./login-server
+         - ./map-server
+         - ./char-server
+
 # MariaDB
     - os: linux
       addons:

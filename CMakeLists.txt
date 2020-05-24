@@ -293,6 +293,15 @@ if( ENABLE_EXTRA_DEBUG_CODE )
 	message( STATUS "Enabled extra DEBUG code" )
 endif()
 
+#
+# Enable testing
+#
+if ( TESTING )
+	set_property( CACHE GLOBAL_DEFINITIONS PROPERTY VALUE "${GLOBAL_DEFINITIONS} -fprofile-arcs -ftest-coverage" )
+	set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE "${GLOBAL_LIBRARIES};-lgcov" )
+	message( STATUS "Enabled testing" )
+endif()
+
 
 #
 # Enable builtin memory manager (default=default)
