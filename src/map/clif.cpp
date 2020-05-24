@@ -17634,7 +17634,7 @@ void clif_parse_bg_queue_apply_request(int fd, struct map_session_data *sd)
 		clif_bg_queue_apply_result(BG_APPLY_DUPLICATE, name, sd); // Duplicate application warning
 		return;
 	} else if (type == 1) // Solo
-		bg_queue_join_multi(name, sd, { sd });
+		bg_queue_join_solo(name, sd);
 	else if (type == 2) // Party
 		bg_queue_join_party(name, sd);
 	else if (type == 4) // Guild

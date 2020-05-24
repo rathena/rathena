@@ -80,6 +80,9 @@ struct s_battleground_type {
 	std::vector<s_battleground_map> maps; ///< List of battleground locations
 	uint32 deserter_time; ///< Amount of time a player is marked deserter (seconds)
 	uint32 start_delay; ///< Amount of time before the start message is sent to players (seconds)
+	bool solo; ///< Ability to join a queue as an individual.
+	bool party; ///< Ability to join a queue as a party.
+	bool guild; ///< Ability to join a queue as a guild.
 };
 
 /// Enum of responses when applying for a Battleground
@@ -139,6 +142,7 @@ int bg_team_leave(struct map_session_data *sd, bool quit, bool deserter);
 bool bg_team_warp(int bg_id, unsigned short mapindex, short x, short y);
 bool bg_player_is_in_bg_map(struct map_session_data *sd);
 bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map_session_data *sd, const char *name);
+void bg_queue_join_solo(const char *name, struct map_session_data *sd);
 void bg_queue_join_party(const char *name, struct map_session_data *sd);
 void bg_queue_join_guild(const char *name, struct map_session_data *sd);
 void bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vector<map_session_data *> list);

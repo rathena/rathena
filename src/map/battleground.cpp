@@ -172,6 +172,52 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 			bg->start_delay = 0;
 	}
 
+	if (this->nodeExists(node, "Join")) {
+		const YAML::Node &joinNode = node["Join"];
+
+		if (this->nodeExists(joinNode, "Solo")) {
+			bool state;
+
+			if (!this->asBool(joinNode, "Solo", state))
+				return 0;
+
+			bg->solo = state;
+		} else {
+			if (!exists)
+				bg->solo = true;
+		}
+
+		if (this->nodeExists(joinNode, "Party")) {
+			bool state;
+
+			if (!this->asBool(joinNode, "Party", state))
+				return 0;
+
+			bg->party = state;
+		} else {
+			if (!exists)
+				bg->party = true;
+		}
+
+		if (this->nodeExists(joinNode, "Guild")) {
+			bool state;
+
+			if (!this->asBool(joinNode, "Guild", state))
+				return 0;
+
+			bg->guild = state;
+		} else {
+			if (!exists)
+				bg->guild = true;
+		}
+	} else {
+		if (!exists) {
+			bg->solo = true;
+			bg->party = true;
+			bg->guild = true;
+		}
+	}
+
 	if (this->nodeExists(node, "Locations")) {
 		int count = 0;
 
@@ -872,12 +918,44 @@ bool bg_queue_reservation(const char *name, bool state, bool ended)
 }
 
 /**
+ * Join as an individual into a Battleground
+ * @param name: Battleground name
+ * @param sd: Player who requested to join the battlegrounds
+ */
+void bg_queue_join_solo(const char *name, struct map_session_data *sd)
+{
+	if (!sd) {
+		ShowError("bg_queue_join_solo: Tried to join non-existent player\n.");
+		return;
+	}
+
+	std::shared_ptr<s_battleground_type> bg = bg_search_name(name);
+
+	if (!bg) {
+		ShowWarning("bq_queue_join_solo: Could not find battleground \"%s\" requested by %s (AID: %d / CID: %d)\n", name, sd->status.name, sd->status.account_id, sd->status.char_id);
+		return;
+	}
+
+	if (!bg->solo) {
+		clif_bg_queue_apply_result(BG_APPLY_INVALID_APP, name, sd);
+		return;
+	}
+
+	bg_queue_join_multi(name, sd, { sd }); // Join as solo
+}
+
+/**
  * Join a party onto the same side of a Battleground
  * @param name: Battleground name
  * @param sd: Player who requested to join the battlegrounds
  */
 void bg_queue_join_party(const char *name, struct map_session_data *sd)
 {
+	if (!sd) {
+		ShowError("bg_queue_join_party: Tried to join non-existent player\n.");
+		return;
+	}
+
 	struct party_data *p = party_search(sd->status.party_id);
 
 	if (!p) {
@@ -895,6 +973,11 @@ void bg_queue_join_party(const char *name, struct map_session_data *sd)
 	std::shared_ptr<s_battleground_type> bg = bg_search_name(name);
 
 	if (bg) {
+		if (!bg->party) {
+			clif_bg_queue_apply_result(BG_APPLY_INVALID_APP, name, sd);
+			return;
+		}
+
 		int p_online = 0;
 
 		for (const auto &it : p->party.member) {
@@ -936,6 +1019,11 @@ void bg_queue_join_party(const char *name, struct map_session_data *sd)
  */
 void bg_queue_join_guild(const char *name, struct map_session_data *sd)
 {
+	if (!sd) {
+		ShowError("bg_queue_join_guild: Tried to join non-existent player\n.");
+		return;
+	}
+
 	if (!sd->guild) {
 		clif_bg_queue_apply_result(BG_APPLY_INVALID_APP, name, sd);
 		return; // Someone has bypassed the client check for being in a guild
@@ -949,6 +1037,11 @@ void bg_queue_join_guild(const char *name, struct map_session_data *sd)
 	std::shared_ptr<s_battleground_type> bg = bg_search_name(name);
 
 	if (bg) {
+		if (!bg->guild) {
+			clif_bg_queue_apply_result(BG_APPLY_INVALID_APP, name, sd);
+			return;
+		}
+
 		struct guild* g = sd->guild;
 
 		if (g->connect_member > bg->max_players) {

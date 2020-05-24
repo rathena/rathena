@@ -30,6 +30,10 @@
 #   MaxLevel          Maximum level to join the battleground. (Default: MAX_LEVEL value)
 #   Deserter          Amount of time in seconds a player is marked deserter. (Default: 600)
 #   StartDelay        Amount of time in seconds once a queue is filled before players are warped. (Default: 0)
+#   Join:             Which application type is accepted. The entryqueuelist.lub can visually disable these options.
+#     Solo            Able to join a queue as an individual. (Default: true)
+#     Party           Able to join a queue as a party. (Default: true)
+#     Guild           Able to join a queue as a guild. (Default: true)
 #   Locations:        Battleground location settings.
 #     - Map           The map on which the battleground will be played.
 #       StartEvent    NPC event triggered when the battleground starts.
