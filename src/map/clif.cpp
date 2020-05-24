@@ -73,6 +73,7 @@ unsigned long color_table[COLOR_MAX];
 
 #include "clif_obfuscation.hpp"
 static bool clif_session_isValid(struct map_session_data *sd);
+static void clif_loadConfirm( struct map_session_data *sd );
 
 #if PACKETVER >= 20150513
 enum mail_type {
@@ -9449,6 +9450,7 @@ void clif_refresh(struct map_session_data *sd)
 
 	mail_clear(sd);
 
+	clif_loadConfirm( sd );
 
 	if( disguised(&sd->bl) ) {/* refresh-da */
 		short disguise = sd->disguise;
