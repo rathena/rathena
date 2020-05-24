@@ -2469,6 +2469,10 @@
 	parseable_packet( 0x0B22, sizeof( struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE2 ), clif_parse_HotkeyRowShift, 0 );
 #endif
 
+#if PACKETVER_MAIN_NUM >= 20190703 || PACKETVER_RE_NUM >= 20190703 || PACKETVER_ZERO_NUM >= 20190709
+	parseable_packet( HEADER_CZ_REQ_MOUNTOFF, sizeof( PACKET_CZ_REQ_MOUNTOFF ), clif_parse_RemoveOption, 0 );
+#endif
+
 #if PACKETVER >= 20190724
 	parseable_packet( 0x0b4c, 2, clif_parse_dull, 0 );
 #endif
