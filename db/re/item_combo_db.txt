@@ -755,6 +755,8 @@
 18507:18539,{ bonus bUseSPrate,-3; }
 18540:5066,{ bonus bAspd,1; bonus bAspdRate,9; bonus2 bSPLossRate,3,2000; }
 18540:5072,{ bonus bAspd,1; bonus bAspdRate,9; bonus2 bSPLossRate,3,2000; }
+18542:1625,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bHealPower,.@r; }
+18542:1631,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bHealPower,(3*.@r); }
 18559:18560,{ bonus bCritAtkRate,5; }
 18563:18564,{ bonus bFixedCastrate,-10; }
 18651:5421,{ bonus bAspdRate,getrefine()/2; }
