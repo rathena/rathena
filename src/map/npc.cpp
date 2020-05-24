@@ -2211,7 +2211,10 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 			return 1; // In official server, this illegal attempt the player will be disconnected
 		}
 
-		value = pc_modifysellvalue(sd, sd->inventory_data[idx]->value_sell);
+		if (battle_config.rental_item_novalue && sd->inventory.u.items_inventory[idx].expire_time)
+			value = 0;
+		else
+			value = pc_modifysellvalue(sd, sd->inventory_data[idx]->value_sell);
 
 		z+= (double)value*amount;
 	}
