@@ -753,6 +753,8 @@
 18149:19210,{ .@weapon = getequiprefinerycnt(EQI_HAND_R); .@eq = getequiprefinerycnt(EQI_HEAD_TOP); bonus bLongAtkRate,5; if (.@weapon >= 7 && .@eq >= 7) { .@val = 20; } if ((.@weapon + .@eq) >= 18) { bonus2 bAddClass,Class_All,10; } if ((.@weapon + .@eq) >= 22) { .@val += 30; } if (.@val) { bonus2 bSkillAtk,"RA_ARROWSTORM",.@val; } }
 18174:22190,{ .@weapon = getequiprefinerycnt(EQI_HAND_R); .@eq = getequiprefinerycnt(EQI_SHOES); bonus2 bAddClass,Class_All,10; if (.@weapon >= 7 && .@eq >= 7) { bonus bAspd,2; } if ((.@weapon + .@eq) >= 18) { bonus bCritAtkRate,10; } if ((.@weapon + .@eq) >= 22) { autobonus "{ bonus bBaseAtk,100; bonus bCritAtkRate,15; bonus2 bAddRace,RC_Insect,50; bonus2 bAddRace,RC_Brute,50; }",20,10000,BF_LONG|BF_WEAPON|BF_NORMAL; /* fix me: unknown rates */ } }
 18507:18539,{ bonus bUseSPrate,-3; }
+18540:5066,{ bonus bAspd,1; bonus bAspdRate,9; bonus2 bSPLossRate,3,2000; }
+18540:5072,{ bonus bAspd,1; bonus bAspdRate,9; bonus2 bSPLossRate,3,2000; }
 18559:18560,{ bonus bCritAtkRate,5; }
 18563:18564,{ bonus bFixedCastrate,-10; }
 18651:5421,{ bonus bAspdRate,getrefine()/2; }
