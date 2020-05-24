@@ -5705,46 +5705,43 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case WL_TETRAVORTEX:
 		if( sc ) { // No SC? No spheres
-			int spheres[5] = { 0, 0, 0, 0, 0 },
-				positions[5] = {-1,-1,-1,-1,-1 },
-				i, j = 0, k, subskill = 0;
+			int i, k = 0;
 
-			for( i = SC_SPHERE_1; i <= SC_SPHERE_5; i++ )
-				if( sc->data[i] ) {
-					spheres[j] = i;
-					positions[j] = sc->data[i]->val2;
-					j++;
-				}
+			if (sc->data[SC_SPHERE_5]) // If 5 spheres, remove last one (based on reverse order) and only do 4 actions (Official behavior)
+				status_change_end(src, SC_SPHERE_1, INVALID_TIMER);
 
-			// Sphere Sort, this time from new to old
-			for( i = 0; i <= j - 2; i++ )
-				for( k = i + 1; k <= j - 1; k++ )
-					if( positions[i] < positions[k] ) {
-						SWAP(positions[i],positions[k]);
-						SWAP(spheres[i],spheres[k]);
-					}
+			for (i = SC_SPHERE_5; i >= SC_SPHERE_1; i--) { // Loop should always be 4 for regular players, but unconditional_skill could be less
+				if (sc->data[static_cast<sc_type>(i)] == nullptr)
+					continue;
 
-			if(j == 5) { // If 5 spheres, remove last one and only do 4 actions (Official behavior)
-				status_change_end(src, static_cast<sc_type>(spheres[4]), INVALID_TIMER);
-				j = 4;
-			}
+				uint16 subskill = 0;
 
-			k = 0;
-			for( i = 0; i < j; i++ ) { // Loop should always be 4 for regular players, but unconditional_skill could be less
-				switch( sc->data[spheres[i]]->val1 ) {
-					case WLS_FIRE:  subskill = WL_TETRAVORTEX_FIRE; k |= 1; break;
-					case WLS_WIND:  subskill = WL_TETRAVORTEX_WIND; k |= 4; break;
-					case WLS_WATER: subskill = WL_TETRAVORTEX_WATER; k |= 2; break;
-					case WLS_STONE: subskill = WL_TETRAVORTEX_GROUND; k |= 8; break;
+				switch (sc->data[static_cast<sc_type>(i)]->val1) {
+					case WLS_FIRE:
+						subskill = WL_TETRAVORTEX_FIRE;
+						k |= 1;
+						break;
+					case WLS_WIND:
+						subskill = WL_TETRAVORTEX_WIND;
+						k |= 4;
+						break;
+					case WLS_WATER:
+						subskill = WL_TETRAVORTEX_WATER;
+						k |= 2;
+						break;
+					case WLS_STONE:
+						subskill = WL_TETRAVORTEX_GROUND;
+						k |= 8;
+						break;
 				}
 
 				if (skill_lv > 5) {
-					skill_area_temp[0] = i;
+					skill_area_temp[0] = abs(i - SC_SPHERE_5);
 					skill_area_temp[1] = k;
 					map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, subskill, skill_lv, tick, flag | BCT_ENEMY, skill_castend_damage_id);
 				} else
-					skill_addtimerskill(src, tick + i * 200, bl->id, k, 0, subskill, skill_lv, i, flag);
-				status_change_end(src, static_cast<sc_type>(spheres[i]), INVALID_TIMER);
+					skill_addtimerskill(src, tick + abs(i - SC_SPHERE_5) * 200, bl->id, k, 0, subskill, skill_lv, abs(i - SC_SPHERE_5), flag);
+				status_change_end(src, static_cast<sc_type>(i), INVALID_TIMER);
 			}
 		}
 		break;
@@ -5814,42 +5811,18 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					skill_blockpc_start(sd, pres_skill_id, cooldown);
 			}
 			else
-			{ // Summon Balls
-				int j = 0, spheres[5] = { 0, 0, 0, 0, 0 }, positions[5] = {-1, -1, -1, -1, -1 };
+			{ // Summoned Balls
+				for (i = SC_SPHERE_5; i >= SC_SPHERE_1; i--) {
+					if (sc->data[static_cast<sc_type>(i)] == nullptr)
+						continue;
 
-				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++) {
-					if (sc && sc->data[i]) {
-						spheres[j] = i;
-						positions[j] = sc->data[i]->val2;
-						sc->data[i]->val2--; // Prepares for next position
-						j++;
-					}
-				}
+					int skele = WL_RELEASE - 5 + sc->data[static_cast<sc_type>(i)]->val1 - WLS_FIRE; // Convert Ball Element into Skill ATK for balls
 
-				if( j == 0 )
-				{ // No Spheres
-					clif_skill_fail(sd,skill_id,USESKILL_FAIL_SUMMON_NONE,0);
-					break;
-				}
-
-				// Sphere Sort
-				for (i = 0; i <= j - 2; i++) {
-					for (int k = i + 1; k <= j - 1; k++) {
-						if (positions[i] > positions[k]) {
-							SWAP(positions[i], positions[k]);
-							SWAP(spheres[i], spheres[k]);
-						}
-					}
-				}
-
-				for( i = 0; i < j; i++ )
-				{
-					int skele = WL_RELEASE - 5 + sc->data[spheres[i]]->val1 - WLS_FIRE; // Convert Ball Element into Skill ATK for balls
 					// WL_SUMMON_ATK_FIRE, WL_SUMMON_ATK_WIND, WL_SUMMON_ATK_WATER, WL_SUMMON_ATK_GROUND
-					skill_addtimerskill(src,tick+(t_tick)status_get_adelay(src)*i,bl->id,0,0,skele,sc->data[spheres[i]]->val3,BF_MAGIC,flag|SD_LEVEL);
-					status_change_end(src, static_cast<sc_type>(spheres[i]), INVALID_TIMER); // Eliminate ball
+					skill_addtimerskill(src, tick + (t_tick)status_get_adelay(src) * abs(i - SC_SPHERE_1), bl->id, 0, 0, skele, sc->data[static_cast<sc_type>(i)]->val2, BF_MAGIC, flag | SD_LEVEL);
+					status_change_end(src, static_cast<sc_type>(i), INVALID_TIMER); // Eliminate ball
 				}
-				clif_skill_nodamage(src,bl,skill_id,0,1);
+				clif_skill_nodamage(src, bl, skill_id, 0, 1);
 			}
 		}
 		break;
@@ -10080,14 +10053,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case WL_SUMMONWB:
 	case WL_SUMMONSTONE:
 		{
-			// pos is used in val2 for SC to indicate the order of this ball.
-			short element = 0, pos = -1;
-			struct status_change *sc = status_get_sc(src);
+			status_change *sc = status_get_sc(src);
 
-			if (!sc)
+			if (sc == nullptr)
 				break;
 
-			switch (skill_id) { // Set val1. The SC element for this ball
+			e_wl_spheres element;
+
+			switch (skill_id) { // Set val2. The SC element for this ball
 				case WL_SUMMONFB:
 					element = WLS_FIRE;
 					break;
@@ -10103,28 +10076,27 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 
 			if (skill_lv == 1) {
-				sc_type sctype = SC_NONE;
+				sc_type sphere = SC_NONE;
 
 				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++) {
-					if (sctype == SC_NONE && !sc->data[i])
-						sctype = static_cast<sc_type>(i); // Take the free SC
-					if (sc->data[i])
-						pos = max(sc->data[i]->val2, pos);
+					if (sc->data[i] == nullptr) {
+						sphere = static_cast<sc_type>(i); // Take the free SC
+						break;
+					}
 				}
 
-				if (sctype == SC_NONE) {
+				if (sphere == SC_NONE) {
 					if (sd) // No free slots to put SC
 						clif_skill_fail(sd, skill_id, USESKILL_FAIL_SUMMON, 0);
 					break;
 				}
 
-				sc_start4(src, src, static_cast<sc_type>(i), 100, element, ++pos, skill_lv, 0, skill_get_time(skill_id, skill_lv));
+				sc_start2(src, src, sphere, 100, element, skill_lv, skill_get_time(skill_id, skill_lv));
 			} else {
-				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++) // Removes any previous types
-					status_change_end(src, static_cast<sc_type>(i), INVALID_TIMER);
-
-				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++)
-					sc_start4(src, src, static_cast<sc_type>(i), 100, element, ++pos, skill_lv, 0, skill_get_time(skill_id, skill_lv));
+				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++) {
+					status_change_end(src, static_cast<sc_type>(i), INVALID_TIMER); // Removes previous type
+					sc_start2(src, src, static_cast<sc_type>(i), 100, element, skill_lv, skill_get_time(skill_id, skill_lv));
+				}
 			}
 
 			clif_skill_nodamage(src, bl, skill_id, 0, 0);
@@ -15949,21 +15921,27 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			}
 			break;
 		case WL_TETRAVORTEX: // bugreport:7598 moved sphere check to precast to avoid triggering cooldown per official behavior -helvetica
-			if( sc ) {
+		case WL_RELEASE:
+			if (sc) {
 				int j = 0;
 
-				for( i = SC_SPHERE_1; i <= SC_SPHERE_5; i++ )
-					if( sc->data[i] ) {
+				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++) {
+					if (sc->data[i])
 						j++;
-					}
+				}
 
-				if( j < 4 ) { // Need 4 spheres minimum
-					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				// Cast requirement
+				if (skill_id == WL_TETRAVORTEX)
+					i = 4;
+				else if (skill_id == WL_RELEASE)
+					i = 1;
+
+				if (j < i) { // Need minimum amount of spheres
+					clif_skill_fail(sd, skill_id, (skill_id == WL_RELEASE) ? USESKILL_FAIL_SUMMON_NONE : USESKILL_FAIL_LEVEL, 0);
 					return false;
 				}
-			}
-			else { // no status at all? no spheres present
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+			} else { // no status at all? no spheres present
+				clif_skill_fail(sd, skill_id, (skill_id == WL_RELEASE) ? USESKILL_FAIL_SUMMON_NONE : USESKILL_FAIL_LEVEL, 0);
 				return false;
 			}
 			break;

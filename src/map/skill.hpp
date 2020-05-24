@@ -2257,7 +2257,7 @@ void skill_usave_trigger(struct map_session_data *sd);
 /**
  * Warlock
  **/
-enum wl_spheres {
+enum e_wl_spheres {
 	WLS_FIRE = 0x44,
 	WLS_WIND,
 	WLS_WATER,
