@@ -34,6 +34,7 @@
 #     Solo            Able to join a queue as an individual. (Default: true)
 #     Party           Able to join a queue as a party. (Default: true)
 #     Guild           Able to join a queue as a guild. (Default: true)
+#   JobRestrictions   List of jobs that are unable to join the battleground.
 #   Locations:        Battleground location settings.
 #     - Map           The map on which the battleground will be played.
 #       StartEvent    NPC event triggered when the battleground starts.
@@ -62,6 +63,14 @@ Body:
     Name: Tierra Gorge
     MinPlayers: 6
     MinLevel: 80
+    JobRestrictions:
+      Novice: true
+      SuperNovice: true
+      Novice_High: true
+      Baby: true
+      Super_Baby: true
+      Super_Novice_E: true
+      Super_Baby_E: true
     Locations:
       - Map: bat_a01
         StartEvent: start#bat_a01::OnReadyCheck
@@ -95,6 +104,14 @@ Body:
     Name: Flavius
     MinPlayers: 6
     MinLevel: 80
+    JobRestrictions:
+      Novice: true
+      SuperNovice: true
+      Novice_High: true
+      Baby: true
+      Super_Baby: true
+      Super_Novice_E: true
+      Super_Baby_E: true
     Locations:
       - Map: bat_b01
         StartEvent: start#bat_b01::OnReadyCheck

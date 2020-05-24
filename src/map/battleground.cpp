@@ -176,36 +176,36 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 		const YAML::Node &joinNode = node["Join"];
 
 		if (this->nodeExists(joinNode, "Solo")) {
-			bool state;
+			bool active;
 
-			if (!this->asBool(joinNode, "Solo", state))
+			if (!this->asBool(joinNode, "Solo", active))
 				return 0;
 
-			bg->solo = state;
+			bg->solo = active;
 		} else {
 			if (!exists)
 				bg->solo = true;
 		}
 
 		if (this->nodeExists(joinNode, "Party")) {
-			bool state;
+			bool active;
 
-			if (!this->asBool(joinNode, "Party", state))
+			if (!this->asBool(joinNode, "Party", active))
 				return 0;
 
-			bg->party = state;
+			bg->party = active;
 		} else {
 			if (!exists)
 				bg->party = true;
 		}
 
 		if (this->nodeExists(joinNode, "Guild")) {
-			bool state;
+			bool active;
 
-			if (!this->asBool(joinNode, "Guild", state))
+			if (!this->asBool(joinNode, "Guild", active))
 				return 0;
 
-			bg->guild = state;
+			bg->guild = active;
 		} else {
 			if (!exists)
 				bg->guild = true;
@@ -215,6 +215,30 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 			bg->solo = true;
 			bg->party = true;
 			bg->guild = true;
+		}
+	}
+
+	if (this->nodeExists(node, "JobRestrictions")) {
+		const YAML::Node &jobsNode = node["JobRestrictions"];
+
+		for (const auto &jobit : jobsNode) {
+			std::string job_name = jobit.first.as<std::string>(), job_name_constant = "JOB_" + job_name;
+			int64 constant;
+
+			if (!script_get_constant(job_name_constant.c_str(), &constant)) {
+				this->invalidWarning(node["JobRestrictions"], "Job %s does not exist.\n", job_name.c_str());
+				continue;
+			}
+
+			bool active;
+
+			if (!this->asBool(jobsNode, job_name, active))
+				return 0;
+
+			if (active)
+				bg->job_restrictions.push_back(static_cast<int32>(constant));
+			else
+				util::vector_erase_if_exists(bg->job_restrictions, static_cast<int32>(constant));
 		}
 	}
 
@@ -853,9 +877,11 @@ bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map
 {
 	nullpo_retr(false, sd);
 
-	if ((sd->class_ & MAPID_UPPERMASK) == MAPID_NOVICE) { // Check class requirement
-		clif_bg_queue_apply_result(BG_APPLY_PLAYER_CLASS, name, sd);
-		return false;
+	for (const auto &job : bg->job_restrictions) { // Check class requirement
+		if (sd->class_ == job) {
+			clif_bg_queue_apply_result(BG_APPLY_PLAYER_CLASS, name, sd);
+			return false;
+		}
 	}
 
 	if (bg->min_lvl > 0 && sd->status.base_level < bg->min_lvl) { // Check minimum level requirement

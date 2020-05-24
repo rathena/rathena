@@ -83,6 +83,7 @@ struct s_battleground_type {
 	bool solo; ///< Ability to join a queue as an individual.
 	bool party; ///< Ability to join a queue as a party.
 	bool guild; ///< Ability to join a queue as a guild.
+	std::vector<int32> job_restrictions; ///< List of jobs that are unable to join.
 };
 
 /// Enum of responses when applying for a Battleground
