@@ -1381,7 +1381,6 @@ bool bg_mapflag_check(std::shared_ptr<s_battleground_queue> queue) {
 			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
 			bg_queue_leave(sd);
 			clif_bg_queue_entry_init(sd);
-			queue->accepted_players--;
 			found = true;
 		}
 	}
@@ -1391,13 +1390,27 @@ bool bg_mapflag_check(std::shared_ptr<s_battleground_queue> queue) {
 			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
 			bg_queue_leave(sd);
 			clif_bg_queue_entry_init(sd);
-			queue->accepted_players--;
 			found = true;
 		}
 	}
 
-	if (found)
-		queue->state = QUEUE_STATE_SETUP; // Make sure queue is put back in this state if player requirement count is not met.
+	if (found) {
+		queue->state = QUEUE_STATE_SETUP; // Set back to queueing state
+		queue->accepted_players = 0; // Reset acceptance count
+
+		// Free map to avoid creating a reservation delay
+		if (queue->map != nullptr) {
+			queue->map->isReserved = false;
+			queue->map = nullptr;
+		}
+
+		// Announce failure to remaining players
+		for (const auto &sd : queue->teama_members)
+			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 340), false, SELF); // Participants were unable to join. Delaying entry for more participants.
+
+		for (const auto &sd : queue->teamb_members)
+			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 340), false, SELF); // Participants were unable to join. Delaying entry for more participants.
+	}
 
 	return found;
 }
