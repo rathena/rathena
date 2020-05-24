@@ -122,9 +122,6 @@ prontera,210,209,5	script	Pet Trader#1	4_M_JPNOJI,{
 			9027, //Alice_Egg
 			9058, //Snow_Rabbit_Egg
 			9059; //Tikbalang_Pet
-		.@menu$ = "";
-		.@ticketIndices = 0;
-		.@count = 0;
 		for (.@i = 0; .@i < getarraysize(.@tickets); .@i++) {
 			if (countitem(.@tickets[.@i]) > 0) {
 				.@menu$ += getitemname(.@tickets[.@i]) + ":";
