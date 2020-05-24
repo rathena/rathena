@@ -20245,7 +20245,7 @@ void clif_sale_start( struct sale_item_data* sale_item, struct block_list* bl, e
 	struct PACKET_ZC_NOTIFY_BARGAIN_SALE_SELLING p;
 
 	p.packetType = HEADER_ZC_NOTIFY_BARGAIN_SALE_SELLING;
-	p.itemId = sale_item->nameid;
+	p.itemId = client_nameid( sale_item->nameid );
 	p.remainingTime = (uint32)(sale_item->end - time(NULL)); // time in S
 
 	clif_send( &p, sizeof( p ), bl, target );
@@ -20259,7 +20259,7 @@ void clif_sale_end( struct sale_item_data* sale_item, struct block_list* bl, enu
 	struct PACKET_ZC_NOTIFY_BARGAIN_SALE_CLOSE p;
 
 	p.packetType = HEADER_ZC_NOTIFY_BARGAIN_SALE_CLOSE;
-	p.itemId = sale_item->nameid;
+	p.itemId = client_nameid( sale_item->nameid );
 
 	clif_send( &p, sizeof( p ), bl, target );
 #endif
@@ -20272,7 +20272,7 @@ void clif_sale_amount( struct sale_item_data* sale_item, struct block_list* bl, 
 	struct PACKET_ZC_ACK_COUNT_BARGAIN_SALE_ITEM p;
 
 	p.packetType = HEADER_ZC_ACK_COUNT_BARGAIN_SALE_ITEM;
-	p.itemId = sale_item->nameid;
+	p.itemId = client_nameid( sale_item->nameid );
 	p.amount = sale_item->amount;
 
 	clif_send( &p, sizeof( p ), bl, target );
@@ -20384,7 +20384,7 @@ void clif_sale_search_reply( struct map_session_data* sd, struct cash_item_data*
 
 	if( item != NULL ){
 		p.result = 0;
-		p.itemId = item->nameid;
+		p.itemId = client_nameid( item->nameid );
 		p.price = item->price;
 	}else{
 		p.result = 1;
