@@ -2180,18 +2180,18 @@
 	parseable_packet(0x098D,-1,clif_parse_clan_chat,2,4);
 	packet(0x098E,-1);
 	// Sale
-	parseable_packet(0x09AC,-1,clif_parse_sale_search,2,4,8);
-	packet(0x09AD,8);
-	parseable_packet(0x09AE,17,clif_parse_sale_add,2,6,8,12,16);
+	parseable_packet( HEADER_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO, -1, clif_parse_sale_search, 0 );
+	packet( HEADER_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO, sizeof( PACKET_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO ) );
+	parseable_packet( HEADER_CZ_REQ_APPLY_BARGAIN_SALE_ITEM, sizeof( PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM ), clif_parse_sale_add, 0 );
 	packet(0x09AF,4);
-	parseable_packet(0x09B0,8,clif_parse_sale_remove,2,6);
+	parseable_packet( HEADER_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM, sizeof( PACKET_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM ), clif_parse_sale_remove, 0 );
 	packet(0x09B1,4);
-	packet(0x09B2,8);
-	packet(0x09B3,4);
+	packet( HEADER_ZC_NOTIFY_BARGAIN_SALE_SELLING, sizeof( PACKET_ZC_NOTIFY_BARGAIN_SALE_SELLING ) );
+	packet( HEADER_ZC_NOTIFY_BARGAIN_SALE_CLOSE, sizeof( PACKET_ZC_NOTIFY_BARGAIN_SALE_CLOSE ) );
 	parseable_packet(0x09B4,6,clif_parse_sale_open,2);
 	parseable_packet(0x09BC,6,clif_parse_sale_close,2);
 	parseable_packet(0x09C3,8,clif_parse_sale_refresh,2,6);
-	packet(0x09C4,8);
+	packet( HEADER_ZC_ACK_COUNT_BARGAIN_SALE_ITEM, sizeof( PACKET_ZC_ACK_COUNT_BARGAIN_SALE_ITEM ) );
 	// New Packet
 	packet(0x097A,-1); // ZC_ALL_QUEST_LIST2
 	packet(0x09DB,-1); // ZC_NOTIFY_MOVEENTRY10
@@ -2312,7 +2312,7 @@
 
 // 2015-05-20aRagexe
 #if PACKETVER >= 20150520
-	parseable_packet(0x0A3D,18,clif_parse_sale_add,2,6,8,12,16);
+	parseable_packet( HEADER_CZ_REQ_APPLY_BARGAIN_SALE_ITEM2, sizeof( PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM ), clif_parse_sale_add, 0 );
 #endif
 
 // 2015-09-16Ragexe

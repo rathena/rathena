@@ -46,10 +46,97 @@ struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST{
 	struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub items[];
 } __attribute__((packed));
 
+struct PACKET_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO{
+	int16 packetType;
+	int16 packetLength;
+	uint32 AID;
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 itemId;
+#else
+	uint16 itemId;
+#endif
+};
+
+struct PACKET_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO{
+	int16 packetType;
+	uint16 result;
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 itemId;
+#else
+	uint16 itemId;
+#endif
+	uint32 price;
+};
+
+struct PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM{
+	int16 packetType;
+	uint32 AID;
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 itemId;
+#else
+	uint16 itemId;
+#endif
+	uint32 amount;
+	uint32 startTime;
+#if PACKETVER >= 20150520
+	uint16 hours;
+#else
+	uint8 hours;
+#endif
+};
+
+struct PACKET_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM{
+	int16 packetType;
+	uint32 AID;
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 itemId;
+#else
+	uint16 itemId;
+#endif
+};
+
+struct PACKET_ZC_NOTIFY_BARGAIN_SALE_SELLING{
+	int16 packetType;
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 itemId;
+#else
+	uint16 itemId;
+#endif
+	uint32 remainingTime;
+};
+
+struct PACKET_ZC_NOTIFY_BARGAIN_SALE_CLOSE{
+	int16 packetType;
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 itemId;
+#else
+	uint16 itemId;
+#endif
+};
+
+struct PACKET_ZC_ACK_COUNT_BARGAIN_SALE_ITEM{
+	int16 packetType;
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 itemId;
+#else
+	uint16 itemId;
+#endif
+	uint32 amount;
+};
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
 #endif
+
+const uint16 HEADER_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO = 0x9ac;
+const uint16 HEADER_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO = 0x9ad;
+const uint16 HEADER_CZ_REQ_APPLY_BARGAIN_SALE_ITEM = 0x9ae;
+const uint16 HEADER_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM = 0x9b0;
+const uint16 HEADER_ZC_NOTIFY_BARGAIN_SALE_SELLING = 0x9b2;
+const uint16 HEADER_ZC_NOTIFY_BARGAIN_SALE_CLOSE = 0x9b3;
+const uint16 HEADER_ZC_ACK_COUNT_BARGAIN_SALE_ITEM = 0x9c4;
+const uint16 HEADER_CZ_REQ_APPLY_BARGAIN_SALE_ITEM2 = 0xa3d;
 
 #pragma warning( pop )
 

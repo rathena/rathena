@@ -20234,13 +20234,13 @@ void clif_hat_effect_single( struct map_session_data* sd, uint16 effectId, bool 
 /// 09b2 <item id>.W <remaining time>.L (ZC_NOTIFY_BARGAIN_SALE_SELLING)
 void clif_sale_start( struct sale_item_data* sale_item, struct block_list* bl, enum send_target target ){
 #if PACKETVER_SUPPORTS_SALES
-	unsigned char buf[8];
+	struct PACKET_ZC_NOTIFY_BARGAIN_SALE_SELLING p;
 
-	WBUFW(buf, 0) = 0x9b2;
-	WBUFW(buf, 2) = sale_item->nameid;
-	WBUFL(buf, 4) = (uint32)(sale_item->end - time(NULL)); // time in S
+	p.packetType = HEADER_ZC_NOTIFY_BARGAIN_SALE_SELLING;
+	p.itemId = sale_item->nameid;
+	p.remainingTime = (uint32)(sale_item->end - time(NULL)); // time in S
 
-	clif_send(buf, 8, bl, target);
+	clif_send( &p, sizeof( p ), bl, target );
 #endif
 }
 
@@ -20248,12 +20248,12 @@ void clif_sale_start( struct sale_item_data* sale_item, struct block_list* bl, e
 /// 09b3 <item id>.W (ZC_NOTIFY_BARGAIN_SALE_CLOSE)
 void clif_sale_end( struct sale_item_data* sale_item, struct block_list* bl, enum send_target target ){
 #if PACKETVER_SUPPORTS_SALES
-	unsigned char buf[4];
+	struct PACKET_ZC_NOTIFY_BARGAIN_SALE_CLOSE p;
 
-	WBUFW(buf, 0) = 0x9b3;
-	WBUFW(buf, 2) = sale_item->nameid;
+	p.packetType = HEADER_ZC_NOTIFY_BARGAIN_SALE_CLOSE;
+	p.itemId = sale_item->nameid;
 
-	clif_send(buf, 4, bl, target);
+	clif_send( &p, sizeof( p ), bl, target );
 #endif
 }
 
@@ -20261,13 +20261,13 @@ void clif_sale_end( struct sale_item_data* sale_item, struct block_list* bl, enu
 /// 09c4 <item id>.W <amount>.L (ZC_ACK_COUNT_BARGAIN_SALE_ITEM)
 void clif_sale_amount( struct sale_item_data* sale_item, struct block_list* bl, enum send_target target ){
 #if PACKETVER_SUPPORTS_SALES
-	unsigned char buf[8];
+	struct PACKET_ZC_ACK_COUNT_BARGAIN_SALE_ITEM p;
 
-	WBUFW(buf, 0) = 0x9c4;
-	WBUFW(buf, 2) = sale_item->nameid;
-	WBUFL(buf, 4) = sale_item->amount;
+	p.packetType = HEADER_ZC_ACK_COUNT_BARGAIN_SALE_ITEM;
+	p.itemId = sale_item->nameid;
+	p.amount = sale_item->amount;
 
-	clif_send(buf, 8, bl, target);
+	clif_send( &p, sizeof( p ), bl, target );
 #endif
 }
 
@@ -20275,13 +20275,15 @@ void clif_sale_amount( struct sale_item_data* sale_item, struct block_list* bl, 
 /// 09ac <account id>.L <item id>.W (CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO)
 void clif_parse_sale_refresh( int fd, struct map_session_data* sd ){
 #if PACKETVER_SUPPORTS_SALES
+	struct PACKET_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO* p = (struct PACKET_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO*)RFIFOP( fd, 0 );
+
 	struct sale_item_data* sale;
 
-	if( RFIFOL(fd, 2) != sd->status.account_id ){
+	if( p->AID != sd->status.account_id ){
 		return;
 	}
 
-	sale = sale_find_item( RFIFOW(fd, 6), true );
+	sale = sale_find_item( p->itemId, true );
 
 	if( sale == NULL ){
 		return;
@@ -20368,20 +20370,21 @@ void clif_parse_sale_close(int fd, struct map_session_data* sd) {
 /// 09ad <result>.W <item id>.W <price>.L (ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO)
 void clif_sale_search_reply( struct map_session_data* sd, struct cash_item_data* item ){
 #if PACKETVER_SUPPORTS_SALES
-	int fd = sd->fd;
+	struct PACKET_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO p;
 
-	WFIFOHEAD(fd, 10);
-	WFIFOW(fd, 0) = 0x9ad;
+	p.packetType = HEADER_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO;
+
 	if( item != NULL ){
-		WFIFOW(fd, 2) = 0;
-		WFIFOW(fd, 4) = item->nameid;
-		WFIFOL(fd, 6) = item->price;
+		p.result = 0;
+		p.itemId = item->nameid;
+		p.price = item->price;
 	}else{
-		WFIFOW(fd, 2) = 1;
-		WFIFOW(fd, 4) = 0;
-		WFIFOL(fd, 6) = 0;
+		p.result = 1;
+		p.itemId = 0;
+		p.price = 0;
 	}
-	WFIFOSET(fd, 10);
+
+	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 #endif
 }
 
@@ -20437,38 +20440,24 @@ void clif_sale_add_reply( struct map_session_data* sd, enum e_sale_add_result re
 
 /// A client request to put an item on sale.
 /// 09ae <account id>.L <item id>.W <amount>.L <start time>.L <hours on sale>.B (CZ_REQ_APPLY_BARGAIN_SALE_ITEM)
-/// 0a3d <account id>.L <item id>.W <amount>.L <start time>.L <hours on sale>.W
+/// 0a3d <account id>.L <item id>.W <amount>.L <start time>.L <hours on sale>.W (CZ_REQ_APPLY_BARGAIN_SALE_ITEM2)
 void clif_parse_sale_add( int fd, struct map_session_data* sd ){
 #if PACKETVER_SUPPORTS_SALES
-	int32 count;
-	int16 nameid;
-	int startTime;
-	int endTime;
-	uint16 sellingHours;
+	nullpo_retv( sd );
 
-	nullpo_retv(sd);
+	struct PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM* p = (struct PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM*)RFIFOP( fd, 0 );
 
-	if( RFIFOL(fd, 2) != sd->status.account_id ){
+	if( p->AID != sd->status.account_id ){
 		return;
 	}
 
 	if( !sd->state.sale_open ){
 		return;
 	}
-
-	nameid = RFIFOW(fd, 6);
-	count = RFIFOL(fd, 8);
-	startTime = RFIFOL(fd, 12);
-#if PACKETVER >= 20150520
-	if( RFIFOW(fd,0) == 0xa3d )
-		sellingHours = RFIFOW(fd, 16);
-	else
-#endif
-		sellingHours = RFIFOB(fd, 16);
 	
-	endTime = startTime + sellingHours * 60 * 60;
+	time_t endTime = p->startTime + p->hours * 60 * 60;
 
-	clif_sale_add_reply( sd, sale_add_item(nameid,count,startTime,endTime) );
+	clif_sale_add_reply( sd, sale_add_item( p->itemId, p->amount, p->startTime, endTime ) );
 #endif
 }
 
@@ -20489,9 +20478,11 @@ void clif_sale_remove_reply( struct map_session_data* sd, bool failed ){
 /// 09b0 <account id>.L <item id>.W (CZ_REQ_REMOVE_BARGAIN_SALE_ITEM)
 void clif_parse_sale_remove( int fd, struct map_session_data* sd ){
 #if PACKETVER_SUPPORTS_SALES
-	nullpo_retv(sd);
+	nullpo_retv( sd );
 
-	if( RFIFOL(fd, 2) != sd->status.account_id ){
+	struct PACKET_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM* p = (struct PACKET_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM*)RFIFOP( fd, 0 );
+
+	if( p->AID != sd->status.account_id ){
 		return;
 	}
 
@@ -20499,7 +20490,7 @@ void clif_parse_sale_remove( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	clif_sale_remove_reply(sd, !sale_remove_item(RFIFOW(fd, 6)));
+	clif_sale_remove_reply( sd, !sale_remove_item( p->itemId ) );
 #endif
 }
 
