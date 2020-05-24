@@ -116,6 +116,14 @@ static inline uint16 server_index( uint16 client_index ){
 	return client_index - 2;
 }
 
+static inline uint16 client_storage_index( uint16 server_index ){
+	return server_index + 1;
+}
+
+static inline uint16 server_storage_index( uint16 client_index ){
+	return client_index - 1;
+}
+
 #if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
 static inline uint32 client_nameid( uint32 server_nameid ){
 	uint32 view = itemdb_viewid( server_nameid );
@@ -2893,10 +2901,10 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 
 		// Non-stackable (Equippable)
 		if( !itemdb_isstackable2( id ) ){
-			clif_item_equip( client_index( i ), &itemlist_equip.list[equip++], &items[i], id, pc_equippoint_sub( sd, id ) );
+			clif_item_equip( client_storage_index( i ), &itemlist_equip.list[equip++], &items[i], id, pc_equippoint_sub( sd, id ) );
 		// Stackable (Normal)
 		}else{
-			clif_item_normal( client_index( i ), &itemlist_normal.list[normal++], &items[i], id );
+			clif_item_normal( client_storage_index( i ), &itemlist_normal.list[normal++], &items[i], id );
 		}
 	}
 
@@ -2952,10 +2960,10 @@ void clif_cartlist( struct map_session_data *sd ){
 
 		// Non-stackable (Equippable)
 		if( !itemdb_isstackable2(id) ){
-			clif_item_equip( i + 2, &itemlist_equip.list[equip++], &sd->cart.u.items_cart[i], id, id->equip );
+			clif_item_equip( client_storage_index( i ), &itemlist_equip.list[equip++], &sd->cart.u.items_cart[i], id, id->equip );
 		 // Stackable (Normal)
 		}else{
-			clif_item_normal( i + 2, &itemlist_normal.list[normal++], &sd->cart.u.items_cart[i], id );
+			clif_item_normal(client_storage_index( i ), &itemlist_normal.list[normal++], &sd->cart.u.items_cart[i], id );
 		}
 	}
 
