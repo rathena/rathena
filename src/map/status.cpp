@@ -3321,7 +3321,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 1000;
 				if ((pc_checkskill(sd, SU_TUNABELLY) + pc_checkskill(sd, SU_TUNAPARTY) + pc_checkskill(sd, SU_BUNCHOFSHRIMP) + pc_checkskill(sd, SU_FRESHSHRIMP) +
 					pc_checkskill(sd, SU_GROOMING) + pc_checkskill(sd, SU_PURRING) + pc_checkskill(sd, SU_SHRIMPARTY)) > 19)
-						bonus += 2000;
+						bonus += 3000;
 			}
 			if ((skill_lv = pc_checkskill(sd, NV_BREAKTHROUGH)) > 0)
 				bonus += 350 * skill_lv + (skill_lv > 4 ? 250 : 0);
@@ -3499,7 +3499,7 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 100;
 				if ((pc_checkskill(sd, SU_TUNABELLY) + pc_checkskill(sd, SU_TUNAPARTY) + pc_checkskill(sd, SU_BUNCHOFSHRIMP) + pc_checkskill(sd, SU_FRESHSHRIMP) +
 					pc_checkskill(sd, SU_GROOMING) + pc_checkskill(sd, SU_PURRING) + pc_checkskill(sd, SU_SHRIMPARTY)) > 19)
-						bonus += 200;
+						bonus += 300;
 			}
 			if ((skill_lv = pc_checkskill(sd, NV_BREAKTHROUGH)) > 0)
 				bonus += 30 * skill_lv + (skill_lv > 4 ? 50 : 0);
@@ -6997,7 +6997,7 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
 	if(sc->data[SC__UNLUCKY])
 		flee2 -= flee2 * sc->data[SC__UNLUCKY]->val2 / 100;
 	if (sc->data[SC_HISS])
-		flee2 += sc->data[SC_HISS]->val2;
+		flee2 += sc->data[SC_HISS]->val2*10;
 	if (sc->data[SC_DORAM_FLEE2])
 		flee2 += sc->data[SC_DORAM_FLEE2]->val1;
 
@@ -13428,9 +13428,12 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_BLOODSUCKER:
 			if( sce->val2 ) {
 				struct block_list *src = map_id2bl(sce->val2);
-				if(src) {
+
+				if (src && !status_isdead(src)) {
 					struct status_change *sc2 = status_get_sc(src);
-					sc2->bs_counter--;
+
+					if (sc2)
+						sc2->bs_counter--;
 				}
 			}
 			break;
