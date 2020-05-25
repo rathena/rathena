@@ -317,12 +317,14 @@ bat_b02,10,294,3	script	Battle Therapist#b02_a	95,{
 
 OnTimer25000:
 	specialeffect EF_SANCTUARY;
-	enablenpc "bat_b02_rp1_a_warp";
+	// enablenpc "bat_b02_rp1_a_warp";
+	areapercentheal "bat_b02",0,280,20,300,100,100;
+	areawarp "bat_b02",0,280,20,300,"bat_b02",87,73;
 	end;
 
-OnTimer26000:
-	disablenpc "bat_b02_rp1_a_warp";
-	end;
+// OnTimer26000:
+	// disablenpc "bat_b02_rp1_a_warp";
+	// end;
 
 OnTimer26500:
 	stopnpctimer;
@@ -335,12 +337,13 @@ OnEnable:
 	end;
 
 OnStop:
-	disablenpc "bat_b02_rp1_a_warp";
+	// disablenpc "bat_b02_rp1_a_warp";
 	disablenpc "Battle Therapist#b02_a";
 	stopnpctimer;
 	end;
 }
 
+/*
 bat_b02,10,290,0	script	bat_b02_rp1_a_warp	45,10,10,{
 OnInit:
 	disablenpc "bat_b02_rp1_a_warp";
@@ -351,6 +354,7 @@ OnTouch:
 	warp "bat_b02",87,73;
 	end;
 }
+*/
 
 bat_b02,389,14,3	script	Battle Therapist#b02_b	95,{
 	specialeffect2 EF_HEAL;
@@ -362,12 +366,14 @@ bat_b02,389,14,3	script	Battle Therapist#b02_b	95,{
 
 OnTimer25000:
 	specialeffect EF_SANCTUARY;
-	enablenpc "bat_b02_rp1_b_warp";
+	areapercentheal "bat_b02",379,0,399,20,100,100;
+	areawarp "bat_b02",379,0,399,20,"bat_b02",312,225;
+	// enablenpc "bat_b02_rp1_b_warp";
 	end;
 
-OnTimer26000:
-	disablenpc "bat_b02_rp1_b_warp";
-	end;
+// OnTimer26000:
+	// disablenpc "bat_b02_rp1_b_warp";
+	// end;
 
 OnTimer26500:
 	stopnpctimer;
@@ -380,12 +386,13 @@ OnEnable:
 	end;
 
 OnStop:
-	disablenpc "bat_b02_rp1_b_warp";
+	// disablenpc "bat_b02_rp1_b_warp";
 	disablenpc "Battle Therapist#b02_b";
 	stopnpctimer;
 	end;
 }
 
+/*
 bat_b02,389,10,0	script	bat_b02_rp1_b_warp	45,10,10,{
 OnInit:
 	disablenpc "bat_b02_rp1_b_warp";
@@ -396,6 +403,7 @@ OnTouch:
 	warp "bat_b02",312,225;
 	end;
 }
+*/
 
 bat_b02,87,76,0	script	A_CODE#bat_b02	-1,5,5,{
 OnTouch:
