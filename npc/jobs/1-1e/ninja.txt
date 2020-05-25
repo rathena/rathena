@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Ninja Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Legionaire, Kisuka
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.7
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Ninja Job Change Quest
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Optimized, updated, checked [Lupus]
 //= 1.2 Added Akagi [Playtester]
 //= 1.3 Updated dialogs to official ones and optimized [SinSloth]
@@ -16,7 +16,7 @@
 //= 1.5 Updated to match AEGIS script and Added Quest Log commands. [Kisuka]
 //= 1.6 Fixed AEGIS amatsu warp typo. [Kisuka]
 //= 1.7 Kagerou/Oboro support (Class -> BaseClass) [Euphy]
-//============================================================ 
+//============================================================
 
 alberta,30,65,3	script	Akagi	730,{
 	if (Class == Job_Novice) {
@@ -238,7 +238,7 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 			mes "[Kuuga Gai]";
 			mes "All you need";
 			mes "to bring me is";
-			mes "^3355FF5 Jellopy^000000 and";
+			mes "^3355FF5 Iron Ore^000000 and";
 			mes "^3355FF1 Phracon^000000.";
 			mes "Please get those";
 			mes "as quickly as you can!";
@@ -261,10 +261,10 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 			close;
 		}
 		else if (NINJ_Q == 4) {
-			if (countitem(7053) < 5 || countitem(1010) < 1) {
+			if (countitem(1002) < 5 || countitem(1010) < 1) {
 				mes "[Kuuga Gai]";
 				mes "Hurry and bring";
-				mes "^3355FF5 Jellopy^000000 and";
+				mes "^3355FF5 Iron Ore^000000 and";
 				mes "^3355FF1 Phracon^000000 to me,";
 				mes "so that I can craft";
 				mes "my own Kunai to use";
@@ -335,7 +335,7 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 			mes "quiet as the falling shadows.";
 			callfunc "Job_Change",Job_Ninja;
 			set NINJ_Q,5;
-			delitem 909,5; // Jellopy
+			delitem 1002,5; // Iron Ore
 			delitem 1010,1; // Phracon
 			getitem 13010,1;	// Asura
 			completequest 6018;
@@ -431,17 +431,17 @@ einbroch,184,194,3	script	Suspicious Man#nq	881,{
 		mes "Great, I'm glad to";
 		mes "hear that. Please";
 		mes "help me find";
-		mes "^3355FF5 Jellopy^000000 and";
+		mes "^3355FF5 Iron Ore^000000 and";
 		mes "^3355FF1 Phracon^000000.";
 		set NINJ_Q,2;
 		changequest 6015,6016;
 		close;
 	}
 	else if (NINJ_Q == 2) {
-		if (countitem(7053) < 5 || countitem(1010) < 1) {
+		if (countitem(1002) < 5 || countitem(1010) < 1) {
 			mes "[Suspicious Man]";
 			mes "Please bring";
-			mes "^3355FF5 Jellopy^000000 and";
+			mes "^3355FF5 Iron Ore^000000 and";
 			mes "^3355FF1 Phracon^000000 to me as";
 			mes "soon as you can. Then,";
 			mes "I can help you find";
@@ -526,7 +526,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	881,{
 		mes "return to Amatsu, so let";
 		mes "me send you there directly...";
 		delitem 1010,1;	// Phracon
-		delitem 909,5;	// Jellopy
+		delitem 1002,5;	// Iron Ore
 		set NINJ_Q,3;
 		changequest 6016,6017;
 		close2;
