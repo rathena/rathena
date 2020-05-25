@@ -677,7 +677,6 @@ struct Battle_Config
 	int idletime_hom_option;
 	int devotion_standup_fix;
 	int feature_bgqueue;
-	int homunculus_exp_gain;
 	int rental_item_novalue;
 	/**
 	* Extended Vending system [Lilith]
