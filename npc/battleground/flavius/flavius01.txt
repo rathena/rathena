@@ -529,11 +529,11 @@ bat_b01,10,294,3	script	Vintenar#bat_b01_aover	419,{
 	set .@A_B_gap,$@Guill_ScoreBG1 - $@Croix_ScoreBG1;
 	if ($@FlaviusBG1_id1 == getcharid(4)) {
 		if (.@A_B_gap > 0)
-			callfunc "F_BG_Badge",1,"Guillaume","Flavius";
+			callfunc "F_BG_Badge",1,"Guillaume","Flavius"; //Guillaume wins
 		else if (.@A_B_gap == 0)
-			callfunc "F_BG_Badge",0,"Guillaume","Flavius";
+			callfunc "F_BG_Badge",0,"Guillaume","Flavius"; //Tie
 		else
-			callfunc "F_BG_Badge",0,"Guillaume","Flavius";
+			callfunc "F_BG_Badge",0,"Guillaume","Flavius"; //Croix wins
 	}
 	else {
 		mes "[Axl Rose]";
@@ -554,11 +554,11 @@ bat_b01,389,14,3	script	Vintenar#bat_b01_bover	415,{
 	set .@A_B_gap,$@Guill_ScoreBG1 - $@Croix_ScoreBG1;
 	if ($@FlaviusBG1_id2 == getcharid(4)) {
 		if (.@A_B_gap > 0)
-			callfunc "F_BG_Badge",1,"Croix","Flavius";
+			callfunc "F_BG_Badge",0,"Croix","Flavius"; //Guillaume wins
 		else if (.@A_B_gap == 0)
-			callfunc "F_BG_Badge",0,"Croix","Flavius";
+			callfunc "F_BG_Badge",0,"Croix","Flavius"; //Tie
 		else
-			callfunc "F_BG_Badge",1,"Croix","Flavius";
+			callfunc "F_BG_Badge",1,"Croix","Flavius"; //Croix wins
 	}
 	else {
 		mes "[Swandery]";
