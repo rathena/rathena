@@ -20016,20 +20016,21 @@ BUILDIN_FUNC(bg_get_data)
 
 /**
  * Reserves a slot for the given Battleground.
- * bg_reserve(<"bg_name">);
+ * bg_reserve("<battleground_map_name>"{,<ended>});
  */
 BUILDIN_FUNC(bg_reserve)
 {
 	const char *str = script_getstr(st, 2);
+	bool ended = script_hasdata(st, 3) ? script_getnum(st, 3) != 0 : false;
 
-	if (!bg_queue_reserve(str))
+	if (!bg_queue_reserve(str, ended))
 		ShowWarning("buildin_bg_reserve: Could not reserve battleground with name %s\n", str);
 	return SCRIPT_CMD_SUCCESS;
 }
 
 /**
  * Removes a spot for the given Battleground.
- * bg_unbook(<"bg_name">);
+ * bg_unbook("<battleground_map_name>");
  */
 BUILDIN_FUNC(bg_unbook)
 {
@@ -20075,7 +20076,7 @@ BUILDIN_FUNC(bg_info)
 			size_t i;
 
 			for (i = 0; i < bg->maps.size(); i++)
-				setd_sub_str(st, nullptr, ".@bgmaps$", i, map_mapid2mapname(bg->maps[i].mapid), nullptr);
+				setd_sub_str(st, nullptr, ".@bgmaps$", i, mapindex_id2name(bg->maps[i].mapindex), nullptr);
 			setd_sub_num(st, nullptr, ".@bgmapscount", 0, i, nullptr);
 			script_pushint(st, i);
 			break;
@@ -25143,7 +25144,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(bg_updatescore,"sii"),
 	BUILDIN_DEF(bg_join,"i????"),
 	BUILDIN_DEF(bg_create,"sii??"),
-	BUILDIN_DEF(bg_reserve,"s"),
+	BUILDIN_DEF(bg_reserve,"s?"),
 	BUILDIN_DEF(bg_unbook,"s"),
 	BUILDIN_DEF(bg_info,"si"),
 
