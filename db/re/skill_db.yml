@@ -33341,7 +33341,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Range: 1
-    Duration1: 10000
+    Duration1: 30000
     Cooldown: 60000
     Requires:
       SpCost: 1
