@@ -63,10 +63,8 @@ gef_dun02,185,83,3,3	monster	Shining Plant	1083,1,1800000,900000
 //==================================================
 // gef_dun03 - Geffenia
 //==================================================
-gef_dun03,0,0	monster	Wraith	1192,8,5000
-gef_dun03,0,0	monster	Wind Ghost	1263,3,5000
-gef_dun03,0,0	monster	Wraith Dead	1291,2,5000
-gef_dun03,0,0	monster	Wraith Dead	1291,2,60000,30000
+gef_dun03,0,0	monster	Wraith	1192,14,5000
+gef_dun03,0,0	monster	Wind Ghost	1263,5,5000
 gef_dun03,0,0	monster	Hellion Revenant	1626,1,600000,300000
-gef_dun03,0,0	monster	Shining Plant	1083,3,1800000,900000
-gef_dun03,0,0	monster	White Plant	1082,10,180000,90000
+gef_dun03,0,0	monster	Shining Plant	1083,5,1800000,900000
+gef_dun03,0,0	monster	White Plant	1082,18,180000,90000

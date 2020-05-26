@@ -16,9 +16,9 @@
 //==================================================
 // ama_fild01 - Amatsu Field
 //==================================================
-ama_fild01,0,0	monster	Bigfoot	1060,15,5000
-ama_fild01,0,0	monster	Karakasa	1400,50,5000
-ama_fild01,0,0	monster	Kapha	1406,40,5000
+ama_fild01,0,0	monster	Bigfoot	1060,14,5000
+ama_fild01,0,0	monster	Karakasa	1400,72,5000
+ama_fild01,0,0	monster	Kapha	1406,57,5000
 ama_fild01,0,0	monster	Miyabi Doll	1404,2,5000
 ama_fild01,0,0	monster	Poison Toad	1402,1,5000
 ama_fild01,173,313	monster	Hydra	1068,1,60000,30000

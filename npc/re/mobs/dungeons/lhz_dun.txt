@@ -28,7 +28,7 @@
 //==================================================
 // lhz_dun01 - Somatology Laboratory
 //==================================================
-lhz_dun01,0,0	monster	Remover	1682,100,5000
+lhz_dun01,0,0	monster	Remover	1682,101,5000
 lhz_dun01,0,0	monster	Anopheles	1627,70,5000
 lhz_dun01,0,0	monster	Metaling	1613,50,5000
 lhz_dun01,0,0	monster	Kavach Icarus	1656,13,5000

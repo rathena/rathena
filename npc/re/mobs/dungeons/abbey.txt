@@ -25,9 +25,9 @@ nameless_n,0,0	monster	Flame Skull	1869,3,5000
 //==================================================
 // abbey01 - Cursed Monastery
 //==================================================
-abbey01,0,0	monster	Banshee	1867,93,5000
-abbey01,0,0	monster	Ghoul	1036,56,5000
-abbey01,0,0	monster	Ragged Zombie	1865,33,5000
+abbey01,0,0	monster	Banshee	1867,96,5000
+abbey01,0,0	monster	Ghoul	1036,57,5000
+abbey01,0,0	monster	Ragged Zombie	1865,34,5000
 abbey01,0,0	monster	Zombie Slaughter	1864,30,5000
 abbey01,0,0	monster	Hellhound	1866,25,5000
 abbey01,0,0	monster	Flame Skull	1869,21,5000
