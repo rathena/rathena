@@ -833,7 +833,7 @@ void clif_bg_queue_apply_result(e_bg_queue_apply_ack result, const char *name, s
 void clif_bg_queue_apply_notify(const char *name, struct map_session_data *sd);
 void clif_bg_queue_entry_init(struct map_session_data *sd);
 void clif_bg_queue_lobby_notify(const char *name, struct map_session_data *sd);
-void clig_bg_queue_ack_lobby(bool result, const char *name, const char *lobbyname, struct map_session_data *sd);
+void clif_bg_queue_ack_lobby(bool result, const char *name, const char *lobbyname, struct map_session_data *sd);
 
 // Instancing
 void clif_instance_create(int instance_id, int num);
