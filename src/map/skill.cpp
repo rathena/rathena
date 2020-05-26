@@ -3645,7 +3645,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			if (!(flag&SD_ANIMATION))
 				clif_skill_nodamage(dsrc, bl, skill_id, skill_lv, 1);
 			// Fall through
-		case WM_REVERBERATION_MAGIC:
+		case WM_REVERBERATION:
 			dmg.dmotion = clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, -2, dmg_type);
 			break;
 		case SJ_FALLINGSTAR_ATK:
@@ -6033,7 +6033,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case WM_REVERBERATION:
 		if (flag & 1)
-			skill_attack(skill_get_type(WM_REVERBERATION_MAGIC), src, src, bl, WM_REVERBERATION_MAGIC, skill_lv, tick, flag);
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		else {
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
