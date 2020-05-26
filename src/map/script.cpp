@@ -6935,7 +6935,7 @@ int script_countitem_sub(struct item *items, struct item_data *id, int size, boo
 		unsigned short nameid = id->nameid;
 
 		for (int i = 0; i < size; i++) {
-			if (&items[i] && items[i].nameid == nameid)
+			if (&items[i] && items[i].nameid == nameid && items[i].expire_time == 0)
 				count += items[i].amount;
 		}
 	} else { // For expanded functions
@@ -6967,7 +6967,7 @@ int script_countitem_sub(struct item *items, struct item_data *id, int size, boo
 		for (int i = 0; i < size; i++) {
 			struct item *itm = &items[i];
 
-			if (!itm || !itm->nameid || itm->amount < 1)
+			if (!itm || !itm->nameid || itm->amount < 1 || items[i].expire_time > 0)
 				continue;
 			if (itm->nameid != it.nameid || itm->identify != it.identify || itm->refine != it.refine || itm->attribute != it.attribute)
 				continue;
@@ -7708,6 +7708,7 @@ BUILDIN_FUNC(rentitem2) {
 	it.card[2] = (short)c3;
 	it.card[3] = (short)c4;
 	it.expire_time = (unsigned int)(time(NULL) + seconds);
+	it.bound = BOUND_NONE;
 
 	if (funcname[strlen(funcname)-1] == '3') {
 		int res = script_getitem_randomoption(st, sd, &it, funcname, 11);
@@ -14058,6 +14059,7 @@ BUILDIN_FUNC(getinventorylist)
 				sprintf(randopt_var, "@inventorylist_option_parameter%d",k+1);
 				pc_setreg(sd,reference_uid(add_str(randopt_var), j),sd->inventory.u.items_inventory[i].option[k].param);
 			}
+			pc_setreg(sd,reference_uid(add_str("@inventorylist_tradable"), j),pc_can_trade_item(sd, i));
 			j++;
 		}
 	}
@@ -24062,13 +24064,8 @@ BUILDIN_FUNC(getequiptradability) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (i >= 0) {
-		bool tradable = (sd->inventory.u.items_inventory[i].expire_time == 0 &&
-			(!sd->inventory.u.items_inventory[i].bound || pc_can_give_bounded_items(sd)) &&
-			itemdb_cantrade(&sd->inventory.u.items_inventory[i], pc_get_group_level(sd), pc_get_group_level(sd))
-			);
-		script_pushint(st, tradable);
-	}
+	if (i >= 0)
+		script_pushint(st, pc_can_trade_item(sd, i));
 	else
 		script_pushint(st, false);
 
