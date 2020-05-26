@@ -25097,7 +25097,7 @@ Body:
       IsTrap: true
     Range: 9
     Hit: Multi_Hit
-    HitCount: 10
+    HitCount: -10
     SplashArea:
       - Level: 1
         Area: 2
