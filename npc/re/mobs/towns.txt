@@ -13,11 +13,9 @@
 //============================================================
 
 //==================================================
-// Brasilis, Strange Mouses
+// Brasilis, Strange Hydra are replaced by Strange Mouse
 //==================================================
-brasilis,283,88,6,6	monster	Strange Hydra	2081,5,5000
-
-// Strange Hydra are replaced by Strange Mouse
+brasilis,283,88,6,6	monster	Strange Mouse	2057,5,5000
 brasilis,284,104,6,6	monster	Strange Mouse	2057,4,5000
 brasilis,215,80,6,6	monster	Strange Mouse	2057,4,5000
 brasilis,96,50,8,8	monster	Strange Mouse	2057,5,5000
