@@ -3,14 +3,14 @@ function	script	IsTypeItem	{
 	.@type = getarg(1);
 	if(.@type == 0){//isETC
 		if(getiteminfo(.@item,2)== 3
-				&& .@item!= 984//Oridecon
-				&& .@item!= 985//Elunium
-				&& .@item!= 706//Four Leaf Clover
-				&& .@item!= 6379//Cash Coin
-				&& .@item!= 1010//Phracon
-				&& .@item!= 1011//Emveretarcon
-				&& .@item!= 7559//THE BOX Key
-				&& .@item!= 6418//Casino Coin
+				&& .@item != 984//Oridecon
+				&& .@item != 985//Elunium
+				&& .@item != 706//Four Leaf Clover
+				&& .@item != 6379//Cash Coin
+				&& .@item != 1010//Phracon
+				&& .@item != 1011//Emveretarcon
+				&& .@item != 7559//THE BOX Key
+				&& .@item != 6418//Casino Coin
 				)
 		return true;
 		else if(getiteminfo(.@item,2)== 6 && !compare(getitemname(.@item),"Card"))
