@@ -15923,20 +15923,20 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		case WL_TETRAVORTEX: // bugreport:7598 moved sphere check to precast to avoid triggering cooldown per official behavior -helvetica
 		case WL_RELEASE:
 			if (sc) {
-				int j = 0;
+				int active_spheres = 0, req_spheres = 0;
 
 				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++) {
 					if (sc->data[i])
-						j++;
+						active_spheres++;
 				}
 
 				// Cast requirement
 				if (skill_id == WL_TETRAVORTEX)
-					i = 4;
-				else if (skill_id == WL_RELEASE)
-					i = 1;
+					req_spheres = 4;
+				else if (skill_id == WL_RELEASE && skill_lv == 2) // Only level 2 uses Spheres
+					req_spheres = 1;
 
-				if (j < i) { // Need minimum amount of spheres
+				if (active_spheres < req_spheres) { // Need minimum amount of spheres
 					clif_skill_fail(sd, skill_id, (skill_id == WL_RELEASE) ? USESKILL_FAIL_SUMMON_NONE : USESKILL_FAIL_LEVEL, 0);
 					return false;
 				}
