@@ -13458,17 +13458,19 @@
 32350,Farthezan,Farthezan,5,20,,1100,130:180,,1,2,0x00004000,56,2,2,4,170,1,2,{ .@r = getrefine(); bonus2 bSkillAtk,"PA_PRESSURE",40; bonus bVariableCastrate,-.@r; if (.@r>=9) bonus2 bSkillAtk,"LG_RAYOFGENESIS",30; if (.@r>=11) { bonus2 bSkillAtk,"LG_RAYOFGENESIS",20; bonus2 bSkillAtk,"PA_PRESSURE",20; } },{},{}
 32351,Estal,Estal,5,20,,700,195,,1,2,0x00040000,56,2,2,4,170,1,2,{ .@r = getrefine(); bonus2 bSkillCooldown,"GN_SPORE_EXPLOSION",-1000; bonus bBaseAtk,4*.@r; if (.@r>=11) .@val = 50; else if (.@r>=9) .@val = 30; bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",.@val; },{},{}
 
-// Warlock Spell Books
-//100065,WL_MB_SG,Spell Book (Storm Gust),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,1; },{},{}
-//100066,WL_MB_LOV,Spell Book (Lord of Vermilion),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,2; },{},{}
-//100067,WL_MB_MS,Spell Book (Meteor Storm),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,3; },{},{}
-//100068,WL_MB_DL,Spell Book (Drain Life),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,4; },{},{}
-//100069,WL_MB_JF,Spell Book (Jack Frost),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,5; },{},{}
-//100070,WL_MB_ES,Spell Book (Earth Strain),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,6; },{},{}
-//100071,WL_MB_CR,Spell Book (Crimson Rock),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,7; },{},{}
-//100072,WL_MB_CL,Spell Book (Chain Lightning),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,8; },{},{}
-//100073,WL_MB_CM,Spell Book (Comet),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,9; },{},{}
-//100074,WL_MB_TV,Spell Book (Tetra Vortex),11,0,,0,,,,,,,,,,,,,{ itemskill WL_READING_SB_READING,10; },{},{}
+//===================================================================
+// New Warlock Spell Books
+//===================================================================
+//100065,WL_MB_SG,Spell Book (Storm Gust),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",1; },{},{}
+//100066,WL_MB_LOV,Spell Book (Lord of Vermilion),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",2; },{},{}
+//100067,WL_MB_MS,Spell Book (Meteor Storm),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",3; },{},{}
+//100068,WL_MB_DL,Spell Book (Drain Life),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",4; },{},{}
+//100069,WL_MB_JF,Spell Book (Jack Frost),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",5; },{},{}
+//100070,WL_MB_ES,Spell Book (Earth Strain),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",6; },{},{}
+//100071,WL_MB_CR,Spell Book (Crimson Rock),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",7; },{},{}
+//100072,WL_MB_CL,Spell Book (Chain Lightning),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",8; },{},{}
+//100073,WL_MB_CM,Spell Book (Comet),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",9; },{},{}
+//100074,WL_MB_TV,Spell Book (Tetra Vortex),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",10; },{},{}
 //
 //100231,Ref_T_Potion,Golden X,0,10,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_REF_T_POTION,30000,0; },{},{}
 //100232,Add_Atk_Potion,Red Herb Activator,0,10,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ADD_ATK_DAMAGE,500000,15; },{},{}

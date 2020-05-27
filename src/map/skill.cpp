@@ -5753,7 +5753,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 			skill_toggle_magicpower(src, skill_id); // No hit will be amplified
 			if (skill_lv == 1) { // SpellBook
-				if (sc && !sc->data[SC_FREEZE_SP])
+				if (sc == nullptr)
+					break;
+
+				if (sc->data[SC_FREEZE_SP] == nullptr)
 					break;
 
 				int spell[SC_MAXSPELLBOOK-SC_SPELLBOOK1 + 1], s = 0;
@@ -15921,12 +15924,11 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			}
 			break;
 		case WL_TETRAVORTEX: // bugreport:7598 moved sphere check to precast to avoid triggering cooldown per official behavior -helvetica
-		case WL_RELEASE:
-			if (sc) {
+		case WL_RELEASE: {
 				int active_spheres = 0, req_spheres = 0;
 
 				for (i = SC_SPHERE_1; i <= SC_SPHERE_5; i++) {
-					if (sc->data[i])
+					if (sc && sc->data[i])
 						active_spheres++;
 				}
 
@@ -15940,9 +15942,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 					clif_skill_fail(sd, skill_id, (skill_id == WL_RELEASE) ? USESKILL_FAIL_SUMMON_NONE : USESKILL_FAIL_LEVEL, 0);
 					return false;
 				}
-			} else { // no status at all? no spheres present
-				clif_skill_fail(sd, skill_id, (skill_id == WL_RELEASE) ? USESKILL_FAIL_SUMMON_NONE : USESKILL_FAIL_LEVEL, 0);
-				return false;
 			}
 			break;
 		case GC_HALLUCINATIONWALK:

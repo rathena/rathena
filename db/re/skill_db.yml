@@ -33395,6 +33395,7 @@ Body:
     Name: WL_READING_SB_READING
     Description: Reading Spellbook
     MaxLevel: 10
+    TargetType: Self
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
