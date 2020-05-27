@@ -28372,6 +28372,7 @@ Body:
     HitCount: 1
     Requires:
       SpCost: 40
+      State: Cart
   - Id: 2552
     Name: RL_RICHS_COIN
     Description: Rich's Coin
