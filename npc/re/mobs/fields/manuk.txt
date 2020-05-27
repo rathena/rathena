@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= alexx, MaC
 //===== Current Version: =====================================
-//= 1.1a
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Additional Comments: =================================
 //= 1.0 Official spawn ammounts from Aegis script [alexx]
 //= 1.1 Added 13.2 mob spawn update [scriptor]
 //= 1.1a Corrected fild2 mobs spawning on fild1. (bugreport:4248)
+//= 1.2 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================

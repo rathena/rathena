@@ -3,12 +3,13 @@
 //===== By: ==================================================
 //= alexx, MaC
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Additional Comments: =================================
 //= 1.0 Official spawn ammounts from Aegis script [alexx]
 //= 1.1 Added 13.2 mob spawn update [scriptor]
+//= 1.2 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================

@@ -3,12 +3,13 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Additional Comments: =================================
 //= 1.0 Split from combined Alde and CT spawn file. [L0ne_W0lf]
 //= 1.1 Added nightmare clock tower. [Ridley8819]
+//= 1.2 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================

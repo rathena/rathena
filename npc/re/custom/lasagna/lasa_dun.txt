@@ -2,6 +2,7 @@
 //= Lasagna Dungeons Monsters Spawn Script
 //===== Changelogs: ==========================================
 //= 1.0 First Version. [Capuche]
+//= 1.1 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================

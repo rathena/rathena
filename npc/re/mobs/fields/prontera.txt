@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Additional Comments: =================================
 //= 1.2 fixed some map name typos [Lupus]
 //= 1.3 Official kRO 10.1 spawns [Playtester]
 //= 1.4 More accurate spawns [Playtester]
 //= 1.5 Updated to Renewal spawns.
 //= 1.6 Added Prontera Field 8 duplicates. [Euphy]
+//= 1.7 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================

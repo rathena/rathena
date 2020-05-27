@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.5
+//= 1.7
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Additional Comments: =================================
@@ -13,6 +13,7 @@
 //= 1.4 More accurate spawns [Playtester]
 //= 1.5 Corrected MVP spawn variance. [L0ne_W0lf]
 //= 1.6 Added Nightmare Glastheim [Ridley8819]
+//= 1.7 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================

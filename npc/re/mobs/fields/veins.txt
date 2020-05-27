@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= $ephiroth
 //===== Current Version: =====================================
-//= 1.9
+//= 2.0
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Additional Comments: =================================
@@ -17,6 +17,7 @@
 //= 1.7 Corrected MVP spawn variance. [Gepard]
 //= 1.8 Updated to Renewal Spawns. [Kisuka]
 //= 1.9 Renewal spawn update.
+//= 2.0 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================

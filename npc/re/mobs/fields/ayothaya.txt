@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.6
+//= 1.7
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Additional Comments: =================================
@@ -13,6 +13,7 @@
 //= 1.4 Official kRO 10.1 spawns [Playtester]
 //= 1.5 Updated to Renewal Spawns [Kisuka]
 //= 1.6 Renewal spawn update.
+//= 1.7 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================

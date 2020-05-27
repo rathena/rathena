@@ -3,13 +3,14 @@
 //===== By: ==================================================
 //= Poki#3 (0.1)
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Additional Comments: =================================
 //= 1.0 Updated by using Tharis' Homun AI, by Tharis [Vicious]
 //= 1.1 More accurate spawns [Playtester]
 //= 1.2 Corrected MVP spawn variance. [L0ne_W0lf]
+//= 1.3 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================

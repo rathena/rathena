@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 2.1
+//= 2.2
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Additional Comments: =================================
@@ -22,6 +22,7 @@
 //= 1.9 More accurate spawns [Playtester]
 //= 2.0 Updated spawns to renewal. [L0ne_W0lf]
 //= 2.1 Renewal spawn update.
+//= 2.2 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================

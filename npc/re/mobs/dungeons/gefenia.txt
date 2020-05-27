@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Muad_Dib, rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.1
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Additional Comments: =================================
@@ -12,6 +12,7 @@
 //= Updated spawns, information from emperium.org [MasterOfMuppets]
 //= Kept the old spawns incase someone would want them.
 //= Aegis ep 10.1 spawns [MasterOfMuppets]
+//= 1.2 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================

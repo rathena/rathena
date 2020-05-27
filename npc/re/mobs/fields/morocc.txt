@@ -16,6 +16,7 @@
 //=     Added 30s spawn time for all Morocc Shadows.
 //= 1.7 Corrected MVP spawn variance. [L0ne_W0lf]
 //= 1.8 Updated to renewal spawns. [L0ne_W0lf]
+//= 1.9 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================

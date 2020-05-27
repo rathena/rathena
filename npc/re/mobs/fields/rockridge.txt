@@ -1,7 +1,10 @@
 //===== rAthena Script =======================================
 //= Rock Ridge Monsters Spawn Script
+//===== Current Version: =====================================
+//= 1.7
 //===== Additional Comments: =================================
 //= 1.0 First version. [Capuche]
+//= 1.1 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 // Kiwawa Desert
