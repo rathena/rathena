@@ -1,4 +1,5 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// Copyright (c) Hercules Dev Team - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "clif.hpp"
