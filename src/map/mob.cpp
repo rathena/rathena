@@ -3009,7 +3009,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if (achievement_db.mobexists(md->mob_id))
 				achievement_update_objective(sd, AG_BATTLE, 1, md->mob_id);
 
-			if (sd->md && src && src->type == BL_MER && mob_db(md->mob_id)->lv > sd->status.base_level / 2)
+			// The master or Mercenary can increase the kill count
+			if (sd->md && src && (src->type == BL_PC || src->type == BL_MER) && mob_db(md->mob_id)->lv > sd->status.base_level / 2)
 				mercenary_kills(sd->md);
 		}
 
