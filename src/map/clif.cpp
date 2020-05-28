@@ -71,6 +71,14 @@ struct s_packet_db packet_db[MAX_PACKET_DB + 1];
 int packet_db_ack[MAX_ACK_FUNC + 1];
 unsigned long color_table[COLOR_MAX];
 
+// Global because if declared inside the function will cause stack corruption
+// Used for inventory and cart:
+struct packet_itemlist_normal itemlist_normal;
+struct packet_itemlist_equip itemlist_equip;
+// Used for storage(s)
+struct ZC_STORE_ITEMLIST_NORMAL storage_itemlist_normal;
+struct ZC_STORE_ITEMLIST_EQUIP storage_itemlist_equip;
+
 #include "clif_obfuscation.hpp"
 static bool clif_session_isValid(struct map_session_data *sd);
 static void clif_loadConfirm( struct map_session_data *sd );
@@ -2815,9 +2823,6 @@ void clif_inventorylist( struct map_session_data *sd ){
 	clif_inventoryStart( sd, type, "" );
 #endif
 
-	struct packet_itemlist_normal itemlist_normal;
-	struct packet_itemlist_equip itemlist_equip;
-
 	int equip = 0;
 	int normal = 0;
 
@@ -2886,13 +2891,10 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 	clif_inventoryStart( sd, type, storename );
 #endif
 
-	struct ZC_STORE_ITEMLIST_NORMAL itemlist_normal;
-	struct ZC_STORE_ITEMLIST_EQUIP itemlist_equip;
-
 	int equip = 0;
 	int normal = 0;
 
-	for( int i = 0; i < MAX_STORAGE; i++ ){
+	for( int i = 0; i < items_length; i++ ){
 		if( items[i].nameid <= 0 ){
 			continue;
 		}
@@ -2901,35 +2903,35 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 
 		// Non-stackable (Equippable)
 		if( !itemdb_isstackable2( id ) ){
-			clif_item_equip( client_storage_index( i ), &itemlist_equip.list[equip++], &items[i], id, pc_equippoint_sub( sd, id ) );
+			clif_item_equip( client_storage_index( i ), &storage_itemlist_equip.list[equip++], &items[i], id, pc_equippoint_sub( sd, id ) );
 		// Stackable (Normal)
 		}else{
-			clif_item_normal( client_storage_index( i ), &itemlist_normal.list[normal++], &items[i], id );
+			clif_item_normal( client_storage_index( i ), &storage_itemlist_normal.list[normal++], &items[i], id );
 		}
 	}
 
 	if( normal ){
-		itemlist_normal.PacketType = inventorylistnormalType;
-		itemlist_normal.PacketLength = ( sizeof( itemlist_normal ) - sizeof( itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal );
+		storage_itemlist_normal.PacketType = inventorylistnormalType;
+		storage_itemlist_normal.PacketLength = ( sizeof( storage_itemlist_normal ) - sizeof( storage_itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal );
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
-		itemlist_normal.invType = type;
+		storage_itemlist_normal.invType = type;
 #elif PACKETVER >= 20120925
-		safestrncpy( itemlist_normal.name, storename, NAME_LENGTH );
+		safestrncpy( storage_itemlist_normal.name, storename, NAME_LENGTH );
 #endif
 
-		clif_send( &itemlist_normal, itemlist_normal.PacketLength, &sd->bl, SELF );
+		clif_send( &storage_itemlist_normal, storage_itemlist_normal.PacketLength, &sd->bl, SELF );
 	}
 
 	if( equip ) {
-		itemlist_equip.PacketType  = inventorylistequipType;
-		itemlist_equip.PacketLength = ( sizeof( itemlist_equip ) - sizeof( itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip );
+		storage_itemlist_equip.PacketType  = inventorylistequipType;
+		storage_itemlist_equip.PacketLength = ( sizeof( storage_itemlist_equip ) - sizeof( storage_itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip );
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
-		itemlist_equip.invType = type;
+		storage_itemlist_equip.invType = type;
 #elif PACKETVER >= 20120925
-		safestrncpy( itemlist_equip.name, storename, NAME_LENGTH );
+		safestrncpy( storage_itemlist_equip.name, storename, NAME_LENGTH );
 #endif
 
-		clif_send( &itemlist_equip, itemlist_equip.PacketLength, &sd->bl, SELF );
+		clif_send( &storage_itemlist_equip, storage_itemlist_equip.PacketLength, &sd->bl, SELF );
 	}
 
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
@@ -2946,8 +2948,6 @@ void clif_cartlist( struct map_session_data *sd ){
 	clif_inventoryStart( sd, type, "" );
 #endif
 
-	struct packet_itemlist_normal itemlist_normal;
-	struct packet_itemlist_equip itemlist_equip;
 	int normal = 0;
 	int equip = 0;
 
