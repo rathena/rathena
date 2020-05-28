@@ -2960,10 +2960,10 @@ void clif_cartlist( struct map_session_data *sd ){
 
 		// Non-stackable (Equippable)
 		if( !itemdb_isstackable2(id) ){
-			clif_item_equip( client_storage_index( i ), &itemlist_equip.list[equip++], &sd->cart.u.items_cart[i], id, id->equip );
+			clif_item_equip( client_index( i ), &itemlist_equip.list[equip++], &sd->cart.u.items_cart[i], id, id->equip );
 		 // Stackable (Normal)
 		}else{
-			clif_item_normal(client_storage_index( i ), &itemlist_normal.list[normal++], &sd->cart.u.items_cart[i], id );
+			clif_item_normal( client_index( i ), &itemlist_normal.list[normal++], &sd->cart.u.items_cart[i], id );
 		}
 	}
 
@@ -4456,7 +4456,7 @@ void clif_storageitemadded( struct map_session_data* sd, struct item* i, int ind
 	struct PACKET_ZC_ADD_ITEM_TO_STORE p;
 
 	p.packetType = storageaddType; // Storage item added
-	p.index = index + 1; // index
+	p.index = client_storage_index( index ); // index
 	p.amount = amount; // amount
 	p.itemId = client_nameid( i->nameid ); // id
 #if PACKETVER >= 5
@@ -4485,7 +4485,7 @@ void clif_storageitemremoved(struct map_session_data* sd, int index, int amount)
 	fd=sd->fd;
 	WFIFOHEAD(fd,packet_len(0xf6));
 	WFIFOW(fd,0)=0xf6; // Storage item removed
-	WFIFOW(fd,2)=index+1;
+	WFIFOW(fd,2)=client_storage_index(index);
 	WFIFOL(fd,4)=amount;
 	WFIFOSET(fd,packet_len(0xf6));
 }
