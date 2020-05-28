@@ -9569,7 +9569,7 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 				// Even thought mobhp ain't a name, we send it as one so the client can parse it. [Skotlex]
 				if( str_p != mobhp ){
 					*(str_p-3) = '\0'; //Remove trailing space + pipe.
-					safestrncpy( packet.name, mobhp, NAME_LENGTH );
+					safestrncpy( packet.party_name, mobhp, NAME_LENGTH );
 				}
 			}
 		}
