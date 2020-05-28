@@ -678,6 +678,7 @@ struct Battle_Config
 	int bgqueue_nowarp_mapflag;
 	int homunculus_exp_gain;
 	int rental_item_novalue;
+	int achievement_mob_share;
 
 #include "../custom/battle_config_struct.inc"
 };

@@ -8954,6 +8954,7 @@ static const struct _battle_data {
 	{ "bgqueue_nowarp_mapflag",             &battle_config.bgqueue_nowarp_mapflag,          0,      0,      1,              },
 	{ "homunculus_exp_gain",                &battle_config.homunculus_exp_gain,             10,     0,      100,            },
 	{ "rental_item_novalue",                &battle_config.rental_item_novalue,             1,      0,      1,              },
+	{ "achievement_mob_share",              &battle_config.achievement_mob_share,           0,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };
