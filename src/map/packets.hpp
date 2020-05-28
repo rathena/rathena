@@ -124,6 +124,33 @@ struct PACKET_ZC_ACK_COUNT_BARGAIN_SALE_ITEM{
 	uint32 amount;
 };
 
+struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub{
+	uint32 id;
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 itemId;
+#else
+	uint16 itemId;
+#endif
+	int32 amount;
+	uint8 action;
+	int32 refine;
+	int64 uniqueId;
+	uint8 IsIdentified;
+	uint16 itemType;
+	struct EQUIPSLOTINFO slot;
+	char name[NAME_LENGTH];
+	char time[NAME_LENGTH];
+	uint8 attribute;
+};
+
+struct PACKET_ZC_ACK_GUILDSTORAGE_LOG{
+	int16 packetType;
+	int16 PacketLength;
+	uint16 result;
+	uint16 amount;
+	struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub items[];
+};
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -136,6 +163,7 @@ const uint16 HEADER_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM = 0x9b0;
 const uint16 HEADER_ZC_NOTIFY_BARGAIN_SALE_SELLING = 0x9b2;
 const uint16 HEADER_ZC_NOTIFY_BARGAIN_SALE_CLOSE = 0x9b3;
 const uint16 HEADER_ZC_ACK_COUNT_BARGAIN_SALE_ITEM = 0x9c4;
+const uint16 HEADER_PACKET_ZC_ACK_GUILDSTORAGE_LOG = 0x9da;
 const uint16 HEADER_CZ_REQ_APPLY_BARGAIN_SALE_ITEM2 = 0xa3d;
 
 #pragma warning( pop )

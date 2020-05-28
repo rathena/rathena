@@ -79,6 +79,8 @@ struct packet_itemlist_equip itemlist_equip;
 // Used for storage(s)
 struct ZC_STORE_ITEMLIST_NORMAL storage_itemlist_normal;
 struct ZC_STORE_ITEMLIST_EQUIP storage_itemlist_equip;
+// Used for official guild storage
+struct PACKET_ZC_ACK_GUILDSTORAGE_LOG guild_storage_log;
 
 #include "clif_obfuscation.hpp"
 static bool clif_session_isValid(struct map_session_data *sd);
@@ -20834,49 +20836,43 @@ void clif_parse_private_airship_request( int fd, struct map_session_data* sd ){
 /// 09DA <size>.W <result>.W <count>.W { <id>.L <item id>.W <amount>.L <action>.B <refine>.L <unique id>.Q <identify>.B <item type>.W
 ///      { <card item id>.W }*4 <name>.24B <time>.24B <attribute>.B }*count (ZC_ACK_GUILDSTORAGE_LOG)
 void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct guild_log_entry>& log, enum e_guild_storage_log result ){
-// TODO:
-#if 0
 #if PACKETVER >= 20140205
 	nullpo_retv( sd );
 
-	int fd = sd->fd;
-	int size = 8;
-	int sub = 83;
+	int size = sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG );
 
 	if( result == GUILDSTORAGE_LOG_FINAL_SUCCESS ){
-		size += log.size() * sub;
+		size = log.size() * sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub );
 	}else{
 		log.clear();
 	}
 
-	WFIFOHEAD(fd, size);
-	WFIFOW(fd, 0) = 0x9DA;
-	WFIFOW(fd, 2) = size;
-	WFIFOW(fd, 4) = result;
-	WFIFOW(fd, 6) = (uint16)log.size();
+	guild_storage_log.packetType = 0x9DA;
+	guild_storage_log.PacketLength = size;
+	guild_storage_log.result = result;
+	guild_storage_log.amount = (uint16)log.size();
 
 	if( result == GUILDSTORAGE_LOG_FINAL_SUCCESS ){
-		for (int offset = 8, i = 0; i < log.size(); i++, offset += sub) {
+		for( int i = 0; i < log.size(); i++ ){
+			struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub* item = &guild_storage_log.items[i];
 			struct guild_log_entry& entry = log[i];
-			uint16 viewid = itemdb_viewid( entry.item.nameid );
 
-			WFIFOL(fd, offset) = entry.id;
-			WFIFOW(fd, offset + 4) = viewid > 0 ? viewid : entry.item.nameid;
-			WFIFOL(fd, offset + 6) = (uint16)(entry.amount > 0 ? entry.amount : (entry.amount * -1));
-			WFIFOB(fd, offset + 10) = entry.amount > 0; // action = true(put), false(get)
-			WFIFOL(fd, offset + 11) = entry.item.refine;
-			WFIFOQ(fd, offset + 15) = entry.item.unique_id;
-			WFIFOB(fd, offset + 23) = entry.item.identify;
-			WFIFOW(fd, offset + 24) = itemtype(entry.item.nameid);
-			clif_addcards(WFIFOP(fd, offset + 26), &entry.item);
-			safestrncpy(WFIFOCP(fd, offset + 34), entry.name, NAME_LENGTH);
-			safestrncpy(WFIFOCP(fd, offset + 34 + NAME_LENGTH), entry.time, NAME_LENGTH);
-			WFIFOB(fd, offset + 34 + 2 * NAME_LENGTH) = entry.item.attribute;
+			item->id = entry.id;
+			item->itemId = client_nameid( entry.item.nameid );
+			item->amount = (uint16)( entry.amount > 0 ? entry.amount : ( entry.amount * -1 ) );
+			item->action = entry.amount > 0; // action = true(put), false(get)
+			item->refine = entry.item.refine;
+			item->uniqueId = entry.item.unique_id;
+			item->IsIdentified = entry.item.identify;
+			item->itemType = itemtype( entry.item.nameid );
+			clif_addcards( &item->slot, &entry.item );
+			safestrncpy( item->name, entry.name, NAME_LENGTH );
+			safestrncpy( item->time, entry.time, NAME_LENGTH );
+			item->attribute = entry.item.attribute;
 		}
 	}
-
-	WFIFOSET(fd, size);
-#endif
+	
+	clif_send( &guild_storage_log, guild_storage_log.PacketLength, &sd->bl, SELF );
 #endif
 }
 
