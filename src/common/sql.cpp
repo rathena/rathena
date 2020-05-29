@@ -1080,10 +1080,8 @@ void Sql_UpgradesChecker(Sql *sql_handle, e_sql_database schema) {
 			std::string mode = "Prerenewal";
 #endif
 
-			if (compiledMode != update->mode) {
-				ShowError("Sql_UpgradesChecker: The server's current mode of '%s' differs from the mode '%s' provided by the update. Skipping.\n", mode.c_str(), update->mode == MODE_RENEWAL ? "Renewal" : "Prerenewal");
+			if (compiledMode != update->mode) // Only apply if mode is a match
 				continue;
-			}
 		}
 
 		if (!(update->database & schema)) // Only apply to the specific schema
