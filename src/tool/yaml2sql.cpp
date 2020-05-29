@@ -327,7 +327,7 @@ static bool appendEntry(const YAML::Node &node, std::string &value, bool string 
 				for (const auto &subNode : node) {
 					std::string name = subNode.first.as<std::string>();
 
-					if (subNode.IsDefined() && subNode[name].as<bool>() == true) {
+					if (subNode.second.as<bool>() == true) {
 						concat_str.append(name);
 						concat_str.append(":true|");
 					} else {
