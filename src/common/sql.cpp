@@ -1105,9 +1105,9 @@ void Sql_UpgradesChecker(Sql *sql_handle, e_sql_database schema) {
 	if (!(schema & SQLDB_LOG) && !skipped_updates.empty()) {
 		size_t count = skipped_updates.size();
 
-		ShowSQL("Detected %zu skipped " CL_WHITE "SQL update%s" CL_RESET "\n", count, count > 1 ? "s" : "");
+		ShowStatus("Detected %zu skipped " CL_WHITE "SQL update%s" CL_RESET "\n", count, count > 1 ? "s" : "");
 		for (const auto &skipIt : skipped_updates)
-			ShowSQL("-- '" CL_WHITE "Update %d" CL_RESET "' has been skipped.\n", skipIt);
+			ShowStatus("-- '" CL_WHITE "Update %d" CL_RESET "' has been skipped.\n", skipIt);
 	}
 
 	if (!new_updates.empty()) {
@@ -1146,9 +1146,9 @@ void Sql_UpgradesChecker(Sql *sql_handle, e_sql_database schema) {
 		output << YAML::Key << "Body";
 		output << YAML::BeginSeq;
 
-		ShowSQL("Detected %zu new " CL_WHITE "SQL update%s" CL_RESET "\n", count, count > 1 ? "s" : "");
+		ShowStatus("Detected %zu new " CL_WHITE "SQL update%s" CL_RESET "\n", count, count > 1 ? "s" : "");
 		for (const auto &newIt : new_updates) {
-			ShowSQL("-- '" CL_WHITE "Update %d" CL_RESET "' has been applied.\n", newIt);
+			ShowStatus("-- '" CL_WHITE "Update %d" CL_RESET "' has been applied.\n", newIt);
 
 			time_t now = time(nullptr);
 
