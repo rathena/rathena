@@ -43,6 +43,7 @@ struct achievement;
 struct guild_log_entry;
 enum e_guild_storage_log : uint16;
 enum e_bg_queue_apply_ack : uint16;
+enum e_instance_notify : uint8;
 
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
@@ -588,7 +589,7 @@ void clif_clearflooritem(struct flooritem_data *fitem, int fd);
 void clif_clearunit_single(int id, clr_type type, int fd);
 void clif_clearunit_area(struct block_list* bl, clr_type type);
 void clif_clearunit_delayed(struct block_list* bl, clr_type type, t_tick tick);
-int clif_spawn(struct block_list *bl);	//area
+int clif_spawn(struct block_list *bl, bool walking = false);	//area
 void clif_walkok(struct map_session_data *sd);	// self
 void clif_move(struct unit_data *ud); //area
 void clif_changemap(struct map_session_data *sd, short m, int x, int y);	//self
@@ -631,7 +632,8 @@ void clif_statusupack(struct map_session_data *sd,int type,int ok,int val);	// s
 void clif_equipitemack(struct map_session_data *sd,int n,int pos,uint8 flag);	// self
 void clif_unequipitemack(struct map_session_data *sd,int n,int pos,int ok);	// self
 void clif_misceffect(struct block_list* bl,int type);	// area
-void clif_changeoption(struct block_list* bl);	// area
+void clif_changeoption_target(struct block_list* bl, struct block_list* target);
+#define clif_changeoption(bl) clif_changeoption_target(bl, NULL)	// area
 void clif_changeoption2(struct block_list* bl);	// area
 void clif_useitemack(struct map_session_data *sd,int index,int amount,bool ok);	// self
 void clif_GlobalMessage(struct block_list* bl, const char* message,enum send_target target);
@@ -713,6 +715,7 @@ void clif_skillunit_update(struct block_list* bl);
 void clif_autospell(struct map_session_data *sd,uint16 skill_lv);
 void clif_devotion(struct block_list *src, struct map_session_data *tsd);
 void clif_spiritball(struct block_list *bl);
+void clif_soulball(struct map_session_data *sd);
 void clif_combo_delay(struct block_list *bl,t_tick wait);
 void clif_bladestop(struct block_list *src, int dst_id, int active);
 void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_target target);
@@ -830,13 +833,13 @@ void clif_bg_queue_apply_result(e_bg_queue_apply_ack result, const char *name, s
 void clif_bg_queue_apply_notify(const char *name, struct map_session_data *sd);
 void clif_bg_queue_entry_init(struct map_session_data *sd);
 void clif_bg_queue_lobby_notify(const char *name, struct map_session_data *sd);
-void clig_bg_queue_ack_lobby(bool result, const char *name, const char *lobbyname, struct map_session_data *sd);
+void clif_bg_queue_ack_lobby(bool result, const char *name, const char *lobbyname, struct map_session_data *sd);
 
 // Instancing
-void clif_instance_create(unsigned short instance_id, int num);
-void clif_instance_changewait(unsigned short instance_id, int num);
-void clif_instance_status(unsigned short instance_id, unsigned int limit1, unsigned int limit2);
-void clif_instance_changestatus(unsigned int instance_id, int type, unsigned int limit);
+void clif_instance_create(int instance_id, int num);
+void clif_instance_changewait(int instance_id, int num);
+void clif_instance_status(int instance_id, unsigned int limit1, unsigned int limit2);
+void clif_instance_changestatus(int instance_id, e_instance_notify type, unsigned int limit);
 
 // Custom Fonts
 void clif_font(struct map_session_data *sd);

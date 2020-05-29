@@ -16,6 +16,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "battle.hpp"
@@ -32,6 +33,8 @@
 #include "pc.hpp"
 #include "pet.hpp"
 #include "script.hpp" // script_config
+
+using namespace rathena;
 
 struct npc_data* fake_nd;
 
@@ -157,9 +160,10 @@ int npc_isnear_sub(struct block_list* bl, va_list args) {
 			if (skill->unit_nonearnpc_type&SKILL_NONEAR_TOMB && nd->subtype == NPCTYPE_TOMB)
 				return 1;
 		}
+		return 0;
 	}
 
-    return 0;
+	return 1;
 }
 
 bool npc_isnear(struct block_list * bl) {
@@ -220,58 +224,148 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 	{
 		TBL_PC *sd = (TBL_PC*)bl;
 
-		if (nd->sc.option&OPTION_INVISIBLE)
+		if (nd->sc.option&(OPTION_INVISIBLE|OPTION_CLOAK))
 			return 1;
 
-		// note : disablenpc doesn't reset the previous trigger status on official
-		if( npc_ontouch_event(sd,nd) > 0 && npc_ontouch2_event(sd,nd) > 0 )
-		{ // failed to run OnTouch event, so just click the npc
-			if (sd->npc_id != 0)
-				return 0;
+		switch (nd->subtype) {
+		case NPCTYPE_WARP:
+			if ((!nd->trigger_on_hidden && (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]))) || pc_isdead(sd))
+				return 1;
+			if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(nd->u.warp.mapindex), sd->group_level))
+				return 1;
+			if (sd->count_rewarp > 10) {
+				ShowWarning("Prevented infinite warp loop for player (%d:%d). Please fix NPC: '%s', path: '%s'\n", sd->status.account_id, sd->status.char_id, nd->exname, nd->path);
+				sd->count_rewarp = 0;
+				return 1;
+			}
+			pc_setpos(sd, nd->u.warp.mapindex, nd->u.warp.x, nd->u.warp.y, CLR_OUTSIGHT);
+			break;
+		default:
+			// note : disablenpc doesn't reset the previous trigger status on official
+			if( npc_ontouch_event(sd,nd) > 0 && npc_ontouch2_event(sd,nd) > 0 )
+			{ // failed to run OnTouch event, so just click the npc
+				if (sd->npc_id != 0)
+					return 0;
 
-			pc_stop_walking(sd,1);
-			npc_click(sd,nd);
+				pc_stop_walking(sd,1);
+				npc_click(sd,nd);
+			}
+			break;
 		}
 	}
 	return 0;
 }
 
+bool npc_is_cloaked(struct npc_data* nd, struct map_session_data* sd) {
+	bool npc_cloaked = (nd->sc.option & OPTION_CLOAK) ? true : false;
+
+	if (std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), nd->bl.id) != sd->cloaked_npc.end())
+		return (!npc_cloaked);
+	return npc_cloaked;
+}
+
+static int npc_cloaked_sub(struct block_list *bl, va_list ap)
+{
+	struct map_session_data* sd;
+
+	nullpo_ret(bl);
+	nullpo_ret(sd = (struct map_session_data *)bl);
+	int id = va_arg(ap, int);
+
+	auto it = std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), id);
+
+	if (it != sd->cloaked_npc.end())
+		sd->cloaked_npc.erase(it);
+
+	return 1;
+}
+
 /*==========================================
  * Disable / Enable NPC
  *------------------------------------------*/
-bool npc_enable(const char* name, int flag)
+bool npc_enable_target(const char* name, uint32 char_id, int flag)
 {
 	struct npc_data* nd = npc_name2id(name);
 
-	if (nd==NULL)
-	{
-		ShowError("npc_enable: Attempted to %s a non-existing NPC '%s' (flag=%d).\n", (flag&3) ? "show" : "hide", name, flag);
+	if (!nd) {
+		ShowError("npc_enable: Attempted to %s a non-existing NPC '%s' (flag=%d).\n", (flag&11) ? "show" : "hide", name, flag);
 		return false;
 	}
 
-	if (flag&1) {
-		nd->sc.option&=~OPTION_INVISIBLE;
-		clif_spawn(&nd->bl);
-	} else if (flag&2)
-		nd->sc.option&=~OPTION_HIDE;
-	else if (flag&4)
-		nd->sc.option|= OPTION_HIDE;
-	else {	//Can't change the view_data to invisible class because the view_data for all npcs is shared! [Skotlex]
-		nd->sc.option|= OPTION_INVISIBLE;
-		clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);  // Hack to trick maya purple card [Xazax]
+	if (char_id > 0 && (flag & 24)) {
+		map_session_data *sd = map_charid2sd(char_id);
+	
+		if (!sd) {
+			ShowError("npc_enable: Attempted to %s a NPC '%s' on an invalid target %d.\n", (flag & 8) ? "show" : "hide", name, char_id);
+			return false;
+		}
+
+		unsigned int option = nd->sc.option;
+		if (flag&8)
+			nd->sc.option &= ~OPTION_CLOAK;
+		else
+			nd->sc.option |= OPTION_CLOAK;
+
+		auto it = std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), nd->bl.id);
+	
+		if (it == sd->cloaked_npc.end() && option != nd->sc.option)
+			sd->cloaked_npc.push_back(nd->bl.id);
+		else if (it != sd->cloaked_npc.end() && option == nd->sc.option)
+			sd->cloaked_npc.erase(it);
+	
+		if (nd->class_ != JT_WARPNPC && nd->class_ != JT_GUILD_FLAG)
+			clif_changeoption_target(&nd->bl, &sd->bl);
+		else {
+			if (nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE|OPTION_CLOAK))
+				clif_clearunit_single(nd->bl.id, CLR_OUTSIGHT, sd->fd);
+			else
+				clif_spawn(&nd->bl);
+		}
+		nd->sc.option = option;
+	}
+	else {
+		if (flag&1) {
+			nd->sc.option &= ~OPTION_INVISIBLE;
+			clif_spawn(&nd->bl);
+		}
+		else if (flag&2)
+			nd->sc.option &= ~OPTION_HIDE;
+		else if (flag&4)
+			nd->sc.option |= OPTION_HIDE;
+		else if (flag&8)
+			nd->sc.option &= ~OPTION_CLOAK;
+		else if (flag&16)
+			nd->sc.option |= OPTION_CLOAK;
+		else {	//Can't change the view_data to invisible class because the view_data for all npcs is shared! [Skotlex]
+			nd->sc.option |= OPTION_INVISIBLE;
+			clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);  // Hack to trick maya purple card [Xazax]
+		}
+		if (nd->class_ != JT_WARPNPC && nd->class_ != JT_GUILD_FLAG)	//Client won't display option changes for these classes [Toms]
+			clif_changeoption(&nd->bl);
+		else {
+			if (nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE|OPTION_CLOAK))
+				clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);
+			else
+				clif_spawn(&nd->bl);
+		}
+		map_foreachinmap(npc_cloaked_sub, nd->bl.m, BL_PC, nd->bl.id);	// Because npc option has been updated we remove the npc id from sd->cloaked_npc
 	}
 
-	if (nd->class_ == JT_WARPNPC || nd->class_ == JT_GUILD_FLAG)
-	{	//Client won't display option changes for these classes [Toms]
-		if (nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE))
-			clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);
-		else
-			clif_spawn(&nd->bl);
-	} else
-		clif_changeoption(&nd->bl);
-
-	if( flag&3 && (nd->u.scr.xs >= 0 || nd->u.scr.ys >= 0) )// check if player standing on a OnTouchArea
-		map_foreachinallarea( npc_enable_sub, nd->bl.m, nd->bl.x-nd->u.scr.xs, nd->bl.y-nd->u.scr.ys, nd->bl.x+nd->u.scr.xs, nd->bl.y+nd->u.scr.ys, BL_PC, nd );
+	if (flag&11) {	// check if player standing on a OnTouchArea
+		int xs = -1, ys = -1;
+		switch (nd->subtype) {
+		case NPCTYPE_SCRIPT:
+			xs = nd->u.scr.xs;
+			ys = nd->u.scr.ys;
+			break;
+		case NPCTYPE_WARP:
+			xs = nd->u.warp.xs;
+			ys = nd->u.warp.ys;
+			break;
+		}
+		if (xs >= 0 || ys >= 0)
+			map_foreachinallarea( npc_enable_sub, nd->bl.m, nd->bl.x-xs, nd->bl.y-ys, nd->bl.x+xs, nd->bl.y+ys, BL_PC, nd );
+	}
 
 	return true;
 }
@@ -895,6 +989,26 @@ int npc_event_sub(struct map_session_data* sd, struct event_data* ev, const char
 		npc_event_dequeue(sd);
 		return 2;
 	}
+
+	char ontouch_event_name[EVENT_NAME_LENGTH];
+	char ontouch2_event_name[EVENT_NAME_LENGTH];
+
+	safesnprintf(ontouch_event_name, ARRAYLENGTH(ontouch_event_name), "%s::%s", ev->nd->exname, script_config.ontouch_event_name);
+	safesnprintf(ontouch2_event_name, ARRAYLENGTH(ontouch2_event_name), "%s::%s", ev->nd->exname, script_config.ontouch2_event_name);
+
+	// recheck some conditions for OnTouch/OnTouch_
+	if (strcmp(eventname, ontouch_event_name) == 0 || strcmp(eventname, ontouch2_event_name) == 0) {
+		int xs = ev->nd->u.scr.xs;
+		int ys = ev->nd->u.scr.ys;
+		int x = ev->nd->bl.x;
+		int y = ev->nd->bl.y;
+
+		if (x > 0 && y > 0 && (xs > -1 && ys > -1) && ((sd->bl.x < x - xs) || (sd->bl.x > x + xs) || (sd->bl.y < y - ys) || (sd->bl.y > y + ys)) ||
+				(sd->state.block_action & PCBLOCK_NPCCLICK) || npc_is_cloaked(ev->nd, sd)) {
+			npc_event_dequeue(sd);
+			return 2;
+		}
+	}
 	run_script(ev->nd->u.scr.script,ev->pos,sd->bl.id,ev->nd->bl.id);
 	return 0;
 }
@@ -1053,6 +1167,9 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 		if (x >= mapdata->npc[i]->bl.x - xs && x <= mapdata->npc[i]->bl.x + xs && y >= mapdata->npc[i]->bl.y - ys && y <= mapdata->npc[i]->bl.y + ys) {
 			f = 0;
 
+			if (npc_is_cloaked(mapdata->npc[i], sd))
+				continue;
+
 			switch (mapdata->npc[i]->subtype) {
 			case NPCTYPE_WARP:
 				if ((!mapdata->npc[i]->trigger_on_hidden && (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]))) || pc_isdead(sd))
@@ -1103,7 +1220,7 @@ int npc_touch_areanpc2(struct mob_data *md)
 
 	for( i = 0; i < mapdata->npc_num_area; i++ )
 	{
-		if( mapdata->npc[i]->sc.option&OPTION_INVISIBLE )
+		if( mapdata->npc[i]->sc.option&(OPTION_INVISIBLE|OPTION_CLOAK) )
 			continue;
 
 		switch( mapdata->npc[i]->subtype )
@@ -2114,7 +2231,10 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 			return 1; // In official server, this illegal attempt the player will be disconnected
 		}
 
-		value = pc_modifysellvalue(sd, sd->inventory_data[idx]->value_sell);
+		if (battle_config.rental_item_novalue && sd->inventory.u.items_inventory[idx].expire_time)
+			value = 0;
+		else
+			value = pc_modifysellvalue(sd, sd->inventory_data[idx]->value_sell);
 
 		z+= (double)value*amount;
 	}
@@ -3332,8 +3452,11 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		case NPCTYPE_POINTSHOP:
 		case NPCTYPE_MARKETSHOP:
 			++npc_shop;
+			safestrncpy( nd->u.shop.pointshop_str, dnd->u.shop.pointshop_str, strlen( dnd->u.shop.pointshop_str ) );
+			nd->u.shop.itemshop_nameid = dnd->u.shop.itemshop_nameid;
 			nd->u.shop.shop_item = dnd->u.shop.shop_item;
 			nd->u.shop.count = dnd->u.shop.count;
+			nd->u.shop.discount =  dnd->u.shop.discount;
 			break;
 
 		case NPCTYPE_WARP:
@@ -3396,7 +3519,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 	char newname[NPC_NAME_LENGTH+1];
 	struct map_data *mapdata = map_getmapdata(m);
 
-	if( mapdata->instance_id == 0 )
+	if( mapdata->instance_id <= 0 )
 		return 1;
 
 	snprintf(newname, ARRAYLENGTH(newname), "dup_%d_%d", mapdata->instance_id, snd->bl.id);
@@ -3407,15 +3530,17 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 
 	if( snd->subtype == NPCTYPE_WARP ) { // Adjust destination, if instanced
 		struct npc_data *wnd = NULL; // New NPC
-		struct instance_data *im = &instance_data[mapdata->instance_id];
-		int dm = map_mapindex2mapid(snd->u.warp.mapindex), imap = 0, i;
+		std::shared_ptr<s_instance_data> idata = util::umap_find(instances, mapdata->instance_id);
+		int dm = map_mapindex2mapid(snd->u.warp.mapindex), imap = 0;
+
 		if( dm < 0 ) return 1;
 
-		for(i = 0; i < im->cnt_map; i++)
-			if(im->map[i]->m && map_mapname2mapid(map_getmapdata(im->map[i]->src_m)->name) == dm) {
-				imap = map_mapname2mapid(map_getmapdata(im->map[i]->m)->name);
+		for (const auto &it : idata->map) {
+			if (it.m && map_mapname2mapid(map_getmapdata(it.src_m)->name) == dm) {
+				imap = map_mapname2mapid(map_getmapdata(it.m)->name);
 				break; // Instance map matches destination, update to instance map
 			}
+		}
 
 		if(!imap)
 			imap = map_mapname2mapid(map_getmapdata(dm)->name);
@@ -4209,22 +4334,22 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 						args.skill_damage.caster = atoi(caster_constant);
 					else {
 						int64 val_tmp;
-						int val;
 
 						if (!script_get_constant(caster_constant, &val_tmp)) {
 							ShowError( "npc_parse_mapflag: Unknown constant '%s'. Skipping (file '%s', line '%d').\n", caster_constant, filepath, strline(buffer, start - buffer) );
 							break;
 						}
 
-						val = static_cast<int>(val_tmp);
-						args.skill_damage.caster = val;
+						args.skill_damage.caster = static_cast<uint16>(val_tmp);
 					}
 					
-					if (!args.skill_damage.caster)
+					if (args.skill_damage.caster == 0)
 						args.skill_damage.caster = BL_ALL;
 
-					for (int i = 0; i < SKILLDMG_MAX; i++)
+					for (int i = SKILLDMG_PC; i < SKILLDMG_MAX; i++)
 						args.skill_damage.rate[i] = cap_value(args.skill_damage.rate[i], -100, 100000);
+
+					trim(skill_name);
 
 					if (strcmp(skill_name, "all") == 0) // Adjust damage for all skills
 						map_setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
@@ -4233,7 +4358,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 					else { // Adjusted damage for specified skill
 						args.flag_val = 1;
 						map_setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
-						map_skill_damage_add(map_getmapdata(m), skill_name2id(skill_name), args.skill_damage.rate, args.skill_damage.caster);
+						map_skill_damage_add(map_getmapdata(m), skill_name2id(skill_name), &args);
 					}
 				}
 			}
@@ -4500,8 +4625,6 @@ const char *npc_get_script_event_name(int npce_index)
 		return script_config.kill_pc_event_name;
 	case NPCE_KILLNPC:
 		return script_config.kill_mob_event_name;
-	case NPCE_STATCALC:
-		return script_config.stat_calc_event_name;
 	default:
 		ShowError("npc_get_script_event_name: npce_index is outside the array limits: %d (max: %d).\n", npce_index, NPCE_MAX);
 		return NULL;

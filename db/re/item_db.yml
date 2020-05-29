@@ -5062,7 +5062,7 @@ Body:
     EquipLevelMin: 40
     Refineable: true
     Script: |
-       bonus2 bAddEff,Eff_Curse,30; bonus2 bComaClass,Class_Normal,10; 
+       bonus2 bAddEff,Eff_Curse,30; bonus2 bComaClass,Class_All,10; 
   - Id: 1133
     AegisName: Fire_Brand
     Name: Fireblend
@@ -5359,7 +5359,7 @@ Body:
     EquipLevelMin: 40
     Refineable: true
     Script: |
-       bonus bAtkEle,Ele_Ghost; bonus3 bSPVanishRate,30,30,BF_WEAPON|BF_MAGIC|BF_MISC; bonus bSPDrainValue,-1; bonus bUnbreakableWeapon; 
+       bonus bAtkEle,Ele_Ghost; bonus3 bSPVanishRate,3,30,BF_WEAPON; bonus bSPDrainValue,-1; bonus bUnbreakableWeapon; 
   - Id: 1142
     AegisName: Jewel_Sword
     Name: Jeweled Sword
@@ -5868,7 +5868,7 @@ Body:
     EquipLevelMin: 48
     Refineable: true
     Script: |
-       bonus bUnbreakableWeapon; bonus bAtkEle,Ele_Holy; 
+       bonus bInt,20; bonus bLuk,20; 
   - Id: 1162
     AegisName: Broad_Sword_
     Name: Broad Sword
@@ -5978,7 +5978,7 @@ Body:
     EquipLevelMin: 48
     Refineable: true
     Script: |
-       bonus bFlee,30; bonus bStr,-5; bonus bAspd,2; bonus bDefRate,-67; bonus bDef2Rate,-67; 
+       bonus bFlee,30; bonus bStr,-5; bonus bAspd,2; bonus bDefRate,-66; bonus bDef2Rate,-66; 
   - Id: 1166
     AegisName: Dragon_Slayer
     Name: Dragon Slayer
@@ -6461,7 +6461,7 @@ Body:
     EquipLevelMin: 90
     Refineable: true
     Script: |
-       bonus bFlee2,10; if(JobLevel>=70) autobonus "{ bonus bBaseAtk,50; }",10,10000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }"; if(getrefine()>8) { bonus bVariableCastrate,-20; bonus bDelayRate,-20; } 
+       bonus bFlee2,10; if(JobLevel>=70 || (eaclass()&EAJL_THIRD && JobLevel>=50)) autobonus "{ bonus bBaseAtk,50; }",10,10000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }"; if(getrefine()>8) { bonus bDelayRate,-20; bonus bUseSPrate,-20; } 
   - Id: 1182
     AegisName: Bloody_Eater
     Name: Bloody Eater
@@ -6771,9 +6771,7 @@ Body:
     Attack: 280
     Range: 2
     Job:
-      Swordman: true
       Knight: true
-      Crusader: true
       Star_Gladiator: true
       Kagerou: true
       Taekwon: true
@@ -6781,6 +6779,10 @@ Body:
       Oboro: true
       Rebellion: true
       Summoner: true
+    Class:
+      Third: true
+      Third_High: true
+      Third_Baby: true
     Location:
       Right_Hand: true
       Left_Hand: true
@@ -6877,7 +6879,7 @@ Body:
       Left_Hand: true
     WeaponLevel: 4
     Script: |
-       bonus bAtkEle,Ele_Dark; 
+       bonus bAtkEle,Ele_Dark; bonus2 bAddRace,RC_DemiHuman,20; bonus2 bSubRace,RC_DemiHuman,-10; bonus bIgnoreDefRace,RC_DemiHuman; bonus2 bAddRace,RC_Player,20; bonus2 bSubRace,RC_Player,-10; bonus bIgnoreDefRace,RC_Player; 
   - Id: 1195
     AegisName: E_Executioner_C
     Name: Executioner
@@ -6997,7 +6999,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-       bonus bUnbreakableWeapon; bonus bCritical,20; bonus bCritAtkRate,50; if(BaseLevel>99) { bonus bBaseAtk,50; } 
+       bonus bCritical,20; bonus bCritAtkRate,50; bonus2 bAddEff,Eff_Crystalize,30; if(BaseLevel>99) { bonus bBaseAtk,50; } 
   - Id: 1199
     AegisName: Ebony_Toe_Nail
     Name: Ebony Toe Nail
@@ -8757,7 +8759,7 @@ Body:
     EquipLevelMin: 55
     Refineable: true
     Script: |
-       bonus bAtkEle,Ele_Holy; bonus bDex,1; 
+       bonus bAtkEle,Ele_Holy; bonus2 bAddRace,RC_Demon,5; 
   - Id: 1245
     AegisName: Cinquedea
     Name: Cinquedea
@@ -9409,7 +9411,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-       bonus2 bAddRace,RC_DemiHuman,70; bonus2 bAddRace,RC_Player,70; bonus bDef,3; bonus bFlee,5; bonus bFlee2,2; bonus bAspdRate,5; 
+       bonus2 bAddRace,RC_DemiHuman,70; bonus2 bAddRace,RC_Player,70; bonus bDef,3; bonus bFlee,5; bonus bFlee2,2; bonus bAspdRate,8; 
   - Id: 1268
     AegisName: Wild_Beast_Claw
     Name: Wild Beast Claw
@@ -9626,7 +9628,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-       bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Curse,5000; bonus bCritical,-1; bonus bUnbreakableWeapon; 
+       bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Curse,5000; bonus bUnbreakableWeapon; 
   - Id: 1275
     AegisName: Katar_Of_Cold_Icicle_
     Name: Katar of Frozen Icicle
@@ -9870,7 +9872,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-       bonus2 bAddRace,RC_DemiHuman,70; bonus2 bAddRace,RC_Player,70; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,20; bonus2 bIgnoreDefRaceRate,RC_Player,20; bonus bUnbreakableWeapon; .@r = getrefine(); if(.@r>5) { bonus2 bAddRace,RC_DemiHuman,pow(min(14,.@r)-4,2); bonus2 bAddRace,RC_Player,pow(min(14,.@r)-4,2); bonus2 bCriticalAddRace,RC_DemiHuman,5; bonus2 bCriticalAddRace,RC_Player,5; } if(.@r>8) autobonus "{ bonus bAspdRate,100; }",70,3000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }"; 
+       bonus2 bAddRace,RC_DemiHuman,70; bonus2 bAddRace,RC_Player,70; bonus bCritAtkRate,20; bonus bUnbreakableWeapon; .@r = getrefine(); if(.@r>5) { bonus2 bAddRace,RC_DemiHuman,pow(min(14,.@r)-4,2); bonus2 bAddRace,RC_Player,pow(min(14,.@r)-4,2); bonus2 bCriticalAddRace,RC_DemiHuman,5; bonus2 bCriticalAddRace,RC_Player,5; } if(.@r>8) autobonus "{ bonus bAspdRate,100; }",70,3000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }"; 
   - Id: 1283
     AegisName: Katar_Of_Speed
     Name: Katar Of Speed
@@ -9933,7 +9935,7 @@ Body:
     EquipLevelMin: 50
     Refineable: true
     Script: |
-       bonus2 bSkillAtk,"AS_GRIMTOOTH",10; bonus3 bAutoSpell,"AS_SONICBLOW",max(getskilllv("AS_SONICBLOW"),1),5; 
+       bonus2 bSkillAtk,"AS_GRIMTOOTH",10; bonus3 bAutoSpell,"AS_SONICBLOW",max(getskilllv("AS_SONICBLOW"),1),100; 
   - Id: 1285
     AegisName: Cakram
     Name: Chakram
@@ -10342,6 +10344,8 @@ Body:
     WeaponLevel: 4
     EquipLevelMin: 105
     Refineable: true
+    Script: |
+       bonus bCritical,getrefine(); 
   - Id: 1299
     AegisName: TE_Woe_Katar
     Name: TE Woe Katar
@@ -10374,7 +10378,38 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-       bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Bleeding,3000; 
+       bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Bleeding,1000; 
+  - Id: 1300
+    AegisName: Cleaver_
+    Name: Cleaver
+    Type: Weapon
+    SubType: 1hAxe
+    Buy: 20
+    Weight: 1200
+    Attack: 140
+    Range: 1
+    Slots: 3
+    Job:
+      Swordman: true
+      Merchant: true
+      Knight: true
+      Crusader: true
+      Star_Gladiator: true
+      Blacksmith: true
+      Alchemist: true
+      Kagerou: true
+      Taekwon: true
+      Soul_Linker: true
+      Oboro: true
+      Rebellion: true
+      Summoner: true
+    Location:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 44
+    Refineable: true
+    Script: |
+       bonus2 bSubRace,RC_DemiHuman,5; bonus2 bSubRace,RC_Player,5; bonus3 bAddMonsterDropItem,517,RC_Brute,3000; 
   - Id: 1301
     AegisName: Axe
     Name: Axe
@@ -10561,7 +10596,7 @@ Body:
     EquipLevelMin: 76
     Refineable: true
     Script: |
-       bonus bDex,2; bonus bLuk,2; 
+       bonus bDex,2; bonus bLuk,2; bonus bUnbreakableWeapon; 
   - Id: 1307
     AegisName: Windhawk
     Name: Windhawk
@@ -10594,7 +10629,7 @@ Body:
     EquipLevelMin: 14
     Refineable: true
     Script: |
-       bonus bAtkEle,Ele_Wind; bonus bAspdRate,5; 
+       bonus bAtkEle,Ele_Wind; bonus bAspdRate,5; bonus bUnbreakableWeapon; 
   - Id: 1308
     AegisName: Golden_Axe
     Name: Golden Axe
@@ -10832,7 +10867,7 @@ Body:
       Left_Hand: true
     WeaponLevel: 4
     Script: |
-       bonus bAtkEle,Ele_Wind; 
+       bonus bAtkEle,Ele_Wind; skill "ITM_TOMAHAWK",1; 
   - Id: 1315
     AegisName: F_Right_Epsilon_C
     Name: Light Epsilon
@@ -10861,7 +10896,7 @@ Body:
     WeaponLevel: 4
     EquipLevelMin: 1
     Script: |
-       bonus bAtkEle,Ele_Holy; bonus bStr,10; 
+       bonus bAtkEle,Ele_Holy; bonus bStr,10; bonus2 bAddRace,RC_Demon,3; skill "AL_HEAL",3; 
   - Id: 1316
     AegisName: Adventure_Axe
     Name: Adventure Axe
@@ -10944,7 +10979,7 @@ Body:
     EquipLevelMin: 105
     Refineable: true
     Script: |
-       bonus bUnbreakableWeapon; 
+       skill "ITM_TOMAHAWK",1; 
   - Id: 1319
     AegisName: TE_Woe_Axe
     Name: TE Woe Axe
@@ -10985,7 +11020,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-       bonus bUnbreakableWeapon; bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Freeze,3000; 
+       bonus bUnbreakableWeapon; bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Freeze,1000; 
   - Id: 1321
     AegisName: Dofle_Axe_
     Name: Deflation Axe
@@ -11019,7 +11054,7 @@ Body:
     EquipLevelMin: 105
     Refineable: true
     Script: |
-       bonus bUnbreakableWeapon; 
+       skill "ITM_TOMAHAWK",1; 
   - Id: 1322
     AegisName: Ru_Blue_Axe
     Name: Blue Axe
@@ -11030,6 +11065,40 @@ Body:
     Attack: 180
     Range: 1
     Slots: 1
+    Job:
+      Mage: true
+      Thief: true
+      Novice: true
+      Archer: true
+      Acolyte: true
+      Dancer: true
+      Swordman: true
+      Merchant: true
+      Knight: true
+      Bard: true
+      Priest: true
+      Crusader: true
+      Wizard: true
+      Star_Gladiator: true
+      Super_Novice: true
+      Blacksmith: true
+      Hunter: true
+      Assassin: true
+      Monk: true
+      Rogue: true
+      Sage: true
+      Kagerou: true
+      Gunslinger: true
+      Ninja: true
+      Taekwon: true
+      Soul_Linker: true
+      Oboro: true
+      Rebellion: true
+      Summoner: true
+    Class:
+      Third: true
+      Third_High: true
+      Third_Baby: true
     Location:
       Right_Hand: true
     WeaponLevel: 1
@@ -11149,6 +11218,56 @@ Body:
     Refineable: true
     Script: |
        .@r = getrefine(); bonus bUnbreakableWeapon; bonus2 bAddClass,Class_all,5; bonus bBaseAtk,4*.@r; if (.@r>=11) .@val = 35; else if (.@r>=9) .@val = 20; bonus2 bSkillAtk,"NC_AXEBOOMERANG",.@val; bonus2 bSkillAtk,"NC_POWERSWING",.@val; 
+  - Id: 1336
+    AegisName: Guardian_Knight_Axe
+    Name: Guardian Knight Axe
+    Type: Weapon
+    SubType: 1hAxe
+    Weight: 1500
+    Attack: 210
+    Range: 1
+    Slots: 2
+    Job:
+      Mage: true
+      Thief: true
+      Novice: true
+      Archer: true
+      Acolyte: true
+      Dancer: true
+      Swordman: true
+      Merchant: true
+      Knight: true
+      Bard: true
+      Priest: true
+      Crusader: true
+      Wizard: true
+      Star_Gladiator: true
+      Super_Novice: true
+      Hunter: true
+      Assassin: true
+      Monk: true
+      Rogue: true
+      Sage: true
+      Alchemist: true
+      Kagerou: true
+      Gunslinger: true
+      Ninja: true
+      Taekwon: true
+      Soul_Linker: true
+      Oboro: true
+      Rebellion: true
+      Summoner: true
+    Class:
+      Third: true
+      Third_High: true
+      Third_Baby: true
+    Location:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+       bonus bUnbreakableWeapon; bonus2 bAddClass,Class_All,5; .@r = getrefine(); bonus bLongAtkRate,.@r; if(.@r >= 9){ bonus2 bSkillAtk,"NC_POWERSWING",20; } if(.@r >= 11){ bonus2 bAddRace,RC_Undead,20; bonus2 bAddRace,RC_Angel,20; } 
   - Id: 1351
     AegisName: Battle_Axe
     Name: Battle Axe
@@ -12042,7 +12161,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-       bonus bStr,5; bonus bHit,20; bonus2 bAddSkillBlow,"MC_MAMMONITE",5; bonus2 bAddEff,Eff_Stun,2000; 
+       bonus bStr,5; bonus bHit,20; bonus2 bSkillAtk,"MC_MAMMONITE",20; bonus2 bAddEff,Eff_Stun,2000; 
   - Id: 1379
     AegisName: BF_Two_Handed_Axe1
     Name: Valorous Insane Battle Axe
@@ -12197,10 +12316,7 @@ Body:
     Attack: 200
     Range: 1
     Job:
-      Swordman: true
       Merchant: true
-      Knight: true
-      Crusader: true
       Star_Gladiator: true
       Blacksmith: true
       Alchemist: true
@@ -12217,7 +12333,7 @@ Body:
     EquipLevelMin: 60
     Refineable: true
     Script: |
-       bonus bAtkEle,Ele_Holy; bonus bVit,10; bonus2 bAddRace,RC_Undead,10; bonus3 bAutoSpell,"AL_BLESSING",5,30; 
+       bonus2 bAddRace,RC_Undead,10; bonus3 bAutoSpell,"AL_BLESSING",5,5; 
   - Id: 1384
     AegisName: Veteran_Axe
     Name: Veteran Axe
@@ -12249,7 +12365,7 @@ Body:
     EquipLevelMin: 80
     Refineable: true
     Script: |
-       if(getskilllv("BS_DAGGER")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_SWORD")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_TWOHANDSWORD")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_KNUCKLE")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_SPEAR")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_AXE")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_MACE")==3) { bonus bBaseAtk,10; } bonus bVit,2; 
+       if(getskilllv("BS_DAGGER")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_SWORD")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_TWOHANDSWORD")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_KNUCKLE")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_SPEAR")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_AXE")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_MACE")==3) { bonus bBaseAtk,10; } bonus bVit,2; bonus4 bAutoSpellOnSkill,"BS_HAMMERFALL",50,3,"SM_MAGNUM"; 
   - Id: 1385
     AegisName: Bradium_Stonehammer
     Name: Bradium Stone Hammer
@@ -12260,13 +12376,8 @@ Body:
     Attack: 210
     Range: 1
     Job:
-      Swordman: true
-      Merchant: true
-      Knight: true
-      Crusader: true
       Star_Gladiator: true
       Blacksmith: true
-      Alchemist: true
       Kagerou: true
       Taekwon: true
       Soul_Linker: true
@@ -12275,7 +12386,6 @@ Body:
       Summoner: true
     Class:
       High: true
-      Third_High: true
     Location:
       Right_Hand: true
       Left_Hand: true
@@ -12320,7 +12430,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-       if(readparam(bStr)>=95){ bonus bBaseAtk,400; bonus2 bAddEff,Eff_Stun,3000; bonus bAspdRate,-25; bonus bUseSPrate,100; bonus bBreakArmorRate,500; } 
+       bonus bAspdRate,-25; bonus bUseSPrate,100; if(readparam(bStr)>=95){ bonus bBaseAtk,400; bonus2 bAddEff,Eff_Stun,3000; bonus bBreakArmorRate,500; } 
   - Id: 1387
     AegisName: Giant_Axe
     Name: Giant Axe
@@ -12332,8 +12442,6 @@ Body:
     Range: 1
     Slots: 1
     Job:
-      Swordman: true
-      Merchant: true
       Knight: true
       Crusader: true
       Star_Gladiator: true
@@ -12497,8 +12605,6 @@ Body:
     Range: 1
     Slots: 1
     Job:
-      Swordman: true
-      Merchant: true
       Knight: true
       Crusader: true
       Star_Gladiator: true
@@ -12510,6 +12616,11 @@ Body:
       Oboro: true
       Rebellion: true
       Summoner: true
+    Class:
+      High: true
+      Third: true
+      Third_High: true
+      Third_Baby: true
     Location:
       Right_Hand: true
       Left_Hand: true
@@ -12517,7 +12628,7 @@ Body:
     EquipLevelMin: 95
     Refineable: true
     Script: |
-       bonus bAtkEle,Ele_Fire; bonus bUnbreakableWeapon; bonus2 bAddEff,Eff_Burning,300; bonus2 bAddEff2,Eff_Burning,300; 
+       bonus bAtkEle,Ele_Fire; bonus bUnbreakableWeapon; bonus2 bAddEff,Eff_Burning,200; bonus2 bAddEff2,Eff_Burning,100; 
   - Id: 1393
     AegisName: End_Sektura
     Name: End Sectora
@@ -12529,8 +12640,6 @@ Body:
     Range: 1
     Slots: 1
     Job:
-      Swordman: true
-      Merchant: true
       Knight: true
       Crusader: true
       Star_Gladiator: true
@@ -12542,6 +12651,11 @@ Body:
       Oboro: true
       Rebellion: true
       Summoner: true
+    Class:
+      High: true
+      Third: true
+      Third_High: true
+      Third_Baby: true
     Location:
       Right_Hand: true
       Left_Hand: true
@@ -12549,7 +12663,7 @@ Body:
     EquipLevelMin: 95
     Refineable: true
     Script: |
-       bonus bAtkEle,Ele_Water; bonus bUnbreakableWeapon; bonus2 bAddEff,Eff_Crystalize,300; bonus2 bAddEff2,Eff_Crystalize,300; 
+       bonus bAtkEle,Ele_Water; bonus bUnbreakableWeapon; bonus2 bAddEff,Eff_Freeze,300; bonus2 bAddEff2,Eff_Freeze,300; 
   - Id: 1394
     AegisName: Upg_Two_Handed_Axe
     Name: Upg Two Handed Axe
@@ -12584,7 +12698,7 @@ Body:
       Override: 100
       NoDrop: true
     Script: |
-       bonus bBaseAtk,(getrefine()*14); if(BaseLevel>70) bonus bBaseAtk,(((BaseLevel-70)/10)*10); 
+       bonus bBaseAtk,(getrefine()*14); if(BaseLevel>70) bonus bBaseAtk,(((BaseLevel-70)/10)*10); bonus bUnbreakableWeapon; 
   - Id: 1395
     AegisName: Velum_Buster
     Name: Vellum Buster
@@ -12649,7 +12763,7 @@ Body:
        bonus bUnbreakableWeapon; bonus2 bAddRace,RC_Player,40; bonus2 bIgnoreDefRaceRate,RC_Player,30; .@r = getrefine(); if(.@r>=6) { bonus2 bSkillAtk,"NC_AXEBOOMERANG",80; bonus2 bSkillAtk,"NC_POWERSWING",80; } if(.@r>=9) { bonus2 bAddRace,RC_Player,60; } 
   - Id: 1397
     AegisName: Bradium_Stonehammer_
-    Name: Bradium Stonehammer
+    Name: Bradium Stone Hammer
     Type: Weapon
     SubType: 2hAxe
     Buy: 20
@@ -12658,19 +12772,16 @@ Body:
     Range: 1
     Slots: 2
     Job:
-      Swordman: true
-      Merchant: true
-      Knight: true
-      Crusader: true
       Star_Gladiator: true
       Blacksmith: true
-      Alchemist: true
       Kagerou: true
       Taekwon: true
       Soul_Linker: true
       Oboro: true
       Rebellion: true
       Summoner: true
+    Class:
+      High: true
     Location:
       Right_Hand: true
       Left_Hand: true
@@ -12678,7 +12789,7 @@ Body:
     EquipLevelMin: 75
     Refineable: true
     Script: |
-       bonus bUnbreakableWeapon; 
+       bonus3 bAddEffOnSkill,"BS_HAMMERFALL",Eff_Stun,500+(200*getrefine()); 
   - Id: 1398
     AegisName: Metal_Two_Handed_Axe
     Name: Metal Two Handed Axe
@@ -12756,7 +12867,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-       bonus bUnbreakableWeapon; bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Stun,3000; 
+       bonus bUnbreakableWeapon; bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Stun,1000; 
   - Id: 1400
     AegisName: Spear_of_Vicious_Mind
     Name: Spear of Vicious Mind
@@ -30071,7 +30182,7 @@ Body:
     Refineable: true
     View: 3
     Script: |
-       bonus2 bSubRace,Ele_Undead,5; bonus2 bSubRace,RC_DemiHuman,-5; 
+       bonus2 bSubEle,Ele_Undead,5; bonus2 bSubRace,RC_DemiHuman,-5; 
   - Id: 2159
     AegisName: Sharel_Shield
     Name: Sharerushirudo
@@ -36089,7 +36200,7 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Script: |
-       bonus bMaxSP,40; .@r = getrefine(); bonus bMaxHPrate,(.@r<=7?.@r-7:1); 
+       bonus bMaxSP,40; .@r = getrefine(); if(.@r>7) bonus bMaxHPrate,.@r-7; 
   - Id: 2476
     AegisName: Peuz_Greave
     Name: Peuz's Greaves
@@ -36116,7 +36227,7 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Script: |
-       bonus bMaxSP,40; .@r = getrefine(); bonus bAgi,(.@r<=7?.@r-7:1); 
+       bonus bMaxSP,40; .@r = getrefine(); if(.@r>7) bonus bAgi,.@r-7; 
   - Id: 2477
     AegisName: Sabah_Shoes
     Name: Sapha Shoes
@@ -43456,7 +43567,7 @@ Body:
       Left_Accessory: true
     EquipLevelMin: 45
     Script: |
-       bonus bCritical,7; bonus bAspdRate,3; bonus2 bAddEff2,Eff_Curse,10; 
+       bonus bCritical,7; bonus bAspdRate,3; 
   - Id: 2856
     AegisName: Half_Megin
     Name: Half Megingjard
@@ -55293,60 +55404,38 @@ Body:
     AegisName: Bear's_Power
     Name: Bear's Power
     Type: Card
-    Buy: 20
-    Weight: 10
     Script: |
        autobonus2 "{ bonus bStr,200; bonus2 bHPLossRate,500,1000; }",20,5000,BF_WEAPON,"{ active_transform 1060,5000; specialeffect2 EF_POTION_BERSERK; showscript \"Bigfoot Power !\"; }"; 
   - Id: 4876
     AegisName: Runaway_Magic
     Name: Runaway Magic
     Type: Card
-    Buy: 20
-    Weight: 10
     Script: |
-       autobonus "{ bonus bInt,200; bonus2 bSPLossRate,200,1000; }",10,10000,BF_MAGIC,"{ specialeffect2 EF_LAMADAN; }"; 
-    UnEquipScript: |
-       heal 0,-2000; 
+       autobonus "{ bonus bInt,200; bonus2 bSPLossRate,200,1000; }",15,10000,BF_MAGIC,"{ specialeffect2 EF_LAMADAN; }"; 
   - Id: 4877
     AegisName: Speed_Of_Light
     Name: Speed of Light
     Type: Card
-    Buy: 20
-    Weight: 10
     Script: |
-       /*TODO: Confirm the rate*/ autobonus "{ bonus bAspdRate,100; bonus bFlee,100; bonus2 bHPLossRate,400,1000; bonus2 bSPLossRate,50,1000;}",10,5000,BF_WEAPON,"{ specialeffect2 EF_AGIUP2; }"; 
-    UnEquipScript: |
-       heal 0,-300; 
+       autobonus "{ bonus bAspdRate,100; bonus bFlee,100; bonus2 bHPLossRate,400,1000; bonus2 bSPLossRate,40,1000;}",10,5000,BF_WEAPON,"{ specialeffect2 EF_FLASHER; }"; 
   - Id: 4878
     AegisName: Muscle_Fool
     Name: Muscle Fool
     Type: Card
-    Buy: 20
-    Weight: 10
     Script: |
-       autobonus2 "{ bonus bVit,200; bonus2 bAddRace,RC_All,-50; bonus bMatkRate,-50; }",10,5000,BF_WEAPON,"{ specialeffect2 EF_GUARD3; }"; 
-    UnEquipScript: |
-       heal 0,-300; 
+       autobonus2 "{ bonus bDef,1000; bonus2 bAddRace,RC_All,-50; bonus bMatkRate,-50; }",20,5000,BF_WEAPON,"{ specialeffect2 EF_MAGNUMBREAK; }"; 
   - Id: 4879
     AegisName: Hawkeye
     Name: Hawkeye
     Type: Card
-    Buy: 20
-    Weight: 10
     Script: |
-       autobonus "{ bonus bDex,200; bonus2 bSPLossRate,50,1000; }",10,5000,BF_WEAPON,"{ specialeffect2 EF_BASH3D6; }"; 
-    UnEquipScript: |
-       heal 0,-300; 
+       autobonus "{ bonus bDex,200; bonus2 bSPLossRate,50,1000; }",30,5000,BF_WEAPON,"{ specialeffect2 EF_FLASHER; }"; 
   - Id: 4880
     AegisName: Lucky_Day
     Name: Lucky Day
     Type: Card
-    Buy: 20
-    Weight: 10
     Script: |
-       autobonus "{ bonus bLuk,200; }",10,5000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_DANCE_BLADE_ATK; }"; 
-    UnEquipScript: |
-       heal 0,-300; 
+       autobonus "{ bonus bLuk,200; bonus2 bAddMonsterDropItem,7444,10; }",15,5000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_MVP; showscript \"LUCKY MAX !!\"; }"; autobonus2 "{ bonus bLuk,200; bonus2 bAddMonsterDropItem,7444,1; }",1,5000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_MVP; showscript \"LUCKY MAX !!\"; }"; 
   - Id: 4881
     AegisName: Attack_Delay_4
     Name: Attack Delay 4
@@ -77179,8 +77268,8 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6689
-    AegisName: Fire_Beetle_Shell
-    Name: Fire Beetle Shell
+    AegisName: BurningSkin
+    Name: Burning Bug Skin
     Type: Etc
     Buy: 10
     Trade:
@@ -77192,8 +77281,8 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6690
-    AegisName: Delicious_Stem
-    Name: Delicious Stem
+    AegisName: YummyStem
+    Name: Yummy Stem
     Type: Etc
     Buy: 10
     Trade:
@@ -77205,47 +77294,47 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6691
-    AegisName: Fire_Feather
-    Name: Fire Feather
+    AegisName: BurningFeather
+    Name: Burning Feather
     Type: Etc
     Buy: 10
     Flags:
       BuyingStore: true
   - Id: 6692
-    AegisName: Patrol_Journal
-    Name: Patrol Journal
+    AegisName: PatrolLog
+    Name: Patrol Log
     Type: Etc
     Buy: 10
     Weight: 1
     Flags:
       BuyingStore: true
   - Id: 6693
-    AegisName: Stone_Blessing
-    Name: Stone Blessing
+    AegisName: Stone_Of_Blessing
+    Name: Stone Of Blessing
     Type: Etc
     Buy: 10
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 6694
-    AegisName: Blood_of_The_Monster
-    Name: Blood of The Monster
+    AegisName: Monster_Blood
+    Name: Monster Blood
     Type: Etc
     Buy: 10
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 6695
-    AegisName: Tooth_Rock_Of_Fire_Golem
-    Name: Tooth Rock Of Fire Golem
+    AegisName: ToothOfFlameGolem
+    Name: Golem's Fiery Stone Tooth
     Type: Etc
     Buy: 10
     Weight: 100
     Flags:
       BuyingStore: true
   - Id: 6696
-    AegisName: Fire_Frill
-    Name: Fire Frill
+    AegisName: ToothOfFlameFrilldora
+    Name: Frilldora's Fiery Nape
     Type: Etc
     Buy: 10
     Weight: 10
@@ -85293,63 +85382,24 @@ Body:
   - Id: 7663
     AegisName: Full_Metal_Jacket
     Name: Full Metal Jacket
-    Type: Ammo
-    SubType: Bullet
+    Type: Etc
     Buy: 200
     Weight: 2
     Attack: 10
-    Job:
-      Star_Gladiator: true
-      Kagerou: true
-      Gunslinger: true
-      Taekwon: true
-      Soul_Linker: true
-      Oboro: true
-      Rebellion: true
-      Summoner: true
-    Location:
-      Ammo: true
-    EquipLevelMin: 1
   - Id: 7664
-    AegisName: Mine_Projectile
+    AegisName: Shooting_Mine
     Name: Grenade Launcher
-    Type: Ammo
-    SubType: Grenade
+    Type: Etc
     Buy: 450
     Weight: 3
     Attack: 10
-    Job:
-      Star_Gladiator: true
-      Kagerou: true
-      Gunslinger: true
-      Taekwon: true
-      Soul_Linker: true
-      Oboro: true
-      Rebellion: true
-      Summoner: true
-    Location:
-      Ammo: true
-    EquipLevelMin: 1
   - Id: 7665
     AegisName: Dragon_Tail_Missile
     Name: Dragon Tail Missile
-    Type: Ammo
-    SubType: Grenade
+    Type: Etc
     Buy: 1500
     Weight: 100
     Attack: 10
-    Job:
-      Star_Gladiator: true
-      Kagerou: true
-      Gunslinger: true
-      Taekwon: true
-      Soul_Linker: true
-      Oboro: true
-      Rebellion: true
-      Summoner: true
-    Location:
-      Ammo: true
-    EquipLevelMin: 1
   - Id: 7666
     AegisName: TimeTravel_Scroll
     Name: Time Travel Scroll
@@ -88679,6 +88729,21 @@ Body:
   - Id: 9121
     AegisName: Orc_Hero_Egg_
     Name: Orc Hero Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9122
+    AegisName: Gloom_Under_Egg
+    Name: Gloom Under Night Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9123
+    AegisName: Ep_17_2_C_Admin1_Egg
+    Name: Child Admin Beta Egg
+    Type: Petegg
+    Buy: 20
+  - Id: 9124
+    AegisName: Ep_17_2_C_Admin2_Egg
+    Name: Child Admin Alpha Egg
     Type: Petegg
     Buy: 20
   - Id: 10001
@@ -93755,7 +93820,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-       bonus_script "{ bonus bMaxHPrate,5; bonus bHPrecovRate,10; }",3600; percentheal 10,0; 
+       sc_start2 SC_INCREASE_MAXHP,3600000,5,10; percentheal 10,0; 
   - Id: 12275
     AegisName: Gold_Pill_2
     Name: Taecheongdan
@@ -93772,7 +93837,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-       bonus_script "{ bonus bMaxSPrate,5; bonus bSPrecovRate,10; }",3600; percentheal 0,10; 
+       sc_start2 SC_INCREASE_MAXSP,3600000,5,10; percentheal 0,10; 
   - Id: 12276
     AegisName: Mimic_Scroll
     Name: Mimic Scroll
@@ -96543,7 +96608,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-       autobonus "{ bonus bCriticalRate,30;}",100,1000; 
+       specialeffect2 EF_MAGICALATTHIT; sc_start SC_INCCRI,300000,30; 
   - Id: 12515
     AegisName: E_Med_Life_Potion
     Name: E Med Life Potion
@@ -98872,13 +98937,10 @@ Body:
     Name: Nauthiz Rune
     Type: Usable
     Buy: 100
-    Weight: 100
+    Weight: 10
     Delay:
       Duration: 120000
       Status: Reuse_Refresh
-    Stack:
-      Amount: 60
-      Inventory: true
     NoUse:
       Override: 100
       Sitting: true
@@ -98898,13 +98960,10 @@ Body:
     Name: Raido Rune
     Type: Usable
     Buy: 100
-    Weight: 100
+    Weight: 10
     Delay:
       Duration: 30000
       Status: Reuse_Crushstrike
-    Stack:
-      Amount: 60
-      Inventory: true
     NoUse:
       Override: 100
       Sitting: true
@@ -98924,13 +98983,10 @@ Body:
     Name: Berkana Rune
     Type: Usable
     Buy: 100
-    Weight: 100
+    Weight: 10
     Delay:
       Duration: 60000
       Status: Reuse_Millenniumshield
-    Stack:
-      Amount: 60
-      Inventory: true
     NoUse:
       Override: 100
       Sitting: true
@@ -98950,10 +99006,7 @@ Body:
     Name: Isa Rune
     Type: Usable
     Buy: 100
-    Weight: 100
-    Stack:
-      Amount: 60
-      Inventory: true
+    Weight: 10
     NoUse:
       Override: 100
       Sitting: true
@@ -98973,7 +99026,7 @@ Body:
     Name: Othila Rune
     Type: Usable
     Buy: 100
-    Weight: 100
+    Weight: 10
     NoUse:
       Override: 100
       Sitting: true
@@ -98993,10 +99046,7 @@ Body:
     Name: Uruz Rune
     Type: Usable
     Buy: 100
-    Weight: 100
-    Stack:
-      Amount: 60
-      Inventory: true
+    Weight: 10
     NoUse:
       Override: 100
       Sitting: true
@@ -99016,7 +99066,7 @@ Body:
     Name: Thurisaz Rune
     Type: Usable
     Buy: 100
-    Weight: 100
+    Weight: 10
     NoUse:
       Override: 100
       Sitting: true
@@ -99036,7 +99086,7 @@ Body:
     Name: Wyrd Rune
     Type: Usable
     Buy: 100
-    Weight: 100
+    Weight: 10
     Delay:
       Duration: 1000
       Status: Reuse_Stormblast
@@ -99059,10 +99109,7 @@ Body:
     Name: Hagalaz Rune
     Type: Usable
     Buy: 100
-    Weight: 100
-    Stack:
-      Amount: 60
-      Inventory: true
+    Weight: 10
     NoUse:
       Override: 100
       Sitting: true
@@ -99099,7 +99146,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-       makerune 5; 
+       makerune 8; 
   - Id: 12735
     AegisName: Runstone_Ancient
     Name: Ancient Rune
@@ -99122,7 +99169,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-       makerune 11; 
+       makerune 30; 
   - Id: 12736
     AegisName: Runstone_Mystic
     Name: Mystic Rune
@@ -99145,7 +99192,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-       makerune 14; 
+       makerune 60; 
   - Id: 12737
     AegisName: Runstone_Ordinary
     Name: General Rune
@@ -99168,7 +99215,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-       makerune 2; 
+       makerune 4; 
   - Id: 12738
     AegisName: Runstone_Rare
     Name: Rare Rune
@@ -99191,7 +99238,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-       makerune 8; 
+       makerune 15; 
   - Id: 12739
     AegisName: Snow_Flower
     Name: Snow Flowers
@@ -147768,7 +147815,7 @@ Body:
     Refineable: true
     View: 724
     Script: |
-       bonus bAllStats,2; bonus2 bSubEle,Ele_All,5; bonus2 bHPRegenRate,(MaxHp/100),10000; 
+       bonus bAllStats,2; bonus2 bSubEle,Ele_All,5; bonus2 bRegenPercentHP,2,10000; bonus2 bRegenPercentSP,1,10000; 
   - Id: 18551
     AegisName: Galaxy_Circlet
     Name: Galaxy Circlet
@@ -153600,7 +153647,7 @@ Body:
       Head_Mid: true
     View: 65
   - Id: 19095
-    AegisName: Happy_Balloon
+    AegisName: Happy_Balloon_K
     Name: Happy Balloon
     Type: Armor
     Weight: 10
@@ -153609,7 +153656,7 @@ Body:
     EquipLevelMin: 1
     View: 1289
     Script: |
-       bonus2 bDropAddRace,RC_All,5; bonus2 bExpAddRace,RC_All,5; 
+       bonus2 bDropAddRace,RC_All,10; bonus2 bExpAddRace,RC_All,5; 
   - Id: 19101
     AegisName: Glastheim_Observer
     Name: Glastheim Observer
@@ -155346,7 +155393,7 @@ Body:
     Refineable: true
     View: 1768
     Script: |
-       .@r = getrefine(); .@sub = 10; .@dmg = 15; if (.@r >= 7) { .@dmg += 15; if (.@r >= 8) { .@sub += 15; if (.@r >= 9) { .@dmg += 20; } } } bonus2 bSubEle,Ele_Earth,.@val; /*bonus2 bAddRace2,RC2_WERNER_LAB,.@dmg; bonus2 bMagicAddRace2,RC2_WERNER_LAB,.@dmg; bonus2 bSubRace2,RC2_WERNER_LAB,.@dmg; Werner's Central lab is not implemented yet */ 
+       .@r = getrefine(); .@sub = 10; .@dmg = 15; if (.@r >= 7) { .@dmg += 15; if (.@r >= 8) { .@sub += 15; if (.@r >= 9) { .@dmg += 20; } } } bonus2 bSubEle,Ele_Earth,.@sub; /*bonus2 bAddRace2,RC2_WERNER_LAB,.@dmg; bonus2 bMagicAddRace2,RC2_WERNER_LAB,.@dmg; bonus2 bSubRace2,RC2_WERNER_LAB,.@dmg; Werner's Central lab is not implemented yet */ 
   - Id: 19391
     AegisName: Eyes_Of_Illusion
     Name: Eyes Of Illusion
@@ -167936,14 +167983,14 @@ Body:
     Name: Lux Anima Runestone
     Type: Delayconsume
     Buy: 2
-    Weight: 100
+    Weight: 10
     Class:
       Third: true
       Third_High: true
       Third_Baby: true
-    Stack:
-      Amount: 60
-      Inventory: true
+    Delay:
+      Duration: 5000
+      Status: Reuse_Limit_Luxanima
     Trade:
       Override: 100
       NoDrop: true
@@ -177696,7 +177743,7 @@ Body:
     Location:
       Right_Hand: true
     Script: |
-       if (getiteminfo(getequipid(EQI_COMPOUND_ON),11) == W_BOW) { bonus3 bAutoSpell,"TF_DOUBLE",5,30; if (getrefine() >= 10) { bonus2 bWeaponDamageRate,W_BOW,20; } } 
+       if (getiteminfo(getequipid(EQI_COMPOUND_ON),11) == W_BOW) { bonus3 bAutoSpell,"AC_DOUBLE",5,30; if (getrefine() >= 10) { bonus2 bWeaponDamageRate,W_BOW,20; } } 
   - Id: 27087
     AegisName: Truthful_Wizard_Card
     Name: Truthful Wizard Card
@@ -178044,7 +178091,7 @@ Body:
     Location:
       Armor: true
     Script: |
-       bonus2 bAddEffWhenHit,Eff_Freeze,1000 + (readparam(bInt) >= 110 ? 5 : 0); bonus bMdef,5; 
+       bonus2 bAddEffWhenHit,Eff_Freeze,3000 + (readparam(bInt) >= 110 ? 1000 : 0); bonus bMdef,5; 
   - Id: 27152
     AegisName: Cutie_Card
     Name: Cutie Card
@@ -178161,7 +178208,7 @@ Body:
     Location:
       Shoes: true
     Script: |
-       .@r = getrefine(); .@sub = 2+(.@r >= 9 ? 3 : .@r >= 7 ? 1 : 0); bonus bNearAtkDef,.@sub; bonus bMagicAtkDef,.@sub; 
+       .@r = getrefine(); .@sub = 2+(.@r >= 9 ? 3 : .@r >= 7 ? 1 : 0); bonus2 bSubEle,Ele_Fire,.@sub; 
   - Id: 27167
     AegisName: Faceworm_Larva_Card
     Name: Faceworm Larva Card
@@ -178331,7 +178378,7 @@ Body:
     Location:
       Left_Accessory: true
     Script: |
-       bonus bAtk,20; if(readparam(bStr) >= 120) { bonus bAtk,20; bonus bAspdRate,-3; } 
+       bonus bAtk,20; if(readparam(bStr) >= 120) { bonus bAtk,20; bonus bAspdRate,3; } 
   - Id: 27184
     AegisName: Knight_Sakray_Card
     Name: Knight Sakray Card
@@ -178863,6 +178910,16 @@ Body:
       Right_Hand: true
     Script: |
        .@r = getrefine(); .@val = 3; if (.@r >= 9) { .@val += 2; if (.@r >= 11) { .@val += 5; } } bonus2 bMagicAtkEle,Ele_Fire,.@val; 
+  - Id: 27321
+    AegisName: Despair_God_Morocc_Card
+    Name: Despair God Morocc Card
+    Type: Card
+    Buy: 20
+    Weight: 10
+    Location:
+      Shoes: true
+    Script: |
+       bonus2 bAddClass,Class_All,10; bonus bMaxHPRate,-50; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player,30; bonus2 bAddRace,RC_Angel,30; autobonus3 "{ }",1000,5000,"NV_FIRSTAID","{ active_transform 3097,5000; }"; /* unknown transformation rates */ 
   - Id: 27322
     AegisName: Demon_God's_Apostle_Ahat_Card
     Name: Demon God's Apostle Ahat Card
@@ -185004,7 +185061,7 @@ Body:
     Location:
       Shoes: true
     Script: |
-       bonus2 bHPRegenRate,1+BaseLevel,10000; if(getrefine()>=7) { bonus bAtk,6*(readparam(bStr)/20); bonus bMaxHPrate,readparam(bStr)/20; } 
+       bonus2 bHPRegenRate,BaseLevel,10000; if(getrefine()>=7) { bonus bAtk,6*(readparam(bStr)/20); bonus bMaxHPrate,readparam(bStr)/20; } 
   - Id: 31010
     AegisName: LoVA_Kima_Card
     Name: LoVA Kima Card
@@ -185094,7 +185151,7 @@ Body:
     Location:
       Right_Hand: true
     Script: |
-       bonus bMaxHP,-1225; bonus3 bAddEff,Eff_Curse,300,ATF_MAGIC; /* unofficial chance [Secret] */ 
+       bonus bMaxHP,-1225; bonus3 bAddEff,Eff_Curse,5000,ATF_MAGIC; 
   - Id: 31019
     AegisName: Creepy_Demon_Card
     Name: Creepy Demon Card
@@ -185102,9 +185159,10 @@ Body:
     Buy: 20
     Weight: 10
     Location:
-      Armor: true
+      Right_Accessory: true
+      Left_Accessory: true
     Script: |
-       bonus bMaxHPrate,-13; bonus3 bAddEffWhenHit,Eff_Curse,300,ATF_MAGIC; /* unofficial chance [Secret] */ 
+       bonus bMaxHPrate,-13; bonus3 bAddEffWhenHit,Eff_Curse,4000,ATF_MAGIC; 
   - Id: 31020
     AegisName: Malicious_Baby_Ghost_Card
     Name: Malicious Baby Ghost Card
@@ -185112,9 +185170,10 @@ Body:
     Buy: 20
     Weight: 10
     Location:
-      Armor: true
+      Right_Accessory: true
+      Left_Accessory: true
     Script: |
-       bonus bMaxHPrate,-13; bonus3 bAddEffWhenHit,Eff_Curse,300,ATF_WEAPON; /* unofficial chance [Secret] */ 
+       bonus bMaxHPrate,-13; bonus3 bAddEffWhenHit,Eff_Curse,4000,ATF_WEAPON; 
   - Id: 31021
     AegisName: Dancing_Marionette_Card
     Name: Dancing Marionette Card
@@ -185134,7 +185193,7 @@ Body:
     Location:
       Shoes: true
     Script: |
-       bonus bMaxSPRate,20; bonus2 bAddEff2,Eff_Curse,100; /* unofficial chance [Secret] */ 
+       bonus bMaxSPRate,20; bonus2 bAddEff2,Eff_Curse,20; 
   - Id: 31023
     AegisName: Celine_Kimi_Card
     Name: Celine Kimi Card
@@ -185144,7 +185203,7 @@ Body:
     Location:
       Right_Hand: true
     Script: |
-       bonus bMatkRate,10; bonus5 bAutoSpell,"NPC_CRITICALWOUND",3,200+(50*getrefine()),BF_MAGIC,1; 
+       bonus bMatkRate,10; bonus5 bAutoSpell,"NPC_CRITICALWOUND",3,5+(10*(getrefine()/3)),BF_MAGIC,1; 
   - Id: 31027
     AegisName: C_Pretty_Bear
     Name: Costume Pretty Bear

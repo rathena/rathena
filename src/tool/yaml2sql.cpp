@@ -77,10 +77,14 @@ static std::unordered_map<std::string, int> um_jobnames {
 //	{ "Gangsi", JOB_GANGSI },
 //	{ "Death_Knight", JOB_DEATH_KNIGHT },
 //	{ "Dark_Collector", JOB_DARK_COLLECTOR },
+#ifdef RENEWAL
 	{ "Kagerou", JOB_KAGEROU },
 	{ "Oboro", JOB_OBORO },
 	{ "Rebellion", JOB_REBELLION },
 	{ "Summoner", JOB_SUMMONER },
+	{ "Star_Emperor", JOB_STAR_EMPEROR },
+	{ "Soul_Reaper", JOB_SOUL_REAPER },
+#endif
 };
 
 static std::unordered_map<std::string, equip_pos> um_equipnames{

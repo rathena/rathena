@@ -307,8 +307,7 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\guild_skill_tree.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\guild_skill_tree.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\homun_skill_tree.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\homun_skill_tree.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\homunculus_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\homunculus_db.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\improvise_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\improvise_db.yml')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\instance_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\instance_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\instance_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\instance_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_avail.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_avail.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_bluebox.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_bluebox.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_cardalbum.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_cardalbum.txt')" />
@@ -351,9 +350,9 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_skill_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_skill_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\pet_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\pet_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\produce_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\produce_db.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\quest_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\quest_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\quest_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\quest_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\refine_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\refine_db.yml')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\size_fix.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\size_fix.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\size_fix.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\size_fix.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_changematerial_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_changematerial_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_damage_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_damage_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_db.yml')" />

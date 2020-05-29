@@ -16,16 +16,22 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Improvised Song Database
+# Size Fix Database
 ###########################################################################
 #
-# Improvised Song Settings
+# Size Fix Settings
 #
 ###########################################################################
-# - Skill             Skill to be casted by Improvised Song.
-#   Probability       Probability of skill compared to others in database (1 = 0.01%, 10000 = 100%).
+# - Weapon    Weapon type.
+#   Small     Small size modifier. (Default: 100)
+#   Medium    Medium size modifier. (Default: 100)
+#   Large     Large size modifier. (Default: 100)
 ###########################################################################
 
 Header:
-  Type: IMPROVISED_SONG_DB
+  Type: SIZE_FIX_DB
   Version: 1
+
+Body:
+  - Weapon: Knuckle
+    Large: 75

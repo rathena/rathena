@@ -35,6 +35,9 @@ enum sc_type : int16;
 #define MAX_SPIRITBALL 15 /// Max spirit balls
 #define MAX_DEVOTION 5 /// Max Devotion slots
 #define MAX_SPIRITCHARM 10 /// Max spirit charms
+#define MAX_SOUL_BALL 20 /// Max soul ball
+#define MAX_STELLAR_MARKS 5 /// Max stellar marks
+#define MAX_UNITED_SOULS 12 /// Max united souls
 
 #define LANGTYPE_VAR "#langtype"
 #define CASHPOINT_VAR "#CASHPOINTS"
@@ -54,8 +57,8 @@ enum sc_type : int16;
 #define ACHIEVEMENTLEVEL "AchievementLevel"
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
-//Raised to 85 since Expanded Super Baby needs it.
-#define MAX_SKILL_TREE 85
+//Raised to 105 since Expanded Super Baby needs it.
+#define MAX_SKILL_TREE 105
 //Total number of classes (for data storage)
 #define CLASS_COUNT (JOB_MAX - JOB_NOVICE_HIGH + JOB_MAX_BASIC)
 
@@ -148,7 +151,7 @@ struct s_addele2 {
 };
 
 struct weapon_data {
-	int atkmods[3];
+	int atkmods[SZ_ALL];
 	// all the variables except atkmods get zero'ed in each call of status_calc_pc
 	// NOTE: if you want to add a non-zeroed variable, you need to update the memset call
 	//  in status_calc_pc as well! All the following are automatically zero'ed. [Skotlex]
@@ -363,6 +366,7 @@ struct map_session_data {
 	int npc_timer_id; //For player attached npc timers. [Skotlex]
 	unsigned int chatID;
 	time_t idletime;
+	time_t idletime_hom;
 
 	struct s_progressbar {
 		int npc_id;
@@ -482,6 +486,7 @@ struct map_session_data {
 		int arrow_atk,arrow_ele,arrow_cri,arrow_hit;
 		int nsshealhp,nsshealsp;
 		int critical_def,double_rate;
+		int short_attack_atk_rate; // Short range atk rate, not weapon based.
 		int long_attack_atk_rate; //Long range atk rate, not weapon based. [Skotlex]
 		int near_attack_def_rate,long_attack_def_rate,magic_def_rate,misc_def_rate;
 		int ignore_mdef_ele;
@@ -534,12 +539,16 @@ struct map_session_data {
 	short spiritcharm; //No. of spirit
 	int spiritcharm_type; //Spirit type
 	int spiritcharm_timer[MAX_SPIRITCHARM];
+	int8 soulball, soulball_old;
+	int soul_timer[MAX_SOUL_BALL];
 
 	unsigned char potion_success_counter; //Potion successes in row counter
 	unsigned char mission_count; //Stores the bounty kill count for TK_MISSION
 	short mission_mobid; //Stores the target mob_id for TK_MISSION
 	int die_counter; //Total number of times you've died
 	int devotion[MAX_DEVOTION]; //Stores the account IDs of chars devoted to.
+	int stellar_mark[MAX_STELLAR_MARKS]; // Stores the account ID's of character's with a stellar mark.
+	int united_soul[MAX_UNITED_SOULS]; // Stores the account ID's of character's who's soul is united.
 
 	int trade_partner;
 	struct s_deal {
@@ -625,10 +634,6 @@ struct map_session_data {
 		bool changed; // if true, should sync with charserver on next mailbox request
 	} mail;
 
-	// Battlegrounds queue system [MasterOfMuppets]
-	std::shared_ptr<s_battleground_queue> bg_queue;
-	bool bg_queue_accept_state; // Set this to true when someone has accepted the invite to join BGs
-
 	//Quest log system
 	int num_quests;          ///< Number of entries in quest_log
 	int avail_quests;        ///< Number of Q_ACTIVE and Q_INACTIVE entries in quest log (index of the first Q_COMPLETE entry)
@@ -648,6 +653,8 @@ struct map_session_data {
 	// Title system
 	std::vector<int> titles;
 
+	std::vector<int> cloaked_npc;
+
 	/* ShowEvent Data Cache flags from map */
 	bool *qi_display;
 	int qi_count;
@@ -657,7 +664,9 @@ struct map_session_data {
 	int debug_line;
 	const char* debug_func;
 
-	int bg_id;
+	// Battlegrounds queue system [MasterOfMuppets]
+	int bg_id, bg_queue_id;
+	int tid_queue_active; ///< Timer ID associated with players joining an active BG
 
 #ifdef SECURE_NPCTIMEOUT
 	/**
@@ -902,7 +911,7 @@ extern struct s_job_info job_info[CLASS_COUNT];
 #define pc_isdead(sd)         ( (sd)->state.dead_sit == 1 )
 #define pc_issit(sd)          ( (sd)->vd.dead_sit == 2 )
 #define pc_isidle_party(sd)   ( (sd)->chatID || (sd)->state.vending || (sd)->state.buyingstore || DIFF_TICK(last_tick, (sd)->idletime) >= battle_config.idle_no_share )
-#define pc_isidle_hom(sd)     ( (sd)->hd && ( (sd)->chatID || (sd)->state.vending || (sd)->state.buyingstore || DIFF_TICK(last_tick, (sd)->idletime) >= battle_config.hom_idle_no_share ) )
+#define pc_isidle_hom(sd)     ( (sd)->hd && ( (sd)->chatID || (sd)->state.vending || (sd)->state.buyingstore || DIFF_TICK(last_tick, (sd)->idletime_hom) >= battle_config.hom_idle_no_share ) )
 #define pc_istrading(sd)      ( (sd)->npc_id || (sd)->state.vending || (sd)->state.buyingstore || (sd)->state.trading )
 #define pc_cant_act(sd)       ( (sd)->npc_id || (sd)->state.vending || (sd)->state.buyingstore || (sd)->chatID || ((sd)->sc.opt1 && (sd)->sc.opt1 != OPT1_BURNING) || (sd)->state.trading || (sd)->state.storage_flag || (sd)->state.prevend )
 
@@ -1012,6 +1021,29 @@ short pc_maxaspd(struct map_session_data *sd);
     )
 #endif
 
+struct s_attendance_reward {
+	uint16 item_id;
+	uint16 amount;
+};
+
+struct s_attendance_period {
+	uint32 start;
+	uint32 end;
+	std::map<uint32, std::shared_ptr<struct s_attendance_reward>> rewards;
+};
+
+class AttendanceDatabase : public TypesafeYamlDatabase<uint32, s_attendance_period> {
+public:
+	AttendanceDatabase() : TypesafeYamlDatabase("ATTENDANCE_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+};
+
+extern AttendanceDatabase attendance_db;
+
 void pc_set_reg_load(bool val);
 int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
@@ -1020,6 +1052,7 @@ int pc_get_group_id(struct map_session_data *sd);
 bool pc_can_sell_item(struct map_session_data* sd, struct item * item, enum npc_subtype shoptype);
 bool pc_can_give_items(struct map_session_data *sd);
 bool pc_can_give_bounded_items(struct map_session_data *sd);
+bool pc_can_trade_item(map_session_data *sd, int index);
 
 bool pc_can_use_command(struct map_session_data *sd, const char *command, AtCommandType type);
 #define pc_has_permission(sd, permission) ( ((sd)->permissions&permission) != 0 )
@@ -1263,11 +1296,17 @@ struct sg_data {
 };
 extern const struct sg_data sg_info[MAX_PC_FEELHATE];
 
+void pc_set_bg_queue_timer(map_session_data *sd);
+void pc_delete_bg_queue_timer(map_session_data *sd);
+
 void pc_setinvincibletimer(struct map_session_data* sd, int val);
 void pc_delinvincibletimer(struct map_session_data* sd);
 
 void pc_addspiritball(struct map_session_data *sd,int interval,int max);
 void pc_delspiritball(struct map_session_data *sd,int count,int type);
+int pc_addsoulball(struct map_session_data *sd,int interval,int max);
+int pc_delsoulball(struct map_session_data *sd,int count,int type);
+
 void pc_addfame(struct map_session_data *sd,int count);
 unsigned char pc_famerank(uint32 char_id, int job);
 bool pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl);

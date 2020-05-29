@@ -93,7 +93,7 @@ char guild_storage_log_table[32] = "guild_storage_log";
 char log_db_ip[64] = "127.0.0.1";
 int log_db_port = 3306;
 char log_db_id[32] = "ragnarok";
-char log_db_pw[32] = "ragnarok";
+char log_db_pw[32] = "";
 char log_db_db[32] = "log";
 Sql* logmysql_handle;
 
@@ -489,6 +489,8 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_WARM]->val4), bl->m, x1-x0, y1-y0);
 				if (sc->data[SC_BANDING])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_BANDING]->val4), bl->m, x1-x0, y1-y0);
+				if (sc->data[SC_HELLS_PLANT])
+					skill_unit_move_unit_group(skill_id2group(sc->data[SC_HELLS_PLANT]->val4), bl->m, x1-x0, y1-y0);
 
 				if (sc->data[SC_NEUTRALBARRIER_MASTER])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_NEUTRALBARRIER_MASTER]->val2), bl->m, x1-x0, y1-y0);
@@ -2061,7 +2063,7 @@ int map_quit(struct map_session_data *sd) {
 	if (sd->bg_id)
 		bg_team_leave(sd, true, true);
 
-	if (sd->bg_queue != nullptr)
+	if (sd->bg_queue_id > 0)
 		bg_queue_leave(sd);
 
 	if( sd->status.clan_id )
@@ -2146,6 +2148,10 @@ int map_quit(struct map_session_data *sd) {
 			status_change_end(&sd->bl, SC_GLASTHEIM_STATE, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_GLASTHEIM_ITEMDEF, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_GLASTHEIM_HPSP, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULGOLEM, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULSHADOW, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULFALCON, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULFAIRY, INVALID_TIMER);
 		}
 	}
 
@@ -2165,12 +2171,12 @@ int map_quit(struct map_session_data *sd) {
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-	if( mapdata->instance_id )
+	if( mapdata->instance_id > 0 )
 		instance_delusers(mapdata->instance_id);
 
 	unit_remove_map_pc(sd,CLR_RESPAWN);
 
-	if( mapdata->instance_id ) { // Avoid map conflicts and warnings on next login
+	if( mapdata->instance_id > 0 ) { // Avoid map conflicts and warnings on next login
 		int16 m;
 		struct point *pt;
 		if( mapdata->save.map )
@@ -2688,18 +2694,16 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 /*==========================================
  * Add an instance map
  *------------------------------------------*/
-int map_addinstancemap(const char *name, unsigned short instance_id)
+int map_addinstancemap(int src_m, int instance_id)
 {
-	int16 src_m = map_mapname2mapid(name);
-	char iname[MAP_NAME_LENGTH];
-	size_t num_cell, size;
-
 	if(src_m < 0)
 		return -1;
 
+	const char *name = map_mapid2mapname(src_m);
+
 	if(strlen(name) > 20) {
 		// against buffer overflow
-		ShowError("map_addisntancemap: can't add long map name \"%s\"\n", name);
+		ShowError("map_addinstancemap: Map name \"%s\" is too long.\n", name);
 		return -2;
 	}
 
@@ -2721,18 +2725,19 @@ int map_addinstancemap(const char *name, unsigned short instance_id)
 
 	struct map_data *src_map = map_getmapdata(src_m);
 	struct map_data *dst_map = map_getmapdata(dst_m);
+	char iname[MAP_NAME_LENGTH];
 
 	strcpy(iname, name);
 
 	// Alter the name
 	// Due to this being custom we only worry about preserving as many characters as necessary for accurate map distinguishing
 	// This also allows us to maintain complete independence with main map functions
-	if((strchr(iname,'@') == NULL) && strlen(iname) > 8) {
-		memmove(iname, iname+(strlen(iname)-9), strlen(iname));
-		snprintf(dst_map->name, sizeof(dst_map->name),"%hu#%s", instance_id, iname);
+	if ((strchr(iname, '@') == nullptr) && strlen(iname) > 8) {
+		memmove(iname, iname + (strlen(iname) - 9), strlen(iname));
+		snprintf(dst_map->name, sizeof(dst_map->name), "%d#%s", (instance_id % 1000), iname);
 	} else
-		snprintf(dst_map->name, sizeof(dst_map->name),"%.3hu%s", instance_id, iname);
-	dst_map->name[MAP_NAME_LENGTH-1] = '\0';
+		snprintf(dst_map->name, sizeof(dst_map->name), "%.3d%s", (instance_id % 1000), iname);
+	dst_map->name[MAP_NAME_LENGTH - 1] = '\0';
 
 	dst_map->m = dst_m;
 	dst_map->instance_id = instance_id;
@@ -2750,21 +2755,23 @@ int map_addinstancemap(const char *name, unsigned short instance_id)
 	dst_map->npc_num_warp = 0;
 
 	// Reallocate cells
-	num_cell = dst_map->xs * dst_map->ys;
+	size_t num_cell = dst_map->xs * dst_map->ys;
+
 	CREATE( dst_map->cell, struct mapcell, num_cell );
 	memcpy( dst_map->cell, src_map->cell, num_cell * sizeof(struct mapcell) );
 
-	size = dst_map->bxs * dst_map->bys * sizeof(struct block_list*);
+	size_t size = dst_map->bxs * dst_map->bys * sizeof(struct block_list*);
+
 	dst_map->block = (struct block_list **)aCalloc(1,size);
 	dst_map->block_mob = (struct block_list **)aCalloc(1,size);
 
 	dst_map->index = mapindex_addmap(-1, dst_map->name);
-	dst_map->channel = NULL;
+	dst_map->channel = nullptr;
 	dst_map->mob_delete_timer = INVALID_TIMER;
 
 	map_data_copy(dst_map, src_map);
 
-	ShowInfo("[Instance] Created map '%s' ('%d') from map '%s' ('%d')\n", dst_map->name, dst_map->m, name, src_map->m);
+	ShowInfo("[Instance] Created map '%s' (%d) from '%s' (%d).\n", dst_map->name, dst_map->m, name, src_map->m);
 
 	map_addmap2db(dst_map);
 
@@ -2823,7 +2830,7 @@ int map_delinstancemap(int m)
 {
 	struct map_data *mapdata = map_getmapdata(m);
 
-	if(m < 0 || !mapdata->instance_id)
+	if(m < 0 || mapdata->instance_id <= 0)
 		return 0;
 
 	// Kick everyone out
@@ -2966,7 +2973,7 @@ void map_removemobs(int16 m)
 		return; //Mobs are already scheduled for removal
 
 	// Don't remove mobs on instance map
-	if (mapdata->instance_id)
+	if (mapdata->instance_id > 0)
 		return;
 
 	mapdata->mob_delete_timer = add_timer(gettick()+battle_config.mob_remove_delay, map_removemobs_timer, m, 0);
@@ -2985,17 +2992,15 @@ const char* map_mapid2mapname(int m)
 	if (!mapdata)
 		return "";
 
-	if (mapdata->instance_id) { // Instance map check
-		struct instance_data *im = &instance_data[mapdata->instance_id];
+	if (mapdata->instance_id > 0) { // Instance map check
+		std::shared_ptr<s_instance_data> idata = util::umap_find(instances, map[m].instance_id);
 
-		if (!im) // This shouldn't happen but if it does give them the map we intended to give
+		if (!idata) // This shouldn't happen but if it does give them the map we intended to give
 			return mapdata->name;
 		else {
-			uint8 i;
-
-			for (i = 0; i < im->cnt_map; i++) { // Loop to find the src map we want
-				if (im->map[i]->m == m)
-					return map[im->map[i]->src_m].name;
+			for (const auto &it : idata->map) { // Loop to find the src map we want
+				if (it.m == m)
+					return map_getmapdata(it.src_m)->name;
 			}
 		}
 	}
@@ -4426,25 +4431,19 @@ int cleanup_sub(struct block_list *bl, va_list ap)
  * Add new skill damage adjustment entry for a map
  * @param m: Map data
  * @param skill_id: Skill ID
- * @param pc: Rate to PC
- * @param mobs: Rate to Monster
- * @param boss: Rate to Boss-monster
- * @param other: Rate to Other target
- * @param caster: Caster type
+ * @param args: Mapflag arguments
  */
-void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster) {
-	struct s_skill_damage entry = {};
+void map_skill_damage_add(struct map_data *m, uint16 skill_id, union u_mapflag_args *args) {
+	nullpo_retv(m);
+	nullpo_retv(args);
 
-	for (int i = 0; i < SKILLDMG_MAX; i++)
-		entry.rate[i] = rate[i];
-	entry.caster = caster;
-
-	if (m->skill_damage.find(skill_id) != m->skill_damage.end()) {
-		m->skill_damage[skill_id] = entry;
+	if (m->skill_damage.find(skill_id) != m->skill_damage.end()) { // Entry exists
+		args->skill_damage.caster |= m->skill_damage[skill_id].caster;
+		m->skill_damage[skill_id] = args->skill_damage;
 		return;
 	}
 
-	m->skill_damage.insert({ skill_id, entry });
+	m->skill_damage.insert({ skill_id, args->skill_damage }); // Add new entry
 }
 
 /**
@@ -4454,6 +4453,8 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG
  * @param per: Skill duration adjustment value in percent
  */
 void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per) {
+	nullpo_retv(mapd);
+
 	if (mapd->skill_duration.find(skill_id) != mapd->skill_duration.end()) // Entry exists
 		mapd->skill_duration[skill_id] += per;
 	else // Update previous entry
@@ -4824,13 +4825,13 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				nullpo_retr(false, args);
 
 				if (!args->flag_val) { // Signifies if it's a single skill or global damage adjustment
-					if (!args->skill_damage.caster) {
+					if (args->skill_damage.caster == 0) {
 						ShowError("map_setmapflag: Skill damage adjustment without casting type for map %s.\n", mapdata->name);
 						return false;
 					}
 
-					mapdata->damage_adjust.caster = args->skill_damage.caster;
-					for (int i = 0; i < SKILLDMG_MAX; i++)
+					mapdata->damage_adjust.caster |= args->skill_damage.caster;
+					for (int i = SKILLDMG_PC; i < SKILLDMG_MAX; i++)
 						mapdata->damage_adjust.rate[i] = cap_value(args->skill_damage.rate[i], -100, 100000);
 				}
 			}

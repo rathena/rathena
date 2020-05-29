@@ -672,6 +672,7 @@
 	export_constant2("bUnbreakableArmor",SP_UNBREAKABLE_ARMOR);
 	export_constant2("bUnbreakableHelm",SP_UNBREAKABLE_HELM);
 	export_constant2("bUnbreakableShield",SP_UNBREAKABLE_SHIELD);
+	export_constant2("bShortAtkRate",SP_SHORT_ATK_RATE);
 	export_constant2("bLongAtkRate",SP_LONG_ATK_RATE);
 	export_constant2("bCritAtkRate",SP_CRIT_ATK_RATE);
 	export_constant2("bCriticalAddRace",SP_CRITICAL_ADDRACE);
@@ -1552,6 +1553,47 @@
 	export_constant(SC_WEAPONBLOCK_ON);
 	export_constant(SC_ENTRY_QUEUE_APPLY_DELAY);
 	export_constant(SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT);
+	export_constant(SC_ADAPTATION);
+	export_constant(SC_BASILICA_CELL);
+	export_constant(SC_LIGHTOFMOON);
+	export_constant(SC_LIGHTOFSUN);
+	export_constant(SC_LIGHTOFSTAR);
+	export_constant(SC_LUNARSTANCE);
+	export_constant(SC_UNIVERSESTANCE);
+	export_constant(SC_SUNSTANCE);
+	export_constant(SC_FLASHKICK);
+	export_constant(SC_NEWMOON);
+	export_constant(SC_STARSTANCE);
+	export_constant(SC_DIMENSION);
+	export_constant(SC_DIMENSION1);
+	export_constant(SC_DIMENSION2);
+	export_constant(SC_CREATINGSTAR);
+	export_constant(SC_FALLINGSTAR);
+	export_constant(SC_NOVAEXPLOSING);
+	export_constant(SC_GRAVITYCONTROL);
+	export_constant(SC_SOULCOLLECT);
+	export_constant(SC_SOULREAPER);
+	export_constant(SC_SOULUNITY);
+	export_constant(SC_SOULSHADOW);
+	export_constant(SC_SOULFAIRY);
+	export_constant(SC_SOULFALCON);
+	export_constant(SC_SOULGOLEM);
+	export_constant(SC_SOULDIVISION);
+	export_constant(SC_SOULENERGY);
+	export_constant(SC_USE_SKILL_SP_SPA);
+	export_constant(SC_USE_SKILL_SP_SHA);
+	export_constant(SC_SP_SHA);
+	export_constant(SC_SOULCURSE);
+	export_constant(SC_HELLS_PLANT);
+	export_constant(SC_INCREASE_MAXHP);
+	export_constant(SC_INCREASE_MAXSP);
+	export_constant(SC_HELPANGEL);
+	export_constant(SC_REF_T_POTION);
+	export_constant(SC_ADD_ATK_DAMAGE);
+	export_constant(SC_ADD_MATK_DAMAGE);
+	export_constant(SC_SOUNDOFDESTRUCTION);
+	export_constant(SC_LUXANIMA);
+	export_constant(SC_REUSE_LIMIT_LUXANIMA);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -3469,6 +3511,7 @@
 	export_constant(EFST_MAGIC_POISON);
 	export_constant(EFST_KAUTE);
 	export_constant(EFST_JPNONLY_TACTICS);
+	export_constant(EFST_MADOGEAR);
 	export_constant(EFST_LUXANIMA);
 	export_constant(EFST_BATH_FOAM_A);
 	export_constant(EFST_BATH_FOAM_B);
@@ -3496,6 +3539,7 @@
 	export_constant(EFST_MD_Ta_Potion);
 	export_constant(EFST_MD_Ra_Potion);
 	export_constant(EFST_MVPCARD_KIEL);
+	export_constant(EFST_HOMUN_TIME);
 	export_constant(EFST_POWER_ACCELERATION);
 	export_constant(EFST_MAX_HP_SP_AVOID);
 	export_constant(EFST_ADD_ALL_STATE);
@@ -7304,6 +7348,13 @@
 	export_constant(HAT_EF_2019RTC2ST_TW);
 	export_constant(HAT_EF_2019RTC3ST_TW);
 	export_constant(HAT_EF_CONS_OF_WIND);
+	export_constant(HAT_EF_MAPLE_FALLS);
+	export_constant(HAT_EF_BJ_HEADSETB);
+	export_constant(HAT_EF_VIP_HAIR);
+	export_constant(HAT_EF_C_MAGIC_HEIR_TW);
+	export_constant(HAT_EF_C_SUDDEN_WEALTH_TW);
+	export_constant(HAT_EF_C_ROMANCE_ROSE_TW);
+	export_constant(HAT_EF_C_DISAPEAR_TIME_TW);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
@@ -7492,7 +7543,6 @@
 	export_constant(INF2_ALLOWONMADO);
 	export_constant(INF2_TARGETMANHOLE);
 	export_constant(INF2_TARGETHIDDEN);
-	export_constant(INF2_INCREASEGLOOMYDAYDAMAGE);
 	export_constant(INF2_INCREASEDANCEWITHWUGDAMAGE);
 	export_constant(INF2_IGNOREWUGBITE);
 	export_constant(INF2_IGNOREAUTOGUARD);
@@ -7541,6 +7591,10 @@
 	export_constant(ST_ELEMENTALSPIRIT);
 	export_constant(ST_ELEMENTALSPIRIT2);
 	export_constant(ST_PECO);
+	export_constant(ST_SUNSTANCE);
+	export_constant(ST_MOONSTANCE);
+	export_constant(ST_STARSTANCE);
+	export_constant(ST_UNIVERSESTANCE);
 
 	/* skill unit flags */
 	export_constant(UF_NOENEMY);
@@ -7706,6 +7760,7 @@
 	export_constant(UNT_FIRE_RAIN);
 	export_constant(UNT_CATNIPPOWDER);
 	export_constant(UNT_NYANGGRASS);
+	export_constant(UNT_CREATINGSTAR);
 	export_constant(UNT_GD_LEADERSHIP);
 	export_constant(UNT_GD_GLORYWOUNDS);
 	export_constant(UNT_GD_SOULCOLD);
