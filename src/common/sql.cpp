@@ -1077,7 +1077,7 @@ void Sql_UpgradesChecker(Sql *sql_handle, e_sql_database schema) {
 			std::string mode = "Renewal";
 #else
 			uint8 compiledMode = MODE_PRERENEWAL;
-			std::string mode = "Prerenewal"
+			std::string mode = "Prerenewal";
 #endif
 
 			if (compiledMode != update->mode) {
