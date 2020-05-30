@@ -843,7 +843,7 @@
 19203:29351,{ bonus bBaseAtk,20; bonus bMatk,20; if (getskilllv("OB_OBOROGENSOU") == 5) bonus bVariableCastrate,-15; autobonus3 "{ bonus bCritAtkRate,30; }",1000,60000,"KG_KAGEMUSYA"; autobonus "{ bonus bNoSizeFix; }",50,5000,BF_WEAPON;  }
 19204:29352,{ bonus bMaxHP,500; bonus bBaseAtk,10; }
 19204:29353,{ bonus bMaxHP,1000; bonus bBaseAtk,20; skill "WS_CARTBOOST",1; autobonus3 "{ bonus bBaseAtk,30; }",1000,60000,"WS_CARTBOOST"; }
-19204:29354,{ bonus bMaxHP,1500; bonus bBaseAtk,40; skill "WS_CARTBOOST",1; autobonus3 "{ bonus bBaseAtk,50; }",1000,60000,"WS_CARTBOOST"; }
+19204:29354,{ bonus bMaxHP,1500; bonus bBaseAtk,40; skill "WS_CARTBOOST",3; autobonus3 "{ bonus bBaseAtk,50; }",1000,120000,"WS_CARTBOOST"; }
 19205:29355,{ bonus2 bSkillAtk,"SU_CN_METEOR",10; bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",10; }
 19205:29356,{ bonus2 bSkillAtk,"SU_CN_METEOR",20; bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",20; bonus bFixedCast,-200; }
 19205:29357,{ bonus2 bSkillAtk,"SU_CN_METEOR",60; bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",60; bonus bFixedCast,-500; }
