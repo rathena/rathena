@@ -1065,10 +1065,24 @@ void Sql_UpgradesChecker(Sql *sql_handle, e_sql_database schema) {
 	std::vector<int32> new_updates, skipped_updates;
 	std::map<int32, std::shared_ptr<s_sql_update_db>> ordered_sql_update_db(sql_update_db.begin(), sql_update_db.end()); // Create an ordered list (by ID) to make sure updates are applied sequentially
 
+	if (SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `sql_updates`")) {
+		Sql_ShowDebug(sql_handle);
+		return;
+	} else if (Sql_NumRows(sql_handle) == 0) { // 'sql_updates' table doesn't exist, create it
+		if (SQL_ERROR == Sql_QueryStr(sql_handle, "CREATE TABLE IF NOT EXISTS `sql_updates` (`id` int(11) unsigned NOT NULL default '0', `patch_date` varchar(24) NOT NULL default '', PRIMARY KEY(`id`)) ENGINE = MyISAM;")) {
+			ShowError("Sql_UpgradesChecker: Failed to create 'sql_updates' table. Skipping SQL updates.\n");
+			Sql_ShowDebug(sql_handle);
+			return;
+		}
+	}
+
 	for (const auto &updateIt : ordered_sql_update_db) {
 		std::shared_ptr<s_sql_update_db> update = updateIt.second;
 
-		if (!update->patchdate.empty()) // Already applied
+		if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `id` FROM `sql_updates` WHERE `id` = '%d'", update->id)) { // Check if SQL Update has already been applied
+			Sql_ShowDebug(sql_handle);
+			continue;
+		} else if (Sql_NumRows(sql_handle) > 0) // Already applied
 			continue;
 
 		if (update->mode != MODE_BOTH) { // Only apply to specific mode
@@ -1109,57 +1123,15 @@ void Sql_UpgradesChecker(Sql *sql_handle, e_sql_database schema) {
 	}
 
 	if (!new_updates.empty()) {
-		std::string save_file;
-
-		if (schema & SQLDB_LOGIN)
-			save_file = "sql-files/saves/login-sql_update_db.yml";
-		else if (schema & SQLDB_CHAR)
-			save_file = "sql-files/saves/char-sql_update_db.yml";
-		else if (schema & SQLDB_MAP)
-			save_file = "sql-files/saves/map-sql_update_db.yml";
-		else
-			save_file = "sql-files/saves/log-sql_update_db.yml";
-
-		std::ofstream save;
-
-		save.open(save_file);
-
-		if (!save.is_open()) {
-			ShowError("Sql_UpgradesChecker: Failed to open '%s'.\n", save_file.c_str());
-			return;
-		}
-
 		size_t count = new_updates.size();
-		YAML::Emitter output(save);
-
-		output << YAML::Comment("THIS FILE IS USED AS A LOG FOR SQL UPDATES.") << YAML::Newline;
-		output << YAML::Comment("DO NOT TOUCH THE CONTENT OF THIS FILE AS IT IS AUTOMATICALLY GENERATED.") << YAML::Newline;
-		output << YAML::BeginMap;
-		output << YAML::Key << "Header";
-		output << YAML::BeginMap;
-		output << YAML::Key << "Type" << YAML::Value << "SQL_UPDATE_DB";
-		output << YAML::Key << "Version" << YAML::Value << 1;
-		output << YAML::EndMap;
-		output << YAML::Newline;
-		output << YAML::Key << "Body";
-		output << YAML::BeginSeq;
 
 		ShowStatus("Detected %zu new " CL_WHITE "SQL update%s" CL_RESET "\n", count, count > 1 ? "s" : "");
 		for (const auto &newIt : new_updates) {
 			ShowStatus("-- '" CL_WHITE "Update %d" CL_RESET "' has been applied.\n", newIt);
 
-			time_t now = time(nullptr);
-
-			output << YAML::BeginMap;
-			output << YAML::Key << "Id" << YAML::Value << newIt;
-			output << YAML::Key << "PatchDate" << YAML::Value << trim(asctime(localtime(&now)));
-			output << YAML::EndMap;
+			if (SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `sql_updates` (`id`, `patch_date`) VALUES ('%d', NOW())", newIt))
+				Sql_ShowDebug(sql_handle);
 		}
-
-		output << YAML::EndSeq;
-		output << YAML::EndMap;
-		output << YAML::Newline;
-		save.close();
 	}
 
 	ordered_sql_update_db.clear();
@@ -1255,15 +1227,6 @@ uint64 SqlUpdateDatabase::parseBodyNode(const YAML::Node &node) {
 	} else {
 		if (!exists)
 			update->skip = false;
-	}
-
-	if (this->nodeExists(node, "PatchDate")) {
-		std::string patchdate;
-
-		if (!this->asString(node, "PatchDate", patchdate))
-			return 0;
-
-		update->patchdate = patchdate;
 	}
 
 	if (!exists)

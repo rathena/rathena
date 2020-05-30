@@ -84,7 +84,6 @@ struct s_sql_update_db {
 	e_server_mode mode;
 	uint8 database;
 	bool skip;
-	std::string patchdate;
 };
 
 class SqlUpdateDatabase : public TypesafeYamlDatabase<int32, s_sql_update_db> {

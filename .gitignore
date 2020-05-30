@@ -90,9 +90,6 @@ Thumbs.db
 /src/tool/Makefile
 /src/tool/obj_all
 
-# /sql-files/saves/
-/sql-files/saves
-
 # /tools/
 /tools/convert
 /tools/adduser
