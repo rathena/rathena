@@ -1,0 +1,22 @@
+###########################################################################
+# Mob Availability and Alias Database
+###########################################################################
+#
+# Mob Availability and Alias Settings
+#
+###########################################################################
+# - Mob                     Mob to adjust.
+#   Sprite                  Sprite which will be sent to the client instead of Mob.
+#   Sex                     Sex (if Sprite is a player). (Default: Female)
+#   HairStyle               Hair Style ID (if Sprite is a player). (Default: 0)
+#   HairColor               Hair Color ID (if Sprite is a player). (Default: 0)
+#   ClothColor              Cloth Color ID (if Sprite is a player). (Default: 0)
+#   Weapon                  Item name of weapon (if Sprite is a player). (Default: 0)
+#   Shield                  Item name of shield (if Sprite is a player). (Default: 0)
+#   HeadTop                 Item name of headgear (if Sprite is a player). (Default: 0)
+#   HeadMid                 Item name of headgear (if Sprite is a player). (Default: 0)
+#   HeadLow                 Item name of headgear (if Sprite is a player). (Default: 0)
+#   PetEquip                Item name of pet equipment (if Mob is a valid pet). (Default: 0)
+#   Options:                Set an option for an object. (Optional)
+#     <Option>: bool
+###########################################################################

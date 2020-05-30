@@ -856,26 +856,6 @@ int chmapif_parse_reqdivorce(int fd){
 }
 
 /**
- * Receive rates of this map index
- * @author [Wizputer]
- * @param fd: wich fd to parse from
- * @return : 0 not enough data received, 1 success
- */
-int chmapif_parse_updmapinfo(int fd){
-	if( RFIFOREST(fd) < 14 )
-		return 0;
-	else {
-		char esc_server_name[sizeof(charserv_config.server_name)*2+1];
-		Sql_EscapeString(sql_handle, esc_server_name, charserv_config.server_name);
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` SET `index`='%d',`name`='%s',`exp`='%d',`jexp`='%d',`drop`='%d'",
-			schema_config.ragsrvinfo_db, fd, esc_server_name, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)) )
-			Sql_ShowDebug(sql_handle);
-		RFIFOSKIP(fd,14);
-	}
-	return 1;
-}
-
-/**
  *  Character disconnected set online 0
  * @author [Wizputer]
  * @param fd: wich fd to parse from
@@ -1442,7 +1422,6 @@ int chmapif_parse(int fd){
 			case 0x2b11: next=chmapif_parse_reqdivorce(fd); break;
 			case 0x2b13: next=chmapif_parse_updmapip(fd,id); break;
 			case 0x2b15: next=chmapif_parse_req_saveskillcooldown(fd); break;
-			case 0x2b16: next=chmapif_parse_updmapinfo(fd); break;
 			case 0x2b17: next=chmapif_parse_setcharoffline(fd); break;
 			case 0x2b18: next=chmapif_parse_setalloffline(fd,id); break;
 			case 0x2b19: next=chmapif_parse_setcharonline(fd,id); break;
@@ -1530,8 +1509,6 @@ void chmapif_server_reset(int id){
 		WBUFW(buf,2) = j * 4 + 10;
 		chmapif_sendallwos(fd, buf, WBUFW(buf,2));
 	}
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `index`='%d'", schema_config.ragsrvinfo_db, map_server[id].fd) )
-		Sql_ShowDebug(sql_handle);
 	online_char_db->foreach(online_char_db,char_db_setoffline,id); //Tag relevant chars as 'in disconnected' server.
 	chmapif_server_destroy(id);
 	chmapif_server_init(id);

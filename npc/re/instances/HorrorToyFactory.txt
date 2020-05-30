@@ -1214,7 +1214,7 @@ OnStart:
 OnStart:
 	.@event$ = instance_npcname( strnpcinfo(0) ) + "::OnMyMobDead";
 	killmonster 'xm_d_map$, .@event$;
-	while (1) {
+	while (unitexists('celene_id) == true) {
 		getunitdata 'celene_id, .@data;
 		.@x = .@data[UMOB_X] + rand(1,20) - 10;
 		.@y = .@data[UMOB_Y] + rand(1,20) - 10;
@@ -1424,7 +1424,7 @@ OnTimer1000:
 	case 6:
 		.@num = rand(2,6);
 		for ( .@i = 0; .@i < .@num; .@i++ )
-			makeitem 2976,1, 'xm_d_map$, rand(208,212), rand(134,138);// Red_Lantern
+			makeitem 7642,1, 'xm_d_map$, rand(208,212), rand(134,138);// Bloody_Coin
 		if (rand(1,1000) > 400)
 			makeitem 603,1, 'xm_d_map$,209,136;// Old_Blue_Box
 		if (rand(1,1000) > 800)
@@ -1542,7 +1542,8 @@ OnTimer1000:
 
 1@xm_d,3,1,3	script	#adsw2	CLEAR_NPC,{
 	if (callfunc("F_GM_NPC",1854,0) == 1) {
-		getunitdata 'Antonio, .@mob;
+		if (unitexists('Antonio) == true)
+			getunitdata 'Antonio, .@mob;
 		mapannounce 'xm_d_map$, "Factory announcement: Exist in " + .@mob[UMOB_X] + " - " + .@mob[UMOB_Y] + ".",bc_map,"0x00ff44";
 	}
 	end;
@@ -1601,7 +1602,6 @@ OnInstanceInit:
 		hideonnpc instance_npcname("#eff_f0" + .@i);
 	disablenpc instance_npcname("#bssk01");
 	disablenpc instance_npcname("#bssk02");
-	hideonnpc instance_npcname("#bssk02");
 	for ( .@i = 1; .@i < 5; ++.@i )
 		hideonnpc instance_npcname("#crssk" + .@i);
 	disablenpc instance_npcname("#kimion1");

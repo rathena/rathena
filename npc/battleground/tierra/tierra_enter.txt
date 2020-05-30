@@ -1,22 +1,19 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= BattleGround System - Tierra Gorge Entrance NPCs
-//===== By: ================================================== 
-//= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 1.0
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Tierra Gorge Battleground Entrance NPCs
-//===== Additional Comments: ================================= 
-//= 1.0 First Version.
+//===== Additional Comments: =================================
+//= 1.0 First Version. [L0ne_W0lf]
 //= 1.1 Fixed silly copy paste errors. (bugreport:4401)
+//= 1.2 Added battle_config checks to allow this script to use the new queue interface or the previous method. [Aleos]
 //============================================================
 
 // First Tierra Gorge Officers - Guillaume
 //============================================================
 bat_room,124,178,5	script	Tierra Gorge Officer#01a	418,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
 	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
@@ -84,6 +81,8 @@ bat_room,124,178,5	script	Tierra Gorge Officer#01a	418,{
 }
 
 bat_room,140,178,5	script	Tierra Gorge Officer#02a	418,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
 	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
@@ -166,37 +165,22 @@ bat_room,127,178,5	script	Guillaume Knight#1	417,{
 	mes "Think and move as quickly as you can. The victory of your army relies on your contribution.";
 	next;
 	mes "[Guillaume Knight]";
-	mes "Please remember: when you join a battle, you will receive a token which indicates the set duration for which you cannot participate in the same type of battle.";
-	mes "You may check the duration by pressing the Alt+U keys.";
+	if (getbattleflag("feature.bgqueue"))
+		mes "If you are ready, start by clicking the ^0000FFbattle button from the interface^000000.";
+	else {
+		mes "Please remember: when you join a battle, you will receive a token which indicates the set duration for which you cannot participate in the same type of battle.";
+		mes "You may check the duration by pressing the Alt+U keys.";
+	}
 	next;
 	mes "[Guillaume Knight]";
-	mes "Are you ready to battle? Then apply with the recruiter next to me!";
+	if (getbattleflag("feature.bgqueue"))
+		mes "Please bear in mind once you cancel, ^0000FFyou may not reapply for 1 minute^000000!";
+	else
+		mes "Are you ready to battle? Then apply with the recruiter next to me!";
 	close;
 }
 
-bat_room,143,178,5	script	Guillaume Knight#2	417,{
-	mes "[Guillaume Knight]";
-	mes "Tierra Gorge consists of two steep sides placed vertically, and has ration depots for the Guillaume and Croix Armies at the 11 and 7 o'clock directions.";
-	next;
-	mes "[Guillaume Knight]";
-	mes "The battle starts at your army's ship, and the goal is to advance and destroy your enemy's rations depot faster than they can destroy yours.";
-	next;
-	mes "[Guillaume Knight]";
-	mes "The healer of the battlefield will resurrect soldiers once every 25 seconds so that they can rejoin the battle.";
-	mes "The army that captures the neutral flag in the center of the battlefield will be rewarded with extra regeneration points, meaning their soldiers will resurrect more than the other side, giving them an advantage.";
-	next;
-	mes "[Guillaume Knight]";
-	mes "Those two rations depots are connected to each other through short and narrow paths, but the gates are blocked with barricades.";
-	mes "Think and move as quickly as you can. The victory of your army relies on your contribution.";
-	next;
-	mes "[Guillaume Knight]";
-	mes "Please remember: when you join a battle, you will receive a token which indicates the set duration for which you cannot participate in the same type of battle.";
-	mes "You may check the duration by pressing the Alt+U keys.";
-	next;
-	mes "[Guillaume Knight]";
-	mes "Are you ready to battle? Then apply with the recruiter next to me!";
-	close;
-}
+bat_room,143,178,5	duplicate(Guillaume Knight#1)	Guillaume Knight#2	417
 
 bat_room,127,121,1	script	Croix Knight#1	413,{
 	mes "[Croix Knight]";
@@ -214,41 +198,28 @@ bat_room,127,121,1	script	Croix Knight#1	413,{
 	mes "Think and move as quickly as you can. The victory of your army relies on your contribution.";
 	next;
 	mes "[Croix Knight]";
-	mes "Please remember: when you join a battle, you will receive a token which indicates the set duration for which you cannot participate in the same type of battle.";
-	mes "You may check the duration by pressing the Alt+U keys.";
+	if (getbattleflag("feature.bgqueue"))
+		mes "If you are ready, start by clicking the ^0000FFbattle button from the interface^000000.";
+	else {
+		mes "Please remember: when you join a battle, you will receive a token which indicates the set duration for which you cannot participate in the same type of battle.";
+		mes "You may check the duration by pressing the Alt+U keys.";
+	}
 	next;
 	mes "[Croix Knight]";
-	mes "Are you ready to battle? Then apply with the recruiter next to me!";
+	if (getbattleflag("feature.bgqueue"))
+		mes "Please bear in mind once you cancel, ^0000FFyou may not reapply for 1 minute^000000!";
+	else
+		mes "Are you ready to battle? Then apply with the recruiter next to me!";
 	close;
 }
 
-bat_room,143,121,1	script	Croix Knight#2	413,{
-	mes "[Croix Knight]";
-	mes "Tierra Gorge consists of two steep sides placed vertically, and has ration depots for the Guillaume and Croix Armies at the 11 and 7 o'clock directions.";
-	next;
-	mes "[Croix Knight]";
-	mes "The battle starts at your army's ship, and the goal is to advance and destroy your enemy's rations depot faster than they can destroy yours.";
-	next;
-	mes "[Croix Knight]";
-	mes "The healer of the battlefield will resurrect soldiers once every 25 seconds so that they can rejoin the battle.";
-	mes "The army that captures the neutral flag in the center of the battlefield will be rewarded with extra regeneration points, meaning their soldiers will resurrect more than the other side, giving them an advantage.";
-	next;
-	mes "[Croix Knight]";
-	mes "Those two rations depots are connected to each other through short and narrow paths, but the gates are blocked with barricades.";
-	mes "Think and move as quickly as you can. The victory of your army relies on your contribution.";
-	next;
-	mes "[Croix Knight]";
-	mes "Please remember: when you join a battle, you will receive a token which indicates the set duration for which you cannot participate in the same type of battle.";
-	mes "You may check the duration by pressing the Alt+U keys.";
-	next;
-	mes "[Croix Knight]";
-	mes "Are you ready to battle? Then apply with the recruiter next to me!";
-	close;
-}
+bat_room,143,121,1	duplicate(Croix Knight#1)	Croix Knight#2	413
 
 // Second Tierra Gorge Officers - Croix
 //============================================================
 bat_room,125,121,1	script	Tierra Gorge Officer#01b	414,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
 	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";
@@ -316,6 +287,8 @@ bat_room,125,121,1	script	Tierra Gorge Officer#01b	414,{
 }
 
 bat_room,140,121,1	script	Tierra Gorge Officer#02b	414,{
+	if (getbattleflag("feature.bgqueue"))
+		end;
 	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";

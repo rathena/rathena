@@ -23,11 +23,12 @@
 //= 5.0 Updated RE/Pre-RE EXP. [Euphy]
 //= 5.1 Added GM management NPCs. [Euphy]
 //= 5.2 Fixed some quest log issues. [Capuche]
+//= 5.3 Changing NPC_ID to NPC_NAME [JohnnyPlayy]
 //============================================================
 
 // Gangster Alert [Official Conversion]
 //============================================================
-lighthalzen,1,1,0	script	Law Enforcement	-1,{
+lighthalzen,1,1,0	script	Law Enforcement	HIDDEN_NPC,{
 	end;
 
 OnEnable:
@@ -48,7 +49,7 @@ OnMyMobDead:
 	end;
 }
 
-lighthalzen,267,200,3	script	Guard#lhz01	868,{
+lighthalzen,267,200,3	script	Guard#lhz01	4_M_LGTGUARD,{
 	if (countitem(7350) > 0) {
 		mes "[Guard]";
 		mes "Hold it right th--!";
@@ -115,7 +116,7 @@ lighthalzen,267,200,3	script	Guard#lhz01	868,{
 	}
 }
 
-lighthalzen,294,223,7	script	Guard#lhz02	868,{
+lighthalzen,294,223,7	script	Guard#lhz02	4_M_LGTGUARD,{
 	if (countitem(7350) > 0) {
 		mes "[Guard]";
 		mes "Hold it right th--!";
@@ -184,7 +185,7 @@ lighthalzen,294,223,7	script	Guard#lhz02	868,{
 
 // Cube Room Quest
 //============================================================
-lighthalzen,341,224,3	script	Fishbone	868,{
+lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 	// Quest is finished.
 	if (MISC_QUEST&512) {
 		mes "[Fishbone]";
@@ -198,7 +199,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 		mes "[Fishbone]";
 		mes "Anyway, good luck in";
 		mes "whatever it is you're doing";
-		mes "here in Lighthazlen. Oh, and";
+		mes "here in Lighthalzen. Oh, and";
 		mes "be real careful! Something";
 		mes "shadier than me is going";
 		mes "on in this big city~";
@@ -645,7 +646,7 @@ lighthalzen,341,224,3	script	Fishbone	868,{
 	}
 }
 
-lhz_cube,237,198,0	script	Bundle of Files#cube	111,{
+lhz_cube,237,198,0	script	Bundle of Files#cube	HIDDEN_NPC,{
 	if (lhz_sincube < 7) {
 		mes "^3355FFThere are a bunch";
 		mes "of files scattered";
@@ -687,7 +688,7 @@ lhz_cube,237,198,0	script	Bundle of Files#cube	111,{
 	close;
 }
 
-lhz_cube,234,202,0	script	Picture#cube	111,{
+lhz_cube,234,202,0	script	Picture#cube	HIDDEN_NPC,{
 	if (lhz_secret01 < 2) {
 		mes "^3355FFThis picture hanging";
 		mes "on the wall catches";
@@ -780,7 +781,7 @@ lhz_cube,234,202,0	script	Picture#cube	111,{
 	close;
 }
 
-lhz_cube,242,201,0	script	Drawer#cube	111,{
+lhz_cube,242,201,0	script	Drawer#cube	HIDDEN_NPC,{
 	if (lhz_secret01 < 1) {
 		mes "^3355FFThe drawer here";
 		mes "looks interesting,";
@@ -820,7 +821,7 @@ lhz_cube,242,201,0	script	Drawer#cube	111,{
 	close;
 }
 
-lhz_cube,248,179,0	script	Chest#cube	111,{
+lhz_cube,248,179,0	script	Chest#cube	HIDDEN_NPC,{
 	if (lhz_sincube < 7) {
 		mes "^3355FFYou've found a chest";
 		mes "with an axe laid on";
@@ -851,7 +852,7 @@ lhz_cube,248,179,0	script	Chest#cube	111,{
 	close;
 }
 
-lhz_cube,237,183,0	script	Barrel#cube	111,{
+lhz_cube,237,183,0	script	Barrel#cube	HIDDEN_NPC,{
 	if (lhz_sincube < 8) {
 		mes "^3355FFYou have";
 		mes "found a shabbily";
@@ -948,7 +949,7 @@ lhz_cube,237,183,0	script	Barrel#cube	111,{
 	close;
 }
 
-lhz_cube,224,192,0	script	Power Generator#cube	111,{
+lhz_cube,224,192,0	script	Power Generator#cube	HIDDEN_NPC,{
 	if (lhz_secret01 < 6) {
 		mes "^3355FFThis is a noisily";
 		mes "operating huge machine";
@@ -997,7 +998,7 @@ lhz_cube,224,192,0	script	Power Generator#cube	111,{
 	close;
 }
 
-lhz_cube,244,201,0	script	Status Light#cube	111,{
+lhz_cube,244,201,0	script	Status Light#cube	HIDDEN_NPC,{
 	if (lhz_secret01 < 7) {
 		mes "^3355FFThe Status Light is";
 		mes "on. It looks like there's";
@@ -1032,7 +1033,7 @@ lhz_cube,244,201,0	script	Status Light#cube	111,{
 	close;
 }
 
-lhz_cube,234,200,0	script	Desk#cube	111,{
+lhz_cube,234,200,0	script	Desk#cube	HIDDEN_NPC,{
 	if (lhz_secret02 < 2) {
 		mes "^3355FFYou've found";
 		mes "a completely";
@@ -1169,7 +1170,7 @@ lhz_cube,234,200,0	script	Desk#cube	111,{
 	}
 }
 
-lhz_cube,247,198,0	script	Bed#cube	111,{
+lhz_cube,247,198,0	script	Bed#cube	HIDDEN_NPC,{
 	if (lhz_secret02 == 0) {
 		mes "^3355FFYou've found a bed";
 		mes "in which the sheets";
@@ -1317,7 +1318,7 @@ lhz_cube,247,198,0	script	Bed#cube	111,{
 	close;
 }
 
-lhz_cube,229,184,0	script	Goblet#cube	111,{
+lhz_cube,229,184,0	script	Goblet#cube	HIDDEN_NPC,{
 	if (lhz_sincube < 10) {
 		if (lhz_secret03 == 0) {
 			mes "^3355FFYou see an empty";
@@ -1346,7 +1347,7 @@ lhz_cube,229,184,0	script	Goblet#cube	111,{
 	close;
 }
 
-lhz_cube,231,202,0	script	Chemicals#cube	111,{
+lhz_cube,231,202,0	script	Chemicals#cube	HIDDEN_NPC,{
 	if (lhz_secret03 < 1) {
 		mes "^3355FFThere is a bottle";
 		mes "containing slightly";
@@ -1394,7 +1395,7 @@ lhz_cube,231,202,0	script	Chemicals#cube	111,{
 	close;
 }
 
-lhz_cube,249,191,0	script	Cabinet#cube	111,{
+lhz_cube,249,191,0	script	Cabinet#cube	HIDDEN_NPC,{
 	if (lhz_secret03 < 2) {
 		mes "^3355FFYou've found a";
 		mes "cabinet that contains";
@@ -1446,7 +1447,7 @@ lhz_cube,249,191,0	script	Cabinet#cube	111,{
 	close;
 }
 
-lhz_cube,224,197,0	script	Experiment Tube#cube	111,{
+lhz_cube,224,197,0	script	Experiment Tube#cube	HIDDEN_NPC,{
 	if (lhz_secret01 < 8) {
 		mes "^3355FFYou find a strange";
 		mes "tube that seems to";
@@ -1545,7 +1546,7 @@ lhz_cube,224,197,0	script	Experiment Tube#cube	111,{
 	}
 }
 
-lhz_cube,248,193,0	script	Box#cube1	111,{
+lhz_cube,248,193,0	script	Box#cube1	HIDDEN_NPC,{
 	if (lhz_secret01 < 9 && lhz_secret02 < 4 && lhz_secret03 < 3) {
 		mes "^3355FFYou find a box with";
 		mes "three distinctively";
@@ -1671,7 +1672,7 @@ lhz_cube,248,193,0	script	Box#cube1	111,{
 	close;
 }
 
-lhz_cube,250,184,0	script	Door#cube	111,{
+lhz_cube,250,184,0	script	Door#cube	HIDDEN_NPC,{
 	mes "^3355FFYou've come upon a";
 	mes "door that leads outside.^000000";
 	next;
@@ -1682,7 +1683,7 @@ lhz_cube,250,184,0	script	Door#cube	111,{
 	close;
 }
 
-lhz_dun02,224,6,0	script	Exit1#lt	45,1,1,{
+lhz_dun02,224,6,0	script	Exit1#lt	WARPNPC,1,1,{
 	end;
 OnTouch_:
 	if (MISC_QUEST&512) {
@@ -1698,7 +1699,7 @@ OnTouch_:
 
 // Lighthalzen Pickpocket Mini-Quest
 //============================================================
-lighthalzen,240,216,4	script	Suspicious Guy#lhz_01	870,2,2,{
+lighthalzen,240,216,4	script	Suspicious Guy#lhz_01	4_M_LGTPOOR,2,2,{
 	end;
 
 OnTouch_:
@@ -1767,7 +1768,7 @@ OnTouch_:
 	}
 }
 
-lighthalzen,220,169,3	script	Suspicious Guy#lhz_02	870,2,2,{
+lighthalzen,220,169,3	script	Suspicious Guy#lhz_02	4_M_LGTPOOR,2,2,{
 	end;
 
 OnInit:
@@ -1839,7 +1840,7 @@ OnTouch_:
 	}
 }
 
-lighthalzen,164,127,4	script	Suspicious Guy#lhz_03	870,2,2,{
+lighthalzen,164,127,4	script	Suspicious Guy#lhz_03	4_M_LGTPOOR,2,2,{
 	end;
 
 OnInit:
@@ -2023,7 +2024,7 @@ OnTouch_:
 
 // Friendship Quest
 //============================================================
-lhz_in02,201,210,5	script	Digotz	869,{
+lhz_in02,201,210,5	script	Digotz	4_M_LGTMAN,{
 	if (BaseLevel < 50) {
 		mes "[Digotz]";
 		mes "Oh, an adventurer?";
@@ -2502,7 +2503,7 @@ lhz_in02,201,210,5	script	Digotz	869,{
 	close;
 }
 
-lighthalzen,337,232,3	script	Maku	870,{
+lighthalzen,337,232,3	script	Maku	4_M_LGTPOOR,{
 	mes "[Maku]";
 	if (friendship > 14) {
 		cutin "lhz_macu07",2;
@@ -2980,7 +2981,7 @@ lighthalzen,337,232,3	script	Maku	870,{
 }
 
 
-yuno_in04,107,14,5	script	Student	754,{
+yuno_in04,107,14,5	script	Student	4_M_SAGE_A,{
 	if (friendship == 7 || friendship == 8) {
 		mes "[Joey Choryee]";
 		mes "This is a study area where";
@@ -3009,7 +3010,7 @@ yuno_in04,107,14,5	script	Student	754,{
 	close;
 }
 
-yuno_in04,96,106,5	script	Passionate Student	754,{
+yuno_in04,96,106,5	script	Passionate Student	4_M_SAGE_A,{
 	if ((MaxWeight-Weight) < 300 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
 		mes "Right now, you're carrying";
@@ -3230,7 +3231,7 @@ yuno_in04,96,106,5	script	Passionate Student	754,{
 	close;
 }
 
-yuno_in04,168,117,3	script	Book#lhz	111,{
+yuno_in04,168,117,3	script	Book#lhz	HIDDEN_NPC,{
 	if (friendship == 11) {
 		mes "^3355FFThere's nothing";
 		mes "over here that you";
@@ -3256,7 +3257,7 @@ yuno_in04,168,117,3	script	Book#lhz	111,{
 
 // Cursed Spirit Quest
 //============================================================
-lhz_dun01,147,106,0	script	#kiz01-1	-1,3,3,{
+lhz_dun01,147,106,0	script	#kiz01-1	HIDDEN_NPC,3,3,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
@@ -3292,11 +3293,11 @@ OnTouch_:
 	end;
 }
 
-lhz_dun01,239,135,0	duplicate(#kiz01-1)	#kiz01-2	-1,3,3
-lhz_dun01,66,213,0	duplicate(#kiz01-1)	#kiz01-3	-1,3,3
-lhz_dun01,225,198,0	duplicate(#kiz01-1)	#kiz01-4	-1,3,3
+lhz_dun01,239,135,0	duplicate(#kiz01-1)	#kiz01-2	HIDDEN_NPC,3,3
+lhz_dun01,66,213,0	duplicate(#kiz01-1)	#kiz01-3	HIDDEN_NPC,3,3
+lhz_dun01,225,198,0	duplicate(#kiz01-1)	#kiz01-4	HIDDEN_NPC,3,3
 
-lhz_dun02,244,229,0	script	#kiz02-1	-1,3,3,{
+lhz_dun02,244,229,0	script	#kiz02-1	HIDDEN_NPC,3,3,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
@@ -3332,11 +3333,11 @@ OnTouch_:
 	end;
 }
 
-lhz_dun02,60,293,0	duplicate(#kiz02-1)	#kiz02-2	-1,3,3
-lhz_dun02,267,278,0	duplicate(#kiz02-1)	#kiz02-3	-1,3,3
-lhz_dun02,94,199,0	duplicate(#kiz02-1)	#kiz02-4	-1,3,3
+lhz_dun02,60,293,0	duplicate(#kiz02-1)	#kiz02-2	HIDDEN_NPC,3,3
+lhz_dun02,267,278,0	duplicate(#kiz02-1)	#kiz02-3	HIDDEN_NPC,3,3
+lhz_dun02,94,199,0	duplicate(#kiz02-1)	#kiz02-4	HIDDEN_NPC,3,3
 
-lhz_dun03,244,51,0	script	#kiz03-1	-1,3,3,{
+lhz_dun03,244,51,0	script	#kiz03-1	HIDDEN_NPC,3,3,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
@@ -3372,10 +3373,10 @@ OnTouch_:
 	end;
 }
 
-lhz_dun03,123,191,0	duplicate(#kiz03-1)	#kiz03-2	-1,3,3
-lhz_dun03,74,140,0	duplicate(#kiz03-1)	#kiz03-3	-1,3,3
+lhz_dun03,123,191,0	duplicate(#kiz03-1)	#kiz03-2	HIDDEN_NPC,3,3
+lhz_dun03,74,140,0	duplicate(#kiz03-1)	#kiz03-3	HIDDEN_NPC,3,3
 
-lighthalzen,344,278,0	script	#kiz03	-1,2,2,{
+lighthalzen,344,278,0	script	#kiz03	HIDDEN_NPC,2,2,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
@@ -3426,7 +3427,7 @@ OnTouch_:
 	end;
 }
 
-lhz_in03,178,22,0	script	#kiz04	-1,2,2,{
+lhz_in03,178,22,0	script	#kiz04	HIDDEN_NPC,2,2,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
@@ -3505,7 +3506,7 @@ OnTouch_:
 	end;
 }
 
-lighthalzen,295,227,0	script	#kiz05	-1,2,2,{
+lighthalzen,295,227,0	script	#kiz05	HIDDEN_NPC,2,2,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
@@ -3551,7 +3552,7 @@ OnTouch_:
 	end;
 }
 
-lighthalzen,364,315,0	script	#kiz06	-1,3,3,{
+lighthalzen,364,315,0	script	#kiz06	HIDDEN_NPC,3,3,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
@@ -3610,7 +3611,7 @@ OnTouch_:
 	end;
 }
 
-lhz_in01,113,150,0	script	#kiz07	-1,3,3,{
+lhz_in01,113,150,0	script	#kiz07	HIDDEN_NPC,3,3,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
@@ -3664,7 +3665,7 @@ OnTouch_:
 	end;
 }
 
-lhz_in01,272,227,0	script	#kiz08	-1,2,2,{
+lhz_in01,272,227,0	script	#kiz08	HIDDEN_NPC,2,2,{
 OnTouch_:
 	if (countitem(7345) > 0 ) {
 		if (lhz_curse == 0) {
@@ -3748,7 +3749,7 @@ OnTouch_:
 	end;
 }
 
-lhz_in01,206,129,0	script	#kiz09	-1,5,5,{
+lhz_in01,206,129,0	script	#kiz09	HIDDEN_NPC,5,5,{
 OnTouch_:
 	if (countitem(7345) > 0) {
 		if (lhz_curse == 12) {
@@ -3767,7 +3768,7 @@ OnTouch_:
 	end;
 }
 
-lhz_que01,21,31,5	script	#li_Varmunt	755,{
+lhz_que01,21,31,5	script	#li_Varmunt	4_M_SAGE_C,{
 	if (countitem(7345) > 0) {
 		if (lhz_curse == 12) {
 			mes "[??]";
@@ -3903,7 +3904,7 @@ lhz_que01,21,31,5	script	#li_Varmunt	755,{
 	end;
 }
 
-lhz_que01,29,24,3	script	#li_researcher	754,{
+lhz_que01,29,24,3	script	#li_researcher	4_M_SAGE_A,{
 	if (countitem(7345) > 0) {
 		if (lhz_curse == 12) {
 			mes "Doctor Varmunt,";
@@ -4038,7 +4039,7 @@ lhz_que01,29,24,3	script	#li_researcher	754,{
 	end;
 }
 
-lhz_in01,282,166,0	script	#kiz10	-1,3,3,{
+lhz_in01,282,166,0	script	#kiz10	HIDDEN_NPC,3,3,{
 OnTouch_:
 	if (countitem(7345) > 0) {
 		if (lhz_curse == 16) {
@@ -4070,7 +4071,7 @@ OnTouch_:
 	end;
 }
 
-lhz_que01,99,74,5	script	#li_Man	48,{
+lhz_que01,99,74,5	script	#li_Man	1_M_02,{
 	if (lhz_curse == 16) {
 		mes "[???]";
 		mes "It's over.";
@@ -4221,7 +4222,7 @@ OnTouch_:
 	close;
 }
 
-lighthalzen,346,263,3	script	Elder#lhz	846,{
+lighthalzen,346,263,3	script	Elder#lhz	4_F_EINOLD,{
 	if (countitem(7345) > 0) {
 		if ((lhz_curse == 1) && (lhz_spi01 == 1) && (lhz_spi02 == 1) && (lhz_spi03 == 1) && (lhz_spi04 == 1)) {
 			mes "[Elder]";
@@ -4689,7 +4690,7 @@ lighthalzen,346,263,3	script	Elder#lhz	846,{
 	}
 }
 
-lhz_in03,32,162,3	script	Crippled Girl#li_tre	53,{
+lhz_in03,32,162,3	script	Crippled Girl#li_tre	1_M_INNKEEPER,{
 	if (lhz_curse == 23) {
 		if (countitem(7341) > 0) {
 			mes "["+strcharinfo(0)+"]";
@@ -5054,7 +5055,7 @@ lhz_in03,32,162,3	script	Crippled Girl#li_tre	53,{
 	}
 }
 
-lighthalzen,324,322,0	script	#li_door	45,2,2,{
+lighthalzen,324,322,0	script	#li_door	WARPNPC,2,2,{
 OnTouch_:
 	if ((lhz_curse > 19) && (lhz_curse < 23)) {
 		mes "^3355FFThe door is locked.^000000";
@@ -5086,7 +5087,7 @@ OnTouch_:
 
 lhz_in03,12,162,0	warp	#to_lhz		1,1,lighthalzen,321,322
 
-lighthalzen,319,321,0	script	#li_bother	-1,2,2,{ //3,3
+lighthalzen,319,321,0	script	#li_bother	HIDDEN_NPC,2,2,{ //3,3
 OnTouch_:
 	if ((lhz_curse == 24 ) || (lhz_curse == 25)) {
 		mes ".............";
@@ -5141,7 +5142,7 @@ OnTouch_:
 	end;
 }
 
-lhz_in01,114,181,5	script	Representative#li_01	71,{
+lhz_in01,114,181,5	script	Representative#li_01	1_F_LIBRARYGIRL,{
 	if (lhz_curse == 7) {
 		mes "[Representative]";
 		mes "Greetings, and welcome";
@@ -5300,7 +5301,7 @@ lhz_in01,114,181,5	script	Representative#li_01	71,{
 	}
 }
 
-lhz_in01,27,247,5	script	Representative#li_02	71,{
+lhz_in01,27,247,5	script	Representative#li_02	1_F_LIBRARYGIRL,{
 	if (lhz_curse > 6) {
 		mes "[Representative]";
 		mes "Welcome to the";
@@ -5313,7 +5314,7 @@ lhz_in01,27,247,5	script	Representative#li_02	71,{
 			mes "Rekenber was established";
 			mes "400 years ago, around the";
 			mes "same time as the foundation";
-			mes "of the Schwaltzvalt Republic.";
+			mes "of the Schwarzwald Republic.";
 			next;
 			mes "[Representative]";
 			mes "We began as the ''Zent Zerter";
@@ -5443,13 +5444,13 @@ lhz_in01,27,247,5	script	Representative#li_02	71,{
 	}
 }
 
-lhz_in01,25,251,3	script	Rekenber Guidebook#li	111,{
+lhz_in01,25,251,3	script	Rekenber Guidebook#li	HIDDEN_NPC,{
 	mes "..............";
 	next;
 	mes "^3131FF#The Vision^000000";
 	mes "In the pursuit of knowledge,";
 	mes "Rekenber will search the";
-	mes "Rune-Midgart continent for";
+	mes "Rune-Midgarts continent for";
 	mes "ancient relics. We hope to make";
 	mes "significant scientific progress by learning the secrets of the past.";
 	next;
@@ -5458,7 +5459,7 @@ lhz_in01,25,251,3	script	Rekenber Guidebook#li	111,{
 	mes "improve current technologies";
 	mes "to provide more convenient";
 	mes "and affordable services in";
-	mes "the Schwaltzvalt Republic.";
+	mes "the Schwarzwald Republic.";
 	next;
 	mes "^3131FF#The Commitment^000000";
 	mes "Although magic and the";
@@ -5479,7 +5480,7 @@ lhz_in01,25,251,3	script	Rekenber Guidebook#li	111,{
 	close;
 }
 
-lhz_in01,273,121,1	script	Mad Scientist#li	865,{
+lhz_in01,273,121,1	script	Mad Scientist#li	4_LGTSCIENCE,{
 	if (lhz_curse == 13) {
 		mes "[Wolfchev]";
 		mes "No one shall";
@@ -5678,7 +5679,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	865,{
 	}
 }
 
-lhz_in01,286,226,3	script	Secretary Slierre#li	831,{
+lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 	if (lhz_curse == 26) {
 		mes "[Sueii Slierre]";
 		mes "Excuse me, but you are";
@@ -5723,7 +5724,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	831,{
 			mes "biggest contributer of the";
 			mes "Regenschirm Laboratory.";
 			mes "Their work will benefit the";
-			mes "entire Rune-Midgard continent, hence our highly involved support.";
+			mes "entire Midgard continent, hence our highly involved support.";
 			next;
 			mes "[Sueii Slierre]";
 			mes "A representative at the";
@@ -6161,7 +6162,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	831,{
 	}
 }
 
-lhz_que01,94,24,0	script	#li_end	-1,2,2,{
+lhz_que01,94,24,0	script	#li_end	HIDDEN_NPC,2,2,{
 OnTouch_:
 	if (lhz_curse > 30) {
 		mes "^3131FFThere's no trace of";
@@ -6177,7 +6178,7 @@ OnTouch_:
 	end;
 }
 
-lhz_in01,43,114,0	script	#li_toend	45,1,1,{
+lhz_in01,43,114,0	script	#li_toend	WARPNPC,1,1,{
 OnTouch_:
 	if (lhz_curse > 30) {
 		warp "lhz_que01",97,30;
@@ -6191,7 +6192,7 @@ OnTouch_:
 lhz_que01,97,33,0	warp	#li_toin01	1,1,lhz_in01,43,120
 lhz_in01,278,132,0	warp	#li_toin02	1,1,lhz_in01,43,120
 
-lhz_que01,89,15,3	script	File#li	111,{
+lhz_que01,89,15,3	script	File#li	HIDDEN_NPC,{
 	mes "Name: Engeod";
 	mes "Age: XX";
 	mes "Height: XXX";
@@ -6209,7 +6210,7 @@ lhz_que01,89,15,3	script	File#li	111,{
 	close;
 }
 
-lhz_in01,269,114,3	script	A File#li-1	111,{
+lhz_in01,269,114,3	script	A File#li-1	HIDDEN_NPC,{
 	mes "Name: Engeod";
 	mes "Age: XX";
 	mes "Height: XXX";
@@ -6227,9 +6228,9 @@ lhz_in01,269,114,3	script	A File#li-1	111,{
 	close;
 }
 
-// President Quest, a.k.a. Schwartzvalt Triology Quest
+// President Quest, a.k.a. Schwarzwald Triology Quest
 //============================================================
-lighthalzen,179,170,4	script	Ordinary Man	98,{
+lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 
 	if(!lhz_boss)
 	{
@@ -6926,7 +6927,7 @@ lighthalzen,179,170,4	script	Ordinary Man	98,{
 	}
 }
 
-lighthalzen,173,167,1	script	Switch	-1,2,4,{
+lighthalzen,173,167,1	script	Switch	HIDDEN_NPC,2,4,{
 
 OnTouch_:
 	if(lhz_boss == 1)
@@ -7011,7 +7012,7 @@ OnTouch_:
 	}
 }
 
-yuno_fild04,165,245,4	script	Dismal Guy	89,{
+yuno_fild04,165,245,4	script	Dismal Guy	4_M_ORIENT02,{
 
 	if(lhz_boss < 8)
 	{
@@ -7114,7 +7115,7 @@ yuno_fild04,165,245,4	script	Dismal Guy	89,{
 		mes "Rekenber Corporation is";
 		mes "our sworn enemy. Did you";
 		mes "know that it basically controls";
-		mes "the Schwaltzvalt Republic?";
+		mes "the Schwarzwald Republic?";
 		next;
 		mes "[Gushaar]";
 		mes "They're so powerful, they";
@@ -7135,12 +7136,12 @@ yuno_fild04,165,245,4	script	Dismal Guy	89,{
 		mes "The ultimate goal of our";
 		mes "group, ''Secret Wing,'' is to";
 		mes "establish true independence";
-		mes "in the Schwaltzvalt Republic";
+		mes "in the Schwarzwald Republic";
 		mes "by destroying Rekenber Corporation.";
 		next;
 		mes "[Gushaar]";
 		mes "Fortunately, the new president";
-		mes "of the Schwaltzvalt Republic,";
+		mes "of the Schwarzwald Republic,";
 		mes "Mr. Weierstrass, is sympathetic";
 		mes "to our cause. He is working with us to bring about a revolution and";
 		mes "overthrow Rekenber Corporation.";
@@ -7191,7 +7192,7 @@ yuno_fild04,165,245,4	script	Dismal Guy	89,{
 	}
 }
 
-yuno_pre,69,20,4	script	Secretary#1	862,{
+yuno_pre,69,20,4	script	Secretary#1	4_F_LGTGIRL,{
 
 	if(lhz_boss < 11)
 	{
@@ -7256,7 +7257,7 @@ yuno_pre,69,20,4	script	Secretary#1	862,{
 				mes "I'm the personal";
 				mes "secretary to the";
 				mes "president of the";
-				mes "Schwartzvalt Republic,";
+				mes "Schwarzwald Republic,";
 				mes "if that's what you mean.";
 				close;
 		}
@@ -7447,7 +7448,7 @@ yuno_pre,69,20,4	script	Secretary#1	862,{
 	}
 }
 
-yuno_pre,95,71,5	script	Guard	852,{
+yuno_pre,95,71,5	script	Guard	4_M_EIN_SOLDIER,{
 
 	if(lhz_boss < 11)
 	{
@@ -7577,14 +7578,14 @@ yuno_pre,95,71,5	script	Guard	852,{
 	}
 }
 
-yuno_pre,96,69,2	script	A Fine Gentleman	754,{
+yuno_pre,96,69,2	script	A Fine Gentleman	4_M_SAGE_A,{
 
 OnInit:
 	disablenpc "A Fine Gentleman";
 	end;
 }
 
-yuno_pre,69,79,4	script	Mr. President	872,{
+yuno_pre,69,79,4	script	Mr. President	4_M_PRESIDENT,{
 
 	if(checkweight(7342,1) != 1)
 	{
@@ -7676,7 +7677,7 @@ L_Mission:
 				mes "exist to create money, but";
 				mes "the Rekenber Corporation";
 				mes "is much more nefarious.";
-				mes "They actually want to dominate the entire Rune-Midgard continent.";
+				mes "They actually want to dominate the entire Midgard continent.";
 				next;
 				mes "[Karl]";
 				mes "In fact, the chairman of";
@@ -7700,7 +7701,7 @@ L_Mission:
 				mes "''Secret Wing's'' only";
 				mes "goal is to destroy the";
 				mes "Rekenber Corporation in";
-				mes "order to break the Schwaltzvalt Republic free from its oppression.";
+				mes "order to break the Schwarzwald Republic free from its oppression.";
 				next;
 				mes "[Karl]";
 				mes "Of course, we realize";
@@ -8127,9 +8128,9 @@ L_Mission:
 		mes "I hope you continue";
 		mes "to keep up the good";
 		mes "work, not only for the";
-		mes "sake of the Schwaltzvalt";
+		mes "sake of the Schwarzwald";
 		mes "Republic, but for peace";
-		mes "on all of Rune-Midgard.";
+		mes "on all of Midgard.";
 		close2;
 		cutin "",255;
 		end;
@@ -8485,7 +8486,7 @@ L_Mission:
 		next;
 		mes "[Karl]";
 		mes "I have had my men to gather some information and learned that Regenschrim had stopped operating now.";
-		mes "You have done well for the Schwaltzvalt Republic.";
+		mes "You have done well for the Schwarzwald Republic.";
 		close2;
 		cutin "",255;
 		end;
@@ -8501,21 +8502,21 @@ L_Mission:
 	}
 }
 
-yuno_pre,77,68,0	script	Secretary#2	862,{
+yuno_pre,77,68,0	script	Secretary#2	4_F_LGTGIRL,{
 
 OnInit:
 	disablenpc "Secretary#2";
 	end;
 }
 
-yuno_pre,75,73,0	script	A Neat Gentleman	109,{
+yuno_pre,75,73,0	script	A Neat Gentleman	4_M_MANAGER,{
 
 OnInit:
 	disablenpc "A Neat Gentleman";
 	end;
 }
 
-yuno_pre,117,60,0	script	Eavesdrop	-1,10,5,{
+yuno_pre,117,60,0	script	Eavesdrop	HIDDEN_NPC,10,5,{
 
 OnTouch_:
 	if(lhz_boss == 16)
@@ -8551,7 +8552,7 @@ OnTouch_:
 	}
 }
 
-aldebaran,58,225,4	script	Kafra Employee#l1	116,{
+aldebaran,58,225,4	script	Kafra Employee#l1	4_F_KAFRA2,{
 
 	if(lhz_boss != 17)
 	{
@@ -8621,7 +8622,7 @@ aldebaran,58,225,4	script	Kafra Employee#l1	116,{
 	}
 }
 
-aldeba_in,155,240,5	script	Kafra Employee#l2	859,{
+aldeba_in,155,240,5	script	Kafra Employee#l2	4_F_AGENTKAFRA,{
 
 	if(checkweight(7343,1) != 1)
 	{
@@ -8904,7 +8905,7 @@ aldeba_in,155,240,5	script	Kafra Employee#l2	859,{
 	}
 }
 
-lhz_fild02,228,214,0	script	Wounded Man	849,{
+lhz_fild02,228,214,0	script	Wounded Man	4_M_DIEMAN,{
 
 	if(checkweight(7343,1) != 1)
 	{
@@ -9006,7 +9007,7 @@ OnInit:
 	end;
 }
 
-lhz_fild02,224,220,0	script	Wounded Man Switch	-1,3,3,{
+lhz_fild02,224,220,0	script	Wounded Man Switch	HIDDEN_NPC,3,3,{
 
 OnTouch_:
 	if(lhz_boss == 18)
@@ -9020,7 +9021,7 @@ OnTouch_:
 	}
 }
 
-lhz_fild01,76,214,0	script	Esuna Trigger	-1,5,5,{
+lhz_fild01,76,214,0	script	Esuna Trigger	HIDDEN_NPC,5,5,{
 
 OnTouch_:
 	if((lhz_boss == 26) || (lhz_boss == 36) || (lhz_boss == 38) || (lhz_boss == 40))
@@ -9035,7 +9036,7 @@ OnTouch_:
 	}
 }
 
-lhz_fild01,66,219,4	script	Mysterious Woman	859,{
+lhz_fild01,66,219,4	script	Mysterious Woman	4_F_AGENTKAFRA,{
 
 	if(lhz_boss == 26)
 	{
@@ -9175,7 +9176,7 @@ lhz_fild01,66,219,4	script	Mysterious Woman	859,{
 		mes "Good, you're back.";
 		mes "Listen, all members of";
 		mes "Secret Wing need to leave";
-		mes "the Schwaltzvalt Republic";
+		mes "the Schwarzwald Republic";
 		mes "immediately! We've been";
 		mes "severely compromised...";
 		next;
@@ -9224,7 +9225,7 @@ lhz_fild01,66,219,4	script	Mysterious Woman	859,{
 		mes "Still, aside from a few";
 		mes "agents, almost all of Secret";
 		mes "Wing must pull out of the";
-		mes "Schwaltzvalt Republic for";
+		mes "Schwarzwald Republic for";
 		mes "now so that we can live to";
 		mes "fight another day.";
 		next;
@@ -9251,7 +9252,7 @@ OnInit:
 	end;
 }
 
-lhz_in01,93,45,4	script	Researcher#1	865,{
+lhz_in01,93,45,4	script	Researcher#1	4_LGTSCIENCE,{
 
 	if(lhz_boss < 28)
 	{
@@ -9353,7 +9354,7 @@ lhz_in01,93,45,4	script	Researcher#1	865,{
 	}
 }
 
-lhz_in01,285,169,3	script	Researcher#2	865,{
+lhz_in01,285,169,3	script	Researcher#2	4_LGTSCIENCE,{
 
 	if(checkweight(7349,1) != 1)
 	{
@@ -9506,7 +9507,7 @@ lhz_in01,285,169,3	script	Researcher#2	865,{
 	}
 }
 
-lhz_in01,187,31,0	script	#Sneak	111,4,3,{
+lhz_in01,187,31,0	script	#Sneak	HIDDEN_NPC,4,3,{
 
 	end;
 
@@ -9663,7 +9664,7 @@ L_Enter:
 	}
 }
 
-lhz_in01,177,44,0	script	Timer_Sneak	-1,8,12,{
+lhz_in01,177,44,0	script	Timer_Sneak	HIDDEN_NPC,8,12,{
 
 OnTouch_:
 	warp "lhz_in01",191,49;
@@ -9690,7 +9691,7 @@ OnTimer190000:
 
 
 
-lhz_in01,182,35,0	script	File Search Engine	111,{
+lhz_in01,182,35,0	script	File Search Engine	HIDDEN_NPC,{
 
 	if((lhz_boss > 28) && (lhz_boss < 35))
 	{
@@ -9820,7 +9821,7 @@ L_Search:
 	close;
 }
 
-lhz_in01,177,31,0	script	Door#sneak	111,{
+lhz_in01,177,31,0	script	Door#sneak	HIDDEN_NPC,{
 
 	if(lhz_boss < 29)
 	{
@@ -9858,7 +9859,7 @@ lhz_in01,177,31,0	script	Door#sneak	111,{
 	}
 }
 
-lhz_in01,184,40,0	script	Area 1-5	111,{
+lhz_in01,184,40,0	script	Area 1-5	HIDDEN_NPC,{
 
 	if(checkweight(7344,1) != 1)
 	{
@@ -9907,7 +9908,7 @@ lhz_in01,184,40,0	script	Area 1-5	111,{
 	}
 }
 
-lhz_in01,184,52,0	script	Area 1-7	111,{
+lhz_in01,184,52,0	script	Area 1-7	HIDDEN_NPC,{
 
 	if((lhz_boss > 28) && (lhz_boss < 32))
 	{
@@ -9929,7 +9930,7 @@ lhz_in01,184,52,0	script	Area 1-7	111,{
 		mes "[Classified Info]";
 		mes "^8C1717Karl Weierstrass has";
 		mes "been a long distinguished";
-		mes "politician in the Schwaltzvalt";
+		mes "politician in the Schwarzwald";
 		mes "Republic and was elected as";
 		mes "its president in the year 984.^000000";
 		next;
@@ -9969,7 +9970,7 @@ lhz_in01,184,52,0	script	Area 1-7	111,{
 	}
 }
 
-lhz_in01,184,46,0	script	Area 3-2	111,{
+lhz_in01,184,46,0	script	Area 3-2	HIDDEN_NPC,{
 
 	if((lhz_boss > 28) && (lhz_boss < 30))
 	{
@@ -10014,7 +10015,7 @@ lhz_in01,184,46,0	script	Area 3-2	111,{
 		mes "3rd Security Team has alrady";
 		mes "placed secret agents in key";
 		mes "strategic locations within";
-		mes "the Schwaltzvalt Republic.^000000";
+		mes "the Schwarzwald Republic.^000000";
 		next;
 		mes "^3355FFThis file is very intriguing,";
 		mes "but it doesn't really cover";
@@ -10034,7 +10035,7 @@ lhz_in01,184,46,0	script	Area 3-2	111,{
 	}
 }
 
-lhz_in01,184,48,0	script	Area 3-3	111,{
+lhz_in01,184,48,0	script	Area 3-3	HIDDEN_NPC,{
 
 	if((lhz_boss > 28) && (lhz_boss < 34))
 	{
@@ -10082,7 +10083,7 @@ lhz_in01,184,48,0	script	Area 3-3	111,{
 	}
 }
 
-lhz_in01,177,56,0	script	Area 6-1	111,{
+lhz_in01,177,56,0	script	Area 6-1	HIDDEN_NPC,{
 
 	if((lhz_boss > 28) && (lhz_boss < 33))
 	{
@@ -10129,7 +10130,7 @@ lhz_in01,177,56,0	script	Area 6-1	111,{
 	}
 }
 
-lhz_dun02,282,278,0	script	Broken Machine	111,{
+lhz_dun02,282,278,0	script	Broken Machine	HIDDEN_NPC,{
 
 	if(checkweight(7346,1) != 1)
 	{
@@ -10209,7 +10210,7 @@ lhz_dun02,282,278,0	script	Broken Machine	111,{
 	}
 }
 
-sec_in02,17,170,4	script	boss::lght_boss_admin	809,{
+sec_in02,17,170,4	script	boss::lght_boss_admin	1_M_SIGNMONK,{
 	callfunc "F_GM_NPC";
 	mes "[Patch]";
 	mes "Tell me what you want.";
@@ -10230,7 +10231,7 @@ sec_in02,17,170,4	script	boss::lght_boss_admin	809,{
 	close;
 }
 
-lhz_in02,19,274,2	script	Maintenance Guy	851,{
+lhz_in02,19,274,2	script	Maintenance Guy	4_M_REPAIR,{
 
 	mes "[Kudiuu]";
 	mes "Holy...!";
@@ -10244,7 +10245,7 @@ lhz_in02,19,274,2	script	Maintenance Guy	851,{
 
 // Rekenber Job Quest
 //============================================================
-lhz_in01,174,258,3	script	Young Man#reken	868,{
+lhz_in01,174,258,3	script	Young Man#reken	4_M_LGTGUARD,{
 
 	if(lhz_rekenber > 21)
 	{
@@ -10986,7 +10987,7 @@ lhz_in01,174,258,3	script	Young Man#reken	868,{
 	end;
 }
 
-lighthalzen,141,162,3	script	Old Man#reken	85,{
+lighthalzen,141,162,3	script	Old Man#reken	4_M_03,{
 
 	mes "[Old Man]";
 	mes "Lately, Kazien seems";
@@ -11016,7 +11017,7 @@ lighthalzen,141,162,3	script	Old Man#reken	85,{
 	close;
 }
 
-einbroch,55,52,3	script	Laboratory Guard#reken	 852,{
+einbroch,55,52,3	script	Laboratory Guard#reken	4_M_EIN_SOLDIER,{
 
 	if(lhz_rekenber == 3)
 	{
@@ -11099,7 +11100,7 @@ einbroch,55,52,3	script	Laboratory Guard#reken	 852,{
 	close;
 }
 
-airplane_01,96,48,3	script	Man#Lyozien	868,{
+airplane_01,96,48,3	script	Man#Lyozien	4_M_LGTMAN,{
 
 	if(lhz_rekenber > 21)
 	{
@@ -11272,7 +11273,7 @@ airplane_01,96,48,3	script	Man#Lyozien	868,{
 		mes "So you spoke to";
 		mes "Mr. Ahman already?";
 		mes "Good, good. Now we can";
-		mes "go back to the Schwaltzvalt";
+		mes "go back to the Schwarzwald";
 		mes "Republic for our next job.";
 		next;
 		mes "[Lyozien]";
@@ -11537,7 +11538,7 @@ OnStop:
 	end;
 }
 
--	script	::Scamp	-1,{
+-	script	::Scamp	HIDDEN_NPC,{
 
 	if(lhz_rekenber > 21)
 	{
@@ -11636,7 +11637,7 @@ OnStop:
 		mes "Oh, it's you again.";
 		mes "Shouldn't you be getting";
 		mes "on the Airship and heading";
-		mes "back to the Schwaltzvalt";
+		mes "back to the Schwarzwald";
 		mes "Republic? There are more";
 		mes "deliveries in queue, you know.";
 		close;
@@ -11720,7 +11721,7 @@ OnStop:
 	close;
 }
 
-airplane_01,1,1,1	script	#bully1	-1,{
+airplane_01,1,1,1	script	#bully1	HIDDEN_NPC,{
 
 OnInit:
 	disablenpc "#bully1";
@@ -11763,7 +11764,7 @@ OnTimer120000:
 	end;
 }
 
-airplane_01,2,2,1	script	#bully2	-1,{
+airplane_01,2,2,1	script	#bully2	HIDDEN_NPC,{
 
 OnInit:
 	disablenpc "#bully2";
@@ -11806,7 +11807,7 @@ OnTimer120000:
 	end;
 }
 
-airplane_01,99,47,3	script	#packidentity	139,2,2,{
+airplane_01,99,47,3	script	#packidentity	HIDDEN_WARP_NPC,2,2,{
 	end;
 
 OnInit:
@@ -11846,7 +11847,7 @@ OnTimer120000:
 	end;
 }
 
-lhz_in01,187,247,3	script	#flashback1	139,2,2,{
+lhz_in01,187,247,3	script	#flashback1	HIDDEN_WARP_NPC,2,2,{
 
 OnTouch_:
 	if(lhz_rekenber == 22)
@@ -11868,7 +11869,7 @@ OnTouch_:
 	end;
 }
 
-lhz_in01,75,248,3	script	#flashback2	139,2,2,{
+lhz_in01,75,248,3	script	#flashback2	HIDDEN_WARP_NPC,2,2,{
 
 OnTouch_:
 	if(lhz_rekenber == 22)
@@ -11906,7 +11907,7 @@ OnTouch_:
 	end;
 }
 
-airplane_01,10,10,3	script	#LyozienSwitch	111,{
+airplane_01,10,10,3	script	#LyozienSwitch	HIDDEN_NPC,{
 	callfunc "F_GM_NPC";
 	mes "[Lyozien Switch]";
 	mes "Input password.";
@@ -11989,11 +11990,11 @@ airplane_01,10,10,3	script	#LyozienSwitch	111,{
 //= 2.9 Fixed Friendship Quest levelup exploit (u could get EXP twice) [Lupus]
 //= 3.0 Added Cursed Spirit Quest. [SinSloth]
 //=     Moved a book non-related to Lighthalzen quests.
-//= 3.1 Added Schwartzvalt Trilogy Quest. [SinSloth]
+//= 3.1 Added Schwarzwald Trilogy Quest. [SinSloth]
 //= 3.2 Updated some NPCs regarding Hugel Rebellion Quest. [SinSloth]
 //= 3.2 Removed the NPC "#kiz03-4" as I couldn't find any [L0ne_W0lf]
 //=     reference to it in the Aegis script.
-//= 3.3 Fixed a wrong negative value checking in Schwartzvalt Trilogy quest. [SinSloth]
+//= 3.3 Fixed a wrong negative value checking in Schwarzwald Trilogy quest. [SinSloth]
 //= 3.4 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 3.5 Touch-ups to the Friendship quest. Added EXP reward. [L0ne_W0lf]
 //=     Added cutins for "Maku" npc, and changed "set HP" to percentheal.

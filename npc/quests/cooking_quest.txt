@@ -86,7 +86,7 @@
 			emotion ET_FRET;
 			mes "[Charles Orleans]";
 			mes "Monsieur, why you look";
-			mes "at me so? Is it the Morroc";
+			mes "at me so? Is it the Morocc";
 			mes "silk shirt I am wearing, my";
 			mes "hair styled by Madam Veronica,";
 			mes "or my brand name muffler";
@@ -1057,7 +1057,7 @@
 		mes "sort of trouble. It makes me";
 		mes "me laugh whenever anyone";
 		mes "suggests that he is hiding";
-		mes "in the Schwaltzvalt Republic...";
+		mes "in the Schwarzwald Republic...";
 		next;
 		emotion ET_GO;
 		mes "[Charles Orleans]";

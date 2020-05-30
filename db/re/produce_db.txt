@@ -192,7 +192,7 @@
 
 //--------------------LEVEL 4-----------
 
-//-- Morroc Fruit Wine <-- 10 Strawberry, 4 Lemon, 10 Orange, 2 Alcohol, 5 Grape
+//-- Morocc Fruit Wine <-- 10 Strawberry, 4 Lemon, 10 Orange, 2 Alcohol, 5 Grape
 70,12049,14,0,0,7475,0,578,10,568,4,582,10,970,2,514,5
 //-- Seasoned Jellyfish <-- 30 Tentacle, 10 White Herb, 10 Soft Blade Grass, 1 Old Frying Pan, 20 Squid Ink
 71,12054,14,0,0,7475,0,962,30,509,10,7194,10,7031,1,1024,20
@@ -618,15 +618,15 @@
 
 //---- Create Bomb --- ItemLV=28 ---------------
 //-- Apple Bomb <-- GN_MAKEBOMB Lv1, Apple Bomb CB, 1 Apple, 1 Scell, 1 Detonator, 1 Gun Powder
-246,13260,28,2496,1,6279,0,512,1,911,1,1051,1,6244,1
+//246,13260,28,2496,1,6279,0,512,1,911,1,1051,1,6244,1
 //-- Coconut Bomb <-- GN_MAKEBOMB Lv1, Coconut Bomb CB, 1 Detonator, 1 Coconut Fruit, 2 Gun Powder
-247,13261,28,2496,1,6281,0,1051,1,6263,1,6244,2
+//247,13261,28,2496,1,6281,0,1051,1,6263,1,6244,2
 //-- Melon Bomb <-- GN_MAKEBOMB Lv1, Melon Bomb CB, 1 Sticky Mucus, 1 Detonator, 2 Gun Powder, 1 Melon
-248,13262,28,2496,1,6282,0,938,1,1051,1,6244,2,6264,1
+//248,13262,28,2496,1,6282,0,938,1,1051,1,6244,2,6264,1
 //-- Pineapple Bomb <-- GN_MAKEBOMB Lv1, Pinepple Bomb CB, 1 Cactus Needle, 1 Detonator, 3 Gun Powder, 1 Pineapple
-249,13263,28,2496,1,6280,0,952,1,1051,1,6244,3,6265,1
+//249,13263,28,2496,1,6280,0,952,1,1051,1,6244,3,6265,1
 //-- Banana Bomb <-- GN_MAKEBOMB Lv1, Banana Bomb CB, 1 Banana, 1 Detonator, 4 Gun Powder, 1 Mould Powder
-250,13264,28,2496,1,6283,0,513,1,1051,1,6244,4,7001,1
+//250,13264,28,2496,1,6283,0,513,1,1051,1,6244,4,7001,1
 
 //---- Special Pharmacy --- ItemLV=29 ----------
 //-- Seed Of Horny Plant <-- GN_S_PHARMACY Lv1, Plant Genetic Grow, 10 Prickly Fruit
@@ -655,28 +655,40 @@
 262,12437,29,2497,1,6285,0,645,5,656,5,1092,10,7455,5
 //-- Cure Free <-- GN_S_PHARMACY Lv1, Quality Potion Book, 20 Green Herb, 1 Fruit Of Mastela, 5 Panacea, 1 Leaf Of Yggdrasil, 10 Empty Cylinder
 263,12475,29,2497,1,6285,0,511,20,522,1,525,5,610,1,1092,10
+//-- Golden X <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 10 Yggdrasilberry, 5 Gold
+//264,100231,29,2497,1,1092,10,607,10,969,5
+//-- Red Herb Activator <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 45 Red Herb, 5 Yggdrasil Seed
+//265,100232,29,2497,1,1092,10,507,45,608,5
+//-- Blue Herb Activator <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 15 Blue Herb, 5 Yggdrasil Seed
+//266,100233,29,2497,1,1092,10,510,15,608,5
+//-- Concentrated Red Syrup Potion <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 10 Empty Potion Bottle, 15 Red Syrup
+//267,1100003,29,2497,1,1092,10,1093,10,11621,15
+//-- Concentrated Blue Syrup Potion <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 10 Empty Potion Bottle, 15 Blue Syrup
+//268,1100004,29,2497,1,1092,10,1093,10,11624,15
+//-- Concentrated Golden Syrup Potion <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 10 Empty Potion Bottle, 15 White Syrup, 10 Yellow Syrup
+//269,1100005,29,2497,1,1092,10,1093,10,11623,15,11622,10
 //===============================================
 
 //--------------------LEVEL 30-----------
 // Novice Red Potion (569) <-- 2 Red Herbs, 1 Apple
-264,569,30,0,0,11058,0,507,2,512,1
+270,569,30,0,0,11058,0,507,2,512,1
 // Novice Magnifier (12325) <-- 3 Fine-grained Trunk, 1 Jellopy
-265,12325,30,0,0,11058,0,1066,3,909,1
+271,12325,30,0,0,11058,0,1066,3,909,1
 // Novice Fly Wing (12323) <-- 2 Fluffs, 2 Feathers, 2 Jellopies
-266,12323,30,0,0,11058,0,914,2,949,2,909,2
+272,12323,30,0,0,11058,0,914,2,949,2,909,2
 // Novice Cutter (13040) <-- 10 Shells, 10 Worm Peelings, 1 Phracon
-267,13040,30,0,0,11058,0,935,10,955,10,1010,1
+273,13040,30,0,0,11058,0,935,10,955,10,1010,1
 // Little Unripe Apple (12846) <-- 1 Apple, 1 Green Herb
-268,12846,30,0,0,11058,0,512,1,511,1
+274,12846,30,0,0,11058,0,512,1,511,1
 // Four Leaf Clover (706) <-- 200 Clovers, 200 Sticky Mucus
-269,706,30,0,0,11058,0,705,200,938,200
+275,706,30,0,0,11058,0,705,200,938,200
 // Banana Juice (532) <-- 1 Banana, 1 Milk
-270,532,30,0,0,11058,0,513,1,519,1
+276,532,30,0,0,11058,0,513,1,519,1
 // Apple Juice (531) <-- 1 Apple, 1 Milk
-271,531,30,0,0,11058,0,512,1,519,1
+277,531,30,0,0,11058,0,512,1,519,1
 // Carrot Juice (534) <-- 1 Carrot, 1 Milk
-272,534,30,0,0,11058,0,515,1,519,1
+278,534,30,0,0,11058,0,515,1,519,1
 // Grape Juice (533) <-- 1 Grape, 1 Milk
-273,533,30,0,0,11058,0,514,1,519,1
+279,533,30,0,0,11058,0,514,1,519,1
 // Unripe Apple (619) <-- 10 Sticky Mucus, 20 Green Herbs, 10 Apples
-274,619,30,0,0,11058,0,938,10,511,20,512,10
+280,619,30,0,0,11058,0,938,10,511,20,512,10

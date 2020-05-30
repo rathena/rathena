@@ -439,7 +439,7 @@ static void itemdb_create_dummy(void) {
 	CREATE(dummy_item, struct item_data, 1);
 
 	memset(dummy_item, 0, sizeof(struct item_data));
-	dummy_item->nameid = 500;
+	dummy_item->nameid = ITEMID_DUMMY;
 	dummy_item->weight = 1;
 	dummy_item->value_sell = 1;
 	dummy_item->type = IT_ETC; //Etc item
@@ -502,18 +502,8 @@ bool itemdb_isequip2(struct item_data *id) {
 bool itemdb_isstackable2(struct item_data *id)
 {
 	nullpo_ret(id);
-	switch(id->type) {
-		case IT_WEAPON:
-		case IT_ARMOR:
-		case IT_PETEGG:
-		case IT_PETARMOR:
-		case IT_SHADOWGEAR:
-			return false;
-		default:
-			return true;
-	}
+	return id->isStackable();
 }
-
 
 /*==========================================
  * Trade Restriction functions [Skotlex]
@@ -571,6 +561,12 @@ bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(st
 			return false;
 	}
 	return true;
+}
+
+bool itemdb_ishatched_egg(struct item* item) {
+	if (item && item->card[0] == CARD0_PET && item->attribute == 1)
+		return true;
+	return false;
 }
 
 /** Specifies if item-type should drop unidentified.
@@ -638,8 +634,14 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	if( ISDIGIT(str[0][0]) ){
 		group_id = atoi(str[0]);
 	}else{
+		int64 group_tmp;
+
 		// Try to parse group id as constant
-		script_get_constant(str[0], &group_id);
+		if (!script_get_constant(str[0], &group_tmp)) {
+			ShowError("itemdb_read_group: Unknown group constant \"%s\".\n", str[0]);
+			return false;
+		}
+		group_id = static_cast<int>(group_tmp);
 	}
 
 	// Check the group id
@@ -834,7 +836,7 @@ static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
 	else if( ISDIGIT(str[2][0]) )
 		id->delay_sc = atoi(str[2]);
 	else{ // Try read sc group id from const db
-		int constant;
+		int64 constant;
 
 		if( !script_get_constant(trim(str[2]), &constant) ){
 			ShowWarning("itemdb_read_itemdelay: Invalid sc group \"%s\" for item id %hu.\n", str[2], nameid);
@@ -1632,23 +1634,10 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 		(id->flag.no_equip&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
 		(id->flag.no_equip&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
 		(id->flag.no_equip&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(id->flag.no_equip&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
+		(id->flag.no_equip&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
 		)
 		return true;
 	return false;
-}
-
-/**
-* Check if item is available in spellbook_db or not
-* @param nameid
-* @return True if item is spellbook; False if not
-*/
-bool itemdb_is_spellbook2(unsigned short nameid) {
-	unsigned char i;
-	if (!nameid || !itemdb_exists(nameid) || !skill_spellbook_count)
-		return false;
-	ARR_FIND(0, MAX_SKILL_SPELLBOOK_DB, i, skill_spellbook_db[i].nameid == nameid);
-	return i == MAX_SKILL_SPELLBOOK_DB ? false : true;
 }
 
 /**
@@ -1724,7 +1713,13 @@ static bool itemdb_read_randomopt(const char* basedir, bool silent) {
 				id = atoi(str[0]);
 			}
 			else {
-				script_get_constant(str[0], &id);
+				int64 id_tmp;
+
+				if (!script_get_constant(str[0], &id_tmp)) {
+					ShowError("itemdb_read_randopt: Unknown random option constant \"%s\".\n", str[0]);
+					continue;
+				}
+				id = static_cast<int>(id_tmp);
 			}
 
 			if (id < 0) {
@@ -1786,14 +1781,18 @@ struct s_random_opt_group *itemdb_randomopt_group_exists(int id) {
  * @author [Cydh]
  **/
 static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
-	int id = 0, i;
+	int64 id_tmp;
+	int id = 0;
+	int i;
 	unsigned short rate = (unsigned short)strtoul(str[1], NULL, 10);
 	struct s_random_opt_group *g = NULL;
 
-	if (!script_get_constant(str[0], &id)) {
+	if (!script_get_constant(str[0], &id_tmp)) {
 		ShowError("itemdb_read_randomopt_group: Invalid ID for Random Option Group '%s'.\n", str[0]);
 		return false;
 	}
+
+	id = static_cast<int>(id_tmp);
 
 	if ((columns-2)%3 != 0) {
 		ShowError("itemdb_read_randomopt_group: Invalid column entries '%d'.\n", columns);
@@ -1814,8 +1813,10 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 		int j, k;
 		memset(&g->entries[i].option, 0, sizeof(g->entries[i].option));
 		for (j = 0, k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k+=3) {
+			int64 randid_tmp;
 			int randid = 0;
-			if (!script_get_constant(str[k], &randid) || !itemdb_randomopt_exists(randid)) {
+
+			if (!script_get_constant(str[k], &randid_tmp) || ((randid = static_cast<int>(randid_tmp)) && !itemdb_randomopt_exists(randid))) {
 				ShowError("itemdb_read_randomopt_group: Invalid random group id '%s' in column %d!\n", str[k], k+1);
 				continue;
 			}
@@ -1973,6 +1974,24 @@ static int itemdb_randomopt_free(DBKey key, DBData *data, va_list ap) {
 	opt->script = NULL;
 	aFree(opt);
 	return 1;
+}
+
+bool item_data::isStackable()
+{
+	switch (this->type) {
+		case IT_WEAPON:
+		case IT_ARMOR:
+		case IT_PETEGG:
+		case IT_PETARMOR:
+		case IT_SHADOWGEAR:
+			return false;
+	}
+	return true;
+}
+
+int item_data::inventorySlotNeeded(int quantity)
+{
+	return (this->flag.guid || !this->isStackable()) ? quantity : 1;
 }
 
 /**
