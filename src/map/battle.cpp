@@ -6181,7 +6181,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				if (src->type == BL_PC)
 					ad.damage = sstatus->str * 2 + sstatus->rhw.atk;
 				else
-					ad.damage = sstatus->str + status_get_lv(src) + (80 + rnd() % 20 + 1) * sstatus->rhw.atk;
+					ad.damage = sstatus->str + status_get_lv(src) + (80 + rnd() % 41) * sstatus->rhw.atk;
 
 				MATK_RATE(200 + 100 * skill_lv + 100 * (skill_lv / 2) + ((skill_lv > 4) ? 100 : 0));
 				break;
