@@ -307,7 +307,7 @@ int Sql_QueryV(Sql* self, const char* query, va_list args)
 
 
 /// Executes a query.
-int Sql_QueryStr(Sql* self, const char* query)
+int Sql_QueryStr(Sql* self, const char* query, bool showErrors)
 {
 	if( self == NULL )
 		return SQL_ERROR;
@@ -317,15 +317,19 @@ int Sql_QueryStr(Sql* self, const char* query)
 	StringBuf_AppendStr(&self->buf, query);
 	if( mysql_real_query(&self->handle, StringBuf_Value(&self->buf), (unsigned long)StringBuf_Length(&self->buf)) )
 	{
-		ShowSQL("DB error - %s\n", mysql_error(&self->handle));
-		ra_mysql_error_handler(mysql_errno(&self->handle));
+		if (showErrors) {
+			ShowSQL("DB error - %s\n", mysql_error(&self->handle));
+			ra_mysql_error_handler(mysql_errno(&self->handle));
+		}
 		return SQL_ERROR;
 	}
 	self->result = mysql_store_result(&self->handle);
 	if( mysql_errno(&self->handle) != 0 )
 	{
-		ShowSQL("DB error - %s\n", mysql_error(&self->handle));
-		ra_mysql_error_handler(mysql_errno(&self->handle));
+		if (showErrors) {
+			ShowSQL("DB error - %s\n", mysql_error(&self->handle));
+			ra_mysql_error_handler(mysql_errno(&self->handle));
+		}
 		return SQL_ERROR;
 	}
 	return SQL_SUCCESS;
@@ -1065,11 +1069,8 @@ void Sql_UpgradesChecker(Sql *sql_handle, e_sql_database schema) {
 	std::vector<int32> new_updates, skipped_updates;
 	std::map<int32, std::shared_ptr<s_sql_update_db>> ordered_sql_update_db(sql_update_db.begin(), sql_update_db.end()); // Create an ordered list (by ID) to make sure updates are applied sequentially
 
-	if (SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `sql_updates`")) {
-		Sql_ShowDebug(sql_handle);
-		return;
-	} else if (Sql_NumRows(sql_handle) == 0) { // 'sql_updates' table doesn't exist, create it
-		if (SQL_ERROR == Sql_QueryStr(sql_handle, "CREATE TABLE IF NOT EXISTS `sql_updates` (`id` int(11) unsigned NOT NULL default '0', `patch_date` varchar(24) NOT NULL default '', PRIMARY KEY(`id`)) ENGINE = MyISAM;")) {
+	if (SQL_ERROR == Sql_QueryStr(sql_handle, "SELECT 1 FROM `sql_updates`", false)) { // 'sql_updates' table doesn't exist, create it
+		if (SQL_ERROR == Sql_QueryStr(sql_handle, "CREATE TABLE IF NOT EXISTS `sql_updates` (`id` int(11) unsigned NOT NULL default '0', `patch_date` datetime NOT NULL, PRIMARY KEY(`id`)) ENGINE = MyISAM;")) {
 			ShowError("Sql_UpgradesChecker: Failed to create 'sql_updates' table. Skipping SQL updates.\n");
 			Sql_ShowDebug(sql_handle);
 			return;

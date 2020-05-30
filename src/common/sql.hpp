@@ -182,7 +182,7 @@ int Sql_QueryV(Sql* self, const char* query, va_list args);
 /// The query is used directly.
 ///
 /// @return SQL_SUCCESS or SQL_ERROR
-int Sql_QueryStr(Sql* self, const char* query);
+int Sql_QueryStr(Sql* self, const char* query, bool showErrors = false);
 
 
 
