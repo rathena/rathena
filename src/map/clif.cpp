@@ -72,16 +72,6 @@ struct s_packet_db packet_db[MAX_PACKET_DB + 1];
 int packet_db_ack[MAX_ACK_FUNC + 1];
 unsigned long color_table[COLOR_MAX];
 
-// Global because if declared inside the function will cause stack corruption
-// Used for inventory and cart:
-struct packet_itemlist_normal itemlist_normal;
-struct packet_itemlist_equip itemlist_equip;
-// Used for storage(s)
-struct ZC_STORE_ITEMLIST_NORMAL storage_itemlist_normal;
-struct ZC_STORE_ITEMLIST_EQUIP storage_itemlist_equip;
-// Used for official guild storage
-struct PACKET_ZC_ACK_GUILDSTORAGE_LOG guild_storage_log;
-
 #include "clif_obfuscation.hpp"
 static bool clif_session_isValid(struct map_session_data *sd);
 static void clif_loadConfirm( struct map_session_data *sd );
@@ -2825,7 +2815,8 @@ void clif_inventorylist( struct map_session_data *sd ){
 
 	clif_inventoryStart( sd, type, "" );
 #endif
-
+	static struct packet_itemlist_normal itemlist_normal;
+	static struct packet_itemlist_equip itemlist_equip;
 	int equip = 0;
 	int normal = 0;
 
@@ -2893,7 +2884,8 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 
 	clif_inventoryStart( sd, type, storename );
 #endif
-
+	static struct ZC_STORE_ITEMLIST_NORMAL storage_itemlist_normal;
+	static struct ZC_STORE_ITEMLIST_EQUIP storage_itemlist_equip;
 	int equip = 0;
 	int normal = 0;
 
@@ -2950,7 +2942,8 @@ void clif_cartlist( struct map_session_data *sd ){
 
 	clif_inventoryStart( sd, type, "" );
 #endif
-
+	static struct packet_itemlist_normal itemlist_normal;
+	static struct packet_itemlist_equip itemlist_equip;
 	int normal = 0;
 	int equip = 0;
 
@@ -20842,6 +20835,7 @@ void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct gui
 #if PACKETVER >= 20140205
 	nullpo_retv( sd );
 
+	static struct PACKET_ZC_ACK_GUILDSTORAGE_LOG guild_storage_log;
 	int size = sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG );
 
 	if( result == GUILDSTORAGE_LOG_FINAL_SUCCESS ){
