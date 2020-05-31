@@ -4734,7 +4734,11 @@
 	parseable_packet(0x0364,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x0365,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x0366,10,clif_parse_UseSkillToPos,2,4,6,8);
+#if PACKETVER_MAIN_NUM >= 20190904 || PACKETVER_RE_NUM >= 20190904 || PACKETVER_ZERO_NUM >= 20190828
+	parseable_packet(0x0367,31,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
+#else
 	parseable_packet(0x0367,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
+#endif
 	parseable_packet(0x0368,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0369,6,clif_parse_SolveCharName,2);
 	parseable_packet(0x0436,19,clif_parse_WantToConnection,2,6,10,14,18);
