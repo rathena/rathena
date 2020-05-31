@@ -920,6 +920,9 @@ void storage_guild_storageadd(struct map_session_data* sd, int index, int amount
 	if( amount < 1 || amount > sd->inventory.u.items_inventory[index].amount )
 		return;
 
+	if (itemdb_ishatched_egg(&sd->inventory.u.items_inventory[index]))
+		return;
+
 	if( stor->lock ) {
 		storage_guild_storageclose(sd);
 		return;
