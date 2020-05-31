@@ -660,7 +660,6 @@ struct Battle_Config
 	int feature_homunculus_autofeed_rate;
 	int summoner_trait;
 	int homunculus_autofeed_always;
-	int homunculus_exp_gain;
 	int feature_attendance;
 	int feature_privateairship;
 	int rental_transaction;
@@ -677,6 +676,8 @@ struct Battle_Config
 	int idletime_hom_option;
 	int devotion_standup_fix;
 	int feature_bgqueue;
+	int bgqueue_nowarp_mapflag;
+	int homunculus_exp_gain;
 	int rental_item_novalue;
 	/**
 	* Extended Vending system [Lilith]

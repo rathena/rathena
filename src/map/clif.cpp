@@ -609,13 +609,12 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 	case BG_SAMEMAP_WOS:
 	case BG:
 	case BG_WOS:
-		if( sd && sd->bg_id && (bg = util::umap_find(bg_team_db, sd->bg_id)))
+		if( sd && sd->bg_id > 0 && (bg = util::umap_find(bg_team_db, sd->bg_id)))
 		{
-			for( i = 0; i < bg->members.size(); i++ )
-			{
-				if( (sd = bg->members[i].sd) == NULL || !(fd = sd->fd) )
+			for (const auto &member : bg->members) {
+				if((sd = member.sd) == nullptr || (fd = sd->fd) == 0)
 					continue;
-				if( sd->bl.id == bl->id && (type == BG_WOS || type == BG_SAMEMAP_WOS || type == BG_AREA_WOS) )
+				if(sd->bl.id == bl->id && (type == BG_WOS || type == BG_SAMEMAP_WOS || type == BG_AREA_WOS) )
 					continue;
 				if( type != BG && type != BG_WOS && sd->bl.m != bl->m )
 					continue;
@@ -17650,12 +17649,12 @@ void clif_parse_bg_queue_apply_request(int fd, struct map_session_data *sd)
 
 	safestrncpy(name, RFIFOCP(fd, 4), NAME_LENGTH);
 
-	if (sd->bg_queue) {
-		ShowWarning("clif_parse_bg_queue_apply_request: Received duplicate queue application: %d from player %s (AID:%d CID:%d).\n", type, sd->status.name, sd->status.account_id, sd->status.char_id);
+	if (sd->bg_queue_id > 0) {
+		//ShowWarning("clif_parse_bg_queue_apply_request: Received duplicate queue application: %d from player %s (AID:%d CID:%d).\n", type, sd->status.name, sd->status.account_id, sd->status.char_id);
 		clif_bg_queue_apply_result(BG_APPLY_DUPLICATE, name, sd); // Duplicate application warning
 		return;
 	} else if (type == 1) // Solo
-		bg_queue_join_multi(name, sd, { sd });
+		bg_queue_join_solo(name, sd);
 	else if (type == 2) // Party
 		bg_queue_join_party(name, sd);
 	else if (type == 4) // Guild
@@ -17690,9 +17689,9 @@ void clif_bg_queue_apply_notify(const char *name, struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 
-	std::shared_ptr<s_battleground_queue> queue = sd->bg_queue;
+	std::shared_ptr<s_battleground_queue> queue = bg_search_queue(sd->bg_queue_id);
 
-	if (!queue) {
+	if (queue == nullptr) {
 		ShowError("clif_bg_queue_apply_notify: Player is not in a battleground queue.\n");
 		return;
 	}
@@ -17732,8 +17731,10 @@ void clif_parse_bg_queue_cancel_request(int fd, struct map_session_data *sd)
 
 	bool success;
 
-	if (sd->bg_queue) {
-		if (sd->bg_queue->in_ready_state)
+	if (sd->bg_queue_id > 0) {
+		std::shared_ptr<s_battleground_queue> queue = bg_search_queue(sd->bg_queue_id);
+
+		if (queue && queue->state == QUEUE_STATE_SETUP_DELAY)
 			return; // Make the cancel button do nothing if the entry window is open. Otherwise it'll crash the game when you click on both the queue status and entry status window.
 		else
 			success = bg_queue_leave(sd);
@@ -17771,11 +17772,11 @@ void clif_parse_bg_queue_lobby_reply(int fd, struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 
-	if(sd->bg_queue) {
+	if(sd->bg_queue_id > 0) {
 		uint8 result = RFIFOB(fd, 2);
 
 		if(result == 1) { // Accept
-			bg_queue_on_accept_invite(sd->bg_queue, sd);
+			bg_queue_on_accept_invite(sd);
 		} else if(result == 2) { // Decline
 			bg_queue_leave(sd);
 			clif_bg_queue_entry_init(sd);
@@ -17785,7 +17786,7 @@ void clif_parse_bg_queue_lobby_reply(int fd, struct map_session_data *sd)
 
 /// Plays a gong sound, signaling that someone has accepted the invite to enter a battleground.
 /// 0x8e1 <result>.B <battleground name>.24B <lobby name>.24B (ZC_REPLY_ACK_LOBBY_ADMISSION)
-void clig_bg_queue_ack_lobby(bool result, const char *name, const char *lobbyname, struct map_session_data *sd)
+void clif_bg_queue_ack_lobby(bool result, const char *name, const char *lobbyname, struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 

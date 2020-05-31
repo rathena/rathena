@@ -1723,8 +1723,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		)) {	//No valid target
 			if (mob_warpchase(md, tbl))
 				return true; //Chasing this target.
-			if(md->ud.walktimer != INVALID_TIMER && (!can_move || md->ud.walkpath.path_pos <= battle_config.mob_chase_refresh)
-				&& (tbl || md->ud.walkpath.path_pos == 0))
+			if (tbl && md->ud.walktimer != INVALID_TIMER && (!can_move || md->ud.walkpath.path_pos <= battle_config.mob_chase_refresh))
 				return true; //Walk at least "mob_chase_refresh" cells before dropping the target unless target is non-existent
 			mob_unlocktarget(md, tick); //Unlock target
 			tbl = NULL;
@@ -3010,7 +3009,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			if (achievement_db.mobexists(md->mob_id))
 				achievement_update_objective(sd, AG_BATTLE, 1, md->mob_id);
 
-			if (sd->md && src && src->type == BL_MER && mob_db(md->mob_id)->lv > sd->status.base_level / 2)
+			// The master or Mercenary can increase the kill count
+			if (sd->md && src && (src->type == BL_PC || src->type == BL_MER) && mob_db(md->mob_id)->lv > sd->status.base_level / 2)
 				mercenary_kills(sd->md);
 		}
 
