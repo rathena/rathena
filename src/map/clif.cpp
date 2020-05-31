@@ -9581,6 +9581,9 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 	case BL_ELEM:
 		safestrncpy( packet.name, ((TBL_ELEM*)bl)->db->name, NAME_LENGTH );
 		break;
+	case BL_SKILL:
+		// Newer clients request this, but do not need an answer
+		return;
 	default:
 		ShowError("clif_name: bad type %d(%d)\n", bl->type, bl->id);
 		return;
