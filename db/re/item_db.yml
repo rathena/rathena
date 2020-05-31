@@ -62361,7 +62361,7 @@ Body:
       Override: 100
       NoDrop: true
     Script: |
-       bonus bFlee,10; bonus bCritAtkRate,10; autobonus "{ bonus2 bIgnoreMdefRaceRate,RC_ALL,25; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_AGIUP; }"; 
+       bonus bFlee,10; bonus bCritAtkRate,10; autobonus "{ bonus2 bIgnoreMdefClassRate,Class_Normal,100; bonus2 bIgnoreMdefClassRate,Class_Boss,100; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_STEAL; }"; 
   - Id: 5361
     AegisName: Gang_Scarf
     Name: Gangster Scarf
@@ -153938,7 +153938,7 @@ Body:
     Refineable: true
     View: 368
     Script: |
-       bonus bFlee,10; bonus bCritAtkRate,10; autobonus "{ bonus2 bIgnoreMdefRaceRate,RC_ALL,25; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_AGIUP; }"; 
+       bonus bFlee,10; bonus bCritAtkRate,10; autobonus "{ bonus2 bIgnoreMdefClassRate,Class_Normal,100; bonus2 bIgnoreMdefClassRate,Class_Boss,100; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_STEAL; }"; 
   - Id: 19137
     AegisName: Strawberry_Mouth_Guard
     Name: Strawberry Mouth Guard
@@ -183388,7 +183388,7 @@ Body:
     EquipLevelMin: 70
     Refineable: true
     Script: |
-       .@r = getrefine(); .@b = readparam(bDex)/10; if (.@r>7) { .@c = .@r-7; if (BaseClass==Job_Novice||BaseJob==Job_Mage) { bonus2 bSubRace,RC_DemiHuman,10; bonus2 bSubRace,RC_Player,10; } } if (BaseClass==Job_Novice) { bonus bMaxHP,300+(200*.@c); bonus bMaxSP,300+(20*.@c); bonus bBaseAtk,100; bonus bMatk,150+(15*.@c); bonus bUseSPrate,-5; bonus bUnbreakableWeapon; bonus bInt,2*.@c; bonus bDex,(2*.@c)-(.@c*.@b); bonus bCritical,7*.@c; bonus bAspdRate,10*.@c; bonus bCritAtkRate,1*.@c; } if (BaseClass==Job_Thief) { bonus bMaxSP,100; bonus bMatk,150; bonus bCritAtkRate,.@r; } if (BaseClass==Job_Mage && .@c) { bonus bMaxHP,200*.@c; bonus bMaxSP,20*.@c; } if (BaseJob==Job_Hunter) { bonus bMaxHP,200; bonus bUseSPrate,-5; bonus bInt,2*.@r; bonus bDex,2*.@r; } if (BaseJob==Job_Bard||BaseJob==Job_Dancer) { bonus bBaseAtk,100; bonus bAspdRate,10*.@r; bonus bUnbreakableWeapon; bonus bDex,-1*(.@c*.@b); } 
+       .@r = getrefine(); .@b = readparam(bDex)/10; if (BaseClass==Job_Novice) { bonus bMaxHP,300+(200*.@r); bonus bMaxSP,300+(20*.@r); bonus bBaseAtk,100; bonus bMatk,150+(15*.@r); bonus bUseSPrate,-5; bonus bUnbreakableWeapon; bonus bInt,2*.@r; bonus bDex,(2*.@r)-(.@r*.@b); bonus bCritical,7*.@r; bonus bAspdRate,10*.@r; bonus bCritAtkRate,1*.@r; } if (BaseClass==Job_Thief) { bonus bMaxSP,100; bonus bMatk,150; bonus bCritAtkRate,.@r; } if (BaseClass==Job_Mage) { bonus bMaxHP,200*.@r; bonus bMaxSP,20*.@r; } if (BaseJob==Job_Hunter) { bonus bMaxHP,200; bonus bUseSPrate,-5; bonus bInt,2*.@r; bonus bDex,2*.@r; } if (BaseJob==Job_Bard||BaseJob==Job_Dancer) { bonus bBaseAtk,100; bonus bAspdRate,10*.@r; bonus bUnbreakableWeapon; bonus bDex,-1*(.@r*.@b); } if (.@r>=7) { if (BaseClass==Job_Novice||BaseJob==Job_Mage) { bonus2 bSubRace,RC_DemiHuman,10; bonus2 bSubRace,RC_Player,10; } } 
   - Id: 28721
     AegisName: Monokage
     Name: Monokage
