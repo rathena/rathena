@@ -5,7 +5,6 @@
 
 #include <stdlib.h>
 
-#include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/random.hpp"
 #include "../common/showmsg.hpp"
@@ -28,8 +27,6 @@ static DBMap *itemdb_combo; /// Item Combo DB
 static DBMap *itemdb_group; /// Item Group DB
 static DBMap *itemdb_randomopt; /// Random option DB
 static DBMap *itemdb_randomopt_group; /// Random option group DB
-
-struct item_data *dummy_item; /// This is the default dummy item used for non-existant items. [Skotlex]
 
 struct s_roulette_db rd;
 
@@ -1280,19 +1277,20 @@ static void itemdb_jobid2mapid(uint64 *bclass, uint64 jobmask, bool active)
 }
 
 /**
-* Create dummy item_data as dummy_item and dummy item group entry as dummy_itemgroup
-*/
+ * Create dummy item_data
+ */
 static void itemdb_create_dummy(void) {
-	CREATE(dummy_item, struct item_data, 1);
+	std::shared_ptr<item_data> dummy_item;
 
-	memset(dummy_item, 0, sizeof(struct item_data));
+	dummy_item = std::make_shared<item_data>();
 	dummy_item->nameid = ITEMID_DUMMY;
 	dummy_item->weight = 1;
 	dummy_item->value_sell = 1;
-	dummy_item->type = IT_ETC; //Etc item
+	dummy_item->type = IT_ETC;
 	dummy_item->name = "UNKNOWN_ITEM";
 	dummy_item->jname = "Unknown Item";
 	dummy_item->view_id = UNKNOWN_ITEM_ID;
+	item_db.put(ITEMID_DUMMY, dummy_item);
 }
 
 /*==========================================
@@ -1303,11 +1301,11 @@ static void itemdb_create_dummy(void) {
 struct item_data* itemdb_search(unsigned short nameid) {
 	struct item_data *id = nullptr;
 
-	if (nameid == dummy_item->nameid)
-		id = dummy_item;
+	if (nameid == ITEMID_DUMMY)
+		id = item_db.find(ITEMID_DUMMY).get();
 	else if (!(id = item_db.find(nameid).get())) {
 		ShowWarning("itemdb_search: Item ID %hu does not exists in the item_db. Using dummy data.\n", nameid);
-		id = dummy_item;
+		id = item_db.find(ITEMID_DUMMY).get();
 	}
 	return id;
 }
@@ -2389,50 +2387,6 @@ static void itemdb_read(void) {
  * Initialize / Finalize
  *------------------------------------------*/
 
-/**
-* Destroys the item_data.
-*/
-static void destroy_item_data(struct item_data* self) {
-	if( self == NULL )
-		return;
-	// free scripts
-	if( self->script )
-		script_free_code(self->script);
-	if( self->equip_script )
-		script_free_code(self->equip_script);
-	if( self->unequip_script )
-		script_free_code(self->unequip_script);
-	if( self->combos_count ) {
-		int i;
-		for( i = 0; i < self->combos_count; i++ ) {
-			if( !self->combos[i]->isRef ) {
-				aFree(self->combos[i]->nameid);
-				if (self->combos[i]->script)
-					script_free_code(self->combos[i]->script);
-			}
-			aFree(self->combos[i]);
-		}
-		aFree(self->combos);
-	}
-#if defined(DEBUG)
-	// trash item
-	memset(self, 0xDD, sizeof(struct item_data));
-#endif
-	// free self
-	aFree(self);
-}
-
-/**
- * @see DBApply
- */
-static int itemdb_final_sub(DBKey key, DBData *data, va_list ap)
-{
-	struct item_data *id = (struct item_data *)db_data2ptr(data);
-
-	destroy_item_data(id);
-	return 0;
-}
-
 /** NOTE:
 * In some OSs, like Raspbian, we aren't allowed to pass 0 in va_list.
 * So, itemdb_group_free2 is useful in some cases.
@@ -2547,7 +2501,6 @@ void do_final_itemdb(void) {
 	itemdb_group->destroy(itemdb_group, itemdb_group_free);
 	itemdb_randomopt->destroy(itemdb_randomopt, itemdb_randomopt_free);
 	itemdb_randomopt_group->destroy(itemdb_randomopt_group, itemdb_randomopt_group_free);
-	destroy_item_data(dummy_item);
 	if (battle_config.feature_roulette)
 		itemdb_roulette_free();
 }

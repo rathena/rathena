@@ -6,6 +6,7 @@
 
 #include "../common/database.hpp"
 #include "../common/db.hpp"
+#include "../common/malloc.hpp"
 #include "../common/mmo.hpp" // ITEM_NAME_LENGTH
 
 #include "script.hpp"
@@ -879,6 +880,18 @@ struct item_data
 
 		if (this->unequip_script)
 			script_free_code(this->unequip_script);
+
+		if (this->combos_count) {
+			for (size_t i = 0; i < this->combos_count; i++) {
+				if (!this->combos[i]->isRef) {
+					aFree(this->combos[i]->nameid);
+					if (this->combos[i]->script)
+						script_free_code(this->combos[i]->script);
+				}
+				aFree(this->combos[i]);
+			}
+			aFree(this->combos);
+		}
 	}
 
 	bool isStackable();
