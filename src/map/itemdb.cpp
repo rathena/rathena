@@ -43,9 +43,9 @@ const std::string ItemDatabase::getDefaultLocation() {
  * @return count of successfully parsed rows
  */
 uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
-	uint32 nameid;
+	int32 nameid;
 
-	if (!this->asUInt32(node, "Id", nameid))
+	if (!this->asInt32(node, "Id", nameid))
 		return 0;
 
 	std::shared_ptr<item_data> item = this->find(nameid);

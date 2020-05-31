@@ -923,9 +923,9 @@ struct s_random_opt_group {
 	uint16 total;
 };
 
-class ItemDatabase : public TypesafeYamlDatabase<uint32, item_data> {
+class ItemDatabase : public TypesafeCachedYamlDatabase<int32, item_data> {
 public:
-	ItemDatabase() : TypesafeYamlDatabase("ITEM_DB", 1) {
+	ItemDatabase() : TypesafeCachedYamlDatabase("ITEM_DB", 1) {
 
 	}
 
