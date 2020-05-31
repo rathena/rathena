@@ -2138,7 +2138,11 @@ void clif_npc_market_purchase_ack(struct map_session_data *sd, uint8 res, uint8 
 	struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT *p = (struct PACKET_ZC_NPC_MARKET_PURCHASE_RESULT *)WFIFOP( fd, 0 );
 	p->PacketType = HEADER_ZC_NPC_MARKET_PURCHASE_RESULT;
 
+#if PACKETVER_MAIN_NUM >= 20190807 || PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190814
+	p->result = ( res == 0 ? 0 : -1 );
+#else
 	p->result = ( res == 0 ? 1 : 0 );
+#endif
 
 	int count = 0;
 
