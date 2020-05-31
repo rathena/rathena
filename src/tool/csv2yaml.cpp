@@ -3236,11 +3236,11 @@ static bool itemdb_read_db(const char* file) {
 		}
 
 		if (*str[19])
-			body << YAML::Key << "Script" << YAML::Value << YAML::Literal << str[19];
+			body << YAML::Key << "Script" << YAML::Value << YAML::Literal << trim(str[19]);
 		if (*str[20])
-			body << YAML::Key << "EquipScript" << YAML::Value << YAML::Literal << str[20];
+			body << YAML::Key << "EquipScript" << YAML::Value << YAML::Literal << trim(str[20]);
 		if (*str[21])
-			body << YAML::Key << "UnEquipScript" << YAML::Value << YAML::Literal << str[21];
+			body << YAML::Key << "UnEquipScript" << YAML::Value << YAML::Literal << trim(str[21]);
 
 		body << YAML::EndMap;
 		entries++;
