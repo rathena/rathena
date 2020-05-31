@@ -2497,6 +2497,7 @@ void itemdb_reload(void) {
 * Finalizing Item DB
 */
 void do_final_itemdb(void) {
+	item_db.clear(); // Used to call destructors
 	db_destroy(itemdb_combo);
 	itemdb_group->destroy(itemdb_group, itemdb_group_free);
 	itemdb_randomopt->destroy(itemdb_randomopt, itemdb_randomopt_free);
