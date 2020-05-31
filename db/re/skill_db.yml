@@ -25089,14 +25089,15 @@ Body:
     Name: WM_REVERBERATION
     Description: Reverberation
     MaxLevel: 5
+    Type: Magic
     TargetType: Attack
     DamageFlags:
       Splash: true
     Flags:
       IsTrap: true
     Range: 9
-    Hit: Single
-    HitCount: 1
+    Hit: Multi_Hit
+    HitCount: -10
     SplashArea:
       - Level: 1
         Area: 2
@@ -25148,7 +25149,7 @@ Body:
         Reproduce: true
     Requires:
       SpCost: 1
-  - Id: 2416
+  - Id: 2416 # Removed on kRO
     Name: WM_REVERBERATION_MAGIC
     Description: Reverberation Magic
     MaxLevel: 5
@@ -28372,6 +28373,7 @@ Body:
     HitCount: 1
     Requires:
       SpCost: 40
+      State: Cart
   - Id: 2552
     Name: RL_RICHS_COIN
     Description: Rich's Coin

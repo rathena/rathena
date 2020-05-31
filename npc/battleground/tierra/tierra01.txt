@@ -58,21 +58,18 @@ OnStop:
 
 OnTimer1000:
 	stopnpctimer;
-	if (!getbattleflag("feature.bgqueue"))
-		initnpctimer;
-	set .@chk_bat_a01,getmapusers("bat_a01");
-	if (.@chk_bat_a01 < 1) {
-		set $@TierraBG1,0; set $@TierraBG1_Victory, 0;
-		if( $@TierraBG1_id1 ) { bg_destroy $@TierraBG1_id1; set $@TierraBG1_id1, 0; }
-		if( $@TierraBG1_id2 ) { bg_destroy $@TierraBG1_id2; set $@TierraBG1_id2, 0; }
-		if (getbattleflag("feature.bgqueue")) {
+	if (bg_get_data($@TierraBG1_id1, 0) == 0 && bg_get_data($@TierraBG1_id2, 0) == 0) {
+		donpcevent "countdown#bat_a01::OnStop";
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_a01", true;
+		$@TierraBG1 = 0; $@TierraBG1_Victory = 0;
+		if( $@TierraBG1_id1 ) { bg_destroy $@TierraBG1_id1; $@TierraBG1_id1 = 0; }
+		if( $@TierraBG1_id2 ) { bg_destroy $@TierraBG1_id2; $@TierraBG1_id2 = 0; }
+		if (getbattleflag("feature.bgqueue"))
 			bg_unbook "bat_a01";
-			end;
-		} else
-			donpcevent "start#bat_a01::OnReadyCheck";
+		end;
 	}
-	if (getbattleflag("feature.bgqueue"))
-		initnpctimer;
+	initnpctimer;
 	end;
 }
 
@@ -124,6 +121,14 @@ OnEnable:
 	disablenpc "Croix Blacksmith#bat_a01";
 	disablenpc "Guillaume Vintenar#a01_a";
 	disablenpc "Croix Vintenar#a01_b";
+	end;
+
+OnGuillaumeActive:
+	warp "bat_a01",352,342;
+	end;
+
+OnCroixActive:
+	warp "bat_a01",353,52;
 	end;
 
 OnGuillaumeQuit:
@@ -183,6 +188,8 @@ OnMyMobDead:
 		mapannounce "bat_a01", "Croix Vintenar Swandery: We destroyed Guillaume's Food Storage. We won that! Wow!",bc_map,"0xFFCE00";
 		bg_warp $@TierraBG1_id1,"bat_a01",50,374;
 		bg_warp $@TierraBG1_id2,"bat_a01",42,16;
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_a01", true;
 	}
 	end;
 }
@@ -206,6 +213,8 @@ OnMyMobDead:
 		mapannounce "bat_a01", "Guillaume Vintenar Axl Rose : We destroyed Croix's Food Storage. We won that! Wow!",bc_map,"0xFFCE00";
 		bg_warp $@TierraBG1_id1,"bat_a01",50,374;
 		bg_warp $@TierraBG1_id2,"bat_a01",42,16;
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_a01", true;
 	}
 	end;
 }
@@ -364,8 +373,10 @@ bat_a01,185,270,1	script	Guillaume Blacksmith#a01	851,{
 				mes "[Guillaume Blacksmith]";
 				mes "Wow! It's done.";
 				mes "We are relieved.";
-				delitem 7049,50; //Stone
-				donpcevent "barricade#bat_a01_a::OnEnable";
+				if (mobcount("bat_a01","barricade#bat_a01_a::OnMyMobDead") < 17) {
+					delitem 7049,50; //Stone
+					donpcevent "barricade#bat_a01_a::OnEnable";
+				}
 				close2;
 				disablenpc "Guillaume Blacksmith#a01";
 				end;
@@ -448,8 +459,10 @@ bat_a01,170,121,5	script	Croix Blacksmith#bat_a01	851,{
 				mes "[Croix Blacksmith]";
 				mes "Wow! It's done.";
 				mes "We are relieved.";
-				delitem 7049,50; //Stone
-				donpcevent "barricade#bat_a01_b::OnEnable";
+				if (mobcount("bat_a01","barricade#bat_a01_b::OnMyMobDead") < 17) {
+					delitem 7049,50; //Stone
+					donpcevent "barricade#bat_a01_b::OnEnable";
+				}
 				close2;
 				disablenpc "Croix Blacksmith#bat_a01";
 				end;
@@ -500,35 +513,39 @@ OnEnable:
 	end;
 
 OnStop:
-	disablenpc "bat_a01_rp1_a_warp";
+	// disablenpc "bat_a01_rp1_a_warp";
 	disablenpc "Battle Therapist#a01_a";
 	stopnpctimer;
 	end;
 
 OnTimer25000:
 	specialeffect EF_SANCTUARY;
-	enablenpc "bat_a01_rp1_a_warp";
+	// enablenpc "bat_a01_rp1_a_warp";
+	areapercentheal "bat_a01",41,365,61,385,100,100;
+	areawarp "bat_a01",41,365,61,385,"bat_a01",352,342;
 	end;
 
-OnTimer26000:
-	disablenpc "bat_a01_rp1_a_warp";
-	end;
+// OnTimer26000:
+	// disablenpc "bat_a01_rp1_a_warp";
+	// end;
 
 OnTimer26500:
 	donpcevent "Battle Therapist#a01_a::OnEnable";
 	end;
 }
 
+/*
 bat_a01,51,375,0	script	bat_a01_rp1_a_warp	-1,10,10,{
 OnInit:
 	disablenpc "bat_a01_rp1_a_warp";
 	end;
 
-OnTouch_:
+OnTouch:
 	percentheal 100,100;
 	warp "bat_a01",352,342;
 	end;
 }
+*/
 
 bat_a01,45,19,3	script	Battle Therapist#a01_b	95,{
 	specialeffect2 EF_HEAL;
@@ -550,25 +567,28 @@ OnEnable:
 	end;
 
 OnStop:
-	disablenpc "bat_a01_rp1_b_warp";
+	// disablenpc "bat_a01_rp1_b_warp";
 	disablenpc "Battle Therapist#a01_b";
 	stopnpctimer;
 	end;
 
 OnTimer25000:
 	specialeffect EF_SANCTUARY;
-	enablenpc "bat_a01_rp1_b_warp";
+	areapercentheal "bat_a01",33,7,53,27,100,100;
+	areawarp "bat_a01",33,7,53,27,"bat_a01",353,52;
+	// enablenpc "bat_a01_rp1_b_warp";
 	end;
 
-OnTimer26000:
-	disablenpc "bat_a01_rp1_b_warp";
-	end;
+// OnTimer26000:
+	// disablenpc "bat_a01_rp1_b_warp";
+	// end;
 
 OnTimer26500:
 	donpcevent "Battle Therapist#a01_b::OnEnable";
 	end;
 }
 
+/*
 bat_a01,43,17,0	script	bat_a01_rp1_b_warp	-1,10,10,{
 OnInit:
 	disablenpc "bat_a01_rp1_b_warp";
@@ -579,6 +599,7 @@ OnTouch:
 	warp "bat_a01",353,52;
 	end;
 }
+*/
 
 bat_a01,60,216,3	script	Valley Ghost#bat_a01_n	950,{
 	specialeffect2 EF_HEAL;
@@ -597,18 +618,21 @@ OnEnable:
 
 OnTimer25000:
 	specialeffect EF_SANCTUARY;
-	enablenpc "bat_a01_rp1_n_warp";
+	areapercentheal "bat_a01",45,203,65,223,100,100;
+	areawarp "bat_a01",45,203,65,223,"bat_a01",301,209;
+	// enablenpc "bat_a01_rp1_n_warp";
 	end;
 
-OnTimer26000:
-	disablenpc "bat_a01_rp1_n_warp";
-	end;
+// OnTimer26000:
+	// disablenpc "bat_a01_rp1_n_warp";
+	// end;
 
 OnTimer26500:
 	donpcevent "Valley Ghost#bat_a01_n::OnEnable";
 	end;
 }
 
+/*
 bat_a01,55,213,0	script	bat_a01_rp1_n_warp	-1,10,10,{
 OnInit:
 	disablenpc "bat_a01_rp1_n_warp";
@@ -619,6 +643,7 @@ OnTouch:
 	warp "bat_a01",301,209;
 	end;
 }
+*/
 
 bat_a01,194,267,0	script	barri_warp_up#bat_a01_a	-1,7,0,{
 OnTouch:
