@@ -802,7 +802,7 @@ extern struct s_roulette_db rd;
 struct item_data
 {
 	unsigned short nameid;
-	std::string name, jname;
+	std::string name, ename;
 
 	//Do not add stuff between value_buy and view_id (see how getiteminfo works)
 	int value_buy;
@@ -940,8 +940,8 @@ struct item_data* itemdb_search_aegisname( const char *str );
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
 struct item_data* itemdb_search(unsigned short nameid);
 struct item_data* itemdb_exists(unsigned short nameid);
-#define itemdb_name(n) itemdb_search(n)->name
-#define itemdb_jname(n) itemdb_search(n)->jname
+#define itemdb_name(n) itemdb_search(n)->name.c_str()
+#define itemdb_ename(n) itemdb_search(n)->ename.c_str()
 #define itemdb_type(n) itemdb_search(n)->type
 #define itemdb_subtype(n) itemdb_search(n)->subtype
 #define itemdb_atk(n) itemdb_search(n)->atk

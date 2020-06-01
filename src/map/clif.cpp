@@ -16390,7 +16390,7 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	safestrncpy(auction.item_name, item->jname.c_str(), sizeof(auction.item_name));
+	safestrncpy(auction.item_name, item->ename.c_str(), sizeof(auction.item_name));
 	auction.type = item->type;
 	memcpy(&auction.item, &sd->inventory.u.items_inventory[sd->auction.index], sizeof(struct item));
 	auction.item.amount = 1;

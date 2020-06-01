@@ -79,8 +79,8 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Name", name))
 			return 0;
 
-		item->jname.resize(ITEM_NAME_LENGTH);
-		item->jname = name.c_str();
+		item->ename.resize(ITEM_NAME_LENGTH);
+		item->ename = name.c_str();
 	}
 
 	if (this->nodeExists(node, "Type")) {
@@ -993,7 +993,7 @@ static struct item_data* itemdb_searchname1(const char *str, bool aegis_only)
 		if (strcmpi(it.second->name.c_str(), str) == 0) {
 			item = it.second;
 			break;
-		} else if (!aegis_only && strcmpi(it.second->jname.c_str(), str) == 0) {
+		} else if (!aegis_only && strcmpi(it.second->ename.c_str(), str) == 0) {
 			item2 = it.second;
 			break;
 		}
@@ -1024,7 +1024,7 @@ int itemdb_searchname_array(struct item_data** data, int size, const char *str)
 
 	for (const auto &it : item_db) {
 		if (count < MAX_SEARCH && count < size) {
-			if (strcmpi(it.second->jname.c_str(), str) == 0)
+			if (strcmpi(it.second->ename.c_str(), str) == 0)
 				data[count++] = it.second.get();
 		} else
 			break;
@@ -1307,7 +1307,7 @@ static void itemdb_create_dummy(void) {
 	dummy_item->value_sell = 1;
 	dummy_item->type = IT_ETC;
 	dummy_item->name = "UNKNOWN_ITEM";
-	dummy_item->jname = "Unknown Item";
+	dummy_item->ename = "Unknown Item";
 	dummy_item->view_id = UNKNOWN_ITEM_ID;
 	item_db.put(ITEMID_DUMMY, dummy_item);
 }
