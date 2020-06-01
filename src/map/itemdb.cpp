@@ -484,6 +484,25 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->look = 0;
 	}
 
+	if (this->nodeExists(node, "AliasName")) {
+		std::string view;
+
+		if (!this->asString(node, "AliasName", view))
+			return 0;
+
+		item_data *view_data = itemdb_search_aegisname(view.c_str());
+
+		if (view_data == nullptr) {
+			this->invalidWarning(node["AliasName"], "Unable to change the alias of %s (%d) because %s is an unknown item.\n", item->name.c_str(), nameid, view.c_str());
+			return 0;
+		}
+
+		item->view_id = view_data->nameid;
+	} else {
+		if (!exists)
+			item->view_id = 0;
+	}
+
 	if (this->nodeExists(node, "Flags")) {
 		const YAML::Node &flagNode = node["Flags"];
 
@@ -1417,36 +1436,6 @@ char itemdb_isidentified(unsigned short nameid) {
 	}
 }
 
-/** Search by name for the override flags available items (Give item another sprite)
-* Structure: <nameid>,<sprite>
-*/
-static bool itemdb_read_itemavail(char* str[], int columns, int current) {
-	unsigned short nameid, sprite;
-	struct item_data *id;
-
-	nameid = atoi(str[0]);
-
-	if( ( id = itemdb_exists(nameid) ) == NULL )
-	{
-		ShowWarning("itemdb_read_itemavail: Invalid item id %hu.\n", nameid);
-		return false;
-	}
-
-	sprite = atoi(str[1]);
-
-	if( sprite > 0 )
-	{
-		id->flag.available = 1;
-		id->view_id = sprite;
-	}
-	else
-	{
-		id->flag.available = 0;
-	}
-
-	return true;
-}
-
 static int itemdb_group_free(DBKey key, DBData *data, va_list ap);
 static int itemdb_group_free2(DBKey key, DBData *data);
 
@@ -2362,8 +2351,7 @@ static void itemdb_read(void) {
 			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
-		
-		sv_readdb(dbsubpath1, "item_avail.txt",         ',', 2, 2, -1, &itemdb_read_itemavail, i > 0);
+
 		sv_readdb(dbsubpath2, "item_group_db.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
 		sv_readdb(dbsubpath2, "item_bluebox.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
 		sv_readdb(dbsubpath2, "item_violetbox.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
@@ -2497,7 +2485,7 @@ void itemdb_reload(void) {
 * Finalizing Item DB
 */
 void do_final_itemdb(void) {
-	item_db.clear(); // Used to call destructors
+	item_db.clear();
 	db_destroy(itemdb_combo);
 	itemdb_group->destroy(itemdb_group, itemdb_group_free);
 	itemdb_randomopt->destroy(itemdb_randomopt, itemdb_randomopt_free);

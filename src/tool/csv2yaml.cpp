@@ -111,6 +111,7 @@ struct s_item_trade_csv2yaml {
 	bool drop, trade, trade_partner, sell, cart, storage, guild_storage, mail, auction;
 };
 
+std::unordered_map<int, int> item_avail;
 std::unordered_map<int, bool> item_buyingstore;
 std::unordered_map<int, s_item_flag_csv2yaml> item_flag;
 std::unordered_map<int, s_item_delay_csv2yaml> item_delay;
@@ -248,6 +249,7 @@ static void skill_txt_data(const std::string& modePath, const std::string& fixed
 
 // Item database data to memory
 static void item_txt_data(const std::string& modePath, const std::string& fixedPath) {
+	item_avail.clear();
 	item_buyingstore.clear();
 	item_flag.clear();
 	item_delay.clear();
@@ -255,6 +257,8 @@ static void item_txt_data(const std::string& modePath, const std::string& fixedP
 	item_nouse.clear();
 	item_trade.clear();
 
+	if (fileExists(fixedPath + "/item_avail.txt"))
+		sv_readdb(fixedPath.c_str(), "item_avail.txt", ',', 2, 2, -1, &itemdb_read_itemavail, false);
 	if (fileExists(modePath + "/item_buyingstore.txt"))
 		sv_readdb(modePath.c_str(), "item_buyingstore.txt", ',', 1, 1, -1, &itemdb_read_buyingstore, false);
 	if (fileExists(modePath + "/item_flag.txt"))
@@ -2788,6 +2792,13 @@ static bool instance_readdb_sub(char* str[], int columns, int current) {
 
 // item_db.yml function
 //---------------------
+static bool itemdb_read_itemavail(char *str[], int columns, int current) {
+	item_avail.insert({ atoi(str[0]), atoi(str[1]) });
+	return true;
+}
+
+// item_db.yml function
+//---------------------
 static bool itemdb_read_buyingstore(char* fields[], int columns, int current) {
 	item_buyingstore.insert({ atoi(fields[0]), true });
 	return true;
@@ -3144,6 +3155,11 @@ static bool itemdb_read_db(const char* file) {
 			body << YAML::Key << "Refineable" << YAML::Value << "true";
 		if (atoi(str[18]) > 0 && type != IT_WEAPON && type != IT_AMMO)
 			body << YAML::Key << "View" << YAML::Value << atoi(str[18]);
+
+		auto it_avail = item_avail.find(nameid);
+
+		if (it_avail != item_avail.end())
+			body << YAML::Key << "AliasName" << YAML::Value << it_avail->second;
 
 		auto it_flag = item_flag.find(nameid);
 		auto it_buying = item_buyingstore.find(nameid);

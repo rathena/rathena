@@ -26,6 +26,7 @@ CREATE TABLE `item_db_re` (
   `equip_level_max` tinyint(3) unsigned DEFAULT NULL,
   `refineable` tinyint(1) unsigned DEFAULT NULL,
   `view` smallint(5) unsigned DEFAULT NULL,
+  `alias_name` varchar(50) NOT NULL DEFAULT '',
   `flag_buyingstore` tinyint(1) unsigned DEFAULT NULL,
   `flag_deadbranch` tinyint(1) unsigned DEFAULT NULL,
   `flag_container` tinyint(1) unsigned DEFAULT NULL,
