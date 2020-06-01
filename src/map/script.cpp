@@ -2497,8 +2497,6 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	memset(&syntax,0,sizeof(syntax));
 	if(first){
 		add_buildin_func();
-		//read_constdb(); // Why here?
-		//script_hardcoded_constants();
 		first=false;
 	}
 
@@ -13213,7 +13211,7 @@ BUILDIN_FUNC(getequipcardcnt)
 	}
 
 	count = 0;
-	for( j = 0; j < sd->inventory_data[i]->slot; j++ )
+	for( j = 0; j < sd->inventory_data[i]->slots; j++ )
 		if( sd->inventory.u.items_inventory[i].card[j] && itemdb_type(sd->inventory.u.items_inventory[i].card[j]) == IT_CARD )
 			count++;
 
@@ -13245,7 +13243,7 @@ BUILDIN_FUNC(successremovecards) {
 	if(itemdb_isspecial(sd->inventory.u.items_inventory[i].card[0]))
 		return SCRIPT_CMD_SUCCESS;
 
-	for( c = sd->inventory_data[i]->slot - 1; c >= 0; --c ) {
+	for( c = sd->inventory_data[i]->slots - 1; c >= 0; --c ) {
 		if( sd->inventory.u.items_inventory[i].card[c] && itemdb_type(sd->inventory.u.items_inventory[i].card[c]) == IT_CARD ) {// extract this card from the item
 			unsigned char flag = 0;
 			struct item item_tmp;
@@ -13262,7 +13260,7 @@ BUILDIN_FUNC(successremovecards) {
 	}
 
 	if(cardflag == 1) {//if card was remove remplace item with no card
-		unsigned char flag = 0, j;
+		unsigned char flag = 0;
 		struct item item_tmp;
 		memset(&item_tmp,0,sizeof(item_tmp));
 
@@ -13273,10 +13271,10 @@ BUILDIN_FUNC(successremovecards) {
 		item_tmp.expire_time = sd->inventory.u.items_inventory[i].expire_time;
 		item_tmp.bound       = sd->inventory.u.items_inventory[i].bound;
 
-		for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
+		for (int j = sd->inventory_data[i]->slots; j < MAX_SLOTS; j++)
 			item_tmp.card[j]=sd->inventory.u.items_inventory[i].card[j];
 		
-		for (j = 0; j < MAX_ITEM_RDM_OPT; j++){
+		for (int j = 0; j < MAX_ITEM_RDM_OPT; j++){
 			item_tmp.option[j].id=sd->inventory.u.items_inventory[i].option[j].id;
 			item_tmp.option[j].value=sd->inventory.u.items_inventory[i].option[j].value;
 			item_tmp.option[j].param=sd->inventory.u.items_inventory[i].option[j].param;
@@ -13321,7 +13319,7 @@ BUILDIN_FUNC(failedremovecards) {
 	if(itemdb_isspecial(sd->inventory.u.items_inventory[i].card[0]))
 		return SCRIPT_CMD_SUCCESS;
 
-	for( c = sd->inventory_data[i]->slot - 1; c >= 0; --c ) {
+	for( c = sd->inventory_data[i]->slots - 1; c >= 0; --c ) {
 		if( sd->inventory.u.items_inventory[i].card[c] && itemdb_type(sd->inventory.u.items_inventory[i].card[c]) == IT_CARD ) {
 			cardflag = 1;
 
@@ -13346,7 +13344,7 @@ BUILDIN_FUNC(failedremovecards) {
 		if(typefail == 0 || typefail == 2){	// destroy the item
 			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 		}else if(typefail == 1){ // destroy the card
-			unsigned char flag = 0, j;
+			unsigned char flag = 0;
 			struct item item_tmp;
 
 			memset(&item_tmp,0,sizeof(item_tmp));
@@ -13358,10 +13356,10 @@ BUILDIN_FUNC(failedremovecards) {
 			item_tmp.expire_time = sd->inventory.u.items_inventory[i].expire_time;
 			item_tmp.bound       = sd->inventory.u.items_inventory[i].bound;
 
-			for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
+			for (int j = sd->inventory_data[i]->slots; j < MAX_SLOTS; j++)
 				item_tmp.card[j]=sd->inventory.u.items_inventory[i].card[j];
 			
-			for (j = 0; j < MAX_ITEM_RDM_OPT; j++){
+			for (int j = 0; j < MAX_ITEM_RDM_OPT; j++){
 				item_tmp.option[j].id=sd->inventory.u.items_inventory[i].option[j].id;
 				item_tmp.option[j].value=sd->inventory.u.items_inventory[i].option[j].value;
 				item_tmp.option[j].param=sd->inventory.u.items_inventory[i].option[j].param;
@@ -13823,7 +13821,7 @@ BUILDIN_FUNC(getitemslots)
 	i_data = itemdb_exists(item_id);
 
 	if (i_data)
-		script_pushint(st,i_data->slot);
+		script_pushint(st,i_data->slots);
 	else
 		script_pushint(st,-1);
 	return SCRIPT_CMD_SUCCESS;
@@ -14967,7 +14965,7 @@ BUILDIN_FUNC(checkequipedcard)
 			if(sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].amount && sd->inventory_data[i]){
 				if (itemdb_isspecial(sd->inventory.u.items_inventory[i].card[0]))
 					continue;
-				for(n=0;n<sd->inventory_data[i]->slot;n++){
+				for(n=0;n<sd->inventory_data[i]->slots;n++){
 					if(sd->inventory.u.items_inventory[i].card[n] == c) {
 						script_pushint(st,1);
 						return SCRIPT_CMD_SUCCESS;
@@ -15519,7 +15517,7 @@ BUILDIN_FUNC(isequippedcnt)
 			} else { //Count cards.
 				if (itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
 					continue; //No cards
-				for (short k = 0; k < sd->inventory_data[index]->slot; k++) {
+				for (short k = 0; k < sd->inventory_data[index]->slots; k++) {
 					if (sd->inventory.u.items_inventory[index].card[k] == id)
 						ret++; //[Lupus]
 				}
@@ -15575,11 +15573,11 @@ BUILDIN_FUNC(isequipped)
 				break;
 			} else { //Cards
 				short k;
-				if (sd->inventory_data[index]->slot == 0 ||
+				if (sd->inventory_data[index]->slots == 0 ||
 					itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
 					continue;
 
-				for (k = 0; k < sd->inventory_data[index]->slot; k++)
+				for (k = 0; k < sd->inventory_data[index]->slots; k++)
 				{	//New hash system which should support up to 4 slots on any equipment. [Skotlex]
 					unsigned int hash = 0;
 					if (sd->inventory.u.items_inventory[index].card[k] != id)
@@ -15649,7 +15647,7 @@ BUILDIN_FUNC(cardscnt)
 		} else {
 			if (itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
 				continue;
-			for(k=0; k<sd->inventory_data[index]->slot; k++) {
+			for(k=0; k<sd->inventory_data[index]->slots; k++) {
 				if (sd->inventory.u.items_inventory[index].card[k] == id)
 					ret++;
 			}

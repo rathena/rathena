@@ -7378,8 +7378,8 @@ ACMD_FUNC(mobinfo)
 #endif
 			if (pc_isvip(sd)) // Display drop rate increase for VIP
 				droprate += (droprate * battle_config.vip_drop_increase) / 100;
-			if (item_data->slot)
-				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->ename.c_str(), item_data->slot, (float)droprate / 100);
+			if (item_data->slots)
+				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->ename.c_str(), item_data->slots, (float)droprate / 100);
 			else
 				sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->ename.c_str(), (float)droprate / 100);
 			strcat(atcmd_output, atcmd_output2);
@@ -7411,13 +7411,13 @@ ACMD_FUNC(mobinfo)
 				if (mvppercent > 0) {
 					j++;
 					if (j == 1) {
-						if (item_data->slot)
-							sprintf(atcmd_output2, " %s[%d]  %02.02f%%", item_data->ename.c_str(), item_data->slot, mvppercent);
+						if (item_data->slots)
+							sprintf(atcmd_output2, " %s[%d]  %02.02f%%", item_data->ename.c_str(), item_data->slots, mvppercent);
 						else
 							sprintf(atcmd_output2, " %s  %02.02f%%", item_data->ename.c_str(), mvppercent);
 					} else {
-						if (item_data->slot)
-							sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->ename.c_str(), item_data->slot, mvppercent);
+						if (item_data->slots)
+							sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->ename.c_str(), item_data->slots, mvppercent);
 						else
 							sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->ename.c_str(), mvppercent);
 					}
@@ -7844,7 +7844,7 @@ ACMD_FUNC(iteminfo)
 	for (i = 0; i < count; i++) {
 		struct item_data * item_data = item_array[i];
 		sprintf(atcmd_output, msg_txt(sd,1277), // Item: '%s'/'%s'[%d] (%hu) Type: %s | Extra Effect: %s
-			item_data->name.c_str(),item_data->ename.c_str(),item_data->slot,item_data->nameid,
+			item_data->name.c_str(),item_data->ename.c_str(),item_data->slots,item_data->nameid,
 			(item_data->type != IT_AMMO) ? itemdb_typename((enum item_types)item_data->type) : itemdb_typename_ammo((e_ammo_type)item_data->look),
 			(item_data->script==NULL)? msg_txt(sd,1278) : msg_txt(sd,1279) // None / With script
 		);
@@ -7894,7 +7894,7 @@ ACMD_FUNC(whodrops)
 	}
 	for (i = 0; i < count; i++) {
 		item_data = item_array[i];
-		sprintf(atcmd_output, msg_txt(sd,1285), item_data->ename.c_str(), item_data->slot, item_data->nameid); // Item: '%s'[%d] (ID:%hu)
+		sprintf(atcmd_output, msg_txt(sd,1285), item_data->ename.c_str(), item_data->slots, item_data->nameid); // Item: '%s'[%d] (ID:%hu)
 		clif_displaymessage(fd, atcmd_output);
 
 		if (item_data->mob[0].chance == 0) {
@@ -8948,7 +8948,7 @@ ACMD_FUNC(itemlist)
 		} else { // normal item
 			int counter2 = 0;
 
-			for( j = 0; j < itd->slot; ++j ) {
+			for( j = 0; j < itd->slots; ++j ) {
 				struct item_data* card;
 
 				if( it->card[j] == 0 || (card = itemdb_exists(it->card[j])) == NULL )

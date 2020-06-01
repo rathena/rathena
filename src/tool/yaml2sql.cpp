@@ -421,8 +421,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column += "`flag_deadbranch`,";
 			if (appendEntry(flags["Container"], value))
 				column += "`flag_container`,";
-			if (appendEntry(flags["Guid"], value))
-				column += "`flag_guid`,";
+			if (appendEntry(flags["UniqueId"], value))
+				column += "`flag_uniqueid`,";
 			if (appendEntry(flags["BindOnEquip"], value))
 				column += "`flag_bindonequip`,";
 			if (appendEntry(flags["DropAnnounce"], value))

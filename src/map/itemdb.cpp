@@ -66,8 +66,10 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "AegisName", name))
 			return 0;
 
-		if (itemdb_search_aegisname(name.c_str()))
-			this->invalidWarning(node["AegisName"], "Found duplicate item Aegis name for %s.\n", name.c_str());
+		if (itemdb_search_aegisname(name.c_str())) {
+			this->invalidWarning(node["AegisName"], "Found duplicate item Aegis name for %s, skipping.\n", name.c_str());
+			return 0;
+		}
 
 		item->name.resize(ITEM_NAME_LENGTH);
 		item->name = name.c_str();
@@ -92,7 +94,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		std::string type_constant = "IT_" + type;
 		int64 constant;
 
-		if (!script_get_constant(type_constant.c_str(), &constant) || constant < IT_HEALING || constant == IT_UNKNOWN || constant == IT_UNKNOWN2 || (constant > IT_SHADOWGEAR && constant < IT_CASH) || constant >= IT_MAX) {
+		if (!script_get_constant(type_constant.c_str(), &constant) || constant < IT_HEALING || constant >= IT_MAX) {
 			this->invalidWarning(node["Type"], "Invalid item type %s for %s (%hu), defaulting to IT_ETC.\n", type.c_str(), item->name.c_str(), nameid);
 			constant = IT_ETC;
 		}
@@ -114,25 +116,24 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "SubType", type))
 			return 0;
 
-		std::string type_constant = "W_" + type;
-		int64 constant;
+		if (item->type == IT_WEAPON) {
+			std::string type_constant = "W_" + type;
+			int64 constant;
 
-		if (item->type == IT_WEAPON && script_get_constant(type_constant.c_str(), &constant)) {
-			if (constant < W_FIST || constant > MAX_WEAPON_TYPE) {
-				this->invalidWarning(node["SubType"], "Invalid weapon type %s for %s (%hu), defaulting to IT_ETC.\n", type.c_str(), item->name.c_str(), nameid);
-				item->type = IT_ETC;
+			if (!script_get_constant(type_constant.c_str(), &constant) || constant < W_FIST || constant >= MAX_WEAPON_TYPE) {
+				this->invalidWarning(node["SubType"], "Invalid weapon type %s for %s (%hu), defaulting to W_FIST.\n", type.c_str(), item->name.c_str(), nameid);
+				item->subtype = W_FIST;
 			}
-		} else {
-			type_constant = "AMMO_" + type;
+		} else if (item->type == IT_AMMO) {
+			std::string type_constant = "AMMO_" + type;
+			int64 constant;
 
-			if (!script_get_constant(type_constant.c_str(), &constant)) {
-				if (item->type == IT_AMMO && (constant < AMMO_ARROW || constant > AMMO_THROWWEAPON)) {
-					this->invalidWarning(node["SubType"], "Invalid ammo type %s for %s (%hu), defaulting to IT_ETC.\n", type.c_str(), item->name.c_str(), nameid);
-					item->type = IT_ETC;
-				} else
-					item->subtype = static_cast<int32>(constant);
+			if (!script_get_constant(type_constant.c_str(), &constant) || constant <= AMMO_NONE || constant >= MAX_AMMO_TYPE) {
+				this->invalidWarning(node["SubType"], "Invalid ammo type %s for %s (%hu), defaulting to AMMO_NONE.\n", type.c_str(), item->name.c_str(), nameid);
+				item->subtype = AMMO_NONE;
 			}
-		}
+		} else
+			this->invalidWarning(node["SubType"], "SubType is not supported for this item type.\n");
 	} else {
 		if (!exists)
 			item->subtype = 0;
@@ -141,18 +142,18 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 	// When a particular price is not given, we should base it off the other one
 	// (it is important to make a distinction between 'no price' and 0z)
 	if (this->nodeExists(node, "Buy")) {
-		int32 buy;
+		uint32 buy;
 
-		if (!this->asInt32(node, "Buy", buy))
+		if (!this->asUInt32(node, "Buy", buy))
 			return 0;
 
 		item->value_buy = buy;
 	} else {
 		if (!exists) {
 			if (this->nodeExists(node, "Sell")) {
-				int32 sell;
+				uint32 sell;
 
-				if (!this->asInt32(node, "Sell", sell))
+				if (!this->asUInt32(node, "Sell", sell))
 					return 0;
 
 				item->value_buy = sell * 2;
@@ -162,9 +163,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Sell")) {
-		int32 sell;
+		uint32 sell;
 
-		if (!this->asInt32(node, "Sell", sell))
+		if (!this->asUInt32(node, "Sell", sell))
 			return 0;
 
 		item->value_sell = sell;
@@ -173,13 +174,15 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->value_sell = item->value_buy / 2;
 	}
 
-	if (item->value_buy / 124. < item->value_sell / 75.)
-		this->invalidWarning(node["Sell"], "Buying/Selling [%d/%d] price of %s (%hu) allows Zeny making exploit through buying/selling at discounted/overcharged prices!\n", item->value_buy, item->value_sell, item->name.c_str(), nameid);
+	if (item->value_buy / 124. < item->value_sell / 75.) {
+		this->invalidWarning(node["Sell"], "Buying/Selling [%d/%d] price of %s (%hu) allows Zeny making exploit through buying/selling at discounted/overcharged prices! Defaulting Sell to 1 Zeny.\n", item->value_buy, item->value_sell, item->name.c_str(), nameid);
+		item->value_sell = 1;
+	}
 
 	if (this->nodeExists(node, "Weight")) {
-		int32 weight;
+		uint32 weight;
 
-		if (!this->asInt32(node, "Weight", weight))
+		if (!this->asUInt32(node, "Weight", weight))
 			return 0;
 
 		item->weight = weight;
@@ -189,9 +192,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Attack")) {
-		int32 atk;
+		uint32 atk;
 
-		if (!this->asInt32(node, "Attack", atk))
+		if (!this->asUInt32(node, "Attack", atk))
 			return 0;
 
 		item->atk = atk;
@@ -202,9 +205,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 #ifdef RENEWAL
 	if (this->nodeExists(node, "MagicAttack")) {
-		int32 matk;
+		uint32 matk;
 
-		if (!this->asInt32(node, "MagicAttack", matk))
+		if (!this->asUInt32(node, "MagicAttack", matk))
 			return 0;
 
 		item->matk = matk;
@@ -215,10 +218,15 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 #endif
 
 	if (this->nodeExists(node, "Defense")) {
-		int32 def;
+		uint32 def;
 
-		if (!this->asInt32(node, "Defense", def))
+		if (!this->asUInt32(node, "Defense", def))
 			return 0;
+
+		if (def > DEFTYPE_MAX) {
+			this->invalidWarning(node["Defense"], "Item defense %d exceeds DEFTYPE_MAX(%d), capping to DEFTYPE_MAX.\n", def, DEFTYPE_MAX);
+			def = DEFTYPE_MAX;
+		}
 
 		item->def = def;
 	} else {
@@ -227,10 +235,15 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Range")) {
-		int32 range;
+		uint16 range;
 
-		if (!this->asInt32(node, "Range", range))
+		if (!this->asUInt16(node, "Range", range))
 			return 0;
+
+		if (range > AREA_SIZE) {
+			this->invalidWarning(node["Range"], "The attack range %d exceeds AREA_SIZE (%d), capping to AREA_SIZE.\n", range, AREA_SIZE);
+			range = AREA_SIZE;
+		}
 
 		item->range = range;
 	} else {
@@ -239,20 +252,20 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Slots")) {
-		uint16 slot;
+		uint16 slots;
 
-		if (!this->asUInt16(node, "Slots", slot))
+		if (!this->asUInt16(node, "Slots", slots))
 			return 0;
 
-		if (slot > MAX_SLOTS) {
+		if (slots > MAX_SLOTS) {
 			this->invalidWarning(node["Slots"], "Item %s (%hu) exceeds maximum slot count, capping to MAX_SLOTS.\n", item->name.c_str(), nameid);
-			slot = MAX_SLOTS;
+			slots = MAX_SLOTS;
 		}
 
-		item->slot = slot;
+		item->slots = slots;
 	} else {
 		if (!exists)
-			item->slot = 0;
+			item->slots = 0;
 	}
 
 	if (this->nodeExists(node, "Job")) {
@@ -272,6 +285,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		for (const auto &jobit : jobNode) {
 			std::string jobName = jobit.first.as<std::string>();
 
+			// Skipped because processed above the loop
 			if (jobName.compare("All") == 0)
 				continue;
 
@@ -311,12 +325,13 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			if (active)
 				item->class_upper |= ITEMJ_MAX;
 			else
-				item->class_upper &= ITEMJ_MAX;
+				item->class_upper &= ~ITEMJ_MAX;
 		}
 
 		for (const auto &classit : classNode) {
 			std::string className = classit.first.as<std::string>();
 
+			// Skipped because processed above the loop
 			if (className.compare("All") == 0)
 				continue;
 
@@ -325,7 +340,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 			if (!script_get_constant(className_constant.c_str(), &constant)) {
 				this->invalidWarning(classNode[className], "Invalid class upper %s for %s (%hu), defaulting to All.\n", className.c_str(), item->name.c_str(), nameid);
-				item->class_upper = ITEMJ_MAX;
+				item->class_upper |= ITEMJ_MAX;
 				break;
 			}
 
@@ -337,7 +352,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			if (active)
 				item->class_upper |= constant;
 			else
-				item->class_upper &= constant;
+				item->class_upper &= ~constant;
 		}
 	} else {
 		if (!exists)
@@ -393,14 +408,15 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 				item->equip |= constant;
 			} else
-				item->equip &= constant;
+				item->equip &= ~constant;
 		}
 	} else {
 		if (!exists) {
-			if (item->equip == 0 && itemdb_isequip2(item.get())) {
+			if (itemdb_isequip2(item.get())) {
 				this->invalidWarning(node["Location"], "Invalid item equip location for %s (%hu) as it has no equip location, defaulting to IT_ETC.\n", item->name.c_str(), nameid);
 				item->type = IT_ETC;
-			}
+			} else
+				item->equip = 0;
 		}
 	}
 
@@ -410,15 +426,20 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "WeaponLevel", lv))
 			return 0;
 
-		if (lv > REFINE_TYPE_MAX) {
-			this->invalidWarning(node["WeaponLevel"], "Invalid weapon level %d for %s (%hu), defaulting to REFINE_TYPE_MAX.\n", lv, item->name.c_str(), nameid);
-			lv = REFINE_TYPE_MAX;
+		if (lv < REFINE_TYPE_ARMOR || lv >= REFINE_TYPE_SHADOW) {
+			this->invalidWarning(node["WeaponLevel"], "Invalid weapon level %d, defaulting to 0.\n", lv);
+			lv = REFINE_TYPE_ARMOR;
+		}
+
+		if (item->type != IT_WEAPON) {
+			this->invalidWarning(node["WeaponLevel"], "Item type is not a weapon, defaulting to 0.\n");
+			lv = REFINE_TYPE_ARMOR;
 		}
 
 		item->wlv = lv;
 	} else {
 		if (!exists)
-			item->wlv = 0;
+			item->wlv = REFINE_TYPE_ARMOR;
 	}
 
 	if (this->nodeExists(node, "EquipLevelMin")) {
@@ -457,7 +478,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		item->elvmax = lv;
 	} else {
 		if (!exists)
-			item->elvmax = 0;
+			item->elvmax = MAX_LEVEL;
 	}
 
 	if (this->nodeExists(node, "Refineable")) {
@@ -473,9 +494,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "View")) {
-		int32 look;
+		uint32 look;
 
-		if (!this->asInt32(node, "View", look))
+		if (!this->asUInt32(node, "View", look))
 			return 0;
 
 		item->look = look;
@@ -518,6 +539,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			item->flag.buyingstore = active;
+		} else {
+			if (!exists)
+				item->flag.buyingstore = false;
 		}
 
 		if (this->nodeExists(flagNode, "DeadBranch")) {
@@ -527,6 +551,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->flag.dead_branch = active;
+		} else {
+			if (!exists)
+				item->flag.dead_branch = false;
 		}
 
 		if (this->nodeExists(flagNode, "Container")) {
@@ -536,20 +563,26 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->flag.group = active;
+		} else {
+			if (!exists)
+				item->flag.group = false;
 		}
 
-		if (this->nodeExists(flagNode, "Guid")) {
+		if (this->nodeExists(flagNode, "UniqueId")) {
 			bool active;
 
-			if (!this->asBool(flagNode, "Guid", active))
+			if (!this->asBool(flagNode, "UniqueId", active))
 				return 0;
 
 			if (!itemdb_isstackable2(item.get()) && active) {
-				this->invalidWarning(flagNode["Guid"], "Non-stackable item %s (%hu) cannot be enabled for GUID.\n", item->name.c_str(), nameid);
+				this->invalidWarning(flagNode["UniqueId"], "Non-stackable item %s (%hu) cannot be enabled for UniqueId.\n", item->name.c_str(), nameid);
 				active = false;
 			}
 
 			item->flag.guid = active;
+		} else {
+			if (!exists)
+				item->flag.guid = false;
 		}
 
 		if (this->nodeExists(flagNode, "BindOnEquip")) {
@@ -559,6 +592,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->flag.bindOnEquip = active;
+		} else {
+			if (!exists)
+				item->flag.bindOnEquip = false;
 		}
 
 		if (this->nodeExists(flagNode, "DropAnnounce")) {
@@ -568,6 +604,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->flag.broadcast = active;
+		} else {
+			if (!exists)
+				item->flag.broadcast = false;
 		}
 
 		if (this->nodeExists(flagNode, "NoConsume")) {
@@ -580,6 +619,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				item->flag.delay_consume |= 0x2;
 			else
 				item->flag.delay_consume &= ~0x2;
+		} else {
+			if (!exists)
+				item->flag.delay_consume = 0;
 		}
 
 		if (this->nodeExists(flagNode, "DropEffect")) {
@@ -597,6 +639,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			item->flag.dropEffect = static_cast<e_item_drop_effect>(constant);
+		} else {
+			if (!exists)
+				item->flag.dropEffect = DROPEFFECT_NONE;
 		}
 	} else {
 		if (!exists) {
@@ -622,6 +667,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->delay.duration = duration;
+		} else {
+			if (!exists)
+				item->delay.duration = 0;
 		}
 
 		if (this->nodeExists(delayNode, "Status")) {
@@ -633,12 +681,15 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			std::string status_constant = "SC_" + status;
 			int64 constant;
 
-			if (!script_get_constant(status_constant.c_str(), &constant)) {
+			if (!script_get_constant(status_constant.c_str(), &constant) || constant < SC_NONE || constant >= SC_MAX) {
 				this->invalidWarning(delayNode[status], "Invalid item delay status %s for %s (%hu), defaulting to SC_NONE.\n", status.c_str(), item->name.c_str(), nameid);
 				constant = SC_NONE;
 			}
 
 			item->delay.sc = static_cast<sc_type>(constant);
+		} else {
+			if (!exists)
+				item->delay.sc = SC_NONE;
 		}
 	} else {
 		if (!exists) {
@@ -662,6 +713,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			item->stack.amount = amount;
+		} else {
+			if (!exists)
+				item->stack.amount = 0;
 		}
 
 		if (this->nodeExists(stackNode, "Inventory")) {
@@ -683,6 +737,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->stack.cart = active;
+		} else {
+			if (!exists)
+				item->stack.cart = true;
 		}
 
 		if (this->nodeExists(stackNode, "Storage")) {
@@ -692,6 +749,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->stack.storage = active;
+		} else {
+			if (!exists)
+				item->stack.storage = true;
 		}
 
 		if (this->nodeExists(stackNode, "GuildStorage")) {
@@ -701,6 +761,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->stack.guild_storage = active;
+		} else {
+			if (!exists)
+				item->stack.guild_storage = true;
 		}
 	} else {
 		if (!exists) {
@@ -727,6 +790,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			item->item_usage.override = override;
+		} else {
+			if (!exists)
+				item->item_usage.override = 0;
 		}
 
 		if (this->nodeExists(nouseNode, "Sitting")) {
@@ -736,6 +802,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->item_usage.sitting = active;
+		} else {
+			if (!exists)
+				item->item_usage.sitting = false;
 		}
 	} else {
 		if (!exists) {
@@ -759,6 +828,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			item->gm_lv_trade_override = override;
+		} else {
+			if (!exists)
+				item->gm_lv_trade_override = 0;
 		}
 
 		if (this->nodeExists(tradeNode, "NoDrop")) {
@@ -768,6 +840,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->flag.trade_restriction.drop = active;
+		} else {
+			if (!exists)
+				item->flag.trade_restriction.drop = false;
 		}
 
 		if (this->nodeExists(tradeNode, "NoTrade")) {
@@ -777,6 +852,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->flag.trade_restriction.trade = active;
+		} else {
+			if (!exists)
+				item->flag.trade_restriction.trade = false;
 		}
 
 		if (this->nodeExists(tradeNode, "TradePartner")) {
@@ -786,6 +864,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->flag.trade_restriction.trade_partner = active;
+		} else {
+			if (!exists)
+				item->flag.trade_restriction.trade_partner = false;
 		}
 
 		if (this->nodeExists(tradeNode, "NoSell")) {
@@ -795,6 +876,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->flag.trade_restriction.sell = active;
+		} else {
+			if (!exists)
+				item->flag.trade_restriction.sell = false;
 		}
 
 		if (this->nodeExists(tradeNode, "NoCart")) {
@@ -804,6 +888,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->flag.trade_restriction.cart = active;
+		} else {
+			if (!exists)
+				item->flag.trade_restriction.cart = false;
 		}
 
 		if (this->nodeExists(tradeNode, "NoStorage")) {
@@ -813,6 +900,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->flag.trade_restriction.storage = active;
+		} else {
+			if (!exists)
+				item->flag.trade_restriction.storage = false;
 		}
 
 		if (this->nodeExists(tradeNode, "NoGuildStorage")) {
@@ -822,6 +912,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->flag.trade_restriction.guild_storage = active;
+		} else {
+			if (!exists)
+				item->flag.trade_restriction.guild_storage = false;
 		}
 
 		if (this->nodeExists(tradeNode, "NoMail")) {
@@ -831,6 +924,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->flag.trade_restriction.mail = active;
+		} else {
+			if (!exists)
+				item->flag.trade_restriction.mail = false;
 		}
 
 		if (this->nodeExists(tradeNode, "NoAuction")) {
@@ -840,6 +936,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			item->flag.trade_restriction.auction = active;
+		} else {
+			if (!exists)
+				item->flag.trade_restriction.auction = false;
 		}
 	} else {
 		if (!exists) {
@@ -987,19 +1086,14 @@ int16 itemdb_group_item_exists_pc(struct map_session_data *sd, unsigned short gr
  *------------------------------------------*/
 static struct item_data* itemdb_searchname1(const char *str, bool aegis_only)
 {
-	std::shared_ptr<item_data> item = nullptr, item2 = nullptr;
-
 	for (const auto &it : item_db) {
-		if (strcmpi(it.second->name.c_str(), str) == 0) {
-			item = it.second;
-			break;
-		} else if (!aegis_only && strcmpi(it.second->ename.c_str(), str) == 0) {
-			item2 = it.second;
-			break;
-		}
+		if (aegis_only && strcmpi(it.second->name.c_str(), str) == 0)
+			return it.second.get();
+		else if (!aegis_only && strcmpi(it.second->ename.c_str(), str) == 0)
+			return it.second.get();
 	}
 
-	return item ? item.get() : item2.get();
+	return nullptr;
 }
 
 struct item_data* itemdb_searchname(const char *str)
@@ -1165,7 +1259,9 @@ char itemdb_pc_get_itemgroup(uint16 group_id, bool identify, struct map_session_
 * @return *item_data if item is exist, or NULL if not
 */
 struct item_data* itemdb_exists(unsigned short nameid) {
-	return item_db.find(nameid).get();
+	std::shared_ptr<item_data> item = item_db.find(nameid);
+
+	return item ? item.get() : nullptr;
 }
 
 /// Returns name type of ammunition [Cydh]
@@ -1318,15 +1414,13 @@ static void itemdb_create_dummy(void) {
  * @return *item_data or *dummy_item if item not found
  *------------------------------------------*/
 struct item_data* itemdb_search(unsigned short nameid) {
-	struct item_data *id = nullptr;
+	std::shared_ptr<item_data> id;
 
-	if (nameid == ITEMID_DUMMY)
-		id = item_db.find(ITEMID_DUMMY).get();
-	else if (!(id = item_db.find(nameid).get())) {
+	if (!(id = item_db.find(nameid))) {
 		ShowWarning("itemdb_search: Item ID %hu does not exists in the item_db. Using dummy data.\n", nameid);
-		id = item_db.find(ITEMID_DUMMY).get();
+		id = item_db.find(ITEMID_DUMMY);
 	}
-	return id;
+	return id.get();
 }
 
 /** Checks if item is equip type or not
@@ -1403,10 +1497,10 @@ bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(st
 	if (!func(item_data, gmlv, gmlv2))
 		return false;
 
-	if(item_data->slot == 0 || itemdb_isspecial(item->card[0]))
+	if(item_data->slots == 0 || itemdb_isspecial(item->card[0]))
 		return true;
 
-	for(i = 0; i < item_data->slot; i++) {
+	for(i = 0; i < item_data->slots; i++) {
 		if (!item->card[i]) continue;
 		if (!func(itemdb_search(item->card[i]), gmlv, gmlv2))
 			return false;
@@ -1878,37 +1972,35 @@ static char itemdb_gendercheck(struct item_data *id)
  */
 static bool itemdb_read_sqldb_sub(char **str) {
 	YAML::Node node;
-	bool offset = false;
+	int index = -1;
 
-	node["Id"] = atoi(str[0]);
-	node["AegisName"] = str[1];
-	node["Name"] = str[2];
-	node["Type"] = str[3];
-	if (atoi(str[4]) != 0)
-		node["SubType"] = str[4];
-	if (atoi(str[5]) != 0)
-		node["Buy"] = atoi(str[5]);
-	if (atoi(str[6]) != 0)
-		node["Sell"] = atoi(str[6]);
-	if (atoi(str[7]) != 0)
-		node["Weight"] = atoi(str[7]);
-	if (atoi(str[8]) != 0)
-		node["Attack"] = atoi(str[8]);
+	node["Id"] = atoi(str[++index]);
+	node["AegisName"] = str[++index];
+	node["Name"] = str[++index];
+	node["Type"] = str[++index];
+	if (atoi(str[++index]) != 0)
+		node["SubType"] = str[index];
+	if (atoi(str[++index]) != 0)
+		node["Buy"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		node["Sell"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		node["Weight"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		node["Attack"] = atoi(str[index]);
 #ifdef RENEWAL
-	if (atoi(str[9]) != 0)
-		node["MagicAttack"] = atoi(str[9]);
-#else
-	offset = true;
+	if (atoi(str[++index]) != 0)
+		node["MagicAttack"] = atoi(str[index]);
 #endif
-	if (atoi(str[10 - offset]) != 0)
-		node["Defense"] = atoi(str[10 - offset]);
-	if (atoi(str[11 - offset]) != 0)
-		node["Range"] = atoi(str[11 - offset]);
-	if (atoi(str[12 - offset]) != 0)
-		node["Slots"] = atoi(str[12 - offset]);
+	if (atoi(str[++index]) != 0)
+		node["Defense"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		node["Range"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		node["Slots"] = atoi(str[index]);
 
 	const char *delim = "|", *state_delim = ":";
-	char *p = strtok(str[13 - offset], delim);
+	char *p = strtok(str[++index], delim);
 
 	if (p) {
 		while (p != nullptr) {
@@ -1926,7 +2018,7 @@ static bool itemdb_read_sqldb_sub(char **str) {
 		}
 	}
 
-	p = strtok(str[14 - offset], delim);
+	p = strtok(str[++index], delim);
 
 	if (p) {
 		while (p != nullptr) {
@@ -1944,9 +2036,9 @@ static bool itemdb_read_sqldb_sub(char **str) {
 		}
 	}
 
-	if (atoi(str[15 - offset]) != 0)
-		node["Gender"] = str[15 - offset];
-	p = strtok(str[16 - offset], delim);
+	if (atoi(str[++index]) != 0)
+		node["Gender"] = str[index];
+	p = strtok(str[++index], delim);
 
 	if (p) {
 		while (p != nullptr) {
@@ -1964,97 +2056,99 @@ static bool itemdb_read_sqldb_sub(char **str) {
 		}
 	}
 
-	if (atoi(str[17 - offset]) != 0)
-		node["WeaponLevel"] = atoi(str[17 - offset]);
-	if (atoi(str[18 - offset]) != 0)
-		node["EquipLevelMin"] = atoi(str[18 - offset]);
-	if (atoi(str[19 - offset]) != 0)
-		node["EquipLevelMax"] = atoi(str[19 - offset]);
-	if (atoi(str[20 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
+		node["WeaponLevel"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		node["EquipLevelMin"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		node["EquipLevelMax"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
 		node["Refineable"] = true;
-	if (atoi(str[21 - offset]) != 0)
-		node["View"] = atoi(str[21 - offset]);
+	if (atoi(str[++index]) != 0)
+		node["View"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		node["AliasName"] = str[index];
 
 	YAML::Node flags;
 
-	if (atoi(str[22 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
 		flags["BuyingStore"] = true;
-	if (atoi(str[23 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
 		flags["DeadBranch"] = true;
-	if (atoi(str[24 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
 		flags["Container"] = true;
-	if (atoi(str[25 - offset]) != 0)
-		flags["Guid"] = true;
-	if (atoi(str[26 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
+		flags["UniqueId"] = true;
+	if (atoi(str[++index]) != 0)
 		flags["BindOnEquip"] = true;
-	if (atoi(str[27 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
 		flags["DropAnnounce"] = true;
-	if (atoi(str[28 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
 		flags["NoConsume"] = true;
-	if (atoi(str[29 - offset]) != 0)
-		flags["DropEffect"] = str[29 - offset];
+	if (atoi(str[++index]) != 0)
+		flags["DropEffect"] = str[index];
 	node["Flags"] = flags;
 
 	YAML::Node delay;
 
-	if (atoi(str[30 - offset]) != 0)
-		delay["Duration"] = atoi(str[30 - offset]);
-	if (atoi(str[31 - offset]) != 0)
-		delay["Status"] = str[31 - offset];
+	if (atoi(str[++index]) != 0)
+		delay["Duration"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		delay["Status"] = str[index];
 	node["Delay"] = delay;
 
 	YAML::Node stack;
 
-	if (atoi(str[32 - offset]) != 0)
-		stack["Amount"] = atoi(str[32 - offset]);
-	if (atoi(str[33 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
+		stack["Amount"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
 		stack["Inventory"] = true;
-	if (atoi(str[34 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
 		stack["Cart"] = true;
-	if (atoi(str[35 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
 		stack["Storage"] = true;
-	if (atoi(str[36 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
 		stack["GuildStorage"] = true;
 	node["Stack"] = stack;
 
 	YAML::Node nouse;
 
-	if (atoi(str[37 - offset]) != 0)
-		nouse["Override"] = atoi(str[37 - offset]);
-	if (atoi(str[38 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
+		nouse["Override"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
 		nouse["Sitting"] = true;
 	node["NoUse"] = nouse;
 
 	YAML::Node trade;
 
-	if (atoi(str[39 - offset]) != 0)
-		trade["Override"] = atoi(str[39 - offset]);
-	if (atoi(str[40 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
+		trade["Override"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
 		trade["NoDrop"] = true;
-	if (atoi(str[41 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
 		trade["NoTrade"] = true;
-	if (atoi(str[42 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
 		trade["TradePartner"] = true;
-	if (atoi(str[43 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
 		trade["NoSell"] = true;
-	if (atoi(str[44 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
 		trade["NoCart"] = true;
-	if (atoi(str[45 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
 		trade["NoStorage"] = true;
-	if (atoi(str[46 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
 		trade["NoGuildStorage"] = true;
-	if (atoi(str[47 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
 		trade["NoMail"] = true;
-	if (atoi(str[48 - offset]) != 0)
+	if (atoi(str[++index]) != 0)
 		trade["NoAuction"] = true;
 	node["Trade"] = trade;
 
-	if (*str[49 - offset])
-		node["Script"] = str[49 - offset];
-	if (*str[50 - offset])
-		node["EquipScript"] = str[50 - offset];
-	if (*str[51 - offset])
-		node["UnEquipScript"] = str[51 - offset];
+	if (*str[++index])
+		node["Script"] = str[index];
+	if (*str[++index])
+		node["EquipScript"] = str[index];
+	if (*str[++index])
+		node["UnEquipScript"] = str[index];
 
 	return item_db.parseBodyNode(node) > 0;
 }

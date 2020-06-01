@@ -805,25 +805,25 @@ struct item_data
 	std::string name, ename;
 
 	//Do not add stuff between value_buy and view_id (see how getiteminfo works)
-	int value_buy;
-	int value_sell;
+	uint32 value_buy;
+	uint32 value_sell;
 	item_types type;
 	int subtype;
 	int maxchance; //For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it, -1 denotes items sold in shops only) [Lupus]
 	int sex;
 	int equip;
-	int weight;
-	int atk;
-	int def;
-	int range;
-	int slot;
-	int look;
+	uint32 weight;
+	uint32 atk;
+	uint32 def;
+	uint16 range;
+	uint16 slots;
+	uint32 look;
 	int elv;
 	int wlv;
 	int view_id;
 	int elvmax; ///< Maximum level for this item
 #ifdef RENEWAL
-	int matk;
+	uint32 matk;
 #endif
 
 //Lupus: I rearranged order of these fields due to compatibility with ITEMINFO script command
@@ -953,7 +953,7 @@ struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_equipscript(n) itemdb_search(n)->script
 #define itemdb_wlv(n) itemdb_search(n)->wlv
 #define itemdb_range(n) itemdb_search(n)->range
-#define itemdb_slot(n) itemdb_search(n)->slot
+#define itemdb_slots(n) itemdb_search(n)->slots
 #define itemdb_available(n) (itemdb_search(n)->flag.available)
 #define itemdb_traderight(n) (itemdb_search(n)->flag.trade_restriction)
 #define itemdb_viewid(n) (itemdb_search(n)->view_id)

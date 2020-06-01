@@ -1198,7 +1198,7 @@ bool pc_isequipped(struct map_session_data *sd, unsigned short nameid)
 			continue;
 		if( sd->inventory_data[index]->nameid == nameid )
 			return true;
-		for( j = 0; j < sd->inventory_data[index]->slot; j++ ){
+		for( j = 0; j < sd->inventory_data[index]->slots; j++ ){
 			if( sd->inventory.u.items_inventory[index].card[j] == nameid )
 				return true;
 		}
@@ -4623,8 +4623,8 @@ int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 	if( sd->inventory.u.items_inventory[idx_equip].equip != 0 )
 		return 0; // item must be unequipped
 
-	ARR_FIND( 0, sd->inventory_data[idx_equip]->slot, i, sd->inventory.u.items_inventory[idx_equip].card[i] == 0 );
-	if( i == sd->inventory_data[idx_equip]->slot )
+	ARR_FIND( 0, sd->inventory_data[idx_equip]->slots, i, sd->inventory.u.items_inventory[idx_equip].card[i] == 0 );
+	if( i == sd->inventory_data[idx_equip]->slots )
 		return 0; // no free slots
 
 	// remember the card id to insert
@@ -10413,7 +10413,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		if (pos == EQP_ACC) //User specified both slots.
 			pos = equip_index[EQI_ACC_R] >= 0 ? EQP_ACC_L : EQP_ACC_R;
 
-		for (i = 0; i < sd->inventory_data[n]->slot; i++) { // Accessories that have cards that force equip location
+		for (i = 0; i < sd->inventory_data[n]->slots; i++) { // Accessories that have cards that force equip location
 			if (!sd->inventory.u.items_inventory[n].card[i])
 				continue;
 

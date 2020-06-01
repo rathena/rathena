@@ -2498,7 +2498,7 @@ static void clif_addcards(unsigned char* buf, struct item* item)
 		return;
 	}
 	//Client only receives four cards.. so randomly send them a set of cards. [Skotlex]
-	if( MAX_SLOTS > 4 && (j = itemdb_slot(item->nameid)) > 4 )
+	if( MAX_SLOTS > 4 && (j = itemdb_slots(item->nameid)) > 4 )
 		i = rnd()%(j-3); //eg: 6 slots, possible i values: 0->3, 1->4, 2->5 => i = rnd()%3;
 
 	//Normal items.
@@ -6712,8 +6712,8 @@ void clif_use_card(struct map_session_data *sd,int idx)
 		if(sd->inventory_data[i]->type==IT_WEAPON && ep==EQP_SHIELD) //Shield card won't go on left weapon.
 			continue;
 
-		ARR_FIND( 0, sd->inventory_data[i]->slot, j, sd->inventory.u.items_inventory[i].card[j] == 0 );
-		if( j == sd->inventory_data[i]->slot )	// No room
+		ARR_FIND( 0, sd->inventory_data[i]->slots, j, sd->inventory.u.items_inventory[i].card[j] == 0 );
+		if( j == sd->inventory_data[i]->slots )	// No room
 			continue;
 
 		if( sd->inventory.u.items_inventory[i].equip > 0 )	// Do not check items that are already equipped

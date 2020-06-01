@@ -30,7 +30,7 @@ CREATE TABLE `item_db2_re` (
   `flag_buyingstore` tinyint(1) unsigned DEFAULT NULL,
   `flag_deadbranch` tinyint(1) unsigned DEFAULT NULL,
   `flag_container` tinyint(1) unsigned DEFAULT NULL,
-  `flag_guid` tinyint(1) unsigned DEFAULT NULL,
+  `flag_uniqueid` tinyint(1) unsigned DEFAULT NULL,
   `flag_bindonequip` tinyint(1) unsigned DEFAULT NULL,
   `flag_dropannounce` tinyint(1) unsigned DEFAULT NULL,
   `flag_noconsume` tinyint(1) unsigned DEFAULT NULL,

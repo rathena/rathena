@@ -49,7 +49,7 @@
 #     BuyingStore           If the item is available for Buyingstores. (Default: false)
 #     DeadBranch            If the item is a Dead Branch. (Default: false)
 #     Container             If the item is part of a container. (Default: false)
-#     Guid                  If the item is a unique stack. (Default: false)
+#     UniqueId              If the item is a unique stack. (Default: false)
 #     BindOnEquip           If the item is bound to the character upon equipping. (Default: false)
 #     DropAnnounce          If the item has a special announcement to self on drop. (Default: false)
 #     NoConsume             If the item is consumed on use. (Default: false)
