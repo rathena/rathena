@@ -6813,7 +6813,7 @@ void clif_item_repair_list(struct map_session_data *sd,struct map_session_data *
 	WFIFOW(fd,0)=0x1fc;
 	for(i=c=0;i<MAX_INVENTORY;i++){
 		unsigned short nameid;
-		if((nameid=dstsd->inventory.u.items_inventory[i].nameid) > 0 && dstsd->inventory.u.items_inventory[i].attribute!=0){// && skill_can_repair(sd,nameid)){
+		if((nameid=dstsd->inventory.u.items_inventory[i].nameid) > 0 && dstsd->inventory.u.items_inventory[i].attribute!=0 && (!itemdb_ishatched_egg(&dstsd->inventory.u.items_inventory[i]))) 	{// && skill_can_repair(sd,nameid)){
 			WFIFOW(fd,c*13+4) = i;
 			WFIFOW(fd,c*13+6) = nameid;
 			WFIFOB(fd,c*13+8) = dstsd->inventory.u.items_inventory[i].refine;
