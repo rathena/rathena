@@ -405,13 +405,13 @@
 	export_constant(ITEM_JOB_ALCHEMIST);
 	export_constant(ITEM_JOB_BARDDANCER);
 	export_constant(ITEM_JOB_TAEKWON);
-	export_constant(ITEM_JOB_STAR_GLADIATOR);
-	export_constant(ITEM_JOB_SOUL_LINKER);
+	export_constant(ITEM_JOB_STARGLADIATOR);
+	export_constant(ITEM_JOB_SOULLINKER);
 	export_constant(ITEM_JOB_GUNSLINGER);
 	export_constant(ITEM_JOB_NINJA);
 	export_constant(ITEM_JOB_GANGSI);
-	export_constant(ITEM_JOB_DEATH_KNIGHT);
-	export_constant(ITEM_JOB_DARK_COLLECTOR);
+	export_constant(ITEM_JOB_DEATHKNIGHT);
+	export_constant(ITEM_JOB_DARKCOLLECTOR);
 	export_constant(ITEM_JOB_KAGEROUOBORO);
 	export_constant(ITEM_JOB_REBELLION);
 	export_constant(ITEM_JOB_SUMMONER);

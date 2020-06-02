@@ -1518,8 +1518,8 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Swordman: true
       Taekwon: true
       Thief: true
@@ -1544,8 +1544,8 @@ Body:
       Mage: true
       Merchant: true
       Rogue: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Swordman: true
       Taekwon: true
       Wizard: true
@@ -6062,7 +6062,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6096,7 +6096,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6129,7 +6129,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6163,7 +6163,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6197,7 +6197,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6230,7 +6230,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6264,7 +6264,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6298,7 +6298,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6331,7 +6331,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6365,7 +6365,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6399,7 +6399,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6432,7 +6432,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6466,7 +6466,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6500,7 +6500,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6533,7 +6533,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6567,7 +6567,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6601,7 +6601,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6634,7 +6634,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6667,7 +6667,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6700,7 +6700,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6732,7 +6732,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6765,7 +6765,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6799,7 +6799,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6833,7 +6833,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6867,7 +6867,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6902,7 +6902,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6936,7 +6936,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6970,7 +6970,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -7004,7 +7004,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -7038,7 +7038,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -7072,7 +7072,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -7124,7 +7124,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -7158,7 +7158,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -7210,7 +7210,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -7244,7 +7244,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -7278,7 +7278,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -7312,7 +7312,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -7346,7 +7346,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -7369,7 +7369,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -7390,7 +7390,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -7493,7 +7493,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -7528,7 +7528,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -7563,7 +7563,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -10863,7 +10863,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -10885,7 +10885,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -12430,7 +12430,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 2
@@ -12449,7 +12449,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12470,7 +12470,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12488,7 +12488,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12508,7 +12508,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12528,7 +12528,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12548,7 +12548,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12568,7 +12568,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 4
@@ -12589,7 +12589,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 4
@@ -12609,7 +12609,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 4
@@ -12630,7 +12630,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12651,7 +12651,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 4
@@ -12672,7 +12672,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 4
@@ -12691,7 +12691,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12721,7 +12721,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12742,7 +12742,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 4
@@ -12761,7 +12761,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 1
@@ -12787,7 +12787,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 4
@@ -12806,7 +12806,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12827,7 +12827,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12848,7 +12848,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12869,7 +12869,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12890,7 +12890,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12911,7 +12911,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12930,7 +12930,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12957,7 +12957,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -12984,7 +12984,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 4
@@ -13012,7 +13012,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 4
@@ -13040,7 +13040,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -13069,7 +13069,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 4
@@ -13096,7 +13096,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -13124,7 +13124,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -13141,7 +13141,7 @@ Body:
     Jobs:
       Priest: true
       Sage: true
-      Star_Gladiator: true
+      StarGladiator: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -13179,7 +13179,7 @@ Body:
       Novice: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13205,7 +13205,7 @@ Body:
       Novice: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13230,7 +13230,7 @@ Body:
       Novice: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13256,7 +13256,7 @@ Body:
       Novice: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13282,7 +13282,7 @@ Body:
       Novice: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13307,7 +13307,7 @@ Body:
       Novice: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13332,7 +13332,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13357,7 +13357,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13381,7 +13381,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13406,7 +13406,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13431,7 +13431,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13455,7 +13455,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13479,7 +13479,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13503,7 +13503,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13527,7 +13527,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13548,7 +13548,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13572,7 +13572,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13597,7 +13597,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13621,7 +13621,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13646,7 +13646,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13707,7 +13707,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13810,7 +13810,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13840,7 +13840,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13863,7 +13863,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13884,7 +13884,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13927,7 +13927,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13958,7 +13958,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -13989,7 +13989,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -14020,7 +14020,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -14131,7 +14131,7 @@ Body:
       Novice: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -14162,7 +14162,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -14194,7 +14194,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -14226,7 +14226,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -14258,7 +14258,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -17913,7 +17913,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -18038,7 +18038,7 @@ Body:
     Jobs:
       Crusader: true
       Knight: true
-      Star_Gladiator: true
+      StarGladiator: true
       Swordman: true
     Location:
       Left_Hand: true
@@ -18057,7 +18057,7 @@ Body:
     Jobs:
       Crusader: true
       Knight: true
-      Star_Gladiator: true
+      StarGladiator: true
       Swordman: true
     Location:
       Left_Hand: true
@@ -18075,7 +18075,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Left_Hand: true
@@ -18269,7 +18269,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Left_Hand: true
@@ -18455,7 +18455,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Class:
       High: true
@@ -18528,8 +18528,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -18603,8 +18603,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -19111,7 +19111,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Head_Top: true
@@ -19133,7 +19133,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Head_Top: true
@@ -19383,7 +19383,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Head_Top: true
@@ -19448,7 +19448,7 @@ Body:
       Crusader: true
       Knight: true
       Merchant: true
-      Star_Gladiator: true
+      StarGladiator: true
       Swordman: true
       Taekwon: true
     Location:
@@ -19486,7 +19486,7 @@ Body:
       Monk: true
       Priest: true
       Rogue: true
-      Star_Gladiator: true
+      StarGladiator: true
       Swordman: true
       Taekwon: true
       Thief: true
@@ -20357,7 +20357,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Wizard: true
     Location:
@@ -20384,7 +20384,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Wizard: true
     Location:
@@ -20557,7 +20557,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Armor: true
@@ -20573,7 +20573,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Armor: true
@@ -20588,7 +20588,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Armor: true
@@ -20723,7 +20723,7 @@ Body:
     Defense: 5
     Jobs:
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Armor: true
@@ -21018,7 +21018,7 @@ Body:
     Slots: 1
     Jobs:
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Armor: true
@@ -21187,7 +21187,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Armor: true
@@ -21278,7 +21278,7 @@ Body:
       Crusader: true
       Knight: true
       Merchant: true
-      Star_Gladiator: true
+      StarGladiator: true
       Swordman: true
       Taekwon: true
     Location:
@@ -21356,7 +21356,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Armor: true
@@ -21518,8 +21518,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -21549,8 +21549,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -21598,8 +21598,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -21868,7 +21868,7 @@ Body:
       Knight: true
       Merchant: true
       Rogue: true
-      Star_Gladiator: true
+      StarGladiator: true
       Swordman: true
       Taekwon: true
       Thief: true
@@ -21895,7 +21895,7 @@ Body:
       Knight: true
       Merchant: true
       Rogue: true
-      Star_Gladiator: true
+      StarGladiator: true
       Swordman: true
       Taekwon: true
       Thief: true
@@ -22138,7 +22138,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Shoes: true
@@ -22354,8 +22354,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -22399,7 +22399,7 @@ Body:
       Merchant: true
       Ninja: true
       Rogue: true
-      Star_Gladiator: true
+      StarGladiator: true
       Swordman: true
       Taekwon: true
       Thief: true
@@ -22433,7 +22433,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Shoes: true
@@ -22532,8 +22532,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -22770,7 +22770,7 @@ Body:
       Knight: true
       Merchant: true
       Rogue: true
-      Star_Gladiator: true
+      StarGladiator: true
       Swordman: true
       Taekwon: true
       Thief: true
@@ -22793,7 +22793,7 @@ Body:
       Knight: true
       Merchant: true
       Rogue: true
-      Star_Gladiator: true
+      StarGladiator: true
       Swordman: true
       Taekwon: true
       Thief: true
@@ -22840,7 +22840,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Garment: true
@@ -22941,7 +22941,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Garment: true
@@ -23284,7 +23284,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Garment: true
@@ -23327,8 +23327,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -23353,7 +23353,7 @@ Body:
       Merchant: true
       Ninja: true
       Rogue: true
-      Star_Gladiator: true
+      StarGladiator: true
       Swordman: true
       Taekwon: true
       Thief: true
@@ -23387,7 +23387,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Garment: true
@@ -23497,8 +23497,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -24498,8 +24498,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -24528,8 +24528,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -24558,8 +24558,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -24588,8 +24588,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -24855,8 +24855,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -24884,8 +24884,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -25559,7 +25559,7 @@ Body:
     Slots: 1
     Jobs:
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Accessory: true
@@ -25576,7 +25576,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Accessory: true
@@ -25626,7 +25626,7 @@ Body:
     Jobs:
       Crusader: true
       Knight: true
-      Star_Gladiator: true
+      StarGladiator: true
       Swordman: true
     Location:
       Right_Accessory: true
@@ -25703,7 +25703,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Accessory: true
@@ -25837,8 +25837,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -26104,8 +26104,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -26133,8 +26133,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -26163,8 +26163,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -26248,8 +26248,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -26983,7 +26983,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Accessory: true
@@ -27009,7 +27009,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Accessory: true
@@ -33991,8 +33991,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Location:
       Head_Mid: true
@@ -34045,8 +34045,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Location:
       Head_Top: true
@@ -34082,7 +34082,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Head_Top: true
@@ -34342,7 +34342,7 @@ Body:
       Monk: true
       Priest: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Head_Top: true
@@ -35495,8 +35495,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Location:
       Head_Mid: true
@@ -35630,7 +35630,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Head_Top: true
@@ -35979,7 +35979,7 @@ Body:
       Crusader: true
       Knight: true
       Merchant: true
-      Star_Gladiator: true
+      StarGladiator: true
       Swordman: true
       Taekwon: true
     Location:
@@ -36007,7 +36007,7 @@ Body:
       Monk: true
       Priest: true
       Rogue: true
-      Star_Gladiator: true
+      StarGladiator: true
       Swordman: true
       Taekwon: true
       Thief: true
@@ -36858,7 +36858,7 @@ Body:
       Crusader: true
       Knight: true
       Merchant: true
-      Star_Gladiator: true
+      StarGladiator: true
       Swordman: true
       Taekwon: true
     Location:
@@ -37326,7 +37326,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Head_Top: true
@@ -37353,7 +37353,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Head_Top: true
@@ -37380,7 +37380,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Head_Top: true
@@ -37407,7 +37407,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Head_Top: true
@@ -37434,7 +37434,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Head_Top: true
@@ -39244,8 +39244,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Location:
       Head_Mid: true
@@ -40074,8 +40074,8 @@ Body:
       Priest: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Wizard: true
     Class:
       High: true
@@ -42919,7 +42919,7 @@ Body:
     EquipLevelMin: 80
     View: 568
     Script: |
-      if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief||(BaseJob==Job_Taekwon&&Class!=Job_Soul_Linker)) bonus bStr,1; else if(BaseClass==Job_Mage||BaseClass==Job_Acolyte||class==Job_Ninja||class==Job_Soul_Linker) bonus bInt,1; else if(BaseClass==Job_Archer||BaseClass==Job_Gunslinger) bonus bDex,1; else if(BaseJob==Job_Novice||BaseJob==Job_SuperNovice) { bonus bMaxHP,80; bonus bMaxSP,30; }
+      if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief||(BaseJob==Job_Taekwon&&Class!=Job_SoulLinker)) bonus bStr,1; else if(BaseClass==Job_Mage||BaseClass==Job_Acolyte||class==Job_Ninja||class==Job_SoulLinker) bonus bInt,1; else if(BaseClass==Job_Archer||BaseClass==Job_Gunslinger) bonus bDex,1; else if(BaseJob==Job_Novice||BaseJob==Job_SuperNovice) { bonus bMaxHP,80; bonus bMaxSP,30; }
   - Id: 5593
     AegisName: K_Rabbit_Bonnet
     Name: Rabbit Bonnet
@@ -64848,7 +64848,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -64883,7 +64883,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -64918,7 +64918,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65200,7 +65200,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65235,7 +65235,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65270,7 +65270,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65306,7 +65306,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65365,7 +65365,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65396,7 +65396,7 @@ Body:
     Jobs:
       Mage: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -65462,7 +65462,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65493,7 +65493,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65524,7 +65524,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65557,7 +65557,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65594,7 +65594,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65629,7 +65629,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65672,7 +65672,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65707,7 +65707,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65742,7 +65742,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65833,7 +65833,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65875,7 +65875,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65939,7 +65939,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -65975,7 +65975,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -66015,7 +66015,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -66055,7 +66055,7 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -66096,7 +66096,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -66136,7 +66136,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -66242,7 +66242,7 @@ Body:
       Ninja: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
+      SoulLinker: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -78876,8 +78876,8 @@ Body:
       Novice: true
       Rogue: true
       Sage: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Swordman: true
       Taekwon: true
       Thief: true
@@ -78900,8 +78900,8 @@ Body:
       Mage: true
       Merchant: true
       Rogue: true
-      Soul_Linker: true
-      Star_Gladiator: true
+      SoulLinker: true
+      StarGladiator: true
       Swordman: true
       Taekwon: true
       Wizard: true

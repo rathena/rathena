@@ -143,17 +143,17 @@ static std::map<std::string, int> um_mapid2jobname {
 	{ "Gunslinger", ITEM_JOB_GUNSLINGER },
 	{ "Ninja", ITEM_JOB_NINJA },
 	{ "Taekwon", ITEM_JOB_TAEKWON },
-	{ "Star_Gladiator", ITEM_JOB_STAR_GLADIATOR },
-	{ "Soul_Linker", ITEM_JOB_SOUL_LINKER },
+	{ "StarGladiator", ITEM_JOB_STARGLADIATOR },
+	{ "SoulLinker", ITEM_JOB_SOULLINKER },
 //	{ "Gangsi", ITEM_JOB_GANGSI },
-//	{ "Death_Knight", ITEM_JOB_DEATH_KNIGHT },
-//	{ "Dark_Collector", ITEM_JOB_DARK_COLLECTOR },
+//	{ "DeathKnight", ITEM_JOB_DEATHKNIGHT },
+//	{ "DarkCollector", ITEM_JOB_DARKCOLLECTOR },
 #ifdef RENEWAL
 	{ "KagerouOboro", ITEM_JOB_KAGEROUOBORO }, // Kagerou and Oboro share the same value
 	{ "Rebellion", ITEM_JOB_REBELLION },
 	{ "Summoner", ITEM_JOB_SUMMONER },
-//	{ "Star_Emperor", ITEM_JOB_32 },
-//	{ "Soul_Reaper", ITEM_JOB_33 },
+//	{ "StarEmperor", ITEM_JOB_32 },
+//	{ "SoulReaper", ITEM_JOB_33 },
 #endif
 };
 

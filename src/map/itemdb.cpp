@@ -1313,72 +1313,68 @@ static void itemdb_jobid2mapid(uint64 *bclass, uint64 jobmask, bool active)
 {
 	uint64 temp_mask[3] = { 0 };
 
-	//Base classes
-	if (jobmask & 1ULL<<JOB_NOVICE) {
-		//Both Novice/Super-Novice are counted with the same ID
-		temp_mask[0] |= 1ULL<<MAPID_NOVICE;
-		temp_mask[1] |= 1ULL<<MAPID_NOVICE;
+	// Base classes
+	if (jobmask & 1ULL << ITEM_JOB_NOVICE) { // Both Novice/Super-Novice are counted with the same ID
+		temp_mask[0] |= 1ULL << MAPID_NOVICE;
+		temp_mask[1] |= 1ULL << MAPID_NOVICE;
 	}
-	for (int i = JOB_NOVICE + 1; i <= JOB_THIEF; i++) {
-		if (jobmask & 1ULL <<i)
-			temp_mask[0] |= 1ULL<<(MAPID_NOVICE + i);
+	for (int i = ITEM_JOB_NOVICE + 1; i <= ITEM_JOB_THIEF; i++) {
+		if (jobmask & 1ULL << i)
+			temp_mask[0] |= 1ULL << (MAPID_NOVICE + i);
 	}
-	//2-1 classes
-	if (jobmask & 1ULL<<JOB_KNIGHT)
-		temp_mask[1] |= 1ULL<<MAPID_SWORDMAN;
-	if (jobmask & 1ULL<<JOB_PRIEST)
-		temp_mask[1] |= 1ULL<<MAPID_ACOLYTE;
-	if (jobmask & 1ULL<<JOB_WIZARD)
-		temp_mask[1] |= 1ULL<<MAPID_MAGE;
-	if (jobmask & 1ULL<<JOB_BLACKSMITH)
-		temp_mask[1] |= 1ULL<<MAPID_MERCHANT;
-	if (jobmask & 1ULL<<JOB_HUNTER)
-		temp_mask[1] |= 1ULL<<MAPID_ARCHER;
-	if (jobmask & 1ULL<<JOB_ASSASSIN)
-		temp_mask[1] |= 1ULL<<MAPID_THIEF;
-	//2-2 classes
-	if (jobmask & 1ULL<<JOB_CRUSADER)
-		temp_mask[2] |= 1ULL<<MAPID_SWORDMAN;
-	if (jobmask & 1ULL<<JOB_MONK)
-		temp_mask[2] |= 1ULL<<MAPID_ACOLYTE;
-	if (jobmask & 1ULL<<JOB_SAGE)
-		temp_mask[2] |= 1ULL<<MAPID_MAGE;
-	if (jobmask & 1ULL<<JOB_ALCHEMIST)
-		temp_mask[2] |= 1ULL<<MAPID_MERCHANT;
-	if (jobmask & 1ULL<<JOB_BARD)
-		temp_mask[2] |= 1ULL<<MAPID_ARCHER;
-//	Bard/Dancer share the same slot now.
-//	if (jobmask & 1ULL<<JOB_DANCER)
-//		temp_mask[2] |= 1ULL<<MAPID_ARCHER;
-	if (jobmask & 1ULL<<JOB_ROGUE)
-		temp_mask[2] |= 1ULL<<MAPID_THIEF;
-	//Special classes that don't fit above.
-	if (jobmask & 1ULL<<21) //Taekwon
-		temp_mask[0] |= 1ULL<<MAPID_TAEKWON;
-	if (jobmask & 1ULL<<22) //Star Gladiator
-		temp_mask[1] |= 1ULL<<MAPID_TAEKWON;
-	if (jobmask & 1ULL<<23) //Soul Linker
-		temp_mask[2] |= 1ULL<<MAPID_TAEKWON;
-	if (jobmask & 1ULL<<JOB_GUNSLINGER) { // Rebellion job can equip Gunslinger equips.
-		temp_mask[0] |= 1ULL<<MAPID_GUNSLINGER;
-		temp_mask[1] |= 1ULL<<MAPID_GUNSLINGER;
+	// 2-1 classes
+	if (jobmask & 1ULL << ITEM_JOB_KNIGHT)
+		temp_mask[1] |= 1ULL << MAPID_SWORDMAN;
+	if (jobmask & 1ULL << ITEM_JOB_PRIEST)
+		temp_mask[1] |= 1ULL << MAPID_ACOLYTE;
+	if (jobmask & 1ULL << ITEM_JOB_WIZARD)
+		temp_mask[1] |= 1ULL << MAPID_MAGE;
+	if (jobmask & 1ULL << ITEM_JOB_BLACKSMITH)
+		temp_mask[1] |= 1ULL << MAPID_MERCHANT;
+	if (jobmask & 1ULL << ITEM_JOB_HUNTER)
+		temp_mask[1] |= 1ULL << MAPID_ARCHER;
+	if (jobmask & 1ULL << ITEM_JOB_ASSASSIN)
+		temp_mask[1] |= 1ULL << MAPID_THIEF;
+	// 2-2 classes
+	if (jobmask & 1ULL << ITEM_JOB_CRUSADER)
+		temp_mask[2] |= 1ULL << MAPID_SWORDMAN;
+	if (jobmask & 1ULL << ITEM_JOB_MONK)
+		temp_mask[2] |= 1ULL << MAPID_ACOLYTE;
+	if (jobmask & 1ULL << ITEM_JOB_SAGE)
+		temp_mask[2] |= 1ULL << MAPID_MAGE;
+	if (jobmask & 1ULL << ITEM_JOB_ALCHEMIST)
+		temp_mask[2] |= 1ULL << MAPID_MERCHANT;
+	if (jobmask & 1ULL << ITEM_JOB_BARDDANCER)
+		temp_mask[2] |= 1ULL << MAPID_ARCHER; // Bard/Dancer share the same slot.
+	if (jobmask & 1ULL << ITEM_JOB_ROGUE)
+		temp_mask[2] |= 1ULL << MAPID_THIEF;
+	// Extended classes
+	if (jobmask & 1ULL << ITEM_JOB_TAEKWON)
+		temp_mask[0] |= 1ULL << MAPID_TAEKWON;
+	if (jobmask & 1ULL << ITEM_JOB_STARGLADIATOR)
+		temp_mask[1] |= 1ULL << MAPID_TAEKWON;
+	if (jobmask & 1ULL << ITEM_JOB_SOULLINKER)
+		temp_mask[2] |= 1ULL << MAPID_TAEKWON;
+	if (jobmask & 1ULL << ITEM_JOB_GUNSLINGER) { // Rebellion job can equip Gunslinger equips.
+		temp_mask[0] |= 1ULL << MAPID_GUNSLINGER;
+		temp_mask[1] |= 1ULL << MAPID_GUNSLINGER;
 	}
-	if (jobmask & 1ULL<<JOB_NINJA) { //Kagerou/Oboro jobs can equip Ninja equips. [Rytech]
-		temp_mask[0] |= 1ULL<<MAPID_NINJA;
-		temp_mask[1] |= 1ULL<<MAPID_NINJA;
+	if (jobmask & 1ULL << ITEM_JOB_NINJA) { // Kagerou/Oboro jobs can equip Ninja equips. [Rytech]
+		temp_mask[0] |= 1ULL << MAPID_NINJA;
+		temp_mask[1] |= 1ULL << MAPID_NINJA;
 	}
-	if (jobmask & 1ULL<<26) //Bongun/Munak
-		temp_mask[0] |= 1ULL<<MAPID_GANGSI;
-	if (jobmask & 1ULL<<27) //Death Knight
-		temp_mask[1] |= 1ULL<<MAPID_GANGSI;
-	if (jobmask & 1ULL<<28) //Dark Collector
-		temp_mask[2] |= 1ULL<<MAPID_GANGSI;
-	if (jobmask & 1ULL<<29) //Kagerou / Oboro
-		temp_mask[1] |= 1ULL<<MAPID_NINJA;
-	if (jobmask & 1ULL<<30) //Rebellion
-		temp_mask[1] |= 1ULL<<MAPID_GUNSLINGER;
-	if (jobmask & 1ULL<<31) //Summoner
-		temp_mask[0] |= 1ULL<<MAPID_SUMMONER;
+	if (jobmask & 1ULL << ITEM_JOB_GANGSI)
+		temp_mask[0] |= 1ULL << MAPID_GANGSI;
+	if (jobmask & 1ULL << ITEM_JOB_DEATHKNIGHT)
+		temp_mask[1] |= 1ULL << MAPID_GANGSI;
+	if (jobmask & 1ULL << ITEM_JOB_DARKCOLLECTOR)
+		temp_mask[2] |= 1ULL << MAPID_GANGSI;
+	if (jobmask & 1ULL << ITEM_JOB_KAGEROUOBORO)
+		temp_mask[1] |= 1ULL << MAPID_NINJA;
+	if (jobmask & 1ULL << ITEM_JOB_REBELLION)
+		temp_mask[1] |= 1ULL << MAPID_GUNSLINGER;
+	if (jobmask & 1ULL << ITEM_JOB_SUMMONER)
+		temp_mask[0] |= 1ULL << MAPID_SUMMONER;
 
 	for (int i = 0; i < ARRAYLENGTH(temp_mask); i++) {
 		if (temp_mask[i] == 0)
