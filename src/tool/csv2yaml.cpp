@@ -3157,8 +3157,14 @@ static bool itemdb_read_db(const char* file) {
 
 		auto it_avail = item_avail.find(nameid);
 
-		if (it_avail != item_avail.end())
-			body << YAML::Key << "AliasName" << YAML::Value << it_avail->second;
+		if (it_avail != item_avail.end()) {
+			std::string *item_name = util::umap_find(aegis_itemnames, static_cast<uint16>(it_avail->second));
+
+			if (item_name == nullptr)
+				ShowError("Item name for item id %d is not known (item_avail).\n", it_avail->second);
+			else
+				body << YAML::Key << "AliasName" << YAML::Value << *item_name;
+		}
 
 		auto it_flag = item_flag.find(nameid);
 		auto it_buying = item_buyingstore.find(nameid);
