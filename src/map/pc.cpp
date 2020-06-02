@@ -1391,7 +1391,7 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 		return ITEM_EQUIP_ACK_FAILLEVEL;
 	if(item->elvmax && sd->status.base_level > (unsigned int)item->elvmax)
 		return ITEM_EQUIP_ACK_FAILLEVEL;
-	if(item->sex != 2 && sd->status.sex != item->sex)
+	if(item->sex != SEX_BOTH && sd->status.sex != item->sex)
 		return ITEM_EQUIP_ACK_FAIL;
 
 	//fail to equip if item is restricted
@@ -5361,7 +5361,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 	}
 
 	//Gender check
-	if(item->sex != 2 && sd->status.sex != item->sex)
+	if(item->sex != SEX_BOTH && sd->status.sex != item->sex)
 		return false;
 	//Required level check
 	if(item->elv && sd->status.base_level < (unsigned int)item->elv)

@@ -1954,15 +1954,15 @@ static void itemdb_roulette_free(void) {
 static char itemdb_gendercheck(struct item_data *id)
 {
 	if (id->nameid == WEDDING_RING_M) //Grom Ring
-		return 1;
+		return SEX_MALE;
 	if (id->nameid == WEDDING_RING_F) //Bride Ring
-		return 0;
+		return SEX_FEMALE;
 	if (id->look == W_MUSICAL && id->type == IT_WEAPON) //Musical instruments are always male-only
-		return 1;
+		return SEX_MALE;
 	if (id->look == W_WHIP && id->type == IT_WEAPON) //Whips are always female-only
-		return 0;
+		return SEX_FEMALE;
 
-	return (battle_config.ignore_items_gender) ? 2 : id->sex;
+	return (battle_config.ignore_items_gender) ? SEX_BOTH : id->sex;
 }
 
 /**
