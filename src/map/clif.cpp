@@ -9828,11 +9828,11 @@ void clif_viewequip_ack( struct map_session_data* sd, struct map_session_data* t
 				continue;
 			}
 
-			if( !tsd->inventory.u.items_inventory[i].equip ){
+			if( !tsd->inventory.u.items_inventory[k].equip ){
 				continue;
 			}
 
-			if( !itemdb_isequip2( tsd->inventory_data[i] ) ){ // Is not equippable
+			if( !itemdb_isequip2( tsd->inventory_data[k] ) ){ // Is not equippable
 				continue;
 			}
 
