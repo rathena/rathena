@@ -199,6 +199,7 @@ static bool skill_parse_row_nonearnpcrangedb(char* split[], int columns, int cur
 static bool skill_parse_row_skilldb(char* split[], int columns, int current);
 static bool quest_read_db(char *split[], int columns, int current);
 static bool instance_readdb_sub(char* str[], int columns, int current);
+static bool itemdb_read_itemavail(char *str[], int columns, int current);
 static bool itemdb_read_buyingstore(char* fields[], int columns, int current);
 static bool itemdb_read_flag(char* fields[], int columns, int current);
 static bool itemdb_read_itemdelay(char* str[], int columns, int current);
