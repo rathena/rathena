@@ -35,7 +35,7 @@
 #   Defense                 Armor's defense. (Default: 0)
 #   Range                   Weapon's attack range. (Default: 0)
 #   Slots                   Available slots in item. (Default: 0)
-#   Job                     Jobs that can equip the item. (Default: All)
+#   Jobs                    Jobs that can equip the item. (Default: All)
 #   Class                   Upper class types that can equip the item. (Default: All)
 #   Gender                  Gender that can equip the item. (Default: Both)
 #   Location                Equipment location. (Default: None)
@@ -95,32 +95,32 @@ Header:
 #    Type: Etc
 #    Sell: 10
 #    Weight: 10
-#    Job:
-#      All: false
+#    Jobs:
+#      All: true
 #  - Id: 7951
 #    AegisName: Token_Bag
 #    Name: Token Bag
 #    Type: Etc
 #    Sell: 10
 #    Weight: 10
-#    Job:
-#      All: false
+#    Jobs:
+#      All: true
 #  - Id: 1998
 #    AegisName: Jeramiah's_Jur
 #    Name: Jeramiah's Jur
 #    Type: Etc
 #    Sell: 10
 #    Weight: 10
-#    Job:
-#      All: false
+#    Jobs:
+#      All: true
 #  - Id: 1999
 #    AegisName: Zed's_Staff
 #    Name: Zed's Staff
 #    Type: Etc
 #    Sell: 10
 #    Weight: 10
-#    Job:
-#      All: false
+#    Jobs:
+#      All: true
 
 # Official Event Items that had their Effects removed after the event was completed
 #=============================================================
@@ -394,23 +394,23 @@ Header:
 #    Name: Gold Ring Of Valentine
 #    Type: Etc
 #    Buy: 10
-#    Job:
-#      All: false
+#    Jobs:
+#      All: true
 #  - Id: 7947
 #    AegisName: Silver_Ring_Of_Valentine
 #    Name: Silver Ring Of Valentine
 #    Type: Etc
 #    Buy: 10
-#    Job:
-#      All: false
+#    Jobs:
+#      All: true
 #  - Id: 7948
 #    AegisName: Box
 #    Name: Box
 #    Type: Etc
 #    Buy: 10
 #    Weight: 10
-#    Job:
-#      All: false
+#    Jobs:
+#      All: true
 #  - Id: 5817
 #    AegisName: Valentine's_Emblem
 #    Name: Valentine's Emblem
@@ -441,14 +441,14 @@ Header:
 #    AegisName: Crushed_Pumpkin
 #    Name: Crushed Pumpkin
 #    Type: Etc
-#    Job:
-#      All: false
+#    Jobs:
+#      All: true
 #  - Id: 6299
 #    AegisName: Worn_Fabric
 #    Name: Worn Fabric
 #    Type: Etc
-#    Job:
-#      All: false
+#    Jobs:
+#      All: true
 
 # Old Tuxedo and Wedding Dress, will display the outfit when worn.
 #==================================================================
@@ -458,7 +458,7 @@ Header:
 #    Type: Armor
 #    Buy: 43000
 #    Weight: 500
-#    Job:
+#    Jobs:
 #      All: true
 #      Novice: false
 #    Location:
@@ -474,7 +474,7 @@ Header:
 #    Type: Armor
 #    Buy: 43000
 #    Weight: 10
-#    Job:
+#    Jobs:
 #      All: true
 #      Novice: false
 #    Gender: Male

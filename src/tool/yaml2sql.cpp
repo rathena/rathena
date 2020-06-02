@@ -47,70 +47,6 @@ int getch( void ){
 }
 #endif
 
-static std::unordered_map<std::string, int> um_jobnames {
-	{ "Novice", JOB_NOVICE },
-	{ "Swordman", JOB_SWORDMAN },
-	{ "Mage", JOB_MAGE },
-	{ "Archer", JOB_ARCHER },
-	{ "Acolyte", JOB_ACOLYTE },
-	{ "Merchant", JOB_MERCHANT },
-	{ "Thief", JOB_THIEF },
-	{ "Knight", JOB_KNIGHT },
-	{ "Priest", JOB_PRIEST },
-	{ "Wizard", JOB_WIZARD },
-	{ "Blacksmith", JOB_BLACKSMITH },
-	{ "Hunter", JOB_HUNTER },
-	{ "Assassin", JOB_ASSASSIN },
-	{ "Crusader", JOB_CRUSADER },
-	{ "Monk", JOB_MONK },
-	{ "Sage", JOB_SAGE },
-	{ "Rogue", JOB_ROGUE },
-	{ "Alchemist", JOB_ALCHEMIST },
-	{ "Bard", JOB_BARD },
-	{ "Dancer", JOB_DANCER },
-	{ "Super_Novice", JOB_SUPER_NOVICE },
-	{ "Gunslinger", JOB_GUNSLINGER },
-	{ "Ninja", JOB_NINJA },
-	{ "Taekwon", JOB_TAEKWON, },
-	{ "Star_Gladiator", JOB_STAR_GLADIATOR },
-	{ "Soul_Linker", JOB_SOUL_LINKER },
-//	{ "Gangsi", JOB_GANGSI },
-//	{ "Death_Knight", JOB_DEATH_KNIGHT },
-//	{ "Dark_Collector", JOB_DARK_COLLECTOR },
-#ifdef RENEWAL
-	{ "Kagerou", JOB_KAGEROU },
-	{ "Oboro", JOB_OBORO },
-	{ "Rebellion", JOB_REBELLION },
-	{ "Summoner", JOB_SUMMONER },
-	{ "Star_Emperor", JOB_STAR_EMPEROR },
-	{ "Soul_Reaper", JOB_SOUL_REAPER },
-#endif
-};
-
-static std::unordered_map<std::string, equip_pos> um_equipnames{
-	{ "Head_Low", EQP_HEAD_LOW },
-	{ "Head_Mid", EQP_HEAD_MID },
-	{ "Head_Top", EQP_HEAD_TOP },
-	{ "Right_Hand", EQP_HAND_R },
-	{ "Left_Hand", EQP_HAND_L },
-	{ "Armor", EQP_ARMOR },
-	{ "Shoes", EQP_SHOES },
-	{ "Garment", EQP_GARMENT },
-	{ "Right_Accessory", EQP_ACC_R },
-	{ "Left_Accessory", EQP_ACC_L },
-	{ "Costume_Head_Top", EQP_COSTUME_HEAD_TOP },
-	{ "Costume_Head_Mid", EQP_COSTUME_HEAD_MID },
-	{ "Costume_Head_Low", EQP_COSTUME_HEAD_LOW },
-	{ "Costume_Garment", EQP_COSTUME_GARMENT },
-	{ "Ammo", EQP_AMMO },
-	{ "Shadow_Armor", EQP_SHADOW_ARMOR },
-	{ "Shadow_Weapon", EQP_SHADOW_WEAPON },
-	{ "Shadow_Shield", EQP_SHADOW_SHIELD },
-	{ "Shadow_Shoes", EQP_SHADOW_SHOES },
-	{ "Shadow_Right_Accessory", EQP_SHADOW_ACC_R },
-	{ "Shadow_Left_Accessory", EQP_SHADOW_ACC_L },
-};
-
 // Forward declaration of conversion functions
 static bool item_db_yaml2sql(const std::string &file, const std::string &table);
 
@@ -391,7 +327,7 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 			column += "`range`,";
 		if (appendEntry(input["Slots"], value))
 			column += "`slots`,";
-		if (appendEntry(input["Job"], value, true, true))
+		if (appendEntry(input["Jobs"], value, true, true))
 			column += "`equip_jobs`,";
 		if (appendEntry(input["Class"], value, true, true))
 			column += "`equip_upper`,";

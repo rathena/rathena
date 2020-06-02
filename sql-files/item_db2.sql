@@ -117,8 +117,8 @@ REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`equip_jobs`
 
 # Old Tuxedo and Wedding Dress, will display the outfit when worn.
 #=============================================================
-REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_jobs`,`equip_locations`,`refineable`,`equip_script`,`unequip_script`) VALUES (2338,'Wedding_Dress','Wedding Dress','Armor',43000,500,'All:true|Novice:true','Armor:true',true,'sc_start SC_WEDDING,INFINITE_TICK,0;','sc_end SC_WEDDING;');
-REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_jobs`,`equip_genders`,`equip_locations`,`refineable`,`equip_script`,`unequip_script`) VALUES (7170,'Tuxedo','Tuxedo','Armor',43000,10,'All:true|Novice:true','Male','Armor:true',true,'sc_start SC_WEDDING,INFINITE_TICK,0;','sc_end SC_WEDDING;');
+REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_jobs`,`equip_locations`,`refineable`,`equip_script`,`unequip_script`) VALUES (2338,'Wedding_Dress','Wedding Dress','Armor',43000,500,'All:true|Novice:false','Armor:true',true,'sc_start SC_WEDDING,INFINITE_TICK,0;','sc_end SC_WEDDING;');
+REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_jobs`,`equip_genders`,`equip_locations`,`refineable`,`equip_script`,`unequip_script`) VALUES (7170,'Tuxedo','Tuxedo','Armor',43000,10,'All:true|Novice:false','Male','Armor:true',true,'sc_start SC_WEDDING,INFINITE_TICK,0;','sc_end SC_WEDDING;');
 
 # Non-kRO Eden Group Mark effect
 #=============================================================

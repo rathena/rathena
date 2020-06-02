@@ -5,6 +5,7 @@
 #include <functional>
 #include <iostream>
 #include <locale>
+#include <map>
 #include <unordered_map>
 #include <vector>
 
@@ -119,43 +120,40 @@ std::unordered_map<int, s_item_stack_csv2yaml> item_stack;
 std::unordered_map<int, s_item_nouse_csv2yaml> item_nouse;
 std::unordered_map<int, s_item_trade_csv2yaml> item_trade;
 
-static std::unordered_map<std::string, int> um_jobnames {
-	{ "Novice", JOB_NOVICE },
-	{ "Swordman", JOB_SWORDMAN },
-	{ "Mage", JOB_MAGE },
-	{ "Archer", JOB_ARCHER },
-	{ "Acolyte", JOB_ACOLYTE },
-	{ "Merchant", JOB_MERCHANT },
-	{ "Thief", JOB_THIEF },
-	{ "Knight", JOB_KNIGHT },
-	{ "Priest", JOB_PRIEST },
-	{ "Wizard", JOB_WIZARD },
-	{ "Blacksmith", JOB_BLACKSMITH },
-	{ "Hunter", JOB_HUNTER },
-	{ "Assassin", JOB_ASSASSIN },
-	{ "Crusader", JOB_CRUSADER },
-	{ "Monk", JOB_MONK },
-	{ "Sage", JOB_SAGE },
-	{ "Rogue", JOB_ROGUE },
-	{ "Alchemist", JOB_ALCHEMIST },
-	{ "Bard", JOB_BARD },
-	{ "Dancer", JOB_DANCER },
-	{ "Super_Novice", JOB_SUPER_NOVICE },
-	{ "Gunslinger", JOB_GUNSLINGER },
-	{ "Ninja", JOB_NINJA },
-	{ "Taekwon", JOB_TAEKWON, },
-	{ "Star_Gladiator", JOB_STAR_GLADIATOR },
-	{ "Soul_Linker", JOB_SOUL_LINKER },
-//	{ "Gangsi", JOB_GANGSI },
-//	{ "Death_Knight", JOB_DEATH_KNIGHT },
-//	{ "Dark_Collector", JOB_DARK_COLLECTOR },
+static std::map<std::string, int> um_mapid2jobname {
+	{ "Novice", ITEM_JOB_NOVICE },
+	{ "Swordman", ITEM_JOB_SWORDMAN },
+	{ "Mage", ITEM_JOB_MAGE },
+	{ "Archer", ITEM_JOB_ARCHER },
+	{ "Acolyte", ITEM_JOB_ACOLYTE },
+	{ "Merchant", ITEM_JOB_MERCHANT },
+	{ "Thief", ITEM_JOB_THIEF },
+	{ "Knight", ITEM_JOB_KNIGHT },
+	{ "Priest", ITEM_JOB_PRIEST },
+	{ "Wizard", ITEM_JOB_WIZARD },
+	{ "Blacksmith", ITEM_JOB_BLACKSMITH },
+	{ "Hunter", ITEM_JOB_HUNTER },
+	{ "Assassin", ITEM_JOB_ASSASSIN },
+	{ "Crusader", ITEM_JOB_CRUSADER },
+	{ "Monk", ITEM_JOB_MONK },
+	{ "Sage", ITEM_JOB_SAGE },
+	{ "Rogue", ITEM_JOB_ROGUE },
+	{ "Alchemist", ITEM_JOB_ALCHEMIST },
+	{ "BardDancer", ITEM_JOB_BARDDANCER }, // Bard and Dancer share the same value
+	{ "Gunslinger", ITEM_JOB_GUNSLINGER },
+	{ "Ninja", ITEM_JOB_NINJA },
+	{ "Taekwon", ITEM_JOB_TAEKWON },
+	{ "Star_Gladiator", ITEM_JOB_STAR_GLADIATOR },
+	{ "Soul_Linker", ITEM_JOB_SOUL_LINKER },
+//	{ "Gangsi", ITEM_JOB_GANGSI },
+//	{ "Death_Knight", ITEM_JOB_DEATH_KNIGHT },
+//	{ "Dark_Collector", ITEM_JOB_DARK_COLLECTOR },
 #ifdef RENEWAL
-	{ "Kagerou", JOB_KAGEROU },
-	{ "Oboro", JOB_OBORO },
-	{ "Rebellion", JOB_REBELLION },
-	{ "Summoner", JOB_SUMMONER },
-	{ "Star_Emperor", JOB_STAR_EMPEROR },
-	{ "Soul_Reaper", JOB_SOUL_REAPER },
+	{ "KagerouOboro", ITEM_JOB_KAGEROUOBORO }, // Kagerou and Oboro share the same value
+	{ "Rebellion", ITEM_JOB_REBELLION },
+	{ "Summoner", ITEM_JOB_SUMMONER },
+//	{ "Star_Emperor", ITEM_JOB_32 },
+//	{ "Soul_Reaper", ITEM_JOB_33 },
 #endif
 };
 
@@ -414,7 +412,7 @@ int do_init( int argc, char** argv ){
 	// Loads required conversion constants
 	if (fileExists(path_db + "/" + "item_db.yml")) {
 		parse_item_constants_yml(path_db_mode, "item_db.yml");
-		parse_item_constants_yml(path_db_import + "/", "item_db.yml");
+		parse_item_constants_yml(path_db_import, "item_db.yml");
 	} else {
 		parse_item_constants_txt( ( path_db_mode + "item_db.txt" ).c_str() );
 		parse_item_constants_txt( ( path_db_import + "/item_db.txt" ).c_str() );
@@ -3074,21 +3072,21 @@ static bool itemdb_read_db(const char* file) {
 			uint64 temp_mask = strtoull(str[11], NULL, 0);
 
 			if (temp_mask == 0) {
-				//body << YAML::Key << "Job";
+				//body << YAML::Key << "Jobs";
 				//body << YAML::BeginMap << YAML::Key << "All" << YAML::Value << "false" << YAML::EndMap;
 			} else if (temp_mask == 0xFFFFFFFF) { // Commented out because it's the default value
-				//body << YAML::Key << "Job";
+				//body << YAML::Key << "Jobs";
 				//body << YAML::BeginMap << YAML::Key << "All" << YAML::Value << "true" << YAML::EndMap;
 			} else if (temp_mask == 0xFFFFFFFE) {
-				body << YAML::Key << "Job";
+				body << YAML::Key << "Jobs";
 				body << YAML::BeginMap;
 				body << YAML::Key << "All" << YAML::Value << "true";
 				body << YAML::Key << "Novice" << YAML::Value << "false";
 				body << YAML::EndMap;
 			} else {
-				body << YAML::Key << "Job";
+				body << YAML::Key << "Jobs";
 				body << YAML::BeginMap;
-				for (const auto& it : um_jobnames) {
+				for (const auto& it : um_mapid2jobname) {
 					uint64 job_mask = 1ULL << it.second;
 
 					if ((temp_mask & job_mask) == job_mask)

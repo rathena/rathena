@@ -268,8 +268,8 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->slots = 0;
 	}
 
-	if (this->nodeExists(node, "Job")) {
-		const YAML::Node &jobNode = node["Job"];
+	if (this->nodeExists(node, "Jobs")) {
+		const YAML::Node &jobNode = node["Jobs"];
 
 		item->class_base[0] = item->class_base[1] = item->class_base[2] = 0;
 
@@ -289,7 +289,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			if (jobName.compare("All") == 0)
 				continue;
 
-			std::string jobName_constant = "JOB_" + jobName;
+			std::string jobName_constant = "ITEM_JOB_" + jobName;
 			int64 constant;
 
 			if (!script_get_constant(jobName_constant.c_str(), &constant)) {
@@ -2011,9 +2011,9 @@ static bool itemdb_read_sqldb_sub(char **str) {
 			state = strtok(nullptr, state_delim);
 
 			if (state == "true")
-				node["Job"][p] = true;
+				node["Jobs"][p] = true;
 			else
-				node["Job"][p] = false;
+				node["Jobs"][p] = false;
 			p = strtok(nullptr, delim);
 		}
 	}
