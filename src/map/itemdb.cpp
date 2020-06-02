@@ -426,7 +426,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "WeaponLevel", lv))
 			return 0;
 
-		if (lv < REFINE_TYPE_ARMOR || lv >= REFINE_TYPE_SHADOW) {
+		if (lv >= REFINE_TYPE_SHADOW) {
 			this->invalidWarning(node["WeaponLevel"], "Invalid weapon level %d, defaulting to 0.\n", lv);
 			lv = REFINE_TYPE_ARMOR;
 		}
