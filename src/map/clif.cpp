@@ -6830,7 +6830,7 @@ void clif_cart_additem( struct map_session_data *sd, int n, int amount ){
 		return;
 	}
 
-	if( n < 0 || n >= MAX_INVENTORY || sd->inventory.u.items_inventory[n].nameid <= 0 || sd->inventory_data[n] == nullptr ){
+	if( n < 0 || n >= MAX_CART || sd->cart.u.items_cart[n].nameid <= 0 ){
 		return;
 	}
 
