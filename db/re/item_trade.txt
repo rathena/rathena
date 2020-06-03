@@ -25,7 +25,7 @@
 599,475,100	// Light_Orange_Pot
 603,8,100	// Old_Blue_Box
 617,8,100	// Old_Violet_Box
-671,507,100	// Gold_Coin
+671,8,100	// Gold_Coin
 675,507,100	// Silver_Coin
 744,1,100	// Bunch_Of_Flowers
 745,1,100	// Wedding_Bouquet
