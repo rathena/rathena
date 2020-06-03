@@ -678,6 +678,8 @@ struct Battle_Config
 	int bgqueue_nowarp_mapflag;
 	int homunculus_exp_gain;
 	int rental_item_novalue;
+	int ping_timer_interval;
+	int ping_time;
 
 #include "../custom/battle_config_struct.inc"
 };

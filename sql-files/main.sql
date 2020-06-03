@@ -254,6 +254,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   `uniqueitem_counter` int(11) unsigned NOT NULL default '0',
   `sex` ENUM('M','F','U') NOT NULL default 'U',
   `hotkey_rowshift` tinyint(3) unsigned NOT NULL default '0',
+  `hotkey_rowshift2` tinyint(3) unsigned NOT NULL default '0',
   `clan_id` int(11) unsigned NOT NULL default '0',
   `last_login` datetime DEFAULT NULL,
   `title_id` INT(11) unsigned NOT NULL default '0',
