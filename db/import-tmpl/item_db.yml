@@ -35,7 +35,7 @@
 #   Defense                 Armor's defense. (Default: 0)
 #   Range                   Weapon's attack range. (Default: 0)
 #   Slots                   Available slots in item. (Default: 0)
-#   Jobs                    Jobs that can equip the item. (Default: All)
+#   Jobs                    Jobs that can equip the item. (Map default is 'All: true')
 #   Class                   Upper class types that can equip the item. (Default: All)
 #   Gender                  Gender that can equip the item. (Default: Both)
 #   Location                Equipment location. (Default: None)
@@ -44,7 +44,7 @@
 #   EquipLevelMax           Maximum level that can equip. (Default: 0)
 #   Refineable              If the item can be refined. (Default: false)
 #   View                    View sprite of an item. (Default: 0)
-#   AvailName               Another item's AegisName that will be sent to the client instead of AegisName. (Default: null)
+#   AliasName               Another item's AegisName that will be sent to the client instead of this item's AegisName. (Default: null)
 #   Flags:                  Item flags. (Default: null)
 #     BuyingStore           If the item is available for Buyingstores. (Default: false)
 #     DeadBranch            If the item is a Dead Branch. (Default: false)
@@ -95,32 +95,24 @@ Header:
 #    Type: Etc
 #    Sell: 10
 #    Weight: 10
-#    Jobs:
-#      All: true
 #  - Id: 7951
 #    AegisName: Token_Bag
 #    Name: Token Bag
 #    Type: Etc
 #    Sell: 10
 #    Weight: 10
-#    Jobs:
-#      All: true
 #  - Id: 1998
 #    AegisName: Jeramiah's_Jur
 #    Name: Jeramiah's Jur
 #    Type: Etc
 #    Sell: 10
 #    Weight: 10
-#    Jobs:
-#      All: true
 #  - Id: 1999
 #    AegisName: Zed's_Staff
 #    Name: Zed's Staff
 #    Type: Etc
 #    Sell: 10
 #    Weight: 10
-#    Jobs:
-#      All: true
 
 # Official Event Items that had their Effects removed after the event was completed
 #=============================================================
@@ -394,23 +386,17 @@ Header:
 #    Name: Gold Ring Of Valentine
 #    Type: Etc
 #    Buy: 10
-#    Jobs:
-#      All: true
 #  - Id: 7947
 #    AegisName: Silver_Ring_Of_Valentine
 #    Name: Silver Ring Of Valentine
 #    Type: Etc
 #    Buy: 10
-#    Jobs:
-#      All: true
 #  - Id: 7948
 #    AegisName: Box
 #    Name: Box
 #    Type: Etc
 #    Buy: 10
 #    Weight: 10
-#    Jobs:
-#      All: true
 #  - Id: 5817
 #    AegisName: Valentine's_Emblem
 #    Name: Valentine's Emblem
@@ -441,14 +427,10 @@ Header:
 #    AegisName: Crushed_Pumpkin
 #    Name: Crushed Pumpkin
 #    Type: Etc
-#    Jobs:
-#      All: true
 #  - Id: 6299
 #    AegisName: Worn_Fabric
 #    Name: Worn Fabric
 #    Type: Etc
-#    Jobs:
-#      All: true
 
 # Old Tuxedo and Wedding Dress, will display the outfit when worn.
 #==================================================================

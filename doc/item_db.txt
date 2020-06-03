@@ -26,7 +26,7 @@ Type: Item's type.
 
 Healing      - Healing item.
 Usable       - Usable item.
-Etc          - Etc item. (Default)
+Etc          - Etc item.
 Armor        - Armor/Garment/Boots/Headgear/Accessory item.
 Weapon       - Weapon item.
 Card         - Card item.
@@ -150,6 +150,7 @@ Summoner
 
 Class: Equippable upper-types.
 
+All         - Applies to all classes.
 Normal      - Normal classes (no Baby/Transcendent/Third classes).
 Upper       - Transcedent classes (no Transcedent-Third classes).
 Baby        - Baby classes (no Third-Baby classes).
@@ -205,7 +206,7 @@ EquipLevelMax: Only able to equip if base level is lower than this.
 
 ---------------------------------------
 
-Refineable: 1 if the item can be refined, 0 otherwise.
+Refineable: Defines if the item can be refined.
 
 ---------------------------------------
 
@@ -213,7 +214,8 @@ View: For normal items, defines a replacement view-sprite for the item.
 
 ---------------------------------------
 
-AliasName: AegisName of another item that will be sent to the client instead of this item.
+AliasName: Use the AegisName of another item which will be sent to the client instead of this item.
+           This makes items visually appear as another without having to change the client data.
 
 ---------------------------------------
 
@@ -232,7 +234,7 @@ DropEffect   - If the item has a special effect when on the ground.
 
 Delay: Item use delay.
   Duration - Duration of delay in seconds.
-  Status   - Status Change used to keep track of the delay. (Optional)
+  Status   - Status Change used to keep track of the delay.
 
 ---------------------------------------
 
@@ -253,15 +255,15 @@ NoUse: Conditions when the item is unusable.
 
 Trade: Trade restrictions.
   Override       - Group level to override these conditions.
-  NoDrop         - If the item can not be dropped. (Default: false)
-  NoTrade        - If the item can not be traded. (Default: false)
-  TradePartner   - If the item can not be traded to the player's partner. (Default: false)
-  NoSell         - If the item can not be sold. (Default: false)
-  NoCart         - If the item can not be put in a cart. (Default: false)
-  NoStorage      - If the item can not be put in a storage. (Default: false)
-  NoGuildStorage - If the item can not be put in a guild storage. (Default: false)
-  NoMail         - If the item can not be put in a mail. (Default: false)
-  NoAuction      - If the item can not be put in an auction. (Default: false)
+  NoDrop         - If the item can not be dropped.
+  NoTrade        - If the item can not be traded.
+  TradePartner   - If the item can not be traded to the player's partner.
+  NoSell         - If the item can not be sold.
+  NoCart         - If the item can not be put in a cart.
+  NoStorage      - If the item can not be put in a storage.
+  NoGuildStorage - If the item can not be put in a guild storage.
+  NoMail         - If the item can not be put in a mail.
+  NoAuction      - If the item can not be put in an auction.
 
 ---------------------------------------
 

@@ -18,7 +18,7 @@
 #   Defense                 Armor's defense. (Default: 0)
 #   Range                   Weapon's attack range. (Default: 0)
 #   Slots                   Available slots in item. (Default: 0)
-#   Jobs                    Jobs that can equip the item. (Default: All)
+#   Jobs                    Jobs that can equip the item. (Map default is 'All: true')
 #   Class                   Upper class types that can equip the item. (Default: All)
 #   Gender                  Gender that can equip the item. (Default: Both)
 #   Location                Equipment location. (Default: None)

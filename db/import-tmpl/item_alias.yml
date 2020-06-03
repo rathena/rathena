@@ -35,7 +35,7 @@
 #   Defense                 Armor's defense. (Default: 0)
 #   Range                   Weapon's attack range. (Default: 0)
 #   Slots                   Available slots in item. (Default: 0)
-#   Job                     Jobs that can equip the item. (Default: All)
+#   Jobs                    Jobs that can equip the item. (Map default is 'All: true')
 #   Class                   Upper class types that can equip the item. (Default: All)
 #   Gender                  Gender that can equip the item. (Default: Both)
 #   Location                Equipment location. (Default: None)
@@ -49,7 +49,7 @@
 #     BuyingStore           If the item is available for Buyingstores. (Default: false)
 #     DeadBranch            If the item is a Dead Branch. (Default: false)
 #     Container             If the item is part of a container. (Default: false)
-#     Guid                  If the item is a unique stack. (Default: false)
+#     UniqueId              If the item is a unique stack. (Default: false)
 #     BindOnEquip           If the item is bound to the character upon equipping. (Default: false)
 #     DropAnnounce          If the item has a special announcement to self on drop. (Default: false)
 #     NoConsume             If the item is consumed on use. (Default: false)
@@ -89,18 +89,18 @@ Header:
 #Body:
   # Treasure Hunters Quest Items
 #  - Id: 1998
-#    AvailName: Jur
+#    AliasName: Jur
 #  - Id: 1999
-#    AvailName: Staff_Of_Soul
+#    AliasName: Staff_Of_Soul
 #  - Id: 7950
-#    AvailName: Foolishness_Of_Blind
+#    AliasName: Foolishness_Of_Blind
 #  - Id: 7951
-#    AvailName: Leather_Bag_Of_Infinity
+#    AliasName: Leather_Bag_Of_Infinity
 
   # St. Patric's Day Quest (2008) Items
 #  - Id: 7915
-#    AvailName: Copper_Coin
+#    AliasName: Copper_Coin
 #  - Id: 7916
-#    AvailName: Silver_Coin
+#    AliasName: Silver_Coin
 #  - Id: 12715
-#    AvailName: Treasure_Box_
+#    AliasName: Treasure_Box_
