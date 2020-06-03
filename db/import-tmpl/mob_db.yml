@@ -1,0 +1,167 @@
+# This file is a part of rAthena.                                                                                                                   
+# Copyright(C) 2020 rAthena Development Team                                                                                                        
+# https://rathena.org - https://github.com/rathena                                                                                                  
+#                                                                                                                                                   
+# This program is free software: you can redistribute it and/or modify                                                                              
+# it under the terms of the GNU General Public License as published by                                                                              
+# the Free Software Foundation, either version 3 of the License, or                                                                                 
+# (at your option) any later version.                                                                                                               
+#                                                                                                                                                   
+# This program is distributed in the hope that it will be useful,                                                                                   
+# but WITHOUT ANY WARRANTY; without even the implied warranty of                                                                                    
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the                                                                                      
+# GNU General Public License for more details.                                                                                                      
+#                                                                                                                                                   
+# You should have received a copy of the GNU General Public License                                                                                 
+# along with this program. If not, see <http://www.gnu.org/licenses/>.                                                                              
+#                                                                                                                                                   
+###########################################################################                                                                         
+# Renewal Monster Database                                                                                                                          
+###########################################################################                                                                         
+#                                                                                                                                                   
+# Monster Settings                                                                                                                                  
+#                                                                                                                                                   
+###########################################################################                                                                         
+# ID - Unique monster ID.                                                                                                                           
+###########################################################################                                                                         
+# SpriteName - The sprite name of the monster minus .act & .spr.                                                                                    
+###########################################################################                                                                         
+# KroName - The name of the monster, this will be used when you use "--ja--".                                                                     
+###########################################################################                                                                         
+# IroName - The name of the monster, this will be used when you use "--en--".                                                                     
+###########################################################################                                                                         
+# Level - The monsters level.                                                                                                                       
+###########################################################################                                                                         
+# Hp - Max and current health points of the monster.                                                                                                
+###########################################################################                                                                         
+# Sp - The monsters SP.                                                                                                                             
+###########################################################################                                                                         
+# Exp - Monster Experience information.                                                                                                             
+#  Base: Base experience given by the monster.                                                                                                       
+#  Job: Base experience given by the monster.                                                                                                        
+#                                                                                                                                                   
+# Optional Field:                                                                                                                                   
+#  MVP: Experience awarded to the player who killed the MVP. (This exp is a percentage of the exp the,monster gives.)                                
+###########################################################################                                                                         
+# Range - Number of cells of a range type.                                                                                                          
+#  Attack: Number of cells the monster can physically attack from. Values greater than 2 count as ranged attacks.                                    
+#  Spell: Maximum Skill Range.                                                                                                                       
+#  Sight: Sight limit of the monster. If set to 1000 or beyond, the monster will follow you all over the map.                                        
+###########################################################################                                                                         
+# Atk - Attack of the monster information.                                                                                                          
+#  Physical: Physical attack of the monster.                                                                                                               
+#  Magic: Magic attack of the monster.                                                                                                                   
+###########################################################################                                                                         
+# Def - Defense of the monster information.                                                                                                         
+#  Physical: Physical defense of the monster, reduce melee & ranged physical attack/skill.                                                           
+#  Magic: Magic defense of the monster.                                                                                                              
+###########################################################################                                                                         
+# Stats - Monster stats information.                                                                                                                
+#  Str: Strength of the monster. Affects ATK.                                                                                                        
+#  Agi: Agility of the monster. Affects FLEE.                                                                                                        
+#  Vit: Vitality of the monster. Adds additional DEF.                                                                                                
+#  Int: Intelligence of the monster. Adds additional MATK.                                                                                           
+#  Dex: Dexterity of the monster. Affects HIT rate.                                                                                                  
+#  Luk: Luck of the monster. Affects Perfect dodge/Lucky flee/Perfect flee/Lucky dodge rate.                                                         
+###########################################################################                                                                         
+# Size - Size of the monster.                                                                                                                       
+# Valid sizes:                                                                                                                                      
+#  SZ_SMALL                                                                                                                                          
+#  SZ_MEDIUM                                                                                                                                         
+#  SZ_BIG                                                                                                                                            
+###########################################################################                                                                         
+# Race - Race of the monster.                                                                                                                       
+# Valid Races:                                                                                                                                      
+#  RC_NONE_                                                                                                                                          
+#  RC_FORMLESS                                                                                                                                       
+#  RC_UNDEAD                                                                                                                                         
+#  RC_BRUTE                                                                                                                                          
+#  RC_PLANT                                                                                                                                          
+#  RC_INSECT                                                                                                                                         
+#  RC_FISH                                                                                                                                           
+#  RC_DEMON                                                                                                                                          
+#  RC_DEMIHUMAN                                                                                                                                      
+#  RC_ANGEL                                                                                                                                          
+#  RC_DRAGON                                                                                                                                         
+#  RC_PLAYER                                                                                                                                         
+#  RC_ALL                                                                                                                                            
+###########################################################################                                                                         
+# Element - The monsters element information.                                                                                                       
+# Level: Element level (min: 1 and max: 4).                                                                                                         
+# El: element.                                                                                                                                 
+#                                                                                                                                                   
+# Valid Elements:                                                                                                                                   
+#  ELE_NONE                                                                                                                                          
+#  ELE_NEUTRAL                                                                                                                                       
+#  ELE_WATER                                                                                                                                         
+#  ELE_EARTH                                                                                                                                         
+#  ELE_FIRE                                                                                                                                          
+#  ELE_WIND                                                                                                                                          
+#  ELE_POISON                                                                                                                                        
+#  ELE_HOLY                                                                                                                                          
+#  ELE_DARK                                                                                                                                          
+#  ELE_GHOST                                                                                                                                         
+#  ELE_UNDEAD                                                                                                                                        
+#  ELE_ALL                                                                                                                                           
+###########################################################################                                                                         
+# Mode - Behaviour of the monster. Value is a boolean (True or False).                                                                              
+#  CanMove: Enables the mob to move/chase characters.                                                                                                
+#  Looter: The mob will loot up nearby items on the ground when it's on idle state.                                                                  
+#  Aggressive: normal aggressive mob, will look for a close-by player to attack.                                                                     
+#  Assist: When a nearby mob of the same class attacks, assist types will join them.                                                                 
+#  CastSensorIdle: Will go after characters who start casting on them if idle or walking (without a target).                                         
+#  NoRandomWalk: The mob will not randomly walk around while in the idle state.                                                                      
+#  NoCastSkill: The mob will be unable to cast skills.                                                                                               
+#  CanAttack: Enables the mob to attack/retaliate when you are within attack range.                                                                  
+#  Note that this only enables them to use normal attacks, skills are always allowed.                                                                
+#  CastSensorChase: Will go after characters who start casting on them if idle or chasing other players (they switch chase targets).                 
+#  ChangeChase: Allows chasing mobs to switch targets if another player happens to be within attack range (handy on ranged attackers, for example).  
+#  Angry: These mobs are "hyper-active".                                                                                                           
+#         Apart from chase/attack, they have the states follow/angry.                                                                                       
+#         Once hit, they stop using these states and use the normal ones.                                                                                   
+#         The new states are used to determine a different skill-set for their "before attacked" and "after attacked" states.                           
+#         Also, when "following", they automatically switch to whoever character is closest.                                                              
+#  ChangeTargetMelee: Enables a mob to switch targets when hit by a normal attack while attacking someone else.                                      
+#  ChangeTargetChase: Enables a mob to switch targets when hit by any attack while chasing another character.                                        
+#  TargetWeak: Allows aggressive monsters to only be aggressive against characters that are five levels below it's own level.                        
+#              For example, a monster of level 104 will not pick fights with a level 99.                                                                         
+#  RandomTarget: Picks a new random target in range on each attack / skill.                                                                          
+#  IgnoreMeleeDamage: The mob will take 1 HP damage from physical attacks.                                                                           
+#  IgnoreMagicDamage: The mob will take 1 HP damage from magic attacks.                                                                              
+#  IgnoreRangedDamage: The mob will take 1 HP damage from ranged attacks.                                                                            
+#  MVP: Flagged as MVP which makes mobs resistant to Coma. Also displays the                                                                         
+#  MVP sign and gives players MVP EXP or MVP items.                                                                                                  
+#  IgnoreMiscSkills: The mob will take 1 HP damage from "none" attack type.                                                                        
+#  KockbackImmune: The mob will be unable to be knocked back.                                                                                        
+#  TeleportBlock: Not implemented yet.                                                                                                               
+#  FixedItemDrop: The mob's drops are not affected by item drop modifiers.                                                                           
+#  Detector: Enables mob to detect and attack characters who are in hiding/cloak.                                                                    
+#  StatusImmune: Immune to being affected by statuses.                                                                                               
+#  SkillImmune: Immune to being affected by skills.                                                                                                  
+###########################################################################                                                                         
+# Speed - Walk speed of the monster. 1 = Fastest, 100 = Normal, 1000 = Slowest.                                                                     
+###########################################################################                                                                         
+# Motion - The monsters motion information.                                                                                                         
+# AttackDelay: Attack Delay of the monster, also known as ASPD.                                                                                     
+#              Low value means faster,attack speed, but don't make it too low or it will lag when a player got mobbed by several of these mobs.                  
+# AttackMotion: Attack animation motion. Lower values mean mob attacks will be, displayed at higher fps making it quicker.                          
+# DamageMotion: Stun animation similar to aMotion but used to display the "I am,hit" animation.                                                   
+# Coincidentally, this same value is used to determine how, long it is before the monster/player can move again. Endure is dMotion = 0.             
+###########################################################################                                                                         
+# Drops - The monsters drop information.                                                                                                            
+#  MVP - List of drops to MVP system.                                                                                                            
+#   ItemId: Id of item.                                                                                                                               
+#   Chance: The rate of the MVP item being dropped, n/10000.                                                                                          
+#                                                                                                                                                   
+#  Normal - List of normal drops on the floor.                                                                                                       
+#   ItemId: Id of item.                                                                                                                               
+#   Chance: The rate of the item being dropped, n/10000.                                                                                              
+#                                                                                                                                                   
+#  Card - Unique card drop id and chance.                                                                                                            
+#   ItemId: Id of card.                                                                                                                               
+#   Chance: The rate of the card being dropped, n/10000.                                                                                              
+###########################################################################  
+
+Header:
+  Type: MOB_DB
+  Version: 1
