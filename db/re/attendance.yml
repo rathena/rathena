@@ -34,8 +34,8 @@ Header:
   Version: 1
 
 Body:
-  - Start: 20200427
-    End: 20200524
+  - Start: 20200601
+    End: 20200630
     Rewards:
       - Day: 1
         ItemId: 22979
@@ -44,55 +44,55 @@ Body:
         ItemId: 6316
         Amount: 2
       - Day: 3
-        ItemId: 23047
-        Amount: 5
+        ItemId: 671
+        Amount: 15
       - Day: 4
-        ItemId: 13891
+        ItemId: 14533
         Amount: 1
       - Day: 5
-        ItemId: 23038
-        Amount: 1
+        ItemId: 12264
+        Amount: 2
       - Day: 6
-        ItemId: 23043
-        Amount: 1
+        ItemId: 13534
+        Amount: 4
       - Day: 7
-        ItemId: 12516
-        Amount: 5
+        ItemId: 12103
+        Amount: 1
       - Day: 8
-        ItemId: 13892
-        Amount: 1
+        ItemId: 671
+        Amount: 30
       - Day: 9
-        ItemId: 23043
-        Amount: 1
-      - Day: 10
         ItemId: 23307
-        Amount: 5
-      - Day: 11
-        ItemId: 23012
         Amount: 3
+      - Day: 10
+        ItemId: 12883
+        Amount: 2
+      - Day: 11
+        ItemId: 607
+        Amount: 4
       - Day: 12
-        ItemId: 13893
-        Amount: 1
+        ItemId: 6316
+        Amount: 5
       - Day: 13
+        ItemId: 671
+        Amount: 50
+      - Day: 14
         ItemId: 14533
         Amount: 2
-      - Day: 14
-        ItemId: 12883
-        Amount: 3
       - Day: 15
-        ItemId: 23048
-        Amount: 5
-      - Day: 16
-        ItemId: 13894
-        Amount: 1
-      - Day: 17
         ItemId: 12264
-        Amount: 5
+        Amount: 3
+      - Day: 16
+        ItemId: 13810
+        Amount: 2
+      - Day: 17
+        ItemId: 12103
+        Amount: 2
       - Day: 18
-        ItemId: 25464
-        Amount: 10
+        ItemId: 671
+        Amount: 75
       - Day: 19
-        ItemId: 6228
+        ItemId: 6232
         Amount: 1
       - Day: 20
         ItemId: 12246
