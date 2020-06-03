@@ -1022,21 +1022,59 @@ static int clif_setlevel(struct block_list* bl) {
 static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target target, struct block_list* tbl ){
 	nullpo_retv( bl );
 
-	struct map_session_data* sd;
+	struct map_session_data* sd = BL_CAST( BL_PC, bl );
 	struct status_change* sc = status_get_sc( bl );
 	struct view_data* vd = status_get_viewdata( bl );
-	struct packet_idle_unit p;
 	int g_id = status_get_guild_id( bl );
 
 #if PACKETVER < 20091103
-	// TODO:
-	if (!pc->db_checkid(vd->class)) {
-		clif->set_unit_idle2(bl,tsd,target);
+	if( !pcdb_checkid( vd->class_ ) ){
+		struct packet_idle_unit2 p;
+
+		p.PacketType = idle_unit2Type;
+#if PACKETVER >= 20071106
+		p.objecttype = clif_bl_type( bl, walking );
+#endif
+		p.GID = bl->id;
+		p.speed = status_get_speed( bl );
+		p.bodyState = ( sc ) ? sc->opt1 : 0;
+		p.healthState = ( sc ) ? sc->opt2 : 0;
+		p.effectState = ( sc ) ? sc->option : 0;
+		p.job = vd->class_;
+		p.head = vd->hair_style;
+		p.weapon = vd->weapon;
+		p.accessory = vd->head_bottom;
+		if( bl->type == BL_NPC && vd->class_ == JT_GUILD_FLAG ){
+			// The hell, why flags work like this?
+			p.shield = status_get_emblem_id( bl );
+			p.accessory2 = GetWord( g_id, 1 );
+			p.accessory3 = GetWord( g_id, 0 );
+		}else{
+			p.shield = vd->shield;
+			p.accessory2 = vd->head_top;
+			p.accessory3 = vd->head_mid;
+		}
+		p.headpalette = vd->hair_color;
+		p.bodypalette = vd->cloth_color;
+		p.headDir = ( sd )? sd->head_dir : 0;
+		p.GUID = g_id;
+		p.GEmblemVer = status_get_emblem_id( bl );
+		p.honor = ( sd ) ? sd->status.manner : 0;
+		p.virtue = ( sc ) ? sc->opt3 : 0;
+		p.isPKModeON = ( sd && sd->status.karma ) ? 1 : 0;
+		p.sex = vd->sex;
+		WBUFPOS( &p.PosDir[0], 0, bl->x, bl->y, unit_getdir( bl ) );
+		p.xSize = p.ySize = ( sd ) ? 5 : 0;
+		p.state = vd->dead_sit;
+		p.clevel = clif_setlevel( bl );
+
+		clif_send( &p, sizeof( p ), tbl, target );
+
 		return;
 	}
 #endif
 
-	sd = BL_CAST(BL_PC, bl);
+	struct packet_idle_unit p;
 
 	p.PacketType = idle_unitType;
 #if PACKETVER >= 20091103
@@ -1141,21 +1179,52 @@ static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target
 static void clif_spawn_unit( struct block_list *bl, enum send_target target ){
 	nullpo_retv( bl );
 
-	struct map_session_data* sd;
+	struct map_session_data* sd = BL_CAST( BL_PC, bl );
 	struct status_change* sc = status_get_sc( bl );
 	struct view_data* vd = status_get_viewdata( bl );
-	struct packet_spawn_unit p;
 	int g_id = status_get_guild_id( bl );
 
 #if PACKETVER < 20091103
-	// TODO:
 	if( !pcdb_checkid( vd->class_ ) ){
-		clif->spawn_unit2(bl,target);
+		struct packet_spawn_unit2 p;
+
+		p.PacketType = spawn_unit2Type;
+#if PACKETVER >= 20071106
+		p.objecttype = clif_bl_type( bl, false );
+#endif
+		p.GID = bl->id;
+		p.speed = status_get_speed( bl );
+		p.bodyState = ( sc ) ? sc->opt1 : 0;
+		p.healthState = ( sc ) ? sc->opt2 : 0;
+		p.effectState = ( sc ) ? sc->option : 0;
+		p.head = vd->hair_style;
+		p.weapon = vd->weapon;
+		p.accessory = vd->head_bottom;
+		p.job = vd->class_;
+		if( bl->type == BL_NPC && vd->class_ == JT_GUILD_FLAG ){
+			// The hell, why flags work like this?
+			p.shield = status_get_emblem_id( bl );
+			p.accessory2 = GetWord( g_id, 1 );
+			p.accessory3 = GetWord( g_id, 0 );
+		}else{
+			p.shield = vd->shield;
+			p.accessory2 = vd->head_top;
+			p.accessory3 = vd->head_mid;
+		}
+		p.headpalette = vd->hair_color;
+		p.bodypalette = vd->cloth_color;
+		p.headDir = ( sd ) ? sd->head_dir : 0;
+		p.isPKModeON = ( sd && sd->status.karma ) ? 1 : 0;
+		p.sex = vd->sex;
+		WBUFPOS( &p.PosDir[0], 0, bl->x, bl->y, unit_getdir( bl ) );
+		p.xSize = p.ySize = ( sd ) ? 5 : 0;
+
+		clif_send( &p, sizeof( p ), bl, target );
 		return;
 	}
 #endif
 
-	sd = BL_CAST(BL_PC, bl);
+	struct packet_spawn_unit p;
 
 	p.PacketType = spawn_unitType;
 #if PACKETVER >= 20091103
@@ -1564,6 +1633,7 @@ int clif_spawn( struct block_list *bl, bool walking ){
 /// 022e <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.W <max hp>.W <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W	(ZC_PROPERTY_HOMUN)
 /// 09f7 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN_2)
 void clif_hominfo( struct map_session_data *sd, struct homun_data *hd, int flag ){
+#if PACKETVER_MAIN_NUM >= 20101005 || PACKETVER_RE_NUM >= 20080827 || defined(PACKETVER_ZERO)
 	nullpo_retv( sd );
 	nullpo_retv( hd );
 
@@ -1642,6 +1712,7 @@ void clif_hominfo( struct map_session_data *sd, struct homun_data *hd, int flag 
 	p.range = status_get_range( &hd->bl );
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+#endif
 }
 
 
