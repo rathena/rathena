@@ -8860,7 +8860,7 @@ ACMD_FUNC(itemlist)
 		}
 
 		if( it->refine )
-			StringBuf_Printf(&buf, "%d %s %+d (%s, id: %d)", it->amount, itd->ename.c_str(), it->refine, itd->name, it->nameid);
+			StringBuf_Printf(&buf, "%d %s %+d (%s, id: %d)", it->amount, itd->ename.c_str(), it->refine, itd->name.c_str(), it->nameid);
 		else
 			StringBuf_Printf(&buf, "%d %s (%s, id: %d)", it->amount, itd->ename.c_str(), itd->name.c_str(), it->nameid);
 
