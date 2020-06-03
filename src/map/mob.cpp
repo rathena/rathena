@@ -4114,69 +4114,172 @@ static void item_dropratio_adjust(unsigned short nameid, int mob_id, int *rate_a
 	}
 }
 
-/*==========================================
- * processes one mobdb entry
- *------------------------------------------*/
-static bool mob_parse_dbrow(char** str)
-{
-	struct mob_db *db, entry;
-	struct status_data *status;
-	int mob_id, i;
+const std::string MobDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/mob_db.yml";
+}
+
+/**
+ * Reads and parses an entry from the mob_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 MobDatabase::parseBodyNode(const YAML::Node& node) {
+	struct mob_db* db, entry;
+	struct status_data* status;
 	double exp, maxhp;
 	struct mob_data data;
 
-	mob_id = atoi(str[0]);
+	uint32 mob_id;
+
+	if (!this->asUInt32(node, "Id", mob_id))
+		return 0;
 
 	if (!((mob_id > MIN_MOB_DB && mob_id < MAX_MOB_DB) || (mob_id > MIN_MOB_DB2 && mob_id < MAX_MOB_DB2))) {
-		ShowError("mob_parse_dbrow: Invalid monster ID %d, must be in range %d-%d or %d-%d.\n", mob_id, MIN_MOB_DB, MAX_MOB_DB, MIN_MOB_DB2, MAX_MOB_DB2);
-		return false;
+		this->invalidWarning(node, "Invalid monster ID %d, must be in range %d-%d or %d-%d.\n", mob_id, MIN_MOB_DB, MAX_MOB_DB, MIN_MOB_DB2, MAX_MOB_DB2);
+		return 0;
 	}
 
 	memset(&entry, 0, sizeof(entry));
 
 	status = &entry.status;
-
 	entry.vd.class_ = mob_id;
-	safestrncpy(entry.sprite, str[1], sizeof(entry.sprite));
-	safestrncpy(entry.jname, str[2], sizeof(entry.jname));
-	safestrncpy(entry.name, str[3], sizeof(entry.name));
-	entry.lv = atoi(str[4]);
-	entry.lv = cap_value(entry.lv, 1, USHRT_MAX);
-	status->max_hp = atoi(str[5]);
-	status->max_sp = atoi(str[6]);
 
-	exp = (double)atoi(str[7]) * (double)battle_config.base_exp_rate / 100.;
-	entry.base_exp = (unsigned int)cap_value(exp, 0, UINT_MAX);
+	if (this->nodeExists(node, "SpriteName"))
+	{
+		std::string sprite_name;
 
-	exp = (double)atoi(str[8]) * (double)battle_config.job_exp_rate / 100.;
-	entry.job_exp = (unsigned int)cap_value(exp, 0, UINT_MAX);
+		if (!this->asString(node, "SpriteName", sprite_name))
+			return 0;
 
-	status->rhw.range = atoi(str[9]);
-#ifdef RENEWAL
-	status->rhw.atk = atoi(str[10]); // BaseATK
-	status->rhw.matk = atoi(str[11]); // BaseMATK
-#else
-	status->rhw.atk = atoi(str[10]); // MinATK
-	status->rhw.atk2 = atoi(str[11]); // MaxATK
-#endif
-	status->def = atoi(str[12]);
-	status->mdef = atoi(str[13]);
-	status->str = atoi(str[14]);
-	status->agi = atoi(str[15]);
-	status->vit = atoi(str[16]);
-	status->int_ = atoi(str[17]);
-	status->dex = atoi(str[18]);
-	status->luk = atoi(str[19]);
-	//All status should be min 1 to prevent divisions by zero from some skills. [Skotlex]
-	if (status->str < 1) status->str = 1;
-	if (status->agi < 1) status->agi = 1;
-	if (status->vit < 1) status->vit = 1;
-	if (status->int_< 1) status->int_= 1;
-	if (status->dex < 1) status->dex = 1;
-	if (status->luk < 1) status->luk = 1;
+		sprite_name.copy(entry.sprite, NAME_LENGTH);
+	}
 
-	entry.range2 = atoi(str[20]);
-	entry.range3 = atoi(str[21]);
+	if (this->nodeExists(node, "KroName"))
+	{
+		std::string kro_name;
+
+		if (!this->asString(node, "KroName", kro_name))
+			return 0;
+
+		kro_name.copy(entry.jname, NAME_LENGTH);
+	}
+
+	if (this->nodeExists(node, "IroName"))
+	{
+		std::string iro_name;
+
+		if (!this->asString(node, "IroName", iro_name))
+			return 0;
+
+		iro_name.copy(entry.name, NAME_LENGTH);
+	}
+
+	if (this->nodeExists(node, "Level"))
+	{
+		uint16 level;
+
+		if (!this->asUInt16(node, "Level", level))
+			return 0;
+
+		entry.lv = cap_value(level, 1, USHRT_MAX);;
+	}
+
+	if (this->nodeExists(node, "Hp"))
+	{
+		uint32 hp;
+
+		if (!this->asUInt32(node, "Hp", hp))
+			return 0;
+
+		status->hp = cap_value(hp, 1, UINT_MAX);
+		status->max_hp = cap_value(hp, 1, UINT_MAX);
+	}
+
+	if (this->nodeExists(node, "Sp"))
+	{
+		uint32 sp;
+
+		if (!this->asUInt32(node, "Sp", sp))
+			return 0;
+
+		status->sp = cap_value(sp, 1, UINT_MAX);
+		status->max_sp = cap_value(sp, 1, UINT_MAX);
+	}
+
+	if (this->nodeExists(node, "Exp"))
+	{
+		const YAML::Node& expNode = node["Exp"];
+
+		if (this->nodeExists(expNode, "Base"))
+		{
+			double base_exp;
+
+			if (!this->asDouble(expNode, "Base", base_exp))
+				return 0;
+
+			base_exp = (double)base_exp * (double)battle_config.base_exp_rate / 100.;
+
+			entry.base_exp = (unsigned int)cap_value(base_exp, 0, UINT_MAX);
+		}
+
+		if (this->nodeExists(expNode, "Job"))
+		{
+			double job_exp;
+
+			if (!this->asDouble(expNode, "Job", job_exp))
+				return 0;
+
+			job_exp = (double)job_exp * (double)battle_config.job_exp_rate / 100.;
+			entry.job_exp = (unsigned int)cap_value(job_exp, 0, UINT_MAX);
+		}
+
+		if (this->nodeExists(expNode, "MVP"))
+		{
+			double mvp_exp;
+
+			if (!this->asDouble(expNode, "MVP", mvp_exp))
+				return 0;
+
+			mvp_exp = (double)mvp_exp * (double)battle_config.mvp_exp_rate / 100.;
+			entry.mexp = (unsigned int)cap_value(mvp_exp, 0, UINT_MAX);
+		}
+	}
+
+	if (this->nodeExists(node, "Range"))
+	{
+		const YAML::Node& rangeNode = node["Range"];
+
+		if (this->nodeExists(rangeNode, "Attack"))
+		{
+			uint16 attack_range;
+
+			if (!this->asUInt16(rangeNode, "Attack", attack_range))
+				return 0;
+
+			status->rhw.range = attack_range;
+		}
+
+		if (this->nodeExists(rangeNode, "Spell"))
+		{
+			uint32 spell_range;
+
+			if (!this->asUInt32(rangeNode, "Spell", spell_range))
+				return 0;
+
+			entry.range2 = spell_range;
+		}
+
+		if (this->nodeExists(rangeNode, "Sight"))
+		{
+			uint32 sight_range;
+
+			if (!this->asUInt32(rangeNode, "Sight", sight_range))
+				return 0;
+
+			entry.range3 = sight_range;
+		}
+	}
+
 	if (battle_config.view_range_rate != 100) {
 		entry.range2 = entry.range2 * battle_config.view_range_rate / 100;
 		if (entry.range2 < 1)
@@ -4187,46 +4290,506 @@ static bool mob_parse_dbrow(char** str)
 		if (entry.range3 < entry.range2)
 			entry.range3 = entry.range2;
 	}
+
 	//Tests showed that chase range is effectively 2 cells larger than expected [Playtester]
 	entry.range3 += 2;
 
-	status->size = atoi(str[22]);
-	status->race = atoi(str[23]);
+	if (this->nodeExists(node, "Atk"))
+	{
+		const YAML::Node& atkNode = node["Atk"];
 
-	i = atoi(str[24]); //Element
-	status->def_ele = i%20;
-	status->ele_lv = (unsigned char)floor(i/20.);
-	if (!CHK_ELEMENT(status->def_ele)) {
-		ShowError("mob_parse_dbrow: Invalid element type %d for monster ID %d (max=%d).\n", status->def_ele, mob_id, ELE_ALL-1);
-		return false;
-	}
-	if (!CHK_ELEMENT_LEVEL(status->ele_lv)) {
-		ShowError("mob_parse_dbrow: Invalid element level %d for monster ID %d, must be in range 1-%d.\n", status->ele_lv, mob_id, MAX_ELE_LEVEL);
-		return false;
+#ifdef RENEWAL
+		if (this->nodeExists(atkNode, "Physycal"))
+		{
+			uint32 phyatk;
+
+			if (!this->asUInt32(atkNode, "Physycal", phyatk))
+				return 0;
+
+			status->rhw.atk = phyatk;
+		}
+
+		if (this->nodeExists(atkNode, "Magic"))
+		{
+			uint32 matk;
+
+			if (!this->asUInt32(atkNode, "Magic", matk))
+				return 0;
+
+			status->rhw.matk = matk;
+		}
+#else
+		if (this->nodeExists(atkNode, "Min"))
+		{
+			uint32 min;
+
+			if (!this->asUInt32(atkNode, "Min", min))
+				return 0;
+
+			status->rhw.atk = min;
+		}
+
+		if (this->nodeExists(atkNode, "Max"))
+		{
+			uint32 max;
+
+			if (!this->asUInt32(atkNode, "Max", max))
+				return 0;
+
+			status->rhw.atk2 = matk;
+		}
+#endif
 	}
 
-	status->mode = static_cast<enum e_mode>(strtol(str[25], NULL, 0));
+	if (this->nodeExists(node, "Def"))
+	{
+		const YAML::Node& defNode = node["Def"];
+
+		if (this->nodeExists(defNode, "Physycal"))
+		{
+			uint32 phydef;
+
+			if (!this->asUInt32(defNode, "Physycal", phydef))
+				return 0;
+
+			status->def = phydef;
+		}
+
+		if (this->nodeExists(defNode, "Magic"))
+		{
+			uint32 mdef;
+
+			if (!this->asUInt32(defNode, "Magic", mdef))
+				return 0;
+
+			status->mdef = mdef;
+		}
+	}
+
+	if (this->nodeExists(node, "Stats"))
+	{
+		const YAML::Node& statsNode = node["Stats"];
+
+		if (this->nodeExists(statsNode, "Str"))
+		{
+			uint32 str;
+
+			if (!this->asUInt32(statsNode, "Str", str))
+				return 0;
+
+			status->str = str;
+		}
+
+		if (this->nodeExists(statsNode, "Agi"))
+		{
+			uint32 agi;
+
+			if (!this->asUInt32(statsNode, "Agi", agi))
+				return 0;
+
+			status->agi = agi;
+		}
+
+		if (this->nodeExists(statsNode, "Vit"))
+		{
+			uint32 vit;
+
+			if (!this->asUInt32(statsNode, "Vit", vit))
+				return 0;
+
+			status->vit = vit;
+		}
+
+		if (this->nodeExists(statsNode, "Int"))
+		{
+			uint32 int_;
+
+			if (!this->asUInt32(statsNode, "Int", int_))
+				return 0;
+
+			status->int_ = int_;
+		}
+
+		if (this->nodeExists(statsNode, "Dex"))
+		{
+			uint32 dex;
+
+			if (!this->asUInt32(statsNode, "Dex", dex))
+				return 0;
+
+			status->dex = dex;
+		}
+
+		if (this->nodeExists(statsNode, "Luk"))
+		{
+			uint32 luk;
+
+			if (!this->asUInt32(statsNode, "Luk", luk))
+				return 0;
+
+			status->luk = luk;
+		}
+	}
+
+	//All status should be min 1 to prevent divisions by zero from some skills. [Skotlex]
+	if (status->str < 1) status->str = 1;
+	if (status->agi < 1) status->agi = 1;
+	if (status->vit < 1) status->vit = 1;
+	if (status->int_ < 1) status->int_ = 1;
+	if (status->dex < 1) status->dex = 1;
+	if (status->luk < 1) status->luk = 1;
+
+	if (this->nodeExists(node, "Size"))
+	{
+		std::string size_;
+
+		if (!this->asString(node, "Size", size_))
+			return 0;
+
+		int64 constant;
+
+		if (!script_get_constant(size_.c_str(), &constant)) {
+			this->invalidWarning(node, "MobDatabase: Invalid size %s for mob id %d, skipping.\n", size_.c_str(), mob_id);
+			return 0;
+		}
+
+		status->size = (enum size)constant;
+	}
+
+	if (this->nodeExists(node, "Race"))
+	{
+		std::string race_;
+
+		if (!this->asString(node, "Race", race_))
+			return 0;
+
+		int64 constant;
+
+		if (!script_get_constant(race_.c_str(), &constant)) {
+			this->invalidWarning(node, "MobDatabase: Invalid race %s for mob id %d, skipping.\n", race_.c_str(), mob_id);
+			return 0;
+		}
+
+		status->race = (e_race)constant;
+	}
+
+	if (this->nodeExists(node, "Element"))
+	{
+		const YAML::Node& elementNode = node["Element"];
+
+		if (this->nodeExists(elementNode, "Level"))
+		{
+			uint16 level;
+
+			if (!this->asUInt16(elementNode, "Level", level))
+				return 0;
+
+			status->ele_lv = level;
+		}
+		else
+			status->ele_lv = 1;
+
+		if (this->nodeExists(elementNode, "Type"))
+		{
+			std::string element;
+
+			if (!this->asString(elementNode, "Type", element))
+				return 0;
+
+			int64 constant;
+
+			if (!script_get_constant(element.c_str(), &constant)) {
+				this->invalidWarning(elementNode, "MobDatabase: Invalid element %s for mob id %d, skipping.\n", element.c_str(), mob_id);
+				return 0;
+			}
+
+			status->def_ele = (e_element)constant;
+		}
+	}
+
+	if (this->nodeExists(node, "Mode"))
+	{
+		const YAML::Node& modeNode = node["Mode"];
+
+		bool mode;
+
+		if (this->nodeExists(modeNode, "CanMove"))
+		{
+			if (this->asBool(modeNode, "CanMove", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_CANMOVE) : static_cast<enum e_mode>(status->mode & ~MD_CANMOVE);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_CANMOVE);
+
+		if (this->nodeExists(modeNode, "Looter"))
+		{
+			if (this->asBool(modeNode, "Looter", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_LOOTER) : static_cast<enum e_mode>(status->mode & ~MD_LOOTER);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_LOOTER);
+
+		if (this->nodeExists(modeNode, "Aggressive"))
+		{
+			if (this->asBool(modeNode, "Aggressive", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_AGGRESSIVE) : static_cast<enum e_mode>(status->mode & ~MD_AGGRESSIVE);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_AGGRESSIVE);
+
+		if (this->nodeExists(modeNode, "Aggressive"))
+		{
+			if (this->asBool(modeNode, "Aggressive", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_AGGRESSIVE) : static_cast<enum e_mode>(status->mode & ~MD_AGGRESSIVE);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_AGGRESSIVE);
+
+		if (this->nodeExists(modeNode, "Assist"))
+		{
+			if (this->asBool(modeNode, "Assist", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_ASSIST) : static_cast<enum e_mode>(status->mode & ~MD_ASSIST);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_ASSIST);
+
+		if (this->nodeExists(modeNode, "CastSensorIdle"))
+		{
+			if (this->asBool(modeNode, "CastSensorIdle", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_CASTSENSOR_IDLE) : static_cast<enum e_mode>(status->mode & ~MD_CASTSENSOR_IDLE);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_CASTSENSOR_IDLE);
+
+		if (this->nodeExists(modeNode, "NoRandomWalk"))
+		{
+			if (this->asBool(modeNode, "NoRandomWalk", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_NORANDOM_WALK) : static_cast<enum e_mode>(status->mode & ~MD_NORANDOM_WALK);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_NORANDOM_WALK);
+
+		if (this->nodeExists(modeNode, "NoCastSkill"))
+		{
+			if (this->asBool(modeNode, "NoCastSkill", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_NOCAST_SKILL) : static_cast<enum e_mode>(status->mode & ~MD_NOCAST_SKILL);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_NOCAST_SKILL);
+
+		if (this->nodeExists(modeNode, "CanAttack"))
+		{
+			if (this->asBool(modeNode, "CanAttack", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_CANATTACK) : static_cast<enum e_mode>(status->mode & ~MD_CANATTACK);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_CANATTACK);
+
+		if (this->nodeExists(modeNode, "CastSensorChase"))
+		{
+			if (this->asBool(modeNode, "CastSensorChase", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_CASTSENSOR_CHASE) : static_cast<enum e_mode>(status->mode & ~MD_CASTSENSOR_CHASE);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_CASTSENSOR_CHASE);
+
+		if (this->nodeExists(modeNode, "ChangeChase"))
+		{
+			if (this->asBool(modeNode, "ChangeChase", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_CHANGECHASE) : static_cast<enum e_mode>(status->mode & ~MD_CHANGECHASE);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_CHANGECHASE);
+
+		if (this->nodeExists(modeNode, "Angry"))
+		{
+			if (this->asBool(modeNode, "Angry", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_ANGRY) : static_cast<enum e_mode>(status->mode & ~MD_ANGRY);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_ANGRY);
+
+		if (this->nodeExists(modeNode, "ChangeTargetMelee"))
+		{
+			if (this->asBool(modeNode, "ChangeTargetMelee", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_CHANGETARGET_MELEE) : static_cast<enum e_mode>(status->mode & ~MD_CHANGETARGET_MELEE);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_CHANGETARGET_MELEE);
+
+		if (this->nodeExists(modeNode, "ChangeTargetChase"))
+		{
+			if (this->asBool(modeNode, "ChangeTargetChase", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_CHANGETARGET_CHASE) : static_cast<enum e_mode>(status->mode & ~MD_CHANGETARGET_CHASE);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_CHANGETARGET_CHASE);
+
+		if (this->nodeExists(modeNode, "TargetWeak"))
+		{
+			if (this->asBool(modeNode, "TargetWeak", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_TARGETWEAK) : static_cast<enum e_mode>(status->mode & ~MD_TARGETWEAK);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_TARGETWEAK);
+
+		if (this->nodeExists(modeNode, "RandomTarget"))
+		{
+			if (this->asBool(modeNode, "RandomTarget", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_RANDOMTARGET) : static_cast<enum e_mode>(status->mode & ~MD_RANDOMTARGET);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_RANDOMTARGET);
+
+		if (this->nodeExists(modeNode, "IgnoreMeleeDamage"))
+		{
+			if (this->asBool(modeNode, "IgnoreMeleeDamage", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_IGNOREMELEE) : static_cast<enum e_mode>(status->mode & ~MD_IGNOREMELEE);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_IGNOREMELEE);
+
+		if (this->nodeExists(modeNode, "IgnoreMagicDamage"))
+		{
+			if (this->asBool(modeNode, "IgnoreMagicDamage", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_IGNOREMAGIC) : static_cast<enum e_mode>(status->mode & ~MD_IGNOREMAGIC);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_IGNOREMAGIC);
+
+		if (this->nodeExists(modeNode, "IgnoreRangedDamage"))
+		{
+			if (this->asBool(modeNode, "IgnoreRangedDamage", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_IGNORERANGED) : static_cast<enum e_mode>(status->mode & ~MD_IGNORERANGED);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_IGNORERANGED);
+
+		if (this->nodeExists(modeNode, "MVP"))
+		{
+			if (this->asBool(modeNode, "MVP", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_MVP) : static_cast<enum e_mode>(status->mode & ~MD_MVP);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_MVP);
+
+		if (this->nodeExists(modeNode, "IgnoreMiscSkills"))
+		{
+			if (this->asBool(modeNode, "IgnoreMiscSkills", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_IGNOREMISC) : static_cast<enum e_mode>(status->mode & ~MD_IGNOREMISC);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_IGNOREMISC);
+
+		if (this->nodeExists(modeNode, "KockbackImmune"))
+		{
+			if (this->asBool(modeNode, "KockbackImmune", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_KNOCKBACK_IMMUNE) : static_cast<enum e_mode>(status->mode & ~MD_KNOCKBACK_IMMUNE);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_KNOCKBACK_IMMUNE);
+
+		if (this->nodeExists(modeNode, "TeleportBlock"))
+		{
+			if (this->asBool(modeNode, "TeleportBlock", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_TELEPORT_BLOCK) : static_cast<enum e_mode>(status->mode & ~MD_TELEPORT_BLOCK);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_TELEPORT_BLOCK);
+
+		if (this->nodeExists(modeNode, "FixedItemDrop"))
+		{
+			if (this->asBool(modeNode, "FixedItemDrop", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_FIXED_ITEMDROP) : static_cast<enum e_mode>(status->mode & ~MD_FIXED_ITEMDROP);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_FIXED_ITEMDROP);
+
+		if (this->nodeExists(modeNode, "Detector"))
+		{
+			if (this->asBool(modeNode, "Detector", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_DETECTOR) : static_cast<enum e_mode>(status->mode & ~MD_DETECTOR);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_DETECTOR);
+
+		if (this->nodeExists(modeNode, "StatusImmune"))
+		{
+			if (this->asBool(modeNode, "StatusImmune", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_STATUS_IMMUNE) : static_cast<enum e_mode>(status->mode & ~MD_STATUS_IMMUNE);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_STATUS_IMMUNE);
+
+		if (this->nodeExists(modeNode, "SkillImmune"))
+		{
+			if (this->asBool(modeNode, "SkillImmune", mode))
+				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_SKILL_IMMUNE) : static_cast<enum e_mode>(status->mode & ~MD_SKILL_IMMUNE);
+		}
+		else
+			status->mode = static_cast<enum e_mode>(status->mode & ~MD_SKILL_IMMUNE);
+	}
+
 	if (!battle_config.monster_active_enable)
-		status->mode = static_cast<enum e_mode>(status->mode&(~MD_AGGRESSIVE));
+		status->mode = static_cast<enum e_mode>(status->mode & (~MD_AGGRESSIVE));
 
-	if (status_has_mode(status,MD_STATUS_IMMUNE|MD_KNOCKBACK_IMMUNE|MD_DETECTOR))
+	if (status_has_mode(status, MD_STATUS_IMMUNE | MD_KNOCKBACK_IMMUNE | MD_DETECTOR))
 		status->class_ = CLASS_BOSS;
 	else // Store as Normal and overwrite in mob_race2_db for special Class
 		status->class_ = CLASS_NORMAL;
 
-	status->speed = atoi(str[26]);
+	if (this->nodeExists(node, "Speed"))
+	{
+		uint16 speed;
+
+		if (!this->asUInt16(node, "Speed", speed))
+			return 0;
+
+		status->speed = speed;
+	}
+
 	status->aspd_rate = 1000;
-	i = atoi(str[27]);
-	status->adelay = cap_value(i, battle_config.monster_max_aspd*2, 4000);
-	i = atoi(str[28]);
-	status->amotion = cap_value(i, battle_config.monster_max_aspd, 2000);
-	//If the attack animation is longer than the delay, the client crops the attack animation!
-	//On aegis there is no real visible effect of having a recharge-time less than amotion anyway.
-	if (status->adelay < status->amotion)
-		status->adelay = status->amotion;
-	status->dmotion = atoi(str[29]);
-	if(battle_config.monster_damage_delay_rate != 100)
-		status->dmotion = status->dmotion * battle_config.monster_damage_delay_rate / 100;
+
+	if (this->nodeExists(node, "Motion"))
+	{
+		const YAML::Node& motionNode = node["Motion"];
+
+		if (this->nodeExists(motionNode, "AttackDelay"))
+		{
+			uint16 aDelay;
+
+			if (!this->asUInt16(motionNode, "AttackDelay", aDelay))
+				return 0;
+
+			status->adelay = cap_value(aDelay, battle_config.monster_max_aspd * 2, 4000);
+		}
+
+		if (this->nodeExists(motionNode, "AttackMotion"))
+		{
+			uint16 aMotion;
+
+			if (!this->asUInt16(motionNode, "AttackMotion", aMotion))
+				return 0;
+
+			status->amotion = cap_value(aMotion, battle_config.monster_max_aspd, 2000);
+		}
+
+		//If the attack animation is longer than the delay, the client crops the attack animation!
+		//On aegis there is no real visible effect of having a recharge-time less than amotion anyway.
+		if (status->adelay < status->amotion)
+			status->adelay = status->amotion;
+
+		if (this->nodeExists(motionNode, "DamageMotion"))
+		{
+			uint16 dMotion;
+
+			if (!this->asUInt16(motionNode, "DamageMotion", dMotion))
+				return 0;
+
+			if (battle_config.monster_damage_delay_rate != 100)
+				status->dmotion = dMotion * battle_config.monster_damage_delay_rate / 100;
+		}
+	}
 
 	// Fill in remaining status data by using a dummy monster.
 	data.bl.type = BL_MOB;
@@ -4234,140 +4797,155 @@ static bool mob_parse_dbrow(char** str)
 	memcpy(&data.status, status, sizeof(struct status_data));
 	status_calc_misc(&data.bl, status, entry.lv);
 
-	// MVP EXP Bonus: MEXP
-	// Some new MVP's MEXP multipled by high exp-rate cause overflow. [LuzZza]
-	exp = (double)atoi(str[30]) * (double)battle_config.mvp_exp_rate / 100.;
-	entry.mexp = (unsigned int)cap_value(exp, 0, UINT_MAX);
-
 	//Now that we know if it is an mvp or not, apply battle_config modifiers [Skotlex]
 	maxhp = (double)status->max_hp;
+
 	if (entry.mexp > 0) { //Mvp
 		if (battle_config.mvp_hp_rate != 100)
 			maxhp = maxhp * (double)battle_config.mvp_hp_rate / 100.;
-	} else //Normal mob
+	}
+	else //Normal mob
 		if (battle_config.monster_hp_rate != 100)
 			maxhp = maxhp * (double)battle_config.monster_hp_rate / 100.;
 
 	status->max_hp = (unsigned int)cap_value(maxhp, 1, UINT_MAX);
-	if(status->max_sp < 1) status->max_sp = 1;
+	if (status->max_sp < 1) status->max_sp = 1;
 
-	//Since mobs always respawn with full life...
-	status->hp = status->max_hp;
-	status->sp = status->max_sp;
+	if (this->nodeExists(node, "Drops"))
+	{
+		const YAML::Node& dropsNode = node["Drops"];
 
-	// MVP Drops: MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per
-	for(i = 0; i < MAX_MVP_DROP; i++) {
-		entry.mvpitem[i].nameid = atoi(str[31+i*2]);
+		if (this->nodeExists(dropsNode, "MVP") && entry.mexp > 0)
+		{
+			const YAML::Node& dropsMVPNode = dropsNode["MVP"];
 
-		if( entry.mvpitem[i].nameid ){
-			if( itemdb_search(entry.mvpitem[i].nameid) ){
-				entry.mvpitem[i].p = atoi(str[32+i*2]);
-				continue;
-			}else{
-				ShowWarning( "Monster \"%s\"(id: %d) is dropping an unknown item \"%s\"(MVP-Drop %d)\n", entry.name, mob_id, str[31+i*2], ( i / 2 ) + 1 );
+			int nodeCount = 0;
+
+			for (const YAML::Node& mvp : dropsMVPNode)
+			{
+				uint32 item_id = 0;
+				uint32 chance = 0;
+
+				if (this->nodeExists(mvp, "ItemID"))
+				{
+					if (!this->asUInt32(mvp, "ItemID", item_id))
+						continue;
+
+					if (!itemdb_exists(item_id)) {
+						this->invalidWarning(mvp, "MobDatabase: Unknown item with ID %hu, skipping...\n", item_id);
+						continue;
+					}
+
+					if (this->nodeExists(mvp, "Chance"))
+					{
+						if (!this->asUInt32(mvp, "Chance", chance))
+							continue;
+					}
+				}
+
+				if (nodeCount > MAX_MVP_DROP)
+				{
+					this->invalidWarning(mvp, "MobDatabase: Max MVP drop for mob id %d reached (MAX %d), skipping.\n", mob_id, MAX_MVP_DROP);
+					continue;
+				}
+
+				entry.mvpitem[nodeCount].nameid = item_id;
+				entry.mvpitem[nodeCount].p = chance;
+
+				nodeCount++;
 			}
 		}
 
-		// Delete the item
-		entry.mvpitem[i].nameid = 0;
-		entry.mvpitem[i].p = 0;
-	}
+		if (this->nodeExists(dropsNode, "Normal"))
+		{
+			const YAML::Node& dropsNormalNode = dropsNode["Normal"];
 
-	for(i = 0; i < MAX_MOB_DROP; i++) {
-		int k = 31 + MAX_MVP_DROP*2 + i*2;
+			int nodeCount = 0;
 
-		entry.dropitem[i].nameid = atoi(str[k]);
+			for (const YAML::Node& normal : dropsNormalNode)
+			{
+				uint32 item_id = 0;
+				uint32 chance = 0;
 
-		if( entry.dropitem[i].nameid ){
-			if( itemdb_search( entry.dropitem[i].nameid ) ){
-				entry.dropitem[i].p = atoi(str[k+1]);
-				continue;
-			}else{
-				ShowWarning( "Monster \"%s\"(id: %d) is dropping an unknown item \"%s\"(Drop %d)\n", entry.name, mob_id, str[k], ( i / 2 ) + 1 );
+				if (this->nodeExists(normal, "ItemID"))
+				{
+					if (!this->asUInt32(normal, "ItemID", item_id))
+						continue;
+
+					if (!itemdb_exists(item_id)) {
+						this->invalidWarning(normal, "MobDatabase: Unknown item with ID %hu, skipping...\n", item_id);
+						continue;
+					}
+
+					if (this->nodeExists(normal, "Chance"))
+					{
+						if (!this->asUInt32(normal, "Chance", chance))
+							continue;
+					}
+				}
+
+				if (nodeCount > (MAX_MOB_DROP - 1)) // We need to save one slot for card [Zell]
+				{
+					this->invalidWarning(normal, "MobDatabase: Max Normal drop for mob id %d reached (MAX %d), skipping.\n", mob_id, MAX_MOB_DROP - 1);
+					continue;
+				}
+
+				entry.dropitem[nodeCount].nameid = item_id;
+				entry.dropitem[nodeCount].p = chance;
+
+				nodeCount++;
 			}
 		}
 
-		// Delete the item
-		entry.dropitem[i].nameid = 0;
-		entry.dropitem[i].p = 0;
+		if (this->nodeExists(dropsNode, "Card"))
+		{
+			const YAML::Node& cardNode = dropsNode["Normal"];
+
+			if (this->nodeExists(cardNode, "ItemID"))
+			{
+				uint32 item_id = 0;
+				uint32 chance = 0;
+
+				if (!this->asUInt32(cardNode, "ItemID", item_id))
+					return 0;
+
+				if (!itemdb_exists(item_id)) {
+					this->invalidWarning(cardNode, "MobDatabase: Unknown card with ID %hu, skipping...\n", item_id);
+					return 0;
+				}
+
+				if (this->nodeExists(cardNode, "Chance"))
+				{
+					if (!this->asUInt32(cardNode, "Chance", chance))
+						return 0;
+				}
+
+				entry.dropitem[MAX_MOB_DROP].nameid = item_id;
+				entry.dropitem[MAX_MOB_DROP].p = chance;
+			}
+		}
 	}
 
 	db = mob_db(mob_id);
 
 	// Finally insert monster's data into the database.
-	if (db == NULL) {
-		try{
+	if (db == NULL)
+	{
+		try {
 			db = &mob_db_data[mob_id];
-		}catch( const std::bad_alloc& ){
-			ShowError( "Memory allocation for monster %hu failed.\n", mob_id );
-			return false;
+		}
+		catch (const std::bad_alloc&) {
+			ShowError("Memory allocation for monster %hu failed.\n", mob_id);
+			return 0;
 		}
 	}
 
 	memcpy(db, &entry, sizeof(struct mob_db));
-	return true;
+
+	return 1;
 }
 
-/*==========================================
- * mob_db.txt reading
- *------------------------------------------*/
-static bool mob_readdb_sub(char* fields[], int columns, int current)
-{
-	return mob_parse_dbrow(fields);
-}
-
-/*==========================================
- * mob_db table reading
- *------------------------------------------*/
-static int mob_read_sqldb(void)
-{
-	const char* mob_db_name[] = {
-		mob_table,
-		mob2_table };
-	int fi;
-
-	for( fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi ) {
-		uint32 lines = 0, count = 0;
-
-		// retrieve all rows from the mob database
-		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", mob_db_name[fi]) ) {
-			Sql_ShowDebug(mmysql_handle);
-			continue;
-		}
-
-		// process rows one by one
-		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
-			// wrap the result into a TXT-compatible format
-			char line[1024];
-			char* str[31+2*MAX_MVP_DROP+2*MAX_MOB_DROP];
-			char* p;
-			int i;
-
-			lines++;
-			for(i = 0, p = line; i < 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP; i++)
-			{
-				char* data;
-				size_t len;
-				Sql_GetData(mmysql_handle, i, &data, &len);
-
-				strcpy(p, data);
-				str[i] = p;
-				p+= len + 1;
-			}
-
-			if (!mob_parse_dbrow(str))
-				continue;
-
-			count++;
-		}
-
-		// free the query result
-		Sql_FreeResult(mmysql_handle);
-
-		ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_db_name[fi]);
-	}
-	return 0;
-}
+MobDatabase mob_database;
 
 const std::string MobAvailDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/" + DBIMPORT + "/mob_avail.yml";
@@ -5524,26 +6102,7 @@ static void mob_load(void)
 		"/" DBIMPORT,
 	};
 
-	// First we parse all the possible monsters to add additional data in the second loop
-	if( db_use_sqldbs )
-		mob_read_sqldb();
-	else {
-		for(int i = 0; i < ARRAYLENGTH(dbsubpath); i++){
-			int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
-			char* dbsubpath2 = (char*)aMalloc(n2+1);
-			bool silent = i > 0;
-
-			if( i == 0 ) {
-				safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
-			} else {
-				safesnprintf(dbsubpath2,n2,"%s%s",db_path,dbsubpath[i]);
-			}
-
-			sv_readdb(dbsubpath2, "mob_db.txt", ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub, silent);
-
-			aFree(dbsubpath2);
-		}
-	}
+	mob_database.load();
 
 	for(int i = 0; i < ARRAYLENGTH(dbsubpath); i++){	
 		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;

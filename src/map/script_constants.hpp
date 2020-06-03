@@ -473,6 +473,13 @@
 	export_constant(MF_PRIVATEAIRSHIP_DESTINATION);
 	export_constant(MF_SKILL_DURATION);
 
+	/* sizes */
+	export_constant(SZ_SMALL);
+	export_constant(SZ_MEDIUM);
+	export_constant(SZ_BIG);
+	export_constant(SZ_ALL);
+	export_constant(SZ_MAX);
+
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
 	export_constant(CELL_SHOOTABLE);

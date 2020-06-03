@@ -244,6 +244,17 @@ struct mob_data {
 	int tomb_nid;
 };
 
+class MobDatabase : public YamlDatabase {
+public:
+	MobDatabase() : YamlDatabase("MOB_DB", 1) {
+
+	}
+
+	void clear() { };
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+};
+
 class MobAvailDatabase : public YamlDatabase {
 public:
 	MobAvailDatabase() : YamlDatabase("MOB_AVAIL_DB", 1) {
