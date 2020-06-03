@@ -6270,7 +6270,10 @@ static int mob_reload_sub_npc( struct npc_data *nd, va_list args ){
 void mob_reload(void) {
 	do_final_mob(true);
 	mob_db_load(true);
-	map_foreachmob(mob_reload_sub);
+	// First only normal monsters
+	map_foreachmob(mob_reload_sub, 0);
+	// Then slaves only
+	map_foreachmob(mob_reload_sub, 1);
 	map_foreachnpc(mob_reload_sub_npc);
 }
 
