@@ -48,9 +48,14 @@
 #  Spell: Maximum Skill Range.                                                                                                                       
 #  Sight: Sight limit of the monster. If set to 1000 or beyond, the monster will follow you all over the map.                                        
 ###########################################################################                                                                         
-# Atk - Attack of the monster information.                                                                                                          
+# Atk - Attack of the monster information. 
+#  In Renewal:                                                                                                         
 #  Physical: Physical attack of the monster.                                                                                                               
-#  Magic: Magic attack of the monster.                                                                                                                   
+#  Magic: Magic attack of the monster.      
+#
+#  In Pre-Renewal:
+#  Min: Min atk of the monster.
+#  Max: Max atk of the monster.                                                                                                             
 ###########################################################################                                                                         
 # Def - Defense of the monster information.                                                                                                         
 #  Physical: Physical defense of the monster, reduce melee & ranged physical attack/skill.                                                           
