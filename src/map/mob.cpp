@@ -5647,7 +5647,7 @@ void mob_reload_itemmob_data(void) {
  * @return 0
  */
 static int mob_reload_sub( struct mob_data *md, va_list args ){
-	bool slaves_only = va_arg( args, bool );
+	bool slaves_only = va_arg( args, int ) != 0;
 
 	if( slaves_only ){
 		if( md->master_id == 0 ){
@@ -5710,9 +5710,9 @@ void mob_reload(void) {
 	do_final_mob(true);
 	mob_db_load(true);
 	// First only normal monsters
-	map_foreachmob( mob_reload_sub, false );
+	map_foreachmob( mob_reload_sub, 0 );
 	// Then slaves only
-	map_foreachmob( mob_reload_sub, true );
+	map_foreachmob( mob_reload_sub, 1 );
 	map_foreachnpc(mob_reload_sub_npc);
 }
 
