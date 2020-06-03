@@ -51,6 +51,91 @@ We want to add our own customized Housing Instance.
           - Map: 2@home
           - Map: 3@home
 
+### /db/import/mob_db.yml
+
+	- Id: 1001
+		SpriteName: SCORPION
+		KroName: Scorpion
+		IroName: Scorpion
+		Level: 16
+		Hp: 153
+		Sp: 1
+		Exp:
+		  Base: 108
+		  Job: 81
+		Range:
+		  Attack: 1
+		  Spell: 10
+		  Sight: 12
+		Atk:
+		  Physycal: 33
+		  Magic: 7
+		Def:
+		  Physical: 16
+		  Magic: 5
+		Stats:
+		  Str: 12
+		  Agi: 15
+		  Vit: 10
+		  Int: 5
+		  Dex: 19
+		  Luk: 5
+		Size: SZ_SMALL
+		Race: RC_INSECT
+		Element:
+		  Level: 1
+		  El: ELE_FIRE
+		Mode:
+		  CanMove: true
+		  Looter: false
+		  Aggressive: false
+		  Assist: false
+		  CastSensorIdle: true
+		  NoRandomWalk: false
+		  NoCastSkill: false
+		  CanAttack: true
+		  CastSensorChase: false
+		  ChangeChase: false
+		  Angry: false
+		  ChangeTargetMelee: true
+		  ChangeTargetChase: true
+		  TargetWeak: false
+		  RandomTarget: false
+		  IgnoreMeleeDamage: false
+		  IgnoreMagicDamage: false
+		  IgnoreRangedDamage: false
+		  MVP: false
+		  IgnoreMiscSkills: false
+		  KockbackImmune: false
+		  TeleportBlock: false
+		  FixedItemDrop: false
+		  Detector: true
+		  StatusImmune: false
+		  SkillImmune: false
+		Speed: 200
+		Motion:
+		  AttackDelay: 1564
+		  AttackMotion: 864
+		  DamageMotion: 576
+		Drops:
+		  Normal:
+		  - ItemID: 990
+		  Chance: 70
+		  - ItemID: 904
+		  Chance: 5500
+		  - ItemID: 757
+		  Chance: 57
+		  - ItemID: 943
+		  Chance: 210
+		  - ItemID: 7041
+		  Chance: 100
+		  - ItemID: 508
+		  Chance: 200
+		  - ItemID: 625
+		  Chance: 20
+		  Card:
+		  ItemID: 4068
+		  Chance: 1
 
 ### Mob Alias
 ---
