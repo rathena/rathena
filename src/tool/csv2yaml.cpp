@@ -358,7 +358,7 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (process("INSTANCE_DB", 1, root_paths, "instance_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("INSTANCE_DB", 1, root_paths, "instance_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 7, 7 + MAX_MAP_PER_INSTANCE, -1, &instance_readdb_sub, false);
 	})) {
 		return 0;
