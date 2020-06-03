@@ -961,7 +961,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Script", script))
 			return 0;
 
-		if (item->script) {
+		if (exists && item->script) {
 			script_free_code(item->script);
 			item->script = nullptr;
 		}
@@ -978,7 +978,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "EquipScript", script))
 			return 0;
 
-		if (item->equip_script) {
+		if (exists && item->equip_script) {
 			script_free_code(item->equip_script);
 			item->equip_script = nullptr;
 		}
@@ -995,7 +995,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "UnEquipScript", script))
 			return 0;
 
-		if (item->unequip_script) {
+		if (exists && item->unequip_script) {
 			script_free_code(item->unequip_script);
 			item->unequip_script = nullptr;
 		}
