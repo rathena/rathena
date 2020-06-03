@@ -85,7 +85,7 @@ enum mail_type {
 };
 #endif
 
-enum inventory_type {
+enum e_inventory_type{
 	INVTYPE_INVENTORY = 0,
 	INVTYPE_CART = 1,
 	INVTYPE_STORAGE = 2,
@@ -2596,8 +2596,7 @@ void clif_additem( struct map_session_data *sd, int n, int amount, unsigned char
 	struct packet_additem p;
 
 	if( fail ){
-		// TODO: change -> we do not want memset anymore
-		memset( &p, 0, sizeof( p ) );
+		p = {};
 	}else{
 		if( n < 0 || n >= MAX_INVENTORY || sd->inventory.u.items_inventory[n].nameid <= 0 || sd->inventory_data[n] == nullptr ){
 			return;
@@ -2767,7 +2766,7 @@ static void clif_item_normal( short idx, struct NORMALITEM_INFO *p, struct item 
 #endif
 }
 
-static void clif_inventoryStart( struct map_session_data *sd, enum inventory_type type, const char *name ){
+static void clif_inventoryStart( struct map_session_data *sd, e_inventory_type type, const char *name ){
 #if PACKETVER_RE_NUM >= 20180829 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
 	nullpo_retv(sd);
 	nullpo_retv(name);
@@ -2794,7 +2793,7 @@ static void clif_inventoryStart( struct map_session_data *sd, enum inventory_typ
 #endif
 }
 
-static void clif_inventoryEnd( struct map_session_data *sd, enum inventory_type type ){
+static void clif_inventoryEnd( struct map_session_data *sd, e_inventory_type type ){
 #if PACKETVER_RE_NUM >= 20180829 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
 	nullpo_retv(sd);
 
@@ -2814,7 +2813,7 @@ void clif_inventorylist( struct map_session_data *sd ){
 	nullpo_retv( sd );
 
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
-	inventory_type type = INVTYPE_INVENTORY;
+	e_inventory_type type = INVTYPE_INVENTORY;
 
 	clif_inventoryStart( sd, type, "" );
 #endif
@@ -2883,7 +2882,7 @@ void clif_equiplist( struct map_session_data *sd ){
 
 void clif_storagelist(struct map_session_data* sd, struct item* items, int items_length, const char *storename){
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
-	inventory_type type = INVTYPE_STORAGE;
+	e_inventory_type type = INVTYPE_STORAGE;
 
 	clif_inventoryStart( sd, type, storename );
 #endif
@@ -2941,7 +2940,7 @@ void clif_cartlist( struct map_session_data *sd ){
 	nullpo_retv( sd );
 
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
-	inventory_type type = INVTYPE_CART;
+	e_inventory_type type = INVTYPE_CART;
 
 	clif_inventoryStart( sd, type, "" );
 #endif
@@ -4326,8 +4325,7 @@ void clif_tradeadditem( struct map_session_data* sd, struct map_session_data* ts
 		clif_add_random_options( p.option_data, &sd->inventory.u.items_inventory[index] );
 #endif
 	}else{
-		// TODO: change -> we do not want memset anymore
-		memset( &p, 0, sizeof( p ) );
+		p = {};
 	}
 
 	p.packetType = tradeaddType;
@@ -17233,7 +17231,7 @@ void clif_mercenary_info(struct map_session_data *sd)
 
 
 /// Mercenary skill tree (ZC_MER_SKILLINFO_LIST).
-/// 029d <packet len>.W { <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <skill name>.24B <upgrada	ble>.B }*
+/// 029d <packet len>.W { <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <skill name>.24B <upgradable>.B }*
 void clif_mercenary_skillblock(struct map_session_data *sd)
 {
 	struct mercenary_data *md;
