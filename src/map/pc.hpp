@@ -769,6 +769,13 @@ struct map_session_data {
 	uint32* hatEffectIDs;
 	uint8 hatEffectCount;
 #endif
+
+	struct{
+		int tid;
+		uint16 skill_id;
+		uint16 level;
+		int target;
+	} skill_keep_using;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
