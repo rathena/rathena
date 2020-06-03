@@ -2979,7 +2979,7 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 	}
 
 	if( normal ){
-		storage_itemlist_normal.PacketType = inventorylistnormalType;
+		storage_itemlist_normal.PacketType = storageListNormalType;
 		storage_itemlist_normal.PacketLength = ( sizeof( storage_itemlist_normal ) - sizeof( storage_itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal );
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
 		storage_itemlist_normal.invType = type;
@@ -2991,7 +2991,7 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 	}
 
 	if( equip ) {
-		storage_itemlist_equip.PacketType  = inventorylistequipType;
+		storage_itemlist_equip.PacketType  = storageListEquipType;
 		storage_itemlist_equip.PacketLength = ( sizeof( storage_itemlist_equip ) - sizeof( storage_itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip );
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
 		storage_itemlist_equip.invType = type;
