@@ -104,8 +104,8 @@ REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,
 REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`script`) VALUES (12743,'Valentine_Gift_Box_F','Valentine Gift Box','Usable',10,'getitem 7947,1;');
 REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`script`) VALUES (12744,'Chocolate_Box','Chocolate Box','Usable',10,'getitem 558,1;');
 REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`script`) VALUES (14466,'Valentine\'s_Emblem_Box','Valentine\'s Emblem Box','Usable',10,'getitem 5817,1;');
-REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`) VALUES (7946,'Gold_Ring_Of_Valentine','Gold Ring Of Valentine','Etc',10,);
-REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`) VALUES (7947,'Silver_Ring_Of_Valentine','Silver Ring Of Valentine','Etc',10,);
+REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`) VALUES (7946,'Gold_Ring_Of_Valentine','Gold Ring Of Valentine','Etc',10);
+REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`) VALUES (7947,'Silver_Ring_Of_Valentine','Silver Ring Of Valentine','Etc',10);
 REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`) VALUES (7948,'Box','Box','Etc',10,10);
 REPLACE INTO `item_db2_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`defense`,`equip_locations`,`script`) VALUES (5817,'Valentine\'s_Emblem','Valentine\'s Emblem','Armor',10,3,'Right_Accessory:true|Left_Accessory:true','bonus bAtkRate,3; bonus bMatkRate,3; bonus bAllStats,2; bonus bFlee,10; bonus bAspd,1; bonus bMdef,3; bonus2 bSkillAtk,"AL_HEAL",10; bonus2 bSkillHeal,"AL_HEAL",10; bonus2 bSkillHeal,"AM_POTIONPITCHER",10; bonus2 bAddItemGroupHealRate,IG_Potion,10;');
 
