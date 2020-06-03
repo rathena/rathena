@@ -606,8 +606,31 @@ void pet_set_intimate(struct pet_data *pd, int value)
 
 	struct map_session_data *sd = pd->master;
 
-	if(pd->pet.intimate <= PET_INTIMATE_NONE)
-		pc_delitem(sd, pet_egg_search(sd, pd->pet.pet_id), 1, 0, 0, LOG_TYPE_OTHER);
+	int index = pet_egg_search( sd, pd->pet.pet_id );
+
+	if( pd->pet.intimate <= PET_INTIMATE_NONE ){
+		pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_OTHER );
+	}else{
+		// Remove everything except the rename flag
+		sd->inventory.u.items_inventory[index].card[3] &= 1;
+
+		if( pd->pet.intimate < PET_INTIMATE_SHY ){
+			// Awkward
+			sd->inventory.u.items_inventory[index].card[3] |= ( 1 << 1 );
+		}else if( pd->pet.intimate < PET_INTIMATE_NEUTRAL ){
+			// Shy
+			sd->inventory.u.items_inventory[index].card[3] |= ( 2 << 1 );
+		}else if( pd->pet.intimate < PET_INTIMATE_CORDIAL ){
+			// Neutral
+			sd->inventory.u.items_inventory[index].card[3] |= ( 3 << 1 );
+		}else if( pd->pet.intimate < PET_INTIMATE_LOYAL ){
+			// Cordial
+			sd->inventory.u.items_inventory[index].card[3] |= ( 4 << 1 );
+		}else if( pd->pet.intimate <= PET_INTIMATE_MAX ){
+			// Loyal
+			sd->inventory.u.items_inventory[index].card[3] |= ( 5 << 1 );
+		}
+	}
 
 	if (sd)
 		status_calc_pc(sd,SCO_NONE);
@@ -1400,6 +1423,12 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 	pd->pet.rename_flag = 1;
 	clif_pet_equip_area(pd);
 	clif_send_petstatus(sd);
+
+	int index = pet_egg_search( sd, pd->pet.pet_id );
+
+	if( index >= 0 ){
+		sd->inventory.u.items_inventory[index].card[3] |= 1;
+	}
 
 	return 1;
 }
