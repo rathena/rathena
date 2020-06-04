@@ -1392,7 +1392,6 @@ int char_make_new_char( struct char_session_data* sd, char* name_, int str, int 
 	}
 
 	// Check gender
-#if PACKETVER >= 20151001
 	switch( sex ){
 		case SEX_FEMALE:
 			sex = 'F';
@@ -1404,7 +1403,6 @@ int char_make_new_char( struct char_session_data* sd, char* name_, int str, int 
 			ShowWarning( "Received unsupported gender '%d'...\n", sex );
 			return -2; // invalid input
 	}
-#endif
 
 	// Check status values
 #if PACKETVER < 20120307
