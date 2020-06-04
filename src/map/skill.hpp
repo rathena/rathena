@@ -105,6 +105,7 @@ enum e_skill_inf2 : uint8 {
 	INF2_IGNOREWUGBITE, // Skill blocked by RA_WUGBITE
 	INF2_IGNOREAUTOGUARD , // Skill is not blocked by SC_AUTOGUARD (physical-skill only)
 	INF2_IGNORECICADA, // Skill is not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (physical-skill only)
+	INF2_SHOWSCALE, // Skill shows AoE area while casting
 	INF2_MAX,
 };
 

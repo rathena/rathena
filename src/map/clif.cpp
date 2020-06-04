@@ -5425,6 +5425,31 @@ void clif_skillinfo(struct map_session_data *sd,int skill_id, int inf)
 	WFIFOSET(fd,packet_len(0x7e1));
 }
 
+void clif_skill_scale( struct block_list *bl, int src_id, int x, int y, uint16 skill_id, uint16 skill_lv, int casttime ){
+#if PACKETVER >= 20151223
+	if( !battle_config.show_skill_scale ){
+		return;
+	}
+
+	struct PACKET_ZC_SKILL_SCALE p;
+
+	p.PacketType = skillscale;
+	p.AID = src_id;
+	p.skill_id = skill_id;
+	p.skill_lv = skill_lv;
+	p.x = x;
+	p.y = y;
+	p.casttime = casttime;
+
+	if( disguised( bl ) ){
+		clif_send( &p, sizeof( p ), bl, AREA_WOS );
+		p.AID = disguised_bl_id( bl->id );
+		clif_send( &p, sizeof( p ), bl, SELF );
+	}else{
+		clif_send( &p, sizeof( p ), bl, AREA );
+	}
+#endif
+}
 
 /// Notifies clients in area, that an object is about to use a skill.
 /// 013e <src id>.L <dst id>.L <x>.W <y>.W <skill id>.W <property>.L <delaytime>.L (ZC_USESKILL_ACK)
@@ -5441,7 +5466,7 @@ void clif_skillinfo(struct map_session_data *sd,int skill_id, int inf)
 /// is disposable:
 ///     0 = yellow chat text "[src name] will use skill [skill name]."
 ///     1 = no text
-void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, uint16 skill_id, int property, int casttime)
+void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, uint16 skill_id, uint16 skill_lv, int property, int casttime)
 {
 #if PACKETVER < 20091124
 	const int cmd = 0x13e;
@@ -5468,6 +5493,10 @@ void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x,
 		clif_send(buf,packet_len(cmd), bl, SELF);
 	} else
 		clif_send(buf,packet_len(cmd), bl, AREA);
+
+	if( skill_get_inf2( skill_id, INF2_SHOWSCALE ) ){
+		clif_skill_scale( bl, src_id, bl->x, bl->y, skill_id, skill_lv, casttime );
+	}
 }
 
 
