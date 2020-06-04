@@ -8956,6 +8956,7 @@ static const struct _battle_data {
 	{ "rental_item_novalue",                &battle_config.rental_item_novalue,             1,      0,      1,              },
 	{ "ping_timer_inverval",                &battle_config.ping_timer_interval,             30,     0,      99999999,       },
 	{ "ping_time",                          &battle_config.ping_time,                       20,     0,      99999999,       },
+	{ "show_skill_scale",                   &battle_config.show_skill_scale,                1,      0,      1,              },
 	{ "feature.refineui",                   &battle_config.feature_refineui,                3,      0,      3,              },
 
 #include "../custom/battle_config_init.inc"
