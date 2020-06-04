@@ -92,7 +92,7 @@ Armor:
     - Level: 13
       NormalChance: 9
       EnrichedChance: 20
-      EventNormalChance: 9
+      EventNormalChance: 20
       EventEnrichedChance: 35
       Bonus: 400
     - Level: 14
@@ -177,7 +177,7 @@ WeaponLv1:
     - Level: 13
       NormalChance: 19
       EnrichedChance: 30
-      EventNormalChance: 19
+      EventNormalChance: 40
       EventEnrichedChance: 55
     - Level: 14
       NormalChance: 18
@@ -256,12 +256,12 @@ WeaponLv2:
     - Level: 12
       NormalChance: 20
       EnrichedChance: 40
-      EventNormalChance: 20
+      EventNormalChance: 40
       EventEnrichedChance: 60
     - Level: 13
       NormalChance: 19
       EnrichedChance: 30
-      EventNormalChance: 19
+      EventNormalChance: 40
       EventEnrichedChance: 45
     - Level: 14
       NormalChance: 18
@@ -340,17 +340,17 @@ WeaponLv3:
     - Level: 11
       NormalChance: 20
       EnrichedChance: 40
-      EventNormalChance: 20
+      EventNormalChance: 50
       EventEnrichedChance: 70
     - Level: 12
       NormalChance: 20
       EnrichedChance: 40
-      EventNormalChance: 20
+      EventNormalChance: 40
       EventEnrichedChance: 60
     - Level: 13
       NormalChance: 19
       EnrichedChance: 30
-      EventNormalChance: 19
+      EventNormalChance: 40
       EventEnrichedChance: 45
     - Level: 14
       NormalChance: 18
@@ -444,7 +444,7 @@ WeaponLv4:
     - Level: 13
       NormalChance: 9
       EnrichedChance: 20
-      EventNormalChance: 9
+      EventNormalChance: 20
       EventEnrichedChance: 35
     - Level: 14
       NormalChance: 8
