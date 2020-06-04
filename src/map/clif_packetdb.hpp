@@ -2355,11 +2355,11 @@
 
 // 2016-10-12aRagexeRE
 #if PACKETVER >= 20161012
-	packet(0x0AA0,2);
-	parseable_packet(0x0AA1,4,clif_parse_refineui_add,2);
-	packet(0x0AA2,-1);
-	parseable_packet(0x0AA3,7,clif_parse_refineui_refine,2,4,6);
-	parseable_packet(0x0AA4,2,clif_parse_refineui_close,0);
+	packet( HEADER_ZC_REFINE_OPEN_WINDOW, sizeof( struct PACKET_ZC_REFINE_OPEN_WINDOW ) );
+	parseable_packet( HEADER_CZ_REFINE_ADD_ITEM, sizeof( struct PACKET_CZ_REFINE_ADD_ITEM ), clif_parse_refineui_add, 0 );
+	packet( HEADER_ZC_REFINE_ADD_ITEM, -1 );
+	parseable_packet( HEADER_CZ_REFINE_ITEM_REQUEST, sizeof( struct PACKET_CZ_REFINE_ITEM_REQUEST ), clif_parse_refineui_refine, 0 );
+	parseable_packet( HEADER_CZ_REFINE_WINDOW_CLOSE, sizeof( struct PACKET_CZ_REFINE_WINDOW_CLOSE ), clif_parse_refineui_close, 0 );
 #endif
 
 // 2016-10-26bRagexeRE

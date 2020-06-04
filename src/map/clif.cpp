@@ -21390,9 +21390,8 @@ void clif_refineui_info( struct map_session_data* sd, uint16 index ){
 	int fd = sd->fd;
 	struct item *item;
 	struct item_data *id;
-	uint16 length;
 	struct refine_materials materials[REFINEUI_MAT_CNT];
-	uint8 i, material_count;
+	uint8 material_count;
 
 	// Get the item db reference
 	id = sd->inventory_data[index];
@@ -21443,21 +21442,25 @@ void clif_refineui_info( struct map_session_data* sd, uint16 index ){
 		return;
 	}
 
-	length = 7 + material_count * 7;
+	uint16 length = sizeof( struct PACKET_ZC_REFINE_ADD_ITEM ) + material_count * sizeof( struct PACKET_ZC_REFINE_ADD_ITEM_SUB );
 
-	WFIFOHEAD(fd,length);
-	WFIFOW(fd,0) = 0x0AA2;
-	WFIFOW(fd,2) = length;
-	WFIFOW(fd,4) = index + 2;
-	WFIFOB(fd,6) = 0; //TODO: required amount of "Blacksmith Blessing"(id: 6635)
+	// Preallocate the size
+	WFIFOHEAD( fd, length );
 
-	for( i = 0; i < material_count; i++ ){
-		WFIFOW(fd,7 + i * 7) = materials[i].cost.nameid;
-		WFIFOB(fd,7 + i * 7 + 2) = materials[i].chance;
-		WFIFOL(fd,7 + i * 7 + 3) = materials[i].cost.zeny;
+	struct PACKET_ZC_REFINE_ADD_ITEM* p = (struct PACKET_ZC_REFINE_ADD_ITEM*)WFIFOP( fd, 0 );
+
+	p->packetType = HEADER_ZC_REFINE_ADD_ITEM;
+	p->packtLength = length;
+	p->itemIndex = client_index( index );
+	p->blacksmithBlessing = 0; //TODO: required amount of "Blacksmith Blessing"(id: 6635)
+
+	for( uint8 i = 0; i < material_count; i++ ){
+		p->req[i].itemId = client_nameid( materials[i].cost.nameid );
+		p->req[i].chance = materials[i].chance;
+		p->req[i].zeny = materials[i].cost.zeny;
 	}
 
-	WFIFOSET(fd,length);
+	WFIFOSET( fd, p->packtLength );
 }
 
 /**
@@ -21466,7 +21469,7 @@ void clif_refineui_info( struct map_session_data* sd, uint16 index ){
  */
 void clif_parse_refineui_add( int fd, struct map_session_data* sd ){
 #if PACKETVER >= 20161012
-	uint16 index = RFIFOW(fd, 2) - 2;
+	uint16 index = server_index( RFIFOW( fd, 2 ) );
 
 	// Check if the refine UI is open
 	if( !sd->state.refineui_open ){
@@ -21474,7 +21477,7 @@ void clif_parse_refineui_add( int fd, struct map_session_data* sd ){
 	}
 
 	// Check if the index is valid
-	if( index < 0 || index >= MAX_INVENTORY ){
+	if( index >= MAX_INVENTORY ){
 		return;
 	}
 
@@ -21489,9 +21492,11 @@ void clif_parse_refineui_add( int fd, struct map_session_data* sd ){
  */
 void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 #if PACKETVER >= 20161012
-	uint16 index = RFIFOW( fd, 2 ) - 2;
-	uint16 material = RFIFOW( fd, 4 );
-	bool use_blacksmith_blessing = RFIFOB( fd, 6 ) != 0; // TODO: add logic
+	struct PACKET_CZ_REFINE_ITEM_REQUEST* p = (struct PACKET_CZ_REFINE_ITEM_REQUEST*)RFIFOP( fd, 0 );
+
+	uint16 index = server_index( p->index );
+	uint16 material = p->itemId;
+	bool use_blacksmith_blessing = p->blacksmithBlessing != 0; // TODO: add logic
 	struct refine_materials materials[REFINEUI_MAT_CNT];
 	uint8 i, material_count;
 	uint16 j;
@@ -21504,7 +21509,7 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 	}
 
 	// Check if the index is valid
-	if( index < 0 || index >= MAX_INVENTORY ){
+	if( index >= MAX_INVENTORY ){
 		return;
 	}
 
