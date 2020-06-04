@@ -7,6 +7,7 @@
 #include "../common/cbasetypes.hpp"
 #include "../common/mmo.hpp"
 
+#include "clif.hpp"
 #include "map.hpp"
 
 #define SEARCHSTORE_RESULTS_PER_PAGE 10
@@ -14,8 +15,8 @@
 /// information about the search being performed
 struct s_search_store_search {
 	struct map_session_data* search_sd;  // sd of the searching player
-	const unsigned short* itemlist;
-	const unsigned short* cardlist;
+	const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist;
+	const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist;
 	unsigned int item_count;
 	unsigned int card_count;
 	unsigned int min_price;
@@ -46,7 +47,7 @@ struct s_search_store_info {
 };
 
 bool searchstore_open(struct map_session_data* sd, unsigned int uses, unsigned short effect);
-void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned int min_price, unsigned int max_price, const unsigned short* itemlist, unsigned int item_count, const unsigned short* cardlist, unsigned int card_count);
+void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned int min_price, unsigned int max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, unsigned int item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, unsigned int card_count);
 bool searchstore_querynext(struct map_session_data* sd);
 void searchstore_next(struct map_session_data* sd);
 void searchstore_clear(struct map_session_data* sd);

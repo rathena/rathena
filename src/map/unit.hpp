@@ -79,7 +79,7 @@ unsigned short
 		cloth_color,
 		body_style;
 	char sex;
-	unsigned dead_sit : 2;
+	unsigned dead_sit : 2; // 0: Standing, 1: Dead, 2: Sitting
 };
 
 /// Enum for unit_blown_immune
@@ -161,6 +161,7 @@ void unit_dataset(struct block_list *bl);
 // Remove unit
 struct unit_data* unit_bl2ud(struct block_list *bl);
 void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype);
+void unit_refresh(struct block_list *bl, bool walking = false);
 void unit_free_pc(struct map_session_data *sd);
 #define unit_remove_map(bl,clrtype) unit_remove_map_(bl,clrtype,__FILE__,__LINE__,__func__)
 int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, int line, const char* func);

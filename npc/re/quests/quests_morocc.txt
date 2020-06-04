@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Morroc Quest NPCs
+//= Morocc Quest NPCs
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
@@ -8,11 +8,11 @@
 //= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
-//= Quest NPCs related to Morroc.
+//= Quest NPCs related to Morocc.
 //===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.0a Gathered remaining dialogues. [Euphy]
-//= 1.1 Added new warpers for Satan Morroc maps. [Euphy]
+//= 1.1 Added new warpers for Satan Morocc maps. [Euphy]
 //============================================================
 
 // Stop Post Quest
@@ -23,7 +23,7 @@ morocc,152,167,4	duplicate(William)	William#moc	89
 // ============================================================
 morocc,169,168,4	duplicate(Alchemist)	Alchemist#moc	64
 
-// Resurrection of Satan Morroc
+// Resurrection of Satan Morocc
 // ============================================================
 -	script	Continental Guard#man	-1,{
 	mes "[Continental Guard]";

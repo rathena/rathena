@@ -27,6 +27,7 @@
 #include "mercenary.hpp"
 #include "party.hpp"
 #include "pc.hpp"
+#include "pc_groups.hpp"
 #include "pet.hpp"
 #include "quest.hpp"
 #include "status.hpp"
@@ -205,6 +206,10 @@ int intif_rename(struct map_session_data *sd, int type, char *name)
  */
 int intif_broadcast(const char* mes, int len, int type)
 {
+	nullpo_ret(mes);
+	if (len < 2)
+		return 0;
+
 	int lp = (type|BC_COLOR_MASK) ? 4 : 0;
 
 	// Send to the local players
@@ -246,6 +251,10 @@ int intif_broadcast(const char* mes, int len, int type)
  */
 int intif_broadcast2(const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY)
 {
+	nullpo_ret(mes);
+	if (len < 2)
+		return 0;
+
 	// Send to the local players
 	clif_broadcast2(NULL, mes, len, fontColor, fontType, fontSize, fontAlign, fontY, ALL_CLIENT);
 
@@ -471,8 +480,8 @@ int intif_saveregistry(struct map_session_data *sd)
 			plen += 1;
 
 			if( p->value ) {
-				WFIFOL(inter_fd, plen) = p->value;
-				plen += 4;
+				WFIFOQ(inter_fd, plen) = p->value;
+				plen += 8;
 			} else {
 				script_reg_destroy_single(sd,key.i64,&p->flag);
 			}
@@ -1266,7 +1275,7 @@ int intif_parse_WisMessage(int fd)
 		return 0;
 	}
 	if(sd->state.ignoreAll) {
-		intif_wis_reply(id, 2);
+		intif_wis_reply(id, (pc_has_permission(sd, PC_PERM_HIDE_SESSION))?1:2);
 		return 0;
 	}
 	wisp_source = RFIFOCP(fd,12); // speed up [Yor]
@@ -1277,7 +1286,7 @@ int intif_parse_WisMessage(int fd)
 
 	if (i < MAX_IGNORE_LIST && sd->ignore[i].name[0] != '\0')
 	{	//Ignored
-		intif_wis_reply(id, 2);
+		intif_wis_reply(id, (pc_has_permission(sd, PC_PERM_HIDE_SESSION))?1:2);
 		return 0;
 	}
 	//Success to send whisper.
@@ -1399,7 +1408,7 @@ void intif_parse_Registers(int fd)
 	
 	if( RFIFOW(fd, 14) ) {
 		char key[32];
-		unsigned int index;
+		uint32 index;
 		int max = RFIFOW(fd, 14), cursor = 16, i;
 
 		/**
@@ -1420,7 +1429,7 @@ void intif_parse_Registers(int fd)
 				safestrncpy(sval, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 				cursor += RFIFOB(fd, cursor) + 1;
 
-				set_reg(NULL,sd,reference_uid(add_str(key), index), key, (void*)sval, NULL);
+				set_reg_str( NULL, sd, reference_uid( add_str( key ), index ), key, sval, NULL );
 			}
 		/**
 		 * Vessel!
@@ -1430,17 +1439,17 @@ void intif_parse_Registers(int fd)
 		 **/
 		} else {
 			for(i = 0; i < max; i++) {
-				int ival;
+				int64 ival;
 				safestrncpy(key, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 				cursor += RFIFOB(fd, cursor) + 1;
 
 				index = RFIFOL(fd, cursor);
 				cursor += 4;
 
-				ival = RFIFOL(fd, cursor);
-				cursor += 4;
+				ival = RFIFOQ(fd, cursor);
+				cursor += 8;
 
-				set_reg(NULL,sd,reference_uid(add_str(key), index), key, (void*)__64BPRTSIZE(ival), NULL);
+				set_reg_num( NULL, sd, reference_uid( add_str( key ), index ), key, ival, NULL );
 			}
 		}
 	}
@@ -2033,15 +2042,15 @@ void intif_parse_questlog(int fd)
 		}
 	} else {
 		struct quest *received = (struct quest *)RFIFOP(fd,8);
-		int i, k = num_received;
+		int k = num_received;
 
 		if(sd->quest_log)
 			RECREATE(sd->quest_log, struct quest, num_received);
 		else
 			CREATE(sd->quest_log, struct quest, num_received);
 
-		for(i = 0; i < num_received; i++) {
-			if(quest_search(received[i].quest_id) == &quest_dummy) {
+		for(int i = 0; i < num_received; i++) {
+			if(!quest_search(received[i].quest_id)) {
 				ShowError("intif_parse_QuestLog: quest %d not found in DB.\n", received[i].quest_id);
 				continue;
 			}
@@ -2171,11 +2180,17 @@ void intif_parse_achievements(int fd)
 				memmove(&sd->achievement_data.achievements[k], &sd->achievement_data.achievements[sd->achievement_data.incompleteCount], sizeof(struct achievement) * (num_received - k));
 			sd->achievement_data.achievements = (struct achievement *)aRealloc(sd->achievement_data.achievements, sizeof(struct achievement) * sd->achievement_data.count);
 		}
-		achievement_level(sd, false); // Calculate level info but don't give any AG_GOAL_ACHIEVE achievements
-		achievement_get_titles(sd->status.char_id); // Populate the title list for completed achievements
-		clif_achievement_update(sd, NULL, 0);
-		clif_achievement_list_all(sd);
 	}
+
+	// Check all conditions and counters on login
+	for( int group = AG_NONE + 1; group < AG_MAX; group++ ){
+		achievement_update_objective( sd, static_cast<e_achievement_group>( group ), 0 );
+	}
+
+	achievement_level(sd, false); // Calculate level info but don't give any AG_GOAL_ACHIEVE achievements
+	achievement_get_titles(sd->status.char_id); // Populate the title list for completed achievements
+	clif_achievement_update(sd, NULL, 0);
+	clif_achievement_list_all(sd);
 }
 
 /**
