@@ -1362,14 +1362,10 @@ static void itemdb_jobid2mapid(uint64 *bclass, uint64 jobmask, bool active)
 		temp_mask[1] |= 1ULL << MAPID_TAEKWON;
 	if (jobmask & 1ULL << ITEM_JOB_SOULLINKER)
 		temp_mask[2] |= 1ULL << MAPID_TAEKWON;
-	if (jobmask & 1ULL << ITEM_JOB_GUNSLINGER) { // Rebellion job can equip Gunslinger equips.
+	if (jobmask & 1ULL << ITEM_JOB_GUNSLINGER)
 		temp_mask[0] |= 1ULL << MAPID_GUNSLINGER;
-		temp_mask[1] |= 1ULL << MAPID_GUNSLINGER;
-	}
-	if (jobmask & 1ULL << ITEM_JOB_NINJA) { // Kagerou/Oboro jobs can equip Ninja equips. [Rytech]
+	if (jobmask & 1ULL << ITEM_JOB_NINJA)
 		temp_mask[0] |= 1ULL << MAPID_NINJA;
-		temp_mask[1] |= 1ULL << MAPID_NINJA;
-	}
 	if (jobmask & 1ULL << ITEM_JOB_GANGSI)
 		temp_mask[0] |= 1ULL << MAPID_GANGSI;
 	if (jobmask & 1ULL << ITEM_JOB_DEATHKNIGHT)
