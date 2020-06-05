@@ -15722,6 +15722,7 @@ Body:
     Flags:
       IsNpc: true
       TargetTrap: true
+      ShowScale: true
     Hit: Multi_Hit
     HitCount: 1
     SplashArea:
@@ -15829,6 +15830,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15877,6 +15879,7 @@ Body:
     Flags:
       IsNpc: true
       TargetTrap: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea: 7
@@ -15892,6 +15895,7 @@ Body:
     Flags:
       IsNpc: true
       TargetTrap: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea: 14
@@ -15907,6 +15911,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15932,6 +15937,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15957,6 +15963,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15982,6 +15989,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16007,6 +16015,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16032,6 +16041,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16058,6 +16068,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     Element: Fire
@@ -16077,6 +16088,7 @@ Body:
       IgnoreDefCard: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Range: 7
     Hit: Single
     HitCount: 1
@@ -16175,6 +16187,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16295,6 +16308,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16320,6 +16334,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16345,6 +16360,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16378,6 +16394,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16676,6 +16693,7 @@ Body:
     Flags:
       IsNpc: true
       IgnoreLandProtector: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     Element: Poison
@@ -16699,6 +16717,7 @@ Body:
       Splash: true
     Flags:
       AlterRangeRadius: true
+      ShowScale: true
     Range: 11
     Hit: Multi_Hit
     HitCount: -20
@@ -16724,6 +16743,7 @@ Body:
       IgnoreDefCard: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     Duration1: 10000
@@ -16748,6 +16768,7 @@ Body:
     Flags:
       IsNpc: true
       IgnoreLandProtector: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     Knockback: 2
@@ -16826,6 +16847,8 @@ Body:
     TargetType: Self
     DamageFlags:
       Splash: true
+    Flags:
+      ShowScale: true
     Hit: Multi_Hit
     HitCount: -5
     Element: Water
@@ -16864,6 +16887,7 @@ Body:
       IsNpc: true
       IsTrap: true
       DisableNearNpc: true
+      ShowScale: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -16912,6 +16936,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Range: 9
     Hit: Single
     SplashArea:
