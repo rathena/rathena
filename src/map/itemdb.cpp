@@ -519,7 +519,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		item_data *view_data = itemdb_search_aegisname(view.c_str());
 
 		if (view_data == nullptr) {
-			this->invalidWarning(node["AliasName"], "Unable to change the alias because %s is an unknown item.\n");
+			this->invalidWarning(node["AliasName"], "Unable to change the alias because %s is an unknown item.\n", view.c_str());
 			return 0;
 		}
 
