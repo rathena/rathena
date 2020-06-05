@@ -791,8 +791,13 @@ enum e_item_drop_effect : uint16 {
 /// Item combo struct
 struct s_item_combo {
 	std::vector<uint32> nameid;
-	struct script_code *script;
+	script_code *script;
 	uint32 id;
+
+	~s_item_combo() {
+		if (this->script)
+			script_free_code(this->script);
+	}
 };
 
 
