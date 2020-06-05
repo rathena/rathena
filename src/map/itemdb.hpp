@@ -797,6 +797,8 @@ struct s_item_combo {
 	~s_item_combo() {
 		if (this->script)
 			script_free_code(this->script);
+
+		this->nameid.clear();
 	}
 };
 
