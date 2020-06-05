@@ -1,4 +1,4 @@
-image: Visual Studio 2015
+image: Visual Studio 2013
 # This is the default location, but we put it here for safety reasons, since we use it in our test script
 clone_folder: c:\projects\rathena
 # We do not need the git history for our integration tests
@@ -12,8 +12,6 @@ environment:
     Defines: "\"BUILDBOT\""
   - VisualStudioVersion: 14.0
     Defines: "\"BUILDBOT;PRERE\""
-on_finish:
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 platform:
   - Win32
   - x64

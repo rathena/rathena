@@ -24,14 +24,6 @@
 #include "showmsg.hpp"
 #include "strlib.hpp"
 
-#include "../config/core.hpp"
-
-#ifndef DEPRECATED_COMPILER_SUPPORT
-	#if defined(_MSC_VER) && _MSC_VER < 1900
-		#error "Visual Studio versions older than Visual Studio 2015 are not officially supported anymore"
-	#endif
-#endif
-
 /// Called when a terminate signal is received.
 void (*shutdown_callback)(void) = NULL;
 
