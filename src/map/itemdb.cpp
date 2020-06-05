@@ -96,7 +96,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(type_constant.c_str(), &constant) || constant < IT_HEALING || constant >= IT_MAX) {
-			this->invalidWarning(node["Type"], "Invalid item type %s for %s (%hu), defaulting to IT_ETC.\n", type.c_str(), item->name.c_str(), nameid);
+			this->invalidWarning(node["Type"], "Invalid item type %s, defaulting to IT_ETC.\n", type.c_str());
 			constant = IT_ETC;
 		}
 
@@ -122,7 +122,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(type_constant.c_str(), &constant) || constant < W_FIST || constant >= MAX_WEAPON_TYPE) {
-				this->invalidWarning(node["SubType"], "Invalid weapon type %s for %s (%hu), defaulting to W_FIST.\n", type.c_str(), item->name.c_str(), nameid);
+				this->invalidWarning(node["SubType"], "Invalid weapon type %s, defaulting to W_FIST.\n", type.c_str());
 				item->subtype = W_FIST;
 			}
 
@@ -132,13 +132,13 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(type_constant.c_str(), &constant) || constant <= AMMO_NONE || constant >= MAX_AMMO_TYPE) {
-				this->invalidWarning(node["SubType"], "Invalid ammo type %s for %s (%hu), defaulting to AMMO_NONE.\n", type.c_str(), item->name.c_str(), nameid);
+				this->invalidWarning(node["SubType"], "Invalid ammo type %s, defaulting to AMMO_NONE.\n", type.c_str());
 				item->subtype = AMMO_NONE;
 			}
 
 			item->subtype = static_cast<int>(constant);
 		} else
-			this->invalidWarning(node["SubType"], "SubType is not supported for this item type.\n");
+			this->invalidWarning(node["SubType"], "Item sub type is not supported for this item type.\n");
 	} else {
 		if (!exists)
 			item->subtype = 0;
@@ -229,7 +229,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (def > DEFTYPE_MAX) {
-			this->invalidWarning(node["Defense"], "Item defense %d exceeds DEFTYPE_MAX(%d), capping to DEFTYPE_MAX.\n", def, DEFTYPE_MAX);
+			this->invalidWarning(node["Defense"], "Item defense %d exceeds DEFTYPE_MAX (%d), capping to DEFTYPE_MAX.\n", def, DEFTYPE_MAX);
 			def = DEFTYPE_MAX;
 		}
 
@@ -246,7 +246,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (range > AREA_SIZE) {
-			this->invalidWarning(node["Range"], "The attack range %d exceeds AREA_SIZE (%d), capping to AREA_SIZE.\n", range, AREA_SIZE);
+			this->invalidWarning(node["Range"], "Item attack range %d exceeds AREA_SIZE (%d), capping to AREA_SIZE.\n", range, AREA_SIZE);
 			range = AREA_SIZE;
 		}
 
@@ -263,7 +263,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (slots > MAX_SLOTS) {
-			this->invalidWarning(node["Slots"], "Item %s (%hu) exceeds maximum slot count, capping to MAX_SLOTS.\n", item->name.c_str(), nameid);
+			this->invalidWarning(node["Slots"], "Item slots %d exceeds MAX_SLOTS (%d), capping to MAX_SLOTS.\n", slots, MAX_SLOTS);
 			slots = MAX_SLOTS;
 		}
 
@@ -298,7 +298,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(jobName_constant.c_str(), &constant)) {
-				this->invalidWarning(jobNode[jobName], "Invalid item job %s for %s (%hu), defaulting to All.\n", jobName.c_str(), item->name.c_str(), nameid);
+				this->invalidWarning(jobNode[jobName], "Invalid item job %s, defaulting to All.\n", jobName.c_str());
 				itemdb_jobid2mapid(item->class_base, UINT64_MAX, true);
 				break;
 			}
@@ -344,7 +344,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(className_constant.c_str(), &constant)) {
-				this->invalidWarning(classNode[className], "Invalid class upper %s for %s (%hu), defaulting to All.\n", className.c_str(), item->name.c_str(), nameid);
+				this->invalidWarning(classNode[className], "Invalid class upper %s, defaulting to All.\n", className.c_str());
 				item->class_upper |= ITEMJ_MAX;
 				break;
 			}
@@ -374,7 +374,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(gender_constant.c_str(), &constant) || constant < SEX_FEMALE || constant > SEX_BOTH) {
-			this->invalidWarning(node["Gender"], "Invalid item gender %s for %s (%hu), defaulting to SEX_BOTH.\n", gender.c_str(), item->name.c_str(), nameid);
+			this->invalidWarning(node["Gender"], "Invalid item gender %s, defaulting to SEX_BOTH.\n", gender.c_str());
 			constant = SEX_BOTH;
 		}
 
@@ -395,7 +395,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(equipName_constant.c_str(), &constant)) {
-				this->invalidWarning(locationNode[equipName], "Invalid location %s for %s (%hu), defaulting to IT_ETC.\n", equipName.c_str(), item->name.c_str(), nameid);
+				this->invalidWarning(locationNode[equipName], "Invalid location %s, defaulting to IT_ETC.\n", equipName.c_str());
 				item->type = IT_ETC;
 				break;
 			}
@@ -407,7 +407,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 			if (active) {
 				if (constant & EQP_SHADOW_GEAR && item->type != IT_SHADOWGEAR) {
-					this->invalidWarning(node, "Invalid item equip location %s for %s (%hu) as it's not a Shadow Gear item type, defaulting to IT_ETC.\n", equipName.c_str(), item->name.c_str(), nameid);
+					this->invalidWarning(node, "Invalid item equip location %s as it's not a Shadow Gear item type, defaulting to IT_ETC.\n", equipName.c_str());
 					item->type = IT_ETC;
 				}
 
@@ -418,7 +418,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 	} else {
 		if (!exists) {
 			if (itemdb_isequip2(item.get())) {
-				this->invalidWarning(node["Location"], "Invalid item equip location for %s (%hu) as it has no equip location, defaulting to IT_ETC.\n", item->name.c_str(), nameid);
+				this->invalidWarning(node["Location"], "Invalid item equip location as it has no equip location, defaulting to IT_ETC.\n");
 				item->type = IT_ETC;
 			} else
 				item->equip = 0;
@@ -454,7 +454,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (lv > MAX_LEVEL) {
-			this->invalidWarning(node["EquipLevelMin"], "Invalid minimum equip level for %s (%hu), defaulting to MAX_LEVEL.\n", item->name.c_str(), nameid);
+			this->invalidWarning(node["EquipLevelMin"], "Minimum equip level %d exceeds MAX_LEVEL (%d), capping to MAX_LEVEL.\n", lv, MAX_LEVEL);
 			lv = MAX_LEVEL;
 		}
 
@@ -471,12 +471,12 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (lv < item->elv) {
-			this->invalidWarning(node["EquipLevelMax"], "Max equip level is less than equip level for %s (%hu), defaulting to equip level.\n", item->name.c_str(), nameid);
+			this->invalidWarning(node["EquipLevelMax"], "Maximum equip level %d is less than minimum equip level %d, capping to minimum equip level.\n", lv, item->elv);
 			lv = item->elv;
 		}
 
 		if (lv > MAX_LEVEL) {
-			this->invalidWarning(node["EquipLevelMax"], "Invalid maximum equip level for %s (%hu), defaulting to MAX_LEVEL.\n", item->name.c_str(), nameid);
+			this->invalidWarning(node["EquipLevelMax"], "Maximum equip level %d exceeds MAX_LEVEL (%d), capping to MAX_LEVEL.\n", lv, MAX_LEVEL);
 			lv = MAX_LEVEL;
 		}
 
@@ -519,7 +519,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		item_data *view_data = itemdb_search_aegisname(view.c_str());
 
 		if (view_data == nullptr) {
-			this->invalidWarning(node["AliasName"], "Unable to change the alias of %s (%d) because %s is an unknown item.\n", item->name.c_str(), nameid, view.c_str());
+			this->invalidWarning(node["AliasName"], "Unable to change the alias because %s is an unknown item.\n");
 			return 0;
 		}
 
@@ -539,7 +539,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (!itemdb_isstackable2(item.get()) && active) {
-				this->invalidWarning(flagNode["Buyingstore"], "Non-stackable item %s (%hu) cannot be enabled for buying store.\n", item->name.c_str(), nameid);
+				this->invalidWarning(flagNode["Buyingstore"], "Non-stackable item cannot be enabled for buying store.\n");
 				active = false;
 			}
 
@@ -580,7 +580,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (!itemdb_isstackable2(item.get()) && active) {
-				this->invalidWarning(flagNode["UniqueId"], "Non-stackable item %s (%hu) cannot be enabled for UniqueId.\n", item->name.c_str(), nameid);
+				this->invalidWarning(flagNode["UniqueId"], "Non-stackable item cannot be enabled for UniqueId.\n");
 				active = false;
 			}
 
@@ -639,7 +639,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(effect_constant.c_str(), &constant) || constant < DROPEFFECT_NONE || constant > DROPEFFECT_MAX) {
-				this->invalidWarning(flagNode["DropEffect"], "Invalid item drop effect %s for %s (%hu), defaulting to DROPEFFECT_NONE.\n", effect.c_str(), item->name.c_str(), nameid);
+				this->invalidWarning(flagNode["DropEffect"], "Invalid item drop effect %s, defaulting to DROPEFFECT_NONE.\n", effect.c_str());
 				constant = DROPEFFECT_NONE;
 			}
 
@@ -687,7 +687,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			int64 constant;
 
 			if (!script_get_constant(status_constant.c_str(), &constant) || constant < SC_NONE || constant >= SC_MAX) {
-				this->invalidWarning(delayNode[status], "Invalid item delay status %s for %s (%hu), defaulting to SC_NONE.\n", status.c_str(), item->name.c_str(), nameid);
+				this->invalidWarning(delayNode[status], "Invalid item delay status %s, defaulting to SC_NONE.\n", status.c_str());
 				constant = SC_NONE;
 			}
 
@@ -713,7 +713,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (!itemdb_isstackable2(item.get())) {
-				this->invalidWarning(stackNode["Amount"], "Non-stackable item %s (%hu) cannot be enabled for stacking.\n", item->name.c_str(), nameid);
+				this->invalidWarning(stackNode["Amount"], "Non-stackable item cannot be enabled for stacking.\n");
 				amount = 0;
 			}
 
@@ -790,7 +790,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (override > 100) {
-				this->invalidWarning(nouseNode["Override"], "Item no use override level exceeds 100 for %s (%hu), capping.\n", item->name.c_str(), nameid);
+				this->invalidWarning(nouseNode["Override"], "Item no use override level %d exceeds 100, capping to 100.\n", override);
 				override = 100;
 			}
 
@@ -828,7 +828,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (override > 100) {
-				this->invalidWarning(tradeNode["Override"], "Item trade override level exceeds 100 for %s (%hu), capping.\n", item->name.c_str(), nameid);
+				this->invalidWarning(tradeNode["Override"], "Item trade override level %d exceeds 100, capping to 100.\n", override);
 				override = 100;
 			}
 
