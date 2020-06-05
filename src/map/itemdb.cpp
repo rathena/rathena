@@ -3,6 +3,7 @@
 
 #include "itemdb.hpp"
 
+#include <map>
 #include <stdlib.h>
 
 #include "../common/nullpo.hpp"
@@ -23,7 +24,7 @@
 
 using namespace rathena;
 
-static DBMap *itemdb_combo; /// Item Combo DB
+static std::map<uint32, std::shared_ptr<s_item_combo>> itemdb_combo; /// Item Combo DB
 static DBMap *itemdb_group; /// Item Group DB
 static DBMap *itemdb_randomopt; /// Random option DB
 static DBMap *itemdb_randomopt_group; /// Random option group DB
@@ -1019,12 +1020,14 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 ItemDatabase item_db;
 
 /**
-* Check if combo exists
-* @param combo_id
-* @return NULL if not exist, or struct item_combo*
-*/
-struct item_combo *itemdb_combo_exists(unsigned short combo_id) {
-	return (struct item_combo *)uidb_get(itemdb_combo, combo_id);
+ * Check if combo exists
+ * @param combo_id
+ * @return s_item_combo or nullptr if it does not exist
+ */
+s_item_combo *itemdb_combo_exists(uint32 combo_id) {
+	auto item = util::map_find(itemdb_combo, combo_id);
+
+	return item.get();
 }
 
 /**
@@ -1687,13 +1690,13 @@ static bool itemdb_read_noequip(char* str[], int columns, int current) {
 /**
  * @return: amount of retrieved entries.
  **/
-static int itemdb_combo_split_atoi (char *str, int *val) {
+static int itemdb_combo_split_atoi (char *str, uint32 *val) {
 	int i;
 
 	for (i=0; i<MAX_ITEMS_PER_COMBO; i++) {
 		if (!str) break;
 
-		val[i] = atoi(str);
+		val[i] = strtoul(str, nullptr, 10);
 
 		str = strchr(str,':');
 
@@ -1767,10 +1770,9 @@ static void itemdb_read_combos(const char* basedir, bool silent) {
 			ShowError("itemdb_read_combos(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
 			continue;
 		} else {
-			int items[MAX_ITEMS_PER_COMBO];
+			uint32 items[MAX_ITEMS_PER_COMBO];
 			int v = 0, retcount = 0;
-			struct item_data * id = NULL;
-			int idx = 0;
+
 			if((retcount = itemdb_combo_split_atoi(str[0], items)) < 2) {
 				ShowError("itemdb_read_combos: line %d of \"%s\" doesn't have enough items to make for a combo (min:2), skipping.\n", lines, path);
 				continue;
@@ -1785,45 +1787,34 @@ static void itemdb_read_combos(const char* basedir, bool silent) {
 			/* failed at some item */
 			if( v < retcount )
 				continue;
-			id = itemdb_exists(items[0]);
-			idx = id->combos_count;
-			/* first entry, create */
-			if( id->combos == NULL ) {
-				CREATE(id->combos, struct item_combo*, 1);
-				id->combos_count = 1;
-			} else {
-				RECREATE(id->combos, struct item_combo*, ++id->combos_count);
-			}
-			CREATE(id->combos[idx],struct item_combo,1);
-			id->combos[idx]->nameid = (unsigned short*)aMalloc( retcount * sizeof(unsigned short) );
-			id->combos[idx]->count = retcount;
-			id->combos[idx]->script = parse_script(str[1], path, lines, 0);
-			id->combos[idx]->id = count;
-			id->combos[idx]->isRef = false;
-			/* populate ->nameid field */
-			for( v = 0; v < retcount; v++ ) {
-				id->combos[idx]->nameid[v] = items[v];
+
+			// Create combo data
+			auto entry = std::make_shared<s_item_combo>();
+
+			entry->nameid = {};
+			entry->script = parse_script(str[1], path, lines, 0);
+			entry->id = count;
+
+			// Store into first item
+			item_data *id = itemdb_exists(items[0]);
+
+			id->combos.push_back(entry);
+
+			size_t idx = id->combos.size() - 1;
+
+			// Populate nameid field
+			for (v = 0; v < retcount; v++)
+				id->combos[idx]->nameid.push_back(items[v]);
+
+			// Populate the children to refer to this combo
+			for (v = 1; v < retcount; v++) {
+				item_data *it = itemdb_exists(items[v]);
+
+				// Copy to other combos in list
+				it->combos.push_back(id->combos[idx]);
 			}
 
-			/* populate the children to refer to this combo */
-			for( v = 1; v < retcount; v++ ) {
-				struct item_data * it;
-				int index;
-				it = itemdb_exists(items[v]);
-				index = it->combos_count;
-				if( it->combos == NULL ) {
-					CREATE(it->combos, struct item_combo*, 1);
-					it->combos_count = 1;
-				} else {
-					RECREATE(it->combos, struct item_combo*, ++it->combos_count);
-				}
-				CREATE(it->combos[index],struct item_combo,1);
-				/* we copy previously alloc'd pointers and just set it to reference */
-				memcpy(it->combos[index],id->combos[idx],sizeof(struct item_combo));
-				/* we flag this way to ensure we don't double-dealloc same data */
-				it->combos[index]->isRef = true;
-			}
-			uidb_put(itemdb_combo,id->combos[idx]->id,id->combos[idx]);
+			itemdb_combo.insert({ id->combos[idx]->id, id->combos[idx] });
 		}
 		count++;
 	}
@@ -2536,10 +2527,10 @@ void itemdb_reload(void) {
 	struct map_session_data* sd;
 
 	item_db.clear();
+	itemdb_combo.clear();
 	itemdb_group->clear(itemdb_group, itemdb_group_free);
 	itemdb_randomopt->clear(itemdb_randomopt, itemdb_randomopt_free);
 	itemdb_randomopt_group->clear(itemdb_randomopt_group, itemdb_randomopt_group_free);
-	db_clear(itemdb_combo);
 	if (battle_config.feature_roulette)
 		itemdb_roulette_free();
 
@@ -2556,17 +2547,7 @@ void itemdb_reload(void) {
 	iter = mapit_geteachpc();
 	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) ) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
-
-		if( sd->combos.count ) { // clear combo bonuses
-			aFree(sd->combos.bonus);
-			aFree(sd->combos.id);
-			aFree(sd->combos.pos);
-			sd->combos.bonus = nullptr;
-			sd->combos.id = nullptr;
-			sd->combos.pos = nullptr;
-			sd->combos.count = 0;
-		}
-
+		sd->combos.clear(); // clear combo bonuses
 		pc_setinventorydata(sd);
 		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
 		pc_load_combo(sd); // Check to see if new combos are available
@@ -2580,7 +2561,7 @@ void itemdb_reload(void) {
 */
 void do_final_itemdb(void) {
 	item_db.clear();
-	db_destroy(itemdb_combo);
+	itemdb_combo.clear();
 	itemdb_group->destroy(itemdb_group, itemdb_group_free);
 	itemdb_randomopt->destroy(itemdb_randomopt, itemdb_randomopt_free);
 	itemdb_randomopt_group->destroy(itemdb_randomopt_group, itemdb_randomopt_group_free);
@@ -2592,7 +2573,6 @@ void do_final_itemdb(void) {
 * Initializing Item DB
 */
 void do_init_itemdb(void) {
-	itemdb_combo = uidb_alloc(DB_OPT_BASE);
 	itemdb_group = uidb_alloc(DB_OPT_BASE);
 	itemdb_randomopt = uidb_alloc(DB_OPT_BASE);
 	itemdb_randomopt_group = uidb_alloc(DB_OPT_BASE);

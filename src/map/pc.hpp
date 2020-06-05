@@ -250,6 +250,13 @@ struct s_regen {
 	int tick;
 };
 
+/// Item combo struct
+struct s_combos {
+	script_code *bonus;
+	uint32 id;
+	uint32 pos;
+};
+
 struct map_session_data {
 	struct block_list bl;
 	struct unit_data ud;
@@ -686,12 +693,7 @@ struct map_session_data {
 	enum npc_timeout_type npc_idle_type;
 #endif
 
-	struct s_combos {
-		struct script_code **bonus;/* the script */
-		unsigned short *id;/* array of combo ids */
-		unsigned int *pos;/* array of positions*/
-		unsigned char count;
-	} combos;
+	std::vector<std::shared_ptr<s_combos>> combos;
 
 	/**
 	 * Guarantees your friend request is legit (for bugreport:4629)

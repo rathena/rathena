@@ -10132,86 +10132,98 @@ void pc_cleareventtimer(struct map_session_data *sd)
 }
 
 /**
-* Called when an item with combo is worn
-* @param *sd
-* @param *data struct item_data
-* @return success numbers of succeed combo
-*/
-static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
-	uint16 i;
+ * Called when an item with combo is worn
+ * @param sd: Player data
+ * @param data: Item data
+ * @return Number of succeeded combo(s)
+ */
+static int pc_checkcombo(struct map_session_data *sd, item_data *data) {
 	int success = 0;
-	for( i = 0; i < data->combos_count; i++ ) {
-		struct itemchk {
-			int idx;
-			unsigned short nameid;
-			short card[MAX_SLOTS];
-		} *combo_idx;
-		int idx, j;
-		int nb_itemCombo;
-		unsigned int pos = 0;
-		/* ensure this isn't a duplicate combo */
-		if( sd->combos.bonus != NULL ) {
-			int x;
-			ARR_FIND( 0, sd->combos.count, x, sd->combos.id[x] == data->combos[i]->id );
-			/* found a match, skip this combo */
-			if( x < sd->combos.count )
-				continue;
+
+	for (const auto &item_combo : data->combos) {
+		bool do_continue = false;
+
+		// Ensure this isn't a duplicate combo
+		for (const auto player_combo : sd->combos) {
+			if (player_combo->id == item_combo->id) {
+				do_continue = true;
+				break;
+			}
 		}
 
-		nb_itemCombo = data->combos[i]->count;
-		if(nb_itemCombo<2) //a combo with less then 2 item ?? how that possible
+		// Combo already equipped
+		if (do_continue)
 			continue;
-		CREATE(combo_idx,struct itemchk,nb_itemCombo);
-		for(j=0; j < nb_itemCombo; j++){
-			combo_idx[j].idx=-1;
-			combo_idx[j].nameid=-1;
-			memset(combo_idx[j].card,-1,MAX_SLOTS);
-		}
-			
-		for( j = 0; j < nb_itemCombo; j++ ) {
-			uint16 id = data->combos[i]->nameid[j], k;
+
+		size_t nb_itemCombo = item_combo->nameid.size();
+
+		if (nb_itemCombo < 2) // A combo with less then 2 item?
+			continue;
+
+		struct s_itemchk {
+			uint32 idx, nameid, card[MAX_SLOTS];
+		};
+		std::vector<s_itemchk> combo_idx;
+		size_t j;
+		unsigned int pos = 0;
+
+		combo_idx.reserve(nb_itemCombo);
+
+		// Zero out temporary combo array
+		for (auto &tmp_combo : combo_idx)
+			tmp_combo = {};
+
+		for (j = 0; j < nb_itemCombo; j++) {
+			uint32 id = item_combo->nameid[j];
 			bool found = false;
-			
-			for( k = 0; k < EQI_MAX; k++ ) {
+
+			for (int16 k = 0; k < EQI_MAX; k++) {
 				short index = sd->equip_index[k];
-				if( index < 0 )
+
+				if (index < 0)
 					continue;
-				if( pc_is_same_equip_index((enum equip_index)k, sd->equip_index, index) )
+				if (pc_is_same_equip_index((equip_index)k, sd->equip_index, index))
 					continue;
-				if (!sd->inventory_data[index] )
+				if (!sd->inventory_data[index])
 					continue;
-				
-				if ( itemdb_type(id) != IT_CARD ) {
-					if ( sd->inventory_data[index]->nameid != id )
+
+				if (itemdb_type(id) != IT_CARD) {
+					if (sd->inventory_data[index]->nameid != id)
 						continue;
-					if(j>0){ //check if this item not already used
-						bool do_continue = false; //used to continue that specific loop with some check that also use some loop
-						uint8 z;
-						for (z = 0; z < nb_itemCombo-1; z++)
-							if(combo_idx[z].idx == index && combo_idx[z].nameid == id) //we already have that index recorded
-								do_continue=true;
-						if(do_continue)
+
+					if (j > 0) { // Check if this item not already used
+						do_continue = false;
+
+						for (size_t z = 0; z < nb_itemCombo - 1; z++) {
+							if (combo_idx[z].idx == index && combo_idx[z].nameid == id) { // Index already recorded
+								do_continue = true;
+								break;
+							}
+						}
+
+						if (do_continue)
 							continue;
 					}
+
 					combo_idx[j].nameid = id;
 					combo_idx[j].idx = index;
 					pos |= sd->inventory.u.items_inventory[index].equip;
 					found = true;
 					break;
-				} else { //Cards and enchants
-					uint16 z;
-					if ( itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]) )
+				} else { // Cards and enchants
+					if (itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
 						continue;
-					for (z = 0; z < MAX_SLOTS; z++) {
-						bool do_continue=false;			
+					for (uint8 z = 0; z < MAX_SLOTS; z++) {
+						do_continue = false;
+
 						if (sd->inventory.u.items_inventory[index].card[z] != id)
 							continue;
-						if(j>0){
-							int c1, c2;
-							for (c1 = 0; c1 < nb_itemCombo-1; c1++){
-								if(combo_idx[c1].idx == index && combo_idx[c1].nameid == id){
-									for (c2 = 0; c2 < MAX_SLOTS; c2++){
-										if(combo_idx[c1].card[c2] == id){ //we already have that card recorded (at this same idx)
+
+						if (j > 0) {
+							for (size_t c1 = 0; c1 < nb_itemCombo - 1; c1++) {
+								if (combo_idx[c1].idx == index && combo_idx[c1].nameid == id) {
+									for (uint8 c2 = 0; c2 < MAX_SLOTS; c2++) {
+										if (combo_idx[c1].card[c2] == id) { // Card already recorded (at this same idx)
 											do_continue = true;
 											break;
 										}
@@ -10219,97 +10231,81 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 								}
 							}
 						}
-						if(do_continue)
+
+						if (do_continue)
 							continue;
+
 						combo_idx[j].nameid = id;
 						combo_idx[j].idx = index;
 						combo_idx[j].card[z] = id;
 						pos |= sd->inventory.u.items_inventory[index].equip;
 						found = true;
- 						break;
- 					}
+						break;
+					}
 				}
 			}
-			if( !found )
-				break;/* we haven't found all the ids for this combo, so we can return */
+
+			if (!found)
+				break; // Unable to found all the IDs for this combo, return
 		}
-		aFree(combo_idx);
-		/* means we broke out of the count loop w/o finding all ids, we can move to the next combo */
-		if( j < nb_itemCombo )
+
+		// Broke out of the count loop without finding all IDs, move to the next combo
+		if (j < nb_itemCombo)
 			continue;
-		/* we got here, means all items in the combo are matching */
-		idx = sd->combos.count;
-		if( sd->combos.bonus == NULL ) {
-			CREATE(sd->combos.bonus, struct script_code *, 1);
-			CREATE(sd->combos.id, unsigned short, 1);
-			CREATE(sd->combos.pos, unsigned int, 1);
-			sd->combos.count = 1;
-		} else {
-			RECREATE(sd->combos.bonus, struct script_code *, ++sd->combos.count);
-			RECREATE(sd->combos.id, unsigned short, sd->combos.count);
-			RECREATE(sd->combos.pos, unsigned int, sd->combos.count);
-		}
-		/* we simply copy the pointer */
-		sd->combos.bonus[idx] = data->combos[i]->script;
-		/* save this combo's id */
-		sd->combos.id[idx] = data->combos[i]->id;
-		/* save pos of combo*/
-		sd->combos.pos[idx] = pos;
+
+		// All items in the combo are matching
+		auto entry = std::make_shared<s_combos>();
+
+		entry->bonus = item_combo->script;
+		entry->id = item_combo->id;
+		entry->pos = pos;
+		sd->combos.push_back(entry);
+		combo_idx.clear();
 		success++;
 	}
+
 	return success;
 }
 
 /**
-* Called when an item with combo is removed
-* @param *sd
-* @param *data struct item_data
-* @return retval numbers of removed combo
-*/
-static int pc_removecombo(struct map_session_data *sd, struct item_data *data ) {
-	int i, retval = 0;
+ * Called when an item with combo is removed
+ * @param sd: Player data
+ * @param data: Item data
+ * @return Number of removed combo(s)
+ */
+static int pc_removecombo(struct map_session_data *sd, item_data *data ) {
 
-	if( sd->combos.bonus == NULL )
-		return 0;/* nothing to do here, player has no combos */
-	for( i = 0; i < data->combos_count; i++ ) {
-		/* check if this combo exists in this user */
-		int x = 0, cursor = 0, j;
-		ARR_FIND( 0, sd->combos.count, x, sd->combos.id[x] == data->combos[i]->id );
-		/* no match, skip this combo */
-		if(x >= sd->combos.count)
-			continue;
+	if (sd->combos.empty())
+		return 0; // Nothing to do here, player has no combos
 
-		sd->combos.bonus[x] = NULL;
-		sd->combos.id[x] = 0;
-		sd->combos.pos[x] = 0;
-		retval++;
+	int retval = 0;
 
-		/* check if combo requirements still fit */
-		if( pc_checkcombo( sd, data ) )
-			continue;
+	for (const auto &item_combo : data->combos) {
+		std::shared_ptr<s_combos> del_combo = nullptr;
 
-		/* move next value to empty slot */
-		for( j = 0, cursor = 0; j < sd->combos.count; j++ ) {
-			if( sd->combos.bonus[j] == NULL )
-				continue;
-
-			if( cursor != j ) {
-				sd->combos.bonus[cursor] = sd->combos.bonus[j];
-				sd->combos.id[cursor]    = sd->combos.id[j];
-				sd->combos.pos[cursor]   = sd->combos.pos[j];
+		// Check if this combo exists on this player
+		for (const auto &player_combo : sd->combos) {
+			if (player_combo->id == item_combo->id) {
+				del_combo = player_combo;
+				break;
 			}
-			cursor++;
 		}
 
-		/* it's empty, we can clear all the memory */
-		if( (sd->combos.count = cursor) == 0 ) {
-			aFree(sd->combos.bonus);
-			aFree(sd->combos.id);
-			aFree(sd->combos.pos);
-			sd->combos.bonus = NULL;
-			sd->combos.id = NULL;
-			sd->combos.pos = NULL;
-			return retval; /* we also can return at this point for we have no more combos to check */
+		// No match, skip this combo
+		if (del_combo == nullptr)
+			continue;
+
+		util::vector_erase_if_exists(sd->combos, del_combo);
+		retval++;
+
+		// Check if combo requirements still fit
+		if (pc_checkcombo(sd, data))
+			continue;
+
+		// It's empty, clear all the memory
+		if (sd->combos.empty()) {
+			sd->combos.clear();
+			return retval; // Return at this point as there are no more combos to check
 		}
 	}
 
@@ -10317,34 +10313,41 @@ static int pc_removecombo(struct map_session_data *sd, struct item_data *data ) 
 }
 
 /**
-* Load combo data(s) of player
-* @param *sd
-* @return ret numbers of succeed combo
-*/
+ * Load combo data(s) of player
+ * @param sd: Player data
+ * @return ret numbers of succeed combo
+ */
 int pc_load_combo(struct map_session_data *sd) {
-	int i, ret = 0;
-	for( i = 0; i < EQI_MAX; i++ ) {
-		struct item_data *id = NULL;
+	int ret = 0;
+
+	for (int16 i = 0; i < EQI_MAX; i++) {
+		item_data *id;
 		short idx = sd->equip_index[i];
-		if( idx < 0 || !(id = sd->inventory_data[idx] ) )
+
+		if (idx < 0 || !(id = sd->inventory_data[idx]))
 			continue;
-		if( id->combos_count )
-			ret += pc_checkcombo(sd,id);
-		if(!itemdb_isspecial(sd->inventory.u.items_inventory[idx].card[0])) {
-			struct item_data *data;
-			int j;
-			for( j = 0; j < MAX_SLOTS; j++ ) {
+
+		if (!id->combos.empty())
+			ret += pc_checkcombo(sd, id);
+
+		if (!itemdb_isspecial(sd->inventory.u.items_inventory[idx].card[0])) {
+			item_data *data;
+
+			for (uint8 j = 0; j < MAX_SLOTS; j++) {
 				if (!sd->inventory.u.items_inventory[idx].card[j])
 					continue;
-				if ( ( data = itemdb_exists(sd->inventory.u.items_inventory[idx].card[j]) ) != NULL ) {
-					if( data->combos_count )
-						ret += pc_checkcombo(sd,data);
+
+				if ((data = itemdb_exists(sd->inventory.u.items_inventory[idx].card[j])) != nullptr) {
+					if (!data->combos.empty())
+						ret += pc_checkcombo(sd, data);
 				}
 			}
 		}
 	}
+
 	return ret;
 }
+
 /*==========================================
  * Equip item on player sd at req_pos from inventory index n
  * return: false - fail; true - success
@@ -10563,19 +10566,21 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 	pc_checkallowskill(sd); //Check if status changes should be halted.
 	iflag = sd->npc_item_flag;
 
-	/* check for combos (MUST be before status_calc_pc) */
-	if( id->combos_count )
-		pc_checkcombo(sd,id);
-	if(itemdb_isspecial(sd->inventory.u.items_inventory[n].card[0]))
-		; //No cards
+	// Check for combos (MUST be before status_calc_pc)
+	if (!id->combos.empty())
+		pc_checkcombo(sd, id);
+
+	if (itemdb_isspecial(sd->inventory.u.items_inventory[n].card[0]))
+		; // No cards
 	else {
-		for( i = 0; i < MAX_SLOTS; i++ ) {
-			struct item_data *data;
+		for (i = 0; i < MAX_SLOTS; i++) {
+			item_data *data;
+
 			if (!sd->inventory.u.items_inventory[n].card[i])
 				continue;
-			if ( ( data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i]) ) != NULL ) {
-				if( data->combos_count )
-					pc_checkcombo(sd,data);
+			if ((data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i])) != nullptr) {
+				if (!data->combos.empty())
+					pc_checkcombo(sd, data);
 			}
 		}
 	}
@@ -10627,22 +10632,23 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 		pc_checkallowskill(sd);
 	iflag = sd->npc_item_flag;
 
-	/* check for combos (MUST be before status_calc_pc) */
+	// Check for combos (MUST be before status_calc_pc)
 	if (sd->inventory_data[n]) {
-		if (sd->inventory_data[n]->combos_count) {
+		if (!sd->inventory_data[n]->combos.empty()) {
 			if (pc_removecombo(sd, sd->inventory_data[n]))
 				status_calc = true;
 		}
+
 		if (itemdb_isspecial(sd->inventory.u.items_inventory[n].card[0]))
-			; //No cards
+			; // No cards
 		else {
 			for (i = 0; i < MAX_SLOTS; i++) {
-				struct item_data *data;
+				item_data *data;
 
 				if (!sd->inventory.u.items_inventory[n].card[i])
 					continue;
-				if ((data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i])) != NULL) {
-					if (data->combos_count) {
+				if ((data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i])) != nullptr) {
+					if (!data->combos.empty()) {
 						if (pc_removecombo(sd, data))
 							status_calc = true;
 					}

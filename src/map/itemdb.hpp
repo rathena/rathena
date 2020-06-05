@@ -4,6 +4,8 @@
 #ifndef ITEMDB_HPP
 #define ITEMDB_HPP
 
+#include <vector>
+
 #include "../common/database.hpp"
 #include "../common/db.hpp"
 #include "../common/malloc.hpp"
@@ -786,14 +788,11 @@ enum e_item_drop_effect : uint16 {
 	DROPEFFECT_MAX
 };
 
-///Item combo struct
-struct item_combo
-{
+/// Item combo struct
+struct s_item_combo {
+	std::vector<uint32> nameid;
 	struct script_code *script;
-	unsigned short *nameid;/* nameid array */
-	unsigned char count;
-	unsigned short id;/* id of this combo */
-	bool isRef;/* whether this struct is a reference or the master */
+	uint32 id;
 };
 
 
@@ -899,9 +898,7 @@ struct item_data
 		bool sitting;
 	} item_usage;
 	short gm_lv_trade_override;	//GM-level to override trade_restriction
-	/* bugreport:309 */
-	struct item_combo **combos;
-	unsigned char combos_count;
+	std::vector<std::shared_ptr<s_item_combo>> combos;
 	struct {
 		uint32 duration;
 		sc_type sc; ///< Use delay group if any instead using player's item_delay data [Cydh]
@@ -917,16 +914,13 @@ struct item_data
 		if (this->unequip_script)
 			script_free_code(this->unequip_script);
 
-		if (this->combos_count) {
-			for (size_t i = 0; i < this->combos_count; i++) {
-				if (!this->combos[i]->isRef) {
-					aFree(this->combos[i]->nameid);
-					if (this->combos[i]->script)
-						script_free_code(this->combos[i]->script);
-				}
-				aFree(this->combos[i]);
+		if (!this->combos.empty()) {
+			for (auto &combo : this->combos) {
+				if (combo->script)
+					script_free_code(combo->script);
 			}
-			aFree(this->combos);
+
+			this->combos.clear();
 		}
 	}
 
@@ -1033,7 +1027,7 @@ bool itemdb_isstackable2(struct item_data *id);
 #define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
 
-struct item_combo *itemdb_combo_exists(unsigned short combo_id);
+s_item_combo *itemdb_combo_exists(uint32 combo_id);
 
 struct s_item_group_db *itemdb_group_exists(unsigned short group_id);
 bool itemdb_group_item_exists(unsigned short group_id, unsigned short nameid);
