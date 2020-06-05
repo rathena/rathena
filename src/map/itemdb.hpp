@@ -795,8 +795,10 @@ struct s_item_combo {
 	uint32 id;
 
 	~s_item_combo() {
-		if (this->script)
+		if (this->script) {
 			script_free_code(this->script);
+			this->script = nullptr;
+		}
 
 		this->nameid.clear();
 	}
@@ -912,23 +914,22 @@ struct item_data
 	} delay;
 
 	~item_data() {
-		if (this->script)
+		if (this->script){
 			script_free_code(this->script);
-
-		if (this->equip_script)
-			script_free_code(this->equip_script);
-
-		if (this->unequip_script)
-			script_free_code(this->unequip_script);
-
-		if (!this->combos.empty()) {
-			for (auto &combo : this->combos) {
-				if (combo->script)
-					script_free_code(combo->script);
-			}
-
-			this->combos.clear();
+			this->script = nullptr;
 		}
+
+		if (this->equip_script){
+			script_free_code(this->equip_script);
+			this->equip_script = nullptr;
+		}
+
+		if (this->unequip_script){
+			script_free_code(this->unequip_script);
+			this->unequip_script = nullptr;
+		}
+
+		this->combos.clear();
 	}
 
 	bool isStackable();
