@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2020-04-04 14:37:03
+Date: 2020-06-06 11:19:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -349,8 +349,9 @@ CREATE TABLE `char` (
   `unban_time` int(11) unsigned NOT NULL DEFAULT 0,
   `font` tinyint(3) unsigned NOT NULL DEFAULT 0,
   `uniqueitem_counter` int(11) unsigned NOT NULL DEFAULT 0,
-  `sex` enum('M','F','U') NOT NULL DEFAULT 'U',
+  `sex` enum('M','F') NOT NULL,
   `hotkey_rowshift` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `hotkey_rowshift2` tinyint(3) unsigned NOT NULL DEFAULT 0,
   `clan_id` int(11) unsigned NOT NULL DEFAULT 0,
   `last_login` datetime DEFAULT NULL,
   `title_id` int(11) unsigned NOT NULL DEFAULT 0,
@@ -515,48 +516,6 @@ CREATE TABLE `db_roulette` (
 -- ----------------------------
 -- Records of db_roulette
 -- ----------------------------
-INSERT INTO `db_roulette` VALUES ('0', '1', '675', '1', '1');
-INSERT INTO `db_roulette` VALUES ('1', '1', '671', '1', '0');
-INSERT INTO `db_roulette` VALUES ('2', '1', '678', '1', '0');
-INSERT INTO `db_roulette` VALUES ('3', '1', '604', '1', '0');
-INSERT INTO `db_roulette` VALUES ('4', '1', '522', '1', '0');
-INSERT INTO `db_roulette` VALUES ('5', '1', '12609', '1', '0');
-INSERT INTO `db_roulette` VALUES ('6', '1', '12523', '1', '0');
-INSERT INTO `db_roulette` VALUES ('7', '1', '985', '1', '0');
-INSERT INTO `db_roulette` VALUES ('8', '1', '984', '1', '0');
-INSERT INTO `db_roulette` VALUES ('9', '2', '675', '1', '1');
-INSERT INTO `db_roulette` VALUES ('10', '2', '671', '1', '0');
-INSERT INTO `db_roulette` VALUES ('11', '2', '603', '1', '0');
-INSERT INTO `db_roulette` VALUES ('12', '2', '608', '1', '0');
-INSERT INTO `db_roulette` VALUES ('13', '2', '607', '1', '0');
-INSERT INTO `db_roulette` VALUES ('14', '2', '12522', '1', '0');
-INSERT INTO `db_roulette` VALUES ('15', '2', '6223', '1', '0');
-INSERT INTO `db_roulette` VALUES ('16', '2', '6224', '1', '0');
-INSERT INTO `db_roulette` VALUES ('17', '3', '675', '1', '1');
-INSERT INTO `db_roulette` VALUES ('18', '3', '671', '1', '0');
-INSERT INTO `db_roulette` VALUES ('19', '3', '12108', '1', '0');
-INSERT INTO `db_roulette` VALUES ('20', '3', '617', '1', '0');
-INSERT INTO `db_roulette` VALUES ('21', '3', '12514', '1', '0');
-INSERT INTO `db_roulette` VALUES ('22', '3', '7444', '1', '0');
-INSERT INTO `db_roulette` VALUES ('23', '3', '969', '1', '0');
-INSERT INTO `db_roulette` VALUES ('24', '4', '675', '1', '1');
-INSERT INTO `db_roulette` VALUES ('25', '4', '671', '1', '0');
-INSERT INTO `db_roulette` VALUES ('26', '4', '616', '1', '0');
-INSERT INTO `db_roulette` VALUES ('27', '4', '12516', '1', '0');
-INSERT INTO `db_roulette` VALUES ('28', '4', '22777', '1', '0');
-INSERT INTO `db_roulette` VALUES ('29', '4', '6231', '1', '0');
-INSERT INTO `db_roulette` VALUES ('30', '5', '671', '1', '1');
-INSERT INTO `db_roulette` VALUES ('31', '5', '12246', '1', '0');
-INSERT INTO `db_roulette` VALUES ('32', '5', '12263', '1', '0');
-INSERT INTO `db_roulette` VALUES ('33', '5', '12831', '1', '0');
-INSERT INTO `db_roulette` VALUES ('34', '5', '6235', '1', '0');
-INSERT INTO `db_roulette` VALUES ('35', '6', '671', '1', '1');
-INSERT INTO `db_roulette` VALUES ('36', '6', '12766', '1', '0');
-INSERT INTO `db_roulette` VALUES ('37', '6', '6234', '1', '0');
-INSERT INTO `db_roulette` VALUES ('38', '6', '6233', '1', '0');
-INSERT INTO `db_roulette` VALUES ('39', '7', '671', '1', '1');
-INSERT INTO `db_roulette` VALUES ('40', '7', '6233', '1', '0');
-INSERT INTO `db_roulette` VALUES ('41', '7', '6233', '1', '0');
 
 -- ----------------------------
 -- Table structure for elemental
