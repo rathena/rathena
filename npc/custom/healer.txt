@@ -50,6 +50,10 @@
 	if (.@Delay)
 	@HD = gettimetick(2) + .@Delay;
 	end;
+	
+OnInit:
+	waitingroom "¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ",0;
+	end;
 }
 
 
@@ -76,7 +80,7 @@ morocc,153,97,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#mor	10301
 moscovia,220,191,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#mos	10301
 niflheim,212,182,5	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#nif	10301
 payon,179,106,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#pay	10301
-prontera,162,193,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#prt	10301
+prontera,163,193,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#prt	10301
 rachel,125,116,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#rac	10301
 splendide,201,153,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#spl	10301
 thor_camp,249,74,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#thor	10301

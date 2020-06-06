@@ -47,4 +47,8 @@ prontera,163,175,3	script	Reset Stats & Skills	10295,{
 	mes "เรียบร้อย!";
 	if(.@Reset[3]) set reset_limit,reset_limit + 1;
 	close;
+	
+OnInit:
+	waitingroom "Reset Stats & Skills",0;
+	end;
 }

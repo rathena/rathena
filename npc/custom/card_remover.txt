@@ -18,7 +18,7 @@
 //= Translated & Modified by Start (Discord ID: Start#1356)
 
 
-prontera,144,174,4	script	ถอดการ์ด	10307,{
+prontera,163,171,3	script	ถอดการ์ด	10307,{
 	disable_items;
 	mes "•ถอดการ์ดฟรี";
 	mes "•ถอดได้เลย ไม่ต้องกลัวอะไรหายทั้งนั้น";

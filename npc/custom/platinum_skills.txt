@@ -31,4 +31,8 @@ prontera,148,171,6	script	รับสกิลเสริม	10298,{
 	callfunc "F_GetPlatinumSkills";
 	mes "เรียบร้อย!";
 	close;
+	
+OnInit:
+	waitingroom "รับสกิลเสริม",0;
+	end;
 }
