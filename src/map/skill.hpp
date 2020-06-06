@@ -105,6 +105,7 @@ enum e_skill_inf2 : uint8 {
 	INF2_IGNOREWUGBITE, // Skill blocked by RA_WUGBITE
 	INF2_IGNOREAUTOGUARD , // Skill is not blocked by SC_AUTOGUARD (physical-skill only)
 	INF2_IGNORECICADA, // Skill is not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (physical-skill only)
+	INF2_SHOWSCALE, // Skill shows AoE area while casting
 	INF2_MAX,
 };
 
@@ -530,6 +531,7 @@ uint16 SKILL_MAX_DB(void);
 int skill_isammotype(struct map_session_data *sd, unsigned short skill_id);
 TIMER_FUNC(skill_castend_id);
 TIMER_FUNC(skill_castend_pos);
+TIMER_FUNC( skill_keep_using );
 int skill_castend_map( struct map_session_data *sd,uint16 skill_id, const char *map);
 
 int skill_cleartimerskill(struct block_list *src);
@@ -1693,7 +1695,7 @@ enum e_skill {
 	WM_METALICSOUND,
 	WM_REVERBERATION,
 	WM_REVERBERATION_MELEE, // Removed on kRO
-	WM_REVERBERATION_MAGIC,
+	WM_REVERBERATION_MAGIC, // Removed on kRO
 	WM_DOMINION_IMPULSE, // Removed on kRO
 	WM_SEVERE_RAINSTORM,
 	WM_POEMOFNETHERWORLD,

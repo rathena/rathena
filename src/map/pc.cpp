@@ -354,6 +354,54 @@ int pc_get_group_level(struct map_session_data *sd) {
 	return sd->group_level;
 }
 
+/**
+ * Remove a player from queue after timeout
+ * @param tid: Timer ID
+ * @param tick: Timer
+ * @param id: ID
+ * @return 0 on success or 1 otherwise
+ */
+static TIMER_FUNC(pc_on_expire_active)
+{
+	map_session_data *sd = (map_session_data *)data;
+
+	nullpo_retr(1, sd);
+
+	sd->tid_queue_active = INVALID_TIMER;
+
+	bg_queue_leave(sd);
+	clif_bg_queue_entry_init(sd);
+	return 0;
+}
+
+/**
+ * Function used to set timer externally
+ * @param sd: Player data
+ */
+void pc_set_bg_queue_timer(map_session_data *sd) {
+	nullpo_retv(sd);
+
+	if (sd->tid_queue_active != INVALID_TIMER) {
+		delete_timer(sd->tid_queue_active, pc_on_expire_active);
+		sd->tid_queue_active = INVALID_TIMER;
+	}
+
+	sd->tid_queue_active = add_timer(gettick() + 20000, pc_on_expire_active, 0, (intptr_t)sd);
+}
+
+/**
+ * Function used to delete timer externally
+ * @param sd: Player data
+ */
+void pc_delete_bg_queue_timer(map_session_data *sd) {
+	nullpo_retv(sd);
+
+	if (sd->tid_queue_active != INVALID_TIMER) {
+		delete_timer(sd->tid_queue_active, pc_on_expire_active);
+		sd->tid_queue_active = INVALID_TIMER;
+	}
+}
+
 static TIMER_FUNC(pc_invincible_timer){
 	struct map_session_data *sd;
 
@@ -752,12 +800,12 @@ void pc_inventory_rentals(struct map_session_data *sd)
 		if( sd->inventory.u.items_inventory[i].expire_time <= time(NULL) ) {
 			if (sd->inventory_data[i]->unequip_script)
 				run_script(sd->inventory_data[i]->unequip_script, 0, sd->bl.id, fake_nd->bl.id);
-			clif_rental_expired(sd->fd, i, sd->inventory.u.items_inventory[i].nameid);
+			clif_rental_expired(sd, i, sd->inventory.u.items_inventory[i].nameid);
 			pc_delitem(sd, i, sd->inventory.u.items_inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
 		} else {
 			unsigned int expire_tick = (unsigned int)(sd->inventory.u.items_inventory[i].expire_time - time(NULL));
 
-			clif_rental_time(sd->fd, sd->inventory.u.items_inventory[i].nameid, (int)expire_tick);
+			clif_rental_time(sd, sd->inventory.u.items_inventory[i].nameid, (int)expire_tick);
 			next_tick = umin(expire_tick * 1000U, next_tick);
 			c++;
 		}
@@ -866,6 +914,24 @@ bool pc_can_give_items(struct map_session_data *sd)
 bool pc_can_give_bounded_items(struct map_session_data *sd)
 {
 	return pc_has_permission(sd, PC_PERM_TRADE_BOUNDED);
+}
+
+/**
+ * Determine if an item in a player's inventory is tradeable based on several merits.
+ * Checks for item_trade, bound, and rental restrictions.
+ * @param sd: Player data
+ * @param index: Item inventory index
+ * @return True if the item can be traded or false otherwise
+ */
+bool pc_can_trade_item(map_session_data *sd, int index) {
+	if (sd && index >= 0) {
+		return (sd->inventory.u.items_inventory[index].expire_time == 0 &&
+			(sd->inventory.u.items_inventory[index].bound == 0 || pc_can_give_bounded_items(sd)) &&
+			itemdb_cantrade(&sd->inventory.u.items_inventory[index], pc_get_group_level(sd), pc_get_group_level(sd))
+			);
+	}
+
+	return false;
 }
 
 /*==========================================
@@ -1471,6 +1537,12 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->expiration_tid = INVALID_TIMER;
 	sd->autotrade_tid = INVALID_TIMER;
 	sd->respawn_tid = INVALID_TIMER;
+	sd->tid_queue_active = INVALID_TIMER;
+
+	sd->skill_keep_using.tid = INVALID_TIMER;
+	sd->skill_keep_using.skill_id = 0;
+	sd->skill_keep_using.level = 0;
+	sd->skill_keep_using.target = 0;
 
 #ifdef SECURE_NPCTIMEOUT
 	// Initialize to defaults/expected
@@ -1617,9 +1689,8 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->bonus_script.head = NULL;
 	sd->bonus_script.count = 0;
 
-	// Initialize BG queue pointer
-	sd->bg_queue = nullptr;
-	sd->bg_queue_accept_state = false;
+	// Initialize BG queue
+	sd->bg_queue_id = 0;
 
 #if PACKETVER >= 20150513
 	sd->hatEffectIDs = NULL;
@@ -4989,11 +5060,11 @@ enum e_additem_result pc_additem(struct map_session_data *sd,struct item *item,i
 	/* rental item check */
 	if( item->expire_time ) {
 		if( time(NULL) > item->expire_time ) {
-			clif_rental_expired(sd->fd, i, sd->inventory.u.items_inventory[i].nameid);
+			clif_rental_expired(sd, i, sd->inventory.u.items_inventory[i].nameid);
 			pc_delitem(sd, i, sd->inventory.u.items_inventory[i].amount, 1, 0, LOG_TYPE_OTHER);
 		} else {
 			unsigned int seconds = (unsigned int)( item->expire_time - time(NULL) );
-			clif_rental_time(sd->fd, sd->inventory.u.items_inventory[i].nameid, seconds);
+			clif_rental_time(sd, sd->inventory.u.items_inventory[i].nameid, seconds);
 			pc_inventory_rental_add(sd, seconds);
 		}
 	}
@@ -5501,7 +5572,7 @@ enum e_additem_result pc_cart_additem(struct map_session_data *sd,struct item *i
 			return ADDITEM_OVERAMOUNT; // no slot
 
 		sd->cart.u.items_cart[i].amount += amount;
-		clif_cart_additem(sd,i,amount,0);
+		clif_cart_additem(sd,i,amount);
 	}
 	else
 	{// item not stackable or not present, add it
@@ -5513,7 +5584,7 @@ enum e_additem_result pc_cart_additem(struct map_session_data *sd,struct item *i
 		sd->cart.u.items_cart[i].id = 0;
 		sd->cart.u.items_cart[i].amount = amount;
 		sd->cart_num++;
-		clif_cart_additem(sd,i,amount,0);
+		clif_cart_additem(sd,i,amount);
 	}
 	sd->cart.u.items_cart[i].favorite = 0; // clear
 	sd->cart.u.items_cart[i].equipSwitch = 0;
@@ -5622,7 +5693,7 @@ void pc_getitemfromcart(struct map_session_data *sd,int idx,int amount)
 	else {
 		clif_cart_delitem(sd, idx, amount);
 		clif_additem(sd, idx, amount, flag);
-		clif_cart_additem(sd, idx, amount, 0);
+		clif_cart_additem(sd, idx, amount);
 	}
 }
 
@@ -8211,7 +8282,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	clif_party_dead( sd );
 
-	pc_setglobalreg(sd, add_str(PCDIECOUNTER_VAR), sd->die_counter+1);
+	pc_setparam(sd, SP_PCDIECOUNTER, sd->die_counter+1);
 	pc_setparam(sd, SP_KILLERRID, src?src->id:0);
 
 	//Reset menu skills/item skills
@@ -8885,7 +8956,7 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		if (sd->die_counter == val)
 			return true;
 		sd->die_counter = val;
-		if (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
+		if (!sd->state.connect_new && sd->die_counter == 1 && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
 			status_calc_pc(sd, SCO_NONE); // Lost the bonus.
 		pc_setglobalreg(sd, add_str(PCDIECOUNTER_VAR), sd->die_counter);
 		return true;
@@ -9443,6 +9514,10 @@ void pc_setoption(struct map_session_data *sd,int type)
 					status_change_end(&sd->bl,statuses[i],INVALID_TIMER);
 			}
 			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
+
+#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106
+			clif_status_load( &sd->bl, EFST_MADOGEAR, 1 );
+#endif
 		} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
 			status_calc_pc(sd,SCO_NONE);
 			status_change_end(&sd->bl,SC_SHAPESHIFT,INVALID_TIMER);
@@ -9454,6 +9529,10 @@ void pc_setoption(struct map_session_data *sd,int type)
 			status_change_end(&sd->bl,SC_NEUTRALBARRIER_MASTER,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_STEALTHFIELD_MASTER,INVALID_TIMER);
 			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
+
+#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106
+			clif_status_load( &sd->bl, EFST_MADOGEAR, 0 );
+#endif
 		}
 	}
 
@@ -13417,6 +13496,7 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_global_expiration_timer, "pc_global_expiration_timer");
 	add_timer_func_list(pc_expiration_timer, "pc_expiration_timer");
 	add_timer_func_list(pc_autotrade_timer, "pc_autotrade_timer");
+	add_timer_func_list(pc_on_expire_active, "pc_on_expire_active");
 
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 

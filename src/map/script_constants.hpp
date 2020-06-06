@@ -3503,6 +3503,7 @@
 	export_constant(EFST_MAGIC_POISON);
 	export_constant(EFST_KAUTE);
 	export_constant(EFST_JPNONLY_TACTICS);
+	export_constant(EFST_MADOGEAR);
 	export_constant(EFST_LUXANIMA);
 	export_constant(EFST_BATH_FOAM_A);
 	export_constant(EFST_BATH_FOAM_B);
@@ -7537,6 +7538,7 @@
 	export_constant(INF2_IGNOREWUGBITE);
 	export_constant(INF2_IGNOREAUTOGUARD);
 	export_constant(INF2_IGNORECICADA);
+	export_constant(INF2_SHOWSCALE);
 
 	/* skill no near npc flags */
 	export_constant(SKILL_NONEAR_WARPPORTAL);

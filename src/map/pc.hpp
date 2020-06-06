@@ -634,10 +634,6 @@ struct map_session_data {
 		bool changed; // if true, should sync with charserver on next mailbox request
 	} mail;
 
-	// Battlegrounds queue system [MasterOfMuppets]
-	std::shared_ptr<s_battleground_queue> bg_queue;
-	bool bg_queue_accept_state; // Set this to true when someone has accepted the invite to join BGs
-
 	//Quest log system
 	int num_quests;          ///< Number of entries in quest_log
 	int avail_quests;        ///< Number of Q_ACTIVE and Q_INACTIVE entries in quest log (index of the first Q_COMPLETE entry)
@@ -668,7 +664,9 @@ struct map_session_data {
 	int debug_line;
 	const char* debug_func;
 
-	int bg_id;
+	// Battlegrounds queue system [MasterOfMuppets]
+	int bg_id, bg_queue_id;
+	int tid_queue_active; ///< Timer ID associated with players joining an active BG
 
 #ifdef SECURE_NPCTIMEOUT
 	/**
@@ -771,6 +769,13 @@ struct map_session_data {
 	uint32* hatEffectIDs;
 	uint8 hatEffectCount;
 #endif
+
+	struct{
+		int tid;
+		uint16 skill_id;
+		uint16 level;
+		int target;
+	} skill_keep_using;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1053,6 +1058,7 @@ int pc_get_group_id(struct map_session_data *sd);
 bool pc_can_sell_item(struct map_session_data* sd, struct item * item, enum npc_subtype shoptype);
 bool pc_can_give_items(struct map_session_data *sd);
 bool pc_can_give_bounded_items(struct map_session_data *sd);
+bool pc_can_trade_item(map_session_data *sd, int index);
 
 bool pc_can_use_command(struct map_session_data *sd, const char *command, AtCommandType type);
 #define pc_has_permission(sd, permission) ( ((sd)->permissions&permission) != 0 )
@@ -1295,6 +1301,9 @@ struct sg_data {
 	bool (*day_func)(void);
 };
 extern const struct sg_data sg_info[MAX_PC_FEELHATE];
+
+void pc_set_bg_queue_timer(map_session_data *sd);
+void pc_delete_bg_queue_timer(map_session_data *sd);
 
 void pc_setinvincibletimer(struct map_session_data* sd, int val);
 void pc_delinvincibletimer(struct map_session_data* sd);
