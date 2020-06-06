@@ -21,7 +21,7 @@
 //Translated & Modified by Start (Discord ID: Start#1356)
 
 
-prontera,128,200,6	script	รับสกิลเสริม	94,{
+prontera,148,171,6	script	รับสกิลเสริม	10298,{
 	mes "ต้องการสกิลเสริมหรือไม่?";
 	next;
 	if (select("ต้องการ:ยกเลิก") == 2) {

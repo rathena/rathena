@@ -17,7 +17,7 @@
 //Translated & Modified by Start (Discord ID: Start#1356)
 
 
-prontera,170,180,1	script	Stylist#custom_stylist	122,{
+prontera,170,180,1	script	Stylist#custom_stylist	10350,{
 	menu "ตัดผม, ย้อมสีผม, ย้อมสีเสื้อ",-,"เปลี่ยนชุด Class 3",L_Class3Suit,"แก้ ID เด้งเข้าเกมไม่ได้",L_ResetErrorCharacter;
 	L_MainMenu:
 	setarray .@Styles[1],getbattleflag("max_cloth_color"),getbattleflag("max_hair_style"),getbattleflag("max_hair_color");

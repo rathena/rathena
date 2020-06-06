@@ -55,42 +55,42 @@
 
 // Duplicates
 //============================================================
-alberta,25,240,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#alb	909
-aldebaran,135,118,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#alde	909
-amatsu,200,79,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#ama	909
-ayothaya,207,169,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#ayo	909
-comodo,184,158,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#com	909
-einbech,57,36,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#einbe	909
-einbroch,57,202,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#einbr	909
-geffen,115,72,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#gef	909
-gonryun,156,122,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#gon	909
-hugel,89,150,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#hug	909
-izlude,121,150,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#izl	909	//Pre-RE: (125,118)
-jawaii,250,139,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#jaw	909
-lighthalzen,152,100,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#lhz	909
-louyang,226,103,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#lou	909
-manuk,272,144,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#man	909
-mid_camp,203,289,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#mid	909
-moc_ruins,72,164,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#moc	909
-morocc,153,97,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#mor	909
-moscovia,220,191,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#mos	909
-niflheim,212,182,5	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#nif	909
-payon,179,106,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#pay	909
-prontera,162,193,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#prt	909
-rachel,125,116,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#rac	909
-splendide,201,153,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#spl	909
-thor_camp,249,74,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#thor	909
-umbala,105,148,3	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#umb	909
-veins,217,121,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#ve	909
-xmas,143,136,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#xmas	909
-yuno,164,45,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#yuno	909
+alberta,25,240,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#alb	10301
+aldebaran,135,118,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#alde	10301
+amatsu,200,79,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#ama	10301
+ayothaya,207,169,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#ayo	10301
+comodo,184,158,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#com	10301
+einbech,57,36,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#einbe	10301
+einbroch,57,202,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#einbr	10301
+geffen,115,72,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#gef	10301
+gonryun,156,122,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#gon	10301
+hugel,89,150,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#hug	10301
+izlude,121,150,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#izl	10301	//Pre-RE: (125,118)
+jawaii,250,139,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#jaw	10301
+lighthalzen,152,100,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#lhz	10301
+louyang,226,103,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#lou	10301
+manuk,272,144,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#man	10301
+mid_camp,203,289,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#mid	10301
+moc_ruins,72,164,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#moc	10301
+morocc,153,97,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#mor	10301
+moscovia,220,191,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#mos	10301
+niflheim,212,182,5	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#nif	10301
+payon,179,106,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#pay	10301
+prontera,162,193,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#prt	10301
+rachel,125,116,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#rac	10301
+splendide,201,153,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#spl	10301
+thor_camp,249,74,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#thor	10301
+umbala,105,148,3	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#umb	10301
+veins,217,121,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#ve	10301
+xmas,143,136,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#xmas	10301
+yuno,164,45,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#yuno	10301
 
 // Duplicates (Renewal)
 //============================================================
-brasilis,194,221,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#bra	909
-dewata,195,187,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#dew	909
-dicastes01,201,194,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#dic	909
-ecl_in01,45,60,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#ecl	909
-malangdo,132,114,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#mal	909
-malaya,227,204,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#ma	909
-mora,55,152,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#mora	909
+brasilis,194,221,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#bra	10301
+dewata,195,187,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#dew	10301
+dicastes01,201,194,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#dic	10301
+ecl_in01,45,60,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#ecl	10301
+malangdo,132,114,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#mal	10301
+malaya,227,204,6	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#ma	10301
+mora,55,152,4	duplicate(Healer)	¿×é¹¿Ù¾ÅÑ§ªÕÇÔµ#mora	10301
