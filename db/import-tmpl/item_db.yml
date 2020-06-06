@@ -476,3 +476,23 @@ Header:
 #    Type: Delayconsume
 #    Script: |
 #      unitskilluseid getcharid(3),"AL_TELEPORT",3;
+
+# Treasure Hunters Quest Items
+#=============================================================
+#  - Id: 1998
+#    AliasName: Jur
+#  - Id: 1999
+#    AliasName: Staff_Of_Soul
+#  - Id: 7950
+#    AliasName: Foolishness_Of_Blind
+#  - Id: 7951
+#    AliasName: Leather_Bag_Of_Infinity
+
+# St. Patric's Day Quest (2008) Items
+#=============================================================
+#  - Id: 7915
+#    AliasName: Copper_Coin
+#  - Id: 7916
+#    AliasName: Silver_Coin
+#  - Id: 12715
+#    AliasName: Treasure_Box_
