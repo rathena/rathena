@@ -1591,7 +1591,7 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 18
     CastCancel: true
     CastTime: 350
     AfterCastActDelay: 3500
@@ -2666,7 +2666,7 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 18
     CastCancel: true
     AfterCastActDelay: 2000
     Duration1:
