@@ -1,0 +1,14 @@
+-	script	Day_Night_Controller	-1,{
+OnInit:
+	if(gettime(3) >= 18 || gettime(3) < 6)
+	night;
+	else
+	day;
+	end;
+OnClock0600: 
+	day;
+	end;
+OnClock1800:
+	night;
+	end;
+}
