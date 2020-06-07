@@ -1299,3 +1299,133 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 	getitem2 .@equip_id,1,1,.@equip_refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
 	close;
 }
+
+// Costume enchant (garment)
+mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
+	disable_items;
+	mes "[Lace La Zard]";
+	mes "Welcome to Fashion Stone!!";
+	mes "My name is Lace La Zard who will make your 'Power Shoulder' dream come true.";
+	next;
+	mes "[Lace La Zard]";
+	mes "Bring your ^ff0000Costume Garment^000000 and ^ff0000Garment Stone^000000, I will complete the perfect upgrade for you.!";
+	mes "I found this formula while working on my own humble body upgrading!";
+	next;
+	if (select( "Apply ability.", "End Conversation." ) == 2) {
+		mes "[Lace La Zard]";
+		mes "Yes? Your want to look more?";
+		close;
+	}
+	if (checkweight(1119,3) == 0) {
+		mes "[Lace La Zard]";
+		mes "Well... Your shoulder doesn't look possilbe for any more upgrade...!";
+		mes "Don't be cruel to your shoulder!";
+		next;
+		mes "It seems you have too many items on you.";
+		mes "Come back after clearing some inventory spaces.";
+		close;
+	}
+	.@part = EQI_COSTUME_GARMENT;
+	.@equip_id = getequipid(.@part);
+	if (.@equip_id == -1) {
+		mes "[Lace La Zard]";
+		mes "Put the garment on your shoulder.";
+		mes "I need to have a look at it to check for upgrading posibility..";
+		close;
+	}
+
+	// costume garment list allowed (incomplete)
+	switch(.@equip_id) {
+	case 20502:	// C_Devil_Wing
+	case 20504:	// C_Cupid_Wing_Pink
+	case 20505:	// C_Cupid_Wing_Skyblue
+	case 20506:	// C_Invisible_Manteau
+	case 20507:	// C_Poring_Bag
+	case 20509:	// C_Wings_of_Uriel
+	case 20510:	// C_SwordWing
+	case 20511:	// C_Blue_Fairy_Wing
+	case 20727:	// Brilliant_Golden_Wings
+	case 20737:	// C_Kirin_Wing
+	case 20746:	// C_Rudra_Wing
+	case 20761:	// C_Wing_Of_Happiness
+	case 20762:	// C_GreatDevilWing
+	case 20763:	// C_Amistr_Bag
+	case 20764:	// C_Fallen_Angel_Wing
+	case 20765:	// C_Archangel_Wing
+		break;
+	default:
+		mes "[Lace La Zard]";
+		mes "I need to have a look at it to check for upgrading posibility..";// custom
+		close;
+	}
+
+	.@equip_refine = getequiprefinerycnt(.@part);
+	setarray .@card[0], getequipcardid(.@part, 0), getequipcardid(.@part, 1), getequipcardid(.@part, 2), getequipcardid(.@part, 3);
+
+	mes "[Lace La Zard]";
+	mes "Wow ^0000FF" + getitemname(.@equip_id) + "^000000!!! You got some sense there, aren't you?";
+	mes "Great!! I'm fully ready for this upgrade!!";
+	next;
+	setarray .@data$[0],
+		6908, 4807, "ASPD+1 only",	// ASPDStone_Robe	Atk_Speed1
+		6963, 4992, "Absorption 1% of damage dealt to enemy into HP with 1% chance",	// HPdrainStone_Robe	HPdrain1
+		6964, 4993, "Absorption 1% of damage dealt to enemy into SP with 1% chance";	// SPdrainStone_Robe	SPdrain1
+		// unknown text
+		// 25067, 29056, "",	// CastingStone_Robe	FixedCasting05
+		// 25170, 29154, "",	// MinorCastingStone_Robe	FixedCasting03
+		// 25302, 29362, "",	// DoubleAttack_Stone	DoubleAttack
+		// 25303, 29361, "",	// Critical_Stone_Robe	Fatal_Robe
+		// 25306, 29358, "";	// CastStone_Robe	Casting_Robe
+
+	.@size = getarraysize(.@data$);
+	for ( .@i = 0; .@i < .@size; .@i += 3 ) {
+		.@id = atoi(.@data$[.@i]);
+		.@menu$ += sprintf( "%d. %s (%d) left:", (.@j+1), getitemname(.@id), countitem(.@id) );
+		.@j++;
+	}
+	.@menu$ += "End Conversation.";
+	.@s = (select(.@menu$) - 1) * 3;
+	if (.@s == .@size) {
+		mes "[Lace La Zard]";
+		mes "Yes? Your want to look more?";
+		close;
+	}
+	.@id = atoi(.@data$[.@s]);
+	.@enchant = atoi(.@data$[.@s+1]);
+	if (getequipid(.@part) < 0 || countitem(.@id) < 1) {
+		mes "[Lace La Zard]";
+		mes "You must have both costume item and ability stone for this upgrading work.";
+		close;
+	}
+	mes "^FF0000   !!! Caution !!!^000000";
+	mes "^ff0000This upgrade can be failed.^000000";
+	mes "^ff0000If the item already has extra ability, we will reset item's ability and give " + .@data$[.@s+2] + ".^000000";
+	mes "^ff0000Are you sure about upgrading this item?^000000";
+	next;
+	if (select( "Yes.", "No." ) == 2) {
+		mes "[Lace La Zard]";
+		mes "Yes? Your want to look more?";
+		close;
+	}
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+		close;
+
+	delitem .@id, 1;
+	delequip .@part;
+	if (rand(100) < 50) {
+		mes "[Lace La Zard]";
+		mes "Beautiful!!";
+		mes "Did I really made this myself!!!!";
+		.@card[0] = .@enchant;
+	}
+	else {
+		mes "[Lace La Zard]";
+		mes "Oh no!";
+		mes "Crash!!!!! I cannot show this failure to the World!!!";
+		.@card[0] = 0;
+	}
+	getitem2 .@equip_id,1,1,.@equip_refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+	close;
+}
