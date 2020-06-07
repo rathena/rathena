@@ -2034,36 +2034,12 @@ void pc_calc_skilltree(struct map_session_data *sd)
 	}
 
 	for (const auto &skill : skill_db) {
-		uint16 skill_id = skill.second->nameid;
-		uint16 idx = skill_get_index(skill_id);
+		uint16 idx = skill_get_index(skill.second->nameid);
 
 		// Restore original level of skills after deleting earned skills.
 		if( sd->status.skill[idx].flag != SKILL_FLAG_PERMANENT && sd->status.skill[idx].flag != SKILL_FLAG_PERM_GRANTED && sd->status.skill[idx].flag != SKILL_FLAG_PLAGIARIZED ) {
 			sd->status.skill[idx].lv = (sd->status.skill[idx].flag == SKILL_FLAG_TEMPORARY) ? 0 : sd->status.skill[idx].flag - SKILL_FLAG_REPLACED_LV_0;
 			sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
-		}
-
-		//Enable Bard/Dancer spirit linked skills.
-		if (skill_id < DC_HUMMING || skill_id > DC_SERVICEFORYOU)
-			continue;
-
-		if( sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER ) {
-			//Link Dancer skills to bard.
-			if( sd->status.sex ) {
-				if( sd->status.skill[idx - 8].lv < 10 )
-					continue;
-				sd->status.skill[idx].id = skill_id;
-				sd->status.skill[idx].lv = sd->status.skill[idx - 8].lv; // Set the level to the same as the linking skill
-				sd->status.skill[idx].flag = SKILL_FLAG_TEMPORARY; // Tag it as a non-savable, non-uppable, bonus skill
-			}
-			//Link Bard skills to dancer.
-			else {
-				if( sd->status.skill[idx].lv < 10 )
-					continue;
-				sd->status.skill[idx - 8].id = skill_id - 8;
-				sd->status.skill[idx - 8].lv = sd->status.skill[idx].lv; // Set the level to the same as the linking skill
-				sd->status.skill[idx - 8].flag = SKILL_FLAG_TEMPORARY; // Tag it as a non-savable, non-uppable, bonus skill
-			}
 		}
 	}
 
@@ -2185,6 +2161,22 @@ void pc_calc_skilltree(struct map_session_data *sd)
 			} else if( skid != NV_BASIC )
 				sd->status.skill[sk_idx].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[sk_idx].lv; // Remember original level
 			sd->status.skill[sk_idx].lv = skill_tree_get_max(skid, sd->status.class_);
+		}
+	}
+
+	// Enable Bard/Dancer spirit linked skills.
+	if (sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER) {
+		std::vector<std::vector<uint16>> linked_skills = { { BA_WHISTLE, DC_HUMMING },
+														   { BA_ASSASSINCROSS, DC_DONTFORGETME },
+														   { BA_POEMBRAGI, DC_FORTUNEKISS },
+														   { BA_APPLEIDUN, DC_SERVICEFORYOU } };
+
+		for (const auto &skill : linked_skills) {
+			if (pc_checkskill(sd, skill[!sd->status.sex]) < 10)
+				continue;
+
+			// Tag it as a non-savable, non-uppable, bonus skill
+			pc_skill(sd, skill[sd->status.sex], 10, ADDSKILL_TEMP);
 		}
 	}
 }
