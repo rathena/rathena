@@ -1965,7 +1965,7 @@ static bool itemdb_read_sqldb_sub(char **str) {
 	node["AegisName"] = str[++index];
 	node["Name"] = str[++index];
 	node["Type"] = str[++index];
-	if (atoi(str[++index]) != 0)
+	if (*str[++index])
 		node["SubType"] = str[index];
 	if (atoi(str[++index]) != 0)
 		node["Buy"] = atoi(str[index]);
@@ -2072,7 +2072,7 @@ static bool itemdb_read_sqldb_sub(char **str) {
 		flags["DropAnnounce"] = true;
 	if (atoi(str[++index]) != 0)
 		flags["NoConsume"] = true;
-	if (atoi(str[++index]) != 0)
+	if (*str[++index])
 		flags["DropEffect"] = str[index];
 	node["Flags"] = flags;
 
@@ -2080,7 +2080,7 @@ static bool itemdb_read_sqldb_sub(char **str) {
 
 	if (atoi(str[++index]) != 0)
 		delay["Duration"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
+	if (*str[++index])
 		delay["Status"] = str[index];
 	node["Delay"] = delay;
 
