@@ -300,139 +300,139 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 		std::string column = "", value = "";
 
 		if (appendEntry(input["Id"], value))
-			column += "`id`,";
+			column.append("`id`,");
 		if (appendEntry(input["AegisName"], value, true))
-			column += "`name_aegis`,";
+			column.append("`name_aegis`,");
 		if (appendEntry(input["Name"], value, true))
-			column += "`name_english`,";
+			column.append("`name_english`,");
 		if (appendEntry(input["Type"], value, true))
-			column += "`type`,";
+			column.append("`type`,");
 		if (appendEntry(input["SubType"], value, true))
-			column += "`subtype`,";
+			column.append("`subtype`,");
 		if (appendEntry(input["Buy"], value))
-			column += "`price_buy`,";
+			column.append("`price_buy`,");
 		if (appendEntry(input["Sell"], value))
-			column += "`price_sell`,";
+			column.append("`price_sell`,");
 		if (appendEntry(input["Weight"], value))
-			column += "`weight`,";
+			column.append("`weight`,");
 		if (appendEntry(input["Attack"], value))
-			column += "`attack`,";
+			column.append("`attack`,");
 #ifdef RENEWAL
 		if (appendEntry(input["MagicAttack"], value))
-			column += "`magic_attack`,";
+			column.append("`magic_attack`,");
 #endif
 		if (appendEntry(input["Defense"], value))
-			column += "`defense`,";
+			column.append("`defense`,");
 		if (appendEntry(input["Range"], value))
-			column += "`range`,";
+			column.append("`range`,");
 		if (appendEntry(input["Slots"], value))
-			column += "`slots`,";
+			column.append("`slots`,");
 		if (appendEntry(input["Jobs"], value, true, true))
-			column += "`equip_jobs`,";
+			column.append("`equip_jobs`,");
 		if (appendEntry(input["Classes"], value, true, true))
-			column += "`equip_classes`,";
+			column.append("`equip_classes`,");
 		if (appendEntry(input["Gender"], value, true))
-			column += "`equip_genders`,";
+			column.append("`equip_genders`,");
 		if (appendEntry(input["Location"], value, true, true))
-			column += "`equip_locations`,";
+			column.append("`equip_locations`,");
 		if (appendEntry(input["WeaponLevel"], value))
-			column += "`weapon_level`,";
+			column.append("`weapon_level`,");
 		if (appendEntry(input["EquipLevelMin"], value))
-			column += "`equip_level_min`,";
+			column.append("`equip_level_min`,");
 		if (appendEntry(input["EquipLevelMax"], value))
-			column += "`equip_level_max`,";
+			column.append("`equip_level_max`,");
 		if (appendEntry(input["Refineable"], value))
-			column += "`refineable`,";
+			column.append("`refineable`,");
 		if (appendEntry(input["View"], value))
-			column += "`view`,";
+			column.append("`view`,");
 		if (appendEntry(input["AliasName"], value))
-			column += "`alias_name`,";
+			column.append("`alias_name`,");
 
 		const YAML::Node &flags = input["Flags"];
 
 		if (flags) {
 			if (appendEntry(flags["BuyingStore"], value))
-				column += "`flag_buyingstore`,";
+				column.append("`flag_buyingstore`,");
 			if (appendEntry(flags["DeadBranch"], value))
-				column += "`flag_deadbranch`,";
+				column.append("`flag_deadbranch`,");
 			if (appendEntry(flags["Container"], value))
-				column += "`flag_container`,";
+				column.append("`flag_container`,");
 			if (appendEntry(flags["UniqueId"], value))
-				column += "`flag_uniqueid`,";
+				column.append("`flag_uniqueid`,");
 			if (appendEntry(flags["BindOnEquip"], value))
-				column += "`flag_bindonequip`,";
+				column.append("`flag_bindonequip`,");
 			if (appendEntry(flags["DropAnnounce"], value))
-				column += "`flag_dropannounce`,";
+				column.append("`flag_dropannounce`,");
 			if (appendEntry(flags["NoConsume"], value))
-				column += "`flag_noconsume`,";
+				column.append("`flag_noconsume`,");
 			if (appendEntry(flags["DropEffect"], value, true))
-				column += "`flag_dropeffect`,";
+				column.append("`flag_dropeffect`,");
 		}
 
 		const YAML::Node &delay = input["Delay"];
 
 		if (delay) {
 			if (appendEntry(delay["Duration"], value))
-				column += "`delay_duration`,";
+				column.append("`delay_duration`,");
 			if (appendEntry(delay["Status"], value, true))
-				column += "`delay_status`,";
+				column.append("`delay_status`,");
 		}
 
 		const YAML::Node &stack = input["Stack"];
 
 		if (stack) {
 			if (appendEntry(stack["Amount"], value))
-				column += "`stack_amount`,";
+				column.append("`stack_amount`,");
 			if (appendEntry(stack["Inventory"], value))
-				column += "`stack_inventory`,";
+				column.append("`stack_inventory`,");
 			if (appendEntry(stack["Cart"], value))
-				column += "`stack_cart`,";
+				column.append("`stack_cart`,");
 			if (appendEntry(stack["Storage"], value))
-				column += "`stack_storage`,";
+				column.append("`stack_storage`,");
 			if (appendEntry(stack["GuildStorage"], value))
-				column += "`stack_guildstorage`,";
+				column.append("`stack_guildstorage`,");
 		}
 
 		const YAML::Node &nouse = input["NoUse"];
 
 		if (nouse) {
 			if (appendEntry(nouse["Override"], value))
-				column += "`nouse_override`,";
+				column.append("`nouse_override`,");
 			if (appendEntry(nouse["Sitting"], value))
-				column += "`nouse_sitting`,";
+				column.append("`nouse_sitting`,");
 		}
 
 		const YAML::Node &trade = input["Trade"];
 
 		if (trade) {
 			if (appendEntry(trade["Override"], value))
-				column += "`trade_override`,";
+				column.append("`trade_override`,");
 			if (appendEntry(trade["NoDrop"], value))
-				column += "`trade_nodrop`,";
+				column.append("`trade_nodrop`,");
 			if (appendEntry(trade["NoTrade"], value))
-				column += "`trade_notrade`,";
+				column.append("`trade_notrade`,");
 			if (appendEntry(trade["TradePartner"], value))
-				column += "`trade_tradepartner`,";
+				column.append("`trade_tradepartner`,");
 			if (appendEntry(trade["NoSell"], value))
-				column += "`trade_nosell`,";
+				column.append("`trade_nosell`,");
 			if (appendEntry(trade["NoCart"], value))
-				column += "`trade_nocart`,";
+				column.append("`trade_nocart`,");
 			if (appendEntry(trade["NoStorage"], value))
-				column += "`trade_nostorage`,";
+				column.append("`trade_nostorage`,");
 			if (appendEntry(trade["NoGuildStorage"], value))
-				column += "`trade_noguildstorage`,";
+				column.append("`trade_noguildstorage`,");
 			if (appendEntry(trade["NoMail"], value))
-				column += "`trade_nomail`,";
+				column.append("`trade_nomail`,");
 			if (appendEntry(trade["NoAuction"], value))
-				column += "`trade_noauction`,";
+				column.append("`trade_noauction`,");
 		}
 
 		if (appendEntry(input["Script"], value, true))
-			column += "`script`,";
+			column.append("`script`,");
 		if (appendEntry(input["EquipScript"], value, true))
-			column += "`equip_script`,";
+			column.append("`equip_script`,");
 		if (appendEntry(input["UnEquipScript"], value, true))
-			column += "`unequip_script`,";
+			column.append("`unequip_script`,");
 
 		column.pop_back(); // Remove last ','
 		value.pop_back(); // Remove last ','
