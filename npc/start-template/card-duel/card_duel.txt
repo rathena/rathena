@@ -1,7 +1,8 @@
 -	script	Card-Duel	-1,{
+	L_MainMenu:
 	mes "ยินดีต้อนรับสู่ Card - Duel!!";
 	next;
-	menu "เริ่มการดวลการ์ด",-;
+	menu "เริ่มการดวลการ์ด",-,"ค่าพลังรวมปัจจุบัน (เทส)",L_DeckStatus;
 
 	callsub L_Player_Initialize;
 	callsub L_Bot_Initialize;
@@ -16,6 +17,9 @@
 		menu "โจมตี",L_Attack,"ชาร์จไม้ตาย",L_Charge;
 	}
 	else{
+		clear;
+		mes "ศัตรูกำลังเล่น โปรดกดปุ่มต่อไป 1 ครั้ง";
+		next;
 		//Bot AI here
 		.@bot_ai_rand = rand(0,1);
 		if(.@bot_ai_rand == 0){
@@ -64,33 +68,29 @@
 	goto L_Turn;
 	
 	L_Player_Initialize:
-	if(s_c_hp <= 0){
-		//TODO: Use card-based
-		s_c_hp = 10;
-		s_c_atk_dmg = 5;
-		s_c_charge_speed = 1;
-	}
+	//if(s_c_hp <= 0){
+	//TODO: Use card-based
+	s_c_hp = 100;
+	s_c_atk_dmg = 5;
+	s_c_charge_speed = 1;
+	//}
 	c_hp = s_c_hp;
 	c_atk_dmg = s_c_atk_dmg;
 	c_charge_power = 0;
 	c_charge_speed = s_c_charge_speed;
-	dispbottom "c_hp: " + c_hp;
-	dispbottom "c_atk_dmg: " + c_atk_dmg;
-	dispbottom "c_charge_power: " + c_charge_power;
-	dispbottom "c_charge_speed: " + c_charge_speed;
 	return;
 	
 	L_Bot_Initialize:
 	.@rand_bot = rand(0,1);
 	if(.@rand_bot == 0){
 		temp_enemy_name$ = "Poring - Bot";
-		temp_enemy_hp = 5;
-		temp_enemy_atk_dmg = 1;
-		temp_enemy_charge_speed = 1;
+		temp_enemy_hp = 50;
+		temp_enemy_atk_dmg = 2;
+		temp_enemy_charge_speed = 2;
 	}
 	else if(.@rand_bot == 1){
 		temp_enemy_name$ = "Lunatic - Bot";
-		temp_enemy_hp = 3;
+		temp_enemy_hp = 30;
 		temp_enemy_atk_dmg = 5;
 		temp_enemy_charge_speed = 1;
 	}
@@ -100,35 +100,31 @@
 	return;
 	
 	L_CurrentBattleInfo:
-	
 	clear;
-	
 	if(current_turn == 0){
 		mes "ถึงตาคุณแล้ว!";
-		mes "--- " + strcharinfo(0) + " ---";
-		
-		mes "^6359C7พลังชีวิต:^000000 " + c_hp;
-		mes "^6359C7พลังโจมตี:^000000 " + c_atk_dmg;
+
+		mes "^6359C7พลังชีวิต:^000000 " + c_hp
+		+ " | ^6359C7พลังโจมตี:^000000 " + c_atk_dmg;
 		mes "^6359C7แต้มไม้ตาย:^000000 " + c_charge_power + "/10 (หากชาร์จ +" + c_charge_speed + ")";
 		
 		mes "--- " + temp_enemy_name$ + " ---";
 		
-		mes "^AB6D6Dพลังชีวิต:^000000 " + temp_enemy_hp;
-		mes "^AB6D6Dพลังโจมตี:^000000 " + temp_enemy_atk_dmg;
-		mes "^6359C7แต้มไม้ตาย:^000000 " + temp_enemy_charge_power + "/10 (หากชาร์จ +" + temp_enemy_charge_speed + ")";
+		mes "^AB6D6Dพลังชีวิต:^000000 " + temp_enemy_hp
+		+ " | ^AB6D6Dพลังโจมตี:^000000 " + temp_enemy_atk_dmg;
+		mes "^AB6D6Dแต้มไม้ตาย:^000000 " + temp_enemy_charge_power + "/10 (หากชาร์จ +" + temp_enemy_charge_speed + ")";
 	}
 	else{
 		mes "ตานี้เป็นตาของศัตรู!";
-		mes "--- " + temp_enemy_name$ + " ---";
-		
-		mes "^AB6D6Dพลังชีวิต:^000000 " + temp_enemy_hp;
-		mes "^AB6D6Dพลังโจมตี:^000000 " + temp_enemy_atk_dmg;
-		mes "^6359C7แต้มไม้ตาย:^000000 " + temp_enemy_charge_power + "/10 (หากชาร์จ +" + temp_enemy_charge_speed + ")";
+
+		mes "^AB6D6Dพลังชีวิต:^000000 " + temp_enemy_hp
+		+ " | ^AB6D6Dพลังโจมตี:^000000 " + temp_enemy_atk_dmg;
+		mes "^AB6D6Dแต้มไม้ตาย:^000000 " + temp_enemy_charge_power + "/10 (หากชาร์จ +" + temp_enemy_charge_speed + ")";
 		
 		mes "--- " + strcharinfo(0) + " ---";
 		
-		mes "^6359C7พลังชีวิต:^000000 " + c_hp;
-		mes "^6359C7พลังโจมตี:^000000 " + c_atk_dmg;
+		mes "^6359C7พลังชีวิต:^000000 " + c_hp
+		+ " | ^6359C7พลังโจมตี:^000000 " + c_atk_dmg;
 		mes "^6359C7แต้มไม้ตาย:^000000 " + c_charge_power + "/10 (หากชาร์จ +" + c_charge_speed + ")";
 	}
 	
@@ -143,6 +139,15 @@
 		close;
 	}
 	return;
+	
+	L_DeckStatus:
+	.@test$ = "ชื่อการ์ด";
+	mes "--- " + .@test$ + " ---";
+	mes "^6359C7พลังชีวิต:^000000 " + s_c_hp;
+	mes "^6359C7พลังโจมตี:^000000 " + s_c_atk_dmg;
+	mes "^6359C7ความเร็วในการชาร์จไม้ตาย:^000000 " + s_c_charge_speed;
+	next;
+	goto L_MainMenu;
 }
 
-prontera,156,181,5	duplicate(Card-Duel)	Poring-Bot-Duel#1	909
+prontera,156,181,5	duplicate(Card-Duel)	Bot-Card-Duel#1	909
