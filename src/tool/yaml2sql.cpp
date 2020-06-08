@@ -329,8 +329,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 			column += "`slots`,";
 		if (appendEntry(input["Jobs"], value, true, true))
 			column += "`equip_jobs`,";
-		if (appendEntry(input["Class"], value, true, true))
-			column += "`equip_upper`,";
+		if (appendEntry(input["Classes"], value, true, true))
+			column += "`equip_classes`,";
 		if (appendEntry(input["Gender"], value, true))
 			column += "`equip_genders`,";
 		if (appendEntry(input["Location"], value, true, true))

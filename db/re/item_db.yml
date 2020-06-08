@@ -36,7 +36,7 @@
 #   Range                   Weapon's attack range. (Default: 0)
 #   Slots                   Available slots in item. (Default: 0)
 #   Jobs                    Jobs that can equip the item. (Map default is 'All: true')
-#   Class                   Upper class types that can equip the item. (Default: All)
+#   Classes                 Upper class types that can equip the item. (Map default is 'All: true')
 #   Gender                  Gender that can equip the item. (Default: Both)
 #   Location                Equipment location. (Default: None)
 #   WeaponLevel             Weapon level. (Default: 0)
@@ -5749,7 +5749,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -5774,7 +5774,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -5892,7 +5892,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -5917,7 +5917,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -6000,7 +6000,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -6025,7 +6025,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -6101,7 +6101,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -6150,7 +6150,7 @@ Body:
     Range: 2
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -8270,7 +8270,7 @@ Body:
     Slots: 1
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -8292,7 +8292,7 @@ Body:
     Range: 1
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -8315,7 +8315,7 @@ Body:
     Slots: 1
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -8338,7 +8338,7 @@ Body:
     Slots: 2
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -8652,7 +8652,7 @@ Body:
     Slots: 2
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -8675,7 +8675,7 @@ Body:
     Slots: 2
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -8893,7 +8893,7 @@ Body:
     Slots: 3
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -8944,7 +8944,7 @@ Body:
     Slots: 2
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -9286,7 +9286,7 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -9567,7 +9567,7 @@ Body:
       Taekwon: true
       Thief: true
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -9589,7 +9589,7 @@ Body:
     Slots: 2
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -9651,7 +9651,7 @@ Body:
     Slots: 2
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -9698,7 +9698,7 @@ Body:
       Taekwon: true
       Thief: true
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -10309,7 +10309,7 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -10337,7 +10337,7 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -10365,7 +10365,7 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -10580,7 +10580,7 @@ Body:
     Range: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       High: true
     Location:
       Right_Hand: true
@@ -10635,7 +10635,7 @@ Body:
       Blacksmith: true
       Crusader: true
       Knight: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -10763,7 +10763,7 @@ Body:
       Blacksmith: true
       Crusader: true
       Knight: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -10791,7 +10791,7 @@ Body:
       Blacksmith: true
       Crusader: true
       Knight: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -10892,7 +10892,7 @@ Body:
     Slots: 2
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       High: true
     Location:
       Right_Hand: true
@@ -11377,7 +11377,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -11401,7 +11401,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -11425,7 +11425,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -11585,7 +11585,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -11618,7 +11618,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -11829,7 +11829,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -11875,7 +11875,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -11898,7 +11898,7 @@ Body:
     Slots: 1
     Jobs:
       Crusader: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -11920,7 +11920,7 @@ Body:
     Slots: 2
     Jobs:
       Crusader: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -11983,7 +11983,7 @@ Body:
     Jobs:
       Crusader: true
       Knight: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -12717,7 +12717,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -12740,7 +12740,7 @@ Body:
     Slots: 1
     Jobs:
       Knight: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -12765,7 +12765,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -12871,7 +12871,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -13053,7 +13053,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -14189,7 +14189,7 @@ Body:
       Acolyte: true
       Monk: true
       Priest: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -14322,7 +14322,7 @@ Body:
     Range: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -15977,7 +15977,7 @@ Body:
       Priest: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -16025,7 +16025,7 @@ Body:
       Priest: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -16316,7 +16316,7 @@ Body:
       Priest: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -16343,7 +16343,7 @@ Body:
       Priest: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -16545,7 +16545,7 @@ Body:
       Priest: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -16582,7 +16582,7 @@ Body:
       Priest: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -16616,7 +16616,7 @@ Body:
       Mage: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -16641,7 +16641,7 @@ Body:
       Acolyte: true
       Monk: true
       Priest: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -16664,7 +16664,7 @@ Body:
     Jobs:
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -17041,7 +17041,7 @@ Body:
     Jobs:
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -17064,7 +17064,7 @@ Body:
     Jobs:
       Acolyte: true
       Mage: true
-    Class:
+    Classes:
       High: true
       Third_High: true
       Third_Baby: true
@@ -17093,7 +17093,7 @@ Body:
       Priest: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -17198,7 +17198,7 @@ Body:
       Priest: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -17379,7 +17379,7 @@ Body:
     Slots: 1
     Jobs:
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -17400,7 +17400,7 @@ Body:
     Slots: 2
     Jobs:
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -17475,7 +17475,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -17504,7 +17504,7 @@ Body:
     Slots: 2
     Jobs:
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -17528,7 +17528,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -17551,7 +17551,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -17575,7 +17575,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -17598,7 +17598,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -17622,7 +17622,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -17654,7 +17654,7 @@ Body:
     Slots: 3
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -17678,7 +17678,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -17702,7 +17702,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -17726,7 +17726,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -17749,7 +17749,7 @@ Body:
     Slots: 3
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -17772,7 +17772,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -17795,7 +17795,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -17818,7 +17818,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -17857,7 +17857,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -18644,7 +18644,7 @@ Body:
     Slots: 3
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -18667,7 +18667,7 @@ Body:
     Slots: 1
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -18752,7 +18752,7 @@ Body:
     Slots: 2
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -18776,7 +18776,7 @@ Body:
     Jobs:
       BardDancer: true
       Hunter: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -18880,7 +18880,7 @@ Body:
     Slots: 2
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -20023,7 +20023,7 @@ Body:
     Slots: 3
     Jobs:
       Monk: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -20279,7 +20279,7 @@ Body:
     Slots: 1
     Jobs:
       Monk: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -20400,7 +20400,7 @@ Body:
     Slots: 2
     Jobs:
       Monk: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -20442,7 +20442,7 @@ Body:
     Slots: 2
     Jobs:
       Monk: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -20465,7 +20465,7 @@ Body:
     Slots: 2
     Jobs:
       Monk: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -20842,7 +20842,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Gender: Male
@@ -20864,7 +20864,7 @@ Body:
     Range: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Gender: Male
@@ -20986,7 +20986,7 @@ Body:
     Slots: 3
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Gender: Male
@@ -21009,7 +21009,7 @@ Body:
     Slots: 2
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Gender: Male
@@ -21056,7 +21056,7 @@ Body:
     Range: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Gender: Male
@@ -21184,7 +21184,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -21270,7 +21270,7 @@ Body:
     Slots: 2
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -21293,7 +21293,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -21342,7 +21342,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -21413,7 +21413,7 @@ Body:
     Slots: 2
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -21846,7 +21846,7 @@ Body:
     Slots: 2
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Gender: Female
@@ -21869,7 +21869,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Gender: Female
@@ -21891,7 +21891,7 @@ Body:
     Range: 2
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Gender: Female
@@ -22013,7 +22013,7 @@ Body:
     Slots: 2
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Gender: Female
@@ -22036,7 +22036,7 @@ Body:
     Slots: 3
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Gender: Female
@@ -22229,7 +22229,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -22315,7 +22315,7 @@ Body:
     Slots: 2
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -22338,7 +22338,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -22438,7 +22438,7 @@ Body:
     Slots: 1
     Jobs:
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -22516,7 +22516,7 @@ Body:
     Slots: 1
     Jobs:
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -22550,7 +22550,7 @@ Body:
       Mage: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -22576,7 +22576,7 @@ Body:
       Acolyte: true
       Monk: true
       Priest: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -22957,7 +22957,7 @@ Body:
     Range: 1
     Jobs:
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -22981,7 +22981,7 @@ Body:
     Slots: 1
     Jobs:
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -23010,7 +23010,7 @@ Body:
       Priest: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -23038,7 +23038,7 @@ Body:
       Sage: true
       SoulLinker: true
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -23113,7 +23113,7 @@ Body:
     Slots: 2
     Jobs:
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -23187,7 +23187,7 @@ Body:
       Sage: true
       SoulLinker: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -23266,7 +23266,7 @@ Body:
     Slots: 2
     Jobs:
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -23291,7 +23291,7 @@ Body:
     Slots: 2
     Jobs:
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -23316,7 +23316,7 @@ Body:
     Slots: 2
     Jobs:
       Priest: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -23701,7 +23701,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -23722,7 +23722,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -23743,7 +23743,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -23764,7 +23764,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -23875,7 +23875,7 @@ Body:
       Sage: true
       SoulLinker: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -23918,7 +23918,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -23951,7 +23951,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -23971,7 +23971,7 @@ Body:
     Slots: 1
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -24007,7 +24007,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -24049,7 +24049,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -24190,7 +24190,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -24796,7 +24796,7 @@ Body:
       Rogue: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -24866,7 +24866,7 @@ Body:
     Weight: 2000
     Defense: 75
     Slots: 1
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -27324,7 +27324,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -27449,7 +27449,7 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -27469,7 +27469,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -27489,7 +27489,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -27508,7 +27508,7 @@ Body:
     Slots: 1
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -27643,7 +27643,7 @@ Body:
       Priest: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -27670,7 +27670,7 @@ Body:
       Rogue: true
       Swordman: true
       Thief: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -27943,7 +27943,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -27975,7 +27975,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -27994,7 +27994,7 @@ Body:
     Slots: 1
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -28026,7 +28026,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -28047,7 +28047,7 @@ Body:
       Archer: true
       BardDancer: true
       Hunter: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -28068,7 +28068,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -28206,7 +28206,7 @@ Body:
     Slots: 1
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -28235,7 +28235,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -28570,7 +28570,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -28611,7 +28611,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -28631,7 +28631,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -28650,7 +28650,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -28668,7 +28668,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -28826,7 +28826,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -28845,7 +28845,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -29010,7 +29010,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -29168,7 +29168,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -29196,7 +29196,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -29599,7 +29599,7 @@ Body:
     Slots: 1
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -29619,7 +29619,7 @@ Body:
     Slots: 1
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -29687,7 +29687,7 @@ Body:
     Slots: 1
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -30409,7 +30409,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -30458,7 +30458,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -30478,7 +30478,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -30497,7 +30497,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -30517,7 +30517,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -30544,7 +30544,7 @@ Body:
       Rogue: true
       Swordman: true
       Thief: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -30571,7 +30571,7 @@ Body:
       Priest: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -30687,7 +30687,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -30811,7 +30811,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -30863,7 +30863,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -30882,7 +30882,7 @@ Body:
     Jobs:
       Monk: true
       Priest: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -30931,7 +30931,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -30993,7 +30993,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -31029,7 +31029,7 @@ Body:
       Priest: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -31058,7 +31058,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -31077,7 +31077,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -31297,7 +31297,7 @@ Body:
       Archer: true
       Novice: true
       Thief: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -31408,7 +31408,7 @@ Body:
     Defense: 20
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -31427,7 +31427,7 @@ Body:
     Defense: 16
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -31520,7 +31520,7 @@ Body:
     Defense: 15
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -32586,7 +32586,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -32617,7 +32617,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -32648,7 +32648,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -32679,7 +32679,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -32951,7 +32951,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -32981,7 +32981,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -33437,7 +33437,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -33454,7 +33454,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -33473,7 +33473,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -33492,7 +33492,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -33934,7 +33934,7 @@ Body:
     Weight: 100
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -33951,7 +33951,7 @@ Body:
     Weight: 200
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -33998,7 +33998,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -34289,7 +34289,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -34319,7 +34319,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -34350,7 +34350,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -34368,7 +34368,7 @@ Body:
     Defense: 1
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -34386,7 +34386,7 @@ Body:
     Defense: 1
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -34405,7 +34405,7 @@ Body:
       Archer: true
       BardDancer: true
       Hunter: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -34439,7 +34439,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -34703,7 +34703,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -35074,7 +35074,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -35113,7 +35113,7 @@ Body:
     Buy: 20
     Weight: 200
     Slots: 1
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -35129,7 +35129,7 @@ Body:
     Buy: 20
     Weight: 200
     Slots: 1
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -35144,7 +35144,7 @@ Body:
     Buy: 20
     Weight: 200
     Slots: 1
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -35159,7 +35159,7 @@ Body:
     Buy: 20
     Weight: 200
     Slots: 1
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -35199,7 +35199,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -35237,7 +35237,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -35398,7 +35398,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -35417,7 +35417,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -35436,7 +35436,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -35453,7 +35453,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -35472,7 +35472,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -35491,7 +35491,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -35511,7 +35511,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -35530,7 +35530,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -35547,7 +35547,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -35566,7 +35566,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -35585,7 +35585,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -36711,7 +36711,7 @@ Body:
     Slots: 1
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -36731,7 +36731,7 @@ Body:
     Slots: 1
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -36832,7 +36832,7 @@ Body:
     Weight: 100
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -37362,7 +37362,7 @@ Body:
       Rogue: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -37977,7 +37977,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -37997,7 +37997,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -38054,7 +38054,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -51563,7 +51563,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -55249,7 +55249,7 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -55282,7 +55282,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -57119,7 +57119,7 @@ Body:
     Weight: 1000
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -59786,7 +59786,7 @@ Body:
     Buy: 250000
     Weight: 500
     Defense: 1
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -59816,7 +59816,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -59832,7 +59832,7 @@ Body:
     Buy: 20
     Weight: 100
     Defense: 1
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -59935,7 +59935,7 @@ Body:
     Buy: 20
     Weight: 200
     Defense: 2
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -60059,7 +60059,7 @@ Body:
     Buy: 20
     Weight: 200
     Slots: 1
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -60088,7 +60088,7 @@ Body:
     Buy: 20
     Weight: 100
     Defense: 1
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -60516,7 +60516,7 @@ Body:
     Slots: 1
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -60545,7 +60545,7 @@ Body:
     Slots: 1
     Jobs:
       Priest: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -60574,7 +60574,7 @@ Body:
     Slots: 1
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -60604,7 +60604,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -60634,7 +60634,7 @@ Body:
     Slots: 1
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -60663,7 +60663,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -60693,7 +60693,7 @@ Body:
     Slots: 1
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -60722,7 +60722,7 @@ Body:
     Slots: 1
     Jobs:
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -60751,7 +60751,7 @@ Body:
     Slots: 1
     Jobs:
       Monk: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -60779,7 +60779,7 @@ Body:
     Defense: 12
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -60808,7 +60808,7 @@ Body:
     Slots: 1
     Jobs:
       Sage: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -60837,7 +60837,7 @@ Body:
     Slots: 1
     Jobs:
       Crusader: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -60867,7 +60867,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -60912,7 +60912,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -61667,7 +61667,7 @@ Body:
       Rogue: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -62692,7 +62692,7 @@ Body:
     Slots: 1
     Jobs:
       Crusader: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -62720,7 +62720,7 @@ Body:
     Slots: 1
     Jobs:
       Monk: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -62748,7 +62748,7 @@ Body:
     Slots: 1
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -62803,7 +62803,7 @@ Body:
     Slots: 1
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -62831,7 +62831,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -62859,7 +62859,7 @@ Body:
     Slots: 1
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -62887,7 +62887,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -72287,7 +72287,7 @@ Body:
     Name: Coupon
     Type: Usable
     Buy: 100
-    Class:
+    Classes:
       All: false
     Gender: Female
     Trade:
@@ -87286,7 +87286,7 @@ Body:
     Weight: 100
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -87302,7 +87302,7 @@ Body:
     Weight: 140
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -87318,7 +87318,7 @@ Body:
     Weight: 180
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -91068,7 +91068,7 @@ Body:
     Weight: 100
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -91084,7 +91084,7 @@ Body:
     Weight: 100
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -91100,7 +91100,7 @@ Body:
     Weight: 100
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -91116,7 +91116,7 @@ Body:
     Weight: 100
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -91132,7 +91132,7 @@ Body:
     Weight: 100
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -95048,7 +95048,7 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -95086,7 +95086,7 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -95274,7 +95274,7 @@ Body:
     Slots: 2
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -95294,7 +95294,7 @@ Body:
     Slots: 4
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -95404,7 +95404,7 @@ Body:
     Slots: 3
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -95442,7 +95442,7 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -95676,7 +95676,7 @@ Body:
       Assassin: true
       Rogue: true
       Thief: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -95700,7 +95700,7 @@ Body:
       Assassin: true
       Rogue: true
       Thief: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -96140,7 +96140,7 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -96279,7 +96279,7 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -96558,7 +96558,7 @@ Body:
       Archer: true
       Swordman: true
       Thief: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -96895,7 +96895,7 @@ Body:
       Rogue: true
       Swordman: true
       Thief: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -96992,7 +96992,7 @@ Body:
     Slots: 1
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -97016,7 +97016,7 @@ Body:
     Slots: 1
     Jobs:
       Ninja: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -97037,7 +97037,7 @@ Body:
     Slots: 1
     Jobs:
       Sage: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -98433,7 +98433,7 @@ Body:
     Jobs:
       Gunslinger: true
       Rebellion: true
-    Class:
+    Classes:
       Normal: true
     Location:
       Right_Hand: true
@@ -98451,7 +98451,7 @@ Body:
     Jobs:
       Gunslinger: true
       Rebellion: true
-    Class:
+    Classes:
       Normal: true
     Location:
       Right_Hand: true
@@ -98469,7 +98469,7 @@ Body:
     Jobs:
       Gunslinger: true
       Rebellion: true
-    Class:
+    Classes:
       Normal: true
     Location:
       Right_Hand: true
@@ -98487,7 +98487,7 @@ Body:
     Jobs:
       Gunslinger: true
       Rebellion: true
-    Class:
+    Classes:
       Normal: true
     Location:
       Right_Hand: true
@@ -98856,7 +98856,7 @@ Body:
     Buy: 80
     Weight: 5
     Attack: 50
-    Class:
+    Classes:
       All: false
     Gender: Female
     Location:
@@ -98871,7 +98871,7 @@ Body:
     Buy: 80
     Weight: 5
     Attack: 50
-    Class:
+    Classes:
       All: false
     Gender: Female
     Location:
@@ -98886,7 +98886,7 @@ Body:
     Buy: 80
     Weight: 5
     Attack: 50
-    Class:
+    Classes:
       All: false
     Gender: Female
     Location:
@@ -98901,7 +98901,7 @@ Body:
     Buy: 80
     Weight: 5
     Attack: 50
-    Class:
+    Classes:
       All: false
     Gender: Female
     Location:
@@ -98916,7 +98916,7 @@ Body:
     Buy: 80
     Weight: 5
     Attack: 50
-    Class:
+    Classes:
       All: false
     Gender: Female
     Location:
@@ -98955,7 +98955,7 @@ Body:
     Buy: 250
     Weight: 250
     Attack: 30
-    Class:
+    Classes:
       All: false
     Gender: Female
     Location:
@@ -98968,7 +98968,7 @@ Body:
     Buy: 500
     Weight: 500
     Attack: 30
-    Class:
+    Classes:
       All: false
     Gender: Female
     Location:
@@ -98981,7 +98981,7 @@ Body:
     Buy: 750
     Weight: 750
     Attack: 30
-    Class:
+    Classes:
       All: false
     Gender: Female
     Location:
@@ -98994,7 +98994,7 @@ Body:
     Buy: 1000
     Weight: 1000
     Attack: 30
-    Class:
+    Classes:
       All: false
     Gender: Female
     Location:
@@ -99007,7 +99007,7 @@ Body:
     Buy: 1200
     Weight: 1200
     Attack: 30
-    Class:
+    Classes:
       All: false
     Gender: Female
     Location:
@@ -99148,7 +99148,7 @@ Body:
     Buy: 15
     Weight: 5
     Attack: 50
-    Class:
+    Classes:
       All: false
     Gender: Female
     Location:
@@ -99163,7 +99163,7 @@ Body:
     Buy: 15
     Weight: 5
     Attack: 50
-    Class:
+    Classes:
       All: false
     Gender: Female
     Location:
@@ -99178,7 +99178,7 @@ Body:
     Buy: 15
     Weight: 5
     Attack: 50
-    Class:
+    Classes:
       All: false
     Gender: Female
     Location:
@@ -99193,7 +99193,7 @@ Body:
     Buy: 15
     Weight: 5
     Attack: 50
-    Class:
+    Classes:
       All: false
     Gender: Female
     Location:
@@ -99208,7 +99208,7 @@ Body:
     Buy: 15
     Weight: 5
     Attack: 50
-    Class:
+    Classes:
       All: false
     Gender: Female
     Location:
@@ -99444,7 +99444,7 @@ Body:
     Weight: 1
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99460,7 +99460,7 @@ Body:
     Weight: 1
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99476,7 +99476,7 @@ Body:
     Weight: 1
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99492,7 +99492,7 @@ Body:
     Weight: 1
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99508,7 +99508,7 @@ Body:
     Weight: 1
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99524,7 +99524,7 @@ Body:
     Weight: 50
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99540,7 +99540,7 @@ Body:
     Weight: 50
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99556,7 +99556,7 @@ Body:
     Weight: 50
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99572,7 +99572,7 @@ Body:
     Weight: 10
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99590,7 +99590,7 @@ Body:
     Weight: 10
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99608,7 +99608,7 @@ Body:
     Weight: 50
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99626,7 +99626,7 @@ Body:
     Weight: 50
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99644,7 +99644,7 @@ Body:
     Weight: 50
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99662,7 +99662,7 @@ Body:
     Weight: 10
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99680,7 +99680,7 @@ Body:
     Weight: 10
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99698,7 +99698,7 @@ Body:
     Weight: 20
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99716,7 +99716,7 @@ Body:
     Weight: 40
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99734,7 +99734,7 @@ Body:
     Weight: 80
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99752,7 +99752,7 @@ Body:
     Weight: 20
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99770,7 +99770,7 @@ Body:
     Weight: 40
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99788,7 +99788,7 @@ Body:
     Weight: 80
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99806,7 +99806,7 @@ Body:
     Weight: 70
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99824,7 +99824,7 @@ Body:
     Weight: 50
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99842,7 +99842,7 @@ Body:
     Weight: 50
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99860,7 +99860,7 @@ Body:
     Weight: 50
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99878,7 +99878,7 @@ Body:
     Weight: 50
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99896,7 +99896,7 @@ Body:
     Weight: 50
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99914,7 +99914,7 @@ Body:
     Weight: 50
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99932,7 +99932,7 @@ Body:
     Weight: 50
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99950,7 +99950,7 @@ Body:
     Weight: 50
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -99968,7 +99968,7 @@ Body:
     Weight: 50
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -100860,7 +100860,7 @@ Body:
       Rogue: true
       Swordman: true
       Thief: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -100892,7 +100892,7 @@ Body:
       Rogue: true
       Swordman: true
       Thief: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -101126,7 +101126,7 @@ Body:
       Rogue: true
       Swordman: true
       Thief: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -101156,7 +101156,7 @@ Body:
       Rogue: true
       Swordman: true
       Thief: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -101187,7 +101187,7 @@ Body:
       Rogue: true
       Swordman: true
       Thief: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -101403,7 +101403,7 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -101666,7 +101666,7 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -101815,7 +101815,7 @@ Body:
       Novice: true
       Swordman: true
       Thief: true
-    Class:
+    Classes:
       Normal: true
       Baby: true
     Location:
@@ -101840,7 +101840,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -101995,7 +101995,7 @@ Body:
     Slots: 1
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -102017,7 +102017,7 @@ Body:
     Slots: 2
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -102105,7 +102105,7 @@ Body:
       Rogue: true
       Swordman: true
       Thief: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -102184,7 +102184,7 @@ Body:
       Crusader: true
       Knight: true
       Rogue: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -102212,7 +102212,7 @@ Body:
       Crusader: true
       Knight: true
       Rogue: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -102240,7 +102240,7 @@ Body:
       Crusader: true
       Knight: true
       Rogue: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -121420,7 +121420,7 @@ Body:
       Rogue: true
       Swordman: true
       Thief: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -121633,7 +121633,7 @@ Body:
     Jobs:
       All: true
       Novice: false
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -121651,7 +121651,7 @@ Body:
     Jobs:
       Crusader: true
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -121922,7 +121922,7 @@ Body:
     Defense: 22
     Jobs:
       Priest: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -121941,7 +121941,7 @@ Body:
     Defense: 22
     Jobs:
       Priest: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -122047,7 +122047,7 @@ Body:
     Defense: 110
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -122066,7 +122066,7 @@ Body:
     Defense: 110
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -122161,7 +122161,7 @@ Body:
     Slots: 1
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -122410,7 +122410,7 @@ Body:
       Novice: true
       Swordman: true
       Thief: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -122633,7 +122633,7 @@ Body:
       Rogue: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -122747,7 +122747,7 @@ Body:
       Rogue: true
       Swordman: true
       Thief: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -122772,7 +122772,7 @@ Body:
       Priest: true
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -122848,7 +122848,7 @@ Body:
       Alchemist: true
       Blacksmith: true
       Merchant: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -122888,7 +122888,7 @@ Body:
       Archer: true
       BardDancer: true
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -123016,7 +123016,7 @@ Body:
     Defense: 80
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -123035,7 +123035,7 @@ Body:
     Defense: 110
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -123101,7 +123101,7 @@ Body:
     Slots: 1
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -123135,7 +123135,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -123168,7 +123168,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -123290,7 +123290,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -123310,7 +123310,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -123418,7 +123418,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -123547,7 +123547,7 @@ Body:
     Defense: 50
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -123565,7 +123565,7 @@ Body:
     Defense: 40
     Jobs:
       Sage: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -123597,7 +123597,7 @@ Body:
     Defense: 80
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -123615,7 +123615,7 @@ Body:
     Defense: 50
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -124078,7 +124078,7 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -124108,7 +124108,7 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -124389,7 +124389,7 @@ Body:
     Slots: 2
     Jobs:
       Priest: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -124526,7 +124526,7 @@ Body:
     Slots: 1
     Jobs:
       Priest: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -124812,7 +124812,7 @@ Body:
       Monk: true
       Priest: true
       Swordman: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -124837,7 +124837,7 @@ Body:
     Slots: 1
     Jobs:
       Acolyte: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -124861,7 +124861,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -124883,7 +124883,7 @@ Body:
     Range: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -124906,7 +124906,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -124929,7 +124929,7 @@ Body:
     Slots: 2
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -125000,7 +125000,7 @@ Body:
     Slots: 1
     Jobs:
       Monk: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -125022,7 +125022,7 @@ Body:
     Slots: 2
     Jobs:
       Monk: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -125051,7 +125051,7 @@ Body:
       Monk: true
       Priest: true
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -125292,7 +125292,7 @@ Body:
     Slots: 2
     Jobs:
       Priest: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -125315,7 +125315,7 @@ Body:
     Slots: 2
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -125339,7 +125339,7 @@ Body:
     Slots: 2
     Jobs:
       Priest: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -125361,7 +125361,7 @@ Body:
     Slots: 2
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -125383,7 +125383,7 @@ Body:
     Slots: 2
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -125405,7 +125405,7 @@ Body:
     Slots: 2
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -125428,7 +125428,7 @@ Body:
     Slots: 2
     Jobs:
       Priest: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -125450,7 +125450,7 @@ Body:
     Slots: 2
     Jobs:
       Monk: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -132430,7 +132430,7 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
-    Class:
+    Classes:
       All: false
     Gender: Female
     Trade:
@@ -132699,7 +132699,7 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
-    Class:
+    Classes:
       All: false
     Trade:
       Override: 100
@@ -132718,7 +132718,7 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 10
-    Class:
+    Classes:
       All: false
     Trade:
       Override: 100
@@ -134553,7 +134553,7 @@ Body:
     Jobs:
       Alchemist: true
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -134571,7 +134571,7 @@ Body:
     Jobs:
       Alchemist: true
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -134591,7 +134591,7 @@ Body:
     Jobs:
       Alchemist: true
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -134611,7 +134611,7 @@ Body:
     Jobs:
       Alchemist: true
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -134631,7 +134631,7 @@ Body:
     Jobs:
       Alchemist: true
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -134719,7 +134719,7 @@ Body:
     Jobs:
       BardDancer: true
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -135101,7 +135101,7 @@ Body:
       Archer: true
       BardDancer: true
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -135257,7 +135257,7 @@ Body:
     Slots: 1
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -135280,7 +135280,7 @@ Body:
     Slots: 2
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -135305,7 +135305,7 @@ Body:
     Jobs:
       Hunter: true
       Rogue: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -135478,7 +135478,7 @@ Body:
     Slots: 2
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -135502,7 +135502,7 @@ Body:
     Jobs:
       BardDancer: true
       Hunter: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -135526,7 +135526,7 @@ Body:
     Slots: 2
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -135550,7 +135550,7 @@ Body:
     Slots: 2
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -135574,7 +135574,7 @@ Body:
     Slots: 2
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -135599,7 +135599,7 @@ Body:
     Slots: 2
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -135623,7 +135623,7 @@ Body:
     Slots: 2
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -135647,7 +135647,7 @@ Body:
     Slots: 2
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -135671,7 +135671,7 @@ Body:
     Slots: 2
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -135695,7 +135695,7 @@ Body:
     Slots: 2
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -135719,7 +135719,7 @@ Body:
     Slots: 2
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -139791,7 +139791,7 @@ Body:
     Slots: 1
     Jobs:
       Sage: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -140017,7 +140017,7 @@ Body:
     Weight: 450
     Defense: 35
     Slots: 1
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -141178,7 +141178,7 @@ Body:
     Slots: 1
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -141208,7 +141208,7 @@ Body:
     Slots: 1
     Jobs:
       Priest: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -141238,7 +141238,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -141268,7 +141268,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -141298,7 +141298,7 @@ Body:
     Slots: 1
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -141328,7 +141328,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -141359,7 +141359,7 @@ Body:
     Slots: 1
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -141389,7 +141389,7 @@ Body:
     Slots: 1
     Jobs:
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -141419,7 +141419,7 @@ Body:
     Slots: 1
     Jobs:
       Monk: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -141449,7 +141449,7 @@ Body:
     Slots: 1
     Jobs:
       Sage: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -141479,7 +141479,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -141510,7 +141510,7 @@ Body:
     Slots: 1
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -141540,7 +141540,7 @@ Body:
     Slots: 1
     Jobs:
       Crusader: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -141570,7 +141570,7 @@ Body:
     Slots: 1
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -142908,7 +142908,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -142937,7 +142937,7 @@ Body:
     Slots: 1
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -142966,7 +142966,7 @@ Body:
     Slots: 1
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -142995,7 +142995,7 @@ Body:
     Slots: 1
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -143024,7 +143024,7 @@ Body:
     Slots: 1
     Jobs:
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -143053,7 +143053,7 @@ Body:
     Slots: 1
     Jobs:
       Sage: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -143082,7 +143082,7 @@ Body:
     Slots: 1
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -143111,7 +143111,7 @@ Body:
     Slots: 1
     Jobs:
       Crusader: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -143140,7 +143140,7 @@ Body:
     Slots: 1
     Jobs:
       Priest: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -143169,7 +143169,7 @@ Body:
     Slots: 1
     Jobs:
       Monk: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -143198,7 +143198,7 @@ Body:
     Slots: 1
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -143227,7 +143227,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -143257,7 +143257,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -152232,7 +152232,7 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -152292,7 +152292,7 @@ Body:
     Weight: 600
     Defense: 45
     Slots: 1
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -152393,7 +152393,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -152413,7 +152413,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -152721,7 +152721,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -152741,7 +152741,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -152761,7 +152761,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -152885,7 +152885,7 @@ Body:
     Defense: 12
     Jobs:
       Sage: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -152917,7 +152917,7 @@ Body:
     Defense: 16
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -153696,7 +153696,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -153745,7 +153745,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -153769,7 +153769,7 @@ Body:
     Slots: 2
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -153790,7 +153790,7 @@ Body:
     Slots: 2
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -153816,7 +153816,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -153892,7 +153892,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -153915,7 +153915,7 @@ Body:
     Slots: 2
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -153941,7 +153941,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -153967,7 +153967,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -153993,7 +153993,7 @@ Body:
       Crusader: true
       Knight: true
       Swordman: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154017,7 +154017,7 @@ Body:
     Slots: 2
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154041,7 +154041,7 @@ Body:
     Slots: 2
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154060,7 +154060,7 @@ Body:
     Buy: 20
     Weight: 600
     Defense: 25
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154077,7 +154077,7 @@ Body:
     Buy: 20
     Weight: 600
     Defense: 20
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154094,7 +154094,7 @@ Body:
     Buy: 20
     Weight: 600
     Defense: 25
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154111,7 +154111,7 @@ Body:
     Buy: 20
     Weight: 600
     Defense: 25
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154128,7 +154128,7 @@ Body:
     Buy: 20
     Weight: 600
     Defense: 25
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154145,7 +154145,7 @@ Body:
     Buy: 20
     Weight: 600
     Defense: 20
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154163,7 +154163,7 @@ Body:
     Weight: 600
     Defense: 25
     Slots: 1
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154181,7 +154181,7 @@ Body:
     Weight: 600
     Defense: 25
     Slots: 1
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154199,7 +154199,7 @@ Body:
     Weight: 600
     Defense: 25
     Slots: 1
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154217,7 +154217,7 @@ Body:
     Weight: 600
     Defense: 20
     Slots: 1
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154235,7 +154235,7 @@ Body:
     Weight: 600
     Defense: 25
     Slots: 1
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154253,7 +154253,7 @@ Body:
     Weight: 600
     Defense: 20
     Slots: 1
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154391,7 +154391,7 @@ Body:
     Weight: 400
     Defense: 25
     Slots: 1
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154479,7 +154479,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154499,7 +154499,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -154653,7 +154653,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -154673,7 +154673,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -154794,7 +154794,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -154814,7 +154814,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -154834,7 +154834,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -155801,7 +155801,7 @@ Body:
     Type: Cash
     Buy: 10
     Weight: 20
-    Class:
+    Classes:
       All: false
     Gender: Female
     Trade:
@@ -155925,7 +155925,7 @@ Body:
     Type: Delayconsume
     Buy: 2
     Weight: 10
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -157559,7 +157559,7 @@ Body:
     Type: Usable
     Buy: 10
     Weight: 100
-    Class:
+    Classes:
       All: false
     Gender: Female
     Trade:
@@ -157626,7 +157626,7 @@ Body:
     Type: Usable
     Buy: 10
     Weight: 10
-    Class:
+    Classes:
       All: false
     Gender: Female
     Trade:
@@ -157646,7 +157646,7 @@ Body:
     Type: Usable
     Buy: 10
     Weight: 10
-    Class:
+    Classes:
       All: false
     Gender: Female
   - Id: 22827
@@ -157655,7 +157655,7 @@ Body:
     Type: Usable
     Buy: 10
     Weight: 10
-    Class:
+    Classes:
       All: false
     Gender: Female
     Script: |
@@ -157756,7 +157756,7 @@ Body:
     Type: Usable
     Buy: 10
     Weight: 10
-    Class:
+    Classes:
       All: false
     Gender: Female
     Trade:
@@ -158710,7 +158710,7 @@ Body:
     Weight: 3000
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -161060,7 +161060,7 @@ Body:
     Name: Enhanced Force Shadow Weapon
     Type: Shadowgear
     Buy: 10
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -161108,7 +161108,7 @@ Body:
     Name: Enhanced Soul Shadow Weapon
     Type: Shadowgear
     Buy: 10
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -161732,7 +161732,7 @@ Body:
     Type: Shadowgear
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -161748,7 +161748,7 @@ Body:
     Type: Shadowgear
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -161765,7 +161765,7 @@ Body:
     Buy: 10
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -161782,7 +161782,7 @@ Body:
     Buy: 10
     Jobs:
       Crusader: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -161799,7 +161799,7 @@ Body:
     Buy: 10
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -161816,7 +161816,7 @@ Body:
     Buy: 10
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -161833,7 +161833,7 @@ Body:
     Buy: 10
     Jobs:
       Priest: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -161850,7 +161850,7 @@ Body:
     Buy: 10
     Jobs:
       Monk: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -161867,7 +161867,7 @@ Body:
     Buy: 10
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -161884,7 +161884,7 @@ Body:
     Buy: 10
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -161901,7 +161901,7 @@ Body:
     Buy: 10
     Jobs:
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -161918,7 +161918,7 @@ Body:
     Buy: 10
     Jobs:
       Sage: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -161935,7 +161935,7 @@ Body:
     Buy: 10
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -161952,7 +161952,7 @@ Body:
     Buy: 10
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -161970,7 +161970,7 @@ Body:
     Buy: 10
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -161987,7 +161987,7 @@ Body:
     Type: Shadowgear
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -162004,7 +162004,7 @@ Body:
     Buy: 10
     Jobs:
       Crusader: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -162021,7 +162021,7 @@ Body:
     Buy: 10
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -162038,7 +162038,7 @@ Body:
     Buy: 10
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -162055,7 +162055,7 @@ Body:
     Buy: 10
     Jobs:
       Priest: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -162072,7 +162072,7 @@ Body:
     Buy: 10
     Jobs:
       Monk: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -162089,7 +162089,7 @@ Body:
     Buy: 10
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -162106,7 +162106,7 @@ Body:
     Buy: 10
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -162123,7 +162123,7 @@ Body:
     Buy: 10
     Jobs:
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -162140,7 +162140,7 @@ Body:
     Buy: 10
     Jobs:
       Sage: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -162157,7 +162157,7 @@ Body:
     Buy: 10
     Jobs:
       Hunter: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -162174,7 +162174,7 @@ Body:
     Buy: 10
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -162192,7 +162192,7 @@ Body:
     Buy: 10
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -162238,7 +162238,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -162255,7 +162255,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -163255,7 +163255,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -163272,7 +163272,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -163289,7 +163289,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -163306,7 +163306,7 @@ Body:
     Buy: 10
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -164597,7 +164597,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -164627,7 +164627,7 @@ Body:
     Range: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -164681,7 +164681,7 @@ Body:
     Jobs:
       Sage: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -164812,7 +164812,7 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -164836,7 +164836,7 @@ Body:
     Slots: 2
     Jobs:
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -164860,7 +164860,7 @@ Body:
     Slots: 2
     Jobs:
       Sage: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -164884,7 +164884,7 @@ Body:
     Slots: 2
     Jobs:
       Sage: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -164908,7 +164908,7 @@ Body:
     Slots: 2
     Jobs:
       Priest: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -164930,7 +164930,7 @@ Body:
     Slots: 2
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -164954,7 +164954,7 @@ Body:
     Slots: 2
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -164977,7 +164977,7 @@ Body:
     Slots: 2
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -166792,7 +166792,7 @@ Body:
     Slots: 1
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -166855,7 +166855,7 @@ Body:
     Slots: 1
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -166878,7 +166878,7 @@ Body:
     Slots: 2
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -166942,7 +166942,7 @@ Body:
     Slots: 2
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -166993,7 +166993,7 @@ Body:
     Slots: 2
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -167017,7 +167017,7 @@ Body:
     Slots: 2
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       High: true
       Third: true
       Third_High: true
@@ -167062,7 +167062,7 @@ Body:
     Slots: 2
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -167086,7 +167086,7 @@ Body:
     Slots: 2
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -167116,7 +167116,7 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -167141,7 +167141,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -167188,7 +167188,7 @@ Body:
     Slots: 1
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -167211,7 +167211,7 @@ Body:
     Slots: 2
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -167240,7 +167240,7 @@ Body:
       Knight: true
       Merchant: true
       Swordman: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -167353,7 +167353,7 @@ Body:
     Slots: 2
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -167377,7 +167377,7 @@ Body:
     Slots: 2
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -167400,7 +167400,7 @@ Body:
     Slots: 2
     Jobs:
       Blacksmith: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -167828,7 +167828,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -167860,7 +167860,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -167892,7 +167892,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -167924,7 +167924,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Wizard: true
-    Class:
+    Classes:
       High: true
       Third_High: true
     Location:
@@ -168276,7 +168276,7 @@ Body:
     Weight: 100
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -168328,7 +168328,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -168347,7 +168347,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -168366,7 +168366,7 @@ Body:
     Slots: 1
     Jobs:
       Summoner: true
-    Class:
+    Classes:
       Normal: true
       High: true
       Baby: true
@@ -168819,7 +168819,7 @@ Body:
     Weight: 200
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -168837,7 +168837,7 @@ Body:
     Slots: 1
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -169782,7 +169782,7 @@ Body:
     Slots: 1
     Jobs:
       Priest: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -169912,7 +169912,7 @@ Body:
     Slots: 2
     Jobs:
       Sage: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -170039,7 +170039,7 @@ Body:
     Slots: 2
     Jobs:
       Sage: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -170061,7 +170061,7 @@ Body:
     Slots: 2
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -170083,7 +170083,7 @@ Body:
     Slots: 2
     Jobs:
       Sage: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -170141,7 +170141,7 @@ Body:
       Swordman: true
       Thief: true
       Wizard: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -170449,7 +170449,7 @@ Body:
     Slots: 2
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -170470,7 +170470,7 @@ Body:
     Slots: 3
     Jobs:
       Assassin: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -170491,7 +170491,7 @@ Body:
     Slots: 2
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -170515,7 +170515,7 @@ Body:
     Slots: 2
     Jobs:
       Rogue: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -170796,7 +170796,7 @@ Body:
     Slots: 1
     Jobs:
       Crusader: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -177161,7 +177161,7 @@ Body:
     Jobs:
       Crusader: true
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -177182,7 +177182,7 @@ Body:
     Jobs:
       Crusader: true
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -177205,7 +177205,7 @@ Body:
     Slots: 2
     Jobs:
       Crusader: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -177228,7 +177228,7 @@ Body:
     Slots: 2
     Jobs:
       Knight: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -177251,7 +177251,7 @@ Body:
     Slots: 2
     Jobs:
       Crusader: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -177274,7 +177274,7 @@ Body:
     Slots: 2
     Jobs:
       Crusader: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -177297,7 +177297,7 @@ Body:
     Slots: 2
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -177320,7 +177320,7 @@ Body:
     Slots: 2
     Jobs:
       BardDancer: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -177662,7 +177662,7 @@ Body:
     Slots: 2
     Jobs:
       Crusader: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true
@@ -177685,7 +177685,7 @@ Body:
     Slots: 2
     Jobs:
       Alchemist: true
-    Class:
+    Classes:
       Third: true
       Third_High: true
       Third_Baby: true

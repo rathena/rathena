@@ -18,7 +18,7 @@ CREATE TABLE `item_db2_re` (
   `range` tinyint(2) unsigned DEFAULT NULL,
   `slots` tinyint(2) unsigned DEFAULT NULL,
   `equip_jobs` text,
-  `equip_upper` text,
+  `equip_classes` text,
   `equip_genders` varchar(10) DEFAULT NULL,
   `equip_locations` text,
   `weapon_level` tinyint(1) unsigned DEFAULT NULL,

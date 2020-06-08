@@ -318,8 +318,8 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 	}
 
-	if (this->nodeExists(node, "Class")) {
-		const YAML::Node &classNode = node["Class"];
+	if (this->nodeExists(node, "Classes")) {
+		const YAML::Node &classNode = node["Classes"];
 
 		if (this->nodeExists(classNode, "All")) {
 			bool active;
@@ -2016,9 +2016,9 @@ static bool itemdb_read_sqldb_sub(char **str) {
 			state = strtok(nullptr, state_delim);
 
 			if (state == "true")
-				node["Class"][p] = true;
+				node["Classes"][p] = true;
 			else
-				node["Class"][p] = false;
+				node["Classes"][p] = false;
 			p = strtok(nullptr, delim);
 		}
 	}

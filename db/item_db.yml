@@ -36,7 +36,7 @@
 #   Range                   Weapon's attack range. (Default: 0)
 #   Slots                   Available slots in item. (Default: 0)
 #   Jobs                    Jobs that can equip the item. (Map default is 'All: true')
-#   Class                   Upper class types that can equip the item. (Default: All)
+#   Classes                 Upper class types that can equip the item. (Map default is 'All: true')
 #   Gender                  Gender that can equip the item. (Default: Both)
 #   Location                Equipment location. (Default: None)
 #   WeaponLevel             Weapon level. (Default: 0)

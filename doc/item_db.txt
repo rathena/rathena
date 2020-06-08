@@ -148,7 +148,7 @@ Summoner
 
 ---------------------------------------
 
-Class: Equippable upper-types.
+Classes: Equippable upper-types.
 
 All         - Applies to all classes.
 Normal      - Normal classes (no Baby/Transcendent/Third classes).

@@ -3098,13 +3098,13 @@ static bool itemdb_read_db(const char* file) {
 			int temp_class = atoi(str[12]);
 
 			if (temp_class == ITEMJ_NONE) {
-				body << YAML::Key << "Class";
+				body << YAML::Key << "Classes";
 				body << YAML::BeginMap << YAML::Key << "All" << YAML::Value << "false" << YAML::EndMap;
 			} else if (temp_class == ITEMJ_ALL) { // Commented out because it's the default value
-				//body << YAML::Key << "Class";
+				//body << YAML::Key << "Classes";
 				//body << YAML::BeginMap << YAML::Key << "All" << YAML::Value << "true" << YAML::EndMap;
 			} else {
-				body << YAML::Key << "Class";
+				body << YAML::Key << "Classes";
 				body << YAML::BeginMap;
 				for (int32 i = ITEMJ_NONE; i <= ITEMJ_THIRD_BABY; i++) {
 					if (i & temp_class) {
