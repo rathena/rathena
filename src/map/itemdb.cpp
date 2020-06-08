@@ -2053,7 +2053,7 @@ static bool itemdb_read_sqldb_sub(char **str) {
 		node["Refineable"] = true;
 	if (atoi(str[++index]) != 0)
 		node["View"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
+	if (*str[++index])
 		node["AliasName"] = str[index];
 
 	YAML::Node flags;

@@ -345,7 +345,7 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 			column.append("`refineable`,");
 		if (appendEntry(input["View"], value))
 			column.append("`view`,");
-		if (appendEntry(input["AliasName"], value))
+		if (appendEntry(input["AliasName"], value, true))
 			column.append("`alias_name`,");
 
 		const YAML::Node &flags = input["Flags"];
