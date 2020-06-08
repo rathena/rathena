@@ -2034,36 +2034,12 @@ void pc_calc_skilltree(struct map_session_data *sd)
 	}
 
 	for (const auto &skill : skill_db) {
-		uint16 skill_id = skill.second->nameid;
-		uint16 idx = skill_get_index(skill_id);
+		uint16 idx = skill_get_index(skill.second->nameid);
 
 		// Restore original level of skills after deleting earned skills.
 		if( sd->status.skill[idx].flag != SKILL_FLAG_PERMANENT && sd->status.skill[idx].flag != SKILL_FLAG_PERM_GRANTED && sd->status.skill[idx].flag != SKILL_FLAG_PLAGIARIZED ) {
 			sd->status.skill[idx].lv = (sd->status.skill[idx].flag == SKILL_FLAG_TEMPORARY) ? 0 : sd->status.skill[idx].flag - SKILL_FLAG_REPLACED_LV_0;
 			sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
-		}
-
-		//Enable Bard/Dancer spirit linked skills.
-		if (skill_id < DC_HUMMING || skill_id > DC_SERVICEFORYOU)
-			continue;
-
-		if( sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER ) {
-			//Link Dancer skills to bard.
-			if( sd->status.sex ) {
-				if( sd->status.skill[idx - 8].lv < 10 )
-					continue;
-				sd->status.skill[idx].id = skill_id;
-				sd->status.skill[idx].lv = sd->status.skill[idx - 8].lv; // Set the level to the same as the linking skill
-				sd->status.skill[idx].flag = SKILL_FLAG_TEMPORARY; // Tag it as a non-savable, non-uppable, bonus skill
-			}
-			//Link Bard skills to dancer.
-			else {
-				if( sd->status.skill[idx].lv < 10 )
-					continue;
-				sd->status.skill[idx - 8].id = skill_id - 8;
-				sd->status.skill[idx - 8].lv = sd->status.skill[idx].lv; // Set the level to the same as the linking skill
-				sd->status.skill[idx - 8].flag = SKILL_FLAG_TEMPORARY; // Tag it as a non-savable, non-uppable, bonus skill
-			}
 		}
 	}
 
@@ -2185,6 +2161,22 @@ void pc_calc_skilltree(struct map_session_data *sd)
 			} else if( skid != NV_BASIC )
 				sd->status.skill[sk_idx].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[sk_idx].lv; // Remember original level
 			sd->status.skill[sk_idx].lv = skill_tree_get_max(skid, sd->status.class_);
+		}
+	}
+
+	// Enable Bard/Dancer spirit linked skills.
+	if (sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER) {
+		std::vector<std::vector<uint16>> linked_skills = { { BA_WHISTLE, DC_HUMMING },
+														   { BA_ASSASSINCROSS, DC_DONTFORGETME },
+														   { BA_POEMBRAGI, DC_FORTUNEKISS },
+														   { BA_APPLEIDUN, DC_SERVICEFORYOU } };
+
+		for (const auto &skill : linked_skills) {
+			if (pc_checkskill(sd, skill[!sd->status.sex]) < 10)
+				continue;
+
+			// Tag it as a non-savable, non-uppable, bonus skill
+			pc_skill(sd, skill[sd->status.sex], 10, ADDSKILL_TEMP);
 		}
 	}
 }
@@ -4549,7 +4541,7 @@ bool pc_skill(struct map_session_data* sd, uint16 skill_id, int level, enum e_ad
 				clif_deleteskill(sd,skill_id);
 			} else
 				clif_addskill(sd,skill_id);
-			if (!skill_get_inf(skill_id)) //Only recalculate for passive skills.
+			if (!skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20) //Only recalculate for passive skills.
 				status_calc_pc(sd, SCO_NONE);
 			break;
 
@@ -4586,7 +4578,7 @@ bool pc_skill(struct map_session_data* sd, uint16 skill_id, int level, enum e_ad
 				clif_deleteskill(sd,skill_id);
 			} else
 				clif_addskill(sd,skill_id);
-			if (!skill_get_inf(skill_id)) //Only recalculate for passive skills.
+			if (!skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20) //Only recalculate for passive skills.
 				status_calc_pc(sd, SCO_NONE);
 			break;
 
@@ -6241,6 +6233,36 @@ uint8 pc_checkskill(struct map_session_data *sd, uint16 skill_id)
 }
 
 /**
+ * Returns the amount of skill points invested in a Summoner's Power of Sea/Land/Life
+ * @param sd: Player data
+ * @param type: Summoner Power Type
+ * @return Skill points invested
+ */
+uint8 pc_checkskill_summoner(map_session_data *sd, e_summoner_power_type type) {
+	if (sd == nullptr)
+		return 0;
+
+	uint8 count = 0;
+
+	switch (type) {
+		case SUMMONER_POWER_SEA:
+			count = pc_checkskill(sd, SU_TUNABELLY) + pc_checkskill(sd, SU_TUNAPARTY) + pc_checkskill(sd, SU_BUNCHOFSHRIMP) + pc_checkskill(sd, SU_FRESHSHRIMP) +
+				pc_checkskill(sd, SU_GROOMING) + pc_checkskill(sd, SU_PURRING) + pc_checkskill(sd, SU_SHRIMPARTY);
+			break;
+		case SUMMONER_POWER_LAND:
+			count = pc_checkskill(sd, SU_SV_STEMSPEAR) + pc_checkskill(sd, SU_CN_POWDERING) + pc_checkskill(sd, SU_CN_METEOR) + pc_checkskill(sd, SU_SV_ROOTTWIST) +
+				pc_checkskill(sd, SU_CHATTERING) + pc_checkskill(sd, SU_MEOWMEOW) + pc_checkskill(sd, SU_NYANGGRASS);
+			break;
+		case SUMMONER_POWER_LIFE:
+			count = pc_checkskill(sd, SU_SCAROFTAROU) + pc_checkskill(sd, SU_PICKYPECK) + pc_checkskill(sd, SU_ARCLOUSEDASH) + pc_checkskill(sd, SU_LUNATICCARROTBEAT) +
+				pc_checkskill(sd, SU_HISS) + pc_checkskill(sd, SU_POWEROFFLOCK) + pc_checkskill(sd, SU_SVG_SPIRIT);
+			break;
+	}
+
+	return count;
+}
+
+/**
  * Check if we still have the correct weapon to continue the skill (actually status)
  * If not ending it
  * @param sd
@@ -7626,7 +7648,7 @@ void pc_skillup(struct map_session_data *sd,uint16 skill_id)
 			int lv, range, upgradable;
 			sd->status.skill[idx].lv++;
 			sd->status.skill_point--;
-			if( !skill_get_inf(skill_id) )
+			if( !skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20 )
 				status_calc_pc(sd,SCO_NONE); // Only recalculate for passive skills.
 			else if( sd->status.skill_point == 0 && pc_is_taekwon_ranker(sd) )
 				pc_calc_skilltree(sd); // Required to grant all TK Ranker skills.
