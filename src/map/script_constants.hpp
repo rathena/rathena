@@ -4981,6 +4981,17 @@
 	export_constant(IG_PRIZEOFHERO);
 	export_constant(IG_PRIVATE_AIRSHIP);
 	export_constant(IG_TOKEN_OF_SIEGFRIED);
+	export_constant(IG_ENCHANT_STONE_BOX5);
+	export_constant(IG_ENCHANT_STONE_BOX6);
+	export_constant(IG_ENCHANT_STONE_BOX7);
+	export_constant(IG_ENCHANT_STONE_BOX8);
+	export_constant(IG_ENCHANT_STONE_BOX9);
+	export_constant(IG_ENCHANT_STONE_BOX10);
+	export_constant(IG_ENCHANT_STONE_BOX11);
+	export_constant(IG_ENCHANT_STONE_BOX12);
+	export_constant(IG_ENCHANT_STONE_BOX13);
+	export_constant(IG_ENCHANT_STONE_BOX14);
+	export_constant(IG_ENCHANT_STONE_BOX15);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
