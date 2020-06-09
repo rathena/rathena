@@ -1699,6 +1699,8 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 
 	sd->catch_target_class = PET_CATCH_FAIL;
 
+	sd->instance_mode = IM_NONE;
+
 	// Check EXP overflow, since in previous revision EXP on Max Level can be more than 'official' Max EXP
 	if (pc_is_maxbaselv(sd) && sd->status.base_exp > MAX_LEVEL_BASE_EXP) {
 		sd->status.base_exp = MAX_LEVEL_BASE_EXP;
@@ -5896,13 +5898,15 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	sd->state.workinprogress = WIP_DISABLE_NONE;
 
 	if( sd->state.changemap ) { // Misc map-changing settings
-		unsigned short curr_map_instance_id = map_getmapdata(sd->bl.m)->instance_id, new_map_instance_id = (mapdata ? mapdata->instance_id : 0);
+		int curr_map_instance_id = map_getmapdata(sd->bl.m)->instance_id, new_map_instance_id = (mapdata ? mapdata->instance_id : 0);
 
 		if (curr_map_instance_id != new_map_instance_id) {
-			if (curr_map_instance_id) // Update instance timer for the map on leave
+			if (curr_map_instance_id > 0) { // Update instance timer for the map on leave
 				instance_delusers(curr_map_instance_id);
+				sd->instance_mode = util::umap_find(instances, curr_map_instance_id)->mode; // Store mode for instance destruction button checks
+			}
 
-			if (new_map_instance_id) // Update instance timer for the map on enter
+			if (new_map_instance_id > 0) // Update instance timer for the map on enter
 				instance_addusers(new_map_instance_id);
 		}
 

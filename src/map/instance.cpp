@@ -111,7 +111,6 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 			instance->timeout = 300;
 	}
 
-	/*
 	if (this->nodeExists(node, "Destroyable")) {
 		bool destroy;
 
@@ -123,7 +122,6 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!exists)
 			instance->destroyable = true;
 	}
-	*/
 
 	if (this->nodeExists(node, "Enter")) {
 		const YAML::Node &enterNode = node["Enter"];
@@ -740,6 +738,68 @@ int16 instance_mapid(int16 m, int instance_id)
 	}
 
 	return m;
+}
+
+/**
+ * Removes an instance, all its maps, and NPCs invoked by the client button.
+ * @param sd: Player data
+ */
+void instance_destroy_command(map_session_data *sd) {
+	nullpo_retv(sd);
+
+	std::shared_ptr<s_instance_data> idata;
+	int instance_id = 0;
+
+	if (sd->instance_mode == IM_CHAR && sd->instance_id > 0) {
+		idata = util::umap_find(instances, sd->instance_id);
+
+		if (idata == nullptr)
+			return;
+
+		instance_id = sd->instance_id;
+	} else if (sd->instance_mode == IM_PARTY && sd->status.party_id > 0) {
+		party_data *pd = party_search(sd->status.party_id);
+
+		if (pd == nullptr)
+			return;
+
+		idata = util::umap_find(instances, pd->instance_id);
+
+		if (idata == nullptr)
+			return;
+
+		int32 i;
+
+		ARR_FIND(0, MAX_PARTY, i, pd->data[i].sd == sd && pd->party.member[i].leader);
+
+		if (i == MAX_PARTY) // Player is not party leader
+			return;
+
+		instance_id = pd->instance_id;
+	} else if (sd->instance_mode == IM_GUILD && sd->guild != nullptr && sd->guild->instance_id > 0) {
+		guild *gd = guild_search(sd->status.guild_id);
+
+		if (gd == nullptr)
+			return;
+
+		idata = util::umap_find(instances, gd->instance_id);
+
+		if (idata == nullptr)
+			return;
+
+		if (strcmp(sd->status.name, gd->master) != 0) // Player is not guild master
+			return;
+
+		instance_id = gd->instance_id;
+	}
+
+	if (instance_id == 0) // Checks above failed
+		return;
+
+	if (!instance_db.find(idata->id)->destroyable) // Instance is flagged as non-destroyable
+		return;
+
+	instance_destroy(instance_id);
 }
 
 /**
