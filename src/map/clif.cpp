@@ -12850,27 +12850,23 @@ void clif_parse_SelectArrow(int fd,struct map_session_data *sd) {
 		return;
 	}
 
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
-	int nameid = RFIFOL(fd, 2);
-#else
-	int nameid = RFIFOW(fd, 2);
-#endif
+	struct PACKET_CZ_REQ_MAKINGARROW* p = (struct PACKET_CZ_REQ_MAKINGARROW*)RFIFOP( fd, 0 );
 
 	switch (sd->menuskill_id) {
 		case AC_MAKINGARROW:
-			skill_arrow_create(sd,nameid);
+			skill_arrow_create(sd,p->itemId);
 			break;
 		case SA_CREATECON:
-			skill_produce_mix(sd,SA_CREATECON,nameid,0,0,0,1,-1);
+			skill_produce_mix(sd,SA_CREATECON,p->itemId,0,0,0,1,-1);
 			break;
 		case WL_READING_SB:
-			skill_spellbook(sd,nameid);
+			skill_spellbook(sd,p->itemId);
 			break;
 		case GC_POISONINGWEAPON:
-			skill_poisoningweapon(sd,nameid);
+			skill_poisoningweapon(sd,p->itemId);
 			break;
 		case NC_MAGICDECOY:
-			skill_magicdecoy(sd,nameid);
+			skill_magicdecoy(sd,p->itemId);
 			break;
 	}
 
