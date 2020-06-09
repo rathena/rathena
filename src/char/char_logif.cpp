@@ -179,11 +179,11 @@ void chlogif_prepsend_global_accreg(void) {
 }
 
 void chlogif_send_global_accreg(const char *key, unsigned int index, int64 int_value, const char* string_value, bool is_string) {
-	int nlen = WFIFOW(login_fd, 2);
-	size_t len;
-
 	if (!chlogif_isconnected())
 		return;
+
+	int nlen = WFIFOW(login_fd, 2);
+	size_t len;
 
 	len = strlen(key)+1;
 
@@ -296,10 +296,10 @@ int chlogif_parse_ackconnect(int fd){
 }
 
 int chlogif_parse_ackaccreq(int fd){
-	struct char_session_data* sd = NULL;
 	if (RFIFOREST(fd) < 21)
 		return 0;
 	{
+		struct char_session_data* sd;
 		uint32 account_id = RFIFOL(fd,2);
 		uint32 login_id1 = RFIFOL(fd,6);
 		uint32 login_id2 = RFIFOL(fd,10);
@@ -334,10 +334,10 @@ int chlogif_parse_ackaccreq(int fd){
  * AH 0x2717 <aid>.L <email>.40B <expiration_time>.L <group_id>.B <birthdate>.11B <pincode>.5B <pincode_change>.L <isvip>.B <char_vip>.B <char_billing>.B
  **/
 int chlogif_parse_reqaccdata(int fd){
-	int u_fd; //user fd
-	struct char_session_data* sd = NULL;
 	if (RFIFOREST(fd) < 75)
 		return 0;
+	int u_fd; //user fd
+	struct char_session_data* sd;
 
 	// find the authenticated session with this account id
 	ARR_FIND( 0, fd_max, u_fd, session[u_fd] && (sd = (struct char_session_data*)session[u_fd]->session_data) && sd->auth && sd->account_id == RFIFOL(fd,2) );
@@ -568,7 +568,7 @@ int chlogif_parse_askkick(int fd){
 			}
 			else
 			{// Manual kick from char server.
-				struct char_session_data *tsd = NULL;
+				struct char_session_data *tsd;
 				int i;
 				ARR_FIND( 0, fd_max, i, session[i] && (tsd = (struct char_session_data*)session[i]->session_data) && tsd->account_id == aid );
 				if( i < fd_max )
