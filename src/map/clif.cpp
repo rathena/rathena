@@ -17924,7 +17924,7 @@ void clif_instance_changestatus(int instance_id, e_instance_notify type, unsigne
 /// 02cf <command>.L (CZ_MEMORIALDUNGEON_COMMAND)
 void clif_parse_MemorialDungeonCommand(int fd, map_session_data *sd)
 {
-	if (pc_istrading(sd) || pc_isdead(sd))
+	if (pc_istrading(sd) || pc_isdead(sd) || map_getmapdata(sd->bl.m)->instance_id == 0)
 		return;
 
 	const PACKET_CZ_MEMORIALDUNGEON_COMMAND *p = (PACKET_CZ_MEMORIALDUNGEON_COMMAND *)RFIFOP(fd, 0);
