@@ -81,7 +81,7 @@ AccountDB* account_db_sql(void) {
 	safestrncpy(db->db_hostname, "127.0.0.1", sizeof(db->db_hostname));
 	db->db_port = 3306;
 	safestrncpy(db->db_username, "ragnarok", sizeof(db->db_username));
-	safestrncpy(db->db_password, "ragnarok", sizeof(db->db_password));
+	safestrncpy(db->db_password, "", sizeof(db->db_password));
 	safestrncpy(db->db_database, "ragnarok", sizeof(db->db_database));
 	safestrncpy(db->codepage, "", sizeof(db->codepage));
 	// other settings

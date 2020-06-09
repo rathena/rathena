@@ -386,7 +386,7 @@ int elemental_clean_effect(struct elemental_data *ed) {
 }
 
 int elemental_action(struct elemental_data *ed, struct block_list *bl, t_tick tick) {
-	struct skill_condition req;
+	struct s_skill_condition req;
 	uint16 skill_id, skill_lv;
 	int i;
 
@@ -562,19 +562,16 @@ bool elemental_skillnotok(uint16 skill_id, struct elemental_data *ed) {
 	return idx == 0 ? false : skill_isNotOk(skill_id,ed->master); // return false or check if it,s ok for master as well
 }
 
-struct skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 skill_lv){
-	struct skill_condition req;
-	uint16 idx = skill_get_index(skill_id);
+struct s_skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 skill_lv){
+	struct s_skill_condition req = {};
+	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 
-	memset(&req,0,sizeof(req));
-
-	if( idx == 0 ) // invalid skill id
+	if( !skill ) // invalid skill id
 		return req;
 
 	skill_lv = cap_value(skill_lv, 1, MAX_SKILL_LEVEL);
-
-	req.hp = skill_db[idx]->require.hp[skill_lv-1];
-	req.sp = skill_db[idx]->require.sp[skill_lv-1];
+	req.hp = skill->require.hp[skill_lv - 1];
+	req.sp = skill->require.sp[skill_lv - 1];
 
 	return req;
 }
