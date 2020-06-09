@@ -2,10 +2,11 @@
 // For more information, see LICENCE in the main folder
 
 #include "account.hpp"
+#include "login.hpp"
 
 #include <algorithm> //min / max
 #include <stdlib.h>
-#include <string.h>
+#include <string>
 
 #include "../common/malloc.hpp"
 #include "../common/mmo.hpp"
@@ -495,12 +496,13 @@ static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 
 
 	// retrieve login entry for the specified account
 	if( SQL_ERROR == Sql_Query(sql_handle,
+		"SELECT `account_id`,`userid`,`user_pass`,`sex`,`email`,`group_id`,`state`,`unban_time`,`expiration_time`,`logincount`,`lastlogin`,`last_ip`,`birthdate`,`character_slots`,`pincode`, `pincode_change`"
+		", IF(`sex` != 'S',%s,'') AS delcode"
 #ifdef VIP_ENABLE
-		"SELECT `account_id`,`userid`,`user_pass`,`sex`,`email`,`group_id`,`state`,`unban_time`,`expiration_time`,`logincount`,`lastlogin`,`last_ip`,`birthdate`,`character_slots`,`pincode`, `pincode_change`, `vip_time`, `old_group` FROM `%s` WHERE `account_id` = %d",
-#else
-		"SELECT `account_id`,`userid`,`user_pass`,`sex`,`email`,`group_id`,`state`,`unban_time`,`expiration_time`,`logincount`,`lastlogin`,`last_ip`,`birthdate`,`character_slots`,`pincode`, `pincode_change` FROM `%s` WHERE `account_id` = %d",
+		", `vip_time`, `old_group`"
 #endif
-		db->account_db, account_id )
+		" FROM `%s` WHERE `account_id` = %d",
+		login_config.delcode_col.c_str(), db->account_db, account_id )
 	) {
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -528,11 +530,30 @@ static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 
 	Sql_GetData(sql_handle, 13, &data, NULL); acc->char_slots = (uint8) atoi(data);
 	Sql_GetData(sql_handle, 14, &data, NULL); safestrncpy(acc->pincode, data, sizeof(acc->pincode));
 	Sql_GetData(sql_handle, 15, &data, NULL); acc->pincode_change = atol(data);
+	Sql_GetData(sql_handle, 16, &data, NULL); acc->deletion_passcode = (data == NULL ? "" : data);
 #ifdef VIP_ENABLE
-	Sql_GetData(sql_handle, 16, &data, NULL); acc->vip_time = atol(data);
-	Sql_GetData(sql_handle, 17, &data, NULL); acc->old_group = atoi(data);
+	Sql_GetData(sql_handle, 17, &data, NULL); acc->vip_time = atol(data);
+	Sql_GetData(sql_handle, 18, &data, NULL); acc->old_group = atoi(data);
 #endif
 	Sql_FreeResult(sql_handle);
+
+	if (acc->deletion_passcode.size()) {
+		// Make sure the delcode for birthdate from YYYY-MM-DD to YYMMDD
+		if (login_config.delcode_col == "`birthdate`") {
+			const std::string str = acc->deletion_passcode;
+			acc->deletion_passcode.clear();
+			acc->deletion_passcode.append(str, 2, 1);
+			acc->deletion_passcode.append(str, 3, 1);
+			acc->deletion_passcode.append(str, 5, 1);
+			acc->deletion_passcode.append(str, 6, 1);
+			acc->deletion_passcode.append(str, 8, 1);
+			acc->deletion_passcode.append(str, 9, 1);
+		}
+		// Unset if email is default a@a.com
+		else if (login_config.delcode_col == "`email`" && acc->deletion_passcode == "a@a.com") {
+			acc->deletion_passcode = "";
+		}
+	}
 
 	return true;
 }
@@ -562,12 +583,16 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 	if( is_new )
 	{// insert into account table
 		if( SQL_SUCCESS != SqlStmt_Prepare(stmt,
+			"INSERT INTO `%s` (`account_id`, `userid`, `user_pass`, `sex`, `email`, `group_id`, `state`, `unban_time`, `expiration_time`, `logincount`, `lastlogin`, `last_ip`, `birthdate`, `character_slots`, `pincode`, `pincode_change`"
 #ifdef VIP_ENABLE
-			"INSERT INTO `%s` (`account_id`, `userid`, `user_pass`, `sex`, `email`, `group_id`, `state`, `unban_time`, `expiration_time`, `logincount`, `lastlogin`, `last_ip`, `birthdate`, `character_slots`, `pincode`, `pincode_change`, `vip_time`, `old_group` ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-#else
-			"INSERT INTO `%s` (`account_id`, `userid`, `user_pass`, `sex`, `email`, `group_id`, `state`, `unban_time`, `expiration_time`, `logincount`, `lastlogin`, `last_ip`, `birthdate`, `character_slots`, `pincode`, `pincode_change`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+			",`vip_time`, `old_group`"
 #endif
-			db->account_db)
+			")"
+			" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?"
+#ifdef VIP_ENABLE
+			",?,?"
+#endif
+			")", db->account_db)
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt,  0, SQLDT_INT,       (void*)&acc->account_id,      sizeof(acc->account_id))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt,  1, SQLDT_STRING,    (void*)acc->userid,           strlen(acc->userid))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt,  2, SQLDT_STRING,    (void*)acc->pass,             strlen(acc->pass))
@@ -596,13 +621,12 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 	}
 	else
 	{// update account table
-		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, 
+		if( SQL_SUCCESS != SqlStmt_Prepare(stmt,
+			"UPDATE `%s` SET `userid`=?,`user_pass`=?,`sex`=?,`email`=?,`group_id`=?,`state`=?,`unban_time`=?,`expiration_time`=?,`logincount`=?,`lastlogin`=?,`last_ip`=?,`birthdate`=?,`character_slots`=?,`pincode`=?, `pincode_change`=?"
 #ifdef VIP_ENABLE
-			"UPDATE `%s` SET `userid`=?,`user_pass`=?,`sex`=?,`email`=?,`group_id`=?,`state`=?,`unban_time`=?,`expiration_time`=?,`logincount`=?,`lastlogin`=?,`last_ip`=?,`birthdate`=?,`character_slots`=?,`pincode`=?, `pincode_change`=?, `vip_time`=?, `old_group`=? WHERE `account_id` = '%d'",
-#else
-			"UPDATE `%s` SET `userid`=?,`user_pass`=?,`sex`=?,`email`=?,`group_id`=?,`state`=?,`unban_time`=?,`expiration_time`=?,`logincount`=?,`lastlogin`=?,`last_ip`=?,`birthdate`=?,`character_slots`=?,`pincode`=?, `pincode_change`=? WHERE `account_id` = '%d'",
+			",`vip_time`=?, `old_group`=?"
 #endif
-			db->account_db, acc->account_id)
+			" WHERE `account_id` = '%d'", db->account_db, acc->account_id)
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt,  0, SQLDT_STRING,    (void*)acc->userid,           strlen(acc->userid))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt,  1, SQLDT_STRING,    (void*)acc->pass,             strlen(acc->pass))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt,  2, SQLDT_ENUM,      (void*)&acc->sex,             sizeof(acc->sex))

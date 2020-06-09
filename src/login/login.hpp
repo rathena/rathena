@@ -5,6 +5,7 @@
 #define LOGIN_HPP
 
 #include <memory>
+#include <string>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/core.hpp" // CORE_ST_LAST
@@ -103,6 +104,7 @@ struct Login_Config {
 	int usercount_high;								/// Amount of users that will display in red
 
 	int char_per_account;							/// number of characters an account can have
+	std::string delcode_col;
 #ifdef VIP_ENABLE
 	struct {
 		unsigned int group;							/// VIP group ID

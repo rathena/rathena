@@ -4,7 +4,7 @@
 #include "loginchrif.hpp"
 
 #include <stdlib.h>
-#include <string.h>
+#include <string>
 
 #include "../common/showmsg.hpp" //show notice
 #include "../common/socket.hpp" //wfifo session
@@ -152,50 +152,38 @@ int logchrif_parse_ackusercount(int fd, int id){
  */
 int logchrif_send_accdata(int fd, uint32 aid) {
 	struct mmo_account acc;
-	time_t expiration_time = 0;
-	char email[40] = "";
-	int group_id = 0;
-	char birthdate[10+1] = "";
-	char pincode[PINCODE_LENGTH+1];
 	char isvip = false;
 	uint8 char_slots = MIN_CHARS, char_vip = 0, char_billing = 0;
 	AccountDB* accounts = login_get_accounts_db();
 
-	memset(pincode,0,PINCODE_LENGTH+1);
 	if( !accounts->load_num(accounts, &acc, aid) )
 		return -1;
-	else {
-		safestrncpy(email, acc.email, sizeof(email));
-		expiration_time = acc.expiration_time;
-		group_id = acc.group_id;
 
-		safestrncpy(birthdate, acc.birthdate, sizeof(birthdate));
-		safestrncpy(pincode, acc.pincode, sizeof(pincode));
 #ifdef VIP_ENABLE
-		char_vip = login_config.vip_sys.char_increase;
-		if( acc.vip_time > time(NULL) ) {
-			isvip = true;
-			char_slots = login_config.char_per_account + char_vip;
-		} else
-			char_slots = login_config.char_per_account;
-		char_billing = MAX_CHAR_BILLING; //TODO create a config for this
+	char_vip = login_config.vip_sys.char_increase;
+	if( acc.vip_time > time(NULL) ) {
+		isvip = true;
+		char_slots = login_config.char_per_account + char_vip;
+	} else
+		char_slots = login_config.char_per_account;
+	char_billing = MAX_CHAR_BILLING; //TODO create a config for this
 #endif
-	}
 
-	WFIFOHEAD(fd,75);
-	WFIFOW(fd,0) = 0x2717;
-	WFIFOL(fd,2) = aid;
-	safestrncpy(WFIFOCP(fd,6), email, 40);
-	WFIFOL(fd,46) = (uint32)expiration_time;
-	WFIFOB(fd,50) = (unsigned char)group_id;
-	WFIFOB(fd,51) = char_slots;
-	safestrncpy(WFIFOCP(fd,52), birthdate, 10+1);
-	safestrncpy(WFIFOCP(fd,63), pincode, 4+1 );
-	WFIFOL(fd,68) = (uint32)acc.pincode_change;
-	WFIFOB(fd,72) = isvip;
-	WFIFOB(fd,73) = char_vip;
-	WFIFOB(fd,74) = char_billing;
-	WFIFOSET(fd,75);
+	WFIFOHEAD(fd, 135);
+	WFIFOW(fd, 0) = 0x2717;
+	WFIFOL(fd, 2) = aid;
+	WFIFOL(fd, 6) = (uint32)acc.expiration_time;
+	WFIFOB(fd, 10) = (unsigned char)acc.group_id;
+	WFIFOB(fd, 11) = char_slots;
+	WFIFOL(fd, 12) = (uint32)acc.pincode_change;
+	WFIFOB(fd, 16) = isvip;
+	WFIFOB(fd, 17) = char_vip;
+	WFIFOB(fd, 18) = char_billing;
+	safestrncpy(WFIFOCP(fd, 19), acc.email, 50);
+	safestrncpy(WFIFOCP(fd, 69), acc.birthdate, 10 + 1);
+	safestrncpy(WFIFOCP(fd, 80), acc.pincode, 4 + 1);
+	safestrncpy(WFIFOCP(fd, 85), acc.deletion_passcode.c_str(), 50/*DELCODE_LENGTH*/);
+	WFIFOSET(fd, 135);
 	return 1;
 }
 
