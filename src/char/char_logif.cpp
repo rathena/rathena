@@ -343,7 +343,6 @@ int chlogif_parse_reqaccdata(int fd){
 	ARR_FIND( 0, fd_max, u_fd, session[u_fd] && (sd = (struct char_session_data*)session[u_fd]->session_data) && sd->auth && sd->account_id == RFIFOL(fd,2) );
 	if( u_fd < fd_max )
 	{
-		int server_id;
 		memcpy(sd->email, RFIFOP(fd,6), 40);
 		sd->expiration_time = (time_t)RFIFOL(fd,46);
 		sd->group_id = RFIFOB(fd,50);
@@ -359,12 +358,10 @@ int chlogif_parse_reqaccdata(int fd){
 		sd->isvip = RFIFOB(fd,72);
 		sd->chars_vip = RFIFOB(fd,73);
 		sd->chars_billing = RFIFOB(fd,74);
-		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, map_server[server_id].fd > 0 && map_server[server_id].map[0] );
 		// continued from char_auth_ok...
-		if( server_id == ARRAYLENGTH(map_server) || //server not online, bugreport:2359
-			(((charserv_config.max_connect_user == 0 || charserv_config.char_maintenance == 1) ||
+		if(((charserv_config.max_connect_user == 0 || charserv_config.char_maintenance == 1) ||
 			(charserv_config.max_connect_user > 0 && char_count_users() >= charserv_config.max_connect_user)) &&
-			sd->group_id < charserv_config.gm_allow_group)) {
+			sd->group_id < charserv_config.gm_allow_group) {
 			// refuse connection (over populated)
 			chclif_reject(u_fd,0);
 		} else {
