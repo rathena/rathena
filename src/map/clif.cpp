@@ -16691,7 +16691,7 @@ void clif_parse_cashshop_buy( int fd, struct map_session_data *sd ){
 		return;
 	}
 
-	cashshop_buylist( sd, 0, p->count, p->items );
+	cashshop_buylist( sd, p->kafraPoints, p->count, p->items );
 }
 
 /// Adoption System
