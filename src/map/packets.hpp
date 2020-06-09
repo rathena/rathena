@@ -39,6 +39,15 @@
 	#pragma pack( push, 1 )
 #endif
 
+struct PACKET_CZ_REQ_MAKINGARROW{
+	int16 packetType;
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 itemId;
+#else
+	uint16 itemId;
+#endif
+} __attribute__((packed));
+
 struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub{
 	uint32 itemId;
 	uint32 amount;
@@ -163,6 +172,10 @@ struct PACKET_ZC_ACK_GUILDSTORAGE_LOG{
 	#pragma pack( pop )
 #endif
 
+const uint16 HEADER_CZ_REQMAKINGITEM = 0x18e;
+const uint16 HEADER_CZ_REQ_MAKINGARROW = 0x1ae;
+const uint16 HEADER_CZ_REQ_ITEMREPAIR = 0x1fd;
+const uint16 HEADER_CZ_REQ_MAKINGITEM = 0x25b;
 const uint16 HEADER_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO = 0x9ac;
 const uint16 HEADER_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO = 0x9ad;
 const uint16 HEADER_CZ_REQ_APPLY_BARGAIN_SALE_ITEM = 0x9ae;
