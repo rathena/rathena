@@ -5784,8 +5784,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				else // Last spell to be released
 					status_change_end(src, SC_FREEZE_SP, INVALID_TIMER);
 
-				if( bl->type != BL_SKILL ) /* skill types will crash the client */
-					clif_skill_nodamage(src, bl, pres_skill_id, pres_skill_lv, 1);
 				if( !skill_check_condition_castbegin(sd, pres_skill_id, pres_skill_lv) )
 					break;
 
@@ -10018,12 +10016,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}else
 		if( sd )
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_TOTARGET,0);
-		break;
-
-	case WL_JACKFROST:
-	case NPC_JACKFROST:
-		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-		map_foreachinrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 		break;
 
 	case WL_SIENNAEXECRATE:
