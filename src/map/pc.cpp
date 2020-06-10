@@ -1699,8 +1699,6 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 
 	sd->catch_target_class = PET_CATCH_FAIL;
 
-	sd->instance_mode = IM_NONE;
-
 	// Check EXP overflow, since in previous revision EXP on Max Level can be more than 'official' Max EXP
 	if (pc_is_maxbaselv(sd) && sd->status.base_exp > MAX_LEVEL_BASE_EXP) {
 		sd->status.base_exp = MAX_LEVEL_BASE_EXP;
@@ -1845,12 +1843,14 @@ void pc_reg_received(struct map_session_data *sd)
 	intif_storage_request(sd,TABLE_CART, 0, STOR_MODE_ALL); // Request cart data
 	intif_storage_request(sd,TABLE_INVENTORY, 0, STOR_MODE_ALL); // Request inventory data
 
+#if PACKETVER_MAIN_NUM < 20190403 || PACKETVER_RE_NUM < 20190320 || PACKETVER_ZERO_NUM < 20190410
 	if (sd->status.party_id)
 		party_member_joined(sd);
 	if (sd->status.guild_id)
 		guild_member_joined(sd);
 	if( sd->status.clan_id )
 		clan_member_joined(sd);
+#endif
 
 	// pet
 	if (sd->status.pet_id > 0)

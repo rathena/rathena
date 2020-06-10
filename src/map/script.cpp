@@ -20168,30 +20168,33 @@ BUILDIN_FUNC(instance_create)
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
+
+	map_session_data *sd;
+
+	if (script_rid2sd(sd))
+		sd->instance_mode = mode;
+
 	if (script_hasdata(st, 4))
 		owner_id = script_getnum(st, 4);
 	else {
-		// If sd is NULL, instance_create will return -2.
-		struct map_session_data *sd = NULL;
-
 		switch(mode) {
 			case IM_NONE:
 				owner_id = st->oid;
 				break;
 			case IM_CHAR:
-				if (script_rid2sd(sd))
+				if (sd != nullptr)
 					owner_id = sd->status.char_id;
 				break;
 			case IM_PARTY:
-				if (script_rid2sd(sd))
+				if (sd != nullptr)
 					owner_id = sd->status.party_id;
 				break;
 			case IM_GUILD:
-				if (script_rid2sd(sd))
+				if (sd != nullptr)
 					owner_id = sd->status.guild_id;
 				break;
 			case IM_CLAN:
-				if (script_rid2sd(sd))
+				if (sd != nullptr)
 					owner_id = sd->status.clan_id;
 				break;
 			default:

@@ -19015,6 +19015,13 @@ static void clif_loadConfirm( struct map_session_data *sd ){
 	p.packetType = HEADER_ZC_LOAD_CONFIRM;
 
 	clif_send( &p, sizeof(p), &sd->bl, SELF );
+
+	if (sd->status.party_id)
+		party_member_joined(sd);
+	if (sd->status.guild_id)
+		guild_member_joined(sd);
+	if (sd->status.clan_id)
+		clan_member_joined(sd);
 #endif
 }
 
