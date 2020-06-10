@@ -33,11 +33,23 @@ struct npc_item_list {
 #endif
 };
 
+#if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
+#pragma pack(push, 1)
+#endif // not NetBSD < 6 / Solaris
+
 /// List of bought/sold item for NPC shops
 struct s_npc_buy_list {
 	unsigned short qty;		///< Amount of item will be bought
-	unsigned short nameid;	///< ID of item will be bought
-};
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 nameid;	///< ID of item will be bought
+#else
+	uint16 nameid;	///< ID of item will be bought
+#endif
+} __attribute__((packed));
+
+#if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
+#pragma pack(pop)
+#endif // not NetBSD < 6 / Solaris
 
 struct npc_data {
 	struct block_list bl;
@@ -1164,6 +1176,18 @@ enum e_job_types
 	JT_4_JP_AB_NPC_009,
 	JT_4_JP_AB_NPC_010,
 
+	JT_4_4JOB_SILLA = 10364,
+	JT_4_4JOB_MAGGI,
+	JT_4_4JOB_ROBIN,
+	JT_4_4JOB_ROBIN_DRUNK,
+	JT_4_4JOB_LETICIA,
+	JT_4_4JOB_SERANG,
+	JT_4_4JOB_EINHAR,
+	JT_4_4JOB_SEALSTONE,
+	JT_4_4JOB_PHANTOMBOOK1,
+	JT_4_4JOB_PHANTOMBOOK2,
+	JT_4_4JOB_PHANTOMBOOK3,
+
 	JT_NEW_NPC_3RD_END = 19999,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
 
@@ -1266,7 +1290,7 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 
 extern struct npc_data* fake_nd;
 
-int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, unsigned short* item_list);
+int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub* item_list);
 bool npc_shop_discount(struct npc_data* nd);
 
 #if PACKETVER >= 20131223

@@ -3503,6 +3503,7 @@
 	export_constant(EFST_MAGIC_POISON);
 	export_constant(EFST_KAUTE);
 	export_constant(EFST_JPNONLY_TACTICS);
+	export_constant(EFST_MADOGEAR);
 	export_constant(EFST_LUXANIMA);
 	export_constant(EFST_BATH_FOAM_A);
 	export_constant(EFST_BATH_FOAM_B);
@@ -4980,6 +4981,17 @@
 	export_constant(IG_PRIZEOFHERO);
 	export_constant(IG_PRIVATE_AIRSHIP);
 	export_constant(IG_TOKEN_OF_SIEGFRIED);
+	export_constant(IG_ENCHANT_STONE_BOX5);
+	export_constant(IG_ENCHANT_STONE_BOX6);
+	export_constant(IG_ENCHANT_STONE_BOX7);
+	export_constant(IG_ENCHANT_STONE_BOX8);
+	export_constant(IG_ENCHANT_STONE_BOX9);
+	export_constant(IG_ENCHANT_STONE_BOX10);
+	export_constant(IG_ENCHANT_STONE_BOX11);
+	export_constant(IG_ENCHANT_STONE_BOX12);
+	export_constant(IG_ENCHANT_STONE_BOX13);
+	export_constant(IG_ENCHANT_STONE_BOX14);
+	export_constant(IG_ENCHANT_STONE_BOX15);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -6094,6 +6106,17 @@
 	export_constant_npc(JT_4_EP17_MERMAID);
 	export_constant_npc(JT_4_JP_AB_NPC_009);
 	export_constant_npc(JT_4_JP_AB_NPC_010);
+	export_constant_npc(JT_4_4JOB_SILLA);
+	export_constant_npc(JT_4_4JOB_MAGGI);
+	export_constant_npc(JT_4_4JOB_ROBIN);
+	export_constant_npc(JT_4_4JOB_ROBIN_DRUNK);
+	export_constant_npc(JT_4_4JOB_LETICIA);
+	export_constant_npc(JT_4_4JOB_SERANG);
+	export_constant_npc(JT_4_4JOB_EINHAR);
+	export_constant_npc(JT_4_4JOB_SEALSTONE);
+	export_constant_npc(JT_4_4JOB_PHANTOMBOOK1);
+	export_constant_npc(JT_4_4JOB_PHANTOMBOOK2);
+	export_constant_npc(JT_4_4JOB_PHANTOMBOOK3);
 	export_constant_npc(JT_NEW_NPC_3RD_END);
 	#undef export_constant_npc
 
@@ -7526,6 +7549,7 @@
 	export_constant(INF2_IGNOREWUGBITE);
 	export_constant(INF2_IGNOREAUTOGUARD);
 	export_constant(INF2_IGNORECICADA);
+	export_constant(INF2_SHOWSCALE);
 
 	/* skill no near npc flags */
 	export_constant(SKILL_NONEAR_WARPPORTAL);

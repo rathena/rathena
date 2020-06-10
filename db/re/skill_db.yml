@@ -1591,7 +1591,7 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 18
     CastCancel: true
     CastTime: 350
     AfterCastActDelay: 3500
@@ -2345,17 +2345,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    SplashArea:
-      - Level: 1
-        Area: 3
-      - Level: 2
-        Area: 3
-      - Level: 3
-        Area: 7
-      - Level: 4
-        Area: 7
-      - Level: 5
-        Area: 15
+    SplashArea: 18
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
@@ -2365,15 +2355,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 13
+          Amount: 59
         - Level: 2
-          Amount: 16
+          Amount: 62
         - Level: 3
-          Amount: 19
+          Amount: 65
         - Level: 4
-          Amount: 22
+          Amount: 68
         - Level: 5
-          Amount: 25
+          Amount: 71
   - Id: 67
     Name: PR_SUFFRAGIUM
     Description: Suffragium
@@ -2647,7 +2637,7 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 18
     CastCancel: true
     CastTime: 3200
     AfterCastActDelay: 2000
@@ -2676,7 +2666,7 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 18
     CastCancel: true
     AfterCastActDelay: 2000
     Duration1:
@@ -15722,6 +15712,7 @@ Body:
     Flags:
       IsNpc: true
       TargetTrap: true
+      ShowScale: true
     Hit: Multi_Hit
     HitCount: 1
     SplashArea:
@@ -15829,6 +15820,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15877,6 +15869,7 @@ Body:
     Flags:
       IsNpc: true
       TargetTrap: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea: 7
@@ -15892,6 +15885,7 @@ Body:
     Flags:
       IsNpc: true
       TargetTrap: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea: 14
@@ -15907,6 +15901,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15932,6 +15927,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15957,6 +15953,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15982,6 +15979,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16007,6 +16005,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16032,6 +16031,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16058,6 +16058,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     Element: Fire
@@ -16077,6 +16078,7 @@ Body:
       IgnoreDefCard: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Range: 7
     Hit: Single
     HitCount: 1
@@ -16175,6 +16177,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16295,6 +16298,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16320,6 +16324,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16345,6 +16350,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16378,6 +16384,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16676,6 +16683,7 @@ Body:
     Flags:
       IsNpc: true
       IgnoreLandProtector: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     Element: Poison
@@ -16699,6 +16707,7 @@ Body:
       Splash: true
     Flags:
       AlterRangeRadius: true
+      ShowScale: true
     Range: 11
     Hit: Multi_Hit
     HitCount: -20
@@ -16724,6 +16733,7 @@ Body:
       IgnoreDefCard: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     Duration1: 10000
@@ -16748,6 +16758,7 @@ Body:
     Flags:
       IsNpc: true
       IgnoreLandProtector: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     Knockback: 2
@@ -16826,6 +16837,8 @@ Body:
     TargetType: Self
     DamageFlags:
       Splash: true
+    Flags:
+      ShowScale: true
     Hit: Multi_Hit
     HitCount: -5
     Element: Water
@@ -16864,6 +16877,7 @@ Body:
       IsNpc: true
       IsTrap: true
       DisableNearNpc: true
+      ShowScale: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -16912,6 +16926,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Range: 9
     Hit: Single
     SplashArea:
@@ -25042,14 +25057,15 @@ Body:
     Name: WM_REVERBERATION
     Description: Reverberation
     MaxLevel: 5
+    Type: Magic
     TargetType: Attack
     DamageFlags:
       Splash: true
     Flags:
       IsTrap: true
     Range: 9
-    Hit: Single
-    HitCount: 1
+    Hit: Multi_Hit
+    HitCount: -10
     SplashArea:
       - Level: 1
         Area: 2
@@ -25101,7 +25117,7 @@ Body:
         Reproduce: true
     Requires:
       SpCost: 1
-  - Id: 2416
+  - Id: 2416 # Removed on kRO
     Name: WM_REVERBERATION_MAGIC
     Description: Reverberation Magic
     MaxLevel: 5
@@ -28325,6 +28341,7 @@ Body:
     HitCount: 1
     Requires:
       SpCost: 40
+      State: Cart
   - Id: 2552
     Name: RL_RICHS_COIN
     Description: Rich's Coin
