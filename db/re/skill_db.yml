@@ -1591,7 +1591,7 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 18
     CastCancel: true
     CastTime: 350
     AfterCastActDelay: 3500
@@ -2345,17 +2345,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    SplashArea:
-      - Level: 1
-        Area: 3
-      - Level: 2
-        Area: 3
-      - Level: 3
-        Area: 7
-      - Level: 4
-        Area: 7
-      - Level: 5
-        Area: 15
+    SplashArea: 18
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
@@ -2365,15 +2355,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 13
+          Amount: 59
         - Level: 2
-          Amount: 16
+          Amount: 62
         - Level: 3
-          Amount: 19
+          Amount: 65
         - Level: 4
-          Amount: 22
+          Amount: 68
         - Level: 5
-          Amount: 25
+          Amount: 71
   - Id: 67
     Name: PR_SUFFRAGIUM
     Description: Suffragium
@@ -2647,7 +2637,7 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 18
     CastCancel: true
     CastTime: 3200
     AfterCastActDelay: 2000
@@ -2676,7 +2666,7 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 18
     CastCancel: true
     AfterCastActDelay: 2000
     Duration1:
