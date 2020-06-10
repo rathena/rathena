@@ -33413,6 +33413,9 @@ Body:
     Description: Reading Spellbook
     MaxLevel: 10
     TargetType: Self
+    CastTime: 5000
+    AfterCastActDelay: 500
+    FixedCastTime: 1000
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
