@@ -168,9 +168,6 @@ bool clan_member_join( struct map_session_data *sd, int clan_id, uint32 account_
 
 	clan_member_joined(sd);
 
-	if (clan->instance_id > 0)
-		instance_reqinfo(sd, clan->instance_id);
-
 	return true;
 }
 
