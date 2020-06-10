@@ -853,7 +853,7 @@ void initChangeTables(void)
 	set_sc( WL_RECOGNIZEDSPELL	, SC_RECOGNIZEDSPELL	, EFST_RECOGNIZEDSPELL	, SCB_MATK);
 	add_sc( WL_SIENNAEXECRATE   , SC_STONE		  );
 	set_sc( WL_STASIS			, SC_STASIS		, EFST_STASIS		, SCB_NONE );
-	set_sc_with_vfx( WL_COMET   , SC_MAGIC_POISON	, EFST_MAGIC_POISON	, SCB_ALL );
+	set_sc_with_vfx( WL_COMET   , SC_MAGIC_POISON	, EFST_MAGIC_POISON	, SCB_NONE );
 	set_sc( WL_TELEKINESIS_INTENSE	, SC_TELEKINESIS_INTENSE, EFST_TELEKINESIS_INTENSE, SCB_MATK );
 
 	/* Ranger */
@@ -4692,8 +4692,6 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->bonus.short_attack_atk_rate += sc->data[SC_LUXANIMA]->val3;
 			sd->bonus.long_attack_atk_rate += sc->data[SC_LUXANIMA]->val3;
 		}
-		if (sc->data[SC_MAGIC_POISON])
-			sd->subele[ELE_ALL] -= sc->data[SC_MAGIC_POISON]->val2;
 	}
 	status_cpy(&sd->battle_status, base_status);
 

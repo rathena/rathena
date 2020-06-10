@@ -593,6 +593,13 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 				}
 				break;
 		}
+
+		if (tsc->data[SC_MAGIC_POISON])
+#ifdef RENEWAL
+			ratio += 50;
+#else
+			damage += (int64)(damage * 50 / 100);
+#endif
 	}
 
 	if (battle_config.attr_recover == 0 && ratio < 0)
