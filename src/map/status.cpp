@@ -1391,6 +1391,8 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_ENTRY_QUEUE_APPLY_DELAY] = EFST_ENTRY_QUEUE_APPLY_DELAY;
 	StatusIconChangeTable[SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT] = EFST_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT;
 
+	StatusIconChangeTable[SC_MADOGEAR] = EFST_MADOGEAR;
+
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] |= SCB_ASPD;
@@ -1608,6 +1610,7 @@ void initChangeTables(void)
 	StatusDisplayType[SC_ANTI_M_BLAST]	  = BL_PC;
 	StatusDisplayType[SC_SPRITEMABLE]     = BL_PC;
 	StatusDisplayType[SC_SV_ROOTTWIST]    = BL_PC;
+	StatusDisplayType[SC_MADOGEAR]        = BL_PC;
 
 	// Costumes
 	StatusDisplayType[SC_MOONSTAR] = BL_PC;
@@ -12221,6 +12224,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CROSSBOWCLAN:
 		case SC_JUMPINGCLAN:
 		case SC_DRESSUP:
+		case SC_MADOGEAR:
 			val_flag |= 1;
 			break;
 		// Start |1|2 val_flag setting
@@ -12865,6 +12869,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_ENTRY_QUEUE_APPLY_DELAY:
 			case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
 			case SC_REUSE_LIMIT_LUXANIMA:
+			case SC_MADOGEAR:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -12901,6 +12906,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_STYLE_CHANGE:
 			case SC_ENTRY_QUEUE_APPLY_DELAY:
 			case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
+			case SC_MADOGEAR:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:

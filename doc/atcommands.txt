@@ -950,6 +950,7 @@ Summons the specified amount of spirit spheres around you.
 ---------------------------------------
 
 @mount {<dragon color 1-5>}
+@mount {<madogear type 0-1>}
 @mount2
 
 Toggles mounting/unmounting a job mount (@mount) or cash mount (@mount2).

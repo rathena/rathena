@@ -4431,11 +4431,24 @@ ACMD_FUNC(mount_peco)
 	}
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC ) {
 		if( !pc_ismadogear(sd) ) {
+			e_mado_type type = MADO_ROBOT;
+
+			if (message[0]) {
+				switch (atoi(message)) {
+					case 1:
+						type = MADO_SUIT;
+						break;
+					default:
+						type = MADO_ROBOT;
+						break;
+				}
+			}
+
 			clif_displaymessage(sd->fd,msg_txt(sd,1123)); // You have mounted your Mado Gear.
-			pc_setoption(sd, sd->sc.option|OPTION_MADOGEAR);
+			pc_setmadogear(sd, true, type);
 		} else {
 			clif_displaymessage(sd->fd,msg_txt(sd,1124)); // You have released your Mado Gear.
-			pc_setoption(sd, sd->sc.option&~OPTION_MADOGEAR);
+			pc_setmadogear(sd, false);
 		}
 		return 0;
 	}

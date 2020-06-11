@@ -10041,20 +10041,29 @@ BUILDIN_FUNC(checkmadogear)
 }
 
 /// Sets if the player is riding MADO Gear.
-/// <flag> defaults to 1
+/// <flag> defaults to true
+/// <type> defaults to MADO_ROBOT
 ///
 /// setmadogear {<flag>{,<char_id>}};
 BUILDIN_FUNC(setmadogear)
 {
-	int flag = 1;
+	bool flag = true;
 	TBL_PC* sd;
+	uint16 type = MADO_ROBOT;
 
-	if (!script_charid2sd(3,sd))
+	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( script_hasdata(st,2) )
-		flag = script_getnum(st,2);
-	pc_setmadogear(sd, flag);
+		flag = script_getnum(st,2) != 0;
+	if (script_hasdata(st, 3)) {
+		type = script_getnum(st, 3);
+
+		if (type < MADO_ROBOT || type >= MADO_MAX)
+			type = MADO_ROBOT;
+	}
+
+	pc_setmadogear(sd, flag, static_cast<e_mado_type>(type));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -24808,7 +24817,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(checkriding,"?"),
 	BUILDIN_DEF(checkwug,"?"),
 	BUILDIN_DEF(checkmadogear,"?"),
-	BUILDIN_DEF(setmadogear,"??"),
+	BUILDIN_DEF(setmadogear,"???"),
 	BUILDIN_DEF2(savepoint,"save","sii???"),
 	BUILDIN_DEF(savepoint,"sii???"),
 	BUILDIN_DEF(gettimetick,"i"),

@@ -1586,6 +1586,7 @@
 	export_constant(SC_SOUNDOFDESTRUCTION);
 	export_constant(SC_LUXANIMA);
 	export_constant(SC_REUSE_LIMIT_LUXANIMA);
+	export_constant(SC_MADOGEAR);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -7777,6 +7778,10 @@
 	export_constant(BG_INFO_MAX_LEVEL);
 	export_constant(BG_INFO_MAPS);
 	export_constant(BG_INFO_DESERTER_TIME);
+
+	/* madogears */
+	export_constant(MADO_ROBOT);
+	export_constant(MADO_SUIT);
 
 	#undef export_constant
 	#undef export_constant2

@@ -9659,16 +9659,26 @@ void pc_setriding(struct map_session_data* sd, int flag)
 	}
 }
 
-/*==========================================
+/**
  * Give player a mado
- *------------------------------------------*/
-void pc_setmadogear(struct map_session_data* sd, int flag)
+ * @param sd: Player
+ * @param flag: Enable or disable mado
+ * @param type: See pc.hpp::e_mado_type (Default is MADO_ROBOT)
+ */
+void pc_setmadogear(struct map_session_data *sd, bool flag, e_mado_type type)
 {
-	if( flag ){
-		if( pc_checkskill(sd,NC_MADOLICENCE) > 0 )
-			pc_setoption(sd, sd->sc.option|OPTION_MADOGEAR);
-	} else if( pc_ismadogear(sd) ){
-			pc_setoption(sd, sd->sc.option&~OPTION_MADOGEAR);
+	if ((sd->class_ & MAPID_THIRDMASK) != MAPID_MECHANIC)
+		return;
+
+	if (flag) {
+		if (pc_checkskill(sd, NC_MADOLICENCE) > 0) {
+			pc_setoption(sd, sd->sc.option | OPTION_MADOGEAR);
+#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106
+			sc_start(&sd->bl, &sd->bl, SC_MADOGEAR, 100, static_cast<int>(type), INFINITE_TICK);
+#endif
+		}
+	} else if (pc_ismadogear(sd)) {
+		pc_setoption(sd, sd->sc.option & ~OPTION_MADOGEAR);
 	}
 }
 
