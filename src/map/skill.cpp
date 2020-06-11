@@ -8552,7 +8552,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 #ifdef RENEWAL
 		clif_blown(src); // Always blow, otherwise it shows a casting animation. [Lemongrass]
 #endif
-		status_change_end(src, SC_ROLLINGCUTTER, INVALID_TIMER);
 		break;
 
 	case TK_HIGHJUMP:
