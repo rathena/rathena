@@ -3537,10 +3537,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 			wd->div_ = skill_get_num(GS_CHAINACTION,skill_lv);
 			wd->type = DMG_MULTI_HIT;
 
-			status_data *status = status_get_status_data(src);
-
-			if (status && status->amotion > 70) // Only triggers if ASPD < 193
-				sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill_get_time(RL_QD_SHOT,1));
+			sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill_get_time(RL_QD_SHOT,1));
 		}
 		else if(sc && sc->data[SC_FEARBREEZE] && sd->weapontype1==W_BOW
 			&& (i = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[i] && sd->inventory.u.items_inventory[i].amount > 1)
@@ -3846,11 +3843,11 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 #endif
 			break;
 		case MO_EXTREMITYFIST:
+			skillratio += 100 * (7 + sstatus->sp / 10);			
 #ifdef RENEWAL
 			if (wd->miscflag&1)
-				skillratio += 100; // More than 5 spirit balls active
+				skillratio *= 2; // More than 5 spirit balls active
 #endif
-			skillratio += 100 * (7 + sstatus->sp / 10);
 			skillratio = min(500000,skillratio); //We stop at roughly 50k SP for overflow protection
 			break;
 		case MO_TRIPLEATTACK:
@@ -4947,12 +4944,9 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 	}
 
 	if ((wd->flag&(BF_LONG|BF_MAGIC)) == BF_LONG) {
-		if (sd && pc_checkskill(sd, SU_POWEROFLIFE) > 0) {
-			if ((pc_checkskill(sd, SU_SCAROFTAROU) + pc_checkskill(sd, SU_PICKYPECK) + pc_checkskill(sd, SU_ARCLOUSEDASH) + pc_checkskill(sd, SU_LUNATICCARROTBEAT) +
-				pc_checkskill(sd, SU_HISS) + pc_checkskill(sd, SU_POWEROFFLOCK) + pc_checkskill(sd, SU_SVG_SPIRIT)) > 19) {
-					ATK_ADDRATE(wd->damage, wd->damage2, 20);
-					RE_ALLATK_ADDRATE(wd, 20);
-			}
+		if (sd && pc_checkskill(sd, SU_POWEROFLIFE) > 0 && pc_checkskill_summoner(sd, SUMMONER_POWER_LIFE) >= 20) {
+			ATK_ADDRATE(wd->damage, wd->damage2, 20);
+			RE_ALLATK_ADDRATE(wd, 20);
 		}
 	}
 
@@ -6069,7 +6063,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			if (mflag&ELE_DARK)
 				s_ele = ELE_DARK;
 			break;
-		case WM_REVERBERATION_MAGIC:
+		case WM_REVERBERATION:
 			if (sd)
 				s_ele = sd->bonus.arrow_ele;
 			break;
@@ -6163,6 +6157,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					ad.damage = status_get_lv(src) + sstatus->int_ + skill_lv * 10;
 #endif
 				}
+				break;
+			case NPC_DARKBREATH:
+				ad.damage = tstatus->hp * (skill_lv <= 5 ? 100 / (2 * 6 - skill_lv) : 50) / 100;
 				break;
 			case PF_SOULBURN:
 				ad.damage = tstatus->sp * 2;
@@ -6492,7 +6489,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += 100; // !TODO: Confirm target sleeping bonus
 						RE_LVL_DMOD(100);
 						break;
-					case WM_REVERBERATION_MAGIC:
+					case WM_REVERBERATION:
 						// MATK [{(Skill Level x 300) + 400} x Casters Base Level / 100] %
 						skillratio += -100 + 700 + 300 * skill_lv;
 						RE_LVL_DMOD(100);
@@ -6906,9 +6903,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			break;
 		case NPC_SMOKING:
 			md.damage = 3;
-			break;
-		case NPC_DARKBREATH:
-			md.damage = tstatus->max_hp * skill_lv * 10 / 100;
 			break;
 		case NPC_EVILLAND:
 			md.damage = skill_calc_heal(src,target,skill_id,skill_lv,false);
@@ -8951,7 +8945,12 @@ static const struct _battle_data {
 	{ "idletime_hom_option",                &battle_config.idletime_hom_option,             0x1F,   0x1,    0xFFF,          },
 	{ "devotion_standup_fix",               &battle_config.devotion_standup_fix,            1,      0,      1,              },
 	{ "feature.bgqueue",                    &battle_config.feature_bgqueue,                 1,      0,      1,              },
+	{ "bgqueue_nowarp_mapflag",             &battle_config.bgqueue_nowarp_mapflag,          0,      0,      1,              },
 	{ "homunculus_exp_gain",                &battle_config.homunculus_exp_gain,             10,     0,      100,            },
+	{ "rental_item_novalue",                &battle_config.rental_item_novalue,             1,      0,      1,              },
+	{ "ping_timer_inverval",                &battle_config.ping_timer_interval,             30,     0,      99999999,       },
+	{ "ping_time",                          &battle_config.ping_time,                       20,     0,      99999999,       },
+	{ "show_skill_scale",                   &battle_config.show_skill_scale,                1,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };

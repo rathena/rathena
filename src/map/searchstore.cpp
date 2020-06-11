@@ -138,7 +138,7 @@ bool searchstore_open(struct map_session_data* sd, unsigned int uses, unsigned s
  * @param cardlist : list with stored cards (cards attached to items)
  * @param card_count : amount of items in cardlist
  */
-void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned int min_price, unsigned int max_price, const unsigned short* itemlist, unsigned int item_count, const unsigned short* cardlist, unsigned int card_count)
+void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned int min_price, unsigned int max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, unsigned int item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, unsigned int card_count)
 {
 	unsigned int i;
 	struct map_session_data* pl_sd;
@@ -172,15 +172,15 @@ void searchstore_query(struct map_session_data* sd, unsigned char type, unsigned
 
 	// validate lists
 	for( i = 0; i < item_count; i++ ) {
-		if( !itemdb_exists(itemlist[i]) ) {
-			ShowWarning("searchstore_query: Client resolved item %hu is not known.\n", itemlist[i]);
+		if( !itemdb_exists(itemlist[i].itemId) ) {
+			ShowWarning("searchstore_query: Client resolved item %hu is not known.\n", itemlist[i].itemId);
 			clif_search_store_info_failed(sd, SSI_FAILED_NOTHING_SEARCH_ITEM);
 			return;
 		}
 	}
 	for( i = 0; i < card_count; i++ ) {
-		if( !itemdb_exists(cardlist[i]) ) {
-			ShowWarning("searchstore_query: Client resolved card %hu is not known.\n", cardlist[i]);
+		if( !itemdb_exists(cardlist[i].itemId) ) {
+			ShowWarning("searchstore_query: Client resolved card %hu is not known.\n", cardlist[i].itemId);
 			clif_search_store_info_failed(sd, SSI_FAILED_NOTHING_SEARCH_ITEM);
 			return;
 		}

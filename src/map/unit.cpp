@@ -1558,6 +1558,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	int inf = skill_get_inf(skill_id);
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 
+	if (!skill)
+		return 0;
+
 	// temp: used to signal combo-skills right now.
 	if (sc && sc->data[SC_COMBO] &&
 		skill_is_combo(skill_id) &&
@@ -1887,7 +1890,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	skill_toggle_magicpower(src, skill_id);
 
 	// In official this is triggered even if no cast time.
-	clif_skillcasting(src, src->id, target_id, 0,0, skill_id, skill_get_ele(skill_id, skill_lv), casttime);
+	clif_skillcasting(src, src->id, target_id, 0,0, skill_id, skill_lv, skill_get_ele(skill_id, skill_lv), casttime);
 
 	if (sd && target->type == BL_MOB) {
 		TBL_MOB *md = (TBL_MOB*)target;
@@ -2035,6 +2038,9 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	if (sc && !sc->count)
 		sc = NULL;
 
+	if (!skill_db.find(skill_id))
+		return 0;
+
 	if( sd ) {
 		if( skill_isNotOk(skill_id, sd) || !skill_check_condition_castbegin(sd, skill_id, skill_lv) )
 			return 0;
@@ -2143,7 +2149,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	skill_toggle_magicpower(src, skill_id);
 
 	// In official this is triggered even if no cast time.
-	clif_skillcasting(src, src->id, 0, skill_x, skill_y, skill_id, skill_get_ele(skill_id, skill_lv), casttime);
+	clif_skillcasting(src, src->id, 0, skill_x, skill_y, skill_id, skill_lv, skill_get_ele(skill_id, skill_lv), casttime);
 
 	if( casttime > 0 ) {
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_pos, src->id, 0 );

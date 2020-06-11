@@ -65,7 +65,7 @@ This list contains all available constants referenced in the 'bonus' commands.
 	ATF_MISC	= Trigger on misc skills
 
 * Other values:
-	Skill (sk): see 'db/(pre-)re/skill_db.txt' (NOTE: Both skill IDs and names, in quotes, are supported.)
+	Skill (sk): see 'db/(pre-)re/skill_db.yml' (NOTE: Both skill IDs and names, in quotes, are supported.)
 	Monster id (mid): see 'db/(pre-)re/mob_db.txt'
 	Item id (iid): see 'db/(pre-)re/item_db.txt'
 	Item group (ig): see 'db/(pre-)re/item_group_db.txt' and the constants in 'db/const.txt', prefixed with IG_*
