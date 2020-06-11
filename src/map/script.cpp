@@ -10059,7 +10059,7 @@ BUILDIN_FUNC(setmadogear)
 	if (script_hasdata(st, 3)) {
 		type = script_getnum(st, 3);
 
-		if (type < MADO_ROBOT || type >= MADO_MAX)
+		if (type >= MADO_MAX)
 			type = MADO_ROBOT;
 	}
 
