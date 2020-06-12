@@ -48936,14 +48936,14 @@ Body:
     Script: |
       bonus bAspd,1;
   - Id: 4992
-    AegisName: HPAbsorb1_Supplement_Reactor
-    Name: HP Absorb Supplement Reactor
+    AegisName: HPdrain1
+    Name: HP Absorb 1
     Type: Card
     Script: |
       bonus2 bHPDrainRate,10,1;
   - Id: 4993
-    AegisName: SPAbsorb1_Supplement_Reactor
-    Name: SP Absorb Supplement Reactor
+    AegisName: SPdrain1
+    Name: SP Absorb 1
     Type: Card
     Script: |
       bonus2 bSPDrainRate,10,1;
@@ -52097,7 +52097,7 @@ Body:
     Refineable: true
     View: 262
     Script: |
-      .@i = (getrefine()>8)?2:1; bonus2 bHPDrainRate,50,8*.@i; bonus2 bSPDrainRate,10,4*.@i; bonus2 bHPLossRate,10,5000;
+      bonus2 bHPDrainRate,50,8; bonus2 bSPDrainRate,10,4; bonus2 bHPLossRate,10,5000;
   - Id: 5209
     AegisName: Yellow_Baseball_Cap
     Name: Love Dad Cap
@@ -54642,7 +54642,7 @@ Body:
       Override: 100
       NoDrop: true
     Script: |
-      bonus bFlee,10; bonus bCritAtkRate,10; autobonus "{ bonus2 bIgnoreMdefRaceRate,RC_ALL,25; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_AGIUP; }";
+      bonus bFlee,10; bonus bCritAtkRate,10; autobonus "{ bonus2 bIgnoreMdefClassRate,Class_Normal,100; bonus2 bIgnoreMdefClassRate,Class_Boss,100; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_STEAL; }";
   - Id: 5361
     AegisName: Gang_Scarf
     Name: Gangster Scarf
@@ -58305,7 +58305,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief||(BaseJob==Job_Taekwon&&Class!=Job_SoulLinker)) bonus bAspd,1; else if(BaseClass==Job_Mage||BaseClass==Job_Acolyte||Class==Job_Ninja||Class==Job_SoulLinker){ bonus bMatk,5; bonus bHealPower,2; } else if(BaseClass==Job_Archer||BaseClass==Job_Gunslinger) bonus bLongAtkRate,2; else if(BaseJob==Job_Novice||BaseJob==Job_SuperNovice) { bonus bMaxHP,120; bonus bMaxSP,60; }
+      if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief||(BaseJob==Job_Taekwon&&Class!=Job_Soul_Linker)) bonus bAspd,1; else if(BaseClass==Job_Mage||BaseClass==Job_Acolyte||Class==Job_Ninja||Class==Job_Soul_Linker){ bonus bMatk,5; bonus bHealPower,2; } else if(BaseClass==Job_Archer||BaseClass==Job_Gunslinger) bonus bLongAtkRate,2; else if(BaseJob==Job_Novice||BaseJob==Job_SuperNovice) { bonus bMaxHP,120; bonus bMaxSP,60; }
   - Id: 5593
     AegisName: K_Rabbit_Bonnet
     Name: Rabbit Bonnet
@@ -61440,7 +61440,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      .@tmp = BaseLevel/30; if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Archer||BaseClass==Job_Gunslinger) { bonus bBaseAtk,(3+.@tmp); } else if(BaseClass==Job_Mage||BaseClass==Job_Acolyte||BaseClass==Job_Ninja||BaseClass==Job_SoulLinker) { bonus bMatk,(3+.@tmp); } else if(BaseClass==Job_Thief) { bonus bFleeRate,(1+.@tmp); } else if(BaseClass==Job_Novice||BaseClass==Job_SuperNovice||BaseClass==Job_Taekwon||BaseClass==Job_StarGladiator||BaseClass==Job_StarGladiator2) { bonus bMaxHP,(50+BaseLevel); bonus bMaxSP,(50+.@tmp); }
+      .@tmp = BaseLevel/30; if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Archer||BaseClass==Job_Gunslinger) { bonus bBaseAtk,(3+.@tmp); } else if(BaseClass==Job_Mage||BaseClass==Job_Acolyte||BaseClass==Job_Ninja||BaseClass==Job_Soul_Linker) { bonus bMatk,(3+.@tmp); } else if(BaseClass==Job_Thief) { bonus bFleeRate,(1+.@tmp); } else if(BaseClass==Job_Novice||BaseClass==Job_SuperNovice||BaseClass==Job_Taekwon||BaseClass==Job_Star_Gladiator||BaseClass==Job_Star_Gladiator2) { bonus bMaxHP,(50+BaseLevel); bonus bMaxSP,(50+.@tmp); }
   - Id: 5795
     AegisName: Red_Dress_Hat
     Name: Bright Red Dress Hat
@@ -62906,6 +62906,14 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bSkillAtk,"NC_AXEBOOMERANG",20; .@dmg = 20; .@r = getrefine(); if (.@r>=7) { .@dmg += getskilllv("BS_WEAPONRESEARCH"); } if (.@r>=9) { .@dmg += getskilllv("NC_TRAININGAXE"); } bonus2 bSkillAtk,"NC_AXETORNADO",.@dmg;
+  - Id: 5909
+    AegisName: C_Valkyrie_Circlet
+    Name: C Valkyrie Circlet
+    Type: Armor
+    Location:
+      Costume_Head_Top: true
+    EquipLevelMin: 1
+    View: 940
   - Id: 5914
     AegisName: Earmuff_Flowerform
     Name: C Flutter Butterfly
@@ -68859,85 +68867,65 @@ Body:
       Override: 100
       NoDrop: true
   - Id: 6636
-    AegisName: Floor_Str
-    Name: Strength Stone(Upper)
+    AegisName: STRStone_Top
+    Name: STR Stone (Upper)
     Type: Etc
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bStr,1;
   - Id: 6637
-    AegisName: Floor_Int
-    Name: Intelligence Stone(Upper)
+    AegisName: INTStone_Top
+    Name: INT Stone (Upper)
     Type: Etc
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bInt,1;
   - Id: 6638
-    AegisName: Floor_Agi
-    Name: Agility Stone(Upper)
+    AegisName: AGIStone_Top
+    Name: AGI Stone (Upper)
     Type: Etc
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bAgi,1;
   - Id: 6639
-    AegisName: Floor_Dex
-    Name: Dexterity Stone(Upper)
+    AegisName: DEXStone_Top
+    Name: DEX Stone (Upper)
     Type: Etc
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bDex,1;
   - Id: 6640
-    AegisName: Floor_Vit
-    Name: Health Stone(Upper)
+    AegisName: VITStone_Top
+    Name: VIT Stone (Upper)
     Type: Etc
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bVit,1;
   - Id: 6641
-    AegisName: Floor_Luk
-    Name: Lucky Stone(Upper)
+    AegisName: LUKStone_Top
+    Name: LUK Stone (Upper)
     Type: Etc
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bLuk,1;
   - Id: 6642
     AegisName: ATKStone_Middle
-    Name: Attack Stone(Middle)
+    Name: ATK Stone (Middle)
     Type: Etc
     Buy: 10
     Weight: 100
-    Script: |
-      bonus2 bAddClass,Class_All,1;
   - Id: 6643
-    AegisName: Floor_Matk
-    Name: Magical Stone(Middle)
+    AegisName: MATKStone_Middle
+    Name: MATK Stone (Middle)
     Type: Etc
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bMatkRate,1;
   - Id: 6644
     AegisName: HITStone_Bottom
-    Name: Hit Stone(Lower)
+    Name: HIT Stone (Lower)
     Type: Etc
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bHit,1;
   - Id: 6645
     AegisName: FLEEStone_Bottom
-    Name: Evasion Stone(Lower)
+    Name: FLEE Stone (Lower)
     Type: Etc
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bFlee,1;
   - Id: 6669
     AegisName: Jade_Leaf
     Name: Emerald Leaf
@@ -69534,28 +69522,22 @@ Body:
       NoAuction: true
   - Id: 6716
     AegisName: Cri_Stone
-    Name: Critical Stone(Upper)
+    Name: CRI Stone (Upper)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bCritical,1;
   - Id: 6717
-    AegisName: MHPStone_Middle
-    Name: Fitness Stone(Middle)
+    AegisName: MaxHP_Stone
+    Name: Stamina Stone (Middle)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bMaxHP,50;
   - Id: 6718
-    AegisName: MSPStone_Bottom
-    Name: Magical Stone(Lower)
+    AegisName: MaxSP_Stone
+    Name: Magic Stone (Lower)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bMaxSP,10;
   - Id: 6719
     AegisName: Jitterbug's_Tooth
     Name: Jitterbug's Tooth
@@ -69733,52 +69715,40 @@ Body:
     Type: Etc
   - Id: 6740
     AegisName: HealStone_Top
-    Name: Stone Recovery(Upper)
+    Name: Recovery Stone (Upper)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bAddItemHealRate,2;
   - Id: 6741
     AegisName: HealStone2_Top
-    Name: Stone Recovery Skills(Upper)
+    Name: Recovery Skill Stone (Upper)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bHealPower2,2;
   - Id: 6742
     AegisName: HealStone_Middle
-    Name: Stone Recovery(Middle)
+    Name: Recovery Stone (Middle)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus2 bHPRegenRate,10,10000;
   - Id: 6743
     AegisName: HPStone_Middle
-    Name: HP Stone(Middle)
+    Name: HP Stone (Middle)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bMaxHPrate,1;
   - Id: 6744
     AegisName: SPStone_Middle
-    Name: SP Stone(Middle)
+    Name: SP Stone (Middle)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bMaxSPrate,1;
   - Id: 6745
     AegisName: HealStone_Bottom
-    Name: Recovery Stone(Low)
+    Name: Recovery Stone (Low)
     Type: Card
     Buy: 20
     Weight: 10
-    Script: |
-      bonus bSPGainValue,1; bonus bMagicHPGainValue,1;
   - Id: 6746
     AegisName: Iron_Artifacts
     Name: Steel Artifact
@@ -70195,28 +70165,22 @@ Body:
       NoAuction: true
   - Id: 6790
     AegisName: BigStone_Top
-    Name: Large Stone(Upper)
+    Name: Large Stone (Upper)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus2 bAddSize,Size_Large,1;
   - Id: 6791
     AegisName: MediumStone_Top
-    Name: Medium Stone(Upper)
+    Name: Medium Stone (Upper)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus2 bAddSize,Size_Medium,1;
   - Id: 6792
     AegisName: SmallStone_Top
-    Name: Small Stone(Upper)
+    Name: Small Stone (Upper)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus2 bAddSize,Size_Small,1;
   - Id: 6795
     AegisName: Ticket_Special_RO2
     Name: Ticket Special RO2
@@ -71708,76 +71672,58 @@ Body:
       BuyingStore: true
   - Id: 6943
     AegisName: ATKStone_Top
-    Name: Attack Stone(Upper)
+    Name: ATK Stone (Upper)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus2 bAddClass,Class_All,1;
   - Id: 6944
     AegisName: MATKStone_Top
-    Name: Magic Stone(Upper)
+    Name: MATK Stone (Upper)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bMatkRate,1;
   - Id: 6945
-    AegisName: Floor_Str2
-    Name: Strength Stone(Middle)
+    AegisName: STRStone_Middle
+    Name: STR Stone (Middle)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bStr,1;
   - Id: 6946
-    AegisName: Floor_Int2
-    Name: Intelligence Stone(Middle)
+    AegisName: INTStone_Middle
+    Name: INT Stone (Middle)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bInt,1;
   - Id: 6947
-    AegisName: Floor_Agi2
-    Name: Agility Stone(Middle)
+    AegisName: AGIStone_Middle
+    Name: AGI Stone (Middle)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bAgi,1;
   - Id: 6948
-    AegisName: Floor_Dex2
-    Name: Dexterity Stone(Middle)
+    AegisName: DEXStone_Middle
+    Name: DEX Stone (Middle)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bDex,1;
   - Id: 6949
-    AegisName: Floor_Vit2
-    Name: Vitality Stone(Middle)
+    AegisName: VITStone_Middle
+    Name: VIT Stone (Middle)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bVit,1;
   - Id: 6950
-    AegisName: Floor_Luk2
-    Name: Lucky Stone(Middle)
+    AegisName: LUKStone_Middle
+    Name: LUK Stone (Middle)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bLuk,1;
   - Id: 6951
     AegisName: HPStone_Bottom
-    Name: HP Stone(Lower)
+    Name: HP Stone (Lower)
     Type: Card
     Buy: 10
     Weight: 100
-    Script: |
-      bonus bMaxHPrate,1;
   - Id: 6953
     AegisName: Ramor_Refine_Ticket
     Name: Ramor Refine Ticket
@@ -71885,6 +71831,18 @@ Body:
     Weight: 100
     Flags:
       BuyingStore: true
+  - Id: 6963
+    AegisName: HPdrainStone_Robe
+    Name: HP Absorption Stone (Garment)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 6964
+    AegisName: SPdrainStone_Robe
+    Name: SP Absorption Stone (Garment)
+    Type: Etc
+    Buy: 10
+    Weight: 100
   - Id: 6965
     AegisName: Fire_Property_Reactor_Blueprint
     Name: Fire Property Reactor Blueprint
@@ -71995,6 +71953,12 @@ Body:
     Name: ASPD Reactor Blueprint
     Type: Etc
     Weight: 10
+  - Id: 6999
+    AegisName: HPdrainStone_Top
+    Name: HP Absorption Stone (Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
   - Id: 7001
     AegisName: Mould_Powder
     Name: Mould Powder
@@ -87104,7 +87068,7 @@ Body:
       specialeffect2 EF_STEAL; bonus_script "{ bonus2 bAddClass,Class_All,3; bonus2 bMagicAddClass,Class_All,3; bonus bMatkRate,3; bonus2 bSubEle,Ele_Neutral,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Wind,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Dark,3; bonus2 bSubEle,Ele_Holy,3; bonus2 bSubEle,Ele_Ghost,3; }",1200;
   - Id: 12380
     AegisName: Desert_Wolf_Babe_Scroll
-    Name: Jobs Change Flute
+    Name: Job Change Flute
     Type: Usable
     Buy: 10
     Weight: 10
@@ -91349,7 +91313,7 @@ Body:
     Weight: 10
   - Id: 12766
     AegisName: Reward_Job_BM25
-    Name: Reward Jobs BM25
+    Name: Reward Job BM25
     Type: Usable
     Trade:
       Override: 100
@@ -136815,7 +136779,7 @@ Body:
       Override: 100
       NoDrop: true
     Script: |
-      bonus bMdef,2; bonus bVariableCastrate,-6; bonus bAspdRate,6; .@r = getrefine(); if(.@r>6){ bonus2 bSubRace,RC_DemiHuman,2;bonus2 bSubRace,RC_Player,2; } if(BaseClass==Job_Swordman || BaseClass==Job_Merchant || BaseClass==Job_Thief || Class==Job_Taekwon || Class==Job_StarGladiator || Class==Job_StarGladiator2 || Class==Job_Monk || Class==Job_Champion || Class==Job_Sura || Class==Job_Sura_T) bonus2 bAddClass,Class_All,(.@r/2);if(BaseClass==Job_Mage || BaseClass==Job_Acolyte || Class==Job_Ninja || Class==Job_SoulLinker) bonus bMatkRate,(.@r/2); if(BaseClass==Job_Archer || Class==Job_Gunslinger) bonus bBaseAtk,.@r;
+      bonus bMdef,2; bonus bVariableCastrate,-6; bonus bAspdRate,6; .@r = getrefine(); if(.@r>6){ bonus2 bSubRace,RC_DemiHuman,2;bonus2 bSubRace,RC_Player,2; } if(BaseClass==Job_Swordman || BaseClass==Job_Merchant || BaseClass==Job_Thief || Class==Job_Taekwon || Class==Job_Star_Gladiator || Class==Job_Star_Gladiator2 || Class==Job_Monk || Class==Job_Champion || Class==Job_Sura || Class==Job_Sura_T) bonus2 bAddClass,Class_All,(.@r/2);if(BaseClass==Job_Mage || BaseClass==Job_Acolyte || Class==Job_Ninja || Class==Job_Soul_Linker) bonus bMatkRate,(.@r/2); if(BaseClass==Job_Archer || Class==Job_Gunslinger) bonus bBaseAtk,.@r;
   - Id: 18573
     AegisName: White_Feather
     Name: White Feather
@@ -141869,7 +141833,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      if (Class == Job_Swordman || Class == Job_Thief || Class == Job_Merchant || Class == Job_Taekwon || Class == Job_StarGladiator || Class == Job_StarGladiator2) bonus bAspd,1; else if (Class == Job_Mage || Class == Job_Acolyte || Class == Job_Ninja || Class == Job_SoulLinker) { bonus bMatk,5; bonus bHealPower,2; } else if (Class == Job_Archer || Class == Job_Gunslinger) bonus bLongAtkRate,2; else if (Class == Job_Novice || Class == Job_SuperNovice) { bonus bMaxHP,120; bonus bMaxSP,60; }
+      if (Class == Job_Swordman || Class == Job_Thief || Class == Job_Merchant || Class == Job_Taekwon || Class == Job_Star_Gladiator || Class == Job_Star_Gladiator2) bonus bAspd,1; else if (Class == Job_Mage || Class == Job_Acolyte || Class == Job_Ninja || Class == Job_Soul_Linker) { bonus bMatk,5; bonus bHealPower,2; } else if (Class == Job_Archer || Class == Job_Gunslinger) bonus bLongAtkRate,2; else if (Class == Job_Novice || Class == Job_SuperNovice) { bonus bMaxHP,120; bonus bMaxSP,60; }
   - Id: 19053
     AegisName: Fighter_Moon_Cat
     Name: Fighter Moon Cat
@@ -141985,7 +141949,7 @@ Body:
     EquipLevelMin: 1
     View: 568
     Script: |
-      if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief||(BaseJob==Job_Taekwon&&Class!=Job_SoulLinker)) { bonus bAspd,1; bonus bAgi,-2; } else if(BaseClass==Job_Mage||BaseClass==Job_Acolyte||Class==Job_Ninja||Class==Job_SoulLinker){ bonus bMatk,3; bonus bHealPower,2; } else if(BaseClass==Job_Archer||BaseClass==Job_Gunslinger) bonus bLongAtkRate,1; else if(BaseJob==Job_Novice||BaseJob==Job_SuperNovice) { bonus bMaxHP,60; bonus bMaxSP,30; }
+      if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief||(BaseJob==Job_Taekwon&&Class!=Job_Soul_Linker)) { bonus bAspd,1; bonus bAgi,-2; } else if(BaseClass==Job_Mage||BaseClass==Job_Acolyte||Class==Job_Ninja||Class==Job_Soul_Linker){ bonus bMatk,3; bonus bHealPower,2; } else if(BaseClass==Job_Archer||BaseClass==Job_Gunslinger) bonus bLongAtkRate,1; else if(BaseJob==Job_Novice||BaseJob==Job_SuperNovice) { bonus bMaxHP,60; bonus bMaxSP,30; }
   - Id: 19086
     AegisName: Robo_Eye_
     Name: Robo Eye
@@ -142401,7 +142365,7 @@ Body:
     Refineable: true
     View: 368
     Script: |
-      bonus bFlee,10; bonus bCritAtkRate,10; autobonus "{ bonus2 bIgnoreMdefRaceRate,RC_ALL,25; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_AGIUP; }";
+      bonus bFlee,10; bonus bCritAtkRate,10; autobonus "{ bonus2 bIgnoreMdefClassRate,Class_Normal,100; bonus2 bIgnoreMdefClassRate,Class_Boss,100; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_STEAL; }";
   - Id: 19137
     AegisName: Strawberry_Mouth_Guard
     Name: Strawberry Mouth Guard
@@ -142666,7 +142630,7 @@ Body:
     Script: |
       bonus bAllStats,1; bonus bUseSPrate,-10; .@r = getrefine(); if (.@r >= 9) { bonus bAspd,1; } if (.@r >= 12) { bonus bSpeedRate,25; } bonus2 bExpAddRace,RC_All,5; bonus2 bDropAddRace,RC_All,5;
   - Id: 19158
-    AegisName: C_GeminiS58_Eyes_Blue
+    AegisName: C_Gemini_Eyes
     Name: Costume GeminiS58 Eyes Blue
     Type: Armor
     Location:
@@ -143534,6 +143498,30 @@ Body:
     View: 1055
     Script: |
       .@r = getrefine(); bonus2 bSubClass,Class_Boss,5; bonus bUnbreakableHelm; if (.@r>=6) { bonus bFlee2,5; bonus2 bSubClass,Class_Boss,5; } if (.@r>=8) { bonus bFlee2,5; bonus2 bSubClass,Class_Boss,10; bonus bNoKnockback; }
+  - Id: 19289
+    AegisName: C_Moon_Eyepatch
+    Name: Costume Moon Eyepatch
+    Type: Armor
+    Location:
+      Costume_Head_Mid: true
+    EquipLevelMin: 1
+    View: 1370
+  - Id: 19291
+    AegisName: C_Shiba_Inu
+    Name: Costume Shiba Inu
+    Type: Armor
+    Location:
+      Costume_Head_Mid: true
+    EquipLevelMin: 1
+    View: 1669
+  - Id: 19294
+    AegisName: C_CatEars_Cyber_HeadP_R
+    Name: Costume Cyber Cat Ear Headphones (Red)
+    Type: Armor
+    Location:
+      Costume_Head_Top: true
+    EquipLevelMin: 1
+    View: 1668
   - Id: 19299
     AegisName: Tree_Sprout
     Name: Tree Sprout
@@ -144542,7 +144530,7 @@ Body:
     Script: |
       bonus bUnbreakableHelm;
   - Id: 19555
-    AegisName: C_Crescent_Moon_Helm
+    AegisName: C_Crescent_Helm
     Name: Costume Crescent Moon Helm
     Type: Armor
     Location:
@@ -144655,7 +144643,6 @@ Body:
     Name: Costume Dragon Arhat Mask
     Type: Armor
     Location:
-      Costume_Head_Top: true
       Costume_Head_Mid: true
       Costume_Head_Low: true
     EquipLevelMin: 1
@@ -144668,7 +144655,6 @@ Body:
     Name: Costume Tiger Arhat Mask
     Type: Armor
     Location:
-      Costume_Head_Top: true
       Costume_Head_Mid: true
       Costume_Head_Low: true
     EquipLevelMin: 1
@@ -145015,6 +145001,7 @@ Body:
       Novice: false
     Location:
       Costume_Head_Top: true
+      Costume_Head_Mid: true
     View: 490
     Trade:
       Override: 100
@@ -145343,6 +145330,7 @@ Body:
     Buy: 10
     Location:
       Costume_Head_Mid: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 65
   - Id: 19639
@@ -145622,6 +145610,14 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 603
+  - Id: 19672
+    AegisName: C_Poring_Letter
+    Name: Costume Poring Letter
+    Type: Armor
+    Buy: 20
+    Location:
+      Costume_Head_Low: true
+    View: 604
   - Id: 19676
     AegisName: C_Rainbow_Poring_Hat
     Name: Costume Rainbow Poring Hat
@@ -145658,6 +145654,14 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 387
+  - Id: 19684
+    AegisName: C_Happy_Wig
+    Name: Costume Happy Wig
+    Type: Armor
+    Buy: 20
+    Location:
+      Costume_Head_Top: true
+    View: 305
   - Id: 19685
     AegisName: C_ShineSantaPoring
     Name: Costume Shining Santa Poring
@@ -145713,6 +145717,14 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 318
+  - Id: 19694
+    AegisName: C_Vane_Hairpin
+    Name: Costume Vane Hairpin
+    Type: Armor
+    Buy: 20
+    Location:
+      Costume_Head_Top: true
+    View: 313
   - Id: 19696
     AegisName: C_Friend_Mochiring_Hat
     Name: Costume Friend Mochiring Hat
@@ -145791,6 +145803,7 @@ Body:
     Type: Armor
     Buy: 10
     Location:
+      Costume_Head_Top: true
       Costume_Head_Mid: true
     EquipLevelMin: 1
     View: 365
@@ -145828,7 +145841,7 @@ Body:
     Name: Costume Scarf
     Type: Armor
     Location:
-      Costume_Head_Low: true
+      Costume_Head_Top: true
     EquipLevelMin: 1
     View: 343
   - Id: 19716
@@ -145982,6 +145995,7 @@ Body:
     Buy: 10
     Location:
       Costume_Head_Mid: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 174
   - Id: 19733
@@ -146000,7 +146014,7 @@ Body:
     Type: Armor
     Buy: 10
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Mid: true
     EquipLevelMin: 1
     View: 83
     Script: |
@@ -146011,7 +146025,7 @@ Body:
     Type: Armor
     Buy: 10
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Mid: true
     EquipLevelMin: 1
     View: 100
   - Id: 19736
@@ -146021,6 +146035,7 @@ Body:
     Buy: 10
     Location:
       Costume_Head_Mid: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 91
     Script: |
@@ -146096,7 +146111,7 @@ Body:
     EquipLevelMin: 1
     View: 642
   - Id: 19745
-    AegisName: C_Holy_Marching_Hat
+    AegisName: C_Holy_Marching_Hat_J
     Name: Costume Holy Marching Hat
     Type: Armor
     Buy: 10
@@ -146386,6 +146401,7 @@ Body:
     Weight: 10
     Location:
       Costume_Head_Top: true
+      Costume_Head_Mid: true
     EquipLevelMin: 1
     View: 307
   - Id: 19776
@@ -146460,7 +146476,7 @@ Body:
     Type: Armor
     Buy: 10
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 25
   - Id: 19784
@@ -147161,6 +147177,14 @@ Body:
     Location:
       Costume_Head_Top: true
     View: 89
+  - Id: 19866
+    AegisName: C_Blue_Pajamas_Hat
+    Name: Costume Blue Pajamas
+    Type: Armor
+    Buy: 20
+    Location:
+      Costume_Head_Top: true
+    View: 501
   - Id: 19871
     AegisName: C_Music_Decoration
     Name: Costume Decoration of Music
@@ -147176,6 +147200,14 @@ Body:
       sc_start SC_DECORATION_OF_MUSIC,INFINITE_TICK,0;
     UnEquipScript: |
       sc_end SC_DECORATION_OF_MUSIC;
+  - Id: 19874
+    AegisName: C_Carnival_Circlet
+    Name: Costume Carnival Circlet
+    Type: Armor
+    Buy: 20
+    Location:
+      Costume_Head_Top: true
+    View: 506
   - Id: 19876
     AegisName: C_Rabbit_Ear_Hat
     Name: Costume Bunny Top Hat
@@ -147197,6 +147229,7 @@ Body:
     Name: Costume Flowerpot Mask
     Type: Armor
     Location:
+      Costume_Head_Mid: true
       Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1086
@@ -147258,7 +147291,7 @@ Body:
     Name: Costume Small Ribbons
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Mid: true
     View: 169
   - Id: 19902
     AegisName: C_Cigar
@@ -147285,6 +147318,14 @@ Body:
       Costume_Head_Top: true
     Refineable: true
     View: 1098
+  - Id: 19912
+    AegisName: C_Cat_Eye
+    Name: "Costume: Cat eye"
+    Type: Armor
+    Location:
+      Costume_Head_Mid: true
+    EquipLevelMin: 1
+    View: 1100
   - Id: 19913
     AegisName: C_Poo_Poo_Hat
     Name: Costume Poo Poo Hat
@@ -147371,13 +147412,14 @@ Body:
     Location:
       Costume_Head_Mid: true
     EquipLevelMin: 1
-    View: 23
+    View: 807
   - Id: 19928
     AegisName: C_Gothic_Heart_Wing
     Name: Costume Gothic Heart Wing
     Type: Armor
     Location:
       Costume_Head_Top: true
+      Costume_Head_Mid: true
     EquipLevelMin: 1
     View: 1111
   - Id: 19929
@@ -147402,7 +147444,7 @@ Body:
     Type: Armor
     Buy: 10
     Location:
-      Costume_Head_Low: true
+      Costume_Head_Top: true
     View: 168
   - Id: 19932
     AegisName: C_Cap_Of_Concentration
@@ -147410,7 +147452,7 @@ Body:
     Type: Armor
     Buy: 10
     Location:
-      Costume_Head_Low: true
+      Costume_Head_Top: true
     View: 157
   - Id: 19934
     AegisName: C_10Gallon_Hat_Of_Flame
@@ -148088,7 +148130,7 @@ Body:
     EquipLevelMin: 1
     View: 708
   - Id: 20022
-    AegisName: C_Love_Fragment
+    AegisName: C_Love_Piece
     Name: Costume Love Fragment
     Type: Armor
     Location:
@@ -148575,8 +148617,6 @@ Body:
     Type: Armor
     Location:
       Costume_Head_Top: true
-      Costume_Head_Mid: true
-      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1234
   - Id: 20071
@@ -148768,7 +148808,7 @@ Body:
     Name: Costume Pipe
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 55
   - Id: 20092
@@ -149287,7 +149327,7 @@ Body:
     EquipLevelMin: 1
     View: 466
   - Id: 20149
-    AegisName: C_Hexagon_Glasses
+    AegisName: C_Hexagon_Spectacles
     Name: Costume Hexagon Glasses
     Type: Armor
     Location:
@@ -149555,7 +149595,7 @@ Body:
     EquipLevelMin: 1
     View: 94
   - Id: 20179
-    AegisName: C_Monkey_Coat_Hat
+    AegisName: C_Monkey_On_Fur_Hat
     Name: Costume Monkey Coat Hat
     Type: Armor
     Location:
@@ -150387,7 +150427,7 @@ Body:
     EquipLevelMin: 1
     View: 385
   - Id: 20278
-    AegisName: C_Mans_Medal
+    AegisName: C_Man_Medal
     Name: Costume Man's Medal
     Type: Armor
     Location:
@@ -150598,6 +150638,14 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 118
+  - Id: 20305
+    AegisName: C_NettyHeart_BalloonGum
+    Name: Costume Nettie Heart Bubble Gum
+    Type: Armor
+    Buy: 20
+    Location:
+      Costume_Head_Low: true
+    View: 720
   - Id: 20307
     AegisName: C_Beginner_Cap
     Name: Costume Beginner Cap
@@ -150755,7 +150803,7 @@ Body:
     EquipLevelMin: 1
     View: 1081
   - Id: 20329
-    AegisName: C_Very_Cute_Doll_Hat
+    AegisName: C_Tare_HSchool_Doll_Hat
     Name: Costume Very Cute Doll Hat
     Type: Armor
     Location:
@@ -150850,6 +150898,14 @@ Body:
       Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1373
+  - Id: 20344
+    AegisName: C_Happy_Balloon_J
+    Name: "Costume: Happy Balloon"
+    Type: Armor
+    Location:
+      Costume_Head_Low: true
+    EquipLevelMin: 1
+    View: 1289
   - Id: 20345
     AegisName: C_Seagod_Protector
     Name: Costume Seagod Protector
@@ -150883,7 +150939,7 @@ Body:
     EquipLevelMin: 1
     View: 117
   - Id: 20349
-    AegisName: C_Flying_Galapago
+    AegisName: C_FlyingGalapago
     Name: Costume Flying Galapago
     Type: Armor
     Location:
@@ -150891,7 +150947,7 @@ Body:
     EquipLevelMin: 1
     View: 1358
   - Id: 20350
-    AegisName: C_Bouncing_Hair_Yellow
+    AegisName: C_Cowlick_YL
     Name: Costume Bouncing Hair Yellow
     Type: Armor
     Location:
@@ -150899,7 +150955,7 @@ Body:
     EquipLevelMin: 1
     View: 1382
   - Id: 20351
-    AegisName: C_Bouncing_Hair_Green
+    AegisName: C_Cowlick_GN
     Name: Costume Bouncing Hair Green
     Type: Armor
     Location:
@@ -150907,7 +150963,7 @@ Body:
     EquipLevelMin: 1
     View: 1383
   - Id: 20352
-    AegisName: C_Bouncing_Hair_Purple
+    AegisName: C_Cowlick_PP
     Name: Costume Bouncing Hair Purple
     Type: Armor
     Location:
@@ -150915,7 +150971,7 @@ Body:
     EquipLevelMin: 1
     View: 1384
   - Id: 20353
-    AegisName: C_Bouncing_Hair_Red
+    AegisName: C_Cowlick_RD
     Name: Costume Bouncing Hair Red
     Type: Armor
     Location:
@@ -150923,7 +150979,7 @@ Body:
     EquipLevelMin: 1
     View: 1385
   - Id: 20354
-    AegisName: C_Bouncing_Hair_Crimson
+    AegisName: C_Cowlick_OM
     Name: Costume Bouncing Hair Crimson
     Type: Armor
     Location:
@@ -150931,7 +150987,7 @@ Body:
     EquipLevelMin: 1
     View: 1386
   - Id: 20355
-    AegisName: C_Bouncing_Hair_Blue
+    AegisName: C_Cowlick_BU
     Name: Costume Bouncing Hair Blue
     Type: Armor
     Location:
@@ -150939,7 +150995,7 @@ Body:
     EquipLevelMin: 1
     View: 1387
   - Id: 20356
-    AegisName: C_Bouncing_Hair_White
+    AegisName: C_Cowlick_WH
     Name: Costume Bouncing Hair White
     Type: Armor
     Location:
@@ -150947,7 +151003,7 @@ Body:
     EquipLevelMin: 1
     View: 1388
   - Id: 20357
-    AegisName: C_Straight_Pony_Yellow
+    AegisName: C_Straight_Pony_YL
     Name: Costume Straight Pony Yellow
     Type: Armor
     Location:
@@ -150955,7 +151011,7 @@ Body:
     EquipLevelMin: 1
     View: 1389
   - Id: 20358
-    AegisName: C_Straight_Pony_Green
+    AegisName: C_Straight_Pony_GN
     Name: Costume Straight Pony Green
     Type: Armor
     Location:
@@ -150963,7 +151019,7 @@ Body:
     EquipLevelMin: 1
     View: 1390
   - Id: 20359
-    AegisName: C_Straight_Pony_Purple
+    AegisName: C_Straight_Pony_PP
     Name: Costume Straight Pony Purple
     Type: Armor
     Location:
@@ -150971,7 +151027,7 @@ Body:
     EquipLevelMin: 1
     View: 1391
   - Id: 20360
-    AegisName: C_Straight_Pony_Red
+    AegisName: C_Straight_Pony_RD
     Name: Costume Straight Pony Red
     Type: Armor
     Location:
@@ -150979,7 +151035,7 @@ Body:
     EquipLevelMin: 1
     View: 1392
   - Id: 20361
-    AegisName: C_Straight_Pony_Crimson
+    AegisName: C_Straight_Pony_OM
     Name: Costume Straight Pony Crimson
     Type: Armor
     Location:
@@ -150987,7 +151043,7 @@ Body:
     EquipLevelMin: 1
     View: 1393
   - Id: 20362
-    AegisName: C_Straight_Pony_Blue
+    AegisName: C_Straight_Pony_BU
     Name: Costume Straight Pony Blue
     Type: Armor
     Location:
@@ -150995,7 +151051,7 @@ Body:
     EquipLevelMin: 1
     View: 1394
   - Id: 20363
-    AegisName: C_Straight_Pony_White
+    AegisName: C_Straight_Pony_WH
     Name: Costume Straight Pony White
     Type: Armor
     Location:
@@ -151003,7 +151059,7 @@ Body:
     EquipLevelMin: 1
     View: 1395
   - Id: 20364
-    AegisName: C_Loose_Wave_Twin_Yellow
+    AegisName: C_Loose_Wave_Twin_YL
     Name: Costume Loose Wave Twin Yellow
     Type: Armor
     Location:
@@ -151011,7 +151067,7 @@ Body:
     EquipLevelMin: 1
     View: 1396
   - Id: 20365
-    AegisName: C_Loose_Wave_Twin_Green
+    AegisName: C_Loose_Wave_Twin_GN
     Name: Costume Loose Wave Twin Green
     Type: Armor
     Location:
@@ -151019,7 +151075,7 @@ Body:
     EquipLevelMin: 1
     View: 1397
   - Id: 20366
-    AegisName: C_Loose_Wave_Twin_Purple
+    AegisName: C_Loose_Wave_Twin_PP
     Name: Costume Loose Wave Twin Purple
     Type: Armor
     Location:
@@ -151027,7 +151083,7 @@ Body:
     EquipLevelMin: 1
     View: 1398
   - Id: 20367
-    AegisName: C_Loose_Wave_Twin_Red
+    AegisName: C_Loose_Wave_Twin_RD
     Name: Costume Loose Wave Twin Red
     Type: Armor
     Location:
@@ -151035,7 +151091,7 @@ Body:
     EquipLevelMin: 1
     View: 1399
   - Id: 20368
-    AegisName: C_Loose_Wave_Twin_Crimson
+    AegisName: C_Loose_Wave_Twin_OM
     Name: Costume Loose Wave Twin Crimson
     Type: Armor
     Location:
@@ -151043,7 +151099,7 @@ Body:
     EquipLevelMin: 1
     View: 1400
   - Id: 20369
-    AegisName: C_Loose_Wave_Twin_Blue
+    AegisName: C_Loose_Wave_Twin_BU
     Name: Costume Loose Wave Twin Blue
     Type: Armor
     Location:
@@ -151051,7 +151107,7 @@ Body:
     EquipLevelMin: 1
     View: 1401
   - Id: 20370
-    AegisName: C_Loose_Wave_Twin_White
+    AegisName: C_Loose_Wave_Twin_WH
     Name: Costume Loose Wave Twin White
     Type: Armor
     Location:
@@ -151099,7 +151155,7 @@ Body:
     EquipLevelMin: 1
     View: 803
   - Id: 20376
-    AegisName: C_Memory_of_Lovers
+    AegisName: C_Memories_Of_Lovers
     Name: Costume Memory of Lovers
     Type: Armor
     Location:
@@ -151155,7 +151211,7 @@ Body:
     EquipLevelMin: 1
     View: 1407
   - Id: 20383
-    AegisName: C_Magic_Decoy_Doll
+    AegisName: C_Magicdecoy_Doll
     Name: Costume Magic Decoy Doll
     Type: Armor
     Location:
@@ -151212,9 +151268,17 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 1411
+  - Id: 20395
+    AegisName: C_BlackWitchHat
+    Name: Costume Black Witch Hat
+    Type: Armor
+    Location:
+      Costume_Head_Top: true
+    EquipLevelMin: 1
+    View: 1006
   - Id: 20396
-    AegisName: C_Green_Hat
-    Name: Costume Green Hat
+    AegisName: C_Woodie_Hat
+    Name: "Costume: Woodie Hat"
     Type: Armor
     Location:
       Costume_Head_Top: true
@@ -151232,7 +151296,7 @@ Body:
     Script: |
       autobonus2 "{}",31,10000,BF_WEAPON|BF_MAGIC,"{ active_transform 1130,10000; specialeffect2 372; /*Confirm Special Effect*/ }";
   - Id: 20398
-    AegisName: C_Niffleheim_Bunny_Hat
+    AegisName: C_Niflheim_Bunny_Hat
     Name: Costume Niffleheim Bunny Hat
     Type: Armor
     Location:
@@ -151444,7 +151508,7 @@ Body:
     EquipLevelMin: 1
     View: 1439
   - Id: 20430
-    AegisName: C_Loyal_Servant_of_Devil_Morocc
+    AegisName: C_Morocc_Kid_Servant
     Name: Costume Loyal Servant of Devil Morocc
     Type: Armor
     Location:
@@ -151460,7 +151524,7 @@ Body:
     EquipLevelMin: 1
     View: 1441
   - Id: 20432
-    AegisName: C_Khalitzburg_Knight_Helm
+    AegisName: C_Khalitzburg_KN_Helm
     Name: Costume Khalitzburg Knight Helm
     Type: Armor
     Location:
@@ -151563,7 +151627,7 @@ Body:
     EquipLevelMin: 1
     View: 1339
   - Id: 20447
-    AegisName: C_Small_Porings_Headband
+    AegisName: C_Small_Poring_Band
     Name: Costume Small Porings Headband
     Type: Armor
     Location:
@@ -151571,7 +151635,7 @@ Body:
     EquipLevelMin: 1
     View: 955
   - Id: 20448
-    AegisName: C_Water_Spellcaster
+    AegisName: C_Cons_Of_Water
     Name: Costume Water Spellcaster
     Type: Armor
     Location:
@@ -151579,7 +151643,7 @@ Body:
     EquipLevelMin: 1
     View: 1451
   - Id: 20449
-    AegisName: C_White_and_Black_Temptation
+    AegisName: C_White_Black_Temp
     Name: Costume White and Black Temptation
     Type: Armor
     Location:
@@ -151627,7 +151691,7 @@ Body:
     EquipLevelMin: 1
     View: 1460
   - Id: 20457
-    AegisName: C_Fluttering_Feathers
+    AegisName: C_Feather_Fluttering
     Name: Costume Fluttering Feathers
     Type: Armor
     Location:
@@ -151691,7 +151755,7 @@ Body:
     EquipLevelMin: 1
     View: 1465
   - Id: 20464
-    AegisName: C_Monochrome_Ribbon_Hat
+    AegisName: C_Monochrome_RibbonHat
     Name: Costume Monochrome Ribbon Hat
     Type: Armor
     Location:
@@ -151740,8 +151804,42 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 1469
+  - Id: 20481
+    AegisName: C_Mask_of_Ifrit
+    Name: Costume Mask of Ifrit
+    Type: Armor
+    Buy: 20
+    Location:
+      Costume_Head_Top: true
+      Costume_Head_Mid: true
+      Costume_Head_Low: true
+    View: 421
+  - Id: 20482
+    AegisName: C_Heaven_Cage
+    Name: Costume Heaven Cage
+    Type: Armor
+    Location:
+      Costume_Head_Top: true
+    EquipLevelMin: 1
+    View: 1286
+  - Id: 20483
+    AegisName: C_Butterfly_Barrettes
+    Name: Costume Butterfly Barrettes
+    Type: Armor
+    Location:
+      Costume_Head_Top: true
+    EquipLevelMin: 1
+    View: 1027
+  - Id: 20486
+    AegisName: C_Twin_Margaret
+    Name: Costume Twin Margaret
+    Type: Armor
+    Location:
+      Costume_Head_Mid: true
+    EquipLevelMin: 1
+    View: 1472
   - Id: 20487
-    AegisName: C_Waltz_of_Flowers
+    AegisName: C_Floral_Waltz
     Name: Costume Waltz of Flowers
     Type: Armor
     Location:
@@ -151752,9 +151850,25 @@ Body:
       hateffect(HAT_EF_FLORAL_WALTZ,true);
     UnEquipScript: |
       hateffect(HAT_EF_FLORAL_WALTZ,false);
+  - Id: 20488
+    AegisName: C_Pope_Ribbon
+    Name: Costume Pope Ribbon
+    Type: Armor
+    Location:
+      Costume_Head_Mid: true
+    EquipLevelMin: 1
+    View: 1474
+  - Id: 20489
+    AegisName: C_Pope_Crown
+    Name: C Pope Crown
+    Type: Armor
+    Location:
+      Costume_Head_Top: true
+    EquipLevelMin: 1
+    View: 1475
   - Id: 20490
-    AegisName: C_Full_Blossom_Sakura_Hairpin_Blue
-    Name: Costume Full Blossom Sakura Hairpin Blue
+    AegisName: C_Full_Bloom_Hp_Blue
+    Name: "Costume: Full Bloom HP(Blue)"
     Type: Armor
     Location:
       Costume_Head_Top: true
@@ -151776,8 +151890,16 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 1017
+  - Id: 20493
+    AegisName: C_Wing_Headphone
+    Name: Costume Wing Headphone
+    Type: Armor
+    Location:
+      Costume_Head_Mid: true
+    EquipLevelMin: 1
+    View: 1347
   - Id: 20495
-    AegisName: C_Quati_Hat
+    AegisName: C_Quati_Hat_J
     Name: Costume Quati Hat
     Type: Armor
     Location:
@@ -151825,7 +151947,7 @@ Body:
     EquipLevelMin: 1
     View: 1
   - Id: 20502
-    AegisName: C_Little_Devil_Wings
+    AegisName: C_Devil_Wing
     Name: Costume Little Devil Wings
     Type: Armor
     Location:
@@ -151833,7 +151955,7 @@ Body:
     EquipLevelMin: 1
     View: 12
   - Id: 20504
-    AegisName: C_Cupids_Pink_Wings
+    AegisName: C_Cupid_Wing_Pink
     Name: Costume Cupid's Pink Wings
     Type: Armor
     Location:
@@ -151904,7 +152026,7 @@ Body:
     EquipLevelMin: 1
     View: 23
   - Id: 20515
-    AegisName: Costume_Magic_Circle
+    AegisName: C_Magic_Circle
     Name: Costume Magic Circle
     Type: Armor
     Location:
@@ -151922,8 +152044,16 @@ Body:
       Costume_Garment: true
     EquipLevelMin: 1
     View: 24
+  - Id: 20517
+    AegisName: C_GiantCatBag_TW
+    Name: Costume Giant Cat Backpack
+    Type: Armor
+    Location:
+      Costume_Garment: true
+    EquipLevelMin: 1
+    View: 25
   - Id: 20519
-    AegisName: C_Full_Bloom_Cherry_Tree
+    AegisName: C_Full_BloomCherry_Tree
     Name: Costume Full Bloom Cherry Tree
     Type: Armor
     Location:
@@ -151955,6 +152085,22 @@ Body:
       hateffect(HAT_EF_C_SHINING_ANGEL_WING,true);
     UnEquipScript: |
       hateffect(HAT_EF_C_SHINING_ANGEL_WING,false);
+  - Id: 20530
+    AegisName: C_Wings_of_Gabriel
+    Name: Costume Wings of Gabriel
+    Type: Armor
+    Location:
+      Costume_Garment: true
+    EquipLevelMin: 1
+    View: 37
+  - Id: 20533
+    AegisName: C_PinkButterfly_Wing_T
+    Name: Costume Fly Like a Butterfly (Pink)
+    Type: Armor
+    Location:
+      Costume_Garment: true
+    EquipLevelMin: 1
+    View: 38
   - Id: 20535
     AegisName: C_Digital_Space
     Name: Costume Digital Space
@@ -151988,8 +152134,16 @@ Body:
       hateffect(HAT_EF_MAGICCIRCLERAINBOW,true);
     UnEquipScript: |
       hateffect(HAT_EF_MAGICCIRCLERAINBOW,false);
+  - Id: 20543
+    AegisName: C_Halloween_Poring_Bag
+    Name: Costume Halloween Poring Bag
+    Type: Armor
+    Location:
+      Costume_Garment: true
+    EquipLevelMin: 1
+    View: 44
   - Id: 20546
-    AegisName: C_Giant_Ribbon_Bell
+    AegisName: C_Backside_Ribbon_Bell
     Name: Costume Giant Ribbon Bell
     Type: Armor
     Location:
@@ -152018,6 +152172,62 @@ Body:
       hateffect(HAT_EF_C_POPPING_PORING_AURA,true);
     UnEquipScript: |
       hateffect(HAT_EF_C_POPPING_PORING_AURA,false);
+  - Id: 20570
+    AegisName: C_HeartChocoBag
+    Name: Costume HeartChocoBag
+    Type: Armor
+    Location:
+      Costume_Garment: true
+    EquipLevelMin: 1
+    View: 47
+  - Id: 20572
+    AegisName: C_WingOfHeart
+    Name: Costume WingOfHeart
+    Type: Armor
+    Location:
+      Costume_Garment: true
+    EquipLevelMin: 1
+    View: 50
+  - Id: 20576
+    AegisName: C_Cat_Fork
+    Name: Costume Cat Fork
+    Type: Armor
+    Location:
+      Costume_Garment: true
+    EquipLevelMin: 1
+    View: 53
+  - Id: 20582
+    AegisName: C_T_Bear_Bag
+    Name: Costume Bear Backpack
+    Type: Armor
+    Location:
+      Costume_Garment: true
+    EquipLevelMin: 1
+    View: 60
+  - Id: 20584
+    AegisName: C_Big_Foxtail
+    Name: Costume Fox Tail
+    Type: Armor
+    Location:
+      Costume_Garment: true
+    EquipLevelMin: 1
+    View: 62
+  - Id: 20588
+    AegisName: C_Nifl_Bloom
+    Name: Costume Broom of Witch
+    Type: Armor
+    Location:
+      Costume_Garment: true
+    EquipLevelMin: 1
+    View: 65
+  - Id: 20592
+    AegisName: C_Santa_Backpack
+    Name: Costume Santa's Pocket
+    Type: Armor
+    Location:
+      Costume_Garment: true
+    EquipLevelMin: 1
+    View: 70
   - Id: 20600
     AegisName: Fantastic_Aura
     Name: Fantastic Aura
@@ -152562,6 +152772,14 @@ Body:
       Costume_Garment: true
     EquipLevelMin: 1
     View: 3
+  - Id: 20765
+    AegisName: C_Archangel_Wing
+    Name: Costume Archangel Wing
+    Type: Armor
+    Location:
+      Costume_Garment: true
+    EquipLevelMin: 1
+    View: 1
   - Id: 20773
     AegisName: Excelion_Wing
     Name: Excelion Wing
@@ -157645,10 +157863,10 @@ Body:
     Name: Costume Enchantment Stone Box 4
     Type: Usable
     Buy: 10
-    Weight: 10
-    Classes:
-      All: false
-    Gender: Female
+    Weight: 100
+    EquipLevelMin: 1
+    Script: |
+      getitem callfunc("F_Rand",6636,6637,6638,6639,6640,6641,6642,6643,6644,6645,6740,6741,6742,6743,6744,6745,6790,6791,6792,6908),1;
   - Id: 22827
     AegisName: Shadow_Cube
     Name: Shadow Cube
@@ -158042,10 +158260,11 @@ Body:
     AegisName: Enchant_Stone_Box5
     Name: Costume Enchantment Stone Box 5
     Type: Usable
-    Buy: 10
+    Buy: 20
     Weight: 10
+    EquipLevelMin: 1
     Script: |
-      getitem callfunc("F_Rand",6908,6943,6944,6945,6946,6947,6948,6949,6950,6951),1;
+      getgroupitem(IG_Enchant_Stone_Box5);
   - Id: 22869
     AegisName: Lucky_Roulette_Tickets
     Name: Lucky Roulette Ticket
@@ -158372,6 +158591,24 @@ Body:
       NoAuction: true
     Script: |
       getitem callfunc("F_Rand",6238,6239,17474,22829,24243,24244,24245),1;
+  - Id: 22905
+    AegisName: Enchant_Stone_Box6
+    Name: Costume Enchantment Stone Box 6
+    Type: Usable
+    Buy: 10
+    Weight: 10
+    EquipLevelMin: 1
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box6);
+  - Id: 22953
+    AegisName: Enchant_Stone_Box7
+    Name: Costume Enchantment Stone Box 7
+    Type: Usable
+    Buy: 10
+    Weight: 10
+    EquipLevelMin: 1
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box7);
   - Id: 22984
     AegisName: Kahluna_Milk
     Name: Kahluna Milk
@@ -158388,6 +158625,15 @@ Body:
     Weight: 10
     Script: |
       sc_start SC_DORAM_BUF_02, 180000, 0;
+  - Id: 23001
+    AegisName: Enchant_Stone_Box8
+    Name: Costume Enchantment Stone Box 8
+    Type: Usable
+    Buy: 10
+    Weight: 10
+    EquipLevelMin: 1
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box8);
   - Id: 23012
     AegisName: S_Small_Mana_Potion
     Name: "[Sale] Small Mana Potion"
@@ -158508,6 +158754,15 @@ Body:
       NoAuction: true
     Script: |
       bonus_script "bonus bAddItemHealRate,20;",1800,9; /* fix me: unknown flag and specialeffect */
+  - Id: 23058
+    AegisName: Enchant_Stone_Box9
+    Name: Costume Enchantment Stone Box 9
+    Type: Usable
+    Buy: 10
+    Weight: 10
+    EquipLevelMin: 1
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box9);
   - Id: 23076
     AegisName: Build_Up_Potion_SS
     Name: Build Up Potion SS
@@ -158540,6 +158795,15 @@ Body:
     Weight: 500
     Script: |
       callfunc("F_Cursed_Crystal");
+  - Id: 23086
+    AegisName: Enchant_Stone_Box10
+    Name: Costume Enchantment Stone Box 10
+    Type: Usable
+    Buy: 10
+    Weight: 10
+    EquipLevelMin: 1
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box10);
   - Id: 23087
     AegisName: Small_Leather_Bag
     Name: Small Leather Bag
@@ -158595,6 +158859,15 @@ Body:
     Weight: 250
     Script: |
       getitem 13232,500;
+  - Id: 23174
+    AegisName: Enchant_Stone_Box11
+    Name: Costume Enchantment Stone Box 11
+    Type: Usable
+    Buy: 10
+    Weight: 10
+    EquipLevelMin: 1
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box11);
   - Id: 23177
     AegisName: Kafra_Card_
     Name: Kafra Card
@@ -158745,6 +159018,15 @@ Body:
     Weight: 10
     Script: |
       itemskill "AL_TELEPORT",1;
+  - Id: 23299
+    AegisName: Enchant_Stone_Box12
+    Name: Costume Enchantment Stone Box 12
+    Type: Usable
+    Buy: 10
+    Weight: 10
+    EquipLevelMin: 1
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box12);
   - Id: 23307
     AegisName: S_Shining_Def_Scroll
     Name: "[Sale] Shining Defense Scroll"
@@ -158776,6 +159058,33 @@ Body:
       NoAuction: true
     Script: |
       input .@megaphone$; announce strcharinfo(0) + ": " + .@megaphone$,bc_all,0xFF0000;
+  - Id: 23524
+    AegisName: Enchant_Stone_Box13
+    Name: Costume Enchantment Stone Box 13
+    Type: Usable
+    Buy: 10
+    Weight: 10
+    EquipLevelMin: 1
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box13);
+  - Id: 23629
+    AegisName: Enchant_Stone_Box14
+    Name: Costume Enchantment Stone Box 14
+    Type: Usable
+    Buy: 10
+    Weight: 10
+    EquipLevelMin: 1
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box14);
+  - Id: 23682
+    AegisName: Enchant_Stone_Box15
+    Name: Costume Enchantment Stone Box 15
+    Type: Usable
+    Buy: 10
+    Weight: 10
+    EquipLevelMin: 1
+    Script: |
+      getgroupitem(IG_Enchant_Stone_Box15);
   - Id: 24000
     AegisName: T1_Shadow_Armor
     Name: Shadow Armor (Tier 1)
@@ -162361,7 +162670,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus bLuk,1; bonus bHit,.@r; if (BaseClass == Job_Swordman || BaseClass == Job_Thief || (BaseClass == Job_Taekwon && BaseJob != Job_SoulLinker)) { bonus bBaseAtk,15; } else if (BaseClass == Job_Merchant || BaseClass == Job_Archer || BaseClass == Job_Gunslinger) { bonus bLongAtkRate,3; } else if (BaseClass == Job_Mage || BaseClass == Job_Acolyte || BaseClass == Job_Ninja || BaseJob == Job_SoulLinker) { bonus bMatk,15; } else if (BaseClass == Job_Novice || BaseJob == Job_Summoner) { bonus bAspdRate,5; bonus bMaxHP,1000; }
+      .@r = getrefine(); bonus bLuk,1; bonus bHit,.@r; if (BaseClass == Job_Swordman || BaseClass == Job_Thief || (BaseClass == Job_Taekwon && BaseJob != Job_Soul_Linker)) { bonus bBaseAtk,15; } else if (BaseClass == Job_Merchant || BaseClass == Job_Archer || BaseClass == Job_Gunslinger) { bonus bLongAtkRate,3; } else if (BaseClass == Job_Mage || BaseClass == Job_Acolyte || BaseClass == Job_Ninja || BaseJob == Job_Soul_Linker) { bonus bMatk,15; } else if (BaseClass == Job_Novice || BaseJob == Job_Summoner) { bonus bAspdRate,5; bonus bMaxHP,1000; }
   - Id: 24327
     AegisName: S_Sigrun_Shield
     Name: Sigrun Shadow Shield
@@ -162371,7 +162680,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus bVit,1; bonus bDef,5*.@r; if (BaseClass == Job_Swordman || BaseClass == Job_Thief || (BaseClass == Job_Taekwon && BaseJob != Job_SoulLinker)) { bonus bAspd,1; } else if (BaseClass == Job_Merchant || BaseClass == Job_Archer || BaseClass == Job_Gunslinger) { bonus bFlee,15; } else if (BaseClass == Job_Mage || BaseClass == Job_Acolyte || BaseClass == Job_Ninja || BaseJob == Job_SoulLinker) { bonus bMaxSPrate,2; bonus bHealPower,3; } else if (BaseClass == Job_Novice || BaseJob == Job_Summoner) { bonus bVariableCastrate,-5; bonus bMaxSP,300; }
+      .@r = getrefine(); bonus bVit,1; bonus bDef,5*.@r; if (BaseClass == Job_Swordman || BaseClass == Job_Thief || (BaseClass == Job_Taekwon && BaseJob != Job_Soul_Linker)) { bonus bAspd,1; } else if (BaseClass == Job_Merchant || BaseClass == Job_Archer || BaseClass == Job_Gunslinger) { bonus bFlee,15; } else if (BaseClass == Job_Mage || BaseClass == Job_Acolyte || BaseClass == Job_Ninja || BaseJob == Job_Soul_Linker) { bonus bMaxSPrate,2; bonus bHealPower,3; } else if (BaseClass == Job_Novice || BaseJob == Job_Summoner) { bonus bVariableCastrate,-5; bonus bMaxSP,300; }
   - Id: 24328
     AegisName: S_Force_Executioner_Weapon
     Name: Force Executioner Shadow Weapon
@@ -163502,6 +163811,114 @@ Body:
     Refineable: true
     Script: |
       bonus2 bIgnoreDefClassRate,Class_Normal,5+(getrefine()/2);
+  - Id: 25000
+    AegisName: SPdrainStone_Top
+    Name: SP Absorption Stone (Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25001
+    AegisName: DEFStone_Middle
+    Name: Def Stone(Middle)
+    Type: Card
+    Buy: 10
+    Weight: 100
+  - Id: 25002
+    AegisName: ChangeLUK_Middle
+    Name: LUK Exchange Stone(Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25003
+    AegisName: ChangeSTR_Middle
+    Name: STR Exchange Stone(Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25004
+    AegisName: ChangeAGI_Middle
+    Name: AGI Exchange Stone(Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25005
+    AegisName: ChangeINT_Middle
+    Name: INT Exchange Stone(Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25006
+    AegisName: ChangeVIT_Middle
+    Name: VIT Exchange Stone(Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25007
+    AegisName: ChangeDEX_Middle
+    Name: DEX Exchange Stone(Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25008
+    AegisName: ChangeVIT_Bottom
+    Name: VIT Exchange Stone(Lower)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25009
+    AegisName: ChangeAGI_Bottom
+    Name: AGI Exchange Stone(Lower)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25010
+    AegisName: ChangeDEX_Bottom
+    Name: DEX Exchange Stone(Lower)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25011
+    AegisName: ChangeLUK_Bottom
+    Name: LUK Exchange Stone(Lower)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25012
+    AegisName: ChangeSTR_Bottom
+    Name: STR Exchange Stone(Lower)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25013
+    AegisName: ChangeINT_Bottom
+    Name: INT Exchange Stone(Lower)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25014
+    AegisName: MDEFStone_Bottom
+    Name: Mdef Stone(Lower)
+    Type: Card
+    Buy: 10
+    Weight: 100
+  - Id: 25015
+    AegisName: EXPStone_Bottom
+    Name: EXP Stone(Lower)
+    Type: Card
+    Buy: 10
+    Weight: 100
+  - Id: 25016
+    AegisName: ATKStone_Bottom
+    Name: ATK Stone (Lower)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25017
+    AegisName: MATKStone_Bottom
+    Name: MATK Stone (Lower)
+    Type: Etc
+    Buy: 10
+    Weight: 100
   - Id: 25043
     AegisName: Thorny_Vine_Flute
     Name: Thorny Vine Flute
@@ -163585,6 +164002,96 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 25058
+    AegisName: TwinkleEffect_Top
+    Name: Twinkle Effect (Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25059
+    AegisName: GhostEffect_Middle
+    Name: Ghost Effect (Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25060
+    AegisName: Critical_Stone
+    Name: Critical Stone (Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25061
+    AegisName: Range_Stone
+    Name: Range Stone (Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25062
+    AegisName: Greed_Stone
+    Name: Greed Stone (Lower)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25063
+    AegisName: MaxHP2_Stone
+    Name: Health Stone (Lower)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25064
+    AegisName: MaxSP2_Stone
+    Name: Magic Stone (Lower)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25065
+    AegisName: Detoxify_Stone
+    Name: Detoxify Stone (Lower)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25066
+    AegisName: Recovery_Stone
+    Name: Recovery Stone (Lower)
+    Type: Card
+    Buy: 20
+    Weight: 100
+  - Id: 25067
+    AegisName: CastingStone_Robe
+    Name: Casting Stone (Garment)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25068
+    AegisName: ASPDStone_Top
+    Name: ASPD Stone (Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25069
+    AegisName: ReloadStone_Top
+    Name: Reload Stone (Upper)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25070
+    AegisName: ReloadStone_Middle
+    Name: Reload Stone (Middle)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25071
+    AegisName: ReloadStone_Bottom
+    Name: Reload Stone (Lower)
+    Type: Etc
+    Buy: 10
+    Weight: 100
+  - Id: 25072
+    AegisName: Kyrie_Stone
+    Name: Kyrie Stone (Lower)
+    Type: Etc
+    Buy: 10
+    Weight: 100
   - Id: 25127
     AegisName: Silent_Energy_Particle
     Name: Silent Energy Particle
@@ -163631,6 +164138,36 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 25136
+    AegisName: ElectricEffect_Middle
+    Name: Electric Effect (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25137
+    AegisName: GreenFloor_Bottom
+    Name: Green Floor Effect (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25138
+    AegisName: ShrinkEffect_Middle
+    Name: Shrink Effect (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25139
+    AegisName: Identify_Stone
+    Name: Identify Stone (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25141
+    AegisName: EXPStone_Middle
+    Name: Experience Stone (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
   - Id: 25142
     AegisName: Doram_Token
     Name: Doram Token
@@ -163920,6 +164457,60 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 25170
+    AegisName: MinorCastingStone_Robe
+    Name: Minor Casting Stone (Garment)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25171
+    AegisName: EXPStone_Top
+    Name: Experience Stone (Upper)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25172
+    AegisName: CastingStone_Top
+    Name: Variable Casting Stone (Upper)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25173
+    AegisName: CastingStone_Middle
+    Name: Variable Casting Stone (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25174
+    AegisName: CastingStone_Bottom
+    Name: Variable Casting Stone (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25175
+    AegisName: LexAeternaStone_Middle
+    Name: Lex Aeterna Stone (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25176
+    AegisName: BlueAuraEffect_Middle
+    Name: Blue Aura Effect (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25177
+    AegisName: ShadowEffect_Middle
+    Name: Shadow Effect (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25178
+    AegisName: PinkGlowEffect_Middle
+    Name: Pink Glow Effect (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
   - Id: 25179
     AegisName: Blessing_Star
     Name: Blessing Star
@@ -164017,6 +164608,18 @@ Body:
     Type: Etc
     Buy: 1200
     Weight: 1200
+  - Id: 25205
+    AegisName: ShrinkEffect_Bottom
+    Name: Shrink Effect (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25206
+    AegisName: ElectricEffect_Top
+    Name: Electric Effect (Upper)
+    Type: Etc
+    Buy: 20
+    Weight: 100
   - Id: 25223
     AegisName: Para_Team_Coin
     Name: Eden Group Coin
@@ -164029,6 +164632,42 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 25224
+    AegisName: WhiteBodyEffect_Middle
+    Name: White Body Effect (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25225
+    AegisName: ExplodingEffect_Middle
+    Name: Crimson Wave Effect (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25226
+    AegisName: WaterFieldEffect_Bottom
+    Name: Water Field Effect (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25227
+    AegisName: Heal_Stone
+    Name: Heal Stone (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25228
+    AegisName: Teleport_Stone
+    Name: Teleport Stone (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25229
+    AegisName: Steal_Stone
+    Name: Steal Stone (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
   - Id: 25231
     AegisName: Suspicious_Bottle
     Name: Suspicious Bottle
@@ -164231,6 +164870,36 @@ Body:
     AegisName: Sweets_Festival_Coin
     Name: Sweets Festival Coin
     Type: Etc
+  - Id: 25302
+    AegisName: DoubleAttack_Stone
+    Name: Double Attack Stone (Garment)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25303
+    AegisName: Critical_Stone_Robe
+    Name: Critical Stone (Garment)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25304
+    AegisName: Critical_Stone_Top
+    Name: Critical Stone (Upper)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25305
+    AegisName: Critical_Stone_Bottom
+    Name: Critical Stone (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25306
+    AegisName: CastStone_Robe
+    Name: Variable Casting Stone (Garment)
+    Type: Etc
+    Buy: 20
+    Weight: 100
   - Id: 25375
     AegisName: Powerful_Soul_Essence
     Name: Powerful Soul Essence
@@ -164240,6 +164909,150 @@ Body:
     Name: Luxurious Pet Food
     Type: Etc
     Weight: 10
+  - Id: 25409
+    AegisName: SuraStone_Top
+    Name: Champion Stone (Upper)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25410
+    AegisName: SuraStone_Middle
+    Name: Champion Stone (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25411
+    AegisName: SuraStone_Lower
+    Name: Champion Stone (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25412
+    AegisName: SuraStone_Robe
+    Name: Sura Stone (Garment)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25413
+    AegisName: RangerStone_Top
+    Name: Sniper Stone (Upper)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25414
+    AegisName: RangerStone_Middle
+    Name: Sniper Stone (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25415
+    AegisName: RangerStone_Lower
+    Name: Sniper Stone (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25416
+    AegisName: RangerStone_Robe
+    Name: Ranger Stone (Garment)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25417
+    AegisName: SorcererStone_Top
+    Name: Scholar Stone (Upper)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25418
+    AegisName: SorcererStone_Middle
+    Name: Scholar Stone (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25419
+    AegisName: SorcererStone_Lower
+    Name: Scholar Stone (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25420
+    AegisName: SorcererStone_Robe
+    Name: Sorcerer Stone (Garment)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25445
+    AegisName: RuneknightStone_Top
+    Name: Lord Knight Stone (Upper)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25446
+    AegisName: RuneknightStone_Middle
+    Name: Lord Knight Stone (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25447
+    AegisName: RuneknightStone_Lower
+    Name: Lord Knight Stone (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25448
+    AegisName: RuneknightStone_Robe
+    Name: Rune Knight Stone (Garment)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25449
+    AegisName: GeneticStone_Robe
+    Name: Genetic Stone (Garment)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25450
+    AegisName: GeneticStone_Top
+    Name: Creator Stone (Upper)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25451
+    AegisName: GeneticStone_Middle
+    Name: Creator Stone (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25452
+    AegisName: GeneticStone_Lower
+    Name: Creator Stone (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25453
+    AegisName: WarlockStone_Top
+    Name: High Wizard Stone (Upper)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25454
+    AegisName: WarlockStone_Middle
+    Name: High Wizard Stone (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25455
+    AegisName: WarlockStone_Lower
+    Name: High Wizard Stone (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25456
+    AegisName: WarlockStone_Robe
+    Name: Warlock Stone (Garment)
+    Type: Etc
+    Buy: 20
+    Weight: 100
   - Id: 25464
     AegisName: World_Moving_Rights
     Name: World Moving Rights
@@ -164254,6 +165067,78 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 25490
+    AegisName: ShadowchaserStone_Top
+    Name: Stalker Stone (Upper)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25491
+    AegisName: ShadowchaserStone_Middle
+    Name: Stalker Stone (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25492
+    AegisName: ShadowchaserStone_Lower
+    Name: Stalker Stone (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25493
+    AegisName: ShadowchaserStone_Robe
+    Name: Shadow Chaser Stone (Garment)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25494
+    AegisName: MechanicStone_Top
+    Name: Mastersmith Stone (Upper)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25495
+    AegisName: MechanicStone_Middle
+    Name: Mastersmith Stone (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25496
+    AegisName: MechanicStone_Lower
+    Name: Mastersmith Stone (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25497
+    AegisName: MechanicStone_Robe
+    Name: Mechanic Stone (Garment)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25498
+    AegisName: WanderMinstrelStone_Top
+    Name: Clown Gypsy Stone (Upper)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25499
+    AegisName: WanderMinstrelStone_Middle
+    Name: Clown Gypsy Stone (Middle)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25500
+    AegisName: WanderMinstrelStone_Lower
+    Name: Clown Gypsy Stone (Lower)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25501
+    AegisName: WanderMinstrelStone_Robe
+    Name: Wanderer Minstrel Stone (Garment)
+    Type: Etc
+    Buy: 20
+    Weight: 100
   - Id: 25670
     AegisName: M_M_Defense
     Name: Modification Module (Defense)
@@ -170268,7 +171153,7 @@ Body:
     EquipLevelMin: 70
     Refineable: true
     Script: |
-      .@r = getrefine(); .@b = readparam(bDex)/10; if (.@r>7) { .@c = .@r-7; if (BaseClass==Job_Novice||BaseJob==Job_Mage) { bonus2 bSubRace,RC_DemiHuman,10; bonus2 bSubRace,RC_Player,10; } } if (BaseClass==Job_Novice) { bonus bMaxHP,300+(200*.@c); bonus bMaxSP,300+(20*.@c); bonus bBaseAtk,100; bonus bMatk,150+(15*.@c); bonus bUseSPrate,-5; bonus bUnbreakableWeapon; bonus bInt,2*.@c; bonus bDex,(2*.@c)-(.@c*.@b); bonus bCritical,7*.@c; bonus bAspdRate,10*.@c; bonus bCritAtkRate,1*.@c; } if (BaseClass==Job_Thief) { bonus bMaxSP,100; bonus bMatk,150; bonus bCritAtkRate,.@r; } if (BaseClass==Job_Mage && .@c) { bonus bMaxHP,200*.@c; bonus bMaxSP,20*.@c; } if (BaseJob==Job_Hunter) { bonus bMaxHP,200; bonus bUseSPrate,-5; bonus bInt,2*.@r; bonus bDex,2*.@r; } if (BaseJob==Job_Bard||BaseJob==Job_Dancer) { bonus bBaseAtk,100; bonus bAspdRate,10*.@r; bonus bUnbreakableWeapon; bonus bDex,-1*(.@c*.@b); }
+      .@r = getrefine(); .@b = readparam(bDex)/10; if (BaseClass==Job_Novice) { bonus bMaxHP,300+(200*.@r); bonus bMaxSP,300+(20*.@r); bonus bBaseAtk,100; bonus bMatk,150+(15*.@r); bonus bUseSPrate,-5; bonus bUnbreakableWeapon; bonus bInt,2*.@r; bonus bDex,(2*.@r)-(.@r*.@b); bonus bCritical,7*.@r; bonus bAspdRate,10*.@r; bonus bCritAtkRate,1*.@r; } if (BaseClass==Job_Thief) { bonus bMaxSP,100; bonus bMatk,150; bonus bCritAtkRate,.@r; } if (BaseClass==Job_Mage) { bonus bMaxHP,200*.@r; bonus bMaxSP,20*.@r; } if (BaseJob==Job_Hunter) { bonus bMaxHP,200; bonus bUseSPrate,-5; bonus bInt,2*.@r; bonus bDex,2*.@r; } if (BaseJob==Job_Bard||BaseJob==Job_Dancer) { bonus bBaseAtk,100; bonus bAspdRate,10*.@r; bonus bUnbreakableWeapon; bonus bDex,-1*(.@r*.@b); } if (.@r>=7) { if (BaseClass==Job_Novice||BaseJob==Job_Mage) { bonus2 bSubRace,RC_DemiHuman,10; bonus2 bSubRace,RC_Player,10; } }
   - Id: 28721
     AegisName: Monokage
     Name: Monokage
@@ -170951,6 +171836,84 @@ Body:
     Buy: 20
     Script: |
       .@r = getrefine(); if (.@r>=7) { bonus bVit,7; } if (.@r>=12) { bonus bVit,1; bonus bMaxHPrate,8; } if (.@r>=13) { bonus bVit,1; bonus bMaxHPrate,2; }
+  - Id: 29013
+    AegisName: HPdrain3
+    Name: HP Absorption 3
+    Type: Card
+    Script: |
+      bonus2 bHPDrainRate,10,3;
+  - Id: 29014
+    AegisName: STR3INT
+    Name: STR+3 INT-3
+    Type: Card
+    Script: |
+      bonus bStr,3; bonus bInt,-3;
+  - Id: 29015
+    AegisName: STR3DEX
+    Name: STR+3 DEX-3
+    Type: Card
+    Script: |
+      bonus bStr,3; bonus bDex,-3;
+  - Id: 29016
+    AegisName: INT3DEX
+    Name: INT+3 DEX-3
+    Type: Card
+    Script: |
+      bonus bInt,3; bonus bDex,-3;
+  - Id: 29017
+    AegisName: INT3VIT
+    Name: INT+3 VIT-3
+    Type: Card
+    Script: |
+      bonus bInt,3; bonus bVit,-3;
+  - Id: 29018
+    AegisName: DEX3VIT
+    Name: DEX+3 VIT-3
+    Type: Card
+    Script: |
+      bonus bDex,3; bonus bVit,-3;
+  - Id: 29019
+    AegisName: DEX3AGI
+    Name: DEX+3 AGI-3
+    Type: Card
+    Script: |
+      bonus bDex,3; bonus bAgi,-3;
+  - Id: 29020
+    AegisName: VIT3AGI
+    Name: VIT+3 AGI-3
+    Type: Card
+    Script: |
+      bonus bVit,3; bonus bAgi,-3;
+  - Id: 29021
+    AegisName: VIT3LUK
+    Name: VIT+3 LUK-3
+    Type: Card
+    Script: |
+      bonus bVit,3; bonus bLuk,-3;
+  - Id: 29022
+    AegisName: AGI3LUK
+    Name: AGI+3 LUK-3
+    Type: Card
+    Script: |
+      bonus bAgi,3; bonus bLuk,-3;
+  - Id: 29023
+    AegisName: AGI3STR
+    Name: AGI+3 STR-3
+    Type: Card
+    Script: |
+      bonus bAgi,3; bonus bStr,-3;
+  - Id: 29024
+    AegisName: LUK3STR
+    Name: LUK+3 STR-3
+    Type: Card
+    Script: |
+      bonus bLuk,3; bonus bStr,-3;
+  - Id: 29025
+    AegisName: LUK3INT
+    Name: LUK+3 INT-3
+    Type: Card
+    Script: |
+      bonus bLuk,3; bonus bInt,-3;
   - Id: 29026
     AegisName: Def20
     Name: DEF+20
@@ -170958,6 +171921,134 @@ Body:
     Buy: 10
     Script: |
       bonus bDef,20;
+  - Id: 29027
+    AegisName: EXP2
+    Name: EXP+2%
+    Type: Card
+    Script: |
+      bonus2 bExpAddClass,Class_All,2;
+  - Id: 29028
+    AegisName: Atk1p_Top
+    Name: ATK + 1%
+    Type: Card
+    Script: |
+      bonus2 bAddClass,Class_All,1;
+  - Id: 29029
+    AegisName: Atk1p_Bottom
+    Name: ATK+1%(Lower)
+    Type: Card
+    Script: |
+      bonus2 bAddClass,Class_All,1;
+  - Id: 29030
+    AegisName: Matk1p_Top
+    Name: MATK+1%
+    Type: Card
+    Script: |
+      bonus bMatkRate,1;
+  - Id: 29031
+    AegisName: Matk1p_Bottom
+    Name: MATK+1%(Lower)
+    Type: Card
+    Script: |
+      bonus bMatkRate,1;
+  - Id: 29032
+    AegisName: SPdrain1_Top
+    Name: SP Absorption 1
+    Type: Card
+    Script: |
+      bonus2 bSPDrainRate,10,1;
+  - Id: 29033
+    AegisName: Mdef4_Bottom
+    Name: MDEF+4
+    Type: Card
+    Script: |
+      bonus bMdef,4;
+  - Id: 29040
+    AegisName: Ghost_Effect
+    Name: Ghost Effect
+    Type: Card
+    Script: |
+      hateffect HAT_EF_C_GHOST_EFFECT,true;
+    UnEquipScript: |
+      hateffect HAT_EF_C_GHOST_EFFECT,false;
+  - Id: 29041
+    AegisName: Twinkle_Effect
+    Name: Twinkle Effect
+    Type: Card
+    Script: |
+      /* todo */
+  - Id: 29046
+    AegisName: Greed
+    Name: Greed
+    Type: Card
+    Script: |
+      skill "BS_GREED",1;
+  - Id: 29047
+    AegisName: Fatal0
+    Name: Fatal
+    Type: Card
+    Script: |
+      bonus bCritAtkRate,3;
+  - Id: 29048
+    AegisName: Expert_Archer0
+    Name: Expert Archer
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,3;
+  - Id: 29049
+    AegisName: HP100_
+    Name: HP+100
+    Type: Card
+    Script: |
+      bonus bMaxHP,100; if (BaseLevel >= 120) { bonus bMaxHPrate,2; }
+  - Id: 29050
+    AegisName: SP50_
+    Name: SP+50
+    Type: Card
+    Script: |
+      bonus bMaxSP,50; if (BaseLevel >= 120) { bonus bMaxSPrate,2; }
+  - Id: 29051
+    AegisName: Detoxify
+    Name: Detoxify
+    Type: Card
+    Script: |
+      skill "TF_DETOXIFY",1;
+  - Id: 29052
+    AegisName: Recovery
+    Name: Recovery
+    Type: Card
+    Script: |
+      skill "PR_STRECOVERY",1;
+  - Id: 29053
+    AegisName: Skill_Delay1_Top
+    Name: After Skill Delay1 Upper
+    Type: Card
+    Script: |
+      bonus bDelayrate,-1;
+  - Id: 29054
+    AegisName: Skill_Delay1_Middle
+    Name: After Skill Delay1 Middle
+    Type: Card
+    Script: |
+      bonus bDelayrate,-1;
+  - Id: 29055
+    AegisName: Skill_Delay1_Bottom
+    Name: After Skill Delay1 Lower
+    Type: Card
+    Script: |
+      bonus bDelayrate,-1;
+  - Id: 29056
+    AegisName: FixedCasting05
+    Name: Reduces Fixed Cast
+    Type: Card
+    Script: |
+      bonus bFixedCast,-500;
+  - Id: 29057
+    AegisName: Kyrie
+    Name: Kyrie
+    Type: Card
+    Script: |
+      skill "PR_KYRIE",1;
   - Id: 29061
     AegisName: Ambition1Lv
     Name: Mettle Lv. 1
@@ -171420,11 +172511,40 @@ Body:
     Buy: 10
     Script: |
       bonus bLongAtkRate,10; bonus bCritical,10;
-  - Id: 29146
-    AegisName: Item_Appraisal
-    Name: Item Appraisal
+  - Id: 29142
+    AegisName: Electric_Effect
+    Name: Electric Effect
     Type: Card
-    Buy: 10
+    Script: |
+      hateffect HAT_EF_ELECTRIC,true;
+    UnEquipScript: |
+      hateffect HAT_EF_ELECTRIC,false;
+  - Id: 29143
+    AegisName: Green_Floor_Effect
+    Name: Green Flare Effect
+    Type: Card
+    Script: |
+      hateffect HAT_EF_GREEN_FLOOR,true;
+    UnEquipScript: |
+      hateffect HAT_EF_GREEN_FLOOR,false;
+  - Id: 29144
+    AegisName: Shrink_Effect
+    Name: Shrink Effect
+    Type: Card
+    Script: |
+      hateffect HAT_EF_SHRINK,true;
+    UnEquipScript: |
+      hateffect HAT_EF_SHRINK,false;
+  - Id: 29145
+    AegisName: EXP2MIDDLE
+    Name: Experience+2%
+    Type: Card
+    Script: |
+      bonus2 bExpAddRace,RC_All,2;
+  - Id: 29146
+    AegisName: Identify
+    Name: Identify
+    Type: Card
     Script: |
       skill "MC_IDENTIFY",1;
   - Id: 29147
@@ -171488,6 +172608,100 @@ Body:
       Shoes: true
     Script: |
       bonus bLuk,1;
+  - Id: 29154
+    AegisName: FixedCasting03
+    Name: Minor Fixed Cast Reduction
+    Type: Card
+    Script: |
+      bonus bFixedCast,-300;
+  - Id: 29155
+    AegisName: LexAeterna
+    Name: Lex Aeterna
+    Type: Card
+    Script: |
+      bonus3 bAutoSpell,"PR_LEXAETERNA",1,10;
+  - Id: 29156
+    AegisName: Casting_Top
+    Name: Variable Cast Reduction Upper
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-3;
+  - Id: 29157
+    AegisName: Casting_Middle
+    Name: Variable Cast Reduction Middle
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-3;
+  - Id: 29158
+    AegisName: Casting_Bottom
+    Name: Variable Cast Reduction Lower
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-3;
+  - Id: 29159
+    AegisName: EXP2TOP
+    Name: Experience + 2%
+    Type: Card
+    Script: |
+      bonus2 bExpAddRace,RC_All,2;
+  - Id: 29160
+    AegisName: BlueAura_Effect
+    Name: Blue Aura Effect
+    Type: Card
+    Script: |
+      /* todo */
+  - Id: 29161
+    AegisName: Pink_Glow_Effect
+    Name: Pink Glow Effect
+    Type: Card
+    Script: |
+      /* todo */
+  - Id: 29162
+    AegisName: Shadow_Effect
+    Name: Shadow Effect
+    Type: Card
+    Script: |
+      /* todo */
+  - Id: 29224
+    AegisName: WhiteBody_Effect
+    Name: White Body Effect
+    Type: Card
+    Script: |
+      hateffect HAT_EF_WHITEBODY,true;
+    UnEquipScript: |
+      hateffect HAT_EF_WHITEBODY,false;
+  - Id: 29225
+    AegisName: WaterField_Effect
+    Name: Water Field Effect
+    Type: Card
+    Script: |
+      hateffect HAT_EF_WATER_BELOW2,true;
+    UnEquipScript: |
+      hateffect HAT_EF_WATER_BELOW2,false;
+  - Id: 29226
+    AegisName: ExplodingWave_Effect
+    Name: Crimson Wave Effect
+    Type: Card
+    Script: |
+      /* todo */
+  - Id: 29227
+    AegisName: Heal
+    Name: Heal
+    Type: Card
+    Script: |
+      skill "AL_HEAL",1;
+  - Id: 29228
+    AegisName: Steal
+    Name: Steal
+    Type: Card
+    Script: |
+      skill "TF_STEAL",1;
+  - Id: 29229
+    AegisName: Teleport
+    Name: Teleport
+    Type: Card
+    Script: |
+      skill "AL_TELEPORT",1;
   - Id: 29310
     AegisName: Racing_RK_1
     Name: Racing(Rune Knight) 1Lv
@@ -171728,6 +172942,36 @@ Body:
     Name: Racing(Summoner) 3Lv
     Type: Card
     Buy: 20
+  - Id: 29358
+    AegisName: Casting_Robe
+    Name: Variable Casting Garment
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-10;
+  - Id: 29359
+    AegisName: Fatal_Top
+    Name: Fatal (Upper)
+    Type: Card
+    Script: |
+      bonus bCritAtkRate,3;
+  - Id: 29360
+    AegisName: Fatal_Bottom
+    Name: Fatal (Lower)
+    Type: Card
+    Script: |
+      bonus bCritAtkRate,3;
+  - Id: 29361
+    AegisName: Fatal_Robe
+    Name: Fatal (Garment)
+    Type: Card
+    Script: |
+      bonus bCritAtkRate,20;
+  - Id: 29362
+    AegisName: DoubleAttack
+    Name: Double Attack
+    Type: Card
+    Script: |
+      skill "TF_DOUBLE",3; bonus bDoubleRate,15;
   - Id: 29579
     AegisName: Racing_SG_1
     Name: Racing (Star Gladiator) 1Lv
@@ -172040,7 +173284,7 @@ Body:
     EquipLevelMin: 1
     View: 483
   - Id: 31031
-    AegisName: C_Drooping_Pope_Casual
+    AegisName: C_Tare_Pope_Casual
     Name: Costume Drooping Pope Casual
     Type: Armor
     Location:
@@ -172048,15 +173292,15 @@ Body:
     EquipLevelMin: 1
     View: 1483
   - Id: 31032
-    AegisName: C_Drooping_Luwmin
-    Name: Costume Drooping Luwmin
+    AegisName: C_Tare_Luwmin
+    Name: "Costume: Sailing Lumin"
     Type: Armor
     Location:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 1484
   - Id: 31033
-    AegisName: C_Believers_Mask
+    AegisName: C_BelieversCap
     Name: Costume Believer's Mask
     Type: Armor
     Location:
@@ -172259,8 +173503,8 @@ Body:
     UnEquipScript: |
       hateffect(HAT_EF_DOUBLEGUMGANG,false);
   - Id: 31057
-    AegisName: C_Eremes_Guiles_Scarf_Black
-    Name: Costume Eremes Guiles Scarf Black
+    AegisName: C_Eremes_Scarf_Black
+    Name: "Costume: Eremes' Scarf (Black)"
     Type: Armor
     Location:
       Costume_Head_Low: true
@@ -172307,195 +173551,195 @@ Body:
     EquipLevelMin: 1
     View: 1502
   - Id: 31063
-    AegisName: C_Hair_Bun_Blue
-    Name: Costume Hair Bun Blue
+    AegisName: C_Hair_Bun_BU
+    Name: Costume Hair in a Bun(Blue)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1503
   - Id: 31064
-    AegisName: C_Hair_Bun_Red
-    Name: Costume Hair Bun Red
+    AegisName: C_Hair_Bun_RD
+    Name: Costume Hair in a Bun(Red)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1504
   - Id: 31065
-    AegisName: C_Hair_Bun_Yellow
-    Name: Costume Hair Bun Yellow
+    AegisName: C_Hair_Bun_YL
+    Name: Costume Hair in a Bun(Yellow)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1505
   - Id: 31066
-    AegisName: C_Hair_Bun_Green
-    Name: Costume Hair Bun Green
+    AegisName: C_Hair_Bun_GN
+    Name: Costume Hair in a Bun(Green)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1506
   - Id: 31067
-    AegisName: C_Hair_Bun_Black
-    Name: Costume Hair Bun Black
+    AegisName: C_Hair_Bun_BL
+    Name: Costume Hair in a Bun(Black)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1507
   - Id: 31068
-    AegisName: C_Hair_Bun_White
-    Name: Costume Hair Bun White
+    AegisName: C_Hair_Bun_WH
+    Name: Costume Hair in a Bun(White)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1508
   - Id: 31069
-    AegisName: C_Hair_Bun_Crimson
-    Name: Costume Hair Bun Crimson
+    AegisName: C_Hair_Bun_OM
+    Name: Costume Hair in a Bun(Brown)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1509
   - Id: 31070
-    AegisName: C_Hair_Bun_Purple
-    Name: Costume Hair Bun Purple
+    AegisName: C_Hair_Bun_PP
+    Name: Costume Hair in a Bun(Purple)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1510
   - Id: 31071
-    AegisName: C_Roll_Twin_Blue
-    Name: Costume Roll Twin Blue
+    AegisName: C_Roll_Twin_BU
+    Name: Costume Roll Twin(Blue)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1511
   - Id: 31072
-    AegisName: C_Roll_Twin_Red
-    Name: Costume Roll Twin Red
+    AegisName: C_Roll_Twin_RD
+    Name: Costume Roll Twin(Red)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1512
   - Id: 31073
-    AegisName: C_Roll_Twin_Yellow
-    Name: Costume Roll Twin Yellow
+    AegisName: C_Roll_Twin_YL
+    Name: Costume Roll Twin(Yellow)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1513
   - Id: 31074
-    AegisName: C_Roll_Twin_Green
-    Name: Costume Roll Twin Green
+    AegisName: C_Roll_Twin_GN
+    Name: Costume Roll Twin(Green)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1514
   - Id: 31075
-    AegisName: C_Roll_Twin_Black
-    Name: Costume Roll Twin Black
+    AegisName: C_Roll_Twin_BL
+    Name: Costume Roll Twin(Black)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1515
   - Id: 31076
-    AegisName: C_Roll_Twin_White
-    Name: Costume Roll Twin White
+    AegisName: C_Roll_Twin_WH
+    Name: Costume Roll Twin(White)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1516
   - Id: 31077
-    AegisName: C_Roll_Twin_Crimson
-    Name: Costume Roll Twin Crimson
+    AegisName: C_Roll_Twin_OM
+    Name: Costume Roll Twin(Brown)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1517
   - Id: 31078
-    AegisName: C_Roll_Twin_Purple
-    Name: Costume Roll Twin Purple
+    AegisName: C_Roll_Twin_PP
+    Name: Costume Roll Twin(Purple)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1518
   - Id: 31079
-    AegisName: C_Long_Pony_Blue
-    Name: Costume Long Pony Blue
+    AegisName: C_Long_Pony_BU
+    Name: Costume Long Pony(Blue)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1519
   - Id: 31080
-    AegisName: C_Long_Pony_Red
-    Name: Costume Long Pony Red
+    AegisName: C_Long_Pony_RD
+    Name: Costume Long Pony(Red)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1520
   - Id: 31081
-    AegisName: C_Long_Pony_Yellow
-    Name: Costume Long Pony Yellow
+    AegisName: C_Long_Pony_YL
+    Name: Costume Long Pony(Yellow)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1521
   - Id: 31082
-    AegisName: C_Long_Pony_Green
-    Name: Costume Long Pony Green
+    AegisName: C_Long_Pony_GN
+    Name: Costume Long Pony(Green)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1522
   - Id: 31083
-    AegisName: C_Long_Pony_Black
-    Name: Costume Long Pony Black
+    AegisName: C_Long_Pony_BL
+    Name: Costume Long Pony(Black)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1523
   - Id: 31084
-    AegisName: C_Long_Pony_White
-    Name: Costume Long Pony White
+    AegisName: C_Long_Pony_WH
+    Name: Costume Long Pony(White)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1524
   - Id: 31085
-    AegisName: C_Long_Pony_Crimson
-    Name: Costume Long Pony Crimson
+    AegisName: C_Long_Pony_OM
+    Name: Costume Long Pony(Brown)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1525
   - Id: 31086
-    AegisName: C_Long_Pony_Purple
-    Name: Costume Long Pony Purple
+    AegisName: C_Long_Pony_PP
+    Name: Costume Long Pony(Purple)
     Type: Armor
     Location:
-      Costume_Head_Top: true
+      Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1526
   - Id: 31087
@@ -172842,7 +174086,7 @@ Body:
     EquipLevelMin: 1
     View: 1202
   - Id: 31134
-    AegisName: C_Happy_Parrot
+    AegisName: C_Happy_Parrot_J
     Name: Costume Talkactive Parrot
     Type: Armor
     Location:
@@ -173030,7 +174274,7 @@ Body:
     EquipLevelMin: 1
     View: 1486
   - Id: 31160
-    AegisName: C_Rune_Helm
+    AegisName: C_RuneHelm
     Name: Costume Rune Helm
     Type: Armor
     Location:
@@ -173063,7 +174307,7 @@ Body:
     EquipLevelMin: 1
     View: 205
   - Id: 31164
-    AegisName: C_Brown_Stole
+    AegisName: C_Brown_Stall
     Name: Costume Brown Stole
     Type: Armor
     Location:
@@ -173095,7 +174339,7 @@ Body:
     EquipLevelMin: 1
     View: 1575
   - Id: 31168
-    AegisName: C_Mouton_Life_B
+    AegisName: C_Mouton_Life_BL
     Name: Costume Blue Mouton Life
     Type: Armor
     Location:
@@ -173177,7 +174421,7 @@ Body:
     EquipLevelMin: 1
     View: 1578
   - Id: 31178
-    AegisName: C_Fire_Muffler
+    AegisName: C_Flame_Muffler
     Name: C Fire Muffler
     Type: Armor
     Location:
@@ -173193,7 +174437,7 @@ Body:
     EquipLevelMin: 1
     View: 1580
   - Id: 31180
-    AegisName: C_King_Sura_Headband
+    AegisName: C_Shura_King_Pledge
     Name: C King Sura Headband
     Type: Armor
     Location:
@@ -174374,7 +175618,7 @@ Body:
     EquipLevelMin: 1
     View: 946
   - Id: 31327
-    AegisName: C_Wood_Goblins_Nose
+    AegisName: C_Stretched_Nose_M
     Name: C Wood Goblins Nose
     Type: Armor
     Location:
@@ -174414,7 +175658,7 @@ Body:
     EquipLevelMin: 1
     View: 1675
   - Id: 31332
-    AegisName: C_Khalitzburg_KN_Helm_BL
+    AegisName: Khalitzburg_KN_Helm_BL
     Name: C Black Khalitzburg Knight Helm
     Type: Armor
     Location:
@@ -174438,7 +175682,7 @@ Body:
     EquipLevelMin: 1
     View: 1604
   - Id: 31370
-    AegisName: C_Straight_Long_YL_
+    AegisName: C_Straight_Long_YLK
     Name: Costume Straight Long Yellow
     Type: Armor
     Location:
@@ -174453,6 +175697,14 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 1412
+  - Id: 31372
+    AegisName: C_Binit_Doll_Hat
+    Name: "Costume: Binit Doll"
+    Type: Armor
+    Location:
+      Costume_Head_Top: true
+    EquipLevelMin: 1
+    View: 358
   - Id: 31374
     AegisName: C_Explosion_gum
     Name: C Explosion gum
@@ -174582,7 +175834,7 @@ Body:
     EquipLevelMin: 1
     View: 1690
   - Id: 31391
-    AegisName: C_Floating_Stone_of_Sage
+    AegisName: C_Floating_Stone_Of_Int
     Name: C Floating Stone of Sage
     Type: Armor
     Location:
@@ -174634,7 +175886,7 @@ Body:
     EquipLevelMin: 1
     View: 1692
   - Id: 31397
-    AegisName: C_Sitting_Pope
+    AegisName: C_Pope_Sitting_Head
     Name: C Sitting Pope
     Type: Armor
     Location:
@@ -174781,7 +176033,7 @@ Body:
     EquipLevelMin: 1
     View: 560
   - Id: 31415
-    AegisName: C_Wanderers_Sakkat
+    AegisName: C_Wanderer_Sakkat
     Name: Costume Wanderer's Sakkat
     Type: Armor
     Location:
@@ -174798,7 +176050,7 @@ Body:
     EquipLevelMin: 1
     View: 556
   - Id: 31418
-    AegisName: C_Green_Onion_in_Mouth
+    AegisName: C_Leek_In_Mouth
     Name: C Green Onion in Mouth
     Type: Armor
     Location:
@@ -174813,8 +176065,24 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 961
+  - Id: 31430
+    AegisName: C_Seppl_Hat_TW
+    Name: "Costume: Seppl Hat"
+    Type: Armor
+    Location:
+      Costume_Head_Top: true
+    EquipLevelMin: 1
+    View: 1023
+  - Id: 31431
+    AegisName: C_Curupira_Hat_TW
+    Name: "Costume: Curupira Hat"
+    Type: Armor
+    Location:
+      Costume_Head_Top: true
+    EquipLevelMin: 1
+    View: 974
   - Id: 31432
-    AegisName: C_Floating_Ice
+    AegisName: C_Luwmin_Ice
     Name: C Floating Ice
     Type: Armor
     Location:
@@ -174822,8 +176090,8 @@ Body:
     EquipLevelMin: 1
     View: 1562
   - Id: 31433
-    AegisName: C_Celestial_Circle
-    Name: C Celestial Circle
+    AegisName: C_Astro_Circle
+    Name: Costume Astro Circle
     Type: Armor
     Location:
       Costume_Head_Top: true
@@ -174878,7 +176146,7 @@ Body:
     EquipLevelMin: 1
     View: 1707
   - Id: 31440
-    AegisName: C_Snow_Bear_Hood
+    AegisName: C_Snow_Bear_Food
     Name: C Snow Bear Hood
     Type: Armor
     Location:
@@ -175159,7 +176427,7 @@ Body:
     EquipLevelMin: 1
     View: 1502
   - Id: 31479
-    AegisName: C_Group_of_Stars
+    AegisName: C_ManyStars_TW
     Name: Costume Group of Stars
     Type: Armor
     Location:
@@ -175171,13 +176439,21 @@ Body:
     UnEquipScript: |
       hateffect(HAT_EF_MANYSTARS,false);
   - Id: 31481
-    AegisName: C_TriColor_CatCup
+    AegisName: C_CatCoffeeCup_TW
     Name: C TriColor CatCup
     Type: Armor
     Location:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 1731
+  - Id: 31483
+    AegisName: C_CatEarRibbon_TW
+    Name: Costume Cat Ear Ribbon
+    Type: Armor
+    Location:
+      Costume_Head_Mid: true
+    EquipLevelMin: 1
+    View: 1733
   - Id: 31484
     AegisName: C_JP_EV13
     Name: C BearCompanion Female
@@ -175219,7 +176495,7 @@ Body:
     EquipLevelMin: 1
     View: 1738
   - Id: 31489
-    AegisName: C_Bouquet_Cap
+    AegisName: C_Bouquet_Hat
     Name: Costume Bouquet Cap
     Type: Armor
     Location:
@@ -175299,7 +176575,7 @@ Body:
     EquipLevelMin: 1
     View: 537
   - Id: 31504
-    AegisName: C_Large_Hungry_Fish
+    AegisName: C_Starving_Fish_Hat
     Name: C Large Hungry Fish
     Type: Armor
     Location:
@@ -175715,8 +176991,16 @@ Body:
       Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1783
+  - Id: 31568
+    AegisName: C_Floating_Ball_TW
+    Name: Costume Floating Ball
+    Type: Armor
+    Location:
+      Costume_Head_Mid: true
+    EquipLevelMin: 1
+    View: 1760
   - Id: 31569
-    AegisName: C_Open_Air_Headset
+    AegisName: C_OpenAir_Headset
     Name: C Open Air Headset
     Type: Armor
     Location:
@@ -175933,7 +177217,7 @@ Body:
     EquipLevelMin: 1
     View: 1803
   - Id: 31600
-    AegisName: C_Kishu_Dog
+    AegisName: C_Kishu_Inu
     Name: C Kishu Dog
     Type: Armor
     Location:
@@ -176003,7 +177287,7 @@ Body:
     EquipLevelMin: 1
     View: 286
   - Id: 31611
-    AegisName: C_Snake_Lord_Stole
+    AegisName: C_Dark_Snake_Lord_Stall
     Name: C Snake Lord Stole
     Type: Armor
     Location:
@@ -176019,7 +177303,7 @@ Body:
     EquipLevelMin: 1
     View: 1811
   - Id: 31614
-    AegisName: Costume_Fox
+    AegisName: C_Fox
     Name: C Fox
     Type: Armor
     Location:
@@ -176035,7 +177319,7 @@ Body:
     EquipLevelMin: 1
     View: 1813
   - Id: 31616
-    AegisName: Costume_Sleep_Sheep
+    AegisName: C_Sleep_Sheep_TW
     Name: C Sleep Sheep
     Type: Armor
     Location:
@@ -176043,7 +177327,7 @@ Body:
     EquipLevelMin: 1
     View: 1814
   - Id: 31624
-    AegisName: Costume_Heart_Of_Cat
+    AegisName: C_HeartOfCat_TW
     Name: C Heart of Cat
     Type: Armor
     Location:
@@ -176051,7 +177335,7 @@ Body:
     EquipLevelMin: 1
     View: 1822
   - Id: 31625
-    AegisName: Costume_Protection_Cloth
+    AegisName: C_Protect_Cloth
     Name: C Protection Cloth
     Type: Armor
     Location:
@@ -176059,7 +177343,7 @@ Body:
     EquipLevelMin: 1
     View: 1761
   - Id: 31628
-    AegisName: Costume_Dokebi
+    AegisName: C_Bogy_Cap_TW
     Name: C Dokebi
     Type: Armor
     Location:
@@ -176371,7 +177655,7 @@ Body:
     EquipLevelMin: 1
     View: 1866
   - Id: 31673
-    AegisName: Costume_Picnic_Basket
+    AegisName: C_Picnic_Basket
     Name: C Picnic Basket
     Type: Armor
     Location:
@@ -176443,7 +177727,7 @@ Body:
     EquipLevelMin: 1
     View: 1876
   - Id: 31688
-    AegisName: Costume_Poring_On_Shoulder
+    AegisName: C_Poring_On_Shoulder
     Name: C Poring On Shoulder
     Type: Armor
     Location:
@@ -176483,7 +177767,7 @@ Body:
     EquipLevelMin: 1
     View: 1413
   - Id: 31693
-    AegisName: Costume_Lunatic_Muffler
+    AegisName: C_LunaticMuffler
     Name: C Lunatic Muffler
     Type: Armor
     Location:
@@ -176515,7 +177799,7 @@ Body:
     EquipLevelMin: 1
     View: 201
   - Id: 31698
-    AegisName: Costume_Red_Riding_Hood
+    AegisName: C_Pigtail_Red_Hood
     Name: C Red Riding Hood
     Type: Armor
     Location:
@@ -176523,7 +177807,7 @@ Body:
     EquipLevelMin: 1
     View: 1879
   - Id: 31699
-    AegisName: Costume_Smiling_Eyes
+    AegisName: C_Smiling_Eyes
     Name: C Smiling Eyes
     Type: Armor
     Location:
@@ -176795,7 +178079,7 @@ Body:
     EquipLevelMin: 1
     View: 992
   - Id: 31765
-    AegisName: Costume_Garnet_Tiara
+    AegisName: C_Garnet_Tiara
     Name: C Garnet Tiara
     Type: Armor
     Location:
@@ -176803,7 +178087,7 @@ Body:
     EquipLevelMin: 1
     View: 1906
   - Id: 31766
-    AegisName: Costume_Peony_Hair_Ornament
+    AegisName: C_Peony_Hair_Ornament
     Name: C Peony Hair Ornament
     Type: Armor
     Location:
@@ -176875,7 +178159,7 @@ Body:
     EquipLevelMin: 1
     View: 1463
   - Id: 31787
-    AegisName: Costume_Shoulder_SavageB
+    AegisName: C_SavageB_On_Shoulder
     Name: C Savage Bebe On Shoulder
     Type: Armor
     Location:
@@ -176946,7 +178230,7 @@ Body:
     EquipLevelMin: 1
     View: 1921
   - Id: 31798
-    AegisName: Costume_Baby_Panda
+    AegisName: C_Baby_Panda
     Name: C Baby Panda
     Type: Armor
     Location:
@@ -176954,7 +178238,7 @@ Body:
     EquipLevelMin: 1
     View: 1922
   - Id: 31799
-    AegisName: Costume_Pretty_White_Bear
+    AegisName: C_Pretty_Bear_WH
     Name: C Pretty White Bear
     Type: Armor
     Location:
@@ -177082,7 +178366,7 @@ Body:
     EquipLevelMin: 1
     View: 1937
   - Id: 31832
-    AegisName: Costume_Bicolor_Cat_Witch_Hat
+    AegisName: C_Bicolor_Cat_Witch_Hat
     Name: C Bicolor Cat Witch Hat
     Type: Armor
     Location:
@@ -177129,6 +178413,14 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 1943
+  - Id: 31884
+    AegisName: C_Magic_Helm
+    Name: Costume Magic Helm
+    Type: Armor
+    Location:
+      Costume_Head_Top: true
+    EquipLevelMin: 1
+    View: 1917
   - Id: 32005
     AegisName: Illusion_Pole_Axe
     Name: Illusion Pole Axe

@@ -42919,7 +42919,7 @@ Body:
     EquipLevelMin: 80
     View: 568
     Script: |
-      if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief||(BaseJob==Job_Taekwon&&Class!=Job_SoulLinker)) bonus bStr,1; else if(BaseClass==Job_Mage||BaseClass==Job_Acolyte||class==Job_Ninja||class==Job_SoulLinker) bonus bInt,1; else if(BaseClass==Job_Archer||BaseClass==Job_Gunslinger) bonus bDex,1; else if(BaseJob==Job_Novice||BaseJob==Job_SuperNovice) { bonus bMaxHP,80; bonus bMaxSP,30; }
+      if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief||(BaseJob==Job_Taekwon&&Class!=Job_Soul_Linker)) bonus bStr,1; else if(BaseClass==Job_Mage||BaseClass==Job_Acolyte||class==Job_Ninja||class==Job_Soul_Linker) bonus bInt,1; else if(BaseClass==Job_Archer||BaseClass==Job_Gunslinger) bonus bDex,1; else if(BaseJob==Job_Novice||BaseJob==Job_SuperNovice) { bonus bMaxHP,80; bonus bMaxSP,30; }
   - Id: 5593
     AegisName: K_Rabbit_Bonnet
     Name: Rabbit Bonnet
@@ -60862,7 +60862,7 @@ Body:
       BuyingStore: true
   - Id: 12380
     AegisName: Desert_Wolf_Babe_Scroll
-    Name: Jobs Change Flute
+    Name: Job Change Flute
     Type: Usable
     Buy: 10
     Weight: 10
@@ -63342,7 +63342,7 @@ Body:
     Weight: 10
   - Id: 12766
     AegisName: Reward_Job_BM25
-    Name: Reward Jobs BM25
+    Name: Reward Job BM25
     Type: Usable
     Trade:
       Override: 100
