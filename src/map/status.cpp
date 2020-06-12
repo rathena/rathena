@@ -650,9 +650,7 @@ void initChangeTables(void)
 #endif
 	add_sc( WS_CARTTERMINATION	, SC_STUN		);
 	set_sc( WS_OVERTHRUSTMAX	, SC_MAXOVERTHRUST	, EFST_OVERTHRUSTMAX, SCB_NONE );
-#ifdef RENEWAL
-	set_sc( CG_SPECIALSINGER	, SC_LONGING		, EFST_ENSEMBLEFATIGUE	, SCB_NONE );
-#else
+#ifndef RENEWAL
 	set_sc( CG_LONGINGFREEDOM	, SC_LONGING		, EFST_LONGING		, SCB_SPEED|SCB_ASPD );
 #endif
 	set_sc( CG_HERMODE		, SC_HERMODE	, EFST_HERMODE	, SCB_NONE		);
@@ -968,7 +966,7 @@ void initChangeTables(void)
 	set_sc( GN_SPORE_EXPLOSION		, SC_SPORE_EXPLOSION	, EFST_SPORE_EXPLOSION, SCB_NONE );
 	set_sc( GN_FIRE_EXPANSION_SMOKE_POWDER	, SC_SMOKEPOWDER	, EFST_FIRE_EXPANSION_SMOKE_POWDER, SCB_FLEE );
 	set_sc( GN_FIRE_EXPANSION_TEAR_GAS	, SC_TEARGAS		, EFST_FIRE_EXPANSION_TEAR_GAS	, SCB_HIT|SCB_FLEE );
-	set_sc( GN_HELLS_PLANT			, SC_HELLS_PLANT		, EFST_HELLS_PLANT_ARMOR	, SCB_NONE );
+	set_sc_with_vfx( GN_HELLS_PLANT		, SC_HELLS_PLANT	, EFST_HELLS_PLANT_ARMOR	, SCB_NONE );
 	set_sc( GN_MANDRAGORA			, SC_MANDRAGORA		, EFST_MANDRAGORA			, SCB_INT );
 	set_sc_with_vfx( GN_ILLUSIONDOPING	, SC_ILLUSIONDOPING	, EFST_ILLUSIONDOPING		, SCB_HIT );
 
@@ -1386,6 +1384,7 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_REF_T_POTION] = EFST_REF_T_POTION;
 	StatusIconChangeTable[SC_ADD_ATK_DAMAGE] = EFST_ADD_ATK_DAMAGE;
 	StatusIconChangeTable[SC_ADD_MATK_DAMAGE] = EFST_ADD_MATK_DAMAGE;
+	StatusIconChangeTable[SC_ENSEMBLEFATIGUE] = EFST_ENSEMBLEFATIGUE;
 
 	// Battleground Queue
 	StatusIconChangeTable[SC_ENTRY_QUEUE_APPLY_DELAY] = EFST_ENTRY_QUEUE_APPLY_DELAY;
@@ -1563,6 +1562,7 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_USE_SKILL_SP_SHA] = EFST_USE_SKILL_SP_SHA;
 
 	StatusChangeFlagTable[SC_ANCILLA] |= SCB_REGEN;
+	StatusChangeFlagTable[SC_ENSEMBLEFATIGUE] |= SCB_SPEED|SCB_ASPD;
 
 #ifdef RENEWAL
 	// renewal EDP increases your weapon atk
@@ -1608,6 +1608,7 @@ void initChangeTables(void)
 	StatusDisplayType[SC_ANTI_M_BLAST]	  = BL_PC;
 	StatusDisplayType[SC_SPRITEMABLE]     = BL_PC;
 	StatusDisplayType[SC_SV_ROOTTWIST]    = BL_PC;
+	StatusDisplayType[SC_HELLS_PLANT]     = BL_PC;
 
 	// Costumes
 	StatusDisplayType[SC_MOONSTAR] = BL_PC;
@@ -1664,9 +1665,6 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_VACUUM_EXTREME]		|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_SUHIDE]				|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_SV_ROOTTWIST]			|= SCS_NOMOVE;
-#ifdef RENEWAL
-	StatusChangeStateTable[SC_LONGING]				|= SCS_NOMOVE;
-#endif
 	StatusChangeStateTable[SC_GRAVITYCONTROL]		|= SCS_NOMOVE;
 
 	/* StatusChangeState (SCS_) NOPICKUPITEMS */
@@ -1692,6 +1690,7 @@ void initChangeTables(void)
 #ifdef RENEWAL
 	StatusChangeStateTable[SC_BASILICA_CELL]		|= SCS_NOCAST;
 	StatusChangeStateTable[SC_ROKISWEIL]			|= SCS_NOCAST;
+	StatusChangeStateTable[SC_ENSEMBLEFATIGUE]		|= SCS_NOCAST;
 #endif
 	StatusChangeStateTable[SC__BLOODYLUST]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC_DEATHBOUND]			|= SCS_NOCAST;
@@ -2467,6 +2466,9 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				(sc->data[SC_NOVAEXPLOSING] && skill_block_check(src, SC_NOVAEXPLOSING, skill_id)) ||
 				(sc->data[SC_GRAVITYCONTROL] && skill_block_check(src, SC_GRAVITYCONTROL, skill_id)) ||
 				(sc->data[SC_KAGEHUMI] && skill_block_check(src, SC_KAGEHUMI, skill_id))
+#ifdef RENEWAL
+				|| (sc->data[SC_ENSEMBLEFATIGUE] && skill_id != CG_SPECIALSINGER)
+#endif
 			))
 				return false;
 
@@ -7321,12 +7323,15 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			val = sc->data[SC_CHASEWALK]->val3;
 		else {
 			val = 0;
-#ifndef RENEWAL
-			// Longing for Freedom cancels song/dance penalty
+			// Longing for Freedom/Special Singer cancels song/dance penalty
+#ifdef RENEWAL
+			if (sc->data[SC_ENSEMBLEFATIGUE])
+				val = max(val, sc->data[SC_ENSEMBLEFATIGUE]->val2);
+#else
 			if( sc->data[SC_LONGING] )
 				val = max( val, 50 - 10 * sc->data[SC_LONGING]->val1 );
-			else
 #endif
+			else
 			if( sd && sc->data[SC_DANCING] )
 				val = max( val, 500 - (40 + 10 * (sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_BARDDANCER)) * pc_checkskill(sd,(sd->status.sex?BA_MUSICALLESSON:DC_DANCINGLESSON)) );
 
@@ -7528,7 +7533,10 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 	} else {
 		if (sc->data[SC_DONTFORGETME])
 			bonus -= sc->data[SC_DONTFORGETME]->val2 / 10;
-#ifndef RENEWAL
+#ifdef RENEWAL
+		if (sc->data[SC_ENSEMBLEFATIGUE])
+			bonus -= sc->data[SC_ENSEMBLEFATIGUE]->val2 / 10;
+#else
 		if (sc->data[SC_LONGING])
 			bonus -= sc->data[SC_LONGING]->val2 / 10;
 #endif
@@ -7728,7 +7736,10 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 
 	if(sc->data[SC_DONTFORGETME])
 		aspd_rate += sc->data[SC_DONTFORGETME]->val2;
-#ifndef RENEWAL
+#ifdef RENEWAL
+	if (sc->data[SC_ENSEMBLEFATIGUE])
+		aspd_rate += sc->data[SC_ENSEMBLEFATIGUE]->val2;
+#else
 	if(sc->data[SC_LONGING])
 		aspd_rate += sc->data[SC_LONGING]->val2;
 #endif
@@ -10466,6 +10477,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 500-100*val1; // Aspd penalty.
 			break;
 #else
+		case SC_ENSEMBLEFATIGUE:
+			val2 = 30; // Speed and ASPD penalty
+			break;
 		case SC_RICHMANKIM:
 			val2 = 10 + 10 * val1; // Exp increase bonus
 			break;
@@ -11408,6 +11422,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_BLOODSUCKER:
 			val4 = tick / 1000;
 			tick_time = 1000; // [GodLesZ] tick time
+			break;
+		case SC_HELLS_PLANT:
+			tick_time = 333;
+			val4 = tick / tick_time;
 			break;
 		case SC_SWINGDANCE:
 			val3 = 3 * val1 + val2; // Walk speed and aspd reduction.
@@ -13199,7 +13217,11 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				if((sce->val1&0xFFFF) == CG_MOONLIT)
 					clif_status_change(bl,EFST_MOON,0,0,0,0,0);
 
+#ifdef RENEWAL
+				status_change_end(bl, SC_ENSEMBLEFATIGUE, INVALID_TIMER);
+#else
 				status_change_end(bl, SC_LONGING, INVALID_TIMER);
+#endif
 			}
 			break;
 		case SC_NOCHAT:
@@ -13299,7 +13321,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_WARM:
 		case SC__MANHOLE:
 		case SC_BANDING:
-		case SC_HELLS_PLANT:
 			if (sce->val4) { // Clear the group.
 				struct skill_unit_group* group = skill_id2group(sce->val4);
 				sce->val4 = 0;
@@ -14350,6 +14371,14 @@ TIMER_FUNC(status_change_timer){
 			}
 			map_freeblock_unlock();
 			status_heal(src, damage*(5 + 5 * sce->val1)/100, 0, 0); // 5 + 5% per level
+			return 0;
+		}
+		break;
+
+	case SC_HELLS_PLANT:
+		if (--(sce->val4) > 0) {
+			skill_castend_damage_id(bl, bl, GN_HELLS_PLANT_ATK, sce->val1, tick, 0);
+			sc_timer_next(333 + tick);
 			return 0;
 		}
 		break;

@@ -1233,7 +1233,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 
 	if( sd )
 	{ // These statuses would be applied anyway even if the damage was blocked by some skills. [Inkfish]
-		if( skill_id != WS_CARTTERMINATION && skill_id != AM_DEMONSTRATION && skill_id != CR_REFLECTSHIELD && skill_id != MS_REFLECTSHIELD
+		if( skill_id != WS_CARTTERMINATION && skill_id != AM_DEMONSTRATION && skill_id != CR_REFLECTSHIELD && skill_id != MS_REFLECTSHIELD && skill_id != GN_HELLS_PLANT_ATK
 #ifndef RENEWAL
 		&& skill_id != ASC_BREAKER
 #endif
@@ -5138,6 +5138,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case GN_SPORE_EXPLOSION:
 	case GN_DEMONIC_FIRE:
 	case GN_FIRE_EXPANSION_ACID:
+	case GN_HELLS_PLANT_ATK:
 	case KO_HAPPOKUNAI:
 	case KO_HUUMARANKA:
 	case KO_MUCHANAGE:
@@ -6448,12 +6449,8 @@ static int skill_castend_song(struct block_list* src, uint16 skill_id, uint16 sk
 	sd->skill_id_dance = skill_id;
 	sd->skill_lv_dance = skill_lv;
 
-	if (skill_get_inf2(skill_id, INF2_ISENSEMBLE)) {
-		sc_start(src, src, status_skill2sc(CG_SPECIALSINGER), 100, 1, skill_get_time(CG_SPECIALSINGER, skill_lv));
+	if (skill_get_inf2(skill_id, INF2_ISENSEMBLE))
 		skill_check_pc_partner(sd, skill_id, &skill_lv, 3, 1);
-		// todo, apply ensemble fatigue if it hits you + ensemble partner.. ??
-		// or maybe we do that in skill_check_pc_partner or something ??
-	}
 
 	return map_foreachinrange(skill_apply_songs, src, skill_get_splash(skill_id, skill_lv), splash_target(src), flag, src, skill_id, skill_lv, tick);
 }
@@ -7098,6 +7095,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SR_CRESCENTELBOW:
 	case SR_LIGHTNINGWALK:
 	case GN_CARTBOOST:
+	case GN_HELLS_PLANT:
 	case KO_MEIKYOUSISUI:
 	case ALL_ODINS_POWER:
 	case ALL_FULL_THROTTLE:
@@ -7834,9 +7832,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case CG_SPECIALSINGER:
-		if (tsc && tsc->data[SC_LONGING]) {
+		if (tsc && tsc->data[SC_ENSEMBLEFATIGUE]) {
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-			status_change_end(bl, SC_LONGING, INVALID_TIMER);
+			status_change_end(bl, SC_ENSEMBLEFATIGUE, INVALID_TIMER);
 		}
 		break;
 
@@ -12931,12 +12929,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		}
 		break;
 
-	case GN_HELLS_PLANT:
-		status_change_end(src, type, INVALID_TIMER); // Remove previous group
-		if ((sg = skill_unitsetting(src, skill_id, skill_lv, src->x, src->y, 0)) != nullptr)
-			sc_start4(src, src, type, 100, skill_lv, 0, 0, sg->group_id, skill_get_time(skill_id, skill_lv));
-		break;
-
 	case SO_FIREWALK:
 	case SO_ELECTRICWALK:
 		if( sc && sc->data[type] )
@@ -14775,11 +14767,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 			}
 			break;
 
-		case UNT_HELLS_PLANT:
-			if( battle_check_target(&unit->bl,bl,BCT_ENEMY) > 0 )
-				skill_attack(skill_get_type(GN_HELLS_PLANT_ATK), ss, &unit->bl, bl, GN_HELLS_PLANT_ATK, sg->skill_lv, tick, SCSTART_NONE);
-			break;
-
 		case UNT_ZEPHYR:
 			if (ss == bl)
 				break; // Doesn't affect the Elemental
@@ -15339,6 +15326,10 @@ int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 
 						clif_skill_nodamage(&tsd->bl, &sd->bl, skill_id, *skill_lv, 1);
 						tsd->skill_id_dance = skill_id;
 						tsd->skill_lv_dance = *skill_lv;
+#ifdef RENEWAL
+						sc_start(&sd->bl, &sd->bl, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(CG_SPECIALSINGER, *skill_lv));
+						sc_start(&sd->bl, &tsd->bl, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(CG_SPECIALSINGER, *skill_lv));
+#endif
 					}
 				}
 				return c;
@@ -20014,12 +20005,10 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 				break;
 			case GN_S_PHARMACY:
 				{
-					int difficulty = (620 - 20 * skill_lv);// (620 - 20 * Skill Level)
+					int difficulty = (620 - 20 * skill_lv); // (620 - 20 * Skill Level)
+					const int production_count[] = { 7, 8, 8, 9, 9, 10, 10, 11, 11, 12 };
 
-					make_per = status->int_ + status->dex/2 + status->luk + sd->status.job_level + (30+rnd()%120) + // (Caster?s INT) + (Caster?s DEX / 2) + (Caster?s LUK) + (Caster?s Job Level) + Random number between (30 ~ 150) +
-								(sd->status.base_level-100) + pc_checkskill(sd, AM_LEARNINGPOTION) + pc_checkskill(sd, CR_FULLPROTECTION)*(4+rnd()%6); // (Caster?s Base Level - 100) + (Potion Research x 5) + (Full Chemical Protection Skill Level) x (Random number between 4 ~ 10)
-
-					switch(nameid){// difficulty factor
+					switch (nameid) { // Item difficulty factor
 						case ITEMID_HP_INCREASE_POTION_SMALL:
 						case ITEMID_SP_INCREASE_POTION_SMALL:
 						case ITEMID_CONCENTRATED_WHITE_POTION_Z:
@@ -20029,7 +20018,6 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 						case ITEMID_SP_INCREASE_POTION_MEDIUM:
 							difficulty += 15;
 							break;
-						case ITEMID_BANANA_BOMB:
 						case ITEMID_HP_INCREASE_POTION_MEDIUM:
 						case ITEMID_SP_INCREASE_POTION_LARGE:
 						case ITEMID_VITATA500:
@@ -20046,28 +20034,31 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 							break;
 					}
 
-					if( make_per >= 400 && make_per > difficulty)
-						qty = 10;
-					else if( make_per >= 300 && make_per > difficulty)
-						qty = 7;
-					else if( make_per >= 100 && make_per > difficulty)
-						qty = 6;
-					else if( make_per >= 1 && make_per > difficulty)
-						qty = 5;
-					else
-						qty = 4;
-					make_per = 10000;
+					make_per = status->int_ + status->dex / 2 + status->luk + sd->status.job_level + (30 + rnd() % 120 + 1) + // Caster's INT + (Caster's DEX / 2) + Caster's LUK + Caster's Job Level + Random number between (30 ~ 150) +
+						sd->status.base_level + 5 * (pc_checkskill(sd, AM_LEARNINGPOTION) - 20) + pc_checkskill(sd, CR_FULLPROTECTION) * (6 + rnd() % 4 + 1); // Caster's Base Level + (5 x (Potion Research Skill Level - 20)) + (Full Chemical Protection Skill Level x Random number between (6 ~ 10))
+					make_per -= difficulty;
+					qty = production_count[skill_lv - 1];
+
+					// Determine quantity from difficulty
+					if (make_per < 1)
+						qty -= 6;
+					else if (make_per < 100)
+						qty -= 5;
+					else if (make_per < 300)
+						qty -= 4;
+					else if (make_per < 400)
+						qty -= 3;
+
+					make_per = 100000; // Adjust success back to 100% for crafting
 				}
 				break;
 			case GN_MAKEBOMB:
 			case GN_MIX_COOKING:
 				{
-					int difficulty = 30 + rnd()%120; // Random number between (30 ~ 150)
+					int difficulty = 30 + rnd() % 120 + 1; // Random number between (30 ~ 150)
 
-					make_per = sd->status.job_level / 4 + status->luk / 2 + status->dex / 3; // (Caster?s Job Level / 4) + (Caster?s LUK / 2) + (Caster?s DEX / 3)
-					qty = ~(5 + rnd()%5) + 1;
-
-					switch(nameid){// difficulty factor
+					switch (nameid) { // Item difficulty factor
+						// GN_MAKEBOMB
 						case ITEMID_APPLE_BOMB:
 							difficulty += 5;
 							break;
@@ -20075,38 +20066,45 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 						case ITEMID_MELON_BOMB:
 							difficulty += 10;
 							break;
-						case ITEMID_SAVAGE_FULL_ROAST:
-						case ITEMID_COCKTAIL_WARG_BLOOD:
-						case ITEMID_MINOR_STEW:
-						case ITEMID_SIROMA_ICED_TEA:
-						case ITEMID_DROSERA_HERB_SALAD:
-						case ITEMID_PETITE_TAIL_NOODLES:
 						case ITEMID_PINEAPPLE_BOMB:
 							difficulty += 15;
 							break;
 						case ITEMID_BANANA_BOMB:
 							difficulty += 20;
 							break;
+						// GN_MIX_COOKING
+						case ITEMID_SAVAGE_FULL_ROAST:
+						case ITEMID_COCKTAIL_WARG_BLOOD:
+						case ITEMID_MINOR_STEW:
+						case ITEMID_SIROMA_ICED_TEA:
+						case ITEMID_DROSERA_HERB_SALAD:
+						case ITEMID_PETITE_TAIL_NOODLES:
+							difficulty += 15;
+							break;
 					}
 
-					if( make_per >= 30 && make_per > difficulty)
-						qty = 10 + rnd()%2;
-					else if( make_per >= 10 && make_per > difficulty)
-						qty = 10;
-					else if( make_per == 10 && make_per > difficulty)
-						qty = 8;
-					else if( (make_per >= 50 || make_per < 30) && make_per < difficulty)
-						;// Food/Bomb creation fails.
-					else if( make_per >= 30 && make_per < difficulty)
-						qty = 5;
+					make_per = sd->status.job_level / 4 + status->luk / 2 + status->dex / 3; // (Caster's Job Level / 4) + (Caster's LUK / 2) + (Caster's DEX / 3)
 
-					if( qty < 0 || (skill_lv == 1 && make_per < difficulty)){
-						qty = ~qty + 1;
-						make_per = 0;
+					if (skill_lv > 1) {
+						make_per -= difficulty;
+
+						// Determine quantity from difficulty
+						if (make_per >= 30)
+							qty = 10 + rnd() % 2;
+						else if (make_per >= 10)
+							qty = 10;
+						else if (make_per >= -10)
+							qty = 8;
+						else if (make_per >= -30)
+							qty = 5;
+						else
+							qty = 0;
+					} else {
+						if (make_per < difficulty)
+							qty = 0;
 					}
-					else
-						make_per = 10000;
-					qty = (skill_lv > 1 ? qty : 1);
+
+					make_per = 100000; // Adjust success back to 100% for crafting
 				}
 				break;
 			default:
@@ -20353,17 +20351,26 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 				clif_misceffect(&sd->bl,6);
 				break;
 			case GN_MIX_COOKING:
-				{
-					struct item tmp_item;
-					const int compensation[5] = {ITEMID_BLACK_LUMP, ITEMID_BLACK_HARD_LUMP, ITEMID_VERY_HARD_LUMP, ITEMID_BLACK_MASS, ITEMID_MYSTERIOUS_POWDER};
-					int rate = rnd()%500;
-					memset(&tmp_item,0,sizeof(tmp_item));
-					if (rate < 50) i = 4;
-					else if (rate < 100) i = 2+rnd()%1;
-					else if (rate < 250) i = 1;
-					else if (rate < 500) i = 0;
+				if (qty == 0) {
+					item tmp_item;
+					const int compensation[5] = { ITEMID_BLACK_LUMP, ITEMID_BLACK_HARD_LUMP, ITEMID_VERY_HARD_LUMP, ITEMID_BLACK_MASS, ITEMID_MYSTERIOUS_POWDER };
+					int rate = rnd() % 1000 + 1;
+
+					memset(&tmp_item, 0, sizeof(tmp_item));
+
+					if (rate < 500)
+						i = 0;
+					else if (rate < 750)
+						i = 1;
+					else if (rate < 850)
+						i = 2;
+					else if (rate < 950)
+						i = 3;
+					else
+						i = 4;
+
 					tmp_item.nameid = compensation[i];
-					tmp_item.amount = qty;
+					tmp_item.amount = (skill_lv == 1) ? 1 : 5 + rand() % 5;
 					tmp_item.identify = 1;
 					if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
 						clif_additem(sd,0,0,flag);
