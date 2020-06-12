@@ -769,6 +769,13 @@ struct map_session_data {
 	uint32* hatEffectIDs;
 	uint8 hatEffectCount;
 #endif
+
+	struct{
+		int tid;
+		uint16 skill_id;
+		uint16 level;
+		int target;
+	} skill_keep_using;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1043,6 +1050,13 @@ public:
 
 extern AttendanceDatabase attendance_db;
 
+/// Enum of Summoner Power of 
+enum e_summoner_power_type {
+	SUMMONER_POWER_LAND = 0,
+	SUMMONER_POWER_LIFE,
+	SUMMONER_POWER_SEA,
+};
+
 void pc_set_reg_load(bool val);
 int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
@@ -1075,6 +1089,7 @@ void pc_setinventorydata(struct map_session_data *sd);
 
 int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 uint8 pc_checkskill(struct map_session_data *sd,uint16 skill_id);
+uint8 pc_checkskill_summoner(map_session_data *sd, e_summoner_power_type type);
 short pc_checkequip(struct map_session_data *sd,int pos,bool checkall=false);
 bool pc_checkequip2(struct map_session_data *sd, unsigned short nameid, int min, int max);
 

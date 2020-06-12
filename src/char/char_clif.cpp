@@ -811,12 +811,23 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		char* data;
 		uint32 char_id;
 		struct auth_node* node;
-		int i, map_fd;
+		int i, map_fd, server_id;
 		DBMap *auth_db = char_get_authdb();
 		DBMap *char_db_ = char_get_chardb();
 
 		int slot = RFIFOB(fd,2);
 		RFIFOSKIP(fd,3);
+
+		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, map_server[server_id].fd > 0 && map_server[server_id].map[0] );
+		// Map-server not available, tell the client to wait (client wont close, char select will respawn)
+		if (server_id == ARRAYLENGTH(map_server)) {
+			WFIFOHEAD(fd, 24);
+			WFIFOW(fd, 0) = 0x840;
+			WFIFOW(fd, 2) = 24;
+			memcpy(WFIFOP(fd, 4), "0", 20); // we can't send it empty (otherwise the list will pop up)
+			WFIFOSET(fd, 24);
+			return 1;
+		}
 
 		// Check if the character exists and is not scheduled for deletion
 		if ( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `char_id` FROM `%s` WHERE `account_id`='%d' AND `char_num`='%d' AND `delete_date` = 0", schema_config.char_db, sd->account_id, slot)
@@ -855,8 +866,6 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 
 		//Have to switch over to the DB instance otherwise data won't propagate [Kevin]
 		cd = (struct mmo_charstatus *)idb_get(char_db_, char_id);
-		if (cd->sex == SEX_ACCOUNT)
-			cd->sex = sd->sex;
 
 		if (charserv_config.log_char) {
 			char esc_name[NAME_LENGTH*2+1];
@@ -951,16 +960,72 @@ int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 	if( (charserv_config.char_new)==0 ) //turn character creation on/off [Kevin]
 		char_id = -2;
 	else {
+		char name[NAME_LENGTH];
+		int str, agi, vit, int_, dex, luk;
+		int slot;
+		int hair_color;
+		int hair_style;
+		short start_job;
+		int sex;
+
 #if PACKETVER >= 20151001
-			char_id = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29),RFIFOW(fd,31),RFIFOW(fd,32),RFIFOB(fd,35));
-			RFIFOSKIP(fd,36);
+		// Sent values
+		safestrncpy( name, RFIFOCP( fd, 2 ), NAME_LENGTH );
+		slot = RFIFOB( fd, 26 );
+		hair_color = RFIFOW( fd, 27 );
+		hair_style = RFIFOW( fd, 29 );
+		start_job = RFIFOW( fd, 31 );
+		// Unknown RFIFOW( fd, 32 )
+		sex = RFIFOB( fd, 35 );
+
+		// Default values
+		str = 1;
+		agi = 1;
+		vit = 1;
+		int_ = 1;
+		dex = 1;
+		luk = 1;
+
+		RFIFOSKIP( fd, 36 );
 #elif PACKETVER >= 20120307
-			char_id = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
-			RFIFOSKIP(fd,31);
+		// Sent values
+		safestrncpy( name, RFIFOCP( fd, 2 ), NAME_LENGTH );
+		slot = RFIFOB( fd, 26 );
+		hair_color = RFIFOW( fd, 27 );
+		hair_style = RFIFOW( fd, 29 );
+
+		// Default values
+		str = 1;
+		agi = 1;
+		vit = 1;
+		int_ = 1;
+		dex = 1;
+		luk = 1;
+		start_job = JOB_NOVICE;
+		sex = sd->sex;
+
+		RFIFOSKIP( fd, 31 );
 #else
-			char_id = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
-			RFIFOSKIP(fd,37);
+		// Sent values
+		safestrncpy( name, RFIFOCP( fd, 2 ), NAME_LENGTH );
+		str = RFIFOB( fd, 26 );
+		agi = RFIFOB( fd, 27 );
+		vit = RFIFOB( fd, 28 );
+		int_ = RFIFOB( fd, 29 );
+		dex = RFIFOB( fd, 30 );
+		luk = RFIFOB( fd, 31 );
+		slot = RFIFOB( fd, 32 );
+		hair_color = RFIFOW( fd, 33 );
+		hair_style = RFIFOW( fd, 35 );
+
+		// Default values
+		start_job = JOB_NOVICE;
+		sex = sd->sex;
+
+		RFIFOSKIP( fd, 37 );
 #endif
+
+		char_id = char_make_new_char( sd, name, str, agi, vit, int_, dex, luk, slot, hair_color, hair_style, start_job, sex );
 	}
 
 	if (char_id < 0) {

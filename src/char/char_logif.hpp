@@ -26,17 +26,17 @@ void chlogif_send_setacconline(int aid);
 void chlogif_send_setallaccoffline(int fd);
 void chlogif_send_setaccoffline(int fd, int aid);
 
-int chlogif_parse_ackconnect(int fd, struct char_session_data* sd);
-int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd);
-int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd);
-int chlogif_parse_keepalive(int fd, struct char_session_data* sd);
+int chlogif_parse_ackconnect(int fd);
+int chlogif_parse_ackaccreq(int fd);
+int chlogif_parse_reqaccdata(int fd);
+int chlogif_parse_keepalive(int fd);
 void chlogif_parse_change_sex_sub(int sex, int acc, int char_id, int class_, int guild_id);
-int chlogif_parse_ackchangesex(int fd, struct char_session_data* sd);
+int chlogif_parse_ackchangesex(int fd);
 int chlogif_parse_ackchangecharsex(int char_id, int sex);
-int chlogif_parse_ack_global_accreg(int fd, struct char_session_data* sd);
-int chlogif_parse_accbannotification(int fd, struct char_session_data* sd);
-int chlogif_parse_askkick(int fd, struct char_session_data* sd);
-int chlogif_parse_updip(int fd, struct char_session_data* sd);
+int chlogif_parse_ack_global_accreg(int fd);
+int chlogif_parse_accbannotification(int fd);
+int chlogif_parse_askkick(int fd);
+int chlogif_parse_updip(int fd);
 
 int chlogif_parse_vipack(int fd);
 int chlogif_reqvipdata(uint32 aid, uint8 flag, int32 timediff, int mapfd);
