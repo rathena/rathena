@@ -6449,12 +6449,8 @@ static int skill_castend_song(struct block_list* src, uint16 skill_id, uint16 sk
 	sd->skill_id_dance = skill_id;
 	sd->skill_lv_dance = skill_lv;
 
-	if (skill_get_inf2(skill_id, INF2_ISENSEMBLE)) {
-		sc_start(src, src, status_skill2sc(CG_SPECIALSINGER), 100, 1, skill_get_time(CG_SPECIALSINGER, skill_lv));
+	if (skill_get_inf2(skill_id, INF2_ISENSEMBLE))
 		skill_check_pc_partner(sd, skill_id, &skill_lv, 3, 1);
-		// todo, apply ensemble fatigue if it hits you + ensemble partner.. ??
-		// or maybe we do that in skill_check_pc_partner or something ??
-	}
 
 	return map_foreachinrange(skill_apply_songs, src, skill_get_splash(skill_id, skill_lv), splash_target(src), flag, src, skill_id, skill_lv, tick);
 }
@@ -7836,9 +7832,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case CG_SPECIALSINGER:
-		if (tsc && tsc->data[SC_LONGING]) {
+		if (tsc && tsc->data[SC_ENSEMBLEFATIGUE]) {
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-			status_change_end(bl, SC_LONGING, INVALID_TIMER);
+			status_change_end(bl, SC_ENSEMBLEFATIGUE, INVALID_TIMER);
 		}
 		break;
 
@@ -15330,6 +15326,10 @@ int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 
 						clif_skill_nodamage(&tsd->bl, &sd->bl, skill_id, *skill_lv, 1);
 						tsd->skill_id_dance = skill_id;
 						tsd->skill_lv_dance = *skill_lv;
+#ifdef RENEWAL
+						sc_start(&sd->bl, &sd->bl, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(CG_SPECIALSINGER, *skill_lv));
+						sc_start(&sd->bl, &tsd->bl, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(CG_SPECIALSINGER, *skill_lv));
+#endif
 					}
 				}
 				return c;
