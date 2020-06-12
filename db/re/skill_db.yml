@@ -28130,19 +28130,17 @@ Body:
       ItemCost:
         - Item: MenEater_Plant_Bottle
           Amount: 1
-    Unit:
-      Id: Hells_Plant
-      Range: 2
-      Interval: 300 # !TODO: Confirm interval
-      Target: Enemy
   - Id: 2491
     Name: GN_HELLS_PLANT_ATK
     Description: Hell's Plant Attack
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
+    DamageFlags:
+      Splash: true
     Hit: Single
     HitCount: 1
+    SplashArea: 2
     Element: Weapon
     CopyFlags:
       Skill:
