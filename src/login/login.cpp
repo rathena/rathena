@@ -118,6 +118,12 @@ void login_remove_online_user(uint32 account_id) {
 		delete_timer( p->waiting_disconnect, login_waiting_disconnect_timer );
 	}
 
+	AccountDB* accounts = login_get_accounts_db();
+	mmo_account acc{};
+	if (accounts->load_num(accounts, &acc, account_id)) {
+		memset(acc.web_auth_token, 0, WEB_AUTH_TOKEN_LENGTH);
+		accounts->save(accounts, &acc);
+	}
 	online_db.erase( account_id );
 }
 
@@ -409,7 +415,8 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	safestrncpy(acc.last_ip, ip, sizeof(acc.last_ip));
 	acc.unban_time = 0;
 	acc.logincount++;
-
+	if(!isServer)
+		safestrncpy(acc.web_auth_token, random_string(WEB_AUTH_TOKEN_LENGTH-1).c_str(), WEB_AUTH_TOKEN_LENGTH-1);
 	accounts->save(accounts, &acc);
 
 	if( sd->sex != 'S' && sd->account_id < START_ACCOUNT_NUM )

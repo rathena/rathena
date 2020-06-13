@@ -130,7 +130,15 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 	WFIFOW(fd,44) = 0; // unknown
 	WFIFOB(fd,46) = sex_str2num(sd->sex);
 #if PACKETVER >= 20170315
-	memset(WFIFOP(fd,47),0,17); // Unknown
+	// send social auth token
+	mmo_account acc;
+	AccountDB* accounts = login_get_accounts_db();
+	if (accounts->load_str(accounts, &acc, sd->userid)) {
+		safestrncpy(WFIFOCP(fd, 47), acc.web_auth_token, WEB_AUTH_TOKEN_LENGTH);
+	}
+	else {
+		memset(WFIFOP(fd, 47), 0, WEB_AUTH_TOKEN_LENGTH);
+	}
 #endif
 	for( i = 0, n = 0; i < ARRAYLENGTH(ch_server); ++i ) {
 		if( !session_isValid(ch_server[i].fd) )

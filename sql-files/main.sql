@@ -754,6 +754,7 @@ CREATE TABLE IF NOT EXISTS `login` (
   `pincode_change` int(11) unsigned NOT NULL DEFAULT '0',
   `vip_time` int(11) unsigned NOT NULL default '0',
   `old_group` tinyint(3) NOT NULL default '0',
+  `web_auth_token` varchar(255) null,
   PRIMARY KEY  (`account_id`),
   KEY `name` (`userid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2000000; 

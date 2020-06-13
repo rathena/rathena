@@ -7,6 +7,7 @@
 #include <chrono>
 #include <iostream>
 #include <numeric> //iota
+#include <random>
 #include <string>
 
 #ifndef __has_builtin
@@ -135,4 +136,16 @@ bool rathena::util::safe_multiplication( int64 a, int64 b, int64& result ){
 
 	return false;
 #endif
+}
+
+std::string random_string(int length)
+{
+	const std::string characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	std::mt19937 generator(std::random_device{}());
+	std::uniform_int_distribution<> distribution(0, characters.size() - 1);
+	std::string ret(length, '\0');
+	for (auto& chr : ret) {
+		chr = characters[distribution(generator)];
+	}
+	return ret;
 }
