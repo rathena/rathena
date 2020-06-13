@@ -20259,10 +20259,6 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 					clif_produceeffect(sd,0,nameid);
 					clif_misceffect(&sd->bl,3);
 					break;
-				case RK_RUNEMASTERY:
-					clif_produceeffect(sd,4,nameid);
-					clif_misceffect(&sd->bl,5);
-					break;
 				default: //Those that don't require a skill?
 					if (skill_produce_db[idx].itemlv > 10 && skill_produce_db[idx].itemlv <= 20) { //Cooking items.
 						clif_specialeffect(&sd->bl, EF_COOKING_OK, AREA);
@@ -20310,10 +20306,18 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 					map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 				}
 			}
-			if (skill_id == GN_MIX_COOKING || skill_id == GN_MAKEBOMB || skill_id ==  GN_S_PHARMACY) {
-				clif_produceeffect(sd,6,nameid);
-				clif_misceffect(&sd->bl,5);
-				clif_msg_skill(sd,skill_id,ITEM_PRODUCE_SUCCESS);
+			switch (skill_id) {
+				case RK_RUNEMASTERY:
+					clif_produceeffect(sd, 4, nameid);
+					clif_misceffect(&sd->bl, 5);
+					break;
+				case GN_MIX_COOKING:
+				case GN_MAKEBOMB:
+				case GN_S_PHARMACY:
+					clif_produceeffect(sd, 6, nameid);
+					clif_misceffect(&sd->bl, 5);
+					clif_msg_skill(sd, skill_id, ITEM_PRODUCE_SUCCESS);
+					break;
 			}
 			return true;
 		}
