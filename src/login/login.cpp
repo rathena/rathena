@@ -119,10 +119,10 @@ void login_remove_online_user(uint32 account_id) {
 	}
 
 	AccountDB* accounts = login_get_accounts_db();
-	mmo_account acc{};
-	if (accounts->load_num(accounts, &acc, account_id)) {
-		memset(acc.web_auth_token, 0, WEB_AUTH_TOKEN_LENGTH);
-		accounts->save(accounts, &acc);
+	mmo_account mmoAccount{};
+	if (accounts->load_num(accounts, &mmoAccount, account_id)) {
+		memset(mmoAccount.web_auth_token, 0, WEB_AUTH_TOKEN_LENGTH);
+		accounts->save(accounts, &mmoAccount);
 	}
 	online_db.erase( account_id );
 }
