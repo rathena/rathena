@@ -416,7 +416,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	acc.unban_time = 0;
 	acc.logincount++;
 	if(!isServer)
-		safestrncpy(acc.web_auth_token, random_string(WEB_AUTH_TOKEN_LENGTH-1).c_str(), WEB_AUTH_TOKEN_LENGTH-1);
+		safestrncpy(acc.web_auth_token, random_string(WEB_AUTH_TOKEN_LENGTH-1).c_str(), WEB_AUTH_TOKEN_LENGTH-1); // FIXME: use secure RNG to generate the string
 	accounts->save(accounts, &acc);
 
 	if( sd->sex != 'S' && sd->account_id < START_ACCOUNT_NUM )
