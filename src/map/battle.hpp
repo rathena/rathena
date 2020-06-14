@@ -683,6 +683,7 @@ struct Battle_Config
 	int show_skill_scale;
 	int achievement_mob_share;
 	int slave_stick_with_master;
+	int recall_stuck_slave;
 
 #include "../custom/battle_config_struct.inc"
 };

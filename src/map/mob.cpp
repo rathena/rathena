@@ -1455,14 +1455,20 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,t_tick tick)
 			return 0;
 
 		// Approach master if within view range, chase back to Master's area also if standing on top of the master.
-		if((md->master_dist>MOB_SLAVEDISTANCE || md->master_dist == 0) &&
-			unit_can_move(&md->bl))
-		{
-			short x = bl->x, y = bl->y;
+		if ((md->master_dist > MOB_SLAVEDISTANCE || md->master_dist == 0) && unit_can_move(&md->bl)) {
+			int16 x = bl->x, y = bl->y;
+
 			mob_stop_attack(md);
-			if(map_search_freecell(&md->bl, bl->m, &x, &y, MOB_SLAVEDISTANCE, MOB_SLAVEDISTANCE, 1)
-				&& unit_walktoxy(&md->bl, x, y, 0))
-				return 1;
+			if (map_search_freecell(&md->bl, bl->m, &x, &y, MOB_SLAVEDISTANCE, MOB_SLAVEDISTANCE, 1)) {
+				int ret_val = unit_walktoxy(&md->bl, x, y, 0);
+
+				if (battle_config.recall_stuck_slave && ret_val == 0) { // Slave is too far from master (outside of battle_config.max_walk_path range), teleport back to master
+					md->master_dist = 0;
+					unit_warp(&md->bl, bl->m, bl->x, bl->y, CLR_TELEPORT);
+					return 1;
+				} else if (ret_val > 0) // Slave will walk back to master if in range
+					return 1;
+			}
 		}
 	} else if (bl->m != md->bl.m && map_flag_gvg2(md->bl.m)) {
 		//Delete the summoned mob if it's in a gvg ground and the master is elsewhere. [Skotlex]
