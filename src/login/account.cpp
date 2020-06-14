@@ -585,7 +585,7 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 13, SQLDT_UCHAR,     (void*)&acc->char_slots,      sizeof(acc->char_slots))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 14, SQLDT_STRING,    (void*)&acc->pincode,         strlen(acc->pincode))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 15, SQLDT_LONG,      (void*)&acc->pincode_change,  sizeof(acc->pincode_change))
-		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 16, SQLDT_STRING,    (void*)&acc->web_auth_token,  sizeof(acc->web_auth_token))
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 16, SQLDT_STRING,    (void*)&acc->web_auth_token,  strlen(acc->web_auth_token))
 #ifdef VIP_ENABLE
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 17, SQLDT_LONG,       (void*)&acc->vip_time,         sizeof(acc->vip_time))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 18, SQLDT_INT,        (void*)&acc->old_group,        sizeof(acc->old_group))
@@ -620,7 +620,7 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 12, SQLDT_UCHAR,     (void*)&acc->char_slots,      sizeof(acc->char_slots))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 13, SQLDT_STRING,    (void*)&acc->pincode,         strlen(acc->pincode))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 14, SQLDT_LONG,      (void*)&acc->pincode_change,  sizeof(acc->pincode_change))
-		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 15, SQLDT_STRING,    (void*)&acc->web_auth_token, sizeof(acc->web_auth_token))
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 15, SQLDT_STRING,    (void*)&acc->web_auth_token, strlen(acc->web_auth_token))
 #ifdef VIP_ENABLE
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 16, SQLDT_LONG,      (void*)&acc->vip_time,        sizeof(acc->vip_time))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 17, SQLDT_INT,       (void*)&acc->old_group,       sizeof(acc->old_group))
