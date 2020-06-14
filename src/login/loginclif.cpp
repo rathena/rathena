@@ -457,6 +457,20 @@ static int logclif_parse_reqcharconnec(int fd, struct login_session_data *sd, ch
 	return 1;
 }
 
+int logclif_parse_otp_login( int fd, struct login_session_data* sd ){
+	RFIFOSKIP( fd, 68 );
+
+	WFIFOHEAD( fd, 34 );
+	WFIFOW( fd, 0 ) = 0xae3;
+	WFIFOW( fd, 2 ) = 34;
+	WFIFOL( fd, 4 ) = 0; // normal login
+	safestrncpy( WFIFOCP( fd, 8 ), "S1000", 6 );
+	safestrncpy( WFIFOCP( fd, 28 ), "token", 6 );
+	WFIFOSET( fd, 34 );
+
+	return 1;
+}
+
 /**
  * Entry point from client to log-server.
  * Function that checks incoming command, then splits it to the correct handler.
@@ -521,6 +535,10 @@ int logclif_parse(int fd) {
 			break;
 		// Sending request of the coding key
 		case 0x01db: next = logclif_parse_reqkey(fd, sd); break;
+		// OTP token login
+		case 0x0acf:
+			next = logclif_parse_otp_login( fd, sd );
+			break;
 		// Connection request of a char-server
 		case 0x2710: logclif_parse_reqcharconnec(fd,sd, ip); return 0; // processing will continue elsewhere
 		default:

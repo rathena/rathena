@@ -1367,7 +1367,7 @@ Affected files:
 -- pcdb: statpoint.txt, job_exp.txt, skill_tree.txt, attr_fix.txt, job_db1.txt, job_db2.txt, job_basehpsp_db.txt, job_maxhpsp_db.txt, job_param_db.txt, level_penalty.txt
 -- questdb: quest_db.txt
 -- script: /npc/*.txt, /npc/*.conf
--- skilldb: skill_db.txt, const.txt, skill_require_db.txt, skill_cast_db.txt, skill_castnodex_db.txt, skill_nocast_db.txt, skill_copyable_db.txt, skill_improvise_db.txt, skill_changematerial_db.txt, skill_nonearnpc_db.txt, skill_damage_db.txt, skill_unit_db.txt, abra_db.txt, create_arrow_db.txt, produce_db.txt, spellbook_db.txt, magicmushroom_db.txt
+-- skilldb: skill_db.yml, const.txt, skill_nocast_db.txt, skill_changematerial_db.txt, skill_damage_db.txt, abra_db.yml, create_arrow_db.txt, produce_db.txt, spellbook_db.yml, magicmushroom_db.yml
 -- statusdb: attr_fix.txt, size_fix.txt, refine_db.txt
 -- achievementdb: achievement_db.conf
 
