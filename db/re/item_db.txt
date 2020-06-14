@@ -6733,7 +6733,7 @@
 12408,Leaf_Cat_Ball,Hydra Ball,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 2081; },{},{}
 12409,Pork_Belly_H,1st Class Pork Belly,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12410,Spareribs_H,Thick Pork Belly,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12411,HE_Battle_Manual,HE Battle Manual,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_EXPBOOST,900000,200; },{},{}
+12411,HE_Battle_Manual,HE Battle Manual,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_EXPBOOST,1800000,400; },{},{}
 12412,HE_Bubble_Gum,HE Bubble Gum,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ITEMBOOST,900000,300; },{},{}
 12413,PCBang_Coupon_Box2,PC Cafe Coupon Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12414,Guarana_Candy,Guarana Candy,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,0; sc_start SC_INCREASEAGI,140000,5; skilleffect "AL_INCAGI",0; },{},{}
