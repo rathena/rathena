@@ -3006,8 +3006,12 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			else if (sd->avail_quests)
 				quest_update_objective(sd, md->mob_id);
 
-			if (achievement_db.mobexists(md->mob_id))
-				achievement_update_objective(sd, AG_BATTLE, 1, md->mob_id);
+			if (achievement_db.mobexists(md->mob_id)) {
+				if (battle_config.achievement_mob_share > 0 && sd->status.party_id > 0)
+					map_foreachinallrange(achievement_update_objective_sub, &md->bl, AREA_SIZE, BL_PC, sd->status.party_id, md->mob_id);
+				else
+					achievement_update_objective(sd, AG_BATTLE, 1, md->mob_id);
+			}
 
 			// The master or Mercenary can increase the kill count
 			if (sd->md && src && (src->type == BL_PC || src->type == BL_MER) && mob_db(md->mob_id)->lv > sd->status.base_level / 2)
@@ -5647,6 +5651,20 @@ void mob_reload_itemmob_data(void) {
  * @return 0
  */
 static int mob_reload_sub( struct mob_data *md, va_list args ){
+	bool slaves_only = va_arg( args, int ) != 0;
+
+	if( slaves_only ){
+		if( md->master_id == 0 ){
+			// Only slaves should be processed now
+			return 0;
+		}
+	}else{
+		if( md->master_id != 0 ){
+			// Slaves will be processed later
+			return 0;
+		}
+	}
+
 	// Relink the mob to the new database entry
 	md->db = mob_db(md->mob_id);
 
@@ -5695,7 +5713,10 @@ static int mob_reload_sub_npc( struct npc_data *nd, va_list args ){
 void mob_reload(void) {
 	do_final_mob(true);
 	mob_db_load(true);
-	map_foreachmob(mob_reload_sub);
+	// First only normal monsters
+	map_foreachmob( mob_reload_sub, 0 );
+	// Then slaves only
+	map_foreachmob( mob_reload_sub, 1 );
 	map_foreachnpc(mob_reload_sub_npc);
 }
 
