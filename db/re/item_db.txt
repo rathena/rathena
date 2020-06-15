@@ -11641,7 +11641,7 @@
 23228,Hazy_Mooncake,Hazy Mooncake,0,768,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* unknown */ },{},{}
 //
 23256,Elixir_Bandages,Elixir Bandages,2,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1041; },{},{}
-23277,Mado_Box,Emergency Magic Gear,2,10000,,3000,,,,,0x00000400,56,2,,,100,,,{ setmadogear 1; },{},{}
+23277,Mado_Box,Emergency Magic Gear,2,10000,,3000,,,,,0x00000400,56,2,,,100,,,{ specialeffect2 EF_CLAYMORE; setmadogear 1,MADO_ROBOT; },{},{}
 23280,N_Fly_Wing_,Novice Fly Wing,11,10,,0,,,,,0xFFFFFFFF,63,2,,,1:98,,,{ itemskill "AL_TELEPORT",1; },{},{}
 23288,Compressed_Wing_Of_Fly,Compressed Fly Wing,11,1000,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "AL_TELEPORT",1; },{},{}
 //

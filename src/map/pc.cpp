@@ -9473,7 +9473,7 @@ void pc_changelook(struct map_session_data *sd,int type,int val) {
 /*==========================================
  * Give an option (type) to player (sd) and display it to client
  *------------------------------------------*/
-void pc_setoption(struct map_session_data *sd,int type)
+void pc_setoption(struct map_session_data *sd,int type, int subtype)
 {
 	int p_type, new_look=0;
 	nullpo_retv(sd);
@@ -9533,10 +9533,7 @@ void pc_setoption(struct map_session_data *sd,int type)
 					status_change_end(&sd->bl,statuses[i],INVALID_TIMER);
 			}
 			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
-
-#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106
-			clif_status_load( &sd->bl, EFST_MADOGEAR, 1 );
-#endif
+			sc_start(&sd->bl, &sd->bl, SC_MADOGEAR, 100, static_cast<int>(subtype), INFINITE_TICK);
 		} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
 			status_calc_pc(sd,SCO_NONE);
 			status_change_end(&sd->bl,SC_SHAPESHIFT,INVALID_TIMER);
@@ -9548,10 +9545,7 @@ void pc_setoption(struct map_session_data *sd,int type)
 			status_change_end(&sd->bl,SC_NEUTRALBARRIER_MASTER,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_STEALTHFIELD_MASTER,INVALID_TIMER);
 			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
-
-#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106
-			clif_status_load( &sd->bl, EFST_MADOGEAR, 0 );
-#endif
+			status_change_end(&sd->bl, SC_MADOGEAR, INVALID_TIMER);
 		}
 	}
 
@@ -9668,12 +9662,8 @@ void pc_setmadogear(struct map_session_data *sd, bool flag, e_mado_type type)
 		return;
 
 	if (flag) {
-		if (pc_checkskill(sd, NC_MADOLICENCE) > 0) {
-			pc_setoption(sd, sd->sc.option | OPTION_MADOGEAR);
-#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106
-			sc_start(&sd->bl, &sd->bl, SC_MADOGEAR, 100, static_cast<int>(type), INFINITE_TICK);
-#endif
-		}
+		if (pc_checkskill(sd, NC_MADOLICENCE) > 0)
+			pc_setoption(sd, sd->sc.option | OPTION_MADOGEAR, type);
 	} else if (pc_ismadogear(sd)) {
 		pc_setoption(sd, sd->sc.option & ~OPTION_MADOGEAR);
 	}
