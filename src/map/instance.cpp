@@ -800,6 +800,26 @@ void instance_destroy_command(map_session_data *sd) {
 		return;
 
 	instance_destroy(instance_id);
+
+	// Check for any other active instances and display their info
+	if (sd->instance_id > 0)
+		instance_reqinfo(sd, sd->instance_id);
+	else if (sd->status.party_id > 0) {
+		party_data *pd = party_search(sd->status.party_id);
+
+		if (pd == nullptr)
+			return;
+
+		if (pd->instance_id > 0)
+			instance_reqinfo(sd, pd->instance_id);
+	} else if (sd->guild != nullptr && sd->guild->instance_id > 0) {
+		guild *gd = guild_search(sd->status.guild_id);
+
+		if (gd == nullptr)
+			return;
+
+		instance_reqinfo(sd, gd->instance_id);
+	}
 }
 
 /**
