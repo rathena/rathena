@@ -21000,7 +21000,7 @@ void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct gui
 		log.clear();
 	}
 
-	guild_storage_log.packetType = 0x9DA;
+	guild_storage_log.packetType = HEADER_ZC_ACK_GUILDSTORAGE_LOG;
 	guild_storage_log.PacketLength = size;
 	guild_storage_log.result = result;
 	guild_storage_log.amount = (uint16)log.size();
