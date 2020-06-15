@@ -1843,12 +1843,22 @@ void pc_reg_received(struct map_session_data *sd)
 	intif_storage_request(sd,TABLE_CART, 0, STOR_MODE_ALL); // Request cart data
 	intif_storage_request(sd,TABLE_INVENTORY, 0, STOR_MODE_ALL); // Request inventory data
 
+	// Restore IM_CHAR instance to the player
+	for (const auto &instance : instances) {
+		if (instance.second->mode == IM_CHAR && instance.second->owner_id == sd->status.char_id) {
+			sd->instance_id = instance.first;
+			break;
+		}
+	}
+
 #if PACKETVER_MAIN_NUM < 20190403 || PACKETVER_RE_NUM < 20190320 || PACKETVER_ZERO_NUM < 20190410
-	if (sd->status.party_id)
+	if (sd->instance_id > 0)
+		instance_reqinfo(sd, sd->instance_id);
+	if (sd->status.party_id > 0)
 		party_member_joined(sd);
-	if (sd->status.guild_id)
+	if (sd->status.guild_id > 0)
 		guild_member_joined(sd);
-	if( sd->status.clan_id )
+	if (sd->status.clan_id > 0)
 		clan_member_joined(sd);
 #endif
 
@@ -1910,14 +1920,6 @@ void pc_reg_received(struct map_session_data *sd)
 	}
 
 	channel_autojoin(sd);
-
-	// Restore IM_CHAR instance to the player
-	for (const auto &instance : instances) {
-		if (instance.second->mode == IM_CHAR && instance.second->owner_id == sd->status.char_id) {
-			sd->instance_id = instance.first;
-			break;
-		}
-	}
 }
 
 static int pc_calc_skillpoint(struct map_session_data* sd)
