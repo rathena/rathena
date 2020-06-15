@@ -20169,10 +20169,7 @@ BUILDIN_FUNC(instance_create)
 		}
 	}
 
-	map_session_data *sd;
-
-	if (script_rid2sd(sd))
-		sd->instance_mode = mode;
+	map_session_data *sd = nullptr;
 
 	if (script_hasdata(st, 4))
 		owner_id = script_getnum(st, 4);
@@ -20182,19 +20179,19 @@ BUILDIN_FUNC(instance_create)
 				owner_id = st->oid;
 				break;
 			case IM_CHAR:
-				if (sd != nullptr)
+				if (script_rid2sd(sd))
 					owner_id = sd->status.char_id;
 				break;
 			case IM_PARTY:
-				if (sd != nullptr)
+				if (script_rid2sd(sd))
 					owner_id = sd->status.party_id;
 				break;
 			case IM_GUILD:
-				if (sd != nullptr)
+				if (script_rid2sd(sd))
 					owner_id = sd->status.guild_id;
 				break;
 			case IM_CLAN:
-				if (sd != nullptr)
+				if (script_rid2sd(sd))
 					owner_id = sd->status.clan_id;
 				break;
 			default:
@@ -20203,7 +20200,10 @@ BUILDIN_FUNC(instance_create)
 		}
 	}
 
-	script_pushint(st, instance_create(owner_id, script_getstr(st, 2), mode));
+	int val = instance_create(owner_id, script_getstr(st, 2), mode);
+	if (sd != nullptr && val > 0)
+		sd->instance_mode = mode;
+	script_pushint(st, val);
 	return SCRIPT_CMD_SUCCESS;
 }
 

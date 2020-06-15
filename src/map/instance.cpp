@@ -804,7 +804,7 @@ void instance_destroy_command(map_session_data *sd) {
 	// Check for any other active instances and display their info
 	if (sd->instance_id > 0)
 		instance_reqinfo(sd, sd->instance_id);
-	else if (sd->status.party_id > 0) {
+	if (sd->status.party_id > 0) {
 		party_data *pd = party_search(sd->status.party_id);
 
 		if (pd == nullptr)
@@ -812,7 +812,8 @@ void instance_destroy_command(map_session_data *sd) {
 
 		if (pd->instance_id > 0)
 			instance_reqinfo(sd, pd->instance_id);
-	} else if (sd->guild != nullptr && sd->guild->instance_id > 0) {
+	}
+	if (sd->guild != nullptr && sd->guild->instance_id > 0) {
 		guild *gd = guild_search(sd->status.guild_id);
 
 		if (gd == nullptr)
@@ -1052,12 +1053,13 @@ bool instance_reqinfo(struct map_session_data *sd, int instance_id)
 		for (int i = 0; i < instance_wait.id.size(); i++) {
 			if (instance_wait.id[i] == instance_id) {
 				clif_instance_create(instance_id, i + 1);
+				sd->instance_mode = idata->mode;
 				break;
 			}
 		}
 	} else if (idata->state == INSTANCE_BUSY) { // Give info on the instance if busy
 		int map_instance_id = map_getmapdata(sd->bl.m)->instance_id;
-		if (map_instance_id <= 0 || (map_instance_id > 0 && map_instance_id == instance_id)) {
+		if (map_instance_id == 0 || map_instance_id == instance_id) {
 			clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			sd->instance_mode = idata->mode;
 		}
