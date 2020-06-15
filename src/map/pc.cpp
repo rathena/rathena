@@ -641,8 +641,8 @@ int pc_delsoulball(struct map_session_data *sd, int count, int type)
 	if (count > sd->soulball)
 		count = sd->soulball;
 	sd->soulball -= count;
-	if (count > MAX_SKILL_LEVEL)
-		count = MAX_SKILL_LEVEL;
+	if (count > MAX_SOUL_BALL)
+		count = MAX_SOUL_BALL;
 
 	for (int i = 0; i < count; i++) {
 		if (sd->soul_timer[i] != INVALID_TIMER) {
@@ -651,7 +651,7 @@ int pc_delsoulball(struct map_session_data *sd, int count, int type)
 		}
 	}
 
-	for (int i = count; i < MAX_SKILL_LEVEL; i++) {
+	for (int i = count; i < MAX_SOUL_BALL; i++) {
 		sd->soul_timer[i - count] = sd->soul_timer[i];
 		sd->soul_timer[i] = INVALID_TIMER;
 	}
@@ -1910,6 +1910,14 @@ void pc_reg_received(struct map_session_data *sd)
 	}
 
 	channel_autojoin(sd);
+
+	// Restore IM_CHAR instance to the player
+	for (const auto &instance : instances) {
+		if (instance.second->mode == IM_CHAR && instance.second->owner_id == sd->status.char_id) {
+			sd->instance_id = instance.first;
+			break;
+		}
+	}
 }
 
 static int pc_calc_skillpoint(struct map_session_data* sd)
@@ -6034,9 +6042,6 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		clif_changemap(sd,m,x,y); // [MouseJstr]
 	} else if(sd->state.active) //Tag player for rewarping after map-loading is done. [Skotlex]
 		sd->state.rewarp = 1;
-
-	if (sc && sc->data[SC_HELLS_PLANT])
-		skill_unit_move_unit_group(skill_id2group(sc->data[SC_HELLS_PLANT]->val4), m, x - sd->bl.x, y - sd->bl.y);
 
 	sd->mapindex = mapindex;
 	sd->bl.m = m;

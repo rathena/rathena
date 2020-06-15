@@ -1041,6 +1041,34 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 }
 
 /**
+ * Map iterator subroutine to update achievement objectives for a party after killing a monster.
+ * @see map_foreachinrange
+ * @param ap: Argument list, expecting:
+ *   int Party ID
+ *   int Mob ID
+ */
+int achievement_update_objective_sub(block_list *bl, va_list ap)
+{
+	map_session_data *sd;
+	int mob_id, party_id;
+
+	nullpo_ret(bl);
+	nullpo_ret(sd = (map_session_data *)bl);
+
+	party_id = va_arg(ap, int);
+	mob_id = va_arg(ap, int);
+
+	if (sd->achievement_data.achievements == nullptr)
+		return 0;
+	if (sd->status.party_id != party_id)
+		return 0;
+
+	achievement_update_objective(sd, AG_BATTLE, 1, mob_id);
+
+	return 1;
+}
+
+/**
  * Loads achievements from the achievement db.
  */
 void achievement_read_db(void)

@@ -2906,9 +2906,33 @@ void clif_inventorylist( struct map_session_data *sd ){
 		// Non-stackable (Equippable)
 		if( !itemdb_isstackable2( sd->inventory_data[i] ) ){
 			clif_item_equip( client_index( i ), &itemlist_equip.list[equip++], &sd->inventory.u.items_inventory[i], sd->inventory_data[i], pc_equippoint( sd, i ) );
+
+			if( equip == MAX_INVENTORY_ITEM_PACKET_NORMAL ){
+				itemlist_equip.PacketType  = inventorylistequipType;
+				itemlist_equip.PacketLength = ( sizeof( itemlist_equip ) - sizeof( itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip );
+#if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
+				itemlist_equip.invType = type;
+#endif
+
+				clif_send( &itemlist_equip, itemlist_equip.PacketLength, &sd->bl, SELF );
+
+				equip = 0;
+			}
 		// Stackable (Normal)
 		}else{
 			clif_item_normal( client_index( i ), &itemlist_normal.list[normal++], &sd->inventory.u.items_inventory[i], sd->inventory_data[i] );
+
+			if( normal == MAX_INVENTORY_ITEM_PACKET_NORMAL ){
+				itemlist_normal.PacketType = inventorylistnormalType;
+				itemlist_normal.PacketLength = ( sizeof( itemlist_normal ) - sizeof( itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal );
+#if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
+				itemlist_normal.invType = type;
+#endif
+
+				clif_send( &itemlist_normal, itemlist_normal.PacketLength, &sd->bl, SELF );
+
+				normal = 0;
+			}
 		}
 	}
 
@@ -2977,9 +3001,37 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 		// Non-stackable (Equippable)
 		if( !itemdb_isstackable2( id ) ){
 			clif_item_equip( client_storage_index( i ), &storage_itemlist_equip.list[equip++], &items[i], id, pc_equippoint_sub( sd, id ) );
+
+			if( equip == MAX_STORAGE_ITEM_PACKET_EQUIP ){
+				storage_itemlist_equip.PacketType  = storageListEquipType;
+				storage_itemlist_equip.PacketLength = ( sizeof( storage_itemlist_equip ) - sizeof( storage_itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip );
+#if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
+				storage_itemlist_equip.invType = type;
+#elif PACKETVER >= 20120925
+				safestrncpy( storage_itemlist_equip.name, storename, NAME_LENGTH );
+#endif
+
+				clif_send( &storage_itemlist_equip, storage_itemlist_equip.PacketLength, &sd->bl, SELF );
+
+				equip = 0;
+			}
 		// Stackable (Normal)
 		}else{
 			clif_item_normal( client_storage_index( i ), &storage_itemlist_normal.list[normal++], &items[i], id );
+
+			if( normal == MAX_STORAGE_ITEM_PACKET_NORMAL ){
+				storage_itemlist_normal.PacketType = storageListNormalType;
+				storage_itemlist_normal.PacketLength = ( sizeof( storage_itemlist_normal ) - sizeof( storage_itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal );
+#if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
+				storage_itemlist_normal.invType = type;
+#elif PACKETVER >= 20120925
+				safestrncpy( storage_itemlist_normal.name, storename, NAME_LENGTH );
+#endif
+
+				clif_send( &storage_itemlist_normal, storage_itemlist_normal.PacketLength, &sd->bl, SELF );
+
+				normal = 0;
+			}
 		}
 	}
 
@@ -12850,27 +12902,23 @@ void clif_parse_SelectArrow(int fd,struct map_session_data *sd) {
 		return;
 	}
 
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
-	int nameid = RFIFOL(fd, 2);
-#else
-	int nameid = RFIFOW(fd, 2);
-#endif
+	struct PACKET_CZ_REQ_MAKINGARROW* p = (struct PACKET_CZ_REQ_MAKINGARROW*)RFIFOP( fd, 0 );
 
 	switch (sd->menuskill_id) {
 		case AC_MAKINGARROW:
-			skill_arrow_create(sd,nameid);
+			skill_arrow_create(sd,p->itemId);
 			break;
 		case SA_CREATECON:
-			skill_produce_mix(sd,SA_CREATECON,nameid,0,0,0,1,-1);
+			skill_produce_mix(sd,SA_CREATECON,p->itemId,0,0,0,1,-1);
 			break;
 		case WL_READING_SB:
-			skill_spellbook(sd,nameid);
+			skill_spellbook(sd,p->itemId);
 			break;
 		case GC_POISONINGWEAPON:
-			skill_poisoningweapon(sd,nameid);
+			skill_poisoningweapon(sd,p->itemId);
 			break;
 		case NC_MAGICDECOY:
-			skill_magicdecoy(sd,nameid);
+			skill_magicdecoy(sd,p->itemId);
 			break;
 	}
 
@@ -16691,7 +16739,7 @@ void clif_parse_cashshop_buy( int fd, struct map_session_data *sd ){
 		return;
 	}
 
-	cashshop_buylist( sd, 0, p->count, p->items );
+	cashshop_buylist( sd, p->kafraPoints, p->count, p->items );
 }
 
 /// Adoption System
@@ -20975,7 +21023,7 @@ void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct gui
 		log.clear();
 	}
 
-	guild_storage_log.packetType = 0x9DA;
+	guild_storage_log.packetType = HEADER_ZC_ACK_GUILDSTORAGE_LOG;
 	guild_storage_log.PacketLength = size;
 	guild_storage_log.result = result;
 	guild_storage_log.amount = (uint16)log.size();
