@@ -1056,8 +1056,11 @@ bool instance_reqinfo(struct map_session_data *sd, int instance_id)
 			}
 		}
 	} else if (idata->state == INSTANCE_BUSY) { // Give info on the instance if busy
-		clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
-		sd->instance_mode = idata->mode;
+		int map_instance_id = map_getmapdata(sd->bl.m)->instance_id;
+		if (map_instance_id <= 0 || (map_instance_id > 0 && map_instance_id == instance_id)) {
+			clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
+			sd->instance_mode = idata->mode;
+		}
 	}
 
 	return true;
