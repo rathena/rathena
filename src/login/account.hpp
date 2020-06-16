@@ -36,7 +36,8 @@ struct mmo_account {
 	char birthdate[10+1];   // assigned birth date (format: YYYY-MM-DD)
 	char pincode[PINCODE_LENGTH+1];		// pincode system
 	time_t pincode_change;	// (timestamp): last time of pincode change
-	char web_auth_token[WEB_AUTH_TOKEN_LENGTH]; // social network system token (randomized on each login)
+	char web_auth_token[WEB_AUTH_TOKEN_LENGTH]; // web authentication token (randomized on each login)
+	bool logout;
 #ifdef VIP_ENABLE
 	int old_group;
 	time_t vip_time;

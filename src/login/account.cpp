@@ -14,6 +14,8 @@
 #include "../common/sql.hpp"
 #include "../common/strlib.hpp"
 
+#include "login.hpp" // login_config
+
 /// global defines
 
 /// internal structure
@@ -134,6 +136,10 @@ static bool account_db_sql_init(AccountDB* self) {
 	if( codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, codepage) )
 		Sql_ShowDebug(sql_handle);
 
+	if( SQL_ERROR == Sql_Query( sql_handle, "UPDATE `%s` SET `web_auth_token` = NULL", db->account_db ) ){
+		Sql_ShowDebug( sql_handle );
+	}
+
 	return true;
 }
 
@@ -143,6 +149,10 @@ static bool account_db_sql_init(AccountDB* self) {
  */
 static void account_db_sql_destroy(AccountDB* self){
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
+
+	if( SQL_ERROR == Sql_Query( db->accounts, "UPDATE `%s` SET `web_auth_token` = NULL", db->account_db ) ){
+		Sql_ShowDebug( db->accounts );
+	}
 
 	Sql_Free(db->accounts);
 	db->accounts = NULL;
@@ -483,7 +493,7 @@ static bool account_db_sql_iter_next(AccountDBIterator* self, struct mmo_account
 }
 
 /**
- * Fetch a struct mmo_account from sql.
+ * Fetch a struct mmo_account from sql, excluding web_auth_token.
  * @param db: pointer to db
  * @param acc: pointer of mmo_account to fill
  * @param account_id: id of user account to take data from
@@ -496,9 +506,9 @@ static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 
 	// retrieve login entry for the specified account
 	if( SQL_ERROR == Sql_Query(sql_handle,
 #ifdef VIP_ENABLE
-		"SELECT `account_id`,`userid`,`user_pass`,`sex`,`email`,`group_id`,`state`,`unban_time`,`expiration_time`,`logincount`,`lastlogin`,`last_ip`,`birthdate`,`character_slots`,`pincode`, `pincode_change`, `web_auth_token`, `vip_time`, `old_group` FROM `%s` WHERE `account_id` = %d",
+		"SELECT `account_id`,`userid`,`user_pass`,`sex`,`email`,`group_id`,`state`,`unban_time`,`expiration_time`,`logincount`,`lastlogin`,`last_ip`,`birthdate`,`character_slots`,`pincode`, `pincode_change`, `vip_time`, `old_group` FROM `%s` WHERE `account_id` = %d",
 #else
-		"SELECT `account_id`,`userid`,`user_pass`,`sex`,`email`,`group_id`,`state`,`unban_time`,`expiration_time`,`logincount`,`lastlogin`,`last_ip`,`birthdate`,`character_slots`,`pincode`, `pincode_change`, `web_auth_token` FROM `%s` WHERE `account_id` = %d",
+		"SELECT `account_id`,`userid`,`user_pass`,`sex`,`email`,`group_id`,`state`,`unban_time`,`expiration_time`,`logincount`,`lastlogin`,`last_ip`,`birthdate`,`character_slots`,`pincode`, `pincode_change` FROM `%s` WHERE `account_id` = %d",
 #endif
 		db->account_db, account_id )
 	) {
@@ -528,12 +538,13 @@ static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 
 	Sql_GetData(sql_handle, 13, &data, NULL); acc->char_slots = (uint8) atoi(data);
 	Sql_GetData(sql_handle, 14, &data, NULL); safestrncpy(acc->pincode, data, sizeof(acc->pincode));
 	Sql_GetData(sql_handle, 15, &data, NULL); acc->pincode_change = atol(data);
-	Sql_GetData(sql_handle, 16, &data, NULL); safestrncpy(acc->web_auth_token, data == NULL ? "" : data, sizeof(acc->web_auth_token));
 #ifdef VIP_ENABLE
-	Sql_GetData(sql_handle, 17, &data, NULL); acc->vip_time = atol(data);
-	Sql_GetData(sql_handle, 18, &data, NULL); acc->old_group = atoi(data);
+	Sql_GetData(sql_handle, 16, &data, NULL); acc->vip_time = atol(data);
+	Sql_GetData(sql_handle, 17, &data, NULL); acc->old_group = atoi(data);
 #endif
 	Sql_FreeResult(sql_handle);
+	acc->logout = false;
+	acc->web_auth_token[0] = '\0';
 
 	return true;
 }
@@ -564,9 +575,9 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 	{// insert into account table
 		if( SQL_SUCCESS != SqlStmt_Prepare(stmt,
 #ifdef VIP_ENABLE
-			"INSERT INTO `%s` (`account_id`, `userid`, `user_pass`, `sex`, `email`, `group_id`, `state`, `unban_time`, `expiration_time`, `logincount`, `lastlogin`, `last_ip`, `birthdate`, `character_slots`, `pincode`, `pincode_change`, `web_auth_token`, `vip_time`, `old_group` ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+			"INSERT INTO `%s` (`account_id`, `userid`, `user_pass`, `sex`, `email`, `group_id`, `state`, `unban_time`, `expiration_time`, `logincount`, `lastlogin`, `last_ip`, `birthdate`, `character_slots`, `pincode`, `pincode_change`, `vip_time`, `old_group` ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 #else
-			"INSERT INTO `%s` (`account_id`, `userid`, `user_pass`, `sex`, `email`, `group_id`, `state`, `unban_time`, `expiration_time`, `logincount`, `lastlogin`, `last_ip`, `birthdate`, `character_slots`, `pincode`, `pincode_change`, `web_auth_token`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+			"INSERT INTO `%s` (`account_id`, `userid`, `user_pass`, `sex`, `email`, `group_id`, `state`, `unban_time`, `expiration_time`, `logincount`, `lastlogin`, `last_ip`, `birthdate`, `character_slots`, `pincode`, `pincode_change`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
 #endif
 			db->account_db)
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt,  0, SQLDT_INT,       (void*)&acc->account_id,      sizeof(acc->account_id))
@@ -585,10 +596,9 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 13, SQLDT_UCHAR,     (void*)&acc->char_slots,      sizeof(acc->char_slots))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 14, SQLDT_STRING,    (void*)&acc->pincode,         strlen(acc->pincode))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 15, SQLDT_LONG,      (void*)&acc->pincode_change,  sizeof(acc->pincode_change))
-		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 16, SQLDT_STRING,    (void*)&acc->web_auth_token,  strlen(acc->web_auth_token))
 #ifdef VIP_ENABLE
-		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 17, SQLDT_LONG,       (void*)&acc->vip_time,         sizeof(acc->vip_time))
-		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 18, SQLDT_INT,        (void*)&acc->old_group,        sizeof(acc->old_group))
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 16, SQLDT_LONG,       (void*)&acc->vip_time,         sizeof(acc->vip_time))
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 17, SQLDT_INT,        (void*)&acc->old_group,        sizeof(acc->old_group))
 #endif
 		||  SQL_SUCCESS != SqlStmt_Execute(stmt)
 		) {
@@ -600,9 +610,9 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 	{// update account table
 		if( SQL_SUCCESS != SqlStmt_Prepare(stmt, 
 #ifdef VIP_ENABLE
-			"UPDATE `%s` SET `userid`=?,`user_pass`=?,`sex`=?,`email`=?,`group_id`=?,`state`=?,`unban_time`=?,`expiration_time`=?,`logincount`=?,`lastlogin`=?,`last_ip`=?,`birthdate`=?,`character_slots`=?,`pincode`=?, `pincode_change`=?, `web_auth_token`=?, `vip_time`=?, `old_group`=? WHERE `account_id` = '%d'",
+			"UPDATE `%s` SET `userid`=?,`user_pass`=?,`sex`=?,`email`=?,`group_id`=?,`state`=?,`unban_time`=?,`expiration_time`=?,`logincount`=?,`lastlogin`=?,`last_ip`=?,`birthdate`=?,`character_slots`=?,`pincode`=?, `pincode_change`=?, `vip_time`=?, `old_group`=? WHERE `account_id` = '%d'",
 #else
-			"UPDATE `%s` SET `userid`=?,`user_pass`=?,`sex`=?,`email`=?,`group_id`=?,`state`=?,`unban_time`=?,`expiration_time`=?,`logincount`=?,`lastlogin`=?,`last_ip`=?,`birthdate`=?,`character_slots`=?,`pincode`=?, `pincode_change`=?, `web_auth_token`=? WHERE `account_id` = '%d'",
+			"UPDATE `%s` SET `userid`=?,`user_pass`=?,`sex`=?,`email`=?,`group_id`=?,`state`=?,`unban_time`=?,`expiration_time`=?,`logincount`=?,`lastlogin`=?,`last_ip`=?,`birthdate`=?,`character_slots`=?,`pincode`=?, `pincode_change`=? WHERE `account_id` = '%d'",
 #endif
 			db->account_db, acc->account_id)
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt,  0, SQLDT_STRING,    (void*)acc->userid,           strlen(acc->userid))
@@ -620,15 +630,60 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 12, SQLDT_UCHAR,     (void*)&acc->char_slots,      sizeof(acc->char_slots))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 13, SQLDT_STRING,    (void*)&acc->pincode,         strlen(acc->pincode))
 		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 14, SQLDT_LONG,      (void*)&acc->pincode_change,  sizeof(acc->pincode_change))
-		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 15, SQLDT_STRING,    (void*)&acc->web_auth_token, strlen(acc->web_auth_token))
 #ifdef VIP_ENABLE
-		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 16, SQLDT_LONG,      (void*)&acc->vip_time,        sizeof(acc->vip_time))
-		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 17, SQLDT_INT,       (void*)&acc->old_group,       sizeof(acc->old_group))
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 15, SQLDT_LONG,      (void*)&acc->vip_time,        sizeof(acc->vip_time))
+		||  SQL_SUCCESS != SqlStmt_BindParam(stmt, 16, SQLDT_INT,       (void*)&acc->old_group,       sizeof(acc->old_group))
 #endif
 		||  SQL_SUCCESS != SqlStmt_Execute(stmt)
 		) {
 			SqlStmt_ShowDebug(stmt);
 			break;
+		}
+	}
+
+	if( acc->sex != 'S' && login_config.use_web_auth_token ){
+		if( acc->logout ){
+			if( SQL_SUCCESS != Sql_Query( sql_handle, "UPDATE `%s` SET `web_auth_token` = NULL WHERE `account_id` = '%d'", db->account_db, acc->account_id ) ){
+				Sql_ShowDebug( sql_handle );
+				break;
+			}
+		}else{
+			const int MAX_RETRIES = 20;
+			int i = 0;
+			bool success = false;
+
+			// Retry it for a maximum number of retries
+			do{
+				if( SQL_SUCCESS == Sql_Query( sql_handle, "UPDATE `%s` SET `web_auth_token` = LEFT( SHA2( CONCAT( UUID(), RAND() ), 256 ), %d ) WHERE `account_id` = '%d'", db->account_db, WEB_AUTH_TOKEN_LENGTH - 1, acc->account_id ) ){
+					success = true;
+					break;
+				}
+			}while( i < MAX_RETRIES && Sql_GetError( sql_handle ) == 1062 );
+
+			if( !success ){
+				if( i == MAX_RETRIES ){
+					ShowError( "Failed to generate a unique web_auth_token with %d retries...\n", i );
+				}else{
+					Sql_ShowDebug( sql_handle );
+				}
+
+				break;
+			}
+
+			char* data;
+			size_t len;
+
+			if( SQL_SUCCESS != Sql_Query( sql_handle, "SELECT `web_auth_token` from `%s` WHERE `account_id` = '%d'", db->account_db, acc->account_id ) ||
+				SQL_SUCCESS != Sql_NextRow( sql_handle ) ||
+				SQL_SUCCESS != Sql_GetData( sql_handle, 0, &data, &len )
+				){
+				Sql_ShowDebug( sql_handle );
+				break;
+			}
+
+			safestrncpy( (char *)&acc->web_auth_token, data, sizeof( acc->web_auth_token ) );
+
+			Sql_FreeResult( sql_handle );
 		}
 	}
 

@@ -22,8 +22,6 @@ class cScopeTimer {
 	cScopeTimer();
 };
 
-std::string random_string(int length);
-
 int levenshtein( const std::string &s1, const std::string &s2 );
 
 namespace rathena {
