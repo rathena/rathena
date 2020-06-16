@@ -3700,7 +3700,7 @@ void map_data_copy(struct map_data *dst_map, struct map_data *src_map) {
 * Copy map data for instance maps from its parents
 * that were cleared in map_flags_init() after reloadscript
 */
-void map_data_copyall (void) {
+void map_data_copyall (void) {//idata->nomapflag
 	if (!instance_start)
 		return;
 	for (int i = instance_start; i < map_num; i++) {

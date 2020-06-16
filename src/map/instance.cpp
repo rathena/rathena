@@ -380,6 +380,9 @@ bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, int instanc
 	if (!db)
 		return false;
 
+	if (idata->ignoretimer)
+		return true;
+
 	// Add timer
 	idata->keep_limit = static_cast<unsigned int>(time(nullptr)) + db->limit;
 	idata->keep_timer = add_timer(gettick() + db->limit * 1000, instance_delete_timer, instance_id, 0);
@@ -689,6 +692,9 @@ int instance_addmap(int instance_id) {
 		idata->idle_limit = static_cast<unsigned int>(time(nullptr)) + db->timeout;
 		idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
 	}
+	idata->ignoretimer = db->ignoretimer;
+	idata->nomapflag = db->nomapflag;
+	idata->nonpc = db->nonpc;
 
 	int16 m;
 
@@ -1083,7 +1089,8 @@ void do_reload_instance(void)
 			continue;
 		else {
 			// First we load the NPCs again
-			instance_addnpc(idata);
+			if(!idata->nonpc)
+				instance_addnpc(idata);
 
 			// Create new keep timer
 			std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);

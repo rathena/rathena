@@ -63,10 +63,13 @@ struct s_instance_data {
 	e_instance_state state; ///< State of instance
 	e_instance_mode mode; ///< Mode of instance
 	int owner_id; ///< Owner ID of instance
+	bool ignoretimer;
 	unsigned int keep_limit; ///< Life time of instance
 	int keep_timer; ///< Life time ID
 	unsigned int idle_limit; ///< Idle time of instance
 	int idle_timer; ///< Idle timer ID
+	bool nonpc;
+	bool nomapflag;
 	struct reg_db regs; ///< Instance variables for scripts
 	std::vector<s_instance_map> map; ///< Array of maps in instance
 
