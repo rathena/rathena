@@ -799,6 +799,13 @@ enum e_item_drop_effect : uint16 {
 	DROPEFFECT_MAX
 };
 
+/// Enum for items with delayed consumption
+enum e_delay_consume : uint8 {
+	DELAYCONSUME_NONE = 0x0,
+	DELAYCONSUME_TEMP = 0x1, // Items that are not consumed immediately upon double-click
+	DELAYCONSUME_NOCONSUME = 0x2, // Items that are not removed upon double-click
+};
+
 /// Item combo struct
 struct s_item_combo {
 	std::vector<uint32> nameid;
@@ -814,7 +821,6 @@ struct s_item_combo {
 		this->nameid.clear();
 	}
 };
-
 
 /// Struct of item group entry
 struct s_item_group_entry
@@ -896,7 +902,7 @@ struct item_data
 		unsigned available : 1;
 		uint32 no_equip;
 		unsigned no_refine : 1;	// [celest]
-		unsigned delay_consume;	// 0x1 - Signifies items that are not consumed immediately upon double-click; 0x2 - Signifies items that are not removed on consumption [Skotlex]
+		unsigned delay_consume;	// [Skotlex]
 		struct {
 			bool drop, trade, trade_partner, sell, cart, storage, guild_storage, mail, auction;
 		} trade_restriction;	//Item restrictions mask [Skotlex]

@@ -15511,7 +15511,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			if( (i = sd->itemindex) == -1 ||
 				sd->inventory.u.items_inventory[i].nameid != sd->itemid ||
 				sd->inventory_data[i] == NULL ||
-				!sd->inventory_data[i]->flag.delay_consume ||
+				sd->inventory_data[i]->flag.delay_consume == DELAYCONSUME_NONE ||
 				sd->inventory.u.items_inventory[i].amount < 1
 				)
 			{	//Something went wrong, item exploit?
@@ -15520,7 +15520,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			}
 			//Consume
 			sd->itemid = sd->itemindex = -1;
-			if( (skill_id == WZ_EARTHSPIKE && sc && sc->data[SC_EARTHSCROLL] && rnd()%100 > sc->data[SC_EARTHSCROLL]->val2) || sd->inventory_data[i]->flag.delay_consume & 0x2 ) // [marquis007]
+			if( (skill_id == WZ_EARTHSPIKE && sc && sc->data[SC_EARTHSCROLL] && rnd()%100 > sc->data[SC_EARTHSCROLL]->val2) || sd->inventory_data[i]->flag.delay_consume & DELAYCONSUME_NOCONSUME ) // [marquis007]
 				; //Do not consume item.
 			else if( sd->inventory.u.items_inventory[i].expire_time == 0 )
 				pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME); // Rental usable items are not consumed until expiration

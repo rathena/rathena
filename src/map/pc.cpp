@@ -5448,7 +5448,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 		return 0;
 
 	/* Items with delayed consume are not meant to work while in mounts except reins of mount(12622) */
-	if( id->flag.delay_consume ) {
+	if( id->flag.delay_consume > 0 ) {
 		if( nameid != ITEMID_REINS_OF_MOUNT && sd->sc.data[SC_ALL_RIDING] )
 			return 0;
 		else if( pc_issit(sd) )
@@ -5458,7 +5458,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	//perform a skill-use check before going through. [Skotlex]
 	//resurrection was picked as testing skill, as a non-offensive, generic skill, it will do.
 	//FIXME: Is this really needed here? It'll be checked in unit.cpp after all and this prevents skill items using when silenced [Inkfish]
-	if( id->flag.delay_consume && ( sd->ud.skilltimer != INVALID_TIMER /*|| !status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)*/ ) )
+	if( id->flag.delay_consume > 0 && ( sd->ud.skilltimer != INVALID_TIMER /*|| !status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)*/ ) )
 		return 0;
 
 	if( id->delay.duration > 0 && !pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && pc_itemcd_check(sd, id, tick, n))
@@ -5467,7 +5467,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	/* on restricted maps the item is consumed but the effect is not used */
 	if (!pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && itemdb_isNoEquip(id,sd->bl.m)) {
 		clif_msg(sd,ITEM_CANT_USE_AREA); // This item cannot be used within this area
-		if( battle_config.allow_consume_restricted_item && !id->flag.delay_consume ) { //need confirmation for delayed consumption items
+		if( battle_config.allow_consume_restricted_item && id->flag.delay_consume > 0 ) { //need confirmation for delayed consumption items
 			clif_useitemack(sd,n,item.amount-1,true);
 			pc_delitem(sd,n,1,1,0,LOG_TYPE_CONSUME);
 		}
@@ -5482,7 +5482,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	amount = item.amount;
 	script = id->script;
 	//Check if the item is to be consumed immediately [Skotlex]
-	if (id->flag.delay_consume)
+	if (id->flag.delay_consume > 0)
 		clif_useitemack(sd, n, amount, true);
 	else
 	{

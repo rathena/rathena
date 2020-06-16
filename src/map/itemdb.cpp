@@ -101,8 +101,8 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 
 		if (constant == IT_DELAYCONSUME) { // Items that are consumed only after target confirmation
-			item->type = IT_USABLE;
-			item->flag.delay_consume |= 0x1;
+			constant = IT_USABLE;
+			item->flag.delay_consume |= DELAYCONSUME_TEMP;
 		}
 
 		item->type = static_cast<item_types>(constant);
@@ -621,12 +621,14 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (active)
-				item->flag.delay_consume |= 0x2;
+				item->flag.delay_consume |= DELAYCONSUME_NOCONSUME;
 			else
-				item->flag.delay_consume &= ~0x2;
+				item->flag.delay_consume &= ~DELAYCONSUME_NOCONSUME;
 		} else {
-			if (!exists)
-				item->flag.delay_consume = 0;
+			if (!exists) {
+				if (!(item->flag.delay_consume & DELAYCONSUME_TEMP))
+					item->flag.delay_consume = DELAYCONSUME_NONE;
+			}
 		}
 
 		if (this->nodeExists(flagNode, "DropEffect")) {
@@ -656,8 +658,8 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->flag.guid = false;
 			item->flag.bindOnEquip = false;
 			item->flag.broadcast = false;
-			if (!(item->flag.delay_consume & 0x1))
-				item->flag.delay_consume = 0;
+			if (!(item->flag.delay_consume & DELAYCONSUME_TEMP))
+				item->flag.delay_consume = DELAYCONSUME_NONE;
 			item->flag.dropEffect = DROPEFFECT_NONE;
 		}
 	}
