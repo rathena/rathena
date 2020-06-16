@@ -111,6 +111,45 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 			instance->timeout = 300;
 	}
 
+	if (this->nodeExists(node, "IgnoreTimer")) {
+		bool ignoretimer;
+
+		if (!this->asBool(node, "IgnoreTimer", ignoretimer))
+			return 0;
+
+		instance->ignoretimer = ignoretimer;
+	}
+	else {
+		if (!exists)
+			instance->ignoretimer = false;
+	}
+
+	if (this->nodeExists(node, "NoNpc")) {
+		bool nonpc;
+
+		if (!this->asBool(node, "NoNpc", nonpc))
+			return 0;
+
+		instance->nonpc = nonpc;
+	}
+	else {
+		if (!exists)
+			instance->nonpc = false;
+	}
+
+	if (this->nodeExists(node, "NoMapFlag")) {
+		bool nomapflag;
+
+		if (!this->asBool(node, "NoMapFlag", nomapflag))
+			return 0;
+
+		instance->nomapflag = nomapflag;
+	}
+	else {
+		if (!exists)
+			instance->nomapflag = false;
+	}
+
 	/*
 	if (this->nodeExists(node, "Destroyable")) {
 		bool destroy;
@@ -646,13 +685,15 @@ int instance_addmap(int instance_id) {
 
 	// Set to busy, update timers
 	idata->state = INSTANCE_BUSY;
-	idata->idle_limit = static_cast<unsigned int>(time(nullptr)) + db->timeout;
-	idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
+	if (!db->ignoretimer) {
+		idata->idle_limit = static_cast<unsigned int>(time(nullptr)) + db->timeout;
+		idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
+	}
 
 	int16 m;
 
 	// Add initial map
-	if ((m = map_addinstancemap(db->enter.map, instance_id)) < 0) {
+	if ((m = map_addinstancemap(db->enter.map, instance_id, db->nomapflag)) < 0) {
 		ShowError("instance_addmap: Failed to create initial map for instance '%s' (%d).\n", db->name.c_str(), instance_id);
 		return 0;
 	}
@@ -665,7 +706,7 @@ int instance_addmap(int instance_id) {
 
 	// Add extra maps (if any)
 	for (const auto &it : db->maplist) {
-		if ((m = map_addinstancemap(it, instance_id)) < 0) { // An error occured adding a map
+		if ((m = map_addinstancemap(it, instance_id, db->nomapflag)) < 0) { // An error occured adding a map
 			ShowError("instance_addmap: No maps added to instance '%s' (%d).\n", db->name.c_str(), instance_id);
 			return 0;
 		} else {
@@ -676,7 +717,8 @@ int instance_addmap(int instance_id) {
 	}
 
 	// Create NPCs on all maps
-	instance_addnpc(idata);
+	if(!db->nonpc)
+		instance_addnpc(idata);
 
 	switch(idata->mode) {
 		case IM_NONE:
@@ -890,7 +932,8 @@ e_instance_enter instance_enter(struct map_session_data *sd, int instance_id, co
 	if (instance_id <= 0) // Default party checks will be used
 		mode = IM_PARTY;
 	else {
-		idata = util::umap_find(instances, instance_id);
+		if(!(idata = util::umap_find(instances, instance_id)))	//might be moved to another PR , Fix issue where warp to non exsiting instance.
+			return IE_NOINSTANCE;
 		mode = idata->mode;
 	}
 
