@@ -8953,7 +8953,6 @@ static const struct _battle_data {
 	{ "show_skill_scale",                   &battle_config.show_skill_scale,                1,      0,      1,              },
 	{ "achievement_mob_share",              &battle_config.achievement_mob_share,           0,      0,      1,              },
 	{ "slave_stick_with_master",            &battle_config.slave_stick_with_master,         0,      0,      1,              },
-	{ "recall_stuck_slave",                 &battle_config.recall_stuck_slave,              0,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };

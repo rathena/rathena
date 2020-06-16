@@ -1458,16 +1458,14 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,t_tick tick)
 		if ((md->master_dist > MOB_SLAVEDISTANCE || md->master_dist == 0) && unit_can_move(&md->bl)) {
 			int16 x = bl->x, y = bl->y;
 
-			mob_stop_attack(md);
 			if (map_search_freecell(&md->bl, bl->m, &x, &y, MOB_SLAVEDISTANCE, MOB_SLAVEDISTANCE, 1)) {
-				int ret_val = unit_walktoxy(&md->bl, x, y, 0);
-
-				if (battle_config.recall_stuck_slave && ret_val == 0) { // Slave is too far from master (outside of battle_config.max_walk_path range), teleport back to master
-					md->master_dist = 0;
-					unit_warp(&md->bl, bl->m, bl->x, bl->y, CLR_TELEPORT);
+				if (unit_walktoxy(&md->bl, x, y, 0) == 0) { // Slave is too far from master (outside of battle_config.max_walk_path range), stay put
+					mob_stop_walking(md, USW_FIXPOS);
+					return 0; // Fail here so target will be picked back up when in range
+				} else { // Slave will walk back to master if in range
+					mob_stop_attack(md);
 					return 1;
-				} else if (ret_val > 0) // Slave will walk back to master if in range
-					return 1;
+				}
 			}
 		}
 	} else if (bl->m != md->bl.m && map_flag_gvg2(md->bl.m)) {
@@ -1807,9 +1805,14 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		md->attacked_id = md->norm_attacked_id = 0;
 	}
 
+	bool slave_lost_target = false;
+
 	// Processing of slave monster
-	if (md->master_id > 0 && mob_ai_sub_hard_slavemob(md, tick))
-		return true;
+	if (md->master_id > 0) {
+		if (mob_ai_sub_hard_slavemob(md, tick) == 1)
+			return true;
+		slave_lost_target = true;
+	}
 
 	// Scan area for targets
 	if (!tbl && can_move && mode&MD_LOOTER && md->lootitems && DIFF_TICK(tick, md->ud.canact_tick) > 0 &&
@@ -1818,7 +1821,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		map_foreachinshootrange (mob_ai_sub_hard_lootsearch, &md->bl, view_range, BL_ITEM, md, &tbl);
 	}
 
-	if ((!tbl && mode&MD_AGGRESSIVE) || md->state.skillstate == MSS_FOLLOW)
+	if ((!tbl && mode&MD_AGGRESSIVE) || md->state.skillstate == MSS_FOLLOW || slave_lost_target)
 	{
 		map_foreachinallrange (mob_ai_sub_hard_activesearch, &md->bl, view_range, DEFAULT_ENEMY_TYPE(md), md, &tbl, mode);
 	}
