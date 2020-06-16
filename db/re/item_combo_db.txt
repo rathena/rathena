@@ -850,10 +850,10 @@
 19205:29356,{ bonus2 bSkillAtk,"SU_CN_METEOR",20; bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",20; bonus bFixedCast,-200; }
 19205:29357,{ bonus2 bSkillAtk,"SU_CN_METEOR",60; bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",60; bonus bFixedCast,-500; }
 19247:28762,{ bonus bMatk,50; .@eq = getequiprefinerycnt(EQI_HEAD_TOP); .@weapon = getequiprefinerycnt(EQI_HAND_R); if (.@eq >= 7 && .@weapon >= 7) { bonus bVariableCastrate,-10; } if ((.@eq + .@weapon) >= 18) { bonus2 bMagicAddSize,Size_Small,15; bonus2 bMagicAddSize,Size_Medium,15; if ((.@eq + .@weapon) >= 22) { autobonus "{ bonus bMatk,50; bonus2 bMagicAtkEle,Ele_Fire,20; }",5,10000,BF_MAGIC; /* unknown rate */ } } }
-19266:1617,{.@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,.@r*10}
-19266:1618,{.@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,.@r*10}
-19266:1619,{.@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,.@r*10}
-19266:1620,{.@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,.@r*10}
+19266:1617,{.@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,.@r*10;}
+19266:1618,{.@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,.@r*10;}
+19266:1619,{.@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,.@r*10;}
+19266:1620,{.@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,.@r*10;}
 19266:2509,{.@r = getequiprefinerycnt(EQI_GARMENT); bonus bVariableCastrate,-(.@r/2);}
 19266:20813,{.@r = getequiprefinerycnt(EQI_GARMENT); bonus bVariableCastrate,-(.@r/2);}
 19266:19139,{.@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bDelayRate,-.@r;}
