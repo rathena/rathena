@@ -757,7 +757,7 @@ CREATE TABLE IF NOT EXISTS `login` (
   `web_auth_token` varchar(17) null,
   PRIMARY KEY  (`account_id`),
   KEY `name` (`userid`),
-  UNIQUE KEY `web_auth_token_key` (`web_auth_token`),
+  UNIQUE KEY `web_auth_token_key` (`web_auth_token`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2000000; 
 
 -- added standard accounts for servers, VERY INSECURE!!!
