@@ -20168,12 +20168,12 @@ BUILDIN_FUNC(instance_create)
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
-
-	map_session_data *sd = nullptr;
-
 	if (script_hasdata(st, 4))
 		owner_id = script_getnum(st, 4);
 	else {
+		// If sd is NULL, instance_create will return -2.
+		struct map_session_data *sd = NULL;
+
 		switch(mode) {
 			case IM_NONE:
 				owner_id = st->oid;
@@ -20200,10 +20200,7 @@ BUILDIN_FUNC(instance_create)
 		}
 	}
 
-	int val = instance_create(owner_id, script_getstr(st, 2), mode);
-	if (sd != nullptr && val > 0)
-		sd->instance_mode = mode;
-	script_pushint(st, val);
+	script_pushint(st, instance_create(owner_id, script_getstr(st, 2), mode));
 	return SCRIPT_CMD_SUCCESS;
 }
 

@@ -537,7 +537,7 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 		return -1;
 	}
 
-	struct map_session_data *sd;
+	struct map_session_data *sd = nullptr;
 	struct party_data *pd;
 	struct guild *gd;
 	struct clan* cd;
@@ -601,14 +601,23 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 			break;
 		case IM_PARTY:
 			pd->instance_id = instance_id;
+			int32 i;
+			ARR_FIND(0, MAX_PARTY, i, pd->party.member[i].leader);
+
+			if (i < MAX_PARTY)
+				sd = map_charid2sd(pd->party.member[i].char_id);
 			break;
 		case IM_GUILD:
 			gd->instance_id = instance_id;
+			sd = map_charid2sd(gd->member[0].char_id);
 			break;
 		case IM_CLAN:
 			cd->instance_id = instance_id;
 			break;
 	}
+
+	if (sd != nullptr)
+		sd->instance_mode = mode;
 
 	instance_wait.id.push_back(instance_id);
 	clif_instance_create(instance_id, instance_wait.id.size());
