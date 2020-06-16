@@ -1124,8 +1124,8 @@ int itemdb_searchname_array(struct item_data** data, int size, const char *str)
 	int count = 0;
 
 	for (const auto &it : item_db) {
-		if (count < MAX_SEARCH && count < size) {
-			if (strcmpi(it.second->ename.c_str(), str) == 0)
+		if (count < size) {
+			if (stristr(it.second->name.c_str(), str) != nullptr || stristr(it.second->ename.c_str(), str) != nullptr || strcmpi(it.second->ename.c_str(), str) == 0)
 				data[count++] = it.second.get();
 		} else
 			break;
