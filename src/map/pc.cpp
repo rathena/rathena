@@ -1908,6 +1908,14 @@ void pc_reg_received(struct map_session_data *sd)
 	}
 
 	channel_autojoin(sd);
+
+	// Restore IM_CHAR instance to the player
+	for (const auto &instance : instances) {
+		if (instance.second->mode == IM_CHAR && instance.second->owner_id == sd->status.char_id) {
+			sd->instance_id = instance.first;
+			break;
+		}
+	}
 }
 
 static int pc_calc_skillpoint(struct map_session_data* sd)
