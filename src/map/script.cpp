@@ -20760,6 +20760,36 @@ BUILDIN_FUNC(instance_live_info)
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
+/*==========================================
+ * set '.@instance_list' to a list of the live instance ids for the map with the mode.
+ * return the array size of '.@instance_list'
+ * .@size = instance_list(IM_NONE, "prontera");
+ *------------------------------------------*/
+BUILDIN_FUNC(instance_list)
+{
+	if (!instance_start) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	e_instance_mode mode = static_cast<e_instance_mode>(script_getnum(st, 2));
+	int src_id = map_mapname2mapid(script_getstr(st, 3));
+	int j = 0;
+
+	for (int i = instance_start; i < map_num; i++) {
+		struct map_data* mapdata = &map[i];
+		if (mapdata->instance_src_map == src_id) {
+			std::shared_ptr<s_instance_data> idata = util::umap_find(instances, mapdata->instance_id);
+			if (idata->mode == mode) {
+				std::shared_ptr<s_instance_db> db = instance_db.find(mapdata->instance_id);
+				setd_sub_num(st, NULL, ".@instance_list", j, db->id, NULL);
+				j++;
+			}
+		}
+	}
+	script_pushint(st, j);
+	return SCRIPT_CMD_SUCCESS;
+}
 
 /*==========================================
  * Custom Fonts
@@ -25159,6 +25189,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_check_clan,"i???"),
 	BUILDIN_DEF(instance_info,"si?"),
 	BUILDIN_DEF(instance_live_info,"i?"),
+	BUILDIN_DEF(instance_list, "is"),
 	/**
 	 * 3rd-related
 	 **/

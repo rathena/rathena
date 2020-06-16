@@ -3705,7 +3705,8 @@ void map_data_copyall (void) {//idata->nomapflag
 		return;
 	for (int i = instance_start; i < map_num; i++) {
 		struct map_data *mapdata = &map[i];
-		if (!mapdata || mapdata->name[0] == '\0' || !mapdata->instance_src_map)
+		std::shared_ptr<s_instance_data> idata = util::umap_find(instances, mapdata->instance_id);
+		if (!mapdata || mapdata->name[0] == '\0' || !mapdata->instance_src_map || idata->nomapflag)
 			continue;
 		map_data_copy(mapdata, &map[mapdata->instance_src_map]);
 	}
