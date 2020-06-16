@@ -299,7 +299,9 @@ void instance_getsd(int instance_id, struct map_session_data *&sd, enum send_tar
  * Deletes an instance timer (Destroys instance)
  */
 static TIMER_FUNC(instance_delete_timer){
-	instance_destroy(id);
+	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, id);
+	if(idata && !idata->ignoretimer)
+		instance_destroy(id);
 
 	return 0;
 }
@@ -379,9 +381,6 @@ bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, int instanc
 
 	if (!db)
 		return false;
-
-	if (idata->ignoretimer)
-		return true;
 
 	// Add timer
 	idata->keep_limit = static_cast<unsigned int>(time(nullptr)) + db->limit;
@@ -863,13 +862,15 @@ bool instance_destroy(int instance_id)
 		}
 	}
 
-	if(idata->keep_timer != INVALID_TIMER) {
-		delete_timer(idata->keep_timer, instance_delete_timer);
-		idata->keep_timer = INVALID_TIMER;
-	}
-	if(idata->idle_timer != INVALID_TIMER) {
-		delete_timer(idata->idle_timer, instance_delete_timer);
-		idata->idle_timer = INVALID_TIMER;
+	if (!idata->ignoretimer) {
+		if (idata->keep_timer != INVALID_TIMER) {
+			delete_timer(idata->keep_timer, instance_delete_timer);
+			idata->keep_timer = INVALID_TIMER;
+		}
+		if (idata->idle_timer != INVALID_TIMER) {
+			delete_timer(idata->idle_timer, instance_delete_timer);
+			idata->idle_timer = INVALID_TIMER;
+		}
 	}
 
 	if (mode == IM_CHAR && sd)
@@ -1039,7 +1040,7 @@ bool instance_addusers(int instance_id)
 {
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
-	if(!idata || idata->state != INSTANCE_BUSY)
+	if(!idata || idata->state != INSTANCE_BUSY || idata->ignoretimer)
 		return false;
 
 	// Stop the idle timer if we had one
@@ -1060,7 +1061,7 @@ bool instance_delusers(int instance_id)
 {
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
-	if(!idata || idata->state != INSTANCE_BUSY)
+	if(!idata || idata->state != INSTANCE_BUSY || idata->ignoretimer)
 		return false;
 
 	int users = 0;
