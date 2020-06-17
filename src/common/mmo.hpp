@@ -680,7 +680,7 @@ struct guild {
 	struct guild_expulsion expulsion[MAX_GUILDEXPULSION];
 	struct guild_skill skill[MAX_GUILDSKILL];
 	struct Channel *channel;
-	unsigned short instance_id;
+	int instance_id;
 	time_t last_leader_change;
 
 	/* Used by char-server to save events for guilds */

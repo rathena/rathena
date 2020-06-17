@@ -87821,7 +87821,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      specialeffect2 EF_STEAL; bonus_script "{ bonus2 bAddDamageClass,Class_All,3; bonus bMatkRate,3; bonus2 bSubEle,Ele_All,3; }",120,0,0,EFST_POPECOOKIE;
+      specialeffect2 EF_STEAL; bonus_script "{ bonus2 bAddClass,Class_All,3; bonus bMatkRate,3; bonus2 bSubEle,Ele_All,3; }",120,0,0,EFST_POPECOOKIE;
   - Id: 12405
     AegisName: Underripe_Yggseed
     Name: Underripe Yggseed
@@ -91926,7 +91926,7 @@ Body:
     Buy: 20
     Weight: 150
     Script: |
-      specialeffect2 EF_POTION_BERSERK; bonus_script "{ bonus2 bAddDamageClass,Class_All,5; bonus bMatkRate,5; bonus bMaxHPrate,3; bonus bMaxSPrate,3; }",60,0,0,EFST_GM_BATTLE; /* showscript */
+      specialeffect2 EF_POTION_BERSERK; bonus_script "{ bonus2 bAddClass,Class_All,5; bonus bMatkRate,5; bonus bMaxHPrate,3; bonus bMaxSPrate,3; }",60,0,0,EFST_GM_BATTLE; /* showscript */
   - Id: 12792
     AegisName: P_Combat_Pill
     Name: P Combat Pill
@@ -91934,7 +91934,7 @@ Body:
     Buy: 20
     Weight: 150
     Script: |
-      specialeffect2 EF_POTION_BERSERK; bonus_script "{ bonus2 bAddDamageClass,Class_All,10; bonus bMatkRate,10; bonus bMaxHPrate,5; bonus bMaxSPrate,5; }",60,0,0,EFST_GM_BATTLE;
+      specialeffect2 EF_POTION_BERSERK; bonus_script "{ bonus2 bAddClass,Class_All,10; bonus bMatkRate,10; bonus bMaxHPrate,5; bonus bMaxSPrate,5; }",60,0,0,EFST_GM_BATTLE;
   - Id: 12793
     AegisName: Combat_Pill_Box10
     Name: Combat Pill Box10
@@ -143878,7 +143878,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      .@r = getrefine(); bonus bBaseAtk,10*(.@r/2); bonus bAspdRate,2*(.@r/3); if (.@r>=8) bonus bCritAtkRate,10*getskilllv("TF_DOUBlE"); if (.@r>=11) { bonus bAspd,1; bonus bBaseAtk,20; }
+      .@r = getrefine(); bonus bBaseAtk,10*(.@r/2); bonus bAspdRate,2*(.@r/3); if (.@r>=8) bonus bCritAtkRate,10*getskilllv("TF_DOUBLE"); if (.@r>=11) { bonus bAspd,1; bonus bBaseAtk,20; }
   - Id: 19205
     AegisName: Racing_Cap_SU
     Name: Racing Cap (Summoner)
@@ -156390,7 +156390,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus_script "bonus bMatk,25; bonus bFixedCastRate,-50;",300,1025;
+      bonus_script "{ bonus bMatk,25; bonus bFixedCastRate,-50; }",300,1025;
   - Id: 22513
     AegisName: King_of_Gift_Box
     Name: King of Gift Box
@@ -159299,7 +159299,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus_script "bonus bFlee,20; bonus bLuk,10;",300,9; /* fix me: unknown flag and specialeffect */
+      bonus_script "{ bonus bFlee,20; bonus bLuk,10; }",300,9; /* fix me: unknown flag and specialeffect */
   - Id: 23047
     AegisName: S_Blessing_Tyr
     Name: "[Sale] Blessing of Tyr"
@@ -159620,7 +159620,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus_script "bonus bDef,500; bonus bMdef,200;",600; /* fix me: unknown flag and specialeffect */
+      bonus_script "{ bonus bDef,500; bonus bMdef,200; }",600; /* fix me: unknown flag and specialeffect */
   - Id: 23340
     AegisName: S_Megaphone
     Name: "[Sale] Megaphone"
@@ -170905,7 +170905,7 @@ Body:
       Left_Accessory: true
     EquipLevelMin: 90
     Script: |
-      bonus bLuk,2; bonus bHit,10; bonus bCriticalLong,5; skill "TF_HIDING",1; if (readparam(bLuk>=100)) { bonus bHit,5; bonus bCriticalLong,10; }
+      bonus bLuk,2; bonus bHit,10; bonus bCriticalLong,5; skill "TF_HIDING",1; if (readparam(bLuk)>=100) { bonus bHit,5; bonus bCriticalLong,10; }
   - Id: 28492
     AegisName: Thieve_Guide_V1
     Name: Thieve's Guide Vol.1
@@ -172308,7 +172308,7 @@ Body:
     Refineable: true
     View: 1
     Script: |
-      .@r = getrefine(); bonus bMdef,5; bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus bBaseAtk,30*(.@r/3); bonus bMatk,30*(.@r/3); if (readparam(Baselevel>=130)) { bonus bMaxHPrate,5; bonus bMaxSPrate,5; }
+      .@r = getrefine(); bonus bMdef,5; bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus bBaseAtk,30*(.@r/3); bonus bMatk,30*(.@r/3); if (readparam(Baselevel)>=130) { bonus bMaxHPrate,5; bonus bMaxSPrate,5; }
   - Id: 28951
     AegisName: Nero_Shield
     Name: Nero Shield
