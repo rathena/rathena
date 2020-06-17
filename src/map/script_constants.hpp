@@ -260,9 +260,11 @@
 	export_constant2("EAJ_BLACKSMITH",MAPID_BLACKSMITH);
 	export_constant2("EAJ_ASSASSIN",MAPID_ASSASSIN);
 	export_constant2("EAJ_STAR_GLADIATOR",MAPID_STAR_GLADIATOR);
+	export_constant2("EAJ_STARGLADIATOR",MAPID_STAR_GLADIATOR);
 	export_constant2("EAJ_REBELLION",MAPID_REBELLION);
 	export_constant2("EAJ_KAGEROUOBORO",MAPID_KAGEROUOBORO);
 	export_constant2("EAJ_DEATH_KNIGHT",MAPID_DEATH_KNIGHT);
+	export_constant2("EAJ_DEATHKNIGHT",MAPID_DEATH_KNIGHT);
 
 	export_constant2("EAJ_CRUSADER",MAPID_CRUSADER);
 	export_constant2("EAJ_SAGE",MAPID_SAGE);
@@ -271,7 +273,9 @@
 	export_constant2("EAJ_ALCHEMIST",MAPID_ALCHEMIST);
 	export_constant2("EAJ_ROGUE",MAPID_ROGUE);
 	export_constant2("EAJ_SOUL_LINKER",MAPID_SOUL_LINKER);
+	export_constant2("EAJ_SOULLINKER",MAPID_SOUL_LINKER);
 	export_constant2("EAJ_DARK_COLLECTOR",MAPID_DARK_COLLECTOR);
+	export_constant2("EAJ_DARKCOLLECTOR",MAPID_DARK_COLLECTOR);
 
 	export_constant2("EAJ_NOVICE_HIGH",MAPID_NOVICE_HIGH);
 	export_constant2("EAJ_SWORDMAN_HIGH",MAPID_SWORDMAN_HIGH);
@@ -383,38 +387,6 @@
 	export_constant2("EAJ_SUPER_BABY_E",MAPID_SUPER_BABY_E);
 
 	export_constant2("EAJ_SUMMONER",MAPID_SUMMONER);
-
-	/* item jobs */
-	export_constant(ITEM_JOB_NOVICE);
-	export_constant(ITEM_JOB_SWORDMAN);
-	export_constant(ITEM_JOB_MAGE);
-	export_constant(ITEM_JOB_ARCHER);
-	export_constant(ITEM_JOB_ACOLYTE);
-	export_constant(ITEM_JOB_MERCHANT);
-	export_constant(ITEM_JOB_THIEF);
-	export_constant(ITEM_JOB_KNIGHT);
-	export_constant(ITEM_JOB_PRIEST);
-	export_constant(ITEM_JOB_WIZARD);
-	export_constant(ITEM_JOB_BLACKSMITH);
-	export_constant(ITEM_JOB_HUNTER);
-	export_constant(ITEM_JOB_ASSASSIN);
-	export_constant(ITEM_JOB_CRUSADER);
-	export_constant(ITEM_JOB_MONK);
-	export_constant(ITEM_JOB_SAGE);
-	export_constant(ITEM_JOB_ROGUE);
-	export_constant(ITEM_JOB_ALCHEMIST);
-	export_constant(ITEM_JOB_BARDDANCER);
-	export_constant(ITEM_JOB_TAEKWON);
-	export_constant(ITEM_JOB_STARGLADIATOR);
-	export_constant(ITEM_JOB_SOULLINKER);
-	export_constant(ITEM_JOB_GUNSLINGER);
-	export_constant(ITEM_JOB_NINJA);
-	export_constant(ITEM_JOB_GANGSI);
-	export_constant(ITEM_JOB_DEATHKNIGHT);
-	export_constant(ITEM_JOB_DARKCOLLECTOR);
-	export_constant(ITEM_JOB_KAGEROUOBORO);
-	export_constant(ITEM_JOB_REBELLION);
-	export_constant(ITEM_JOB_SUMMONER);
 
 	/* sex */
 	export_constant(SEX_FEMALE);

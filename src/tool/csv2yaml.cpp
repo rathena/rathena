@@ -121,39 +121,40 @@ std::unordered_map<int, s_item_nouse_csv2yaml> item_nouse;
 std::unordered_map<int, s_item_trade_csv2yaml> item_trade;
 
 static std::map<std::string, int> um_mapid2jobname {
-	{ "Novice", ITEM_JOB_NOVICE },
-	{ "Swordman", ITEM_JOB_SWORDMAN },
-	{ "Mage", ITEM_JOB_MAGE },
-	{ "Archer", ITEM_JOB_ARCHER },
-	{ "Acolyte", ITEM_JOB_ACOLYTE },
-	{ "Merchant", ITEM_JOB_MERCHANT },
-	{ "Thief", ITEM_JOB_THIEF },
-	{ "Knight", ITEM_JOB_KNIGHT },
-	{ "Priest", ITEM_JOB_PRIEST },
-	{ "Wizard", ITEM_JOB_WIZARD },
-	{ "Blacksmith", ITEM_JOB_BLACKSMITH },
-	{ "Hunter", ITEM_JOB_HUNTER },
-	{ "Assassin", ITEM_JOB_ASSASSIN },
-	{ "Crusader", ITEM_JOB_CRUSADER },
-	{ "Monk", ITEM_JOB_MONK },
-	{ "Sage", ITEM_JOB_SAGE },
-	{ "Rogue", ITEM_JOB_ROGUE },
-	{ "Alchemist", ITEM_JOB_ALCHEMIST },
-	{ "BardDancer", ITEM_JOB_BARDDANCER }, // Bard and Dancer share the same value
-	{ "Gunslinger", ITEM_JOB_GUNSLINGER },
-	{ "Ninja", ITEM_JOB_NINJA },
-	{ "Taekwon", ITEM_JOB_TAEKWON },
-	{ "StarGladiator", ITEM_JOB_STARGLADIATOR },
-	{ "SoulLinker", ITEM_JOB_SOULLINKER },
-//	{ "Gangsi", ITEM_JOB_GANGSI },
-//	{ "DeathKnight", ITEM_JOB_DEATHKNIGHT },
-//	{ "DarkCollector", ITEM_JOB_DARKCOLLECTOR },
+	{ "Novice", JOB_NOVICE }, // Novice and Super Novice share the same value
+	{ "SuperNovice", JOB_NOVICE },
+	{ "Swordman", JOB_SWORDMAN },
+	{ "Mage", JOB_MAGE },
+	{ "Archer", JOB_ARCHER },
+	{ "Acolyte", JOB_ACOLYTE },
+	{ "Merchant", JOB_MERCHANT },
+	{ "Thief", JOB_THIEF },
+	{ "Knight", JOB_KNIGHT },
+	{ "Priest", JOB_PRIEST },
+	{ "Wizard", JOB_WIZARD },
+	{ "Blacksmith", JOB_BLACKSMITH },
+	{ "Hunter", JOB_HUNTER },
+	{ "Assassin", JOB_ASSASSIN },
+	{ "Crusader", JOB_CRUSADER },
+	{ "Monk", JOB_MONK },
+	{ "Sage", JOB_SAGE },
+	{ "Rogue", JOB_ROGUE },
+	{ "Alchemist", JOB_ALCHEMIST },
+	{ "BardDancer", JOB_BARD }, // Bard and Dancer share the same value
+	{ "BardDancer", JOB_DANCER },
+	{ "Gunslinger", JOB_GUNSLINGER },
+	{ "Ninja", JOB_NINJA },
+	{ "Taekwon", 21 },
+	{ "StarGladiator", 22 },
+	{ "SoulLinker", 23 },
+//	{ "Gangsi", 26 },
+//	{ "DeathKnight", 27 },
+//	{ "DarkCollector", 28 },
 #ifdef RENEWAL
-	{ "KagerouOboro", ITEM_JOB_KAGEROUOBORO }, // Kagerou and Oboro share the same value
-	{ "Rebellion", ITEM_JOB_REBELLION },
-	{ "Summoner", ITEM_JOB_SUMMONER },
-//	{ "StarEmperor", ITEM_JOB_32 },
-//	{ "SoulReaper", ITEM_JOB_33 },
+	{ "KagerouOboro", 29 }, // Kagerou and Oboro share the same value
+	{ "KagerouOboro", 29 },
+	{ "Rebellion", 30 },
+	{ "Summoner", 31 },
 #endif
 };
 
@@ -415,7 +416,7 @@ int do_init( int argc, char** argv ){
 		parse_item_constants_yml(path_db_import, "item_db.yml");
 	} else {
 		parse_item_constants_txt( ( path_db_mode + "item_db.txt" ).c_str() );
-		parse_item_constants_txt( ( path_db_import + "/item_db.txt" ).c_str() );
+		parse_item_constants_txt( ( path_db_import + "item_db.txt" ).c_str() );
 	}
 	sv_readdb( path_db_mode.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false );
 	sv_readdb( path_db_import.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false );
@@ -3082,12 +3083,23 @@ static bool itemdb_read_db(const char* file) {
 				body << YAML::BeginMap;
 				body << YAML::Key << "All" << YAML::Value << "true";
 				body << YAML::Key << "Novice" << YAML::Value << "false";
+				body << YAML::Key << "SuperNovice" << YAML::Value << "false";
 				body << YAML::EndMap;
 			} else {
 				body << YAML::Key << "Jobs";
 				body << YAML::BeginMap;
-				for (const auto& it : um_mapid2jobname) {
+
+				bool hasBard = false, hasKagerou = false;
+
+				for (const auto &it : um_mapid2jobname) {
 					uint64 job_mask = 1ULL << it.second;
+
+					if ((temp_mask & JOB_BARD) == JOB_BARD)
+						hasBard = true;
+					if ((temp_mask & JOB_KAGEROU) == JOB_KAGEROU)
+						hasKagerou = true;
+					if ((hasBard && (temp_mask & JOB_DANCER) == JOB_DANCER) || (hasKagerou && (temp_mask & JOB_OBORO) == JOB_OBORO))
+						continue;
 
 					if ((temp_mask & job_mask) == job_mask)
 						body << YAML::Key << it.first << YAML::Value << "true";

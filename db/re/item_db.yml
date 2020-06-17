@@ -1572,6 +1572,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Summoner: true
+      SuperNovice: true
       Swordman: true
       Taekwon: true
       Thief: true
@@ -4057,6 +4058,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -4083,6 +4085,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -4108,6 +4111,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -4134,6 +4138,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -4160,6 +4165,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -4185,6 +4191,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -4211,6 +4218,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -4237,6 +4245,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -4262,6 +4271,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -4288,6 +4298,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -4314,6 +4325,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -4339,6 +4351,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -4365,6 +4378,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -4391,6 +4405,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -4417,6 +4432,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -4627,6 +4643,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -5175,6 +5192,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -5192,6 +5210,7 @@ Body:
     Slots: 2
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -5209,6 +5228,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Hand: true
     WeaponLevel: 4
@@ -6369,6 +6389,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6404,6 +6425,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6438,6 +6460,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6473,6 +6496,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6508,6 +6532,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6542,6 +6567,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6577,6 +6603,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6612,6 +6639,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6646,6 +6674,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6681,6 +6710,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6716,6 +6746,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6750,6 +6781,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6785,6 +6817,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6820,6 +6853,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6854,6 +6888,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6889,6 +6924,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6924,6 +6960,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -6958,6 +6995,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -7733,6 +7771,7 @@ Body:
     Range: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Hand: true
     WeaponLevel: 1
@@ -7779,6 +7818,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -7796,6 +7836,7 @@ Body:
     Slots: 2
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -7827,6 +7868,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -7863,6 +7905,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -7899,6 +7942,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -9044,6 +9088,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -9070,6 +9115,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -9095,6 +9141,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -9120,6 +9167,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -9207,6 +9255,7 @@ Body:
     Range: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Hand: true
     WeaponLevel: 4
@@ -9231,6 +9280,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -9312,6 +9362,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -9347,6 +9398,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -9485,6 +9537,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -9541,32 +9594,7 @@ Body:
     Range: 1
     Slots: 1
     Jobs:
-      Acolyte: true
-      Archer: true
-      Assassin: true
-      BardDancer: true
-      Blacksmith: true
-      Crusader: true
-      Gunslinger: true
-      Hunter: true
-      KagerouOboro: true
-      Knight: true
-      Mage: true
-      Merchant: true
-      Monk: true
-      Ninja: true
-      Novice: true
-      Priest: true
-      Rebellion: true
-      Rogue: true
-      Sage: true
-      SoulLinker: true
-      StarGladiator: true
-      Summoner: true
-      Swordman: true
-      Taekwon: true
-      Thief: true
-      Wizard: true
+      {}
     Classes:
       Third: true
       Third_High: true
@@ -9672,32 +9700,7 @@ Body:
     Range: 1
     Slots: 2
     Jobs:
-      Acolyte: true
-      Alchemist: true
-      Archer: true
-      Assassin: true
-      BardDancer: true
-      Crusader: true
-      Gunslinger: true
-      Hunter: true
-      KagerouOboro: true
-      Knight: true
-      Mage: true
-      Merchant: true
-      Monk: true
-      Ninja: true
-      Novice: true
-      Priest: true
-      Rebellion: true
-      Rogue: true
-      Sage: true
-      SoulLinker: true
-      StarGladiator: true
-      Summoner: true
-      Swordman: true
-      Taekwon: true
-      Thief: true
-      Wizard: true
+      {}
     Classes:
       Third: true
       Third_High: true
@@ -13151,6 +13154,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -13177,6 +13181,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -13202,6 +13207,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -13228,6 +13234,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -13254,6 +13261,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -13279,6 +13287,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -13305,6 +13314,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -13331,6 +13341,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -13357,6 +13368,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -14123,6 +14135,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -14158,6 +14171,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -14217,6 +14231,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -14240,6 +14255,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -15371,6 +15387,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -15398,6 +15415,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -15423,6 +15441,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -15447,6 +15466,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -15472,6 +15492,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -15499,6 +15520,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -15525,6 +15547,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -15899,6 +15922,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -15919,6 +15943,7 @@ Body:
     Slots: 2
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Hand: true
     WeaponLevel: 3
@@ -16400,6 +16425,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -16692,6 +16718,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -16778,6 +16805,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -16842,6 +16870,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -17141,6 +17170,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -17230,6 +17260,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -17258,6 +17289,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -17359,6 +17391,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -17430,6 +17463,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -17457,6 +17491,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -22874,6 +22909,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -22908,6 +22944,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -23528,6 +23565,7 @@ Body:
     Defense: 20
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Left_Hand: true
     View: 1
@@ -23550,6 +23588,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Left_Hand: true
     EquipLevelMin: 40
@@ -23568,6 +23607,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Left_Hand: true
     EquipLevelMin: 65
@@ -23586,6 +23626,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Left_Hand: true
     EquipLevelMin: 65
@@ -23603,6 +23644,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Left_Hand: true
     EquipLevelMin: 20
@@ -23701,6 +23743,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -23722,6 +23765,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -23743,6 +23787,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -23764,6 +23809,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -23784,6 +23830,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Left_Hand: true
     EquipLevelMin: 1
@@ -24007,6 +24054,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -24190,6 +24238,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -24347,6 +24396,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Left_Hand: true
     Refineable: true
@@ -24747,6 +24797,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Left_Hand: true
@@ -24816,6 +24867,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Left_Hand: true
     EquipLevelMin: 99
@@ -25243,6 +25295,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -25258,6 +25311,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -25491,6 +25545,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Gender: Female
     Location:
       Head_Top: true
@@ -25509,6 +25564,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Gender: Male
     Location:
       Head_Top: true
@@ -25609,6 +25665,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -25625,6 +25682,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -25639,6 +25697,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 40
@@ -25656,6 +25715,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -25670,6 +25730,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -25684,6 +25745,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -25700,6 +25762,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 34
@@ -25762,6 +25825,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -25778,6 +25842,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -25865,6 +25930,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     View: 47
@@ -25907,6 +25973,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     View: 50
@@ -25959,6 +26026,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     View: 54
@@ -25973,6 +26041,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     View: 55
@@ -25987,6 +26056,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     View: 56
@@ -26001,6 +26071,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     View: 57
@@ -26016,6 +26087,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 58
@@ -26040,6 +26112,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -26055,6 +26128,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -26143,6 +26217,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
       Head_Mid: true
@@ -26181,6 +26256,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -26195,6 +26271,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 30
@@ -26211,6 +26288,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     EquipLevelMin: 70
@@ -26225,6 +26303,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -26241,6 +26320,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
       Head_Mid: true
@@ -26275,6 +26355,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     View: 78
@@ -26328,6 +26409,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     View: 82
@@ -26360,6 +26442,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
       Head_Mid: true
@@ -26468,6 +26551,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     Refineable: true
@@ -26482,6 +26566,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     Refineable: true
@@ -26495,6 +26580,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     Refineable: true
@@ -26509,6 +26595,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     Refineable: true
@@ -26523,6 +26610,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 30
@@ -26669,6 +26757,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 60
@@ -26686,6 +26775,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     Refineable: true
@@ -27009,6 +27099,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     Refineable: true
@@ -27034,6 +27125,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Armor: true
     EquipLevelMin: 10
@@ -27113,6 +27205,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 45
@@ -27150,6 +27243,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 45
@@ -27187,6 +27281,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 45
@@ -27224,6 +27319,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 45
@@ -27239,6 +27335,7 @@ Body:
     Defense: 25
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Armor: true
     Trade:
@@ -27261,6 +27358,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 65
@@ -27275,6 +27373,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 54
@@ -27291,6 +27390,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Armor: true
     EquipLevelMin: 40
@@ -27324,6 +27424,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -27399,6 +27500,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 1
@@ -27414,6 +27516,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 1
@@ -27428,6 +27531,7 @@ Body:
     Weight: 500
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Armor: true
     EquipLevelMin: 1
@@ -27469,6 +27573,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -27489,6 +27594,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -27545,6 +27651,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     Trade:
@@ -28122,6 +28229,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 81
@@ -28146,6 +28254,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 61
@@ -28169,6 +28278,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     Refineable: true
@@ -28193,6 +28303,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     Refineable: true
@@ -28235,6 +28346,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -28274,6 +28386,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     Refineable: true
@@ -28288,6 +28401,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     Refineable: true
@@ -28356,6 +28470,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Gender: Female
     Location:
       Shoes: true
@@ -28382,6 +28497,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     Refineable: true
@@ -28451,6 +28567,7 @@ Body:
     Defense: 5
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Shoes: true
     Trade:
@@ -28473,6 +28590,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Gender: Female
     Location:
       Shoes: true
@@ -28490,6 +28608,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Shoes: true
     EquipLevelMin: 40
@@ -28506,6 +28625,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     EquipLevelMin: 65
@@ -28522,6 +28642,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     EquipLevelMin: 65
@@ -28538,6 +28659,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     EquipLevelMin: 54
@@ -28554,6 +28676,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Shoes: true
     EquipLevelMin: 25
@@ -28570,6 +28693,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -28611,6 +28735,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -28631,6 +28756,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -28650,6 +28776,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -28668,6 +28795,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -28705,6 +28833,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     Trade:
@@ -28798,6 +28927,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     Refineable: true
@@ -28845,6 +28975,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -29074,6 +29205,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     EquipLevelMin: 81
@@ -29097,6 +29229,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     EquipLevelMin: 61
@@ -29121,6 +29254,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     Refineable: true
@@ -29144,6 +29278,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     Refineable: true
@@ -29168,6 +29303,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -29196,6 +29332,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -29340,6 +29477,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     Refineable: true
@@ -29790,6 +29928,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Shoes: true
@@ -29807,6 +29946,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     EquipLevelMin: 75
@@ -29824,6 +29964,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     EquipLevelMin: 60
@@ -29841,6 +29982,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     EquipLevelMin: 65
@@ -29858,6 +30000,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     EquipLevelMin: 65
@@ -29902,6 +30045,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     EquipLevelMin: 54
@@ -29919,6 +30063,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Gender: Female
     Location:
       Shoes: true
@@ -29999,6 +30144,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Shoes: true
@@ -30059,6 +30205,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     Refineable: true
@@ -30073,6 +30220,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     Refineable: true
@@ -30131,6 +30279,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 40
@@ -30147,6 +30296,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     Refineable: true
@@ -30179,6 +30329,7 @@ Body:
     Defense: 4
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Garment: true
     Trade:
@@ -30202,6 +30353,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 75
@@ -30218,6 +30370,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Garment: true
     EquipLevelMin: 40
@@ -30235,6 +30388,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 80
@@ -30288,6 +30442,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 65
@@ -30304,6 +30459,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 65
@@ -30320,6 +30476,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 33
@@ -30336,6 +30493,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 61
@@ -30352,6 +30510,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 54
@@ -30368,6 +30527,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Garment: true
     EquipLevelMin: 20
@@ -30409,6 +30569,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -30428,6 +30589,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 40
@@ -30458,6 +30620,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -30478,6 +30641,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -30497,6 +30661,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -30517,6 +30682,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -30589,6 +30755,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     Trade:
@@ -30658,6 +30825,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 60
@@ -30811,6 +30979,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -30931,6 +31100,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -30958,6 +31128,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 81
@@ -30993,6 +31164,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -31058,6 +31230,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -31077,6 +31250,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -31199,6 +31373,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     Refineable: true
@@ -31296,6 +31471,7 @@ Body:
     Jobs:
       Archer: true
       Novice: true
+      SuperNovice: true
       Thief: true
     Classes:
       Normal: true
@@ -31593,6 +31769,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 95
@@ -31624,6 +31801,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 40
@@ -31744,6 +31922,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 54
@@ -31759,6 +31938,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -31774,6 +31954,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -31789,6 +31970,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -31804,6 +31986,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -31819,6 +32002,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -31846,6 +32030,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -31906,6 +32091,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -31922,6 +32108,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -31937,6 +32124,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -31953,6 +32141,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -31969,6 +32158,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32018,6 +32208,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32034,6 +32225,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32050,6 +32242,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32066,6 +32259,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32082,6 +32276,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32098,6 +32293,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32124,6 +32320,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32174,6 +32371,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32189,6 +32387,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32289,6 +32488,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32416,6 +32616,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32431,6 +32632,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32446,6 +32648,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32461,6 +32664,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32516,6 +32720,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32709,6 +32914,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32752,6 +32958,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32838,6 +33045,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -32851,6 +33059,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33031,6 +33240,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33047,6 +33257,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33063,6 +33274,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33079,6 +33291,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33094,6 +33307,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     EquipLevelMin: 1
@@ -33119,6 +33333,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 1
@@ -33143,6 +33358,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33167,6 +33383,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33191,6 +33408,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33215,6 +33433,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33239,6 +33458,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33263,6 +33483,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33287,6 +33508,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33311,6 +33533,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33336,6 +33559,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33361,6 +33585,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33386,6 +33611,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33411,6 +33637,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33454,6 +33681,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -33473,6 +33701,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -33492,6 +33721,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -33623,6 +33853,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -33970,6 +34201,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -34016,6 +34248,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -34040,6 +34273,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -34064,6 +34298,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -34109,6 +34344,7 @@ Body:
     Defense: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -34129,6 +34365,7 @@ Body:
     Defense: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -34151,6 +34388,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -34166,6 +34404,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -34703,6 +34942,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -34857,6 +35097,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -34880,6 +35121,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -34903,6 +35145,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -35074,6 +35317,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -35285,6 +35529,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -35722,6 +35967,7 @@ Body:
     Weight: 100
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -35744,6 +35990,7 @@ Body:
     Weight: 100
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -35766,6 +36013,7 @@ Body:
     Weight: 100
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -35788,6 +36036,7 @@ Body:
     Weight: 100
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -35810,6 +36059,7 @@ Body:
     Weight: 100
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -35832,6 +36082,7 @@ Body:
     Weight: 100
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -35917,6 +36168,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -35994,6 +36246,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36008,6 +36261,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36023,6 +36277,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36037,6 +36292,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36051,6 +36307,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36065,6 +36322,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36079,6 +36337,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36103,6 +36362,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36179,6 +36439,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36193,6 +36454,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36208,6 +36470,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36222,6 +36485,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36236,6 +36500,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36250,6 +36515,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36266,6 +36532,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36283,6 +36550,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36504,6 +36772,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36519,6 +36788,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36963,6 +37233,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36977,6 +37248,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -36993,6 +37265,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -37009,6 +37282,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -37394,6 +37668,7 @@ Body:
     Weight: 100
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -37415,6 +37690,7 @@ Body:
     Weight: 100
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -37436,6 +37712,7 @@ Body:
     Weight: 100
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -37621,6 +37898,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -37864,6 +38142,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -48999,6 +49278,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -49040,6 +49320,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -49055,6 +49336,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     View: 90
@@ -49070,6 +49352,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
       Head_Mid: true
@@ -49086,6 +49369,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     View: 92
@@ -49099,6 +49383,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 55
@@ -49116,6 +49401,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 94
@@ -49129,6 +49415,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -49167,6 +49454,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -49219,6 +49507,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -49271,6 +49560,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -49401,6 +49691,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 50
@@ -49446,6 +49737,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -49461,6 +49753,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 40
@@ -49503,6 +49796,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -49517,6 +49811,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 50
@@ -49531,6 +49826,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -49545,6 +49841,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 38
@@ -49560,6 +49857,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 10
@@ -49586,6 +49884,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 64
@@ -49632,6 +49931,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 14
@@ -49647,6 +49947,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     EquipLevelMin: 20
@@ -49708,6 +50009,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -49803,6 +50105,7 @@ Body:
     Defense: 6
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Head_Top: true
     View: 101
@@ -49837,6 +50140,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -49903,6 +50207,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -49942,6 +50247,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 70
@@ -49959,6 +50265,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -49988,6 +50295,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -50004,6 +50312,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -50020,6 +50329,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -50036,6 +50346,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 70
@@ -50053,6 +50364,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -50154,6 +50466,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 75
@@ -50196,6 +50509,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -50223,6 +50537,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
       Head_Mid: true
@@ -50283,6 +50598,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
       Head_Top: true
@@ -50334,6 +50650,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
       Head_Top: true
@@ -50353,6 +50670,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
       Head_Top: true
@@ -50456,6 +50774,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 30
@@ -50471,6 +50790,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     View: 187
@@ -50575,6 +50895,7 @@ Body:
     Defense: 8
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Head_Top: true
     EquipLevelMin: 40
@@ -50661,6 +50982,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Head_Top: true
     EquipLevelMin: 40
@@ -50690,6 +51012,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
       Head_Top: true
@@ -50708,6 +51031,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 65
@@ -50726,6 +51050,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 65
@@ -50743,6 +51068,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 65
@@ -50760,6 +51086,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Head_Top: true
     EquipLevelMin: 50
@@ -50777,6 +51104,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 33
@@ -50794,6 +51122,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 61
@@ -50811,6 +51140,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 54
@@ -50936,6 +51266,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     EquipLevelMin: 75
@@ -50966,6 +51297,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 30
@@ -51029,6 +51361,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 30
@@ -51073,6 +51406,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Gender: Male
     Location:
       Head_Low: true
@@ -51338,6 +51672,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 40
@@ -51429,6 +51764,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -51446,6 +51782,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Gender: Female
     Location:
       Head_Top: true
@@ -51465,6 +51802,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Gender: Male
     Location:
       Head_Top: true
@@ -51546,6 +51884,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -51563,6 +51902,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -51762,6 +52102,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 30
@@ -52064,6 +52405,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     View: 259
@@ -52091,6 +52433,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 40
@@ -52108,6 +52451,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -52199,6 +52543,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -52215,6 +52560,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -52266,6 +52612,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -52281,6 +52628,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     View: 55
@@ -52324,6 +52672,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
       Head_Top: true
@@ -52342,6 +52691,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
       Head_Top: true
@@ -52391,6 +52741,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 64
@@ -52408,6 +52759,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 64
@@ -52425,6 +52777,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 64
@@ -52442,6 +52795,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -52458,6 +52812,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -52474,6 +52829,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -52490,6 +52846,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -52506,6 +52863,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -52839,6 +53197,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -52923,6 +53282,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
       Head_Mid: true
@@ -52956,6 +53316,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -53024,6 +53385,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -53180,6 +53542,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -53197,6 +53560,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -53213,6 +53577,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 142
@@ -53258,6 +53623,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 123
@@ -53570,6 +53936,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 45
@@ -53647,6 +54014,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 328
@@ -53904,6 +54272,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -53924,6 +54293,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -54058,6 +54428,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
       Head_Top: true
@@ -54125,6 +54496,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 142
@@ -54149,6 +54521,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 105
@@ -54422,6 +54795,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -54437,6 +54811,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -54454,6 +54829,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -54469,6 +54845,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -54498,6 +54875,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 38
@@ -54633,6 +55011,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 45
@@ -55012,6 +55391,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 50
@@ -55570,6 +55950,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 18
@@ -55629,6 +56010,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
       Head_Mid: true
@@ -55649,6 +56031,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     EquipLevelMin: 50
@@ -55894,6 +56277,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 439
@@ -55909,6 +56293,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 440
@@ -55924,6 +56309,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 441
@@ -55939,6 +56325,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 442
@@ -56063,6 +56450,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -56738,6 +57126,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 102
@@ -56761,6 +57150,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 254
@@ -56842,6 +57232,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -56863,6 +57254,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
       Head_Top: true
@@ -57302,6 +57694,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 30
@@ -57770,6 +58163,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -58627,6 +59021,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -58656,6 +59051,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     View: 55
@@ -58783,6 +59179,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 30
@@ -58823,6 +59220,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 64
@@ -59121,6 +59519,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 1
@@ -59134,6 +59533,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -59149,6 +59549,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     EquipLevelMin: 1
@@ -59163,6 +59564,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -59178,6 +59580,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 41
@@ -59773,6 +60176,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -59955,6 +60359,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 30
@@ -59995,6 +60400,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 64
@@ -60289,6 +60695,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 1
@@ -60302,6 +60709,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -60317,6 +60725,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     EquipLevelMin: 1
@@ -60331,6 +60740,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -60346,6 +60756,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 41
@@ -61641,6 +62052,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 50
@@ -61707,6 +62119,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -94268,6 +94681,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -94304,6 +94718,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -94340,6 +94755,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -94406,6 +94822,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Hand: true
     WeaponLevel: 4
@@ -94727,6 +95144,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -95127,6 +95545,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -95292,6 +95711,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -95337,6 +95757,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -95441,6 +95862,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -95473,6 +95895,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -95505,6 +95928,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -95742,6 +96166,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -95778,6 +96203,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -95819,6 +96245,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -95860,6 +96287,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -96164,6 +96592,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Hand: true
     WeaponLevel: 1
@@ -96196,6 +96625,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -96240,6 +96670,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -96278,6 +96709,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -96378,6 +96810,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -96417,6 +96850,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -96638,6 +97072,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -96760,6 +97195,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -96797,6 +97233,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -96824,6 +97261,7 @@ Body:
       Ninja: true
       Novice: true
       SoulLinker: true
+      SuperNovice: true
       Thief: true
     Location:
       Right_Hand: true
@@ -96898,6 +97336,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -96934,6 +97373,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -101016,6 +101456,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -101052,6 +101493,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -101178,6 +101620,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -101201,6 +101644,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -101237,6 +101681,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -101480,6 +101925,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -101723,6 +102169,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -101747,6 +102194,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -101777,6 +102225,7 @@ Body:
     Jobs:
       Merchant: true
       Novice: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Classes:
@@ -101886,6 +102335,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -102011,6 +102461,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -102039,6 +102490,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -102067,6 +102519,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Classes:
@@ -102114,6 +102567,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -102262,6 +102716,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -118869,6 +119324,7 @@ Body:
       SoulLinker: true
       StarGladiator: true
       Summoner: true
+      SuperNovice: true
       Swordman: true
       Taekwon: true
       Thief: true
@@ -121401,6 +121857,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     Trade:
@@ -121597,6 +122054,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Classes:
       High: true
       Third_High: true
@@ -121651,6 +122109,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 1
@@ -121765,6 +122224,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 1
@@ -121945,6 +122405,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     Refineable: true
@@ -122229,6 +122690,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Armor: true
@@ -122372,6 +122834,7 @@ Body:
     Jobs:
       Archer: true
       Novice: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Classes:
@@ -122482,6 +122945,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Armor: true
@@ -122546,6 +123010,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Armor: true
     EquipLevelMin: 99
@@ -122687,6 +123152,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 80
@@ -123403,6 +123869,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 80
@@ -123828,6 +124295,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Armor: true
     EquipLevelMin: 130
@@ -124212,6 +124680,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -124381,6 +124850,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -124415,6 +124885,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -124440,6 +124911,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -124521,6 +124993,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -124551,6 +125024,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -124578,6 +125052,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -124626,6 +125101,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -124680,6 +125156,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -124747,6 +125224,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -124944,6 +125422,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -125052,6 +125531,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -125080,6 +125560,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -125108,6 +125589,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -125127,6 +125609,7 @@ Body:
     Slots: 2
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Right_Hand: true
     WeaponLevel: 4
@@ -125154,6 +125637,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -125189,6 +125673,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -125216,6 +125701,7 @@ Body:
       Monk: true
       Novice: true
       Priest: true
+      SuperNovice: true
       Swordman: true
     Location:
       Right_Hand: true
@@ -135833,6 +136319,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     EquipLevelMin: 70
@@ -135848,6 +136335,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 30
@@ -135869,6 +136357,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 15
@@ -135916,6 +136405,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     View: 681
@@ -136744,6 +137234,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 100
@@ -136936,6 +137427,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -136952,6 +137444,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -137050,6 +137543,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     View: 47
@@ -137092,6 +137586,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -137307,6 +137802,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     View: 187
@@ -137397,6 +137893,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     EquipLevelMin: 20
@@ -137410,6 +137907,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 20
@@ -137423,6 +137921,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 20
@@ -137438,6 +137937,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -137453,6 +137953,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -137603,6 +138104,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 70
@@ -137716,6 +138218,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -137734,6 +138237,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -137752,6 +138256,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -137768,6 +138273,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -137784,6 +138290,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 20
@@ -137799,6 +138306,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 20
@@ -137814,6 +138322,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 20
@@ -138013,6 +138522,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -138030,6 +138540,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -138047,6 +138558,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -138065,6 +138577,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -138082,6 +138595,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     EquipLevelMin: 20
@@ -138096,6 +138610,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 20
@@ -138109,6 +138624,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 20
@@ -138126,6 +138642,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 60
@@ -138143,6 +138660,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -138161,6 +138679,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -138233,6 +138752,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -138251,6 +138771,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -138268,6 +138789,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     EquipLevelMin: 20
@@ -138283,6 +138805,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 20
@@ -138298,6 +138821,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 20
@@ -138313,6 +138837,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 20
@@ -138385,6 +138910,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -138491,6 +139017,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 1
@@ -138509,6 +139036,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -138527,6 +139055,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -138545,6 +139074,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -138562,6 +139092,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -138578,6 +139109,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 20
@@ -138591,6 +139123,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 20
@@ -138631,6 +139164,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 70
@@ -138685,6 +139219,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -138702,6 +139237,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -138719,6 +139255,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 20
@@ -138737,6 +139274,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -138752,6 +139290,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 20
@@ -138766,6 +139305,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     EquipLevelMin: 20
@@ -138779,6 +139319,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
     EquipLevelMin: 20
@@ -138824,6 +139365,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
       Head_Top: true
@@ -138987,6 +139529,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Head_Top: true
@@ -139181,6 +139724,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 99
@@ -139317,6 +139861,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -139334,6 +139879,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -139365,6 +139911,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 99
@@ -139578,6 +140125,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Head_Top: true
     EquipLevelMin: 99
@@ -139738,6 +140286,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 45
@@ -139839,6 +140388,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -139894,6 +140444,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -139911,6 +140462,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -139928,6 +140480,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -139945,6 +140498,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     Refineable: true
@@ -142004,6 +142558,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     View: 82
@@ -142020,6 +142575,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Low: true
       Head_Mid: true
@@ -142037,6 +142593,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     EquipLevelMin: 20
@@ -142052,6 +142609,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     View: 92
@@ -142264,6 +142822,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     EquipLevelMin: 50
@@ -142328,6 +142887,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Mid: true
     View: 78
@@ -142359,6 +142919,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 45
@@ -143301,6 +143862,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Head_Top: true
     EquipLevelMin: 100
@@ -143372,6 +143934,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 99
@@ -143395,6 +143958,7 @@ Body:
       Merchant: true
       Novice: true
       Rogue: true
+      SuperNovice: true
       Swordman: true
       Thief: true
     Location:
@@ -143637,6 +144201,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 120
@@ -143654,6 +144219,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Head_Top: true
     EquipLevelMin: 130
@@ -144999,6 +145565,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Costume_Head_Top: true
       Costume_Head_Mid: true
@@ -152324,6 +152891,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Garment: true
@@ -152395,6 +152963,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Garment: true
     EquipLevelMin: 99
@@ -153293,6 +153862,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 99
@@ -153309,6 +153879,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 100
@@ -153440,6 +154011,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 130
@@ -153596,6 +154168,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 99
@@ -153613,6 +154186,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Garment: true
     EquipLevelMin: 99
@@ -154542,6 +155116,7 @@ Body:
     Slots: 1
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Shoes: true
     EquipLevelMin: 99
@@ -154807,6 +155382,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     EquipLevelMin: 1
@@ -155459,6 +156035,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     EquipLevelMin: 99
@@ -155610,6 +156187,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Shoes: true
     EquipLevelMin: 130
@@ -161989,6 +162567,7 @@ Body:
     Type: Shadowgear
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Shadow_Weapon: true
     EquipLevelMin: 1
@@ -162581,6 +163160,7 @@ Body:
     Buy: 10
     Jobs:
       Novice: true
+      SuperNovice: true
     Location:
       Shadow_Shield: true
     EquipLevelMin: 1
@@ -165597,6 +166177,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -165676,6 +166257,7 @@ Body:
       Priest: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Wizard: true
     Location:
       Right_Hand: true
@@ -170482,6 +171064,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true
@@ -171023,6 +171606,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -171069,6 +171653,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -171106,6 +171691,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -171144,6 +171730,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      SuperNovice: true
       Swordman: true
       Thief: true
       Wizard: true
@@ -178819,6 +179406,7 @@ Body:
     Jobs:
       All: true
       Novice: false
+      SuperNovice: false
     Location:
       Right_Accessory: true
       Left_Accessory: true

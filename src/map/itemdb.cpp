@@ -31,7 +31,7 @@ static DBMap *itemdb_randomopt_group; /// Random option group DB
 
 struct s_roulette_db rd;
 
-static void itemdb_jobid2mapid(uint64 *bclass, uint64 jobmask, bool active);
+static void itemdb_jobid2mapid(uint64 bclass[3], e_mapid jobmask, bool active);
 static char itemdb_gendercheck(struct item_data *id);
 
 const std::string ItemDatabase::getDefaultLocation() {
@@ -284,7 +284,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			if (!this->asBool(jobNode, "All", active))
 				return 0;
 
-			itemdb_jobid2mapid(item->class_base, UINT64_MAX, active);
+			itemdb_jobid2mapid(item->class_base, static_cast<e_mapid>(MAPID_ALL), active);
 		}
 
 		for (const auto &jobit : jobNode) {
@@ -294,12 +294,12 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			if (jobName.compare("All") == 0)
 				continue;
 
-			std::string jobName_constant = "ITEM_JOB_" + jobName;
+			std::string jobName_constant = "EAJ_" + jobName;
 			int64 constant;
 
 			if (!script_get_constant(jobName_constant.c_str(), &constant)) {
 				this->invalidWarning(jobNode[jobName], "Invalid item job %s, defaulting to All.\n", jobName.c_str());
-				itemdb_jobid2mapid(item->class_base, UINT64_MAX, true);
+				itemdb_jobid2mapid(item->class_base, static_cast<e_mapid>(MAPID_ALL), true);
 				break;
 			}
 
@@ -308,13 +308,13 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			if (!this->asBool(jobNode, jobName.c_str(), active))
 				return 0;
 
-			itemdb_jobid2mapid(item->class_base, static_cast<uint64>(1) << constant, active);
+			itemdb_jobid2mapid(item->class_base, static_cast<e_mapid>(1 << constant), active);
 		}
 	} else {
 		if (!exists) {
 			item->class_base[0] = item->class_base[1] = item->class_base[2] = 0;
 
-			itemdb_jobid2mapid(item->class_base, UINT64_MAX, true);
+			itemdb_jobid2mapid(item->class_base, static_cast<e_mapid>(MAPID_ALL), true);
 		}
 	}
 
@@ -328,9 +328,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (active)
-				item->class_upper |= ITEMJ_MAX;
+				item->class_upper |= ITEMJ_ALL;
 			else
-				item->class_upper &= ~ITEMJ_MAX;
+				item->class_upper &= ~ITEMJ_ALL;
 		}
 
 		for (const auto &classit : classNode) {
@@ -345,7 +345,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 			if (!script_get_constant(className_constant.c_str(), &constant)) {
 				this->invalidWarning(classNode[className], "Invalid class upper %s, defaulting to All.\n", className.c_str());
-				item->class_upper |= ITEMJ_MAX;
+				item->class_upper |= ITEMJ_ALL;
 				break;
 			}
 
@@ -361,7 +361,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 	} else {
 		if (!exists)
-			item->class_upper = ITEMJ_MAX;
+			item->class_upper = ITEMJ_ALL;
 	}
 
 	if (this->nodeExists(node, "Gender")) {
@@ -1318,68 +1318,18 @@ const char* itemdb_typename(enum item_types type)
  * @param active: Whether the flag is active or not
  * @author: Skotlex
  */
-static void itemdb_jobid2mapid(uint64 *bclass, uint64 jobmask, bool active)
+static void itemdb_jobid2mapid(uint64 bclass[3], e_mapid jobmask, bool active)
 {
 	uint64 temp_mask[3] = { 0 };
 
-	// Base classes
-	if (jobmask & 1ULL << ITEM_JOB_NOVICE) { // Both Novice/Super-Novice are counted with the same ID
-		temp_mask[0] |= 1ULL << MAPID_NOVICE;
-		temp_mask[1] |= 1ULL << MAPID_NOVICE;
+	if (jobmask != MAPID_ALL) {
+		// Needs to be shifted by 1ULL, because Novice is 0
+		temp_mask[0] |= (jobmask & MAPID_BASEMASK) << 1ULL;
+		temp_mask[1] |= (jobmask & JOBL_2_1) << 1ULL;
+		temp_mask[2] |= (jobmask & JOBL_2_2) << 1ULL;
+	} else {
+		temp_mask[0] = temp_mask[1] = temp_mask[2] = MAPID_ALL;
 	}
-	for (int i = ITEM_JOB_NOVICE + 1; i <= ITEM_JOB_THIEF; i++) {
-		if (jobmask & 1ULL << i)
-			temp_mask[0] |= 1ULL << (MAPID_NOVICE + i);
-	}
-	// 2-1 classes
-	if (jobmask & 1ULL << ITEM_JOB_KNIGHT)
-		temp_mask[1] |= 1ULL << MAPID_SWORDMAN;
-	if (jobmask & 1ULL << ITEM_JOB_PRIEST)
-		temp_mask[1] |= 1ULL << MAPID_ACOLYTE;
-	if (jobmask & 1ULL << ITEM_JOB_WIZARD)
-		temp_mask[1] |= 1ULL << MAPID_MAGE;
-	if (jobmask & 1ULL << ITEM_JOB_BLACKSMITH)
-		temp_mask[1] |= 1ULL << MAPID_MERCHANT;
-	if (jobmask & 1ULL << ITEM_JOB_HUNTER)
-		temp_mask[1] |= 1ULL << MAPID_ARCHER;
-	if (jobmask & 1ULL << ITEM_JOB_ASSASSIN)
-		temp_mask[1] |= 1ULL << MAPID_THIEF;
-	// 2-2 classes
-	if (jobmask & 1ULL << ITEM_JOB_CRUSADER)
-		temp_mask[2] |= 1ULL << MAPID_SWORDMAN;
-	if (jobmask & 1ULL << ITEM_JOB_MONK)
-		temp_mask[2] |= 1ULL << MAPID_ACOLYTE;
-	if (jobmask & 1ULL << ITEM_JOB_SAGE)
-		temp_mask[2] |= 1ULL << MAPID_MAGE;
-	if (jobmask & 1ULL << ITEM_JOB_ALCHEMIST)
-		temp_mask[2] |= 1ULL << MAPID_MERCHANT;
-	if (jobmask & 1ULL << ITEM_JOB_BARDDANCER)
-		temp_mask[2] |= 1ULL << MAPID_ARCHER; // Bard/Dancer share the same slot.
-	if (jobmask & 1ULL << ITEM_JOB_ROGUE)
-		temp_mask[2] |= 1ULL << MAPID_THIEF;
-	// Extended classes
-	if (jobmask & 1ULL << ITEM_JOB_TAEKWON)
-		temp_mask[0] |= 1ULL << MAPID_TAEKWON;
-	if (jobmask & 1ULL << ITEM_JOB_STARGLADIATOR)
-		temp_mask[1] |= 1ULL << MAPID_TAEKWON;
-	if (jobmask & 1ULL << ITEM_JOB_SOULLINKER)
-		temp_mask[2] |= 1ULL << MAPID_TAEKWON;
-	if (jobmask & 1ULL << ITEM_JOB_GUNSLINGER)
-		temp_mask[0] |= 1ULL << MAPID_GUNSLINGER;
-	if (jobmask & 1ULL << ITEM_JOB_NINJA)
-		temp_mask[0] |= 1ULL << MAPID_NINJA;
-	if (jobmask & 1ULL << ITEM_JOB_GANGSI)
-		temp_mask[0] |= 1ULL << MAPID_GANGSI;
-	if (jobmask & 1ULL << ITEM_JOB_DEATHKNIGHT)
-		temp_mask[1] |= 1ULL << MAPID_GANGSI;
-	if (jobmask & 1ULL << ITEM_JOB_DARKCOLLECTOR)
-		temp_mask[2] |= 1ULL << MAPID_GANGSI;
-	if (jobmask & 1ULL << ITEM_JOB_KAGEROUOBORO)
-		temp_mask[1] |= 1ULL << MAPID_NINJA;
-	if (jobmask & 1ULL << ITEM_JOB_REBELLION)
-		temp_mask[1] |= 1ULL << MAPID_GUNSLINGER;
-	if (jobmask & 1ULL << ITEM_JOB_SUMMONER)
-		temp_mask[0] |= 1ULL << MAPID_SUMMONER;
 
 	for (int i = 0; i < ARRAYLENGTH(temp_mask); i++) {
 		if (temp_mask[i] == 0)
