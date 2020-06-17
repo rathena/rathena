@@ -17968,6 +17968,22 @@ void clif_instance_changestatus(int instance_id, e_instance_notify type, unsigne
 	return;
 }
 
+/// Destroy an instance from the status window
+/// 02cf <command>.L (CZ_MEMORIALDUNGEON_COMMAND)
+void clif_parse_MemorialDungeonCommand(int fd, map_session_data *sd)
+{
+	if (pc_istrading(sd) || pc_isdead(sd) || map_getmapdata(sd->bl.m)->instance_id > 0)
+		return;
+
+	const PACKET_CZ_MEMORIALDUNGEON_COMMAND *p = (PACKET_CZ_MEMORIALDUNGEON_COMMAND *)RFIFOP(fd, 0);
+
+	switch (p->command) {
+		case COMMAND_MEMORIALDUNGEON_DESTROY_FORCE:
+			instance_destroy_command(sd);
+			break;
+	}
+}
+
 /// Notifies clients about item picked up by a party member.
 /// 02b8 <account id>.L <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B (ZC_ITEM_PICKUP_PARTY)
 void clif_party_show_picker( struct map_session_data* sd, struct item* item_data ){
@@ -19047,6 +19063,15 @@ static void clif_loadConfirm( struct map_session_data *sd ){
 	p.packetType = HEADER_ZC_LOAD_CONFIRM;
 
 	clif_send( &p, sizeof(p), &sd->bl, SELF );
+
+	if (sd->instance_id > 0)
+		instance_reqinfo(sd, sd->instance_id);
+	if (sd->status.party_id > 0)
+		party_member_joined(sd);
+	if (sd->status.guild_id > 0)
+		guild_member_joined(sd);
+	if (sd->status.clan_id > 0)
+		clan_member_joined(sd);
 #endif
 }
 

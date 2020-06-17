@@ -24,6 +24,7 @@
 #include "vending.hpp" // struct s_vending
 
 enum AtCommandType : uint8;
+enum e_instance_mode : uint8;
 //enum e_log_chat_type : uint8;
 enum e_log_pick_type : uint32;
 enum sc_type : int16;
@@ -762,7 +763,9 @@ struct map_session_data {
 		t_tick tick;
 	} roulette;
 
-	unsigned short instance_id;
+	int instance_id;
+	e_instance_mode instance_mode; ///< Mode of instance player last leaves from (used for instance destruction button)
+
 	short setlook_head_top, setlook_head_mid, setlook_head_bottom, setlook_robe; ///< Stores 'setlook' script command values.
 
 #if PACKETVER >= 20150513
