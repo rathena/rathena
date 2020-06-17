@@ -682,6 +682,7 @@ struct Battle_Config
 	int ping_time;
 	int show_skill_scale;
 	int achievement_mob_share;
+	int slave_stick_with_master;
 
 #include "../custom/battle_config_struct.inc"
 };
