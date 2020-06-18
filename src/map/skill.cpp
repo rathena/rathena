@@ -18060,7 +18060,7 @@ int skill_detonator(struct block_list *bl, va_list ap)
 		return 0;
 
 	int unit_id = group->unit_id;
-	int16 skill_id = group->skill_id, skill_lv = group->skill_lv;
+	uint16 skill_id = group->skill_id, skill_lv = group->skill_lv;
 
 	switch( unit_id )
 	{ //List of Hunter and Ranger Traps that can be detonate.
