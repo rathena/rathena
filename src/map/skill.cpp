@@ -5750,15 +5750,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case WL_RELEASE:
-		if( sd )
-		{
+		if (sc == nullptr)
+			break;
+		if (sd) {
 			int i;
 
 			skill_toggle_magicpower(src, skill_id); // No hit will be amplified
 			if (skill_lv == 1) { // SpellBook
-				if (sc == nullptr)
-					break;
-
 				if (sc->data[SC_FREEZE_SP] == nullptr)
 					break;
 
@@ -5813,9 +5811,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 				if( cooldown > 0 )
 					skill_blockpc_start(sd, pres_skill_id, cooldown);
-			}
-			else
-			{ // Summoned Balls
+			} else { // Summoned Balls
 				for (i = SC_SPHERE_5; i >= SC_SPHERE_1; i--) {
 					if (sc->data[static_cast<sc_type>(i)] == nullptr)
 						continue;
