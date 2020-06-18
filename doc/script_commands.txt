@@ -958,13 +958,6 @@ mapflag for it to work is because, otherwise, it'd be server-wide and trigger
 every time a player would change maps. Imagine the server load with 1,000 players
 (oh the pain...)
 
-OnPCStatCalcEvent:
-
-This special label triggers when a player's stats are recalculated, such as when
-changing stats, equipment, or maps, as well as when logging in, leveling up, and
-mounting a job mount. This can be used to grant additional item bonuses to certain
-player groups, for instance.
-
 OnWhisperGlobal:
 
 This special label triggers when a player whispers the NPC, and will run with the
@@ -2917,6 +2910,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_option_id5[]        - fifth array of random option IDs
 @inventorylist_option_value5[]     - fifth array of random option values
 @inventorylist_option_parameter5[] - fifth array of random option parameters
+@inventorylist_tradable            - Returns if an item is tradable or not (Pass item_trade.txt, bound, and rental restrictions).
 
 This could be handy to save/restore a character's inventory, since no other
 command returns such a complete set of data, and could also be the only way to
@@ -3433,7 +3427,7 @@ recalculating guardians' HP.
 This function returns the level of the skill <skill id> of the guild <guild id>.
 If the guild does not have that skill, 0 is returned.
 If the guild does not exist, -1 is returned.
-Refer to 'db/(pre-)re/skill_db.txt' for the full list of skills. (GD_* are guild skills)
+Refer to 'db/(pre-)re/skill_db.yml' for the full list of skills. (GD_* are guild skills)
 
 ---------------------------------------
 
@@ -3466,7 +3460,7 @@ mes "You have " + getMapGuildUsers("prontera",getcharid(2)) + " guild members in
 
 This function returns the level of the specified skill that the invoking
 character has. If they don't have the skill, 0 will be returned. The full list
-of character skills is available in 'db/(pre-)re/skill_db.txt'.
+of character skills is available in 'db/(pre-)re/skill_db.yml'.
 
 There are two main uses for this function, it can check whether the character
 has a skill or not, and it can tell you if the level is high enough.
@@ -3911,6 +3905,14 @@ Examples:
 
 Returns the time, in seconds, that the specified player has been idle.
 Name is optional, and defaults to the attached player if omitted.
+
+---------------------------------------
+
+*checkidlehom({"<Player Name>"})
+
+Returns the time, in seconds, that the specified player has been idle for homunculus item/exp share.
+Name is optional, and defaults to the attached player if omitted.
+This will only work if 'hom_idle_no_share' and 'idletime_hom_option' are enabled (see '/conf/battle/homunc.conf').
 
 ---------------------------------------
 
@@ -4797,8 +4799,9 @@ for special cases such as removing a status change or resetting a variable or st
 of the player.
 
 This command can not be used to rent stackable items. Rental items cannot be
-dropped, traded, sold to NPCs, or placed in guild storage. (i.e. trade mask 75)
+dropped, traded, or placed in guild storage. (i.e. trade mask 67)
 Note: 'delitem' in an NPC script can still remove rental items.
+Note: 'countitem' will not count any item with a rental timer. Use 'rentalcountitem' instead.
 
 ---------------------------------------
 
@@ -5026,6 +5029,32 @@ cart, storage, or guild storage.
 
 If no cart is mounted, 'cartcountitem2' will return -1.
 If player is not in a guild or storage is open, 'guildstoragecountitem2' will return -1.
+
+---------------------------------------
+
+*rentalcountitem(<item id>{,<accountID>})
+*rentalcountitem("<item name>"{,<accountID>})
+
+This function will return the number of rental items for the specified item ID that the
+invoking character has in the inventory.
+
+---------------------------------------
+
+*rentalcountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*rentalcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*rentalcountitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+*rentalcountitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+
+Expanded version of 'rentalcountitem' function, used for created/carded/forged items.
+
+This function will return the number of rental items for the specified item ID and
+other parameters that the invoking character has in the inventory.
+See 'getitem2' for an explanation of the expanded parameters.
+
+'rentalcountitem3' is advance version of 'rentalcountitem2' that also use Item Random Option as criteria.
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomValueArray> : Array variable of item random option's value.
+<RandomParamArray> : Array variable of item random option's param.
 
 ---------------------------------------
 
@@ -5582,7 +5611,7 @@ levels. This refers to the invoking character and will only work if the invoking
 character is a member of a guild AND its guild master, otherwise no failure
 message will be given and no error will occur, but nothing will happen - same
 about the guild skill trying to exceed the possible maximum. The full list of
-guild skills is available in 'db/(pre-)re/skill_db.txt', these are all the GD_ skills at
+guild skills is available in 'db/(pre-)re/skill_db.yml', these are all the GD_ skills at
 the end.
 
 // This would give your character's guild one level of Approval (GD_APPROVAL ID
@@ -5969,7 +5998,7 @@ These commands will give the invoking character a specified skill. This is also
 used for item scripts.
 
 Level is obvious. Skill id is the ID number of the skill in question as per
-'db/(pre-)re/skill_db.txt'. It is not known for certain whether this can be used to give
+'db/(pre-)re/skill_db.yml'. It is not known for certain whether this can be used to give
 a character a monster's skill, but you're welcome to try with the numbers given
 in 'db/(pre-)re/mob_skill_db.txt'.
 
@@ -6595,13 +6624,14 @@ Returns true if the command was executed on the other NPC successfully, false if
 
 ---------------------------------------
 
-*npctalk "<message>"{,"<NPC name>","<flag>"};
+*npctalk "<message>"{,"<NPC name>",<flag>{,<color>}};
 
 This command will display a message as if the NPC object running it was a player
 talking - that is, above their head and in the chat window.
 The display name of the NPC won't get appended in front of the message.
 If the <NPC name> option is given and not empty, then that NPC will display the message,
-else the attached NPC will display the message.
+else the attached NPC will display the message,
+the color format is in RGB (0xRRGGBB). The color is White by default.
 
 Target for <flag>:
 - bc_all  : Broadcast message is sent server-wide (only in the chat window).
@@ -9391,19 +9421,19 @@ Example:
 
 ---------------------------------------
 
-*bg_reserve("<battleground_name>");
+*bg_reserve("<battleground_map_name>"{,<ended>});
 
-Reserves a slot for the given Battleground for the Battleground UI System.
+Reserves a Battleground map for the Battleground UI System. When a map is booked it prevents another similar
+queue from being created and will allow players to join an active Battlegrounds event.
 
-Note: 'bg_reserve' and 'bg_unbook' prevent the Battlegrounds queue from joining players in an active Battleground.
+If <ended> is true, then the Battleground is marked as over to prevent new players from joining. This state is meant
+for the period where players can get their Badges.
 
 ---------------------------------------
 
-*bg_unbook("<battleground_name>");
+*bg_unbook("<battleground_map_name>");
 
-Removes a spot for the given Battleground for the Battleground UI System.
-
-Note: 'bg_reserve' and 'bg_unbook' prevent the Battlegrounds queue from joining players in an active Battleground.
+Removes a Battleground map for the Battleground UI System. When a map is unbooked it allows a queue to be created.
 
 ---------------------------------------
 
@@ -9700,7 +9730,7 @@ when pet performance is activated.
 
 This will make the pet use a specified support skill on the owner whenever the
 HP and SP are below the given percent values, with a specified delay time
-between activations. The skill numbers are as per 'db/(pre-)re/skill_db.txt'.
+between activations. The skill numbers are as per 'db/(pre-)re/skill_db.yml'.
 
 It's not quite certain who's stats will be used for the skills cast, the
 character's or the pets. Probably, Skotlex can answer that question.

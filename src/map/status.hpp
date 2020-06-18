@@ -921,6 +921,18 @@ enum sc_type : int16 {
 	SC_SOULCURSE,
 
 	SC_HELLS_PLANT,
+	SC_INCREASE_MAXHP, // EFST_ATKER_ASPD
+	SC_INCREASE_MAXSP, // EFST_ATKER_MOVESPEED
+	SC_REF_T_POTION,
+	SC_ADD_ATK_DAMAGE,
+	SC_ADD_MATK_DAMAGE,
+
+	SC_HELPANGEL,
+	SC_SOUNDOFDESTRUCTION,
+
+	SC_LUXANIMA,
+	SC_REUSE_LIMIT_LUXANIMA,
+	SC_ENSEMBLEFATIGUE,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -2023,6 +2035,8 @@ enum efst_types : short{
 
 	EFST_JPNONLY_TACTICS = 1147,
 
+	EFST_MADOGEAR = 1149,
+
 	EFST_LUXANIMA = 1154,
 	EFST_BATH_FOAM_A,
 	EFST_BATH_FOAM_B,
@@ -2082,7 +2096,6 @@ enum e_joint_break : uint8 {
 extern short current_equip_item_index;
 extern unsigned int current_equip_combo_pos;
 extern int current_equip_card_id;
-extern bool running_npc_stat_calc_event;
 extern short current_equip_opt_index;
 
 //Status change option definitions (options are what makes status changes visible to chars
