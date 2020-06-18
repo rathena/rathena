@@ -15923,10 +15923,11 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		case WL_SUMMONBL:
 		case WL_SUMMONWB:
 		case WL_SUMMONSTONE:
-			if( sc ) {
-				ARR_FIND(SC_SPHERE_1,SC_SPHERE_5+1,i,!sc->data[i]);
-				if( i == SC_SPHERE_5+1 ) { // No more free slots
-					clif_skill_fail(sd,skill_id,USESKILL_FAIL_SUMMON,0);
+			if (skill_lv == 1 && sc) { // Failure only happens on level 1
+				ARR_FIND(SC_SPHERE_1, SC_SPHERE_5 + 1, i, !sc->data[i]);
+
+				if (i == SC_SPHERE_5 + 1) { // No more free slots
+					clif_skill_fail(sd, skill_id, USESKILL_FAIL_SUMMON, 0);
 					return false;
 				}
 			}
