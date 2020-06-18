@@ -414,7 +414,7 @@
 29598:26158,{ .@r= getequiprefinerycnt(EQI_HAND_R)/3; bonus2 bSkillAtk,"WL_HELLINFERNO",7*.@r; bonus2 bSkillAtk,"WL_CRIMSONROCK",5*.@r; }
 29599:16095,{ .@r= getequiprefinerycnt(EQI_HAND_R)/3; bonus2 bSkillAtk,"AB_JUDEX",10*.@r; bonus2 bSkillAtk,"AB_DUPLELIGHT",5*.@r; }
 29599:2057,{ .@r= getequiprefinerycnt(EQI_HAND_R)/3; bonus2 bMagicAtkEle,Ele_Holy,5*.@r; bonus2 bSkillAtk,"AB_ADORAMUS",5*.@r; }
-29599:26161,{ .@r= getequiprefinerycnt(EQI_HAND_R)3; bonus2 bSkillAtk,"PR_MAGNUS",10*.@r; bonus2 bSkillAtk,"AB_JUDEX",5*.@r; }
+29599:26161,{ .@r= getequiprefinerycnt(EQI_HAND_R)/3; bonus2 bSkillAtk,"PR_MAGNUS",10*.@r; bonus2 bSkillAtk,"AB_JUDEX",5*.@r; }
 29600:18185,{ .@r= getequiprefinerycnt(EQI_HAND_R)/3; bonus bCritAtkRate,5*.@r; bonus2 bSkillAtk,"SN_SHARPSHOOTING",7*.@r; }
 29600:18186,{ .@r= getequiprefinerycnt(EQI_HAND_R)/3; bonus2 bSkillAtk,"RA_AIMEDBOLT",7*.@r; bonus2 bSkillUseSPrate,"RA_AIMEDBOLT",2*.@r; }
 29600:18187,{ .@r= getequiprefinerycnt(EQI_HAND_R)/3; bonus2 bSkillCooldown,"RA_UNLIMIT",-15000*.@r; bonus2 bSkillUseSPrate,"RA_ARROWSTORM",2*.@r; }

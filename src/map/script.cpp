@@ -6923,9 +6923,10 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
  * @param random_option: If the struct command has random option arguments
  * @param st: Script state (required for random options)
  * @param sd: Player data (required for random options)
+ * @param rental: Whether or not to count rental items
  * @return Total count of item being searched
  */
-int script_countitem_sub(struct item *items, struct item_data *id, int size, bool expanded, bool random_option, struct script_state *st, struct map_session_data *sd) {
+static int script_countitem_sub(struct item *items, struct item_data *id, int size, bool expanded, bool random_option, struct script_state *st, struct map_session_data *sd = nullptr, bool rental = false) {
 	nullpo_retr(-1, items);
 	nullpo_retr(-1, st);
 
@@ -6935,11 +6936,15 @@ int script_countitem_sub(struct item *items, struct item_data *id, int size, boo
 		unsigned short nameid = id->nameid;
 
 		for (int i = 0; i < size; i++) {
-			if (&items[i] && items[i].nameid == nameid && items[i].expire_time == 0)
-				count += items[i].amount;
+			item *itm = &items[i];
+
+			if (itm == nullptr || itm->nameid == 0 || itm->amount < 1 || (!rental && itm->expire_time > 0))
+				continue;
+			if (itm->nameid == nameid)
+				count += itm->amount;
 		}
 	} else { // For expanded functions
-		struct item it;
+		item it;
 
 		memset(&it, 0, sizeof(it));
 
@@ -6965,9 +6970,9 @@ int script_countitem_sub(struct item *items, struct item_data *id, int size, boo
 		}
 
 		for (int i = 0; i < size; i++) {
-			struct item *itm = &items[i];
+			item *itm = &items[i];
 
-			if (!itm || !itm->nameid || itm->amount < 1 || items[i].expire_time > 0)
+			if (itm == nullptr || itm->nameid == 0 || itm->amount < 1 || (!rental && items[i].expire_time > 0))
 				continue;
 			if (itm->nameid != it.nameid || itm->identify != it.identify || itm->refine != it.refine || itm->attribute != it.attribute)
 				continue;
@@ -7073,7 +7078,7 @@ BUILDIN_FUNC(cartcountitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	int count = script_countitem_sub(sd->cart.u.items_cart, id, MAX_CART, (aid > 3) ? true : false, false, st, nullptr);
+	int count = script_countitem_sub(sd->cart.u.items_cart, id, MAX_CART, (aid > 3) ? true : false, false, st);
 	if (count < 0) {
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
@@ -7117,7 +7122,7 @@ BUILDIN_FUNC(storagecountitem)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	int count = script_countitem_sub(sd->storage.u.items_storage, id, MAX_STORAGE, (aid > 3) ? true : false, false, st, nullptr);
+	int count = script_countitem_sub(sd->storage.u.items_storage, id, MAX_STORAGE, (aid > 3) ? true : false, false, st);
 	if (count < 0) {
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
@@ -7165,7 +7170,7 @@ BUILDIN_FUNC(guildstoragecountitem)
 
 	gstor->lock = true;
 
-	int count = script_countitem_sub(gstor->u.items_guild, id, MAX_GUILD_STORAGE, (aid > 3) ? true : false, false, st, nullptr);
+	int count = script_countitem_sub(gstor->u.items_guild, id, MAX_GUILD_STORAGE, (aid > 3) ? true : false, false, st);
 
 	storage_guild_storageclose(sd);
 	gstor->lock = false;
@@ -7175,6 +7180,53 @@ BUILDIN_FUNC(guildstoragecountitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	script_pushint(st, count);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Returns number of rental items in inventory
+ * rentalcountitem(<nameID>{,<accountID>})
+ * rentalcountitem2(<nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
+ * rentalcountitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+ * rentalcountitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+ */
+BUILDIN_FUNC(rentalcountitem)
+{
+	char *command = (char *)script_getfuncname(st);
+	int aid = 3;
+	bool random_option = false;
+
+	if (command[strlen(command) - 1] == '2')
+		aid = 10;
+	else if (command[strlen(command) - 1] == '3') {
+		aid = 13;
+		random_option = true;
+	}
+
+	map_session_data *sd;
+
+	if (!script_accid2sd(aid, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	item_data *id;
+
+	if (script_isstring(st, 2)) // item name
+		id = itemdb_searchname(script_getstr(st, 2));
+	else // item id
+		id = itemdb_exists(script_getnum(st, 2));
+
+	if (!id) {
+		ShowError("buildin_%s: Invalid item '%s'.\n", command, script_getstr(st, 2)); // returns string, regardless of what it was
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int count = script_countitem_sub(sd->inventory.u.items_inventory, id, MAX_INVENTORY, (aid > 3) ? true : false, random_option, st, sd, true);
+	if (count < 0) {
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
 	script_pushint(st, count);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -25310,6 +25362,11 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(cloakoffnpc, "s?"),
 	BUILDIN_DEF(cloakonnpc, "s?"),
 	BUILDIN_DEF(isnpccloaked, "s?"),
+
+	BUILDIN_DEF(rentalcountitem, "v?"),
+	BUILDIN_DEF2(rentalcountitem, "rentalcountitem2", "viiiiiii?"),
+	BUILDIN_DEF2(rentalcountitem, "rentalcountitem3", "viiiiiiirrr?"),
+
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

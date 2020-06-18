@@ -111,7 +111,6 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 			instance->timeout = 300;
 	}
 
-	/*
 	if (this->nodeExists(node, "Destroyable")) {
 		bool destroy;
 
@@ -123,7 +122,6 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!exists)
 			instance->destroyable = true;
 	}
-	*/
 
 	if (this->nodeExists(node, "Enter")) {
 		const YAML::Node &enterNode = node["Enter"];
@@ -539,7 +537,7 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 		return -1;
 	}
 
-	struct map_session_data *sd;
+	struct map_session_data *sd = nullptr;
 	struct party_data *pd;
 	struct guild *gd;
 	struct clan* cd;
@@ -603,14 +601,23 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 			break;
 		case IM_PARTY:
 			pd->instance_id = instance_id;
+			int32 i;
+			ARR_FIND(0, MAX_PARTY, i, pd->party.member[i].leader);
+
+			if (i < MAX_PARTY)
+				sd = map_charid2sd(pd->party.member[i].char_id);
 			break;
 		case IM_GUILD:
 			gd->instance_id = instance_id;
+			sd = map_charid2sd(gd->member[0].char_id);
 			break;
 		case IM_CLAN:
 			cd->instance_id = instance_id;
 			break;
 	}
+
+	if (sd != nullptr)
+		sd->instance_mode = mode;
 
 	instance_wait.id.push_back(instance_id);
 	clif_instance_create(instance_id, instance_wait.id.size());
@@ -740,6 +747,89 @@ int16 instance_mapid(int16 m, int instance_id)
 	}
 
 	return m;
+}
+
+/**
+ * Removes an instance, all its maps, and NPCs invoked by the client button.
+ * @param sd: Player data
+ */
+void instance_destroy_command(map_session_data *sd) {
+	nullpo_retv(sd);
+
+	std::shared_ptr<s_instance_data> idata;
+	int instance_id = 0;
+
+	if (sd->instance_mode == IM_CHAR && sd->instance_id > 0) {
+		idata = util::umap_find(instances, sd->instance_id);
+
+		if (idata == nullptr)
+			return;
+
+		instance_id = sd->instance_id;
+	} else if (sd->instance_mode == IM_PARTY && sd->status.party_id > 0) {
+		party_data *pd = party_search(sd->status.party_id);
+
+		if (pd == nullptr)
+			return;
+
+		idata = util::umap_find(instances, pd->instance_id);
+
+		if (idata == nullptr)
+			return;
+
+		int32 i;
+
+		ARR_FIND(0, MAX_PARTY, i, pd->data[i].sd == sd && pd->party.member[i].leader);
+
+		if (i == MAX_PARTY) // Player is not party leader
+			return;
+
+		instance_id = pd->instance_id;
+	} else if (sd->instance_mode == IM_GUILD && sd->guild != nullptr && sd->guild->instance_id > 0) {
+		guild *gd = guild_search(sd->status.guild_id);
+
+		if (gd == nullptr)
+			return;
+
+		idata = util::umap_find(instances, gd->instance_id);
+
+		if (idata == nullptr)
+			return;
+
+		if (strcmp(sd->status.name, gd->master) != 0) // Player is not guild master
+			return;
+
+		instance_id = gd->instance_id;
+	}
+
+	if (instance_id == 0) // Checks above failed
+		return;
+
+	if (!instance_db.find(idata->id)->destroyable) // Instance is flagged as non-destroyable
+		return;
+
+	instance_destroy(instance_id);
+
+	// Check for any other active instances and display their info
+	if (sd->instance_id > 0)
+		instance_reqinfo(sd, sd->instance_id);
+	if (sd->status.party_id > 0) {
+		party_data *pd = party_search(sd->status.party_id);
+
+		if (pd == nullptr)
+			return;
+
+		if (pd->instance_id > 0)
+			instance_reqinfo(sd, pd->instance_id);
+	}
+	if (sd->guild != nullptr && sd->guild->instance_id > 0) {
+		guild *gd = guild_search(sd->status.guild_id);
+
+		if (gd == nullptr)
+			return;
+
+		instance_reqinfo(sd, gd->instance_id);
+	}
 }
 
 /**
@@ -972,11 +1062,17 @@ bool instance_reqinfo(struct map_session_data *sd, int instance_id)
 		for (int i = 0; i < instance_wait.id.size(); i++) {
 			if (instance_wait.id[i] == instance_id) {
 				clif_instance_create(instance_id, i + 1);
+				sd->instance_mode = idata->mode;
 				break;
 			}
 		}
-	} else if(idata->state == INSTANCE_BUSY) // Give info on the instance if busy
-		clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
+	} else if (idata->state == INSTANCE_BUSY) { // Give info on the instance if busy
+		int map_instance_id = map_getmapdata(sd->bl.m)->instance_id;
+		if (map_instance_id == 0 || map_instance_id == instance_id) {
+			clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
+			sd->instance_mode = idata->mode;
+		}
+	}
 
 	return true;
 }
