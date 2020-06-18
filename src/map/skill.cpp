@@ -4221,6 +4221,8 @@ static TIMER_FUNC(skill_timerskill){
 					case SR_FALLENEMPIRE:
 					case SR_TIGERCANNON:
 					case SR_SKYNETBLOW:
+						if (src->type != BL_PC)
+							continue;
 						break; // Exceptions
 					default:
 						continue; // Caster is Dead
@@ -4497,6 +4499,8 @@ int skill_cleartimerskill (struct block_list *src)
 				case SR_FALLENEMPIRE:
 				case SR_TIGERCANNON:
 				case SR_SKYNETBLOW:
+					if (src->type != BL_PC)
+						break;
 					continue;
 			}
 			delete_timer(ud->skilltimerskill[i]->timer, skill_timerskill);
