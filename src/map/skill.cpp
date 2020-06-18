@@ -5760,25 +5760,24 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				if (sc->data[SC_FREEZE_SP] == nullptr)
 					break;
 
-				int spell[SC_MAXSPELLBOOK-SC_SPELLBOOK1 + 1], s = 0;
+				bool found_spell = false;
 
-				for(i = SC_MAXSPELLBOOK; i >= SC_SPELLBOOK1; i--) // List all available spell to be released
-					if( sc->data[i] )
-						spell[s++] = i;
+				for (i = SC_MAXSPELLBOOK; i >= SC_SPELLBOOK1; i--) { // List all available spell to be released
+					if (sc->data[i] != nullptr) {
+						found_spell = true;
+						break;
+					}
+				}
 
-				if ( s == 0 )
+				if (!found_spell)
 					break;
 
-				uint16 pres_skill_id, pres_skill_lv, point;
+				// Now extract the data from the preserved spell
+				uint16 pres_skill_id = sc->data[i]->val1;
+				uint16 pres_skill_lv = sc->data[i]->val2;
+				uint16 point = sc->data[i]->val3;
 
-				i = spell[s==1?0:rnd()%s];// Random select of spell to be released.
-				if(sc->data[i] ){// Now extract the data from the preserved spell
-					pres_skill_id = sc->data[i]->val1;
-					pres_skill_lv = sc->data[i]->val2;
-					point = sc->data[i]->val3;
-					status_change_end(src, static_cast<sc_type>(i), INVALID_TIMER);
-				}else //something went wrong :(
-					break;
+				status_change_end(src, static_cast<sc_type>(i), INVALID_TIMER);
 
 				if( sc->data[SC_FREEZE_SP]->val2 > point )
 					sc->data[SC_FREEZE_SP]->val2 -= point;
