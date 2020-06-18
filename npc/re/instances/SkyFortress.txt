@@ -177,7 +177,7 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 		next;
 		if (is_party_leader() == true) {
 			if (select( "End the dialogue.", "Show the -Dungeon Pass-." ) == 2) {
-				if (countitem(14505) < 1 && countitem(14506) < 1) {// Sky Fortress Ticket
+				if (rentalcountitem(14505) < 1 && rentalcountitem(14506) < 1) {// Sky Fortress Ticket
 					mes "[Scientist Doyeon]";
 					mes "I don't think this works";
 					mes "without the -Dungeon Pass-.";
@@ -342,7 +342,7 @@ prt_q,243,75,3	script	Fortress Entry Warp Portal#1	PORTAL,{
 	case 2:
 		break;
 	case 3:
-		if (countitem(14505) < 1 && countitem(14506) < 1) {// Sky Fortress Ticket
+		if (rentalcountitem(14505) < 1 && rentalcountitem(14506) < 1) {// Sky Fortress Ticket
 			mes "- You don't have -";
 			mes "- the Dungeon Pass. -";
 			close;
@@ -398,7 +398,7 @@ dali02,115,61,3	script	Fortress Entry Warp Portal#2	PORTAL,{
 		mes "- The warp is emanating bright lights. -";
 		close;
 	}
-	if (countitem(14505) < 1 && countitem(14506) < 1) {// Sky Fortress Ticket
+	if (rentalcountitem(14505) < 1 && rentalcountitem(14506) < 1) {// Sky Fortress Ticket
 		mes "- You don't have -";
 		mes "- the Dungeon Pass. -";
 		close;
@@ -581,7 +581,7 @@ dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
 			mes "the invaded Prontera.";
 			close;
 		}
-		if (countitem(14505) < 1 && countitem(14506) < 1) {// Sky Fortress Ticket
+		if (rentalcountitem(14505) < 1 && rentalcountitem(14506) < 1) {// Sky Fortress Ticket
 			mes "[Scientist Doyeon]";
 			mes "I don't think this works";
 			mes "without the -Dungeon Pass-.";
