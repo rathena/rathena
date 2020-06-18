@@ -18042,21 +18042,26 @@ int skill_greed(struct block_list *bl, va_list ap)
 /// Ranger's Detonator [Jobbie/3CeAM]
 int skill_detonator(struct block_list *bl, va_list ap)
 {
-	struct skill_unit *unit = NULL;
-	struct block_list *src;
-	int unit_id;
-
 	nullpo_ret(bl);
 	nullpo_ret(ap);
 
-	src = va_arg(ap,struct block_list *);
-
-	if( bl->type != BL_SKILL || (unit = (struct skill_unit *)bl) == NULL || !unit->group )
-		return 0;
-	if( unit->group->src_id != src->id )
+	if (bl->type != BL_SKILL)
 		return 0;
 
-	unit_id = unit->group->unit_id;
+	block_list *src = va_arg(ap, block_list *);
+	skill_unit *unit = (skill_unit *)bl;
+
+	if (unit == nullptr)
+		return 0;
+
+	skill_unit_group *group = unit->group;
+
+	if (group == nullptr || group->src_id != src->id)
+		return 0;
+
+	int unit_id = group->unit_id;
+	int16 skill_id = group->skill_id, skill_lv = group->skill_lv;
+
 	switch( unit_id )
 	{ //List of Hunter and Ranger Traps that can be detonate.
 		case UNT_BLASTMINE:
@@ -18068,21 +18073,21 @@ int skill_detonator(struct block_list *bl, va_list ap)
 		case UNT_ICEBOUNDTRAP:
 			switch(unit_id) {
 				case UNT_TALKIEBOX:
-					clif_talkiebox(bl,unit->group->valstr);
-					unit->group->val2 = -1;
+					clif_talkiebox(bl,group->valstr);
+					group->val2 = -1;
 					break;
 				case UNT_CLAYMORETRAP:
 				case UNT_FIRINGTRAP:
 				case UNT_ICEBOUNDTRAP:
-					map_foreachinrange(skill_trap_splash,bl,skill_get_splash(unit->group->skill_id,unit->group->skill_lv),unit->group->bl_flag|BL_SKILL|~BCT_SELF,bl,unit->group->tick);
+					map_foreachinrange(skill_trap_splash,bl,skill_get_splash(skill_id,skill_lv),group->bl_flag|BL_SKILL|~BCT_SELF,bl,group->tick);
 					break;
 				default:
-					map_foreachinrange(skill_trap_splash,bl,skill_get_splash(unit->group->skill_id,unit->group->skill_lv),unit->group->bl_flag,bl,unit->group->tick);
+					map_foreachinrange(skill_trap_splash,bl,skill_get_splash(skill_id,skill_lv),group->bl_flag,bl,group->tick);
 					break;
 			}
 			clif_changetraplook(bl, UNT_USED_TRAPS);
-			unit->group->unit_id = UNT_USED_TRAPS;
-			unit->group->limit = DIFF_TICK(gettick(),unit->group->tick) +
+			group->unit_id = UNT_USED_TRAPS;
+			group->limit = DIFF_TICK(gettick(),group->tick) +
 				(unit_id == UNT_TALKIEBOX ? 5000 : (unit_id == UNT_CLUSTERBOMB || unit_id == UNT_ICEBOUNDTRAP? 2500 : (unit_id == UNT_FIRINGTRAP ? 0 : 1500)) );
 			break;
 	}
