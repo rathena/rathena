@@ -152,7 +152,6 @@ static std::map<std::string, int> um_mapid2jobname {
 //	{ "DarkCollector", 28 },
 #ifdef RENEWAL
 	{ "KagerouOboro", 29 }, // Kagerou and Oboro share the same value
-	{ "KagerouOboro", 29 },
 	{ "Rebellion", 30 },
 	{ "Summoner", 31 },
 #endif
@@ -3088,18 +3087,8 @@ static bool itemdb_read_db(const char* file) {
 			} else {
 				body << YAML::Key << "Jobs";
 				body << YAML::BeginMap;
-
-				bool hasBard = false, hasKagerou = false;
-
 				for (const auto &it : um_mapid2jobname) {
 					uint64 job_mask = 1ULL << it.second;
-
-					if ((temp_mask & JOB_BARD) == JOB_BARD)
-						hasBard = true;
-					if ((temp_mask & JOB_KAGEROU) == JOB_KAGEROU)
-						hasKagerou = true;
-					if ((hasBard && (temp_mask & JOB_DANCER) == JOB_DANCER) || (hasKagerou && (temp_mask & JOB_OBORO) == JOB_OBORO))
-						continue;
 
 					if ((temp_mask & job_mask) == job_mask)
 						body << YAML::Key << it.first << YAML::Value << "true";
