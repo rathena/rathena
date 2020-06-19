@@ -284,7 +284,7 @@ void instance_getsd(int instance_id, struct map_session_data *&sd, enum send_tar
  * Deletes an instance timer (Destroys instance)
  */
 static TIMER_FUNC(instance_delete_timer){
-		instance_destroy(id);
+	instance_destroy(id);
 
 	return 0;
 }
@@ -415,7 +415,6 @@ bool instance_startidletimer(std::shared_ptr<s_instance_data> idata, int instanc
 	// Add the timer
 	idata->idle_limit = static_cast<unsigned int>(time(nullptr)) + db->timeout;
 	idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
-
 
 	switch(idata->mode) {
 		case IM_NONE:
@@ -942,11 +941,11 @@ bool instance_destroy(int instance_id)
 		}
 	}
 
-	if (idata->keep_timer != INVALID_TIMER) {
+	if(idata->keep_timer != INVALID_TIMER) {
 		delete_timer(idata->keep_timer, instance_delete_timer);
 		idata->keep_timer = INVALID_TIMER;
 	}
-	if (idata->idle_timer != INVALID_TIMER) {
+	if(idata->idle_timer != INVALID_TIMER) {
 		delete_timer(idata->idle_timer, instance_delete_timer);
 		idata->idle_timer = INVALID_TIMER;
 	}

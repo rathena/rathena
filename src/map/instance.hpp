@@ -63,7 +63,6 @@ struct s_instance_data {
 	e_instance_state state; ///< State of instance
 	e_instance_mode mode; ///< Mode of instance
 	int owner_id; ///< Owner ID of instance
-	bool ignoretimer;
 	unsigned int keep_limit; ///< Life time of instance
 	int keep_timer; ///< Life time ID
 	unsigned int idle_limit; ///< Idle time of instance
