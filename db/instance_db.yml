@@ -29,6 +29,8 @@
 #   IdleTimeOut       Time before an idle instance is destroyed in seconds. (Default: 300)
 #   NoNpc             Prevent coping NPCs from the source map. (Default: false)
 #   NoMapFlag         Prevent coping Mapflags from the source map. (Default: false)
+#   Destroyable       Toggles the ability to destroy the instance using instance 'Destroy' button. (Default: true)
+#                     Note: the button is displayed based on parties. For any mode, it requires the party leader to be the instance owner to destroy it.
 #   Enter:            Instance entrance coordinates.
 #     Map             Map Name where players start.
 #     X               X Coordinate where players start.
