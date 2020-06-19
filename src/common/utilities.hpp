@@ -175,6 +175,23 @@ namespace rathena {
 				vector.erase(vector.begin() + index);
 		}
 
+		/**
+		 * Determine if a value exists in the vector and then erase it
+		 * @param vector: Vector to erase value from
+		 * @param value: Value to remove
+		 */
+		template <typename K, typename V> void vector_erase_if_exists(std::vector<K> &vector, V value) {
+			auto it = std::find(vector.begin(), vector.end(), value);
+
+			if (it != vector.end()) {
+				if (vector.size() == 1) {
+					vector.clear();
+					vector.shrink_to_fit();
+				} else
+					vector.erase(it);
+			}
+		}
+
 		bool safe_addition( int64 a, int64 b, int64& result );
 		bool safe_substraction( int64 a, int64 b, int64& result );
 		bool safe_multiplication( int64 a, int64 b, int64& result );

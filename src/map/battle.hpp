@@ -349,6 +349,7 @@ struct Battle_Config
 	int prevent_logout;	// Added by RoVeRT
 	int prevent_logout_trigger;
 	int land_protector_behavior;
+	int npc_emotion_behavior;
 
 	int alchemist_summon_reward;	// [Valaris]
 	int drops_by_luk;
@@ -671,9 +672,17 @@ struct Battle_Config
 	int boss_nopc_idleskill_rate;
 	int boss_nopc_move_rate;
 	int hom_idle_no_share;
+	int idletime_hom_option;
 	int devotion_standup_fix;
 	int feature_bgqueue;
+	int bgqueue_nowarp_mapflag;
 	int homunculus_exp_gain;
+	int rental_item_novalue;
+	int ping_timer_interval;
+	int ping_time;
+	int show_skill_scale;
+	int achievement_mob_share;
+	int slave_stick_with_master;
 
 #include "../custom/battle_config_struct.inc"
 };

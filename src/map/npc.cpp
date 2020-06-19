@@ -16,6 +16,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "battle.hpp"
@@ -32,6 +33,8 @@
 #include "pc.hpp"
 #include "pet.hpp"
 #include "script.hpp" // script_config
+
+using namespace rathena;
 
 struct npc_data* fake_nd;
 
@@ -157,9 +160,10 @@ int npc_isnear_sub(struct block_list* bl, va_list args) {
 			if (skill->unit_nonearnpc_type&SKILL_NONEAR_TOMB && nd->subtype == NPCTYPE_TOMB)
 				return 1;
 		}
+		return 0;
 	}
 
-    return 0;
+	return 1;
 }
 
 bool npc_isnear(struct block_list * bl) {
@@ -985,6 +989,26 @@ int npc_event_sub(struct map_session_data* sd, struct event_data* ev, const char
 		npc_event_dequeue(sd);
 		return 2;
 	}
+
+	char ontouch_event_name[EVENT_NAME_LENGTH];
+	char ontouch2_event_name[EVENT_NAME_LENGTH];
+
+	safesnprintf(ontouch_event_name, ARRAYLENGTH(ontouch_event_name), "%s::%s", ev->nd->exname, script_config.ontouch_event_name);
+	safesnprintf(ontouch2_event_name, ARRAYLENGTH(ontouch2_event_name), "%s::%s", ev->nd->exname, script_config.ontouch2_event_name);
+
+	// recheck some conditions for OnTouch/OnTouch_
+	if (strcmp(eventname, ontouch_event_name) == 0 || strcmp(eventname, ontouch2_event_name) == 0) {
+		int xs = ev->nd->u.scr.xs;
+		int ys = ev->nd->u.scr.ys;
+		int x = ev->nd->bl.x;
+		int y = ev->nd->bl.y;
+
+		if (x > 0 && y > 0 && (xs > -1 && ys > -1) && ((sd->bl.x < x - xs) || (sd->bl.x > x + xs) || (sd->bl.y < y - ys) || (sd->bl.y > y + ys)) ||
+				(sd->state.block_action & PCBLOCK_NPCCLICK) || npc_is_cloaked(ev->nd, sd)) {
+			npc_event_dequeue(sd);
+			return 2;
+		}
+	}
 	run_script(ev->nd->u.scr.script,ev->pos,sd->bl.id,ev->nd->bl.id);
 	return 0;
 }
@@ -1658,7 +1682,7 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
  * @param item_list: List of items to purchase
  * @return clif_cashshop_ack value to display
  */
-int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, unsigned short* item_list)
+int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub* item_list)
 {
 	int i, j, amount, new_, w, vt;
 	unsigned short nameid;
@@ -1678,8 +1702,8 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 	// Validating Process ----------------------------------------------------
 	for( i = 0; i < count; i++ )
 	{
-		nameid = item_list[i*2+1];
-		amount = item_list[i*2+0];
+		nameid = item_list[i].itemId;
+		amount = item_list[i].amount;
 		id = itemdb_exists(nameid);
 
 		if( !id || amount <= 0 )
@@ -1689,12 +1713,12 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 		if( j == nd->u.shop.count || nd->u.shop.shop_item[j].value <= 0 )
 			return ERROR_TYPE_ITEM_ID;
 
-		nameid = item_list[i*2+1] = nd->u.shop.shop_item[j].nameid; //item_avail replacement
+		nameid = item_list[i].itemId = nd->u.shop.shop_item[j].nameid; //item_avail replacement
 
 		if( !itemdb_isstackable2(id) && amount > 1 )
 		{
 			ShowWarning("Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable item %hu!\n", sd->status.name, sd->status.account_id, sd->status.char_id, amount, nameid);
-			amount = item_list[i*2+0] = 1;
+			amount = item_list[i].amount = 1;
 		}
 
 		switch( pc_checkadditem(sd,nameid,amount) )
@@ -1721,8 +1745,8 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 
 	// Delivery Process ----------------------------------------------------
 	for( i = 0; i < count; i++ ) {
-		nameid = item_list[i*2+1];
-		amount = item_list[i*2+0];
+		nameid = item_list[i].itemId;
+		amount = item_list[i].amount;
 
 		if( !pet_create_egg(sd,nameid) ) {
 			struct item item_tmp;
@@ -2207,7 +2231,10 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 			return 1; // In official server, this illegal attempt the player will be disconnected
 		}
 
-		value = pc_modifysellvalue(sd, sd->inventory_data[idx]->value_sell);
+		if (battle_config.rental_item_novalue && sd->inventory.u.items_inventory[idx].expire_time)
+			value = 0;
+		else
+			value = pc_modifysellvalue(sd, sd->inventory_data[idx]->value_sell);
 
 		z+= (double)value*amount;
 	}
@@ -3013,7 +3040,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		nd->u.shop.shop_item[nd->u.shop.count].value = value;
 #if PACKETVER >= 20131223
 		nd->u.shop.shop_item[nd->u.shop.count].flag = 0;
-		if (type == NPCTYPE_MARKETSHOP)
+		if (type == NPCTYPE_MARKETSHOP )
 			nd->u.shop.shop_item[nd->u.shop.count].qty = qty;
 #endif
 		nd->u.shop.count++;
@@ -3425,8 +3452,11 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		case NPCTYPE_POINTSHOP:
 		case NPCTYPE_MARKETSHOP:
 			++npc_shop;
+			safestrncpy( nd->u.shop.pointshop_str, dnd->u.shop.pointshop_str, strlen( dnd->u.shop.pointshop_str ) );
+			nd->u.shop.itemshop_nameid = dnd->u.shop.itemshop_nameid;
 			nd->u.shop.shop_item = dnd->u.shop.shop_item;
 			nd->u.shop.count = dnd->u.shop.count;
+			nd->u.shop.discount =  dnd->u.shop.discount;
 			break;
 
 		case NPCTYPE_WARP:
@@ -3489,7 +3519,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 	char newname[NPC_NAME_LENGTH+1];
 	struct map_data *mapdata = map_getmapdata(m);
 
-	if( mapdata->instance_id == 0 )
+	if( mapdata->instance_id <= 0 )
 		return 1;
 
 	snprintf(newname, ARRAYLENGTH(newname), "dup_%d_%d", mapdata->instance_id, snd->bl.id);
@@ -3500,15 +3530,17 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 
 	if( snd->subtype == NPCTYPE_WARP ) { // Adjust destination, if instanced
 		struct npc_data *wnd = NULL; // New NPC
-		struct instance_data *im = &instance_data[mapdata->instance_id];
-		int dm = map_mapindex2mapid(snd->u.warp.mapindex), imap = 0, i;
+		std::shared_ptr<s_instance_data> idata = util::umap_find(instances, mapdata->instance_id);
+		int dm = map_mapindex2mapid(snd->u.warp.mapindex), imap = 0;
+
 		if( dm < 0 ) return 1;
 
-		for(i = 0; i < im->cnt_map; i++)
-			if(im->map[i]->m && map_mapname2mapid(map_getmapdata(im->map[i]->src_m)->name) == dm) {
-				imap = map_mapname2mapid(map_getmapdata(im->map[i]->m)->name);
+		for (const auto &it : idata->map) {
+			if (it.m && map_mapname2mapid(map_getmapdata(it.src_m)->name) == dm) {
+				imap = map_mapname2mapid(map_getmapdata(it.m)->name);
 				break; // Instance map matches destination, update to instance map
 			}
+		}
 
 		if(!imap)
 			imap = map_mapname2mapid(map_getmapdata(dm)->name);
@@ -4593,8 +4625,6 @@ const char *npc_get_script_event_name(int npce_index)
 		return script_config.kill_pc_event_name;
 	case NPCE_KILLNPC:
 		return script_config.kill_mob_event_name;
-	case NPCE_STATCALC:
-		return script_config.stat_calc_event_name;
 	default:
 		ShowError("npc_get_script_event_name: npce_index is outside the array limits: %d (max: %d).\n", npce_index, NPCE_MAX);
 		return NULL;

@@ -223,6 +223,12 @@ enum e_mapid {
 
 //Max size for inputs to Graffiti, Talkie Box and Vending text prompts
 #define MESSAGE_SIZE (79 + 1)
+// Max size for inputs to Graffiti, Talkie Box text prompts
+#if PACKETVER_MAIN_NUM >= 20190904 || PACKETVER_RE_NUM >= 20190904 || PACKETVER_ZERO_NUM >= 20190828
+#define TALKBOX_MESSAGE_SIZE 21
+#else
+#define TALKBOX_MESSAGE_SIZE (79 + 1)
+#endif
 //String length you can write in the 'talking box'
 #define CHATBOX_SIZE (70 + 1)
 //Chatroom-related string sizes
@@ -498,7 +504,7 @@ enum _sp {
 	SP_STATE_NORECOVER_RACE, SP_CRITICAL_RANGEATK, SP_MAGIC_ADDRACE2, SP_IGNORE_MDEF_RACE2_RATE, // 2079-2082
 	SP_WEAPON_ATK_RATE, SP_WEAPON_MATK_RATE, SP_DROP_ADDRACE, SP_DROP_ADDCLASS, SP_NO_MADO_FUEL, // 2083-2087
 	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, SP_SKILL_DELAY, SP_NO_WALK_DELAY, //2088-2093
-	SP_LONG_SP_GAIN_VALUE, SP_LONG_HP_GAIN_VALUE // 2094-2095
+	SP_LONG_SP_GAIN_VALUE, SP_LONG_HP_GAIN_VALUE, SP_SHORT_ATK_RATE // 2094-2096
 };
 
 enum _look {
@@ -748,7 +754,7 @@ struct map_data {
 	int mob_delete_timer;	// Timer ID for map_removemobs_timer [Skotlex]
 
 	// Instance Variables
-	unsigned short instance_id;
+	int instance_id;
 	int instance_src_map;
 
 	/* rAthena Local Chat */
@@ -1035,7 +1041,7 @@ void map_clearflooritem(struct block_list* bl);
 int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false);
 
 // instances
-int map_addinstancemap(const char *name, unsigned short instance_id);
+int map_addinstancemap(int src_m, int instance_id);
 int map_delinstancemap(int m);
 void map_data_copyall(void);
 void map_data_copy(struct map_data *dst_map, struct map_data *src_map);

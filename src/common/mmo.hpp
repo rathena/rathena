@@ -33,6 +33,12 @@
 	#define MAX_HOTKEYS 38
 #endif
 
+#if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190508 || PACKETVER_ZERO_NUM >= 20190605
+	#define MAX_HOTKEYS_DB ((MAX_HOTKEYS) * 2)
+#else
+	#define MAX_HOTKEYS_DB MAX_HOTKEYS
+#endif
+
 #define MAX_MAP_PER_SERVER 1500 /// Maximum amount of maps available on a server
 #define MAX_INVENTORY 100 ///Maximum items in player inventory
 /** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
@@ -69,7 +75,6 @@
 #define MAX_GUILDLEVEL 50 ///Max Guild level
 #define MAX_GUARDIANS 8	///Local max per castle. If this value is increased, need to add more fields on MySQL `guild_castle` table [Skotlex]
 #define MAX_QUEST_OBJECTIVES 3 ///Max quest objectives for a quest
-#define MAX_QUEST_DROPS 3 ///Max quest drops for a quest
 #define MAX_PC_BONUS_SCRIPT 50 ///Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 #define MAX_ITEM_RDM_OPT 5	 /// Max item random option [Napster]
 #define DB_NAME_LEN 256 //max len of dbs
@@ -212,7 +217,7 @@ enum e_mode {
 #define CL_MASK 0xF000000
 
 // Questlog states
-enum quest_state {
+enum e_quest_state : uint8 {
 	Q_INACTIVE, ///< Inactive quest (the user can toggle between active and inactive quests)
 	Q_ACTIVE,   ///< Active quest
 	Q_COMPLETE, ///< Completed quest
@@ -221,9 +226,9 @@ enum quest_state {
 /// Questlog entry
 struct quest {
 	int quest_id;                    ///< Quest ID
-	unsigned int time;               ///< Expiration time
+	uint32 time;                     ///< Expiration time
 	int count[MAX_QUEST_OBJECTIVES]; ///< Kill counters of each quest objective
-	enum quest_state state;          ///< Current quest state
+	e_quest_state state;             ///< Current quest state
 };
 
 struct s_item_randomoption {
@@ -378,7 +383,7 @@ struct s_storage {
 		unsigned get : 1;
 		unsigned put : 1;
 	} state;
-	union { // Max for inventory, storage, cart, and guild storage are 1637 each without changing this struct and struct item [2014/10/27]
+	union { // Max for inventory, storage, cart, and guild storage are 818 each without changing this struct and struct item [2016/08/14]
 		struct item items_inventory[MAX_INVENTORY];
 		struct item items_storage[MAX_STORAGE];
 		struct item items_cart[MAX_CART];
@@ -519,7 +524,7 @@ struct mmo_charstatus {
 
 	struct s_friend friends[MAX_FRIENDS]; //New friend system [Skotlex]
 #ifdef HOTKEY_SAVING
-	struct hotkey hotkeys[MAX_HOTKEYS];
+	struct hotkey hotkeys[MAX_HOTKEYS_DB];
 #endif
 	bool show_equip,allow_party;
 	short rename;
@@ -537,6 +542,7 @@ struct mmo_charstatus {
 	uint32 uniqueitem_counter;
 
 	unsigned char hotkey_rowshift;
+	unsigned char hotkey_rowshift2;
 	unsigned long title_id;
 };
 
@@ -674,7 +680,7 @@ struct guild {
 	struct guild_expulsion expulsion[MAX_GUILDEXPULSION];
 	struct guild_skill skill[MAX_GUILDSKILL];
 	struct Channel *channel;
-	unsigned short instance_id;
+	int instance_id;
 	time_t last_leader_change;
 
 	/* Used by char-server to save events for guilds */
@@ -965,8 +971,7 @@ enum e_job {
 enum e_sex {
 	SEX_FEMALE = 0,
 	SEX_MALE,
-	SEX_SERVER,
-	SEX_ACCOUNT = 99
+	SEX_SERVER
 };
 
 /// Item Bound Type
