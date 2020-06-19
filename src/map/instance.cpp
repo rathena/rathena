@@ -464,19 +464,19 @@ bool instance_stopidletimer(std::shared_ptr<s_instance_data> idata, int instance
 			break;
 		case IM_CHAR:
 			if (map_charid2sd(idata->owner_id)) // Notify the player
-				clif_instance_changestatus(instance_id, IN_NOTIFY, idata->idle_limit);
+				clif_instance_changestatus(instance_id, IN_NOTIFY, 0);
 			break;
 		case IM_PARTY:
 			if (party_search(idata->owner_id)) // Notify the party
-				clif_instance_changestatus(instance_id, IN_NOTIFY, idata->idle_limit);
+				clif_instance_changestatus(instance_id, IN_NOTIFY, 0);
 			break;
 		case IM_GUILD:
 			if (guild_search(idata->owner_id)) // Notify the guild
-				clif_instance_changestatus(instance_id, IN_NOTIFY, idata->idle_limit);
+				clif_instance_changestatus(instance_id, IN_NOTIFY, 0);
 			break;
 		case IM_CLAN:
 			if (clan_search(idata->owner_id)) // Notify the clan
-				clif_instance_changestatus(instance_id, IN_NOTIFY, idata->idle_limit);
+				clif_instance_changestatus(instance_id, IN_NOTIFY, 0);
 			break;
 		default:
 			return false;
