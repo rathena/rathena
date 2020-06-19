@@ -20833,8 +20833,7 @@ BUILDIN_FUNC(instance_list)
 		if (mapdata->instance_src_map == src_id) {
 			std::shared_ptr<s_instance_data> idata = util::umap_find(instances, mapdata->instance_id);
 			if (idata && idata->mode == mode) {
-				std::shared_ptr<s_instance_db> db = instance_db.find(mapdata->instance_id);
-				setd_sub_num(st, NULL, ".@instance_list", j, db->id, NULL);
+				setd_sub_num(st, NULL, ".@instance_list", j, mapdata->instance_id, NULL);
 				j++;
 			}
 		}
