@@ -37,7 +37,6 @@ struct mmo_account {
 	char pincode[PINCODE_LENGTH+1];		// pincode system
 	time_t pincode_change;	// (timestamp): last time of pincode change
 	char web_auth_token[WEB_AUTH_TOKEN_LENGTH]; // web authentication token (randomized on each login)
-	bool logout;
 #ifdef VIP_ENABLE
 	int old_group;
 	time_t vip_time;
@@ -106,6 +105,12 @@ struct AccountDB {
 	/// @param account_id Account id
 	/// @return true if successful
 	bool (*remove)(AccountDB* self, const uint32 account_id);
+
+	/// Removes the web auth token for the given account id
+	bool (*remove_webtoken)(AccountDB* self, const uint32 account_id);
+
+	/// Removes the web auth token for all accounts
+	bool (*remove_webtokens)(AccountDB* self);
 
 	/// Modifies the data of an existing account.
 	/// Uses acc->account_id to identify the account.

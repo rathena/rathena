@@ -118,12 +118,8 @@ void login_remove_online_user(uint32 account_id) {
 		delete_timer( p->waiting_disconnect, login_waiting_disconnect_timer );
 	}
 
-	AccountDB* accounts = login_get_accounts_db();
-	mmo_account acc;
-	if (accounts->load_num(accounts, &acc, account_id)) {
-		acc.logout = true;
-		accounts->save(accounts, &acc);
-	}
+	accounts->remove_webtoken( accounts, account_id );
+
 	online_db.erase( account_id );
 }
 
