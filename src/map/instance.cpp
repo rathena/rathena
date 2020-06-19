@@ -111,19 +111,6 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 			instance->timeout = 300;
 	}
 
-	if (this->nodeExists(node, "IgnoreTimer")) {
-		bool ignoretimer;
-
-		if (!this->asBool(node, "IgnoreTimer", ignoretimer))
-			return 0;
-
-		instance->ignoretimer = ignoretimer;
-	}
-	else {
-		if (!exists)
-			instance->ignoretimer = false;
-	}
-
 	if (this->nodeExists(node, "NoNpc")) {
 		bool nonpc;
 
@@ -297,8 +284,6 @@ void instance_getsd(int instance_id, struct map_session_data *&sd, enum send_tar
  * Deletes an instance timer (Destroys instance)
  */
 static TIMER_FUNC(instance_delete_timer){
-	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, id);
-	if(idata && !idata->ignoretimer)
 		instance_destroy(id);
 
 	return 0;
@@ -372,7 +357,7 @@ static TIMER_FUNC(instance_subscription_timer){
 bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, int instance_id)
 {
 	// No timer
-	if (!idata || idata->keep_timer != INVALID_TIMER)
+	if (!idata || idata->keep_timer != INVALID_TIMER || !idata->keep_limit)
 		return false;
 
 	std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
@@ -431,6 +416,7 @@ bool instance_startidletimer(std::shared_ptr<s_instance_data> idata, int instanc
 	idata->idle_limit = static_cast<unsigned int>(time(nullptr)) + db->timeout;
 	idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
 
+
 	switch(idata->mode) {
 		case IM_NONE:
 			break;
@@ -470,7 +456,7 @@ bool instance_stopidletimer(std::shared_ptr<s_instance_data> idata, int instance
 		return false;
 
 	// Delete the timer - Party has returned or instance is destroyed
-	idata->idle_limit = 0;
+	//idata->idle_limit = 0;
 	delete_timer(idata->idle_timer, instance_delete_timer);
 	idata->idle_timer = INVALID_TIMER;
 
@@ -694,11 +680,15 @@ int instance_addmap(int instance_id) {
 
 	// Set to busy, update timers
 	idata->state = INSTANCE_BUSY;
-	if (!db->ignoretimer) {
+	if (db->timeout) {
 		idata->idle_limit = static_cast<unsigned int>(time(nullptr)) + db->timeout;
 		idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
 	}
-	idata->ignoretimer = db->ignoretimer;
+
+	if (db->limit) {
+		idata->keep_limit = 1;//this will allow the instance to get a time.
+		//idata->keep_timer = INVALID_TIMER;
+	}
 	idata->nomapflag = db->nomapflag;
 	idata->nonpc = db->nonpc;
 
@@ -952,15 +942,13 @@ bool instance_destroy(int instance_id)
 		}
 	}
 
-	if (!idata->ignoretimer) {
-		if (idata->keep_timer != INVALID_TIMER) {
-			delete_timer(idata->keep_timer, instance_delete_timer);
-			idata->keep_timer = INVALID_TIMER;
-		}
-		if (idata->idle_timer != INVALID_TIMER) {
-			delete_timer(idata->idle_timer, instance_delete_timer);
-			idata->idle_timer = INVALID_TIMER;
-		}
+	if (idata->keep_timer != INVALID_TIMER) {
+		delete_timer(idata->keep_timer, instance_delete_timer);
+		idata->keep_timer = INVALID_TIMER;
+	}
+	if (idata->idle_timer != INVALID_TIMER) {
+		delete_timer(idata->idle_timer, instance_delete_timer);
+		idata->idle_timer = INVALID_TIMER;
 	}
 
 	if (mode == IM_CHAR && sd)
@@ -1136,7 +1124,7 @@ bool instance_addusers(int instance_id)
 {
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
-	if(!idata || idata->state != INSTANCE_BUSY || idata->ignoretimer)
+	if(!idata || idata->state != INSTANCE_BUSY || !idata->idle_limit)
 		return false;
 
 	// Stop the idle timer if we had one
@@ -1157,7 +1145,7 @@ bool instance_delusers(int instance_id)
 {
 	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
-	if(!idata || idata->state != INSTANCE_BUSY || idata->ignoretimer)
+	if(!idata || idata->state != INSTANCE_BUSY || !idata->idle_limit)
 		return false;
 
 	int users = 0;
@@ -1192,7 +1180,7 @@ void do_reload_instance(void)
 			// Create new keep timer
 			std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
 
-			if (db)
+			if (db && db->limit)
 				idata->keep_limit = static_cast<unsigned int>(time(nullptr)) + db->limit;
 		}
 	}

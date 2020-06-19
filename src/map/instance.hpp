@@ -90,7 +90,6 @@ struct s_instance_data {
 struct s_instance_db {
 	int id; ///< Instance DB ID
 	std::string name; ///< Instance name
-	bool ignoretimer;
 	uint32 limit, ///< Duration limit
 		timeout; ///< Timeout limit
 	bool nonpc;
