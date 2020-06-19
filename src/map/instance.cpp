@@ -455,7 +455,6 @@ bool instance_stopidletimer(std::shared_ptr<s_instance_data> idata, int instance
 		return false;
 
 	// Delete the timer - Party has returned or instance is destroyed
-	//idata->idle_limit = 0;
 	delete_timer(idata->idle_timer, instance_delete_timer);
 	idata->idle_timer = INVALID_TIMER;
 
@@ -685,8 +684,8 @@ int instance_addmap(int instance_id) {
 	}
 
 	if (db->limit) {
-		idata->keep_limit = 1;//this will allow the instance to get a time.
-		//idata->keep_timer = INVALID_TIMER;
+		//This will allow the instance to get a time in 'instance_startkeeptimer'
+		idata->keep_limit = 1;
 	}
 	idata->nomapflag = db->nomapflag;
 	idata->nonpc = db->nonpc;

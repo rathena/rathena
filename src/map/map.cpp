@@ -3700,13 +3700,13 @@ void map_data_copy(struct map_data *dst_map, struct map_data *src_map) {
 * Copy map data for instance maps from its parents
 * that were cleared in map_flags_init() after reloadscript
 */
-void map_data_copyall (void) {//idata->nomapflag
+void map_data_copyall (void) {
 	if (!instance_start)
 		return;
 	for (int i = instance_start; i < map_num; i++) {
 		struct map_data *mapdata = &map[i];
 		std::shared_ptr<s_instance_data> idata = util::umap_find(instances, mapdata->instance_id);
-		if (!mapdata || mapdata->name[0] == '\0' || !mapdata->instance_src_map || idata->nomapflag)
+		if (!mapdata || mapdata->name[0] == '\0' || !mapdata->instance_src_map || (idata && idata->nomapflag))
 			continue;
 		map_data_copy(mapdata, &map[mapdata->instance_src_map]);
 	}
