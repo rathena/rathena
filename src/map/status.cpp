@@ -1561,6 +1561,7 @@ void initChangeTables(void)
 
 	StatusChangeFlagTable[SC_ANCILLA] |= SCB_REGEN;
 	StatusChangeFlagTable[SC_ENSEMBLEFATIGUE] |= SCB_SPEED|SCB_ASPD;
+	StatusChangeFlagTable[SC_MISTY_FROST] |= SCB_NONE;
 
 #ifdef RENEWAL
 	// renewal EDP increases your weapon atk
@@ -12246,6 +12247,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CROSSBOWCLAN:
 		case SC_JUMPINGCLAN:
 		case SC_DRESSUP:
+		case SC_MISTY_FROST:
 			val_flag |= 1;
 			break;
 		// Start |1|2 val_flag setting
