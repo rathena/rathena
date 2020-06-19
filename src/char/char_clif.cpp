@@ -818,7 +818,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		int slot = RFIFOB(fd,2);
 		RFIFOSKIP(fd,3);
 
-		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, map_server[server_id].fd > 0 && map_server[server_id].map[0] );
+		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, map_server[server_id].fd > 0 && !map_server[server_id].map.empty() );
 		// Map-server not available, tell the client to wait (client wont close, char select will respawn)
 		if (server_id == ARRAYLENGTH(map_server)) {
 			WFIFOHEAD(fd, 24);
