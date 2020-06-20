@@ -14,10 +14,19 @@
 //============================================================
 
 prontera,171,181,1	script	Stylist#custom_stylist	122,{
-	setarray .@Styles[1],
-		getbattleflag("max_cloth_color"),
-		getbattleflag("max_hair_style"),
-		getbattleflag("max_hair_color");
+	.@doramHairstyles = 6;
+	.@doramHaircolours = 8;
+	if (Class == 4218) {
+		setarray .@Styles[1],
+			getbattleflag("max_cloth_color"),
+			.@doramHairstyles,
+			.@doramHaircolours;
+	} else {
+		setarray .@Styles[1],
+			getbattleflag("max_cloth_color"),
+			getbattleflag("max_hair_style"),
+			getbattleflag("max_hair_color");
+	}
 	setarray .@Look[1],
 		LOOK_CLOTHES_COLOR,
 		LOOK_HAIR,
@@ -25,22 +34,23 @@ prontera,171,181,1	script	Stylist#custom_stylist	122,{
 	set .@s, select(" ~ Cloth color: ~ Hairstyle: ~ Hair color");
 	set .@Revert, getlook(.@Look[.@s]);
 	set .@Style,1;
+	set .@min,(.@s==2?1:0);
 	while(1) {
 		setlook .@Look[.@s], .@Style;
 		message strcharinfo(0),"This is style #"+.@Style+".";
-		set .@menu$, " ~ Next (^0055FF"+((.@Style!=.@Styles[.@s])?.@Style+1:1)+"^000000): ~ Previous (^0055FF"+((.@Style!=1)?.@Style-1:.@Styles[.@s])+"^000000): ~ Jump to...: ~ Revert to original (^0055FF"+.@Revert+"^000000)";
+		set .@menu$, " ~ Next (^0055FF"+((.@Style!=.@Styles[.@s])?.@Style+1:1)+"^000000): ~ Previous (^0055FF"+((.@Style!=.@min)?.@Style-1:.@Styles[.@s])+"^000000): ~ Jump to...: ~ Revert to original (^0055FF"+.@Revert+"^000000)";
 		switch(select(.@menu$)) {
 		case 1:
 			set .@Style, ((.@Style != .@Styles[.@s]) ? .@Style+1 : 1);
 			break;
 		case 2:
-			set .@Style, ((.@Style != 1) ? .@Style-1 : .@Styles[.@s]);
+			set .@Style, ((.@Style != .@min) ? .@Style-1 : .@Styles[.@s]);
 			break;
 		case 3:
-			message strcharinfo(0),"Choose a style between 1 - "+.@Styles[.@s]+".";
+			message strcharinfo(0),"Choose a style between "+.@min+" - "+.@Styles[.@s]+".";
 			input .@Style,0,.@Styles[.@s];
-			if (!.@Style)
-				set .@Style, rand(1,.@Styles[.@s]);
+			if (.@Style<.@min || .@Style>.@Styles[.@s])
+				set .@Style, rand(.@min,.@Styles[.@s]);
 			break;
 		case 4:
 			set .@Style, .@Revert;
