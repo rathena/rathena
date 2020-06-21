@@ -884,7 +884,7 @@
 20135:20136,{ bonus bAllStats,12; }
 2053:19451,{ bonus2 bSubRace,RC_Player,3; bonus2 bAddClass,Class_All,15; bonus2 bMagicAddClass,Class_All,15; }
 2053:27301,{ bonus2 bAddClass,Class_All,10; bonus bAspdRate,10; }
-2060:15388:15389,{ bonus bMatk,30; autobonus "{ bonus2 bSkillAtk,"WL_TETRAVORTEX",10; bonus2 bSkillAtk,"WL_SOULEXPANSION",10; }",10,10000,BF_MAGIC; .@r = getequippercentrefinery(EQI_HAND_R) + getequippercentrefinery(EQI_ARMOR) + getequippercentrefinery(EQI_GARMENT); if(.@r>=30){ bonus2 bMagicAddRace,RC_Undead,20; bonus2 bMagicAddRace,RC_Angel,20; } }
+2060:15388:15389,{ bonus bMatk,30; autobonus "{ bonus2 bSkillAtk,\"WL_TETRAVORTEX\",10; bonus2 bSkillAtk,\"WL_SOULEXPANSION\",10; }",10,10000,BF_MAGIC; .@r = getequippercentrefinery(EQI_HAND_R) + getequippercentrefinery(EQI_ARMOR) + getequippercentrefinery(EQI_GARMENT); if(.@r>=30){ bonus2 bMagicAddRace,RC_Undead,20; bonus2 bMagicAddRace,RC_Angel,20; } }
 20701:2165,{ .@a = getequiprefinerycnt(EQI_GARMENT); .@b = getequiprefinerycnt(EQI_HAND_L); bonus2 bAddEle,Ele_Earth,.@b; bonus2 bSubRace,RC_Fish,.@a; }
 20714:28320,{ .@val = min(12,getequiprefinerycnt(EQI_GARMENT)); bonus2 bAddRace,RC_DemiHuman,.@val; bonus2 bAddRace,RC_Player,.@val; }
 20717:22000,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
