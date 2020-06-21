@@ -617,18 +617,18 @@
 4683:4695,{ autobonus "{ bonus bAtk,100; }",30,6000,BF_WEAPON,"{ active_transform 3246,6000; }"; }
 4697:27012,{ bonus bNoMadoFuel; }
 4699:27012,{ bonus bNoMadoFuel; }
-4958:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bDelayrate,-1 - ( .@r > 9 ) ? 1 : 0; } }
-4959:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bLongAtkRate,2 + ( .@r > 9 ) ? 1 : 0; } }
-4960:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bUseSPrate,-2 - ( .@r > 9 ) ? 1 : 0; } }
-4961:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bMatk,10 + ( .@r > 9 ) ? 10 : 0; } }
-4962:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bAtk,2 + ( .@r > 9 ) ? 5 : 0; } }
-4963:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bAtk,4 + ( .@r > 9 ) ? 2 : 0; bonus bHit,3 + ( .@r > 9 ) ? 1 : 0; } }
-4964:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus2 bMagicAddRace,RC_All,1 + ( .@r > 9 ) ? 1 : 0; } }
-4965:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bVariableCastrate,-1 - ( .@r > 9 ) ? 1 : 0; } }
-4966:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus2 bAddRace,RC_All,1 + ( .@r > 9 ) ? 1 : 0; } }
-4967:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bAspdRate,1 + ( .@r > 9 ) ? 1 : 0; } }
-4968:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ setarray .@skills$, "AL_HEAL", "PR_SANCTUARY", "AM_POTIONPITCHER", "AB_HIGHNESSHEAL", "AB_CHEAL"; for( .@i = 0; .@i < getarraysize(.@skills$); .@i++ ){ bonus2 bSkillHeal,.@skills$[.@i],2 + ( .@r > 9 ) ? 2 : 0; } } }
-4969:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ setarray .@skills$, "AL_HEAL", "PR_SANCTUARY", "AM_POTIONPITCHER", "AB_HIGHNESSHEAL", "AB_CHEAL"; for( .@i = 0; .@i < getarraysize(.@skills$); .@i++ ){ bonus2 bSkillHeal2,.@skills$[.@i],2 + ( .@r > 9 ) ? 2 : 0; } /* TODO: Depending on some recovery items HP recovery amount + 1% or if refine >= 9 + 2% */ } }
+4958:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bDelayrate,-1 - ( .@r >= 9 ) ? 1 : 0; } }
+4959:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bLongAtkRate,2 + ( .@r >= 9 ) ? 1 : 0; } }
+4960:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bUseSPrate,-2 - ( .@r >= 9 ) ? 1 : 0; } }
+4961:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bMatk,10 + ( .@r >= 9 ) ? 10 : 0; } }
+4962:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bAtk,2 + ( .@r >= 9 ) ? 5 : 0; } }
+4963:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bAtk,4 + ( .@r >= 9 ) ? 2 : 0; bonus bHit,3 + ( .@r > 9 ) ? 1 : 0; } }
+4964:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus2 bMagicAddRace,RC_All,1 + ( .@r >= 9 ) ? 1 : 0; } }
+4965:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bVariableCastrate,-1 - ( .@r >= 9 ) ? 1 : 0; } }
+4966:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus2 bAddRace,RC_All,1 + ( .@r >= 9 ) ? 1 : 0; } }
+4967:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ bonus bAspdRate,1 + ( .@r >= 9 ) ? 1 : 0; } }
+4968:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ setarray .@skills$, "AL_HEAL", "PR_SANCTUARY", "AM_POTIONPITCHER", "AB_HIGHNESSHEAL", "AB_CHEAL"; for( .@i = 0; .@i < getarraysize(.@skills$); .@i++ ){ bonus2 bSkillHeal,.@skills$[.@i],2 + ( .@r >= 9 ) ? 2 : 0; } } }
+4969:19050,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); if( .@r >= 7 ){ setarray .@skills$, "AL_HEAL", "PR_SANCTUARY", "AM_POTIONPITCHER", "AB_HIGHNESSHEAL", "AB_CHEAL"; for( .@i = 0; .@i < getarraysize(.@skills$); .@i++ ){ bonus2 bSkillHeal2,.@skills$[.@i],2 + ( .@r >= 9 ) ? 2 : 0; } /* TODO: Depending on some recovery items HP recovery amount + 1% or if refine >= 9 + 2% */ } }
 5040:5442,{ bonus bAspdRate,3; bonus bVariableCastrate,3; }
 5040:18672,{ bonus bSPrecovRate,3; }
 5040:18673,{ bonus bHealPower,10; }
@@ -884,7 +884,7 @@
 20135:20136,{ bonus bAllStats,12; }
 2053:19451,{ bonus2 bSubRace,RC_Player,3; bonus2 bAddClass,Class_All,15; bonus2 bMagicAddClass,Class_All,15; }
 2053:27301,{ bonus2 bAddClass,Class_All,10; bonus bAspdRate,10; }
-2060:15388:15389,{ bonus bMatk,30; autobonus "{ bonus2 bSkillAtk,"WL_TETRAVORTEX",10; bonus2 bSkillAtk,"WL_SOULEXPANSION",10; }",10,10000,BF_MAGIC; .@r = getequippercentrefinery(EQI_HAND_R) + getequippercentrefinery(EQI_ARMOR) + getequippercentrefinery(EQI_GARMENT); if(.@r>=30){ bonus2 bMagicAddRace,RC_Undead,20; bonus2 bMagicAddRace,RC_Angel,20; } }
+2060:15388:15389,{ bonus bMatk,30; autobonus "{ bonus2 bSkillAtk,\"WL_TETRAVORTEX\",10; bonus2 bSkillAtk,\"WL_SOULEXPANSION\",10; }",10,10000,BF_MAGIC; .@r = getequippercentrefinery(EQI_HAND_R) + getequippercentrefinery(EQI_ARMOR) + getequippercentrefinery(EQI_GARMENT); if(.@r>=30){ bonus2 bMagicAddRace,RC_Undead,20; bonus2 bMagicAddRace,RC_Angel,20; } }
 20701:2165,{ .@a = getequiprefinerycnt(EQI_GARMENT); .@b = getequiprefinerycnt(EQI_HAND_L); bonus2 bAddEle,Ele_Earth,.@b; bonus2 bSubRace,RC_Fish,.@a; }
 20714:28320,{ .@val = min(12,getequiprefinerycnt(EQI_GARMENT)); bonus2 bAddRace,RC_DemiHuman,.@val; bonus2 bAddRace,RC_Player,.@val; }
 20717:22000,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
