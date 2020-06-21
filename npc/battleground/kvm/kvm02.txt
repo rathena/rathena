@@ -155,6 +155,14 @@ OnCroixDie:
 	}
 	end;
 
+OnGuillaumeActive:
+	warp "bat_c02",62,119;
+	end;
+
+OnCroixActive:
+	warp "bat_c02",137,64;
+	end;
+
 OnStart:
 	disablenpc "KVM Officer#KVM02A";
 	disablenpc "KVM Officer#KVM02B";
@@ -224,6 +232,7 @@ OnTimer61000:
 			end;
 		}
 	}
+	bg_updatescore "bat_c02",.Guillaume_Count,.Croix_Count;
 	set $@KvM02BG, 2; // Playing
 	bg_warp $@KvM02BG_id1,"bat_c02",62,119;
 	bg_warp $@KvM02BG_id2,"bat_c02",137,64;
@@ -292,6 +301,8 @@ OnStop:
 	bg_warp $@KvM02BG_id1,"bat_c02",53,128;
 	bg_warp $@KvM02BG_id2,"bat_c02",146,55;
 	donpcevent "KvM02_BG_Out::OnBegin";
+	if (getbattleflag("feature.bgqueue"))
+		bg_reserve "bat_c02", true;
 	end;
 }
 
@@ -333,7 +344,6 @@ OnTimer60000:
 	disablenpc "KVM Officer#KVM02B";
 	mapwarp "bat_c02","bat_room",154,150;
 	maprespawnguildid "bat_c02",0,3; // Just in case someone else
-	bg_updatescore "bat_c02",5,5;
 	set $@KvM02BG, 0;
 
 OnGuillaumeJoin:

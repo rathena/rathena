@@ -22,6 +22,7 @@
 #include "itemdb.hpp"
 #include "log.hpp"
 #include "map.hpp" // struct map_session_data
+#include "packets.hpp"
 #include "pc.hpp"
 #include "pc_groups.hpp"
 
@@ -741,8 +742,8 @@ enum e_guild_storage_log storage_guild_log_read_sub( struct map_session_data* sd
 enum e_guild_storage_log storage_guild_log_read( struct map_session_data* sd ){
 	std::vector<struct guild_log_entry> log;
 
-	// ( 65535(maximum packet size) - 8(header) ) / 83 (entry size) = 789 (-1 for safety)
-	enum e_guild_storage_log ret = storage_guild_log_read_sub( sd, log, 788 );
+	// ( maximum packet size - header size ) / entry size ) - 1 (for safety)
+	enum e_guild_storage_log ret = storage_guild_log_read_sub( sd, log, ( ( UINT16_MAX - sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG ) ) / sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub ) ) - 1 );
 
 	clif_guild_storage_log( sd, log, ret );
 
@@ -918,6 +919,9 @@ void storage_guild_storageadd(struct map_session_data* sd, int index, int amount
 		return;
 
 	if( amount < 1 || amount > sd->inventory.u.items_inventory[index].amount )
+		return;
+
+	if (itemdb_ishatched_egg(&sd->inventory.u.items_inventory[index]))
 		return;
 
 	if( stor->lock ) {
