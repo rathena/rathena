@@ -4,6 +4,8 @@
 #ifndef SOCKET_HPP
 #define SOCKET_HPP
 
+#include "../config/core.hpp"
+
 #ifdef WIN32
 	#include "winapi.hpp"
 	typedef long in_addr_t;
@@ -16,6 +18,10 @@
 
 #include "cbasetypes.hpp"
 #include "timer.hpp" // t_tick
+
+#ifndef MAXCONN
+	#define MAXCONN FD_SETSIZE
+#endif
 
 #define FIFOSIZE_SERVERLINK 256*1024
 
@@ -92,6 +98,7 @@ struct socket_data
 	size_t rdata_size, wdata_size;
 	size_t rdata_pos;
 	time_t rdata_tick; // time of last recv (for detecting timeouts); zero when timeout is disabled
+	time_t wdata_tick; // time of last send (for detecting timeouts);
 
 	RecvFunc func_recv;
 	SendFunc func_send;
@@ -103,7 +110,7 @@ struct socket_data
 
 // Data prototype declaration
 
-extern struct socket_data* session[FD_SETSIZE];
+extern struct socket_data* session[MAXCONN];
 
 extern int fd_max;
 

@@ -85,8 +85,8 @@ moc_para01,44,38,3	script	Mission [71 - 85]	857,{
 		mes "- related to the Sphinx Dungeon -";
 		mes "- on this mission Board. -";
 		next;
-		set .@str1$,"The villagers of Morroc are worried by the increasing number of monsters in the Sphinx Dungeon. ";
-		set .@str2$,"- Meidi from Morroc -";
+		set .@str1$,"The villagers of Morocc are worried by the increasing number of monsters in the Sphinx Dungeon. ";
+		set .@str2$,"- Meidi from Morocc -";
 		switch(select("Hunt Requiem:Hunt Marduk:Hunt Pasana")) {
 			case 1: callsub L_Quest,10107,.@str1$+"Hunt 10 Requiems.",.@str2$;
 			case 2: callsub L_Quest,10108,.@str1$+"Hunt 10 Marduks.",.@str2$;
@@ -140,9 +140,9 @@ moc_para01,44,38,3	script	Mission [71 - 85]	857,{
 		switch(select("Hunt Kikimora:Hunt Miyabi Doll:Hunt Mi Gao:Hunt Headless Mule:Hunt Tamruan:Gather Festival Masks for the Festival")) {
 			case 1: callsub L_Quest,10121,.@str1$+"Hunt 15 Kikimoras in Moscovia!",.@str2$;
 			case 2: callsub L_Quest,10122,.@str1$+"Hunt 15 Miyabi Dolls in Amatsu!",.@str2$;
-			case 3: callsub L_Quest,10123,.@str1$+"Hunt 15 Mi Gaos in Louyang!",.@str2$;
+			case 3: callsub L_Quest,10123,.@str1$+"Hunt 15 Mi Gaos in Luoyang!",.@str2$;
 			case 4: callsub L_Quest,5055,"I know there are many terrifying monsters outside the city, but what terrifies me are these Headless Mules lurking around. I hope they will never venture into town. Hunt 15 Headless Mules!","- Mariana from Brasilis -";
-			case 5: callsub L_Quest,5056,"Tamruans make a lot of noise. I don't mind in the morning but they keep me from falling asleep at night. I want to sleep. Hunt 15 Tamruans!","- Shaman Pumo from Ayotaya -";
+			case 5: callsub L_Quest,5056,"Tamruans make a lot of noise. I don't mind in the morning but they keep me from falling asleep at night. I want to sleep. Hunt 15 Tamruans!","- Shaman Pumo from Ayothaya -";
 			case 6: callsub L_Quest,5057,"The Dumpling Childs stole all the masks that I had prepared for the festival. Try to get a hold of 30 masks! I'll owe you~","- SaYumMoon Chief of Kunlun -";
 		}
 	}

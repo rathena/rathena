@@ -50,7 +50,7 @@ struct mercenary_data {
 
 	struct s_mercenary_db *db;
 	struct s_mercenary mercenary;
-	char blockskill[MAX_SKILL];
+	std::vector<uint16> blockskill;
 
 	int masterteleport_timer;
 	struct map_session_data *master;
@@ -84,7 +84,7 @@ int mercenary_checkskill(struct mercenary_data *md, uint16 skill_id);
 short mercenary_skill_get_index(uint16 skill_id);
 
 /**
- * atcommand.c required
+ * atcommand.cpp required
  **/
 void mercenary_readdb(void);
 void mercenary_read_skilldb(void);

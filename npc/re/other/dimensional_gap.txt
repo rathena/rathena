@@ -19,7 +19,7 @@ mid_camp,207,290,6	script	Expedition Guide#01	4_M_EIN_SOLDIER,{
 		mes "A member of the Expedition team found these backdoor passages to get through the Dimensional Rifts.";
 		next;
 		mes "[Expedition Guide]";
-		mes "This is like a Rune Midgard Alliance version of the Bifrost bridge so it can connect us to different parts of the New World.";
+		mes "This is like a Midgard Alliance version of the Bifrost bridge so it can connect us to different parts of the New World.";
 		next;
 		mes "[Expedition Guide]";
 		mes "Time and space is distorted in the Dimensional Gap.  Not all passageways have been discovered so please be sure to use caution when entering an unverified area.";
@@ -56,11 +56,11 @@ dali,137,87,4	script	Allied Forces Soldier	4_M_MOCASS1,{
 	close;
 }
 
-dali,122,60,4	script	Morroc Soldier	4_M_MOC_SOLDIER,{
-	mes "[Morroc Soldier]";
-	mes "This dimensional rift is connected to ^0000FFMorroc^000000 back in Rune Midgard.";
+dali,122,60,4	script	Morocc Soldier	4_M_MOC_SOLDIER,{
+	mes "[Morocc Soldier]";
+	mes "This dimensional rift is connected to ^0000FFMorocc^000000 back in Midgard.";
 	next;
-	mes "[Morroc Soldier]";
+	mes "[Morocc Soldier]";
 	mes "This is the fastest gateway back to our world.  The area is still destroyed but restoration efforts will soon be on the way.";
 	close;
 }

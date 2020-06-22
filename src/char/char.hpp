@@ -79,7 +79,6 @@ struct Schema_Config {
 	char skill_homunculus_db[DB_NAME_LEN];
 	char mercenary_db[DB_NAME_LEN];
 	char mercenary_owner_db[DB_NAME_LEN];
-	char ragsrvinfo_db[DB_NAME_LEN];
 	char elemental_db[DB_NAME_LEN];
 	char bonus_script_db[DB_NAME_LEN];
 	char acc_reg_num_table[DB_NAME_LEN];
@@ -193,7 +192,7 @@ struct CharServ_Config {
 };
 extern struct CharServ_Config charserv_config;
 
-#define MAX_MAP_SERVERS 30 //how many mapserver a char server can handle
+#define MAX_MAP_SERVERS 2 //how many mapserver a char server can handle
 struct mmo_map_server {
 	int fd;
 	uint32 ip;
@@ -307,13 +306,7 @@ void char_auth_ok(int fd, struct char_session_data *sd);
 void char_set_charselect(uint32 account_id);
 void char_read_fame_list(void);
 
-#if PACKETVER >= 20151001
-int char_make_new_char_sql(struct char_session_data* sd, char* name_, int slot, int hair_color, int hair_style, short start_job, short unknown, int sex);
-#elif PACKETVER >= 20120307
-int char_make_new_char_sql(struct char_session_data* sd, char* name_, int slot, int hair_color, int hair_style);
-#else
-int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style);
-#endif
+int char_make_new_char( struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style, short start_job, int sex );
 
 void char_set_session_flag_(int account_id, int val, bool set);
 #define char_set_session_flag(account_id, val)   ( char_set_session_flag_((account_id), (val), true)  )

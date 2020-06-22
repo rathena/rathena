@@ -36,7 +36,7 @@ using namespace rathena;
 #define LOGIN_MAX_MSG 30				/// Max number predefined in msg_conf
 static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf
 
-//definition of exported var declared in .h
+//definition of exported var declared in header
 struct mmo_char_server ch_server[MAX_SERVERS];	/// char server data
 struct Login_Config login_config;				/// Configuration of login-serv
 std::unordered_map<uint32,struct online_login_data> online_db;
@@ -316,9 +316,14 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	// Account creation with _M/_F
 	if( login_config.new_account_flag ) {
 		if( len > 2 && strnlen(sd->passwd, NAME_LENGTH) > 0 && // valid user and password lengths
-			sd->passwdenc == 0 && // unencoded password
 			sd->userid[len-2] == '_' && memchr("FfMm", sd->userid[len-1], 4) ) // _M/_F suffix
 		{
+			// Encoded password
+			if( sd->passwdenc != 0 ){
+				ShowError( "Account '%s' could not be created because client side password encryption is enabled.\n", sd->userid );
+				return 0; // unregistered id
+			}
+
 			int result;
 			// remove the _M/_F suffix
 			len -= 2;

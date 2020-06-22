@@ -4,6 +4,7 @@
 #ifndef STATUS_HPP
 #define STATUS_HPP
 
+#include "../common/database.hpp"
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
 
@@ -58,6 +59,23 @@ struct refine_cost {
 /// Get refine chance
 int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched);
 int status_get_refine_cost(int weapon_lv, int type, bool what);
+
+/// Weapon attack modification for size
+struct s_sizefix_db {
+	uint16 small, medium, large;
+};
+
+class SizeFixDatabase : public TypesafeYamlDatabase<int32, s_sizefix_db> {
+public:
+	SizeFixDatabase() : TypesafeYamlDatabase("SIZE_FIX_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+};
+
+extern SizeFixDatabase size_fix_db;
 
 /// Status changes listing. These code are for use by the server.
 enum sc_type : int16 {
@@ -860,6 +878,61 @@ enum sc_type : int16 {
 	SC_LHZ_DUN_N4,
 
 	SC_ANCILLA,
+	SC_EARTHSHAKER,
+	SC_WEAPONBLOCK_ON,
+	SC_SPORE_EXPLOSION,
+	SC_ADAPTATION,
+	SC_BASILICA_CELL, // Used in renewal mode for cell_basilica only
+
+	SC_ENTRY_QUEUE_APPLY_DELAY,
+	SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT,
+
+	// Star Emperor
+	SC_LIGHTOFMOON,
+	SC_LIGHTOFSUN,
+	SC_LIGHTOFSTAR,
+	SC_LUNARSTANCE,
+	SC_UNIVERSESTANCE,
+	SC_SUNSTANCE,
+	SC_FLASHKICK,
+	SC_NEWMOON,
+	SC_STARSTANCE,
+	SC_DIMENSION,
+	SC_DIMENSION1,
+	SC_DIMENSION2,
+	SC_CREATINGSTAR,
+	SC_FALLINGSTAR,
+	SC_NOVAEXPLOSING,
+	SC_GRAVITYCONTROL,
+
+	// Soul Reaper
+	SC_SOULCOLLECT,
+	SC_SOULREAPER,
+	SC_SOULUNITY,
+	SC_SOULSHADOW,
+	SC_SOULFAIRY,
+	SC_SOULFALCON,
+	SC_SOULGOLEM,
+	SC_SOULDIVISION,
+	SC_SOULENERGY,
+	SC_USE_SKILL_SP_SPA,
+	SC_USE_SKILL_SP_SHA,
+	SC_SP_SHA,
+	SC_SOULCURSE,
+
+	SC_HELLS_PLANT,
+	SC_INCREASE_MAXHP, // EFST_ATKER_ASPD
+	SC_INCREASE_MAXSP, // EFST_ATKER_MOVESPEED
+	SC_REF_T_POTION,
+	SC_ADD_ATK_DAMAGE,
+	SC_ADD_MATK_DAMAGE,
+
+	SC_HELPANGEL,
+	SC_SOUNDOFDESTRUCTION,
+
+	SC_LUXANIMA,
+	SC_REUSE_LIMIT_LUXANIMA,
+	SC_ENSEMBLEFATIGUE,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -1729,9 +1802,10 @@ enum efst_types : short{
 	EFST_MERMAID_LONGING,
 	EFST_MAGICAL_FEATHER,
 	EFST_DRACULA_CARD,
-
-	EFST_LIMIT_POWER_BOOSTER = 867,
+	EFST_ALL_PRONTERA_RECALL,
+	EFST_LIMIT_POWER_BOOSTER,
 	EFST_GIFT_OF_SNOW,
+	EFST_NPC_HALLUCINATIONWALK,
 
 	EFST_TIME_ACCESSORY = 872,
 	EFST_EP16_DEF,
@@ -1804,6 +1878,9 @@ enum efst_types : short{
 	EFST_AID_PERIOD_PLUSJOBEXP,
 	EFST_AID_PERIOD_DEADPENALTY,
 	EFST_AID_PERIOD_ADDSTOREITEMCOUNT,
+	EFST_ALL_GLASTHEIM_RECALL,
+
+	EFST_ALL_THANATOS_RECALL = 945,
 
 	EFST_MAGICSTONE_OF_GRACE_SET = 948,
 
@@ -1824,8 +1901,8 @@ enum efst_types : short{
 	EFST_BLAZE_BEAD = 979,
 	EFST_FROZEN_BEAD,
 	EFST_BREEZE_BEAD,
-
-	EFST_AID_PERIOD_RECEIVEITEM_2ND = 983,
+	EFST_SOULATTACK,
+	EFST_AID_PERIOD_RECEIVEITEM_2ND,
 	EFST_AID_PERIOD_PLUSEXP_2ND,
 	EFST_AID_PERIOD_PLUSJOBEXP_2ND,
 	EFST_PRONTERA_JP,
@@ -1835,8 +1912,9 @@ enum efst_types : short{
 	EFST_KIEL_CARD,
 
 	EFST_CHEERUP = 992,
-
-	EFST_S_MANAPOTION = 995,
+	EFST_GET_CNT_UNREAD_RODEX_CHARDB,
+	EFST_GET_CNT_UNREAD_RODEX_GLOBALDB,
+	EFST_S_MANAPOTION,
 	EFST_M_DEFSCROLL,
 
 	EFST_AS_RAGGED_GOLEM_CARD = 1000,
@@ -1860,8 +1938,9 @@ enum efst_types : short{
 	EFST_IMMUNE_PROPERTY_UNDEAD,
 	EFST_REUSE_LIMIT_NP,
 	EFST_SPECIALCOOKIE,
-
-	EFST_GLORY_OF_RETURN = 1030,
+	EFST_DAMAGE_HEAL2,
+	EFST_DAMAGE_HEAL3,
+	EFST_GLORY_OF_RETURN,
 	EFST_ATK_POPCORN,
 	EFST_MATK_POPCORN,
 	EFST_ASPD_POPCORN,
@@ -1918,6 +1997,7 @@ enum efst_types : short{
 	EFST_ANCILLA = 1095,
 
 	EFST_FESTIVE_ENERGY = 1104,
+	EFST_TEST_KR01,
 
 	EFST_WEAPONBLOCK_ON = 1107,
 	EFST_CRI_DAMAGE,
@@ -1934,27 +2014,88 @@ enum efst_types : short{
 	EFST_ASSUMPTIO_BUFF,
 	EFST_BASILICA_BUFF,
 	EFST_OVERLAPEXPUP2,
+
+	EFST_SOULCURSE = 1125,
+	EFST_SOUND_OF_DESTRUCTION,
+	EFST_DF_MANAPLUS,
+	EFST_DF_FULLSWINGK,
+	EFST_NV_BREAKTHROUGH,
+	EFST_HELPANGEL,
+	EFST_NV_TRANSCENDENCE,
+	EFST_SWEETSFAIR_ATK,
+	EFST_SWEETSFAIR_MATK,
+
+	EFST_FLOWER_LEAF2 = 1135,
+	EFST_FLOWER_LEAF3,
+	EFST_FLOWER_LEAF4,
+
+	EFST_MISTY_FROST = 1141,
+	EFST_MAGIC_POISON,
+	EFST_KAUTE,
+
+	EFST_JPNONLY_TACTICS = 1147,
+
+	EFST_MADOGEAR = 1149,
+
+	EFST_LUXANIMA = 1154,
+	EFST_BATH_FOAM_A,
+	EFST_BATH_FOAM_B,
+	EFST_BATH_FOAM_C,
+	EFST_AROMA_OIL,
+	EFST_REUSE_LIMIT_LUXANIMA,
+
+	EFST_AIRSHIP_PIPE = 1163,
+	EFST_PIECES_OF_SHADOW,
+	EFST_HELLS_PLANT_ARMOR,
+	EFST_RELIEVE_DAMAGE,
+	EFST_LOCKON_LASER,
+
+	EFST_REF_T_POTION = 1169,
+	EFST_ADD_ATK_DAMAGE,
+	EFST_ADD_MATK_DAMAGE,
+	EFST_SERVANTWEAPON,
+	EFST_SERVANT_SIGN,
+	EFST_CHARGINGPIERCE,
+	EFST_CHARGINGPIERCE_COUNT,
+	EFST_DRAGONIC_AURA,
+	EFST_BIG_SCAR,
+	EFST_VIGOR,
+
+	EFST_PRESSURE = 1180,
+
+	EFST_MD_Me_Potion = 1185,
+	EFST_MD_Ma_Potion,
+	EFST_MD_Ta_Potion,
+	EFST_MD_Ra_Potion,
+
+	EFST_MVPCARD_KIEL = 1229,
+
+	EFST_HOMUN_TIME = 1303,
+	EFST_POWER_ACCELERATION,
+	EFST_MAX_HP_SP_AVOID,
+	EFST_ADD_ALL_STATE,
+	EFST_AID_PERIOD_POWER_ACCELERATION,
+	EFST_AID_PERIOD_MAX_HP_SP_AVOID,
+	EFST_AID_PERIOD_ADD_ALL_STATE,
 /// @APIHOOK_END
 /// Do not modify code above this, since it will be automatically generated by the API again
 	EFST_MAX,
 };
 
 /// JOINTBEAT stackable ailments
-enum e_joint_break
-{
-	BREAK_ANKLE	= 0x01, ///< MoveSpeed reduced by 50%
-	BREAK_WRIST	= 0x02, ///< ASPD reduced by 25%
-	BREAK_KNEE	= 0x04, ///< MoveSpeed reduced by 30%, ASPD reduced by 10%
-	BREAK_SHOULDER	= 0x08, ///< DEF reduced by 50%
-	BREAK_WAIST	= 0x10, ///< DEF reduced by 25%, ATK reduced by 25%
-	BREAK_NECK	= 0x20, ///< current attack does 2x damage, inflicts 'bleeding' for 30 seconds
-	BREAK_FLAGS	= BREAK_ANKLE | BREAK_WRIST | BREAK_KNEE | BREAK_SHOULDER | BREAK_WAIST | BREAK_NECK,
+enum e_joint_break : uint8 {
+	BREAK_ANKLE = 0x01,		///< MoveSpeed reduced by 50%
+	BREAK_WRIST = 0x02,		///< ASPD reduced by 25%
+	BREAK_KNEE = 0x04,		///< MoveSpeed reduced by 30%, ASPD reduced by 10%
+	BREAK_SHOULDER = 0x08,	///< DEF reduced by 50%
+	BREAK_WAIST = 0x10,		///< DEF reduced by 25%, ATK reduced by 25%
+	BREAK_NECK = 0x20,		///< Current attack does 2x damage, inflicts 'bleeding' for 30 seconds
+	BREAK_FLAGS = BREAK_ANKLE | BREAK_WRIST | BREAK_KNEE | BREAK_SHOULDER | BREAK_WAIST | BREAK_NECK,
 };
 
 extern short current_equip_item_index;
 extern unsigned int current_equip_combo_pos;
 extern int current_equip_card_id;
-extern bool running_npc_stat_calc_event;
 extern short current_equip_opt_index;
 
 //Status change option definitions (options are what makes status changes visible to chars
@@ -2314,7 +2455,6 @@ struct status_change {
 	unsigned short opt2;// health state (bitfield)
 	unsigned char count;
 	//! TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
-	unsigned char jb_flag; //Joint Beat type flag
 	struct {
 		unsigned char move;
 		unsigned char pickup;
@@ -2340,13 +2480,13 @@ int status_sc2skill(sc_type sc);
 unsigned int status_sc2scb_flag(sc_type sc);
 int status_type2relevant_bl_types(int type);
 
-int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, t_tick walkdelay, int flag);
+int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, t_tick walkdelay, int flag, uint16 skill_id);
 //Define for standard HP damage attacks.
-#define status_fix_damage(src, target, hp, walkdelay) status_damage(src, target, hp, 0, walkdelay, 0)
+#define status_fix_damage(src, target, hp, walkdelay, skill) status_damage(src, target, hp, 0, walkdelay, 0, skill)
 //Define for standard SP damage attacks.
-#define status_fix_spdamage(src, target, sp, walkdelay) status_damage(src, target, 0, sp, walkdelay, 0)
+#define status_fix_spdamage(src, target, sp, walkdelay, skill) status_damage(src, target, 0, sp, walkdelay, 0, skill)
 //Define for standard HP/SP damage triggers.
-#define status_zap(bl, hp, sp) status_damage(NULL, bl, hp, sp, 0, 1)
+#define status_zap(bl, hp, sp) status_damage(NULL, bl, hp, sp, 0, 1, 0)
 //Define for standard HP/SP skill-related cost triggers (mobs require no HP/SP to use skills)
 int64 status_charge(struct block_list* bl, int64 hp, int64 sp);
 int status_percent_change(struct block_list *src, struct block_list *target, int8 hp_rate, int8 sp_rate, uint8 flag);

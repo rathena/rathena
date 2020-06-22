@@ -22,6 +22,7 @@
 #include "itemdb.hpp"
 #include "log.hpp"
 #include "map.hpp" // struct map_session_data
+#include "packets.hpp"
 #include "pc.hpp"
 #include "pc_groups.hpp"
 
@@ -210,6 +211,9 @@ static enum e_storage_add storage_canAddItem(struct s_storage *stor, int idx, st
 		return STORAGE_ADD_INVALID; // No item on that spot
 
 	if (amount < 1 || amount > items[idx].amount)
+		return STORAGE_ADD_INVALID;
+
+	if (itemdb_ishatched_egg(&items[idx]))
 		return STORAGE_ADD_INVALID;
 
 	if (!stor->state.put)
@@ -409,6 +413,10 @@ void storage_storageaddfromcart(struct map_session_data *sd, struct s_storage *s
 	enum e_storage_add result;
 	nullpo_retv(sd);
 
+	if (sd->state.prevend) {
+		return;
+	}
+
 	result = storage_canAddItem(stor, index, sd->cart.u.items_inventory, amount, MAX_CART);
 	if (result == STORAGE_ADD_INVALID)
 		return;
@@ -443,6 +451,10 @@ void storage_storagegettocart(struct map_session_data* sd, struct s_storage *sto
 	enum e_storage_add result;
 
 	nullpo_retv(sd);
+
+	if (sd->state.prevend) {
+		return;
+	}
 
 	result = storage_canGetItem(stor, index, amount);
 	if (result != STORAGE_ADD_OK)
@@ -730,8 +742,8 @@ enum e_guild_storage_log storage_guild_log_read_sub( struct map_session_data* sd
 enum e_guild_storage_log storage_guild_log_read( struct map_session_data* sd ){
 	std::vector<struct guild_log_entry> log;
 
-	// ( 65535(maximum packet size) - 8(header) ) / 83 (entry size) = 789 (-1 for safety)
-	enum e_guild_storage_log ret = storage_guild_log_read_sub( sd, log, 788 );
+	// ( maximum packet size - header size ) / entry size ) - 1 (for safety)
+	enum e_guild_storage_log ret = storage_guild_log_read_sub( sd, log, ( ( UINT16_MAX - sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG ) ) / sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub ) ) - 1 );
 
 	clif_guild_storage_log( sd, log, ret );
 
@@ -907,6 +919,9 @@ void storage_guild_storageadd(struct map_session_data* sd, int index, int amount
 		return;
 
 	if( amount < 1 || amount > sd->inventory.u.items_inventory[index].amount )
+		return;
+
+	if (itemdb_ishatched_egg(&sd->inventory.u.items_inventory[index]))
 		return;
 
 	if( stor->lock ) {

@@ -64,26 +64,19 @@ iz_int04,51,30,0	duplicate(iz_int#intro_evt02)	iz_int04#intro_evt02	HIDDEN_WARP_
 
 //== Wounded Swordsman (iz_int) =================================
 iz_int,56,32,3	script	Wounded Swordsman#intro_npc01_iz_int	4_TOWER_01,5,5,{
-	@intro_npc01 = 1;
 	npctalk "Oh...", "", bc_self;
-	classchange HIDDEN_WARP_NPC, "", bc_self;// todo: classchange self remain on map
-	classchange 4_TOWER_02, "Wounded Swordsman#intro_npc02_" + strnpcinfo(4), bc_self;
+	cloakonnpc strnpcinfo(0), getcharid(0);
+	cloakoffnpc "Wounded Swordsman#intro_npc02_" + strnpcinfo(4), getcharid(0);
 	end;
 
 OnTouch:
-	if (@intro_npc01 == 0) {
-		npctalk "Urgh... please... help me...", "", bc_self;
-		sleep2 500;
-		npctalk "In order to talk with me.. click my body..", "", bc_self;
-	}
-	else {// debug
-		classchange HIDDEN_WARP_NPC, "", bc_self;
-		classchange 4_TOWER_02, "Wounded Swordsman#intro_npc02_" + strnpcinfo(4), bc_self;
-	}
+	npctalk "Urgh... please... help me...", "", bc_self;
+	sleep2 500;
+	npctalk "In order to talk with me.. click my body..", "", bc_self;
 	end;
 
 OnInit:
-	questinfo 21001, QTYPE_QUEST, 1, Job_Novice;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(21001) && Class == Job_Novice" );
 	end;
 }
 iz_int01,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsman#intro_npc01_iz_int01	4_TOWER_01,5,5
@@ -91,7 +84,7 @@ iz_int02,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsm
 iz_int03,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsman#intro_npc01_iz_int03	4_TOWER_01,5,5
 iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsman#intro_npc01_iz_int04	4_TOWER_01,5,5
 
-iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	HIDDEN_WARP_NPC,{
+iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	4_TOWER_02,{
 	if (isbegin_quest(21001) == 0) {
 		mes "[Wounded]";
 		mes "Wow! Thanks a lot!";
@@ -125,13 +118,14 @@ iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	HIDDEN_WARP_NPC,{
 	end;
 
 OnInit:
-	questinfo 21001, QTYPE_QUEST, 1, Job_Novice;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(21001) && Class == Job_Novice" );
+	cloakonnpc strnpcinfo(0);
 	end;
 }
-iz_int01,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int01	HIDDEN_WARP_NPC
-iz_int02,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int02	HIDDEN_WARP_NPC
-iz_int03,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int03	HIDDEN_WARP_NPC
-iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int04	HIDDEN_WARP_NPC
+iz_int01,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int01	4_TOWER_02
+iz_int02,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int02	4_TOWER_02
+iz_int03,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int03	4_TOWER_02
+iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int04	4_TOWER_02
 
 // - Captain Carocc (Ship)
 // -----------------------------------------------------------------------------
@@ -237,7 +231,7 @@ int_land,78,103,5	script	Captain Carocc#intro_npc03	4_M_REINDEER,{
 	close;
 
 OnInit:
-	questinfo 21008, QTYPE_QUEST, 1, Job_Novice;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(21008) && Class == Job_Novice" );
 	end;
 }
 
@@ -288,7 +282,7 @@ int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
 		mes "[Lumin]";
 		mes "Yes.";
 		next;
-		classchange HIDDEN_WARP_NPC, "", bc_self;// todo: classchange self remain on map
+		cloakonnpc strnpcinfo(0), getcharid(0);
 		cutin "fly_trock.bmp",2;
 		mes "[Captain Carocc]";
 		mes "Oh boy.";
@@ -312,7 +306,7 @@ int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
 	mes ".....";
 	mes "....So?";
 	next;
-	classchange HIDDEN_WARP_NPC, "", bc_self;// todo: classchange self remain on map
+	cloakonnpc strnpcinfo(0), getcharid(0);
 	mes "- Lu just walked away with a cynical look on his face.";
 	next;
 	cutin "fly_trock.bmp",2;
@@ -328,8 +322,7 @@ int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
 	end;
 
 OnInit:
-	questinfo 7471, QTYPE_QUEST, 1, Job_Novice;
-	setquestinfo_req 7471,21008,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "Class == Job_Novice && !isbegin_quest(7471) && isbegin_quest(21008) == 1" );
 	end;
 }
 int_land01,73,100,3	duplicate(Lumin#new_ship)	Lumin#new_ship01	4_M_NOV_RUMIN
@@ -380,8 +373,7 @@ int_land,58,69,5	script	Sailor#intro_npc04	4W_SAILOR,{
 	close;
 
 OnInit:
-	questinfo 21002, QTYPE_QUEST, 1, Job_Novice;
-	setquestinfo_req 21002,21008,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "Class == Job_Novice && !isbegin_quest(21002) && isbegin_quest(21008) == 1" );
 	end;
 }
 
@@ -442,7 +434,7 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 					select("You mean the Academy?");
 					mes "[Carocc]";
 					mes "Yes! It's called the ^4d4dffRoyal Criatura Academy^000000.";
-					mes "Founded by the Rune Midgard lineage to help out new adventurers.";
+					mes "Founded by the Rune-Midgarts lineage to help out new adventurers.";
 					next;
 					mes "[Carocc]";
 					mes "A friend of mine works there, so I'll give you the introduction to him.";
@@ -793,9 +785,7 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 	end;
 
 OnInit:
-	questinfo 7472, QTYPE_QUEST, 1, Job_Novice;
-	setquestinfo_level 7472,1,14;
-	setquestinfo_req 7472,7473,0;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "Class == Job_Novice && BaseLevel <= 14 && !isbegin_quest(7472) && !isbegin_quest(7473)" );
 	end;
 
 OnTouch:
@@ -1115,8 +1105,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 	}
 
 OnInit:
-	questinfo 7473, QTYPE_QUEST, 1, Job_Novice;
-	setquestinfo_level 7473,1,14;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "Class == Job_Novice && BaseLevel <= 14 && !isbegin_quest(7473)" );
 	end;
 
 OnTouch:
@@ -1222,7 +1211,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 					case 3:
 						mes "[Information Staff]";
 						mes "To the southeast, the <NAVI>[Airship]<INFO>izlude,206,75,</INFO></NAVI>";
-						mes "will be connected with the Capital of the republic of Schwarzwald -^8B4513 Yuno^000000, and";
+						mes "will be connected with the Capital of the republic of Schwarzwald -^8B4513 Juno^000000, and";
 						mes "The capital of the Arunapeltsdom -^8B4513 Rachel ^000000.";
 						mes "Do you need additional directions?";
 						viewpoint 1, 210, 73, 2, 0xFF0A82;
@@ -1488,7 +1477,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 					case 3:
 						mes "[Information Staff]";
 						mes "To the southeast, the <NAVI>[Airship]<INFO>izlude,206,75,</INFO></NAVI>";
-						mes "will be connected with the Capital of the republic of Schwarzwald -^8B4513 Yuno^000000, and";
+						mes "will be connected with the Capital of the republic of Schwarzwald -^8B4513 Juno^000000, and";
 						mes "The capital of the Arunapeltsdom -^8B4513 Rachel ^000000.";
 						mes "Do you need additional directions?";
 						viewpoint 1, 210, 73, 2, 0xFF0A82;
@@ -1636,13 +1625,8 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 	}
 
 OnInit:
-	questinfo 7474, QTYPE_QUEST, 1;
-	setquestinfo_level 7474,1,14;
-
-	// questinfo 7495, QTYPE_QUEST, 1;// officially disabled
-	// setquestinfo_req 7495,7475,1;
-	// setquestinfo_req 7495,7476,1;
-	// setquestinfo_req 7495,7477,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel <= 14 && !isbegin_quest(7474)" );
+	// questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7495) && isbegin_quest(7475) == 1 && isbegin_quest(7476) == 1 && isbegin_quest(7477) == 1" );// officially disabled
 	end;
 }
 
@@ -1655,7 +1639,7 @@ izlude_d,120,207,4	duplicate(Information Staff#0)	Information Staff#d	8W_SOLDIER
 // -----------------------------------------------------------------------------
 izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 	.@total = isbegin_quest(7475) + isbegin_quest(7476) + isbegin_quest(7477);
-	if (isbegin_quest(7474)) {
+	if (isbegin_quest(7474) == 1) {
 		if (!isbegin_quest(7475)) {
 			mes "==== Airship Information====";
 			mes "Izlude - Juno - Rachel";
@@ -1775,8 +1759,7 @@ izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 	}
 
 OnInit:
-	questinfo 7475, QTYPE_QUEST, 0;
-	setquestinfo_req 7475,7474,1;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "!isbegin_quest(7475) && isbegin_quest(7474) == 1" );
 	end;
 
 OnTouch:
@@ -1918,8 +1901,7 @@ izlude,207,167,3	script	Arena#iz	4_BULLETIN_BOARD2,3,3,{
 	}
 
 OnInit:
-	questinfo 7476, QTYPE_QUEST, 0;
-	setquestinfo_req 7476,7474,1;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "!isbegin_quest(7476) && isbegin_quest(7474) == 1" );
 	end;
 
 OnTouch:
@@ -2061,8 +2043,7 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 	}
 
 OnInit:
-	questinfo 7477, QTYPE_QUEST, 0;
-	setquestinfo_req 7477,7474,1;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "!isbegin_quest(7477) && isbegin_quest(7474) == 1" );
 	end;
 
 OnTouch:
@@ -2249,7 +2230,7 @@ iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 		} else {
 			mes "[Therapist]";
 			mes "I already let you know about the basic medical botany.";
-			mes "By the way, there is something called a ^4d4dffShining Plant^000000 here on Rune Midgard.";
+			mes "By the way, there is something called a ^4d4dffShining Plant^000000 here on Midgard.";
 			next;
 			mes "[Therapist]";
 			mes "Nobody knows which herb comes out from this plant.";
@@ -2275,8 +2256,7 @@ iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 	}
 
 OnInit:
-	questinfo 7478, QTYPE_QUEST, 0;
-	setquestinfo_req 7478,4269,2;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "!isbegin_quest(7478) && isbegin_quest(4269) == 2" );
 	end;
 }
 
@@ -2419,8 +2399,7 @@ izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 	end;
 
 OnInit:
-	questinfo 7479, QTYPE_QUEST, 1;
-	setquestinfo_req 7479,7478,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7479) && isbegin_quest(7478) == 1" );
 	end;
 }
 
@@ -2432,7 +2411,7 @@ izlude_d,140,249,7	duplicate(Academy Student#0)	Academy Student#d	4_M_NOV_RUMIN
 // - Instructor Argos (Trick Dead Quest)
 // -----------------------------------------------------------------------------
 izlude,140,260,3	script	Instructor Argos#iz	4_M_LIEMAN,{
-	if (Class != Job_Novice && getskilllv("NV_TRICKDEAD") != 0) {
+	if (Class != Job_Novice || getskilllv("NV_TRICKDEAD") != 0) {
 		mes "[Instructor Argos]";
 		mes "snoring... snoring...";
 		close;
@@ -2589,7 +2568,7 @@ izlude,140,260,3	script	Instructor Argos#iz	4_M_LIEMAN,{
 	}
 
 OnInit:
-	questinfo 15001, QTYPE_QUEST, 0, Job_Novice;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "Class == Job_Novice && !isbegin_quest(15001)" );
 	end;
 }
 
@@ -2679,13 +2658,13 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 			switch(select("What's on the 1st floor", "What's on the 2nd floor", "Explanation about towns", "End Conversation")) {
 			case 1:
 				mes "[Receptionist]";
-				mes "The first floor is equipped with instructors that give you lessons on how the world works here in Rune Midgard.";
+				mes "The first floor is equipped with instructors that give you lessons on how the world works here in Midgard.";
 				next;
 				mes "[Receptionist]";
 				mes "First of all, at the dispensary, you can learn how to recover your physical strength and learn a skill to heal your HP";
 				next;
 				mes "[Receptionist]";
-				mes "At the armory, you can get simple training about battling monsters in Rune Midgard.";
+				mes "At the armory, you can get simple training about battling monsters in Midgard.";
 				next;
 				mes "[Receptionist]";
 				mes "At the cafeteria, you can practice cooking and and will learn its many benefits.";
@@ -2800,7 +2779,7 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 	}
 
 OnInit:
-	questinfo 4269, QTYPE_QUEST, 0, Job_Novice;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "Class == Job_Novice && !isbegin_quest(4269)" );
 	end;
 }
 
@@ -3079,7 +3058,7 @@ iz_ac01,134,47,5	script	Trainer Mainz#ac	4_M_KY_KNT,4,4,{
 		mes "Want to know what I mean?";
 		next;
 		mes "[Mainz]";
-		mes "There are various kinds of monsters on the Rune Midgard continent. And some of them can poison you or put you in abnormal conditions.";
+		mes "There are various kinds of monsters on the Midgard continent. And some of them can poison you or put you in abnormal conditions.";
 		next;
 		mes "[Mainz]";
 		mes "Usually, anybody is too embarrassed to admit being poisoned without knowing.  I just did it on purpose to let you have the experience in case it happens out in the real world.";
@@ -3089,7 +3068,7 @@ iz_ac01,134,47,5	script	Trainer Mainz#ac	4_M_KY_KNT,4,4,{
 		emotion ET_OTL;
 		next;
 		mes "[Mainz]";
-		mes "As an apology, I would like to inform you of several abnormal statuses you might experience in the Rune Midgard Continent.";
+		mes "As an apology, I would like to inform you of several abnormal statuses you might experience in the Midgard Continent.";
 		next;
 		mes "[Mainz]";
 		mes "Don't decline it! Being ready to learn so speak to me again.";
@@ -3472,7 +3451,7 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 			}
 			mes "[Shop Helper Leonie]";
 			mes "Wise choise.";
-			mes "Rune Midgard has many shops and many variety of currencies.";
+			mes "Midgard has many shops and many variety of currencies.";
 			mes "So you need to listen to me well to use them accordingly.";
 			setquest 1237;
 			close;
@@ -3657,7 +3636,7 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 	}
 
 OnInit:
-	questinfo 1237, QTYPE_QUEST, 0;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "!isbegin_quest(1237)" );
 	end;
 }
 
@@ -3843,7 +3822,7 @@ iz_ac01,53,74,3	script	Attribute Expert#ac	1_M_WIZARD,{
 	}
 
 OnInit:
-	questinfo 2299, QTYPE_QUEST, 0;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "!isbegin_quest(2299)" );
 	end;
 }
 
@@ -3905,7 +3884,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 			next;
 			emotion ET_BEST;
 			mes "[Dacquoise]";
-			mes "I am Dacquoise, the pupil of the legendary chef of Rune Midgard, ^0000cdCharles Orleans^000000.";
+			mes "I am Dacquoise, the pupil of the legendary chef of Rune-Midgarts, ^0000cdCharles Orleans^000000.";
 			next;
 			emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 			mes "[Eclaire]";
@@ -4369,7 +4348,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 		} else {
 			emotion ET_BEST;
 			mes "[Dacquoise]";
-			mes "I am Dacquoise, the pupil of the legendary chef of Rune Midgard, ^0000cdCharles Orleans^000000.";
+			mes "I am Dacquoise, the pupil of the legendary chef of Rune-Midgarts, ^0000cdCharles Orleans^000000.";
 			next;
 			emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 			mes "[Eclaire]";
@@ -4396,10 +4375,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 	}
 
 OnInit:
-	questinfo 14154, QTYPE_QUEST, 1, Job_Novice;
-	questinfo 14155, QTYPE_QUEST, 1, Job_Novice;
-	questinfo 14156, QTYPE_QUEST, 1, Job_Novice;
-	questinfo 14157, QTYPE_QUEST, 1, Job_Novice;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "Class == Job_Novice && (!isbegin_quest(14154) || !isbegin_quest(14155) || !isbegin_quest(14156) || !isbegin_quest(14157))" );
 	end;
 }
 
@@ -4596,7 +4572,7 @@ iz_ac01,59,83,3	script	Battle Instructor#08	4_M_NOV_HUNT,{
 							}
 							if (checkquest(11341,HUNTING) < 2) {
 								mes "[Battle Instructor Subino]";
-								mes "^ff0000Fabre^000000 is the most common bug which is usually seen in Rune Midgard Kingdom..";
+								mes "^ff0000Fabre^000000 is the most common bug which is usually seen in Rune-Midgarts Kingdom..";
 								mes "It is a worm but it is very popular because it looks cute.";
 								next;
 								mes "[Battle Instructor Subino]";
@@ -4738,16 +4714,8 @@ L_Quest:
 	}
 
 OnInit:
-	questinfo 11339, QTYPE_QUEST ,0 ,Job_Novice;
-	questinfo 11340, QTYPE_QUEST ,0 ,Job_Novice;
-	questinfo 11341, QTYPE_QUEST ,0 ,Job_Novice;
-	questinfo 11342, QTYPE_QUEST ,0 ,Job_Novice;
-	questinfo 11344, QTYPE_QUEST ,0 ,Job_Novice;
-	setquestinfo_req 11339,4269,2;
-	setquestinfo_req 11340,4269,2;
-	setquestinfo_req 11341,4269,2;
-	setquestinfo_req 11342,4269,2;
-	setquestinfo_req 11344,4269,2;
+	questinfo( QTYPE_QUEST, QMARK_NONE,
+		"Class == Job_Novice && isbegin_quest(4269) == 2 && (!isbegin_quest(11339) || !isbegin_quest(11340) || !isbegin_quest(11341) || !isbegin_quest(11342) || !isbegin_quest(11344))" );
 	end;
 }
 
@@ -4907,7 +4875,7 @@ iz_ac01,45,80,5	script	Adept Adventurer#ac	4_M_JOB_BLACKSMITH,{
 	}
 
 OnInit:
-	questinfo 2298, QTYPE_QUEST, 0;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "!isbegin_quest(2298)" );
 	end;
 }
 
@@ -5042,7 +5010,7 @@ new_1-3,92,169,5	script	Adept Adventurer#new_1-3	4_M_JOB_BLACKSMITH,{
 		mes "Would you look at that...Porings growing in the garden of the closed Criatura Academy like little Jelly Babies.";
 		next;
 		mes "[Adept Adventurer]";
-		mes "Not all monsters in Rune Midgards are our for your blood, just most of them.";
+		mes "Not all monsters in Midgard are our for your blood, just most of them.";
 		next;
 		mes "[Adept Adventurer]";
 		mes "Take a look at that, looks like that ^3131FFPoring^000000 has something to say to you";
@@ -5163,7 +5131,7 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		mes "The Little Porings aren't bad'uns, they've just not been to the outside world.";
 		next;
 		mes "[Poring]";
-		mes "If this keeps up, all of the Porings in Rune Midgard'll be under the sway of Ghostring.";
+		mes "If this keeps up, all of the Porings in Midgard will be under the sway of Ghostring.";
 		next;
 		if (select("Can I help you?", "Too bad.") == 2) {
 			mes "[Poring]";
@@ -5292,7 +5260,7 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		next;
 		mes "[Poring]";
 		mes "Oi, Little Poring.";
-		mes "I look forward to seeing you once you've explored Rune Midgards!";
+		mes "I look forward to seeing you once you've explored Midgard!";
 		mes "Cheers mate.";
 		completequest 2298;
 		if (Class == Job_Novice)
@@ -5411,7 +5379,7 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 				break;
 			case 3:
 				mes "[Kafra Guide Trainer]";
-				mes "Teleport service is a service that sends you to various locations throughout Rune Midgard.";
+				mes "Teleport service is a service that sends you to various locations throughout Midgard.";
 				next;
 				mes "[Kafra Guide Trainer]";
 				mes "Different Kafra Employees have different teleport locations to send you to so you need to talk to them to find out where they're teleporting to.";
@@ -6596,7 +6564,7 @@ iz_ac02,149,43,3	script	Ragie#ac	1_M_BARD,{
 			mes "A beautiful Wanderer from Comodo at the age of 20. Not only Midgard but also wherever her wandering troupe goes, a fan club follows.";
 			next;
 			mes "[Ragie]";
-			mes "I am ^FF0000Ragie^000000 in charge with the Rune Midgard branch head of Igoo's informal fan club! As Igoo has gone to the 2nd world, I am taking a rest for a while. But she will be back soon.";
+			mes "I am ^FF0000Ragie^000000 in charge with the Rune-Midgarts branch head of Igoo's informal fan club! As Igoo has gone to the 2nd world, I am taking a rest for a while. But she will be back soon.";
 			next;
 			mes "[Ragie]";
 			mes "As I am still a low level of adventurer, I haven't followed her to the 2nd world... See! I will make great efforts and follow her everywhere.";
@@ -9569,8 +9537,7 @@ gef_fild07,89,208,6	script	Magician's Guild Guide#1	2_F_MAGICMASTER,{
 	close;
 
 OnInit:
-	questinfo 9265, QTYPE_QUEST, 1;
-	setquestinfo_req 9265,9264,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(9265) && isbegin_quest(9264) == 1" );
 	end;
 }
 
@@ -9614,8 +9581,7 @@ geffen,43,123,6	script	Magician's Guild Guide#2	2_F_MAGICMASTER,{
 	close;
 
 OnInit:
-	questinfo 9266, QTYPE_QUEST, 1;
-	setquestinfo_req 9266,9265,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(9266) && isbegin_quest(9265) == 1" );
 	end;
 }
 
@@ -10481,7 +10447,7 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 						next;
 						cutin "gc_mayssel01.bmp", 1;
 						mes "[Mayssel]";
-						mes "If you are ready, I will send you to the deserts of Morroc to embrace the shadows.";
+						mes "If you are ready, I will send you to the deserts of Morocc to embrace the shadows.";
 						mes "The journey will be both strange and challenging.";
 						next;
 						if (select("At once please.", "I need more time.") == 2) {
@@ -10492,7 +10458,7 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 							end;
 						}
 						mes "[Mayssel]";
-						mes "^4d4dffFind the Pyramid^000000 in the ^4d4dffNorthwest^000000 of Morroc.";
+						mes "^4d4dffFind the Pyramid^000000 in the ^4d4dffNorthwest^000000 of Morocc.";
 						close2;
 						cutin "", 255;
 						warp "morocc", 30, 290;
@@ -10805,12 +10771,9 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 	}
 
 OnInit:
-	questinfo 7480, QTYPE_QUEST, 0, Job_Novice;
-	setquestinfo_req 7480,4269,2;
-	questinfo 7483, QTYPE_QUEST, 0;
-	setquestinfo_req 7483,7481,1,7482,1;
-
-	// questinfo 7495, QTYPE_QUEST, 0;// officially disabled
+	questinfo( QTYPE_QUEST, QMARK_NONE, "Class == Job_Novice && !isbegin_quest(7480) && isbegin_quest(4269) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "!isbegin_quest(7483) && isbegin_quest(7481) == 1 && isbegin_quest(7482) == 1" );
+	// questinfo( QTYPE_QUEST, QMARK_NONE, "!isbegin_quest(7495)" );// officially disabled
 	// setquestinfo_req 7495,7484,2,7485,3;
 	end;
 }
@@ -11333,10 +11296,8 @@ iz_ac02,49,134,5	script	Vicente#ac	4_M_HUMAN_02,{
 	}
 
 OnInit:
-	questinfo 7481, QTYPE_QUEST, 0;
-	setquestinfo_req 7481,7480,1;
-	questinfo 7484, QTYPE_QUEST, 0;
-	setquestinfo_req 7484,7483,1;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "!isbegin_quest(7481) && isbegin_quest(7480) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "!isbegin_quest(7484) && isbegin_quest(7483) == 1" );
 	end;
 }
 
@@ -11773,10 +11734,8 @@ iz_ac02,55,134,3	script	Verkhasel#ac	4_M_GUILLOTINE,{
 	}
 
 OnInit:
-	questinfo 7482, QTYPE_QUEST, 0;
-	setquestinfo_req 7482,7480,1;
-	questinfo 7485, QTYPE_QUEST, 0;
-	setquestinfo_req 7485,7483,1;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "!isbegin_quest(7482) && isbegin_quest(7480) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "!isbegin_quest(7485) && isbegin_quest(7483) == 1" );
 	end;
 }
 
@@ -11944,8 +11903,7 @@ iz_ac02,62,139,3	script	Lumin#ac	4_M_NOV_RUMIN,{
 	}
 
 OnInit:
-	questinfo 7487, QTYPE_QUEST, 0;
-	setquestinfo_req 7487,7485,1;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "!isbegin_quest(7487) && isbegin_quest(7485) == 1" );
 	end;
 }
 
@@ -12575,7 +12533,7 @@ izlude,153,126,1	script	Refinery Owner Han#iz	4_M_02,{
 	.@jerun_tutorial = isbegin_quest(5153) + isbegin_quest(5154) + isbegin_quest(5155) + isbegin_quest(5156);
 	if (.@jerun_tutorial == 0) {
 		mes "[Refinery Owner Han]";
-		mes "Hello? My name is Han to lead the next generation of refining culture in Rune Midguard.";
+		mes "Hello? My name is Han to lead the next generation of refining culture in Rune-Midgarts.";
 		next;
 		mes "[Refinery Owner Han]";
 		mes "Entering this market lately, if I don't have old customers, it is not easy to operate. So, I do the advertising by myself.";
@@ -12810,8 +12768,7 @@ izlude,153,126,1	script	Refinery Owner Han#iz	4_M_02,{
 	}
 
 OnInit:
-	questinfo 5153, QTYPE_QUEST, 1;
-	setquestinfo_level 5153,1,20;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel <= 20 && !isbegin_quest(5153)" );
 	end;
 }
 
@@ -13900,7 +13857,7 @@ izlude,96,125,7	script	Enchanter Mounds#iz	4_CAT_SAILOR2,{
 				mes "Socket enchant is the skill to make card slots appear in Weapon or Armor.";
 				next;
 				mes "[Mounds]";
-				mes "When you meet the Seyablem and Leyablem brothers around the towns of Rune Midgard they can help you with this service.";
+				mes "When you meet the Seyablem and Leyablem brothers around the towns of Rune-Midgarts they can help you with this service.";
 				next;
 				mes "[Mounds]";
 				mes "If they fail to put a new slot in your item say farewell to it...";
@@ -13950,8 +13907,7 @@ izlude,96,125,7	script	Enchanter Mounds#iz	4_CAT_SAILOR2,{
 	}
 
 OnInit:
-	questinfo 5157, QTYPE_QUEST, 1;
-	setquestinfo_level 5157,1,20;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel <= 20 && !isbegin_quest(5157)" );
 	end;
 }
 
@@ -14188,7 +14144,7 @@ izlude,158,130,4	script	Repair Man#iz	4_M_04,{
 		mes "[Repair Man]";
 		mes "------------------------";
 		mes "Damaged Equipment Estimate";
-		mes "Damaged Equipment: ^FF0000"+ .@broken +"?000000";
+		mes "Damaged Equipment: ^FF0000"+ .@broken +"^000000";
 		mes "Fee: ^0000FF"+ .@cost +" Zeny^000000";
 		mes "------------------------";
 		mes "Would you like to proceed with the repair?";
