@@ -7270,7 +7270,7 @@ int64 battle_calc_return_damage(struct block_list *bl, struct block_list *src, i
 		if (!status_reflect && sd && sd->bonus.short_weapon_damage_return)
 			rdamage += damage * sd->bonus.short_weapon_damage_return / 100;
 		else if (status_reflect && sc && sc->count) {
-			if (sc->data[SC_REFLECTSHIELD]) {
+			if (sc->data[SC_REFLECTSHIELD] && sc->data[SC_DEVOTION]) {
 				status_change_entry *sce_d = sc->data[SC_DEVOTION];
 				block_list *d_bl = map_id2bl(sce_d->val1);
 
