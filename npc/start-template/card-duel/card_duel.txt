@@ -1,4 +1,5 @@
 -	script	Card-Duel	-1,{
+	//skilleffect "SM_PROVOKE",0;
 	L_MainMenu:
 	mes "ยินดีต้อนรับสู่ Card - Duel!!";
 	next;
