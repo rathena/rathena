@@ -15748,7 +15748,7 @@ Body:
         Area: 11
       - Level: 10
         Area: 13
-    Duration1: 900
+    Duration1: 910
     FixedCastTime: -1
     Unit:
       Id: Earthquake

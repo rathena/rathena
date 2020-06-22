@@ -6176,11 +6176,14 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				break;
 			case NPC_EARTHQUAKE:
 				if (src->type == BL_PC)
-					ad.damage = sstatus->str * 2 + sstatus->rhw.atk;
+					ad.damage = sstatus->str * 2 + battle_calc_weapon_attack(src, target, skill_id, skill_lv, mflag).damage;
 				else
-					ad.damage = sstatus->str + status_get_lv(src) + (80 + rnd() % 41) * sstatus->rhw.atk;
+					ad.damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, 0);
 
 				MATK_RATE(200 + 100 * skill_lv + 100 * (skill_lv / 2) + ((skill_lv > 4) ? 100 : 0));
+
+				if (nk[NK_SPLASHSPLIT] && mflag > 1)
+					ad.damage /= mflag;
 				break;
 			case NPC_ICEMINE:
 			case NPC_FLAMECROSS:
