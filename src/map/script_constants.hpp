@@ -3570,7 +3570,10 @@
 	export_constant(RC_DEMIHUMAN);
 	export_constant(RC_ANGEL);
 	export_constant(RC_DRAGON);
-	export_constant(RC_PLAYER);
+	export_constant(RC_PLAYER_HUMAN);
+	export_constant(RC_PLAYER_DORAM);
+	// should we keep RC_PLAYER = RC_PLAYER_HUMAN ?
+	export_constant2("RC_PLAYER",RC_PLAYER_HUMAN);
 	export_constant(RC_ALL);
 
 	export_constant(RC2_NONE);

@@ -657,7 +657,8 @@ struct Battle_Config
 	int switch_remove_edp;
 	int feature_homunculus_autofeed;
 	int feature_homunculus_autofeed_rate;
-	int summoner_trait;
+	int summoner_race;
+	int summoner_size;
 	int homunculus_autofeed_always;
 	int feature_attendance;
 	int feature_privateairship;
