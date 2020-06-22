@@ -467,7 +467,7 @@ static void cashshop_read_db( void ){
  * @param item_list Array of item ID
  * @return true: success, false: fail
  */
-bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, uint16* item_list ){
+bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list ){
 	uint32 totalcash = 0;
 	uint32 totalweight = 0;
 	int i,new_;
@@ -487,9 +487,9 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 	new_ = 0;
 
 	for( i = 0; i < n; ++i ){
-		unsigned short nameid = *( item_list + i * 5 );
-		uint32 quantity = *( item_list + i * 5 + 2 );
-		uint8 tab = (uint8)*( item_list + i * 5 + 4 );
+		unsigned short nameid = item_list[i].itemId;
+		uint32 quantity = item_list[i].amount;
+		uint16 tab = item_list[i].tab;
 		int j;
 
 		if( tab >= CASHSHOP_TAB_MAX ){
@@ -504,7 +504,7 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 			return false;
 		}
 
-		nameid = *( item_list + i * 5 ) = cash_shop_items[tab].item[j]->nameid; //item_avail replacement
+		nameid = item_list[i].itemId = cash_shop_items[tab].item[j]->nameid; //item_avail replacement
 		id = itemdb_exists(nameid);
 
 		if( !id ){
@@ -569,10 +569,10 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 	}
 
 	for( i = 0; i < n; ++i ){
-		unsigned short nameid = *( item_list + i * 5 );
-		uint32 quantity = *( item_list + i * 5 + 2 );
+		unsigned short nameid = item_list[i].itemId;
+		uint32 quantity = item_list[i].amount;
 #if PACKETVER_SUPPORTS_SALES
-		uint16 tab = *(item_list + i * 5 + 4);
+		uint16 tab = item_list[i].tab;
 #endif
 		struct item_data *id = itemdb_search(nameid);
 
@@ -580,12 +580,12 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 			continue;
 
 		if (!pet_create_egg(sd, nameid)) {
-			unsigned short get_amt = quantity, j;
+			unsigned short get_amt = quantity;
 
 			if (id->flag.guid || !itemdb_isstackable2(id))
 				get_amt = 1;
 
-			for (j = 0; j < quantity; j += get_amt) {
+			for (uint32 j = 0; j < quantity; j += get_amt) {
 				struct item item_tmp = { 0 };
 
 				item_tmp.nameid = nameid;
@@ -605,6 +605,8 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 						clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_RUNE_OVERCOUNT );
 						return false;
 				}
+
+				clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_SUCCESS );
 
 #if PACKETVER_SUPPORTS_SALES
 				if( tab == CASHSHOP_TAB_SALE ){
@@ -627,7 +629,6 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 		}
 	}
 
-	clif_cashshop_result( sd, 0, CASHSHOP_RESULT_SUCCESS ); //Doesn't show any message?
 	return true;
 }
 
