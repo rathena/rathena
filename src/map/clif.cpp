@@ -10764,7 +10764,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	// For automatic triggering of NPCs after map loading (so you don't need to walk 1 step first)
 	if (map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKNPC))
-		npc_touch_areanpc(sd,sd->bl.m,sd->bl.x,sd->bl.y);
+		npc_touch_area_allnpc(sd,sd->bl.m,sd->bl.x,sd->bl.y);
 	else
 		sd->areanpc.clear();
 
