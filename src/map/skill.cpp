@@ -22211,9 +22211,9 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (active)
-				skill->castnodex |= constant;
+				skill->delaynodex |= constant;
 			else
-				skill->castnodex &= ~constant;
+				skill->delaynodex &= ~constant;
 		}
 	}
 
