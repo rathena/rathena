@@ -9221,7 +9221,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (sc->option&OPTION_MADOGEAR) {
 				int skill_id = status_sc2skill(type);
 
-				if (skill_id >= 0 && !(skill_get_inf3(skill_id)&INF3_USABLE_MADO))
+				if (skill_id >= 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO))
 					return 0;
 			}
 			break;
