@@ -442,7 +442,7 @@ Sequence Map Form
 
 ---------------------------------------
 
-FixedCastTime: Time that is fixed during cast of the skill in milliseconds.
+FixedCastTime: Time that is fixed during cast of the skill in milliseconds. A value of -1 will use 20% of CastTime as FixedCastTime. See battle_config::default_fixed_castrate to adjust the rate.
 
 Can be defined in scalar form or sequence map form:
 Scalar Form
