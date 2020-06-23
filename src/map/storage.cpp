@@ -742,8 +742,7 @@ enum e_guild_storage_log storage_guild_log_read_sub( struct map_session_data* sd
 enum e_guild_storage_log storage_guild_log_read( struct map_session_data* sd ){
 	std::vector<struct guild_log_entry> log;
 
-	// ( maximum packet size - header size ) / entry size ) - 1 (for safety)
-	enum e_guild_storage_log ret = storage_guild_log_read_sub( sd, log, ( ( UINT16_MAX - sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG ) ) / sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub ) ) - 1 );
+	enum e_guild_storage_log ret = storage_guild_log_read_sub( sd, log, MAX_GUILD_STORAGE_LOG_PACKET );
 
 	clif_guild_storage_log( sd, log, ret );
 
