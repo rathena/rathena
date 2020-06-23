@@ -1143,8 +1143,10 @@ Body:
       
       if (.@i >= PET_INTIMATE_LOYAL) {
         bonus2 bSubRace,RC_Brute,5;
+        bonus2 bSubRace,RC_Player_Doram,5;
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus2 bSubRace,RC_Brute,3;
+        bonus2 bSubRace,RC_Player_Doram,3;
       }
   - Mob: BACSOJIN_
     TameItem: Shiny_Wing_Gown
