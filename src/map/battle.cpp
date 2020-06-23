@@ -7275,7 +7275,7 @@ int64 battle_calc_return_damage(struct block_list *bl, struct block_list *src, i
 				block_list *d_bl = map_id2bl(sce_d->val1);
 
 				// Don't reflect non-skill attack if has SC_REFLECTSHIELD from Devotion bonus inheritance
-				if (sce_d && d_bl && ((d_bl->type == BL_MER && ((TBL_MER *)d_bl)->master && ((TBL_MER *)d_bl)->master->bl.id == bl->id) || (d_bl->type == BL_PC && ((TBL_PC *)d_bl)->devotion[sce_d->val2] == bl->id))) {
+				if (d_bl && ((d_bl->type == BL_MER && ((TBL_MER *)d_bl)->master && ((TBL_MER *)d_bl)->master->bl.id == bl->id) || (d_bl->type == BL_PC && ((TBL_PC *)d_bl)->devotion[sce_d->val2] == bl->id))) {
 					if ((skill_id == 0 && battle_config.devotion_rdamage_skill_only && sc->data[SC_REFLECTSHIELD]->val4) || !check_distance_bl(bl, d_bl, sce_d->val3))
 						return 0;
 				}
