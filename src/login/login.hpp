@@ -46,7 +46,7 @@ struct login_session_data {
 
 	int fd;				///socket of client
 
-	char web_auth_token[WEB_AUTH_TOKEN_LENGTH];
+	char web_auth_token[WEB_AUTH_TOKEN_LENGTH]; /// web authentication token
 };
 
 #define MAX_SERVERS 5 //max number of mapserv that could be attach
