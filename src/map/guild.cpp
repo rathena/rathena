@@ -1265,7 +1265,7 @@ int guild_notice_changed(int guild_id,const char *mes1,const char *mes2) {
 /*====================================================
  * Check condition for changing guild emblem
  *---------------------------------------------------*/
-int guild_check_emblem_change_condition(map_session_data *sd)
+bool guild_check_emblem_change_condition(map_session_data *sd)
 {
 	nullpo_ret(sd);
 	guild* g = sd->guild;
@@ -1273,18 +1273,19 @@ int guild_check_emblem_change_condition(map_session_data *sd)
 	if (battle_config.require_glory_guild &&
 		g != nullptr && guild_checkskill(g, GD_GLORYGUILD) > 0) {
 		clif_skill_fail(sd, GD_GLORYGUILD, USESKILL_FAIL_LEVEL, 0);
-		return 0;
+		return false;
 	}
+
+	return true;
 }
 
 /*====================================================
  * Change guild emblem
  *---------------------------------------------------*/
 int guild_change_emblem(struct map_session_data *sd,int len,const char *data) {
-	struct guild *g;
 	nullpo_ret(sd);
 
-	if (guild_check_emblem_change_condition(sd)) {
+	if (!guild_check_emblem_change_condition(sd)) {
 		return 0;
 	}
 
@@ -1296,10 +1297,9 @@ int guild_change_emblem(struct map_session_data *sd,int len,const char *data) {
  *---------------------------------------------------*/
 int guild_change_emblem_version(map_session_data* sd, int version)
 {
-	guild* g;
 	nullpo_ret(sd);
 
-	if (guild_check_emblem_change_condition(sd)) {
+	if (!guild_check_emblem_change_condition(sd)) {
 		return 0;
 	}
 
