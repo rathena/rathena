@@ -1966,7 +1966,7 @@ void char_auth_ok(int fd, struct char_session_data *sd) {
 		{	//Character already online. KICK KICK KICK
 			mapif_disconnectplayer(map_server[character->server].fd, character->account_id, character->char_id, 2);
 			if (character->waiting_disconnect == INVALID_TIMER)
-				character->waiting_disconnect = add_timer(gettick()+20000, char_chardb_waiting_disconnect, character->account_id, 0);
+				character->waiting_disconnect = add_timer(gettick()+AUTH_TIMEOUT, char_chardb_waiting_disconnect, character->account_id, 0);
 			chclif_send_auth_result(fd,8);
 			return;
 		}
