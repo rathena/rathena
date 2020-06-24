@@ -3870,6 +3870,23 @@ struct PACKET_ZC_AUTORUN_SKILL {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_AUTORUN_SKILL, 0x0147);
 
+#if PACKETVER >= 20190605
+struct PACKET_CZ_GUILD_EMBLEM_CHANGE2 {
+	int16 packetType;
+	uint32 guild_id;
+	uint32 version;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_GUILD_EMBLEM_CHANGE2, 0x0b46);
+
+struct PACKET_ZC_GUILD_EMBLEM_REFRESH {
+	int16 packetType;
+	uint32 guild_id;
+	uint32 version;
+	uint32 unknown;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_GUILD_EMBLEM_REFRESH, 0x0b47);
+#endif
+
 #if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #pragma pack(pop)
 #endif // not NetBSD < 6 / Solaris

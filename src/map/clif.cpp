@@ -8762,8 +8762,19 @@ void clif_guild_emblem(struct map_session_data *sd,struct guild *g)
 
 /// Sends update of the guild id/emblem id to everyone in the area (ZC_CHANGE_GUILD).
 /// 01b4 <id>.L <guild id>.L <emblem id>.W
+/// 0b47 <guild id>.L <version>.L <unknown>.L
 void clif_guild_emblem_area(struct block_list* bl)
 {
+#if PACKETVER > 20190605
+	PACKET_ZC_GUILD_EMBLEM_REFRESH p{};
+
+	p.packetType = HEADER_ZC_GUILD_EMBLEM_REFRESH;
+	p.guild_id = status_get_guild_id(bl);
+	p.version = status_get_emblem_id(bl);
+	p.unknown = 0;
+
+	clif_send(&p, sizeof(p), bl, AREA);
+#else
 	uint8 buf[12];
 
 	nullpo_retv(bl);
@@ -8775,6 +8786,7 @@ void clif_guild_emblem_area(struct block_list* bl)
 	WBUFL(buf,6) = status_get_guild_id(bl);
 	WBUFW(buf,10) = status_get_emblem_id(bl);
 	clif_send(buf, 12, bl, AREA_WOS);
+#endif
 }
 
 
@@ -13840,6 +13852,30 @@ void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd){
 	guild_change_emblem(sd, emblem_len, (const char*)emblem);
 }
 
+/// Request to update the guild emblem id (version, according to Gravity)
+/// 0b46 <guild id>.L <version>.L
+void clif_parse_GuildChangeEmblem2(int fd, struct map_session_data* sd) {
+#if PACKETVER >= 20190605
+	const PACKET_CZ_GUILD_EMBLEM_CHANGE2* p = (PACKET_CZ_GUILD_EMBLEM_CHANGE2*)RFIFOP(fd, 0);
+	guild* g;
+
+	if ((g = sd->guild) == NULL)
+		return;
+
+	int guild_id = p->guild_id;
+	int version = p->version;
+
+	nullpo_retv(sd);
+
+	if (!sd->state.gmaster_flag)
+		return;
+
+	if (!(battle_config.emblem_woe_change) && is_agit_start()) {
+		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 385), false, SELF); //"You not allowed to change emblem during woe"
+		return;
+	}
+#endif
+}
 
 /// Guild notice update request (CZ_GUILD_NOTICE).
 /// 016e <guild id>.L <msg1>.60B <msg2>.120B
