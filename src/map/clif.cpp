@@ -13855,17 +13855,16 @@ void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd){
 /// Request to update the guild emblem id (version, according to Gravity)
 /// 0b46 <guild id>.L <version>.L
 void clif_parse_GuildChangeEmblem2(int fd, struct map_session_data* sd) {
+	nullpo_retv(sd);
+
 #if PACKETVER >= 20190605
 	const PACKET_CZ_GUILD_EMBLEM_CHANGE2* p = (PACKET_CZ_GUILD_EMBLEM_CHANGE2*)RFIFOP(fd, 0);
-	guild* g;
+	guild* g = sd->guild;
 
-	if ((g = sd->guild) == NULL)
+	if (g == nullptr || g->guild_id != p->guild_id)
 		return;
 
-	int guild_id = p->guild_id;
 	int version = p->version;
-
-	nullpo_retv(sd);
 
 	if (!sd->state.gmaster_flag)
 		return;
@@ -13874,6 +13873,8 @@ void clif_parse_GuildChangeEmblem2(int fd, struct map_session_data* sd) {
 		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 385), false, SELF); //"You not allowed to change emblem during woe"
 		return;
 	}
+
+	guild_change_emblem_version(sd, version);
 #endif
 }
 
