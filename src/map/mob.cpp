@@ -1821,7 +1821,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		map_foreachinshootrange (mob_ai_sub_hard_lootsearch, &md->bl, view_range, BL_ITEM, md, &tbl);
 	}
 
-	if ((!tbl && mode&MD_AGGRESSIVE) || md->state.skillstate == MSS_FOLLOW || slave_lost_target)
+	if ((mode&MD_AGGRESSIVE && (!tbl || slave_lost_target)) || md->state.skillstate == MSS_FOLLOW)
 	{
 		map_foreachinallrange (mob_ai_sub_hard_activesearch, &md->bl, view_range, DEFAULT_ENEMY_TYPE(md), md, &tbl, mode);
 	}
