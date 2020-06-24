@@ -13574,6 +13574,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_JUMPINGCLAN:
 			status_change_end(bl,SC_CLAN_INFO,INVALID_TIMER);
 			break;
+		case SC_SOULENERGY:
+			if (sd)
+				pc_delsoulball(sd, sd->soulball, false);
+			break;
 	}
 
 	opt_flag = 1;
