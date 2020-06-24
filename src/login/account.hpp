@@ -106,8 +106,11 @@ struct AccountDB {
 	/// @return true if successful
 	bool (*remove)(AccountDB* self, const uint32 account_id);
 
-	/// Removes the web auth token for the given account id
-	bool (*remove_webtoken)(AccountDB* self, const uint32 account_id);
+	/// Enables the web auth token for the given account id
+	bool (*enable_webtoken)(AccountDB* self, const uint32 account_id);
+
+	/// Disables the web auth token for the given account id
+	bool (*disable_webtoken)(AccountDB* self, const uint32 account_id);
 
 	/// Removes the web auth token for all accounts
 	bool (*remove_webtokens)(AccountDB* self);

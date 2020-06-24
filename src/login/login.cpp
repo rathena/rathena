@@ -98,6 +98,8 @@ struct online_login_data* login_add_online_user(int char_server, uint32 account_
 		}
 	}
 
+	accounts->enable_webtoken( accounts, account_id );
+
 	return p;
 }
 
@@ -118,7 +120,7 @@ void login_remove_online_user(uint32 account_id) {
 		delete_timer( p->waiting_disconnect, login_waiting_disconnect_timer );
 	}
 
-	accounts->remove_webtoken( accounts, account_id );
+	accounts->disable_webtoken( accounts, account_id );
 
 	online_db.erase( account_id );
 }
