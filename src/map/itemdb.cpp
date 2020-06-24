@@ -1360,7 +1360,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	/*
 	if ( !str[4][0] && !str[5][0])
 	{
-		ShowWarning("itemdb_parse_dbrow: No buying/selling price defined for item %hu (%s), using 20/10z\n", nameid, id->jname);
+		ShowWarning("itemdb_parse_dbrow: No buying/selling price defined for item %u (%s), using 20/10z\n", nameid, id->jname);
 		id->value_buy = 20;
 		id->value_sell = 10;
 	} else

@@ -24341,7 +24341,7 @@ BUILDIN_FUNC(mail){
 			script_removetop(st, -1, 0);
 
 			if( msg.item[i].bound <= BOUND_NONE || msg.item[i].bound >= BOUND_MAX ){
-				ShowError( "buildin_mail: bound %d for item %hu is invalid.\n", msg.item[i].bound, msg.item[i].nameid );
+				ShowError( "buildin_mail: bound %d for item %u is invalid.\n", msg.item[i].bound, msg.item[i].nameid );
 				return SCRIPT_CMD_FAILURE;
 			}
 		}
@@ -24362,7 +24362,7 @@ BUILDIN_FUNC(mail){
 				msg.item[k].card[i] = (unsigned short)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 
 				if( msg.item[k].card[i] != 0 && !itemdb_exists(msg.item[k].card[i]) ){
-					ShowError( "buildin_mail: invalid card id %hu.\n", msg.item[k].card[i] );
+					ShowError( "buildin_mail: invalid card id %u.\n", msg.item[k].card[i] );
 					return SCRIPT_CMD_FAILURE;
 				}
 			}

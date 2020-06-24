@@ -6325,7 +6325,7 @@ ACMD_FUNC(autolootitem)
 					ShowDebug("Non-existant item %d on autolootitem list (account_id: %d, char_id: %d)", sd->state.autolootid[i], sd->status.account_id, sd->status.char_id);
 					continue;
 				}
-				sprintf(atcmd_output, "'%s'/'%s' {%hu}", item_data->name, item_data->jname, item_data->nameid);
+				sprintf(atcmd_output, "'%s'/'%s' {%u}", item_data->name, item_data->jname, item_data->nameid);
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}

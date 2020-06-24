@@ -198,7 +198,7 @@ int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned ch
 
 			// duplicate
 			if( listidx != i ){
-				ShowWarning( "buyingstore_create: Found duplicate item on buying list (nameid=%d, amount=%hu, account_id=%d, char_id=%d).\n", item->itemId, item->amount, sd->status.account_id, sd->status.char_id );
+				ShowWarning( "buyingstore_create: Found duplicate item on buying list (nameid=%u, amount=%hu, account_id=%d, char_id=%d).\n", item->itemId, item->amount, sd->status.account_id, sd->status.char_id );
 				break;
 			}
 		}
@@ -377,7 +377,7 @@ void buyingstore_trade( struct map_session_data* sd, uint32 account_id, unsigned
 		for( int k = 0; k < i; k++ ){
 			// duplicate
 			if( itemlist[k].index == item->index && k != i ){
-				ShowWarning( "buyingstore_trade: Found duplicate item on selling list (prevnameid=%d, prevamount=%hu, nameid=%d, amount=%hu, account_id=%d, char_id=%d).\n", itemlist[k].itemId, itemlist[k].amount, item->itemId, item->amount, sd->status.account_id, sd->status.char_id );
+				ShowWarning( "buyingstore_trade: Found duplicate item on selling list (prevnameid=%d, prevamount=%hu, nameid=%u, amount=%hu, account_id=%d, char_id=%d).\n", itemlist[k].itemId, itemlist[k].amount, item->itemId, item->amount, sd->status.account_id, sd->status.char_id );
 				clif_buyingstore_trade_failed_seller( sd, BUYINGSTORE_TRADE_SELLER_FAILED, item->itemId );
 				return;
 			}

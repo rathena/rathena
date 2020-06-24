@@ -1031,7 +1031,7 @@ short pc_maxaspd(struct map_session_data *sd);
 #endif
 
 struct s_attendance_reward {
-	uint16 item_id;
+	uint32 item_id;
 	uint16 amount;
 };
 

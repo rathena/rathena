@@ -204,14 +204,14 @@ uint64 AttendanceDatabase::parseBodyNode(const YAML::Node &node){
 			}
 
 			if( this->nodeExists( rewardNode, "ItemId" ) ){
-				uint16 item_id;
+				uint32 item_id;
 
-				if( !this->asUInt16( rewardNode, "ItemId", item_id ) ){
+				if( !this->asUInt32( rewardNode, "ItemId", item_id ) ){
 					continue;
 				}
 
 				if( item_id == 0 || !itemdb_exists( item_id ) ){
-					ShowError( "pc_attendance_load: Unknown item ID %hu for day %d.\n", item_id, day + 1 );
+					ShowError( "pc_attendance_load: Unknown item ID %u for day %d.\n", item_id, day + 1 );
 					continue;
 				}
 
