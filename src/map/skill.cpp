@@ -16913,8 +16913,8 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 		/* Skill level-dependent checks */
 		case NC_SHAPESHIFT: // NOTE: Magic_Gear_Fuel must be last in the ItemCost list depending on the skill's max level
 		case NC_REPAIR: // NOTE: Repair_Kit must be last in the ItemCost list depending on the skill's max level
-			req.itemid[1] = skill->require.itemid[skill->max - 1];
-			req.amount[1] = skill->require.amount[skill->max - 1];
+			req.itemid[1] = skill->require.itemid[skill->max];
+			req.amount[1] = skill->require.amount[skill->max];
 		case KO_MAKIBISHI:
 		case GN_FIRE_EXPANSION:
 		case SO_SUMMON_AGNI:
