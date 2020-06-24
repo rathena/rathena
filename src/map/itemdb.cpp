@@ -1312,7 +1312,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 
 	nameid = strtoul(str[0], NULL, 10);
 
-	if( nameid <= 0 || nameid >= MAX_ITEMID || nameid == dummy_item->nameid )
+	if( nameid <= 0 || nameid >= UINT32_MAX || nameid == dummy_item->nameid )
 	{
 		ShowWarning("itemdb_parse_dbrow: Invalid id %d in line %d of \"%s\", skipping.\n", nameid, line, source);
 		return false;

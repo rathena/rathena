@@ -8,13 +8,6 @@
 #include "../common/mmo.hpp" // ITEM_NAME_LENGTH
 
 
-#ifdef NAMEID_32BIT
-///Maximum allowed Item ID (range: 1 ~ 2,147,483,647)
-#define MAX_ITEMID INT32_MAX
-#else
-///Maximum allowed Item ID (range: 1 ~ 65,534)
-#define MAX_ITEMID USHRT_MAX
-#endif
 
 ///Use apple for unknown items.
 #define UNKNOWN_ITEM_ID 512

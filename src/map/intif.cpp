@@ -3229,7 +3229,7 @@ void intif_parse_MessageToFD(int fd) {
 
 /**
  * Request to send broadcast item to all servers
- * ZI 3009 <cmd>.W <len>.W <nameid>.NID <source>.W <type>.B <name>.?B
+ * ZI 3009 <cmd>.W <len>.W <nameid>.N <source>.W <type>.B <name>.?B
  * @param sd Player who obtain the item
  * @param nameid Obtained item
  * @param sourceid Source of item, another item ID or monster ID
@@ -3269,7 +3269,7 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, uint32 name
 /**
  * Request to send broadcast item to all servers.
  * TODO: Confirm the usage. Maybe on getitem-like command?
- * ZI 3009 <cmd>.W <len>.W <nameid>.NID <source>.W <type>.B <name>.24B <npcname>.24B
+ * ZI 3009 <cmd>.W <len>.W <nameid>.N <source>.W <type>.B <name>.24B <npcname>.24B
  * @param sd Player who obtain the item
  * @param nameid Obtained item
  * @param srcname Source name

@@ -86,17 +86,6 @@ struct s_packet_keys {
 };
 #endif
 
-struct s_item_list_1 {
-	unsigned short amount;
-	t_nameid nameid;
-}__attribute__((packed));
-
-struct s_item_list_2 {
-	uint32 nameid;
-	uint32 amount;
-	uint16 tab;
-}__attribute__((packed));
-
 enum e_CASHSHOP_ACK : uint8_t{
 	ERROR_TYPE_NONE             = 0, ///< The deal has successfully completed.
 	ERROR_TYPE_NPC              = 1, ///< The Purchase has failed because the NPC does not exist.
@@ -711,7 +700,7 @@ void clif_deleteskill(struct map_session_data *sd, int skill_id);
 
 void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, uint16 skill_id, uint16 skill_lv, int property, int casttime);
 void clif_skillcastcancel(struct block_list* bl);
-void clif_skill_fail(struct map_session_data *sd,uint16 skill_id,enum useskill_fail_cause cause,int btype, t_nameid itemId = 0);
+void clif_skill_fail(struct map_session_data *sd,uint16 skill_id,enum useskill_fail_cause cause,int btype, uint32 itemId = 0);
 void clif_skill_cooldown(struct map_session_data *sd, uint16 skill_id, t_tick tick);
 int clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int64 sdamage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
 //int clif_skill_damage2(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int damage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);

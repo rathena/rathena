@@ -54,14 +54,13 @@
 #endif
 
 #if PACKETVER > 20180620
-	typedef unsigned int t_nameid;
-#define NAMEID_32BIT
+	typedef uint32 t_nameid;
 #define RFIFON RFIFOL
 #define WFIFON RFIFOL
 #define RBUFN RBUFL
 #define WBUFN WBUFL
 #else
-	typedef unsigned short t_nameid;
+	typedef uint16 t_nameid;
 #define RFIFON RFIFOW
 #define WFIFON WFIFOW
 #define RBUFN RBUFW
