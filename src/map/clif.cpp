@@ -2906,9 +2906,33 @@ void clif_inventorylist( struct map_session_data *sd ){
 		// Non-stackable (Equippable)
 		if( !itemdb_isstackable2( sd->inventory_data[i] ) ){
 			clif_item_equip( client_index( i ), &itemlist_equip.list[equip++], &sd->inventory.u.items_inventory[i], sd->inventory_data[i], pc_equippoint( sd, i ) );
+
+			if( equip == MAX_INVENTORY_ITEM_PACKET_NORMAL ){
+				itemlist_equip.PacketType  = inventorylistequipType;
+				itemlist_equip.PacketLength = ( sizeof( itemlist_equip ) - sizeof( itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip );
+#if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
+				itemlist_equip.invType = type;
+#endif
+
+				clif_send( &itemlist_equip, itemlist_equip.PacketLength, &sd->bl, SELF );
+
+				equip = 0;
+			}
 		// Stackable (Normal)
 		}else{
 			clif_item_normal( client_index( i ), &itemlist_normal.list[normal++], &sd->inventory.u.items_inventory[i], sd->inventory_data[i] );
+
+			if( normal == MAX_INVENTORY_ITEM_PACKET_NORMAL ){
+				itemlist_normal.PacketType = inventorylistnormalType;
+				itemlist_normal.PacketLength = ( sizeof( itemlist_normal ) - sizeof( itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal );
+#if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
+				itemlist_normal.invType = type;
+#endif
+
+				clif_send( &itemlist_normal, itemlist_normal.PacketLength, &sd->bl, SELF );
+
+				normal = 0;
+			}
 		}
 	}
 
@@ -2977,9 +3001,37 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 		// Non-stackable (Equippable)
 		if( !itemdb_isstackable2( id ) ){
 			clif_item_equip( client_storage_index( i ), &storage_itemlist_equip.list[equip++], &items[i], id, pc_equippoint_sub( sd, id ) );
+
+			if( equip == MAX_STORAGE_ITEM_PACKET_EQUIP ){
+				storage_itemlist_equip.PacketType  = storageListEquipType;
+				storage_itemlist_equip.PacketLength = ( sizeof( storage_itemlist_equip ) - sizeof( storage_itemlist_equip.list ) ) + ( sizeof( struct EQUIPITEM_INFO ) * equip );
+#if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
+				storage_itemlist_equip.invType = type;
+#elif PACKETVER >= 20120925
+				safestrncpy( storage_itemlist_equip.name, storename, NAME_LENGTH );
+#endif
+
+				clif_send( &storage_itemlist_equip, storage_itemlist_equip.PacketLength, &sd->bl, SELF );
+
+				equip = 0;
+			}
 		// Stackable (Normal)
 		}else{
 			clif_item_normal( client_storage_index( i ), &storage_itemlist_normal.list[normal++], &items[i], id );
+
+			if( normal == MAX_STORAGE_ITEM_PACKET_NORMAL ){
+				storage_itemlist_normal.PacketType = storageListNormalType;
+				storage_itemlist_normal.PacketLength = ( sizeof( storage_itemlist_normal ) - sizeof( storage_itemlist_normal.list ) ) + ( sizeof( struct NORMALITEM_INFO ) * normal );
+#if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
+				storage_itemlist_normal.invType = type;
+#elif PACKETVER >= 20120925
+				safestrncpy( storage_itemlist_normal.name, storename, NAME_LENGTH );
+#endif
+
+				clif_send( &storage_itemlist_normal, storage_itemlist_normal.PacketLength, &sd->bl, SELF );
+
+				normal = 0;
+			}
 		}
 	}
 
@@ -6676,6 +6728,9 @@ void clif_use_card(struct map_session_data *sd,int idx)
 			continue;
 
 		if(sd->inventory_data[i]->type==IT_WEAPON && ep==EQP_SHIELD) //Shield card won't go on left weapon.
+			continue;
+
+		if(sd->inventory_data[i]->type == IT_ARMOR && (ep & EQP_ACC) && ((ep & EQP_ACC) != EQP_ACC) && ((sd->inventory_data[i]->equip & EQP_ACC) != (ep & EQP_ACC)) ) // specific accessory-card can only be inserted to specific accessory.
 			continue;
 
 		ARR_FIND( 0, sd->inventory_data[i]->slot, j, sd->inventory.u.items_inventory[i].card[j] == 0 );
@@ -12850,27 +12905,23 @@ void clif_parse_SelectArrow(int fd,struct map_session_data *sd) {
 		return;
 	}
 
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
-	int nameid = RFIFOL(fd, 2);
-#else
-	int nameid = RFIFOW(fd, 2);
-#endif
+	struct PACKET_CZ_REQ_MAKINGARROW* p = (struct PACKET_CZ_REQ_MAKINGARROW*)RFIFOP( fd, 0 );
 
 	switch (sd->menuskill_id) {
 		case AC_MAKINGARROW:
-			skill_arrow_create(sd,nameid);
+			skill_arrow_create(sd,p->itemId);
 			break;
 		case SA_CREATECON:
-			skill_produce_mix(sd,SA_CREATECON,nameid,0,0,0,1,-1);
+			skill_produce_mix(sd,SA_CREATECON,p->itemId,0,0,0,1,-1);
 			break;
 		case WL_READING_SB:
-			skill_spellbook(sd,nameid);
+			skill_spellbook(sd,p->itemId);
 			break;
 		case GC_POISONINGWEAPON:
-			skill_poisoningweapon(sd,nameid);
+			skill_poisoningweapon(sd,p->itemId);
 			break;
 		case NC_MAGICDECOY:
-			skill_magicdecoy(sd,nameid);
+			skill_magicdecoy(sd,p->itemId);
 			break;
 	}
 
@@ -16691,7 +16742,7 @@ void clif_parse_cashshop_buy( int fd, struct map_session_data *sd ){
 		return;
 	}
 
-	cashshop_buylist( sd, 0, p->count, p->items );
+	cashshop_buylist( sd, p->kafraPoints, p->count, p->items );
 }
 
 /// Adoption System
@@ -17920,6 +17971,22 @@ void clif_instance_changestatus(int instance_id, e_instance_notify type, unsigne
 	return;
 }
 
+/// Destroy an instance from the status window
+/// 02cf <command>.L (CZ_MEMORIALDUNGEON_COMMAND)
+void clif_parse_MemorialDungeonCommand(int fd, map_session_data *sd)
+{
+	if (pc_istrading(sd) || pc_isdead(sd) || map_getmapdata(sd->bl.m)->instance_id > 0)
+		return;
+
+	const PACKET_CZ_MEMORIALDUNGEON_COMMAND *p = (PACKET_CZ_MEMORIALDUNGEON_COMMAND *)RFIFOP(fd, 0);
+
+	switch (p->command) {
+		case COMMAND_MEMORIALDUNGEON_DESTROY_FORCE:
+			instance_destroy_command(sd);
+			break;
+	}
+}
+
 /// Notifies clients about item picked up by a party member.
 /// 02b8 <account id>.L <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B (ZC_ITEM_PICKUP_PARTY)
 void clif_party_show_picker( struct map_session_data* sd, struct item* item_data ){
@@ -18999,6 +19066,15 @@ static void clif_loadConfirm( struct map_session_data *sd ){
 	p.packetType = HEADER_ZC_LOAD_CONFIRM;
 
 	clif_send( &p, sizeof(p), &sd->bl, SELF );
+
+	if (sd->instance_id > 0)
+		instance_reqinfo(sd, sd->instance_id);
+	if (sd->status.party_id > 0)
+		party_member_joined(sd);
+	if (sd->status.guild_id > 0)
+		guild_member_joined(sd);
+	if (sd->status.clan_id > 0)
+		clan_member_joined(sd);
 #endif
 }
 
@@ -19846,9 +19922,9 @@ void clif_roulette_generate( struct map_session_data *sd, unsigned char result, 
 	p.Step = stage;
 	p.Idx = prizeIdx;
 	p.AdditionItemID = bonusItemID;
-	p.RemainBronze = sd->roulette_point.gold;
-	p.RemainGold = sd->roulette_point.silver;
-	p.RemainSilver = sd->roulette_point.bronze;
+	p.RemainGold = sd->roulette_point.gold;
+	p.RemainSilver = sd->roulette_point.silver;
+	p.RemainBronze = sd->roulette_point.bronze;
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 }
@@ -20943,23 +21019,26 @@ void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct gui
 #if PACKETVER >= 20140205
 	nullpo_retv( sd );
 
-	static struct PACKET_ZC_ACK_GUILDSTORAGE_LOG guild_storage_log;
-	int size = sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG );
+	int fd = sd->fd;
+	int16 size = sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG );
 
 	if( result == GUILDSTORAGE_LOG_FINAL_SUCCESS ){
-		size = log.size() * sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub );
+		size += static_cast<int16>(log.size()) * sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub );
 	}else{
 		log.clear();
 	}
 
-	guild_storage_log.packetType = 0x9DA;
-	guild_storage_log.PacketLength = size;
-	guild_storage_log.result = result;
-	guild_storage_log.amount = (uint16)log.size();
+	WFIFOHEAD( fd, size );
+	struct PACKET_ZC_ACK_GUILDSTORAGE_LOG *p = (struct PACKET_ZC_ACK_GUILDSTORAGE_LOG*)WFIFOP( fd, 0 );
+
+	p->packetType = HEADER_ZC_ACK_GUILDSTORAGE_LOG;
+	p->PacketLength = size;
+	p->result = result;
+	p->amount = (uint16)log.size();
 
 	if( result == GUILDSTORAGE_LOG_FINAL_SUCCESS ){
 		for( int i = 0; i < log.size(); i++ ){
-			struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub* item = &guild_storage_log.items[i];
+			struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub* item = &p->items[i];
 			struct guild_log_entry& entry = log[i];
 
 			item->id = entry.id;
@@ -20977,7 +21056,7 @@ void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct gui
 		}
 	}
 	
-	clif_send( &guild_storage_log, guild_storage_log.PacketLength, &sd->bl, SELF );
+	WFIFOSET( fd, p->PacketLength );
 #endif
 }
 

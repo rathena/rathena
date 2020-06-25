@@ -811,12 +811,23 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		char* data;
 		uint32 char_id;
 		struct auth_node* node;
-		int i, map_fd;
+		int i, map_fd, server_id;
 		DBMap *auth_db = char_get_authdb();
 		DBMap *char_db_ = char_get_chardb();
 
 		int slot = RFIFOB(fd,2);
 		RFIFOSKIP(fd,3);
+
+		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, map_server[server_id].fd > 0 && !map_server[server_id].map.empty() );
+		// Map-server not available, tell the client to wait (client wont close, char select will respawn)
+		if (server_id == ARRAYLENGTH(map_server)) {
+			WFIFOHEAD(fd, 24);
+			WFIFOW(fd, 0) = 0x840;
+			WFIFOW(fd, 2) = 24;
+			memcpy(WFIFOP(fd, 4), "0", 20); // we can't send it empty (otherwise the list will pop up)
+			WFIFOSET(fd, 24);
+			return 1;
+		}
 
 		// Check if the character exists and is not scheduled for deletion
 		if ( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `char_id` FROM `%s` WHERE `account_id`='%d' AND `char_num`='%d' AND `delete_date` = 0", schema_config.char_db, sd->account_id, slot)

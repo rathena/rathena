@@ -1591,7 +1591,7 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 18
     CastCancel: true
     CastTime: 350
     AfterCastActDelay: 3500
@@ -2345,17 +2345,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    SplashArea:
-      - Level: 1
-        Area: 3
-      - Level: 2
-        Area: 3
-      - Level: 3
-        Area: 7
-      - Level: 4
-        Area: 7
-      - Level: 5
-        Area: 15
+    SplashArea: 18
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
@@ -2365,15 +2355,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 13
+          Amount: 59
         - Level: 2
-          Amount: 16
+          Amount: 62
         - Level: 3
-          Amount: 19
+          Amount: 65
         - Level: 4
-          Amount: 22
+          Amount: 68
         - Level: 5
-          Amount: 25
+          Amount: 71
   - Id: 67
     Name: PR_SUFFRAGIUM
     Description: Suffragium
@@ -2647,7 +2637,7 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 18
     CastCancel: true
     CastTime: 3200
     AfterCastActDelay: 2000
@@ -2676,7 +2666,7 @@ Body:
       Splash: true
     Hit: Single
     HitCount: 1
-    SplashArea: -1
+    SplashArea: 18
     CastCancel: true
     AfterCastActDelay: 2000
     Duration1:
@@ -13257,29 +13247,27 @@ Body:
     MaxLevel: 5
     Type: Magic
     TargetType: Ground
-    DamageFlags:
-      NoDamage: true
     Flags:
       TargetEmperium: true
       IgnoreHovering: true
       TargetHidden: true
     Range: 18
-    Hit: Single
-    HitCount: 1
+    Hit: Multi_Hit
+    HitCount:
+      - Level: 1
+        Count: 10
+      - Level: 2
+        Count: 12
+      - Level: 3
+        Count: 14
+      - Level: 4
+        Count: 16
+      - Level: 5
+        Count: 18
     CastCancel: true
     CastTime: 5000
     AfterCastActDelay: 1000
-    Duration1:
-      - Level: 1
-        Time: 2000
-      - Level: 2
-        Time: 2400
-      - Level: 3
-        Time: 2800
-      - Level: 4
-        Time: 3200
-      - Level: 5
-        Time: 3600
+    Duration1: 100
     Cooldown: 5000
     FixedCastTime: 1000
     Requires:
@@ -13294,13 +13282,10 @@ Body:
           Amount: 90
         - Level: 5
           Amount: 100
-      ItemCost:
-        - Item: Blue_Gemstone
-          Amount: 1
     Unit:
       Id: Gravitation
-      Layout: 2
-      Interval: 200
+      Range: 2
+      Interval: 5100 #Using 5s causes a rare bug where another hit occurs at the end
       Target: Enemy
       Flag:
         PathCheck: true
@@ -28145,19 +28130,17 @@ Body:
       ItemCost:
         - Item: MenEater_Plant_Bottle
           Amount: 1
-    Unit:
-      Id: Hells_Plant
-      Range: 2
-      Interval: 300 # !TODO: Confirm interval
-      Target: Enemy
   - Id: 2491
     Name: GN_HELLS_PLANT_ATK
     Description: Hell's Plant Attack
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
+    DamageFlags:
+      Splash: true
     Hit: Single
     HitCount: 1
+    SplashArea: 2
     Element: Weapon
     CopyFlags:
       Skill:
@@ -30543,9 +30526,8 @@ Body:
     Hit: Multi_Hit
     HitCount: -2
     Element: Weapon
-    AfterCastActDelay: 500
     Duration1: 3000
-    Cooldown: # !TODO: Confirm cooldown
+    Cooldown:
       - Level: 1
         Time: 4000
       - Level: 2

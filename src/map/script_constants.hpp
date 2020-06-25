@@ -1589,6 +1589,7 @@
 	export_constant(SC_SOUNDOFDESTRUCTION);
 	export_constant(SC_LUXANIMA);
 	export_constant(SC_REUSE_LIMIT_LUXANIMA);
+	export_constant(SC_ENSEMBLEFATIGUE);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -3572,7 +3573,9 @@
 	export_constant(RC_DEMIHUMAN);
 	export_constant(RC_ANGEL);
 	export_constant(RC_DRAGON);
-	export_constant(RC_PLAYER);
+	export_constant(RC_PLAYER_HUMAN);
+	export_constant(RC_PLAYER_DORAM);
+	export_deprecated_constant3("RC_PLAYER", RC_PLAYER_HUMAN, "RC_PLAYER_HUMAN");
 	export_constant(RC_ALL);
 
 	export_constant(RC2_NONE);

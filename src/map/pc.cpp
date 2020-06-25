@@ -641,8 +641,8 @@ int pc_delsoulball(struct map_session_data *sd, int count, int type)
 	if (count > sd->soulball)
 		count = sd->soulball;
 	sd->soulball -= count;
-	if (count > MAX_SKILL_LEVEL)
-		count = MAX_SKILL_LEVEL;
+	if (count > MAX_SOUL_BALL)
+		count = MAX_SOUL_BALL;
 
 	for (int i = 0; i < count; i++) {
 		if (sd->soul_timer[i] != INVALID_TIMER) {
@@ -651,7 +651,7 @@ int pc_delsoulball(struct map_session_data *sd, int count, int type)
 		}
 	}
 
-	for (int i = count; i < MAX_SKILL_LEVEL; i++) {
+	for (int i = count; i < MAX_SOUL_BALL; i++) {
 		sd->soul_timer[i - count] = sd->soul_timer[i];
 		sd->soul_timer[i] = INVALID_TIMER;
 	}
@@ -1843,12 +1843,24 @@ void pc_reg_received(struct map_session_data *sd)
 	intif_storage_request(sd,TABLE_CART, 0, STOR_MODE_ALL); // Request cart data
 	intif_storage_request(sd,TABLE_INVENTORY, 0, STOR_MODE_ALL); // Request inventory data
 
-	if (sd->status.party_id)
+	// Restore IM_CHAR instance to the player
+	for (const auto &instance : instances) {
+		if (instance.second->mode == IM_CHAR && instance.second->owner_id == sd->status.char_id) {
+			sd->instance_id = instance.first;
+			break;
+		}
+	}
+
+#if PACKETVER_MAIN_NUM < 20190403 || PACKETVER_RE_NUM < 20190320 || PACKETVER_ZERO_NUM < 20190410
+	if (sd->instance_id > 0)
+		instance_reqinfo(sd, sd->instance_id);
+	if (sd->status.party_id > 0)
 		party_member_joined(sd);
-	if (sd->status.guild_id)
+	if (sd->status.guild_id > 0)
 		guild_member_joined(sd);
-	if( sd->status.clan_id )
+	if (sd->status.clan_id > 0)
 		clan_member_joined(sd);
+#endif
 
 	// pet
 	if (sd->status.pet_id > 0)
@@ -4648,36 +4660,40 @@ bool pc_skill(struct map_session_data* sd, uint16 skill_id, int level, enum e_ad
  *------------------------------------------*/
 int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 {
-	int i;
-	unsigned short nameid;
-
 	nullpo_ret(sd);
 
-	if( idx_equip < 0 || idx_equip >= MAX_INVENTORY || sd->inventory_data[idx_equip] == NULL )
+	int i;
+	unsigned short nameid;
+	struct item_data* item_eq = sd->inventory_data[idx_equip];
+	struct item_data* item_card = sd->inventory_data[idx_card];
+
+	if( idx_equip < 0 || idx_equip >= MAX_INVENTORY || item_eq == NULL )
 		return 0; //Invalid item index.
-	if( idx_card < 0 || idx_card >= MAX_INVENTORY || sd->inventory_data[idx_card] == NULL )
+	if( idx_card < 0 || idx_card >= MAX_INVENTORY || item_card == NULL )
 		return 0; //Invalid card index.
 	if( sd->inventory.u.items_inventory[idx_equip].nameid <= 0 || sd->inventory.u.items_inventory[idx_equip].amount < 1 )
 		return 0; // target item missing
 	if( sd->inventory.u.items_inventory[idx_card].nameid <= 0 || sd->inventory.u.items_inventory[idx_card].amount < 1 )
 		return 0; // target card missing
-	if( sd->inventory_data[idx_equip]->type != IT_WEAPON && sd->inventory_data[idx_equip]->type != IT_ARMOR )
+	if( item_eq->type != IT_WEAPON && item_eq->type != IT_ARMOR )
 		return 0; // only weapons and armor are allowed
-	if( sd->inventory_data[idx_card]->type != IT_CARD )
+	if( item_card->type != IT_CARD )
 		return 0; // must be a card
 	if( sd->inventory.u.items_inventory[idx_equip].identify == 0 )
 		return 0; // target must be identified
 	if( itemdb_isspecial(sd->inventory.u.items_inventory[idx_equip].card[0]) )
 		return 0; // card slots reserved for other purposes
-	if( (sd->inventory_data[idx_equip]->equip & sd->inventory_data[idx_card]->equip) == 0 )
+	if( (item_eq->equip & item_card->equip) == 0 )
 		return 0; // card cannot be compounded on this item type
-	if( sd->inventory_data[idx_equip]->type == IT_WEAPON && sd->inventory_data[idx_card]->equip == EQP_SHIELD )
+	if( item_eq->type == IT_WEAPON && item_card->equip == EQP_SHIELD )
 		return 0; // attempted to place shield card on left-hand weapon.
+	if( item_eq->type == IT_ARMOR && (item_card->equip & EQP_ACC) && ((item_card->equip & EQP_ACC) != EQP_ACC) && ((item_eq->equip & EQP_ACC) != (item_card->equip & EQP_ACC)) )
+		return 0; // specific accessory-card can only be inserted to specific accessory.
 	if( sd->inventory.u.items_inventory[idx_equip].equip != 0 )
 		return 0; // item must be unequipped
 
-	ARR_FIND( 0, sd->inventory_data[idx_equip]->slot, i, sd->inventory.u.items_inventory[idx_equip].card[i] == 0 );
-	if( i == sd->inventory_data[idx_equip]->slot )
+	ARR_FIND( 0, item_eq->slot, i, sd->inventory.u.items_inventory[idx_equip].card[i] == 0 );
+	if( i == item_eq->slot )
 		return 0; // no free slots
 
 	// remember the card id to insert
@@ -5952,13 +5968,15 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	sd->state.workinprogress = WIP_DISABLE_NONE;
 
 	if( sd->state.changemap ) { // Misc map-changing settings
-		unsigned short curr_map_instance_id = map_getmapdata(sd->bl.m)->instance_id, new_map_instance_id = (mapdata ? mapdata->instance_id : 0);
+		int curr_map_instance_id = map_getmapdata(sd->bl.m)->instance_id, new_map_instance_id = (mapdata ? mapdata->instance_id : 0);
 
 		if (curr_map_instance_id != new_map_instance_id) {
-			if (curr_map_instance_id) // Update instance timer for the map on leave
+			if (curr_map_instance_id > 0) { // Update instance timer for the map on leave
 				instance_delusers(curr_map_instance_id);
+				sd->instance_mode = util::umap_find(instances, curr_map_instance_id)->mode; // Store mode for instance destruction button checks
+			}
 
-			if (new_map_instance_id) // Update instance timer for the map on enter
+			if (new_map_instance_id > 0) // Update instance timer for the map on enter
 				instance_addusers(new_map_instance_id);
 		}
 
@@ -6086,9 +6104,6 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		clif_changemap(sd,m,x,y); // [MouseJstr]
 	} else if(sd->state.active) //Tag player for rewarping after map-loading is done. [Skotlex]
 		sd->state.rewarp = 1;
-
-	if (sc && sc->data[SC_HELLS_PLANT])
-		skill_unit_move_unit_group(skill_id2group(sc->data[SC_HELLS_PLANT]->val4), m, x - sd->bl.x, y - sd->bl.y);
 
 	sd->mapindex = mapindex;
 	sd->bl.m = m;

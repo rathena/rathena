@@ -308,7 +308,7 @@
 	packet(0x018b,4);
 	packet(0x018c,29);
 	packet(0x018d,-1);
-	parseable_packet(0x018e,10,clif_parse_ProduceMix,2,4,6,8);
+	parseable_packet( HEADER_CZ_REQMAKINGITEM, sizeof( struct PACKET_CZ_REQMAKINGITEM ), clif_parse_ProduceMix, 0 );
 	packet(0x018f,6);
 	parseable_packet(0x0190,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
 	packet( HEADER_ZC_TALKBOX_CHATCONTENTS, sizeof( struct PACKET_ZC_TALKBOX_CHATCONTENTS ) );
@@ -340,7 +340,7 @@
 	packet(0x01ab,12);
 	packet(0x01ac,6);
 	packet(0x01ad,-1);
-	parseable_packet(0x01ae,4,clif_parse_SelectArrow,2);
+	parseable_packet( HEADER_CZ_REQ_MAKINGARROW, sizeof( PACKET_CZ_REQ_MAKINGARROW ), clif_parse_SelectArrow, 0 );
 	parseable_packet(0x01af,4,clif_parse_ChangeCart,2);
 	packet(0x01b0,11);
 	packet(0x01b1,7);
@@ -419,7 +419,7 @@
 	packet(0x01fa,48);
 	packet(0x01fb,56);
 	packet(0x01fc,-1);
-	parseable_packet(0x01fd,4,clif_parse_RepairItem,0);
+	parseable_packet( HEADER_CZ_REQ_ITEMREPAIR, sizeof( struct PACKET_CZ_REQ_ITEMREPAIR ), clif_parse_RepairItem, 0 );
 	packet(0x01fe,5);
 	packet(0x01ff,10);
 	packet(0x0200,26);
@@ -875,7 +875,7 @@
 #if PACKETVER >= 20051010
 	packet(0x020e,32);
 	packet(0x025a,-1);
-	parseable_packet(0x025b,6,clif_parse_Cooking,2,4);
+	parseable_packet( HEADER_CZ_REQ_MAKINGITEM, sizeof( struct PACKET_CZ_REQ_MAKINGITEM ), clif_parse_Cooking, 0 );
 #endif
 
 // 2005-10-13aSakexe
@@ -1072,11 +1072,6 @@
 	parseable_packet(0x0190,19,clif_parse_ActionRequest,5,18);
 #endif
 
-// 2007-05-07aSakexe
-#if PACKETVER >= 20070507
-	parseable_packet(0x01fd,15,clif_parse_RepairItem,0);
-#endif
-
 // 2007-02-27aSakexe to 2007-10-02aSakexe
 #if PACKETVER >= 20070227
 	parseable_packet(0x0288,10,clif_parse_npccashshop_buy,2,4,6);
@@ -1114,7 +1109,7 @@
 	packet(0x02cc,4);
 	packet(0x02cd,26);
 	packet(0x02ce,10);
-	packet(0x02cf,6);
+	parseable_packet(0x02cf,6,clif_parse_MemorialDungeonCommand,2);
 	packet(0x02d0,-1);
 	packet(0x02d1,-1);
 	packet(0x02d2,-1);
@@ -1915,7 +1910,6 @@
 
 // 2012-04-10aRagexeRE
 #if PACKETVER >= 20120410
-	parseable_packet(0x01fd,15,clif_parse_RepairItem,0);
 	parseable_packet(0x089c,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x0885,5,clif_parse_HomMenu,2,4);
 	parseable_packet(0x0961,36,clif_parse_StoragePassword,2,4,20);
@@ -2049,7 +2043,6 @@
 // 2013-03-20Ragexe (Judas)
 #if PACKETVER >= 20130320
 	parseable_packet(0x014f,6,clif_parse_GuildRequestInfo,2);
-	parseable_packet(0x01fd,15,clif_parse_RepairItem,0);
 	//parseable_packet(0x0281,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
 	parseable_packet(0x035f,6,clif_parse_ReqClickBuyingStore,2);
 	parseable_packet(0x0363,6,clif_parse_TickSend,2);
@@ -2428,7 +2421,7 @@
 
 // 2018-03-21aRagexeRE
 #if PACKETVER >= 20180321
-	parseable_packet(0x0A49,20,clif_parse_private_airship_request,0);
+	parseable_packet( 0x0A49, sizeof( struct PACKET_CZ_PRIVATE_AIRSHIP_REQUEST ), clif_parse_private_airship_request, 0 );
 	packet(0x0A4A,6);
 	packet(0x0A4B,22);
 	packet(0x0A4C,28);
@@ -2437,16 +2430,6 @@
 // 2018-04-18bRagexeRE
 #if PACKETVER >= 20180418
 	packet(0x0ADD, 22);
-#endif
-
-#if PACKETVER >= 20180704
-	parseable_packet( 0x018e, sizeof( struct PACKET_CZ_REQMAKINGITEM ), clif_parse_ProduceMix, 0 );
-	parseable_packet( 0x01ae, 6, clif_parse_SelectArrow, 0 );
-	parseable_packet( 0x01fd, sizeof( struct PACKET_CZ_REQ_ITEMREPAIR ), clif_parse_RepairItem, 0 );
-	parseable_packet( 0x025b, sizeof( struct PACKET_CZ_REQ_MAKINGITEM ), clif_parse_Cooking, 0 );
-	// this is done in clif_shuffle
-	//parseable_packet( 0x083C, sizeof( struct PACKET_CZ_SSILIST_ITEM_CLICK ), clif_parse_SearchStoreInfoListItemClick, 0 );
-	parseable_packet( 0x0A49, sizeof( struct PACKET_CZ_PRIVATE_AIRSHIP_REQUEST ), clif_parse_private_airship_request, 0 );
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20181002 || PACKETVER_RE_NUM >= 20181002 || PACKETVER_ZERO_NUM >= 20181010

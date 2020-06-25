@@ -22,7 +22,7 @@ This list contains all available constants referenced in the 'bonus' commands.
 
 * Race (r)
 	RC_Angel, RC_Brute, RC_DemiHuman, RC_Demon, RC_Dragon, RC_Fish, RC_Formless,
-	RC_Insect, RC_Plant, RC_Player, RC_Undead, RC_All
+	RC_Insect, RC_Plant, RC_Player_Human (RC_Player deprecated), RC_Player_Doram, RC_Undead, RC_All
 
 * Monster Race (mr)
 	RC2_Goblin, RC2_Kobold, RC2_Orc, RC2_Golem, RC2_Guardian, RC2_Ninja,
