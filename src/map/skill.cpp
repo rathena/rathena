@@ -5705,10 +5705,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case WL_TETRAVORTEX:
 		if (sd == nullptr) { // Monster usage
 			uint8 i = 0;
-			std::vector<std::vector<uint16>> tetra_skills = { { WL_TETRAVORTEX_FIRE, 1 },
-														      { WL_TETRAVORTEX_WIND, 4 },
-														      { WL_TETRAVORTEX_WATER, 2 },
-														      { WL_TETRAVORTEX_GROUND, 8 } };
+			const static std::vector<std::vector<uint16>> tetra_skills = { { WL_TETRAVORTEX_FIRE, 1 },
+																		   { WL_TETRAVORTEX_WIND, 4 },
+																		   { WL_TETRAVORTEX_WATER, 2 },
+																		   { WL_TETRAVORTEX_GROUND, 8 } };
 
 			for (const auto &skill : tetra_skills) {
 				if (skill_lv > 5) {
