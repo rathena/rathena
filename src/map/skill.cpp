@@ -8148,6 +8148,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				clif_skill_warppoint(sd,skill_id,skill_lv, (unsigned short)-1,sd->status.save_point.map,0,0);
 		} else
 			unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
+			if (md && mob_countslave(bl) > 0)
+				mob_warpslave(src,MOB_SLAVEDISTANCE);
 		break;
 
 	case NPC_EXPULSION:
