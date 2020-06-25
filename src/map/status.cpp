@@ -4607,20 +4607,16 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		}
         if (sc->data[SC_GEFFEN_MAGIC1]) {
             sd->right_weapon.addrace[RC_PLAYER_HUMAN] += sc->data[SC_GEFFEN_MAGIC1]->val1;
-            sd->right_weapon.addrace[RC_PLAYER_DORAM] += sc->data[SC_GEFFEN_MAGIC1]->val1;
             sd->right_weapon.addrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC1]->val1;
             sd->left_weapon.addrace[RC_PLAYER_HUMAN] += sc->data[SC_GEFFEN_MAGIC1]->val1;
-            sd->left_weapon.addrace[RC_PLAYER_DORAM] += sc->data[SC_GEFFEN_MAGIC1]->val1;
             sd->left_weapon.addrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC1]->val1;
         }
         if (sc->data[SC_GEFFEN_MAGIC2]) {
             sd->magic_addrace[RC_PLAYER_HUMAN] += sc->data[SC_GEFFEN_MAGIC2]->val1;
-            sd->magic_addrace[RC_PLAYER_DORAM] += sc->data[SC_GEFFEN_MAGIC2]->val1;
             sd->magic_addrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC2]->val1;
         }
         if(sc->data[SC_GEFFEN_MAGIC3]) {
             sd->subrace[RC_PLAYER_HUMAN] += sc->data[SC_GEFFEN_MAGIC3]->val1;
-            sd->subrace[RC_PLAYER_DORAM] += sc->data[SC_GEFFEN_MAGIC3]->val1;
             sd->subrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC3]->val1;
         }
 		if(sc->data[SC_ARMOR_ELEMENT_WATER]) {	// This status change should grant card-type elemental resist.
