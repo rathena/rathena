@@ -4318,11 +4318,7 @@ static TIMER_FUNC(skill_timerskill){
 							}
 							if (j) {
 								i = applyeffects[rnd()%j];
-								status_change_start(src, target, static_cast<sc_type>(i), 10000, skl->skill_lv,
-									(i == SC_BURNING ? 1000 : (i == SC_BLEEDING ? src->id : 0)),
-									(i == SC_BURNING ? src->id : 0), 0,
-									(i == SC_BURNING ? 15000 : (i == SC_FREEZING ? 40000 :
-									(i == SC_BLEEDING ? 120000 : 5000))), SCSTART_NONE);
+								sc_start(src, target, static_cast<sc_type>(i), 100, skl->skill_lv, (i == SC_BURNING ? 18000 : (i == SC_FREEZING ? 27000 : (i == SC_BLEEDING ? 108000 : 4500))));
 							}
 						}
 					}
@@ -5707,7 +5703,23 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case WL_TETRAVORTEX:
-		if( sc ) { // No SC? No spheres
+		if (sd == nullptr) { // Monster usage
+			uint8 i = 0;
+			std::vector<std::vector<uint16>> tetra_skills = { { WL_TETRAVORTEX_FIRE, 1 },
+														      { WL_TETRAVORTEX_WIND, 4 },
+														      { WL_TETRAVORTEX_WATER, 2 },
+														      { WL_TETRAVORTEX_GROUND, 8 } };
+
+			for (const auto &skill : tetra_skills) {
+				if (skill_lv > 5) {
+					skill_area_temp[0] = i;
+					skill_area_temp[1] = skill[1];
+					map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill[0], skill_lv, tick, flag | BCT_ENEMY, skill_castend_damage_id);
+				} else
+					skill_addtimerskill(src, tick + i * 200, bl->id, skill[1], 0, skill[0], skill_lv, i, flag);
+				i++;
+			}
+		} else if (sc) { // No SC? No spheres
 			int i, k = 0;
 
 			if (sc->data[SC_SPHERE_5]) // If 5 spheres, remove last one (based on reverse order) and only do 4 actions (Official behavior)
