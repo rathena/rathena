@@ -1130,7 +1130,7 @@ int mapif_guild_emblem(struct guild *g)
 	return 0;
 }
 
-// Send the guild emblem_id (version0
+// Send the guild emblem_id (version)
 int mapif_guild_emblem_version(guild* g)
 {
 	unsigned char buf[10];
