@@ -22764,7 +22764,7 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current)
 {
 	unsigned short x, y;
 	unsigned short id = atoi(split[0]);
-	unsigned short nameid = 0;
+	uint32 nameid = 0;
 	bool found = false;
 
 	if (id >= ARRAYLENGTH(skill_produce_db)) {
@@ -22775,7 +22775,7 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current)
 	// Clear previous data, for importing support
 	memset(&skill_produce_db[id], 0, sizeof(skill_produce_db[id]));
 	// Import just for clearing/disabling from original data
-	if (!(nameid = atoi(split[1]))) {
+	if (!(nameid = strtoul(split[1], NULL, 10))) {
 		//ShowInfo("skill_parse_row_producedb: Product list with ID %d removed from list.\n", id);
 		return true;
 	}

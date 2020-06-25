@@ -6933,7 +6933,7 @@ static int script_countitem_sub(struct item *items, struct item_data *id, int si
 	int count = 0;
 
 	if (!expanded) { // For non-expanded functions
-		unsigned short nameid = id->nameid;
+		uint32 nameid = id->nameid;
 
 		for (int i = 0; i < size; i++) {
 			item *itm = &items[i];
@@ -7523,7 +7523,8 @@ BUILDIN_FUNC(getitem)
  *------------------------------------------*/
 BUILDIN_FUNC(getitem2)
 {
-	unsigned short nameid, amount;
+	uint32 nameid;
+	unsigned short amount;
 	int iden, ref, attr;
 	unsigned short c1, c2, c3, c4;
 	char bound = BOUND_NONE;

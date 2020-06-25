@@ -242,7 +242,7 @@ void inter_auctions_fromsql(void)
 		for( i = 0; i < MAX_SLOTS; i++ )
 		{
 			Sql_GetData(sql_handle, 15 + i, &data, NULL);
-			item->card[i] = atoi(data);
+			item->card[i] = strtoul(data, NULL, 10);
 		}
 
 		for (i = 0; i < MAX_ITEM_RDM_OPT; i++) {
