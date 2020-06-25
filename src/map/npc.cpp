@@ -190,9 +190,7 @@ int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
 	// if( pc_ishiding(sd) )
 		// return 1; // Can't trigger 'OnTouch_'.
 
-	auto it = std::find(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), nd->bl.id);
-
-	if (it != sd->npc_ontouch_.end())
+	if (util::vector_exists(sd->npc_ontouch_, nd->bl.id))
 		return 0;
 
 	safesnprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch_event_name);
@@ -202,9 +200,8 @@ int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
 int npc_ontouch2_event(struct map_session_data *sd, struct npc_data *nd)
 {
 	char name[EVENT_NAME_LENGTH];
-	auto it = std::find(sd->areanpc.begin(), sd->areanpc.end(), nd->bl.id);
 
-	if (it != sd->areanpc.end())
+	if (util::vector_exists(sd->areanpc, nd->bl.id))
 		return 0;
 
 	safesnprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch2_event_name);
@@ -337,7 +334,7 @@ bool npc_enable_target(const char* name, uint32 char_id, int flag)
 			ys = nd->u.warp.ys;
 			break;
 		}
-		if (xs >= 0 || ys >= 0)
+		if (xs > -1 && ys > -1)
 			map_foreachinallarea( npc_enable_sub, nd->bl.m, nd->bl.x-xs, nd->bl.y-ys, nd->bl.x+xs, nd->bl.y+ys, BL_PC, nd );
 	}
 
@@ -1010,14 +1007,10 @@ int npc_event(struct map_session_data* sd, const char* eventname, int ontouch)
 
 		nd->touching_id = sd->bl.id;
 
-		auto it = std::find(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), nd->bl.id);
-
-		if (it == sd->npc_ontouch_.end())
+		if (!util::vector_exists(sd->npc_ontouch_, nd->bl.id))
 			sd->npc_ontouch_.push_back(nd->bl.id);
 	} else if (ontouch == 2) { // OnTouch
-		auto it = std::find(sd->areanpc.begin(), sd->areanpc.end(), nd->bl.id);
-
-		if (it == sd->areanpc.end())
+		if (!util::vector_exists(sd->areanpc, nd->bl.id))
 			sd->areanpc.push_back(nd->bl.id);
 	}
 
@@ -1101,13 +1094,12 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y, st
 	nullpo_retr(0, sd);
 	nullpo_retr(0, nd);
 
-	int xs = -1, ys = -1;
-
 	if (nd->sc.option&OPTION_INVISIBLE)
 		return 1; // a npc was found, but it is disabled
 	if (npc_is_cloaked(nd, sd))
 		return 1;
 
+	int xs = -1, ys = -1;
 	switch(nd->subtype) {
 	case NPCTYPE_WARP:
 		xs = nd->u.warp.xs;
@@ -1120,7 +1112,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y, st
 	default:
 		return 0;
 	}
-	if (xs < 0 && ys < 0)
+	if (xs < 0 || ys < 0)
 		return 0;
 	if (x < (nd->bl.x - xs) || x > (nd->bl.x + xs) || y < (nd->bl.y - ys) || y > (nd->bl.y + ys))
 		return 0;
@@ -1142,9 +1134,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y, st
 		// warp type sorted first, no need to check if they override any other OnTouch areas.
 
 		if (npc_ontouch_event(sd, nd) > 0 && npc_ontouch2_event(sd, nd) > 0) { // failed to run OnTouch event, so just click the npc
-			auto it = std::find(sd->areanpc.begin(), sd->areanpc.end(), nd->bl.id);
-
-			if (it == sd->areanpc.end())
+			if (!util::vector_exists(sd->areanpc, nd->bl.id))
 				sd->areanpc.push_back(nd->bl.id);
 
 			npc_click(sd, nd);
@@ -1166,9 +1156,8 @@ int npc_touch_area_allnpc(struct map_session_data* sd, int16 m, int16 x, int16 y
 	for (i = 0; i < sd->areanpc.size(); i++) {
 		struct npc_data *nd = map_id2nd(sd->areanpc[i]);
 
-		if (!nd || nd->subtype != NPCTYPE_SCRIPT ||
-			!(nd->bl.m == m && x >= nd->bl.x - nd->u.scr.xs && x <= nd->bl.x + nd->u.scr.xs && y >= nd->bl.y - nd->u.scr.ys && y <= nd->bl.y + nd->u.scr.ys))
-			sd->areanpc.erase(sd->areanpc.begin() + i);
+		if (!nd || nd->subtype != NPCTYPE_SCRIPT || !(nd->bl.m == m && x >= nd->bl.x - nd->u.scr.xs && x <= nd->bl.x + nd->u.scr.xs && y >= nd->bl.y - nd->u.scr.ys && y <= nd->bl.y + nd->u.scr.ys))
+			util::erase_at(sd->areanpc, i);
 	}
 
 	if (sd->state.block_action & PCBLOCK_NPCCLICK)
@@ -1225,6 +1214,8 @@ int npc_touch_areanpc2(struct mob_data *md)
 			default:
 				continue; // Keep Searching
 		}
+		if (xs < 0 || ys < 0)
+			continue;
 
 		if( x >= mapdata->npc[i]->bl.x-xs && x <= mapdata->npc[i]->bl.x+xs && y >= mapdata->npc[i]->bl.y-ys && y <= mapdata->npc[i]->bl.y+ys )
 		{ // In the npc touch area

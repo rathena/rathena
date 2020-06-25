@@ -333,12 +333,11 @@ int unit_walktoxy_ontouch(struct block_list *bl, va_list ap)
 			return 1;
 
 		// Remove NPCs that are no longer within the OnTouch area
-		for (int i = 0; i < sd->areanpc.size(); i++) {
+		for (size_t i = 0; i < sd->areanpc.size(); i++) {
 			struct npc_data *nd = map_id2nd(sd->areanpc[i]);
 
-			if (!nd || nd->subtype != NPCTYPE_SCRIPT ||
-				!(nd->bl.m == bl->m && bl->x >= nd->bl.x - nd->u.scr.xs && bl->x <= nd->bl.x + nd->u.scr.xs && bl->y >= nd->bl.y - nd->u.scr.ys && bl->y <= nd->bl.y + nd->u.scr.ys))
-				sd->areanpc.erase(sd->areanpc.begin() + i);
+			if (!nd || nd->subtype != NPCTYPE_SCRIPT || !(nd->bl.m == bl->m && bl->x >= nd->bl.x - nd->u.scr.xs && bl->x <= nd->bl.x + nd->u.scr.xs && bl->y >= nd->bl.y - nd->u.scr.ys && bl->y <= nd->bl.y + nd->u.scr.ys))
+				rathena::util::erase_at(sd->areanpc, i);
 		}
 		npc_touchnext_areanpc(sd, false);
 
@@ -547,7 +546,7 @@ static TIMER_FUNC(unit_walktoxy_timer){
 				ys = nd->u.warp.ys;
 				break;
 			}
-			if (xs > -1 || ys > -1)
+			if (xs > -1 && ys > -1)
 				map_foreachinmap(unit_walktoxy_ontouch, nd->bl.m, BL_PC, nd);
 			break;
 	}
