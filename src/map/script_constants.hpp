@@ -3570,7 +3570,9 @@
 	export_constant(RC_DEMIHUMAN);
 	export_constant(RC_ANGEL);
 	export_constant(RC_DRAGON);
-	export_constant(RC_PLAYER);
+	export_constant(RC_PLAYER_HUMAN);
+	export_constant(RC_PLAYER_DORAM);
+	export_deprecated_constant3("RC_PLAYER", RC_PLAYER_HUMAN, "RC_PLAYER_HUMAN");
 	export_constant(RC_ALL);
 
 	export_constant(RC2_NONE);
