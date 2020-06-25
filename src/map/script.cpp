@@ -7882,9 +7882,14 @@ BUILDIN_FUNC(makeitem) {
 		else
 			nameid = UNKNOWN_ITEM_ID;
 	}
-	else
-		nameid = script_getnum(st, 2);
-
+	else {
+		int64 nameid_check = script_getnum64(st, 2);
+		if (nameid_check < 0) {
+			flag = 1;
+			nameid_check = -nameid_check;
+		}
+		nameid = static_cast<uint32>(nameid_check);
+	}
 	amount = script_getnum(st,3);
 	mapname	= script_getstr(st,4);
 	x = script_getnum(st,5);
@@ -7898,21 +7903,14 @@ BUILDIN_FUNC(makeitem) {
 	} else
 		m = map_mapname2mapid(mapname);
 
-	if(nameid<0) {
-		nameid = -nameid;
-		flag = 1;
-	}
+	memset(&item_tmp,0,sizeof(item_tmp));
+	item_tmp.nameid = nameid;
+	if (!flag)
+		item_tmp.identify = 1;
+	else
+		item_tmp.identify = itemdb_isidentified(nameid);
 
-	if(nameid > 0) {
-		memset(&item_tmp,0,sizeof(item_tmp));
-		item_tmp.nameid = nameid;
-		if(!flag)
-			item_tmp.identify = 1;
-		else
-			item_tmp.identify = itemdb_isidentified(nameid);
-
-		map_addflooritem(&item_tmp,amount,m,x,y,0,0,0,4,0);
-	}
+	map_addflooritem(&item_tmp,amount,m,x,y,0,0,0,4,0);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -7942,7 +7940,7 @@ BUILDIN_FUNC(makeitem2) {
 			nameid = UNKNOWN_ITEM_ID;
 	}
 	else
-		nameid = script_getnum(st, 2);
+		nameid = script_getnum64(st, 2);
 
 	amount = script_getnum(st,3);
 	mapname	= script_getstr(st,4);

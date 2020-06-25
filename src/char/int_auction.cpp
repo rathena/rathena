@@ -247,7 +247,7 @@ void inter_auctions_fromsql(void)
 
 		for (i = 0; i < MAX_ITEM_RDM_OPT; i++) {
 			Sql_GetData(sql_handle, 15 + MAX_SLOTS + i*3, &data, NULL);
-			item->option[i].id = strtoul(data, NULL, 10);
+			item->option[i].id = atoi(data);
 			Sql_GetData(sql_handle, 16 + MAX_SLOTS + i*3, &data, NULL);
 			item->option[i].value = atoi(data);
 			Sql_GetData(sql_handle, 17 + MAX_SLOTS + i*3, &data, NULL);
