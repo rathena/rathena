@@ -1670,7 +1670,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			sc_start(src,bl,SC_STUN,70,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 	case GS_BULLSEYE: //0.1% coma rate.
-		if(tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER)
+		if(tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER_HUMAN || tstatus->race == RC_PLAYER_DORAM)
 			status_change_start(src,bl,SC_COMA,10,skill_lv,0,src->id,0,0,SCSTART_NONE);
 		break;
 	case GS_PIERCINGSHOT:
@@ -2033,7 +2033,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					case SC_DRESSUP:		case SC_HANBOK:			case SC_OKTOBERFEST:
 					case SC_LHZ_DUN_N1:		case SC_LHZ_DUN_N2:			case SC_LHZ_DUN_N3:			case SC_LHZ_DUN_N4:
 					case SC_ENTRY_QUEUE_APPLY_DELAY:	case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
-					case SC_REUSE_LIMIT_LUXANIMA:
+					case SC_REUSE_LIMIT_LUXANIMA:	case SC_LUXANIMA:
 						continue;
 					case SC_WHISTLE:		case SC_ASSNCROS:		case SC_POEMBRAGI:
 					case SC_APPLEIDUN:		case SC_HUMMING:		case SC_DONTFORGETME:
@@ -5073,7 +5073,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case HT_POWER:
-		if( tstatus->race == RC_BRUTE || tstatus->race == RC_INSECT )
+		if( tstatus->race == RC_BRUTE || tstatus->race == RC_PLAYER_DORAM || tstatus->race == RC_INSECT )
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
@@ -7877,7 +7877,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if( dstmd )
 		{
 			if( status_get_lv(src) > status_get_lv(bl)
-			&&  (tstatus->race == RC_DEMON || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER || tstatus->race == RC_ANGEL)
+			&&  (tstatus->race == RC_DEMON || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER_HUMAN || tstatus->race == RC_PLAYER_DORAM || tstatus->race == RC_ANGEL)
 			&&  !status_has_mode(tstatus,MD_STATUS_IMMUNE) )
 				clif_skill_nodamage(src,bl,skill_id,skill_lv, sc_start2(src,bl,type,70,skill_lv,src->id,skill_get_time(skill_id,skill_lv)));
 			else
@@ -8510,7 +8510,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_WEDDING:		case SC_XMAS:			case SC_SUMMER:
 					case SC_DRESSUP:		case SC_HANBOK:			case SC_OKTOBERFEST:
 					case SC_LHZ_DUN_N1:		case SC_LHZ_DUN_N2:			case SC_LHZ_DUN_N3:			case SC_LHZ_DUN_N4:
-					case SC_REUSE_LIMIT_LUXANIMA:
+					case SC_REUSE_LIMIT_LUXANIMA:	case SC_LUXANIMA:
 						continue;
 					case SC_WHISTLE:
 					case SC_ASSNCROS:
@@ -8549,6 +8549,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 #ifdef RENEWAL
 		clif_blown(src); // Always blow, otherwise it shows a casting animation. [Lemongrass]
+#else
+		clif_slide(bl, bl->x, bl->y); //Show the casting animation on pre-re
 #endif
 		break;
 
@@ -9995,7 +9997,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_DRESSUP:		case SC_HANBOK:			case SC_OKTOBERFEST:
 					case SC_LHZ_DUN_N1:		case SC_LHZ_DUN_N2:			case SC_LHZ_DUN_N3:			case SC_LHZ_DUN_N4:
 					case SC_ENTRY_QUEUE_APPLY_DELAY:	case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
-					case SC_REUSE_LIMIT_LUXANIMA:
+					case SC_REUSE_LIMIT_LUXANIMA:		case SC_LUXANIMA:
 					continue;
 				case SC_ASSUMPTIO:
 					if( bl->type == BL_MOB )
@@ -16911,8 +16913,8 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 		/* Skill level-dependent checks */
 		case NC_SHAPESHIFT: // NOTE: Magic_Gear_Fuel must be last in the ItemCost list depending on the skill's max level
 		case NC_REPAIR: // NOTE: Repair_Kit must be last in the ItemCost list depending on the skill's max level
-			req.itemid[1] = skill->require.itemid[skill->max - 1];
-			req.amount[1] = skill->require.amount[skill->max - 1];
+			req.itemid[1] = skill->require.itemid[skill->max];
+			req.amount[1] = skill->require.amount[skill->max];
 		case KO_MAKIBISHI:
 		case GN_FIRE_EXPANSION:
 		case SO_SUMMON_AGNI:
@@ -22209,9 +22211,9 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			if (active)
-				skill->castnodex |= constant;
+				skill->delaynodex |= constant;
 			else
-				skill->castnodex &= ~constant;
+				skill->delaynodex &= ~constant;
 		}
 	}
 
