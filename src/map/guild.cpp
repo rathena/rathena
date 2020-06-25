@@ -1270,8 +1270,7 @@ bool guild_check_emblem_change_condition(map_session_data *sd)
 	nullpo_ret(sd);
 	guild* g = sd->guild;
 
-	if (battle_config.require_glory_guild &&
-		g != nullptr && guild_checkskill(g, GD_GLORYGUILD) > 0) {
+	if (battle_config.require_glory_guild && g != nullptr && guild_checkskill(g, GD_GLORYGUILD) > 0) {
 		clif_skill_fail(sd, GD_GLORYGUILD, USESKILL_FAIL_LEVEL, 0);
 		return false;
 	}
