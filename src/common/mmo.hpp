@@ -53,7 +53,7 @@
 	#endif
 #endif
 
-#if PACKETVER > 20180620
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
 	typedef uint32 t_nameid;
 #define RFIFON RFIFOL
 #define WFIFON RFIFOL
