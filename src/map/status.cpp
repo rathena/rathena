@@ -3868,7 +3868,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	// Give them all modes except these (useful for clones)
 	base_status->mode = static_cast<e_mode>(MD_MASK&~(MD_STATUS_IMMUNE|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_DETECTOR|MD_ANGRY|MD_TARGETWEAK));
 
-	base_status->size = (sd->class_&JOBL_BABY || ((battle_config.summoner_trait&2) && (sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER)) ? SZ_SMALL : SZ_MEDIUM;
+	base_status->size = (sd->class_&JOBL_BABY) ? SZ_SMALL : (((sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? battle_config.summoner_size : SZ_MEDIUM);
 	if (battle_config.character_size && pc_isriding(sd)) { // [Lupus]
 		if (sd->class_&JOBL_BABY) {
 			if (battle_config.character_size&SZ_BIG)
@@ -3879,7 +3879,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	}
 	base_status->aspd_rate = 1000;
 	base_status->ele_lv = 1;
-	base_status->race = ((battle_config.summoner_trait&1) && (sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? RC_BRUTE : RC_PLAYER;
+	base_status->race = ((sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? battle_config.summoner_race : RC_PLAYER_HUMAN;
 	base_status->class_ = CLASS_NORMAL;
 
 	sd->autospell.clear();
@@ -4606,17 +4606,17 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->subrace[RC_DEMON] += sc->data[SC_PROVIDENCE]->val2;
 		}
         if (sc->data[SC_GEFFEN_MAGIC1]) {
-            sd->right_weapon.addrace[RC_PLAYER] += sc->data[SC_GEFFEN_MAGIC1]->val1;
+            sd->right_weapon.addrace[RC_PLAYER_HUMAN] += sc->data[SC_GEFFEN_MAGIC1]->val1;
             sd->right_weapon.addrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC1]->val1;
-            sd->left_weapon.addrace[RC_PLAYER] += sc->data[SC_GEFFEN_MAGIC1]->val1;
+            sd->left_weapon.addrace[RC_PLAYER_HUMAN] += sc->data[SC_GEFFEN_MAGIC1]->val1;
             sd->left_weapon.addrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC1]->val1;
         }
         if (sc->data[SC_GEFFEN_MAGIC2]) {
-            sd->magic_addrace[RC_PLAYER] += sc->data[SC_GEFFEN_MAGIC2]->val1;
+            sd->magic_addrace[RC_PLAYER_HUMAN] += sc->data[SC_GEFFEN_MAGIC2]->val1;
             sd->magic_addrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC2]->val1;
         }
         if(sc->data[SC_GEFFEN_MAGIC3]) {
-            sd->subrace[RC_PLAYER] += sc->data[SC_GEFFEN_MAGIC3]->val1;
+            sd->subrace[RC_PLAYER_HUMAN] += sc->data[SC_GEFFEN_MAGIC3]->val1;
             sd->subrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC3]->val1;
         }
 		if(sc->data[SC_ARMOR_ELEMENT_WATER]) {	// This status change should grant card-type elemental resist.

@@ -97,7 +97,7 @@ RDMOPT_RACE_TOLERACE_PLANT,{ bonus2 bSubRace,RC_Plant,getrandomoptinfo(ROA_VALUE
 RDMOPT_RACE_TOLERACE_INSECT,{ bonus2 bSubRace,RC_Insect,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_TOLERACE_FISHS,{ bonus2 bSubRace,RC_Fish,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_TOLERACE_DEVIL,{ bonus2 bSubRace,RC_Demon,getrandomoptinfo(ROA_VALUE); }
-RDMOPT_RACE_TOLERACE_HUMAN,{ bonus2 bSubRace,RC_DemiHuman,getrandomoptinfo(ROA_VALUE); bonus2 bSubRace,RC_Player,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_TOLERACE_HUMAN,{ bonus2 bSubRace,RC_DemiHuman,getrandomoptinfo(ROA_VALUE); bonus2 bSubRace,RC_Player_Human,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_TOLERACE_ANGEL,{ bonus2 bSubRace,RC_Angel,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_TOLERACE_DRAGON,{ bonus2 bSubRace,RC_Dragon,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_DAMAGE_NOTHING,{ bonus2 bAddRace,RC_Formless,getrandomoptinfo(ROA_VALUE); }
@@ -107,7 +107,7 @@ RDMOPT_RACE_DAMAGE_PLANT,{ bonus2 bAddRace,RC_Plant,getrandomoptinfo(ROA_VALUE);
 RDMOPT_RACE_DAMAGE_INSECT,{ bonus2 bAddRace,RC_Insect,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_DAMAGE_FISHS,{ bonus2 bAddRace,RC_Fish,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_DAMAGE_DEVIL,{ bonus2 bAddRace,RC_Demon,getrandomoptinfo(ROA_VALUE); }
-RDMOPT_RACE_DAMAGE_HUMAN,{ bonus2 bAddRace,RC_DemiHuman,getrandomoptinfo(ROA_VALUE); bonus2 bAddRace,RC_Player,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_DAMAGE_HUMAN,{ bonus2 bAddRace,RC_DemiHuman,getrandomoptinfo(ROA_VALUE); bonus2 bAddRace,RC_Player_Human,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_DAMAGE_ANGEL,{ bonus2 bAddRace,RC_Angel,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_DAMAGE_DRAGON,{ bonus2 bAddRace,RC_Dragon,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_MDAMAGE_NOTHING,{ bonus2 bMagicAddRace,RC_Formless,getrandomoptinfo(ROA_VALUE); }
@@ -117,7 +117,7 @@ RDMOPT_RACE_MDAMAGE_PLANT,{ bonus2 bMagicAddRace,RC_Plant,getrandomoptinfo(ROA_V
 RDMOPT_RACE_MDAMAGE_INSECT,{ bonus2 bMagicAddRace,RC_Insect,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_MDAMAGE_FISHS,{ bonus2 bMagicAddRace,RC_Fish,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_MDAMAGE_DEVIL,{ bonus2 bMagicAddRace,RC_Demon,getrandomoptinfo(ROA_VALUE); }
-RDMOPT_RACE_MDAMAGE_HUMAN,{ bonus2 bMagicAddRace,RC_DemiHuman,getrandomoptinfo(ROA_VALUE); bonus2 bMagicAddRace,RC_Player,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_MDAMAGE_HUMAN,{ bonus2 bMagicAddRace,RC_DemiHuman,getrandomoptinfo(ROA_VALUE); bonus2 bMagicAddRace,RC_Player_Human,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_MDAMAGE_ANGEL,{ bonus2 bMagicAddRace,RC_Angel,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_MDAMAGE_DRAGON,{ bonus2 bMagicAddRace,RC_Dragon,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_CRI_PERCENT_NOTHING,{ bonus2 bCriticalAddRace,RC_Formless,getrandomoptinfo(ROA_VALUE)/10; }
@@ -127,7 +127,7 @@ RDMOPT_RACE_CRI_PERCENT_PLANT,{ bonus2 bCriticalAddRace,RC_Plant,getrandomoptinf
 RDMOPT_RACE_CRI_PERCENT_INSECT,{ bonus2 bCriticalAddRace,RC_Insect,getrandomoptinfo(ROA_VALUE)/10; }
 RDMOPT_RACE_CRI_PERCENT_FISHS,{ bonus2 bCriticalAddRace,RC_Fish,getrandomoptinfo(ROA_VALUE)/10; }
 RDMOPT_RACE_CRI_PERCENT_DEVIL,{ bonus2 bCriticalAddRace,RC_Demon,getrandomoptinfo(ROA_VALUE)/10; }
-RDMOPT_RACE_CRI_PERCENT_HUMAN,{ bonus2 bCriticalAddRace,RC_DemiHuman,getrandomoptinfo(ROA_VALUE)/10; bonus2 bCriticalAddRace,RC_Player,getrandomoptinfo(ROA_VALUE)/10; }
+RDMOPT_RACE_CRI_PERCENT_HUMAN,{ bonus2 bCriticalAddRace,RC_DemiHuman,getrandomoptinfo(ROA_VALUE)/10; bonus2 bCriticalAddRace,RC_Player_Human,getrandomoptinfo(ROA_VALUE)/10; }
 RDMOPT_RACE_CRI_PERCENT_ANGEL,{ bonus2 bCriticalAddRace,RC_Angel,getrandomoptinfo(ROA_VALUE)/10; }
 RDMOPT_RACE_CRI_PERCENT_DRAGON,{ bonus2 bCriticalAddRace,RC_Dragon,getrandomoptinfo(ROA_VALUE)/10; }
 RDMOPT_RACE_IGNORE_DEF_PERCENT_NOTHING,{ bonus2 bIgnoreDefRaceRate,RC_Formless,getrandomoptinfo(ROA_VALUE); }
@@ -137,7 +137,7 @@ RDMOPT_RACE_IGNORE_DEF_PERCENT_PLANT,{ bonus2 bIgnoreDefRaceRate,RC_Plant,getran
 RDMOPT_RACE_IGNORE_DEF_PERCENT_INSECT,{ bonus2 bIgnoreDefRaceRate,RC_Insect,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_IGNORE_DEF_PERCENT_FISHS,{ bonus2 bIgnoreDefRaceRate,RC_Fish,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_IGNORE_DEF_PERCENT_DEVIL,{ bonus2 bIgnoreDefRaceRate,RC_Demon,getrandomoptinfo(ROA_VALUE); }
-RDMOPT_RACE_IGNORE_DEF_PERCENT_HUMAN,{ bonus2 bIgnoreDefRaceRate,RC_DemiHuman,getrandomoptinfo(ROA_VALUE); bonus2 bIgnoreDefRaceRate,RC_Player,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_DEF_PERCENT_HUMAN,{ bonus2 bIgnoreDefRaceRate,RC_DemiHuman,getrandomoptinfo(ROA_VALUE); bonus2 bIgnoreDefRaceRate,RC_Player_Human,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_IGNORE_DEF_PERCENT_ANGEL,{ bonus2 bIgnoreDefRaceRate,RC_Angel,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_IGNORE_DEF_PERCENT_DRAGON,{ bonus2 bIgnoreDefRaceRate,RC_Dragon,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_IGNORE_MDEF_PERCENT_NOTHING,{ bonus2 bIgnoreMdefRaceRate,RC_Formless,getrandomoptinfo(ROA_VALUE); }
@@ -147,7 +147,7 @@ RDMOPT_RACE_IGNORE_MDEF_PERCENT_PLANT,{ bonus2 bIgnoreMdefRaceRate,RC_Plant,getr
 RDMOPT_RACE_IGNORE_MDEF_PERCENT_INSECT,{ bonus2 bIgnoreMdefRaceRate,RC_Insect,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_IGNORE_MDEF_PERCENT_FISHS,{ bonus2 bIgnoreMdefRaceRate,RC_Fish,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_IGNORE_MDEF_PERCENT_DEVIL,{ bonus2 bIgnoreMdefRaceRate,RC_Demon,getrandomoptinfo(ROA_VALUE); }
-RDMOPT_RACE_IGNORE_MDEF_PERCENT_HUMAN,{ bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,getrandomoptinfo(ROA_VALUE); bonus2 bIgnoreMdefRaceRate,RC_Player,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_MDEF_PERCENT_HUMAN,{ bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,getrandomoptinfo(ROA_VALUE); bonus2 bIgnoreMdefRaceRate,RC_Player_Human,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_IGNORE_MDEF_PERCENT_ANGEL,{ bonus2 bIgnoreMdefRaceRate,RC_Angel,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_IGNORE_MDEF_PERCENT_DRAGON,{ bonus2 bIgnoreMdefRaceRate,RC_Dragon,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_CLASS_DAMAGE_NORMAL_TARGET,{ bonus2 bAddClass,Class_Normal,getrandomoptinfo(ROA_VALUE); }

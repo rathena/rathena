@@ -98,6 +98,8 @@ struct online_login_data* login_add_online_user(int char_server, uint32 account_
 		}
 	}
 
+	accounts->enable_webtoken( accounts, account_id );
+
 	return p;
 }
 
@@ -117,6 +119,8 @@ void login_remove_online_user(uint32 account_id) {
 	if( p->waiting_disconnect != INVALID_TIMER ){
 		delete_timer( p->waiting_disconnect, login_waiting_disconnect_timer );
 	}
+
+	accounts->disable_webtoken( accounts, account_id );
 
 	online_db.erase( account_id );
 }
@@ -409,8 +413,11 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	safestrncpy(acc.last_ip, ip, sizeof(acc.last_ip));
 	acc.unban_time = 0;
 	acc.logincount++;
-
 	accounts->save(accounts, &acc);
+
+	if( login_config.use_web_auth_token ){
+		safestrncpy( sd->web_auth_token, acc.web_auth_token, WEB_AUTH_TOKEN_LENGTH );
+	}
 
 	if( sd->sex != 'S' && sd->account_id < START_ACCOUNT_NUM )
 		ShowWarning("Account %s has account id %d! Account IDs must be over %d to work properly!\n", sd->userid, sd->account_id, START_ACCOUNT_NUM);
@@ -637,6 +644,8 @@ bool login_config_read(const char* cfgName, bool normal) {
 			login_config.ip_sync_interval = (unsigned int)1000*60*atoi(w2); //w2 comes in minutes.
 		else if(!strcmpi(w1, "client_hash_check"))
 			login_config.client_hash_check = config_switch(w2);
+		else if(!strcmpi(w1, "use_web_auth_token"))
+			login_config.use_web_auth_token = config_switch(w2);
 		else if(!strcmpi(w1, "client_hash")) {
 			int group = 0;
 			char md5[33];
@@ -751,6 +760,7 @@ void login_set_defaults() {
 	login_config.vip_sys.char_increase = MAX_CHAR_VIP;
 	login_config.vip_sys.group = 5;
 #endif
+	login_config.use_web_auth_token = true;
 
 	//other default conf
 	safestrncpy(login_config.loginconf_name, "conf/login_athena.conf", sizeof(login_config.loginconf_name));

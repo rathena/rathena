@@ -1670,7 +1670,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			sc_start(src,bl,SC_STUN,70,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 	case GS_BULLSEYE: //0.1% coma rate.
-		if(tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER)
+		if(tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER_HUMAN || tstatus->race == RC_PLAYER_DORAM)
 			status_change_start(src,bl,SC_COMA,10,skill_lv,0,src->id,0,0,SCSTART_NONE);
 		break;
 	case GS_PIERCINGSHOT:
@@ -5073,7 +5073,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case HT_POWER:
-		if( tstatus->race == RC_BRUTE || tstatus->race == RC_INSECT )
+		if( tstatus->race == RC_BRUTE || tstatus->race == RC_PLAYER_DORAM || tstatus->race == RC_INSECT )
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
@@ -7877,7 +7877,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if( dstmd )
 		{
 			if( status_get_lv(src) > status_get_lv(bl)
-			&&  (tstatus->race == RC_DEMON || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER || tstatus->race == RC_ANGEL)
+			&&  (tstatus->race == RC_DEMON || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER_HUMAN || tstatus->race == RC_PLAYER_DORAM || tstatus->race == RC_ANGEL)
 			&&  !status_has_mode(tstatus,MD_STATUS_IMMUNE) )
 				clif_skill_nodamage(src,bl,skill_id,skill_lv, sc_start2(src,bl,type,70,skill_lv,src->id,skill_get_time(skill_id,skill_lv)));
 			else
