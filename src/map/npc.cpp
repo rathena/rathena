@@ -190,9 +190,7 @@ int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
 	// if( pc_ishiding(sd) )
 		// return 1; // Can't trigger 'OnTouch_'.
 
-	auto it = std::find(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), nd->bl.id);
-
-	if (it != sd->npc_ontouch_.end())
+	if (util::vector_exists(sd->npc_ontouch_, nd->bl.id))
 		return 0;
 
 	safesnprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch_event_name);
@@ -202,14 +200,15 @@ int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
 int npc_ontouch2_event(struct map_session_data *sd, struct npc_data *nd)
 {
 	char name[EVENT_NAME_LENGTH];
-	auto it = std::find(sd->areanpc.begin(), sd->areanpc.end(), nd->bl.id);
 
-	if (it != sd->areanpc.end())
+	if (util::vector_exists(sd->areanpc, nd->bl.id))
 		return 0;
 
 	safesnprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch2_event_name);
 	return npc_event(sd,name,2);
 }
+
+int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y, struct npc_data *nd);
 
 /*==========================================
  * Sub-function of npc_enable, runs OnTouch event when enabled
@@ -223,35 +222,7 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 	if(bl->type == BL_PC)
 	{
 		TBL_PC *sd = (TBL_PC*)bl;
-
-		if (nd->sc.option&(OPTION_INVISIBLE|OPTION_CLOAK))
-			return 1;
-
-		switch (nd->subtype) {
-		case NPCTYPE_WARP:
-			if ((!nd->trigger_on_hidden && (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]))) || pc_isdead(sd))
-				return 1;
-			if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(nd->u.warp.mapindex), sd->group_level))
-				return 1;
-			if (sd->count_rewarp > 10) {
-				ShowWarning("Prevented infinite warp loop for player (%d:%d). Please fix NPC: '%s', path: '%s'\n", sd->status.account_id, sd->status.char_id, nd->exname, nd->path);
-				sd->count_rewarp = 0;
-				return 1;
-			}
-			pc_setpos(sd, nd->u.warp.mapindex, nd->u.warp.x, nd->u.warp.y, CLR_OUTSIGHT);
-			break;
-		default:
-			// note : disablenpc doesn't reset the previous trigger status on official
-			if( npc_ontouch_event(sd,nd) > 0 && npc_ontouch2_event(sd,nd) > 0 )
-			{ // failed to run OnTouch event, so just click the npc
-				if (sd->npc_id != 0)
-					return 0;
-
-				pc_stop_walking(sd,1);
-				npc_click(sd,nd);
-			}
-			break;
-		}
+		npc_touch_areanpc(sd, bl->m, bl->x, bl->y, nd);
 	}
 	return 0;
 }
@@ -363,7 +334,7 @@ bool npc_enable_target(const char* name, uint32 char_id, int flag)
 			ys = nd->u.warp.ys;
 			break;
 		}
-		if (xs >= 0 || ys >= 0)
+		if (xs > -1 && ys > -1)
 			map_foreachinallarea( npc_enable_sub, nd->bl.m, nd->bl.x-xs, nd->bl.y-ys, nd->bl.x+xs, nd->bl.y+ys, BL_PC, nd );
 	}
 
@@ -1036,14 +1007,10 @@ int npc_event(struct map_session_data* sd, const char* eventname, int ontouch)
 
 		nd->touching_id = sd->bl.id;
 
-		auto it = std::find(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), nd->bl.id);
-
-		if (it == sd->npc_ontouch_.end())
+		if (!util::vector_exists(sd->npc_ontouch_, nd->bl.id))
 			sd->npc_ontouch_.push_back(nd->bl.id);
 	} else if (ontouch == 2) { // OnTouch
-		auto it = std::find(sd->areanpc.begin(), sd->areanpc.end(), nd->bl.id);
-
-		if (it == sd->areanpc.end())
+		if (!util::vector_exists(sd->areanpc, nd->bl.id))
 			sd->areanpc.push_back(nd->bl.id);
 	}
 
@@ -1122,89 +1089,98 @@ int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
 	return found;
 }
 
+int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y, struct npc_data *nd)
+{
+	nullpo_retr(0, sd);
+	nullpo_retr(0, nd);
+
+	if (nd->sc.option&OPTION_INVISIBLE)
+		return 1; // a npc was found, but it is disabled
+	if (npc_is_cloaked(nd, sd))
+		return 1;
+
+	int xs = -1, ys = -1;
+	switch(nd->subtype) {
+	case NPCTYPE_WARP:
+		xs = nd->u.warp.xs;
+		ys = nd->u.warp.ys;
+		break;
+	case NPCTYPE_SCRIPT:
+		xs = nd->u.scr.xs;
+		ys = nd->u.scr.ys;
+		break;
+	default:
+		return 0;
+	}
+	if (xs < 0 || ys < 0)
+		return 0;
+	if (x < (nd->bl.x - xs) || x > (nd->bl.x + xs) || y < (nd->bl.y - ys) || y > (nd->bl.y + ys))
+		return 0;
+
+	switch (nd->subtype) {
+	case NPCTYPE_WARP:
+		if ((!nd->trigger_on_hidden && (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]))) || pc_isdead(sd))
+			break; // hidden or dead chars cannot use warps
+		if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(nd->u.warp.mapindex), sd->group_level))
+			break;
+		if (sd->count_rewarp > 10) {
+			ShowWarning("Prevented infinite warp loop for player (%d:%d). Please fix NPC: '%s', path: '%s'\n", sd->status.account_id, sd->status.char_id, nd->exname, nd->path);
+			sd->count_rewarp = 0;
+			break;
+		}
+		pc_setpos(sd, nd->u.warp.mapindex, nd->u.warp.x, nd->u.warp.y, CLR_OUTSIGHT);
+		return 2;
+	case NPCTYPE_SCRIPT:
+		// warp type sorted first, no need to check if they override any other OnTouch areas.
+
+		if (npc_ontouch_event(sd, nd) > 0 && npc_ontouch2_event(sd, nd) > 0) { // failed to run OnTouch event, so just click the npc
+			if (!util::vector_exists(sd->areanpc, nd->bl.id))
+				sd->areanpc.push_back(nd->bl.id);
+
+			npc_click(sd, nd);
+		}
+		break;
+	}
+	return 1;
+}
+
 /*==========================================
  * Exec OnTouch for player if in range of area event
  *------------------------------------------*/
-int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
+int npc_touch_area_allnpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 {
-	int xs, ys, i, f = 1;
-
 	nullpo_retr(1, sd);
 
 	// Remove NPCs that are no longer within the OnTouch area
-	for (i = 0; i < sd->areanpc.size(); i++) {
+	for (size_t i = 0; i < sd->areanpc.size(); i++) {
 		struct npc_data *nd = map_id2nd(sd->areanpc[i]);
 
-		if (!nd || nd->subtype != NPCTYPE_SCRIPT ||
-			!(nd->bl.m == m && x >= nd->bl.x - nd->u.scr.xs && x <= nd->bl.x + nd->u.scr.xs && y >= nd->bl.y - nd->u.scr.ys && y <= nd->bl.y + nd->u.scr.ys))
-			sd->areanpc.erase(sd->areanpc.begin() + i);
+		if (!nd || nd->subtype != NPCTYPE_SCRIPT || !(nd->bl.m == m && x >= nd->bl.x - nd->u.scr.xs && x <= nd->bl.x + nd->u.scr.xs && y >= nd->bl.y - nd->u.scr.ys && y <= nd->bl.y + nd->u.scr.ys))
+			util::erase_at(sd->areanpc, i);
 	}
 
 	if (sd->state.block_action & PCBLOCK_NPCCLICK)
 		return 0;
 
 	struct map_data *mapdata = map_getmapdata(m);
+	int f = 1;
 
-	for (i = 0; i < mapdata->npc_num_area; i++) {
-		if (mapdata->npc[i]->sc.option&OPTION_INVISIBLE) {
-			f = 0; // a npc was found, but it is disabled; don't print warning
-			continue;
-		}
-
-		switch(mapdata->npc[i]->subtype) {
-		case NPCTYPE_WARP:
-			xs = mapdata->npc[i]->u.warp.xs;
-			ys = mapdata->npc[i]->u.warp.ys;
+	for (int i = 0; i < mapdata->npc_num_area; i++) {
+		switch( npc_touch_areanpc(sd, m, x, y, mapdata->npc[i]) ) {
+		case 0:
 			break;
-		case NPCTYPE_SCRIPT:
-			xs = mapdata->npc[i]->u.scr.xs;
-			ys = mapdata->npc[i]->u.scr.ys;
-			break;
-		default:
-			continue;
-		}
-
-		if (x >= mapdata->npc[i]->bl.x - xs && x <= mapdata->npc[i]->bl.x + xs && y >= mapdata->npc[i]->bl.y - ys && y <= mapdata->npc[i]->bl.y + ys) {
+		case 1:
 			f = 0;
-
-			if (npc_is_cloaked(mapdata->npc[i], sd))
-				continue;
-
-			switch (mapdata->npc[i]->subtype) {
-			case NPCTYPE_WARP:
-				if ((!mapdata->npc[i]->trigger_on_hidden && (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]))) || pc_isdead(sd))
-					break; // hidden or dead chars cannot use warps
-				if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(mapdata->npc[i]->u.warp.mapindex), sd->group_level))
-					break;
-				if (sd->count_rewarp > 10) {
-					ShowWarning("Prevented infinite warp loop for player (%d:%d). Please fix NPC: '%s', path: '%s'\n", sd->status.account_id, sd->status.char_id, mapdata->npc[i]->exname, mapdata->npc[i]->path);
-					sd->count_rewarp = 0;
-					break;
-				}
-				pc_setpos(sd, mapdata->npc[i]->u.warp.mapindex, mapdata->npc[i]->u.warp.x, mapdata->npc[i]->u.warp.y, CLR_OUTSIGHT);
-				return 0;
-			case NPCTYPE_SCRIPT:
-				// warp type sorted first, no need to check if they override any other OnTouch areas.
-
-				if (npc_ontouch_event(sd, mapdata->npc[i]) > 0 && npc_ontouch2_event(sd, mapdata->npc[i]) > 0) { // failed to run OnTouch event, so just click the npc
-					auto it = std::find(sd->areanpc.begin(), sd->areanpc.end(), mapdata->npc[i]->bl.id);
-
-					if (it == sd->areanpc.end())
-						sd->areanpc.push_back(mapdata->npc[i]->bl.id);
-
-					npc_click(sd, mapdata->npc[i]);
-				}
-
-				break;
-			}
+			break;
+		case 2:
+			return 0;
 		}
 	}
-	
+
 	if (f == 1) {
-		ShowError("npc_touch_areanpc : stray NPC cell/NPC not found in the block on coordinates '%s',%d,%d\n", mapdata->name, x, y);
+		ShowError("npc_touch_area_allnpc : stray NPC cell/NPC not found in the block on coordinates '%s',%d,%d\n", mapdata->name, x, y);
 		return 1;
 	}
-
 	return 0;
 }
 
@@ -1238,6 +1214,8 @@ int npc_touch_areanpc2(struct mob_data *md)
 			default:
 				continue; // Keep Searching
 		}
+		if (xs < 0 || ys < 0)
+			continue;
 
 		if( x >= mapdata->npc[i]->bl.x-xs && x <= mapdata->npc[i]->bl.x+xs && y >= mapdata->npc[i]->bl.y-ys && y <= mapdata->npc[i]->bl.y+ys )
 		{ // In the npc touch area
