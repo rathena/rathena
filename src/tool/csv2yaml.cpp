@@ -3133,7 +3133,7 @@ static bool itemdb_read_db(const char* file) {
 		if (atoi(str[14]) > 0) {
 			int temp_loc = atoi(str[14]);
 
-			body << YAML::Key << "Location";
+			body << YAML::Key << "Locations";
 			body << YAML::BeginMap;
 			for (const auto &it : um_equipnames) {
 				if (it.second & temp_loc)

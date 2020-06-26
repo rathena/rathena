@@ -387,15 +387,15 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 	}
 
-	if (this->nodeExists(node, "Location")) {
-		const YAML::Node &locationNode = node["Location"];
+	if (this->nodeExists(node, "Locations")) {
+		const YAML::Node &locationNode = node["Locations"];
 
 		for (const auto &locit : locationNode) {
 			std::string equipName = locit.first.as<std::string>(), equipName_constant = "EQP_" + equipName;
 			int64 constant;
 
 			if (!script_get_constant(equipName_constant.c_str(), &constant)) {
-				this->invalidWarning(locationNode[equipName], "Invalid location %s, defaulting to IT_ETC.\n", equipName.c_str());
+				this->invalidWarning(locationNode[equipName], "Invalid equip location %s, defaulting to IT_ETC.\n", equipName.c_str());
 				item->type = IT_ETC;
 				break;
 			}
@@ -418,7 +418,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 	} else {
 		if (!exists) {
 			if (itemdb_isequip2(item.get())) {
-				this->invalidWarning(node["Location"], "Invalid item equip location as it has no equip location, defaulting to IT_ETC.\n");
+				this->invalidWarning(node["Locations"], "Invalid item equip location as it has no equip location, defaulting to IT_ETC.\n");
 				item->type = IT_ETC;
 			} else
 				item->equip = 0;

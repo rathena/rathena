@@ -168,7 +168,7 @@ Both
 
 ---------------------------------------
 
-Location: Equipment's placement.
+Locations: Equipment's placement.
 
 Head_Top               - Upper Headgear.
 Head_Mid               - Middle Headgear.
