@@ -142,7 +142,7 @@ Header:
 #      bonus bLuk,3; bonus2 bResEff,Eff_Curse,2000; bonus bVariableCastrate,-2; bonus bAspdRate,4; bonus2 bAddMonsterDropItem,539,100; bonus2 bAddMonsterDropItem,529,200; bonus2 bAddMonsterDropItem,530,200; autobonus "{ bonus bCritical,10; }",10,5000;
 #  - Id: 5811
 #    Script: |
-#      bonus2 bSubRace,RC_Brute,5;
+#      bonus2 bSubRace,RC_Brute,5; bonus2 bSubRace,RC_Player_Doram,5;
 
 #  - Id: 11702
 #    Weight: 10
