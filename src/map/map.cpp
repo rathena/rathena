@@ -93,7 +93,7 @@ char guild_storage_log_table[32] = "guild_storage_log";
 char log_db_ip[64] = "127.0.0.1";
 int log_db_port = 3306;
 char log_db_id[32] = "ragnarok";
-char log_db_pw[32] = "ragnarok";
+char log_db_pw[32] = "";
 char log_db_db[32] = "log";
 Sql* logmysql_handle;
 
@@ -489,8 +489,6 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_WARM]->val4), bl->m, x1-x0, y1-y0);
 				if (sc->data[SC_BANDING])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_BANDING]->val4), bl->m, x1-x0, y1-y0);
-				if (sc->data[SC_HELLS_PLANT])
-					skill_unit_move_unit_group(skill_id2group(sc->data[SC_HELLS_PLANT]->val4), bl->m, x1-x0, y1-y0);
 
 				if (sc->data[SC_NEUTRALBARRIER_MASTER])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_NEUTRALBARRIER_MASTER]->val2), bl->m, x1-x0, y1-y0);
@@ -2063,7 +2061,7 @@ int map_quit(struct map_session_data *sd) {
 	if (sd->bg_id)
 		bg_team_leave(sd, true, true);
 
-	if (sd->bg_queue != nullptr)
+	if (sd->bg_queue_id > 0)
 		bg_queue_leave(sd);
 
 	if( sd->status.clan_id )
@@ -2703,7 +2701,7 @@ int map_addinstancemap(int src_m, int instance_id)
 
 	if(strlen(name) > 20) {
 		// against buffer overflow
-		ShowError("map_addinstancemap: can't add long map name \"%s\"\n", name);
+		ShowError("map_addinstancemap: Map name \"%s\" is too long.\n", name);
 		return -2;
 	}
 
@@ -2732,7 +2730,7 @@ int map_addinstancemap(int src_m, int instance_id)
 	// Alter the name
 	// Due to this being custom we only worry about preserving as many characters as necessary for accurate map distinguishing
 	// This also allows us to maintain complete independence with main map functions
-	if ((strchr(iname, '@') == NULL) && strlen(iname) > 8) {
+	if ((strchr(iname, '@') == nullptr) && strlen(iname) > 8) {
 		memmove(iname, iname + (strlen(iname) - 9), strlen(iname));
 		snprintf(dst_map->name, sizeof(dst_map->name), "%d#%s", (instance_id % 1000), iname);
 	} else
@@ -2766,12 +2764,12 @@ int map_addinstancemap(int src_m, int instance_id)
 	dst_map->block_mob = (struct block_list **)aCalloc(1,size);
 
 	dst_map->index = mapindex_addmap(-1, dst_map->name);
-	dst_map->channel = NULL;
+	dst_map->channel = nullptr;
 	dst_map->mob_delete_timer = INVALID_TIMER;
 
 	map_data_copy(dst_map, src_map);
 
-	ShowInfo("[Instance] Created map '%s' ('%d') from map '%s' ('%d')\n", dst_map->name, dst_map->m, name, src_map->m);
+	ShowInfo("[Instance] Created map '%s' (%d) from '%s' (%d).\n", dst_map->name, dst_map->m, name, src_map->m);
 
 	map_addmap2db(dst_map);
 

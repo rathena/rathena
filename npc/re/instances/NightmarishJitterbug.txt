@@ -1419,6 +1419,7 @@ OnTouch_:
 		break;
 	case 3:
 		jitterbug_options |= 1;
+		areamonster 'map_jtb$,351,131,389,96, "--ja--", 3108,1;	// no label
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I like your Red Potion (feat. Muka).";
 		mes "[Newoz]";
 		mes "Hah hah, this is embarassing, but thank you.";

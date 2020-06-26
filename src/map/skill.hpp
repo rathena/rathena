@@ -101,11 +101,11 @@ enum e_skill_inf2 : uint8 {
 	INF2_ALLOWONMADO, // Skill that can be used while on Madogear
 	INF2_TARGETMANHOLE, // Skill that can be used to target while under SC__MANHOLE effect
 	INF2_TARGETHIDDEN, // Skill that affects hidden targets
-	INF2_INCREASEGLOOMYDAYDAMAGE, // Skill that affects SC_GLOOMYDAY_SK
 	INF2_INCREASEDANCEWITHWUGDAMAGE, // Skill that is affected by SC_DANCEWITHWUG
 	INF2_IGNOREWUGBITE, // Skill blocked by RA_WUGBITE
 	INF2_IGNOREAUTOGUARD , // Skill is not blocked by SC_AUTOGUARD (physical-skill only)
 	INF2_IGNORECICADA, // Skill is not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (physical-skill only)
+	INF2_SHOWSCALE, // Skill shows AoE area while casting
 	INF2_MAX,
 };
 
@@ -531,6 +531,7 @@ uint16 SKILL_MAX_DB(void);
 int skill_isammotype(struct map_session_data *sd, unsigned short skill_id);
 TIMER_FUNC(skill_castend_id);
 TIMER_FUNC(skill_castend_pos);
+TIMER_FUNC( skill_keep_using );
 int skill_castend_map( struct map_session_data *sd,uint16 skill_id, const char *map);
 
 int skill_cleartimerskill(struct block_list *src);
@@ -1693,9 +1694,9 @@ enum e_skill {
 	WM_LESSON = 2412,
 	WM_METALICSOUND,
 	WM_REVERBERATION,
-	WM_REVERBERATION_MELEE,
-	WM_REVERBERATION_MAGIC,
-	WM_DOMINION_IMPULSE,
+	WM_REVERBERATION_MELEE, // Removed on kRO
+	WM_REVERBERATION_MAGIC, // Removed on kRO
+	WM_DOMINION_IMPULSE, // Removed on kRO
 	WM_SEVERE_RAINSTORM,
 	WM_POEMOFNETHERWORLD,
 	WM_VOICEOFSIREN,
@@ -2202,7 +2203,7 @@ enum e_skill_unit_id : uint16 {
 	UNT_DEMONIC_FIRE,
 	UNT_FIRE_EXPANSION_SMOKE_POWDER,
 	UNT_FIRE_EXPANSION_TEAR_GAS,
-	UNT_HELLS_PLANT,
+	UNT_HELLS_PLANT, // No longer a unit skill
 	UNT_VACUUM_EXTREME,
 	UNT_BANDING,
 	UNT_FIRE_MANTLE,
@@ -2295,7 +2296,7 @@ public:
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode(const YAML::Node& node);
+	uint64 parseBodyNode(const YAML::Node &node);
 };
 
 extern MagicMushroomDatabase magic_mushroom_db;

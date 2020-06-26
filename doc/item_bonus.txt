@@ -22,7 +22,7 @@ This list contains all available constants referenced in the 'bonus' commands.
 
 * Race (r)
 	RC_Angel, RC_Brute, RC_DemiHuman, RC_Demon, RC_Dragon, RC_Fish, RC_Formless,
-	RC_Insect, RC_Plant, RC_Player, RC_Undead, RC_All
+	RC_Insect, RC_Plant, RC_Player_Human (RC_Player deprecated), RC_Player_Doram, RC_Undead, RC_All
 
 * Monster Race (mr)
 	RC2_Goblin, RC2_Kobold, RC2_Orc, RC2_Golem, RC2_Guardian, RC2_Ninja,
@@ -65,7 +65,7 @@ This list contains all available constants referenced in the 'bonus' commands.
 	ATF_MISC	= Trigger on misc skills
 
 * Other values:
-	Skill (sk): see 'db/(pre-)re/skill_db.txt' (NOTE: Both skill IDs and names, in quotes, are supported.)
+	Skill (sk): see 'db/(pre-)re/skill_db.yml' (NOTE: Both skill IDs and names, in quotes, are supported.)
 	Monster id (mid): see 'db/(pre-)re/mob_db.txt'
 	Item id (iid): see 'db/(pre-)re/item_db.txt'
 	Item group (ig): see 'db/(pre-)re/item_group_db.txt' and the constants in 'db/const.txt', prefixed with IG_*
@@ -168,7 +168,8 @@ bonus2 bSkillUseSPrate,sk,n;		Decreases SP consumption of skill sk by n%
 Atk/Def
 -------
 bonus2 bSkillAtk,sk,n;    		Increases damage of skill sk by n%
-bonus bLongAtkRate,n;     		Increases damage of ranged attacks by n%
+bonus bShortAtkRate,n;			Increases damage of short ranged attacks by n%
+bonus bLongAtkRate,n;     		Increases damage of long ranged attacks by n%
 bonus bCritAtkRate,n;     		Increases critical damage by +n%
 bonus bCriticalDef,n;     		Decreases the chance of being hit by critical hits by n%
 bonus2 bWeaponAtk,w,n;    		Adds n ATK when weapon of type w is equipped

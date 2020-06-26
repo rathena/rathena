@@ -252,8 +252,9 @@ CREATE TABLE IF NOT EXISTS `char` (
   `unban_time` int(11) unsigned NOT NULL default '0',
   `font` tinyint(3) unsigned NOT NULL default '0',
   `uniqueitem_counter` int(11) unsigned NOT NULL default '0',
-  `sex` ENUM('M','F','U') NOT NULL default 'U',
+  `sex` ENUM('M','F') NOT NULL,
   `hotkey_rowshift` tinyint(3) unsigned NOT NULL default '0',
+  `hotkey_rowshift2` tinyint(3) unsigned NOT NULL default '0',
   `clan_id` int(11) unsigned NOT NULL default '0',
   `last_login` datetime DEFAULT NULL,
   `title_id` INT(11) unsigned NOT NULL default '0',
@@ -753,8 +754,11 @@ CREATE TABLE IF NOT EXISTS `login` (
   `pincode_change` int(11) unsigned NOT NULL DEFAULT '0',
   `vip_time` int(11) unsigned NOT NULL default '0',
   `old_group` tinyint(3) NOT NULL default '0',
+  `web_auth_token` varchar(17) null,
+  `web_auth_token_enabled` tinyint(2) NOT NULL default '0',
   PRIMARY KEY  (`account_id`),
-  KEY `name` (`userid`)
+  KEY `name` (`userid`),
+  UNIQUE KEY `web_auth_token_key` (`web_auth_token`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2000000; 
 
 -- added standard accounts for servers, VERY INSECURE!!!
