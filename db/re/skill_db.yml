@@ -2072,7 +2072,7 @@ Body:
       - Level: 3
         Time: 400
       - Level: 4
-        Time: -1
+        Time: 0
     Requires:
       SpCost: 60
       ItemCost:
@@ -11362,13 +11362,13 @@ Body:
       - Level: 6
         Time: 500
       - Level: 7
-        Time: -1
+        Time: 0
       - Level: 8
-        Time: -1
+        Time: 0
       - Level: 9
-        Time: -1
+        Time: 0
       - Level: 10
-        Time: -1
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
@@ -19716,7 +19716,7 @@ Body:
       - Level: 2
         Time: 500
       - Level: 3
-        Time: -1
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
@@ -26208,7 +26208,7 @@ Body:
       - Level: 4
         Time: 200
       - Level: 5
-        Time: -1
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
@@ -26289,7 +26289,7 @@ Body:
       - Level: 4
         Time: 200
       - Level: 5
-        Time: -1
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
@@ -26439,7 +26439,7 @@ Body:
       - Level: 4
         Time: 100
       - Level: 5
-        Time: -1
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
@@ -26839,7 +26839,7 @@ Body:
       - Level: 4
         Time: 200
       - Level: 5
-        Time: -1
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
@@ -31448,7 +31448,7 @@ Body:
       - Level: 4
         Time: 1000
       - Level: 5
-        Time: -1
+        Time: 0
     Requires:
       SpCost:
         - Level: 1
