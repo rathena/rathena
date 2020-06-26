@@ -7867,7 +7867,7 @@ BUILDIN_FUNC(grouprandomitem) {
 * makeitem "<item name>",<amount>,"<map name>",<X>,<Y>;
 */
 BUILDIN_FUNC(makeitem) {
-	uint32 nameid;
+	int32 nameid;
 	uint16 amount, flag = 0, x, y;
 	const char *mapname;
 	int m;
@@ -7883,13 +7883,17 @@ BUILDIN_FUNC(makeitem) {
 			nameid = UNKNOWN_ITEM_ID;
 	}
 	else {
-		int64 nameid_check = script_getnum64(st, 2);
-		if (nameid_check < 0) {
+		nameid = script_getnum(st, 2);
+		if (nameid < 0) {
 			flag = 1;
-			nameid_check = -nameid_check;
+			nameid = -1 * nameid;
 		}
-		nameid = static_cast<uint32>(nameid_check);
 	}
+
+	if (!itemdb_exists(nameid)) {
+		return SCRIPT_CMD_SUCCESS; //Failed...
+	}
+
 	amount = script_getnum(st,3);
 	mapname	= script_getstr(st,4);
 	x = script_getnum(st,5);
@@ -7940,7 +7944,7 @@ BUILDIN_FUNC(makeitem2) {
 			nameid = UNKNOWN_ITEM_ID;
 	}
 	else
-		nameid = script_getnum64(st, 2);
+		nameid = script_getnum(st, 2);
 
 	amount = script_getnum(st,3);
 	mapname	= script_getstr(st,4);
