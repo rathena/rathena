@@ -1150,10 +1150,9 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y, st
 int npc_touch_area_allnpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 {
 	nullpo_retr(1, sd);
-	int i, f = 1;
 
 	// Remove NPCs that are no longer within the OnTouch area
-	for (i = 0; i < sd->areanpc.size(); i++) {
+	for (size_t i = 0; i < sd->areanpc.size(); i++) {
 		struct npc_data *nd = map_id2nd(sd->areanpc[i]);
 
 		if (!nd || nd->subtype != NPCTYPE_SCRIPT || !(nd->bl.m == m && x >= nd->bl.x - nd->u.scr.xs && x <= nd->bl.x + nd->u.scr.xs && y >= nd->bl.y - nd->u.scr.ys && y <= nd->bl.y + nd->u.scr.ys))
@@ -1164,8 +1163,9 @@ int npc_touch_area_allnpc(struct map_session_data* sd, int16 m, int16 x, int16 y
 		return 0;
 
 	struct map_data *mapdata = map_getmapdata(m);
+	int f = 1;
 
-	for (i = 0; i < mapdata->npc_num_area; i++) {
+	for (int i = 0; i < mapdata->npc_num_area; i++) {
 		switch( npc_touch_areanpc(sd, m, x, y, mapdata->npc[i]) ) {
 		case 0:
 			break;
