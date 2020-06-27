@@ -489,8 +489,6 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_WARM]->val4), bl->m, x1-x0, y1-y0);
 				if (sc->data[SC_BANDING])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_BANDING]->val4), bl->m, x1-x0, y1-y0);
-				if (sc->data[SC_HELLS_PLANT])
-					skill_unit_move_unit_group(skill_id2group(sc->data[SC_HELLS_PLANT]->val4), bl->m, x1-x0, y1-y0);
 
 				if (sc->data[SC_NEUTRALBARRIER_MASTER])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_NEUTRALBARRIER_MASTER]->val2), bl->m, x1-x0, y1-y0);
@@ -2665,7 +2663,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 	}
 	// npcs with trigger area are grouped
 	// 0 < npc_num_warp < npc_num_area < npc_num
-	if (xs < 0 && ys < 0)
+	if (xs < 0 || ys < 0)
 		mapdata->npc[ mapdata->npc_num ] = nd;
 	else {
 		switch (nd->subtype) {

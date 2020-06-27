@@ -223,6 +223,12 @@ enum e_mapid {
 
 //Max size for inputs to Graffiti, Talkie Box and Vending text prompts
 #define MESSAGE_SIZE (79 + 1)
+// Max size for inputs to Graffiti, Talkie Box text prompts
+#if PACKETVER_MAIN_NUM >= 20190904 || PACKETVER_RE_NUM >= 20190904 || PACKETVER_ZERO_NUM >= 20190828
+#define TALKBOX_MESSAGE_SIZE 21
+#else
+#define TALKBOX_MESSAGE_SIZE (79 + 1)
+#endif
 //String length you can write in the 'talking box'
 #define CHATBOX_SIZE (70 + 1)
 //Chatroom-related string sizes
@@ -278,7 +284,8 @@ enum e_race : int8{
 	RC_DEMIHUMAN,
 	RC_ANGEL,
 	RC_DRAGON,
-	RC_PLAYER,
+	RC_PLAYER_HUMAN,
+	RC_PLAYER_DORAM,
 	RC_ALL,
 	RC_MAX //auto upd enum for array size
 };

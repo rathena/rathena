@@ -1888,14 +1888,14 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 		target->type == BL_MOB && //This bonus doesn't work against players.
 		(battle_check_undead(status->race,status->def_ele) || status->race == RC_DEMON) )
 		damage += (skill*(int)(3+(sd->status.base_level+1)*0.05));	// submitted by orn
-	if( (skill = pc_checkskill(sd, RA_RANGERMAIN)) > 0 && (status->race == RC_BRUTE || status->race == RC_PLANT || status->race == RC_FISH) )
+	if( (skill = pc_checkskill(sd, RA_RANGERMAIN)) > 0 && (status->race == RC_BRUTE || status->race == RC_PLAYER_DORAM || status->race == RC_PLANT || status->race == RC_FISH) )
 		damage += (skill * 5);
 	if( (skill = pc_checkskill(sd,NC_RESEARCHFE)) > 0 && (status->def_ele == ELE_FIRE || status->def_ele == ELE_EARTH) )
 		damage += (skill * 10);
 
 	damage += (15 * pc_checkskill(sd, NC_MADOLICENCE)); // Attack bonus is granted even without the Madogear
 
-	if((skill = pc_checkskill(sd,HT_BEASTBANE)) > 0 && (status->race == RC_BRUTE || status->race == RC_INSECT) ) {
+	if((skill = pc_checkskill(sd,HT_BEASTBANE)) > 0 && (status->race == RC_INSECT || status->race == RC_BRUTE || status->race == RC_PLAYER_DORAM) ) {
 		damage += (skill * 4);
 		if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_HUNTER)
 			damage += sd->status.str;
@@ -3537,10 +3537,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 			wd->div_ = skill_get_num(GS_CHAINACTION,skill_lv);
 			wd->type = DMG_MULTI_HIT;
 
-			status_data *status = status_get_status_data(src);
-
-			if (status && status->amotion > 70) // Only triggers if ASPD < 193
-				sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill_get_time(RL_QD_SHOT,1));
+			sc_start(src,src,SC_QD_SHOT_READY,100,target->id,skill_get_time(RL_QD_SHOT,1));
 		}
 		else if(sc && sc->data[SC_FEARBREEZE] && sd->weapontype1==W_BOW
 			&& (i = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[i] && sd->inventory.u.items_inventory[i].amount > 1)
@@ -4020,7 +4017,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case GS_BULLSEYE:
 			//Only works well against brute/demihumans non bosses.
-			if((tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER) && !status_has_mode(tstatus,MD_STATUS_IMMUNE))
+			if((tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER_HUMAN || tstatus->race == RC_PLAYER_DORAM) && !status_has_mode(tstatus,MD_STATUS_IMMUNE))
 				skillratio += 400;
 			break;
 		case GS_TRACKING:
@@ -4516,7 +4513,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			}
 			break;
 		case GN_HELLS_PLANT_ATK:
-			skillratio += -100 + 500 * skill_lv + sstatus->int_ * (sd ? pc_checkskill(sd, AM_CANNIBALIZE) : 5); // !TODO: Confirm INT and Cannibalize bonus
+			skillratio += -100 + 100 * skill_lv + sstatus->int_ * (sd ? pc_checkskill(sd, AM_CANNIBALIZE) : 5); // !TODO: Confirm INT and Cannibalize bonus
 			RE_LVL_DMOD(100);
 			break;
 		// Physical Elemantal Spirits Attack Skills
@@ -4947,12 +4944,9 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 	}
 
 	if ((wd->flag&(BF_LONG|BF_MAGIC)) == BF_LONG) {
-		if (sd && pc_checkskill(sd, SU_POWEROFLIFE) > 0) {
-			if ((pc_checkskill(sd, SU_SCAROFTAROU) + pc_checkskill(sd, SU_PICKYPECK) + pc_checkskill(sd, SU_ARCLOUSEDASH) + pc_checkskill(sd, SU_LUNATICCARROTBEAT) +
-				pc_checkskill(sd, SU_HISS) + pc_checkskill(sd, SU_POWEROFFLOCK) + pc_checkskill(sd, SU_SVG_SPIRIT)) > 19) {
-					ATK_ADDRATE(wd->damage, wd->damage2, 20);
-					RE_ALLATK_ADDRATE(wd, 20);
-			}
+		if (sd && pc_checkskill(sd, SU_POWEROFLIFE) > 0 && pc_checkskill_summoner(sd, SUMMONER_POWER_LIFE) >= 20) {
+			ATK_ADDRATE(wd->damage, wd->damage2, 20);
+			RE_ALLATK_ADDRATE(wd, 20);
 		}
 	}
 
@@ -5082,7 +5076,7 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 			(skill=pc_checkskill(tsd,AL_DP)) > 0 )
 			vit_def += skill*(int)(3 +(tsd->status.base_level+1)*0.04);   // submitted by orn
 		if( src->type == BL_MOB && (skill=pc_checkskill(tsd,RA_RANGERMAIN))>0 &&
-			(sstatus->race == RC_BRUTE || sstatus->race == RC_FISH || sstatus->race == RC_PLANT) )
+			(sstatus->race == RC_BRUTE || sstatus->race == RC_PLAYER_DORAM || sstatus->race == RC_FISH || sstatus->race == RC_PLANT) )
 			vit_def += skill*5;
 		if( src->type == BL_MOB && (skill = pc_checkskill(tsd, NC_RESEARCHFE)) > 0 &&
 			(sstatus->def_ele == ELE_FIRE || sstatus->def_ele == ELE_EARTH) )
@@ -6069,7 +6063,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			if (mflag&ELE_DARK)
 				s_ele = ELE_DARK;
 			break;
-		case WM_REVERBERATION_MAGIC:
+		case WM_REVERBERATION:
 			if (sd)
 				s_ele = sd->bonus.arrow_ele;
 			break;
@@ -6495,7 +6489,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += 100; // !TODO: Confirm target sleeping bonus
 						RE_LVL_DMOD(100);
 						break;
-					case WM_REVERBERATION_MAGIC:
+					case WM_REVERBERATION:
 						// MATK [{(Skill Level x 300) + 400} x Casters Base Level / 100] %
 						skillratio += -100 + 700 + 300 * skill_lv;
 						RE_LVL_DMOD(100);
@@ -7260,7 +7254,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 				return 0;
 	}
 
-	if (ssc && ssc->data[SC_REF_T_POTION])
+	if (ssc && (ssc->data[SC_REF_T_POTION] || ssc->data[SC_HELLS_PLANT]))
 		return 0;
 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
@@ -8933,7 +8927,8 @@ static const struct _battle_data {
 	{ "switch_remove_edp",                  &battle_config.switch_remove_edp,               2,      0,      3,              },
 	{ "feature.homunculus_autofeed",        &battle_config.feature_homunculus_autofeed,     1,      0,      1,              },
 	{ "feature.homunculus_autofeed_rate",   &battle_config.feature_homunculus_autofeed_rate,30,     0,    100,              },
-	{ "summoner_trait",                     &battle_config.summoner_trait,                  3,      0,      3,              },
+	{ "summoner_race",                      &battle_config.summoner_race,                   RC_PLAYER_DORAM,      RC_FORMLESS,      RC_PLAYER_DORAM,              },
+	{ "summoner_size",                      &battle_config.summoner_size,                   SZ_SMALL,                SZ_SMALL,               SZ_BIG,              },
 	{ "homunculus_autofeed_always",         &battle_config.homunculus_autofeed_always,      1,      0,      1,              },
 	{ "feature.attendance",                 &battle_config.feature_attendance,              1,      0,      1,              },
 	{ "feature.privateairship",             &battle_config.feature_privateairship,          1,      0,      1,              },
@@ -8954,6 +8949,11 @@ static const struct _battle_data {
 	{ "bgqueue_nowarp_mapflag",             &battle_config.bgqueue_nowarp_mapflag,          0,      0,      1,              },
 	{ "homunculus_exp_gain",                &battle_config.homunculus_exp_gain,             10,     0,      100,            },
 	{ "rental_item_novalue",                &battle_config.rental_item_novalue,             1,      0,      1,              },
+	{ "ping_timer_inverval",                &battle_config.ping_timer_interval,             30,     0,      99999999,       },
+	{ "ping_time",                          &battle_config.ping_time,                       20,     0,      99999999,       },
+	{ "show_skill_scale",                   &battle_config.show_skill_scale,                1,      0,      1,              },
+	{ "achievement_mob_share",              &battle_config.achievement_mob_share,           0,      0,      1,              },
+	{ "slave_stick_with_master",            &battle_config.slave_stick_with_master,         0,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };
