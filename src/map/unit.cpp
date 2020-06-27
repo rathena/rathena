@@ -1328,6 +1328,9 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 	clif_spawn(bl);
 	skill_unit_move(bl,gettick(),1);
 
+	if (!battle_config.slave_stick_with_master && bl->type == BL_MOB && mob_countslave(bl) > 0)
+		mob_warpslave(bl,MOB_SLAVEDISTANCE);
+
 	return 0;
 }
 
