@@ -13857,8 +13857,6 @@ void clif_parse_GuildChangeEmblem2(int fd, struct map_session_data* sd) {
 	if (g == nullptr || g->guild_id != p->guild_id)
 		return;
 
-	int version = p->version;
-
 	if (!sd->state.gmaster_flag)
 		return;
 
@@ -13867,7 +13865,7 @@ void clif_parse_GuildChangeEmblem2(int fd, struct map_session_data* sd) {
 		return;
 	}
 
-	guild_change_emblem_version(sd, version);
+	guild_change_emblem_version(sd, p->version);
 #endif
 }
 
