@@ -541,7 +541,6 @@ struct map_session_data {
 	int spiritcharm_type; //Spirit type
 	int spiritcharm_timer[MAX_SPIRITCHARM];
 	int8 soulball, soulball_old;
-	int soul_timer[MAX_SOUL_BALL];
 
 	unsigned char potion_success_counter; //Potion successes in row counter
 	unsigned char mission_count; //Stores the bounty kill count for TK_MISSION
@@ -1328,8 +1327,8 @@ void pc_delinvincibletimer(struct map_session_data* sd);
 
 void pc_addspiritball(struct map_session_data *sd,int interval,int max);
 void pc_delspiritball(struct map_session_data *sd,int count,int type);
-int pc_addsoulball(struct map_session_data *sd,int interval,int max);
-int pc_delsoulball(struct map_session_data *sd,int count,int type);
+int pc_addsoulball(map_session_data *sd, int max);
+int pc_delsoulball(map_session_data *sd, int count, bool type);
 
 void pc_addfame(struct map_session_data *sd,int count);
 unsigned char pc_famerank(uint32 char_id, int job);

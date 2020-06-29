@@ -3492,22 +3492,21 @@ ACMD_FUNC(spiritball)
 
 ACMD_FUNC(soulball)
 {
-	uint32 max_soulballs = min(ARRAYLENGTH(sd->soul_timer), 0x7FFF);
 	int number;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || (number = atoi(message)) < 0 || number > max_soulballs) {
+	if (!message || !*message || (number = atoi(message)) < 0 || number > MAX_SOUL_BALL) {
 		char msg[CHAT_SIZE_MAX];
-		safesnprintf(msg, sizeof(msg), "Usage: @soulball <number: 0-%d>", max_soulballs);
+
+		safesnprintf(msg, sizeof(msg), "Usage: @soulball <number: 0-%d>", MAX_SOUL_BALL);
 		clif_displaymessage(fd, msg);
 		return -1;
 	}
 
 	if (sd->soulball > 0)
-		pc_delsoulball(sd, sd->soulball, 1);
+		pc_delsoulball(sd, sd->soulball, true);
 	sd->soulball = number;
 	clif_soulball(sd);
-	// no message, player can see the difference
 
 	return 0;
 }

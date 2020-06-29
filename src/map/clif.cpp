@@ -4635,11 +4635,11 @@ void clif_storageclose(struct map_session_data* sd)
 /// Note: Spirit spheres and Soul spheres work on
 /// seprate systems officially, but both send out
 /// the same packet which leads to confusion on how
-/// much soul energy a Soul Reaper acturally has
+/// much soul energy a Soul Reaper actually has
 /// should the player also have spirit spheres.
 /// They will likely create a new packet for this soon
 /// to seprate the animations for spirit and soul spheres.
-/// For now well use this and replace it later when possible. [Rytech]
+/// For now we'll use this and replace it later when possible. [Rytech]
 /// 
 /// 01d0 <id>.L <amount>.W (ZC_SPIRITS)
 /// 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
@@ -6728,6 +6728,9 @@ void clif_use_card(struct map_session_data *sd,int idx)
 			continue;
 
 		if(sd->inventory_data[i]->type==IT_WEAPON && ep==EQP_SHIELD) //Shield card won't go on left weapon.
+			continue;
+
+		if(sd->inventory_data[i]->type == IT_ARMOR && (ep & EQP_ACC) && ((ep & EQP_ACC) != EQP_ACC) && ((sd->inventory_data[i]->equip & EQP_ACC) != (ep & EQP_ACC)) ) // specific accessory-card can only be inserted to specific accessory.
 			continue;
 
 		ARR_FIND( 0, sd->inventory_data[i]->slot, j, sd->inventory.u.items_inventory[i].card[j] == 0 );
@@ -10759,7 +10762,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	// For automatic triggering of NPCs after map loading (so you don't need to walk 1 step first)
 	if (map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKNPC))
-		npc_touch_areanpc(sd,sd->bl.m,sd->bl.x,sd->bl.y);
+		npc_touch_area_allnpc(sd,sd->bl.m,sd->bl.x,sd->bl.y);
 	else
 		sd->areanpc.clear();
 
@@ -19914,9 +19917,9 @@ void clif_roulette_generate( struct map_session_data *sd, unsigned char result, 
 	p.Step = stage;
 	p.Idx = prizeIdx;
 	p.AdditionItemID = bonusItemID;
-	p.RemainBronze = sd->roulette_point.gold;
-	p.RemainGold = sd->roulette_point.silver;
-	p.RemainSilver = sd->roulette_point.bronze;
+	p.RemainGold = sd->roulette_point.gold;
+	p.RemainSilver = sd->roulette_point.silver;
+	p.RemainBronze = sd->roulette_point.bronze;
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
 }
@@ -21011,23 +21014,26 @@ void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct gui
 #if PACKETVER >= 20140205
 	nullpo_retv( sd );
 
-	static struct PACKET_ZC_ACK_GUILDSTORAGE_LOG guild_storage_log;
-	int size = sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG );
+	int fd = sd->fd;
+	int16 size = sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG );
 
 	if( result == GUILDSTORAGE_LOG_FINAL_SUCCESS ){
-		size = log.size() * sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub );
+		size += static_cast<int16>(log.size()) * sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub );
 	}else{
 		log.clear();
 	}
 
-	guild_storage_log.packetType = HEADER_ZC_ACK_GUILDSTORAGE_LOG;
-	guild_storage_log.PacketLength = size;
-	guild_storage_log.result = result;
-	guild_storage_log.amount = (uint16)log.size();
+	WFIFOHEAD( fd, size );
+	struct PACKET_ZC_ACK_GUILDSTORAGE_LOG *p = (struct PACKET_ZC_ACK_GUILDSTORAGE_LOG*)WFIFOP( fd, 0 );
+
+	p->packetType = HEADER_ZC_ACK_GUILDSTORAGE_LOG;
+	p->PacketLength = size;
+	p->result = result;
+	p->amount = (uint16)log.size();
 
 	if( result == GUILDSTORAGE_LOG_FINAL_SUCCESS ){
 		for( int i = 0; i < log.size(); i++ ){
-			struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub* item = &guild_storage_log.items[i];
+			struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub* item = &p->items[i];
 			struct guild_log_entry& entry = log[i];
 
 			item->id = entry.id;
@@ -21045,7 +21051,7 @@ void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct gui
 		}
 	}
 	
-	clif_send( &guild_storage_log, guild_storage_log.PacketLength, &sd->bl, SELF );
+	WFIFOSET( fd, p->PacketLength );
 #endif
 }
 

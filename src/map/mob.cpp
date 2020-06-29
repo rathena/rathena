@@ -1009,7 +1009,7 @@ int mob_linksearch(struct block_list *bl,va_list ap)
 	target = va_arg(ap, struct block_list *);
 	tick=va_arg(ap, t_tick);
 
-	if (md->mob_id == mob_id && DIFF_TICK(md->last_linktime, tick) < MIN_MOBLINKTIME
+	if (md->mob_id == mob_id && status_has_mode(&md->status,MD_ASSIST) && DIFF_TICK(md->last_linktime, tick) < MIN_MOBLINKTIME
 		&& !md->target_id)
 	{
 		md->last_linktime = tick;
@@ -1821,7 +1821,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		map_foreachinshootrange (mob_ai_sub_hard_lootsearch, &md->bl, view_range, BL_ITEM, md, &tbl);
 	}
 
-	if ((!tbl && mode&MD_AGGRESSIVE) || md->state.skillstate == MSS_FOLLOW || slave_lost_target)
+	if ((mode&MD_AGGRESSIVE && (!tbl || slave_lost_target)) || md->state.skillstate == MSS_FOLLOW)
 	{
 		map_foreachinallrange (mob_ai_sub_hard_activesearch, &md->bl, view_range, DEFAULT_ENEMY_TYPE(md), md, &tbl, mode);
 	}
