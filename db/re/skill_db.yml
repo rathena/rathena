@@ -28776,7 +28776,7 @@ Body:
         Revolver: true
       Ammo:
         Bullet: true
-      AmmoAmount: 10
+      AmmoAmount: 3
   - Id: 2562
     Name: RL_H_MINE
     Description: Howling Mine
