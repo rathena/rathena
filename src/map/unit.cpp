@@ -316,6 +316,42 @@ TIMER_FUNC(unit_step_timer){
 	return 1;
 }
 
+int unit_walktoxy_ontouch(struct block_list *bl, va_list ap)
+{
+	struct npc_data *nd;
+
+	nullpo_ret(bl);
+	nullpo_ret(nd = va_arg(ap,struct npc_data *));
+
+	switch( bl->type ) {
+	case BL_PC:
+		TBL_PC *sd = (TBL_PC*)bl;
+
+		if (sd == nullptr)
+			return 1;
+		if (sd->state.block_action & PCBLOCK_NPCCLICK)
+			return 1;
+
+		// Remove NPCs that are no longer within the OnTouch area
+		for (size_t i = 0; i < sd->areanpc.size(); i++) {
+			struct npc_data *nd = map_id2nd(sd->areanpc[i]);
+
+			if (!nd || nd->subtype != NPCTYPE_SCRIPT || !(nd->bl.m == bl->m && bl->x >= nd->bl.x - nd->u.scr.xs && bl->x <= nd->bl.x + nd->u.scr.xs && bl->y >= nd->bl.y - nd->u.scr.ys && bl->y <= nd->bl.y + nd->u.scr.ys))
+				rathena::util::erase_at(sd->areanpc, i);
+		}
+		npc_touchnext_areanpc(sd, false);
+
+		if (map_getcell(bl->m, bl->x, bl->y, CELL_CHKNPC) == 0)
+			return 1;
+
+		npc_touch_areanpc(sd, bl->m, bl->x, bl->y, nd);
+		break;
+	// case BL_MOB:	// unsupported
+	}
+	
+	return 0;
+}
+
 /**
  * Defines when to refresh the walking character to object and restart the timer if applicable
  * Also checks for speed update, target location, and slave teleport timers
@@ -332,6 +368,7 @@ static TIMER_FUNC(unit_walktoxy_timer){
 	struct unit_data *ud;
 	TBL_PC *sd=NULL;
 	TBL_MOB *md=NULL;
+	TBL_NPC *nd=NULL;
 
 	bl = map_id2bl(id);
 
@@ -341,6 +378,7 @@ static TIMER_FUNC(unit_walktoxy_timer){
 	switch(bl->type) { // svoid useless cast, we can only be 1 type
 		case BL_PC: sd = BL_CAST(BL_PC, bl); break;
 		case BL_MOB: md = BL_CAST(BL_MOB, bl); break;
+		case BL_NPC: nd = BL_CAST(BL_NPC, bl); break;
 	}
 
 	ud = unit_bl2ud(bl);
@@ -460,7 +498,7 @@ static TIMER_FUNC(unit_walktoxy_timer){
 			if( !sd->npc_ontouch_.empty() )
 				npc_touchnext_areanpc(sd,false);
 			if(map_getcell(bl->m,x,y,CELL_CHKNPC)) {
-				npc_touch_areanpc(sd,bl->m,x,y);
+				npc_touch_area_allnpc(sd,bl->m,x,y);
 				if (bl->prev == NULL) // Script could have warped char, abort remaining of the function.
 					return 0;
 			} else
@@ -492,6 +530,24 @@ static TIMER_FUNC(unit_walktoxy_timer){
 				// Resend walk packet for proper Self Destruction display.
 				clif_move(ud);
 			}
+			break;
+		case BL_NPC:
+			if (nd->sc.option&OPTION_INVISIBLE)
+				break;
+
+			int xs = -1, ys = -1;
+			switch (nd->subtype) {
+			case NPCTYPE_SCRIPT:
+				xs = nd->u.scr.xs;
+				ys = nd->u.scr.ys;
+				break;
+			case NPCTYPE_WARP:
+				xs = nd->u.warp.xs;
+				ys = nd->u.warp.ys;
+				break;
+			}
+			if (xs > -1 && ys > -1)
+				map_foreachinmap(unit_walktoxy_ontouch, nd->bl.m, BL_PC, nd);
 			break;
 	}
 
@@ -988,7 +1044,7 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 			npc_touchnext_areanpc(sd,false);
 
 		if(map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC)) {
-			npc_touch_areanpc(sd, bl->m, bl->x, bl->y);
+			npc_touch_area_allnpc(sd, bl->m, bl->x, bl->y);
 
 			if (bl->prev == NULL) // Script could have warped char, abort remaining of the function.
 				return false;
@@ -1119,7 +1175,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_bl
 					npc_touchnext_areanpc(sd, false);
 
 				if(map_getcell(bl->m, bl->x, bl->y, CELL_CHKNPC))
-					npc_touch_areanpc(sd, bl->m, bl->x, bl->y);
+					npc_touch_area_allnpc(sd, bl->m, bl->x, bl->y);
 				else
 					sd->areanpc.clear();
 			}
@@ -1271,6 +1327,9 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 
 	clif_spawn(bl);
 	skill_unit_move(bl,gettick(),1);
+
+	if (!battle_config.slave_stick_with_master && bl->type == BL_MOB && mob_countslave(bl) > 0)
+		mob_warpslave(bl,MOB_SLAVEDISTANCE);
 
 	return 0;
 }
@@ -3305,7 +3364,6 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			pc_inventory_rental_clear(sd);
 			pc_delspiritball(sd, sd->spiritball, 1);
 			pc_delspiritcharm(sd, sd->spiritcharm, sd->spiritcharm_type);
-			pc_delsoulball(sd,sd->soulball, 1);
 
 			if( sd->st && sd->st->state != RUN ) {// free attached scripts that are waiting
 				script_free_state(sd->st);

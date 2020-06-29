@@ -14,6 +14,8 @@
 #include "../common/sql.hpp"
 #include "../common/strlib.hpp"
 
+#include "login.hpp" // login_config
+
 /// global defines
 
 /// internal structure
@@ -49,6 +51,9 @@ static bool account_db_sql_get_property(AccountDB* self, const char* key, char* 
 static bool account_db_sql_set_property(AccountDB* self, const char* option, const char* value);
 static bool account_db_sql_create(AccountDB* self, struct mmo_account* acc);
 static bool account_db_sql_remove(AccountDB* self, const uint32 account_id);
+static bool account_db_sql_enable_webtoken( AccountDB* self, const uint32 account_id );
+static bool account_db_sql_disable_webtoken( AccountDB* self, const uint32 account_id );
+static bool account_db_sql_remove_webtokens( AccountDB* self );
 static bool account_db_sql_save(AccountDB* self, const struct mmo_account* acc);
 static bool account_db_sql_load_num(AccountDB* self, struct mmo_account* acc, const uint32 account_id);
 static bool account_db_sql_load_str(AccountDB* self, struct mmo_account* acc, const char* userid);
@@ -71,6 +76,9 @@ AccountDB* account_db_sql(void) {
 	db->vtable.save         = &account_db_sql_save;
 	db->vtable.create       = &account_db_sql_create;
 	db->vtable.remove       = &account_db_sql_remove;
+	db->vtable.enable_webtoken = &account_db_sql_enable_webtoken;
+	db->vtable.disable_webtoken = &account_db_sql_disable_webtoken;
+	db->vtable.remove_webtokens = &account_db_sql_remove_webtokens;
 	db->vtable.load_num     = &account_db_sql_load_num;
 	db->vtable.load_str     = &account_db_sql_load_str;
 	db->vtable.iterator     = &account_db_sql_iterator;
@@ -134,6 +142,8 @@ static bool account_db_sql_init(AccountDB* self) {
 	if( codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, codepage) )
 		Sql_ShowDebug(sql_handle);
 
+	self->remove_webtokens( self );
+
 	return true;
 }
 
@@ -143,6 +153,10 @@ static bool account_db_sql_init(AccountDB* self) {
  */
 static void account_db_sql_destroy(AccountDB* self){
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
+
+	if( SQL_ERROR == Sql_Query( db->accounts, "UPDATE `%s` SET `web_auth_token` = NULL", db->account_db ) ){
+		Sql_ShowDebug( db->accounts );
+	}
 
 	Sql_Free(db->accounts);
 	db->accounts = NULL;
@@ -483,7 +497,7 @@ static bool account_db_sql_iter_next(AccountDBIterator* self, struct mmo_account
 }
 
 /**
- * Fetch a struct mmo_account from sql.
+ * Fetch a struct mmo_account from sql, excluding web_auth_token.
  * @param db: pointer to db
  * @param acc: pointer of mmo_account to fill
  * @param account_id: id of user account to take data from
@@ -533,6 +547,7 @@ static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 
 	Sql_GetData(sql_handle, 17, &data, NULL); acc->old_group = atoi(data);
 #endif
 	Sql_FreeResult(sql_handle);
+	acc->web_auth_token[0] = '\0';
 
 	return true;
 }
@@ -627,6 +642,45 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 			SqlStmt_ShowDebug(stmt);
 			break;
 		}
+	}
+
+	if( acc->sex != 'S' && login_config.use_web_auth_token ){
+		const int MAX_RETRIES = 20;
+		int i = 0;
+		bool success = false;
+
+		// Retry it for a maximum number of retries
+		do{
+			if( SQL_SUCCESS == Sql_Query( sql_handle, "UPDATE `%s` SET `web_auth_token` = LEFT( SHA2( CONCAT( UUID(), RAND() ), 256 ), %d ), `web_auth_token_enabled` = '1' WHERE `account_id` = '%d'", db->account_db, WEB_AUTH_TOKEN_LENGTH - 1, acc->account_id ) ){
+				success = true;
+				break;
+			}
+		}while( i < MAX_RETRIES && Sql_GetError( sql_handle ) == 1062 );
+
+		if( !success ){
+			if( i == MAX_RETRIES ){
+				ShowError( "Failed to generate a unique web_auth_token with %d retries...\n", i );
+			}else{
+				Sql_ShowDebug( sql_handle );
+			}
+
+			break;
+		}
+
+		char* data;
+		size_t len;
+
+		if( SQL_SUCCESS != Sql_Query( sql_handle, "SELECT `web_auth_token` from `%s` WHERE `account_id` = '%d'", db->account_db, acc->account_id ) ||
+			SQL_SUCCESS != Sql_NextRow( sql_handle ) ||
+			SQL_SUCCESS != Sql_GetData( sql_handle, 0, &data, &len )
+			){
+			Sql_ShowDebug( sql_handle );
+			break;
+		}
+
+		safestrncpy( (char *)&acc->web_auth_token, data, sizeof( acc->web_auth_token ) );
+
+		Sql_FreeResult( sql_handle );
 	}
 
 	// if we got this far, everything was successful
@@ -828,4 +882,37 @@ void mmo_send_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 c
 	WFIFOSET(fd, plen);
 
 	Sql_FreeResult(sql_handle);
+}
+
+bool account_db_sql_enable_webtoken( AccountDB* self, const uint32 account_id ){
+	AccountDB_SQL* db = (AccountDB_SQL*)self;
+
+	if( SQL_ERROR == Sql_Query( db->accounts, "UPDATE `%s` SET `web_auth_token_enabled` = '1' WHERE `account_id` = '%u'", db->account_db, account_id ) ){
+		Sql_ShowDebug( db->accounts );
+		return false;
+	}
+
+	return true;
+}
+
+bool account_db_sql_disable_webtoken( AccountDB* self, const uint32 account_id ){
+	AccountDB_SQL* db = (AccountDB_SQL*)self;
+
+	if( SQL_ERROR == Sql_Query( db->accounts, "UPDATE `%s` SET `web_auth_token_enabled` = '0' WHERE `account_id` = '%u'", db->account_db, account_id ) ){
+		Sql_ShowDebug( db->accounts );
+		return false;
+	}
+
+	return true;
+}
+
+bool account_db_sql_remove_webtokens( AccountDB* self ){
+	AccountDB_SQL* db = (AccountDB_SQL*)self;
+
+	if( SQL_ERROR == Sql_Query( db->accounts, "UPDATE `%s` SET `web_auth_token` = NULL, `web_auth_token_enabled` = '0'", db->account_db ) ){
+		Sql_ShowDebug( db->accounts );
+		return false;
+	}
+
+	return true;
 }

@@ -4801,7 +4801,7 @@ of the player.
 This command can not be used to rent stackable items. Rental items cannot be
 dropped, traded, or placed in guild storage. (i.e. trade mask 67)
 Note: 'delitem' in an NPC script can still remove rental items.
-Note: 'countitem' will not count any item with a rental timer.
+Note: 'countitem' will not count any item with a rental timer. Use 'rentalcountitem' instead.
 
 ---------------------------------------
 
@@ -5029,6 +5029,32 @@ cart, storage, or guild storage.
 
 If no cart is mounted, 'cartcountitem2' will return -1.
 If player is not in a guild or storage is open, 'guildstoragecountitem2' will return -1.
+
+---------------------------------------
+
+*rentalcountitem(<item id>{,<accountID>})
+*rentalcountitem("<item name>"{,<accountID>})
+
+This function will return the number of rental items for the specified item ID that the
+invoking character has in the inventory.
+
+---------------------------------------
+
+*rentalcountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*rentalcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*rentalcountitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+*rentalcountitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+
+Expanded version of 'rentalcountitem' function, used for created/carded/forged items.
+
+This function will return the number of rental items for the specified item ID and
+other parameters that the invoking character has in the inventory.
+See 'getitem2' for an explanation of the expanded parameters.
+
+'rentalcountitem3' is advance version of 'rentalcountitem2' that also use Item Random Option as criteria.
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomValueArray> : Array variable of item random option's value.
+<RandomParamArray> : Array variable of item random option's param.
 
 ---------------------------------------
 

@@ -1944,74 +1944,76 @@ OnStart:
 	switch ('GMT_1QUE) {
 		case 11:
 			hideonnpc instance_npcname("Arhi#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2549,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2549,1,.@label$);
 			break;
 		case 12:
 			hideonnpc instance_npcname("Dio Anemos#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2550,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2550,1,.@label$);
 			break;
 		case 13:
 			if ('GMTQuest == 1) {
 				hideonnpc instance_npcname("Geffen Gangster#n1");
-				'BossID = monster(.@map$,114,50,"--ja--",2553,1,.@label$);
+				monster(.@map$,114,50,"--ja--",2553,1,.@label$);
 			} else if ('GMTQuest == 2) {
 				hideonnpc instance_npcname("Geffen Bully#n1");
-				'BossID = monster(.@map$,114,50,"--ja--",2552,1,.@label$);
+				monster(.@map$,114,50,"--ja--",2552,1,.@label$);
 			} else {
 				hideonnpc instance_npcname("Geffen Shoplifter#n1");
-				'BossID = monster(.@map$,114,50,"--ja--",2551,1,.@label$);
+				monster(.@map$,114,50,"--ja--",2551,1,.@label$);
 			}
 			break;
 		case 14:
 			hideonnpc instance_npcname("Faymont#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2554,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2554,1,.@label$);
 			break;
 		case 15:
 			hideonnpc instance_npcname("Ordre#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2555,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2555,1,.@label$);
 			break;
 		case 16:
 			hideonnpc instance_npcname("Blut Hase#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2556,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2556,1,.@label$);
 			break;
 		case 17:
 			hideonnpc instance_npcname("Kuro Akuma#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2557,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2557,1,.@label$);
 			break;
 		case 18:
 			hideonnpc instance_npcname("Ifodes#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2558,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2558,1,.@label$);
 			break;
 		case 19:
 			hideonnpc instance_npcname("Licheniyes#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2559,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2559,1,.@label$);
 			break;
 		case 20:
 			hideonnpc instance_npcname("Odoric#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2560,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2560,1,.@label$);
 			break;
 		case 21:
 			hideonnpc instance_npcname("Ju#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2561,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2561,1,.@label$);
 			break;
 		case 22:
 			if ('half) {
 				hideonnpc instance_npcname("Dwigh#1");
-				'BossID = monster(.@map$,114,50,"--ja--",2562,1,.@label$);
+				monster(.@map$,114,50,"--ja--",2562,1,.@label$);
 			}
 			else {
 				hideonnpc instance_npcname("Fay Kanavian#1");
-				'BossID = monster(.@map$,114,50,"--ja--",2563,1,.@label$);
+				monster(.@map$,114,50,"--ja--",2563,1,.@label$);
 				donpcevent instance_npcname("#GMTHomun")+"::OnSummon";
 			}
 			
 			break;
 		case 23:
 			hideonnpc instance_npcname("Fenrir#f");
-			'BossID = monster(.@map$,114,50,"--ja--",2564,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2564,1,.@label$);
+			'BossID = $@mobid[0];
 			donpcevent instance_npcname("Geffen Academy Master")+"::OnTalk3";
 			end;
 	}
+	'BossID = $@mobid[0];
 		
 	donpcevent instance_npcname("Geffen Academy Master")+"::OnTalk1";
 	end;
@@ -2089,7 +2091,8 @@ OnTimeout2:
 	mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: Time's up! The judges will decide the victor for this round!",bc_blue;	
 	
 	setcell instance_mapname("1@ge_st"), 50, 50, 50, 50, cell_walkable, 1;
-	unitwarp 'BossID, instance_mapname("1@ge_st"), 50, 50;
+	if (unitexists('BossID))
+		unitwarp 'BossID, instance_mapname("1@ge_st"), 50, 50;
 	killmonster instance_mapname("1@ge_st"), instance_npcname("#GMTcontroller")+"::OnTimeout";
 	'BossID = 0;
 	
@@ -2231,7 +2234,8 @@ end;
 
 OnSummon:
 	initnpctimer;
-	'HomID = monster (instance_mapname("1@ge_st"), 114,50,"--ja--",2565,1, instance_npcname("#GMTHomun")+"::OnHomDead");
+	monster (instance_mapname("1@ge_st"), 114,50,"--ja--",2565,1, instance_npcname("#GMTHomun")+"::OnHomDead");
+	'HomID = $@mobid[0];
 	end;
 
 OnTimer10000:
