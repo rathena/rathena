@@ -2966,17 +2966,19 @@ static void pc_bonus_subrace(struct map_session_data* sd, unsigned char race, sh
 	}
 
 	for (auto &it : sd->subrace3) {
-		if (it.race == race) {
-			it.rate += rate;
-			it.flag = flag;
+		if (it.race == race && it.flag == flag) {
+			it.rate = cap_value(it.rate + rate, -10000, 10000);
 			return;
 		}
 	}
 
 	struct s_addrace2 entry = {};
 
+	if (rate < -10000 || rate > 10000)
+		ShowWarning("pc_bonus_subrace: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
+
 	entry.race = race;
-	entry.rate = rate;
+	entry.rate = cap_value(rate, -10000, 10000);
 	entry.flag = flag;
 
 	sd->subrace3.push_back(entry);
@@ -4383,7 +4385,7 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		break;
 
 	case SP_SUBRACE: // bonus3 bSubRace,r,x,bf;
-		PC_BONUS_CHK_ELEMENT(type2, SP_SUBRACE);
+		PC_BONUS_CHK_RACE(type2, SP_SUBRACE);
 		if (sd->state.lr_flag != 2)
 			pc_bonus_subrace(sd, (unsigned char)type2, type3, val);
 		break;

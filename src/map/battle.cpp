@@ -702,7 +702,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				cardfix = cardfix * (100 - tsd->subrace2[s_race2]) / 100;
 				int race_fix = tsd->subrace[sstatus->race] - tsd->subrace[RC_ALL];
 				for (const auto &it : tsd->subrace3) {
-					if (it.race != s_race2)
+					if (it.race != sstatus->race)
 						continue;
 					if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 						((it.flag)&flag)&BF_RANGEMASK &&
@@ -911,7 +911,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				cardfix = cardfix * (100 - tsd->subrace2[s_race2]) / 100;
 				int race_fix = tsd->subrace[sstatus->race] - tsd->subrace[RC_ALL];
 				for (const auto &it : tsd->subrace3) {
-					if (it.race != s_race2)
+					if (it.race != sstatus->race)
 						continue;
 					if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 						((it.flag)&flag)&BF_RANGEMASK &&
@@ -958,7 +958,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				}
 				int race_fix = tsd->subrace[sstatus->race] - tsd->subrace[RC_ALL];
 				for (const auto &it : tsd->subrace3) {
-					if (it.race != s_race2)
+					if (it.race != sstatus->race)
 						continue;
 					if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 						((it.flag)&flag)&BF_RANGEMASK &&
