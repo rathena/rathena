@@ -553,68 +553,30 @@ void pc_delspiritball(struct map_session_data *sd,int count,int type)
 	}
 }
 
-static TIMER_FUNC(pc_soulball_timer)
-{
-	struct map_session_data *sd;
-
-	if ((sd = (struct map_session_data *)map_id2sd(id)) == nullptr || sd->bl.type != BL_PC)
-		return 1;
-
-	if (sd->soulball <= 0) {
-		ShowError("pc_soulball_timer: %d soulball's available. (aid=%d tid=%d)\n", sd->soulball, sd->status.account_id, tid);
-		sd->soulball = 0;
-		return 0;
-	}
-
-	int i;
-
-	ARR_FIND(0, sd->soulball, i, sd->soul_timer[i] == tid);
-	if (i == sd->soulball) {
-		ShowError("pc_soulball_timer: timer not found (aid=%d tid=%d)\n", sd->status.account_id, tid);
-		return 0;
-	}
-
-	sd->soulball--;
-	if (i != sd->soulball)
-		memmove(sd->soul_timer + i, sd->soul_timer + i + 1, (sd->soulball - i) * sizeof(int));
-	sd->soul_timer[sd->soulball] = INVALID_TIMER;
-	clif_soulball(sd);
-
-	return 0;
-}
-
 /**
- * Adds a soulball to player for 'interval' ms
+ * Adds a soulball to player
  * @param sd: Player data
- * @param interval: Duration
  * @param max: Max amount of soulballs
  */
-int pc_addsoulball(struct map_session_data *sd, int interval, int max)
+int pc_addsoulball(map_session_data *sd, int max)
 {
 	nullpo_ret(sd);
+
+	status_change *sc = status_get_sc(&sd->bl);
+
+	if (sc == nullptr || sc->data[SC_SOULENERGY] == nullptr) {
+		sc_start(&sd->bl, &sd->bl, SC_SOULENERGY, 100, 0, skill_get_time2(SP_SOULCOLLECT, 1));
+		sd->soulball = 0;
+	}
 
 	max = min(max, MAX_SOUL_BALL);
 	sd->soulball = cap_value(sd->soulball, 0, MAX_SOUL_BALL);
 
-	if (sd->soulball && sd->soulball >= max) {
-		if (sd->soul_timer[0] != INVALID_TIMER)
-			delete_timer(sd->soul_timer[0], pc_soulball_timer);
+	if (sd->soulball && sd->soulball >= max)
 		sd->soulball--;
-		if (sd->soulball != 0)
-			memmove(sd->soul_timer + 0, sd->soul_timer + 1, (sd->soulball) * sizeof(int));
-		sd->soul_timer[sd->soulball] = INVALID_TIMER;
-	}
-
-	if (interval > 0) {
-		int tid = add_timer(gettick() + interval, pc_soulball_timer, sd->bl.id, 0), i;
-
-		ARR_FIND(0, sd->soulball, i, sd->soul_timer[i] == INVALID_TIMER || DIFF_TICK(get_timer(tid)->tick, get_timer(sd->soul_timer[i])->tick) < 0);
-		if (i != sd->soulball)
-			memmove(sd->soul_timer + i + 1, sd->soul_timer + i, (sd->soulball - i) * sizeof(int));
-		sd->soul_timer[i] = tid;
-	}
 
 	sd->soulball++;
+	sc_start(&sd->bl, &sd->bl, SC_SOULENERGY, 100, sd->soulball, skill_get_time2(SP_SOULCOLLECT, 1));
 	clif_soulball(sd);
 
 	return 0;
@@ -624,37 +586,27 @@ int pc_addsoulball(struct map_session_data *sd, int interval, int max)
  * Removes number of soulball from player
  * @param sd: Player data
  * @param count: Amount to remove
- * @param type: 1 = doesn't give client effect
+ * @param type: true = doesn't give client effect
  */
-int pc_delsoulball(struct map_session_data *sd, int count, int type)
+int pc_delsoulball(map_session_data *sd, int count, bool type)
 {
 	nullpo_ret(sd);
-
-	if (sd->soulball <= 0) {
-		sd->soulball = 0;
-		return 0;
-	}
 
 	if (count <= 0)
 		return 0;
 
-	if (count > sd->soulball)
-		count = sd->soulball;
-	sd->soulball -= count;
-	if (count > MAX_SOUL_BALL)
-		count = MAX_SOUL_BALL;
+	status_change *sc = status_get_sc(&sd->bl);
 
-	for (int i = 0; i < count; i++) {
-		if (sd->soul_timer[i] != INVALID_TIMER) {
-			delete_timer(sd->soul_timer[i], pc_soulball_timer);
-			sd->soul_timer[i] = INVALID_TIMER;
-		}
+	if (sd->soulball <= 0 || sc == nullptr || sc->data[SC_SOULENERGY] == nullptr) {
+		sd->soulball = 0;
+		return 0;
 	}
 
-	for (int i = count; i < MAX_SOUL_BALL; i++) {
-		sd->soul_timer[i - count] = sd->soul_timer[i];
-		sd->soul_timer[i] = INVALID_TIMER;
-	}
+	sd->soulball -= cap_value(count, 0, sd->soulball);
+	if (sd->soulball == 0)
+		status_change_end(&sd->bl, SC_SOULENERGY, INVALID_TIMER);
+	else
+		sc->data[SC_SOULENERGY]->val1 = sd->soulball;
 
 	if (!type)
 		clif_soulball(sd);
@@ -1562,8 +1514,6 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 
 	for(i = 0; i < MAX_SPIRITBALL; i++)
 		sd->spirit_timer[i] = INVALID_TIMER;
-	for (i = 0; i < MAX_SOUL_BALL; i++)
-		sd->soul_timer[i] = INVALID_TIMER;
 
 	if (battle_config.item_auto_get)
 		sd->state.autoloot = 10000;
@@ -8333,7 +8283,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	if ( sd->spiritball !=0 )
 		pc_delspiritball(sd,sd->spiritball,0);
 	if (sd->soulball != 0)
-		pc_delsoulball(sd, sd->soulball, 0);
+		pc_delsoulball(sd, sd->soulball, false);
 
 	if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
 		pc_delspiritcharm(sd,sd->spiritcharm,sd->spiritcharm_type);
@@ -12586,6 +12536,9 @@ void pc_scdata_received(struct map_session_data *sd) {
 		sd->cart_weight_max = 0; // Force a client refesh
 		status_calc_cart_weight(sd, (e_status_calc_weight_opt)(CALCWT_ITEM|CALCWT_MAXBONUS|CALCWT_CARTSTATE));
 	}
+
+	if (sd->sc.data[SC_SOULENERGY])
+		sd->soulball = sd->sc.data[SC_SOULENERGY]->val1;
 }
 
 /**
@@ -13526,7 +13479,6 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_calc_pvprank_timer, "pc_calc_pvprank_timer");
 	add_timer_func_list(pc_autosave, "pc_autosave");
 	add_timer_func_list(pc_spiritball_timer, "pc_spiritball_timer");
-	add_timer_func_list(pc_soulball_timer, "pc_soulball_timer");
 	add_timer_func_list(pc_follow_timer, "pc_follow_timer");
 	add_timer_func_list(pc_endautobonus, "pc_endautobonus");
 	add_timer_func_list(pc_spiritcharm_timer, "pc_spiritcharm_timer");

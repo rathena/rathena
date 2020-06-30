@@ -4635,11 +4635,11 @@ void clif_storageclose(struct map_session_data* sd)
 /// Note: Spirit spheres and Soul spheres work on
 /// seprate systems officially, but both send out
 /// the same packet which leads to confusion on how
-/// much soul energy a Soul Reaper acturally has
+/// much soul energy a Soul Reaper actually has
 /// should the player also have spirit spheres.
 /// They will likely create a new packet for this soon
 /// to seprate the animations for spirit and soul spheres.
-/// For now well use this and replace it later when possible. [Rytech]
+/// For now we'll use this and replace it later when possible. [Rytech]
 /// 
 /// 01d0 <id>.L <amount>.W (ZC_SPIRITS)
 /// 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
