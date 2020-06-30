@@ -11,6 +11,14 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="yaml.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="yamlupgrade.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="yamlupgrade.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

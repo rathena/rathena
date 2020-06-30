@@ -159,6 +159,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="yaml.hpp" />
+    <ClInclude Include="yamlupgrade.hpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="yamlupgrade.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
