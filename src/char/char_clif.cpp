@@ -45,9 +45,10 @@ void chclif_moveCharSlotReply( int fd, struct char_session_data* sd, unsigned sh
  * Client is requesting to move a charslot
  */
 int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd){
+	FIFOSD_CHECK(8);
+
 	uint16 from, to;
 
-	FIFOSD_CHECK(8);
 	from = RFIFOW(fd,2);
 	to = RFIFOW(fd,4);
 	//Cnt = RFIFOW(fd,6); //how many time we have left to change (client.. lol we don't trust him)
@@ -630,9 +631,10 @@ int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 
 // CH: <082b>.W <char id>.L
 int chclif_parse_char_delete2_cancel(int fd, struct char_session_data* sd) {
+	FIFOSD_CHECK(6);
+
 	uint32 char_id, i;
 
-	FIFOSD_CHECK(6);
 	char_id = RFIFOL(fd,2);
 	RFIFOSKIP(fd,6);
 
@@ -697,8 +699,9 @@ int chclif_parse_maplogin(int fd){
 
 // 0065 <account id>.L <login id1>.L <login id2>.L <???>.W <sex>.B
 int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
-	FIFOSD_CHECK(17)
-	{
+	if( RFIFOREST(fd) < 17 ) // request to connect
+		return 0;
+	else {
 		struct auth_node* node;
 		DBMap *auth_db = char_get_authdb();
 
@@ -945,12 +948,12 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 // S 0067 <name>.24B <str>.B <agi>.B <vit>.B <int>.B <dex>.B <luk>.B <slot>.B <hair color>.W <hair style>.W
 // S 0a39 <name>.24B <slot>.B <hair color>.W <hair style>.W <starting job ID>.W <Unknown>.(W or 2 B's)??? <sex>.B
 int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
-	int char_id = 0;
-
 	if (cmd == 0xa39) FIFOSD_CHECK(36) //>=20151001
 	else if (cmd == 0x970) FIFOSD_CHECK(31) //>=20120307
 	else if (cmd == 0x67) FIFOSD_CHECK(37)
 	else return 0;
+
+	int char_id;
 
 	if( (charserv_config.char_new)==0 ) //turn character creation on/off [Kevin]
 		char_id = -2;
@@ -1140,11 +1143,12 @@ void chclif_reqrename_response( int fd, struct char_session_data* sd, bool name_
 // Request for checking the new name on character renaming
 // 028d <account ID>.l <char ID>.l <new name>.24B (CH_REQ_IS_VALID_CHARNAME)
 int chclif_parse_reqrename( int fd, struct char_session_data* sd ){
+	FIFOSD_CHECK(34);
+
 	int i, cid, aid;
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
 
-	FIFOSD_CHECK(34);
 	aid = RFIFOL(fd,2);
 	cid = RFIFOL(fd,6);
 	safestrncpy(name, RFIFOCP(fd,10), NAME_LENGTH);
