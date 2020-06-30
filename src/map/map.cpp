@@ -3649,6 +3649,7 @@ void map_flags_init(void){
 
 		mapdata->flag.clear();
 		mapdata->flag.reserve(MF_MAX); // Reserve the bucket size
+		mapdata->drop_list.clear();
 		args.flag_val = 100;
 
 		// additional mapflag data
