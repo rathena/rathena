@@ -223,6 +223,12 @@ enum e_mapid {
 
 //Max size for inputs to Graffiti, Talkie Box and Vending text prompts
 #define MESSAGE_SIZE (79 + 1)
+// Max size for inputs to Graffiti, Talkie Box text prompts
+#if PACKETVER_MAIN_NUM >= 20190904 || PACKETVER_RE_NUM >= 20190904 || PACKETVER_ZERO_NUM >= 20190828
+#define TALKBOX_MESSAGE_SIZE 21
+#else
+#define TALKBOX_MESSAGE_SIZE (79 + 1)
+#endif
 //String length you can write in the 'talking box'
 #define CHATBOX_SIZE (70 + 1)
 //Chatroom-related string sizes
@@ -278,7 +284,8 @@ enum e_race : int8{
 	RC_DEMIHUMAN,
 	RC_ANGEL,
 	RC_DRAGON,
-	RC_PLAYER,
+	RC_PLAYER_HUMAN,
+	RC_PLAYER_DORAM,
 	RC_ALL,
 	RC_MAX //auto upd enum for array size
 };
@@ -498,7 +505,7 @@ enum _sp {
 	SP_STATE_NORECOVER_RACE, SP_CRITICAL_RANGEATK, SP_MAGIC_ADDRACE2, SP_IGNORE_MDEF_RACE2_RATE, // 2079-2082
 	SP_WEAPON_ATK_RATE, SP_WEAPON_MATK_RATE, SP_DROP_ADDRACE, SP_DROP_ADDCLASS, SP_NO_MADO_FUEL, // 2083-2087
 	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, SP_SKILL_DELAY, SP_NO_WALK_DELAY, //2088-2093
-	SP_LONG_SP_GAIN_VALUE, SP_LONG_HP_GAIN_VALUE // 2094-2095
+	SP_LONG_SP_GAIN_VALUE, SP_LONG_HP_GAIN_VALUE, SP_SHORT_ATK_RATE // 2094-2096
 };
 
 enum _look {

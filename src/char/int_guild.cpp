@@ -1130,6 +1130,18 @@ int mapif_guild_emblem(struct guild *g)
 	return 0;
 }
 
+// Send the guild emblem_id (version)
+int mapif_guild_emblem_version(guild* g)
+{
+	unsigned char buf[10];
+	WBUFW(buf, 0) = 0x3841;
+	WBUFL(buf, 2) = g->guild_id;
+	WBUFL(buf, 6) = g->emblem_id;
+	chmapif_sendall(buf, 10);
+
+	return 0;
+}
+
 int mapif_guild_master_changed(struct guild *g, int aid, int cid, time_t time)
 {
 	unsigned char buf[18];
@@ -1884,6 +1896,22 @@ int mapif_parse_GuildMasterChange(int fd, int guild_id, const char* name, int le
 	return mapif_guild_master_changed(g, g->member[0].account_id, g->member[0].char_id, g->last_leader_change);
 }
 
+int mapif_parse_GuildEmblemVersion(int fd, int guild_id, int version)
+{
+	guild* g = inter_guild_fromsql(guild_id);
+
+	if (g == nullptr)
+		return 0;
+
+	g->emblem_len = 0;
+	g->emblem_id = version;
+	g->save_flag |= GS_EMBLEM;
+
+	mapif_guild_emblem_version(g);
+
+	return 1;
+}
+
 // Communication from the map server
 // - Can analyzed only one by one packet
 // Data packet length that you set to inter.cpp
@@ -1912,6 +1940,7 @@ int inter_guild_parse_frommap(int fd)
 	case 0x303F: mapif_parse_GuildEmblem(fd,RFIFOW(fd,2)-12,RFIFOL(fd,4),RFIFOL(fd,8),RFIFOCP(fd,12)); break;
 	case 0x3040: mapif_parse_GuildCastleDataLoad(fd,RFIFOW(fd,2),(int *)RFIFOP(fd,4)); break;
 	case 0x3041: mapif_parse_GuildCastleDataSave(fd,RFIFOW(fd,2),RFIFOB(fd,4),RFIFOL(fd,5)); break;
+	case 0x3042: mapif_parse_GuildEmblemVersion(fd, RFIFOL(fd, 2), RFIFOL(fd, 6)); break;
 
 	default:
 		return 0;

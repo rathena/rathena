@@ -116,7 +116,7 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (!process("MAGIC_MUSHROOM_DB", 1, root_paths, "magicmushroom_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("MAGIC_MUSHROOM_DB", 1, root_paths, "magicmushroom_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1, 1, -1, &skill_parse_row_magicmushroomdb, false);
 	})) {
 		return 0;
@@ -125,12 +125,6 @@ int do_init( int argc, char** argv ){
 	if (!process("ABRA_DB", 1, root_paths, "abra_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3, 3, -1, &skill_parse_row_abradb, false);
 	})) {
-		return 0;
-	}
-
-	if (!process("IMPROVISED_SONG_DB", 1, root_paths, "skill_improvise_db", [](const std::string& path, const std::string& name_ext) -> bool {
-		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 2, 2, -1, &skill_parse_row_improvisedb, false);
-	}, "improvise_db")) {
 		return 0;
 	}
 
@@ -166,7 +160,7 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (process("INSTANCE_DB", 1, root_paths, "instance_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("INSTANCE_DB", 1, root_paths, "instance_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 7, 7 + MAX_MAP_PER_INSTANCE, -1, &instance_readdb_sub, false);
 	})) {
 		return 0;
@@ -409,7 +403,7 @@ static bool pet_read_db( const char* file ){
 }
 
 // Copied and adjusted from skill.cpp
-static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current)
+static bool skill_parse_row_magicmushroomdb(char *split[], int column, int current)
 {
 	uint16 skill_id = atoi(split[0]);
 	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
@@ -462,25 +456,6 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current)
 		body << YAML::EndSeq;
 	}
 
-	body << YAML::EndMap;
-
-	return true;
-}
-
-// Copied and adjusted from skill.cpp
-static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
-{
-	uint16 skill_id = atoi(split[0]);
-	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
-
-	if (skill_name == nullptr) {
-		ShowError("Skill name for Improvised Song skill ID %hu is not known.\n", skill_id);
-		return false;
-	}
-
-	body << YAML::BeginMap;
-	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
-	body << YAML::Key << "Probability" << YAML::Value << atoi(split[1]) / 10;
 	body << YAML::EndMap;
 
 	return true;
@@ -1105,8 +1080,6 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 			body << YAML::Key << "TargetManHole" << YAML::Value << "true";
 		if (inf3_val & 0x10000)
 			body << YAML::Key << "TargetHidden" << YAML::Value << "true";
-		if (inf3_val & 0x20000)
-			body << YAML::Key << "IncreaseGloomyDayDamage" << YAML::Value << "true";
 		if (inf3_val & 0x40000)
 			body << YAML::Key << "IncreaseDanceWithWugDamage" << YAML::Value << "true";
 		if (inf3_val & 0x80000)
