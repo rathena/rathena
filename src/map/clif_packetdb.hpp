@@ -1109,7 +1109,7 @@
 	packet(0x02cc,4);
 	packet(0x02cd,26);
 	packet(0x02ce,10);
-	packet(0x02cf,6);
+	parseable_packet(0x02cf,6,clif_parse_MemorialDungeonCommand,2);
 	packet(0x02d0,-1);
 	packet(0x02d1,-1);
 	packet(0x02d2,-1);
@@ -2445,6 +2445,11 @@
 
 #if PACKETVER_MAIN_NUM >= 20190227 || PACKETVER_RE_NUM >= 20190220 || PACKETVER_ZERO_NUM >= 20190220
 	parseable_packet( 0x0B1C, sizeof( struct PACKET_CZ_PING ), clif_parse_dull, 0 );
+#endif
+
+#if PACKETVER >= 20190724
+	parseable_packet(HEADER_CZ_GUILD_EMBLEM_CHANGE2, sizeof( PACKET_CZ_GUILD_EMBLEM_CHANGE2 ), clif_parse_GuildChangeEmblem2, 0 );
+	packet(HEADER_ZC_CHANGE_GUILD, sizeof(PACKET_ZC_CHANGE_GUILD));
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190508 || PACKETVER_ZERO_NUM >= 20190605

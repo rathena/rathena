@@ -28776,7 +28776,7 @@ Body:
         Revolver: true
       Ammo:
         Bullet: true
-      AmmoAmount: 10
+      AmmoAmount: 3
   - Id: 2562
     Name: RL_H_MINE
     Description: Howling Mine
@@ -30526,9 +30526,8 @@ Body:
     Hit: Multi_Hit
     HitCount: -2
     Element: Weapon
-    AfterCastActDelay: 500
     Duration1: 3000
-    Cooldown: # !TODO: Confirm cooldown
+    Cooldown:
       - Level: 1
         Time: 4000
       - Level: 2

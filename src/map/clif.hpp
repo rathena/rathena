@@ -574,6 +574,10 @@ enum e_config_type : uint32 {
 	CONFIG_HOMUNCULUS_AUTOFEED
 };
 
+enum e_memorial_dungeon_command : uint16 {
+	COMMAND_MEMORIALDUNGEON_DESTROY_FORCE = 0x3,
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -843,6 +847,7 @@ void clif_instance_create(int instance_id, int num);
 void clif_instance_changewait(int instance_id, int num);
 void clif_instance_status(int instance_id, unsigned int limit1, unsigned int limit2);
 void clif_instance_changestatus(int instance_id, e_instance_notify type, unsigned int limit);
+void clif_parse_MemorialDungeonCommand(int fd, map_session_data *sd);
 
 // Custom Fonts
 void clif_font(struct map_session_data *sd);
