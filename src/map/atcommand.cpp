@@ -6140,6 +6140,24 @@ ACMD_FUNC(changegm)
 		return -1;
 	}
 
+	if( !battle_config.guild_leaderchange_woe && is_agit_start() ){
+#if PACKETVER >= 20151001
+		clif_msg(sd, GUILD_MASTER_WOE);
+#else
+		clif_displaymessage(fd, msg_txt(sd,1513)); // Currently in WoE hours, unable to delegate Guild leader
+#endif
+		return -1;
+	}
+
+	if( battle_config.guild_leaderchange_delay && DIFF_TICK(time(NULL),sd->guild->last_leader_change) < battle_config.guild_leaderchange_delay ){
+#if PACKETVER >= 20151001
+		clif_msg(sd, GUILD_MASTER_DELAY);
+#else
+		clif_displaymessage(fd, msg_txt(sd,1514)); // You have to wait for a while before delegating a new Guild leader
+#endif
+		return -1;
+	}
+
 	guild_gm_change(sd->status.guild_id, pl_sd->status.char_id);
 	return 0;
 }
