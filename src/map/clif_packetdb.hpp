@@ -2447,6 +2447,11 @@
 	parseable_packet( 0x0B1C, sizeof( struct PACKET_CZ_PING ), clif_parse_dull, 0 );
 #endif
 
+#if PACKETVER >= 20190724
+	parseable_packet(HEADER_CZ_GUILD_EMBLEM_CHANGE2, sizeof( PACKET_CZ_GUILD_EMBLEM_CHANGE2 ), clif_parse_GuildChangeEmblem2, 0 );
+	packet(HEADER_ZC_CHANGE_GUILD, sizeof(PACKET_ZC_CHANGE_GUILD));
+#endif
+
 #if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190508 || PACKETVER_ZERO_NUM >= 20190605
 	parseable_packet( 0x0B21, sizeof( struct PACKET_CZ_SHORTCUT_KEY_CHANGE2 ), clif_parse_Hotkey, 0 );
 	parseable_packet( 0x0B22, sizeof( struct PACKET_CZ_SHORTCUTKEYBAR_ROTATE2 ), clif_parse_HotkeyRowShift, 0 );
