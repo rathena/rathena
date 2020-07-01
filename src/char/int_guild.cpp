@@ -36,7 +36,7 @@ static const char dataToHex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9
 static DBMap* guild_db_; // int guild_id -> struct guild*
 static DBMap *castle_db;
 
-static unsigned int guild_exp[100];
+static uint64 guild_exp[MAX_GUILDLEVEL];
 
 int mapif_parse_GuildLeave(int fd,int guild_id,uint32 account_id,uint32 char_id,int flag,const char *mes);
 int mapif_guild_broken(int guild_id,int flag);
@@ -221,7 +221,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 				StringBuf_AppendStr(&buf, ", ");
 			//else	//last condition using add_coma setting
 			//	add_comma = true;
-			StringBuf_Printf(&buf, "`guild_lv`=%d, `skill_point`=%d, `exp`=%" PRIu64 ", `next_exp`=%u, `max_member`=%d", g->guild_lv, g->skill_point, g->exp, g->next_exp, g->max_member);
+			StringBuf_Printf(&buf, "`guild_lv`=%d, `skill_point`=%d, `exp`=%" PRIu64 ", `next_exp`=%" PRIu64 ", `max_member`=%d", g->guild_lv, g->skill_point, g->exp, g->next_exp, g->max_member);
 		}
 		StringBuf_Printf(&buf, " WHERE `guild_id`=%d", g->guild_id);
 		if( SQL_ERROR == Sql_Query(sql_handle, "%s", StringBuf_Value(&buf)) )
@@ -380,7 +380,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	}
 	Sql_GetData(sql_handle,  5, &data, NULL); g->average_lv = atoi(data);
 	Sql_GetData(sql_handle,  6, &data, NULL); g->exp = strtoull(data, NULL, 10);
-	Sql_GetData(sql_handle,  7, &data, NULL); g->next_exp = (unsigned int)strtoul(data, NULL, 10);
+	Sql_GetData(sql_handle,  7, &data, NULL); g->next_exp = strtoull(data, NULL, 10);
 	Sql_GetData(sql_handle,  8, &data, NULL); g->skill_point = atoi(data);
 	Sql_GetData(sql_handle,  9, &data, &len); memcpy(g->mes1, data, zmin(len, sizeof(g->mes1)));
 	Sql_GetData(sql_handle, 10, &data, &len); memcpy(g->mes2, data, zmin(len, sizeof(g->mes2)));
@@ -630,10 +630,10 @@ struct guild_castle* inter_guildcastle_fromsql(int castle_id)
 // Read exp_guild.txt
 bool exp_guild_parse_row(char* split[], int column, int current)
 {
-	unsigned int exp = (unsigned int)atol(split[0]);
+	uint64 exp = (uint64)strtoull(split[0], nullptr, 10);
 
-	if (exp >= UINT_MAX) {
-		ShowError("exp_guild: Invalid exp %d at line %d\n", exp, current);
+	if (exp > UINT64_MAX) {
+		ShowError("exp_guild: Invalid exp %" PRIu64 " at line %d\n", exp, current);
 		return false;
 	}
 
@@ -825,7 +825,7 @@ bool guild_check_empty(struct guild *g)
 	return i < g->max_member ? false : true; // not empty
 }
 
-unsigned int guild_nextexp(int level)
+uint64 guild_nextexp(int level)
 {
 	if (level == 0)
 		return 1;
@@ -844,7 +844,7 @@ int guild_checkskill(struct guild *g,int id)
 int guild_calcinfo(struct guild *g)
 {
 	int i,c;
-	unsigned int nextexp;
+	uint64 nextexp;
 	struct guild before = *g; // Save guild current values
 
 	if(g->guild_lv<=0)

@@ -483,7 +483,7 @@ struct mmo_charstatus {
 	uint32 mother;
 	uint32 child;
 
-	expType base_exp,job_exp;
+	uint64 base_exp,job_exp;
 	int zeny;
 
 	short class_; ///< Player's JobID
@@ -663,7 +663,7 @@ struct guild {
 	int guild_id;
 	short guild_lv, connect_member, max_member, average_lv;
 	uint64 exp;
-	unsigned int next_exp;
+	uint64 next_exp;
 	int skill_point;
 	char name[NAME_LENGTH],master[NAME_LENGTH];
 	struct guild_member member[MAX_GUILD];

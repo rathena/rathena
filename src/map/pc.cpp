@@ -1123,7 +1123,7 @@ enum adopt_responses pc_try_adopt(struct map_session_data *p1_sd, struct map_ses
 bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd)
 {
 	int job, joblevel;
-	expType jobexp;
+	uint64 jobexp;
 
 	if( pc_try_adopt(p1_sd, p2_sd, b_sd) != ADOPT_ALLOWED )
 		return false;
@@ -6801,7 +6801,7 @@ int pc_follow(struct map_session_data *sd,int target_id)
 }
 
 int pc_checkbaselevelup(struct map_session_data *sd) {
-	expType next = pc_nextbaseexp(sd);
+	uint64 next = pc_nextbaseexp(sd);
 
 	if (!next || sd->status.base_exp < next || pc_is_maxbaselv(sd))
 		return 0;
@@ -6867,7 +6867,7 @@ void pc_baselevelchanged(struct map_session_data *sd) {
 
 int pc_checkjoblevelup(struct map_session_data *sd)
 {
-	expType next = pc_nextjobexp(sd);
+	uint64 next = pc_nextjobexp(sd);
 
 	nullpo_ret(sd);
 	if(!next || sd->status.job_exp < next || pc_is_maxjoblv(sd))
@@ -6910,7 +6910,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 * @param job_exp Job EXP before peronal bonuses
 * @param src Block list that affecting the exp calculation
 */
-static void pc_calcexp(struct map_session_data *sd, expType *base_exp, expType *job_exp, struct block_list *src)
+static void pc_calcexp(struct map_session_data *sd, uint64 *base_exp, uint64 *job_exp, struct block_list *src)
 {
 	int bonus = 0, vip_bonus_base = 0, vip_bonus_job = 0;
 
@@ -6944,7 +6944,7 @@ static void pc_calcexp(struct map_session_data *sd, expType *base_exp, expType *
 	}
 
 	if (*base_exp) {
-		expType exp = (expType)(*base_exp + ((double)*base_exp * ((bonus + vip_bonus_base) / 100.)));
+		uint64 exp = (uint64)(*base_exp + ((double)*base_exp * ((bonus + vip_bonus_base) / 100.)));
 		*base_exp = exp;
 	}
 
@@ -6953,7 +6953,7 @@ static void pc_calcexp(struct map_session_data *sd, expType *base_exp, expType *
 		bonus += sd->sc.data[SC_JEXPBOOST]->val1;
 
 	if (*job_exp) {
-		expType exp = (expType)(*job_exp + ((double)*job_exp * ((bonus + vip_bonus_job) / 100.)));
+		uint64 exp = (uint64)(*job_exp + ((double)*job_exp * ((bonus + vip_bonus_job) / 100.)));
 		*job_exp = exp;
 	}
 
@@ -6969,7 +6969,7 @@ static void pc_calcexp(struct map_session_data *sd, expType *base_exp, expType *
  * @param next_job_exp Job EXP needed for next job level
  * @param lost True:EXP penalty, lose EXP
  **/
-void pc_gainexp_disp(struct map_session_data *sd, expType base_exp, expType next_base_exp, expType job_exp, expType next_job_exp, bool lost) {
+void pc_gainexp_disp(struct map_session_data *sd, uint64 base_exp, uint64 next_base_exp, uint64 job_exp, uint64 next_job_exp, bool lost) {
 	char output[CHAT_SIZE_MAX];
 
 	nullpo_retv(sd);
@@ -6990,9 +6990,9 @@ void pc_gainexp_disp(struct map_session_data *sd, expType base_exp, expType next
  * @param exp_flag 1: Quest EXP; 2: Param Exp (Ignore Guild EXP tax, EXP adjustments)
  * @return
  **/
-void pc_gainexp(struct map_session_data *sd, struct block_list *src, expType base_exp, expType job_exp, uint8 exp_flag)
+void pc_gainexp(struct map_session_data *sd, struct block_list *src, uint64 base_exp, uint64 job_exp, uint8 exp_flag)
 {
-	expType nextb = 0, nextj = 0;
+	uint64 nextb = 0, nextj = 0;
 	uint8 flag = 0; ///< 1: Base EXP given, 2: Job EXP given, 4: Max Base level, 8: Max Job Level
 
 	nullpo_retv(sd);
@@ -7006,7 +7006,7 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, expType bas
 			return; // no exp on pvp maps
 	
 		if (sd->status.guild_id>0)
-			base_exp -= guild_payexp(sd,(uint32)u64min(base_exp, UINT32_MAX));
+			base_exp -= guild_payexp(sd,base_exp);
 	}
 
 	flag = ((base_exp) ? 1 : 0) |
@@ -7051,7 +7051,7 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, expType bas
 	// Give EXP for Base Level
 	if (base_exp) {
 		if (sd->status.base_exp + base_exp < sd->status.base_exp)
-			sd->status.base_exp = EXPTYPE_MAX;
+			sd->status.base_exp = UINT64_MAX;
 		else
 			sd->status.base_exp += base_exp;
 
@@ -7062,7 +7062,7 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, expType bas
 	// Give EXP for Job Level
 	if (job_exp) {
 		if (sd->status.job_exp + job_exp < sd->status.job_exp)
-			sd->status.job_exp = EXPTYPE_MAX;
+			sd->status.job_exp = UINT64_MAX;
 		else
 			sd->status.job_exp += job_exp;
 
@@ -7085,7 +7085,7 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, expType bas
  * @param base_exp Base EXP lost
  * @param job_exp Job EXP lost
  **/
-void pc_lostexp(struct map_session_data *sd, expType base_exp, expType job_exp) {
+void pc_lostexp(struct map_session_data *sd, uint64 base_exp, uint64 job_exp) {
 
 	nullpo_retv(sd);
 
@@ -7168,7 +7168,7 @@ bool pc_is_maxjoblv(struct map_session_data *sd) {
  * @param sd
  * @return Base EXP needed for next base level
  **/
-expType pc_nextbaseexp(struct map_session_data *sd){
+uint64 pc_nextbaseexp(struct map_session_data *sd){
 	nullpo_ret(sd);
 	if (sd->status.base_level == 0) // Is this something that possible?
 		return 0;
@@ -7182,7 +7182,7 @@ expType pc_nextbaseexp(struct map_session_data *sd){
  * @param sd
  * @return Job EXP needed for next job level
  **/
-expType pc_nextjobexp(struct map_session_data *sd){
+uint64 pc_nextjobexp(struct map_session_data *sd){
 	nullpo_ret(sd);
 	if (sd->status.job_level == 0) // Is this something that possible?
 		return 0;
@@ -8003,7 +8003,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	// Activate Steel body if a super novice dies at 99+% exp [celest]
 	// Super Novices have no kill or die functions attached when saved by their angel
 	if (!sd->state.snovice_dead_flag && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
-		expType exp = pc_nextbaseexp(sd);
+		uint64 exp = pc_nextbaseexp(sd);
 
 		if( exp && get_percentage_exp(sd->status.base_exp, exp) >= 99 ) {
 			sd->state.snovice_dead_flag = 1;
@@ -8178,8 +8178,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		&& !sd->sc.data[SC_BABY] && !sd->sc.data[SC_LIFEINSURANCE]
 		&& !mapdata->flag[MF_NOEXPPENALTY] && !mapdata_flag_gvg2(mapdata))
 	{
-		expType base_penalty = 0;
-		expType job_penalty = 0;
+		uint64 base_penalty = 0;
+		uint64 job_penalty = 0;
 		uint32 zeny_penalty = 0;
 
 		if (pc_isvip(sd)) { // EXP penalty for VIP
@@ -8194,8 +8194,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 		if ((battle_config.death_penalty_maxlv&1 || !pc_is_maxbaselv(sd)) && base_penalty > 0) {
 			switch (battle_config.death_penalty_type) {
-				case 1: base_penalty = (expType) ( pc_nextbaseexp(sd) * ( base_penalty / 10000. ) ); break;
-				case 2: base_penalty = (expType) ( sd->status.base_exp * ( base_penalty / 10000. ) ); break;
+				case 1: base_penalty = (uint64) ( pc_nextbaseexp(sd) * ( base_penalty / 10000. ) ); break;
+				case 2: base_penalty = (uint64) ( sd->status.base_exp * ( base_penalty / 10000. ) ); break;
 			}
 			if (base_penalty){ //recheck after altering to speedup
 				if (battle_config.pk_mode && src && src->type==BL_PC)
@@ -8386,10 +8386,10 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_SEX:             val = sd->status.sex; break;
 		case SP_WEIGHT:          val = sd->weight; break;
 		case SP_MAXWEIGHT:       val = sd->max_weight; break;
-		case SP_BASEEXP:         val = (uint32)u64min(sd->status.base_exp, UINT32_MAX); break;
-		case SP_JOBEXP:          val = (uint32)u64min(sd->status.job_exp, UINT32_MAX); break;
-		case SP_NEXTBASEEXP:     val = (uint32)u64min(pc_nextbaseexp(sd), UINT32_MAX); break;
-		case SP_NEXTJOBEXP:      val = (uint32)u64min(pc_nextjobexp(sd), UINT32_MAX); break;
+		case SP_BASEEXP:         val = (int32)u64min(sd->status.base_exp, INT32_MAX); break;
+		case SP_JOBEXP:          val = (int32)u64min(sd->status.job_exp, INT32_MAX); break;
+		case SP_NEXTBASEEXP:     val = (int32)u64min(pc_nextbaseexp(sd), INT32_MAX); break;
+		case SP_NEXTJOBEXP:      val = (int32)u64min(pc_nextjobexp(sd), INT32_MAX); break;
 		case SP_HP:              val = sd->battle_status.hp; break;
 		case SP_MAXHP:           val = sd->battle_status.max_hp; break;
 		case SP_SP:              val = sd->battle_status.sp; break;
@@ -11738,7 +11738,7 @@ static bool pc_readdb_job_exp(char* fields[], int columns, int current)
 
 	job_info[idx].max_level[type] = maxlvl;
 	for(i=0; i<maxlvl; i++)
-		job_info[idx].exp_table[type][i] = ((expType)strtoull(fields[3+i], NULL, 0));
+		job_info[idx].exp_table[type][i] = ((uint64)strtoull(fields[3+i], nullptr, 10));
 	//Reverse check in case the array has a bunch of trailing zeros... [Skotlex]
 	//The reasoning behind the -2 is this... if the max level is 5, then the array
 	//should look like this:

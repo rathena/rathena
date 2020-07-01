@@ -1357,7 +1357,7 @@ static DBData create_expcache(DBKey key, va_list args) {
 /*====================================================
  * Return taxed experience from player sd to guild
  *---------------------------------------------------*/
-unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp) {
+uint64 guild_payexp(struct map_session_data *sd,uint64 exp) {
 	struct guild *g;
 	struct guild_expcache *c;
 	int per;
@@ -1392,7 +1392,7 @@ unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp) {
  * Add this experience to guild exp
  * [Celest]
  *---------------------------------------------------*/
-int guild_getexp(struct map_session_data *sd,int exp) {
+uint64 guild_getexp(struct map_session_data *sd,uint64 exp) {
 	struct guild_expcache *c;
 	nullpo_ret(sd);
 

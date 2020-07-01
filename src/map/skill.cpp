@@ -6373,14 +6373,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				clif_skill_nodamage(src,bl,ALL_RESURRECTION,skill_lv,1); //Both Redemptio and Res show this skill-animation.
 				if(sd && dstsd && battle_config.resurrection_exp > 0)
 				{
-					expType exp = 0,jexp = 0;
+					uint64 exp = 0,jexp = 0;
 					int lv = dstsd->status.base_level - sd->status.base_level, jlv = dstsd->status.job_level - sd->status.job_level;
 					if(lv > 0 && pc_nextbaseexp(dstsd)) {
-						exp = (int)((double)dstsd->status.base_exp * (double)lv * (double)battle_config.resurrection_exp / 1000000.);
+						exp = (uint64)(dstsd->status.base_exp * lv * battle_config.resurrection_exp / 1000000.);
 						if (exp < 1) exp = 1;
 					}
 					if(jlv > 0 && pc_nextjobexp(dstsd)) {
-						jexp = (int)((double)dstsd->status.job_exp * (double)lv * (double)battle_config.resurrection_exp / 1000000.);
+						jexp = (uint64)(dstsd->status.job_exp * lv * battle_config.resurrection_exp / 1000000.);
 						if (jexp < 1) jexp = 1;
 					}
 					if(exp > 0 || jexp > 0)
@@ -15301,7 +15301,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		case PR_REDEMPTIO:
 		case LG_INSPIRATION:
 			{
-				expType exp, exp_needp = 0;
+				uint64 exp, exp_needp;
 				switch (skill_id) {
 					case PR_REDEMPTIO:
 						exp_needp = battle_config.exp_cost_redemptio;
