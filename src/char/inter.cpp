@@ -62,7 +62,7 @@ int inter_recv_packet_length[] = {
 	-1,-1,10,10,  0,-1,12, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3050-  Auction System [Zephyrus]
 	 6,-1, 6,-1, 16+NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3060-  Quest system [Kevin] [Inkfish] / Achievements [Aleos]
 	-1,10, 6,-1,  0, 0, 0, 0,  0, 0, 0, 0, -1,10,  6,-1,	// 3070-  Mercenary packets [Zephyrus], Elemental packets [pakpil]
-	48,14,-1, 6,  0, 0, 0, 0,  0, 0,13,-1,  0, 0,  0, 0,	// 3080-  Pet System, Storage
+	52,14,-1, 6,  0, 0, 0, 0,  0, 0,13,-1,  0, 0,  0, 0,	// 3080-  Pet System, Storage
 	-1,10,-1, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3090-  Homunculus packets [albator]
 	 2,-1, 6, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 30A0-  Clan packets
 };
