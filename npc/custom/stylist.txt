@@ -15,7 +15,7 @@
 
 prontera,171,181,1	script	Stylist#custom_stylist	122,{
 	.@doramHairstyles = 6;
-	.@doramHaircolours = 8;
+	.@doramHaircolours = 34;
 	if (Class == 4218) {
 		setarray .@Styles[1],
 			getbattleflag("max_cloth_color"),
