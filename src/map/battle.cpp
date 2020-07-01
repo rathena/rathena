@@ -3502,7 +3502,7 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 				}
 			}
 #ifndef RENEWAL
-			if(tsd != nullptr & tsd->bonus.crit_def_rate != 0 && !skill_id && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) {
+			if(tsd != nullptr && tsd->bonus.crit_def_rate != 0 && !skill_id && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) {
 				ATK_ADDRATE(wd->damage, wd->damage2, -tsd->bonus.crit_def_rate);
 			}
 #endif
