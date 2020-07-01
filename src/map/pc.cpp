@@ -4614,14 +4614,21 @@ int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 {
 	nullpo_ret(sd);
 
+	if (idx_equip < 0 || idx_equip >= MAX_INVENTORY) {
+		return 0;
+	}
+	if (idx_card < 0 || idx_card >= MAX_INVENTORY) {
+		return 0;
+	}
+
 	int i;
 	unsigned short nameid;
 	struct item_data* item_eq = sd->inventory_data[idx_equip];
 	struct item_data* item_card = sd->inventory_data[idx_card];
 
-	if( idx_equip < 0 || idx_equip >= MAX_INVENTORY || item_eq == NULL )
+	if(item_eq == nullptr)
 		return 0; //Invalid item index.
-	if( idx_card < 0 || idx_card >= MAX_INVENTORY || item_card == NULL )
+	if(item_card == nullptr)
 		return 0; //Invalid card index.
 	if( sd->inventory.u.items_inventory[idx_equip].nameid <= 0 || sd->inventory.u.items_inventory[idx_equip].amount < 1 )
 		return 0; // target item missing
