@@ -698,8 +698,19 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					cardfix = cardfix * (100 - ele_fix) / 100;
 				}
 				cardfix = cardfix * (100 - tsd->subsize[sstatus->size] - tsd->subsize[SZ_ALL]) / 100;
+				cardfix = cardfix * (100 - tsd->magic_subsize[sstatus->size] - tsd->magic_subsize[SZ_ALL]) / 100;
 				cardfix = cardfix * (100 - tsd->subrace2[s_race2]) / 100;
-				cardfix = cardfix * (100 - tsd->subrace[sstatus->race] - tsd->subrace[RC_ALL]) / 100;
+				int race_fix = tsd->subrace[sstatus->race] - tsd->subrace[RC_ALL];
+				for (const auto &it : tsd->subrace3) {
+					if (it.race != sstatus->race)
+						continue;
+					if (!(((it.flag)&flag)&BF_WEAPONMASK &&
+						((it.flag)&flag)&BF_RANGEMASK &&
+						((it.flag)&flag)&BF_SKILLMASK))
+						continue;
+					race_fix += it.rate;
+				}
+				cardfix = cardfix * (100 - race_fix) / 100;
 				cardfix = cardfix * (100 - tsd->subclass[sstatus->class_] - tsd->subclass[CLASS_ALL]) / 100;
 
 				for (const auto &it : tsd->add_mdef) {
@@ -898,7 +909,17 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				}
 				cardfix = cardfix * (100 - tsd->subsize[sstatus->size] - tsd->subsize[SZ_ALL]) / 100;
 				cardfix = cardfix * (100 - tsd->subrace2[s_race2]) / 100;
-				cardfix = cardfix * (100 - tsd->subrace[sstatus->race] - tsd->subrace[RC_ALL]) / 100;
+				int race_fix = tsd->subrace[sstatus->race] - tsd->subrace[RC_ALL];
+				for (const auto &it : tsd->subrace3) {
+					if (it.race != sstatus->race)
+						continue;
+					if (!(((it.flag)&flag)&BF_WEAPONMASK &&
+						((it.flag)&flag)&BF_RANGEMASK &&
+						((it.flag)&flag)&BF_SKILLMASK))
+						continue;
+					race_fix += it.rate;
+				}
+				cardfix = cardfix * (100 - race_fix) / 100;
 				cardfix = cardfix * (100 - tsd->subclass[sstatus->class_] - tsd->subclass[CLASS_ALL]) / 100;
 				for (const auto &it : tsd->add_def) {
 					if (it.id == s_class) {
@@ -935,9 +956,20 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 						ele_fix += tsd->subdefele[s_defele] + tsd->subdefele[ELE_ALL];
 					cardfix = cardfix * (100 - ele_fix) / 100;
 				}
+				int race_fix = tsd->subrace[sstatus->race] - tsd->subrace[RC_ALL];
+				for (const auto &it : tsd->subrace3) {
+					if (it.race != sstatus->race)
+						continue;
+					if (!(((it.flag)&flag)&BF_WEAPONMASK &&
+						((it.flag)&flag)&BF_RANGEMASK &&
+						((it.flag)&flag)&BF_SKILLMASK))
+						continue;
+					race_fix += it.rate;
+				}
+				cardfix = cardfix * (100 - race_fix) / 100;
+
 				cardfix = cardfix * (100 - tsd->subsize[sstatus->size] - tsd->subsize[SZ_ALL]) / 100;
 				cardfix = cardfix * (100 - tsd->subrace2[s_race2]) / 100;
-				cardfix = cardfix * (100 - tsd->subrace[sstatus->race] - tsd->subrace[RC_ALL]) / 100;
 				cardfix = cardfix * (100 - tsd->subclass[sstatus->class_] - tsd->subclass[CLASS_ALL]) / 100;
 				cardfix = cardfix * (100 - tsd->bonus.misc_def_rate) / 100;
 				if( flag&BF_SHORT )
@@ -3257,6 +3289,8 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
+	struct map_session_data *tsd = BL_CAST(BL_PC, target);
+
 	uint16 i;
 	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd->miscflag);
 
@@ -3467,6 +3501,11 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 					}
 				}
 			}
+#ifndef RENEWAL
+			if(tsd != nullptr & tsd->bonus.crit_def_rate != 0 && !skill_id && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) {
+				ATK_ADDRATE(wd->damage, wd->damage2, -tsd->bonus.crit_def_rate);
+			}
+#endif
 			break;
 	} //End switch(skill_id)
 }
@@ -5795,11 +5834,15 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #ifdef RENEWAL
 	if (is_attack_critical(&wd, src, target, skill_id, skill_lv, false)) {
 		if (sd) { //Check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
-			wd.damage = (int)floor((float)((wd.damage * 140) / 100 * (100 + sd->bonus.crit_atk_rate)) / 100);
+			wd.damage = (int64)floor((float)((wd.damage * 140) / 100 * (100 + sd->bonus.crit_atk_rate)) / 100);
 			if (is_attack_left_handed(src, skill_id))
-				wd.damage2 = (int)floor((float)((wd.damage2 * 140) / 100 * (100 + sd->bonus.crit_atk_rate)) / 100);
+				wd.damage2 = (int64)floor((float)((wd.damage2 * 140) / 100 * (100 + sd->bonus.crit_atk_rate)) / 100);
 		} else
-			wd.damage = (int)floor((float)(wd.damage * 140) / 100);
+			wd.damage = (int64)floor((float)(wd.damage * 140) / 100);
+
+		if (tsd && tsd->bonus.crit_def_rate != 0) {
+			ATK_ADDRATE(wd.damage, wd.damage2, -tsd->bonus.crit_def_rate);
+		}
 	}
 #endif
 
