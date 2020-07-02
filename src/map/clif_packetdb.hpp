@@ -2395,6 +2395,11 @@
 	packet(0x0ADE,6);
 #endif
 
+// 2017-11-29
+#if PACKETVER >= 20171129
+	packet(0x0ADF,58);
+#endif
+
 // 2018-01-03aRagexeRE or 2018-01-03bRagexeRE
 #if PACKETVER >= 20180103
 	parseable_packet(0x0ae8,2,clif_parse_changedress,0);
