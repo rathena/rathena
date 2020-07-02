@@ -20443,7 +20443,7 @@ bool skill_arrow_create(struct map_session_data *sd, unsigned short nameid)
 		}
 	}
 
-	if (!idx || (j = pc_search_inventory(sd,nameid)) < 0)
+	if (idx < 0 || (j = pc_search_inventory(sd,nameid)) < 0)
 		return false;
 
 	pc_delitem(sd,j,1,0,0,LOG_TYPE_PRODUCE);
