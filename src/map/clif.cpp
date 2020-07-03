@@ -9644,15 +9644,14 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 	nullpo_retv( src );
 	nullpo_retv( bl );
 
-	struct PACKET_ZC_ACK_REQNAMEALL packet = { 0 };
-
-	packet.packet_id = HEADER_ZC_ACK_REQNAMEALL;
-	packet.gid = bl->id;
-
 	switch( bl->type ){
 		case BL_PC: {
-			struct map_session_data *sd = (struct map_session_data *)bl;
-			struct party_data *p = NULL;
+			PACKET_ZC_ACK_REQNAMEALL packet = { 0 };
+
+			packet.packet_id = HEADER_ZC_ACK_REQNAMEALL;
+			packet.gid = bl->id;
+
+			map_session_data *sd = (map_session_data *)bl;
 
 			//Requesting your own "shadow" name. [Skotlex]
 			if( src == bl && target == SELF && sd->disguise ){
@@ -9661,10 +9660,13 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 
 			if( sd->fakename[0] ) {
 				safestrncpy( packet.name, sd->fakename, NAME_LENGTH );
-				break;
+				clif_send( &packet, sizeof(packet), src, target );
+				return;
 			}
 
 			safestrncpy( packet.name, sd->status.name, NAME_LENGTH );
+
+			party_data *p;
 
 			if( sd->status.party_id ){
 				p = party_search( sd->status.party_id );
@@ -9690,30 +9692,71 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 #if PACKETVER_MAIN_NUM >= 20150225 || PACKETVER_RE_NUM >= 20141126 || defined( PACKETVER_ZERO )
 			packet.title_id = sd->status.title_id; // Title ID
 #endif
-		}
-		break;
-	//[blackhole89]
-	case BL_HOM:
-		safestrncpy( packet.name, ((TBL_HOM*)bl)->homunculus.name, NAME_LENGTH );
-		break;
-	case BL_MER:
-		safestrncpy( packet.name, ((TBL_MER*)bl)->db->name, NAME_LENGTH );
-		break;
-	case BL_PET:
-		safestrncpy( packet.name, ((TBL_PET*)bl)->pet.name, NAME_LENGTH );
-		break;
-	case BL_NPC:
-		safestrncpy( packet.name, ((TBL_NPC*)bl)->name, NAME_LENGTH );
-		break;
-	case BL_MOB: {
-			struct mob_data *md = (struct mob_data *)bl;
 
-			safestrncpy( packet.name, md->name, NAME_LENGTH );
+			clif_send(&packet, sizeof(packet), src, target);
+		}
+			break;
+		//[blackhole89]
+		case BL_HOM:
+		case BL_MER:
+		case BL_PET:
+		case BL_NPC:
+		case BL_ELEM: {
+			PACKET_ZC_ACK_REQNAME_TITLE packet = { 0 };
+
+			packet.packet_id = HEADER_ZC_ACK_REQNAME_TITLE;
+			packet.gid = bl->id;
+
+			switch (bl->type) {
+				case BL_HOM:
+					memcpy(packet.name, ((TBL_HOM *)bl)->homunculus.name, NAME_LENGTH);
+					break;
+				case BL_MER:
+					memcpy(packet.name, ((TBL_MER *)bl)->db->name, NAME_LENGTH);
+					break;
+				case BL_PET:
+					safestrncpy(packet.name, ((TBL_PET *)bl)->pet.name, NAME_LENGTH);
+					break;
+				case BL_NPC:
+					safestrncpy(packet.name, ((TBL_NPC *)bl)->name, NAME_LENGTH);
+					break;
+				case BL_ELEM:
+					safestrncpy(packet.name, ((TBL_ELEM *)bl)->db->name, NAME_LENGTH);
+					break;
+			}
+
+#if PACKETVER_MAIN_NUM >= 20180207 || PACKETVER_RE_NUM >= 20171129 || PACKETVER_ZERO_NUM >= 20171130
+			unit_data *ud = unit_bl2ud(bl);
+
+			if (ud != nullptr) {
+				memcpy(packet.title, ud->title, NAME_LENGTH);
+				packet.groupId = ud->group_id;
+			}
+#endif
+
+			clif_send(&packet, sizeof(packet), src, target);
+		}
+			break;
+		case BL_MOB: {
+			mob_data *md = (mob_data *)bl;
 
 			if( md->guardian_data && md->guardian_data->guild_id ){
+				PACKET_ZC_ACK_REQNAMEALL packet = { 0 };
+
+				packet.packet_id = HEADER_ZC_ACK_REQNAMEALL;
+				packet.gid = bl->id;
+				safestrncpy( packet.name, md->name, NAME_LENGTH );
 				safestrncpy( packet.guild_name, md->guardian_data->guild_name, NAME_LENGTH );
 				safestrncpy( packet.position_name, md->guardian_data->castle->castle_name, NAME_LENGTH );
+
+				clif_send(&packet, sizeof(packet), src, target);
 			}else if( battle_config.show_mob_info ){
+				PACKET_ZC_ACK_REQNAMEALL packet = { 0 };
+
+				packet.packet_id = HEADER_ZC_ACK_REQNAMEALL;
+				packet.gid = bl->id;
+				safestrncpy( packet.name, md->name, NAME_LENGTH );
+
 				char mobhp[50], *str_p = mobhp;
 
 				if( battle_config.show_mob_info&4 ){
@@ -9733,25 +9776,36 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 					*(str_p-3) = '\0'; //Remove trailing space + pipe.
 					safestrncpy( packet.party_name, mobhp, NAME_LENGTH );
 				}
+
+				clif_send(&packet, sizeof(packet), src, target);
+			} else {
+				PACKET_ZC_ACK_REQNAME_TITLE packet = { 0 };
+
+				packet.packet_id = HEADER_ZC_ACK_REQNAME_TITLE;
+				packet.gid = bl->id;
+				safestrncpy(packet.name, md->name, NAME_LENGTH);
+
+#if PACKETVER_MAIN_NUM >= 20180207 || PACKETVER_RE_NUM >= 20171129 || PACKETVER_ZERO_NUM >= 20171130
+				unit_data *ud = unit_bl2ud(bl);
+
+				if (ud != nullptr) {
+					memcpy(packet.title, ud->title, NAME_LENGTH);
+					packet.groupId = ud->group_id;
+				}
+#endif
+
+				clif_send(&packet, sizeof(packet), src, target);
 			}
 		}
-		break;
-	case BL_CHAT:	//FIXME: Clients DO request this... what should be done about it? The chat's title may not fit... [Skotlex]
-//		safestrncpy(WBUFP(buf,6), (struct chat*)->title, NAME_LENGTH);
-//		break;
-		return;
-	case BL_ELEM:
-		safestrncpy( packet.name, ((TBL_ELEM*)bl)->db->name, NAME_LENGTH );
-		break;
-	case BL_SKILL:
-		// Newer clients request this, but do not need an answer
-		return;
-	default:
-		ShowError("clif_name: bad type %d(%d)\n", bl->type, bl->id);
-		return;
+			break;
+		case BL_CHAT:
+		case BL_SKILL:
+			// Newer clients request this, but do not need an answer
+			return;
+		default:
+			ShowError("clif_name: bad type %d(%d)\n", bl->type, bl->id);
+			return;
 	}
-
-	clif_send( &packet, sizeof( packet ), src, target );
 }
 
 /// Taekwon Jump (TK_HIGHJUMP) effect (ZC_HIGHJUMP).
