@@ -18620,20 +18620,20 @@ BUILDIN_FUNC(setunittitle)
  * Gets a unit's title.
  * getunittitle <GID>;
  */
-BUILDIN_FUNC(setunittitle)
+BUILDIN_FUNC(getunittitle)
 {
 	int gid = script_getnum(st, 2);
 	block_list *bl = map_id2bl(gid);
 
 	if (bl == nullptr) {
-		ShowWarning("buildin_setunittitle: Unable to find object with given game ID %d!\n", gid);
+		ShowWarning("buildin_getunittitle: Unable to find object with given game ID %d!\n", gid);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	unit_data *ud = unit_bl2ud(bl);
 
 	if (ud == nullptr) {
-		ShowWarning("buildin_setunittitle: Unable to find unit_data for given game ID %d!\n", gid);
+		ShowWarning("buildin_getunittitle: Unable to find unit_data for given game ID %d!\n", gid);
 		return SCRIPT_CMD_FAILURE;
 	}
 
