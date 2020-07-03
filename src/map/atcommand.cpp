@@ -4587,7 +4587,7 @@ ACMD_FUNC(repairall)
 
 	count = 0;
 	for (i = 0; i < MAX_INVENTORY; i++) {
-		if (sd->inventory.u.items_inventory[i].nameid && !itemdb_ishatched_egg(&sd->inventory.u.items_inventory[i])) {
+		if (sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].attribute == 1 && !itemdb_ishatched_egg(&sd->inventory.u.items_inventory[i])) {
 			sd->inventory.u.items_inventory[i].attribute = 0;
 			clif_produceeffect(sd, 0, sd->inventory.u.items_inventory[i].nameid);
 			count++;
