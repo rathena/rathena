@@ -89,10 +89,7 @@ e_tower,76,79,0	script	Cellar Protection Stone	2_MONEMUS,{
 			break;
 		}
 		else{
-			//RATHENA
 			set .@instance, instance_create( .instance_name$ );
-			//HERCULES
-			//set .@instance, instance_create( .instance_name$, .@party_id, IOT_PARTY );
 			if( .@instance < 0 ) {
 				npctalk .instance_name$ + " reservation failed.";
 				mes "^0000FF"+.instance_name$+" ^000000- Reservation Failed!";
@@ -111,21 +108,6 @@ e_tower,76,79,0	script	Cellar Protection Stone	2_MONEMUS,{
 				}
 			attachrid( .@origin );
 			npctalk .instance_name$ + " has been generated for Party - "+getpartyname( .@party_id );
-
-			//HERCULES
-			//for( set .@i, 0; .@i < getarraysize(.map$); set .@i,.@i+1 )
-			//{
-			//	if( instance_attachmap( .map$[.@i],.@instance ) == "" ){
-			//		setmapflag .map$[.@i],mf_zone,"Memorial Dungeon";
-			//		npctalk .instance_name$ + " reservation failed due to map attach failure.";
-			//		mes "- ^FF0000Reservation Failed!^000000";
-			//		instance_destroy( .@instance );
-			//		set .@instance, -1;
-			//		close;
-			//	}
-			//}
-			//instance_set_timeout .instance_delay,300,.@instance;
-			//instance_init(.@instance);
 		}
 	case 2:
 		if( EC_INSTANCE_ID <= 0 ){
@@ -134,7 +116,6 @@ e_tower,76,79,0	script	Cellar Protection Stone	2_MONEMUS,{
 		else{
 			getmapxy(.@map$, .@x, .@y, BL_PC);
 			save .@map$, .@x, .@y;
-			//RATHENA
 			switch(instance_enter(.instance_name$)) {
 				default:
 					mes "An unknown error has occurred.";
@@ -149,17 +130,7 @@ e_tower,76,79,0	script	Cellar Protection Stone	2_MONEMUS,{
 				case 0:
 					mapannounce .map$[0], strcharinfo(0)+" from party, " +getpartyname( .@party_id )+", is entering the dungeon, "+.instance_name$+".",bc_map,"0x00ff99",FW_NORMAL,12;
 					close;
-				}
-
-			//HERCULES
-			//savepoint .@map$, .@x, .@y;
-			//if( has_instance( .map$[0] ) == "" ){
-			//	mes .instance_name$ + " doesnt exist for Party - "+getpartyname( .@party_id );
-			//}
-			//else{
-			//	warp .map$[0],96,395;
-			//	instance_announce instance_id(), getpartyname(getcharid(1))+"  entered in the "+.instance_name$+"!",bc_map,"0x00ff99";
-			//}
+			}
 		}
 		break;
 	case 3:
@@ -431,7 +402,8 @@ function	EC_Spawns	{
 	case 21:
 		set 'EC_Mobs,50;
 		areamonster instance_mapname(.@map$),91,349,137,375,"Stainer",1174,30,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),91,349,137,375,"Brilight",1211,20,strnpcinfo(3)+"::OnMobDead";		break;
+		areamonster instance_mapname(.@map$),91,349,137,375,"Brilight",1211,20,strnpcinfo(3)+"::OnMobDead";
+		break;
 	case 22:
 		set 'EC_Mobs,60;
 		areamonster instance_mapname(.@map$),179,349,225,375,"Marc",1045,15,strnpcinfo(3)+"::OnMobDead";
@@ -510,7 +482,8 @@ function	EC_Spawns	{
 		set 'EC_Mobs,45;
 		areamonster instance_mapname(.@map$),91,94,137,119,"Bathory",1102,15,strnpcinfo(3)+"::OnMobDead";
 		areamonster instance_mapname(.@map$),91,94,137,119,"Sohee",1170,15,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),91,94,137,119,"Violy",1390,15,strnpcinfo(3)+"::OnMobDead";		break;
+		areamonster instance_mapname(.@map$),91,94,137,119,"Violy",1390,15,strnpcinfo(3)+"::OnMobDead";
+		break;
 	case 34:
 		set 'EC_Mobs,60;
 		areamonster instance_mapname(.@map$),179,94,225,119,"Dragon Tail",1321,15,strnpcinfo(3)+"::OnMobDead";
@@ -631,7 +604,8 @@ function	EC_Spawns	{
 		break;
 	case 55:
 		set 'EC_Mobs,75;
-		areamonster instance_mapname(.@map$),265,94,311,119,"Iceicle",1789,75,strnpcinfo(3)+"::OnMobDead";		break;
+		areamonster instance_mapname(.@map$),265,94,311,119,"Iceicle",1789,75,strnpcinfo(3)+"::OnMobDead";
+		break;
 	case 56:
 		set 'EC_Mobs,31;
 		areamonster instance_mapname(.@map$),349,94,395,119,"Gazeti",1778,30,strnpcinfo(3)+"::OnMobDead";
