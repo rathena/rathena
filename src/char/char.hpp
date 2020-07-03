@@ -313,7 +313,7 @@ void char_set_session_flag_(int account_id, int val, bool set);
 #define char_unset_session_flag(account_id, val) ( char_set_session_flag_((account_id), (val), false) )
 
 //For use in packets that depend on an sd being present [Skotlex]
-#define FIFOSD_CHECK(rest) { if(RFIFOREST(fd) < rest) return 0; if (sd==NULL || !sd->auth) { RFIFOSKIP(fd,rest); return 0; } }
+#define FIFOSD_CHECK(rest) { if (RFIFOREST(fd) < rest) return 0; if (sd == nullptr || !sd->auth) { RFIFOSKIP(fd, rest); return 0; } }
 
 #define msg_config_read(cfgName) char_msg_config_read(cfgName)
 #define msg_txt(msg_number) char_msg_txt(msg_number)
