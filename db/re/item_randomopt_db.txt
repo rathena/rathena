@@ -207,6 +207,7 @@ RDMOPT_RACE_WEAPON_TOLERACE_ANGEL,{ bonus3 bSubRace,RC_Angel,getrandomoptinfo(RO
 RDMOPT_RACE_WEAPON_TOLERACE_DRAGON,{ bonus3 bSubRace,RC_Dragon,getrandomoptinfo(ROA_VALUE),BF_WEAPON; }
 // RDMOPT_RANGE_WEAPON_ATTACK_DAMAGE_TARGET,{}
 // RDMOPT_RANGE_WEAPON_ATTACK_DAMAGE_USER,{}
+RDMOPT_RACE_TOLERACE_PLAYER_HUMAN,{ bonus2 bSubRace,RC_Player_Human,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_TOLERACE_PLAYER_DORAM,{ bonus2 bSubRace,RC_Player_Doram,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_DAMAGE_PLAYER_HUMAN,{ bonus2 bAddRace,RC_Player_Human,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_RACE_DAMAGE_PLAYER_DORAM,{ bonus2 bAddRace,RC_Player_Doram,getrandomoptinfo(ROA_VALUE); }
