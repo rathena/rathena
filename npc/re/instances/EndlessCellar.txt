@@ -784,21 +784,21 @@ OnPorDead:
 	instance_announce .@i,"Squeaky Voice: I know.  I'll let you play with my pets, the Six Great Pains.",bc_map,0xFF0000;
 	sleep2 3000;
 	instance_announce .@i,"Squeaky Voice: Try not to die too fast, they need their exercise.",bc_map,0xFF0000;
-	monster instance_mapname("5@new"),156,145,"High Priest Magaleta",1649,1,instance_npcname("EC_Manager", instance_id())+"::OnPain1";
+	monster instance_mapname("5@new"),156,145,"High Priest Margaretha",1649,1,instance_npcname("EC_Manager", instance_id())+"::OnPain1";
 	end;
 
 OnPain1:
 	sleep2 5000;
 	instance_announce .@i,"Squeaky Voice: You are stronger than you look, now try the pain of magic.",bc_map,0xFF0000;
 	sleep2 5000;
-	monster instance_mapname("5@new"),156,145,"High Wizard Katrinn",1651,1,instance_npcname("EC_Manager", instance_id())+"::OnPain2";
+	monster instance_mapname("5@new"),156,145,"High Wizard Kathryne",1651,1,instance_npcname("EC_Manager", instance_id())+"::OnPain2";
 	end;
 
 OnPain2:
 	sleep2 5000;
 	instance_announce .@i,"Squeaky Voice: Impressive, but how will you handle the pain of distance?",bc_map,0xFF0000;
 	sleep2 5000;
-	monster instance_mapname("5@new"),156,145,"Sniper Shecil",1650,1,instance_npcname("EC_Manager", instance_id())+"::OnPain3";
+	monster instance_mapname("5@new"),156,145,"Sniper Cecil",1650,1,instance_npcname("EC_Manager", instance_id())+"::OnPain3";
 	end;
 
 OnPain3:
@@ -812,14 +812,14 @@ OnPain4:
 	sleep2 5000;
 	instance_announce .@i,"Squeaky Voice: You murderers, it's time to feel the pain of paralysis.",bc_map,0xFF0000;
 	sleep2 5000;
-	monster instance_mapname("5@new"),156,145,"Whitesmith Harword",1648,1,instance_npcname("EC_Manager", instance_id())+"::OnPain5";
+	monster instance_mapname("5@new"),156,145,"Whitesmith Howard",1648,1,instance_npcname("EC_Manager", instance_id())+"::OnPain5";
 	end;
 
 OnPain5:
 	sleep2 5000;
 	instance_announce .@i,"Squeaky Voice: I'm getting annoyed, my last pet will finish you off.",bc_map,0xFF0000;
 	sleep2 5000;
-	monster instance_mapname("5@new"),156,145,"Whitesmith Harword",1648,1,instance_npcname("EC_Manager", instance_id())+"::OnPain6";
+	monster instance_mapname("5@new"),156,145,"Lord Knight Seyren",1646,1,instance_npcname("EC_Manager", instance_id())+"::OnPain6";
 	end;
 
 OnPain6:
@@ -856,11 +856,11 @@ OnPoripori:
 	sleep2 5000;
 	enablenpc instance_npcname("EC_Arc_Pori", instance_id());
 	instance_announce .@i,"Arc Pori Pori: You defeated Pori Pori! Come find me quickly for your reward!",bc_map,0x00D7FF;
-	sleep2 30000;
+	sleep2 120000;
 	instance_announce .@i,"Arc Pori Pori: Quick, speak to me before the dark energy expels everyone!",bc_map,0x00D7FF;
-	sleep2 30000;
+	sleep2 120000;
 	instance_announce .@i,"Arc Pori Pori: Oh no! There's too much dark energy, everyone is about to be expelled!",bc_map,0x00D7FF;
-	sleep2 5000;
+	sleep2 30000;
 	getpartymember getcharid(1),2;
 	for( set .@i, 0; .@i < $@partymembercount; set .@i, .@i+1 ) {
 		if( attachrid( $@partymemberaid[.@i] ) && EC_INSTANCE_ID > 0){
