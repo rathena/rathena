@@ -1641,7 +1641,7 @@ S_CheckFull:
 
 Example 2: callsub used repeatedly, with different arguments
 // notice how the Zeny check/delete is reused, instead of copy-pasting for every warp
-	switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Beacon Island, Pharos") {
+	switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Beacon Island, Pharos")) {
 		case 1:	callsub S_DunWarp,"hu_fild05",192,207;
 		case 2:	callsub S_DunWarp,"ama_in02",119,181;
 		case 3:	callsub S_DunWarp,"moc_fild20",164,145;
