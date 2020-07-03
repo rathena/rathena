@@ -5418,7 +5418,7 @@ void clif_addskill(struct map_session_data *sd, int skill_id)
 
 /// Deletes a skill from the skill tree (ZC_SKILLINFO_DELETE).
 /// 0441 <skill id>.W
-void clif_deleteskill(struct map_session_data *sd, int skill_id)
+void clif_deleteskill(struct map_session_data *sd, int skill_id, int flag)
 {
 #if PACKETVER >= 20081217
 	int fd;
@@ -5435,7 +5435,11 @@ void clif_deleteskill(struct map_session_data *sd, int skill_id)
 	WFIFOW(fd,2) = skill_id;
 	WFIFOSET(fd,packet_len(0x441));
 #endif
-	clif_skillinfoblock(sd);
+#if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
+	if (!flag)
+#endif
+		clif_skillinfoblock(sd);
+
 }
 
 /// Updates a skill in the skill tree (ZC_SKILLINFO_UPDATE).
