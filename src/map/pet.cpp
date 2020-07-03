@@ -593,6 +593,28 @@ int pet_hungry_val(struct pet_data *pd)
 		return 0;
 }
 
+int16 pet_get_card3_intimacy( int intimacy ){
+	if( intimacy < PET_INTIMATE_SHY ){
+		// Awkward
+		return ( 1 << 1 );
+	}else if( intimacy < PET_INTIMATE_NEUTRAL ){
+		// Shy
+		return ( 2 << 1 );
+	}else if( intimacy < PET_INTIMATE_CORDIAL ){
+		// Neutral
+		return ( 3 << 1 );
+	}else if( intimacy < PET_INTIMATE_LOYAL ){
+		// Cordial
+		return ( 4 << 1 );
+	}else if( intimacy <= PET_INTIMATE_MAX ){
+		// Loyal
+		return ( 5 << 1 );
+	}else{
+		// Unknown
+		return 0;
+	}
+}
+
 /**
  * Set the value of the pet's intimacy.
  * @param pd : pet requesting
@@ -614,22 +636,7 @@ void pet_set_intimate(struct pet_data *pd, int value)
 		// Remove everything except the rename flag
 		sd->inventory.u.items_inventory[index].card[3] &= 1;
 
-		if( pd->pet.intimate < PET_INTIMATE_SHY ){
-			// Awkward
-			sd->inventory.u.items_inventory[index].card[3] |= ( 1 << 1 );
-		}else if( pd->pet.intimate < PET_INTIMATE_NEUTRAL ){
-			// Shy
-			sd->inventory.u.items_inventory[index].card[3] |= ( 2 << 1 );
-		}else if( pd->pet.intimate < PET_INTIMATE_CORDIAL ){
-			// Neutral
-			sd->inventory.u.items_inventory[index].card[3] |= ( 3 << 1 );
-		}else if( pd->pet.intimate < PET_INTIMATE_LOYAL ){
-			// Cordial
-			sd->inventory.u.items_inventory[index].card[3] |= ( 4 << 1 );
-		}else if( pd->pet.intimate <= PET_INTIMATE_MAX ){
-			// Loyal
-			sd->inventory.u.items_inventory[index].card[3] |= ( 5 << 1 );
-		}
+		sd->inventory.u.items_inventory[index].card[3] |= pet_get_card3_intimacy( pd->pet.intimate );
 	}
 
 	if (sd)
@@ -1320,6 +1327,7 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 	tmp_item.card[1] = GetWord(pet_id,0);
 	tmp_item.card[2] = GetWord(pet_id,1);
 	tmp_item.card[3] = 0; //New pets are not named.
+	tmp_item.card[3] |= pet_get_card3_intimacy( pet->intimate ); // Store intimacy status based on initial intimacy
 
 	if((ret = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER))) {
 		clif_additem(sd,0,0,ret);
