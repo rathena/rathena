@@ -271,7 +271,7 @@ function	EC_Spawns	{
 	}
 	else
 	{
-		getmapxy(.@map$,.@x,.@y,1,("ECwarp_"+'EC_Floor));
+		getmapxy(.@map$,.@x,.@y,BL_NPC,("ECwarp_"+'EC_Floor));
 		set .@map$, (('EC_Floor-1) / 20 + 1)+"@new";
 	}
 
@@ -445,9 +445,9 @@ function	EC_Spawns	{
 		areamonster instance_mapname(.@map$),265,265,311,291,"Goat",1372,10,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 28:
-		set 'EC_Mobs,71;
-		areamonster instance_mapname(.@map$),349,265,395,291,"Bettle King",1494,20,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),349,265,395,291,"Bacsojin",1518,10,strnpcinfo(3)+"::OnMobDead";
+		set 'EC_Mobs,66;
+		areamonster instance_mapname(.@map$),349,265,395,291,"Beetle King",1494,20,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),349,265,395,291,"Bacsojin",1518,5,strnpcinfo(3)+"::OnMobDead";
 		areamonster instance_mapname(.@map$),349,265,395,291,"Chung E",1519,10,strnpcinfo(3)+"::OnMobDead";
 		areamonster instance_mapname(.@map$),349,265,395,291,"Tamruan",1584,30,strnpcinfo(3)+"::OnMobDead";
 		areamonster instance_mapname(.@map$),349,265,395,291,"Lady Tanee",1688,1,strnpcinfo(3)+"::OnMobDead";
@@ -547,7 +547,7 @@ function	EC_Spawns	{
 	case 44:
 		set 'EC_Mobs,51;
 		areamonster instance_mapname(.@map$),349,349,395,375,"Novus",1715,25,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),349,349,395,375,"Novus",1716,25,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),349,349,395,375,"Novus",1718,25,strnpcinfo(3)+"::OnMobDead";
 		areamonster instance_mapname(.@map$),349,349,395,375,"Detale",1719,1,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 45:
