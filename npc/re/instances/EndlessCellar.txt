@@ -8,11 +8,12 @@
 //===== Compatible With ===============================================================================
 //= eAthena SVN
 //==== Description ====================================================================================
-//= A custom sequel to Endless Cellar containing almost all the monsters that were not in the original Cellar.  77 floors total and mvps are every 4 floors.
+//= A custom sequel to Endless Cellar containing almost all the monsters that were not in the original Cellar. 81 floors total and mvps are every 4 floors.
 //= Angel Pori Pori is the same as the Eternal Brazier in Endless Cellar, this also applies to the Arc Pori Pori and Lost Soul npcs.
 //= Excluded monsters: Great Demon Baphomet because he has the skill NPC_INVINCIBLE, and any monsters that drop quest items like Kublin and Hellion Revenant for example.
 //==== Changelog ======================================================================================
 //= 1.0  First Release
+//= 1.1  Added floors up to 81, fixed name typos and aligned with design of Ragnarok.life
 //=====================================================================================================
 
 e_tower,76,79,0	script	Cellar Protection Stone	2_MONEMUS,{
@@ -179,14 +180,14 @@ OnInit:
 		case 2:
 			mes "to which level should I set the instance?";
 			next;
-			input .@level,0,77;
+			input .@level,0,81;
 			if(.@level == 0) close;
 			set 'EC_Floor,.@level;
 			killmonsterall instance_mapname("1@new", instance_id());
 			killmonsterall instance_mapname("2@new", instance_id());
 			killmonsterall instance_mapname("3@new", instance_id());
 			killmonsterall instance_mapname("4@new", instance_id());
-			for(set .@k,1; .@k < 'EC_Floor && .@k < 77; set .@k,.@k + 1)
+			for(set .@k,1; .@k < 'EC_Floor && .@k < 81; set .@k,.@k + 1)
 				enablenpc instance_npcname("ECwarp_"+.@k, instance_id());
 			EC_Spawns();
 			mes "Should I warp you there now?";
@@ -196,10 +197,10 @@ OnInit:
 			if(!.@level){
 				mes "Input the Level you want to warp to:";
 				next;
-				input .@level,0,77;
+				input .@level,0,81;
 				if(.@level == 0) close;
 			}
-			if(.@level == 77)
+			if(.@level == 81)
 				warp instance_mapname("5@new", instance_id()),156,65;
 			else {
 				setarray .@warpx[0],96,184,270,354;
@@ -212,9 +213,9 @@ OnInit:
 		case 4:
 			mes "Floor: "+'EC_Floor;
 			mes "Lasttime varibale: "+'EC_Lasttime;
-			if('EC_Floor == 77)
+			if('EC_Floor == 81)
 				set .@map$,instance_mapname("5@new", instance_id());
-			else if('EC_Floor < 77)
+			else if('EC_Floor < 81)
 				set .@map$,instance_mapname((('EC_Floor-1) / 20 + 1)+"@new", instance_id());
 			mes "Alive mobs(variable): "+'EC_Mobs;
 			mes "Alive mobs(real): "+mobcount(.@map$, instance_npcname("EC_Manager",instance_id())+"::OnMobDead");
@@ -257,14 +258,14 @@ OnInit:
 	killmonsterall instance_mapname("1@new", instance_id());
 	killmonsterall instance_mapname("2@new", instance_id());
 	EC_Spawns();
-	for(set .@k,1; .@k < 'EC_Floor && .@k < 77; set .@k,.@k + 1)
+	for(set .@k,1; .@k < 'EC_Floor && .@k < 81; set .@k,.@k + 1)
 		enablenpc instance_npcname("ECwarp_"+.@k,instance_id());
 	delitem 'EC_AshID,1;
 	warp instance_mapname("3@new", instance_id()),96,393;
 	end;
 
 function	EC_Spawns	{
-	if('EC_Floor == 77)
+	if('EC_Floor == 81)
 	{
 		set .@map$, "5@new";
 	}
@@ -413,20 +414,20 @@ function	EC_Spawns	{
 		break;
 	case 23:
 		set 'EC_Mobs,50;
-		areamonster instance_mapname(.@map$),265,349,311,375,"Punk",1199,20,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),265,349,311,375,"Stone Shooter",1495,20,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),265,349,311,375,"Stem Worm",1215,10,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),265,349,311,375,"Wood Goblin",1880,20,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),265,349,311,375,"Les",1881,20,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),265,349,311,375,"Mavka",1884,10,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 24:
 		set 'EC_Mobs,31;
-		areamonster instance_mapname(.@map$),349,349,395,375,"Joker",1131,20,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),349,349,395,375,"Chung E",1631,10,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),349,349,395,375,"Baphomet",1039,1,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),349,349,395,375,"Babayaga",1882,20,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),349,349,395,375,"Uzhas",1883,10,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),349,349,395,375,"Gopinich",1885,1,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 25:
 		set 'EC_Mobs,60;
 		areamonster instance_mapname(.@map$),91,265,137,291,"Kaho",1072,15,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),91,265,137,291,"Blazzer",1367,15,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),91,265,137,291,"Blazer",1367,15,strnpcinfo(3)+"::OnMobDead";
 		areamonster instance_mapname(.@map$),91,265,137,291,"Driller",1380,15,strnpcinfo(3)+"::OnMobDead";
 		areamonster instance_mapname(.@map$),91,265,137,291,"Horong",1129,10,strnpcinfo(3)+"::OnMobDead";
 		areamonster instance_mapname(.@map$),91,265,137,291,"Minorous",1149,5,strnpcinfo(3)+"::OnMobDead";
@@ -551,8 +552,8 @@ function	EC_Spawns	{
 		break;
 	case 45:
 		set 'EC_Mobs,50;
-		areamonster instance_mapname(.@map$),91,265,137,291,"Nightmare",1061,25,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),91,265,137,291,"Nightmare Terror",1379,25,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),91,265,137,291,"Banshee Master",1974,25,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),91,265,137,291,"Banshee",1868,25,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 46:
 		set 'EC_Mobs,55;
@@ -577,8 +578,8 @@ function	EC_Spawns	{
 		break;
 	case 50:
 		set 'EC_Mobs,50;
-		areamonster instance_mapname(.@map$),179,177,225,203,"Hell Apocalips",1978,25,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),179,177,225,203,"Apocalips",1365,25,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),179,177,225,203,"Hell Apocalypse",1978,25,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),179,177,225,203,"Apocalypse",1365,25,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 51:
 		set 'EC_Mobs,50;
@@ -593,8 +594,8 @@ function	EC_Spawns	{
 		break;
 	case 53:
 		set 'EC_Mobs,40;
-		areamonster instance_mapname(.@map$),91,94,137,119,"Wraith Dead",1291,20,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),91,94,137,119,"Ancient Mummy",1297,20,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),91,94,137,119,"Zombie Slaughter",1864,20,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),91,94,137,119,"Hell Poodle",1866,20,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 54:
 		set 'EC_Mobs,60;
@@ -604,7 +605,7 @@ function	EC_Spawns	{
 		break;
 	case 55:
 		set 'EC_Mobs,75;
-		areamonster instance_mapname(.@map$),265,94,311,119,"Iceicle",1789,75,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),265,94,311,119,"Icicle",1789,75,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 56:
 		set 'EC_Mobs,31;
@@ -638,91 +639,115 @@ function	EC_Spawns	{
 		break;
 	case 61:
 		set 'EC_Mobs,80;
-		areamonster instance_mapname(.@map$),91,349,137,375,"Acidus",1713,40,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),91,349,137,375,"Venatu",1677,40,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),91,349,137,375,"Pinguicula",1995,40,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),91,349,137,375,"Dark Pinguicula",2015,40,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 62:
 		set 'EC_Mobs,90;
-		areamonster instance_mapname(.@map$),179,349,225,375,"Orc Sniper",1982,60,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),179,349,225,375,"Bloody Knight",1268,30,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),179,349,225,375,"Nepenthes",1988,60,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),179,349,225,375,"Luciola Vespa",1994,30,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 63:
 		set 'EC_Mobs,70;
-		areamonster instance_mapname(.@map$),265,349,311,375,"Acidus",1716,50,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),265,349,311,375,"Succubus",1370,20,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),265,349,311,375,"Naga",1993,50,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),265,349,311,375,"Cornus",1992,20,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 64:
 		set 'EC_Mobs,17;
-		areamonster instance_mapname(.@map$),349,349,395,375,"Agav",1769,15,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),349,349,395,375,"DoppelGanger",1046,2,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),349,349,395,375,"Hillslion",1989,15,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),349,349,395,375,"Tendrillion",1991,2,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 65:
 		set 'EC_Mobs,75;
-		areamonster instance_mapname(.@map$),91,265,137,291,"Alicel",1739,50,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),91,265,137,291,"Aliot",1740,25,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),91,265,137,291,"Centipede Larva",1999,50,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),91,265,137,291,"Centipede",1987,25,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 66:
 		set 'EC_Mobs,80;
-		areamonster instance_mapname(.@map$),179,265,225,291,"Assaulter",1315,30,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),179,265,225,291,"Chimera",1283,10,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),179,265,225,291,"Freezer",1319,40,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),179,265,225,291,"Draco Egg",2014,30,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),179,265,225,291,"Draco",2013,10,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),179,265,225,291,"Tatacho",1986,40,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 67:
 		set 'EC_Mobs,60;
-		areamonster instance_mapname(.@map$),265,265,311,291,"Bloody Murderer",1507,30,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),265,265,311,291,"Dark Illusion",1302,10,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),265,265,311,291,"Bradium Golem",2024,30,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),265,265,311,291,"Stalactic Golem",1278,10,strnpcinfo(3)+"::OnMobDead";
 		areamonster instance_mapname(.@map$),265,265,311,291,"Lava Golem",1366,20,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 68:
 		set 'EC_Mobs,12;
-		areamonster instance_mapname(.@map$),349,265,395,291,"Gryphon",1259,10,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),349,265,395,291,"Evil Snake Lord",1418,2,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),349,265,395,291,"Tatacho",1986,10,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),349,265,395,291,"Hardrock Mammoth",1990,2,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 69:
-		set 'EC_Mobs,75;
-		areamonster instance_mapname(.@map$),91,177,137,203,"S-Gemini",1681,25,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),91,177,137,203,"Imp",1837,25,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),91,177,137,203,"Incubus",1374,25,strnpcinfo(3)+"::OnMobDead";
+		set 'EC_Mobs,50;
+		areamonster instance_mapname(.@map$),91,177,137,203,"Sropho",2201,20,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),91,177,137,203,"Sedora",2204,20,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),91,177,137,203,"Merman",1264,10,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 70:
-		set 'EC_Mobs,50;
-		areamonster instance_mapname(.@map$),179,177,225,203,"Abysmal Knight",1219,35,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),179,177,225,203,"Luli Ruri",1505,15,strnpcinfo(3)+"::OnMobDead";
+		set 'EC_Mobs,75;
+		areamonster instance_mapname(.@map$),179,177,225,203,"Pot Dofle",2203,40,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),179,177,225,203,"King Dramoh",2198,15,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),179,177,225,203,"Marine Sphere",1142,20,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 71:
-		set 'EC_Mobs,24;
-		areamonster instance_mapname(.@map$),265,177,311,203,"Mysteltainn",1203,12,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),265,177,311,203,"Owl Baron",1295,12,strnpcinfo(3)+"::OnMobDead";
+		set 'EC_Mobs,60;
+		areamonster instance_mapname(.@map$),265,177,311,203,"Kraken Leg",2206,10,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),265,177,311,203,"Strouf",1065,40,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),265,177,311,203,"Penomena",1216,10,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 72:
-		set 'EC_Mobs,1;
-		areamonster instance_mapname(.@map$),349,177,395,203,"Drake",1112,1,strnpcinfo(3)+"::OnMobDead";
+		set 'EC_Mobs,36;
+		areamonster instance_mapname(.@map$),349,177,395,203,"Sropho",2201,20,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),349,177,395,203,"Sedora",2204,15,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),349,177,395,203,"Kraken",2202,1,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 73:
-		set 'EC_Mobs,16;
-		areamonster instance_mapname(.@map$),91,94,137,119,"Byorgue",1839,16,strnpcinfo(3)+"::OnMobDead";
+		set 'EC_Mobs,75;
+		areamonster instance_mapname(.@map$),91,94,137,119,"Aqua Elemental",2016,25,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),91,94,137,119,"Rhyncho",2020,25,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),91,94,137,119,"Phylla",2021,25,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 74:
-		set 'EC_Mobs,12;
-		areamonster instance_mapname(.@map$),179,94,225,119,"Lord Knight Seyren",1640,2,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),179,94,225,119,"Assassin Cross Eremes",1641,2,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),179,94,225,119,"Whitesmith Howard",1642,2,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),179,94,225,119,"High Priest Margaretha",1643,2,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),179,94,225,119,"Sniper Cecil",1644,2,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),179,94,225,119,"High Wizard Kathryne",1645,2,strnpcinfo(3)+"::OnMobDead";
+		set 'EC_Mobs,50;
+		areamonster instance_mapname(.@map$),179,94,225,119,"Ancient Tree",2019,35,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),179,94,225,119,"Dark Shadow",2023,15,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 75:
-		set 'EC_Mobs,28;
-		areamonster instance_mapname(.@map$),265,94,311,119,"Bloody Knight",1268,7,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),265,94,311,119,"Bow Master",1830,7,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),265,94,311,119,"Dimik",1671,7,strnpcinfo(3)+"::OnMobDead";
-		areamonster instance_mapname(.@map$),265,94,311,119,"Kasa",1833,7,strnpcinfo(3)+"::OnMobDead";
+		set 'EC_Mobs,24;
+		areamonster instance_mapname(.@map$),265,94,311,119,"Rata",2017,12,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),265,94,311,119,"Duneyrr",2018,12,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 76:
 		set 'EC_Mobs,1;
-		areamonster instance_mapname(.@map$),349,94,395,119,"Ifrit",1832,1,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),349,94,395,119,"Nidhoggr's Shadow",2022,1,strnpcinfo(3)+"::OnMobDead";
 		break;
 	case 77:
+		set 'EC_Mobs,16;
+		areamonster instance_mapname(.@map$),91,7,137,33,"Byorgue",1839,16,strnpcinfo(3)+"::OnMobDead";
+		break;
+	case 78:
+		set 'EC_Mobs,12;
+		areamonster instance_mapname(.@map$),179,7,225,33,"Lord Knight Seyren",1640,2,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),179,7,225,33,"Assassin Cross Eremes",1641,2,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),179,7,225,33,"Whitesmith Howard",1642,2,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),179,7,225,33,"High Priest Margaretha",1643,2,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),179,7,225,33,"Sniper Cecil",1644,2,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),179,7,225,33,"High Wizard Kathryne",1645,2,strnpcinfo(3)+"::OnMobDead";
+		break;
+	case 79:
+		set 'EC_Mobs,28;
+		areamonster instance_mapname(.@map$),265,7,311,33,"Incarnation of Morroc",1918,7,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),265,7,311,33,"Incarnation of Morroc",1919,7,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),265,7,311,33,"Incarnation of Morroc",1920,7,strnpcinfo(3)+"::OnMobDead";
+		areamonster instance_mapname(.@map$),265,7,311,33,"Incarnation of Morroc",1921,7,strnpcinfo(3)+"::OnMobDead";
+		break;
+	case 80:
+		set 'EC_Mobs,1;
+		areamonster instance_mapname(.@map$),349,7,395,33,"Wounded Morroc",1917,1,strnpcinfo(3)+"::OnMobDead";
+		break;
+	case 81:
 		monster instance_mapname(.@map$),156,75,"Poring",1002,1,strnpcinfo(3)+"::OnPorDead";
 		break;
 	}
@@ -740,7 +765,7 @@ OnInstanceInit:
 	if(strnpcinfo(3) == "EC_Manager")
 		end;
 	set .@k,'EC_Floor;
-	if('EC_Floor <= 77){
+	if('EC_Floor <= 81){
 		EC_Spawns();
 	}
 	else
@@ -755,13 +780,13 @@ OnMobDead:
 		end;
 	}
 
-	if('EC_Floor < 77)
+	if('EC_Floor < 81)
 		enablenpc instance_npcname("ECwarp_"+'EC_Floor, instance_id());
 	if('EC_Floor == 40)
 		donpcevent instance_npcname("ECwarp_40", instance_id())+"::OnEnableAshtimer";
 	instance_announce .@i,"All monsters on the "+'EC_Floor+('EC_Floor % 10 == 1 ? "st" : ('EC_Floor % 10 == 2 ? "nd" : ('EC_Floor % 10 == 3 ? "rd" : "th")))+" level have been defeated.",bc_map;
 	set 'EC_Floor,'EC_Floor+1;
-	if('EC_Floor <= 77)
+	if('EC_Floor <= 81)
 		EC_Spawns();
 	else {
 		mes "[Endless Cellar]";
@@ -1016,7 +1041,12 @@ OnEnableAshtimer:
 4@new,135,99,0	script	ECwarp_73	45,1,1,{	end;	OnInstanceInit: disablenpc strnpcinfo(3); end; OnTouch:	warp instance_mapname("4@new"),184,137;	end; }
 4@new,223,99,0	script	ECwarp_74	45,1,1,{	end;	OnInstanceInit: disablenpc strnpcinfo(3); end; OnTouch:	warp instance_mapname("4@new"),270,137;	end; }
 4@new,309,99,0	script	ECwarp_75	45,1,1,{	end;	OnInstanceInit: disablenpc strnpcinfo(3); end; OnTouch:	warp instance_mapname("4@new"),354,137;	end; }
-4@new,393,99,0	script	ECwarp_76	45,1,1,{	end;	OnInstanceInit: disablenpc strnpcinfo(3); end; OnTouch:	warp instance_mapname("5@new"),156,65;	end; }
+4@new,393,99,0	script	ECwarp_76	45,1,1,{	end;	OnInstanceInit: disablenpc strnpcinfo(3); end; OnTouch:	warp instance_mapname("4@new"),96,51;	end; }
+
+4@new,135,13,0 	script	ECwarp_77	45,1,1,{	end;	OnInstanceInit: disablenpc strnpcinfo(3); end; OnTouch:	warp instance_mapname("4@new"),184,51;	end; }
+4@new,223,13,0	script	ECwarp_78	45,1,1,{	end;	OnInstanceInit: disablenpc strnpcinfo(3); end; OnTouch:	warp instance_mapname("4@new"),270,51;	end; }
+4@new,309,13,0	script	ECwarp_79	45,1,1,{	end;	OnInstanceInit: disablenpc strnpcinfo(3); end; OnTouch:	warp instance_mapname("4@new"),354,51;	end; }
+4@new,393,13,0	script	ECwarp_80	45,1,1,{	end;	OnInstanceInit: disablenpc strnpcinfo(3); end; OnTouch:	warp instance_mapname("5@new"),156,65;	end; }
 
 // = Mapflags
 // ====================================================================================================
