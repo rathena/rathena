@@ -200,6 +200,7 @@ Body:
       Y: 304
   - Id: 22
     Name: Endless Cellar
+    TimeLimit: 14400
     Enter:
       Map: 1@new
       X: 96
