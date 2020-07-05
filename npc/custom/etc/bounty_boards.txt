@@ -1,0 +1,628 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.2 Added conditional vip script and merged into one file
+//= 1.1 Added vip function to collect all bounties,
+//=     Fixed a minnor bug with one use of a close command.
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+function	script	F_Bounty_Board	{
+	if (BaseLevel < getarg(0) || (BaseLevel > getarg(1) && getarg(1))){
+		for (.@i = 5; .@i < getargcount(); .@i += 4){
+			if (checkquest(getarg(.@i)) != -1){
+				mes "[Bounty Board]";
+				mes "You are ready to collect your bounty.";
+				mes "Which bounty do you want to collect?";
+				next;
+				switch(select("Collect 1 bounty", "Collect ALL bounties", "I want to QUIT hunting", "cancel")){
+					case 1: goto L_BountyOne;
+					case 2: goto L_BountyAll;
+					case 3: goto L_BountyDel;
+					case 4: close;
+				}
+			}
+		}
+		switch(getarg(3)){
+			case 1: mes "These bounties are available only to adventurers who are between the levels "+getarg(0)+"-"+getarg(1)+"."; break;
+			case 2: mes "These bounties are available only to adventurers who are between levels "+getarg(0)+" and "+getarg(1)+"."; break;
+			case 3: mes "These bounties are available only to adventurers who are above level "+getarg(0)+"."; break;
+			case 4: mes "These bounties are available only to adventurers who are higher than level "+getarg(0)+"."; break;
+			case 5: mes "You've stumbled upon what appears to be a bulletin board with wanted ads. Nothing looks that interesting."; break;
+		}
+		close;
+	}
+	mes "[Bounty Board]";
+	mes "You've stumbled upon what appears to be a bulletin board with wanted ads.";
+	mes "Take a closer look?";
+	next;
+	mes "[Bounty Board]";
+	mes "There are many listings for monster hunting.";
+	next;
+	switch(select("Check bounty missions", "Collect bounty rewards", "Where do I go to hunt?", "Search for other bounty hunters.", "I want to QUIT hunting", "Not interested.")){
+	case 1:	// Check bounty missions
+		mes "[Bounty Board]";
+		mes "There is a list of monsters on the board.";
+		mes "Looking through it you decide to take one hunting task.";
+		next;
+		for (.@i = 4; .@i < getargcount(); .@i += 4)
+			.@menu$ = .@menu$ + getmonsterinfo(getarg(.@i),MOB_NAME) + ":";
+		.@menu$ = .@menu$ + "Hunt All:Cancel";
+		.@bounty = (select(.@menu$) * 4) + 1;
+		if (.@bounty > getargcount()+1){
+			mes "[Bounty Board]";
+			mes "You have decided not to take any bounties.";
+			close;
+		} else if (.@bounty == getargcount()+1){
+			for (.@i = 5; .@i < getargcount(); .@i += 4){
+				if (checkquest(getarg(.@i)) == -1)
+					setquest getarg(.@i);
+				.@HuntAllList$ = .@HuntAllList$ + (.@i+4 > getargcount()?" and ":(.@i > 5?", ":"")) + getmonsterinfo(getarg(.@i-1),MOB_NAME);
+			}
+			mes "[Bounty Board]";
+			mes "There is a bounty to hunt 150 " + .@HuntAllList$ + " hunt them all.";
+			close;
+		}
+		.@monster$ = getmonsterinfo(getarg(.@bounty-1),MOB_NAME);
+		mes "[Bounty Board]";
+		mes "There is a bounty to hunt 150 " + .@monster$ + ".";
+		next;
+		if (select("I'll do it.", "Uhh actually nevermind.") == 1){
+			if (checkquest(getarg(.@bounty),HUNTING) == -1)
+				setquest getarg(.@bounty);
+			mes "[Bounty Board]";
+			mes "You have accepted the bounty to hunt "+.@monster$+".";
+		}
+		close;
+	case 2:	// Collect bounty rewards
+		mes "[Bounty Board]";
+		mes "You are ready to collect your bounty.";
+		mes "Which bounty do you want to collect?";
+		next;
+		switch(select("Collect 1 bounty", "Collect ALL bounties", "cancel")){
+			case 1: goto L_BountyOne;
+			case 2: goto L_BountyAll;
+			case 3: close;
+		}
+	case 3:	// Where do I go to hunt?
+		mes "[Bounty Board]";
+		switch(getarg(2)){
+			case 1: mes "You can hunt them at the dungeon. You're staring at the entrance now!"; break;
+			case 2: mes "You can hunt them at the forests surrounding Payon and at the Cave up north at Archer Village."; break;
+			case 3: mes "You can hunt them at various fields surrounding Prontera."; break;
+			case 4: mes "You can hunt them at various fields and dungeons around Prontera."; break;
+			case 5: mes "You can hunt at the Umbala Fields to fulfill these bounties."; break;
+			case 6:
+				mes "Wich monster hunting field do you want to go to?";
+				next;
+				.@bounty = (select("Golem", "Stalactic Golem", "Medusa", "Cancel") * 4) + 1;
+				if (.@bounty > getargcount())
+					close;
+				mes "[Bounty Board]";
+				if (checkquest(getarg(.@bounty),HUNTING) == -1){
+					mes "You're currently not hunting "+getmonsterinfo(getarg(.@bounty-1),MOB_NAME)+".";
+					close;
+				}
+				mes "Sending you now.";
+				close2;
+				switch(.@bounty){
+					case 1: warp "cmd_fild06",147,36; break;
+					case 2: warp "beach_dun2",154,25; break;
+					case 3: warp "beach_dun",266,67; break;
+				}
+				end;
+			case 7: mes "You can hunt at the <NAVI>Juno Fields<INFO>yuno,158,16,</INFO></NAVI> to fulfill these bounties."; break;
+			case 8: mes "You can hunt at <NAVI>Brasilis Field<INFO>brasilis,309,304,</INFO></NAVI> and <NAVI>Brasilis Dungeon<INFO>brasilis,183,284,</INFO></NAVI> to fulfill these bounties."; break;
+			case 9: mes "You can hunt them at various fields surrounding Lighthalzen."; break;
+			case 10: mes "You can hunt them at various fields and dungeons around Lighthalzen."; break;
+			case 11:
+				mes "You can hunt at <NAVI>Splendide Field<INFO>mid_camp,14,143,</INFO></NAVI> to fulfill these bounties.";
+				mes "Be sure that you're an authorized member of the Midgard Alliance before you go there.";
+				break;
+			case 12: mes "You can hunt at the two Dicastes Fields to fulfill these bounties."; break;
+		}
+		close;
+	case 4:	// Search for other bounty hunters.
+		mes "[Bounty Board]";
+		mes "To find players to party with, click on the [Booking] button in, your user menu or type \"/booking\" in the chat box to bring up the window.";
+		next;
+		mes "[Bounty Board]";
+		mes "Then click \"Search\" to bring up all party listings.";
+		mes "To post a party wanted ad, type \"/recruit\" into the chat box.";
+		close;
+	case 5:	// I want to QUIT hunting
+		goto L_BountyDel;
+	case 6:	// Not interested.
+		mes "[Bounty Board]";
+		mes "Life is full of dangers.";
+		mes "You don't live life unless you put yourself in danger from time to time";
+		close;
+	}
+
+L_BountyOne:
+	mes "[Bounty Board]";
+	if (VIP_SCRIPT) {
+		mes "You will receive ^FF00001 Eden Merit Badge if all bounties are collected together.^000000";
+		mes "Otherwise, zeny and EXP/JEXP are rewarded alone.";
+		mes "^FF0000VIP accounts get to choose how to distribute experience prizes^000000.";
+	} else {
+		mes "You will receive 10% more experience if all bounties are collected together.^000000";
+		mes "Otherwise, zeny and EXP/JEXP are rewarded at standard rates.";
+	}
+	next;
+	for (.@i = 4; .@i < getargcount(); .@i += 4)
+		.@menu$ = .@menu$ + getmonsterinfo(getarg(.@i),MOB_NAME) + ":";
+	.@menu$ = .@menu$ + "Cancel";
+	.@bounty = (select(.@menu$) * 4) + 1;
+	if (.@bounty > getargcount()){
+		mes "^000000[Bounty Board]^000000";
+		mes "Come back when you have a bounty completed.";
+		close;
+	}
+	if (checkquest(getarg(.@bounty),HUNTING) == 2){
+		if (!VIP_SCRIPT || vip_status(1)){
+			mes "^000000[Bounty Board]^000000";
+			mes "How will you distribute your newfound experience?";
+			next;
+			.@vip_reward = select("^FF0000Both Base and Job EXP^000000", "^0000FFI want Base EXP only.^000000", "^FFA400I want Job EXP only.^000000");
+		}
+		erasequest getarg(.@bounty);
+		if (Zeny + 37500 <= MAX_ZENY)
+			Zeny += 37500;
+		.@BaseExp = getarg(.@bounty+1);
+		.@JobExp = getarg(.@bounty+2);
+		switch(.@vip_reward){
+			case 2:
+				getexp .@BaseExp,0;
+				getexp .@JobExp,0;
+				break;
+			case 3:
+				getexp 0,.@BaseExp;
+				getexp 0,.@JobExp;
+				break;
+			default:
+				getexp .@BaseExp,.@JobExp;
+				break;
+		}
+	} else {
+		mes "^000000[Bounty Board]^000000";
+		mes "The bounty to hunt "+getmonsterinfo(getarg(.@bounty-1),MOB_NAME)+" has not been completed.";
+	}
+	close;
+
+L_BountyAll:
+	mes "[Bounty Board]";
+	mes "Oh you fancy yourself a good hunter eh?";
+	mes "Let me see if you've actually hunted all the monsters you said you would.";
+	next;
+	for (.@i = 5; .@i < getargcount(); .@i += 4){
+		if (checkquest(getarg(.@i),HUNTING) < 2){
+			mes "[Bounty Board]";
+			mes "The bounty to hunt all has not been completed.";
+			mes "Lying will not be tolerated.";
+			close;
+		}
+	}
+	if (!VIP_SCRIPT || vip_status(1)){
+		mes "^000000[Bounty Board]^000000";
+		mes "How will you distribute your newfound experience?";
+		next;
+		.@vip_reward = select("^FF0000Both Base and Job EXP^000000", "^0000FFI want Base EXP only.^000000", "^FFA400I want Job EXP only.^000000");
+	}
+	for (.@i = 5; .@i < getargcount(); .@i += 4)
+		erasequest getarg(.@i);
+	for (.@i = 6; .@i < getargcount(); .@i += 4){
+		if (Zeny + 37500 <= MAX_ZENY)
+			Zeny += 37500;
+		if (VIP_SCRIPT) {
+			.@BaseExp = getarg(.@i);
+			.@JobExp = getarg(.@i+1);
+		} else {
+			.@BaseExp = getarg(.@i) * 11 / 10;
+			.@JobExp = getarg(.@i+1) * 11 / 10;
+		}
+		switch(.@vip_reward){
+			case 2:
+				getexp .@BaseExp,0;
+				getexp .@JobExp,0;
+				break;
+			case 3:
+				getexp 0,.@BaseExp;
+				getexp 0,.@JobExp;
+				break;
+			default:
+				getexp .@BaseExp,.@JobExp;
+				break;
+		}
+	}
+	if (VIP_SCRIPT)
+		getitem "Para_Logro_Badge",1;
+	mes "[Bounty Board]";
+	mes "Here is your reward.";
+	close;
+
+L_BountyDel:
+	mes "[Bounty Board]";
+	mes "I'll check what missions that you've taken so far.";
+	mes "Which ones do you want to quit?";
+	next;
+	for (.@i = 5; .@i < getargcount(); .@i += 4){
+		if (checkquest(getarg(.@i),HUNTING) == 1){
+			.@monster$ = getmonsterinfo(getarg(.@i-1),MOB_NAME);
+			mes "[Bounty Board]";
+			mes "You have NOT completed the " + .@monster$ + " hunt mission.";
+			mes "Do you want to continue or quit?";
+			next;
+			if (select("Keep hunting "+.@monster$, "^FF0000Get rid of my quest^000000") == 2){
+				erasequest getarg(.@i);
+				mes "[Bounty Board]";
+				mes "All of your records for this quest have been deleted.";
+				close2;
+				.@questerased = 1;
+			}
+		}
+	}
+	if (!.@questerased)
+		close;
+	else
+		end;
+
+}
+
+aldebaran,144,128,3	script	Bounty Board#al1	837,{
+	callfunc "F_Bounty_Board", 140, 0, 1, 5,
+		2479,	62890,		 622800,	 529650,	// NG_MIMIC
+		2478,	62891,		1181250,	1782000,	// NG_RIDEWORD
+		2917,	62892,		1690425,	1902825,	// BIG_BELL
+		2916,	62893,		1675575,	1576125,	// BIG_BEN
+		2919,	62894,		1321650,	1489050;	// NEO_PUNK
+	end;
+}
+
+brasilis,190,224,0	script	Bounty Board 70-175#bra1	837,{
+	callfunc "F_Bounty_Board", 70, 0, 8, 3,
+		2074,	62603,	 93300,		 67500,	// CURUPIRA
+		2071,	62604,	151650,		168000,	// HEADLESS_MULE
+		2072,	62605,	108000,		 76800,	// JAGUAR
+		2073,	62606,	 98850,		 81600,	// TOUCAN
+		2070,	62607,	 89850,		153450,	// PIRANHA
+		2069,	62608,	160500,		133500;	// IARA
+	end;
+}
+
+comodo,104,136,3	script	Bounty Board 40-60#cmd1	837,{
+	callfunc "F_Bounty_Board", 40, 60, 1, 1,
+		1034,	62617,	 52312,		 59062,	// THARA_FROG
+		1323,	62618,	 72225,		 81000,	// SEE_OTTER
+		1317,	62619,	 60750,		 68287,	// FUR_SEAL
+		1254,	62620,	 62212,		 69862,	// RAGGLER
+		1687,	62621,	164025,		184950,	// GREEN_IGUANA
+		1271,	62622,	 82012,		 92475,	// ALLIGATOR
+		1118,	62809,	 59140,		 66491;	// FLORA
+	end;
+}
+
+comodo,106,136,3	script	Bounty Board 60-105#cmd2	837,{
+	callfunc "F_Bounty_Board", 60, 105, 6, 1,
+		1040,	62623,	 91125,		102600,	// GOLEM
+		1278,	62624,	113850,		128025,	// STALACTIC_GOLEM
+		1148,	62625,	293062,		219712;	// MEDUSA
+	end;
+}
+
+dicastes01,196,48,0	script	Bounty Board 101-140#dc1	837,{
+	callfunc "F_Bounty_Board", 101, 140, 12, 2,
+		1987,	62613,		360112,		304987,	// CENTIPEDE
+		1999,	62614,		329625,		225225,	// CENTIPEDE_LARVA
+		1986,	62615,		423225,		347850,	// TATACHO
+		2092,	62616,		579937,		579937;	// DOLOMEDES
+	end;
+}
+
+dicastes01,196,46,0	script	Bounty Board 120-175#dc2	837,{
+	callfunc "F_Bounty_Board", 120, 0, 12, 2,
+		2085,	62802,		712125,		591187,	// ANTLER_SCARABA
+		2084,	62803,		650250,		511762,	// HORN_SCARABA2
+		2086,	62804,		786375,		674437,	// RAKE_SCARABA
+		2083,	62805,		587250,		451237;	// HORN_SCARABA
+	end;
+}
+
+
+geffen,78,75,3	script	Bounty Board 1-20#gf1	837,{
+	callfunc "F_Bounty_Board", 1, 20, 1, 1,
+		1011,	62660,	 4950,		 4050,	// CHONCHON
+		1012,	62661,	10125,		 7650,	// RODA_FROG
+		1020,	62662,	16200,		12151,	// MANDRAGORA
+		1094,	62663,	13050,		 9675;	// AMBERNITE
+	end;
+}
+
+geffen,77,76,3	script	Bounty Board 21-50#gf2	837,{
+	callfunc "F_Bounty_Board", 21, 50, 2, 1,
+		1018,	62664,	16200,		18225,	// CREAMY
+		1103,	62665,	18225,		20475,	// CARAMEL
+		1128,	62666,	24300,		27225,	// HORN
+		1077,	62667,	18225,		20475,	// POISON_SPORE
+		1104,	62810,	30375,		34200,	// COCO
+		1056,	62811,	18225,		20475,	// SMOKIE
+		1145,	62812,	20250,		22725,	// MARTIN
+		1033,	62813,	26100,		29475;	// ELDER_WILOW
+	end;
+}
+
+geffen,76,77,3	script	Bounty Board 41-75#gf3	837,{
+	callfunc "F_Bounty_Board", 41, 75, 2, 1,
+		1023,	62668,	39375,		60750,	// ORK_WARRIOR
+		1273,	62669,	42750,		48825,	// ORC_LADY
+		1122,	62670,	41400,		46575,	// GOBLIN_1
+		1258,	62671,	50625,		56925,	// GOBLIN_ARCHER
+		1169,	62820,	37350,		42075;	// SKEL_WORKER
+	end;
+}
+
+geffen,75,78,3	script	Bounty Board 61-100#gf4	837,{
+	callfunc "F_Bounty_Board", 61, 100, 2, 1,
+		1036,	62672,	65475,		 73800,	// GHOUL
+		1130,	62673,	71100,		 79875,	// JAKK
+		1061,	62674,	56250,		116100;	// NIGHTMARE
+	end;
+}
+
+geffen,74,79,3	script	Bounty Board 81-120#gf5	837,{
+	callfunc "F_Bounty_Board", 81, 120, 2, 1,
+		1109,	62675,	203175,		243675,	// DEVIRUCHI
+		1143,	62676,	162225,		225900,	// MARIONETTE
+		1192,	62677,	133875,		133875,	// WRAITH
+		1198,	62678,	273375,		187425,	// DARK_PRIEST
+		1253,	62679,	213750,		160275,	// GARGOYLE
+		1156,	62680,	101250,		113850,	// PETIT_
+		1155,	62681,	131625,		148050,	// PETIT
+		1117,	62682,	150525,		144000,	// EVIL_DRUID
+		1263,	62683,	103275,		150075;	// WIND_GHOST
+	end;
+}
+
+geffen,73,80,3	script	Bounty Board 101-150#gf6	837,{
+	callfunc "F_Bounty_Board", 101, 150, 2, 1,
+		1267,	62684,	218700,		164025,	// CARAT
+		1208,	62685,	381150,		277425,	// WANDER_MAN
+		1207,	62686,	244350,		183150,	// STING
+		1194,	62687,	207450,		293175,	// ARCLOUSE
+		1163,	62688,	311625,		233550,	// RAYDRIC
+		1132,	62689,	321975,		241425,	// KHALITZBURG
+		1206,	62690,	329625,		249975,	// ANOLIAN
+		//1371,	62691,						// FAKE_ANGEL
+		1390,	62692,	321975,		241425,	// VIOLY
+		//1292,	62693,						// MINI_DEMON
+		1310,	62815,	347625,		347625;	// MAJORUROS
+	end;
+}
+
+hugel,67,153,3	script	Bounty Board 81-100#hu1	837,{
+	callfunc "F_Bounty_Board", 81, 100, 9, 1,
+		1715,	62789,		146700,		169200,	// NOVUS
+		1718,	62790,		121500,		136575;	// NOVUS_
+	end;
+}
+
+hugel,66,152,3	script	Bounty Board 101-150#hu2	837,{
+	callfunc "F_Bounty_Board", 101, 150, 4, 1,
+		1699,	62791,		275400,		232650,	// ANCIENT_MIMIC
+		1698,	62792,		288450,		216225;	// DEATHWORD
+	end;
+}
+
+hugel,65,151,3	script	Bounty Board 121-160#hu3	837,{
+	callfunc "F_Bounty_Board", 121, 160, 10, 1,
+		1714,	62793,		448312,		336262,	// FERUS
+		1717,	62794,		470812,		336262,	// FERUS_
+		1752,	62795,		481500,		386775,	// SKOGUL
+		1753,	62796,		513225,		402412,	// FRUS
+		1716,	62798,		508500,		381262,	// ACIDUS_
+		1713,	62799,		508500,		381262;	// ACIDUS
+	end;
+}
+
+yuno,180,145,0	script	Bounty Board 70-110#jn1	837,{
+	callfunc "F_Bounty_Board", 70, 110, 7, 1,
+		1372,	62556,	119812,		134662,	// GOAT
+		1376,	62557,	135112,		151762,	// HARPY
+		1386,	62558,	116325,		130500,	// SLEEPER
+		1369,	62559,	 99787,		112275;	// GRAND_PECO
+	end;
+}
+
+yuno,182,145,0	script	Bounty Board 101-150#jn2	837,{
+	callfunc "F_Bounty_Board", 101, 150, 7, 1,
+		1385,	62710,	236025,		177075,	// DELETER_
+		1384,	62711,	236025,		177075,	// DELETER
+		1379,	62712,	274725,		206100,	// NIGHTMARE_TERROR
+		1676,	62713,	275400,		206550,	// VENATU_1
+		1677,	62714,	296550,		222750,	// VENATU_2
+		1678,	62715,	297225,		222975,	// VENATU_3
+		1679,	62716,	297225,		222975,	// VENATU_4
+		1365,	62717,	342225,		256725;	// APOCALIPS
+	end;
+}
+
+lighthalzen,194,161,3	script	Bounty Board 81-100#lz1	837,{
+	callfunc "F_Bounty_Board", 81, 100, 9, 1,
+		1613,	62745,	107325,		120825,	// METALING
+		1162,	62746,	131625,		148050,	// RAFFLESIA
+		1215,	62747,	121500,		136575,	// STEM_WORM
+		1692,	62748,	179775,		202050,	// BREEZE
+		1627,	62749,	190125,		213975;	// ANOPHELES
+	end;
+}
+
+lighthalzen,192,161,3	script	Bounty Board 101-150#lz2	837,{
+	callfunc "F_Bounty_Board", 101, 150, 4, 1,
+		1133,	62750,	255825,		191925,	// KOBOLD_1
+		1134,	62751,	218700,		164025,	// KOBOLD_2
+		1135,	62752,	205425,		154125,	// KOBOLD_3
+		1282,	62753,	243000,		294750;	// KOBOLD_ARCHER
+	end;
+}
+
+lighthalzen,190,161,3	script	Bounty Board 121-175#lz3	837,{
+	callfunc "F_Bounty_Board", 121, 0, 10, 1,
+		1682,	62754,	424350,		318150,	// REMOVAL
+		1657,	62755,	506250,		503550,	// RAWREL
+		1655,	62756,	546750,		511200,	// EREND
+		1654,	62757,	550575,		552150,	// ARMAIA
+		1653,	62758,	573075,		531000,	// WHIKEBAIN
+		1656,	62759,	573975,		481050,	// KAVAC
+		1652,	62760,	588510,		501750;	// YGNIZEM
+	end;
+}
+
+lighthalzen,188,162,3	script	Bounty Board 141#lz4	837,{
+	callfunc "F_Bounty_Board", 141, 0, 1, 4,
+		1639,	62761,	1516950,	1997550,	// KATRINN
+		1637,	62762,	1736100,	1738912,	// MAGALETA
+		1638,	62763,	1863225,	1861312,	// SHECIL
+		1635,	62764,	1880325,	1993162,	// EREMES
+		1634,	62765,	1996987,	2010825,	// SEYREN
+		1636,	62766,	1918687,	2022525,	// HARWORD
+		2227,	62767,	1799325,	1490400,	// TRENTINI
+		2223,	62768,	2486925,	2139300,	// CELIA
+		2226,	62769,	2496600,	2286225,	// ALPHOCCIO
+		2225,	62770,	2729925,	2276100,	// GERTIE
+		2224,	62771,	2889450,	2228625,	// CHEN
+		2222,	62772,	2969550,	2596500,	// FLAMEL
+		2221,	62773,	3641175,	2706075;	// RANDEL
+	end;
+}
+
+mid_camp,182,253,0	script	Bounty Board 100-150#mc1	837,{
+	callfunc "F_Bounty_Board", 100, 150, 11, 2,
+		1995,	62806,		249750,		186975,	// PINGUICULA
+		2015,	62807,		236250,		272100,	// PINGUICULA_D
+		1988,	62808,		292275,		201600,	// NEPENTHES
+		1992,	62599,		702000,		450450,	// CORNUS
+		1993,	62600,		331200,		248850,	// NAGA
+		1994,	62602,		182475,		203175;	// LUCIOLA_VESPA
+	end;
+}
+
+mora,98,110,3	script	Bounty Board 141#mo1	837,{
+	callfunc "F_Bounty_Board", 141, 0, 1, 4,
+		2137,	62821,		798750,		708750,	// MIMING
+		2136,	62822,		843750,		731250,	// LITTLE_FATUM
+		2365,	62823,		800662,		848137,	// CENERE
+		2363,	62824,		466875,		461812,	// MENBLATT
+		2364,	62825,		456525,		378112,	// PETAL
+		2133,	62826,		876375,		789750,	// ANGRA_MANTIS
+		2366,	62827,		812812,		871650,	// ANTIQUE_BOOK
+		2368,	62828,		795487,		862762,	// LICHTERN_Y
+		2367,	62829,		808537,		846562,	// LICHTERN_B
+		2369,	62830,		810112,		892800,	// LICHTERN_R
+		2370,	62831,		811575,		847912;	// LICHTERN_G
+	end;
+}
+
+payon,148,95,3	script	Bounty Board 1-20#pay1	837,{
+	callfunc "F_Bounty_Board", 1, 20, 1, 1,
+		1010,	62644,	 6975,		5175,	// WILOW
+		1014,	62565,	13050,		9675,	// SPORE
+		1025,	62566,	13050,		9675;	// SNAKE
+	end;
+}
+
+payon,148,93,3	script	Bounty Board 21-50#pay2	837,{
+	callfunc "F_Bounty_Board", 21, 50, 2, 1,
+		1060,	62567,	20250,		22725,	// BIGFOOT
+		1128,	62797,	24300,		27225,	// HORN
+		1076,	62560,	18225,		20475,	// SKELETON
+		1028,	62561,	24300,		27225;	// SOLDIER_SKELETON
+	end;
+}
+
+payon,148,91,3	script	Bounty Board 41-75#pay3	837,{
+	callfunc "F_Bounty_Board", 41, 75, 2, 1,
+		1277,	62569,	54675,		61650,	// GREATEST_GENERAL
+		1013,	62645,	38475,		43425,	// WOLF
+		1016,	62562,	45450,		51075,	// ARCHER_SKELETON
+		1026,	62646,	55575,		62550,	// MUNAK
+		1188,	62647,	59625,		67050;	// BON_GUN
+	end;
+}
+
+payon,148,89,3	script	Bounty Board 61-100#pay4	837,{
+	callfunc "F_Bounty_Board", 61, 100, 2, 1,
+		1170,	62648,	66750,		 75150,	// SOHEE
+		1110,	62649,	75900,		 85350,	// DOKEBI
+		1180,	62650,	99750,		112200;	// NINE_TAIL
+	end;
+}
+
+prontera,136,225,3	script	Bounty Board 1-20#prt1	837,{
+	callfunc "F_Bounty_Board", 1, 20, 3, 1,
+		1004,	62722,	 9000,		 6750,	// HORNET
+		1012,	62723,	10125,		 7650,	// RODA_FROG
+		1052,	62724,	11025,		 8325,	// ROCKER
+		1167,	62725,	10125,		 7650,	// SAVAGE_BABE
+		1048,	62726,	14175,		15975,	// THIEF_BUG_EGG
+		1063,	62816,	 5400,		 3900,	// LUNATIC
+		1094,	62817,	13050,		 9675;	// AMBERNITE
+	end;
+}
+
+prontera,138,227,3	script	Bounty Board 21-50#prt2	837,{
+	callfunc "F_Bounty_Board", 21, 50, 4, 1,
+		1051,	62727,	14175,		15975,	// THIEF_BUG
+		1175,	62728,	15075,		17100,	// TAROU
+		1174,	62729,	14175,		15975,	// STAINER
+		1019,	62730,	18225,		20475,	// PECOPECO
+		1104,	62731,	30375,		34200,	// COCO
+		1057,	62732,	30375,		34200,	// YOYO
+		1053,	62733,	20250,		22725,	// THIEF_BUG_
+		1054,	62734,	22275,		25200,	// THIEF_BUG__
+		1031,	62735,	22275,		25200,	// POPORING
+		1033,	62736,	26100,		29475,	// ELDER_WILOW
+		1055,	62818,	12150,		27337;	// MUKA
+	end;
+}
+
+prontera,140,229,3	script	Bounty Board 41-70#prt3	837,{
+	callfunc "F_Bounty_Board", 41, 70, 4, 1,
+		1100,	62737,	40500,		45450,	// ARGOS
+		1494,	62738,	50625,		56925,	// KIND_OF_BEETLE
+		1166,	62739,	64350,		72450,	// SAVAGE
+		1138,	62819,	49500,		55575;	// MAGNOLIA
+	end;
+}
+
+prontera,142,231,3	script	Bounty Board 61-100#prt4	837,{
+	callfunc "F_Bounty_Board", 61, 100, 4, 1,
+		1380,	62740,	 66825,		 75150,	// DRILLER
+		1035,	62741,	 67950,		 76500,	// HUNTER_FLY
+		1139,	62742,	 66825,		 75263,	// MANTIS
+		1037,	62743,	162000,		182250,	// SIDE_WINDER
+		1099,	62744,	 91125,		102600;	// ARGIOPE
+	end;
+}
+
+umbala,124,85,1	script	Bounty Board 40-100#um1	837,{
+	callfunc "F_Bounty_Board", 40, 100, 5, 1,
+		1261,	62609,	 81000,		124875,	// WILD_ROSE
+		1493,	62610,	 94050,		105525,	// DRYAD
+		1499,	62611,	 79650,		 89775,	// WOOTAN_FIGHTER
+		1500,	62612,	103725,		150300;	// PARASITE
+	end;
+}
