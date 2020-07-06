@@ -292,7 +292,7 @@ aldebaran,144,128,3	script	Bounty Board#al1	837,{
 	end;
 }
 
-brasilis,190,224,0	script	Bounty Board 70-175#bra1	837,{
+brasilis,188,232,0	script	Bounty Board 70-175#bra1	837,{
 	callfunc "F_Bounty_Board", 70, 0, 8, 3,
 		2074,	62603,	 93300,		 67500,	// CURUPIRA
 		2071,	62604,	151650,		168000,	// HEADLESS_MULE
@@ -303,7 +303,7 @@ brasilis,190,224,0	script	Bounty Board 70-175#bra1	837,{
 	end;
 }
 
-comodo,104,136,3	script	Bounty Board 40-60#cmd1	837,{
+comodo,109,136,3	script	Bounty Board 40-60#cmd1	837,{
 	callfunc "F_Bounty_Board", 40, 60, 1, 1,
 		1034,	62617,	 52312,		 59062,	// THARA_FROG
 		1323,	62618,	 72225,		 81000,	// SEE_OTTER
@@ -315,7 +315,7 @@ comodo,104,136,3	script	Bounty Board 40-60#cmd1	837,{
 	end;
 }
 
-comodo,106,136,3	script	Bounty Board 60-105#cmd2	837,{
+comodo,111,136,3	script	Bounty Board 60-105#cmd2	837,{
 	callfunc "F_Bounty_Board", 60, 105, 6, 1,
 		1040,	62623,	 91125,		102600,	// GOLEM
 		1278,	62624,	113850,		128025,	// STALACTIC_GOLEM
@@ -323,7 +323,7 @@ comodo,106,136,3	script	Bounty Board 60-105#cmd2	837,{
 	end;
 }
 
-dicastes01,196,48,0	script	Bounty Board 101-140#dc1	837,{
+dicastes01,196,50,0	script	Bounty Board 101-140#dc1	837,{
 	callfunc "F_Bounty_Board", 101, 140, 12, 2,
 		1987,	62613,		360112,		304987,	// CENTIPEDE
 		1999,	62614,		329625,		225225,	// CENTIPEDE_LARVA
@@ -332,7 +332,7 @@ dicastes01,196,48,0	script	Bounty Board 101-140#dc1	837,{
 	end;
 }
 
-dicastes01,196,46,0	script	Bounty Board 120-175#dc2	837,{
+dicastes01,196,47,0	script	Bounty Board 120-175#dc2	837,{
 	callfunc "F_Bounty_Board", 120, 0, 12, 2,
 		2085,	62802,		712125,		591187,	// ANTLER_SCARABA
 		2084,	62803,		650250,		511762,	// HORN_SCARABA2
@@ -342,7 +342,7 @@ dicastes01,196,46,0	script	Bounty Board 120-175#dc2	837,{
 }
 
 
-geffen,78,75,3	script	Bounty Board 1-20#gf1	837,{
+geffen,85,68,3	script	Bounty Board 1-20#gf1	837,{
 	callfunc "F_Bounty_Board", 1, 20, 1, 1,
 		1011,	62660,	 4950,		 4050,	// CHONCHON
 		1012,	62661,	10125,		 7650,	// RODA_FROG
@@ -351,7 +351,7 @@ geffen,78,75,3	script	Bounty Board 1-20#gf1	837,{
 	end;
 }
 
-geffen,77,76,3	script	Bounty Board 21-50#gf2	837,{
+geffen,83,70,3	script	Bounty Board 21-50#gf2	837,{
 	callfunc "F_Bounty_Board", 21, 50, 2, 1,
 		1018,	62664,	16200,		18225,	// CREAMY
 		1103,	62665,	18225,		20475,	// CARAMEL
@@ -364,7 +364,7 @@ geffen,77,76,3	script	Bounty Board 21-50#gf2	837,{
 	end;
 }
 
-geffen,76,77,3	script	Bounty Board 41-75#gf3	837,{
+geffen,81,72,3	script	Bounty Board 41-75#gf3	837,{
 	callfunc "F_Bounty_Board", 41, 75, 2, 1,
 		1023,	62668,	39375,		60750,	// ORK_WARRIOR
 		1273,	62669,	42750,		48825,	// ORC_LADY
@@ -374,7 +374,7 @@ geffen,76,77,3	script	Bounty Board 41-75#gf3	837,{
 	end;
 }
 
-geffen,75,78,3	script	Bounty Board 61-100#gf4	837,{
+geffen,78,75,3	script	Bounty Board 61-100#gf4	837,{
 	callfunc "F_Bounty_Board", 61, 100, 2, 1,
 		1036,	62672,	65475,		 73800,	// GHOUL
 		1130,	62673,	71100,		 79875,	// JAKK
@@ -382,7 +382,7 @@ geffen,75,78,3	script	Bounty Board 61-100#gf4	837,{
 	end;
 }
 
-geffen,74,79,3	script	Bounty Board 81-120#gf5	837,{
+geffen,76,77,3	script	Bounty Board 81-120#gf5	837,{
 	callfunc "F_Bounty_Board", 81, 120, 2, 1,
 		1109,	62675,	203175,		243675,	// DEVIRUCHI
 		1143,	62676,	162225,		225900,	// MARIONETTE
@@ -396,7 +396,7 @@ geffen,74,79,3	script	Bounty Board 81-120#gf5	837,{
 	end;
 }
 
-geffen,73,80,3	script	Bounty Board 101-150#gf6	837,{
+geffen,74,79,3	script	Bounty Board 101-150#gf6	837,{
 	callfunc "F_Bounty_Board", 101, 150, 2, 1,
 		1267,	62684,	218700,		164025,	// CARAT
 		1208,	62685,	381150,		277425,	// WANDER_MAN
@@ -419,14 +419,14 @@ hugel,67,153,3	script	Bounty Board 81-100#hu1	837,{
 	end;
 }
 
-hugel,66,152,3	script	Bounty Board 101-150#hu2	837,{
+hugel,65,151,3	script	Bounty Board 101-150#hu2	837,{
 	callfunc "F_Bounty_Board", 101, 150, 4, 1,
 		1699,	62791,		275400,		232650,	// ANCIENT_MIMIC
 		1698,	62792,		288450,		216225;	// DEATHWORD
 	end;
 }
 
-hugel,65,151,3	script	Bounty Board 121-160#hu3	837,{
+hugel,63,149,3	script	Bounty Board 121-160#hu3	837,{
 	callfunc "F_Bounty_Board", 121, 160, 10, 1,
 		1714,	62793,		448312,		336262,	// FERUS
 		1717,	62794,		470812,		336262,	// FERUS_
@@ -508,7 +508,7 @@ lighthalzen,188,162,3	script	Bounty Board 141#lz4	837,{
 	end;
 }
 
-mid_camp,182,253,0	script	Bounty Board 100-150#mc1	837,{
+mid_camp,181,254,0	script	Bounty Board 100-150#mc1	837,{
 	callfunc "F_Bounty_Board", 100, 150, 11, 2,
 		1995,	62806,		249750,		186975,	// PINGUICULA
 		2015,	62807,		236250,		272100,	// PINGUICULA_D
@@ -570,7 +570,7 @@ payon,148,89,3	script	Bounty Board 61-100#pay4	837,{
 	end;
 }
 
-prontera,136,225,3	script	Bounty Board 1-20#prt1	837,{
+prontera,165,75,3	script	Bounty Board 1-20#prt1	837,{
 	callfunc "F_Bounty_Board", 1, 20, 3, 1,
 		1004,	62722,	 9000,		 6750,	// HORNET
 		1012,	62723,	10125,		 7650,	// RODA_FROG
@@ -582,7 +582,7 @@ prontera,136,225,3	script	Bounty Board 1-20#prt1	837,{
 	end;
 }
 
-prontera,138,227,3	script	Bounty Board 21-50#prt2	837,{
+prontera,165,73,3	script	Bounty Board 21-50#prt2	837,{
 	callfunc "F_Bounty_Board", 21, 50, 4, 1,
 		1051,	62727,	14175,		15975,	// THIEF_BUG
 		1175,	62728,	15075,		17100,	// TAROU
@@ -598,7 +598,7 @@ prontera,138,227,3	script	Bounty Board 21-50#prt2	837,{
 	end;
 }
 
-prontera,140,229,3	script	Bounty Board 41-70#prt3	837,{
+prontera,165,71,3	script	Bounty Board 41-70#prt3	837,{
 	callfunc "F_Bounty_Board", 41, 70, 4, 1,
 		1100,	62737,	40500,		45450,	// ARGOS
 		1494,	62738,	50625,		56925,	// KIND_OF_BEETLE
@@ -607,7 +607,7 @@ prontera,140,229,3	script	Bounty Board 41-70#prt3	837,{
 	end;
 }
 
-prontera,142,231,3	script	Bounty Board 61-100#prt4	837,{
+prontera,165,69,3	script	Bounty Board 61-100#prt4	837,{
 	callfunc "F_Bounty_Board", 61, 100, 4, 1,
 		1380,	62740,	 66825,		 75150,	// DRILLER
 		1035,	62741,	 67950,		 76500,	// HUNTER_FLY
