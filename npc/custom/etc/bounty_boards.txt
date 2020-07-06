@@ -282,7 +282,7 @@ L_BountyDel:
 
 }
 
-aldebaran,144,128,3	script	Bounty Board#al1	837,{
+aldebaran,144,128,3	script	Bounty Board 140+#al1	837,{
 	callfunc "F_Bounty_Board", 140, 0, 1, 5,
 		2479,	62890,		 622800,	 529650,	// NG_MIMIC
 		2478,	62891,		1181250,	1782000,	// NG_RIDEWORD
@@ -490,7 +490,7 @@ lighthalzen,190,161,3	script	Bounty Board 121-175#lz3	837,{
 	end;
 }
 
-lighthalzen,188,162,3	script	Bounty Board 141#lz4	837,{
+lighthalzen,188,162,3	script	Bounty Board 141+#lz4	837,{
 	callfunc "F_Bounty_Board", 141, 0, 1, 4,
 		1639,	62761,	1516950,	1997550,	// KATRINN
 		1637,	62762,	1736100,	1738912,	// MAGALETA
@@ -519,7 +519,7 @@ mid_camp,181,254,0	script	Bounty Board 100-150#mc1	837,{
 	end;
 }
 
-mora,98,110,3	script	Bounty Board 141#mo1	837,{
+mora,98,110,3	script	Bounty Board 141+#mo1	837,{
 	callfunc "F_Bounty_Board", 141, 0, 1, 4,
 		2137,	62821,		798750,		708750,	// MIMING
 		2136,	62822,		843750,		731250,	// LITTLE_FATUM
