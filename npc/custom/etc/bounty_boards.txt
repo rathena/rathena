@@ -138,11 +138,10 @@ function	script	F_Bounty_Board	{
 		close;
 	case 4:	// Search for other bounty hunters.
 		mes "[Bounty Board]";
-		mes "To find players to party with, click on the [Booking] button in, your user menu or type \"/booking\" in the chat box to bring up the window.";
+		mes "To find players to party with, you send a direct message to ^0000FF#main^000000 to speak in Global chat.";
 		next;
 		mes "[Bounty Board]";
-		mes "Then click \"Search\" to bring up all party listings.";
-		mes "To post a party wanted ad, type \"/recruit\" into the chat box.";
+		mes "You can also visit the ChocobotRO Discord and look for fellow bounty hunters in the ^888888#lfp-lfg^000000 channel.";
 		close;
 	case 5:	// I want to QUIT hunting
 		goto L_BountyDel;
@@ -160,7 +159,7 @@ L_BountyOne:
 		mes "Otherwise, zeny and EXP/JEXP are rewarded alone.";
 		mes "^FF0000VIP accounts get to choose how to distribute experience prizes^000000.";
 	} else {
-		mes "You will receive 10% more experience if all bounties are collected together.^000000";
+		mes "You will receive 20% more experience if all bounties are collected together.^000000";
 		mes "Otherwise, zeny and EXP/JEXP are rewarded at standard rates.";
 	}
 	next;
@@ -232,8 +231,8 @@ L_BountyAll:
 			.@BaseExp = getarg(.@i);
 			.@JobExp = getarg(.@i+1);
 		} else {
-			.@BaseExp = getarg(.@i) * 11 / 10;
-			.@JobExp = getarg(.@i+1) * 11 / 10;
+			.@BaseExp = getarg(.@i) * 12 / 10;
+			.@JobExp = getarg(.@i+1) * 12 / 10;
 		}
 		switch(.@vip_reward){
 			case 2:
