@@ -208,10 +208,16 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 					if (!this->asString(targetNode, "Race", race))
 						return 0;
 
+					std::string race_constant = "RC_" + race;
 					int64 constant;
 
-					if (!script_get_constant(race.c_str(), &constant) || constant < RC_FORMLESS || constant > RC_ALL) {
-						this->invalidWarning(targetNode["Race"], "Invalid race type %s, skipping.\n", race.c_str());
+					if (!script_get_constant(race_constant.c_str(), &constant)) {
+						this->invalidWarning(targetNode["Race"], "Invalid race %s, skipping.\n", race.c_str());
+						return 0;
+					}
+
+					if (constant < RC_FORMLESS || constant > RC_ALL || constant == RC_NONE_ || constant == RC_PLAYER_HUMAN || constant == RC_PLAYER_DORAM) {
+						this->invalidWarning(targetNode["Race"], "Unsupported race %s, skipping.\n", race.c_str());
 						return 0;
 					}
 
@@ -219,15 +225,21 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 
 				if (this->nodeExists(targetNode, "Size")) {
-					std::string size;
+					std::string size_;
 
-					if (!this->asString(targetNode, "Size", size))
+					if (!this->asString(targetNode, "Size", size_))
 						return 0;
 
+					std::string size_constant = "Size_" + size_;
 					int64 constant;
 
-					if (!script_get_constant(size.c_str(), &constant) || constant < SZ_SMALL || constant > SZ_ALL) {
-						this->invalidWarning(targetNode["Size"], "Invalid size type %s, skipping.\n", size.c_str());
+					if (!script_get_constant(size_constant.c_str(), &constant)) {
+						this->invalidWarning(targetNode["Size"], "Invalid size type %s, skipping.\n", size_.c_str());
+						return 0;
+					}
+
+					if (constant < SZ_SMALL || constant > SZ_ALL) {
+						this->invalidWarning(targetNode["size"], "Unsupported size %s, skipping.\n", size_.c_str());
 						return 0;
 					}
 
@@ -240,10 +252,16 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 					if (!this->asString(targetNode, "Element", element))
 						return 0;
 
+					std::string element_constant = "Ele_" + element;
 					int64 constant;
 
-					if (!script_get_constant(element.c_str(), &constant) || constant < ELE_NEUTRAL || constant > ELE_ALL) {
-						this->invalidWarning(targetNode["Element"], "Invalid element type %s, skipping.\n", element.c_str());
+					if (!script_get_constant(element_constant.c_str(), &constant)) {
+						this->invalidWarning(targetNode["Element"], "Invalid element %s, skipping.\n", element.c_str());
+						return 0;
+					}
+
+					if (constant < ELE_NEUTRAL || constant > ELE_ALL) {
+						this->invalidWarning(targetNode["Element"], "Unsupported element %s, skipping.\n", element.c_str());
 						return 0;
 					}
 
@@ -673,9 +691,9 @@ void quest_update_objective(struct map_session_data *sd, int mob_id, int mob_lev
 			if (qi->objectives[j]->mob_id == mob_id)
 				objective_check = 5;
 			else if (qi->objectives[j]->mob_id == 0) {
-				if (qi->objectives[j]->min_level == 0 || qi->objectives[j]->min_level >= mob_level)
+				if (qi->objectives[j]->min_level == 0 || qi->objectives[j]->min_level <= mob_level)
 					objective_check++;
-				if (qi->objectives[j]->max_level == 0 || qi->objectives[j]->max_level <= mob_level)
+				if (qi->objectives[j]->max_level == 0 || qi->objectives[j]->max_level >= mob_level)
 					objective_check++;
 				if (qi->objectives[j]->race == RC_ALL || qi->objectives[j]->race == mob_race)
 					objective_check++;

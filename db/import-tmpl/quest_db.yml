@@ -30,16 +30,16 @@
 #                   Specify without "+" for the exact time the quest expires using "d" (optionnal), [0-23]"h" (required), [0-59]"mn" (optionnal), [0-59]"s" (optionnal) format.
 #                   Please note the number before "d" only shift the exact timer to the given day(s).
 #   Targets:        Quest objective target. (Default: null)
-#                   The target can be a couple of node Mob/Count or of ID/Race/Size/Element/MinLevel/MaxLevel.
+#                   The target can be a couple of node Mob/Count or of Id/Race/Size/Element/MinLevel/MaxLevel.
 #                   If Mob is supplied, Count is required and the others field are ignored.
-#                   If ID is supplied, at least one parameter Race/Size/Element/MinLevel/MaxLevel is required.
-#                   If ID is supplied, Count is required for each new entry.
+#                   If Id is supplied, at least one parameter Race/Size/Element/MinLevel/MaxLevel is required.
+#                   If Id is supplied, Count is required for each new entry.
 #     - Mob         Monster to kill (aegis monster name).
 #       Count       Amount of monsters to kill. Set to 0 to skip the target on import.
-#       ID          Unique target index for the quest ID. Requires a positive number.
-#       Race        Monster race target (default RC_All). Valids race are RC_Angel, RC_Brute, RC_DemiHuman, RC_Demon, RC_Dragon, RC_Fish, RC_Formless, RC_Insect, RC_Plant, RC_Undead, RC_All.
-#       Size        Monster size target (default Size_All). Valids size are Size_Small, Size_Medium, Size_Large, Size_All.
-#       Element     Monster element target (default Ele_All). Valids elements are ELE_NEUTRAL, ELE_WATER, ELE_EARTH, ELE_FIRE, ELE_WIND, ELE_POISON, ELE_HOLY, ELE_DARK, ELE_GHOST, ELE_UNDEAD, ELE_ALL.
+#       Id          Unique target index for the quest Id. Requires a positive number.
+#       Race        Monster race target (default All). Valids race are Angel, Brute, DemiHuman, Demon, Dragon, Fish, Formless, Insect, Plant, Undead, All.
+#       Size        Monster size target (default All). Valids size are Small, Medium, Large, All.
+#       Element     Monster element target (default All). Valids elements are Dark, Earth, Fire, Ghost, Holy, Neutral, Poison, Undead, Water, Wind, All.
 #       MinLevel    Minimum monster level target. If not supplied but MaxLevel defined, MinLevel is 1. Set to 0 to ignore MinLevel on import. (Default: 0)
 #       MaxLevel    Maximum monster level target. If not supplied but MinLevel defined, MaxLevel value is the constant MAX_LEVEL defined by the server. Set to 0 to ignore MaxLevel on import. (Default: 0)
 #   Drops:          Quest item drop targets. (Default: null)
