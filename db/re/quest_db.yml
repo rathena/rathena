@@ -2257,70 +2257,70 @@ Body:
     Title: "[Repeat]Warrior Discipline-Human"
     Targets:
       - Id: 1
-        Count: 10
+        Count: 50
         Race: DemiHuman
         MinLevel: 140
   - Id: 5405
     Title: "[Repeat]Warrior Discipline-Animal"
     Targets:
       - Id: 1
-        Count: 10
+        Count: 50
         Race: Brute
         MinLevel: 140
   - Id: 5406
     Title: "[Repeat]Warrior Discipline-Insect"
     Targets:
       - Id: 1
-        Count: 10
+        Count: 50
         Race: Insect
         MinLevel: 140
   - Id: 5407
     Title: "[Repeat]Warrior Discipline-Fish"
     Targets:
       - Id: 1
-        Count: 10
+        Count: 50
         Race: Fish
         MinLevel: 140
   - Id: 5408
     Title: "[Repeat]Warrior Discipline-Plant"
     Targets:
       - Id: 1
-        Count: 10
+        Count: 50
         Race: Plant
         MinLevel: 140
   - Id: 5409
     Title: "[Repeat]Warrior Discipline-Devil"
     Targets:
       - Id: 1
-        Count: 10
+        Count: 50
         Race: Demon
         MinLevel: 140
   - Id: 5410
     Title: "[Repeat]Warrior Discipline-Angel"
     Targets:
       - Id: 1
-        Count: 10
+        Count: 50
         Race: Angel
         MinLevel: 140
   - Id: 5411
     Title: "[Repeat]Warrior Discipline-Immortal"
     Targets:
       - Id: 1
-        Count: 10
+        Count: 50
         Race: Undead
         MinLevel: 140
   - Id: 5412
     Title: "[Repeat]Warrior Discipline-Intangible"
     Targets:
       - Id: 1
-        Count: 10
+        Count: 50
         Race: Formless
         MinLevel: 140
   - Id: 5413
     Title: "[Repeat]Warrior Discipline-Dragon"
     Targets:
       - Id: 1
-        Count: 10
+        Count: 50
         Race: Dragon
         MinLevel: 140
   - Id: 5414
