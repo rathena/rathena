@@ -17150,7 +17150,7 @@ void clif_quest_send_list(struct map_session_data *sd)
 				WFIFOL(fd, offset) = (race ? race : (size ? size : (element ? element : 0)));
 				offset += 4;
 #endif
-				WFIFOL(fd, offset) = ((mob && qi->objectives[j]->mob_id > 0) ? qi->objectives[j]->mob_id : 1002);
+				WFIFOL(fd, offset) = ((mob && qi->objectives[j]->mob_id > 0) ? qi->objectives[j]->mob_id : MONID_PORING);
 				offset += 4;
 #if PACKETVER >= 20150513
 				WFIFOW(fd, offset) = qi->objectives[j]->min_level;
@@ -17218,7 +17218,7 @@ void clif_quest_send_mission(struct map_session_data *sd)
 		for (int j = 0 ; j < qi->objectives.size(); j++) {
 			struct mob_db *mob = mob_db(qi->objectives[j]->mob_id);
 
-			WFIFOL(fd, i*104+22+j*30) = (mob ? qi->objectives[j]->mob_id : 1002);
+			WFIFOL(fd, i*104+22+j*30) = (mob ? qi->objectives[j]->mob_id : MOBID_PORING);
 			WFIFOW(fd, i*104+26+j*30) = sd->quest_log[i].count[j];
 			if (mob && qi->objectives[j]->mob_id > 0)
 				safestrncpy(WFIFOCP(fd, i*104+28+j*30), mob->jname, NAME_LENGTH);
@@ -17268,7 +17268,7 @@ void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 		WFIFOL(fd, offset) = (race ? race : (size ? size : (element ? element : 0)));	// effect ?
 		offset += 4;
 #endif
-		WFIFOL(fd, offset) = ((mob && qi->objectives[i]->mob_id > 0) ? qi->objectives[i]->mob_id : 1002);	// 0 can't be used as it displays "Novice" job regardless of the clif_mobtype_name
+		WFIFOL(fd, offset) = ((mob && qi->objectives[i]->mob_id > 0) ? qi->objectives[i]->mob_id : MOBID_PORING);	// 0 can't be used as it displays "Novice" job regardless of the clif_mobtype_name
 		offset += 4;
 #if PACKETVER >= 20150513
 		WFIFOW(fd, offset) = qi->objectives[i]->min_level;
