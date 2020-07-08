@@ -7807,12 +7807,12 @@
 	export_constant(BG_INFO_DESERTER_TIME);
 
 	/* item job classes */
-	export_constant2("ITEMJ_Normal", ITEMJ_NORMAL);
-	export_constant2("ITEMJ_High", ITEMJ_UPPER);
-	export_constant2("ITEMJ_Baby", ITEMJ_BABY);
-	export_constant2("ITEMJ_Third", ITEMJ_THIRD);
-	export_constant2("ITEMJ_Third_High", ITEMJ_THIRD_UPPER);
-	export_constant2("ITEMJ_Third_Baby", ITEMJ_THIRD_BABY);
+	export_constant(ITEMJ_NORMAL);
+	export_constant(ITEMJ_UPPER);
+	export_constant(ITEMJ_BABY);
+	export_constant(ITEMJ_THIRD);
+	export_constant(ITEMJ_THIRD_UPPER);
+	export_constant(ITEMJ_THIRD_BABY);
 
 	/* item drop effects */
 	export_constant(DROPEFFECT_NONE);

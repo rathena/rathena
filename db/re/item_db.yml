@@ -5770,8 +5770,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -5795,8 +5795,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -5913,8 +5913,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -5938,8 +5938,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -6021,8 +6021,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -6046,8 +6046,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -6122,8 +6122,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -6172,7 +6172,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -8315,8 +8315,8 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -8337,8 +8337,8 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -8360,8 +8360,8 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -8383,8 +8383,8 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -8697,8 +8697,8 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -8720,8 +8720,8 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -8938,8 +8938,8 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -8989,8 +8989,8 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -9337,8 +9337,8 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -9623,7 +9623,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -9645,7 +9645,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -9707,7 +9707,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -9755,7 +9755,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -10365,8 +10365,8 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -10393,8 +10393,8 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -10421,8 +10421,8 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -10636,7 +10636,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -10691,8 +10691,8 @@ Body:
       Crusader: true
       Knight: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -10819,9 +10819,9 @@ Body:
       Crusader: true
       Knight: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -10847,9 +10847,9 @@ Body:
       Crusader: true
       Knight: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -10948,7 +10948,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -11433,8 +11433,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -11457,8 +11457,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -11481,8 +11481,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -11641,8 +11641,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -11674,8 +11674,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -11886,7 +11886,7 @@ Body:
       Swordman: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -11931,8 +11931,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -11955,7 +11955,7 @@ Body:
       Crusader: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -11977,7 +11977,7 @@ Body:
       Crusader: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -12039,9 +12039,9 @@ Body:
       Crusader: true
       Knight: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -12773,8 +12773,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -12796,8 +12796,8 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -12821,8 +12821,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -12927,8 +12927,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -13110,7 +13110,7 @@ Body:
       Swordman: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -14256,8 +14256,8 @@ Body:
       Monk: true
       Priest: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -14392,7 +14392,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -16055,8 +16055,8 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -16103,8 +16103,8 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -16394,8 +16394,8 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -16421,8 +16421,8 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -16624,8 +16624,8 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -16661,8 +16661,8 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -16695,8 +16695,8 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -16720,8 +16720,8 @@ Body:
       Monk: true
       Priest: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -16743,8 +16743,8 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -17123,8 +17123,8 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -17146,8 +17146,8 @@ Body:
       Acolyte: true
       Mage: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -17175,8 +17175,8 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -17282,7 +17282,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -17466,7 +17466,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -17487,7 +17487,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -17564,7 +17564,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -17593,7 +17593,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -17617,7 +17617,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -17640,7 +17640,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -17664,7 +17664,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -17687,7 +17687,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -17711,7 +17711,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -17743,7 +17743,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -17767,7 +17767,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -17791,7 +17791,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -17815,7 +17815,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -17838,7 +17838,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -17861,7 +17861,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -17884,7 +17884,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -17907,7 +17907,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -17946,7 +17946,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -18732,8 +18732,8 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -18755,8 +18755,8 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -18840,8 +18840,8 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -18864,8 +18864,8 @@ Body:
       BardDancer: true
       Hunter: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -18968,8 +18968,8 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -20111,8 +20111,8 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -20368,7 +20368,7 @@ Body:
       Monk: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -20489,7 +20489,7 @@ Body:
       Monk: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -20531,7 +20531,7 @@ Body:
       Monk: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -20554,7 +20554,7 @@ Body:
       Monk: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -20930,8 +20930,8 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -20952,8 +20952,8 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -21074,8 +21074,8 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -21097,8 +21097,8 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -21144,8 +21144,8 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -21273,7 +21273,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Male
     Locations:
@@ -21359,7 +21359,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -21382,7 +21382,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Male
     Locations:
@@ -21431,7 +21431,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Male
     Locations:
@@ -21502,7 +21502,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Male
     Locations:
@@ -21934,8 +21934,8 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -21957,8 +21957,8 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -21979,8 +21979,8 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -22101,8 +22101,8 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -22124,8 +22124,8 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -22318,7 +22318,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Female
     Locations:
@@ -22404,7 +22404,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -22427,7 +22427,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Female
     Locations:
@@ -22526,8 +22526,8 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -22604,8 +22604,8 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -22638,8 +22638,8 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -22664,8 +22664,8 @@ Body:
       Monk: true
       Priest: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -23048,7 +23048,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -23071,8 +23071,8 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -23101,7 +23101,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -23129,7 +23129,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -23204,7 +23204,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -23277,9 +23277,9 @@ Body:
       SoulLinker: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -23357,7 +23357,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -23382,7 +23382,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -23407,7 +23407,7 @@ Body:
       Priest: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -23797,8 +23797,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 68
@@ -23819,8 +23819,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 55
@@ -23841,8 +23841,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 55
@@ -23863,8 +23863,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 75
@@ -23975,8 +23975,8 @@ Body:
       SoulLinker: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 70
@@ -24018,8 +24018,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 50
@@ -24051,8 +24051,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 70
@@ -24071,8 +24071,8 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 70
@@ -24108,8 +24108,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 95
@@ -24150,8 +24150,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 65
@@ -24292,8 +24292,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 22
@@ -24901,7 +24901,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Left_Hand: true
@@ -24972,7 +24972,7 @@ Body:
     Slots: 1
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Left_Hand: true
@@ -27478,8 +27478,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 1
@@ -27606,8 +27606,8 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 55
@@ -27627,8 +27627,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 55
@@ -27648,8 +27648,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 55
@@ -27667,8 +27667,8 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 50
@@ -27803,8 +27803,8 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 55
@@ -27830,8 +27830,8 @@ Body:
       Swordman: true
       Thief: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 55
@@ -28103,8 +28103,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 70
@@ -28135,8 +28135,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 70
@@ -28154,8 +28154,8 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 70
@@ -28186,8 +28186,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 70
@@ -28207,8 +28207,8 @@ Body:
       BardDancer: true
       Hunter: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 75
@@ -28228,8 +28228,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 82
@@ -28370,8 +28370,8 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 50
@@ -28400,8 +28400,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     Refineable: true
@@ -28747,8 +28747,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 1
@@ -28789,8 +28789,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 85
@@ -28810,8 +28810,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 55
@@ -28830,8 +28830,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 55
@@ -28849,8 +28849,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 75
@@ -29009,8 +29009,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Shoes: true
     Refineable: true
@@ -29029,8 +29029,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 55
@@ -29194,8 +29194,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 70
@@ -29357,8 +29357,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 85
@@ -29386,8 +29386,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 60
@@ -29791,7 +29791,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -29811,7 +29811,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -29879,7 +29879,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -30623,8 +30623,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Garment: true
     Refineable: true
@@ -30674,8 +30674,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 48
@@ -30695,8 +30695,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 55
@@ -30715,8 +30715,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 55
@@ -30736,8 +30736,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 55
@@ -30763,8 +30763,8 @@ Body:
       Swordman: true
       Thief: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 70
@@ -30790,8 +30790,8 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 70
@@ -30908,8 +30908,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Garment: true
     Refineable: true
@@ -31033,8 +31033,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 70
@@ -31085,8 +31085,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Garment: true
     Refineable: true
@@ -31104,8 +31104,8 @@ Body:
       Monk: true
       Priest: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 70
@@ -31154,8 +31154,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 95
@@ -31218,8 +31218,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 55
@@ -31254,8 +31254,8 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 70
@@ -31284,8 +31284,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Garment: true
     Refineable: true
@@ -31304,8 +31304,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 90
@@ -31527,7 +31527,7 @@ Body:
       Thief: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Garment: true
@@ -31638,7 +31638,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Garment: true
@@ -31657,7 +31657,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Garment: true
@@ -31750,7 +31750,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Garment: true
@@ -32844,8 +32844,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -32875,8 +32875,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -32906,8 +32906,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -32937,8 +32937,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -33213,8 +33213,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -33243,8 +33243,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -33717,8 +33717,8 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -33735,8 +33735,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -33755,8 +33755,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -33775,8 +33775,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -34218,8 +34218,8 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -34235,8 +34235,8 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -34283,8 +34283,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -34581,8 +34581,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -34611,8 +34611,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -34642,8 +34642,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -34660,8 +34660,8 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -34678,8 +34678,8 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -34697,8 +34697,8 @@ Body:
       BardDancer: true
       Hunter: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -34731,8 +34731,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -34996,8 +34996,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -35371,8 +35371,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -35410,8 +35410,8 @@ Body:
     Weight: 200
     Slots: 1
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -35426,8 +35426,8 @@ Body:
     Weight: 200
     Slots: 1
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -35441,8 +35441,8 @@ Body:
     Weight: 200
     Slots: 1
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -35456,8 +35456,8 @@ Body:
     Weight: 200
     Slots: 1
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -35496,8 +35496,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -35534,8 +35534,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -35697,7 +35697,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -35716,7 +35716,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -35735,7 +35735,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -35752,7 +35752,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -35771,7 +35771,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -35790,7 +35790,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -35810,7 +35810,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -35829,7 +35829,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -35846,7 +35846,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -35865,7 +35865,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -35884,7 +35884,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -37035,7 +37035,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -37055,7 +37055,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -37156,7 +37156,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -37689,9 +37689,9 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -38310,7 +38310,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Male
     Locations:
@@ -38330,7 +38330,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Female
     Locations:
@@ -38387,7 +38387,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -51956,8 +51956,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Head_Top: true
     Refineable: true
@@ -55682,8 +55682,8 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Head_Top: true
     EquipLevelMin: 85
@@ -55715,8 +55715,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Head_Top: true
     EquipLevelMin: 85
@@ -57564,8 +57564,8 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Head_Mid: true
     View: 23
@@ -60244,7 +60244,7 @@ Body:
     Defense: 1
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Head_Top: true
@@ -60274,7 +60274,7 @@ Body:
     Weight: 100
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Head_Low: true
@@ -60290,7 +60290,7 @@ Body:
     Defense: 1
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Head_Mid: true
@@ -60393,7 +60393,7 @@ Body:
     Defense: 2
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Head_Top: true
@@ -60519,7 +60519,7 @@ Body:
     Slots: 1
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Head_Top: true
@@ -60548,7 +60548,7 @@ Body:
     Defense: 1
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Head_Top: true
@@ -60981,7 +60981,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -61010,7 +61010,7 @@ Body:
       Priest: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -61039,7 +61039,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Mid: true
@@ -61069,7 +61069,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Male
     Locations:
@@ -61099,7 +61099,7 @@ Body:
       Rogue: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -61128,7 +61128,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Male
     Locations:
@@ -61158,7 +61158,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -61187,7 +61187,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -61216,7 +61216,7 @@ Body:
       Monk: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -61244,7 +61244,7 @@ Body:
       Assassin: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Low: true
@@ -61273,7 +61273,7 @@ Body:
       Sage: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -61302,7 +61302,7 @@ Body:
       Crusader: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Mid: true
@@ -61332,7 +61332,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Female
     Locations:
@@ -61377,7 +61377,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Female
     Locations:
@@ -62132,8 +62132,8 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Head_Low: true
       Head_Mid: true
@@ -63159,7 +63159,7 @@ Body:
       Crusader: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -63187,7 +63187,7 @@ Body:
       Monk: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -63215,7 +63215,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -63270,7 +63270,7 @@ Body:
       Rogue: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -63298,7 +63298,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -63326,7 +63326,7 @@ Body:
       Assassin: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -63354,7 +63354,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -87717,7 +87717,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Flags:
       BuyingStore: true
@@ -87733,7 +87733,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Flags:
       BuyingStore: true
@@ -87749,7 +87749,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Flags:
       BuyingStore: true
@@ -91499,7 +91499,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Flags:
       BuyingStore: true
@@ -91515,7 +91515,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Flags:
       BuyingStore: true
@@ -91531,7 +91531,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Flags:
       BuyingStore: true
@@ -91547,7 +91547,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Flags:
       BuyingStore: true
@@ -91563,7 +91563,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Flags:
       BuyingStore: true
@@ -95483,8 +95483,8 @@ Body:
       Thief: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -95521,8 +95521,8 @@ Body:
       Thief: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -95710,8 +95710,8 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -95730,8 +95730,8 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -95842,8 +95842,8 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -95880,8 +95880,8 @@ Body:
       Thief: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -96117,8 +96117,8 @@ Body:
       Rogue: true
       Thief: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -96141,8 +96141,8 @@ Body:
       Rogue: true
       Thief: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -96585,8 +96585,8 @@ Body:
       Thief: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -96727,8 +96727,8 @@ Body:
       Thief: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -97010,7 +97010,7 @@ Body:
       Thief: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -97351,7 +97351,7 @@ Body:
       Thief: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -97450,7 +97450,7 @@ Body:
       Rogue: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -97474,7 +97474,7 @@ Body:
       Ninja: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -97495,7 +97495,7 @@ Body:
       Sage: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -99902,7 +99902,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -99918,7 +99918,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -99934,7 +99934,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -99950,7 +99950,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -99966,7 +99966,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -99982,7 +99982,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -99998,7 +99998,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100014,7 +100014,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100030,7 +100030,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100048,7 +100048,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100066,7 +100066,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100084,7 +100084,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100102,7 +100102,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100120,7 +100120,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100138,7 +100138,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100156,7 +100156,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100174,7 +100174,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100192,7 +100192,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100210,7 +100210,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100228,7 +100228,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100246,7 +100246,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100264,7 +100264,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100282,7 +100282,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100300,7 +100300,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100318,7 +100318,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100336,7 +100336,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100354,7 +100354,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100372,7 +100372,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100390,7 +100390,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100408,7 +100408,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -100426,7 +100426,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -101317,9 +101317,9 @@ Body:
       Swordman: true
       Thief: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -101349,9 +101349,9 @@ Body:
       Swordman: true
       Thief: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -101585,8 +101585,8 @@ Body:
       Swordman: true
       Thief: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -101615,8 +101615,8 @@ Body:
       Swordman: true
       Thief: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -101646,8 +101646,8 @@ Body:
       Swordman: true
       Thief: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -101865,8 +101865,8 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -102129,8 +102129,8 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -102307,7 +102307,7 @@ Body:
       Swordman: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -102463,7 +102463,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -102485,7 +102485,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -102576,7 +102576,7 @@ Body:
       Thief: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -102655,9 +102655,9 @@ Body:
       Knight: true
       Rogue: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -102683,9 +102683,9 @@ Body:
       Knight: true
       Rogue: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -102711,9 +102711,9 @@ Body:
       Knight: true
       Rogue: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -121893,8 +121893,8 @@ Body:
       Swordman: true
       Thief: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 85
@@ -122108,8 +122108,8 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 22
@@ -122127,7 +122127,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -122400,7 +122400,7 @@ Body:
       Priest: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -122419,7 +122419,7 @@ Body:
       Priest: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -122526,7 +122526,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -122545,7 +122545,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -122640,7 +122640,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -122891,7 +122891,7 @@ Body:
       Thief: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Armor: true
@@ -123115,9 +123115,9 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -123231,7 +123231,7 @@ Body:
       Thief: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -123256,7 +123256,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -123332,7 +123332,7 @@ Body:
       Merchant: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -123372,7 +123372,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -123500,7 +123500,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -123519,7 +123519,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -123585,7 +123585,7 @@ Body:
       Assassin: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -123619,7 +123619,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Armor: true
@@ -123652,7 +123652,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Armor: true
@@ -123774,7 +123774,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Armor: true
@@ -123794,7 +123794,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Armor: true
@@ -123902,7 +123902,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Armor: true
@@ -124032,7 +124032,7 @@ Body:
       Rogue: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -124050,7 +124050,7 @@ Body:
       Sage: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -124082,7 +124082,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -124100,7 +124100,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Armor: true
@@ -124563,8 +124563,8 @@ Body:
       Priest: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -124593,8 +124593,8 @@ Body:
       Priest: true
       Swordman: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -124876,7 +124876,7 @@ Body:
       Priest: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125016,7 +125016,7 @@ Body:
       Priest: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125308,7 +125308,7 @@ Body:
       Swordman: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125332,9 +125332,9 @@ Body:
     Jobs:
       Acolyte: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125357,7 +125357,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125379,7 +125379,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125402,7 +125402,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125425,7 +125425,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125497,7 +125497,7 @@ Body:
       Monk: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125519,7 +125519,7 @@ Body:
       Monk: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125548,7 +125548,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125796,7 +125796,7 @@ Body:
       Priest: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125819,7 +125819,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125843,7 +125843,7 @@ Body:
       Priest: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125865,7 +125865,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125887,7 +125887,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125909,7 +125909,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125932,7 +125932,7 @@ Body:
       Priest: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -125954,7 +125954,7 @@ Body:
       Monk: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -135057,7 +135057,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -135075,7 +135075,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -135095,7 +135095,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -135115,7 +135115,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -135135,7 +135135,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -135223,7 +135223,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -135605,7 +135605,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -135761,7 +135761,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -135784,7 +135784,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -135809,7 +135809,7 @@ Body:
       Rogue: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -135982,7 +135982,7 @@ Body:
       Rogue: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -136005,9 +136005,9 @@ Body:
       BardDancer: true
       Hunter: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -136030,7 +136030,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -136054,7 +136054,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -136078,7 +136078,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -136103,7 +136103,7 @@ Body:
       Rogue: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -136127,7 +136127,7 @@ Body:
       Rogue: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -136151,7 +136151,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -136175,7 +136175,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -136199,7 +136199,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -136223,7 +136223,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -140358,7 +140358,7 @@ Body:
       Sage: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -140589,7 +140589,7 @@ Body:
     Slots: 1
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -141750,7 +141750,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -141780,7 +141780,7 @@ Body:
       Priest: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -141810,7 +141810,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -141840,7 +141840,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -141870,7 +141870,7 @@ Body:
       Rogue: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -141900,7 +141900,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Male
     Locations:
@@ -141931,7 +141931,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -141961,7 +141961,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -141991,7 +141991,7 @@ Body:
       Monk: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -142021,7 +142021,7 @@ Body:
       Sage: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -142051,7 +142051,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Female
     Locations:
@@ -142082,7 +142082,7 @@ Body:
       Assassin: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -142112,7 +142112,7 @@ Body:
       Crusader: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -142142,7 +142142,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -143487,7 +143487,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -143516,7 +143516,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -143545,7 +143545,7 @@ Body:
       Assassin: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -143574,7 +143574,7 @@ Body:
       Rogue: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -143603,7 +143603,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -143632,7 +143632,7 @@ Body:
       Sage: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -143661,7 +143661,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -143690,7 +143690,7 @@ Body:
       Crusader: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -143719,7 +143719,7 @@ Body:
       Priest: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -143748,7 +143748,7 @@ Body:
       Monk: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -143777,7 +143777,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Head_Top: true
@@ -143806,7 +143806,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Male
     Locations:
@@ -143836,7 +143836,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Female
     Locations:
@@ -153064,9 +153064,9 @@ Body:
       Thief: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Garment: true
@@ -153125,7 +153125,7 @@ Body:
     Slots: 1
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Garment: true
@@ -153226,7 +153226,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Garment: true
@@ -153246,7 +153246,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Garment: true
@@ -153562,7 +153562,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Garment: true
@@ -153582,7 +153582,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Garment: true
@@ -153602,7 +153602,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Garment: true
@@ -153726,7 +153726,7 @@ Body:
       Sage: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Garment: true
@@ -153758,7 +153758,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Garment: true
@@ -154542,7 +154542,7 @@ Body:
       Swordman: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -154591,7 +154591,7 @@ Body:
       Swordman: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -154615,7 +154615,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -154636,7 +154636,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -154662,7 +154662,7 @@ Body:
       Swordman: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -154738,7 +154738,7 @@ Body:
       Swordman: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -154761,7 +154761,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -154787,7 +154787,7 @@ Body:
       Swordman: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -154813,7 +154813,7 @@ Body:
       Swordman: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -154839,7 +154839,7 @@ Body:
       Swordman: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -154863,7 +154863,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -154887,7 +154887,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -154910,7 +154910,7 @@ Body:
       SuperNovice: false
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -154931,7 +154931,7 @@ Body:
       SuperNovice: false
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -154952,7 +154952,7 @@ Body:
       SuperNovice: false
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -154973,7 +154973,7 @@ Body:
       SuperNovice: false
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -154994,7 +154994,7 @@ Body:
       SuperNovice: false
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -155015,7 +155015,7 @@ Body:
       SuperNovice: false
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -155037,7 +155037,7 @@ Body:
       SuperNovice: false
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -155059,7 +155059,7 @@ Body:
       SuperNovice: false
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -155081,7 +155081,7 @@ Body:
       SuperNovice: false
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -155103,7 +155103,7 @@ Body:
       SuperNovice: false
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -155125,7 +155125,7 @@ Body:
       SuperNovice: false
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -155147,7 +155147,7 @@ Body:
       SuperNovice: false
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -155286,7 +155286,7 @@ Body:
     Slots: 1
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -155374,7 +155374,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -155394,7 +155394,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shoes: true
@@ -155549,7 +155549,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Shoes: true
@@ -155569,7 +155569,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Shoes: true
@@ -155690,7 +155690,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Shoes: true
@@ -155710,7 +155710,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Shoes: true
@@ -155730,7 +155730,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Shoes: true
@@ -156823,7 +156823,7 @@ Body:
     Weight: 10
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Delay:
       Duration: 5000
@@ -159663,7 +159663,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     EquipLevelMin: 100
     Delay:
@@ -162049,7 +162049,7 @@ Body:
     Buy: 10
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Weapon: true
@@ -162097,7 +162097,7 @@ Body:
     Buy: 10
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Weapon: true
@@ -162722,7 +162722,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Shadow_Weapon: true
@@ -162738,7 +162738,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Shadow_Weapon: true
@@ -162755,7 +162755,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Weapon: true
@@ -162772,7 +162772,7 @@ Body:
       Crusader: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Weapon: true
@@ -162789,7 +162789,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Weapon: true
@@ -162806,7 +162806,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Weapon: true
@@ -162823,7 +162823,7 @@ Body:
       Priest: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Weapon: true
@@ -162840,7 +162840,7 @@ Body:
       Monk: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Weapon: true
@@ -162857,7 +162857,7 @@ Body:
       Assassin: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Weapon: true
@@ -162874,7 +162874,7 @@ Body:
       Rogue: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Weapon: true
@@ -162891,7 +162891,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Weapon: true
@@ -162908,7 +162908,7 @@ Body:
       Sage: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Weapon: true
@@ -162925,7 +162925,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Weapon: true
@@ -162942,7 +162942,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Male
     Locations:
@@ -162960,7 +162960,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Female
     Locations:
@@ -162977,7 +162977,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Shield: true
@@ -162994,7 +162994,7 @@ Body:
       Crusader: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Shield: true
@@ -163011,7 +163011,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Shield: true
@@ -163028,7 +163028,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Shield: true
@@ -163045,7 +163045,7 @@ Body:
       Priest: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Shield: true
@@ -163062,7 +163062,7 @@ Body:
       Monk: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Shield: true
@@ -163079,7 +163079,7 @@ Body:
       Assassin: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Shield: true
@@ -163096,7 +163096,7 @@ Body:
       Rogue: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Shield: true
@@ -163113,7 +163113,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Shield: true
@@ -163130,7 +163130,7 @@ Body:
       Sage: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Shield: true
@@ -163147,7 +163147,7 @@ Body:
       Hunter: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Shadow_Shield: true
@@ -163164,7 +163164,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Male
     Locations:
@@ -163182,7 +163182,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Female
     Locations:
@@ -163228,7 +163228,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Shadow_Shield: true
@@ -163245,7 +163245,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Shadow_Shield: true
@@ -164246,7 +164246,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Shadow_Armor: true
@@ -164263,7 +164263,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Shadow_Shoes: true
@@ -164280,7 +164280,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Shadow_Armor: true
@@ -164297,7 +164297,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Shadow_Shoes: true
@@ -166164,7 +166164,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -166194,7 +166194,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -166247,9 +166247,9 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -166381,7 +166381,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Hand: true
@@ -166405,7 +166405,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -166429,7 +166429,7 @@ Body:
       Sage: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -166453,7 +166453,7 @@ Body:
       Sage: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -166477,7 +166477,7 @@ Body:
       Priest: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -166499,7 +166499,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Female
     Locations:
@@ -166523,7 +166523,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Female
     Locations:
@@ -166546,7 +166546,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Female
     Locations:
@@ -168361,7 +168361,7 @@ Body:
       Assassin: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -168424,7 +168424,7 @@ Body:
       Assassin: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -168447,7 +168447,7 @@ Body:
       Assassin: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -168511,7 +168511,7 @@ Body:
       Assassin: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -168561,9 +168561,9 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -168585,9 +168585,9 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
+      Upper: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -168631,7 +168631,7 @@ Body:
       Assassin: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -168655,7 +168655,7 @@ Body:
       Assassin: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -168685,7 +168685,7 @@ Body:
       Swordman: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -168710,7 +168710,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -168757,7 +168757,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -168780,7 +168780,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -168809,7 +168809,7 @@ Body:
       Swordman: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -168922,7 +168922,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -168946,7 +168946,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -168969,7 +168969,7 @@ Body:
       Blacksmith: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -169396,8 +169396,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -169428,8 +169428,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -169460,8 +169460,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -169492,8 +169492,8 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
-      Third_High: true
+      Upper: true
+      Third_Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -169845,7 +169845,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Accessory: true
@@ -169897,7 +169897,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Accessory: true
@@ -169916,7 +169916,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Accessory: true
@@ -169935,7 +169935,7 @@ Body:
       Summoner: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
     Locations:
       Right_Accessory: true
@@ -170388,7 +170388,7 @@ Body:
       Rogue: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -170406,7 +170406,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Accessory: true
@@ -171352,7 +171352,7 @@ Body:
       Priest: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -171482,7 +171482,7 @@ Body:
       Sage: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -171609,7 +171609,7 @@ Body:
       Sage: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -171631,7 +171631,7 @@ Body:
       Rogue: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -171653,7 +171653,7 @@ Body:
       Sage: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -171712,7 +171712,7 @@ Body:
       Wizard: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -172023,7 +172023,7 @@ Body:
       Assassin: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -172044,7 +172044,7 @@ Body:
       Assassin: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -172065,7 +172065,7 @@ Body:
       Rogue: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -172089,7 +172089,7 @@ Body:
       Rogue: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -172370,7 +172370,7 @@ Body:
       Crusader: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Left_Hand: true
@@ -179142,7 +179142,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -179163,7 +179163,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -179186,7 +179186,7 @@ Body:
       Crusader: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -179209,7 +179209,7 @@ Body:
       Knight: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -179232,7 +179232,7 @@ Body:
       Crusader: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -179255,7 +179255,7 @@ Body:
       Crusader: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -179278,7 +179278,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Male
     Locations:
@@ -179301,7 +179301,7 @@ Body:
       BardDancer: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Gender: Male
     Locations:
@@ -179644,7 +179644,7 @@ Body:
       Crusader: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true
@@ -179667,7 +179667,7 @@ Body:
       Alchemist: true
     Classes:
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Right_Hand: true

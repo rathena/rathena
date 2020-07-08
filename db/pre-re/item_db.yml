@@ -5677,7 +5677,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -5701,7 +5701,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -5818,7 +5818,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -5842,7 +5842,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -5922,7 +5922,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -5946,7 +5946,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -6021,7 +6021,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -7980,7 +7980,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -8001,7 +8001,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -8023,7 +8023,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -8045,7 +8045,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -8336,7 +8336,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -8358,7 +8358,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -8661,7 +8661,7 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -9363,7 +9363,7 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -9390,7 +9390,7 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -9417,7 +9417,7 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -9643,7 +9643,7 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -9700,7 +9700,7 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -10174,7 +10174,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -10197,7 +10197,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -10220,7 +10220,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -10368,7 +10368,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -10400,7 +10400,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -11158,7 +11158,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -11180,7 +11180,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -11204,7 +11204,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -12335,7 +12335,7 @@ Body:
       Monk: true
       Priest: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -13816,7 +13816,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -13861,7 +13861,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -14127,7 +14127,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -14152,7 +14152,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -14358,7 +14358,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -14393,7 +14393,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -14425,7 +14425,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -14448,7 +14448,7 @@ Body:
       Monk: true
       Priest: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -14470,7 +14470,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -15237,7 +15237,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -15259,7 +15259,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -15339,7 +15339,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -15363,7 +15363,7 @@ Body:
       BardDancer: true
       Hunter: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -15475,7 +15475,7 @@ Body:
       BardDancer: true
       Hunter: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -16418,7 +16418,7 @@ Body:
     Jobs:
       Monk: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -16878,7 +16878,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
+      Upper: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -16899,7 +16899,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
+      Upper: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -17018,7 +17018,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
+      Upper: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -17040,7 +17040,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
+      Upper: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -17086,7 +17086,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
+      Upper: true
     Gender: Male
     Locations:
       Right_Hand: true
@@ -17551,7 +17551,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
+      Upper: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -17573,7 +17573,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
+      Upper: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -17594,7 +17594,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
+      Upper: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -17713,7 +17713,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
+      Upper: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -17735,7 +17735,7 @@ Body:
     Jobs:
       BardDancer: true
     Classes:
-      High: true
+      Upper: true
     Gender: Female
     Locations:
       Right_Hand: true
@@ -17836,7 +17836,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -17910,7 +17910,7 @@ Body:
     Jobs:
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -17942,7 +17942,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -17966,7 +17966,7 @@ Body:
       Monk: true
       Priest: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
       Left_Hand: true
@@ -18368,7 +18368,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 68
@@ -18389,7 +18389,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 55
@@ -18410,7 +18410,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 55
@@ -18431,7 +18431,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 75
@@ -18542,7 +18542,7 @@ Body:
       SoulLinker: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 70
@@ -18584,7 +18584,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 50
@@ -18616,7 +18616,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 70
@@ -18635,7 +18635,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 70
@@ -18661,7 +18661,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 95
@@ -18692,7 +18692,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 65
@@ -18711,10 +18711,10 @@ Body:
       Blacksmith: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Left_Hand: true
@@ -21099,7 +21099,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 1
@@ -21176,7 +21176,7 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 55
@@ -21196,7 +21196,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 55
@@ -21216,7 +21216,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 55
@@ -21234,7 +21234,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 50
@@ -21369,7 +21369,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 55
@@ -21395,7 +21395,7 @@ Body:
       Swordman: true
       Thief: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 55
@@ -21659,7 +21659,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 70
@@ -21690,7 +21690,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 70
@@ -21708,7 +21708,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 70
@@ -21739,7 +21739,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 70
@@ -21759,7 +21759,7 @@ Body:
       BardDancer: true
       Hunter: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 75
@@ -21779,7 +21779,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 82
@@ -21908,7 +21908,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 50
@@ -21937,7 +21937,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Armor: true
     Refineable: true
@@ -22271,7 +22271,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 1
@@ -22312,7 +22312,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 85
@@ -22332,7 +22332,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 55
@@ -22351,7 +22351,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 55
@@ -22369,7 +22369,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 75
@@ -22518,7 +22518,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Shoes: true
     Refineable: true
@@ -22537,7 +22537,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 55
@@ -22697,7 +22697,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 70
@@ -22839,7 +22839,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 85
@@ -22867,7 +22867,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Shoes: true
     EquipLevelMin: 60
@@ -23263,7 +23263,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 1
@@ -23312,7 +23312,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 48
@@ -23332,7 +23332,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 55
@@ -23351,7 +23351,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 55
@@ -23371,7 +23371,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 55
@@ -23397,7 +23397,7 @@ Body:
       Swordman: true
       Thief: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 70
@@ -23423,7 +23423,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 70
@@ -23520,7 +23520,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Garment: true
     Refineable: true
@@ -23640,7 +23640,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 70
@@ -23691,7 +23691,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Garment: true
     Refineable: true
@@ -23709,7 +23709,7 @@ Body:
       Monk: true
       Priest: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 70
@@ -23748,7 +23748,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 95
@@ -23800,7 +23800,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 55
@@ -23835,7 +23835,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 70
@@ -23864,7 +23864,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Garment: true
     Refineable: true
@@ -23883,7 +23883,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Garment: true
     EquipLevelMin: 90
@@ -24721,7 +24721,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -24751,7 +24751,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -24781,7 +24781,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -24811,7 +24811,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -25082,7 +25082,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -25111,7 +25111,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -25575,7 +25575,7 @@ Body:
       Knight: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -25592,7 +25592,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -25611,7 +25611,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -25630,7 +25630,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -26024,7 +26024,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -26040,7 +26040,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -26087,7 +26087,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -26361,7 +26361,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -26390,7 +26390,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -26420,7 +26420,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -26437,7 +26437,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -26454,7 +26454,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -26472,7 +26472,7 @@ Body:
       BardDancer: true
       Hunter: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -26505,7 +26505,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -26760,7 +26760,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -27074,7 +27074,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -27113,7 +27113,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -27132,7 +27132,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -27151,7 +27151,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -27170,7 +27170,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -36513,7 +36513,7 @@ Body:
       Novice: false
       SuperNovice: false
     Classes:
-      High: true
+      Upper: true
     Locations:
       Head_Top: true
     Refineable: true
@@ -40413,7 +40413,7 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Head_Top: true
     EquipLevelMin: 85
@@ -40445,7 +40445,7 @@ Body:
       StarGladiator: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Head_Top: true
     EquipLevelMin: 85
@@ -42173,7 +42173,7 @@ Body:
     Jobs:
       Hunter: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Head_Mid: true
     EquipLevelMin: 60
@@ -44140,7 +44140,7 @@ Body:
       Sage: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Head_Low: true
       Head_Mid: true
@@ -61729,10 +61729,10 @@ Body:
     Weight: 20
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Flags:
       BuyingStore: true
@@ -61746,10 +61746,10 @@ Body:
     Weight: 40
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Flags:
       BuyingStore: true
@@ -61763,10 +61763,10 @@ Body:
     Weight: 80
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Flags:
       BuyingStore: true
@@ -61780,10 +61780,10 @@ Body:
     Weight: 20
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Flags:
       BuyingStore: true
@@ -61797,10 +61797,10 @@ Body:
     Weight: 40
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Flags:
       BuyingStore: true
@@ -61814,10 +61814,10 @@ Body:
     Weight: 80
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Flags:
       BuyingStore: true
@@ -62989,10 +62989,10 @@ Body:
     Weight: 100
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
   - Id: 12701
     AegisName: Old_Blue_Box_F
@@ -63828,10 +63828,10 @@ Body:
     Weight: 50
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
   - Id: 12848
     AegisName: Falcon_Flute
@@ -65950,7 +65950,7 @@ Body:
       Thief: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -65987,7 +65987,7 @@ Body:
       Thief: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -66174,7 +66174,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -66193,7 +66193,7 @@ Body:
     Jobs:
       Assassin: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -66298,7 +66298,7 @@ Body:
     Jobs:
       Rogue: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -66335,7 +66335,7 @@ Body:
       Thief: true
       Wizard: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -66584,7 +66584,7 @@ Body:
       Rogue: true
       Thief: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 2
@@ -66607,7 +66607,7 @@ Body:
       Rogue: true
       Thief: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -68320,10 +68320,10 @@ Body:
       Ninja: true
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     Locations:
       Ammo: true
@@ -68911,7 +68911,7 @@ Body:
       Swordman: true
       Thief: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -68940,7 +68940,7 @@ Body:
       Swordman: true
       Thief: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -68969,7 +68969,7 @@ Body:
       Swordman: true
       Thief: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -69194,7 +69194,7 @@ Body:
       Merchant: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -80400,7 +80400,7 @@ Body:
       Swordman: true
       Thief: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Armor: true
     EquipLevelMin: 85
@@ -80449,7 +80449,7 @@ Body:
       Priest: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -80478,7 +80478,7 @@ Body:
       Priest: true
       Swordman: true
     Classes:
-      High: true
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -81311,9 +81311,9 @@ Body:
     Weight: 100
     Classes:
       Normal: true
-      High: true
+      Upper: true
       Baby: true
       Third: true
-      Third_High: true
+      Third_Upper: true
       Third_Baby: true
     EquipLevelMin: 1
