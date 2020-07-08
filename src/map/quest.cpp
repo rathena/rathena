@@ -268,11 +268,9 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 					target->element = static_cast<uint8>(constant);
 				}
 
-				// if one level is set, the second must be above 0 (visual glitch)
+				// if max_level is set, min_level is 1
 				if (target->min_level == 0 && target->max_level > 0)
 					target->min_level = 1;
-				if (target->max_level == 0 && target->min_level > 0)
-					target->max_level = MAX_LEVEL;
 			}
 
 			if (this->nodeExists(targetNode, "Count")) {

@@ -41,7 +41,7 @@
 #       Size        Monster size target (default All). Valids size are Small, Medium, Large, All.
 #       Element     Monster element target (default All). Valids elements are Dark, Earth, Fire, Ghost, Holy, Neutral, Poison, Undead, Water, Wind, All.
 #       MinLevel    Minimum monster level target. If not supplied but MaxLevel defined, MinLevel is 1. Set to 0 to ignore MinLevel on import. (Default: 0)
-#       MaxLevel    Maximum monster level target. If not supplied but MinLevel defined, MaxLevel value is the constant MAX_LEVEL defined by the server. Set to 0 to ignore MaxLevel on import. (Default: 0)
+#       MaxLevel    Maximum monster level target. Set to 0 to ignore MaxLevel on import. (Default: 0)
 #   Drops:          Quest item drop targets. (Default: null)
 #     - Mob         Monster to kill. 0 will apply to all monsters. (Default: 0)
 #       Item        Item to drop.
