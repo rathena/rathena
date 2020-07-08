@@ -609,10 +609,12 @@ int guild_recv_info(struct guild *sg) {
 		//Perform the check on the user because the first load
 		guild_check_member(sg);
 		if ((sd = map_nick2sd(sg->master,false)) != NULL) {
+#ifndef RENEWAL
 			//If the guild master is online the first time the guild_info is received,
 			//that means he was the first to join, so apply guild skill blocking here.
 			if( battle_config.guild_skill_relog_delay )
 				guild_block_skill(sd, battle_config.guild_skill_relog_delay);
+#endif
 
 			//Also set the guild master flag.
 			sd->guild = g;
@@ -807,9 +809,11 @@ void guild_member_joined(struct map_session_data *sd) {
 	}
 	if (strcmp(sd->status.name,g->master) == 0) {	// set the Guild Master flag
 		sd->state.gmaster_flag = 1;
+#ifndef RENEWAL
 		// prevent Guild Skills from being used directly after relog
 		if( battle_config.guild_skill_relog_delay )
 			guild_block_skill(sd, battle_config.guild_skill_relog_delay);
+#endif
 	}
 	i = guild_getindex(g, sd->status.account_id, sd->status.char_id);
 	if (i == -1)
@@ -1005,6 +1009,7 @@ int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int f
 		status_change_end(&sd->bl,SC_GLORYWOUNDS,INVALID_TIMER);
 		status_change_end(&sd->bl,SC_SOULCOLD,INVALID_TIMER);
 		status_change_end(&sd->bl,SC_HAWKEYES,INVALID_TIMER);
+		status_change_end(&sd->bl,SC_EMERGENCY_MOVE,INVALID_TIMER);
 		//@TODO: Send emblem update to self and people around
 	}
 	return 0;
@@ -1074,9 +1079,11 @@ int guild_send_memberinfoshort(struct map_session_data *sd,int online) { // clea
 
 	if(!online){
 		int i=guild_getindex(g,sd->status.account_id,sd->status.char_id);
-		if(i>=0)
-			g->member[i].sd=NULL;
-		else
+		if (i >= 0) {
+			if (sd->state.gmaster_flag == 1 && g->chargeshout_flag.active)
+				g->chargeshout_flag.active = false;
+			g->member[i].sd = NULL;
+		} else
 			ShowError("guild_send_memberinfoshort: Failed to locate member %d:%d in guild %d!\n", sd->status.account_id, sd->status.char_id, g->guild_id);
 		return 0;
 	}
@@ -1481,6 +1488,7 @@ int guild_skillupack(int guild_id,uint16 skill_id,uint32 account_id) {
 			case GD_GLORYWOUNDS:
 			case GD_SOULCOLD:
 			case GD_HAWKEYES:
+			case GD_EMERGENCY_MOVE:
 					guild_guildaura_refresh(sd,skill_id,g->skill[idx].lv);
 				break;
 		}
@@ -1891,6 +1899,7 @@ int guild_broken(int guild_id,int flag) {
 			status_change_end(&sd->bl,SC_GLORYWOUNDS,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_SOULCOLD,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_HAWKEYES,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_EMERGENCY_MOVE,INVALID_TIMER);
 		}
 	}
 
@@ -1975,8 +1984,10 @@ int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id, time_t tim
 		g->member[0].sd->state.gmaster_flag = 1;
 		clif_name_area(&g->member[0].sd->bl);
 		//Block his skills to prevent abuse.
+#ifndef RENEWAL
 		if (battle_config.guild_skill_relog_delay)
 			guild_block_skill(g->member[0].sd, battle_config.guild_skill_relog_delay);
+#endif
 	}
 
 	// announce the change to all guild members

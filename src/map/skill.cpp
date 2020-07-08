@@ -2035,6 +2035,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					case SC_LHZ_DUN_N1:		case SC_LHZ_DUN_N2:			case SC_LHZ_DUN_N3:			case SC_LHZ_DUN_N4:
 					case SC_ENTRY_QUEUE_APPLY_DELAY:	case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
 					case SC_REUSE_LIMIT_LUXANIMA:	case SC_LUXANIMA:	case SC_SOULENERGY:
+					case SC_EMERGENCY_MOVE:
 						continue;
 					case SC_WHISTLE:		case SC_ASSNCROS:		case SC_POEMBRAGI:
 					case SC_APPLEIDUN:		case SC_HUMMING:		case SC_DONTFORGETME:
@@ -8516,6 +8517,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_DRESSUP:		case SC_HANBOK:			case SC_OKTOBERFEST:
 					case SC_LHZ_DUN_N1:		case SC_LHZ_DUN_N2:			case SC_LHZ_DUN_N3:			case SC_LHZ_DUN_N4:
 					case SC_REUSE_LIMIT_LUXANIMA:	case SC_LUXANIMA:	case SC_SOULENERGY:
+					case SC_EMERGENCY_MOVE:
 						continue;
 					case SC_WHISTLE:
 					case SC_ASSNCROS:
@@ -9393,7 +9395,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				src,skill_id,skill_lv,tick, flag|BCT_GUILD|1,
 				skill_castend_nodamage_id);
 			if (sd)
-				guild_block_skill(sd,skill_get_time2(skill_id,skill_lv));
+#ifdef RENEAWL
+				skill_blockpc_start(sd, skill_id, skill_get_cooldown(time, skill_lv));
+#else
+				guild_block_skill(sd, skill_get_time2(skill_id, skill_lv));
+#endif
 		}
 		break;
 	case GD_EMERGENCYCALL:
@@ -9432,8 +9438,39 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				}
 			}
 			if (sd)
-				guild_block_skill(sd,skill_get_time2(skill_id,skill_lv));
+#ifdef RENEAWL
+				skill_blockpc_start(sd, skill_id, skill_get_cooldown(time, skill_lv));
+#else
+				guild_block_skill(sd, skill_get_time2(skill_id, skill_lv));
+#endif
 		}
+		break;
+	case GD_CHARGESHOUT_FLAG:
+		if (sd && sd->guild && sd->state.gmaster_flag == 1) {
+			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, nullptr, MOBID_GUILD_SKILL_FLAG, nullptr, SZ_SMALL, AI_GUILD);
+
+			if (md) {
+				sd->guild->chargeshout_flag.active = true;
+				sd->guild->chargeshout_flag.m = src->m;
+				sd->guild->chargeshout_flag.x = src->x;
+				sd->guild->chargeshout_flag.y = src->y;
+				md->master_id = src->id;
+
+				if (md->deletetimer != INVALID_TIMER)
+					delete_timer(md->deletetimer, mob_timer_delete);
+				md->deletetimer = add_timer(gettick() + skill_get_time(GD_CHARGESHOUT_FLAG, skill_lv), mob_timer_delete, md->bl.id, 0);
+				mob_spawn(md);
+			}
+		}
+		break;
+	case GD_CHARGESHOUT_BEATING:
+		if (sd && sd->guild && sd->guild->chargeshout_flag.active) {
+			if (pc_setpos(sd, map_id2index(sd->guild->chargeshout_flag.m), sd->guild->chargeshout_flag.x, sd->guild->chargeshout_flag.y, CLR_RESPAWN) != SETPOS_OK)
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+			else
+				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		} else
+			clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 		break;
 
 	case SG_FEEL:
@@ -10003,6 +10040,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_LHZ_DUN_N1:		case SC_LHZ_DUN_N2:			case SC_LHZ_DUN_N3:			case SC_LHZ_DUN_N4:
 					case SC_ENTRY_QUEUE_APPLY_DELAY:	case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
 					case SC_REUSE_LIMIT_LUXANIMA:		case SC_LUXANIMA:	case SC_SOULENERGY:
+					case SC_EMERGENCY_MOVE:
 					continue;
 				case SC_ASSUMPTIO:
 					if( bl->type == BL_MOB )
@@ -13583,6 +13621,7 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 	case GD_GLORYWOUNDS:
 	case GD_SOULCOLD:
 	case GD_HAWKEYES:
+	case GD_EMERGENCY_MOVE:
 		limit = 1000000;//it doesn't matter
 		break;
 	case LG_BANDING:
@@ -13662,7 +13701,11 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 	group->bl_flag = skill_get_unit_bl_target(skill_id);
 	group->state.ammo_consume = (sd && sd->state.arrow_atk && skill_id != GS_GROUNDDRIFT); //Store if this skill needs to consume ammo.
 	group->state.song_dance = (((skill->unit_flag[UF_DANCE] || skill->unit_flag[UF_SONG])?1:0)|(skill->unit_flag[UF_ENSEMBLE]?2:0)); //Signals if this is a song/dance/duet
-	group->state.guildaura = ( skill_id >= GD_LEADERSHIP && skill_id <= GD_HAWKEYES )?1:0;
+	group->state.guildaura = ( skill_id >= GD_LEADERSHIP && skill_id <= GD_HAWKEYES
+#ifdef RENEWAL
+		|| skill_id == GD_EMERGENCY_MOVE
+#endif
+		) ? 1 : 0;
 	group->item_id = req_item;
 
 	// If tick is greater than current, do not invoke onplace function just yet. [Skotlex]
@@ -14165,6 +14208,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 		case UNT_GD_GLORYWOUNDS:
 		case UNT_GD_SOULCOLD:
 		case UNT_GD_HAWKEYES:
+		case UNT_GD_EMERGENCY_MOVE:
 			if ( !sce && battle_check_target(&unit->bl, bl, sg->target_flag) > 0 )
 				sc_start4(ss, bl,type,100,sg->skill_lv,0,0,0,1000);
 			break;
@@ -15091,6 +15135,7 @@ int skill_unit_onleft(uint16 skill_id, struct block_list *bl, t_tick tick)
 		case GD_GLORYWOUNDS:
 		case GD_SOULCOLD:
 		case GD_HAWKEYES:
+		case GD_EMERGENCY_MOVE:
 			if( !(sce && sce->val4) )
 				status_change_end(bl, type, INVALID_TIMER);
 			break;
@@ -15885,6 +15930,8 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		case GD_BATTLEORDER:
 		case GD_REGENERATION:
 		case GD_RESTORE:
+		case GD_CHARGESHOUT_FLAG:
+		case GD_CHARGESHOUT_BEATING:
 			if (!map_flag_gvg2(sd->bl.m)) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;

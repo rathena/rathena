@@ -802,6 +802,10 @@ void initChangeTables(void)
 	set_sc( GD_BATTLEORDER		, SC_BATTLEORDERS	, EFST_GDSKILL_BATTLEORDER	, SCB_STR|SCB_INT|SCB_DEX );
 	set_sc( GD_REGENERATION		, SC_REGENERATION	, EFST_GDSKILL_REGENERATION	, SCB_REGEN );
 
+#ifdef RENEWAL
+	set_sc( GD_EMERGENCY_MOVE	, SC_EMERGENCY_MOVE	, EFST_BLANK	, SCB_SPEED );
+#endif
+
 	/* Rune Knight */
 	set_sc( RK_ENCHANTBLADE		, SC_ENCHANTBLADE	, EFST_ENCHANTBLADE		, SCB_NONE );
 	set_sc( RK_DRAGONHOWLING	, SC_FEAR		, EFST_BLANK			, SCB_FLEE|SCB_HIT );
@@ -7450,6 +7454,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			val = max(val, sc->data[SC_DORAM_WALKSPEED]->val1);
 		if (sc->data[SC_RUSHWINDMILL])
 			val = max(val, 25); // !TODO: Confirm bonus movement speed
+		if (sc->data[SC_EMERGENCY_MOVE])
+			val = max(val, sc->data[SC_EMERGENCY_MOVE]->val2);
 
 		// !FIXME: official items use a single bonus for this [ultramage]
 		if( sc->data[SC_SPEEDUP0] ) // Temporary item-based speedup
@@ -10204,6 +10210,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_GLORYWOUNDS:
 			case SC_SOULCOLD:
 			case SC_HAWKEYES:
+			case SC_EMERGENCY_MOVE:
 				if( sce->val4 && !val4 ) // You cannot override master guild aura
 					return 0;
 				break;
@@ -12080,6 +12087,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_HELPANGEL:
 			tick_time = 1000;
 			val4 = tick / tick_time;
+			break;
+		case SC_EMERGENCY_MOVE:
+			val2 = 25; // Movement speed increase
 			break;
 
 		case SC_SUNSTANCE:
@@ -14592,6 +14602,7 @@ TIMER_FUNC(status_change_timer){
 	case SC_GLORYWOUNDS:
 	case SC_SOULCOLD:
 	case SC_HAWKEYES:
+	case SC_EMERGENCY_MOVE:
 		// They only end by status_change_end
 		sc_timer_next(600000 + tick);
 		return 0;
@@ -14944,6 +14955,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_GLORYWOUNDS:
 			case SC_SOULCOLD:
 			case SC_HAWKEYES:
+			case SC_EMERGENCY_MOVE:
 			case SC_SAFETYWALL:
 			case SC_PNEUMA:
 			case SC_NOCHAT:

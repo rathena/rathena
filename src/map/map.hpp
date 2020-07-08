@@ -372,6 +372,7 @@ enum mob_ai {
 	AI_ZANZOU,
 	AI_LEGION,
 	AI_FAW,
+	AI_GUILD,
 	AI_MAX
 };
 

@@ -1818,7 +1818,7 @@ bool battle_can_hit_gvg_target(struct block_list *src,struct block_list *bl,uint
 
 	if (ud && ud->immune_attack)
 		return false;
-	if(md && md->guardian_data) {
+	if(md && (md->guardian_data || md->special_state.ai == AI_GUILD)) {
 		if ((status_bl_has_mode(bl,MD_SKILL_IMMUNE) || (class_ == MOBID_EMPERIUM && !skill_get_inf2(skill_id, INF2_TARGETEMPERIUM))) && flag&BF_SKILL) //Skill immunity.
 			return false;
 		if( src->type != BL_MOB || mob_is_clone( ((struct mob_data*)src)->mob_id ) ){
@@ -1829,6 +1829,9 @@ bool battle_can_hit_gvg_target(struct block_list *src,struct block_list *bl,uint
 
 			if (g && battle_config.guild_max_castles && guild_checkcastles(g)>=battle_config.guild_max_castles)
 				return false; // [MouseJstr]
+
+			if (md->special_state.ai == AI_GUILD && g != nullptr && g->guild_id == md->master_id)
+				return false;
 		}
 	}
 	return true;
@@ -8231,8 +8234,12 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_PET:
 			if (t_bl->type != BL_MOB && flag&BCT_ENEMY)
 				return 0; //Pet may not attack non-mobs.
-			if (t_bl->type == BL_MOB && ((TBL_MOB*)t_bl)->guardian_data && flag&BCT_ENEMY)
-				return 0; //pet may not attack Guardians/Emperium
+			if (t_bl->type == BL_MOB && flag & BCT_ENEMY) {
+				mob_data *md = BL_CAST(BL_MOB, t_bl);
+
+				if (md && (md->guardian_data || md->special_state.ai == AI_GUILD))
+					return 0; //pet may not attack Guardians/Emperium
+			}
 			break;
 		case BL_SKILL: {
 				struct skill_unit *su = (struct skill_unit *)src;

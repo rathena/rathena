@@ -1590,6 +1590,7 @@
 	export_constant(SC_LUXANIMA);
 	export_constant(SC_REUSE_LIMIT_LUXANIMA);
 	export_constant(SC_ENSEMBLEFATIGUE);
+	export_constant(SC_EMERGENCY_MOVE);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -3627,6 +3628,7 @@
 	export_constant(AI_ZANZOU);
 	export_constant(AI_LEGION);
 	export_constant(AI_FAW);
+	export_constant(AI_GUILD);
 
 	/* battle flags */
 	export_constant(BF_NONE);
@@ -7780,6 +7782,7 @@
 	export_constant(UNT_GD_GLORYWOUNDS);
 	export_constant(UNT_GD_SOULCOLD);
 	export_constant(UNT_GD_HAWKEYES);
+	export_constant(UNT_GD_EMERGENCY_MOVE);
 
 	/* battleground info types */
 	export_constant(BG_INFO_ID);

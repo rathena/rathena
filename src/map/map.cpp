@@ -521,6 +521,8 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_SOULCOLD]->val4), bl->m, x1-x0, y1-y0);
 				if (sc->data[SC_HAWKEYES])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_HAWKEYES]->val4), bl->m, x1-x0, y1-y0);
+				if (sc->data[SC_EMERGENCY_MOVE])
+					skill_unit_move_unit_group(skill_id2group(sc->data[SC_EMERGENCY_MOVE]->val4), bl->m, x1-x0, y1-y0);
 			}
 		}
 	} else
@@ -2086,6 +2088,7 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_GLORYWOUNDS, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_SOULCOLD, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_HAWKEYES, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_EMERGENCY_MOVE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_CHASEWALK2, INVALID_TIMER);
 		if(sd->sc.data[SC_PROVOKE] && sd->sc.data[SC_PROVOKE]->timer == INVALID_TIMER)
 			status_change_end(&sd->bl, SC_PROVOKE, INVALID_TIMER); //Infinite provoke ends on logout

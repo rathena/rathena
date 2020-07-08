@@ -37316,7 +37316,7 @@ Body:
     SplashArea: 15
     CastCancel: true
     Duration1: 180000
-    Duration2: 300000
+    Cooldown: 180000
     FixedCastTime: -1
     CastTimeFlags:
       IgnoreDex: true
@@ -37336,7 +37336,7 @@ Body:
     SplashArea: 15
     CastCancel: true
     Duration1: 60000
-    Duration2: 300000
+    Cooldown: 180000
     FixedCastTime: -1
     CastTimeFlags:
       IgnoreDex: true
@@ -37355,8 +37355,8 @@ Body:
       IsGuild: true
     SplashArea: 15
     CastCancel: true
-    Duration2: 300000
-    FixedCastTime: 10000
+    Cooldown: 180000
+    FixedCastTime: 1000
     CastTimeFlags:
       IgnoreStatus: true
       IgnoreItemBonus: true
@@ -37374,7 +37374,7 @@ Body:
       IsGuild: true
       IgnoreKagehumi: true
     CastCancel: true
-    Duration2: 300000
+    Cooldown: 300000
     FixedCastTime: 5000
     CastTimeFlags:
       IgnoreDex: true
@@ -37400,7 +37400,7 @@ Body:
       IsGuild: true
       IgnoreKagehumi: true
     CastCancel: true
-    Duration2: 300000
+    Cooldown: 300000
     FixedCastTime: 5000
     Requires:
       SpCost: 1
@@ -37410,3 +37410,45 @@ Body:
     MaxLevel: 5
     Flags:
       IsGuild: true
+  - Id: 10017
+    Name: GD_CHARGESHOUT_FLAG
+    Description: Charge Shout Flag
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsGuild: true
+    CastCancel: true
+    Duration1: 300000
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 1
+  - Id: 10018
+    Name: GD_CHARGESHOUT_BEATING
+    Description: Charge Shout Beating
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsGuild: true
+    CastCancel: true
+    FixedCastTime: 1000
+    Requires:
+      SpCost: 1
+  - Id: 10019
+    Name: GD_EMERGENCY_MOVE
+    Description: Emergency Move
+    MaxLevel: 1
+    Flags:
+      IsGuild: true
+    SplashArea: 2 # TODO: Confirm area
+    Duration1: 600000
+    Unit:
+      Id: Gd_Emergency_Move
+      Layout: 2 # TODO: Confirm area
+      Interval: -1
+      Target: SameGuild
+      Flag:
+        NoMob: true
