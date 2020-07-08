@@ -216,7 +216,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 					}
 
-					if (constant < RC_FORMLESS || constant > RC_ALL || constant == RC_NONE_ || constant == RC_PLAYER_HUMAN || constant == RC_PLAYER_DORAM) {
+					if (constant < RC_FORMLESS || constant > RC_ALL || constant == RC_PLAYER_HUMAN || constant == RC_PLAYER_DORAM) {
 						this->invalidWarning(targetNode["Race"], "Unsupported race %s, skipping.\n", race.c_str());
 						return 0;
 					}

@@ -17150,7 +17150,7 @@ void clif_quest_send_list(struct map_session_data *sd)
 				WFIFOL(fd, offset) = (race ? race : (size ? size : (element ? element : 0)));
 				offset += 4;
 #endif
-				WFIFOL(fd, offset) = ((mob && qi->objectives[j]->mob_id > 0) ? qi->objectives[j]->mob_id : MONID_PORING);
+				WFIFOL(fd, offset) = ((mob && qi->objectives[j]->mob_id > 0) ? qi->objectives[j]->mob_id : MOBID_PORING);
 				offset += 4;
 #if PACKETVER >= 20150513
 				WFIFOW(fd, offset) = qi->objectives[j]->min_level;

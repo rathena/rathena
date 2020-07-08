@@ -14,8 +14,8 @@
 #                   Please note the number before "d" only shift the exact timer to the given day(s).
 #   Targets:        Quest objective target. (Default: null)
 #                   The target can be a couple of node Mob/Count or of Id/Race/Size/Element/MinLevel/MaxLevel.
-#                   If Mob is supplied, Count is required and the others field are ignored.
-#                   If Id is supplied, at least one parameter Race/Size/Element/MinLevel/MaxLevel is required.
+#                   If Mob is supplied, Count is required and the other fields are ignored.
+#                   If Id is supplied, at least one other field of Race/Size/Element/MinLevel/MaxLevel is required.
 #                   If Id is supplied, Count is required for each new entry.
 #     - Mob         Monster to kill (aegis monster name).
 #       Count       Amount of monsters to kill. Set to 0 to skip the target on import.
