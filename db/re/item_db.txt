@@ -3542,7 +3542,7 @@
 5350,Pirate_Bandana_,Pirate Bandana,4,20,,100,,4,,1,0xFFFFFFFE,63,2,256,,0,1,74,{ bonus bStr,1; },{},{}
 5351,Sunflower_,Sunflower,4,20,,100,,2,,1,0xFFFFFFFF,63,2,256,,0,0,37,{ bonus2 bSubRace,RC_Insect,10; },{},{}
 5352,Poporing_Cap,Poporing Cap,4,20,,700,,4,,0,0xFFFFFFFE,63,2,256,,38,1,361,{},{},{}
-5353,Helm_Of_Sun_,Hat of the Sun God,4,20,,2400,,4,,1,0x00CFDF80,63,2,768,,0,1,138,{ bonus bStr,3; bonus bInt,2; bonus5 bAutoSpellWhenHit,"HP_ASSUMPTIO",1,1,BF_WEAPON|BF_MAGIC,0; },{},{}
+5353,Helm_Of_Sun_,Hat of the Sun God,4,20,,2400,,4,,1,0x00CFDF80,63,2,768,,0,1,138,{ bonus bStr,3; bonus bInt,2; },{},{}
 5354,Muslim_Hat_M,Muslim Hat M,4,0,,100,,4,,0,0xFFFFFFFF,63,1,256,,0,0,362,{ bonus bVariableCastrate,-5; },{},{}
 5355,Muslim_Hat_F,Selendang,4,0,,100,,4,,0,0xFFFFFFFF,63,0,256,,0,0,363,{ bonus bVariableCastrate,-5; },{},{}
 5356,Pumpkin_Hat_H,Festival Pumpkin Hat,4,20,,200,,3,,0,0xFFFFFFFF,63,2,256,,0,1,206,{ bonus2 bSubRace,RC_Demon,5; bonus2 bAddRace,RC_Demon,5; },{},{}
