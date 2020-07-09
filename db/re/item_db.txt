@@ -8336,8 +8336,8 @@
 14166,F_Giant_Fly_Wing_Box,Giant Fly Wing Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12212,10; },{},{}
 14167,F_Neuralizer_Box,Neuralizer Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12213,1; },{},{}
 14168,F_Convex_Mirror_Box,Convex Mirror Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12214,10; },{},{}
-14169,F_Blessing_10_Scroll_Box,Blessing 10 Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12215,20; },{},{}
-14170,F_Inc_Agi_10_Scroll_Box,Increase AGI 10 scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12216,20; },{},{}
+14169,F_Blessing_10_Scroll_Box,Blessing 10 Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12215,10; },{},{}
+14170,F_Inc_Agi_10_Scroll_Box,Increase AGI 10 scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12216,10; },{},{}
 14171,F_Aspersio_5_Scroll_Box,Aspersio 5 Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12217,10; getitem 523,10; },{},{}
 14172,F_Assumptio_5_Scroll_Box,Assumptio 5 Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12218,10; },{},{}
 14173,F_Wind_Walk_10_Scroll_Box,Wind Walk 10 Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12219,10; },{},{}
