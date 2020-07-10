@@ -126,7 +126,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				item->subtype = W_FIST;
 			}
 
-			item->subtype = static_cast<int>(constant);
+			item->subtype = static_cast<weapon_type>(constant);
 		} else if (item->type == IT_AMMO) {
 			std::string type_constant = "AMMO_" + type;
 			int64 constant;
@@ -136,7 +136,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 				item->subtype = AMMO_NONE;
 			}
 
-			item->subtype = static_cast<int>(constant);
+			item->subtype = static_cast<e_ammo_type>(constant);
 		} else
 			this->invalidWarning(node["SubType"], "Item sub type is not supported for this item type.\n");
 	} else {

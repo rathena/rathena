@@ -833,20 +833,20 @@ struct item_data
 	uint32 value_buy;
 	uint32 value_sell;
 	item_types type;
-	int subtype;
+	uint8 subtype;
 	int maxchance; //For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it, -1 denotes items sold in shops only) [Lupus]
-	int sex;
-	int equip;
+	uint8 sex;
+	uint32 equip;
 	uint32 weight;
 	uint32 atk;
 	uint32 def;
 	uint16 range;
 	uint16 slots;
 	uint32 look;
-	int elv;
-	int wlv;
-	int view_id;
-	int elvmax; ///< Maximum level for this item
+	uint16 elv;
+	uint16 wlv;
+	uint32 view_id;
+	uint16 elvmax; ///< Maximum level for this item
 #ifdef RENEWAL
 	uint32 matk;
 #endif
