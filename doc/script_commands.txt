@@ -1641,7 +1641,7 @@ S_CheckFull:
 
 Example 2: callsub used repeatedly, with different arguments
 // notice how the Zeny check/delete is reused, instead of copy-pasting for every warp
-	switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Beacon Island, Pharos") {
+	switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Beacon Island, Pharos")) {
 		case 1:	callsub S_DunWarp,"hu_fild05",192,207;
 		case 2:	callsub S_DunWarp,"ama_in02",119,181;
 		case 3:	callsub S_DunWarp,"moc_fild20",164,145;
@@ -7977,6 +7977,20 @@ Returns "Unknown" if unit is not found.
 
 ---------------------------------------
 
+*setunittitle <GID>,<title>;
+
+Apply a <title> to the given <GID>.
+
+Note: This only works on non-player types. It also will only work on mobs if battle_config.show_mob_info is not enabled.
+
+---------------------------------------
+
+*getunittitle <GID>;
+
+Returns the title of the given <GID>.
+
+---------------------------------------
+
 *getunitdata <GID>,<arrayname>;
 *setunitdata <GID>,<parameter>,<new value>;
 
@@ -8043,6 +8057,7 @@ Parameters (indexes) for monsters are:
 	UMOB_TARGETID
 	UMOB_ROBE
 	UMOB_BODY2
+	UMOB_GROUP_ID
 
 -----
 
@@ -8087,6 +8102,7 @@ Parameter (indexes) for homunculi are:
 	UHOM_ADELAY
 	UHOM_DMOTION
 	UHOM_TARGETID
+	UHOM_GROUP_ID
 
 -----
 
@@ -8128,6 +8144,7 @@ Parameter (indexes) for pets are:
 	UPET_AMOTION
 	UPET_ADELAY
 	UPET_DMOTION
+	UPET_GROUP_ID
 
 -----
 
@@ -8169,6 +8186,7 @@ Parameter (indexes) for mercenaries are:
 	UMER_ADELAY
 	UMER_DMOTION
 	UMER_TARGETID
+	UMER_GROUP_ID
 
 -----
 
@@ -8212,6 +8230,7 @@ Parameter (indexes) for elementals are:
 	UELE_ADELAY
 	UELE_DMOTION
 	UELE_TARGETID
+	UELE_GROUP_ID
 
 -----
 
@@ -8261,6 +8280,7 @@ Parameter (indexes) for NPCs are:
 	UNPC_ROBE
 	UNPC_BODY2
 	UNPC_DEADSIT
+	UNPC_GROUP_ID
 
 *Notes:
 		- *_SIZE: small (0); medium (1); large (2)

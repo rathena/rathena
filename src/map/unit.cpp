@@ -1328,6 +1328,9 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 	clif_spawn(bl);
 	skill_unit_move(bl,gettick(),1);
 
+	if (!battle_config.slave_stick_with_master && bl->type == BL_MOB && mob_countslave(bl) > 0)
+		mob_warpslave(bl,MOB_SLAVEDISTANCE);
+
 	return 0;
 }
 
@@ -3361,7 +3364,6 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			pc_inventory_rental_clear(sd);
 			pc_delspiritball(sd, sd->spiritball, 1);
 			pc_delspiritcharm(sd, sd->spiritcharm, sd->spiritcharm_type);
-			pc_delsoulball(sd,sd->soulball, 1);
 
 			if( sd->st && sd->st->state != RUN ) {// free attached scripts that are waiting
 				script_free_state(sd->st);

@@ -23859,9 +23859,15 @@ Body:
     Defense: 90
     Slots: 1
     Jobs:
-      All: true
-      Novice: false
-      SuperNovice: false
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Rogue: true
+      Swordman: true
+      Thief: true
     Classes:
       Upper: true
       Third_Upper: true
@@ -43859,7 +43865,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      bonus bBaseAtk,5; bonus2 bAddEle,Ele_Earth,10; bonus2 bCriticalAddRace,RC_Brute,15; bonus2 bCriticalAddRace,RC_Player_Doram,15;
+      bonus bBaseAtk,5; bonus2 bAddEle,Ele_Earth,10; bonus2 bCriticalAddRace,RC_Brute,15; bonus2 bCriticalAddRace,RC_Player_Doram,15; bonus2 bCriticalAddRace,RC_Plant,15;
   - Id: 4433
     AegisName: Imp_Card
     Name: Imp Card
@@ -53310,7 +53316,7 @@ Body:
     Refineable: true
     View: 218
     Script: |
-      bonus bInt,2; if(BaseClass==Job_Mage) bonus bMatkRate,(JobLevel/20); if(Baseclass==Job_Acolyte) bonus bUseSPrate,-(JobLevel/10); if(BaseClass==Job_Archer) bonus bMaxSP,(JobLevel*2);
+      bonus bInt,2; if(BaseClass==Job_Mage) bonus bMatkRate,(JobLevel/20); if(BaseClass==Job_Acolyte) bonus bUseSPrate,-(JobLevel/10); if(BaseClass==Job_Archer) bonus bMaxSP,(JobLevel*2);
   - Id: 5262
     AegisName: Gold_Tiara_
     Name: Golden Tiara
@@ -54962,7 +54968,7 @@ Body:
     Refineable: true
     View: 138
     Script: |
-      bonus bStr,3; bonus bInt,2; bonus5 bAutoSpellWhenHit,"HP_ASSUMPTIO",1,1,BF_WEAPON|BF_MAGIC,0;
+      bonus bStr,3; bonus bInt,2;
   - Id: 5354
     AegisName: Muslim_Hat_M
     Name: Muslim Hat M
@@ -86109,7 +86115,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_ATKPOTION,60000,10; sc_start SC_MATKFOOD,120000,10;
+      sc_start SC_ATKPOTION,60000,10; sc_start SC_MATKFOOD,60000,10;
   - Id: 12269
     AegisName: Tasty_Colonel
     Name: Tasty Pink Ration
@@ -142223,12 +142229,14 @@ Body:
     Type: Armor
     Weight: 500
     Defense: 10
+    Slots: 1
     Locations:
       Head_Top: true
+    EquipLevelMin: 50
     Refineable: true
     View: 1220
     Script: |
-      .@r = getrefine(); bonus bInt,(3 + (.@r/2)+ (BaseLevel > 130 ? .@r : 0)); bonus bMatkRate,4;
+      .@r = getrefine(); bonus bInt,(3 + (BaseLevel > 99 ? .@r : .@r/2)); bonus bMatkRate,4;
   - Id: 19021
     AegisName: Gigant_Helm
     Name: Gigant Helm
@@ -144044,6 +144052,20 @@ Body:
     View: 1629
     Script: |
       bonus bAspd,1;
+  - Id: 19266
+    AegisName: Survive_Circlet_
+    Name: Survivor's Circlet
+    Type: Armor
+    Weight: 500
+    Defense: 10
+    Slots: 1
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 1
+    Refineable: true
+    View: 1220
+    Script: |
+      .@r = getrefine(); bonus bInt,3; bonus bMatk,10*(.@r/2)+(BaseLevel > 129 ? 50 : 0); if (.@r >= 10) {bonus bMatkRate,5;}
   - Id: 19269
     AegisName: Happy_Flapping_Wings
     Name: Happy Flapping Angel Wings
@@ -169189,7 +169211,7 @@ Body:
     EquipLevelMin: 150
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus bDex,2; bonus2 bAddClass,Class_All,2; bonus bLongAtkRate,(.@r/2)*5 + (.@r > 11 ? 5 : 0); if(.@r > 6){ bonus2 bSkillAtk,"RL_R_TRIP",20; } if(.@r > 8){ bonus2 bSkillUseSPrate,"RL_R_TRIP",-5; }
+      .@r = getrefine(); bonus bDex,2; bonus2 bAddClass,Class_All,2; bonus bLongAtkRate,(.@r/2)*5 + (.@r > 11 ? 5 : 0); if(.@r > 6){ bonus2 bSkillAtk,"RL_R_TRIP",20; } if(.@r > 8){ bonus2 bSkillUseSPrate,"RL_R_TRIP",5; }
   - Id: 28242
     AegisName: Calf_Anaconda
     Name: Calf Anaconda
@@ -169209,7 +169231,7 @@ Body:
     EquipLevelMin: 150
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus bSplashRange,1; bonus bMaxSPrate,2; bonus bLongAtkRate,(.@r/2)*5 + (.@r > 8 ? 5 : 0); if(.@r > 6){ bonus2 bSkillAtk,"RL_BANISHING_BUSTER",20; } if(.@r > 11){ bonus2 bSkillUseSPrate,"RL_BANISHING_BUSTER",-15; }
+      .@r = getrefine(); bonus bSplashRange,1; bonus bMaxSPrate,2; bonus bLongAtkRate,(.@r/2)*5 + (.@r > 8 ? 5 : 0); if(.@r > 6){ bonus2 bSkillAtk,"RL_BANISHING_BUSTER",20; } if(.@r > 11){ bonus2 bSkillUseSPrate,"RL_BANISHING_BUSTER",15; }
   - Id: 28243
     AegisName: Calf_Python
     Name: Calf Python
@@ -169371,7 +169393,7 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus bLongAtkRate,2*(.@r/3); bonus bBaseAtk,10*(.@r/2); if (.@r >= 7) { .@val = 15; bonus2 bSkillUseSPrate,"RL_R_TRIP",10; if (.@r >= 9) { autobonus3 "{ bonus bBaseAtk,50; bonus bLongAtkRate,10; }",1000,90000,"RL_P_ALTER"; if (.@r >= 11) { .@val += 15; } } bonus2 bSkillAtk,"RL_R_TRIP",.@val; }
+      .@r = getrefine(); bonus bLongAtkRate,2*(.@r/3); bonus bBaseAtk,10*(.@r/2); if (.@r >= 7) { .@val = 15; bonus2 bSkillUseSPrate,"RL_R_TRIP",-10; if (.@r >= 9) { autobonus3 "{ bonus bBaseAtk,50; bonus bLongAtkRate,10; }",1000,90000,"RL_P_ALTER"; if (.@r >= 11) { .@val += 15; } } bonus2 bSkillAtk,"RL_R_TRIP",.@val; }
   - Id: 28302
     AegisName: Vesper_Core01_
     Name: Vesper Core 01

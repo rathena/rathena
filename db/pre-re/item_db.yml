@@ -18427,9 +18427,15 @@ Body:
     Defense: 4
     Slots: 1
     Jobs:
-      All: true
-      Novice: false
-      SuperNovice: false
+      Alchemist: true
+      Assassin: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Rogue: true
+      Swordman: true
+      Thief: true
     Classes:
       Upper: true
     Locations:
@@ -33022,7 +33028,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      bonus bBaseAtk,5; bonus2 bAddEle,Ele_Earth,10; bonus2 bCriticalAddRace,RC_Brute,15; bonus2 bCriticalAddRace,RC_Player_Doram,15;
+      bonus bBaseAtk,5; bonus2 bAddEle,Ele_Earth,10; bonus2 bCriticalAddRace,RC_Brute,15; bonus2 bCriticalAddRace,RC_Player_Doram,15; bonus2 bCriticalAddRace,RC_Plant,15;
   - Id: 4433
     AegisName: Imp_Card
     Name: Imp Card
@@ -35919,7 +35925,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 3
+    Defense: 2
     Locations:
       Head_Top: true
     Refineable: true
@@ -38062,7 +38068,7 @@ Body:
     Refineable: true
     View: 218
     Script: |
-      bonus bInt,2; if(BaseClass==Job_Mage) bonus bMatkRate,(JobLevel/20); if(Baseclass==Job_Acolyte) bonus bUseSPrate,-(JobLevel/10); if(BaseClass==Job_Archer) bonus bMaxSP,(JobLevel*2);
+      bonus bInt,2; if(BaseClass==Job_Mage) bonus bMatkRate,(JobLevel/20); if(BaseClass==Job_Acolyte) bonus bUseSPrate,-(JobLevel/10); if(BaseClass==Job_Archer) bonus bMaxSP,(JobLevel*2);
   - Id: 5262
     AegisName: Gold_Tiara_
     Name: Golden Tiara
@@ -41346,7 +41352,7 @@ Body:
     Refineable: true
     View: 456
     Script: |
-      bonus bHPrecovRate, 5; bonus bHPrecovRate, 5;
+      bonus bMaxHPrate,5; bonus bMaxSPrate,5;
   - Id: 5459
     AegisName: Drooping_Bunny_Chusuk
     Name: Drooping Bunny
@@ -58028,7 +58034,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_HITFOOD,1200000,30;
+      sc_start SC_HITFOOD,1800000,30;
   - Id: 12123
     AegisName: Honey_Pastry
     Name: Honey Pastry
@@ -58038,7 +58044,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_FLEEFOOD,1200000,30;
+      sc_start SC_FLEEFOOD,1800000,30;
   - Id: 12124
     AegisName: Rainbow_Cake
     Name: Rainbow Cake
@@ -58048,7 +58054,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      sc_start SC_BATKFOOD,1200000,10; sc_start SC_MATKFOOD,120000,10;
+      sc_start SC_BATKFOOD,60000,10; sc_start SC_MATKFOOD,60000,10;
   - Id: 12125
     AegisName: Outdoor_Cooking_Kits
     Name: Outdoor Cooking Kit
@@ -59751,7 +59757,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_HITFOOD,1200000,30;
+      sc_start SC_HITFOOD,180000,30;
   - Id: 12267
     AegisName: Honey_Pastry_
     Name: Honey Pastry
@@ -59769,7 +59775,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_FLEEFOOD,1200000,30;
+      sc_start SC_FLEEFOOD,180000,30;
   - Id: 12268
     AegisName: Rainbow_Cake_
     Name: Rainbow Cake
@@ -59787,7 +59793,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_ATKPOTION,60000,10; sc_start SC_MATKFOOD,120000,10;
+      sc_start SC_ATKPOTION,60000,10; sc_start SC_MATKFOOD,60000,10;
   - Id: 12269
     AegisName: Tasty_Colonel
     Name: Tasty Pink Ration
@@ -59855,7 +59861,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_INCHIT,600000,33;
+      sc_start SC_HITFOOD,600000,33;
   - Id: 12273
     AegisName: Mre_C
     Name: Military Ration C
@@ -59872,7 +59878,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_INCFLEE,600000,33;
+      sc_start SC_FLEEFOOD,600000,33;
   - Id: 12274
     AegisName: Gold_Pill_1
     Name: Daehwandan
@@ -60396,7 +60402,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      sc_start SC_INCFLEE,600000,10;
+      sc_start SC_FLEEFOOD,300000,10;
   - Id: 12311
     AegisName: Large_Spray_Of_Flowers
     Name: Huge Spray Of Flowers
@@ -60437,6 +60443,8 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      /* itemskill "ALL_ANGEL_PROTECT",1; */
   - Id: 12314
     AegisName: Noive_Box
     Name: Noive Box
@@ -60475,7 +60483,7 @@ Body:
     Type: Usable
     Weight: 300
     Script: |
-      sc_start SC_INCHIT,600000,10; sc_start SC_INCFLEE2,600000,20;
+      sc_start SC_HITFOOD,600000,10; sc_start SC_FLEEFOOD,600000,20;
   - Id: 12321
     AegisName: Spicy_Sandwich
     Name: Arunafeltz Desert Sandwich
@@ -79462,14 +79470,14 @@ Body:
     Type: Usable
     Weight: 10
     Script: |
-      sc_start SC_INCFLEE,1800000,30;
+      sc_start SC_FLEEFOOD,1800000,30;
   - Id: 14531
     AegisName: Accuracy_30_Scroll
     Name: Concentration Scroll
     Type: Usable
     Weight: 10
     Script: |
-      sc_start SC_INCHIT,1800000,30;
+      sc_start SC_HITFOOD,1800000,30;
   - Id: 14532
     AegisName: Battle_Manual25
     Name: Field Manual 25%
@@ -80272,7 +80280,7 @@ Body:
       NoSell: true
       NoGuildStorage: true
     Script: |
-      sc_start SC_INCFLEE,300000,30; sc_start SC_INCHIT,300000,30; sc_start SC_ATKPOTION,300000,20; sc_start SC_MATKPOTION,300000,20;
+      sc_start SC_FLEEFOOD,300000,30; sc_start SC_HITFOOD,300000,30; sc_start SC_ATKPOTION,300000,20; sc_start SC_MATKPOTION,300000,20;
   - Id: 14602
     AegisName: TaogunkaS
     Name: Tao Gunka Scroll
@@ -80379,6 +80387,8 @@ Body:
     AegisName: Spoiled_Cuisine
     Name: Spoiled Cuisine
     Type: Usable
+    Buy: 5000
+    Weight: 300
     Script: |
       percentheal 10,10;
   - Id: 15000
@@ -80452,7 +80462,7 @@ Body:
       Upper: true
     Locations:
       Right_Hand: true
-    WeaponLevel: 4
+    WeaponLevel: 3
     EquipLevelMin: 50
     Refineable: true
     Script: |

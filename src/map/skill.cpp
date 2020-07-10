@@ -1754,7 +1754,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		}
 		break;
 	case NC_FLAMELAUNCHER:
-		sc_start4(src,bl, SC_BURNING, 20 + 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
+		sc_start(src, bl, SC_BURNING, 20 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case NC_COLDSLOWER:
 		// Status chances are applied officially through a check
@@ -1765,8 +1765,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 	case NC_POWERSWING:
 		sc_start(src,bl, SC_STUN, 10, skill_lv, skill_get_time(skill_id, skill_lv));
-		if( rnd()%100 < 5*skill_lv )
-			skill_castend_damage_id(src, bl, NC_AXEBOOMERANG, ((sd) ? pc_checkskill(sd, NC_AXEBOOMERANG) : skill_get_max(NC_AXEBOOMERANG)), tick, 1);
+		skill = pc_checkskill(sd, NC_AXEBOOMERANG);
+		if (sd && skill > 0 && (sd->status.weapon == W_1HAXE || sd->status.weapon == W_2HAXE) && rnd() % 100 < 5 * skill_lv)
+			skill_castend_damage_id(src, bl, NC_AXEBOOMERANG, skill, tick, 1);
 		break;
 	case GC_WEAPONCRUSH:
 		skill_castend_nodamage_id(src,bl,skill_id,skill_lv,tick,BCT_ENEMY);
@@ -2033,7 +2034,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					case SC_DRESSUP:		case SC_HANBOK:			case SC_OKTOBERFEST:
 					case SC_LHZ_DUN_N1:		case SC_LHZ_DUN_N2:			case SC_LHZ_DUN_N3:			case SC_LHZ_DUN_N4:
 					case SC_ENTRY_QUEUE_APPLY_DELAY:	case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
-					case SC_REUSE_LIMIT_LUXANIMA:	case SC_LUXANIMA:
+					case SC_REUSE_LIMIT_LUXANIMA:	case SC_LUXANIMA:	case SC_SOULENERGY:
 						continue;
 					case SC_WHISTLE:		case SC_ASSNCROS:		case SC_POEMBRAGI:
 					case SC_APPLEIDUN:		case SC_HUMMING:		case SC_DONTFORGETME:
@@ -4221,6 +4222,8 @@ static TIMER_FUNC(skill_timerskill){
 					case SR_FALLENEMPIRE:
 					case SR_TIGERCANNON:
 					case SR_SKYNETBLOW:
+						if (src->type != BL_PC)
+							continue;
 						break; // Exceptions
 					default:
 						continue; // Caster is Dead
@@ -4497,6 +4500,8 @@ int skill_cleartimerskill (struct block_list *src)
 				case SR_FALLENEMPIRE:
 				case SR_TIGERCANNON:
 				case SR_SKYNETBLOW:
+					if (src->type != BL_PC)
+						break;
 					continue;
 			}
 			delete_timer(ud->skilltimerskill[i]->timer, skill_timerskill);
@@ -8510,7 +8515,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_WEDDING:		case SC_XMAS:			case SC_SUMMER:
 					case SC_DRESSUP:		case SC_HANBOK:			case SC_OKTOBERFEST:
 					case SC_LHZ_DUN_N1:		case SC_LHZ_DUN_N2:			case SC_LHZ_DUN_N3:			case SC_LHZ_DUN_N4:
-					case SC_REUSE_LIMIT_LUXANIMA:	case SC_LUXANIMA:
+					case SC_REUSE_LIMIT_LUXANIMA:	case SC_LUXANIMA:	case SC_SOULENERGY:
 						continue;
 					case SC_WHISTLE:
 					case SC_ASSNCROS:
@@ -9997,7 +10002,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_DRESSUP:		case SC_HANBOK:			case SC_OKTOBERFEST:
 					case SC_LHZ_DUN_N1:		case SC_LHZ_DUN_N2:			case SC_LHZ_DUN_N3:			case SC_LHZ_DUN_N4:
 					case SC_ENTRY_QUEUE_APPLY_DELAY:	case SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT:
-					case SC_REUSE_LIMIT_LUXANIMA:		case SC_LUXANIMA:
+					case SC_REUSE_LIMIT_LUXANIMA:		case SC_LUXANIMA:	case SC_SOULENERGY:
 					continue;
 				case SC_ASSUMPTIO:
 					if( bl->type == BL_MOB )
@@ -16723,7 +16728,7 @@ void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uin
 				case SP_SOULREAPER:
 				case SP_SOULEXPLOSION:
 				case SP_KAUTE:
-					pc_delsoulball(sd, require.spiritball, 0);
+					pc_delsoulball(sd, require.spiritball, false);
 					break;
 
 				default: // Skills that require spirit/coin spheres.
@@ -18044,21 +18049,25 @@ int skill_greed(struct block_list *bl, va_list ap)
 /// Ranger's Detonator [Jobbie/3CeAM]
 int skill_detonator(struct block_list *bl, va_list ap)
 {
-	struct skill_unit *unit = NULL;
-	struct block_list *src;
-	int unit_id;
-
 	nullpo_ret(bl);
 	nullpo_ret(ap);
 
-	src = va_arg(ap,struct block_list *);
-
-	if( bl->type != BL_SKILL || (unit = (struct skill_unit *)bl) == NULL || !unit->group )
-		return 0;
-	if( unit->group->src_id != src->id )
+	if (bl->type != BL_SKILL)
 		return 0;
 
-	unit_id = unit->group->unit_id;
+	block_list *src = va_arg(ap, block_list *);
+	skill_unit *unit = (skill_unit *)bl;
+
+	if (unit == nullptr)
+		return 0;
+
+	skill_unit_group *group = unit->group;
+
+	if (group == nullptr || group->src_id != src->id)
+		return 0;
+
+	int unit_id = group->unit_id;
+
 	switch( unit_id )
 	{ //List of Hunter and Ranger Traps that can be detonate.
 		case UNT_BLASTMINE:
@@ -18070,21 +18079,23 @@ int skill_detonator(struct block_list *bl, va_list ap)
 		case UNT_ICEBOUNDTRAP:
 			switch(unit_id) {
 				case UNT_TALKIEBOX:
-					clif_talkiebox(bl,unit->group->valstr);
-					unit->group->val2 = -1;
+					clif_talkiebox(bl,group->valstr);
+					group->val2 = -1;
 					break;
 				case UNT_CLAYMORETRAP:
 				case UNT_FIRINGTRAP:
 				case UNT_ICEBOUNDTRAP:
-					map_foreachinrange(skill_trap_splash,bl,skill_get_splash(unit->group->skill_id,unit->group->skill_lv),unit->group->bl_flag|BL_SKILL|~BCT_SELF,bl,unit->group->tick);
+					map_foreachinrange(skill_trap_splash,bl,skill_get_splash(group->skill_id,group->skill_lv),group->bl_flag|BL_SKILL|~BCT_SELF,bl,group->tick);
 					break;
 				default:
-					map_foreachinrange(skill_trap_splash,bl,skill_get_splash(unit->group->skill_id,unit->group->skill_lv),unit->group->bl_flag,bl,unit->group->tick);
+					map_foreachinrange(skill_trap_splash,bl,skill_get_splash(group->skill_id,group->skill_lv),group->bl_flag,bl,group->tick);
 					break;
 			}
+			if (unit->group == nullptr)
+				return 0;
 			clif_changetraplook(bl, UNT_USED_TRAPS);
-			unit->group->unit_id = UNT_USED_TRAPS;
-			unit->group->limit = DIFF_TICK(gettick(),unit->group->tick) +
+			group->unit_id = UNT_USED_TRAPS;
+			group->limit = DIFF_TICK(gettick(),group->tick) +
 				(unit_id == UNT_TALKIEBOX ? 5000 : (unit_id == UNT_CLUSTERBOMB || unit_id == UNT_ICEBOUNDTRAP? 2500 : (unit_id == UNT_FIRINGTRAP ? 0 : 1500)) );
 			break;
 	}
@@ -20432,7 +20443,7 @@ bool skill_arrow_create(struct map_session_data *sd, unsigned short nameid)
 		}
 	}
 
-	if (!idx || (j = pc_search_inventory(sd,nameid)) < 0)
+	if (idx < 0 || (j = pc_search_inventory(sd,nameid)) < 0)
 		return false;
 
 	pc_delitem(sd,j,1,0,0,LOG_TYPE_PRODUCE);
