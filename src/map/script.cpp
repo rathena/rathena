@@ -21821,17 +21821,17 @@ BUILDIN_FUNC(stand)
 /** Creates an array of bounded item IDs
  * countbound {<type>{,<char_id>}};
  * @param type: 0 - All bound items; 1 - Account Bound; 2 - Guild Bound; 3 - Party Bound
- * @return amt: Amount of items found
+ * @return amt: Total number of different items type found
  */
 BUILDIN_FUNC(countbound)
 {
-	int i, type, j = 0, k = 0;
 	TBL_PC *sd;
 
 	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	type = script_getnum(st,2);
+	int i, k = 0;
+	int type = script_getnum(st,2);
 
 	for( i = 0; i < MAX_INVENTORY; i ++ ) {
 		if( sd->inventory.u.items_inventory[i].nameid > 0 && (
@@ -21839,12 +21839,12 @@ BUILDIN_FUNC(countbound)
 			))
 		{
 			pc_setreg(sd,reference_uid(add_str("@bound_items"), k),sd->inventory.u.items_inventory[i].nameid);
+			pc_setreg(sd,reference_uid(add_str("@bound_amount"), k),sd->inventory.u.items_inventory[i].amount);
 			k++;
-			j += sd->inventory.u.items_inventory[i].amount;
 		}
 	}
 
-	script_pushint(st,j);
+	script_pushint(st,k);
 	return SCRIPT_CMD_SUCCESS;
 }
 
