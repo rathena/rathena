@@ -157,7 +157,7 @@ static std::map<std::string, int> um_mapid2jobname {
 #endif
 };
 
-static std::unordered_map<std::string, equip_pos> um_equipnames{
+static std::unordered_map<std::string, equip_pos> um_equipnames {
 	{ "Head_Low", EQP_HEAD_LOW },
 	{ "Head_Mid", EQP_HEAD_MID },
 	{ "Head_Top", EQP_HEAD_TOP },

@@ -81,7 +81,7 @@ template<typename Func>
 bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda ){
 	for( const std::string& path : paths ){
 		const std::string name_ext = name + ".yml";
-		const std::string from = path + "/" + name_ext;
+		const std::string from = path + name_ext;
 		std::string rename = "";
 
 		if (path.find("import") == std::string::npos) {
@@ -98,7 +98,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 #endif
 		}
 
-		const std::string to = path + "/" + (rename.size() > 0 ? rename : name) + ".sql";
+		const std::string to = path + (rename.size() > 0 ? rename : name) + ".sql";
 
 		if( fileExists( from ) ){
 			inNode.reset();
@@ -252,32 +252,12 @@ std::string string_escape(const std::string &s) {
  * @param node: Node with entry
  * @param value: String to store node value to
  * @param string: If value is a string or not
- * @param concat: If Node is a concatenated type
  */
-static bool appendEntry(const YAML::Node &node, std::string &value, bool string = false, bool concat = false) {
+static bool appendEntry(const YAML::Node &node, std::string &value, bool string = false) {
 	if (node.IsDefined()) {
 		if (string) {
-			std::string node_str = "", concat_str = "";
-
-			if (concat) {
-				for (const auto &subNode : node) {
-					std::string name = subNode.first.as<std::string>();
-
-					if (subNode.second.as<bool>() == true) {
-						concat_str.append(name);
-						concat_str.append(":true|");
-					} else {
-						concat_str.append(name);
-						concat_str.append(":false|");
-					}
-				}
-
-				concat_str.pop_back(); // Remove last '|'
-			} else
-				node_str = string_escape(node.as<std::string>());
-
 			value.append("'");
-			value.append(string_trim(concat ? concat_str : node_str));
+			value.append(string_trim(string_escape(node.as<std::string>())));
 			value.append("',");
 		} else {
 			value.append(string_trim(node.as<std::string>()));
@@ -327,14 +307,149 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 			column.append("`range`,");
 		if (appendEntry(input["Slots"], value))
 			column.append("`slots`,");
-		if (appendEntry(input["Jobs"], value, true, true))
-			column.append("`equip_jobs`,");
-		if (appendEntry(input["Classes"], value, true, true))
-			column.append("`equip_classes`,");
+
+		const YAML::Node &jobs = input["Jobs"];
+
+		if (jobs) {
+			if (appendEntry(jobs["All"], value))
+				column.append("`job_all`,");
+			if (appendEntry(jobs["Acolyte"], value))
+				column.append("`job_acolyte`,");
+			if (appendEntry(jobs["Alchemist"], value))
+				column.append("`job_alchemist`,");
+			if (appendEntry(jobs["Archer"], value))
+				column.append("`job_archer`,");
+			if (appendEntry(jobs["Assassin"], value))
+				column.append("`job_assassin`,");
+			if (appendEntry(jobs["BardDancer"], value))
+				column.append("`job_barddancer`,");
+			if (appendEntry(jobs["Blacksmith"], value))
+				column.append("`job_blacksmith`,");
+			if (appendEntry(jobs["Crusader"], value))
+				column.append("`job_crusader`,");
+			if (appendEntry(jobs["Gunslinger"], value))
+				column.append("`job_gunslinger`,");
+			if (appendEntry(jobs["Hunter"], value))
+				column.append("`job_hunter`,");
+#ifdef RENEWAL
+			if (appendEntry(jobs["KagerouOboro"], value))
+				column.append("`job_kagerouoboro`,");
+#endif
+			if (appendEntry(jobs["Knight"], value))
+				column.append("`job_knight`,");
+			if (appendEntry(jobs["Mage"], value))
+				column.append("`job_mage`,");
+			if (appendEntry(jobs["Merchant"], value))
+				column.append("`job_merchant`,");
+			if (appendEntry(jobs["Monk"], value))
+				column.append("`job_monk`,");
+			if (appendEntry(jobs["Ninja"], value))
+				column.append("`job_ninja`,");
+			if (appendEntry(jobs["Novice"], value))
+				column.append("`job_novice`,");
+			if (appendEntry(jobs["Priest"], value))
+				column.append("`job_priest`,");
+#ifdef RENEWAL
+			if (appendEntry(jobs["Rebellion"], value))
+				column.append("`job_rebellion`,");
+#endif
+			if (appendEntry(jobs["Rogue"], value))
+				column.append("`job_rogue`,");
+			if (appendEntry(jobs["Sage"], value))
+				column.append("`job_sage`,");
+			if (appendEntry(jobs["SoulLinker"], value))
+				column.append("`job_soullinker`,");
+			if (appendEntry(jobs["StarGladiator"], value))
+				column.append("`job_stargladiator`,");
+#ifdef RENEWAL
+			if (appendEntry(jobs["Summoner"], value))
+				column.append("`job_summoner`,");
+#endif
+			if (appendEntry(jobs["SuperNovice"], value))
+				column.append("`job_supernovice`,");
+			if (appendEntry(jobs["Swordman"], value))
+				column.append("`job_swordman`,");
+			if (appendEntry(jobs["Taekwon"], value))
+				column.append("`job_taekwon`,");
+			if (appendEntry(jobs["Thief"], value))
+				column.append("`job_thief`,");
+			if (appendEntry(jobs["Wizard"], value))
+				column.append("`job_wizard`,");
+		}
+
+		const YAML::Node &classes = input["Classes"];
+
+		if (classes) {
+			if (appendEntry(classes["All"], value))
+				column.append("`class_all`,");
+			if (appendEntry(classes["Normal"], value))
+				column.append("`class_normal`,");
+			if (appendEntry(classes["Upper"], value))
+				column.append("`class_upper`,");
+			if (appendEntry(classes["Baby"], value))
+				column.append("`class_baby`,");
+#ifdef RENEWAL
+			if (appendEntry(classes["Third"], value))
+				column.append("`class_third`,");
+			if (appendEntry(classes["Third_Upper"], value))
+				column.append("`class_third_upper`,");
+			if (appendEntry(classes["Third_Baby"], value))
+				column.append("`class_third_baby`,");
+#endif
+		}
+
 		if (appendEntry(input["Gender"], value, true))
-			column.append("`equip_genders`,");
-		if (appendEntry(input["Location"], value, true, true))
-			column.append("`equip_locations`,");
+			column.append("`gender`,");
+
+		const YAML::Node &locations = input["Locations"];
+
+		if (locations) {
+			if (appendEntry(locations["All"], value))
+				column.append("`location_all`,");
+			if (appendEntry(locations["Head_Top"], value))
+				column.append("`location_head_top`,");
+			if (appendEntry(locations["Head_Mid"], value))
+				column.append("`location_head_mid`,");
+			if (appendEntry(locations["Head_Low"], value))
+				column.append("`location_head_low`,");
+			if (appendEntry(locations["Armor"], value))
+				column.append("`location_armor`,");
+			if (appendEntry(locations["Weapon"], value))
+				column.append("`location_weapon`,");
+			if (appendEntry(locations["Shield"], value))
+				column.append("`location_shield`,");
+			if (appendEntry(locations["Garment"], value))
+				column.append("`location_garment`,");
+			if (appendEntry(locations["Shoes"], value))
+				column.append("`location_shoes`,");
+			if (appendEntry(locations["Right_Accessory"], value))
+				column.append("`location_right_accessory`,");
+			if (appendEntry(locations["Left_Accessory"], value))
+				column.append("`location_left_accessory`,");
+			if (appendEntry(locations["Costume_Head_Top"], value))
+				column.append("`location_costume_head_top`,");
+			if (appendEntry(locations["Costume_Head_Mid"], value))
+				column.append("`location_costume_head_Mid`,");
+			if (appendEntry(locations["Costume_Head_Low"], value))
+				column.append("`location_costume_head_Low`,");
+			if (appendEntry(locations["Costume_Garment"], value))
+				column.append("`location_costume_Garment`,");
+			if (appendEntry(locations["Ammo"], value))
+				column.append("`location_ammo`,");
+			if (appendEntry(locations["Shadow_Armor"], value))
+				column.append("`location_shadow_armor`,");
+			if (appendEntry(locations["Shadow_Weapon"], value))
+				column.append("`location_shadow_weapon`,");
+			if (appendEntry(locations["Shadow_Shield"], value))
+				column.append("`location_shadow_shield`,");
+			if (appendEntry(locations["Shadow_Shoes"], value))
+				column.append("`location_shadow_shoes`,");
+			if (appendEntry(locations["Shadow_Right_Accessory"], value))
+				column.append("`location_shadow_right_accessory`,");
+			if (appendEntry(locations["Shadow_Left_Accessory"], value))
+				column.append("`location_shadow_left_accessory`,");
+		}
+
 		if (appendEntry(input["WeaponLevel"], value))
 			column.append("`weapon_level`,");
 		if (appendEntry(input["EquipLevelMin"], value))

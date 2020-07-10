@@ -1938,62 +1938,144 @@ static bool itemdb_read_sqldb_sub(char **str) {
 	if (atoi(str[++index]) != 0)
 		node["Slots"] = atoi(str[index]);
 
-	const char *delim = "|", *state_delim = ":";
-	char *p = strtok(str[++index], delim);
+	YAML::Node jobs;
 
-	if (p) {
-		while (p != nullptr) {
-			trim(p);
+	if (atoi(str[++index]) != 0)
+		jobs["All"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Acolyte"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Alchemist"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Archer"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Assassin"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["BardDancer"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Blacksmith"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Crusader"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Gunslinger"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Hunter"] = atoi(str[index]);
+#ifdef RENEWAL
+	if (atoi(str[++index]) != 0)
+		jobs["KagerouOboro"] = atoi(str[index]);
+#endif
+	if (atoi(str[++index]) != 0)
+		jobs["Knight"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Mage"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Merchant"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Monk"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Ninja"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Novice"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Priest"] = atoi(str[index]);
+#ifdef RENEWAL
+	if (atoi(str[++index]) != 0)
+		jobs["Rebellion"] = atoi(str[index]);
+#endif
+	if (atoi(str[++index]) != 0)
+		jobs["Rogue"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Sage"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["SoulLinker"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["StarGladiator"] = atoi(str[index]);
+#ifdef RENEWAL
+	if (atoi(str[++index]) != 0)
+		jobs["Summoner"] = atoi(str[index]);
+#endif
+	if (atoi(str[++index]) != 0)
+		jobs["SuperNovice"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Swordman"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Taekwon"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Thief"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		jobs["Wizard"] = atoi(str[index]);
+	node["Jobs"] = jobs;
 
-			char *state = strtok(p, state_delim);
+	YAML::Node classes;
 
-			state = strtok(nullptr, state_delim);
-
-			if (state == "true")
-				node["Jobs"][p] = true;
-			else
-				node["Jobs"][p] = false;
-			p = strtok(nullptr, delim);
-		}
-	}
-
-	p = strtok(str[++index], delim);
-
-	if (p) {
-		while (p != nullptr) {
-			trim(p);
-
-			char *state = strtok(p, state_delim);
-
-			state = strtok(nullptr, state_delim);
-
-			if (state == "true")
-				node["Classes"][p] = true;
-			else
-				node["Classes"][p] = false;
-			p = strtok(nullptr, delim);
-		}
-	}
+	if (atoi(str[++index]) != 0)
+		classes["All"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		classes["Normal"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		classes["Upper"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		classes["Baby"] = atoi(str[index]);
+#ifdef RENEWAL
+	if (atoi(str[++index]) != 0)
+		classes["Third"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		classes["Third_Upper"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		classes["Third_Baby"] = atoi(str[index]);
+#endif
+	node["Classes"] = classes;
 
 	if (atoi(str[++index]) != 0)
 		node["Gender"] = str[index];
-	p = strtok(str[++index], delim);
 
-	if (p) {
-		while (p != nullptr) {
-			trim(p);
+	YAML::Node locations;
 
-			char *state = strtok(p, state_delim);
-
-			state = strtok(nullptr, state_delim);
-
-			if (state == "true")
-				node["Location"][p] = true;
-			else
-				node["Location"][p] = false;
-			p = strtok(nullptr, delim);
-		}
-	}
+	if (atoi(str[++index]) != 0)
+		locations["All"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Head_Top"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Head_Mid"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Head_Low"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Armor"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Weapon"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Shield"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Garment"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Shoes"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Right_Accessory"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Left_Accessory"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Costume_Head_Top"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Costume_Head_Mid"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Costume_Head_Low"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Costume_Garment"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Ammo"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Shadow_Armor"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Shadow_Weapon"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Shadow_Shield"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Shadow_Shoes"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Shadow_Right_Accessory"] = atoi(str[index]);
+	if (atoi(str[++index]) != 0)
+		locations["Shadow_Left_Accessory"] = atoi(str[index]);
+	node["Locations"] = locations;
 
 	if (atoi(str[++index]) != 0)
 		node["WeaponLevel"] = atoi(str[index]);

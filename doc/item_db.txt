@@ -114,37 +114,35 @@ Slots: Amount of slots the item possesses.
 
 Jobs: Equippable jobs.
 
-All         - Applies to all jobs.
-Novice      - Applies to Novice and Super Novice.
-Swordman
-Mage
-Archer
+All          - Applies to all jobs listed below.
 Acolyte
-Merchant
-Thief
-Knight
-Priest
-Wizard
-Blacksmith
-Hunter
-Assassin
-Crusader
-Monk
-Sage
-Rogue
 Alchemist
-BardDancer    - Applies to Bard and Dancer.
-Taekwon
-StarGladiator
-SoulLinker
+Archer
+Assassin
+BardDancer   - Applies to Bard and Dancer.
+Blacksmith
+Crusader
 Gunslinger
+Hunter
+KagerouOboro - Applies to Kagerou and Oboro.
+Knight
+Mage
+Merchant
+Monk
 Ninja
-Gangsi
-DeathKnight
-DarkCollector
-KagerouOboro  - Applies to Kagerou and Oboro.
+Novice
+Priest
 Rebellion
+Rogue
+Sage
+SoulLinker
+StarGladiator
 Summoner
+SuperNovice
+Swordman
+Taekwon
+Thief
+Wizard
 
 ---------------------------------------
 
