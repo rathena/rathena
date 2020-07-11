@@ -14,16 +14,16 @@ UPDATE `char_reg_num` SET `key` = 'ep16_gaobs' WHERE `key` = 'banquet_geoborg_qu
 
 UPDATE `char_reg_num` SET `key` = 'ep16_wig' WHERE `key` = 'banquet_wigner_quest' AND `value` < 5;
 UPDATE `char_reg_num` SET `key` = 'ep16_wig', `value` = `value` + 5 WHERE `key` = 'banquet_wigner_quest' AND `value` > 5;
-UPDATE `char_reg_num` SET `key` = 'ep16_wig', `value` = 10 FROM `char_reg_num` INNER JOIN `quest` ON `char_reg_num`.`char_id` = `quest`.`char_id`
-WHERE `key` = 'banquet_wigner_quest' AND `value` = 5 AND `quest_id` = 14482 AND `state` = 1;
-UPDATE `char_reg_num` SET `key` = 'ep16_wig', `value` = 9 FROM `char_reg_num` INNER JOIN `quest` ON `char_reg_num`.`char_id` = `quest`.`char_id`
-WHERE `key` = 'banquet_wigner_quest' AND `value` = 5 AND `quest_id` = 14480 AND `state` = 2;
-UPDATE `char_reg_num` SET `key` = 'ep16_wig', `value` = 8 FROM `char_reg_num` INNER JOIN `quest` ON `char_reg_num`.`char_id` = `quest`.`char_id`
-WHERE `key` = 'banquet_wigner_quest' AND `value` = 5 AND `quest_id` = 14480 AND `state` = 1;
-UPDATE `char_reg_num` SET `key` = 'ep16_wig', `value` = 7 FROM `char_reg_num` INNER JOIN `quest` ON `char_reg_num`.`char_id` = `quest`.`char_id`
-WHERE `key` = 'banquet_wigner_quest' AND `value` = 5 AND `quest_id` = 14481 AND `state` = 2;
-UPDATE `char_reg_num` SET `key` = 'ep16_wig', `value` = 6 FROM `char_reg_num` INNER JOIN `quest` ON `char_reg_num`.`char_id` = `quest`.`char_id`
-WHERE `key` = 'banquet_wigner_quest' AND `value` = 5 AND `quest_id` = 14481 AND `state` = 1;
+UPDATE `char_reg_num` c, `quest` q SET c.`key` = 'ep16_wig', c.`value` = 10
+WHERE c.`key` = 'banquet_wigner_quest' AND c.`value` = 5 AND q.`quest_id` = 14482 AND q.`state` = 1;
+UPDATE `char_reg_num` c, `quest` q SET c.`key` = 'ep16_wig', c.`value` = 9
+WHERE c.`key` = 'banquet_wigner_quest' AND c.`value` = 5 AND q.`quest_id` = 14480 AND q.`state` = 2;
+UPDATE `char_reg_num` c, `quest` q SET c.`key` = 'ep16_wig', c.`value` = 8
+WHERE c.`key` = 'banquet_wigner_quest' AND c.`value` = 5 AND q.`quest_id` = 14480 AND q.`state` = 1;
+UPDATE `char_reg_num` c, `quest` q SET c.`key` = 'ep16_wig', c.`value` = 7
+WHERE c.`key` = 'banquet_wigner_quest' AND c.`value` = 5 AND q.`quest_id` = 14481 AND q.`state` = 2;
+UPDATE `char_reg_num` c, `quest` q SET c.`key` = 'ep16_wig', c.`value` = 6
+WHERE c.`key` = 'banquet_wigner_quest' AND c.`value` = 5 AND q.`quest_id` = 14481 AND q.`state` = 1;
 UPDATE `char_reg_num` SET `key` = 'ep16_wig' WHERE `key` = 'banquet_wigner_quest' AND `value` = 5;
 
 UPDATE `char_reg_num` SET `key` = 'ep16_cookbs' WHERE `key` = 'banquet_quest_cooking' AND `value` < 3;
