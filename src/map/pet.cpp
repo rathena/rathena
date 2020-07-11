@@ -593,6 +593,28 @@ int pet_hungry_val(struct pet_data *pd)
 		return 0;
 }
 
+int16 pet_get_card3_intimacy( int intimacy ){
+	if( intimacy < PET_INTIMATE_SHY ){
+		// Awkward
+		return ( 1 << 1 );
+	}else if( intimacy < PET_INTIMATE_NEUTRAL ){
+		// Shy
+		return ( 2 << 1 );
+	}else if( intimacy < PET_INTIMATE_CORDIAL ){
+		// Neutral
+		return ( 3 << 1 );
+	}else if( intimacy < PET_INTIMATE_LOYAL ){
+		// Cordial
+		return ( 4 << 1 );
+	}else if( intimacy <= PET_INTIMATE_MAX ){
+		// Loyal
+		return ( 5 << 1 );
+	}else{
+		// Unknown
+		return 0;
+	}
+}
+
 /**
  * Set the value of the pet's intimacy.
  * @param pd : pet requesting
@@ -606,8 +628,16 @@ void pet_set_intimate(struct pet_data *pd, int value)
 
 	struct map_session_data *sd = pd->master;
 
-	if(pd->pet.intimate <= PET_INTIMATE_NONE)
-		pc_delitem(sd, pet_egg_search(sd, pd->pet.pet_id), 1, 0, 0, LOG_TYPE_OTHER);
+	int index = pet_egg_search( sd, pd->pet.pet_id );
+
+	if( pd->pet.intimate <= PET_INTIMATE_NONE ){
+		pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_OTHER );
+	}else{
+		// Remove everything except the rename flag
+		sd->inventory.u.items_inventory[index].card[3] &= 1;
+
+		sd->inventory.u.items_inventory[index].card[3] |= pet_get_card3_intimacy( pd->pet.intimate );
+	}
 
 	if (sd)
 		status_calc_pc(sd,SCO_NONE);
@@ -1297,6 +1327,7 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 	tmp_item.card[1] = GetWord(pet_id,0);
 	tmp_item.card[2] = GetWord(pet_id,1);
 	tmp_item.card[3] = 0; //New pets are not named.
+	tmp_item.card[3] |= pet_get_card3_intimacy( pet->intimate ); // Store intimacy status based on initial intimacy
 
 	if((ret = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER))) {
 		clif_additem(sd,0,0,ret);
@@ -1400,6 +1431,12 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 	pd->pet.rename_flag = 1;
 	clif_pet_equip_area(pd);
 	clif_send_petstatus(sd);
+
+	int index = pet_egg_search( sd, pd->pet.pet_id );
+
+	if( index >= 0 ){
+		sd->inventory.u.items_inventory[index].card[3] |= 1;
+	}
 
 	return 1;
 }
