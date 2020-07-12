@@ -878,7 +878,7 @@ bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map
 	nullpo_retr(false, sd);
 
 	for (const auto &job : bg->job_restrictions) { // Check class requirement
-		if (sd->class_ == job) {
+		if (sd->status.class_ == job) {
 			clif_bg_queue_apply_result(BG_APPLY_PLAYER_CLASS, name, sd);
 			return false;
 		}
