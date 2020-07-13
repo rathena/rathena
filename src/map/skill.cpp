@@ -9381,6 +9381,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case GD_BATTLEORDER:
 	case GD_REGENERATION:
 	case GD_RESTORE:
+	case GD_EMERGENCY_MOVE:
 		if(flag&1) {
 			if (status_get_guild_id(src) == status_get_guild_id(bl)) {				
 				if( skill_id == GD_RESTORE )
@@ -13621,7 +13622,6 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 	case GD_GLORYWOUNDS:
 	case GD_SOULCOLD:
 	case GD_HAWKEYES:
-	case GD_EMERGENCY_MOVE:
 		limit = 1000000;//it doesn't matter
 		break;
 	case LG_BANDING:
@@ -13701,11 +13701,7 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 	group->bl_flag = skill_get_unit_bl_target(skill_id);
 	group->state.ammo_consume = (sd && sd->state.arrow_atk && skill_id != GS_GROUNDDRIFT); //Store if this skill needs to consume ammo.
 	group->state.song_dance = (((skill->unit_flag[UF_DANCE] || skill->unit_flag[UF_SONG])?1:0)|(skill->unit_flag[UF_ENSEMBLE]?2:0)); //Signals if this is a song/dance/duet
-	group->state.guildaura = ( skill_id >= GD_LEADERSHIP && skill_id <= GD_HAWKEYES
-#ifdef RENEWAL
-		|| skill_id == GD_EMERGENCY_MOVE
-#endif
-		) ? 1 : 0;
+	group->state.guildaura = ( skill_id >= GD_LEADERSHIP && skill_id <= GD_HAWKEYES )?1:0;
 	group->item_id = req_item;
 
 	// If tick is greater than current, do not invoke onplace function just yet. [Skotlex]
@@ -14208,7 +14204,6 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 		case UNT_GD_GLORYWOUNDS:
 		case UNT_GD_SOULCOLD:
 		case UNT_GD_HAWKEYES:
-		case UNT_GD_EMERGENCY_MOVE:
 			if ( !sce && battle_check_target(&unit->bl, bl, sg->target_flag) > 0 )
 				sc_start4(ss, bl,type,100,sg->skill_lv,0,0,0,1000);
 			break;
@@ -15135,7 +15130,6 @@ int skill_unit_onleft(uint16 skill_id, struct block_list *bl, t_tick tick)
 		case GD_GLORYWOUNDS:
 		case GD_SOULCOLD:
 		case GD_HAWKEYES:
-		case GD_EMERGENCY_MOVE:
 			if( !(sce && sce->val4) )
 				status_change_end(bl, type, INVALID_TIMER);
 			break;

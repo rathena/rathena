@@ -2239,13 +2239,12 @@ enum e_skill_unit_id : uint16 {
 	UNT_CREATINGSTAR,
 
 	/**
-	 * Guild Skills
+	 * Guild Auras
 	 **/
 	UNT_GD_LEADERSHIP = 0xc1,
 	UNT_GD_GLORYWOUNDS = 0xc2,
 	UNT_GD_SOULCOLD = 0xc3,
 	UNT_GD_HAWKEYES = 0xc4,
-	UNT_GD_EMERGENCY_MOVE = 0xc5,
 
 	UNT_MAX = 0x190
 };

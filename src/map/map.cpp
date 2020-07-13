@@ -521,8 +521,6 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_SOULCOLD]->val4), bl->m, x1-x0, y1-y0);
 				if (sc->data[SC_HAWKEYES])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_HAWKEYES]->val4), bl->m, x1-x0, y1-y0);
-				if (sc->data[SC_EMERGENCY_MOVE])
-					skill_unit_move_unit_group(skill_id2group(sc->data[SC_EMERGENCY_MOVE]->val4), bl->m, x1-x0, y1-y0);
 			}
 		}
 	} else

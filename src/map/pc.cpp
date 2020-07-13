@@ -8592,9 +8592,6 @@ void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp) {
 		guild_guildaura_refresh(sd,GD_GLORYWOUNDS,guild_checkskill(sd->guild,GD_GLORYWOUNDS));
 		guild_guildaura_refresh(sd,GD_SOULCOLD,guild_checkskill(sd->guild,GD_SOULCOLD));
 		guild_guildaura_refresh(sd,GD_HAWKEYES,guild_checkskill(sd->guild,GD_HAWKEYES));
-#ifdef RENEWAL
-		guild_guildaura_refresh(sd,GD_EMERGENCY_MOVE,guild_checkskill(sd->guild,GD_EMERGENCY_MOVE));
-#endif
 	}
 }
 

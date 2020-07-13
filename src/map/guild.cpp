@@ -1488,7 +1488,6 @@ int guild_skillupack(int guild_id,uint16 skill_id,uint32 account_id) {
 			case GD_GLORYWOUNDS:
 			case GD_SOULCOLD:
 			case GD_HAWKEYES:
-			case GD_EMERGENCY_MOVE:
 					guild_guildaura_refresh(sd,skill_id,g->skill[idx].lv);
 				break;
 		}

@@ -803,7 +803,7 @@ void initChangeTables(void)
 	set_sc( GD_REGENERATION		, SC_REGENERATION	, EFST_GDSKILL_REGENERATION	, SCB_REGEN );
 
 #ifdef RENEWAL
-	set_sc( GD_EMERGENCY_MOVE	, SC_EMERGENCY_MOVE	, EFST_BLANK	, SCB_SPEED );
+	set_sc( GD_EMERGENCY_MOVE	, SC_EMERGENCY_MOVE	, EFST_INC_AGI	, SCB_SPEED );
 #endif
 
 	/* Rune Knight */
@@ -10210,7 +10210,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_GLORYWOUNDS:
 			case SC_SOULCOLD:
 			case SC_HAWKEYES:
-			case SC_EMERGENCY_MOVE:
 				if( sce->val4 && !val4 ) // You cannot override master guild aura
 					return 0;
 				break;
@@ -14602,7 +14601,6 @@ TIMER_FUNC(status_change_timer){
 	case SC_GLORYWOUNDS:
 	case SC_SOULCOLD:
 	case SC_HAWKEYES:
-	case SC_EMERGENCY_MOVE:
 		// They only end by status_change_end
 		sc_timer_next(600000 + tick);
 		return 0;

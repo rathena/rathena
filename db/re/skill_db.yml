@@ -37321,8 +37321,6 @@ Body:
     CastTimeFlags:
       IgnoreDex: true
       IgnoreStatus: true
-    Requires:
-      SpCost: 1
   - Id: 10011
     Name: GD_REGENERATION
     Description: Regeneration
@@ -37341,8 +37339,6 @@ Body:
     CastTimeFlags:
       IgnoreDex: true
       IgnoreStatus: true
-    Requires:
-      SpCost: 1
   - Id: 10012
     Name: GD_RESTORE
     Description: Restoration
@@ -37360,8 +37356,6 @@ Body:
     CastTimeFlags:
       IgnoreStatus: true
       IgnoreItemBonus: true
-    Requires:
-      SpCost: 1
   - Id: 10013
     Name: GD_EMERGENCYCALL
     Description: Urgent Call
@@ -37380,8 +37374,6 @@ Body:
       IgnoreDex: true
       IgnoreStatus: true
       IgnoreItemBonus: true
-    Requires:
-      SpCost: 1
   - Id: 10014
     Name: GD_DEVELOPMENT
     Description: Permanent Development
@@ -37402,8 +37394,6 @@ Body:
     CastCancel: true
     Cooldown: 300000
     FixedCastTime: 5000
-    Requires:
-      SpCost: 1
   - Id: 10016
     Name: GD_GUILD_STORAGE
     Description: Guild Storage Expansion
@@ -37421,9 +37411,8 @@ Body:
       IsGuild: true
     CastCancel: true
     Duration1: 300000
+    Cooldown: 60000
     FixedCastTime: 1000
-    Requires:
-      SpCost: 1
   - Id: 10018
     Name: GD_CHARGESHOUT_BEATING
     Description: Charge Shout Beating
@@ -37434,21 +37423,14 @@ Body:
     Flags:
       IsGuild: true
     CastCancel: true
+    Cooldown: 60000
     FixedCastTime: 1000
-    Requires:
-      SpCost: 1
   - Id: 10019
     Name: GD_EMERGENCY_MOVE
     Description: Emergency Move
     MaxLevel: 1
     Flags:
       IsGuild: true
-    SplashArea: 2 # TODO: Confirm area
-    Duration1: 600000
-    Unit:
-      Id: Gd_Emergency_Move
-      Layout: 2 # TODO: Confirm area
-      Interval: -1
-      Target: SameGuild
-      Flag:
-        NoMob: true
+    SplashArea: 15
+    Duration1: 10000
+    Cooldown: 600000
