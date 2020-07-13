@@ -9397,7 +9397,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				skill_castend_nodamage_id);
 			if (sd)
 #ifdef RENEWAL
-				skill_blockpc_start(sd, skill_id, skill_get_cooldown(time, skill_lv));
+				skill_blockpc_start(sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 #else
 				guild_block_skill(sd, skill_get_time2(skill_id, skill_lv));
 #endif
@@ -9440,7 +9440,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 			if (sd)
 #ifdef RENEWAL
-				skill_blockpc_start(sd, skill_id, skill_get_cooldown(time, skill_lv));
+				skill_blockpc_start(sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 #else
 				guild_block_skill(sd, skill_get_time2(skill_id, skill_lv));
 #endif
