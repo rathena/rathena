@@ -380,9 +380,10 @@ static int clif_send_sub(struct block_list *bl, va_list ap)
 	nullpo_ret(bl);
 	nullpo_ret(sd = (struct map_session_data *)bl);
 
-	fd = sd->fd;
-	if (!fd) //Don't send to disconnected clients.
+	// Don't send to disconnected clients.
+	if( !session_isActive( fd = sd->fd ) ){
 		return 0;
+	}
 
 	buf = va_arg(ap,unsigned char*);
 	len = va_arg(ap,int);
@@ -413,9 +414,6 @@ static int clif_send_sub(struct block_list *bl, va_list ap)
 	}
 	break;
 	}
-
-	if (session[fd] == NULL)
-		return 0;
 
 	/* unless visible, hold it here */
 	if (!battle_config.update_enemy_position && clif_ally_only && !sd->special_state.intravision &&
@@ -462,22 +460,23 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 
 	case ALL_CLIENT: //All player clients.
 		iter = mapit_getallusers();
-		while( (tsd = (TBL_PC*)mapit_next(iter)) != NULL ){
-			WFIFOHEAD(tsd->fd, len);
-			memcpy(WFIFOP(tsd->fd, 0), buf, len);
-			WFIFOSET(tsd->fd, len);
+		while( ( tsd = (map_session_data*)mapit_next( iter ) ) != nullptr ){
+			if( session_isActive( fd = tsd->fd ) ){
+				WFIFOHEAD( fd, len );
+				memcpy( WFIFOP( fd, 0 ), buf, len );
+				WFIFOSET( fd, len );
+			}
 		}
 		mapit_free(iter);
 		break;
 
 	case ALL_SAMEMAP: //All players on the same map
 		iter = mapit_getallusers();
-		while( (tsd = (TBL_PC*)mapit_next(iter)) != NULL )
-		{
-			if( bl->m == tsd->bl.m ){
-				WFIFOHEAD(tsd->fd, len);
-				memcpy(WFIFOP(tsd->fd,0), buf, len);
-				WFIFOSET(tsd->fd,len);
+		while( ( tsd = (map_session_data*)mapit_next( iter ) ) != nullptr ){
+			if( bl->m == tsd->bl.m && session_isActive( fd = tsd->fd ) ){
+				WFIFOHEAD( fd, len );
+				memcpy( WFIFOP( fd, 0 ), buf, len );
+				WFIFOSET( fd, len );
 			}
 		}
 		mapit_free(iter);
@@ -511,7 +510,7 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 			for(i = 0; i < cd->users; i++) {
 				if (type == CHAT_WOS && cd->usersd[i] == sd)
 					continue;
-				if ((fd=cd->usersd[i]->fd) >0 && session[fd]){ // Added check to see if session exists [PoW]
+				if( session_isActive( fd = cd->usersd[i]->fd ) ){
 					WFIFOHEAD(fd,len);
 					memcpy(WFIFOP(fd,0), buf, len);
 					WFIFOSET(fd,len);
@@ -538,7 +537,7 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 				if( (sd = p->data[i].sd) == NULL )
 					continue;
 
-				if( !(fd=sd->fd) )
+				if( !session_isActive( fd = sd->fd ) )
 					continue;
 
 				if( sd->bl.id == bl->id && (type == PARTY_WOS || type == PARTY_SAMEMAP_WOS || type == PARTY_AREA_WOS) )
@@ -558,12 +557,11 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 				break;
 
 			iter = mapit_getallusers();
-			while( (tsd = (TBL_PC*)mapit_next(iter)) != NULL )
-			{
-				if( tsd->partyspy == p->party.party_id ){
-					WFIFOHEAD(tsd->fd, len);
-					memcpy(WFIFOP(tsd->fd,0), buf, len);
-					WFIFOSET(tsd->fd,len);
+			while( ( tsd = (map_session_data*)mapit_next( iter ) ) != nullptr ){
+				if( tsd->partyspy == p->party.party_id && session_isActive( fd = tsd->fd ) ){
+					WFIFOHEAD( fd, len );
+					memcpy( WFIFOP( fd, 0 ), buf, len );
+					WFIFOSET( tsd->fd, len );
 				}
 			}
 			mapit_free(iter);
@@ -575,21 +573,20 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 		if (!sd || !sd->duel_group) break; //Invalid usage.
 
 		iter = mapit_getallusers();
-		while( (tsd = (TBL_PC*)mapit_next(iter)) != NULL )
-		{
+		while( ( tsd = (map_session_data*)mapit_next( iter ) ) != nullptr ){
 			if( type == DUEL_WOS && bl->id == tsd->bl.id )
 				continue;
-			if( sd->duel_group == tsd->duel_group ){
-				WFIFOHEAD(tsd->fd, len);
-				memcpy(WFIFOP(tsd->fd,0), buf, len);
-				WFIFOSET(tsd->fd,len);
+			if( sd->duel_group == tsd->duel_group && session_isActive( fd = tsd->fd ) ){
+				WFIFOHEAD( fd, len );
+				memcpy( WFIFOP( fd, 0 ), buf, len );
+				WFIFOSET( fd, len );
 			}
 		}
 		mapit_free(iter);
 		break;
 
 	case SELF:
-		if (sd && (fd=sd->fd)) {
+		if( sd && session_isActive( fd=sd->fd ) ){
 			WFIFOHEAD(fd,len);
 			memcpy(WFIFOP(fd,0), buf, len);
 			WFIFOSET(fd,len);
@@ -613,9 +610,8 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 
 		if (g) {
 			for(i = 0; i < g->max_member; i++) {
-				if( (sd = g->member[i].sd) != NULL )
-				{
-					if( !(fd=sd->fd) )
+				if( (sd = g->member[i].sd) != nullptr ){
+					if( !session_isActive( fd = sd->fd ) )
 						continue;
 
 					if( type == GUILD_NOBG && sd->bg_id )
@@ -639,12 +635,11 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 				break;
 
 			iter = mapit_getallusers();
-			while( (tsd = (TBL_PC*)mapit_next(iter)) != NULL )
-			{
-				if( tsd->guildspy == g->guild_id ){
-					WFIFOHEAD(tsd->fd, len);
-					memcpy(WFIFOP(tsd->fd,0), buf, len);
-					WFIFOSET(tsd->fd,len);
+			while( ( tsd = (map_session_data*)mapit_next( iter ) ) != nullptr ){
+				if( tsd->guildspy == g->guild_id && session_isActive( fd = tsd->fd ) ){
+					WFIFOHEAD( fd, len );
+					memcpy( WFIFOP( fd, 0 ), buf, len );
+					WFIFOSET( fd, len );
 				}
 			}
 			mapit_free(iter);
@@ -664,7 +659,7 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 		if( sd && sd->bg_id > 0 && (bg = util::umap_find(bg_team_db, sd->bg_id)))
 		{
 			for (const auto &member : bg->members) {
-				if((sd = member.sd) == nullptr || (fd = sd->fd) == 0)
+				if( ( sd = member.sd ) == nullptr || !session_isActive( fd = sd->fd ) )
 					continue;
 				if(sd->bl.id == bl->id && (type == BG_WOS || type == BG_SAMEMAP_WOS || type == BG_AREA_WOS) )
 					continue;
@@ -683,7 +678,7 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 			struct clan* clan = sd->clan;
 
 			for( i = 0; i < clan->max_member; i++ ){
-				if( ( sd = clan->members[i] ) == NULL || !(fd = sd->fd) ){
+				if( ( sd = clan->members[i] ) == nullptr || !session_isActive( fd = sd->fd ) ){
 					continue;
 				}
 
@@ -696,11 +691,11 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 				break;
 
 			iter = mapit_getallusers();
-			while ((tsd = (TBL_PC*)mapit_next(iter)) != NULL){
-				if (tsd->clanspy == clan->id){
-					WFIFOHEAD(tsd->fd, len);
-					memcpy(WFIFOP(tsd->fd, 0), buf, len);
-					WFIFOSET(tsd->fd, len);
+			while( ( tsd = (map_session_data*)mapit_next( iter ) ) != nullptr ){
+				if( tsd->clanspy == clan->id && session_isActive( fd = tsd->fd ) ){
+					WFIFOHEAD(fd, len);
+					memcpy(WFIFOP(fd, 0), buf, len);
+					WFIFOSET(fd, len);
 				}
 			}
 			mapit_free(iter);
