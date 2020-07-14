@@ -120,6 +120,7 @@ bool instance_addusers(int instance_id);
 bool instance_delusers(int instance_id);
 int16 instance_mapid(int16 m, int instance_id);
 int instance_addmap(int instance_id);
+void instance_mapname(int instance_id, char* dst_name, const char* src_name);
 
 void instance_addnpc(std::shared_ptr<s_instance_data> idata);
 

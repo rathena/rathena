@@ -632,6 +632,28 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 }
 
 /**
+ * Generating map name for instances
+ * @param instance_id: Instance ID to add map to
+ * @param dst_name: pointer to put the new name to
+ * @param src_name: source map's name
+ */
+void instance_mapname(int instance_id, char* dst_name, const char* src_name) {
+	char tmp_name[MAP_NAME_LENGTH];
+
+	strcpy(tmp_name, src_name);
+
+	// Alter the name
+	// Due to this being custom we only worry about preserving as many characters as necessary for accurate map distinguishing
+	// This also allows us to maintain complete independence with main map functions
+	if ((strchr(tmp_name, '@') == nullptr) && strlen(tmp_name) > 8) {
+		memmove(tmp_name, tmp_name + (strlen(tmp_name) - 9), strlen(tmp_name));
+		snprintf(dst_name, MAP_NAME_LENGTH, "%d#%s", (instance_id % 1000), tmp_name);
+	}
+	else
+		snprintf(dst_name, MAP_NAME_LENGTH, "%.3d%s", (instance_id % 1000), tmp_name);
+}
+
+/**
  * Adds maps to the instance
  * @param instance_id: Instance ID to add map to
  * @return 0 on failure or map count on success
@@ -733,15 +755,8 @@ int16 instance_mapid(int16 m, int instance_id)
 
 	for (const auto &it : idata->map) {
 		if (it.src_m == m) {
-			char iname[MAP_NAME_LENGTH], alt_name[MAP_NAME_LENGTH];
-
-			strcpy(iname, name);
-
-			if (!(strchr(iname, '@')) && strlen(iname) > 8) {
-				memmove(iname, iname + (strlen(iname) - 9), strlen(iname));
-				snprintf(alt_name, sizeof(alt_name), "%d#%s", (instance_id % 1000), iname);
-			} else
-				snprintf(alt_name, sizeof(alt_name), "%.3d%s", (instance_id % 1000), iname);
+			char alt_name[MAP_NAME_LENGTH];
+			instance_mapname(instance_id, alt_name, name);
 			return map_mapname2mapid(alt_name);
 		}
 	}
