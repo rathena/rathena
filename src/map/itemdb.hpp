@@ -33,12 +33,12 @@
 ///Enum of item id (for hardcoded purpose)
 enum item_itemid
 {
+	ITEMID_DUMMY						= 499,
 	ITEMID_RED_POTION					= 501,
 	ITEMID_YELLOW_POTION				= 503,
 	ITEMID_WHITE_POTION					= 504,
 	ITEMID_BLUE_POTION					= 505,
 	ITEMID_APPLE						= 512,
-	ITEMID_CARROT						= 515,
 	ITEMID_HOLY_WATER					= 523,
 	ITEMID_PUMPKIN						= 535,
 	ITEMID_RED_SLIM_POTION				= 545,
@@ -88,9 +88,7 @@ enum item_itemid
 	ITEMID_COATING_BOTTLE				= 7139,
 	ITEMID_FRAGMENT_OF_CRYSTAL			= 7321,
 	ITEMID_SKULL_						= 7420,
-	ITEMID_TOKEN_OF_SIEGFRIED			= 7621,
 	ITEMID_TRAP_ALLOY					= 7940,
-	ITEMID_CATNIP_FRUIT					= 11602,
 	ITEMID_MERCENARY_RED_POTION			= 12184,
 	ITEMID_MERCENARY_BLUE_POTION		= 12185,
 	ITEMID_GIANT_FLY_WING				= 12212,
@@ -106,11 +104,6 @@ enum item_itemid
 	ITEMID_REINS_OF_MOUNT				= 12622,
 	ITEMID_NOBLE_NAMEPLATE				= 12705,
 	ITEMID_SILVER_BULLET				= 13201,
-	ITEMID_SLUG_AMMUNITION_L			= 13210,
-	ITEMID_SLUG_AMMUNITION_M			= 13211,
-	ITEMID_SLUG_AMMUNITION_H			= 13212,
-	ITEMID_SLUG_AMMUNITION_SH			= 13213,
-	ITEMID_SLUG_AMMUNITION_XH			= 13214,
 	ITEMID_PURIFICATION_BULLET			= 13220,
 	ITEMID_SILVER_BULLET_				= 13221,
 	ITEMID_DUN_TELE_SCROLL1				= 14527,
@@ -192,6 +185,12 @@ enum genetic_item_list
 	ITEMID_BLACK_HARD_LUMP,
 	ITEMID_VERY_HARD_LUMP,
 	ITEMID_MYSTERIOUS_POWDER,
+	ITEMID_HP_INC_POTS_TO_THROW			= 13275,
+	ITEMID_HP_INC_POTM_TO_THROW,
+	ITEMID_HP_INC_POTL_TO_THROW,
+	ITEMID_SP_INC_POTS_TO_THROW,
+	ITEMID_SP_INC_POTM_TO_THROW,
+	ITEMID_SP_INC_POTL_TO_THROW,
 };
 
 ///Guillotine Cross
@@ -733,6 +732,18 @@ enum e_random_item_group {
 	IG_SANTA_GIFT,
 	IG_PRIZEOFHERO,
 	IG_PRIVATE_AIRSHIP,
+	IG_TOKEN_OF_SIEGFRIED,
+	IG_ENCHANT_STONE_BOX5,
+	IG_ENCHANT_STONE_BOX6,
+	IG_ENCHANT_STONE_BOX7,
+	IG_ENCHANT_STONE_BOX8,
+	IG_ENCHANT_STONE_BOX9,
+	IG_ENCHANT_STONE_BOX10,
+	IG_ENCHANT_STONE_BOX11,
+	IG_ENCHANT_STONE_BOX12,
+	IG_ENCHANT_STONE_BOX13,
+	IG_ENCHANT_STONE_BOX14,
+	IG_ENCHANT_STONE_BOX15,
 };
 
 /// Enum for bound/sell restricted selling
@@ -844,6 +855,7 @@ struct item_data
 		unsigned guid : 1; // This item always be attached with GUID and make it as bound item! [Cydh]
 		unsigned broadcast : 1; ///< Will be broadcasted if someone obtain the item [Cydh]
 		bool bindOnEquip; ///< Set item as bound when equipped
+		uint8 dropEffect; ///< Drop Effect Mode
 	} flag;
 	struct {// item stacking limitation
 		unsigned short amount;
@@ -861,6 +873,9 @@ struct item_data
 	struct item_combo **combos;
 	unsigned char combos_count;
 	short delay_sc; ///< Use delay group if any instead using player's item_delay data [Cydh]
+
+	bool isStackable();
+	int inventorySlotNeeded(int quantity);
 };
 
 // Struct for item random option [Secret]
@@ -889,6 +904,7 @@ struct s_random_opt_group {
 };
 
 struct item_data* itemdb_searchname(const char *name);
+struct item_data* itemdb_search_aegisname( const char *str );
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
 struct item_data* itemdb_search(unsigned short nameid);
 struct item_data* itemdb_exists(unsigned short nameid);
@@ -909,9 +925,9 @@ struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_traderight(n) (itemdb_search(n)->flag.trade_restriction)
 #define itemdb_viewid(n) (itemdb_search(n)->view_id)
 #define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip)
+#define itemdb_dropeffect(n) (itemdb_search(n)->flag.dropEffect)
 const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (enum e_item_ammo ammo);
-bool itemdb_is_spellbook2(unsigned short nameid);
 
 struct s_item_group_entry *itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group);
 unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
@@ -930,6 +946,7 @@ bool itemdb_canguildstore_sub(struct item_data *itd, int gmlv, int unused);
 bool itemdb_canmail_sub(struct item_data *itd, int gmlv, int unused);
 bool itemdb_canauction_sub(struct item_data *itd, int gmlv, int unused);
 bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(struct item_data*, int, int));
+bool itemdb_ishatched_egg(struct item* item);
 #define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
 #define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)
 #define itemdb_canpartnertrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_canpartnertrade_sub)
@@ -951,6 +968,7 @@ struct item_combo *itemdb_combo_exists(unsigned short combo_id);
 
 struct s_item_group_db *itemdb_group_exists(unsigned short group_id);
 bool itemdb_group_item_exists(unsigned short group_id, unsigned short nameid);
+int16 itemdb_group_item_exists_pc(struct map_session_data *sd, unsigned short group_id);
 char itemdb_pc_get_itemgroup(uint16 group_id, bool identify, struct map_session_data *sd);
 
 bool itemdb_parse_roulette_db(void);

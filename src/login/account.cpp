@@ -14,6 +14,8 @@
 #include "../common/sql.hpp"
 #include "../common/strlib.hpp"
 
+#include "login.hpp" // login_config
+
 /// global defines
 
 /// internal structure
@@ -49,6 +51,9 @@ static bool account_db_sql_get_property(AccountDB* self, const char* key, char* 
 static bool account_db_sql_set_property(AccountDB* self, const char* option, const char* value);
 static bool account_db_sql_create(AccountDB* self, struct mmo_account* acc);
 static bool account_db_sql_remove(AccountDB* self, const uint32 account_id);
+static bool account_db_sql_enable_webtoken( AccountDB* self, const uint32 account_id );
+static bool account_db_sql_disable_webtoken( AccountDB* self, const uint32 account_id );
+static bool account_db_sql_remove_webtokens( AccountDB* self );
 static bool account_db_sql_save(AccountDB* self, const struct mmo_account* acc);
 static bool account_db_sql_load_num(AccountDB* self, struct mmo_account* acc, const uint32 account_id);
 static bool account_db_sql_load_str(AccountDB* self, struct mmo_account* acc, const char* userid);
@@ -71,6 +76,9 @@ AccountDB* account_db_sql(void) {
 	db->vtable.save         = &account_db_sql_save;
 	db->vtable.create       = &account_db_sql_create;
 	db->vtable.remove       = &account_db_sql_remove;
+	db->vtable.enable_webtoken = &account_db_sql_enable_webtoken;
+	db->vtable.disable_webtoken = &account_db_sql_disable_webtoken;
+	db->vtable.remove_webtokens = &account_db_sql_remove_webtokens;
 	db->vtable.load_num     = &account_db_sql_load_num;
 	db->vtable.load_str     = &account_db_sql_load_str;
 	db->vtable.iterator     = &account_db_sql_iterator;
@@ -81,7 +89,7 @@ AccountDB* account_db_sql(void) {
 	safestrncpy(db->db_hostname, "127.0.0.1", sizeof(db->db_hostname));
 	db->db_port = 3306;
 	safestrncpy(db->db_username, "ragnarok", sizeof(db->db_username));
-	safestrncpy(db->db_password, "ragnarok", sizeof(db->db_password));
+	safestrncpy(db->db_password, "", sizeof(db->db_password));
 	safestrncpy(db->db_database, "ragnarok", sizeof(db->db_database));
 	safestrncpy(db->codepage, "", sizeof(db->codepage));
 	// other settings
@@ -134,6 +142,8 @@ static bool account_db_sql_init(AccountDB* self) {
 	if( codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, codepage) )
 		Sql_ShowDebug(sql_handle);
 
+	self->remove_webtokens( self );
+
 	return true;
 }
 
@@ -143,6 +153,10 @@ static bool account_db_sql_init(AccountDB* self) {
  */
 static void account_db_sql_destroy(AccountDB* self){
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
+
+	if( SQL_ERROR == Sql_Query( db->accounts, "UPDATE `%s` SET `web_auth_token` = NULL", db->account_db ) ){
+		Sql_ShowDebug( db->accounts );
+	}
 
 	Sql_Free(db->accounts);
 	db->accounts = NULL;
@@ -483,7 +497,7 @@ static bool account_db_sql_iter_next(AccountDBIterator* self, struct mmo_account
 }
 
 /**
- * Fetch a struct mmo_account from sql.
+ * Fetch a struct mmo_account from sql, excluding web_auth_token.
  * @param db: pointer to db
  * @param acc: pointer of mmo_account to fill
  * @param account_id: id of user account to take data from
@@ -533,6 +547,7 @@ static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 
 	Sql_GetData(sql_handle, 17, &data, NULL); acc->old_group = atoi(data);
 #endif
 	Sql_FreeResult(sql_handle);
+	acc->web_auth_token[0] = '\0';
 
 	return true;
 }
@@ -629,6 +644,69 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 		}
 	}
 
+	if( acc->sex != 'S' && login_config.use_web_auth_token ){
+		static bool initialized = false;
+		static const char* query;
+
+		// Pseudo Scope to break out
+		while( !initialized ){
+			if( SQL_SUCCESS == Sql_Query( sql_handle, "SELECT SHA2( 'test', 256 )" ) ){
+				query = "UPDATE `%s` SET `web_auth_token` = LEFT( SHA2( CONCAT( UUID(), RAND() ), 256 ), %d ), `web_auth_token_enabled` = '1' WHERE `account_id` = '%d'";
+				initialized = true;
+				break;
+			}
+
+			if( SQL_SUCCESS == Sql_Query( sql_handle, "SELECT MD5( 'test' )" ) ){
+				query = "UPDATE `%s` SET `web_auth_token` = LEFT( MD5( CONCAT( UUID(), RAND() ) ), %d ), `web_auth_token_enabled` = '1' WHERE `account_id` = '%d'";
+				initialized = true;
+				break;
+			}
+
+			ShowWarning( "Your MySQL does not support SHA2 and MD5 - no hashing will be used for login token creation.\n" );
+			ShowWarning( "If you are using an old version of MySQL consider upgrading to a newer release.\n" );
+			query = "UPDATE `%s` SET `web_auth_token` = LEFT( CONCAT( UUID(), RAND() ), %d ), `web_auth_token_enabled` = '1' WHERE `account_id` = '%d'";
+			initialized = true;
+			break;
+		}
+
+		const int MAX_RETRIES = 20;
+		int i = 0;
+		bool success = false;
+
+		// Retry it for a maximum number of retries
+		do{
+			if( SQL_SUCCESS == Sql_Query( sql_handle, query, db->account_db, WEB_AUTH_TOKEN_LENGTH - 1, acc->account_id ) ){
+				success = true;
+				break;
+			}
+		}while( i < MAX_RETRIES && Sql_GetError( sql_handle ) == 1062 );
+
+		if( !success ){
+			if( i == MAX_RETRIES ){
+				ShowError( "Failed to generate a unique web_auth_token with %d retries...\n", i );
+			}else{
+				Sql_ShowDebug( sql_handle );
+			}
+
+			break;
+		}
+
+		char* data;
+		size_t len;
+
+		if( SQL_SUCCESS != Sql_Query( sql_handle, "SELECT `web_auth_token` from `%s` WHERE `account_id` = '%d'", db->account_db, acc->account_id ) ||
+			SQL_SUCCESS != Sql_NextRow( sql_handle ) ||
+			SQL_SUCCESS != Sql_GetData( sql_handle, 0, &data, &len )
+			){
+			Sql_ShowDebug( sql_handle );
+			break;
+		}
+
+		safestrncpy( (char *)&acc->web_auth_token, data, sizeof( acc->web_auth_token ) );
+
+		Sql_FreeResult( sql_handle );
+	}
+
 	// if we got this far, everything was successful
 	result = true;
 
@@ -641,17 +719,17 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 	return result;
 }
 
-void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id) {
+void mmo_save_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 char_id) {
 	Sql* sql_handle = ((AccountDB_SQL*)self)->accounts;
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
-	int count = RFIFOW(fd, 12);
+	uint16 count = RFIFOW(fd, 12);
 
 	if (count) {
 		int cursor = 14, i;
 		char key[32], sval[254], esc_key[32*2+1], esc_sval[254*2+1];
 
 		for (i = 0; i < count; i++) {
-			unsigned int index;
+			uint32 index;
 			safestrncpy(key, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 			Sql_EscapeString(sql_handle, esc_key, key);
 			cursor += RFIFOB(fd, cursor) + 1;
@@ -662,12 +740,12 @@ void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 			switch (RFIFOB(fd, cursor++)) {
 				// int
 				case 0:
-					if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%d')", db->global_acc_reg_num_table, account_id, esc_key, index, RFIFOL(fd, cursor)) )
+					if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%" PRId64 "')", db->global_acc_reg_num_table, account_id, esc_key, index, RFIFOQ(fd, cursor)) )
 						Sql_ShowDebug(sql_handle);
-					cursor += 4;
+					cursor += 8;
 					break;
 				case 1:
-					if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `key` = '%s' AND `index` = '%u' LIMIT 1", db->global_acc_reg_num_table, account_id, esc_key, index) )
+					if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", db->global_acc_reg_num_table, account_id, esc_key, index) )
 						Sql_ShowDebug(sql_handle);
 					break;
 				// str
@@ -675,11 +753,11 @@ void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 					safestrncpy(sval, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 					cursor += RFIFOB(fd, cursor) + 1;
 					Sql_EscapeString(sql_handle, esc_sval, sval);
-					if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%s')", db->global_acc_reg_str_table, account_id, esc_key, index, esc_sval) )
+					if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%s')", db->global_acc_reg_str_table, account_id, esc_key, index, esc_sval) )
 						Sql_ShowDebug(sql_handle);
 					break;
 				case 3:
-					if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `key` = '%s' AND `index` = '%u' LIMIT 1", db->global_acc_reg_str_table, account_id, esc_key, index) )
+					if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", db->global_acc_reg_str_table, account_id, esc_key, index) )
 						Sql_ShowDebug(sql_handle);
 					break;
 				default:
@@ -690,14 +768,14 @@ void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 	}
 }
 
-void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id) {
+void mmo_send_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 char_id) {
 	Sql* sql_handle = ((AccountDB_SQL*)self)->accounts;
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 	char* data;
 	int plen = 0;
 	size_t len;
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%d'", db->global_acc_reg_str_table, account_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%" PRIu32 "'", db->global_acc_reg_str_table, account_id) )
 		Sql_ShowDebug(sql_handle);
 
 	WFIFOHEAD(fd, 60000 + 300);
@@ -728,7 +806,7 @@ void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 
 		Sql_GetData(sql_handle, 1, &data, NULL);
 
-		WFIFOL(fd, plen) = (unsigned int)atol(data);
+		WFIFOL(fd, plen) = (uint32)atol(data);
 		plen += 4;
 
 		Sql_GetData(sql_handle, 2, &data, NULL);
@@ -764,7 +842,7 @@ void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 
 	Sql_FreeResult(sql_handle);
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%d'", db->global_acc_reg_num_table, account_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%" PRIu32 "'", db->global_acc_reg_num_table, account_id) )
 		Sql_ShowDebug(sql_handle);
 
 	WFIFOHEAD(fd, 60000 + 300);
@@ -795,13 +873,13 @@ void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 
 		Sql_GetData(sql_handle, 1, &data, NULL);
 
-		WFIFOL(fd, plen) = (unsigned int)atol(data);
+		WFIFOL(fd, plen) = (uint32)atol(data);
 		plen += 4;
 
 		Sql_GetData(sql_handle, 2, &data, NULL);
 
-		WFIFOL(fd, plen) = atoi(data);
-		plen += 4;
+		WFIFOQ(fd, plen) = strtoll(data,NULL,10);
+		plen += 8;
 
 		WFIFOW(fd, 14) += 1;
 
@@ -828,4 +906,37 @@ void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 	WFIFOSET(fd, plen);
 
 	Sql_FreeResult(sql_handle);
+}
+
+bool account_db_sql_enable_webtoken( AccountDB* self, const uint32 account_id ){
+	AccountDB_SQL* db = (AccountDB_SQL*)self;
+
+	if( SQL_ERROR == Sql_Query( db->accounts, "UPDATE `%s` SET `web_auth_token_enabled` = '1' WHERE `account_id` = '%u'", db->account_db, account_id ) ){
+		Sql_ShowDebug( db->accounts );
+		return false;
+	}
+
+	return true;
+}
+
+bool account_db_sql_disable_webtoken( AccountDB* self, const uint32 account_id ){
+	AccountDB_SQL* db = (AccountDB_SQL*)self;
+
+	if( SQL_ERROR == Sql_Query( db->accounts, "UPDATE `%s` SET `web_auth_token_enabled` = '0' WHERE `account_id` = '%u'", db->account_db, account_id ) ){
+		Sql_ShowDebug( db->accounts );
+		return false;
+	}
+
+	return true;
+}
+
+bool account_db_sql_remove_webtokens( AccountDB* self ){
+	AccountDB_SQL* db = (AccountDB_SQL*)self;
+
+	if( SQL_ERROR == Sql_Query( db->accounts, "UPDATE `%s` SET `web_auth_token` = NULL, `web_auth_token_enabled` = '0'", db->account_db ) ){
+		Sql_ShowDebug( db->accounts );
+		return false;
+	}
+
+	return true;
 }

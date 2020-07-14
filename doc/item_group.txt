@@ -38,7 +38,7 @@ The table below explains which fields are accessed in each.
 
 ---------------------------------------
 
-GroupID: See the "Item Group ID" section in 'src/map/itemdb.h' and the "item groups" section in 'src/map/script_constants.h'.
+GroupID: See the "Item Group ID" section in 'src/map/itemdb.hpp' and the "item groups" section in 'src/map/script_constants.hpp'.
          Supports IG_* constants.
 
 ---------------------------------------
@@ -65,7 +65,7 @@ Amount: Amount of item that will be obtained.
 
 Random: Set this to '0' and the item will always be obtained ("must" item).
 		Random value will allocates where the item will be stored at random group.
-		(max. random group is 4, defined as MAX_ITEMGROUP_RANDGROUP in 'src/map/itemdb.c'.)
+		(max. random group is 4, defined as MAX_ITEMGROUP_RANDGROUP in 'src/map/itemdb.cpp'.)
 
 	Item Group:
 		IG_MyItemGroup,Knife,0,1,0		//a "must" item

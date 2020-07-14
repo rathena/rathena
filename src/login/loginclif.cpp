@@ -47,7 +47,6 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 
 	uint8 server_num, n;
 	uint32 subnet_char_ip;
-	struct auth_node* node;
 	int i;
 
 #if PACKETVER < 20170315
@@ -89,7 +88,8 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 	}
 
 	{
-		struct online_login_data* data = (struct online_login_data*)idb_get(online_db, sd->account_id);
+		struct online_login_data* data = login_get_online_user( sd->account_id );
+
 		if( data )
 		{// account is already marked as online!
 			if( data->char_server > -1 )
@@ -108,7 +108,7 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 			if( data->char_server == -1 )
 			{// client has authed but did not access char-server yet
 				// wipe previous session
-				idb_remove(auth_db, sd->account_id);
+				login_remove_auth_node(sd->account_id);
 				login_remove_online_user(sd->account_id);
 				data = NULL;
 			}
@@ -130,7 +130,7 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 	WFIFOW(fd,44) = 0; // unknown
 	WFIFOB(fd,46) = sex_str2num(sd->sex);
 #if PACKETVER >= 20170315
-	memset(WFIFOP(fd,47),0,17); // Unknown
+	safestrncpy( WFIFOCP( fd, 47 ), sd->web_auth_token, WEB_AUTH_TOKEN_LENGTH ); // web authentication token
 #endif
 	for( i = 0, n = 0; i < ARRAYLENGTH(ch_server); ++i ) {
 		if( !session_isValid(ch_server[i].fd) )
@@ -139,7 +139,7 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 		WFIFOL(fd,header+n*size) = htonl((subnet_char_ip) ? subnet_char_ip : ch_server[i].ip);
 		WFIFOW(fd,header+n*size+4) = ntows(htons(ch_server[i].port)); // [!] LE byte order here [!]
 		memcpy(WFIFOP(fd,header+n*size+6), ch_server[i].name, 20);
-		WFIFOW(fd,header+n*size+26) = ch_server[i].users;
+		WFIFOW(fd,header+n*size+26) = login_get_usercount( ch_server[i].users );
 		WFIFOW(fd,header+n*size+28) = ch_server[i].type;
 		WFIFOW(fd,header+n*size+30) = ch_server[i].new_;
 #if PACKETVER >= 20170315
@@ -150,21 +150,12 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 	WFIFOSET(fd,header+size*server_num);
 
 	// create temporary auth entry
-	CREATE(node, struct auth_node, 1);
-	node->account_id = sd->account_id;
-	node->login_id1 = sd->login_id1;
-	node->login_id2 = sd->login_id2;
-	node->sex = sd->sex;
-	node->ip = ip;
-	node->clienttype = sd->clienttype;
-	idb_put(auth_db, sd->account_id, node);
-	{
-		struct online_login_data* data;
-		// mark client as 'online'
-		data = login_add_online_user(-1, sd->account_id);
-		// schedule deletion of this node
-		data->waiting_disconnect = add_timer(gettick()+AUTH_TIMEOUT, login_waiting_disconnect_timer, sd->account_id, 0);
-	}
+	login_add_auth_node( sd, ip );
+
+	// mark client as 'online'
+	struct online_login_data* data = login_add_online_user(-1, sd->account_id);
+	// schedule deletion of this node
+	data->waiting_disconnect = add_timer(gettick()+AUTH_TIMEOUT, login_waiting_disconnect_timer, sd->account_id, 0);
 }
 
 /**
@@ -342,7 +333,7 @@ static int logclif_parse_reqauth(int fd, struct login_session_data *sd, int comm
 		if( israwpass )
 		{
 			ShowStatus("Request for connection of %s (ip: %s)\n", sd->userid, ip);
-			safestrncpy(sd->passwd, password, NAME_LENGTH);
+			safestrncpy(sd->passwd, password, PASSWD_LENGTH);
 			if( login_config.use_md5_passwds )
 				MD5_String(sd->passwd, sd->passwd);
 			sd->passwdenc = 0;
@@ -466,6 +457,20 @@ static int logclif_parse_reqcharconnec(int fd, struct login_session_data *sd, ch
 	return 1;
 }
 
+int logclif_parse_otp_login( int fd, struct login_session_data* sd ){
+	RFIFOSKIP( fd, 68 );
+
+	WFIFOHEAD( fd, 34 );
+	WFIFOW( fd, 0 ) = 0xae3;
+	WFIFOW( fd, 2 ) = 34;
+	WFIFOL( fd, 4 ) = 0; // normal login
+	safestrncpy( WFIFOCP( fd, 8 ), "S1000", 6 );
+	safestrncpy( WFIFOCP( fd, 28 ), "token", 6 );
+	WFIFOSET( fd, 34 );
+
+	return 1;
+}
+
 /**
  * Entry point from client to log-server.
  * Function that checks incoming command, then splits it to the correct handler.
@@ -530,6 +535,10 @@ int logclif_parse(int fd) {
 			break;
 		// Sending request of the coding key
 		case 0x01db: next = logclif_parse_reqkey(fd, sd); break;
+		// OTP token login
+		case 0x0acf:
+			next = logclif_parse_otp_login( fd, sd );
+			break;
 		// Connection request of a char-server
 		case 0x2710: logclif_parse_reqcharconnec(fd,sd, ip); return 0; // processing will continue elsewhere
 		default:

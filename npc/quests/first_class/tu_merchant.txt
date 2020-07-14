@@ -794,7 +794,7 @@ prontera,247,129,3	script	Jayon	4_M_03,{
 		callsub L_Potions, 400,10;
 	else if (tu_merchant == 8)
 		callsub L_Potions, 410,10;
-	mes "The Schwaltzvalt Republic...";
+	mes "The Schwarzwald Republic...";
 	mes "It's a really interesting country. There's Juno and a few other places worth looking around. ";
 	next;
 	mes "[Jayon]";

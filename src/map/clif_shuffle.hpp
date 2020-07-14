@@ -19,7 +19,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	//parseable_packet(0x0862,4,NULL,0); // CZ_GANGSI_RANK
 	parseable_packet(0x0887,8,clif_parse_MoveToKafra,2,4);
@@ -58,7 +58,7 @@
 	parseable_packet(0x08aa,2,clif_parse_SearchStoreInfoNextPage,0);
 	parseable_packet(0x0925,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x0926,5,clif_parse_HomMenu,2,4);
-	parseable_packet(0x093e,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x093e,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0950,26,clif_parse_PartyInvite2,2);
 	parseable_packet(0x0952,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	parseable_packet(0x095C,10,clif_parse_UseSkillToId,2,4,6);
@@ -70,7 +70,7 @@
 #elif PACKETVER == 20130529
 	parseable_packet(0x023B,5,clif_parse_HomMenu,2,4);
 	parseable_packet(0x0438,10,clif_parse_UseSkillToId,2,4,6);
-	parseable_packet(0x085A,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x085A,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x085E,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
 	parseable_packet(0x0863,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0869,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
@@ -124,7 +124,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0883,36,clif_parse_StoragePassword,2,4,20);
 	parseable_packet(0x096A,6,clif_parse_GetCharNameRequest,2);
@@ -151,7 +151,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x087E,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x0919,19,clif_parse_WantToConnection,2,6,10,14,18);
@@ -173,7 +173,7 @@
 	parseable_packet(0x0887,26,clif_parse_PartyInvite2,2);
 	parseable_packet(0x0889,7,clif_parse_ActionRequest,2,6);
 	parseable_packet(0x088E,5,clif_parse_WalkToXY,2);
-	parseable_packet(0x0890,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0890,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0891,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	parseable_packet(0x08A6,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x08A7,18,clif_parse_PartyBookingRegisterReq,2,4,6);
@@ -205,7 +205,7 @@
 	parseable_packet(0x0817,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	//parseable_packet(0x0860,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
 	parseable_packet(0x088B,6,clif_parse_TakeItem,2);
@@ -246,7 +246,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0873,36,clif_parse_StoragePassword,2,4,20);
 	parseable_packet(0x0930,5,clif_parse_ChangeDir,2,4);
@@ -279,7 +279,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0880,36,clif_parse_StoragePassword,2,4,20);
 	parseable_packet(0x096A,6,clif_parse_GetCharNameRequest,2);
@@ -311,7 +311,7 @@
 	parseable_packet(0x0956,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x0958,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x095B,36,clif_parse_StoragePassword,2,4,20);
-	parseable_packet(0x0960,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0960,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0967,6,clif_parse_SolveCharName,2);
 	parseable_packet(0x096A,2,clif_parse_ReqCloseBuyingStore,0);
 // 2013-08-07Ragexe
@@ -341,7 +341,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0887,36,clif_parse_StoragePassword,2,4,20);
 	parseable_packet(0x096A,6,clif_parse_GetCharNameRequest,2);
@@ -372,7 +372,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x08A4,36,clif_parse_StoragePassword,2,4,20);
 	parseable_packet(0x096A,6,clif_parse_GetCharNameRequest,2);
@@ -399,7 +399,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x086E,19,clif_parse_WantToConnection,2,6,10,14,18);
 	//parseable_packet(0x0922,4,NULL,0); // CZ_GANGSI_RANK
@@ -422,7 +422,7 @@
 	parseable_packet(0x0815,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
-	parseable_packet(0x0835,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0835,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0878,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x087d,6,clif_parse_DropItem,2,4);
@@ -461,7 +461,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x087c,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x0895,36,clif_parse_StoragePassword,0);
@@ -492,7 +492,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,19,clif_parse_WantToConnection,2,6,10,14,18);
 	parseable_packet(0x0868,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x0899,5,clif_parse_HomMenu,2,4);
@@ -502,7 +502,7 @@
 	parseable_packet(0x096a,6,clif_parse_GetCharNameRequest,2);
 // 2015-01-28aRagexe
 #elif PACKETVER == 20150128
-	parseable_packet(0x0202,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0202,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x023b,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x035f,6,clif_parse_ReqClickBuyingStore,2);
 	parseable_packet(0x0365,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
@@ -558,7 +558,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0966,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x096a,6,clif_parse_GetCharNameRequest,2);
@@ -578,7 +578,7 @@
 	parseable_packet(0x0815,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
 	parseable_packet(0x0817,6,clif_parse_TakeItem,2);
 	parseable_packet(0x0819,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0867,18,clif_parse_PartyBookingRegisterReq,2,4);
 	//parseable_packet(0x0885,4,NULL,0); // CZ_GANGSI_RANK
@@ -610,7 +610,7 @@
 	parseable_packet(0x0896,7,clif_parse_ActionRequest,2,6);
 	parseable_packet(0x08a1,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x08a3,6,clif_parse_TakeItem,2);
-	parseable_packet(0x08a5,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x08a5,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x08a6,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x091c,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
 	parseable_packet(0x0928,5,clif_parse_ChangeDir,2,4);
@@ -636,7 +636,7 @@
 	parseable_packet(0x086f,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
 	parseable_packet(0x087c,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x087e,5,clif_parse_ChangeDir,2,4);
-	parseable_packet(0x0883,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0883,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0885,10,clif_parse_UseSkillToPos,2,4,6,8);
 	parseable_packet(0x0891,6,clif_parse_GetCharNameRequest,2);
 	//parseable_packet(0x0893,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
@@ -661,7 +661,7 @@
 	parseable_packet(0x0367,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0437,6,clif_parse_ReqClickBuyingStore,2);
 	parseable_packet(0x083c,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
-	parseable_packet(0x085e,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x085e,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x086f,5,clif_parse_WalkToXY,2);
 	parseable_packet(0x0875,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
 	//parseable_packet(0x087e,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
@@ -713,7 +713,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0955,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x096a,6,clif_parse_GetCharNameRequest,2);
@@ -732,7 +732,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0867,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x086a,19,clif_parse_WantToConnection,2,6,10,14,18);
@@ -764,7 +764,7 @@
 	parseable_packet(0x0817,6,clif_parse_TakeItem,2);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x085a,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x0864,26,clif_parse_PartyInvite2,2);
@@ -796,7 +796,7 @@
 	parseable_packet(0x0817,5,clif_parse_HomMenu,2,4);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0864,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x0879,8,clif_parse_MoveToKafra,2,4);
@@ -839,7 +839,7 @@
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
 	parseable_packet(0x0838,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x083c,36,clif_parse_StoragePassword,0);
-	parseable_packet(0x0940,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0940,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x096a,6,clif_parse_GetCharNameRequest,2);
 // 2015-06-17aRagexeRE or 2015-06-18aRagexeRE
 #elif PACKETVER == 20150617 || PACKETVER == 20150618
@@ -860,7 +860,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0869,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x086a,18,clif_parse_PartyBookingRegisterReq,2,4);
@@ -890,7 +890,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x085d,8,clif_parse_MoveFromKafra,2,4);
 	//parseable_packet(0x0862,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
 	parseable_packet(0x0865,26,clif_parse_FriendsListAdd,2);
@@ -919,7 +919,7 @@
 	parseable_packet(0x088d,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x0890,2,clif_parse_SearchStoreInfoNextPage,0);
 	parseable_packet(0x0891,10,clif_parse_UseSkillToId,2,4,6);
-	parseable_packet(0x08a0,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x08a0,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x08a1,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x08a4,6,clif_parse_TakeItem,2);
 	parseable_packet(0x08a8,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
@@ -943,7 +943,7 @@
 	parseable_packet(0x0869,7,clif_parse_ActionRequest,2,6);
 	parseable_packet(0x0873,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
 	parseable_packet(0x0877,5,clif_parse_WalkToXY,2);
-	parseable_packet(0x087F,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x087F,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0881,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	parseable_packet(0x089B,18,clif_parse_PartyBookingRegisterReq,2,4,6);
 	parseable_packet(0x089C,6,clif_parse_TakeItem,2);
@@ -992,7 +992,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0860,36,clif_parse_StoragePassword,2,4,20);
 	parseable_packet(0x096a,6,clif_parse_GetCharNameRequest,2);
@@ -1019,7 +1019,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	//parseable_packet(0x0862,4,NULL,0); // CZ_GANGSI_RANK
 	parseable_packet(0x093f,5,clif_parse_HomMenu,2,4);
@@ -1052,7 +1052,7 @@
 	parseable_packet(0x091d,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x0930,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
 	parseable_packet(0x0934,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
-	parseable_packet(0x0944,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0944,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x094f,2,clif_parse_SearchStoreInfoNextPage,0);
 	parseable_packet(0x0956,6,clif_parse_SolveCharName,2);
 	parseable_packet(0x095e,8,clif_parse_MoveToKafra,2,4);
@@ -1083,7 +1083,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x086A,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x091D,5,clif_parse_HomMenu,2,4);
@@ -1116,7 +1116,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0860,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x096a,6,clif_parse_GetCharNameRequest,2);
@@ -1147,7 +1147,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0860,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x096A,6,clif_parse_GetCharNameRequest,2);
@@ -1169,7 +1169,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0886,6,clif_parse_TickSend,2);
 	parseable_packet(0x0887,6,clif_parse_GetCharNameRequest,2);
@@ -1199,7 +1199,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x085D,-1,clif_parse_ItemListWindowSelected,2,4,8,8,12);
 	parseable_packet(0x0862,6,clif_parse_DropItem,2,4);
@@ -1229,7 +1229,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x086b,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x088b,36,clif_parse_StoragePassword,2,4,20);
@@ -1270,7 +1270,7 @@
 	parseable_packet(0x092A,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x092E,10,clif_parse_UseSkillToPos,2,4,6,8);
 	parseable_packet(0x0939,6,clif_parse_ReqClickBuyingStore,2);
-	parseable_packet(0x093E,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x093E,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0951,5,clif_parse_HomMenu,2,4);
 	parseable_packet(0x0956,26,clif_parse_PartyInvite2,2);
 	//parseable_packet(0x0957,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
@@ -1302,7 +1302,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0870,36,clif_parse_StoragePassword,2,4,20);
 	parseable_packet(0x096a,6,clif_parse_GetCharNameRequest,2);
@@ -1320,7 +1320,7 @@
 	parseable_packet(0x0861,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0866,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x0875,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x087A,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x087A,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x087F,6,clif_parse_ReqClickBuyingStore,2);
 	parseable_packet(0x088E,10,clif_parse_UseSkillToId,2,4,6);
 	//parseable_packet(0x088F,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
@@ -1344,7 +1344,7 @@
 	parseable_packet(0x0362,5,clif_parse_HomMenu,2,4);
 	//parseable_packet(0x0364,4,NULL,0); // CZ_GANGSI_RANK
 	parseable_packet(0x0365,18,clif_parse_PartyBookingRegisterReq,2,4);
-	parseable_packet(0x0436,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0436,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x085B,6,clif_parse_TickSend,2);
 	parseable_packet(0x0864,8,clif_parse_MoveFromKafra,2,4);
@@ -1398,7 +1398,7 @@
 	parseable_packet(0x095e,6,clif_parse_SolveCharName,2);
 	parseable_packet(0x095f,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0965,36,clif_parse_StoragePassword,0);
-	parseable_packet(0x0967,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0967,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 // 2016-01-06aRagexeRE
 #elif PACKETVER == 20160106
 	parseable_packet(0x035f,6,clif_parse_TickSend,2);
@@ -1414,7 +1414,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0861,6,clif_parse_TakeItem,2);
 	parseable_packet(0x086a,6,clif_parse_DropItem,2,4);
@@ -1451,7 +1451,7 @@
 	parseable_packet(0x08a0,6,clif_parse_TickSend,2);
 	parseable_packet(0x08a6,6,clif_parse_TakeItem,2);
 	parseable_packet(0x08aa,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
-	parseable_packet(0x0919,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0919,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x091b,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0924,6,clif_parse_DropItem,2,4);
 	parseable_packet(0x0930,6,clif_parse_SolveCharName,2);
@@ -1488,7 +1488,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0865,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x096a,6,clif_parse_GetCharNameRequest,2);
@@ -1516,7 +1516,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x085e,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x0922,5,clif_parse_HomMenu,2,4);
@@ -1540,7 +1540,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,19,clif_parse_WantToConnection,2,6,10,14,18);
 	parseable_packet(0x0835,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x086c,18,clif_parse_PartyBookingRegisterReq,2,4);
 	parseable_packet(0x0872,5,clif_parse_HomMenu,2,4);
@@ -1579,7 +1579,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x086c,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x0870,26,clif_parse_FriendsListAdd,2);
@@ -1590,7 +1590,7 @@
 	parseable_packet(0x0202,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	parseable_packet(0x023b,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0362,5,clif_parse_ChangeDir,2,4);
-	parseable_packet(0x0365,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0365,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0864,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x0870,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x0873,5,clif_parse_HomMenu,2,4);
@@ -1631,7 +1631,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x0861,19,clif_parse_WantToConnection,2,6,10,14,18);
 	//parseable_packet(0x086b,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
@@ -1658,7 +1658,7 @@
 	parseable_packet(0x0865,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0867,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	parseable_packet(0x0868,5,clif_parse_HomMenu,2,4);
-	parseable_packet(0x0873,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0873,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0875,2,clif_parse_SearchStoreInfoNextPage,0);
 	parseable_packet(0x087a,10,clif_parse_UseSkillToPos,2,4,6,8);
 	parseable_packet(0x087d,26,clif_parse_PartyInvite2,2);
@@ -1707,7 +1707,7 @@
 	parseable_packet(0x0932,5,clif_parse_HomMenu,2,4);
 	parseable_packet(0x094f,7,clif_parse_ActionRequest,2,6);
 	parseable_packet(0x0956,6,clif_parse_TickSend,2);
-	parseable_packet(0x095e,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x095e,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x096a,6,clif_parse_TakeItem,2);
 // 2016-03-16aRagexeRE
 #elif PACKETVER == 20160316
@@ -1736,7 +1736,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0922,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x096a,6,clif_parse_GetCharNameRequest,2);
@@ -1755,7 +1755,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	//parseable_packet(0x0867,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
 	parseable_packet(0x0869,6,clif_parse_TakeItem,2);
@@ -1785,7 +1785,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0867,26,clif_parse_PartyInvite2,2);
 	parseable_packet(0x086d,6,clif_parse_TakeItem,2);
@@ -1823,7 +1823,7 @@
 	parseable_packet(0x08a9,2,clif_parse_ReqCloseBuyingStore,0);
 	//parseable_packet(0x08ac,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
 	parseable_packet(0x0927,8,clif_parse_MoveToKafra,2,4);
-	parseable_packet(0x092d,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x092d,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0933,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x0934,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0940,6,clif_parse_TickSend,2);
@@ -1849,7 +1849,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0862,19,clif_parse_WantToConnection,2,6,10,14,18);
 	//parseable_packet(0x087a,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
@@ -1880,7 +1880,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,5,clif_parse_HomMenu,2,4);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0864,6,clif_parse_TakeItem,2);
 	//parseable_packet(0x0870,4,NULL,0); // CZ_GANGSI_RANK
@@ -1922,7 +1922,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,2,clif_parse_SearchStoreInfoNextPage,0);
 	parseable_packet(0x0835,36,clif_parse_StoragePassword,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0940,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x096a,6,clif_parse_GetCharNameRequest,2);
@@ -1953,7 +1953,7 @@
 	parseable_packet(0x093e,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0940,19,clif_parse_WantToConnection,2,6,10,14,18);
 	parseable_packet(0x0941,8,clif_parse_MoveFromKafra,2,4);
-	parseable_packet(0x0948,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0948,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0952,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x095b,6,clif_parse_ReqClickBuyingStore,2);
 	parseable_packet(0x0969,36,clif_parse_StoragePassword,0);
@@ -1979,7 +1979,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x085e,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x0894,26,clif_parse_FriendsListAdd,2);
@@ -2011,7 +2011,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x086c,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x0874,19,clif_parse_WantToConnection,2,6,10,14,18);
@@ -2033,7 +2033,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	//parseable_packet(0x085a,4,NULL,0); // CZ_GANGSI_RANK
 	parseable_packet(0x085e,6,clif_parse_DropItem,2,4);
@@ -2066,7 +2066,7 @@
 	parseable_packet(0x0817,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0863,6,clif_parse_TakeItem,2);
 	parseable_packet(0x0870,8,clif_parse_MoveFromKafra,2,4);
@@ -2098,7 +2098,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	//parseable_packet(0x085c,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
 	parseable_packet(0x0885,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
@@ -2142,7 +2142,7 @@
 	parseable_packet(0x0958,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x095c,18,clif_parse_PartyBookingRegisterReq,2,4);
 	parseable_packet(0x095e,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
-	parseable_packet(0x0961,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0961,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 // 2016-06-22aRagexeRE
 #elif PACKETVER == 20160622
 	parseable_packet(0x023b,10,clif_parse_UseSkillToPos,2,4,6,8);
@@ -2167,7 +2167,7 @@
 	parseable_packet(0x092d,6,clif_parse_TickSend,2);
 	parseable_packet(0x092f,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0936,19,clif_parse_WantToConnection,2,6,10,14,18);
-	parseable_packet(0x0937,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0937,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x093b,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x093f,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
 	parseable_packet(0x0946,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
@@ -2176,7 +2176,7 @@
 	parseable_packet(0x0969,6,clif_parse_DropItem,2,4);
 // 2016-06-29aRagexeRE or 2016-06-30aRagexeRE
 #elif PACKETVER == 20160629 || PACKETVER == 20160630
-	parseable_packet(0x0202,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0202,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x022d,5,clif_parse_WalkToXY,2);
 	//parseable_packet(0x035f,4,NULL,0); // CZ_GANGSI_RANK
 	parseable_packet(0x0363,6,clif_parse_ReqClickBuyingStore,2);
@@ -2234,7 +2234,7 @@
 	parseable_packet(0x0945,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x094c,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x0952,2,clif_parse_ReqCloseBuyingStore,0);
-	parseable_packet(0x0957,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0957,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0958,6,clif_parse_TakeItem,2);
 // 2016-07-13bRagexeRE
 #elif PACKETVER == 20160713
@@ -2250,7 +2250,7 @@
 	parseable_packet(0x087b,6,clif_parse_TickSend,2);
 	parseable_packet(0x0883,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x088d,18,clif_parse_PartyBookingRegisterReq,2,4);
-	parseable_packet(0x0892,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0892,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x089a,26,clif_parse_PartyInvite2,2);
 	//parseable_packet(0x089f,4,NULL,0); // CZ_GANGSI_RANK
 	parseable_packet(0x08a2,8,clif_parse_MoveFromKafra,2,4);
@@ -2285,7 +2285,7 @@
 	parseable_packet(0x089a,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x089c,5,clif_parse_HomMenu,2,4);
 	parseable_packet(0x089e,8,clif_parse_MoveFromKafra,2,4);
-	parseable_packet(0x08a0,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x08a0,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x08aa,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
 	//parseable_packet(0x0917,4,NULL,0); // CZ_GANGSI_RANK
 	parseable_packet(0x091c,6,clif_parse_TakeItem,2);
@@ -2309,7 +2309,7 @@
 	parseable_packet(0x07ec,6,clif_parse_DropItem,2,4);
 	//parseable_packet(0x0866,4,NULL,0); // CZ_GANGSI_RANK
 	parseable_packet(0x0868,26,clif_parse_PartyInvite2,2);
-	parseable_packet(0x0869,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0869,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0874,6,clif_parse_ReqClickBuyingStore,2);
 	parseable_packet(0x0877,18,clif_parse_PartyBookingRegisterReq,2,4);
 	parseable_packet(0x0883,7,clif_parse_ActionRequest,2,6);
@@ -2347,7 +2347,7 @@
 	parseable_packet(0x08a1,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
 	parseable_packet(0x091b,6,clif_parse_TakeItem,2);
 	parseable_packet(0x0929,36,clif_parse_StoragePassword,0);
-	parseable_packet(0x0930,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0930,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0932,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0934,7,clif_parse_ActionRequest,2,6);
 	parseable_packet(0x0937,10,clif_parse_UseSkillToPos,2,4,6,8);
@@ -2365,7 +2365,7 @@
 	parseable_packet(0x0361,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x0819,10,clif_parse_UseSkillToPos,2,4,6,8);
 	parseable_packet(0x0838,26,clif_parse_PartyInvite2,2);
-	parseable_packet(0x085d,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x085d,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x085e,6,clif_parse_DropItem,2,4);
 	parseable_packet(0x085f,18,clif_parse_PartyBookingRegisterReq,2,4);
 	parseable_packet(0x0860,6,clif_parse_SolveCharName,2);
@@ -2409,7 +2409,7 @@
 	parseable_packet(0x0917,36,clif_parse_StoragePassword,0);
 	//parseable_packet(0x091b,4,NULL,0); // CZ_GANGSI_RANK
 	parseable_packet(0x092c,26,clif_parse_FriendsListAdd,2);
-	parseable_packet(0x092e,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x092e,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0938,2,clif_parse_SearchStoreInfoNextPage,0);
 	parseable_packet(0x093a,5,clif_parse_HomMenu,2,4);
 	parseable_packet(0x0946,6,clif_parse_SolveCharName,2);
@@ -2449,7 +2449,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x091c,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x096a,6,clif_parse_GetCharNameRequest,2);
@@ -2457,7 +2457,7 @@
 #elif PACKETVER == 20160913
 	parseable_packet(0x0361,18,clif_parse_PartyBookingRegisterReq,2,4);
 	parseable_packet(0x0817,8,clif_parse_MoveToKafra,2,4);
-	parseable_packet(0x085b,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x085b,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0865,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0874,6,clif_parse_ReqClickBuyingStore,2);
 	parseable_packet(0x0875,6,clif_parse_TickSend,2);
@@ -2511,7 +2511,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x094a,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x096a,6,clif_parse_GetCharNameRequest,2);
@@ -2528,7 +2528,7 @@
 	parseable_packet(0x086d,6,clif_parse_DropItem,2,4);
 	parseable_packet(0x0872,5,clif_parse_HomMenu,2,4);
 	parseable_packet(0x0878,6,clif_parse_SolveCharName,2);
-	parseable_packet(0x087f,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x087f,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0889,19,clif_parse_WantToConnection,2,6,10,14,18);
 	parseable_packet(0x088e,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0897,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
@@ -2566,7 +2566,7 @@
 	//parseable_packet(0x091e,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
 	parseable_packet(0x092b,6,clif_parse_TickSend,2);
 	parseable_packet(0x0931,26,clif_parse_FriendsListAdd,2);
-	parseable_packet(0x0932,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0932,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x093b,10,clif_parse_UseSkillToPos,2,4,6,8);
 	parseable_packet(0x0942,6,clif_parse_DropItem,2,4);
 	parseable_packet(0x0944,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
@@ -2591,7 +2591,7 @@
 	parseable_packet(0x0863,7,clif_parse_ActionRequest,2,6);
 	parseable_packet(0x0868,6,clif_parse_TakeItem,2);
 	parseable_packet(0x086d,19,clif_parse_WantToConnection,2,6,10,14,18);
-	parseable_packet(0x0872,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0872,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0875,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0880,10,clif_parse_UseSkillToPos,2,4,6,8);
 	parseable_packet(0x0893,8,clif_parse_MoveToKafra,2,4);
@@ -2632,7 +2632,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0889,36,clif_parse_StoragePassword,0);
 	//parseable_packet(0x0892,4,NULL,0); // CZ_GANGSI_RANK
@@ -2649,7 +2649,7 @@
 	parseable_packet(0x0861,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	parseable_packet(0x0862,6,clif_parse_TickSend,2);
 	parseable_packet(0x086a,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x086c,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x086c,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	//parseable_packet(0x086e,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
 	parseable_packet(0x087a,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	//parseable_packet(0x087c,4,NULL,0); // CZ_GANGSI_RANK
@@ -2697,7 +2697,7 @@
 	parseable_packet(0x0936,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0946,19,clif_parse_WantToConnection,2,6,10,14,18);
 	parseable_packet(0x0949,5,clif_parse_ChangeDir,2,4);
-	parseable_packet(0x095e,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x095e,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0964,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
 	parseable_packet(0x0965,10,clif_parse_UseSkillToPos,2,4,6,8);
 	parseable_packet(0x0966,6,clif_parse_TickSend,2);
@@ -2719,7 +2719,7 @@
 	//parseable_packet(0x087a,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
 	parseable_packet(0x0881,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x088e,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
-	parseable_packet(0x0891,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0891,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0898,6,clif_parse_TakeItem,2);
 	parseable_packet(0x089a,6,clif_parse_DropItem,2,4);
 	parseable_packet(0x089d,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
@@ -2749,7 +2749,7 @@
 	parseable_packet(0x0893,7,clif_parse_ActionRequest,2,6);
 	parseable_packet(0x08a1,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x08a2,18,clif_parse_PartyBookingRegisterReq,2,4);
-	parseable_packet(0x08aa,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x08aa,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x08ac,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x0920,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
 	parseable_packet(0x0925,10,clif_parse_UseSkillToPos,2,4,6,8);
@@ -2781,7 +2781,7 @@
 	parseable_packet(0x088b,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x089c,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x08a9,10,clif_parse_UseSkillToPos,2,4,6,8);
-	parseable_packet(0x08aa,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x08aa,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x091a,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x0926,19,clif_parse_WantToConnection,2,6,10,14,18);
 	parseable_packet(0x092a,6,clif_parse_ReqClickBuyingStore,2);
@@ -2817,7 +2817,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	//parseable_packet(0x088f,4,NULL,0); // CZ_GANGSI_RANK
 	parseable_packet(0x0931,5,clif_parse_HomMenu,2,4);
@@ -2840,7 +2840,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0867,26,clif_parse_FriendsListAdd,2);
 	//parseable_packet(0x0868,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
@@ -2875,7 +2875,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	//parseable_packet(0x0819,4,NULL,0); // CZ_GANGSI_RANK
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x085a,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
 	parseable_packet(0x0862,26,clif_parse_FriendsListAdd,2);
@@ -2896,7 +2896,7 @@
 	parseable_packet(0x0817,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x085b,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
 	parseable_packet(0x0866,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
-	parseable_packet(0x0876,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0876,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0881,6,clif_parse_GetCharNameRequest,2);
 	//parseable_packet(0x0884,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
 	parseable_packet(0x0885,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
@@ -2930,7 +2930,7 @@
 	parseable_packet(0x0870,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0871,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x0875,2,clif_parse_ReqCloseBuyingStore,0);
-	parseable_packet(0x087f,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x087f,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0886,5,clif_parse_WalkToXY,2);
 	parseable_packet(0x0889,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
 	parseable_packet(0x0893,6,clif_parse_DropItem,2,4);
@@ -2972,7 +2972,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToPos,2,4,6,8);
 	parseable_packet(0x085a,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x087f,36,clif_parse_StoragePassword,0);
@@ -2995,7 +2995,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x085d,5,clif_parse_HomMenu,2,4);
 	parseable_packet(0x0877,26,clif_parse_FriendsListAdd,2);
@@ -3028,7 +3028,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0862,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x0865,5,clif_parse_ChangeDir,2,4);
@@ -3064,7 +3064,7 @@
 	parseable_packet(0x091c,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x091d,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0920,26,clif_parse_FriendsListAdd,2);
-	parseable_packet(0x0929,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0929,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x092b,10,clif_parse_UseSkillToPos,2,4,6,8);
 	parseable_packet(0x0930,5,clif_parse_WalkToXY,2);
 	parseable_packet(0x093c,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
@@ -3084,7 +3084,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x085d,18,clif_parse_PartyBookingRegisterReq,2,4);
 	parseable_packet(0x085e,5,clif_parse_ChangeDir,2,4);
@@ -3120,7 +3120,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x085c,26,clif_parse_PartyInvite2,2);
 	parseable_packet(0x0860,5,clif_parse_ChangeDir,2,4);
@@ -3155,7 +3155,7 @@
 	parseable_packet(0x0890,10,clif_parse_UseSkillToPos,2,4,6,8);
 	//parseable_packet(0x0896,4,NULL,0); // CZ_GANGSI_RANK
 	parseable_packet(0x089b,8,clif_parse_MoveToKafra,2,4);
-	parseable_packet(0x08a2,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x08a2,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x08a8,18,clif_parse_PartyBookingRegisterReq,2,4);
 	parseable_packet(0x091c,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0925,8,clif_parse_MoveFromKafra,2,4);
@@ -3180,7 +3180,7 @@
 	parseable_packet(0x0815,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x085f,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x0866,6,clif_parse_DropItem,2,4);
@@ -3202,7 +3202,7 @@
 	parseable_packet(0x022d,6,clif_parse_DropItem,2,4);
 	parseable_packet(0x0360,7,clif_parse_ActionRequest,2,6);
 	parseable_packet(0x0362,5,clif_parse_HomMenu,2,4);
-	parseable_packet(0x0819,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0819,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x085e,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
 	parseable_packet(0x0863,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x086b,19,clif_parse_WantToConnection,2,6,10,14,18);
@@ -3255,7 +3255,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x087d,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x096a,6,clif_parse_GetCharNameRequest,2);
@@ -3282,7 +3282,7 @@
 	parseable_packet(0x08aa,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x091a,6,clif_parse_DropItem,2,4);
 	parseable_packet(0x091b,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
-	parseable_packet(0x091d,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x091d,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0920,6,clif_parse_SolveCharName,2);
 	parseable_packet(0x0922,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
 	parseable_packet(0x0944,6,clif_parse_GetCharNameRequest,2);
@@ -3317,7 +3317,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x091a,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x096a,6,clif_parse_GetCharNameRequest,2);
@@ -3337,7 +3337,7 @@
 	parseable_packet(0x0815,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x085d,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x087a,18,clif_parse_PartyBookingRegisterReq,2,4);
@@ -3370,7 +3370,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,5,clif_parse_HomMenu,2,4);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x085f,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x0860,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
@@ -3412,12 +3412,12 @@
 	parseable_packet(0x0952,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0959,6,clif_parse_TakeItem,2);
 	parseable_packet(0x095b,6,clif_parse_GetCharNameRequest,2);
-	parseable_packet(0x095c,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x095c,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x095d,36,clif_parse_StoragePassword,0);
 // 2017-04-19bRagexeRE
 #elif PACKETVER == 20170419
 	parseable_packet(0x0811,5,clif_parse_ChangeDir,2,4);
-	parseable_packet(0x0819,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0819,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0838,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x085a,7,clif_parse_ActionRequest,2,6);
 	parseable_packet(0x085e,5,clif_parse_WalkToXY,2);
@@ -3460,7 +3460,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0866,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
 	//parseable_packet(0x086f,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
@@ -3499,7 +3499,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083c,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0875,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x0894,5,clif_parse_ChangeDir,2,4);
@@ -3522,7 +3522,7 @@
 	parseable_packet(0x088c,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x088d,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x0894,6,clif_parse_GetCharNameRequest,2);
-	parseable_packet(0x0896,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0896,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0899,26,clif_parse_PartyInvite2,2);
 	//parseable_packet(0x089e,4,NULL,0); // CZ_GANGSI_RANK
 	parseable_packet(0x089f,2,clif_parse_ReqCloseBuyingStore,0);
@@ -3557,7 +3557,7 @@
 	parseable_packet(0x088d,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0894,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x089c,5,clif_parse_WalkToXY,2);
-	parseable_packet(0x08a1,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x08a1,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	//parseable_packet(0x091e,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
 	parseable_packet(0x0923,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
 	parseable_packet(0x0925,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
@@ -3595,7 +3595,7 @@
 	parseable_packet(0x08ad,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x092d,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0933,8,clif_parse_MoveFromKafra,2,4);
-	parseable_packet(0x0937,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0937,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0940,18,clif_parse_PartyBookingRegisterReq,2,4);
 	parseable_packet(0x0945,6,clif_parse_ReqClickBuyingStore,2);
 	parseable_packet(0x0963,6,clif_parse_TakeItem,2);
@@ -3612,7 +3612,7 @@
 	parseable_packet(0x0864,6,clif_parse_DropItem,2,4);
 	parseable_packet(0x0871,19,clif_parse_WantToConnection,2,6,10,14,18);
 	//parseable_packet(0x0873,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
-	parseable_packet(0x0875,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0875,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0885,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x088a,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x0897,6,clif_parse_TakeItem,2);
@@ -3661,10 +3661,10 @@
 	parseable_packet(0x0936,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0944,19,clif_parse_WantToConnection,2,6,10,14,18);
 	//parseable_packet(0x0957,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
-	parseable_packet(0x0963,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0963,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 // 2017-06-21aRagexeRE
 #elif PACKETVER == 20170621
-	parseable_packet(0x0202,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0202,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x035F,6,clif_parse_TickSend,2);
 	parseable_packet(0x0360,6,clif_parse_ReqClickBuyingStore,2);
 	parseable_packet(0x0361,6,clif_parse_TakeItem,2);
@@ -3720,7 +3720,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0863,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x096A,6,clif_parse_GetCharNameRequest,2);
@@ -3740,7 +3740,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0879,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x0886,26,clif_parse_FriendsListAdd,2);
@@ -3782,7 +3782,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0944,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x096A,6,clif_parse_GetCharNameRequest,2);
@@ -3799,7 +3799,7 @@
 	parseable_packet(0x086E,26,clif_parse_PartyInvite2,2);
 	parseable_packet(0x087D,6,clif_parse_TakeItem,2);
 	parseable_packet(0x0881,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
-	parseable_packet(0x0882,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0882,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0885,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
 	parseable_packet(0x0891,10,clif_parse_UseSkillToPos,2,4,6,8);
 	parseable_packet(0x0898,10,clif_parse_UseSkillToId,2,4,6);
@@ -3837,7 +3837,7 @@
 	parseable_packet(0x08AB,6,clif_parse_TakeItem,2);
 	parseable_packet(0x08AC,6,clif_parse_TickSend,2);
 	parseable_packet(0x091D,26,clif_parse_FriendsListAdd,2);
-	parseable_packet(0x091E,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x091E,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x091F,5,clif_parse_HomMenu,2,4);
 	parseable_packet(0x0921,6,clif_parse_SolveCharName,2);
 	parseable_packet(0x0923,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
@@ -3872,7 +3872,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x087D,36,clif_parse_StoragePassword,0);
 	//parseable_packet(0x08A6,4,NULL,0); // CZ_GANGSI_RANK
@@ -3901,7 +3901,7 @@
 	//parseable_packet(0x08A7,4,NULL,0); // CZ_GANGSI_RANK
 	parseable_packet(0x08A9,5,clif_parse_WalkToXY,2);
 	parseable_packet(0x08AC,5,clif_parse_HomMenu,2,4);
-	parseable_packet(0x091C,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x091C,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0921,6,clif_parse_ReqClickBuyingStore,2);
 	parseable_packet(0x0925,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x092C,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
@@ -3936,7 +3936,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x086C,19,clif_parse_WantToConnection,2,6,10,14,18);
 	parseable_packet(0x086D,36,clif_parse_StoragePassword,0);
@@ -3969,7 +3969,7 @@
 	parseable_packet(0x0939,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x093E,7,clif_parse_ActionRequest,2,6);
 	parseable_packet(0x0940,6,clif_parse_SolveCharName,2);
-	parseable_packet(0x0942,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0942,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0943,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0947,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	parseable_packet(0x0951,2,clif_parse_SearchStoreInfoNextPage,0);
@@ -3992,7 +3992,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0860,6,clif_parse_DropItem,2,4);
 	parseable_packet(0x0866,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
@@ -4033,7 +4033,7 @@
 	//parseable_packet(0x091E,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
 	parseable_packet(0x0920,2,clif_parse_SearchStoreInfoNextPage,0);
 	parseable_packet(0x0923,5,clif_parse_WalkToXY,2);
-	parseable_packet(0x0925,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0925,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0927,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	parseable_packet(0x095A,10,clif_parse_UseSkillToPos,2,4,6,8);
 	parseable_packet(0x095C,6,clif_parse_SolveCharName,2);
@@ -4060,7 +4060,7 @@
 	parseable_packet(0x0923,19,clif_parse_WantToConnection,2,6,10,14,18);
 	parseable_packet(0x0926,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x092E,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
-	parseable_packet(0x0937,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0937,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0939,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x0945,18,clif_parse_PartyBookingRegisterReq,2,4);
 	parseable_packet(0x094C,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
@@ -4077,7 +4077,7 @@
 	parseable_packet(0x0366,19,clif_parse_WantToConnection,2,6,10,14,18);
 	parseable_packet(0x085C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0873,6,clif_parse_SolveCharName,2);
-	parseable_packet(0x0875,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0875,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x087D,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	parseable_packet(0x087E,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x088B,2,clif_parse_SearchStoreInfoNextPage,0);
@@ -4115,7 +4115,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0885,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x0897,5,clif_parse_ChangeDir,2,4);
@@ -4154,7 +4154,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x087B,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x0882,5,clif_parse_HomMenu,2,4);
@@ -4178,7 +4178,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	//parseable_packet(0x086A,4,NULL,0); // CZ_GANGSI_RANK
 	//parseable_packet(0x087A,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
@@ -4219,7 +4219,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x08A2,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x096A,6,clif_parse_GetCharNameRequest,2);
@@ -4244,7 +4244,7 @@
 	parseable_packet(0x089C,18,clif_parse_PartyBookingRegisterReq,2,4);
 	parseable_packet(0x08A0,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x08AB,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
-	parseable_packet(0x08AD,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x08AD,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x091B,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x0939,5,clif_parse_WalkToXY,2);
 	parseable_packet(0x094A,2,clif_parse_ReqCloseBuyingStore,0);
@@ -4262,7 +4262,7 @@
 	parseable_packet(0x0815,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x0819,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
 	parseable_packet(0x0838,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
-	parseable_packet(0x085D,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x085D,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0863,5,clif_parse_WalkToXY,2);
 	parseable_packet(0x0878,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x087E,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
@@ -4302,7 +4302,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	//parseable_packet(0x086D,4,NULL,0); // CZ_GANGSI_RANK
 	parseable_packet(0x086F,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
@@ -4330,7 +4330,7 @@
 	//parseable_packet(0x0885,8,NULL,0); // CZ_JOIN_BATTLE_FIELD
 	parseable_packet(0x0890,6,clif_parse_TickSend,2);
 	parseable_packet(0x0891,6,clif_parse_TakeItem,2);
-	parseable_packet(0x0893,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0893,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0897,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x0898,6,clif_parse_DropItem,2,4);
 	parseable_packet(0x089A,8,clif_parse_MoveFromKafra,2,4);
@@ -4351,7 +4351,7 @@
 #elif PACKETVER == 20171129
 	parseable_packet(0x02C4,5,clif_parse_ChangeDir,2,4);
 	parseable_packet(0x035F,6,clif_parse_ReqClickBuyingStore,2);
-	parseable_packet(0x0361,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0361,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0363,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x0365,6,clif_parse_DropItem,2,4);
 	parseable_packet(0x0366,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
@@ -4390,7 +4390,7 @@
 	parseable_packet(0x0815,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0867,6,clif_parse_DropItem,2,4);
 	//parseable_packet(0x086A,4,NULL,0); // CZ_GANGSI_RANK
@@ -4432,7 +4432,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0860,19,clif_parse_WantToConnection,2,6,10,14,18);
 	//parseable_packet(0x0881,4,NULL,0); // CZ_GANGSI_RANK
@@ -4451,7 +4451,7 @@
 	parseable_packet(0x0861,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	parseable_packet(0x0872,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0873,6,clif_parse_GetCharNameRequest,2);
-	parseable_packet(0x0880,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0880,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0882,6,clif_parse_TickSend,2);
 	parseable_packet(0x0885,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
 	parseable_packet(0x088C,10,clif_parse_UseSkillToPos,2,4,6,8);
@@ -4487,7 +4487,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x087D,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x0888,8,clif_parse_MoveFromKafra,2,4);
@@ -4509,7 +4509,7 @@
 	parseable_packet(0x0811,19,clif_parse_WantToConnection,2,6,10,14,18);
 	//parseable_packet(0x0865,4,NULL,0); // CZ_GANGSI_RANK
 	parseable_packet(0x086B,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
-	parseable_packet(0x086D,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x086D,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x0872,6,clif_parse_ReqClickBuyingStore,2);
 	parseable_packet(0x0876,6,clif_parse_TickSend,2);
 	parseable_packet(0x0879,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
@@ -4560,7 +4560,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0875,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x096A,6,clif_parse_GetCharNameRequest,2);
@@ -4579,7 +4579,7 @@
 	parseable_packet(0x0815,-1,clif_parse_ReqOpenBuyingStore,2,4,8,9,89);
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x085F,36,clif_parse_StoragePassword,0);
 	//parseable_packet(0x0868,4,NULL,0); // CZ_GANGSI_RANK
@@ -4617,7 +4617,7 @@
 	parseable_packet(0x0817,2,clif_parse_ReqCloseBuyingStore,0);
 	parseable_packet(0x0819,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0835,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x0838,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0838,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x083C,10,clif_parse_UseSkillToId,2,4,6);
 	parseable_packet(0x0870,19,clif_parse_WantToConnection,2,6,10,14,18);
 	parseable_packet(0x0881,26,clif_parse_FriendsListAdd,2);
@@ -4631,7 +4631,7 @@
 	parseable_packet(0x0369,36,clif_parse_StoragePassword,0);
 	parseable_packet(0x0802,6,clif_parse_DropItem,2,4);
 	parseable_packet(0x0817,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
-	parseable_packet(0x085A,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x085A,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x086F,26,clif_parse_PartyInvite2,2);
 	parseable_packet(0x0874,6,clif_parse_TickSend,2);
 	parseable_packet(0x0875,8,clif_parse_MoveFromKafra,2,4);
@@ -4686,7 +4686,7 @@
 	parseable_packet(0x094D,10,clif_parse_UseSkillToPos,2,4,6,8);
 	parseable_packet(0x094E,6,clif_parse_TakeItem,2);
 	parseable_packet(0x0957,6,clif_parse_GetCharNameRequest,2);
-	parseable_packet(0x0964,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x0964,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x096A,7,clif_parse_ActionRequest,2,6);
 // 2018-03-07bRagexeRE
 #elif PACKETVER == 20180307
@@ -4702,7 +4702,7 @@
 	parseable_packet(0x0877,5,clif_parse_WalkToXY,2);
 	parseable_packet(0x088D,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x0893,10,clif_parse_UseSkillToId,2,4,6);
-	parseable_packet(0x089B,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x089B,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 	parseable_packet(0x08A6,2,clif_parse_SearchStoreInfoNextPage,0);
 	parseable_packet(0x08AA,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x08AB,5,clif_parse_ChangeDir,2,4);
@@ -4734,7 +4734,11 @@
 	parseable_packet(0x0364,8,clif_parse_MoveToKafra,2,4);
 	parseable_packet(0x0365,8,clif_parse_MoveFromKafra,2,4);
 	parseable_packet(0x0366,10,clif_parse_UseSkillToPos,2,4,6,8);
+#if PACKETVER_MAIN_NUM >= 20190904 || PACKETVER_RE_NUM >= 20190904 || PACKETVER_ZERO_NUM >= 20190828
+	parseable_packet(0x0367,31,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
+#else
 	parseable_packet(0x0367,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
+#endif
 	parseable_packet(0x0368,6,clif_parse_GetCharNameRequest,2);
 	parseable_packet(0x0369,6,clif_parse_SolveCharName,2);
 	parseable_packet(0x0436,19,clif_parse_WantToConnection,2,6,10,14,18);
@@ -4749,7 +4753,7 @@
 	parseable_packet(0x0819,-1,clif_parse_ReqTradeBuyingStore,2,4,8,12);
 	parseable_packet(0x0835,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
 	parseable_packet(0x0838,2,clif_parse_SearchStoreInfoNextPage,0);
-	parseable_packet(0x083C,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x083C,sizeof(struct PACKET_CZ_SSILIST_ITEM_CLICK),clif_parse_SearchStoreInfoListItemClick,0);
 #endif
 
 #endif /* CLIF_SHUFFLE_HPP */

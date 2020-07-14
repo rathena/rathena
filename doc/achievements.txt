@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20170531
+//= 20190226
 //===== Description: =========================================
 //= Explanation of the achievements_db.yml file and structure.
 //============================================================
@@ -64,7 +64,8 @@ Example 2:
   // IE: In the achievement_list.lub file, UI_Type 0 is displayed as non-incremental while 1 shows a progress bar of completion for the achievement.
   Condition: " ARG0 >= 100 "
   Target:
-    - Count: 100
+    - Id: 0 // Array index value
+      Count: 100
 
 ---------------------------------------
 

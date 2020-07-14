@@ -22,8 +22,8 @@
 // or many connected clients, please increase TIMER_MIN_INTERVAL.
 // The official interval of 20ms is however strongly recommended,
 // as it is needed for perfect server-client syncing.
-#define TIMER_MIN_INTERVAL 20
-#define TIMER_MAX_INTERVAL 1000
+const t_tick TIMER_MIN_INTERVAL = 20;
+const t_tick TIMER_MAX_INTERVAL = 1000;
 
 // timers (array)
 static struct TimerData* timer_data = NULL;
@@ -137,10 +137,14 @@ static void rdtsc_calibrate(){
 #endif
 
 /// platform-abstracted tick retrieval
-static unsigned int tick(void)
+static t_tick tick(void)
 {
 #if defined(WIN32)
+#ifdef DEPRECATED_WINDOWS_SUPPORT
 	return GetTickCount();
+#else
+	return GetTickCount64();
+#endif
 #elif defined(ENABLE_RDTSC)
 	//
 		return (unsigned int)((_rdtsc() - RDTSC_BEGINTICK) / RDTSC_CLOCK);
@@ -160,7 +164,7 @@ static unsigned int tick(void)
 #if defined(TICK_CACHE) && TICK_CACHE > 1
 //////////////////////////////////////////////////////////////////////////
 // tick is cached for TICK_CACHE calls
-static unsigned int gettick_cache;
+static t_tick gettick_cache;
 static int gettick_count = 1;
 
 unsigned int gettick_nocache(void)
@@ -170,7 +174,7 @@ unsigned int gettick_nocache(void)
 	return gettick_cache;
 }
 
-unsigned int gettick(void)
+t_tick gettick(void)
 {
 	return ( --gettick_count == 0 ) ? gettick_nocache() : gettick_cache;
 }
@@ -178,12 +182,12 @@ unsigned int gettick(void)
 #else
 //////////////////////////////
 // tick doesn't get cached
-unsigned int gettick_nocache(void)
+t_tick gettick_nocache(void)
 {
 	return tick();
 }
 
-unsigned int gettick(void)
+t_tick gettick(void)
 {
 	return tick();
 }
@@ -240,7 +244,7 @@ static int acquire_timer(void)
 
 /// Starts a new timer that is deleted once it expires (single-use).
 /// Returns the timer's id.
-int add_timer(unsigned int tick, TimerFunc func, int id, intptr_t data)
+int add_timer(t_tick tick, TimerFunc func, int id, intptr_t data)
 {
 	int tid;
 
@@ -258,13 +262,13 @@ int add_timer(unsigned int tick, TimerFunc func, int id, intptr_t data)
 
 /// Starts a new timer that automatically restarts itself (infinite loop until manually removed).
 /// Returns the timer's id, or INVALID_TIMER if it fails.
-int add_timer_interval(unsigned int tick, TimerFunc func, int id, intptr_t data, int interval)
+int add_timer_interval(t_tick tick, TimerFunc func, int id, intptr_t data, int interval)
 {
 	int tid;
 
 	if( interval < 1 )
 	{
-		ShowError("add_timer_interval: invalid interval (tick=%u %p[%s] id=%d data=%d diff_tick=%d)\n", tick, func, search_timer_func_list(func), id, data, DIFF_TICK(tick, gettick()));
+		ShowError("add_timer_interval: invalid interval (tick=%" PRtf " %p[%s] id=%d data=%" PRIdPTR " diff_tick=%d)\n", tick, func, search_timer_func_list(func), id, data, DIFF_TICK(tick, gettick()));
 		return INVALID_TIMER;
 	}
 
@@ -310,14 +314,14 @@ int delete_timer(int tid, TimerFunc func)
 
 /// Adjusts a timer's expiration time.
 /// Returns the new tick value, or -1 if it fails.
-int addtick_timer(int tid, unsigned int tick)
+t_tick addt_tickimer(int tid, t_tick tick)
 {
-	return settick_timer(tid, timer_data[tid].tick+tick);
+	return sett_tickimer(tid, timer_data[tid].tick+tick);
 }
 
 /// Modifies a timer's expiration time (an alternative to deleting a timer and starting a new one).
 /// Returns the new tick value, or -1 if it fails.
-int settick_timer(int tid, unsigned int tick)
+t_tick sett_tickimer(int tid, t_tick tick)
 {
 	size_t i;
 
@@ -325,28 +329,28 @@ int settick_timer(int tid, unsigned int tick)
 	ARR_FIND(0, BHEAP_LENGTH(timer_heap), i, BHEAP_DATA(timer_heap)[i] == tid);
 	if( i == BHEAP_LENGTH(timer_heap) )
 	{
-		ShowError("settick_timer: no such timer %d (%p(%s))\n", tid, timer_data[tid].func, search_timer_func_list(timer_data[tid].func));
+		ShowError("sett_tickimer: no such timer %d (%p(%s))\n", tid, timer_data[tid].func, search_timer_func_list(timer_data[tid].func));
 		return -1;
 	}
 
-	if( (int)tick == -1 )
+	if( tick == -1 )
 		tick = 0;// add 1ms to avoid the error value -1
 
 	if( timer_data[tid].tick == tick )
-		return (int)tick;// nothing to do, already in propper position
+		return tick;// nothing to do, already in propper position
 
 	// pop and push adjusted timer
 	BHEAP_POPINDEX(timer_heap, i, DIFFTICK_MINTOPCMP, SWAP);
 	timer_data[tid].tick = tick;
 	BHEAP_PUSH(timer_heap, tid, DIFFTICK_MINTOPCMP, SWAP);
-	return (int)tick;
+	return tick;
 }
 
 /// Executes all expired timers.
 /// Returns the value of the smallest non-expired timer (or 1 second if there aren't any).
-int do_timer(unsigned int tick)
+t_tick do_timer(t_tick tick)
 {
-	int diff = TIMER_MAX_INTERVAL; // return value
+	t_tick diff = TIMER_MAX_INTERVAL; // return value
 
 	// process all timers one by one
 	while( BHEAP_LENGTH(timer_heap) )

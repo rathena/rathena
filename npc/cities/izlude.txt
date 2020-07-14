@@ -77,7 +77,7 @@
 	mes "Izlude is the satellite city of Prontera, capital of the Rune-Midgarts kingdom.";
 	next;
 	mes "[Bonne]";
-	mes "Izlude is key to our kingdom because of the Swordsman Association located here, as well as the fact that Izlude is in charge of protecting the Rune-Midgard coastline.";
+	mes "Izlude is key to our kingdom because of the Swordsman Association located here, as well as the fact that Izlude is in charge of protecting the Rune-Midgarts coastline.";
 	next;
 	mes "[Bonne]";
 	mes "I know, this bridge might look weak and fragile, but it is actually state of the art, built with the most sophisticated technology.";
