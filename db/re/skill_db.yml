@@ -37429,6 +37429,10 @@ Body:
     Name: GD_EMERGENCY_MOVE
     Description: Emergency Move
     MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
     Flags:
       IsGuild: true
     SplashArea: 15
