@@ -1641,7 +1641,7 @@ S_CheckFull:
 
 Example 2: callsub used repeatedly, with different arguments
 // notice how the Zeny check/delete is reused, instead of copy-pasting for every warp
-	switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Beacon Island, Pharos") {
+	switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Beacon Island, Pharos")) {
 		case 1:	callsub S_DunWarp,"hu_fild05",192,207;
 		case 2:	callsub S_DunWarp,"ama_in02",119,181;
 		case 3:	callsub S_DunWarp,"moc_fild20",164,145;
@@ -4801,7 +4801,7 @@ of the player.
 This command can not be used to rent stackable items. Rental items cannot be
 dropped, traded, or placed in guild storage. (i.e. trade mask 67)
 Note: 'delitem' in an NPC script can still remove rental items.
-Note: 'countitem' will not count any item with a rental timer.
+Note: 'countitem' will not count any item with a rental timer. Use 'rentalcountitem' instead.
 
 ---------------------------------------
 
@@ -5032,20 +5032,47 @@ If player is not in a guild or storage is open, 'guildstoragecountitem2' will re
 
 ---------------------------------------
 
+*rentalcountitem(<item id>{,<accountID>})
+*rentalcountitem("<item name>"{,<accountID>})
+
+This function will return the number of rental items for the specified item ID that the
+invoking character has in the inventory.
+
+---------------------------------------
+
+*rentalcountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*rentalcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*rentalcountitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+*rentalcountitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+
+Expanded version of 'rentalcountitem' function, used for created/carded/forged items.
+
+This function will return the number of rental items for the specified item ID and
+other parameters that the invoking character has in the inventory.
+See 'getitem2' for an explanation of the expanded parameters.
+
+'rentalcountitem3' is advance version of 'rentalcountitem2' that also use Item Random Option as criteria.
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomValueArray> : Array variable of item random option's value.
+<RandomParamArray> : Array variable of item random option's param.
+
+---------------------------------------
+
 *countbound({<bound type>{,<char_id>}})
 
-This function will return the number of bounded items in the character's
-inventory, and sets an array @bound_items[] containing all item IDs of the
-counted items. If a bound type is specified, only those items will be counted.
+This function will return the number of different bounded items in the character's
+inventory, and sets the arrays @bound_items[] and @bound_amount[] containing all item IDs of the
+counted items and their respective amount. If a bound type is specified, only those items will be counted.
 
 For a list of bound types see 'getitembound'.
 
 Example:
-	mes "You currently have " + countbound() + " bounded items.";
+	.@total_type = countbound();
+	mes "You currently have " + .@total_type + " different type of bounded items.";
 	next;
 	mes "The list of bounded items include:";
-	for(.@i = 0; .@i < getarraysize(@bound_items); .@i++)
-		mes getitemname(@bound_items[.@i]);
+	for(.@i = 0; .@i < .@total_type; .@i++)
+		mes "x" + @bound_amount[.@i] + " " + getitemname(@bound_items[.@i]);
 	close;
 
 ---------------------------------------
@@ -7951,6 +7978,20 @@ Returns "Unknown" if unit is not found.
 
 ---------------------------------------
 
+*setunittitle <GID>,<title>;
+
+Apply a <title> to the given <GID>.
+
+Note: This only works on non-player types. It also will only work on mobs if battle_config.show_mob_info is not enabled.
+
+---------------------------------------
+
+*getunittitle <GID>;
+
+Returns the title of the given <GID>.
+
+---------------------------------------
+
 *getunitdata <GID>,<arrayname>;
 *setunitdata <GID>,<parameter>,<new value>;
 
@@ -8017,6 +8058,7 @@ Parameters (indexes) for monsters are:
 	UMOB_TARGETID
 	UMOB_ROBE
 	UMOB_BODY2
+	UMOB_GROUP_ID
 
 -----
 
@@ -8061,6 +8103,7 @@ Parameter (indexes) for homunculi are:
 	UHOM_ADELAY
 	UHOM_DMOTION
 	UHOM_TARGETID
+	UHOM_GROUP_ID
 
 -----
 
@@ -8102,6 +8145,7 @@ Parameter (indexes) for pets are:
 	UPET_AMOTION
 	UPET_ADELAY
 	UPET_DMOTION
+	UPET_GROUP_ID
 
 -----
 
@@ -8143,6 +8187,7 @@ Parameter (indexes) for mercenaries are:
 	UMER_ADELAY
 	UMER_DMOTION
 	UMER_TARGETID
+	UMER_GROUP_ID
 
 -----
 
@@ -8186,6 +8231,7 @@ Parameter (indexes) for elementals are:
 	UELE_ADELAY
 	UELE_DMOTION
 	UELE_TARGETID
+	UELE_GROUP_ID
 
 -----
 
@@ -8235,6 +8281,7 @@ Parameter (indexes) for NPCs are:
 	UNPC_ROBE
 	UNPC_BODY2
 	UNPC_DEADSIT
+	UNPC_GROUP_ID
 
 *Notes:
 		- *_SIZE: small (0); medium (1); large (2)
