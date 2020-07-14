@@ -4681,9 +4681,9 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node& node) {
 		else
 			status->mode = static_cast<enum e_mode>(status->mode & ~MD_IGNOREMISC);
 
-		if (this->nodeExists(modeNode, "KockbackImmune"))
+		if (this->nodeExists(modeNode, "KnockbackImmune"))
 		{
-			if (this->asBool(modeNode, "KockbackImmune", mode))
+			if (this->asBool(modeNode, "KnockbackImmune", mode))
 				status->mode = mode ? static_cast<enum e_mode>(status->mode | MD_KNOCKBACK_IMMUNE) : static_cast<enum e_mode>(status->mode & ~MD_KNOCKBACK_IMMUNE);
 		}
 		else
