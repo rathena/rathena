@@ -404,8 +404,6 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 		const YAML::Node &locations = input["Locations"];
 
 		if (locations) {
-			if (appendEntry(locations["All"], value))
-				column.append("`location_all`,");
 			if (appendEntry(locations["Head_Top"], value))
 				column.append("`location_head_top`,");
 			if (appendEntry(locations["Head_Mid"], value))

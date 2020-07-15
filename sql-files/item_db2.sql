@@ -47,7 +47,6 @@ CREATE TABLE `item_db2` (
   `class_upper` tinyint(1) unsigned DEFAULT NULL,
   `class_baby` tinyint(1) unsigned DEFAULT NULL,
   `gender` varchar(10) DEFAULT NULL,
-  `location_all` tinyint(1) unsigned DEFAULT NULL,
   `location_head_top` tinyint(1) unsigned DEFAULT NULL,
   `location_head_mid` tinyint(1) unsigned DEFAULT NULL,
   `location_head_low` tinyint(1) unsigned DEFAULT NULL,
