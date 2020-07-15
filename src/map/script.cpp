@@ -21014,7 +21014,7 @@ BUILDIN_FUNC(progressbar)
  * progressbar_npc "<color>",<seconds>{,<"NPC Name">};
  */
 BUILDIN_FUNC(progressbar_npc){
-	struct map_session_data *sd = NULL;
+	map_session_data *sd;
 	struct npc_data* nd = NULL;
 
 	if( script_hasdata(st, 4) ){
@@ -21030,7 +21030,8 @@ BUILDIN_FUNC(progressbar_npc){
 		nd = map_id2nd(st->oid);
 	}
 
-	if( !nd->progressbar.timeout ){ // First call (by function)
+	// First call(by function call)
+	if( !nd->progressbar.timeout ){
 		const char *color;
 		int second;
 
@@ -21042,21 +21043,27 @@ BUILDIN_FUNC(progressbar_npc){
 			return SCRIPT_CMD_FAILURE;
 		}
 
-		if (script_rid2sd(sd)) // Player attached - keep them from doing other things
+		if (script_rid2sd(sd)) { // Player attached - keep them from doing other things
 			sd->state.workinprogress = WIP_DISABLE_ALL;
+			sd->state.block_action |= (PCBLOCK_MOVE | PCBLOCK_ATTACK | PCBLOCK_SKILL);
+		}
 
-		// Sleep for the target amount of time
+		// sleep for the target amount of time
 		st->state = RERUNLINE;
 		st->sleep.tick = second * 1000;
 		nd->progressbar.timeout = gettick() + second * 1000;
 		nd->progressbar.color = strtol(color, (char **)NULL, 0);
 
 		clif_progressbar_npc_area(nd);
-	} else { // Second call (by timer after sleep time is over)
-		if (script_rid2sd(sd)) // Player attached - remove restrictions
+	// Second call(by timer after sleeping time is over)
+	} else {
+		// Continue the script
+		if (script_rid2sd(sd)) { // Player attached - remove restrictions
 			sd->state.workinprogress = WIP_DISABLE_NONE;
+			sd->state.block_action &= ~(PCBLOCK_MOVE | PCBLOCK_ATTACK | PCBLOCK_SKILL);
+		}
 
-		st->state = RUN; // Continue the script
+		st->state = RUN;
 		st->sleep.tick = 0;
 		nd->progressbar.timeout = nd->progressbar.color = 0;
 	}
