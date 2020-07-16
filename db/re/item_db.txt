@@ -12205,16 +12205,16 @@
 25260,Fragment_of_Purple_Ore,Fragment of Purple Ore,3,0,,0,,,,,,,,,,,,,{},{},{}
 25271,Illusion_Stone,Illusion Stone,3,10,,0,,,,,,,,,,,,,{},{},{}
 25272,Illusion_Gemstone,Illusion Gemstone,3,0,,10,,,,,,,,,,,,,{},{},{}
-25276,Clean_Bone,Clean Bone,3,248,,10,,,,,,,,,,,,,{},{},{}
-25277,Deadly_Poison_Powder,Deadly Poison Powder,3,0,,10,,,,,,,,,,,,,{},{},{}
+25276,Clean_Bone,Clean Bone,3,348,,10,,,,,,,,,,,,,{},{},{}
+25277,Deadly_Poison_Powder,Deadly Poison Powder,3,644,,10,,,,,,,,,,,,,{},{},{}
 25278,Bandits_Scarf,Bandit's Scarf,3,330,,10,,,,,,,,,,,,,{},{},{}
 25279,Crude_Ammo,Crude Ammo,3,300,,10,,,,,,,,,,,,,{},{},{}
-25280,Broken_Shotgun,Broken Shotgun,3,0,,10,,,,,,,,,,,,,{},{},{}
-25281,Crude_Scimitar,Crude Scimitar,3,0,,10,,,,,,,,,,,,,{},{},{}
-25282,Worn_Revolver,Worn Revolver,3,0,,10,,,,,,,,,,,,,{},{},{}
+25280,Broken_Shotgun,Broken Shotgun,3,910,,10,,,,,,,,,,,,,{},{},{}
+25281,Crude_Scimitar,Crude Scimitar,3,970,,10,,,,,,,,,,,,,{},{},{}
+25282,Worn_Revolver,Worn Revolver,3,820,,10,,,,,,,,,,,,,{},{},{}
 25283,Brown_Muffler,Brown Muffler,3,420,,10,,,,,,,,,,,,,{},{},{}
-25284,Swamp_Bug_Shell,Swamp Bug Shell,3,0,,10,,,,,,,,,,,,,{},{},{}
-25285,Brown_Rat_Tail,Brown Rat Tail,3,0,,10,,,,,,,,,,,,,{},{},{}
+25284,Swamp_Bug_Shell,Swamp Bug Shell,3,230,,10,,,,,,,,,,,,,{},{},{}
+25285,Brown_Rat_Tail,Brown Rat Tail,3,210,,10,,,,,,,,,,,,,{},{},{}
 25290,Sweets_Festival_Coin,Sweets Festival Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
 25302,DoubleAttack_Stone,Double Attack Stone (Garment),3,20,,100,,,,,,,,,,,,,{},{},{}
 25303,Critical_Stone_Robe,Critical Stone (Garment),3,20,,100,,,,,,,,,,,,,{},{},{}
@@ -12691,7 +12691,7 @@
 28604,Crimson_Bible,Crimson Bible,5,20,,450,45,,1,2,0x00410100,63,2,2,3,70,1,15,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bMatk,(.@r<=15?(pow(.@r,2)/2):225); },{},{}
 28605,Book_of_Vicious_Mind,Book of Vicious Mind,5,20,,950,95,,1,1,0x00010100,63,2,2,4,160,1,15,{ bonus bAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2); bonus bUnbreakableWeapon; },{},{}
 28606,Unity_Bible,Unity Bible,5,20,,220,42,,1,1,0x00410100,63,2,2,3,1,1,15,{ bonus bBaseAtk,pow(getrefine(),2)*125/100; },{},{}
-28608,Elemental_Origin,Elemental Origin,5,0,,800,120:150,,1,2,0x00010000,56,2,2,3,100,1,15,{ .@r = getrefine(); bonus bInt,4; .@bonus = 10; if (.@r>=7) { .@bonus += 10; } if (.@r>=9) { .@bonus += 10; } bonus2 bSkillAtk,"MG_FIREBOLT",.@bonus; bonus2 bSkillAtk,"MG_COLDBOLT",.@bonus; bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",.@bonus; },{},{}
+28608,Elemental_Origin,Elemental Origin,5,20,,800,120:150,,1,2,0x00010000,56,2,2,3,100,1,15,{ .@r = getrefine(); bonus bInt,4; .@bonus = 10; if (.@r>=7) { .@bonus += 10; } if (.@r>=9) { .@bonus += 10; } bonus2 bSkillAtk,"MG_FIREBOLT",.@bonus; bonus2 bSkillAtk,"MG_COLDBOLT",.@bonus; bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",.@bonus; },{},{}
 28612,Illusion_Apocalypse,Illusion Apocalypse,5,0,,800,170,,1,2,0x00410100,63,2,2,4,100,1,15,{ .@val = 10 + 10*(min(getrefine(),10)/3); bonus2 bAddEle,Ele_Water,.@val; bonus2 bAddEle,Ele_Earth,.@val; bonus2 bAddEle,Ele_Fire,.@val; bonus2 bAddEle,Ele_Wind,.@val; bonus2 bSubDefEle,Ele_Holy,-30; },{},{}
 28618,Book_of_the_Sun_God,Book of the Sun God,5,10,,500,180:170,,1,4,0x00010100,63,2,2,3,100,1,15,{ .@r = getrefine(); bonus bMaxHP,200*.@r; bonus bMaxSP,50*.@r; bonus bAspdRate,.@r; if (.@r>=10) bonus3 bAutoSpell,"WZ_METEOR",5,200; else if (.@r>=8) bonus3 bAutoSpell,"WZ_METEOR",4,150; else bonus3 bAutoSpell,"WZ_METEOR",3,100; },{},{}
 28619,Prisoner_Diary,Prisoner's Diary,5,20,,800,210,,1,2,0x00410100,63,2,2,3,175,1,15,{ .@r = getrefine(); bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus bBaseAtk,20*(.@r/2); if (.@r>=9) .@val = 25; else if (.@r>=7) .@val = 10; if (.@r>=11) { bonus2 bAddEle,Ele_Dark,15; bonus2 bMagicAddEle,Ele_Dark,15; bonus2 bAddEle,Ele_Undead,15; bonus2 bMagicAddEle,Ele_Undead,15; } bonus2 bAddRace,RC_Demon,.@val; bonus2 bAddRace,RC_Undead,.@val; bonus2 bMagicAddRace,RC_Demon,.@val; bonus2 bMagicAddRace,RC_Undead,.@val; },{},{}
