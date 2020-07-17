@@ -2042,9 +2042,9 @@ static bool itemdb_read_sqldb_sub(char **str) {
 	if (atoi(str[++index]) != 0)
 		locations["Armor"] = atoi(str[index]);
 	if (atoi(str[++index]) != 0)
-		locations["Weapon"] = atoi(str[index]);
+		locations["Left_Hand"] = atoi(str[index]);
 	if (atoi(str[++index]) != 0)
-		locations["Shield"] = atoi(str[index]);
+		locations["Right_Hand"] = atoi(str[index]);
 	if (atoi(str[++index]) != 0)
 		locations["Garment"] = atoi(str[index]);
 	if (atoi(str[++index]) != 0)

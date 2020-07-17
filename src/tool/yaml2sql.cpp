@@ -412,10 +412,10 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`location_head_low`,");
 			if (appendEntry(locations["Armor"], value))
 				column.append("`location_armor`,");
-			if (appendEntry(locations["Weapon"], value))
-				column.append("`location_weapon`,");
-			if (appendEntry(locations["Shield"], value))
-				column.append("`location_shield`,");
+			if (appendEntry(locations["Left_Hand"], value))
+				column.append("`location_left_hand`,");
+			if (appendEntry(locations["Right_Hand"], value))
+				column.append("`location_right_hand`,");
 			if (appendEntry(locations["Garment"], value))
 				column.append("`location_garment`,");
 			if (appendEntry(locations["Shoes"], value))

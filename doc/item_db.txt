@@ -168,25 +168,25 @@ Both
 
 Locations: Equipment's placement.
 
-Head_Top               - Upper Headgear.
-Head_Mid               - Middle Headgear.
-Head_Low               - Lower Headgear.
-Armor                  - Armor.
-Weapon                 - Weapon.
-Shield                 - Shield.
-Garment                - Garment/Robe.
-Shoes                  - Shoes.
-Right_Accessory        - Accessory Right.
-Left_Accessory         - Accessory Left.
+Head_Top               - Upper Headgear
+Head_Mid               - Middle Headgear
+Head_Low               - Lower Headgear
+Armor                  - Armor
+Right_Hand             - Weapon
+Left_Hand              - Shield
+Garment                - Garment/Robe
+Shoes                  - Shoes
+Right_Accessory        - Accessory Right
+Left_Accessory         - Accessory Left
 Costume_Head_Top       - Costume Top Headgear
 Costume_Head_Mid       - Costume Mid Headgear
 Costume_Head_Low       - Costume Low Headgear
 Costume_Garment        - Costume Garment/Robe
-Ammo                   - Ammo.
-Shadow_Armor           - Shadow Armor.
-Shadow_Weapon          - Shadow Weapon.
-Shadow_Shield          - Shadow Shield.
-Shadow_Shoes           - Shadow Shoes.
+Ammo                   - Ammo
+Shadow_Armor           - Shadow Armor
+Shadow_Weapon          - Shadow Weapon
+Shadow_Shield          - Shadow Shield
+Shadow_Shoes           - Shadow Shoes
 Shadow_Right_Accessory - Shadow Accessory Right (Earring)
 Shadow_Left_Accessory  - Shadow Accessory Left (Pendant)
 
