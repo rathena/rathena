@@ -3992,7 +3992,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case AS_SPLASHER:
 #ifdef RENEWAL
-			skillratio += 400 + 100 * skill_lv;
+			skillratio += -100 + 400 + 100 * skill_lv;
 #else
 			skillratio += 400 + 50 * skill_lv;
 #endif
