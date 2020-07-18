@@ -1015,8 +1015,7 @@ e_instance_enter instance_enter(struct map_session_data *sd, int instance_id, co
 	if (instance_id <= 0) // Default party checks will be used
 		mode = IM_PARTY;
 	else {
-		if(!(idata = util::umap_find(instances, instance_id)))	//might be moved to another PR , Fix issue where warp to non exsiting instance.
-			return IE_NOINSTANCE;
+		idata = util::umap_find(instances, instance_id);
 		mode = idata->mode;
 	}
 
