@@ -656,7 +656,7 @@
 5920:18542,{ bonus bHealPower,2*getequiprefinerycnt(EQI_HEAD_TOP); }
 5933:19112,{ bonus2 bAddSize,Size_All,1; bonus bLongAtkRate,1; if(readparam(bStr)>=108) { bonus2 bAddSize,Size_All,2; bonus bLongAtkRate,1; } if(readparam(bStr)>=120) { bonus2 bAddSize,Size_All,3; bonus bLongAtkRate,1; } }
 5967:28321,{ bonus2 bSubSkill,"HT_BLITZBEAT",200; }
-5918:19306,{ .@aspd = 1; .@crit_dmg = 2 + 2 * (readparam(bDex) / 10); .@sub_demi = 2; .@luk = readparam(bLuk); if (.@luk > 107) { .@aspd += 1; .@crit_dmg += 2; .@sub_demi += 2; } if (.@luk > 119) { .@aspd += 2; .@crit_dmg += 4; .@sub_demi += 4; bonus bSplashRange,1; } bonus bAspd,.@aspd; bonus bCritAtkRate,.@crit_dmg; bonus2 bSubRace,RC_DemiHuman,.@sub_demi; bonus2 bSubSkill,"NPC_CRITICALSLASH",100; }
+5918:19306,{ .@aspd = 1; .@crit_dmg = 2 + 2 * (readparam(bDex) / 10); .@sub_player = 2; .@luk = readparam(bLuk); if (.@luk > 107) { .@aspd += 1; .@crit_dmg += 2; .@sub_player += 2; } if (.@luk > 119) { .@aspd += 2; .@crit_dmg += 4; .@sub_player += 4; bonus bSplashRange,1; } bonus bAspd,.@aspd; bonus bCritAtkRate,.@crit_dmg; bonus2 bSubRace,RC_Player_Human,.@sub_player; bonus2 bSubSkill,"NPC_CRITICALSLASH",100; }
 //9024:18832,{ bonus3 bAutoSpell,"BS_ADRENALINE",2,(GetPetRelationship >= 3)?15:10; }
 1298:4317,{ bonus bCritAtkRate,5; }
 1298:4521,{ bonus bCritAtkRate,5; }
