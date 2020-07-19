@@ -21706,13 +21706,14 @@ BUILDIN_FUNC(consumeitem)
 	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	if( script_isstring(st, 2) ){
-		const char *name = script_getstr(st, 2);
+	if (script_isstring(st, 2)) {
+		const char* name = script_getstr(st, 2);
 
-		if( ( item_data = itemdb_searchname( name ) ) == NULL ){
-			ShowError( "buildin_consumeitem: Nonexistant item %s requested.\n", name );
+		if ((item_data = itemdb_searchname(name)) == NULL) {
+			ShowError("buildin_consumeitem: Nonexistant item %s requested.\n", name);
 			return SCRIPT_CMD_FAILURE;
 		}
+	} else {
 		uint32 nameid = script_getnum(st, 2);
 
 		if( ( item_data = itemdb_exists( nameid ) ) == NULL ){
