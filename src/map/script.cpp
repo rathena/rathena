@@ -21014,7 +21014,7 @@ BUILDIN_FUNC(progressbar)
  * progressbar_npc "<color>",<seconds>{,<"NPC Name">};
  */
 BUILDIN_FUNC(progressbar_npc){
-	map_session_data *sd;
+	map_session_data *sd = map_id2sd(st->rid);
 	struct npc_data* nd = NULL;
 
 	if( script_hasdata(st, 4) ){
@@ -21043,7 +21043,7 @@ BUILDIN_FUNC(progressbar_npc){
 			return SCRIPT_CMD_FAILURE;
 		}
 
-		if (script_rid2sd(sd)) { // Player attached - keep them from doing other things
+		if (sd) { // Player attached - keep them from doing other things
 			sd->state.workinprogress = WIP_DISABLE_ALL;
 			sd->state.block_action |= (PCBLOCK_MOVE | PCBLOCK_ATTACK | PCBLOCK_SKILL);
 		}
@@ -21058,7 +21058,7 @@ BUILDIN_FUNC(progressbar_npc){
 	// Second call(by timer after sleeping time is over)
 	} else {
 		// Continue the script
-		if (script_rid2sd(sd)) { // Player attached - remove restrictions
+		if (sd) { // Player attached - remove restrictions
 			sd->state.workinprogress = WIP_DISABLE_NONE;
 			sd->state.block_action &= ~(PCBLOCK_MOVE | PCBLOCK_ATTACK | PCBLOCK_SKILL);
 		}
