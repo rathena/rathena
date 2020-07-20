@@ -808,7 +808,7 @@ OnTouch:
 
 	disablenpc instance_npcname("Stefan.J.E.Wolf#sthd_02");
 	for ( .@i = 1; .@i <= 6; .@i++ ) {
-		enablenpc instance_npcname("Desactivated Warp#sthd_mov_" + .@i);
+		enablenpc instance_npcname("Deactivated Warp#sthd_mov_" + .@i);
 		enablenpc instance_npcname("#sthd_move_back_a_" + .@i);
 	}
 	enablenpc instance_npcname("#sthd_move_01_01");
@@ -909,7 +909,7 @@ OnTouch:
 1@sthb,147,86,1	duplicate(Activated Warp#sthd_mov_1)	Activated Warp#sthd_mov_5	1_SHADOW_NPC
 1@sthb,179,51,1	duplicate(Activated Warp#sthd_mov_1)	Activated Warp#sthd_mov_6	1_SHADOW_NPC
 
-1@sthb,34,85,1	script	Desactivated Warp#sthd_mov_1	4_ENERGY_WHITE,{
+1@sthb,34,85,1	script	Deactivated Warp#sthd_mov_1	4_ENERGY_WHITE,{
 	if (select( "Desactivate the warp.", "Activate the warp." ) == 1) {
 		mes "- Move the fortress to a special place -";
 		mes "- Accessible door -";
@@ -932,11 +932,11 @@ OnTouch:
 	close;
 }
 
-1@sthb,83,99,1	duplicate(Desactivated Warp#sthd_mov_1)	Desactivated Warp#sthd_mov_2	4_ENERGY_WHITE
-1@sthb,24,39,1	duplicate(Desactivated Warp#sthd_mov_1)	Desactivated Warp#sthd_mov_3	4_ENERGY_WHITE
-1@sthb,206,79,1	duplicate(Desactivated Warp#sthd_mov_1)	Desactivated Warp#sthd_mov_4	4_ENERGY_WHITE
-1@sthb,147,87,1	duplicate(Desactivated Warp#sthd_mov_1)	Desactivated Warp#sthd_mov_5	4_ENERGY_WHITE
-1@sthb,178,51,1	duplicate(Desactivated Warp#sthd_mov_1)	Desactivated Warp#sthd_mov_6	4_ENERGY_WHITE
+1@sthb,83,99,1	duplicate(Deactivated Warp#sthd_mov_1)	Deactivated Warp#sthd_mov_2	4_ENERGY_WHITE
+1@sthb,24,39,1	duplicate(Deactivated Warp#sthd_mov_1)	Deactivated Warp#sthd_mov_3	4_ENERGY_WHITE
+1@sthb,206,79,1	duplicate(Deactivated Warp#sthd_mov_1)	Deactivated Warp#sthd_mov_4	4_ENERGY_WHITE
+1@sthb,147,87,1	duplicate(Deactivated Warp#sthd_mov_1)	Deactivated Warp#sthd_mov_5	4_ENERGY_WHITE
+1@sthb,178,51,1	duplicate(Deactivated Warp#sthd_mov_1)	Deactivated Warp#sthd_mov_6	4_ENERGY_WHITE
 
 
 // Spawn in the rooms
@@ -1774,7 +1774,7 @@ OnInstanceInit:
 
 	for ( .@i = 1; .@i <= 6; .@i++ ) {
 		disablenpc instance_npcname("Activated Warp#sthd_mov_" + .@i);
-		disablenpc instance_npcname("Desactivated Warp#sthd_mov_" + .@i);
+		disablenpc instance_npcname("Deactivated Warp#sthd_mov_" + .@i);
 		disablenpc instance_npcname("#sthd_move_back_a_" + .@i);
 	}
 
