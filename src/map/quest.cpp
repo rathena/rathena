@@ -221,7 +221,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 					}
 
-					target->race = static_cast<uint8>(constant);
+					target->race = static_cast<e_race>(constant);
 				}
 
 				if (this->nodeExists(targetNode, "Size")) {
@@ -243,7 +243,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 					}
 
-					target->size = static_cast<uint8>(constant);
+					target->size = static_cast<e_size>(constant);
 				}
 
 				if (this->nodeExists(targetNode, "Element")) {
@@ -265,7 +265,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 						return 0;
 					}
 
-					target->element = static_cast<uint8>(constant);
+					target->element = static_cast<e_element>(constant);
 				}
 
 				// if max_level is set, min_level is 1
@@ -639,24 +639,29 @@ int quest_delete(struct map_session_data *sd, int quest_id)
  * @param ap : Argument list, expecting:
  *   int Party ID
  *   int Mob ID
+ *   int Mob Level
+ *   int Mob Race
+ *   int Mob Size
+ *   int Mob Element
  */
 int quest_update_objective_sub(struct block_list *bl, va_list ap)
 {
-	struct map_session_data *sd;
-	int party_id, mob_id, mob_level, mob_size, mob_race, mob_element;
-
 	nullpo_ret(bl);
-	nullpo_ret(sd = (struct map_session_data *)bl);
 
-	party_id = va_arg(ap,int);
-	mob_id = va_arg(ap, int);
-	mob_level = va_arg(ap, int);
-	mob_race = va_arg(ap, int);
-	mob_size = va_arg(ap, int);
-	mob_element = va_arg(ap, int);
+	struct map_session_data *sd;
+
+	nullpo_ret(sd = (struct map_session_data *)bl);
 
 	if( !sd->avail_quests )
 		return 0;
+
+	int party_id = va_arg(ap,int);
+	int mob_id = va_arg(ap, int);
+	int mob_level = va_arg(ap, int);
+	e_race mob_race = static_cast<e_race>(va_arg(ap, int));
+	e_size mob_size = static_cast<e_size>(va_arg(ap, int));
+	e_element mob_element = static_cast<e_element>(va_arg(ap, int));
+	
 	if( sd->status.party_id != party_id )
 		return 0;
 
@@ -667,10 +672,14 @@ int quest_update_objective_sub(struct block_list *bl, va_list ap)
 
 /**
  * Updates the quest objectives for a character after killing a monster, including the handling of quest-granted drops.
- * @param sd : Character's data
- * @param mob_id : Monster ID
+ * @param sd: Character's data
+ * @param mob_id: Monster ID
+ * @param mob_level: Monster Level
+ * @param mob_race: Monster Race
+ * @param mob_size: Monster Size
+ * @param mob_element: Monster Element
  */
-void quest_update_objective(struct map_session_data *sd, int mob_id, int mob_level, int mob_race, int mob_size, int mob_element)
+void quest_update_objective(struct map_session_data *sd, int mob_id, int mob_level, e_race mob_race, e_size mob_size, e_element mob_element)
 {
 	nullpo_retv(sd);
 

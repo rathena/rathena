@@ -17053,7 +17053,7 @@ static void clif_quest_len(int def_len, int info_len, int avail_quests, int *lim
 	(*len_out) = ((*limit_out) * info_len) + def_len;
 }
 
-std::string clif_mobtype_name(int8 race, int8 size, int8 element) {
+std::string clif_mobtype_name(e_race race, e_size size, e_element element) {
 	std::string race_name, size_name, ele_name;
 
 	switch(race) {
@@ -17142,7 +17142,10 @@ void clif_quest_send_list(struct map_session_data *sd)
 
 			for (int j = 0; j < qi->objectives.size(); j++) {
 				mob = mob_db(qi->objectives[j]->mob_id);
-				int8 race = qi->objectives[j]->race, size = qi->objectives[j]->size, element = qi->objectives[j]->element;
+
+				e_race race = qi->objectives[j]->race;
+				e_size size = qi->objectives[j]->size;
+				e_element element = qi->objectives[j]->element;
 
 #if PACKETVER >= 20150513
 				WFIFOL(fd, offset) = sd->quest_log[i].quest_id * 1000 + j;
@@ -17260,7 +17263,9 @@ void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 
 	for (int i = 0, offset = 17; i < qi->objectives.size(); i++) {
 		struct mob_db *mob = mob_db(qi->objectives[i]->mob_id);
-		int8 race = qi->objectives[i]->race, size = qi->objectives[i]->size, element = qi->objectives[i]->element;
+		e_race race = qi->objectives[i]->race;
+		e_size size = qi->objectives[i]->size;
+		e_element element = qi->objectives[i]->element;
 
 #if PACKETVER >= 20150513
 		WFIFOL(fd, offset) = qd->quest_id * 1000 + i;
