@@ -121,6 +121,13 @@ int unit_walktoxy_sub(struct block_list *bl)
 		((TBL_PC *)bl)->head_dir = 0;
 		clif_walkok((TBL_PC*)bl);
 	}
+#if PACKETVER >= 20170726
+	// If this is a walking NPC and it will use a player sprite
+	else if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->class_ ) ){
+		// Respawn the NPC as player unit
+		unit_refresh( bl, true );
+	}
+#endif
 	clif_move(ud);
 
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
@@ -309,6 +316,42 @@ TIMER_FUNC(unit_step_timer){
 	return 1;
 }
 
+int unit_walktoxy_ontouch(struct block_list *bl, va_list ap)
+{
+	struct npc_data *nd;
+
+	nullpo_ret(bl);
+	nullpo_ret(nd = va_arg(ap,struct npc_data *));
+
+	switch( bl->type ) {
+	case BL_PC:
+		TBL_PC *sd = (TBL_PC*)bl;
+
+		if (sd == nullptr)
+			return 1;
+		if (sd->state.block_action & PCBLOCK_NPCCLICK)
+			return 1;
+
+		// Remove NPCs that are no longer within the OnTouch area
+		for (size_t i = 0; i < sd->areanpc.size(); i++) {
+			struct npc_data *nd = map_id2nd(sd->areanpc[i]);
+
+			if (!nd || nd->subtype != NPCTYPE_SCRIPT || !(nd->bl.m == bl->m && bl->x >= nd->bl.x - nd->u.scr.xs && bl->x <= nd->bl.x + nd->u.scr.xs && bl->y >= nd->bl.y - nd->u.scr.ys && bl->y <= nd->bl.y + nd->u.scr.ys))
+				rathena::util::erase_at(sd->areanpc, i);
+		}
+		npc_touchnext_areanpc(sd, false);
+
+		if (map_getcell(bl->m, bl->x, bl->y, CELL_CHKNPC) == 0)
+			return 1;
+
+		npc_touch_areanpc(sd, bl->m, bl->x, bl->y, nd);
+		break;
+	// case BL_MOB:	// unsupported
+	}
+	
+	return 0;
+}
+
 /**
  * Defines when to refresh the walking character to object and restart the timer if applicable
  * Also checks for speed update, target location, and slave teleport timers
@@ -325,6 +368,7 @@ static TIMER_FUNC(unit_walktoxy_timer){
 	struct unit_data *ud;
 	TBL_PC *sd=NULL;
 	TBL_MOB *md=NULL;
+	TBL_NPC *nd=NULL;
 
 	bl = map_id2bl(id);
 
@@ -334,6 +378,7 @@ static TIMER_FUNC(unit_walktoxy_timer){
 	switch(bl->type) { // svoid useless cast, we can only be 1 type
 		case BL_PC: sd = BL_CAST(BL_PC, bl); break;
 		case BL_MOB: md = BL_CAST(BL_MOB, bl); break;
+		case BL_NPC: nd = BL_CAST(BL_NPC, bl); break;
 	}
 
 	ud = unit_bl2ud(bl);
@@ -410,6 +455,14 @@ static TIMER_FUNC(unit_walktoxy_timer){
 	ud->walktimer = INVALID_TIMER;
 
 	if (bl->x == ud->to_x && bl->y == ud->to_y) {
+#if PACKETVER >= 20170726
+		// If this was a walking NPC and it used a player sprite
+		if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->class_ ) ){
+			// Respawn the NPC as NPC unit
+			unit_refresh( bl, false );
+		}
+#endif
+
 		if (ud->walk_done_event[0]){
 			char walk_done_event[EVENT_NAME_LENGTH];
 
@@ -445,7 +498,7 @@ static TIMER_FUNC(unit_walktoxy_timer){
 			if( !sd->npc_ontouch_.empty() )
 				npc_touchnext_areanpc(sd,false);
 			if(map_getcell(bl->m,x,y,CELL_CHKNPC)) {
-				npc_touch_areanpc(sd,bl->m,x,y);
+				npc_touch_area_allnpc(sd,bl->m,x,y);
 				if (bl->prev == NULL) // Script could have warped char, abort remaining of the function.
 					return 0;
 			} else
@@ -477,6 +530,24 @@ static TIMER_FUNC(unit_walktoxy_timer){
 				// Resend walk packet for proper Self Destruction display.
 				clif_move(ud);
 			}
+			break;
+		case BL_NPC:
+			if (nd->sc.option&OPTION_INVISIBLE)
+				break;
+
+			int xs = -1, ys = -1;
+			switch (nd->subtype) {
+			case NPCTYPE_SCRIPT:
+				xs = nd->u.scr.xs;
+				ys = nd->u.scr.ys;
+				break;
+			case NPCTYPE_WARP:
+				xs = nd->u.warp.xs;
+				ys = nd->u.warp.ys;
+				break;
+			}
+			if (xs > -1 && ys > -1)
+				map_foreachinmap(unit_walktoxy_ontouch, nd->bl.m, BL_PC, nd);
 			break;
 	}
 
@@ -973,7 +1044,7 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 			npc_touchnext_areanpc(sd,false);
 
 		if(map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC)) {
-			npc_touch_areanpc(sd, bl->m, bl->x, bl->y);
+			npc_touch_area_allnpc(sd, bl->m, bl->x, bl->y);
 
 			if (bl->prev == NULL) // Script could have warped char, abort remaining of the function.
 				return false;
@@ -1104,7 +1175,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_bl
 					npc_touchnext_areanpc(sd, false);
 
 				if(map_getcell(bl->m, bl->x, bl->y, CELL_CHKNPC))
-					npc_touch_areanpc(sd, bl->m, bl->x, bl->y);
+					npc_touch_area_allnpc(sd, bl->m, bl->x, bl->y);
 				else
 					sd->areanpc.clear();
 			}
@@ -1257,6 +1328,9 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 	clif_spawn(bl);
 	skill_unit_move(bl,gettick(),1);
 
+	if (!battle_config.slave_stick_with_master && bl->type == BL_MOB && mob_countslave(bl) > 0)
+		mob_warpslave(bl,MOB_SLAVEDISTANCE);
+
 	return 0;
 }
 
@@ -1384,7 +1458,7 @@ int unit_can_move(struct block_list *bl) {
 	if (DIFF_TICK(ud->canmove_tick, gettick()) > 0)
 		return 0;
 
-	if ((sd && (pc_issit(sd) || sd->state.vending || sd->state.buyingstore || (sd->state.block_action & PCBLOCK_MOVE))) || ud->state.blockedmove)
+	if ((sd && (pc_issit(sd) || sd->state.vending || sd->state.buyingstore || (sd->state.block_action & PCBLOCK_MOVE) || sd->state.mail_writing)) || ud->state.blockedmove)
 		return 0; // Can't move
 
 	// Status changes that block movement
@@ -1543,6 +1617,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	int inf = skill_get_inf(skill_id);
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 
+	if (!skill)
+		return 0;
+
 	// temp: used to signal combo-skills right now.
 	if (sc && sc->data[SC_COMBO] &&
 		skill_is_combo(skill_id) &&
@@ -1559,10 +1636,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 			target_id = src->id;
 
 		combo = 1;
-	} else if ( target_id == src->id &&
-		inf&INF_SELF_SKILL &&
-		(skill->inf2[INF2_NOTARGETSELF] ||
-		(skill_id == RL_QD_SHOT && sc && sc->data[SC_QD_SHOT_READY])) ) {
+	} else if (target_id == src->id && inf&INF_SELF_SKILL && skill->inf2[INF2_NOTARGETSELF]) {
 		target_id = ud->target; // Auto-select target. [Skotlex]
 		combo = 1;
 	}
@@ -1577,6 +1651,20 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 				if (sc && sc->data[SC_BLADESTOP]) {
 					if ((target=map_id2bl(sc->data[SC_BLADESTOP]->val4)) == NULL)
 						return 0;
+				}
+				break;
+			case GC_WEAPONCRUSH:
+				if (sc && sc->data[SC_WEAPONBLOCK_ON]) {
+					if ((target = map_id2bl(sc->data[SC_WEAPONBLOCK_ON]->val1)) == nullptr)
+						return 0;
+					combo = 1;
+				}
+				break;
+			case RL_QD_SHOT:
+				if (sc && sc->data[SC_QD_SHOT_READY]) {
+					if ((target = map_id2bl(sc->data[SC_QD_SHOT_READY]->val1)) == nullptr)
+						return 0;
+					combo = 1;
 				}
 				break;
 			case WE_MALE:
@@ -1861,7 +1949,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	skill_toggle_magicpower(src, skill_id);
 
 	// In official this is triggered even if no cast time.
-	clif_skillcasting(src, src->id, target_id, 0,0, skill_id, skill_get_ele(skill_id, skill_lv), casttime);
+	clif_skillcasting(src, src->id, target_id, 0,0, skill_id, skill_lv, skill_get_ele(skill_id, skill_lv), casttime);
 
 	if (sd && target->type == BL_MOB) {
 		TBL_MOB *md = (TBL_MOB*)target;
@@ -2009,6 +2097,9 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	if (sc && !sc->count)
 		sc = NULL;
 
+	if (!skill_db.find(skill_id))
+		return 0;
+
 	if( sd ) {
 		if( skill_isNotOk(skill_id, sd) || !skill_check_condition_castbegin(sd, skill_id, skill_lv) )
 			return 0;
@@ -2117,7 +2208,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	skill_toggle_magicpower(src, skill_id);
 
 	// In official this is triggered even if no cast time.
-	clif_skillcasting(src, src->id, 0, skill_x, skill_y, skill_id, skill_get_ele(skill_id, skill_lv), casttime);
+	clif_skillcasting(src, src->id, 0, skill_x, skill_y, skill_id, skill_lv, skill_get_ele(skill_id, skill_lv), casttime);
 
 	if( casttime > 0 ) {
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_pos, src->id, 0 );
@@ -2914,7 +3005,6 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_TINDER_BREAKER, INVALID_TIMER);
 		status_change_end(bl, SC_TINDER_BREAKER2, INVALID_TIMER);
 		status_change_end(bl, SC_FLASHKICK, INVALID_TIMER);
-		status_change_end(bl, SC_SOULUNITY, INVALID_TIMER);
 		status_change_end(bl, SC_HIDING, INVALID_TIMER);
 		// Ensure the bl is a PC; if so, we'll handle the removal of cloaking and cloaking exceed later
 		if ( bl->type != BL_PC ) {
@@ -2932,7 +3022,6 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_CAMOUFLAGE, INVALID_TIMER);
 		status_change_end(bl, SC_NEUTRALBARRIER_MASTER, INVALID_TIMER);
 		status_change_end(bl, SC_STEALTHFIELD_MASTER, INVALID_TIMER);
-		status_change_end(bl, SC_HELLS_PLANT, INVALID_TIMER);
 		status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 		status_change_end(bl, SC__MANHOLE, INVALID_TIMER);
 		status_change_end(bl, SC_VACUUM_EXTREME, INVALID_TIMER);
@@ -3159,7 +3248,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
  * Refresh the area with a change in display of a unit.
  * @bl: Object to update
  */
-void unit_refresh(struct block_list *bl) {
+void unit_refresh(struct block_list *bl, bool walking) {
 	nullpo_retv(bl);
 
 	if (bl->m < 0)
@@ -3171,7 +3260,7 @@ void unit_refresh(struct block_list *bl) {
 	// Probably need to use another flag or other way to refresh it
 	if (mapdata->users) {
 		clif_clearunit_area(bl, CLR_TRICKDEAD); // Fade out
-		clif_spawn(bl); // Fade in
+		clif_spawn(bl,walking); // Fade in
 	}
 }
 
@@ -3275,7 +3364,6 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			pc_inventory_rental_clear(sd);
 			pc_delspiritball(sd, sd->spiritball, 1);
 			pc_delspiritcharm(sd, sd->spiritcharm, sd->spiritcharm_type);
-			pc_delsoulball(sd,sd->soulball, 1);
 
 			if( sd->st && sd->st->state != RUN ) {// free attached scripts that are waiting
 				script_free_state(sd->st);

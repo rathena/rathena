@@ -63,6 +63,7 @@ int intif_guild_skillup(int guild_id, uint16 skill_id, uint32 account_id, int ma
 int intif_guild_alliance(int guild_id1, int guild_id2, uint32 account_id1, uint32 account_id2, int flag);
 int intif_guild_notice(int guild_id, const char *mes1, const char *mes2);
 int intif_guild_emblem(int guild_id, int len, const char *data);
+int intif_guild_emblem_version(int guild_id, int version);
 int intif_guild_castle_dataload(int num, int *castle_ids);
 int intif_guild_castle_datasave(int castle_id, int index, int value);
 #ifdef BOUND_ITEMS

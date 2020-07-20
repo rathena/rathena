@@ -10076,6 +10076,8 @@ Body:
       - Level: 60
         Bonus: Str
   - Job: Super_Novice_E
+    HPMultiplicator: 5000
+    SpFactor: 500
     BaseASPD:
       Fist: 40
       Dagger: 55
@@ -10147,6 +10149,26 @@ Body:
         Bonus: Dex
       - Level: 49
         Bonus: Luk
+      - Level: 51
+        Bonus: Str
+      - Level: 52
+        Bonus: Agi
+      - Level: 54
+        Bonus: Vit
+      - Level: 56
+        Bonus: Int
+      - Level: 57
+        Bonus: Dex
+      - Level: 59
+        Bonus: Luk
+      - Level: 61
+        Bonus: Str
+      - Level: 62
+        Bonus: Agi
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Dex
   - Job: Super_Baby_E
     BaseASPD:
       Fist: 40
@@ -10219,6 +10241,26 @@ Body:
         Bonus: Dex
       - Level: 49
         Bonus: Luk
+      - Level: 51
+        Bonus: Str
+      - Level: 52
+        Bonus: Agi
+      - Level: 54
+        Bonus: Vit
+      - Level: 56
+        Bonus: Int
+      - Level: 57
+        Bonus: Dex
+      - Level: 59
+        Bonus: Luk
+      - Level: 61
+        Bonus: Str
+      - Level: 62
+        Bonus: Agi
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Dex
   - Job: Kagerou
     MaxWeight: 26000
     HpFactor: 75

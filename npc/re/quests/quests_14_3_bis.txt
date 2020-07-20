@@ -2186,7 +2186,7 @@ morocc,138,238,4	script	Piled Rags#ep14bs	4_M_DIEMAN,{
 			mes "" + strcharinfo(0) + ", huh? That's a good name.";
 			next;
 		}
-		if (ep14_3_newerabs == 3) {
+		if (ep14_3_newerabs <= 3) {
 			mes "[Tamarin]";
 			mes "Ah,";
 			mes "I'd better do something before people start asking if I'm homeless.";
@@ -2202,7 +2202,7 @@ morocc,138,238,4	script	Piled Rags#ep14bs	4_M_DIEMAN,{
 				close3;
 			}
 		}
-		if (ep14_3_newerabs == 4) {
+		if (ep14_3_newerabs <= 4) {
 			mes "[Tamarin]";
 			mes "Ah,";
 			mes "do you mean the ^0000FFoasis near the northwestern sphinx^000000?";

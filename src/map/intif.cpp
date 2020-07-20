@@ -27,6 +27,7 @@
 #include "mercenary.hpp"
 #include "party.hpp"
 #include "pc.hpp"
+#include "pc_groups.hpp"
 #include "pet.hpp"
 #include "quest.hpp"
 #include "status.hpp"
@@ -38,7 +39,7 @@ static const int packet_len_table[] = {
 	 0, 0, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
 	39,-1,15,15, 15+NAME_LENGTH,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
-	-1, 0, 0,18,  0, 0, 0, 0, -1,75,-1,11, 11,-1, 38, 0, //0x3840
+	-1,10, 0,18,  0, 0, 0, 0, -1,75,-1,11, 11,-1, 38, 0, //0x3840
 	-1,-1, 7, 7,  7,11, 8,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus] itembound[Akinari]
 	-1, 7,-1, 7, 14, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish] / Achievements [Aleos]
 	-1, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0, -1, 3,  3, 0, //0x3870  Mercenaries [Zephyrus] / Elemental [pakpil]
@@ -1131,6 +1132,21 @@ int intif_guild_emblem(int guild_id,int len,const char *data)
 	return 1;
 }
 
+int intif_guild_emblem_version(int guild_id, int emblem_id)
+{
+	if (CheckForCharServer())
+		return 0;
+	if (guild_id <= 0)
+		return 0;
+	WFIFOHEAD(inter_fd, 10);
+	WFIFOW(inter_fd, 0) = 0x3042;
+	WFIFOL(inter_fd, 2) = guild_id;
+	WFIFOL(inter_fd, 6) = emblem_id;
+	WFIFOSET(inter_fd, 10);
+
+	return 1;
+}
+
 /**
  * Requests guild castles data from char-server.
  * @param num Number of castles, size of castle_ids array.
@@ -1274,7 +1290,7 @@ int intif_parse_WisMessage(int fd)
 		return 0;
 	}
 	if(sd->state.ignoreAll) {
-		intif_wis_reply(id, 2);
+		intif_wis_reply(id, (pc_has_permission(sd, PC_PERM_HIDE_SESSION))?1:2);
 		return 0;
 	}
 	wisp_source = RFIFOCP(fd,12); // speed up [Yor]
@@ -1285,7 +1301,7 @@ int intif_parse_WisMessage(int fd)
 
 	if (i < MAX_IGNORE_LIST && sd->ignore[i].name[0] != '\0')
 	{	//Ignored
-		intif_wis_reply(id, 2);
+		intif_wis_reply(id, (pc_has_permission(sd, PC_PERM_HIDE_SESSION))?1:2);
 		return 0;
 	}
 	//Success to send whisper.
@@ -1814,6 +1830,12 @@ int intif_parse_GuildNotice(int fd)
 int intif_parse_GuildEmblem(int fd)
 {
 	guild_emblem_changed(RFIFOW(fd,2)-12,RFIFOL(fd,4),RFIFOL(fd,8), RFIFOCP(fd,12));
+	return 1;
+}
+
+int intif_parse_GuildEmblemVersionChanged(int fd)
+{
+	guild_emblem_changed(0, RFIFOL(fd, 2), RFIFOL(fd, 6), nullptr); // Doesn't need emblem length and data
 	return 1;
 }
 
@@ -3761,6 +3783,7 @@ int intif_parse(int fd)
 	case 0x383e:	intif_parse_GuildNotice(fd); break;
 	case 0x383f:	intif_parse_GuildEmblem(fd); break;
 	case 0x3840:	intif_parse_GuildCastleDataLoad(fd); break;
+	case 0x3841:	intif_parse_GuildEmblemVersionChanged(fd); break;
 	case 0x3843:	intif_parse_GuildMasterChanged(fd); break;
 
 	// Mail System

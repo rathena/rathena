@@ -97,11 +97,11 @@ AllowOnWarg					- Usable while riding Warg.
 AllowOnMado					- Usable while on Madogear.
 TargetManHole				- Target enemy with SC__MANHOLE.
 TargetHidden				- Target enemy with OPTION_HIDE.
-IncreaseGloomyDayDamage		- Increase SC_GLOOMYDAY_SK damage.
 IncreaseDanceWithWugDamage	- Increase SC_DANCEWITHWUG damage.
 IgnoreWugBite				- Ignore RA_WUGBITE.
-IgnoreAutoGuard			- Not blocked by SC_AUTOGUARD (When TargetType is Weapon only).
+IgnoreAutoGuard				- Not blocked by SC_AUTOGUARD (When TargetType is Weapon only).
 IgnoreCicada				- Not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (When TargetType is Weapon only).
+ShowScale					- Shows AoE area while casting
 
 ---------------------------------------
 
@@ -693,6 +693,10 @@ Mado				- Requires OPTION_MADOGEAR.
 ElementalSpirit		- Requires an Elemental Spirit to be summoned.
 ElementalSpirit2	- Requires an Elemental Spirit to be summoned and will be removed after.
 Peco				- Requires OPTION_RIDING.
+Sunstance			- Requires Sun/Universe Stance status be active.
+Moonstance			- Requires Moon/Universe Stance status be active.
+Starstance			- Requires Star/Universe Stance status be active.
+Universestance		- Requires Universe Stance status be active.
 
 ------------------
 
