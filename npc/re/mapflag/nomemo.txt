@@ -11,6 +11,9 @@
 //= 1.4 Added GVG TE Maps. [Cydh]
 //============================================================
 
+// Paradise Market =============
+moc_para01	mapflag	nomemo
+
 // Episode 13 ====================
 job3_arch01	mapflag	nomemo
 job3_arch02	mapflag	nomemo
