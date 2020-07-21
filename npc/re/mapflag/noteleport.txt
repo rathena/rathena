@@ -16,7 +16,7 @@
 //============================================================
 
 // Paradise Market =============
-moc_para01	mapflag	noteleport
+paramk	mapflag	noteleport
 
 // Cities ========================
 moc_para01	mapflag	noteleport
