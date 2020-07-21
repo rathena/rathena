@@ -7557,16 +7557,16 @@ REPLACE INTO `item_db_re` VALUES (13232,'Blind_Bullet','Blind Bullet',10,10,NULL
 #===================================================================
 # Shurikens & Kunais
 #===================================================================
-REPLACE INTO `item_db_re` VALUES (13250,'Shuriken','Shuriken',10,4,NULL,5,'10',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1',NULL,6,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13251,'Nimbus_Shuriken','Nimbus Shuriken',10,10,NULL,5,'30',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'20',NULL,6,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13252,'Flash_Shuriken','Flash Shuriken',10,20,NULL,5,'45',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'40',NULL,6,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13253,'Sharp_Leaf_Shuriken','Sharp Leaf Shuriken',10,40,NULL,5,'70',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'60',NULL,6,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13254,'Thorn_Needle_Shuriken','Thorn Needle Shuriken',10,100,NULL,5,'100',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'80',NULL,6,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13255,'Kunai_Of_Icicle','Icicle Kunai',10,10,NULL,20,'30',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1',NULL,7,'bonus bAtkEle,Ele_Water;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13256,'Kunai_Of_Black_Soil','Black Earth Kunai',10,10,NULL,20,'30',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1',NULL,7,'bonus bAtkEle,Ele_Earth;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13257,'Kunai_Of_Furious_Wind','High Wind Kunai',10,10,NULL,20,'30',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1',NULL,7,'bonus bAtkEle,Ele_Wind;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13258,'Kunai_Of_Fierce_Flame','Heat Wave Kunai',10,10,NULL,20,'30',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1',NULL,7,'bonus bAtkEle,Ele_Fire;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13259,'Kunai_Of_Deadly_Poison','Fell Poison Kunai',10,10,NULL,20,'30',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1',NULL,7,'bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,500;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13250,'Shuriken','Shuriken',10,4,NULL,1,'10',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1',NULL,6,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13251,'Nimbus_Shuriken','Nimbus Shuriken',10,10,NULL,1,'30',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'20',NULL,6,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13252,'Flash_Shuriken','Flash Shuriken',10,20,NULL,1,'45',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'40',NULL,6,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13253,'Sharp_Leaf_Shuriken','Sharp Leaf Shuriken',10,40,NULL,1,'70',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'60',NULL,6,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13254,'Thorn_Needle_Shuriken','Thorn Needle Shuriken',10,100,NULL,1,'100',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'80',NULL,6,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13255,'Kunai_Of_Icicle','Icicle Kunai',10,10,NULL,1,'30',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1',NULL,7,'bonus bAtkEle,Ele_Water;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13256,'Kunai_Of_Black_Soil','Black Earth Kunai',10,10,NULL,1,'30',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1',NULL,7,'bonus bAtkEle,Ele_Earth;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13257,'Kunai_Of_Furious_Wind','High Wind Kunai',10,10,NULL,1,'30',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1',NULL,7,'bonus bAtkEle,Ele_Wind;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13258,'Kunai_Of_Fierce_Flame','Heat Wave Kunai',10,10,NULL,1,'30',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1',NULL,7,'bonus bAtkEle,Ele_Fire;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13259,'Kunai_Of_Deadly_Poison','Fell Poison Kunai',10,10,NULL,1,'30',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1',NULL,7,'bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,500;',NULL,NULL);
 #===================================================================
 # Genetic Created Bombs And Throwing Items
 #===================================================================
@@ -7607,7 +7607,7 @@ REPLACE INTO `item_db_re` VALUES (13290,'Black_Thing_To_Throw','Throwing Black M
 REPLACE INTO `item_db_re` VALUES (13291,'Starfish','Starfish',10,0,NULL,5,'110',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'50',NULL,6,'bonus bAtkEle,Ele_Neutral; bonus2 bAddEff,Eff_Stun,1000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13292,'Dried_Squid','Dried Squid',10,10,NULL,20,'50',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1',NULL,7,'bonus bAtkEle,Ele_Neutral; bonus2 bAddEff,Eff_Stun,1000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13293,'Flying_Fish','Flying Fish',10,10,NULL,20,'50',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'1',NULL,7,'bonus bAtkEle,Ele_Neutral; bonus3 bAutoSpell,"NPC_CRITICALWOUND",1,3;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13294,'Explosive_Kunai','Explosive Kunai',10,100,NULL,30,'50',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'100',NULL,7,'bonus bAtkEle,Ele_Neutral;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13294,'Explosive_Kunai','Explosive Kunai',10,100,NULL,1,'50',NULL,NULL,NULL,0x02000000,63,2,32768,NULL,'100',NULL,7,'bonus bAtkEle,Ele_Neutral;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13295,'Light_Shuriken','Light Shuriken',10,0,NULL,5,'5',NULL,NULL,NULL,0xFFFFFFFF,63,2,32768,NULL,NULL,NULL,0,NULL,NULL,NULL);
 #===================================================================
 # Ninja Fuuma Shurikens
