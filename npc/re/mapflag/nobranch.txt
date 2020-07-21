@@ -15,10 +15,10 @@
 //============================================================
 
 // Paradise Market =============
-moc_para01	mapflag	nobranch
-
-// 3rd Class Job Maps ==========
 paramk	mapflag	nobranch
+
+// 3rd Class Job Maps & Paradise 
+moc_para01	mapflag	nobranch
 job3_arch01	mapflag	nobranch
 job3_arch02	mapflag	nobranch
 job3_arch03	mapflag	nobranch
