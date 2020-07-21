@@ -8800,8 +8800,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case NPC_RUN:
-		if (md && unit_escape(src, bl, rnd()%10 + 1))
-			mob_unlocktarget(md, tick);
+		if (md) {
+			block_list* tbl = map_id2bl(md->target_id);
+
+			if (tbl) {
+				mob_unlocktarget(md, tick);
+				if (unit_escape(src, tbl, skill_lv > 1 ? skill_lv : AREA_SIZE, 2)) // Send distance in skill level > 1
+					md->state.skillstate = MSS_WALK; // Otherwise it isn't updated in the AI.
+			}
+		}
 		break;
 
 	case NPC_TRANSFORMATION:
