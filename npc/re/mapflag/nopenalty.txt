@@ -15,7 +15,7 @@
 //============================================================
 
 // Paradise Market =============
-moc_para01	mapflag	nopenalty
+paramk	mapflag	nopenalty
 
 // Towns ====================
 brasilis	mapflag	nopenalty
