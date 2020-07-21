@@ -15,7 +15,7 @@
 //============================================================
 
 // Paradise Market =============
-moc_para01	mapflag	pvp	off
+paramk	mapflag	pvp	off
 
 // Instances ===================
 1@mist	mapflag	pvp	off
