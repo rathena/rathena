@@ -7528,8 +7528,8 @@
 13250,Shuriken,Shuriken,10,4,,1,10,,,,0x02000000,63,2,32768,,1,,6,{},{},{}
 13251,Nimbus_Shuriken,Nimbus Shuriken,10,10,,1,30,,,,0x02000000,63,2,32768,,20,,6,{},{},{}
 13252,Flash_Shuriken,Flash Shuriken,10,20,,1,45,,,,0x02000000,63,2,32768,,40,,6,{},{},{}
-13253,Sharp_Leaf_Shuriken,Sharp Leaf Shuriken,1,70,,5,70,,,,0x02000000,63,2,32768,,60,,6,{},{},{}
-13254,Thorn_Needle_Shuriken,Thorn Needle Shuriken,1,100,,5,100,,,,0x02000000,63,2,32768,,80,,6,{},{},{}
+13253,Sharp_Leaf_Shuriken,Sharp Leaf Shuriken,10,40,,1,70,,,,0x02000000,63,2,32768,,60,,6,{},{},{}
+13254,Thorn_Needle_Shuriken,Thorn Needle Shuriken,10,100,,1,100,,,,0x02000000,63,2,32768,,80,,6,{},{},{}
 13255,Kunai_Of_Icicle,Icicle Kunai,10,10,,1,30,,,,0x02000000,63,2,32768,,1,,7,{ bonus bAtkEle,Ele_Water; },{},{}
 13256,Kunai_Of_Black_Soil,Black Earth Kunai,10,10,,1,30,,,,0x02000000,63,2,32768,,1,,7,{ bonus bAtkEle,Ele_Earth; },{},{}
 13257,Kunai_Of_Furious_Wind,High Wind Kunai,10,10,,1,30,,,,0x02000000,63,2,32768,,1,,7,{ bonus bAtkEle,Ele_Wind; },{},{}
