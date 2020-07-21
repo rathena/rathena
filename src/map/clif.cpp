@@ -15347,12 +15347,15 @@ void clif_mail_getattachment(struct map_session_data* sd, struct mail_message *m
 			return;
 	}
 
-	WFIFOHEAD(fd, 12);
-	WFIFOW(fd, 0) = type == MAIL_ATT_ZENY ? 0x9f2 : 0x9f4;
-	WFIFOQ(fd, 2) = msg->id;
-	WFIFOB(fd, 10) = msg->type;
-	WFIFOB(fd, 11) = result;
-	WFIFOSET(fd, 12);
+	PACKET_ZC_ACK_ITEM_FROM_MAIL *p = { 0 };
+
+	WFIFOHEAD(fd, sizeof(*p));
+	p = (PACKET_ZC_ACK_ITEM_FROM_MAIL *)WFIFOP(fd, 0);
+	p->PacketType = type == MAIL_ATT_ZENY ? rodexgetzeny : rodexgetitem;
+	p->MailID = msg->id;
+	p->opentype = msg->type;
+	p->result = result;
+	WFIFOSET(fd, sizeof(*p));
 
 	clif_Mail_refreshinbox( sd, msg->type, 0 );
 #endif
