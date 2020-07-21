@@ -7525,16 +7525,16 @@
 //===================================================================
 // Shurikens & Kunais
 //===================================================================
-13250,Shuriken,Shuriken,10,4,,5,10,,,,0x02000000,63,2,32768,,1,,6,{},{},{}
-13251,Nimbus_Shuriken,Nimbus Shuriken,10,10,,5,30,,,,0x02000000,63,2,32768,,20,,6,{},{},{}
-13252,Flash_Shuriken,Flash Shuriken,10,20,,5,45,,,,0x02000000,63,2,32768,,40,,6,{},{},{}
-13253,Sharp_Leaf_Shuriken,Sharp Leaf Shuriken,10,40,,5,70,,,,0x02000000,63,2,32768,,60,,6,{},{},{}
-13254,Thorn_Needle_Shuriken,Thorn Needle Shuriken,10,100,,5,100,,,,0x02000000,63,2,32768,,80,,6,{},{},{}
-13255,Kunai_Of_Icicle,Icicle Kunai,10,10,,20,30,,,,0x02000000,63,2,32768,,1,,7,{ bonus bAtkEle,Ele_Water; },{},{}
-13256,Kunai_Of_Black_Soil,Black Earth Kunai,10,10,,20,30,,,,0x02000000,63,2,32768,,1,,7,{ bonus bAtkEle,Ele_Earth; },{},{}
-13257,Kunai_Of_Furious_Wind,High Wind Kunai,10,10,,20,30,,,,0x02000000,63,2,32768,,1,,7,{ bonus bAtkEle,Ele_Wind; },{},{}
-13258,Kunai_Of_Fierce_Flame,Heat Wave Kunai,10,10,,20,30,,,,0x02000000,63,2,32768,,1,,7,{ bonus bAtkEle,Ele_Fire; },{},{}
-13259,Kunai_Of_Deadly_Poison,Fell Poison Kunai,10,10,,20,30,,,,0x02000000,63,2,32768,,1,,7,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,500; },{},{}
+13250,Shuriken,Shuriken,10,4,,1,10,,,,0x02000000,63,2,32768,,1,,6,{},{},{}
+13251,Nimbus_Shuriken,Nimbus Shuriken,10,10,,1,30,,,,0x02000000,63,2,32768,,20,,6,{},{},{}
+13252,Flash_Shuriken,Flash Shuriken,10,20,,1,45,,,,0x02000000,63,2,32768,,40,,6,{},{},{}
+13253,Sharp_Leaf_Shuriken,Sharp Leaf Shuriken,1,70,,5,70,,,,0x02000000,63,2,32768,,60,,6,{},{},{}
+13254,Thorn_Needle_Shuriken,Thorn Needle Shuriken,1,100,,5,100,,,,0x02000000,63,2,32768,,80,,6,{},{},{}
+13255,Kunai_Of_Icicle,Icicle Kunai,10,10,,1,30,,,,0x02000000,63,2,32768,,1,,7,{ bonus bAtkEle,Ele_Water; },{},{}
+13256,Kunai_Of_Black_Soil,Black Earth Kunai,10,10,,1,30,,,,0x02000000,63,2,32768,,1,,7,{ bonus bAtkEle,Ele_Earth; },{},{}
+13257,Kunai_Of_Furious_Wind,High Wind Kunai,10,10,,1,30,,,,0x02000000,63,2,32768,,1,,7,{ bonus bAtkEle,Ele_Wind; },{},{}
+13258,Kunai_Of_Fierce_Flame,Heat Wave Kunai,10,10,,1,30,,,,0x02000000,63,2,32768,,1,,7,{ bonus bAtkEle,Ele_Fire; },{},{}
+13259,Kunai_Of_Deadly_Poison,Fell Poison Kunai,10,10,,1,30,,,,0x02000000,63,2,32768,,1,,7,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,500; },{},{}
 //===================================================================
 // Genetic Created Bombs And Throwing Items
 //===================================================================
@@ -7575,7 +7575,7 @@
 13291,Starfish,Starfish,10,0,,5,110,,,,0x02000000,63,2,32768,,50,,6,{ bonus bAtkEle,Ele_Neutral; bonus2 bAddEff,Eff_Stun,1000; },{},{}
 13292,Dried_Squid,Dried Squid,10,10,,20,50,,,,0x02000000,63,2,32768,,1,,7,{ bonus bAtkEle,Ele_Neutral; bonus2 bAddEff,Eff_Stun,1000; },{},{}
 13293,Flying_Fish,Flying Fish,10,10,,20,50,,,,0x02000000,63,2,32768,,1,,7,{ bonus bAtkEle,Ele_Neutral; bonus3 bAutoSpell,"NPC_CRITICALWOUND",1,3; },{},{}
-13294,Explosive_Kunai,Explosive Kunai,10,100,,30,50,,,,0x02000000,63,2,32768,,100,,7,{ bonus bAtkEle,Ele_Neutral; },{},{}
+13294,Explosive_Kunai,Explosive Kunai,10,100,,1,50,,,,0x02000000,63,2,32768,,100,,7,{ bonus bAtkEle,Ele_Neutral; },{},{}
 13295,Light_Shuriken,Light Shuriken,10,0,,5,5,,,,0xFFFFFFFF,63,2,32768,,,,0,{},{},{}
 //===================================================================
 // Ninja Fuuma Shurikens
