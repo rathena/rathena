@@ -13,7 +13,7 @@
 //============================================================
 
 // Paradise Market =============
-moc_para01	mapflag	nomemo
+paramk	mapflag	nomemo
 
 // Episode 13 ====================
 job3_arch01	mapflag	nomemo
