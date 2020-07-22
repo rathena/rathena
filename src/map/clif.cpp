@@ -12857,16 +12857,15 @@ void clif_parse_NpcSelectMenu(int fd,struct map_session_data *sd){
 	int npc_id = RFIFOL(fd,info->pos[0]);
 	uint8 select = RFIFOB(fd,info->pos[1]);
 
-	if( (select > sd->npc_menu && select != 0xff) || select == 0 ) {
 #ifdef SECURE_NPCTIMEOUT
-		if( sd->npc_idle_timer != INVALID_TIMER ) {
+	if( sd->npc_idle_timer == INVALID_TIMER )
+		return;
 #endif
+
+	if( (select > sd->npc_menu && select != 0xff) || select == 0 ) {
 			TBL_NPC* nd = map_id2nd(npc_id);
 			ShowWarning("Invalid menu selection on npc %d:'%s' - got %d, valid range is [%d..%d] (player AID:%d, CID:%d, name:'%s')!\n", npc_id, (nd)?nd->name:"invalid npc id", select, 1, sd->npc_menu, sd->bl.id, sd->status.char_id, sd->status.name);
 			clif_GM_kick(NULL,sd);
-#ifdef SECURE_NPCTIMEOUT
-		}
-#endif
 		return;
 	}
 
