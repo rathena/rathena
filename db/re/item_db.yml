@@ -99763,7 +99763,7 @@ Body:
     Type: Ammo
     SubType: Shuriken
     Buy: 4
-    Weight: 5
+    Weight: 1
     Attack: 10
     Jobs:
       Ninja: true
@@ -99776,7 +99776,7 @@ Body:
     Type: Ammo
     SubType: Shuriken
     Buy: 10
-    Weight: 5
+    Weight: 1
     Attack: 30
     Jobs:
       Ninja: true
@@ -99789,7 +99789,7 @@ Body:
     Type: Ammo
     SubType: Shuriken
     Buy: 20
-    Weight: 5
+    Weight: 1
     Attack: 45
     Jobs:
       Ninja: true
@@ -99802,7 +99802,7 @@ Body:
     Type: Ammo
     SubType: Shuriken
     Buy: 40
-    Weight: 5
+    Weight: 1
     Attack: 70
     Jobs:
       Ninja: true
@@ -99815,7 +99815,7 @@ Body:
     Type: Ammo
     SubType: Shuriken
     Buy: 100
-    Weight: 5
+    Weight: 1
     Attack: 100
     Jobs:
       Ninja: true
@@ -99828,7 +99828,7 @@ Body:
     Type: Ammo
     SubType: Kunai
     Buy: 10
-    Weight: 20
+    Weight: 1
     Attack: 30
     Jobs:
       Ninja: true
@@ -99843,7 +99843,7 @@ Body:
     Type: Ammo
     SubType: Kunai
     Buy: 10
-    Weight: 20
+    Weight: 1
     Attack: 30
     Jobs:
       Ninja: true
@@ -99858,7 +99858,7 @@ Body:
     Type: Ammo
     SubType: Kunai
     Buy: 10
-    Weight: 20
+    Weight: 1
     Attack: 30
     Jobs:
       Ninja: true
@@ -99873,7 +99873,7 @@ Body:
     Type: Ammo
     SubType: Kunai
     Buy: 10
-    Weight: 20
+    Weight: 1
     Attack: 30
     Jobs:
       Ninja: true
@@ -99888,7 +99888,7 @@ Body:
     Type: Ammo
     SubType: Kunai
     Buy: 10
-    Weight: 20
+    Weight: 1
     Attack: 30
     Jobs:
       Ninja: true
@@ -100516,7 +100516,7 @@ Body:
     Type: Ammo
     SubType: Kunai
     Buy: 100
-    Weight: 30
+    Weight: 1
     Attack: 50
     Jobs:
       Ninja: true
@@ -165518,12 +165518,13 @@ Body:
     AegisName: Clean_Bone
     Name: Clean Bone
     Type: Etc
-    Buy: 248
+    Buy: 348
     Weight: 10
   - Id: 25277
     AegisName: Deadly_Poison_Powder
     Name: Deadly Poison Powder
     Type: Etc
+    Buy: 644
     Weight: 10
   - Id: 25278
     AegisName: Bandits_Scarf
@@ -165541,16 +165542,19 @@ Body:
     AegisName: Broken_Shotgun
     Name: Broken Shotgun
     Type: Etc
+    Buy: 910
     Weight: 10
   - Id: 25281
     AegisName: Crude_Scimitar
     Name: Crude Scimitar
     Type: Etc
+    Buy: 970
     Weight: 10
   - Id: 25282
     AegisName: Worn_Revolver
     Name: Worn Revolver
     Type: Etc
+    Buy: 820
     Weight: 10
   - Id: 25283
     AegisName: Brown_Muffler
@@ -165562,11 +165566,13 @@ Body:
     AegisName: Swamp_Bug_Shell
     Name: Swamp Bug Shell
     Type: Etc
+    Buy: 230
     Weight: 10
   - Id: 25285
     AegisName: Brown_Rat_Tail
     Name: Brown Rat Tail
     Type: Etc
+    Buy: 210
     Weight: 10
   - Id: 25290
     AegisName: Sweets_Festival_Coin
@@ -171495,6 +171501,7 @@ Body:
     Name: Elemental Origin
     Type: Weapon
     SubType: Book
+    Buy: 20
     Weight: 800
     Attack: 120
     MagicAttack: 150
