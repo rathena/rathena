@@ -8805,8 +8805,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 			if (tbl) {
 				mob_unlocktarget(md, tick);
-				if (unit_escape(src, tbl, skill_lv > 1 ? skill_lv : AREA_SIZE, 2)) // Send distance in skill level > 1
-					md->state.skillstate = MSS_WALK; // Otherwise it isn't updated in the AI.
+				unit_escape(src, tbl, skill_lv > 1 ? skill_lv : AREA_SIZE, 2); // Send distance in skill level > 1
 			}
 		}
 		break;
