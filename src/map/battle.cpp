@@ -1188,13 +1188,11 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 		d->dmg_lv = ATK_BLOCK;
 		if (sce->val3 <= 0) { // Shield Down
 			sce->val2--;
-			if (sce->val2 >= 0) {
+			if (sce->val2 > 0) {
 				clif_millenniumshield(target, sce->val2);
-				if (sce->val2 != 0)
-					status_change_end(target, SC_MILLENNIUMSHIELD, INVALID_TIMER); // All shields down
-				else
-					sce->val3 = 1000; // Next shield
-			}
+				sce->val3 = 1000; // Next shield
+			} else
+				status_change_end(target, SC_MILLENNIUMSHIELD, INVALID_TIMER); // All shields down
 			status_change_start(src, target, SC_STUN, 10000, 0, 0, 0, 0, 1000, SCSTART_NOTICKDEF);
 		}
 		return false;
