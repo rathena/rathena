@@ -225,7 +225,7 @@ monk_test,306,151,3	script	Grave of Baphomet#edq	111,{
 			close;
 		case IE_OK:
 			mapannounce "monk_test","[" + strcharinfo(0) + "] member of the [" + getpartyname(.@party_id) + "] party has entered the Sealed Shrine.",bc_map,"0x00ff99";
-			setquest 3040;
+			if (checkre(RENEWAL)) setquest 3040;
 			//warp "1@cata",100,224;
 			close;
 		}
@@ -1147,6 +1147,7 @@ OnInstanceInit:
 2@cata,80,63,4	script	Ancient Hero's Soul#2F	411,{
 	cutin "ins_cata_champ_s",2;
 	if (checkquest(3041)>=0) erasequest 3041;
+	if (!checkre(RENEWAL)) setquest 3040;
 	mes "[Ancient Hero's Soul]";
 	mes "Good job, my descendants... You've finished the long-cherished task that me and my bretheren could not complete.";
 	next;

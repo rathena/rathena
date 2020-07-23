@@ -94,7 +94,7 @@ enum MobDamageLogFlag
 	MDLF_SELF
 };
 
-enum size {
+enum e_size : uint8 {
 	SZ_SMALL = 0,
 	SZ_MEDIUM,
 	SZ_BIG,

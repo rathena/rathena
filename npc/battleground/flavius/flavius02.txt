@@ -59,21 +59,18 @@ OnStop:
 
 OnTimer1000:
 	stopnpctimer;
-	if (!getbattleflag("feature.bgqueue"))
-		initnpctimer;
-	set .@chk_bat_a01,getmapusers("bat_b02");
-	if (.@chk_bat_a01 < 1) {
-		set $@FlaviusBG2, 0;
-		if( $@FlaviusBG2_id1 ) { bg_destroy $@FlaviusBG2_id1; set $@FlaviusBG2_id1, 0; }
-		if( $@FlaviusBG2_id2 ) { bg_destroy $@FlaviusBG2_id2; set $@FlaviusBG2_id2, 0; }
-		if (getbattleflag("feature.bgqueue")) {
-			bg_unbook "bat_b01";
-			end;
-		} else
-			donpcevent "start#bat_b01::OnReadyCheck";
+	if (bg_get_data($@FlaviusBG2_id1, 0) == 0 && bg_get_data($@FlaviusBG2_id2, 0) == 0) {
+		donpcevent "countdown#bat_b02::OnStop";
+		if (getbattleflag("feature.bgqueue"))
+			bg_reserve "bat_b02", true;
+		$@FlaviusBG2 = 0;
+		if( $@FlaviusBG2_id1 ) { bg_destroy $@FlaviusBG2_id1; $@FlaviusBG2_id1 = 0; }
+		if( $@FlaviusBG2_id2 ) { bg_destroy $@FlaviusBG2_id2; $@FlaviusBG2_id2 = 0; }
+		if (getbattleflag("feature.bgqueue"))
+			bg_unbook "bat_b02";
+		end;
 	}
-	if (getbattleflag("feature.bgqueue"))
-		initnpctimer;
+	initnpctimer;
 	end;
 }
 
@@ -89,7 +86,7 @@ OnReadyCheck:
 	if( $@FlaviusBG2 )
 		end;
 	if (!getbattleflag("feature.bgqueue")) {
-			set .@Guillaume, getwaitingroomstate(0,"Lieutenant Huvas");
+		set .@Guillaume, getwaitingroomstate(0,"Lieutenant Huvas");
 		set .@Croix, getwaitingroomstate(0,"Lieutenant Yukon");
 		if( !.@Guillaume && !.@Croix ) {
 			donpcevent "#bat_b02_timer::OnStop";
@@ -102,8 +99,8 @@ OnReadyCheck:
 	set $@FlaviusBG2_Victory, 0;
 	set $@Croix_ScoreBG2, 0;
 	set $@Guill_ScoreBG2, 0;
-
 	bg_updatescore "bat_b02",$@Guill_ScoreBG2,$@Croix_ScoreBG2;
+
 	if (!getbattleflag("feature.bgqueue")) {
 		donpcevent "Lieutenant Huvas::OnEnterBG";
 		donpcevent "Lieutenant Yukon::OnEnterBG";
@@ -140,13 +137,14 @@ OnReset:
 	donpcevent "guardian#bat_b02_b::OnEnable";
 	donpcevent "cell#bat_b02_a::OnRed";
 	donpcevent "cell#bat_b02_b::OnRed";
-	donpcevent "time#bat_b02::OnEnable";
-	disablenpc "Guillaume Vintenar#b02_a";
-	disablenpc "Croix Vintenar#b02_b";
-	disablenpc "Vintenar#bat_b02_aover";
-	disablenpc "Vintenar#bat_b02_bover";
-	bg_warp $@FlaviusBG2_id1,"bat_b02",87,75;
-	bg_warp $@FlaviusBG2_id2,"bat_b02",311,224;
+	end;
+
+OnGuillaumeActive:
+	warp "bat_b02",87,75;
+	end;
+
+OnCroixActive:
+	warp "bat_b02",311,224;
 	end;
 
 OnGuillaumeQuit:
@@ -182,6 +180,8 @@ OnMyMobDead:
 			enablenpc "Guillaume Vintenar#b02_a";
 			enablenpc "Croix Vintenar#b02_b";
 			donpcevent "time#bat_b02::OnStop";
+			if (getbattleflag("feature.bgqueue"))
+				bg_reserve "bat_b02", true;
 		}
 		else {
 			set $@Croix_ScoreBG2,1;
@@ -216,6 +216,8 @@ OnMyMobDead:
 			enablenpc "Guillaume Vintenar#b02_a";
 			enablenpc "Croix Vintenar#b02_b";
 			donpcevent "time#bat_b02::OnStop";
+			if (getbattleflag("feature.bgqueue"))
+				bg_reserve "bat_b02", true;
 		}
 		else {
 			set $@Guill_ScoreBG2,1;
@@ -315,12 +317,14 @@ bat_b02,10,294,3	script	Battle Therapist#b02_a	95,{
 
 OnTimer25000:
 	specialeffect EF_SANCTUARY;
-	enablenpc "bat_b02_rp1_a_warp";
+	// enablenpc "bat_b02_rp1_a_warp";
+	areapercentheal "bat_b02",0,280,20,300,100,100;
+	areawarp "bat_b02",0,280,20,300,"bat_b02",87,73;
 	end;
 
-OnTimer26000:
-	disablenpc "bat_b02_rp1_a_warp";
-	end;
+// OnTimer26000:
+	// disablenpc "bat_b02_rp1_a_warp";
+	// end;
 
 OnTimer26500:
 	stopnpctimer;
@@ -333,22 +337,24 @@ OnEnable:
 	end;
 
 OnStop:
-	disablenpc "bat_b02_rp1_a_warp";
+	// disablenpc "bat_b02_rp1_a_warp";
 	disablenpc "Battle Therapist#b02_a";
 	stopnpctimer;
 	end;
 }
 
+/*
 bat_b02,10,290,0	script	bat_b02_rp1_a_warp	45,10,10,{
 OnInit:
 	disablenpc "bat_b02_rp1_a_warp";
 	end;
 
-OnTouch_:
+OnTouch:
 	percentheal 100,100;
 	warp "bat_b02",87,73;
 	end;
 }
+*/
 
 bat_b02,389,14,3	script	Battle Therapist#b02_b	95,{
 	specialeffect2 EF_HEAL;
@@ -360,12 +366,14 @@ bat_b02,389,14,3	script	Battle Therapist#b02_b	95,{
 
 OnTimer25000:
 	specialeffect EF_SANCTUARY;
-	enablenpc "bat_b02_rp1_b_warp";
+	areapercentheal "bat_b02",379,0,399,20,100,100;
+	areawarp "bat_b02",379,0,399,20,"bat_b02",312,225;
+	// enablenpc "bat_b02_rp1_b_warp";
 	end;
 
-OnTimer26000:
-	disablenpc "bat_b02_rp1_b_warp";
-	end;
+// OnTimer26000:
+	// disablenpc "bat_b02_rp1_b_warp";
+	// end;
 
 OnTimer26500:
 	stopnpctimer;
@@ -378,15 +386,16 @@ OnEnable:
 	end;
 
 OnStop:
-	disablenpc "bat_b02_rp1_b_warp";
+	// disablenpc "bat_b02_rp1_b_warp";
 	disablenpc "Battle Therapist#b02_b";
 	stopnpctimer;
 	end;
 }
 
-bat_b02,389,10,0	script	bat_b02_rp1_b_warp	45,9,9,{
+/*
+bat_b02,389,10,0	script	bat_b02_rp1_b_warp	45,10,10,{
 OnInit:
-	disablenpc "bat_b02_rp1_a_warp";
+	disablenpc "bat_b02_rp1_b_warp";
 	end;
 
 OnTouch:
@@ -394,18 +403,19 @@ OnTouch:
 	warp "bat_b02",312,225;
 	end;
 }
+*/
 
 bat_b02,87,76,0	script	A_CODE#bat_b02	-1,5,5,{
 OnTouch:
 	if (checkquest(2070) < 0)
-		//setquest 2070;
+		setquest 2070;
 	end;
 }
 
 bat_b02,312,224,0	script	B_CODE#bat_b02	-1,5,5,{
 OnTouch:
 	if (checkquest(2070) < 0)
-		//setquest 2070;
+		setquest 2070;
 	end;
 }
 
@@ -491,6 +501,8 @@ OnTimer1830000:
 	bg_warp $@FlaviusBG2_id2,"bat_b02",390,10;
 	enablenpc "Vintenar#bat_b02_aover";
 	enablenpc "Vintenar#bat_b02_bover";
+	if (getbattleflag("feature.bgqueue"))
+		bg_reserve "bat_b02", true;
 	end;
 
 OnTimer1900000:
@@ -527,11 +539,11 @@ bat_b02,10,294,3	script	Vintenar#bat_b02_aover	419,{
 	set .@A_B_gap,$@Guill_ScoreBG2 - $@Croix_ScoreBG2;
 	if ($@FlaviusBG2_id1 == getcharid(4)) {
 		if (.@A_B_gap > 0)
-			callfunc "F_BG_Badge",1,"Guillaume","Flavius";
+			callfunc "F_BG_Badge",1,"Guillaume","Flavius"; //Guillaume wins
 		else if (.@A_B_gap == 0)
-			callfunc "F_BG_Badge",0,"Guillaume","Flavius";
+			callfunc "F_BG_Badge",0,"Guillaume","Flavius"; //Tie
 		else
-			callfunc "F_BG_Badge",0,"Guillaume","Flavius";
+			callfunc "F_BG_Badge",0,"Guillaume","Flavius"; //Croix wins
 	}
 	else {
 		mes "[Axl Rose]";
@@ -552,11 +564,11 @@ bat_b02,389,14,3	script	Vintenar#bat_b02_bover	415,{
 	set .@A_B_gap,$@Guill_ScoreBG2 - $@Croix_ScoreBG2;
 	if ($@FlaviusBG2_id2 == getcharid(4)) {
 		if (.@A_B_gap > 0)
-			callfunc "F_BG_Badge",1,"Croix","Flavius";
+			callfunc "F_BG_Badge",0,"Croix","Flavius"; //Guillaume wins
 		else if (.@A_B_gap == 0)
-			callfunc "F_BG_Badge",0,"Croix","Flavius";
+			callfunc "F_BG_Badge",0,"Croix","Flavius"; //Tie
 		else
-			callfunc "F_BG_Badge",1,"Croix","Flavius";
+			callfunc "F_BG_Badge",1,"Croix","Flavius"; //Croix wins
 	}
 	else {
 		mes "[Swandery]";

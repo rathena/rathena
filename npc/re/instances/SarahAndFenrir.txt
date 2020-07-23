@@ -666,8 +666,10 @@ OnTimer15500:
 1@glast,199,237,0	script	#glast_move_03	WARPNPC,2,2,{
 	end;
 OnTouch:
-	if (is_party_leader() == true)
-		warpparty 'map_glast$,197,263, getcharid(1), 'map_glast$,1,1;
+	if (is_party_leader() == true) {
+		// warpparty 'map_glast$,197,263, getcharid(1), 'map_glast$,1,1;	// using mapwarp for now
+		mapwarp 'map_glast$,'map_glast$,197,263;
+	}
 	end;
 }
 
@@ -675,8 +677,10 @@ OnTouch:
 1@glast,199,294,0	script	#glast_move_03a	WARPNPC,3,3,{
 	end;
 OnTouch:
-	if (is_party_leader() == true)
-		warpparty 'map_glast$,188,334, getcharid(1), 'map_glast$,1,1;
+	if (is_party_leader() == true) {
+		// warpparty 'map_glast$,188,334, getcharid(1), 'map_glast$,1,1;
+		mapwarp 'map_glast$,'map_glast$,188,334;
+	}
 	end;
 }
 
@@ -694,7 +698,8 @@ OnTouch:
 OnTouch:
 	if (is_party_leader() == true) {
 		donpcevent instance_npcname("#sarah_wrath") + "::OnStop";
-		warpparty 'map_glast$,349,282, getcharid(1), 'map_glast$,1,1;
+		// warpparty 'map_glast$,349,282, getcharid(1), 'map_glast$,1,1;
+		mapwarp 'map_glast$,'map_glast$,349,282;
 	}
 	end;
 }
@@ -763,12 +768,13 @@ OnTouch:
 		npctalk "Fenrith Fenrir: We don't have much time! We have to go search for it now! Let's go in!", 'fenrir_3$;
 		sleep2 2000;
 		setpcblock PCBLOCK_NPC, false;
-		if ('skip_left_part == 0) {// 5 mins have passed?
+		if ('skip_left_part == 0 && is_party_leader() == true) {// 5 mins have passed?
 			donpcevent instance_npcname("#fenrir_left_final_2") + "::OnStop";
 			disablenpc 'fenrir_3$;
 			enablenpc 'fenrir_4$;
 			enablenpc instance_npcname("#glast_event_9");
-			warpparty 'map_glast$,41,348, getcharid(1), 'map_glast$,1,1;
+			// warpparty 'map_glast$,41,348, getcharid(1), 'map_glast$,1,1;
+			mapwarp 'map_glast$,'map_glast$,41,348;
 		}
 	}
 	end;

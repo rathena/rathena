@@ -45,10 +45,10 @@ void chclif_moveCharSlotReply( int fd, struct char_session_data* sd, unsigned sh
  * Client is requesting to move a charslot
  */
 int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd){
+	FIFOSD_CHECK(8);
+
 	uint16 from, to;
 
-	if( RFIFOREST(fd) < 8 )
-		return 0;
 	from = RFIFOW(fd,2);
 	to = RFIFOW(fd,4);
 	//Cnt = RFIFOW(fd,6); //how many time we have left to change (client.. lol we don't trust him)
@@ -130,8 +130,8 @@ void chclif_pincode_sendstate( int fd, struct char_session_data* sd, enum pincod
  * Client just entering charserv from login, send him pincode confirmation
  */
 int chclif_parse_reqpincode_window(int fd, struct char_session_data* sd){
-	if( RFIFOREST(fd) < 6 )
-		return 0;
+	FIFOSD_CHECK(6);
+
 	if( charserv_config.pincode_config.pincode_enabled && RFIFOL(fd,2) == sd->account_id ){
 		if( strlen( sd->pincode ) <= 0 ){
 			chclif_pincode_sendstate( fd, sd, PINCODE_NEW );
@@ -147,10 +147,10 @@ int chclif_parse_reqpincode_window(int fd, struct char_session_data* sd){
  * Client as anwsered pincode questionning, checking if valid anwser
  */
 int chclif_parse_pincode_check( int fd, struct char_session_data* sd ){
+	FIFOSD_CHECK(10);
+
 	char pin[PINCODE_LENGTH+1];
 
-	if( RFIFOREST(fd) < 10 )
-		return 0;
 	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id )
 		return 1;
 
@@ -239,8 +239,8 @@ bool pincode_allowed( char* pincode ){
  * Client request to change pincode
  */
 int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
-	if( RFIFOREST(fd) < 14 )
-		return 0;
+	FIFOSD_CHECK(14);
+
 	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id )
 		return 1;
 	else {
@@ -275,8 +275,7 @@ int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
  * activate PIN system and set first PIN
  */
 int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
-	if( RFIFOREST(fd) < 10 )
-		return 0;
+	FIFOSD_CHECK(10);
 
 	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id )
 		return 1;
@@ -632,9 +631,9 @@ int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 
 // CH: <082b>.W <char id>.L
 int chclif_parse_char_delete2_cancel(int fd, struct char_session_data* sd) {
-	uint32 char_id, i;
+	FIFOSD_CHECK(6);
 
-	FIFOSD_CHECK(6)
+	uint32 char_id, i;
 
 	char_id = RFIFOL(fd,2);
 	RFIFOSKIP(fd,6);
@@ -773,8 +772,7 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 
 //struct PACKET_CH_CHARLIST_REQ { 0x0 short PacketType}
 int chclif_parse_req_charlist(int fd, struct char_session_data* sd){
-	if( RFIFOREST(fd) < 2 )
-		return 0;
+	FIFOSD_CHECK(2);
 	RFIFOSKIP(fd,2);
 	chclif_mmo_send099d(fd,sd);
 	return 1;
@@ -804,19 +802,30 @@ void chclif_send_map_data( int fd, struct mmo_charstatus *cd, uint32 ipl, int ma
 }
 
 int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
-	FIFOSD_CHECK(3);
+	FIFOSD_CHECK(3)
 	{
 		struct mmo_charstatus char_dat;
 		struct mmo_charstatus *cd;
 		char* data;
 		uint32 char_id;
 		struct auth_node* node;
-		int i, map_fd;
+		int i, map_fd, server_id;
 		DBMap *auth_db = char_get_authdb();
 		DBMap *char_db_ = char_get_chardb();
 
 		int slot = RFIFOB(fd,2);
 		RFIFOSKIP(fd,3);
+
+		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, map_server[server_id].fd > 0 && !map_server[server_id].map.empty() );
+		// Map-server not available, tell the client to wait (client wont close, char select will respawn)
+		if (server_id == ARRAYLENGTH(map_server)) {
+			WFIFOHEAD(fd, 24);
+			WFIFOW(fd, 0) = 0x840;
+			WFIFOW(fd, 2) = 24;
+			memcpy(WFIFOP(fd, 4), "0", 20); // we can't send it empty (otherwise the list will pop up)
+			WFIFOSET(fd, 24);
+			return 1;
+		}
 
 		// Check if the character exists and is not scheduled for deletion
 		if ( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `char_id` FROM `%s` WHERE `account_id`='%d' AND `char_num`='%d' AND `delete_date` = 0", schema_config.char_db, sd->account_id, slot)
@@ -855,8 +864,6 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 
 		//Have to switch over to the DB instance otherwise data won't propagate [Kevin]
 		cd = (struct mmo_charstatus *)idb_get(char_db_, char_id);
-		if (cd->sex == SEX_ACCOUNT)
-			cd->sex = sd->sex;
 
 		if (charserv_config.log_char) {
 			char esc_name[NAME_LENGTH*2+1];
@@ -941,26 +948,82 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 // S 0067 <name>.24B <str>.B <agi>.B <vit>.B <int>.B <dex>.B <luk>.B <slot>.B <hair color>.W <hair style>.W
 // S 0a39 <name>.24B <slot>.B <hair color>.W <hair style>.W <starting job ID>.W <Unknown>.(W or 2 B's)??? <sex>.B
 int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
-	int char_id = 0;
-
 	if (cmd == 0xa39) FIFOSD_CHECK(36) //>=20151001
 	else if (cmd == 0x970) FIFOSD_CHECK(31) //>=20120307
 	else if (cmd == 0x67) FIFOSD_CHECK(37)
 	else return 0;
 
+	int char_id;
+
 	if( (charserv_config.char_new)==0 ) //turn character creation on/off [Kevin]
 		char_id = -2;
 	else {
+		char name[NAME_LENGTH];
+		int str, agi, vit, int_, dex, luk;
+		int slot;
+		int hair_color;
+		int hair_style;
+		short start_job;
+		int sex;
+
 #if PACKETVER >= 20151001
-			char_id = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29),RFIFOW(fd,31),RFIFOW(fd,32),RFIFOB(fd,35));
-			RFIFOSKIP(fd,36);
+		// Sent values
+		safestrncpy( name, RFIFOCP( fd, 2 ), NAME_LENGTH );
+		slot = RFIFOB( fd, 26 );
+		hair_color = RFIFOW( fd, 27 );
+		hair_style = RFIFOW( fd, 29 );
+		start_job = RFIFOW( fd, 31 );
+		// Unknown RFIFOW( fd, 32 )
+		sex = RFIFOB( fd, 35 );
+
+		// Default values
+		str = 1;
+		agi = 1;
+		vit = 1;
+		int_ = 1;
+		dex = 1;
+		luk = 1;
+
+		RFIFOSKIP( fd, 36 );
 #elif PACKETVER >= 20120307
-			char_id = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
-			RFIFOSKIP(fd,31);
+		// Sent values
+		safestrncpy( name, RFIFOCP( fd, 2 ), NAME_LENGTH );
+		slot = RFIFOB( fd, 26 );
+		hair_color = RFIFOW( fd, 27 );
+		hair_style = RFIFOW( fd, 29 );
+
+		// Default values
+		str = 1;
+		agi = 1;
+		vit = 1;
+		int_ = 1;
+		dex = 1;
+		luk = 1;
+		start_job = JOB_NOVICE;
+		sex = sd->sex;
+
+		RFIFOSKIP( fd, 31 );
 #else
-			char_id = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
-			RFIFOSKIP(fd,37);
+		// Sent values
+		safestrncpy( name, RFIFOCP( fd, 2 ), NAME_LENGTH );
+		str = RFIFOB( fd, 26 );
+		agi = RFIFOB( fd, 27 );
+		vit = RFIFOB( fd, 28 );
+		int_ = RFIFOB( fd, 29 );
+		dex = RFIFOB( fd, 30 );
+		luk = RFIFOB( fd, 31 );
+		slot = RFIFOB( fd, 32 );
+		hair_color = RFIFOW( fd, 33 );
+		hair_style = RFIFOW( fd, 35 );
+
+		// Default values
+		start_job = JOB_NOVICE;
+		sex = sd->sex;
+
+		RFIFOSKIP( fd, 37 );
 #endif
+
+		char_id = char_make_new_char( sd, name, str, agi, vit, int_, dex, luk, slot, hair_color, hair_style, start_job, sex );
 	}
 
 	if (char_id < 0) {
@@ -1080,11 +1143,12 @@ void chclif_reqrename_response( int fd, struct char_session_data* sd, bool name_
 // Request for checking the new name on character renaming
 // 028d <account ID>.l <char ID>.l <new name>.24B (CH_REQ_IS_VALID_CHARNAME)
 int chclif_parse_reqrename( int fd, struct char_session_data* sd ){
+	FIFOSD_CHECK(34);
+
 	int i, cid, aid;
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
 
-	FIFOSD_CHECK(34);
 	aid = RFIFOL(fd,2);
 	cid = RFIFOL(fd,6);
 	safestrncpy(name, RFIFOCP(fd,10), NAME_LENGTH);
