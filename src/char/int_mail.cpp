@@ -361,6 +361,9 @@ void mapif_Mail_getattach(int fd, uint32 char_id, int mail_id, int type)
 	if( msg.dest_id != char_id )
 		return;
 
+	if( charserv_config.mail_retrieve == 0 && msg.status != MAIL_READ )
+		return;
+
 	if( type & MAIL_ATT_ZENY ){
 		if( msg.zeny > 0 ){
 			if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `zeny` = 0 WHERE `id` = '%d'", schema_config.mail_db, mail_id ) ){
