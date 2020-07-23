@@ -1463,7 +1463,7 @@ bool npc_scriptcont(struct map_session_data* sd, int id, bool closing){
 	nullpo_retr(true, sd);
 
 #ifdef SECURE_NPCTIMEOUT
-	if( sd->npc_idle_timer == INVALID_TIMER )
+	if( sd->npc_idle_timer == INVALID_TIMER && !sd->state.ignoretimeout )
 		return true;
 #endif
 
