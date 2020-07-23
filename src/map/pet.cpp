@@ -1192,14 +1192,17 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 	}
 
 	int i = sd->itemindex;
-	if (!(i == -1 ||
-		sd->inventory.u.items_inventory[i].nameid != sd->itemid ||
-		sd->inventory_data[i] == NULL ||
-		!sd->inventory_data[i]->flag.delay_consume ||
-		sd->inventory.u.items_inventory[i].amount < 1
-		)) {
-		sd->itemid = sd->itemindex = -1;
+
+	if (i >= 0 && sd->inventory.u.items_inventory[i].nameid == sd->itemid && sd->inventory.u.items_inventory[i].amount > 0 && sd->inventory_data[i] != nullptr && sd->inventory_data[i]->flag.delay_consume > 0) {
+		sd->itemid = 0;
+		sd->itemindex = -1;
 		pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_CONSUME);
+	} else { // Invalid taming item, abort capture.
+		clif_pet_roulette(sd, 0);
+		sd->catch_target_class = PET_CATCH_FAIL;
+		sd->itemid = 0;
+		sd->itemindex = -1;
+		return 1;
 	}
 
 	std::shared_ptr<s_pet_db> pet = pet_db.find(md->mob_id);
