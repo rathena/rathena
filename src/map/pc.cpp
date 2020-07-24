@@ -8652,10 +8652,10 @@ int64 pc_readparam(struct map_session_data* sd,int64 type)
 		case SP_SEX:             val = sd->status.sex; break;
 		case SP_WEIGHT:          val = sd->weight; break;
 		case SP_MAXWEIGHT:       val = sd->max_weight; break;
-		case SP_BASEEXP:         val = (int32)u64min(sd->status.base_exp, INT32_MAX); break;
-		case SP_JOBEXP:          val = (int32)u64min(sd->status.job_exp, INT32_MAX); break;
-		case SP_NEXTBASEEXP:     val = (int32)u64min(pc_nextbaseexp(sd), INT32_MAX); break;
-		case SP_NEXTJOBEXP:      val = (int32)u64min(pc_nextjobexp(sd), INT32_MAX); break;
+		case SP_BASEEXP:         val = u64min(sd->status.base_exp, EXP_MAX); break;
+		case SP_JOBEXP:          val = u64min(sd->status.job_exp, EXP_MAX); break;
+		case SP_NEXTBASEEXP:     val = u64min(pc_nextbaseexp(sd), EXP_MAX); break;
+		case SP_NEXTJOBEXP:      val = u64min(pc_nextjobexp(sd), EXP_MAX); break;
 		case SP_HP:              val = sd->battle_status.hp; break;
 		case SP_MAXHP:           val = sd->battle_status.max_hp; break;
 		case SP_SP:              val = sd->battle_status.sp; break;
@@ -8860,22 +8860,22 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		sd->status.zeny = cap_value(val, 0, MAX_ZENY);
 		break;
 	case SP_BASEEXP:
-		{
-			val = cap_value(val, 0, INT_MAX);
-			if (val < sd->status.base_exp) // Lost
-				pc_lostexp(sd, sd->status.base_exp - val, 0);
-			else // Gained
-				pc_gainexp(sd, NULL, val - sd->status.base_exp, 0, 2);
-		}
+		val_tmp = cap_value(val_tmp, 0, EXP_MAX);
+		if (val_tmp < sd->status.base_exp) // Lost
+			pc_lostexp(sd, sd->status.base_exp - val_tmp, 0);
+		else // Gained
+			pc_gainexp(sd, NULL, val_tmp - sd->status.base_exp, 0, 2);
+		if (pc_is_maxbaselv(sd) && sd->status.base_exp > MAX_LEVEL_BASE_EXP)
+			sd->status.base_exp = MAX_LEVEL_BASE_EXP;
 		return true;
 	case SP_JOBEXP:
-		{
-			val = cap_value(val, 0, INT_MAX);
-			if (val < sd->status.job_exp) // Lost
-				pc_lostexp(sd, 0, sd->status.job_exp - val);
-			else // Gained
-				pc_gainexp(sd, NULL, 0, val - sd->status.job_exp, 2);
-		}
+		val_tmp = cap_value(val_tmp, 0, EXP_MAX);
+		if (val_tmp < sd->status.job_exp) // Lost
+			pc_lostexp(sd, 0, sd->status.job_exp - val_tmp);
+		else // Gained
+			pc_gainexp(sd, NULL, 0, val_tmp - sd->status.job_exp, 2);
+		if (pc_is_maxjoblv(sd) && sd->status.job_exp > MAX_LEVEL_JOB_EXP)
+			sd->status.job_exp = MAX_LEVEL_JOB_EXP;
 		return true;
 	case SP_SEX:
 		sd->status.sex = val ? SEX_MALE : SEX_FEMALE;

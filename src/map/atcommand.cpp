@@ -5315,11 +5315,11 @@ ACMD_FUNC(exp)
 
 	nextb = (double)pc_nextbaseexp(sd);
 	if (nextb)
-		nextb = sd->status.base_exp > 10000 ? ((double)sd->status.base_exp / nextb * 100) : (sd->status.base_exp * 100.0 / nextb);
+		nextb = nextb = sd->status.base_exp*100.0/nextb;
 
 	nextj = (double)pc_nextjobexp(sd);
 	if (nextj)
-		nextj = sd->status.job_exp > 10000 ? ((double)sd->status.job_exp / nextj * 100) : (sd->status.job_exp * 100.0 / nextj);
+		nextj = sd->status.job_exp*100.0/nextj;
 
 	sprintf(output, msg_txt(sd,1148), sd->status.base_level, nextb, sd->status.job_level, nextj); // Base Level: %d (%.3f%%) | Job Level: %d (%.3f%%)
 	clif_displaymessage(fd, output);

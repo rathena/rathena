@@ -365,7 +365,7 @@ unsigned int get_percentage(const unsigned int A, const unsigned int B)
 
 	if( B == 0 )
 	{
-		ShowError("get_percentage(): divison by zero! (A=%u,B=%u)\n", A, B);
+		ShowError("get_percentage: divison by zero! (A=%u,B=%u)\n", A, B);
 		return ~0U;
 	}
 
@@ -373,30 +373,30 @@ unsigned int get_percentage(const unsigned int A, const unsigned int B)
 
 	if( result > UINT_MAX )
 	{
-		ShowError("get_percentage(): result percentage too high! (A=%u,B=%u,result=%g)\n", A, B, result);
+		ShowError("get_percentage: result percentage too high! (A=%u,B=%u,result=%g)\n", A, B, result);
 		return UINT_MAX;
 	}
 
 	return (unsigned int)floor(result);
 }
 
-unsigned int get_percentage_exp(const unsigned long long A, const unsigned long long B)
+uint32 get_percentage_exp(const uint64 A, const uint64 B)
 {
 	double result;
 
 	if (B == 0)
 	{
-		ShowError("get_percentage_exp(): divison by zero! (A=%llu,B=%llu)\n", A, B);
+		ShowError("get_percentage_exp: divison by zero! (A=%" PRIu64 ",B=%" PRIu64 ")\n", A, B);
 		return ~0U;
 	}
 
 	result = 100 * ((double)A / (double)B);
 
-	if (result > UINT_MAX)
+	if (result > UINT32_MAX)
 	{
-		ShowError("get_percentage_exp(): result percentage too high! (A=%llu,B=%llu,result=%g)\n", A, B, result);
-		return UINT_MAX;
+		ShowError("get_percentage_exp: result percentage too high! (A=%" PRIu64 ",B=%" PRIu64 ",result=%g)\n", A, B, result);
+		return UINT32_MAX;
 	}
 
-	return (unsigned int)floor(result);
+	return (uint32)floor(result);
 }

@@ -3367,22 +3367,22 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 #if PACKETVER >= 20170830
 	case SP_BASEEXP:
 		WFIFOW(fd,0)=0xacb;
-		WFIFOQ(fd,4)=sd->status.base_exp;
+		WFIFOQ(fd,4)=client_exp(sd->status.base_exp);
 		len = packet_len(0xacb);
 		break;
 	case SP_JOBEXP:
 		WFIFOW(fd,0)=0xacb;
-		WFIFOQ(fd,4)=sd->status.job_exp;
+		WFIFOQ(fd,4)=client_exp(sd->status.job_exp);
 		len = packet_len(0xacb);
 		break;
 	case SP_NEXTBASEEXP:
 		WFIFOW(fd,0)=0xacb;
-		WFIFOQ(fd,4)=pc_nextbaseexp(sd);
+		WFIFOQ(fd,4)=client_exp(pc_nextbaseexp(sd));
 		len = packet_len(0xacb);
 		break;
 	case SP_NEXTJOBEXP:
 		WFIFOW(fd,0)=0xacb;
-		WFIFOQ(fd,4)=pc_nextjobexp(sd);
+		WFIFOQ(fd,4)=client_exp(pc_nextjobexp(sd));
 		len = packet_len(0xacb);
 		break;
 #else
@@ -8535,8 +8535,8 @@ void clif_guild_basicinfo(struct map_session_data *sd) {
 	WFIFOL(fd,10)=g->connect_member;
 	WFIFOL(fd,14)=g->max_member;
 	WFIFOL(fd,18)=g->average_lv;
-	WFIFOL(fd,22)=(uint32)client_exp(g->exp);
-	WFIFOL(fd,26)=(uint32)client_exp(g->next_exp);
+	WFIFOL(fd,22)=(uint32)cap_value(g->exp, 0, EXP_MAX);
+	WFIFOL(fd,26)=(uint32)cap_value(g->next_exp, 0, EXP_MAX);
 	WFIFOL(fd,30)=0;	// Tax Points
 	WFIFOL(fd,34)=0;	// Honor: (left) Vulgar [-100,100] Famed (right)
 	WFIFOL(fd,38)=0;	// Virtue: (down) Wicked [-100,100] Righteous (up)
@@ -18199,10 +18199,10 @@ void clif_displayexp(struct map_session_data *sd, t_exp exp, char type, bool que
 	WFIFOW(fd,0) = cmd;
 	WFIFOL(fd,2) = sd->bl.id;
 #if PACKETVER >= 20170830
-	WFIFOQ(fd,6) = client_exp(exp * (lost ? -1 : 1));
+	WFIFOQ(fd,6) = client_exp(exp) * (lost ? -1 : 1);
 	offset = 4;
 #else
-	WFIFOL(fd,6) = client_exp(exp * (lost ? -1 : 1));
+	WFIFOL(fd,6) = client_exp(exp) * (lost ? -1 : 1);
 	offset = 0;
 #endif
 	WFIFOW(fd,10+offset) = type;
