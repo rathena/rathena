@@ -25116,9 +25116,9 @@ Body:
       - Level: 3
         Area: 2
       - Level: 4
-        Area: 3
+        Area: 2
       - Level: 5
-        Area: 3
+        Area: 2
     CopyFlags:
       Skill:
         Reproduce: true
@@ -25138,10 +25138,10 @@ Body:
         - Level: 4
           Amount: 42
         - Level: 5
-          Amount: 48
+          Amount: 80
       Ammo:
         Arrow: true
-      AmmoAmount: 10
+      AmmoAmount: 5
   - Id: 2415 # Removed on kRO
     Name: WM_REVERBERATION_MELEE
     Description: Reverberation Melee
@@ -25243,7 +25243,7 @@ Body:
         Whip: true
       Ammo:
         Arrow: true
-      AmmoAmount: 20
+      AmmoAmount: 10
     Unit:
       Id: Severe_Rainstorm
       Range: 5

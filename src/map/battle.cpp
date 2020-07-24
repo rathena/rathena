@@ -4481,9 +4481,15 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case WM_SEVERE_RAINSTORM_MELEE:
 			//ATK [{(Caster DEX + AGI) x (Skill Level / 5)} x Caster Base Level / 100] %
+#ifdef RENEWAL
+			skillratio = 300 + (status_get_dex(src) + status_get_agi(src)) * skill_lv / 5;
+			if (wd->miscflag&4) // Whip/Instrument equipped
+				skillratio += 50; // !TODO: What's the weapon bonus?
+#else
 			skillratio = (status_get_dex(src) + status_get_agi(src)) * skill_lv / 5;
 			if (wd->miscflag&4) // Whip/Instrument equipped
-				skillratio += 100; // !TODO: What's the weapon bonus?
+				skillratio += 100; // !TODO: What's the weapon bonus?	
+#endif
 			RE_LVL_DMOD(100);
 			break;
 		case WM_GREAT_ECHO:
@@ -6526,6 +6532,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += -100 + 120 * skill_lv + 60 * ((sd) ? pc_checkskill(sd, WM_LESSON) : 1);
 						if (tsc && tsc->data[SC_SLEEP])
 							skillratio += 100; // !TODO: Confirm target sleeping bonus
+#ifdef RENEWAL
+						skillratio *= 2;
+#endif
 						RE_LVL_DMOD(100);
 						break;
 					case WM_REVERBERATION:
