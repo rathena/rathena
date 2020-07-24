@@ -19,6 +19,8 @@
 #include "char_mapif.hpp"
 #include "inter.hpp"
 
+using namespace rathena;
+
 #define GS_MEMBER_UNMODIFIED 0x00
 #define GS_MEMBER_MODIFIED 0x01
 #define GS_MEMBER_NEW 0x02
@@ -1558,10 +1560,7 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,uint32 account_id,uint
 					exp = exp*(charserv_config.guild_exp_rate)/100;
 
 				// Update guild exp
-				if (exp > EXP_MAX - g->exp)
-					g->exp = EXP_MAX;
-				else
-					g->exp+=exp;
+				g->exp = util::safe_addition_cap(g->exp, exp, EXP_MAX);
 
 				guild_calcinfo(g);
 				mapif_guild_basicinfochanged(guild_id,GBI_EXP,&g->exp,sizeof(g->exp));
