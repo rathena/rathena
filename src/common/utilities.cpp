@@ -136,3 +136,20 @@ bool rathena::util::safe_multiplication( int64 a, int64 b, int64& result ){
 	return false;
 #endif
 }
+
+/**
+ * Safely add int64 values without overflowing.
+ * @param a: Holder of value to increment
+ * @param b: Increment by
+ * @param cap: Cap value
+ * @return Result of a + b
+ */
+uint64 rathena::util::safe_addition_cap(int64 a, int64 b, int64 cap) {
+	int64 result;
+
+	if (rathena::util::safe_addition(a, b, result)) {
+		return cap;
+	} else {
+		return result;
+	}
+}

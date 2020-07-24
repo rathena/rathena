@@ -633,7 +633,6 @@ struct guild_member {
 	uint32 account_id, char_id;
 	short hair,hair_color,gender,class_,lv;
 	t_exp exp;
-	int exp_payper;
 	short online,position;
 	char name[NAME_LENGTH];
 	struct map_session_data *sd;

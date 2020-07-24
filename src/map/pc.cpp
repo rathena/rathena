@@ -7185,7 +7185,7 @@ static void pc_calcexp(struct map_session_data *sd, t_exp *base_exp, t_exp *job_
 
 	if (*base_exp) {
 		t_exp exp = (t_exp)(*base_exp + ((double)*base_exp * ((bonus + vip_bonus_base) / 100.)));
-		*base_exp = exp;
+		*base_exp = cap_value(exp, 1, EXP_MAX);
 	}
 
 	// Give JEXPBOOST for quests even if src is NULL.
@@ -7194,7 +7194,7 @@ static void pc_calcexp(struct map_session_data *sd, t_exp *base_exp, t_exp *job_
 
 	if (*job_exp) {
 		t_exp exp = (t_exp)(*job_exp + ((double)*job_exp * ((bonus + vip_bonus_job) / 100.)));
-		*job_exp = exp;
+		*job_exp = cap_value(exp, 1, EXP_MAX);
 	}
 
 	return;
