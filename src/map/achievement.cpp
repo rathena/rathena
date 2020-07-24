@@ -77,7 +77,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 			return 0;
 		}
 
-		int constant;
+		int64 constant;
 
 		if( !script_get_constant( group_name.c_str(), &constant ) ){
 			this->invalidWarning( node, "achievement_read_db_sub: Invalid group %s for achievement %d, skipping.\n", group_name.c_str(), achievement_id );
@@ -1038,6 +1038,34 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 			pc_setglobalreg( sd, add_str( name.c_str() ), 0 );
 		}
 	}
+}
+
+/**
+ * Map iterator subroutine to update achievement objectives for a party after killing a monster.
+ * @see map_foreachinrange
+ * @param ap: Argument list, expecting:
+ *   int Party ID
+ *   int Mob ID
+ */
+int achievement_update_objective_sub(block_list *bl, va_list ap)
+{
+	map_session_data *sd;
+	int mob_id, party_id;
+
+	nullpo_ret(bl);
+	nullpo_ret(sd = (map_session_data *)bl);
+
+	party_id = va_arg(ap, int);
+	mob_id = va_arg(ap, int);
+
+	if (sd->achievement_data.achievements == nullptr)
+		return 0;
+	if (sd->status.party_id != party_id)
+		return 0;
+
+	achievement_update_objective(sd, AG_BATTLE, 1, mob_id);
+
+	return 1;
 }
 
 /**

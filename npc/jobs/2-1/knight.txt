@@ -444,7 +444,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "[Captain Herman]";
 		mes "Go forth!";
 		mes "The future of";
-		mes "Rune-Midgard";
+		mes "Rune-Midgarts";
 		mes "rests on your";
 		mes "shoulders!";
 		close;
@@ -1601,7 +1601,7 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 				mes "let's begin!";
 				next;
 				mes "[Lady Amy]";
-				mes "You are a Knight and you are looking for a party in Morroc.";
+				mes "You are a Knight and you are looking for a party in Morocc.";
 				mes "How would you go about doing so?";
 				next;
 			}
@@ -1612,7 +1612,7 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 				close;
 			}
 		}
-		mes "You are a Knight and you are looking for a party in Morroc.";
+		mes "You are a Knight and you are looking for a party in Morocc.";
 		mes "How would you go about doing so?";
 		next;
 		if (select("Shout out that you are looking for a party.:Open a chat room and wait.:Look for people seeking Knights.") != 1)
@@ -1634,7 +1634,7 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 		mes "[Lady Amy]";
 		mes "But some rude players came with a group of monsters and disappeared! What should you do?";
 		next;
-		if (select("Keep the monsters from reaching the party.:Defend while the party retreats.:Run away on your Peco Peco.") == 2)
+		if (select("Keep the monsters from reaching the party.:Defend while the party retreats.:Run away on your Peco Peco.") != 3)
 			set .@knight_t,.@knight_t+10;
 		mes "[Lady Amy]";
 		mes "Luckily, you all lived through the crisis. But as you walk, you find a person, who is not in your party, collapsed on the ground.";
@@ -1662,7 +1662,7 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 		mes "What should you";
 		mes "do to sell your item?";
 		next;
-		if (select("Shout out loud to everyone.:Open a chat room and wait.:Inquire if there is anyone that is interested.") == 3)
+		if (select("Shout out loud to everyone.:Open a chat room and wait.:Inquire if there is anyone that is interested.") != 1)
 			set .@knight_t,.@knight_t+10;
 		mes "[Lady Amy]";
 		mes "While you are waiting,";
@@ -2018,7 +2018,7 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 			switch(select("About ^3355FFClaymore^000000:Buy Claymore:End Conversation")) {
 			case 1:
 				mes "[Sir Gray]";
-				mes "Claymore, one of the best among the famous swords you can attain in Rune-Midgarts's Prontera!! Its value is priceless when considered by a Knight.";
+				mes "Claymore, one of the best among the famous swords you can attain in Rune-Midgarts' Prontera!! Its value is priceless when considered by a Knight.";
 				next;
 				mes "[Sir Gray]";
 				mes "Now, the Prontera Chivalry is making these fabulous Claymores. For Knights, they are only ^3355FF74,000^000000 Zeny.";

@@ -45,6 +45,8 @@ struct login_session_data {
 	int has_client_hash;		///client ha sent an hash
 
 	int fd;				///socket of client
+
+	char web_auth_token[WEB_AUTH_TOKEN_LENGTH]; /// web authentication token
 };
 
 #define MAX_SERVERS 5 //max number of mapserv that could be attach
@@ -109,6 +111,7 @@ struct Login_Config {
 		unsigned int char_increase;					/// number of char-slot to increase in VIP state
 	} vip_sys;
 #endif
+	bool use_web_auth_token;						/// Enable web authentication token system
 };
 extern struct Login_Config login_config;
 

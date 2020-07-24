@@ -1414,11 +1414,12 @@ OnTouch_:
 		jitterbug_options &= ~1;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I like Aigu's single, Only I Didn't Know about the Card Album.";
 		mes "[Newoz]";
-		mes "Aigu is the Rune-Midgart's hottest singer at this moment!";
-		npctalk "Newoz: Aigu is the Rune-Midgart's hottest singer at this moment!";
+		mes "Aigu is the Rune-Midgarts' hottest singer at this moment!";
+		npctalk "Newoz: Aigu is the Rune-Midgarts' hottest singer at this moment!";
 		break;
 	case 3:
 		jitterbug_options |= 1;
+		areamonster 'map_jtb$,351,131,389,96, "--ja--", 3108,1;	// no label
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I like your Red Potion (feat. Muka).";
 		mes "[Newoz]";
 		mes "Hah hah, this is embarassing, but thank you.";

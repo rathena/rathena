@@ -593,6 +593,28 @@ int pet_hungry_val(struct pet_data *pd)
 		return 0;
 }
 
+int16 pet_get_card3_intimacy( int intimacy ){
+	if( intimacy < PET_INTIMATE_SHY ){
+		// Awkward
+		return ( 1 << 1 );
+	}else if( intimacy < PET_INTIMATE_NEUTRAL ){
+		// Shy
+		return ( 2 << 1 );
+	}else if( intimacy < PET_INTIMATE_CORDIAL ){
+		// Neutral
+		return ( 3 << 1 );
+	}else if( intimacy < PET_INTIMATE_LOYAL ){
+		// Cordial
+		return ( 4 << 1 );
+	}else if( intimacy <= PET_INTIMATE_MAX ){
+		// Loyal
+		return ( 5 << 1 );
+	}else{
+		// Unknown
+		return 0;
+	}
+}
+
 /**
  * Set the value of the pet's intimacy.
  * @param pd : pet requesting
@@ -605,6 +627,17 @@ void pet_set_intimate(struct pet_data *pd, int value)
 	pd->pet.intimate = min(value, PET_INTIMATE_MAX);
 
 	struct map_session_data *sd = pd->master;
+
+	int index = pet_egg_search( sd, pd->pet.pet_id );
+
+	if( pd->pet.intimate <= PET_INTIMATE_NONE ){
+		pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_OTHER );
+	}else{
+		// Remove everything except the rename flag
+		sd->inventory.u.items_inventory[index].card[3] &= 1;
+
+		sd->inventory.u.items_inventory[index].card[3] |= pet_get_card3_intimacy( pd->pet.intimate );
+	}
 
 	if (sd)
 		status_calc_pc(sd,SCO_NONE);
@@ -819,7 +852,7 @@ static TIMER_FUNC(pet_hungry){
 		pet_set_intimate(pd, pd->pet.intimate + pet_db_ptr->hungry_intimacy_dec);
 
 		if( pd->pet.intimate <= PET_INTIMATE_NONE ) {
-			pd->pet.intimate = PET_INTIMATE_NONE;
+			pet_set_intimate(pd, PET_INTIMATE_NONE);
 			pd->status.speed = pd->get_pet_walk_speed();
 		}
 
@@ -1148,6 +1181,15 @@ int pet_select_egg(struct map_session_data *sd,short egg_index)
 	if(egg_index < 0 || egg_index >= MAX_INVENTORY)
 		return 0; //Forged packet!
 
+	if(sd->trade_partner)	//The player have trade in progress.
+		return 0;
+
+	std::shared_ptr<s_pet_db> pet = pet_db_search(sd->inventory.u.items_inventory[egg_index].nameid, PET_EGG);
+	if (!pet) {
+		ShowError("pet does not exist, egg id %d\n", sd->inventory.u.items_inventory[egg_index].nameid);
+		return 0;
+	}
+
 	if(sd->inventory.u.items_inventory[egg_index].card[0] == CARD0_PET)
 		intif_request_petdata(sd->status.account_id, sd->status.char_id, MakeDWord(sd->inventory.u.items_inventory[egg_index].card[1], sd->inventory.u.items_inventory[egg_index].card[2]) );
 	else
@@ -1285,6 +1327,7 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 	tmp_item.card[1] = GetWord(pet_id,0);
 	tmp_item.card[2] = GetWord(pet_id,1);
 	tmp_item.card[3] = 0; //New pets are not named.
+	tmp_item.card[3] |= pet_get_card3_intimacy( pet->intimate ); // Store intimacy status based on initial intimacy
 
 	if((ret = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER))) {
 		clif_additem(sd,0,0,ret);
@@ -1388,6 +1431,12 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 	pd->pet.rename_flag = 1;
 	clif_pet_equip_area(pd);
 	clif_send_petstatus(sd);
+
+	int index = pet_egg_search( sd, pd->pet.pet_id );
+
+	if( index >= 0 ){
+		sd->inventory.u.items_inventory[index].card[3] |= 1;
+	}
 
 	return 1;
 }
@@ -1524,7 +1573,7 @@ int pet_food(struct map_session_data *sd, struct pet_data *pd)
 	if (pd->pet.hungry > PET_HUNGRY_SATISFIED) {
 		pet_set_intimate(pd, pd->pet.intimate + pet_db_ptr->r_full);
 		if (pd->pet.intimate <= PET_INTIMATE_NONE) {
-			pd->pet.intimate = PET_INTIMATE_NONE;
+			pet_set_intimate(pd, PET_INTIMATE_NONE);
 			pet_stop_attack(pd);
 			pd->status.speed = pd->get_pet_walk_speed();
 		}
@@ -2210,7 +2259,7 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 	// Prepare the new pet
 	sd->pd->pet.class_ = pet_id;
 	sd->pd->pet.egg_id = new_data->EggID;
-	sd->pd->pet.intimate = new_data->intimate;
+	pet_set_intimate(sd->pd, new_data->intimate);
 	if( !sd->pd->pet.rename_flag ){
 		struct mob_db* mdb = mob_db( pet_id );
 

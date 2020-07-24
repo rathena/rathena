@@ -1799,7 +1799,7 @@ ra_in01,235,194,5	script	Katinshuell	931,{
 		if (.@input$ == "Lighthalzen") {
 			mes "[Katinshuell]";
 			mes "Lighthalzen...?";
-			mes "a city in the Schwaltzvalt";
+			mes "a city in the Schwarzwald";
 			mes "Republic. That, and it's";
 			mes "a tough place to live in.";
 			mes "That's all I really know...";
@@ -5462,7 +5462,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 				mes "An imitation of Ymir's";
 				mes "Heart? I think I know of";
 				mes "a famous scientist from the";
-				mes "Schwartzvalt Republic that";
+				mes "Schwarzwald Republic that";
 				mes "was working on that! Let's";
 				mes "see, his name was...";
 				next;
@@ -5495,7 +5495,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 				mes "I'm not sure what happened";
 				mes "to Varmunt. All I know was that";
 				mes "something serious happened";
-				mes "in the Schwaltzvalt Republic,";
+				mes "in the Schwarzwald Republic,";
 				mes "and that he disappeared in";
 				mes "the fiasco. It's strange...";
 				next;
@@ -5536,7 +5536,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 				mes "are trying to recreate Ymir's";
 				mes "Heart at research centers";
 				mes "in the Holy Ground and the";
-				mes "Schwaltzvalt Republic.";
+				mes "Schwarzwald Republic.";
 				next;
 				mes "[High Priest Zhed]";
 				mes "The hard-liners are";
@@ -6121,7 +6121,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "priests started being absent";
 					mes "from their offices. Many of";
 					mes "them were invited over to";
-					mes "the Schwaltzvalt Republic...";
+					mes "the Schwarzwald Republic...";
 					next;
 					mes "[High Priest Zhed]";
 					mes "Regardless, I know for";
@@ -6219,13 +6219,13 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 					mes "I'm glad that everything";
 					mes "turned out great. Your";
 					mes "help was truly a blessing.";
-					mes "Although Schwaltzvalt will";
+					mes "Although Schwarzwald will";
 					mes "continue their plans without";
 					mes "us, we've slowed them down.";
 					next;
 					mes "[High Priest Zhed]";
 					mes "Yes, without our support,";
-					mes "Schwaltzvalt won't have";
+					mes "Schwarzwald won't have";
 					mes "any excuse to continue";
 					mes "their dangerous research";
 					mes "for a little while, at least.";
