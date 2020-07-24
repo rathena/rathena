@@ -65,6 +65,16 @@ static inline uint32 client_tick( t_tick tick ){
 	return (uint32)tick;
 }
 
+#if PACKETVER >= 20170830
+static inline int64 client_exp(t_exp exp) {
+	return (int64)u64min(exp, EXP_MAX);
+}
+#else
+static inline int32 client_exp(t_exp exp) {
+	return (int32)u64min(exp, EXP_MAX);
+}
+#endif
+
 /* for clif_clearunit_delayed */
 static struct eri *delay_clearunit_ers;
 
@@ -18189,10 +18199,10 @@ void clif_displayexp(struct map_session_data *sd, t_exp exp, char type, bool que
 	WFIFOW(fd,0) = cmd;
 	WFIFOL(fd,2) = sd->bl.id;
 #if PACKETVER >= 20170830
-	WFIFOQ(fd,6) = u64min(exp, EXP_MAX) * (lost ? -1 : 1);
+	WFIFOQ(fd,6) = client_exp(exp * (lost ? -1 : 1));
 	offset = 4;
 #else
-	WFIFOL(fd,6) = (int32)u64min(exp, EXP_MAX) * (lost ? -1 : 1);
+	WFIFOL(fd,6) = client_exp(exp * (lost ? -1 : 1));
 	offset = 0;
 #endif
 	WFIFOW(fd,10+offset) = type;

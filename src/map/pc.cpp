@@ -7290,10 +7290,7 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, t_exp base_
 
 	// Give EXP for Base Level
 	if (base_exp) {
-		if (sd->status.base_exp + base_exp < sd->status.base_exp)
-			sd->status.base_exp = EXP_MAX;
-		else
-			sd->status.base_exp += base_exp;
+		sd->status.base_exp = util::safe_addition_cap(sd->status.base_exp, base_exp, EXP_MAX);
 
 		if (!pc_checkbaselevelup(sd))
 			clif_updatestatus(sd,SP_BASEEXP);
@@ -7301,10 +7298,7 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, t_exp base_
 
 	// Give EXP for Job Level
 	if (job_exp) {
-		if (sd->status.job_exp + job_exp < sd->status.job_exp)
-			sd->status.job_exp = EXP_MAX;
-		else
-			sd->status.job_exp += job_exp;
+		sd->status.job_exp = util::safe_addition_cap(sd->status.job_exp, job_exp, EXP_MAX);
 
 		if (!pc_checkjoblevelup(sd))
 			clif_updatestatus(sd,SP_JOBEXP);

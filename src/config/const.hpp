@@ -56,7 +56,7 @@
 /**
  * EXP definition type
  */
-typedef uint64 t_exp;
+typedef unsigned long long t_exp;
 #if PACKETVER >= 20170830
 	const t_exp EXP_MAX = INT64_MAX;
 #else

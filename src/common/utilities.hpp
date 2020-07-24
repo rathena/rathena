@@ -195,6 +195,23 @@ namespace rathena {
 		bool safe_addition( int64 a, int64 b, int64& result );
 		bool safe_substraction( int64 a, int64 b, int64& result );
 		bool safe_multiplication( int64 a, int64 b, int64& result );
+
+		/**
+		 * Safetly add uint64 values without overflowing.
+		 * @param a: Holder of value to increment
+		 * @param b: Increment by
+		 * @param cap: Cap value
+		 * @return Result of a + b
+		 */
+		uint64 safe_addition_cap(int64 a, int64 b, int64 cap) {
+			int64 result;
+
+			if (util::safe_addition(a, b, result)) {
+				return cap;
+			} else {
+				return result;
+			}
+		}
 	}
 }
 
