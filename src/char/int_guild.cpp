@@ -379,7 +379,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	}
 	Sql_GetData(sql_handle,  5, &data, NULL); g->average_lv = atoi(data);
 	Sql_GetData(sql_handle,  6, &data, NULL); g->exp = strtoull(data, NULL, 10);
-	Sql_GetData(sql_handle,  7, &data, NULL); g->next_exp = strtoull(data, NULL, 10);
+	Sql_GetData(sql_handle,  7, &data, NULL); g->next_exp = strtoull(data, nullptr, 10);
 	Sql_GetData(sql_handle,  8, &data, NULL); g->skill_point = atoi(data);
 	Sql_GetData(sql_handle,  9, &data, &len); memcpy(g->mes1, data, zmin(len, sizeof(g->mes1)));
 	Sql_GetData(sql_handle, 10, &data, &len); memcpy(g->mes2, data, zmin(len, sizeof(g->mes2)));
@@ -642,8 +642,8 @@ bool exp_guild_parse_row(char* split[], int column, int current)
 {
 	t_exp exp = strtoull(split[0], nullptr, 10);
 
-	if (exp > EXP_MAX) {
-		ShowError("exp_guild: Invalid exp %" PRIu64 " at line %d, exceeds max of %" PRIu64 "\n", exp, current, EXP_MAX);
+	if (exp > GEXP_MAX) {
+		ShowError("exp_guild: Invalid exp %" PRIu64 " at line %d, exceeds max of %" PRIu64 "\n", exp, current, GEXP_MAX);
 		return false;
 	}
 
@@ -1560,7 +1560,7 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,uint32 account_id,uint
 					exp = exp*(charserv_config.guild_exp_rate)/100;
 
 				// Update guild exp
-				g->exp = util::safe_addition_cap(g->exp, exp, EXP_MAX);
+				g->exp = util::safe_addition_cap(g->exp, exp, GEXP_MAX);
 
 				guild_calcinfo(g);
 				mapif_guild_basicinfochanged(guild_id,GBI_EXP,&g->exp,sizeof(g->exp));

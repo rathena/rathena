@@ -15803,7 +15803,8 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		case PR_REDEMPTIO:
 		case LG_INSPIRATION:
 			{
-				t_exp exp, exp_needp;
+				t_exp exp;
+				uint32 exp_needp;
 				switch (skill_id) {
 					case PR_REDEMPTIO:
 						exp_needp = battle_config.exp_cost_redemptio;

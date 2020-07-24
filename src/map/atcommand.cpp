@@ -5315,7 +5315,7 @@ ACMD_FUNC(exp)
 
 	nextb = (double)pc_nextbaseexp(sd);
 	if (nextb)
-		nextb = nextb = sd->status.base_exp*100.0/nextb;
+		nextb = sd->status.base_exp*100.0/nextb;
 
 	nextj = (double)pc_nextjobexp(sd);
 	if (nextj)

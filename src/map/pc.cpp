@@ -8860,22 +8860,18 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		sd->status.zeny = cap_value(val, 0, MAX_ZENY);
 		break;
 	case SP_BASEEXP:
-		val_tmp = cap_value(val_tmp, 0, EXP_MAX);
+		val_tmp = cap_value(val_tmp, 0, pc_is_maxbaselv(sd) ? MAX_LEVEL_BASE_EXP : EXP_MAX);
 		if (val_tmp < sd->status.base_exp) // Lost
 			pc_lostexp(sd, sd->status.base_exp - val_tmp, 0);
 		else // Gained
 			pc_gainexp(sd, NULL, val_tmp - sd->status.base_exp, 0, 2);
-		if (pc_is_maxbaselv(sd) && sd->status.base_exp > MAX_LEVEL_BASE_EXP)
-			sd->status.base_exp = MAX_LEVEL_BASE_EXP;
 		return true;
 	case SP_JOBEXP:
-		val_tmp = cap_value(val_tmp, 0, EXP_MAX);
+		val_tmp = cap_value(val_tmp, 0, pc_is_maxjoblv(sd) ? MAX_LEVEL_JOB_EXP : EXP_MAX);
 		if (val_tmp < sd->status.job_exp) // Lost
 			pc_lostexp(sd, 0, sd->status.job_exp - val_tmp);
 		else // Gained
 			pc_gainexp(sd, NULL, 0, val_tmp - sd->status.job_exp, 2);
-		if (pc_is_maxjoblv(sd) && sd->status.job_exp > MAX_LEVEL_JOB_EXP)
-			sd->status.job_exp = MAX_LEVEL_JOB_EXP;
 		return true;
 	case SP_SEX:
 		sd->status.sex = val ? SEX_MALE : SEX_FEMALE;

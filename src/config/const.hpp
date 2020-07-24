@@ -65,6 +65,8 @@ typedef uint64 t_exp;
 	const t_exp EXP_MAX = INT32_MAX;
 #endif
 
+const t_exp GEXP_MAX = INT32_MAX;
+
 /* pointer size fix which fixes several gcc warnings */
 #ifdef __64BIT__
 	#define __64BPRTSIZE(y) (intptr)y
