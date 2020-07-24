@@ -14469,7 +14469,7 @@ void clif_parse_NoviceDoriDori(int fd, struct map_session_data *sd)
 void clif_parse_NoviceExplosionSpirits(int fd, struct map_session_data *sd)
 {
 	if( (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE ) {
-		uint64 next = pc_nextbaseexp(sd);
+		t_exp next = pc_nextbaseexp(sd);
 
 		if( next ) {
 			int percent = (int)( ( (double)sd->status.base_exp/(double)next )*1000. );
@@ -17621,7 +17621,7 @@ void clif_party_show_picker(struct map_session_data * sd, struct item * item_dat
  * @param quest False:Normal EXP; True:Quest EXP (displayed in purple color)
  * @param lost True:if losing EXP
  */
-void clif_displayexp(struct map_session_data *sd, uint64 exp, char type, bool quest, bool lost)
+void clif_displayexp(struct map_session_data *sd, t_exp exp, char type, bool quest, bool lost)
 {
 	int fd;
 	int offset;
@@ -17639,10 +17639,10 @@ void clif_displayexp(struct map_session_data *sd, uint64 exp, char type, bool qu
 	WFIFOW(fd,0) = cmd;
 	WFIFOL(fd,2) = sd->bl.id;
 #if PACKETVER >= 20170830
-	WFIFOQ(fd,6) = (int64)u64min(exp, INT64_MAX) * (lost ? -1 : 1);
+	WFIFOQ(fd,6) = u64min(exp, EXP_MAX) * (lost ? -1 : 1);
 	offset = 4;
 #else
-	WFIFOL(fd,6) = (int32)u64min(exp, INT32_MAX) * (lost ? -1 : 1);
+	WFIFOL(fd,6) = (int32)u64min(exp, EXP_MAX) * (lost ? -1 : 1);
 	offset = 0;
 #endif
 	WFIFOW(fd,10+offset) = type;

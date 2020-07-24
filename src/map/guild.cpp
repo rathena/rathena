@@ -51,7 +51,7 @@ struct eventlist {
 //Guild EXP cache
 struct guild_expcache {
 	int guild_id, account_id, char_id;
-	uint64 exp;
+	t_exp exp;
 };
 static struct eri *expcache_ers; //For handling of guild exp payment.
 
@@ -403,8 +403,8 @@ int guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap) {
 		return 0;
 	}
 
-	if (g->member[i].exp > UINT64_MAX - c->exp)
-		g->member[i].exp = UINT64_MAX;
+	if (g->member[i].exp > EXP_MAX - c->exp)
+		g->member[i].exp = EXP_MAX;
 	else
 		g->member[i].exp+= c->exp;
 
@@ -1357,7 +1357,7 @@ static DBData create_expcache(DBKey key, va_list args) {
 /*====================================================
  * Return taxed experience from player sd to guild
  *---------------------------------------------------*/
-uint64 guild_payexp(struct map_session_data *sd,uint64 exp) {
+t_exp guild_payexp(struct map_session_data *sd,t_exp exp) {
 	struct guild *g;
 	struct guild_expcache *c;
 	int per;
@@ -1379,8 +1379,8 @@ uint64 guild_payexp(struct map_session_data *sd,uint64 exp) {
 
 	c = (struct guild_expcache *)db_data2ptr(guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd));
 
-	if (c->exp > UINT64_MAX - exp)
-		c->exp = UINT64_MAX;
+	if (c->exp > EXP_MAX - exp)
+		c->exp = EXP_MAX;
 	else
 		c->exp += exp;
 
@@ -1392,7 +1392,7 @@ uint64 guild_payexp(struct map_session_data *sd,uint64 exp) {
  * Add this experience to guild exp
  * [Celest]
  *---------------------------------------------------*/
-uint64 guild_getexp(struct map_session_data *sd,uint64 exp) {
+t_exp guild_getexp(struct map_session_data *sd,t_exp exp) {
 	struct guild_expcache *c;
 	nullpo_ret(sd);
 
@@ -1400,8 +1400,8 @@ uint64 guild_getexp(struct map_session_data *sd,uint64 exp) {
 		return 0;
 
 	c = (struct guild_expcache *)db_data2ptr(guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd));
-	if (c->exp > UINT64_MAX - exp)
-		c->exp = UINT64_MAX;
+	if (c->exp > EXP_MAX - exp)
+		c->exp = EXP_MAX;
 	else
 		c->exp += exp;
 	return exp;

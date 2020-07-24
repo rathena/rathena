@@ -36,7 +36,7 @@ static const char dataToHex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9
 static DBMap* guild_db_; // int guild_id -> struct guild*
 static DBMap *castle_db;
 
-static uint64 guild_exp[MAX_GUILDLEVEL];
+static t_exp guild_exp[MAX_GUILDLEVEL];
 
 int mapif_parse_GuildLeave(int fd,int guild_id,uint32 account_id,uint32 char_id,int flag,const char *mes);
 int mapif_guild_broken(int guild_id,int flag);
@@ -630,9 +630,9 @@ struct guild_castle* inter_guildcastle_fromsql(int castle_id)
 // Read exp_guild.txt
 bool exp_guild_parse_row(char* split[], int column, int current)
 {
-	uint64 exp = (uint64)strtoull(split[0], nullptr, 10);
+	t_exp exp = strtoull(split[0], nullptr, 10);
 
-	if (exp > UINT64_MAX) {
+	if (exp > EXP_MAX) {
 		ShowError("exp_guild: Invalid exp %" PRIu64 " at line %d\n", exp, current);
 		return false;
 	}
@@ -825,7 +825,7 @@ bool guild_check_empty(struct guild *g)
 	return i < g->max_member ? false : true; // not empty
 }
 
-uint64 guild_nextexp(int level)
+t_exp guild_nextexp(int level)
 {
 	if (level == 0)
 		return 1;
@@ -844,7 +844,7 @@ int guild_checkskill(struct guild *g,int id)
 int guild_calcinfo(struct guild *g)
 {
 	int i,c;
-	uint64 nextexp;
+	t_exp nextexp;
 	struct guild before = *g; // Save guild current values
 
 	if(g->guild_lv<=0)
@@ -1526,20 +1526,20 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,uint32 account_id,uint
 		  }
 		case GMI_EXP:
 		{	// EXP
-			uint64 old_exp=g->member[i].exp;
-			g->member[i].exp=*((uint64 *)data);
+			t_exp old_exp=g->member[i].exp;
+			g->member[i].exp=*((t_exp *)data);
 			g->member[i].modified = GS_MEMBER_MODIFIED;
 			if (g->member[i].exp > old_exp)
 			{
-				uint64 exp = g->member[i].exp - old_exp;
+				t_exp exp = g->member[i].exp - old_exp;
 
 				// Compute gained exp
 				if (charserv_config.guild_exp_rate != 100)
 					exp = exp*(charserv_config.guild_exp_rate)/100;
 
 				// Update guild exp
-				if (exp > UINT64_MAX - g->exp)
-					g->exp = UINT64_MAX;
+				if (exp > EXP_MAX - g->exp)
+					g->exp = EXP_MAX;
 				else
 					g->exp+=exp;
 
