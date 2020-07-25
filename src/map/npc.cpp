@@ -1699,6 +1699,10 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, str
 			amount = item_list[i].amount = 1;
 		}
 
+		if( nd->master_nd ) { // Script-controlled shops decide by themselves, what can be bought and for what price.
+			continue;
+		}
+
 		switch( pc_checkadditem(sd,nameid,amount) )
 		{
 			case CHKADDITEM_NEW:
@@ -1711,6 +1715,9 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, str
 		vt += nd->u.shop.shop_item[j].value * amount;
 		w += itemdb_weight(nameid) * amount;
 	}
+
+	if (nd->master_nd) //Script-based shops.
+		return npc_buylist_sub(sd,count,(struct s_npc_buy_list*)item_list,nd->master_nd);
 
 	if( w + sd->weight > sd->max_weight )
 		return ERROR_TYPE_INVENTORY_WEIGHT;
