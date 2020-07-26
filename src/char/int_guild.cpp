@@ -642,8 +642,8 @@ bool exp_guild_parse_row(char* split[], int column, int current)
 {
 	t_exp exp = strtoull(split[0], nullptr, 10);
 
-	if (exp > GEXP_MAX) {
-		ShowError("exp_guild: Invalid exp %" PRIu64 " at line %d, exceeds max of %" PRIu64 "\n", exp, current, GEXP_MAX);
+	if (exp > MAX_GUILD_EXP) {
+		ShowError("exp_guild: Invalid exp %" PRIu64 " at line %d, exceeds max of %" PRIu64 "\n", exp, current, MAX_GUILD_EXP);
 		return false;
 	}
 
@@ -1560,7 +1560,7 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,uint32 account_id,uint
 					exp = exp*(charserv_config.guild_exp_rate)/100;
 
 				// Update guild exp
-				g->exp = util::safe_addition_cap(g->exp, exp, GEXP_MAX);
+				g->exp = util::safe_addition_cap(g->exp, exp, MAX_GUILD_EXP);
 
 				guild_calcinfo(g);
 				mapif_guild_basicinfochanged(guild_id,GBI_EXP,&g->exp,sizeof(g->exp));

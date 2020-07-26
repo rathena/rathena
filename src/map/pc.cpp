@@ -65,8 +65,6 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max);
 static inline bool pc_attendance_rewarded_today( struct map_session_data* sd );
 
 #define PVP_CALCRANK_INTERVAL 1000	// PVP calculation interval
-#define MAX_LEVEL_BASE_EXP 99999999 ///< Max Base EXP for player on Max Base Level
-#define MAX_LEVEL_JOB_EXP 999999999 ///< Max Job EXP for player on Max Job Level
 
 static unsigned int statp[MAX_LEVEL+1];
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
@@ -7185,7 +7183,7 @@ static void pc_calcexp(struct map_session_data *sd, t_exp *base_exp, t_exp *job_
 
 	if (*base_exp) {
 		t_exp exp = (t_exp)(*base_exp + ((double)*base_exp * ((bonus + vip_bonus_base) / 100.)));
-		*base_exp = cap_value(exp, 1, EXP_MAX);
+		*base_exp = cap_value(exp, 1, MAX_EXP);
 	}
 
 	// Give JEXPBOOST for quests even if src is NULL.
@@ -7194,7 +7192,7 @@ static void pc_calcexp(struct map_session_data *sd, t_exp *base_exp, t_exp *job_
 
 	if (*job_exp) {
 		t_exp exp = (t_exp)(*job_exp + ((double)*job_exp * ((bonus + vip_bonus_job) / 100.)));
-		*job_exp = cap_value(exp, 1, EXP_MAX);
+		*job_exp = cap_value(exp, 1, MAX_EXP);
 	}
 
 	return;
@@ -7290,7 +7288,7 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, t_exp base_
 
 	// Give EXP for Base Level
 	if (base_exp) {
-		sd->status.base_exp = util::safe_addition_cap(sd->status.base_exp, base_exp, EXP_MAX);
+		sd->status.base_exp = util::safe_addition_cap(sd->status.base_exp, base_exp, MAX_EXP);
 
 		if (!pc_checkbaselevelup(sd))
 			clif_updatestatus(sd,SP_BASEEXP);
@@ -7298,7 +7296,7 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, t_exp base_
 
 	// Give EXP for Job Level
 	if (job_exp) {
-		sd->status.job_exp = util::safe_addition_cap(sd->status.job_exp, job_exp, EXP_MAX);
+		sd->status.job_exp = util::safe_addition_cap(sd->status.job_exp, job_exp, MAX_EXP);
 
 		if (!pc_checkjoblevelup(sd))
 			clif_updatestatus(sd,SP_JOBEXP);
@@ -8652,10 +8650,10 @@ int64 pc_readparam(struct map_session_data* sd,int64 type)
 		case SP_SEX:             val = sd->status.sex; break;
 		case SP_WEIGHT:          val = sd->weight; break;
 		case SP_MAXWEIGHT:       val = sd->max_weight; break;
-		case SP_BASEEXP:         val = u64min(sd->status.base_exp, EXP_MAX); break;
-		case SP_JOBEXP:          val = u64min(sd->status.job_exp, EXP_MAX); break;
-		case SP_NEXTBASEEXP:     val = u64min(pc_nextbaseexp(sd), EXP_MAX); break;
-		case SP_NEXTJOBEXP:      val = u64min(pc_nextjobexp(sd), EXP_MAX); break;
+		case SP_BASEEXP:         val = u64min(sd->status.base_exp, MAX_EXP); break;
+		case SP_JOBEXP:          val = u64min(sd->status.job_exp, MAX_EXP); break;
+		case SP_NEXTBASEEXP:     val = u64min(pc_nextbaseexp(sd), MAX_EXP); break;
+		case SP_NEXTJOBEXP:      val = u64min(pc_nextjobexp(sd), MAX_EXP); break;
 		case SP_HP:              val = sd->battle_status.hp; break;
 		case SP_MAXHP:           val = sd->battle_status.max_hp; break;
 		case SP_SP:              val = sd->battle_status.sp; break;
@@ -8860,14 +8858,14 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		sd->status.zeny = cap_value(val, 0, MAX_ZENY);
 		break;
 	case SP_BASEEXP:
-		val_tmp = cap_value(val_tmp, 0, pc_is_maxbaselv(sd) ? MAX_LEVEL_BASE_EXP : EXP_MAX);
+		val_tmp = cap_value(val_tmp, 0, pc_is_maxbaselv(sd) ? MAX_LEVEL_BASE_EXP : MAX_EXP);
 		if (val_tmp < sd->status.base_exp) // Lost
 			pc_lostexp(sd, sd->status.base_exp - val_tmp, 0);
 		else // Gained
 			pc_gainexp(sd, NULL, val_tmp - sd->status.base_exp, 0, 2);
 		return true;
 	case SP_JOBEXP:
-		val_tmp = cap_value(val_tmp, 0, pc_is_maxjoblv(sd) ? MAX_LEVEL_JOB_EXP : EXP_MAX);
+		val_tmp = cap_value(val_tmp, 0, pc_is_maxjoblv(sd) ? MAX_LEVEL_JOB_EXP : MAX_EXP);
 		if (val_tmp < sd->status.job_exp) // Lost
 			pc_lostexp(sd, 0, sd->status.job_exp - val_tmp);
 		else // Gained

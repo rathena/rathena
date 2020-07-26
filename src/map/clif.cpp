@@ -67,11 +67,11 @@ static inline uint32 client_tick( t_tick tick ){
 
 #if PACKETVER >= 20170830
 static inline int64 client_exp(t_exp exp) {
-	return (int64)u64min(exp, EXP_MAX);
+	return (int64)u64min(exp, MAX_EXP);
 }
 #else
 static inline int32 client_exp(t_exp exp) {
-	return (int32)u64min(exp, EXP_MAX);
+	return (int32)u64min(exp, MAX_EXP);
 }
 #endif
 
@@ -8535,8 +8535,8 @@ void clif_guild_basicinfo(struct map_session_data *sd) {
 	WFIFOL(fd,10)=g->connect_member;
 	WFIFOL(fd,14)=g->max_member;
 	WFIFOL(fd,18)=g->average_lv;
-	WFIFOL(fd,22)=(uint32)cap_value(g->exp, 0, GEXP_MAX);
-	WFIFOL(fd,26)=(uint32)cap_value(g->next_exp, 0, GEXP_MAX);
+	WFIFOL(fd,22)=(uint32)cap_value(g->exp, 0, MAX_GUILD_EXP);
+	WFIFOL(fd,26)=(uint32)cap_value(g->next_exp, 0, MAX_GUILD_EXP);
 	WFIFOL(fd,30)=0;	// Tax Points
 	WFIFOL(fd,34)=0;	// Honor: (left) Vulgar [-100,100] Famed (right)
 	WFIFOL(fd,38)=0;	// Virtue: (down) Wicked [-100,100] Righteous (up)
