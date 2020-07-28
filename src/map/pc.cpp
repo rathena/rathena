@@ -12023,8 +12023,19 @@ static bool pc_readdb_job_exp(char* fields[], int columns, int current)
 	idx = pc_class2idx(job_id);
 
 	job_info[idx].max_level[type] = maxlvl;
-	for(i=0; i<maxlvl; i++)
-		job_info[idx].exp_table[type][i] = strtoull(fields[3+i], nullptr, 10);
+	for(i=0; i<maxlvl; i++){
+		t_exp exp = strtoull( fields[3 + i], nullptr, 10 );
+
+		if( exp == 0 ){
+			ShowWarning( "pc_readdb_job_exp: No value defined for level %d in line %d. Defaulting to MAX_EXP...\n", i + 1, current );
+			exp = MAX_EXP;
+		}else if( exp > MAX_EXP ){
+			ShowWarning( "pc_readdb_job_exp: Value %" PRIu64 " is too high, capping to %" PRIu64 "...\n", exp, MAX_EXP );
+			exp = MAX_EXP;
+		}
+
+		job_info[idx].exp_table[type][i] = exp;
+	}
 	//Reverse check in case the array has a bunch of trailing zeros... [Skotlex]
 	//The reasoning behind the -2 is this... if the max level is 5, then the array
 	//should look like this:
