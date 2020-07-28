@@ -1462,6 +1462,11 @@ bool npc_scriptcont(struct map_session_data* sd, int id, bool closing){
 
 	nullpo_retr(true, sd);
 
+#ifdef SECURE_NPCTIMEOUT
+	if( sd->npc_idle_timer == INVALID_TIMER && !sd->state.ignoretimeout )
+		return true;
+#endif
+
 	if( id != sd->npc_id ){
 		TBL_NPC* nd_sd = (TBL_NPC*)map_id2bl(sd->npc_id);
 		TBL_NPC* nd = BL_CAST(BL_NPC, target);
