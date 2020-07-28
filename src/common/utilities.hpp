@@ -14,6 +14,10 @@
 #include "cbasetypes.hpp"
 #include "random.hpp"
 
+#ifndef __has_builtin
+	#define __has_builtin(x) 0
+#endif
+
 // Class used to perform time measurement
 class cScopeTimer {
 	struct sPimpl; //this is to avoid long compilation time
@@ -192,6 +196,11 @@ namespace rathena {
 			}
 		}
 
+#if __has_builtin( __builtin_add_overflow ) || ( defined( __GNUC__ ) && !defined( __clang__ ) && defined( GCC_VERSION  ) && GCC_VERSION >= 50100 )
+		template <typename T> bool safe_addition(T a, T b, T &result) {
+			return __builtin_add_overflow(a, b, &result);
+		}
+#else
 		template <typename T> bool safe_addition( T a, T b, T& result ){
 			bool overflow = false;
 
@@ -215,6 +224,7 @@ namespace rathena {
 
 			return overflow;
 		}
+#endif
 
 		bool safe_substraction( int64 a, int64 b, int64& result );
 		bool safe_multiplication( int64 a, int64 b, int64& result );
