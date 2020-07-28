@@ -85,8 +85,8 @@ int inter_pet_fromsql(int pet_id, struct s_pet* p)
 		Sql_GetData(sql_handle,  3, &data, NULL); p->account_id = atoi(data);
 		Sql_GetData(sql_handle,  4, &data, NULL); p->char_id = atoi(data);
 		Sql_GetData(sql_handle,  5, &data, NULL); p->level = atoi(data);
-		Sql_GetData(sql_handle,  6, &data, NULL); p->egg_id = strtoul(data, NULL, 10);
-		Sql_GetData(sql_handle,  7, &data, NULL); p->equip = strtoul(data, NULL, 10);
+		Sql_GetData(sql_handle,  6, &data, NULL); p->egg_id = strtoul(data, nullptr, 10);
+		Sql_GetData(sql_handle,  7, &data, NULL); p->equip = strtoul(data, nullptr, 10);
 		Sql_GetData(sql_handle,  8, &data, NULL); p->intimate = atoi(data);
 		Sql_GetData(sql_handle,  9, &data, NULL); p->hungry = atoi(data);
 		Sql_GetData(sql_handle, 10, &data, NULL); p->rename_flag = atoi(data);

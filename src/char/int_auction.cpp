@@ -227,7 +227,7 @@ void inter_auctions_fromsql(void)
 		Sql_GetData(sql_handle, 8, &data, NULL); auction->timestamp = atoi(data);
 
 		item = &auction->item;
-		Sql_GetData(sql_handle, 9, &data, NULL); item->nameid = strtoul(data, NULL, 10);
+		Sql_GetData(sql_handle, 9, &data, NULL); item->nameid = strtoul(data, nullptr, 10);
 		Sql_GetData(sql_handle,10, &data, NULL); safestrncpy(auction->item_name, data, ITEM_NAME_LENGTH);
 		Sql_GetData(sql_handle,11, &data, NULL); auction->type = atoi(data);
 
@@ -242,7 +242,7 @@ void inter_auctions_fromsql(void)
 		for( i = 0; i < MAX_SLOTS; i++ )
 		{
 			Sql_GetData(sql_handle, 15 + i, &data, NULL);
-			item->card[i] = strtoul(data, NULL, 10);
+			item->card[i] = strtoul(data, nullptr, 10);
 		}
 
 		for (i = 0; i < MAX_ITEM_RDM_OPT; i++) {
