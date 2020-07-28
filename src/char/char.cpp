@@ -1490,7 +1490,7 @@ int char_make_new_char( struct char_session_data* sd, char* name_, int str, int 
 	char_id = (int)Sql_LastInsertId(sql_handle);
 	//Give the char the default items
 	for (k = 0; k <= MAX_STARTITEM && tmp_start_items[k].nameid != 0; k++) {
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%u', '%u', '%hu', '%d')", schema_config.inventory_db, char_id, tmp_start_items[k].nameid, tmp_start_items[k].amount, tmp_start_items[k].pos, 1) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%u', '%hu', '%u', '%d')", schema_config.inventory_db, char_id, tmp_start_items[k].nameid, tmp_start_items[k].amount, tmp_start_items[k].pos, 1) )
 			Sql_ShowDebug(sql_handle);
 	}
 
@@ -2739,18 +2739,18 @@ void char_set_defaults(){
 
 	charserv_config.start_items[0].nameid = 1201;
 	charserv_config.start_items[0].amount = 1;
-	charserv_config.start_items[0].pos = 2;
+	charserv_config.start_items[0].pos = EQP_HAND_R;
 	charserv_config.start_items[1].nameid = 2301;
 	charserv_config.start_items[1].amount = 1;
-	charserv_config.start_items[1].pos = 16;
+	charserv_config.start_items[1].pos = EQP_ARMOR;
 
 #if PACKETVER >= 20150101
 	charserv_config.start_items_doram[0].nameid = 1681;
 	charserv_config.start_items_doram[0].amount = 1;
-	charserv_config.start_items_doram[0].pos = 2;
+	charserv_config.start_items_doram[0].pos = EQP_HAND_R;
 	charserv_config.start_items_doram[1].nameid = 2301;
 	charserv_config.start_items_doram[1].amount = 1;
-	charserv_config.start_items_doram[1].pos = 16;
+	charserv_config.start_items_doram[1].pos = EQP_ARMOR;
 #endif
 
 	charserv_config.console = 0;
@@ -2847,9 +2847,10 @@ void char_config_split_startitem(char *w1_value, char *w2_value, struct startite
 		}
 
 		// TODO: Item ID verification
-		start_items[i].nameid = max(0, atoi(fields[1]));
-		start_items[i].amount = max(0, atoi(fields[2]));
-		start_items[i].pos = max(0, atoi(fields[3]));
+		start_items[i].nameid = strtoul( fields[1], nullptr, 10 );
+		// TODO: Stack verification
+		start_items[i].amount = min( strtoul( fields[2], nullptr, 10 ), MAX_AMOUNT );
+		start_items[i].pos = strtoul( fields[3], nullptr, 10 );
 
 		lineitem = strtok(NULL, ":"); //next lineitem
 		i++;

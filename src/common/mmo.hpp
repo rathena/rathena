@@ -314,7 +314,7 @@ struct point {
 struct startitem {
 	uint32 nameid;
 	unsigned short amount;
-	short pos;
+	uint32 pos;
 };
 
 enum e_skill_flag
