@@ -69,28 +69,6 @@ int levenshtein(const std::string &s1, const std::string &s2)
 	return result;
 }
 
-bool rathena::util::safe_addition( int64 a, int64 b, int64& result ){
-#if __has_builtin( __builtin_add_overflow ) || ( defined( __GNUC__ ) && !defined( __clang__ ) && defined( GCC_VERSION  ) && GCC_VERSION >= 50100 )
-	return __builtin_add_overflow( a, b, &result );
-#else
-	bool overflow = false;
-
-	if( b < 0 ){
-		if( a < ( INT64_MIN - b ) ){
-			overflow = true;
-		}
-	}else{
-		if( a > ( INT64_MAX - b ) ){
-			overflow = true;
-		}
-	}
-
-	result = a + b;
-
-	return overflow;
-#endif
-}
-
 bool rathena::util::safe_substraction( int64 a, int64 b, int64& result ){
 #if __has_builtin( __builtin_sub_overflow ) || ( defined( __GNUC__ ) && !defined( __clang__ ) && defined( GCC_VERSION  ) && GCC_VERSION >= 50100 )
 	return __builtin_sub_overflow( a, b, &result );
@@ -135,21 +113,4 @@ bool rathena::util::safe_multiplication( int64 a, int64 b, int64& result ){
 
 	return false;
 #endif
-}
-
-/**
- * Safely add int64 values without overflowing.
- * @param a: Holder of value to increment
- * @param b: Increment by
- * @param cap: Cap value
- * @return Result of a + b
- */
-uint64 rathena::util::safe_addition_cap(int64 a, int64 b, int64 cap) {
-	int64 result;
-
-	if (rathena::util::safe_addition(a, b, result)) {
-		return cap;
-	} else {
-		return result;
-	}
 }

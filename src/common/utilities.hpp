@@ -192,10 +192,49 @@ namespace rathena {
 			}
 		}
 
-		bool safe_addition( int64 a, int64 b, int64& result );
+		template <typename T> bool safe_addition( T a, T b, T& result ){
+			bool overflow = false;
+
+			if( std::numeric_limits<T>::is_signed ){
+				if( b < 0 ){
+					if( a < ( (std::numeric_limits<T>::min)() - b ) ){
+						overflow = true;
+					}
+				}else{
+					if( a > ( (std::numeric_limits<T>::max)() - b ) ){
+						overflow = true;
+					}
+				}
+			}else{
+				if( a > ( (std::numeric_limits<T>::max)() - b ) ){
+					overflow = true;
+				}
+			}
+
+			result = a + b;
+
+			return overflow;
+		}
+
 		bool safe_substraction( int64 a, int64 b, int64& result );
 		bool safe_multiplication( int64 a, int64 b, int64& result );
-		uint64 safe_addition_cap(int64 a, int64 b, int64 cap);
+
+		/**
+		 * Safely add values without overflowing.
+		 * @param a: Holder of value to increment
+		 * @param b: Increment by
+		 * @param cap: Cap value
+		 * @return Result of a + b
+		 */
+		template <typename T> T safe_addition_cap( T a, T b, T cap ){
+			T result;
+
+			if( rathena::util::safe_addition( a, b, result ) ){
+				return cap;
+			}else{
+				return result;
+			}
+		}
 	}
 }
 
