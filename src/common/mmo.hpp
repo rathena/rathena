@@ -488,7 +488,7 @@ struct mmo_charstatus {
 	uint32 mother;
 	uint32 child;
 
-	unsigned int base_exp,job_exp;
+	t_exp base_exp,job_exp;
 	int zeny;
 
 	short class_; ///< Player's JobID
@@ -632,7 +632,7 @@ struct map_session_data;
 struct guild_member {
 	uint32 account_id, char_id;
 	short hair,hair_color,gender,class_,lv;
-	uint64 exp;
+	t_exp exp;
 	short online,position;
 	char name[NAME_LENGTH];
 	struct map_session_data *sd;
@@ -667,8 +667,8 @@ struct Channel;
 struct guild {
 	int guild_id;
 	short guild_lv, connect_member, max_member, average_lv;
-	uint64 exp;
-	unsigned int next_exp;
+	t_exp exp;
+	t_exp next_exp;
 	int skill_point;
 	char name[NAME_LENGTH],master[NAME_LENGTH];
 	struct guild_member member[MAX_GUILD];
