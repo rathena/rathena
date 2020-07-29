@@ -9185,3 +9185,262 @@ un_myst,209,42,3	script	Tamarin#Lastroom Entrance	4_M_TAMARIN,{
 }
 
 verus04,144,239,3	shop	Tool Merchant#verus	4_M_DEWMAN,611:-1,504:-1,656:-1,601:-1,602:-1,610:-1
+
+
+// Doom Prayers event on verus04
+verus04,2,2,0	script	Sneak attack timer#EP15_1D	HIDDEN_WARP_NPC,{
+	end;
+OnTimer60000:
+	if (rand(1,2) == 1)
+		initnpctimer "Perishing blessing society#EP15_1D";
+	end;
+OnTimer3600000:
+OnInit:
+	initnpctimer;
+	end;
+}
+
+verus04,3,3,4	script	Perishing blessing society#EP15_1D	CLEAR_NPC,{
+	if (callfunc("F_GM_NPC",1854,0,0,9999) < 1)
+		end;
+	mes "[Small Helper]";
+	mes "Episode 15.1";
+	mes "I am a small helper for the mission of the Phantasmagorika security team. Do you need help?";
+	next;
+	while(1) {
+		switch( select( "View role status", "Task setting", "Active operation", "End NPC" ) ) {
+		case 1:
+			mes "5304(N)" + isbegin_quest(5304) + " / 5312(N)" + isbegin_quest(5312) + "";
+			mes "5305(N)" + isbegin_quest(5305) + " / 5313(N)" + isbegin_quest(5313) + "";
+			mes "5306(N)" + isbegin_quest(5306) + " / 5314(H)" + checkquest(5314,HUNTING) + "";
+			mes "5307(N)" + isbegin_quest(5307) + " / 5315(N)" + isbegin_quest(5315) + "";
+			mes "5308(N)" + isbegin_quest(5308) + " / 5316(N)" + isbegin_quest(5316) + "";
+			mes "5309(N)" + isbegin_quest(5309) + " / 5317(N)" + isbegin_quest(5317) + "";
+			mes "5310(N)" + isbegin_quest(5310) + " / 5318(T)" + checkquest(5318,PLAYTIME) + "";
+			mes "5311(N)" + isbegin_quest(5311) + " / (N)Normal (H)unting (T)ime";
+			next;
+			continue;
+		case 2:
+			mes "[Small Helper]";
+			mes "Task setting.";
+			mes "Level limit 140.";
+			mes "Those who fail to reach 140 may not perform tasks.";
+			next;
+			switch( select( "Reset Cooldown", "Set to before reward", "Item description", "Task initialization" ) ) {
+			case 1:
+				mes "[Small Helper]";
+				mes "Only remove 23 hours of cooldown.";
+				next;
+				select("Remove");
+				erasequest 5318;
+				mes "[Small Helper]";
+				mes "Removed.";
+				next;
+				continue;
+			case 2:
+				mes "[Small Helper]";
+				mes "Please choose whether to accept or not before setting it as a reward..";
+				next;
+				if (isbegin_quest(5304) == 0) {
+					setquest 5304;
+					completequest 5304;
+				}
+				setquest 5309;
+				setarray .@name$[0], "Salgran", "Gerev", "Seiden", "Piffs";
+				for ( .@i = 0; .@i < 4; ++.@i ) {
+					if (select( "Police Officer " + .@name$[.@i] + " Please ask O", "Police Officer " + .@name$[.@i] + " Please ask X" ) == 1) {
+						.@id = 5314 + .@i;
+						if (isbegin_quest(.@id) == 0)
+							setquest .@id;
+						if (isbegin_quest(.@id) == 1)
+							completequest .@id;
+					}
+					.@id = 5305 + .@i;
+					if (isbegin_quest(.@id) == 0) {
+						setquest .@id;
+						completequest .@id;
+					}
+					setquest (5310 + .@i);
+				}
+				mes "[Small Helper]";
+				mes "Done.";
+				next;
+				continue;
+			case 3:
+				mes "[Small Helper]";
+				mes "This task will confirm both the task and the Guest. Please use the function after receiving the task..";
+				next;
+				switch( select( "Remove the trap", "Gather Stones", "Gather the herb.", "End NPC" ) ) {
+				case 1:
+					mes "[Small Helper]";
+					mes "Set to the state where the trap has been removed.";
+					next;
+					select("set up");
+					ep15_1_mang = 10;
+					continue;
+				case 2:
+					mes "[Small Helper]";
+					mes "Set to the state of the stone that has been completed.";
+					next;
+					select("set up");
+					ep15_1_mang = 10;
+					getitem 7049,10;// Stone
+					continue;
+				case 3:
+					mes "[Small Helper]";
+					mes "Set to the state of the herb gathering that has been completed.";
+					next;
+					select("set up");
+					ep15_1_mang = 10;
+					getitem 6754,10;// Collected_Herb
+					continue;
+				case 4:
+					mes "[Small Helper]";
+					mes "Bye bye~";
+					close;
+				}
+				end;
+			case 4:
+				mes "[Small Helper]";
+				mes "The Doom Sayers vs. Phantasmagorika security team mission initialization.";
+				next;
+				select("Task initialization");
+				ep15_1_mang = 0;
+				delitem 7049, countitem(7049);// Stone
+				getitem 6754, countitem(6754);// Collected_Herb
+				for ( .@i = 5304; .@i <= 5318; ++.@i ) {
+					if (isbegin_quest(.@i) > 0)
+						erasequest .@i;
+				}
+				mes "[Small Helper]";
+				mes "Initialized.";
+				next;
+				continue;
+			}
+			end;
+		case 3:
+			mes "[Small Helper]";
+			mes "Adjust the section of sudden activity, no need to confirm the implementation, so please use it after evaluation.";
+			next;
+			switch( select( "Activity begins", "Activity ends", "Control timer starts", "Control timer ends" ) ) {
+			case 1:
+				mes "[Small Helper]";
+				mes "Sudden activity Start, the current map number has " + getmapusers("verus04") + " people, and the released monsters have 15 + " + getmapusers("verus04") + " only.";
+				next;
+				select("Start");
+				initnpctimer "Perishing blessing society#EP15_1D";
+				mes "[Small Helper]";
+				mes "Sudden task Start.";
+				next;
+				continue;
+			case 2:
+				mes "[Small Helper]";
+				mes "The sudden task End, once selected, will force End even if it is actually in progress.";
+				next;
+				select("End");
+				donpcevent "Perishing blessing society#EP15_1D::OnStop";
+				mes "[Small Helper]";
+				mes "Sudden task End.";
+				next;
+				continue;
+			case 3:
+				mes "[Small Helper]";
+				mes "Set the timer that controls the sudden activity to ON. It is not confirmed, please pay attention when operating.";
+				next;
+				select("Start");
+				initnpctimer "Sneak attack timer#EP15_1D";
+				mes "[Small Helper]";
+				mes "The burst activity timer has started.";
+				next;
+				continue;
+			case 4:
+				mes "[Small Helper]";
+				mes "Set the timer that controls the sudden activity to OFF. It is not confirmed, please pay attention when operating.";
+				next;
+				select("End");
+				stopnpctimer "Sneak attack timer#EP15_1D";
+				mes "[Small Helper]";
+				mes "The burst activity timer has been End.";
+				next;
+				continue;
+			}
+			end;
+		case 4:
+			mes "[Small Helper]";
+			mes "Bye bye~";
+			close;
+		}
+	}
+	end;
+
+OnTimer1000:
+	.@count = 10 + getmapusers("verus04");
+	.@label$ = "Perishing blessing society#EP15_1D::OnMyMobDead";
+    monster "verus04",0,0,"Doom Prayers Believer",3158,.@count, .@label$;	// RUIN_BELIEVER2
+    monster "verus04",0,0,"Ruin Grace Believer",3157,5, .@label$;			// RUIN_BELIEVER1
+	copyarray .mob_id[0], $@mobid[0], 5;
+
+	mapannounce "verus04", "Police Officer Piffs: The Doom Prayers have stricken!", bc_map,0xFFFF00;
+	end;
+OnTimer3000:
+	mapannounce "verus04", "Police Chief Kesler: Attention all police officers, stop the Doom Prayers before they destroy the excavation site!", bc_map,0xFFFF00;
+	end;
+OnTimer30000:
+	mapannounce "verus04", "Doom Prayers Executive: Destroy and bring the end of the world! Destroy and be saved!", bc_map,0xFFFF00;
+	end;
+OnTimer60000:
+	mapannounce "verus04", "Police Officer Piffs: Argh, Doom Prayers! Where do they keep coming from?!", bc_map,0xFFFF00;
+	callsub( S_String,
+		"Doom Prayers Executive : *Chuckle*...Near the time of demise.",
+		"Doom Prayers Executive : Let it be destroyed!!",
+		"Doom Prayers Executive : All throwing stones and throwing it!!",
+		"Doom Prayers Executive : Only when we can die can we get salvation.",
+		"Doom Prayers Executive : There are so many unnecessary people! Attack~~!!"
+	);
+OnTimer120000:
+	mapannounce "verus04", "Police Chief Kesler: Everyone, do not retreat! Don't let them destroy the excavation site!", bc_map,0xFFFF00;
+	callsub( S_String,
+		"Doom Prayers Executive : There are so many unnecessary people! Attack~~!!",
+		"Doom Prayers Executive : *Chuckle*...Near the time of demise.",
+		"Doom Prayers Executive : Let it be destroyed!!",
+		"Doom Prayers Executive : All throwing stones and throwing it!!",
+		"Doom Prayers Executive : Only when we can die can we get salvation."
+	);
+OnTimer180000:
+	mapannounce "verus04", "Police Officer Piffs: Those Doom Prayers underestimate us.", bc_map,0xFFFF00;
+	callsub( S_String,
+		"Doom Prayers Executive : Only when we can die can we get salvation.",
+		"Doom Prayers Executive : There are so many unnecessary people! Attack~~!!",
+		"Doom Prayers Executive : *Chuckle*...Near the time of demise.",
+		"Doom Prayers Executive : Let it be destroyed!!",
+		"Doom Prayers Executive : All throwing stones and throwing it!!"
+	);
+OnTimer240000:
+	mapannounce "verus04", "Police Chief Kesler: The guys who died in the attack thought we were bullied!", bc_map,0xFFFF00;
+	callsub( S_String,
+		"Doom Prayers Executive : All throwing stones and throwing it!!",
+		"Doom Prayers Executive : Only when we can die can we get salvation.",
+		"Doom Prayers Executive : There are so many unnecessary people! Attack~~!!",
+		"Doom Prayers Executive : *Chuckle*...Near the time of demise.",
+		"Doom Prayers Executive : Let it be destroyed!!"
+	);
+OnTimer300000:
+	// fallthrough
+OnStop:
+	stopnpctimer;
+	killmonster "verus04", "Perishing blessing society#EP15_1D::OnMyMobDead";
+	mapannounce "verus04", "Police Chief Kesler: Adventurers, the Doom Prayers have been driven out of Phantasmagorika. They're no longer a threat to your safety.", bc_map,0xFFFF00;
+	end;
+OnMyMobDead:
+	if (mobcount( "verus04", "Perishing blessing society#EP15_1D::OnMyMobDead" ) < 1) {
+		mapannounce "verus04", "Doom Prayers Executive: Damn! This time can only be a temporarily retreat!!!", bc_map,0xFFFF00;
+		donpcevent "Perishing blessing society#EP15_1D::OnStop";
+	}
+	end;
+S_String:
+	for ( .@i = 0; .@i < 5; ++.@i ) {
+		if (unitexists(.mob_id[.@i]) == true)
+			unittalk .mob_id[.@i], getarg(.@i);
+	}
+	end;
+}
