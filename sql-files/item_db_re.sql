@@ -12609,7 +12609,7 @@ REPLACE INTO `item_db_re` VALUES (28321,'Falconer_Claw','Falconer Claw',4,0,NULL
 REPLACE INTO `item_db_re` VALUES (28322,'Falconer_Glove','Falconer Glove',4,0,NULL,100,NULL,5,NULL,1,0x00000800,63,2,136,NULL,'80',0,NULL,'bonus bDex,1; bonus bUseSPrate,-5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28326,'Broken_Chip_1','Broken Chips 01',4,10,NULL,100,NULL,NULL,NULL,1,0xFFFFFFFF,63,2,136,NULL,'100',0,NULL,'bonus bStr,4;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28327,'Broken_Chip_2','Broken Chips 02',4,10,NULL,100,NULL,NULL,NULL,1,0xFFFFFFFF,63,2,136,NULL,'100',0,NULL,'bonus bInt,4;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (28332,'Jewel_Ring','Jewerly Ring',4,10,NULL,100,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,136,NULL,'1',0,NULL,'bonus bLuk,20; autobonus "{ bonus bAspd,2; }",50,2000,BF_WEAPON|BF_MAGIC;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28332,'Jewel_Ring','Jewerly Ring',4,10,NULL,100,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,136,NULL,'1',0,NULL,'/* bonus bLuk,20; Event bonus */ autobonus "{ bonus bAspd,2; bonus bVariableCastrate,-30; }",50,5000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_ENCHANCE; }";',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28333,'Gold_PC_Room_Ring','Gold PC Room Ring',4,10,NULL,0,NULL,NULL,NULL,1,0xFFFFFFFF,63,2,136,NULL,'1',0,NULL,'bonus bMaxHPrate,3; bonus bMaxSPrate,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28342,'Critical_Anklet','Critical Anklet',4,0,NULL,200,NULL,3,NULL,1,0xFFFFFFFF,63,2,136,NULL,NULL,0,NULL,'bonus bCritical,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28352,'Vesper_Gear_01','Vesper Gear 01',4,20,NULL,100,NULL,1,NULL,1,0xFFFFFFFF,63,2,136,NULL,'90',0,0,'bonus bMdef,3; bonus bMatkRate,5;',NULL,NULL);
