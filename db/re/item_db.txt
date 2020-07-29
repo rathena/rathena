@@ -4792,16 +4792,16 @@
 6745,HealStone_Bottom,Recovery Stone (Low),6,20,,10,,,,,,,,,,,,,{},{},{}
 6746,Iron_Artifacts,Steel Artifact,3,10,,0,,,,,,,,,,,,,{},{},{}
 6747,Iron_Artifacts_,Steel Artifact,3,10,,0,,,,,,,,,,,,,{},{},{}
-6748,Daily_Report_He_And_His_Team,Daily Report He And His Team,3,10,,0,,,,,,,,,,,,,{},{},{}
-6749,Operation_Control_Device,Operation Control Device,3,10,,0,,,,,,,,,,,,,{},{},{}
+6748,Excavator_Repoet,Daily Report He And His Team,3,10,,0,,,,,,,,,,,,,{},{},{}
+6749,Power_Control_Device,Operation Control Device,3,10,,0,,,,,,,,,,,,,{},{},{}
 6750,Failed_Engine,Failed Engine,3,10,,10,,,,,,,,,,,,,{},{},{}
 6751,Crushed_Can_Iron_Plate,Crushed Can Iron Plate,3,10,,10,,,,,,,,,,,,,{},{},{}
 6752,Charleston_Parts,Charleston Parts,3,10,,10,,,,,,,,,,,,,{},{},{}
-6753,Token_Of_Destruction,Token Of Destruction,3,10,,0,,,,,,,,,,,,,{},{},{}
-6754,Collected_Medicinal_Herbs,Collected Medicinal Herbs,3,10,,0,,,,,,,,,,,,,{},{},{}
+6753,Sign_Of_Destruction,Token Of Destruction,3,10,,0,,,,,,,,,,,,,{},{},{}
+6754,Collected_Herb,Collected Medicinal Herbs,3,10,,0,,,,,,,,,,,,,{},{},{}
 6755,Contaminated_Magic,Contaminated Magic,3,20,,10,,,,,,,,,,,,,{},{},{}
-6756,Cohesive_Energy,Cohesive Energy,3,20,,0,,,,,,,,,,,,,{},{},{}
-6757,The_Memory_Recorder,The Memory Recorder,3,20,,0,,,,,,,,,,,,,{},{},{}
+6756,Condensed_Energy,Cohesive Energy,3,20,,0,,,,,,,,,,,,,{},{},{}
+6757,Memory_Record,The Memory Recorder,3,20,,0,,,,,,,,,,,,,{},{},{}
 
 6762,Banana_Can,Banana Can,3,0,,10,,,,,,,,,,,,,{},{},{}
 6763,Spicy_Rice_Cake,Spicy Rice Cake,3,0,,10,,,,,,,,,,,,,{},{},{}
@@ -4848,11 +4848,11 @@
 6819,Acolyte_Soul,Acolyte Soul,3,10,,10,,,,,,,,,,,,,{},{},{}
 6820,Particles_Of_Energy,Energy Fragment,3,0,,10,,,,,,,,,,,,,{},{},{}
 6821,Solo_Troops_Badge,Single Union Badge,3,0,,0,,,,,,,,,,,,,{},{},{}
-6824,Experimental_Dong_Memory_Record,Experimental Dong Memory Record,3,10,,10,,,,,,,,,,,,,{},{},{}
+6824,Lab_Memory_Record,Experimental Dong Memory Record,3,10,,10,,,,,,,,,,,,,{},{},{}
 6825,Air_Cleaner_Box,Air Cleaner Box,3,10,,10000,,,,,,,,,,,,,{},{},{}
 6826,Fresh_Grapes,Fresh Grapes,3,10,,100,,,,,,,,,,,,,{},{},{}
-6827,Complete_Machine_Parts,Complete Machine Parts,3,10,,0,,,,,,,,,,,,,{},{},{}
-6828,Gravity_Safety_Device,Gravity Safety Device,3,10,,100,,,,,,,,,,,,,{},{},{}
+6827,Normal_Parts,Complete Machine Parts,3,10,,0,,,,,,,,,,,,,{},{},{}
+6828,Gravity_Parts,Gravity Safety Device,3,10,,100,,,,,,,,,,,,,{},{},{}
 6832,Questioned_Parts,Questioned Parts,3,10,,10,,,,,,,,,,,,,{},{},{}
 6833,Limited_Token_of_Ziegfried,(Limited) Token of Ziegfried,3,10,,10,,,,,,,,,,,,,{},{},{}
 6834,Legendary_Fur,Legendary Fur,3,10,,10,,,,,,,,,,,,,{},{},{}
@@ -11485,11 +11485,11 @@
 22685,Solo_Christmas_Gift,Single Union Christmas Gift,2,0,,0,,,,,0xFFFFFFFF,63,2,,,0,,,{ getgroupitem(IG_Solo_Christmas_Gift); },{},{}
 22686,Solo_Cookie,Single Cookie,0,0,,50,,,,,0xFFFFFFFF,63,2,,,0,,,{ percentheal 5,5; },{},{}
 22687,Pieces_Of_Sentiment,Sentimental Fragment,11,0,,1,,,,0,0xFFFFFFFF,63,2,,,100,,,{ callfunc("F_Pieces_Of_Sentiment"); },{},{}
-22691,Record_Fragment1,Record Fragment,0,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "un_bk_q",98,143; if (callfunc("F_time_limit_recorder") == 1) { recorder_quest_type = 1; } },{},{}
-22692,Record_Fragment2,Record Fragment,0,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "un_bk_q",45,276; if (callfunc("F_time_limit_recorder") == 1) { recorder_quest_type = 2; } },{},{}
-22693,Record_Fragment3,Record Fragment,0,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "un_bk_q",217,346; if (callfunc("F_time_limit_recorder") == 1) { recorder_quest_type = 3; } },{},{}
-22694,Record_Fragment4,Record Fragment,0,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "un_bk_q",273,235; if (callfunc("F_time_limit_recorder") == 1) { recorder_quest_type = 4; } },{},{}
-22695,Record_Fragment5,Record Fragment,0,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "un_bk_q",275,290; if (callfunc("F_time_limit_recorder") == 1) { recorder_quest_type = 5; } },{},{}
+22691,Piece_Of_Record1,Record Fragment,0,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "un_bk_q",98,143; if (callfunc("F_time_limit_recorder") == 1) { recorder_quest_type = 1; } },{},{}
+22692,Piece_Of_Record2,Record Fragment,0,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "un_bk_q",45,276; if (callfunc("F_time_limit_recorder") == 1) { recorder_quest_type = 2; } },{},{}
+22693,Piece_Of_Record3,Record Fragment,0,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "un_bk_q",217,346; if (callfunc("F_time_limit_recorder") == 1) { recorder_quest_type = 3; } },{},{}
+22694,Piece_Of_Record4,Record Fragment,0,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "un_bk_q",273,235; if (callfunc("F_time_limit_recorder") == 1) { recorder_quest_type = 4; } },{},{}
+22695,Piece_Of_Record5,Record Fragment,0,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "un_bk_q",275,290; if (callfunc("F_time_limit_recorder") == 1) { recorder_quest_type = 5; } },{},{}
 22699,Test_Reagent,Test Reagent,2,,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus bFlee,100;",5,9; sc_start SC_BLIND,5000,0,10000,0; },{},{}
 22700,Jumping_Support_Box,Jumping Support Box,18,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*TODO: getitem 12529,1; getitem 12323,200; getitem 12324,50; and 5 boxes that containing quivers + oridecons*/ },{},{}
 22702,STR_Soul_Potion,STR Reduction Potion,11,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashReduceStat",bStr,-1,22702; },{},{}

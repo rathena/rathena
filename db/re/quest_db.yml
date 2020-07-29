@@ -6147,6 +6147,7 @@ Body:
     Title: Let the Specialists Handle It
   - Id: 11377
     Title: Act of Kindness
+    TimeLimit: +1d
   - Id: 11378
     Title: "Trick or treat "
   - Id: 11379
