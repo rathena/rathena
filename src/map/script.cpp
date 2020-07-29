@@ -4369,7 +4369,7 @@ void script_attach_state(struct script_state* st){
 		sd->npc_item_flag = st->npc_item_flag; // load default.
 		sd->state.disable_atcommand_on_npc = battle_config.atcommand_disable_npc && (!pc_has_permission(sd, PC_PERM_ENABLE_COMMAND));
 #ifdef SECURE_NPCTIMEOUT
-		if( sd->npc_idle_timer == INVALID_TIMER )
+		if( sd->npc_idle_timer == INVALID_TIMER && !sd->state.ignoretimeout )
 			sd->npc_idle_timer = add_timer(gettick() + (SECURE_NPCTIMEOUT_INTERVAL*1000),npc_secure_timeout_timer,sd->bl.id,0);
 		sd->npc_idle_tick = gettick();
 #endif
@@ -8961,7 +8961,7 @@ BUILDIN_FUNC(getbrokenid)
 
 	num = script_getnum(st,2);
 	for(i = 0; i < MAX_INVENTORY; i++) {
-		if( sd->inventory.u.items_inventory[i].card[0] != CARD0_PET && sd->inventory.u.items_inventory[i].attribute ){
+		if( sd->inventory.u.items_inventory[i].attribute == 1 && !itemdb_ishatched_egg( &sd->inventory.u.items_inventory[i] ) ){
 				brokencounter++;
 				if(num == brokencounter){
 					id = sd->inventory.u.items_inventory[i].nameid;
@@ -8990,7 +8990,7 @@ BUILDIN_FUNC(repair)
 
 	num = script_getnum(st,2);
 	for(i = 0; i < MAX_INVENTORY; i++) {
-		if( sd->inventory.u.items_inventory[i].card[0] != CARD0_PET && sd->inventory.u.items_inventory[i].attribute ){
+		if( sd->inventory.u.items_inventory[i].attribute == 1 && !itemdb_ishatched_egg( &sd->inventory.u.items_inventory[i] ) ){
 				repaircounter++;
 				if(num == repaircounter) {
 					sd->inventory.u.items_inventory[i].attribute = 0;
@@ -9018,7 +9018,7 @@ BUILDIN_FUNC(repairall)
 
 	for(i = 0; i < MAX_INVENTORY; i++)
 	{
-		if( sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].card[0] != CARD0_PET && sd->inventory.u.items_inventory[i].attribute ){
+		if( sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].attribute == 1 && !itemdb_ishatched_egg( &sd->inventory.u.items_inventory[i] ) ){
 			sd->inventory.u.items_inventory[i].attribute = 0;
 			clif_produceeffect(sd,0,sd->inventory.u.items_inventory[i].nameid);
 			repaircounter++;
@@ -17786,6 +17786,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMOB_TARGETID, md->target_id);
 			getunitdata_sub(UMOB_ROBE, md->vd->robe);
 			getunitdata_sub(UMOB_BODY2, md->vd->body_style);
+			getunitdata_sub(UMOB_GROUP_ID, md->ud.group_id);
 			break;
 
 		case BL_HOM:
@@ -17833,6 +17834,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UHOM_ADELAY, hd->battle_status.adelay);
 			getunitdata_sub(UHOM_DMOTION, hd->battle_status.dmotion);
 			getunitdata_sub(UHOM_TARGETID, hd->ud.target);
+			getunitdata_sub(UHOM_GROUP_ID, hd->ud.group_id);
 			break;
 
 		case BL_PET:
@@ -17877,6 +17879,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UPET_AMOTION, pd->status.amotion);
 			getunitdata_sub(UPET_ADELAY, pd->status.adelay);
 			getunitdata_sub(UPET_DMOTION, pd->status.dmotion);
+			getunitdata_sub(UPET_GROUP_ID, pd->ud.group_id);
 			break;
 
 		case BL_MER:
@@ -17921,6 +17924,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMER_ADELAY, mc->base_status.adelay);
 			getunitdata_sub(UMER_DMOTION, mc->base_status.dmotion);
 			getunitdata_sub(UMER_TARGETID, mc->ud.target);
+			getunitdata_sub(UMER_GROUP_ID, mc->ud.group_id);
 			break;
 
 		case BL_ELEM:
@@ -17967,6 +17971,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UELE_ADELAY, ed->base_status.adelay);
 			getunitdata_sub(UELE_DMOTION, ed->base_status.dmotion);
 			getunitdata_sub(UELE_TARGETID, ed->ud.target);
+			getunitdata_sub(UELE_GROUP_ID, ed->ud.group_id);
 			break;
 
 		case BL_NPC:
@@ -18019,6 +18024,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UNPC_ROBE, nd->vd.robe);
 			getunitdata_sub(UNPC_BODY2, nd->vd.body_style);
 			getunitdata_sub(UNPC_DEADSIT, nd->vd.dead_sit);
+			getunitdata_sub(UNPC_GROUP_ID, nd->ud.group_id);
 			break;
 
 		default:
@@ -18180,6 +18186,7 @@ BUILDIN_FUNC(setunitdata)
 			}
 			case UMOB_ROBE: clif_changelook(bl, LOOK_ROBE, (unsigned short)value); break;
 			case UMOB_BODY2: clif_changelook(bl, LOOK_BODY2, (unsigned short)value); break;
+			case UMOB_GROUP_ID: md->ud.group_id = value; unit_refresh(bl); break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MOB.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18242,6 +18249,7 @@ BUILDIN_FUNC(setunitdata)
 				unit_attack(&hd->bl, target->id, 1);
 				break;
 			}
+			case UHOM_GROUP_ID: hd->ud.group_id = value; unit_refresh(bl); break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_HOM.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18293,6 +18301,7 @@ BUILDIN_FUNC(setunitdata)
 			case UPET_AMOTION: pd->status.amotion = (short)value; break;
 			case UPET_ADELAY: pd->status.adelay = (short)value; break;
 			case UPET_DMOTION: pd->status.dmotion = (short)value; break;
+			case UPET_GROUP_ID: pd->ud.group_id = value; unit_refresh(bl); break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_PET.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18350,6 +18359,7 @@ BUILDIN_FUNC(setunitdata)
 				unit_attack(&mc->bl, target->id, 1);
 				break;
 			}
+			case UMER_GROUP_ID: mc->ud.group_id = value; unit_refresh(bl); break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MER.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18412,6 +18422,7 @@ BUILDIN_FUNC(setunitdata)
 				unit_attack(&ed->bl, target->id, 1);
 				break;
 			}
+			case UELE_GROUP_ID: ed->ud.group_id = value; unit_refresh(bl); break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_ELEM.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18470,6 +18481,7 @@ BUILDIN_FUNC(setunitdata)
 			case UNPC_ROBE: clif_changelook(bl, LOOK_ROBE, (unsigned short)value); break;
 			case UNPC_BODY2: clif_changelook(bl, LOOK_BODY2, (unsigned short)value); break;
 			case UNPC_DEADSIT: nd->vd.dead_sit = (char)value; unit_refresh(bl); break;
+			case UNPC_GROUP_ID: nd->ud.group_id = value; unit_refresh(bl); break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_NPC.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18575,6 +18587,57 @@ BUILDIN_FUNC(setunitname)
 	}
 	clif_name_area(bl); // Send update to client.
 
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Sets a unit's title.
+ * setunittitle <GID>,<title>;
+ */
+BUILDIN_FUNC(setunittitle)
+{
+	int gid = script_getnum(st, 2);
+	block_list *bl = map_id2bl(gid);
+
+	if (bl == nullptr) {
+		ShowWarning("buildin_setunittitle: Unable to find object with given game ID %d!\n", gid);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	unit_data *ud = unit_bl2ud(bl);
+
+	if (ud == nullptr) {
+		ShowWarning("buildin_setunittitle: Unable to find unit_data for given game ID %d!\n", gid);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	safestrncpy(ud->title, script_getstr(st, 3), NAME_LENGTH);
+	clif_name_area(bl);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Gets a unit's title.
+ * getunittitle <GID>;
+ */
+BUILDIN_FUNC(getunittitle)
+{
+	int gid = script_getnum(st, 2);
+	block_list *bl = map_id2bl(gid);
+
+	if (bl == nullptr) {
+		ShowWarning("buildin_getunittitle: Unable to find object with given game ID %d!\n", gid);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	unit_data *ud = unit_bl2ud(bl);
+
+	if (ud == nullptr) {
+		ShowWarning("buildin_getunittitle: Unable to find unit_data for given game ID %d!\n", gid);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushstrcopy(st, ud->title);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -20951,6 +21014,7 @@ BUILDIN_FUNC(progressbar)
  * progressbar_npc "<color>",<seconds>{,<"NPC Name">};
  */
 BUILDIN_FUNC(progressbar_npc){
+	map_session_data *sd = map_id2sd(st->rid);
 	struct npc_data* nd = NULL;
 
 	if( script_hasdata(st, 4) ){
@@ -20979,8 +21043,10 @@ BUILDIN_FUNC(progressbar_npc){
 			return SCRIPT_CMD_FAILURE;
 		}
 
-		// detach the player
-		script_detach_rid(st);
+		if (sd) { // Player attached - keep them from doing other things
+			sd->state.workinprogress = WIP_DISABLE_ALL;
+			sd->state.block_action |= (PCBLOCK_MOVE | PCBLOCK_ATTACK | PCBLOCK_SKILL);
+		}
 
 		// sleep for the target amount of time
 		st->state = RERUNLINE;
@@ -20992,6 +21058,11 @@ BUILDIN_FUNC(progressbar_npc){
 	// Second call(by timer after sleeping time is over)
 	} else {
 		// Continue the script
+		if (sd) { // Player attached - remove restrictions
+			sd->state.workinprogress = WIP_DISABLE_NONE;
+			sd->state.block_action &= ~(PCBLOCK_MOVE | PCBLOCK_ATTACK | PCBLOCK_SKILL);
+		}
+
 		st->state = RUN;
 		st->sleep.tick = 0;
 		nd->progressbar.timeout = nd->progressbar.color = 0;
@@ -21758,17 +21829,17 @@ BUILDIN_FUNC(stand)
 /** Creates an array of bounded item IDs
  * countbound {<type>{,<char_id>}};
  * @param type: 0 - All bound items; 1 - Account Bound; 2 - Guild Bound; 3 - Party Bound
- * @return amt: Amount of items found
+ * @return amt: Total number of different items type found
  */
 BUILDIN_FUNC(countbound)
 {
-	int i, type, j = 0, k = 0;
 	TBL_PC *sd;
 
 	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	type = script_getnum(st,2);
+	int i, k = 0;
+	int type = script_getnum(st,2);
 
 	for( i = 0; i < MAX_INVENTORY; i ++ ) {
 		if( sd->inventory.u.items_inventory[i].nameid > 0 && (
@@ -21776,12 +21847,12 @@ BUILDIN_FUNC(countbound)
 			))
 		{
 			pc_setreg(sd,reference_uid(add_str("@bound_items"), k),sd->inventory.u.items_inventory[i].nameid);
+			pc_setreg(sd,reference_uid(add_str("@bound_amount"), k),sd->inventory.u.items_inventory[i].amount);
 			k++;
-			j += sd->inventory.u.items_inventory[i].amount;
 		}
 	}
 
-	script_pushint(st,j);
+	script_pushint(st,k);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -25118,6 +25189,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getunittype,"i"),
 	BUILDIN_DEF(getunitname,"i"),
 	BUILDIN_DEF(setunitname,"is"),
+	BUILDIN_DEF(setunittitle,"is"),
+	BUILDIN_DEF(getunittitle,"i"),
 	BUILDIN_DEF(getunitdata,"i*"),
 	BUILDIN_DEF(setunitdata,"iii"),
 	BUILDIN_DEF(unitwalk,"iii?"),
