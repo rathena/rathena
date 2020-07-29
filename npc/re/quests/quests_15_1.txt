@@ -16,7 +16,7 @@
 //= 1.1 Fixed NPC names [zackdreaver]
 //============================================================
 
-prontera,121,77,3	script	Phantasmagorika Spokesperson	4_F_ZONDAGIRL,{
+prontera,121,77,3	script	Phantasmagorika Spokesperson#prt::spokesperson	4_F_ZONDAGIRL,4,4,{
 	mes "[Spokesperson]";
 	mes "Good day.";
 	mes "Rekenber is recruiting adventurers for an excavation project that takes place in Phantasmagorika, the newly discovered ruins in Juperos.";
@@ -70,15 +70,27 @@ prontera,121,77,3	script	Phantasmagorika Spokesperson	4_F_ZONDAGIRL,{
 		mes "We need you!";
 		close;
 	}
+	end;
+
+OnTouch_:
+	.@npc$ = strnpcinfo(2);
+	if (getd( "." + .@npc$ ) == 1)
+		end;
+	setd "." + .@npc$, 1;
+	sleep 3000;
+	npctalk "Spokesperson: Recruiting adventurers for the excavation of Phantasmagorika.";
+	sleep 17000;
+	setd "." + .@npc$, 0;
+	end;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && isbegin_quest(7610) != 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && isbegin_quest(7610) == 0" );
 	end;
 }
-geffen,135,64,3	duplicate(Phantasmagorika Spokesperson)	Phantasmagorika Spokesperson#2	4_F_ZONDAGIRL
-alberta,119,65,3	duplicate(Phantasmagorika Spokesperson)	Phantasmagorika Spokesperson#3	4_F_ZONDAGIRL
-morocc,208,287,3	duplicate(Phantasmagorika Spokesperson)	Phantasmagorika Spokesperson#4	4_F_ZONDAGIRL
-payon,174,113,3	duplicate(Phantasmagorika Spokesperson)	Phantasmagorika Spokesperson#5	4_F_ZONDAGIRL
+morocc,208,287,3	duplicate(spokesperson)	Phantasmagorika Spokesperson#moc	4_F_ZONDAGIRL,4,4
+payon,174,113,3	duplicate(spokesperson)	Phantasmagorika Spokesperson#pay	4_F_ZONDAGIRL,4,4
+geffen,135,64,3	duplicate(spokesperson)	Phantasmagorika Spokesperson#gef	4_F_ZONDAGIRL,4,4
+alberta,119,65,3	duplicate(spokesperson)	Phantasmagorika Spokesperson#alb	4_F_ZONDAGIRL,4,2
 
 moc_para01,31,14,0	script	#atnevt01	HIDDEN_WARP_NPC,2,2,{
 	end;
@@ -1144,954 +1156,24 @@ verus04,176,161,5	script	Healer Miyo#atnd08	4_F_ACOLYTE,{
 	mes "Where do you hurt?";
 	next;
 	.@s = select( "HP/SP full recovery 5,000 z", "HP/SP half recovery 2,000 z" );
-	if (VER_MAIN > 4)
+	if (isbegin_quest(7610) > 0)
 		setarray .@cost[1],4500,1800;
 	else
 		setarray .@cost[1],5000,2000;
+	if (Zeny < .@cost[.@s]) {
+		mes "[Miyo]";
+		mes "...Look at you and you";
+		mes "can't pay for the treatment fee?";
+		close;
+	}
 	Zeny = Zeny - .@cost[.@s];
+    npcskill "AL_HEAL",(10/.@s),(99/.@s),(99/.@s);
 	percentheal (100 / .@s), (100 / .@s);
 	mes "[Miyo]";
 	mes "Oh, you're exhausted.";
 	mes "Let me restore " + ( .@s == 1 ? "your full" : "some of your" ) + " energy.";
 	mes "I'm offering a 10% discount to the official excavators.";
 	mes "Smile, and you'll feel better.";
-	close;
-}
-
-verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
-	mes "[Nile]";
-	if (VER_MAIN < 23) {
-		cutin "Arquien_n_atnad01.bmp",2;
-		mes "I just.. Don't want to let it be known I am there..";
-		mes "If you have business, let's meet officially in the Eden Group office.";
-		close3;
-	}
-	switch(VER_MAIN) {
-	case 23:
-		if (countitem(6757) < 5) {// The_Memory_Recorder
-			cutin "Arquien_n_atnad04.bmp",2;
-			mes "Do you not remember what I told you at the office?";
-			mes "I said if you want to play it, you need at least five.";
-			next;
-			cutin "Arquien_n_atnad01.bmp",2;
-			mes "[Nile]";
-			mes "The other pieces should be at the place you first found the 'Memory Record'.";
-			mes "So go there and thoroughly search the area.";
-		}
-		else {
-			cutin "Arquien_n_atnad01.bmp",2;
-			mes "Did you bring it?";
-			mes "Good. Put them together like this...";
-			mes "Put it here...";
-			next;
-			mes "[Nile]";
-			mes "Alright, all ready.";
-			mes "You push the play switch youself.";
-			delitem 6757,5;// The_Memory_Recorder
-			erasequest 7645;// Piece of Memory Record
-			setquest 7646;// Play Memory Record
-			VER_MAIN = 24;
-			emotion ET_SURPRISE, getnpcid(0,"Record player#e152a01");
-		}
-		break;
-	case 24:
-		cutin "Arquien_n_atnad01.bmp",2;
-		mes "It's the table right here.";
-		mes "I set it up so you can operate it.";
-		mes "You just have to play it.";
-		break;
-	case 25:
-		cutin "Arquien_n_atnad02.bmp",2;
-		mes "...The content is not a big deal.";
-		mes "Why.. is the name Atnad mentioned?";
-		mes "Does the old man know too?";
-		next;
-		cutin "Arquien_n_atnad01.bmp",2;
-		mes "[Nile]";
-		mes "No, no. He probably doesn't know.";
-		mes "Still feels like there is something to this.";
-		mes "..Ah thinking like this isn't my thing.";
-		next;
-		mes "[Nile]";
-		mes "You go and tell him about the content.";
-		mes "And this Memory Record.. Oh..?";
-		specialeffect EF_SPELLBREAKER,AREA,"Record player#e152a01";
-		next;
-		select("What just happened..");
-		mes "[Nile]";
-		mes "What is this..? Is it static?";
-		mes "The content won't be erased, right?";
-		mes "What do you call this type. Was it physical record.";
-		mes "I am not sure but the content itself should be fine.";
-		mes "It would be problematic if this much disappears.";
-		next;
-		mes "[Nile]";
-		mes "Recite the general idea to the old man, and ask him why the name Atnad is mentioned.";
-		erasequest 7646;// Play Memory Record
-		setquest 7647;// Report Memory Record
-		VER_MAIN = 26;
-		getexp 750000,500000;
-		break;
-	case 26:
-		cutin "Arquien_n_atnad04.bmp",2;
-		mes "You remember the gist right?";
-		mes "Just go and report it.";
-		mes "Tell him I will collect the items myself.";
-		mes "He will probably have no problem.";
-		mes "Since the old man is soooooo superior.";
-		break;
-	case 27:
-		if (countitem(6824) < 5) {// // Experimental_Dong_Memory_Record
-			cutin "Arquien_n_atnad04.bmp",2;
-			mes "Ha. That old man..";
-			mes "He will never come here himself, will he?";
-			mes "So this time it's the laboratories Memory Records?";
-			next;
-			cutin "Arquien_n_atnad03.bmp",2;
-			mes "[Nile]";
-			mes "I can press the record player switch for you.";
-			mes "Am I not generous?";
-			next;
-			mes "[Nile]";
-			mes "Bring back the Memory Records of the laboratories you want to play.";
-			mes "You know 5 have to be collected, right?";
-		}
-		else {
-			cutin "Arquien_n_atnad01.bmp",2;
-			mes "So it's these things.";
-			mes "Okay.";
-			mes "I don't feel that great but work is work.";
-			next;
-			mes "[Nile]";
-			mes "It's done.";
-			mes "You'll get what you want just by playing it.";
-			mes "Record the message properly and pass it along to the doctor. Got it?";
-			delitem 6824,5;// Experimental_Dong_Memory_Record
-			VER_MAIN = 28;
-		}
-		break;
-	case 28:
-		cutin "Arquien_n_atnad01.bmp",2;
-		mes "The record player is next to me.";
-		mes "Listen to it yourself, record the messages yourself.";
-		break;
-	case 29:
-		cutin "Arquien_n_atnad02.bmp",2;
-		mes "So that crunching noise, wasn't static but the sound of the connecting part cracking?";
-		mes "You can play it if you connect them into 5 again, the content will be preserved...";
-		mes "Anyway...";
-		next;
-		mes "[Nile]";
-		mes "..The content this time again is peculiar.";
-		mes "The experimental work, is it talking about the experiment that turned this place like this?";
-		mes "I mean the laboratories Memory Records.";
-		next;
-		cutin "Arquien_n_atnad04.bmp",2;
-		mes "[Nile]";
-		mes "It may perhaps play a big role in revealing the secrets of this area?";
-		mes "Although some of these findings are repeating the same content.";
-		next;
-		select("Show piece.");
-		cutin "Arquien_n_atnad02.bmp",2;
-		mes "[Nile]";
-		mes "Ho..this is interesting.";
-		mes "Was there an empty space in the middle of the record?";
-		mes "This part was breaking.";
-		mes "I feel a great evil design from this piece.";
-		mes "Make sure to handle this carefully.";
-		mes "You don't know what can happen.";
-		next;
-		cutin "Arquien_n_atnad03.bmp",2;
-		mes "[Nile]";
-		mes "Talking about these Memory Records.";
-		mes "It is interesting to listen to.";
-		mes "I'm going to participate so bring the Memory Records to me next time.";
-		next;
-		mes "[Nile]";
-		mes "You understand what I am saying?";
-		mes "Then, go to the old man and report this news.";
-		erasequest 7648;// Memory Records of the Laboratories
-		setquest 7649;// Report Memory Record Content
-		VER_MAIN = 30;
-		getexp 750000,500000;
-		next;
-		mes "^4d4dffYou can now receive daily quests for collecting Memory Records through Arquien Nile Atnad.^000000";
-		break;
-	default:
-		cutin "Arquien_n_atnad01.bmp",2;
-		mes "What's going on?";
-		next;
-		switch( select( "Research facilities Memory Records", "Laboratories Memory Records", "Converse", "I just stopped by." ) ) {
-		case 1:
-			mes "[Nile]";
-			switch( checkquest(7651,PLAYTIME) ) {
-			case -1:
-				if (isbegin_quest(7650) > 0) {
-					if (countitem(6757) < 5) {
-						mes "5 Research facilities Memory Records.";
-						mes "I'm looking forward to hear about my ancestors again.";
-						close3;
-					}
-					mes "You obtained all the Memory Records.";
-					mes "I wonder how many Memory Records are out there with this content?";
-					next;
-					mes "[Nile]";
-					mes "I guess we have no choice to gather as much information as possible?";
-					mes "Preparations for playing the record is finished.";
-					mes "Just have to play it now.";
-					delitem 6757,5;// The_Memory_Recorder
-					if (isbegin_quest(7654) == 0)
-						setquest 7654;// Play Research facilities Memory Records
-					close3;
-				}
-				mes "Are you here to collect Research facilities Memory Records?";
-				mes "Let's do what we have been doing.";
-				mes "Collecting 5 Research facilities Memory Records.";
-				next;
-				mes "[Nile]";
-				mes "In the meantime I will be preparing the record player to play it right away.";
-				mes "I wonder what the content will be this time.";
-				next;
-				if (select( "Accept.","Reject." ) == 2) {
-					mes "[Nile]";
-					mes "Well, what can I do.";
-					mes "You are probably busy too from everybody you have to answer to.";
-					mes "Then see you later.";
-					close3;
-				}
-				mes "[Nile]";
-				mes "I knew you'd say that.";
-				mes "You're curious about the content too, right?";
-				mes "I will be looking forward to it as well.";
-				setquest 7650;// Collect Memory Records of Research facilities
-				close3;
-			case 0:
-			case 1:
-				mes "As for collecting the Research Facilities Memory Records, we decided to do it only once a day, right?";
-				mes "Should we drive the old man into anxiety by working slowly and roughly?";
-				next;
-				mes "[Nile]";
-				mes "So, come back if the time I suggested is passed.";
-				mes "And you will be tired as well.";
-				mes "I am not the type to shove people around.";
-				close3;
-			case 2:
-				erasequest 7651;// One Memory a Day
-				mes "Hm.. Should we start to gather Memory Records again?";
-				mes "Let me know if you want to.";
-				mes "I will be tuning the record player in the meanwhile.";
-				close3;
-			}
-		case 2:
-			mes "[Nile]";
-			switch( checkquest(7653,PLAYTIME) ) {
-			case -1:
-				if (isbegin_quest(7652) > 0) {
-					if (countitem(6824) < 5) {
-						mes "5 laboratories area's Memory Records.";
-						mes "I wonder what that Dorothy lady will talk about this time.";
-						close3;
-					}
-					mes "I see you have obtained all the laboratories Memory Records.";
-					mes "I wonder how many Memory Records are out there with this content?";
-					next;
-					mes "[Nile]";
-					mes "I guess we have no choice to gather as much information as possible?";
-					mes "Preparations for playing the record is finished.";
-					mes "Just have to play it now.";
-					delitem 6824,5;// Experimental_Dong_Memory_Record
-					if (isbegin_quest(7655) == 0)
-						setquest 7655;// Play Laboratories Memory Records
-					close3;
-				}
-				mes "Are you here to collect Research facilities Memory Records?";
-				mes "Let's do what we have been doing.";
-				mes "I mean ^4d4dffcollecting 5 laboratories Memory Records in the underground facility of laboratories^000000.";
-				next;
-				mes "[Nile]";
-				mes "In the meantime I will be preparing the record player to play it right away.";
-				mes "I wonder what the content will be this time.";
-				next;
-				if (select( "Accept.", "Reject." ) == 2) {
-					mes "[Nile]";
-					mes "Well, what can I do.";
-					mes "You are probably busy too from everybody you have to answer to.";
-					mes "Then see you later.";
-					close3;
-				}
-				mes "[Nile]";
-				mes "I knew you'd say that.";
-				mes "You're curious about the content too, right?";
-				mes "I will be looking forward to it as well.";
-				setquest 7652;// Collect Memory Records of Laboratories
-				close3;
-			case 0:
-			case 1:
-				cutin "Arquien_n_atnad01.bmp",2;
-				mes "As for collecting the laboratories Memory Records, we decided to do it only once a day, right?";
-				mes "Should we drive the old man into anxiety by working slowly and roughly?";
-				next;
-				mes "[Nile]";
-				mes "So, come back if the time I suggested is passed.";
-				mes "And you will be tired as well.";
-				mes "I am not the type to shove people around.";
-				close3;
-			case 2:
-				erasequest 7653;// One Memory a Day 2
-				mes "Hm.. Should we start to gather Memory Records again?";
-				mes "Let me know if you want to.";
-				mes "I will be tuning the record player in the meanwhile.";
-				close3;
-			}
-		case 3:
-			mes "[Nile]";
-			if (VER_MAIN >= 37) {
-				cutin "Arquien_n_atnad02.bmp",2;
-				mes "The truth is I didn't really have hard feelings torwards my father.";
-				mes "I just wanted to hear one apology...";
-				close3;
-			}
-			if (VER_MAIN == 36) {
-				mes "Wait, something is going on?";
-				mes "That tent there is where the excavation team is, right?";
-				mes "It seems someone is visiting?";
-				mes "Go along now!";
-				cutin "",255;
-				close;
-			}
-			mes "What do you want to say?";
-			next;
-			select("About the Last Exploration");
-			mes "[Nile]";
-			mes "Ah, that..?";
-			mes "Forget about that.";
-			mes "Now that I think about it I need to hear it from him directly.";
-			next;
-			mes "[Nile]";
-			mes "According to Aures he blindly clung onto Juperos..";
-			mes "I think I might know why he did that now.";
-			next;
-			select("Perhaps for the contents in the Memory Records?");
-			mes "[Nile]";
-			mes "That's right.";
-			mes "The old man. My father probably vaguely knows as well.";
-			mes "He's looking for his roots.";
-			mes "Although it is my childhood memories, the grandfathers had a lot of secrets.";
-			next;
-			cutin "Arquien_n_atnad03.bmp",2;
-			mes "[Nile]";
-			mes "Even so... haha. Can I really be a descendant of this area of Verus?";
-			mes "It's probably just the same name. Hahaha...";
-			close3;
-		case 4:
-			mes "[Nile]";
-			cutin "Arquien_n_atnad01.bmp",2;
-			mes "Hey. I don't have that much time to spare okay?";
-			close3;
-		}
-	}
-	close3;
-}
-
-// Note : 2 players can use the npc at the same time
-verus04,170,150,3	script	Record player#e152a01	CLEAR_NPC,{
-	if (VER_MAIN == 24) {
-		mes "Playing audible information of the Memory Record.";
-		sleep2 1000;
-		npctalk "Whirr------ Zizip---";
-		sleep2 3000;
-		npctalk "Zizip-- Hey! What are you doing? Hey, are you listening?";
-		sleep2 3000;
-		npctalk "I'm listening. Zerter. .. Ah! You. Your voice got in this!";
-		sleep2 3000;
-		npctalk "What? You were recording? For what?";
-		sleep2 3000;
-		npctalk "For.. Zizizip--- Installing. Ah.. It's going to -zizizip.";
-		sleep2 3000;
-		npctalk "Hahahahaha that's what you are thinking? No one is like you Atnad. Aren't you --zizzip.";
-		sleep2 1000;
-		npctalk "..Atnad?";
-		sleep2 3000;
-		npctalk "Zizizip-- zizip..It's going to..criing---.. Bzz----";
-		sleep2 3000;
-		next;
-		VER_MAIN = 25;
-		mes "All audible information in the Memory Record has been played.";
-		close;
-	}
-	if (VER_MAIN == 28) {
-		mes "Playing audible information of the Memory Record.";
-		sleep2 1000;
-		npctalk "I am Dorothy Florence. I picked up a Memory Record in the Monitoring room today.";
-		sleep2 4000;
-		npctalk "It could be a black box recorded on the day of the experiment. I will play it!";
-		sleep2 4000;
-		npctalk "Zizip-- Ah.. static noise first... Ah. There it is.";
-		sleep2 4000;
-		npctalk "Goodluck..";
-		sleep2 4000;
-		npctalk "(Female Voice) Ha.. I regret never having dated.";
-		sleep2 4000;
-		npctalk "(Another Female Voice) Ah...... I should be seeing this while having chicken and beer.... zizizip--";
-		sleep2 4000;
-		npctalk "Huh? Is this all? But this voice. Ahhhhhh Artemia who checked her laundry!";
-		sleep2 4000;
-		npctalk "..Hum.. I see. That day. This is what happened.....";
-		sleep2 4000;
-		npctalk "Click";
-		sleep2 3000;
-		next;
-		mes "All audible information in the Memory Record has been played.";
-		getitem 22691,1;// Record_Fragment1
-		setquest 7653;// One Memory a Day 2
-		VER_MAIN = 29;
-		next;
-		mes "As you try to eject the Memory Record, the connecting part breaks with a cracking sound and returns to it's disassembled form.";
-		close;
-	}
-	.@quest_7654 = isbegin_quest(7654);// Play Research facilities Memory Records
-	.@quest_7655 = isbegin_quest(7655);// Play Laboratories Memory Records
-
-	if (.@quest_7654 > 0 || .@quest_7655 > 0) {
-		mes "Playing audible information of the Memory Record.";
-		sleep2 1000;
-		if (.@quest_7654 > 0) {
-			switch( rand(1,13) ) {// inaccurate (maybe more texts)
-			case 1:
-				npctalk "printf(Hello, World!)";
-				sleep2 4000;
-				npctalk "return 0";
-				sleep2 4000;
-				npctalk "Finished coding up to this point and shot 10 arrows.";
-				sleep2 4000;
-				npctalk "Ferdinando";
-				break;
-			case 2:
-				npctalk "Hello, Tatio";
-				sleep2 4000;
-				npctalk "I don't know how many years it has been.";
-				sleep2 4000;
-				npctalk "I guess I did a good thing by giving you eternal life.";
-				sleep2 4000;
-				npctalk "I guess you know the results of the outside exploration team? I am going to live outside.";
-				sleep2 4000;
-				npctalk "In this land where scientific civilization is a myth, I am going to live like primal man.";
-				sleep2 4000;
-				npctalk "Should I quit science and learn this thing called magic? Hahahahaha";
-				sleep2 4000;
-				npctalk "Smack! Stop saying stupid stuff!";
-				sleep2 4000;
-				npctalk "Ah.. Got hit again. My..zizizip.. hurts... zizizip";
-				break;
-			case 3:
-				npctalk "Hello, Tatio. Can you collect these and pick them up?";
-				sleep2 4000;
-				npctalk "I am playing around for you left alone in the city.";
-				sleep2 4000;
-				npctalk "Sorry for dumping all our hope and despair on you.";
-				sleep2 4000;
-				npctalk "How long do you have to stay in this grave of a city in solitude?";
-				sleep2 4000;
-				npctalk "I've decided to hide Memory Records for you.";
-				sleep2 4000;
-				npctalk "Of course I didn't even forget about the tiny parcels~!";
-				sleep2 4000;
-				npctalk "I was hoping to find the luxury to find and listen to these.";
-				sleep2 4000;
-				npctalk "...Your companion forever. Lasse Atnad.";
-				break;
-			case 4:
-				npctalk "Ah test test.. oh.. it works?";
-				sleep2 4000;
-				npctalk "Hello I am software engineer Sukurita.";
-				sleep2 4000;
-				npctalk "Today I am here to inform you of the points to note on Sukuta language used in the Sukuta engine.";
-				sleep2 4000;
-				npctalk "Skuta language can use both global and local variables..";
-				sleep2 4000;
-				npctalk "The global variable is like the devil and if you fall for the sweet allurement of";
-				sleep2 4000;
-				npctalk "the global variable you will suffer a heart palpitating and";
-				sleep2 4000;
-				npctalk "cold sweat inducing epilepsy over 1 byte of space or special syntax.";
-				sleep2 4000;
-				npctalk "Next time I will explain the alternative to Skuta language mhm mhm";
-				sleep2 4000;
-				npctalk "Sukurita language invented by I, Sukurita. Heeheeheehee";
-				break;
-			case 5:
-				npctalk "Click-zizip don't stop me Puhahaha I will leave this on record!";
-				sleep2 4000;
-				npctalk "Puhahahahahahahahaha";
-				sleep2 4000;
-				npctalk "I am not crazy, this is funny! It's because it's funny.";
-				sleep2 4000;
-				npctalk "This is a time to be laughing?";
-				sleep2 4000;
-				npctalk "Ah, of course not. It's not but hehehehe";
-				sleep2 4000;
-				npctalk "...Then should I cry? Huh? Hasn't this given you hope?";
-				sleep2 4000;
-				npctalk "Our hope!";
-				sleep2 4000;
-				npctalk "Clack-! Ah... this.. this smashing is Ze..Zerte.....";
-				sleep2 4000;
-				npctalk "Ugh. Blimey. You're a lot to handle.";
-				sleep2 4000;
-				npctalk "Huh? This was still recording?";
-				break;
-			case 6:
-				npctalk "Today is the last experiment and 4885th project of Verus city.";
-				sleep2 4000;
-				npctalk "Everybody wished to see the experiment succeed and went to the laboratories to observe.";
-				sleep2 4000;
-				npctalk "Except for me who is on shift in the Research facilities. Hahahaha";
-				sleep2 4000;
-				npctalk "Aha. Now I think Tatio is also not a member of the main project so is here with me in the Research facilities.";
-				sleep2 4000;
-				npctalk "It is lonely work.... Only if something good happened..";
-				sleep2 4000;
-				npctalk "Didn't something just flash? Hey!";
-				sleep2 4000;
-				npctalk "Booom! Zizizizip";
-				break;
-			case 7:
-				npctalk "Measurements for the survivors in the panic room are no longer being shown on the disaster system screen.";
-				sleep2 4000;
-				npctalk "What in the world happened?";
-				sleep2 4000;
-				npctalk "What is going on? Is it a system error?";
-				sleep2 4000;
-				npctalk "Tatio says Dr. Fresa is still alive.";
-				sleep2 4000;
-				npctalk "I pray that his heart is okay...";
-				break;
-			case 8:
-				npctalk "Hello, I am Lasse Atnad. I am on Research facility night duty again today.";
-				sleep2 4000;
-				npctalk "Huh? What is this? What are you doing now Atnad?";
-				sleep2 4000;
-				npctalk "Ey, can't you tell? I am voice recording!";
-				sleep2 4000;
-				npctalk "You're using an outdated recorder in this day and age? Record video. Video.";
-				sleep2 4000;
-				npctalk "That's my choice! Please don't disrupt me. Argh You attacked my weak spot Ahahaha";
-				sleep2 4000;
-				npctalk "...Zizip..click";
-				break;
-			case 9:
-				npctalk "Hey, Lasse. I am curious about something. Can you answer?";
-				sleep2 4000;
-				npctalk "What is it? What is it that you're pushing my recorder into my face?";
-				sleep2 4000;
-				npctalk "Since this is an interview. I am Zete, striving to reach the pinnacle of bioengineering..";
-				sleep2 4000;
-				npctalk "Enough with bragging. What are you curious about? What is it?";
-				sleep2 4000;
-				npctalk "It's just about Tatio, but he is mostly metameres. I heard that is Dr. Fresa's work, right?";
-				sleep2 4000;
-				npctalk "Yes. Dr. Fresa did research on mechanical substitution for the nervous system before coming to Verus city...";
-				sleep2 4000;
-				npctalk "Oh lala, then that couple came to meet because of that work?";
-				sleep2 4000;
-				npctalk "That's probably right? Tatio himself agreed to the human experiment without hesitation, so it was meant to be.";
-				sleep2 4000;
-				npctalk "Mhm.. So was it the fruit of an one-sided crush?";
-				sleep2 4000;
-				npctalk "Eh? What are you talking about? How did you conclude that? Others' personal life at that...";
-				sleep2 4000;
-				npctalk "Noo look. Fresa who distinguishes people into those useful for research, and to those useless..";
-				sleep2 4000;
-				npctalk "Then one day brings a husband so you know how surprised I was?!?!?!";
-				sleep2 4000;
-				npctalk "So, what you were interested in wasn't biotechnology but Dr. Fresa's love life. Ugh..";
-				sleep2 4000;
-				npctalk "Right! The Fresa! That stone of a woman has a lover..!! Can you believe it?";
-				sleep2 4000;
-				npctalk "I am sorry but. Isn't that enough?";
-				sleep2 4000;
-				npctalk "Heeek! Tatio, when. Did. You come hahahahaha !!! This. This isn't anything!";
-				sleep2 4000;
-				npctalk "Crash---! Click!";
-				break;
-			case 10:
-				npctalk "Explosion Day 32, voice record Lasse Atnad.";
-				sleep2 4000;
-				npctalk "The explosions inside the laboratories are not stopping.";
-				sleep2 4000;
-				npctalk "The condition of the researchers participating or observing the experiment is unknown";
-				sleep2 4000;
-				npctalk "except through the system vitals connected to the panic room.";
-				sleep2 4000;
-				npctalk "The plaza and research facilities have only been partially damaged by the explosion aftermath.";
-				sleep2 4000;
-				npctalk "However.. Some of the researchers and citizens have been killed by an unknown shock wave..";
-				sleep2 4000;
-				npctalk "We are currently assembling an exploration robot using the research facilities.";
-				sleep2 4000;
-				npctalk "Verus city main power source has stopped so minimal facilities are being powered by a secondary energy cube.";
-				sleep2 4000;
-				npctalk "Energy storms are still making accessing pass the laboratories partition impossible.";
-				sleep2 4000;
-				npctalk "The majority of the researchers are sick of being isolated in the city and are arguing for research on Time Sleep.";
-				sleep2 4000;
-				npctalk "..Within this grave we can't escape, we dream of going back in time.";
-				break;
-			case 11:
-				npctalk "Which side, I am on the side of being useful to research.";
-				sleep2 4000;
-				npctalk "That is the worth of my existence when it comes to her. This a fact I knew well.";
-				sleep2 4000;
-				npctalk "The reason I could not refuse, the reason I could not help but follow her as if I was lured by a mirage...";
-				sleep2 4000;
-				npctalk "Because she already was the owner of my heart...";
-				sleep2 4000;
-				npctalk "Rustle";
-				sleep2 4000;
-				npctalk "Hurk.. You. So it was true. It was a one way crush as ever.";
-				sleep2 4000;
-				npctalk "Huh? What are you looking at.. Urk isn't that Tatio's diary?";
-				sleep2 4000;
-				npctalk "Be quiet! Idiot! What if we get caught!";
-				sleep2 4000;
-				npctalk "What, you are reading this while recording it?!?!?!?!";
-				break;
-			case 12:
-				npctalk "Hello, Tatio.";
-				sleep2 4000;
-				npctalk "Most of the people are dead.";
-				sleep2 4000;
-				npctalk "I do not feel guilt even though I turned all those people into dust in order to survive.";
-				sleep2 4000;
-				npctalk "Above all I worry about you being left alone.";
-				sleep2 4000;
-				npctalk "So I have decided to stop despairing.";
-				sleep2 4000;
-				npctalk "It is tomorrow. The day all of us leave this place with you here...";
-				sleep2 4000;
-				npctalk "Until we can see each other again, good bye.";
-				break;
-			case 13:
-				npctalk "Hello. This is Silvia Loren.";
-				sleep2 4000;
-				npctalk "My hobby is chicken. I like beer~.";
-				sleep2 4000;
-				npctalk "Eh... Kind of went overboard by taking on a project today.";
-				sleep2 4000;
-				npctalk "Honestly it isn't a subject I was interested in.";
-				sleep2 4000;
-				npctalk "Vincent was participating in it.";
-				sleep2 4000;
-				npctalk "Ah.......";
-				sleep2 4000;
-				npctalk "No wait wait. I didn't mean to explain that. Oh now!! Cancel it!! - Zizipzizip";
-				break;
-			}
-			sleep2 3000;
-			next;
-			mes "All audible information in the Memory Record has been played.";
-			erasequest 7650;// Collect Memory Records of Research facilities
-			erasequest 7654;// Play Research facilities Memory Records
-			setquest 7651;// One Memory a Day
-			if (VERUS_DAILY_QUEST < 10) {// inaccurate
-				if (VER_MAIN != 32)
-					VERUS_DAILY_QUEST++;
-				if (VER_MAIN == 35 && VERUS_DAILY_QUEST == 10)
-					VER_MAIN = 36;
-				else if (VER_MAIN == 31 && VERUS_DAILY_QUEST > 4)
-					VER_MAIN = 32;
-			}
-		}
-		else {
-			switch( rand(1,14) ) {
-			case 1:
-				npctalk "This is Dorothy Florence. Dorothy who only knows how to do laundry.";
-				sleep2 4000;
-				npctalk "I want to save the remains of the people with the only things I have.";
-				sleep2 4000;
-				npctalk "This place has a lot of people. They are still alive.";
-				sleep2 4000;
-				npctalk "I hope to save as many stories of the people as I can.";
-				sleep2 4000;
-				npctalk "As I hope somebody will remember how we were instead.";
-				sleep2 4000;
-				npctalk "Okay.. then.. who should I interview first?";
-				break;
-			case 2:
-				npctalk "This is Dorothy Florence.";
-				sleep2 4000;
-				npctalk "Individual assignments have been established under Dr. Fresa's command.";
-				sleep2 4000;
-				npctalk "We have to survive here until the energy storm outside stops.";
-				sleep2 4000;
-				npctalk "We have decided to consult the former cafeteria owner Yangsang on the food problem.";
-				sleep2 4000;
-				npctalk "They say we can last about 40 days.";
-				sleep2 4000;
-				npctalk "This panic room is amazing.";
-				break;
-			case 3:
-				npctalk "This is Dorothy Florence.";
-				sleep2 4000;
-				npctalk "We had a small party today";
-				sleep2 4000;
-				npctalk "We had the first harvest of the plants being cultivated!";
-				sleep2 4000;
-				npctalk "According to the biotechnology managers harvest is possible at least once every 2 weeks";
-				sleep2 4000;
-				npctalk "due to a growth acceleration technology.";
-				sleep2 4000;
-				npctalk "I can taste fresh grapes again today.";
-				break;
-			case 4:
-				npctalk "This is Dorothy Florence. This is the 3rd night.";
-				sleep2 4000;
-				npctalk "People are looking to Dr. Fresa as the leader of this current situation and rendering yesterday's criticism meaningless.";
-				sleep2 4000;
-				npctalk "Biotechnology engineers, mechanical engineers, facility managers.. we have everybody we need.";
-				sleep2 4000;
-				npctalk "There are also lowly kitchen maids like myself as well.";
-				sleep2 4000;
-				npctalk "I was here just to deliver some laundry.";
-				sleep2 4000;
-				npctalk "How did I get caught up in something like this?";
-				break;
-			case 5:
-				npctalk "I am Dorothy Florence. I picked up a Memory Record in the Monitoring room today.";
-				sleep2 4000;
-				npctalk "It could be a black box recorded on the day of the experiment. I will play it!";
-				sleep2 4000;
-				npctalk "Zizip-- Ah.. static noise first... Ah. There it is.";
-				sleep2 4000;
-				npctalk "Goodluck..";
-				sleep2 4000;
-				npctalk "(Female Voice) Ha.. I regret never having dated.";
-				sleep2 4000;
-				npctalk "(Another Female Voice) Ah...... I should be seeing this while having chicken and beer.... zizizip--";
-				sleep2 4000;
-				npctalk "Huh? Is this all? But this voice. Ahhhhhh Artemia who checked her laundry!";
-				sleep2 4000;
-				npctalk "..Hum.. I see. That day. This is what happened.....";
-				sleep2 4000;
-				npctalk "Click";
-				break;
-			case 6:
-				npctalk "This is Dorothy Florence.";
-				sleep2 4000;
-				npctalk "The plants cultivated by the biologist have sprouted shoots one day.";
-				sleep2 4000;
-				npctalk "Should I be happy?";
-				sleep2 4000;
-				npctalk "It is something to be happy about but, there is still no contact with the outside world.";
-				sleep2 4000;
-				npctalk "A week has passed, and the only joy of the people in the panic room...";
-				sleep2 4000;
-				npctalk "Is watching the germination of the plants.";
-				break;
-			case 7:
-				npctalk "This is Dorothy Florence. It has been a month of panic room life.";
-				sleep2 4000;
-				npctalk "People were busy since the morning due to the Air cleaner being broken.";
-				sleep2 4000;
-				npctalk "I can only watch on since the only thing I know how to do is wash clothes.";
-				sleep2 4000;
-				npctalk "Fortunately the machine manias have already made a new air cleaner";
-				sleep2 4000;
-				npctalk "so there will be no problem breathing.";
-				sleep2 4000;
-				npctalk "What a relief, isn't it?";
-				break;
-			case 8:
-				npctalk "This is Dorothy. This is the last recording.";
-				sleep2 4000;
-				npctalk ".I don't want to die. Whimper..";
-				sleep2 4000;
-				npctalk "I don't want to be like them!!";
-				sleep2 4000;
-				npctalk "...I want to live...";
-				break;
-			case 9:
-				npctalk "This is Dorothy Florence. I am recording this";
-				sleep2 4000;
-				npctalk "because someone has to leave behind the memories of this terrible accident.";
-				sleep2 4000;
-				npctalk "The outside has been completely cut off from the explosion that occurred with the experiment.";
-				sleep2 4000;
-				npctalk "Most of the people have currently evacuated to the panic room.";
-				sleep2 4000;
-				npctalk "There is no contact with the outside world.";
-				sleep2 4000;
-				npctalk "Going out side will be difficult for the time being.";
-				break;
-			case 10:
-				npctalk "Hello, I am Ate. The assistant engineer of Verus city.";
-				sleep2 4000;
-				npctalk "Haha.. isn't this awkward?";
-				sleep2 4000;
-				npctalk "I.. fermented alcohol a while ago with the grapes in the bunker.";
-				sleep2 4000;
-				npctalk "Life in the bunker is becoming more impoverished the more we lose life on the surface.";
-				sleep2 4000;
-				npctalk "I didn't share that much but the guy next to me must be drunk because he keeps clinging on to me.";
-				sleep2 4000;
-				npctalk "Doesn't this guy have something better to do than to cling onto me.";
-				sleep2 4000;
-				npctalk "I'm kind of on the popular side. Haha.";
-				sleep2 4000;
-				npctalk "But, seeing that clingy guy reminded me of the kid somehow.";
-				sleep2 4000;
-				npctalk "Long black braided hair and face full of freckles...";
-				sleep2 4000;
-				npctalk "..Ate! Can you check this for a minute?";
-				sleep2 4000;
-				npctalk "Ah.. sorry. I have to go to work. I will do more when I have the chance.";
-				sleep2 4000;
-				npctalk "Eh, Ate's interview will be continued next time! This has been Dorothy!";
-				break;
-			case 11:
-				npctalk "This is Dorothy Florence. Day 50 of the explosion.";
-				sleep2 4000;
-				npctalk "After a long discussion, the research staff of Dr. Fresa seem to have decided to";
-				sleep2 4000;
-				npctalk "go through part of the partition where these is no energy storm.";
-				sleep2 4000;
-				npctalk "They are leaving by digging an underground tunnel.. !";
-				sleep2 4000;
-				npctalk "I thought we were trapped by the protective wall?";
-				break;
-			case 12:
-				npctalk "Hello! Ate! Do you have time?";
-				sleep2 4000;
-				npctalk "Hello, Dorothy. Is this that thing last time? Did I really have to continue?";
-				sleep2 4000;
-				npctalk "I did promise. No choice. Where was I?";
-				sleep2 4000;
-				npctalk "The kid with long black braided hair and face full of freckles!";
-				sleep2 4000;
-				npctalk "Ah, yes. That kid. He would follow me around annoyingly.";
-				sleep2 4000;
-				npctalk "A time when he was a even more of a kid. .. Haa..";
-				sleep2 4000;
-				npctalk "I was relieved to think I was finally rid of him in Verus city.";
-				sleep2 4000;
-				npctalk "Until I ran into him at the laboratories. Haha, isn't he quite the kid?";
-				sleep2 4000;
-				npctalk "Always honest in his feelings, unchanging....";
-				sleep2 4000;
-				npctalk "But the kid, never told me he liked me because his stubbornness.";
-				sleep2 4000;
-				npctalk "Even though it was written on his face.";
-				sleep2 4000;
-				npctalk "Chasing me around like a stalker. Humph... Hahaha";
-				sleep2 4000;
-				npctalk "But today I am missing you kid. .. Hoho.";
-				sleep2 4000;
-				npctalk ".....But that day you probably, hm.. that day....";
-				sleep2 4000;
-				npctalk ".................Dorothy . ..Let's stop.";
-				break;
-			case 13:
-				npctalk "This is Dorothy Florence. A month and a week has passed.";
-				sleep2 4000;
-				npctalk "There is bad news today.";
-				sleep2 4000;
-				npctalk "The people who went outside the multiplex protective wall to measure the atmosphere have not come back.";
-				sleep2 4000;
-				npctalk "Maybe.. They were swallowed up by the energy storm.";
-				sleep2 4000;
-				npctalk "I hope they find freedom again.";
-				break;
-			case 14:
-				npctalk "This is Dorothy Florence. Day 44 of the explosion.";
-				sleep2 4000;
-				npctalk "I hear a portion of the people within the protective wall have changed strangely.";
-				sleep2 4000;
-				npctalk "Apparently it is related to having gone outside.";
-				sleep2 4000;
-				npctalk "People are scrambling to check the wall.";
-				sleep2 4000;
-				npctalk "What is going to happen to us...?";
-				break;
-			case 15:
-				npctalk "--------Bang-----";
-				sleep2 4000;
-				npctalk "Urk..";
-				sleep2 4000;
-				npctalk "Sob sob...";
-				sleep2 4000;
-				npctalk "Why! Why did it happen like this!!!";
-				sleep2 4000;
-				npctalk "Sob sob..";
-				sleep2 4000;
-				npctalk "-------Baang-----";
-				sleep2 4000;
-				npctalk "--Zizip-Ah --doctor --before --zizizip-- he zizip- look zizip--for..";
-				sleep2 4000;
-				npctalk "--Zizizip--here.";
-				sleep2 4000;
-				npctalk "-Click-";
-				sleep2 4000;
-				npctalk "Hm. The doctor looks very tired as well.";
-				sleep2 4000;
-				npctalk "Ah! This was on? I'm going to get in trouble for leaving it on too long..";
-				sleep2 4000;
-				npctalk "Umph! Hm! This is Vanilla Luide. I am tired a lot these days for some reason.";
-				sleep2 4000;
-				npctalk "I guess looking at the situation it's not a shock to see everybody's state.";
-				sleep2 4000;
-				npctalk "Hoo...";
-				sleep2 4000;
-				npctalk "Bzz..";
-				break;
-			}
-			sleep2 3000;
-			next;
-			mes "All audible information in the Memory Record has been played.";
-			erasequest 7652;// Collect Memory Records of Laboratories
-			erasequest 7655;// Play Laboratories Memory Records
-			setquest 7653;// One Memory a Day 2
-			// memory record daily quests
-			if (countitem(22691) < 1 && countitem(22692) < 1 && countitem(22693) < 1 && countitem(22694) < 1 && countitem(22695) < 1)
-				getitem rand(22691,22695),1;// Record_Fragment
-		}
-		getexp 1500000,1000000;
-		next;
-		specialeffect EF_SPELLBREAKER;
-		mes "As you try to eject the Memory Record, the connecting part breaks with a cracking sound and returns to it's disassembled form.";
-		next;
-		cutin "Arquien_n_atnad01.bmp",2;
-		mes "[Nile]";
-		mes "Darn. There's only one content but it annoyingly breaks every time it doesn't play.";
-		mes "I'm starting to think it's made like this on purpose.";
-		mes "Annoying to clean up..";
-		next;
-		mes "[Nile]";
-		mes "Why make things like this with all that science and talent and whatnot?";
-		mes "Not to mention there is the occasional overlap..";
-		mes "It feels like someone is coaxing us to find out about the past no matter what.";
-		next;
-		mes "[Nile]";
-		mes "Anyway I will record this content separately and deliver it to the old man.";
-		mes "Good work today.";
-		next;
-		mes "[Nile]";
-		if (VERUS_DAILY_QUEST < 10)
-			mes "Then come back tomorrow.";
-		else {
-			mes "Wait, something is going on?";
-			mes "That tent there is where the excavation team is, right?";
-			mes "It seems someone is visiting?";
-			mes "Go along now!";
-		}
-		close3;
-	}
-	if (VER_MAIN < 30) {
-		cutin "Arquien_n_atnad01.bmp",2;
-		mes "[Nile]";
-		mes "Can you, not touch things without asking?";
-		close3;
-	}
-	mes "There are no more Memory Records to play.";
 	close;
 }
 
@@ -3226,153 +2308,6 @@ OnInit:
 	end;
 }
 
-verus03,167,257,5	script	Access Controller Damhw#atnd	4_M_LGTGUARD,{
-	.@visible_name$ = strnpcinfo(1);
-	if (.@visible_name$ == "Access Controller Damhw")
-		.@npc_name$ = "Damhwa";
-	else if (.@visible_name$ == "Access Controller Geuma")
-		.@npc_name$ = "Geuman";
-	else
-		.@npc_name$ = "Gyuhwa";
-
-	mes "[" + .@npc_name$ + "]";
-	if (VER_MAIN < 19) {
-		mes "I am sorry, only permitted excavation team members are permitted access.";
-		mes "If you work hard with your current excavation team the permit will come.";
-		close;
-	}
-	if (isbegin_quest(7641) == 2) {
-		mes "How is the research and investigation going?";
-		mes "The machines in the restricted area are quite dangerous so please be careful.";
-		close;
-	}
-	mes "This place can only be accessed by permitted members.";
-	mes "Where are you coming from?";
-	next;
-	if (select("I am coming from the atnad excavation", "Why am I prohibited?") == 1) {
-		mes "[" + .@npc_name$ + "]";
-		mes "Ah. You are a member of the Atnad excavation team.";
-		mes "Yes I have confirmed you on the list.";
-		mes "Atnad excavators are permitted access.";
-		next;
-		select("Why is access prohibited?");
-	}
-	mes "[" + .@npc_name$ + "]";
-	mes "Verus City is divided into four large sections.";
-	mes "Did you know?";
-	next;
-	mes "[" + .@npc_name$ + "]";
-	mes "The area currently open are the town and plaza.";
-	mes "While the reason is unknown this place has been closed off and prohibited.";
-	next;
-	mes "[" + .@npc_name$ + "]";
-	mes "During independent corporate investigations before excavator recruitment,";
-	mes "we found that there was a large explosion here and to check the safety of the area,";
-	mes "an inspection period was needed.";
-	next;
-	mes "[" + .@npc_name$ + "]";
-	mes "This is place currently not seen as a great risk other than the dangerous terrain and possibility of";
-	mes "being attacked by machines like the plaza, so access is limited only to the excavation team.";
-	next;
-	mes "[" + .@npc_name$ + "]";
-	mes "Please note that the permit also includes the zone connected in the West.";
-	next;
-	mes "[" + .@npc_name$ + "]";
-	mes "Anyway, since you are permitted you may enter freely from now on.";
-	mes "Then I expect there to be good results!";
-	completequest 7641;// Access Permitted (note : player can enter in verus01 without this quest)
-	close;
-
-OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7641) == 1" );
-	end;
-}
-verus03,172,257,3	duplicate(Access Controller Damhw#atnd)	Access Controller Gyuhw#atnd	4_M_LGTGUARD
-verus03,52,250,5	duplicate(Access Controller Damhw#atnd)	Access Controller Geuma#atnd	4_M_LGTGUARD
-
-verus03,52,254,0	script	verus03_to_verus01	WARPNPC,1,1,{
-	if (VER_MAIN < 19) {
-		mes "[Access Controller]";
-		mes "I am sorry but only permitted members can enter from this point.";
-		close;
-	}
-	warp "verus01",243,62;
-	end;
-}
-
-verus03,169,259,0	script	verus03_to_verus02	WARPNPC,1,1,{
-	if (VER_MAIN < 19) {
-		mes "[Access Controller]";
-		mes "I am sorry but only permitted members can enter from this point.";
-		close;
-	}
-	warp "verus02",72,19;
-	end;
-}
-
-
-verus02,60,30,1	script	Strewn paper#e152a01	4_ENERGY_BLUE,{
-	if (checkweight(1301,1) == 0) {
-		mes "- Cannot progress quest because you have too many items in your possession. -";
-		close;
-	}
-	if (VER_MAIN == 20) {
-		mes "Decided to deliver the 'Memory Record' found in the heap to Dr. Ian Atnad.";
-		mes "Right now a piece of paper hard to read is left.";
-		close;
-	}
-	if (isbegin_quest(7645) == 0 && isbegin_quest(7650) == 0 && VER_MAIN != 19) {
-		mes "Nothing special is found.";
-		close;
-	}
-	if (countitem(6757) > 4) {
-		mes "Enough Memory Records are collected.";
-		mes "No more need to go through the heap of garbage.";
-		close;
-	}
-	if (VER_MAIN == 19) {
-		mes "All sorts of documents and office supplies are piled up in a heap.";
-		mes "Most of the writing is damaged and hard to read.";
-	}
-	else
-		mes "Something may come out by a search.";
-	next;
-	if (select("Check adequately.", "Quit.") == 2) {
-		mes "Decided to investigate something else.";
-		close;
-	}
-	progressbar "00ff00",3;
-	disablenpc strnpcinfo(0);
-	getitem 6757,1;// The_Memory_Recorder
-	if (VER_MAIN == 19) {
-		mes "You find a object never seen before as you go through the clutter of documents and office supplies.";
-		mes "^4d4dffThis needs to be checked if it has enough research value to be brought back to Dr. Ian Atnad.^000000";
-		erasequest 7642;// Explore Research facilities
-		setquest 7643;// Mysterious Piece
-		VER_MAIN = 20;
-	}
-	else {
-		mes "Found a Memory Record between the piles of documents.";
-		mes "Seems like someone hid it there on purpose.";
-	}
-	initnpctimer;
-	close;
-
-OnTimer60000:
-	stopnpctimer;
-	enablenpc strnpcinfo(0);
-	end;
-}
-verus02,178,32,3	duplicate(Strewn paper#e152a01)	Strewn paper#e152a02	4_ENERGY_BLUE
-verus02,102,135,3	duplicate(Strewn paper#e152a01)	Strewn paper#e152a03	4_ENERGY_BLUE
-verus02,42,37,3	duplicate(Strewn paper#e152a01)	Strewn paper#e152a04	4_ENERGY_BLUE
-verus02,155,64,3	duplicate(Strewn paper#e152a01)	Strewn paper#e152a05	4_ENERGY_BLUE
-verus02,80,129,3	duplicate(Strewn paper#e152a01)	Strewn paper#e152a06	4_ENERGY_BLUE
-verus02,29,129,3	duplicate(Strewn paper#e152a01)	Strewn paper#e152a07	4_ENERGY_BLUE
-verus02,125,85,3	duplicate(Strewn paper#e152a01)	Strewn paper#e152a08	4_ENERGY_BLUE
-verus02,51,237,3	duplicate(Strewn paper#e152a01)	Strewn paper#e152a09	4_ENERGY_BLUE
-verus02,160,150,3	duplicate(Strewn paper#e152a01)	Strewn paper#e152a10	4_ENERGY_BLUE
-
 verus01,123,181,3	script	Verity#Warper	4_F_BERRYTEA,{
 	mes "[Verity]";
 	mes "Hello.";
@@ -3402,14 +2337,11 @@ verus01,123,181,3	script	Verity#Warper	4_F_BERRYTEA,{
 			mes "[Verity]";
 			if (countitem(6828) < 1) {
 				mes "I see you do not have the gravity safety device with you.";
-				close2;
-				cutin "",255;
-				end;
+				close3;
 			}
-			delitem 6828,1;// Gravity_Safety_Device
+			delitem 6828,1;// Gravity_Parts
 			close2;
 			warp "un_myst",142,38;
-			@weird_piece = 0;
 			end;
 		}
 		break;
@@ -3420,62 +2352,6 @@ verus01,123,181,3	script	Verity#Warper	4_F_BERRYTEA,{
 	cutin "EP15_2_brt_1.bmp",2;
 	close3;
 }
-
-un_bunker,382,335,3	script	Box#e152p00	4_ENERGY_BLUE,{
-	if (checkweight(1301,1) == 0) {
-		mes "- Cannot progress quest because you have too many items in your possession. -";
-		close;
-	}
-	if (VER_MAIN == 27 || isbegin_quest(7652) > 0) {// Collect Memory Records of Laboratories
-		if (countitem(6824) > 4) {
-			mes "Enough Memory Records are collected.";
-			mes "No need to keep on crawling and searching.";
-			close;
-		}
-		if (VER_MAIN == 27)
-			mes "Something shiny is seen under the desk.";
-		else
-			mes "Something may come out by a search.";
-		next;
-		if (select( "Check below.", "Quit." ) == 1) {
-			progressbar "00ff00",3;
-			mes "Found a Memory Record under the desk.";
-			getitem 6824,1;// Experimental_Dong_Memory_Record
-			initnpctimer;
-			disablenpc strnpcinfo(0);
-		}
-		close;
-	}
-	mes "Nothing special is found.";
-	close;
-OnTimer30000:
-	stopnpctimer;
-	enablenpc strnpcinfo(0);
-	end;
-}
-un_bunker,87,167,3	duplicate(Box#e152p00)	Under desk#e152p01	4_ENERGY_BLUE
-un_bunker,316,243,3	duplicate(Box#e152p00)	Under desk#e152p02	4_ENERGY_BLUE
-un_bunker,103,175,3	duplicate(Box#e152p00)	Under desk#e152p03	4_ENERGY_BLUE
-un_bunker,50,292,3	duplicate(Box#e152p00)	Machine Remains#e152p04	4_ENERGY_BLUE
-un_bunker,57,314,3	duplicate(Box#e152p00)	Machine Remains#e152p05	4_ENERGY_BLUE
-un_bunker,128,314,3	duplicate(Box#e152p00)	Machine Remains#e152p06	4_ENERGY_BLUE
-un_bunker,143,308,3	duplicate(Box#e152p00)	Machine Remains#e152p07	4_ENERGY_BLUE
-un_bunker,147,287,3	duplicate(Box#e152p00)	Machine Remains#e152p08	4_ENERGY_BLUE
-un_bunker,245,360,3	duplicate(Box#e152p00)	Thicket#e152p09	4_ENERGY_BLUE
-un_bunker,286,348,3	duplicate(Box#e152p00)	Thicket#e152p10	4_ENERGY_BLUE
-un_bunker,331,375,3	duplicate(Box#e152p00)	Thicket#e152p11	4_ENERGY_BLUE
-un_bunker,288,263,3	duplicate(Box#e152p00)	Document pile#e152p14	4_ENERGY_BLUE
-un_bunker,280,243,3	duplicate(Box#e152p00)	Document pile#e152p15	4_ENERGY_BLUE
-un_bunker,287,304,3	duplicate(Box#e152p00)	Organized food tray#e15	4_ENERGY_BLUE
-un_bunker,321,305,3	duplicate(Box#e152p00)	Organized food tray#e152	4_ENERGY_BLUE
-
-un_bunker,103,95,4	script	Mysterious Device#EP15.?_1	2_BOARD2,{
-	end;
-}
-un_bunker,102,161,4	duplicate(Mysterious Device#EP15.?_1)	Mysterious Device#EP15.?_2	2_BOARD2
-un_bunker,51,272,4	duplicate(Mysterious Device#EP15.?_1)	Mysterious Device#EP15.?_3	2_BOARD2
-un_bunker,295,234,4	duplicate(Mysterious Device#EP15.?_1)	Mysterious Device#EP15.?_4	2_BOARD2
-un_bunker,279,297,4	duplicate(Mysterious Device#EP15.?_1)	Mysterious Device#EP15.?_5	2_BOARD2
 
 //- Wandering Bard Quest
 verus03,129,21,5	script	Wandering Bard#ep15	1_M_BARD,{
@@ -5798,7 +4674,7 @@ juperos_01,242,91,3	script	Rekenber Guard#atd06	4_M_LGTGUARD,{
 	close;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && isbegin_quest(7610) != 2" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && isbegin_quest(7610) == 0" );
 	end;
 }
 
@@ -5819,102 +4695,7 @@ yuno_fild07,211,179,5	script	Excavator Guide#atd07	4_M_LGTGUARD,{
 	close;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && isbegin_quest(7610) != 2" );
-	end;
-}
-
-verus03,55,245,3	script	Rekenber Scholar#e152a0	2_M_MOLGENSTEIN,{
-	mes "[Rekenber Scholar]";
-	mes "Hm.. This machine seems to be have been used for tracking something.";
-	mes "What do you think?";
-	next;
-	mes "[Rekenber Technician]";
-	mes "I think so as well.";
-	mes "This screen probably indicates the position or condition of what it is tracking or detecting.";
-	next;
-	mes "[Rekenber Scholar]";
-	mes "Was it showing the situation of this closed area, perhaps?";
-	mes "It is presumed that it was impossible to directly enter based on the interior situation a while ago.";
-	next;
-	mes "[Rekenber Technician]";
-	mes "Probably so.";
-	mes "We can assume there was a large explosion just by observation with our eyes..";
-	mes "Then the reason for the people outside to install something like this ....";
-	next;
-	mes "[Rekenber Scholar]";
-	mes "Yes. It is to find out the interior situation.";
-	mes "Maybe.. there was a big accident so it might be for searching for survivors..";
-	next;
-	mes "[Rekenber Technician]";
-	mes "Indeed. You are probably right.";
-	mes "And our role is to find out the secrets of what happened here.";
-	close;
-
-}
-verus03,55,243,3	duplicate(Rekenber Scholar#e152a0)	Rekenber technician#e152a1	4_M_REPAIR
-
-verus03,59,250,7	script	Coral Excavation team C#e152	2_M_SAGE_B,{
-	mes "[Cecil]";
-	mes "Hey, Kobell. If we want to be chosen as an outstanding excavation team...!";
-	next;
-	mes "[Kobell]";
-	mes "To be..?";
-	next;
-	mes "[Cecil]";
-	mes "Is to figure out the identity of these unknown mechanical devices!";
-	next;
-	mes "[Kobell]";
-	mes "Whaat? How did this happen?";
-	mes "We didn't even major in engineering!";
-	next;
-	mes "[Cecil]";
-	mes "This place if full of machines! We can receive recognition like the Atnad excavators if we analyze them!";
-	next;
-	mes "[Kobell]";
-	mes "Aha! Indeed so.";
-	mes "But I think the Atnad excavators are around here...?";
-	next;
-	mes "[Cecil]";
-	mes "Hah! Our research goals cannot be discovered. This is a secret between you and I!";
-	next;
-	mes "[Kobell]";
-	mes "Let's do that~";
-	close;
-}
-verus03,61,250,7	duplicate(Coral Excavation team C#e152)	Coral Excavation team C#e152_	4_M_ALCHE_C
-
-verus04,1,1,0	script	#verus04_invade	HIDDEN_WARP_NPC,{
-	end;
-OnInit:
-	initnpctimer;
-	end;
-OnTimer1000:
-	mapannounce "verus04", "Police Officer Piffs: The Doom Prayers have stricken!", bc_map;
-    monster "verus04",0,0,"Ruin Grace Believer",3158,20, "#verus04_invade::OnMobDead";
-	end;
-OnTimer3000:
-	mapannounce "verus04", "Police Chief Kesler: Attention all police officers, stop the Doom Prayers before they destroy the excavation site!", bc_map;
-	end;
-OnTimer30000:
-	mapannounce "verus04", "Doom Prayers Executive: Destroy and bring the end of the world! Destroy and be saved!", bc_map;
-	end;
-OnTimer60000:
-	mapannounce "verus04", "Police Officer Piffs: Argh, Doom Prayers! Where do they keep coming from?!", bc_map;
-	end;
-OnTimer120000:
-	mapannounce "verus04", "Police Chief Kesler: Everyone, do not retreat! Don't let them destroy the excavation site!", bc_map;
-	end;
-OnTimer180000:
-	mapannounce "verus04", "Police Chief Kesler: Those Doom Prayers underestimate us.", bc_map;
-	end;
-OnTimer240000:
-	mapannounce "verus04", "Police Chief Kesler: Adventurers, the Doom Prayers have been driven out of Phantasmagorika. They're no longer a threat to your safety.", bc_map;
-	killmonster "verus04", "#verus04_invade::OnMobDead";
-	end;
-OnTimer3600000:
-	initnpctimer;
-	end;
-OnMobDead:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && isbegin_quest(7610) == 0" );
 	end;
 }
 
@@ -5932,7 +4713,7 @@ verus04,203,171,3	script	Rekenber Guard#ver02	4_M_LGTGUARD,{
 }
 verus04,171,267,3	script	Rekenber Guard#ver03	4_M_LGTGUARD2,{
 	mes "[Rekenber Guard]";
-	if (rand(2))// inaccurate
+	if (Sex == SEX_MALE)
 		mes "I hate using portable johns, but my bladder can't seem to hold very much. What about you?";
 	else
 		mes "Ack! Shoo! Don't come close! I'm saving myself for my future bride!";
@@ -6200,120 +4981,84 @@ verus04,91,252,5	script	Archaeologist#tevt01	4_M_6THPRIN1,10,10,{
 	close;
 
 OnTouch_:
-	if (.ontalk == 0) {
-		.ontalk = 1;
-		initnpctimer;
-	}
-	end;
-OnTimer2000:
+	if (.ontalk == 1)
+		end;
+	.ontalk = 1;
+	sleep 3000;
 	npctalk "I suspect this Verus City serves a special purpose.", "Archaeologist#tevt01";
-	end;
-OnTimer7000:
+	sleep 5000;
 	npctalk "How did you know this place is called Verus?", "New Excavator#tevt03";
-	end;
-OnTimer12000:
-	npctalk "Oh, the name was found written on various milestones and walls at the Plaza.", "Civilization Researcher";
-	end;
-OnTimer17000:
-	npctalk "Verus City, Verus Town, Verus Plaza...", "Civilization Researcher";
-	end;
-OnTimer22000:
-	npctalk "There are two districts that remain unaccessible.", "Civilization Researcher";
-	end;
-OnTimer27000:
+	sleep 5000;
+	npctalk "Oh, the name was found written on various milestones and walls at the Plaza.", "Civilization Researcher#tevt04";
+	sleep 5000;
+	npctalk "Verus City, Verus Town, Verus Plaza...", "Civilization Researcher#tevt04";
+	sleep 5000;
+	npctalk "There are two districts that remain unaccessible.", "Civilization Researcher#tevt04";
+	sleep 5000;
 	npctalk "Oh, those two that require permission. You know a lot.", "New Excavator#tevt03";
-	end;
-OnTimer32000:
+	sleep 5000;
 	npctalk "I've just figured that out from on a map I've found in a house in the Town.", "Historian#tevt02";
-	end;
-OnTimer37000:
+	sleep 5000;
 	npctalk "This place consists of four districts, and only the Town and the Plaza are explorable at this point.", "Archaeologist#tevt01";
-	end;
-OnTimer42000:
+	sleep 5000;
 	npctalk "We'd better work harder, or our exploration might become limited to this very area.", "Archaeologist#tevt01";
-	end;
-OnTimer47000:;
+	sleep 5000;
 	npctalk "If it really was a planned city, then what was the plan?", "New Excavator#tevt03";
-	end;
-OnTimer52000:
+	sleep 5000;
 	npctalk "Einbech is built purely for mining purposes. This city probably served a special purpose like that.", "Scientist#tevt05";
-	end;
-OnTimer57000:
+	sleep 5000;
 	npctalk "It must have something to do with technological research and experimentation.", "Scientist#tevt05";
-	end;
-OnTimer62000:
+	sleep 5000;
 	npctalk "I've deduced it from journals and diaries found in the Town.", "Historian#tevt02";
-	end;
-OnTimer67000:
+	sleep 5000;
 	npctalk "Most of these journals and diaries belonged to scholars and scientists.", "Historian#tevt02";
-	end;
-OnTimer72000:
-	npctalk "The point is this ancient civilization had some really advanced science.", "Civilization Researcher";
-	end;
-OnTimer77000:
-	npctalk "It may not be ancient at all. It could be something unfathomable.", "Civilization Researcher";
-	end;
-OnTimer82000:
+	sleep 5000;
+	npctalk "The point is this ancient civilization had some really advanced science.", "Civilization Researcher#tevt04";
+	sleep 5000;
+	npctalk "It may not be ancient at all. It could be something unfathomable.", "Civilization Researcher#tevt04";
+	sleep 5000;
 	npctalk "We're here to solve the mystery for a better future for mankind!", "New Excavator#tevt03";
-	end;
-OnTimer87000:
+	sleep 5000;
 	npctalk "*Snort* In the end Rekenber takes all.", "Scientist#tevt05";
-	end;
-OnTimer92000:
+	sleep 5000;
 	npctalk "But the core discoveries and the excavation efforts are shared by all the organizations involved.", "New Excavator#tevt03";
-	end;
-OnTimer97000:
-	npctalk "What we can do is just do what we can do best in the moment.", "Civilization Researcher";
-	end;
-OnTimer102000:
+	sleep 5000;
+	npctalk "What we can do is just do what we can do best in the moment.", "Civilization Researcher#tevt04";
+	sleep 5000;
 	npctalk "But I can't help but think Rekenber has a hidden agenda. I'm not trying to be unappreciative, but...", "Historian#tevt02";
-	end;
-OnTimer107000:
+	sleep 5000;
 	npctalk "Let's focus on the present for now.", "Historian#tevt02";
-	end;
-OnTimer112000:
+	sleep 5000;
 	npctalk "Why don't we share all the information we find except for our individual research subjects?", "Archaeologist#tevt01";
-	end;
-OnTimer117000:
-	npctalk "I agree.", "Civilization Researcher";
-	end;
-OnTimer122000:
+	sleep 5000;
+	npctalk "I agree.", "Civilization Researcher#tevt04";
+	sleep 1000;
 	npctalk "All right.", "Scientist#tevt05";
-	end;
-OnTimer127000:
+	sleep 5000;
 	npctalk "Um, do you know what's for lunch today?", "Scientist#tevt05";
-	end;
-OnTimer130000:
+	sleep 3000;
 	npctalk "Um...", "Archaeologist#tevt01";
-	end;
-OnTimer135000:
-	npctalk "Some frozen food. I'm just going to eat the bread I saved yesterday.", "Civilization Researcher";
-	end;
-OnTimer140000:
+	sleep 5000;
+	npctalk "Some frozen food. I'm just going to eat the bread I saved yesterday.", "Civilization Researcher#tevt04";
+	sleep 5000;
 	npctalk "Sigh, Rekenber can be stingy if it wants to.", "Historian#tevt02";
-	end;
-OnTimer145000:
+	sleep 5000;
 	npctalk "Why? What's wrong with frozen food?", "New Excavator#tevt03";
-	end;
-OnTimer150000:
+	sleep 5000;
 	npctalk "Here, try mine.", "Historian#tevt02";
-	end;
-OnTimer155000:
+	sleep 5000;
 	npctalk "You can take mine, too.", "Archaeologist#tevt01";
-	end;
-OnTimer160000:
+	sleep 5000;
 	npctalk "Or mine.", "Scientist#tevt05";
-	end;
-OnTimer163000:
+	sleep 3000;
 	npctalk "...", "New Excavator#tevt03";
-	end;
-OnTimer168000:
+	sleep 5000;
 	npctalk "Um, aren't you guys hungry?", "New Excavator#tevt03";
-	end;
-OnTimer178000:
+	sleep 5000;
+	sleep 5000;
 	npctalk "Is it possible it's frozen because it tastes bad otherwise?", "New Excavator#tevt03";
+	sleep 35000;
 	.ontalk = 0;
-	stopnpctimer;
 	end;
 }
 
@@ -6338,7 +5083,7 @@ verus04,91,248,7	script	New Excavator#tevt03	4_TOWER_04,{
 	close;
 }
 
-verus04,94,251,3	script	Civilization Researcher	4_TOWER_16,{
+verus04,94,251,3	script	Civilization Researcher#tevt04	4_TOWER_16,{
 	mes "[Civilization Researcher]";
 	mes "I thought this was a part of Juperos.";
 	mes "I'm now reconsidering that theory.";
@@ -6361,11 +5106,11 @@ verus04,94,248,1	script	Scientist#tevt05	4_M_SAGE_C,{
 }
 
 verus04,116,220,0	script	#ep15_1elb	PORTAL,{
-	mes "- Caution -";
+	mes "^FF0000- Caution -";
 	mes "- For your safety, -";
 	mes "- avoid running -";
 	mes "- or jumping -";
-	mes "- while inside. -";
+	mes "- while inside. -^000000";
 	close;
 }
 
@@ -6457,25 +5202,25 @@ verus03,38,114,4	duplicate(Sign#EP15_1DCenter)	Sign#EP15_1DEast	4_BOARD3
 verus03,116,39,4	duplicate(Sign#EP15_1DCenter)	Sign#EP15_1DWest	4_BOARD3
 
 
-verus04,96,195,5	script	Adventurer Cat#ep15_1el_1	4_CAT_REST,{
+verus04,96,195,5	script	Adventurer Cat#ep15_1el18	4_CAT_REST,{
 	mes "[Adventurer Cat]";
 	mes "I must investi... ga... te...";
 	mes "Zzz... Zzz...";
 	close;
 }
-verus04,96,194,5	script	Adventurer Cat#ep15_1el_2	4_CAT_REST,{
+verus04,96,194,5	script	Adventurer Cat#ep15_1el17	4_CAT_REST,{
 	mes "[Adventurer Cat]";
 	mes "*Purr*";
 	mes "*Meow*";
 	close;
 }
-verus04,96,193,5	script	Adventurer Cat#ep15_1el_3	4_CAT_REST,{
+verus04,96,193,5	script	Adventurer Cat#ep15_1el16	4_CAT_REST,{
 	mes "[Adventurer Cat]";
 	mes "For some reason, I can't stand up.";
 	mes "*Meow*";
 	close;
 }
-verus04,96,192,5	script	Adventurer Cat#ep15_1el_4	4_CAT_REST,{
+verus04,96,192,5	script	Adventurer Cat#ep15_1el15	4_CAT_REST,{
 	mes "[Adventurer Cat]";
 	mes "I've got a good spot.";
 	mes "*Purr*";
@@ -6563,9 +5308,10 @@ lhz_in01,275,251,3	script	Luke Lapez#ep152i01	4_M_EDEN_GUARDER,{
 	close2;
 	cutin "",255;
 	npctalk "So much for the damn escort...", "Luke Lapez#ep152i01";
-	sleep 400;
+	setpcblock PCBLOCK_NPC, true;
+	sleep2 500;
+	setpcblock PCBLOCK_NPC, false;
 	emotion ET_FRET, getnpcid(0, "Commander Arquien#ep152i");
-	sleep 200;
 	emotion ET_THINK, getnpcid(0, "Luke Lapez#ep152i01");
 	end;
 }
