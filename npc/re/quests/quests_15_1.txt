@@ -9482,6 +9482,260 @@ un_myst,209,42,3	script	Tamarin#Lastroom Entrance	4_M_TAMARIN,{
 
 verus04,144,239,3	shop	Tool Merchant#verus	4_M_DEWMAN,611:-1,504:-1,656:-1,601:-1,602:-1,610:-1
 
+// ep15_1_moc_nk - Reward Coordinator
+morocc,54,190,5	script	Reward Coordinator	4_M_SAGE_C,{
+	for ( .@i = 5252; .@i <= 5264; .@i += 2 ) {
+		if (isbegin_quest(.@i) == 1)
+			erasequest .@i;
+	}
+	if (isbegin_quest(5269) == 1)
+		erasequest 5269;
+	if (isbegin_quest(5275) == 1)
+		erasequest 5275;
+
+	if (countitem(6688) > 0)
+		delitem 6688, countitem(6688);	// Wood_
+	if (countitem(6688) > 0)
+		delitem 6687, countitem(6687);	// LongRopes
+	if (countitem(6686) > 0)
+		delitem 6686, countitem(6686);	// Brick
+	mes "[Reward Coordinator]";
+	mes "So, um... I'm...";
+	mes "I think I'm sent here";
+	mes "to... to... Let me think...";
+	mes "Oh yes, to support the Morroc restoration work.";
+	next;
+	mes "[Reward Coordinator]";
+	mes "The restoration work is finished,";
+	mes "but I remain";
+	mes "to finish rewarding the volunteers.";
+	next;
+	mes "[Reward Coordinator]";
+	mes "So, how may I help you today?";
+	next;
+	switch( select( "Claim rewards.", "What can I do with the Contribution Certificate Vending Machine?", "End conversation." ) ) {
+	case 1:
+		for ( .@i = 5251; .@i <= 5263; .@i += 2 ) {
+			if (isbegin_quest(.@i) == 1)
+				.@moc_on++;
+		}
+		if (isbegin_quest(5265) == 1 || isbegin_quest(5266) == 1 || isbegin_quest(5267) == 1 || isbegin_quest(5268) == 1)
+			.@moc_on++;
+		if (isbegin_quest(5270) == 1 || isbegin_quest(5271) == 1 || isbegin_quest(5272) == 1 || isbegin_quest(5273) == 1 || isbegin_quest(5274) == 1)
+			.@moc_on++;
+		if (.@moc_on > 0) {
+			mes "[Reward Coordinator]";
+			mes "In recognition of your credit,";
+			mes "we will grant you a certificate.";
+			mes "The certificates can be used by the vending machine next to it.";
+			getitem 6685, .@moc_on;	// MoroccMerit
+			for ( .@i = 5251; .@i < 5275; .@i++ ) {
+				if (isbegin_quest(.@i) == 1)
+					completequest .@i;
+			}
+			close;
+		}
+		mes "[Reward Coordinator]";
+		mes "You haven't finished your quest,";
+		mes "or never accepted one. Please check your quest history.";
+		close;
+	case 2:
+		mes "[Reward Coordinator]";
+		mes "Do you see the vending machine next to me?";
+		mes "You can use your Certificates with the machine";
+		mes "to get EXP and a variety of items in exchange.";
+		next;
+		mes "[Reward Coordinator]";
+		mes "For more details, you should click the vending machine.";
+		close;
+	case 3:
+		mes "[Reward Coordinator]";
+		mes "Um, so...";
+		mes "Why did you";
+		mes "talk to me, if I may ask?";
+		next;
+		mes "[Reward Coordinator]";
+		mes "Aww, I hate this sandy wind.";
+		mes "It leaves my nice clothes";
+		mes "sandy and nasty-feeling.";
+		close;
+	}
+}
+
+morocc,43,191,5	script	Announcement#moc_re	4_BOARD3,{
+	if (ep14_3_mocrank > $@2012_ep14_moc_most) {
+		$@2012_ep14_moc_most = ep14_3_mocrank;
+		$@2012_ep14_moc_mostname$ = strcharinfo(0);
+	}
+	mes "[Morroc Restoration Project Director Paek]";
+	mes "Currently the greatest contributor is";
+	mes "Great Adventurer " + $@2012_ep14_moc_mostname$ + ",";
+	mes "who has made a total of " + $@2012_ep14_moc_most + " contributions so far.";
+	mes "I'd like to give thanks to this adventurer on behalf of the entire city.";
+	close;
+}
+
+morocc,52,197,6	script	Contribution Certificate Vending Machine#ep14_3	2_VENDING_MACHINE1,{
+	if (checkweight(1301,1) == 0) {
+		mes "- You are carrying too many items to proceed with the dialog -";
+		close;
+	}
+	if (BaseLevel < 80) {
+		mes "[Vending Machine Administrator]";
+		mes "Hello~ Don't touch the vending machine casually.";
+		close;
+	}
+	mes "[Contribution Certificate Vending Machine]";
+	mes "- Select an item you want. -";
+	mes "Current Contribution Certificates: " + countitem(6685) + "";
+	next;
+	switch( select(
+		"Do not exchange.",
+		"[1] EXP -(1)",
+		"[2] Job Agency Recommendation -(1)",
+		"[3] 20 Condensed White Potions -(10)",
+		"[4] 10 Red Gemstones -(20)",
+		"[5] 10 Yellow Gemstones -(20)",
+		"[6] 1 Sadagui -(20)",
+		"[7] 1 Yggdrasil Dust -(20)",
+		"[8] 1 Snow Flip -(20)",
+		"[9] 1 Peony Mami -(20)",
+		"[10] 1 Blue Potion -(30)",
+		"[11] 1 Great Nature -(50)",
+		"[12] 1 Rough Wind -(50)",
+		"[13] 1 Mystic Frozen -(50)",
+		"[14] 1 Flame Heart -(50)",
+		"[15] 1 Yggdrasil Seed -(100)" ) ) {
+	case 1:
+		close;
+	case 2:
+		mes "[Contribution Certificate Vending Machine]";
+		mes "Do you want EXP?";
+		next;
+		while(1) {
+			if (select("Yes.", "No.") == 2) {
+				mes "[Contribution Certificate Vending Machine]";
+				mes "Thank you for using the vending machine.";
+				close;
+			}
+			if (countitem(6685) < 1) {
+				mes "[Contribution Certificate Vending Machine]";
+				mes "Not enough Certificates.";
+				next;
+				mes "[Contribution Certificate Vending Machine]";
+				mes "Thank you for using the vending machine.";
+				close;
+			}
+			delitem 6685,1;	// MoroccMerit
+			if (BaseLevel > 79 && BaseLevel < 91)
+				getexp 10000,0;
+			else if (BaseLevel > 90 && BaseLevel < 101)
+				getexp 15000,0;
+			else if (BaseLevel > 100 && BaseLevel < 111)
+				getexp 20000,0;
+			else if (BaseLevel > 110 && BaseLevel < 121)
+				getexp 25000,0;
+			else if (BaseLevel > 120 && BaseLevel < 131)
+				getexp 30000,0;
+			else if (BaseLevel > 130 && BaseLevel < 141)
+				getexp 35000,0;
+			else if (BaseLevel > 140 && BaseLevel < 151)
+				getexp 40000,0;
+			else
+				getexp 45000,0;
+			mes "[Contribution Certificate Vending Machine]";
+			mes "Do you want to continue to redeem?";
+			next;
+		}
+		end;
+	case 3:
+		mes "[Contribution Certificate Vending Machine]";
+		mes "Do you want Job Agency Recommendation?";
+		next;
+		while(1) {
+			if (select("Yes.", "No.") == 2) {
+				mes "[Contribution Certificate Vending Machine]";
+				mes "Thank you for using the vending machine.";
+				close;
+			}
+			if (countitem(6685) < 1) {
+				mes "[Contribution Certificate Vending Machine]";
+				mes "Not enough Certificates.";
+				next;
+				mes "[Contribution Certificate Vending Machine]";
+				mes "Thank you for using the vending machine.";
+				close;
+			}
+			delitem 6685,1;	// MoroccMerit
+			if (BaseLevel > 79 && BaseLevel < 91)
+				getexp 0,10000;
+			else if (BaseLevel > 90 && BaseLevel < 101)
+				getexp 0,12000;
+			else if (BaseLevel > 100 && BaseLevel < 111)
+				getexp 0,5000;
+			else if (BaseLevel > 110 && BaseLevel < 121)
+				getexp 0,7000;
+			else if (BaseLevel > 120 && BaseLevel < 131)
+				getexp 0,9000;
+			else if (BaseLevel > 130 && BaseLevel < 141)
+				getexp 0,11000;
+			else if (BaseLevel > 140 && BaseLevel < 151)
+				getexp 0,13000;
+			else
+				getexp 0,13000;
+			mes "[Contribution Certificate Vending Machine]";
+			mes "Do you want to continue to redeem?";
+			next;
+		}
+		end;
+	case 4:  callsub( S_Exchange, 10,   547, 20 );	// White_Slim_Potion
+	case 5:  callsub( S_Exchange, 20,   716, 10 );	// Red_Gemstone
+	case 6:  callsub( S_Exchange, 20,   715, 10 );	// Yellow_Gemstone
+	case 7:  callsub( S_Exchange, 20, 12814,  1 );	// Slapping_Herb
+	case 8:  callsub( S_Exchange, 20, 12815,  1 );	// Yggdrasil_Dust
+	case 9:  callsub( S_Exchange, 20, 12812,  1 );	// Snow_Flip
+	case 10: callsub( S_Exchange, 20, 12813,  1 );	// Peony_Mommy
+	case 11: callsub( S_Exchange, 30,   505,  1 );	// Blue_Potion
+	case 12: callsub( S_Exchange, 50,   997,  1 );	// Great_Nature
+	case 13: callsub( S_Exchange, 50,   996,  1 );	// Rough_Wind
+	case 14: callsub( S_Exchange, 50,   995,  1 );	// Mistic_Frozen
+	case 15: callsub( S_Exchange, 50,   994,  1 );	// Flame_Heart
+	case 16: callsub( S_Exchange, 100,  608,  1 );	// Seed_Of_Yggdrasil
+	default:
+		mes "[Contribution Certificate Vending Machine]";
+		mes "Malfunction.";
+		close;
+	}
+	end;
+
+S_Exchange:
+	.@item_id = getarg(1);
+	mes "[Contribution Certificate Vending Machine]";
+	mes "Do you want " + getitemname(.@item_id) + "?";
+	next;
+	while(1) {
+		if (select("Yes.", "No.") == 2) {
+			mes "[Contribution Certificate Vending Machine]";
+			mes "Thank you for using the vending machine.";
+			close;
+		}
+		if (countitem(6685) < getarg(0)) {
+			mes "[Contribution Certificate Vending Machine]";
+			mes "Not enough Certificates.";
+			next;
+			mes "[Contribution Certificate Vending Machine]";
+			mes "Thank you for using the vending machine.";
+			close;
+		}
+		delitem 6685, getarg(0);	// MoroccMerit
+		getitem .@item_id, getarg(2);
+		mes "[Contribution Certificate Vending Machine]";
+		mes "Do you want to continue to redeem?";
+		next;
+	}
+	end;
+}
+
 
 // Doom Prayers event on verus04
 verus04,2,2,0	script	Sneak attack timer#EP15_1D	HIDDEN_WARP_NPC,{
