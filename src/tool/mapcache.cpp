@@ -195,39 +195,42 @@ void process_args(int argc, char *argv[])
 
 int do_init(int argc, char** argv)
 {
-	/* setup pre-defined, #define-dependant */
-	map_cache_file = std::string(db_path) + "/" + std::string(DBIMPORT) + "/map_cache.dat";
-
 	// Process the command-line arguments
 	process_args(argc, argv);
 
 	ShowStatus("Initializing grfio with %s\n", grf_list_file.c_str());
 	grfio_init(grf_list_file.c_str());
 
-	// Attempt to open the map cache file and force rebuild if not found
-	ShowStatus("Opening map cache: %s\n", map_cache_file.c_str());
-	if(!rebuild) {
-		map_cache_fp = fopen(map_cache_file.c_str(), "rb");
-		if(map_cache_fp == NULL) {
-			ShowNotice("Existing map cache not found, forcing rebuild mode\n");
-			rebuild = 1;
-		} else
-			fclose(map_cache_fp);
-	}
-	if(rebuild)
-		map_cache_fp = fopen(map_cache_file.c_str(), "w+b");
-	else
-		map_cache_fp = fopen(map_cache_file.c_str(), "r+b");
-	if(map_cache_fp == NULL) {
-		ShowError("Failure when opening map cache file %s\n", map_cache_file.c_str());
-		exit(EXIT_FAILURE);
-	}
-
 	// Open the map list
 	FILE *list;
 	std::vector<std::string> directories = { std::string(db_path) + "/",  std::string(db_path) + "/" + std::string(DBIMPORT) + "/" };
 
 	for (const auto &directory : directories) {
+		/* setup pre-defined, #define-dependant */
+		if (directory.find("import") != std::string::npos)
+			map_cache_file = std::string(db_path) + "/" + std::string(DBIMPORT) + "map_cache.dat";
+		else
+			map_cache_file = std::string(db_path) + "/" + std::string(DBPATH) + "/map_cache.dat";
+
+		// Attempt to open the map cache file and force rebuild if not found
+		ShowStatus("Opening map cache: %s\n", map_cache_file.c_str());
+		if (!rebuild) {
+			map_cache_fp = fopen(map_cache_file.c_str(), "rb");
+			if (map_cache_fp == NULL) {
+				ShowNotice("Existing map cache not found, forcing rebuild mode\n");
+				rebuild = 1;
+			} else
+				fclose(map_cache_fp);
+		}
+		if (rebuild)
+			map_cache_fp = fopen(map_cache_file.c_str(), "w+b");
+		else
+			map_cache_fp = fopen(map_cache_file.c_str(), "r+b");
+		if (map_cache_fp == NULL) {
+			ShowError("Failure when opening map cache file %s\n", map_cache_file.c_str());
+			exit(EXIT_FAILURE);
+		}
+
 		std::string filename = directory + map_list_file;
 
 		ShowStatus("Opening map list: %s\n", filename.c_str());
@@ -279,15 +282,15 @@ int do_init(int argc, char** argv)
 
 		}
 
+		// Write the main header and close the map cache
+		ShowStatus("Closing map cache: %s\n", map_cache_file.c_str());
+		fseek(map_cache_fp, 0, SEEK_SET);
+		fwrite(&header, sizeof(struct main_header), 1, map_cache_fp);
+		fclose(map_cache_fp);
+
 		ShowStatus("Closing map list: %s\n", filename.c_str());
 		fclose(list);
 	}
-
-	// Write the main header and close the map cache
-	ShowStatus("Closing map cache: %s\n", map_cache_file.c_str());
-	fseek(map_cache_fp, 0, SEEK_SET);
-	fwrite(&header, sizeof(struct main_header), 1, map_cache_fp);
-	fclose(map_cache_fp);
 
 	ShowStatus("Finalizing grfio\n");
 	grfio_final();
