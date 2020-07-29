@@ -7109,200 +7109,376 @@ lhz_in01,272,251,3	script	Commander Arquien#ep152i	4_F_EDEN_MASTER,{
 	close3;
 }
 
-//- To Phantasmagorika!
+// ep15_1_elbs - To Phantasmagorika!
 yuno_fild07,216,157,5	script	Guide Elisha#ep15_1bs2	4_F_ZONDAGIRL,{
-	if (VER_MAIN >= 4) {
-		mes "[Elisha]";
-		mes "Good day.";
-		mes "Please say your name, so I can check your registration.";
-		emotion ET_THROB;
-		next;
-		switch( select( "Say your name.", "Ask about the registration.", "End conversation." ) ) {
-		case 1:
-			mes "[Elisha]";
-			switch(VER_ELEVATOR) {
-			case 0:
-			case 1:
-				mes "Um, let's see...";
-				mes "I'm sorry, but you're not on the list. Could you check your registration status?";
-				emotion ET_PROFUSELY_SWEAT;
-				close;
-			case 2:
-				mes "You're back already.";
-				emotion ET_THROB;
-				next;
-				mes "[Elisha]";
-				mes "Let's see...";
-				mes "Ah, I've found your name.";
-				mes "Would you like to ^0000FFmove to Phantasmagorika^000000 now?";
-				next;
-				if (select( "No.", "Yes." ) == 1) {
-					mes "[Elisha]";
-					mes "Have a good day.";
-					emotion ET_THROB;
-					close;
-				}
-				mes "[Elisha]";
-				mes "Let me send you to Phantasmagorika.";
-				next;
-				mes "[Elisha]";
-				mes "For your safety, please avoid running or jumping while inside.";
-				next;
-				mes "[Elisha]";
-				mes "Ready?";
-				mes "Have a safe exploration!";
-				emotion ET_THROB;
-				next;
-				mes "^FF0000- BEEP-! -";
-				mes "- Service temporarily unavailable. -^000000";
-				emotion ET_HUK, playerattached();
-				next;
-				mes "[Elisha]";
-				mes "Um?";
-				mes "Could you hold on a moment?";
-				emotion ET_PROFUSELY_SWEAT;
-				next;
-				mes "^FF0000- BEEP-! -";
-				mes "- Service temporarily unavailable. -^000000";
-				emotion ET_HUK, playerattached();
-				next;
-				mes "[Elisha]";
-				mes "Um...";
-				mes "What's wrong with it?";
-				mes "Please give me a moment.";
-				emotion ET_PROFUSELY_SWEAT;
-				next;
-				mes "^FF0000- BEEP-! -";
-				mes "- Service temporarily unavailable. -^000000";
-				emotion ET_HUK, playerattached();
-				next;
-				mes "[Elisha]";
-				mes "Uh-oh.";
-				mes "Is it out of order?";
-				mes "It can't be!";
-				emotion ET_HUK;
-				next;
-				mes "^FF0000- BEEP-! -";
-				mes "- Service temporarily unavailable. -^000000";
-				emotion ET_HUK, playerattached();
-				next;
-				mes "[Elisha]";
-				mes "I'm sorry, " + strcharinfo(0) + ".";
-				mes "I know you're registered for the service, but it's out of order at this moment.";
-				mes "I'm sorry for this inconvenience.";
-				emotion ET_PROFUSELY_SWEAT;
-				emotion ET_HUK, playerattached();
-				next;
-				mes "[Elisha]";
-				mes "It was working fine just a moment ago.";
-				mes "I'm sorry.";
-				mes "I'll have to call in a technician. Please use the stairs instead.";
-				next;
-				mes "[Elisha]";
-				mes "^0000FFPhantasmagorika is past the tunnel to the south from the southeast gate outside Juperos Ruins.^000000";
-				next;
-				mes "[Elisha]";
-				mes "There are elevator doors near the fountain in the center of the place. Could you check what happened to the elevator?";
-				mes "I'm so sorry for all this.";
-				emotion ET_CRY;
-				changequest 11364,11365;// To Phantasmagorika!
-				VER_ELEVATOR = 3;
-				close;
-			case 3:
-				mes "It was working fine just a moment ago.";
-				mes "I'm sorry.";
-				mes "I'll have to call in a technician. Please use the stairs instead.";
-				next;
-				mes "[Elisha]";
-				mes "^0000FFPhantasmagorika is past the tunnel to the south from the southeast gate outside Juperos Ruins.^000000";
-				next;
-				mes "[Elisha]";
-				mes "There are elevator doors near the fountain in the center of the place. Could you check what happened to the elevator?";
-				mes "I'm so sorry for all this.";
-				emotion ET_CRY;
-				close;
-			case 4:
-				mes "I'm sorry.";
-				mes "The elevator is currently out of order.";
-				close;
-			default:
-				mes "Let's see...";
-				mes "A... B... C... D... E... F... Ah, there it is!";
-				emotion ET_PROFUSELY_SWEAT;
-				next;
-				mes "[Elisha]";
-				mes "" + strcharinfo(0) + ", your registration has been confirmed.";
-				mes "Would you like to move to Phantasmagorika?";
-				emotion ET_THROB;
-				next;
-				if (select( "No.", "Yes." ) == 1) {
-					mes "[Elisha]";
-					mes "Have a good day.";
-					close;
-				}
-				mes "[Elisha]";
-				mes "Let me send you to Phantasmagorika.";
-				next;
-				mes "[Elisha]";
-				mes "For your safety, please avoid running or jumping while inside.";
-				next;
-				mes "[Elisha]";
-				mes "Ready?";
-				mes "Have a safe exploration!";
-				close2;
-				warp "verus04",122,217;
-				end;
-			}
-		case 2:
-			mes "[Elisha]";
-			mes "*Clears her throat*";
-			mes "This facility is provided by ^0000FFRekenber^000000";
-			next;
-			mes "[Elisha]";
-			mes "to ^0000FFthe members of the Eden Group^000000 for their safe transportation to ^0000FFPhantasmagorika^000000.";
-			next;
-			mes "[Elisha]";
-			mes "To use this facility, you must be ^0000FFa member of the Eden Group who is registered for the Phantasmagorika excavation project^000000.";
-			next;
-			mes "[Elisha]";
-			mes "You can register for the use of the facility at ^0000FFRekenber Corporation Headquarters^000000, so long as you're a registered excavator of the Eden Group.";
-			if (VER_ELEVATOR >= 2)
-				close;
-			next;
-			if (select( "End conversation.", "Ask for directions." ) == 2) {
-				mes "[Elisha]";
-				mes "To register for the use of the facility, please visit ^0000FFRekenber Corporation Headquarters in Lighthalzen and talk to Leitner at the information desk to the west from the main entrance on the first floor^000000.";
-				next;
-				mes "[Elisha]";
-				mes "The whole registration process may sound cumbersome, but using the elevator is worth the trouble.";
-				if (VER_ELEVATOR == 0) {
-					setquest 11363;// To Phantasmagorika!
-					VER_ELEVATOR = 1;
-				}
-				close;
-			}
-			break;
-		case 3:
-			break;
-		}
-	}
 	mes "[Elisha]";
-	mes "My company Rekenber is in partnership with the Eden Group";
-	mes "for the ^0000FFPhantasmagorika excavation project^000000.";
+	mes "It was working fine just a moment ago.";
+	mes "I'm sorry.";
+	mes "I'll have to call in a technician. Please use the stairs instead.";
 	next;
 	mes "[Elisha]";
-	mes "The newly discovered legacy of the ancients: Phantasmagorika!";
-	mes "Contact the ^0000FFEden Group^000000 to join its Phantasmagorika excavation project!";
+	mes "^0000FFPhantasmagorika is past the tunnel to the south from the southeast gate outside Juperos Ruins.^000000";
+	next;
+	mes "[Elisha]";
+	mes "There are elevator doors near the fountain in the center of the place. Could you check what happened to the elevator?";
+	close;
+OnInit:
+	disablenpc "Guide Elisha#ep15_1bs2";
+	end;
+}
+
+/* Illogical
+verus04,1,1,5	script	Halo#ep15_1_elyo	4_M_DIEMAN,{
+	end;
+OnEnable:
+	enablenpc "Halo#ep15_1_elyo";
+	donpcevent "Fallen Man#ep15_1_elyo::OnDisable";
+	end;
+OnInit:
+	disablenpc "Halo#ep15_1_elyo";
+	end;
+}
+*/
+
+verus04,115,221,5	script	Fallen Man#ep15_1_elyo	4_M_DIEMAN,{
+	if (checkweight(1119,3) == 0) {
+		mes "- You are carrying too many items to proceed with the quest -";
+		close;
+	}
+	.@name$ = strcharinfo(0);
+	mes "- Someone died! -";
+	next;
+	mes "- Unfortunately, the person who died stuck in the elevator door, and the elevator that opened and closed constantly stuck to him.. -";
+	next;
+	mes "[" + .@name$ + "]";
+	mes "Are you ok?";
+	next;
+	mes "[Fallen Man]";
+	mes "......";
+	next;
+	mes "[" + .@name$ + "]";
+	mes "Can you hear me?";
+	next;
+	mes "[Fallen Man]";
+	mes "...Leave me alone...";
+	next;
+	mes "[" + .@name$ + "]";
+	mes "What?";
+	next;
+	mes "[Fallen Man]";
+	mes "I am fine, let me go..";
+	next;
+	mes "[" + .@name$ + "]";
+	mes "But you don't look like it's nothing...";
+	mes "Wait here,";
+	mes "I will help you.";
+	next;
+	mes "[Fallen Man]";
+	mes "Just telling you that I dont... Hey! My waist!!!";
+	next;
+	mes "[" + .@name$ + "]";
+	mes "......";
+	next;
+	mes "[" + .@name$ + "]";
+	mes "I will help you find a doctor!";
+	next;
+	mes "[Fallen Man]";
+	mes "Excuse me, thank you.";
+	next;
+	.@time = checkquest(11377,PLAYTIME);
+	if (.@time > 1)
+		erasequest 11377;
+	if (checkweight(1119,3) == 0) {
+		mes "- You are carrying too many items to proceed with the quest -";
+		close;
+	}
+	if (.@time == 1)
+		mes "later, the boys lying on the stretcher were embarrassed and suddenly grabbed my hand..";
+	else {
+		mes "Later, the boy lying on the stretcher looked embarrassed and suddenly put a small fruit in my hand..";
+		if (isbegin_quest(11377) == 0)
+			setquest 11377;
+		if (isbegin_quest(11376) == 0)
+			getitem 522,1;// Fruit_Of_Mastela
+		else {
+			erasequest 11376;
+			getitem 522,2;// Fruit_Of_Mastela
+		}
+	}
+	// donpcevent "Halo#ep15_1_elyo::OnEnable";
+	donpcevent "Fallen Man#ep15_1_elyo::OnDisable";
 	close;
 
+OnDisable:
+	disablenpc "Fallen Man#ep15_1_elyo";
+	disablenpc "Guide Elisha#ep15_1bs2";
+
+ 	enablenpc "Guide Elisha#ep15_1bs";
+	enablenpc "Guide Scarlet#ep15_1bs";
+	enablenpc "Du#ep15_1elb";
+	enablenpc "Mark#ep15_1elb";
+	enablenpc "Tamarin#ep15_1elb";
+	enablenpc "Alph#ep15_1elb";
+	enablenpc "Maggi#ep15_1elb";
+	// disablenpc "Halo#ep15_1_elyo";
+	stopnpctimer;
+	end;
+OnEnable:
+	enablenpc "Fallen Man#ep15_1_elyo";
+	enablenpc "Guide Elisha#ep15_1bs2";
+
+	disablenpc "Guide Elisha#ep15_1bs";
+	disablenpc "Guide Scarlet#ep15_1bs";
+	disablenpc "Du#ep15_1elb";
+	disablenpc "Mark#ep15_1elb";
+	disablenpc "Tamarin#ep15_1elb";
+	disablenpc "Alph#ep15_1elb";
+	disablenpc "Maggi#ep15_1elb";
+	initnpctimer;
+	end;
+OnTimer3600000:
+	donpcevent "Fallen Man#ep15_1_elyo::OnDisable";
+	stopnpctimer;
+	end;
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(11363) && !isbegin_quest(11364) && !isbegin_quest(11365) && !isbegin_quest(11366)" );
+	disablenpc "Fallen Man#ep15_1_elyo";
+	end;
+}
+
+yuno_fild07,216,157,5	script	Guide Elisha#ep15_1bs	4_F_ZONDAGIRL,{
+	if (isbegin_quest(11376) > 0) {
+		mes "[Elisha]";
+		mes "Weird!! How can the elevator suddenly move again?";
+		mes "maybe the following people have something to do?";
+		erasequest 11376;
+		close;
+	}
+	.@name$ = strcharinfo(0);
+	if (checkquest(11377,PLAYTIME) > 1)
+		erasequest 11377;
+	if (VER_MAIN < 4) {
+		mes "[Elisha]";
+		mes "My company Rekenber is in partnership with the Eden Group";
+		mes "for the ^0000FFPhantasmagorika excavation project^000000.";
+		next;
+		mes "[Elisha]";
+		mes "The newly discovered legacy of the ancients: Phantasmagorika!";
+		mes "Contact the ^0000FFEden Group^000000 to join its Phantasmagorika excavation project!";
+		close;
+	}
+	mes "[Elisha]";
+	mes "Good day.";
+	mes "Please say your name, so I can check your registration.";
+	emotion ET_THROB;
+	next;
+	switch( select( "Say your name.", "Ask about the registration.", "End conversation." ) ) {
+	case 1:
+		mes "[Elisha]";
+		switch(ep15_1_elb) {
+		case 0:
+		case 1:
+			mes "Um, let's see...";
+			mes "I'm sorry, but you're not on the list. Could you check your registration status?";
+			emotion ET_PROFUSELY_SWEAT;
+			close;
+		case 2:
+			mes "[Elisha]";
+			mes "You're back already.";
+			emotion ET_THROB;
+			next;
+			mes "[Elisha]";
+			mes "Let's see...";
+			mes "Ah, I've found your name.";
+			mes "Would you like to ^0000FFmove to Phantasmagorika^000000 now?";
+			next;
+			if (select( "No.", "Yes." ) == 1) {
+				mes "[Elisha]";
+				mes "Have a good day.";
+				emotion ET_THROB;
+				close;
+			}
+			mes "[Elisha]";
+			mes "Let me send you to Phantasmagorika.";
+			next;
+			mes "[Elisha]";
+			mes "For your safety, please avoid running or jumping while inside.";
+			next;
+			mes "[Elisha]";
+			mes "Ready?";
+			mes "Have a safe exploration!";
+			emotion ET_THROB;
+			next;
+			mes "^FF0000- BEEP-! -";
+			mes "- Service temporarily unavailable. -^000000";
+			emotion ET_HUK, playerattached();
+			next;
+			mes "[Elisha]";
+			mes "Um?";
+			mes "Could you hold on a moment?";
+			emotion ET_PROFUSELY_SWEAT;
+			next;
+			mes "^FF0000- BEEP-! -";
+			mes "- Service temporarily unavailable. -^000000";
+			emotion ET_HUK, playerattached();
+			next;
+			mes "[Elisha]";
+			mes "Um...";
+			mes "What's wrong with it?";
+			mes "Please give me a moment.";
+			emotion ET_PROFUSELY_SWEAT;
+			next;
+			mes "^FF0000- BEEP-! -";
+			mes "- Service temporarily unavailable. -^000000";
+			emotion ET_HUK, playerattached();
+			next;
+			mes "[Elisha]";
+			mes "Uh-oh.";
+			mes "Is it out of order?";
+			mes "It can't be!";
+			emotion ET_HUK;
+			next;
+			mes "^FF0000- BEEP-! -";
+			mes "- Service temporarily unavailable. -^000000";
+			emotion ET_HUK, playerattached();
+			next;
+			mes "[Elisha]";
+			mes "I'm sorry, " + .@name$ + ".";
+			mes "I know you're registered for the service, but it's out of order at this moment.";
+			mes "I'm sorry for this inconvenience.";
+			emotion ET_PROFUSELY_SWEAT;
+			emotion ET_HUK, playerattached();
+			next;
+			mes "[Elisha]";
+			mes "It was working fine just a moment ago.";
+			mes "I'm sorry.";
+			mes "I'll have to call in a technician. Please use the stairs instead.";
+			next;
+			mes "[Elisha]";
+			mes "^0000FFPhantasmagorika is past the tunnel to the south from the southeast gate outside Juperos Ruins.^000000";
+			next;
+			mes "[Elisha]";
+			mes "There are elevator doors near the fountain in the center of the place. Could you check what happened to the elevator?";
+			mes "I'm so sorry for all this.";
+			emotion ET_CRY;
+			ep15_1_elb = 3;
+			//completequest 11364;	// officially completed
+			erasequest 11364;
+			setquest 11365;
+			close;
+		case 3:
+			mes "[Elisha]";
+			mes "It was working fine just a moment ago.";
+			mes "I'm sorry.";
+			mes "I'll have to call in a technician. Please use the stairs instead.";
+			next;
+			mes "[Elisha]";
+			mes "^0000FFPhantasmagorika is past the tunnel to the south from the southeast gate outside Juperos Ruins.^000000";
+			next;
+			mes "[Elisha]";
+			mes "There are elevator doors near the fountain in the center of the place. Could you check what happened to the elevator?";
+			mes "I'm so sorry for all this.";
+			emotion ET_CRY;
+			close;
+		case 4:
+			mes "[Elisha]";
+			mes "I'm sorry.";
+			mes "The elevator is currently out of order.";
+			close;
+		}
+		if (checkquest(11377,PLAYTIME) > 1)
+			erasequest 11377;
+		if (checkquest(11377,PLAYTIME) == -1) {
+			if (rand(1,100) == 77) {
+				mes "[Elisha]";
+				mes "God! How come again!!!";
+				mes "This bad elevator is always broken! Everyday!!!";
+				setquest 11376;
+				donpcevent "Fallen Man#ep15_1_elyo::OnEnable";
+				close;
+			}
+		}
+		mes "[Elisha]";
+		mes "Let's see...";
+		mes "A... B... C... D... E... F... Ah, there it is!";
+		emotion ET_PROFUSELY_SWEAT;
+		next;
+		mes "[Elisha]";
+		mes "" + .@name$ + ", your registration has been confirmed.";
+		mes "Would you like to move to Phantasmagorika?";
+		emotion ET_THROB;
+		next;
+		if (select( "No", "Yes" ) == 1) {
+			mes "[Elisha]";
+			mes "Have a good day.";
+			close;
+		}
+		mes "[Elisha]";
+		mes "Let me send you to Phantasmagorika.";
+		next;
+		mes "[Elisha]";
+		mes "For your safety, please avoid running or jumping while inside.";
+		next;
+		mes "[Elisha]";
+		mes "Ready?";
+		mes "Have a safe exploration!";
+		close2;
+		warp "verus04",122,217;
+		end;
+	case 2:
+		mes "[Elisha]";
+		mes "*Clears her throat*";
+		mes "This facility is provided by ^0000FFRekenber^000000";
+		next;
+		mes "[Elisha]";
+		mes "to ^0000FFthe members of the Eden Group^000000 for their safe transportation to ^0000FFPhantasmagorika^000000.";
+		next;
+		mes "[Elisha]";
+		mes "To use this facility, you must be ^0000FFa member of the Eden Group who is registered for the Phantasmagorika excavation project^000000.";
+		next;
+		mes "[Elisha]";
+		mes "You can register for the use of the facility at ^0000FFRekenber Corporation Headquarters^000000, so long as you're a registered excavator of the Eden Group.";
+		if (ep15_1_elb > 1)
+			close;
+		next;
+		if (select( "End conversation.", "Ask for directions." ) == 1) {
+			mes "[Elisha]";
+			mes "My company Rekenber is in partnership with the Eden Group";
+			mes "for the ^0000FFPhantasmagorika excavation project^000000.";
+			next;
+			mes "[Elisha]";
+			mes "The newly discovered legacy of the ancients: Phantasmagorika!";
+			mes "Contact the ^0000FFEden Group^000000 to join its Phantasmagorika excavation project!";
+			close;
+		}
+		mes "[Elisha]";
+		mes "To register for the use of the facility, please visit ^0000FFRekenber Corporation Headquarters in Lighthalzen and talk to Leitner at the information desk to the west from the main entrance on the first floor^000000.";
+		next;
+		mes "[Elisha]";
+		mes "The whole registration process may sound cumbersome, but using the elevator is worth the trouble.";
+		if (ep15_1_elb == 0) {
+			ep15_1_elb = 1;
+			setquest 11363;// To Phantasmagorika!
+		}
+		close;
+	case 3:
+		mes "[Elisha]";
+		mes "My company Rekenber is in partnership with the Eden Group";
+		mes "for the ^0000FFPhantasmagorika excavation project^000000.";
+		next;
+		mes "[Elisha]";
+		mes "The newly discovered legacy of the ancients: Phantasmagorika!";
+		mes "Contact the ^0000FFEden Group^000000 to join its Phantasmagorika excavation project!";
+		close;
+	}
+	end;
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(11363)" );
 	end;
 }
 
 lhz_in01,75,209,3	script	Leitner#ep15_1bs	4_LGTSCIENCE,{
 	mes "[Leitner]";
-	switch(VER_ELEVATOR) {
+	switch(ep15_1_elb) {
 	case 0:
 		mes "Heya!";
 		mes "What brings you here, sweetheart?";
@@ -7350,8 +7526,9 @@ lhz_in01,75,209,3	script	Leitner#ep15_1bs	4_LGTSCIENCE,{
 		mes "Alright,";
 		mes "you're good to go.";
 		mes "Now you can use the elevator.";
-		changequest 11363,11364;// To Phantasmagorika!
-		VER_ELEVATOR = 2;
+		ep15_1_elb = 2;
+		completequest 11363;// To Phantasmagorika!
+		setquest 11364;
 		close;
 	case 2:
 		mes "I know, I know; why the extra step when the elevator is open to the public?";
@@ -7368,8 +7545,16 @@ lhz_in01,75,209,3	script	Leitner#ep15_1bs	4_LGTSCIENCE,{
 }
 
 verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
+	if (isbegin_quest(11376) > 0) {
+		mes "[Scarlet]";
+		mes "Hey! That has been solved!";
+		mes "Hey... sorry, I shouldn't laugh, but it's really funny... oh...";
+		erasequest 11376;
+		close;
+	}
+	.@name$ = strcharinfo(0);
 	mes "[Scarlet]";
-	switch(VER_ELEVATOR) {
+	switch(ep15_1_elb) {
 	case 0:
 	case 1:
 	case 2:
@@ -7420,7 +7605,7 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		cutin "bu_du3.bmp",2;
 		next;
 		mes "[Mark]";
-		mes "...";
+		mes "......";
 		emotion ET_FRET, getnpcid(0, "Mark#ep15_1elb");
 		cutin "bu_mark4.bmp",0;
 		next;
@@ -7482,8 +7667,10 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		next;
 		mes "[Scarlet]";
 		mes "Please help us!";
-		changequest 11365,11366;// To Phantasmagorika!
-		VER_ELEVATOR = 4;
+		ep15_1_elb = 4;
+		//completequest 11365;	// officially completed
+		erasequest 11365;
+		setquest 11366;
 		close;
 	case 4:
 		mes "Careful!";
@@ -7507,8 +7694,8 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		emotion ET_HUK;
 		cutin "",255;
 		next;
-		mes "[Scarlet]";
-		if (countitem(7319) < 30) {// Used_Iron_Plate
+		if (countitem(7319) < 30) {
+			mes "[Scarlet]";
 			mes "This elevator is so unstable that none of us can move.";
 			mes "Could you bring us something to ^0000FFsupport the floor^000000?";
 			next;
@@ -7520,11 +7707,13 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 			mes "Please help us!";
 			close;
 		}
+		mes "[Scarlet]";
 		mes "Did you bring Used Iron Plates?";
 		mes "Please push them in here carefully, one by one.";
-		delitem 7319,30;// Used_Iron_Plate
-		completequest 11366;// To Phantasmagorika!
-		VER_ELEVATOR = 5;
+		delitem 7319,30;// Old_Steel_Plate
+		ep15_1_elb = 5;
+		//completequest 11366;	// officially completed
+		erasequest 11366;
 		next;
 		mes "[Scarlet]";
 		mes "They might not hold for long, but that should still be enough us to get out.";
@@ -7548,7 +7737,7 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		cutin "",255;
 		next;
 		mes "[Scarlet]";
-		mes "And " + strcharinfo(0) + ", thank you so much.";
+		mes "And " + .@name$ + ", thank you so much.";
 		mes "We could have been in big trouble if it weren't for you.";
 		emotion ET_THANKS;
 		next;
@@ -7561,7 +7750,7 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		mes "The elevator is back in operation now. Let me know if you want to go up.";
 		next;
 		mes "[Mark]";
-		mes "Whew! " + strcharinfo(0) + ", you've saved us.";
+		mes "Whew! " + .@name$ + ", you've saved us.";
 		mes "Sigh, I don't know when he's going to grow up.";
 		emotion ET_THANKS, getnpcid(0, "Mark#ep15_1elb");
 		cutin "bu_mark2.bmp",0;
@@ -7579,7 +7768,7 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		next;
 		mes "[Tamarin]";
 		mes "Thank you.";
-		mes "Sigh, I don't want to imagine what might have happened if you, " + strcharinfo(0) + ", didn't pass by at that moment.";
+		mes "Sigh, I don't want to imagine what might have happened if you, " + .@name$ + ", didn't pass by at that moment.";
 		emotion ET_THANKS, getnpcid(0, "Tamarin#ep15_1elb");
 		cutin "ep143_tasmi.bmp",2;
 		next;
@@ -7620,27 +7809,31 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		cutin "",255;
 		close;
 	default:
+		mes "[Scarlet]";
 		mes "Good day.";
 		mes "Please say your name, so I can check your registration.";
 		next;
-		if (select( "Say your name.", "End conversation." ) == 1) {
+		if (select( "Say your name.", "End conversation." ) == 2) {
 			mes "[Scarlet]";
-			mes "Hm...";
-			mes "Yes, " + strcharinfo(0) + ", your registration has been confirmed.";
-			mes "Would you like to move to the entrance to Juperos?";
-			next;
-			if (select( "No.", "Yes." ) == 2) {
-				mes "[Scarlet]";
-				mes "Ready?";
-				mes "Have a safe exploration!";
-				close2;
-				warp "yuno_fild07",230,156;
-				end;
-			}
+			mes "Have a good day.";
+			close;
 		}
 		mes "[Scarlet]";
-		mes "Have a good day.";
-		close;
+		mes "Hm...";
+		mes "Yes, " + .@name$ + ", your registration has been confirmed.";
+		mes "Would you like to move to the entrance to Juperos?";
+		next;
+		if (select( "No", "Yes" ) == 1) {
+			mes "[Scarlet]";
+			mes "Have a good day.";
+			close;
+		}
+		mes "[Scarlet]";
+		mes "Ready?";
+		mes "Have a safe exploration!";
+		close2;
+		warp "yuno_fild07",230,156;
+		end;
 	}
 }
 
@@ -7683,7 +7876,7 @@ function	script	excavator_part2	{
 }
 
 verus04,117,219,0	script	Alph#ep15_1elb	4_M_BLACKMAN,{
-	switch(VER_ELEVATOR) {
+	switch(ep15_1_elb) {
 	case 0:
 	case 1:
 	case 2:
@@ -7691,10 +7884,10 @@ verus04,117,219,0	script	Alph#ep15_1elb	4_M_BLACKMAN,{
 		mes "Excavation, that's a good subject.";
 		emotion ET_THINK;
 		cutin "bu_alp4.bmp",2;
-		break;
+		close3;
 	case 3:
 		mes "[Alph]";
-		mes "...";
+		mes "......";
 		mes "S-stop moving.";
 		emotion ET_PROFUSELY_SWEAT;
 		cutin "bu_alp2.bmp",2;
@@ -7716,37 +7909,38 @@ verus04,117,219,0	script	Alph#ep15_1elb	4_M_BLACKMAN,{
 		mes "Th-the f-floor...";
 		emotion ET_PROFUSELY_SWEAT;
 		cutin "bu_alp2.bmp",2;
-		break;
+		close3;
 	case 5:
 		excavator_part2();
-		break;
-	case 100:
+		close3;
+	case 6:
 		mes "[Alph]";
 		mes "What about the fountain?";
 		emotion ET_HUK, getnpcid(0, "Fountain#ep15_1elb");
 		cutin "bu_alp1.bmp",2;
-		break;
+		close3;
 	default:
 		mes "[Alph]";
 		mes "...Thank you.";
 		cutin "bu_alp1.bmp",2;
-		break;
+		close3;
 	}
-	close3;
 }
+
 verus04,115,220,5	script	Du#ep15_1elb	4_M_REDMAN,{
-	switch(VER_ELEVATOR) {
+	switch(ep15_1_elb) {
 	case 0:
 	case 1:
 	case 2:
 		mes "[Du]";
 		mes "Adventurers,";
 		mes "let's go!";
-		cutin "bu_du2.bmp", 2;
-		break;
+		cutin "bu_du2.bmp",2;
+		close3;
 	case 3:
 		mes "[Du]";
 		mes "WAAAAAHH-!";
+		emotion ET_HUK;
 		cutin "bu_du5.bmp",2;
 		next;
 		mes "[Du]";
@@ -7779,33 +7973,34 @@ verus04,115,220,5	script	Du#ep15_1elb	4_M_REDMAN,{
 		close;
 	case 5:
 		excavator_part2();
-		break;
-	case 100:
+		close3;
+	case 6:
 		mes "[Du]";
 		mes "Whoa!";
 		mes "Guys, come look at this fountain!";
 		emotion ET_HUK, getnpcid(0, "Fountain#ep15_1elb");
 		cutin "bu_du2.bmp",2;
-		break;
+		close3;
 	default:
 		mes "[Du]";
 		mes "Adventuring is all about bravery and curiosity!";
 		cutin "bu_du2.bmp",2;
+		close3;
 	}
-	close3;
 }
+
 verus04,117,220,3	script	Maggi#ep15_1elb	4_F_PINKWOMAN,{
-	switch(VER_ELEVATOR) {
+	switch(ep15_1_elb) {
 	case 0:
 	case 1:
 	case 2:
 		mes "[Maggi]";
 		mes "Phantasmagorika. What a pretty name!";
-		cutin "bu_maggi2.bmp", 2;
-		break;
+		cutin "bu_maggi2.bmp",2;
+		close3;
 	case 3:
 		mes "[Maggi]";
-		mes "Kyaaaahhh-!";
+		mes "WAAAAAHH-!!!";
 		emotion ET_HUK;
 		cutin "bu_maggi4.bmp",2;
 		next;
@@ -7822,20 +8017,20 @@ verus04,117,220,3	script	Maggi#ep15_1elb	4_F_PINKWOMAN,{
 		close;
 	case 4:
 		mes "[Maggi]";
-		mes "Kyaaaaah-!";
+		mes "WAAAAAHH-!!!!";
 		emotion ET_HUK;
 		cutin "bu_maggi4.bmp",2;
-		break;
+		close3;
 	case 5:
 		excavator_part2();
-		break;
-	case 100:
+		close3;
+	case 6:
 		mes "[Maggi]";
 		mes "Du is full of bile and vinegar.";
 		mes "What's so interesting about the fountain?";
 		emotion ET_HUK, getnpcid(0, "Fountain#ep15_1elb");
 		cutin "bu_maggi1.bmp",2;
-		break;
+		close3;
 	default:
 		mes "[Maggi]";
 		mes "*Sob* *Hiccup*";
@@ -7843,11 +8038,12 @@ verus04,117,220,3	script	Maggi#ep15_1elb	4_F_PINKWOMAN,{
 		mes "I was so scared! Wah-!";
 		emotion ET_CRY;
 		cutin "bu_maggi4.bmp",2;
+		close3;
 	}
-	close3;
 }
+
 verus04,115,221,5	script	Mark#ep15_1elb	4_M_BLUEMAN,{
-	switch(VER_ELEVATOR) {
+	switch(ep15_1_elb) {
 	case 0:
 	case 1:
 	case 2:
@@ -7859,7 +8055,7 @@ verus04,115,221,5	script	Mark#ep15_1elb	4_M_BLUEMAN,{
 		mes "[Mark]";
 		mes "It's discovered near Juperos, but believed to belong to a different civilization.";
 		cutin "bu_mark2.bmp",0;
-		break;
+		close3;
 	case 3:
 		mes "[Mark]";
 		mes "Watch out!";
@@ -7883,33 +8079,34 @@ verus04,115,221,5	script	Mark#ep15_1elb	4_M_BLUEMAN,{
 		mes "You're going to give me a heart attack!";
 		emotion ET_FRET;
 		cutin "bu_mark3.bmp",0;
-		break;
+		close3;
 	case 5:
 		excavator_part2();
-		break;
-	case 100:
+		close3;
+	case 6:
 		mes "[Mark]";
 		mes "What about the fountain?";
 		emotion ET_HUK, getnpcid(0, "Fountain#ep15_1elb");
 		cutin "bu_mark3.bmp",0;
-		break;
+		close3;
 	default:
 		mes "[Mark]";
 		mes "Whew! " + strcharinfo(0) + ", you've saved us.";
 		mes "Sigh, I don't know when he's going to grow up.";
 		cutin "bu_mark3.bmp",0;
+		close3;
 	}
-	close3;
 }
+
 verus04,116,219,5	script	Tamarin#ep15_1elb	4_M_TAMARIN,{
-	switch(VER_ELEVATOR) {
+	switch(ep15_1_elb) {
 	case 0:
 	case 1:
 	case 2:
 		mes "[Tamarin]";
 		mes "An excavation project of this scale should attract throngs of people.";
 		cutin "ep143_tasta.bmp",2;
-		break;
+		close3;
 	case 3:
 		mes "[Tamarin]";
 		mes "I told you stop jumping!";
@@ -7933,27 +8130,27 @@ verus04,116,219,5	script	Tamarin#ep15_1elb	4_M_TAMARIN,{
 		mes "nothing is going in my favor!";
 		emotion ET_CRY;
 		cutin "ep143_tahuk.bmp",2;
-		break;
+		close3;
 	case 5:
 		excavator_part2();
-		break;
-	case 100:
+		close3;
+	case 6:
 		mes "[Tamarin]";
 		mes "Hm, did Du find something in the fountain?";
 		emotion ET_HUK, getnpcid(0, "Fountain#ep15_1elb");
 		cutin "ep143_tasmi.bmp",2;
-		break;
+		close3;
 	default:
 		mes "[Tamarin]";
 		mes "Thank you.";
 		mes "Sigh, I don't want to imagine what might have happened if you, " + strcharinfo(0) + ", didn't pass by at that moment.";
 		cutin "ep143_tasmi.bmp",2;
+		close3;
 	}
-	close3;
 }
 
-verus04,116,226,0	script	Fountain#ep15_1elb	4_ENERGY_BLUE,{
-	if (VER_ELEVATOR == 100) {
+verus04,116,226,0	script	Fountain#ep15_1elb	HIDDEN_NPC,{
+	if (ep15_1_elb == 6) {
 		mes "[Du]";
 		mes "Look, I wiped it, and it sparkles!";
 		cutin "bu_du2.bmp",2;
@@ -8002,10 +8199,13 @@ verus04,116,226,0	script	Fountain#ep15_1elb	4_ENERGY_BLUE,{
 		mes "How about those sundries on the left side?";
 		emotion ET_HUK, getnpcid(0, "Sundries#ep15_1elb");
 		cutin "ep143_tasta.bmp",2;
-		changequest 11367,11368;// Looking for the Traces
-		VER_ELEVATOR = 101;
+		ep15_1_elb = 7;
+		//completequest 11367;	// officially completed
+		erasequest 11367;
+		setquest 11368;
+		close3;
 	}
-	else if (VER_ELEVATOR == 101) {
+	if (ep15_1_elb == 7) {
 		mes "[Alph]";
 		mes "Let's look around for something else.";
 		cutin "bu_alp1.bmp",2;
@@ -8014,16 +8214,15 @@ verus04,116,226,0	script	Fountain#ep15_1elb	4_ENERGY_BLUE,{
 		mes "How about those sundries on the left side?";
 		emotion ET_HUK, getnpcid(0, "Sundries#ep15_1elb");
 		cutin "ep143_tasta.bmp",2;
+		close3;
 	}
-	else {
-		mes "- Ordinary-looking Fountain -";
-		mes "- There's nothing in it. -";
-	}
-	close3;
+	mes "- Ordinary-looking Fountain -";
+	mes "- There's nothing in it. -";
+	close;
 }
 
-verus04,95,238,0	script	Sundries#ep15_1elb	4_ENERGY_BLUE,{
-	if (VER_ELEVATOR == 101) {
+verus04,95,238,0	script	Sundries#ep15_1elb	HIDDEN_NPC,{
+	if (ep15_1_elb == 7) {
 		mes "[Alph]";
 		mes "Hm...";
 		mes "Everything looks too clean.";
@@ -8036,22 +8235,25 @@ verus04,95,238,0	script	Sundries#ep15_1elb	4_ENERGY_BLUE,{
 		mes "[Alph]";
 		mes "And look at the tree on the left side.";
 		emotion ET_HUK, getnpcid(0, "Tree#ep15_1elb");
-		changequest 11368,11369;// Looking for the Traces
-		VER_ELEVATOR = 102;
+		ep15_1_elb = 8;
+		//completequest 11368;	// officially completed
+		erasequest 11368;
+		setquest 11369;// Looking for the Traces
+		close3;
 	}
-	else if (VER_ELEVATOR == 102) {
+	if (ep15_1_elb == 8) {
 		mes "[Alph]";
 		mes "Look at the tree on the left side.";
 		cutin "bu_alp1.bmp",2;
 		emotion ET_HUK, getnpcid(0, "Tree#ep15_1elb");
+		close3;
 	}
-	else
-		mes "- The ground is littered with sundries. -";
-	close3;
+	mes "- The ground is littered with sundries. -";
+	close;
 }
 
-verus04,79,249,0	script	Tree#ep15_1elb	4_ENERGY_BLUE,{
-	if (VER_ELEVATOR == 102) {
+verus04,79,249,0	script	Tree#ep15_1elb	HIDDEN_NPC,{
+	if (ep15_1_elb == 8) {
 		mes "[Du]";
 		mes "I've been wondering since we arrived: don't trees need sunlight to grow?";
 		cutin "bu_du1.bmp",2;
@@ -8079,58 +8281,58 @@ verus04,79,249,0	script	Tree#ep15_1elb	4_ENERGY_BLUE,{
 		mes "Something strange is standing in front of the door!";
 		emotion ET_HUK, getnpcid(0, "Signboard#ep15_1elb");
 		cutin "bu_du2.bmp",2;
-		changequest 11369,11370;// Looking for the Traces
-		VER_ELEVATOR = 103;
+		ep15_1_elb = 9;
+		//completequest 11369;	// officially completed
+		erasequest 11369;
+		setquest 11370;
+		close3;
 	}
-	else if (VER_ELEVATOR == 103) {
+	if (ep15_1_elb == 9) {
 		mes "[Du]";
 		mes "Oh, look here!";
 		mes "Something strange is standing in front of the door!";
 		emotion ET_HUK, getnpcid(0, "Signboard#ep15_1elb");
 		cutin "bu_du2.bmp",2;
+		close3;
 	}
-	else {
-		mes "A tall, verdant tree.";
-		mes "Nothing looks special about it, except that it's growing underground.";
-	}
-	close3;
+	mes "A tall, verdant tree.";
+	mes "Nothing looks special about it, except that it's growing underground.";
+	close;
 }
 
-verus04,62,255,0	script	Signboard#ep15_1elb	4_ENERGY_BLUE,{
-	if (VER_ELEVATOR == 103 || VER_ELEVATOR == 104) {
-		if (VER_ELEVATOR == 103) {
-			mes "[Mark]";
-			mes "Hey!";
-			mes "Stop wandering off! This place can be dangerous!";
-			cutin "bu_mark3.bmp",0;
-			next;
-			mes "[Du]";
-			mes "Adventuring is all about bravery and curiosity!";
-			cutin "bu_du2.bmp",2;
-			next;
-			mes "[Du]";
-			mes "And I'm not going to let other people take all the treasures!";
-			cutin "bu_du1.bmp",2;
-			next;
-			mes "[Tamarin]";
-			mes "Last time you said that, you were hospitalized for a month.";
-			cutin "ep143_taang.bmp",2;
-			next;
-			mes "[Du]";
-			mes "This time, it's different!";
-			mes "Plus, what doesn't kill me only makes me stronger. It did!";
-			cutin "bu_du5.bmp",2;
-			next;
-			mes "[Mark]";
-			mes "You're delusional.";
-			cutin "bu_mark4.bmp",0;
-			next;
-			mes "[Alph]";
-			mes "Oh,";
-			mes "wait.";
-			cutin "bu_alp1.bmp",2;
-			next;
-		}
+verus04,62,255,0	script	Signboard#ep15_1elb	HIDDEN_NPC,{	// todo 4_ENERGY_BLUE ?
+	if (ep15_1_elb == 9) {
+		mes "[Mark]";
+		mes "Hey!";
+		mes "Stop wandering off! This place can be dangerous!";
+		cutin "bu_mark3.bmp",0;
+		next;
+		mes "[Du]";
+		mes "Adventuring is all about bravery and curiosity!";
+		cutin "bu_du2.bmp",2;
+		next;
+		mes "[Du]";
+		mes "And I'm not going to let other people take all the treasures!";
+		cutin "bu_du1.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "Last time you said that, you were hospitalized for a month.";
+		cutin "ep143_taang.bmp",2;
+		next;
+		mes "[Du]";
+		mes "This time, it's different!";
+		mes "Plus, what doesn't kill me only makes me stronger. It did!";
+		cutin "bu_du5.bmp",2;
+		next;
+		mes "[Mark]";
+		mes "You're delusional.";
+		cutin "bu_mark4.bmp",0;
+		next;
+		mes "[Alph]";
+		mes "Oh,";
+		mes "wait.";
+		cutin "bu_alp1.bmp",2;
+		next;
 		mes "[Alph]";
 		mes "Look behind the building.";
 		mes "There's a path that leads upward.";
@@ -8164,10 +8366,46 @@ verus04,62,255,0	script	Signboard#ep15_1elb	4_ENERGY_BLUE,{
 		mes "[Mark]";
 		mes "We'd better follow him before we lose him.";
 		cutin "bu_mark1.bmp",0;
-		if (VER_ELEVATOR == 103) {
-			changequest 11370,11371;// Looking for the Traces
-			VER_ELEVATOR = 104;
-		}
+		ep15_1_elb = 10;
+		//completequest 11370;	// officially completed
+		erasequest 11370;
+		setquest 11371;
+		close3;
+	}
+	if (ep15_1_elb == 10) {
+		mes "[Alph]";
+		mes "Look behind the building.";
+		mes "There's a path that leads upward.";
+		cutin "bu_alp3.bmp",2;
+		next;
+		mes "[Du]";
+		mes "I go";
+		mes "wherever my instinct leads me!";
+		mes "Mwah hah hah!";
+		cutin "bu_du2.bmp",2;
+		next;
+		mes "[Mark]";
+		mes "Du, stop!";
+		mes "Did you not hear me?!";
+		cutin "bu_mark3.bmp",0;
+		next;
+		mes "[Mark]";
+		mes "Grr!";
+		mes "He's out of control.";
+		next;
+		mes "[Maggi]";
+		mes "Mark,";
+		mes "Du's managed to get that far already.";
+		cutin "bu_maggi1.bmp",2;
+		next;
+		mes "[Mark]";
+		mes "Grr!";
+		mes "That knucklehead!";
+		cutin "bu_mark3.bmp",0;
+		next;
+		mes "[Mark]";
+		mes "We'd better follow him before we lose him.";
+		cutin "bu_mark1.bmp",0;
 		close3;
 	}
 	mes "- The door is blocked. -";
@@ -8175,8 +8413,8 @@ verus04,62,255,0	script	Signboard#ep15_1elb	4_ENERGY_BLUE,{
 }
 
 verus03,46,23,3	script	Du#ep15_1elb03	4_M_REDMAN,{
-	mes "[Du]";
-	if (VER_ELEVATOR == 104) {
+	if (ep15_1_elb == 10) {
+		mes "[Du]";
 		mes "Whoa...";
 		mes "I thought this place would be the same as the last one, but it's overrun with machines.";
 		emotion ET_HUK;
@@ -8193,23 +8431,26 @@ verus03,46,23,3	script	Du#ep15_1elb03	4_M_REDMAN,{
 		mes "Up there, I saw another fountain looking similar to the last one.";
 		mes "Do you want to go check it out?";
 		cutin "bu_du2.bmp",2;
-		changequest 11371,11372;// Looking for the Traces
-		VER_ELEVATOR = 105;
+		ep15_1_elb = 11;
+		//completequest 11371;	// officially completed
+		erasequest 11371;
+		setquest 11372;
+		close3;
 	}
-	else if (VER_ELEVATOR == 105) {
+	if (ep15_1_elb == 11) {
+		mes "[Du]";
 		mes "Up there, I saw another fountain looking similar to the last one.";
 		mes "Do you want to go check it out?";
 		cutin "bu_du2.bmp",2;
+		close3;
 	}
-	else {
-		mes "What does this place have to do with Juperos?";
-		cutin "bu_du5.bmp",2;
-	}
-	close3;
+	mes "[Du]";
+	mes "What does this place have to do with Juperos?";
+	close;
 }
 
-verus03,44,65,0	script	Fountain#ep15_1elb03	4_ENERGY_BLUE,{
-	if (VER_ELEVATOR == 105) {
+verus03,44,65,0	script	Fountain#ep15_1elb03	HIDDEN_NPC,{
+	if (ep15_1_elb == 11) {
 		mes "[Alph]";
 		mes "Hm...";
 		mes "This place is disturbingly clean.";
@@ -8233,7 +8474,7 @@ verus03,44,65,0	script	Fountain#ep15_1elb03	4_ENERGY_BLUE,{
 		cutin "bu_du5.bmp",2;
 		next;
 		mes "[Mark]";
-		mes "...";
+		mes "......";
 		cutin "bu_mark3.bmp",0;
 		next;
 		mes "[Du]";
@@ -8247,10 +8488,13 @@ verus03,44,65,0	script	Fountain#ep15_1elb03	4_ENERGY_BLUE,{
 		mes "[Mark]";
 		mes "Keep an eye on Du; he wanders off easily.";
 		cutin "bu_mark4.bmp",0;
-		changequest 11372,11373;// Looking for the Traces
-		VER_ELEVATOR = 106;
+		ep15_1_elb = 12;
+		//completequest 11372;	// officially completed
+		erasequest 11372;
+		setquest 11373;
+		close3;
 	}
-	else if (VER_ELEVATOR == 106) {
+	if (ep15_1_elb == 12) {
 		mes "[Mark]";
 		mes "I'll take the path north. Meet me up there later.";
 		cutin "bu_mark2.bmp",0;
@@ -8258,17 +8502,16 @@ verus03,44,65,0	script	Fountain#ep15_1elb03	4_ENERGY_BLUE,{
 		mes "[Mark]";
 		mes "Keep an eye on Du; he wanders off easily.";
 		cutin "bu_mark4.bmp",0;
+		close3;
 	}
-	else {
-		mes "- Ordinary-looking Fountain -";
-		mes "- There's nothing in it. -";
-	}
-	close3;
+	mes "- Ordinary-looking Fountain -";
+	mes "- There's nothing in it. -";
+	close;
 }
 
 verus03,88,237,3	script	Mark#ep15_1elb03	4_M_BLUEMAN,{
-	mes "[Mark]";
-	if (VER_ELEVATOR == 106) {
+	if (ep15_1_elb == 12) {
+		mes "[Mark]";
 		mes "Do you see the giant machine ahead of us?";
 		mes "Unlike the first place, this place is filled with giant machines.";
 		cutin "bu_mark1.bmp",0;
@@ -8288,20 +8531,26 @@ verus03,88,237,3	script	Mark#ep15_1elb03	4_M_BLUEMAN,{
 		mes "Don't go over there!";
 		cutin "bu_mark1.bmp",0;
 		emotion ET_HUK;
-		changequest 11373,11374;// Looking for the Traces
-		VER_ELEVATOR = 107;
+		emotion ET_HUK, getnpcid(0, "Tamarin#ep15_1elb03");
+		ep15_1_elb = 13;
+		//completequest 11373;	// officially completed
+		erasequest 11373;
+		setquest 11374;
+		close3;
 	}
-	else if (VER_ELEVATOR == 107) {
+	if (ep15_1_elb == 13) {
+		mes "[Mark]";
 		mes "Oh, Tamarin!";
 		mes "Don't go over there!";
 		cutin "bu_mark1.bmp",0;
 		emotion ET_HUK;
+		emotion ET_HUK, getnpcid(0, "Tamarin#ep15_1elb03");
+		close3;
 	}
-	else {
-		mes "Do you see the giant machine ahead of us?";
-		mes "Unlike the first place, this place is filled with giant machines.";
-		cutin "bu_mark3.bmp", 0;
-	}
+	mes "[Mark]";
+	mes "Do you see the giant machine ahead of us?";
+	mes "Unlike the first place, this place is filled with giant machines.";
+	cutin "bu_mark1.bmp",0;
 	close3;
 }
 
@@ -8310,27 +8559,24 @@ verus03,51,256,3	script	Tamarin#ep15_1elb03	4_M_TAMARIN,{
 	mes "Look over there.";
 	mes "That part of the place is completely destroyed.";
 	cutin "ep143_tahuk.bmp",2;
-	if (VER_ELEVATOR == 107 || VER_ELEVATOR == 108) {
+	if (ep15_1_elb == 13 || ep15_1_elb == 14) {
 		next;
 		mes "[Tamarin]";
 		mes "Maggi, how's it like over there?";
 		cutin "ep143_tasta.bmp",2;
 		emotion ET_HUK, getnpcid(0, "Maggi#ep15_1elb03");
-		if (VER_ELEVATOR == 107) {
-			changequest 11374,11375;// Looking for the Traces
-			VER_ELEVATOR = 108;
+		if (ep15_1_elb == 13) {
+			ep15_1_elb = 14;
+			//completequest 11374;	// officially completed
+			erasequest 11374;
+			setquest 11375;
 		}
 	}
 	close3;
 }
 
-verus03,35,254,3	script	Maggi#ep15_1elb03	612,{
-	if (VER_ELEVATOR < 108) {
-		mes "[Maggi]";
-		mes "Danger is in the air. I can feel it in my bones.";
-		cutin "bu_maggi3.bmp",2;
-	}
-	else if (VER_ELEVATOR == 108) {
+verus03,35,254,3	script	Maggi#ep15_1elb03	4_F_PINKWOMAN,{
+	if (ep15_1_elb == 14) {
 		mes "[Maggi]";
 		mes "Oh.";
 		mes "The path over here is also blocked.";
@@ -8399,12 +8645,14 @@ verus03,35,254,3	script	Maggi#ep15_1elb03	612,{
 		mes "[Mark]";
 		mes "I agree.";
 		mes "Let's check the other places first.";
-		completequest 11375;// Looking for the Traces
+		ep15_1_elb = 15;
+		//completequest 11375;	// officially completed
+		erasequest 11375;
 		getexp 1000000,0;
 		cutin "bu_mark2.bmp",0;
-		VER_ELEVATOR = 109;
+		close3;
 	}
-	else {
+	if (ep15_1_elb == 15) {
 		mes "[Alph]";
 		mes "The path is blocked, and if the Phantasmagorika Excavation Team hasn't cleared it, then there must be a reason. Let's steer clear of it until we find out more about it.";
 		cutin "bu_alp1.bmp",2;
@@ -8413,17 +8661,27 @@ verus03,35,254,3	script	Maggi#ep15_1elb03	612,{
 		mes "I agree.";
 		mes "Let's check the other places first.";
 		cutin "bu_mark2.bmp",0;
+		close3;
 	}
+	mes "[Maggi]";
+	mes "Danger is in the air. I can feel it in my bones.";
+	cutin "bu_maggi3.bmp",2;
 	close3;
 }
 
-// Part 3 : Vestige
+// Part 3 : Vestige - ep15_2_underbs
 verus01,221,65,5	script	Du#Verus	4_M_REDMAN,{
-	if (VER_MAIN < 19)
+	if (VER_MAIN < 19)	// extra check
 		end;
 	mes "[Du]";
-	if (VER_ELEVATOR == 109 || VER_ELEVATOR == 1000) {
-		if (VER_ELEVATOR == 109) {
+	if (ep15_2_bslast < 2) {
+		if (ep15_1_elb < 15) {
+			mes "[Dyu]";
+			mes "Investigations are supposed to be done calmly...";
+			cutin "bu_du3.bmp",2;
+			close3;
+		}
+		if (ep15_2_bslast == 0) {
 			mes "Isn't this a complete mess?";
 			mes "Whew, barely got in!";
 			mes "I hate these access protocols.";
@@ -8477,9 +8735,9 @@ verus01,221,65,5	script	Du#Verus	4_M_REDMAN,{
 		mes "[Mark]";
 		mes "Then let's investigate that part first.";
 		cutin "bu_mark1.bmp",0;
-		if (VER_ELEVATOR == 109) {
+		if (ep15_2_bslast == 0) {
 			setquest 11381;// Vestige
-			VER_ELEVATOR = 1000;
+			ep15_2_bslast = 1;
 		}
 		close3;
 	}
@@ -8489,8 +8747,8 @@ verus01,221,65,5	script	Du#Verus	4_M_REDMAN,{
 }
 
 verus01,151,173,3	script	Fruit#Verus	4_F_FRUIT,{
-	mes "[Fruit]";
-	if (VER_ELEVATOR < 110) {
+	if (ep15_2_bslast < 2) {
+		mes "[Fruit]";
 		mes "Coooooooooolll!!!!";
 		mes "See this?";
 		mes "Right here!!!!";
@@ -8499,62 +8757,73 @@ verus01,151,173,3	script	Fruit#Verus	4_F_FRUIT,{
 		mes "[Fruit]";
 		mes "Doesn't it look like something will go swirly?!";
 		mes "Haaa!";
-		close3;
-	}
-	if (VER_ELEVATOR == 1000 || VER_ELEVATOR == 1001) {
-		if (VER_ELEVATOR == 1000) {
-			mes "Coooooooooolll!!!!";
-			mes "See this?";
-			mes "Right here!!!!";
-			cutin "EP15_2_fru_2.bmp",2;
-			next;
+		if (ep15_2_bslast == 0)
+			close3;
+		next;
+		mes "[Fruit]";
+		mes "I wish I could take the whole thing to my laboratory!";
+		mes "I can only watch on...";
+		cutin "EP15_2_fru_3.bmp",2;
+		next;
+		mes "[Fruit]";
+		mes "So I was thinking...";
+		mes "I was busy here so I haven't been able to go down to the underground bunker they say is right underneath.";
+		cutin "EP15_2_fru_2.bmp",2;
+		next;
+		mes "[Fruit]";
+		mes "Do you want to go?";
+		next;
+		mes "[Fruit]";
+		mes "It isn't common to have someone tell you all the investigation points, right?";
+		next;
+		mes "[Fruit]";
+		mes "I am not asking you to work for free either!";
+		mes "If you bring back interesting results there will be rewards!";
+		next;
+		mes "[Fruit]";
+		mes "What do you think?";
+		next;
+		if (select( "Quit.", "Do it." ) == 1) {
 			mes "[Fruit]";
-			mes "Doesn't it look like something will go swirly?!";
-			mes "Haaa!";
-			next;
-			mes "[Fruit]";
-			mes "I wish I could take the whole thing to my laboratory!";
-			mes "I can only watch on...";
-			cutin "EP15_2_fru_3.bmp",2;
-			next;
-			mes "[Fruit]";
-			mes "So I was thinking...";
-			mes "I was busy here so I haven't been able to go down to the underground bunker they say is right underneath.";
-			cutin "EP15_2_fru_2.bmp",2;
-			next;
-			mes "[Fruit]";
-			mes "Do you want to go?";
-			next;
-			mes "[Fruit]";
-			mes "It isn't common to have someone tell you all the investigation points, right?";
-			next;
-			mes "[Fruit]";
-			mes "I am not asking you to work for free either!";
-			mes "If you bring back interesting results there will be rewards!";
-			next;
-			mes "[Fruit]";
-			mes "What do you think?";
-			next;
-			if (select( "Quit.", "Do it." ) == 1) {
-				mes "[Fruit]";
-				mes "Eh...";
-				cutin "EP15_2_fru_1.bmp",2;
-				close2;
-				cutin "",255;
-				end;
-			}
+			mes "Eh...";
+			cutin "EP15_2_fru_1.bmp",2;
+			close3;
 		}
+		mes "[Fruit]";
 		mes "Yahoo!!!";
 		mes "If you go in a little ways there will probably be someone to guide you.";
 		next;
 		mes "[Fruit]";
 		mes "I will be expecting you to bring back lots of fun stuff.";
-		if (VER_ELEVATOR == 1000) {
-			erasequest 11381;// Vestige
-			setquest 11382;// Vestige
-			VER_ELEVATOR = 1001;
-		}
+		// completequest 11381;	// completed officially
+		erasequest 11381;// Vestige
+		setquest 11382;// Vestige
+		ep15_2_bslast = 2;
 		close3;
+	}
+	if (ep15_2_bslast == 2) {
+		mes "[Fruit]";
+		mes "Yahoo!!!";
+		mes "If you go in a little ways there will probably be someone to guide you.";
+		cutin "EP15_2_fru_2.bmp",2;
+		next;
+		mes "[Fruit]";
+		mes "I will be expecting you to bring back lots of fun stuff.";
+		close3;
+	}
+	if (ep15_2_bslast < 9) {
+		mes "[Fruit]";
+		mes "How, is there any progress in the investigation?";
+		mes "Although it is an underground bunker, the scale is not a joke!";
+		cutin "EP15_2_fru_3.bmp",2;
+		next;
+		mes "[Fruit]";
+		mes "Wouldn't it be lost?";
+		close3;
+	}
+	if (checkweight(1119,3) == 0) {
+		mes "- You are carrying too many items to proceed with the quest -";
+		close;
 	}
 	if (checkquest(11380,HUNTING) == 2) {
 		mes "[Fruit]";
@@ -8566,10 +8835,12 @@ verus01,151,173,3	script	Fruit#Verus	4_F_FRUIT,{
 		mes "So? So? Then what?";
 		mes "Come on! Tell me more!!!";
 		erasequest 11380;// Last Room
-		getitem 6827,1;// Intact Machine Component
-		getitem 6828,1;// Gravity Safety Device
+		getexp 200000,0;
+		getitem 6827,1;// Normal_Parts
+		getitem 6828,1;// Gravity_Parts
 		close3;
 	}
+	mes "[Fruit]";
 	mes "Hm... Is there anything more interesting?";
 	cutin "EP15_2_fru_1.bmp",2;
 	next;
@@ -8587,17 +8858,17 @@ verus01,151,173,3	script	Fruit#Verus	4_F_FRUIT,{
 			next;
 			mes "[Fruit]";
 			mes "ATK and MATK + 50. If helmet refinement is at 9, it has an affect of MSP + 50%, MHP + 10%.";
-			.@item_id = 18997;
+			.@item_id = 18997;	// Riot_Chip
 			break;
 		case 2:
 			mes "[Fruit]";
 			mes "Broken Chip 1 has STR + 4. If equipped with Broken Chip 2, it has a STR + 8, INT+ 8 affect.";
-			.@item_id = 28326;
+			.@item_id = 28326;	// Broken_Chip_1
 			break;
 		case 3:
 			mes "[Fruit]";
 			mes "Broken Chip 2 has INT + 4. If equipped with Broken Chip 1, it has a STR + 8, INT+ 8 affect.";
-			.@item_id = 28327;
+			.@item_id = 28327;	// Broken_Chip_2
 			break;
 		}
 		next;
@@ -8607,8 +8878,8 @@ verus01,151,173,3	script	Fruit#Verus	4_F_FRUIT,{
 				mes "Not enough!!!";
 				close3;
 			}
-			delitem 6827,17;// Intact Machine Component
-			getitem .@item_id,1;// Runaway Chip
+			delitem 6827,17;// Normal_Parts
+			getitem .@item_id,1;
 			close3;
 		}
 		// continue
@@ -8619,9 +8890,8 @@ verus01,151,173,3	script	Fruit#Verus	4_F_FRUIT,{
 }
 
 un_bunker,100,96,3	script	Mark#Bunker Entrance	4_M_BLUEMAN,{
-	mes "[Mark]";
-	if (VER_ELEVATOR == 1001 || VER_ELEVATOR == 1002) {
-		if (VER_ELEVATOR == 1001) {
+	if (ep15_2_bslast == 2 || ep15_2_bslast == 3) {
+		if (ep15_2_bslast == 2) {
 			mes "This part is very pristinely preserved compared to the upper parts.";
 			mes "But this disgusting smell....";
 			cutin "bu_mark4.bmp",0;
@@ -8668,25 +8938,28 @@ un_bunker,100,96,3	script	Mark#Bunker Entrance	4_M_BLUEMAN,{
 		next;
 		mes "[Du]";
 		mes "Wait for me!!!!!";
-		if (VER_ELEVATOR == 1001) {
+		if (ep15_2_bslast == 2) {
+			// completequest 11382;	// officially completed
 			changequest 11382,11383;// Vestige
-			VER_ELEVATOR = 1002;
+			ep15_2_bslast = 3;
 		}
 		close3;
 	}
+	mes "[Mark]";
 	mes "What is this disgusting smell?";
 	cutin "bu_mark4.bmp",0;
 	close3;
 }
 
 un_bunker,363,171,3	script	Alph#Entrance	4_M_BLACKMAN,{
-	mes "[Alph]";
-	if (VER_ELEVATOR < 1002) {
+	if (ep15_2_bslast < 3) {
+		mes "[Alph]";
 		mes "There are too many suspicious places...";
 		cutin "bu_alp3.bmp",2;
 		close3;
 	}
-	if (VER_ELEVATOR == 1002) {
+	if (ep15_2_bslast == 3) {
+		mes "[Alph]";
 		mes "Um...";
 		mes "You're here...";
 		cutin "bu_alp3.bmp",2;
@@ -8757,14 +9030,16 @@ un_bunker,363,171,3	script	Alph#Entrance	4_M_BLACKMAN,{
 			mes "Right...";
 			mes "There's a bad energy so be careful...";
 			cutin "bu_alp1.bmp",2;
+			// completequest 11383;	// officially completed
 			erasequest 11383;// Vestige
 			setquest 11384;// Vestige
-			VER_ELEVATOR = 1003;
+			ep15_2_bslast = 4;
 			close2;
 			warp "un_bunker",385,83;
 			end;
 		}
 	}
+	mes "[Alph]";
 	mes "Is there more left to investigate in this room?";
 	cutin "bu_alp1.bmp",2;
 	next;
@@ -8783,9 +9058,7 @@ un_bunker,363,171,3	script	Alph#Entrance	4_M_BLACKMAN,{
 }
 
 un_bunker,388,86,3	script	Alph#Entrance2	4_M_BLACKMAN,{
-	if (VER_ELEVATOR < 1003)// inaccurate
-		end;
-	if (VER_ELEVATOR == 1003) {
+	if (ep15_2_bslast == 4) {
 		mes "[Alph]";
 		mes "As expected..";
 		mes "Only this room has a different lay out than the rest...";
@@ -8803,9 +9076,10 @@ un_bunker,388,86,3	script	Alph#Entrance2	4_M_BLACKMAN,{
 		mes "[Du]";
 		mes "Charge!!!!!";
 		cutin "bu_du5.bmp",2;
+		// completequest 11384;	// officially completed
 		erasequest 11384;// Vestige
 		setquest 11385;// Vestige
-		VER_ELEVATOR = 1004;
+		ep15_2_bslast = 5;
 		close2;
 		warp "un_myst",11,206;
 		end;
@@ -8832,7 +9106,7 @@ un_myst,27,208,5	script	Verity#Myst	4_F_BERRYTEA,{
 	mes "My head is starting to throb already.";
 	cutin "EP15_2_brt_3.bmp",2;
 	next;
-	if (VER_ELEVATOR == 1004 || VER_ELEVATOR == 1005) {
+	if (ep15_2_bslast == 5 || ep15_2_bslast == 6) {
 		mes "[Tamarin]";
 		mes "What is this space?";
 		mes "It seems to be poorly built for it to be used as a bunker...";
@@ -8845,16 +9119,15 @@ un_myst,27,208,5	script	Verity#Myst	4_F_BERRYTEA,{
 		mes "[Tamarin]";
 		mes "There looks to be another door there so let's check it out.";
 		cutin "ep143_tasta.bmp",2;
-		if (VER_ELEVATOR == 1004) {
+		if (ep15_2_bslast == 5) {
+			// completequest 11385;	// officially completed
 			changequest 11385,11386;// Vestige
-			VER_ELEVATOR = 1005;
-			close2;
-			cutin "",255;
-			end;
+			ep15_2_bslast = 6;
+			close3;
 		}
 		next;
 	}
-	if (VER_ELEVATOR == 1005)
+	if (ep15_2_bslast == 5)
 		.@string$ = "Move to the door.";
 	else
 		.@string$ = "Quit.";
@@ -8872,10 +9145,16 @@ un_myst,27,208,5	script	Verity#Myst	4_F_BERRYTEA,{
 	end;
 }
 
-un_myst,56,206,0	script	warp_un_myst	WARPNPC,1,1,{
+un_myst,56,206,0	script	#myst_1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	if (VER_ELEVATOR == 1005) {
+	if (ep15_2_bslast < 5) {
+		mes "- Unable to enter the place -";
+		close2;
+		warp "un_bunker",300,166;
+		end;
+	}
+	if (ep15_2_bslast == 6) {
 		mes "- Does not seem locked but blocked by something.-";
 		next;
 		if (select( "Break it.", "Quit." ) == 2) {
@@ -8890,18 +9169,21 @@ OnTouch:
 		mes "Two!";
 		mes "Three!";
 		cutin "bu_du5.bmp",2;
+		// completequest 11386;	// officially completed
 		erasequest 11386;// Vestige
 		setquest 11387;// Vestige
-		VER_ELEVATOR = 1006;
+		ep15_2_bslast = 7;
+		ep15_2_bsmemo = 1;
 		close2;
 	}
+	ep15_2_bsmemo = 1;
 	warp "un_myst",81,190;
 	end;
 }
 
 un_myst,100,190,3	script	Du#Hall	4_M_REDMAN,{
-	if (VER_ELEVATOR == 1006 || VER_ELEVATOR == 1007) {
-		if (VER_ELEVATOR == 1006) {
+	if (ep15_2_bslast == 7 || ep15_2_bslast == 8) {
+		if (ep15_2_bslast == 7) {
 			mes "[Du]";
 			mes "Wow...What is this place?";
 			cutin "bu_du1.bmp",2;
@@ -8981,10 +9263,11 @@ un_myst,100,190,3	script	Du#Hall	4_M_REDMAN,{
 		mes "This is the first time for me go in this deep...";
 		mes "There is no other way!";
 		cutin "EP15_2_brt_6.bmp",2;
-		if (VER_ELEVATOR == 1006) {
+		if (ep15_2_bslast == 7) {
+			// completequest 11387;	// officially completed
 			erasequest 11387;// Vestige
 			setquest 11388;// Vestige
-			VER_ELEVATOR = 1007;
+			ep15_2_bslast = 8;
 		}
 		close3;
 	}
@@ -9000,11 +9283,11 @@ un_myst,100,190,3	script	Du#Hall	4_M_REDMAN,{
 }
 
 un_myst,333,206,3	script	Weird piece#01	4_GC109,{
-	if (isbegin_quest(11388) == 0 && isbegin_quest(11389) == 0) {
+	if (ep15_2_bslast < 8) {
 		mes "There is a weird piece.";
 		close;
 	}
-	if (@weird_piece == 1) {// A
+	if (ep15_2_bsmemo == 1) {// A
 		mes "I cannot tell how long it has been since I entered this place.";
 		mes "In this darkness my sense of time grows dull and the people are quickly growing tired.";
 		next;
@@ -9016,13 +9299,16 @@ un_myst,333,206,3	script	Weird piece#01	4_GC109,{
 		next;
 		mes "How long can we keep running?";
 		close2;
-		erasequest 11388;// Vestige
-		setquest 11389;// Vestige
+		if (ep15_2_bslast < 9) {
+			// completequest 11388;	// officially completed
+			erasequest 11388;// Vestige
+			setquest 11389;// Vestige
+		}
 		warp "un_myst",260,204;
-		@weird_piece = 2;
+		ep15_2_bsmemo = 2;
 		end;
 	}
-	if (@weird_piece == 2) {
+	if (ep15_2_bsmemo == 2) {
 		mes "Even though I was ready for this, the situation is deteriorating.";
 		mes "I can only say I would not have survived if I stayed at that place.";
 		next;
@@ -9031,26 +9317,29 @@ un_myst,333,206,3	script	Weird piece#01	4_GC109,{
 		mes "Many have already become incapable of hope...";
 		close2;
 		warp "un_myst",260,204;
-		@weird_piece = 3;
+		ep15_2_bsmemo = 3;
 		end;
 	}
-	if (@weird_piece == 3) {
-		mes "We should have been out by now according to the calculations but there is only dirt still.";
-		next;
-		mes "The calculations could be wrong and we may be going in circles.";
-		mes "It doesn't feel right.";
-		next;
-		mes "No..";
-		mes "I haven't felt at ease since that day.";
-		close2;
-		warp "un_myst",347,138;
-		@weird_piece = 4;
-		end;
-	}
+	mes "We should have been out by now according to the calculations but there is only dirt still.";
+	next;
+	mes "The calculations could be wrong and we may be going in circles.";
+	mes "It doesn't feel right.";
+	next;
+	mes "No..";
+	mes "I haven't felt at ease since that day.";
+	close2;
+	warp "un_myst",347,138;
+	if (ep15_2_bsmemo == 3)
+		ep15_2_bsmemo = 4;
+	end;
 }
 
 un_myst,182,137,3	script	Weird piece#02	4_GC109,{
-	if (@weird_piece == 4) {// B
+	if (ep15_2_bsmemo < 4) {
+		mes "There is a weird piece.";
+		close;
+	}
+	if (ep15_2_bsmemo == 4) {// B
 		mes "I may have reached my limits.";
 		mes "I must blame my overtaxed body for not listening to me now.";
 		next;
@@ -9062,10 +9351,10 @@ un_myst,182,137,3	script	Weird piece#02	4_GC109,{
 		mes "I don't think there is no such time left for me..";
 		close2;
 		warp "un_myst",86,136;
-		@weird_piece = 5;
+		ep15_2_bsmemo = 5;
 		end;
 	}
-	if (@weird_piece == 5) {
+	if (ep15_2_bsmemo == 5) {
 		mes "Even walking is difficult now.";
 		next;
 		mes "Once I confidently claimed I will lead all of us...";
@@ -9076,81 +9365,89 @@ un_myst,182,137,3	script	Weird piece#02	4_GC109,{
 		mes "Everything of mine...";
 		close2;
 		warp "un_myst",86,136;
-		@weird_piece = 6;
+		ep15_2_bsmemo = 6;
 		end;
 	}
-	if (@weird_piece == 6) {
+	if (ep15_2_bsmemo == 6) {
 		mes "It would be better to abandon me...";
 		close2;
 		warp "un_myst",86,136;
-		@weird_piece = 7;
+		ep15_2_bsmemo = 7;
 		end;
 	}
-	if (@weird_piece == 7) {
-		mes "The days I am asleep are outnumbering the days I am awake now.";
-		next;
-		mes "I suddenly picture his face in my increasingly hazy consciousness.";
-		next;
-		mes "Tatio...";
-		next;
-		mes "A person sweet to me even though all I only cared about was my work.";
-		next;
-		mes "Ha... person...";
-		mes "I cannot endure the shame of my past for considering him a mere successful project.'";
-		next;
-		mes "Though I cannot help that I may die here...";
-		mes "If only to apologize to him...";
-		mes "If only to muster one sweet word, I have thoughts of survival.";
-		next;
-		mes "..Is it possible?";
-		close2;
-		warp "un_myst",14,92;
-		@weird_piece = 8;
-		end;
-	}
+	mes "The days I am asleep are outnumbering the days I am awake now.";
+	next;
+	mes "I suddenly picture his face in my increasingly hazy consciousness.";
+	next;
+	mes "Tatio...";
+	next;
+	mes "A person sweet to me even though all I only cared about was my work.";
+	next;
+	mes "Ha... person...";
+	mes "I cannot endure the shame of my past for considering him a mere successful project.'";
+	next;
+	mes "Though I cannot help that I may die here...";
+	mes "If only to apologize to him...";
+	mes "If only to muster one sweet word, I have thoughts of survival.";
+	next;
+	mes "..Is it possible?";
+	close2;
+	warp "un_myst",14,92;
+	if (ep15_2_bsmemo == 7)
+		ep15_2_bsmemo = 8;
+	end;
 }
 
 un_myst,214,86,3	script	Weird piece#03	4_GC109,{
-	if (@weird_piece > 7 && @weird_piece < 17) {
-		if (@weird_piece == 8)// C
+	if (ep15_2_bsmemo < 8) {
+		mes "There is a weird piece.";
+		close;
+	}
+	if (ep15_2_bsmemo < 16) {
+		if (ep15_2_bsmemo == 8)// C
 			mes "01001000010001010100110001001100010011110101011101001111010100100100110001000100";
-		else if (@weird_piece == 9)
-			mes "s o g g g o h o h h h h h h h h h h h h";
-		else if (@weird_piece == 10)
+		else if (ep15_2_bsmemo == 9)
+			mes "01001001010000010100110101000110010010010100111001000101";
+		else if (ep15_2_bsmemo == 10)
+			mes "@#$%&!#...";
+		else if (ep15_2_bsmemo == 11)
 			mes "debugging";
-		else if (@weird_piece == 11) {
+		else if (ep15_2_bsmemo == 12) {
 			mes "File...error...restore...";
 			mes "Operation...range...25%...30%...35%.......";
 		}
-		else if (@weird_piece == 12)
+		else if (ep15_2_bsmemo == 13)
 			mes "45%...50%... Minimal normal operations possible start safety mode operations";
-		else if (@weird_piece == 13)
+		else if (ep15_2_bsmemo == 14)
 			mes "60% movement speed normal. Bodily functions normal.";
-		else if (@weird_piece == 14)
+		else if (ep15_2_bsmemo == 15)
 			mes "70% Most language function restored. Slight symptoms of septic anemia but it seems it will be fixed soon.";
-		else if (@weird_piece == 15) {
-			mes "80% Surgery was fairly successful despite having had no proper preparations.";
-			mes "Planning to apply treatment to the rest of the survivors based on this success.";
-		}
-		else if (@weird_piece == 16) {
-			mes "98% Corrupt sector detected.";
-			mes "For more effective operations I have copied the memory chip and constructed 'T_W_O_002b.'";
-			mes "There seems to have been some loss of data during the copying process...";
-			close2;
-			warp "un_myst",209,33;
-			@weird_piece = 17;
-			end;
-		}
 		close2;
 		warp "un_myst",160,89;
-		@weird_piece++;
+		ep15_2_bsmemo++;
 		end;
 	}
+	if (ep15_2_bsmemo == 16) {
+		mes "80% Surgery was fairly successful despite having had no proper preparations.";
+		mes "Planning to apply treatment to the rest of the survivors based on this success.";
+		close2;
+		warp "un_myst",209,33;
+		ep15_2_bsmemo = 17;
+		end;
+	}
+	mes "98% Corrupt sector detected.";
+	mes "For more effective operations I have copied the memory chip and constructed 'T_W_O_002b.'";
+	mes "There seems to have been some loss of data during the copying process...";
+	close2;
+	warp "un_myst",209,33;
+	end;
 }
 
 un_myst,209,42,3	script	Tamarin#Lastroom Entrance	4_M_TAMARIN,{
-	if (VER_ELEVATOR < 1007)
-		end;
+	if (checkweight(1119,3) == 0) {
+		mes "- You are carrying too many items to proceed with the quest -";
+		close;
+	}
 	mes "[Tamarin]";
 	mes "... It seems the last survivors have lingered here...";
 	cutin "ep143_taang.bmp",2;
@@ -9158,29 +9455,28 @@ un_myst,209,42,3	script	Tamarin#Lastroom Entrance	4_M_TAMARIN,{
 	mes "[Tamarin]";
 	mes "I feel scared to open the next door for some reason.";
 	next;
-	if (VER_ELEVATOR == 1007 && @weird_piece == 17) {
+	if (ep15_2_bsmemo == 17) {
 		select("Open door.");
-		completequest 11389;// Vestige
-		VER_ELEVATOR = 1008;
-		getexp 0,1000000;
-		@weird_piece = 0;
-		getitem 6827,1;// Complete_Machine_Parts
-		getitem 6828,1;// Gravity_Safety_Device
+		if (ep15_2_bslast < 9) {
+			ep15_2_bslast = 9;
+			ep15_2_bsmemo = 18;
+			completequest 11389;// Vestige
+			getexp 0,1000000;
+			getitem 6827,1;// Normal_Parts
+			getitem 6828,1;// Gravity_Parts
+		}
+		close2;
+		warp "un_myst",142,38;
+		end;
 	}
-	else {
-		if (@weird_piece == 0)	// can't go outside following path weird piece
-			.@string$ = "Go outside.";
-		.@s = select( "Open door.", .@string$ ) - 1;
-	}
+	.@s = select( "Open door.", "Go outside." ) - 1;
 	mes "[Tamarin]";
 	mes "There is a bitter feeling of sorts...";
 	close2;
 	if (.@s == 0)
 		warp "un_myst",142,38;
-	else {
+	else
 		warp "un_bunker",98,91;
-		@weird_piece = 0;
-	}
 	end;
 }
 
