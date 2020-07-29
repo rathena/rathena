@@ -5313,11 +5313,11 @@ ACMD_FUNC(exp)
 	nullpo_retr(-1, sd);
 	memset(output, '\0', sizeof(output));
 
-	nextb = pc_nextbaseexp(sd);
+	nextb = (double)pc_nextbaseexp(sd);
 	if (nextb)
 		nextb = sd->status.base_exp*100.0/nextb;
 
-	nextj = pc_nextjobexp(sd);
+	nextj = (double)pc_nextjobexp(sd);
 	if (nextj)
 		nextj = sd->status.job_exp*100.0/nextj;
 

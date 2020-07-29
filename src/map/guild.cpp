@@ -51,7 +51,7 @@ struct eventlist {
 //Guild EXP cache
 struct guild_expcache {
 	int guild_id, account_id, char_id;
-	uint64 exp;
+	t_exp exp;
 };
 static struct eri *expcache_ers; //For handling of guild exp payment.
 
@@ -402,10 +402,7 @@ int guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap) {
 		return 0;
 	}
 
-	if (g->member[i].exp > UINT64_MAX - c->exp)
-		g->member[i].exp = UINT64_MAX;
-	else
-		g->member[i].exp+= c->exp;
+	g->member[i].exp = util::safe_addition_cap(g->member[i].exp, c->exp, MAX_GUILD_EXP);
 
 	intif_guild_change_memberinfo(g->guild_id,c->account_id,c->char_id,
 		GMI_EXP,&g->member[i].exp,sizeof(g->member[i].exp));
@@ -1384,7 +1381,7 @@ static DBData create_expcache(DBKey key, va_list args) {
 /*====================================================
  * Return taxed experience from player sd to guild
  *---------------------------------------------------*/
-unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp) {
+t_exp guild_payexp(struct map_session_data *sd,t_exp exp) {
 	struct guild *g;
 	struct guild_expcache *c;
 	int per;
@@ -1405,11 +1402,7 @@ unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp) {
 	//Otherwise tax everything.
 
 	c = (struct guild_expcache *)db_data2ptr(guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd));
-
-	if (c->exp > UINT64_MAX - exp)
-		c->exp = UINT64_MAX;
-	else
-		c->exp += exp;
+	c->exp = util::safe_addition_cap(c->exp, exp, MAX_GUILD_EXP);
 
 	return exp;
 }
@@ -1419,7 +1412,7 @@ unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp) {
  * Add this experience to guild exp
  * [Celest]
  *---------------------------------------------------*/
-int guild_getexp(struct map_session_data *sd,int exp) {
+t_exp guild_getexp(struct map_session_data *sd,t_exp exp) {
 	struct guild_expcache *c;
 	nullpo_ret(sd);
 
@@ -1427,10 +1420,8 @@ int guild_getexp(struct map_session_data *sd,int exp) {
 		return 0;
 
 	c = (struct guild_expcache *)db_data2ptr(guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd));
-	if (c->exp > UINT64_MAX - exp)
-		c->exp = UINT64_MAX;
-	else
-		c->exp += exp;
+	c->exp = util::safe_addition_cap(c->exp, exp, MAX_GUILD_EXP);
+
 	return exp;
 }
 

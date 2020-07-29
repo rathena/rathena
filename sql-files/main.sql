@@ -439,7 +439,7 @@ CREATE TABLE IF NOT EXISTS `guild` (
   `max_member` tinyint(6) unsigned NOT NULL default '0',
   `average_lv` smallint(6) unsigned NOT NULL default '1',
   `exp` bigint(20) unsigned NOT NULL default '0',
-  `next_exp` int(11) unsigned NOT NULL default '0',
+  `next_exp` bigint(20) unsigned NOT NULL default '0',
   `skill_point` tinyint(11) unsigned NOT NULL default '0',
   `mes1` varchar(60) NOT NULL default '',
   `mes2` varchar(120) NOT NULL default '',
