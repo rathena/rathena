@@ -1167,7 +1167,7 @@ verus04,176,161,5	script	Healer Miyo#atnd08	4_F_ACOLYTE,{
 		close;
 	}
 	Zeny = Zeny - .@cost[.@s];
-    npcskill "AL_HEAL",(10/.@s),(99/.@s),(99/.@s);
+	npcskill "AL_HEAL",(10/.@s),(99/.@s),(99/.@s);
 	percentheal (100 / .@s), (100 / .@s);
 	mes "[Miyo]";
 	mes "Oh, you're exhausted.";
@@ -4248,7 +4248,7 @@ verus02,79,31,4	script	Krotzel#1	4_F_HUWOMAN,{
 	if (VER_MAIN < 19)
 		end;
 	mes "[Krotzel]";
-	switch(VER_REPORTER) {
+	switch(ep15_2_brigan) {
 	case 0:
 		mes "I am Monthly Brigan's senior reporter Krotzel! As this place is revealed to the many, many Adventurers are gathering here.";
 		next;
@@ -4272,7 +4272,7 @@ verus02,79,31,4	script	Krotzel#1	4_F_HUWOMAN,{
 		next;
 		mes "[Krotzel]";
 		mes "While I am not completely lacking combat experience my forte is reporting! But where did everybody really go? One might think we're on a picnic!";
-		VER_REPORTER = 1;
+		ep15_2_brigan = 1;
 		close;
 	case 1:
 		mes "I am most worried about the Probationary member. He is still new so won't know anything. It is highly possible he followed the veteran senior. If it is okay, can you find him?";
@@ -4285,7 +4285,7 @@ verus02,79,31,4	script	Krotzel#1	4_F_HUWOMAN,{
 			mes "I will look around in this area. You don't have to bring him. Even though it's the Probationary period he should know how to work by himself! Just let me know where he is when you find him.";
 			close2;
 			setquest 13195;// Monthly Brigan
-			VER_REPORTER = 2;
+			ep15_2_brigan = 2;
 			end;
 		}
 		close;
@@ -4302,7 +4302,7 @@ verus02,79,31,4	script	Krotzel#1	4_F_HUWOMAN,{
 		mes "She started singing about the architecture style as soon as she came here so she will be around this area.";
 		close2;
 		setquest 13196;// Monthly Brigan
-		VER_REPORTER = 4;
+		ep15_2_brigan = 4;
 		end;
 	case 4:
 		mes "We got along well since joining and eventually made a team together so I cannot help but be worried.";
@@ -4320,7 +4320,7 @@ verus02,79,31,4	script	Krotzel#1	4_F_HUWOMAN,{
 		mes "Although I think he will be safe... can you find out where about he is? He probably ran to the ruins there...";
 		close2;
 		setquest 13197;// Monthly Brigan
-		VER_REPORTER = 6;
+		ep15_2_brigan = 6;
 		end;
 	case 6:
 		mes "Find me Grizzly Grylls, veteran reporter who can survive anywhere. I think he may be in the ruins to the east...";
@@ -4336,7 +4336,7 @@ verus02,79,31,4	script	Krotzel#1	4_F_HUWOMAN,{
 		close2;
 		setquest 13199;// Krotzel's Request - Complete
 		getexp 1500000,1000000;
-		VER_REPORTER = 8;
+		ep15_2_brigan = 8;
 		end;
 	default:
 		break;
@@ -4344,7 +4344,8 @@ verus02,79,31,4	script	Krotzel#1	4_F_HUWOMAN,{
 	switch( checkquest(13199,PLAYTIME) ) {
 	case -1:
 	case 2:
-		if (isbegin_quest(13198) == 0) {// Monthly Brigan : Krotzel's Request
+		switch( isbegin_quest(13198) ) {
+		case 0:
 			mes "You're the adventurer I met last time! Our team members still haven't returned so I am worried. If it's okay, can you check if they are safe?";
 			next;
 			switch( select( "Look for team members", "Right now is not a good time", "Converse" ) ) {
@@ -4370,16 +4371,23 @@ verus02,79,31,4	script	Krotzel#1	4_F_HUWOMAN,{
 				mes "The boss' goal is that. Not the jackpot for an Adventurer but let's make a magazine that can provide sweet info! That's kind of the purpose apparently.";
 				close;
 			}
-		}
-		if (isbegin_quest(13195) > 0 || isbegin_quest(13196) > 0 || isbegin_quest(13197) > 0) {
-			mes "I should check if everybody is safe. Please find and see if all three are working hard.";
+			end;
+		case 1:
+			if (isbegin_quest(13195) > 0 || isbegin_quest(13196) > 0 || isbegin_quest(13197) > 0) {
+				mes "I should check if everybody is safe. Please find and see if all three are working hard.";
+				close;
+			}
+			mes "Well we are all safe today. Because we are Adventure team 2! Thank you for helping!";
+			close2;
+			erasequest 13198;// Monthly Brigan : Krotzel's Request
+			setquest 13199;// Krotzel's Request - Complete
+			getexp 1000000,500000;
+			end;
+		case 2:
+			mes "[Krotzel]";
+			mes "I should check if everybody is safe.";
 			close;
 		}
-		mes "Well we are all safe today. Because we are Adventure team 2! Thank you for helping!";
-		close2;
-		erasequest 13198;// Monthly Brigan : Krotzel's Request
-		setquest 13199;// Krotzel's Request - Complete
-		getexp 1000000,500000;
 		end;
 	case 0:
 	case 1:
@@ -4389,20 +4397,20 @@ verus02,79,31,4	script	Krotzel#1	4_F_HUWOMAN,{
 }
 
 verus02,134,169,4	script	Photo Journalist#1	4_F_GON,{
-	if (VER_REPORTER < 4 || VER_REPORTER == 6 || VER_REPORTER == 7) {
+	if (ep15_2_brigan < 4 || ep15_2_brigan == 6 || ep15_2_brigan == 7) {
 		mes "[Sunny Kim]";
 		mes "Monthly Brigan's senior photo journalist...Ahah! Monsters keep coming! It's dangerous!";
 		close;
 	}
-	if (VER_REPORTER == 4) {
+	if (ep15_2_brigan == 4) {
 		mes "[Sunny Kim]";
 		mes "Krotzel? Ah you mean my partner. I still have to capture the cool architecture style and monsters. Tell her I am fine.";
 		close2;
 		erasequest 13196;// Monthly Brigan
-		VER_REPORTER = 5;
+		ep15_2_brigan = 5;
 		end;
 	}
-	if (VER_REPORTER == 5) {
+	if (ep15_2_brigan == 5) {
 		mes "[Sunny Kim]";
 		mes "I thought I worked a lot on the ground but I am impressed! I will capture all of it in my palm!";
 		close;
@@ -4462,20 +4470,20 @@ verus02,134,169,4	script	Photo Journalist#1	4_F_GON,{
 }
 
 verus01,41,103,4	script	Exhausted Journalist#1	52,{
-	if (VER_REPORTER < 6) {
+	if (ep15_2_brigan < 6) {
 		mes "[Grylls]";
 		mes "Haha are you an Adventurer? I am Grizzly Grylls! A reporter who likes adventure.";
 		close;
 	}
-	if (VER_REPORTER == 6) {
+	if (ep15_2_brigan == 6) {
 		mes "[Grylls]";
 		mes "Krotzel is concerned? Don't joke. I am veteran reporter Grizzly Grylls! I am enjoying an adventure! Tell her to not worry.";
 		close2;
 		erasequest 13197;// Monthly Brigan
-		VER_REPORTER = 7;
+		ep15_2_brigan = 7;
 		end;
 	}
-	if (VER_REPORTER == 7) {
+	if (ep15_2_brigan == 7) {
 		mes "[Grylls]";
 		mes "Now I am confused whether I am a reporter or an adventurer. I even got the nickname survival king for being able to survive anywhere!";
 		close;
@@ -4514,7 +4522,7 @@ verus01,41,103,4	script	Exhausted Journalist#1	52,{
 				close;
 			}
 			mes "I will cook now! I am salivating at the thought of the flavor!";
-			delitem 11597,30;// Metalbug
+			delitem 11597,30;// Iron_Bug
 			erasequest 13204;// Monthly Brigan : Grylls' Request
 			if (isbegin_quest(13205) > 0)
 				erasequest 13205;
@@ -4534,20 +4542,20 @@ verus01,41,103,4	script	Exhausted Journalist#1	52,{
 }
 
 verus01,172,146,4	script	Lame Journalist#1	4_M_HUBOY,{
-	if (VER_REPORTER < 2 || VER_REPORTER > 3 && VER_REPORTER < 8) {
+	if (ep15_2_brigan < 2 || ep15_2_brigan > 3 && ep15_2_brigan < 8) {
 		mes "[Rookie Reporter]";
 		mes "Hello! I am Rookie reporter Trapp! Of Monthly Brigan's Adventure Team 2! I will cover the stories even through danger!";
 		close;
 	}
-	if (VER_REPORTER == 2) {
+	if (ep15_2_brigan == 2) {
 		mes "[Rookie Reporter]";
 		mes "Hello! I am Trapp! The newest member of Monthly Brigan's Adventure team 2! My senior is worried? I will cover this story and return!";
 		close2;
 		erasequest 13195;// Monthly Brigan
-		VER_REPORTER = 3;
+		ep15_2_brigan = 3;
 		end;
 	}
-	if (VER_REPORTER == 3) {
+	if (ep15_2_brigan == 3) {
 		mes "[Rookie Reporter]";
 		mes "Please tell her to not worry so much! I am a reporter too now! However if you have the time I would like you to help me with something. I mean later.";
 		close;
