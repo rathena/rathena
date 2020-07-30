@@ -2934,6 +2934,9 @@ Body:
         Time: 2400
     Requires:
       SpCost: 75
+      ItemCost:
+        - Item: Blue_Gemstone
+          Amount: 1
     Unit:
       Id: Firepillar_Waiting
       AlternateId: Firepillar_Active
