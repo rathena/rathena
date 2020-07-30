@@ -2441,41 +2441,41 @@ int mob_getdroprate(struct block_list *src, struct mob_db *mob, int base_rate, i
 		if (battle_config.drops_by_luk2) // Drops affected by luk as a % increase [Skotlex]
 			drop_rate += (int)(0.5 + drop_rate * status_get_luk(src) * battle_config.drops_by_luk2 / 10000.);
 
-	if (src->type == BL_PC) { // Player specific drop rate adjustments
-		struct map_session_data *sd = map_id2sd(src->id);
-		int drop_rate_bonus = 100;
-		int drop_rate_base = drop_rate;
+		if (src->type == BL_PC) { // Player specific drop rate adjustments
+			struct map_session_data *sd = map_id2sd(src->id);
+			int drop_rate_bonus = 100;
+			int drop_rate_base = drop_rate;
 
-		if (battle_config.pk_mode && (int)(mob->lv - sd->status.base_level) >= 20) // pk_mode increase drops if 20 level difference [Valaris]
-			drop_rate = (int)(drop_rate * 1.25);
+			if (battle_config.pk_mode && (int)(mob->lv - sd->status.base_level) >= 20) // pk_mode increase drops if 20 level difference [Valaris]
+				drop_rate = (int)(drop_rate * 1.25);
 
-		// Add class and race specific bonuses
-		drop_rate_bonus += sd->dropaddclass[mob->status.class_] + sd->dropaddclass[CLASS_ALL];
-		drop_rate_bonus += sd->dropaddrace[mob->status.race] + sd->dropaddrace[RC_ALL];
+			// Add class and race specific bonuses
+			drop_rate_bonus += sd->dropaddclass[mob->status.class_] + sd->dropaddclass[CLASS_ALL];
+			drop_rate_bonus += sd->dropaddrace[mob->status.race] + sd->dropaddrace[RC_ALL];
 
-		if (sd->sc.data[SC_ITEMBOOST])
-			drop_rate_bonus += sd->sc.data[SC_ITEMBOOST]->val1;
+			if (sd->sc.data[SC_ITEMBOOST])
+				drop_rate_bonus += sd->sc.data[SC_ITEMBOOST]->val1;
 
-		drop_rate_bonus = (int)(0.5 + drop_rate * drop_rate_bonus / 100.);
+			drop_rate_bonus = (int)(0.5 + drop_rate * drop_rate_bonus / 100.);
 
-		int cap;
+			int cap;
 
-		if (pc_isvip(sd)) { // Increase item drop rate for VIP.
-			// Unsure how the VIP and other bonuses should stack, this is additive.
-			// multiplicative is (replace line if that's correct)
-			// drop_rate_bonus += (int)(0.5 + drop_rate_bonus * battle_config.vip_drop_increase / 100.);
-			drop_rate_bonus += (int)(0.5 + drop_rate_base * battle_config.vip_drop_increase / 100.);
-			cap = battle_config.drop_rate_cap_vip;
-		} else
-			cap = battle_config.drop_rate_cap;
+			if (pc_isvip(sd)) { // Increase item drop rate for VIP.
+				// Unsure how the VIP and other bonuses should stack, this is additive.
+				// multiplicative is (replace line if that's correct)
+				// drop_rate_bonus += (int)(0.5 + drop_rate_bonus * battle_config.vip_drop_increase / 100.);
+				drop_rate_bonus += (int)(0.5 + drop_rate_base * battle_config.vip_drop_increase / 100.);
+				cap = battle_config.drop_rate_cap_vip;
+			} else
+				cap = battle_config.drop_rate_cap;
 
-		drop_rate = drop_rate_bonus;
+			drop_rate = drop_rate_bonus;
 
-		// Now rig the drop rate to never be over 90% unless it is originally >90%.
-		if ((drop_rate_base < cap) && (drop_rate_bonus > cap)) {
-			drop_rate = cap;
+			// Now rig the drop rate to never be over 90% unless it is originally >90%.
+			if ((drop_rate_base < cap) && (drop_rate_bonus > cap)) {
+				drop_rate = cap;
+			}
 		}
-	}
 	}
 
 	drop_rate = min(drop_rate, 10000); // Cap it to 100%
