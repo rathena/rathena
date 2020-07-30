@@ -3457,8 +3457,7 @@ verus04,170,150,3	script	Record player#e152a01	CLEAR_NPC,{
 }
 
 
-
-
+// Bunker - ep15_2_memory
 function	script	F_time_limit_recorder	{
 	if (getarg(1,1) && checkweight(1301,1) == 0) {
 		mes "- You are carrying too many items to proceed with the quest -";
@@ -3807,8 +3806,10 @@ un_bk_q,93,168,4	script	Dr.Fresa#EP15.2MR	4_F_BERRYTEA,{
 			mes "[Lona Fresa]";
 			mes "I got it. We need to take measures.";
 			next;
-			erasequest 5364;
-			erasequest 5365;
+			if (isbegin_quest(5364) > 0)
+				erasequest 5364;
+			if (isbegin_quest(5365) > 0)
+				erasequest 5365;
 			setquest 5370;
 			getexp 750000,750000;
 			mes "The small round capsule has percolated through the skin. It feels like experience has accumulated.";
@@ -4040,7 +4041,8 @@ un_bk_q,82,323,2	script	Mechanician Al#EP15.2MR	4_M_REPAIR,{
 			mes "Ernon? Goods manager Ernon? He has a message for me? What is it?";
 			next;
 			input .@string$;
-			setquest 5369;
+			if (isbegin_quest(5369) == 0)
+				setquest 5369;
 			if (.@string$ == "You idiots!! Stop wasting material with stupid machines!!")
 				ep15_2_memory = 1;
 			else
@@ -4253,10 +4255,14 @@ un_bk_q,86,121,4	script	Chemical Substance Specialist Karsten#EP15.2MR	4_M_ALCHE
 			mes "[Chemical Substance Specialist Karsten]";
 			mes "Anyway thanks. I prepared this for compensation.";
 			next;
-			erasequest 5359;
-			erasequest 5360;
-			erasequest 5361;
-			erasequest 5362;
+			if (isbegin_quest(5359) > 0)
+				erasequest 5359;
+			if (isbegin_quest(5360) > 0)
+				erasequest 5360;
+			if (isbegin_quest(5361) > 0)
+				erasequest 5361;
+			if (isbegin_quest(5362) > 0)
+				erasequest 5362;
 			setquest 5370;
 			getexp 1000000,1000000;
 			mes "- The small round capsule has percolated through skin. It feels like experience has accumulated.";
@@ -4368,12 +4374,10 @@ un_bk_q,56,286,4	script	Mechanician Mugeosi#EP15.2MR	4_M_REPAIR,{
 			mes "[Mechanician Mugeosi]";
 			mes "Sayhu says Adventurers like this kind of stuff and I should use this as compensation after giving you work.";
 			next;
-			erasequest 5352;
-			erasequest 5353;
-			erasequest 5354;
-			erasequest 5355;
-			erasequest 5356;
-			erasequest 5357;
+			for ( .@i = 5352; .@i < 5358; .@i++ ) {
+				if (isbegin_quest(.@i) > 0)
+					erasequest .@i;
+			}
 			ep15_2_memory = 0;
 			setquest 5370;
 			getexp 1000000,1000000;
@@ -4859,10 +4863,7 @@ S_Random_Grap:
 }
 
 un_bk_q,276,243,4	script	Nurse Lapplad#EP15.2MR	4_F_BRZ_WOMAN,{
-	if (checkweight(1301,1) == 0) {
-		mes "- You are carrying too many items to proceed with the quest -";
-		close;
-	}
+	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
 	if (.@cooldown_status_day[0] == 1)	// Unknown text
 		end;
 	if (.@cooldown_status_day[1] == 1)	// Unknown text
@@ -5203,8 +5204,10 @@ un_bk_q,279,294,4	script	Transportation Executive Ernon#EP15.2MR	4_M_LGTMAN,{
 			mes "[Transportation Executive Ernon]";
 			mes "Since we're almost done here I will finish up quickly and go. This is compensation for the work.";
 			next;
-			erasequest 5367;
-			erasequest 5368;
+			if (isbegin_quest(5367) > 0)
+				erasequest 5367;
+			if (isbegin_quest(5368) > 0)
+				erasequest 5368;
 			setquest 5370;
 			ep15_2_memory = 0;
 			getexp 500000,500000;
@@ -5229,9 +5232,10 @@ un_bk_q,279,294,4	script	Transportation Executive Ernon#EP15.2MR	4_M_LGTMAN,{
 			mes "[Transportation Executive Ernon]";
 			mes "Here! This is compensation for the job.";
 			next;
-			erasequest 5367;
-			erasequest 5368;
-			erasequest 5369;
+			for ( .@i = 5367; .@i < 5370; .@i++ ) {
+				if (isbegin_quest(.@i) > 0)
+					erasequest .@i;
+			}
 			if (ep15_2_memory == 0)
 				getexp 750000,500000;
 			else
@@ -5397,7 +5401,21 @@ un_bk_q,97,84,4	script	Dimension move Portal#EP15.2MR	PORTAL,{
 }
 
 un_bunker,103,95,4	script	Mysterious Device#EP15.2MR1	2_BOARD2,{
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
+	setarray .@quest_id[0], 5341,5351,5358,5363,5366;
+	for ( .@i = 0; .@i < 5; ++.@i ) {
+		switch( checkquest(.@quest_id[.@i],PLAYTIME) ) {
+		case -1:
+			.@cooldown_status_day[.@i] = 0;
+			break;
+		case 0:
+		case 1:
+			.@cooldown_status_day[.@i] = 1;
+			break;
+		case 2:
+			.@cooldown_status_day[.@i] = 2;
+			break;
+		}
+	}
 	.@all = .@cooldown_status_day[0] + .@cooldown_status_day[1] + .@cooldown_status_day[2] + .@cooldown_status_day[3] + .@cooldown_status_day[4];
 	if (.@all == 1) {
 		mes "A mysteriously intense driving energy can be felt from this device.";
@@ -5420,7 +5438,6 @@ un_bunker,103,95,4	script	Mysterious Device#EP15.2MR1	2_BOARD2,{
 		delitem 6825, countitem(6825);
 		delitem 6826, countitem(6826);
 		ep15_2_memory = 0;
-		erasequest 5341;
 		for ( .@i = 5341; .@i <= 5370; ++.@i ) {
 			if (isbegin_quest(.@i) > 0)
 				erasequest .@i;
@@ -5573,11 +5590,11 @@ un_bk_q,297,287,6	script	Adventurer Jean#EP15.2MR	4_M_HUBOY,{
 		mes "I think the food here is one of the best.";
 		close;
 	}
-	mes "[Adventurer Jean]"
-	mes "I ate a lot of different things from adventuring places."
+	mes "[Adventurer Jean]";
+	mes "I ate a lot of different things from adventuring places.";
 	next;
-	mes "[Adventurer Jean]"
-	mes "I think the food here is one of the best."
+	mes "[Adventurer Jean]";
+	mes "I think the food here is one of the best.";
 	close;
 }
 
@@ -6429,8 +6446,10 @@ sec_in02,17,13,4	script	Brigan Helper#1	4_F_HUWOMAN,{
 		}
 	case 2:
 		mes "Delete all tasks";
-		for ( .@i = 13195; .@i < 13206; ++.@i )
-			erasequest .@i;
+		for ( .@i = 13195; .@i < 13206; ++.@i ) {
+			if (isbegin_quest(.@i) > 0)
+				erasequest .@i;
+		}
 		close;
 	case 3:
 		for ( .@i = 13195; .@i < 13206; ++.@i )
