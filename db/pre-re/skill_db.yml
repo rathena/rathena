@@ -9404,6 +9404,7 @@ Body:
         Time: 55000
       - Level: 10
         Time: 60000
+    Duration2: 1000
     Requires:
       SpCost: 50
       Weapon:
