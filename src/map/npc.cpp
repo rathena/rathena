@@ -1490,7 +1490,8 @@ bool npc_scriptcont(struct map_session_data* sd, int id, bool closing){
 		}
 	}
 #ifdef SECURE_NPCTIMEOUT
-	sd->npc_idle_tick = gettick(); //Update the last NPC iteration
+	if( !closing )
+		sd->npc_idle_tick = gettick(); //Update the last NPC iteration
 #endif
 
 	/**
