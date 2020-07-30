@@ -58,5 +58,5 @@ un_myst,121,82,0	duplicate(#m301)	#m302	WARPNPC,1,1
 un_myst,169,89,0	duplicate(#m301)	#m303	WARPNPC,1,1
 un_myst,219,88,0	duplicate(#m301)	#m304	WARPNPC,1,1
 
-un_bunker,387,79,0	warp2	#room_out	1,1,un_bunker,300,166
+un_bunker,387,79,0	warp2	#room_out_	1,1,un_bunker,300,166
 un_myst,108,38,0	warp2	#way	1,1,un_myst,209,33

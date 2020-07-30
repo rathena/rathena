@@ -79,26 +79,6 @@ OnInit:
 verus03,172,257,3	duplicate(Access Controller Damhw#atnd02)	Access Controller Gyuhw#atnd03	4_M_LGTGUARD
 verus03,52,250,5	duplicate(Access Controller Damhw#atnd02)	Access Controller Geuma#atnd01	4_M_LGTGUARD
 
-verus03,52,254,0	script	verus03_to_verus01	WARPNPC,1,1,{
-	if (ep15_2_permit < 1) {
-		mes "[Access Controller]";
-		mes "I am sorry but only permitted members can enter from this point.";
-		close;
-	}
-	warp "verus01",243,62;
-	end;
-}
-
-verus03,169,259,0	script	verus03_to_verus02	WARPNPC,1,1,{
-	if (ep15_2_permit < 1) {
-		mes "[Access Controller]";
-		mes "I am sorry but only permitted members can enter from this point.";
-		close;
-	}
-	warp "verus02",72,19;
-	end;
-}
-
 verus03,55,245,3	script	Rekenber Scholar#e152a01	2_M_MOLGENSTEIN,{
 	mes "[Rekenber Scholar]";
 	mes "Hm.. This machine seems to be have been used for tracking something.";
@@ -1364,68 +1344,44 @@ verus04,170,150,3	script	Record player#e152a01	CLEAR_NPC,{
 	close3;
 }
 
-// Return 0 if a time limit of "Restriction on the Journey" quests has been reached.
 function	script	F_time_limit_recorder	{
-	return (checkquest(5341,PLAYTIME) != 2 && checkquest(5351,PLAYTIME) != 2 && checkquest(5358,PLAYTIME) != 2 && checkquest(5363,PLAYTIME) != 2 && checkquest(5366,PLAYTIME) != 2);
-}
-
-// Erase datas if a time limit of "Restriction on the Journey" quests has been reached.
-function	script	F_erase_datas_recorder	{
-	if (callfunc("F_time_limit_recorder") == 1)
-		return;
-	mes "Your whole body suddenly becomes heavy and time seems to be passing faster around you.";
-	for ( .@quest_id = 5341; .@quest_id < 5371; .@quest_id++ ) {
-		if (isbegin_quest(.@quest_id) > 0)
-			erasequest .@quest_id;
+	if (getarg(1,1) && checkweight(1301,1) == 0) {
+		mes "- You are carrying too many items to proceed with the quest -";
+		close;
 	}
-	delitem 6825, countitem(6825);// Air Purifier Box
-	delitem 6826, countitem(6826);// Fresh Grape
-	recorder_quest_type = 0;
-	recorder_quest_status = 0;
-	mes "Ah- This cozy and snug fe...el.....ling";
-	warp "un_bunker",98,91;
-	close;
+	setarray .@quest_id[0], 5341,5351,5358,5363,5366;
+	for ( .@i = 0; .@i < 5; ++.@i ) {
+		switch( checkquest(.@quest_id[.@i],PLAYTIME) ) {
+		case -1:
+			set getelementofarray( getarg(0), .@i ), 0;
+			break;
+		case 0:
+		case 1:
+			set getelementofarray( getarg(0), .@i ), 1;
+			break;
+		case 2:
+			mes "Your whole body suddenly becomes heavy and time seems to be passing faster around you.";
+			ep15_2_memory = 0;
+			for ( .@i = 5341; .@i <= 5369; ++.@i ) {
+				if (isbegin_quest(.@i) > 0)
+					erasequest .@i;
+			}
+			if (isbegin_quest(5370) == 1)
+				mes "Your whole body suddenly becomes heavy and time seems to be passing faster around you.";
+			else {
+				mes "Ah- This cozy and snug fe...el.....ling";
+				if (getarg(2,1))
+					warp "un_bunker",98,91;
+				else
+					consumeitem 602;// Wing_Of_Butterfly
+			}
+			close;
+		}
+	}
+	return;
 }
 
 // Monitoring room
-un_bk_q,97,141,0	script	Monitoring room#A-0	WARPNPC,1,1,{
-	end;
-OnTouch:
-	callfunc("F_time_limit_recorder");
-	if (recorder_quest_type == 1 && recorder_quest_status == 0) {
-		mes "[Bunker Sayhu]";
-		mes "Hey!! Where do you think you're going when we're trying to get a headcount? Get over here.";
-		close;
-	}
-	warp "un_bk_q",98,121;
-	end;
-}
-
-un_bk_q,69,167,0	script	Monitoring room#L-1	WARPNPC,1,1,{
-	end;
-OnTouch:
-	if (recorder_quest_type == 1 && recorder_quest_status == 0) {
-		mes "[Bunker Sayhu]";
-		mes "Hey!! Where do you think you're going when we're trying to get a headcount? Get over here.";
-		close;
-	}
-	warp "un_bk_q",57,168;
-	end;
-}
-
-un_bk_q,126,168,0	script	Monitoring room#L-2	WARPNPC,1,1,{
-	end;
-OnTouch:
-	callfunc("F_time_limit_recorder");
-	if (recorder_quest_type == 1 && recorder_quest_status == 0) {
-		mes "[Bunker Sayhu]";
-		mes "Hey!! Where do you think you're going when we're trying to get a headcount? Get over here.";
-		close;
-	}
-	warp "un_bk_q",140,167;
-	end;
-}
-
 un_bk_q,103,147,4	script	Bunker Sayhu#EP15.2MR	4_M_ALCHE_C,{
 	callfunc("F_time_limit_recorder");
 	switch( recorder_quest_type ) {
@@ -2325,20 +2281,6 @@ un_bk_q,103,393,4	script	Memory_Record#EP15.2MR	4_ENERGY_BLUE,{
 }
 
 // Machine Warehouse
-un_bk_q,41,275,0	script	Machine Warehouse#J-0	WARPNPC,1,1,{
-	end;
-OnTouch:
-	callfunc("F_time_limit_recorder");
-	if (recorder_quest_type == 2 && recorder_quest_status == 0) {
-		emotion ET_O, getnpcid(0, "Mechanician Mugeosi#EP1");
-		mes "[Mechanician Mugeosi]";
-		mes "Ah! You're the adventurer send to deliver air cleaners. You are at the right place. Come this way.";
-		close;
-	}
-	warp "un_bk_q",21,276;
-	end;
-}
-
 un_bk_q,56,286,4	script	Mechanician Mugeosi#EP1	4_M_REPAIR,{
 	callfunc("F_time_limit_recorder");
 	switch( recorder_quest_type ) {
@@ -2899,29 +2841,6 @@ un_bk_q,213,303,4	script	Bioengineer Touring#EP1	4W_M_02,{
 }
 
 // Farm
-un_bk_q,216,300,0	script	C-0#farm	WARPNPC,1,1,{
-	end;
-OnTouch:
-	callfunc("F_time_limit_recorder");
-	mes "[Bioengineer Touring]";
-	mes "Wait a minute. You cannot enter the farm right now.";
-	close;
-}
-
-un_bk_q,213,346,0	script	farm#C-0	WARPNPC,1,1,{
-	end;
-OnTouch:
-	callfunc("F_time_limit_recorder");
-	if (recorder_quest_type == 3 && recorder_quest_status == 0) {
-		emotion ET_BIGTHROB, getnpcid(0, "Bioengineer Ebrik#EP15.2MR");
-		mes "[Bioengineer Ebrik]";
-		mes "Are you the Adventurer here to help us with the grape harvest? Right here!!";
-		close;
-	}
-	warp "un_bk_q",213,299;
-	end;
-}
-
 un_bk_q,220,350,4	script	Bioengineer Ebrik#EP15.2MR	4_M_01,{
 	callfunc("F_time_limit_recorder");
 	if (recorder_quest_type != 3)
@@ -3101,45 +3020,6 @@ un_bk_q,249,344,2	script	Bioengineer#EP15.2MR5	4_M_ALCHE_C,{
 }
 
 // Clinic
-un_bk_q,269,236,0	script	Clinic#G-1	WARPNPC,1,1,{
-	end;
-OnTouch:
-	callfunc("F_time_limit_recorder");
-	if (recorder_quest_type == 4 && recorder_quest_status == 0) {
-		mes "[Nurse Lapplad]";
-		mes "Look here?! Where are you trying to go? We have to do some tests so don't leave and wait here!!";
-		close;
-	}
-	warp "un_bk_q",255,235;
-	end;
-}
-
-un_bk_q,297,221,0	script	Clinic#H-0	WARPNPC,1,1,{
-	end;
-OnTouch:
-	callfunc("F_time_limit_recorder");
-	if (recorder_quest_type == 4 && recorder_quest_status == 0) {
-		mes "[Nurse Lapplad]";
-		mes "Look here?! Where are you trying to go? We have to do some tests so don't leave and wait here!!";
-		close;
-	}
-	warp "un_bk_q",298,203;
-	end;
-}
-
-un_bk_q,326,236,0	script	Clinic#G-2	WARPNPC,1,1,{
-	end;
-OnTouch:
-	callfunc("F_time_limit_recorder");
-	if (recorder_quest_type == 4 && recorder_quest_status == 0) {
-		mes "[Nurse Lapplad]";
-		mes "Look here?! Where are you trying to go? We have to do some tests so don't leave and wait here!!";
-		close;
-	}
-	warp "un_bk_q",340,235;
-	end;
-}
-
 un_bk_q,276,243,4	script	Nurse Lapplad#EP15.2MR	4_F_BRZ_WOMAN,{
 	callfunc("F_time_limit_recorder");
 	switch( recorder_quest_type ) {
@@ -3389,33 +3269,6 @@ un_bk_q,296,254,4	script	Nurse#EP15.2MR7	4_F_NURSE,{
 }
 
 // Cafeteria
-un_bk_q,271,290,0	script	Cafeteria#G-1	WARPNPC,1,1,{
-	end;
-OnTouch:
-	callfunc("F_time_limit_recorder");
-	if (recorder_quest_type == 5 && recorder_quest_status == 0) {
-		emotion ET_FRET, getnpcid(0, "Transportation Executive Ernon");
-		mes "[Transportation Executive Ernon]";
-		mes "Hey~ This is a time to borrow even the hands of small children. Stop goofing around and come here.";
-		close;
-	}
-	warp "un_bk_q",255,261;
-	end;
-}
-
-un_bk_q,324,290,0	script	Cafeteria#G-2	WARPNPC,1,1,{
-	end;
-OnTouch:
-	callfunc("F_time_limit_recorder");
-	if (recorder_quest_type == 5 && recorder_quest_status == 0) {
-		mes "[Transportation Executive Ernon]";
-		mes "Hey~ This is a time to borrow even the hands of small children. Stop goofing around and come here.";
-		close;
-	}
-	warp "un_bk_q",340,261;
-	end;
-}
-
 un_bk_q,279,294,4	script	Transportation Executive Ernon	4_M_LGTMAN,{
 	callfunc("F_time_limit_recorder");
 	switch( recorder_quest_type ) {
