@@ -7269,9 +7269,7 @@ ACMD_FUNC(mobinfo)
 				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname, item_data->slot, (float)droprate / 100);
 			else
 				sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->jname, (float)droprate / 100);
-			
 			strcat(atcmd_output, atcmd_output2);
-
 			if (++j % 3 == 0) {
 				clif_displaymessage(fd, atcmd_output);
 				strcpy(atcmd_output, " ");
