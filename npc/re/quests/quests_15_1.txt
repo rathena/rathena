@@ -4801,7 +4801,6 @@ yuno_fild07,216,157,5	script	Guide Elisha#ep15_1bs	4_F_ZONDAGIRL,{
 			emotion ET_PROFUSELY_SWEAT;
 			close;
 		case 2:
-			mes "[Elisha]";
 			mes "You're back already.";
 			emotion ET_THROB;
 			next;
@@ -4880,12 +4879,10 @@ yuno_fild07,216,157,5	script	Guide Elisha#ep15_1bs	4_F_ZONDAGIRL,{
 			mes "I'm so sorry for all this.";
 			emotion ET_CRY;
 			ep15_1_elb = 3;
-			//completequest 11364;	// officially completed
-			erasequest 11364;
+			completequest 11364;
 			setquest 11365;
 			close;
 		case 3:
-			mes "[Elisha]";
 			mes "It was working fine just a moment ago.";
 			mes "I'm sorry.";
 			mes "I'll have to call in a technician. Please use the stairs instead.";
@@ -4899,16 +4896,16 @@ yuno_fild07,216,157,5	script	Guide Elisha#ep15_1bs	4_F_ZONDAGIRL,{
 			emotion ET_CRY;
 			close;
 		case 4:
-			mes "[Elisha]";
 			mes "I'm sorry.";
 			mes "The elevator is currently out of order.";
 			close;
+		default:
+			break;
 		}
 		if (checkquest(11377,PLAYTIME) > 1)
 			erasequest 11377;
 		if (checkquest(11377,PLAYTIME) == -1) {
 			if (rand(1,100) == 77) {
-				mes "[Elisha]";
 				mes "God! How come again!!!";
 				mes "This bad elevator is always broken! Everyday!!!";
 				setquest 11376;
@@ -4916,7 +4913,6 @@ yuno_fild07,216,157,5	script	Guide Elisha#ep15_1bs	4_F_ZONDAGIRL,{
 				close;
 			}
 		}
-		mes "[Elisha]";
 		mes "Let's see...";
 		mes "A... B... C... D... E... F... Ah, there it is!";
 		emotion ET_PROFUSELY_SWEAT;
@@ -5187,8 +5183,7 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		mes "[Scarlet]";
 		mes "Please help us!";
 		ep15_1_elb = 4;
-		//completequest 11365;	// officially completed
-		erasequest 11365;
+		completequest 11365;
 		setquest 11366;
 		close;
 	case 4:
@@ -5231,8 +5226,7 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		mes "Please push them in here carefully, one by one.";
 		delitem 7319,30;// Old_Steel_Plate
 		ep15_1_elb = 5;
-		//completequest 11366;	// officially completed
-		erasequest 11366;
+		completequest 11366;
 		next;
 		mes "[Scarlet]";
 		mes "They might not hold for long, but that should still be enough us to get out.";
@@ -5328,7 +5322,6 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		cutin "",255;
 		close;
 	default:
-		mes "[Scarlet]";
 		mes "Good day.";
 		mes "Please say your name, so I can check your registration.";
 		next;
@@ -5390,7 +5383,7 @@ function	script	excavator_part2	{
 	emotion ET_HUK, getnpcid(0, "Fountain#ep15_1elb");
 	cutin "bu_du2.bmp",2;
 	setquest 11367;// Looking for the Traces
-	VER_ELEVATOR = 100;
+	ep15_1_elb = 6;
 	return;
 }
 
@@ -5719,8 +5712,7 @@ verus04,116,226,0	script	Fountain#ep15_1elb	HIDDEN_NPC,{
 		emotion ET_HUK, getnpcid(0, "Sundries#ep15_1elb");
 		cutin "ep143_tasta.bmp",2;
 		ep15_1_elb = 7;
-		//completequest 11367;	// officially completed
-		erasequest 11367;
+		completequest 11367;
 		setquest 11368;
 		close3;
 	}
@@ -5755,8 +5747,7 @@ verus04,95,238,0	script	Sundries#ep15_1elb	HIDDEN_NPC,{
 		mes "And look at the tree on the left side.";
 		emotion ET_HUK, getnpcid(0, "Tree#ep15_1elb");
 		ep15_1_elb = 8;
-		//completequest 11368;	// officially completed
-		erasequest 11368;
+		completequest 11368;
 		setquest 11369;// Looking for the Traces
 		close3;
 	}
@@ -5801,8 +5792,7 @@ verus04,79,249,0	script	Tree#ep15_1elb	HIDDEN_NPC,{
 		emotion ET_HUK, getnpcid(0, "Signboard#ep15_1elb");
 		cutin "bu_du2.bmp",2;
 		ep15_1_elb = 9;
-		//completequest 11369;	// officially completed
-		erasequest 11369;
+		completequest 11369;
 		setquest 11370;
 		close3;
 	}
@@ -5886,8 +5876,7 @@ verus04,62,255,0	script	Signboard#ep15_1elb	HIDDEN_NPC,{
 		mes "We'd better follow him before we lose him.";
 		cutin "bu_mark1.bmp",0;
 		ep15_1_elb = 10;
-		//completequest 11370;	// officially completed
-		erasequest 11370;
+		completequest 11370;
 		setquest 11371;
 		close3;
 	}
@@ -5951,8 +5940,7 @@ verus03,46,23,3	script	Du#ep15_1elb03	4_M_REDMAN,{
 		mes "Do you want to go check it out?";
 		cutin "bu_du2.bmp",2;
 		ep15_1_elb = 11;
-		//completequest 11371;	// officially completed
-		erasequest 11371;
+		completequest 11371;
 		setquest 11372;
 		close3;
 	}
@@ -6008,8 +5996,7 @@ verus03,44,65,0	script	Fountain#ep15_1elb03	HIDDEN_NPC,{
 		mes "Keep an eye on Du; he wanders off easily.";
 		cutin "bu_mark4.bmp",0;
 		ep15_1_elb = 12;
-		//completequest 11372;	// officially completed
-		erasequest 11372;
+		completequest 11372;
 		setquest 11373;
 		close3;
 	}
@@ -6052,8 +6039,7 @@ verus03,88,237,3	script	Mark#ep15_1elb03	4_M_BLUEMAN,{
 		emotion ET_HUK;
 		emotion ET_HUK, getnpcid(0, "Tamarin#ep15_1elb03");
 		ep15_1_elb = 13;
-		//completequest 11373;	// officially completed
-		erasequest 11373;
+		completequest 11373;
 		setquest 11374;
 		close3;
 	}
@@ -6086,8 +6072,7 @@ verus03,51,256,3	script	Tamarin#ep15_1elb03	4_M_TAMARIN,{
 		emotion ET_HUK, getnpcid(0, "Maggi#ep15_1elb03");
 		if (ep15_1_elb == 13) {
 			ep15_1_elb = 14;
-			//completequest 11374;	// officially completed
-			erasequest 11374;
+			completequest 11374;
 			setquest 11375;
 		}
 	}
@@ -6165,8 +6150,7 @@ verus03,35,254,3	script	Maggi#ep15_1elb03	4_F_PINKWOMAN,{
 		mes "I agree.";
 		mes "Let's check the other places first.";
 		ep15_1_elb = 15;
-		//completequest 11375;	// officially completed
-		erasequest 11375;
+		completequest 11375;
 		getexp 1000000,0;
 		cutin "bu_mark2.bmp",0;
 		close3;

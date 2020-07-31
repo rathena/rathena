@@ -911,7 +911,6 @@ verus01,221,65,5	script	Du#Verus	4_M_REDMAN,{
 	mes "[Du]";
 	if (ep15_2_bslast < 2) {
 		if (ep15_1_elb < 15) {
-			mes "[Dyu]";
 			mes "Investigations are supposed to be done calmly...";
 			cutin "bu_du3.bmp",2;
 			close3;
@@ -1174,8 +1173,8 @@ un_bunker,100,96,3	script	Mark#Bunker Entrance	4_M_BLUEMAN,{
 		mes "[Du]";
 		mes "Wait for me!!!!!";
 		if (ep15_2_bslast == 2) {
-			// completequest 11382;	// officially completed
-			changequest 11382,11383;// Vestige
+			completequest 11382;
+			setquest 11383;// Vestige
 			ep15_2_bslast = 3;
 		}
 		close3;
@@ -1218,7 +1217,7 @@ un_bunker,363,171,3	script	Alph#Entrance	4_M_BLACKMAN,{
 			mes "...";
 			mes "Don't forget our goal is to investigate...";
 			cutin "bu_alp1.bmp",2;
-			break;
+			close3;
 		case 2:
 			mes "[Alph]";
 			mes "I just sent out the signal so the others will arrive soon.";
@@ -1265,8 +1264,7 @@ un_bunker,363,171,3	script	Alph#Entrance	4_M_BLACKMAN,{
 			mes "Right...";
 			mes "There's a bad energy so be careful...";
 			cutin "bu_alp1.bmp",2;
-			// completequest 11383;	// officially completed
-			erasequest 11383;// Vestige
+			completequest 11383;
 			setquest 11384;// Vestige
 			ep15_2_bslast = 4;
 			close2;
@@ -1311,8 +1309,7 @@ un_bunker,388,86,3	script	Alph#Entrance2	4_M_BLACKMAN,{
 		mes "[Du]";
 		mes "Charge!!!!!";
 		cutin "bu_du5.bmp",2;
-		// completequest 11384;	// officially completed
-		erasequest 11384;// Vestige
+		completequest 11384;
 		setquest 11385;// Vestige
 		ep15_2_bslast = 5;
 		close2;
@@ -1355,14 +1352,14 @@ un_myst,27,208,5	script	Verity#Myst	4_F_BERRYTEA,{
 		mes "There looks to be another door there so let's check it out.";
 		cutin "ep143_tasta.bmp",2;
 		if (ep15_2_bslast == 5) {
-			// completequest 11385;	// officially completed
-			changequest 11385,11386;// Vestige
+			completequest 11385;
+			setquest 11386;// Vestige
 			ep15_2_bslast = 6;
 			close3;
 		}
 		next;
 	}
-	if (ep15_2_bslast == 5)
+	if (ep15_2_bslast == 6)
 		.@string$ = "Move to the door.";
 	else
 		.@string$ = "Quit.";
@@ -1383,7 +1380,8 @@ un_myst,27,208,5	script	Verity#Myst	4_F_BERRYTEA,{
 un_myst,56,206,0	script	#myst_1	WARPNPC,1,1,{
 	end;
 OnTouch:
-	if (ep15_2_bslast < 5) {
+	//if (ep15_2_bslast < 5) {	// typo ?
+	if (ep15_2_bslast < 6) {
 		mes "- Unable to enter the place -";
 		close2;
 		warp "un_bunker",300,166;
@@ -1404,8 +1402,7 @@ OnTouch:
 		mes "Two!";
 		mes "Three!";
 		cutin "bu_du5.bmp",2;
-		// completequest 11386;	// officially completed
-		erasequest 11386;// Vestige
+		completequest 11386;
 		setquest 11387;// Vestige
 		ep15_2_bslast = 7;
 		ep15_2_bsmemo = 1;
@@ -1499,8 +1496,7 @@ un_myst,100,190,3	script	Du#Hall	4_M_REDMAN,{
 		mes "There is no other way!";
 		cutin "EP15_2_brt_6.bmp",2;
 		if (ep15_2_bslast == 7) {
-			// completequest 11387;	// officially completed
-			erasequest 11387;// Vestige
+			completequest 11387;
 			setquest 11388;// Vestige
 			ep15_2_bslast = 8;
 		}
@@ -1535,8 +1531,7 @@ un_myst,333,206,3	script	Weird piece#01	4_GC109,{
 		mes "How long can we keep running?";
 		close2;
 		if (ep15_2_bslast < 9) {
-			// completequest 11388;	// officially completed
-			erasequest 11388;// Vestige
+			completequest 11388;
 			setquest 11389;// Vestige
 		}
 		warp "un_myst",260,204;
@@ -2266,7 +2261,7 @@ un_bunker,382,335,3	script	Box#e152p00	4_ENERGY_BLUE,{
 		mes "- You are carrying too many items to proceed with the quest. -";
 		close;
 	}
-	.@npc_name$ = strnpcinfo(0);
+	.@npc_name$ = strnpcinfo(1);
 	if (ep15_1_atnad == 27 && countitem(6824) < 5) {
 		if (.@npc_name$ == "Box")
 			mes "It is a loosely sealed box.";
