@@ -11,9 +11,13 @@
 //= 1.3 Added dali02 [Nova]
 //= 1.4 Added Nightmare Glastheim [Ridley8819]
 //= 1.5 Added WOE:TE maps [Cydh]
+//= 1.6 Added Para Market maps [mazvi]
 //============================================================
 
-// 3rd Class Job Maps & Paradise
+// Paradise Market =============
+paramk	mapflag	nobranch
+
+// 3rd Class Job Maps & Paradise 
 moc_para01	mapflag	nobranch
 job3_arch01	mapflag	nobranch
 job3_arch02	mapflag	nobranch

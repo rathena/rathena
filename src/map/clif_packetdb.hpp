@@ -59,7 +59,7 @@
 	packet(0x0092,28);
 	packet(0x0093,2);
 	parseable_packet(0x0094,6,clif_parse_GetCharNameRequest,2);
-	packet(0x0095,30);
+	packet( HEADER_ZC_ACK_REQNAME_TITLE, sizeof( PACKET_ZC_ACK_REQNAME_TITLE ) );
 	parseable_packet(0x0096,-1,clif_parse_WisMessage,2,4,28);
 	packet(0x0097,-1);
 	packet(0x0098,3);
@@ -315,7 +315,7 @@
 	packet(0x0192,24);
 	parseable_packet(0x0193,6,clif_parse_SolveCharName,2);
 	packet(0x0194,30);
-	packet(0x0195,102);
+	packet( HEADER_ZC_ACK_REQNAMEALL, sizeof( struct PACKET_ZC_ACK_REQNAMEALL ) );
 	packet(0x0196,9);
 	parseable_packet(0x0197,4,clif_parse_ResetChar,2);
 	parseable_packet(0x0198,8,clif_parse_GMChangeMapType,2,4,6);
@@ -2294,7 +2294,6 @@
 	// Title System
 	parseable_packet(0x0A2E,6,clif_parse_change_title,0); // CZ_REQ_CHANGE_TITLE
 	packet(0x0A2F,7); // ZC_ACK_CHANGE_TITLE
-	packet(0x0A30,106); // ZC_ACK_REQNAMEALL2
 
 	// Quest UI
 	packet(0x08FE,-1); // ZC_HUNTING_QUEST_INFO

@@ -685,6 +685,7 @@ struct Battle_Config
 	int show_skill_scale;
 	int achievement_mob_share;
 	int slave_stick_with_master;
+	int at_logout_event;
 
 	/**
 	* Extended Vending system [Lilith]
