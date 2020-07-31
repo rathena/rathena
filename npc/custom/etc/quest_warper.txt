@@ -648,7 +648,7 @@ function	script	QWS_TownStamps	{
 
 function	script	QWS_DungeonStamps	{
 	set @Dstamp,0;
-	set @MaxDstamp,37; //maximum number of dungeons
+	set @MaxDstamp,40; //maximum number of dungeons
 	set @DisabledDstamp,0; //update this to the number of existing dungeons disabled
 	set @binvalue,1;
 	set @Dstamploop,0;
@@ -1254,6 +1254,20 @@ function	script	QWS_Darray	{
 
 	QWS_Make_Dungeon_Menu 3;
 
+//----------------BEACH DUNGEON
+	setarray @pDmenuitems$[@Di], "Beach Dungeon";
+	setarray @pDprice[@Di], $QW_BW_PRICE;
+	setarray @pDfee$[@Di], "$QW_BW_FEE";
+	setarray @DLevels[@Di], 3;
+
+	setarray @DGat$[@Dref], "beach_dun", "beach_dun2", "beach_dun3";
+	setarray @DLevelName$[@Dref], "West Cave", "North Cave", "East Cave";
+	setarray @DXcoords[@Dref], 267, 154, 23;
+	setarray @DYcoords[@Dref], 68, 23, 260;
+	setarray @DDepth[@Dref], 0, 0, 0;
+
+	QWS_Make_Dungeon_Menu 37;
+
 //----------------BIFROST TOWER
 	setarray @pDmenuitems$[@Di], "Bifrost Tower";
 	setarray @pDprice[@Di], $QW_OW_PRICE;
@@ -1267,6 +1281,20 @@ function	script	QWS_Darray	{
 	setarray @DDepth[@Dref], 0, 1, 2, 2;
 
 	QWS_Make_Dungeon_Menu 30;
+
+//----------------BRASILIS DUNGEON
+	setarray @pDmenuitems$[@Di], "Brasilis Dungeon";
+	setarray @pDprice[@Di], $QW_OW_PRICE;
+	setarray @pDfee$[@Di], "$QW_OW_FEE";
+	setarray @DLevels[@Di], 2;
+
+	setarray @DGat$[@Dref], "bra_dun01", "bra_dun02";
+	setarray @DLevelName$[@Dref], "Level 1", "Level 2";
+	setarray @DXcoords[@Dref], 87, 261;
+	setarray @DYcoords[@Dref], 47, 262;
+	setarray @DDepth[@Dref], 0, 1;
+
+	QWS_Make_Dungeon_Menu 38;
 
 //----------------BYALAN
 	setarray @pDmenuitems$[@Di], "Byalan Dungeon";
@@ -1323,6 +1351,20 @@ function	script	QWS_Darray	{
 	setarray @DDepth[@Dref], 0, 1, 2, 3;
 
 	QWS_Make_Dungeon_Menu 7;
+
+//----------------DEWATA DUNGEON
+	setarray @pDmenuitems$[@Di], "Dewata Dungeon";
+	setarray @pDprice[@Di], $QW_OW_PRICE;
+	setarray @pDfee$[@Di], "$QW_OW_FEE";
+	setarray @DLevels[@Di], 2;
+
+	setarray @DGat$[@Dref], "dew_dun01", "dew_dun02";
+	setarray @DLevelName$[@Dref], "Krakatoa", "Istana Cave";
+	setarray @DXcoords[@Dref], 293, 301;
+	setarray @DYcoords[@Dref], 161, 30;
+	setarray @DDepth[@Dref], 0, 1;
+
+	QWS_Make_Dungeon_Menu 39;
 
 //----------------EINBECH DUNGEON
 	setarray @pDmenuitems$[@Di], "Einbech Dungeon";
@@ -2408,6 +2450,9 @@ abbey01,324,101,4	script	Warpra Helper#33	112,{ callfunc "QWS_Dungeon_Warpra",33
 ra_san01,144,16,4	script	Warpra Helper#34	112,{ callfunc "QWS_Dungeon_Warpra",34,"Rachel Sanctuary"; close; }
 dic_dun01,295,103,4	script	Warpra Helper#35	112,{ callfunc "QWS_Dungeon_Warpra",35,"Scaraba Hole Dungeon"; close; }
 thor_v02,190,64,4	script	Warpra Helper#36	112,{ callfunc "QWS_Dungeon_Warpra",36,"Thor Volcano"; close; }
+beach_dun3,151,207,6	script	Warpra Helper#37	112,{ callfunc "QWS_Dungeon_Warpra",37,"Beach Dungeon"; close; }
+bra_dun02,280,258,4	script	Warpra Helper#38	112,{ callfunc "QWS_Dungeon_Warpra",38,"Brasilis Dungeon"; close; }
+dew_dun01,193,141,4	script	Warpra Helper#39	112,{ callfunc "QWS_Dungeon_Warpra",39,"Dewata Dungeon"; close; }
 
 // Instances
 gef_fild10,244,206,4	script	Warpra#instance_0	113,{ callfunc "QWS_Instance_Warpra",0,"Orc Memory Dungeon"; close; }
