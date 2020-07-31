@@ -14570,7 +14570,18 @@ BUILDIN_FUNC(skilleffect)
 		clif_standing(&sd->bl);
 	}
 
-	clif_skill_nodamage(&sd->bl,&sd->bl,skill_id,skill_lv,1);
+	switch (skill_get_casttype(skill_id)) {
+		case CAST_GROUND:
+			clif_skill_poseffect(&sd->bl, skill_id, skill_lv, sd->bl.x, sd->bl.y, gettick());
+			break;
+		case CAST_NODAMAGE:
+			clif_skill_nodamage(&sd->bl, &sd->bl, skill_id, skill_lv, 1);
+			break;
+		case CAST_DAMAGE:
+			clif_skill_damage(&sd->bl, &sd->bl, gettick(), status_get_amotion(&sd->bl), status_get_dmotion(&sd->bl), 0, 1, skill_id, skill_lv, skill_get_hit(skill_id));
+			break;
+	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -14590,8 +14601,21 @@ BUILDIN_FUNC(npcskilleffect)
 	x=script_getnum(st,4);
 	y=script_getnum(st,5);
 
-	if (bl)
-		clif_skill_poseffect(bl,skill_id,skill_lv,x,y,gettick());
+	if (bl == nullptr)
+		return SCRIPT_CMD_SUCCESS;
+
+	switch (skill_get_casttype(skill_id)) {
+		case CAST_GROUND:
+			clif_skill_poseffect(bl, skill_id, skill_lv, x, y, gettick());
+			break;
+		case CAST_NODAMAGE:
+			clif_skill_nodamage(bl, bl, skill_id, skill_lv, 1);
+			break;
+		case CAST_DAMAGE:
+			clif_skill_damage(bl, bl, gettick(), status_get_amotion(bl), status_get_dmotion(bl), 0, 1, skill_id, skill_lv, skill_get_hit(skill_id));
+			break;
+	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
