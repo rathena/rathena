@@ -51,6 +51,7 @@ function HasjROCostume {
 		case Job_Minstrel:
 		case Job_Wanderer:
 		case Job_Warlock:
+		case Job_Shadow_Chaser:
 		case Job_Sorcerer:
 		case Job_Sura:
 		case Job_Rune_Knight:
