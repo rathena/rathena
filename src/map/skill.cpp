@@ -12391,6 +12391,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case NPC_VENOMFOG:
 	case NPC_ICEMINE:
 	case NPC_FLAMECROSS:
+	case NPC_HELLBURNING:
 	case NPC_REVERBERATION:
 	case RA_ELECTRICSHOCKER:
 	case RA_CLUSTERBOMB:
@@ -14273,6 +14274,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 		case UNT_VENOMFOG:
 		case UNT_ICEMINE:
 		case UNT_FLAMECROSS:
+		case UNT_HELLBURNING:
 			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			break;
 
