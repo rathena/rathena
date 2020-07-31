@@ -2977,9 +2977,10 @@ struct PACKET_CZ_MEMORIALDUNGEON_COMMAND {
 
 struct PACKET_ZC_REMOVE_EFFECT {
 	int16 packetType;
-	uint32 aid;
+	uint32 AID;
 	uint32 effectId;
 } __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_REMOVE_EFFECT, 0x0b0d);
 
 #if PACKETVER >= 20160525
 struct PACKET_ZC_CAMERA_INFO {
