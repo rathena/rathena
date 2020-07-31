@@ -102,7 +102,7 @@ bool mapif_quest_delete(uint32 char_id, int quest_id) {
  * @return false in case of errors, true otherwise
  */
 bool mapif_quest_add(uint32 char_id, struct quest qd) {
-	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`(`quest_id`, `char_id`, `state`, `time`, `count1`, `count2`, `count3`) VALUES ('%d', '%d', '%d','%d', '%d', '%d', '%d')", schema_config.quest_db, qd.quest_id, char_id, qd.state, qd.time, qd.count[0], qd.count[1], qd.count[2]) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`(`quest_id`, `char_id`, `state`, `time`, `count1`, `count2`, `count3`) VALUES ('%d', '%d', '%d', '%u', '%d', '%d', '%d')", schema_config.quest_db, qd.quest_id, char_id, qd.state, qd.time, qd.count[0], qd.count[1], qd.count[2]) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return false;

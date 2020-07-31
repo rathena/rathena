@@ -163,7 +163,7 @@ prontera,108,96,5	script	Cantankerous Geezer#prt::EggGeezer	709,{
 	mes "Chicken Eggs got to be so";
 	mes "expensive? I mean, 500 zeny";
 	mes "is a lot! I think it's because";
-	mes "some guy in Morroc is trying";
+	mes "some guy in Morocc is trying";
 	mes "to amass a ton of Holy Eggs!";
 	next;
 	mes "[Cantankerous Geezer]";

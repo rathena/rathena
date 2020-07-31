@@ -11,7 +11,7 @@
 // Think of it as a way to disguise items.
 // Don't sell the item in same shop with the source. Example, don't put 2240 & 2241 in same place!
 
-2240,2241 //Beard - Grampa Beard
+//2240,2241 //Beard - Grampa Beard
 
 //Treasure Hunters Quest Items
 //use these aliases if your game client doesn't support them normally

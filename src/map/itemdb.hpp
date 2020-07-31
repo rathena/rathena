@@ -33,6 +33,7 @@
 ///Enum of item id (for hardcoded purpose)
 enum item_itemid
 {
+	ITEMID_DUMMY						= 499,
 	ITEMID_RED_POTION					= 501,
 	ITEMID_YELLOW_POTION				= 503,
 	ITEMID_WHITE_POTION					= 504,
@@ -732,6 +733,17 @@ enum e_random_item_group {
 	IG_PRIZEOFHERO,
 	IG_PRIVATE_AIRSHIP,
 	IG_TOKEN_OF_SIEGFRIED,
+	IG_ENCHANT_STONE_BOX5,
+	IG_ENCHANT_STONE_BOX6,
+	IG_ENCHANT_STONE_BOX7,
+	IG_ENCHANT_STONE_BOX8,
+	IG_ENCHANT_STONE_BOX9,
+	IG_ENCHANT_STONE_BOX10,
+	IG_ENCHANT_STONE_BOX11,
+	IG_ENCHANT_STONE_BOX12,
+	IG_ENCHANT_STONE_BOX13,
+	IG_ENCHANT_STONE_BOX14,
+	IG_ENCHANT_STONE_BOX15,
 };
 
 /// Enum for bound/sell restricted selling
@@ -916,7 +928,6 @@ struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_dropeffect(n) (itemdb_search(n)->flag.dropEffect)
 const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (enum e_item_ammo ammo);
-bool itemdb_is_spellbook2(unsigned short nameid);
 
 struct s_item_group_entry *itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group);
 unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);

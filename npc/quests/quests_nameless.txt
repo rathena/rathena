@@ -2274,16 +2274,16 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 			emotion ET_THINK;
 			mes "[Foreign Merchant]";
 			mes "I heard that I could make";
-			mes "a killing in Morroc, which is";
+			mes "a killing in Morocc, which is";
 			mes "why I moved my business here.";
 			mes "But it looks like the weather";
 			mes "is going to kill me first!";
 			next;
-			select("How did you hear of Morroc?");
+			select("How did you hear of Morocc?");
 			emotion ET_THINK;
 			mes "[Foreign Merchant]";
 			mes "I... I just told you.";
-			mes "I heard that Morroc is";
+			mes "I heard that Morocc is";
 			mes "full customers willing to";
 			mes "buy things at premium prices.";
 			mes "Ugh, but it's a burning hell!";
@@ -2304,7 +2304,7 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 			mes "sell some sweet, heavenly";
 			mes "drink around here? You know,";
 			mes "near the pond in the middle";
-			mes "of Morroc? Before I leave,";
+			mes "of Morocc? Before I leave,";
 			mes "I want to taste that drink...";
 			set aru_em,1;
 			setquest 2129;
@@ -2314,7 +2314,7 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 			mes "[Foreign Merchant]";
 			mes "Say, isn't there a wandering";
 			mes "drink merchant near the pond";
-			mes "in the middle of Morroc. Oh,";
+			mes "in the middle of Morocc. Oh,";
 			mes "what I would do to have that";
 			mes "delicious drink he's selling...";
 			next;
@@ -2419,7 +2419,7 @@ moc_ruins,77,167,4	script	Foreign Merchant#aru1	880,5,5,{
 			mes "[Foreign Merchant]";
 			mes "Well, I'm already here.";
 			mes "I guess I may as well go";
-			mes "sightseeing around Morroc.";
+			mes "sightseeing around Morocc.";
 			mes "*Pant Pant* But it's so hot!";
 			close;
 		}
@@ -3079,9 +3079,9 @@ OnTouch:
 		mes "Write a report about the";
 		mes "tests conducted by the";
 		mes "moderates in Arunafeltz and";
-		mes "the Schwaltzvalt Republic,";
+		mes "the Schwarzwald Republic,";
 		mes "and their relationship with";
-		mes "that Schwaltzvalt Corporation.";
+		mes "that Schwarzwald Corporation.";
 		next;
 		mes "[Zhed]";
 		mes "I'll get it done immediately,";
@@ -4848,7 +4848,7 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 					mes "[Ibrahim]";
 					mes "Heh, it sounds like almost";
 					mes "anyone who's anyone in";
-					mes "Morroc knows who you are.";
+					mes "Morocc knows who you are.";
 					mes "Pleasure to make your";
 					mes "acquaintance~";
 					close;
@@ -4981,7 +4981,7 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 			if ((treasure_nd > 10) && (BaseLevel > 65)) {
 				mes "[Ibrahim]";
 				mes "Ah, I hear from a friend";
-				mes "in Morroc that you happened";
+				mes "in Morocc that you happened";
 				mes "to obtain the Unlucky Emerald.";
 				mes "I'm sure it's one of the Four";
 				mes "Cursed Jewels. You wouldn't";
@@ -5066,7 +5066,7 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 				mes "[Ibrahim]";
 				mes "I heard that you obtained";
 				mes "the Unlucky Emerald from";
-				mes "a friend in Morroc. Let me";
+				mes "a friend in Morocc. Let me";
 				mes "warn you that you might not";
 				mes "be strong enough to handle";
 				mes "its power. Be careful.";
@@ -6633,7 +6633,7 @@ prontera,148,326,3	script	Chief Officer#edq	734,{
 			mes "That damned Z Gang seems";
 			mes "to be in the center of all the";
 			mes "crime that's happening in";
-			mes "Rune-Midgard. They caused";
+			mes "Rune-Midgarts. They caused";
 			mes "a riot in Geffen by spreading";
 			mes "rumors about ghosts...";
 			next;
@@ -6743,7 +6743,7 @@ prt_in,168,18,1	script	Valdes	65,2,2,{
 			next;
 			mes "[Valdes]";
 			mes "Heh, I just ran out of wine!";
-			mes "Gimme, um, ^0000FFMorroc Fruit Wine^000000!";
+			mes "Gimme, um, ^0000FFMorocc Fruit Wine^000000!";
 			mes "5 bottles! Then... Maybe...";
 			mes "I'll tell you want you really";
 			mes "wanna know. Heh heh~ ^666666*Hic!*^000000";
@@ -6846,7 +6846,7 @@ prt_in,168,18,1	script	Valdes	65,2,2,{
 			mes "You stinkface!";
 			mes "Where's my wine?!";
 			mes "My ^0000FF5 bottles of";
-			mes "Morroc Fruit Wine^000000?!";
+			mes "Morocc Fruit Wine^000000?!";
 			mes "I'm not gonna talk";
 			mes "to you without it!";
 			close;
@@ -7089,12 +7089,12 @@ in_rogue,359,116,3	script	Marybell	747,{
 					mes "Oh, and one more thing...";
 					mes "I hear that they're trying";
 					mes "to secretly recruit more";
-					mes "gang members in Morroc.";
+					mes "gang members in Morocc.";
 					mes "The nerve of those guys...!";
 					next;
 					mes "[Marybell]";
 					mes "It might be a good idea";
-					mes "for you to go to Morroc";
+					mes "for you to go to Morocc";
 					mes "and check it out. Good";
 					mes "luck finding those Z Gang";
 					mes "guys. And take care!";
@@ -7120,7 +7120,7 @@ in_rogue,359,116,3	script	Marybell	747,{
 		mes "Oh, and one more thing...";
 		mes "I hear that they're trying";
 		mes "to secretly recruit more";
-		mes "gang members in Morroc.";
+		mes "gang members in Morocc.";
 		mes "The nerve of those guys...! ";
 		next;
 		mes "[Marybell]";
@@ -7213,7 +7213,7 @@ in_rogue,359,116,3	script	Marybell	747,{
 		mes "Even so, we're definitely";
 		mes "sure that it's around the";
 		mes "secret path to the South";
-		mes "Morroc underground. Um,";
+		mes "Morocc underground. Um,";
 		mes "but we can't let you come";
 		mes "with the Rogue Guild.";
 		next;
@@ -7233,7 +7233,7 @@ in_rogue,359,116,3	script	Marybell	747,{
 		mes "We're definitely sure";
 		mes "that the Z Gang's hideout";
 		mes "is near the secret path";
-		mes "to the South Morroc";
+		mes "to the South Morocc";
 		mes "underground. You";
 		mes "know where that is?";
 		next;
@@ -8139,7 +8139,7 @@ moc_ruins,90,67,3	script	Suspicious Man#1	4W_M_03,4,4,{
 			mes "[Z Gang Informer]";
 			mes "...............................";
 			mes "Their secret hideout is in";
-			mes "South Morroc, and you can't";
+			mes "South Morocc, and you can't";
 			mes "enter the place without the";
 			mes "secret password.";
 			next;
@@ -9046,7 +9046,7 @@ morocc,143,63,3	script	Ragged Man#nd	929,{
 			case 1:
 				mes "[Ragged Man]";
 				mes "I was so sure I could find";
-				mes "the treasure here in Morroc";
+				mes "the treasure here in Morocc";
 				mes "when I first started... I did";
 				mes "all my research and prep work.";
 				mes "But after hiring teams of other";
@@ -9455,7 +9455,7 @@ morocc,102,298,3	script	Man#zgang	98,{
 			next;
 			mes "[Man]";
 			mes "The treasure is buried";
-			mes "south of Morroc. Use the";
+			mes "south of Morocc. Use the";
 			mes "south gate to leave town,";
 			mes "and then head to the next";
 			mes "field to the south. From";
@@ -9757,7 +9757,7 @@ comodo,339,224,3	script	Man in Hiding#nd	881,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "What? No, it's not like";
 			mes "that. I met this treasure";
-			mes "hunter in Morroc that said";
+			mes "hunter in Morocc that said";
 			mes "I could find you around here.";
 			next;
 			mes "[Man in Hiding]";
@@ -9888,7 +9888,7 @@ moc_fild18,108,116,0	script	#treasure	844,{
 	}
 	else if (treasure_nd == 6) {
 		mes "^3355FFThat Treasure Hunter in";
-		mes "Morroc must know something";
+		mes "Morocc must know something";
 		mes "about the chest's magical";
 		mes "protection. It might be";
 		mes "a good idea to ask him.^000000";
@@ -11411,24 +11411,24 @@ OnTouch:
 
 // Rogue Guild Investigation
 //============================================================ 
-prontera,163,204,3	script	Man from Morroc	99,{
+prontera,163,204,3	script	Man from Morocc	99,{
 	if (rumour_nd == 0) {
-		mes "[Morroc Traveler]";
+		mes "[Morocc Traveler]";
 		mes "Ah, it's very nice and";
 		mes "refreshing to be near this";
 		mes "fountain. It's much cooler";
-		mes "here than back in Morroc.";
+		mes "here than back in Morocc.";
 		next;
-		switch(select("Nice day today, huh?:How's Morroc lately?")) {
+		switch(select("Nice day today, huh?:How's Morocc lately?")) {
 		case 1:
-			mes "[Morroc Traveler]";
+			mes "[Morocc Traveler]";
 			mes "Oh, yes. It's a wonderful";
 			mes "day! Prontera is so sunny";
 			mes "and cool. No wonder so";
 			mes "many people live over here!";
 			close;
 		case 2:
-			mes "[Morroc Traveler]";
+			mes "[Morocc Traveler]";
 			mes "You're an adventurer, and";
 			mes "you haven't heard the crazy";
 			mes "rumors spreading all over";
@@ -11438,7 +11438,7 @@ prontera,163,204,3	script	Man from Morroc	99,{
 			next;
 		}
 		select("What crazy rumors?");
-		mes "[Morroc Traveler]";
+		mes "[Morocc Traveler]";
 		mes "Uh... Rogue agents!";
 		mes "They're all over the place!";
 		mes "Why don't you talk to some";
@@ -11449,7 +11449,7 @@ prontera,163,204,3	script	Man from Morroc	99,{
 		close;
 	}
 	else if (rumour_nd == 1) {
-		mes "[Morroc Traveler]";
+		mes "[Morocc Traveler]";
 		mes "Shouldn't you be";
 		mes "looking for a Rogue";
 		mes "agent to talk to?";
@@ -11460,7 +11460,7 @@ prontera,163,204,3	script	Man from Morroc	99,{
 	}
 	else if (rumour_nd > 1) {
 		if (zdan_edq > 12) {
-			mes "[Morroc Traveler]";
+			mes "[Morocc Traveler]";
 			mes "So the Z Gang was what";
 			mes "those crazy rumors were";
 			mes "all about. Good to hear";
@@ -11468,7 +11468,7 @@ prontera,163,204,3	script	Man from Morroc	99,{
 			close;
 		}
 		else {
-			mes "[Morroc Traveler]";
+			mes "[Morocc Traveler]";
 			mes "Hey, uh...";
 			mes "I'm just trying to";
 			mes "relax on my vacation.";
@@ -12861,7 +12861,7 @@ comodo,233,199,5	script	Rogue Guild Agent#nd3	810,{
 				}
 				mes "[Agent]";
 				mes "Anyway, you've got one";
-				mes "last place to go, Morroc.";
+				mes "last place to go, Morocc.";
 				mes "Check in with the Rogue";
 				mes "agent over there, will you?";
 				mes "Oh, and take this food";
@@ -12896,7 +12896,7 @@ comodo,233,199,5	script	Rogue Guild Agent#nd3	810,{
 				next;
 				mes "[Agent]";
 				mes "Hey, be safe on your";
-				mes "way to Morroc, alright?";
+				mes "way to Morocc, alright?";
 				mes "Good luck finding that";
 				mes "Rogue agent over there.";
 				mes "Oh, and mum's the word";
@@ -12917,7 +12917,7 @@ comodo,233,199,5	script	Rogue Guild Agent#nd3	810,{
 		mes "[Agent]";
 		mes "Oh, hey, you're back?";
 		mes "Weren't you already on";
-		mes "your way to Morroc?";
+		mes "your way to Morocc?";
 		close;
 	}
 	else if (rumour_nd == 22) {
@@ -12987,7 +12987,7 @@ morocc,116,39,3	script	Rogue Guild Agent#nd4	779,{
 			mes "[Agent]";
 			mes "Anyway, that gang is";
 			mes "drawing a lot of flak";
-			mes "to Morroc. I mean, they";
+			mes "to Morocc. I mean, they";
 			mes "kind of live here, so...";
 			next;
 			mes "[Agent]";

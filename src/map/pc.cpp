@@ -65,8 +65,6 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max);
 static inline bool pc_attendance_rewarded_today( struct map_session_data* sd );
 
 #define PVP_CALCRANK_INTERVAL 1000	// PVP calculation interval
-#define MAX_LEVEL_BASE_EXP 99999999 ///< Max Base EXP for player on Max Base Level
-#define MAX_LEVEL_JOB_EXP 999999999 ///< Max Job EXP for player on Max Job Level
 
 static unsigned int statp[MAX_LEVEL+1];
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
@@ -89,27 +87,6 @@ struct fame_list chemist_fame_list[MAX_FAME_LIST];
 struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 
 struct s_job_info job_info[CLASS_COUNT];
-
-struct s_attendance_reward{
-	uint16 item_id;
-	uint16 amount;
-};
-
-struct s_attendance_period{
-	uint32 start;
-	uint32 end;
-	std::map<uint32,std::shared_ptr<struct s_attendance_reward>> rewards;
-};
-
-class AttendanceDatabase : public TypesafeYamlDatabase<uint32,s_attendance_period>{
-public:
-	AttendanceDatabase() : TypesafeYamlDatabase( "ATTENDANCE_DB", 1 ){
-
-	}
-
-	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
-};
 
 const std::string AttendanceDatabase::getDefaultLocation(){
 	return std::string(db_path) + "/attendance.yml";
@@ -375,6 +352,54 @@ int pc_get_group_level(struct map_session_data *sd) {
 	return sd->group_level;
 }
 
+/**
+ * Remove a player from queue after timeout
+ * @param tid: Timer ID
+ * @param tick: Timer
+ * @param id: ID
+ * @return 0 on success or 1 otherwise
+ */
+static TIMER_FUNC(pc_on_expire_active)
+{
+	map_session_data *sd = (map_session_data *)data;
+
+	nullpo_retr(1, sd);
+
+	sd->tid_queue_active = INVALID_TIMER;
+
+	bg_queue_leave(sd);
+	clif_bg_queue_entry_init(sd);
+	return 0;
+}
+
+/**
+ * Function used to set timer externally
+ * @param sd: Player data
+ */
+void pc_set_bg_queue_timer(map_session_data *sd) {
+	nullpo_retv(sd);
+
+	if (sd->tid_queue_active != INVALID_TIMER) {
+		delete_timer(sd->tid_queue_active, pc_on_expire_active);
+		sd->tid_queue_active = INVALID_TIMER;
+	}
+
+	sd->tid_queue_active = add_timer(gettick() + 20000, pc_on_expire_active, 0, (intptr_t)sd);
+}
+
+/**
+ * Function used to delete timer externally
+ * @param sd: Player data
+ */
+void pc_delete_bg_queue_timer(map_session_data *sd) {
+	nullpo_retv(sd);
+
+	if (sd->tid_queue_active != INVALID_TIMER) {
+		delete_timer(sd->tid_queue_active, pc_on_expire_active);
+		sd->tid_queue_active = INVALID_TIMER;
+	}
+}
+
 static TIMER_FUNC(pc_invincible_timer){
 	struct map_session_data *sd;
 
@@ -527,6 +552,67 @@ void pc_delspiritball(struct map_session_data *sd,int count,int type)
 }
 
 /**
+ * Adds a soulball to player
+ * @param sd: Player data
+ * @param max: Max amount of soulballs
+ */
+int pc_addsoulball(map_session_data *sd, int max)
+{
+	nullpo_ret(sd);
+
+	status_change *sc = status_get_sc(&sd->bl);
+
+	if (sc == nullptr || sc->data[SC_SOULENERGY] == nullptr) {
+		sc_start(&sd->bl, &sd->bl, SC_SOULENERGY, 100, 0, skill_get_time2(SP_SOULCOLLECT, 1));
+		sd->soulball = 0;
+	}
+
+	max = min(max, MAX_SOUL_BALL);
+	sd->soulball = cap_value(sd->soulball, 0, MAX_SOUL_BALL);
+
+	if (sd->soulball && sd->soulball >= max)
+		sd->soulball--;
+
+	sd->soulball++;
+	sc_start(&sd->bl, &sd->bl, SC_SOULENERGY, 100, sd->soulball, skill_get_time2(SP_SOULCOLLECT, 1));
+	clif_soulball(sd);
+
+	return 0;
+}
+
+/**
+ * Removes number of soulball from player
+ * @param sd: Player data
+ * @param count: Amount to remove
+ * @param type: true = doesn't give client effect
+ */
+int pc_delsoulball(map_session_data *sd, int count, bool type)
+{
+	nullpo_ret(sd);
+
+	if (count <= 0)
+		return 0;
+
+	status_change *sc = status_get_sc(&sd->bl);
+
+	if (sd->soulball <= 0 || sc == nullptr || sc->data[SC_SOULENERGY] == nullptr) {
+		sd->soulball = 0;
+		return 0;
+	}
+
+	sd->soulball -= cap_value(count, 0, sd->soulball);
+	if (sd->soulball == 0)
+		status_change_end(&sd->bl, SC_SOULENERGY, INVALID_TIMER);
+	else
+		sc->data[SC_SOULENERGY]->val1 = sd->soulball;
+
+	if (!type)
+		clif_soulball(sd);
+
+	return 0;
+}
+
+/**
 * Increases a player's fame points and displays a notice to him
 * @param sd Player
 * @param count Fame point
@@ -664,12 +750,12 @@ void pc_inventory_rentals(struct map_session_data *sd)
 		if( sd->inventory.u.items_inventory[i].expire_time <= time(NULL) ) {
 			if (sd->inventory_data[i]->unequip_script)
 				run_script(sd->inventory_data[i]->unequip_script, 0, sd->bl.id, fake_nd->bl.id);
-			clif_rental_expired(sd->fd, i, sd->inventory.u.items_inventory[i].nameid);
+			clif_rental_expired(sd, i, sd->inventory.u.items_inventory[i].nameid);
 			pc_delitem(sd, i, sd->inventory.u.items_inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
 		} else {
 			unsigned int expire_tick = (unsigned int)(sd->inventory.u.items_inventory[i].expire_time - time(NULL));
 
-			clif_rental_time(sd->fd, sd->inventory.u.items_inventory[i].nameid, (int)expire_tick);
+			clif_rental_time(sd, sd->inventory.u.items_inventory[i].nameid, (int)expire_tick);
 			next_tick = umin(expire_tick * 1000U, next_tick);
 			c++;
 		}
@@ -780,6 +866,24 @@ bool pc_can_give_bounded_items(struct map_session_data *sd)
 	return pc_has_permission(sd, PC_PERM_TRADE_BOUNDED);
 }
 
+/**
+ * Determine if an item in a player's inventory is tradeable based on several merits.
+ * Checks for item_trade, bound, and rental restrictions.
+ * @param sd: Player data
+ * @param index: Item inventory index
+ * @return True if the item can be traded or false otherwise
+ */
+bool pc_can_trade_item(map_session_data *sd, int index) {
+	if (sd && index >= 0) {
+		return (sd->inventory.u.items_inventory[index].expire_time == 0 &&
+			(sd->inventory.u.items_inventory[index].bound == 0 || pc_can_give_bounded_items(sd)) &&
+			itemdb_cantrade(&sd->inventory.u.items_inventory[index], pc_get_group_level(sd), pc_get_group_level(sd))
+			);
+	}
+
+	return false;
+}
+
 /*==========================================
  * Prepares character for saving.
  * @param sd
@@ -790,8 +894,6 @@ void pc_makesavestatus(struct map_session_data *sd) {
 	if(!battle_config.save_clothcolor)
 		sd->status.clothes_color = 0;
 
-	// Since this is currently not officially released,
-	// its best to have a forced option to not save body styles.
 	if(!battle_config.save_body_style)
 		sd->status.body = 0;
 
@@ -1123,7 +1225,7 @@ enum adopt_responses pc_try_adopt(struct map_session_data *p1_sd, struct map_ses
 bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd)
 {
 	int job, joblevel;
-	unsigned int jobexp;
+	t_exp jobexp;
 
 	if( pc_try_adopt(p1_sd, p2_sd, b_sd) != ADOPT_ALLOWED )
 		return false;
@@ -1385,6 +1487,12 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->expiration_tid = INVALID_TIMER;
 	sd->autotrade_tid = INVALID_TIMER;
 	sd->respawn_tid = INVALID_TIMER;
+	sd->tid_queue_active = INVALID_TIMER;
+
+	sd->skill_keep_using.tid = INVALID_TIMER;
+	sd->skill_keep_using.skill_id = 0;
+	sd->skill_keep_using.level = 0;
+	sd->skill_keep_using.target = 0;
 
 #ifdef SECURE_NPCTIMEOUT
 	// Initialize to defaults/expected
@@ -1463,7 +1571,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->vars_ok = false;
 	sd->vars_received = 0x0;
 
-	sd->qi_display = NULL;
+	sd->qi_display = nullptr;
 	sd->qi_count = 0;
 
 	//warp player
@@ -1528,6 +1636,9 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	
 	sd->bonus_script.head = NULL;
 	sd->bonus_script.count = 0;
+
+	// Initialize BG queue
+	sd->bg_queue_id = 0;
 
 #if PACKETVER >= 20150513
 	sd->hatEffectIDs = NULL;
@@ -1603,34 +1714,34 @@ void pc_reg_received(struct map_session_data *sd)
 
 	sd->vars_ok = true;
 
-	sd->change_level_2nd = pc_readglobalreg(sd, add_str(JOBCHANGE2ND_VAR));
-	sd->change_level_3rd = pc_readglobalreg(sd, add_str(JOBCHANGE3RD_VAR));
-	sd->die_counter = pc_readglobalreg(sd, add_str(PCDIECOUNTER_VAR));
+	sd->change_level_2nd = static_cast<unsigned char>(pc_readglobalreg(sd, add_str(JOBCHANGE2ND_VAR)));
+	sd->change_level_3rd = static_cast<unsigned char>(pc_readglobalreg(sd, add_str(JOBCHANGE3RD_VAR)));
+	sd->die_counter = static_cast<int>(pc_readglobalreg(sd, add_str(PCDIECOUNTER_VAR)));
 
-	sd->langtype = pc_readaccountreg(sd, add_str(LANGTYPE_VAR));
+	sd->langtype = static_cast<int>(pc_readaccountreg(sd, add_str(LANGTYPE_VAR)));
 	if (msg_checklangtype(sd->langtype,true) < 0)
 		sd->langtype = 0; //invalid langtype reset to default
 
 	// Cash shop
-	sd->cashPoints = pc_readaccountreg(sd, add_str(CASHPOINT_VAR));
-	sd->kafraPoints = pc_readaccountreg(sd, add_str(KAFRAPOINT_VAR));
+	sd->cashPoints = static_cast<int>(pc_readaccountreg(sd, add_str(CASHPOINT_VAR)));
+	sd->kafraPoints = static_cast<int>(pc_readaccountreg(sd, add_str(KAFRAPOINT_VAR)));
 
 	// Cooking Exp
-	sd->cook_mastery = pc_readglobalreg(sd, add_str(COOKMASTERY_VAR));
+	sd->cook_mastery = static_cast<short>(pc_readglobalreg(sd, add_str(COOKMASTERY_VAR)));
 
 	if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON )
 	{ // Better check for class rather than skill to prevent "skill resets" from unsetting this
-		sd->mission_mobid = pc_readglobalreg(sd, add_str(TKMISSIONID_VAR));
-		sd->mission_count = pc_readglobalreg(sd, add_str(TKMISSIONCOUNT_VAR));
+		sd->mission_mobid = static_cast<short>(pc_readglobalreg(sd, add_str(TKMISSIONID_VAR)));
+		sd->mission_count = static_cast<unsigned char>(pc_readglobalreg(sd, add_str(TKMISSIONCOUNT_VAR)));
 	}
 
 	if (battle_config.feature_banking)
-		sd->bank_vault = pc_readreg2(sd, BANK_VAULT_VAR);
+		sd->bank_vault = static_cast<int>(pc_readreg2(sd, BANK_VAULT_VAR));
 
 	if (battle_config.feature_roulette) {
-		sd->roulette_point.bronze = pc_readreg2(sd, ROULETTE_BRONZE_VAR);
-		sd->roulette_point.silver = pc_readreg2(sd, ROULETTE_SILVER_VAR);
-		sd->roulette_point.gold = pc_readreg2(sd, ROULETTE_GOLD_VAR);
+		sd->roulette_point.bronze = static_cast<int>(pc_readreg2(sd, ROULETTE_BRONZE_VAR));
+		sd->roulette_point.silver = static_cast<int>(pc_readreg2(sd, ROULETTE_SILVER_VAR));
+		sd->roulette_point.gold = static_cast<int>(pc_readreg2(sd, ROULETTE_GOLD_VAR));
 	}
 	sd->roulette.prizeIdx = -1;
 
@@ -1638,33 +1749,33 @@ void pc_reg_received(struct map_session_data *sd)
 	for(i=0;i<MAX_PC_FEELHATE;i++) { //for now - someone need to make reading from txt/sql
 		uint16 j;
 
-		if ((j = pc_readglobalreg(sd, add_str(sg_info[i].feel_var))) != 0) {
+		if ((j = static_cast<uint16>(pc_readglobalreg(sd, add_str(sg_info[i].feel_var)))) != 0) {
 			sd->feel_map[i].index = j;
 			sd->feel_map[i].m = map_mapindex2mapid(j);
 		} else {
 			sd->feel_map[i].index = 0;
 			sd->feel_map[i].m = -1;
 		}
-		sd->hate_mob[i] = pc_readglobalreg(sd, add_str(sg_info[i].hate_var))-1;
+		sd->hate_mob[i] = static_cast<short>(pc_readglobalreg(sd, add_str(sg_info[i].hate_var)))-1;
 	}
 
 	if ((i = pc_checkskill(sd,RG_PLAGIARISM)) > 0) {
-		unsigned short skid = pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM));
+		unsigned short skid = static_cast<unsigned short>(pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM)));
 		sd->cloneskill_idx = skill_get_index(skid);
 		if (sd->cloneskill_idx > 0) {
 			sd->status.skill[sd->cloneskill_idx].id = skid;
-			sd->status.skill[sd->cloneskill_idx].lv = pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM_LV));
+			sd->status.skill[sd->cloneskill_idx].lv = static_cast<uint8>(pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM_LV)));
 			if (sd->status.skill[sd->cloneskill_idx].lv > i)
 				sd->status.skill[sd->cloneskill_idx].lv = i;
 			sd->status.skill[sd->cloneskill_idx].flag = SKILL_FLAG_PLAGIARIZED;
 		}
 	}
 	if ((i = pc_checkskill(sd,SC_REPRODUCE)) > 0) {
-		unsigned short skid = pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE));
+		unsigned short skid = static_cast<unsigned short>(pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE)));
 		sd->reproduceskill_idx = skill_get_index(skid);
 		if (sd->reproduceskill_idx > 0) {
 			sd->status.skill[sd->reproduceskill_idx].id = skid;
-			sd->status.skill[sd->reproduceskill_idx].lv = pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE_LV));
+			sd->status.skill[sd->reproduceskill_idx].lv = static_cast<uint8>(pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE_LV)));
 			if (i < sd->status.skill[sd->reproduceskill_idx].lv)
 				sd->status.skill[sd->reproduceskill_idx].lv = i;
 			sd->status.skill[sd->reproduceskill_idx].flag = SKILL_FLAG_PLAGIARIZED;
@@ -1680,12 +1791,24 @@ void pc_reg_received(struct map_session_data *sd)
 	intif_storage_request(sd,TABLE_CART, 0, STOR_MODE_ALL); // Request cart data
 	intif_storage_request(sd,TABLE_INVENTORY, 0, STOR_MODE_ALL); // Request inventory data
 
-	if (sd->status.party_id)
+	// Restore IM_CHAR instance to the player
+	for (const auto &instance : instances) {
+		if (instance.second->mode == IM_CHAR && instance.second->owner_id == sd->status.char_id) {
+			sd->instance_id = instance.first;
+			break;
+		}
+	}
+
+#if PACKETVER_MAIN_NUM < 20190403 || PACKETVER_RE_NUM < 20190320 || PACKETVER_ZERO_NUM < 20190410
+	if (sd->instance_id > 0)
+		instance_reqinfo(sd, sd->instance_id);
+	if (sd->status.party_id > 0)
 		party_member_joined(sd);
-	if (sd->status.guild_id)
+	if (sd->status.guild_id > 0)
 		guild_member_joined(sd);
-	if( sd->status.clan_id )
+	if (sd->status.clan_id > 0)
 		clan_member_joined(sd);
+#endif
 
 	// pet
 	if (sd->status.pet_id > 0)
@@ -1727,21 +1850,21 @@ void pc_reg_received(struct map_session_data *sd)
 	if (sd->state.connect_new == 0 && sd->fd) { //Character already loaded map! Gotta trigger LoadEndAck manually.
 		sd->state.connect_new = 1;
 		clif_parse_LoadEndAck(sd->fd, sd);
-	}
 
-	if( pc_isinvisible(sd) ) {
-		sd->vd.class_ = JT_INVISIBLE;
-		clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
-		// decrement the number of pvp players on the map
-		map_getmapdata(sd->bl.m)->users_pvp--;
+		if( pc_isinvisible( sd ) ){
+			sd->vd.class_ = JT_INVISIBLE;
+			clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
+			// decrement the number of pvp players on the map
+			map_getmapdata( sd->bl.m )->users_pvp--;
 
-		if( map_getmapflag(sd->bl.m, MF_PVP) && !map_getmapflag(sd->bl.m, MF_PVP_NOCALCRANK) && sd->pvp_timer != INVALID_TIMER ){
-			// unregister the player for ranking
-			delete_timer( sd->pvp_timer, pc_calc_pvprank_timer );
-			sd->pvp_timer = INVALID_TIMER;
+			if( map_getmapflag( sd->bl.m, MF_PVP ) && !map_getmapflag( sd->bl.m, MF_PVP_NOCALCRANK ) && sd->pvp_timer != INVALID_TIMER ){
+				// unregister the player for ranking
+				delete_timer( sd->pvp_timer, pc_calc_pvprank_timer );
+				sd->pvp_timer = INVALID_TIMER;
+			}
+
+			clif_changeoption( &sd->bl );
 		}
-
-		clif_changeoption( &sd->bl );
 	}
 
 	channel_autojoin(sd);
@@ -1755,9 +1878,10 @@ static int pc_calc_skillpoint(struct map_session_data* sd)
 
 	for(i = 1; i < MAX_SKILL; i++) {
 		if( sd->status.skill[i].id && sd->status.skill[i].lv > 0) {
-			uint16 inf2 = skill_get_inf2(sd->status.skill[i].id);
-			if ((!(inf2&INF2_QUEST_SKILL) || battle_config.quest_skill_learn) &&
-				!(inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL)) //Do not count wedding/link skills. [Skotlex]
+			std::shared_ptr<s_skill_db> skill = skill_db.find(sd->status.skill[i].id);
+
+			if ((!skill->inf2[INF2_ISQUEST] || battle_config.quest_skill_learn) &&
+				(!skill->inf2[INF2_ISWEDDING] || skill->inf2[INF2_ISSPIRIT]) //Do not count wedding/link skills. [Skotlex]
 				)
 			{
 				if(sd->status.skill[i].flag == SKILL_FLAG_PERMANENT)
@@ -1772,9 +1896,7 @@ static int pc_calc_skillpoint(struct map_session_data* sd)
 }
 
 static bool pc_grant_allskills(struct map_session_data *sd, bool addlv) {
-	uint16 i = 0;
-
-	if (!sd || !pc_has_permission(sd, PC_PERM_ALL_SKILL) || !SKILL_MAX_DB())
+	if (!sd || !pc_has_permission(sd, PC_PERM_ALL_SKILL))
 		return false;
 
 	/**
@@ -1783,9 +1905,10 @@ static bool pc_grant_allskills(struct map_session_data *sd, bool addlv) {
 	* Get ALL skills except npc/guild ones. [Skotlex]
 	* Don't add SG_DEVIL [Komurka] and MO_TRIPLEATTACK and RG_SNATCHER [ultramage]
 	**/
-	for( i = 0; i < MAX_SKILL; i++ ) {
-		uint16 skill_id = skill_idx2id(i);
-		if (!skill_id || (skill_get_inf2(skill_id)&(INF2_NPC_SKILL|INF2_GUILD_SKILL)))
+	for (const auto &skill : skill_db) {
+		uint16 skill_id = skill.second->nameid;
+
+		if (skill_id == 0 || skill.second->inf2[INF2_ISNPC]|| skill.second->inf2[INF2_ISGUILD])
 			continue;
 		switch (skill_id) {
 			case SM_SELFPROVOKE:
@@ -1811,10 +1934,13 @@ static bool pc_grant_allskills(struct map_session_data *sd, bool addlv) {
 			default:
 				{
 					uint8 lv = (uint8)skill_get_max(skill_id);
+
 					if (lv > 0) {
-						sd->status.skill[i].id = skill_id;
+						uint16 idx = skill_get_index(skill_id);
+
+						sd->status.skill[idx].id = skill_id;
 						if (addlv)
-							sd->status.skill[i].lv = lv;
+							sd->status.skill[idx].lv = lv;
 					}
 				}
 				break;
@@ -1829,73 +1955,51 @@ static bool pc_grant_allskills(struct map_session_data *sd, bool addlv) {
  *------------------------------------------*/
 void pc_calc_skilltree(struct map_session_data *sd)
 {
-	int i, flag;
-	int c = 0;
-
 	nullpo_retv(sd);
-	i = pc_calc_skilltree_normalize_job(sd);
-	c = pc_mapid2jobid(i, sd->status.sex);
-	if( c == -1 )
+
+	int job = pc_calc_skilltree_normalize_job(sd);
+	int class_ = pc_mapid2jobid(job, sd->status.sex);
+
+	if( class_ == -1 )
 	{ //Unable to normalize job??
-		ShowError("pc_calc_skilltree: Unable to normalize job %d for character %s (%d:%d)\n", i, sd->status.name, sd->status.account_id, sd->status.char_id);
+		ShowError("pc_calc_skilltree: Unable to normalize job %d for character %s (%d:%d)\n", job, sd->status.name, sd->status.account_id, sd->status.char_id);
 		return;
 	}
-	c = pc_class2idx(c);
+	class_ = pc_class2idx(class_);
 
-	for( i = 0; i < MAX_SKILL; i++ ) {
-		if( sd->status.skill[i].flag != SKILL_FLAG_PLAGIARIZED && sd->status.skill[i].flag != SKILL_FLAG_PERM_GRANTED ) //Don't touch these
-			sd->status.skill[i].id = 0; //First clear skills.
+	for (const auto &skill : skill_db) {
+		uint16 skill_id = skill.second->nameid;
+		uint16 idx = skill_get_index(skill_id);
+
+		if( sd->status.skill[idx].flag != SKILL_FLAG_PLAGIARIZED && sd->status.skill[idx].flag != SKILL_FLAG_PERM_GRANTED ) //Don't touch these
+			sd->status.skill[idx].id = 0; //First clear skills.
 		/* permanent skills that must be re-checked */
-		if( sd->status.skill[i].flag == SKILL_FLAG_PERM_GRANTED ) {
-			uint16 sk_id = skill_idx2id(i);
-			if (!sk_id) {
-				sd->status.skill[i].id = 0;
-				sd->status.skill[i].lv = 0;
-				sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
+		if( sd->status.skill[idx].flag == SKILL_FLAG_PERM_GRANTED ) {
+			if (skill_id == 0) {
+				sd->status.skill[idx].id = 0;
+				sd->status.skill[idx].lv = 0;
+				sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
 				continue;
 			}
-			switch (sk_id) {
+			switch (skill_id) {
 				case NV_TRICKDEAD:
 					if( (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE ) {
-						sd->status.skill[i].id = 0;
-						sd->status.skill[i].lv = 0;
-						sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
+						sd->status.skill[idx].id = 0;
+						sd->status.skill[idx].lv = 0;
+						sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
 					}
 					break;
 			}
 		}
 	}
 
-	for( i = 0; i < MAX_SKILL; i++ ) {
-		uint16 skill_id = 0;
+	for (const auto &skill : skill_db) {
+		uint16 idx = skill_get_index(skill.second->nameid);
 
 		// Restore original level of skills after deleting earned skills.
-		if( sd->status.skill[i].flag != SKILL_FLAG_PERMANENT && sd->status.skill[i].flag != SKILL_FLAG_PERM_GRANTED && sd->status.skill[i].flag != SKILL_FLAG_PLAGIARIZED ) {
-			sd->status.skill[i].lv = (sd->status.skill[i].flag == SKILL_FLAG_TEMPORARY) ? 0 : sd->status.skill[i].flag - SKILL_FLAG_REPLACED_LV_0;
-			sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
-		}
-
-		//Enable Bard/Dancer spirit linked skills.
-		if (!(skill_id = skill_idx2id(i)) || skill_id < DC_HUMMING || skill_id > DC_SERVICEFORYOU)
-			continue;
-
-		if( sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER ) {
-			//Link Dancer skills to bard.
-			if( sd->status.sex ) {
-				if( sd->status.skill[i-8].lv < 10 )
-					continue;
-				sd->status.skill[i].id = skill_id;
-				sd->status.skill[i].lv = sd->status.skill[i-8].lv; // Set the level to the same as the linking skill
-				sd->status.skill[i].flag = SKILL_FLAG_TEMPORARY; // Tag it as a non-savable, non-uppable, bonus skill
-			}
-			//Link Bard skills to dancer.
-			else {
-				if( sd->status.skill[i].lv < 10 )
-					continue;
-				sd->status.skill[i-8].id = skill_id - 8;
-				sd->status.skill[i-8].lv = sd->status.skill[i].lv; // Set the level to the same as the linking skill
-				sd->status.skill[i-8].flag = SKILL_FLAG_TEMPORARY; // Tag it as a non-savable, non-uppable, bonus skill
-			}
+		if( sd->status.skill[idx].flag != SKILL_FLAG_PERMANENT && sd->status.skill[idx].flag != SKILL_FLAG_PERM_GRANTED && sd->status.skill[idx].flag != SKILL_FLAG_PLAGIARIZED ) {
+			sd->status.skill[idx].lv = (sd->status.skill[idx].flag == SKILL_FLAG_TEMPORARY) ? 0 : sd->status.skill[idx].flag - SKILL_FLAG_REPLACED_LV_0;
+			sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
 		}
 	}
 
@@ -1903,7 +2007,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 	if ((sd->class_&MAPID_UPPERMASK) != MAPID_TAEKWON) {
 		uint16 c_ = pc_class2idx(JOB_TAEKWON);
 
-		for (i = 0; i < MAX_SKILL_TREE; i++) {
+		for (uint16 i = 0; i < MAX_SKILL_TREE; i++) {
 			uint16 sk_id = skill_tree[c_][i].skill_id;
 			uint16 sk_idx = 0;
 
@@ -1921,11 +2025,13 @@ void pc_calc_skilltree(struct map_session_data *sd)
 	// Grant all skills
 	pc_grant_allskills(sd, false);
 
+	int flag;
+
 	do {
 		uint16 skid = 0;
 
 		flag = 0;
-		for (i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[c][i].skill_id) > 0; i++) {
+		for (uint16 i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[class_][i].skill_id) > 0; i++) {
 			bool fail = false;
 			uint16 sk_idx = skill_get_index(skid);
 
@@ -1933,11 +2039,9 @@ void pc_calc_skilltree(struct map_session_data *sd)
 				continue; //Skill already known.
 
 			if (!battle_config.skillfree) {
-				uint8 j;
-
 				// Checking required skills
-				for(j = 0; j < MAX_PC_SKILL_REQUIRE; j++) {
-					uint16 sk_need_id = skill_tree[c][i].need[j].skill_id;
+				for(uint8 j = 0; j < MAX_PC_SKILL_REQUIRE; j++) {
+					uint16 sk_need_id = skill_tree[class_][i].need[j].skill_id;
 					uint16 sk_need_idx = 0;
 
 					if (sk_need_id && (sk_need_idx = skill_get_index(sk_need_id))) {
@@ -1950,40 +2054,42 @@ void pc_calc_skilltree(struct map_session_data *sd)
 						else
 							sk_need = pc_checkskill(sd,sk_need_id);
 
-						if (sk_need < skill_tree[c][i].need[j].skill_lv) {
+						if (sk_need < skill_tree[class_][i].need[j].skill_lv) {
 							fail = true;
 							break;
 						}
 					}
 				}
 
-				if (sd->status.base_level < skill_tree[c][i].baselv) { //We need to get the actual class in this case
-					int class_ = pc_mapid2jobid(sd->class_, sd->status.sex);
-					class_ = pc_class2idx(class_);
-					if (class_ == c || (class_ != c && sd->status.base_level < skill_tree[class_][i].baselv))
+				if (sd->status.base_level < skill_tree[class_][i].baselv) { //We need to get the actual class in this case
+					int c_ = pc_mapid2jobid(sd->class_, sd->status.sex);
+
+					c_ = pc_class2idx(c_);
+					if (class_ == c_ || (class_ != c_ && sd->status.base_level < skill_tree[class_][i].baselv))
 						fail = true; // base level requirement wasn't satisfied
 				}
-				if (sd->status.job_level < skill_tree[c][i].joblv) { //We need to get the actual class in this case
-					int class_ = pc_mapid2jobid(sd->class_, sd->status.sex);
-					class_ = pc_class2idx(class_);
-					if (class_ == c || (class_ != c && sd->status.job_level < skill_tree[class_][i].joblv))
+				if (sd->status.job_level < skill_tree[class_][i].joblv) { //We need to get the actual class in this case
+					int c_ = pc_mapid2jobid(sd->class_, sd->status.sex);
+
+					c_ = pc_class2idx(c_);
+					if (class_ == c_ || (class_ != c_ && sd->status.job_level < skill_tree[class_][i].joblv))
 						fail = true; // job level requirement wasn't satisfied
 				}
 			}
 
 			if (!fail) {
-				int inf2 = skill_get_inf2(skid);
+				std::shared_ptr<s_skill_db> skill = skill_db.find(skid);
 
 				if (!sd->status.skill[sk_idx].lv && (
-					(inf2&INF2_QUEST_SKILL && !battle_config.quest_skill_learn) ||
-					inf2&INF2_WEDDING_SKILL ||
-					(inf2&INF2_SPIRIT_SKILL && !sd->sc.data[SC_SPIRIT])
+					(skill->inf2[INF2_ISQUEST] && !battle_config.quest_skill_learn) ||
+					skill->inf2[INF2_ISWEDDING] ||
+					(skill->inf2[INF2_ISSPIRIT] && !sd->sc.data[SC_SPIRIT])
 				))
 					continue; //Cannot be learned via normal means. Note this check DOES allows raising already known skills.
 
 				sd->status.skill[sk_idx].id = skid;
 
-				if(inf2&INF2_SPIRIT_SKILL) { //Spirit skills cannot be learned, they will only show up on your tree when you get buffed.
+				if(skill->inf2[INF2_ISSPIRIT]) { //Spirit skills cannot be learned, they will only show up on your tree when you get buffed.
 					sd->status.skill[sk_idx].lv = 1; // need to manually specify a skill level
 					sd->status.skill[sk_idx].flag = SKILL_FLAG_TEMPORARY; //So it is not saved, and tagged as a "bonus" skill.
 				}
@@ -1992,19 +2098,22 @@ void pc_calc_skilltree(struct map_session_data *sd)
 		}
 	} while(flag);
 
-	if( c > 0 && sd->status.skill_point == 0 && pc_is_taekwon_ranker(sd) ) {
-		unsigned short skid = 0;
+	if( class_ > 0 && sd->status.skill_point == 0 && pc_is_taekwon_ranker(sd) ) {
+		uint16 skid = 0;
+
 		/* Taekwon Ranker Bonus Skill Tree
 		============================================
 		- Grant All Taekwon Tree, but only as Bonus Skills in case they drop from ranking.
 		- (c > 0) to avoid grant Novice Skill Tree in case of Skill Reset (need more logic)
 		- (sd->status.skill_point == 0) to wait until all skill points are assigned to avoid problems with Job Change quest. */
 
-		for( i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[c][i].skill_id) > 0; i++ ) {
-			uint16 sk_idx = 0;
-			if (!(sk_idx = skill_get_index(skid)))
+		for( uint16 i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[class_][i].skill_id) > 0; i++ ) {
+			uint16 sk_idx = skill_get_index(skid);
+
+			if (sk_idx == 0)
 				continue;
-			if( (skill_get_inf2(skid)&(INF2_QUEST_SKILL|INF2_WEDDING_SKILL)) )
+
+			if( skill_get_inf2_(skid, { INF2_ISQUEST, INF2_ISWEDDING }) )
 				continue; //Do not include Quest/Wedding skills.
 			if( sd->status.skill[sk_idx].id == 0 ) {
 				sd->status.skill[sk_idx].id = skid;
@@ -2012,6 +2121,22 @@ void pc_calc_skilltree(struct map_session_data *sd)
 			} else if( skid != NV_BASIC )
 				sd->status.skill[sk_idx].flag = SKILL_FLAG_REPLACED_LV_0 + sd->status.skill[sk_idx].lv; // Remember original level
 			sd->status.skill[sk_idx].lv = skill_tree_get_max(skid, sd->status.class_);
+		}
+	}
+
+	// Enable Bard/Dancer spirit linked skills.
+	if (sd->sc.count && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_BARDDANCER) {
+		std::vector<std::vector<uint16>> linked_skills = { { BA_WHISTLE, DC_HUMMING },
+														   { BA_ASSASSINCROSS, DC_DONTFORGETME },
+														   { BA_POEMBRAGI, DC_FORTUNEKISS },
+														   { BA_APPLEIDUN, DC_SERVICEFORYOU } };
+
+		for (const auto &skill : linked_skills) {
+			if (pc_checkskill(sd, skill[!sd->status.sex]) < 10)
+				continue;
+
+			// Tag it as a non-savable, non-uppable, bonus skill
+			pc_skill(sd, skill[sd->status.sex], 10, ADDSKILL_TEMP);
 		}
 	}
 }
@@ -2072,11 +2197,12 @@ static void pc_check_skilltree(struct map_session_data *sd)
 			if (sd->status.base_level < skill_tree[c][i].baselv || sd->status.job_level < skill_tree[c][i].joblv)
 				continue;
 
-			j = skill_get_inf2(skid);
+			std::shared_ptr<s_skill_db> skill = skill_db.find(skid);
+
 			if( !sd->status.skill[sk_idx].lv && (
-				(j&INF2_QUEST_SKILL && !battle_config.quest_skill_learn) ||
-				j&INF2_WEDDING_SKILL ||
-				(j&INF2_SPIRIT_SKILL && !sd->sc.data[SC_SPIRIT])
+				(skill->inf2[INF2_ISQUEST] && !battle_config.quest_skill_learn) ||
+				skill->inf2[INF2_ISWEDDING] ||
+				(skill->inf2[INF2_ISSPIRIT] && !sd->sc.data[SC_SPIRIT])
 			) )
 				continue; //Cannot be learned via normal means.
 
@@ -2643,7 +2769,7 @@ void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonu
 
 	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr_t)bonus);
 	sd->state.autobonus |= autobonus->pos;
-	status_calc_pc(sd,SCO_FORCE);
+	status_calc_pc(sd,SCO_NONE);
 }
 
 /**
@@ -2664,7 +2790,7 @@ TIMER_FUNC(pc_endautobonus){
 		}
 	}
 	
-	status_calc_pc(sd,SCO_FORCE);
+	status_calc_pc(sd,SCO_NONE);
 	return 0;
 }
 
@@ -2762,6 +2888,49 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
 	sd->subele2.push_back(entry);
 }
 
+/**
+ * Adjust race damage to target when attacking
+ * @param sd: Player data
+ * @param race: Race to adjust
+ * @param rate: Success chance
+ * @param flag: Battle flag
+*/
+static void pc_bonus_subrace(struct map_session_data* sd, unsigned char race, short rate, short flag)
+{
+	if (sd->subrace3.size() == MAX_PC_BONUS) {
+		ShowWarning("pc_bonus_subrace: Reached max (%d) number of resist race damage bonuses per character!\n", MAX_PC_BONUS);
+		return;
+	}
+
+	if (!(flag&BF_RANGEMASK))
+		flag |= BF_SHORT | BF_LONG;
+	if (!(flag&BF_WEAPONMASK))
+		flag |= BF_WEAPON;
+	if (!(flag&BF_SKILLMASK)) {
+		if (flag&(BF_MAGIC | BF_MISC))
+			flag |= BF_SKILL;
+		if (flag&BF_WEAPON)
+			flag |= BF_NORMAL | BF_SKILL;
+	}
+
+	for (auto &it : sd->subrace3) {
+		if (it.race == race && it.flag == flag) {
+			it.rate = cap_value(it.rate + rate, -10000, 10000);
+			return;
+		}
+	}
+
+	struct s_addrace2 entry = {};
+
+	if (rate < -10000 || rate > 10000)
+		ShowWarning("pc_bonus_subrace: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
+
+	entry.race = race;
+	entry.rate = cap_value(rate, -10000, 10000);
+	entry.flag = flag;
+
+	sd->subrace3.push_back(entry);
+}
 /**
  * General item bonus for player
  * @param bonus: Bonus array
@@ -3313,6 +3482,10 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			if(sd->state.lr_flag !=2)
 				sd->bonus.classchange=val;
 			break;
+		case SP_SHORT_ATK_RATE:
+			if(sd->state.lr_flag != 2)	//[Lupus] it should stack, too. As any other cards rate bonuses
+				sd->bonus.short_attack_atk_rate+=val;
+			break;
 		case SP_LONG_ATK_RATE:
 			if(sd->state.lr_flag != 2)	//[Lupus] it should stack, too. As any other cards rate bonuses
 				sd->bonus.long_attack_atk_rate+=val;
@@ -3336,6 +3509,10 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 		case SP_CRIT_ATK_RATE:
 			if(sd->state.lr_flag != 2)
 				sd->bonus.crit_atk_rate += val;
+			break;
+		case SP_CRIT_DEF_RATE:
+			if(sd->state.lr_flag != 2)
+				sd->bonus.crit_def_rate += val;
 			break;
 		case SP_NO_REGEN:
 			if(sd->state.lr_flag != 2)
@@ -3415,6 +3592,10 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			if(sd->state.lr_flag != 2)
 				sd->bonus.ematk += val;
 			break;
+		case SP_ADD_VARIABLECAST:
+			if (sd->state.lr_flag != 2)
+				sd->bonus.add_varcast += val;
+			break;
 #ifdef RENEWAL_CAST
 		case SP_FIXCASTRATE:
 			if(sd->state.lr_flag != 2)
@@ -3429,14 +3610,9 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			if(sd->state.lr_flag != 2)
 				sd->bonus.varcastrate -= val;
 			break;
-		case SP_ADD_VARIABLECAST:
-			if(sd->state.lr_flag != 2)
-				sd->bonus.add_varcast += val;
-			break;
 #else
 		case SP_ADD_FIXEDCAST:
 		case SP_FIXCASTRATE:
-		case SP_ADD_VARIABLECAST:
 			//ShowWarning("pc_bonus: non-RENEWAL_CAST doesn't support this bonus %d.\n", type);
 			break;
 		case SP_VARCASTRATE:
@@ -3475,10 +3651,7 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 				sd->special_state.no_walk_delay = 1;
 			break;
 		default:
-			if (running_npc_stat_calc_event) {
-				ShowWarning("pc_bonus: unknown bonus type %d %d in OnPCStatCalcEvent!\n", type, val);
-			}
-			else if (current_equip_combo_pos > 0) {
+			if (current_equip_combo_pos > 0) {
 				ShowWarning("pc_bonus: unknown bonus type %d %d in a combo with item #%d\n", type, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 			}
 			else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
@@ -3796,6 +3969,11 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag != 2)
 			sd->subsize[type2]+=val;
 		break;
+	case SP_MAGIC_SUBSIZE: // bonus2 bMagicSubSize,s,x;
+		PC_BONUS_CHK_SIZE(type2,SP_MAGIC_SUBSIZE);
+		if(sd->state.lr_flag != 2)
+			sd->magic_subsize[type2]+=val;
+		break;
 	case SP_SUBRACE2: // bonus2 bSubRace2,mr,x;
 		PC_BONUS_CHK_RACE2(type2,SP_SUBRACE2);
 		if(sd->state.lr_flag != 2)
@@ -3950,6 +4128,16 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 
 		pc_bonus_itembonus(sd->skillcooldown, type2, val, false);
 		break;
+	case SP_SKILL_VARIABLECAST: // bonus2 bSkillVariableCast,sk,t;
+		if (sd->state.lr_flag == 2)
+			break;
+		if (sd->skillvarcast.size() == MAX_PC_BONUS) {
+			ShowWarning("pc_bonus2: SP_SKILL_VARIABLECAST: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
+			break;
+		}
+
+		pc_bonus_itembonus(sd->skillvarcast, type2, val, false);
+		break;
 #ifdef RENEWAL_CAST
 	case SP_SKILL_FIXEDCAST: // bonus2 bSkillFixedCast,sk,t;
 		if(sd->state.lr_flag == 2)
@@ -3960,16 +4148,6 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		}
 
 		pc_bonus_itembonus(sd->skillfixcast, type2, val, false);
-		break;
-	case SP_SKILL_VARIABLECAST: // bonus2 bSkillVariableCast,sk,t;
-		if(sd->state.lr_flag == 2)
-			break;
-		if (sd->skillvarcast.size() == MAX_PC_BONUS) {
-			ShowWarning("pc_bonus2: SP_SKILL_VARIABLECAST: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
-			break;
-		}
-
-		pc_bonus_itembonus(sd->skillvarcast, type2, val, false);
 		break;
 	case SP_CASTRATE: // bonus2 bCastrate,sk,n;
 	case SP_VARCASTRATE: // bonus2 bVariableCastrate,sk,n;
@@ -3994,7 +4172,6 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		break;
 #else
 	case SP_SKILL_FIXEDCAST: // bonus2 bSkillFixedCast,sk,t;
-	case SP_SKILL_VARIABLECAST: // bonus2 bSkillVariableCast,sk,t;
 	case SP_FIXCASTRATE: // bonus2 bFixedCastrate,sk,n;
 		//ShowWarning("pc_bonus2: Non-RENEWAL_CAST doesn't support this bonus %d.\n", type);
 		break;
@@ -4067,10 +4244,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		sd->magic_subdefele[type2] += val;
 		break;
 	default:
-		if (running_npc_stat_calc_event) {
-			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in OnPCStatCalcEvent!\n", type, type2, val);
-		}
-		else if (current_equip_combo_pos > 0) {
+		if (current_equip_combo_pos > 0) {
 			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in a combo with item #%d\n", type, type2, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 		} 
 		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
@@ -4112,7 +4286,7 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		if(sd->state.lr_flag != 2)
 		{
 			int target = skill_get_inf(type2); //Support or Self (non-auto-target) skills should pick self.
-			target = target&INF_SUPPORT_SKILL || (target&INF_SELF_SKILL && !(skill_get_inf2(type2)&INF2_NO_TARGET_SELF));
+			target = target&INF_SUPPORT_SKILL || (target&INF_SELF_SKILL && !skill_get_inf2(type2, INF2_NOTARGETSELF));
 			pc_bonus_autospell(sd->autospell, target?-type2:type2, type3, val, 0, current_equip_card_id);
 		}
 		break;
@@ -4120,7 +4294,7 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		if(sd->state.lr_flag != 2)
 		{
 			int target = skill_get_inf(type2); //Support or Self (non-auto-target) skills should pick self.
-			target = target&INF_SUPPORT_SKILL || (target&INF_SELF_SKILL && !(skill_get_inf2(type2)&INF2_NO_TARGET_SELF));
+			target = target&INF_SUPPORT_SKILL || (target&INF_SELF_SKILL && !skill_get_inf2(type2, INF2_NOTARGETSELF));
 			pc_bonus_autospell(sd->autospell2, target?-type2:type2, type3, val, BF_NORMAL|BF_SKILL, current_equip_card_id);
 		}
 		break;
@@ -4161,7 +4335,13 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		if (sd->state.lr_flag != 2)
 			pc_bonus_subele(sd, (unsigned char)type2, type3, val);
 		break;
-		
+
+	case SP_SUBRACE: // bonus3 bSubRace,r,x,bf;
+		PC_BONUS_CHK_RACE(type2, SP_SUBRACE);
+		if (sd->state.lr_flag != 2)
+			pc_bonus_subrace(sd, (unsigned char)type2, type3, val);
+		break;
+
 	case SP_SP_VANISH_RACE_RATE: // bonus3 bSPVanishRaceRate,r,x,n;
 		PC_BONUS_CHK_RACE(type2,SP_SP_VANISH_RACE_RATE);
 		if(sd->state.lr_flag != 2) {
@@ -4204,10 +4384,7 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		sd->norecover_state_race[type2].tick = val;
 		break;
 	default:
-		if (running_npc_stat_calc_event) {
-			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in OnPCStatCalcEvent!\n", type, type2, type3, val);
-		}
-		else if (current_equip_combo_pos > 0) {
+		if (current_equip_combo_pos > 0) {
 			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in a combo with item #%d\n", type, type2, type3, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 		}
 		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
@@ -4248,7 +4425,7 @@ void pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type
 		if(sd->state.lr_flag != 2)
 		{
 			int target = skill_get_inf(type3); //Support or Self (non-auto-target) skills should pick self.
-			target = target&INF_SUPPORT_SKILL || (target&INF_SELF_SKILL && !(skill_get_inf2(type3)&INF2_NO_TARGET_SELF));
+			target = target&INF_SUPPORT_SKILL || (target&INF_SELF_SKILL && !skill_get_inf2(type3, INF2_NOTARGETSELF));
 
 			pc_bonus_autospell_onskill(sd->autospell3, type2, target?-type3:type3, type4, val, current_equip_card_id);
 		}
@@ -4290,10 +4467,7 @@ void pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type
 		break;
 
 	default:
-		if (running_npc_stat_calc_event) {
-			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in OnPCStatCalcEvent!\n", type, type2, type3, type4, val);
-		}
-		else if (current_equip_combo_pos > 0) {
+		if (current_equip_combo_pos > 0) {
 			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in a combo with item #%d\n", type, type2, type3, type4, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 		}
 		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
@@ -4342,10 +4516,7 @@ void pc_bonus5(struct map_session_data *sd,int type,int type2,int type3,int type
 		break;
 
 	default:
-		if (running_npc_stat_calc_event) {
-			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in OnPCStatCalcEvent!\n", type, type2, type3, type4, type5, val);
-		}
-		else if (current_equip_combo_pos > 0) {
+		if (current_equip_combo_pos > 0) {
 			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in a combo with item #%d\n", type, type2, type3, type4, type5, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 		}
 		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
@@ -4392,7 +4563,7 @@ bool pc_skill(struct map_session_data* sd, uint16 skill_id, int level, enum e_ad
 				clif_deleteskill(sd,skill_id);
 			} else
 				clif_addskill(sd,skill_id);
-			if (!skill_get_inf(skill_id)) //Only recalculate for passive skills.
+			if (!skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20) //Only recalculate for passive skills.
 				status_calc_pc(sd, SCO_NONE);
 			break;
 
@@ -4429,7 +4600,7 @@ bool pc_skill(struct map_session_data* sd, uint16 skill_id, int level, enum e_ad
 				clif_deleteskill(sd,skill_id);
 			} else
 				clif_addskill(sd,skill_id);
-			if (!skill_get_inf(skill_id)) //Only recalculate for passive skills.
+			if (!skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20) //Only recalculate for passive skills.
 				status_calc_pc(sd, SCO_NONE);
 			break;
 
@@ -4443,36 +4614,47 @@ bool pc_skill(struct map_session_data* sd, uint16 skill_id, int level, enum e_ad
  *------------------------------------------*/
 int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 {
-	int i;
-	unsigned short nameid;
-
 	nullpo_ret(sd);
 
-	if( idx_equip < 0 || idx_equip >= MAX_INVENTORY || sd->inventory_data[idx_equip] == NULL )
+	if (idx_equip < 0 || idx_equip >= MAX_INVENTORY) {
+		return 0;
+	}
+	if (idx_card < 0 || idx_card >= MAX_INVENTORY) {
+		return 0;
+	}
+
+	int i;
+	unsigned short nameid;
+	struct item_data* item_eq = sd->inventory_data[idx_equip];
+	struct item_data* item_card = sd->inventory_data[idx_card];
+
+	if(item_eq == nullptr)
 		return 0; //Invalid item index.
-	if( idx_card < 0 || idx_card >= MAX_INVENTORY || sd->inventory_data[idx_card] == NULL )
+	if(item_card == nullptr)
 		return 0; //Invalid card index.
 	if( sd->inventory.u.items_inventory[idx_equip].nameid <= 0 || sd->inventory.u.items_inventory[idx_equip].amount < 1 )
 		return 0; // target item missing
 	if( sd->inventory.u.items_inventory[idx_card].nameid <= 0 || sd->inventory.u.items_inventory[idx_card].amount < 1 )
 		return 0; // target card missing
-	if( sd->inventory_data[idx_equip]->type != IT_WEAPON && sd->inventory_data[idx_equip]->type != IT_ARMOR )
+	if( item_eq->type != IT_WEAPON && item_eq->type != IT_ARMOR )
 		return 0; // only weapons and armor are allowed
-	if( sd->inventory_data[idx_card]->type != IT_CARD )
+	if( item_card->type != IT_CARD )
 		return 0; // must be a card
 	if( sd->inventory.u.items_inventory[idx_equip].identify == 0 )
 		return 0; // target must be identified
 	if( itemdb_isspecial(sd->inventory.u.items_inventory[idx_equip].card[0]) )
 		return 0; // card slots reserved for other purposes
-	if( (sd->inventory_data[idx_equip]->equip & sd->inventory_data[idx_card]->equip) == 0 )
+	if( (item_eq->equip & item_card->equip) == 0 )
 		return 0; // card cannot be compounded on this item type
-	if( sd->inventory_data[idx_equip]->type == IT_WEAPON && sd->inventory_data[idx_card]->equip == EQP_SHIELD )
+	if( item_eq->type == IT_WEAPON && item_card->equip == EQP_SHIELD )
 		return 0; // attempted to place shield card on left-hand weapon.
+	if( item_eq->type == IT_ARMOR && (item_card->equip & EQP_ACC) && ((item_card->equip & EQP_ACC) != EQP_ACC) && ((item_eq->equip & EQP_ACC) != (item_card->equip & EQP_ACC)) )
+		return 0; // specific accessory-card can only be inserted to specific accessory.
 	if( sd->inventory.u.items_inventory[idx_equip].equip != 0 )
 		return 0; // item must be unequipped
 
-	ARR_FIND( 0, sd->inventory_data[idx_equip]->slot, i, sd->inventory.u.items_inventory[idx_equip].card[i] == 0 );
-	if( i == sd->inventory_data[idx_equip]->slot )
+	ARR_FIND( 0, item_eq->slot, i, sd->inventory.u.items_inventory[idx_equip].card[i] == 0 );
+	if( i == item_eq->slot )
 		return 0; // no free slots
 
 	// remember the card id to insert
@@ -4903,16 +5085,17 @@ enum e_additem_result pc_additem(struct map_session_data *sd,struct item *item,i
 	/* rental item check */
 	if( item->expire_time ) {
 		if( time(NULL) > item->expire_time ) {
-			clif_rental_expired(sd->fd, i, sd->inventory.u.items_inventory[i].nameid);
+			clif_rental_expired(sd, i, sd->inventory.u.items_inventory[i].nameid);
 			pc_delitem(sd, i, sd->inventory.u.items_inventory[i].amount, 1, 0, LOG_TYPE_OTHER);
 		} else {
 			unsigned int seconds = (unsigned int)( item->expire_time - time(NULL) );
-			clif_rental_time(sd->fd, sd->inventory.u.items_inventory[i].nameid, seconds);
+			clif_rental_time(sd, sd->inventory.u.items_inventory[i].nameid, seconds);
 			pc_inventory_rental_add(sd, seconds);
 		}
 	}
 
 	achievement_update_objective(sd, AG_GET_ITEM, 1, id->value_sell);
+	pc_show_questinfo(sd);
 
 	return ADDITEM_SUCCESS;
 }
@@ -4948,6 +5131,8 @@ char pc_delitem(struct map_session_data *sd,int n,int amount,int type, short rea
 		clif_delitem(sd,n,amount,reason);
 	if(!(type&2))
 		clif_updatestatus(sd,SP_WEIGHT);
+
+	pc_show_questinfo(sd);
 
 	return 0;
 }
@@ -5264,6 +5449,9 @@ int pc_useitem(struct map_session_data *sd,int n)
 
 	nullpo_ret(sd);
 
+	if (sd->state.mail_writing)
+		return 0;
+
 	if (sd->npc_id) {
 		if (sd->progressbar.npc_id) {
 			clif_progressbar_abort(sd);
@@ -5409,7 +5597,7 @@ enum e_additem_result pc_cart_additem(struct map_session_data *sd,struct item *i
 			return ADDITEM_OVERAMOUNT; // no slot
 
 		sd->cart.u.items_cart[i].amount += amount;
-		clif_cart_additem(sd,i,amount,0);
+		clif_cart_additem(sd,i,amount);
 	}
 	else
 	{// item not stackable or not present, add it
@@ -5421,7 +5609,7 @@ enum e_additem_result pc_cart_additem(struct map_session_data *sd,struct item *i
 		sd->cart.u.items_cart[i].id = 0;
 		sd->cart.u.items_cart[i].amount = amount;
 		sd->cart_num++;
-		clif_cart_additem(sd,i,amount,0);
+		clif_cart_additem(sd,i,amount);
 	}
 	sd->cart.u.items_cart[i].favorite = 0; // clear
 	sd->cart.u.items_cart[i].equipSwitch = 0;
@@ -5530,7 +5718,7 @@ void pc_getitemfromcart(struct map_session_data *sd,int idx,int amount)
 	else {
 		clif_cart_delitem(sd, idx, amount);
 		clif_additem(sd, idx, amount, flag);
-		clif_cart_additem(sd, idx, amount, 0);
+		clif_cart_additem(sd, idx, amount);
 	}
 }
 
@@ -5734,25 +5922,31 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 	int16 m = map_mapindex2mapid(mapindex);
 	struct map_data *mapdata = map_getmapdata(m);
+	status_change *sc = status_get_sc(&sd->bl);
 
 	sd->state.changemap = (sd->mapindex != mapindex);
 	sd->state.warping = 1;
 	sd->state.workinprogress = WIP_DISABLE_NONE;
 
 	if( sd->state.changemap ) { // Misc map-changing settings
-		unsigned short curr_map_instance_id = map_getmapdata(sd->bl.m)->instance_id, new_map_instance_id = (mapdata ? mapdata->instance_id : 0);
+		int curr_map_instance_id = map_getmapdata(sd->bl.m)->instance_id, new_map_instance_id = (mapdata ? mapdata->instance_id : 0);
 
 		if (curr_map_instance_id != new_map_instance_id) {
-			if (curr_map_instance_id) // Update instance timer for the map on leave
+			if (curr_map_instance_id > 0) { // Update instance timer for the map on leave
 				instance_delusers(curr_map_instance_id);
+				sd->instance_mode = util::umap_find(instances, curr_map_instance_id)->mode; // Store mode for instance destruction button checks
+			}
 
-			if (new_map_instance_id) // Update instance timer for the map on enter
+			if (new_map_instance_id > 0) // Update instance timer for the map on enter
 				instance_addusers(new_map_instance_id);
 		}
 
+		if (sd->bg_id && !mapdata->flag[MF_BATTLEGROUND]) // Moving to a map that isn't a Battlegrounds
+			bg_team_leave(sd, false, true);
+
 		sd->state.pmap = sd->bl.m;
-		if (sd->sc.count) { // Cancel some map related stuff.
-			if (sd->sc.data[SC_JAILED])
+		if (sc && sc->count) { // Cancel some map related stuff.
+			if (sc->data[SC_JAILED])
 				return SETPOS_MAPINDEX; //You may not get out!
 			status_change_end(&sd->bl, SC_BOSSMAPINFO, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_WARM, INVALID_TIMER);
@@ -5760,8 +5954,8 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 			status_change_end(&sd->bl, SC_MOON_COMFORT, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_STAR_COMFORT, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_MIRACLE, INVALID_TIMER);
-			if (sd->sc.data[SC_KNOWLEDGE]) {
-				struct status_change_entry *sce = sd->sc.data[SC_KNOWLEDGE];
+			if (sc->data[SC_KNOWLEDGE]) {
+				struct status_change_entry *sce = sc->data[SC_KNOWLEDGE];
 				if (sce->timer != INVALID_TIMER)
 					delete_timer(sce->timer, status_change_timer);
 				sce->timer = add_timer(gettick() + skill_get_time(SG_KNOWLEDGE, sce->val1), status_change_timer, sd->bl.id, SC_KNOWLEDGE);
@@ -5769,6 +5963,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 			status_change_end(&sd->bl, SC_PROPERTYWALK, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_CLOAKING, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SUHIDE, INVALID_TIMER);
 		}
 		for(int i = 0; i < EQI_MAX; i++ ) {
 			if( sd->equip_index[i] >= 0 )
@@ -5789,6 +5984,16 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		}
 
 		channel_pcquit(sd,4); //quit map chan
+
+		// Remove Cloaked NPC if changing to another map
+		for (auto it = sd->cloaked_npc.begin(); it != sd->cloaked_npc.end(); ++it) {
+			block_list *npc_bl = map_id2bl(*it);
+
+			if (npc_bl && npc_bl->m != m) {
+				sd->cloaked_npc.erase(it);
+				break;
+			}
+		}
 	}
 
 	if( m < 0 )
@@ -5905,7 +6110,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	}
 
 	pc_cell_basilica(sd);
-	
+
 	//check if we gonna be rewarped [lighta]
 	if(npc_check_areanpc(1,m,x,y,0)){
 		sd->count_rewarp++;
@@ -6012,12 +6217,18 @@ bool pc_memo(struct map_session_data* sd, int pos)
  * @return player skill cooldown
  */
 int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv) {
-	uint16 idx = skill_get_index(skill_id);
-	int cooldown = 0;
-	
-	if (!idx) return 0;
-	if (skill_db[idx]->cooldown[skill_lv - 1])
-		cooldown = skill_db[idx]->cooldown[skill_lv - 1];
+	if (skill_id == SJ_NOVAEXPLOSING) {
+		struct status_change *sc = status_get_sc(&sd->bl);
+
+		if (sc && sc->data[SC_DIMENSION])
+			return 0;
+	}
+
+	int cooldown = skill_get_cooldown(skill_id, skill_lv);
+
+	if (cooldown == 0)
+		return 0;
+
 	if (skill_id == SU_TUNABELLY && pc_checkskill(sd, SU_SPIRITOFSEA))
 		cooldown -= skill_get_time(SU_TUNABELLY, skill_lv);
 
@@ -6051,6 +6262,36 @@ uint8 pc_checkskill(struct map_session_data *sd, uint16 skill_id)
 		return 0;
 	}
 	return (sd->status.skill[idx].id == skill_id) ? sd->status.skill[idx].lv : 0;
+}
+
+/**
+ * Returns the amount of skill points invested in a Summoner's Power of Sea/Land/Life
+ * @param sd: Player data
+ * @param type: Summoner Power Type
+ * @return Skill points invested
+ */
+uint8 pc_checkskill_summoner(map_session_data *sd, e_summoner_power_type type) {
+	if (sd == nullptr)
+		return 0;
+
+	uint8 count = 0;
+
+	switch (type) {
+		case SUMMONER_POWER_SEA:
+			count = pc_checkskill(sd, SU_TUNABELLY) + pc_checkskill(sd, SU_TUNAPARTY) + pc_checkskill(sd, SU_BUNCHOFSHRIMP) + pc_checkskill(sd, SU_FRESHSHRIMP) +
+				pc_checkskill(sd, SU_GROOMING) + pc_checkskill(sd, SU_PURRING) + pc_checkskill(sd, SU_SHRIMPARTY);
+			break;
+		case SUMMONER_POWER_LAND:
+			count = pc_checkskill(sd, SU_SV_STEMSPEAR) + pc_checkskill(sd, SU_CN_POWDERING) + pc_checkskill(sd, SU_CN_METEOR) + pc_checkskill(sd, SU_SV_ROOTTWIST) +
+				pc_checkskill(sd, SU_CHATTERING) + pc_checkskill(sd, SU_MEOWMEOW) + pc_checkskill(sd, SU_NYANGGRASS);
+			break;
+		case SUMMONER_POWER_LIFE:
+			count = pc_checkskill(sd, SU_SCAROFTAROU) + pc_checkskill(sd, SU_PICKYPECK) + pc_checkskill(sd, SU_ARCLOUSEDASH) + pc_checkskill(sd, SU_LUNATICCARROTBEAT) +
+				pc_checkskill(sd, SU_HISS) + pc_checkskill(sd, SU_POWEROFFLOCK) + pc_checkskill(sd, SU_SVG_SPIRIT);
+			break;
+	}
+
+	return count;
 }
 
 /**
@@ -6293,21 +6534,21 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_SHADOW_CHASER_T:       return MAPID_SHADOW_CHASER_T;
 	//Baby 3-1 Jobs
 		case JOB_SUPER_BABY_E:          return MAPID_SUPER_BABY_E;
-		case JOB_BABY_RUNE:             return MAPID_BABY_RUNE;
+		case JOB_BABY_RUNE_KNIGHT:      return MAPID_BABY_RUNE_KNIGHT;
 		case JOB_BABY_WARLOCK:          return MAPID_BABY_WARLOCK;
 		case JOB_BABY_RANGER:           return MAPID_BABY_RANGER;
-		case JOB_BABY_BISHOP:           return MAPID_BABY_BISHOP;
+		case JOB_BABY_ARCH_BISHOP:      return MAPID_BABY_ARCH_BISHOP;
 		case JOB_BABY_MECHANIC:         return MAPID_BABY_MECHANIC;
-		case JOB_BABY_CROSS:            return MAPID_BABY_CROSS;
+		case JOB_BABY_GUILLOTINE_CROSS: return MAPID_BABY_GUILLOTINE_CROSS;
 		case JOB_BABY_STAR_EMPEROR:     return MAPID_BABY_STAR_EMPEROR;
 	//Baby 3-2 Jobs
-		case JOB_BABY_GUARD:            return MAPID_BABY_GUARD;
+		case JOB_BABY_ROYAL_GUARD:      return MAPID_BABY_ROYAL_GUARD;
 		case JOB_BABY_SORCERER:         return MAPID_BABY_SORCERER;
 		case JOB_BABY_MINSTREL:
 		case JOB_BABY_WANDERER:         return MAPID_BABY_MINSTRELWANDERER;
 		case JOB_BABY_SURA:             return MAPID_BABY_SURA;
 		case JOB_BABY_GENETIC:          return MAPID_BABY_GENETIC;
-		case JOB_BABY_CHASER:           return MAPID_BABY_CHASER;
+		case JOB_BABY_SHADOW_CHASER:    return MAPID_BABY_SHADOW_CHASER;
 		case JOB_BABY_SOUL_REAPER:      return MAPID_BABY_SOUL_REAPER;
 	//Doram Jobs
 		case JOB_SUMMONER:              return MAPID_SUMMONER;
@@ -6445,20 +6686,20 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_SHADOW_CHASER_T:       return JOB_SHADOW_CHASER_T;
 	//Baby 3-1 Jobs
 		case MAPID_SUPER_BABY_E:          return JOB_SUPER_BABY_E;
-		case MAPID_BABY_RUNE:             return JOB_BABY_RUNE;
+		case MAPID_BABY_RUNE_KNIGHT:      return JOB_BABY_RUNE_KNIGHT;
 		case MAPID_BABY_WARLOCK:          return JOB_BABY_WARLOCK;
 		case MAPID_BABY_RANGER:           return JOB_BABY_RANGER;
-		case MAPID_BABY_BISHOP:           return JOB_BABY_BISHOP;
+		case MAPID_BABY_ARCH_BISHOP:      return JOB_BABY_ARCH_BISHOP;
 		case MAPID_BABY_MECHANIC:         return JOB_BABY_MECHANIC;
-		case MAPID_BABY_CROSS:            return JOB_BABY_CROSS;
+		case MAPID_BABY_GUILLOTINE_CROSS: return JOB_BABY_GUILLOTINE_CROSS;
 		case MAPID_BABY_STAR_EMPEROR:     return JOB_BABY_STAR_EMPEROR;
 	//Baby 3-2 Jobs
-		case MAPID_BABY_GUARD:            return JOB_BABY_GUARD;
+		case MAPID_BABY_ROYAL_GUARD:      return JOB_BABY_ROYAL_GUARD;
 		case MAPID_BABY_SORCERER:         return JOB_BABY_SORCERER;
 		case MAPID_BABY_MINSTRELWANDERER: return sex?JOB_BABY_MINSTREL:JOB_BABY_WANDERER;
 		case MAPID_BABY_SURA:             return JOB_BABY_SURA;
 		case MAPID_BABY_GENETIC:          return JOB_BABY_GENETIC;
-		case MAPID_BABY_CHASER:           return JOB_BABY_CHASER;
+		case MAPID_BABY_SHADOW_CHASER:    return JOB_BABY_SHADOW_CHASER;
 		case MAPID_BABY_SOUL_REAPER:      return JOB_BABY_SOUL_REAPER;
 	//Doram Jobs
 		case MAPID_SUMMONER:              return JOB_SUMMONER;
@@ -6652,25 +6893,25 @@ const char* job_name(int class_)
 	case JOB_MECHANIC_T2:
 		return msg_txt(NULL,629);
 
-	case JOB_BABY_RUNE:
+	case JOB_BABY_RUNE_KNIGHT:
 	case JOB_BABY_WARLOCK:
 	case JOB_BABY_RANGER:
-	case JOB_BABY_BISHOP:
+	case JOB_BABY_ARCH_BISHOP:
 	case JOB_BABY_MECHANIC:
-	case JOB_BABY_CROSS:
-	case JOB_BABY_GUARD:
+	case JOB_BABY_GUILLOTINE_CROSS:
+	case JOB_BABY_ROYAL_GUARD:
 	case JOB_BABY_SORCERER:
 	case JOB_BABY_MINSTREL:
 	case JOB_BABY_WANDERER:
 	case JOB_BABY_SURA:
 	case JOB_BABY_GENETIC:
-	case JOB_BABY_CHASER:
-		return msg_txt(NULL,638 - JOB_BABY_RUNE+class_);
+	case JOB_BABY_SHADOW_CHASER:
+		return msg_txt(NULL,638 - JOB_BABY_RUNE_KNIGHT+class_);
 
-	case JOB_BABY_RUNE2:
+	case JOB_BABY_RUNE_KNIGHT2:
 		return msg_txt(NULL,638);
 
-	case JOB_BABY_GUARD2:
+	case JOB_BABY_ROYAL_GUARD2:
 		return msg_txt(NULL,644);
 
 	case JOB_BABY_RANGER2:
@@ -6802,7 +7043,7 @@ int pc_follow(struct map_session_data *sd,int target_id)
 }
 
 int pc_checkbaselevelup(struct map_session_data *sd) {
-	unsigned int next = pc_nextbaseexp(sd);
+	t_exp next = pc_nextbaseexp(sd);
 
 	if (!next || sd->status.base_exp < next || pc_is_maxbaselv(sd))
 		return 0;
@@ -6813,12 +7054,10 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 		if( ( !battle_config.multi_level_up || ( battle_config.multi_level_up_base > 0 && sd->status.base_level >= battle_config.multi_level_up_base ) ) && sd->status.base_exp > next-1 )
 			sd->status.base_exp = next-1;
 
-		next = pc_gets_status_point(sd->status.base_level);
-		sd->status.base_level++;
-		sd->status.status_point += next;
+		sd->status.status_point += pc_gets_status_point(sd->status.base_level++);
 
 		if( pc_is_maxbaselv(sd) ){
-			sd->status.base_exp = u32min(sd->status.base_exp,MAX_LEVEL_BASE_EXP);
+			sd->status.base_exp = u64min(sd->status.base_exp,MAX_LEVEL_BASE_EXP);
 			break;
 		}
 	} while ((next=pc_nextbaseexp(sd)) > 0 && sd->status.base_exp >= next);
@@ -6870,7 +7109,7 @@ void pc_baselevelchanged(struct map_session_data *sd) {
 
 int pc_checkjoblevelup(struct map_session_data *sd)
 {
-	unsigned int next = pc_nextjobexp(sd);
+	t_exp next = pc_nextjobexp(sd);
 
 	nullpo_ret(sd);
 	if(!next || sd->status.job_exp < next || pc_is_maxjoblv(sd))
@@ -6886,7 +7125,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 		sd->status.skill_point ++;
 
 		if( pc_is_maxjoblv(sd) ){
-			sd->status.job_exp = u32min(sd->status.job_exp,MAX_LEVEL_JOB_EXP);
+			sd->status.job_exp = u64min(sd->status.job_exp,MAX_LEVEL_JOB_EXP);
 			break;
 		}
 	} while ((next=pc_nextjobexp(sd)) > 0 && sd->status.job_exp >= next);
@@ -6897,11 +7136,13 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 	clif_updatestatus(sd,SP_SKILLPOINT);
 	status_calc_pc(sd,SCO_FORCE);
 	clif_misceffect(&sd->bl,1);
-	if (pc_checkskill(sd, SG_DEVIL) && pc_is_maxbaselv(sd))
+	if (pc_checkskill(sd, SG_DEVIL) && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)) )
 		clif_status_change(&sd->bl, EFST_DEVIL1, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
 
 	npc_script_event(sd, NPCE_JOBLVUP);
 	achievement_update_objective(sd, AG_GOAL_LEVEL, 1, sd->status.job_level);
+
+	pc_show_questinfo(sd);
 	return 1;
 }
 
@@ -6911,7 +7152,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 * @param job_exp Job EXP before peronal bonuses
 * @param src Block list that affecting the exp calculation
 */
-static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsigned int *job_exp, struct block_list *src)
+static void pc_calcexp(struct map_session_data *sd, t_exp *base_exp, t_exp *job_exp, struct block_list *src)
 {
 	int bonus = 0, vip_bonus_base = 0, vip_bonus_job = 0;
 
@@ -6945,8 +7186,8 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 	}
 
 	if (*base_exp) {
-		unsigned int exp = (unsigned int)(*base_exp + (double)*base_exp * (bonus + vip_bonus_base)/100.);
-		*base_exp =  cap_value(exp, 1, UINT_MAX);
+		t_exp exp = (t_exp)(*base_exp + ((double)*base_exp * ((bonus + vip_bonus_base) / 100.)));
+		*base_exp = cap_value(exp, 1, MAX_EXP);
 	}
 
 	// Give JEXPBOOST for quests even if src is NULL.
@@ -6954,8 +7195,8 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 		bonus += sd->sc.data[SC_JEXPBOOST]->val1;
 
 	if (*job_exp) {
-		unsigned int exp = (unsigned int)(*job_exp + (double)*job_exp * (bonus + vip_bonus_job)/100.);
-		*job_exp = cap_value(exp, 1, UINT_MAX);
+		t_exp exp = (t_exp)(*job_exp + ((double)*job_exp * ((bonus + vip_bonus_job) / 100.)));
+		*job_exp = cap_value(exp, 1, MAX_EXP);
 	}
 
 	return;
@@ -6970,7 +7211,7 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
  * @param next_job_exp Job EXP needed for next job level
  * @param lost True:EXP penalty, lose EXP
  **/
-void pc_gainexp_disp(struct map_session_data *sd, unsigned int base_exp, unsigned int next_base_exp, unsigned int job_exp, unsigned int next_job_exp, bool lost) {
+void pc_gainexp_disp(struct map_session_data *sd, t_exp base_exp, t_exp next_base_exp, t_exp job_exp, t_exp next_job_exp, bool lost) {
 	char output[CHAT_SIZE_MAX];
 
 	nullpo_retv(sd);
@@ -6991,9 +7232,9 @@ void pc_gainexp_disp(struct map_session_data *sd, unsigned int base_exp, unsigne
  * @param exp_flag 1: Quest EXP; 2: Param Exp (Ignore Guild EXP tax, EXP adjustments)
  * @return
  **/
-void pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int base_exp, unsigned int job_exp, uint8 exp_flag)
+void pc_gainexp(struct map_session_data *sd, struct block_list *src, t_exp base_exp, t_exp job_exp, uint8 exp_flag)
 {
-	unsigned int nextb = 0, nextj = 0;
+	t_exp nextb = 0, nextj = 0;
 	uint8 flag = 0; ///< 1: Base EXP given, 2: Job EXP given, 4: Max Base level, 8: Max Job Level
 
 	nullpo_retv(sd);
@@ -7051,20 +7292,16 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned in
 
 	// Give EXP for Base Level
 	if (base_exp) {
-		if ((uint64)sd->status.base_exp + base_exp > UINT32_MAX)
-			sd->status.base_exp = UINT32_MAX;
-		else
-			sd->status.base_exp += base_exp;
+		sd->status.base_exp = util::safe_addition_cap(sd->status.base_exp, base_exp, MAX_EXP);
+
 		if (!pc_checkbaselevelup(sd))
 			clif_updatestatus(sd,SP_BASEEXP);
 	}
 
 	// Give EXP for Job Level
 	if (job_exp) {
-		if ((uint64)sd->status.job_exp + job_exp > UINT32_MAX)
-			sd->status.job_exp = UINT32_MAX;
-		else
-			sd->status.job_exp += job_exp;
+		sd->status.job_exp = util::safe_addition_cap(sd->status.job_exp, job_exp, MAX_EXP);
+
 		if (!pc_checkjoblevelup(sd))
 			clif_updatestatus(sd,SP_JOBEXP);
 	}
@@ -7084,19 +7321,19 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned in
  * @param base_exp Base EXP lost
  * @param job_exp Job EXP lost
  **/
-void pc_lostexp(struct map_session_data *sd, unsigned int base_exp, unsigned int job_exp) {
+void pc_lostexp(struct map_session_data *sd, t_exp base_exp, t_exp job_exp) {
 
 	nullpo_retv(sd);
 
 	if (base_exp) {
-		base_exp = u32min(sd->status.base_exp, base_exp);
+		base_exp = u64min(sd->status.base_exp, base_exp);
 		sd->status.base_exp -= base_exp;
 		clif_displayexp(sd, base_exp, SP_BASEEXP, false, true);
 		clif_updatestatus(sd, SP_BASEEXP);
 	}
 
 	if (job_exp) {
-		job_exp = u32min(sd->status.job_exp, job_exp);
+		job_exp = u64min(sd->status.job_exp, job_exp);
 		sd->status.job_exp -= job_exp;
 		clif_displayexp(sd, job_exp, SP_JOBEXP, false, true);
 		clif_updatestatus(sd, SP_JOBEXP);
@@ -7167,7 +7404,7 @@ bool pc_is_maxjoblv(struct map_session_data *sd) {
  * @param sd
  * @return Base EXP needed for next base level
  **/
-unsigned int pc_nextbaseexp(struct map_session_data *sd){
+t_exp pc_nextbaseexp(struct map_session_data *sd){
 	nullpo_ret(sd);
 	if (sd->status.base_level == 0) // Is this something that possible?
 		return 0;
@@ -7181,7 +7418,7 @@ unsigned int pc_nextbaseexp(struct map_session_data *sd){
  * @param sd
  * @return Job EXP needed for next job level
  **/
-unsigned int pc_nextjobexp(struct map_session_data *sd){
+t_exp pc_nextjobexp(struct map_session_data *sd){
 	nullpo_ret(sd);
 	if (sd->status.job_level == 0) // Is this something that possible?
 		return 0;
@@ -7437,7 +7674,7 @@ void pc_skillup(struct map_session_data *sd,uint16 skill_id)
 			int lv, range, upgradable;
 			sd->status.skill[idx].lv++;
 			sd->status.skill_point--;
-			if( !skill_get_inf(skill_id) )
+			if( !skill_get_inf(skill_id) || pc_checkskill_summoner(sd, SUMMONER_POWER_LAND) >= 20 || pc_checkskill_summoner(sd, SUMMONER_POWER_SEA) >= 20 )
 				status_calc_pc(sd,SCO_NONE); // Only recalculate for passive skills.
 			else if( sd->status.skill_point == 0 && pc_is_taekwon_ranker(sd) )
 				pc_calc_skilltree(sd); // Required to grant all TK Ranker skills.
@@ -7451,6 +7688,8 @@ void pc_skillup(struct map_session_data *sd,uint16 skill_id)
 			clif_updatestatus(sd,SP_SKILLPOINT);
 			if( skill_id == GN_REMODELING_CART ) /* cart weight info was updated by status_calc_pc */
 				clif_updatestatus(sd,SP_CARTINFO);
+			if (pc_checkskill(sd, SG_DEVIL) && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)))
+				clif_status_change(&sd->bl, EFST_DEVIL1, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
 			if (!pc_has_permission(sd, PC_PERM_ALL_SKILL)) // may skill everything at any time anyways, and this would cause a huge slowdown
 				clif_skillinfoblock(sd);
 		}
@@ -7480,14 +7719,16 @@ int pc_allskillup(struct map_session_data *sd)
 	if (!pc_grant_allskills(sd, true)) {
 		uint16 sk_id;
 		for (i = 0; i < MAX_SKILL_TREE && (sk_id = skill_tree[pc_class2idx(sd->status.class_)][i].skill_id) > 0;i++){
-			int inf2 = 0;
-			uint16 sk_idx = 0;
-			if (!sk_id || !(sk_idx = skill_get_index(sk_id)))
+			uint16 sk_idx = skill_get_index(sk_id);
+
+			if (sk_id == 0 || sk_idx == 0)
 				continue;
-			inf2 = skill_get_inf2(sk_id);
+
+			std::shared_ptr<s_skill_db> skill = skill_db.find(sk_id);
+
 			if (
-				(inf2&INF2_QUEST_SKILL && !battle_config.quest_skill_learn) ||
-				(inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL)) ||
+				(skill->inf2[INF2_ISQUEST] && !battle_config.quest_skill_learn) ||
+				((skill->inf2[INF2_ISWEDDING] || skill->inf2[INF2_ISSPIRIT])) ||
 				sk_id == SG_DEVIL
 			)
 				continue; //Cannot be learned normally.
@@ -7677,7 +7918,7 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		if( pc_is_taekwon_ranker(sd) )
 			return 0;
 
-		if( pc_checkskill(sd, SG_DEVIL) && pc_is_maxjoblv(sd) )
+		if( pc_checkskill(sd, SG_DEVIL) && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)) )
 			clif_status_load(&sd->bl, EFST_DEVIL1, 0); //Remove perma blindness due to skill-reset. [Skotlex]
 		i = sd->sc.option;
 		if( i&OPTION_RIDING && pc_checkskill(sd, KN_RIDING) )
@@ -7709,24 +7950,21 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 			status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
 	}
 
-	for( i = 1; i < MAX_SKILL; i++ )
-	{
-		uint8 lv = sd->status.skill[i].lv;
-		int inf2;
-		uint16 skill_id = skill_idx2id(i);
+	for (const auto &skill : skill_db) {
+		uint16 skill_id = skill.second->nameid, idx = skill_get_index(skill_id);
+		uint8 lv = sd->status.skill[idx].lv;
+
 		if (lv == 0 || skill_id == 0)
 			continue;
 
-		inf2 = skill_get_inf2(skill_id);
-
-		if( inf2&(INF2_WEDDING_SKILL|INF2_SPIRIT_SKILL) ) //Avoid reseting wedding/linker skills.
+		if( skill.second->inf2[INF2_ISWEDDING] || skill.second->inf2[INF2_ISSPIRIT] ) //Avoid reseting wedding/linker skills.
 			continue;
 
 		// Don't reset trick dead if not a novice/baby
 		if( skill_id == NV_TRICKDEAD && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE )
 		{
-			sd->status.skill[i].lv = 0;
-			sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
+			sd->status.skill[idx].lv = 0;
+			sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
 			continue;
 		}
 
@@ -7734,31 +7972,31 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		if (skill_id == NV_BASIC && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE )
 			continue;
 
-		if( sd->status.skill[i].flag == SKILL_FLAG_PERM_GRANTED )
+		if( sd->status.skill[idx].flag == SKILL_FLAG_PERM_GRANTED )
 			continue;
 
 		if( flag&4 && !skill_ischangesex(skill_id) )
 			continue;
 
-		if( inf2&INF2_QUEST_SKILL && !battle_config.quest_skill_learn )
+		if( skill.second->inf2[INF2_ISQUEST] && !battle_config.quest_skill_learn )
 		{ //Only handle quest skills in a special way when you can't learn them manually
 			if( battle_config.quest_skill_reset && !(flag&2) )
 			{	//Wipe them
-				sd->status.skill[i].lv = 0;
-				sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
+				sd->status.skill[idx].lv = 0;
+				sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
 			}
 			continue;
 		}
-		if( sd->status.skill[i].flag == SKILL_FLAG_PERMANENT )
+		if( sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT )
 			skill_point += lv;
 		else
-		if( sd->status.skill[i].flag >= SKILL_FLAG_REPLACED_LV_0 )
-			skill_point += (sd->status.skill[i].flag - SKILL_FLAG_REPLACED_LV_0);
+		if( sd->status.skill[idx].flag >= SKILL_FLAG_REPLACED_LV_0 )
+			skill_point += (sd->status.skill[idx].flag - SKILL_FLAG_REPLACED_LV_0);
 
 		if( !(flag&2) )
 		{// reset
-			sd->status.skill[i].lv = 0;
-			sd->status.skill[i].flag = SKILL_FLAG_PERMANENT;
+			sd->status.skill[idx].lv = 0;
+			sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
 		}
 	}
 
@@ -7798,7 +8036,7 @@ int pc_resethate(struct map_session_data* sd)
 	int i;
 	nullpo_ret(sd);
 
-	for (i=0; i<3; i++)
+	for (i=0; i<MAX_PC_FEELHATE; i++)
 	{
 		sd->hate_mob[i] = -1;
 		pc_setglobalreg(sd, add_str(sg_info[i].hate_var), 0);
@@ -8002,9 +8240,9 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	// Activate Steel body if a super novice dies at 99+% exp [celest]
 	// Super Novices have no kill or die functions attached when saved by their angel
 	if (!sd->state.snovice_dead_flag && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
-		unsigned int exp = pc_nextbaseexp(sd);
+		t_exp exp = pc_nextbaseexp(sd);
 
-		if( exp && get_percentage(sd->status.base_exp,exp) >= 99 ) {
+		if( exp && get_percentage_exp(sd->status.base_exp, exp) >= 99 ) {
 			sd->state.snovice_dead_flag = 1;
 			pc_setrestartvalue(sd,1);
 			status_percent_heal(&sd->bl, 100, 100);
@@ -8026,6 +8264,27 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			sd->devotion[k] = 0;
 		}
 	}
+
+	for (k = 0; k < MAX_STELLAR_MARKS; k++) {
+		if (sd->stellar_mark[k]) {
+			struct map_session_data *smarksd = map_id2sd(sd->stellar_mark[k]);
+
+			if (smarksd)
+				status_change_end(&smarksd->bl, SC_FLASHKICK, INVALID_TIMER);
+			sd->stellar_mark[k] = 0;
+		}
+	}
+
+	for (k = 0; k < MAX_UNITED_SOULS; k++) {
+		if (sd->united_soul[k]) {
+			struct map_session_data *usoulsd = map_id2sd(sd->united_soul[k]);
+
+			if (usoulsd)
+				status_change_end(&usoulsd->bl, SC_SOULUNITY, INVALID_TIMER);
+			sd->united_soul[k] = 0;
+		}
+	}
+
 	if(sd->shadowform_id) { //if we were target of shadowform
 		status_change_end(map_id2bl(sd->shadowform_id), SC__SHADOWFORM, INVALID_TIMER);
 		sd->shadowform_id = 0; //should be remove on status end anyway
@@ -8035,8 +8294,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		struct pet_data *pd = sd->pd;
 		if( !mapdata->flag[MF_NOEXPPENALTY] ) {
 			pet_set_intimate(pd, pd->pet.intimate + pd->get_pet_db()->die);
-			if( pd->pet.intimate < 0 )
-				pd->pet.intimate = 0;
+			if( pd->pet.intimate <= PET_INTIMATE_NONE )
+				pet_set_intimate(pd, PET_INTIMATE_NONE);
 			clif_send_petdata(sd,sd->pd,1,pd->pet.intimate);
 		}
 		if( sd->pd->target_id ) // Unlock all targets...
@@ -8060,6 +8319,11 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			duel_reject(sd->duel_invite, sd);
 	}
 
+	if( sd->skill_keep_using.tid != INVALID_TIMER ){
+		delete_timer( sd->skill_keep_using.tid, skill_keep_using );
+		sd->skill_keep_using.tid = INVALID_TIMER;
+	}
+
 	pc_close_npc(sd,2); //close npc if we were using one
 
 	/* e.g. not killed thru pc_damage */
@@ -8071,7 +8335,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	clif_party_dead( sd );
 
-	pc_setglobalreg(sd, add_str(PCDIECOUNTER_VAR), sd->die_counter+1);
+	pc_setparam(sd, SP_PCDIECOUNTER, sd->die_counter+1);
 	pc_setparam(sd, SP_KILLERRID, src?src->id:0);
 
 	//Reset menu skills/item skills
@@ -8084,6 +8348,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	if ( sd->spiritball !=0 )
 		pc_delspiritball(sd,sd->spiritball,0);
+	if (sd->soulball != 0)
+		pc_delsoulball(sd, sd->soulball, false);
 
 	if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
 		pc_delspiritcharm(sd,sd->spiritcharm,sd->spiritcharm_type);
@@ -8177,8 +8443,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		&& !sd->sc.data[SC_BABY] && !sd->sc.data[SC_LIFEINSURANCE]
 		&& !mapdata->flag[MF_NOEXPPENALTY] && !mapdata_flag_gvg2(mapdata))
 	{
-		uint32 base_penalty = 0;
-		uint32 job_penalty = 0;
+		t_exp base_penalty = 0;
+		t_exp job_penalty = 0;
 		uint32 zeny_penalty = 0;
 
 		if (pc_isvip(sd)) { // EXP penalty for VIP
@@ -8193,13 +8459,13 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 		if ((battle_config.death_penalty_maxlv&1 || !pc_is_maxbaselv(sd)) && base_penalty > 0) {
 			switch (battle_config.death_penalty_type) {
-				case 1: base_penalty = (uint32) ( pc_nextbaseexp(sd) * ( base_penalty / 10000. ) ); break;
-				case 2: base_penalty = (uint32) ( sd->status.base_exp * ( base_penalty / 10000. ) ); break;
+				case 1: base_penalty = (t_exp) ( pc_nextbaseexp(sd) * ( base_penalty / 10000. ) ); break;
+				case 2: base_penalty = (t_exp) ( sd->status.base_exp * ( base_penalty / 10000. ) ); break;
 			}
 			if (base_penalty){ //recheck after altering to speedup
 				if (battle_config.pk_mode && src && src->type==BL_PC)
 					base_penalty *= 2;
-				base_penalty = u32min(sd->status.base_exp, base_penalty);
+				base_penalty = u64min(sd->status.base_exp, base_penalty);
 			}
 		}
 		else 
@@ -8213,7 +8479,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			if (job_penalty) {
 				if (battle_config.pk_mode && src && src->type==BL_PC)
 					job_penalty *= 2;
-				job_penalty = u32min(sd->status.job_exp, job_penalty);
+				job_penalty = u64min(sd->status.job_exp, job_penalty);
 			}
 		}
 		else
@@ -8298,10 +8564,13 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		return 1|8;
 	}
 	else if( sd->bg_id ) {
-		struct battleground_data *bg = bg_team_search(sd->bg_id);
-		if( bg && bg->mapindex > 0 ) { // Respawn by BG
-			sd->respawn_tid = add_timer(tick+1000, pc_respawn_timer, sd->bl.id, 0);
-			return 1|8;
+		std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, sd->bg_id);
+
+		if (bg) {
+			if (bg->cemetery.map > 0) { // Respawn by BG
+				sd->respawn_tid = add_timer(tick + 1000, pc_respawn_timer, sd->bl.id, 0);
+				return 1|8;
+			}
 		}
 	}
 
@@ -8366,9 +8635,9 @@ bool pc_revive_item(struct map_session_data *sd) {
 /*==========================================
  * script reading pc status registry
  *------------------------------------------*/
-int pc_readparam(struct map_session_data* sd,int type)
+int64 pc_readparam(struct map_session_data* sd,int64 type)
 {
-	int val = 0;
+	int64 val = 0;
 
 	nullpo_ret(sd);
 
@@ -8385,10 +8654,10 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_SEX:             val = sd->status.sex; break;
 		case SP_WEIGHT:          val = sd->weight; break;
 		case SP_MAXWEIGHT:       val = sd->max_weight; break;
-		case SP_BASEEXP:         val = sd->status.base_exp; break;
-		case SP_JOBEXP:          val = sd->status.job_exp; break;
-		case SP_NEXTBASEEXP:     val = pc_nextbaseexp(sd); break;
-		case SP_NEXTJOBEXP:      val = pc_nextjobexp(sd); break;
+		case SP_BASEEXP:         val = u64min(sd->status.base_exp, MAX_EXP); break;
+		case SP_JOBEXP:          val = u64min(sd->status.job_exp, MAX_EXP); break;
+		case SP_NEXTBASEEXP:     val = u64min(pc_nextbaseexp(sd), MAX_EXP); break;
+		case SP_NEXTJOBEXP:      val = u64min(pc_nextjobexp(sd), MAX_EXP); break;
 		case SP_HP:              val = sd->battle_status.hp; break;
 		case SP_MAXHP:           val = sd->battle_status.max_hp; break;
 		case SP_SP:              val = sd->battle_status.sp; break;
@@ -8417,6 +8686,7 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_ROULETTE_GOLD:   val = sd->roulette_point.gold; break;
 		case SP_PCDIECOUNTER:    val = sd->die_counter; break;
 		case SP_COOKMASTERY:     val = sd->cook_mastery; break;
+		case SP_ACHIEVEMENT_LEVEL: val = sd->achievement_data.level; break;
 		case SP_CRITICAL:        val = sd->battle_status.cri/10; break;
 		case SP_ASPD:            val = (2000-sd->battle_status.amotion)/10; break;
 		case SP_BASE_ATK:
@@ -8493,6 +8763,7 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_UNBREAKABLE_GARMENT: val = (sd->bonus.unbreakable_equip&EQP_GARMENT)?1:0; break;
 		case SP_UNBREAKABLE_SHOES: val = (sd->bonus.unbreakable_equip&EQP_SHOES)?1:0; break;
 		case SP_CLASSCHANGE:     val = sd->bonus.classchange; break;
+		case SP_SHORT_ATK_RATE:  val = sd->bonus.short_attack_atk_rate; break;
 		case SP_LONG_ATK_RATE:   val = sd->bonus.long_attack_atk_rate; break;
 		case SP_BREAK_WEAPON_RATE: val = sd->bonus.break_weapon_rate; break;
 		case SP_BREAK_ARMOR_RATE: val = sd->bonus.break_armor_rate; break;
@@ -8526,8 +8797,9 @@ int pc_readparam(struct map_session_data* sd,int type)
 #else
 			val = sd->castrate; break;
 #endif
+		case SP_CRIT_DEF_RATE: val = sd->bonus.crit_def_rate; break;
 		default:
-			ShowError("pc_readparam: Attempt to read unknown parameter '%d'.\n", type);
+			ShowError("pc_readparam: Attempt to read unknown parameter '%lld'.\n", type);
 			return -1;
 	}
 
@@ -8537,22 +8809,24 @@ int pc_readparam(struct map_session_data* sd,int type)
 /*==========================================
  * script set pc status registry
  *------------------------------------------*/
-bool pc_setparam(struct map_session_data *sd,int type,int val)
+bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 {
 	nullpo_retr(false,sd);
 
+	int val = static_cast<unsigned int>(val_tmp);
+
 	switch(type){
 	case SP_BASELEVEL:
-		if ((unsigned int)val > pc_maxbaselv(sd)) //Capping to max
+		if (val > pc_maxbaselv(sd)) //Capping to max
 			val = pc_maxbaselv(sd);
-		if ((unsigned int)val > sd->status.base_level) {
+		if (val > sd->status.base_level) {
 			int i = 0;
 			int stat=0;
-			for (i = 0; i < (int)((unsigned int)val - sd->status.base_level); i++)
+			for (i = 0; i < (int)(val - sd->status.base_level); i++)
 				stat += pc_gets_status_point(sd->status.base_level + i);
 			sd->status.status_point += stat;
 		}
-		sd->status.base_level = (unsigned int)val;
+		sd->status.base_level = val;
 		sd->status.base_exp = 0;
 		// clif_updatestatus(sd, SP_BASELEVEL);  // Gets updated at the bottom
 		clif_updatestatus(sd, SP_NEXTBASEEXP);
@@ -8563,12 +8837,12 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 			party_send_levelup(sd);
 		break;
 	case SP_JOBLEVEL:
-		if ((unsigned int)val >= sd->status.job_level) {
-			if ((unsigned int)val > pc_maxjoblv(sd)) val = pc_maxjoblv(sd);
+		if (val >= sd->status.job_level) {
+			if (val > pc_maxjoblv(sd)) val = pc_maxjoblv(sd);
 			sd->status.skill_point += val - sd->status.job_level;
 			clif_updatestatus(sd, SP_SKILLPOINT);
 		}
-		sd->status.job_level = (unsigned int)val;
+		sd->status.job_level = val;
 		sd->status.job_exp = 0;
 		// clif_updatestatus(sd, SP_JOBLEVEL);  // Gets updated at the bottom
 		clif_updatestatus(sd, SP_NEXTJOBEXP);
@@ -8588,22 +8862,18 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		sd->status.zeny = cap_value(val, 0, MAX_ZENY);
 		break;
 	case SP_BASEEXP:
-		{
-			val = cap_value(val, 0, INT_MAX);
-			if ((unsigned int)val < sd->status.base_exp) // Lost
-				pc_lostexp(sd, sd->status.base_exp - val, 0);
-			else // Gained
-				pc_gainexp(sd, NULL, val - sd->status.base_exp, 0, 2);
-		}
+		val_tmp = cap_value(val_tmp, 0, pc_is_maxbaselv(sd) ? MAX_LEVEL_BASE_EXP : MAX_EXP);
+		if (val_tmp < sd->status.base_exp) // Lost
+			pc_lostexp(sd, sd->status.base_exp - val_tmp, 0);
+		else // Gained
+			pc_gainexp(sd, NULL, val_tmp - sd->status.base_exp, 0, 2);
 		return true;
 	case SP_JOBEXP:
-		{
-			val = cap_value(val, 0, INT_MAX);
-			if ((unsigned int)val < sd->status.job_exp) // Lost
-				pc_lostexp(sd, 0, sd->status.job_exp - val);
-			else // Gained
-				pc_gainexp(sd, NULL, 0, val - sd->status.job_exp, 2);
-		}
+		val_tmp = cap_value(val_tmp, 0, pc_is_maxjoblv(sd) ? MAX_LEVEL_JOB_EXP : MAX_EXP);
+		if (val_tmp < sd->status.job_exp) // Lost
+			pc_lostexp(sd, 0, sd->status.job_exp - val_tmp);
+		else // Gained
+			pc_gainexp(sd, NULL, 0, val_tmp - sd->status.job_exp, 2);
 		return true;
 	case SP_SEX:
 		sd->status.sex = val ? SEX_MALE : SEX_FEMALE;
@@ -8736,7 +9006,7 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		if (sd->die_counter == val)
 			return true;
 		sd->die_counter = val;
-		if (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
+		if (!sd->state.connect_new && sd->die_counter == 1 && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
 			status_calc_pc(sd, SCO_NONE); // Lost the bonus.
 		pc_setglobalreg(sd, add_str(PCDIECOUNTER_VAR), sd->die_counter);
 		return true;
@@ -8750,10 +9020,10 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		pc_setglobalreg(sd, add_str(COOKMASTERY_VAR), sd->cook_mastery);
 		return true;
 	default:
-		ShowError("pc_setparam: Attempted to set unknown parameter '%d'.\n", type);
+		ShowError("pc_setparam: Attempted to set unknown parameter '%lld'.\n", type);
 		return false;
 	}
-	clif_updatestatus(sd,type);
+	clif_updatestatus(sd,static_cast<int>(type));
 
 	return true;
 }
@@ -8793,28 +9063,27 @@ int pc_itemheal(struct map_session_data *sd, int itemid, int hp, int sp)
 		bonus = 100 + (sd->battle_status.vit << 1) + pc_checkskill(sd, SM_RECOVERY) * 10 + pc_checkskill(sd, AM_LEARNINGPOTION) * 5;
 		// A potion produced by an Alchemist in the Fame Top 10 gets +50% effect [DracoRPG]
 		if (potion_flag == 2) {
-			bonus += 50;
+			bonus += bonus * 50 / 100;
 			if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_ROGUE)
-				bonus += 100; // Receive an additional +100% effect from ranked potions to HP only
+				bonus += bonus; // Receive an additional +100% effect from ranked potions to HP only
 		}
 		//All item bonuses.
 		bonus += sd->bonus.itemhealrate2;
 		//Item Group bonuses
-		bonus += pc_get_itemgroup_bonus(sd, itemid);
+		bonus += bonus * pc_get_itemgroup_bonus(sd, itemid) / 100;
 		//Individual item bonuses.
 		for(const auto &it : sd->itemhealrate) {
 			if (it.id == itemid) {
-				bonus += it.val;
+				bonus += bonus * it.val / 100;
 				break;
 			}
 		}
-
 		// Recovery Potion
 		if (sd->sc.data[SC_INCHEALRATE])
-			bonus += sd->sc.data[SC_INCHEALRATE]->val1;
+			bonus += bonus * sd->sc.data[SC_INCHEALRATE]->val1 / 100;
 		// 2014 Halloween Event : Pumpkin Bonus
 		if (sd->sc.data[SC_MTF_PUMPKIN] && itemid == ITEMID_PUMPKIN)
-			bonus += sd->sc.data[SC_MTF_PUMPKIN]->val1;
+			bonus += bonus * sd->sc.data[SC_MTF_PUMPKIN]->val1 / 100;
 
 		tmp = hp * bonus / 100; // Overflow check
 		if (bonus != 100 && tmp > hp)
@@ -8824,7 +9093,7 @@ int pc_itemheal(struct map_session_data *sd, int itemid, int hp, int sp)
 		bonus = 100 + (sd->battle_status.int_ << 1) + pc_checkskill(sd, MG_SRECOVERY) * 10 + pc_checkskill(sd, AM_LEARNINGPOTION) * 5;
 		// A potion produced by an Alchemist in the Fame Top 10 gets +50% effect [DracoRPG]
 		if (potion_flag == 2)
-			bonus += 50;
+			bonus += bonus * 50 / 100;
 
 		tmp = sp * bonus / 100; // Overflow check
 		if (bonus != 100 && tmp > sp)
@@ -8835,21 +9104,24 @@ int pc_itemheal(struct map_session_data *sd, int itemid, int hp, int sp)
 		if (sd->sc.data[SC_CRITICALWOUND])
 			penalty += sd->sc.data[SC_CRITICALWOUND]->val2;
 
-		if (sd->sc.data[SC_DEATHHURT])
+		if (sd->sc.data[SC_DEATHHURT] && sd->sc.data[SC_DEATHHURT]->val3 == 1)
 			penalty += 20;
 
 		if (sd->sc.data[SC_NORECOVER_STATE])
 			penalty = 100;
 
-		if (sd->sc.data[SC_VITALITYACTIVATION]) {
+		if (sd->sc.data[SC_VITALITYACTIVATION])
 			hp += hp / 2; // 1.5 times
-			sp -= sp / 2;
-		}
 
 		if (sd->sc.data[SC_WATER_INSIGNIA] && sd->sc.data[SC_WATER_INSIGNIA]->val1 == 2) {
 			hp += hp / 10;
 			sp += sp / 10;
 		}
+
+#ifdef RENEWAL
+		if (sd->sc.data[SC_APPLEIDUN])
+			hp += sd->sc.data[SC_APPLEIDUN]->val3 / 100;
+#endif
 
 		if (penalty > 0) {
 			hp -= hp * penalty / 100;
@@ -8972,7 +9244,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 			sd->status.skill[sd->cloneskill_idx].id = 0;
 			sd->status.skill[sd->cloneskill_idx].lv = 0;
 			sd->status.skill[sd->cloneskill_idx].flag = SKILL_FLAG_PERMANENT;
-			clif_deleteskill(sd,pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM)));
+			clif_deleteskill(sd, static_cast<int>(pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM))));
 		}
 		sd->cloneskill_idx = 0;
 		pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM), 0);
@@ -8984,7 +9256,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 			sd->status.skill[sd->reproduceskill_idx].id = 0;
 			sd->status.skill[sd->reproduceskill_idx].lv = 0;
 			sd->status.skill[sd->reproduceskill_idx].flag = SKILL_FLAG_PERMANENT;
-			clif_deleteskill(sd,pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE)));
+			clif_deleteskill(sd, static_cast<int>(pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE))));
 		}
 		sd->reproduceskill_idx = 0;
 		pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE), 0);
@@ -9288,10 +9560,14 @@ void pc_setoption(struct map_session_data *sd,int type)
 			for (uint8 i = 0; i < ARRAYLENGTH(statuses); i++) {
 				int skill_id = status_sc2skill(statuses[i]);
 
-				if (skill_id >= 0 && !(skill_get_inf3(skill_id)&INF3_USABLE_MADO))
+				if (skill_id > 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO))
 					status_change_end(&sd->bl,statuses[i],INVALID_TIMER);
 			}
 			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
+
+#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106
+			clif_status_load( &sd->bl, EFST_MADOGEAR, 1 );
+#endif
 		} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
 			status_calc_pc(sd,SCO_NONE);
 			status_change_end(&sd->bl,SC_SHAPESHIFT,INVALID_TIMER);
@@ -9303,6 +9579,10 @@ void pc_setoption(struct map_session_data *sd,int type)
 			status_change_end(&sd->bl,SC_NEUTRALBARRIER_MASTER,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_STEALTHFIELD_MASTER,INVALID_TIMER);
 			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
+
+#if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106
+			clif_status_load( &sd->bl, EFST_MADOGEAR, 0 );
+#endif
 		}
 	}
 
@@ -9449,7 +9729,12 @@ bool pc_can_attack( struct map_session_data *sd, int target_id ) {
 	if (sd->state.block_action & PCBLOCK_ATTACK)
 		return false;
 
-	if( sd->sc.data[SC_BASILICA] ||
+	if(
+#ifdef RENEWAL
+		sd->sc.data[SC_BASILICA_CELL] ||
+#else
+		sd->sc.data[SC_BASILICA] ||
+#endif
 		sd->sc.data[SC__SHADOWFORM] ||
 		sd->sc.data[SC_CURSEDCIRCLE_ATKER] ||
 		sd->sc.data[SC_CURSEDCIRCLE_TARGET] ||
@@ -9469,22 +9754,22 @@ bool pc_can_attack( struct map_session_data *sd, int target_id ) {
 /*==========================================
  * Read '@type' variables (temporary numeric char reg)
  *------------------------------------------*/
-int pc_readreg(struct map_session_data* sd, int64 reg)
+int64 pc_readreg(struct map_session_data* sd, int64 reg)
 {
-	return i64db_iget(sd->regs.vars, reg);
+	return i64db_i64get(sd->regs.vars, reg);
 }
 
 /*==========================================
  * Set '@type' variables (temporary numeric char reg)
  *------------------------------------------*/
-bool pc_setreg(struct map_session_data* sd, int64 reg, int val)
+bool pc_setreg(struct map_session_data* sd, int64 reg, int64 val)
 {
-	unsigned int index = script_getvaridx(reg);
+	uint32 index = script_getvaridx(reg);
 
 	nullpo_retr(false, sd);
 
 	if( val ) {
-		i64db_iput(sd->regs.vars, reg, val);
+		i64db_i64put(sd->regs.vars, reg, val);
 		if( index )
 			script_array_update(&sd->regs, reg, false);
 	} else {
@@ -9554,7 +9839,7 @@ bool pc_setregstr(struct map_session_data* sd, int64 reg, const char* str)
  * - '#type' (permanent numeric account reg)
  * - '##type' (permanent numeric account reg2)
  **/
-int pc_readregistry(struct map_session_data *sd, int64 reg)
+int64 pc_readregistry(struct map_session_data *sd, int64 reg)
 {
 	struct script_reg_num *p = NULL;
 
@@ -9600,15 +9885,15 @@ char* pc_readregistry_str(struct map_session_data *sd, int64 reg)
  * - '#type' (permanent numeric account reg)
  * - '##type' (permanent numeric account reg2)
  **/
-int pc_setregistry(struct map_session_data *sd, int64 reg, int val)
+bool pc_setregistry(struct map_session_data *sd, int64 reg, int64 val)
 {
 	struct script_reg_num *p = NULL;
 	const char *regname = get_str(script_getvarid(reg));
-	unsigned int index = script_getvaridx(reg);
-	
+	uint32 index = script_getvaridx(reg);
+
 	if ( !reg_load && !sd->vars_ok ) {
 		ShowError("pc_setregistry : refusing to set %s until vars are received.\n", regname);
-		return 0;
+		return false;
 	}
 
 	if ((p = (struct script_reg_num *)i64db_get(sd->regs.vars, reg))) {
@@ -9644,7 +9929,7 @@ int pc_setregistry(struct map_session_data *sd, int64 reg, int val)
 	if (!reg_load && p)
 		sd->vars_dirty = true;
 
-	return 1;
+	return true;
 }
 
 /**
@@ -9653,7 +9938,7 @@ int pc_setregistry(struct map_session_data *sd, int64 reg, int val)
  * - '#type$' (permanent str account reg)
  * - '##type$' (permanent str account reg2)
  **/
-int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val)
+bool pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val)
 {
 	struct script_reg_str *p = NULL;
 	const char *regname = get_str(script_getvarid(reg));
@@ -9662,13 +9947,13 @@ int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val)
 
 	if (!reg_load && !sd->vars_ok) {
 		ShowError("pc_setregistry_str : refusing to set %s until vars are received.\n", regname);
-		return 0;
+		return false;
 	}
 
 	if ( !script_check_RegistryVariableLength(1, val, &vlen ) )
 	{
 		ShowError("pc_check_RegistryVariableLength: Variable value length is too long (aid: %d, cid: %d): '%s' sz=%zu\n", sd->status.account_id, sd->status.char_id, val, vlen);
-		return 0;
+		return false;
 	}
 
 	if( (p = (struct script_reg_str *)i64db_get(sd->regs.vars, reg) ) ) {
@@ -9711,7 +9996,7 @@ int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val)
 	if( !reg_load && p )
 		sd->vars_dirty = true;
 
-	return 1;
+	return true;
 }
 
 /**
@@ -9721,7 +10006,7 @@ int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val)
  * @param value
  * @return True if success, false if failed.
  **/
-bool pc_setreg2(struct map_session_data *sd, const char *reg, int val) {
+bool pc_setreg2(struct map_session_data *sd, const char *reg, int64 val) {
 	char prefix = reg[0];
 
 	nullpo_retr(false, sd);
@@ -9742,9 +10027,9 @@ bool pc_setreg2(struct map_session_data *sd, const char *reg, int val) {
 		case '@':
 			return pc_setreg(sd, add_str(reg), val);
 		case '#':
-			return (reg[1] == '#') ? pc_setaccountreg2(sd, add_str(reg), val) > 0 : pc_setaccountreg(sd, add_str(reg), val) > 0;
+			return (reg[1] == '#') ? pc_setaccountreg2(sd, add_str(reg), val) : pc_setaccountreg(sd, add_str(reg), val);
 		default:
-			return pc_setglobalreg(sd, add_str(reg), val) > 0;
+			return pc_setglobalreg(sd, add_str(reg), val);
 	}
 
 	return false;
@@ -9756,7 +10041,7 @@ bool pc_setreg2(struct map_session_data *sd, const char *reg, int val) {
  * @param reg Variable name
  * @return Variable value or 0 if failed.
  **/
-int pc_readreg2(struct map_session_data *sd, const char *reg) {
+int64 pc_readreg2(struct map_session_data *sd, const char *reg) {
 	char prefix = reg[0];
 
 	nullpo_ret(sd);
@@ -10125,7 +10410,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 
 	if( n < 0 || n >= MAX_INVENTORY ) {
 		if( equipswitch ){
-			clif_equipswitch_add( sd, n, req_pos, true );
+			clif_equipswitch_add( sd, n, req_pos, ITEM_EQUIP_ACK_FAIL );
 		}else{
 			clif_equipitemack(sd,0,0,ITEM_EQUIP_ACK_FAIL);
 		}
@@ -10133,7 +10418,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 	}
 	if( DIFF_TICK(sd->canequip_tick,gettick()) > 0 ) {
 		if( equipswitch ){
-			clif_equipswitch_add( sd, n, req_pos, true );
+			clif_equipswitch_add( sd, n, req_pos, ITEM_EQUIP_ACK_FAIL );
 		}else{
 			clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL);
 		}
@@ -10149,7 +10434,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 
 	if((res = pc_isequip(sd,n))) {
 		if( equipswitch ){
-			clif_equipswitch_add( sd, n, req_pos, true );
+			clif_equipswitch_add( sd, n, req_pos, res );
 		}else{
 			clif_equipitemack(sd,n,0,res);	// fail
 		}
@@ -10157,13 +10442,13 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 	}
 
 	if( equipswitch && id->type == IT_AMMO ){
-		clif_equipswitch_add( sd, n, req_pos, true );
+		clif_equipswitch_add( sd, n, req_pos, ITEM_EQUIP_ACK_FAIL );
 		return false;
 	}
 
 	if (!(pos&req_pos) || sd->inventory.u.items_inventory[n].equip != 0 || sd->inventory.u.items_inventory[n].attribute==1 ) { // [Valaris]
 		if( equipswitch ){
-			clif_equipswitch_add( sd, n, req_pos, true );
+			clif_equipswitch_add( sd, n, req_pos, ITEM_EQUIP_ACK_FAIL );
 		}else{
 			clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL);	// fail
 		}
@@ -10172,7 +10457,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 	if( sd->sc.count && (sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
 		sd->sc.data[SC_KYOUGAKU] || (sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) ) {
 		if( equipswitch ){
-			clif_equipswitch_add( sd, n, req_pos, true );
+			clif_equipswitch_add( sd, n, req_pos, ITEM_EQUIP_ACK_FAIL );
 		}else{
 			clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL); //Fail
 		}
@@ -10243,7 +10528,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		}
 
 		sd->inventory.u.items_inventory[n].equipSwitch = pos;
-		clif_equipswitch_add( sd, n, pos, false );
+		clif_equipswitch_add( sd, n, pos, ITEM_EQUIP_ACK_OK );
 		return true;
 	}else{
 		for(i=0;i<EQI_MAX;i++) {
@@ -10388,7 +10673,8 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 		sd->state.autobonus &= ~sd->inventory.u.items_inventory[n].equip; //Check for activated autobonus [Inkfish]
 
 	sd->inventory.u.items_inventory[n].equip = 0;
-	pc_checkallowskill(sd);
+	if (!(flag & 4))
+		pc_checkallowskill(sd);
 	iflag = sd->npc_item_flag;
 
 	/* check for combos (MUST be before status_calc_pc) */
@@ -10415,8 +10701,10 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 		}
 	}
 
-	if (status_calc)
+	if (flag & 1 || status_calc) {
+		pc_checkallowskill(sd);
 		status_calc_pc(sd, SCO_NONE);
+	}
 
 	if (sd->sc.data[SC_SIGNUMCRUCIS] && !battle_check_undead(sd->battle_status.race, sd->battle_status.def_ele))
 		status_change_end(&sd->bl, SC_SIGNUMCRUCIS, INVALID_TIMER);
@@ -10442,8 +10730,6 @@ static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 		}
 	}
 
-	if (flag & 1)
-		status_calc_pc(sd, SCO_FORCE);
 	sd->npc_item_flag = iflag;
 }
 
@@ -10560,6 +10846,12 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		status_change_end(&sd->bl, SC_ARMOR_RESIST, INVALID_TIMER);
 	}
 
+	// On equipment change
+#ifndef RENEWAL
+	if (!(flag&4))
+		status_change_end(&sd->bl, SC_CONCENTRATION, INVALID_TIMER);
+#endif
+
 	// On ammo change
 	if (sd->inventory_data[n]->type == IT_AMMO && (sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET || sd->inventory_data[n]->nameid != ITEMID_PURIFICATION_BULLET || sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET_))
 		status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
@@ -10642,7 +10934,7 @@ int pc_equipswitch( struct map_session_data* sd, int index ){
 			sd->inventory.u.items_inventory[unequipped_index].equipSwitch = unequipped_position;
 
 			// Notify the client
-			clif_equipswitch_add( sd, unequipped_index, unequipped_position, false );
+			clif_equipswitch_add( sd, unequipped_index, unequipped_position, ITEM_EQUIP_ACK_OK );
 		}
 
 		return all_position;
@@ -11039,7 +11331,7 @@ void pc_regen (struct map_session_data *sd, t_tick diff_tick)
 	if (sd->percent_hp_regen.value) {
 		sd->percent_hp_regen.tick += diff_tick;
 		while (sd->percent_hp_regen.tick >= sd->percent_hp_regen.rate) {
-			hp += (sd->percent_hp_regen.value * sd->status.max_hp);
+			hp += sd->status.max_hp * sd->percent_hp_regen.value / 100;
 			sd->percent_hp_regen.tick -= sd->percent_hp_regen.rate;
 		}
 	}
@@ -11047,7 +11339,7 @@ void pc_regen (struct map_session_data *sd, t_tick diff_tick)
 	if (sd->percent_sp_regen.value) {
 		sd->percent_sp_regen.tick += diff_tick;
 		while (sd->percent_sp_regen.tick >= sd->percent_sp_regen.rate) {
-			sp += (sd->percent_sp_regen.value * sd->status.max_sp);
+			sp += sd->status.max_sp * sd->percent_sp_regen.value / 100;
 			sd->percent_sp_regen.tick -= sd->percent_sp_regen.rate;
 		}
 	}
@@ -11508,7 +11800,7 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 	idx = pc_class2idx(class_);
 
 	if (!skill_get_index(skill_id)) {
-		ShowWarning("pc_readdb_skilltree: Unable to load skill %hu into job %d's tree.", skill_id, class_);
+		ShowWarning("pc_readdb_skilltree: Unable to load skill %hu into job %d's tree.\n", skill_id, class_);
 		return false;
 	}
 	if (skill_lv > (skill_lv_max = skill_get_max(skill_id))) {
@@ -11735,8 +12027,19 @@ static bool pc_readdb_job_exp(char* fields[], int columns, int current)
 	idx = pc_class2idx(job_id);
 
 	job_info[idx].max_level[type] = maxlvl;
-	for(i=0; i<maxlvl; i++)
-		job_info[idx].exp_table[type][i] = ((uint32) atoi(fields[3+i]));
+	for(i=0; i<maxlvl; i++){
+		t_exp exp = strtoull( fields[3 + i], nullptr, 10 );
+
+		if( exp == 0 ){
+			ShowWarning( "pc_readdb_job_exp: No value defined for level %d in line %d. Defaulting to MAX_EXP...\n", i + 1, current );
+			exp = MAX_EXP;
+		}else if( exp > MAX_EXP ){
+			ShowWarning( "pc_readdb_job_exp: Value %" PRIu64 " is too high, capping to %" PRIu64 "...\n", exp, MAX_EXP );
+			exp = MAX_EXP;
+		}
+
+		job_info[idx].exp_table[type][i] = exp;
+	}
 	//Reverse check in case the array has a bunch of trailing zeros... [Skotlex]
 	//The reasoning behind the -2 is this... if the max level is 5, then the array
 	//should look like this:
@@ -11854,10 +12157,12 @@ static bool pc_readdb_job_basehpsp(char* fields[], int columns, int current)
 */
 static bool pc_readdb_job_param(char* fields[], int columns, int current)
 {
+	int64 class_tmp;
 	int idx, class_;
 	uint16 str, agi, vit, int_, dex, luk;
 
-	script_get_constant(trim(fields[0]),&class_);
+	script_get_constant(trim(fields[0]),&class_tmp);
+	class_ = static_cast<int>(class_tmp);
 
 	if ((idx = pc_class2idx(class_)) < 0) {
 		ShowError("pc_readdb_job_param: Invalid job '%s'. Skipping!",fields[0]);
@@ -11885,14 +12190,16 @@ static bool pc_readdb_job_param(char* fields[], int columns, int current)
  **/
 static bool pc_readdb_job_noenter_map(char *str[], int columns, int current) {
 	int idx, class_ = -1;
+	int64 class_tmp;
 
 	if (ISDIGIT(str[0][0])) {
 		class_ = atoi(str[0]);
 	} else {
-		if (!script_get_constant(str[0], &class_)) {
+		if (!script_get_constant(str[0], &class_tmp)) {
 			ShowError("pc_readdb_job_noenter_map: Invalid job %s specified.\n", str[0]);
 			return false;
 		}
+		class_ = static_cast<int>(class_tmp);
 	}
 
 	if (!pcdb_checkid(class_) || (idx = pc_class2idx(class_)) < 0) {
@@ -12303,6 +12610,9 @@ void pc_scdata_received(struct map_session_data *sd) {
 		sd->cart_weight_max = 0; // Force a client refesh
 		status_calc_cart_weight(sd, (e_status_calc_weight_opt)(CALCWT_ITEM|CALCWT_MAXBONUS|CALCWT_CARTSTATE));
 	}
+
+	if (sd->sc.data[SC_SOULENERGY])
+		sd->soulball = sd->sc.data[SC_SOULENERGY]->val1;
 }
 
 /**
@@ -12698,13 +13008,19 @@ void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
  */
 void pc_cell_basilica(struct map_session_data *sd) {
 	nullpo_retv(sd);
-	
+
+#ifdef RENEWAL
+	enum sc_type type = SC_BASILICA_CELL;
+#else
+	enum sc_type type = SC_BASILICA;
+#endif
+
 	if (!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKBASILICA)) {
-		if (sd->sc.data[SC_BASILICA])
-			status_change_end(&sd->bl,SC_BASILICA,INVALID_TIMER);
+		if (sd->sc.data[type])
+			status_change_end(&sd->bl, type,INVALID_TIMER);
 	}
-	else if (!sd->sc.data[SC_BASILICA])
-		sc_start(&sd->bl,&sd->bl,SC_BASILICA,100,0,INFINITE_TICK);
+	else if (!sd->sc.data[type])
+		sc_start(&sd->bl,&sd->bl, type,100,0,INFINITE_TICK);
 }
 
 /** [Cydh]
@@ -12731,11 +13047,41 @@ short pc_maxparameter(struct map_session_data *sd, enum e_params param) {
 			return max_param;
 	}
 
-	return (class_&MAPID_BASEMASK) == MAPID_SUMMONER ? battle_config.max_summoner_parameter :
-		((class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO || (class_&MAPID_UPPERMASK) == MAPID_REBELLION) ? battle_config.max_extended_parameter :
-		((class_&JOBL_THIRD) ? ((class_&JOBL_UPPER) ? battle_config.max_third_trans_parameter : ((class_&JOBL_BABY) ? battle_config.max_baby_third_parameter : battle_config.max_third_parameter)) : 
-		((class_&JOBL_BABY) ? battle_config.max_baby_parameter :
-		((class_&JOBL_UPPER) ? battle_config.max_trans_parameter : battle_config.max_parameter)));
+	// Always check babies first
+	if( class_ & JOBL_BABY ){
+		if( class_ & JOBL_THIRD ){
+			return battle_config.max_baby_third_parameter;
+		}else{
+			return battle_config.max_baby_parameter;
+		}
+	}
+
+	// Summoner
+	if( ( class_ & MAPID_BASEMASK ) == MAPID_SUMMONER ){
+		return battle_config.max_summoner_parameter;
+	}
+
+	// Extended classes
+	if( ( class_ & MAPID_UPPERMASK ) == MAPID_KAGEROUOBORO || ( class_ & MAPID_UPPERMASK ) == MAPID_REBELLION ){
+		return battle_config.max_extended_parameter;
+	}
+
+	// 3rd class
+	if( class_ & JOBL_THIRD ){
+		// Transcendent
+		if( class_ & JOBL_UPPER ){
+			return battle_config.max_third_trans_parameter;
+		}else{
+			return battle_config.max_third_parameter;
+		}
+	}
+
+	// Transcendent
+	if( class_ & JOBL_UPPER ){
+		return battle_config.max_trans_parameter;
+	}
+
+	return battle_config.max_parameter;
 }
 
 /**
@@ -12867,7 +13213,7 @@ void pc_validate_skill(struct map_session_data *sd) {
  * @param show If show is true and qi_display is 0, set qi_display to 1 and show the event bubble.
  *             If show is false and qi_display is 1, set qi_display to 0 and hide the event bubble.
  **/
-static void pc_show_questinfo_sub(struct map_session_data *sd, bool *qi_display, struct questinfo *qi, bool show) {
+static void pc_show_questinfo_sub(struct map_session_data *sd, bool *qi_display, struct s_questinfo *qi, bool show) {
 	if (show) {
 		// Check if need to be displayed
 		if ((*qi_display) != 1) {
@@ -12880,9 +13226,9 @@ static void pc_show_questinfo_sub(struct map_session_data *sd, bool *qi_display,
 		if ((*qi_display) != 0) {
 			(*qi_display) = 0;
 #if PACKETVER >= 20120410
-			clif_quest_show_event(sd, &qi->nd->bl, 9999, 0);
+			clif_quest_show_event(sd, &qi->nd->bl, QTYPE_NONE, QMARK_NONE);
 #else
-			clif_quest_show_event(sd, &qi->nd->bl, 0, 0);
+			clif_quest_show_event(sd, &qi->nd->bl, QTYPE_QUEST, QMARK_NONE);
 #endif
 		}
 	}
@@ -12894,75 +13240,36 @@ static void pc_show_questinfo_sub(struct map_session_data *sd, bool *qi_display,
  **/
 void pc_show_questinfo(struct map_session_data *sd) {
 #if PACKETVER >= 20090218
-	struct questinfo *qi = NULL;
-	unsigned short i;
-	uint8 j;
-	int8 mystate = 0;
-	bool failed = false;
-
 	nullpo_retv(sd);
 
 	if (sd->bl.m < 0 || sd->bl.m >= MAX_MAPINDEX)
 		return;
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+	nullpo_retv(mapdata);
 
-	if (!mapdata->qi_count || !mapdata->qi_data)
+	if (mapdata->qi_data.empty())
 		return;
-	if (mapdata->qi_count != sd->qi_count)
+	if (mapdata->qi_data.size() != sd->qi_count)
 		return; // init was not called yet
 
-	for(i = 0; i < mapdata->qi_count; i++) {
+	struct s_questinfo *qi = nullptr;
+	bool show;
+
+	for (int i = 0; i < mapdata->qi_data.size(); i++) {
 		qi = &mapdata->qi_data[i];
+ 		if (!qi)
+ 			continue;
 
-		if (!qi)
-			continue;
-
-		if (quest_check(sd, qi->quest_id, HAVEQUEST) != -1) { // Check if quest is not started
-			pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, false);
-			continue;
-		}
-
-		// Level range checks
-		if (sd->status.base_level < qi->min_level || sd->status.base_level > qi->max_level) {
-			pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, false);
-			continue;
-		}
-
-		// Quest requirements
-		if (qi->req_count) {
-			failed = false;
-			for (j = 0; j < qi->req_count; j++) {
-				mystate = quest_check(sd, qi->req[j].quest_id, HAVEQUEST);
-				mystate = mystate + (mystate < 1);
-				if (mystate != qi->req[j].state) {
-					failed = true;
-					break;
-				}
-			}
-			if (failed) {
-				pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, false);
-				continue;
-			}
-		}
-
-		// Job requirements
-		if (qi->jobid_count) {
-			failed = true;
-			for (j = 0; j < qi->jobid_count; j++) {
-				if (pc_mapid2jobid(sd->class_,sd->status.sex) == qi->jobid[j]) {
-					pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, true);
-					failed = false;
-					break;
-				}
-			}
-			if (!failed)
-				continue;
-			pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, false);
-		}
+		if (!qi->condition)
+			show = true;
 		else {
-			pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, true);
+			if (achievement_check_condition(qi->condition, sd))
+				show = true;
+			else
+				show = false;
 		}
+		pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, show);
 	}
 #endif
 }
@@ -12977,7 +13284,7 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 
 	if (sd->qi_display) {
 		aFree(sd->qi_display);
-		sd->qi_display = NULL;
+		sd->qi_display = nullptr;
 	}
 	sd->qi_count = 0;
 
@@ -12985,10 +13292,12 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 		return;
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+	nullpo_retv(mapdata);
 
-	if (!mapdata->qi_count || !mapdata->qi_data)
+	if (mapdata->qi_data.empty())
 		return;
-	CREATE(sd->qi_display, bool, (sd->qi_count = mapdata->qi_count));
+
+	CREATE(sd->qi_display, bool, (sd->qi_count = mapdata->qi_data.size()));
 #endif
 }
 
@@ -13143,7 +13452,7 @@ int32 pc_attendance_counter( struct map_session_data* sd ){
 	}
 
 	// Get the counter for the current period
-	int counter = pc_readreg2( sd, ATTENDANCE_COUNT_VAR );
+	int counter = static_cast<int>(pc_readreg2( sd, ATTENDANCE_COUNT_VAR ));
 
 	// Check if we have a remaining counter from a previous period
 	if( counter > 0 && pc_readreg2( sd, ATTENDANCE_DATE_VAR ) < period->start ){
@@ -13172,7 +13481,7 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 		return;
 	}
 
-	int32 attendance_counter = pc_readreg2( sd, ATTENDANCE_COUNT_VAR );
+	int32 attendance_counter = static_cast<int32>(pc_readreg2( sd, ATTENDANCE_COUNT_VAR ));
 
 	attendance_counter += 1;
 
@@ -13250,6 +13559,7 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_global_expiration_timer, "pc_global_expiration_timer");
 	add_timer_func_list(pc_expiration_timer, "pc_expiration_timer");
 	add_timer_func_list(pc_autotrade_timer, "pc_autotrade_timer");
+	add_timer_func_list(pc_on_expire_active, "pc_on_expire_active");
 
 	add_timer(gettick() + autosave_interval, pc_autosave, 0, 0);
 

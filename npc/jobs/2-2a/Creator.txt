@@ -91,7 +91,7 @@ valkyrie,53,50,3	script	Biochemist#Valkyrie	122,{
 		mes "Yes...";
 		mes "It's about time.";
 		mes "We need more geniuses";
-		mes "like you on Rune-Midgard.";
+		mes "like you on Midgard.";
 		next;
 		mes "[Biochemist]";
 		mes "Would you like to";
