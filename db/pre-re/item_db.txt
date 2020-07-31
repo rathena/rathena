@@ -4829,7 +4829,7 @@
 12261,Secret_Medicine,Leap of Fantasy,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ getexp2(2000000,1000000); },{},{}
 12262,Inspector_Certificate_,Authoritative Badge,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SPEEDUP0,540000,25; },{},{}
 12263,Comp_Battle_Manual,Field Manual,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,50; },{},{}
-12264,Comp_Bubble_Gum,Bubble Gum,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ITEMBOOST,1800000,50; },{},{}
+12264,Comp_Bubble_Gum,Bubble Gum,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ITEMBOOST,1800000,100; },{},{}
 12265,Comp_Insurance,Life Insurrance,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_LIFEINSURANCE,1800000,0; },{},{}
 12266,Sesame_Pastry_,Sesame Pastry,2,2,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_HITFOOD,1200000,30; },{},{}
 12267,Honey_Pastry_,Honey Pastry,2,2,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_FLEEFOOD,1200000,30; },{},{}
