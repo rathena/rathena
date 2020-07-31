@@ -33,7 +33,7 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 		mes "Don't worry about me.";
 		close;
 	}
-	if (getguildmaster(.@guild_id) != strcharinfo(0)) {
+	if (is_guild_leader() == false) {
 		mes "I feel so grateful all the time about you letting me stay here.";
 		mes "It's nothing special... but if you want, I'll make you tools that could be of use.";
 		next;

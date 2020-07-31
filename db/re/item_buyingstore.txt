@@ -8,13 +8,86 @@
 //  Items are in same order as data\buyingstoreitemlist.txt, which
 //  must be edited as well for the client to accept added items.
 
+//---2018 / 05 / 16 - 아이템 추가 8517
+6635	//Blacksmith_Blessing
+12507	//E_WOB_Rune
+12508	//E_WOB_Schwaltz
+12509	//E_WOB_Rachel
+12510	//E_WOB_Local
+//22999
+//23136
+//23221
+//23222
+//23223
+//23224
+//23225
+//23226
+//23227
+23228	//Hazy_Mooncake
+//23282
+//25041
+//---2018 / 04 / 18 - 일루전 오브 루안다 아이템 추가
+//25633
+//25634
+//25635
+//25636
+//25637
+//25638
+//25639
+//25640
+//25641
+//25642
+//---2018 / 03 / 14 - 찰스턴부품 추가
+6752	//Charleston_Parts
+//---2018 / 03 / 05 - 일루전 아이템 및 흙빛의조각 게펜마법대회주화 추가
+6671	//Geffen_Coin_Magic_Tournament
+6672	//Shard_of_Gray
+//11620
+25256	//Hazy_Dream_Fragment
+25257	//Bloody_Love_Letter
+25258	//Broken_Arrow
+//25261
+//25262
+//25263
+//25264
+//25265
+//25266
+//25267
+25271	//Illusion_Stone
+//25297
+//25298
+//25299
+//25300
+//25311
+//25312
+//25313
+//25314
+//25615
+//25616
+//25617
+//25618
+//25619
+//---2017 / 10 / 30 - 사냥대회 이벤트 코인 추가
+//23533
+//--- 2017 / 01 / 25 - 신비한 메달 추가
+//25273
+//--- 2016 / 12 / 07 - 락릿지 추가
+//25276
+//25277
+//25278
+//25279
+//25280
+//25281
+//25282
+//25283
+//25284
+//25285
 //--- 2015 / 12 / 16 - 전사자무덤
 //25127
 //25128
 //25129
 //25130
 //25131
-22687	//Fragments_Vicious_Mind
 //23016
 //23080
 4671	//V_B_Celia_Card
@@ -705,8 +778,8 @@
 6940	//Moving_Dark_Matter
 6941	//Fragments_Valkyrie_Power
 6942	//Will_Master
-//6961
-//6962
+6961	//Huge_Metal_Scrap
+6962	//Old_Fuel
 6905	//Broken_Magic_Stone
 //--- 2014 / 12 / 17
 12739	//Snow_Flower
@@ -742,7 +815,7 @@
 11597	//Iron_Worm
 22699	//Test_Reagent
 22679	//Death_Bin
-22687	//Fragments_Vicious_Mind
+22687	//Pieces_Of_Sentiment
 6615	//Siege_Guild_Coin
 //--- 2013 / 08 / 02
 6750	//Failed_Engine
@@ -800,7 +873,7 @@
 6608	//Coagulated_Spell
 6609	//Glast_Decayed_Nail
 6610	//Glast_Horrendous_Mouth
-//6611
+6611	//Colorful_Key
 6612	//Gold_Coin_Basket
 6613	//Flashy_Brooch
 7228	//Gold_Bullion

@@ -182,7 +182,7 @@ hu_in01,18,94,0	script	A Part-Timer#1	49,{
 	mes "Still, I think I can";
 	mes "handle this difficult task~";
 	mes "This room is the office for";
-	mes "the Schwaltzvalt Republic team,";
+	mes "the Schwarzwald Republic team,";
 	mes "and the other is for the Rune-";
 	mes "Midgarts Kingdom team.";
 	next;

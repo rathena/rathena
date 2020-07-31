@@ -130,7 +130,7 @@ int elemental_create(struct map_session_data *sd, int class_, unsigned int lifet
 	return 1;
 }
 
-int elemental_get_lifetime(struct elemental_data *ed) {
+t_tick elemental_get_lifetime(struct elemental_data *ed) {
 	const struct TimerData * td;
 	if( ed == NULL || ed->summon_timer == INVALID_TIMER )
 		return 0;
@@ -385,8 +385,8 @@ int elemental_clean_effect(struct elemental_data *ed) {
 	return 1;
 }
 
-int elemental_action(struct elemental_data *ed, struct block_list *bl, unsigned int tick) {
-	struct skill_condition req;
+int elemental_action(struct elemental_data *ed, struct block_list *bl, t_tick tick) {
+	struct s_skill_condition req;
 	uint16 skill_id, skill_lv;
 	int i;
 
@@ -429,9 +429,9 @@ int elemental_action(struct elemental_data *ed, struct block_list *bl, unsigned 
 			ed->ud.skill_lv = skill_lv;
 
 			if( skill_get_inf(skill_id) & INF_GROUND_SKILL )
-				ed->ud.skilltimer = add_timer( tick+status_get_speed(&ed->bl)*walk_dist, skill_castend_pos, ed->bl.id, 0 );
+				ed->ud.skilltimer = add_timer( tick+(t_tick)status_get_speed(&ed->bl)*walk_dist, skill_castend_pos, ed->bl.id, 0 );
 			else
-				ed->ud.skilltimer = add_timer( tick+status_get_speed(&ed->bl)*walk_dist, skill_castend_id, ed->bl.id, 0 );
+				ed->ud.skilltimer = add_timer( tick+(t_tick)status_get_speed(&ed->bl)*walk_dist, skill_castend_id, ed->bl.id, 0 );
 		}
 		return 1;
 
@@ -562,19 +562,16 @@ bool elemental_skillnotok(uint16 skill_id, struct elemental_data *ed) {
 	return idx == 0 ? false : skill_isNotOk(skill_id,ed->master); // return false or check if it,s ok for master as well
 }
 
-struct skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 skill_lv){
-	struct skill_condition req;
-	uint16 idx = skill_get_index(skill_id);
+struct s_skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 skill_lv){
+	struct s_skill_condition req = {};
+	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 
-	memset(&req,0,sizeof(req));
-
-	if( idx == 0 ) // invalid skill id
+	if( !skill ) // invalid skill id
 		return req;
 
 	skill_lv = cap_value(skill_lv, 1, MAX_SKILL_LEVEL);
-
-	req.hp = skill_db[idx]->require.hp[skill_lv-1];
-	req.sp = skill_db[idx]->require.sp[skill_lv-1];
+	req.hp = skill->require.hp[skill_lv - 1];
+	req.sp = skill->require.sp[skill_lv - 1];
 
 	return req;
 }
@@ -633,7 +630,7 @@ static int elemental_ai_sub_timer_activesearch(struct block_list *bl, va_list ap
 	return 0;
 }
 
-static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_data *sd, unsigned int tick) {
+static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_data *sd, t_tick tick) {
 	struct block_list *target = NULL;
 	int master_dist, view_range;
 	enum e_mode mode;
@@ -744,7 +741,7 @@ static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_
 }
 
 static int elemental_ai_sub_foreachclient(struct map_session_data *sd, va_list ap) {
-	unsigned int tick = va_arg(ap,unsigned int);
+	t_tick tick = va_arg(ap,t_tick);
 	if(sd->status.ele_id && sd->ed)
 		elemental_ai_sub_timer(sd->ed,sd,tick);
 
@@ -783,8 +780,13 @@ static bool read_elementaldb_sub(char* str[], int columns, int current) {
 	status->max_hp = atoi(str[4]);
 	status->max_sp = atoi(str[5]);
 	status->rhw.range = atoi(str[6]);
-	status->rhw.atk = atoi(str[7]);
-	status->rhw.atk2 = atoi(str[8]);
+#ifdef RENEWAL
+	status->rhw.atk = atoi(str[7]); // BaseATK
+	status->rhw.matk = atoi(str[8]); // BaseMATK
+#else
+	status->rhw.atk = atoi(str[7]); // MinATK
+	status->rhw.atk2 = atoi(str[8]); // MaxATK
+#endif
 	status->def = atoi(str[9]);
 	status->mdef = atoi(str[10]);
 	status->str = atoi(str[11]);

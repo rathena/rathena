@@ -304,7 +304,7 @@ for 'Map' type 16 will be applied.
 
 This mapflag can also be used to adjust the damage of one skill by a percentage:
  - skill_name:
-	Name of the skill in 'db/(pre-)re/skill_db.txt' (ex. SM_BASH).
+	Name of the skill in 'db/(pre-)re/skill_db.yml' (ex. SM_BASH).
 	To adjust all skill damage, write "all" (without quotes).
  - caster: the groups for which the adjustment takes effect. (bitmask)
 	BL_PC = Player
@@ -318,6 +318,16 @@ This mapflag can also be used to adjust the damage of one skill by a percentage:
 	SKILLDMG_MOB = against normal monster
 	SKILLDMG_BOSS = against boss monster
 	SKILLDMG_OTHER = against other (homunculus, mercenary, pet, elemental)
+
+---------------------------------------
+
+*skill_duration	skill_name,percentage
+
+Sets skill (trap-type) time limit to n% of original duration.
+
+// Example:
+// Makes HT_ANKLESNARE's lifetime in the castle 4x longer than other maps.
+prtg_cas01	mapflag	skill_duration	HT_ANKLESNARE,400
 
 ---------------------------------------
 

@@ -644,3 +644,7 @@ IG_Mercenary,12179,1 // SpearMercenary_Scroll7
 IG_Mercenary,12180,1 // SpearMercenary_Scroll8
 IG_Mercenary,12181,1 // SpearMercenary_Scroll9
 IG_Mercenary,12182,1 // SpearMercenary_Scroll10
+// Token of Siegfried
+IG_Token_Of_Siegfried,6293,1	// F_Token_Of_Siegfried
+IG_Token_Of_Siegfried,6316,1	// E_Token_Of_Siegfried
+IG_Token_Of_Siegfried,7621,1	// Token_Of_Siegfried

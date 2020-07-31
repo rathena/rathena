@@ -29,7 +29,7 @@
 //=	- Small corrections to the prontera Inns.
 //=	- Removed the Cancel dialog.
 //= 1.6 More fixes, changed progression of "Rest"ing.
-//=	- Corrected Morroc NPCs. [L0ne_W0lf]
+//=	- Corrected Morocc NPCs. [L0ne_W0lf]
 //= 1.7 Corrected Payon NPC. [L0ne_W0lf] 
 //= 1.8 Corrected Geffen NPC. [L0ne_W0lf] 
 //= 1.9 Added the Inn for Al De baran. [L0ne_W0lf]
@@ -41,7 +41,7 @@
 //= 2.4 Fixed Inn Employee#Ahlma warping to same destination as save point, bugreport: 191.
 //= 2.5 Added Moskovia Gostinitsa (Inn) from jA
 //= 2.6 Updated Alberta inn to official. [L0ne_W0lf]
-//= 2.7 Removed Morroc Inns as per episode 12.1. [L0ne_W0lf]
+//= 2.7 Removed Morocc Inns as per episode 12.1. [L0ne_W0lf]
 //= 2.8 Removed Moscovia Inn; Its in quests/quest_moscovia.txt [Kisuka]
 //= 2.9 Added switch menus, updated to match AEGIS scripts. [Kisuka]
 //= 2.9a Added 'npcskill' command. [Euphy]
@@ -88,13 +88,13 @@ payon_in01,132,62,5	script	Inn Employee#Ahee	53,{
 /*
 morocc_in,147,141,3	script	Inn Employee#Hasna	53,{
 
-	callfunc "F_InnMaid","[Employee Hasna]","Morroc Inn","morocc_in",142,140;
+	callfunc "F_InnMaid","[Employee Hasna]","Morocc Inn","morocc_in",142,140;
 	warp "morocc_in",173,135; end;
 }
 // South --------------------------------
 morocc_in,80,100,5	script	Inn Employee#Manar	53,{
 
-	callfunc "F_InnMaid","[Employee Manar]","Morroc Inn","morocc_in",78,95;
+	callfunc "F_InnMaid","[Employee Manar]","Morocc Inn","morocc_in",78,95;
 	warp "morocc_in",79,123; end;
 }
 */

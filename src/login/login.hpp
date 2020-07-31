@@ -45,9 +45,11 @@ struct login_session_data {
 	int has_client_hash;		///client ha sent an hash
 
 	int fd;				///socket of client
+
+	char web_auth_token[WEB_AUTH_TOKEN_LENGTH]; /// web authentication token
 };
 
-#define MAX_SERVERS 30 //max number of mapserv that could be attach
+#define MAX_SERVERS 5 //max number of mapserv that could be attach
 ///Struct describing 1 char-serv attach to us
 struct mmo_char_server {
 	char name[20];	///char-serv name
@@ -97,6 +99,11 @@ struct Login_Config {
 	char msgconf_name[256];							/// name of msg_conf config file
 	char lanconf_name[256];							/// name of lan config file
 
+	bool usercount_disable;							/// Disable colorization and description in general?
+	int usercount_low;								/// Amount of users that will display in green
+	int usercount_medium;							/// Amount of users that will display in yellow
+	int usercount_high;								/// Amount of users that will display in red
+
 	int char_per_account;							/// number of characters an account can have
 #ifdef VIP_ENABLE
 	struct {
@@ -104,6 +111,7 @@ struct Login_Config {
 		unsigned int char_increase;					/// number of char-slot to increase in VIP state
 	} vip_sys;
 #endif
+	bool use_web_auth_token;						/// Enable web authentication token system
 };
 extern struct Login_Config login_config;
 
@@ -124,7 +132,6 @@ struct online_login_data {
 	int waiting_disconnect;
 	int char_server;
 };
-extern DBMap* online_db; // uint32 account_id -> struct online_login_data*
 
 /// Auth database
 #define AUTH_TIMEOUT 30000
@@ -136,19 +143,11 @@ struct auth_node {
 	char sex;
 	uint8 clienttype;
 };
-extern DBMap* auth_db; // uint32 account_id -> struct auth_node*
 
 ///Accessors
 AccountDB* login_get_accounts_db(void);
 
-/**
- * Sub function to create an online_login_data and save it to db.
- * @param key: Key of the database entry
- * @param ap: args
- * @return : Data identified by the key to be put in the database
- * @see DBCreateData
- */
-DBData login_create_online_user(DBKey key, va_list args);
+struct online_login_data* login_get_online_user( uint32 account_id );
 
 /**
  * Function to add a user in online_db.
@@ -167,6 +166,12 @@ struct online_login_data* login_add_online_user(int char_server, uint32 account_
  */
 void login_remove_online_user(uint32 account_id);
 
+struct auth_node* login_get_auth_node( uint32 account_id );
+
+struct auth_node* login_add_auth_node( struct login_session_data* sd, uint32 ip );
+
+void login_remove_auth_node( uint32 account_id );
+
 /**
  * Timered function to disconnect a user from login.
  *  This is done either after auth_ok or kicked by char-server.
@@ -180,15 +185,7 @@ void login_remove_online_user(uint32 account_id);
  */
 TIMER_FUNC(login_waiting_disconnect_timer);
 
-/**
- * Sub function to apply on online_db.
- * Mark a character as offline.
- * @param data: 1 entry in the db
- * @param ap: args
- * @return : Value to be added up by the function that is applying this
- * @see DBApply
- */
-int login_online_db_setoffline(DBKey key, DBData *data, va_list ap);
+void login_online_db_setoffline( int char_server );
 
 /**
  * Test to determine if an IP come from LAN or WAN.
@@ -227,5 +224,7 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
  *	x: acc state (TODO document me deeper)
  */
 int login_mmo_auth(struct login_session_data* sd, bool isServer);
+
+int login_get_usercount( int users );
 
 #endif /* LOGIN_HPP */

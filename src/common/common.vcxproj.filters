@@ -23,6 +23,9 @@
     <ClInclude Include="core.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="database.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="db.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -91,6 +94,9 @@
     <ClCompile Include="core.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="database.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="db.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -139,9 +145,9 @@
     <ClCompile Include="utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClInclude Include="winapi.cpp">
+    <ClCompile Include="winapi.cpp">
       <Filter>Source Files</Filter>
-    </ClInclude>
+    </ClCompile>
     <ClCompile Include="utilities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

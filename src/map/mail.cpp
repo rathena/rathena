@@ -16,6 +16,7 @@
 #include "itemdb.hpp"
 #include "log.hpp"
 #include "pc.hpp"
+#include "pet.hpp"
 
 void mail_clear(struct map_session_data *sd)
 {
@@ -65,18 +66,27 @@ int mail_removeitem(struct map_session_data *sd, short flag, int idx, int amount
 		pc_delitem(sd, idx, amount, 0, 0, LOG_TYPE_MAIL);
 #endif
 	}else{
-		for( ; i < MAIL_MAX_ITEM-1; i++ ){
-			if (sd->mail.item[i + 1].nameid == 0)
-				break;
-			sd->mail.item[i].index = sd->mail.item[i+1].index;
-			sd->mail.item[i].nameid = sd->mail.item[i+1].nameid;
-			sd->mail.item[i].amount = sd->mail.item[i+1].amount;
-		}
+		sd->mail.item[i].amount -= amount;
 
-		for( ; i < MAIL_MAX_ITEM; i++ ){
-			sd->mail.item[i].index = 0;
-			sd->mail.item[i].nameid = 0;
-			sd->mail.item[i].amount = 0;
+		// Item was removed completely
+		if( sd->mail.item[i].amount <= 0 ){
+			// Move the rest of the array forward
+			for( ; i < MAIL_MAX_ITEM - 1; i++ ){
+				if ( sd->mail.item[i + 1].nameid == 0 ){
+					break;
+				}
+
+				sd->mail.item[i].index = sd->mail.item[i+1].index;
+				sd->mail.item[i].nameid = sd->mail.item[i+1].nameid;
+				sd->mail.item[i].amount = sd->mail.item[i+1].amount;
+			}
+
+			// Zero the rest
+			for( ; i < MAIL_MAX_ITEM; i++ ){
+				sd->mail.item[i].index = 0;
+				sd->mail.item[i].nameid = 0;
+				sd->mail.item[i].amount = 0;
+			}
 		}
 
 #if PACKETVER < 20150513
@@ -145,6 +155,13 @@ enum mail_attach_result mail_setitem(struct map_session_data *sd, short idx, uin
 
 		if( idx < 0 || idx >= MAX_INVENTORY || sd->inventory_data[idx] == nullptr )
 			return MAIL_ATTACH_ERROR;
+
+		if (itemdb_ishatched_egg(&sd->inventory.u.items_inventory[idx]))
+			return MAIL_ATTACH_ERROR;
+
+		if( sd->inventory.u.items_inventory[idx].equipSwitch ){
+			return MAIL_ATTACH_EQUIPSWITCH;
+		}
 
 #if PACKETVER < 20150513
 		i = 0;
@@ -273,7 +290,22 @@ void mail_getattachment(struct map_session_data* sd, struct mail_message* msg, i
 
 	for( i = 0; i < MAIL_MAX_ITEM; i++ ){
 		if( item->nameid > 0 && item->amount > 0 ){
-			pc_additem(sd, &item[i], item[i].amount, LOG_TYPE_MAIL);
+			// If no card or special card id is set
+			if( item[i].card[0] == 0 ){
+				// Check if it is a pet egg
+				std::shared_ptr<s_pet_db> pet = pet_db_search( item[i].nameid, PET_EGG );
+
+				// If it is a pet egg and the card data does not contain a pet id (see if clause above)
+				if( pet != nullptr ){
+					// Create a new pet
+					pet_create_egg( sd, item[i].nameid );
+					item_received = true;
+					continue;
+				}
+			}
+
+			// Add the item normally
+			pc_additem( sd, &item[i], item[i].amount, LOG_TYPE_MAIL );
 			item_received = true;
 		}	
 	}
@@ -366,7 +398,7 @@ void mail_send(struct map_session_data *sd, const char *dest_name, const char *t
 			clif_Mail_send(sd, WRITE_MAIL_FAILED_CNT);
 			return;
 		}else{
-			sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, date_get_dayofyear(), sd->sc.data[SC_DAILYSENDMAILCNT]->val2 + 1, -1 );
+			sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, date_get_dayofyear(), sd->sc.data[SC_DAILYSENDMAILCNT]->val2 + 1, INFINITE_TICK );
 		}
 	}
 
@@ -397,7 +429,7 @@ void mail_send(struct map_session_data *sd, const char *dest_name, const char *t
 	}
 
 	if (body_len)
-		safestrncpy(msg.body, (char*)body_msg, body_len + 1);
+		safestrncpy(msg.body, (char*)body_msg, min(body_len + 1, MAIL_BODY_LENGTH));
 	else
 		memset(msg.body, 0x00, MAIL_BODY_LENGTH);
 
@@ -415,6 +447,6 @@ void mail_refresh_remaining_amount( struct map_session_data* sd ){
 
 	// If it was not yet started or it was started on another day
 	if( sd->sc.data[SC_DAILYSENDMAILCNT] == NULL || sd->sc.data[SC_DAILYSENDMAILCNT]->val1 != doy ){
-		sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, doy, 0, -1 );
+		sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, doy, 0, INFINITE_TICK );
 	}
 }
