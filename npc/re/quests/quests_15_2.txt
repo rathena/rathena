@@ -3470,6 +3470,7 @@ function	script	F_time_limit_recorder	{
 			break;
 		case 2:
 			mes "Your whole body suddenly becomes heavy and time seems to be passing faster around you.";
+			close2;	// custom (player can't read the text without this)
 			ep15_2_memory = 0;
 			for ( .@i = 5341; .@i <= 5369; ++.@i ) {
 				if (isbegin_quest(.@i) > 0)
@@ -4005,10 +4006,37 @@ un_bk_q,82,323,2	script	Mechanician Al#EP15.2MR	4_M_REPAIR,{
 				mes "Is that grape for me? It's not? Pssh!!";
 				close;
 			}
-			//todo
+			mes "[Mechanician Al]";
+			mes "What? Grapes? You are delivering this?";
+			next;
+			emotion 23;
+			mes "[Mechanician Al]";
+			mes "You picked this one by one with your bare hands?";
+			next;
+			mes "[Mechanician Al]";
+			mes "Why are you doing such cumbersome work? You could've ask us to make a grape harvesting machine..";
+			next;
+			mes "[Mechanician Al]";
+			mes "Thanks tough. This is compensation. Fress said to compensate adventurers who are caught up in the accident against their will.";
+			next;
+			if (isbegin_quest(5359) > 0)
+				erasequest 5359;
+			if (isbegin_quest(5360) > 0)
+				erasequest 5360;
+			if (isbegin_quest(5361) > 0)
+				erasequest 5361;
+			if (isbegin_quest(5362) > 0)
+				erasequest 5362;
+			setquest 5370;
+			getexp 1000000,1000000;
+			mes "- The small round capsule has percolated through skin. It feels like experience has accumulated.";
+			next;
+			mes "[Mechanician Al]";
+			mes "If you meet Ebrik tell him thanks for the grapes.";
 			close;
 		default:
-			//todo
+			mes "[Mechanician Al]";
+			mes "If you meet Ebrik tell him thanks for the grapes.";
 			close;
 		}
 	}
@@ -4143,7 +4171,8 @@ un_bk_q,347,217,4	script	Facilities manager Remodeling#EP15.2MR	4_M_EINMAN,{
 			//todo
 			close;
 		default:
-			//todo
+			mes "[Facilities manager Remodeling]";
+			mes "If you meet Ebrik tell him thanks for the grapes.";
 			close;
 		}
 	}
@@ -4807,7 +4836,8 @@ un_bk_q,220,350,4	script	Bioengineer Ebrik#EP15.2MR	4_M_01,{
 			mes "Compensation will be paid by the people receiving the deliveries so you do not have to come back here.";
 			close;
 		default:
-			//todo
+			mes "[Bioengineer Ebrik]";
+			mes "I thought I told you don't have to come back. Anyway how did you get inside?";
 			close;
 		}
 	}
@@ -4898,9 +4928,9 @@ un_bk_q,276,243,4	script	Nurse Lapplad#EP15.2MR	4_F_BRZ_WOMAN,{
 		mes "[Nurse Lapplad]";
 		mes "Look here. My skin is getting crispy from not being able to sleep for days~";
 		next;
-		if (mobcount( "un_bk_q", "Nurse Lapplad#EP15.2MR::OnMobDead" ) < 1) {
+		if (mobcount( "un_bk_q", "Nurse Lapplad#EP15.2MR::OnMyMobDead" ) < 1) {
 			disablenpc "Patient#EP15.2MR_01";
-			monster "un_bk_q",286,254, "Convulsing Patient", 3008,1, "Nurse Lapplad#EP15.2MR::OnMobDead";	// ZOMBIE
+			monster "un_bk_q",286,254, "Convulsing Patient", 1015,1, "Nurse Lapplad#EP15.2MR::OnMyMobDead";	// ZOMBIE
 			.mob_id[1] = $@mobid[0];
 			initnpctimer;
 		}
@@ -4931,7 +4961,7 @@ un_bk_q,276,243,4	script	Nurse Lapplad#EP15.2MR	4_F_BRZ_WOMAN,{
 	if (.@cooldown_status_day[3] == 1) {
 		.@quest_day_4 = isbegin_quest(5364) + isbegin_quest(5365);
 		if (.@quest_day_4 == 1) {
-			if (mobcount( "un_bk_q", "Nurse Lapplad#EP15.2MR::OnMobDead" ) < 1) {
+			if (mobcount( "un_bk_q", "Nurse Lapplad#EP15.2MR::OnMyMobDead" ) < 1) {
 				mes "[Nurse Lapplad]";
 				mes "You didn't get bit or scratched by the convulsing patient, did you?";
 				next;
@@ -4985,8 +5015,8 @@ un_bk_q,276,243,4	script	Nurse Lapplad#EP15.2MR	4_F_BRZ_WOMAN,{
 	end;
 
 OnMyMobDead:
-	if (mobcount( "un_bk_q", "Nurse Lapplad#EP15.2MR::OnMobDead" ) < 1) {
-		killmonster "un_bk_q", "Nurse Lapplad#EP15.2MR::OnMobDead";
+	if (mobcount( "un_bk_q", "Nurse Lapplad#EP15.2MR::OnMyMobDead" ) < 1) {
+		killmonster "un_bk_q", "Nurse Lapplad#EP15.2MR::OnMyMobDead";
 		enablenpc "Patient#EP15.2MR_01";
 		enablenpc "Patient#EP15.2MR_02";
 		enablenpc "Patient#EP15.2MR_03";
@@ -5007,7 +5037,7 @@ OnMyMobDead:
 		else
 			end;	// stop here
 		disablenpc "Patient#EP15.2MR_0" + .@r;
-		monster "un_bk_q",.@xy[0],.@xy[1], "Convulsing Patient", 3008,1, "Nurse Lapplad#EP15.2MR::OnMobDead";	// ZOMBIE
+		monster "un_bk_q",.@xy[0],.@xy[1], "Convulsing Patient", 1015,1, "Nurse Lapplad#EP15.2MR::OnMyMobDead";	// ZOMBIE
 		.mob_id[.@r] = $@mobid[0];
 		initnpctimer;
 		end;
@@ -5203,6 +5233,8 @@ un_bk_q,279,294,4	script	Transportation Executive Ernon#EP15.2MR	4_M_LGTMAN,{
 				erasequest 5367;
 			if (isbegin_quest(5368) > 0)
 				erasequest 5368;
+			if (isbegin_quest(5369) > 0)
+				erasequest 5369;
 			setquest 5370;
 			ep15_2_memory = 0;
 			getexp 500000,500000;
