@@ -362,8 +362,10 @@ TIMER_FUNC(npc_secure_timeout_timer){
 	t_tick cur_tick = gettick(); //ensure we are on last tick
 
 	if ((sd = map_id2sd(id)) == NULL || !sd->npc_id || sd->state.ignoretimeout) {
-		if (sd)
+		if( sd && sd->npc_idle_timer != INVALID_TIMER ){
+			delete_timer( sd->npc_idle_timer, npc_secure_timeout_timer );
 			sd->npc_idle_timer = INVALID_TIMER;
+		}
 		return 0; // Not logged in anymore OR no longer attached to a NPC OR using 'ignoretimeout' script command
 	}
 
@@ -380,7 +382,11 @@ TIMER_FUNC(npc_secure_timeout_timer){
 	if( DIFF_TICK(cur_tick,sd->npc_idle_tick) > (timeout*1000) ) {
 		pc_close_npc(sd,1);
 	} else if(sd->st && (sd->st->state == END || sd->st->state == CLOSE)){
-		sd->npc_idle_timer = INVALID_TIMER; //stop timer the script is already ending
+		// stop timer the script is already ending
+		if( sd->npc_idle_timer != INVALID_TIMER ){
+			delete_timer( sd->npc_idle_timer, npc_secure_timeout_timer );
+			sd->npc_idle_timer = INVALID_TIMER;
+		}
 	} else { //Create a new instance of ourselves to continue
 		sd->npc_idle_timer = add_timer(cur_tick + (SECURE_NPCTIMEOUT_INTERVAL*1000),npc_secure_timeout_timer,sd->bl.id,0);
 	}
@@ -1463,7 +1469,7 @@ bool npc_scriptcont(struct map_session_data* sd, int id, bool closing){
 	nullpo_retr(true, sd);
 
 #ifdef SECURE_NPCTIMEOUT
-	if( sd->npc_idle_timer == INVALID_TIMER && !sd->state.ignoretimeout )
+	if( !closing && sd->npc_idle_timer == INVALID_TIMER && !sd->state.ignoretimeout )
 		return true;
 #endif
 
@@ -1484,7 +1490,8 @@ bool npc_scriptcont(struct map_session_data* sd, int id, bool closing){
 		}
 	}
 #ifdef SECURE_NPCTIMEOUT
-	sd->npc_idle_tick = gettick(); //Update the last NPC iteration
+	if( !closing )
+		sd->npc_idle_tick = gettick(); //Update the last NPC iteration
 #endif
 
 	/**
