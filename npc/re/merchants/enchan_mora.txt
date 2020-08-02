@@ -1779,3 +1779,54 @@ mora,134,166,4	script	Bulberry Westhood#pa0829	509,{
 		}
 	}
 }
+
+mora,119,75,6	script	Artifact Panhandler#pa0829	4_F_DOGTRAVELER,{
+	mes "[Artifact Panhandler]";
+	mes "Do you have any Arch Bishop or Warlock equipment in your inventory you don't want?";
+	next;
+	mes "[Artifact Panhandler]";
+	mes "I'll give you 3 Mora coins in exchange for one equipment.";
+	mes "How about it?";
+	next;
+	if(select("No thanks.:Yes, sounds great.") == 1) {
+		mes "[Artifact Panhandler]";
+		mes "Fine... hmph!";
+		close;
+	}
+	setarray .@items[0],2864,2865,2866,2471,2472,2569,2570,15029,15030,1657,16013,2156,2467,2468,2469,2470,2859,2860,2861,2862,15025,15026,15027,15028,2007,2008,2009,2010;
+	.@j = 0;
+	for (.@i = 0; .@i < getarraysize(.@items); .@i++) {
+		.@id = .@items[.@i];
+		if (countitem(.@id) > 0) {
+			.@menuList$ += getitemname(.@id) + ":";
+			.@menuReference[.@j] = .@i;
+			.@j++;
+		}
+	}
+	if (.@j == 0) {
+		mes "[Artifact Panhandler]";
+		mes "Hmm, you don't seem to have any of the equipment I'm looking for ...";
+		close;
+	}
+	mes "[Artifact Panhandler]";
+	mes "Just a warning, I'll take the first matching equipment I find from your inventory.";
+	mes "If that's a problem, put the ones you want to keep in storage first.";
+	next;
+	.@choice = select(.@menuList$);
+	.@choiceId = .@items[.@menuReference[.@choice-1]];
+	mes "[Artifact Panhandler]";
+	mes "You want to exchange your ^0000FF" + getitemname(.@choiceId) + "^000000?";
+	next;
+	if (select("No, I've changed my mind.:Yes, please.") == 1) {
+		mes "[Artifact Panhandler]";
+		mes "^888888*Sighs*^000000";
+		mes "Got me all excited for nothing...";
+		close;
+	}
+	delitem .@choiceId,1;
+	getitem 6380,3; //Mora_Coin
+	mes "[Artifact Panhandler]";
+	mes "Thanks!";
+	mes "Here are your coins.";
+	end;
+}
