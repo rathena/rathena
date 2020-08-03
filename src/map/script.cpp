@@ -14579,12 +14579,18 @@ BUILDIN_FUNC(skilleffect)
 	skill_id = ( script_isstring(st, 2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
 	skill_lv = script_getnum(st,3);
 
-	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+	if (skill_db.find(skill_id) == nullptr) {
+		ShowError("buildin_skilleffect: Invalid skill defined (%d)!\n", skill_id);
+		return SCRIPT_CMD_FAILURE;
+	}
 
-	if (skill == nullptr)
-		return SCRIPT_CMD_SUCCESS;
+	uint16 skill_lv_cap = cap_value(skill_lv, 1, skill_get_max(skill_id));
 
-	skill_lv = cap_value(skill_lv, 1, skill_get_max(skill_id));
+	if (skill_lv != skill_lv_cap) {
+		ShowWarning("buildin_skilleffect: Invalid skill level %d, capping to %d.\n", skill_lv, skill_lv_cap);
+		skill_lv = skill_lv_cap;
+		script_reportsrc(st);
+	}
 
 	/* Ensure we're standing because the following packet causes the client to virtually set the char to stand,
 	 * which leaves the server thinking it still is sitting. */
@@ -14606,23 +14612,32 @@ BUILDIN_FUNC(skilleffect)
 BUILDIN_FUNC(npcskilleffect)
 {
 	struct block_list *bl= map_id2bl(st->oid);
+
+	if (bl == nullptr) {
+		ShowError("buildin_npcskilleffect: Invalid object attached to NPC.");
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	uint16 skill_id, skill_lv;
-	int x, y;
+	int16 x, y;
 
 	skill_id=( script_isstring(st, 2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
 	skill_lv=script_getnum(st,3);
 	x=script_getnum(st,4);
 	y=script_getnum(st,5);
 
-	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+	if (skill_db.find(skill_id) == nullptr) {
+		ShowError("buildin_npcskilleffect: Invalid skill defined (%d)!\n", skill_id);
+		return SCRIPT_CMD_FAILURE;
+	}
 
-	if (skill == nullptr)
-		return SCRIPT_CMD_SUCCESS;
+	uint16 skill_lv_cap = cap_value(skill_lv, 1, skill_get_max(skill_id));
 
-	skill_lv = cap_value(skill_lv, 1, skill_get_max(skill_id));
-
-	if (bl == nullptr)
-		return SCRIPT_CMD_SUCCESS;
+	if (skill_lv != skill_lv_cap) {
+		ShowWarning("buildin_npcskilleffect: Invalid skill level %d, capping to %d.\n", skill_lv, skill_lv_cap);
+		skill_lv = skill_lv_cap;
+		script_reportsrc(st);
+	}
 
 	script_skill_effect(bl, skill_id, skill_lv, bl->x, bl->y);
 
