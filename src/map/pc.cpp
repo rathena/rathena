@@ -8207,7 +8207,10 @@ void pc_close_npc(struct map_session_data *sd,int flag)
 		sd->npc_menu = 0;
 		sd->npc_shopid = 0;
 #ifdef SECURE_NPCTIMEOUT
-		sd->npc_idle_timer = INVALID_TIMER;
+		if( sd->npc_idle_timer != INVALID_TIMER ){
+			delete_timer( sd->npc_idle_timer, npc_secure_timeout_timer );
+			sd->npc_idle_timer = INVALID_TIMER;
+		}
 #endif
 		if (sd->st) {
 			if (sd->st->state == CLOSE) {
