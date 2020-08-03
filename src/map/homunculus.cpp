@@ -907,7 +907,7 @@ static TIMER_FUNC(hom_hungry){
 
 	clif_send_homdata(sd,SP_HUNGRY,hd->homunculus.hunger);
 
-	int hunger_delay = hd->homunculus.hunger <= 10 ? battle_config.homunculus_starving_delay : hd->homunculusDB->hungryDelay; // Every 20 seconds if hunger <= 10
+	int hunger_delay = (battle_config.homunculus_starving_rate > 0 && hd->homunculus.hunger <= battle_config.homunculus_starving_rate) ? battle_config.homunculus_starving_delay : hd->homunculusDB->hungryDelay; // Every 20 seconds if hunger <= 10
 
 	hd->hungry_timer = add_timer(tick+hunger_delay,hom_hungry,sd->bl.id,0); //simple Fix albator
 	return 0;
@@ -1061,7 +1061,7 @@ void hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 void hom_init_timers(struct homun_data * hd)
 {
 	if (hd->hungry_timer == INVALID_TIMER) {
-		int hunger_delay = hd->homunculus.hunger <= 10 ? battle_config.homunculus_starving_delay : hd->homunculusDB->hungryDelay; // Every 20 seconds if hunger <= 10
+		int hunger_delay = (battle_config.homunculus_starving_rate > 0 && hd->homunculus.hunger <= battle_config.homunculus_starving_rate) ? battle_config.homunculus_starving_delay : hd->homunculusDB->hungryDelay; // Every 20 seconds if hunger <= 10
 
 		hd->hungry_timer = add_timer(gettick()+hunger_delay,hom_hungry,hd->master->bl.id,0);
 	}
