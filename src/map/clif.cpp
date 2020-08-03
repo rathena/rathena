@@ -11064,6 +11064,11 @@ void clif_parse_progressbar(int fd, struct map_session_data * sd){
 	sd->progressbar.npc_id = 0;
 	sd->progressbar.timeout = 0;
 	sd->state.workinprogress = WIP_DISABLE_NONE;
+
+	if( battle_config.idletime_option&IDLE_NPC_PROGRESS ){
+		sd->idletime = last_tick;
+	}
+
 	npc_scriptcont(sd, npc_id, closing);
 }
 
@@ -12916,6 +12921,11 @@ void clif_parse_NpcSelectMenu(int fd,struct map_session_data *sd){
 	}
 
 	sd->npc_menu = select;
+
+	if( battle_config.idletime_option&IDLE_NPC_MENU ){
+		sd->idletime = last_tick;
+	}
+
 	npc_scriptcont(sd,npc_id, false);
 }
 
@@ -12924,6 +12934,10 @@ void clif_parse_NpcSelectMenu(int fd,struct map_session_data *sd){
 /// 00b9 <npc id>.L
 void clif_parse_NpcNextClicked(int fd,struct map_session_data *sd)
 {
+	if( battle_config.idletime_option&IDLE_NPC_NEXT ){
+		sd->idletime = last_tick;
+	}
+
 	npc_scriptcont(sd,RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]), false);
 }
 
@@ -12936,6 +12950,11 @@ void clif_parse_NpcAmountInput(int fd,struct map_session_data *sd){
 	int amount = (int)RFIFOL(fd,info->pos[1]);
 
 	sd->npc_amount = amount;
+
+	if( battle_config.idletime_option&IDLE_NPC_INPUT ){
+		sd->idletime = last_tick;
+	}
+
 	npc_scriptcont(sd, npcid, false);
 }
 
@@ -12956,6 +12975,11 @@ void clif_parse_NpcStringInput(int fd, struct map_session_data* sd){
 #endif
 
 	safestrncpy(sd->npc_str, message, min(message_len,CHATBOX_SIZE));
+
+	if( battle_config.idletime_option&IDLE_NPC_INPUT ){
+		sd->idletime = last_tick;
+	}
+
 	npc_scriptcont(sd, npcid, false);
 }
 
@@ -12966,6 +12990,11 @@ void clif_parse_NpcCloseClicked(int fd,struct map_session_data *sd)
 {
 	if (!sd->npc_id) //Avoid parsing anything when the script was done with. [Skotlex]
 		return;
+
+	if( battle_config.idletime_option&IDLE_NPC_CLOSE ){
+		sd->idletime = last_tick;
+	}
+
 	npc_scriptcont(sd, RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]), true);
 }
 
