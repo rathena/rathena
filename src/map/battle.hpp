@@ -685,6 +685,7 @@ struct Battle_Config
 	int achievement_mob_share;
 	int slave_stick_with_master;
 	int at_logout_event;
+	int homunculus_starving_delay;
 
 #include "../custom/battle_config_struct.inc"
 };
