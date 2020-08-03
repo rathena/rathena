@@ -14580,7 +14580,7 @@ BUILDIN_FUNC(skilleffect)
 	skill_lv = script_getnum(st,3);
 
 	if (skill_db.find(skill_id) == nullptr) {
-		ShowError("buildin_skilleffect: Invalid skill defined (%d)!\n", skill_id);
+		ShowError("buildin_skilleffect: Invalid skill defined (%s)!\n", script_getstr(st, 2));
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -14627,7 +14627,7 @@ BUILDIN_FUNC(npcskilleffect)
 	y=script_getnum(st,5);
 
 	if (skill_db.find(skill_id) == nullptr) {
-		ShowError("buildin_npcskilleffect: Invalid skill defined (%d)!\n", skill_id);
+		ShowError("buildin_npcskilleffect: Invalid skill defined (%s)!\n", script_getstr(st, 2));
 		return SCRIPT_CMD_FAILURE;
 	}
 
