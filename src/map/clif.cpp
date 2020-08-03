@@ -16017,7 +16017,6 @@ void clif_parse_Mail_getattach( int fd, struct map_session_data *sd ){
 	}
 
 	intif_mail_getattach(sd,msg, (enum mail_attachment_type)attachment);
-	clif_Mail_read(sd, mail_id);
 }
 
 
