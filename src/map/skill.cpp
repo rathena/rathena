@@ -12068,9 +12068,14 @@ TIMER_FUNC(skill_castend_id){
 	//You can't place a skill failed packet here because it would be
 	//sent in ALL cases, even cases where skill_check_condition fails
 	//which would lead to double 'skill failed' messages u.u [Skotlex]
-	if(sd)
-		sd->skillitem = sd->skillitemlv = sd->skillitem_keep_requirement = sd->skill_keep_using.skill_id = 0;
-	else if(md)
+	if (sd) {
+		sd->skillitem = sd->skillitemlv = sd->skillitem_keep_requirement = 0;
+		if (sd->skill_keep_using.skill_id > 0) {
+			sd->skill_keep_using.skill_id = 0;
+			delete_timer(sd->skill_keep_using.tid, skill_keep_using);
+			sd->skill_keep_using.tid = INVALID_TIMER;
+		}
+	} else if (md)
 		md->skill_idx = -1;
 	return 0;
 }
