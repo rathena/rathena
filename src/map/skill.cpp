@@ -16939,6 +16939,9 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 		case SO_EARTH_INSIGNIA:
 			req.itemid[0] = skill->require.itemid[min(skill_lv-1,MAX_SKILL_ITEM_REQUIRE-1)];
 			req.amount[0] = skill->require.amount[min(skill_lv-1,MAX_SKILL_ITEM_REQUIRE-1)];
+		case WZ_FIREPILLAR: // no gems required at level 1-5 [celest]
+			if (skill_id == WZ_FIREPILLAR && skill_lv < 6)
+				break;
 			level_dependent = true;
 
 		/* Normal skill requirements and gemstone checks */
@@ -16947,10 +16950,6 @@ struct s_skill_condition skill_get_requirement(struct map_session_data* sd, uint
 				// Skip this for level_dependent requirement, just looking forward for gemstone removal. Assumed if there is gemstone there.
 				if (!level_dependent) {
 					switch( skill_id ) {
-						case WZ_FIREPILLAR: // no gems required at level 1-5 [celest]
-							if (skill_lv < 6)
-								continue;
-							break;
 						case AM_POTIONPITCHER:
 						case CR_SLIMPITCHER:
 						case CR_CULTIVATION:
