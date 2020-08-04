@@ -2767,6 +2767,7 @@ void char_set_defaults(){
 	charserv_config.clan_remove_inactive_days = 14;
 	charserv_config.mail_return_days = 14;
 	charserv_config.mail_delete_days = 14;
+	charserv_config.mail_retrieve = 1;
 
 #if defined(RENEWAL) && PACKETVER >= 20151001
 	charserv_config.allowed_job_flag = 3;
