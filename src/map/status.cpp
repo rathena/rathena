@@ -3984,7 +3984,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			}
 			wa->atk += sd->inventory_data[index]->atk;
 			if(r)
-				wa->atk2 = refine_info[wlv].bonus[r-1] / 100;
+				wa->atk2 += refine_info[wlv].bonus[r-1] / 100;
 #ifdef RENEWAL
 			wa->matk += sd->inventory_data[index]->matk;
 			wa->wlv = wlv;
