@@ -4168,7 +4168,31 @@ un_bk_q,347,217,4	script	Facilities manager Remodeling#EP15.2MR	4_M_EINMAN,{
 				mes "What!! That grape!! I had some already so I am guessing it's not mine.";
 				close;
 			}
-			//todo
+			mes "[Facilities manager Remodeling]";
+			mes "Good job.";
+			next;
+			emotion 1;
+			mes "[Facilities manager Remodeling]";
+			mes "The rumors say the Mechanicians smashed a grape tree but is it true?";
+			next;
+			select("According to Ebrik.");
+			mes "[Facilities manager Remodeling]";
+			mes "Thought so.. Mechanician Al is kind of a machine supremacist. I guess that is why he became a mechanician.";
+			next;
+			emotion 15;
+			mes "[Facilities manager Remodeling]";
+			mes "Anyway I will enjoy this grape you delivered. This is a reward.";
+			next;
+			erasequest 5359;
+			erasequest 5360;
+			erasequest 5361;
+			erasequest 5362;
+			setquest 5370;
+			getexp 1000000,1000000;
+			mes "- The small round capsule has percolated through skin. It feels like experience has accumulated.";
+			next;
+			mes "[Facilities manager Remodeling]";
+			mes "If you meet Ebrik tell him thanks for the grapes.";
 			close;
 		default:
 			mes "[Facilities manager Remodeling]";
@@ -5063,7 +5087,7 @@ OnTimer3000:
 }
 
 un_bk_q,286,254,4	script	Patient#EP15.2MR_01	4_M_LIEMAN,{
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
+	callfunc( "F_time_limit_recorder", .@cooldown_status_day, 0 );
 	emotion 19;
 	mes "[Patient]";
 	mes "Hurts.. It hurts..";
@@ -5071,14 +5095,14 @@ un_bk_q,286,254,4	script	Patient#EP15.2MR_01	4_M_LIEMAN,{
 }
 
 un_bk_q,296,252,4	script	Patient#EP15.2MR_02	4_M_DSTMANDEAD,{
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
+	callfunc( "F_time_limit_recorder", .@cooldown_status_day, 0 );
 	mes "[Patient]";
 	mes "I'm fine. They're making a fuss for no reason.";
 	close;
 }
 
 un_bk_q,316,231,4	script	Patient#EP15.2MR_03	4_M_DIEMAN,{
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
+	callfunc( "F_time_limit_recorder", .@cooldown_status_day, 0 );
 	emotion 45;
 	mes "[Patient]";
 	mes "I keep feeling sleepy for some reason. Is it because I'm sick?";
@@ -5086,7 +5110,7 @@ un_bk_q,316,231,4	script	Patient#EP15.2MR_03	4_M_DIEMAN,{
 }
 
 un_bk_q,281,226,4	script	Patient#EP15.2MR_04	4_F_PATIENT,{
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
+	callfunc( "F_time_limit_recorder", .@cooldown_status_day, 0 );
 	emotion 54;
 	mes "[Patient]";
 	mes "My head feels blank.. Uh? Did you say something?";
@@ -5094,7 +5118,7 @@ un_bk_q,281,226,4	script	Patient#EP15.2MR_04	4_F_PATIENT,{
 }
 
 un_bk_q,320,249,4	script	Patient#EP15.2MR_05	4_M_PATIENT,{
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
+	callfunc( "F_time_limit_recorder", .@cooldown_status_day, 0 );
 	emotion 53;
 	mes "[Patient]";
 	mes "Ugh.. Feels like my whole body is cramped.";
@@ -5102,7 +5126,7 @@ un_bk_q,320,249,4	script	Patient#EP15.2MR_05	4_M_PATIENT,{
 }
 
 un_bk_q,306,233,4	script	Patient#EP15.2MR_06	4_M_DIEMAN,{
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
+	callfunc( "F_time_limit_recorder", .@cooldown_status_day, 0 );
 	emotion 43;
 	mes "[Patient]";
 	mes "Urk.. I feel sick even though I didn't drink.";
@@ -5110,7 +5134,7 @@ un_bk_q,306,233,4	script	Patient#EP15.2MR_06	4_M_DIEMAN,{
 }
 
 un_bk_q,310,261,4	script	Patient#EP15.2MR_07	4_M_LIEMAN,{
-	callfunc( "F_time_limit_recorder", .@cooldown_status_day );
+	callfunc( "F_time_limit_recorder", .@cooldown_status_day, 0 );
 	emotion 57;
 	mes "[Patient]";
 	mes "Oh no is there a transfectant found in me..";
