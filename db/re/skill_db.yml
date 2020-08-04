@@ -24351,6 +24351,16 @@ Body:
           Amount: 1
         - Level: 5
           Amount: 1
+        - Level: 6
+          Amount: 0
+        - Level: 7
+          Amount: 0
+        - Level: 8
+          Amount: 0
+        - Level: 9
+          Amount: 0
+        - Level: 10
+          Amount: 0
   - Id: 2337
     Name: SR_WINDMILL
     Description: Windmill
