@@ -10623,7 +10623,7 @@ Body:
     EquipLevelMin: 80
     Refineable: true
     Script: |
-      if(getskilllv("BS_DAGGER")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_SWORD")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_TWOHANDSWORD")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_KNUCKLE")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_SPEAR")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_AXE")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_MACE")==3) { bonus bBaseAtk,10; } bonus bVit,2; bonus4 bAutoSpellOnSkill,"BS_HAMMERFALL",50,3,"SM_MAGNUM";
+      if(getskilllv("BS_DAGGER")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_SWORD")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_TWOHANDSWORD")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_KNUCKLE")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_SPEAR")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_AXE")==3) { bonus bBaseAtk,10; } if(getskilllv("BS_MACE")==3) { bonus bBaseAtk,10; } bonus bVit,2; bonus4 bAutoSpellOnSkill,"BS_HAMMERFALL","SM_MAGNUM",50,3;
   - Id: 1385
     AegisName: Bradium_Stonehammer
     Name: Bradium Stone Hammer
@@ -14557,7 +14557,7 @@ Body:
     EquipLevelMin: 40
     Refineable: true
     Script: |
-      bonus bAtkEle,Ele_Dark; bonus2 bAddEle,Ele_Holy,5; bonus2 bAddEle,Ele_Water,7; bonus2 bAddEle,Ele_Earth,7; bonus2 bAddEle,Ele_Fire,7; bonus2 bAddEle,Ele_Wind,7;
+      bonus bAtkEle,Ele_Dark; bonus2 bSubDefEle,Ele_Holy,-5; bonus2 bAddEle,Ele_Water,7; bonus2 bAddEle,Ele_Earth,7; bonus2 bAddEle,Ele_Fire,7; bonus2 bAddEle,Ele_Wind,7;
   - Id: 1558
     AegisName: Girl's_Diary
     Name: Girl's Diary
@@ -24488,7 +24488,7 @@ Body:
     View: 3
   - Id: 2158
     AegisName: Ramor_Shield_Undead
-    Name: Ramorushirudo
+    Name: Ramor Shield
     Type: Armor
     Buy: 20
     Weight: 1300
@@ -24500,10 +24500,10 @@ Body:
     Refineable: true
     View: 3
     Script: |
-      bonus2 bSubEle,Ele_Undead,5; bonus2 bSubRace,RC_DemiHuman,-5;
+      bonus2 bSubDefEle,Ele_Undead,5; bonus2 bMagicSubDefEle,Ele_Undead,5; bonus2 bSubRace,RC_DemiHuman,5;
   - Id: 2159
     AegisName: Sharel_Shield
-    Name: Sharerushirudo
+    Name: Sharel Shield
     Type: Armor
     Buy: 20
     Weight: 1300
@@ -24514,6 +24514,8 @@ Body:
     EquipLevelMin: 65
     Refineable: true
     View: 3
+    Script: |
+      bonus2 bSubDefEle,Ele_Fire,5; bonus2 bMagicSubDefEle,Ele_Fire,5; bonus2 bSubRace,RC_Demon,5;
   - Id: 2160
     AegisName: Giant_Shield
     Name: Giant Shield
@@ -24569,20 +24571,7 @@ Body:
       bonus bMdef,5; skill "ALL_ODINS_POWER",2; bonus bHealPower,5;
   - Id: 2163
     AegisName: Flow_Shield
-    Name: Floor Shield
-    Type: Armor
-    Buy: 20
-    Weight: 1300
-    Defense: 50
-    Slots: 1
-    Locations:
-      Left_Hand: true
-    EquipLevelMin: 65
-    Refineable: true
-    View: 3
-  - Id: 2164
-    AegisName: Sombre_Shield
-    Name: Bull Son Shield
+    Name: Flow Shield
     Type: Armor
     Buy: 20
     Weight: 1300
@@ -24594,7 +24583,22 @@ Body:
     Refineable: true
     View: 3
     Script: |
-      bonus2 bSubDefEle,Ele_Dark,5; bonus2 bSubDefEle,Ele_Fire,5;
+      bonus2 bSubDefEle,Ele_Water,5; bonus2 bMagicSubDefEle,Ele_Water,5; bonus2 bSubRace,RC_Brute,-5;
+  - Id: 2164
+    AegisName: Sombre_Shield
+    Name: Sombre Shield
+    Type: Armor
+    Buy: 20
+    Weight: 1300
+    Defense: 50
+    Slots: 1
+    Locations:
+      Left_Hand: true
+    EquipLevelMin: 65
+    Refineable: true
+    View: 3
+    Script: |
+      bonus2 bSubDefEle,Ele_Dark,5; bonus2 bMagicSubDefEle,Ele_Dark,5; bonus2 bSubRace,RC_Undead,-5;
   - Id: 2165
     AegisName: Sol_Shield
     Name: Sol Shield
@@ -24608,6 +24612,8 @@ Body:
     EquipLevelMin: 65
     Refineable: true
     View: 3
+    Script: |
+      bonus2 bSubDefEle,Ele_Earth,5; bonus2 bMagicSubDefEle,Ele_Earth,5; bonus2 bSubRace,RC_Plant,-5;
   - Id: 2166
     AegisName: Exorcism_Bible_
     Name: Devil's Bible Drive
@@ -24639,6 +24645,8 @@ Body:
     EquipLevelMin: 65
     Refineable: true
     View: 3
+    Script: |
+      bonus2 bSubDefEle,Ele_Poison,5; bonus2 bMagicSubDefEle,Ele_Poison,5; bonus2 bSubRace,RC_Plant,-5;
   - Id: 2168
     AegisName: Immuned_Shield
     Name: Immune Shield
@@ -24750,6 +24758,8 @@ Body:
     EquipLevelMin: 65
     Refineable: true
     View: 3
+    Script: |
+      bonus2 bSubDefEle,Ele_Holy,5; bonus2 bMagicSubDefEle,Ele_Holy,5; bonus2 bSubRace,RC_Dragon,-5;
   - Id: 2175
     AegisName: Esprit_Shield
     Name: Spirit Shield
@@ -24763,6 +24773,8 @@ Body:
     EquipLevelMin: 65
     Refineable: true
     View: 3
+    Script: |
+      bonus2 bSubDefEle,Ele_Ghost,5; bonus2 bMagicSubDefEle,Ele_Ghost,5; bonus2 bSubRace,RC_Angel,-5;
   - Id: 2176
     AegisName: Dark_Book
     Name: Black Book
@@ -31933,6 +31945,8 @@ Body:
       Garment: true
     EquipLevelMin: 65
     Refineable: true
+    Script: |
+      bonus2 bSubDefEle,Ele_Water,5; bonus2 bMagicSubDefEle,Ele_Water,5; bonus2 bSubRace,RC_Brute,-5;
   - Id: 2594
     AegisName: Wrapping_Manteau
     Name: Wrapping Manteau
@@ -152904,7 +152918,7 @@ Body:
     EquipLevelMin: 65
     Refineable: true
     Script: |
-      bonus2 bSubEle,Ele_Earth,5; bonus2 bSubRace,RC_Fish,-5;
+      bonus2 bSubDefEle,Ele_Earth,5; bonus2 bMagicSubDefEle,Ele_Earth,5; bonus2 bSubRace,RC_Fish,-5;
   - Id: 20702
     AegisName: TE_Woe_Muffler
     Name: TE Woe Muffler
@@ -161804,7 +161818,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus2 bSubEle,Ele_Neutral,(.@r<7)?1:((.@r<9)?2:3);
+      .@r = getrefine(); .@i = (.@r<7)?1:((.@r<9)?2:3); bonus2 bSubDefEle,Ele_Neutral,.@i; bonus2 bMagicSubDefEle,Ele_Neutral,.@i;
   - Id: 24199
     AegisName: S_Hallowed_Shield
     Name: Hallowed Shadow Shield
@@ -161814,7 +161828,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus2 bSubEle,Ele_Dark,(.@r<7)?1:((.@r<9)?2:3);
+      .@r = getrefine(); .@i = (.@r<7)?1:((.@r<9)?2:3); bonus2 bSubDefEle,Ele_Dark,.@i; bonus2 bMagicSubDefEle,Ele_Dark,.@i;
   - Id: 24200
     AegisName: S_Saharic_Shield
     Name: Saharic Shadow Shield
@@ -161824,7 +161838,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus2 bSubEle,Ele_Water,(.@r<7)?1:((.@r<9)?2:3);
+      .@r = getrefine(); .@i = (.@r<7)?1:((.@r<9)?2:3); bonus2 bSubDefEle,Ele_Water,.@i; bonus2 bMagicSubDefEle,Ele_Water,.@i;
   - Id: 24201
     AegisName: S_Underneath_Shield
     Name: Underneath Shadow Shield
@@ -161834,7 +161848,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus2 bSubEle,Ele_Earth,(.@r<7)?1:((.@r<9)?2:3);
+      .@r = getrefine(); .@i = (.@r<7)?1:((.@r<9)?2:3); bonus2 bSubDefEle,Ele_Earth,.@i; bonus2 bMagicSubDefEle,Ele_Earth,.@i;
   - Id: 24202
     AegisName: S_Flam_Shield
     Name: Flame Shadow Shield
@@ -161844,7 +161858,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus2 bSubEle,Ele_Fire,(.@r<7)?1:((.@r<9)?2:3);
+      .@r = getrefine(); .@i = (.@r<7)?1:((.@r<9)?2:3); bonus2 bSubDefEle,Ele_Fire,.@i; bonus2 bMagicSubDefEle,Ele_Fire,.@i;
   - Id: 24203
     AegisName: S_Windy_Shield
     Name: Windy Shadow Shield
@@ -161854,7 +161868,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus2 bSubEle,Ele_Wind,(.@r<7)?1:((.@r<9)?2:3);
+      .@r = getrefine(); .@i = (.@r<7)?1:((.@r<9)?2:3); bonus2 bSubDefEle,Ele_Wind,.@i; bonus2 bMagicSubDefEle,Ele_Wind,.@i;
   - Id: 24204
     AegisName: S_Envenom_Shield
     Name: Envenom Shadow Shield
@@ -161864,7 +161878,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus2 bSubEle,Ele_Poison,(.@r<7)?1:((.@r<9)?2:3);
+      .@r = getrefine(); .@i = (.@r<7)?1:((.@r<9)?2:3); bonus2 bSubDefEle,Ele_Poison,.@i; bonus2 bMagicSubDefEle,Ele_Poison,.@i;
   - Id: 24205
     AegisName: S_Damned_Shield
     Name: Damned Shadow Shield
@@ -161874,7 +161888,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus2 bSubEle,Ele_Holy,(.@r<7)?1:((.@r<9)?2:3);
+      .@r = getrefine(); .@i = (.@r<7)?1:((.@r<9)?2:3); bonus2 bSubDefEle,Ele_Holy,.@i; bonus2 bMagicSubDefEle,Ele_Holy,.@i;
   - Id: 24206
     AegisName: S_Geist_Shield
     Name: Exorcism Shadow Shield
@@ -161884,7 +161898,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus2 bSubEle,Ele_Ghost,(.@r<7)?1:((.@r<9)?2:3);
+      .@r = getrefine(); .@i = (.@r<7)?1:((.@r<9)?2:3); bonus2 bSubDefEle,Ele_Ghost,.@i; bonus2 bMagicSubDefEle,Ele_Ghost,.@i;
   - Id: 24207
     AegisName: S_Divine_Shield
     Name: Divine Shadow Shield
@@ -161894,7 +161908,7 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus2 bSubEle,Ele_Undead,(.@r<7)?1:((.@r<9)?2:3);
+      .@r = getrefine(); .@i = (.@r<7)?1:((.@r<9)?2:3); bonus2 bSubDefEle,Ele_Undead,.@i; bonus2 bMagicSubDefEle,Ele_Undead,.@i;
   - Id: 24208
     AegisName: S_Expert_Shoes
     Name: Expert Shadow Shoes
@@ -166729,7 +166743,7 @@ Body:
     Locations:
       Left_Hand: true
     Script: |
-      bonus2 bSubEle,Ele_Fire,20; bonus2 bAddEle,Ele_Fire,5;
+      bonus2 bSubDefEle,Ele_Fire,20; bonus2 bAddEle,Ele_Fire,5;
   - Id: 27030
     AegisName: Fulbuk_Card
     Name: Firebug Card
@@ -169711,7 +169725,7 @@ Body:
       Left_Accessory: true
     EquipLevelMin: 1
     Script: |
-      bonus bLuk,20; autobonus "{ bonus bAspd,2; }",50,2000,BF_WEAPON|BF_MAGIC;
+      /* bonus bLuk,20; Event bonus */ autobonus "{ bonus bAspd,2; bonus bVariableCastrate,-30; }",50,5000,BF_WEAPON|BF_MAGIC,"{ specialeffect2 EF_ENCHANCE; }";
   - Id: 28333
     AegisName: Gold_PC_Room_Ring
     Name: Gold PC Room Ring

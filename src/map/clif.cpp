@@ -65,6 +65,16 @@ static inline uint32 client_tick( t_tick tick ){
 	return (uint32)tick;
 }
 
+#if PACKETVER >= 20170830
+static inline int64 client_exp(t_exp exp) {
+	return (int64)u64min(exp, MAX_EXP);
+}
+#else
+static inline int32 client_exp(t_exp exp) {
+	return (int32)u64min(exp, MAX_EXP);
+}
+#endif
+
 /* for clif_clearunit_delayed */
 static struct eri *delay_clearunit_ers;
 
@@ -1462,6 +1472,22 @@ static void clif_spiritball_single(int fd, struct map_session_data *sd)
 	WFIFOSET(fd, packet_len(0x1e1));
 }
 
+/// Notifies the client of an object's Millenium Shields.
+static void clif_millenniumshield_single(int fd, map_session_data *sd)
+{
+	nullpo_retv(sd);
+
+	if (sd->sc.data[SC_MILLENNIUMSHIELD] == nullptr)
+		return;
+
+	WFIFOHEAD(fd, packet_len(0x440));
+	WFIFOW(fd, 0) = 0x440;
+	WFIFOL(fd, 2) = sd->bl.id;
+	WFIFOW(fd, 6) = sd->sc.data[SC_MILLENNIUMSHIELD]->val2;
+	WFIFOW(fd, 8) = 0;
+	WFIFOSET(fd, packet_len(0x440));
+}
+
 /*==========================================
  * Kagerou/Oboro amulet spirit
  *------------------------------------------*/
@@ -1550,6 +1576,26 @@ void clif_weather(int16 m)
 	}
 	mapit_free(iter);
 }
+
+/**
+ * Hide a NPC from the effects of Maya Purple card.
+ * @param bl: Block data
+ * @return True if NPC is disabled or false otherwise
+ */
+static inline bool clif_npc_mayapurple(block_list *bl) {
+	nullpo_retr(false, bl);
+
+	if (bl->type == BL_NPC) {
+		npc_data *nd = map_id2nd(bl->id);
+
+		// TODO: Confirm if waitingroom cause any special cases
+		if (/* nd->chat_id == 0 && */ nd->sc.option & OPTION_INVISIBLE)
+			return true;
+	}
+
+	return false;
+}
+
 /**
  * Main function to spawn a unit on the client (player/mob/pet/etc)
  **/
@@ -1560,10 +1606,8 @@ int clif_spawn( struct block_list *bl, bool walking ){
 	if( !vd || vd->class_ == JT_INVISIBLE )
 		return 0;
 
-	/**
-	* Hide NPC from maya purple card.
-	**/
-	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
+	// Hide NPC from Maya Purple card
+	if (clif_npc_mayapurple(bl))
 		return 0;
 
 	if( bl->type == BL_NPC && !vd->dead_sit ){
@@ -1585,6 +1629,8 @@ int clif_spawn( struct block_list *bl, bool walking ){
 
 			if (sd->spiritball > 0)
 				clif_spiritball(&sd->bl);
+			if (sd->sc.data[SC_MILLENNIUMSHIELD])
+				clif_millenniumshield(&sd->bl, sd->sc.data[SC_MILLENNIUMSHIELD]->val2);
 			if (sd->soulball > 0)
 				clif_soulball(sd);
 			if(sd->state.size==SZ_BIG) // tiny/big players [Valaris]
@@ -1906,10 +1952,8 @@ void clif_move(struct unit_data *ud)
 		return;
 	}
 
-	/**
-	* Hide NPC from maya purple card.
-	**/
-	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
+	// Hide NPC from Maya Purple card
+	if (clif_npc_mayapurple(bl))
 		return;
 
 	if (ud->state.speed_changed) {
@@ -3357,40 +3401,40 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 #if PACKETVER >= 20170830
 	case SP_BASEEXP:
 		WFIFOW(fd,0)=0xacb;
-		WFIFOQ(fd,4)=sd->status.base_exp;
+		WFIFOQ(fd,4)=client_exp(sd->status.base_exp);
 		len = packet_len(0xacb);
 		break;
 	case SP_JOBEXP:
 		WFIFOW(fd,0)=0xacb;
-		WFIFOQ(fd,4)=sd->status.job_exp;
+		WFIFOQ(fd,4)=client_exp(sd->status.job_exp);
 		len = packet_len(0xacb);
 		break;
 	case SP_NEXTBASEEXP:
 		WFIFOW(fd,0)=0xacb;
-		WFIFOQ(fd,4)=pc_nextbaseexp(sd);
+		WFIFOQ(fd,4)=client_exp(pc_nextbaseexp(sd));
 		len = packet_len(0xacb);
 		break;
 	case SP_NEXTJOBEXP:
 		WFIFOW(fd,0)=0xacb;
-		WFIFOQ(fd,4)=pc_nextjobexp(sd);
+		WFIFOQ(fd,4)=client_exp(pc_nextjobexp(sd));
 		len = packet_len(0xacb);
 		break;
 #else
 	case SP_BASEEXP:
 		WFIFOW(fd,0)=0xb1;
-		WFIFOL(fd,4)=sd->status.base_exp;
+		WFIFOL(fd,4)=client_exp(sd->status.base_exp);
 		break;
 	case SP_JOBEXP:
 		WFIFOW(fd,0)=0xb1;
-		WFIFOL(fd,4)=sd->status.job_exp;
+		WFIFOL(fd,4)=client_exp(sd->status.job_exp);
 		break;
 	case SP_NEXTBASEEXP:
 		WFIFOW(fd,0)=0xb1;
-		WFIFOL(fd,4)=pc_nextbaseexp(sd);
+		WFIFOL(fd,4)= client_exp(pc_nextbaseexp(sd));
 		break;
 	case SP_NEXTJOBEXP:
 		WFIFOW(fd,0)=0xb1;
-		WFIFOL(fd,4)=pc_nextjobexp(sd);
+		WFIFOL(fd,4)= client_exp(pc_nextjobexp(sd));
 		break;
 #endif
 
@@ -4674,6 +4718,8 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 
 	if(dstsd->spiritball > 0)
 		clif_spiritball_single(sd->fd, dstsd);
+	if (dstsd->sc.data[SC_MILLENNIUMSHIELD])
+		clif_millenniumshield_single(sd->fd, dstsd);
 	if (dstsd->spiritcharm_type != CHARM_TYPE_NONE && dstsd->spiritcharm > 0)
 		clif_spiritcharm_single(sd->fd, dstsd);
 	if (dstsd->soulball > 0)
@@ -4707,10 +4753,8 @@ void clif_getareachar_unit( struct map_session_data* sd,struct block_list *bl ){
 	if (!vd || vd->class_ == JT_INVISIBLE)
 		return;
 
-	/**
-	* Hide NPC from maya purple card.
-	**/
-	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
+	// Hide NPC from Maya Purple card
+	if (clif_npc_mayapurple(bl))
 		return;
 
 	ud = unit_bl2ud(bl);
@@ -6491,7 +6535,7 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 #if PACKETVER >= 20121010
 	struct map_data *mapdata = map_getmapdata(bl->m);
 
-	WBUFL(buf,4) = ((mapdata->flag[MF_PVP]?1:0)<<0)| // PARTY - Show attack cursor on non-party members (PvP)
+	WBUFL(buf,4) = ((mapdata->flag[MF_PVP]?1:0 || (bl->type == BL_PC && ((TBL_PC *)bl)->duel_group > 0))<<0)| // PARTY - Show attack cursor on non-party members (PvP)
 		((mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata)?1:0)<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
 		((mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata)?1:0)<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
 		((mapdata->flag[MF_NOMINEEFFECT] || !mapdata_flag_gvg2(mapdata)?0:1)<<3)| // USE_SIMPLE_EFFECT - Automatically enable /mineffect
@@ -8525,8 +8569,8 @@ void clif_guild_basicinfo(struct map_session_data *sd) {
 	WFIFOL(fd,10)=g->connect_member;
 	WFIFOL(fd,14)=g->max_member;
 	WFIFOL(fd,18)=g->average_lv;
-	WFIFOL(fd,22)=(uint32)cap_value(g->exp,0,INT32_MAX);
-	WFIFOL(fd,26)=g->next_exp;
+	WFIFOL(fd,22)=(uint32)cap_value(g->exp, 0, MAX_GUILD_EXP);
+	WFIFOL(fd,26)=(uint32)cap_value(g->next_exp, 0, MAX_GUILD_EXP);
 	WFIFOL(fd,30)=0;	// Tax Points
 	WFIFOL(fd,34)=0;	// Honor: (left) Vulgar [-100,100] Famed (right)
 	WFIFOL(fd,38)=0;	// Virtue: (down) Wicked [-100,100] Righteous (up)
@@ -9577,6 +9621,8 @@ void clif_refresh(struct map_session_data *sd)
 	clif_updatestatus(sd,SP_LUK);
 	if (sd->spiritball)
 		clif_spiritball_single(sd->fd, sd);
+	if (sd->sc.data[SC_MILLENNIUMSHIELD])
+		clif_millenniumshield_single(sd->fd, sd);
 	if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
 		clif_spiritcharm_single(sd->fd, sd);
 	if (sd->soulball)
@@ -12857,16 +12903,15 @@ void clif_parse_NpcSelectMenu(int fd,struct map_session_data *sd){
 	int npc_id = RFIFOL(fd,info->pos[0]);
 	uint8 select = RFIFOB(fd,info->pos[1]);
 
-	if( (select > sd->npc_menu && select != 0xff) || select == 0 ) {
 #ifdef SECURE_NPCTIMEOUT
-		if( sd->npc_idle_timer != INVALID_TIMER ) {
+	if( sd->npc_idle_timer == INVALID_TIMER && !sd->state.ignoretimeout )
+		return;
 #endif
+
+	if( (select > sd->npc_menu && select != 0xff) || select == 0 ) {
 			TBL_NPC* nd = map_id2nd(npc_id);
 			ShowWarning("Invalid menu selection on npc %d:'%s' - got %d, valid range is [%d..%d] (player AID:%d, CID:%d, name:'%s')!\n", npc_id, (nd)?nd->name:"invalid npc id", select, 1, sd->npc_menu, sd->bl.id, sd->status.char_id, sd->status.name);
 			clif_GM_kick(NULL,sd);
-#ifdef SECURE_NPCTIMEOUT
-		}
-#endif
 		return;
 	}
 
@@ -14708,10 +14753,10 @@ void clif_parse_NoviceDoriDori(int fd, struct map_session_data *sd)
 void clif_parse_NoviceExplosionSpirits(int fd, struct map_session_data *sd)
 {
 	if( (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE ) {
-		unsigned int next = pc_nextbaseexp(sd);
+		t_exp next = pc_nextbaseexp(sd);
 
 		if( next ) {
-			int percent = (int)( ( (float)sd->status.base_exp/(float)next )*1000. );
+			int percent = (int)( ( (double)sd->status.base_exp/(double)next )*1000. );
 
 			if( percent && ( percent%100 ) == 0 ) {// 10.0%, 20.0%, ..., 90.0%
 				sc_start(&sd->bl,&sd->bl, status_skill2sc(MO_EXPLOSIONSPIRITS), 100, 17, skill_get_time(MO_EXPLOSIONSPIRITS, 5)); //Lv17-> +50 critical (noted by Poki) [Skotlex]
@@ -18169,9 +18214,9 @@ void clif_party_show_picker( struct map_session_data* sd, struct item* item_data
  * @param exp EXP value gained/loss
  * @param type SP_BASEEXP, SP_JOBEXP
  * @param quest False:Normal EXP; True:Quest EXP (displayed in purple color)
- * @param lost True:if lossing EXP
+ * @param lost True:if losing EXP
  */
-void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, bool quest, bool lost)
+void clif_displayexp(struct map_session_data *sd, t_exp exp, char type, bool quest, bool lost)
 {
 	int fd;
 	int offset;
@@ -18189,10 +18234,10 @@ void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, b
 	WFIFOW(fd,0) = cmd;
 	WFIFOL(fd,2) = sd->bl.id;
 #if PACKETVER >= 20170830
-	WFIFOQ(fd,6) = (int64)u64min((uint64)exp, INT_MAX) * (lost ? -1 : 1);
+	WFIFOQ(fd,6) = client_exp(exp) * (lost ? -1 : 1);
 	offset = 4;
 #else
-	WFIFOL(fd,6) = (int)umin(exp, INT_MAX) * (lost ? -1 : 1);
+	WFIFOL(fd,6) = client_exp(exp) * (lost ? -1 : 1);
 	offset = 0;
 #endif
 	WFIFOW(fd,10+offset) = type;
