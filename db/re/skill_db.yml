@@ -16825,6 +16825,28 @@ Body:
     Flags:
       IsNpc: true
     HitCount: 1
+  - Id: 719
+    Name: NPC_HELLBURNING
+    Description: Hell Burning
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Self
+    Flags:
+      IsNpc: true
+      IgnoreLandProtector: true
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    Duration1: 3000
+    Unit:
+      Id: Hellburning
+      Layout: 1
+      Interval: 20
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+        RangedSingleUnit: true
   - Id: 720
     Name: NPC_JACKFROST
     Description: Jack Frost 2
