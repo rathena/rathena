@@ -4183,10 +4183,14 @@ un_bk_q,347,217,4	script	Facilities manager Remodeling#EP15.2MR	4_M_EINMAN,{
 			mes "[Facilities manager Remodeling]";
 			mes "Anyway I will enjoy this grape you delivered. This is a reward.";
 			next;
-			erasequest 5359;
-			erasequest 5360;
-			erasequest 5361;
-			erasequest 5362;
+			if (isbegin_quest(5359) > 0)
+				erasequest 5359;
+			if (isbegin_quest(5360) > 0)
+				erasequest 5360;
+			if (isbegin_quest(5361) > 0)
+				erasequest 5361;
+			if (isbegin_quest(5362) > 0)
+				erasequest 5362;
 			setquest 5370;
 			getexp 1000000,1000000;
 			mes "- The small round capsule has percolated through skin. It feels like experience has accumulated.";
