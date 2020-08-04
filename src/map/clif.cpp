@@ -9554,14 +9554,14 @@ void clif_specialeffect_remove(struct block_list* bl, int type, enum send_target
 	struct PACKET_ZC_REMOVE_EFFECT p;
 
 	p.packetType = HEADER_ZC_REMOVE_EFFECT;
-	p.AID = bl->id;
+	p.aid = bl->id;
 	p.effectId = type;
 
 	clif_send( &p, sizeof( struct PACKET_ZC_REMOVE_EFFECT ), bl, target );
 
 	if( disguised(bl) )
 	{
-		p.AID = disguised_bl_id( bl->id );
+		p.aid = disguised_bl_id( bl->id );
 		clif_send( &p, sizeof( struct PACKET_ZC_REMOVE_EFFECT ), bl, SELF );
 	}
 #endif
@@ -9576,10 +9576,16 @@ void clif_specialeffect_remove_single(struct block_list* bl, int type, struct bl
 	struct PACKET_ZC_REMOVE_EFFECT p;
 
 	p.packetType = HEADER_ZC_REMOVE_EFFECT;
-	p.AID = bl->id;
+	p.aid = bl->id;
 	p.effectId = type;
 
 	clif_send( &p, sizeof( struct PACKET_ZC_REMOVE_EFFECT ), target, SELF );
+
+	if( disguised(bl) )
+	{
+		p.aid = disguised_bl_id( bl->id );
+		clif_send( &p, sizeof( struct PACKET_ZC_REMOVE_EFFECT ), target, SELF );
+	}
 #endif
 }
 

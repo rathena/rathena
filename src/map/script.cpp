@@ -14655,8 +14655,8 @@ BUILDIN_FUNC(removespecialeffect)
 	int type = script_getnum(st,2);
 	enum send_target target = script_hasdata(st,3) ? (send_target)script_getnum(st,3) : AREA;
 
-	if(bl==NULL)
-		return SCRIPT_CMD_SUCCESS;
+	if(bl==nullptr)
+		return SCRIPT_CMD_FAILURE;
 
 	if( type <= EF_NONE || type >= EF_MAX ){
 		ShowError( "buildin_removespecialeffect: unsupported effect id %d\n", type );
@@ -14668,6 +14668,11 @@ BUILDIN_FUNC(removespecialeffect)
 		TBL_NPC *nd = npc_name2id(script_getstr(st,4));
 		if(nd)
 			clif_specialeffect_remove(&nd->bl, type, target);
+		else {
+			ShowError("buildin_removespecialeffect: can't find npc %s\n", script_getstr(st,4));
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
 	else
 	{
@@ -14675,6 +14680,10 @@ BUILDIN_FUNC(removespecialeffect)
 			TBL_PC *sd;
 			if (script_rid2sd(sd))
 				clif_specialeffect_remove_single(bl,type,&sd->bl);
+			else {
+				ShowError("buildin_removespecialeffect: no player attached.");
+				return SCRIPT_CMD_FAILURE;
+			}
 		} else {
 			clif_specialeffect_remove(bl, type, target);
 		}
@@ -14686,7 +14695,9 @@ BUILDIN_FUNC(removespecialeffect2)
 {
 	TBL_PC *sd;
 
-	if( script_nick2sd(4,sd) ){
+	if( !script_nick2sd(4,sd) )
+		return SCRIPT_CMD_FAILURE;
+	else {
 		int type = script_getnum(st,2);
 		enum send_target target = script_hasdata(st,3) ? (send_target)script_getnum(st,3) : AREA;
 
