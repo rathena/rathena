@@ -11184,8 +11184,8 @@
 
 3038,Hidden Mob 7@NPC_INVISIBLE,idle,353,1,10000,0,30000,yes,self,always,0,,,,,,,
 3038,Hidden Mob 7@NPC_INVISIBLE,attack,353,1,10000,0,30000,yes,self,always,0,,,,,,,
-// 3038,Hidden Mob 7@NPC_HELLBURNING,idle,719,1,10000,0,3000,yes,self,always,0,,,,,,,
-// 3038,Hidden Mob 7@NPC_HELLBURNING,attack,719,1,10000,0,3000,yes,self,always,0,,,,,,,
+3038,Hidden Mob 7@NPC_HELLBURNING,idle,719,1,10000,0,3000,yes,self,always,0,,,,,,,
+3038,Hidden Mob 7@NPC_HELLBURNING,attack,719,1,10000,0,3000,yes,self,always,0,,,,,,,
 
 // Jitterbug instance
 3069,Ferre@NPC_GROUNDATTACK,attack,185,5,1000,0,5000,no,target,always,0,,,,,,,

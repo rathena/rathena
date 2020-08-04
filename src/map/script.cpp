@@ -14547,6 +14547,22 @@ BUILDIN_FUNC(petskillsupport)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+static inline void script_skill_effect(block_list *bl, uint16 skill_id, uint16 skill_lv, int16 x, int16 y) {
+	nullpo_retv(bl);
+
+	switch (skill_get_casttype(skill_id)) {
+		case CAST_GROUND:
+			clif_skill_poseffect(bl, skill_id, skill_lv, x, y, gettick());
+			break;
+		case CAST_NODAMAGE:
+			clif_skill_nodamage(bl, bl, skill_id, skill_lv, 1);
+			break;
+		case CAST_DAMAGE:
+			clif_skill_damage(bl, bl, gettick(), status_get_amotion(bl), status_get_dmotion(bl), 0, 1, skill_id, skill_lv, skill_get_hit(skill_id));
+			break;
+	}
+}
+
 /*==========================================
  * Scripted skill effects [Celest]
  *------------------------------------------*/
@@ -14558,10 +14574,23 @@ BUILDIN_FUNC(skilleffect)
 	uint16 skill_id, skill_lv;
 	
 	if( !script_rid2sd(sd) )
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 	
 	skill_id = ( script_isstring(st, 2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
 	skill_lv = script_getnum(st,3);
+
+	if (skill_db.find(skill_id) == nullptr) {
+		ShowError("buildin_skilleffect: Invalid skill defined (%s)!\n", script_getstr(st, 2));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	uint16 skill_lv_cap = cap_value(skill_lv, 1, skill_get_max(skill_id));
+
+	if (skill_lv != skill_lv_cap) {
+		ShowWarning("buildin_skilleffect: Invalid skill level %d, capping to %d.\n", skill_lv, skill_lv_cap);
+		skill_lv = skill_lv_cap;
+		script_reportsrc(st);
+	}
 
 	/* Ensure we're standing because the following packet causes the client to virtually set the char to stand,
 	 * which leaves the server thinking it still is sitting. */
@@ -14570,7 +14599,8 @@ BUILDIN_FUNC(skilleffect)
 		clif_standing(&sd->bl);
 	}
 
-	clif_skill_nodamage(&sd->bl,&sd->bl,skill_id,skill_lv,1);
+	script_skill_effect(&sd->bl, skill_id, skill_lv, sd->bl.x, sd->bl.y);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -14582,16 +14612,35 @@ BUILDIN_FUNC(skilleffect)
 BUILDIN_FUNC(npcskilleffect)
 {
 	struct block_list *bl= map_id2bl(st->oid);
+
+	if (bl == nullptr) {
+		ShowError("buildin_npcskilleffect: Invalid object attached to NPC.");
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	uint16 skill_id, skill_lv;
-	int x, y;
+	int16 x, y;
 
 	skill_id=( script_isstring(st, 2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
 	skill_lv=script_getnum(st,3);
 	x=script_getnum(st,4);
 	y=script_getnum(st,5);
 
-	if (bl)
-		clif_skill_poseffect(bl,skill_id,skill_lv,x,y,gettick());
+	if (skill_db.find(skill_id) == nullptr) {
+		ShowError("buildin_npcskilleffect: Invalid skill defined (%s)!\n", script_getstr(st, 2));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	uint16 skill_lv_cap = cap_value(skill_lv, 1, skill_get_max(skill_id));
+
+	if (skill_lv != skill_lv_cap) {
+		ShowWarning("buildin_npcskilleffect: Invalid skill level %d, capping to %d.\n", skill_lv, skill_lv_cap);
+		skill_lv = skill_lv_cap;
+		script_reportsrc(st);
+	}
+
+	script_skill_effect(bl, skill_id, skill_lv, bl->x, bl->y);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 

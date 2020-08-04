@@ -4239,6 +4239,10 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if (sd->state.lr_flag != 2)
 			sd->dropaddclass[type2] += val;
 		break;
+	case SP_MAGIC_SUBDEF_ELE: // bonus2 bMagicSubDefEle,e,x;
+		PC_BONUS_CHK_ELEMENT(type2, SP_MAGIC_SUBDEF_ELE);
+		sd->magic_subdefele[type2] += val;
+		break;
 	default:
 		if (current_equip_combo_pos > 0) {
 			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in a combo with item #%d\n", type, type2, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
@@ -8207,7 +8211,10 @@ void pc_close_npc(struct map_session_data *sd,int flag)
 		sd->npc_menu = 0;
 		sd->npc_shopid = 0;
 #ifdef SECURE_NPCTIMEOUT
-		sd->npc_idle_timer = INVALID_TIMER;
+		if( sd->npc_idle_timer != INVALID_TIMER ){
+			delete_timer( sd->npc_idle_timer, npc_secure_timeout_timer );
+			sd->npc_idle_timer = INVALID_TIMER;
+		}
 #endif
 		if (sd->st) {
 			if (sd->st->state == CLOSE) {

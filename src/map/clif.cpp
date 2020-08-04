@@ -1472,6 +1472,22 @@ static void clif_spiritball_single(int fd, struct map_session_data *sd)
 	WFIFOSET(fd, packet_len(0x1e1));
 }
 
+/// Notifies the client of an object's Millenium Shields.
+static void clif_millenniumshield_single(int fd, map_session_data *sd)
+{
+	nullpo_retv(sd);
+
+	if (sd->sc.data[SC_MILLENNIUMSHIELD] == nullptr)
+		return;
+
+	WFIFOHEAD(fd, packet_len(0x440));
+	WFIFOW(fd, 0) = 0x440;
+	WFIFOL(fd, 2) = sd->bl.id;
+	WFIFOW(fd, 6) = sd->sc.data[SC_MILLENNIUMSHIELD]->val2;
+	WFIFOW(fd, 8) = 0;
+	WFIFOSET(fd, packet_len(0x440));
+}
+
 /*==========================================
  * Kagerou/Oboro amulet spirit
  *------------------------------------------*/
@@ -1560,6 +1576,26 @@ void clif_weather(int16 m)
 	}
 	mapit_free(iter);
 }
+
+/**
+ * Hide a NPC from the effects of Maya Purple card.
+ * @param bl: Block data
+ * @return True if NPC is disabled or false otherwise
+ */
+static inline bool clif_npc_mayapurple(block_list *bl) {
+	nullpo_retr(false, bl);
+
+	if (bl->type == BL_NPC) {
+		npc_data *nd = map_id2nd(bl->id);
+
+		// TODO: Confirm if waitingroom cause any special cases
+		if (/* nd->chat_id == 0 && */ nd->sc.option & OPTION_INVISIBLE)
+			return true;
+	}
+
+	return false;
+}
+
 /**
  * Main function to spawn a unit on the client (player/mob/pet/etc)
  **/
@@ -1570,10 +1606,8 @@ int clif_spawn( struct block_list *bl, bool walking ){
 	if( !vd || vd->class_ == JT_INVISIBLE )
 		return 0;
 
-	/**
-	* Hide NPC from maya purple card.
-	**/
-	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
+	// Hide NPC from Maya Purple card
+	if (clif_npc_mayapurple(bl))
 		return 0;
 
 	if( bl->type == BL_NPC && !vd->dead_sit ){
@@ -1595,6 +1629,8 @@ int clif_spawn( struct block_list *bl, bool walking ){
 
 			if (sd->spiritball > 0)
 				clif_spiritball(&sd->bl);
+			if (sd->sc.data[SC_MILLENNIUMSHIELD])
+				clif_millenniumshield(&sd->bl, sd->sc.data[SC_MILLENNIUMSHIELD]->val2);
 			if (sd->soulball > 0)
 				clif_soulball(sd);
 			if(sd->state.size==SZ_BIG) // tiny/big players [Valaris]
@@ -1916,10 +1952,8 @@ void clif_move(struct unit_data *ud)
 		return;
 	}
 
-	/**
-	* Hide NPC from maya purple card.
-	**/
-	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
+	// Hide NPC from Maya Purple card
+	if (clif_npc_mayapurple(bl))
 		return;
 
 	if (ud->state.speed_changed) {
@@ -4684,6 +4718,8 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 
 	if(dstsd->spiritball > 0)
 		clif_spiritball_single(sd->fd, dstsd);
+	if (dstsd->sc.data[SC_MILLENNIUMSHIELD])
+		clif_millenniumshield_single(sd->fd, dstsd);
 	if (dstsd->spiritcharm_type != CHARM_TYPE_NONE && dstsd->spiritcharm > 0)
 		clif_spiritcharm_single(sd->fd, dstsd);
 	if (dstsd->soulball > 0)
@@ -4717,10 +4753,8 @@ void clif_getareachar_unit( struct map_session_data* sd,struct block_list *bl ){
 	if (!vd || vd->class_ == JT_INVISIBLE)
 		return;
 
-	/**
-	* Hide NPC from maya purple card.
-	**/
-	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
+	// Hide NPC from Maya Purple card
+	if (clif_npc_mayapurple(bl))
 		return;
 
 	ud = unit_bl2ud(bl);
@@ -6501,7 +6535,7 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 #if PACKETVER >= 20121010
 	struct map_data *mapdata = map_getmapdata(bl->m);
 
-	WBUFL(buf,4) = ((mapdata->flag[MF_PVP]?1:0)<<0)| // PARTY - Show attack cursor on non-party members (PvP)
+	WBUFL(buf,4) = ((mapdata->flag[MF_PVP]?1:0 || (bl->type == BL_PC && ((TBL_PC *)bl)->duel_group > 0))<<0)| // PARTY - Show attack cursor on non-party members (PvP)
 		((mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata)?1:0)<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
 		((mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata)?1:0)<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
 		((mapdata->flag[MF_NOMINEEFFECT] || !mapdata_flag_gvg2(mapdata)?0:1)<<3)| // USE_SIMPLE_EFFECT - Automatically enable /mineffect
@@ -9587,6 +9621,8 @@ void clif_refresh(struct map_session_data *sd)
 	clif_updatestatus(sd,SP_LUK);
 	if (sd->spiritball)
 		clif_spiritball_single(sd->fd, sd);
+	if (sd->sc.data[SC_MILLENNIUMSHIELD])
+		clif_millenniumshield_single(sd->fd, sd);
 	if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
 		clif_spiritcharm_single(sd->fd, sd);
 	if (sd->soulball)
