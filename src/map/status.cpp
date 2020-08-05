@@ -10571,10 +10571,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 
-		case SC_BLOCKING_PLAY:
-			tick = battle_config.blocking_play_delay;
-			break;
-
 		case SC_STONE:
 			val3 = max(val3, 100); // Incubation time
 			val4 = max(tick-val3, 100); // Petrify time

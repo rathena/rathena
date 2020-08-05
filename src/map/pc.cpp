@@ -5946,8 +5946,8 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 		sd->state.pmap = sd->bl.m;
 
-		if (battle_config.blocking_play_delay)
-			sc_start(&sd->bl, &sd->bl, SC_BLOCKING_PLAY, 100, 0, 0);
+		if (battle_config.blocking_play_delay > 0)
+			sc_start(&sd->bl, &sd->bl, SC_BLOCKING_PLAY, 100, 0, battle_config.blocking_play_delay);
 
 		if (sc && sc->count) { // Cancel some map related stuff.
 			if (sc->data[SC_JAILED])
