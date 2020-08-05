@@ -3,19 +3,20 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Additional Comments: =================================
 //= 1.0 First version from jAthena [Playtester]
 //= 1.1 More accurate spawns [Playtester]
 //= 1.2 Removed Ktullanux spawn, quest implemented [L0ne_W0lf]
+//= 1.3 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================
 // ice_dun01 - Ice Cave
 //==================================================
-ice_dun01,0,0	monster	Siroma	1776,75,5000
+ice_dun01,0,0	monster	Siroma	1776,76,5000
 ice_dun01,0,0	monster	Roween	1782,5,5000
 ice_dun01,0,0	monster	Muscipular	1780,5,5000
 ice_dun01,0,0	monster	Gazeti	1778,2,5000

@@ -574,6 +574,10 @@ enum e_config_type : uint32 {
 	CONFIG_HOMUNCULUS_AUTOFEED
 };
 
+enum e_memorial_dungeon_command : uint16 {
+	COMMAND_MEMORIALDUNGEON_DESTROY_FORCE = 0x3,
+};
+
 int clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -843,6 +847,7 @@ void clif_instance_create(int instance_id, int num);
 void clif_instance_changewait(int instance_id, int num);
 void clif_instance_status(int instance_id, unsigned int limit1, unsigned int limit2);
 void clif_instance_changestatus(int instance_id, e_instance_notify type, unsigned int limit);
+void clif_parse_MemorialDungeonCommand(int fd, map_session_data *sd);
 
 // Custom Fonts
 void clif_font(struct map_session_data *sd);
@@ -925,9 +930,9 @@ void clif_quest_send_mission(struct map_session_data * sd);
 void clif_quest_add(struct map_session_data * sd, struct quest * qd);
 void clif_quest_delete(struct map_session_data * sd, int quest_id);
 void clif_quest_update_status(struct map_session_data * sd, int quest_id, bool active);
-void clif_quest_update_objective(struct map_session_data * sd, struct quest * qd, int mobid);
+void clif_quest_update_objective(struct map_session_data * sd, struct quest * qd);
 void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, e_questinfo_types effect, e_questinfo_markcolor color);
-void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, bool quest, bool lost);
+void clif_displayexp(struct map_session_data *sd, t_exp exp, char type, bool quest, bool lost);
 
 int clif_send(const void* buf, int len, struct block_list* bl, enum send_target type);
 void do_init_clif(void);

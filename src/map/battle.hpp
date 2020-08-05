@@ -657,7 +657,8 @@ struct Battle_Config
 	int switch_remove_edp;
 	int feature_homunculus_autofeed;
 	int feature_homunculus_autofeed_rate;
-	int summoner_trait;
+	int summoner_race;
+	int summoner_size;
 	int homunculus_autofeed_always;
 	int feature_attendance;
 	int feature_privateairship;
@@ -681,6 +682,11 @@ struct Battle_Config
 	int ping_timer_interval;
 	int ping_time;
 	int show_skill_scale;
+	int achievement_mob_share;
+	int slave_stick_with_master;
+	int at_logout_event;
+	int homunculus_starving_rate;
+	int homunculus_starving_delay;
 
 #include "../custom/battle_config_struct.inc"
 };

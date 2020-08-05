@@ -9404,6 +9404,7 @@ Body:
         Time: 55000
       - Level: 10
         Time: 60000
+    Duration2: 1000
     Requires:
       SpCost: 50
       Weapon:
@@ -27463,6 +27464,7 @@ Body:
     HitCount: 1
     Requires:
       SpCost: 40
+      State: Cart
   - Id: 2552
     Name: RL_RICHS_COIN
     Description: Rich's Coin

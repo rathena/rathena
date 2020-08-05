@@ -1057,7 +1057,7 @@ lasagna,224,126,5	script	Healer Haru#doram07t	4_DR_M_02,{
 			setquest 7722;// EMT
 			completequest 7722;// EMT
 		}
-		skill "NV_FIRSTAID",1,SKILL_PERM;
+		skill "NV_FIRSTAID",1,SKILL_PERM_GRANT;
 		next;
 		mes "[Healer Haru]";
 		mes "Well, then. I'll let you in on something juicy while I'm at it.";
