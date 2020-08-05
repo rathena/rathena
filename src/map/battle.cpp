@@ -276,10 +276,18 @@ void battle_damage(struct block_list *src, struct block_list *target, int64 dama
 	if (dmg_lv > ATK_BLOCK && attack_type)
 		skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, tick);
 	// This is the last place where we have access to the actual damage type, so any monster events depending on type must be placed here
-	if (target->type == BL_MOB && damage && (attack_type&BF_NORMAL)) {
-		// Monsters differentiate whether they have been attacked by a skill or a normal attack
+	if (target->type == BL_MOB) {
 		struct mob_data* md = BL_CAST(BL_MOB, target);
-		md->norm_attacked_id = md->attacked_id;
+
+		if (!status_isdead(target) && src != target) {
+			if (damage > 0 )
+				mobskill_event(md, src, tick, attack_type);
+			if (skill_id)
+				mobskill_event(md, src, tick, MSC_SKILLUSED|(skill_id<<16));
+		}
+
+		if (damage && (attack_type&BF_NORMAL)) // Monsters differentiate whether they have been attacked by a skill or a normal attack
+			md->norm_attacked_id = md->attacked_id;
 	}
 	map_freeblock_unlock();
 }
@@ -1708,12 +1716,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			damage = div_;
 	}
 
-	if( bl->type == BL_MOB && !status_isdead(bl) && src != bl) {
-		if (damage > 0 )
-			mobskill_event((TBL_MOB*)bl,src,gettick(),flag);
-		if (skill_id)
-			mobskill_event((TBL_MOB*)bl,src,gettick(),MSC_SKILLUSED|(skill_id<<16));
-	}
 	if (sd && pc_ismadogear(sd)) {
 		short element = skill_get_ele(skill_id, skill_lv);
 
