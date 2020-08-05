@@ -1625,7 +1625,7 @@ void socket_init(void)
 
 bool session_isValid(int fd)
 {
-	return ( fd > 0 && fd < MAXCONN && session[fd] != NULL );
+	return ( fd > 0 && fd < MAXCONN && session[fd] != nullptr );
 }
 
 bool session_isActive(int fd)

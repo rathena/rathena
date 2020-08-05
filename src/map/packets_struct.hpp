@@ -405,6 +405,11 @@ enum packet_headers {
 #else
 	guildLeave = 0x15a,
 #endif
+#if PACKETVER >= 20190724
+	changeGuildEmblem = 0xb47,
+#else
+	changeGuildEmblem = 0x1b4,
+#endif
 };
 
 #if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
@@ -3869,6 +3874,27 @@ struct PACKET_ZC_AUTORUN_SKILL {
 	char up_flag;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_AUTORUN_SKILL, 0x0147);
+
+struct PACKET_CZ_GUILD_EMBLEM_CHANGE2 {
+	int16 packetType;
+	uint32 guild_id;
+	uint32 version;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_GUILD_EMBLEM_CHANGE2, 0x0b46);
+
+struct PACKET_ZC_CHANGE_GUILD {
+	int16 packetType;
+#if PACKETVER < 20190724
+	uint32 aid;
+	uint32 guild_id;
+	uint16 emblem_id;
+#else
+	uint32 guild_id;
+	uint32 emblem_id;
+	uint32 unknown;
+#endif
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_CHANGE_GUILD, 0x0b47);
 
 #if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #pragma pack(pop)

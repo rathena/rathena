@@ -9711,6 +9711,7 @@ Body:
         Time: 55000
       - Level: 10
         Time: 60000
+    Duration2: 1000
     Requires:
       SpCost: 50
       Weapon:
@@ -16824,6 +16825,28 @@ Body:
     Flags:
       IsNpc: true
     HitCount: 1
+  - Id: 719
+    Name: NPC_HELLBURNING
+    Description: Hell Burning
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Self
+    Flags:
+      IsNpc: true
+      IgnoreLandProtector: true
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    Duration1: 3000
+    Unit:
+      Id: Hellburning
+      Layout: 1
+      Interval: 20
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+        RangedSingleUnit: true
   - Id: 720
     Name: NPC_JACKFROST
     Description: Jack Frost 2
@@ -19601,25 +19624,25 @@ Body:
     Element: Holy
     SplashArea:
       - Level: 1
-        Area: 1
+        Area: 3
       - Level: 2
-        Area: 1
+        Area: 3
       - Level: 3
-        Area: 1
+        Area: 3
       - Level: 4
-        Area: 1
+        Area: 3
       - Level: 5
-        Area: 1
+        Area: 3
       - Level: 6
-        Area: 1
+        Area: 3
       - Level: 7
-        Area: 2
+        Area: 5
       - Level: 8
-        Area: 2
+        Area: 5
       - Level: 9
-        Area: 2
+        Area: 5
       - Level: 10
-        Area: 2
+        Area: 5
     CopyFlags:
       Skill:
         Reproduce: true
@@ -24328,6 +24351,16 @@ Body:
           Amount: 1
         - Level: 5
           Amount: 1
+        - Level: 6
+          Amount: 0
+        - Level: 7
+          Amount: 0
+        - Level: 8
+          Amount: 0
+        - Level: 9
+          Amount: 0
+        - Level: 10
+          Amount: 0
   - Id: 2337
     Name: SR_WINDMILL
     Description: Windmill
@@ -28776,7 +28809,7 @@ Body:
         Revolver: true
       Ammo:
         Bullet: true
-      AmmoAmount: 10
+      AmmoAmount: 3
   - Id: 2562
     Name: RL_H_MINE
     Description: Howling Mine
