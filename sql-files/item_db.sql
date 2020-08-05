@@ -148,9 +148,9 @@ REPLACE INTO `item_db` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`wei
 REPLACE INTO `item_db` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (540,'Falcon\'s_Feed','Falcon Food','Healing',2000,50,'itemheal rand(185,225),0;');
 REPLACE INTO `item_db` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (541,'Pecopeco\'s_Feed','PecoPeco Food','Healing',3000,50,'itemheal rand(325,405),0;');
 REPLACE INTO `item_db` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (544,'Fish_Slice','Raw Fish','Healing',20,30,true,'itemheal rand(25,60),0;');
-REPLACE INTO `item_db` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (545,'Red_Slim_Potion','Condensed Red Potion','Healing',150,20,'itemheal rand(45,65),0;');
-REPLACE INTO `item_db` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (546,'Yellow_Slim_Potion','Condensed Yellow Potion','Healing',600,30,'itemheal rand(175,235),0;');
-REPLACE INTO `item_db` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (547,'White_Slim_Potion','Condensed White Potion','Healing',1650,50,'itemheal rand(325,405),0;');
+REPLACE INTO `item_db` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (545,'Red_Slim_Potion','Condensed Red Potion','Healing',150,10,'itemheal rand(45,65),0;');
+REPLACE INTO `item_db` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (546,'Yellow_Slim_Potion','Condensed Yellow Potion','Healing',600,20,'itemheal rand(175,235),0;');
+REPLACE INTO `item_db` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (547,'White_Slim_Potion','Condensed White Potion','Healing',1650,20,'itemheal rand(325,405),0;');
 REPLACE INTO `item_db` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (548,'Cheese','Cheese','Healing',2800,50,true,'itemheal 0,rand(10,15);');
 REPLACE INTO `item_db` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (549,'Nice_Sweet_Potato','Yam','Healing',180,80,true,'itemheal rand(50,100),0; sc_start SC_Stun,3000,0,1500,0;');
 REPLACE INTO `item_db` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (550,'Popped_Rice','Rice Cake','Healing',10,10,true,'itemheal rand(10,15),0;');

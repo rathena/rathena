@@ -15376,9 +15376,9 @@ void clif_Mail_setattachment( struct map_session_data* sd, int index, int amount
 /// 09f2 <mail id>.Q <mail tab>.B <result>.B (ZC_ACK_ZENY_FROM_MAIL)
 /// 09f4 <mail id>.Q <mail tab>.B <result>.B (ZC_ACK_ITEM_FROM_MAIL)
 void clif_mail_getattachment(struct map_session_data* sd, struct mail_message *msg, uint8 result, enum mail_attachment_type type) {
+#if PACKETVER < 20150513
 	int fd = sd->fd;
 
-#if PACKETVER < 20150513
 	WFIFOHEAD(fd,packet_len(0x245));
 	WFIFOW(fd,0) = 0x245;
 	WFIFOB(fd,2) = result;
@@ -15392,12 +15392,13 @@ void clif_mail_getattachment(struct map_session_data* sd, struct mail_message *m
 			return;
 	}
 
-	WFIFOHEAD(fd, 12);
-	WFIFOW(fd, 0) = type == MAIL_ATT_ZENY ? 0x9f2 : 0x9f4;
-	WFIFOQ(fd, 2) = msg->id;
-	WFIFOB(fd, 10) = msg->type;
-	WFIFOB(fd, 11) = result;
-	WFIFOSET(fd, 12);
+	PACKET_ZC_ACK_ITEM_FROM_MAIL p = { 0 };
+
+	p.PacketType = type == MAIL_ATT_ZENY ? rodexgetzeny : rodexgetitem;
+	p.MailID = msg->id;
+	p.opentype = msg->type;
+	p.result = result;
+	clif_send(&p, sizeof(p), &sd->bl, SELF);
 
 	clif_Mail_refreshinbox( sd, msg->type, 0 );
 #endif
@@ -15411,17 +15412,19 @@ void clif_mail_getattachment(struct map_session_data* sd, struct mail_message *m
 ///     1 = recipinent does not exist
 /// 09ed <result>.B (ZC_ACK_WRITE_MAIL)
 void clif_Mail_send(struct map_session_data* sd, enum mail_send_result result){
-	int fd = sd->fd;
 #if PACKETVER < 20150513
+	int fd = sd->fd;
+
 	WFIFOHEAD(fd,packet_len(0x249));
 	WFIFOW(fd,0) = 0x249;
 	WFIFOB(fd,2) = result != WRITE_MAIL_SUCCESS;
 	WFIFOSET(fd,packet_len(0x249));
 #else
-	WFIFOHEAD(fd, 3);
-	WFIFOW(fd, 0) = 0x9ed;
-	WFIFOB(fd, 2) = result;
-	WFIFOSET(fd, 3);
+	PACKET_ZC_WRITE_MAIL_RESULT p = { 0 };
+
+	p.PacketType = rodexwriteresult;
+	p.result = result;
+	clif_send(&p, sizeof(p), &sd->bl, SELF);
 #endif
 }
 
@@ -15433,9 +15436,9 @@ void clif_Mail_send(struct map_session_data* sd, enum mail_send_result result){
 ///     1 = failure
 // 09f6 <mail tab>.B <mail id>.Q (ZC_ACK_DELETE_MAIL)
 void clif_mail_delete( struct map_session_data* sd, struct mail_message *msg, bool success ){
+#if PACKETVER < 20150513
 	int fd = sd->fd;
 
-#if PACKETVER < 20150513
 	WFIFOHEAD(fd, packet_len(0x257));
 	WFIFOW(fd,0) = 0x257;
 	WFIFOL(fd,2) = msg->id;
@@ -15444,11 +15447,12 @@ void clif_mail_delete( struct map_session_data* sd, struct mail_message *msg, bo
 #else
 	// This is only a success notification
 	if( success ){
-		WFIFOHEAD(fd, 11);
-		WFIFOW(fd, 0) = 0x9f6;
-		WFIFOB(fd, 2) = msg->type;
-		WFIFOQ(fd, 3) = msg->id;
-		WFIFOSET(fd, 11);
+		PACKET_ZC_ACK_DELETE_MAIL p = { 0 };
+
+		p.PacketType = rodexdelete;
+		p.opentype = msg->type;
+		p.MailID = msg->id;
+		clif_send(&p, sizeof(p), &sd->bl, SELF);
 	}
 #endif
 }
@@ -15472,8 +15476,9 @@ void clif_Mail_return(int fd, int mail_id, short fail)
 /// 024a <mail id>.L <title>.40B <sender>.24B (ZC_MAIL_RECEIVE)
 /// 09e7 <result>.B (ZC_NOTIFY_UNREADMAIL)
 void clif_Mail_new(struct map_session_data* sd, int mail_id, const char *sender, const char *title){
-	int fd = sd->fd;
 #if PACKETVER < 20150513
+	int fd = sd->fd;
+
 	WFIFOHEAD(fd,packet_len(0x24a));
 	WFIFOW(fd,0) = 0x24a;
 	WFIFOL(fd,2) = mail_id;
@@ -15481,10 +15486,11 @@ void clif_Mail_new(struct map_session_data* sd, int mail_id, const char *sender,
 	safestrncpy(WFIFOCP(fd,46), sender, NAME_LENGTH);
 	WFIFOSET(fd,packet_len(0x24a));
 #else
-	WFIFOHEAD(fd,3);
-	WFIFOW(fd,0) = 0x9e7;
-	WFIFOB(fd,2) = sd->mail.inbox.unread > 0 || sd->mail.inbox.unchecked > 0; // unread
-	WFIFOSET(fd,3);
+	PACKET_ZC_NOTIFY_UNREADMAIL p = { 0 };
+
+	p.PacketType = rodexicon;
+	p.result = sd->mail.inbox.unread > 0 || sd->mail.inbox.unchecked > 0; // unread
+	clif_send(&p, sizeof(p), &sd->bl, SELF);
 #endif
 }
 
@@ -15902,13 +15908,12 @@ void clif_parse_Mail_read(int fd, struct map_session_data *sd){
 /// Allow a player to begin writing a mail
 /// 0a12 <receiver>.24B <success>.B (ZC_ACK_OPEN_WRITE_MAIL)
 void clif_send_Mail_beginwrite_ack( struct map_session_data *sd, char* name, bool success ){
-	int fd = sd->fd;
+	PACKET_ZC_ACK_OPEN_WRITE_MAIL p = { 0 };
 
-	WFIFOHEAD(fd, 27);
-	WFIFOW(fd, 0) = 0xa12;
-	safestrncpy(WFIFOCP(fd, 2), name, NAME_LENGTH);
-	WFIFOB(fd, 26) = success;
-	WFIFOSET(fd, 27);
+	p.PacketType = rodexopenwrite;
+	safestrncpy(p.receiveName, name, NAME_LENGTH);
+	p.result = success;
+	clif_send(&p, sizeof(p), &sd->bl, SELF);
 }
 
 /// Request to start writing a mail
@@ -15939,22 +15944,16 @@ void clif_parse_Mail_cancelwrite( int fd, struct map_session_data *sd ){
 /// 0a14 <char id>.L <class>.W <base level>.W (ZC_CHECK_RECEIVE_CHARACTER_NAME)
 /// 0a51 <char id>.L <class>.W <base level>.W <name>.24B (ZC_CHECK_RECEIVE_CHARACTER_NAME2)
 void clif_Mail_Receiver_Ack( struct map_session_data* sd, uint32 char_id, short class_, uint32 level, const char* name ){
-	int fd = sd->fd;
-#if PACKETVER <= 20160302
-	int cmd = 0xa14;
-#else
-	int cmd = 0xa51;
-#endif
+	PACKET_ZC_CHECKNAME p = { 0 };
 
-	WFIFOHEAD(fd, packet_len(cmd));
-	WFIFOW(fd, 0) = cmd;
-	WFIFOL(fd, 2) = char_id;
-	WFIFOW(fd, 6) = class_;
-	WFIFOW(fd, 8) = level;
+	p.PacketType = rodexcheckplayer;
+	p.CharId = char_id;
+	p.Class = class_;
+	p.BaseLevel = level;
 #if PACKETVER >= 20160302
-	strncpy(WFIFOCP(fd, 10), name, NAME_LENGTH);
+	strncpy(p.Name, name, NAME_LENGTH);
 #endif
-	WFIFOSET(fd, packet_len(cmd));
+	clif_send(&p, sizeof(p), &sd->bl, SELF);
 }
 
 /// Request information about the recipient
@@ -16063,7 +16062,6 @@ void clif_parse_Mail_getattach( int fd, struct map_session_data *sd ){
 	}
 
 	intif_mail_getattach(sd,msg, (enum mail_attachment_type)attachment);
-	clif_Mail_read(sd, mail_id);
 }
 
 
@@ -16162,13 +16160,12 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd){
 /// Remove an item from a mail
 /// 0a07 <result>.B <index>.W <amount>.W <weight>.W
 void clif_mail_removeitem( struct map_session_data* sd, bool success, int index, int amount ){
-	int fd = sd->fd;
+	PACKET_ZC_ACK_REMOVE_ITEM_MAIL p = { 0 };
 
-	WFIFOHEAD(fd, 9);
-	WFIFOW(fd, 0) = 0xa07;
-	WFIFOB(fd, 2) = success;
-	WFIFOW(fd, 3) = index;
-	WFIFOW(fd, 5) = amount;
+	p.PacketType = rodexremoveitem;
+	p.result = success;
+	p.index = index;
+	p.cnt = amount;
 
 	int total = 0;
 	for( int i = 0; i < MAIL_MAX_ITEM; i++ ){
@@ -16179,8 +16176,8 @@ void clif_mail_removeitem( struct map_session_data* sd, bool success, int index,
 		total += sd->mail.item[i].amount * ( sd->inventory_data[sd->mail.item[i].index]->weight / 10 );
 	}
 
-	WFIFOW(fd, 7) = total;
-	WFIFOSET(fd, 9);
+	p.weight = total;
+	clif_send(&p, sizeof(p), &sd->bl, SELF);
 }
 
 /// Request to reset mail item and/or Zeny

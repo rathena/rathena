@@ -478,7 +478,7 @@ Body:
     Name: Condensed Red Potion
     Type: Healing
     Buy: 150
-    Weight: 20
+    Weight: 10
     Script: |
       itemheal rand(45,65),0;
   - Id: 546
@@ -486,7 +486,7 @@ Body:
     Name: Condensed Yellow Potion
     Type: Healing
     Buy: 600
-    Weight: 30
+    Weight: 20
     Script: |
       itemheal rand(175,235),0;
   - Id: 547
@@ -494,7 +494,7 @@ Body:
     Name: Condensed White Potion
     Type: Healing
     Buy: 1650
-    Weight: 50
+    Weight: 20
     Script: |
       itemheal rand(325,405),0;
   - Id: 548
