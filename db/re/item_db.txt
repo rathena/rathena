@@ -951,7 +951,7 @@
 1589,Legacy_Of_Dragon_,Legacy of Dragon,5,20,,700,130,,1,2,0x00410100,63,2,2,4,70,1,15,{ bonus bInt,3; bonus bIgnoreDefRace,RC_Dragon; bonus2 bSPGainRace,RC_Dragon,10; },{},{}
 1590,Snake_Encyclopedia,Daizenshu Dakatsu,5,60000,,1500,10:110,,1,2,0x00010100,56,2,2,4,105,1,15,{ bonus bUnbreakableWeapon; .@r = getrefine(); bonus bBaseAtk,.@r*3; bonus bMatk,.@r*3; },{},{}
 1591,TE_Woe_Book,TE Woe Book,5,0,,0,120,,1,0,0x00410100,63,2,2,3,40,1,15,{ bonus2 bAddRace,RC_Player_Human,40; bonus2 bMagicAddRace,RC_Player_Human,5; bonus3 bAddEff,Eff_Blind,1000,ATF_MAGIC; bonus bHealPower,5; },{},{}
-1592,Raijin's_Lineage,Raijin's Lineage,5,10,,400,90:130,,1,2,0x00410100,63,2,2,4,27,1,15,{ .@r = getrefine(); bonus bInt,3; bonus bFlee2,15; bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",5+.@r; bonus bUnbreakableWeapon; bonus bAtkEle,Ele_Wind; },{},{}
+1592,Raijin's_Lineage,Raijin's Lineage,5,10,,400,90:130,,1,2,0x00410100,63,2,2,4,27,1,15,{ .@r = getrefine(); bonus bInt,3; bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",5+.@r; bonus bUnbreakableWeapon; bonus bAtkEle,Ele_Wind; },{},{}
 1593,Book_of_Destiny,Book of Destiny,5,10,,400,90:90,,1,1,0x00410100,63,2,2,4,24,1,15,{ .@r = getrefine(); bonus bLuk,5; bonus bFlee2,15; if(.@r >= 7) bonus bFlee2,5; bonus bUnbreakableWeapon; },{},{}
 1594,Fire_Pedigree_Book,Fire Pedigree Book,5,10,,400,90:130,,1,2,0x00410100,63,2,2,4,27,1,15,{ .@r = getrefine(); bonus bInt,3; bonus2 bSkillAtk,"MG_FIREBOLT",5+.@r; bonus bUnbreakableWeapon; bonus bAtkEle,Ele_Fire; },{},{}
 1595,Water_Pedigree_Book,Water Pedigree Book,5,10,,400,90:130,,1,2,0x00410100,63,2,2,4,27,1,15,{ .@r = getrefine(); bonus bInt,3; bonus2 bSkillAtk,"MG_COLDBOLT",5+.@r; bonus bUnbreakableWeapon; bonus bAtkEle,Ele_Water; },{},{}
