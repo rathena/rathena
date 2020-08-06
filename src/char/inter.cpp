@@ -949,6 +949,8 @@ int inter_init_sql(const char *file)
 			Sql_ShowDebug(sql_handle);
 	}
 
+	Sql_UpgradesChecker(sql_handle, SQLDB_CHAR);
+
 	wis_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	interServerDb.load();
 	inter_guild_sql_init();

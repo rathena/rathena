@@ -144,6 +144,8 @@ static bool account_db_sql_init(AccountDB* self) {
 
 	self->remove_webtokens( self );
 
+	Sql_UpgradesChecker(sql_handle, SQLDB_LOGIN);
+
 	return true;
 }
 

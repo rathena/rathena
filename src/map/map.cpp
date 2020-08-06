@@ -4297,6 +4297,9 @@ int map_sql_init(void)
 		if ( SQL_ERROR == Sql_SetEncoding(qsmysql_handle, default_codepage) )
 			Sql_ShowDebug(qsmysql_handle);
 	}
+
+	Sql_UpgradesChecker(mmysql_handle, SQLDB_MAP);
+
 	return 0;
 }
 
@@ -4336,6 +4339,8 @@ int log_sql_init(void)
 	if( strlen(default_codepage) > 0 )
 		if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, default_codepage) )
 			Sql_ShowDebug(logmysql_handle);
+
+	Sql_UpgradesChecker(logmysql_handle, SQLDB_LOG);
 
 	return 0;
 }
