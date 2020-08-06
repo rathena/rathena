@@ -461,6 +461,7 @@ struct map_session_data {
 	int ignore_mdef_by_race2[RC2_MAX];
 	int dropaddrace[RC_MAX];
 	int dropaddclass[CLASS_MAX];
+	int magic_subdefele[ELE_MAX];
 	// zeroed arrays end here.
 
 	std::vector<s_autospell> autospell, autospell2, autospell3;
@@ -892,7 +893,7 @@ struct s_job_info {
 	int max_weight_base;
 	std::vector<uint8> job_bonus;
 	std::vector<int16> aspd_base;
-	int64 exp_table[2][MAX_LEVEL];
+	t_exp exp_table[2][MAX_LEVEL];
 	uint16 max_base_level, max_job_level;
 	struct s_params {
 		uint16 str, agi, vit, int_, dex, luk;
@@ -1241,11 +1242,11 @@ bool pc_is_maxbaselv(struct map_session_data *sd);
 bool pc_is_maxjoblv(struct map_session_data *sd);
 int pc_checkbaselevelup(struct map_session_data *sd);
 int pc_checkjoblevelup(struct map_session_data *sd);
-void pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int base_exp, unsigned int job_exp, uint8 exp_flag);
-void pc_gainexp_disp(struct map_session_data *sd, unsigned int base_exp, unsigned int next_base_exp, unsigned int job_exp, unsigned int next_job_exp, bool lost);
-void pc_lostexp(struct map_session_data *sd, unsigned int base_exp, unsigned int job_exp);
-unsigned int pc_nextbaseexp(struct map_session_data *sd);
-unsigned int pc_nextjobexp(struct map_session_data *sd);
+void pc_gainexp(struct map_session_data *sd, struct block_list *src, t_exp base_exp, t_exp job_exp, uint8 exp_flag);
+void pc_gainexp_disp(struct map_session_data *sd, t_exp base_exp, t_exp next_base_exp, t_exp job_exp, t_exp next_job_exp, bool lost);
+void pc_lostexp(struct map_session_data *sd, t_exp base_exp, t_exp job_exp);
+t_exp pc_nextbaseexp(struct map_session_data *sd);
+t_exp pc_nextjobexp(struct map_session_data *sd);
 int pc_gets_status_point(int);
 int pc_need_status_point(struct map_session_data *,int,int);
 int pc_maxparameterincrease(struct map_session_data*,int);

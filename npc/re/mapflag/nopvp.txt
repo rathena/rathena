@@ -11,7 +11,11 @@
 //===== Additional Comments: ================================= 
 //= 1.0 Renewal split. [Euphy]
 //= 1.1 Added Izlude duplicates. [Euphy]
+//= 1.2 Added Para Market maps [mazvi]
 //============================================================
+
+// Paradise Market =============
+paramk	mapflag	pvp	off
 
 // Instances ===================
 1@mist	mapflag	pvp	off

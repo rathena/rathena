@@ -5808,9 +5808,9 @@ Increase AGI Lv 5, and display appropriate effects.
 *npcskilleffect <skill id>,<number>,<x>,<y>;
 *npcskilleffect "<skill name>",<number>,<x>,<y>;
 
-This command behaves identically to 'skilleffect', however, the effect will not
-be centered on the invoking character's sprite, nor on the NPC sprite, if any,
-but will be centered at map coordinates given on the same map as the invoking
+This command behaves identically to 'skilleffect', however, ground type skill
+effects will be centered at the map coordinates given on the same map as the
+attached character and all other skill types will be centered on the attached
 character.
 
 ---------------------------------------
@@ -6863,9 +6863,6 @@ above the head of the currently attached (or given) NPC. Once the
 given amount of seconds passes, the script resumes. The color format
 is in RGB (RRGGBB). The color is currently ignored by the client and
 appears always green.
-
-Note: If a player is attached to the NPC, they are detached from the NPC
-as soon as the progress bar activates.
 
 ---------------------------------------
 //
