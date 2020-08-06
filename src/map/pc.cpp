@@ -12093,8 +12093,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 
 		if (!exists) {
 			job->aspd_base.resize(MAX_WEAPON_TYPE + shield);
-			for (size_t i = 0; i < job->aspd_base.size(); i++)
-				job->aspd_base[i] = 2000;
+			std::fill(job->aspd_base.begin(), job->aspd_base.end(), 2000);
 		}
 
 		for (const auto &aspdit : aspdNode) {
@@ -12120,12 +12119,12 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			job->job_bonus.resize(job->max_job_level);
 
 		for (const YAML::Node &levelNode : node["Level"]) {
-			int32 level;
+			uint16 level;
 
-			if (!this->asInt32(levelNode, "Level", level))
+			if (!this->asUInt16(levelNode, "Level", level))
 				return 0;
 
-			if (level < 1 || level > MAX_LEVEL) {
+			if (level > MAX_LEVEL) {
 				this->invalidWarning(levelNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 				return 0;
 			}
@@ -12225,7 +12224,7 @@ uint64 JobExpDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asUInt16(node, "MaxBaseLevel", level))
 					return 0;
 
-				if (level < 1 || level > MAX_LEVEL) {
+				if (level > MAX_LEVEL) {
 					this->invalidWarning(node["MaxBaseLevel"], "MaxBaseLevel must be between 1~MAX_LEVEL for %s, capping to MAX_LEVEL.\n", job_name.c_str());
 					level = MAX_LEVEL;
 				}
@@ -12236,12 +12235,12 @@ uint64 JobExpDatabase::parseBodyNode(const YAML::Node &node) {
 
 			if (this->nodeExists(node, "BaseExp")) {
 				for (const YAML::Node &bexpNode : node["BaseExp"]) {
-					int32 level;
+					uint16 level;
 
-					if (!this->asInt32(bexpNode, "Level", level))
+					if (!this->asUInt16(bexpNode, "Level", level))
 						return 0;
 
-					if (level < 1 || level > MAX_LEVEL) {
+					if (level > MAX_LEVEL) {
 						this->invalidWarning(bexpNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 						return 0;
 					}
@@ -12263,7 +12262,7 @@ uint64 JobExpDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asUInt16(node, "MaxJobLevel", level))
 					return 0;
 
-				if (level < 1 || level > MAX_LEVEL) {
+				if (level > MAX_LEVEL) {
 					this->invalidWarning(node["MaxJobLevel"], "MaxJobLevel must be between 1~MAX_LEVEL for %s, capping to MAX_LEVEL.\n", job_name.c_str());
 					level = MAX_LEVEL;
 				}
@@ -12274,12 +12273,12 @@ uint64 JobExpDatabase::parseBodyNode(const YAML::Node &node) {
 
 			if (this->nodeExists(node, "JobExp")) {
 				for (const YAML::Node &jexpNode : node["JobExp"]) {
-					int32 level;
+					uint16 level;
 
-					if (!this->asInt32(jexpNode, "Level", level))
+					if (!this->asUInt16(jexpNode, "Level", level))
 						return 0;
 
-					if (level < 1 || level > MAX_LEVEL) {
+					if (level > MAX_LEVEL) {
 						this->invalidWarning(jexpNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 						return 0;
 					}
@@ -12340,12 +12339,12 @@ uint64 JobBaseHPSPDatabase::parseBodyNode(const YAML::Node &node) {
 				job->base_hp.resize(job->max_base_level, 1);
 
 				for (const YAML::Node &bhpNode : node["BaseHp"]) {
-					int32 level;
+					uint16 level;
 
-					if (!this->asInt32(bhpNode, "Level", level))
+					if (!this->asUInt16(bhpNode, "Level", level))
 						return 0;
 
-					if (level < 1 || level > MAX_LEVEL) {
+					if (level > MAX_LEVEL) {
 						this->invalidWarning(bhpNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 						return 0;
 					}
@@ -12367,12 +12366,12 @@ uint64 JobBaseHPSPDatabase::parseBodyNode(const YAML::Node &node) {
 				job->base_sp.resize(job->max_base_level, 1);
 
 				for (const YAML::Node &bspNode : node["BaseSp"]) {
-					int32 level;
+					uint16 level;
 
-					if (!this->asInt32(bspNode, "Level", level))
+					if (!this->asUInt16(bspNode, "Level", level))
 						return 0;
 
-					if (level < 1 || level > MAX_LEVEL) {
+					if (level > MAX_LEVEL) {
 						this->invalidWarning(bspNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 						return 0;
 					}
