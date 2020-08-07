@@ -267,7 +267,7 @@ static TIMER_FUNC(sale_start_timer){
 	return 1;
 }
 
-enum e_sale_add_result sale_add_item(t_itemid nameid, int32 count, time_t from, time_t to ){
+enum e_sale_add_result sale_add_item( t_itemid nameid, int32 count, time_t from, time_t to ){
 	int i;
 	struct sale_item_data* sale_item;
 
@@ -318,7 +318,7 @@ enum e_sale_add_result sale_add_item(t_itemid nameid, int32 count, time_t from, 
 	return SALE_ADD_SUCCESS;
 }
 
-bool sale_remove_item(t_itemid nameid){
+bool sale_remove_item( t_itemid nameid ){
 	struct sale_item_data* sale_item;
 	int i;
 

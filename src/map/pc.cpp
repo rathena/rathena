@@ -4607,9 +4607,9 @@ int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 	nullpo_ret(sd);
 
 	int i;
+	t_itemid nameid;
 	struct item_data* item_eq = sd->inventory_data[idx_equip];
 	struct item_data* item_card = sd->inventory_data[idx_card];
-	t_itemid nameid;
 
 	if( idx_equip < 0 || idx_equip >= MAX_INVENTORY || item_eq == NULL )
 		return 0; //Invalid item index.
@@ -10182,7 +10182,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 		struct itemchk {
 			int idx;
 			t_itemid nameid;
-			uint32 card[MAX_SLOTS];
+			t_itemid card[MAX_SLOTS];
 		} *combo_idx;
 		int idx, j;
 		int nb_itemCombo;

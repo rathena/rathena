@@ -145,8 +145,16 @@ static inline uint16 client_nameid( t_itemid server_nameid ){
 	t_itemid view = itemdb_viewid( server_nameid );
 
 	if( view > 0 ){
+		if( view > UINT16_MAX ){
+			return (uint16)UNKNOWN_ITEM_ID;
+		}
+
 		return (uint16)view;
 	}else{
+		if( server_nameid > UINT16_MAX ){
+			return (uint16)UNKNOWN_ITEM_ID;
+		}
+
 		return (uint16)server_nameid;
 	}
 }

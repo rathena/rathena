@@ -108,7 +108,7 @@ int8 buyingstore_setup(struct map_session_data* sd, unsigned char slots){
 * @param zenylimit
 * @param result
 * @param storename
-* @param *itemlist { <nameid>.N, <amount>.W, <price>.L }*
+* @param *itemlist { <nameid>.W, <amount>.W, <price>.L }*
 * @param count Number of item on the itemlist
 * @param at Autotrader info, or NULL if requetsed not from autotrade persistance
 * @return 0 If success, 1 - Cannot open, 2 - Manner penalty, 3 - Mapflag restiction, 4 - Cell restriction, 5 - Invalid count/result, 6 - Cannot give item, 7 - Will be overweight
@@ -321,7 +321,7 @@ void buyingstore_open(struct map_session_data* sd, uint32 account_id)
 * Start transaction
 * @param sd Player/Seller
 * @param account_id Buyer account ID
-* @param *itemlist List of sold items { <index>.W, <nameid>.N, <amount>.W }*
+* @param *itemlist List of sold items { <index>.W, <nameid>.W, <amount>.W }*
 * @param count Number of item on the itemlist
 */
 void buyingstore_trade( struct map_session_data* sd, uint32 account_id, unsigned int buyer_id, const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* itemlist, unsigned int count ){
