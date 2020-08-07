@@ -20681,9 +20681,8 @@ int skill_elementalanalysis(struct map_session_data* sd, int n, uint16 skill_lv,
 		return 1;
 
 	for( i = 0; i < n; i++ ) {
-		t_itemid nameid;
+		t_itemid nameid, product;
 		int add_amount, del_amount, idx;
-		t_itemid product;
 		struct item tmp_item;
 
 		idx = item_list[i*2+0]-2;
