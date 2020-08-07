@@ -21738,7 +21738,7 @@ BUILDIN_FUNC(consumeitem)
 			return SCRIPT_CMD_FAILURE;
 		}
 	} else {
-		t_nameid nameid = script_getnum(st, 2);
+		t_itemid nameid = script_getnum(st, 2);
 
 		if( ( item_data = itemdb_exists( nameid ) ) == NULL ){
 			ShowError("buildin_consumeitem: Nonexistant item %u requested.\n", nameid );
