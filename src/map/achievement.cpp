@@ -241,7 +241,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 
 		// TODO: not camel case
 		if( this->nodeExists( rewardNode, "ItemID" ) ){
-			uint32 itemId;
+			t_itemid itemId;
 
 			if( !this->asUInt32( rewardNode, "ItemID", itemId ) ){
 				return 0;

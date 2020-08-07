@@ -51,7 +51,7 @@ enum e_buyingstore_failure
 
 
 static unsigned int buyingstore_nextid = 0;
-static const uint32 buyingstore_blankslots[MAX_SLOTS] = { 0 };  // used when checking whether or not an item's card slots are blank
+static const t_itemid buyingstore_blankslots[MAX_SLOTS] = { 0 };  // used when checking whether or not an item's card slots are blank
 
 
 /// Returns unique buying store id
@@ -377,7 +377,7 @@ void buyingstore_trade( struct map_session_data* sd, uint32 account_id, unsigned
 		for( int k = 0; k < i; k++ ){
 			// duplicate
 			if( itemlist[k].index == item->index && k != i ){
-				ShowWarning( "buyingstore_trade: Found duplicate item on selling list (prevnameid=%d, prevamount=%hu, nameid=%u, amount=%hu, account_id=%d, char_id=%d).\n", itemlist[k].itemId, itemlist[k].amount, item->itemId, item->amount, sd->status.account_id, sd->status.char_id );
+				ShowWarning( "buyingstore_trade: Found duplicate item on selling list (prevnameid=%u, prevamount=%hu, nameid=%u, amount=%hu, account_id=%d, char_id=%d).\n", itemlist[k].itemId, itemlist[k].amount, item->itemId, item->amount, sd->status.account_id, sd->status.char_id );
 				clif_buyingstore_trade_failed_seller( sd, BUYINGSTORE_TRADE_SELLER_FAILED, item->itemId );
 				return;
 			}
@@ -509,7 +509,7 @@ void buyingstore_trade( struct map_session_data* sd, uint32 account_id, unsigned
 
 
 /// Checks if an item is being bought in given player's buying store.
-bool buyingstore_search(struct map_session_data* sd, uint32 nameid)
+bool buyingstore_search(struct map_session_data* sd, t_itemid nameid)
 {
 	unsigned int i;
 
@@ -542,7 +542,6 @@ bool buyingstore_searchall(struct map_session_data* sd, const struct s_search_st
 	if( !sd->state.buyingstore )
 	{// not buying
 		return true;
-
 	}
 
 	for( idx = 0; idx < s->item_count; idx++ )
@@ -730,7 +729,7 @@ void do_init_buyingstore_autotrade( void ) {
 				while (SQL_SUCCESS == Sql_NextRow(mmysql_handle) && j < at->count) {
 					char *data;
 					CREATE(at->entries[j], struct s_autotrade_entry, 1);
-					Sql_GetData(mmysql_handle, 0, &data, NULL); at->entries[j]->item_id = strtoul(data, NULL, 10);
+					Sql_GetData(mmysql_handle, 0, &data, NULL); at->entries[j]->item_id = strtoul(data, nullptr, 10);
 					Sql_GetData(mmysql_handle, 1, &data, NULL); at->entries[j]->amount = atoi(data);
 					Sql_GetData(mmysql_handle, 2, &data, NULL); at->entries[j]->price = atoi(data);
 					j++;

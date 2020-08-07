@@ -53,19 +53,8 @@
 	#endif
 #endif
 
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
-	typedef uint32 t_nameid;
-#define RFIFON RFIFOL
-#define WFIFON RFIFOL
-#define RBUFN RBUFL
-#define WBUFN WBUFL
-#else
-	typedef uint16 t_nameid;
-#define RFIFON RFIFOW
-#define WFIFON WFIFOW
-#define RBUFN RBUFW
-#define WBUFN WBUFW
-#endif
+typedef uint32 t_itemid;
+
 /** Number of slots carded equipment can have. Never set to less than 4 as they are also used to keep the data of forged items/equipment. [Skotlex]
 * Note: The client seems unable to receive data for more than 4 slots due to all related packets having a fixed size. */
 #define MAX_SLOTS 4
@@ -104,8 +93,8 @@
 
 #define MAX_STATUS_TYPE 5
 
-#define WEDDING_RING_M 2634
-#define WEDDING_RING_F 2635
+const t_itemid WEDDING_RING_M = 2634;
+const t_itemid WEDDING_RING_F = 2635;
 
 //For character names, title names, guilds, maps, etc.
 //Includes null-terminator as it is the length of the array.
@@ -262,13 +251,13 @@ struct achievement {
 
 struct item {
 	int id;
-	uint32 nameid;
+	t_itemid nameid;
 	short amount;
 	unsigned int equip; // location(s) where item is equipped (using enum equip_pos for bitmasking)
 	char identify;
 	char refine;
 	char attribute;
-	uint32 card[MAX_SLOTS];
+	t_itemid card[MAX_SLOTS];
 	struct s_item_randomoption option[MAX_ITEM_RDM_OPT];		// max of 5 random options can be supported.
 	unsigned int expire_time;
 	char favorite, bound;
@@ -312,7 +301,7 @@ struct point {
 };
 
 struct startitem {
-	uint32 nameid;
+	t_itemid nameid;
 	unsigned short amount;
 	uint32 pos;
 };
@@ -419,8 +408,8 @@ struct s_pet {
 	int pet_id;
 	short class_;
 	short level;
-	uint32 egg_id;//pet egg id
-	uint32 equip;//pet equip name_id
+	t_itemid egg_id;//pet egg id
+	t_itemid equip;//pet equip name_id
 	short intimate;//pet friendly
 	short hungry;//pet hungry
 	char name[NAME_LENGTH];

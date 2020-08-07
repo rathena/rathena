@@ -22,16 +22,16 @@
 
 struct s_pet_evo_data {
 	uint16 target_mob_id;
-	std::unordered_map<uint16, uint32> requirements;
+	std::unordered_map<t_itemid, uint16> requirements;
 };
 
 /// Pet DB
 struct s_pet_db {
 	uint16 class_; ///< Monster ID
-	uint32 itemID; ///< Lure ID
-	uint32 EggID; ///< Egg ID
-	uint32 AcceID; ///< Accessory ID
-	uint32 FoodID; ///< Food ID
+	t_itemid itemID; ///< Lure ID
+	t_itemid EggID; ///< Egg ID
+	t_itemid AcceID; ///< Accessory ID
+	t_itemid FoodID; ///< Food ID
 	uint16 fullness; ///< Amount of hunger decresed each hungry_delay interval
 	uint32 hungry_delay; ///< Hunger value decrease each x seconds
 	int32 hunger_increase; ///< Hunger increased every time the pet is fed.
@@ -47,7 +47,6 @@ struct s_pet_db {
 	uint16 change_target_rate; ///< Rate of which the pet will change its attack target.
 	bool allow_autofeed; ///< Can this pet use auto feeding mechanic.
 	std::unordered_map<uint16, std::shared_ptr<s_pet_evo_data>> evolution_data; ///< Data for evolving the pet.
-
 	struct script_code
 		*pet_support_script, ///< Script since pet hatched. For pet* script commands only.
 		*pet_bonus_script; ///< Bonus script for this pet.
@@ -185,7 +184,7 @@ struct pet_data {
 	}
 };
 
-bool pet_create_egg(struct map_session_data *sd, uint32 item_id);
+bool pet_create_egg(struct map_session_data *sd, t_itemid item_id);
 int pet_hungry_val(struct pet_data *pd);
 void pet_set_intimate(struct pet_data *pd, int value);
 int pet_target_check(struct pet_data *pd,struct block_list *bl,int type);

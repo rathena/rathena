@@ -67,13 +67,14 @@ struct view_data {
 #else
 	unsigned short class_;
 #endif
-	uint32
+	t_itemid
 		weapon,
 		shield, //Or left-hand weapon.
 		robe,
 		head_top,
 		head_mid,
-		head_bottom,
+		head_bottom;
+	uint16
 		hair_style,
 		hair_color,
 		cloth_color,

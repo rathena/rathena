@@ -2849,7 +2849,7 @@ void char_config_split_startitem(char *w1_value, char *w2_value, struct startite
 		// TODO: Item ID verification
 		start_items[i].nameid = strtoul( fields[1], nullptr, 10 );
 		// TODO: Stack verification
-		start_items[i].amount = min( strtoul( fields[2], nullptr, 10 ), MAX_AMOUNT );
+		start_items[i].amount = min( (uint16)strtoul( fields[2], nullptr, 10 ), MAX_AMOUNT );
 		start_items[i].pos = strtoul( fields[3], nullptr, 10 );
 
 		lineitem = strtok(NULL, ":"); //next lineitem

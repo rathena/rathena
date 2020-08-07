@@ -438,9 +438,9 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 					return 0;
 				}
 
-				uint32 amount;
+				uint16 amount;
 
-				if( !this->asUInt32( requirementNode, "Amount", amount ) ){
+				if( !this->asUInt16( requirementNode, "Amount", amount ) ){
 					return 0;
 				}
 
@@ -619,7 +619,7 @@ void pet_set_intimate(struct pet_data *pd, int value)
  * @param item_id : item ID of tamer
  * @return true:success, false:failure
  */
-bool pet_create_egg(struct map_session_data *sd, uint32 item_id)
+bool pet_create_egg(struct map_session_data *sd, t_itemid item_id)
 {
 	std::shared_ptr<s_pet_db> pet = pet_db_search(item_id, PET_EGG);
 
@@ -1414,7 +1414,6 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 int pet_equipitem(struct map_session_data *sd,int index)
 {
 	struct pet_data *pd;
-	uint32 nameid;
 
 	nullpo_retr(1, sd);
 
@@ -1429,7 +1428,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 		return 1;
 	}
 
-	nameid = sd->inventory.u.items_inventory[index].nameid;
+	t_itemid nameid = sd->inventory.u.items_inventory[index].nameid;
 
 	if(pet_db_ptr->AcceID == 0 || nameid != pet_db_ptr->AcceID || pd->pet.equip != 0) {
 		clif_equipitemack(sd,0,0,ITEM_EQUIP_ACK_FAIL);
@@ -1467,13 +1466,12 @@ int pet_equipitem(struct map_session_data *sd,int index)
 static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 {
 	struct item tmp_item;
-	uint32 nameid;
 	unsigned char flag = 0;
 
 	if(pd->pet.equip == 0)
 		return 1;
 
-	nameid = pd->pet.equip;
+	t_itemid nameid = pd->pet.equip;
 	pd->pet.equip = 0;
 	status_set_viewdata(&pd->bl, pd->pet.class_);
 	clif_pet_equip_area(pd);

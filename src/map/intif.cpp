@@ -95,7 +95,7 @@ struct map_session_data *inter_search_sd(uint32 account_id, uint32 char_id)
  * @param pet_name
  * @return 
  */
-int intif_create_pet(uint32 account_id,uint32 char_id,short pet_class,short pet_lv, uint32 pet_egg_id, uint32 pet_equip,short intimate,short hungry,char rename_flag,char incubate,char *pet_name)
+int intif_create_pet(uint32 account_id,uint32 char_id,short pet_class,short pet_lv, t_itemid pet_egg_id, t_itemid pet_equip,short intimate,short hungry,char rename_flag,char incubate,char *pet_name)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -2260,15 +2260,15 @@ int intif_achievement_reward(struct map_session_data *sd, struct s_achievement_d
 		return 0;
 	}
 
-	WFIFOHEAD(inter_fd, 18 +NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH);
+	WFIFOHEAD(inter_fd, 16+NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH);
 	WFIFOW(inter_fd, 0) = 0x3064;
 	WFIFOL(inter_fd, 2) = sd->status.char_id;
 	WFIFOL(inter_fd, 6) = adb->achievement_id;
 	WFIFOL(inter_fd, 10) = adb->rewards.nameid;
-	WFIFOL(inter_fd, 14) = adb->rewards.amount;
-	safestrncpy(WFIFOCP(inter_fd, 18), sd->status.name, NAME_LENGTH);
-	safestrncpy(WFIFOCP(inter_fd, 18 +NAME_LENGTH), adb->name.c_str(), ACHIEVEMENT_NAME_LENGTH);
-	WFIFOSET(inter_fd, 18 +NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH);
+	WFIFOW(inter_fd, 14) = adb->rewards.amount;
+	safestrncpy(WFIFOCP(inter_fd, 16), sd->status.name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd, 16+NAME_LENGTH), adb->name.c_str(), ACHIEVEMENT_NAME_LENGTH);
+	WFIFOSET(inter_fd, 16+NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH);
 
 	return 1;
 }
@@ -3236,7 +3236,7 @@ void intif_parse_MessageToFD(int fd) {
  * @param type Obtain type @see enum BROADCASTING_SPECIAL_ITEM_OBTAIN
  * @return
  **/
-int intif_broadcast_obtain_special_item(struct map_session_data *sd, uint32 nameid, unsigned int sourceid, unsigned char type) {
+int intif_broadcast_obtain_special_item(struct map_session_data *sd, t_itemid nameid, t_itemid sourceid, unsigned char type) {
 	nullpo_retr(0, sd);
 
 	// Should not be here!
@@ -3275,7 +3275,7 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, uint32 name
  * @param srcname Source name
  * @return
  **/
-int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, uint32 nameid) {
+int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, t_itemid nameid) {
 	nullpo_retr(0, sd);
 
 	// Send local

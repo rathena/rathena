@@ -204,9 +204,9 @@ struct s_skill_condition {
 	int32 ammo_qty;							/// Amount of ammo
 	int32 state;							/// State/condition. @see enum e_require_state
 	int32 spiritball;						/// Spiritball cost
-	uint32 itemid[MAX_SKILL_ITEM_REQUIRE];	/// Required item
+	t_itemid itemid[MAX_SKILL_ITEM_REQUIRE];	/// Required item
 	int32 amount[MAX_SKILL_ITEM_REQUIRE];	/// Amount of item
-	std::vector<int32> eqItem;				/// List of equipped item
+	std::vector<t_itemid> eqItem;				/// List of equipped item
 	std::vector<sc_type> status;			/// List of Status required (SC)
 };
 
@@ -223,9 +223,9 @@ struct s_skill_require {
 	int32 ammo_qty[MAX_SKILL_LEVEL];		/// Amount of ammo
 	int32 state;							/// State/condition. @see enum e_require_state
 	int32 spiritball[MAX_SKILL_LEVEL];		/// Spiritball cost
-	uint32 itemid[MAX_SKILL_ITEM_REQUIRE];	/// Required item
+	t_itemid itemid[MAX_SKILL_ITEM_REQUIRE];	/// Required item
 	int32 amount[MAX_SKILL_ITEM_REQUIRE];	/// Amount of item
-	std::vector<int32> eqItem;				/// List of equipped item
+	std::vector<t_itemid> eqItem;				/// List of equipped item
 	std::vector<sc_type> status;			/// List of Status required (SC)
 };
 
@@ -361,7 +361,7 @@ struct skill_unit_group {
 	int link_group_id; /// Linked group that should be deleted if this one is deleted
 	int unit_count, /// Number of unit at this group
 		alive_count; /// Number of alive unit
-	uint32 item_id; /// Store item used.
+	t_itemid item_id; /// Store item used.
 	struct skill_unit *unit; /// Skill Unit
 	struct {
 		unsigned ammo_consume : 1; // Need to consume ammo
@@ -417,20 +417,20 @@ enum e_skill_blown	{
 
 /// Create Database item
 struct s_skill_produce_db {
-	uint32 nameid; /// Product ID
+	t_itemid nameid; /// Product ID
 	unsigned short req_skill; /// Required Skill
 	unsigned char req_skill_lv, /// Required Skill Level
 		itemlv; /// Item Level
-	uint32 mat_id[MAX_PRODUCE_RESOURCE]; /// Materials needed
+	t_itemid mat_id[MAX_PRODUCE_RESOURCE]; /// Materials needed
 	unsigned short mat_amount[MAX_PRODUCE_RESOURCE]; /// Amount of each materials
 };
 extern struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 
 /// Creating database arrow
 struct s_skill_arrow_db {
-	uint32 nameid, /// Material ID
-		cre_id[MAX_ARROW_RESULT], /// Arrow created
-		cre_amount[MAX_ARROW_RESULT]; /// Amount of each arrow created
+	t_itemid nameid; /// Material ID
+	t_itemid cre_id[MAX_ARROW_RESULT]; /// Arrow created
+	uint16 cre_amount[MAX_ARROW_RESULT]; /// Amount of each arrow created
 };
 extern struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 
@@ -601,10 +601,10 @@ bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md);
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y);
 
 // Item creation
-short skill_can_produce_mix( struct map_session_data *sd, uint32 nameid, int trigger, int qty);
-bool skill_produce_mix( struct map_session_data *sd, uint16 skill_id, uint32 nameid, int slot1, int slot2, int slot3, int qty, short produce_idx );
+short skill_can_produce_mix( struct map_session_data *sd, t_itemid nameid, int trigger, int qty);
+bool skill_produce_mix( struct map_session_data *sd, uint16 skill_id, t_itemid nameid, int slot1, int slot2, int slot3, int qty, short produce_idx );
 
-bool skill_arrow_create( struct map_session_data *sd, uint32 nameid);
+bool skill_arrow_create( struct map_session_data *sd, t_itemid nameid);
 
 // skills for the mob
 int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,t_tick tick,int flag );
@@ -2267,7 +2267,7 @@ enum wl_spheres {
 
 struct s_skill_spellbook_db {
 	uint16 skill_id, points;
-	uint32 nameid;
+	t_itemid nameid;
 };
 
 class ReadingSpellbookDatabase : public TypesafeYamlDatabase<uint16, s_skill_spellbook_db> {
@@ -2278,12 +2278,12 @@ public:
 
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
-	std::shared_ptr<s_skill_spellbook_db> findBook(uint32 nameid);
+	std::shared_ptr<s_skill_spellbook_db> findBook(t_itemid nameid);
 };
 
 extern ReadingSpellbookDatabase reading_spellbook_db;
 
-void skill_spellbook(struct map_session_data *sd, uint32 nameid);
+void skill_spellbook(struct map_session_data *sd, t_itemid nameid);
 
 int skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_id);
 
@@ -2315,12 +2315,12 @@ bool skill_check_camouflage(struct block_list *bl, struct status_change_entry *s
 /**
  * Mechanic
  **/
-int skill_magicdecoy(struct map_session_data *sd, uint32 nameid);
+int skill_magicdecoy(struct map_session_data *sd, t_itemid nameid);
 
 /**
  * Guiltoine Cross
  **/
-int skill_poisoningweapon( struct map_session_data *sd, uint32 nameid);
+int skill_poisoningweapon( struct map_session_data *sd, t_itemid nameid);
 
 /**
  * Auto Shadow Spell (Shadow Chaser)
