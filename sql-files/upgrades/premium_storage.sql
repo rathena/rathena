@@ -1,8 +1,8 @@
 --
--- Table structure for table `storage_1`
+-- Table structure for table `vip_storage`
 --
 
-CREATE TABLE IF NOT EXISTS `storage_1` (
+CREATE TABLE IF NOT EXISTS `vip_storage` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `account_id` int(11) unsigned NOT NULL default '0',
   `nameid` smallint(5) unsigned NOT NULL default '0',
