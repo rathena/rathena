@@ -5856,7 +5856,7 @@ This command behaves parameter same as 'specialeffect', but use for remove effec
 from invoking NPC.
 ---------------------------------------
 
-*removespecialeffect2 <effect number>{,<send_target>{,"<NPC Name>"}};
+*removespecialeffect2 <effect number>{,<send_target>{,"<Player Name>"}};
 
 Work for 2018-10-02+
 This command behaves parameter same as 'specialeffect2', but use for remove effect with <effect number>
