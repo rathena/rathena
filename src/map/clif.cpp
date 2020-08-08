@@ -11075,6 +11075,11 @@ void clif_parse_progressbar(int fd, struct map_session_data * sd){
 	sd->progressbar.npc_id = 0;
 	sd->progressbar.timeout = 0;
 	sd->state.workinprogress = WIP_DISABLE_NONE;
+
+	if( battle_config.idletime_option&IDLE_NPC_PROGRESS ){
+		sd->idletime = last_tick;
+	}
+
 	npc_scriptcont(sd, npc_id, closing);
 }
 
@@ -12927,6 +12932,11 @@ void clif_parse_NpcSelectMenu(int fd,struct map_session_data *sd){
 	}
 
 	sd->npc_menu = select;
+
+	if( battle_config.idletime_option&IDLE_NPC_MENU ){
+		sd->idletime = last_tick;
+	}
+
 	npc_scriptcont(sd,npc_id, false);
 }
 
@@ -12935,6 +12945,10 @@ void clif_parse_NpcSelectMenu(int fd,struct map_session_data *sd){
 /// 00b9 <npc id>.L
 void clif_parse_NpcNextClicked(int fd,struct map_session_data *sd)
 {
+	if( battle_config.idletime_option&IDLE_NPC_NEXT ){
+		sd->idletime = last_tick;
+	}
+
 	npc_scriptcont(sd,RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]), false);
 }
 
@@ -12947,6 +12961,11 @@ void clif_parse_NpcAmountInput(int fd,struct map_session_data *sd){
 	int amount = (int)RFIFOL(fd,info->pos[1]);
 
 	sd->npc_amount = amount;
+
+	if( battle_config.idletime_option&IDLE_NPC_INPUT ){
+		sd->idletime = last_tick;
+	}
+
 	npc_scriptcont(sd, npcid, false);
 }
 
@@ -12967,6 +12986,11 @@ void clif_parse_NpcStringInput(int fd, struct map_session_data* sd){
 #endif
 
 	safestrncpy(sd->npc_str, message, min(message_len,CHATBOX_SIZE));
+
+	if( battle_config.idletime_option&IDLE_NPC_INPUT ){
+		sd->idletime = last_tick;
+	}
+
 	npc_scriptcont(sd, npcid, false);
 }
 
@@ -12977,6 +13001,11 @@ void clif_parse_NpcCloseClicked(int fd,struct map_session_data *sd)
 {
 	if (!sd->npc_id) //Avoid parsing anything when the script was done with. [Skotlex]
 		return;
+
+	if( battle_config.idletime_option&IDLE_NPC_CLOSE ){
+		sd->idletime = last_tick;
+	}
+
 	npc_scriptcont(sd, RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]), true);
 }
 
@@ -13026,9 +13055,6 @@ void clif_parse_SelectArrow(int fd,struct map_session_data *sd) {
 			break;
 		case SA_CREATECON:
 			skill_produce_mix(sd,SA_CREATECON,p->itemId,0,0,0,1,-1);
-			break;
-		case WL_READING_SB:
-			skill_spellbook(sd,p->itemId);
 			break;
 		case GC_POISONINGWEAPON:
 			skill_poisoningweapon(sd,p->itemId);
@@ -18928,43 +18954,7 @@ void clif_millenniumshield(struct block_list *bl, short shields) {
 	clif_send(buf,packet_len(0x440),bl,AREA);
 #endif
 }
-/**
- * Warlock
- **/
-/*==========================================
- * Spellbook list [LimitLine/3CeAM]
- *------------------------------------------*/
-void clif_spellbook_list( struct map_session_data *sd ){
-	nullpo_retv( sd );
 
-	int fd = sd->fd;
-
-	if( !session_isActive( fd ) ){
-		return;
-	}
-
-	WFIFOHEAD( fd, sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + MAX_INVENTORY * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub ) );
-	struct PACKET_ZC_MAKINGARROW_LIST *p = (struct PACKET_ZC_MAKINGARROW_LIST *)WFIFOP( fd, 0 );
-	p->packetType = HEADER_ZC_MAKINGARROW_LIST;
-
-	int count = 0;
-	for( int i = 0; i < MAX_INVENTORY; i++ ){
-		if( reading_spellbook_db.findBook( sd->inventory.u.items_inventory[i].nameid ) ){
-			p->items[count].itemId = client_nameid( sd->inventory.u.items_inventory[i].nameid );
-			count++;
-		}
-	}
-
-	if( count > 0 ){
-		p->packetLength = sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub );
-		WFIFOSET( fd, p->packetLength );
-		sd->menuskill_id = WL_READING_SB;
-		sd->menuskill_val = count;
-	}else{
-		status_change_end( &sd->bl, SC_STOP, INVALID_TIMER );
-		clif_skill_fail( sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK, 0 );
-	}
-}
 /**
  * Mechanic
  **/
