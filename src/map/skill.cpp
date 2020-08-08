@@ -22773,7 +22773,7 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current)
 	}
 
 	if (!itemdb_exists(nameid)) {
-		ShowError("skill_parse_row_producedb: Invalid item %d.\n", nameid);
+		ShowError("skill_parse_row_producedb: Invalid item %u.\n", nameid);
 		return false;
 	}
 
@@ -22802,7 +22802,7 @@ static bool skill_parse_row_createarrowdb(char* split[], int columns, int curren
 	t_itemid material_id = strtoul(split[0], nullptr, 10);
 
 	if (!(itemdb_exists(material_id))) {
-		ShowError("skill_parse_row_createarrowdb: Invalid item %d.\n", material_id);
+		ShowError("skill_parse_row_createarrowdb: Invalid item %u.\n", material_id);
 		return false;
 	}
 
@@ -22816,7 +22816,7 @@ static bool skill_parse_row_createarrowdb(char* split[], int columns, int curren
 	// Import just for clearing/disabling from original data
 	if (strtoul(split[1], nullptr, 10) == 0) {
 		memset(&skill_arrow_db[i], 0, sizeof(skill_arrow_db[i]));
-		//ShowInfo("skill_parse_row_createarrowdb: Arrow creation with Material ID %d removed from list.\n", material_id);
+		//ShowInfo("skill_parse_row_createarrowdb: Arrow creation with Material ID %u removed from list.\n", material_id);
 		return true;
 	}
 
