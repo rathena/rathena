@@ -5815,7 +5815,6 @@ character.
 ---------------------------------------
 
 *specialeffect <effect number>{,<send_target>{,"<NPC Name>"}};
-*removespecialeffect <effect number>{,<send_target>{,"<NPC Name>"}};
 
 This command will display special effect with the given number, centered on the
 specified NPCs coordinates, if any. For a full list of special effect numbers
@@ -5839,7 +5838,6 @@ will retain the default behavior of the command.
 ---------------------------------------
 
 *specialeffect2 <effect number>{,<send_target>{,"<Player Name>"}};
-*removespecialeffect2 <effect number>{,<send_target>{,"<Player Name>"}};
 
 This command behaves identically to 'specialeffect', but the effect will be
 centered on the invoking character's sprite.
@@ -5849,6 +5847,20 @@ one currently attached to the script. Like with specialeffect, when specifying
 a player, <send_target> must be supplied, specifying AREA will retain the default
 behavior of the command.
 
+---------------------------------------
+
+*removespecialeffect <effect number>{,<send_target>{,"<NPC Name>"}};
+
+Work for 2018-10-02+
+This command behaves parameter same as 'specialeffect', but use for remove effect with <effect number>
+from invoking NPC.
+---------------------------------------
+
+*removespecialeffect2 <effect number>{,<send_target>{,"<NPC Name>"}};
+
+Work for 2018-10-02+
+This command behaves parameter same as 'specialeffect2', but use for remove effect with <effect number>
+from invoking character.
 ---------------------------------------
 
 *statusup <stat>{,<char_id>};
