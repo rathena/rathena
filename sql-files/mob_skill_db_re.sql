@@ -11211,8 +11211,8 @@ REPLACE INTO `mob_skill_db_re` VALUES (3029,'Grim Reaper Ankou@NPC_DRAGONFEAR','
 
 REPLACE INTO `mob_skill_db_re` VALUES (3038,'Hidden Mob 7@NPC_INVISIBLE','idle',353,1,10000,0,30000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (3038,'Hidden Mob 7@NPC_INVISIBLE','attack',353,1,10000,0,30000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db_re` VALUES ( 3038,'Hidden Mob 7@NPC_HELLBURNING','idle',719,1,10000,0,3000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#REPLACE INTO `mob_skill_db_re` VALUES ( 3038,'Hidden Mob 7@NPC_HELLBURNING','attack',719,1,10000,0,3000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3038,'Hidden Mob 7@NPC_HELLBURNING','idle',719,1,10000,0,3000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3038,'Hidden Mob 7@NPC_HELLBURNING','attack',719,1,10000,0,3000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 # Jitterbug instance
 REPLACE INTO `mob_skill_db_re` VALUES (3069,'Ferre@NPC_GROUNDATTACK','attack',185,5,1000,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);

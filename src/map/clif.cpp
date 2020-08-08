@@ -106,7 +106,7 @@ enum e_inventory_type{
 * @param nameid: Item ID
 * @return item type. For IT_PETEGG will be displayed as IT_ARMOR. If Shadow Weapon of IT_SHADOWGEAR as IT_WEAPON and else as IT_ARMOR
 */
-static inline int itemtype(unsigned short nameid) {
+static inline int itemtype(t_itemid nameid) {
 	struct item_data* id = itemdb_search(nameid); //Use itemdb_search, so non-existance item will use dummy data and won't crash the server. bugreport:8468
 	int type = id->type;
 	if( type == IT_SHADOWGEAR ) {
@@ -141,8 +141,8 @@ static inline uint32 disguised_bl_id( uint32 bl_id ){
 }
 
 #if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
-static inline uint32 client_nameid( uint32 server_nameid ){
-	uint32 view = itemdb_viewid( server_nameid );
+static inline uint32 client_nameid( t_itemid server_nameid ){
+	t_itemid view = itemdb_viewid( server_nameid );
 
 	if( view > 0 ){
 		return view;
@@ -151,12 +151,20 @@ static inline uint32 client_nameid( uint32 server_nameid ){
 	}
 }
 #else
-static inline uint16 client_nameid( uint32 server_nameid ){
-	uint32 view = itemdb_viewid( server_nameid );
+static inline uint16 client_nameid( t_itemid server_nameid ){
+	t_itemid view = itemdb_viewid( server_nameid );
 
 	if( view > 0 ){
+		if( view > UINT16_MAX ){
+			return (uint16)UNKNOWN_ITEM_ID;
+		}
+
 		return (uint16)view;
 	}else{
+		if( server_nameid > UINT16_MAX ){
+			return (uint16)UNKNOWN_ITEM_ID;
+		}
+
 		return (uint16)server_nameid;
 	}
 }
@@ -963,7 +971,7 @@ void clif_clearunit_delayed(struct block_list* bl, clr_type type, t_tick tick)
 	add_timer(tick, clif_clearunit_delayed_sub, (int)type, (intptr_t)tbl);
 }
 
-void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, unsigned short *lhand)
+void clif_get_weapon_view(struct map_session_data* sd, t_itemid *rhand, t_itemid *lhand)
 {
 	if(sd->sc.option&OPTION_COSTUME)
 	{
@@ -2183,6 +2191,7 @@ void clif_parse_NPCShopClosed(int fd, struct map_session_data *sd) {
  * Presents list of items, that can be sold to a Market shop.
  * @author: Ind and Yommy
  **/
+/// 0x9d5 <packet len>.W { <name id>.W <type>.B <price>.L <qty>.L <weight>.W }* (ZC_NPC_MARKET_OPEN)
 void clif_npc_market_open(struct map_session_data *sd, struct npc_data *nd) {
 #if PACKETVER >= 20131223
 	nullpo_retv( sd );
@@ -2237,6 +2246,7 @@ void clif_parse_NPCMarketClosed(int fd, struct map_session_data *sd) {
 
 
 /// Purchase item from Market shop.
+/// 0x9d7 <packet len>.W <count>.B { <name id>.W <qty>.W <price>.L }* (ZC_NPC_MARKET_PURCHASE_RESULT)
 void clif_npc_market_purchase_ack(struct map_session_data *sd, uint8 res, uint8 n, struct s_npc_buy_list *list) {
 #if PACKETVER >= 20131223
 	nullpo_retv( sd );
@@ -2283,6 +2293,7 @@ void clif_npc_market_purchase_ack(struct map_session_data *sd, uint8 res, uint8 
 
 
 /// Purchase item from Market shop.
+/// 0x9d6 <len>.W { <name id>.W <qty>.L } (CZ_NPC_MARKET_PURCHASE)
 void clif_parse_NPCMarketPurchase(int fd, struct map_session_data *sd) {
 #if PACKETVER >= 20131223
 	nullpo_retv( sd );
@@ -3578,7 +3589,7 @@ void clif_changestatus(struct map_session_data* sd,int type,int val)
 
 
 /// 00c3 <id>.L <type>.B <value>.B (ZC_SPRITE_CHANGE)
-/// 01d7 <id>.L <type>.B <value>.L (ZC_SPRITE_CHANGE2)
+/// 01d7 <id>.L <type>.B <value1>.W <value2>.W (ZC_SPRITE_CHANGE2)
 void clif_sprite_change( struct block_list *bl, int id, int type, int val, int val2, enum send_target target ){
 	struct PACKET_ZC_SPRITE_CHANGE p;
 
@@ -3875,7 +3886,7 @@ void clif_arrow_create_list( struct map_session_data *sd ){
 
 	int count = 0;
 	for( int i = 0; i < MAX_SKILL_ARROW_DB; i++ ){
-		short nameid = skill_arrow_db[i].nameid;
+		t_itemid nameid = skill_arrow_db[i].nameid;
 
 		if( !itemdb_exists( nameid ) ){
 			continue;
@@ -5084,7 +5095,7 @@ void clif_getareachar_item( struct map_session_data* sd,struct flooritem_data* f
 	struct PACKET_ZC_ITEM_ENTRY p;
 	int view = itemdb_viewid( fitem->item.nameid );
 
-	p.packetType = 0x9d;
+	p.packetType = HEADER_ZC_ITEM_ENTRY;
 	p.AID = fitem->bl.id;
 	p.itemId = view > 0 ? view : fitem->item.nameid;
 	p.identify = fitem->item.identify;
@@ -5631,7 +5642,7 @@ void clif_skillcastcancel(struct block_list* bl)
 /// if(result!=0) doesn't display any of the previous messages
 /// Note: when this packet is received an unknown flag is always set to 0,
 /// suggesting this is an ACK packet for the UseSkill packets and should be sent on success too [FlavioJS]
-void clif_skill_fail( struct map_session_data *sd, uint16 skill_id, enum useskill_fail_cause cause, int btype, int itemId ){
+void clif_skill_fail( struct map_session_data *sd, uint16 skill_id, enum useskill_fail_cause cause, int btype, t_itemid itemId ){
 	nullpo_retv( sd );
 
 	int fd = sd->fd;
@@ -5654,7 +5665,7 @@ void clif_skill_fail( struct map_session_data *sd, uint16 skill_id, enum useskil
 
 	struct PACKET_ZC_ACK_TOUSESKILL p;
 
-	p.packetType = 0x110;
+	p.packetType = HEADER_ZC_ACK_TOUSESKILL;
 	p.skillId = skill_id;
 	p.btype = btype;
 	p.itemId = itemId;
@@ -6535,7 +6546,7 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 #if PACKETVER >= 20121010
 	struct map_data *mapdata = map_getmapdata(bl->m);
 
-	WBUFL(buf,4) = ((mapdata->flag[MF_PVP]?1:0)<<0)| // PARTY - Show attack cursor on non-party members (PvP)
+	WBUFL(buf,4) = ((mapdata->flag[MF_PVP]?1:0 || (bl->type == BL_PC && ((TBL_PC *)bl)->duel_group > 0))<<0)| // PARTY - Show attack cursor on non-party members (PvP)
 		((mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata)?1:0)<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
 		((mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata)?1:0)<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
 		((mapdata->flag[MF_NOMINEEFFECT] || !mapdata_flag_gvg2(mapdata)?0:1)<<3)| // USE_SIMPLE_EFFECT - Automatically enable /mineffect
@@ -6637,10 +6648,10 @@ void clif_refine(int fd, int fail, int index, int val)
 ///     1 = "weapon upgraded: %s" MsgStringTable[912] in rgb(0,205,205)
 ///     2 = "cannot upgrade %s until you level up the upgrade weapon skill" MsgStringTable[913] in rgb(255,200,200)
 ///     3 = "you lack the item %s to upgrade the weapon" MsgStringTable[914] in rgb(255,200,200)
-void clif_upgrademessage( struct map_session_data* sd, int result, unsigned short item_id ){
+void clif_upgrademessage( struct map_session_data* sd, int result, t_itemid item_id ){
 	struct PACKET_ZC_ACK_WEAPONREFINE p;
 
-	p.packetType = 0x223;
+	p.packetType = HEADER_ZC_ACK_WEAPONREFINE;
 	p.result = result;
 	p.itemId = client_nameid( item_id );
 
@@ -7992,14 +8003,14 @@ void clif_movetoattack(struct map_session_data *sd,struct block_list *bl)
 ///     1 = failure
 ///     2 = success (alchemist)
 ///     3 = failure (alchemist)
-void clif_produceeffect(struct map_session_data* sd,int flag, unsigned short nameid){
+void clif_produceeffect(struct map_session_data* sd,int flag, t_itemid nameid){
 	nullpo_retv( sd );
 
 	clif_solved_charname( sd->fd, sd->status.char_id, sd->status.name );
 
 	struct PACKET_ZC_ACK_REQMAKINGITEM p;
 
-	p.packetType = 0x18f;
+	p.packetType = HEADER_ZC_ACK_REQMAKINGITEM;
 	p.result = flag;
 	p.itemId = client_nameid( nameid );
 
@@ -8348,10 +8359,10 @@ void clif_mvp_effect(struct map_session_data *sd)
 
 /// MVP item reward message (ZC_MVP_GETTING_ITEM).
 /// 010a <name id>.W
-void clif_mvp_item( struct map_session_data *sd, unsigned short nameid ){
+void clif_mvp_item( struct map_session_data *sd, t_itemid nameid ){
 	struct PACKET_ZC_MVP_GETTING_ITEM p;
 
-	p.packetType = 0x10a;
+	p.packetType = HEADER_ZC_MVP_GETTING_ITEM;
 	p.itemId = client_nameid( nameid );
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
@@ -14507,12 +14518,12 @@ void clif_parse_GM_Item_Monster(int fd, struct map_session_data *sd)
 	if( (id = itemdb_searchname(str)) ) {
 		StringBuf_Init(&command);
 		if( !itemdb_isstackable2(id) ) //Nonstackable
-			StringBuf_Printf(&command, "%citem2 %d 1 0 0 0 0 0 0 0", atcommand_symbol, id->nameid);
+			StringBuf_Printf(&command, "%citem2 %u 1 0 0 0 0 0 0 0", atcommand_symbol, id->nameid);
 		else {
 			if (id->flag.guid)
-				StringBuf_Printf(&command, "%citem %d 1", atcommand_symbol, id->nameid);
+				StringBuf_Printf(&command, "%citem %u 1", atcommand_symbol, id->nameid);
 			else
-				StringBuf_Printf(&command, "%citem %d 20", atcommand_symbol, id->nameid);
+				StringBuf_Printf(&command, "%citem %u 20", atcommand_symbol, id->nameid);
 		}
 		is_atcommand(fd, sd, StringBuf_Value(&command), 1);
 		StringBuf_Destroy(&command);
@@ -15419,9 +15430,9 @@ void clif_Mail_setattachment( struct map_session_data* sd, int index, int amount
 /// 09f2 <mail id>.Q <mail tab>.B <result>.B (ZC_ACK_ZENY_FROM_MAIL)
 /// 09f4 <mail id>.Q <mail tab>.B <result>.B (ZC_ACK_ITEM_FROM_MAIL)
 void clif_mail_getattachment(struct map_session_data* sd, struct mail_message *msg, uint8 result, enum mail_attachment_type type) {
+#if PACKETVER < 20150513
 	int fd = sd->fd;
 
-#if PACKETVER < 20150513
 	WFIFOHEAD(fd,packet_len(0x245));
 	WFIFOW(fd,0) = 0x245;
 	WFIFOB(fd,2) = result;
@@ -15435,12 +15446,13 @@ void clif_mail_getattachment(struct map_session_data* sd, struct mail_message *m
 			return;
 	}
 
-	WFIFOHEAD(fd, 12);
-	WFIFOW(fd, 0) = type == MAIL_ATT_ZENY ? 0x9f2 : 0x9f4;
-	WFIFOQ(fd, 2) = msg->id;
-	WFIFOB(fd, 10) = msg->type;
-	WFIFOB(fd, 11) = result;
-	WFIFOSET(fd, 12);
+	PACKET_ZC_ACK_ITEM_FROM_MAIL p = { 0 };
+
+	p.PacketType = type == MAIL_ATT_ZENY ? rodexgetzeny : rodexgetitem;
+	p.MailID = msg->id;
+	p.opentype = msg->type;
+	p.result = result;
+	clif_send(&p, sizeof(p), &sd->bl, SELF);
 
 	clif_Mail_refreshinbox( sd, msg->type, 0 );
 #endif
@@ -15454,17 +15466,19 @@ void clif_mail_getattachment(struct map_session_data* sd, struct mail_message *m
 ///     1 = recipinent does not exist
 /// 09ed <result>.B (ZC_ACK_WRITE_MAIL)
 void clif_Mail_send(struct map_session_data* sd, enum mail_send_result result){
-	int fd = sd->fd;
 #if PACKETVER < 20150513
+	int fd = sd->fd;
+
 	WFIFOHEAD(fd,packet_len(0x249));
 	WFIFOW(fd,0) = 0x249;
 	WFIFOB(fd,2) = result != WRITE_MAIL_SUCCESS;
 	WFIFOSET(fd,packet_len(0x249));
 #else
-	WFIFOHEAD(fd, 3);
-	WFIFOW(fd, 0) = 0x9ed;
-	WFIFOB(fd, 2) = result;
-	WFIFOSET(fd, 3);
+	PACKET_ZC_WRITE_MAIL_RESULT p = { 0 };
+
+	p.PacketType = rodexwriteresult;
+	p.result = result;
+	clif_send(&p, sizeof(p), &sd->bl, SELF);
 #endif
 }
 
@@ -15476,9 +15490,9 @@ void clif_Mail_send(struct map_session_data* sd, enum mail_send_result result){
 ///     1 = failure
 // 09f6 <mail tab>.B <mail id>.Q (ZC_ACK_DELETE_MAIL)
 void clif_mail_delete( struct map_session_data* sd, struct mail_message *msg, bool success ){
+#if PACKETVER < 20150513
 	int fd = sd->fd;
 
-#if PACKETVER < 20150513
 	WFIFOHEAD(fd, packet_len(0x257));
 	WFIFOW(fd,0) = 0x257;
 	WFIFOL(fd,2) = msg->id;
@@ -15487,11 +15501,12 @@ void clif_mail_delete( struct map_session_data* sd, struct mail_message *msg, bo
 #else
 	// This is only a success notification
 	if( success ){
-		WFIFOHEAD(fd, 11);
-		WFIFOW(fd, 0) = 0x9f6;
-		WFIFOB(fd, 2) = msg->type;
-		WFIFOQ(fd, 3) = msg->id;
-		WFIFOSET(fd, 11);
+		PACKET_ZC_ACK_DELETE_MAIL p = { 0 };
+
+		p.PacketType = rodexdelete;
+		p.opentype = msg->type;
+		p.MailID = msg->id;
+		clif_send(&p, sizeof(p), &sd->bl, SELF);
 	}
 #endif
 }
@@ -15515,8 +15530,9 @@ void clif_Mail_return(int fd, int mail_id, short fail)
 /// 024a <mail id>.L <title>.40B <sender>.24B (ZC_MAIL_RECEIVE)
 /// 09e7 <result>.B (ZC_NOTIFY_UNREADMAIL)
 void clif_Mail_new(struct map_session_data* sd, int mail_id, const char *sender, const char *title){
-	int fd = sd->fd;
 #if PACKETVER < 20150513
+	int fd = sd->fd;
+
 	WFIFOHEAD(fd,packet_len(0x24a));
 	WFIFOW(fd,0) = 0x24a;
 	WFIFOL(fd,2) = mail_id;
@@ -15524,10 +15540,11 @@ void clif_Mail_new(struct map_session_data* sd, int mail_id, const char *sender,
 	safestrncpy(WFIFOCP(fd,46), sender, NAME_LENGTH);
 	WFIFOSET(fd,packet_len(0x24a));
 #else
-	WFIFOHEAD(fd,3);
-	WFIFOW(fd,0) = 0x9e7;
-	WFIFOB(fd,2) = sd->mail.inbox.unread > 0 || sd->mail.inbox.unchecked > 0; // unread
-	WFIFOSET(fd,3);
+	PACKET_ZC_NOTIFY_UNREADMAIL p = { 0 };
+
+	p.PacketType = rodexicon;
+	p.result = sd->mail.inbox.unread > 0 || sd->mail.inbox.unchecked > 0; // unread
+	clif_send(&p, sizeof(p), &sd->bl, SELF);
 #endif
 }
 
@@ -15945,13 +15962,12 @@ void clif_parse_Mail_read(int fd, struct map_session_data *sd){
 /// Allow a player to begin writing a mail
 /// 0a12 <receiver>.24B <success>.B (ZC_ACK_OPEN_WRITE_MAIL)
 void clif_send_Mail_beginwrite_ack( struct map_session_data *sd, char* name, bool success ){
-	int fd = sd->fd;
+	PACKET_ZC_ACK_OPEN_WRITE_MAIL p = { 0 };
 
-	WFIFOHEAD(fd, 27);
-	WFIFOW(fd, 0) = 0xa12;
-	safestrncpy(WFIFOCP(fd, 2), name, NAME_LENGTH);
-	WFIFOB(fd, 26) = success;
-	WFIFOSET(fd, 27);
+	p.PacketType = rodexopenwrite;
+	safestrncpy(p.receiveName, name, NAME_LENGTH);
+	p.result = success;
+	clif_send(&p, sizeof(p), &sd->bl, SELF);
 }
 
 /// Request to start writing a mail
@@ -15982,22 +15998,16 @@ void clif_parse_Mail_cancelwrite( int fd, struct map_session_data *sd ){
 /// 0a14 <char id>.L <class>.W <base level>.W (ZC_CHECK_RECEIVE_CHARACTER_NAME)
 /// 0a51 <char id>.L <class>.W <base level>.W <name>.24B (ZC_CHECK_RECEIVE_CHARACTER_NAME2)
 void clif_Mail_Receiver_Ack( struct map_session_data* sd, uint32 char_id, short class_, uint32 level, const char* name ){
-	int fd = sd->fd;
-#if PACKETVER <= 20160302
-	int cmd = 0xa14;
-#else
-	int cmd = 0xa51;
-#endif
+	PACKET_ZC_CHECKNAME p = { 0 };
 
-	WFIFOHEAD(fd, packet_len(cmd));
-	WFIFOW(fd, 0) = cmd;
-	WFIFOL(fd, 2) = char_id;
-	WFIFOW(fd, 6) = class_;
-	WFIFOW(fd, 8) = level;
+	p.PacketType = rodexcheckplayer;
+	p.CharId = char_id;
+	p.Class = class_;
+	p.BaseLevel = level;
 #if PACKETVER >= 20160302
-	strncpy(WFIFOCP(fd, 10), name, NAME_LENGTH);
+	strncpy(p.Name, name, NAME_LENGTH);
 #endif
-	WFIFOSET(fd, packet_len(cmd));
+	clif_send(&p, sizeof(p), &sd->bl, SELF);
 }
 
 /// Request information about the recipient
@@ -16106,7 +16116,6 @@ void clif_parse_Mail_getattach( int fd, struct map_session_data *sd ){
 	}
 
 	intif_mail_getattach(sd,msg, (enum mail_attachment_type)attachment);
-	clif_Mail_read(sd, mail_id);
 }
 
 
@@ -16205,13 +16214,12 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd){
 /// Remove an item from a mail
 /// 0a07 <result>.B <index>.W <amount>.W <weight>.W
 void clif_mail_removeitem( struct map_session_data* sd, bool success, int index, int amount ){
-	int fd = sd->fd;
+	PACKET_ZC_ACK_REMOVE_ITEM_MAIL p = { 0 };
 
-	WFIFOHEAD(fd, 9);
-	WFIFOW(fd, 0) = 0xa07;
-	WFIFOB(fd, 2) = success;
-	WFIFOW(fd, 3) = index;
-	WFIFOW(fd, 5) = amount;
+	p.PacketType = rodexremoveitem;
+	p.result = success;
+	p.index = index;
+	p.cnt = amount;
 
 	int total = 0;
 	for( int i = 0; i < MAIL_MAX_ITEM; i++ ){
@@ -16222,8 +16230,8 @@ void clif_mail_removeitem( struct map_session_data* sd, bool success, int index,
 		total += sd->mail.item[i].amount * ( sd->inventory_data[sd->mail.item[i].index]->weight / 10 );
 	}
 
-	WFIFOW(fd, 7) = total;
-	WFIFOSET(fd, 9);
+	p.weight = total;
+	clif_send(&p, sizeof(p), &sd->bl, SELF);
 }
 
 /// Request to reset mail item and/or Zeny
@@ -16709,6 +16717,8 @@ void clif_parse_cashshop_close( int fd, struct map_session_data* sd ){
 //0846 <tabid>.W (CZ_REQ_SE_CASH_TAB_CODE))
 //08c0 <len>.W <openIdentity>.L <itemcount>.W (ZC_ACK_SE_CASH_ITEM_LIST2)
 void clif_parse_CashShopReqTab(int fd, struct map_session_data *sd) {
+// [4144] packet exists only in 2011 and was dropped after
+#if PACKETVER >= 20110222 && PACKETVER < 20120000
 	short tab = RFIFOW(fd, packet_db[RFIFOW(fd,0)].pos[0]);
 	int j;
 
@@ -16727,6 +16737,7 @@ void clif_parse_CashShopReqTab(int fd, struct map_session_data *sd) {
 	}
 
 	WFIFOSET(fd, 10 + ( cash_shop_items[tab].count * 6 ));
+#endif
 }
 
 //08ca <len>.W <itemcount> W <tabcode>.W (ZC_ACK_SCHEDULER_CASHITEM)
@@ -16852,7 +16863,7 @@ void clif_cashshop_ack(struct map_session_data* sd, int error)
 	WFIFOSET(fd, packet_len(0x289));
 }
 
-void clif_cashshop_result( struct map_session_data *sd, unsigned short item_id, uint16 result ){
+void clif_cashshop_result( struct map_session_data *sd, t_itemid item_id, uint16 result ){
 #if PACKETVER_MAIN_NUM >= 20101123 || PACKETVER_RE_NUM >= 20120328 || defined( PACKETVER_ZERO )
 	nullpo_retv( sd );
 
@@ -17682,11 +17693,11 @@ void clif_mercenary_message(struct map_session_data* sd, int message){
 
 /// Notification about the remaining time of a rental item.
 /// 0298 <name id>.W <seconds>.L (ZC_CASH_TIME_COUNTER)
-void clif_rental_time( struct map_session_data* sd, unsigned short nameid, int seconds ){
+void clif_rental_time( struct map_session_data* sd, t_itemid nameid, int seconds ){
 	// '<ItemName>' item will disappear in <seconds/60> minutes.
 	struct PACKET_ZC_CASH_TIME_COUNTER p;
 
-	p.packetType = 0x298;
+	p.packetType = HEADER_ZC_CASH_TIME_COUNTER;
 	p.itemId = client_nameid( nameid );
 	p.seconds = seconds;
 
@@ -17696,11 +17707,11 @@ void clif_rental_time( struct map_session_data* sd, unsigned short nameid, int s
 
 /// Deletes a rental item from client's inventory.
 /// 0299 <index>.W <name id>.W (ZC_CASH_ITEM_DELETE)
-void clif_rental_expired( struct map_session_data* sd, int index, unsigned short nameid ){
+void clif_rental_expired( struct map_session_data* sd, int index, t_itemid nameid ){
 	// '<ItemName>' item has been deleted from the Inventory
 	struct PACKET_ZC_CASH_ITEM_DELETE p;
 
-	p.packetType = 0x299;
+	p.packetType = HEADER_ZC_CASH_ITEM_DELETE;
 	p.index = client_index( index );
 	p.itemId = client_nameid( nameid );
 
@@ -18230,7 +18241,7 @@ void clif_party_show_picker( struct map_session_data* sd, struct item* item_data
 
 	struct PACKET_ZC_ITEM_PICKUP_PARTY p;
 
-	p.packetType = 0x2b8;
+	p.packetType = HEADER_ZC_ITEM_PICKUP_PARTY;
 	p.AID = sd->status.account_id;
 	p.itemId = item_data->nameid;
 	p.identified = item_data->identify;
@@ -18651,11 +18662,11 @@ void clif_buyingstore_trade_failed_buyer(struct map_session_data* sd, short resu
 /// Updates the zeny limit and an item in the buying store item list.
 /// 081b <name id>.W <amount>.W <limit zeny>.L (ZC_UPDATE_ITEM_FROM_BUYING_STORE)
 /// 09e6 <name id>.W <amount>.W <zeny>.L <limit zeny>.L <GID>.L <Date>.L (ZC_UPDATE_ITEM_FROM_BUYING_STORE2)
-void clif_buyingstore_update_item( struct map_session_data* sd, unsigned short nameid, unsigned short amount, uint32 char_id, int zeny ){
+void clif_buyingstore_update_item( struct map_session_data* sd, t_itemid nameid, unsigned short amount, uint32 char_id, int zeny ){
 	struct PACKET_ZC_UPDATE_ITEM_FROM_BUYING_STORE p;
 
 	p.packetType = buyingStoreUpdateItemType;
-	p.itemId = nameid;
+	p.itemId = client_nameid( nameid );
 	p.amount = amount;
 	p.zenyLimit = sd->buyingstore.zenylimit;
 #if PACKETVER >= 20141016
@@ -18694,10 +18705,10 @@ void clif_buyingstore_delete_item(struct map_session_data* sd, short index, unsi
 ///     6 = "The trade failed, because the entered amount of item %s is higher, than the buyer is willing to buy." (0x6d3, MSI_BUYINGSTORE_TRADE_OVERCOUNT)
 ///     7 = "The trade failed, because the buyer is lacking required balance." (0x6d1, MSI_BUYINGSTORE_TRADE_LACKBUYERZENY)
 ///     ? = nothing
-void clif_buyingstore_trade_failed_seller( struct map_session_data* sd, short result, unsigned short nameid ){
+void clif_buyingstore_trade_failed_seller( struct map_session_data* sd, short result, t_itemid nameid ){
 	struct PACKET_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER p;
 
-	p.packetType = 0x824;
+	p.packetType = HEADER_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER;
 	p.result = result;
 	p.itemId = client_nameid( nameid );
 
@@ -20144,7 +20155,7 @@ static uint8 clif_roulette_getitem(struct map_session_data *sd) {
 
 /// Update Roulette window with current stats
 /// 0A20 <result>.B <stage>.W <price index>.W <bonus item>.W <gold>.L <silver>.L <bronze>.L (ZC_ACK_GENERATE_ROULETTE)
-void clif_roulette_generate( struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, short bonusItemID ){
+void clif_roulette_generate( struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, t_itemid bonusItemID ){
 	nullpo_retv( sd );
 
 	struct packet_roulette_generate_ack p;
@@ -20450,7 +20461,7 @@ void clif_parse_merge_item_cancel(int fd, struct map_session_data* sd) {
  * type: ITEMOBTAIN_TYPE_BOXITEM & ITEMOBTAIN_TYPE_MONSTER_ITEM "[playername] ... [sourcename] ... [itemname]" -> MsgStringTable[1629]
  * type: ITEMOBTAIN_TYPE_NPC "[playername] ... [itemname]" -> MsgStringTable[1870]
  **/
-void clif_broadcast_obtain_special_item( const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type ){
+void clif_broadcast_obtain_special_item( const char *char_name, t_itemid nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type ){
 	char name[NAME_LENGTH];
 
 	if( battle_config.broadcast_hide_name ){
@@ -20667,7 +20678,7 @@ void clif_sale_start( struct sale_item_data* sale_item, struct block_list* bl, e
 #endif
 }
 
-/// Notify the clien that a sale has ended
+/// Notify the client that a sale has ended
 /// 09b3 <item id>.W (ZC_NOTIFY_BARGAIN_SALE_CLOSE)
 void clif_sale_end( struct sale_item_data* sale_item, struct block_list* bl, enum send_target target ){
 #if PACKETVER_SUPPORTS_SALES
@@ -21217,7 +21228,7 @@ void clif_parse_private_airship_request( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	uint16 item_id = p->ItemID;
+	t_itemid item_id = p->ItemID;
 
 	// Check if the item sent by the client is known to us
 	if( !itemdb_group_item_exists(IG_PRIVATE_AIRSHIP, item_id) ){

@@ -3845,6 +3845,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->ignore_mdef_by_race2)
 		+ sizeof(sd->dropaddrace)
 		+ sizeof(sd->dropaddclass)
+		+ sizeof(sd->magic_subdefele)
 		);
 
 	memset (&sd->right_weapon.overrefine, 0, sizeof(sd->right_weapon) - sizeof(sd->right_weapon.atkmods));
@@ -3984,7 +3985,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			}
 			wa->atk += sd->inventory_data[index]->atk;
 			if(r)
-				wa->atk2 = refine_info[wlv].bonus[r-1] / 100;
+				wa->atk2 += refine_info[wlv].bonus[r-1] / 100;
 #ifdef RENEWAL
 			wa->matk += sd->inventory_data[index]->matk;
 			wa->wlv = wlv;
@@ -15582,7 +15583,7 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 		int64 idx_tmp = 0;
 		const YAML::Node &type = costit;
 		int idx = 0, price;
-		unsigned short material;
+		t_itemid material;
 		const std::string keys[] = { "Type", "Price", "Material" };
 
 		for (int i = 0; i < ARRAYLENGTH(keys); i++) {
@@ -15598,7 +15599,8 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 			idx = static_cast<int>(idx_tmp);
 		}
 		price = type["Price"].as<int>();
-		material = type["Material"].as<uint16>();
+		// TODO: item id verification
+		material = type["Material"].as<t_itemid>();
 
 		refine_info[refine_info_index].cost[idx].nameid = material;
 		refine_info[refine_info_index].cost[idx].zeny = price;

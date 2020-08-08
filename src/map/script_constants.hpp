@@ -755,7 +755,7 @@
 	export_constant2("bLongHPGainValue",SP_LONG_HP_GAIN_VALUE);
 	export_constant2("bMagicSubSize",SP_MAGIC_SUBSIZE);
 	export_constant2("bCritDefRate",SP_CRIT_DEF_RATE);
-
+	export_constant2("bMagicSubDefEle", SP_MAGIC_SUBDEF_ELE);
 
 	/* equip indices */
 	export_constant(EQI_COMPOUND_ON);
@@ -7832,6 +7832,7 @@
 	export_constant(UNT_GROUNDDRIFT_POISON);
 	export_constant(UNT_GROUNDDRIFT_WATER);
 	export_constant(UNT_GROUNDDRIFT_FIRE);
+	export_constant(UNT_EARTHQUAKE);
 	export_constant(UNT_EVILLAND);
 	export_constant(UNT_EPICLESIS);
 	export_constant(UNT_EARTHSTRAIN);
