@@ -853,16 +853,21 @@ enum ammo_type {
 };
 
 enum idletime_option {
-	IDLE_WALK          = 0x001,
-	IDLE_USESKILLTOID  = 0x002,
-	IDLE_USESKILLTOPOS = 0x004,
-	IDLE_USEITEM       = 0x008,
-	IDLE_ATTACK        = 0x010,
-	IDLE_CHAT          = 0x020,
-	IDLE_SIT           = 0x040,
-	IDLE_EMOTION       = 0x080,
-	IDLE_DROPITEM      = 0x100,
-	IDLE_ATCOMMAND     = 0x200,
+	IDLE_WALK          = 0x0001,
+	IDLE_USESKILLTOID  = 0x0002,
+	IDLE_USESKILLTOPOS = 0x0004,
+	IDLE_USEITEM       = 0x0008,
+	IDLE_ATTACK        = 0x0010,
+	IDLE_CHAT          = 0x0020,
+	IDLE_SIT           = 0x0040,
+	IDLE_EMOTION       = 0x0080,
+	IDLE_DROPITEM      = 0x0100,
+	IDLE_ATCOMMAND     = 0x0200,
+	IDLE_NPC_CLOSE     = 0x0400,
+	IDLE_NPC_INPUT     = 0x0800,
+	IDLE_NPC_MENU      = 0x1000,
+	IDLE_NPC_NEXT      = 0x2000,
+	IDLE_NPC_PROGRESS  = 0x4000,
 };
 
 enum adopt_responses {
