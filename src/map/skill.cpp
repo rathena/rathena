@@ -22783,7 +22783,7 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current)
 	skill_produce_db[id].req_skill_lv = atoi(split[4]);
 
 	for (x = 5, y = 0; x+1 < columns && split[x] && split[x+1] && y < MAX_PRODUCE_RESOURCE; x += 2, y++) {
-		skill_produce_db[id].mat_id[y] = atoi(split[x]);
+		skill_produce_db[id].mat_id[y] = strtoul(split[x], nullptr, 10);
 		skill_produce_db[id].mat_amount[y] = atoi(split[x+1]);
 	}
 
@@ -22798,7 +22798,8 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current)
  */
 static bool skill_parse_row_createarrowdb(char* split[], int columns, int current)
 {
-	unsigned short x, y, i, material_id = atoi(split[0]);
+	unsigned short x, y, i;
+	t_itemid material_id = strtoul(split[0], nullptr, 10);
 
 	if (!(itemdb_exists(material_id))) {
 		ShowError("skill_parse_row_createarrowdb: Invalid item %d.\n", material_id);
@@ -22813,7 +22814,7 @@ static bool skill_parse_row_createarrowdb(char* split[], int columns, int curren
 	}
 
 	// Import just for clearing/disabling from original data
-	if (atoi(split[1]) == 0) {
+	if (strtoul(split[1], nullptr, 10) == 0) {
 		memset(&skill_arrow_db[i], 0, sizeof(skill_arrow_db[i]));
 		//ShowInfo("skill_parse_row_createarrowdb: Arrow creation with Material ID %d removed from list.\n", material_id);
 		return true;
@@ -22821,7 +22822,7 @@ static bool skill_parse_row_createarrowdb(char* split[], int columns, int curren
 
 	skill_arrow_db[i].nameid = material_id;
 	for (x = 1, y = 0; x+1 < columns && split[x] && split[x+1] && y < MAX_ARROW_RESULT; x += 2, y++) {
-		skill_arrow_db[i].cre_id[y] = atoi(split[x]);
+		skill_arrow_db[i].cre_id[y] = strtoul(split[x], nullptr, 10);
 		skill_arrow_db[i].cre_amount[y] = atoi(split[x+1]);
 	}
 	if (i == skill_arrow_count)
