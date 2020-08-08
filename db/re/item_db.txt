@@ -13733,12 +13733,12 @@
 450041,Noblesse_Frost_Robe,Noblesse Frost Robe,4,20,,0,,70,,1,0x00000200,56,2,16,,100,1,,{ .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Water,5; },{},{}
 450042,Noblesse_Psychic_Robe,Noblesse Psychic Robe,4,20,,0,,70,,1,0x00010000,56,2,16,,100,1,,{ .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Neutral,5; },{},{}
 450043,Noblesse_Dust_Robe,Noblesse Dust Robe,4,20,,0,,70,,1,0x00010000,56,2,16,,100,1,,{ .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Water,5; },{},{}
-450044,Noblesse_Sun_Suit,Noblesse Sun Suit,4,20,,0,,70,,1,0x00400000,63,2,16,,100,1,,{ .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus2 bAddClass,Class_All,5; },{},{}
-450045,Noblesse_Moon_Suit,Noblesse Moon Suit,4,20,,0,,70,,1,0x00400000,63,2,16,,100,1,,{ .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus2 bAddSize,Size_All,5; if(.@r>=9) bonus2 bAddClass,Class_All,5; },{},{}
-450046,Noblesse_Ninja_Suit,Noblesse Ninja Suit,4,20,,0,,70,,1,0x02000000,63,2,16,,100,1,,{ .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_All,5; },{},{}
-450047,Noblesse_Kunai_Suit,Noblesse Kunai Suit,4,20,,0,,70,,1,0x02000000,63,2,16,,100,1,,{ .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus2 bAddClass,Class_All,5; if(.@r>=9) bonus bLongAtkRate,5; },{},{}
-450048,Noblesse_Eswhoo_Robe,Noblesse Eswhoo Robe,4,20,,0,,70,,1,0x00800000,63,2,16,,100,1,,{ .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,5; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,5; },{},{}
-450049,Noblesse_Explosion_Robe,Noblesse Explosion Robe,4,20,,0,,70,,1,0x00800000,63,2,16,,100,1,,{ .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,5; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,5; },{},{}
+450044,Noblesse_Sun_Suit,Noblesse Sun Suit,4,20,,0,,70,,1,0x00400000,56,2,16,,100,1,,{ .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus2 bAddClass,Class_All,5; },{},{}
+450045,Noblesse_Moon_Suit,Noblesse Moon Suit,4,20,,0,,70,,1,0x00400000,56,2,16,,100,1,,{ .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus2 bAddSize,Size_All,5; if(.@r>=9) bonus2 bAddClass,Class_All,5; },{},{}
+450046,Noblesse_Ninja_Suit,Noblesse Ninja Suit,4,20,,0,,70,,1,0x20000000,63,2,16,,100,1,,{ .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_All,5; },{},{}
+450047,Noblesse_Kunai_Suit,Noblesse Kunai Suit,4,20,,0,,70,,1,0x20000000,63,2,16,,100,1,,{ .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus2 bAddClass,Class_All,5; if(.@r>=9) bonus bLongAtkRate,5; },{},{}
+450048,Noblesse_Eswhoo_Robe,Noblesse Eswhoo Robe,4,20,,0,,70,,1,0x00800000,56,2,16,,100,1,,{ .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,5; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,5; },{},{}
+450049,Noblesse_Explosion_Robe,Noblesse Explosion Robe,4,20,,0,,70,,1,0x00800000,56,2,16,,100,1,,{ .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,5; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,5; },{},{}
 450050,Noblesse_Knuckle_Suit,Noblesse Knuckle Suit,4,20,,0,,70,,1,0x00008000,56,2,16,,100,1,,{ .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bMaxSPrate,10; if(.@r>=9) bonus2 bAddSize,Size_All,5; },{},{}
 450051,Noblesse_Tiger_Suit,Noblesse Tiger Suit,4,20,,0,,70,,1,0x00008000,56,2,16,,100,1,,{ .@r = getrefine(); bonus bMaxSPrate,5; if(.@r>=7) bonus bMaxHPrate,3; if(.@r>=9) bonus bMaxHPrate,3; },{},{}
 450052,Imperial_Breath_Armor,Imperial Breath Armor,4,20,,0,,120,,1,0x00000080,56,2,16,,125,1,,{ .@r = getrefine(); bonus bMaxHPrate,7; if(.@r>=7) bonus bVariableCastrate,-15; if(.@r>=9) bonus bMaxHPrate,7; },{},{}
@@ -13769,12 +13769,12 @@
 450077,Imperial_Frost_Robe,Imperial Frost Robe,4,20,,0,,90,,1,0x00000200,56,2,16,,125,1,,{ .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus bVariableCastrate,-15; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Water,7; },{},{}
 450078,Imperial_Psychic_Robe,Imperial Psychic Robe,4,20,,0,,90,,1,0x00010000,56,2,16,,125,1,,{ .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus bVariableCastrate,-15; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Neutral,7; },{},{}
 450079,Imperial_Dust_Robe,Imperial Dust Robe,4,20,,0,,90,,1,0x00010000,56,2,16,,125,1,,{ .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus bVariableCastrate,-15; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Water,7; },{},{}
-450080,Imperial_Sun_Suit,Imperial Sun Suit,4,20,,0,,90,,1,0x00400000,63,2,16,,125,1,,{ .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus2 bAddClass,Class_All,7; },{},{}
-450081,Imperial_Moon_Suit,Imperial Moon Suit,4,20,,0,,90,,1,0x00400000,63,2,16,,125,1,,{ .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus2 bAddSize,Size_All,7; if(.@r>=9) bonus2 bAddClass,Class_All,7; },{},{}
-450082,Imperial_Ninja_Suit,Imperial Ninja Suit,4,20,,0,,90,,1,0x02000000,63,2,16,,125,1,,{ .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus bVariableCastrate,-15; if(.@r>=9) bonus2 bMagicAtkEle,Ele_All,7; },{},{}
-450083,Imperial_Kunai_Suit,Imperial Kunai Suit,4,20,,0,,90,,1,0x02000000,63,2,16,,125,1,,{ .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus2 bAddClass,Class_All,7; if(.@r>=9) bonus bLongAtkRate,7; },{},{}
-450084,Imperial_Eswhoo_Robe,Imperial Eswhoo Robe,4,20,,0,,90,,1,0x00800000,63,2,16,,125,1,,{ .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,7; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,7; },{},{}
-450085,Imperial_Explosion_Robe,Imperial Explosion Robe,4,20,,0,,90,,1,0x00800000,63,2,16,,125,1,,{ .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,7; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,7; },{},{}
+450080,Imperial_Sun_Suit,Imperial Sun Suit,4,20,,0,,90,,1,0x00400000,56,2,16,,125,1,,{ .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus2 bAddClass,Class_All,7; },{},{}
+450081,Imperial_Moon_Suit,Imperial Moon Suit,4,20,,0,,90,,1,0x00400000,56,2,16,,125,1,,{ .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus2 bAddSize,Size_All,7; if(.@r>=9) bonus2 bAddClass,Class_All,7; },{},{}
+450082,Imperial_Ninja_Suit,Imperial Ninja Suit,4,20,,0,,90,,1,0x20000000,63,2,16,,125,1,,{ .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus bVariableCastrate,-15; if(.@r>=9) bonus2 bMagicAtkEle,Ele_All,7; },{},{}
+450083,Imperial_Kunai_Suit,Imperial Kunai Suit,4,20,,0,,90,,1,0x20000000,63,2,16,,125,1,,{ .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus2 bAddClass,Class_All,7; if(.@r>=9) bonus bLongAtkRate,7; },{},{}
+450084,Imperial_Eswhoo_Robe,Imperial Eswhoo Robe,4,20,,0,,90,,1,0x00800000,56,2,16,,125,1,,{ .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,7; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,7; },{},{}
+450085,Imperial_Explosion_Robe,Imperial Explosion Robe,4,20,,0,,90,,1,0x00800000,56,2,16,,125,1,,{ .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,7; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,7; },{},{}
 450086,Grace_Breath_Armor,Grace Breath Armor,4,20,,0,,130,,1,0x00000080,56,2,16,,150,1,,{ .@r = getrefine(); bonus bMaxHPrate,10; if(.@r>=7) bonus bVariableCastrate,-20; if(.@r>=9) bonus bMaxHPrate,10; },{},{}
 450087,Grace_Knight_Armor,Grace Knight Armor,4,20,,0,,130,,1,0x00000080,56,2,16,,150,1,,{ .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus bCritAtkRate,10; },{},{}
 450088,Grace_Spear_Armor,Grace Spear Armor,4,20,,0,,130,,1,0x00004000,56,2,16,,150,1,,{ .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus bLongAtkRate,10; },{},{}
@@ -13803,12 +13803,12 @@
 450111,Grace_Frost_Robe,Grace Frost Robe,4,20,,0,,100,,1,0x00000200,56,2,16,,150,1,,{ .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus bVariableCastrate,-20; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Water,10; },{},{}
 450112,Grace_Psychic_Robe,Grace Psychic Robe,4,20,,0,,100,,1,0x00010000,56,2,16,,150,1,,{ .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus bVariableCastrate,-20; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Neutral,10; },{},{}
 450113,Grace_Dust_Robe,Grace Dust Robe,4,20,,0,,100,,1,0x00010000,56,2,16,,150,1,,{ .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus bVariableCastrate,-20; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Water,10; },{},{}
-450114,Grace_Sun_Suit,Grace Sun Suit,4,20,,0,,100,,1,0x00400000,63,2,16,,150,1,,{ .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus2 bAddClass,Class_All,10; },{},{}
-450115,Grace_Moon_Suit,Grace Moon Suit,4,20,,0,,100,,1,0x00400000,63,2,16,,150,1,,{ .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus2 bAddSize,Size_All,10; if(.@r>=9) bonus2 bAddClass,Class_All,10; },{},{}
-450116,Grace_Ninja_Suit,Grace Ninja Suit,4,20,,0,,100,,1,0x02000000,63,2,16,,150,1,,{ .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus bVariableCastrate,-20; if(.@r>=9) bonus2 bMagicAtkEle,Ele_All,10; },{},{}
-450117,Grace_Kunai_Suit,Grace Kunai Suit,4,20,,0,,100,,1,0x02000000,63,2,16,,150,1,,{ .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus2 bAddClass,Class_All,10; if(.@r>=9) bonus bLongAtkRate,10; },{},{}
-450118,Grace_Eswhoo_Robe,Grace Eswhoo Robe,4,20,,0,,100,,1,0x00800000,63,2,16,,150,1,,{ .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,10; },{},{}
-450119,Grace_Explosion_Robe,Grace Explosion Robe,4,20,,0,,100,,1,0x00800000,63,2,16,,150,1,,{ .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,10; },{},{}
+450114,Grace_Sun_Suit,Grace Sun Suit,4,20,,0,,100,,1,0x00400000,56,2,16,,150,1,,{ .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus2 bAddClass,Class_All,10; },{},{}
+450115,Grace_Moon_Suit,Grace Moon Suit,4,20,,0,,100,,1,0x00400000,56,2,16,,150,1,,{ .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus2 bAddSize,Size_All,10; if(.@r>=9) bonus2 bAddClass,Class_All,10; },{},{}
+450116,Grace_Ninja_Suit,Grace Ninja Suit,4,20,,0,,100,,1,0x20000000,63,2,16,,150,1,,{ .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus bVariableCastrate,-20; if(.@r>=9) bonus2 bMagicAtkEle,Ele_All,10; },{},{}
+450117,Grace_Kunai_Suit,Grace Kunai Suit,4,20,,0,,100,,1,0x20000000,63,2,16,,150,1,,{ .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus2 bAddClass,Class_All,10; if(.@r>=9) bonus bLongAtkRate,10; },{},{}
+450118,Grace_Eswhoo_Robe,Grace Eswhoo Robe,4,20,,0,,100,,1,0x00800000,56,2,16,,150,1,,{ .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,10; },{},{}
+450119,Grace_Explosion_Robe,Grace Explosion Robe,4,20,,0,,100,,1,0x00800000,56,2,16,,150,1,,{ .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,10; },{},{}
 450121,Noblesse_Super_Novice_Suit,Noblesse Super Novice Suit,4,20,,0,,70,,1,0x00000001,63,2,16,,100,1,,{ .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus bMaxHPrate,5; },{},{}
 450122,Noblesse_Super_Novice_Robe,Noblesse Super Novice Robe,4,20,,0,,70,,1,0x00000001,63,2,16,,100,1,,{ .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus bMaxHPrate,5; },{},{}
 450123,Imperial_Super_Novice_Suit,Imperial Super Novice Suit,4,20,,0,,90,,1,0x00000001,63,2,16,,125,1,,{ .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus bMaxHPrate,7; },{},{}
@@ -13824,14 +13824,14 @@
 470021,Grace_Magic_Boots,Grace Magic Boots,4,0,,0,,30,,1,0xFFFFFFFF,63,2,64,,150,1,0,{ .@r = getrefine(); bonus bMatk,20; bonus bFlee,20; if (.@r>=7) bonus bFixedCast,-500; if (.@r>=9) bonus2 bMagicAtkEle,Ele_All,10; },{},{}
 // New Garment
 480012,Noblesse_Attack_Manteau,Noblesse Attack Manteau,4,,,0,,20,,1,0xFFFFFFFF,63,2,4,,100,1,,{ .@r = getrefine(); bonus bAspdRate,3; if (.@r>=7) bonus bDelayrate,-5; if (.@r>=9) bonus2 bAddSize,Size_All,5; },{},{}
-480014,Noblesse_Magic_Manteau,Noblesse Magic Manteau,4,,,0,,20,,1,0xFFFFFFFF,63,2,4,,100,1,,{ .@r = getrefine(); bonus bAspdRate,3; if (.@r>=7) bonus bDelayrate,-5; if (.@r>=9) bonus2 bAddSize,Size_All,5; },{},{}
+480014,Noblesse_Magic_Manteau,Noblesse Magic Manteau,4,,,0,,20,,1,0xFFFFFFFF,63,2,4,,100,1,,{ .@r = getrefine(); bonus bVariableCastrate,-5; if (.@r>=7) bonus bDelayrate,-5; if (.@r>=9) bonus2 bMagicAtkEle,Ele_All,5; },{},{}
 480016,Imperial_Attack_Manteau,Imperial Attack Manteau,4,,,0,,25,,1,0xFFFFFFFF,63,2,4,,125,1,,{ .@r = getrefine(); bonus bAspdRate,5; if (.@r>=7) bonus bDelayrate,-5; if (.@r>=9) bonus2 bAddSize,Size_All,7; },{},{}
 480017,Imperial_Magic_Manteau,Imperial Magic Manteau,4,,,0,,25,,1,0xFFFFFFFF,63,2,4,,125,1,,{ .@r = getrefine(); bonus bVariableCastrate,-7; if (.@r>=7) bonus bDelayrate,-5; if (.@r>=9) bonus2 bMagicAtkEle,Ele_All,7; },{},{}
 480018,Grace_Attack_Manteau,Grace Attack Manteau,4,,,0,,30,,1,0xFFFFFFFF,63,2,4,,150,1,,{ .@r = getrefine(); bonus bAspdRate,7; if (.@r>=7) bonus bDelayrate,-5; if (.@r>=9) bonus2 bAddSize,Size_All,10; },{},{}
 480019,Grace_Magic_Manteau,Grace Magic Manteau,4,,,0,,30,,1,0xFFFFFFFF,63,2,4,,150,1,,{ .@r = getrefine(); bonus bVariableCastrate,-10; if (.@r>=7) bonus bDelayrate,-5; if (.@r>=9) bonus2 bMagicAtkEle,Ele_All,10; },{},{}
 // New Accessory
-490014,Noblesse_Attack_Ring,Noblesse Attack Ring,4,0,,50,,0,,1,0xFFFFFFFF,63,2,8,,100,0,0,{ bonus bAspdRate,3; bonus bVariableCastrate,-5; bonus bCritAtkRate,5; },{},{}
-490015,Noblesse_Magic_Ring,Noblesse Magic Ring,4,0,,50,,0,,1,0xFFFFFFFF,63,2,8,,100,0,0,{ bonus bAspdRate,3; bonus bVariableCastrate,-5; bonus2 bMagicAddEle,Ele_All,5; },{},{}
+490014,Noblesse_Attack_Ring,Noblesse Attack Ring,4,0,,0,,5,,1,0xFFFFFFFF,63,2,8,,100,0,0,{ bonus bAspdRate,3; bonus bVariableCastrate,-5; bonus bCritAtkRate,5; },{},{}
+490015,Noblesse_Magic_Ring,Noblesse Magic Ring,4,0,,0,,5,,1,0xFFFFFFFF,63,2,8,,100,0,0,{ bonus bAspdRate,3; bonus bVariableCastrate,-5; bonus2 bMagicAddEle,Ele_All,5; },{},{}
 490017,Imperial_Attack_Ring,Imperial Attack Ring,4,0,,50,,0,,1,0xFFFFFFFF,63,2,8,,125,0,0,{ bonus bAspdRate,5; bonus bVariableCastrate,-7; bonus bCritAtkRate,7; },{},{}
 490018,Imperial_Magic_Ring,Imperial Magic Ring,4,0,,50,,0,,1,0xFFFFFFFF,63,2,8,,125,0,0,{ bonus bAspdRate,5; bonus bVariableCastrate,-7; bonus2 bMagicAddEle,Ele_All,7; },{},{}
 490019,Grace_Attack_Ring,Grace Attack Ring,4,0,,50,,0,,1,0xFFFFFFFF,63,2,8,,150,0,0,{ bonus bAspdRate,7; bonus bVariableCastrate,-10; bonus bCritAtkRate,10; },{},{}
