@@ -4289,23 +4289,23 @@
 6186,Monkey_Wrench,Monkey Wrench,3,500,,10,,,,,,,,,,,,,{},{},{}
 6187,Blank_Card,Blank Card,3,20,,10,,,,,,,,,,,,,{},{},{}
 6188,Slot_Coupon,Slotting Advertisement,3,20,,10,,,,,,,,,,,,,{},{},{}
-6189,Magic_Book_FB,Spell Book (Fire Bolt),3,0,,0,,,,,,,,,,,,,{},{},{}
-6190,Magic_Book_CB,Spell Book (Cold Bolt),3,0,,0,,,,,,,,,,,,,{},{},{}
-6191,Magic_Book_LB,Spell Book (Lightening Bolt),3,0,,0,,,,,,,,,,,,,{},{},{}
-6192,Magic_Book_SG,Spell Book (Storm Gust),3,0,,0,,,,,,,,,,,,,{},{},{}
-6193,Magic_Book_LOV,Spell Book (Lord Of Vermilion),3,0,,0,,,,,,,,,,,,,{},{},{}
-6194,Magic_Book_MS,Spell Book (Meteor Storm),3,0,,0,,,,,,,,,,,,,{},{},{}
-6195,Magic_Book_CM,Spell Book (Comet),3,0,,0,,,,,,,,,,,,,{},{},{}
-6196,Magic_Book_TV,Spell Book (Tetra Vortex),3,0,,0,,,,,,,,,,,,,{},{},{}
-6197,Magic_Book_TS,Spell Book (Thunder Storm),3,0,,0,,,,,,,,,,,,,{},{},{}
-6198,Magic_Book_JT,Spell Book (Jupitel Thunder),3,0,,0,,,,,,,,,,,,,{},{},{}
-6199,Magic_Book_WB,Spell Book (Water Ball),3,0,,0,,,,,,,,,,,,,{},{},{}
-6200,Magic_Book_HD,Spell Book (Heaven's Drive),3,0,,0,,,,,,,,,,,,,{},{},{}
-6201,Magic_Book_ES,Spell Book (Earth Spike),3,0,,0,,,,,,,,,,,,,{},{},{}
-6202,Magic_Book_ES_,Spell Book (Earth Strain),3,0,,0,,,,,,,,,,,,,{},{},{}
-6203,Magic_Book_CL,Spell Book (Chain Lightning),3,0,,0,,,,,,,,,,,,,{},{},{}
-6204,Magic_Book_CR,Spell Book (Crimson Rock),3,0,,0,,,,,,,,,,,,,{},{},{}
-6205,Magic_Book_DL,Spell Book (Drain Life),3,0,,0,,,,,,,,,,,,,{},{},{}
+6189,Magic_Book_FB,Old Spell Book (Fire Bolt),3,0,,0,,,,,,,,,,,,,{},{},{}
+6190,Magic_Book_CB,Old Spell Book (Cold Bolt),3,0,,0,,,,,,,,,,,,,{},{},{}
+6191,Magic_Book_LB,Old Spell Book (Lightening Bolt),3,0,,0,,,,,,,,,,,,,{},{},{}
+6192,Magic_Book_SG,Old Spell Book (Storm Gust),3,0,,0,,,,,,,,,,,,,{},{},{}
+6193,Magic_Book_LOV,Old Spell Book (Lord Of Vermilion),3,0,,0,,,,,,,,,,,,,{},{},{}
+6194,Magic_Book_MS,Old Spell Book (Meteor Storm),3,0,,0,,,,,,,,,,,,,{},{},{}
+6195,Magic_Book_CM,Old Spell Book (Comet),3,0,,0,,,,,,,,,,,,,{},{},{}
+6196,Magic_Book_TV,Old Spell Book (Tetra Vortex),3,0,,0,,,,,,,,,,,,,{},{},{}
+6197,Magic_Book_TS,Old Spell Book (Thunder Storm),3,0,,0,,,,,,,,,,,,,{},{},{}
+6198,Magic_Book_JT,Old Spell Book (Jupitel Thunder),3,0,,0,,,,,,,,,,,,,{},{},{}
+6199,Magic_Book_WB,Old Spell Book (Water Ball),3,0,,0,,,,,,,,,,,,,{},{},{}
+6200,Magic_Book_HD,Old Spell Book (Heaven's Drive),3,0,,0,,,,,,,,,,,,,{},{},{}
+6201,Magic_Book_ES,Old Spell Book (Earth Spike),3,0,,0,,,,,,,,,,,,,{},{},{}
+6202,Magic_Book_ES_,Old Spell Book (Earth Strain),3,0,,0,,,,,,,,,,,,,{},{},{}
+6203,Magic_Book_CL,Old Spell Book (Chain Lightning),3,0,,0,,,,,,,,,,,,,{},{},{}
+6204,Magic_Book_CR,Old Spell Book (Crimson Rock),3,0,,0,,,,,,,,,,,,,{},{},{}
+6205,Magic_Book_DL,Old Spell Book (Drain Life),3,0,,0,,,,,,,,,,,,,{},{},{}
 6206,I_Love_You,I Love You,3,0,,0,,,,,,,,,,,,,{},{},{}
 6207,Thank_You,Thank You,3,0,,0,,,,,,,,,,,,,{},{},{}
 6208,I_Respect_You,I Respect You,3,0,,0,,,,,,,,,,,,,{},{},{}
@@ -13668,15 +13668,33 @@
 32351,Estal,Estal,5,20,,700,195,,1,2,0x00040000,56,2,2,4,170,1,2,{ .@r = getrefine(); bonus2 bSkillCooldown,"GN_SPORE_EXPLOSION",-1000; bonus bBaseAtk,4*.@r; if (.@r>=11) .@val = 50; else if (.@r>=9) .@val = 30; bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",.@val; },{},{}
 
 //100052,Enchant_Stone_Box19,Costume Enchantment Stone Box 19,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box19); },{},{}
+
+//===================================================================
+// New Warlock Spell Books
+//===================================================================
+100065,WL_MB_SG,Spell Book (Storm Gust),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",1; },{},{}
+100066,WL_MB_LOV,Spell Book (Lord of Vermilion),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",2; },{},{}
+100067,WL_MB_MS,Spell Book (Meteor Storm),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",3; },{},{}
+100068,WL_MB_DL,Spell Book (Drain Life),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",4; },{},{}
+100069,WL_MB_JF,Spell Book (Jack Frost),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",5; },{},{}
+100070,WL_MB_ES,Spell Book (Earth Strain),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",6; },{},{}
+100071,WL_MB_CR,Spell Book (Crimson Rock),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",7; },{},{}
+100072,WL_MB_CL,Spell Book (Chain Lightning),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",8; },{},{}
+100073,WL_MB_CM,Spell Book (Comet),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",9; },{},{}
+100074,WL_MB_TV,Spell Book (Tetra Vortex),11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_READING_SB_READING",10; },{},{}
+
 //100202,Enchant_Stone_Box20,Costume Enchantment Stone Box 20,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box20); },{},{}
+
 //100231,Ref_T_Potion,Golden X,0,10,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_REF_T_POTION,30000,0; },{},{}
 //100232,Add_Atk_Potion,Red Herb Activator,0,10,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ADD_ATK_DAMAGE,500000,15; },{},{}
 //100233,Add_Matk_Potion,Blue Herb Activator,0,10,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ADD_MATK_DAMAGE,500000,15; },{},{}
+
 //100314,Enchant_Stone_Box21,Costume Enchantment Stone Box 21,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box21); },{},{}
 // Costumes
+//400020,C_BeachBall,Costume Beachball,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1918,{},{},{}
 //440000,C_SharkHead,Costume Shark Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,5120,,1,0,1919,{},{},{}
 //440002,C_Happy_Cat_TW,Costume Happy Cat,4,0,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,0,1980,{},{},{}
-//400020,C_BeachBall,Costume Beachball,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1918,{},{},{}
+
 //1100003,Concentrated_R_P,Concentrated Red Potion,0,10,,2,,,,,0xFFFFFFFF,63,2,,,120,,,{ itemheal rand(655,675),0; },{},{}
 //1100004,Concentrated_B_P,Concentrated Blue Potion,0,10,,2,,,,,0xFFFFFFFF,63,2,,,120,,,{ itemheal 0,rand(340,360); },{},{}
 //1100005,Concentrated_G_P,Concentrated Gold Potion,0,10,,2,,,,,0xFFFFFFFF,63,2,,,180,,,{ itemheal rand(2730,2750),0; },{},{}

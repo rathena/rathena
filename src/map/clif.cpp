@@ -13056,9 +13056,6 @@ void clif_parse_SelectArrow(int fd,struct map_session_data *sd) {
 		case SA_CREATECON:
 			skill_produce_mix(sd,SA_CREATECON,p->itemId,0,0,0,1,-1);
 			break;
-		case WL_READING_SB:
-			skill_spellbook(sd,p->itemId);
-			break;
 		case GC_POISONINGWEAPON:
 			skill_poisoningweapon(sd,p->itemId);
 			break;
@@ -18957,43 +18954,7 @@ void clif_millenniumshield(struct block_list *bl, short shields) {
 	clif_send(buf,packet_len(0x440),bl,AREA);
 #endif
 }
-/**
- * Warlock
- **/
-/*==========================================
- * Spellbook list [LimitLine/3CeAM]
- *------------------------------------------*/
-void clif_spellbook_list( struct map_session_data *sd ){
-	nullpo_retv( sd );
 
-	int fd = sd->fd;
-
-	if( !session_isActive( fd ) ){
-		return;
-	}
-
-	WFIFOHEAD( fd, sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + MAX_INVENTORY * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub ) );
-	struct PACKET_ZC_MAKINGARROW_LIST *p = (struct PACKET_ZC_MAKINGARROW_LIST *)WFIFOP( fd, 0 );
-	p->packetType = HEADER_ZC_MAKINGARROW_LIST;
-
-	int count = 0;
-	for( int i = 0; i < MAX_INVENTORY; i++ ){
-		if( reading_spellbook_db.findBook( sd->inventory.u.items_inventory[i].nameid ) ){
-			p->items[count].itemId = client_nameid( sd->inventory.u.items_inventory[i].nameid );
-			count++;
-		}
-	}
-
-	if( count > 0 ){
-		p->packetLength = sizeof( struct PACKET_ZC_MAKINGARROW_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGARROW_LIST_sub );
-		WFIFOSET( fd, p->packetLength );
-		sd->menuskill_id = WL_READING_SB;
-		sd->menuskill_val = count;
-	}else{
-		status_change_end( &sd->bl, SC_STOP, INVALID_TIMER );
-		clif_skill_fail( sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK, 0 );
-	}
-}
 /**
  * Mechanic
  **/
