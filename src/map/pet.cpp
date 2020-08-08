@@ -374,7 +374,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		}
 
 		if( pet->pet_bonus_script != nullptr ){
-			aFree( pet->pet_bonus_script );
+			script_free_code( pet->pet_bonus_script );
 			pet->pet_bonus_script = nullptr;
 		}
 
@@ -393,7 +393,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		}
 
 		if( pet->pet_support_script != nullptr ){
-			aFree( pet->pet_support_script );
+			script_free_code( pet->pet_support_script );
 			pet->pet_support_script = nullptr;
 		}
 
