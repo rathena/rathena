@@ -13685,9 +13685,9 @@
 
 //100202,Enchant_Stone_Box20,Costume Enchantment Stone Box 20,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box20); },{},{}
 
-//100231,Ref_T_Potion,Golden X,0,10,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_REF_T_POTION,30000,0; },{},{}
-//100232,Add_Atk_Potion,Red Herb Activator,0,10,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ADD_ATK_DAMAGE,500000,15; },{},{}
-//100233,Add_Matk_Potion,Blue Herb Activator,0,10,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ADD_MATK_DAMAGE,500000,15; },{},{}
+100231,Ref_T_Potion,Golden X,0,10,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_REF_T_POTION,30000,0; },{},{}
+100232,Add_Atk_Potion,Red Herb Activator,0,10,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ADD_ATK_DAMAGE,500000,15; },{},{}
+100233,Add_Matk_Potion,Blue Herb Activator,0,10,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ADD_MATK_DAMAGE,500000,15; },{},{}
 
 //100314,Enchant_Stone_Box21,Costume Enchantment Stone Box 21,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Enchant_Stone_Box21); },{},{}
 // Costumes
@@ -13695,6 +13695,6 @@
 //440000,C_SharkHead,Costume Shark Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,5120,,1,0,1919,{},{},{}
 //440002,C_Happy_Cat_TW,Costume Happy Cat,4,0,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,0,1980,{},{},{}
 
-//1100003,Concentrated_R_P,Concentrated Red Potion,0,10,,2,,,,,0xFFFFFFFF,63,2,,,120,,,{ itemheal rand(655,675),0; },{},{}
-//1100004,Concentrated_B_P,Concentrated Blue Potion,0,10,,2,,,,,0xFFFFFFFF,63,2,,,120,,,{ itemheal 0,rand(340,360); },{},{}
-//1100005,Concentrated_G_P,Concentrated Gold Potion,0,10,,2,,,,,0xFFFFFFFF,63,2,,,180,,,{ itemheal rand(2730,2750),0; },{},{}
+1100003,Concentrated_R_P,Concentrated Red Potion,0,10,,2,,,,,0xFFFFFFFF,63,2,,,120,,,{ itemheal rand(655,675),0; },{},{}
+1100004,Concentrated_B_P,Concentrated Blue Potion,0,10,,2,,,,,0xFFFFFFFF,63,2,,,120,,,{ itemheal 0,rand(340,360); },{},{}
+1100005,Concentrated_G_P,Concentrated Gold Potion,0,10,,2,,,,,0xFFFFFFFF,63,2,,,180,,,{ itemheal rand(2730,2750),0; },{},{}
