@@ -50,6 +50,9 @@ ALTER TABLE `pet`
 	MODIFY `egg_id` int(10) unsigned NOT NULL default '0',
 	MODIFY `equip` int(10) unsigned NOT NULL default '0';
 
+ALTER TABLE `sales`
+	MODIFY `nameid` int(10) unsigned NOT NULL;
+
 ALTER TABLE `storage`
 	MODIFY `nameid` int(10) unsigned NOT NULL default '0',
 	MODIFY `card0` int(10) unsigned NOT NULL default '0',
