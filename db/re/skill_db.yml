@@ -9711,6 +9711,7 @@ Body:
         Time: 55000
       - Level: 10
         Time: 60000
+    Duration2: 1000
     Requires:
       SpCost: 50
       Weapon:
@@ -15704,10 +15705,12 @@ Body:
     DamageFlags:
       Splash: true
       SplashSplit: true
+      IgnoreDefense: true
     Flags:
       IsNpc: true
       TargetTrap: true
       ShowScale: true
+      IgnoreLandProtector: true
     Hit: Multi_Hit
     HitCount: 1
     SplashArea:
@@ -15731,6 +15734,35 @@ Body:
         Area: 11
       - Level: 10
         Area: 13
+    Duration1: 910
+    FixedCastTime: -1
+    Unit:
+      Id: Earthquake
+      Range:
+        - Level: 1
+          Size: 5
+        - Level: 2
+          Size: 7
+        - Level: 3
+          Size: 9
+        - Level: 4
+          Size: 11
+        - Level: 5
+          Size: 13
+        - Level: 6
+          Size: 5
+        - Level: 7
+          Size: 7
+        - Level: 8
+          Size: 9
+        - Level: 9
+          Size: 11
+        - Level: 10
+          Size: 13
+      Interval: 300
+      Target: Enemy
+      Flag:
+        PathCheck: true
   - Id: 654
     Name: NPC_FIREBREATH
     Description: Fire Breath
@@ -16824,6 +16856,28 @@ Body:
     Flags:
       IsNpc: true
     HitCount: 1
+  - Id: 719
+    Name: NPC_HELLBURNING
+    Description: Hell Burning
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Self
+    Flags:
+      IsNpc: true
+      IgnoreLandProtector: true
+    Hit: Single
+    HitCount: 1
+    Element: Fire
+    Duration1: 3000
+    Unit:
+      Id: Hellburning
+      Layout: 1
+      Interval: 20
+      Target: Enemy
+      Flag:
+        NoOverlap: true
+        PathCheck: true
+        RangedSingleUnit: true
   - Id: 720
     Name: NPC_JACKFROST
     Description: Jack Frost 2
@@ -19564,25 +19618,25 @@ Body:
     Element: Holy
     SplashArea:
       - Level: 1
-        Area: 1
+        Area: 3
       - Level: 2
-        Area: 1
+        Area: 3
       - Level: 3
-        Area: 1
+        Area: 3
       - Level: 4
-        Area: 1
+        Area: 3
       - Level: 5
-        Area: 1
+        Area: 3
       - Level: 6
-        Area: 1
+        Area: 3
       - Level: 7
-        Area: 2
+        Area: 5
       - Level: 8
-        Area: 2
+        Area: 5
       - Level: 9
-        Area: 2
+        Area: 5
       - Level: 10
-        Area: 2
+        Area: 5
     CopyFlags:
       Skill:
         Reproduce: true
@@ -24291,6 +24345,16 @@ Body:
           Amount: 1
         - Level: 5
           Amount: 1
+        - Level: 6
+          Amount: 0
+        - Level: 7
+          Amount: 0
+        - Level: 8
+          Amount: 0
+        - Level: 9
+          Amount: 0
+        - Level: 10
+          Amount: 0
   - Id: 2337
     Name: SR_WINDMILL
     Description: Windmill
@@ -28739,7 +28803,7 @@ Body:
         Revolver: true
       Ammo:
         Bullet: true
-      AmmoAmount: 10
+      AmmoAmount: 3
   - Id: 2562
     Name: RL_H_MINE
     Description: Howling Mine

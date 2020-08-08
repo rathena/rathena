@@ -753,6 +753,9 @@
 	export_constant2("bNoWalkDelay",SP_NO_WALK_DELAY);
 	export_constant2("bLongSPGainValue",SP_LONG_SP_GAIN_VALUE);
 	export_constant2("bLongHPGainValue",SP_LONG_HP_GAIN_VALUE);
+	export_constant2("bMagicSubSize",SP_MAGIC_SUBSIZE);
+	export_constant2("bCritDefRate",SP_CRIT_DEF_RATE);
+	export_constant2("bMagicSubDefEle", SP_MAGIC_SUBDEF_ELE);
 
 	/* equip indices */
 	export_constant(EQI_COMPOUND_ON);
@@ -3505,12 +3508,18 @@
 	export_constant(EFST_KAUTE);
 	export_constant(EFST_JPNONLY_TACTICS);
 	export_constant(EFST_MADOGEAR);
+	export_constant(EFST_DEADLY_DEFEASANCE);
+	export_constant(EFST_CLIMAX_DES_HU);
+	export_constant(EFST_CLIMAX);
 	export_constant(EFST_LUXANIMA);
 	export_constant(EFST_BATH_FOAM_A);
 	export_constant(EFST_BATH_FOAM_B);
 	export_constant(EFST_BATH_FOAM_C);
 	export_constant(EFST_AROMA_OIL);
 	export_constant(EFST_REUSE_LIMIT_LUXANIMA);
+	export_constant(EFST_POWERFUL_FAITH);
+	export_constant(EFST_SINCERE_FAITH);
+	export_constant(EFST_FIRM_FAITH);
 	export_constant(EFST_AIRSHIP_PIPE);
 	export_constant(EFST_PIECES_OF_SHADOW);
 	export_constant(EFST_HELLS_PLANT_ARMOR);
@@ -3527,11 +3536,119 @@
 	export_constant(EFST_BIG_SCAR);
 	export_constant(EFST_VIGOR);
 	export_constant(EFST_PRESSURE);
+	export_constant(EFST_CLIMAX_EARTH);
+	export_constant(EFST_CLIMAX_BLOOM);
+	export_constant(EFST_CLIMAX_CRYIMP);
 	export_constant(EFST_MD_Me_Potion);
 	export_constant(EFST_MD_Ma_Potion);
 	export_constant(EFST_MD_Ta_Potion);
 	export_constant(EFST_MD_Ra_Potion);
+	export_constant(EFST_HOLY_OIL);
+	export_constant(EFST_CRYSTAL_IMPACT);
+	export_constant(EFST_SHADOW_EXCEED);
+	export_constant(EFST_DANCING_KNIFE);
+	export_constant(EFST_POTENT_VENOM);
+	export_constant(EFST_SHADOW_SCAR);
+	export_constant(EFST_E_SLASH_COUNT);
+	export_constant(EFST_MEDIALE);
+	export_constant(EFST_A_VITA);
+	export_constant(EFST_A_TELUM);
+	export_constant(EFST_PRE_ACIES);
+	export_constant(EFST_COMPETENTIA);
+	export_constant(EFST_GUARD_STANCE);
+	export_constant(EFST_ATTACK_STANCE);
+	export_constant(EFST_GUARDIAN_S);
+	export_constant(EFST_HANDICAPSTATE_DEEPBLIND);
+	export_constant(EFST_HANDICAPSTATE_DEEPSILENCE);
+	export_constant(EFST_HANDICAPSTATE_LASSITUDE);
+	export_constant(EFST_HANDICAPSTATE_FROSTBITE);
+	export_constant(EFST_HANDICAPSTATE_SWOONING);
+	export_constant(EFST_HANDICAPSTATE_LIGHTNINGSTRIKE);
+	export_constant(EFST_HANDICAPSTATE_CRYSTALLIZATION);
+	export_constant(EFST_HANDICAPSTATE_CONFLAGRATION);
+	export_constant(EFST_HANDICAPSTATE_MISFORTUNE);
+	export_constant(EFST_HANDICAPSTATE_DEADLYPOISON);
+	export_constant(EFST_HANDICAPSTATE_DEPRESSION);
+	export_constant(EFST_HANDICAPSTATE_HOLYFLAME);
+	export_constant(EFST_REBOUND_S);
+	export_constant(EFST_SHIELD_MASTERY);
+	export_constant(EFST_SPEAR_SWORD_M);
+	export_constant(EFST_HOLY_S);
+	export_constant(EFST_ULTIMATE_S);
+	export_constant(EFST_SPEAR_SCAR);
+	export_constant(EFST_SHIELD_POWER);
+	export_constant(EFST_RELIGIO);
+	export_constant(EFST_BENEDICTUM);
 	export_constant(EFST_MVPCARD_KIEL);
+	export_constant(EFST_FIRST_BRAND);
+	export_constant(EFST_SECOND_BRAND);
+	export_constant(EFST_SECOND_JUDGE);
+	export_constant(EFST_THIRD_EXOR_FLAME);
+	export_constant(EFST_FIRST_FAITH_POWER);
+	export_constant(EFST_AXE_STOMP);
+	export_constant(EFST_A_MACHINE);
+	export_constant(EFST_D_MACHINE);
+	export_constant(EFST_MT_M_MACHINE_OPERATOR);
+	export_constant(EFST_TWOAXEDEF);
+	export_constant(EFST_DAGGER_AND_BOW_M);
+	export_constant(EFST_MAGIC_SWORD_M);
+	export_constant(EFST_SHADOW_STRIP);
+	export_constant(EFST_ABYSS_DAGGER);
+	export_constant(EFST_ABYSSFORCEWEAPON);
+	export_constant(EFST_ABYSS_SLAYER);
+	export_constant(EFST_PROTECTSHADOWEQUIP);
+	export_constant(EFST_RESEARCHREPORT);
+	export_constant(EFST_BO_HELL_DUSTY);
+	export_constant(EFST_WINDSIGN);
+	export_constant(EFST_CRESCIVEBOLT);
+	export_constant(EFST_CALAMITYGALE);
+	export_constant(EFST_STAGE_MANNER);
+	export_constant(EFST_RETROSPECTION);
+	export_constant(EFST_MYSTIC_SYMPHONY);
+	export_constant(EFST_KVASIR_SONATA);
+	export_constant(EFST_SOUNDBLEND);
+	export_constant(EFST_GEF_NOCTURN);
+	export_constant(EFST_AIN_RHAPSODY);
+	export_constant(EFST_MUSICAL_INTERLUDE);
+	export_constant(EFST_JAWAII_SERENADE);
+	export_constant(EFST_PRON_MARCH);
+	export_constant(EFST_ROSEBLOSSOM);
+	export_constant(EFST_ACIDIFIED_ZONE_WATER);
+	export_constant(EFST_ACIDIFIED_ZONE_GROUND);
+	export_constant(EFST_ACIDIFIED_ZONE_WIND);
+	export_constant(EFST_ACIDIFIED_ZONE_FIRE);
+	export_constant(EFST_MAGIC_BOOK_M);
+	export_constant(EFST_SPELL_ENCHANTING);
+	export_constant(EFST_SUMMON_ELEMENTAL_ARDOR);
+	export_constant(EFST_SUMMON_ELEMENTAL_DILUVIO);
+	export_constant(EFST_SUMMON_ELEMENTAL_PROCELLA);
+	export_constant(EFST_SUMMON_ELEMENTAL_TERREMOTUS);
+	export_constant(EFST_SUMMON_ELEMENTAL_SERPENS);
+	export_constant(EFST_FLAMETECHNIC);
+	export_constant(EFST_FLAMETECHNIC_OPTION);
+	export_constant(EFST_FLAMEARMOR);
+	export_constant(EFST_FLAMEARMOR_OPTION);
+	export_constant(EFST_COLD_FORCE);
+	export_constant(EFST_COLD_FORCE_OPTION);
+	export_constant(EFST_CRYSTAL_ARMOR);
+	export_constant(EFST_CRYSTAL_ARMOR_OPTION);
+	export_constant(EFST_GRACE_BREEZE);
+	export_constant(EFST_GRACE_BREEZE_OPTION);
+	export_constant(EFST_EYES_OF_STORM);
+	export_constant(EFST_EYES_OF_STORM_OPTION);
+	export_constant(EFST_EARTH_CARE);
+	export_constant(EFST_EARTH_CARE_OPTION);
+	export_constant(EFST_STRONG_PROTECTION);
+	export_constant(EFST_STRONG_PROTECTION_OPTION);
+	export_constant(EFST_DEEP_POISONING);
+	export_constant(EFST_DEEP_POISONING_OPTION);
+	export_constant(EFST_POISON_SHIELD);
+	export_constant(EFST_POISON_SHIELD_OPTION);
+	export_constant(EFST_ABR_BATTLE_WARIOR);
+	export_constant(EFST_ABR_DUAL_CANNON);
+	export_constant(EFST_ABR_MOTHER_NET);
+	export_constant(EFST_ABR_INFINITY);
+	export_constant(EFST_ELEMENTAL_VEIL);
 	export_constant(EFST_HOMUN_TIME);
 	export_constant(EFST_POWER_ACCELERATION);
 	export_constant(EFST_MAX_HP_SP_AVOID);
@@ -3539,6 +3656,12 @@
 	export_constant(EFST_AID_PERIOD_POWER_ACCELERATION);
 	export_constant(EFST_AID_PERIOD_MAX_HP_SP_AVOID);
 	export_constant(EFST_AID_PERIOD_ADD_ALL_STATE);
+	export_constant(EFST_POISON_MIST);
+	export_constant(EFST_STONE_WALL);
+	export_constant(EFST_OVERBRANDREADY);
+	export_constant(EFST_SHIELDSPELL);
+	export_constant(EFST_CLOUD_POISON);
+	export_constant(EFST_SPORE_EXPLOSION_DEBUFF);
 /// @APIHOOK_END
 /// Do not modify code above this, since it will be automatically generated by the API again
 	export_constant(EFST_MAX);
@@ -3570,7 +3693,9 @@
 	export_constant(RC_DEMIHUMAN);
 	export_constant(RC_ANGEL);
 	export_constant(RC_DRAGON);
-	export_constant(RC_PLAYER);
+	export_constant(RC_PLAYER_HUMAN);
+	export_constant(RC_PLAYER_DORAM);
+	export_deprecated_constant3("RC_PLAYER", RC_PLAYER_HUMAN, "RC_PLAYER_HUMAN");
 	export_constant(RC_ALL);
 
 	export_constant(RC2_NONE);
@@ -4142,6 +4267,7 @@
 	export_constant(UMOB_TARGETID);
 	export_constant(UMOB_ROBE);
 	export_constant(UMOB_BODY2);
+	export_constant(UMOB_GROUP_ID);
 
 	/* unit control - homunculus */
 	export_constant(UHOM_SIZE);
@@ -4184,6 +4310,7 @@
 	export_constant(UHOM_ADELAY);
 	export_constant(UHOM_DMOTION);
 	export_constant(UHOM_TARGETID);
+	export_constant(UHOM_GROUP_ID);
 
 	/* unit control - pet */
 	export_constant(UPET_SIZE);
@@ -4223,6 +4350,7 @@
 	export_constant(UPET_AMOTION);
 	export_constant(UPET_ADELAY);
 	export_constant(UPET_DMOTION);
+	export_constant(UPET_GROUP_ID);
 
 	/* unit control - mercenary */
 	export_constant(UMER_SIZE);
@@ -4262,6 +4390,7 @@
 	export_constant(UMER_ADELAY);
 	export_constant(UMER_DMOTION);
 	export_constant(UMER_TARGETID);
+	export_constant(UMER_GROUP_ID);
 
 	/* unit control - elemental */
 	export_constant(UELE_SIZE);
@@ -4303,6 +4432,7 @@
 	export_constant(UELE_ADELAY);
 	export_constant(UELE_DMOTION);
 	export_constant(UELE_TARGETID);
+	export_constant(UELE_GROUP_ID);
 
 	/* unit control - NPC */
 	export_deprecated_constant3("UNPC_DISPLAY", UNPC_CLASS, "UNPC_CLASS");
@@ -4351,6 +4481,7 @@
 	export_constant(UNPC_ROBE);
 	export_constant(UNPC_BODY2);
 	export_constant(UNPC_DEADSIT);
+	export_constant(UNPC_GROUP_ID);
 
 	export_constant(NAV_NONE);
 	export_constant(NAV_AIRSHIP_ONLY);
@@ -7701,6 +7832,7 @@
 	export_constant(UNT_GROUNDDRIFT_POISON);
 	export_constant(UNT_GROUNDDRIFT_WATER);
 	export_constant(UNT_GROUNDDRIFT_FIRE);
+	export_constant(UNT_EARTHQUAKE);
 	export_constant(UNT_EVILLAND);
 	export_constant(UNT_EPICLESIS);
 	export_constant(UNT_EARTHSTRAIN);
