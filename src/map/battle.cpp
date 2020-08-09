@@ -9000,6 +9000,7 @@ static const struct _battle_data {
 	{ "at_logout_event",                    &battle_config.at_logout_event,                 1,      0,      1,              },
 	{ "homunculus_starving_rate",           &battle_config.homunculus_starving_rate,        10,     0,      100,            },
 	{ "homunculus_starving_delay",          &battle_config.homunculus_starving_delay,       20000,  0,      INT_MAX,        },
+	{ "drop_connection_on_quit",            &battle_config.drop_connection_on_quit,         0,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };

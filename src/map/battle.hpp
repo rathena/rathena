@@ -687,6 +687,7 @@ struct Battle_Config
 	int at_logout_event;
 	int homunculus_starving_rate;
 	int homunculus_starving_delay;
+	int drop_connection_on_quit;
 
 #include "../custom/battle_config_struct.inc"
 };
