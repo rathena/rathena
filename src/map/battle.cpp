@@ -2278,13 +2278,22 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 	if (skill_get_inf2(skill_id, INF2_ISTRAP))
 		return BF_SHORT;
 
-	// When monsters use Arrow Shower or Bomb, it is always short range
-	if (src->type == BL_MOB && (skill_id == AC_SHOWER || skill_id == AM_DEMONSTRATION))
-		return BF_SHORT;
-
-	// Cast range is 7 cells and player jumps to target but skill is considered melee
-	if (skill_id == GC_CROSSIMPACT)
-		return BF_SHORT;
+	switch (skill_id) {
+		case AC_SHOWER:
+		case AM_DEMONSTRATION:
+			// When monsters use Arrow Shower or Bomb, it is always short range
+			if (src->type == BL_MOB)
+				return BF_SHORT;
+			break;
+#ifdef RENEWAL
+		case KN_BRANDISHSPEAR:
+			// Renewal changes to ranged physical damage
+			return BF_LONG;
+#endif
+		case GC_CROSSIMPACT:
+			// Cast range is 7 cells and player jumps to target but skill is considered melee
+			return BF_SHORT;
+	}
 
 	//Skill Range Criteria
 	if (battle_config.skillrange_by_distance &&
@@ -5622,11 +5631,6 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				wd.blewcount = 0;
 				break;
 
-#ifdef RENEWAL
-			case KN_BRANDISHSPEAR:
-				wd.flag |= BF_LONG;
-				break;
-#endif
 			case KN_AUTOCOUNTER:
 				wd.flag = (wd.flag&~BF_SKILLMASK)|BF_NORMAL;
 				break;
