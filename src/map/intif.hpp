@@ -23,8 +23,8 @@ int intif_parse(int fd);
 
 int intif_broadcast(const char* mes, int len, int type);
 int intif_broadcast2(const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY);
-int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned short nameid, unsigned int sourceid, unsigned char type);
-int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid);
+int intif_broadcast_obtain_special_item(struct map_session_data *sd, t_itemid nameid, unsigned int sourceid, unsigned char type);
+int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, t_itemid nameid);
 int intif_main_message(struct map_session_data* sd, const char* message);
 
 int intif_wis_message(struct map_session_data *sd,char *nick,char *mes,int mes_len);
@@ -63,13 +63,14 @@ int intif_guild_skillup(int guild_id, uint16 skill_id, uint32 account_id, int ma
 int intif_guild_alliance(int guild_id1, int guild_id2, uint32 account_id1, uint32 account_id2, int flag);
 int intif_guild_notice(int guild_id, const char *mes1, const char *mes2);
 int intif_guild_emblem(int guild_id, int len, const char *data);
+int intif_guild_emblem_version(int guild_id, int version);
 int intif_guild_castle_dataload(int num, int *castle_ids);
 int intif_guild_castle_datasave(int castle_id, int index, int value);
 #ifdef BOUND_ITEMS
 void intif_itembound_guild_retrieve(uint32 char_id, uint32 account_id, int guild_id);
 #endif
 
-int intif_create_pet(uint32 account_id, uint32 char_id, short pet_type, short pet_lv, unsigned short pet_egg_id, unsigned short pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name);
+int intif_create_pet(uint32 account_id, uint32 char_id, short pet_type, short pet_lv, t_itemid pet_egg_id, t_itemid pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name);
 int intif_request_petdata(uint32 account_id, uint32 char_id, int pet_id);
 int intif_save_petdata(uint32 account_id, struct s_pet *p);
 int intif_delete_petdata(int pet_id);

@@ -320,8 +320,8 @@ int mapif_parse_achievement_reward(int fd){
 		struct item item;
 
 		memset(&item, 0, sizeof(struct item));
-		item.nameid = RFIFOW(fd, 10);
-		item.amount = RFIFOL(fd, 12);
+		item.nameid = RFIFOL(fd, 10);
+		item.amount = RFIFOW(fd, 14);
 		item.identify = 1;
 
 		safesnprintf(mail_sender, NAME_LENGTH, char_msg_txt(227)); // 227: GM

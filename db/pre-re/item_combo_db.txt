@@ -66,18 +66,18 @@
 2357:2421:2524:5171,{ bonus bAllStats,1; }
 2358:5153,{ bonus bLuk,6; bonus bFlee,5; bonus bInt,2; }
 2359:2654,{ bonus bUseSPrate,-20; bonus bMaxHP,300; }
-2369:2428:2533:5306,{ bonus2 bSubRace,RC_DemiHuman,10; bonus2 bSubRace,RC_Player,10; bonus bMaxHPrate,20; bonus2 bResEff,Eff_Freeze,10000; skill "WZ_FROSTNOVA",10; }
+2369:2428:2533:5306,{ bonus2 bSubRace,RC_DemiHuman,10; bonus2 bSubRace,RC_Player_Human,10; bonus bMaxHPrate,20; bonus2 bResEff,Eff_Freeze,10000; skill "WZ_FROSTNOVA",10; }
 2371:2522,{ bonus bAgi,5; bonus bFlee,10; }
 2371:2523,{ bonus bAgi,5; bonus bFlee,10; }
 2374:2729,{ bonus2 bAddClass,Class_All,3; bonus bMatkRate,3; }
 2375:2729,{ bonus2 bAddClass,Class_All,3; bonus bMatkRate,3; }
-2376:2435:2538,{ bonus2 bSubRace,RC_All,-300; bonus2 bSubRace,RC_DemiHuman,300; bonus2 bSubRace,RC_Player,300; bonus bVit,3; bonus bMaxHPRate,12; bonus bHealpower2,10; bonus bAddItemHealRate,10; autobonus2 "{ bonus2 bHPRegenRate,600,1000; }",5,10000,BF_WEAPON,"{ specialeffect2 EF_HEAL; }"; }
-2377:2435:2538,{ bonus2 bSubRace,RC_All,-300; bonus2 bSubRace,RC_DemiHuman,300; bonus2 bSubRace,RC_Player,300; bonus bStr,3; bonus bMaxHPRate,12; bonus2 bSkillAtk,"MC_MAMMONITE",20; bonus2 bSkillHeal,"AM_POTIONPITCHER",10; bonus2 bSkillHeal2,"AM_POTIONPITCHER",10; bonus2 bSkillHeal2,"AL_HEAL",10; bonus bUnbreakableArmor; }
-2378:2435:2538,{ bonus2 bSubRace,RC_All,-300; bonus2 bSubRace,RC_DemiHuman,300; bonus2 bSubRace,RC_Player,300; bonus bAgi,3; bonus bMaxHPRate,12; bonus bCritical,5; bonus bAspdRate,5; autobonus "{ bonus2 bHPRegenRate,300,1000; }",10,10000,BF_WEAPON,"{ specialeffect2 EF_HEAL; }"; }
-2379:2436:2539,{ bonus2 bSubRace,RC_All,-300; bonus2 bSubRace,RC_DemiHuman,300; bonus2 bSubRace,RC_Player,300; bonus bInt,3; bonus bMaxHPRate,12; bonus2 bResEff,Eff_Stun,2000; autobonus2 "{ bonus bDefEle,Ele_Ghost; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_ENERGYCOAT; }"; }
-2380:2436:2539,{ bonus2 bSubRace,RC_All,-300; bonus2 bSubRace,RC_DemiHuman,300; bonus2 bSubRace,RC_Player,300; bonus bInt,3; bonus bMaxHPRate,12; bonus2 bCastrate,"AL_HOLYLIGHT",-50; bonus bHealPower,6; autobonus2 "{ bonus bDefEle,Ele_Ghost; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_ENERGYCOAT; }"; }
-2381:2436:2539,{ bonus2 bSubRace,RC_All,-300; bonus2 bSubRace,RC_DemiHuman,300; bonus2 bSubRace,RC_Player,300; bonus bDex,3; bonus bMaxHPRate,12; bonus bLongAtkDef,10; bonus bDelayRate,-25; }
-2382:2437:2540,{ bonus2 bSubRace,RC_All,-300; bonus2 bSubRace,RC_DemiHuman,300; bonus2 bSubRace,RC_Player,300; bonus bDex,3; bonus bMaxHPRate,12; bonus bLongAtkDef,10; bonus bDelayRate,-25; }
+2376:2435:2538,{ bonus2 bSubRace,RC_All,-300; bonus2 bSubRace,RC_DemiHuman,300; bonus2 bSubRace,RC_Player_Human,300; bonus bVit,3; bonus bMaxHPRate,12; bonus bHealpower2,10; bonus bAddItemHealRate,10; autobonus2 "{ bonus2 bHPRegenRate,600,1000; }",5,10000,BF_WEAPON,"{ specialeffect2 EF_HEAL; }"; }
+2377:2435:2538,{ bonus2 bSubRace,RC_All,-300; bonus2 bSubRace,RC_DemiHuman,300; bonus2 bSubRace,RC_Player_Human,300; bonus bStr,3; bonus bMaxHPRate,12; bonus2 bSkillAtk,"MC_MAMMONITE",20; bonus2 bSkillHeal,"AM_POTIONPITCHER",10; bonus2 bSkillHeal2,"AM_POTIONPITCHER",10; bonus2 bSkillHeal2,"AL_HEAL",10; bonus bUnbreakableArmor; }
+2378:2435:2538,{ bonus2 bSubRace,RC_All,-300; bonus2 bSubRace,RC_DemiHuman,300; bonus2 bSubRace,RC_Player_Human,300; bonus bAgi,3; bonus bMaxHPRate,12; bonus bCritical,5; bonus bAspdRate,5; autobonus "{ bonus2 bHPRegenRate,300,1000; }",10,10000,BF_WEAPON,"{ specialeffect2 EF_HEAL; }"; }
+2379:2436:2539,{ bonus2 bSubRace,RC_All,-300; bonus2 bSubRace,RC_DemiHuman,300; bonus2 bSubRace,RC_Player_Human,300; bonus bInt,3; bonus bMaxHPRate,12; bonus2 bResEff,Eff_Stun,2000; autobonus2 "{ bonus bDefEle,Ele_Ghost; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_ENERGYCOAT; }"; }
+2380:2436:2539,{ bonus2 bSubRace,RC_All,-300; bonus2 bSubRace,RC_DemiHuman,300; bonus2 bSubRace,RC_Player_Human,300; bonus bInt,3; bonus bMaxHPRate,12; bonus2 bCastrate,"AL_HOLYLIGHT",-50; bonus bHealPower,6; autobonus2 "{ bonus bDefEle,Ele_Ghost; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_ENERGYCOAT; }"; }
+2381:2436:2539,{ bonus2 bSubRace,RC_All,-300; bonus2 bSubRace,RC_DemiHuman,300; bonus2 bSubRace,RC_Player_Human,300; bonus bDex,3; bonus bMaxHPRate,12; bonus bLongAtkDef,10; bonus bDelayRate,-25; }
+2382:2437:2540,{ bonus2 bSubRace,RC_All,-300; bonus2 bSubRace,RC_DemiHuman,300; bonus2 bSubRace,RC_Player_Human,300; bonus bDex,3; bonus bMaxHPRate,12; bonus bLongAtkDef,10; bonus bDelayRate,-25; }
 2387:2440:2744,{ bonus bMaxHPrate,7; bonus bMaxSPrate,7; bonus bCastrate,-3; bonus bDelayrate,-15; }
 2390:2749,{ bonus bFlee2,5; }
 2394:2444:2549,{ bonus2 bAddClass,Class_All,5; bonus bMatkRate,5; bonus2 bResEff,Eff_Freeze,10000; bonus2 bSkillHeal2,"AM_POTIONPITCHER",3; bonus2 bSkillHeal2,"AL_HEAL",3; bonus2 bSkillHeal2,"PR_SANCTUARY",3; }
@@ -137,7 +137,7 @@
 4153:4247:4273,{ bonus3 bAddMonsterDropItem,544,RC_Fish,3000; bonus2 bAddEle,Ele_Water,30; }
 4168:4169,{ bonus bMaxHPrate,20; bonus bMaxSPrate,20; bonus bCastrate,-10; }
 4172:4210:4230:4257:4272,{ bonus bAgi,5; bonus bStr,5; bonus bAspdRate,5; bonus bSpeedRate,25; bonus bSPDrainValue,1; if(BaseClass==Job_Thief) bonus bNoGemStone; }
-4178:4199:4234:4252:4297,{ bonus bAgi,5; bonus bDex,3; bonus bLongAtkRate,20; bonus bPerfectHitAddRate,20; if(BaseClass==Job_Archer) { bonus2 bExpAddRace,RC_Brute,5; bonus2 bComaRace,RC_Brute,100; } }
+4178:4199:4234:4252:4297,{ bonus bAgi,5; bonus bDex,3; bonus bLongAtkRate,20; bonus bPerfectHitAddRate,20; if(BaseClass==Job_Archer) { bonus2 bExpAddRace,RC_Brute,5; bonus2 bComaRace,RC_Brute,100; bonus2 bComaRace,RC_Player_Doram,100; } }
 4178:4234:4252:4297:4381,{ bonus bDex,5; bonus2 bSkillAtk,"CG_ARROWVULCAN",5; bonus2 bSkillAtk,"DC_THROWARROW",10; bonus2 bSkillAtk,"BA_MUSICALSTRIKE",10; if(BaseJob==Job_Bard||BaseJob==Job_Dancer) bonus3 bAutoSpellWhenHit,"CG_TAROTCARD",2,50; }
 4185:4217:4280:4293:4312,{ bonus bVit,10; bonus bCastrate,-10; bonus bUseSPRate,-10; if(BaseClass==Job_Acolyte) { bonus2 bExpAddRace,RC_Undead,5; bonus2 bExpAddRace,RC_Demon,5; bonus2 bSubRace,RC_Undead,30; bonus2 bSubRace,RC_Demon,30; } }
 4185:4293:4312:4332,{ bonus bStr,3; bonus bMaxSP,80; bonus bBaseAtk,25; bonus3 bAutoSpell,"AL_CRUCIS",5,10; bonus2 bSkillAtk,"MO_EXTREMITYFIST",10; if(BaseJob==Job_Monk) { bonus bUseSPrate,-10; bonus bNoCastCancel; } }
@@ -152,7 +152,7 @@
 4268:4277,{ bonus bBaseAtk,20; bonus bLuk,3; }
 4311:4319:4331:4371,{ bonus bInt,1; bonus bStr,1; bonus bDef,2; bonus bSPrecovRate,10; bonus2 bSkillAtk,"PA_SHIELDCHAIN",10; bonus2 bSkillAtk,"PA_SACRIFICE",10; bonus bCastrate,-10; if(BaseJob==Job_Crusader) bonus bDefEle,Ele_Holy; }
 4323:4324,{ bonus3 bAutoSpell,"MG_FROSTDIVER",3,250; }
-4435:4436,{ bonus2 bSPGainRace,RC_DemiHuman,2; bonus2 bSPGainRace,RC_Player,2; }
+4435:4436,{ bonus2 bSPGainRace,RC_DemiHuman,2; bonus2 bSPGainRace,RC_Player_Human,2; }
 5040:5442,{ bonus bAspdRate,3; bonus bCastrate,3; }
 5068:5653,{ bonus bStr,1; bonus bAtkRate,5; }
 5074:5653,{ bonus bStr,1; bonus bAspdRate,2; }

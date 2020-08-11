@@ -89,9 +89,8 @@ std::unordered_map<uint16, s_skill_db> skill_nearnpc;
 // Forward declaration of conversion functions
 static bool guild_read_guildskill_tree_db( char* split[], int columns, int current );
 static bool pet_read_db( const char* file );
-static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current);
+static bool skill_parse_row_magicmushroomdb(char *split[], int column, int current);
 static bool skill_parse_row_abradb(char* split[], int columns, int current);
-static bool skill_parse_row_improvisedb(char* split[], int columns, int current);
 static bool skill_parse_row_spellbookdb(char* split[], int columns, int current);
 static bool mob_readdb_mobavail(char *str[], int columns, int current);
 static bool skill_parse_row_requiredb(char* split[], int columns, int current);
@@ -105,7 +104,7 @@ static bool quest_read_db(char *split[], int columns, int current);
 static bool instance_readdb_sub(char* str[], int columns, int current);
 
 // Constants for conversion
-std::unordered_map<uint16, std::string> aegis_itemnames;
+std::unordered_map<t_itemid, std::string> aegis_itemnames;
 std::unordered_map<uint16, uint16> aegis_itemviewid;
 std::unordered_map<uint16, std::string> aegis_mobnames;
 std::unordered_map<uint16, std::string> aegis_skillnames;
@@ -151,7 +150,8 @@ void script_set_constant_( const char* name, int64 value, const char* constant_n
 }
 
 const char* constant_lookup( int32 value, const char* prefix ){
-	nullpo_retr( nullptr, prefix );
+	if (prefix == nullptr)
+		return nullptr;
 
 	for( auto const& pair : constants ){
 		// Same prefix group and same value
@@ -164,7 +164,8 @@ const char* constant_lookup( int32 value, const char* prefix ){
 }
 
 int64 constant_lookup_int(const char* constant) {
-	nullpo_retr(-100, constant);
+	if (constant == nullptr)
+		return -100;
 
 	for (auto const &pair : constants) {
 		if (strlen(pair.first) == strlen(constant) && strncasecmp(pair.first, constant, strlen(constant)) == 0) {
@@ -313,7 +314,7 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (!process("MAGIC_MUSHROOM_DB", 1, root_paths, "magicmushroom_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("MAGIC_MUSHROOM_DB", 1, root_paths, "magicmushroom_db", [](const std::string &path, const std::string &name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1, 1, -1, &skill_parse_row_magicmushroomdb, false);
 	})) {
 		return 0;
@@ -322,12 +323,6 @@ int do_init( int argc, char** argv ){
 	if (!process("ABRA_DB", 1, root_paths, "abra_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3, 3, -1, &skill_parse_row_abradb, false);
 	})) {
-		return 0;
-	}
-
-	if (!process("IMPROVISED_SONG_DB", 1, root_paths, "skill_improvise_db", [](const std::string& path, const std::string& name_ext) -> bool {
-		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 2, 2, -1, &skill_parse_row_improvisedb, false);
-	}, "improvise_db")) {
 		return 0;
 	}
 
@@ -363,7 +358,7 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (process("INSTANCE_DB", 1, root_paths, "instance_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("INSTANCE_DB", 1, root_paths, "instance_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 7, 7 + MAX_MAP_PER_INSTANCE, -1, &instance_readdb_sub, false);
 	})) {
 		return 0;
@@ -775,49 +770,49 @@ static bool pet_read_db( const char* file ){
 		body << YAML::BeginMap;
 		body << YAML::Key << "Mob" << YAML::Value << *mob_name;
 
-		uint16 tame_item_id = (uint16)atoi( str[3] );
+		t_itemid tame_item_id = strtoul( str[3], nullptr, 10 );
 
 		if( tame_item_id > 0 ){
 			std::string* tame_item_name = util::umap_find( aegis_itemnames, tame_item_id );
 
 			if( tame_item_name == nullptr ){
-				ShowError( "Item name for item id %hu is not known.\n", tame_item_id );
+				ShowError( "Item name for item id %u is not known.\n", tame_item_id );
 				return false;
 			}
 
 			body << YAML::Key << "TameItem" << YAML::Value << *tame_item_name;
 		}
 
-		uint16 egg_item_id = (uint16)atoi( str[4] );
+		t_itemid egg_item_id = strtoul( str[4], nullptr, 10 );
 		std::string* egg_item_name = util::umap_find( aegis_itemnames, egg_item_id );
 
 		if( egg_item_name == nullptr ){
-			ShowError( "Item name for item id %hu is not known.\n", egg_item_id );
+			ShowError( "Item name for item id %u is not known.\n", egg_item_id );
 			return false;
 		}
 
 		body << YAML::Key << "EggItem" << YAML::Value << *egg_item_name;
 
-		uint16 equip_item_id = (uint16)atoi( str[5] );
+		t_itemid equip_item_id = strtoul( str[5], nullptr, 10 );
 
 		if( equip_item_id > 0 ){
 			std::string* equip_item_name = util::umap_find( aegis_itemnames, equip_item_id );
 
 			if( equip_item_name == nullptr ){
-				ShowError( "Item name for item id %hu is not known.\n", equip_item_id );
+				ShowError( "Item name for item id %u is not known.\n", equip_item_id );
 				return false;
 			}
 
 			body << YAML::Key << "EquipItem" << YAML::Value << *equip_item_name;
 		}
 
-		uint16 food_item_id = (uint16)atoi( str[6] );
+		t_itemid food_item_id = strtoul( str[6], nullptr, 10 );
 
 		if( food_item_id > 0 ){
 			std::string* food_item_name = util::umap_find( aegis_itemnames, food_item_id );
 
 			if( food_item_name == nullptr ){
-				ShowError( "Item name for item id %hu is not known.\n", food_item_id );
+				ShowError( "Item name for item id %u is not known.\n", food_item_id );
 				return false;
 			}
 
@@ -872,7 +867,7 @@ static bool pet_read_db( const char* file ){
 }
 
 // Copied and adjusted from skill.cpp
-static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current)
+static bool skill_parse_row_magicmushroomdb(char *split[], int column, int current)
 {
 	uint16 skill_id = atoi(split[0]);
 	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
@@ -931,25 +926,6 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current)
 }
 
 // Copied and adjusted from skill.cpp
-static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
-{
-	uint16 skill_id = atoi(split[0]);
-	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
-
-	if (skill_name == nullptr) {
-		ShowError("Skill name for Improvised Song skill ID %hu is not known.\n", skill_id);
-		return false;
-	}
-
-	body << YAML::BeginMap;
-	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
-	body << YAML::Key << "Probability" << YAML::Value << atoi(split[1]) / 10;
-	body << YAML::EndMap;
-
-	return true;
-}
-
-// Copied and adjusted from skill.cpp
 static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 {
 	uint16 skill_id = atoi(split[0]);
@@ -960,11 +936,11 @@ static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 		return false;
 	}
 
-	uint16 nameid = atoi(split[2]);
+	t_itemid nameid = strtoul(split[2], nullptr, 10);
 	std::string *book_name = util::umap_find(aegis_itemnames, nameid);
 
 	if (book_name == nullptr) {
-		ShowError("Book name for item ID %hu is not known.\n", nameid);
+		ShowError("Book name for item ID %u is not known.\n", nameid);
 		return false;
 	}
 
@@ -1022,11 +998,11 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 			body << YAML::Key << "ClothColor" << YAML::Value << atoi(str[11]);
 
 		if (atoi(str[5]) != 0) {
-			uint16 weapon_item_id = atoi(str[5]);
+			t_itemid weapon_item_id = strtoul( str[5], nullptr, 10 );
 			std::string *weapon_item_name = util::umap_find(aegis_itemnames, weapon_item_id);
 
 			if (weapon_item_name == nullptr) {
-				ShowError("Item name for item ID %hu (weapon) is not known.\n", weapon_item_id);
+				ShowError("Item name for item ID %u (weapon) is not known.\n", weapon_item_id);
 				return false;
 			}
 
@@ -1034,11 +1010,11 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 		}
 
 		if (atoi(str[6]) != 0) {
-			uint16 shield_item_id = atoi(str[6]);
+			t_itemid shield_item_id = strtoul( str[6], nullptr, 10 );
 			std::string *shield_item_name = util::umap_find(aegis_itemnames, shield_item_id);
 
 			if (shield_item_name == nullptr) {
-				ShowError("Item name for item ID %hu (shield) is not known.\n", shield_item_id);
+				ShowError("Item name for item ID %u (shield) is not known.\n", shield_item_id);
 				return false;
 			}
 
@@ -1053,7 +1029,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 				return false;
 			}
 
-			std::string *headtop_item_name = util::umap_find(aegis_itemnames, *headtop_item_id);
+			std::string *headtop_item_name = util::umap_find(aegis_itemnames, (t_itemid)*headtop_item_id);
 
 			if (headtop_item_name == nullptr) {
 				ShowError("Item name for item ID %hu (head top) is not known.\n", *headtop_item_id);
@@ -1071,7 +1047,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 				return false;
 			}
 
-			std::string *headmid_item_name = util::umap_find(aegis_itemnames, *headmid_item_id);
+			std::string *headmid_item_name = util::umap_find(aegis_itemnames, (t_itemid)*headmid_item_id);
 
 			if (headmid_item_name == nullptr) {
 				ShowError("Item name for item ID %hu (head mid) is not known.\n", *headmid_item_id);
@@ -1089,7 +1065,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 				return false;
 			}
 
-			std::string *headlow_item_name = util::umap_find(aegis_itemnames, *headlow_item_id);
+			std::string *headlow_item_name = util::umap_find(aegis_itemnames, (t_itemid)*headlow_item_id);
 
 			if (headlow_item_name == nullptr) {
 				ShowError("Item name for item ID %hu (head low) is not known.\n", *headlow_item_id);
@@ -1191,11 +1167,11 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 		}
 	} else if (columns == 3) {
 		if (atoi(str[5]) != 0) {
-			uint16 peteq_item_id = atoi(str[5]);
+			t_itemid peteq_item_id = strtoul( str[5], nullptr, 10 );
 			std::string *peteq_item_name = util::umap_find(aegis_itemnames, peteq_item_id);
 
 			if (peteq_item_name == nullptr) {
-				ShowError("Item name for item ID %hu (pet equip) is not known.\n", peteq_item_id);
+				ShowError("Item name for item ID %u (pet equip) is not known.\n", peteq_item_id);
 				return false;
 			}
 
@@ -1292,11 +1268,11 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 
 	for (int i = 0; i < MAX_SKILL_ITEM_REQUIRE; i++) {
 		if (atoi(split[13 + 2 * i]) > 0) {
-			uint16 item_id = atoi(split[13 + 2 * i]);
+			t_itemid item_id = strtoul( split[13 + 2 * i], nullptr, 10 );
 			std::string *item_name = util::umap_find(aegis_itemnames, item_id);
 
 			if (item_name == nullptr) {
-				ShowError("Item name for item id %hu is not known.\n", item_id);
+				ShowError("Item name for item id %u is not known.\n", item_id);
 				return false;
 			}
 
@@ -1591,8 +1567,6 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 			body << YAML::Key << "TargetManHole" << YAML::Value << "true";
 		if (inf3_val & 0x10000)
 			body << YAML::Key << "TargetHidden" << YAML::Value << "true";
-		if (inf3_val & 0x20000)
-			body << YAML::Key << "IncreaseGloomyDayDamage" << YAML::Value << "true";
 		if (inf3_val & 0x40000)
 			body << YAML::Key << "IncreaseDanceWithWugDamage" << YAML::Value << "true";
 		if (inf3_val & 0x80000)
@@ -2250,7 +2224,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 				if (it_req->second.itemid[i] > 0) {
 					body << YAML::BeginMap;
 
-					std::string *item_name = util::umap_find(aegis_itemnames, static_cast<uint16>(it_req->second.itemid[i]));
+					std::string *item_name = util::umap_find(aegis_itemnames, it_req->second.itemid[i]);
 
 					if (item_name == nullptr) {
 						ShowError("Item name for item id %hu is not known (itemcost).\n", it_req->second.itemid[i]);
@@ -2271,10 +2245,10 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 			body << YAML::BeginMap;
 
 			for (const auto &it : it_req->second.eqItem) {
-				std::string *item_name = util::umap_find(aegis_itemnames, static_cast<uint16>(it));
+				std::string *item_name = util::umap_find(aegis_itemnames, it);
 
 				if (item_name == nullptr) {
-					ShowError("Item name for item id %hu is not known (equipment).\n", it);
+					ShowError("Item name for item id %u is not known (equipment).\n", it);
 					return false;
 				}
 
@@ -2516,7 +2490,8 @@ static bool quest_read_db(char *split[], int columns, int current) {
 		body << YAML::BeginSeq;
 
 		for (size_t i = 0; i < MAX_QUEST_DROPS; i++) {
-			int32 mob_id = (int32)atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 2)]), nameid = (uint16)atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 3)]);
+			int32 mob_id = (int32)atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 2)]);
+			t_itemid nameid = strtoul(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 3)], nullptr, 10);
 
 			if (!mob_id || !nameid)
 				continue;
@@ -2528,10 +2503,10 @@ static bool quest_read_db(char *split[], int columns, int current) {
 				continue;
 			}
 
-			std::string *item_name = util::umap_find(aegis_itemnames, static_cast<uint16>(nameid));
+			std::string *item_name = util::umap_find(aegis_itemnames, nameid);
 
 			if (!item_name) {
-				ShowError("quest_read_db: Invalid item name %hu, drop not read.\n", nameid);
+				ShowError("quest_read_db: Invalid item name %u, drop not read.\n", nameid);
 				return false;
 			}
 
@@ -2569,7 +2544,7 @@ static bool instance_readdb_sub(char* str[], int columns, int current) {
 
 	if (columns > 7) {
 		body << YAML::Key << "AdditionalMaps";
-		body << YAML::BeginSeq;
+		body << YAML::BeginMap;
 
 		for (int i = 7; i < columns; i++) {
 			if (!strlen(str[i]))
@@ -2578,12 +2553,10 @@ static bool instance_readdb_sub(char* str[], int columns, int current) {
 			if (strcmpi(str[4], str[i]) == 0)
 				continue;
 
-			body << YAML::BeginMap;
 			body << YAML::Key << str[i] << YAML::Value << "true";
-			body << YAML::EndMap;
 		}
 
-		body << YAML::EndSeq;
+		body << YAML::EndMap;
 	}
 
 	body << YAML::EndMap;
