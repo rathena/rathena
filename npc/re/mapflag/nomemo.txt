@@ -9,7 +9,11 @@
 //= 1.2 Added dali, dali02 [Nova]
 //= 1.3 Added Nightmare Glastheim [Ridley8819]
 //= 1.4 Added GVG TE Maps. [Cydh]
+//= 1.5 Added Para Market maps [mazvi]
 //============================================================
+
+// Paradise Market =============
+paramk	mapflag	nomemo
 
 // Episode 13 ====================
 job3_arch01	mapflag	nomemo

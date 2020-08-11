@@ -94,7 +94,7 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
 
 	sd->vended_id = vsd->vender_id;  // register vending uid
 
-	clif_vendinglist(sd, id, vsd->vending);
+	clif_vendinglist( sd, vsd );
 }
 
 /**
@@ -401,7 +401,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
  * @param nameid : item id
  * @return 0:not selling it, 1: yes
  */
-bool vending_search(struct map_session_data* sd, unsigned short nameid)
+bool vending_search(struct map_session_data* sd, t_itemid nameid)
 {
 	int i;
 
@@ -409,7 +409,7 @@ bool vending_search(struct map_session_data* sd, unsigned short nameid)
 		return false;
 	}
 
-	ARR_FIND( 0, sd->vend_num, i, sd->cart.u.items_cart[sd->vending[i].index].nameid == (short)nameid );
+	ARR_FIND( 0, sd->vend_num, i, sd->cart.u.items_cart[sd->vending[i].index].nameid == nameid );
 	if( i == sd->vend_num ) { // not found
 		return false;
 	}
@@ -433,7 +433,7 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 		return true;
 
 	for( idx = 0; idx < s->item_count; idx++ ) {
-		ARR_FIND( 0, sd->vend_num, i, sd->cart.u.items_cart[sd->vending[i].index].nameid == s->itemlist[idx] );
+		ARR_FIND( 0, sd->vend_num, i, sd->cart.u.items_cart[sd->vending[i].index].nameid == s->itemlist[idx].itemId );
 		if( i == sd->vend_num ) { // not found
 			continue;
 		}
@@ -454,7 +454,7 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 			slot = itemdb_slot(it->nameid);
 
 			for( c = 0; c < slot && it->card[c]; c ++ ) {
-				ARR_FIND( 0, s->card_count, cidx, s->cardlist[cidx] == it->card[c] );
+				ARR_FIND( 0, s->card_count, cidx, s->cardlist[cidx].itemId == it->card[c] );
 				if( cidx != s->card_count ) { // found
 					break;
 				}

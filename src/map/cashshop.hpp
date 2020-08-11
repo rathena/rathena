@@ -4,16 +4,18 @@
 #ifndef CASHSHOP_HPP
 #define CASHSHOP_HPP
 
-#include "../common/cbasetypes.hpp" // uint16, uint32
-#include "../common/timer.hpp" // ShowWarning, ShowStatus
 #include "../config/core.hpp"
+
+#include "../common/cbasetypes.hpp" // uint16, uint32
+#include "../common/mmo.hpp" // t_itemid
+#include "../common/timer.hpp" // ShowWarning, ShowStatus
 
 struct map_session_data;
 
 void do_init_cashshop( void );
 void do_final_cashshop( void );
 void cashshop_reloaddb( void );
-bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, uint16* item_list );
+bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub* item_list );
 
 // Taken from AEGIS
 enum CASH_SHOP_TAB_CODE
@@ -51,7 +53,7 @@ enum CASHSHOP_BUY_RESULT
 };
 
 struct cash_item_data{
-	unsigned short nameid;
+	t_itemid nameid;
 	uint32 price;
 };
 
@@ -71,7 +73,7 @@ enum e_sale_add_result {
 
 struct sale_item_data{
 	// Data
-	uint16 nameid;
+	t_itemid nameid;
 	time_t start;
 	time_t end;
 	uint32 amount;
@@ -89,9 +91,9 @@ struct sale_item_db{
 #if PACKETVER_SUPPORTS_SALES
 extern struct sale_item_db sale_items;
 
-struct sale_item_data* sale_find_item(uint16 nameid, bool onsale);
-enum e_sale_add_result sale_add_item(uint16 nameid, int32 count, time_t from, time_t to);
-bool sale_remove_item(uint16 nameid);
+struct sale_item_data* sale_find_item(t_itemid nameid, bool onsale);
+enum e_sale_add_result sale_add_item(t_itemid nameid, int32 count, time_t from, time_t to);
+bool sale_remove_item(t_itemid nameid);
 void sale_notify_login( struct map_session_data* sd );
 #endif
 

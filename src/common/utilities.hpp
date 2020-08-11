@@ -14,6 +14,10 @@
 #include "cbasetypes.hpp"
 #include "random.hpp"
 
+#ifndef __has_builtin
+	#define __has_builtin(x) 0
+#endif
+
 // Class used to perform time measurement
 class cScopeTimer {
 	struct sPimpl; //this is to avoid long compilation time
@@ -192,9 +196,55 @@ namespace rathena {
 			}
 		}
 
-		bool safe_addition( int64 a, int64 b, int64& result );
+#if __has_builtin( __builtin_add_overflow ) || ( defined( __GNUC__ ) && !defined( __clang__ ) && defined( GCC_VERSION  ) && GCC_VERSION >= 50100 )
+		template <typename T> bool safe_addition(T a, T b, T &result) {
+			return __builtin_add_overflow(a, b, &result);
+		}
+#else
+		template <typename T> bool safe_addition( T a, T b, T& result ){
+			bool overflow = false;
+
+			if( std::numeric_limits<T>::is_signed ){
+				if( b < 0 ){
+					if( a < ( (std::numeric_limits<T>::min)() - b ) ){
+						overflow = true;
+					}
+				}else{
+					if( a > ( (std::numeric_limits<T>::max)() - b ) ){
+						overflow = true;
+					}
+				}
+			}else{
+				if( a > ( (std::numeric_limits<T>::max)() - b ) ){
+					overflow = true;
+				}
+			}
+
+			result = a + b;
+
+			return overflow;
+		}
+#endif
+
 		bool safe_substraction( int64 a, int64 b, int64& result );
 		bool safe_multiplication( int64 a, int64 b, int64& result );
+
+		/**
+		 * Safely add values without overflowing.
+		 * @param a: Holder of value to increment
+		 * @param b: Increment by
+		 * @param cap: Cap value
+		 * @return Result of a + b
+		 */
+		template <typename T> T safe_addition_cap( T a, T b, T cap ){
+			T result;
+
+			if( rathena::util::safe_addition( a, b, result ) ){
+				return cap;
+			}else{
+				return result;
+			}
+		}
 	}
 }
 
