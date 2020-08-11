@@ -692,7 +692,7 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	str[1] = trim(str[1]);
 
 	// Check if the item can be found by id
-	if( ( entry.nameid = strtoul(str[1], nullptr, 10) ) <= 0 || !itemdb_exists( entry.nameid ) ){
+	if( ( entry.nameid = strtoul(str[1], nullptr, 10) ) == 0 || !itemdb_exists( entry.nameid ) ){
 		// Otherwise look it up by name
 		struct item_data *id = itemdb_searchname(str[1]);
 
@@ -781,7 +781,7 @@ static bool itemdb_read_itemtrade(char* str[], int columns, int current) {
 
 	if( ( id = itemdb_exists(nameid) ) == NULL )
 	{
-		//ShowWarning("itemdb_read_itemtrade: Invalid item id %d.\n", nameid);
+		//ShowWarning("itemdb_read_itemtrade: Invalid item id %u.\n", nameid);
 		//return false;
 		// FIXME: item_trade.txt contains items, which are commented in item database.
 		return true;

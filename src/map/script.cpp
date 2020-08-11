@@ -10619,7 +10619,7 @@ BUILDIN_FUNC(getmobdrops)
 
 	for( i = 0; i < MAX_MOB_DROP_TOTAL; i++ )
 	{
-		if( mob->dropitem[i].nameid < 1 )
+		if( mob->dropitem[i].nameid == 0 )
 			continue;
 		if( itemdb_exists(mob->dropitem[i].nameid) == NULL )
 			continue;

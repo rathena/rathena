@@ -22684,7 +22684,7 @@ uint64 ReadingSpellbookDatabase::parseBodyNode(const YAML::Node &node) {
  * @return Spell data or nullptr otherwise
  */
 std::shared_ptr<s_skill_spellbook_db> ReadingSpellbookDatabase::findBook(t_itemid nameid) {
-	if (nameid < 1 || !itemdb_exists(nameid) || reading_spellbook_db.size() == 0)
+	if (nameid == 0 || !itemdb_exists(nameid) || reading_spellbook_db.size() == 0)
 		return nullptr;
 
 	for (const auto &spell : reading_spellbook_db) {

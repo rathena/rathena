@@ -849,17 +849,15 @@ void clif_charselectok(int id, uint8 ok)
 void clif_dropflooritem( struct flooritem_data* fitem, bool canShowEffect ){
 	nullpo_retv(fitem);
 
-	if( fitem->item.nameid <= 0 ){
+	if( fitem->item.nameid == 0 ){
 		return;
 	}
-
-	int view = itemdb_viewid( fitem->item.nameid );
 
 	struct packet_dropflooritem p;
 
 	p.PacketType = dropflooritemType;
 	p.ITAID = fitem->bl.id;
-	p.ITID = ( view > 0 ) ? view : fitem->item.nameid;
+	p.ITID = client_nameid( fitem->item.nameid );
 #if PACKETVER >= 20130000 /* not sure date */
 	p.type = itemtype( fitem->item.nameid );
 #endif
@@ -2650,28 +2648,12 @@ static void clif_addcards( struct EQUIPSLOTINFO* buf, struct item* item ){
 	}
 
 	// Normal items.
-	if( item->card[i] > 0 && ( j = itemdb_viewid( item->card[i] ) ) > 0 ){
-		buf->card[0] = j;
-	}else{
-		buf->card[0] = item->card[i];
-	}
-
-	if( item->card[++i] > 0 && ( j = itemdb_viewid( item->card[i] ) ) > 0 ){
-		buf->card[1] = j;
-	}else{
-		buf->card[1] = item->card[i];
-	}
-
-	if( item->card[++i] > 0 && ( j = itemdb_viewid( item->card[i] ) ) > 0 ){
-		buf->card[2] = j;
-	}else{
-		buf->card[2] = item->card[i];
-	}
-
-	if( item->card[++i] > 0 && ( j = itemdb_viewid( item->card[i] ) ) > 0 ){
-		buf->card[3] = j;
-	}else{
-		buf->card[3] = item->card[i];
+	for( int k = 0; k < 4; k++, i++ ){
+		if( item->card[i] > 0 ){
+			buf->card[k] = client_nameid( item->card[i] );
+		}else{
+			buf->card[k] = 0;
+		}
 	}
 }
 
@@ -2727,7 +2709,7 @@ void clif_additem( struct map_session_data *sd, int n, int amount, unsigned char
 	if( fail ){
 		p = {};
 	}else{
-		if( n < 0 || n >= MAX_INVENTORY || sd->inventory.u.items_inventory[n].nameid <= 0 || sd->inventory_data[n] == nullptr ){
+		if( n < 0 || n >= MAX_INVENTORY || sd->inventory.u.items_inventory[n].nameid == 0 || sd->inventory_data[n] == nullptr ){
 			return;
 		}
 
@@ -2952,7 +2934,7 @@ void clif_inventorylist( struct map_session_data *sd ){
 	int normal = 0;
 
 	for( int i = 0; i < MAX_INVENTORY; i++ ){
-		if( sd->inventory.u.items_inventory[i].nameid <= 0 || sd->inventory_data[i] == nullptr ){
+		if( sd->inventory.u.items_inventory[i].nameid == 0 || sd->inventory_data[i] == nullptr ){
 			continue;
 		}
 
@@ -3018,7 +3000,7 @@ void clif_inventorylist( struct map_session_data *sd ){
 /* on 20120925 onwards this is a field on clif_item_equip/normal */
 #if PACKETVER >= 20111122 && PACKETVER < 20120925
 	for( int i = 0; i < MAX_INVENTORY; i++ ){
-		if( sd->inventory.u.items_inventory[i].nameid <= 0 || sd->inventory_data[i] == NULL )
+		if( sd->inventory.u.items_inventory[i].nameid == 0 || sd->inventory_data[i] == NULL )
 			continue;
 
 		if ( sd->inventory.u.items_inventory[i].favorite )
@@ -3045,7 +3027,7 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 	int normal = 0;
 
 	for( int i = 0; i < items_length; i++ ){
-		if( items[i].nameid <= 0 ){
+		if( items[i].nameid == 0 ){
 			continue;
 		}
 
@@ -3131,7 +3113,7 @@ void clif_cartlist( struct map_session_data *sd ){
 	int equip = 0;
 
 	for( int i = 0; i < MAX_CART; i++ ){
-		if( sd->cart.u.items_cart[i].nameid <= 0 ){
+		if( sd->cart.u.items_cart[i].nameid == 0 ){
 			continue;
 		}
 
@@ -3698,7 +3680,7 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 #if PACKETVER > 3
 				if (sd) {
 					int n;
-					if((n = sd->equip_index[2]) >= 0 && sd->inventory_data[n]) {
+					if((n = sd->equip_index[EQI_SHOES]) >= 0 && sd->inventory_data[n]) {
 						if(sd->inventory_data[n]->view_id > 0)
 							val = sd->inventory_data[n]->view_id;
 						else
@@ -4155,7 +4137,7 @@ void clif_useitemack( struct map_session_data *sd, int index, int amount, bool o
 		return;
 	}
 
-	if( index < 0 || index >= MAX_INVENTORY || sd->inventory.u.items_inventory[index].nameid <= 0 || sd->inventory_data[index] == nullptr ){
+	if( index < 0 || index >= MAX_INVENTORY || sd->inventory.u.items_inventory[index].nameid == 0 || sd->inventory_data[index] == nullptr ){
 		return;
 	}
 
@@ -4490,7 +4472,7 @@ void clif_tradeadditem( struct map_session_data* sd, struct map_session_data* ts
 	if( index ){
 		index = server_index( index );
 
-		if( index >= MAX_INVENTORY || sd->inventory.u.items_inventory[index].nameid <= 0 || sd->inventory_data[index] == nullptr ){
+		if( index >= MAX_INVENTORY || sd->inventory.u.items_inventory[index].nameid == 0 || sd->inventory_data[index] == nullptr ){
 			return;
 		}
 
@@ -5093,11 +5075,10 @@ void clif_getareachar_item( struct map_session_data* sd,struct flooritem_data* f
 	nullpo_retv( fitem );
 
 	struct PACKET_ZC_ITEM_ENTRY p;
-	int view = itemdb_viewid( fitem->item.nameid );
 
 	p.packetType = HEADER_ZC_ITEM_ENTRY;
 	p.AID = fitem->bl.id;
-	p.itemId = view > 0 ? view : fitem->item.nameid;
+	p.itemId = client_nameid( fitem->item.nameid );
 	p.identify = fitem->item.identify;
 	p.x = fitem->bl.x;
 	p.y = fitem->bl.y;
@@ -6840,7 +6821,7 @@ void clif_item_identify_list(struct map_session_data *sd)
 	WFIFOW(fd,0)=0x177;
 	for(i=c=0;i<MAX_INVENTORY;i++){
 		if(sd->inventory.u.items_inventory[i].nameid > 0 && !sd->inventory.u.items_inventory[i].identify){
-			WFIFOW(fd,c*2+4)=i+2;
+			WFIFOW(fd,c*2+4)=client_index(i);
 			c++;
 		}
 	}
@@ -6895,7 +6876,7 @@ void clif_item_repair_list( struct map_session_data *sd,struct map_session_data 
 	for( int i = 0; i < MAX_INVENTORY; i++ ){
 		if( dstsd->inventory.u.items_inventory[i].nameid > 0 && dstsd->inventory.u.items_inventory[i].attribute != 0 && !itemdb_ishatched_egg( &dstsd->inventory.u.items_inventory[i] ) ){ // && skill_can_repair(sd,nameid)){
 			p->items[c].index = i;
-			p->items[c].itemId = dstsd->inventory.u.items_inventory[i].nameid;
+			p->items[c].itemId = client_nameid( dstsd->inventory.u.items_inventory[i].nameid );
 			p->items[c].refine = dstsd->inventory.u.items_inventory[i].refine;
 			clif_addcards( &p->items[c].slot, &dstsd->inventory.u.items_inventory[i] );
 			c++;
@@ -7041,7 +7022,7 @@ void clif_cart_additem( struct map_session_data *sd, int n, int amount ){
 		return;
 	}
 
-	if( n < 0 || n >= MAX_CART || sd->cart.u.items_cart[n].nameid <= 0 ){
+	if( n < 0 || n >= MAX_CART || sd->cart.u.items_cart[n].nameid == 0 ){
 		return;
 	}
 
@@ -8067,11 +8048,11 @@ void clif_sendegg(struct map_session_data *sd)
 	WFIFOHEAD(fd, MAX_INVENTORY * 2 + 4);
 	WFIFOW(fd,0)=0x1a6;
 	for(i=0,n=0;i<MAX_INVENTORY;i++){
-		if(sd->inventory.u.items_inventory[i].nameid <= 0 || sd->inventory_data[i] == NULL ||
+		if(sd->inventory.u.items_inventory[i].nameid == 0 || sd->inventory_data[i] == NULL ||
 		   sd->inventory_data[i]->type != IT_PETEGG ||
 		   sd->inventory.u.items_inventory[i].amount <= 0)
 			continue;
-		WFIFOW(fd,n*2+4)=i+2;
+		WFIFOW(fd,n*2+4)=client_index(i);
 		n++;
 	}
 	WFIFOW(fd,2)=4+n*2;
@@ -10096,7 +10077,7 @@ void clif_viewequip_ack( struct map_session_data* sd, struct map_session_data* t
 		int k = tsd->equip_index[i];
 
 		if( k >= 0 ){
-			if( tsd->inventory.u.items_inventory[k].nameid <= 0 || tsd->inventory_data[k] == NULL ){ // Item doesn't exist
+			if( tsd->inventory.u.items_inventory[k].nameid == 0 || tsd->inventory_data[k] == NULL ){ // Item doesn't exist
 				continue;
 			}
 
@@ -13028,7 +13009,7 @@ void clif_parse_ItemIdentify(int fd,struct map_session_data *sd) {
 	// - Invalid item ID or item doesn't exist
 	// - Item is already identified
 	if (idx < 0 || idx >= MAX_INVENTORY ||
-		sd->inventory.u.items_inventory[idx].nameid <= 0 || sd->inventory_data[idx] == NULL ||
+		sd->inventory.u.items_inventory[idx].nameid == 0 || sd->inventory_data[idx] == NULL ||
 		sd->inventory.u.items_inventory[idx].identify) {// cancel pressed
 			sd->state.workinprogress = WIP_DISABLE_NONE;
 			clif_menuskill_clear(sd);
@@ -18229,7 +18210,7 @@ void clif_party_show_picker( struct map_session_data* sd, struct item* item_data
 
 	p.packetType = HEADER_ZC_ITEM_PICKUP_PARTY;
 	p.AID = sd->status.account_id;
-	p.itemId = item_data->nameid;
+	p.itemId = client_nameid( item_data->nameid );
 	p.identified = item_data->identify;
 	p.damaged = item_data->attribute;
 	p.refine = item_data->refine;
@@ -20019,7 +20000,7 @@ void clif_roulette_info( struct map_session_data* sd ){
 		for( int j = 0; j < MAX_ROULETTE_COLUMNS - i; j++ ){
 			p.ItemInfo[count].Row = i;
 			p.ItemInfo[count].Position = j;
-			p.ItemInfo[count].ItemId = rd.nameid[i][j];
+			p.ItemInfo[count].ItemId = client_nameid( rd.nameid[i][j] );
 			p.ItemInfo[count].Count = rd.qty[i][j];
 #if PACKETVER >= 20180511
 			p.ItemInfo[count].unused = 0;
@@ -20507,7 +20488,7 @@ void clif_parse_Oneclick_Itemidentify(int fd, struct map_session_data *sd) {
 	// - Invalid item ID or item doesn't exist
 	// - Item is already identified
 	if (idx < 0 || idx >= MAX_INVENTORY ||
-		sd->inventory.u.items_inventory[idx].nameid <= 0 || sd->inventory_data[idx] == NULL ||
+		sd->inventory.u.items_inventory[idx].nameid == 0 || sd->inventory_data[idx] == NULL ||
 		sd->inventory.u.items_inventory[idx].identify)
 			return;
 

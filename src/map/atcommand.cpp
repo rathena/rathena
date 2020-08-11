@@ -2827,10 +2827,9 @@ ACMD_FUNC(makeegg) {
 		return -1;
 	}
 
-	if ((item_data = itemdb_searchname(message)) != NULL) // for egg name
-		id = item_data->nameid;
-	else
-	if ((id = mobdb_searchname(message)) != 0) // for monster name
+
+	// for monster name
+	if ((id = mobdb_searchname(message)) != 0)
 		;
 	else
 		id = atoi(message);
@@ -2838,7 +2837,16 @@ ACMD_FUNC(makeegg) {
 	std::shared_ptr<s_pet_db> pet = pet_db.find(id);
 
 	if( pet == nullptr ){
-		pet = pet_db_search(id, PET_EGG);
+		t_itemid nameid;
+
+		// for egg name
+		if( ( item_data = itemdb_searchname( message ) ) != nullptr ){
+			nameid = item_data->nameid;
+		}else{
+			nameid = strtoul( message, nullptr, 10 );
+		}
+
+		pet = pet_db_search( nameid, PET_EGG );
 	}
 
 	if (pet != nullptr) {
@@ -7391,7 +7399,7 @@ ACMD_FUNC(mobinfo)
 		j = 0;
 		for (i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
 			int droprate;
-			if (mob->dropitem[i].nameid <= 0 || mob->dropitem[i].p < 1 || (item_data = itemdb_exists(mob->dropitem[i].nameid)) == NULL)
+			if (mob->dropitem[i].nameid == 0 || mob->dropitem[i].p < 1 || (item_data = itemdb_exists(mob->dropitem[i].nameid)) == NULL)
 				continue;
 			droprate = mob->dropitem[i].p;
 
@@ -7427,7 +7435,7 @@ ACMD_FUNC(mobinfo)
 			mvpremain = 100.0; //Remaining drop chance for official mvp drop mode
 			j = 0;
 			for (i = 0; i < MAX_MVP_DROP_TOTAL; i++) {
-				if (mob->mvpitem[i].nameid <= 0 || (item_data = itemdb_exists(mob->mvpitem[i].nameid)) == NULL)
+				if (mob->mvpitem[i].nameid == 0 || (item_data = itemdb_exists(mob->mvpitem[i].nameid)) == NULL)
 					continue;
 				//Because if there are 3 MVP drops at 50%, the first has a chance of 50%, the second 25% and the third 12.5%
 				mvppercent = (float)mob->mvpitem[i].p * mvpremain / 10000.0f;
@@ -8988,7 +8996,7 @@ ACMD_FUNC(itemlist)
 				if( counter2 != 1 )
 					StringBuf_AppendStr(&buf, ", ");
 
-				StringBuf_Printf(&buf, "#%d %s (id: %d)", counter2, card->jname, card->nameid);
+				StringBuf_Printf(&buf, "#%d %s (id: %u)", counter2, card->jname, card->nameid);
 			}
 
 			if( counter2 > 0 )
