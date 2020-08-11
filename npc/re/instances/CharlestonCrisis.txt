@@ -1687,7 +1687,6 @@ OnTimer300:
 			mes "[Shalosh]";
 			mes "Maybe I too should leave for new noises and stories.";
 			completequest 13184;
-			//SavePPL Upgrade_Part_Engine
 			if (isbegin_quest(13186) == 0) {
 				setquest 13186;
 				completequest 13186;
