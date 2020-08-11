@@ -3179,8 +3179,8 @@
 4989,Reactor_A_MSP,SP Supplement Reactor,6,0,,,,,,,,,,,,,,,{ bonus bMaxSPrate,3; },{},{}
 4990,Reactor_A_FROZ,Frozen Supplement Reactor,6,0,,,,,,,,,,,,,,,{ bonus2 bResEff,Eff_Freeze,10000; },{},{}
 4991,Reactor_A_ASPD,ASPD Supplement Reactor,6,0,,,,,,,,,,,,,,,{ bonus bAspd,1; },{},{}
-4992,HPAbsorb1_Supplement_Reactor,HP Absorb Supplement Reactor,6,0,,,,,,,,,,,,,,,{ bonus2 bHPDrainRate,10,1; },{},{}
-4993,SPAbsorb1_Supplement_Reactor,SP Absorb Supplement Reactor,6,0,,,,,,,,,,,,,,,{ bonus2 bSPDrainRate,10,1; },{},{}
+4992,HPdrain1,HP Absorb 1,6,0,,0,,,,,,,,,,,,,{ bonus2 bHPDrainRate,10,1; },{},{}
+4993,SPdrain1,SP Absorb 1,6,0,,0,,,,,,,,,,,,,{ bonus2 bSPDrainRate,10,1; },{},{}
 4994,Rune_of_Strength_Lv_1,Rune of Strength Lv 1,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bStr,5; } if (.@r>=10) { bonus2 bAddClass,Class_All,5; } },{},{}
 4995,Rune_of_Strength_Lv_2,Rune of Strength Lv 2,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bStr,6; } if (.@r>=11) { bonus bStr,1; bonus2 bAddClass,Class_All,7; } },{},{}
 4996,Rune_of_Strength_Lv_3,Rune of Strength_Lv 3,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bStr,7; } if (.@r>=12) { bonus bStr,1; bonus2 bAddClass,Class_All,8; } if (.@r>=13) { bonus bStr,1; bonus2 bAddClass,Class_All,2; } },{},{}
@@ -4975,7 +4975,8 @@
 6960,Air_Stronghold_Key,Sky Fortress Key,3,10,,10,,,,,,,,,,,,,{},{},{}
 6961,LargeScrap,Huge Metal Scrap,3,10,0,1000,,,,,,,,,,,,,{},{},{}
 6962,OldTank,Old Fuel,3,10,0,100,,,,,,,,,,,,,{},{},{}
-
+6963,HPdrainStone_Robe,HP Absorption Stone (Garment),3,10,,100,,,,,,,,,,,,,{},{},{}
+6964,SPdrainStone_Robe,SP Absorption Stone (Garment),3,10,,100,,,,,,,,,,,,,{},{},{}
 6965,Reactor_P_FIRE_,Fire Property Reactor Blueprint,3,0,,10,,,,,,,,,,,,,{},{},{}
 6966,Reactor_P_WATER_,Water Property Reactor Blueprint,3,0,,10,,,,,,,,,,,,,{},{},{}
 6967,Reactor_P_GROUND_,Earth Property Reactor Blueprint,3,0,,10,,,,,,,,,,,,,{},{},{}
