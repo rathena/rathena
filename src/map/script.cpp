@@ -7933,7 +7933,7 @@ BUILDIN_FUNC(makeitem) {
  * makeitem3 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>;
  */
 BUILDIN_FUNC(makeitem2) {
-	uint32 nameid;
+	t_itemid nameid;
 	uint16 amount, x, y;
 	const char *mapname;
 	int m;
@@ -10619,7 +10619,7 @@ BUILDIN_FUNC(getmobdrops)
 
 	for( i = 0; i < MAX_MOB_DROP_TOTAL; i++ )
 	{
-		if( mob->dropitem[i].nameid < 1 )
+		if( mob->dropitem[i].nameid == 0 )
 			continue;
 		if( itemdb_exists(mob->dropitem[i].nameid) == NULL )
 			continue;

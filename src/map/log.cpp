@@ -305,7 +305,7 @@ void log_zeny(struct map_session_data* sd, e_log_pick_type type, struct map_sess
 
 
 /// logs MVP monster rewards
-void log_mvpdrop(struct map_session_data* sd, int monster_id, unsigned int* log_mvp)
+void log_mvpdrop(struct map_session_data* sd, int monster_id, t_itemid nameid, t_exp exp )
 {
 	nullpo_retv(sd);
 
@@ -314,8 +314,8 @@ void log_mvpdrop(struct map_session_data* sd, int monster_id, unsigned int* log_
 
 	if( log_config.sql_logs )
 	{
-		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`mvp_date`, `kill_char_id`, `monster_id`, `prize`, `mvpexp`, `map`) VALUES (NOW(), '%d', '%d', '%u', '%u', '%s') ",
-			log_config.log_mvpdrop, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1], mapindex_id2name(sd->mapindex)) )
+		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`mvp_date`, `kill_char_id`, `monster_id`, `prize`, `mvpexp`, `map`) VALUES (NOW(), '%d', '%d', '%u', '%" PRIu64 "', '%s') ",
+			log_config.log_mvpdrop, sd->status.char_id, monster_id, nameid, exp, mapindex_id2name(sd->mapindex)) )
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;
@@ -331,7 +331,7 @@ void log_mvpdrop(struct map_session_data* sd, int monster_id, unsigned int* log_
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
-		fprintf(logfp,"%s - %s[%d:%d]\t%d\t%hu,%u\n", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, monster_id, (unsigned short)log_mvp[0], log_mvp[1]);
+		fprintf(logfp,"%s - %s[%d:%d]\t%d\t%u,%" PRIu64 "\n", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, monster_id, nameid, exp);
 		fclose(logfp);
 	}
 }

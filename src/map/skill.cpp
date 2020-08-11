@@ -19848,7 +19848,8 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, t_itemid na
 	}
 
 	for (i = 0; i < MAX_PRODUCE_RESOURCE; i++) {
-		short id, x, j;
+		short x, j;
+		t_itemid id;
 
 		if (!(id = skill_produce_db[idx].mat_id[i]) || !itemdb_exists(id))
 			continue;
@@ -22683,7 +22684,7 @@ uint64 ReadingSpellbookDatabase::parseBodyNode(const YAML::Node &node) {
  * @return Spell data or nullptr otherwise
  */
 std::shared_ptr<s_skill_spellbook_db> ReadingSpellbookDatabase::findBook(t_itemid nameid) {
-	if (nameid < 1 || !itemdb_exists(nameid) || reading_spellbook_db.size() == 0)
+	if (nameid == 0 || !itemdb_exists(nameid) || reading_spellbook_db.size() == 0)
 		return nullptr;
 
 	for (const auto &spell : reading_spellbook_db) {

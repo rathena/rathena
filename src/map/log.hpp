@@ -82,7 +82,7 @@ void log_feeding(struct map_session_data *sd, e_log_feeding_type type, t_itemid 
 
 /// old, but useful logs
 void log_branch(struct map_session_data* sd);
-void log_mvpdrop(struct map_session_data* sd, int monster_id, unsigned int* log_mvp);
+void log_mvpdrop(struct map_session_data* sd, int monster_id, t_itemid nameid, t_exp exp);
 
 int log_config_read(const char* cfgName);
 
