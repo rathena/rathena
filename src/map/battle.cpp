@@ -6119,7 +6119,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				s_ele = ELE_HOLY;
 			break;
 		case WL_HELLINFERNO:
-			if (mflag == ELE_DARK) {
+			if (mflag & ELE_DARK) {
 				s_ele = ELE_DARK;
 				ad.div_ = 3;
 			}
