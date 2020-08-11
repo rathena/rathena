@@ -6123,7 +6123,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				s_ele = ELE_HOLY;
 			break;
 		case WL_HELLINFERNO:
-			if (mflag == ELE_DARK) {
+			if (mflag & 2) { // ELE_DARK
 				s_ele = ELE_DARK;
 				ad.div_ = 3;
 			}
@@ -6494,7 +6494,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case WL_HELLINFERNO:
 						skillratio += -100 + 400 * skill_lv;
-						if (mflag == ELE_DARK)
+						if (mflag & 2) // ELE_DARK
 							skillratio += 200;
 						RE_LVL_DMOD(100);
 						break;
