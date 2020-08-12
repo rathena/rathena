@@ -1378,7 +1378,7 @@ ACMD_FUNC(item)
 	itemlist = strtok(item_name, ":");
 	while (itemlist != NULL && j<10) {
 		if ((item_data[j] = itemdb_searchname(itemlist)) == NULL &&
-		    (item_data[j] = itemdb_exists(atoi(itemlist))) == NULL){
+		    (item_data[j] = itemdb_exists( strtoul( itemlist, nullptr, 10 ) ) ) == NULL){
 			clif_displaymessage(fd, msg_txt(sd,19)); // Invalid item ID or name.
 			return -1;
 		}
@@ -1391,7 +1391,7 @@ ACMD_FUNC(item)
 	get_count = number;
 
 	for(j--; j>=0; j--){ //produce items in list
-		unsigned short item_id = item_data[j]->nameid;
+		t_itemid item_id = item_data[j]->nameid;
 		//Check if it's stackable.
 		if (!itemdb_isstackable2(item_data[j]))
 			get_count = 1;
@@ -1422,7 +1422,7 @@ ACMD_FUNC(item2)
 	struct item item_tmp;
 	struct item_data *item_data;
 	char item_name[100];
-	unsigned short item_id;
+	t_itemid item_id;
 	int number = 0, bound = BOUND_NONE;
 	int identify = 0, refine = 0, attr = 0;
 	int c1 = 0, c2 = 0, c3 = 0, c4 = 0;
@@ -1460,7 +1460,7 @@ ACMD_FUNC(item2)
 
 	item_id = 0;
 	if ((item_data = itemdb_searchname(item_name)) != NULL ||
-	    (item_data = itemdb_exists(atoi(item_name))) != NULL)
+	    (item_data = itemdb_exists(strtoul(item_name, nullptr, 10))) != NULL)
 		item_id = item_data->nameid;
 
 	if (item_id > 500) {
@@ -1521,7 +1521,7 @@ ACMD_FUNC(itemreset)
 	nullpo_retr(-1, sd);
 
 	for (i = 0; i < MAX_INVENTORY; i++) {
-		if (sd->inventory.u.items_inventory[i].amount && sd->inventory.u.items_inventory[i].equip == 0) {
+		if (sd->inventory.u.items_inventory[i].amount && sd->inventory.u.items_inventory[i].equip == 0 && !itemdb_ishatched_egg(&sd->inventory.u.items_inventory[i])) {
 			pc_delitem(sd, i, sd->inventory.u.items_inventory[i].amount, 0, 0, LOG_TYPE_COMMAND);
 		}
 	}
@@ -1830,7 +1830,7 @@ ACMD_FUNC(bodystyle)
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (!(sd->class_&JOBL_THIRD)) {
+	if (!(sd->class_ & JOBL_THIRD) || (sd->class_ & MAPID_THIRDMASK) == MAPID_SUPER_NOVICE_E || (sd->class_ & MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || (sd->class_ & MAPID_THIRDMASK) == MAPID_SOUL_REAPER) {
 		clif_displaymessage(fd, msg_txt(sd,740));	// This job has no alternate body styles.
 		return -1;
 	}
@@ -2373,7 +2373,7 @@ ACMD_FUNC(refine)
 ACMD_FUNC(produce)
 {
 	char item_name[100];
-	unsigned short item_id;
+	t_itemid item_id;
 	int attribute = 0, star = 0;
 	struct item_data *item_data;
 	struct item tmp_item;
@@ -2391,7 +2391,7 @@ ACMD_FUNC(produce)
 	}
 
 	if ( (item_data = itemdb_searchname(item_name)) == NULL &&
-		 (item_data = itemdb_exists(atoi(item_name))) == NULL ) {
+		 (item_data = itemdb_exists( strtoul( item_name, nullptr, 10 ) ) ) == NULL ) {
 		clif_displaymessage(fd, msg_txt(sd,170)); //This item is not an equipment.
 		return -1;
 	}
@@ -2419,7 +2419,7 @@ ACMD_FUNC(produce)
 		if ((flag = pc_additem(sd, &tmp_item, 1, LOG_TYPE_COMMAND)))
 			clif_additem(sd, 0, 0, flag);
 	} else {
-		sprintf(atcmd_output, msg_txt(sd,169), item_id, item_data->name); // The item (%hu: '%s') is not equipable.
+		sprintf(atcmd_output, msg_txt(sd,169), item_id, item_data->name); // The item (%u: '%s') is not equipable.
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
@@ -2827,10 +2827,9 @@ ACMD_FUNC(makeegg) {
 		return -1;
 	}
 
-	if ((item_data = itemdb_searchname(message)) != NULL) // for egg name
-		id = item_data->nameid;
-	else
-	if ((id = mobdb_searchname(message)) != 0) // for monster name
+
+	// for monster name
+	if ((id = mobdb_searchname(message)) != 0)
 		;
 	else
 		id = atoi(message);
@@ -2838,7 +2837,16 @@ ACMD_FUNC(makeegg) {
 	std::shared_ptr<s_pet_db> pet = pet_db.find(id);
 
 	if( pet == nullptr ){
-		pet = pet_db_search(id, PET_EGG);
+		t_itemid nameid;
+
+		// for egg name
+		if( ( item_data = itemdb_searchname( message ) ) != nullptr ){
+			nameid = item_data->nameid;
+		}else{
+			nameid = strtoul( message, nullptr, 10 );
+		}
+
+		pet = pet_db_search( nameid, PET_EGG );
 	}
 
 	if (pet != nullptr) {
@@ -3492,22 +3500,21 @@ ACMD_FUNC(spiritball)
 
 ACMD_FUNC(soulball)
 {
-	uint32 max_soulballs = min(ARRAYLENGTH(sd->soul_timer), 0x7FFF);
 	int number;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || (number = atoi(message)) < 0 || number > max_soulballs) {
+	if (!message || !*message || (number = atoi(message)) < 0 || number > MAX_SOUL_BALL) {
 		char msg[CHAT_SIZE_MAX];
-		safesnprintf(msg, sizeof(msg), "Usage: @soulball <number: 0-%d>", max_soulballs);
+
+		safesnprintf(msg, sizeof(msg), "Usage: @soulball <number: 0-%d>", MAX_SOUL_BALL);
 		clif_displaymessage(fd, msg);
 		return -1;
 	}
 
 	if (sd->soulball > 0)
-		pc_delsoulball(sd, sd->soulball, 1);
+		pc_delsoulball(sd, sd->soulball, true);
 	sd->soulball = number;
 	clif_soulball(sd);
-	// no message, player can see the difference
 
 	return 0;
 }
@@ -3724,7 +3731,7 @@ ACMD_FUNC(idsearch)
 		clif_displaymessage(fd, atcmd_output);
 	}
 	for(i = 0; i < match; i++) {
-		sprintf(atcmd_output, msg_txt(sd,78), item_array[i]->jname, item_array[i]->nameid); // %s: %d
+		sprintf(atcmd_output, msg_txt(sd,78), item_array[i]->jname, item_array[i]->nameid); // %s: %u
 		clif_displaymessage(fd, atcmd_output);
 	}
 	sprintf(atcmd_output, msg_txt(sd,79), match); // It is %d affair above.
@@ -4588,7 +4595,7 @@ ACMD_FUNC(repairall)
 
 	count = 0;
 	for (i = 0; i < MAX_INVENTORY; i++) {
-		if (sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].card[0] != CARD0_PET && sd->inventory.u.items_inventory[i].attribute == 1) {
+		if (sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].attribute == 1 && !itemdb_ishatched_egg(&sd->inventory.u.items_inventory[i])) {
 			sd->inventory.u.items_inventory[i].attribute = 0;
 			clif_produceeffect(sd, 0, sd->inventory.u.items_inventory[i].nameid);
 			count++;
@@ -4851,18 +4858,22 @@ ACMD_FUNC(servertime)
 			clif_displaymessage(fd, msg_txt(sd,232)); // Game time: The game is in permanent night.
 	} else if (battle_config.night_duration == 0)
 		if (night_flag == 1) { // we start with night
-			timer_data = get_timer(day_timer_tid);
-			sprintf(temp, msg_txt(sd,233), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in night for %s.
-			clif_displaymessage(fd, temp);
-			clif_displaymessage(fd, msg_txt(sd,234)); // Game time: After, the game will be in permanent daylight.
+			if ((timer_data = get_timer(day_timer_tid)) != nullptr) {
+				sprintf(temp, msg_txt(sd,233), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in night for %s.
+				clif_displaymessage(fd, temp);
+				clif_displaymessage(fd, msg_txt(sd,234)); // Game time: After, the game will be in permanent daylight.
+			} else
+				clif_displaymessage(fd, msg_txt(sd,232)); // Game time: The game is in permanent night.
 		} else
 			clif_displaymessage(fd, msg_txt(sd,231)); // Game time: The game is in permanent daylight.
 	else if (battle_config.day_duration == 0)
 		if (night_flag == 0) { // we start with day
-			timer_data = get_timer(night_timer_tid);
-			sprintf(temp, msg_txt(sd,235), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in daylight for %s.
-			clif_displaymessage(fd, temp);
-			clif_displaymessage(fd, msg_txt(sd,236)); // Game time: After, the game will be in permanent night.
+			if ((timer_data = get_timer(night_timer_tid)) != nullptr) {
+				sprintf(temp, msg_txt(sd,235), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in daylight for %s.
+				clif_displaymessage(fd, temp);
+				clif_displaymessage(fd, msg_txt(sd,236)); // Game time: After, the game will be in permanent night.
+			} else
+				clif_displaymessage(fd, msg_txt(sd,231)); // Game time: The game is in permanent daylight.
 		} else
 			clif_displaymessage(fd, msg_txt(sd,232)); // Game time: The game is in permanent night.
 	else {
@@ -5310,11 +5321,11 @@ ACMD_FUNC(exp)
 	nullpo_retr(-1, sd);
 	memset(output, '\0', sizeof(output));
 
-	nextb = pc_nextbaseexp(sd);
+	nextb = (double)pc_nextbaseexp(sd);
 	if (nextb)
 		nextb = sd->status.base_exp*100.0/nextb;
 
-	nextj = pc_nextjobexp(sd);
+	nextj = (double)pc_nextjobexp(sd);
 	if (nextj)
 		nextj = sd->status.job_exp*100.0/nextj;
 
@@ -5628,6 +5639,9 @@ ACMD_FUNC(dropall)
 			if( type == -1 || type == (uint8)item_data->type ) {
 				if( sd->inventory.u.items_inventory[i].equip != 0 )
 					pc_unequipitem(sd, i, 3);
+				if( itemdb_ishatched_egg( &sd->inventory.u.items_inventory[i] ) ){
+					pet_return_egg( sd, sd->pd );
+				}
 				pc_equipswitch_remove(sd, i);
 
 				int amount = sd->inventory.u.items_inventory[i].amount;
@@ -5664,6 +5678,9 @@ ACMD_FUNC(storeall)
 		if (sd->inventory.u.items_inventory[i].amount) {
 			if(sd->inventory.u.items_inventory[i].equip != 0)
 				pc_unequipitem(sd, i, 3);
+			if( itemdb_ishatched_egg( &sd->inventory.u.items_inventory[i] ) ){
+				pet_return_egg( sd, sd->pd );
+			}
 			pc_equipswitch_remove(sd, i);
 			storage_storageadd(sd, &sd->storage, i, sd->inventory.u.items_inventory[i].amount);
 		}
@@ -5835,6 +5852,14 @@ ACMD_FUNC(useskill)
 		return -1;
 	}
 
+	if (!skill_id || !skill_db.find(skill_id)) {
+		clif_displaymessage(fd, msg_txt(sd, 198)); // This skill number doesn't exist.
+		return -1;
+	}
+
+	if (!skill_lv)
+		skill_lv = 1;
+
 	if(!strcmp(atcmd_player_name,"self"))
 		pl_sd = sd; //quick keyword
 	else if ( (pl_sd = map_nick2sd(atcmd_player_name,true)) == NULL ){
@@ -5950,14 +5975,14 @@ ACMD_FUNC(skilltree)
 void getring (struct map_session_data* sd)
 {
 	char flag = 0;
-	unsigned short item_id;
+	t_itemid item_id;
 	struct item item_tmp;
 	item_id = (sd->status.sex) ? WEDDING_RING_M : WEDDING_RING_F;
 
 	memset(&item_tmp, 0, sizeof(item_tmp));
 	item_tmp.nameid = item_id;
 	item_tmp.identify = 1;
-	item_tmp.card[0] = 255;
+	item_tmp.card[0] = CARD0_FORGE;
 	item_tmp.card[2] = sd->status.partner_id;
 	item_tmp.card[3] = sd->status.partner_id >> 16;
 
@@ -6089,6 +6114,9 @@ ACMD_FUNC(autotrade) {
 		status_change_start(NULL,&sd->bl, SC_AUTOTRADE, 10000, 0, 0, 0, 0, ((timeout > 0) ? min(timeout,battle_config.at_timeout) : battle_config.at_timeout) * 60000, SCSTART_NONE);
 	}
 
+	if (battle_config.at_logout_event)
+		npc_script_event(sd, NPCE_LOGOUT); //Logout Event
+
 	channel_pcquit(sd,0xF); //leave all chan
 	clif_authfail_fd(sd->fd, 15);
 
@@ -6126,6 +6154,24 @@ ACMD_FUNC(changegm)
 
 	if((pl_sd=map_nick2sd(atcmd_player_name,false)) == NULL || pl_sd->status.guild_id != sd->status.guild_id) {
 		clif_displaymessage(fd, msg_txt(sd,1184)); // Target character must be online and be a guild member.
+		return -1;
+	}
+
+	if( !battle_config.guild_leaderchange_woe && is_agit_start() ){
+#if PACKETVER >= 20151001
+		clif_msg(sd, GUILD_MASTER_WOE);
+#else
+		clif_displaymessage(fd, msg_txt(sd,1513)); // Currently in WoE hours, unable to delegate Guild leader
+#endif
+		return -1;
+	}
+
+	if( battle_config.guild_leaderchange_delay && DIFF_TICK(time(NULL),sd->guild->last_leader_change) < battle_config.guild_leaderchange_delay ){
+#if PACKETVER >= 20151001
+		clif_msg(sd, GUILD_MASTER_DELAY);
+#else
+		clif_displaymessage(fd, msg_txt(sd,1514)); // You have to wait for a while before delegating a new Guild leader
+#endif
 		return -1;
 	}
 
@@ -6255,7 +6301,7 @@ ACMD_FUNC(autolootitem)
 
 	if (action < 3) // add or remove
 	{
-		if ((item_data = itemdb_exists(atoi(message))) == NULL)
+		if ((item_data = itemdb_exists(strtoul(message, nullptr, 10))) == nullptr)
 			item_data = itemdb_searchname(message);
 		if (!item_data) {
 			// No items founds in the DB with Id or Name
@@ -6277,7 +6323,7 @@ ACMD_FUNC(autolootitem)
 			return -1;
 		}
 		sd->state.autolootid[i] = item_data->nameid; // Autoloot Activated
-		sprintf(atcmd_output, msg_txt(sd,1192), item_data->name, item_data->jname, item_data->nameid); // Autolooting item: '%s'/'%s' {%d}
+		sprintf(atcmd_output, msg_txt(sd,1192), item_data->name, item_data->jname, item_data->nameid); // Autolooting item: '%s'/'%s' {%u}
 		clif_displaymessage(fd, atcmd_output);
 		sd->state.autolooting = 1;
 		break;
@@ -6288,7 +6334,7 @@ ACMD_FUNC(autolootitem)
 			return -1;
 		}
 		sd->state.autolootid[i] = 0;
-		sprintf(atcmd_output, msg_txt(sd,1194), item_data->name, item_data->jname, item_data->nameid); // Removed item: '%s'/'%s' {%d} from your autolootitem list.
+		sprintf(atcmd_output, msg_txt(sd,1194), item_data->name, item_data->jname, item_data->nameid); // Removed item: '%s'/'%s' {%u} from your autolootitem list.
 		clif_displaymessage(fd, atcmd_output);
 		ARR_FIND(0, AUTOLOOTITEM_SIZE, i, sd->state.autolootid[i] != 0);
 		if (i == AUTOLOOTITEM_SIZE) {
@@ -6313,7 +6359,7 @@ ACMD_FUNC(autolootitem)
 					ShowDebug("Non-existant item %d on autolootitem list (account_id: %d, char_id: %d)", sd->state.autolootid[i], sd->status.account_id, sd->status.char_id);
 					continue;
 				}
-				sprintf(atcmd_output, "'%s'/'%s' {%hu}", item_data->name, item_data->jname, item_data->nameid);
+				sprintf(atcmd_output, "'%s'/'%s' {%u}", item_data->name, item_data->jname, item_data->nameid);
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}
@@ -6396,7 +6442,7 @@ ACMD_FUNC(autoloottype)
 				return -1;
 			}
 			sd->state.autoloottype |= (1<<type); // Stores the type
-			sprintf(atcmd_output, msg_txt(sd,1483), itemdb_typename(type), type); // Autolooting item type: '%s' {%d}
+			sprintf(atcmd_output, msg_txt(sd,1483), itemdb_typename(type), type); // Autolooting item type: '%s' {%u}
 			clif_displaymessage(fd, atcmd_output);
 			break;
 		case 2:
@@ -6405,7 +6451,7 @@ ACMD_FUNC(autoloottype)
 				return -1;
 			}
 			sd->state.autoloottype &= ~(1<<type);
-			sprintf(atcmd_output, msg_txt(sd,1485), itemdb_typename(type), type); // Removed item type: '%s' {%d} from your autoloottype list.
+			sprintf(atcmd_output, msg_txt(sd,1485), itemdb_typename(type), type); // Removed item type: '%s' {%u} from your autoloottype list.
 			clif_displaymessage(fd, atcmd_output);
 			break;
 		case 3:
@@ -7353,7 +7399,7 @@ ACMD_FUNC(mobinfo)
 		j = 0;
 		for (i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
 			int droprate;
-			if (mob->dropitem[i].nameid <= 0 || mob->dropitem[i].p < 1 || (item_data = itemdb_exists(mob->dropitem[i].nameid)) == NULL)
+			if (mob->dropitem[i].nameid == 0 || mob->dropitem[i].p < 1 || (item_data = itemdb_exists(mob->dropitem[i].nameid)) == NULL)
 				continue;
 			droprate = mob->dropitem[i].p;
 
@@ -7389,7 +7435,7 @@ ACMD_FUNC(mobinfo)
 			mvpremain = 100.0; //Remaining drop chance for official mvp drop mode
 			j = 0;
 			for (i = 0; i < MAX_MVP_DROP_TOTAL; i++) {
-				if (mob->mvpitem[i].nameid <= 0 || (item_data = itemdb_exists(mob->mvpitem[i].nameid)) == NULL)
+				if (mob->mvpitem[i].nameid == 0 || (item_data = itemdb_exists(mob->mvpitem[i].nameid)) == NULL)
 					continue;
 				//Because if there are 3 MVP drops at 50%, the first has a chance of 50%, the second 25% and the third 12.5%
 				mvppercent = (float)mob->mvpitem[i].p * mvpremain / 10000.0f;
@@ -7817,7 +7863,7 @@ ACMD_FUNC(iteminfo)
 		clif_displaymessage(fd, msg_txt(sd,1276)); // Please enter an item name/ID (usage: @ii/@iteminfo <item name/ID>).
 		return -1;
 	}
-	if ((item_array[0] = itemdb_exists(atoi(message))) == NULL)
+	if ((item_array[0] = itemdb_exists(strtoul(message, nullptr, 10))) == nullptr)
 		count = itemdb_searchname_array(item_array, MAX_SEARCH, message);
 
 	if (!count) {
@@ -7831,7 +7877,7 @@ ACMD_FUNC(iteminfo)
 	}
 	for (i = 0; i < count; i++) {
 		struct item_data * item_data = item_array[i];
-		sprintf(atcmd_output, msg_txt(sd,1277), // Item: '%s'/'%s'[%d] (%hu) Type: %s | Extra Effect: %s
+		sprintf(atcmd_output, msg_txt(sd,1277), // Item: '%s'/'%s'[%d] (%u) Type: %s | Extra Effect: %s
 			item_data->name,item_data->jname,item_data->slot,item_data->nameid,
 			(item_data->type != IT_AMMO) ? itemdb_typename((enum item_types)item_data->type) : itemdb_typename_ammo((enum e_item_ammo)item_data->look),
 			(item_data->script==NULL)? msg_txt(sd,1278) : msg_txt(sd,1279) // None / With script
@@ -7868,7 +7914,7 @@ ACMD_FUNC(whodrops)
 		clif_displaymessage(fd, msg_txt(sd,1284)); // Please enter item name/ID (usage: @whodrops <item name/ID>).
 		return -1;
 	}
-	if ((item_array[0] = itemdb_exists(atoi(message))) == NULL)
+	if ((item_array[0] = itemdb_exists(strtoul(message, nullptr, 10))) == nullptr)
 		count = itemdb_searchname_array(item_array, MAX_SEARCH, message);
 
 	if (!count) {
@@ -7882,7 +7928,7 @@ ACMD_FUNC(whodrops)
 	}
 	for (i = 0; i < count; i++) {
 		item_data = item_array[i];
-		sprintf(atcmd_output, msg_txt(sd,1285), item_data->jname, item_data->slot, item_data->nameid); // Item: '%s'[%d] (ID:%hu)
+		sprintf(atcmd_output, msg_txt(sd,1285), item_data->jname, item_data->slot, item_data->nameid); // Item: '%s'[%d] (ID: %u)
 		clif_displaymessage(fd, atcmd_output);
 
 		if (item_data->mob[0].chance == 0) {
@@ -8848,9 +8894,9 @@ ACMD_FUNC(itemlist)
 		}
 
 		if( it->refine )
-			StringBuf_Printf(&buf, "%d %s %+d (%s, id: %d)", it->amount, itd->jname, it->refine, itd->name, it->nameid);
+			StringBuf_Printf(&buf, "%d %s %+d (%s, id: %u)", it->amount, itd->jname, it->refine, itd->name, it->nameid);
 		else
-			StringBuf_Printf(&buf, "%d %s (%s, id: %d)", it->amount, itd->jname, itd->name, it->nameid);
+			StringBuf_Printf(&buf, "%d %s (%s, id: %u)", it->amount, itd->jname, itd->name, it->nameid);
 
 		if( it->equip ) {
 			char equipstr[CHAT_SIZE_MAX];
@@ -8925,7 +8971,7 @@ ACMD_FUNC(itemlist)
 		StringBuf_Clear(&buf);
 
 		if( it->card[0] == CARD0_PET ) { // pet egg
-			if (it->card[3])
+			if (it->card[3]&1)
 				StringBuf_Printf(&buf, msg_txt(sd,1348), (unsigned int)MakeDWord(it->card[1], it->card[2])); //  -> (pet egg, pet id: %u, named)
 			else
 				StringBuf_Printf(&buf, msg_txt(sd,1349), (unsigned int)MakeDWord(it->card[1], it->card[2])); //  -> (pet egg, pet id: %u, unnamed)
@@ -8950,7 +8996,7 @@ ACMD_FUNC(itemlist)
 				if( counter2 != 1 )
 					StringBuf_AppendStr(&buf, ", ");
 
-				StringBuf_Printf(&buf, "#%d %s (id: %d)", counter2, card->jname, card->nameid);
+				StringBuf_Printf(&buf, "#%d %s (id: %u)", counter2, card->jname, card->nameid);
 			}
 
 			if( counter2 > 0 )
@@ -9041,7 +9087,7 @@ ACMD_FUNC(stats)
 ACMD_FUNC(delitem)
 {
 	char item_name[100];
-	unsigned short nameid;
+	t_itemid nameid;
 	int amount = 0, total, idx;
 	struct item_data* id;
 
@@ -9053,7 +9099,7 @@ ACMD_FUNC(delitem)
 		return -1;
 	}
 
-	if( ( id = itemdb_searchname(item_name) ) != NULL || ( id = itemdb_exists(atoi(item_name)) ) != NULL )
+	if( ( id = itemdb_searchname(item_name) ) != NULL || ( id = itemdb_exists( strtoul( item_name, nullptr, 10 ) ) ) != NULL )
 	{
 		nameid = id->nameid;
 	}
@@ -10728,6 +10774,8 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 	if (battle_config.idletime_option&IDLE_ATCOMMAND)
 		sd->idletime = last_tick;
+	if (battle_config.hom_idle_no_share && sd->hd && battle_config.idletime_hom_option&IDLE_ATCOMMAND)
+		sd->idletime_hom = last_tick;
 
 	//Clearing these to be used once more.
 	memset(command, '\0', sizeof(command));
