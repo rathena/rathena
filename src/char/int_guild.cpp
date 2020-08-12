@@ -19,6 +19,8 @@
 #include "char_mapif.hpp"
 #include "inter.hpp"
 
+using namespace rathena;
+
 #define GS_MEMBER_UNMODIFIED 0x00
 #define GS_MEMBER_MODIFIED 0x01
 #define GS_MEMBER_NEW 0x02
@@ -36,7 +38,7 @@ static const char dataToHex[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9
 static DBMap* guild_db_; // int guild_id -> struct guild*
 static DBMap *castle_db;
 
-static unsigned int guild_exp[100];
+static t_exp guild_exp[MAX_GUILDLEVEL];
 
 int mapif_parse_GuildLeave(int fd,int guild_id,uint32 account_id,uint32 char_id,int flag,const char *mes);
 int mapif_guild_broken(int guild_id,int flag);
@@ -90,9 +92,9 @@ TIMER_FUNC(guild_save_timer){
 	return 0;
 }
 
-int inter_guild_removemember_tosql(uint32 account_id, uint32 char_id)
+int inter_guild_removemember_tosql(uint32 char_id)
 {
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE from `%s` where `account_id` = '%d' and `char_id` = '%d'", schema_config.guild_member_db, account_id, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE from `%s` where `char_id` = '%d'", schema_config.guild_member_db, char_id) )
 		Sql_ShowDebug(sql_handle);
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `guild_id` = '0' WHERE `char_id` = '%d'", schema_config.char_db, char_id) )
 		Sql_ShowDebug(sql_handle);
@@ -109,7 +111,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 	// GS_LEVEL `guild_lv`,`max_member`,`exp`,`next_exp`,`skill_point`
 	// GS_BASIC `name`,`master`,`char_id`
 
-	// GS_MEMBER `guild_member` (`guild_id`,`account_id`,`char_id`,`hair`,`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`name`)
+	// GS_MEMBER `guild_member` (`guild_id`,`char_id`,`exp`,`position`)
 	// GS_POSITION `guild_position` (`guild_id`,`position`,`name`,`mode`,`exp_mode`)
 	// GS_ALLIANCE `guild_alliance` (`guild_id`,`opposition`,`alliance_id`,`name`)
 	// GS_EXPULSION `guild_expulsion` (`guild_id`,`account_id`,`name`,`mes`)
@@ -221,7 +223,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 				StringBuf_AppendStr(&buf, ", ");
 			//else	//last condition using add_coma setting
 			//	add_comma = true;
-			StringBuf_Printf(&buf, "`guild_lv`=%d, `skill_point`=%d, `exp`=%" PRIu64 ", `next_exp`=%u, `max_member`=%d", g->guild_lv, g->skill_point, g->exp, g->next_exp, g->max_member);
+			StringBuf_Printf(&buf, "`guild_lv`=%d, `skill_point`=%d, `exp`=%" PRIu64 ", `next_exp`=%" PRIu64 ", `max_member`=%d", g->guild_lv, g->skill_point, g->exp, g->next_exp, g->max_member);
 		}
 		StringBuf_Printf(&buf, " WHERE `guild_id`=%d", g->guild_id);
 		if( SQL_ERROR == Sql_Query(sql_handle, "%s", StringBuf_Value(&buf)) )
@@ -239,12 +241,9 @@ int inter_guild_tosql(struct guild *g,int flag)
 				continue;
 			if(m->account_id) {
 				//Since nothing references guild member table as foreign keys, it's safe to use REPLACE INTO
-				Sql_EscapeStringLen(sql_handle, esc_name, m->name, strnlen(m->name, NAME_LENGTH));
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`guild_id`,`account_id`,`char_id`,`hair`,`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`name`) "
-					"VALUES ('%d','%d','%d','%d','%d','%d','%d','%d','%" PRIu64 "','%d','%d','%d','%s')",
-					schema_config.guild_member_db, g->guild_id, m->account_id, m->char_id,
-					m->hair, m->hair_color, m->gender,
-					m->class_, m->lv, m->exp, m->exp_payper, m->online, m->position, esc_name) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`guild_id`,`char_id`,`exp`,`position`) "
+					"VALUES ('%d','%d','%" PRIu64 "','%d')",
+					schema_config.guild_member_db, g->guild_id, m->char_id, m->exp, m->position ) )
 					Sql_ShowDebug(sql_handle);
 				if (m->modified&GS_MEMBER_NEW || new_guild == 1)
 				{
@@ -380,7 +379,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	}
 	Sql_GetData(sql_handle,  5, &data, NULL); g->average_lv = atoi(data);
 	Sql_GetData(sql_handle,  6, &data, NULL); g->exp = strtoull(data, NULL, 10);
-	Sql_GetData(sql_handle,  7, &data, NULL); g->next_exp = (unsigned int)strtoul(data, NULL, 10);
+	Sql_GetData(sql_handle,  7, &data, NULL); g->next_exp = strtoull(data, nullptr, 10);
 	Sql_GetData(sql_handle,  8, &data, NULL); g->skill_point = atoi(data);
 	Sql_GetData(sql_handle,  9, &data, &len); memcpy(g->mes1, data, zmin(len, sizeof(g->mes1)));
 	Sql_GetData(sql_handle, 10, &data, &len); memcpy(g->mes2, data, zmin(len, sizeof(g->mes2)));
@@ -411,7 +410,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 	}
 
 	// load guild member info
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `m`.`account_id`,`m`.`char_id`,`m`.`hair`,`m`.`hair_color`,`m`.`gender`,`m`.`class`,`m`.`lv`,`m`.`exp`,`m`.`exp_payper`,`m`.`online`,`m`.`position`,`m`.`name`,coalesce(UNIX_TIMESTAMP(`c`.`last_login`),0) "
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `c`.`account_id`,`m`.`char_id`,`c`.`hair`,`c`.`hair_color`,`c`.`sex`,`c`.`class`,`c`.`base_level`,`m`.`exp`,`c`.`online`,`m`.`position`,`c`.`name`,coalesce(UNIX_TIMESTAMP(`c`.`last_login`),0) "
 		"FROM `%s` `m` INNER JOIN `%s` `c` on `c`.`char_id`=`m`.`char_id` WHERE `m`.`guild_id`='%d' ORDER BY `position`", schema_config.guild_member_db, schema_config.char_db, guild_id) )
 	{
 		Sql_ShowDebug(sql_handle);
@@ -426,17 +425,28 @@ struct guild * inter_guild_fromsql(int guild_id)
 		Sql_GetData(sql_handle,  1, &data, NULL); m->char_id = atoi(data);
 		Sql_GetData(sql_handle,  2, &data, NULL); m->hair = atoi(data);
 		Sql_GetData(sql_handle,  3, &data, NULL); m->hair_color = atoi(data);
-		Sql_GetData(sql_handle,  4, &data, NULL); m->gender = atoi(data);
+		Sql_GetData(sql_handle,  4, &data, NULL);
+		switch( *data ){
+			case 'F':
+				m->gender = SEX_FEMALE;
+				break;
+			case 'M':
+				m->gender = SEX_MALE;
+				break;
+			default:
+				ShowWarning( "inter_guild_fromsql: Unsupported gender %c for char_id %u. Defaulting to male...\n", *data, m->char_id );
+				m->gender = SEX_MALE;
+				break;
+		}
 		Sql_GetData(sql_handle,  5, &data, NULL); m->class_ = atoi(data);
 		Sql_GetData(sql_handle,  6, &data, NULL); m->lv = atoi(data);
 		Sql_GetData(sql_handle,  7, &data, NULL); m->exp = strtoull(data, NULL, 10);
-		Sql_GetData(sql_handle,  8, &data, NULL); m->exp_payper = (unsigned int)atoi(data);
-		Sql_GetData(sql_handle,  9, &data, NULL); m->online = atoi(data);
-		Sql_GetData(sql_handle, 10, &data, NULL); m->position = atoi(data);
+		Sql_GetData(sql_handle,  8, &data, NULL); m->online = atoi(data);
+		Sql_GetData(sql_handle,  9, &data, NULL); m->position = atoi(data);
 		if( m->position >= MAX_GUILDPOSITION ) // Fix reduction of MAX_GUILDPOSITION [PoW]
 			m->position = MAX_GUILDPOSITION - 1;
-		Sql_GetData(sql_handle, 11, &data, &len); memcpy(m->name, data, zmin(len, NAME_LENGTH));
-		Sql_GetData(sql_handle, 12, &data, NULL); m->last_login = atoi(data);
+		Sql_GetData(sql_handle, 10, &data, &len); memcpy(m->name, data, zmin(len, NAME_LENGTH));
+		Sql_GetData(sql_handle, 11, &data, NULL); m->last_login = atoi(data);
 		m->modified = GS_MEMBER_UNMODIFIED;
 	}
 
@@ -630,10 +640,10 @@ struct guild_castle* inter_guildcastle_fromsql(int castle_id)
 // Read exp_guild.txt
 bool exp_guild_parse_row(char* split[], int column, int current)
 {
-	unsigned int exp = (unsigned int)atol(split[0]);
+	t_exp exp = strtoull(split[0], nullptr, 10);
 
-	if (exp >= UINT_MAX) {
-		ShowError("exp_guild: Invalid exp %d at line %d\n", exp, current);
+	if (exp > MAX_GUILD_EXP) {
+		ShowError("exp_guild: Invalid exp %" PRIu64 " at line %d, exceeds max of %" PRIu64 "\n", exp, current, MAX_GUILD_EXP);
 		return false;
 	}
 
@@ -750,7 +760,7 @@ int inter_guild_CharOffline(uint32 char_id, int guild_id)
 // Initialize guild sql
 int inter_guild_sql_init(void)
 {
-	const char *filename[]={ DBPATH"exp_guild.txt","import/exp_guild.txt"};
+	const char *filename[]={ DBPATH"exp_guild.txt", DBIMPORT"/exp_guild.txt"};
 	int i;
 	//Initialize the guild cache
 	guild_db_= idb_alloc(DB_OPT_RELEASE_DATA);
@@ -758,7 +768,7 @@ int inter_guild_sql_init(void)
 
 	//Read exp file
 	for(i = 0; i<ARRAYLENGTH(filename); i++){
-		sv_readdb(db_path, filename[i], ',', 1, 1, 100, exp_guild_parse_row, i > 0);
+		sv_readdb(db_path, filename[i], ',', 1, 1, MAX_GUILDLEVEL, exp_guild_parse_row, i > 0);
 	}
 
 	add_timer_func_list(guild_save_timer, "guild_save_timer");
@@ -825,11 +835,14 @@ bool guild_check_empty(struct guild *g)
 	return i < g->max_member ? false : true; // not empty
 }
 
-unsigned int guild_nextexp(int level)
+t_exp guild_nextexp(int level)
 {
 	if (level == 0)
 		return 1;
-	return level < 100 && level > 0 ? guild_exp[level-1] : 0;
+	if (level < 0 || level > MAX_GUILDLEVEL)
+		return 0;
+
+	return guild_exp[level-1];
 }
 
 int guild_checkskill(struct guild *g,int id)
@@ -841,7 +854,7 @@ int guild_checkskill(struct guild *g,int id)
 int guild_calcinfo(struct guild *g)
 {
 	int i,c;
-	unsigned int nextexp;
+	t_exp nextexp;
 	struct guild before = *g; // Save guild current values
 
 	if(g->guild_lv<=0)
@@ -867,7 +880,7 @@ int guild_calcinfo(struct guild *g)
 		g->max_member = MAX_GUILD;
 	}
 
-	// Compute the guild average level level
+	// Compute the guild average level
 	g->average_lv=0;
 	g->connect_member=0;
 	for(i=c=0;i<g->max_member;i++)
@@ -1119,6 +1132,18 @@ int mapif_guild_emblem(struct guild *g)
 	return 0;
 }
 
+// Send the guild emblem_id (version)
+int mapif_guild_emblem_version(guild* g)
+{
+	unsigned char buf[10];
+	WBUFW(buf, 0) = 0x3841;
+	WBUFL(buf, 2) = g->guild_id;
+	WBUFL(buf, 6) = g->emblem_id;
+	chmapif_sendall(buf, 10);
+
+	return 0;
+}
+
 int mapif_guild_master_changed(struct guild *g, int aid, int cid, time_t time)
 {
 	unsigned char buf[18];
@@ -1324,7 +1349,7 @@ int mapif_parse_GuildLeave(int fd, int guild_id, uint32 account_id, uint32 char_
 	}
 
 	mapif_guild_withdraw(guild_id,account_id,char_id,flag,g->member[i].name,mes);
-	inter_guild_removemember_tosql(g->member[i].account_id,g->member[i].char_id);
+	inter_guild_removemember_tosql(g->member[i].char_id);
 
 	memset(&g->member[i],0,sizeof(struct guild_member));
 
@@ -1451,23 +1476,22 @@ int mapif_parse_GuildMessage(int fd,int guild_id,uint32 account_id,char *mes,int
 // Modification of the guild
 int mapif_parse_GuildBasicInfoChange(int fd,int guild_id,int type,const char *data,int len)
 {
-	struct guild * g;
-	short dw=*((short *)data);
-	g = inter_guild_fromsql(guild_id);
-	if(g==NULL)
+	struct guild *g = inter_guild_fromsql(guild_id);
+
+	if (!g)
 		return 0;
 
-	switch(type)
-	{
+	short data_value = *((short *)data);
+
+	switch(type) {
 		case GBI_GUILDLV:
-			if(dw>0 && g->guild_lv+dw<=50)
-			{
-				g->guild_lv+=dw;
-				g->skill_point+=dw;
-			}
-			else if(dw<0 && g->guild_lv+dw>=1)
-				g->guild_lv+=dw;
-			mapif_guild_info(-1,g);
+			if (data_value > 0 && g->guild_lv + data_value <= MAX_GUILDLEVEL) {
+				g->guild_lv += data_value;
+				g->skill_point += data_value;
+			} else if (data_value < 0 && g->guild_lv + data_value >= 1)
+				g->guild_lv += data_value;
+
+			mapif_guild_info(-1, g);
 			g->save_flag |= GS_LEVEL;
 			return 0;
 		default:
@@ -1524,22 +1548,19 @@ int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,uint32 account_id,uint
 		  }
 		case GMI_EXP:
 		{	// EXP
-			uint64 old_exp=g->member[i].exp;
-			g->member[i].exp=*((uint64 *)data);
+			t_exp old_exp=g->member[i].exp;
+			g->member[i].exp=*((t_exp *)data);
 			g->member[i].modified = GS_MEMBER_MODIFIED;
 			if (g->member[i].exp > old_exp)
 			{
-				uint64 exp = g->member[i].exp - old_exp;
+				t_exp exp = g->member[i].exp - old_exp;
 
 				// Compute gained exp
 				if (charserv_config.guild_exp_rate != 100)
 					exp = exp*(charserv_config.guild_exp_rate)/100;
 
 				// Update guild exp
-				if (exp > UINT64_MAX - g->exp)
-					g->exp = UINT64_MAX;
-				else
-					g->exp+=exp;
+				g->exp = util::safe_addition_cap(g->exp, exp, MAX_GUILD_EXP);
 
 				guild_calcinfo(g);
 				mapif_guild_basicinfochanged(guild_id,GBI_EXP,&g->exp,sizeof(g->exp));
@@ -1874,6 +1895,22 @@ int mapif_parse_GuildMasterChange(int fd, int guild_id, const char* name, int le
 	return mapif_guild_master_changed(g, g->member[0].account_id, g->member[0].char_id, g->last_leader_change);
 }
 
+int mapif_parse_GuildEmblemVersion(int fd, int guild_id, int version)
+{
+	guild* g = inter_guild_fromsql(guild_id);
+
+	if (g == nullptr)
+		return 0;
+
+	g->emblem_len = 0;
+	g->emblem_id = version;
+	g->save_flag |= GS_EMBLEM;
+
+	mapif_guild_emblem_version(g);
+
+	return 1;
+}
+
 // Communication from the map server
 // - Can analyzed only one by one packet
 // Data packet length that you set to inter.cpp
@@ -1902,6 +1939,7 @@ int inter_guild_parse_frommap(int fd)
 	case 0x303F: mapif_parse_GuildEmblem(fd,RFIFOW(fd,2)-12,RFIFOL(fd,4),RFIFOL(fd,8),RFIFOCP(fd,12)); break;
 	case 0x3040: mapif_parse_GuildCastleDataLoad(fd,RFIFOW(fd,2),(int *)RFIFOP(fd,4)); break;
 	case 0x3041: mapif_parse_GuildCastleDataSave(fd,RFIFOW(fd,2),RFIFOB(fd,4),RFIFOL(fd,5)); break;
+	case 0x3042: mapif_parse_GuildEmblemVersion(fd, RFIFOL(fd, 2), RFIFOL(fd, 6)); break;
 
 	default:
 		return 0;

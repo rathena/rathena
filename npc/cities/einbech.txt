@@ -258,7 +258,7 @@ einbech,151,168,3	script	Tollaf#ein	855,{
 	mes "live so much better than we";
 	mes "do, especially those snobs in";
 	mes "Einbroch! Einbech must be the";
-	mes "worst town Schwaltzvalt Republic. No, it's the worst in the world!";
+	mes "worst town Schwarzwald Republic. No, it's the worst in the world!";
 	close;
 }
 

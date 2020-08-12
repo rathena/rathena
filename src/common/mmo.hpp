@@ -33,6 +33,12 @@
 	#define MAX_HOTKEYS 38
 #endif
 
+#if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190508 || PACKETVER_ZERO_NUM >= 20190605
+	#define MAX_HOTKEYS_DB ((MAX_HOTKEYS) * 2)
+#else
+	#define MAX_HOTKEYS_DB MAX_HOTKEYS
+#endif
+
 #define MAX_MAP_PER_SERVER 1500 /// Maximum amount of maps available on a server
 #define MAX_INVENTORY 100 ///Maximum items in player inventory
 /** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
@@ -46,6 +52,9 @@
 		#define MAX_CHARS 9
 	#endif
 #endif
+
+typedef uint32 t_itemid;
+
 /** Number of slots carded equipment can have. Never set to less than 4 as they are also used to keep the data of forged items/equipment. [Skotlex]
 * Note: The client seems unable to receive data for more than 4 slots due to all related packets having a fixed size. */
 #define MAX_SLOTS 4
@@ -69,7 +78,6 @@
 #define MAX_GUILDLEVEL 50 ///Max Guild level
 #define MAX_GUARDIANS 8	///Local max per castle. If this value is increased, need to add more fields on MySQL `guild_castle` table [Skotlex]
 #define MAX_QUEST_OBJECTIVES 3 ///Max quest objectives for a quest
-#define MAX_QUEST_DROPS 3 ///Max quest drops for a quest
 #define MAX_PC_BONUS_SCRIPT 50 ///Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 #define MAX_ITEM_RDM_OPT 5	 /// Max item random option [Napster]
 #define DB_NAME_LEN 256 //max len of dbs
@@ -85,8 +93,8 @@
 
 #define MAX_STATUS_TYPE 5
 
-#define WEDDING_RING_M 2634
-#define WEDDING_RING_F 2635
+const t_itemid WEDDING_RING_M = 2634;
+const t_itemid WEDDING_RING_F = 2635;
 
 //For character names, title names, guilds, maps, etc.
 //Includes null-terminator as it is the length of the array.
@@ -152,7 +160,6 @@
 #define EL_CLASS_MAX (EL_CLASS_BASE+MAX_ELEMENTAL_CLASS-1)
 
 //Achievement System
-#define MAX_ACHIEVEMENT_RANK 20 /// Maximum achievement level
 #define MAX_ACHIEVEMENT_OBJECTIVES 10 /// Maximum different objectives in achievement_db.yml
 #define MAX_ACHIEVEMENT_DEPENDENTS 20 /// Maximum different dependents in achievement_db.yml
 #define ACHIEVEMENT_NAME_LENGTH 50 /// Max Achievement Name length
@@ -213,7 +220,7 @@ enum e_mode {
 #define CL_MASK 0xF000000
 
 // Questlog states
-enum quest_state {
+enum e_quest_state : uint8 {
 	Q_INACTIVE, ///< Inactive quest (the user can toggle between active and inactive quests)
 	Q_ACTIVE,   ///< Active quest
 	Q_COMPLETE, ///< Completed quest
@@ -222,9 +229,9 @@ enum quest_state {
 /// Questlog entry
 struct quest {
 	int quest_id;                    ///< Quest ID
-	unsigned int time;               ///< Expiration time
+	uint32 time;                     ///< Expiration time
 	int count[MAX_QUEST_OBJECTIVES]; ///< Kill counters of each quest objective
-	enum quest_state state;          ///< Current quest state
+	e_quest_state state;             ///< Current quest state
 };
 
 struct s_item_randomoption {
@@ -244,13 +251,13 @@ struct achievement {
 
 struct item {
 	int id;
-	unsigned short nameid;
+	t_itemid nameid;
 	short amount;
 	unsigned int equip; // location(s) where item is equipped (using enum equip_pos for bitmasking)
 	char identify;
 	char refine;
 	char attribute;
-	unsigned short card[MAX_SLOTS];
+	t_itemid card[MAX_SLOTS];
 	struct s_item_randomoption option[MAX_ITEM_RDM_OPT];		// max of 5 random options can be supported.
 	unsigned int expire_time;
 	char favorite, bound;
@@ -294,8 +301,9 @@ struct point {
 };
 
 struct startitem {
-	unsigned short nameid, amount;
-	short pos;
+	t_itemid nameid;
+	unsigned short amount;
+	uint32 pos;
 };
 
 enum e_skill_flag
@@ -323,7 +331,7 @@ struct script_reg_state {
 
 struct script_reg_num {
 	struct script_reg_state flag;
-	int value;
+	int64 value;
 };
 
 struct script_reg_str {
@@ -379,7 +387,7 @@ struct s_storage {
 		unsigned get : 1;
 		unsigned put : 1;
 	} state;
-	union { // Max for inventory, storage, cart, and guild storage are 1637 each without changing this struct and struct item [2014/10/27]
+	union { // Max for inventory, storage, cart, and guild storage are 818 each without changing this struct and struct item [2016/08/14]
 		struct item items_inventory[MAX_INVENTORY];
 		struct item items_storage[MAX_STORAGE];
 		struct item items_cart[MAX_CART];
@@ -400,13 +408,14 @@ struct s_pet {
 	int pet_id;
 	short class_;
 	short level;
-	unsigned short egg_id;//pet egg id
-	unsigned short equip;//pet equip name_id
+	t_itemid egg_id;//pet egg id
+	t_itemid equip;//pet equip name_id
 	short intimate;//pet friendly
 	short hungry;//pet hungry
 	char name[NAME_LENGTH];
 	char rename_flag;
 	char incubate;
+	bool autofeed;
 };
 
 struct s_homunculus {	//[orn]
@@ -483,7 +492,7 @@ struct mmo_charstatus {
 	uint32 mother;
 	uint32 child;
 
-	unsigned int base_exp,job_exp;
+	t_exp base_exp,job_exp;
 	int zeny;
 
 	short class_; ///< Player's JobID
@@ -519,7 +528,7 @@ struct mmo_charstatus {
 
 	struct s_friend friends[MAX_FRIENDS]; //New friend system [Skotlex]
 #ifdef HOTKEY_SAVING
-	struct hotkey hotkeys[MAX_HOTKEYS];
+	struct hotkey hotkeys[MAX_HOTKEYS_DB];
 #endif
 	bool show_equip,allow_party;
 	short rename;
@@ -537,6 +546,7 @@ struct mmo_charstatus {
 	uint32 uniqueitem_counter;
 
 	unsigned char hotkey_rowshift;
+	unsigned char hotkey_rowshift2;
 	unsigned long title_id;
 };
 
@@ -626,8 +636,7 @@ struct map_session_data;
 struct guild_member {
 	uint32 account_id, char_id;
 	short hair,hair_color,gender,class_,lv;
-	uint64 exp;
-	int exp_payper;
+	t_exp exp;
 	short online,position;
 	char name[NAME_LENGTH];
 	struct map_session_data *sd;
@@ -662,8 +671,8 @@ struct Channel;
 struct guild {
 	int guild_id;
 	short guild_lv, connect_member, max_member, average_lv;
-	uint64 exp;
-	unsigned int next_exp;
+	t_exp exp;
+	t_exp next_exp;
 	int skill_point;
 	char name[NAME_LENGTH],master[NAME_LENGTH];
 	struct guild_member member[MAX_GUILD];
@@ -675,7 +684,7 @@ struct guild {
 	struct guild_expulsion expulsion[MAX_GUILDEXPULSION];
 	struct guild_skill skill[MAX_GUILDSKILL];
 	struct Channel *channel;
-	unsigned short instance_id;
+	int instance_id;
 	time_t last_leader_change;
 
 	/* Used by char-server to save events for guilds */
@@ -911,22 +920,22 @@ enum e_job {
 	JOB_MECHANIC2,
 	JOB_MECHANIC_T2,
 
-	JOB_BABY_RUNE = 4096,
+	JOB_BABY_RUNE_KNIGHT = 4096,
 	JOB_BABY_WARLOCK,
 	JOB_BABY_RANGER,
-	JOB_BABY_BISHOP,
+	JOB_BABY_ARCH_BISHOP,
 	JOB_BABY_MECHANIC,
-	JOB_BABY_CROSS,
-	JOB_BABY_GUARD,
+	JOB_BABY_GUILLOTINE_CROSS,
+	JOB_BABY_ROYAL_GUARD,
 	JOB_BABY_SORCERER,
 	JOB_BABY_MINSTREL,
 	JOB_BABY_WANDERER,
 	JOB_BABY_SURA,
 	JOB_BABY_GENETIC,
-	JOB_BABY_CHASER,
+	JOB_BABY_SHADOW_CHASER,
 
-	JOB_BABY_RUNE2,
-	JOB_BABY_GUARD2,
+	JOB_BABY_RUNE_KNIGHT2,
+	JOB_BABY_ROYAL_GUARD2,
 	JOB_BABY_RANGER2,
 	JOB_BABY_MECHANIC2,
 
@@ -966,8 +975,7 @@ enum e_job {
 enum e_sex {
 	SEX_FEMALE = 0,
 	SEX_MALE,
-	SEX_SERVER,
-	SEX_ACCOUNT = 99
+	SEX_SERVER
 };
 
 /// Item Bound Type

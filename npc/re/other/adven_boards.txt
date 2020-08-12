@@ -855,10 +855,10 @@ moc_fild19,107,101,0	script	Signposts#Sphinx	2_BULLETIN_BOARD,{
 		.@mo_board = callfunc( "F_AvenBoard",
 			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.^000000",
 			1146,"Matyr","King's protector, gatekeeper. Dog is used as a medium to summon the gatekeeper using forbidden magic. Its body is covered in dark mist and it is very agile.",
-			1178,"Zerom","Morroc natives were drafted to help with the construction of the Sphinx. They were cursed to become a monster and protect the Sphinx for all eternity.",
-			1164,"Requiem","Morroc natives were drafted to help with the construction of the Sphinx. They were cursed to become a monster and protect the Sphinx for all eternity.",
+			1178,"Zerom","Morocc natives were drafted to help with the construction of the Sphinx. They were cursed to become a monster and protect the Sphinx for all eternity.",
+			1164,"Requiem","Morocc natives were drafted to help with the construction of the Sphinx. They were cursed to become a monster and protect the Sphinx for all eternity.",
 			1191,"Mimic","Adventurer's tips are needed.",
-			1140,"Marduk","Augur of Morroc Natives. It controls cursed Morroc natives to protect King's Tomb.",
+			1140,"Marduk","Augur of Morocc Natives. It controls cursed Morocc natives to protect King's Tomb.",
 			1154,"Pasana","Protector of the Pyramid. In order to continue to protect the now deceased king, it has willingly received the curse of the Pyramid.",
 			1149,"Minorous","Unknown creature living deep within the labyrinth. It is not on friendly term with Orcs, but they rarely come across each other. When it encounters a creature, it will chase down the target and attack with its giant hammer.",
 			1098,"Anubis","Adventurer's tips are needed.",
@@ -2710,7 +2710,7 @@ tha_t01,156,78,0	duplicate(Guide#Thanatos1)	Guide#Thanatos2	CLEAR_NPC
 prt_fild05,278,220,0	script	Signpost#Culvert	2_BULLETIN_BOARD,{
 	while(1) {
 		mes "[Prontera Culvert]";
-		mes "Prontera Culvert can only be accessed by adventurers who have the permission from Rune Midgard Kingdrom.";
+		mes "Prontera Culvert can only be accessed by adventurers who have the permission from Rune-Midgarts Kingdom.";
 		mes "-- Adventurer Group --";
 		next;
 		if ((MISC_QUEST & 8) == 0) {
@@ -2990,9 +2990,9 @@ gonryun,155,198,0	script	Signpost#Kunlun Dungeon	2_BULLETIN_BOARD,{
 	}
 }
 
-louyang,37,276,0	script	Signpost#Louyang Dungeon	2_BULLETIN_BOARD,{
+louyang,37,276,0	script	Signpost#Luoyang Dungeon	2_BULLETIN_BOARD,{
 	while(1) {
-		mes "[Louyang Dungeon]";
+		mes "[Luoyang Dungeon]";
 		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
 		mes "-- Adventurer Group --";
 		next;
@@ -3011,13 +3011,13 @@ louyang,37,276,0	script	Signpost#Louyang Dungeon	2_BULLETIN_BOARD,{
 			1513,"Mao Guai","Evil cat spirit in human clothing. It walks on two legs like a human and attacks with a fan in its hands.",
 			1518,"White Lady","This MVP monster lures nearby adventurers with its beauty. Some adventurers become enchanted by its scream." );
 		if (.@mo_board == 1) {
-			mes "[Louyang Dungeon]";
-			mes "Louyang Dungeon is comprised of 3 floors and the monsters that appear here tend to overpower adventurers in mass numbers. Prepare before venturing into this dungeon.";
+			mes "[Luoyang Dungeon]";
+			mes "Luoyang Dungeon is comprised of 3 floors and the monsters that appear here tend to overpower adventurers in mass numbers. Prepare before venturing into this dungeon.";
 			next;
 			while(1) {
-				switch( select( "Louyang Dungeon - Suei Long Gon","Louyang Dungeon - The Royal Tomb","Louyang Dungeon - Inside the Royal Tomb","Cancel" ) ) {
+				switch( select( "Luoyang Dungeon - Suei Long Gon","Luoyang Dungeon - The Royal Tomb","Luoyang Dungeon - Inside the Royal Tomb","Cancel" ) ) {
 				case 1:
-					mes "[Louyang Dungeon - Suei Long Gon]";
+					mes "[Luoyang Dungeon - Suei Long Gon]";
 					mes "------------ Monster ------------";
 					mes "Horong(66)";
 					mes "Grizzly(66)";
@@ -3029,7 +3029,7 @@ louyang,37,276,0	script	Signpost#Louyang Dungeon	2_BULLETIN_BOARD,{
 					F_InfoBoard;
 					continue;
 				case 2:
-					mes "[Louyang Dungeon - The Royal Tomb]";
+					mes "[Luoyang Dungeon - The Royal Tomb]";
 					mes "------------ Monster ------------";
 					mes "Mimic(56)";
 					mes "Munak(58)";
@@ -3039,7 +3039,7 @@ louyang,37,276,0	script	Signpost#Louyang Dungeon	2_BULLETIN_BOARD,{
 					F_InfoBoard;
 					continue;
 				case 3:
-					mes "[Louyang Dungeon - Inside the Royal Tomb]";
+					mes "[Luoyang Dungeon - Inside the Royal Tomb]";
 					mes "------------ Monster ------------";
 					mes "Zhu Po Long(82)";
 					mes "Green Maiden(82)";

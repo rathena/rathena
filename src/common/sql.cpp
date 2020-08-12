@@ -93,6 +93,14 @@ Sql* Sql_Malloc(void)
 }
 
 
+/**
+ * Retrieves the last error number.
+ * @param self : sql handle
+ * @return last error number
+ */
+unsigned int Sql_GetError( Sql* self ){
+	return mysql_errno( &self->handle );
+}
 
 static int Sql_P_Keepalive(Sql* self);
 
@@ -564,7 +572,7 @@ static void Sql_P_ShowDebugMysqlFieldInfo(const char* prefix, enum enum_field_ty
 	switch( type )
 	{
 	default:
-		ShowDebug("%stype=%s%u, length=%d\n", prefix, sign, type, length);
+		ShowDebug("%stype=%s%u, length=%lu\n", prefix, sign, type, length);
 		return;
 #define SHOW_DEBUG_OF(x) case x: type_string = #x; break
 	SHOW_DEBUG_OF(MYSQL_TYPE_TINY);
@@ -588,7 +596,7 @@ static void Sql_P_ShowDebugMysqlFieldInfo(const char* prefix, enum enum_field_ty
 	SHOW_DEBUG_OF(MYSQL_TYPE_NULL);
 #undef SHOW_DEBUG_TYPE_OF
 	}
-	ShowDebug("%stype=%s%s, length=%d%s\n", prefix, sign, type_string, length, length_postfix);
+	ShowDebug("%stype=%s%s, length=%lu%s\n", prefix, sign, type_string, length, length_postfix);
 }
 
 

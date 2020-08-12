@@ -113,6 +113,13 @@ bool mapif_achievement_add(uint32 char_id, struct achievement* ad)
 	StringBuf buf;
 	int i;
 
+	ARR_FIND( 0, MAX_ACHIEVEMENT_OBJECTIVES, i, ad->count[i] != 0 );
+
+	if( i == MAX_ACHIEVEMENT_OBJECTIVES && ad->completed == 0 && ad->rewarded == 0 ){
+		// Do not save
+		return true;
+	}
+
 	StringBuf_Init(&buf);
 	StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `id`, `completed`, `rewarded`", schema_config.achievement_table);
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
@@ -313,8 +320,8 @@ int mapif_parse_achievement_reward(int fd){
 		struct item item;
 
 		memset(&item, 0, sizeof(struct item));
-		item.nameid = RFIFOW(fd, 10);
-		item.amount = RFIFOL(fd, 12);
+		item.nameid = RFIFOL(fd, 10);
+		item.amount = RFIFOW(fd, 14);
 		item.identify = 1;
 
 		safesnprintf(mail_sender, NAME_LENGTH, char_msg_txt(227)); // 227: GM

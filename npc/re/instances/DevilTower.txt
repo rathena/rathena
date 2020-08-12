@@ -466,12 +466,14 @@ OnTimer26000:
 		mes "Do you hear that?";
 		mes "Help Fama take care of the injured soldiers.";
 		mes "Fama will give you first aid-kits, use it to help the injured people.";
-		// close2;// still attached
+		close2;
+		setpcblock PCBLOCK_NPC, true;
 		npctalk "Officer Heim: Do you hear that?";
 		sleep2 2000;
 		npctalk "Officer Heim: Help Fama take care of the injured soldiers.";
 		sleep2 2000;
 		npctalk "Healer Fama: Okay~ You are going to help me? Come here and receive the first aid kit~!";
+		setpcblock PCBLOCK_NPC, false;
 		end;
 	case 1:
 		mes "[Officer Heim]";
@@ -648,7 +650,7 @@ OnTouch:
 		.@lucile$ = instance_npcname("Lucile#tnm01");
 		.@heim$ = instance_npcname("Officer Heim#heim");
 		'devil_tower = 3;
-		mes "";	// todo fix me "workinprogress"
+		setpcblock PCBLOCK_NPC, true;
 		cutin "tnm_lucile01.bmp",2;
 		sleep2 1500;
 		npctalk "Lucile: I am Lucile from the Assassin Guild.", .@lucile$;
@@ -699,6 +701,7 @@ OnTouch:
 		npctalk "Officer Heim: They are so unpredictable. You know what is going on right? Back them up...", .@heim$;
 		sleep2 2500;
 		npctalk "Officer Heim: Help us take care of the demons coming down from upstairs.", .@heim$;
+		setpcblock PCBLOCK_NPC, false;
 		end;
 	}
 }
@@ -1391,7 +1394,7 @@ OnTimer7000:
 	else {
 		mes "[Lucile]";
 		mes "The collision of those two powers is too much to handle.";
-		mes "It could have influenced the south of Rune Midgard.";
+		mes "It could have influenced the south of Rune-Midgarts.";
 	}
 	next;
 	if (select( "Follow.", "Stop." ) == 2) {
@@ -1413,13 +1416,14 @@ OnTimer7000:
 OnTouch:
 	if ('devil_tower != 9)
 		end;
-	mes "";	// todo fix me "workinprogress"
+	setpcblock PCBLOCK_NPC, true;
 	disablenpc instance_npcname("#tnm3event01");
 	enablenpc instance_npcname("Young Girl#tnm01");
 	sleep2 4000;
 	mapannounce 'map_tnm3$, "Young Girl: Odin Preserve me! A demon!! Help me!", bc_map,0xFF00;
 	'mob_count = 12;
 	initnpctimer;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 OnTimer1000:
 	monster 'map_tnm3$,33,171,"Evil Shadow",2939,1, instance_npcname("Young Girl#tnm01") + "::OnMobDead";// MM_EVIL_SHADOW1
@@ -1477,8 +1481,8 @@ OnTimer9000:
 		select("Where are they?");
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Where are they?";
 		mes "[Young Girl]";
-		mes "They are in Morroc castle. My father is a knight.";
-		npctalk "They are in Morroc castle. My father is a knight.";
+		mes "They are in Morocc castle. My father is a knight.";
+		npctalk "They are in Morocc castle. My father is a knight.";
 		next;
 		mes "[Young Girl]";
 		mes "It seems like something is happening, I hear strange noises downstairs.";
@@ -1596,7 +1600,7 @@ OnMobDead:
 OnTouch_:
 	if ('devil_tower == 11) {
 		'devil_tower = 12;
-		mes "";	// todo fix me "workinprogress"
+		setpcblock PCBLOCK_NPC, true;
 		sleep2 1000;
 		npctalk "Evil Shadow: I thought I smelled rats sneaking in here. I was right!!";
 		sleep2 3000;
@@ -1605,6 +1609,7 @@ OnTouch_:
 		npctalk "Evil Shadow: I summon the Darkness!!";
 		disablenpc instance_npcname("Evil Shadow#tnm3mob01");
 		donpcevent instance_npcname("Evil Shadow kill#tnm3mob01") + "::OnSummon";
+		setpcblock PCBLOCK_NPC, false;
 	}
 	end;
 }
@@ -1647,7 +1652,7 @@ OnTouch_:// possibility to skip this step
 		end;
 	if ('shade == 0) {
 		'shade = 1;
-		mes "";	// todo fix me "workinprogress"
+		setpcblock PCBLOCK_NPC, true;
 		sleep2 1000;
 		npctalk "Demonic Shade: So you are the trouble makers!";
 		sleep2 2000;
@@ -1656,6 +1661,7 @@ OnTouch_:// possibility to skip this step
 		npctalk "Demonic Shade: The eternal truth is I will turn your deaths into the Demon's life with your hearts' blood!!!";
 		disablenpc instance_npcname("Demonic Shade#mobmaster");
 		donpcevent instance_npcname("#mobmaster_kill") + "::OnSummon";
+		setpcblock PCBLOCK_NPC, false;
 	}
 	end;
 }
@@ -1717,7 +1723,7 @@ OnMobDead:
 1@tnm3,97,48,3	script	Loki#tnmloki01	4_M_ROKI2,{
 	if ('devil_tower == 12) {
 		'devil_tower = 13;
-		donpcevent instance_npcname("#morroc_lord_talk") + "::OnStart";
+		donpcevent instance_npcname("#morocc_lord_talk") + "::OnStart";
 		end;
 	}
 	mes "[Loki]";
@@ -1727,13 +1733,13 @@ OnMobDead:
 
 1@tnm3,94,51,4	duplicate(Officer Heim#heim0)	Young Girl#tnm04	4_F_DST_CHILD
 
-1@tnm2,1,1,0	script	#morroc_lord_talk	HIDDEN_WARP_NPC,{
+1@tnm2,1,1,0	script	#morocc_lord_talk	HIDDEN_WARP_NPC,{
 	end;
 OnStart:
-	enablenpc instance_npcname("#morroc_lord_talk");
-	'morroc$ = instance_npcname("Morocc Lord Knight#mocl");
+	enablenpc instance_npcname("#morocc_lord_talk");
+	'Morocc$ = instance_npcname("Morocc Lord Knight#mocl");
 	'loki$ = instance_npcname("Loki#tnmloki01");
-	npctalk "Morocc Lord Knight: So.. the rat was an assassin? You came here to die?", 'morroc$;
+	npctalk "Morocc Lord Knight: So.. the rat was an assassin? You came here to die?", 'Morocc$;
 	initnpctimer;
 	end;
 OnTimer3000:
@@ -1743,16 +1749,16 @@ OnTimer6000:
 	npctalk "Loki: My mission brought me here to bury it again.", 'loki$;
 	end;
 OnTimer9000:
-	npctalk "Morocc Lord Knight: Really.. the Assassin guild who I thought was on a mission to balance power in the world.", 'morroc$;
+	npctalk "Morocc Lord Knight: Really.. the Assassin guild who I thought was on a mission to balance power in the world.", 'Morocc$;
 	end;
 OnTimer12000:
-	npctalk "Morocc Lord Knight: Resurrecting the demon would bring balance! Even the mightiest become slaves to a god..", 'morroc$;
+	npctalk "Morocc Lord Knight: Resurrecting the demon would bring balance! Even the mightiest become slaves to a god..", 'Morocc$;
 	end;
 OnTimer15000:
-	npctalk "Morocc Lord Knight: The gods have their own plans. Do you know what the gods plan for you or I?", 'morroc$;
+	npctalk "Morocc Lord Knight: The gods have their own plans. Do you know what the gods plan for you or I?", 'Morocc$;
 	end;
 OnTimer18000:
-	npctalk "Morocc Lord Knight: They want this world to only be in their image. Where do we fit into that?!", 'morroc$;
+	npctalk "Morocc Lord Knight: They want this world to only be in their image. Where do we fit into that?!", 'Morocc$;
 	end;
 OnTimer20000:
 	npctalk "Loki: Shut up!", 'loki$;
@@ -1764,7 +1770,7 @@ OnTimer25000:
 	npctalk "Loki: That is my mission!", 'loki$;
 	end;
 OnTimer28000:
-	npctalk "Morocc Lord Knight: So all you want is to finish your damn mission?..", 'morroc$;
+	npctalk "Morocc Lord Knight: So all you want is to finish your damn mission?..", 'Morocc$;
 	end;
 OnTimer31000:
 	npctalk "Loki: *Grins* Of course!!", 'loki$;
@@ -1788,7 +1794,7 @@ OnTimer36500:
 	npctalk "!!!", 'loki$;
 	end;
 OnTimer38500:
-	npctalk "Morocc Lord Knight: Oh no.. They should have sent better than you, Mr. Assassin, for this mission.", 'morroc$;
+	npctalk "Morocc Lord Knight: Oh no.. They should have sent better than you, Mr. Assassin, for this mission.", 'Morocc$;
 	end;
 OnTimer41500:
 	npctalk "Young Girl: Something is wrong....", instance_npcname("Young Girl#tnm04");
@@ -1797,15 +1803,15 @@ OnTimer44500:
 	npctalk "Young Girl: My Papa would never act this way.. Ugh..", instance_npcname("Young Girl#tnm04");
 	end;
 OnTimer47500:
-	npctalk "Morocc Lord Knight: Human.. To do such a stupid thing.. a sacrifice.", 'morroc$;
+	npctalk "Morocc Lord Knight: Human.. To do such a stupid thing.. a sacrifice.", 'Morocc$;
 	end;
 OnTimer50500:
-	npctalk "Morocc Lord Knight: You know, the truth is, that it is useless.", 'morroc$;
+	npctalk "Morocc Lord Knight: You know, the truth is, that it is useless.", 'Morocc$;
 	end;
 OnTimer53500:
-	npctalk "Morocc Lord Knight: Gwuaaa hahahaha. You stupid humans I will kill you all as sacrifices for the demon!!", 'morroc$;
-	specialeffect EF_COUPLECASTING,AREA, 'morroc$;
-	specialeffect EF_VOLCANO,AREA, 'morroc$;
+	npctalk "Morocc Lord Knight: Gwuaaa hahahaha. You stupid humans I will kill you all as sacrifices for the demon!!", 'Morocc$;
+	specialeffect EF_COUPLECASTING,AREA, 'Morocc$;
+	specialeffect EF_VOLCANO,AREA, 'Morocc$;
 	end;
 OnTimer54500:
 	npctalk "Loki:... tsk! useless....!", 'loki$;
@@ -1815,7 +1821,7 @@ OnTimer55500:
 	mapwarp 'map_tnm3$, 'map_tnm3$,136,62;// todo area 1x1
 	'devil_tower = 13;
 	stopnpctimer;
-	disablenpc instance_npcname("#morroc_lord_talk");
+	disablenpc instance_npcname("#morocc_lord_talk");
 	disablenpc instance_npcname("Morocc Lord Knight#mocl");
 	disablenpc instance_npcname("Loki#tnmloki01");
 	disablenpc instance_npcname("Young Girl#tnm04");
@@ -2192,7 +2198,7 @@ OnInstanceInit:
 
 	// Boss
 	disablenpc instance_npcname("Morocc Lord Knight#mocl");
-	disablenpc instance_npcname("#morroc_lord_talk");
+	disablenpc instance_npcname("#morocc_lord_talk");
 	disablenpc instance_npcname("Loki#tnmloki01");
 	disablenpc instance_npcname("Young Girl#tnm04");
 	disablenpc instance_npcname("Loki#tnmloki02");

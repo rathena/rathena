@@ -1,29 +1,29 @@
 //===== rAthena Script =======================================
 //= Enchants NPCs.
 //===== Description: =========================================
-//= Hero Ring enchants NPCs - Walkthrough Conversion.
+//= [Official Conversion]
+//= Hero Ring enchants NPCs
 //===== Changelogs: ==========================================
 //= 1.0 First Version. [Capuche]
+//= 1.1 Slight change to match official script. [Capuche]
 //============================================================
 
 moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 	disable_items;
-	if (checkweight(1201,1) == 0) {// custom
-		mes "The kind of items you have is too various. Retry after reducing the sort of items.";
-		close;
-	}
-	if ((MaxWeight - Weight) < 10000) {
-		mes "You are overburdened, so you cannot proceed it anymore. Please try again after reduce the weight.";
-		close;
-	}
 	mes "[Hero Token Exchanger]";
-	mes "If you fought Morroc";
+	mes "If you fought Morocc";
 	mes "and collected";
 	mes "Hero Tokens,";
 	mes "I can exchange them with a special ring for you.";
 	mes "Do you want to take a look at my ring?";
 	while(true) {
 		next;
+		if (checkweight(2163,2) == 0) {
+			mes "[Hero Token Exchanger]";
+			mes "Your pack has a lot of items,";
+			mes "Please come again after arrange it!";
+			close;
+		}
 		switch( select( "Ring description", "Exchange with the ring.", "End conversation." ) ) {
 		case 1:
 			mes "[Hero Token Exchanger]";
@@ -44,16 +44,16 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			mes "Hero Ring";
 			mes "can aid you";
 			mes "in subjugating";
-			mes "Morroc.";
+			mes "Morocc.";
 			mes "Any more questions?";
 			continue;
 		case 2:
 			mes "- Hero Ring -";
 			mes "^006400A ring made for warriors^000000";
-			mes "^006400on the quest to defeat Morroc..^000000";
+			mes "^006400on the quest to defeat Morocc..^000000";
 			mes "^006400When Enchanted,^000000";
 			mes "^006400it lends its owner^000000";
-			mes "^006400the power to confront Morroc.^000000";
+			mes "^006400the power to confront Morocc.^000000";
 			mes "^006400Clas: Accessory/DEF: 0^000000";
 			mes "^006400Weight: 20/Required Level: 160^000000";
 			mes "^006400Slot: 0/Equip To: All Jobs^000000";
@@ -74,7 +74,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 				mes "[Hero Token Exchanger]";
 				mes "^006400Hero Token^000000";
 				mes "is given to";
-				mes "those who bravely fought Morroc.";
+				mes "those who bravely fought Morocc.";
 				mes "You don't have";
 				mes "30 ^006400Hero Tokens^000000,";
 				mes "and therefore I can't assist you.";

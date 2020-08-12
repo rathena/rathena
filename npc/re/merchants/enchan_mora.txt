@@ -75,7 +75,7 @@ mora,88,89,5	script	Keeper of Secrets#pa082	495,{
 				mes "You are already allowed access to our relics by your possession of a Ring!";
 				close;
 			}
-			if (Class == Job_Arch_Bishop || Class == Job_Arch_Bishop_T || Class == Job_Baby_Bishop) {
+			if (Class == Job_Arch_Bishop || Class == Job_Arch_Bishop_T || Class == Job_Baby_Arch_Bishop) {
 				setarray .@items[0],2864,2865,2866; //Light_Of_Cure,Seal_Of_Cathedral,Ring_Of_Archbishop
 				break;
 			} else {
@@ -106,7 +106,7 @@ mora,88,89,5	script	Keeper of Secrets#pa082	495,{
 		mes "You have obtained ^aa00aa"+getitemname(.@item)+"^000000. May the Blessing of the Light be with you.";
 		close;
 	case 3:
-		if (Class == Job_Arch_Bishop || Class == Job_Arch_Bishop_T || Class == Job_Baby_Bishop) {
+		if (Class == Job_Arch_Bishop || Class == Job_Arch_Bishop_T || Class == Job_Baby_Arch_Bishop) {
 			mes "[Artifice]";
 			mes "We exchange rings into coins for those who cannot control the ring.";
 			next;
