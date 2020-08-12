@@ -4018,7 +4018,6 @@ ACMD_FUNC(reload) {
 		mapit_free(iter);
 
 		for (auto &bg : bg_queues) {
-				queue->state = QUEUE_STATE_ENDED;
 				for (auto &sd : bg->teama_members)
 					bg_team_leave(sd, false, false); // Kick Team A from battlegrounds
 				for (auto &sd : bg->teamb_members)
