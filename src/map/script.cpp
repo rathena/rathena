@@ -14622,14 +14622,6 @@ BUILDIN_FUNC(skilleffect)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	uint16 skill_lv_cap = cap_value(skill_lv, 1, skill_get_max(skill_id));
-
-	if (skill_lv != skill_lv_cap) {
-		ShowWarning("buildin_skilleffect: Invalid skill level %d, capping to %d.\n", skill_lv, skill_lv_cap);
-		skill_lv = skill_lv_cap;
-		script_reportsrc(st);
-	}
-
 	/* Ensure we're standing because the following packet causes the client to virtually set the char to stand,
 	 * which leaves the server thinking it still is sitting. */
 	if( pc_issit(sd) && pc_setstand(sd, false) ) {
@@ -14667,14 +14659,6 @@ BUILDIN_FUNC(npcskilleffect)
 	if (skill_db.find(skill_id) == nullptr) {
 		ShowError("buildin_npcskilleffect: Invalid skill defined (%s)!\n", script_getstr(st, 2));
 		return SCRIPT_CMD_FAILURE;
-	}
-
-	uint16 skill_lv_cap = cap_value(skill_lv, 1, skill_get_max(skill_id));
-
-	if (skill_lv != skill_lv_cap) {
-		ShowWarning("buildin_npcskilleffect: Invalid skill level %d, capping to %d.\n", skill_lv, skill_lv_cap);
-		skill_lv = skill_lv_cap;
-		script_reportsrc(st);
 	}
 
 	script_skill_effect(bl, skill_id, skill_lv, bl->x, bl->y);
