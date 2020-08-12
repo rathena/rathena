@@ -60,7 +60,6 @@ OnTimer1000:
 	stopnpctimer;
 	if (bg_get_data($@FlaviusBG1_id1, 0) == 0 && bg_get_data($@FlaviusBG1_id2, 0) == 0) {
 		donpcevent "countdown#bat_b01::OnStop";
-OnReset:
 		if (getbattleflag("feature.bgqueue"))
 			bg_reserve "bat_b01", true;
 		$@FlaviusBG1 = 0;
@@ -79,7 +78,6 @@ OnReset:
 bat_b01,15,15,3	script	start#bat_b01	844,{
 OnInit:
 	mapwarp "bat_b01","bat_room",154,150;
-	donpcevent "#bat_b01_timer::OnReset";
 	end;
 
 OnReadyCheck:

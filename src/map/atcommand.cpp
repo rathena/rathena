@@ -4013,8 +4013,18 @@ ACMD_FUNC(reload) {
 			pc_close_npc(pl_sd,1);
 			clif_cutin(pl_sd, "", 255);
 			pl_sd->state.block_action &= ~(PCBLOCK_ALL ^ PCBLOCK_IMMUNE);
+			bg_queue_leave(sd);
 		}
 		mapit_free(iter);
+
+		for (auto &bg : bg_queues) {
+				queue->state = QUEUE_STATE_ENDED;
+				for (auto &sd : bg->teama_members)
+					bg_team_leave(sd, false, false); // Kick Team A from battlegrounds
+				for (auto &sd : bg->teamb_members)
+					bg_team_leave(sd, false, false); // Kick Team B from battlegrounds
+				bg_queue_clear(bg, true);
+		}
 
 		flush_fifos();
 		map_reloadnpc(true); // reload config files seeking for npcs

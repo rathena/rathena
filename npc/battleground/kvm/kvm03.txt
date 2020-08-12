@@ -333,7 +333,6 @@ OnTimer55000:
 
 OnTimer60000:
 	stopnpctimer;
-OnInit:
 	if (getbattleflag("feature.bgqueue"))
 		bg_reserve "bat_c03", true;
 	mapwarp "bat_c03","bat_room",154,150;
