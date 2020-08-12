@@ -4013,15 +4013,15 @@ ACMD_FUNC(reload) {
 			pc_close_npc(pl_sd,1);
 			clif_cutin(pl_sd, "", 255);
 			pl_sd->state.block_action &= ~(PCBLOCK_ALL ^ PCBLOCK_IMMUNE);
-			bg_queue_leave(sd);
+			bg_queue_leave(pl_sd);
 		}
 		mapit_free(iter);
 
 		for (auto &bg : bg_queues) {
-				for (auto &sd : bg->teama_members)
-					bg_team_leave(sd, false, false); // Kick Team A from battlegrounds
-				for (auto &sd : bg->teamb_members)
-					bg_team_leave(sd, false, false); // Kick Team B from battlegrounds
+				for (auto &bg_sd : bg->teama_members)
+					bg_team_leave(bg_sd, false, false); // Kick Team A from battlegrounds
+				for (auto &bg_sd : bg->teamb_members)
+					bg_team_leave(bg_sd, false, false); // Kick Team B from battlegrounds
 				bg_queue_clear(bg, true);
 		}
 
