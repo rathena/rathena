@@ -19255,7 +19255,7 @@ static void clif_loadConfirm( struct map_session_data *sd ){
 
 /// Enable playing abilities of a player if map is done loading.
 /// 0447 (CZ_BLOCKING_PLAY_CANCEL)
-void clif_parse_blocking_playcancel( int fd,struct map_session_data *sd ){
+void clif_parse_blocking_playcancel( int fd, struct map_session_data *sd ){
 	nullpo_retv(sd);
 
 	if (sd->state.warping == 0)

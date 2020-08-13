@@ -10775,8 +10775,8 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
 		sd->sc.data[SC__BLOODYLUST] ||
 		sd->sc.data[SC_KYOUGAKU] ||
-		(sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON) ||
-		sd->sc.data[SC_BLOCKING_PLAY]))	// can't switch weapon
+		(sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON) ||	// can't switch weapon
+		sd->sc.data[SC_BLOCKING_PLAY]))
 	{
 		clif_unequipitemack(sd,n,0,0);
 		return false;
