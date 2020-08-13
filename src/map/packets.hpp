@@ -159,6 +159,19 @@ struct PACKET_ZC_ACK_GUILDSTORAGE_LOG{
 	struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub items[];
 };
 
+struct PACKET_EFST_SET_ENTER {
+	int16 PacketType;
+	uint32 GID;
+	uint16 type;
+	uint32 remaining;
+#if PACKETVER >= 20120618
+	uint32 total;
+#endif
+	int32 val1;
+	int32 val2;
+	int32 val3;
+};
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -177,6 +190,11 @@ DEFINE_PACKET_HEADER(ZC_NOTIFY_BARGAIN_SALE_CLOSE, 0x9b3)
 DEFINE_PACKET_HEADER(ZC_ACK_COUNT_BARGAIN_SALE_ITEM, 0x9c4)
 DEFINE_PACKET_HEADER(ZC_ACK_GUILDSTORAGE_LOG, 0x9da)
 DEFINE_PACKET_HEADER(CZ_REQ_APPLY_BARGAIN_SALE_ITEM2, 0xa3d)
+#if PACKETVER >= 20120618
+DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x984)
+#elif PACKETVER >= 20111108
+DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x8ff)
+#endif
 
 const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
 const int16 MAX_INVENTORY_ITEM_PACKET_EQUIP = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_equip ) - ( sizeof( struct EQUIPITEM_INFO ) * MAX_ITEMLIST ) ) ) / sizeof( struct EQUIPITEM_INFO ) );

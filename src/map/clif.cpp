@@ -6127,6 +6127,7 @@ void clif_cooking_list( struct map_session_data *sd, int trigger, uint16 skill_i
 /// 043f <index>.W <id>.L <state>.B <remain msec>.L { <val>.L }*3 (ZC_MSG_STATE_CHANGE2) [used exclusively for starting statuses on pcs]
 /// 0983 <index>.W <id>.L <state>.B <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_MSG_STATE_CHANGE3) (PACKETVER >= 20120618)
 /// @param bl: Sends packet to clients around this object
+/// @param id: ID of object that has this effect
 /// @param type: Status icon (see efst_types)
 /// @param flag: 1:Active, 0:Inactive
 /// @param tick_total: Total duration in ms
@@ -6134,7 +6135,7 @@ void clif_cooking_list( struct map_session_data *sd, int trigger, uint16 skill_i
 /// @param val1: Value 1
 /// @param val2: Value 2
 /// @param val3: Value 3
-void clif_status_change_sub(struct block_list *bl, int type, int flag, t_tick tick_total, t_tick tick, int val1, int val2, int val3)
+void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, t_tick tick_total, t_tick tick, int val1, int val2, int val3)
 {
 	nullpo_retv(bl);
 
@@ -6164,20 +6165,18 @@ void clif_status_change_sub(struct block_list *bl, int type, int flag, t_tick ti
 					tick = 9999; // this is indeed what official servers do
 				break;
 		}
+	}
 
-		p.PacketType = status_changeType;
-	} else
-		p.PacketType = sc_notickType;
+	p.PacketType = status_changeType;
 	p.index = type;
-	p.AID = bl->id;
+	p.AID = id;
 	p.state = (uint8)flag;
 
-#if PACKETVER >= 20120618
-	if (battle_config.display_status_timers > 0)
-		p.Total = client_tick(tick_total);
-#endif
 #if PACKETVER >= 20090121
 	if (battle_config.display_status_timers > 0) {
+#if PACKETVER >= 20120618
+		p.Total = client_tick(tick_total);
+#endif
 		p.Left = client_tick(tick);
 		p.val1 = val1;
 		p.val2 = val2;
@@ -6185,7 +6184,7 @@ void clif_status_change_sub(struct block_list *bl, int type, int flag, t_tick ti
 	}
 #endif
 
-	clif_send(&p, sizeof(p), bl, (sd && sd->status.option & OPTION_INVISIBLE) ? SELF : AREA);
+	clif_send(&p, sizeof(p), bl, pc_isinvisible(sd) ? SELF : AREA);
 }
 
 /* Sends status effect to clients around the bl
@@ -6198,7 +6197,7 @@ void clif_status_change_sub(struct block_list *bl, int type, int flag, t_tick ti
  * @param val3: Value 3
  */
 void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick_total, int val1, int val2, int val3) {
-	clif_status_change_sub(bl, type, flag, tick_total, tick_total, val1, val2, val3);
+	clif_status_change_sub(bl, bl->id, type, flag, tick_total, tick_total, val1, val2, val3);
 }
 
 /**
@@ -6208,12 +6207,11 @@ void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick_t
  * @param target: Client send type
  */
 void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, enum send_target target) {
-	unsigned char i;
+	nullpo_retv(bl);
+
 	struct sc_display_entry **sc_display;
 	unsigned char sc_display_count;
 	bool spheres_sent;
-
-	nullpo_retv(bl);
 
 	switch( bl->type ){
 		case BL_PC: {
@@ -6236,26 +6234,29 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 			return;
 	}
 
-	for (i = 0; i < sc_display_count; i++) {
+	for (unsigned char i = 0; i < sc_display_count; i++) {
 		enum sc_type type = sc_display[i]->type;
 		struct status_change *sc = status_get_sc(bl);
-		const struct TimerData *td = (sc && sc->data[type] ? get_timer(sc->data[type]->timer) : NULL);
-		t_tick tick = 0;
+		const TimerData *td_total = (sc && sc->data[type] ? get_timer(sc->data[type]->tick_total) : nullptr);
+		const TimerData *td = (sc && sc->data[type] ? get_timer(sc->data[type]->timer) : nullptr);
+		t_tick tick_total = 0, tick = 0, cur_tick = gettick();
 
-		if (td)
-			tick = DIFF_TICK(td->tick, gettick());
+		if (td_total != nullptr)
+			tick_total = DIFF_TICK(td_total->tick, cur_tick);
+		if (td != nullptr)
+			tick = DIFF_TICK(td->tick, cur_tick);
 
 		if( spheres_sent && type >= SC_SPHERE_1 && type <= SC_SPHERE_5 ){
 #if PACKETVER > 20120418
-			clif_efst_status_change(tbl, bl->id, AREA_WOS, StatusIconChangeTable[type], tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
+			clif_efst_status_change(tbl, bl->id, AREA_WOS, StatusIconChangeTable[type], tick_total, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
 #else
-			clif_status_change_sub(tbl, StatusIconChangeTable[type], 1, tick, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, AREA_WOS);
+			clif_status_change_sub(tbl, bl->id, StatusIconChangeTable[type], 1, tick, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, AREA_WOS);
 #endif
 		}else{
 #if PACKETVER > 20120418
-			clif_efst_status_change(tbl, bl->id, target, StatusIconChangeTable[type], tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
+			clif_efst_status_change(tbl, bl->id, target, StatusIconChangeTable[type], tick_total, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3);
 #else
-			clif_status_change_sub(tbl, StatusIconChangeTable[type], 1, tick, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
+			clif_status_change_sub(tbl, bl->id, StatusIconChangeTable[type], 1, tick, tick, sc_display[i]->val1, sc_display[i]->val2, sc_display[i]->val3, target);
 #endif
 		}
 	}
@@ -6264,38 +6265,30 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 /// Notifies the client when a player enters the screen with an active EFST.
 /// 08ff <id>.L <index>.W <remain msec>.L { <val>.L }*3  (ZC_EFST_SET_ENTER) (PACKETVER >= 20111108)
 /// 0984 <id>.L <index>.W <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_EFST_SET_ENTER2) (PACKETVER >= 20120618)
-void clif_efst_status_change(struct block_list *bl, int tid, enum send_target target, int type, t_tick tick, int val1, int val2, int val3) {
+void clif_efst_status_change(struct block_list *bl, int tid, enum send_target target, int type, t_tick tick_total, t_tick tick, int val1, int val2, int val3) {
 #if PACKETVER >= 20111108
-	unsigned char buf[32];
-#if PACKETVER >= 20120618
-	const int cmd = 0x984;
-#elif PACKETVER >= 20111108
-	const int cmd = 0x8ff;
-#endif
-	int offset = 0;
+	nullpo_retv(bl);
 
 	if (type == EFST_BLANK)
 		return;
 
-	nullpo_retv(bl);
-
-	if (tick <= 0)
+	if (tick < 0)
 		tick = 9999;
 
-	WBUFW(buf,offset + 0) = cmd;
-	WBUFL(buf,offset + 2) = tid;
-	WBUFW(buf,offset + 6) = type;
-#if PACKETVER >= 20111108
-	WBUFL(buf,offset + 8) = client_tick(tick); // Set remaining status duration [exneval]
-#if PACKETVER >= 20120618
-	WBUFL(buf,offset + 12) = client_tick(tick);
-	offset += 4;
+	PACKET_EFST_SET_ENTER p = { 0 };
+
+	p.PacketType = HEADER_ZC_EFST_SET_ENTER;
+	p.GID = tid;
+	p.type = type;
+	p.remaining = client_tick(tick);
+#ifdef PACKETVER >= 20120618
+	p.total = client_tick(tick_total);
 #endif
-	WBUFL(buf,offset + 12) = val1;
-	WBUFL(buf,offset + 16) = val2;
-	WBUFL(buf,offset + 20) = val3;
-#endif
-	clif_send(buf,packet_len(cmd),bl,target);
+	p.val1 = val1;
+	p.val2 = val2;
+	p.val3 = val3;
+
+	clif_send(&p, sizeof(p), bl, target);
 #endif
 }
 

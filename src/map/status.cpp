@@ -12617,10 +12617,12 @@ int status_change_start_sub(struct block_list* src, struct block_list* bl,enum s
 		calc_flag&=~SCB_BODY;
 	}*/
 
-	t_tick tick = duration;
+	t_tick tick;
 
 	if (!(flag & SCSTART_LOADED))
 		tick = tick_total; // When starting a new SC (not loading), its remaining duration is the same as the total
+	else
+		tick = duration;
 	if (!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && StatusDisplayType[type])) {
 		int status_icon = StatusIconChangeTable[type];
 
@@ -12629,7 +12631,7 @@ int status_change_start_sub(struct block_list* src, struct block_list* bl,enum s
 			status_icon = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
 #endif
 
-		clif_status_change_sub(bl, status_icon, 1, tick_total, tick, (val_flag & 1) ? val1 : 1, (val_flag & 2) ? val2 : 0, (val_flag & 4) ? val3 : 0);
+		clif_status_change_sub(bl, bl->id, status_icon, 1, tick_total, tick, (val_flag & 1) ? val1 : 1, (val_flag & 2) ? val2 : 0, (val_flag & 4) ? val3 : 0);
 	}
 
 	// Used as temporary storage for scs with interval ticks, so that the actual duration is sent to the client first.

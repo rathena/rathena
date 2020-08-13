@@ -279,7 +279,7 @@ int chmapif_parse_askscdata(int fd){
 		int aid, cid;
 		aid = RFIFOL(fd,2);
 		cid = RFIFOL(fd,6);
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT type, tick, tick_total, val1, val2, val3, val4 from `%s` WHERE `account_id` = '%d' AND `char_id`='%d'",
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT type, tick, val1, val2, val3, val4, tick_total from `%s` WHERE `account_id` = '%d' AND `char_id`='%d'",
 			schema_config.scdata_db, aid, cid) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -299,11 +299,11 @@ int chmapif_parse_askscdata(int fd){
 			{
 				Sql_GetData(sql_handle, 0, &data, NULL); scdata.type = atoi(data);
 				Sql_GetData(sql_handle, 1, &data, NULL); scdata.tick = strtoll( data, nullptr, 10 );
-				Sql_GetData(sql_handle, 2, &data, NULL); scdata.tick_total = strtoll(data, nullptr, 10);
-				Sql_GetData(sql_handle, 3, &data, NULL); scdata.val1 = atoi(data);
-				Sql_GetData(sql_handle, 4, &data, NULL); scdata.val2 = atoi(data);
-				Sql_GetData(sql_handle, 5, &data, NULL); scdata.val3 = atoi(data);
-				Sql_GetData(sql_handle, 6, &data, NULL); scdata.val4 = atoi(data);
+				Sql_GetData(sql_handle, 2, &data, NULL); scdata.val1 = atoi(data);
+				Sql_GetData(sql_handle, 3, &data, NULL); scdata.val2 = atoi(data);
+				Sql_GetData(sql_handle, 4, &data, NULL); scdata.val3 = atoi(data);
+				Sql_GetData(sql_handle, 5, &data, NULL); scdata.val4 = atoi(data);
+				Sql_GetData(sql_handle, 6, &data, NULL); scdata.tick_total = strtoll(data, nullptr, 10);
 				memcpy(WFIFOP(fd, 14+count*sizeof(struct status_change_data)), &scdata, sizeof(struct status_change_data));
 			}
 			if (count >= 50)
