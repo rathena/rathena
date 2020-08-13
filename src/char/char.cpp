@@ -586,7 +586,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 	}
 
 	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,       &item.id,          0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 1, SQLDT_USHORT,    &item.nameid,      0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 1, SQLDT_UINT,    &item.nameid,      0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 2, SQLDT_SHORT,     &item.amount,      0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 3, SQLDT_UINT,      &item.equip,       0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 4, SQLDT_CHAR,      &item.identify,    0, NULL, NULL);
@@ -600,7 +600,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 		SqlStmt_BindColumn(stmt, 11, SQLDT_UINT, &item.equipSwitch, 0, NULL, NULL);
 	}
 	for( i = 0; i < MAX_SLOTS; ++i )
-		SqlStmt_BindColumn(stmt, 10+offset+i, SQLDT_USHORT, &item.card[i], 0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 10+offset+i, SQLDT_UINT, &item.card[i], 0, NULL, NULL);
 	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
 		SqlStmt_BindColumn(stmt, 10+offset+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].id, 0, NULL, NULL);
 		SqlStmt_BindColumn(stmt, 11+offset+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].value, 0, NULL, NULL);
@@ -650,7 +650,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 					if (tableswitch == TABLE_INVENTORY)
 						StringBuf_Printf(&buf, ", `favorite`='%d', `equip_switch`='%u'", items[i].favorite, items[i].equipSwitch);
 					for( j = 0; j < MAX_SLOTS; ++j )
-						StringBuf_Printf(&buf, ", `card%d`=%hu", j, items[i].card[j]);
+						StringBuf_Printf(&buf, ", `card%d`=%u", j, items[i].card[j]);
 					for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
 						StringBuf_Printf(&buf, ", `option_id%d`=%d", j, items[i].option[j].id);
 						StringBuf_Printf(&buf, ", `option_val%d`=%d", j, items[i].option[j].value);
@@ -706,12 +706,12 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 		else
 			found = true;
 
-		StringBuf_Printf(&buf, "('%d', '%hu', '%d', '%u', '%d', '%d', '%d', '%u', '%d', '%" PRIu64 "'",
+		StringBuf_Printf(&buf, "('%d', '%u', '%d', '%u', '%d', '%d', '%d', '%u', '%d', '%" PRIu64 "'",
 			id, items[i].nameid, items[i].amount, items[i].equip, items[i].identify, items[i].refine, items[i].attribute, items[i].expire_time, items[i].bound, items[i].unique_id);
 		if (tableswitch == TABLE_INVENTORY)
 			StringBuf_Printf(&buf, ", '%d', '%u'", items[i].favorite, items[i].equipSwitch);
 		for( j = 0; j < MAX_SLOTS; ++j )
-			StringBuf_Printf(&buf, ", '%hu'", items[i].card[j]);
+			StringBuf_Printf(&buf, ", '%u'", items[i].card[j]);
 		for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
 			StringBuf_Printf(&buf, ", '%d'", items[i].option[j].id);
 			StringBuf_Printf(&buf, ", '%d'", items[i].option[j].value);
@@ -812,7 +812,7 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 	}
 
 	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,          &item.id,        0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 1, SQLDT_USHORT,       &item.nameid,    0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 1, SQLDT_UINT,         &item.nameid,    0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 2, SQLDT_SHORT,        &item.amount,    0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 3, SQLDT_UINT,         &item.equip,     0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 4, SQLDT_CHAR,         &item.identify,  0, NULL, NULL);
@@ -826,7 +826,7 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 		SqlStmt_BindColumn(stmt, 11, SQLDT_UINT, &item.equipSwitch, 0, NULL, NULL);
 	}
 	for( i = 0; i < MAX_SLOTS; ++i )
-		SqlStmt_BindColumn(stmt, 10+offset+i, SQLDT_USHORT, &item.card[i],   0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 10+offset+i, SQLDT_UINT, &item.card[i],   0, NULL, NULL);
  	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
 		SqlStmt_BindColumn(stmt, 10+offset+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].id, 0, NULL, NULL);
 		SqlStmt_BindColumn(stmt, 11+offset+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].value, 0, NULL, NULL);
@@ -1490,7 +1490,7 @@ int char_make_new_char( struct char_session_data* sd, char* name_, int str, int 
 	char_id = (int)Sql_LastInsertId(sql_handle);
 	//Give the char the default items
 	for (k = 0; k <= MAX_STARTITEM && tmp_start_items[k].nameid != 0; k++) {
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%hu', '%hu', '%hu', '%d')", schema_config.inventory_db, char_id, tmp_start_items[k].nameid, tmp_start_items[k].amount, tmp_start_items[k].pos, 1) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%u', '%hu', '%u', '%d')", schema_config.inventory_db, char_id, tmp_start_items[k].nameid, tmp_start_items[k].amount, tmp_start_items[k].pos, 1) )
 			Sql_ShowDebug(sql_handle);
 	}
 
@@ -1504,7 +1504,7 @@ int char_make_new_char( struct char_session_data* sd, char* name_, int str, int 
 int char_divorce_char_sql(int partner_id1, int partner_id2){
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `partner_id`='0' WHERE `char_id`='%d' OR `char_id`='%d' LIMIT 2", schema_config.char_db, partner_id1, partner_id2) )
 		Sql_ShowDebug(sql_handle);
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE (`nameid`='%hu' OR `nameid`='%hu') AND (`char_id`='%d' OR `char_id`='%d') LIMIT 2", schema_config.inventory_db, WEDDING_RING_M, WEDDING_RING_F, partner_id1, partner_id2) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE (`nameid`='%u' OR `nameid`='%u') AND (`char_id`='%d' OR `char_id`='%d') LIMIT 2", schema_config.inventory_db, WEDDING_RING_M, WEDDING_RING_F, partner_id1, partner_id2) )
 		Sql_ShowDebug(sql_handle);
 	chmapif_send_ackdivorce(partner_id1, partner_id2);
 	return 0;
@@ -2739,18 +2739,18 @@ void char_set_defaults(){
 
 	charserv_config.start_items[0].nameid = 1201;
 	charserv_config.start_items[0].amount = 1;
-	charserv_config.start_items[0].pos = 2;
+	charserv_config.start_items[0].pos = EQP_HAND_R;
 	charserv_config.start_items[1].nameid = 2301;
 	charserv_config.start_items[1].amount = 1;
-	charserv_config.start_items[1].pos = 16;
+	charserv_config.start_items[1].pos = EQP_ARMOR;
 
 #if PACKETVER >= 20150101
 	charserv_config.start_items_doram[0].nameid = 1681;
 	charserv_config.start_items_doram[0].amount = 1;
-	charserv_config.start_items_doram[0].pos = 2;
+	charserv_config.start_items_doram[0].pos = EQP_HAND_R;
 	charserv_config.start_items_doram[1].nameid = 2301;
 	charserv_config.start_items_doram[1].amount = 1;
-	charserv_config.start_items_doram[1].pos = 16;
+	charserv_config.start_items_doram[1].pos = EQP_ARMOR;
 #endif
 
 	charserv_config.console = 0;
@@ -2848,9 +2848,10 @@ void char_config_split_startitem(char *w1_value, char *w2_value, struct startite
 		}
 
 		// TODO: Item ID verification
-		start_items[i].nameid = max(0, atoi(fields[1]));
-		start_items[i].amount = max(0, atoi(fields[2]));
-		start_items[i].pos = max(0, atoi(fields[3]));
+		start_items[i].nameid = strtoul( fields[1], nullptr, 10 );
+		// TODO: Stack verification
+		start_items[i].amount = min( (uint16)strtoul( fields[2], nullptr, 10 ), MAX_AMOUNT );
+		start_items[i].pos = strtoul( fields[3], nullptr, 10 );
 
 		lineitem = strtok(NULL, ":"); //next lineitem
 		i++;
