@@ -14,6 +14,19 @@
 
 struct s_storage_table;
 
+struct s_inter_serv_config {
+	uint16 char_server_port; ///< Char server port
+	std::string char_server_ip; ///< Char server IP
+	std::string char_server_id; ///< Char server username
+	std::string char_server_pw; ///< Char server password
+	std::string char_server_db; ///< Char server database
+	std::string default_codepage; ///< Codepage [irmin]
+
+	uint32 party_share_level; ///< Party share level
+};
+
+extern s_inter_serv_config inter_config;
+
 class InterServerDatabase : public TypesafeYamlDatabase<uint32, s_storage_table>{
 public:
 	InterServerDatabase() : TypesafeYamlDatabase( "INTER_SERVER_DB", 1 ){
@@ -36,8 +49,6 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 	const char *birthdate, const char *userid);
 
 int inter_log(const char *fmt,...);
-
-extern unsigned int party_share_level;
 
 extern Sql* sql_handle;
 extern Sql* lsql_handle;

@@ -4,7 +4,21 @@
 #ifndef IPBAN_HPP
 #define IPBAN_HPP
 
+#include <string>
+
 #include "../common/cbasetypes.hpp"
+
+struct s_ipban_config {
+	uint16 ipban_db_port; ///< IP Ban port
+	std::string ipban_db_hostname; ///< IP Ban IP
+	std::string ipban_db_username; ///< IP Ban username
+	std::string ipban_db_password; ///< IP Ban password
+	std::string ipban_db_database; ///< IP Ban database
+	std::string ipban_codepage; ///< Codepage [irmin]
+	std::string ipban_table; ///< IP Ban SQL Table
+};
+
+extern s_ipban_config ipban_config;
 
 /**
  * Check if ip is in the active bans list.

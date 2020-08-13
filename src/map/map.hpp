@@ -24,6 +24,25 @@ struct npc_data;
 struct item_data;
 struct Channel;
 
+struct s_map_serv_config {
+	// Map database
+	uint16 map_server_port; ///< Map server port
+	std::string map_server_ip; ///< Map server IP
+	std::string map_server_id; ///< Map server username
+	std::string map_server_pw; ///< Map server password
+	std::string map_server_db; ///< Map server database
+	// Log database
+	uint16 log_db_port = 3306;
+	std::string log_db_ip;
+	std::string log_db_id;
+	std::string log_db_pw;
+	std::string log_db_db;
+
+	std::string default_codepage; ///< Codepage [irmin]
+};
+
+extern s_map_serv_config map_config;
+
 enum E_MAPSERVER_ST {
 	MAPSERVER_ST_RUNNING = CORE_ST_LAST,
 	MAPSERVER_ST_STARTING,

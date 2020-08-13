@@ -37,20 +37,12 @@
 
 std::string cfgFile = "inter_athena.yml"; ///< Inter-Config file
 InterServerDatabase interServerDb;
+s_inter_serv_config inter_config;
 
 #define WISDATA_TTL (60*1000)	//Wis data Time To Live (60 seconds)
 #define WISDELLIST_MAX 256		// Number of elements in the list Delete data Wis
 
-
 Sql* sql_handle = NULL;	///Link to mysql db, connection FD
-
-int char_server_port = 3306;
-char char_server_ip[64] = "127.0.0.1";
-char char_server_id[32] = "ragnarok";
-char char_server_pw[32] = ""; // Allow user to send empty password (bugreport:7787)
-char char_server_db[32] = "ragnarok";
-char default_codepage[32] = ""; //Feature by irmin.
-unsigned int party_share_level = 10;
 
 /// Received packet Lengths from map-server
 int inter_recv_packet_length[] = {
@@ -806,19 +798,19 @@ int inter_config_read(const char* cfgName)
 			continue;
 
 		if(!strcmpi(w1,"char_server_ip"))
-			safestrncpy(char_server_ip,w2,sizeof(char_server_ip));
+			inter_config.char_server_ip = w2;
 		else if(!strcmpi(w1,"char_server_port"))
-			char_server_port = atoi(w2);
+			inter_config.char_server_port = (uint16)strtoul(w2, nullptr, 10);
 		else if(!strcmpi(w1,"char_server_id"))
-			safestrncpy(char_server_id,w2,sizeof(char_server_id));
+			inter_config.char_server_id = w2;
 		else if(!strcmpi(w1,"char_server_pw"))
-			safestrncpy(char_server_pw,w2,sizeof(char_server_pw));
+			inter_config.char_server_pw = w2;
 		else if(!strcmpi(w1,"char_server_db"))
-			safestrncpy(char_server_db,w2,sizeof(char_server_db));
+			inter_config.char_server_db = w2;
 		else if(!strcmpi(w1,"default_codepage"))
-			safestrncpy(default_codepage,w2,sizeof(default_codepage));
+			inter_config.default_codepage = w2;
 		else if(!strcmpi(w1,"party_share_level"))
-			party_share_level = (unsigned int)atof(w2);
+			inter_config.party_share_level = (uint32)strtoul(w2, nullptr, 10);
 		else if(!strcmpi(w1,"log_inter"))
 			charserv_config.log_inter = atoi(w2);
 		else if(!strcmpi(w1,"inter_server_conf"))
@@ -927,27 +919,43 @@ uint64 InterServerDatabase::parseBodyNode( const YAML::Node& node ){
 	return 1;
 }
 
+/**
+ * Assign default values for Inter-server configurations
+ */
+static void inter_config_init() {
+	inter_config.char_server_port = 3306;
+	inter_config.char_server_ip = "127.0.0.1";
+	inter_config.char_server_id = "ragnarok";
+	inter_config.char_server_pw = "";
+	inter_config.char_server_db = "ragnarok";
+	inter_config.default_codepage = "";
+	inter_config.party_share_level = 10;
+}
+
 // initialize
 int inter_init_sql(const char *file)
 {
+	inter_config_init();
 	inter_config_read(file);
 
 	//DB connection initialized
 	sql_handle = Sql_Malloc();
 	ShowInfo("Connect Character DB server.... (Character Server)\n");
-	if( SQL_ERROR == Sql_Connect(sql_handle, char_server_id, char_server_pw, char_server_ip, (uint16)char_server_port, char_server_db) )
+	if( SQL_ERROR == Sql_Connect(sql_handle, inter_config.char_server_id.c_str(), inter_config.char_server_pw.c_str(), inter_config.char_server_ip.c_str(), inter_config.char_server_port, inter_config.char_server_db.c_str()) )
 	{
 		ShowError("Couldn't connect with username = '%s', password = '%s', host = '%s', port = '%d', database = '%s'\n",
-			char_server_id, char_server_pw, char_server_ip, char_server_port, char_server_db);
+			inter_config.char_server_id.c_str(), inter_config.char_server_pw.c_str(), inter_config.char_server_ip.c_str(), inter_config.char_server_port, inter_config.char_server_db.c_str());
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
 	}
 
-	if( *default_codepage ) {
-		if( SQL_ERROR == Sql_SetEncoding(sql_handle, default_codepage) )
+	if( !inter_config.default_codepage.empty() ) {
+		if( SQL_ERROR == Sql_SetEncoding(sql_handle, inter_config.default_codepage.c_str()) )
 			Sql_ShowDebug(sql_handle);
 	}
+
+	ShowStatus("" CL_WHITE "[SQL]" CL_RESET ": Successfully '" CL_GREEN "connected" CL_RESET "' to Database '" CL_WHITE "%s" CL_RESET "'.\n", inter_config.char_server_db.c_str());
 
 	wis_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	interServerDb.load();

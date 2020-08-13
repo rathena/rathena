@@ -342,7 +342,7 @@ int party_check_family_share(struct party_data *p) {
 // Returns whether this party can keep having exp share or not.
 int party_check_exp_share(struct party_data *p)
 {
-	return (p->party.count < 2 || p->max_lv - p->min_lv <= party_share_level || party_check_family_share(p));
+	return (p->party.count < 2 || p->max_lv - p->min_lv <= inter_config.party_share_level || party_check_family_share(p));
 }
 
 // Is there any member in the party?
@@ -790,7 +790,7 @@ int mapif_parse_PartyShareLevel(int fd,unsigned int share_lvl)
 	struct party_data *p;
 	DBIterator* iter = db_iterator(party_db_);
 
-	party_share_level = share_lvl;
+	inter_config.party_share_level = share_lvl;
 
 	for(p = (struct party_data *)dbi_first(iter); dbi_exists(iter); p = (struct party_data *)dbi_next(iter)) { //Update online parties
 		if(p->party.count > 1)

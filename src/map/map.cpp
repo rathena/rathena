@@ -52,15 +52,11 @@
 
 using namespace rathena;
 
-char default_codepage[32] = "";
+s_map_serv_config map_config;
 
-int map_server_port = 3306;
-char map_server_ip[64] = "127.0.0.1";
-char map_server_id[32] = "ragnarok";
-char map_server_pw[32] = "";
-char map_server_db[32] = "ragnarok";
 Sql* mmysql_handle;
 Sql* qsmysql_handle; /// For query_sql
+Sql *logmysql_handle;
 
 int db_use_sqldbs = 0;
 char buyingstores_table[32] = "buyingstores";
@@ -88,14 +84,6 @@ char vending_items_table[32] = "vending_items";
 char market_table[32] = "market";
 char roulette_table[32] = "db_roulette";
 char guild_storage_log_table[32] = "guild_storage_log";
-
-// log database
-char log_db_ip[64] = "127.0.0.1";
-int log_db_port = 3306;
-char log_db_id[32] = "ragnarok";
-char log_db_pw[32] = "";
-char log_db_db[32] = "log";
-Sql* logmysql_handle;
 
 // DBMap declaration
 static DBMap* id_db=NULL; /// int id -> struct block_list*
@@ -4220,41 +4208,41 @@ int inter_config_read(const char *cfgName)
 		else
 		//Map Server SQL DB
 		if(strcmpi(w1,"map_server_ip")==0)
-			safestrncpy(map_server_ip, w2, sizeof(map_server_ip));
+			map_config.map_server_ip = w2;
 		else
 		if(strcmpi(w1,"map_server_port")==0)
-			map_server_port=atoi(w2);
+			map_config.map_server_port = (uint16)strtoul(w2, nullptr, 10);
 		else
 		if(strcmpi(w1,"map_server_id")==0)
-			safestrncpy(map_server_id, w2, sizeof(map_server_id));
+			map_config.map_server_id = w2;
 		else
 		if(strcmpi(w1,"map_server_pw")==0)
-			safestrncpy(map_server_pw, w2, sizeof(map_server_pw));
+			map_config.map_server_pw = w2;
 		else
 		if(strcmpi(w1,"map_server_db")==0)
-			safestrncpy(map_server_db, w2, sizeof(map_server_db));
+			map_config.map_server_db = w2;
 		else
 		if(strcmpi(w1,"default_codepage")==0)
-			safestrncpy(default_codepage, w2, sizeof(default_codepage));
+			map_config.default_codepage = w2;
 		else
 		if(strcmpi(w1,"use_sql_db")==0) {
 			db_use_sqldbs = config_switch(w2);
 			ShowStatus ("Using SQL dbs: %s\n",w2);
 		} else
 		if(strcmpi(w1,"log_db_ip")==0)
-			safestrncpy(log_db_ip, w2, sizeof(log_db_ip));
+			map_config.log_db_ip = w2;
 		else
 		if(strcmpi(w1,"log_db_id")==0)
-			safestrncpy(log_db_id, w2, sizeof(log_db_id));
+			map_config.log_db_id = w2;
 		else
 		if(strcmpi(w1,"log_db_pw")==0)
-			safestrncpy(log_db_pw, w2, sizeof(log_db_pw));
+			map_config.log_db_pw = w2;
 		else
 		if(strcmpi(w1,"log_db_port")==0)
-			log_db_port = atoi(w2);
+			map_config.log_db_port = (uint16)strtoul(w2, nullptr, 10);
 		else
 		if(strcmpi(w1,"log_db_db")==0)
-			safestrncpy(log_db_db, w2, sizeof(log_db_db));
+			map_config.log_db_db = w2;
 		else
 		if( mapreg_config_read(w1,w2) )
 			continue;
@@ -4278,11 +4266,11 @@ int map_sql_init(void)
 	qsmysql_handle = Sql_Malloc();
 
 	ShowInfo("Connecting to the Map DB Server....\n");
-	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) ||
-		SQL_ERROR == Sql_Connect(qsmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) )
+	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_config.map_server_id.c_str(), map_config.map_server_pw.c_str(), map_config.map_server_ip.c_str(), map_config.map_server_port, map_config.map_server_db.c_str()) ||
+		SQL_ERROR == Sql_Connect(qsmysql_handle, map_config.map_server_id.c_str(), map_config.map_server_pw.c_str(), map_config.map_server_ip.c_str(), map_config.map_server_port, map_config.map_server_db.c_str()) )
 	{
 		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db);
+			map_config.map_server_id.c_str(), map_config.map_server_pw.c_str(), map_config.map_server_ip.c_str(), map_config.map_server_port, map_config.map_server_db.c_str());
 		Sql_ShowDebug(mmysql_handle);
 		Sql_Free(mmysql_handle);
 		Sql_ShowDebug(qsmysql_handle);
@@ -4291,10 +4279,10 @@ int map_sql_init(void)
 	}
 	ShowStatus("Connect success! (Map Server Connection)\n");
 
-	if( strlen(default_codepage) > 0 ) {
-		if ( SQL_ERROR == Sql_SetEncoding(mmysql_handle, default_codepage) )
+	if( !map_config.default_codepage.empty() ) {
+		if ( SQL_ERROR == Sql_SetEncoding(mmysql_handle, map_config.default_codepage.c_str()) )
 			Sql_ShowDebug(mmysql_handle);
-		if ( SQL_ERROR == Sql_SetEncoding(qsmysql_handle, default_codepage) )
+		if ( SQL_ERROR == Sql_SetEncoding(qsmysql_handle, map_config.default_codepage.c_str()) )
 			Sql_ShowDebug(qsmysql_handle);
 	}
 	return 0;
@@ -4323,18 +4311,18 @@ int log_sql_init(void)
 	// log db connection
 	logmysql_handle = Sql_Malloc();
 
-	ShowInfo("" CL_WHITE "[SQL]" CL_RESET ": Connecting to the Log Database " CL_WHITE "%s" CL_RESET " At " CL_WHITE "%s" CL_RESET "...\n",log_db_db,log_db_ip);
-	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db) ){
+	ShowInfo("" CL_WHITE "[SQL]" CL_RESET ": Connecting to the Log Database " CL_WHITE "%s" CL_RESET " At " CL_WHITE "%s" CL_RESET "...\n", map_config.log_db_db.c_str(), map_config.log_db_ip.c_str());
+	if ( SQL_ERROR == Sql_Connect(logmysql_handle, map_config.log_db_id.c_str(), map_config.log_db_pw.c_str(), map_config.log_db_ip.c_str(), map_config.log_db_port, map_config.log_db_db.c_str()) ){
 		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db);
+			map_config.log_db_id.c_str(), map_config.log_db_pw.c_str(), map_config.log_db_ip.c_str(), map_config.log_db_port, map_config.log_db_db.c_str());
 		Sql_ShowDebug(logmysql_handle);
 		Sql_Free(logmysql_handle);
 		exit(EXIT_FAILURE);
 	}
-	ShowStatus("" CL_WHITE "[SQL]" CL_RESET ": Successfully '" CL_GREEN "connected" CL_RESET "' to Database '" CL_WHITE "%s" CL_RESET "'.\n", log_db_db);
+	ShowStatus("" CL_WHITE "[SQL]" CL_RESET ": Successfully '" CL_GREEN "connected" CL_RESET "' to Database '" CL_WHITE "%s" CL_RESET "'.\n", map_config.log_db_db.c_str());
 
-	if( strlen(default_codepage) > 0 )
-		if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, default_codepage) )
+	if( !map_config.default_codepage.empty() )
+		if ( SQL_ERROR == Sql_SetEncoding(logmysql_handle, map_config.default_codepage.c_str()) )
 			Sql_ShowDebug(logmysql_handle);
 
 	return 0;
@@ -5122,8 +5110,26 @@ void do_shutdown(void)
 	}
 }
 
+/**
+ * Assign default values for Map-server configurations
+ */
+static void map_config_init() {
+	map_config.map_server_port = 3306;
+	map_config.map_server_ip = "127.0.0.1";
+	map_config.map_server_id = "ragnarok";
+	map_config.map_server_pw = "";
+	map_config.map_server_db = "ragnarok";
+	map_config.log_db_ip = "127.0.0.1";
+	map_config.log_db_id = "ragnarok";
+	map_config.log_db_pw = "";
+	map_config.log_db_db = "log";
+	map_config.default_codepage = "";
+}
+
 int do_init(int argc, char *argv[])
 {
+	map_config_init();
+
 	runflag = MAPSERVER_ST_STARTING;
 #ifdef GCOLLECT
 	GC_enable_incremental();
