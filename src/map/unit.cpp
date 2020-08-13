@@ -718,17 +718,14 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 	if (!path_search(&wpd, bl->m, bl->x, bl->y, x, y, flag&1, CELL_CHKNOPASS)) // Count walk path cells
 		return 0;
 
-	if (bl->type != BL_NPC) {
-
+	if (bl->type != BL_NPC && (
 #ifdef OFFICIAL_WALKPATH
-		if( !path_search_long(NULL, bl->m, bl->x, bl->y, x, y, CELL_CHKNOPASS) // Check if there is an obstacle between
-			&& wpd.path_len > 14 ) // Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
-				return 0;
+		( !path_search_long(NULL, bl->m, bl->x, bl->y, x, y, CELL_CHKNOPASS) // Check if there is an obstacle between
+		&& wpd.path_len > 14 ) // Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
+		||
 #endif
-
-		if (wpd.path_len > battle_config.max_walk_path)
+		wpd.path_len > battle_config.max_walk_path))
 			return 0;
-	}
 
 	if (flag&4) {
 		unit_unattackable(bl);
