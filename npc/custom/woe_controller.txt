@@ -62,13 +62,16 @@ OnInit:
 //  [2] Mail all rewards.
 //      - If not set, players receive items in their inventory.
 //      - Only ONE item can be sent via mail for PACKETVER < 20150513 while later clients are limited to MAIL_MAX_ITEM (5).
-//      - Note that offline players do NOT receive rewards.
+//      - If this setting is not set, offline players do NOT receive rewards in any case.
 //  [4] Only reward Guild Masters.
 //      - If not set, all guild members are rewarded.
 //      - If mailing is enabled (option 2), offline Guild Masters WILL receive rewards.
 //  [8] Duplicate IP check.
 //      - Members in a guild with the same IP address are not rewarded.
 //      - If Guild Masters is enabled (option 4), this feature is not used.
+//  [16] Mail online player only.
+//      - Only available when mailing is enabled (option 2).
+//      - When enabled, offline players do NOT receive rewards.
 // -----------------------------------------------------------
 
 	// Combine values as needed (e.g. 1|8 = 1+8 = 9).
@@ -313,23 +316,26 @@ OnReward:
 				.@size_guild = .@k;
 			}
 			for(set .@j,0; .@j<.@size_guild; set .@j,.@j+1) {
+				.@online = isloggedin(.@aid[.@j],.@cid[.@j]);
 				if (.Options&2) {
-					.@charid = .@cid[.@j];
-					.@sender$ = "no-reply";
-					.@title$ = "** Siege Reward: "+getcastlename(.Castles$[.@i])+" **";
-					.@body$ = "Brave one,\r\n \r\n Congratulations!\r\n Your guild has successfully occupied\r\n territory in the War of Emperium on\r\n "+.@str$+".\r\n \r\n \r\n \r\n \r\n [ Your reward is attached. ]";
+					if (.@online || !(.Options&16)) {
+						.@charid = .@cid[.@j];
+						.@sender$ = "no-reply";
+						.@title$ = "** Siege Reward: "+getcastlename(.Castles$[.@i])+" **";
+						.@body$ = "Brave one,\r\n \r\n Congratulations!\r\n Your guild has successfully occupied\r\n territory in the War of Emperium on\r\n "+.@str$+".\r\n \r\n \r\n \r\n \r\n [ Your reward is attached. ]";
 
-					if (.reward_id_size)
-						mail .@charid, .@sender$, .@title$, .@body$, .reward_zeny, .reward_id, .reward_amount;
-					else
-						mail .@charid, .@sender$, .@title$, .@body$, .reward_zeny;
+						if (.reward_id_size)
+							mail .@charid, .@sender$, .@title$, .@body$, .reward_zeny, .reward_id, .reward_amount;
+						else
+							mail .@charid, .@sender$, .@title$, .@body$, .reward_zeny;
 
-					if (PACKETVER < 20150513 && !getd(".@str_"+.@cid[.@j]) && isloggedin(.@aid[.@j],.@cid[.@j])) {
-						setd ".@str_"+.@cid[.@j],1;
-						message rid2name(.@aid[.@j]),"You've got mail!";
+						if (PACKETVER < 20150513 && !getd(".@str_"+.@cid[.@j]) && .@online) {
+							setd ".@str_"+.@cid[.@j],1;
+							message rid2name(.@aid[.@j]),"You've got mail!";
+						}
 					}
 				}
-				else if (isloggedin(.@aid[.@j],.@cid[.@j])) {
+				else if (.@online) {
 					attachrid( .@aid[.@j], true );
 					.@name$ = strcharinfo( 0 );
 					.@castle_name$ = getcastlename(.Castles$[.@i]);

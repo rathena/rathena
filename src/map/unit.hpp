@@ -59,6 +59,8 @@ struct unit_data {
 		unsigned blockedskill : 1;
 	} state;
 	char walk_done_event[EVENT_NAME_LENGTH];
+	char title[NAME_LENGTH];
+	int32 group_id;
 };
 
 struct view_data {
@@ -67,13 +69,14 @@ struct view_data {
 #else
 	unsigned short class_;
 #endif
-unsigned short
+	t_itemid
 		weapon,
 		shield, //Or left-hand weapon.
 		robe,
 		head_top,
 		head_mid,
-		head_bottom,
+		head_bottom;
+	uint16
 		hair_style,
 		hair_color,
 		cloth_color,
@@ -119,7 +122,7 @@ int unit_can_move(struct block_list *bl);
 int unit_is_walking(struct block_list *bl);
 int unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int type);
 
-int unit_escape(struct block_list *bl, struct block_list *target, short dist);
+int unit_escape(struct block_list *bl, struct block_list *target, short dist, uint8 flag = 0);
 
 // Instant unit changes
 bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath);

@@ -645,13 +645,37 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 	}
 
 	if( acc->sex != 'S' && login_config.use_web_auth_token ){
+		static bool initialized = false;
+		static const char* query;
+
+		// Pseudo Scope to break out
+		while( !initialized ){
+			if( SQL_SUCCESS == Sql_Query( sql_handle, "SELECT SHA2( 'test', 256 )" ) ){
+				query = "UPDATE `%s` SET `web_auth_token` = LEFT( SHA2( CONCAT( UUID(), RAND() ), 256 ), %d ), `web_auth_token_enabled` = '1' WHERE `account_id` = '%d'";
+				initialized = true;
+				break;
+			}
+
+			if( SQL_SUCCESS == Sql_Query( sql_handle, "SELECT MD5( 'test' )" ) ){
+				query = "UPDATE `%s` SET `web_auth_token` = LEFT( MD5( CONCAT( UUID(), RAND() ) ), %d ), `web_auth_token_enabled` = '1' WHERE `account_id` = '%d'";
+				initialized = true;
+				break;
+			}
+
+			ShowWarning( "Your MySQL does not support SHA2 and MD5 - no hashing will be used for login token creation.\n" );
+			ShowWarning( "If you are using an old version of MySQL consider upgrading to a newer release.\n" );
+			query = "UPDATE `%s` SET `web_auth_token` = LEFT( CONCAT( UUID(), RAND() ), %d ), `web_auth_token_enabled` = '1' WHERE `account_id` = '%d'";
+			initialized = true;
+			break;
+		}
+
 		const int MAX_RETRIES = 20;
 		int i = 0;
 		bool success = false;
 
 		// Retry it for a maximum number of retries
 		do{
-			if( SQL_SUCCESS == Sql_Query( sql_handle, "UPDATE `%s` SET `web_auth_token` = LEFT( SHA2( CONCAT( UUID(), RAND() ), 256 ), %d ), `web_auth_token_enabled` = '1' WHERE `account_id` = '%d'", db->account_db, WEB_AUTH_TOKEN_LENGTH - 1, acc->account_id ) ){
+			if( SQL_SUCCESS == Sql_Query( sql_handle, query, db->account_db, WEB_AUTH_TOKEN_LENGTH - 1, acc->account_id ) ){
 				success = true;
 				break;
 			}
