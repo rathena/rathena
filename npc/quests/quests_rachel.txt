@@ -7245,7 +7245,10 @@ OnTouch:
 		mes "For now, you may as well";
 		mes "talk to High Priest Zhed.^000000";
 		set ra_tem_q,19;
-		changequest 8102,8103;
+		if (isbegin_quest(8102) == 1)
+			changequest 8102,8103;
+		else
+			setquest 8103;
 		close;
 	}
 	end;
