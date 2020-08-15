@@ -2344,7 +2344,7 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 void skill_reveal_trap_inarea(struct block_list *src, int range, int x, int y);
 int skill_get_time3(struct map_data *mapdata, uint16 skill_id, uint16 skill_lv);
 
-int skill_vending(struct map_session_data *sd, unsigned short nameid); //Extended Vending [Lilith]
+int skill_vending(struct map_session_data *sd, t_itemid nameid); //Extended Vending [Lilith]
 
 /// Variable name of copied skill by Plagiarism
 #define SKILL_VAR_PLAGIARISM "CLONE_SKILL"

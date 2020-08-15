@@ -17602,7 +17602,7 @@ void skill_identify(struct map_session_data *sd, int idx)
 /**
 * Extended Vending system [Lilith]
 **/
-int skill_vending(struct map_session_data *sd, unsigned short nameid) {
+int skill_vending(struct map_session_data *sd, t_itemid nameid) {
 	struct item_data *item;
 	char output[1024];
 	nullpo_ret(sd);
@@ -17612,7 +17612,7 @@ int skill_vending(struct map_session_data *sd, unsigned short nameid) {
 		sd->state.workinprogress = WIP_DISABLE_NONE;
 		return 0;
 	}
-	if (nameid <= 0 || nameid >= (MAX_ITEMID)) {
+	if (nameid == 0 || nameid == ITEMID_DUMMY) {
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
 		sd->state.prevend = 0;
 		sd->state.workinprogress = WIP_DISABLE_NONE;
