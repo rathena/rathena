@@ -228,7 +228,8 @@ bonus3 bAddEle,e,x,bf;    		+x% physical damage against element e with trigger c
 bonus2 bMagicAddEle,e,x;  		+x% magical damage against element e
 bonus2 bSubEle,e,x;       		+x% damage reduction against attack element e
 bonus3 bSubEle,e,x,bf;    		+x% damage reduction against attack element e with trigger criteria bf
-bonus2 bSubDefEle,e,x;    		+x% damage reduction from enemy with defense element e
+bonus2 bSubDefEle,e,x;    		+x% physical damage reduction from enemy with defense element e
+bonus2 bMagicSubDefEle,e,x;		+x% magic damage reduction from enemy with defense element e
 
 bonus2 bAddRace,r,x;      		+x% physical damage against race r
 bonus2 bMagicAddRace,r,x; 		+x% magical damage against race r

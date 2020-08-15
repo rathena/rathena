@@ -187,6 +187,7 @@ struct CharServ_Config {
 	int clan_remove_inactive_days;
 	int mail_return_days;
 	int mail_delete_days;
+	int mail_retrieve;
 
 	int allowed_job_flag;
 };
