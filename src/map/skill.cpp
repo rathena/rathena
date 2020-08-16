@@ -17341,6 +17341,8 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 			VARCAST_REDUCTION(sc->data[SC_TELEKINESIS_INTENSE]->val2);
 		if (sc->data[SC_SOULFAIRY])
 			VARCAST_REDUCTION(sc->data[SC_SOULFAIRY]->val3);
+		if (sc->data[SC_EP16_2_BUFF_AC])
+			VARCAST_REDUCTION(80);
 		// Multiplicative Fixed CastTime values
 		if (sc->data[SC_SECRAMENT])
 			fixcast_r = max(fixcast_r, sc->data[SC_SECRAMENT]->val2);
