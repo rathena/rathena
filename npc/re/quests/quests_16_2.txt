@@ -623,7 +623,7 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	4_EP16_SKIA,{
 		mes "[Kronecker]";
 		mes "You can continue to enjoy everything you did as a guest. We have agreed on it.";
 		mes "As you always have shown us honest faith.";
-		getitem 6919,10;	// Honor_Proof
+		getitem 6919,10;	// TokenOfHonor
 		getexp 500000,500000;
 		completequest 7741;// Let's return
 		terra_gloria_main = 24;
@@ -3567,7 +3567,7 @@ que_swat,150,58,3	script	Rookie#ep162_03	4_M_ROOKIE,{
 			mes "We will count on you again next time.";
 			erasequest 7742;// Sweeping the remnants
 			setquest 7743;// Sweeping the remnants (Standby)
-			getitem 25155,3;	// Schwartz's_Honor_Token
+			getitem 25155,3;	// Swz_Honor_Token
 			getexp 200000,200000;
 			close3;
 		}
@@ -3661,7 +3661,7 @@ que_swat,145,57,3	script	Philopontess#ep162_04	4_M_PHILOFONTES,{
 		next;
 		mes "[Tess]";
 		mes "Thank you for your support in advance.";
-		getitem 25155,10;	// Schwartz's_Honor_Token
+		getitem 25155,10;	// Swz_Honor_Token
 		getexp 500000,500000;
 		terra_gloria_main = 25;
 		close2;
@@ -3716,7 +3716,7 @@ que_swat,145,57,3	script	Philopontess#ep162_04	4_M_PHILOFONTES,{
 			setquest 7745;		// Hiding Researcher (Standby)
 			erasequest 7760;	// Well hidden
 			erasequest 7744;	// Hiding Researcher
-			getitem 25155,3;	// Schwartz's_Honor_Token
+			getitem 25155,3;	// Swz_Honor_Token
 			getexp 200000,200000;
 			next;
 			mes "[Tess]";
@@ -3831,7 +3831,7 @@ que_swat,161,53,3	script	Yuslan#ep162_1	4_M_GUNSLINGER3,{
 			mes "Please be with us next time!";
 			erasequest 7761;// Make Chimeras rest in peace
 			setquest 7762;// Make Chimeras rest in peace (Standby)
-			getitem 25155,3;	// Schwartz's_Honor_Token
+			getitem 25155,3;	// Swz_Honor_Token
 			getexp 300000,300000;
 			close;
 		}
@@ -3897,7 +3897,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 		mes "It smells good.";
 		mes "Seems like they gave a great effort. Tell them thanks.";
 		completequest 16031;// Service: Cookies delivery
-		delitem 25161,1;// Delicious Handmade Cookie
+		delitem 25161,1;// Handmade_cookie2
 		close;
 	}
 
@@ -4148,7 +4148,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 				setquest 16010;// Battle in great condition
 				completequest 14602;// Hunter on second floor
 				getexp 200000,200000;
-				getitem 25155,10;	// Schwartz's_Honor_Token
+				getitem 25155,10;	// Swz_Honor_Token
 				close3;
 			}
 		}
@@ -4309,7 +4309,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			erasequest 16061;	// Fair and equitable result
 			setquest 16010;// Battle in great condition
 			getexp 400000,400000;
-			getitem 25155,3;// Schwartz's Honor Token
+			getitem 25155,3;// Swz_Honor_Token
 			close3;
 		}
 		end;
@@ -4641,7 +4641,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "I will count on you in the future.";
 			completequest 16019;// Elena Volkova's Solution
 			getexp 200000,200000;
-			getitem 25155,10;// Schwartz's Honor Token
+			getitem 25155,10;// Swz_Honor_Token
 			lebedev_quest_16_2 = 11;
 			close3;
 		}
@@ -4658,7 +4658,9 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 	end;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16011) == 0 && isbegin_quest(14602) == 1" );// todo display too when 16061 completed
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16011) == 0 && isbegin_quest(14602) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16061) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(16010,PLAYTIME) == 2" );
 
 	// twin quest main - incomplete: should display everytime player need to talk to npc
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16012) == 0 && isbegin_quest(14615) == 1" );
@@ -4696,13 +4698,13 @@ rebel_in,177,30,3	script	Sorita Doritas#16.2rm	4_M_GUNSLINGER3,{
 rebel_in,177,28,5	script	Ivan Ivanov#16.2rm	4_M_REBELLION2,{
 	end;
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16010) == 0" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16061) == 1" );
 	waitingroom "Enter Rebellion arena",20,"Ivan Ivanov#16.2rm::OnEvent",1;
 	end;
 OnEvent:
 	if (.event_start == 0) {
 		.event_start = 1;
-		warpwaitingpc "rebel_in",201,19;	// note: waitingroom trigger is 1 = warp one player
+		warpwaitingpc "rebel_in",201,19;
 		donpcevent "Milo River#16.2rmA::OnStart";
 	}
 	end;
@@ -4711,6 +4713,7 @@ OnStart:
 	end;
 OnTimer3000:
 	stopnpctimer;
+	disablenpc "Naga#16.2rmA";
 	areawarp "rebel_in",192,12,207,27,"rebel_in",68,76;
 	.event_start = 0;
 	if (getwaitingroomstate(33) == true)	// warp next player in waitingroom
@@ -4781,11 +4784,18 @@ OnMobDead:
 	completequest 16061;	// Fair and equitable result
 	npctalk "Milo River: " + strcharinfo(0) + ", you win! You can go out and magnify yourself. You are moving to the lobby in three seconds.";
 	donpcevent "Ivan Ivanov#16.2rm::OnStart";
-	// sleep2 3000;	// should simulate player attached
+	enablenpc "Naga#16.2rmA";
 	end;
 }
 
-// rebel_in,200,19,0	script	Naga#16.2rmA	HIDDEN_WARP_NPC,12,12,{	// officially warp out
+rebel_in,200,19,0	script	Naga#16.2rmA	HIDDEN_WARP_NPC,12,12,{
+	end;
+OnTouch:
+	setpcblock PCBLOCK_NPC, true;
+	sleep2 3000;	// player attached
+	setpcblock PCBLOCK_NPC, false;
+	end;
+}
 
 // Square Leader - start the Old Lady part
 rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
@@ -5274,7 +5284,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		cutin "ep162_dn03.bmp",2;
 		cloakonnpc "Dien#162gmbs2", getcharid(0);
 		if (terra_gloria_lady_part == 9) {
-			getitem 25155,10;	// Schwartz's_Honor_Token
+			getitem 25155,10;	// Swz_Honor_Token
 			getexp 200000,200000;
 			completequest 14600;// Gentleman on second floor
 			completequest 11462;// Doubt
@@ -6610,7 +6620,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		npctalk "Please visit us again, adventurer.", "Rookie#16nego02", bc_self;
 		erasequest 14614;// Convince the leaders
 		setquest 14615;// Between negotiation and deception
-		getitem 25155,10;	// Schwartz's_Honor_Token
+		getitem 25155,10;	// Swz_Honor_Token
 		getexp 1000000,500000;
 		terra_gloria_main = 17;
 		close3;
@@ -7517,10 +7527,10 @@ rebel_in,162,87,5	script	Rebellion Guard leader#2	4_M_REBELLION,{
 				next;
 				mes "[Rebellion Guard leader Larcis]";
 				mes "If you bring this token to Strasse at the stairs at 10 o'clock in the corridor of the 2nd floor, you will receive something useful in return.";
-				delitem 25165,1;// High Class Tea
+				delitem 25165,1;// High_Class_Tea
 				erasequest 11465;// Dien's High Class Tea
 				setquest 11466;// Dien's High Class Tea
-				getitem 25155,3;// Schwartz's Honor Token
+				getitem 25155,3;// Swz_Honor_Token
 				getexp 150000,150000;
 				break;
 			case 1:
@@ -7531,10 +7541,10 @@ rebel_in,162,87,5	script	Rebellion Guard leader#2	4_M_REBELLION,{
 				next;
 				mes "[Rebellion Guard leader Larcis]";
 				mes "If you bring this token to Strasse at the stairs at 10 o'clock in the corridor of the 2nd floor, you will receive something useful in return.";
-				delitem 25167,1;// Old Letter
+				delitem 25167,1;// Old_Letter
 				erasequest 11467;// Ridsh's Old Letter
 				setquest 11468;// Ridsh's Old Letter
-				getitem 25155,3;// Schwartz's Honor Token
+				getitem 25155,3;// Swz_Honor_Token
 				getexp 150000,150000;
 				break;
 			case 2:
@@ -7546,7 +7556,7 @@ rebel_in,162,87,5	script	Rebellion Guard leader#2	4_M_REBELLION,{
 				mes "[Rebellion Guard leader Larcis]";
 				mes "If you bring this token to Strasse at the stairs at 10 o'clock in the corridor of the 2nd floor, you will receive something useful in return.";
 				delitem 25166,4;	// Very_Shining_Ring
-				getitem 25155,3;	// Schwartz's_Honor_Token
+				getitem 25155,3;	// Swz_Honor_Token
 				erasequest 11469;// Cotness's Shiny Ring
 				setquest 11470;// Cotness's Shiny Ring
 				getexp 150000,150000;
@@ -7558,10 +7568,9 @@ rebel_in,162,87,5	script	Rebellion Guard leader#2	4_M_REBELLION,{
 	end;
 
 OnInit:
-	// todo: check the playtime condition to display the bubble
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11465) == 0 && (checkquest(11466,PLAYTIME) == -1 || checkquest(11466,PLAYTIME) == 2) && isbegin_quest(11464) == 2" );
-	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11467) == 0 && (checkquest(11468,PLAYTIME) == -1 || checkquest(11466,PLAYTIME) == 2) && isbegin_quest(11464) == 2" );
-	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11469) == 0 && (checkquest(11470,PLAYTIME) == -1 || checkquest(11466,PLAYTIME) == 2) && isbegin_quest(11464) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11467) == 0 && (checkquest(11468,PLAYTIME) == -1 || checkquest(11468,PLAYTIME) == 2) && isbegin_quest(11464) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11469) == 0 && (checkquest(11470,PLAYTIME) == -1 || checkquest(11470,PLAYTIME) == 2) && isbegin_quest(11464) == 2" );
 	end;
 }
 
@@ -8388,7 +8397,7 @@ rebel_in,78,63,6	script	Rebellion leader#TFQ15	4_M_RUPERT,{
 		mes "Since it was not an official mission, I cannot give you a huge reward. But it's still a remarkable achievement.";
 		next;
 		completequest 5737;	// Clana Namieri
-		getitem 25155,10;// Schwartz's Honor Token
+		getitem 25155,10;// Swz_Honor_Token
 		getexp 1000000,4000000;
 		yurhik_quest = 11;
 		mes "[Rebellion leader]";
@@ -8877,7 +8886,7 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 		mes "(......Cookies...?)";
 		erasequest 16016;// Borrowing wisdom of the experts
 		setquest 16033;// Bring dessert and listen the story
-		getitem 25161,1;// Delicious Handmade Cookie
+		getitem 25161,1;// Handmade_cookie2
 		lebedev_quest_16_2 = 7;
 		close;
 	}
@@ -8887,7 +8896,7 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 		next;
 		mes "[Detached Force commander Ericsson]";
 		mes "Don't preach at them too much. If they have problems, listen to them. Make sure you give them cookies.";
-		getitem 25161,1;// Delicious Handmade Cookie
+		getitem 25161,1;// Handmade_cookie2
 		close;
 	}
 	// twins daily quest
@@ -8907,69 +8916,328 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 		mes "[Detached Force commander Ericsson]";
 		mes "Hmm, good! Tell them thanks.";
 		completequest 16030;// Service: Cookies delivery
-		delitem 25161,1;// Delicious Handmade Cookie
+		delitem 25161,1;// Handmade_cookie2
 		close;
 	}
 
-	switch( isbegin_quest(16045) ) {
+	// Veteran's small memorial service quest
+	switch( checkquest(16049,PLAYTIME) ) {
+	case -1:
+		break;
 	case 0:
+	case 1:
 		mes "[Detached Force commander Ericsson]";
-		mes "...?";
-		mes "You...";
+		mes "I'm happy, thank you. One bouquet for today is enough.";
 		next;
 		mes "[Detached Force commander Ericsson]";
-		mes "You are the adventurer who created a huge noise in our hideout.";
-		mes "By the way, ... Hmm, no. Never mind.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "(... Seems like he wants to say something.)";
-		next;
-		if (select( "Would you like to say anything?", "See you." ) == 2) {
-			mes "[Detached Force commander Ericsson]";
-			mes "Oops, sorry. See you later.";
-			close;
-		}
+		mes "You must have other things to do, come back tomorrow.";
+		close;
+	case 2:
 		mes "[Detached Force commander Ericsson]";
-		mes "Oh, actually... I wanted to ask you for a little favor.";
-		mes "You'll have to visit Einbroch for a while. Would you accept it?";
+		mes "Will you stop by Einbroch again and offer flowers?";
 		next;
 		if (select( "I will help you.", "Sorry, I'm busy." ) == 2) {
 			mes "[Detached Force commander Ericsson]";
-			mes "Sorry for this inconvenience.";
+			mes "Is that so.";
+			mes "I'm sorry. It's not fun anyway.";
+			next;
+			mes "[Detached Force commander Ericsson]";
+			mes "I hope you can stop by later when you have time.";
 			close;
 		}
 		mes "[Detached Force commander Ericsson]";
-		mes "Thanks. It's not a tough job.";
-		mes "If you go south from the Einbroch observatory, you will find a ^0000CDflower girl^000000.";
-		next;
-		mes "[Detached Force commander Ericsson]";
-		mes "Could you buy a Bunch Of Flowers from that kid and lay it beneath the tree beside her?";
-		mes "There is a small sign below the tree, so you will find it easily.";
-		next;
-		mes "[Detached Force commander Ericsson]";
-		mes "I will count on you. Come back and report, I mean... tell me.";
-		setquest 16045;// Veteran's small memorial service
+		mes "There is a tree on the south side from the Einbroch observatory. You will find a ^0000CDflower girl^000000 nearby.";
+		mes "Thank you very much.";
+		erasequest 16049;// Quiet dawn
+		setquest 16050;// Tribute hour
 		close;
-	case 1:
-		// todo
+	}
+	switch( isbegin_quest(16050) ) {
+	case 0:// first time
+		if (isbegin_quest(16045) == 0) {
+			mes "[Detached Force commander Ericsson]";
+			mes "...?";
+			mes "You...";
+			next;
+			mes "[Detached Force commander Ericsson]";
+			mes "You are the adventurer who created a huge noise in our hideout.";
+			mes "By the way, ... Hmm, no. Never mind.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "(... Seems like he wants to say something.)";
+			next;
+			if (select( "Would you like to say anything?", "See you." ) == 2) {
+				mes "[Detached Force commander Ericsson]";
+				mes "Oops, sorry. See you later.";
+				close;
+			}
+			mes "[Detached Force commander Ericsson]";
+			mes "Oh, actually... I wanted to ask you for a little favor.";
+			mes "You'll have to visit Einbroch for a while. Would you accept it?";
+			next;
+			if (select( "I will help you.", "Sorry, I'm busy." ) == 2) {
+				mes "[Detached Force commander Ericsson]";
+				mes "Sorry for this inconvenience.";
+				close;
+			}
+			mes "[Detached Force commander Ericsson]";
+			mes "Thanks. It's not a tough job.";
+			mes "If you go south from the Einbroch observatory, you will find a ^0000CDflower girl^000000.";
+			next;
+			mes "[Detached Force commander Ericsson]";
+			mes "Could you buy a Bunch Of Flowers from that kid and lay it beneath the tree beside her?";
+			mes "There is a small sign below the tree, so you will find it easily.";
+			next;
+			mes "[Detached Force commander Ericsson]";
+			mes "I will count on you. Come back and report, I mean... tell me.";
+			setquest 16045;// Veteran's small memorial service
+			close;
+		}
+		if (isbegin_quest(16048) == 1) {
+			mes "[Detached Force commander Ericsson]";
+			mes "Oh, it's you.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I've spoken with Lucy.";
+			next;
+			mes "[Detached Force commander Ericsson]";
+			mes "Fine. Are you alright?";
+			next;
+			if (select( "I'm fine.", "She was talking about you." ) == 1) {
+				mes "[Detached Force commander Ericsson]";
+				mes "Is that so. Did she say anything? If she did, I would ask to keep it a secret from the twins.";
+				next;
+			}
+			mes "[Detached Force commander Ericsson]";
+			mes "What are you talking about?";
+			next;
+			mes "I told Lucy's story.";
+			next;
+			mes "[Detached Force commander Ericsson]";
+			mes "... I've always misunderstood.";
+			mes "Anyway, keep the story a secret from the others Rebellion, especially from the Lebedev twins.";
+			next;
+			mes "[Detached Force commander Ericsson]";
+			mes "If only she was alive...";
+			next;
+			mes "[Detached Force commander Ericsson]";
+			mes "No, I shouldn't think like that.";
+			next;
+			mes "[Detached Force commander Ericsson]";
+			mes "Thank you for going.";
+			mes "If you do not mind, will you stop by sometimes and put down some flowers?";
+			completequest 16048;// Traces of old story
+			setquest 16049;// Quiet dawn
+			getitem 25155,10;// Swz_Honor_Token
+			close;
+		}
+		mes "[Detached Force commander Ericsson]";
+		mes "Buy a Bunch Of Flowers from ^0000CDflower girl^000000 and lay it beneath the tree.";
+		mes "If you go south from the Einbroch observatory, you will find it.";
+		close;
+	case 1:// daily
+		if (isbegin_quest(16053) == 1) {
+			mes "I've been to Einbroch.";
+			next;
+			mes "[Detached Force commander Ericsson]";
+			mes "Thank you for going. I'd have to stop by myself, but I seldom have time.";
+			mes "Because these are busy times.";
+			erasequest 16053;// Ongoing old story
+			erasequest 16050;// Tribute hour
+			setquest 16049;// Quiet dawn
+			getitem 25155,3;// Swz_Honor_Token
+			close;
+		}
 		mes "[Detached Force commander Ericsson]";
 		mes "Buy a Bunch Of Flowers from ^0000CDflower girl^000000 and lay it beneath the tree.";
 		mes "If you go south from the Einbroch observatory, you will find it.";
 		close;
 	case 2:
-		// todo
+		end;
 	}
 	end;
 
 OnInit:
 	// Ericsson daily
 	.@terra_main_18$ = "isbegin_quest(14615) == 2";
-	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && isbegin_quest(16045) == 0") );
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && checkquest(16049,PLAYTIME) == -1 && isbegin_quest(16045) == 0") );
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && checkquest(16049,PLAYTIME) == 2") );
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && isbegin_quest(16048) == 1") );
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && isbegin_quest(16053) == 1") );
 
 	// twins daily quest : "Service: Cookies delivery"
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16030) == 1 && countitem(25161) > 0" );
 	end;
 }
+
+einbroch,167,160,3	script	Flower Girl#16.2rm	1_M_SIZ,{
+	if (isbegin_quest(16045) == 1) {
+		mes "[Flower Girl]";
+		mes "Hello. How about a flower?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Please bring me a bouquet.";
+		next;
+		mes "[Flower Girl]";
+		mes "Yes, I understand!";
+		mes "Oh, what should I do...";
+		next;
+		mes "[Flower Girl]";
+		mes "I have the flowers, but I ran out of paper to make a bouquet.";
+		mes "The shop I usually buy the paper from is closed...";
+		mes "I cannot go very far alone.";
+		next;
+		mes "[Flower Girl]";
+		mes "Please.";
+		mes "If you bring ^0000CD3 Slick Paper^000000, I will make a bouquet for you without having to pay for the flowers.";
+		completequest 16045;// Veteran's small memorial service
+		setquest 16046;// DIY obtaining bouquet materials
+		close;
+	}
+	if (isbegin_quest(16046) == 1 || isbegin_quest(16051) == 1) {
+		mes "[Flower Girl]";
+		mes "Did you bring ^0000CD3 Slick Paper^000000?";
+		mes "If you bring, I will make a bouquet for you without having to pay for the flowers.";
+		if (countitem(7111) < 3)
+			close;
+		next;
+		if (select( "Hand over the slick paper.", "Do not give the paper." ) == 2) {
+			mes "[Flower Girl]";
+			mes "Oh, I'm sorry... Didn't you need a bouquet?";
+			close;
+		}
+		mes "[Flower Girl]";
+		mes "Here, this bouquet is beautiful.";
+		delitem 7111,3;// Smooth_Paper
+		getitem 25152,1;// Cherish_Bouquet
+		if (isbegin_quest(16046) == 1) {
+			erasequest 16046;// DIY obtaining bouquet materials
+			setquest 16047;// Quiet memorial ceremony
+			getexp 1200000,1200000;
+		}
+		else {
+			erasequest 16051;// DIY obtaining bouquet materials
+			setquest 16052;// Quiet memorial ceremony
+		}
+		close;
+	}
+	if (isbegin_quest(16047) == 1 || isbegin_quest(16052) == 1) {
+		mes "[Flower Girl]";
+		mes "Flower quickly wither, but they are beautiful when they bloom.";
+		if (countitem(25152) < 1)
+			getitem 25152,1;// Cherish_Bouquet
+		close;
+	}
+	if (isbegin_quest(16050) == 1) {
+		mes "[Flower Girl]";
+		mes "Hello, you're here again. What flowers do you need?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Can you make a bouquet of carnations?";
+		next;
+		mes "[Flower Girl]";
+		mes "Oh my... I'm sorry, I still don't have enough paper to make a bouquet...";
+		mes "If you bring 3 pieces of ^0000CD smooth paper ^000000, I will make it.";
+		completequest 16050;// Tribute hour
+		setquest 16051;// DIY obtaining bouquet materials
+		close;
+	}
+	mes "[Flower Girl]";
+	mes "Buy flowers, you can buy from me!";
+	close;
+
+OnInit:
+	questinfo( QTYPE_QUEST,QMARK_YELLOW, " isbegin_quest(16045) == 1 " );
+	questinfo( QTYPE_QUEST,QMARK_YELLOW, " isbegin_quest(16046) == 1 " );
+	questinfo( QTYPE_QUEST,QMARK_YELLOW, " isbegin_quest(16050) == 1 " );
+	questinfo( QTYPE_QUEST,QMARK_YELLOW, " isbegin_quest(16051) == 1 " );
+	end;
+}
+
+einbroch,162,153,3	script	Huge Tree#16.2rm	4_BULLETIN_BOARD2,{
+	if (isbegin_quest(16047) == 1) {
+		mes "[Strange Voice]";
+		mes "There is a small sign in front of the tree.";
+		mes " ";
+		mes " - Here lies a kind " + (Sex ? "boy" : "girl") + " -";
+		if (countitem(25152) < 1)	// custom check
+			close;
+		mes " ";
+		mes "Should I put the bouquet down?";
+		next;
+		if (select( "Put the bouquet down.", "Don't put the bouquet down." ) == 2) {
+			mes "Stop trying to drop the flowers and check again that everything is right.";
+			close;
+		}
+		mes "I put down the Cherished Bouquet and took a moment of silence.";
+		next;
+		mes "[Strange Voice]";
+		mes "Who's there?";
+		next;
+		mes "Beside the tree, a small grandmother held out her hand.";
+		cloakoffnpc "Grandma Lucy#16.2rm", getcharid(0);
+		next;
+		mes "[Grandma]";
+		mes "Do you... know who it is? did you know Irene??";
+		mes "Looking at the clothes, I think you're a traveler. My memory is fading.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I came here out of a favor.";
+		next;
+		mes "[Grandma]";
+		mes "A favor? Adler's and that?";
+		mes "I'm Irene's grandmother who fell asleep here. My name is Luck.";
+		next;
+		mes "[Lucy Grandma]";
+		mes "At this time of year, Adler is the children who come to me always at this time of year, but this year I will not be able to candles.";
+		next;
+		if (select( "Goodbye.", "Report on Commander Ericsson and Mrs. Irene." ) == 1) {
+			mes "[Lucy Grandma]";
+			mes "Stop trying to drop the flowers and check again that everything is right.";
+			close2;
+			cloakonnpc "Grandma Lucy#16.2rm", getcharid(0);
+			end;
+		}
+		mes "[Lucy Grandma]";
+		mes "I believe it! That you had difficulties in reaching a city where young people cannot see!";
+		next;
+		mes "[Lucy Grandma]";
+		mes "I'm very thankful. Be alright...";
+		erasequest 16047;// Quiet memorial ceremony
+		setquest 16048;// Traces of old story
+		delitem 25152,1;// Cherish_Bouquet
+		close2;
+		cloakonnpc "Grandma Lucy#16.2rm", getcharid(0);
+		end;
+	}
+	if (isbegin_quest(16052) == 1) {
+		if (countitem(25152) < 1) {	// custom text
+			mes "[Huge Tree]";
+			mes "There is a small sign in front of the tree.";
+			mes "- Here lies a kind girl -";
+			close;
+		}
+		mes "Drop the bouquet and place it on the floor.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Calm down, Mrs. Irene...";
+		erasequest 16052;// Quiet memorial ceremony
+		setquest 16053;// Ongoing old story
+		delitem 25152,1;// Cherish_Bouquet
+		close;
+	}
+	mes "[Huge Tree]";
+	mes "There is a small sign in front of the tree.";
+	mes "- Here lies a kind girl -";
+	close;
+
+OnInit:
+	questinfo( QTYPE_QUEST,QMARK_YELLOW, " isbegin_quest(16047) == 1 " );
+	questinfo( QTYPE_QUEST,QMARK_YELLOW, " isbegin_quest(16052) == 1 " );
+	end;
+}
+
+einbroch,159,153,6	duplicate(dummy_cloaked_npc)	Grandma Lucy#16.2rm	8_F_GRANDMOTHER
 
 
 // Daily Quest - Mason Bender Business
@@ -9060,7 +9328,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 		mes "[Mason Bender]";
 		mes "I can see how much effort they gave to make them. It's delicious.";
 		completequest 16028;// Service: Cookies delivery
-		delitem 25161,1;// Delicious Handmade Cookie
+		delitem 25161,1;// Handmade_cookie2
 		close;
 	}
 
@@ -9133,7 +9401,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 			setquest 16055;	// Advertising: Dou you want a clean city?
 			setquest 16056;	// Advertising: Then blow it all away!
 			setquest 16057;	// Advertising: Suitable revenge for old age!
-			getitem 25163,3;	// Arms_Shop_Ad
+			getitem 25163,3;	// Arms_Shop_AD
 			close;
 		case 1:
 			if (isbegin_quest(16055) != 2 || isbegin_quest(16056) != 2 || isbegin_quest(16057) != 2) {
@@ -9148,7 +9416,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 					mes "[Mason Bender]";
 					mes "Please don't mistreat the leaflets. This time, I will give them to you again.";
 					.@count = (isbegin_quest(16055) != 2) + (isbegin_quest(16056) != 2) + (isbegin_quest(16057) != 2);
-					getitem 25163,.@count;	// Arms_Shop_Ad
+					getitem 25163,.@count;	// Arms_Shop_AD
 					close;
 				}
 				mes "[Mason Bender]";
@@ -9187,7 +9455,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 			erasequest 16057;	// Advertising: Suitable revenge for old age!
 			setquest 16058;	// Slow advertising effect
 			getexp 100000,100000;
-			getitem 25155,10;	// Schwartz's_Honor_Token
+			getitem 25155,10;	// Swz_Honor_Token
 			close;
 		case 2:
 			break;
@@ -9287,7 +9555,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 		setquest 16055;	// Advertising: Dou you want a clean city?
 		setquest 16056;	// Advertising: Then blow it all away!
 		setquest 16057;	// Advertising: Suitable revenge for old age!
-		getitem 25163,3;	// Arms_Shop_Ad
+		getitem 25163,3;	// Arms_Shop_AD
 		close;
 	}
 	if (isbegin_quest(16055) != 2 || isbegin_quest(16056) != 2 || isbegin_quest(16057) != 2) {
@@ -9302,7 +9570,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 			mes "[Mason Bender]";
 			mes "Please don't mistreat the leaflets. This time, I will give them to you again.";
 			.@count = (isbegin_quest(16055) != 2) + (isbegin_quest(16056) != 2) + (isbegin_quest(16057) != 2);
-			getitem 25163,.@count;	// Arms_Shop_Ad
+			getitem 25163,.@count;	// Arms_Shop_AD
 			close;
 		}
 		mes "[Mason Bender]";
@@ -9329,7 +9597,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 	erasequest 16059;	// Differentiated advertising strategy
 	setquest 16058;	// Slow advertising effect
 	getexp 100000,100000;
-	getitem 25155,3;// Schwartz's Honor Token
+	getitem 25155,3;// Swz_Honor_Token
 	close;
 
 OnInit:
@@ -9369,7 +9637,7 @@ einbech,71,168,1	script	Tired Looking Man#16.2r	4_M_SEAMAN,{
 		next;
 		mes "[Tired Looking Man]";
 		mes "Mortar? Are we having a war? Why would I buy it?";
-		delitem 25163,1;	// Arms_Shop_Ad
+		delitem 25163,1;	// Arms_Shop_AD
 		completequest 16055;	// Advertising: Dou you want a clean city?
 		close;
 	case 2:
@@ -9381,7 +9649,7 @@ einbech,71,168,1	script	Tired Looking Man#16.2r	4_M_SEAMAN,{
 	end;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16055) == 1 && (checkquest(16058,PLAYTIME) == -1 || checkquest(16058,PLAYTIME) == 2)" );	// todo
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16055) == 1" );
 	end;
 }
 
@@ -9408,7 +9676,7 @@ einbech,79,100,3	script	Tired Looking Old man#1	4_M_BARYO_OLD,{
 		next;
 		mes "[Tired Looking Old man]";
 		mes "I will take the leaflets if you give me... But I only need a little amount of gunpowder in the mine.";
-		delitem 25163,1;	// Arms_Shop_Ad
+		delitem 25163,1;	// Arms_Shop_AD
 		completequest 16056;	// Advertising: Then blow it all away!
 		close;
 	case 2:
@@ -9420,7 +9688,7 @@ einbech,79,100,3	script	Tired Looking Old man#1	4_M_BARYO_OLD,{
 	end;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16056) == 1 && (checkquest(16058,PLAYTIME) == -1 || checkquest(16058,PLAYTIME) == 2)" );	// todo
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16056) == 1" );
 	end;
 }
 
@@ -9446,7 +9714,7 @@ einbech,170,143,3	script	Sleepy Looking Old woman	4_F_BARYO_OLD,{
 		next;
 		mes "[Sleepy Looking Old woman]";
 		mes "Dried filefish fillet? Are you selling it? Oh, I don't have tooth so I can't eat it.";
-		delitem 25163,1;	// Arms_Shop_Ad
+		delitem 25163,1;	// Arms_Shop_AD
 		completequest 16057;	// Advertising: Suitable revenge for old age!
 		close;
 	case 2:
@@ -9457,7 +9725,7 @@ einbech,170,143,3	script	Sleepy Looking Old woman	4_F_BARYO_OLD,{
 	end;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16057) == 1 && (checkquest(16058,PLAYTIME) == -1 || checkquest(16058,PLAYTIME) == 2)" );	// todo
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16057) == 1" );
 	end;
 }
 
@@ -9542,7 +9810,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 		mes "So don't look at me like that!!";
 		mes "Just give me the cookies!";
 		completequest 16027;// Service: Cookies delivery
-		delitem 25161,1;// Delicious Handmade Cookie
+		delitem 25161,1;// Handmade_cookie2
 		close;
 	}
 
@@ -9635,13 +9903,13 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 			setquest 16032;// Hospitality to senior
 			close;
 		}
-		// todo
 		mes "[Milo River]";
 		mes "What have you brought? I will read the list.";
 		mes "Tell me what you brought!";
 		next;
-		// setarray .@item_id[0], , , 12048, , 12063;
-		.@s = select( "Grape Herb Tea", "Autumn Red Tea", "Honey Herb Tea", "Chocolate Mousse Cake", "Fruits Mix", "I don't have any." ) - 1;
+		setarray .@item_id[0],12046,12047,12048,12062,12063;
+		//.@s = select( "Grape Herb Tea", "Autumn Red Tea", "Honey Herb Tea", "Chocolate Mousse Cake", "Fruits Mix", "I don't have any." ) - 1;
+		.@s = select( getitemname(.@item_id[0]), getitemname(.@item_id[1]), getitemname(.@item_id[2]), getitemname(.@item_id[3]), getitemname(.@item_id[4]), "I don't have any." ) - 1;
 		if (.@s == 5) {
 			mes "[Milo River]";
 			mes "Well, I see. Although you are an adventurer, they are not easy to get. Aren't they?";
@@ -9661,13 +9929,18 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 			close;
 		}
 		switch( .@s ) {
+		case 0:
+			callsub( S_Item, .@item_id[.@s], "cup", "are old raisins" );
 		case 1:
+			callsub( S_Item, .@item_id[.@s], "cup", "are tea leaves with unpleasant smell" );
 		case 2:
-			callsub S_Item, 12048, "cup of Honey Herb tea", "withered herbs";
+			callsub( S_Item, .@item_id[.@s], "cup", "are withered herbs" );
 		case 3:
+			callsub( S_Item, .@item_id[.@s], "piece", "is butter with an unpleasant smell" );
 		case 4:
-			callsub S_Item, 12063, "bowl of Fruits Mix", "unripe fruits";
+			callsub( S_Item, .@item_id[.@s], "bowl", "are unripe fruits" );
 		}
+		end;
 	case 2:
 		switch( checkquest(16042,PLAYTIME) ) {
 		case -1:
@@ -9730,7 +10003,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 				mes "[Milo River]";
 				mes "Thank you! I will give you enough Anchovy cookies.";
 				mes "They are for cats. Give them to Charity and bring back the rest of them. Make sure you don't eat them.";
-				getitem 25162,1;	// Crispy_Anchovy
+				getitem 25162,1;	// Anchovy_cookie
 				setquest 16041;// Investigation: Capture strolling cat operation
 				close;
 			case 1:
@@ -9748,7 +10021,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 					next;
 					mes "[Milo River]";
 					mes "Anyway, I'll give you the Anchovy cookies again. Please keep them safe. This time, you return with Charity and Anchovy cookies!";
-					getitem 25162,1;	// Crispy_Anchovy
+					getitem 25162,1;	// Anchovy_cookie
 					close;
 				}
 				mes "[Milo River]";
@@ -9895,11 +10168,11 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 			cloakonnpc "Morana Rudel#16.2rm", getcharid(0);
 			cloakonnpc "Nice Looking Gun#16.2rm", getcharid(0);
 			if (countitem(25162) > 0)
-				delitem 25162,1;	// Crispy_Anchovy
+				delitem 25162,1;	// Anchovy_cookie
 			erasequest 16044;// In charge of Charity
 			setquest 16042;// Charity temporarily stays
 			getexp 100000,100000;
-			getitem 25155,10;	// Schwartz's_Honor_Token
+			getitem 25155,10;	// Swz_Honor_Token
 			next;
 			mes "[Charity]";
 			mes "Meow~";
@@ -9923,12 +10196,12 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 
 S_Item:
 	mes "[Milo River]";
-	mes "You brought it as you promised! A " + getarg(1) + ". Will you give it to me now?";
+	mes "You brought it as you promised! A " + getarg(1) + " of " + getitemname(getarg(0)) + ". Will you give it to me now?";
 	next;
 	if (select( "Give it to him.", "Do not give it to him." ) == 2) {
 		mes "[Milo River]";
 		mes "Well, I see. Although you are an adventurer, they are not easy to get. Aren't they?";
-		mes "All I can get around this place are " + getarg(2) + ". I can't make anything nice with them.";
+		mes "All I can get around this place " + getarg(2) + ". I can't make anything nice with them.";
 		mes "It's just a lack of my ability, haha!";
 		close;
 	}
@@ -9944,7 +10217,7 @@ S_Item:
 		completequest 16032;// Hospitality to senior
 	setquest 16034;// Sweet cookies once a day
 	getexp 200000,200000;
-	getitem 25155,3;// Schwartz's Honor Token
+	getitem 25155,3;// Swz_Honor_Token
 	close;
 
 OnInit:
@@ -9953,10 +10226,6 @@ OnInit:
 
 	// Lebedev twins quest
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16013) == 1" );
-
-	// twin quest main - display when 16027 active
-	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16013) == 0 && isbegin_quest(16012) == 1" );
-	// questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16015) == 0 && isbegin_quest(16013) == 2 && isbegin_quest(16014) == 2" );
 
 	// twins daily quest : "Service: Cookies delivery"
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16027) == 1 && countitem(25161) > 0" );
@@ -10047,7 +10316,7 @@ rebel_in,90,51,5	script	Rachel Smith#16.2rm	4_F_GUNSLINGER2,{
 		mes "[Rachel Smith]";
 		mes "Smells nice... I will ask them the recipe later.";
 		completequest 16029;// Service: Cookies delivery
-		delitem 25161,1;// Delicious Handmade Cookie
+		delitem 25161,1;// Handmade_cookie2
 		close;
 	}
 
@@ -10104,7 +10373,7 @@ rebel_in,90,51,5	script	Rachel Smith#16.2rm	4_F_GUNSLINGER2,{
 		mes "[Rachel Smith]";
 		mes "Bring this revolver to Einbroch Blacksmith guild and show it to them. Since I am a member of that guild, they will recognize it when they see the revolver repaired by me. I am counting on you.";
 		setquest 16035;// Delivery: Explosive revolver materials
-		getitem 25151,1;	// Rachel's_Revolver
+		getitem 25151,1;	// Rachels_Revolver
 		rachel_quest_16_2 = 1;
 		close;
 	}
@@ -10113,7 +10382,7 @@ rebel_in,90,51,5	script	Rachel Smith#16.2rm	4_F_GUNSLINGER2,{
 			mes "[Rachel Smith]";
 			mes "Hmm... Where is my revolver?";
 			mes "This is irresponsible. I will give you another gun. Don't do this again.";
-			getitem 25151,1;// Rachel's Revolver
+			getitem 25151,1;// Rachels_Revolver
 			close;
 		}
 		mes "[Rachel Smith]";
@@ -10156,7 +10425,7 @@ rebel_in,90,51,5	script	Rachel Smith#16.2rm	4_F_GUNSLINGER2,{
 			next;
 			completequest 16036;// Expert's keen eye
 			setquest 16040;// Collect 5 Irons
-			getitem 25155,7;// Schwartz's Honor Token
+			getitem 25155,7;// Swz_Honor_Token
 			rachel_quest_16_2 = 3;
 			close;
 		}
@@ -10164,7 +10433,7 @@ rebel_in,90,51,5	script	Rachel Smith#16.2rm	4_F_GUNSLINGER2,{
 		mes "Yes. I will.";
 		mes "I have no other choice.";
 		completequest 16036;// Expert's keen eye
-		getitem 25155,7;// Schwartz's Honor Token
+		getitem 25155,7;// Swz_Honor_Token
 		rachel_quest_16_2 = 3;
 		close;
 	}
@@ -10273,7 +10542,7 @@ S_Quest:
 	delitem .@item_req, .@count_req;
 	setquest 16037;// Material collection once a day
 	getexp 200000,200000;
-	getitem 25155,3;// Schwartz's Honor Token
+	getitem 25155,3;// Swz_Honor_Token
 	close;
 
 OnInit:
@@ -10326,7 +10595,7 @@ ein_in01,38,21,3	script	Blacksmith Jack#16.2rm	4_M_MIDDLE1,{
 		next;
 		mes "[Blacksmith Jack]";
 		mes "Go back and tell her. It might be exploded in the meantime...";
-		delitem 25151,1;// Rachel's Revolver
+		delitem 25151,1;// Rachels_Revolver
 		erasequest 16035;// Delivery: Explosive revolver materials
 		setquest 16036;// Expert's keen eye
 		rachel_quest_16_2 = 2;
@@ -10587,7 +10856,7 @@ rebel_in,90,40,5	script	Hogar#pa0829	4_M_MASKMAN,{
 		else if (.@card[2] == 0)
 			.@card[2] = .@enhance[ rand(.@size) ];
 
-		delitem 25155,20;	// Schwartz's_Honor_Token
+		delitem 25155,20;	// Swz_Honor_Token
 		delequip EQI_ARMOR;
 		getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
 		specialeffect2 EF_REPAIRWEAPON;
@@ -10655,7 +10924,7 @@ rebel_in,90,40,5	script	Hogar#pa0829	4_M_MASKMAN,{
 		else if (.@card[2] == 0)
 			.@card[2] = .@enhance[ rand(.@size) ];
 
-		delitem 25155,5;	// Schwartz's_Honor_Token
+		delitem 25155,5;	// Swz_Honor_Token
 		delequip EQI_ACC_L;
 		getitem2 .@equip_id,1,1,0,0,.@card[0],.@card[1],.@card[2],.@card[3];
 		specialeffect2 EF_REPAIRWEAPON;
@@ -10702,7 +10971,7 @@ rebel_in,90,40,5	script	Hogar#pa0829	4_M_MASKMAN,{
 			mes "Listen, fellow. If you don't have any " + getitemname(25155) + ", you cannot trade with me.";
 			close;
 		}
-		delitem 25155,10;	// Schwartz's_Honor_Token
+		delitem 25155,10;	// Swz_Honor_Token
 		delequip EQI_ARMOR;
 		getitem2 .@equip_id,1,1,.@refine,0,.@card[0],0,0,0;
 		specialeffect2 EF_REPAIRWEAPON;
@@ -10759,7 +11028,7 @@ rebel_in,90,40,5	script	Hogar#pa0829	4_M_MASKMAN,{
 			mes "Listen, fellow. If you don't have any " + getitemname(25155) + ", you cannot trade with me.";
 			close;
 		}
-		delitem 25155,10;	// Schwartz's_Honor_Token
+		delitem 25155,10;	// Swz_Honor_Token
 		delequip EQI_ACC_L;
 		if (rand(100) < 20) {
 			specialeffect2 EF_LORD;
@@ -10812,12 +11081,12 @@ rebel_in,74,67,5	script	Strasse#rebel_in	4_M_TATIO,{
 	next;
 
 	setarray .@item[0],
-		15163, 1000,
-		15164, 1000,
-		20456, 1500,
-		19115, 2500,
-		28425, 1500,
-		28426, 1500;
+		15163, 1000,	// Agenda_Robe
+		15164, 1000,	// Consultation_Robe
+		20456, 1500,	// C_Combat_Vestige
+		19115, 2500,	// Republic_Hat
+		28425, 1500,	// Mercenary_Ring_A
+		28426, 1500;	// Mercenary_Ring_B
 
 	.@s = (select( "Agenda Robe", "Consultation Robe", "Costume Combat Vestige", "Hat of Republic", "Mercenary Ring A type", "Mercenary Ring B type" ) - 1) * 2;
 	mes "[Strasse]";
@@ -10830,13 +11099,17 @@ rebel_in,74,67,5	script	Strasse#rebel_in	4_M_TATIO,{
 		mes "Please come back after you decided.";
 		close;
 	}
-	if (countitem(25155) < .@item[.@s+1]) {// Schwartz Honor Tokens
+	if (countitem(25155) < .@item[.@s+1]) {// Swz_Honor_Token
 		mes "[Strasse]";
 		mes "You don't have enough tokens...";
 		mes "Please collect some more.";
 		close;
 	}
-	// todo
+	// custom text
+	mes "[Strasse]";
+	mes "Here is your <ITEM>" + getitemname(.@item[.@s]) + "<INFO>" + .@item[.@s] + "</INFO></ITEM>.";
+	delitem 25155, .@item[.@s+1];
+	getitem .@item[.@s],1;
 	close;
 }
 
@@ -10936,9 +11209,9 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 		mes "[Master]";
 		mes "Thank you so much.";
 		erasequest 14611;// Gun recycling
-		delitem 25153,3;// Broken Gun Wreck
+		delitem 25153,3;// Broken_Gun_Wreck
 		setquest 14612;// Time for repair
-		getitem 25155,3;// Schwartz's Honor Token
+		getitem 25155,3;// Swz_Honor_Token
 		getexp 200000,200000;
 		close;
 	case 2:
@@ -11210,8 +11483,8 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 		mes "Thank you so much.";
 		erasequest 14610;// Gun recycling
 		setquest 14612;// Time for repair
-		delitem 25153,3;// Broken Gun Wreck
-		getitem 25155,3;// Schwartz's Honor Token
+		delitem 25153,3;// Broken_Gun_Wreck
+		getitem 25155,3;// Swz_Honor_Token
 		getexp 200000,200000;
 		close;
 	case 2:
@@ -11220,10 +11493,9 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 	end;
 
 OnInit:
-	// todo: check the result when 25153 not in inventory but HUNTING completed, when playtime completed
 	.@terra_main_18$ = "isbegin_quest(14615) == 2";
-	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && (checkquest(14610,HUNTING) == -1 || checkquest(14610,HUNTING) == 2) && checkquest(14612,PLAYTIME) == -1 && isbegin_quest(14611) == 0") );
-	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && (checkquest(14612,PLAYTIME) == 2 || checkquest(14611,HUNTING) == 2)") );
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && (checkquest(14610,HUNTING) == -1 || (checkquest(14610,HUNTING) == 2 && countitem(25153) > 2)) && checkquest(14612,PLAYTIME) == -1 && isbegin_quest(14611) == 0") );
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && (checkquest(14612,PLAYTIME) == 2 || (checkquest(14611,HUNTING) == 2 && countitem(25153) > 2))") );
 	end;
 }
 
@@ -11721,9 +11993,9 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "Please take a good rest today. We will count on you again tomorrow. You must be exhausted.";
 			erasequest 14603;// Pipe repair materials
 			delitem 999,5;// Steel
-			delitem 7319,15;// Used Iron Plate
+			delitem 7319,15;// Old_Steel_Plate
 			setquest 14609;// Quiet time
-			getitem 25155,3;// Schwartz's Honor Token
+			getitem 25155,3;// Swz_Honor_Token
 			getexp 200000,200000;
 			close3;
 		case 2:
@@ -12005,10 +12277,10 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Phew, I am exhausted as well. Please take a good rest now and come back after the ^0000cddawn^000000.";
 			erasequest 14604;// National Fuel Solar Fuel
-			delitem 7068,10;// Burnt Tree
+			delitem 7068,10;// Burn_Tree
 			delitem 1003,3;// Coal
 			setquest 14609;// Quiet time
-			getitem 25155,3;// Schwartz's Honor Token
+			getitem 25155,3;// Swz_Honor_Token
 			getexp 200000,200000;
 			close3;
 		case 2:
@@ -12280,10 +12552,10 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "That fellow is really loud, isn't he? I apologize on behalf of him. Please take a good rest and come back ^0000cdafter the dawn^000000.";
 			erasequest 14605;// Sparkling things
-			delitem 7321,10;// Crystal Fragment
-			delitem 7315,10;// Dark Crystal Fragment
+			delitem 7321,10;// Fragment_Of_Crystal
+			delitem 7315,10;// Dark_Crystal_Fragment
 			setquest 14609;// Quiet time
-			getitem 25155,3;// Schwartz's Honor Token
+			getitem 25155,3;// Swz_Honor_Token
 			getexp 200000,200000;
 			close3;
 		}
@@ -12404,9 +12676,9 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "Please take a good rest today. We will count on you again tomorrow. You must be exhausted.";
 			erasequest 14606;// Pipe repair materials
 			delitem 999,5;// Steel
-			delitem 7319,15;// Used Iron Plate
+			delitem 7319,15;// Old_Steel_Plate
 			setquest 14609;// Quiet time
-			getitem 25155,3;// Schwartz's Honor Token
+			getitem 25155,3;// Swz_Honor_Token
 			getexp 200000,200000;
 			close3;
 		}
@@ -12646,10 +12918,10 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Please take a good rest today. We will count on you again tomorrow.";
 			erasequest 14607;// National Fuel Solar Fuel
-			delitem 7068,10;// Burnt Tree
+			delitem 7068,10;// Burn_Tree
 			delitem 1003,3;// Coal
 			setquest 14609;// Quiet time
-			getitem 25155,3;// Schwartz's Honor Token
+			getitem 25155,3;// Swz_Honor_Token
 			getexp 200000,200000;
 			close3;
 		}
@@ -12746,10 +13018,10 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Please take a good rest today. We will count on you again tomorrow.";
 			erasequest 14608;// Sparkling things
-			delitem 7321,10;// Crystal Fragment
-			delitem 7315,10;// Dark Crystal Fragment
+			delitem 7321,10;// Fragment_Of_Crystal
+			delitem 7315,10;// Dark_Crystal_Fragment
 			setquest 14609;// Quiet time
-			getitem 25155,3;// Schwartz's Honor Token
+			getitem 25155,3;// Swz_Honor_Token
 			getexp 0,300000;
 			close3;
 		}
@@ -12757,13 +13029,16 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 	end;
 
 OnInit:
-	// todo: check conditions
-	.@terra_main_18$ = "isbegin_quest(14615) == 2";
 	.@conditions$ =
-		.@terra_main_18$ +
-		" && isbegin_quest(14603) == 0 && isbegin_quest(14604) == 0 && isbegin_quest(14605) == 0 && isbegin_quest(14606) == 0 && isbegin_quest(14607) == 0 && isbegin_quest(14608) == 0" +
-		" && checkquest(14609,PLAYTIME) == -1";
+		"isbegin_quest(14615) == 2 && (checkquest(14609,PLAYTIME) == -1 || checkquest(14609,PLAYTIME) == 2)" +
+		" && isbegin_quest(14603) == 0 && isbegin_quest(14604) == 0 && isbegin_quest(14605) == 0 && isbegin_quest(14606) == 0 && isbegin_quest(14607) == 0 && isbegin_quest(14608) == 0";
 	questinfo( QTYPE_QUEST, QMARK_NONE, .@conditions$ );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(14603,HUNTING) == 2 && countitem(999) > 4 && countitem(7319) > 14");
+	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(14604,HUNTING) == 2 && countitem(7068) > 9 && countitem(1003) > 2");
+	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(14605,HUNTING) == 2 && countitem(7321) > 9 && countitem(7315) > 9");
+	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(14606,HUNTING) == 2 && countitem(999) > 4 && countitem(7319) > 14");
+	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(14607,HUNTING) == 2 && countitem(7068) > 9 && countitem(1003) < 3");
+	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(14608,HUNTING) == 2 && countitem(7321) > 9 && countitem(7315) > 9");
 	end;
 }
 
@@ -13272,10 +13547,10 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		npctalk "Jana Levedeva: Yes...", "", bc_self;
 		mes "[" + strcharinfo(0) + "]";
 		mes "(You heard their story. Let's go to ^0000CDElena Bolkova^000000 and tell her.)";
-		delitem 25161,1;// Delicious Handmade Cookie
+		lebedev_quest_16_2 = 8;
+		delitem 25161,1;// Handmade_cookie2
 		erasequest 16033;// Bring dessert and listen the story
 		setquest 16017;// Twin's sincere confession
-		lebedev_quest_16_2 = 8;
 		close;
 	}
 	if (lebedev_quest_16_2 == 8) {
@@ -13369,7 +13644,20 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 			mes "[Jana Levedeva]";
 			mes "The juvenile corner of the Prontera library has designated rental system. You can ask the ^0000CDlibrarian in charge of juveniles^000000.";
 			close;
-		// case 16022:// todo
+		case 16022:
+			mes "[Jana Levedeva]";
+			mes "Hmm.. Commander Elena told us to make a hobby.";
+			mes "I guess reading is a fine hobby. Isn't it?";
+			next;
+			mes "[Jana Levedeva]";
+			mes "Please rent a book for us from the juvenile section of Prontera Library.";
+			mes "The book's name is... ^0000CDRebellion, the history of liberty^000000. Please borrow this book for me.";
+			npctalk "Ilya Lebedev: After looking at its name, I feel like I must read it.", "Ilya Lebedev#16.2rm", bc_self;
+			setquest 16022;// Service: Book lending agent
+			next;
+			mes "[Jana Levedeva]";
+			mes "The juvenile corner of the Prontera library has designated rental system. You can ask the ^0000CDlibrarian in charge of juveniles^000000.";
+			close;
 		case 16023:
 			mes "[Jana Levedeva]";
 			mes "Hmm.. Commander Elena told us to make a hobby.";
@@ -13449,7 +13737,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 			setquest 16029;// Service: Cookies delivery
 			setquest 16030;// Service: Cookies delivery
 			setquest 16031;// Service: Cookies delivery
-			getitem 25161,5;// Delicious Handmade Cookie
+			getitem 25161,5;// Handmade_cookie2
 			close;
 		}
 	}
@@ -13459,11 +13747,15 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		mes "Did you forget what I asked you to borrow? It's dizzy after being shaken 1,000 times!";
 		mes "Last time I went there with Ilya, the librarian at juvenile section found it for me...";
 		close;
-	// case 16022:// todo
+	case 16022:
+		mes "[Jana Levedeva]";
+		mes "Did you forget what I asked you to borrow? 'Rebellion, the history of liberty'!";
+		mes "Last time I went there with Ilya, the librarian at juvenile section found it for me...";
+		close;
 	case 16023:
 		mes "[Ilya Lebedev]";
 		mes "Norgroad Horizon, please.";
-		mes "If you tell the book name to the librarian, he/she will hand it you you.";
+		mes "If you tell the book name to the librarian, he/she will hand it you.";
 		close;
 	case 16024:
 		if (countitem(25160) < 1) {
@@ -13487,9 +13779,9 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		mes "(Hmm, she's not mentioning about returning it.)";
 		erasequest 16024;// Service: Loaned book delivery
 		setquest 16020;// Daily babysitting
-		delitem 25160,1;// Borrowed Book
+		delitem 25160,1;// Borrow_Book
 		getexp 200000,200000;
-		getitem 25155,3;// Schwartz's Honor Token
+		getitem 25155,3;// Swz_Honor_Token
 		close;
 	case 16025:
 		if (checkquest(.@quest_list[.@i],HUNTING) != 2 || countitem(6244) < 1) {
@@ -13504,11 +13796,11 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		mes "[Ilya Lebedev]";
 		mes "Thank you for doing us a favor!";
 		mes "About the result, I will inform you later!";
-		delitem 6244,1;// Gun Powder
+		delitem 6244,1;// Gun_Powder
 		erasequest 16025;// Service: Exploring the Mine Dungeon
 		setquest 16020;// Daily babysitting
 		getexp 200000,200000;
-		getitem 25155,3;// Schwartz's Honor Token
+		getitem 25155,3;// Swz_Honor_Token
 		close;
 	case 16026:
 		if (checkquest(.@quest_list[.@i],HUNTING) != 2 || countitem(6213) < 1) {
@@ -13523,11 +13815,11 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		mes "[Ilya Lebedev]";
 		mes "Thank you for doing us a favor!";
 		mes "Jana says she will inform you about the result after the experiment!!";
-		delitem 6213,1;// Explosive Powder
+		delitem 6213,1;// Explosive_Powder
 		erasequest 16026;// Service: Exploring the Mine Dungeon
 		setquest 16020;// Daily babysitting
 		getexp 200000,200000;
-		getitem 25155,3;// Schwartz's Honor Token
+		getitem 25155,3;// Swz_Honor_Token
 		close;
 	case 16027:
 		for ( .@i = 16027; .@quest_id <= 16031; .@quest_id++ ) {
@@ -13548,7 +13840,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 				mes "[Jana Levedeva]";
 				mes "We will give you some more. Make sure you bring them to those five people please.";
 				mes "Glutton " + strcharinfo(0) + " Older " + .@genre$ + " we will make you more cookies for you next time!";
-				getitem 25161, .@cookie;// Delicious Handmade Cookie
+				getitem 25161, .@cookie;// Handmade_cookie2
 			}
 			close;
 		}
@@ -13563,18 +13855,24 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		erasequest 16031;// Service: Cookies delivery
 		setquest 16020;// Daily babysitting
 		getexp 200000,200000;
-		getitem 25155,3;// Schwartz's Honor Token
+		getitem 25155,3;// Swz_Honor_Token
 		close;
 	}
 	end;
 
 OnInit:
-	// incomplete
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16012) == 1" );
 	questinfo( QTYPE_QUEST, QMARK_NONE, "lebedev_quest_16_2 == 4" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "lebedev_quest_16_2 == 7 && countitem(25161) > 0" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16018) == 1" );
 
-	// twin cookies
+	// daily
+	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(16020,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "lebedev_quest_16_2 > 10 && checkquest(16020,PLAYTIME) == -1 && isbegin_quest(16021) == 0 && isbegin_quest(16023) == 0 && isbegin_quest(16024) == 0 && isbegin_quest(16025) == 0 && isbegin_quest(16026) == 0 && isbegin_quest(16027) == 0" );
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16027) == 2 && isbegin_quest(16028) == 2 && isbegin_quest(16029) == 2 && isbegin_quest(16030) == 2 && isbegin_quest(16031) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16024) == 1 && countitem(25160) > 0" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(16025,HUNTING) == 2 && countitem(6244) > 0" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(16026,HUNTING) == 2 && countitem(6213) > 0" );
 	end;
 }
 
@@ -13582,7 +13880,7 @@ rebel_in,70,75,1	duplicate(dummy_cloaked_npc)	Ilya Lebedev#16.2rms	4_M_ILYA
 rebel_in,69,75,1	duplicate(dummy_cloaked_npc)	Jana Levedeva#16.2rms	4_F_ANYA
 
 prt_in,165,89,1	script	Librarian in charge of juveniles 	1_F_LIBRARYGIRL,{
-	setarray .@quest_id[0], 16021,16023;
+	setarray .@quest_id[0], 16021,16022,16023;
 	.@size = getarraysize(.@quest_id);
 	for ( .@i = 0; .@i < .@size && isbegin_quest(.@quest_id[.@i]) == 0; .@i++ )
 		continue;
@@ -13615,12 +13913,16 @@ prt_in,165,89,1	script	Librarian in charge of juveniles 	1_F_LIBRARYGIRL,{
 	else if (.@r == 1)
 		setarray .@menu$[0], "My younger sister is so cute", "Record of my travel to Kunrun by foot", "The secret of the business told by Babayaga";
 	else if (.@r == 3)
-		setarray .@menu$[0], "Guidebook for food_materials in Dungeon", "Famous Lasagna Restaurants", "Hair&Beauty - Fairy's edition";
+		setarray .@menu$[0], "Guidebook for food materials in Dungeon", "Famous Lasagna Restaurants", "Hair&Beauty - Fairy's edition";
 
 	switch( .@quest_id[.@i] ) {
 	case 16021:
 		.@right_answer = 0;
 		.@menu$[0] = "It's dizzy after being shaken 1,000 times.";
+		break;
+	case 16022:
+		.@right_answer = 1;
+		.@menu$[1] = "Rebellion, the history of liberty";
 		break;
 	case 16023:
 		.@right_answer = 2;
@@ -13649,7 +13951,7 @@ prt_in,165,89,1	script	Librarian in charge of juveniles 	1_F_LIBRARYGIRL,{
 	mes "Yes. Here it is. Please abide by the deadline.";
 	erasequest .@quest_id[.@i];
 	setquest 16024;// Service: Loaned book delivery
-	getitem 25160,1;// Borrowed Book
+	getitem 25160,1;// Borrow_Book
 	close;
 }
 
@@ -13725,7 +14027,7 @@ prt_in,177,26,6	script	Knight Windsor#ep162	4_M_JOB_KNIGHT1,{
 		mes "[Benedict Windsor]";
 		mes "... Thanks.";
 		mes "...";
-		delitem 25180,1;// Old Rings
+		delitem 25180,1;// Old_Couple_Ring
 		setquest 7746;// A pair of old rings
 		completequest 7746;// A pair of old rings
 		getexp 100000,100000;
@@ -13754,7 +14056,7 @@ prt_in,177,26,6	script	Knight Windsor#ep162	4_M_JOB_KNIGHT1,{
 		mes "[Benedict Windsor]";
 		mes "You ...";
 		mes "......";
-		delitem 25185,1;// Locket Pendant
+		delitem 25185,1;// Locket_Pendant
 		setquest 7747;// Locket Pendant
 		completequest 7747;// Locket Pendant
 		getexp 100000,100000;
@@ -13883,7 +14185,7 @@ yuno_in01,163,31,3	script	Blacksmith Cleaver#ep16	4_TOWER_17,{
 		mes "Thank you ... for coming all the way here.";
 		mes "I have to delay my work for a while.";
 		mes "....";
-		delitem 25183,1;// Decorated Archer's Thimble
+		delitem 25183,1;// Deco_Thimble_Archer
 		setquest 7749;// Bow Thimble Decoration
 		completequest 7749;// Bow Thimble Decoration
 		getexp 100000,100000;
@@ -13933,7 +14235,7 @@ que_job01,89,91,1	script	Guile Marovitz#ep162	1_M_JOBTESTER,{
 		mes "[Guile Marovitz]";
 		mes "I will take him ... well.";
 		mes "Thank you.";
-		delitem 25182,1;// Assassin's Mark Dagger
+		delitem 25182,1;// Assassin_PT_Dagger
 		setquest 7750;// Assassin Dagger with Glyph
 		erasequest 7750;// Assassin Dagger with Glyph
 		getexp 100000,100000;
@@ -14007,7 +14309,7 @@ payon_in03,194,39,3	script	Hunter Sherine#ep162	4_F_JOB_HUNTER,{
 		next;
 		mes "[Sherine]";
 		mes "... Thank ... you ...";
-		delitem 25184,1;// Portable Sewingbox
+		delitem 25184,1;// Portable_Sewingbox
 		setquest 7751;// Portable Sewing Kit
 		erasequest 7751;// Portable Sewing Kit
 		getexp 100000,100000;
