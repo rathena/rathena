@@ -12,8 +12,8 @@
 //= 1.0 First version. [Capuche]
 //============================================================
 
-slabw01,232,91,5	duplicate(dummy_npc)	Skia#ep162_06	HIDDEN_WARP_NPC				// 4_EP16_SKIA
-slabw01,233,92,3	duplicate(dummy_npc)	Scared researcher#ep162	HIDDEN_WARP_NPC		// 4_M_ALCHE_A
+slabw01,232,91,5	duplicate(dummy_cloaked_npc)	Skia#ep162_06	4_EP16_SKIA
+slabw01,233,92,3	duplicate(dummy_cloaked_npc)	Scared researcher#ep162	4_M_ALCHE_A
 
 // Werner Laboratory central room (solo instance)
 slabw01,236,91,3	script	Rookie#ep162_04	4_M_ROOKIE,{
@@ -26,8 +26,8 @@ slabw01,236,91,3	script	Rookie#ep162_04	4_M_ROOKIE,{
 		mes "No wonder it looked like they had something to back them up.";
 		mes "Shall we use an explosive and blow it up?";
 		next;
-		classchange( 4_EP16_SKIA, "Skia#ep162_06", bc_self );
-		classchange( 4_M_ALCHE_A, "Scared researcher#ep162", bc_self );
+		cloakoffnpc( "Skia#ep162_06", getcharid(0) );
+		cloakoffnpc( "Scared researcher#ep162", getcharid(0) );
 		npctalk "Wait!", "Skia#ep162_06", bc_self;
 		mes "[Skia]";
 		mes "Not in such a crude way!";
@@ -51,8 +51,8 @@ slabw01,236,91,3	script	Rookie#ep162_04	4_M_ROOKIE,{
 		mes "Really? Then I will bring this researcher to the squadron outside.";
 		mes "About the central room, " + strcharinfo(0) + " I am counting on you!";
 		next;
-		classchange( HIDDEN_WARP_NPC, "Skia#ep162_06", bc_self );
-		classchange( HIDDEN_WARP_NPC, "Scared researcher#ep162", bc_self );
+		cloakonnpc( "Skia#ep162_06", getcharid(0) );
+		cloakonnpc( "Scared researcher#ep162", getcharid(0) );
 		mes "[Rookie]";
 		mes "Haha, they let us open the gate of the central room!";
 		mes "Please speak to me again once you are ready to go in here.";
@@ -63,8 +63,8 @@ slabw01,236,91,3	script	Rookie#ep162_04	4_M_ROOKIE,{
 		terra_gloria_main = 21;
 		close;
 	}
-	if (terra_gloria_main == 21) {
-		if (getcharid(1) < 1 || getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (instance_live_info(ILI_NAME) == "Werner Laboratory central room#1") {
+		if (getcharid(1) < 1 || is_party_leader() == false) {
 			mes "^4d4dffThis event is proceeded to the Memorial.";
 			mes "Please try again after organizing a party.^000000";
 			close;
@@ -81,7 +81,7 @@ slabw01,236,91,3	script	Rookie#ep162_04	4_M_ROOKIE,{
 		mes "[Rookie]";
 		mes "Wow! This is it! I always learn things quickly!";
 		mes "Well, please go in now!";
-		classchange( PORTAL, "Central_room#evt_gate01", bc_self );
+		cloakoffnpc( "Central_room#evt_gate01", getcharid(0) );
 		instance_create("Werner Laboratory central room#1");	// officially there is only one 'Werner Laboratory central room' instance
 		close;
 	}
@@ -109,7 +109,7 @@ slabw01,236,91,3	script	Rookie#ep162_04	4_M_ROOKIE,{
 			mes "Please try again after organizing a party.^000000";
 			close;
 		}
-		if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+		if (is_party_leader() == false) {
 			mes "[Rookie]";
 			mes "If there is a gate that has already been activated, you can see it.";
 			next;
@@ -129,7 +129,7 @@ slabw01,236,91,3	script	Rookie#ep162_04	4_M_ROOKIE,{
 		mes "[Rookie]";
 		mes "Wow! This is it! I always learn things quickly!";
 		mes "Well, please go in now!";
-		classchange( PORTAL, "Central_room#evt_gate01", bc_self );
+		cloakoffnpc( "Central_room#evt_gate01", getcharid(0) );
 		instance_create("Werner Laboratory central room#2");
 		close;
 	case 2:
@@ -143,15 +143,14 @@ slabw01,236,91,3	script	Rookie#ep162_04	4_M_ROOKIE,{
 	end;
 
 OnInit:
-	questinfo 7742, QTYPE_QUEST;
-	// setquestinfo_req 7742, 7742, 1;	// todo: should display when 7742 active, hunting not completed
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, " checkquest(7742,HUNTING) == 0 || checkquest(7742,HUNTING) == 1 " );
 	end;
 }
 
-slabw01,246,88,3	script	Central_room#evt_gate01	HIDDEN_WARP_NPC,{		// PORTAL
+slabw01,246,88,3	script	Central_room#evt_gate01	PORTAL,{
 	if (terra_gloria_main != 21 && terra_gloria_main < 23)
 		end;
-	if (getcharid(1) < 1 || (terra_gloria_main == 21 && getcharid(0) != getpartyleader(getcharid(1),2))) {
+	if (getcharid(1) < 1 || (terra_gloria_main == 21 && is_party_leader() == false)) {
 		mes "^4d4dffMD Only the party leader can enter [Central room] now.^000000";
 		close;
 	}
@@ -182,6 +181,11 @@ slabw01,246,88,3	script	Central_room#evt_gate01	HIDDEN_WARP_NPC,{		// PORTAL
 		// warp "1@slw",187,24;
 		end;
 	}
+	end;
+
+OnInit:
+	cloakonnpc( strnpcinfo(0) );
+	end;
 }
 
 // warps
@@ -193,10 +197,10 @@ slabw01,246,88,3	script	Central_room#evt_gate01	HIDDEN_WARP_NPC,{		// PORTAL
 1@slw,187,25,0	script	#sl_evt01	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
-	if (getcharid(0) != getpartyleader(getcharid(1),2))
+	if (is_party_leader() == false)
 		end;
 	disablenpc instance_npcname("#sl_evt01");
-	if (terra_gloria_main == 21)
+	if (instance_live_info(ILI_NAME) == "Werner Laboratory central room#1")	// terra_gloria_main == 21
 		enablenpc instance_npcname("Eisen Werner#werner01");
 	else {
 		enablenpc instance_npcname("Guard#gard01");
@@ -277,7 +281,7 @@ OnInstanceInit:
 
 // * Events - First entrance
 1@slw,188,42,3	script	Eisen Werner#werner01	4_M_EISEN,{
-	if (getcharid(0) != getpartyleader(getcharid(1),2))
+	if (is_party_leader() == false)
 		end;
 	cutin "ep16_eisen01.bmp",1;
 	mes "[Eisen Werner]";
@@ -335,13 +339,15 @@ OnInstanceInit:
 	mes "I will guide you.";
 	close2;
 	cutin "",255;
-	disablenpc instance_npcname("Eisen Werner#werner01");
-	enablenpc instance_npcname("Eisen Werner#werner02");
+	if (is_party_leader() == true) {
+		disablenpc instance_npcname("Eisen Werner#werner01");
+		enablenpc instance_npcname("Eisen Werner#werner02");
+	}
 	end;
 }
 
 1@slw,189,164,3	script	Eisen Werner#werner02	4_M_EISEN,{
-	if (getcharid(0) != getpartyleader(getcharid(1),2))
+	if (is_party_leader() == false)
 		end;
 	cutin "ep16_eisen01.bmp",1;
 	mes "[Eisen Werner]";
@@ -381,14 +387,16 @@ OnInstanceInit:
 	mes "Then I'll see you in the next zone.";
 	close2;
 	cutin "",255;
-	disablenpc instance_npcname("Eisen Werner#werner02");
-	enablenpc instance_npcname("Security device#switch01");
-	enablenpc instance_npcname("Security device#switch02");
+	if (is_party_leader() == true) {
+		disablenpc instance_npcname("Eisen Werner#werner02");
+		enablenpc instance_npcname("Security device#switch01");
+		enablenpc instance_npcname("Security device#switch02");
+	}
 	end;
 }
 
 1@slw,155,191,3	script	Security device#switch01	CLEAR_NPC,{
-	if (getcharid(0) != getpartyleader(getcharid(1),2))
+	if (is_party_leader() == false)
 		end;
 	.@number = atoi( replacestr( strnpcinfo(2), "switch", "" ) );
 	.@type = (.@number < 10) ? 0 : 1;
@@ -407,6 +415,8 @@ OnInstanceInit:
 		mes "The device has been initialized.";
 		close;
 	}
+	if (is_party_leader() == false)
+		end;
 	'device_state[.@type] = 'device_state[.@type] | .@npc_num;
 	if ('device_state[.@type] != 3) {
 		mes "Operated the security device.";
@@ -418,7 +428,7 @@ OnInstanceInit:
 	switch( .@type ) {
 	case 0:
 		enablenpc instance_npcname("#slwwarp01");
-		if (terra_gloria_main == 21)// eventually replace following instance name
+		if (instance_live_info(ILI_NAME) == "Werner Laboratory central room#1")	// terra_gloria_main == 21
 			enablenpc instance_npcname("Eisen Werner#werner03");
 		else {
 			enablenpc instance_npcname("Guard#gard05");
@@ -427,7 +437,7 @@ OnInstanceInit:
 		}
 		break;
 	case 1:
-		if (terra_gloria_main == 21)
+		if (instance_live_info(ILI_NAME) == "Werner Laboratory central room#1")
 			enablenpc instance_npcname("Eisen Werner#werner04");
 		else
 			enablenpc instance_npcname("Central Entrance#door");
@@ -546,7 +556,7 @@ OnRight2:
 // Room 2
 // * Events - First entrance
 1@slw,72,70,3	script	Eisen Werner#werner03	4_M_EISEN,{
-	if (getcharid(0) != getpartyleader(getcharid(1),2))
+	if (is_party_leader() == false)
 		end;
 	cutin "ep16_eisen01.bmp",1;
 	mes "[Eisen Werner]";
@@ -595,9 +605,11 @@ OnRight2:
 	mes "Let's move to the next zone.";
 	close2;
 	cutin "",255;
-	disablenpc instance_npcname("Eisen Werner#werner03");
-	enablenpc instance_npcname("Security device#switch11");
-	enablenpc instance_npcname("Security device#switch12");
+	if (is_party_leader() == true) {
+		disablenpc instance_npcname("Eisen Werner#werner03");
+		enablenpc instance_npcname("Security device#switch11");
+		enablenpc instance_npcname("Security device#switch12");
+	}
 	end;
 }
 
@@ -605,7 +617,7 @@ OnRight2:
 // Room 3
 // * Events - First entrance
 1@slw,57,141,3	script	Eisen Werner#werner04	4_M_EISEN,{
-	if (getcharid(0) != getpartyleader(getcharid(1),2))
+	if (is_party_leader() == false)
 		end;
 	cutin "ep16_eisen01.bmp",1;
 	mes "[Eisen Werner]";
@@ -638,19 +650,21 @@ OnRight2:
 	mes "Now, take a look at the gift I've prepared.";
 	close2;
 	cutin "",255;
-	disablenpc instance_npcname("Eisen Werner#werner04");
-	enablenpc instance_npcname("Central Entrance#door");
+	if (is_party_leader() == true) {
+		disablenpc instance_npcname("Eisen Werner#werner04");
+		enablenpc instance_npcname("Central Entrance#door");
+	}
 	end;
 }
 
 1@slw,54,146,0	script	Central Entrance#door	WARPNPC,1,1,{
 	end;
 OnTouch:
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		warp 'map_slw$,55,153;
 		end;
 	}
-	if (terra_gloria_main == 21) {
+	if (instance_live_info(ILI_NAME) == "Werner Laboratory central room#1") {
 		if ('event_final == 0) {
 			'event_final = 1;
 			enablenpc instance_npcname("Eisen Werner#werner05");
@@ -698,7 +712,7 @@ OnTouch:
 1@slw,56,171,3	duplicate(dummy_npc)	Seyren Windsor#seiren	4_M_SEIREN_UC
 
 1@slw,53,171,5	script	Eisen Werner#werner05	4_M_EISEN,{
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "^4d4dffOnly the party leader can proceed with this event.^000000";
 		close;
 	}
@@ -744,12 +758,14 @@ OnTouch:
 	mes "[Eisen Werner]";
 	mes "Something...";
 	mes "that will surprise you.";
-	// close2;	// fix me
+	close2;
+	setpcblock PCBLOCK_NPC, true;
 	cutin "",255;
 	sleep2 3000;
 	enablenpc .@seyren$;
 	npctalk "......", .@seyren$;
 	sleep2 1000;
+	setpcblock PCBLOCK_NPC, false;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : ... Seyren?!";
 	mes "[Eisen Werner]";
 	mes "How do you like the gift I've prepared?!";
@@ -874,7 +890,8 @@ OnTouch:
 	mes "[Eisen Werner]";
 	mes "Never think that I'm finished here.";
 	mes "I don't need a loser either.";
-	// close2;	// fix me
+	close2;
+	setpcblock PCBLOCK_NPC, true;
 	cutin "",255;
 	specialeffect EF_BEGINSPELL3;
 	sleep2 1000;
@@ -883,6 +900,7 @@ OnTouch:
 	specialeffect EF_LORD;
 	disablenpc instance_npcname("Eisen Werner#werner05");
 	sleep2 2000;
+	setpcblock PCBLOCK_NPC, false;
 	npctalk "Oh....", .@seyren$;
 	mes "[Seyren]";
 	mes "... Eisen. You have abandoned everything like this.";
@@ -963,7 +981,7 @@ OnTouch:
 	mes "[Seyren]";
 	mes "While I still have my will now, I have one message to give you.";
 	next;
-	if (terra_gloria_main == 21) {
+	if (instance_live_info(ILI_NAME) == "Werner Laboratory central room#1") {
 		mes "[Seyren]";
 		mes "Please, go ahead.";
 		mes "Seyren Windsor, the knight of Prontera failed in the task.";
@@ -979,12 +997,15 @@ OnTouch:
 		mes "[Seyren]";
 		mes "They are ^4d4dffrelics^000000 of me and my companions.";
 		mes "Please give them to our families.";
-		getitem 25179,1;
-		getitem 23087,1;
-		erasequest 7739;// Find Star of Blessing!
-		setquest 7740;// Star of Blessing obtained
-		terra_gloria_main = 22;
-		// close2;	// fix me
+		if (is_party_leader() == true) {
+			getitem 25179,1;	// Blessing_Star
+			getitem 23087,1;	// Small_Leather_Bag
+			erasequest 7739;// Find Star of Blessing!
+			setquest 7740;// Star of Blessing obtained
+			terra_gloria_main = 22;
+		}
+		close2;
+		setpcblock PCBLOCK_NPC, true;
 		cutin "",255;
 		specialeffect EF_ICECRASH, AREA, .@seyren$;
 		disablenpc .@seyren$;
@@ -992,6 +1013,7 @@ OnTouch:
 		sleep2 1000;
 		specialeffect2 EF_SCREEN_QUAKE;
 		sleep2 1000;
+		setpcblock PCBLOCK_NPC, false;
 		specialeffect2 EF_SCREEN_QUAKE;
 		specialeffect2 EF_RAIN_PARTICLE2;
 		warp "que_swat",155,50;
@@ -1001,17 +1023,20 @@ OnTouch:
 	mes "[Seyren]";
 	mes "It was great to see you at the end.";
 	mes "Thank you... Bye.";
-	// close2;	// fix me
+	close2;
+	setpcblock PCBLOCK_NPC, true;
 	cutin "",255;
 	specialeffect EF_ICECRASH, AREA, .@seyren$;
-	hideonnpc .@seyren$;
+	cloakonnpc .@seyren$;
 	// monster 'map_slw$,56,171, "Seyren", SEYREN, 1;
 	sleep2 1000;
 	specialeffect2 EF_SCREEN_QUAKE;
 	sleep2 1000;
 	specialeffect2 EF_SCREEN_QUAKE;
 	specialeffect2 EF_RAIN_PARTICLE2;
-	'event_final = 0;
+	setpcblock PCBLOCK_NPC, false;
+	if (is_party_leader() == true)
+		'event_final = 0;
 	mapannounce 'map_slw$, "The setting of the central room has been initialized.", bc_map,0xFF99;
 	warpparty 'map_slw$,54,134,getcharid(1),'map_slw$,2,2;
 	disablenpc .@seyren$;
@@ -1019,15 +1044,14 @@ OnTouch:
 }
 
 // * Battle
-// hideonnpc to display effect
 1@slw,55,170,3	duplicate(dummy_npc)	Pet child#boss_master	3621
 
 1@slw,55,170,3	script	#boss_master_dummy	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
-	if (getcharid(0) != getpartyleader(getcharid(1),2))	// officially player can spawn multiple boss changing party leader
+	if (is_party_leader() == false)	// officially player can spawn multiple boss changing party leader
 		end;
-	mes "";
+	setpcblock PCBLOCK_NPC, true;
 	.@npc_name$ = instance_npcname("Pet child#boss_master");
 	npctalk "How dare you come in! You're so brave!", .@npc_name$;
 	sleep2 3000;
@@ -1039,13 +1063,14 @@ OnTouch:
 	sleep2 3000;
 	npctalk "A... anyway, you are dead meat.", .@npc_name$;
 	sleep2 3000;
+	setpcblock PCBLOCK_NPC, false;
 	disablenpc instance_npcname("#boss_master_dummy");
 	npctalk "Beeee prepared!!!", .@npc_name$;
 	specialeffect EF_DANCE_BLADE_ATK, AREA, instance_npcname("Pet child#boss_master");
 	specialeffect EF_ALL_FULL_THROTTLE, AREA, instance_npcname("Pet child#boss_master");
 	donpcevent instance_npcname("#boss_master_lab") + "::OnStart";
 	mapannounce 'map_slw$, "The Magic field has been activated.", bc_map,0xFF99;
-	hideonnpc instance_npcname("Pet child#boss_master");
+	cloakonnpc instance_npcname("Pet child#boss_master");
 	end;
 }
 

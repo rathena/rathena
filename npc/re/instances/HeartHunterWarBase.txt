@@ -148,7 +148,7 @@ ein_fild04,281,337,3	script	Julian#ep16.2	4_M_REBELLION2,{
 		setquest 12374;// Heart Hunter Base occupation
 		mes "[Julian]";
 		mes "After that, follow the instruction of the chief of your unit. Once the gate to the base is opened, talk to the Striker Unit Commander over there and start.";
-		if (getcharid(0) == getpartyleader(getcharid(1),2)) {
+		if (is_party_leader() == true) {
 			next;
 			mes "[Julian]";
 			mes "If you are ready, I will let you know the attack time.";
@@ -162,7 +162,7 @@ ein_fild04,281,337,3	script	Julian#ep16.2	4_M_REBELLION2,{
 		}
 		close;
 	case 1:
-		if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+		if (is_party_leader() == false) {
 			mes "[Julian]";
 			mes "After that, follow the instruction of the chief of your unit. Once the gate to the base is opened, talk to the Striker Unit Commander over there and start.";
 			close;
@@ -180,7 +180,7 @@ ein_fild04,281,337,3	script	Julian#ep16.2	4_M_REBELLION2,{
 		}
 		break;
 	case 2:
-		if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+		if (is_party_leader() == false) {
 			mes "[Julian]";
 			mes "After that, follow the instruction of the chief of your unit. Once the gate to the base is opened, talk to the Striker Unit Commander over there and start.";
 			close;
@@ -655,7 +655,7 @@ OnTouch:
 	select("Give him the gunpowder");
 	if ('event == 1) {
 		'event = 2;
-		delitem 25154, countitem(25154);
+		delitem 25154, countitem(25154);// Antique_Powder
 		donpcevent instance_npcname("Julian#1_1") + "::OnStart";
 	}
 	end;
@@ -694,15 +694,15 @@ OnTimer12000:
 	disablenpc instance_npcname("#tr118");
 	disablenpc instance_npcname("#tr119");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl17");
-	hideonnpc instance_npcname("#wl17");
+	cloakonnpc instance_npcname("#wl17");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl18");
-	hideonnpc instance_npcname("#wl18");
+	cloakonnpc instance_npcname("#wl18");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl19");
-	hideonnpc instance_npcname("#wl19");
+	cloakonnpc instance_npcname("#wl19");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl20");
-	hideonnpc instance_npcname("#wl20");
+	cloakonnpc instance_npcname("#wl20");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl21");
-	hideonnpc instance_npcname("#wl21");
+	cloakonnpc instance_npcname("#wl21");
 	setcell 'map_swat$,116,30,116,66,cell_walkable,1;
 	end;
 OnTimer17000:
@@ -721,7 +721,7 @@ OnTimer17000:
 	specialeffect EF_COIN;
 	disablenpc instance_npcname("Pile of gunpowder#1");
 	for ( .@i = 0; .@i < 5; .@i++ )
-		makeitem 25154,1,'map_swat$, rand(56,60), rand(84,86);
+		makeitem 25154,1,'map_swat$, rand(56,60), rand(84,86);// Antique_Powder
 	initnpctimer;
 	end;
 OnTimer3000:
@@ -781,15 +781,15 @@ OnTimer7000:
 	disablenpc instance_npcname("#tr125");
 	disablenpc instance_npcname("#tr126");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl51");
-	hideonnpc instance_npcname("#wl51");
+	cloakonnpc instance_npcname("#wl51");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl52");
-	hideonnpc instance_npcname("#wl52");
+	cloakonnpc instance_npcname("#wl52");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl53");
-	hideonnpc instance_npcname("#wl53");
+	cloakonnpc instance_npcname("#wl53");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl54");
-	hideonnpc instance_npcname("#wl54");
+	cloakonnpc instance_npcname("#wl54");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl55");
-	hideonnpc instance_npcname("#wl55");
+	cloakonnpc instance_npcname("#wl55");
 	setcell 'map_swat$,151,30,151,60,cell_walkable,1;
 	end;
 OnTimer15000:
@@ -895,7 +895,7 @@ OnTimer14000:
 OnTimer1000:
 	stopnpctimer;
 	for ( .@i = 0; .@i < 5; .@i++ )
-		makeitem 25154,1,'map_swat$, rand(161,165), rand(51,55);
+		makeitem 25154,1,'map_swat$, rand(161,165), rand(51,55);// Antique_Powder
 	end;
 }
 
@@ -931,7 +931,7 @@ OnMobDead:
 	select("Give him the gunpowder");
 	if ('event == 4) {
 		'event = 5;
-		delitem 25154, countitem(25154);// Antique Gunpowder
+		delitem 25154, countitem(25154);// Antique_Powder
 		donpcevent instance_npcname("Julian#2_ep16_2") + "::OnStart";	// officially player can re-trigger the event
 	}
 	end;
@@ -948,15 +948,15 @@ OnTimer9000:
 	disablenpc instance_npcname("#tr130");
 	disablenpc instance_npcname("#tr131");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl72");
-	hideonnpc instance_npcname("#wl72");
+	cloakonnpc instance_npcname("#wl72");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl73");
-	hideonnpc instance_npcname("#wl73");
+	cloakonnpc instance_npcname("#wl73");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl74");
-	hideonnpc instance_npcname("#wl74");
+	cloakonnpc instance_npcname("#wl74");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl75");
-	hideonnpc instance_npcname("#wl75");
+	cloakonnpc instance_npcname("#wl75");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl76");
-	hideonnpc instance_npcname("#wl76");
+	cloakonnpc instance_npcname("#wl76");
 	setcell 'map_swat$,250,30,250,46,cell_walkable,1;
 	end;
 OnTimer14000:
@@ -1022,7 +1022,7 @@ OnTimer24000:
 	end;
 OnTimer28000:
 	specialeffect EF_LORD, AREA, "Julian#3";
-	hideonnpc instance_npcname("Julian#3");	// hideonnpc to display EF_LORD properly
+	cloakonnpc instance_npcname("Julian#3");	// cloakonnpc to display EF_LORD properly
 	enablenpc instance_npcname("Ebel#1_1");
 	npctalk "Ebel: Did I miss...", instance_npcname("Ebel#1_1");
 	end;
@@ -1178,7 +1178,7 @@ OnTimer40000:
 	mes "[Julian]";
 	mes "Hmm. The engineers need to repair the occupied base. It's time for battle force step outside.";
 	if (isbegin_quest(12374) == 1) {
-		getitem 25155,10;
+		getitem 25155,10;// Swz_Honor_Token
 		completequest 12374;// Heart Hunter Base occupation
 		terra_gloria_main = 20;
 	}
@@ -1191,6 +1191,9 @@ OnInstanceInit:
 
 	'instance_id = instance_id();
 	'map_swat$ = instance_mapname("1@swat");
+
+	if (instance_live_info(ILI_NAME) != "Heart Hunter War Base 1")
+		disablenpc instance_npcname("#start_npc");
 
 	// Step 1
 	disablenpc instance_npcname("Julian#1_1");
@@ -1246,7 +1249,7 @@ OnInstanceInit:
 
 // Entrance
 1@swat,53,122,1	script	Julian#4	4_M_REBELLION2,{
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "[Julian]";
 		mes "I'm talking to your leader now " + strcharinfo(0) + ".";
 		close;
@@ -1352,15 +1355,15 @@ OnTouch:
 	disablenpc instance_npcname("#tr133");
 	disablenpc instance_npcname("#tr134");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl88");
-	hideonnpc instance_npcname("#wl88");
+	cloakonnpc instance_npcname("#wl88");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl89");
-	hideonnpc instance_npcname("#wl89");
+	cloakonnpc instance_npcname("#wl89");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl90");
-	hideonnpc instance_npcname("#wl90");
+	cloakonnpc instance_npcname("#wl90");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl91");
-	hideonnpc instance_npcname("#wl91");
+	cloakonnpc instance_npcname("#wl91");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl92");
-	hideonnpc instance_npcname("#wl92");
+	cloakonnpc instance_npcname("#wl92");
 	enablenpc instance_npcname("#start2_2_1");
 	enablenpc instance_npcname("Julian#5");
 	setcell 'map_swat$,23,222,40,222,cell_walkable,1;
@@ -1426,15 +1429,15 @@ OnTimer1000:
 	disablenpc instance_npcname("#tr137");
 	disablenpc instance_npcname("#tr138");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl110");
-	hideonnpc instance_npcname("#wl110");
+	cloakonnpc instance_npcname("#wl110");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl111");
-	hideonnpc instance_npcname("#wl111");
+	cloakonnpc instance_npcname("#wl111");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl112");
-	hideonnpc instance_npcname("#wl112");
+	cloakonnpc instance_npcname("#wl112");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl113");
-	hideonnpc instance_npcname("#wl113");
+	cloakonnpc instance_npcname("#wl113");
 	specialeffect EF_LORD, AREA, instance_npcname("#wl114");
-	hideonnpc instance_npcname("#wl114");
+	cloakonnpc instance_npcname("#wl114");
 	setcell 'map_swat$,22,272,52,272,cell_walkable,1;
 
 	enablenpc instance_npcname("#start2_2_2");
@@ -1555,7 +1558,7 @@ OnTimer1000:
 	specialeffect EF_COIN;
 	disablenpc instance_npcname("Pile of gunpowder#4");
 	for ( .@i = 0; .@i < 4; .@i++ )
-		makeitem 25154,1,'map_swat$, rand(78,82), rand(250,251);
+		makeitem 25154,1,'map_swat$, rand(78,82), rand(250,251);	// Antique_Powder
 	initnpctimer;
 	end;
 }
@@ -1588,7 +1591,7 @@ OnTouch:
 1@swat,136,258,3	script	Julian#8_0	4_M_REBELLION2,{
 	if ('status_instance != 2)
 		end;
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "[Julian]";
 		mes "Wait for a while " + strcharinfo(0) + " we will proceed once your unit leader comes.";
 		close;
@@ -1603,13 +1606,13 @@ OnTouch:
 		mes "[Julian]";
 		mes "... It's real.";
 		close2;
-		if (getcharid(0) == getpartyleader(getcharid(1),2) && 'status_instance == 2)
+		if (is_party_leader() == true && 'status_instance == 2)
 			donpcevent instance_npcname("Julian#8") + "::OnStart";
 		end;
 	}
 	mes "[Julian]";
 	mes "Hmm. Great. Let's start right away.";
-	if (getcharid(0) == getpartyleader(getcharid(1),2) && 'status_instance == 2)
+	if (is_party_leader() == true && 'status_instance == 2)
 		donpcevent instance_npcname("Julian#8_0") + "::OnStart";
 	close;
 OnStart:
@@ -1790,6 +1793,9 @@ OnInstanceInit:
 
 	'instance_id = instance_id();
 	'map_swat$ = instance_mapname("1@swat");
+
+	if (instance_live_info(ILI_NAME) != "Heart Hunter War Base 2")
+		disablenpc instance_npcname("Julian#4");
 
 	// warps
 	disablenpc instance_npcname("#wp_boss");
