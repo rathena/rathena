@@ -8,7 +8,7 @@
 //= 1.2 Navigation system update. [Euphy]
 //============================================================
 
-lighthalzen,207,310,5	script	Lighthalzen Guide#lhz01::GuideLighthazlen	852,{
+lighthalzen,207,310,5	script	Lighthalzen Guide#lhz01::GuideLighthalzen	852,{
 	cutin "ein_soldier",2;
 	mes "[Lighthalzen Guide]";
 	mes "Welcome to ^8B4513Lighthalzen^000000,";
@@ -175,7 +175,7 @@ L_Mark:
 	mes "Would you like to check any other locations?";
 	return;
 }
-lighthalzen,220,310,3	duplicate(GuideLighthazlen)	Lighthalzen Guide#lhz02	852
-lighthalzen,154,100,5	duplicate(GuideLighthazlen)	Lighthalzen Guide#lhz03	852
-lighthalzen,307,224,3	duplicate(GuideLighthazlen)	Lighthalzen Guide#lhz04	852
-lighthalzen,247,82,3	duplicate(GuideLighthazlen)	Lighthalzen Guide#lhz05	852
+lighthalzen,220,310,3	duplicate(GuideLighthalzen)	Lighthalzen Guide#lhz02	852
+lighthalzen,154,100,5	duplicate(GuideLighthalzen)	Lighthalzen Guide#lhz03	852
+lighthalzen,307,224,3	duplicate(GuideLighthalzen)	Lighthalzen Guide#lhz04	852
+lighthalzen,247,82,3	duplicate(GuideLighthalzen)	Lighthalzen Guide#lhz05	852

@@ -19,7 +19,7 @@
 //= 1.2 Clean-up. [Capuche]
 //============================================================
 
-// Teleport Cats (14.2 Cat Hand Addition)
+// Teleport Cats (14.2 Cat Paw Addition)
 //============================================================
 -	script	Teleport Cat#ep14_2	-1,{
 	switch(atoi(charat(strnpcinfo(1),16))) {
@@ -4600,28 +4600,28 @@ OnTouch:
 function	script	CheckBurglary	{
 	.@last = getarg(1);
 	for ( .@i = getarg(0); .@i <= .@last; .@i++ ) {
+		if (checkquest(.@i) != -1)
+			continue;
 		switch(.@i) {
-			if (checkquest(.@i) != -1)
-				continue;
 		case 9252:
 			mes "- Let's examine Poppy first -";
-			return;
+			close;
 		case 9253:
 			mes "- Let's examine the messy";
 			mes "bookshelves first -";
-			return;
+			close;
 		case 9254:
 			mes "- Let's examine the damaged";
 			mes "book first -";
-			return;
+			close;
 		case 9255:
 			mes "- Let's examine the";
 			mes "container first -";
-			return;
+			close;
 		case 9256:
 			mes "- Let's examine the";
 			mes "messed up table first -";
-			return;
+			close;
 		}
 	}
 	return;
@@ -5309,7 +5309,7 @@ ecl_in04,77,104,5	script	Mother Rosa#eclage	4_F_MORAFINE1,{
 				break;
 			}
 			next;
-			.@menu2 = select("Do you suspect anyone?:Is there anything else missing?") -1;
+			.@menu2 = select("Do you suspect anyone?:Is there anything else missing?");
 			switch (.@menu2) {
 			case 1:
 				mes "[Mother Rosa]";
@@ -7930,7 +7930,7 @@ ecl_in01,80,86,4	script	Midgard Exploration#bok1	HIDDEN_NPC,{
 			mes "Seriously, human capability is...so disappointing. If they're wise enough, they'll use Warp-portal.";
 			break;
 		case 9:
-			mes "Morroc Village is known to be a place where Morroc, the king of demons, rests.";
+			mes "Morocc Village is known to be a place where Morocc, the king of demons, rests.";
 			next;
 			mes "Making waterways and lakes in the barren inhospitable desert...what an exceptional piece of work for humans.";
 			next;
@@ -8078,7 +8078,7 @@ ecl_in01,83,84,4	script	Midgard Exploration#bok3	HIDDEN_NPC,{
 			mes "But aren't those entertainment facilities supposed to be in the center of a country?";
 			break;
 		case 5:
-			mes "A city called Yuno is even floating in the sky! How incredible is this.";
+			mes "A city called Juno is even floating in the sky! How incredible is this.";
 			next;
 			mes "And there is a special reward for those who escape the maze: there is a place where rebirth is given.";
 			next;
@@ -8145,7 +8145,7 @@ ecl_in01,83,81,4	script	Midgard Exploration#bok4	HIDDEN_NPC,{
 		case 2:
 			mes "Places you can reach through Alberta are as follows.";
 			next;
-			mes "A country of Gods, Amatsu, a place of refuge, Kunlun, Louyang where many martial art experts reside, Ayothaya in which a huge sculpture is present, and many others.";
+			mes "A country of Gods, Amatsu, a place of refuge, Kunlun, Luoyang where many martial art experts reside, Ayothaya in which a huge sculpture is present, and many others.";
 			next;
 			mes "I can see that more places would be available in the future as delegates from many other countries are arriving there more recently.";
 			break;
@@ -8329,7 +8329,7 @@ ecl_in01,82,79,4	script	Magazine#02	HIDDEN_NPC,{
 	next;
 	if (select("Keep reading.:Stop reading.") == 2)
 		close;
-	mes "That cat introduced himself and told me that he studied in Morroc.";
+	mes "That cat introduced himself and told me that he studied in Morocc.";
 	next;
 	mes "Then he assured me that he could upgrade my +9 Violet Fear to +10 Violet Fear.";
 	next;
@@ -8359,7 +8359,7 @@ ecl_in01,82,79,4	script	Magazine#02	HIDDEN_NPC,{
 	next;
 	if (select("Keep reading.:Stop reading.") == 2)
 		close;
-	mes "This is a story of 'Appearing in Morroc Chocheon****.'";
+	mes "This is a story of 'Appearing in Morocc Chocheon****.'";
 	close;
 }
 
@@ -8522,7 +8522,7 @@ ecl_in02,146,114,4	script	Clever#pa0829	4_M_FAIRYSCHOLAR_DIRTY,{
 		mes "Hmm? Why? Do you have an interesting story?";
 		while (1) {
 			next;
-			if (select("Try entertaining him.:Tell him about the journey until now.:Tell him about Rune Midgard.:Ask him what he wants to eat.") == 4) {
+			if (select("Try entertaining him.:Tell him about the journey until now.:Tell him about Midgard.:Ask him what he wants to eat.") == 4) {
 				mes "[Clever]";
 				mes "Hmm. What do I want to eat? I have lots of things I want to eat. After all, I've been eating stale prison rice all this time. I had one thing in particular.";
 				next;
@@ -10997,6 +10997,7 @@ ecl_fild01,190,93,5	script	Fili#1	4_M_FAIRYANG,1,1,{
 					close;
 				}
 			}
+			close;
 		case 3:
 			if (checkquest(13060,PLAYTIME) == 2) {
 				mes "We should go check if the adventurers are okay.";
@@ -11041,6 +11042,7 @@ ecl_fild01,190,93,5	script	Fili#1	4_M_FAIRYANG,1,1,{
 					close;
 				}
 			}
+			close;
 		}
 	}
 	else if (ep14_2_nines == 2) {
@@ -15269,7 +15271,7 @@ ecl_in03,41,90,3	script	Mayor Jun Kardui#tl01	4_M_FARIYKING,{
 		mes "[Kardui]";
 		mes "Let's think about that later. ";
 		mes "Anyway...I heard from Nydhog.";
-		mes "The Chief of Staff seemed to be manipulated by a subordinate of Morroc.";
+		mes "The Chief of Staff seemed to be manipulated by a subordinate of Morocc.";
 		next;
 		cutin "kardui02",2;
 		mes "[Kardui]";

@@ -179,7 +179,7 @@ bool loginlog_init(void) {
 
 	loginlog_config.enabled = true;
 
-	ShowStatus("Loginlog connection: Database '" CL_WHITE "%s" CL_RESET "' at '" CL_WHITE "%s" CL_RESET "'\n", loginlog_config.log_db_database.c_str(), loginlog_config.log_db_username.c_str());
+	ShowStatus("Loginlog connection: Database '" CL_WHITE "%s" CL_RESET "' at '" CL_WHITE "%s" CL_RESET "'\n", loginlog_config.log_db_database.c_str(), loginlog_config.log_db_hostname.c_str());
 	return true;
 }
 

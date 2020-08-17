@@ -1320,7 +1320,8 @@ bool channel_read_sub(config_setting_t *chan, struct Channel *tmp_chan, uint8 i)
 	config_setting_t  *group_list = NULL;
 	int delay = 1000, autojoin = 0, leave = 1, chat = 1, color_override = 0,
 		self_notif = 1, join_notif = 0, leave_notif = 0;
-	int type = CHAN_TYPE_PUBLIC, group_count = 0;
+	int64 type = CHAN_TYPE_PUBLIC;
+	int group_count = 0;
 	const char *name = NULL, *password = NULL, *alias = NULL, *color_str = "Default", *type_str = NULL;
 
 	if (tmp_chan == NULL)

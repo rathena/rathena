@@ -79,7 +79,8 @@ struct s_achievement_db {
 	struct script_code* condition;
 	int16 mapindex;
 	struct ach_reward {
-		unsigned short nameid, amount;
+		t_itemid nameid;
+		unsigned short amount;
 		struct script_code *script;
 		uint32 title_id;
 		ach_reward();
@@ -112,6 +113,23 @@ public:
 
 extern AchievementDatabase achievement_db;
 
+struct s_achievement_level{
+	uint16 level;
+	uint16 points;
+};
+
+class AchievementLevelDatabase : public TypesafeYamlDatabase<uint16, s_achievement_level>{
+public:
+	AchievementLevelDatabase() : TypesafeYamlDatabase( "ACHIEVEMENT_LEVEL_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const YAML::Node& node );
+};
+
+extern AchievementLevelDatabase achievement_level_db;
+
 void achievement_get_reward(struct map_session_data *sd, int achievement_id, time_t rewarded);
 struct achievement *achievement_add(struct map_session_data *sd, int achievement_id);
 bool achievement_remove(struct map_session_data *sd, int achievement_id);
@@ -120,8 +138,10 @@ void achievement_check_reward(struct map_session_data *sd, int achievement_id);
 void achievement_free(struct map_session_data *sd);
 int achievement_check_progress(struct map_session_data *sd, int achievement_id, int type);
 int *achievement_level(struct map_session_data *sd, bool flag);
+bool achievement_check_condition(struct script_code* condition, struct map_session_data* sd);
 void achievement_get_titles(uint32 char_id);
 void achievement_update_objective(struct map_session_data *sd, enum e_achievement_group group, uint8 arg_count, ...);
+int achievement_update_objective_sub(block_list *bl, va_list ap);
 void achievement_read_db(void);
 void achievement_db_reload(void);
 

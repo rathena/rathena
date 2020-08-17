@@ -52,7 +52,6 @@ extern struct Inter_Config inter_config; /// Inter/char-server configuration wit
 extern Sql* sql_handle;
 extern Sql* lsql_handle;
 
-void inter_savereg(uint32 account_id, uint32 char_id, const char *key, unsigned int index, intptr_t val, bool is_string);
 int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type);
 
 #endif /* INTER_HPP */
