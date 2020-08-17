@@ -42,7 +42,7 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
 	StringBuf_AppendStr(&buf, "SELECT `id`, COALESCE(UNIX_TIMESTAMP(`completed`),0), COALESCE(UNIX_TIMESTAMP(`rewarded`),0)");
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
 		StringBuf_Printf(&buf, ", `count%d`", i + 1);
-	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id` = '%u'", schema_config.achievement_table, char_id);
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id` = '%u'", charserv_table(achievement_table), char_id);
 
 	stmt = SqlStmt_Malloc(sql_handle);
 	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
@@ -94,7 +94,7 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
  */
 bool mapif_achievement_delete(uint32 char_id, int achievement_id)
 {
-	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d' AND `char_id` = '%u'", schema_config.achievement_table, achievement_id, char_id)) {
+	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d' AND `char_id` = '%u'", charserv_table(achievement_table), achievement_id, char_id)) {
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}

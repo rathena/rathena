@@ -666,7 +666,7 @@ void log_config_read_done(void) {
 		ShowInfo("Logging 'logmes' messages to %s: '%s'.\n", target, log_config.schema.npc_table.c_str());
 	}
 	if (log_config.zeny) {
-		ShowInfo("Logging Zeny transactions to %s: '%s'.\n", log_config.schema.zeny_table.c_str());
+		ShowInfo("Logging Zeny transactions to %s: '%s'.\n", target, log_config.schema.zeny_table.c_str());
 	}
 	if (log_config.cash) {
 		ShowInfo("Logging Cash transactions to %s: '%s'.\n", target, log_config.schema.cash_table.c_str());
@@ -848,7 +848,7 @@ int log_config_read(const char* cfgName)
 			else if( strcmpi( w1, "log_extension" ) == 0 )
 				log_config.log_ext = w2;
 			else if( strcmpi( w1, "log_timestamp_format" ) == 0 )
-				log_config.log_timestamp, w2;
+				log_config.log_timestamp = w2;
 			//support the import command, just like any other config
 			else if( strcmpi(w1,"import") == 0 )
 				log_config_read(w2);
