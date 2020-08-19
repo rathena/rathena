@@ -3,12 +3,6 @@
 //===== Description: =========================================
 //= [Walkthrough Conversion]
 //--- NPCs quests for Episode 16.2
-//
-//- Unfinished:
-//-- Ericsson's daily quest
-//-- Milo River's gathering quest
-//-- Levedeva's daily quest
-//-- Strasse (exchange npc)
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
 //============================================================
@@ -1785,7 +1779,7 @@ OnInit:
 einbech,44,207,0	script	#16negobok06	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
-	if (terra_gloria_main == 0)
+	if (terra_gloria_main == 10 || terra_gloria_main == 11)
 		end;
 	cloakonnpc "Lazy#16nego01", getcharid(0);
 	end;
@@ -2082,18 +2076,6 @@ einbech,76,131,3	script	Lazy#16nego02	4_M_LAZY,{
 
 OnInit:
 	cloakonnpc "Lazy#16nego02";
-	end;
-}
-
-// rebel_in entrance
-einbech,215,84,0	script	nemi	WARPNPC,1,1,{
-	end;
-OnTouch:
-	if (terra_gloria_main < 14) {
-		mes "You only see a cold and hard wall.";
-		close;
-	}
-	warp "rebel_in",21,41;
 	end;
 }
 
@@ -3601,6 +3583,7 @@ que_swat,150,58,3	script	Rookie#ep162_03	4_M_ROOKIE,{
 
 OnInit:
 	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(7742,HUNTING) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "terra_gloria_main > 24 && (checkquest(7743,PLAYTIME) == -1 || checkquest(7743,PLAYTIME) == 2) && (checkquest(7742,HUNTING) == -1 || checkquest(7742,HUNTING) == 2)" );
 	end;
 }
 
@@ -3664,6 +3647,7 @@ que_swat,145,57,3	script	Philopontess#ep162_04	4_M_PHILOFONTES,{
 		getitem 25155,10;	// Swz_Honor_Token
 		getexp 500000,500000;
 		terra_gloria_main = 25;
+		questinfo_refresh();
 		close2;
 		npctalk "Oh, please come here for a moment.", "Rookie#ep162_03", bc_self;
 		end;
@@ -3759,8 +3743,9 @@ que_swat,145,57,3	script	Philopontess#ep162_04	4_M_PHILOFONTES,{
 	end;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(7744) == 0 && isbegin_quest(7741) == 2" );
-	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(7745) == 0 && isbegin_quest(7760) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "terra_gloria_main == 24" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "terra_gloria_main > 24 && isbegin_quest(7744) == 0 && (checkquest(7745,PLAYTIME) == -1 || checkquest(7745,PLAYTIME) == 2)" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(7760) > 0" );
 	end;
 }
 
@@ -3858,7 +3843,7 @@ que_swat,161,53,3	script	Yuslan#ep162_1	4_M_GUNSLINGER3,{
 	end;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(7761,HUNTING) == 2 || checkquest(7762,PLAYTIME) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "terra_gloria_main > 19 && (checkquest(7761,HUNTING) == -1 || checkquest(7761,HUNTING) == 2) && (checkquest(7762,PLAYTIME) == -1 || checkquest(7762,PLAYTIME) == 2)" );
 	end;
 }
 
@@ -3898,7 +3883,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 		mes "Seems like they gave a great effort. Tell them thanks.";
 		completequest 16031;// Service: Cookies delivery
 		delitem 25161,1;// Handmade_cookie2
-		close;
+		close3;
 	}
 
 	if (terra_gloria_main == 16 && isbegin_quest(14602) == 1) {
@@ -4421,6 +4406,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			npctalk "Elena Bolkova: Are they it Mason and Milo in Clana Nemieri..?", "", bc_self;
 			setquest 16012;// Troublesome twin
 			lebedev_quest_16_2 = 1;
+			questinfo_refresh();
 			close3;
 		}
 		if (lebedev_quest_16_2 == 1) {
@@ -4466,6 +4452,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			erasequest 16015;// The cause of failure is a careless attempt
 			setquest 16016;// Borrowing wisdom of the experts
 			lebedev_quest_16_2 = 6;
+			questinfo_refresh();
 			close3;
 		}
 		if (lebedev_quest_16_2 == 6) {
@@ -4510,6 +4497,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			erasequest 16017;// Twin's sincere confession
 			setquest 16018;// Encourage instead of punishment
 			lebedev_quest_16_2 = 9;
+			questinfo_refresh();
 			close3;
 		}
 		if (lebedev_quest_16_2 == 9) {
@@ -4643,6 +4631,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			getexp 200000,200000;
 			getitem 25155,10;// Swz_Honor_Token
 			lebedev_quest_16_2 = 11;
+			questinfo_refresh();
 			close3;
 		}
 		mes "[USU commander Elena]";
@@ -4662,8 +4651,8 @@ OnInit:
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16061) == 2" );
 	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(16010,PLAYTIME) == 2" );
 
-	// twin quest main - incomplete: should display everytime player need to talk to npc
-	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16012) == 0 && isbegin_quest(14615) == 1" );
+	// twin quest main
+	questinfo( QTYPE_QUEST, QMARK_NONE, "terra_gloria_main > 16 && (lebedev_quest_16_2 == 0 || lebedev_quest_16_2 == 5 || lebedev_quest_16_2 == 8 || lebedev_quest_16_2 == 10)" );
 
 	// twins daily quest : "Service: Cookies delivery"
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16031) == 1 && countitem(25161) > 0" );
@@ -4948,8 +4937,8 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		mes "[Rebellion leader]";
 		mes "He must know his position better than anyone else.";
 		mes "The man called Lazy, too.";
-		setquest 11454;// Doubt
 		terra_gloria_lady_part = 1;
+		setquest 11454;// Doubt
 		close;
 	}
 	if (terra_gloria_lady_part < 5) {
@@ -5289,6 +5278,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 			completequest 14600;// Gentleman on second floor
 			completequest 11462;// Doubt
 			terra_gloria_lady_part = 10;
+			questinfo_refresh();
 		}
 		close3;
 	}
@@ -5301,7 +5291,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 	close;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11454) == 0 && isbegin_quest(11455) == 0 && isbegin_quest(11456) == 0 && isbegin_quest(11457) == 0 && isbegin_quest(14601) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "terra_gloria_main >= 16 && terra_gloria_lady_part == 0" );
 	end;
 }
 
@@ -6623,6 +6613,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		getitem 25155,10;	// Swz_Honor_Token
 		getexp 1000000,500000;
 		terra_gloria_main = 17;
+		questinfo_refresh();
 		close3;
 	}
 	cutin "16lei_01.bmp",2;
@@ -6631,7 +6622,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 	close3;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(14614) == 0 && isbegin_quest(14599) == 1" );
+	// questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(14614) == 0 && isbegin_quest(14599) == 1" );	// no questinfo
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(14615) == 0 && isbegin_quest(14602) == 2 && isbegin_quest(11462) == 2" );
 	end;
 }
@@ -6936,15 +6927,15 @@ OnTouch:
 		mes "Then I'll fix the party accessories in advance.";
 		mes "Hohohoho.";
 		cutin "ep162_ctn02.bmp",2;
-		setquest 11463;// You said the party is ready?
 		terra_gloria_lady_part = 11;
+		setquest 11463;// You said the party is ready?
 		close3;
 	}
 	warp "rebel_in",158,83;
 	end;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11463) == 0 && isbegin_quest(14600) == 0 && isbegin_quest(11464) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "terra_gloria_lady_part == 10" );
 	end;
 }
 
@@ -7571,6 +7562,10 @@ OnInit:
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11465) == 0 && (checkquest(11466,PLAYTIME) == -1 || checkquest(11466,PLAYTIME) == 2) && isbegin_quest(11464) == 2" );
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11467) == 0 && (checkquest(11468,PLAYTIME) == -1 || checkquest(11468,PLAYTIME) == 2) && isbegin_quest(11464) == 2" );
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11469) == 0 && (checkquest(11470,PLAYTIME) == -1 || checkquest(11470,PLAYTIME) == 2) && isbegin_quest(11464) == 2" );
+
+	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(11465,HUNTING) == 2 && countitem(25165) > 0 && isbegin_quest(11464) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(11467,HUNTING) == 2 && countitem(25167) > 0 && isbegin_quest(11464) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(11469,HUNTING) == 2 && countitem(25166) > 3 && isbegin_quest(11464) == 2" );
 	end;
 }
 
@@ -8617,6 +8612,7 @@ lighthalzen,135,233,6	script	Arivero Yurhik#TFQ07	4_M_GUNSLINGER,{
 		npctalk "Bang!", "Teleport Prohibition equipment#2", bc_self;
 		sleep2 1000;
 		specialeffect EF_LORD, AREA, "Teleport Prohibition equipment#2";
+		cloakonnpc "Teleport Prohibition equipment#2", getcharid(0);
 		sleep2 1000;
 		mes "[Arivero Yurhik]";
 		mes "Nevertheless, the first one is always tough and it is easier from the second one. Now let us disappear with teleporting..";
@@ -8656,6 +8652,7 @@ lighthalzen,137,231,0	script	Rihrtarzen Prohibition equipment 	HIDDEN_WARP_NPC,5
 	end;
 OnTouch:
 	if (yurhik_quest == 5) {
+		cloakoffnpc "Teleport Prohibition equipment#2", getcharid(0);
 		mes "Is this it? The mansion surrounded by water? According to the condition, it seems like it.";
 		next;
 		cloakoffnpc "Arivero Yurhik#TFQ07", getcharid(0);
@@ -8888,6 +8885,7 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 		setquest 16033;// Bring dessert and listen the story
 		getitem 25161,1;// Handmade_cookie2
 		lebedev_quest_16_2 = 7;
+		questinfo_refresh();
 		close;
 	}
 	if (lebedev_quest_16_2 == 7 && countitem(25161) < 1) {
@@ -9036,6 +9034,7 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 		mes "If you go south from the Einbroch observatory, you will find it.";
 		close;
 	case 1:// daily
+	case 2:
 		if (isbegin_quest(16053) == 1) {
 			mes "I've been to Einbroch.";
 			next;
@@ -9052,18 +9051,20 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 		mes "Buy a Bunch Of Flowers from ^0000CDflower girl^000000 and lay it beneath the tree.";
 		mes "If you go south from the Einbroch observatory, you will find it.";
 		close;
-	case 2:
-		end;
 	}
 	end;
 
 OnInit:
 	// Ericsson daily
-	.@terra_main_18$ = "isbegin_quest(14615) == 2";
-	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && checkquest(16049,PLAYTIME) == -1 && isbegin_quest(16045) == 0") );
-	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && checkquest(16049,PLAYTIME) == 2") );
-	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && isbegin_quest(16048) == 1") );
-	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && isbegin_quest(16053) == 1") );
+	.@terra_main$ = "terra_gloria_main > 16";
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main$ + " && checkquest(16049,PLAYTIME) == -1 && isbegin_quest(16045) == 0") );
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main$ + " && checkquest(16049,PLAYTIME) == 2") );
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main$ + " && isbegin_quest(16048) == 1") );
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main$ + " && isbegin_quest(16053) == 1") );
+
+	// twins main quest
+	questinfo( QTYPE_QUEST, QMARK_NONE, "lebedev_quest_16_2 == 6" );
+	end;
 
 	// twins daily quest : "Service: Cookies delivery"
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16030) == 1 && countitem(25161) > 0" );
@@ -9148,9 +9149,8 @@ einbroch,167,160,3	script	Flower Girl#16.2rm	1_M_SIZ,{
 
 OnInit:
 	questinfo( QTYPE_QUEST,QMARK_YELLOW, " isbegin_quest(16045) == 1 " );
-	questinfo( QTYPE_QUEST,QMARK_YELLOW, " isbegin_quest(16046) == 1 " );
+	questinfo( QTYPE_QUEST,QMARK_YELLOW, "(isbegin_quest(16046) == 1 || isbegin_quest(16051) == 1) && countitem(7111) > 2" );
 	questinfo( QTYPE_QUEST,QMARK_YELLOW, " isbegin_quest(16050) == 1 " );
-	questinfo( QTYPE_QUEST,QMARK_YELLOW, " isbegin_quest(16051) == 1 " );
 	end;
 }
 
@@ -9602,7 +9602,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 
 OnInit:
 	// Mason Bender Business
-	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16054) == 0" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "terra_gloria_main > 16 && isbegin_quest(16054) == 0" );
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16055) == 2 && isbegin_quest(16056) == 2 && isbegin_quest(16057) == 2" );
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16059) == 0 && isbegin_quest(16054) == 2 && (checkquest(16058,PLAYTIME) == -1 || checkquest(16058,PLAYTIME) == 2)" );
 
@@ -10221,8 +10221,11 @@ S_Item:
 	close;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16032) == 0 && isbegin_quest(14615) == 2" );
-	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16041) == 0 && isbegin_quest(14615) == 2 && isbegin_quest(16044) == 0 && isbegin_quest(16042) == 0" );
+	.@terra_main$ = "terra_gloria_main > 16";
+	questinfo( QTYPE_QUEST, QMARK_NONE, .@terra_main$ + " && isbegin_quest(16032) == 0" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, .@terra_main$ + " && isbegin_quest(16041) == 0 && isbegin_quest(16044) == 0 && (checkquest(16042,PLAYTIME) == -1 || checkquest(16042,PLAYTIME) == 2)" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, .@terra_main$ + " && isbegin_quest(16043) == 0 && isbegin_quest(16041) == 2 && isbegin_quest(16044) == 0 && (checkquest(16042,PLAYTIME) == -1 || checkquest(16042,PLAYTIME) == 2)" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, .@terra_main$ + " && isbegin_quest(16044) == 1" );
 
 	// Lebedev twins quest
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16013) == 1" );
@@ -10546,13 +10549,13 @@ S_Quest:
 	close;
 
 OnInit:
-	.@terra_main_18$ = "isbegin_quest(14615) == 2";
+	.@terra_main$ = "terra_gloria_main > 16";
 	.@has_item$ = 
 		"(isbegin_quest(16038) == 1 && countitem(984) > 1) || " +
 		"(isbegin_quest(16039) == 1 && countitem(985) > 1) || " +
 		"(isbegin_quest(16040) == 1 && countitem(998) > 4)";
-	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && isbegin_quest(16035) == 0 && (isbegin_quest(16036) == 0 || isbegin_quest(16036) == 1)") );
-	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && ((checkquest(16037,PLAYTIME) == -1 && (" + .@has_item$ + ")) || checkquest(16037,PLAYTIME) == 2)") );
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main$ + " && isbegin_quest(16035) == 0 && (isbegin_quest(16036) == 0 || isbegin_quest(16036) == 1)") );
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main$ + " && ((checkquest(16037,PLAYTIME) == -1 && (" + .@has_item$ + ")) || checkquest(16037,PLAYTIME) == 2)") );
 
 	// twins daily quest : "Service: Cookies delivery"
 	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16029) == 1 && countitem(25161) > 0" );
@@ -11493,16 +11496,16 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 	end;
 
 OnInit:
-	.@terra_main_18$ = "isbegin_quest(14615) == 2";
-	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && (checkquest(14610,HUNTING) == -1 || (checkquest(14610,HUNTING) == 2 && countitem(25153) > 2)) && checkquest(14612,PLAYTIME) == -1 && isbegin_quest(14611) == 0") );
-	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && (checkquest(14612,PLAYTIME) == 2 || (checkquest(14611,HUNTING) == 2 && countitem(25153) > 2))") );
+	.@terra_main$ = "terra_gloria_main > 16";
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main$ + " && (checkquest(14610,HUNTING) == -1 || (checkquest(14610,HUNTING) == 2 && countitem(25153) > 2)) && checkquest(14612,PLAYTIME) == -1 && isbegin_quest(14611) == 0") );
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main$ + " && (checkquest(14612,PLAYTIME) == 2 || (checkquest(14611,HUNTING) == 2 && countitem(25153) > 2))") );
 	end;
 }
 
 ein_fild09,70,175,5	script	Suspicious Heap of Earth#1	4_SOIL,{
 	if (isbegin_quest(14610) == 0 && isbegin_quest(14611) == 0)
 		end;
-	if (countitem(25153) >= 3) {
+	if (countitem(25153) >= 3) {	// what if true but hunting not completed?
 		mes "[" + strcharinfo(0) + "]";
 		mes "You've reclaimed enough of them. Let's go back to the Master.";
 		close;
@@ -13030,7 +13033,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 
 OnInit:
 	.@conditions$ =
-		"isbegin_quest(14615) == 2 && (checkquest(14609,PLAYTIME) == -1 || checkquest(14609,PLAYTIME) == 2)" +
+		"terra_gloria_main > 16 && (checkquest(14609,PLAYTIME) == -1 || checkquest(14609,PLAYTIME) == 2)" +
 		" && isbegin_quest(14603) == 0 && isbegin_quest(14604) == 0 && isbegin_quest(14605) == 0 && isbegin_quest(14606) == 0 && isbegin_quest(14607) == 0 && isbegin_quest(14608) == 0";
 	questinfo( QTYPE_QUEST, QMARK_NONE, .@conditions$ );
 	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(14603,HUNTING) == 2 && countitem(999) > 4 && countitem(7319) > 14");
@@ -13579,6 +13582,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		erasequest 16018;// Encourage instead of punishment
 		setquest 16019;// Elena Volkova's Solution
 		lebedev_quest_16_2 = 10;
+		questinfo_refresh();
 		close;
 	}
 	if (lebedev_quest_16_2 == 10) {
@@ -13732,14 +13736,15 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 				mes "Please make some space. We don't want the cookies to get broken.";
 				close;
 			}
+			getitem 25161,5;// Handmade_cookie2
 			setquest 16027;// Service: Cookies delivery
 			setquest 16028;// Service: Cookies delivery
 			setquest 16029;// Service: Cookies delivery
 			setquest 16030;// Service: Cookies delivery
 			setquest 16031;// Service: Cookies delivery
-			getitem 25161,5;// Handmade_cookie2
 			close;
 		}
+		end;
 	}
 	switch( .@quest_list[.@i] ) {
 	case 16021:
@@ -13907,7 +13912,7 @@ prt_in,165,89,1	script	Librarian in charge of juveniles 	1_F_LIBRARYGIRL,{
 	mes "Hello. Welcome to Prontera library.";
 	mes "For juvenile books, only designated rental service is available. Which book are you looking for?";
 	next;
-	.@r = rand(5);
+	.@r = rand(3);
 	if (.@r == 0)
 		setarray .@menu$[0], "A story of 101 cookies", "No Gun No Life", "Linsa, the Owl of Wizard";
 	else if (.@r == 1)
@@ -13955,37 +13960,7 @@ prt_in,165,89,1	script	Librarian in charge of juveniles 	1_F_LIBRARYGIRL,{
 	close;
 }
 
-// warps
-rebel_in,34,43,0	warp2	#negoin02	5,2,rebel_in,21,41
-rebel_in,18,43,0	warp2	einbech_south	1,1,einbech,215,80
-
-// Commander Room
-rebel_in,88,80,0	warp2	#162gmroom2_1	1,1,rebel_in,209,82
-rebel_in,209,77,0	warp2	#162gmroom2_2	1,1,rebel_in,87,75
-
-// Ladies Room
-rebel_in,155,84,0	warp2	#162gmroom2_3	1,1,rebel_in,119,41
-
-ein_in01,273,273,0	warp	roomB_roomBGate	1,1,ein_in01,274,243
-
-ein_in01,274,246,0	script	#ep162_warp01	WARPNPC,1,1,{
-	end;
-OnTouch:
-	if (terra_gloria_main == 18 || terra_gloria_main == 22) {
-		cutin "ep16_tes01.bmp",0;
-		mes "[Tess]";
-		mes "Welcome. Please come in.";
-		close2;
-	}
-	warp "ein_in01",273,276;
-	end;
-}
-
-// Dungeon
-que_swat,155,61,0	warp	#in_slbw	1,1,slabw01,14,88
-slabw01,10,88,0	warp	#out_slbw	1,1,que_swat,155,58
-
-	// Items Quests given by Small Leather Bag (ID: 23087) - not repeatable
+// Items Quests given by Small Leather Bag (ID: 23087) - not repeatable
 prt_in,177,26,6	script	Knight Windsor#ep162	4_M_JOB_KNIGHT1,{
 	switch( isbegin_quest(7746) ) {
 	case 0:
