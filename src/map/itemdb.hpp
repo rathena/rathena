@@ -16,10 +16,8 @@
 
 enum e_ammo_type : uint8;
 
-///Maximum allowed Item ID (range: 1 ~ 65,534)
-#define MAX_ITEMID USHRT_MAX
 ///Use apple for unknown items.
-#define UNKNOWN_ITEM_ID 512
+const t_itemid UNKNOWN_ITEM_ID = 512;
 /// The maximum number of item delays
 #define MAX_ITEMDELAYS	10
 ///Designed for search functions, species max number of matches to display.
@@ -32,15 +30,15 @@ enum e_ammo_type : uint8;
 #define MAX_ROULETTE_LEVEL 7 /** client-defined value **/
 #define MAX_ROULETTE_COLUMNS 9 /** client-defined value **/
 
-#define CARD0_FORGE 0x00FF
-#define CARD0_CREATE 0x00FE
-#define CARD0_PET 0x0100
+const t_itemid CARD0_FORGE = 0x00FF;
+const t_itemid CARD0_CREATE = 0x00FE;
+const t_itemid CARD0_PET = 0x0100;
 
 ///Marks if the card0 given is "special" (non-item id used to mark pets/created items. [Skotlex]
 #define itemdb_isspecial(i) (i == CARD0_FORGE || i == CARD0_CREATE || i == CARD0_PET)
 
 ///Enum of item id (for hardcoded purpose)
-enum item_itemid
+enum item_itemid : t_itemid
 {
 	ITEMID_DUMMY						= 499,
 	ITEMID_RED_POTION					= 501,
@@ -122,10 +120,11 @@ enum item_itemid
 	ITEMID_WOB_RACHEL					= 14584,
 	ITEMID_WOB_LOCAL					= 14585,
 	ITEMID_SIEGE_TELEPORT_SCROLL		= 14591,
+	ITEMID_WL_MB_SG						= 100065,
 };
 
 ///Rune Knight
-enum rune_item_list
+enum rune_item_list : t_itemid
 {
 	ITEMID_NAUTHIZ		= 12725,
 	ITEMID_RAIDO,
@@ -140,7 +139,7 @@ enum rune_item_list
 };
 
 ///Mechanic
-enum mechanic_item_list
+enum mechanic_item_list : t_itemid
 {
 	ITEMID_ACCELERATOR				= 2800,
 	ITEMID_HOVERING_BOOSTER,
@@ -163,7 +162,7 @@ enum mechanic_item_list
 };
 
 ///Genetic
-enum genetic_item_list
+enum genetic_item_list : t_itemid
 {
 	ITEMID_SEED_OF_HORNY_PLANT			= 6210,
 	ITEMID_BLOODSUCK_PLANT_SEED,
@@ -203,7 +202,7 @@ enum genetic_item_list
 };
 
 ///Guillotine Cross
-enum poison_item_list
+enum poison_item_list : t_itemid
 {
 	ITEMID_PARALYSE = 12717,
 	ITEMID_LEECHESEND,
@@ -789,8 +788,8 @@ struct s_item_combo {
 /// Struct of item group entry
 struct s_item_group_entry
 {
-	unsigned short nameid, /// Item ID
-		duration, /// Duration if item as rental item (in minutes)
+	t_itemid nameid; /// Item ID
+	unsigned short duration, /// Duration if item as rental item (in minutes)
 		amount; /// Amount of item will be obtained
 	bool isAnnounced, /// Broadcast if player get this item
 		GUID, /// Gives Unique ID for items in each box opened
@@ -816,8 +815,8 @@ struct s_item_group_db
 
 /// Struct of Roulette db
 struct s_roulette_db {
-	unsigned short *nameid[MAX_ROULETTE_LEVEL], /// Item ID
-		           *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
+	t_itemid *nameid[MAX_ROULETTE_LEVEL]; /// Item ID
+	unsigned short *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
 	int *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
 	int items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
 };
@@ -826,7 +825,7 @@ extern struct s_roulette_db rd;
 ///Main item data struct
 struct item_data
 {
-	unsigned short nameid;
+	t_itemid nameid;
 	std::string name, ename;
 
 	//Do not add stuff between value_buy and view_id (see how getiteminfo works)
@@ -845,7 +844,7 @@ struct item_data
 	uint32 look;
 	uint16 elv;
 	uint16 wlv;
-	uint32 view_id;
+	t_itemid view_id;
 	uint16 elvmax; ///< Maximum level for this item
 #ifdef RENEWAL
 	uint32 matk;
@@ -957,8 +956,8 @@ extern ItemDatabase item_db;
 struct item_data* itemdb_searchname(const char *name);
 struct item_data* itemdb_search_aegisname( const char *str );
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
-struct item_data* itemdb_search(unsigned short nameid);
-struct item_data* itemdb_exists(unsigned short nameid);
+struct item_data* itemdb_search(t_itemid nameid);
+struct item_data* itemdb_exists(t_itemid nameid);
 #define itemdb_name(n) itemdb_search(n)->name.c_str()
 #define itemdb_ename(n) itemdb_search(n)->ename.c_str()
 #define itemdb_type(n) itemdb_search(n)->type
@@ -982,7 +981,7 @@ const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (e_ammo_type ammo);
 
 struct s_item_group_entry *itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group);
-unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
+t_itemid itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
@@ -1011,7 +1010,7 @@ bool itemdb_ishatched_egg(struct item* item);
 
 bool itemdb_isequip2(struct item_data *id);
 #define itemdb_isequip(nameid) itemdb_isequip2(itemdb_search(nameid))
-char itemdb_isidentified(unsigned short nameid);
+char itemdb_isidentified(t_itemid nameid);
 bool itemdb_isstackable2(struct item_data *id);
 #define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
@@ -1019,7 +1018,7 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m);
 s_item_combo *itemdb_combo_exists(uint32 combo_id);
 
 struct s_item_group_db *itemdb_group_exists(unsigned short group_id);
-bool itemdb_group_item_exists(unsigned short group_id, unsigned short nameid);
+bool itemdb_group_item_exists(unsigned short group_id, t_itemid nameid);
 int16 itemdb_group_item_exists_pc(struct map_session_data *sd, unsigned short group_id);
 char itemdb_pc_get_itemgroup(uint16 group_id, bool identify, struct map_session_data *sd);
 

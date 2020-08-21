@@ -65667,103 +65667,103 @@ Body:
     Weight: 10
   - Id: 6189
     AegisName: Magic_Book_FB
-    Name: Spell Book (Fire Bolt)
+    Name: Old Spell Book (Fire Bolt)
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6190
     AegisName: Magic_Book_CB
-    Name: Spell Book (Cold Bolt)
+    Name: Old Spell Book (Cold Bolt)
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6191
     AegisName: Magic_Book_LB
-    Name: Spell Book (Lightening Bolt)
+    Name: Old Spell Book (Lightening Bolt)
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6192
     AegisName: Magic_Book_SG
-    Name: Spell Book (Storm Gust)
+    Name: Old Spell Book (Storm Gust)
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6193
     AegisName: Magic_Book_LOV
-    Name: Spell Book (Lord Of Vermilion)
+    Name: Old Spell Book (Lord Of Vermilion)
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6194
     AegisName: Magic_Book_MS
-    Name: Spell Book (Meteor Storm)
+    Name: Old Spell Book (Meteor Storm)
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6195
     AegisName: Magic_Book_CM
-    Name: Spell Book (Comet)
+    Name: Old Spell Book (Comet)
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6196
     AegisName: Magic_Book_TV
-    Name: Spell Book (Tetra Vortex)
+    Name: Old Spell Book (Tetra Vortex)
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6197
     AegisName: Magic_Book_TS
-    Name: Spell Book (Thunder Storm)
+    Name: Old Spell Book (Thunder Storm)
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6198
     AegisName: Magic_Book_JT
-    Name: Spell Book (Jupitel Thunder)
+    Name: Old Spell Book (Jupitel Thunder)
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6199
     AegisName: Magic_Book_WB
-    Name: Spell Book (Water Ball)
+    Name: Old Spell Book (Water Ball)
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6200
     AegisName: Magic_Book_HD
-    Name: Spell Book (Heaven's Drive)
+    Name: Old Spell Book (Heaven's Drive)
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6201
     AegisName: Magic_Book_ES
-    Name: Spell Book (Earth Spike)
+    Name: Old Spell Book (Earth Spike)
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6202
     AegisName: Magic_Book_ES_
-    Name: Spell Book (Earth Strain)
+    Name: Old Spell Book (Earth Strain)
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6203
     AegisName: Magic_Book_CL
-    Name: Spell Book (Chain Lightning)
+    Name: Old Spell Book (Chain Lightning)
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6204
     AegisName: Magic_Book_CR
-    Name: Spell Book (Crimson Rock)
+    Name: Old Spell Book (Crimson Rock)
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6205
     AegisName: Magic_Book_DL
-    Name: Spell Book (Drain Life)
+    Name: Old Spell Book (Drain Life)
     Type: Etc
     Flags:
       BuyingStore: true
@@ -70263,7 +70263,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6748
-    AegisName: Daily_Report_He_And_His_Team
+    AegisName: Excavator_Repoet
     Name: Daily Report He And His Team
     Type: Etc
     Buy: 10
@@ -70278,7 +70278,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6749
-    AegisName: Operation_Control_Device
+    AegisName: Power_Control_Device
     Name: Operation Control Device
     Type: Etc
     Buy: 10
@@ -70325,7 +70325,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6753
-    AegisName: Token_Of_Destruction
+    AegisName: Sign_Of_Destruction
     Name: Token Of Destruction
     Type: Etc
     Buy: 10
@@ -70338,7 +70338,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6754
-    AegisName: Collected_Medicinal_Herbs
+    AegisName: Collected_Herb
     Name: Collected Medicinal Herbs
     Type: Etc
     Buy: 10
@@ -70359,7 +70359,7 @@ Body:
     Buy: 20
     Weight: 10
   - Id: 6756
-    AegisName: Cohesive_Energy
+    AegisName: Condensed_Energy
     Name: Cohesive Energy
     Type: Etc
     Buy: 20
@@ -70374,7 +70374,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6757
-    AegisName: The_Memory_Recorder
+    AegisName: Memory_Record
     Name: The Memory Recorder
     Type: Etc
     Buy: 20
@@ -70826,7 +70826,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6824
-    AegisName: Experimental_Dong_Memory_Record
+    AegisName: Lab_Memory_Record
     Name: Experimental Dong Memory Record
     Type: Etc
     Buy: 10
@@ -70872,7 +70872,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6827
-    AegisName: Complete_Machine_Parts
+    AegisName: Normal_Parts
     Name: Complete Machine Parts
     Type: Etc
     Buy: 10
@@ -70886,7 +70886,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6828
-    AegisName: Gravity_Safety_Device
+    AegisName: Gravity_Parts
     Name: Gravity Safety Device
     Type: Etc
     Buy: 10
@@ -157755,7 +157755,7 @@ Body:
     Script: |
       callfunc("F_Pieces_Of_Sentiment");
   - Id: 22691
-    AegisName: Record_Fragment1
+    AegisName: Piece_Of_Record1
     Name: Record Fragment
     Type: Healing
     Trade:
@@ -157769,9 +157769,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      warp "un_bk_q",98,143; if (callfunc("F_time_limit_recorder") == 1) { recorder_quest_type = 1; }
+      warp "un_bk_q",98,143;
   - Id: 22692
-    AegisName: Record_Fragment2
+    AegisName: Piece_Of_Record2
     Name: Record Fragment
     Type: Healing
     Trade:
@@ -157785,9 +157785,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      warp "un_bk_q",45,276; if (callfunc("F_time_limit_recorder") == 1) { recorder_quest_type = 2; }
+      warp "un_bk_q",45,276;
   - Id: 22693
-    AegisName: Record_Fragment3
+    AegisName: Piece_Of_Record3
     Name: Record Fragment
     Type: Healing
     Trade:
@@ -157801,9 +157801,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      warp "un_bk_q",217,346; if (callfunc("F_time_limit_recorder") == 1) { recorder_quest_type = 3; }
+      warp "un_bk_q",217,346;
   - Id: 22694
-    AegisName: Record_Fragment4
+    AegisName: Piece_Of_Record4
     Name: Record Fragment
     Type: Healing
     Trade:
@@ -157817,9 +157817,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      warp "un_bk_q",273,235; if (callfunc("F_time_limit_recorder") == 1) { recorder_quest_type = 4; }
+      warp "un_bk_q",273,235;
   - Id: 22695
-    AegisName: Record_Fragment5
+    AegisName: Piece_Of_Record5
     Name: Record Fragment
     Type: Healing
     Trade:
@@ -157833,7 +157833,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      warp "un_bk_q",275,290; if (callfunc("F_time_limit_recorder") == 1) { recorder_quest_type = 5; }
+      warp "un_bk_q",275,290;
   - Id: 22699
     AegisName: Test_Reagent
     Name: Test Reagent
@@ -179719,3 +179719,134 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus2 bSkillCooldown,"GN_SPORE_EXPLOSION",-1000; bonus bBaseAtk,4*.@r; if (.@r>=11) .@val = 50; else if (.@r>=9) .@val = 30; bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",.@val;
+  - Id: 100065
+    AegisName: WL_MB_SG
+    Name: Spell Book (Storm Gust)
+    Type: Delayconsume
+    Flags:
+      NoConsume: true
+    Script: |
+      itemskill "WL_READING_SB_READING",1;
+  - Id: 100066
+    AegisName: WL_MB_LOV
+    Name: Spell Book (Lord of Vermilion)
+    Type: Delayconsume
+    Flags:
+      NoConsume: true
+    Script: |
+      itemskill "WL_READING_SB_READING",2;
+  - Id: 100067
+    AegisName: WL_MB_MS
+    Name: Spell Book (Meteor Storm)
+    Type: Delayconsume
+    Flags:
+      NoConsume: true
+    Script: |
+      itemskill "WL_READING_SB_READING",3;
+  - Id: 100068
+    AegisName: WL_MB_DL
+    Name: Spell Book (Drain Life)
+    Type: Delayconsume
+    Flags:
+      NoConsume: true
+    Script: |
+      itemskill "WL_READING_SB_READING",4;
+  - Id: 100069
+    AegisName: WL_MB_JF
+    Name: Spell Book (Jack Frost)
+    Type: Delayconsume
+    Flags:
+      NoConsume: true
+    Script: |
+      itemskill "WL_READING_SB_READING",5;
+  - Id: 100070
+    AegisName: WL_MB_ES
+    Name: Spell Book (Earth Strain)
+    Type: Delayconsume
+    Flags:
+      NoConsume: true
+    Script: |
+      itemskill "WL_READING_SB_READING",6;
+  - Id: 100071
+    AegisName: WL_MB_CR
+    Name: Spell Book (Crimson Rock)
+    Type: Delayconsume
+    Flags:
+      NoConsume: true
+    Script: |
+      itemskill "WL_READING_SB_READING",7;
+  - Id: 100072
+    AegisName: WL_MB_CL
+    Name: Spell Book (Chain Lightning)
+    Type: Delayconsume
+    Flags:
+      NoConsume: true
+    Script: |
+      itemskill "WL_READING_SB_READING",8;
+  - Id: 100073
+    AegisName: WL_MB_CM
+    Name: Spell Book (Comet)
+    Type: Delayconsume
+    Flags:
+      NoConsume: true
+    Script: |
+      itemskill "WL_READING_SB_READING",9;
+  - Id: 100074
+    AegisName: WL_MB_TV
+    Name: Spell Book (Tetra Vortex)
+    Type: Delayconsume
+    Flags:
+      NoConsume: true
+    Script: |
+      itemskill "WL_READING_SB_READING",10;
+  - Id: 100231
+    AegisName: Ref_T_Potion
+    Name: Golden X
+    Type: Healing
+    Buy: 10
+    Weight: 30
+    Script: |
+      sc_start SC_REF_T_POTION,30000,0;
+  - Id: 100232
+    AegisName: Add_Atk_Potion
+    Name: Red Herb Activator
+    Type: Healing
+    Buy: 10
+    Weight: 30
+    Script: |
+      sc_start SC_ADD_ATK_DAMAGE,500000,15;
+  - Id: 100233
+    AegisName: Add_Matk_Potion
+    Name: Blue Herb Activator
+    Type: Healing
+    Buy: 10
+    Weight: 30
+    Script: |
+      sc_start SC_ADD_MATK_DAMAGE,500000,15;
+  - Id: 1100003
+    AegisName: Concentrated_R_P
+    Name: Concentrated Red Potion
+    Type: Healing
+    Buy: 10
+    Weight: 2
+    EquipLevelMin: 120
+    Script: |
+      itemheal rand(655,675),0;
+  - Id: 1100004
+    AegisName: Concentrated_B_P
+    Name: Concentrated Blue Potion
+    Type: Healing
+    Buy: 10
+    Weight: 2
+    EquipLevelMin: 120
+    Script: |
+      itemheal 0,rand(340,360);
+  - Id: 1100005
+    AegisName: Concentrated_G_P
+    Name: Concentrated Gold Potion
+    Type: Healing
+    Buy: 10
+    Weight: 2
+    EquipLevelMin: 180
+    Script: |
+      itemheal rand(2730,2750),0;

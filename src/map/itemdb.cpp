@@ -44,7 +44,7 @@ const std::string ItemDatabase::getDefaultLocation() {
  * @return count of successfully parsed rows
  */
 uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
-	uint32 nameid;
+	t_itemid nameid;
 
 	if (!this->asUInt32(node, "Id", nameid))
 		return 0;
@@ -1047,7 +1047,7 @@ struct s_item_group_db *itemdb_group_exists(unsigned short group_id) {
  * @param nameid: Item to check for in group
  * @return True if item is in group, else false
  */
-bool itemdb_group_item_exists(unsigned short group_id, unsigned short nameid)
+bool itemdb_group_item_exists(unsigned short group_id, t_itemid nameid)
 {
 	struct s_item_group_db *group = (struct s_item_group_db *)uidb_get(itemdb_group, group_id);
 	unsigned short i, j;
@@ -1176,7 +1176,7 @@ struct s_item_group_entry *itemdb_get_randgroupitem(uint16 group_id, uint8 sub_g
 * @param sub_group: 0 is 'must' item group, random groups start from 1 to MAX_ITEMGROUP_RANDGROUP+1
 * @return Item ID or UNKNOWN_ITEM_ID on fail
 */
-unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group) {
+t_itemid itemdb_searchrandomid(uint16 group_id, uint8 sub_group) {
 	struct s_item_group_entry *entry = itemdb_get_randgroupitem(group_id, sub_group);
 	return entry ? entry->nameid : UNKNOWN_ITEM_ID;
 }
@@ -1267,7 +1267,7 @@ char itemdb_pc_get_itemgroup(uint16 group_id, bool identify, struct map_session_
 * @param nameid
 * @return *item_data if item is exist, or NULL if not
 */
-struct item_data* itemdb_exists(unsigned short nameid) {
+struct item_data* itemdb_exists(t_itemid nameid) {
 	std::shared_ptr<item_data> item = item_db.find(nameid);
 
 	return item ? item.get() : nullptr;
@@ -1364,11 +1364,11 @@ static void itemdb_create_dummy(void) {
  * @param nameid
  * @return *item_data or *dummy_item if item not found
  *------------------------------------------*/
-struct item_data* itemdb_search(unsigned short nameid) {
+struct item_data* itemdb_search(t_itemid nameid) {
 	std::shared_ptr<item_data> id;
 
 	if (!(id = item_db.find(nameid))) {
-		ShowWarning("itemdb_search: Item ID %hu does not exists in the item_db. Using dummy data.\n", nameid);
+		ShowWarning("itemdb_search: Item ID %u does not exists in the item_db. Using dummy data.\n", nameid);
 		id = item_db.find(ITEMID_DUMMY);
 	}
 	return id.get();
@@ -1468,7 +1468,7 @@ bool itemdb_ishatched_egg(struct item* item) {
 /** Specifies if item-type should drop unidentified.
 * @param nameid ID of item
 */
-char itemdb_isidentified(unsigned short nameid) {
+char itemdb_isidentified(t_itemid nameid) {
 	int type=itemdb_type(nameid);
 	switch (type) {
 		case IT_WEAPON:
@@ -1558,7 +1558,7 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	str[1] = trim(str[1]);
 
 	// Check if the item can be found by id
-	if( ( entry.nameid = atoi(str[1]) ) <= 0 || !itemdb_exists( entry.nameid ) ){
+	if( ( entry.nameid = strtoul(str[1], nullptr, 10) ) == 0 || !itemdb_exists( entry.nameid ) ){
 		// Otherwise look it up by name
 		struct item_data *id = itemdb_searchname(str[1]);
 
@@ -1614,16 +1614,16 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 * Structure: <nameid>,<mode>
 */
 static bool itemdb_read_noequip(char* str[], int columns, int current) {
-	unsigned short nameid;
+	t_itemid nameid;
 	int flag;
 	struct item_data *id;
 
-	nameid = atoi(str[0]);
+	nameid = strtoul(str[0], nullptr, 10);
 	flag = atoi(str[1]);
 
 	if( ( id = itemdb_exists(nameid) ) == NULL )
 	{
-		ShowWarning("itemdb_read_noequip: Invalid item id %hu.\n", nameid);
+		ShowWarning("itemdb_read_noequip: Invalid item id %u.\n", nameid);
 		return false;
 	}
 
@@ -1795,29 +1795,30 @@ bool itemdb_parse_roulette_db(void)
 
 		for (k = 0; k < limit && SQL_SUCCESS == Sql_NextRow(mmysql_handle); k++) {
 			char* data;
-			unsigned short item_id, amount;
+			t_itemid item_id;
+			unsigned short amount;
 			int level, flag;
 
 			Sql_GetData(mmysql_handle, 1, &data, NULL); level = atoi(data);
-			Sql_GetData(mmysql_handle, 2, &data, NULL); item_id = atoi(data);
+			Sql_GetData(mmysql_handle, 2, &data, NULL); item_id = strtoul(data, nullptr, 10);
 			Sql_GetData(mmysql_handle, 3, &data, NULL); amount = atoi(data);
 			Sql_GetData(mmysql_handle, 4, &data, NULL); flag = atoi(data);
 
 			if (!itemdb_exists(item_id)) {
-				ShowWarning("itemdb_parse_roulette_db: Unknown item ID '%hu' in level '%d'\n", item_id, level);
+				ShowWarning("itemdb_parse_roulette_db: Unknown item ID '%u' in level '%d'\n", item_id, level);
 				continue;
 			}
 			if (amount < 1 || amount > MAX_AMOUNT){
-				ShowWarning("itemdb_parse_roulette_db: Unsupported amount '%hu' for item ID '%hu' in level '%d'\n", amount, item_id, level);
+				ShowWarning("itemdb_parse_roulette_db: Unsupported amount '%hu' for item ID '%u' in level '%d'\n", amount, item_id, level);
 				continue;
 			}
 			if (flag < 0 || flag > 1) {
-				ShowWarning("itemdb_parse_roulette_db: Unsupported flag '%d' for item ID '%hu' in level '%d'\n", flag, item_id, level);
+				ShowWarning("itemdb_parse_roulette_db: Unsupported flag '%d' for item ID '%u' in level '%d'\n", flag, item_id, level);
 				continue;
 			}
 
 			j = rd.items[i];
-			RECREATE(rd.nameid[i], unsigned short, ++rd.items[i]);
+			RECREATE(rd.nameid[i], t_itemid, ++rd.items[i]);
 			RECREATE(rd.qty[i], unsigned short, rd.items[i]);
 			RECREATE(rd.flag[i], int, rd.items[i]);
 
@@ -1848,7 +1849,7 @@ bool itemdb_parse_roulette_db(void)
 		ShowWarning("itemdb_parse_roulette_db: Level %d has %d items, %d are required. Filling with Apples...\n", i + 1, rd.items[i], limit);
 
 		rd.items[i] = limit;
-		RECREATE(rd.nameid[i], unsigned short, rd.items[i]);
+		RECREATE(rd.nameid[i], t_itemid, rd.items[i]);
 		RECREATE(rd.qty[i], unsigned short, rd.items[i]);
 		RECREATE(rd.flag[i], int, rd.items[i]);
 
@@ -1913,7 +1914,7 @@ static bool itemdb_read_sqldb_sub(char **str) {
 	YAML::Node node;
 	int index = -1;
 
-	node["Id"] = atoi(str[++index]);
+	node["Id"] = strtoul(str[++index], nullptr, 10);
 	node["AegisName"] = str[++index];
 	node["Name"] = str[++index];
 	node["Type"] = str[++index];
