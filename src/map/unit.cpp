@@ -93,7 +93,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 
 #ifdef OFFICIAL_WALKPATH
 	if( (bl->type != BL_NPC) // If type is a NPC, please disregard.
-		&& wpd.path_len > 14 // Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett])
+		&& wpd.path_len > 14 // Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
 		&& !path_search_long(nullptr, bl->m, bl->x, bl->y, ud->to_x, ud->to_y, CELL_CHKNOPASS) ) // Check if there is an obstacle between
 			return 0;
 #endif
@@ -2543,7 +2543,7 @@ bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, 
 
 #ifdef OFFICIAL_WALKPATH
 	if( (bl->type != BL_NPC) // If type is a NPC, please disregard.
-		&& wpd.path_len > 14 // Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett])
+		&& wpd.path_len > 14 // Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
 		&& !path_search_long(nullptr, bl->m, bl->x, bl->y, tbl->x-dx, tbl->y-dy, CELL_CHKNOPASS) ) // Check if there is an obstacle between
 			return false;
 #endif
