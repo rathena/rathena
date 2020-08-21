@@ -78,13 +78,6 @@ struct unit_data* unit_bl2ud(struct block_list *bl)
  */
 int unit_walktoxy_sub(struct block_list *bl)
 {
-	int i;
-	struct walkpath_data wpd = {0};
-
-	nullpo_retr(1, bl);
-
-	struct unit_data *ud = unit_bl2ud(bl);
-	if (ud == nullptr)
 	nullpo_retr(1, bl);
 
 	unit_data *ud = unit_bl2ud(bl);
