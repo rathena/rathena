@@ -85,20 +85,21 @@ int unit_walktoxy_sub(struct block_list *bl)
 	if (ud == nullptr)
 		return 0;
 
-	int i;
 	walkpath_data wpd = { 0 };
 
 	if( !path_search(&wpd,bl->m,bl->x,bl->y,ud->to_x,ud->to_y,ud->state.walk_easy,CELL_CHKNOPASS) )
 		return 0;
 
 #ifdef OFFICIAL_WALKPATH
-	if( (bl->type != BL_NPC) // If type is a NPC, please disregard.
+	if( bl->type != BL_NPC // If type is a NPC, please disregard.
 		&& wpd.path_len > 14 // Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
 		&& !path_search_long(nullptr, bl->m, bl->x, bl->y, ud->to_x, ud->to_y, CELL_CHKNOPASS) ) // Check if there is an obstacle between
 			return 0;
 #endif
 
 	ud->walkpath = wpd;
+
+	int i;
 
 	if (ud->target_to && ud->chaserange>1) {
 		// Generally speaking, the walk path is already to an adjacent tile
@@ -719,13 +720,13 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 	if (!path_search(&wpd, bl->m, bl->x, bl->y, x, y, flag&1, CELL_CHKNOPASS)) // Count walk path cells
 		return 0;
 
-	if (bl->type != BL_NPC && (
+	if (bl->type != BL_NPC &&
+		( wpd.path_len > battle_config.max_walk_path ||
 #ifdef OFFICIAL_WALKPATH
 		( wpd.path_len > 14 // Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
 		&& !path_search_long(nullptr, bl->m, bl->x, bl->y, x, y, CELL_CHKNOPASS) ) // Check if there is an obstacle between
-		||
 #endif
-		wpd.path_len > battle_config.max_walk_path))
+		))
 			return 0;
 
 	if (flag&4) {
@@ -2542,7 +2543,7 @@ bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, 
 		return false;
 
 #ifdef OFFICIAL_WALKPATH
-	if( (bl->type != BL_NPC) // If type is a NPC, please disregard.
+	if( bl->type != BL_NPC // If type is a NPC, please disregard.
 		&& wpd.path_len > 14 // Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
 		&& !path_search_long(nullptr, bl->m, bl->x, bl->y, tbl->x-dx, tbl->y-dy, CELL_CHKNOPASS) ) // Check if there is an obstacle between
 			return false;
