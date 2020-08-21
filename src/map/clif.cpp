@@ -16169,7 +16169,7 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd){
 	if (amount < 0 || server_index(idx) >= MAX_INVENTORY)
 		return;
 
-	if (sd->inventory_data[idx] == nullptr)
+	if (sd->inventory_data[server_index(idx)] == nullptr)
 		return;
 
 	flag = mail_setitem(sd, idx, amount);
