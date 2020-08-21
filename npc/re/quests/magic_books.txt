@@ -290,7 +290,7 @@ geffen_in,175,112,4	script	Lea	2_F_MAGICMASTER,{
 			close;
 		case 2:
 			mes "[Lea]";
-			mes "Ah, so you want the Intermediate Magic Books. If you pay a ^4d4ffloan deposit of 100,000z^000000, we will lend you an Intermediate Magic Books.";
+			mes "Ah, so you want the Intermediate Magic Books. If you pay a ^4d4fffloan deposit of 100,000z^000000, we will lend you an Intermediate Magic Books.";
 			next;
 			mes "[Lea]";
 			mes "What kind of Magic Book do you want?";
@@ -318,12 +318,12 @@ geffen_in,175,112,4	script	Lea	2_F_MAGICMASTER,{
 				getitem .@Books[.@i-1],1; //WL_MB_SG, WL_MB_LOV, WL_MB_MS
 				close;
 			}
-			mes "The ^4d4ffloan deposit is 100,000z^000000. The deposit has adjusted as the Magic Book has changed.";
+			mes "The ^4d4fffloan deposit is 100,000z^000000. The deposit has adjusted as the Magic Book has changed.";
 			close;
 		case 3:
 			mes "[Lea]";
 			mes "Oh, do you want the Superior Magic Books? The policy has been changed to accept loan deposits unconditionally, instead of the existing demanding loan conditions.";
-			mes "The Superior Magic Book ^4d4ffloan deposit is 500,000z^000000.";
+			mes "The Superior Magic Book ^4d4fffloan deposit is 500,000z^000000.";
 			next;
 			mes "[Lea]";
 			mes "What kind of Magic Book do you want?";
@@ -351,7 +351,7 @@ geffen_in,175,112,4	script	Lea	2_F_MAGICMASTER,{
 				getitem .@Books[.@i-1],1; //WL_MB_DL, WL_MB_JF, WL_MB_ES, WL_MB_CR, WL_MB_CL
 				close;
 			}
-			mes "The ^4d4ffloan deposit is 500,000z^000000. The deposit has adjusted as the Magic Book has changed.";
+			mes "The ^4d4fffloan deposit is 500,000z^000000. The deposit has adjusted as the Magic Book has changed.";
 			close;
 		case 4:
 			if ((BaseLevel > 139) && (mac_book < 1) && ((getskilllv(2217) > 0) || (getskilllv(2213) > 0))) {
