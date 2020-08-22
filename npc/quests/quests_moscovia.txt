@@ -636,7 +636,8 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	4_M_RUSBALD,{
 		mes "back to the island, I want to go";
 		mes "together with you! Eh? Hahaha!";
 		mos_whale_edq = 16;
-		changequest 18111,18112;
+		if (isbegin_quest(18111))
+			changequest 18111,18112;
 		close;
 	} else if (mos_whale_edq < 18) {
 		mes "[Mr. Ibanoff]";
@@ -674,7 +675,8 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	4_M_RUSBALD,{
 			mes "[Mr. Ibanoff]";
 			mes "Again, let's get the ship ready and sail before the sun sets!";
 			mos_whale_edq = 19;
-			changequest 18113,18114;
+			if (isbegin_quest(18113))
+				changequest 18113,18114;
 			close;
 		}
 		mes "[Mr. Ibanoff]";
@@ -1460,7 +1462,8 @@ mosk_fild01,86,104,3	script	Aged Stranger#npc	4_M_GUSLIMAN,{
 			delitem 7106,20; //Goat's_Horn
 			delitem 7065,10; //Sea_Otter_Leather
 			mos_whale_edq = 34;
-			changequest 18117,18118;
+			if (isbegin_quest(18117))
+				changequest 18117,18118;
 			mes "[Aged Stranger]";
 			mes "Wait for a moment until I make the";
 			mes "instrument successfully.";
@@ -1523,7 +1526,8 @@ mosk_fild01,86,104,3	script	Aged Stranger#npc	4_M_GUSLIMAN,{
 			mes "island. Everything is going to be";
 			mes "well.";
 			next;
-			changequest 18118,18119;
+			if (isbegin_quest(18118))
+				changequest 18118,18119;
 		}
 		callsub S_AS_2,1;
 	} else if (mos_whale_edq == 36) {
@@ -2138,7 +2142,8 @@ mosk_in,131,92,3	script	Csar Alexsay III#npc	4_M_RUSKING,7,7,{
 		mes "You have a heavy responsibility.";
 		mes "Bring evidence of this whale island to me, to provide me with some relief. Now go.";
 		mos_whale_edq = 18;
-		changequest 18112,18113;
+		if (isbegin_quest(18112))
+			changequest 18112,18113;
 		close;
 	} else if (mos_whale_edq > 17 && mos_whale_edq < 35) {
 		mes "[Csar Alexsay III]";
