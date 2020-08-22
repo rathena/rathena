@@ -374,7 +374,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		}
 
 		if( pet->pet_bonus_script != nullptr ){
-			aFree( pet->pet_bonus_script );
+			script_free_code( pet->pet_bonus_script );
 			pet->pet_bonus_script = nullptr;
 		}
 
@@ -393,7 +393,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		}
 
 		if( pet->pet_support_script != nullptr ){
-			aFree( pet->pet_support_script );
+			script_free_code( pet->pet_support_script );
 			pet->pet_support_script = nullptr;
 		}
 
@@ -1196,7 +1196,7 @@ int pet_select_egg(struct map_session_data *sd,short egg_index)
 
 	std::shared_ptr<s_pet_db> pet = pet_db_search(sd->inventory.u.items_inventory[egg_index].nameid, PET_EGG);
 	if (!pet) {
-		ShowError("pet does not exist, egg id %d\n", sd->inventory.u.items_inventory[egg_index].nameid);
+		ShowError("pet does not exist, egg id %u\n", sd->inventory.u.items_inventory[egg_index].nameid);
 		return 0;
 	}
 

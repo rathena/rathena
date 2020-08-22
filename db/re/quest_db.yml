@@ -4086,13 +4086,13 @@ Body:
     Title: Core Collection
     Drops:
       - Mob: RECON_ROBOT
-        Item: Operation_Control_Device
+        Item: Power_Control_Device
         Rate: 5000
       - Mob: REPAIR_ROBOT
-        Item: Operation_Control_Device
+        Item: Power_Control_Device
         Rate: 5000
       - Mob: EXPLORATION_ROVER
-        Item: Operation_Control_Device
+        Item: Power_Control_Device
         Rate: 5000
   - Id: 7616
     Title: Core Collection - Down
@@ -6207,6 +6207,7 @@ Body:
     Title: Let the Specialists Handle It
   - Id: 11377
     Title: Act of Kindness
+    TimeLimit: +1d
   - Id: 11378
     Title: "Trick or treat "
   - Id: 11379

@@ -5845,7 +5845,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case WL_HELLINFERNO:
 		if (flag & 1) {
 			skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
-			skill_addtimerskill(src, tick + 300, bl->id, 0, 0, skill_id, skill_lv, BF_MAGIC, flag | ELE_DARK);
+			skill_addtimerskill(src, tick + 300, bl->id, 0, 0, skill_id, skill_lv, BF_MAGIC, flag | 2);
 		} else {
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
@@ -11954,7 +11954,7 @@ TIMER_FUNC(skill_castend_id){
 		else
 			skill_castend_damage_id(src,target,ud->skill_id,ud->skill_lv,tick,flag);
 
-		if( sd && sd->skill_keep_using.skill_id == ud->skill_id ){
+		if( sd && sd->skill_keep_using.skill_id > 0 && sd->skill_keep_using.skill_id == ud->skill_id ){
 			sd->skill_keep_using.tid = add_timer( sd->ud.canact_tick + 100, skill_keep_using, sd->bl.id, 0 );
 		}
 
@@ -19848,7 +19848,8 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, t_itemid na
 	}
 
 	for (i = 0; i < MAX_PRODUCE_RESOURCE; i++) {
-		short id, x, j;
+		short x, j;
+		t_itemid id;
 
 		if (!(id = skill_produce_db[idx].mat_id[i]) || !itemdb_exists(id))
 			continue;
@@ -22683,7 +22684,7 @@ uint64 ReadingSpellbookDatabase::parseBodyNode(const YAML::Node &node) {
  * @return Spell data or nullptr otherwise
  */
 std::shared_ptr<s_skill_spellbook_db> ReadingSpellbookDatabase::findBook(t_itemid nameid) {
-	if (nameid < 1 || !itemdb_exists(nameid) || reading_spellbook_db.size() == 0)
+	if (nameid == 0 || !itemdb_exists(nameid) || reading_spellbook_db.size() == 0)
 		return nullptr;
 
 	for (const auto &spell : reading_spellbook_db) {
@@ -22773,7 +22774,7 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current)
 	}
 
 	if (!itemdb_exists(nameid)) {
-		ShowError("skill_parse_row_producedb: Invalid item %d.\n", nameid);
+		ShowError("skill_parse_row_producedb: Invalid item %u.\n", nameid);
 		return false;
 	}
 
@@ -22783,7 +22784,7 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current)
 	skill_produce_db[id].req_skill_lv = atoi(split[4]);
 
 	for (x = 5, y = 0; x+1 < columns && split[x] && split[x+1] && y < MAX_PRODUCE_RESOURCE; x += 2, y++) {
-		skill_produce_db[id].mat_id[y] = atoi(split[x]);
+		skill_produce_db[id].mat_id[y] = strtoul(split[x], nullptr, 10);
 		skill_produce_db[id].mat_amount[y] = atoi(split[x+1]);
 	}
 
@@ -22798,10 +22799,11 @@ static bool skill_parse_row_producedb(char* split[], int columns, int current)
  */
 static bool skill_parse_row_createarrowdb(char* split[], int columns, int current)
 {
-	unsigned short x, y, i, material_id = atoi(split[0]);
+	unsigned short x, y, i;
+	t_itemid material_id = strtoul(split[0], nullptr, 10);
 
 	if (!(itemdb_exists(material_id))) {
-		ShowError("skill_parse_row_createarrowdb: Invalid item %d.\n", material_id);
+		ShowError("skill_parse_row_createarrowdb: Invalid item %u.\n", material_id);
 		return false;
 	}
 
@@ -22813,15 +22815,15 @@ static bool skill_parse_row_createarrowdb(char* split[], int columns, int curren
 	}
 
 	// Import just for clearing/disabling from original data
-	if (atoi(split[1]) == 0) {
+	if (strtoul(split[1], nullptr, 10) == 0) {
 		memset(&skill_arrow_db[i], 0, sizeof(skill_arrow_db[i]));
-		//ShowInfo("skill_parse_row_createarrowdb: Arrow creation with Material ID %d removed from list.\n", material_id);
+		//ShowInfo("skill_parse_row_createarrowdb: Arrow creation with Material ID %u removed from list.\n", material_id);
 		return true;
 	}
 
 	skill_arrow_db[i].nameid = material_id;
 	for (x = 1, y = 0; x+1 < columns && split[x] && split[x+1] && y < MAX_ARROW_RESULT; x += 2, y++) {
-		skill_arrow_db[i].cre_id[y] = atoi(split[x]);
+		skill_arrow_db[i].cre_id[y] = strtoul(split[x], nullptr, 10);
 		skill_arrow_db[i].cre_amount[y] = atoi(split[x+1]);
 	}
 	if (i == skill_arrow_count)

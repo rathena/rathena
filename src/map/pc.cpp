@@ -1074,7 +1074,7 @@ void pc_setequipindex(struct map_session_data *sd)
 	}
 
 	for (i = 0; i < MAX_INVENTORY; i++) {
-		if (sd->inventory.u.items_inventory[i].nameid <= 0)
+		if (sd->inventory.u.items_inventory[i].nameid == 0)
 			continue;
 		if (sd->inventory.u.items_inventory[i].equip) {
 			uint8 j;
@@ -4632,9 +4632,9 @@ int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 		return 0; //Invalid item index.
 	if(item_card == nullptr)
 		return 0; //Invalid card index.
-	if( sd->inventory.u.items_inventory[idx_equip].nameid <= 0 || sd->inventory.u.items_inventory[idx_equip].amount < 1 )
+	if( sd->inventory.u.items_inventory[idx_equip].nameid == 0 || sd->inventory.u.items_inventory[idx_equip].amount < 1 )
 		return 0; // target item missing
-	if( sd->inventory.u.items_inventory[idx_card].nameid <= 0 || sd->inventory.u.items_inventory[idx_card].amount < 1 )
+	if( sd->inventory.u.items_inventory[idx_card].nameid == 0 || sd->inventory.u.items_inventory[idx_card].amount < 1 )
 		return 0; // target card missing
 	if( item_eq->type != IT_WEAPON && item_eq->type != IT_ARMOR )
 		return 0; // only weapons and armor are allowed
@@ -5154,7 +5154,7 @@ bool pc_dropitem(struct map_session_data *sd,int n,int amount)
 	if(amount <= 0)
 		return false;
 
-	if(sd->inventory.u.items_inventory[n].nameid <= 0 ||
+	if(sd->inventory.u.items_inventory[n].nameid == 0 ||
 		sd->inventory.u.items_inventory[n].amount <= 0 ||
 		sd->inventory.u.items_inventory[n].amount < amount ||
 		sd->state.trading || sd->state.vending ||

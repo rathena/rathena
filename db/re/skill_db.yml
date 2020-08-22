@@ -2111,7 +2111,7 @@ Body:
     HitCount: -3
     Element: Weapon
     SplashArea: 2
-    ActiveInstance: 3
+    ActiveInstance: 5
     Knockback: 2
     CastTime: 500
     Duration1: 1000
@@ -9711,7 +9711,6 @@ Body:
         Time: 55000
       - Level: 10
         Time: 60000
-    Duration2: 1000
     Requires:
       SpCost: 50
       Weapon:

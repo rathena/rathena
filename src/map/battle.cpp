@@ -1283,10 +1283,12 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	if ((sce = sc->data[SC_PARRYING]) && flag&BF_WEAPON && skill_id != WS_CARTTERMINATION && rnd() % 100 < sce->val2) {
 		clif_skill_nodamage(target, target, LK_PARRYING, sce->val1, 1);
 
-		unit_data *ud = unit_bl2ud(target);
+		if (skill_id == LK_PARRYING) {
+			unit_data *ud = unit_bl2ud(target);
 
-		if (ud) // Delay the next attack
-			ud->attackabletime = gettick() + skill_get_time2(LK_PARRYING, sce->val1);
+			if (ud != nullptr) // Delay the next attack
+				ud->attackabletime = gettick() + status_get_adelay(target);
+		}
 		return false;
 	}
 
@@ -2278,13 +2280,22 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 	if (skill_get_inf2(skill_id, INF2_ISTRAP))
 		return BF_SHORT;
 
-	// When monsters use Arrow Shower or Bomb, it is always short range
-	if (src->type == BL_MOB && (skill_id == AC_SHOWER || skill_id == AM_DEMONSTRATION))
-		return BF_SHORT;
-
-	// Cast range is 7 cells and player jumps to target but skill is considered melee
-	if (skill_id == GC_CROSSIMPACT)
-		return BF_SHORT;
+	switch (skill_id) {
+		case AC_SHOWER:
+		case AM_DEMONSTRATION:
+			// When monsters use Arrow Shower or Bomb, it is always short range
+			if (src->type == BL_MOB)
+				return BF_SHORT;
+			break;
+#ifdef RENEWAL
+		case KN_BRANDISHSPEAR:
+			// Renewal changes to ranged physical damage
+			return BF_LONG;
+#endif
+		case GC_CROSSIMPACT:
+			// Cast range is 7 cells and player jumps to target but skill is considered melee
+			return BF_SHORT;
+	}
 
 	//Skill Range Criteria
 	if (battle_config.skillrange_by_distance &&
@@ -3324,25 +3335,24 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 				if (index >= 0 &&
 					sd->inventory_data[index] &&
 					sd->inventory_data[index]->type == IT_WEAPON)
-					wd->equipAtk += sd->inventory_data[index]->weight/20; // weight from spear is treated as equipment ATK on official [helvetica]
+					wd->equipAtk += sd->inventory_data[index]->weight*7/100; // weight from spear is treated as equipment ATK on official [helvetica]
 
 				battle_calc_damage_parts(wd, src, target, skill_id, skill_lv);
 				wd->masteryAtk = 0; // weapon mastery is ignored for spiral
+				
+				switch (tstatus->size) { //Size-fix. Is this modified by weapon perfection?
+					case SZ_SMALL: //Small: 115%
+						ATK_RATE(wd->damage, wd->damage2, 115);
+						RE_ALLATK_RATE(wd, 115);
+						break;
+					//case SZ_MEDIUM: //Medium: 100%
+					case SZ_BIG: //Large: 85%
+						ATK_RATE(wd->damage, wd->damage2, 85);
+						RE_ALLATK_RATE(wd, 85);
+						break;
+				}
 			} else {
 				wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, 0); //Monsters have no weight and use ATK instead
-			}
-
-			switch (tstatus->size) { //Size-fix. Is this modified by weapon perfection?
-				// !TODO: Confirm new size modifiers
-				case SZ_SMALL: //Small: 125%
-					ATK_RATE(wd->damage, wd->damage2, 125);
-					RE_ALLATK_RATE(wd, 125);
-					break;
-				//case SZ_MEDIUM: //Medium: 100%
-				case SZ_BIG: //Large: 75%
-					ATK_RATE(wd->damage, wd->damage2, 75);
-					RE_ALLATK_RATE(wd, 75);
-					break;
 			}
 #else
 		case NJ_ISSEN:
@@ -5622,11 +5632,6 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				wd.blewcount = 0;
 				break;
 
-#ifdef RENEWAL
-			case KN_BRANDISHSPEAR:
-				wd.flag |= BF_LONG;
-				break;
-#endif
 			case KN_AUTOCOUNTER:
 				wd.flag = (wd.flag&~BF_SKILLMASK)|BF_NORMAL;
 				break;
@@ -6119,7 +6124,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				s_ele = ELE_HOLY;
 			break;
 		case WL_HELLINFERNO:
-			if (mflag == ELE_DARK) {
+			if (mflag & 2) { // ELE_DARK
 				s_ele = ELE_DARK;
 				ad.div_ = 3;
 			}
@@ -6490,7 +6495,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case WL_HELLINFERNO:
 						skillratio += -100 + 400 * skill_lv;
-						if (mflag == ELE_DARK)
+						if (mflag & 2) // ELE_DARK
 							skillratio += 200;
 						RE_LVL_DMOD(100);
 						break;
@@ -7300,8 +7305,12 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 				return 0;
 	}
 
-	if (ssc && (ssc->data[SC_REF_T_POTION] || ssc->data[SC_HELLS_PLANT]))
-		return 0;
+	if (ssc) {
+		if (ssc->data[SC_HELLS_PLANT])
+			return 0;
+		if (ssc->data[SC_REF_T_POTION])
+			return 1; // Returns 1 damage
+	}
 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
 		if ( (skill_get_inf2(skill_id, INF2_ISTRAP) || !status_reflect) && sd && sd->bonus.short_weapon_damage_return ) {
@@ -8935,6 +8944,7 @@ static const struct _battle_data {
 	{ "monster_eye_range_bonus",            &battle_config.mob_eye_range_bonus,             0,      0,      10,             },
 	{ "monster_stuck_warning",              &battle_config.mob_stuck_warning,               0,      0,      1,              },
 	{ "skill_eightpath_algorithm",          &battle_config.skill_eightpath_algorithm,       1,      0,      1,              },
+	{ "skill_eightpath_same_cell",          &battle_config.skill_eightpath_same_cell,       1,      0,      1,              },
 	{ "death_penalty_maxlv",                &battle_config.death_penalty_maxlv,             0,      0,      3,              },
 	{ "exp_cost_redemptio",                 &battle_config.exp_cost_redemptio,              1,      0,      100,            },
 	{ "exp_cost_redemptio_limit",           &battle_config.exp_cost_redemptio_limit,        5,      0,      MAX_PARTY,      },
@@ -9000,6 +9010,7 @@ static const struct _battle_data {
 	{ "at_logout_event",                    &battle_config.at_logout_event,                 1,      0,      1,              },
 	{ "homunculus_starving_rate",           &battle_config.homunculus_starving_rate,        10,     0,      100,            },
 	{ "homunculus_starving_delay",          &battle_config.homunculus_starving_delay,       20000,  0,      INT_MAX,        },
+	{ "drop_connection_on_quit",            &battle_config.drop_connection_on_quit,         0,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };
