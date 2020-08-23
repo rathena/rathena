@@ -2861,8 +2861,7 @@ number.
 This is the only function around where a parameter may be either a string or a
 number! If it's a number, it means that only the items with that item ID number
 will be counted. If it is a string, it is assumed to mean the 'english name'
-field from the item database. If you give it an empty string, or something that
-isn't found from the item database, it will count items number '512' (apples).
+field from the item database.
 
 ---------------------------------------
 
@@ -5060,18 +5059,19 @@ See 'getitem2' for an explanation of the expanded parameters.
 
 *countbound({<bound type>{,<char_id>}})
 
-This function will return the number of bounded items in the character's
-inventory, and sets an array @bound_items[] containing all item IDs of the
-counted items. If a bound type is specified, only those items will be counted.
+This function will return the number of different bounded items in the character's
+inventory, and sets the arrays @bound_items[] and @bound_amount[] containing all item IDs of the
+counted items and their respective amount. If a bound type is specified, only those items will be counted.
 
 For a list of bound types see 'getitembound'.
 
 Example:
-	mes "You currently have " + countbound() + " bounded items.";
+	.@total_type = countbound();
+	mes "You currently have " + .@total_type + " different type of bounded items.";
 	next;
 	mes "The list of bounded items include:";
-	for(.@i = 0; .@i < getarraysize(@bound_items); .@i++)
-		mes getitemname(@bound_items[.@i]);
+	for(.@i = 0; .@i < .@total_type; .@i++)
+		mes "x" + @bound_amount[.@i] + " " + getitemname(@bound_items[.@i]);
 	close;
 
 ---------------------------------------
@@ -5807,9 +5807,9 @@ Increase AGI Lv 5, and display appropriate effects.
 *npcskilleffect <skill id>,<number>,<x>,<y>;
 *npcskilleffect "<skill name>",<number>,<x>,<y>;
 
-This command behaves identically to 'skilleffect', however, the effect will not
-be centered on the invoking character's sprite, nor on the NPC sprite, if any,
-but will be centered at map coordinates given on the same map as the invoking
+This command behaves identically to 'skilleffect', however, ground type skill
+effects will be centered at the map coordinates given on the same map as the
+attached character and all other skill types will be centered on the attached
 character.
 
 ---------------------------------------
@@ -6862,9 +6862,6 @@ above the head of the currently attached (or given) NPC. Once the
 given amount of seconds passes, the script resumes. The color format
 is in RGB (RRGGBB). The color is currently ignored by the client and
 appears always green.
-
-Note: If a player is attached to the NPC, they are detached from the NPC
-as soon as the progress bar activates.
 
 ---------------------------------------
 //
@@ -8550,6 +8547,8 @@ Valid types are:
 		if = 10000, then this item is sold in NPC shops only
 	4 - sex; 5 - equip; 6 - weight; 7 - atk; 8 - def; 9 - range;
 	10 - slot; 11 - look; 12 - elv; 13 - wlv; 14 - view id
+	15 - eLVMax
+	16 - matk if RENEWAL is defined
 
 Example:
 	setiteminfo 7049,6,9990; // Stone now weighs 999.0

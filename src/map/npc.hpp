@@ -25,7 +25,7 @@ struct npc_label_list {
 
 /// Item list for NPC sell/buy list
 struct npc_item_list {
-	unsigned short nameid;
+	t_itemid nameid;
 	unsigned int value;
 #if PACKETVER >= 20131223
 	unsigned short qty; ///< Stock counter (Market shop)
@@ -92,7 +92,7 @@ struct npc_data {
 		struct {
 			struct npc_item_list *shop_item;
 			uint16 count;
-			unsigned short itemshop_nameid; // Item Shop cost item ID
+			t_itemid itemshop_nameid; // Item Shop cost item ID
 			char pointshop_str[32]; // Point Shop cost variable name
 			bool discount;
 		} shop;
@@ -1237,6 +1237,7 @@ bool npc_scriptcont(struct map_session_data* sd, int id, bool closing);
 struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl);
 int npc_buysellsel(struct map_session_data* sd, int id, int type);
 uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list);
+static int npc_buylist_sub(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list, struct npc_data* nd);
 uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list);
 void npc_parse_mob2(struct spawn_data* mob);
 struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y);
@@ -1286,7 +1287,7 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type);
 int npc_duplicate4instance(struct npc_data *snd, int16 m);
 int npc_instanceinit(struct npc_data* nd);
 int npc_instancedestroy(struct npc_data* nd);
-int npc_cashshop_buy(struct map_session_data *sd, unsigned short nameid, int amount, int points);
+int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, int points);
 
 void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, int cost[2], bool display);
 
@@ -1297,7 +1298,7 @@ bool npc_shop_discount(struct npc_data* nd);
 
 #if PACKETVER >= 20131223
 void npc_market_tosql(const char *exname, struct npc_item_list *list);
-void npc_market_delfromsql_(const char *exname, unsigned short nameid, bool clear);
+void npc_market_delfromsql_(const char *exname, t_itemid nameid, bool clear);
 #endif
 
 #ifdef SECURE_NPCTIMEOUT

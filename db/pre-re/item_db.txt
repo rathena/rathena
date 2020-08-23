@@ -47,9 +47,9 @@
 //542,Festive_Cookie,Festival Cookie,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,405),0; },{},{}
 //543,Festive_Rainbow_Cake,Festival Rainbow Cake,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,405),0; },{},{}
 544,Fish_Slice,Raw Fish,0,20,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(25,60),0; },{},{}
-545,Red_Slim_Potion,Condensed Red Potion,0,150,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(45,65),0; },{},{}
-546,Yellow_Slim_Potion,Condensed Yellow Potion,0,600,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(175,235),0; },{},{}
-547,White_Slim_Potion,Condensed White Potion,0,1650,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,405),0; },{},{}
+545,Red_Slim_Potion,Condensed Red Potion,0,150,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(45,65),0; },{},{}
+546,Yellow_Slim_Potion,Condensed Yellow Potion,0,600,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(175,235),0; },{},{}
+547,White_Slim_Potion,Condensed White Potion,0,1650,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(325,405),0; },{},{}
 548,Cheese,Cheese,0,2800,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 0,rand(10,15); },{},{}
 549,Nice_Sweet_Potato,Yam,0,180,,80,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(50,100),0; sc_start SC_Stun,3000,0,1500,0; },{},{}
 550,Popped_Rice,Rice Cake,0,10,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(10,15),0; },{},{}

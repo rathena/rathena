@@ -847,14 +847,11 @@ void initChangeTables(void)
 	/* Warlock */
 	add_sc( WL_WHITEIMPRISON	, SC_WHITEIMPRISON	);
 	set_sc_with_vfx( WL_FROSTMISTY	, SC_FREEZING		, EFST_FROSTMISTY		, SCB_ASPD|SCB_SPEED|SCB_DEF );
-	add_sc( WL_JACKFROST        , SC_FREEZE		  );
 	set_sc( WL_MARSHOFABYSS		, SC_MARSHOFABYSS	, EFST_MARSHOFABYSS	, SCB_AGI|SCB_DEX|SCB_SPEED );
 	set_sc( WL_RECOGNIZEDSPELL	, SC_RECOGNIZEDSPELL	, EFST_RECOGNIZEDSPELL	, SCB_MATK);
 	add_sc( WL_SIENNAEXECRATE   , SC_STONE		  );
 	set_sc( WL_STASIS			, SC_STASIS		, EFST_STASIS		, SCB_NONE );
-	add_sc( WL_CRIMSONROCK      , SC_STUN         );
-	set_sc( WL_HELLINFERNO      , SC_BURNING         , EFST_BURNT           , SCB_MDEF );
-	set_sc( WL_COMET            , SC_BURNING         , EFST_BURNT           , SCB_MDEF );
+	set_sc_with_vfx( WL_COMET   , SC_MAGIC_POISON	, EFST_MAGIC_POISON	, SCB_NONE );
 	set_sc( WL_TELEKINESIS_INTENSE	, SC_TELEKINESIS_INTENSE, EFST_TELEKINESIS_INTENSE, SCB_MATK );
 
 	/* Ranger */
@@ -1385,6 +1382,7 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_ADD_ATK_DAMAGE] = EFST_ADD_ATK_DAMAGE;
 	StatusIconChangeTable[SC_ADD_MATK_DAMAGE] = EFST_ADD_MATK_DAMAGE;
 	StatusIconChangeTable[SC_ENSEMBLEFATIGUE] = EFST_ENSEMBLEFATIGUE;
+	StatusIconChangeTable[SC_MISTY_FROST] = EFST_MISTY_FROST;
 
 	// Battleground Queue
 	StatusIconChangeTable[SC_ENTRY_QUEUE_APPLY_DELAY] = EFST_ENTRY_QUEUE_APPLY_DELAY;
@@ -1569,6 +1567,7 @@ void initChangeTables(void)
 
 	StatusChangeFlagTable[SC_ANCILLA] |= SCB_REGEN;
 	StatusChangeFlagTable[SC_ENSEMBLEFATIGUE] |= SCB_SPEED|SCB_ASPD;
+	StatusChangeFlagTable[SC_MISTY_FROST] |= SCB_NONE;
 
 #ifdef RENEWAL
 	// renewal EDP increases your weapon atk
@@ -1615,6 +1614,8 @@ void initChangeTables(void)
 	StatusDisplayType[SC_SPRITEMABLE]     = BL_PC;
 	StatusDisplayType[SC_SV_ROOTTWIST]    = BL_PC;
 	StatusDisplayType[SC_HELLS_PLANT]     = BL_PC;
+	StatusDisplayType[SC_MISTY_FROST]     = BL_PC;
+	StatusDisplayType[SC_MAGIC_POISON]    = BL_PC;
 
 	// Costumes
 	StatusDisplayType[SC_MOONSTAR] = BL_PC;
@@ -3845,6 +3846,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->ignore_mdef_by_race2)
 		+ sizeof(sd->dropaddrace)
 		+ sizeof(sd->dropaddclass)
+		+ sizeof(sd->magic_subdefele)
 		);
 
 	memset (&sd->right_weapon.overrefine, 0, sizeof(sd->right_weapon) - sizeof(sd->right_weapon.atkmods));
@@ -3984,7 +3986,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			}
 			wa->atk += sd->inventory_data[index]->atk;
 			if(r)
-				wa->atk2 = refine_info[wlv].bonus[r-1] / 100;
+				wa->atk2 += refine_info[wlv].bonus[r-1] / 100;
 #ifdef RENEWAL
 			wa->matk += sd->inventory_data[index]->matk;
 			wa->wlv = wlv;
@@ -10324,7 +10326,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_MAGICPOWER:
 			// val1: Skill lv
 			val2 = 1; // Lasts 1 invocation
-			val3 = 5*val1; // Matk% increase
+#ifdef RENEWAL
+			val3 = 10 * val1; // Matk% increase
+#else
+			val3 = 5 * val1; // Matk% increase
+#endif
 			val4 = 0; // 0 = ready to be used, 1 = activated and running
 			break;
 		case SC_SACRIFICE:
@@ -11914,6 +11920,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 10 + val1 * 5; // Def/Mdef
 			tick = INFINITE_TICK;
 			break;
+		case SC_MAGIC_POISON:
+			val2 = 50; // Attribute Reduction
+			break;
 
 		/* Rebellion */
 		case SC_B_TRAP:
@@ -12247,6 +12256,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CROSSBOWCLAN:
 		case SC_JUMPINGCLAN:
 		case SC_DRESSUP:
+		case SC_MISTY_FROST:
 			val_flag |= 1;
 			break;
 		// Start |1|2 val_flag setting
@@ -15582,7 +15592,7 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 		int64 idx_tmp = 0;
 		const YAML::Node &type = costit;
 		int idx = 0, price;
-		unsigned short material;
+		t_itemid material;
 		const std::string keys[] = { "Type", "Price", "Material" };
 
 		for (int i = 0; i < ARRAYLENGTH(keys); i++) {
@@ -15598,7 +15608,8 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 			idx = static_cast<int>(idx_tmp);
 		}
 		price = type["Price"].as<int>();
-		material = type["Material"].as<uint16>();
+		// TODO: item id verification
+		material = type["Material"].as<t_itemid>();
 
 		refine_info[refine_info_index].cost[idx].nameid = material;
 		refine_info[refine_info_index].cost[idx].zeny = price;
