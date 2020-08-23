@@ -2861,8 +2861,7 @@ number.
 This is the only function around where a parameter may be either a string or a
 number! If it's a number, it means that only the items with that item ID number
 will be counted. If it is a string, it is assumed to mean the 'english name'
-field from the item database. If you give it an empty string, or something that
-isn't found from the item database, it will count items number '512' (apples).
+field from the item database.
 
 ---------------------------------------
 
@@ -8548,6 +8547,8 @@ Valid types are:
 		if = 10000, then this item is sold in NPC shops only
 	4 - sex; 5 - equip; 6 - weight; 7 - atk; 8 - def; 9 - range;
 	10 - slot; 11 - look; 12 - elv; 13 - wlv; 14 - view id
+	15 - eLVMax
+	16 - matk if RENEWAL is defined
 
 Example:
 	setiteminfo 7049,6,9990; // Stone now weighs 999.0

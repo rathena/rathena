@@ -7832,6 +7832,7 @@
 	export_constant(UNT_GROUNDDRIFT_POISON);
 	export_constant(UNT_GROUNDDRIFT_WATER);
 	export_constant(UNT_GROUNDDRIFT_FIRE);
+	export_constant(UNT_EARTHQUAKE);
 	export_constant(UNT_EVILLAND);
 	export_constant(UNT_EPICLESIS);
 	export_constant(UNT_EARTHSTRAIN);

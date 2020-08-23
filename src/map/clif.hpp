@@ -700,7 +700,7 @@ void clif_deleteskill(struct map_session_data *sd, int skill_id);
 
 void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, uint16 skill_id, uint16 skill_lv, int property, int casttime);
 void clif_skillcastcancel(struct block_list* bl);
-void clif_skill_fail(struct map_session_data *sd,uint16 skill_id,enum useskill_fail_cause cause,int btype, int itemId = 0);
+void clif_skill_fail(struct map_session_data *sd,uint16 skill_id,enum useskill_fail_cause cause,int btype, t_itemid itemId = 0);
 void clif_skill_cooldown(struct map_session_data *sd, uint16 skill_id, t_tick tick);
 int clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int64 sdamage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
 //int clif_skill_damage2(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int damage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
@@ -713,7 +713,7 @@ void clif_skill_teleportmessage(struct map_session_data *sd, int type);
 void clif_skill_produce_mix_list(struct map_session_data *sd, int skill_id, int trigger);
 void clif_cooking_list(struct map_session_data *sd, int trigger, uint16 skill_id, int qty, int list_type);
 
-void clif_produceeffect(struct map_session_data* sd,int flag, unsigned short nameid);
+void clif_produceeffect(struct map_session_data* sd,int flag, t_itemid nameid);
 
 void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target, bool visible);
 void clif_skill_delunit(struct skill_unit *unit);
@@ -764,7 +764,7 @@ void clif_hat_effect_single( struct map_session_data* sd, uint16 effectId, bool 
 void clif_item_skill(struct map_session_data *sd,uint16 skill_id,uint16 skill_lv);
 
 void clif_mvp_effect(struct map_session_data *sd);
-void clif_mvp_item(struct map_session_data *sd, unsigned short nameid);
+void clif_mvp_item(struct map_session_data *sd, t_itemid nameid);
 void clif_mvp_exp(struct map_session_data *sd, unsigned int exp);
 void clif_mvp_noitem(struct map_session_data* sd);
 void clif_changed_dir(struct block_list *bl, enum send_target target);
@@ -863,7 +863,7 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 void clif_pvpset(struct map_session_data *sd, int pvprank, int pvpnum,int type);
 void clif_map_property_mapall(int map, enum map_property property);
 void clif_refine(int fd, int fail, int index, int val);
-void clif_upgrademessage( struct map_session_data* sd, int result, unsigned short item_id );
+void clif_upgrademessage( struct map_session_data* sd, int result, t_itemid item_id );
 
 //petsystem
 void clif_catch_process(struct map_session_data *sd);
@@ -897,7 +897,7 @@ void clif_GM_silence(struct map_session_data* sd, struct map_session_data* tsd, 
 void clif_disp_overhead_(struct block_list *bl, const char* mes, enum send_target flag);
 #define clif_disp_overhead(bl, mes) clif_disp_overhead_(bl, mes, AREA)
 
-void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, unsigned short *lhand);
+void clif_get_weapon_view(struct map_session_data* sd, t_itemid *rhand, t_itemid *lhand);
 
 void clif_party_xy_remove(struct map_session_data *sd); //Fix for minimap [Kevin]
 void clif_gospel_info(struct map_session_data *sd, int type);
@@ -979,8 +979,8 @@ void clif_mercenary_message(struct map_session_data* sd, int message);
 void clif_mercenary_updatestatus(struct map_session_data *sd, int type);
 
 // RENTAL SYSTEM
-void clif_rental_time( struct map_session_data* sd, unsigned short nameid, int seconds );
-void clif_rental_expired( struct map_session_data* sd, int index, unsigned short nameid );
+void clif_rental_time( struct map_session_data* sd, t_itemid nameid, int seconds );
+void clif_rental_expired( struct map_session_data* sd, int index, t_itemid nameid );
 
 // BOOK READING
 void clif_readbook(int fd, int book_id, int page);
@@ -1022,9 +1022,9 @@ void clif_buyingstore_disappear_entry(struct map_session_data* sd);
 void clif_buyingstore_disappear_entry_single(struct map_session_data* sd, struct map_session_data* pl_sd);
 void clif_buyingstore_itemlist(struct map_session_data* sd, struct map_session_data* pl_sd);
 void clif_buyingstore_trade_failed_buyer(struct map_session_data* sd, short result);
-void clif_buyingstore_update_item(struct map_session_data* sd, unsigned short nameid, unsigned short amount, uint32 char_id, int zeny);
+void clif_buyingstore_update_item(struct map_session_data* sd, t_itemid nameid, unsigned short amount, uint32 char_id, int zeny);
 void clif_buyingstore_delete_item(struct map_session_data* sd, short index, unsigned short amount, int price);
-void clif_buyingstore_trade_failed_seller(struct map_session_data* sd, short result, unsigned short nameid);
+void clif_buyingstore_trade_failed_seller(struct map_session_data* sd, short result, t_itemid nameid);
 
 /// Search Store System
 void clif_search_store_info_ack(struct map_session_data* sd);
@@ -1033,7 +1033,7 @@ void clif_open_search_store_info(struct map_session_data* sd);
 void clif_search_store_info_click_ack(struct map_session_data* sd, short x, short y);
 
 /// Cash Shop
-void clif_cashshop_result( struct map_session_data* sd, unsigned short item_id, uint16 result );
+void clif_cashshop_result( struct map_session_data* sd, t_itemid item_id, uint16 result );
 void clif_cashshop_open( struct map_session_data* sd, int tab );
 
 void clif_display_pinfo(struct map_session_data *sd, int type);
@@ -1049,8 +1049,6 @@ void clif_parse_roulette_item(int fd, struct map_session_data *sd);
 void clif_elementalconverter_list(struct map_session_data *sd);
 
 void clif_millenniumshield(struct block_list *bl, short shields);
-
-void clif_spellbook_list(struct map_session_data *sd);
 
 void clif_magicdecoy_list(struct map_session_data *sd, uint16 skill_lv, short x, short y);
 
@@ -1110,7 +1108,7 @@ void clif_notify_bindOnEquip(struct map_session_data *sd, int n);
 
 void clif_merge_item_open(struct map_session_data *sd);
 
-void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type);
+void clif_broadcast_obtain_special_item(const char *char_name, t_itemid nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type);
 
 void clif_dressing_room(struct map_session_data *sd, int flag);
 void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id );
