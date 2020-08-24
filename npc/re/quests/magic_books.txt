@@ -513,7 +513,7 @@ mid_camp,255,244,4	script	Galfos	4_M_JOB_WIZARD,{
 		next;
 		set .@i, select("I've discovered everything about Comet.:I've mastered the zenith of Tetra Vortex.");
 		mes "[Galfos]";
-		if ((.@i == 1 && countitem(6195)) || (.@i == 2 && countitem(6196))) {
+		if ((.@i == 1 && countitem(100073)) || (.@i == 2 && countitem(100074))) {
 			mes "Are you kidding me? You already have the book!";
 			close;
 		}
@@ -524,7 +524,7 @@ mid_camp,255,244,4	script	Galfos	4_M_JOB_WIZARD,{
 			mes "There's one problem, though: I'm so broke that I don't even have enough money to buy the tools to make the book.";
 			next;
 			mes "[Galfos]";
-			mes "I need at least ^0000aa1,000,000 zeny^000000 to buy all the necessary tools. Do you have the money?";
+			mes "I need at least ^0000aa500,000 zeny^000000 to buy all the necessary tools. Do you have the money?";
 			next;
 			if(select("Wh-what? No!:Sure.") == 1) {
 				mes "[Galfos]";
@@ -532,14 +532,14 @@ mid_camp,255,244,4	script	Galfos	4_M_JOB_WIZARD,{
 				close;
 			}
 			mes "[Galfos]";
-			if (Zeny >= 1000000) {
+			if (Zeny >= 500000) {
 				mes "Alright then, let's get started!";
 				next;
 				specialeffect2 EF_DISPELL;
 				progressbar "ffff00",4;
 				specialeffect2 EF_LORD;
-				set Zeny, Zeny - 1000000;
-				getitem 6194+.@i,1; //Magic_Book_CM, Magic_Book_TV
+				set Zeny, Zeny - 500000;
+				getitem 100072+.@i,1; //WL_MB_CM, WL_MB_TV
 				mes "[Galfos]";
 				mes "Man, I almost lost my control to the incredible magic energy! Here's your Magic Book.";
 				next;
