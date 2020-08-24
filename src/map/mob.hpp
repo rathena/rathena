@@ -127,6 +127,8 @@ struct mob_skill {
 	enum MobSkillState state;
 	uint16 skill_id,skill_lv;
 	short permillage;
+	//eduardo. What if..
+		// int permillage;
 	int casttime,delay;
 	short cancel;
 	short cond1,cond2;
@@ -174,6 +176,35 @@ struct mob_db {
 	unsigned int option;
 	int maxskill;
 	struct mob_skill skill[MAX_MOBSKILL];
+
+	//eduardo
+	int attProb;
+	int chaseRate;
+	struct s_specialState {
+		unsigned int clone : 1;/* is clone? 1:0 */
+	} special_state; //Special mob information that does not needs to be zero'ed on mob respawn.
+	int hom_id;
+	struct homun_data *hd;
+	struct pet_data *pd;
+	unsigned short klas;
+	std::string klase;
+	std::vector<int> markedid;
+	int ms_spellfist_lv;
+	std::vector<int> comboskill_lv;
+	int truest;
+	int mobid;	//wont't be used
+	int petname;
+	int id_;
+	int petid;
+	int merid;
+	uint16 cloneskill_idx, ///Stores index of copied skill by Intimidate/Plagiarism
+		reproduceskill_idx; ///Stores index of copied skill by Reproduce
+	struct s_skill skill2[MAX_SKILL];
+
+	unsigned short nameid_wl;
+
+	//complicated. pending
+	// struct weapon_data right_weapon, left_weapon;
 };
 
 struct mob_data {
@@ -181,7 +212,9 @@ struct mob_data {
 	struct unit_data  ud;
 	struct view_data *vd;
 	bool vd_changed;
-	struct status_data status, *base_status; //Second one is in case of leveling up mobs, or tiny/large mobs.
+	// struct status_data status, *base_status; //Second one is in case of leveling up mobs, or tiny/large mobs.
+	//eduardo
+	struct status_data status, *base_status, battle_status; //Second one is in case of leveling up mobs, or tiny/large mobs.
 	struct status_change sc;
 	struct mob_db *db;	//For quick data access (saves doing mob_db(md->mob_id) all the time) [Skotlex]
 	char name[NAME_LENGTH];
@@ -189,6 +222,9 @@ struct mob_data {
 		unsigned int size : 2; //Small/Big monsters.
 		enum mob_ai ai; //Special ai for summoned monsters.
 		unsigned int clone : 1;/* is clone? 1:0 */
+
+		//eduardo
+		unsigned int restart_full_recover : 1;
 	} special_state; //Special mob information that does not needs to be zero'ed on mob respawn.
 	struct s_MobState {
 		unsigned int aggressive : 1; //Signals whether the mob AI is in aggressive mode or reactive mode. [Skotlex]
@@ -209,6 +245,9 @@ struct mob_data {
 		int id; //char id
 		unsigned int dmg;
 		unsigned int flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
+
+		//eduardo
+		int id_sc;
 	} dmglog[DAMAGELOG_SIZE];
 	uint32 spotted_log[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
@@ -242,6 +281,61 @@ struct mob_data {
 	 * MvP Tombstone NPC ID
 	 **/
 	int tomb_nid;
+
+	//eduardo
+	//quite a lot huh
+	int id_src;
+	short mob_id2;
+	int attProb;
+	int chaseRate;
+	int devotion[100];
+	std::vector<int>partners;
+	uint16 skill_id_old,skill_lv_old;
+	uint16 skill_id_dance,skill_lv_dance;
+	struct elemental_data *ed;
+	struct mercenary_data *scmd;
+	int truest;
+	unsigned short class_;
+	int charid;
+	int fd;
+	uint16 playedSong;
+	int8 spiritball, spiritball_old;
+	int spirit_timer[15];
+	short spiritcharm;
+	int spiritcharm_type;
+	int spiritcharm_timer[10];	
+	struct s_skill skill2[MAX_SKILL];
+	struct homun_data *hd;
+	int homid;
+	struct mob_data *master2;
+	int petid;
+	int merid;
+	struct pet_data *pd;
+	unsigned short klas;
+	std::string klase;
+	std::vector<int> markedid;
+	int ms_spellfist_lv;
+	short pvp_point;
+	uint16 cloneskill_idx,
+		reproduceskill_idx;	
+	unsigned short nameid_wl;
+	// struct weapon_data right_weapon, left_weapon;	
+	t_tick canuseitem_tick;	// [Skotlex]
+	enum type : uint16{
+		BL_NUL   = 0x000,
+		BL_PC    = 0x001,
+		BL_MOB   = 0x002,
+		BL_PET   = 0x004,
+		BL_HOM   = 0x008,
+		BL_MER   = 0x010,
+		BL_ITEM  = 0x020,
+		BL_SKILL = 0x040,
+		BL_NPC   = 0x080,
+		BL_CHAT  = 0x100,
+		BL_ELEM  = 0x200,
+
+		BL_ALL   = 0xFFF,
+	};
 };
 
 class MobAvailDatabase : public YamlDatabase {
@@ -374,6 +468,8 @@ int mob_count_sub(struct block_list *bl, va_list ap);
 int mob_is_clone(int mob_id);
 
 int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, enum e_mode mode, int flag, unsigned int duration);
+//eduardo
+int mob_clone_spawn2(struct map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, enum e_mode mode, int flag, unsigned int duration, const char* style, int truest);
 int mob_clone_delete(struct mob_data *md);
 
 void mob_reload_itemmob_data(void);

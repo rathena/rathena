@@ -449,6 +449,9 @@ struct s_homunculus {	//[orn]
 
 	char spiritball; //for homun S [lighta]
 	bool autofeed;
+
+	//eduardo
+	int master2; //pointer back to its master
 };
 
 struct s_mercenary {
@@ -548,6 +551,9 @@ struct mmo_charstatus {
 	unsigned char hotkey_rowshift;
 	unsigned char hotkey_rowshift2;
 	unsigned long title_id;
+
+	//eduardo	
+	unsigned short nameid_wl;
 };
 
 typedef enum mail_status {

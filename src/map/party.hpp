@@ -91,6 +91,8 @@ int party_sub_count(struct block_list *bl, va_list ap);
 int party_sub_count_class(struct block_list *bl, va_list ap);
 int party_sub_count_banding(struct block_list *bl, va_list ap);
 int party_foreachsamemap(int (*func)(struct block_list *,va_list),struct map_session_data *sd,int range,...);
+//eduardo
+int party_foreachsamemap2(int (*func)(struct block_list *,va_list),struct mob_data *md,int range,...);
 
 /*==========================================
  * Party Booking in KRO [Spiria]

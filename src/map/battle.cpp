@@ -3314,6 +3314,8 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct map_session_data *tsd = BL_CAST(BL_PC, target);
 
+	//eduardo
+	struct mob_data *md = BL_CAST(BL_MOB, src);
 	uint16 i;
 	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd->miscflag);
 
@@ -3516,13 +3518,34 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 					ATK_ADDRATE(wd->damage, wd->damage2, sd->bonus.crit_atk_rate);
 				}
 #endif
+				//eduardo
 				if(sd->status.party_id && (skill=pc_checkskill(sd,TK_POWER)) > 0) {
-					if( (i = party_foreachsamemap(party_sub_count, sd, 0)) > 1 ) { // exclude the player himself [Inkfish]
+					// if( (i = party_foreachsamemap(party_sub_count, sd, 0)) > 1 ) { // exclude the player himself [Inkfish]
+					// 	ATK_ADDRATE(wd->damage, wd->damage2, 2*skill*i);
+					// 	RE_ALLATK_ADDRATE(wd, 2*skill*i);
+					// }
+					if (sd->partners_bl.size() > 0) {
+						if ((i = sd->partners_bl.size()) - 1) { // exclude the player himself [Inkfish]
+							ATK_ADDRATE(wd->damage, wd->damage2, 2 * skill*i);
+							RE_ALLATK_ADDRATE(wd, 2 * skill*i);
+						}
+					}
+					else {
+						if ((i = party_foreachsamemap(party_sub_count, sd, 0)) > 1) { // exclude the player himself [Inkfish]
+							ATK_ADDRATE(wd->damage, wd->damage2, 2 * skill*i);
+							RE_ALLATK_ADDRATE(wd, 2 * skill*i);
+						}
+					}
+				}
+			} else if (md){if (md->special_state.clone == 1){
+				int skill;
+				if((skill=pc_checkskill2(md,TK_POWER)) > 0) {
+					if( (i = (map_id2sd(md->master_id))->partners_blid.size() - 1) ) { // exclude the player himself [Inkfish]
 						ATK_ADDRATE(wd->damage, wd->damage2, 2*skill*i);
 						RE_ALLATK_ADDRATE(wd, 2*skill*i);
 					}
 				}
-			}
+			}}
 #ifndef RENEWAL
 			if(tsd != nullptr && tsd->bonus.crit_def_rate != 0 && !skill_id && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) {
 				ATK_ADDRATE(wd->damage, wd->damage2, -tsd->bonus.crit_def_rate);
@@ -4542,32 +4565,59 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case GN_SLINGITEM_RANGEMELEEATK:
-			if( sd ) {
-				switch( sd->itemid ) {
-					case ITEMID_APPLE_BOMB:
-						skillratio += 200 + status_get_str(src) + status_get_dex(src);
-						break;
-					case ITEMID_COCONUT_BOMB:
-					case ITEMID_PINEAPPLE_BOMB:
-						skillratio += 700 + status_get_str(src) + status_get_dex(src);
-						break;
-					case ITEMID_MELON_BOMB:
-						skillratio += 400 + status_get_str(src) + status_get_dex(src);
-						break;
-					case ITEMID_BANANA_BOMB:
-						skillratio += 777 + status_get_str(src) + status_get_dex(src);
-						break;
-					case ITEMID_BLACK_LUMP:
-						skillratio += -100 + (status_get_str(src) + status_get_agi(src) + status_get_dex(src)) / 3;
-						break;
-					case ITEMID_BLACK_HARD_LUMP:
-						skillratio += -100 + (status_get_str(src) + status_get_agi(src) + status_get_dex(src)) / 2;
-						break;
-					case ITEMID_VERY_HARD_LUMP:
-						skillratio += -100 + status_get_str(src) + status_get_agi(src) + status_get_dex(src);
-						break;
+			if (sd) {
+				switch (sd->itemid) {
+				case ITEMID_APPLE_BOMB:
+					skillratio += 200 + status_get_str(src) + status_get_dex(src);
+					break;
+				case ITEMID_COCONUT_BOMB:
+				case ITEMID_PINEAPPLE_BOMB:
+					skillratio += 700 + status_get_str(src) + status_get_dex(src);
+					break;
+				case ITEMID_MELON_BOMB:
+					skillratio += 400 + status_get_str(src) + status_get_dex(src);
+					break;
+				case ITEMID_BANANA_BOMB:
+					skillratio += 777 + status_get_str(src) + status_get_dex(src);
+					break;
+				case ITEMID_BLACK_LUMP:
+					skillratio += -100 + (status_get_str(src) + status_get_agi(src) + status_get_dex(src)) / 3;
+					break;
+				case ITEMID_BLACK_HARD_LUMP:
+					skillratio += -100 + (status_get_str(src) + status_get_agi(src) + status_get_dex(src)) / 2;
+					break;
+				case ITEMID_VERY_HARD_LUMP:
+					skillratio += -100 + status_get_str(src) + status_get_agi(src) + status_get_dex(src);
+					break;
+					RE_LVL_DMOD(100);
 				}
-				RE_LVL_DMOD(100);
+			} 
+			else {
+				//eduardo
+				//random
+				int rand_ = rnd() % 10 + 1;
+				if (rand_ < 2) {
+					skillratio += 200 + status_get_str(src) + status_get_dex(src);
+				}
+				else if (rand_ == 2) {
+					skillratio += 700 + status_get_str(src) + status_get_dex(src);
+				}
+				else if (rand_ < 4) {
+					skillratio += 400 + status_get_str(src) + status_get_dex(src);
+				}
+				else if (rand_ < 6) {
+					skillratio += 777 + status_get_str(src) + status_get_dex(src);
+				}
+				else if (rand_ < 8) {
+					skillratio += -100 + (status_get_str(src) + status_get_agi(src) + status_get_dex(src)) / 3;
+				}
+				else if (rand_ == 9) {
+					skillratio += -100 + (status_get_str(src) + status_get_agi(src) + status_get_dex(src)) / 2;
+				}
+				else {
+					skillratio += -100 + status_get_str(src) + status_get_agi(src) + status_get_dex(src);
+					RE_LVL_DMOD(100);
+				}
 			}
 			break;
 		case GN_HELLS_PLANT_ATK:
@@ -8527,6 +8577,9 @@ static const struct _battle_data {
 	{ "monster_loot_type",                  &battle_config.monster_loot_type,               0,      0,      1,              },
 //	{ "mob_skill_use",                      &battle_config.mob_skill_use,                   1,      0,      1,              }, //Deprecated
 	{ "mob_skill_rate",                     &battle_config.mob_skill_rate,                  100,    0,      INT_MAX,        },
+	//eduardo
+	{ "clone_skill_rate",                   &battle_config.clone_skill_rate,                  100,    0,      INT_MAX,        },
+
 	{ "mob_skill_delay",                    &battle_config.mob_skill_delay,                 100,    0,      INT_MAX,        },
 	{ "mob_count_rate",                     &battle_config.mob_count_rate,                  100,    0,      INT_MAX,        },
 	{ "mob_spawn_delay",                    &battle_config.mob_spawn_delay,                 100,    0,      INT_MAX,        },

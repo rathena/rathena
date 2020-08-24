@@ -166,6 +166,8 @@ struct pet_data {
 
 	int masterteleport_timer;
 	struct map_session_data *master;
+	//eduardo
+	struct mob_data *master2; //pointer back to its slaveclone master
 
 	std::shared_ptr<s_pet_db> get_pet_db() {
 		return pet_db.find(this->pet.class_);
@@ -193,6 +195,8 @@ int pet_sc_check(struct map_session_data *sd, int type); //Skotlex
 std::shared_ptr<s_pet_db> pet_db_search(int key, enum e_pet_itemtype type);
 int pet_hungry_timer_delete(struct pet_data *pd);
 bool pet_data_init(struct map_session_data *sd, struct s_pet *pet);
+//eduardo
+bool pet_data_init2(struct mob_data *md, struct s_pet *pet);
 bool pet_return_egg( struct map_session_data *sd, struct pet_data *pd );
 int pet_birth_process(struct map_session_data *sd, struct s_pet *pet);
 int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag);
@@ -214,6 +218,8 @@ int pet_egg_search(struct map_session_data *sd, int pet_id);
 void pet_evolution(struct map_session_data *sd, int16 pet_id);
 int pet_food(struct map_session_data *sd, struct pet_data *pd);
 void pet_clear_support_bonuses(struct map_session_data *sd);
+//eduardo
+void pet_clear_support_bonuses2(struct mob_data *md);
 
 #define pet_stop_walking(pd, type) unit_stop_walking(&(pd)->bl, type)
 #define pet_stop_attack(pd) unit_stop_attack(&(pd)->bl)

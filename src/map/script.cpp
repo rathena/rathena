@@ -11695,19 +11695,44 @@ BUILDIN_FUNC(sc_start)
 	if(!bl)
 		return SCRIPT_CMD_SUCCESS;
 
+	//eduardo
+	struct map_session_data *sd;
+	sd = ((struct map_session_data *)bl);
 	switch(start_type) {
 		case 1:
 			status_change_start(bl, bl, type, rate, val1, 0, 0, val4, tick, flag);
+			if (sd) if (sd->partners_blid.size() > 0)
+			for (int i = 0; i < sd->partners_blid.size(); i++) {
+				struct block_list *bl;
+				bl = map_id2bl(sd->partners_blid[i]);
+				if (!bl) return 0;
+				status_change_start(bl, bl, type, rate, val1, 0, 0, val4, tick, flag);
+			}
 			break;
 		case 2:
 			val2 = script_getnum(st,5);
 			status_change_start(bl, bl, type, rate, val1, val2, 0, val4, tick, flag);
+			if (sd) ShowMessage("\n itsuka %d \n", sd->status.name);
+			/*if (sd) if (sd->partners_blid!=NULL) if (sd->partners_blid.size() > 0)
+			for (int i = 0; i < sd->partners_blid.size(); i++) {
+				struct block_list *bl;
+				bl = map_id2bl(sd->partners_blid[i]);
+				if (!bl) return 0;
+				status_change_start(bl, bl, type, rate, val1, val2, 0, val4, tick, flag);
+			}*/
 			break;
 		case 4:
 			val2 = script_getnum(st,5);
 			val3 = script_getnum(st,6);
 			val4 = script_getnum(st,7);
 			status_change_start(bl, bl, type, rate, val1, val2, val3, val4, tick, flag);
+			if (sd) if (sd->partners_blid.size() > 0)
+			for (int i = 0; i < sd->partners_blid.size(); i++) {
+				struct block_list *bl;
+				bl = map_id2bl(sd->partners_blid[i]);
+				if (!bl) return 0;
+				status_change_start(bl, bl, type, rate, val1, val2, val3, val4, tick, flag);
+			}
 			break;
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -25298,6 +25323,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(delwall,"s"),
 	BUILDIN_DEF(checkwall,"s"),
 	BUILDIN_DEF(searchitem,"rs"),
+	BUILDIN_DEF(partner_create,"ii"),
+	//eduardo
 	BUILDIN_DEF(mercenary_create,"ii"),
 	BUILDIN_DEF(mercenary_heal,"ii"),
 	BUILDIN_DEF(mercenary_sc_start,"iii"),

@@ -2976,13 +2976,17 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	status->mdef2 = cap_value(stat, 0, SHRT_MAX);
 #endif
 
-	//Critical
+	/*//Critical
 	if( bl->type&battle_config.enable_critical ) {
 		stat = status->cri;
 		stat += 10 + (status->luk*10/3); // (every 1 luk = +0.3 critical)
 		status->cri = cap_value(stat, 1, SHRT_MAX);
 	} else
-		status->cri = 0;
+		status->cri = 0;*/
+	// eduardo
+		stat = status->cri;
+		stat += 10 + (status->luk*10/3); // (every 1 luk = +0.3 critical)
+		status->cri = cap_value(stat, 1, SHRT_MAX);
 
 	if (bl->type&battle_config.enable_perfect_flee) {
 		stat = status->flee2;
@@ -5302,6 +5306,10 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 	struct status_data *status = status_get_status_data(bl); // Battle Status
 	struct status_change *sc = status_get_sc(bl);
 	TBL_PC *sd = BL_CAST(BL_PC,bl);
+
+	//eduardo
+	TBL_MOB *md = BL_CAST(BL_MOB,bl);
+
 	int temp;
 
 	if (!b_status || !status)
@@ -5727,6 +5735,13 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 #else
 				amotion += (2000 - amotion) * ( 55 - 5 * ( skill_lv + 1 ) ) / 100; //Increases amotion to reduce ASPD to the corresponding absolute percentage for each level (overriding other adjustments)
 #endif
+			//eduardo
+			if (md && md->special_state.clone==1){
+				if (md->ud.skilltimer != INVALID_TIMER
+					&& (skill_lv = pc_checkskill2(md, SA_FREECAST)) > 0
+				)
+				amotion += (2000 - amotion) * ( 55 - 5 * ( skill_lv + 1 ) ) / 100; //Increases amotion to reduce ASPD to the corresponding absolute percentage for each level (overriding other adjustments)
+			}
 
 #ifdef RENEWAL_ASPD
 			// RE ASPD % modifier

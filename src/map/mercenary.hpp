@@ -57,11 +57,19 @@ struct mercenary_data {
 	int contract_timer;
 
 	unsigned devotion_flag : 1;
+	
+	//eduardo
+	int devotion[100];
+	struct mob_data *master2; //pointer back to its slaveclone master
 };
 
 struct s_mercenary_db *mercenary_db(uint16 class_);
+//eduardo
+struct mob_db *partner_db( int id );
 struct view_data * mercenary_get_viewdata(uint16 class_);
 
+bool partner_create(struct map_session_data *sd, uint16 class_, unsigned int lifetime);
+//eduardo
 bool mercenary_create(struct map_session_data *sd, uint16 class_, unsigned int lifetime);
 bool mercenary_recv_data(struct s_mercenary *merc, bool flag);
 void mercenary_save(struct mercenary_data *md);
@@ -80,6 +88,9 @@ int mercenary_get_calls(struct mercenary_data *md);
 void mercenary_set_calls(struct mercenary_data *md, int value);
 void mercenary_kills(struct mercenary_data *md);
 
+//eduardo
+int merskill_use(struct mercenary_data *md, t_tick tick, int event, int tid);
+
 int mercenary_checkskill(struct mercenary_data *md, uint16 skill_id);
 short mercenary_skill_get_index(uint16 skill_id);
 
@@ -88,7 +99,8 @@ short mercenary_skill_get_index(uint16 skill_id);
  **/
 void mercenary_readdb(void);
 void mercenary_read_skilldb(void);
-
+//eduardo
+void do_init_partner(void);
 void do_init_mercenary(void);
 void do_final_mercenary(void);
 

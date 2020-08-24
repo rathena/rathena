@@ -1329,6 +1329,58 @@ int party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_sess
 	return total;
 }
 
+//eduardo
+int party_foreachsamemap2(int (*func)(struct block_list*,va_list),struct mob_data *md,int range,...)
+{
+	int i;
+	int x0,y0,x1,y1;
+	struct block_list *list[100];
+	int blockcount=0;
+	int total = 0; //Return value.
+	struct map_session_data *sd;
+
+	sd = map_id2sd(md->master_id);
+
+	// nullpo_ret(sd);
+
+	x0 = md->bl.x-range;
+	y0 = md->bl.y-range;
+	x1 = md->bl.x+range;
+	y1 = md->bl.y+range;
+
+	for(i = 0; i < sd->partners2.size(); i++) {
+		struct mob_data *md2 = sd->partners2[i];
+
+		if(md2->bl.m!=md2->bl.m || !md2->bl.prev)
+			continue;
+
+		if(range &&
+			(md2->bl.x<x0 || md2->bl.y<y0 ||
+			 md2->bl.x>x1 || md2->bl.y>y1 ) )
+			continue;		
+
+		 list[blockcount++]=&md2->bl;
+	}
+	list[blockcount++]=&sd->bl;
+
+	map_freeblock_lock();
+
+	for(i = 0; i < blockcount; i++) {
+		va_list ap;
+		va_start(ap, range);
+		total += func(list[i], ap);
+		va_end(ap);
+
+		// clif_skill_nodamage(bl_bl[i], bl_bl[i], skill_id, skill_lv, 
+		// 	sc_start(md->bl,bl_bl[i],type,100,
+		// 	(skill_id == AB_CLEMENTIA)? bless_lv : (skill_id == AB_CANTO)? agi_lv : skill_lv, skill_get_time(skill_id,skill_lv)));
+	}
+
+	map_freeblock_unlock();
+
+	return total;
+}
+
 /*==========================================
  * Party Booking in KRO [Spiria]
  *------------------------------------------*/

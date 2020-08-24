@@ -871,6 +871,8 @@ void clif_pet_roulette(struct map_session_data *sd,int data);
 void clif_sendegg(struct map_session_data *sd);
 void clif_send_petstatus(struct map_session_data *sd);
 void clif_send_petdata(struct map_session_data* sd, struct pet_data* pd, int type, int param);
+//eduardo
+void clif_send_petdata2(struct mob_data* md, struct pet_data* pd, int type, int param);
 #define clif_pet_equip(sd, pd) clif_send_petdata(sd, pd, 3, (pd)->vd.head_bottom)
 #define clif_pet_equip_area(pd) clif_send_petdata(NULL, pd, 3, (pd)->vd.head_bottom)
 #define clif_pet_performance(pd, param) clif_send_petdata(NULL, pd, 4, param)
@@ -914,6 +916,8 @@ int clif_homskillinfoblock(struct map_session_data *sd);
 void clif_homskillup(struct map_session_data *sd, uint16 skill_id);	//[orn]
 void clif_hom_food(struct map_session_data *sd,int foodid,int fail);	//[orn]
 void clif_send_homdata(struct map_session_data *sd, int state, int param);	//[orn]
+//eduardo
+void clif_send_homdata2(struct mob_data *md, int state, int param);
 
 void clif_configuration( struct map_session_data* sd, enum e_config_type type, bool enabled );
 void clif_partytickack(struct map_session_data* sd, bool flag);

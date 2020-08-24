@@ -26,10 +26,16 @@
 #include "party.hpp"
 #include "pc.hpp"
 #include "trade.hpp"
+//eduardo
+#include "mob.hpp"
+#include "battle.hpp"
+#include "map.hpp"
 
 using namespace rathena;
 
 std::map<uint16, struct s_mercenary_db> mercenary_db_data;
+//eduardo
+std::map<uint16, struct mob_db> partner_db_data;
 
 /**
  * Search Mercenary by class
@@ -68,6 +74,239 @@ short mercenary_skill_get_index(uint16 skill_id) {
 		return -1;
 	return skill_id;
 }
+
+//eduardo
+static bool partner_readdb_sub(char* str[], int columns, int current)
+{	//straight from mob_parse_dbrow
+	uint16 class_ = atoi(str[0]);
+	struct mob_db *db, entry;
+	int mob_id;// , i;
+	struct status_data *status;
+	struct mob_data data;
+	//std::string nimi;
+	//int ele;
+	//std::string mob_name;
+	//memset(&entry, 0, sizeof(entry));
+	// status = &entry->status;
+	// ShowMessage("\n aaaaa %s \n", str[1]);
+
+	mob_id = class_;// atoi(str[0]);
+	db = &partner_db_data[mob_id];
+	db->vd.class_ = mob_id;
+	db->id_ = mob_id;
+	db->lv = atoi(str[2]);
+	safestrncpy(db->name, str[1], NAME_LENGTH);
+	status = &db->status;
+	status->max_hp = atoi(str[3]);
+	status->max_sp = atoi(str[4]);
+	status->rhw.range = atoi(str[5]);
+	status->rhw.atk = atoi(str[6]);
+	status->rhw.atk2 = status->rhw.atk + atoi(str[7]);
+	status->def = atoi(str[8]);
+	status->mdef = atoi(str[9]);
+	status->str = atoi(str[10]);
+	status->agi = atoi(str[11]);
+	status->vit = atoi(str[12]);
+	status->int_ = atoi(str[13]);
+	status->dex = atoi(str[14]);
+	status->luk = atoi(str[15]);
+	db->range2 = atoi(str[16]);
+	db->range3 = atoi(str[17]);
+	status->size = atoi(str[18]);
+	status->race = atoi(str[19]);
+	// ele = 12;//atoi(str[20]);
+			 //status->def_ele = ele%20;
+			 //status->ele_lv = (unsigned char)floor(ele/20.);
+			 //db->class_
+	status->mode = static_cast<enum e_mode>(strtol(str[21], NULL, 0));
+	status->aspd_rate = atoi(str[22]);
+	status->speed = atoi(str[23]);
+	status->adelay = atoi(str[24]);
+	status->amotion = atoi(str[25]);
+	status->dmotion = atoi(str[26]);
+	db->truest = atoi(str[27]);
+	db->petname = atoi(str[29]);
+	db->attProb = atoi(str[30]);
+
+	memcpy(&db->status, status, sizeof(struct status_data));
+
+	db = &partner_db_data[mob_id];
+	//db = mob_db(mob_id);
+	if (db == NULL) {
+		try{
+			db = &partner_db_data[mob_id];
+		}catch( const std::bad_alloc& ){
+			ShowError( "Memory allocation for monster %hu failed.\n", mob_id );
+			return false;
+		}
+	}
+
+	//memcpy(db, &entry, sizeof(struct mob_db));
+	return true;
+}
+
+//eduardo
+bool partner_create(struct map_session_data *sd, uint16 class_, unsigned int lifetime) 
+{	//mercenary_create + clif_scriptinputstr ---> mob_clone_spawn2
+	//int mob_id;
+	//struct mob_db *db;
+	//struct mob_data *md;
+	int x, y, flag, i=0;
+	struct map_session_data *pl_sd=NULL;
+
+	// sd = map_id2sd(sd->bl.id);
+	
+	memset(&sd->npc_id, 0, sizeof(sd->npc_id));
+	
+	if (strcmp(sd->partnerSelected,"")!=0){
+		std::string charName;
+		charName = std::string(sd->partnerSelected);
+		std::string full;
+		full = std::string("@clonea ");
+		full.append(charName);
+		// is_atcommand(sd->fd, sd, full.c_str(), 1);
+		// clif_scloneequest(target_sd, sd->status.name);
+		//clif_traderequest(map_nick2sd(charName.c_str(), true), sd->status.name);
+		// strcpy(sd->partnerSelected2, sd->partnerSelected);
+		//sd->partnerSelected_ = sd->partnerSelected;
+		pl_sd = map_nick2sd(charName.c_str(),true);
+		if (!pl_sd || pl_sd == NULL) {
+			clif_displaymessage(sd->fd, "no active player with this nickname");	
+			memset(&sd->partnerSelected, 0, sizeof(sd->partnerSelected));
+			return false;
+		}
+		if(pc_get_group_level(pl_sd) > pc_get_group_level(sd)) {
+			clif_displaymessage(sd->fd, msg_txt(sd,126));	// Cannot clone a player of higher GM level than yourself.
+			return false;
+		}
+		//parent_cmd = atcommand_alias_db.checkAlias(command+1);
+		flag = 2;		
+		if(pc_isdead(sd)){
+		    clif_displaymessage(sd->fd, msg_txt(sd,129+flag*2));
+		    return false;
+		}
+		if (mob_countslave(&sd->bl) >= battle_config.atc_slave_clone_limit){
+			clif_displaymessage(sd->fd, "too many slaves. Liberate them.");	
+			memset(&sd->partnerSelected, 0, sizeof(sd->partnerSelected));
+			return false;
+		}
+
+		do {
+			x = sd->bl.x + (rnd() % 10 - 5);
+			y = sd->bl.y + (rnd() % 10 - 5);
+		} while (map_getcell(sd->bl.m,x,y,CELL_CHKNOPASS) && i++ < 10);
+
+		if (i >= 10) {
+			x = sd->bl.x;
+			y = sd->bl.y;
+		}
+
+		if( 
+		mob_clone_spawn2(
+			map_nick2sd(charName.c_str(), true),
+			sd->bl.m, 
+			sd->bl.x,
+			sd->bl.y,
+			"", 
+			sd->bl.id,
+			MD_NONE, 
+			1, 
+			0, 
+			"default", 
+			map_nick2sd(sd->partnerSelected,true)->status.char_id
+		)) {
+			clif_displaymessage(sd->fd, "an sclone spawned");	
+			return false;		}
+
+		memset(&sd->partnerSelected, 0, sizeof(sd->partnerSelected));
+	} else {
+		clif_scriptinputstr(sd, 0);
+	}
+
+	return true;
+}
+
+//eduardo
+int counter22 = 0;
+
+//eduardo
+int merskill_use(struct mercenary_data *md, t_tick tick, int event, int tid)
+{
+	struct block_list *tbl;
+	uint16 skill_id;
+	uint8 skill_lv;
+	int casttime, inf;
+
+	if (md->ud.skilltimer != INVALID_TIMER) { return 0; }
+	if (event == -1 && DIFF_TICK(md->ud.canact_tick, tick) > 0)
+		return 0;
+
+	// unsigned int intimacy = 0;
+	// short idx = -1;
+
+	int j = rnd() % MAX_MERCSKILL;
+
+	if (!md) return -1;
+
+	if (md->db->skill[j].id>0){
+		skill_id = md->db->skill[j].id;
+
+		skill_lv = md->db->skill[j].lv;
+		casttime = skill_castfix(&md->bl, skill_id, skill_lv);
+
+		inf = skill_get_inf(skill_id);
+		if (inf&INF_ATTACK_SKILL) {
+			map_freeblock_lock();
+			tbl = map_id2bl(tid);	if (!tbl) { return -1; }
+			if (skill_id != 0){
+				unit_skilluse_id2(&md->bl, tid, skill_id, skill_lv, casttime, false);
+			}
+			map_freeblock_unlock();
+		} else if(inf&INF_GROUND_SKILL) {
+			tbl = map_id2bl(tid);
+			map_freeblock_lock();
+			if (skill_id != 0){
+				if (
+					!battle_check_range(&md->bl, tbl, skill_get_range2(&md->bl, skill_id, skill_lv, true))
+					|| !unit_skilluse_pos2(&md->bl, tbl->x+rnd_value(-2,2), tbl->y+rnd_value(-2,2), skill_id, skill_lv, casttime, false)
+				){
+					map_freeblock_unlock();
+					return -1;
+				}
+			}
+			map_freeblock_unlock();
+		} else if (inf&INF_SELF_SKILL) {
+			tid = md->bl.id;
+			map_freeblock_lock();
+			tbl = map_id2bl(tid);	if (!tbl) { return -1; }
+			if (skill_id != 0){
+				unit_skilluse_id2(&md->bl, tid, skill_id, skill_lv, casttime, false);
+			}
+			map_freeblock_unlock();
+		} else if (inf&INF_SUPPORT_SKILL) {
+			if (md->master2){
+				tid = md->master2->bl.id;
+			} else if (md->master){
+				tid = md->master->bl.id;
+			}
+			map_freeblock_lock();
+			tbl = map_id2bl(tid);	if (!tbl) { return -1; }
+			if (skill_id != 0){
+				unit_skilluse_id2(&md->bl, tid, skill_id, skill_lv, casttime, false);	
+			}
+			map_freeblock_unlock();
+		} else return -1;		
+
+		return 1;
+	} else {
+		counter22++;
+		if (counter22%5==0){
+			return 0;
+		} else merskill_use(md, gettick(), -1, tid);
+	}
+	return 0;
+}
+
 
 /**
 * Create a new Mercenary for Player
@@ -605,6 +844,24 @@ void mercenary_read_skilldb(void){
 void do_init_mercenary(void){
 	mercenary_readdb();
 	mercenary_read_skilldb();
+
+	//add_timer_func_list(mercenary_contract, "mercenary_contract");
+}
+
+//eduardo
+//unused because mercenary duplicate is kinda weak & wasteful; and we have pain split, so.
+void do_init_partner(void){
+	/* specifically for partners.txt */
+	// partner_readdb();
+	const char *filename[]={ "partners.txt",DBIMPORT"/partners.txt"};
+	uint8 i;
+
+	partner_db_data.clear();
+
+	for(i = 0; i<ARRAYLENGTH(filename); i++){
+		sv_readdb(".", filename[i], ',', 5, 57, -1, &partner_readdb_sub, i > 0);
+	}
+	// mercenary_read_skilldb();
 
 	//add_timer_func_list(mercenary_contract, "mercenary_contract");
 }

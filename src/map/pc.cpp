@@ -466,6 +466,40 @@ static TIMER_FUNC(pc_spiritball_timer){
 
 	return 0;
 }
+//eduardo
+static TIMER_FUNC(pc_spiritball_timer2){
+	struct mob_data *md;
+	int i;
+
+	if( (md=(struct mob_data *)map_id2md(id)) == NULL || md->bl.type!=BL_MOB )
+		return 1;
+
+	if( md->spiritball <= 0 )
+	{
+		ShowError("pc_spiritball_timer2: %d spiritball's available. (aid=%d cid=%d tid=%d)\n", md->spiritball, 
+			md->mob_id, 
+			md->charid, tid);
+		md->spiritball = 0;
+		return 0;
+	}
+
+	ARR_FIND(0, md->spiritball, i, md->spirit_timer[i] == tid);
+	if( i == md->spiritball )
+	{
+		ShowError("pc_spiritball_timer: timer not found (aid=%d cid=%d tid=%d)\n", 
+			md->mob_id, md->charid, tid);
+		return 0;
+	}
+
+	md->spiritball--;
+	if( i != md->spiritball )
+		memmove(md->spirit_timer+i, md->spirit_timer+i+1, (md->spiritball-i)*sizeof(int));
+	md->spirit_timer[md->spiritball] = INVALID_TIMER;
+
+	clif_spiritball(&md->bl);
+
+	return 0;
+}
 
 /**
 * Adds a spiritball to player for 'interval' ms
@@ -610,6 +644,78 @@ int pc_delsoulball(map_session_data *sd, int count, bool type)
 		clif_soulball(sd);
 
 	return 0;
+}
+
+//eduardo
+void pc_addspiritball2(struct mob_data *md,int interval,int max)
+{
+	int tid;
+	uint8 i;
+
+	nullpo_retv(md);
+
+	if(max > MAX_SPIRITBALL)
+		max = MAX_SPIRITBALL;
+	if(md->spiritball < 0)
+		md->spiritball = 0;
+
+	if( md->spiritball && md->spiritball >= max )
+	{
+		if(md->spirit_timer[0] != INVALID_TIMER)
+			delete_timer(md->spirit_timer[0],pc_spiritball_timer2);
+		md->spiritball--;
+		if( md->spiritball != 0 )
+			memmove(md->spirit_timer+0, md->spirit_timer+1, (md->spiritball)*sizeof(int));
+		md->spirit_timer[md->spiritball] = INVALID_TIMER;
+	}
+
+	tid = add_timer(gettick()+interval, pc_spiritball_timer2, md->bl.id, 0);
+	ARR_FIND(0, md->spiritball, i, md->spirit_timer[i] == INVALID_TIMER || DIFF_TICK(get_timer(tid)->tick, get_timer(md->spirit_timer[i])->tick) < 0);
+	if( i != md->spiritball )
+		memmove(md->spirit_timer+i+1, md->spirit_timer+i, (md->spiritball-i)*sizeof(int));
+	md->spirit_timer[i] = tid;
+	md->spiritball++;
+	if( (md->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
+		clif_millenniumshield(&md->bl,md->spiritball);
+	else
+		clif_spiritball(&md->bl);
+}
+void pc_delspiritball2(struct mob_data *md,int count,int type)
+{
+	uint8 i;
+
+	nullpo_retv(md);
+
+	if(md->spiritball <= 0) {
+		md->spiritball = 0;
+		return;
+	}
+
+	if(count == 0)
+		return;
+	if(count > md->spiritball)
+		count = md->spiritball;
+	md->spiritball -= count;
+	if(count > MAX_SPIRITBALL)
+		count = MAX_SPIRITBALL;
+
+	for(i=0;i<count;i++) {
+		if(md->spirit_timer[i] != INVALID_TIMER) {
+			delete_timer(md->spirit_timer[i],pc_spiritball_timer2);
+			md->spirit_timer[i] = INVALID_TIMER;
+		}
+	}
+	for(i=count;i<MAX_SPIRITBALL;i++) {
+		md->spirit_timer[i-count] = md->spirit_timer[i];
+		md->spirit_timer[i] = INVALID_TIMER;
+	}
+
+	if(!type) {
+		if( (md->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD )
+			clif_millenniumshield(&md->bl,md->spiritball);
+		else
+			clif_spiritball(&md->bl);
+	}
 }
 
 /**
@@ -1814,6 +1920,11 @@ void pc_reg_received(struct map_session_data *sd)
 	if (sd->status.pet_id > 0)
 		intif_request_petdata(sd->status.account_id, sd->status.char_id, sd->status.pet_id);
 
+	//eduardo
+	if (battle_config.mvp_raid_mode){
+		ShowMessage("\n\n----------RRRAAAAAIIIDDDD!!1!! \n");
+	}
+	
 	// Homunculus [albator]
 	if( sd->status.hom_id > 0 )
 		intif_homunculus_requestload(sd->status.account_id, sd->status.hom_id);
@@ -6266,6 +6377,39 @@ uint8 pc_checkskill(struct map_session_data *sd, uint16 skill_id)
 	return (sd->status.skill[idx].id == skill_id) ? sd->status.skill[idx].lv : 0;
 }
 
+//eduardo
+uint8 pc_checkskill2(struct mob_data *md, uint16 skill_id)
+{
+	uint16 idx = 0;
+	if (md == NULL)
+		return 0;
+	/*if (SKILL_CHK_GUILD(skill_id) ) {
+		struct guild *g;
+
+		if( md->status.guild_id>0 && (g=md->guild)!=NULL)
+			return guild_checkskill(g,skill_id);
+		return 0;
+	}*/
+	if (battle_config.scskillbyhotkeys && md->special_state.clone==1) {
+		uint16 thisone = 999;
+		for (int i = 0; i < MAX_HOTKEYS+10; i++) {
+			if (md->db->skill[i].skill_id == skill_id) {
+				thisone = i;
+				break;
+			}
+			else thisone = 999;
+		}
+		return (md->db->skill[thisone].skill_lv || 0);
+	}
+	else {
+		if ((idx = skill_get_index(skill_id)) == 0) {
+			ShowError("pc_checkskill2: Invalid skill id %d (char_id=%d).\n", skill_id, md->charid);
+			return 0;
+		}
+		return (md->db->skill[idx].skill_id == skill_id) ? md->db->skill[idx].skill_lv : 0;
+	}
+}
+
 /**
  * Returns the amount of skill points invested in a Summoner's Power of Sea/Land/Life
  * @param sd: Player data
@@ -8010,6 +8154,14 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		clif_updatestatus(sd,SP_SKILLPOINT);
 		clif_skillinfoblock(sd);
 		status_calc_pc(sd, SCO_FORCE);
+	}
+
+	//eduardo
+	//updating hotkeys	
+	for (int pos = 0; pos < MAX_HOTKEYS; pos++) {
+		sd->status.hotkeys[pos].type = 0;
+		sd->status.hotkeys[pos].id = 0;
+		sd->status.hotkeys[pos].lv = 0;
 	}
 
 	return skill_point;
@@ -11639,6 +11791,44 @@ void pc_addspiritcharm(struct map_session_data *sd, int interval, int max, int t
 	clif_spiritcharm(sd);
 }
 
+//eduardo
+void pc_addspiritcharm2(struct mob_data *md, int interval, int max, int type)
+{
+	int tid, i;
+
+	nullpo_retv(md);
+
+	if (md->spiritcharm_type != CHARM_TYPE_NONE && type != md->spiritcharm_type)
+		pc_delspiritcharm2(md, md->spiritcharm, md->spiritcharm_type);
+
+	if (max > MAX_SPIRITCHARM)
+		max = MAX_SPIRITCHARM;
+
+	if (md->spiritcharm < 0)
+		md->spiritcharm = 0;
+
+	if (md->spiritcharm && md->spiritcharm >= max) {
+		if (md->spiritcharm_timer[0] != INVALID_TIMER)
+			delete_timer(md->spiritcharm_timer[0], pc_spiritcharm_timer);
+		md->spiritcharm--;
+		if (md->spiritcharm != 0)
+			memmove(md->spiritcharm_timer + 0, md->spiritcharm_timer + 1, (md->spiritcharm) * sizeof(int));
+		md->spiritcharm_timer[md->spiritcharm] = INVALID_TIMER;
+	}
+
+	tid = add_timer(gettick() + interval, pc_spiritcharm_timer, md->bl.id, 0);
+	ARR_FIND(0, md->spiritcharm, i, md->spiritcharm_timer[i] == INVALID_TIMER || DIFF_TICK(get_timer(tid)->tick, get_timer(md->spiritcharm_timer[i])->tick) < 0);
+
+	if (i != md->spiritcharm)
+		memmove(md->spiritcharm_timer + i + 1, md->spiritcharm_timer + i, (md->spiritcharm - i) * sizeof(int));
+
+	md->spiritcharm_timer[i] = tid;
+	md->spiritcharm++;
+	md->spiritcharm_type = type;
+
+	//clif_spiritcharm(sd);
+}
+
 /**
  * Removes one or more spirit charms.
  * @param sd: The target character
@@ -11686,6 +11876,50 @@ void pc_delspiritcharm(struct map_session_data *sd, int count, int type)
 		sd->spiritcharm_type = CHARM_TYPE_NONE;
 
 	clif_spiritcharm(sd);
+}
+
+//eduardo
+void pc_delspiritcharm2(struct mob_data *md, int count, int type)
+{
+	int i;
+
+	nullpo_retv(md);
+
+	if (md->spiritcharm_type != type)
+		return;
+
+	if (md->spiritcharm <= 0) {
+		md->spiritcharm = 0;
+		return;
+	}
+
+	if (count <= 0)
+		return;
+
+	if (count > md->spiritcharm)
+		count = md->spiritcharm;
+
+	md->spiritcharm -= count;
+
+	if (count > MAX_SPIRITCHARM)
+		count = MAX_SPIRITCHARM;
+
+	for (i = 0; i < count; i++) {
+		if (md->spiritcharm_timer[i] != INVALID_TIMER) {
+			delete_timer(md->spiritcharm_timer[i], pc_spiritcharm_timer);
+			md->spiritcharm_timer[i] = INVALID_TIMER;
+		}
+	}
+
+	for (i = count; i < MAX_SPIRITCHARM; i++) {
+		md->spiritcharm_timer[i - count] = md->spiritcharm_timer[i];
+		md->spiritcharm_timer[i] = INVALID_TIMER;
+	}
+
+	if (md->spiritcharm <= 0)
+		md->spiritcharm_type = CHARM_TYPE_NONE;
+
+	//clif_spiritcharm(sd);
 }
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
@@ -13561,6 +13795,8 @@ void do_init_pc(void) {
 	add_timer_func_list(pc_calc_pvprank_timer, "pc_calc_pvprank_timer");
 	add_timer_func_list(pc_autosave, "pc_autosave");
 	add_timer_func_list(pc_spiritball_timer, "pc_spiritball_timer");
+	//eduardo
+	add_timer_func_list(pc_spiritball_timer2, "pc_spiritball_timer2");
 	add_timer_func_list(pc_follow_timer, "pc_follow_timer");
 	add_timer_func_list(pc_endautobonus, "pc_endautobonus");
 	add_timer_func_list(pc_spiritcharm_timer, "pc_spiritcharm_timer");

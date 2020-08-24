@@ -2391,6 +2391,27 @@ void map_foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...)
 	dbi_destroy(iter);
 }
 
+//eduardo
+void map_foreachpc2(int(*func)(struct mob_data* md, va_list args), ...)
+{
+	DBIterator* iter;
+	struct mob_data* md;
+
+	iter = db_iterator(mobid_db);
+	for (md = (struct mob_data*)dbi_first(iter); dbi_exists(iter); md = (struct mob_data*)dbi_next(iter))
+	{
+		va_list args;
+		int ret;
+
+		va_start(args, func);
+		ret = func(md, args);
+		va_end(args);
+		if (ret == -1)
+			break;// stop iterating
+	}
+	dbi_destroy(iter);
+}
+
 /// Applies func to all the mobs in the db.
 /// Stops iterating if func returns -1.
 void map_foreachmob(int (*func)(struct mob_data* md, va_list args), ...)
@@ -5242,6 +5263,8 @@ int do_init(int argc, char *argv[])
 	do_init_pet();
 	do_init_homunculus();
 	do_init_mercenary();
+	//eduardo	
+	// do_init_partner();
 	do_init_elemental();
 	do_init_quest();
 	do_init_achievement();

@@ -104,6 +104,10 @@ static DBMap *mob_skill_db; /// Monster skill temporary db. s_mob_skill -> mobid
 static struct eri *item_drop_ers; //For loot drops delay structures.
 static struct eri *item_drop_list_ers;
 
+//eduardo
+std::vector<int> teammates;
+std::vector<int> teammates_bl;
+
 struct s_randomsummon_entry {
 	uint16 mob_id;
 	uint32 rate;
@@ -1315,6 +1319,126 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 			return 1;
 		}
 		break;
+	case BL_MOB:
+	//eduardo
+		if (battle_config.hom_setting&HOMSET_FIRST_TARGET &&
+			(*target) && (*target)->type == BL_HOM && bl->type != BL_HOM)
+			return 0; //For some reason Homun targets are never overriden.
+
+		dist = distance_bl(&md->bl, bl);
+
+		if (md->special_state.clone == 1){
+			if (
+				strcmp(md->klase.c_str(), "MG")==0
+				|| strcmp(md->klase.c_str(), "WZ")==0
+				|| strcmp(md->klase.c_str(), "AL")==0
+				|| strcmp(md->klase.c_str(), "BA")==0
+				|| strcmp(md->klase.c_str(), "PR")==0
+			){
+				if(
+					((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) &&
+					battle_check_range(&md->bl,bl,md->db->range2)
+				){
+					#ifdef ACTIVEPATHSEARCH
+						struct walkpath_data wpd;
+						if (!path_search(&wpd, md->bl.m, md->bl.x, md->bl.y, bl->x , bl->y, 0, CELL_CHKWALL)) // Count walk path cells
+							return 0;
+						//Standing monsters use range2, walking monsters use range3
+						if ((md->ud.walktimer == INVALID_TIMER && wpd.path_len > md->db->range2)
+							|| (md->ud.walktimer != INVALID_TIMER && wpd.path_len > md->db->range3))
+							return 0;
+					#endif
+					(*target) = bl;
+					md->target_id=bl->id;
+					
+					// if (md->ud.skilltimer == INVALID_TIMER) 
+						mobskill_use(md, gettick(), -1); 
+						// else {
+							// if (md->name=="rani") {
+					// ShowMessage(" casTer ");
+					clif_viewpoint(map_id2sd(md->master_id), 1, 0, md->bl.x, md->bl.y, md->mob_id, 0xFFFFFF);
+					if (battle_check_target(&md->bl, bl, BCT_ENEMY)){
+						// if (map_count_oncell(md->bl.m, bl->x+7, bl->y+7, BL_MOB|BL_PC|BL_NPC, 1) < 1)
+						if (!unit_walktoxy(&md->bl, bl->x+7, bl->y+7, 0))
+							return 0;
+			 		}
+			 		 // else 
+					// unit_walktoxy(&md->bl, bl->x, bl->y, 0);
+								// unit_escape(&md->bl, bl, rnd()%4+1);
+							// }
+					// }
+
+					if (status_get_hp(bl) < 0.5 * status_get_max_hp(bl)){
+						// ShowMessage(" alerta! %s %d %d", md->name, status_get_hp(bl), (int)status_get_max_hp(bl)/2);
+						unit_escape(&md->bl, bl, 7);
+					}
+
+					md->min_chase= dist + md->db->range3;
+					if(md->min_chase>MAX_MINCHASE)
+						md->min_chase=MAX_MINCHASE;
+					return 1;
+				} 
+				//if( (struct block_list abl = map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode)) ){
+					// if(
+					// 	((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) &&
+					// 	battle_check_range(&md->bl,bl,md->db->range2)
+					// ){ //Pick closest target?	
+					// 	(*target) = bl;
+					// 	md->target_id=bl->id;
+					// 	md->min_chase= dist + md->db->range3;
+					// 	if(md->min_chase>MAX_MINCHASE)
+					// 		md->min_chase=MAX_MINCHASE;
+					// 	return 1;
+					// }
+				//}
+			} else {
+				if(
+					((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) &&
+					battle_check_range(&md->bl,bl,md->db->range2)
+				){ //Pick closest target?
+					#ifdef ACTIVEPATHSEARCH
+						struct walkpath_data wpd;
+						if (!path_search(&wpd, md->bl.m, md->bl.x, md->bl.y, bl->x, bl->y, 0, CELL_CHKWALL)) // Count walk path cells
+							return 0;
+						//Standing monsters use range2, walking monsters use range3
+						if ((md->ud.walktimer == INVALID_TIMER && wpd.path_len > md->db->range2)
+							|| (md->ud.walktimer != INVALID_TIMER && wpd.path_len > md->db->range3))
+							return 0;
+					#endif
+
+					(*target) = bl;
+					md->target_id=bl->id;
+					md->min_chase= dist + md->db->range3;
+					if(md->min_chase>MAX_MINCHASE)
+						md->min_chase=MAX_MINCHASE;
+					return 1;
+				}
+			}
+		} 
+		else {
+			//regular mob
+			if(
+				((*target) == NULL || !check_distance_bl(&md->bl, *target, dist)) &&
+				battle_check_range(&md->bl,bl,md->db->range2)
+			){ //Pick closest target?
+				#ifdef ACTIVEPATHSEARCH
+					struct walkpath_data wpd;
+					if (!path_search(&wpd, md->bl.m, md->bl.x, md->bl.y, bl->x, bl->y, 0, CELL_CHKWALL)) // Count walk path cells
+						return 0;
+					//Standing monsters use range2, walking monsters use range3
+					if ((md->ud.walktimer == INVALID_TIMER && wpd.path_len > md->db->range2)
+						|| (md->ud.walktimer != INVALID_TIMER && wpd.path_len > md->db->range3))
+						return 0;
+				#endif
+				(*target) = bl;
+				md->target_id=bl->id;
+				md->min_chase= dist + md->db->range3;
+				if(md->min_chase>MAX_MINCHASE)
+					md->min_chase=MAX_MINCHASE;
+				return 1;
+			}
+		}
+		break;
 	}
 	return 0;
 }
@@ -1522,6 +1646,15 @@ int mob_unlocktarget(struct mob_data *md, t_tick tick)
 		md->state.skillstate = MSS_IDLE;
 	case MSS_IDLE:
 		// Idle skill.
+		//eduardo
+		// if (md->special_state.clone == 1){
+		// 	if (rnd()%10>5){
+
+		// 	}
+		// } else {
+			if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) && mobskill_use(md, tick, -1))
+				break;
+		// }
 		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) && mobskill_use(md, tick, -1))
 			break;
 		//Random walk.
@@ -1686,6 +1819,9 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	enum e_mode mode;
 	int view_range, can_move;
 
+	//eduardo
+	int attProb = rnd()%100;
+
 	if(md->bl.prev == nullptr || md->status.hp == 0)
 		return false;
 
@@ -1733,76 +1869,200 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	}
 
 	// Check for target change.
-	if( md->attacked_id && mode&MD_CANATTACK )
-	{
-		if( md->attacked_id == md->target_id )
-		{	//Rude attacked check.
-			if( !battle_check_range(&md->bl, tbl, md->status.rhw.range)
-			&&  ( //Can't attack back and can't reach back.
-					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB]
-						|| md->sc.data[SC_BITE] || md->sc.data[SC_VACUUM_EXTREME] || md->sc.data[SC_THORNSTRAP]
-						|| md->sc.data[SC__MANHOLE] // Not yet confirmed if boss will teleport once it can't reach target.
-						|| md->walktoxy_fail_count > 0)
-					)
-					|| !mob_can_reach(md, tbl, md->min_chase, MSS_RUSH)
-				)
-			&&  md->state.attacked_count++ >= RUDE_ATTACKED_COUNT
-			&&  !mobskill_use(md, tick, MSC_RUDEATTACKED) // If can't rude Attack
-			&&  can_move && unit_escape(&md->bl, tbl, rnd()%10 +1)) // Attempt escape
-			{	//Escaped
-				md->attacked_id = md->norm_attacked_id = 0;
-				return true;
-			}
-		}
-		else
-		if( (abl = map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode)) )
+	//eduardo
+	if (md->special_state.clone == 1){
+		if( md->attacked_id && mode&MD_CANATTACK )
 		{
-			int dist;
-			if( md->bl.m != abl->m || abl->prev == NULL
-				|| (dist = distance_bl(&md->bl, abl)) >= MAX_MINCHASE // Attacker longer than visual area
-				|| battle_check_target(&md->bl, abl, BCT_ENEMY) <= 0 // Attacker is not enemy of mob
-				|| (battle_config.mob_ai&0x2 && !status_check_skilluse(&md->bl, abl, 0, 0)) // Cannot normal attack back to Attacker
-				|| (!battle_check_range(&md->bl, abl, md->status.rhw.range) // Not on Melee Range and ...
-				&& ( // Reach check
-					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB]
-						|| md->sc.data[SC_BITE] || md->sc.data[SC_VACUUM_EXTREME] || md->sc.data[SC_THORNSTRAP]
-						|| md->sc.data[SC__MANHOLE] // Not yet confirmed if boss will teleport once it can't reach target.
-						|| md->walktoxy_fail_count > 0)
+			if( md->attacked_id == md->target_id )
+			{	//Rude attacked check.
+				if (
+					// md->special_state.clone == 1 &&
+					(
+						strcmp(md->klase.c_str(), "MG")==0
+						|| strcmp(md->klase.c_str(), "WZ")==0
+						|| strcmp(md->klase.c_str(), "AL")==0
+						|| strcmp(md->klase.c_str(), "BA")==0
+						|| strcmp(md->klase.c_str(), "PR")==0
+						|| strcmp(md->klase.c_str(), "AC")==0
+						|| strcmp(md->klase.c_str(), "HT")==0
+						|| strcmp(md->klase.c_str(), "GS")==0
+						|| strcmp(md->klase.c_str(), "RL")==0
+						// || strcmp(md->klase.c_str(), "SA")==0
 					)
-					|| !mob_can_reach(md, abl, dist+md->db->range3, MSS_RUSH)
-				   )
-				) )
-			{ // Rude attacked
-				if (abl->id != md->bl.id //Self damage does not cause rude attack
-				&& md->state.attacked_count++ >= RUDE_ATTACKED_COUNT				
-				&& !mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move
-				&& !tbl && unit_escape(&md->bl, abl, rnd()%10 +1))
-				{	//Escaped.
-					//TODO: Maybe it shouldn't attempt to run if it has another, valid target?
+				){
+					// if (md->attProb > rnd_value(0,100)){
+					// 	ShowMessage("_checkAttack_");
+					// } else {
+					// 	ShowMessage("_NOcheckAttack_");
+					// }
+					// ShowMessage(" sial ");
+					if( 
+					// !battle_check_range(&md->bl, tbl, md->status.rhw.range)
+					// &&  ( //Can't attack back and can't reach back.
+					// 		(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB]
+					// 			|| md->sc.data[SC_BITE] || md->sc.data[SC_VACUUM_EXTREME] || md->sc.data[SC_THORNSTRAP]
+					// 			|| md->sc.data[SC__MANHOLE] // Not yet confirmed if boss will teleport once it can't reach target.
+								md->walktoxy_fail_count > 0 ||
+					// 		)
+							!mob_can_reach(md, tbl, md->min_chase, MSS_RUSH)
+					// 	)
+					&&  md->state.attacked_count++ >= RUDE_ATTACKED_COUNT &&
+					!mobskill_use(md, tick, MSC_RUDEATTACKED) // If can't rude Attack
+					&& can_move && unit_escape(&md->bl, tbl, rnd()%10+1)
+					) // Attempt escape
+					{	//Escaped
+						md->attacked_id = md->norm_attacked_id = 0;
+						return true;
+					} //else ShowMessage(" gada ");
+				}
+			}
+			//if TARGET exists
+			else
+			if( (abl = map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode)) )
+			{
+
+				int dist;
+				//eduardo 
+				// active sclone here 
+				if (
+					// md->special_state.clone == 1 &&
+					(
+						strcmp(md->klase.c_str(), "MG")==0
+						|| strcmp(md->klase.c_str(), "WZ")==0
+						|| strcmp(md->klase.c_str(), "AL")==0
+						|| strcmp(md->klase.c_str(), "BA")==0
+						|| strcmp(md->klase.c_str(), "PR")==0
+						|| strcmp(md->klase.c_str(), "AC")==0
+						|| strcmp(md->klase.c_str(), "HT")==0
+						|| strcmp(md->klase.c_str(), "GS")==0
+						|| strcmp(md->klase.c_str(), "RL")==0
+						// || strcmp(md->klase.c_str(), "SA")==0
+					)
+				){
+					//non ranged slaveclone
+					// ShowMessage(" fff %s", md->klase.c_str());
+
+					if( md->bl.m != abl->m || abl->prev == NULL
+						|| (dist = distance_bl(&md->bl, abl)) >= MAX_MINCHASE // Attacker longer than visual area
+						|| battle_check_target(&md->bl, abl, BCT_ENEMY) <= 0 // Attacker is not enemy of mob
+						|| (battle_config.mob_ai&0x2 && !status_check_skilluse(&md->bl, abl, 0, 0)) // Cannot normal attack back to Attacker
+						|| (!battle_check_range(&md->bl, abl, md->status.rhw.range) // Not on Melee Range and ...
+						&& ( // Reach check
+							(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB]
+								|| md->sc.data[SC_BITE] || md->sc.data[SC_VACUUM_EXTREME] || md->sc.data[SC_THORNSTRAP]
+								|| md->sc.data[SC__MANHOLE] // Not yet confirmed if boss will teleport once it can't reach target.
+								|| md->walktoxy_fail_count > 0)
+							)
+							|| !mob_can_reach(md, abl, dist+md->db->range3, MSS_RUSH)
+						   )
+						) 
+					)
+					{ // Rude attacked
+						if (abl->id != md->bl.id //Self damage does not cause rude attack
+						&& md->state.attacked_count++ >= RUDE_ATTACKED_COUNT				
+						&& !mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move
+						&& !tbl && unit_escape(&md->bl, abl, rnd()%10 +1))
+						{	//Escaped.
+							//TODO: Maybe it shouldn't attempt to run if it has another, valid target?
+							md->attacked_id = md->norm_attacked_id = 0;
+							return true;
+						}
+					}
+					else
+					if (!(battle_config.mob_ai&0x2) && !status_check_skilluse(&md->bl, abl, 0, 0))
+					{
+						//Can't attack back, but didn't invoke a rude attacked skill...
+					}
+					else
+					{ //Attackable
+						//If a monster can change the target to the attacker, it will change the target
+						md->target_id = md->attacked_id; // set target
+						if (md->state.attacked_count)
+							md->state.attacked_count--; //Should we reset rude attack count?
+						md->min_chase = dist+md->db->range3;
+						if(md->min_chase>MAX_MINCHASE)
+							md->min_chase=MAX_MINCHASE;
+						tbl = abl; //Set the new target
+					}
+				}
+			}
+
+			//Clear it since it's been checked for already.
+			md->attacked_id = md->norm_attacked_id = 0;
+		}
+	} else {
+		//regular default mob
+		if( md->attacked_id && mode&MD_CANATTACK )
+		{
+			if( md->attacked_id == md->target_id )
+			{	//Rude attacked check.
+				if( !battle_check_range(&md->bl, tbl, md->status.rhw.range)
+				&&  ( //Can't attack back and can't reach back.
+						(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB]
+							|| md->sc.data[SC_BITE] || md->sc.data[SC_VACUUM_EXTREME] || md->sc.data[SC_THORNSTRAP]
+							|| md->sc.data[SC__MANHOLE] // Not yet confirmed if boss will teleport once it can't reach target.
+							|| md->walktoxy_fail_count > 0)
+						)
+						|| !mob_can_reach(md, tbl, md->min_chase, MSS_RUSH)
+					)
+				&&  md->state.attacked_count++ >= RUDE_ATTACKED_COUNT
+				&&  !mobskill_use(md, tick, MSC_RUDEATTACKED) // If can't rude Attack
+				&&  can_move && unit_escape(&md->bl, tbl, rnd()%10 +1)) // Attempt escape
+				{	//Escaped
 					md->attacked_id = md->norm_attacked_id = 0;
 					return true;
 				}
 			}
 			else
-			if (!(battle_config.mob_ai&0x2) && !status_check_skilluse(&md->bl, abl, 0, 0))
+			if( (abl = map_id2bl(md->attacked_id)) && (!tbl || mob_can_changetarget(md, abl, mode)) )
 			{
-				//Can't attack back, but didn't invoke a rude attacked skill...
+				int dist;
+				if( md->bl.m != abl->m || abl->prev == NULL
+					|| (dist = distance_bl(&md->bl, abl)) >= MAX_MINCHASE // Attacker longer than visual area
+					|| battle_check_target(&md->bl, abl, BCT_ENEMY) <= 0 // Attacker is not enemy of mob
+					|| (battle_config.mob_ai&0x2 && !status_check_skilluse(&md->bl, abl, 0, 0)) // Cannot normal attack back to Attacker
+					|| (!battle_check_range(&md->bl, abl, md->status.rhw.range) // Not on Melee Range and ...
+					&& ( // Reach check
+						(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB]
+							|| md->sc.data[SC_BITE] || md->sc.data[SC_VACUUM_EXTREME] || md->sc.data[SC_THORNSTRAP]
+							|| md->sc.data[SC__MANHOLE] // Not yet confirmed if boss will teleport once it can't reach target.
+							|| md->walktoxy_fail_count > 0)
+						)
+						|| !mob_can_reach(md, abl, dist+md->db->range3, MSS_RUSH)
+						)
+					) )
+				{ // Rude attacked
+					if (abl->id != md->bl.id //Self damage does not cause rude attack
+					&& md->state.attacked_count++ >= RUDE_ATTACKED_COUNT				
+					&& !mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move
+					&& !tbl && unit_escape(&md->bl, abl, rnd()%10 +1))
+					{	//Escaped.
+						//TODO: Maybe it shouldn't attempt to run if it has another, valid target?
+						md->attacked_id = md->norm_attacked_id = 0;
+						return true;
+					}
+				}
+				else
+				if (!(battle_config.mob_ai&0x2) && !status_check_skilluse(&md->bl, abl, 0, 0))
+				{
+					//Can't attack back, but didn't invoke a rude attacked skill...
+				}
+				else
+				{ //Attackable
+					//If a monster can change the target to the attacker, it will change the target
+					md->target_id = md->attacked_id; // set target
+					if (md->state.attacked_count)
+						md->state.attacked_count--; //Should we reset rude attack count?
+					md->min_chase = dist+md->db->range3;
+					if(md->min_chase>MAX_MINCHASE)
+						md->min_chase=MAX_MINCHASE;
+					tbl = abl; //Set the new target
+				}
 			}
-			else
-			{ //Attackable
-				//If a monster can change the target to the attacker, it will change the target
-				md->target_id = md->attacked_id; // set target
-				if (md->state.attacked_count)
-					md->state.attacked_count--; //Should we reset rude attack count?
-				md->min_chase = dist+md->db->range3;
-				if(md->min_chase>MAX_MINCHASE)
-					md->min_chase=MAX_MINCHASE;
-				tbl = abl; //Set the new target
-			}
-		}
 
-		//Clear it since it's been checked for already.
-		md->attacked_id = md->norm_attacked_id = 0;
+			//Clear it since it's been checked for already.
+			md->attacked_id = md->norm_attacked_id = 0;
+		}
 	}
 
 	bool slave_lost_target = false;
@@ -1815,11 +2075,21 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	}
 
 	// Scan area for targets
-	if (!tbl && can_move && mode&MD_LOOTER && md->lootitems && DIFF_TICK(tick, md->ud.canact_tick) > 0 &&
+	//eduardo
+	if (md) if (md->special_state.clone == 1){
+		//dont random chase pls
+	} else {
+		if (!tbl && can_move && mode&MD_LOOTER && md->lootitems && DIFF_TICK(tick, md->ud.canact_tick) > 0 &&
+			(md->lootitem_count < LOOTITEM_SIZE || battle_config.monster_loot_type != 1))
+		{	// Scan area for items to loot, avoid trying to loot if the mob is full and can't consume the items.
+			map_foreachinshootrange (mob_ai_sub_hard_lootsearch, &md->bl, view_range, BL_ITEM, md, &tbl);
+		}
+	}
+	/*if (!tbl && can_move && mode&MD_LOOTER && md->lootitems && DIFF_TICK(tick, md->ud.canact_tick) > 0 &&
 		(md->lootitem_count < LOOTITEM_SIZE || battle_config.monster_loot_type != 1))
 	{	// Scan area for items to loot, avoid trying to loot if the mob is full and can't consume the items.
 		map_foreachinshootrange (mob_ai_sub_hard_lootsearch, &md->bl, view_range, BL_ITEM, md, &tbl);
-	}
+	}*/
 
 	if ((mode&MD_AGGRESSIVE && (!tbl || slave_lost_target)) || md->state.skillstate == MSS_FOLLOW)
 	{
@@ -1908,35 +2178,196 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	}
 
 	//Attempt to attack.
+	//eduardo
 	//At this point we know the target is attackable, we just gotta check if the range matches.
-	if (battle_check_range(&md->bl, tbl, md->status.rhw.range) && !(md->sc.option&OPTION_HIDE))
-	{	//Target within range and able to use normal attack, engage
-		if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER) 
-		{ //Only attack if no more attack delay left
-			if(tbl->type == BL_PC)
-				mob_log_damage(md, tbl, 0); //Log interaction (counts as 'attacker' for the exp bonus)
 
-			if( !(mode&MD_RANDOMTARGET) )
-				unit_attack(&md->bl,tbl->id,1);
-			else { // Attack once and find a new random target
-				int search_size = (view_range < md->status.rhw.range) ? view_range : md->status.rhw.range;
-				unit_attack(&md->bl, tbl->id, 0);
-				if ((tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), search_size))) {
-					md->target_id = tbl->id;
-					md->min_chase = md->db->range3;
+	if (md->special_state.clone == 1){
+		if (
+			strcmp(md->klase.c_str(), "MG")==0
+			|| strcmp(md->klase.c_str(), "WZ")==0
+			|| strcmp(md->klase.c_str(), "AL")==0
+			|| strcmp(md->klase.c_str(), "BA")==0
+			|| strcmp(md->klase.c_str(), "PR")==0
+			|| strcmp(md->klase.c_str(), "AC")==0
+			|| strcmp(md->klase.c_str(), "HT")==0
+			|| strcmp(md->klase.c_str(), "GS")==0
+			|| strcmp(md->klase.c_str(), "RL")==0			
+		){
+			int randNow = rnd_value(0,100); 
+		 	if (randNow < 30){
+				if((md->master_dist>MOB_SLAVEDISTANCE || md->master_dist == 0) &&
+						unit_can_move(&md->bl))
+				{
+					struct block_list * bl = map_id2bl(md->master_id);
+					short x = bl->x, y = bl->y;
+					mob_stop_attack(md);
+					if(map_search_freecell(&md->bl, bl->m, &x, &y, MOB_SLAVEDISTANCE, MOB_SLAVEDISTANCE, 1)
+						&& unit_walktoxy(&md->bl, x, y, 0)
+					)
+						return 1;
+				} 
+		 	} else {
+		 		// if (battle_check_target(&md->bl, tbl, BCT_ENEMY)){
+					// if (!
+						unit_walktoxy(&md->bl, tbl->x + 7, tbl->y + 7, 0);
+						// )
+						// return 0;
+		 		// } 
+		 	// 	else {
+				// 	if (!unit_walktoxy(&md->bl, tbl->x, tbl->y, 0))
+				// 		return 0;
+				// }
+
+		 	}
+	 		if (			
+				strcmp(md->klase.c_str(), "AC")==0
+				|| strcmp(md->klase.c_str(), "HT")==0
+				|| strcmp(md->klase.c_str(), "GS")==0
+				|| strcmp(md->klase.c_str(), "RL")==0
+	 		){
+	 			//
+	 		}
+	 		else mobskill_use(md, tick, -1);
+
+			//Attempt to attack.
+			//At this point we know the target is attackable, we just gotta check if the range matches.
+			//eduardo
+			if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER) 
+			{ //Only attack if no more attack delay left
+				if(tbl->type == BL_PC)
+					mob_log_damage(md, tbl, 0); //Log interaction (counts as 'attacker' for the exp bonus)
+				
+				if( !(mode&MD_RANDOMTARGET) ){
+					if (md->attProb > attProb){
+						unit_attack(&md->bl,tbl->id,1);
+						if (md->hd){ homskill_use(md->hd, tick, -1, tbl->id); }
+					} else {
+						mobskill_use(md, tick, -1);
+					}
+
+				} else { // Attack once and find a new random target
+					int search_size = (view_range < md->status.rhw.range) ? view_range : md->status.rhw.range;
+					
+					// ShowMessage("\n %s sekar %d %d", md->name, md->attProb, attProb);
+					if (md->attProb > attProb){
+						unit_attack(&md->bl,tbl->id,0);
+						if (md->hd){ homskill_use(md->hd, tick, -1, tbl->id); }
+					} else {
+						mobskill_use(md, tick, -1);
+					}
+					//eduardo saturday
+					if ((tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), search_size))) {
+						md->target_id = tbl->id;
+						md->min_chase = md->db->range3;
+					}
 				}
 			}
+			return true;
+		} else {
+			//non ranged slaveclone 
+			
+			//Attempt to attack.
+			//At this point we know the target is attackable, we just gotta check if the range matches.
+			//eduardo friday
+			if (battle_check_range(&md->bl, tbl, md->status.rhw.range) && !(md->sc.option&OPTION_HIDE))
+			{	//Target within range and able to use normal attack, engage
+				if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER) 
+				{ //Only attack if no more attack delay left
+					if(tbl->type == BL_PC)
+						mob_log_damage(md, tbl, 0); //Log interaction (counts as 'attacker' for the exp bonus)
+					
+					if( !(mode&MD_RANDOMTARGET) ){
+						if (md->special_state.clone == 1){
+							if (md->attProb > attProb){
+								unit_attack(&md->bl,tbl->id,1);
+								if (md->hd){ homskill_use(md->hd, tick, -1, tbl->id); }
+							} else {
+								mobskill_use(md, tick, -1);
+							}
+						}
+					} else { // Attack once and find a new random target
+						int search_size = (view_range < md->status.rhw.range) ? view_range : md->status.rhw.range;
+						
+						if (md->attProb > attProb){
+							unit_attack(&md->bl,tbl->id,0);
+							if (md->hd){ homskill_use(md->hd, tick, -1, tbl->id); }
+						} else {
+							mobskill_use(md, tick, -1);
+						}
+						//eduardo saturday
+						if ((tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), search_size))) {
+							md->target_id = tbl->id;
+							md->min_chase = md->db->range3;
+						}
+					}
+				}
+				return true;
+			}
 		}
-		return true;
+
+	} else {
+		if (battle_check_range(&md->bl, tbl, md->status.rhw.range) && !(md->sc.option&OPTION_HIDE))
+		{	//Target within range and able to use normal attack, engage
+			if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER) 
+			{ //Only attack if no more attack delay left
+				if(tbl->type == BL_PC)
+					mob_log_damage(md, tbl, 0); //Log interaction (counts as 'attacker' for the exp bonus)
+
+				if( !(mode&MD_RANDOMTARGET) )
+					unit_attack(&md->bl,tbl->id,1);
+				else { // Attack once and find a new random target
+					int search_size = (view_range < md->status.rhw.range) ? view_range : md->status.rhw.range;
+					unit_attack(&md->bl, tbl->id, 0);
+					if ((tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), search_size))) {
+						md->target_id = tbl->id;
+						md->min_chase = md->db->range3;
+					}
+				}
+			}
+			return true;
+		}
 	}
 
 	//Monsters in berserk state, unable to use normal attacks, will always attempt a skill
-	if(md->ud.walktimer == INVALID_TIMER && (md->state.skillstate == MSS_BERSERK || md->state.skillstate == MSS_ANGRY)) 
-	{
-		if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(md->ud.canact_tick, tick) < -MIN_MOBTHINKTIME*IDLE_SKILL_INTERVAL) 
-		{ //Only use skill if able to walk on next tick and not used a skill the last second
-			if (mobskill_use(md, tick, -1))
-				return true;
+	//eduardo
+	if (md->special_state.clone == 1){
+		if(md->ud.walktimer == INVALID_TIMER && (md->state.skillstate == MSS_BERSERK || md->state.skillstate == MSS_ANGRY)) 
+		// if(md->ud.walktimer == INVALID_TIMER && (md->state.skillstate == MSS_BERSERK || md->state.skillstate == MSS_ANGRY || md->state.skillstate == MSS_RUSH)) 
+		{
+		 	if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(md->ud.canact_tick, tick) < -MIN_MOBTHINKTIME*IDLE_SKILL_INTERVAL) 
+		 	{ //Only use skill if able to walk on next tick and not used a skill the last second
+		 		if (
+					strcmp(md->klase.c_str(), "MG")==0
+					|| strcmp(md->klase.c_str(), "WZ")==0
+					|| strcmp(md->klase.c_str(), "AL")==0
+					|| strcmp(md->klase.c_str(), "BA")==0
+					|| strcmp(md->klase.c_str(), "PR")==0
+					|| strcmp(md->klase.c_str(), "AC")==0
+					|| strcmp(md->klase.c_str(), "HT")==0
+					|| strcmp(md->klase.c_str(), "GS")==0
+					|| strcmp(md->klase.c_str(), "RL")==0
+				){
+		 			if (md->attProb > attProb){
+		 				unit_attack(&md->bl,tbl->id,0);
+		 				return true;
+		 			} else {
+				 		if (mobskill_use(md, tick, -1))
+				 			return true;
+		 			}
+				} else {
+					//non ranged slaveclone 
+		 			unit_attack(&md->bl,tbl->id,0);
+				}
+			}
+		}
+	} else {
+		if(md->ud.walktimer == INVALID_TIMER && (md->state.skillstate == MSS_BERSERK || md->state.skillstate == MSS_ANGRY)) 
+		{
+			if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(md->ud.canact_tick, tick) < -MIN_MOBTHINKTIME*IDLE_SKILL_INTERVAL) 
+			{ //Only use skill if able to walk on next tick and not used a skill the last second
+				if (mobskill_use(md, tick, -1))
+					return true;
+			}
 		}
 	}
 
@@ -2056,8 +2487,29 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 		// In Aegis, this is 100% for mobs that have been activated by players and none otherwise.
 		if( mob_is_spotted(md) &&
 			((!status_has_mode(&md->status,MD_STATUS_IMMUNE) && rnd()%100 < battle_config.mob_nopc_move_rate) ||
-			(status_has_mode(&md->status,MD_STATUS_IMMUNE) && rnd()%100 < battle_config.boss_nopc_move_rate)))
-			mob_randomwalk(md, tick);
+			(status_has_mode(&md->status,MD_STATUS_IMMUNE) && rnd()%100 < battle_config.boss_nopc_move_rate))){
+
+			//eduardo
+			if (md->special_state.clone == 1){
+				if (rnd()%50 < 50){
+					mob_randomwalk(md, tick);
+				} else {
+					// below makes not attacking idk why	
+					if((md->master_dist>MOB_SLAVEDISTANCE || md->master_dist == 0) &&
+						unit_can_move(&md->bl))
+					{
+						struct block_list * bl = map_id2bl(md->master_id);
+						short x = bl->x, y = bl->y;
+						mob_stop_attack(md);
+						if(
+							map_search_freecell(&md->bl, bl->m, &x, &y, MOB_SLAVEDISTANCE, MOB_SLAVEDISTANCE, 1)
+						&& unit_walktoxy(&md->bl, x, y, 0))
+						return 1;
+					} 	
+				}
+			} 
+			else mob_randomwalk(md, tick);
+		}
 	}
 	else if( md->ud.walktimer == INVALID_TIMER )
 	{
@@ -2274,6 +2726,8 @@ TIMER_FUNC(mob_respawn){
 void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 {
 	uint32 char_id = 0;
+	//eduardo
+	uint32 char_id2 = 0;
 	int flag = MDLF_NORMAL;
 
 	if( damage < 0 )
@@ -2295,10 +2749,17 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 		{
 			struct homun_data *hd = (TBL_HOM*)src;
 			flag = MDLF_HOMUN;
-			if( hd->master )
+			//eduardo
+			if (hd->master2){
+				char_id = hd->master->status.char_id;
+			} else if( hd->master )
 				char_id = hd->master->status.char_id;
 			if( damage )
 				md->attacked_id = src->id;
+			/*if( hd->master )
+				char_id = hd->master->status.char_id;
+			if( damage )
+				md->attacked_id = src->id;*/
 			break;
 		}
 		case BL_MER:
@@ -2343,10 +2804,21 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 		case BL_ELEM:
 		{
 			struct elemental_data *ele = (TBL_ELEM*)src;
-			if( ele->master )
+			//eduardo
+			if (ele->master2){
+				char_id = ele->master2->charid;
+				if( damage )
+					md->attacked_id = src->id;
+			} else {
+				if( ele->master )
+					char_id = ele->master->status.char_id;
+				if( damage )
+					md->attacked_id = src->id;
+			}
+			/*if( ele->master )
 				char_id = ele->master->status.char_id;
 			if( damage )
-				md->attacked_id = src->id;
+				md->attacked_id = src->id;*/
 			break;
 		}
 		default: //For all unhandled types.
@@ -2445,6 +2917,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 {
 	struct status_data *status;
 	struct map_session_data *sd = NULL, *tmpsd[DAMAGELOG_SIZE];
+	//eduardo
+	struct map_session_data *sd_sc;
 	struct map_session_data *mvp_sd = NULL, *second_sd = NULL, *third_sd = NULL;
 
 	struct {
@@ -2475,12 +2949,25 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		md->status.hp = 0;
 	}
 
-	map_freeblock_lock();
+	map_freeblock_unlock();
 
 	memset(pt,0,sizeof(pt));
 
-	if(src && src->type == BL_MOB)
+	//eduardo
+	if(src && src->type == BL_MOB){
+		struct mob_data *md123;
+		md123 = ((struct mob_data *)src);
+		if (md123) {
+			if (md123->special_state.clone == 1) {
+				sd_sc = map_charid2sd(md123->charid);
+
+				//if unavailable, return exp to master *grin
+				if (!sd_sc) sd_sc = map_id2sd(md123->master_id);
+			}
+			mvp_sd = map_id2sd(md123->master_id);
+		}
 		mob_unlocktarget((struct mob_data *)src,tick);
+	}
 
 	// filter out entries not eligible for exp distribution
 	memset(tmpsd,0,sizeof(tmpsd));
@@ -2679,6 +3166,30 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 						}
 #endif
 						pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, 0);
+						//eduardo
+						//EXPALL
+						//md = target
+						//how to retrieve sd->partner
+						if (sd_sc) {	}
+
+						if (teammates.size()>0){
+							// double expPtot [12] = { 1,1.2,1.4, 1.6,1.8, 2,   2.2, 2.4,2.6, 2.8, 3,   3.2 };
+							// double expPper [12] = { 1,0.6,0.47,0.4,0.36,0.33,0.31,0.3,0.29,0.28,0.27,0.27};
+							// if (battle_config.sclonepartyexpdist){
+							// 	base_exp = base_exp * expPtot[teammates.size()] * expPper[teammates.size()];
+											//base  * expPtot[2+1] * expPper[2+1]
+											//100	* 1.6 * 0.47
+
+							for (int i = 0; i < teammates.size(); i++) {
+								if (map_charid2sd(teammates[i])){
+									pc_gainexp(map_charid2sd(teammates[i]), &md->bl, base_exp, job_exp, 0);
+								}
+							}
+							//also HOMUN heheh (when active)
+							if (tmpsd[i]->hd) {
+								hom_gainexp(tmpsd[i]->hd, base_exp);
+							}
+						}
 					}
 				}
 				if(zeny) // zeny from mobs [Valaris]
@@ -3057,14 +3568,53 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	if( md->can_summon )
 		mob_deleteslave(md);
 
+	//eduardo
+	if (md->ed){
+		elemental_delete(md->ed);
+	}
+	if (md->hd){
+		hom_dead(md->hd);
+		unit_free(&md->hd->bl,CLR_DEAD);
+		unit_remove_map(&md->hd->bl,CLR_OUTSIGHT);
+		intif_homunculus_requestdelete(md->homid);
+		md->homid = 0;
+	}
+	if (md->pd){
+		unit_remove_map(&md->pd->bl, CLR_OUTSIGHT);
+		intif_delete_petdata(md->petid);
+	}
+	// if (md->scmd){
+	// 	ShowMessage("\n matoy %d \n", md->merid);		
+	// }
+
 	map_freeblock_unlock();
 
 	if( !rebirth ) {
 
 		if( pcdb_checkid(md->vd->class_) ) {//Player mobs are not removed automatically by the client.
 			/* first we set them dead, then we delay the outsight effect */
-			clif_clearunit_area(&md->bl,CLR_DEAD);
-			clif_clearunit_delayed(&md->bl, CLR_OUTSIGHT,tick+3000);
+			if (md->special_state.clone == 1) {
+				//eduardo
+				int tobdeleted;
+				struct map_session_data *sd;
+				sd = map_id2sd(md->master_id);
+				for (int i=0; i<teammates.size(); i++){
+					if (teammates[i]==md->charid){
+						tobdeleted = i;
+						// ShowMessage("\n %d just dieded \n", teammates[i]);
+					}
+				}
+				if (sd) sd->dieded = teammates_bl[tobdeleted];
+				teammates.erase(teammates.begin() + tobdeleted);
+				teammates_bl.erase(teammates_bl.begin() + tobdeleted);
+				
+				clif_clearunit_area(&md->bl, CLR_DEAD);
+				clif_clearunit_delayed(&md->bl, CLR_OUTSIGHT, tick + 3000);
+				//how to resurrect?
+			} else {
+				clif_clearunit_area(&md->bl,CLR_DEAD);
+				clif_clearunit_delayed(&md->bl, CLR_OUTSIGHT,tick+3000);
+			}
 		} else
 			/**
 			 * We give the client some time to breath and this allows it to display anything it'd like with the dead corpose
@@ -3588,6 +4138,9 @@ struct mob_data *mob_getfriendstatus(struct mob_data *md,int cond1,int cond2)
  *------------------------------------------*/
 int mobskill_use(struct mob_data *md, t_tick tick, int event)
 {
+	//eduardo
+	//TODO: refactor to be mobskill_use2
+
 	struct mob_skill *ms;
 	struct block_list *fbl = NULL; //Friend bl, which can either be a BL_PC or BL_MOB depending on the situation. [Skotlex]
 	struct block_list *bl;
@@ -3595,17 +4148,36 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 	int i,j,n;
 	short skill_target;
 
+	int attProb = 100;
+
 	nullpo_ret(md);
 	nullpo_ret(ms = md->db->skill);
 
-	if (!battle_config.mob_skill_rate || md->ud.skilltimer != INVALID_TIMER || !md->db->maxskill || status_has_mode(&md->status,MD_NOCAST_SKILL))
+	//eduardo
+	if (md->special_state.clone == 1){
+		if (!battle_config.mob_skill_rate || md->ud.skilltimer != INVALID_TIMER || !md->db->maxskill/* || status_has_mode(&md->status, MD_NOCAST_SKILL)*/)
+			return 0;//										||
+		//													|_ actually can be used for interrupting skill such as cast cancel. But idk, mine doesn't work
+	} else {
+		if (!battle_config.mob_skill_rate || md->ud.skilltimer != INVALID_TIMER || !md->db->maxskill || status_has_mode(&md->status,MD_NOCAST_SKILL))
 		return 0;
+	}
+
+	/*if (!battle_config.mob_skill_rate || md->ud.skilltimer != INVALID_TIMER || !md->db->maxskill || status_has_mode(&md->status,MD_NOCAST_SKILL))
+		return 0;*/
 
 	if (event == -1 && DIFF_TICK(md->ud.canact_tick, tick) > 0)
 		return 0; //Skill act delay only affects non-event skills.
 
 	//Pick a starting position and loop from that.
-	i = battle_config.mob_ai&0x100?rnd()%md->db->maxskill:0;
+	//eduardo
+	if (battle_config.scskillbyhotkeys){
+													// 10 = just some big extra number for passive skills
+													// maybe just fixed the number?
+		i = battle_config.mob_ai&0x100?rnd()%MAX_HOTKEYS+10:0;
+	} else {
+		i = battle_config.mob_ai&0x100?rnd()%md->db->maxskill:0;
+	}
 	for (n = 0; n < md->db->maxskill; i++, n++) {
 		int c2, flag = 0;
 
@@ -3634,6 +4206,7 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 			flag = ((event & 0xffff) == MSC_SKILLUSED && ((event >> 16) == c2 || c2 == 0));
 		else if(event == -1){
 			//Avoid entering on defined events to avoid "hyper-active skill use" due to the overflow of calls to this function in battle.
+			//eduardo: nope. Make them hyperactive
 			switch (ms[i].cond1)
 			{
 				case MSC_ALWAYS:
@@ -3722,10 +4295,73 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 					bl = &md->bl;
 					break;
 			}
-			if (!bl) continue;
+			//eduardo
+			if (!bl) {
+				if (
+					ms[i].skill_id==HT_CLAYMORETRAP || ms[i].skill_id==HT_BLASTMINE || ms[i].skill_id==HT_FREEZINGTRAP || ms[i].skill_id==HT_FLASHER || ms[i].skill_id==HT_SANDMAN || ms[i].skill_id==HT_SHOCKWAVE || ms[i].skill_id==HT_ANKLESNARE || ms[i].skill_id==HT_LANDMINE || ms[i].skill_id==HT_SKIDTRAP
+					|| ms[i].skill_id == RA_CLUSTERBOMB	|| ms[i].skill_id == RA_MAGENTATRAP || ms[i].skill_id == RA_COBALTTRAP || ms[i].skill_id == RA_MAIZETRAP || ms[i].skill_id == RA_VERDURETRAP || ms[i].skill_id == RA_FIRINGTRAP || ms[i].skill_id == RA_ICEBOUNDTRAP 
+				){
+					bl = &md->bl;
+				} else continue;
+			}
+			// if (!bl) continue;
 
 			x = bl->x;
 		  	y = bl->y;
+		  	//eduardo
+		  	if (
+		  		ms[i].skill_id==MG_SAFETYWALL || ms[i].skill_id==AL_PNEUMA || 
+		  		ms[i].skill_id==GN_WALLOFTHORN
+		  		|| ms[i].skill_id==NC_SILVERSNIPER || ms[i].skill_id==AB_EPICLESIS
+		  		|| ms[i].skill_id==SO_WARMER
+		  		|| ms[i].skill_id==PR_SANCTUARY
+		  	){
+		  		if (rnd()%7 > 3){
+		  			x = md->bl.x;
+		  			y = md->bl.y;
+		  		} else {
+					if (md) if (md->master_id) {
+						x = map_id2sd(md->master_id)->bl.x;
+						y = map_id2sd(md->master_id)->bl.y;
+					}
+					else {
+						x = md->bl.x + rnd_value(-5,5);
+						y = md->bl.y + rnd_value(-5,5);
+					}
+		  		}
+		  	} else if (
+		  		ms[i].skill_id==AM_CANNIBALIZE
+		  		|| ms[i].skill_id==SC_MAELSTROM
+		  		|| ms[i].skill_id==SC_MANHOLE
+		  		|| ms[i].skill_id==SC_DIMENSIONDOOR
+		  	){
+		  		x += rnd_value(-5,5);
+		  		y += rnd_value(-5,5);
+		  	} else if (
+		  		ms[i].skill_id==SO_PSYCHIC_WAVE
+		  		|| ms[i].skill_id==LG_RAYOFGENESIS
+		  	){
+				int enemies = 0;
+				if (map_count_oncell(md->bl.m, x, y, BL_MOB, 1)) enemies++;
+				if (map_count_oncell(md->bl.m, x, y-1, BL_MOB, 1)) enemies++;
+				if (map_count_oncell(md->bl.m, x, y+1, BL_MOB, 1)) enemies++;
+				if (map_count_oncell(md->bl.m, x-1, y, BL_MOB, 1)) enemies++;
+				if (map_count_oncell(md->bl.m, x-1, y-1, BL_MOB, 1)) enemies++;
+				if (map_count_oncell(md->bl.m, x-1, y+1, BL_MOB, 1)) enemies++;
+				if (map_count_oncell(md->bl.m, x+1, y, BL_MOB, 1)) enemies++;
+				if (map_count_oncell(md->bl.m, x+1, y-1, BL_MOB, 1)) enemies++;
+				if (map_count_oncell(md->bl.m, x+1, y+1, BL_MOB, 1)) enemies++;
+				if (enemies < 3) /*if (rnd()%10 < 5)*/ continue; 
+			} else if (
+				ms[i].skill_id == HT_CLAYMORETRAP || ms[i].skill_id == HT_BLASTMINE || ms[i].skill_id == HT_FREEZINGTRAP || ms[i].skill_id == HT_FLASHER || ms[i].skill_id == HT_SANDMAN || ms[i].skill_id == HT_SHOCKWAVE || ms[i].skill_id == HT_ANKLESNARE || ms[i].skill_id == HT_LANDMINE || ms[i].skill_id == HT_SKIDTRAP
+				|| ms[i].skill_id == RA_CLUSTERBOMB || ms[i].skill_id == RA_MAGENTATRAP || ms[i].skill_id == RA_COBALTTRAP || ms[i].skill_id == RA_MAIZETRAP || ms[i].skill_id == RA_VERDURETRAP || ms[i].skill_id == RA_FIRINGTRAP || ms[i].skill_id == RA_ICEBOUNDTRAP
+			){
+				if (md) if (md->master_id) {
+					x = x + rnd_value(-3, 3);
+					y = y + rnd_value(-3, 3);
+				}
+			}
+
 			// Look for an area to cast the spell around...
 			if (skill_target >= MST_AROUND5) {
 				j = skill_target >= MST_AROUND1?
@@ -3773,6 +4409,333 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 
 			md->skill_idx = i;
 			map_freeblock_lock();
+			//eduardo
+			if (md->special_state.clone == 1){
+				if (strcmp(skill_get_name(ms[i].skill_id), "AL_HEAL") == 0
+					&& (	strcmp(md->klase.c_str(), "AL")==0
+							|| strcmp(md->klase.c_str(), "PR")==0
+							// || strcmp(md->klase.c_str(), "CR")==0
+							// || strcmp(md->klase.c_str(), "MO")==0
+					) && (
+						battle_check_undead(status_get_status_data(map_id2bl(md->target_id))->race,
+						status_get_status_data(map_id2bl(md->target_id))->def_ele) > 0
+					))
+					{
+						if (rnd()%10+1 < 8)
+							if (md->ud.attacktimer == INVALID_TIMER) unit_skilluse_id(&md->bl, md->target_id, AL_HEAL, (pc_checkskill2(md,AL_HEAL)||rnd()%10+1));
+						else {
+							if (md->ud.attacktimer == INVALID_TIMER) unit_skilluse_id(&md->bl, bl->id, AL_HEAL, (pc_checkskill2(md,AL_HEAL)||rnd()%10+1));
+						}
+					}
+
+				if (strcmp(skill_get_name(ms[i].skill_id), "AB_HIGHNESSHEAL") == 0
+				&& (	
+					strcmp(md->klase.c_str(), "PR")==0 //actually AB
+				)
+				&& (
+					battle_check_undead(status_get_status_data(map_id2bl(md->target_id))->race,
+					status_get_status_data(map_id2bl(md->target_id))->def_ele) > 0
+				))
+				{
+					if (rnd()%10+1 < 8)
+						if (md->ud.attacktimer == INVALID_TIMER) unit_skilluse_id(&md->bl, md->target_id, AB_HIGHNESSHEAL, (pc_checkskill2(md,AB_HIGHNESSHEAL)||rnd()%5+1));
+					else {
+						if (md->ud.attacktimer == INVALID_TIMER) unit_skilluse_id(&md->bl, bl->id, AB_HIGHNESSHEAL, (pc_checkskill2(md,AB_HIGHNESSHEAL)||rnd()%5+1));
+					}
+				}
+
+				if (strcmp(md->klase.c_str(), "PR") == 0) {
+					struct map_session_data *sd8;
+					sd8 = map_id2sd(md->master_id);
+					if (sd8) if (sd8->dieded > 0){
+						if (BL_CAST(BL_MOB,map_id2bl(sd8->dieded))){
+							if (md->ud.attacktimer == INVALID_TIMER) {
+								if (pc_checkskill2(md,ALL_RESURRECTION))
+								unit_skilluse_id(&md->bl, (map_id2sd(md->master_id))->dieded, ALL_RESURRECTION, (pc_checkskill2(md,ALL_RESURRECTION)||rnd()%4+1));
+							}
+							(map_id2sd(md->master_id))->dieded = 0;
+							return 0;
+						}
+					}
+				}
+
+				// this should've been learned by the machine. Maybe determined by how good the damage done was.
+				// ShowMessage("doer: %s %d %d \n", md->name, md->klas, md->klas == MAPID_WIZARD);
+				if (
+					strcmp(md->klase.c_str(), "MG")==0
+					|| strcmp(md->klase.c_str(), "WZ")==0
+					|| strcmp(md->klase.c_str(), "SA")==0
+					|| strcmp(md->klase.c_str(), "AM")==0
+					|| strcmp(md->klase.c_str(), "NJ")==0
+					|| strcmp(md->klase.c_str(), "KG")==0
+					|| strcmp(md->klase.c_str(), "SNV")==0
+					|| strcmp(md->klase.c_str(), "SU")==0
+				){
+					unsigned char mob_ele = ((struct mob_data *)bl)->status.def_ele;
+					if (
+						(mob_ele == ELE_WATER && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_WATER) ||
+						(mob_ele == ELE_WATER && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_FIRE) ||
+						(mob_ele == ELE_WATER && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_EARTH) ||
+						(mob_ele == ELE_WATER && strcmp(skill_get_name(ms[i].skill_id), "SA_FROSTWEAPON")==0) ||
+						(mob_ele == ELE_WATER && strcmp(skill_get_name(ms[i].skill_id), "SA_ELEMENTWATER")==0) ||
+						(mob_ele == ELE_WATER && strcmp(skill_get_name(ms[i].skill_id), "NJ_HYOUSENSOU")==0) ||
+						(mob_ele == ELE_WATER && strcmp(skill_get_name(ms[i].skill_id), "NJ_SUITON")==0) ||
+						(mob_ele == ELE_WATER && strcmp(skill_get_name(ms[i].skill_id), "NJ_HYOUSYOURAKU")==0) ||
+						(mob_ele == ELE_WATER && strcmp(skill_get_name(ms[i].skill_id), "SO_DIAMONDDUST")==0) ||
+						(mob_ele == ELE_WATER && strcmp(skill_get_name(ms[i].skill_id), "WL_JACKFROST")==0) ||
+						(mob_ele == ELE_WATER && strcmp(skill_get_name(ms[i].skill_id), "WL_FROSTMISTY")==0) ||
+
+						(mob_ele == ELE_WIND && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_WIND) ||
+						(mob_ele == ELE_WIND && strcmp(skill_get_name(ms[i].skill_id), "SA_LIGHTNINGLOADER")==0) ||
+						(mob_ele == ELE_WIND && strcmp(skill_get_name(ms[i].skill_id), "SA_ELEMENTWIND")==0) ||
+						(mob_ele == ELE_WIND && strcmp(skill_get_name(ms[i].skill_id), "NJ_HUUJIN")==0) ||
+						(mob_ele == ELE_WIND && strcmp(skill_get_name(ms[i].skill_id), "NJ_RAIGEKISAI")==0) ||
+						(mob_ele == ELE_WIND && strcmp(skill_get_name(ms[i].skill_id), "NJ_KAMAITACHI")==0) ||
+						(mob_ele == ELE_WIND && strcmp(skill_get_name(ms[i].skill_id), "SO_ELECTRICWALK")==0) ||
+						(mob_ele == ELE_WIND && strcmp(skill_get_name(ms[i].skill_id), "SO_VARETYR_SPEAR")==0) ||
+						(mob_ele == ELE_WIND && strcmp(skill_get_name(ms[i].skill_id), "WL_CHAINLIGHTNING")==0) ||
+
+						(mob_ele == ELE_FIRE && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_FIRE) ||
+						(mob_ele == ELE_FIRE && strcmp(skill_get_name(ms[i].skill_id), "SA_FLAMELAUNCHER")==0) ||
+						(mob_ele == ELE_FIRE && strcmp(skill_get_name(ms[i].skill_id), "NJ_KOUENKA")==0) ||
+						(mob_ele == ELE_FIRE && strcmp(skill_get_name(ms[i].skill_id), "NJ_KAENSIN")==0) ||
+						(mob_ele == ELE_FIRE && strcmp(skill_get_name(ms[i].skill_id), "NJ_BAKUENRYU")==0) ||
+						(mob_ele == ELE_FIRE && strcmp(skill_get_name(ms[i].skill_id), "SA_ELEMENTFIRE")==0) ||
+						(mob_ele == ELE_FIRE && strcmp(skill_get_name(ms[i].skill_id), "SO_FIREWALK")==0) ||	
+						(mob_ele == ELE_FIRE && strcmp(skill_get_name(ms[i].skill_id), "WL_HELLINFERNO")==0) ||	
+						(mob_ele == ELE_FIRE && strcmp(skill_get_name(ms[i].skill_id), "WL_CRIMSONROCK")==0) ||		
+
+						(mob_ele == ELE_EARTH && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_EARTH) ||
+						(mob_ele == ELE_EARTH && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_WIND) ||
+						(mob_ele == ELE_EARTH && strcmp(skill_get_name(ms[i].skill_id), "SA_SEISMICWEAPON")==0) ||
+						(mob_ele == ELE_EARTH && strcmp(skill_get_name(ms[i].skill_id), "SA_ELEMENTGROUND")==0) ||
+						(mob_ele == ELE_EARTH && strcmp(skill_get_name(ms[i].skill_id), "SO_EARTHGRAVE")==0) ||
+						(mob_ele == ELE_EARTH && strcmp(skill_get_name(ms[i].skill_id), "WL_EARTHSTRAIN")==0) ||
+						(mob_ele == ELE_EARTH && strcmp(skill_get_name(ms[i].skill_id), "WL_SIENNAEXECRATE")==0) ||
+
+						(mob_ele == ELE_NEUTRAL && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_GHOST) ||
+
+						(mob_ele == ELE_HOLY && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_HOLY) ||
+						(mob_ele == ELE_HOLY && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_POISON) ||
+
+						(mob_ele == ELE_GHOST && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_NEUTRAL) ||
+
+						(mob_ele == ELE_POISON && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_POISON) ||
+						(mob_ele == ELE_POISON && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_DARK) ||
+						(mob_ele == ELE_POISON && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_UNDEAD) ||
+						(mob_ele == ELE_POISON && strcmp(skill_get_name(ms[i].skill_id), "SO_POISON_BUSTER")==0) ||
+						(mob_ele == ELE_POISON && strcmp(skill_get_name(ms[i].skill_id), "SO_CLOUD_KILL")==0) ||					
+
+						(mob_ele == ELE_DARK && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_POISON) ||
+						(mob_ele == ELE_DARK && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_DARK) ||
+						(mob_ele == ELE_DARK && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_UNDEAD) ||
+						(mob_ele == ELE_DARK && strcmp(skill_get_name(ms[i].skill_id), "SO_POISON_BUSTER")==0) ||
+						(mob_ele == ELE_DARK && strcmp(skill_get_name(ms[i].skill_id), "SO_CLOUD_KILL")==0) ||		
+
+						(mob_ele == ELE_UNDEAD && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_POISON) ||
+						(mob_ele == ELE_UNDEAD && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_DARK) ||
+						(mob_ele == ELE_UNDEAD && skill_get_ele(ms[i].skill_id, ms[i].skill_lv) == ELE_UNDEAD) ||
+						(mob_ele == ELE_UNDEAD && strcmp(skill_get_name(ms[i].skill_id), "SO_POISON_BUSTER")==0) ||
+						(mob_ele == ELE_UNDEAD && strcmp(skill_get_name(ms[i].skill_id), "SO_CLOUD_KILL")==0)	
+					){
+						//ineffective plan of cast : cancel it!
+						//return 0;
+						continue; 
+					}
+				}
+
+				struct mob_data *md3;
+				md3 = (struct mob_data *)bl;
+				if (	
+					strcmp(skill_get_name(ms[i].skill_id), "WZ_FROSTNOVA") == 0
+					|| strcmp(skill_get_name(ms[i].skill_id), "CR_GRANDCROSS") == 0
+					|| strcmp(skill_get_name(ms[i].skill_id), "RK_IGNITIONBREAK") == 0
+					|| strcmp(skill_get_name(ms[i].skill_id), "MS_MAGNUM") == 0
+					|| strcmp(skill_get_name(ms[i].skill_id), "MS_BOWLINGBASH") == 0
+					|| strcmp(skill_get_name(ms[i].skill_id), "PR_MAGNUS") == 0
+					|| strcmp(skill_get_name(ms[i].skill_id), "NC_AXETORNADO") == 0
+					|| strcmp(skill_get_name(ms[i].skill_id), "GN_CART_TORNADO") == 0
+					|| strcmp(skill_get_name(ms[i].skill_id), "LG_EARTHDRIVE") == 0
+					|| strcmp(skill_get_name(ms[i].skill_id), "LG_MOONSLASHER") == 0
+					|| strcmp(skill_get_name(ms[i].skill_id), "WL_JACKFROST") == 0
+					|| strcmp(skill_get_name(ms[i].skill_id), "WL_FROSTMISTY") == 0
+				){
+					if (
+						(status_has_mode(&md3->status,MD_MVP))
+					 	|| (md3->status.class_ == CLASS_BOSS)
+					){
+						//allow & do nothing
+					} else {
+						//check the surrounding number of enemies
+						int enemies = 0;
+						if (map_count_oncell(md->bl.m, bl->x, bl->y, BL_MOB, 1)) enemies++;
+						if (map_count_oncell(md->bl.m, bl->x, bl->y-1, BL_MOB, 1)) enemies++;
+						if (map_count_oncell(md->bl.m, bl->x, bl->y+1, BL_MOB, 1)) enemies++;
+						if (map_count_oncell(md->bl.m, bl->x-1, bl->y, BL_MOB, 1)) enemies++;
+						if (map_count_oncell(md->bl.m, bl->x-1, bl->y-1, BL_MOB, 1)) enemies++;
+						if (map_count_oncell(md->bl.m, bl->x-1, bl->y+1, BL_MOB, 1)) enemies++;
+						if (map_count_oncell(md->bl.m, bl->x+1, bl->y, BL_MOB, 1)) enemies++;
+						if (map_count_oncell(md->bl.m, bl->x+1, bl->y-1, BL_MOB, 1)) enemies++;
+						if (map_count_oncell(md->bl.m, bl->x+1, bl->y+1, BL_MOB, 1)) enemies++;
+						if (enemies < 2) 
+							if (rnd()%10 < 5) return 0;					
+						
+						//cancel to not waste SP & casttime
+					}
+				}
+
+				if ((
+					strcmp(skill_get_name(ms[i].skill_id), "SO_SUMMON_AGNI") == 0
+					|| strcmp(skill_get_name(ms[i].skill_id), "SO_SUMMON_AQUA") == 0
+					|| strcmp(skill_get_name(ms[i].skill_id), "SO_SUMMON_VENTUS") == 0
+					|| strcmp(skill_get_name(ms[i].skill_id), "SO_SUMMON_TERA") == 0
+				) && md->hd
+				){
+					continue;
+				}
+ 
+				//finally, use skill
+				if (md->sc.data[SC_SPELLFIST]){
+					continue;
+				} else {
+					//homun
+					if (
+						strcmp(skill_get_name(ms[i].skill_id), "HLIF_HEAL") == 0|| strcmp(skill_get_name(ms[i].skill_id), "HLIF_AVOID") == 0|| strcmp(skill_get_name(ms[i].skill_id), "HLIF_CHANGE") == 0|| strcmp(skill_get_name(ms[i].skill_id), "HAMI_CASTLE") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "HAMI_DEFENCE") == 0|| strcmp(skill_get_name(ms[i].skill_id), "HAMI_BLOODLUST") == 0|| strcmp(skill_get_name(ms[i].skill_id), "HFLI_MOON") == 0|| strcmp(skill_get_name(ms[i].skill_id), "HFLI_FLEET") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "HFLI_SPEED") == 0|| strcmp(skill_get_name(ms[i].skill_id), "HFLI_SBR44") == 0|| strcmp(skill_get_name(ms[i].skill_id), "HVAN_CAPRICE") == 0|| strcmp(skill_get_name(ms[i].skill_id), "HVAN_CHAOTIC") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "HVAN_EXPLOSION") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_SUMMON_LEGION") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_NEEDLE_OF_PARALYZE") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_POISON_MIST") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "MH_PAIN_KILLER") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_LIGHT_OF_REGENE") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_OVERED_BOOST") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_ERASER_CUTTER") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "MH_XENO_SLASHER") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_SILENT_BREEZE") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_STYLE_CHANGE") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_SONIC_CRAW") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "MH_SILVERVEIN_RUSH") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_MIDNIGHT_FRENZY") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_STAHL_HORN") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_GOLDENE_FERSE") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "MH_STEINWAND") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_HEILIGE_STANGE") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_ANGRIFFS_MODUS") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_TINDER_BREAKER") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "MH_CBC") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_EQC") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_MAGMA_FLOW") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_GRANITIC_ARMOR") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "MH_LAVA_SLIDE") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_PYROCLASTIC") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_VOLCANIC_ASH") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_TINDER_BREAKER") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "MH_TINDER_BREAKER") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_TINDER_BREAKER") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MH_TINDER_BREAKER") == 0
+					) {
+						if (!md->hd || !hom_is_active(md->hd) || md->homid<1){
+							//return 0;
+							continue;
+						}
+						else if (hom_is_active(md->hd)>0){
+							// unit_skilluse_id2(&md->hd->bl, bl->id, ms[i].skill_id, ms[i].skill_lv, ms[i].casttime, ms[i].cancel);
+							homskill_use(md->hd, gettick(), -1, bl->id);
+						}
+						else {
+							//throwback to master's homun
+							if (map_id2sd(md->master_id))
+								if (hom_is_active((map_id2sd(md->master_id))->hd) && (map_id2sd(md->master_id))->hd){
+									struct homun_data *sdhd;
+									sdhd = (map_id2sd(md->master_id))->hd;
+									if (!sdhd) continue;// return 0;
+									// unit_skilluse_id2(&mdhd->bl, bl->id, ms[i].skill_id, ms[i].skill_lv, ms[i].casttime, ms[i].cancel);
+
+									homskill_use(sdhd, gettick(), -1, bl->id);
+								}
+								else continue;// return 0;
+						}
+					} else if (
+						strcmp(skill_get_name(ms[i].skill_id), "MS_BASH") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MS_MAGNUM") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MS_BOWLINGBASH") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MS_PARRYING") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "MS_REFLECTSHIELD") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MS_BERSERK") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MA_DOUBLE") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MA_SHOWER") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "MA_SKIDTRAP") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MA_LANDMINE") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MA_SANDMAN") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MA_FREEZINGTRAP") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "MA_REMOVETRAP") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MA_SHARPSHOOTING") == 0|| strcmp(skill_get_name(ms[i].skill_id), "ML_PIERCE") == 0|| strcmp(skill_get_name(ms[i].skill_id), "ML_BRANDISH") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "ML_SPIRALPIERCE") == 0|| strcmp(skill_get_name(ms[i].skill_id), "ML_DEFENDER") == 0|| strcmp(skill_get_name(ms[i].skill_id), "ML_AUTOGUARD") == 0|| strcmp(skill_get_name(ms[i].skill_id), "ML_DEVOTION") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "MER_MAGNIFICAT") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MER_QUICKEN") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MER_SIGHT") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MER_CRASH") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "MER_REGAIN") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MER_TENDER") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MER_BENEDICTION") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MER_RECUPERATE") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "MER_MENTALCURE") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MER_COMPRESS") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MER_PROVOKE") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MER_AUTOBERSERK") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "MER_DECAGI") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MER_SCAPEGOAT") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MER_LEXDIVINA") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MER_ESTIMATION") == 0
+						|| strcmp(skill_get_name(ms[i].skill_id), "MER_KYRIE") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MER_BLESSING") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MER_INCAGI") == 0|| strcmp(skill_get_name(ms[i].skill_id), "MER_INVINCIBLEOFF2") == 0
+					){
+						if (map_id2sd(md->master_id)) 
+						if ((map_id2sd(md->master_id))->md){
+							struct mercenary_data *mdmd;
+							mdmd = (map_id2sd(md->master_id))->md;
+							if (!mdmd) continue;//return 0;
+							unit_skilluse_id2(&mdmd->bl, bl->id, ms[i].skill_id, ms[i].skill_lv, ms[i].casttime, ms[i].cancel);
+						}
+						else continue;//return 0;
+					}
+					else //char 
+						unit_skilluse_id2(&md->bl, bl->id, ms[i].skill_id, ms[i].skill_lv, ms[i].casttime, ms[i].cancel);
+					md->skill_id_old = ms[i].skill_id;
+					md->skill_lv_old = ms[i].skill_lv;
+					if (battle_config.skill_log)
+						ShowMessage("\n%s casts %s lv %d %d to%d", md->name, skill_get_name(ms[i].skill_id), md->skill_lv_old, md->skill_id_old, bl->id);
+				}
+
+				//CCCCOMBO
+				if (md->skill_id_old==GC_ROLLINGCUTTER && (strcmp(md->klase.c_str(), "AS")==0)){
+					for (int i=0; i<10; i++){
+						if (md->ud.skilltimer == INVALID_TIMER) unit_skilluse_id(&md->bl, bl->id,  GC_ROLLINGCUTTER, md->skill_lv_old);						
+					}					
+					unit_skilluse_id(&md->bl, bl->id,  GC_CROSSRIPPERSLASHER, (pc_checkskill2(md,GC_CROSSRIPPERSLASHER)||rnd()%5+1));
+				} 
+				else if (md->skill_id_old==TF_HIDING && (strcmp(md->klase.c_str(), "RG")==0)){
+					for (int i=0; i<5; i++){
+						if (md->ud.skilltimer == INVALID_TIMER) unit_skilluse_id(&md->bl, bl->id,  RG_INTIMIDATE, md->skill_lv_old);
+						if (md->ud.skilltimer == INVALID_TIMER) unit_skilluse_id(&md->bl, bl->id,  TF_HIDING, (pc_checkskill2(md,TF_HIDING) || rnd()%10+1));
+					}
+						if (md->ud.skilltimer == INVALID_TIMER) unit_skilluse_id(&md->bl, bl->id,  RG_INTIMIDATE, (pc_checkskill2(md,RG_INTIMIDATE) || rnd()%5+1));
+				} 
+				else if (md->skill_id_old==SU_PICKYPECK && (strcmp(md->klase.c_str(), "SU")==0)){
+					for (int i=0; i<5; i++){
+						if (md->ud.skilltimer == INVALID_TIMER) unit_skilluse_id(&md->bl, bl->id,  SU_PICKYPECK, md->skill_lv_old);
+					}	
+				} 
+				else if (md->skill_id_old&MO_CHAINCOMBO && (strcmp(md->klase.c_str(), "MO")==0)){
+					if (md->ud.skilltimer == INVALID_TIMER) 
+						unit_skilluse_id(&md->bl, bl->id,  MO_COMBOFINISH, (pc_checkskill2(md,MO_COMBOFINISH)||rnd()%5+1));
+					if (md->ud.skilltimer == INVALID_TIMER)
+						unit_skilluse_id(&md->bl, bl->id, CH_CHAINCRUSH, (pc_checkskill2(md,CH_CHAINCRUSH)||rnd()%10+1));
+				} 
+				else if (md->skill_id_old&SR_DRAGONCOMBO && (strcmp(md->klase.c_str(), "MO")==0)){
+					if (md->ud.skilltimer == INVALID_TIMER) 
+						unit_skilluse_id(&md->bl, bl->id,  SR_FALLENEMPIRE, (pc_checkskill2(md,SR_FALLENEMPIRE)|| rnd()%5+1));
+					if (md->ud.skilltimer == INVALID_TIMER)
+						unit_skilluse_id(&md->bl, bl->id, SR_TIGERCANNON, (pc_checkskill2(md,SR_TIGERCANNON)||rnd()%10+1));
+				} 
+				else if (
+				(
+					md->skill_id_old==SO_SUMMON_VENTUS
+					|| md->skill_id_old==SO_SUMMON_AGNI
+					|| md->skill_id_old==SO_SUMMON_AQUA
+					|| md->skill_id_old==SO_SUMMON_TERA
+				) && (
+					strcmp(md->klase.c_str(), "SA")==0
+				)){
+					unit_skilluse_id(&md->bl, bl->id,  SO_EL_CONTROL, (pc_checkskill2(md,SO_EL_CONTROL)||rnd()%3+1));
+				}				
+				else if (
+					md->skill_id_old==WZ_FROSTNOVA 
+					&& (
+						strcmp(md->klase.c_str(), "MG")==0
+						|| strcmp(md->klase.c_str(), "SA")==0
+						|| strcmp(md->klase.c_str(), "WZ")==0
+					)
+				){
+					for (int i=0; i<5; i++){
+						unit_skilluse_id(&md->bl, bl->id,  WZ_FROSTNOVA, md->skill_lv_old);
+					}
+					unit_skilluse_id(&md->bl, bl->id,  WZ_HEAVENDRIVE, (pc_checkskill2(md,WZ_HEAVENDRIVE)||rnd()%5+1));
+				}			
+			} else {
+				//OK this teleporting behaves wierldy i give up
+				// if (strcmp(skill_get_name(ms[i].skill_id), "AL_TELEPORT") == 0){
+				// 	if (md->target_id > 0) continue;
+
+				// 	if (rnd()%10+1 == 10)
+				// 		continue;//return 0;
+				// 	// ShowMessage("\n pls don't teleport");
+				// }
+
+				if (
+					!battle_check_range(&md->bl, bl, skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv, true)) 
+					|| !unit_skilluse_id2(&md->bl, bl->id, ms[i].skill_id, ms[i].skill_lv, ms[i].casttime, ms[i].cancel)
+				){
+					map_freeblock_unlock();
+					continue;	
+				}
+			}
+
 			if (!battle_check_range(&md->bl, bl, skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv, true)) ||
 				!unit_skilluse_id2(&md->bl, bl->id, ms[i].skill_id, ms[i].skill_lv, ms[i].casttime, ms[i].cancel))
 			{
@@ -4056,7 +5019,9 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 	md = mob_once_spawn_sub(&sd->bl, m, x, y, "--en--", mob_id, event, SZ_SMALL, AI_NONE);
 	if (!md) return 0; //Failed?
 
-	md->special_state.clone = 1;
+	// md->special_state.clone = 1;
+	//eduardo
+	md->special_state.clone = 2;
 
 	if (master_id || flag || duration) { //Further manipulate crafted char.
 		if (flag&1) //Friendly Character
@@ -4072,6 +5037,1556 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 	}
 
 	mob_spawn(md);
+
+	return md->bl.id;
+}
+
+//eduardo
+int mob_clone_spawn2(struct map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, enum e_mode mode, int flag, unsigned int duration, const char *style, int truest)
+{
+	int mob_id;
+	int i,j,inf,fd;
+	struct mob_data *md;
+	struct mob_skill *ms;
+	struct mob_db* db;
+	struct status_data *status;
+
+	int attProb = 100;
+	int cR = 100;
+
+	double mstat = 1.0; //absoute value. i know it's weird and ineffective to other classes than melee attacker
+	//std::ofstream myfile;
+
+	nullpo_ret(sd);
+
+	for (int i=0; i<teammates.size(); i++){
+		if (map_charid2sd(teammates[i]))
+		if(strcmp(map_charid2sd(teammates[i])->status.name,sd->status.name)== 0){
+			clif_displaymessage(map_id2sd(master_id)->fd, "already spawned.");
+			return 0;
+		}
+	}
+
+	if(pc_isdead(sd) && master_id && flag&1)
+		return 0;
+
+	ARR_FIND( MOB_CLONE_START, MOB_CLONE_END, mob_id, mob_db(mob_id) == NULL );
+	if(mob_id >= MOB_CLONE_END)
+		return 0;
+
+	try {
+		db = &mob_db_data[mob_id];
+	} catch( const std::bad_alloc& ){
+		ShowError( "mob_clone_spawn: Memory allocation for clone %hu failed.\n", mob_id );
+		return 0;
+	}
+
+	status = &db->status;
+	
+	strcpy(db->sprite,sd->status.name);
+	strcpy(db->name,sd->status.name);
+	strcpy(db->jname,sd->status.name);
+
+	db->lv=status_get_lv(&sd->bl);
+
+	memcpy(status, &sd->base_status, sizeof(struct status_data));
+
+	// status->klas = sd->class_;
+	//sd = source sd
+	//db = newlycreated
+	//master = sclone summoner
+	switch(sd->class_&MAPID_BASEMASK){
+		case MAPID_NOVICE : 	attProb = battle_config.nv_a;		db->klase = "NV";	break;
+		case MAPID_ACOLYTE : 	attProb = battle_config.al_a;		db->klase = "AL";	break;
+		case MAPID_SWORDMAN : 	attProb = battle_config.sm_a;		db->klase = "SM";	break;
+		case MAPID_ARCHER : 	attProb = battle_config.ac_a;		db->klase = "AC"; 	break;
+		case MAPID_MAGE :		attProb = battle_config.mg_a;		db->klase = "MG";	break;
+		case MAPID_MERCHANT : 	attProb = battle_config.mc_a;		db->klase = "MC";	break;
+		case MAPID_THIEF : 		attProb = battle_config.tf_a;		db->klase = "TF";	break;
+		case MAPID_TAEKWON : 	attProb = battle_config.tk_a;		db->klase = "TK";	break;
+		case MAPID_GUNSLINGER : attProb = battle_config.gs_a;		db->klase = "GS";	break;
+		case MAPID_NINJA :		attProb = battle_config.nj_a;		db->klase = "NJ";	break;
+		case MAPID_SUMMONER :	attProb = battle_config.su_a;		db->klase = "SU";	break;
+	}
+
+	switch(sd->class_&MAPID_UPPERMASK){
+		case MAPID_SUPER_NOVICE:attProb = battle_config.snv_a;		db->klase = "SNV";	break;
+		case MAPID_PRIEST : 	attProb = battle_config.pr_a;		db->klase = "PR";	break;
+		case MAPID_KNIGHT :		attProb = battle_config.kn_a;		db->klase = "KN";	break;
+		case MAPID_HUNTER : 	attProb = battle_config.ht_a;		db->klase = "HT";	break;
+		case MAPID_BLACKSMITH : attProb = battle_config.bs_a;		db->klase = "BS";	break;
+		case MAPID_WIZARD : 	attProb = battle_config.wz_a;		db->klase = "WZ";	break;
+		case MAPID_ASSASSIN : 	attProb = battle_config.as_a;		db->klase = "AS";	break;
+		case MAPID_STAR_GLADIATOR:	attProb = battle_config.sj_a;	db->klase = "SJ";	break;
+		case MAPID_REBELLION : attProb = battle_config.rl_a;		db->klase = "RL";	break;
+		case MAPID_KAGEROUOBORO : attProb = battle_config.kg_a;		db->klase = "KG";	break;
+		case MAPID_CRUSADER :  attProb = battle_config.cr_a;		db->klase = "CR";	break;
+		case MAPID_SAGE : 	   attProb = battle_config.sa_a;		db->klase = "SA";	break;
+		case MAPID_BARDDANCER :	attProb = battle_config.ba_a;		db->klase = "BA";	break;
+		case MAPID_MONK : 		attProb = battle_config.mo_a;		db->klase = "MO";	break;
+		case MAPID_ALCHEMIST : 	attProb = battle_config.am_a;		db->klase = "AM";	break;
+		case MAPID_ROGUE : 		attProb = battle_config.rg_a;		db->klase = "RG";	break;
+		case MAPID_SOUL_LINKER : attProb = battle_config.sl_a;		db->klase = "SL";	break;
+		case MAPID_SUMMONER :	attProb = battle_config.su_a;		db->klase = "SU";	break;
+	}
+	if (sd->cloneskill_idx) {
+		db->cloneskill_idx = sd->cloneskill_idx;
+		db->reproduceskill_idx = sd->reproduceskill_idx;
+		//memcpy(a,b,size)
+		//db->skill2 = sd->status.skill;
+		memcpy(db->skill, &sd->status.skill, sizeof(struct s_skill));
+	}
+	if (sd->status.nameid_wl){
+		db->nameid_wl = sd->status.nameid_wl;
+	}
+	if (!mstat) mstat = 2;
+	if (!cR) cR = 50;
+	status->klas = sd->class_;
+	db->klas = sd->class_;
+
+	attProb = (int)(attProb);
+	mstat = (int)battle_config.cur_mstat;
+	mstat = mstat/10;
+	//eduardo
+	//ignore the complicating double & short & int calculation warning
+	
+	//mstat = 1;
+
+	status->str = status_get_str(&sd->bl)*mstat;	status->agi = status_get_agi(&sd->bl)*mstat;
+	status->vit = status_get_vit(&sd->bl)*mstat;	status->int_ = status_get_int(&sd->bl)*mstat;
+	status->dex = status_get_dex(&sd->bl)*mstat;	status->luk = status_get_luk(&sd->bl)*mstat;
+
+	status->hit = status_get_hit(&sd->bl)*1;	status->flee = status_get_flee(&sd->bl)*1;
+	status->mdef = status_get_mdef(&sd->bl)*1;	status->flee2 = status_get_flee2(&sd->bl)*1;
+	status->def2 = status_get_def2(&sd->bl)*1;	status->mdef2 = status_get_mdef2(&sd->bl)*1;
+	status->batk = status_get_batk(&sd->bl)*1;	
+	status->matk_max = status_get_matk_max(&sd->bl)*mstat;	status->matk_min = status_get_matk_min(&sd->bl)*mstat;
+	status->watk = status_get_watk(&sd->bl)*1;	status->watk2 = status_get_watk2(&sd->bl)*1;
+	status->mode = status_get_mode(&sd->bl);
+
+	
+	if (
+		strcmp(db->klase.c_str(),"MG")==0
+		|| strcmp(db->klase.c_str(),"WZ")==0
+		|| strcmp(db->klase.c_str(),"AL")==0
+		|| strcmp(db->klase.c_str(),"SA")==0
+	){
+		status->lhw.atk = status->dex;// *(mstat);
+		status->lhw.atk2 = status_get_lwatk(&sd->bl); // status->lhw.atk;// status_get_lwatk2(&sd->bl)*(mstat);
+	} 
+		else if (status->lhw.atk) {
+			status->lhw.atk = 1 *  status->dex; //Min ATK
+			status->lhw.atk2= 1 *  (status->dex + status->lhw.atk + status->lhw.atk2); //Max ATK
+		}
+
+	if (
+		strcmp(db->klase.c_str(), "MG")==0
+		|| strcmp(db->klase.c_str(), "WZ")==0
+		|| strcmp(db->klase.c_str(), "AL")==0
+		|| strcmp(db->klase.c_str(), "SA")==0
+	){
+		status->rhw.atk = 1 * status->dex; //Min ATK
+		status->rhw.atk2 = status_get_watk2(&sd->bl);
+	} else {
+		status->rhw.atk2 = 1 * (status->dex + status->rhw.atk + status->rhw.atk2); //Max ATK
+		status->rhw.atk = status->rhw.atk2;// status_get_watk(&sd->bl);
+	}
+
+	status->cri = status_get_critical(&sd->bl);
+	status->rhw.range = status_get_range(&sd->bl);
+
+	status->max_hp = status_get_max_hp(&sd->bl);	status->max_sp = status_get_max_sp(&sd->bl);
+	status->adelay = status_get_adelay(&sd->bl);	status->amotion = status_get_amotion(&sd->bl);
+	status->dmotion = status_get_dmotion(&sd->bl);	status->speed = status_get_speed(&sd->bl);
+
+	status->sp = status_get_sp(&sd->bl);	status->hp = status_get_hp(&sd->bl);
+	status->race = status_get_race(&sd->bl);
+
+	status->jlvl = sd->status.job_level;
+	status->blvl = db->lv;//sd->status.base_level;
+	status->mode = status_get_mode(&sd->bl);
+
+	if(battle_config.battle_log){
+		ShowMessage("\nspawn: ");
+		// ShowMessage("\n bmstat %d 	battP %d\n", battle_config.cur_mstat, battle_config.cur_attprob);
+		ShowMessage("-----------------------------------------\n");
+		ShowMessage("    *mstat	status_get_str(&sd->bl)\n");
+		ShowMessage("-------- mstat= %d %d -------- ", (int)battle_config.cur_mstat, mstat);
+		ShowMessage("\n str %d 	%d ", status->str, status_get_str(&sd->bl));
+		ShowMessage("\n vit %d 	%d ", status->vit, status_get_vit(&sd->bl));
+		ShowMessage("\n dex %d 	%d ", status->dex, status_get_dex(&sd->bl));
+		ShowMessage("\n agi %d 	%d ", status->agi, status_get_agi(&sd->bl));
+		ShowMessage("\n int %d 	%d ", status->int_, status_get_int(&sd->bl));
+		ShowMessage("\n luk %d 	%d ", status->luk, status_get_luk(&sd->bl));
+		ShowMessage("\n matkma %d	matkmi	%d ", status->matk_max, status->matk_min);
+		ShowMessage("\n hit %d 	%d ", status->hit, status_get_hit(&sd->bl));
+		ShowMessage("\n flee %d 	%d ", status->flee, status_get_flee(&sd->bl));
+		ShowMessage("\n lhwA %d 	%d ", status->lhw.atk, status_get_lwatk(&sd->bl));
+		ShowMessage("\n lhwA2 %d 	%d ", status->lhw.atk2, status_get_lwatk2(&sd->bl));
+		ShowMessage("\n rhwA2	 %d 	 ", status->rhw.atk2);
+		ShowMessage("\n rhwA 	%d 	 ", status->rhw.atk);
+		ShowMessage("\n cri %d 	%d ", status->cri, status_get_critical(&sd->bl));
+		ShowMessage("\n rhwR %d 	%d ", status->rhw.range, status_get_range(&sd->bl));
+		ShowMessage("\n speed %d 	%d ", status->speed, status_get_speed(&sd->bl));
+		ShowMessage("\n jlv	%d	blv %d ", status->jlvl, status->blvl);
+		ShowMessage("\n-----------------------------------------\n");
+	}
+
+	//origin:
+	if (mode) {//User provided mode.
+		status->mode = mode;
+	} else if (flag&1) //Friendly Character, remove looting.
+		status->mode = static_cast<enum e_mode>(status->mode&(~MD_LOOTER));
+
+	status->hp = status->max_hp;
+	status->sp = status->max_sp;
+
+	memcpy(&db->vd, &sd->vd, sizeof(struct view_data));
+
+	db->base_exp=1;
+	db->job_exp=1;
+	db->range2=AREA_SIZE; //Let them have the same view-range as players.
+	db->range3=AREA_SIZE; //Min chase of a screen.
+	db->option=sd->sc.option;
+
+	db->special_state.clone = 1;
+
+	//Skill copy [Skotlex]
+	ms = &db->skill[0];
+
+	/**
+	 * We temporarily disable sd's fd so it doesn't receive the messages from skill_check_condition_castbegin
+	 **/
+	fd = sd->fd;
+	sd->fd = 0;
+
+	//Go Backwards to give better priority to advanced skills.
+	//eduardo: nope
+	int extra = 0;
+	if (battle_config.etc_log) ShowMessage("\n SKILLLLZ:-------------");
+	if (
+		strcmp(db->klase.c_str(),"KN")==0		|| strcmp(db->klase.c_str(),"PR")==0	|| strcmp(db->klase.c_str(),"HT")==0	|| strcmp(db->klase.c_str(),"BS")==0
+		|| strcmp(db->klase.c_str(),"WZ")==0	|| strcmp(db->klase.c_str(),"SJ")==0	|| strcmp(db->klase.c_str(),"AS")==0	|| strcmp(db->klase.c_str(),"RL")==0
+		|| strcmp(db->klase.c_str(),"KG")==0	|| strcmp(db->klase.c_str(),"CR")==0	|| strcmp(db->klase.c_str(),"SA")==0	|| strcmp(db->klase.c_str(),"BA")==0
+		|| strcmp(db->klase.c_str(),"MO")==0	|| strcmp(db->klase.c_str(),"AM")==0	|| strcmp(db->klase.c_str(),"RG")==0	|| strcmp(db->klase.c_str(),"SL")==0
+	){
+		if (battle_config.etc_log) ShowMessage(" gede");
+		if (battle_config.scskillbyhotkeys){
+			if (battle_config.etc_log) ShowMessage("\n HOTKEYS t%d A%d", truest, sd->status.account_id);
+			for(int i=0;i<MAX_HOTKEYS;i++){
+				if (sd->status.hotkeys[i].type==1){
+					uint16 skill_id = sd->status.hotkeys[i].id;
+					// uint16 sk_idx = 0;
+					memset (&ms[i], 0, sizeof(struct mob_skill));
+					ms[i].skill_id = skill_id;
+					ms[i].skill_lv = sd->status.hotkeys[i].lv;
+					ms[i].state = MSS_ANY;
+					ms[i].permillage = 500*battle_config.clone_skill_rate/100;
+					ms[i].emotion = -1;
+					ms[i].casttime = skill_castfix(&sd->bl, skill_id, ms[i].skill_lv);
+					//eduardo
+					//instant cast : 530 = 2*dex + int of battle status
+					//https://www.limitro.com/forums/topic/2613-instant-cast/
+					if (battle_config.sceasymode) {
+						ms[i].cancel = 0;
+					}
+					else {
+						ms[i].cancel = 1;
+						ms[i].casttime -= (int)(floor)((double)ms[i].casttime * (((double)sd->battle_status.dex*2 + (double)sd->battle_status.int_) / 530));
+						if (ms[i].casttime < 0) ms[i].casttime = 0;
+						//or..... max 250 dex?						
+						/*ms[i].casttime -= (
+							(floor)(
+								(
+									(double)(int)(sd->battle_status.dex) / 250
+								) * ms[i].casttime
+							)
+						);*/
+					}
+
+					ms[i].delay = 2000;
+					ms[i].msg_id = 0;
+
+					if (battle_config.etc_log) ShowMessage("\n #%d hotkey: %s (%d) lv:%d d:%d p:%d dex:%d cT:%d", 
+						i, skill_get_name(skill_id), sd->status.hotkeys[i].id, sd->status.hotkeys[i].lv, ms[i].delay, ms[i].permillage
+						,sd->battle_status.dex
+						,ms[i].casttime
+					);
+					inf = skill_get_inf(skill_id);
+					if (inf&INF_ATTACK_SKILL) {	
+						ms[i].permillage = 3000;
+						ms[i].delay = 3000;
+						ms[i].target = MST_TARGET;
+						ms[i].cond1 = MSC_ALWAYS;
+						if (skill_get_range(skill_id, ms[i].skill_lv)  > 3) ms[i].state = MSS_ANYTARGET;
+						else ms[i].state = MSS_BERSERK;
+						if (
+						strcmp(skill_get_name(skill_id),"ST_FULLSTRIP")==0
+						){
+							ms[i].permillage = 3000;
+							ms[i].delay = 1000;	
+						} 
+						else if (
+						strcmp(skill_get_name(skill_id),"MO_EXTREMITYFIST")==0
+						){
+							ms[i].permillage = 100;
+							ms[i].delay = 60000;	
+						} 
+						if (battle_config.etc_log) ShowMessage(" attack");
+					} else if (inf&INF_GROUND_SKILL) {	
+						if (skill_get_inf2(skill_id, INF2_ISTRAP)) { //Traps!
+							ms[i].state = MSS_IDLE;
+							ms[i].target = MST_AROUND2;
+							ms[i].delay = 30000;
+							ms[i].permillage = 1000;
+						} else if (skill_get_unit_target(skill_id) == BCT_ENEMY) { //Target Enemy
+							ms[i].state = MSS_ANYTARGET;
+							ms[i].target = MST_TARGET;
+							ms[i].cond1 = MSC_ALWAYS;
+							ms[i].permillage = 800;
+						} else { //Target allies
+							ms[i].target = MST_FRIEND;
+							ms[i].cond1 = MSC_FRIENDHPLTMAXRATE;
+							ms[i].cond2 = 95;
+							ms[i].delay = 30000;
+							ms[i].permillage = 800;
+						}
+
+						if (
+						strcmp(skill_get_name(skill_id),"WZ_METEOR")==0 ||
+						strcmp(skill_get_name(skill_id),"WZ_STORMGUST")==0 ||
+						strcmp(skill_get_name(skill_id),"MG_THUNDERSTORM")==0 ||
+						strcmp(skill_get_name(skill_id),"WZ_VERMILION")==0	){
+							ms[i].permillage = 500;
+							ms[i].delay = 30000;	
+						} else if (
+						strcmp(skill_get_name(skill_id),"WL_COMET")==0		){
+							ms[i].permillage = 500;
+							ms[i].delay = 35000;	
+						} else if (
+						strcmp(skill_get_name(skill_id),"BS_HAMMERFALL")==0	||
+						strcmp(skill_get_name(skill_id),"WZ_HEAVENDRIVE")==0
+						){
+							ms[i].permillage = 2500;
+							ms[i].delay = 1000;		
+						}
+						if (battle_config.etc_log) ShowMessage(" ground");
+					} else if (inf&INF_SELF_SKILL){		
+						if (skill_get_inf2(skill_id, INF2_NOTARGETSELF)) { //auto-select target skill.
+							ms[i].target = MST_TARGET;
+							ms[i].cond1 = MSC_ALWAYS;
+							if (skill_get_range(skill_id, ms[i].skill_lv)  > 3) {
+								ms[i].state = MSS_ANYTARGET;
+							} else {
+								ms[i].state = MSS_BERSERK;
+							}
+						} else { //default Self skill
+							ms[i].target = MST_SELF;
+							ms[i].cond1 = MSC_MYHPLTMAXRATE;
+							ms[i].cond2 = 90;
+							ms[i].permillage = 1500;
+							//Delay: Remove the stock 5 secs and add half of the support time.
+							// ms[i].delay += -5000 +(skill_get_time(skill_id, ms[i].skill_lv) + skill_get_time2(skill_id, ms[i].skill_lv))/2;
+							// if (ms[i].delay < 5000)
+							ms[i].delay = 5000; //With a minimum of 5 secs.
+						}
+						if (
+						strcmp(skill_get_name(skill_id),"TK_READYSTORM")==0 ||
+						strcmp(skill_get_name(skill_id),"TK_READYDOWN")==0 ||
+						strcmp(skill_get_name(skill_id),"TK_READYTURN")==0 ||
+						strcmp(skill_get_name(skill_id),"TK_READYCOUNTER")==0 ||
+						strcmp(skill_get_name(skill_id),"TK_DODGE")==0 ||
+						strcmp(skill_get_name(skill_id),"WL_READING_SB")==0 ||
+						strcmp(skill_get_name(skill_id),"TK_HIGHJUMP")==0 		){
+							ms[i].permillage = 500;
+							ms[i].delay = 30000;	
+						} else if (
+						strcmp(skill_get_name(skill_id),"LK_BERSERK")==0		
+						|| strcmp(skill_get_name(skill_id),"TF_HIDING")==0
+						|| strcmp(skill_get_name(skill_id),"TF_BACKSLIDING")==0
+						|| strcmp(skill_get_name(skill_id),"AS_CLOAKING")==0
+						|| strcmp(skill_get_name(skill_id),"ST_CHASEWALK")==0
+						|| strcmp(skill_get_name(skill_id),"TK_RUN")==0
+						){
+							ms[i].permillage = 250;
+							ms[i].delay = 60000;	
+						} else if (
+						strcmp(skill_get_name(skill_id),"BS_HAMMERFALL")==0	||
+						strcmp(skill_get_name(skill_id),"MO_CHAINCOMBO")==0	
+						){
+							ms[i].permillage = 2500;
+							ms[i].delay = 1000;		
+						} else if (
+						strcmp(skill_get_name(skill_id),"BD_LULLABY")==0 ||
+						strcmp(skill_get_name(skill_id),"BD_RICHMANKIM")==0 ||
+						strcmp(skill_get_name(skill_id),"BD_ETERNALCHAOS")==0 ||
+						strcmp(skill_get_name(skill_id),"BD_DRUMBATTLEFIELD")==0 ||
+						strcmp(skill_get_name(skill_id),"BD_RINGNIBELUNGEN")==0 ||
+						strcmp(skill_get_name(skill_id),"BA_DISSONANCE")==0 ||
+						strcmp(skill_get_name(skill_id),"BA_ASSASSINCROSS")==0 ||
+						strcmp(skill_get_name(skill_id),"BA_POEMBRAGI")==0 ||
+						strcmp(skill_get_name(skill_id),"BA_APPLEIDUN")==0 ||
+						strcmp(skill_get_name(skill_id),"BA_WHISTLE")==0 ||
+						strcmp(skill_get_name(skill_id),"DC_HUMMING")==0 ||
+						strcmp(skill_get_name(skill_id),"BD_ROKISWEIL")==0 ||
+						strcmp(skill_get_name(skill_id),"DC_SERVICEFORYOU")==0 ||
+						strcmp(skill_get_name(skill_id),"DC_DONTFORGETME")==0 ||
+						strcmp(skill_get_name(skill_id),"DC_UGLYDANCE")==0 ||
+						strcmp(skill_get_name(skill_id),"DC_FORTUNEKISS")==0 ||
+						strcmp(skill_get_name(skill_id),"BD_SIEGFRIED")==0 ||
+						strcmp(skill_get_name(skill_id),"BD_INTOABYSS")==0	||
+						// strcmp(skill_get_name(skill_id),"CH_TIGERFIST")==0 ||
+						strcmp(skill_get_name(skill_id),"CH_CHAINCRUSH")==0 ||
+						strcmp(skill_get_name(skill_id),"CG_MOONLIT")==0
+						){
+							ms[i].delay = 60000;
+							ms[i].permillage = 800;
+						} else if (
+						strcmp(skill_get_name(skill_id),"WZ_FROSTNOVA")==0
+						){
+							ms[i].delay = 100;
+							ms[i].permillage = 4000;
+						} else if (
+						strcmp(skill_get_name(skill_id),"GN_SLINGITEM")==0
+						){
+							ms[i].target = MST_RANDOM; //eduardo // MST_MASTER
+							ms[i].delay = 100;
+							ms[i].permillage = 250;
+							ms[i].state = MSS_ANYTARGET;
+							// ms[i].target = MST_TARGET;
+							ms[i].cond1 = MSC_ALWAYS;
+						}
+						if (battle_config.etc_log) ShowMessage(" self");					
+					} else if (inf&INF_SUPPORT_SKILL){	
+						ms[i].target = MST_FRIEND; //eduardo // MST_MASTER
+						ms[i].cond1 = MSC_FRIENDHPLTMAXRATE;
+						ms[i].cond2 = 90;
+						if (skill_id == AL_HEAL)
+							ms[i].permillage = 5000; //Higher skill rate usage for heal. (more often)
+						else if (skill_id == ALL_RESURRECTION)
+							ms[i].cond2 = 1;
+						else ms[i].permillage = 1000;
+						//Delay: Remove the stock 5 secs and add half of the support time.
+						ms[i].delay += -5000 +(skill_get_time(skill_id, ms[i].skill_lv) + skill_get_time2(skill_id, ms[i].skill_lv))/2;
+						if (ms[i].delay < 2000)
+							ms[i].delay = 2000; //With a minimum of 2 secs.
+
+						
+						if (i+1 < MAX_MOBSKILL) { //duplicate this so it also triggers on self.
+							memcpy(&ms[i+1], &ms[i], sizeof(struct mob_skill));
+							db->maxskill = ++i;
+							ms[i].target = MST_SELF;
+							ms[i].cond1 = MSC_MYHPLTMAXRATE;
+						}
+						if (
+						strcmp(skill_get_name(skill_id),"AM_CP_HELM")==0
+						|| strcmp(skill_get_name(skill_id),"AM_CP_ARMOR")==0
+						|| strcmp(skill_get_name(skill_id),"AM_CP_SHIELD")==0
+						|| strcmp(skill_get_name(skill_id),"AM_CP_WEAPON")==0
+						){
+							ms[i].delay = 2000;
+							ms[i].permillage = 1000;
+						} else if (
+						strcmp(skill_get_name(skill_id),"WL_WHITEIMPRISON")==0
+						){
+							ms[i].delay = 2000;
+							ms[i].permillage = 500;
+						}  
+						if (battle_config.etc_log) ShowMessage(" support");
+					}
+
+			 		//ms[i].target = MST_TARGET;
+					ms[i].cond1 = MSC_ALWAYS;
+
+					// if( !skill_check_condition_castbegin(sd,skill_id,sd->status.skill[sk_idx].lv) )
+					// 	continue;
+
+			 		// j++;
+			 		db->maxskill++;
+			 		extra = db->maxskill;				
+				}
+			}
+
+			//passive ones
+			for (int j = 0,i=MAX_HOTKEYS;i>=0 && j< MAX_MOBSKILL ;j++) {
+				uint16 skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].skill_id;
+				uint16 sk_idx = 0;
+				if (
+					skill_id == SA_FREECAST
+					|| skill_id==GS_CHAINACTION
+					|| skill_id==TF_DOUBLE
+					|| skill_id==MO_TRIPLEATTACK
+					|| skill_id==TK_POWER
+				){
+					memset (&ms[i], 0, sizeof(struct mob_skill));
+					ms[i].skill_id = skill_id;
+					ms[i].skill_lv = sd->status.skill[skill_id].lv;
+					ms[i].state = MSS_ANY;
+					ms[i].permillage = 500*battle_config.clone_skill_rate/100;
+					ms[i].emotion = -1;
+					if (battle_config.sceasymode) ms[i].cancel = 0; else ms[i].cancel = 1;
+					ms[i].casttime = skill_castfix(&sd->bl,skill_id, ms[i].skill_lv);
+					ms[i].delay = 2000;
+					ms[i].msg_id = 0;
+					ms[i].state = MSS_BERSERK;
+					ms[i].target = MST_TARGET;
+					ms[i].cond1 = MSC_ALWAYS;
+					ms[i].permillage = skill_id==MO_TRIPLEATTACK?(3000-ms[i].skill_lv*100):(ms[i].skill_lv*500);
+					ms[i].delay -= 5000; //Remove the added delay as these could trigger on "all hits".
+
+					if (battle_config.etc_log) ShowMessage("\n $%d passive: %s (%d) lv:%d d:%d p:%d", i, skill_get_name(skill_id), skill_id, ms[i].skill_lv, ms[i].delay, ms[i].permillage);
+					
+					j++;
+					i++;
+					db->maxskill++;// = ++i;
+					extra = db->maxskill;
+				} 
+			}
+		} else {
+			//non hotkey way
+			//reprioritize particular extra skills
+			for (j = 0,i=MAX_SKILL_TREE-1;i>=0 && j< MAX_MOBSKILL ;j++) {
+				uint16 skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].skill_id;
+				uint16 sk_idx = 0;
+
+				// if (strcmp(skill_get_name(skill_id),"MG_SIGHT")==0){
+				if (
+					skill_id == MG_SIGHT
+					|| skill_id == AL_RUWACH
+					|| skill_id == GC_ROLLINGCUTTER
+					|| skill_id == SM_ENDURE
+				){
+					memset (&ms[i], 0, sizeof(struct mob_skill));
+					ms[i].skill_id = skill_id;
+					ms[i].skill_lv = sd->status.skill[sk_idx].lv;
+					ms[i].state = MSS_BERSERK;
+					ms[i].permillage = 1000;//500*battle_config.clone_skill_rate/100; //Default chance of all skills: 5%
+					
+					ms[i].emotion = -1;
+					if (battle_config.sceasymode) ms[i].cancel = 0; else ms[i].cancel = 1;
+					ms[i].casttime = skill_castfix(&sd->bl,skill_id, ms[i].skill_lv);
+					ms[i].delay = 2000;
+					ms[i].msg_id = 0;	
+
+					ms[i].target = MST_SELF;
+					ms[i].cond1 = MSC_ALWAYS;
+
+					// // inf = skill_get_inf(skill_id);
+					if (battle_config.etc_log) ShowMessage("\n %d extra: %s d:%d p:%d", ms[i].skill_id, skill_get_name(skill_id), ms[i].delay, ms[i].permillage);
+					j++;
+					db->maxskill++;// = ++i;
+					extra = db->maxskill;
+					// ShowMessage(" \n max %d extra %d i %d j %d \n", db->maxskill, extra, i, j);
+				} else if (
+					skill_id == MG_SAFETYWALL
+					|| skill_id==AM_POTIONPITCHER
+				){
+					memset (&ms[i], 0, sizeof(struct mob_skill));
+					ms[i].skill_id = skill_id;
+					ms[i].skill_lv = sd->status.skill[sk_idx].lv;
+					ms[i].target = MST_FRIEND;
+					ms[i].cond1 = MSC_FRIENDHPLTMAXRATE;
+					ms[i].cond2 = 95;
+					ms[i].delay = 10000;
+					ms[i].permillage = 500;
+					ms[i].state = MSS_BERSERK;
+					ms[i].emotion = -1;
+					if (battle_config.sceasymode) ms[i].cancel = 0; else ms[i].cancel = 1;
+					ms[i].casttime = skill_castfix(&sd->bl,skill_id, ms[i].skill_lv);
+					ms[i].msg_id = 0;	
+					if (battle_config.etc_log) ShowMessage("\n %d extra3: %s d:%d p:%d", ms[i].skill_id, skill_get_name(skill_id), ms[i].delay, ms[i].permillage);
+					j++;
+					db->maxskill++;// = ++i;
+					extra = db->maxskill;
+					// ShowMessage(" \n max %d extra %d i %d j %d \n", db->maxskill, extra, i, j);
+				} 
+			}
+
+			int i = extra;
+			if (strcmp(db->klase.c_str(), "AM")==0){	
+				uint16 skill_id = GN_SLINGITEM_RANGEMELEEATK;
+				memset (&ms[i], 0, sizeof(struct mob_skill));
+				ms[i].skill_id = skill_id;
+				ms[i].skill_lv = 1;//sd->status.skill[sk_idx].lv;
+				ms[i].permillage = 3000;
+				ms[i].delay = 3000;
+				ms[i].target = MST_TARGET;
+				ms[i].cond1 = MSC_ALWAYS;
+				ms[i].state = MSS_BERSERK;
+
+				ms[i].emotion = -1;
+				if (battle_config.sceasymode) ms[i].cancel = 0; else ms[i].cancel = 1;
+				ms[i].casttime = skill_castfix(&sd->bl,skill_id, ms[i].skill_lv);
+				ms[i].delay = 2000;
+				ms[i].msg_id = 0;	
+
+				if (battle_config.etc_log) ShowMessage("\n %d extra2: %s d:%d p:%d", ms[i].skill_id, skill_get_name(skill_id), ms[i].delay, ms[i].permillage);
+				j++;
+				db->maxskill++;// = ++i;
+				extra = db->maxskill;
+			}
+
+			for (i=0,j = MAX_SKILL_TREE-1;j>=0 && i< MAX_MOBSKILL ;j--) {
+				uint16 skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].skill_id;
+				//eduardo
+				uint16 sk_idx = 0;
+
+				if (!skill_id || !(sk_idx = skill_get_index(skill_id)) || sd->status.skill[sk_idx].lv < 1 ||
+					skill_get_inf2_(skill_id, { INF2_ISWEDDING, INF2_ISGUILD }) ||
+					mob_clone_disabled_skills(skill_id)
+				)
+					continue;
+
+				//Normal aggressive mob, disable skills that cannot help them fight
+				//against players (those with flags UF_NOMOB and UF_NOPC are specific
+				//to always aid players!) [Skotlex]
+				// if (!(flag&1) 
+					// &&
+					// skill_get_unit_id(skill_id) &&
+					// skill_get_unit_flag_(skill_id, { UF_NOMOB, UF_NOPC })
+					// )
+					// continue;
+
+				//eduardo ALLOW EXEPTION (third/second job) gede
+				if (db->special_state.clone == 1){
+					if (
+						skill_id == SC_FEINTBOMB || skill_id == BD_LULLABY || skill_id == BD_RICHMANKIM  || skill_id == BD_ETERNALCHAOS || skill_id == BD_DRUMBATTLEFIELD || skill_id == BD_RINGNIBELUNGEN || skill_id == BD_ROKISWEIL || skill_id == BD_INTOABYSS || skill_id == BD_SIEGFRIED
+						|| skill_id == MO_CHAINCOMBO || skill_id ==MO_COMBOFINISH || skill_id ==MO_FINGEROFFENSIVE || skill_id ==MO_EXPLOSIONSPIRITS
+						|| skill_id == GS_GLITTERING || skill_id == HT_POWER || skill_id ==KN_ONEHAND || skill_id ==BS_ADRENALINE2 || skill_id ==AM_BERSERKPITCHER
+						|| skill_id == GN_SLINGITEM_RANGEMELEEATK || skill_id == AM_CALLHOMUN || skill_id == SO_EL_CONTROL || skill_id == SO_EL_CURE
+						|| skill_id == GC_CROSSRIPPERSLASHER || skill_id == GC_CROSSIMPACT || skill_id == GC_ROLLINGCUTTER || skill_id == GC_WEAPONCRUSH
+						|| skill_id == GC_VENOMIMPRESS || skill_id == GC_POISONSMOKE || skill_id == SO_SPELLFIST || skill_id == LG_HESPERUSLIT
+						|| skill_id == HT_CLAYMORETRAP || skill_id == WS_CARTTERMINATION || skill_id == KO_MUCHANAGE || skill_id == RL_FLICKER || skill_id == RL_B_TRAP || skill_id == KO_HAPPOKUNAI
+					){
+						//ALLOW: do nothing
+						// reason: impossible to play with md around here
+					} else {
+						if( !skill_check_condition_castbegin(sd,skill_id,sd->status.skill[sk_idx].lv) )
+							continue;
+					}
+				} else {
+					/**
+					 * The clone should be able to cast the skill (e.g. have the required weapon) bugreport:5299)
+					 **/
+					if( !skill_check_condition_castbegin(sd,skill_id,sd->status.skill[sk_idx].lv) )
+						continue;
+				}
+				// ShowMessage(" (%d) ", i);
+				memset (&ms[i], 0, sizeof(struct mob_skill));
+				
+				ms[i].skill_id = skill_id;
+				ms[i].skill_lv = sd->status.skill[sk_idx].lv;
+				ms[i].state = MSS_ANY;
+				ms[i].permillage = 500*battle_config.clone_skill_rate/100; //Default chance of all skills: 5%
+				
+				ms[i].emotion = -1;
+				if (battle_config.sceasymode) ms[i].cancel = 0; else ms[i].cancel = 1;
+				ms[i].casttime = skill_castfix(&sd->bl,skill_id, ms[i].skill_lv);
+				ms[i].delay = 5000+skill_delayfix(&sd->bl,skill_id, ms[i].skill_lv);
+				ms[i].msg_id = 0;
+
+				inf = skill_get_inf(skill_id);
+				if (inf&INF_ATTACK_SKILL) {		
+					ms[i].permillage = 3000;
+					ms[i].delay = 3000;
+					ms[i].target = MST_TARGET;
+					ms[i].cond1 = MSC_ALWAYS;
+					if (skill_get_range(skill_id, ms[i].skill_lv)  > 3)
+						ms[i].state = MSS_ANYTARGET;
+					else
+						ms[i].state = MSS_BERSERK;
+
+					if (
+						strcmp(skill_get_name(skill_id),"ST_FULLSTRIP")==0
+					){
+						ms[i].permillage = 3000;
+						ms[i].delay = 1000;	
+					} else if (
+						strcmp(skill_get_name(skill_id),"LG_SHIELDPRESS")==0
+					){
+						ms[i].permillage = 7000;
+						ms[i].delay = 1000;	
+					}if (
+						strcmp(skill_get_name(skill_id),"RA_AIMEDBOLT")==0 
+						|| strcmp(skill_get_name(skill_id),"RG_INTIMIDATE")==0 
+					){
+						ms[i].permillage = 1000;
+						ms[i].delay = 10000;	
+					} else if (
+						strcmp(skill_get_name(skill_id),"GN_SLINGITEM_RANGEMELEEATK")==0
+					){
+						ms[i].permillage = 3000;
+						ms[i].delay = 1000;	
+						ms[i].cond1 = MSS_BERSERK;
+					}
+					//ST_FULLSTRIP
+					if (battle_config.etc_log) ShowMessage("\n %d attack: %s d:%d p:%d", ms[i].skill_id, skill_get_name(skill_id), ms[i].delay, ms[i].permillage);
+				} else if(inf&INF_GROUND_SKILL) {		
+					if (skill_get_inf2(skill_id, INF2_ISTRAP)) { //Traps!
+						// ms[i].state = MSS_IDLE;
+						ms[i].target = MST_AROUND2;
+						ms[i].delay = 10000; //3000
+						ms[i].permillage = 500;
+
+						ms[i].cond1 = MSC_ALWAYS;
+						ms[i].state = MSS_ANYTARGET;
+						
+					} else if (skill_get_unit_target(skill_id) == BCT_ENEMY) { //Target Enemy
+						ms[i].state = MSS_ANYTARGET;
+						ms[i].target = MST_TARGET;
+						ms[i].cond1 = MSC_ALWAYS;
+						ms[i].permillage = 800;
+					} else { //Target allies
+						ms[i].target = MST_FRIEND;
+						ms[i].cond1 = MSC_FRIENDHPLTMAXRATE;
+						ms[i].cond2 = 95;
+						ms[i].delay = 30000;
+						ms[i].permillage = 800;
+					}
+
+					if (
+						strcmp(skill_get_name(skill_id),"WZ_METEOR")==0 ||
+						strcmp(skill_get_name(skill_id),"WZ_STORMGUST")==0 ||
+						strcmp(skill_get_name(skill_id),"MG_THUNDERSTORM")==0 ||
+						strcmp(skill_get_name(skill_id),"PR_MAGNUS")==0 ||
+						strcmp(skill_get_name(skill_id),"WZ_VERMILION")==0	 ||
+						strcmp(skill_get_name(skill_id),"MG_SAFETYWALL")==0
+						|| strcmp(skill_get_name(skill_id),"RA_ARROWSTORM")==0
+						|| strcmp(skill_get_name(skill_id),"RA_AIMEDBOLT")==0
+						){
+							ms[i].permillage = 500;
+							ms[i].delay = 30000;	
+					} else if (
+						strcmp(skill_get_name(skill_id),"WL_COMET")==0		){
+							ms[i].permillage = 100;
+							ms[i].delay = 35000;	
+					} else if (
+						strcmp(skill_get_name(skill_id),"LG_HESPERUSLIT")==0		){
+							ms[i].permillage = 100;
+							ms[i].delay = 60000;	
+					} else if (
+						strcmp(skill_get_name(skill_id),"BS_HAMMERFALL")==0	||
+						strcmp(skill_get_name(skill_id),"WZ_HEAVENDRIVE")==0
+					){
+						ms[i].permillage = 2500;
+						ms[i].delay = 1000;		
+					}
+
+					if (battle_config.etc_log) ShowMessage("\n %d ground: %s d:%d p:%d", ms[i].skill_id, skill_get_name(skill_id), ms[i].delay, ms[i].permillage);
+				} else if (inf&INF_SELF_SKILL) {		
+					if (skill_get_inf2(skill_id, INF2_NOTARGETSELF)) { //auto-select target skill.
+						ms[i].target = MST_TARGET;
+						ms[i].cond1 = MSC_ALWAYS;
+						if (skill_get_range(skill_id, ms[i].skill_lv)  > 3) {
+							ms[i].state = MSS_ANYTARGET;
+						} else {
+							ms[i].state = MSS_BERSERK;
+						}
+					} else { //default Self skill
+						ms[i].target = MST_SELF;
+						ms[i].cond1 = MSC_MYHPLTMAXRATE;
+						ms[i].cond2 = 90;
+						ms[i].permillage = 1000;
+						//Delay: Remove the stock 5 secs and add half of the support time.
+						// ms[i].delay += -5000 +(skill_get_time(skill_id, ms[i].skill_lv) + skill_get_time2(skill_id, ms[i].skill_lv))/2;
+						// if (ms[i].delay < 5000)
+						ms[i].delay = 5000; //With a minimum of 5 secs.
+					}
+
+					if (
+					strcmp(skill_get_name(skill_id),"TK_READYSTORM")==0 ||
+					strcmp(skill_get_name(skill_id),"TK_READYDOWN")==0 ||
+					strcmp(skill_get_name(skill_id),"TK_READYTURN")==0 ||
+					strcmp(skill_get_name(skill_id),"TK_READYCOUNTER")==0 ||
+					strcmp(skill_get_name(skill_id),"TK_DODGE")==0 ||
+					strcmp(skill_get_name(skill_id),"TK_HIGHJUMP")==0 ||
+					strcmp(skill_get_name(skill_id),"WL_READING_SB")==0 ||
+					strcmp(skill_get_name(skill_id),"SO_EL_CONTROL")==0
+					){
+						ms[i].permillage = 500;
+						ms[i].delay = 60000;	
+					} else if (
+					strcmp(skill_get_name(skill_id),"LK_BERSERK")==0
+					|| strcmp(skill_get_name(skill_id),"NC_EMERGENCYCOOL")==0	
+					|| strcmp(skill_get_name(skill_id),"SO_SUMMON_AQUA")==0
+					|| strcmp(skill_get_name(skill_id),"SO_SUMMON_TERA")==0
+					|| strcmp(skill_get_name(skill_id),"SO_SUMMON_AGNI")==0
+					|| strcmp(skill_get_name(skill_id),"SO_SUMMON_VENTUS")==0
+					|| strcmp(skill_get_name(skill_id),"LG_KINGS_GRACE")==0
+					|| strcmp(skill_get_name(skill_id),"ALL_FULL_THROTTLE")==0
+					|| strcmp(skill_get_name(skill_id),"TF_HIDING")==0
+					|| strcmp(skill_get_name(skill_id),"TF_BACKSLIDING")==0
+					|| strcmp(skill_get_name(skill_id),"AS_CLOAKING")==0
+					|| strcmp(skill_get_name(skill_id),"ST_CHASEWALK")==0
+					|| strcmp(skill_get_name(skill_id),"SC_AUTOSHADOWSPELL")==0
+					|| strcmp(skill_get_name(skill_id),"WL_READING_SB")==0
+					|| strcmp(skill_get_name(skill_id),"TK_RUN")==0
+					){
+						ms[i].permillage = 100;
+						ms[i].delay = 60000;	
+					} else if (
+					strcmp(skill_get_name(skill_id),"MO_CHAINCOMBO")==0	
+					){
+						ms[i].permillage = 2500;
+						ms[i].delay = 1000;		
+					} else if (
+					strcmp(skill_get_name(skill_id),"BD_LULLABY")==0 ||
+					strcmp(skill_get_name(skill_id),"BD_RICHMANKIM")==0 ||
+					strcmp(skill_get_name(skill_id),"BD_ETERNALCHAOS")==0 ||
+					strcmp(skill_get_name(skill_id),"BD_DRUMBATTLEFIELD")==0 ||
+					strcmp(skill_get_name(skill_id),"BD_RINGNIBELUNGEN")==0 ||
+					strcmp(skill_get_name(skill_id),"BA_DISSONANCE")==0 ||
+					strcmp(skill_get_name(skill_id),"BA_ASSASSINCROSS")==0 ||
+					strcmp(skill_get_name(skill_id),"BA_POEMBRAGI")==0 ||
+					strcmp(skill_get_name(skill_id),"BA_APPLEIDUN")==0 ||
+					strcmp(skill_get_name(skill_id),"BA_WHISTLE")==0 ||
+					strcmp(skill_get_name(skill_id),"DC_HUMMING")==0 ||
+					strcmp(skill_get_name(skill_id),"BD_ROKISWEIL")==0 ||
+					strcmp(skill_get_name(skill_id),"DC_SERVICEFORYOU")==0 ||
+					strcmp(skill_get_name(skill_id),"DC_DONTFORGETME")==0 ||
+					strcmp(skill_get_name(skill_id),"DC_UGLYDANCE")==0 ||
+					strcmp(skill_get_name(skill_id),"DC_FORTUNEKISS")==0 ||
+					strcmp(skill_get_name(skill_id),"BD_SIEGFRIED")==0 ||
+					strcmp(skill_get_name(skill_id),"BD_INTOABYSS")==0	||
+					// strcmp(skill_get_name(skill_id),"CH_TIGERFIST")==0 ||
+					strcmp(skill_get_name(skill_id),"CH_CHAINCRUSH")==0
+					){
+						ms[i].delay = 60000;
+						ms[i].permillage = 800;
+					} else if (
+					strcmp(skill_get_name(skill_id),"WZ_FROSTNOVA")==0
+					){
+						ms[i].delay = 100;
+						ms[i].permillage = 3000;
+					} else if (
+					strcmp(skill_get_name(skill_id),"GN_SLINGITEM")==0
+					){
+						ms[i].target = MST_RANDOM; //eduardo // MST_MASTER
+						ms[i].delay = 100;
+						ms[i].permillage = 250;
+						ms[i].state = MSS_ANYTARGET;
+						// ms[i].target = MST_TARGET;
+						ms[i].cond1 = MSC_ALWAYS;
+					}
+
+					if (battle_config.etc_log) ShowMessage("\n %d self: %s d:%d p:%d", ms[i].skill_id, skill_get_name(skill_id), ms[i].delay, ms[i].permillage);
+				} else if (inf&INF_SUPPORT_SKILL) {		
+					ms[i].target = MST_FRIEND; //eduardo // MST_MASTER
+					ms[i].cond1 = MSC_FRIENDHPLTMAXRATE;
+					ms[i].cond2 = 90;
+					if (skill_id == AL_HEAL)
+						ms[i].permillage = 5000; //Higher skill rate usage for heal. (more often)
+					else if (skill_id == ALL_RESURRECTION)
+						ms[i].cond2 = 1;
+					else ms[i].permillage = 1000;
+					//Delay: Remove the stock 5 secs and add half of the support time.
+					ms[i].delay += -5000 +(skill_get_time(skill_id, ms[i].skill_lv) + skill_get_time2(skill_id, ms[i].skill_lv))/2;
+					if (ms[i].delay < 2000)
+						ms[i].delay = 2000; //With a minimum of 2 secs.
+
+					
+					if (i+1 < MAX_MOBSKILL) { //duplicate this so it also triggers on self.
+						memcpy(&ms[i+1], &ms[i], sizeof(struct mob_skill));
+						db->maxskill = ++i;
+						ms[i].target = MST_SELF;
+						ms[i].cond1 = MSC_MYHPLTMAXRATE;
+					}
+					if (
+						strcmp(skill_get_name(skill_id),"WL_WHITEIMPRISON")==0
+					){
+						ms[i].permillage = 500;
+						ms[i].delay = 2000;		
+					}
+					
+					if (battle_config.etc_log) ShowMessage("\n %d support: %s d:%d p:%d", ms[i].skill_id, skill_get_name(skill_id), ms[i].delay, ms[i].permillage);
+				} else {		
+					if (battle_config.etc_log) ShowMessage("\n skill else: %s %d", skill_get_name(skill_id), i);
+					switch (skill_id) { //Certain Special skills that are passive, and thus, never triggered.
+						//eduardo
+						case MO_TRIPLEATTACK:
+						case TF_DOUBLE:
+						case GS_CHAINACTION:
+						case SA_FREECAST:
+						case TK_POWER:
+							ms[i].state = MSS_BERSERK;
+							ms[i].target = MST_TARGET;
+							ms[i].cond1 = MSC_ALWAYS;
+							ms[i].permillage = skill_id==MO_TRIPLEATTACK?(3000-ms[i].skill_lv*100):(ms[i].skill_lv*500);
+							ms[i].delay -= 5000; //Remove the added delay as these could trigger on "all hits".
+							break;
+						default:
+							//Untreated Skill
+							continue;
+					}
+				}
+				
+
+				//eduardo
+				if (!ms[i].permillage) ms[i].permillage = ms[i].permillage*battle_config.clone_skill_rate/100;
+				
+				if (!ms[i].delay) ms[i].delay = ms[i].delay*battle_config.mob_skill_delay/100;
+				
+				if (battle_config.mvp_raid_mode){
+					if (inf&INF_ATTACK_SKILL){
+						ms[i].permillage = (int)ms[i].permillage * (int)battle_config.mvp_raid_mode_m;
+						ms[i].delay = (int)ms[i].delay / (int)battle_config.mvp_raid_mode_m;
+						if (battle_config.etc_log) ShowMessage("	-> %d", ms[i].permillage);
+					}
+				}
+
+				if (strcmp(skill_get_name(skill_id), "SO_SPELLFIST") == 0) {
+					db->ms_spellfist_lv = ms[i].skill_lv;
+				}
+
+				if (ms[i].permillage > 500)
+					ms[i].permillage = ms[i].permillage + rnd_value(-100,100);
+				if (battle_config.etc_log) ShowMessage("	=> %d", ms[i].permillage);
+
+				db->maxskill = ++i;
+			}
+		}
+	} else {	
+		//(NOVICE & first job) kecil
+		if (battle_config.scskillbyhotkeys){
+			if (battle_config.etc_log) ShowMessage("\n HOTKEYS t%d A%d", truest, sd->status.account_id);
+			for(int i=0;i<MAX_HOTKEYS;i++){
+				if (sd->status.hotkeys[i].type==1){
+					uint16 skill_id = sd->status.hotkeys[i].id;
+					
+					memset (&ms[i], 0, sizeof(struct mob_skill));
+					ms[i].skill_id = skill_id;
+					ms[i].skill_lv = sd->status.hotkeys[i].lv;
+					ms[i].state = MSS_ANY;
+					ms[i].permillage = 500*battle_config.clone_skill_rate/100;
+					ms[i].emotion = -1;
+					if (battle_config.sceasymode) ms[i].cancel = 0; else ms[i].cancel = 1;
+					ms[i].casttime = skill_castfix(&sd->bl,skill_id, ms[i].skill_lv);
+					ms[i].delay = 2000;
+					ms[i].msg_id = 0;
+
+					if (battle_config.etc_log) ShowMessage("\n #%d hotkey: %s (%d) lv:%d d:%d p:%d ", i, skill_get_name(skill_id), sd->status.hotkeys[i].id, sd->status.hotkeys[i].lv, ms[i].delay, ms[i].permillage);
+					inf = skill_get_inf(skill_id);
+					if (inf&INF_ATTACK_SKILL) {	
+						ms[i].permillage = 3000;
+						ms[i].delay = 3000;
+						ms[i].target = MST_TARGET;
+						ms[i].cond1 = MSC_ALWAYS;
+						if (skill_get_range(skill_id, ms[i].skill_lv)  > 3) ms[i].state = MSS_ANYTARGET;
+						else ms[i].state = MSS_BERSERK;
+						if (
+						strcmp(skill_get_name(skill_id),"ST_FULLSTRIP")==0
+						){
+							ms[i].permillage = 3000;
+							ms[i].delay = 1000;	
+						}
+						if (battle_config.etc_log) ShowMessage(" attack");
+					} else if (inf&INF_GROUND_SKILL) {	
+						if (skill_get_inf2(skill_id, INF2_ISTRAP)) { //Traps!
+							ms[i].state = MSS_IDLE;
+							ms[i].target = MST_AROUND2;
+							ms[i].delay = 30000;
+							ms[i].permillage = 1000;
+						} else if (skill_get_unit_target(skill_id) == BCT_ENEMY) { //Target Enemy
+							ms[i].state = MSS_ANYTARGET;
+							ms[i].target = MST_TARGET;
+							ms[i].cond1 = MSC_ALWAYS;
+							ms[i].permillage = 800;
+						} else { //Target allies
+							ms[i].target = MST_FRIEND;
+							ms[i].cond1 = MSC_FRIENDHPLTMAXRATE;
+							ms[i].cond2 = 95;
+							ms[i].delay = 30000;
+							ms[i].permillage = 800;
+						}
+
+						if (
+						strcmp(skill_get_name(skill_id),"WZ_METEOR")==0 ||
+						strcmp(skill_get_name(skill_id),"WZ_STORMGUST")==0 ||
+						strcmp(skill_get_name(skill_id),"MG_THUNDERSTORM")==0 ||
+						strcmp(skill_get_name(skill_id),"WZ_VERMILION")==0	){
+							ms[i].permillage = 500;
+							ms[i].delay = 30000;	
+						} else if (
+						strcmp(skill_get_name(skill_id),"WL_COMET")==0		){
+							ms[i].permillage = 500;
+							ms[i].delay = 35000;	
+						} else if (
+						strcmp(skill_get_name(skill_id),"BS_HAMMERFALL")==0	||
+						strcmp(skill_get_name(skill_id),"WZ_HEAVENDRIVE")==0
+						){
+							ms[i].permillage = 2500;
+							ms[i].delay = 1000;		
+						}
+						if (battle_config.etc_log) ShowMessage(" ground");
+					} else if (inf&INF_SELF_SKILL){		
+						if (skill_get_inf2(skill_id, INF2_NOTARGETSELF)) { //auto-select target skill.
+							ms[i].target = MST_TARGET;
+							ms[i].cond1 = MSC_ALWAYS;
+							if (skill_get_range(skill_id, ms[i].skill_lv)  > 3) {
+								ms[i].state = MSS_ANYTARGET;
+							} else {
+								ms[i].state = MSS_BERSERK;
+							}
+						} else { //default Self skill
+							ms[i].target = MST_SELF;
+							ms[i].cond1 = MSC_MYHPLTMAXRATE;
+							ms[i].cond2 = 90;
+							ms[i].permillage = 1500;
+							//Delay: Remove the stock 5 secs and add half of the support time.
+							// ms[i].delay += -5000 +(skill_get_time(skill_id, ms[i].skill_lv) + skill_get_time2(skill_id, ms[i].skill_lv))/2;
+							// if (ms[i].delay < 5000)
+							ms[i].delay = 5000; //With a minimum of 5 secs.
+						}
+						if (
+						strcmp(skill_get_name(skill_id),"TK_READYSTORM")==0 ||
+						strcmp(skill_get_name(skill_id),"TK_READYDOWN")==0 ||
+						strcmp(skill_get_name(skill_id),"TK_READYTURN")==0 ||
+						strcmp(skill_get_name(skill_id),"TK_READYCOUNTER")==0 ||
+						strcmp(skill_get_name(skill_id),"TK_DODGE")==0 ||
+						strcmp(skill_get_name(skill_id),"WL_READING_SB")==0 ||
+						strcmp(skill_get_name(skill_id),"TK_HIGHJUMP")==0 		){
+							ms[i].permillage = 500;
+							ms[i].delay = 30000;	
+						} else if (
+						strcmp(skill_get_name(skill_id),"LK_BERSERK")==0		
+						|| strcmp(skill_get_name(skill_id),"TF_HIDING")==0
+						|| strcmp(skill_get_name(skill_id),"TF_BACKSLIDING")==0
+						|| strcmp(skill_get_name(skill_id),"AS_CLOAKING")==0
+						|| strcmp(skill_get_name(skill_id),"ST_CHASEWALK")==0
+						|| strcmp(skill_get_name(skill_id),"TK_RUN")==0
+						){
+							ms[i].permillage = 250;
+							ms[i].delay = 60000;	
+						} else if (
+						strcmp(skill_get_name(skill_id),"BS_HAMMERFALL")==0	||
+						strcmp(skill_get_name(skill_id),"MO_CHAINCOMBO")==0	
+						){
+							ms[i].permillage = 2500;
+							ms[i].delay = 1000;		
+						} else if (
+						strcmp(skill_get_name(skill_id),"BD_LULLABY")==0 ||
+						strcmp(skill_get_name(skill_id),"BD_RICHMANKIM")==0 ||
+						strcmp(skill_get_name(skill_id),"BD_ETERNALCHAOS")==0 ||
+						strcmp(skill_get_name(skill_id),"BD_DRUMBATTLEFIELD")==0 ||
+						strcmp(skill_get_name(skill_id),"BD_RINGNIBELUNGEN")==0 ||
+						strcmp(skill_get_name(skill_id),"BA_DISSONANCE")==0 ||
+						strcmp(skill_get_name(skill_id),"BA_ASSASSINCROSS")==0 ||
+						strcmp(skill_get_name(skill_id),"BA_POEMBRAGI")==0 ||
+						strcmp(skill_get_name(skill_id),"BA_APPLEIDUN")==0 ||
+						strcmp(skill_get_name(skill_id),"BA_WHISTLE")==0 ||
+						strcmp(skill_get_name(skill_id),"DC_HUMMING")==0 ||
+						strcmp(skill_get_name(skill_id),"BD_ROKISWEIL")==0 ||
+						strcmp(skill_get_name(skill_id),"DC_SERVICEFORYOU")==0 ||
+						strcmp(skill_get_name(skill_id),"DC_DONTFORGETME")==0 ||
+						strcmp(skill_get_name(skill_id),"DC_UGLYDANCE")==0 ||
+						strcmp(skill_get_name(skill_id),"DC_FORTUNEKISS")==0 ||
+						strcmp(skill_get_name(skill_id),"BD_SIEGFRIED")==0 ||
+						strcmp(skill_get_name(skill_id),"BD_INTOABYSS")==0	||
+						// strcmp(skill_get_name(skill_id),"CH_TIGERFIST")==0 ||
+						strcmp(skill_get_name(skill_id),"CH_CHAINCRUSH")==0 ||
+						strcmp(skill_get_name(skill_id),"CG_MOONLIT")==0
+						){
+							ms[i].delay = 60000;
+							ms[i].permillage = 800;
+						} else if (
+						strcmp(skill_get_name(skill_id),"WZ_FROSTNOVA")==0
+						){
+							ms[i].delay = 100;
+							ms[i].permillage = 4000;
+						} else if (
+						strcmp(skill_get_name(skill_id),"GN_SLINGITEM")==0
+						){
+							ms[i].target = MST_RANDOM; //eduardo // MST_MASTER
+							ms[i].delay = 100;
+							ms[i].permillage = 250;
+							ms[i].state = MSS_ANYTARGET;
+							// ms[i].target = MST_TARGET;
+							ms[i].cond1 = MSC_ALWAYS;
+						}
+						if (battle_config.etc_log) ShowMessage(" self");					
+					} else if (inf&INF_SUPPORT_SKILL){	
+						ms[i].target = MST_FRIEND; //eduardo // MST_MASTER
+						ms[i].cond1 = MSC_FRIENDHPLTMAXRATE;
+						ms[i].cond2 = 90;
+						if (skill_id == AL_HEAL)
+							ms[i].permillage = 5000; //Higher skill rate usage for heal. (more often)
+						else if (skill_id == ALL_RESURRECTION)
+							ms[i].cond2 = 1;
+						else ms[i].permillage = 1000;
+						//Delay: Remove the stock 5 secs and add half of the support time.
+						ms[i].delay += -5000 +(skill_get_time(skill_id, ms[i].skill_lv) + skill_get_time2(skill_id, ms[i].skill_lv))/2;
+						if (ms[i].delay < 2000)
+							ms[i].delay = 2000; //With a minimum of 2 secs.
+
+						
+						if (i+1 < MAX_MOBSKILL) { //duplicate this so it also triggers on self.
+							memcpy(&ms[i+1], &ms[i], sizeof(struct mob_skill));
+							db->maxskill = ++i;
+							ms[i].target = MST_SELF;
+							ms[i].cond1 = MSC_MYHPLTMAXRATE;
+						}
+						if (
+						strcmp(skill_get_name(skill_id),"AM_CP_HELM")==0
+						|| strcmp(skill_get_name(skill_id),"AM_CP_ARMOR")==0
+						|| strcmp(skill_get_name(skill_id),"AM_CP_SHIELD")==0
+						|| strcmp(skill_get_name(skill_id),"AM_CP_WEAPON")==0
+						){
+							ms[i].delay = 2000;
+							ms[i].permillage = 1000;
+						} else if (
+						strcmp(skill_get_name(skill_id),"WL_WHITEIMPRISON")==0
+						){
+							ms[i].delay = 500;
+							ms[i].permillage = 2000;
+						}  
+						if (battle_config.etc_log) ShowMessage(" support");
+					} else {
+						if (battle_config.etc_log) ShowMessage(" else");
+						switch (skill_id) { //Certain Special skills that are passive, and thus, never triggered.
+							case MO_TRIPLEATTACK:
+							case TF_DOUBLE:
+							case GS_CHAINACTION:
+							case SA_FREECAST:
+							case TK_POWER:
+								ms[i].state = MSS_BERSERK;
+								ms[i].target = MST_TARGET;
+								ms[i].cond1 = MSC_ALWAYS;
+								ms[i].permillage = skill_id==MO_TRIPLEATTACK?(3000-ms[i].skill_lv*100):(ms[i].skill_lv*500);
+								ms[i].delay -= 5000; //Remove the added delay as these could trigger on "all hits".
+								break;
+							default:
+								// ShowMessage("\n %s left untreated", skill_get_name(ms[i].skill_id)); //Untreated Skill
+								continue;
+						}
+					}
+
+			 		//ms[i].target = MST_TARGET;
+					ms[i].cond1 = MSC_ALWAYS;
+
+					// if( !skill_check_condition_castbegin(sd,skill_id,sd->status.skill[sk_idx].lv) )
+					// 	continue;
+
+			 		// j++;
+			 		db->maxskill++;
+			 		extra = db->maxskill;				
+				}
+			}
+
+			//passive ones
+			for (int j = 0,i=MAX_HOTKEYS;i>=0 && j< MAX_MOBSKILL ;j++) {
+				uint16 skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].skill_id;
+				uint16 sk_idx = 0;
+				if (
+					skill_id == SA_FREECAST
+					|| skill_id==GS_CHAINACTION
+					|| skill_id==TF_DOUBLE
+					|| skill_id==MO_TRIPLEATTACK
+					|| skill_id==TK_POWER
+				){
+					memset (&ms[i], 0, sizeof(struct mob_skill));
+					ms[i].skill_id = skill_id;
+					ms[i].skill_lv = sd->status.skill[skill_id].lv;
+					ms[i].state = MSS_ANY;
+					ms[i].permillage = 500*battle_config.clone_skill_rate/100;
+					ms[i].emotion = -1;
+					if (battle_config.sceasymode) ms[i].cancel = 0; else ms[i].cancel = 1;
+					ms[i].casttime = skill_castfix(&sd->bl,skill_id, ms[i].skill_lv);
+					ms[i].delay = 2000;
+					ms[i].msg_id = 0;
+					ms[i].state = MSS_BERSERK;
+					ms[i].target = MST_TARGET;
+					ms[i].cond1 = MSC_ALWAYS;
+					ms[i].permillage = skill_id==MO_TRIPLEATTACK?(3000-ms[i].skill_lv*100):(ms[i].skill_lv*500);
+					ms[i].delay -= 5000; //Remove the added delay as these could trigger on "all hits".
+
+					if (battle_config.etc_log) ShowMessage("\n $%d passive: %s (%d) lv:%d d:%d p:%d", i, skill_get_name(skill_id), skill_id, ms[i].skill_lv, ms[i].delay, ms[i].permillage);
+					
+					j++;
+					i++;
+					db->maxskill++;// = ++i;
+					extra = db->maxskill;
+				} 
+			}
+		} else {
+			//non hotkey
+			for (j = 0,i=MAX_SKILL_TREE-1;i>=0 && j< MAX_MOBSKILL ;j++) {
+				uint16 skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].skill_id;
+				//eduardo
+				uint16 sk_idx = 0;
+
+				if (!skill_id || !(sk_idx = skill_get_index(skill_id)) || sd->status.skill[sk_idx].lv < 1 ||
+					skill_get_inf2_(skill_id, { INF2_ISWEDDING, INF2_ISGUILD }) ||
+					mob_clone_disabled_skills(skill_id)
+				)
+					continue;
+
+				//Normal aggressive mob, disable skills that cannot help them fight
+				//against players (those with flags UF_NOMOB and UF_NOPC are specific
+				//to always aid players!) [Skotlex]
+				// if (!(flag&1) 
+					// &&
+					// skill_get_unit_id(skill_id) &&
+					// skill_get_unit_flag_(skill_id, { UF_NOMOB, UF_NOPC })
+					// )
+					// continue;
+
+				//eduardo ALLOW EXEPTION
+				if (db->special_state.clone == 1){
+					if (
+						skill_id == BD_LULLABY || skill_id == BD_RICHMANKIM  || skill_id == BD_ETERNALCHAOS || skill_id == BD_DRUMBATTLEFIELD || skill_id == BD_RINGNIBELUNGEN || skill_id == BD_ROKISWEIL || skill_id == BD_INTOABYSS || skill_id == BD_SIEGFRIED
+						|| skill_id == MO_CHAINCOMBO || skill_id == MO_COMBOFINISH || skill_id == MO_FINGEROFFENSIVE || skill_id == MO_EXPLOSIONSPIRITS
+						|| skill_id == GS_GLITTERING || skill_id == HT_CLAYMORETRAP
+					){
+						//ALLOW: do nothing
+						// reason: impossible to play with md around here
+					} else {
+						if( !skill_check_condition_castbegin(sd,skill_id,sd->status.skill[sk_idx].lv) )
+							continue;
+					}
+
+				} else {
+
+					/**
+					 * The clone should be able to cast the skill (e.g. have the required weapon) bugreport:5299)
+					 **/
+					if( !skill_check_condition_castbegin(sd,skill_id,sd->status.skill[sk_idx].lv) )
+						continue;
+				}
+
+				memset (&ms[i], 0, sizeof(struct mob_skill));
+				ms[i].skill_id = skill_id;
+				ms[i].skill_lv = sd->status.skill[sk_idx].lv;
+				ms[i].state = MSS_ANY;
+				ms[i].permillage = 500*battle_config.clone_skill_rate/100; //Default chance of all skills: 5%
+				
+				ms[i].emotion = -1;
+				if (battle_config.sceasymode) ms[i].cancel = 0; else ms[i].cancel = 1;
+				ms[i].casttime = skill_castfix(&sd->bl,skill_id, ms[i].skill_lv);
+				ms[i].delay = 5000+skill_delayfix(&sd->bl,skill_id, ms[i].skill_lv);
+				ms[i].msg_id = 0;
+
+				inf = skill_get_inf(skill_id);
+				if (inf&INF_ATTACK_SKILL) {		
+					ms[i].permillage = 3000;
+					ms[i].delay = 3000;
+					ms[i].target = MST_TARGET;
+					ms[i].cond1 = MSC_ALWAYS;
+					if (skill_get_range(skill_id, ms[i].skill_lv)  > 3)
+						ms[i].state = MSS_ANYTARGET;
+					else
+						ms[i].state = MSS_BERSERK;
+
+					if (
+					strcmp(skill_get_name(skill_id),"ST_FULLSTRIP")==0
+					){
+						ms[i].permillage = 3000;
+						ms[i].delay = 1000;	
+					}
+					//ST_FULLSTRIP
+					if (battle_config.etc_log) ShowMessage("\n %d skill attack: %s d:%d p:%d", i, skill_get_name(skill_id), ms[i].delay, ms[i].permillage);
+				} else if(inf&INF_GROUND_SKILL) {		
+					if (skill_get_inf2(skill_id, INF2_ISTRAP)) { //Traps!
+						ms[i].state = MSS_IDLE;
+						ms[i].target = MST_AROUND2;
+						ms[i].delay = 30000;
+						ms[i].permillage = 1000;
+					} else if (skill_get_unit_target(skill_id) == BCT_ENEMY) { //Target Enemy
+						ms[i].state = MSS_ANYTARGET;
+						ms[i].target = MST_TARGET;
+						ms[i].cond1 = MSC_ALWAYS;
+						ms[i].permillage = 800;
+					} else { //Target allies
+						ms[i].target = MST_FRIEND;
+						ms[i].cond1 = MSC_FRIENDHPLTMAXRATE;
+						ms[i].cond2 = 95;
+						ms[i].delay = 30000;
+						ms[i].permillage = 800;
+					}
+
+					if (
+					strcmp(skill_get_name(skill_id),"WZ_METEOR")==0 ||
+					strcmp(skill_get_name(skill_id),"WZ_STORMGUST")==0 ||
+					strcmp(skill_get_name(skill_id),"MG_THUNDERSTORM")==0 ||
+					strcmp(skill_get_name(skill_id),"WZ_VERMILION")==0	){
+						ms[i].permillage = 500;
+						ms[i].delay = 30000;	
+					} else if (
+					strcmp(skill_get_name(skill_id),"WL_COMET")==0		){
+						ms[i].permillage = 500;
+						ms[i].delay = 35000;	
+					} else if (
+					strcmp(skill_get_name(skill_id),"BS_HAMMERFALL")==0	||
+					strcmp(skill_get_name(skill_id),"WZ_HEAVENDRIVE")==0
+					){
+						ms[i].permillage = 2500;
+						ms[i].delay = 1000;		
+					}
+
+					if (battle_config.etc_log) ShowMessage("\n skill ground: %s d:%d p:%d", skill_get_name(skill_id), ms[i].delay, ms[i].permillage);
+				} else if (inf&INF_SELF_SKILL) {		
+					if (skill_get_inf2(skill_id, INF2_NOTARGETSELF)) { //auto-select target skill.
+						ms[i].target = MST_TARGET;
+						ms[i].cond1 = MSC_ALWAYS;
+						if (skill_get_range(skill_id, ms[i].skill_lv)  > 3) {
+							ms[i].state = MSS_ANYTARGET;
+						} else {
+							ms[i].state = MSS_BERSERK;
+						}
+					} else { //default Self skill
+						ms[i].target = MST_SELF;
+						ms[i].cond1 = MSC_MYHPLTMAXRATE;
+						ms[i].cond2 = 90;
+						ms[i].permillage = 1500;
+						//Delay: Remove the stock 5 secs and add half of the support time.
+						// ms[i].delay += -5000 +(skill_get_time(skill_id, ms[i].skill_lv) + skill_get_time2(skill_id, ms[i].skill_lv))/2;
+						// if (ms[i].delay < 5000)
+						ms[i].delay = 5000; //With a minimum of 5 secs.
+					}
+					if (
+					strcmp(skill_get_name(skill_id),"TK_READYSTORM")==0 ||
+					strcmp(skill_get_name(skill_id),"TK_READYDOWN")==0 ||
+					strcmp(skill_get_name(skill_id),"TK_READYTURN")==0 ||
+					strcmp(skill_get_name(skill_id),"TK_READYCOUNTER")==0 ||
+					strcmp(skill_get_name(skill_id),"TK_DODGE")==0 ||
+					strcmp(skill_get_name(skill_id),"WL_READING_SB")==0 ||
+					strcmp(skill_get_name(skill_id),"TK_HIGHJUMP")==0 		){
+						ms[i].permillage = 500;
+						ms[i].delay = 30000;	
+					} else if (
+					strcmp(skill_get_name(skill_id),"LK_BERSERK")==0		
+					|| strcmp(skill_get_name(skill_id),"TF_HIDING")==0
+					|| strcmp(skill_get_name(skill_id),"TF_BACKSLIDING")==0
+					|| strcmp(skill_get_name(skill_id),"AS_CLOAKING")==0
+					|| strcmp(skill_get_name(skill_id),"ST_CHASEWALK")==0
+					|| strcmp(skill_get_name(skill_id),"TK_RUN")==0
+					){
+						ms[i].permillage = 250;
+						ms[i].delay = 60000;	
+					} else if (
+					strcmp(skill_get_name(skill_id),"BS_HAMMERFALL")==0	||
+					strcmp(skill_get_name(skill_id),"MO_CHAINCOMBO")==0	
+					){
+						ms[i].permillage = 2500;
+						ms[i].delay = 1000;		
+					} else if (
+					strcmp(skill_get_name(skill_id),"BD_LULLABY")==0 ||
+					strcmp(skill_get_name(skill_id),"BD_RICHMANKIM")==0 ||
+					strcmp(skill_get_name(skill_id),"BD_ETERNALCHAOS")==0 ||
+					strcmp(skill_get_name(skill_id),"BD_DRUMBATTLEFIELD")==0 ||
+					strcmp(skill_get_name(skill_id),"BD_RINGNIBELUNGEN")==0 ||
+					strcmp(skill_get_name(skill_id),"BA_DISSONANCE")==0 ||
+					strcmp(skill_get_name(skill_id),"BA_ASSASSINCROSS")==0 ||
+					strcmp(skill_get_name(skill_id),"BA_POEMBRAGI")==0 ||
+					strcmp(skill_get_name(skill_id),"BA_APPLEIDUN")==0 ||
+					strcmp(skill_get_name(skill_id),"BA_WHISTLE")==0 ||
+					strcmp(skill_get_name(skill_id),"DC_HUMMING")==0 ||
+					strcmp(skill_get_name(skill_id),"BD_ROKISWEIL")==0 ||
+					strcmp(skill_get_name(skill_id),"DC_SERVICEFORYOU")==0 ||
+					strcmp(skill_get_name(skill_id),"DC_DONTFORGETME")==0 ||
+					strcmp(skill_get_name(skill_id),"DC_UGLYDANCE")==0 ||
+					strcmp(skill_get_name(skill_id),"DC_FORTUNEKISS")==0 ||
+					strcmp(skill_get_name(skill_id),"BD_SIEGFRIED")==0 ||
+					strcmp(skill_get_name(skill_id),"BD_INTOABYSS")==0	||
+					// strcmp(skill_get_name(skill_id),"CH_TIGERFIST")==0 ||
+					strcmp(skill_get_name(skill_id),"CH_CHAINCRUSH")==0 ||
+					strcmp(skill_get_name(skill_id),"CG_MOONLIT")==0
+					){
+						ms[i].delay = 60000;
+						ms[i].permillage = 800;
+					} else if (
+					strcmp(skill_get_name(skill_id),"WZ_FROSTNOVA")==0
+					){
+						ms[i].delay = 100;
+						ms[i].permillage = 4000;
+					} else if (
+					strcmp(skill_get_name(skill_id),"GN_SLINGITEM")==0
+					){
+						ms[i].target = MST_RANDOM; //eduardo // MST_MASTER
+						ms[i].delay = 100;
+						ms[i].permillage = 250;
+						ms[i].state = MSS_ANYTARGET;
+						ms[i].cond1 = MSC_ALWAYS;
+					}
+
+					if (battle_config.etc_log) ShowMessage("\n skill self: %s d:%d p:%d", skill_get_name(skill_id), ms[i].delay, ms[i].permillage);
+				} else if (inf&INF_SUPPORT_SKILL) {		
+					ms[i].target = MST_FRIEND; //eduardo // MST_MASTER
+					ms[i].cond1 = MSC_FRIENDHPLTMAXRATE;
+					ms[i].cond2 = 90;
+					if (skill_id == AL_HEAL)
+						ms[i].permillage = 5000; //Higher skill rate usage for heal. (more often)
+					else if (skill_id == ALL_RESURRECTION)
+						ms[i].cond2 = 1;
+					else ms[i].permillage = 1000;
+					//Delay: Remove the stock 5 secs and add half of the support time.
+					ms[i].delay += -5000 +(skill_get_time(skill_id, ms[i].skill_lv) + skill_get_time2(skill_id, ms[i].skill_lv))/2;
+					if (ms[i].delay < 2000)
+						ms[i].delay = 2000; //With a minimum of 2 secs.
+
+					
+					if (i+1 < MAX_MOBSKILL) { //duplicate this so it also triggers on self.
+						memcpy(&ms[i+1], &ms[i], sizeof(struct mob_skill));
+						db->maxskill = ++i;
+						ms[i].target = MST_SELF;
+						ms[i].cond1 = MSC_MYHPLTMAXRATE;
+					}
+					if (
+					strcmp(skill_get_name(skill_id),"AM_CP_HELM")==0
+					|| strcmp(skill_get_name(skill_id),"AM_CP_ARMOR")==0
+					|| strcmp(skill_get_name(skill_id),"AM_CP_SHIELD")==0
+					|| strcmp(skill_get_name(skill_id),"AM_CP_WEAPON")==0
+					){
+						ms[i].delay = 2000;
+						ms[i].permillage = 1000;
+					} else if (
+					strcmp(skill_get_name(skill_id),"WL_WHITEIMPRISON")==0
+					){
+						ms[i].delay = 500;
+						ms[i].permillage = 1000;
+					} 
+					if (battle_config.etc_log) ShowMessage("\n skill support: %s d:%d p:%d", skill_get_name(skill_id), ms[i].delay, ms[i].permillage);
+				} else {		
+					if (battle_config.etc_log) ShowMessage("\n skill else: %s %d", skill_get_name(skill_id), i);
+					switch (skill_id) { //Certain Special skills that are passive, and thus, never triggered.
+						case MO_TRIPLEATTACK:
+						case TF_DOUBLE:
+						case GS_CHAINACTION:
+						case SA_FREECAST:
+						case TK_POWER:
+							ms[i].state = MSS_BERSERK;
+							ms[i].target = MST_TARGET;
+							ms[i].cond1 = MSC_ALWAYS;
+							ms[i].permillage = skill_id==MO_TRIPLEATTACK?(3000-ms[i].skill_lv*100):(ms[i].skill_lv*500);
+							ms[i].delay -= 5000; //Remove the added delay as these could trigger on "all hits".
+							break;
+						default:
+							continue;
+					}
+				}
+
+				//eduardo
+				if (!ms[i].permillage) ms[i].permillage = ms[i].permillage*battle_config.clone_skill_rate/100;
+				if (!ms[i].delay) ms[i].delay = ms[i].delay*battle_config.mob_skill_delay/100;
+				
+				if (battle_config.mvp_raid_mode){
+					if (inf&INF_ATTACK_SKILL){
+						ms[i].permillage = (int)ms[i].permillage * (int)battle_config.mvp_raid_mode_m;
+						ms[i].delay = (int)ms[i].delay / (int)battle_config.mvp_raid_mode_m;
+						if (battle_config.etc_log) ShowMessage("	-> %d", ms[i].permillage);
+					}
+				}
+
+				if (ms[i].permillage > 500)
+					ms[i].permillage = ms[i].permillage + rnd_value(-100,100);
+				if (battle_config.etc_log) ShowMessage("	=> %d", ms[i].permillage);				
+
+				db->maxskill = ++i;
+			}
+		}
+	}
+
+	/**
+	 * We grant the session it's fd value back.
+	 **/
+	sd->fd = fd;
+
+	//Finally, spawn it.
+	md = mob_once_spawn_sub(&sd->bl, m, x, y, "--en--", mob_id, event, SZ_SMALL, AI_NONE);
+	if (!md) return 0; //Failed?
+
+	md->klas = db->klas;
+	md->klase = db->klase;
+	md->cloneskill_idx = db->cloneskill_idx;
+	md->reproduceskill_idx = db->reproduceskill_idx;
+	md->nameid_wl = db->nameid_wl;
+	
+	//eduardo
+	memcpy(&md->skill2, &ms, sizeof(struct s_skill));
+
+	md->special_state.clone = 1;
+	md->skill_id_old = 0;
+	md->skill_lv_old = 0;
+	md->special_state.restart_full_recover = sd->special_state.restart_full_recover;
+	md->id_src = master_id;	//the one who summons sclone
+	md->charid = sd->status.char_id;
+	bool exist = false;
+	for (int i = 0; i < teammates.size(); i++) {
+		if (teammates[i] == md->charid) exist = true;
+	}
+	if (!exist) {
+		teammates.push_back(md->charid);
+	} else {
+		return 0;
+	}
+
+	md->attProb = attProb;
+	md->chaseRate = cR;
+	md->mob_id2 = mob_id;
+	md->truest = truest;
+	map_id2sd(master_id)->partners.push_back(mob_id);
+	
+	if (battle_config.etc_log) 
+	ShowMessage("\nmob_id %d master_id %d md-> %d jmlPartner %d jmlPartner2 %d char_id %d truest %d char's %d Aid: %d blid %d \n", 
+						mob_id, 
+								master_id, 
+										md->attProb, 
+												teammates.size(),
+													map_id2sd(master_id)->partners.size(),
+															map_id2sd(master_id)->status.char_id,
+																			truest,
+																					md->truest,
+																						map_charid2sd(truest)->status.account_id,
+																													md->bl.id
+	);
+
+	if (master_id || flag || duration) { //Further manipulate crafted char.
+		if (flag&1) //Friendly Character
+			md->special_state.ai = AI_ATTACK;
+		if (master_id) {//Attach to Master
+			md->master_id = master_id;
+		}
+		if (duration) //Auto Delete after a while.
+		{
+			if( md->deletetimer != INVALID_TIMER )
+				delete_timer(md->deletetimer, mob_timer_delete);
+			md->deletetimer = add_timer (gettick() + duration, mob_timer_delete, md->bl.id, 0);
+		}
+	}
+
+	mob_spawn(md);
+	md->bl.slaveclone = true;
+
+	clif_viewpoint(map_id2sd(md->master_id), 1, 0, md->bl.x, md->bl.y, md->mob_id, 0xFFFFFF);
+	
+	//eduardo
+	//pet clone	
+	if (battle_config.slaveclonepet){
+		if (map_charid2sd(md->charid)->pd){
+			intif_create_pet(md->bl.id, md->mob_id, 
+				map_charid2sd(md->charid)->pd->pet.class_, 
+				map_charid2sd(md->charid)->pd->pet.level, 
+				map_charid2sd(md->charid)->pd->pet.egg_id, 
+				0, 
+				map_charid2sd(md->charid)->pd->pet.intimate, 
+				100, 0, 0, 
+				map_charid2sd(md->charid)->pd->db->jname);
+		}
+	}
+
+	map_id2sd(master_id)->partners2.push_back(md);
+
+	teammates_bl.push_back(md->bl.id);
+	map_id2sd(master_id)->teammates = teammates;
+	map_id2sd(master_id)->partners_blid.push_back(md->bl.id);
+	map_id2sd(master_id)->partners_id.push_back(md->charid);
+	map_id2sd(master_id)->partners_bl.push_back(&md->bl);
+
+	//eduardo
+	//goal: summon offline sd. Chaotic evil, and leaking security (account_id)
+	//hypothetically it works, but without skills (too much to be saved on a txt?). Case: sclone-ing different char 
+	//myfile.open ("partners.txt"/*, std::ios_base::app*/);
+	//myfile<<md->mob_id<<","<<md->name<<","<<db->lv<<","<<status->max_hp<<","<<status->max_sp<<","<<status->rhw.range<<","<<status->rhw.atk<<","<<status->rhw.atk2<<","<<status->def<<","<<status->mdef<<","<<status->mdef<<","<<status->str<<","<<status->agi<<","<<status->vit<<","<<status->int_<<","<<status->dex<<","<<status->luk<<","<<db->range2<<","<<db->range3<<","<<"0x01"<<","<<""<<","<<status->mode<<","<<status->aspd_rate<<","<<status->speed<<","<<status->adelay<<","<<status->amotion<<","<<status->dmotion<<","<<truest<<","<<md->bl.id<<","<<map_charid2sd(md->charid)->pd->pet.name<<","<<md->attProb<<"\n";
+	//myfile.close();
 
 	return md->bl.id;
 }
@@ -4158,11 +6673,26 @@ static bool mob_parse_dbrow(char** str)
 	status->max_hp = atoi(str[5]);
 	status->max_sp = atoi(str[6]);
 
-	exp = (double)atoi(str[7]) * (double)battle_config.base_exp_rate / 100.;
+	//eduardo
+	if (battle_config.more_exp_rate){
+		exp = round(entry.lv/battle_config.more_exp_rate_f) * (double)atoi(str[7]) * (double)battle_config.base_exp_rate/100;
+		entry.base_exp = (unsigned int)cap_value(exp, 0, UINT_MAX);
+
+		exp = round(entry.lv/battle_config.more_exp_rate_f) * (double)atoi(str[8]) * (double)battle_config.job_exp_rate/100;
+		entry.job_exp = (unsigned int)cap_value(exp, 0, UINT_MAX);
+	} else {
+		exp = 1 * (double)atoi(str[7]) * (double)battle_config.base_exp_rate / 100.;
+		entry.base_exp = (unsigned int)cap_value(exp, 0, UINT_MAX);
+
+		exp = 1 * (double)atoi(str[8]) * (double)battle_config.job_exp_rate / 100.;
+		entry.job_exp = (unsigned int)cap_value(exp, 0, UINT_MAX);
+	}
+
+	/*exp = (double)atoi(str[7]) * (double)battle_config.base_exp_rate / 100.;
 	entry.base_exp = (unsigned int)cap_value(exp, 0, UINT_MAX);
 
 	exp = (double)atoi(str[8]) * (double)battle_config.job_exp_rate / 100.;
-	entry.job_exp = (unsigned int)cap_value(exp, 0, UINT_MAX);
+	entry.job_exp = (unsigned int)cap_value(exp, 0, UINT_MAX);*/
 
 	status->rhw.range = atoi(str[9]);
 #ifdef RENEWAL
@@ -5661,7 +8191,7 @@ void mob_reload_itemmob_data(void) {
  * @return 0
  */
 static int mob_reload_sub( struct mob_data *md, va_list args ){
-	bool slaves_only = va_arg( args, int ) != 0;
+	bool slaves_only = va_arg( args, int )/* != 0 && bool slaves_only = va_arg(args, int) < 100*/;
 
 	if( slaves_only ){
 		if( md->master_id == 0 ){

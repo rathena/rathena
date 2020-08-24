@@ -44,7 +44,9 @@ void map_msg_reload(void);
 #define AREA_SIZE battle_config.area_size
 #define DAMAGELOG_SIZE 30
 #define LOOTITEM_SIZE 10
-#define MAX_MOBSKILL 50		//Max 128, see mob skill_idx type if need this higher
+//eduardo
+#define MAX_MOBSKILL 128
+// #define MAX_MOBSKILL 50		//Max 128, see mob skill_idx type if need this higher
 #define MAX_MOB_LIST_PER_MAP 128
 #define MAX_EVENTQUEUE 2
 #define MAX_EVENTTIMER 32
@@ -52,6 +54,8 @@ void map_msg_reload(void);
 #define MIN_FLOORITEM 2
 #define MAX_FLOORITEM START_ACCOUNT_NUM
 #define MAX_LEVEL 200
+//eduardo
+// #define MAX_LEVEL 1000
 #define MAX_DROP_PER_MAP 48
 #define MAX_IGNORE_LIST 20 	// official is 14
 #define MAX_VENDING 12
@@ -390,6 +394,9 @@ struct block_list {
 	int id;
 	int16 m,x,y;
 	enum bl_type type;
+
+	//eduardo
+	bool slaveclone;
 };
 
 
@@ -1077,6 +1084,8 @@ int map_eraseallipport(void);
 void map_addiddb(struct block_list *);
 void map_deliddb(struct block_list *bl);
 void map_foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...);
+//eduardo
+void map_foreachpc2(int(*func)(struct mob_data* md, va_list args), ...);
 void map_foreachmob(int (*func)(struct mob_data* md, va_list args), ...);
 void map_foreachnpc(int (*func)(struct npc_data* nd, va_list args), ...);
 void map_foreachregen(int (*func)(struct block_list* bl, va_list args), ...);

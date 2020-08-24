@@ -20,6 +20,8 @@
 #include "intif.hpp"
 #include "itemdb.hpp"
 #include "log.hpp"
+//eduardo
+#include "map.hpp"
 #include "npc.hpp"
 #include "party.hpp"
 #include "pc.hpp"
@@ -199,6 +201,10 @@ int hom_dead(struct homun_data *hd)
 {
 	//There's no intimacy penalties on death (from Tharis)
 	struct map_session_data *sd = hd->master;
+	//eduardo
+	struct mob_data *md;
+	md = hd->master2;
+	if (md) md->homid = 0;
 
 	clif_emotion(&hd->bl, ET_KEK);
 
@@ -206,10 +212,15 @@ int hom_dead(struct homun_data *hd)
 	hom_hungry_timer_delete(hd);
 	hd->homunculus.hp = 0;
 
-	if (!sd) //unit remove map will invoke unit free
-		return 3;
+	if (!md){
+		if (!sd) {//unit remove map will invoke unit free
+			return 3;
+		}
+	}
 
-	clif_emotion(&sd->bl, ET_CRY);
+	// clif_emotion(&sd->bl, ET_CRY);
+	if (sd)	clif_emotion(&sd->bl, ET_CRY);
+	if (md)	clif_emotion(&md->bl, ET_CRY);
 	//Remove from map (if it has no intimacy, it is auto-removed from memory)
 	return 3;
 }
@@ -244,6 +255,36 @@ int hom_vaporize(struct map_session_data *sd, int flag)
 		hd->blockskill.shrink_to_fit();
 	}
 	clif_hominfo(sd, sd->hd, 0);
+	hom_save(hd);
+	return unit_remove_map(&hd->bl, CLR_OUTSIGHT);
+}
+
+//eduardo
+int hom_vaporize2(struct mob_data *md, int flag)
+{
+	struct homun_data *hd;
+
+	nullpo_ret(md);
+
+	hd = md->hd;
+	if (!hd || hd->homunculus.vaporize)
+		return 0;
+
+	if (status_isdead(&hd->bl))
+		return 0; //Can't vaporize a dead homun.
+
+	if (flag == HOM_ST_REST && get_percentage(hd->battle_status.hp, hd->battle_status.max_hp) < 80)
+		return 0;
+
+	hd->regen.state.block = 3; //Block regen while vaporized.
+	//Delete timers when vaporized.
+	hom_hungry_timer_delete(hd);
+	hd->homunculus.vaporize = flag ? flag : HOM_ST_REST;
+	if (battle_config.hom_setting&HOMSET_RESET_REUSESKILL_VAPORIZED) {
+		hd->blockskill.clear();
+		hd->blockskill.shrink_to_fit();
+	}
+	// clif_hominfo(sd, sd->hd, 0);
 	hom_save(hd);
 	return unit_remove_map(&hd->bl, CLR_OUTSIGHT);
 }
@@ -1054,6 +1095,61 @@ void hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 	hd->masterteleport_timer = INVALID_TIMER;
 }
 
+
+void hom_alloc2(struct mob_data *md, struct s_homunculus *hom)
+{
+	struct homun_data *hd;
+	int i = 0;
+
+	nullpo_retv(md);
+
+	if (md->hd){
+		Assert((md->homid || md->hd) || md->hd->master2);
+	}
+
+	i = hom_search(hom->class_, HOMUNCULUS_CLASS);
+	if (i < 0) {
+		ShowError("hom_alloc2: unknown class [%d] for homunculus '%s', requesting deletion.\n", hom->class_, hom->name);
+		md->homid = 0;
+		intif_homunculus_requestdelete(hom->hom_id);
+		return;
+	}
+	md->hd = hd = (struct homun_data*)aCalloc(1, sizeof(struct homun_data));
+	hd->bl.type = BL_HOM;
+	hd->bl.id = npc_get_new_npc_id();
+
+	hd->master = map_charid2sd(md->charid);
+	hd->master2 = md;
+	hd->homunculusDB = &homunculus_db[i];
+	memcpy(&hd->homunculus, hom, sizeof(struct s_homunculus));
+	hd->exp_next = hexptbl[hd->homunculus.level - 1];
+
+	status_set_viewdata(&hd->bl, hd->homunculus.class_);
+	status_change_init(&hd->bl);
+	unit_dataset(&hd->bl);
+	hd->ud.dir = md->ud.dir;
+
+	md->hd->homunculus.vaporize = HOM_ST_ACTIVE;
+	// ShowMessage("\n prev %d ", md->hd->bl.prev);
+	if (md->hd->bl.prev == NULL)
+	{	
+		// Find a random valid pos around the player
+		hd->bl.m = md->bl.m;
+		hd->bl.x = md->bl.x;
+		hd->bl.y = md->bl.y;
+		unit_calc_pos(&hd->bl, md->bl.x, md->bl.y, md->ud.dir);
+		hd->bl.x = hd->ud.to_x;
+		hd->bl.y = hd->ud.to_y;
+	} 
+	else unit_warp(&md->hd->bl,md->bl.m, md->bl.x, md->bl.y,CLR_OUTSIGHT);
+
+	map_addiddb(&hd->bl);
+	status_calc_homunculus(hd, SCO_FIRST);
+
+	hd->hungry_timer = INVALID_TIMER;
+	hd->masterteleport_timer = INVALID_TIMER;
+}
+
 /**
 * Init homunculus timers
 * @param hd
@@ -1064,6 +1160,17 @@ void hom_init_timers(struct homun_data * hd)
 		int hunger_delay = (battle_config.homunculus_starving_rate > 0 && hd->homunculus.hunger <= battle_config.homunculus_starving_rate) ? battle_config.homunculus_starving_delay : hd->homunculusDB->hungryDelay; // Every 20 seconds if hunger <= 10
 
 		hd->hungry_timer = add_timer(gettick()+hunger_delay,hom_hungry,hd->master->bl.id,0);
+	}
+	hd->regen.state.block = 0; //Restore HP/SP block.
+	hd->masterteleport_timer = INVALID_TIMER;
+}
+
+void hom_init_timers2(struct homun_data * hd)
+{
+	//eduardo
+	if (hd->master2) {
+		if (hd->hungry_timer == INVALID_TIMER)
+			hd->hungry_timer = add_timer(gettick() + hd->homunculusDB->hungryDelay, hom_hungry, hd->master2->bl.id, 0);
 	}
 	hd->regen.state.block = 0; //Restore HP/SP block.
 	hd->masterteleport_timer = INVALID_TIMER;
@@ -1116,6 +1223,153 @@ bool hom_call(struct map_session_data *sd)
 	return true;
 }
 
+bool hom_call2(struct mob_data *md)
+{
+	struct homun_data *hd_src = NULL;
+	struct map_session_data *sdm, *sdsrc;
+
+	sdm = map_id2sd(md->master_id);
+	sdsrc = map_charid2sd(md->charid);
+	if (sdsrc && !sdsrc->hd){
+		clif_displaymessage(sdm->fd, "Source-copy Homunculus not found, so yeah");	
+		return false;
+	} else if (sdsrc && sdsrc->hd) {
+		hd_src = sdsrc->hd;
+	}
+
+	if (md->homid && !md->hd){
+		//impossible to reach here
+		return intif_homunculus_requestload(md->bl.id, md->homid) > 0;
+	} 
+
+	// ShowMessage("\nke %d %d \n", md->homid, md->hd);
+	if (!hd_src) return false; else {
+		// force hom_create_request
+		struct s_homunculus homun;
+		int i;
+		i = hom_search(hd_src->homunculus.class_,HOMUNCULUS_CLASS);
+		if(i < 0)
+			return false;
+		memset(&homun, 0, sizeof(struct s_homunculus));
+		safestrncpy(homun.name, status_get_name(&hd_src->bl), NAME_LENGTH-1);
+		homun.class_ = hd_src->homunculus.class_;
+		homun.hunger = rnd_value(32,80);
+		homun.intimacy = rnd_value(90000,100000);
+		homun.char_id = md->bl.id;
+		homun.level = status_get_lv(&hd_src->bl);
+		homun.max_sp = hd_src->homunculus.max_sp;
+		homun.sp = homun.max_sp;
+		homun.max_hp = hd_src->homunculus.max_hp;
+		homun.hp = homun.max_hp;
+		homun.str = 10 * hd_src->base_status.str;
+		homun.agi = 10 * hd_src->base_status.agi;
+		homun.vit = 10 * hd_src->base_status.vit;
+		homun.int_= 10 * hd_src->base_status.int_;
+		homun.dex = 10 * hd_src->base_status.dex;
+		homun.luk = 10 * hd_src->base_status.luk;
+		intif_homunculus_create(homun.char_id, &homun);
+	} 	
+	
+
+	return true;
+}
+
+//eduardo
+int counter3 = 0;
+
+//eduardo
+int homskill_use(struct homun_data *hd, t_tick tick, int event, int tid)
+{
+	struct block_list *tbl;
+	uint16 skill_id;
+	uint8 skill_lv, skill_fl;
+	int casttime, inf;
+
+	if (!hom_is_active(hd)) return -1;
+	if (hd->master2 && hom_is_active(hd))
+		memcpy(&hd->homunculus.hskill
+			,&hd->master2->hd->homunculus.hskill
+			,sizeof(struct s_skill));
+
+	if (!battle_config.mob_skill_rate) { return 0; }
+	if (hd->ud.skilltimer != INVALID_TIMER) { return 0; }
+	if (event == -1 && DIFF_TICK(hd->ud.canact_tick, tick) > 0)
+		return 0;
+
+	// unsigned int intimacy = 0;
+	// short idx = -1;
+
+	int j = rnd() % MAX_HOMUNSKILL;	//because hd->homunculus.hskill doesnt store mutated homun skills idk why
+
+	if (!hd) return -1;
+
+	if (hd->homunculus.hskill[j].id>0){
+		// ShowMessage("\n homcasts: %d %d %d to:%d slotnum%d self%d ", MAX_HOM_SKILL_TREE, MAX_HOMUNCULUS_CLASS, sizeof(hd->homunculus.hskill), tid, j,hd->bl.id);
+		skill_id = hd->homunculus.hskill[j].id;
+
+		if (
+			skill_id==HLIF_BRAIN || skill_id==HAMI_SKIN || skill_id==HVAN_INSTRUCT
+		){
+			return -1;
+		} 
+
+		skill_lv = hd->homunculus.hskill[j].lv;
+		skill_fl = hd->homunculus.hskill[j].flag;
+		casttime = skill_castfix(&hd->bl, skill_id, skill_lv);
+
+		inf = skill_get_inf(skill_id);
+		if (inf&INF_ATTACK_SKILL) {
+			map_freeblock_lock();
+			tbl = map_id2bl(tid);	if (!tbl) { return -1; }
+			if (skill_id != 0){		
+				unit_skilluse_id2(&hd->bl, tid, skill_id, skill_lv, casttime, false);
+			}
+			map_freeblock_unlock();
+		} else if(inf&INF_GROUND_SKILL) {
+			tbl = map_id2bl(tid);
+			map_freeblock_lock();
+			if (skill_id != 0){
+				if (
+					!battle_check_range(&hd->bl, tbl, skill_get_range2(&hd->bl, skill_id, skill_lv, true))
+					|| !unit_skilluse_pos2(&hd->bl, tbl->x+rnd_value(-2,2), tbl->y+rnd_value(-2,2), skill_id, skill_lv, casttime, false)
+				){
+					map_freeblock_unlock();
+					return -1;
+				}
+			}
+			map_freeblock_unlock();
+		} else if (inf&INF_SELF_SKILL) {
+			tid = hd->bl.id;
+			map_freeblock_lock();
+			tbl = map_id2bl(tid);	if (!tbl) { return -1; }
+			if (skill_id != 0){
+				unit_skilluse_id2(&hd->bl, tid, skill_id, skill_lv, casttime, false);	
+			}
+			map_freeblock_unlock();
+		} else if (inf&INF_SUPPORT_SKILL) {
+			if (hd->master2){
+				tid = hd->master2->bl.id;
+			} else if (hd->master){
+				tid = hd->master->bl.id;
+			}
+			map_freeblock_lock();
+			tbl = map_id2bl(tid);	if (!tbl) { return -1; }
+			if (skill_id != 0){
+				unit_skilluse_id2(&hd->bl, tid, skill_id, skill_lv, casttime, false);
+			}
+			map_freeblock_unlock();
+		} else return -1;		
+
+		return 1;
+	} else {
+		counter3++;
+		if (counter3%5 == 0){
+			return 0;
+		} else homskill_use(hd, gettick(), -1, tid);
+	}
+	return 0;
+}
+
 /**
  * Receive homunculus data from char server
  * @param account_id : owner account_id of the homon
@@ -1129,7 +1383,86 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 	struct homun_data *hd;
 	bool created = false;
 
+	//eduardo
+	struct mob_data *md;
 	sd = map_id2sd(account_id);
+	md = BL_CAST(BL_MOB, map_id2bl(account_id));
+
+	if(!sd && !md){
+		return 0;
+	} else if (md && !sd){
+		if (!flag) { // Failed to load
+			md->homid = 0;
+			return 0;
+		} 
+		
+		if (!md->homid) { //Hom just created.
+			md->homid = sh->hom_id;
+			created = true;
+		}
+
+		if (md->hd) { //uh? Overwrite the data.
+			memcpy(&md->hd->homunculus, sh, sizeof(struct s_homunculus));
+			unit_warp(&md->hd->bl,md->bl.m, md->bl.x, md->bl.y,CLR_OUTSIGHT);
+		} else {
+			hom_alloc2(md, sh);
+		}
+
+		hd = md->hd;
+		// if (created)	
+			status_percent_heal(&hd->bl, 100, 100); //because with bl.id, I will always create new ones
+
+		if(hd && hd->homunculus.hp && !hd->homunculus.vaporize && hd->bl.prev == NULL && md->bl.prev != NULL)
+		{
+			if(map_addblock(&hd->bl))
+				return 0;
+			clif_spawn(&hd->bl);
+			clif_send_homdata2(md,SP_ACK,0);
+			// clif_hominfo(map_id2sd(md->master_id),hd,1);
+			// clif_hominfo(map_id2sd(md->master_id),hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
+			clif_homskillinfoblock(map_id2sd(md->master_id));
+			//hom_init_timers2(hd);
+		}
+	} else if (!md && sd){
+		if (sd->status.char_id != sh->char_id)
+		{
+			if (sd->status.hom_id == sh->hom_id)
+				sh->char_id = sd->status.char_id; //Correct char id.
+			else
+				return 0;
+		}
+		if (!flag) { // Failed to load
+			sd->status.hom_id = 0;
+			return 0;
+		}
+		if (!sd->status.hom_id) { //Hom just created.
+			sd->status.hom_id = sh->hom_id;
+			created = true;
+		}
+		if (sd->hd) //uh? Overwrite the data.
+			memcpy(&sd->hd->homunculus, sh, sizeof(struct s_homunculus));
+		else
+			hom_alloc(sd, sh);
+
+		hd = sd->hd;
+
+		if (created)
+			status_percent_heal(&hd->bl, 100, 100);
+
+		if(hd && hd->homunculus.hp && !hd->homunculus.vaporize && hd->bl.prev == NULL && sd->bl.prev != NULL)
+		{
+			if(map_addblock(&hd->bl))
+				return 0;
+			clif_spawn(&hd->bl);
+			clif_send_homdata(sd,SP_ACK,0);
+			clif_hominfo(sd,hd,1);
+			clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
+			clif_homskillinfoblock(sd);
+			hom_init_timers(hd);
+		}
+	}
+
+	/*sd = map_id2sd(account_id);
 	if(!sd)
 		return 0;
 	if (sd->status.char_id != sh->char_id)
@@ -1167,7 +1500,7 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 		clif_homskillinfoblock(sd);
 		hom_init_timers(hd);
-	}
+	}*/
 	return 1;
 }
 
@@ -1246,6 +1579,41 @@ int hom_ressurect(struct map_session_data* sd, unsigned char per, short x, short
 	if (!hd->bl.prev)
 	{	//Add it back to the map.
 		hd->bl.m = sd->bl.m;
+		hd->bl.x = x;
+		hd->bl.y = y;
+		if(map_addblock(&hd->bl))
+			return 0;
+		clif_spawn(&hd->bl);
+	}
+	return status_revive(&hd->bl, per, 0);
+}
+
+//eduardo
+int hom_ressurect2(struct mob_data* md, unsigned char per, short x, short y)
+{
+	struct homun_data* hd;
+
+	nullpo_ret(md);
+
+	if (!md->homid)
+		return 0; // no homunculus
+
+	if (!md->hd) //Load homun data;
+		return intif_homunculus_requestload(md->bl.id, md->homid);
+
+	hd = md->hd;
+
+	if (hd->homunculus.vaporize == HOM_ST_REST)
+		return 0; // vaporized homunculi need to be 'called'
+
+	if (!status_isdead(&hd->bl))
+		return 0; // already alive
+
+	hom_init_timers(hd);
+
+	if (!hd->bl.prev)
+	{	//Add it back to the map.
+		hd->bl.m = md->bl.m;
 		hd->bl.x = x;
 		hd->bl.y = y;
 		if(map_addblock(&hd->bl))

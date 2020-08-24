@@ -67,6 +67,8 @@ struct homun_data {
 	int hungry_timer;	//[orn]
 	unsigned int exp_next;
 	std::vector<uint16> blockskill;	// [orn]
+	//eduardo
+	struct mob_data *master2; //pointer back to its slaveclone master
 };
 
 #define MAX_HOM_SKILL_REQUIRE 5
@@ -138,6 +140,9 @@ enum e_homun_grade : uint8 {
 	HOMGRADE_LOYAL,
 };
 
+//eduardo
+int homskill_use(struct homun_data *hd,t_tick tick,int event,int tid);
+
 /// Check Homunculus Class ID
 #define homdb_checkid(id) ((id) >=  HM_CLASS_BASE && (id) <= HM_CLASS_MAX)
 
@@ -160,10 +165,14 @@ int hom_mutate(struct homun_data *hd,int homun_id);
 void hom_heal(struct homun_data *hd);
 int hom_vaporize(struct map_session_data *sd, int flag);
 int hom_ressurect(struct map_session_data *sd, unsigned char per, short x, short y);
+//eduardo
+int hom_vaporize2(struct mob_data *md, int flag);
 void hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp);
 void hom_reset_stats(struct homun_data *hd);
 int hom_shuffle(struct homun_data *hd); // [Zephyrus]
 void hom_save(struct homun_data *hd);
+//eduardo
+bool hom_call2(struct mob_data *md);
 bool hom_call(struct map_session_data *sd);
 bool hom_create_request(struct map_session_data *sd, int class_);
 int hom_search(int key,int type);
@@ -178,6 +187,8 @@ int hom_increase_intimacy(struct homun_data * hd, unsigned int value);
 int hom_decrease_intimacy(struct homun_data * hd, unsigned int value);
 int hom_skill_tree_get_max(int skill_id, int b_class);
 void hom_init_timers(struct homun_data * hd);
+//eduardo
+void hom_init_timers2(struct homun_data * hd);
 void hom_reload_skill(void);
 void hom_reload(void);
 

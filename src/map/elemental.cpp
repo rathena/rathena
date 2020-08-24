@@ -49,6 +49,93 @@ struct view_data * elemental_get_viewdata(int class_) {
 	return &elemental_db[i].vd;
 }
 
+//eduardo
+int elemental_create2(struct mob_data *md, int class_, unsigned int lifetime) {
+	struct s_elemental ele;
+	struct s_elemental_db *db;
+	int i;
+
+	nullpo_retr(1, md);
+	
+	if ((i = elemental_search_index(class_)) < 0) {
+		return 0;
+	}
+
+	db = &elemental_db[i];
+	memset(&ele, 0, sizeof(struct s_elemental));
+
+	if (md) ele.char_id = md->bl.id;
+	ele.class_ = class_;
+	ele.mode = EL_MODE_PASSIVE; // Initial mode
+	i = db->status.size + 1; // summon level
+				//[(Caster's Max HP/ 3 ) + (Caster's INT x 10 )+ (Caster's Job Level x 20 )] x [(Elemental Summon Level + 2) / 3]
+	ele.hp = ele.max_hp = 5 * (md->status.max_hp / 3 + md->status.int_ * 10 + md->status.jlvl * 20) * ((i + 2) / 3);
+	//Caster's Max SP /4
+	ele.sp = ele.max_sp = 2 * md->status.max_sp / 4;
+	//Caster's [ Max SP / (18 / Elemental Summon Skill Level) 1- 100 ]
+	ele.atk = 2 * (md->status.max_sp / (18 / i) * 1 - 100);
+	//Caster's [ Max SP / (18 / Elemental Summon Skill Level) ]
+	ele.atk2 = 2* md->status.max_sp / (18 / i);
+	//Caster's HIT + (Caster's Base Level)
+	ele.hit = md->status.hit + md->status.blvl;
+	//[Elemental Summon Skill Level x (Caster's INT / 2 + Caster's DEX / 4)]
+	ele.matk = i * (md->status.int_ / 2 + md->status.dex / 4);
+	//150 + [Caster's DEX / 10] + [Elemental Summon Skill Level x 3 ]
+	ele.amotion = 150 + md->status.dex / 10 + i * 3;
+	//Caster's DEF + (Caster's Base Level / (5 - Elemental Summon Skill Level)
+	ele.def = md->status.def + md->status.blvl / (5 - i);
+	//Caster's MDEF + (Caster's INT / (5 - Elemental Summon Skill Level)
+	ele.mdef = md->status.mdef + md->status.int_ / (5 - i);
+	//Caster's FLEE + (Caster's Base Level / (5 - Elemental Summon Skill Level)
+	ele.flee = md->status.flee + md->status.blvl / (5 - i);
+
+	//per individual bonuses
+	switch (db->class_) {
+	case ELEMENTALID_AGNI_S:	case ELEMENTALID_AGNI_M:
+	case ELEMENTALID_AGNI_L: //ATK + (Summon Agni Skill Level x 20) / HIT + (Summon Agni Skill Level x 10)
+		ele.atk += i * 20;
+		ele.atk2 += i * 20;
+		ele.hit += i * 10;
+		break;
+	case ELEMENTALID_AQUA_S:	case ELEMENTALID_AQUA_M:
+	case ELEMENTALID_AQUA_L: //MDEF + (Summon Aqua Skill Level x 10) / MATK + (Summon Aqua Skill Level x 20)
+		ele.mdef += i * 10;
+		ele.matk += i * 20;
+		break;
+	case ELEMENTALID_VENTUS_S:	case ELEMENTALID_VENTUS_M:
+	case ELEMENTALID_VENTUS_L: //FLEE + (Summon Ventus Skill Level x 20) / MATK + (Summon Ventus Skill Level x 10)
+		ele.flee += i * 20;
+		ele.matk += i * 10;
+		break;
+	case ELEMENTALID_TERA_S:	case ELEMENTALID_TERA_M:
+	case ELEMENTALID_TERA_L: //DEF + (Summon Tera Skill Level x 25) / ATK + (Summon Tera Skill Level x 5)
+		ele.def += i * 25;
+		ele.atk += i * 5;
+		ele.atk2 += i * 5;
+		break;
+	}
+
+	//if( (i=pc_checkskill(sd,SO_EL_SYMPATHY)) > 0 ){
+	ele.hp = ele.max_hp += ele.max_hp * 5 * i / 100;
+	ele.sp = ele.max_sp += ele.max_sp * 5 * i / 100;
+	ele.atk += 25 * i;
+	ele.atk2 += 25 * i;
+	ele.matk += 25 * i;
+	//}
+
+	ele.life_time = lifetime;
+
+	// Request Char Server to create this elemental
+	// if (md->status.ele_id > 0) {
+		// ShowMessage("\n md requests el %d ", md->status.ele_id);
+		//elemental_data_received();
+		// intif_elemental_request(md->status.ele_id, md->bl.id);
+	// } //else 
+	intif_elemental_create(&ele);
+
+	return 1;
+}
+
 int elemental_create(struct map_session_data *sd, int class_, unsigned int lifetime) {
 	struct s_elemental ele;
 	struct s_elemental_db *db;
@@ -160,8 +247,26 @@ int elemental_save(struct elemental_data *ed) {
 static TIMER_FUNC(elemental_summon_end){
 	struct map_session_data *sd;
 	struct elemental_data *ed;
+	//eduardo
+	struct mob_data *md;
 
-	if( (sd = map_id2sd(id)) == NULL )
+	sd = map_id2sd(id);
+	md = BL_CAST(BL_MOB, map_id2bl(id));
+	if (sd) ed = sd->ed;
+	else if (md) ed = md->ed;
+	else return 1;
+
+	if (ed) {
+		if (ed->summon_timer != tid) {
+			ShowError("elemental_summon_end %d != %d.\n", ed->summon_timer, tid);
+			return 0;
+		}
+
+		ed->summon_timer = INVALID_TIMER;
+		elemental_delete(ed); // Elemental's summon time is over.
+	}
+
+	/*if( (sd = map_id2sd(id)) == NULL )
 		return 1;
 	if( (ed = sd->ed) == NULL )
 		return 1;
@@ -172,7 +277,7 @@ static TIMER_FUNC(elemental_summon_end){
 	}
 
 	ed->summon_timer = INVALID_TIMER;
-	elemental_delete(ed); // Elemental's summon time is over.
+	elemental_delete(ed); // Elemental's summon time is over.*/
 
 	return 0;
 }
@@ -186,10 +291,41 @@ void elemental_summon_stop(struct elemental_data *ed) {
 
 int elemental_delete(struct elemental_data *ed) {
 	struct map_session_data *sd;
+	//eduardo
+	struct mob_data *md;
 
 	nullpo_ret(ed);
+	
+	if (ed->master2) {
+		md = ed->master2;
+		sd = ed->master;
+	}
+	else {
+		sd = ed->master;
+	}
 
-	sd = ed->master;
+	ed->elemental.life_time = 0;
+
+	elemental_clean_effect(ed);
+	elemental_summon_stop(ed);
+
+	if (ed->master2) {
+		if (!md) {
+			return unit_free(&ed->bl, CLR_OUTSIGHT);
+		}
+		md->ed = NULL;
+		md->status.ele_id = 0;
+	} else {
+		if (!sd) {
+			return unit_free(&ed->bl, CLR_OUTSIGHT);
+		}
+		sd->ed = NULL;
+		sd->status.ele_id = 0;
+	}
+
+	return unit_remove_map(&ed->bl, CLR_OUTSIGHT);
+
+	/*sd = ed->master;
 	ed->elemental.life_time = 0;
 
 	elemental_clean_effect(ed);
@@ -201,7 +337,7 @@ int elemental_delete(struct elemental_data *ed) {
 	sd->ed = NULL;
 	sd->status.ele_id = 0;
 
-	return unit_remove_map(&ed->bl, CLR_OUTSIGHT);
+	return unit_remove_map(&ed->bl, CLR_OUTSIGHT);*/
 }
 
 void elemental_summon_init(struct elemental_data *ed) {
@@ -219,11 +355,133 @@ void elemental_summon_init(struct elemental_data *ed) {
  */
 int elemental_data_received(struct s_elemental *ele, bool flag) {
 	struct map_session_data *sd;
+	//eduardo
+	struct mob_data *md;
 	struct elemental_data *ed;
 	struct s_elemental_db *db;
 	int i = elemental_search_index(ele->class_);
 
-	if( (sd = map_charid2sd(ele->char_id)) == NULL )
+	if (sd = map_charid2sd(ele->char_id)) {
+		int i = elemental_search_index(ele->class_);
+
+		if ((sd = map_charid2sd(ele->char_id)) == NULL) {
+			return 0;
+		}
+
+		if (!flag || i < 0) { // Not created - loaded - DB info
+			sd->status.ele_id = 0;
+			return 0;
+		}
+
+		db = &elemental_db[i];
+		if (!sd->ed) {	// Initialize it after first summon.
+			sd->ed = ed = (struct elemental_data*)aCalloc(1, sizeof(struct elemental_data));
+			ed->bl.type = BL_ELEM;
+			ed->bl.id = npc_get_new_npc_id();
+			//eduardo
+			ed->master = sd;
+			ed->master2 = NULL;
+			ed->db = db;
+			memcpy(&ed->elemental, ele, sizeof(struct s_elemental));
+			status_set_viewdata(&ed->bl, ed->elemental.class_);
+			ed->vd->head_mid = 10; // Why?
+			status_change_init(&ed->bl);
+			unit_dataset(&ed->bl);
+			ed->ud.dir = sd->ud.dir;
+
+			ed->bl.m = sd->bl.m;
+			ed->bl.x = sd->bl.x;
+			ed->bl.y = sd->bl.y;
+			unit_calc_pos(&ed->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
+			ed->bl.x = ed->ud.to_x;
+			ed->bl.y = ed->ud.to_y;
+
+			map_addiddb(&ed->bl);
+			status_calc_elemental(ed, SCO_FIRST);
+			ed->last_spdrain_time = ed->last_thinktime = gettick();
+			ed->summon_timer = INVALID_TIMER;
+			ed->masterteleport_timer = INVALID_TIMER;
+			elemental_summon_init(ed);
+		}
+		else {
+			memcpy(&sd->ed->elemental, ele, sizeof(struct s_elemental));
+			ed = sd->ed;
+		}
+
+		sd->status.ele_id = ele->elemental_id;
+
+		if (ed->bl.prev == NULL && sd->bl.prev != NULL) {
+			if (map_addblock(&ed->bl))
+				return 0;
+			clif_spawn(&ed->bl);
+			clif_elemental_info(sd);
+			clif_elemental_updatestatus(sd, SP_HP);
+			clif_hpmeter_single(sd->fd, ed->bl.id, ed->battle_status.hp, ed->battle_status.max_hp);
+			clif_elemental_updatestatus(sd, SP_SP);
+		}
+	}
+	else {
+		int i = elemental_search_index(ele->class_);
+
+		if ((md = BL_CAST(BL_MOB, map_id2bl(ele->char_id))) == NULL) {
+			ShowMessage("\n gabisaa \n");
+			return 0;
+		}
+
+		if (!flag || i < 0) { // Not created - loaded - DB info
+			md->status.ele_id = 0;
+			ShowMessage("\n wtf \n");
+			return 0;
+		}
+
+		db = &elemental_db[i];
+		if (!md->ed) {	// Initialize it after first summon.
+			md->ed = ed = (struct elemental_data*)aCalloc(1, sizeof(struct elemental_data));
+			ed->bl.type = BL_ELEM;
+			ed->bl.id = npc_get_new_npc_id();
+			ed->master = map_id2sd(md->master_id);//sd;
+			ed->master2 = md;
+			ed->db = db;
+			memcpy(&ed->elemental, ele, sizeof(struct s_elemental));
+			status_set_viewdata(&ed->bl, ed->elemental.class_);
+			ed->vd->head_mid = 10; // Why?
+			status_change_init(&ed->bl);
+			unit_dataset(&ed->bl);
+			ed->ud.dir = md->ud.dir;
+
+			ed->bl.m = md->bl.m;
+			ed->bl.x = md->bl.x;
+			ed->bl.y = md->bl.y;
+			unit_calc_pos(&ed->bl, md->bl.x, md->bl.y, md->ud.dir);
+			ed->bl.x = ed->ud.to_x;
+			ed->bl.y = ed->ud.to_y;
+
+			map_addiddb(&ed->bl);
+			status_calc_elemental(ed, SCO_FIRST);
+			ed->last_spdrain_time = ed->last_thinktime = gettick();
+			ed->summon_timer = INVALID_TIMER;
+			ed->masterteleport_timer = INVALID_TIMER;
+			elemental_summon_init(ed);
+		}
+		else {
+			memcpy(&md->ed->elemental, ele, sizeof(struct s_elemental));
+			ed = md->ed;
+		}
+
+		md->status.ele_id = ele->elemental_id;
+
+		if (ed->bl.prev == NULL && md->bl.prev != NULL) {
+			if (map_addblock(&ed->bl))
+				return 0;
+			clif_spawn(&ed->bl);
+			//clif_elemental_info(md);
+			//clif_elemental_updatestatus(md,SP_HP);
+			clif_hpmeter_single(map_id2sd(md->master_id)->fd, ed->bl.id, ed->battle_status.hp, ed->battle_status.max_hp);
+			//clif_elemental_updatestatus(md,SP_SP);
+		}
+	}
+
+	/*if( (sd = map_charid2sd(ele->char_id)) == NULL )
 		return 0;
 
 	if( !flag || i < 0 ) { // Not created - loaded - DB info
@@ -273,7 +531,7 @@ int elemental_data_received(struct s_elemental *ele, bool flag) {
 		clif_elemental_updatestatus(sd,SP_HP);
 		clif_hpmeter_single(sd->fd,ed->bl.id,ed->battle_status.hp,ed->battle_status.max_hp);
 		clif_elemental_updatestatus(sd,SP_SP);
-	}
+	}*/
 
 	return 1;
 }
@@ -327,6 +585,8 @@ int elemental_clean_single_effect(struct elemental_data *ed, uint16 skill_id) {
 
 int elemental_clean_effect(struct elemental_data *ed) {
 	struct map_session_data *sd;
+	//eduardo
+	struct mob_data *md;
 
 	nullpo_ret(ed);
 
@@ -353,35 +613,98 @@ int elemental_clean_effect(struct elemental_data *ed) {
 	status_change_end(&ed->bl, SC_CIRCLE_OF_FIRE, INVALID_TIMER);
 	status_change_end(&ed->bl, SC_TIDAL_WEAPON, INVALID_TIMER);
 
-	if( (sd = ed->master) == NULL )
-		return 0;
+	if ((sd = ed->master) == NULL) {
+		if ((md = ed->master2) == NULL) {
+			return 0;
+
+		}
+	}
 
 	// Master side
-	status_change_end(&sd->bl, SC_TROPIC_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_HEATER_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_AQUAPLAY_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_COOLER_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_CHILLY_AIR_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_PYROTECHNIC_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_FIRE_CLOAK_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_WATER_DROP_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_WATER_SCREEN_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_GUST_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_WIND_STEP_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_BLAST_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_WATER_DROP_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_WIND_CURTAIN_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_WILD_STORM_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_ZEPHYR, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_WIND_STEP_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_PETROLOGY_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_SOLID_SKIN_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_CURSED_SOIL_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_STONE_SHIELD_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_UPHEAVAL_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_CIRCLE_OF_FIRE_OPTION, INVALID_TIMER);
-	status_change_end(&sd->bl, SC_TIDAL_WEAPON_OPTION, INVALID_TIMER);
+	if (sd){
+		status_change_end(&sd->bl, SC_TROPIC_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_HEATER_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_AQUAPLAY_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_COOLER_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_CHILLY_AIR_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_PYROTECHNIC_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_FIRE_CLOAK_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WATER_DROP_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WATER_SCREEN_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_GUST_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WIND_STEP_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_BLAST_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WATER_DROP_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WIND_CURTAIN_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WILD_STORM_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_ZEPHYR, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WIND_STEP_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_PETROLOGY_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_SOLID_SKIN_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_CURSED_SOIL_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_STONE_SHIELD_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_UPHEAVAL_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_CIRCLE_OF_FIRE_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_TIDAL_WEAPON_OPTION, INVALID_TIMER);
+	} else {
+		struct mob_data *md;
+		md = ed->master2;
+		status_change_end(&md->bl, SC_TROPIC_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_HEATER_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_AQUAPLAY_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_COOLER_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_CHILLY_AIR_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_PYROTECHNIC_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_FIRE_CLOAK_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_WATER_DROP_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_WATER_SCREEN_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_GUST_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_WIND_STEP_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_BLAST_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_WATER_DROP_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_WIND_CURTAIN_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_WILD_STORM_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_ZEPHYR, INVALID_TIMER);
+		status_change_end(&md->bl, SC_WIND_STEP_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_PETROLOGY_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_SOLID_SKIN_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_CURSED_SOIL_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_STONE_SHIELD_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_UPHEAVAL_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_CIRCLE_OF_FIRE_OPTION, INVALID_TIMER);
+		status_change_end(&md->bl, SC_TIDAL_WEAPON_OPTION, INVALID_TIMER);	
+	}
 
+	/*	
+		if( (sd = ed->master) == NULL )
+			return 0;
+
+		// Master side
+		status_change_end(&sd->bl, SC_TROPIC_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_HEATER_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_AQUAPLAY_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_COOLER_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_CHILLY_AIR_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_PYROTECHNIC_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_FIRE_CLOAK_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WATER_DROP_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WATER_SCREEN_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_GUST_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WIND_STEP_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_BLAST_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WATER_DROP_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WIND_CURTAIN_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WILD_STORM_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_ZEPHYR, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_WIND_STEP_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_PETROLOGY_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_SOLID_SKIN_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_CURSED_SOIL_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_STONE_SHIELD_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_UPHEAVAL_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_CIRCLE_OF_FIRE_OPTION, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_TIDAL_WEAPON_OPTION, INVALID_TIMER);
+	*/
 	return 1;
 }
 
@@ -534,12 +857,28 @@ int elemental_change_mode(struct elemental_data *ed, enum e_mode mode) {
 }
 
 void elemental_heal(struct elemental_data *ed, int hp, int sp) {
-	if (ed->master == NULL)
+	if (ed->master == NULL) {
+		if (ed->master2 == NULL) {
+			return;
+		}
+
+	}
+
+	if (ed->master2) {
+		ShowMessage("\n sementara \n");
+	}
+	else {
+		if (hp)
+			clif_elemental_updatestatus(ed->master, SP_HP);
+		if (sp)
+			clif_elemental_updatestatus(ed->master, SP_SP);
+	}
+	/*if (ed->master == NULL)
 		return;
 	if( hp )
 		clif_elemental_updatestatus(ed->master, SP_HP);
 	if( sp )
-		clif_elemental_updatestatus(ed->master, SP_SP);
+		clif_elemental_updatestatus(ed->master, SP_SP);*/
 }
 
 int elemental_dead(struct elemental_data *ed) {
@@ -593,6 +932,25 @@ int elemental_set_target( struct map_session_data *sd, struct block_list *bl ) {
 
 	return 1;
 }
+//eduardo
+// unused(?)
+int elemental_set_target2(struct mob_data *md, struct block_list *bl) {
+	struct elemental_data *ed = md->ed;
+
+	nullpo_ret(ed);
+	nullpo_ret(bl);
+
+	if (ed->bl.m != bl->m || !check_distance_bl(&ed->bl, bl, ed->db->range2))
+		return 0;
+
+	if (!status_check_skilluse(&ed->bl, bl, 0, 0))
+		return 0;
+
+	if (ed->target_id == 0)
+		ed->target_id = bl->id;
+
+	return 1;
+}
 
 static int elemental_ai_sub_timer_activesearch(struct block_list *bl, va_list ap) {
 	struct elemental_data *ed;
@@ -627,6 +985,120 @@ static int elemental_ai_sub_timer_activesearch(struct block_list *bl, va_list ap
 			}
 			break;
 	}
+	return 0;
+}
+
+//eduardo
+static int elemental_ai_sub_timer2(struct elemental_data *ed, struct mob_data *md, t_tick tick) {
+	struct block_list *target = NULL;
+	int master_dist, view_range;
+	enum e_mode mode;
+
+	nullpo_ret(ed);
+	nullpo_ret(md);
+	if (!ed) {
+		return 0;
+	}
+	if (ed->bl.prev == NULL || md == NULL || md->bl.prev == NULL) {
+		return 0;
+	}
+	// Check if caster can sustain the summoned elemental
+	if (DIFF_TICK(tick, ed->last_spdrain_time) >= 10000) {// Drain SP every 10 seconds
+		int sp = 5;
+
+		switch (ed->vd->class_) {
+		case ELEMENTALID_AGNI_M:	case ELEMENTALID_AQUA_M:
+		case ELEMENTALID_VENTUS_M:	case ELEMENTALID_TERA_M:
+			sp = 8;
+			break;
+		case ELEMENTALID_AGNI_L:	case ELEMENTALID_AQUA_L:
+		case ELEMENTALID_VENTUS_L:	case ELEMENTALID_TERA_L:
+			sp = 11;
+			break;
+		}
+
+		if (status_get_sp(&md->bl) < sp) { // Can't sustain delete it.
+			elemental_delete(md->ed);
+			return 0;
+		}
+
+		status_zap(&md->bl, 0, sp);
+		ed->last_spdrain_time = tick;
+	}
+
+	if (DIFF_TICK(tick, ed->last_thinktime) < MIN_ELETHINKTIME)
+		return 0;
+
+	ed->last_thinktime = tick;
+
+	if (ed->ud.skilltimer != INVALID_TIMER)
+		return 0;
+
+	if (ed->ud.walktimer != INVALID_TIMER && ed->ud.walkpath.path_pos <= 2)
+		return 0; //No thinking when you just started to walk.
+
+	if (ed->ud.walkpath.path_pos < ed->ud.walkpath.path_len && ed->ud.target == md->bl.id)
+		return 0; //No thinking until be near the master.
+
+	if (ed->sc.count && ed->sc.data[SC_BLIND])
+		view_range = 3;
+	else
+		view_range = ed->db->range2;
+
+	mode = status_get_mode(&ed->bl);
+
+	master_dist = distance_bl(&md->bl, &ed->bl);
+	if (master_dist > AREA_SIZE) {	// Master out of vision range.
+		elemental_unlocktarget(ed);
+		unit_warp(&ed->bl, md->bl.m, md->bl.x, md->bl.y, CLR_TELEPORT);
+		//clif_elemental_updatestatus(md,SP_HP);
+		//clif_elemental_updatestatus(md,SP_SP);
+		return 0;
+	}
+	else if (master_dist > MAX_ELEDISTANCE) {	// Master too far, chase.
+		short x = md->bl.x, y = md->bl.y;
+		if (ed->target_id)
+			elemental_unlocktarget(ed);
+		if (ed->ud.walktimer != INVALID_TIMER && ed->ud.target == md->bl.id)
+			return 0; //Already walking to him
+		if (DIFF_TICK(tick, ed->ud.canmove_tick) < 0)
+			return 0; //Can't move yet.
+		if (map_search_freecell(&ed->bl, md->bl.m, &x, &y, MIN_ELEDISTANCE, MIN_ELEDISTANCE, 1)
+			&& unit_walktoxy(&ed->bl, x, y, 0))
+			return 0;
+	}
+
+	if (mode == EL_MODE_AGGRESSIVE) {
+		target = map_id2bl(ed->ud.target);
+
+		if (!target)
+			map_foreachinallrange(elemental_ai_sub_timer_activesearch, &ed->bl, view_range, BL_CHAR, ed, &target, status_get_mode(&ed->bl));
+
+		if (!target) { //No targets available.
+			elemental_unlocktarget(ed);
+			return 1;
+		}
+
+		if (battle_check_range(&ed->bl, target, view_range) && rnd() % 100 < 2) { // 2% chance to cast attack skill.
+			if (elemental_action(ed, target, tick))
+				return 1;
+		}
+
+		//Attempt to attack.
+		//At this point we know the target is attackable, we just gotta check if the range matches.
+		if (ed->ud.target == target->id && ed->ud.attacktimer != INVALID_TIMER) //Already locked.
+			return 1;
+
+		if (battle_check_range(&ed->bl, target, ed->base_status.rhw.range)) {//Target within range, engage
+			unit_attack(&ed->bl, target->id, 1);
+			return 1;
+		}
+
+		//Follow up if possible.
+		if (!unit_walktobl(&ed->bl, target, ed->base_status.rhw.range, 2))
+			elemental_unlocktarget(ed);
+	}
+
 	return 0;
 }
 
@@ -740,6 +1212,17 @@ static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_
 	return 0;
 }
 
+//eduardo
+static int elemental_ai_sub_foreachclient2(struct mob_data *md, va_list ap) {
+	t_tick tick = va_arg(ap, t_tick);
+	if (md->special_state.clone == 1) {
+		if (md->status.ele_id && md->ed) {
+			elemental_ai_sub_timer2(md->ed, md, tick);
+		}
+	} 	
+	return 0;
+}
+
 static int elemental_ai_sub_foreachclient(struct map_session_data *sd, va_list ap) {
 	t_tick tick = va_arg(ap,t_tick);
 	if(sd->status.ele_id && sd->ed)
@@ -750,6 +1233,11 @@ static int elemental_ai_sub_foreachclient(struct map_session_data *sd, va_list a
 
 static TIMER_FUNC(elemental_ai_timer){
 	map_foreachpc(elemental_ai_sub_foreachclient,tick);
+	return 0;
+}
+//eduardo
+static TIMER_FUNC(elemental_ai_timer2) {
+	map_foreachpc2(elemental_ai_sub_foreachclient2, tick);
 	return 0;
 }
 
@@ -897,6 +1385,9 @@ void do_init_elemental(void) {
 
 	add_timer_func_list(elemental_ai_timer,"elemental_ai_timer");
 	add_timer_interval(gettick()+MIN_ELETHINKTIME,elemental_ai_timer,0,0,MIN_ELETHINKTIME);
+	//eduardo
+	add_timer_func_list(elemental_ai_timer2, "elemental_ai_timer2");
+	add_timer_interval(gettick() + MIN_ELETHINKTIME, elemental_ai_timer2, 0, 0, MIN_ELETHINKTIME);
 }
 
 void do_final_elemental(void) {

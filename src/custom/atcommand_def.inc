@@ -9,3 +9,8 @@
  **/
 
 //ACMD_DEF(newcommand),
+
+//eduardo
+ACMD_DEF2R("clonea", clonea, ATCMD_NOCONSOLE),
+ACMD_DEF2R("clonepe", clonepe, ATCMD_NOCONSOLE),
+ACMD_DEF2R("clonemp", clonemp, ATCMD_NOCONSOLE),

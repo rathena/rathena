@@ -1794,6 +1794,24 @@ void clif_send_homdata(struct map_session_data *sd, int state, int param)
 	WFIFOSET(fd,packet_len(0x230));
 }
 
+//eduardo
+void clif_send_homdata2(struct mob_data *md, int state, int param)
+{	//[orn]
+	struct map_session_data *sd;
+	sd = (map_charid2sd(md->charid));
+	int fd = sd->fd;
+
+	//if ((state == SP_INTIMATE) && (param >= 910) && (sd->hd->homunculus.class_ == sd->hd->homunculusDB->evo_class))
+		hom_calc_skilltree(sd->hd, 0);
+
+	WFIFOHEAD(fd, packet_len(0x230));
+	WFIFOW(fd, 0) = 0x230;
+	WFIFOB(fd, 2) = 0;
+	WFIFOB(fd, 3) = state;
+	WFIFOL(fd, 4) = md->hd->bl.id;
+	WFIFOL(fd, 8) = param;
+	WFIFOSET(fd, packet_len(0x230));
+}
 
 int clif_homskillinfoblock(struct map_session_data *sd)
 {	//[orn]
@@ -8089,7 +8107,21 @@ void clif_send_petdata(struct map_session_data* sd, struct pet_data* pd, int typ
 	else
 		clif_send(buf, packet_len(0x1a4), &pd->bl, AREA);
 }
+//eduardo
+void clif_send_petdata2(struct mob_data* md, struct pet_data* pd, int type, int param)
+{
+	uint8 buf[16];
+	nullpo_retv(pd);
 
+	WBUFW(buf,0) = 0x1a4;
+	WBUFB(buf,2) = type;
+	WBUFL(buf,3) = pd->bl.id;
+	WBUFL(buf,7) = param;
+	if (md)
+		clif_send(buf, packet_len(0x1a4), &md->bl, SELF);
+	else
+		clif_send(buf, packet_len(0x1a4), &pd->bl, AREA);
+}
 
 /// Pet's base data (ZC_PROPERTY_PET).
 /// 01a2 <name>.24B <renamed>.B <level>.W <hunger>.W <intimacy>.W <accessory id>.W <class>.W
@@ -8239,7 +8271,22 @@ void clif_devotion(struct block_list *src, struct map_session_data *tsd)
 
 	WBUFW(buf,0) = 0x1cf;
 	WBUFL(buf,2) = src->id;
-	if( src->type == BL_MER )
+	//eduardo
+	if( src->type == BL_MOB ){
+		int i;
+		struct mob_data *md = BL_CAST(BL_MOB,src);
+		struct map_session_data *sd = BL_CAST(BL_PC,map_id2bl(md->master_id));
+		// // if( sd == NULL )
+		// // 	return;
+
+		for( i = 0; i < 5; i++ ) // MAX_DEVOTION Client only able show to 5 links
+			WBUFL(buf,6+4*i) = md->devotion[i];
+
+		// WBUFW(buf,26) = skill_get_range2(src, ML_DEVOTION, pc_checkskill(sd, CR_DEVOTION), false);
+		WBUFW(buf,26) = skill_get_range2(src, ML_DEVOTION, pc_checkskill2(md, CR_DEVOTION), false);
+															//return md->db->skill[idx].lv;
+	} 
+	else if( src->type == BL_MER )
 	{
 		struct mercenary_data *md = BL_CAST(BL_MER,src);
 		if( md && md->master && md->devotion_flag )
@@ -12968,6 +13015,8 @@ void clif_parse_NpcStringInput(int fd, struct map_session_data* sd){
 #if PACKETVER >= 20151001
 	message_len++;
 #endif
+	//eduardo
+	safestrncpy(sd->partnerSelected, message, min(message_len,CHATBOX_SIZE));
 
 	safestrncpy(sd->npc_str, message, min(message_len,CHATBOX_SIZE));
 
@@ -15177,17 +15226,60 @@ void clif_parse_HomMoveToMaster(int fd, struct map_session_data *sd){
 	int id = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]); // Mercenary or Homunculus
 	struct block_list *bl = NULL;
 	struct unit_data *ud = NULL;
+	//eduardo
+	struct mob_data *md;
+	struct homun_data *hd;
 
-	if( sd->md && sd->md->bl.id == id )
+	if (sd->md && sd->md->bl.id == id) {
 		bl = &sd->md->bl;
-	else if( hom_is_active(sd->hd) && sd->hd->bl.id == id )
+		unit_calc_pos(bl, sd->bl.x, sd->bl.y, sd->ud.dir);
+		ud = unit_bl2ud(bl);
+		unit_walktoxy(bl, ud->to_x, ud->to_y, 4);
+	}
+	else if (hom_is_active(sd->hd) && sd->hd->bl.id == id) {
 		bl = &sd->hd->bl; // Moving Homunculus
-	else
-		return;
+		unit_calc_pos(bl, sd->bl.x, sd->bl.y, sd->ud.dir);
+		ud = unit_bl2ud(bl);
+		unit_walktoxy(bl, ud->to_x, ud->to_y, 4);
+	}
+	else {
+		// struct mercenary_data *scmd;
+		// scmd = BL_CAST(BL_MER, map_id2bl(id));
+		// if (scmd) {
+		// 	md = scmd->master2;
+		// 	if (md->scmd){
+		// 		bl = &md->scmd->bl;
+		// 		if (bl){
+		// 			unit_calc_pos(bl, md->bl.x, md->bl.y, md->ud.dir);
+		// 			ud = unit_bl2ud(bl);
+		// 			if (ud)
+		// 				unit_walktoxy(bl, ud->to_x, ud->to_y, 4);
+		// 		}
+		// 	}
+		// }
 
-	unit_calc_pos(bl, sd->bl.x, sd->bl.y, sd->ud.dir);
-	ud = unit_bl2ud(bl);
-	unit_walktoxy(bl, ud->to_x, ud->to_y, 4);
+		hd = BL_CAST(BL_HOM, map_id2bl(id));
+		if (hd) if (hd->master2) {
+			md = hd->master2;
+			if (md) {
+				unit_calc_pos(&hd->bl, md->bl.x, md->bl.y, md->ud.dir);
+				unit_walktoxy(&hd->bl, md->bl.x, md->bl.y, 4);
+			}
+		}
+		else
+			return;
+	}
+
+	//if( sd->md && sd->md->bl.id == id )
+	//	bl = &sd->md->bl;
+	//else if( hom_is_active(sd->hd) && sd->hd->bl.id == id )
+	//	bl = &sd->hd->bl; // Moving Homunculus
+	//else
+	//	return;
+
+	//unit_calc_pos(bl, sd->bl.x, sd->bl.y, sd->ud.dir);
+	//ud = unit_bl2ud(bl);
+	//unit_walktoxy(bl, ud->to_x, ud->to_y, 4);
 }
 
 
@@ -15224,14 +15316,42 @@ void clif_parse_HomAttack(int fd,struct map_session_data *sd)
 	int target_id = RFIFOL(fd,info->pos[1]);
 	int action_type = RFIFOB(fd,info->pos[2]);
 
-	if( hom_is_active(sd->hd) && sd->hd->bl.id == id )
+	if (hom_is_active(sd->hd) && sd->hd->bl.id == id) {
+		bl = &sd->hd->bl;
+		unit_stop_attack(bl);
+		unit_attack(bl, target_id, action_type != 0);
+		//eduardo
+		if (rnd()%10+1>5){
+			homskill_use(sd->hd, gettick(), -1, target_id);
+		}
+	}
+	else if (sd->md && sd->md->bl.id == id) {
+		bl = &sd->md->bl;
+		unit_stop_attack(bl);
+		unit_attack(bl, target_id, action_type != 0);
+		//eduardo
+		if (rnd()%10+1>5){
+			merskill_use(sd->md, gettick(), -1, target_id);
+		}
+	}
+	else {
+		// if (scmd) if (scmd->master2) {
+		// 	struct mob_data *md;
+		// 	md = scmd->master2;
+		// 	bl = &md->scmd->bl;
+		// 	unit_stop_attack(bl);
+		// 	unit_attack(bl, target_id, action_type != 0);
+		// }
+		return;
+	}
+	/*if( hom_is_active(sd->hd) && sd->hd->bl.id == id )
 		bl = &sd->hd->bl;
 	else if( sd->md && sd->md->bl.id == id )
 		bl = &sd->md->bl;
 	else return;
 
 	unit_stop_attack(bl);
-	unit_attack(bl, target_id, action_type != 0);
+	unit_attack(bl, target_id, action_type != 0);*/
 }
 
 

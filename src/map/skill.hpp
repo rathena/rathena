@@ -581,6 +581,8 @@ int skill_disable_check(struct status_change *sc, uint16 skill_id);
 bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 skill_id, uint16 skill_lv, enum bl_type type, bool display_failure);
 
 int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 *skill_lv, int range, int cast_flag);
+//eduardo
+int skill_check_pc_partner2(struct mob_data *md, uint16 skill_id, uint16 *skill_lv, int range, int cast_flag);
 int skill_unit_move(struct block_list *bl,t_tick tick,int flag);
 void skill_unit_move_unit_group( struct skill_unit_group *group, int16 m,int16 dx,int16 dy);
 void skill_unit_move_unit(struct block_list *bl, int dx, int dy);
@@ -613,6 +615,8 @@ bool skill_arrow_create( struct map_session_data *sd, t_itemid nameid);
 int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,t_tick tick,int flag );
 int skill_castend_damage_id( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,t_tick tick,int flag );
 int skill_castend_pos2( struct block_list *src, int x,int y,uint16 skill_id,uint16 skill_lv,t_tick tick,int flag);
+//eduardo
+int skill_partner_add(struct block_list *src, int x, int y, uint16 skill_id, uint16 skill_lv, t_tick tick, int flag);
 
 int skill_blockpc_start(struct map_session_data*, int, t_tick);
 int skill_blockpc_get(struct map_session_data *sd, int skillid);
@@ -2288,6 +2292,8 @@ public:
 extern ReadingSpellbookDatabase reading_spellbook_db;
 
 void skill_spellbook(struct map_session_data *sd, t_itemid nameid);
+//eduardo
+void skill_spellbook2(struct mob_data *md, unsigned short nameid);
 
 int skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_id);
 
@@ -2320,11 +2326,15 @@ bool skill_check_camouflage(struct block_list *bl, struct status_change_entry *s
  * Mechanic
  **/
 int skill_magicdecoy(struct map_session_data *sd, t_itemid nameid);
+//eduardo
+int skill_magicdecoy2(struct mob_data *md, unsigned short nameid);
 
 /**
  * Guiltoine Cross
  **/
 int skill_poisoningweapon( struct map_session_data *sd, t_itemid nameid);
+//eduardo
+int skill_poisoningweapon2( struct mob_data *md, unsigned short nameid);
 
 /**
  * Auto Shadow Spell (Shadow Chaser)

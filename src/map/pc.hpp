@@ -789,6 +789,18 @@ struct map_session_data {
 		uint16 level;
 		int target;
 	} skill_keep_using;
+
+	//eduardo
+	std::vector<int>partners;
+	std::vector<struct mob_data*>partners2;
+	std::vector<struct block_list*>partners_bl;
+	std::vector<int>partners_blid;
+	std::vector<int>partners_id;
+	uint16 playedSong;
+	std::vector<int> teammates;
+	char partnerSelected[71];
+	char partnerSelected2[1];
+	int dieded;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1107,6 +1119,8 @@ void pc_setinventorydata(struct map_session_data *sd);
 
 int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 uint8 pc_checkskill(struct map_session_data *sd,uint16 skill_id);
+//eduardo
+uint8 pc_checkskill2(struct mob_data *md,uint16 skill_id);
 uint8 pc_checkskill_summoner(map_session_data *sd, e_summoner_power_type type);
 short pc_checkequip(struct map_session_data *sd,int pos,bool checkall=false);
 bool pc_checkequip2(struct map_session_data *sd, t_itemid nameid, int min, int max);
@@ -1336,6 +1350,10 @@ void pc_delinvincibletimer(struct map_session_data* sd);
 
 void pc_addspiritball(struct map_session_data *sd,int interval,int max);
 void pc_delspiritball(struct map_session_data *sd,int count,int type);
+//eduardo
+void pc_addspiritball2(struct mob_data *md,int interval,int max);
+void pc_delspiritball2(struct mob_data *md,int count,int type);
+
 int pc_addsoulball(map_session_data *sd, int max);
 int pc_delsoulball(map_session_data *sd, int count, bool type);
 
@@ -1375,7 +1393,11 @@ uint8 pc_itemcd_check(struct map_session_data *sd, struct item_data *id, t_tick 
 int pc_load_combo(struct map_session_data *sd);
 
 void pc_addspiritcharm(struct map_session_data *sd, int interval, int max, int type);
+//eduardo
+void pc_addspiritcharm2(struct mob_data *md, int interval, int max, int type);
 void pc_delspiritcharm(struct map_session_data *sd, int count, int type);
+//eduardo
+void pc_delspiritcharm2(struct mob_data *md, int count, int type);
 
 void pc_baselevelchanged(struct map_session_data *sd);
 
