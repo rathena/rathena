@@ -127,3 +127,7 @@ Thumbs.db
 
 # CMakeFiles
 /CMakeFiles/
+
+# eduardo
+/npc/custom/
+/npc/scripts_custom.conf

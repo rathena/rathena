@@ -28327,10 +28327,6 @@ Body:
       ItemCost:
         - Item: Mandragora_Flowerpot
           Amount: 1
-#eduardo
-    Unit:
-      Id: Howling_of_mandragora
-      Layout: 5
   - Id: 2493 # Removed on kRO
     Name: GN_SLINGITEM
     Description: Sling Item
