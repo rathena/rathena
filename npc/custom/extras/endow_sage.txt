@@ -1,0 +1,61 @@
+// [This script is brought to you by Pang]
+// This NPC will give your players the selected elemental endowments normally given by sages. The NPC will also
+// sell elemental converters. The prices and whether elemental stones are required can be configured after the
+// OnInit label at the end.
+// V1.0 - Released - 5-Jul-2018
+
+izlude,131,142,6	script	Well Endowed Sage	742,{
+	mes "[Well Endowed Sage]","Greetings! How would you like to be endowed?";
+	if(@End_Ele) .@Last_Ele$ = "Last Element - "+.Element$[@End_Ele]+":"; else .@Last_Ele$ = ":";
+	select(.@Last_Ele$+.Element$[1]+":"+.Element$[2]+":"+.Element$[3]+":"+.Element$[4]+":Converters");
+	if(@menu == 6) {callshop "conv_shop",1; end;}
+	if(@menu != 1) .@Choice = @menu-1; else .@Choice = @End_Ele;
+	if(.ReqType) .@Req_Item$ = " and a ^0055FF" + getitemname(.StoneReq[.@Choice]) + "^000000";
+	clear;
+	mes "[Well Endowed Sage]","So you would like a ^0055FF" + .Element$[.@Choice] + "^000000 endowment? You will require ^0055FF" + .Price + "^000000 zeny" + .@Req_Item$ + ".","Do you accept?";
+	if(select("Yes:No") == 1) {
+		if( .ReqType ) {
+			if(countitem(.StoneReq[.@Choice]) == 0 || Zeny < .Price) {
+				clear;
+				mes "[Well Endowed Sage]","You do not have the required money or items. Please come back when you do.";
+				close;
+			}
+		}
+		else if( Zeny < .Price ) {
+			clear;
+			mes "[Well Endowed Sage]","You do not have the required money or items. Please come back when you do.";
+			close;
+		}
+		clear;
+		mes "[Well Endowed Sage]","Thank you for your custom. Here we go!";
+		close2;
+		@End_Ele = .@Choice;
+		sc_start .EndowSC[@End_Ele],.Ticks,0;
+		Zeny = Zeny - .Price;
+		if (.ReqType) delitem .StoneReq[.@Choice],1;
+		end;
+	}
+	else {
+		clear;
+		mes "[Well Endowed Sage]","Too bad! Let me endow you next time.";
+		close;
+	}
+
+OnInit:
+	.Price = 20000;			// Price for endowment.
+	.Ticks = 1800000;		// Time in ticks for duration of buff.
+	.ReqType = 1;			// Requirements. 0 = None | 1 = Elemental Stones | 2 = Greater Elemental Stones
+	.ConvPrice = 10000;		// Price for Elemental Converters
+	for (.@ConvID = 12114;.@ConvID <= 12117;.@ConvID++) {
+		npcshopadditem "conv_shop",.@ConvID,.ConvPrice;
+	}
+	npcshopdelitem "conv_shop",909;
+	setarray .Element$[1],"Water","Wind","Fire","Earth";
+	setarray .EndowSC[1],SC_WATERWEAPON,SC_WINDWEAPON,SC_FIREWEAPON,SC_EARTHWEAPON;
+	switch (.ReqType) {
+		case 1: setarray .StoneReq[1],991,992,990,993; end;
+		case 2: setarray .StoneReq[1],995,996,994,997; end;
+	}
+}
+
+-	shop	conv_shop	-1,909:-1.

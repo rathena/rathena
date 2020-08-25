@@ -1,0 +1,19 @@
+
+
+prontera,155,181,5	script	Hair Style	4_F_KAFRA1,{
+	cutin "hairstyle_"+Sex, 3;
+	mes "Change Hairstyle?";
+	switch(select("Yes.", "No.") == 1) {
+		input .@style, 0, .max_hairstyle[Sex];
+		setlook LOOK_HAIR, .@style;
+	}
+	close2;
+	cutin "", 255;
+	end;
+	
+	OnInit:
+		setbattleflag("min_hair_style", 0);
+		setbattleflag("max_hair_style", 99);
+		setarray .max_hairstyle, 99, 84;
+		end;
+}

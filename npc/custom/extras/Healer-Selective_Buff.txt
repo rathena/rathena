@@ -1,0 +1,39 @@
+
+prontera,159,181,5	script	Healer#shop_based	4_F_KAFRA1,{
+	doevent "healer_shop_main::OnTalk";
+}
+
+-	shop	healer_shop_npc_main	-1,909:-1
+
+-	script	healer_shop_main	-1,{
+		
+	OnInit:
+		.shop_npc_name$ = "healer_shop_npc_main";
+		
+		npcshopdelitem(.shop_npc_name$, 909);
+		npcshopadditem(.shop_npc_name$, 607, 1, 608, 1); 
+		npcshopadditem(.shop_npc_name$, 12215, 1, 12216, 1, 656, 1, 501, 1);
+		npcshopadditem(.shop_npc_name$, 14519, 1, 14517, 1, 14518, 1, 14520, 1);
+		npcshopadditem(.shop_npc_name$, 12219, 1, 12220, 1, 12217, 1, 12218, 1, 14516, 1);
+		npcshopadditem(.shop_npc_name$, 14590, 1, 14588, 1, 14589, 1);
+		end;
+		
+	OnTalk:
+		npcshopattach .shop_npc_name$, 1;
+		callshop .shop_npc_name$, 1;
+		end;
+		
+	OnBuyItem:
+		.@size = getarraysize(@bought_nameid);
+		while (.@i < .@size) {
+			for (.@x = 0; .@x < @bought_quantity[.@i]; .@x++) {
+				consumeitem @bought_nameid[.@i];
+				if (.@x && .@x % 50 == 0)
+					sleep2 1;
+			}
+			.@i++;
+		}
+		npcshopattach .npc_name$, 0;
+		npctalk "Enjoy your buff.", "Healer#shop_based";
+		end;
+}

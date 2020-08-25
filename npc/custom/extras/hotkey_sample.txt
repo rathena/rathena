@@ -1,0 +1,21 @@
+prontera,167,191,4	script	test	80,{
+	mes "Select";
+	next;
+	.@sel = select("Get Hotkeys:Update Hotkeys:Clear Hotkeys");
+	if(.@sel==1){
+		gethotkeys();
+		mes "Saved Hotkeys";
+		close;
+	} else if(.@sel==2) {
+		for(.@i = 0; .@i < @hotkey_count; .@i++){
+			updatehotkey(@hotkey_type[.@i],@hotkey_id[.@i],@hotkey_lv[.@i],@hotkey_pos[.@i]);
+		}
+		mes "Updated Hotkeys";
+		close;
+	} else if(.@sel==3){
+		clearhotkeys();
+		mes "Cleared Hotkeys";
+		close;
+	}
+	end;
+}

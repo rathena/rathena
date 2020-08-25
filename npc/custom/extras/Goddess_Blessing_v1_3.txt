@@ -1,0 +1,142 @@
+//===== rAthena Script =======================================
+//= Goddess Offering
+//=====  by: =============================
+//= pajodex
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project (pajodex)
+//===== Description: =========================================
+/*
+Goddess Offering
+	
+	Goddess Patron collects a certain item from players which
+will serve as an offering. Once the goal is reached, Goddess 
+Blessing will activate for a certain time which gives off buff 
+to every players who clicks the Goddess Patron.
+
+	This script is mainly for fun or quest. All Players will farm 
+for this certain item for offering to enable the goddess's blessing.
+ 
+	Enjoy!
+
+*/
+//=====******** Note ********=================================
+//= if you find bugs or problem, please do tell DM me at
+//= Discord (pajodex#1328) or rAthena (pajodex) 
+//= open for suggestions
+//===== Additional Comments: =================================
+/* 	1.0 - Initial release
+	1.1 - Fixed bug report by maken06
+		- Limit players to get buffed only once per activation
+		- Optimization
+	1.2 - Added @goddessreset command in-case your npc gets broken
+	1.3 - Fix getting negative value when spamming at command (bug
+		  report by: Cyro)
+*/
+//=============================================================
+
+prontera,150,150,1	script	Goddess Patron	79,{
+function	pubroom ;
+function	goddessblessing ;
+	if($goddess_active) {
+		if(getbuff == 0) 
+		{	
+			specialeffect2 338;
+			specialeffect2 EF_HEAL2;
+			message strcharinfo(0), rand(2) ? "Ah! I can feel the power from within!!" :  "Yes! I feel blessed!!!";	
+			goddessblessing;
+			getbuff = 1;
+			end;
+		}	
+		else
+			{
+				set .@Timer, $event_time + .delay_tick;
+				mes "Goddess has heard your cries!!!";			
+				mes "Time left: " + callfunc("Time2Str",.@Timer);
+				close;
+			}
+	} 
+	mes "Hi ^FF0000"+strcharinfo(0)+"^000000,";
+	mes "If everybody offers a ^FF0000"+getitemname(.item_offering)+"^000000,";
+	mes "the Goddess will be glad and bless everyone with powers!";
+	callshop "goddess#shop",2;
+	npcshopattach "goddess#shop";
+	end;
+	
+OnSellItem:
+	for (.@i = 0; .@i < getarraysize(@sold_nameid); .@i++) {
+		if (countitem(@sold_nameid[.@i]) < @sold_quantity[.@i] || @sold_quantity[.@i] <= 0) {
+			mes "omgh4x!";
+			close;
+		} else if (@sold_nameid[.@i] == .item_offering){
+			delitem .item_offering, @sold_quantity[.@i];
+			$donate = $donate + @sold_quantity[.@i];
+			donator = donator + @sold_quantity[.@i];
+		} else {
+			mes "Sorry, I only accept '^FF0000"+getitemname(.item_offering)+"^000000' as offerings.";
+			close;
+		}
+	}
+	if($donate >= .goal) { 
+		mes "Complete";
+		$goddess_active = 1;
+		$event_time = gettimetick(2);
+		pubroom;
+		addtimer .delay_tick * 1000, strnpcinfo(3) + "::OnEventEnd";
+		close;
+		}
+	mes "Thank you! May the Goddesses will hear your desires!";
+	pubroom;
+	close;
+	
+OnEventEnd:
+	query_sql("UPDATE `char_reg_num` SET `value` = '0' WHERE `key` ='getbuff'");
+	addrid(0);
+	getbuff = 0;
+	$event_time = 0;
+	$goddess_active = 0;
+	$donate = $donate - .goal;
+	if($donate < 0) $donate = 0; // prevent getting negative value
+	pubroom;
+	end;
+
+	function	goddessblessing	{
+		// ----- Add your desired SCs below! -----
+		sc_start SC_FOOD_STR_CASH,8640000,10;
+		sc_start SC_FOOD_AGI_CASH,8640000,10;
+		sc_start SC_FOOD_DEX_CASH,8640000,10;
+		sc_start SC_FOOD_LUK_CASH,8640000,10;
+		sc_start SC_FOOD_INT_CASH,8640000,10;
+		sc_start SC_FOOD_VIT_CASH,8640000,10;
+		sc_start SC_ITEMBOOST,8640000,50;
+		sc_start SC_EXPBOOST,8640000,50;
+		// -------- end of adding SC ---------
+		return;
+	}
+	
+OnInit:
+	// ---- Configuration starts ------
+	.goal = 100000;					// Goal to reach
+	.delay_tick = 60 * 60 * 4; 		// Blessing time active : 4hrs (seconds * mins * hours)
+	.item_offering = 501; 			// Item to offer
+	//----- Configuration ends-----
+	
+	//----- Don't touch below-----
+	.@difftick = gettimetick(2) - $event_time;
+	if(.@difftick < 0) 
+		addtimer .@difftick, strnpcinfo(3) + "::OnEventEnd";
+	pubroom;
+	bindatcmd "goddessreset",strnpcinfo(3) + "::OnEventEnd",60,100;
+	end;
+	
+	function	pubroom	{
+		delwaitingroom;
+		if($goddess_active) 
+			waitingroom "Goddess Blessing is activated!!",0;
+		 else 
+			waitingroom $donate +" / "+.goal+" more to go ",0;
+		return;
+	}
+}
+-	shop	goddess#shop	-1,501:50.

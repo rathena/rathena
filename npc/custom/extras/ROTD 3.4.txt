@@ -1,0 +1,144 @@
+
+
+prontera,155,181,5	script	ROTD	436,{
+set .@gmlevel,getgmlevel();
+
+do{
+	set .@menu,select("^4EEE94ROTD Information^000000",
+				( .@gmlevel < .gm_level )?"":"^FF0000[GM]^000000Set a New Monster's Race",
+				( .@gmlevel < .gm_level )?"":"^FF0000[GM]^000000Set EXP Bonus",		
+				( .@gmlevel < .gm_level )?"":"^FF0000[GM]^000000Set Item / Zeny Bonus",
+				"Close" );
+				
+	switch( .@menu ) {
+		Case 1:
+			mes "^FF0000ROTD^000000 refer to ^0000FFRace of the Day^000000";
+			mes "In another word, it mean that the ^FF0000Monster's Race^000000 that you killed by day will grant you ^FF0000Extra Bonus EXP / Item / Zeny ^000000.";
+			next;
+			mes "[ ^FF0000Today's ROTD^000000 ]";
+			mes "^0000FF"+.rotd$[.today_rotd]+"^000000 Race";
+			if ( .rotd_exp_bonus ) mes " ~ ^777777"+.rotd_exp_bonus+"% more exp^000000";
+			if ( ( .rotd_item_amount && .rotd_item_rate ) || .rotd_zeny || .rotd_exp_bonus ) {
+				mes " ";
+				mes "Reward : "+( ( .rotd_item_rate )? .rotd_item_rate+"%":"" )+" : ";
+				if ( .rotd_item_amount && .rotd_item_rate ) mes " ~ ^777777"+.rotd_item_amount+" x "+getitemname( .rotd_item_id )+"^000000";
+				if ( .rotd_zeny ) mes " ~ ^777777"+.rotd_zeny+" Zeny^000000";
+				mes " ";
+				mes "Amount are random...";
+			}
+			break;
+		Case 2:
+			mes "Select new race.";
+			set .today_rotd,select( .rotd_menu$ ) - 1;
+			if ( .today_rotd >= .rotd_size ) set .today_rotd,rand( .rotd_size );
+			mes "New Race : ^777777"+.rotd$[.today_rotd]+"^000000";
+			delwaitingroom;
+			waitingroom "[ROTD]:"+.rotd$[.today_rotd]+" ",0;
+			break;
+		Case 3:
+			mes "Set new exp bonus. (%)";
+			input .rotd_exp_bonus,0,100;
+			if ( .rotd_exp_bonus ) mes "ROTD EXP : "+.rotd_exp_bonus+" %";
+			break;
+		Case 4:
+			mes "Set Rotd bonus";
+			mes "Inset Zeny Bonus";
+			input .@zeny;
+			mes "Insert Item ID";
+			do{
+				input .@item,0,32767; 
+				if ( !.@item ) close;
+			}while( getitemname( .@item ) == "null" );
+			mes "Enter amount.";
+			input .@amount,0,30000;
+			mes "Enter Rate to gain.";
+			input .@rate,0,100;
+			if ( .@amount && .@rate ) {
+				next;
+				mes "Updated item bonus : ( "+.@rate+"% )";
+				mes "^777777"+.@amount+" x "+getitemname( .@item )+"^000000";
+				mes "^777777"+.@zeny+" Zeny^000000";
+				if ( select( "Confirm","Cancel" ) == 1 ) {
+					set .rotd_item_id,.@item;	
+					set .rotd_item_amount,.@amount;
+					set .rotd_item_rate,.@rate;
+					set .rotd_zeny,.@zeny;
+					mes "Updated.";
+				}
+			}
+		default: close;
+	}
+	next;
+}while( .@menu != 5 );
+close;
+
+OnInit:
+	// min gm level
+	set .gm_level,80;
+
+	// monster race list
+	setarray .rotd$[0],
+		"Formless",
+		"Undead",
+		"Brute",
+		"Plant",
+		"Insect",
+		"Fish",
+		"Demon",
+		"Demi Human",
+		"Angel",
+		"Dragon",
+		"Boss",
+		"Non-Boss";
+	set .rotd_size,getarraysize( .rotd$ );
+	for( set .@i,0; .@i < .rotd_size; set .@i,.@i + 1 )
+		set .rotd_menu$,.rotd_menu$ + .rotd$[.@i] +":";
+	set .rotd_menu$,.rotd_menu$ + "^0055FFRandom Race^000000";
+
+	// min party member lv to gain exp
+	set .party_level_range,10;
+
+// daily reset
+OnClock0000:
+	set .today_rotd,rand( .rotd_size );
+	set .rotd_exp_bonus,rand( 1,100 );
+	delwaitingroom;
+	waitingroom "[ROTD]:"+.rotd$[.today_rotd]+" ",0;
+	end;
+	
+OnNPCKillEvent:
+if ( getmonsterinfo( killedrid,MOB_RACE ) == .today_rotd ) {
+	set .@partyid,getcharid(1);
+	set .@mob_base_exp,(( getmonsterinfo( killedrid,MOB_BASEEXP ) / 100 ) * .rotd_exp_bonus );
+	set .@mob_job_exp,(( getmonsterinfo( killedrid,MOB_JOBEXP ) / 100 ) * .rotd_exp_bonus );
+	if ( .@partyid ) {
+		set .@aid,getcharid(3);
+		set .@baselevel,BaseLevel;
+		set .@map$,strcharinfo(3);
+		getpartymember .@partyid,1;
+		getpartymember .@partyid,2;
+		while( .@i < $@partymembercount ) {
+			if ( isloggedin( $@partymemberaid[.@i],$@partymembercid[.@i] ) )
+				if ( attachrid( $@partymemberaid[.@i] ) )
+					if ( strcharinfo(3) == .@map$ && ( BaseLevel - .@baselevel ) <= .party_level_range && ( BaseLevel - .@baselevel ) >= ~.party_level_range && Hp >= 1 ) {	
+						set BaseExp,( BaseExp + .@mob_base_exp );
+						set JobExp,( JobExp + .@mob_job_exp );
+						dispbottom "[ROTD Party] : "+.@mob_base_exp+" EXP";
+					}
+			set .@i,.@i + 1;
+		}
+		attachrid( .@aid );
+	}
+	else {
+		set BaseExp,( BaseExp + .@mob_base_exp );
+		set JobExp,( JobExp + .@mob_job_exp );
+		dispbottom "[ROTD SOLO] : "+.@mob_base_exp+" EXP";
+	}
+	if ( rand( 100 ) < .rotd_item_rate && .rotd_zeny ) 
+		set Zeny,Zeny + rand( .rotd_zeny );
+	if ( rand( 100 ) < .rotd_item_rate && .rotd_item_amount ) 
+		getitem .rotd_item_id,rand( .rotd_item_amount ),.@aid;
+}
+end;
+}
+

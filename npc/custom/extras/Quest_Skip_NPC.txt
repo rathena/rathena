@@ -1,0 +1,2839 @@
+//===== Compatible With: ======================================
+//= rAthena SVN
+//===== Description: ==========================================
+//= [Quest Skipping NPC]
+//===== Additional Comments: ==================================
+//= Any issues or typos should be sent to ianmattheis@gmail.com
+//= 1.0 Initial Release [Azura Skyy] July 7th 2014
+//= 1.01 Release [Azura Skyy] July 10th 2014
+//= 1.02 Fixes include more 'if' statements to explain
+//= quest status, added cutin, Kiel Hyre detailed information,
+//= and revised some dialogue. Overall quality improvement.
+//= 1.1 Release [Azura Skyy] July 2015
+//GM level check so GMs may edit use through NPC
+//Allow @set $ commands to toggle functionality
+//including GM req, XP, Item req, and Level req.
+//Requires initial setup through Edit Mode or @set $QuestGMR 6
+//$QuestXP uses getexp (effected by quest exp rate)
+//=============================================================
+prontera,173,195,3	script	Alsvid#QC	626,{
+set .@menu$, "Hello:Cancel";
+if ($QuestGM) == 0 {
+	if (getgmlevel() < $QuestGMR) {
+	}
+	else {
+		set .@menu$, .@menu$ + ":^ff3300I've come seeking knowledge...^000000:^ff3300Edit Mode^000000";
+	}
+}
+else { //if $QuestGM > 0 {
+	if (getgmlevel() < $QuestGMR) {
+		set .@menu$, .@menu$ + ":^ff3300I've come seeking knowledge...^00000";
+	}
+//This line decides what GMs may access the edit mode, changing which players may access the Quest Skip feature, toggle XP rewards, and toggle item or level requirements.
+	else if (getgmlevel() >= $QuestGMR) {
+		set .@menu$, .@menu$ + ":^ff3300I've come seeking knowledge...^000000:^ff3300Edit Mode^000000";
+	}
+}
+switch(select(.@menu$)) {
+	case 1:
+		mes "["+strcharinfo(0)+",]";
+		mes "I'm an adventurer...";
+		next;
+		mes "[Alsvid]";
+		mes "I've known a number of adventurers, many more deserving of the knowledge I offer than you.";
+		close2;
+		end;
+	case 2:
+		end;
+	case 3:
+		cutin "bu_oliver1",0;
+		emotion et_surprise;
+		mes "[Alsvid]";
+		mes "You have an interesting aura about you... What information do you seek? ";
+		close2;
+		if(select("Quick Information:Detailed Information") == 1) {
+			set .@QuickQ, 1;
+		}
+		switch(select("The Republic of Schwartzvald:The Arunafeltz States:Standalone:New World")) {
+			case 1:
+				switch(select("Factory Quest:Einbroch Murder Quest:Biolabs Entrance Quest:President Quest:Cursed Spirit Quest:Odin's Temple Evacuation Quest")) {
+					case 1:
+						if (checkquest(8031)== 2) {
+							mes "Alsvid";
+							mes "You already know The Factory story.";
+							close2;
+							cutin "bu_oliver1",255;
+							end;
+						}
+						if (checkquest(8031)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 1) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff33001^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+								if(countitem(7317)<10 || countitem(7325)<20) || countitem(7319)<10{
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^CE000010 Rusty Screw^000000";
+									mes "^CE000020 Flexible Tube^000000";
+									mes "^CE000010 Used Iron Plate^000000";
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "Einbroch struggled with polluted air as a result of the smog from the factory.";
+								next;
+								mes "[Alsvid]";
+								mes "The city faced another problem as the workers endured dangerous work conditions.";
+								next;
+								mes "[Alsvid]";
+								mes "While Liotzburg, the superintendent denied the allocation of funds for repairs, the field supervisor, Zelmeto, took matter into his own hands, employing an adventurer.";
+								next;
+								mes "[Alsvid]";
+								mes "With the help of an adventurer, they were able to spot faulty machinery and fix it before anyone was seriously injured.";
+								next;
+							}
+							mes "[Alsvid]";
+							mes "You now know the Factory story..";
+							close2;
+							setquest 8031;
+							completequest 8031;
+							set EinFactory,16;
+							if ($QuestXP > 0) {
+								if (BaseLevel > 0 && BaseLevel < 41) {
+									getexp 61,0;
+								}
+								if (BaseLevel > 40 && BaseLevel < 51) {
+									getexp 307,0;
+								}
+								if (BaseLevel > 50 && BaseLevel < 61) {
+									getexp 660,0;
+								}
+								if (BaseLevel > 60 && BaseLevel < 71) {
+									getexp 1850,0;
+								}
+								if (BaseLevel > 70 && BaseLevel < 81) {
+									getexp 3206,0;
+								}
+								if (BaseLevel > 80 && BaseLevel < 91) {
+									getexp 76026,0;
+								}
+								if (BaseLevel > 90) {
+									getexp 290674,0;
+								}
+							}
+							if ($QuestItem > 0) {
+								delitem 7317, 10;//Rusty Screw
+								delitem 7325, 20;//Flexible Tube
+								delitem 7319, 10;//Used Iron Plate
+							}
+							cutin "bu_oliver1",255;
+							end;
+						}
+						else {
+							close2;
+							cutin "bu_oliver1",255;
+							end;
+						}
+					case 2:
+						if (checkquest(2078)== 2) {
+							mes "Alsvid";
+							mes "You already know the Einbroch Murder story.";
+							close2;
+							cutin "bu_oliver1",255;
+							end;
+						}
+						if (checkquest(8031)== 2 && checkquest(2078)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 1) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff33001^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "Buender Hikeman, a retired miner reluctantly confided in an adventurer his troubled past in hopes of getting some closure.";
+								next;
+								mes "[Alsvid]";
+								mes "The adventurer is led to the city of Einbroch where he discovers a man named, Shinokas, who was responsible for the mine collapse that killed Hikeman's friends.";
+								next;
+								mes "[Alsvid]";
+								mes "Shinokas pleaded with the adventurer to search for the ore (so precious that Rekenber bribed him to kill his friends).";
+								next;
+								mes "[Alsvid]";
+								mes "In the end Shinokas died realizing that he was only able to discover amazing things with his friends.";
+								next;
+							}
+							mes "[Alsvid]";
+							mes "You now know the Einbroch Murder story.";
+							close2;
+							setquest 2078;
+							completequest 2078;
+							set Shinokas_Quest,11;
+							if ($QuestXP > 0) {
+								if (BaseLevel > 0 && BaseLevel < 70) {
+									getexp 10000,8000;
+								}
+								if (BaseLevel > 69 && BaseLevel < 80) {
+									getexp 30000,10000;
+								}
+								if (BaseLevel > 79 && BaseLevel < 90) {
+									getexp 70000,70000;
+								}
+								if (BaseLevel > 89) {
+									getexp 90000,50000;
+								}
+							}
+							if ($QuestItem > 0) {
+							}
+							cutin "bu_oliver1",255;
+							end;
+						}
+						else {
+							mes "Alsvid";
+							mes "You do not yet know The Factory story.";
+							close2;
+							cutin "bu_oliver1",255;
+							end;
+						}
+					case 3:
+						if (checkquest(12057)== 2) {
+							mes "Alsvid";
+							mes "You already know how to access the Biolabs.";
+							close2;
+							cutin "",255;
+							end;
+						}
+						if (checkquest(12057)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 60) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330060^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+								if(countitem(909)<20){
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^CE000020 Jellopy^000000";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "Fishbone, an ex-researcher for Regenschirm (Rekenber's Scientific Research Division) helped an adventurer to acquire a Laboratory pass, granting them access to the Somatology lab.";
+								next;
+							}
+							mes "Alsvid";
+							mes "You now know how to access the Biolabs.";
+							close2;
+							setquest 12057;
+							completequest 12057;
+							set lhz_sincube,10;
+							set lhz_secret01,0;
+							set lhz_secret02,0;
+							set lhz_secret03,0;
+							set MISC_QUEST,MISC_QUEST|512;
+							getitem 2657,1; //Lab_Passport
+							if ($QuestXP > 0) {
+							}
+							if ($QuestItem > 0) {
+								delitem 909, 20;//Jellopy
+							}
+							cutin "bu_oliver1",255;
+							end;
+						}
+						else {
+							close2;
+							cutin "",255;
+							end;
+						}
+					case 4:
+						if (checkquest(12028)== 2) {
+							mes "Alsvid";
+							mes "You already know the story of the President Quest.";
+							close2;
+							cutin "",255;
+							end;
+						}
+						if (checkquest(12057)== 2 && checkquest(2078)== 2 && checkquest(12028)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 60) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330060^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+								if(countitem(7347)<10 || countitem(7345)<10){
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^CE000010 Research Charts^000000";
+									mes "^CE000010 Handcuffs^000000";
+									end;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "A passing adventurer had a chance encounter with Ghalstein who exposed himself as a member of 'Secret Wing; a group who's single cause was bringing down the Rekenber Corporation that runs the Schwartzvald Republic.'";
+								next;
+								mes "[Alsvid]";
+								mes "Ghalstein recruited the adventurer into Secret Wing, and tasked them with collecting research information as well as a piece of Ymir's heart.";
+								next;
+								mes "[Alsvid]";
+								mes "Secret Wing members eventually led the adventurer to Republic of Schwartzvald president, Karl Weierstrass.";
+								next;
+								mes "[Alsvid]";
+								mes "Karl, also a member of Secret Wing, requested that the adventurer meet an informant from the Kafra Agency, Benith. It was at this time that the adventurer learned Kafra Corporation's interests were at odds with Rekenber Corporation over their sponsorship of the Zonda Corporation(Rekenber's small way of gaining influence in Rune Midgarts.";
+								next;
+								mes "[Alsvid]";
+								mes "Benith then sent the adventurer on a rescue mission to recover Jargeah, a member of Secret Wing who died handing a file to the adventurer.";
+								next;
+								mes "[Alsvid]";
+								mes "After a number of exchanges between the adventurer and Secret Wing members, a final document was arranged to be delivered to the president.";
+								next;
+								mes "[Alsvid]";
+								mes "The adventurer concluded their escapade after learning that the president's aide, Kurelle h been leaking all of Secret Wing's information to Rekenber.";
+								next;
+							}
+							mes "Alsvid";
+							mes "You now know the story of the President Quest.";
+							close2;
+							setquest 12028;
+							completequest 12028;
+							set lhz_boss,44;
+							if ($QuestXP > 0) {
+								getexp 270000,0;
+							}
+							if ($QuestItem > 0) {
+								delitem 7347, 10;//Research Charts
+								delitem 7345, 10;//Handcuffs
+							}
+						}
+						else {
+							mes "Alsvid";
+							mes "You do not yet know the Einbroch Murder story or how to access the Biolabs.";
+							close2;
+							cutin "",255;
+							end;
+						}
+						cutin "",255;
+						end;
+					case 5:
+						if (checkquest(2095)== 2) {
+							mes "Alsvid";
+							mes "You already know the story of the Cursed Spirit.";
+							close2;
+							cutin "",255;
+							end;
+						}
+						if (checkquest(12057)== 2 && checkquest(2095)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 60) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330060^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+								if(countitem(7345)<1 || countitem(746)<1 || countitem(744)<1 || countitem(523)<5 || countitem(2241)<1 || countitem(2243)<1){
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^CE00001 Handcuffs^000000";
+									mes "^CE00001 Glass Bead^000000";
+									mes "^CE00001 Boquet^000000";
+									mes "^CE00001 Holy Water^000000";
+									mes "^CE00001 Grandpa Beard^000000 -not consumed";
+									mes "^CE00001 Geek Glasses^000000 -not consumed";
+									close2;
+									cutin "bu_oliver1",255;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "While in the Somatology Laboratory, an adventurer attracted the attention of some spirits.";
+								next;
+								mes "The spirits continually made their way into the adventurer's mind with haunting voices of past events.";
+								next;
+								mes "[Alsvid]";
+								mes "The voices eventually led the adventurer to the Rekenber Corporation's headquarters. Inside the Rekenber building, the hallucinations became worse.";
+								next;
+								mes "[Alsvid]";
+								mes "Past events began flashing before their eyes and they saw the great sage, Varmunt, resigning from Rekenber after completing the first artificial Ymir's Heart.";
+								next;
+								mes "[Alsvid]";
+								mes "After the hallucinations ended, the adventurer confronted Wolchev, one of the researchers at present day Rekenber.";
+								next;
+								mes "[Alsvid]";
+								mes "The final hallucination ended with the adventurer recovering an old pendant from the spirit's past.";
+								next;
+								mes "[Alsvid]";
+								mes "In the Lighthalzen slums, the adventurer met the sister to the spirit whom owned the pendant. She was quite distraught over her brother's disappearance from many years ago but built up the enthusiasm to get healthy with encouragement from the adventurer.";
+								next;
+								mes "[Alsvid]";
+								mes "The adventurer then became possessed by the spirit long enough for the spirit to convey his last words to his sister.";
+								mes "[Alsvid]";
+								mes "With proof gathered from the Laboratory, the adventurer confronted Rekenber staff regarding Wolchev's cruel experiments.";
+								next;
+								mes "[Alsvid]";
+								mes "Rekenber conducted an internal investigation and promised that Wolchev would be punished if not fired for conducting homunculus experiments on humans.";
+								next;
+							}
+							mes "Alsvid";
+							mes "You now know the story of the Cursed Spirit.";
+							setquest 2095;
+							completequest 2095;
+							set lhz_curse,32;
+							if ($QuestXP > 0) {
+								if (BaseLevel > 0 && BaseLevel < 70) {
+									getexp 800000,300000;
+								}
+								if (BaseLevel > 69 && BaseLevel < 80) {
+									getexp 1000000,500000;
+								}
+								if (BaseLevel > 79 && BaseLevel < 90) {
+									getexp 1500000,800000;
+								}
+								if (BaseLevel > 89) {
+									getexp 2000000,1000000;
+								}
+							}
+							if ($QuestItem > 0) {
+								delitem 7345, 1;//Handcuffs
+								delitem 7746, 1;//Glass Bead
+								delitem 744, 1;//Boquet
+								delitem 523, 1;//Holy Water
+							}
+							cutin "",255;
+							end;
+						}
+						else {
+							mes "Alsvid";
+							mes "You do not yet know how to access the Biolabs.";
+							close2;
+							cutin "",255;
+							end;
+						}
+					case 6:
+						if (checkquest(11008)== 2) {
+							mes "Alsvid";
+							mes "You already know the story of Odin's Temple Excavation.";
+							close2;
+							cutin "",255;
+							end;
+						}
+						if (checkquest (11008)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 60) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330060^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+								if(countitem(7511)<5 || zeny < 2400){
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^CE00005 Rune of Darkness^000000";
+									mes "^FFCE002400 Zeny^000000";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "After reading a sign post in Hugel advertising recruitment for an excavation of Odin's Temple, an adventurer heeded to the call.";
+								next;
+								mes "[Alsvid]";
+								mes "The excavation crew sent the adventurer to the temple's island and back several times before getting suspicious of fellow team members.";
+								next;
+								mes "[Alsvid]";
+								mes "As it turns out, part of the team was hoping to find Ymir's Heart somewhere on the site.";
+								next;
+								mes "[Alsvid]";
+								mes "Fortunately, Ashe, part of the excavation team sent the adventurer to Morocc with a file, where they discovered that some Secret Wing operatives were still active.";
+								next;
+							}
+							mes "Alsvid";
+							mes "You now know the story of Odin's Temple Excavation.";
+							close2;
+							setquest 11008;
+							completequest 11008;
+							set hg_odin,60;
+							if ($QuestXP > 0) {
+								getexp 70000,0;
+							}
+							if ($QuestItem > 0) {
+								delitem 7511, 5;//Rune of Darkness
+								set Zeny,Zeny-2400;//Zeny
+							}
+							cutin "",255;
+							end;
+						}
+						else {
+							close2;
+							cutin "",255;
+							end;
+						}
+				}
+			case 2:
+				switch(select("Lost Child:Rachel Sanctuary:Veins Siblings:Curse of Gaebolg:Thor Volcano Base:Peace for Arunafeltz:Nameless Island Entry Quest")) {
+					case 1:
+						if (checkquest(8099)== 2) {
+							mes "Alsvid";
+							mes "You already know the story of the Lost Child.";
+							close2;
+							cutin "",255;
+							end;
+						}
+						if (checkquest (8099)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 60) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330060^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "Rachel resident Vincent sent an adventurer to recover a precious gem gifted to his master by the Pope of Rachel.";
+								next;
+								mes "[Alsvid]";
+								mes "Phoebe, Vincent's son, stole the gem. As it turns out, the class system in Rachel made Vincent's relationship with Phoebe's mother, Jenny socially unacceptable and capable of damaging Zhed's reputation.";
+								next;
+								mes "[Alsvid]";
+								mes "After attempting to have the adventurer killed to protect his information, Vincent apologized and returned the gem the adventurer took from Phoebe.";
+								mes "[Alsvid]";
+								mes "As thanks, Vincent gave the adventurer a recommendation, allowing them to see High Priest Zhed in Rachel's temple, Ceshrumnir.";
+								next;
+								mes "Alsvid";
+								mes "You now know the story of the Lost Child.";
+								next;
+							}
+							mes "Alsvid";
+							mes "You now know the story of the Lost Child.";
+							close2;
+							setquest 8099;
+							completequest 8099;
+							set lost_boy,13;
+							if ($QuestXP > 0) {
+								getexp 90000,0;
+							}
+							if ($QuestItem > 0) {
+							}
+							cutin "",255;
+							end;
+						}
+						else {
+							close2;
+							cutin "",255;
+							end;
+						}
+					case 2:
+						if (checkquest(8105)== 2) {
+							mes "Alsvid";
+							mes "You already know the story of Rachel's Sanctuary.";
+							close2;
+							cutin "",255;
+							end;
+						}
+						if (checkquest(8099)== 2 && checkquest(8105)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 60) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330060^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+								if(countitem(12018)<20 || countitem(7561)<40){
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^CE000020 Firecracker^000000";
+									mes "^CE000040 Glacial Heart^000000";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "The Arunafeltz States, once residing in isolation, and home to the Freyjan Sanctuary known as Ceshrumnir, became readily accessible with the artificial Heart of Ymir powered airships.";
+								next;
+								mes "[Alsvid]";
+								mes "With the help of ten thousand donations by generous adventurers and citizens, Ceshrumnir opened it's doors to the public, and with it, let out it's dirty secrets.";
+								next;
+								mes "[Alsvid]";
+								mes "The adventurer was forced to enter the temple through the window the first time, leading them to discover blood in the temple.";
+								next;
+								mes "[Alsvid]";
+								mes "High Priest Zhed was pleased to meet the curious adventurer who had helped recover the gem for Vincent and requested further assistance.";
+								next;
+								mes "[Alsvid]";
+								mes "It seemed that the Pope, while being the head of a nation, was also interested in learning about things beyond Rachel's walls, and Zhed was eager to feed that curiosity.";
+								next;
+								mes "[Alsvid]";
+								mes "The adventurer met the adolescent Pope and regaled her with stories of their adventures. As the adventurer spoke, it became clear that the pope was also as she appeared- a young, lonely child.";
+								next;
+								mes "[Alsvid]";
+								mes "The Pope also divulged information on the 'Holy Ground' within the temple where even she was unable to tread.";
+								next;
+								mes "[Alsvid]";
+								mes "Zhed, upon hearing mention of the Holy Ground from the adventurer, requested that they excuse him and not mention the Holy Ground to any other priests.";
+								next;
+								mes "[Alsvid]";
+								mes "The adventurer took the momentary reprieve to investigate the Holy Grounds on their own.";
+								mes "It is there that the adventurer stumbled upon something interesting in the water; a piece of Ymir's Heart.";
+								next;
+								mes "[Alsvid]";
+								mes "Before the adventurer could do anything more, they are dragged out of the sanctuary.";
+								next;
+							}
+							mes "Alsvid";
+							mes "You now know the story of Rachel's Sanctuary.";
+							close2;
+							setquest 8105;
+							completequest 8105;
+							set ra_tem_q,0;
+							if ($QuestXP > 0) {
+								getexp 90000,60000;
+							}
+							if ($QuestItem > 0) {
+								delitem 12018, 20;//Firecracker
+								delitem 7561, 40;//Glacial Heart
+							}
+							cutin "",255;
+							end;
+						}
+						else {
+							mes "Alsvid";
+							mes "You do not yet know the story of the Lost Child.";
+							close2;
+							cutin "",255;
+							end;
+						}
+					case 3:
+						if (checkquest(3083)== 2) {
+							mes "Alsvid";
+							mes "You already know the story of the Veins Siblings.";
+							close2;
+							cutin "",255;
+							end;
+						}
+						if (checkquest(8105)== 2 && checkquest(3083) == -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 60) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330060^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+								else {
+								}
+							}
+							if ($QuestItem > 0) {
+								if(countitem(519)<10 || countitem(511)<100 || countitem(909)<50 || countitem(713)<6 || countitem(528)<5 || countitem(619)<1 || countitem(503)<2 || countitem(999)<1){
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^CE000010 Milk^000000";
+									mes "^CE0000100 Green Herb^000000";
+									mes "^CE000050 Jellopy^000000";
+									mes "^CE00006 Empty Bottle^000000";
+									mes "^CE00005 Monster's Feed^000000";
+									mes "^CE00001 Unripe Apple^000000";
+									mes "^CE00002 Yellow Potion^000000";
+									mes "^CE00001 Steel^000000 -not consumed";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "While in Veins, an adventurer crossed paths with a little boy, Karyn, who requests help rescuing his sister from some strange men in Thor's Volcano.";
+								next;
+								mes "[Alsvid]";
+								mes "The adventurer agreed to search and located Karyn's sister, Curdie, locked near a military base within the volcano.";
+								next;
+								mes "[Alsvid]";
+								mes "With the help of a local locksmith, soap maker, and camel, the adventurer was able to free Curdie and returned her to Karyn.";
+								next;
+							}
+							mes "Alsvid";
+							mes "You now know the story of the Veins Siblings.";
+							setquest 3083;
+							completequest 3083;
+							set rachel_camel,25;
+							if ($QuestXP > 0) {
+								getexp 100000,50000;
+							}
+							if ($QuestItem > 0) {
+								delitem 519, 10;//Milk
+								delitem 511, 100;//Green Herb
+								delitem 909, 50;//Jellopy
+								delitem 713, 6;//Empty Bottle
+								delitem 528, 5;//Monster's Feed
+								delitem 619, 1;//Unripe Apple
+								delitem 503, 2;//Yellow Potion
+							}
+							close2;
+							cutin "",255;
+							end;
+						}
+						else {
+							mes "Alsvid";
+							mes "You do not yet understand the story of Rachel's Sanctuary.";
+							close2;
+							cutin "",255;
+							end;
+						}
+					case 4:
+						if (checkquest(18052)== 2) {
+							mes "Alsvid";
+							mes "You already know the story of the Curse of Gaebolg..";
+							close2;
+							cutin "",255;
+							end;
+						}
+						if (checkquest(18052)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 60) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330060^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+								if(countitem(506)<1 || countitem(715)<1){
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^CE00001 Green Potion^000000";
+									mes "^CE00001 Yellow Gemstone^000000";
+									mes "^FFCE001000 Zeny^000000";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "Speaking to a number of historians eventually led the adventurer to Father Bamph, who explained the curse of Jormungand.";
+								next;
+								mes "[Alsvid]";
+								mes "It would seem that the first born son of each generation in the Prontera royal family died from a centuries old curse cast on the Gaebolg and other six royal families in Prontera by Jormungand, the Midgard serpent.";
+								next;
+								mes "[Alsvid]";
+								mes "Father Bamph requested that the adventurer meet with a woman near Mt. Mjolnir to discuss discrepancies in various versions of the the rhyme.";
+								next;
+								mes "[Alsvid]";
+								mes "The adventurer learned from the woman, Bonnie Imbullea, that she had performed an exorcism in an attempt to prevent the curse from taking any of the princes. As a result of the three dead princes, she left Prontera.";
+								next;
+								mes "[Alsvid]";
+								mes "After learning the difference in the verses, Father Bamph led the adventurer into the Mausoleum to investigate the bodies of the three princes who succumbed to the curse.";
+								next;
+								mes "[Alsvid]";
+								mes "The intuitive adventurer noticed a serpent mark on the skin of the princes and determined that poison was surely involved.";
+								next;
+								mes "[Alsvid]";
+								mes "With the help of members from the assassin's guild, the adventurer is able to confirm that poison was used to kill the princes.";
+								next;
+								mes "[Alsvid]";
+								mes "Father Bamph pleaded with the adventurer that they not divulge any of the information they gathered with anyone else.";
+								mes "[Alsvid]";
+								mes "Father Bamph requested that the player inform Bonnie of what they learned so that she may forgive herself.";
+								next;
+							}
+							mes "Alsvid";
+							mes "You now know the story of the Curse of Gaebolg.";
+							close2;
+							setquest 18052;
+							completequest 18052;
+							set prt_curse,60;
+							if ($QuestXP > 0) {
+								getexp 135000,0;
+							}
+							if ($QuestItem > 0) {
+								delitem 506, 1;//Green Potion
+								delitem 715, 1;//Yellow Gemstone
+								set Zeny,Zeny-1000;//Zeny
+							}
+							cutin "",255;
+							end;
+						}
+						else {
+							close2;
+							cutin "",255;
+							end;
+						}
+					case 5:
+						if (checkquest(2131)== 2) {
+							mes "Alsvid";
+							mes "You already know the story of Thor's Volcano Base.";
+							close2;
+							cutin "",255;
+							end;
+						}
+						if (checkquest(3083)== 2 && checkquest(2131)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 60) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330060^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "The adventurer who had previously assisted Zhed, returned to discuss the incident they saw in Thor's Volcano.";
+								next;
+								mes "[Alsvid]";
+								mes "Zhed, disturbed by the news helped the adventurer to gain information about Thor's Volcano and a geologist to help them carry out a plan.";
+								next;
+								mes "[Alsvid]";
+								mes "After locating the geologist, and acquiring his tools, the adventurer is able to take readings from various pars of the Volcano.";
+								next;
+								mes "[Alsvid]";
+								mes "Using this tool, the adventurer is able to fabricate evidence to suggest that the Volcano Base is in danger of being destroyed by an eruption.";
+								next;
+								mes "[Alsvid]";
+								mes "With information as their weapon, the adventurer entered the Volcano Base and joined the anti Rune-Midgarts army under Colonel Vito.";
+								next;
+								mes "[Alsvid]";
+								mes "The Colonel assigned the adventurer the task of checking the pipes within the base, allowing for further evidence fabrication, enabling the adventurer to slow down the Volcano Base's operation.";
+								next;
+							}
+							mes "Alsvid";
+							mes "You now know the story of Thor's Volcano Base.";
+							close2;
+							setquest 2131;
+							completequest 2131;
+							set aru_vol,26;
+							if ($QuestXP > 0) {
+								getexp 820000,0;
+							}
+							if ($QuestItem > 0) {
+							}
+							cutin "",255;
+							end;
+						}
+						else {
+							mes "Alsvid";
+							mes "You do not yet understand the story of the Veins SIblings.";
+							close2;
+							cutin "",255;
+							end;
+						}
+					case 6:
+						if (checkquest(2142)== 2) {
+							mes "Alsvid";
+							mes "You already know of the peace Arunafeltz has found.";
+							close2;
+							cutin "",255;
+							end;
+						}
+						if (checkquest(2131)== 2 && checkquest(2142)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 60) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330060^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+								if(countitem(725)<1){
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^CE00001 Sardonyx^000000";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "In Morocc, the adventurer who previously helped Zhed ran into a thirsty man and assisted him by getting him a bottle of wine.";
+								next;
+								mes "[Alsvid]";
+								mes "The man turned out to be an agent of High Priest Zhed's. After learning this, the adventurer decided to visit their old pal, Zhed.";
+								next;
+								mes "[Alsvid]";
+								mes "Back at the temple, Zhed greeted the adventure before expressing his concern for the priests. Zhed no longer had control over the other priests and feels that the Pope is too inexperienced to fulfil her duties.";
+								next;
+								mes "[Alsvid]";
+								mes "Zhed tells the adventurer to recruit the assistance of his friend, Niren. Niren initially refuses to help Zhed, but decided to give a chance and asked the adventurer to visit the Pope.";
+								next;
+								mes "[Alsvid]";
+								mes "The Pope explains to the adventurer that she is feeling tired and lonely. After relaying this information to Niren, she came up with a plan to remove the other priests from the temple for a time.";
+								next;
+								mes "[Alsvid]";
+								mes "With the rest of the priests on vacation, Zhed, Niren, and the adventurer approached the Pope and explained the situation. The Pope understood and agreed.";
+								next;
+								mes "[Alsvid]";
+								mes "The Pope made a speech appointing Zhed and Niren in control of the other priests. Zhed and Niren extended their gratitude and Zhed informed the adventurer that Thor's Volcano Base was shutting down.";
+								next;
+							}
+							mes "Alsvid";
+							mes "You now know of the peace Arunafeltz has found.";
+							close2;
+							setquest 2142;
+							completequest 2142;
+							set aru_em,24;
+							if ($QuestXP > 0) {
+								getexp 250000,0;
+							}
+							if ($QuestItem > 0) {
+								delitem 725, 1;//Sardonyx
+							}
+							cutin "",255;
+							end;
+						}
+						else {
+							mes "Alsvid";
+							mes "You do not yet understand the story of Thor's Volcano Base.";
+							close2;
+							cutin "",255;
+							end;
+						}
+					case 7:
+						if (checkquest(17017)== 2) {
+							mes "Alsvid";
+							mes "You already know how to access the Nameless Island Monastery.";
+							close2;
+							cutin "",255;
+							end;
+						}
+						if (checkquest(8105)== 2 && checkquest(18052)== 2 && checkquest(17017)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 80) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330080^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+								if(Zeny<3000){
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^FFCE003000 Zeny^000000";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "An agent on the international airship contacts the adventurer who previously helped Father Bamph and informed the adventurer of a contact request from Father Bamph.";
+								next;
+								mes "[Alsvid]";
+								mes "Father Bamph recruits the assistance of the adventurer in tracking a high-ranking official from Rune-Midgarts who went missing in Comodo.";
+								next;
+								mes "[Alsvid]";
+								mes "After a bit of running around, the adventurer ended up receiving a written order from Zhed to the magistrate, allowing the adventurer to gain access to classified information regarding some smugglers.";
+								next;
+								mes "[Alsvid]";
+								mes "The magistrate divulged information regarding the smugglers and the high-ranking official they mistook for a random rich guy in Comodo.";
+								next;
+								mes "[Alsvid]";
+								mes "It turns out that some officials from Rachel ordered the smugglers and their captive to be placed in the old monastery South-west of Veins until the High Priests could decide what to do with them.";
+								next;
+								mes "[Alsvid]";
+								mes "Upon investigating the monastery, the adventurer discovered the undead corpse of King Tristan Gaebolg III. Defeating the corpse left the adventurer with the token of the king.";
+								next;
+								mes "[Alsvid]";
+								mes "Father Bamph was aware that such things might occur one day, but didn't expect anything so soon. He claimed that the royal courts of Prontera were busy with their own business and hoped that this case wouldn't cause any huge issues.";
+								next;
+							}
+							mes "Alsvid";
+							mes "You now know how to access the Nameless Island Monastery.";
+							close2;
+							setquest 17017;
+							completequest 17017;
+							set aru_monas,25;
+							if ($QuestXP > 0) {
+								getexp 150000,0;
+							}
+							if ($QuestItem > 0) {
+								set Zeny,Zeny-3000;//Zeny
+							}
+							cutin "",255;
+							end;
+						}
+						else {
+							mes "Alsvid";
+							mes "You do not yet know the story of Rachel's Sanctuary, the Veins Siblings, or understand the Curse of Gaebolg..";
+							close2;
+							cutin "",255;
+							end;
+						}
+				}
+			case 3:
+				switch(select("Friendship:Bruspetti:Juperos Quest:Kiel Hyre Quest")) {
+					case 1:
+						if (checkquest(12006)== 2) {
+							mes "Alsvid";
+							mes "You already understand the meaning of Friendship.";
+							close2;
+							cutin "",255;
+							end;
+						}
+						if (checkquest(12006)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 50) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330050^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "Maku and Alexander Digotz of the slums and upper Lighthalzen (respectfully) were childhood friends who became bitter.";
+								next;
+								mes "[Alsvid]";
+								mes "With the help of an adventurer, the two ex-friends sent messages back and forth about how angry they were and wanting to beat each other up.";
+								next;
+								mes "[Alsvid]";
+								mes "Digotz eventually mentions that they had a friend who was able to sort out their issues as children.";
+								next;
+								mes "[Alsvid]";
+								mes "The childhood friend, Benkaistein offers his diary to the adventurer to help sort out the issue.";
+								next;
+								mes "[Alsvid]";
+								mes "After arranging a meet up for Digotz and Maku, the adventurer returned to Digotz's house in Lighthalzen and found him with a knife in his back.";
+								next;
+								mes "[Alsvid]";
+								mes "Digotz died without meeting Maku. His final words to the adventurer were regret for being angry at his friend when life is so short.";
+								next;
+							}
+							mes "Alsvid";
+							mes "You now understand the meaning of Friendship.";
+							close2;
+							setquest 12006;
+							completequest 12006;
+							set friendship,16;
+							if ($QuestXP > 0) {
+								if (BaseLevel > 0 && BaseLevel < 76) {
+									getexp 39600,0;
+								}
+								if (BaseLevel > 75 && BaseLevel < 91) {
+									getexp 80000,0;
+								}
+								if (BaseLevel > 90) {
+									getexp 140000,0;
+								}
+							}
+							if ($QuestItem > 0) {
+							}
+							cutin "",255;
+							end;
+						}
+						else {
+							close2;
+							cutin "",255;
+							end;
+						}
+					case 2:
+						if (checkquest(8122)== 2) {
+							mes "Alsvid";
+							mes "You already know the story of Bruspetti.";
+							close2;
+							cutin "",255;
+							end;
+						}
+						if (checkquest(12006)== 2 && checkquest(8122)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 50) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330050^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+								if(countitem(1201)<1){
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^CE00001 Knife[3]^000000";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "The adventurer who tried to help Digotz and Maku become friends again finds themselves investigating conflicting stories regarding Katinshuell's relationship.";
+								next;
+								mes "[Alsvid]";
+								mes "Katinshuell claims that he left his girlfriend, but Mr. Shendar, the father of Katinshuell's girlfriend talks only of how he misses his daughter.";
+								next;
+								mes "[Alsvid]";
+								mes "After travelling to the Lighthalzen hotel, the adventurer picked up on the scent of roses that Lachellen (Rachel resident) confirms to be Bruspetti's scent.";
+								next;
+								mes "[Alsvid]";
+								mes "Lachellen encouraged the adventurer to visit the place that Bruspetti and her boyfriend often visited. It is hear that the adventurer learned of a girl drowning in Freya's Spring.";
+								next;
+								mes "[Alsvid]";
+								mes "A more thorough investigation of Mr. Shendar's residence led the adventurer to acquire Bruspetti's diary where she describes the horrible truth she learned about Katinshuell.";
+								next;
+								mes "[Alsvid]";
+								mes "The last time the adventurer confronted Katinshuell about all they had learned in the diary, Katinshuell confessed to murdering Digotz on an order from higher-ups in Lighthalzen.";
+								next;
+								mes "[Alsvid]";
+								mes "The adventurer also learned that Bruspetti threw herself into Freya's Spring after Katinshuell confessed his crime to her.";
+								next;
+							}
+							mes "Alsvid";
+							mes "You now know the story of Bruspetti.";
+							close2;
+							setquest 8122;
+							completequest 8122;
+							set rach_vice,24;
+							if ($QuestXP > 0) {
+								if (BaseLevel > 0 && BaseLevel < 76) {
+									getexp 45000,0;
+								}
+								if (BaseLevel > 75 && BaseLevel < 91) {
+									getexp 85000,0;
+								}
+								if (BaseLevel > 90) {
+									getexp 130000,0;
+								}
+							}
+							if ($QuestItem > 0) {
+								delitem 1201, 1;//Knife[3]
+							}
+							cutin "",255;
+							end;
+						}
+						else {
+							mes "Alsvid";
+							mes "You do not yet understand the meaning of Friendship.";
+							close2;
+							cutin "",255;
+							end;
+						}
+					case 3:
+						if (checkquest(2142)== 2) {
+							mes "Alsvid";
+							mes "You already know why Juperos fell.";
+							close2;
+							cutin "",255;
+							end;
+						}
+						if (checkquest(11022)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 1) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff33001^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+								if(countitem(7356)<1 || countitem(7357)<1 || countitem(7358)<1 || countitem(7359)<1){
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^CE00001 Crest Piece(Purple)^000000";
+									mes "^CE00001 Crest Piece(Green)^000000";
+									mes "^CE00001 Crest Piece(Orange)^000000";
+									mes "^CE00001 Crest Piece(Blue)^000000";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "An adventurer found themselves in the Yuno library talking to a rude scholar, Feyruz, who is working on her thesis on 'The Fall of Juperos.'";
+								next;
+								mes "[Alsvid]";
+								mes "Feyruz agreed with the adventurer that her thesis lacked conjecture, but argues that there is no known documentation from that era to further her thesis.";
+								next;
+								mes "[Alsvid]";
+								mes "Feyruz suggested that the adventurer bring back any interesting information they find, should they find themselves wandering the ruins of Juperos.";
+								next;
+								mes "[Alsvid]";
+								mes "After investigating the ruins, the adventurer returns to Feyruz to discuss some statues they found matching several within Juno.";
+								next;
+								mes "[Alsvid]";
+								mes "Again Feyruz requests the adventurer bring back any interesting artefacts, and the adventurer returns again with four plates, detailing Juperos' fall.";
+								next;
+								mes "[Alsvid]";
+								mes "Juperos was a prosperous city that thrived on scientific advancements, much like Juno. The city experienced a revolution in science as a result of one scientist's effort to manipulate the Heart of Ymir's energy.";
+								next;
+								mes "[Alsvid]";
+								mes "The same scientist that brought the city greatest detailed accounts of experimentation with the chimera.";
+								next;
+								mes "[Alsvid]";
+								mes "In his experiments, the scientist aimed to find a scientific method for immortality but was driven to insanity.";
+								next;
+								mes "[Alsvid]";
+								mes "Juperos fell victim to the scientist after he transformed himself into a chimera. Fortunately, a team of scientists were able to salvage a fragment of Ymir's Heart and used it to raise the city to the sky.";
+								next;
+								mes "[Alsvid]";
+								mes "The story goes that the team of scientists who launched Juperos into what would become Juno all died immediately after, leaving no documentation.";
+								next;
+							}
+							mes "Alsvid";
+							mes "You now know why Juperos fell.";
+							close2;
+							setquest 11022;
+							completequest 11022;
+							set yuno_hist,10;
+							if ($QuestXP > 0) {
+								getexp 40000,0;
+							}
+							if ($QuestItem > 0) {
+								delitem 7356, 1;//Crest Piece(Purple)
+								delitem 7357, 1;//Crest Piece(Green)
+								delitem 7358, 1;//Crest Piece(Orange)
+								delitem 7359, 1;//Crest Piece(Blue)
+							}
+							cutin "",255;
+							end;
+						}
+						else {
+							close2;
+							cutin "",255;
+							end;
+						}
+					case 4:
+						if (checkquest(16146)== 2) {
+							mes "Alsvid";
+							mes "You already know the truth of Kiel Hyre's past and his son.";
+							close2;
+							cutin "",255;
+							end;
+						}
+						if (checkquest(16146)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 70) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^FF330070^000000 is";
+									mes "requiredto complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+								if(countitem(519)<7 || countitem(7182)<5 || countitem(548)<2 || countitem(537)<1 || countitem(544)<10 || countitem(7507)<4){
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^CE00007 Milk^000000";
+									mes "^CE00005 Cacao^000000";
+									mes "^CE00002 Cheese^000000";
+									mes "^CE00001 Pet Food^000000";
+									mes "^CE000010 Raw Fish^000000";
+									mes "^CE00004 Solid Iron Piece^000000";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "An adventurer took a job to deliver wine from the Yuno pub to Ms. Lecollane at the Kiel Hyre Academy.";
+								next;
+								mes "[Alsvid]";
+								mes "After delivering the wine, the adventurer overheard one of the students, Elly, dropping some of her ingredients. Elly's panic led the adventurer to a second delivery job, collecting her cooking supplies.";
+								next;
+								mes "[Alsvid]";
+								mes "After returning with the supplies, Elly rewarded them with some well-baked cookies and a request for the adventurer to bring some cookies to her grandfather, at Kiel Hyre's, cottage.";
+								next;
+								mes "[Alsvid]";
+								mes "When the guard denied the adventurer access to the cottage, they returned to Elly and received a cottage key.";
+								next;
+								mes "[Alsvid]";
+								mes "Returning to the cottage once more, the adventurer managed their way into a storage room on the edge of the Kiel Hyre residence. Inside they found a letter to Elly warning that he might be in danger (his son, Kiehl wants to kill him) and that she should seek help";
+								next;
+								mes "[Alsvid]";
+								mes "Questioning Elly after giving her the note revealed some ominous information on the Kiel Hyre Academy.";
+								next;
+								mes "[Alsvid]";
+								mes "Apparently students were becoming petrified. Frozen in place and unresponsive. Other students in the academy also suggested the disappearance of a classmate.";
+								next;
+								mes "[Alsvid]";
+								mes "Elly tells the adventurer that she doesn't need to worry, because if anything were to happen, the adventurer could just tell 'Wake up, Elly!' to save her.";
+								next;
+								mes "[Alsvid]";
+								mes "The adventurer then proceeded to investigate Kiel Hyre's residence. The investigation led the adventurer to a few pieces of the puzzle that was Kiel Hyre's history.";
+								next;
+								mes "[Alsvid]";
+								mes "When the adventurer returned to Elly's dorm to discuss the things they found that Elly was unresponsive.";
+								next;
+								mes "[Alsvid]";
+								mes "Per Elly's instructions, the adventurer shouted to her, but the call had only a small effect. Elly's hands opened for her to drop a luxurious button.";
+								next;
+								mes "[Alsvid]";
+								mes "Beside the cookies on the table, the adventurer finds that Elly left them a note- the note suggested that Elly feared for her safety and attempted to protect herself by locking herself in her room.";
+								next;
+								mes "[Alsvid]";
+								mes "With Elly unable to assist the adventurer, they are left to their own devices to discover an entrance to an underground factory beneath some graves near the Kiel Hyre Dormitory.";
+								next;
+								mes "[Alsvid]";
+								mes "Exploration of the factory reveals a number of robotic monsters and locked doors. Eventually the adventurer winds up meeting Allysia and rescuing Kiel Hyre, and is asked by Allysia to meet her master in their Lighthalzen home.";
+								next;
+								mes "[Alsvid]";
+								mes "Entering Kiel Hyre mansion enabled the adventurer access to speaking with Kiel Hyre.";
+								next;
+								mes "[Alsvid]";
+								mes "Kiel Hyre reveals a brief history on his work designing robots, explaining that Allysia, his assistant, as well as all the students at the Kiel Hyre Academy, including Elly, were actually prototypes of his 2nd generation robots.";
+								next;
+								mes "[Alsvid]";
+								mes "Kiel went on to explain that his son, Kiehl had been working for Rekenber Corporation, modifying the second generation prototypes into third generation weapons.";
+								next;
+								mes "[Alsvid]";
+								mes "As the adventurer left the Kiel Hyre mansion, they were approached by a Schwartzvald Republic agent, Mitchell, who explained Kiehl's connections to Rekenber and requests that the adventurer investigate the disappearance of a woman named 'Ellisia' from thirty years ago.";
+								next;
+								mes "[Alsvid]";
+								mes "The adventurer began the investigation with an old woman in Juno. The old woman hands the adventurer the Rosimmer Mansion Key.";
+								next;
+								mes "[Alsvid]";
+								mes "Within the house, the adventurer finds 'K.H's Letter,' 'James's Note,' and a 'Family Portrait,' which depicts a love triangle between Kiel Hyre, Ellisia, and James Rosimmer.";
+								next;
+								mes "[Alsvid]";
+								mes "Back in Juno, the old woman from before informs the adventurer of the river where Ellisia died and about the fisherman who witnessed the incident.";
+								next;
+								mes "[Alsvid]";
+								mes "The adventurer located the fisherman in a Juno field and inquired about the death of Ellisia only to learn that the fisherman found a ring while fishing and that a man fitting Kiel Hyre's description paid a large sum of money for the ring.";
+								next;
+								mes "[Alsvid]";
+								mes "The adventurer returned to Mitchell to share what information they had learned. After conversing with Mitchell, the adventurer confronted Kiel Hyre.";
+								next;
+								mes "[Alsvid]";
+								mes "With the evidence presented, Kiel Hyre broke down and explained how he met Ellisia. Kiel Hyre claims that he asked her to run away with him instead of James, and when she refused, he tried to steal the ring James gave her.";
+								next;
+								mes "[Alsvid]";
+								mes "In the struggle, the land crumbled and Ellisia drowned in the river. His feelings for vengeance on James led him to merge the Kiel Hyre Foundation with the Rekenber Corporation. Using his new found wealth and power allowed Kiel to become wealthy while bankrupting the Rossimers.";
+								next;
+								mes "[Alsvid]";
+								mes "The second generation of robots that Kiel Hyre created used a new brain, consisting of Condensed Memory Scrolls. This new brain was unstable and led Rekenber to scrapping the second generation.";
+								next;
+								mes "[Alsvid]";
+								mes "Kiel Hyre watched his son, Kiehl grow greedy and evil as a result of growing without Norman morals, and set out to educate the remaining second generation children (Elly, Aliot, Alicel) with the Kiel Hyre Academy.";
+								next;
+								mes "[Alsvid]";
+								mes "His son was still able to modify some of the second generation children into weapons (less Elly). Kiel Hyre concludes his history with a request for the adventurer to stop Kiehl.";
+								next;
+								mes "[Alsvid]";
+								mes "After fighting through several rooms of third generation robots (homunculus body), the adventurer finds their way to Kiehl's laboratory.";
+								next;
+								mes "[Alsvid]";
+								mes "After the Schwartzvald Republic agents and the adventurer surround Kiehl, Kiehl kills the agents and goes on to attack the adventurer.";
+								next;
+								mes "[Alsvid]";
+								mes "The adventurer manages to stop Kiehl. Before Kiehl can be killed, he transfers his memories to a new body. The first fourth generation robot (Kiehl-D01) and compliments the adventurer on being a worth opponent.";
+								next;
+								mes "[Alsvid]";
+								mes "Before fleeing, Kiehl hands Ellisia's ring to the adventurer and asked the adventurer to tell his father of his fourth generation body, commenting that his father would understand.";
+								next;
+							}
+							mes "Alsvid";
+							mes "You now know the truth of Kiel Hyre's past and his son.";
+							close2;
+							setquest 16146;
+							completequest 16146;
+							set KielHyreQuest,105;
+							if ($QuestXP > 0) {
+								getexp 3000000,750000;
+							}
+							if ($QuestItem > 0) {
+								delitem 519, 7;//Milk
+								delitem 7182, 5;//Cacao
+								delitem 548, 2;//Cheese
+								delitem 537, 1;//Pet Food
+								delitem 544, 10;//Raw Fish
+								delitem 7507, 4;//Solid Iron Piece
+							}
+							cutin "",255;
+							end;
+						}
+						else {
+							cutin "",255;
+							end;
+						}
+				}
+			case 4:
+				switch(select("Onward to the New World:New Surroundings:Attitude to the New World:Pursuing Rayan Moore:Next")) {
+					case 1:
+						if (checkquest(10078)== 2) {
+							mes "[Alsvid]";
+							mes "You are already able to move Onward to the New World.";
+							close2;
+							cutin "bu_oliver1",255;
+							end;
+						}
+						if (checkquest(10078)== -1) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 70) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330070^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+								if(countitem(909)<300 || countitem(721)<1 || countitem(723)<1){
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^CE0000300 Jellopy";
+									mes "^CE00001 Emerald";
+									mes "^CE00001 Ruby";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "After speaking with a recruiter in Prontera Castle, adventurers were offered the ability to explore the New World.";
+								next;
+								mes "[Alsvid]";
+								mes "After a series of extorting quests, adventurers found themselves ready for the 'Ash-Vacuum.' With the recruiter's approval, adventurers met in Lighthalzen.";
+								next;
+								mes "[Alsvid]";
+								mes "Inside the Rekenber Headquarters, the 'United Midgard Alliance' discussed what to expect in the 'Ash-Vacuum.'";
+								next;
+								mes "[Alsvid]";
+								mes "Sikaiz, the man lecturing about the Ash-Vacuum goes on to explain that the area is accessible by a portal left behind by Satan Morroc.";
+								next;
+								mes "[Alsvid]";
+								mes "Once the adventurers were filled in on the details of the expedition, they were asked to check in with the Alliance Managers for both";
+								next;
+								mes "[Alsvid]";
+								mes "Rune-Midgarts and Arunafeltz. Both managers express their interest in betraying the peaceful alliance in an effort to be the sole benefeciary of the exploration.";
+								next;
+								mes "[Alsvid]";
+								mes "Before the mission begins, Schwartzvald Republic Agents plot against Sikaiz, their country's Alliance Manager, replacing him with Munkenro, someone they can use to benefit themselves.";
+								next;
+								mes "[Alsvid]";
+								mes "With Munkenro as the new Alliance Manager for the Schwartzvald Republic, the mission is ready to begin. Adventurers headed to the Sograt Desert";
+								next;
+								mes "[Alsvid]";
+								mes "Where they are able to enter the gateway to the New World, the Ash Vacuum.";
+								next;
+							}
+							mes "[Alsvid]";
+							mes "You are now able to move Onward to the New World.";
+							close2;
+							setquest 10078;
+							completequest 10078;
+							set ep13_ryu,100;
+							if ($QuestXP > 0) {
+								getexp 132000,42000;
+							}
+							if ($QuestItem > 0) {
+								delitem 909, 300;//Jellopy
+								delitem 721, 1;//Emerald
+								delitem 723, 1;//Ruby
+							}
+						}
+						else {
+						}
+						cutin "",255;
+						end;
+					case 2:
+						if (checkquest(11100)== 2) {
+							mes "[Alsvid]";
+							mes "You've already adjusted to the New Surroundings.";
+							close2;
+							cutin "bu_oliver1",255;
+							end;
+						}
+						if (checkquest(11100)== -1 && checkquest(10078) == 2) {
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 70) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330070^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+								if(countitem(6041)<20){
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^CE000020 Strong Vine";
+									close2;
+									cutin "bu_oliver1",255;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "Inside the Ash Vacuum, the United Midgard Alliance set up the 'Midgard Expedition Camp.'";
+								next;
+								mes "[Alsvid]";
+								mes "Just outside the portal, Marian greeted the adventurers and lead them to Instructor Lugen to help them adjut to the area.";
+								next;
+								mes "[Alsvid]";
+								mes "Lugen firsts asked adventurers to register with the Receptionist, Brink, before sending them on a series of short missions.";
+								next;
+								mes "[Alsvid]";
+								mes "The first request is issued by Diego, the Barracks attendant who requests some supplies from Splendide Fields.";
+								next;
+								mes "[Alsvid]";
+								mes "After delivering the goods and repairing the barracks, adventurers embarked on delivery runs,";
+								next;
+								mes "[Alsvid]";
+								mes "Bringing supplies to various people around the camp and it's neighboring lands.";
+								next;
+								mes "[Alsvid]";
+								mes "To conclude their introduction to the New World, Instructor Lugen asked for adventurers to deliver a few messages";
+								next;
+								mes "[Alsvid]";
+								mes "between him and his friend on the other end of camp, as they were ordered not to leave their posts.";
+								next;
+							}
+							mes "[Alsvid]";
+							mes "You have now adjusted to the New Surroundings.";
+							close2;
+							setquest 11100;
+							completequest 11100;
+							set ep13_newbs,100;
+							if ($QuestXP > 0) {
+								getexp 100000,10000;
+							}
+							if ($QuestItem > 0) {
+								delitem 6041, 20;//Strong Vine
+							}
+						}
+						else {
+							mes "[Alsvid]";
+							mes "You do not yet know how to move Onward to the New World.";
+							close2;
+							cutin "bu_oliver1",255;
+						}
+						cutin "",255;
+						end;
+					case 3:
+						if (checkquest(2157)== 2){
+							mes "[Alsvid]";
+							mes "You've already got a positive Attitude to the New World.";
+							close2;
+							cutin "bu_oliver1",255;
+							end;
+						}
+						if (checkquest(2157)== -1){
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 70) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330070^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+								if(countitem(713)<1 || countitem(6041)<1 || countitem(523)<5 || countitem(938)<30 || countitem(6032)<20){
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^CE00001 Empty Bottle";
+									mes "^CE00001 Strong Vine";
+									mes "^CE00001 Holy Water";
+									mes "^CE00001 Sticky Mucus";
+									mes "^CE00001 Horn of Hillslion";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "Rumis Block, a monnster scholar in the New World shares his great distaste for his job in this new place, complaining that it's freezing.";
+								next;
+								mes "[Alsvid]";
+								mes "Adventurers found that by killing a Nephentes and bringing Rumis a strong vine, they could convince him";
+								next;
+								mes "[Alsvid]";
+								mes "that the New World wasn't so different from Midgard. To further help his research, he requests some resources.";
+								next;
+								mes "[Alsvid]";
+								mes "Rumis requests that adventurers than bring his research specimen to his twin brother, a botanist in the New World.";
+								next;
+								mes "[Alsvid]";
+								mes "Rumis' brother, Terris, eager to make serious progress in the New World sent adventurers to the lands West of the Alliance Camp.";
+								next;
+								mes "[Alsvid]";
+								mes "After reporting back to Terris, he suggested that the lands to the West were cultivated which is confirmed by his test.";
+								next;
+								mes "[Alsvid]";
+								mes "Large mushroom-like lamps in the area were the source of the fertile lands that made for a paradise in an otherwise uninhabitable land.";
+								next;
+								mes "[Alsvid]";
+								mes "Rumis, after hearing of his brother's success in the New World, strived to match his effort by learning about the new species.";
+								next;
+								mes "[Alsvid]";
+								mes "Rumis' first interest was the Hillslion which prove to be of no interest, but the Tatacho of the area were found to wear small hats.";
+								next;
+								mes "[Alsvid]";
+								mes "Rumis concluded that the Tatacho were not smart enough to make the hats, so they must have been made by a nearby humanoid species- suspecting fairies.";
+								next;
+							}
+							mes "[Alsvid]";
+							mes "You've gained a positive Attitude to the New World.";
+							close2;
+							setquest 2157;
+							completequest 2157;
+							set ep13_animal,100;
+							if ($QuestXP > 0) {
+								getexp 150000, 0;
+							}
+							if ($QuestItem > 0) {
+								delitem 713, 1;//Empty Bottle
+								delitem 6041, 1;//Strong Vine
+								delitem 523, 5;//Holy Water
+								delitem 938, 30;//Sticky Mucus
+								delitem 6032, 20;//Horn of Hillslion
+							}
+						}
+						else {
+							mes "[Alsvid]";
+							mes "You do not yet know how to move Onward to the New World.";
+							close2;
+							cutin "bu_oliver1",255;
+						}
+						cutin "",255;
+						end;
+					case 4://Ryan Moore
+						if (checkquest(7036)== 2){
+							mes "[Alsvid]";
+							mes "You already know what happened while Pursuing Rayan Moore.";
+							close2;
+							cutin "bu_oliver1",255;
+							end;
+						}
+						if (checkquest(7036)== -1){
+							if ($QuestLevel > 0) {
+								if (BaseLevel < 70) {
+									mes "[Alsvid]";
+									mes "A base level of at least ^ff330070^000000 is";
+									mes "required to complete this quest.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if ($QuestItem > 0) {
+								if(countitem(7511)<30 || countitem(7563)<30 || countitem(523)<30){
+									mes "[Alsvid]";
+									mes "You are missing items";
+									mes "necessarily for completing";
+									mes "this quest.";
+									next;
+									mes "[Alsvid]";
+									mes "You need:";
+									mes "^CE000030 Rune of Darkness";
+									mes "^CE000030 Bloody Rune";
+									mes "^CE000030 Holy Water";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+							}
+							if (.@QuickQ < 1) {
+								mes "[Alsvid]";
+								mes "Echinacea, the Pursuit Party Leader at the mid cam asked adventurers to work as Mr. Kidd's assistant in their mission.";
+								next;
+								mes "[Alsvid]";
+								mes "Mr. Kidd explained that their primary mission at Mid Camp was to investigate the gap where Satan Morroc had crossed and to find Rayan Moore, the man responsible for weakening the seal.";
+								next;
+								mes "[Alsvid]";
+								mes "The other members of the mission were working out of Morroc and had, until recently, been in contact with Mid Camp.";
+								next;
+								mes "[Alsvid]";
+								mes "Using adventurers as messengers, the Morroc member, Rin, was contacted. She was found wounded from her encounter with Rayan Moore.";
+								next;
+								mes "[Alsvid]";
+								mes "Rin asked adventurers to investigate the place where Rayan Moore and his followers attacked her- in a field near Hugel.";
+								next;
+								mes "[Alsvid]";
+								mes "At the ambush site, adventurers found a Crystal of Feardom. After showing Rin the crystal, she finished her report for Kidd.";
+								next;
+								mes "[Alsvid]";
+								mes "After Kidd reads the report, adventurers were drawn to the crystal. Touching it resulted in them being sent back in time to Rin's ambush.";
+								next;
+								mes "[Alsvid]";
+								mes "Adventurers discovered a sealed scroll on one of the Dandelion member's corpses. After having it unsealed by Defaria, they found it to be a teleport scroll.";
+								next;
+								mes "[Alsvid]";
+								mes "Using the scroll, adventurers were able to find Rayan Moore's hideout, allowing them to ease drop.";
+								next;
+								mes "[Alsvid]";
+								mes "After listening for some time, adventurers entered the basement to find Rayan Moore's men slaughtered, and a blood soaked man quivering among the debris.";
+								next;
+								mes "[Alsvid]";
+								mes "Mr. Kidd arrested the man for Rin to interrogate. The man turns out to be Rayan Moore who is split between him self and Satan Morocc's control.";
+								next;
+								mes "[Alsvid]";
+								mes "The real Rayan Moore was shocked to learn that he slaughtered his comrades, and admitted that he was only pretending to weaken the seal initially, in an";
+								next;
+								mes "[Alsvid]";
+								mes "effort to shake up the city of Morocc, which would have allowed to spread the word of their goddess, Freya. Unfortunately, during his studies, he fell under Morocc's control.";
+								next;
+								mes "[Alsvid]";
+								mes "During the interrogation, Satan Morocc controlled Rayan escapes using the Crystal of Feardom the adventurers carried.";
+								next;
+								mes "[Alsvid]";
+								mes "Despite the best efforts of the pursuing party, they were unable to locate Rayan on the Midgard continent or the Ash Vacuum. Satan Morocc took him elsewhere.";
+								next;
+							}
+							mes "[Alsvid]";
+							mes "You now know what happened while Pursuing Rayan Moore.";
+							close2;
+							setquest 7036;
+							completequest 7036;
+							set mao_morocc2,100;
+							if ($QuestXP > 0) {
+								getexp 120000, 20000;
+							}
+							if ($QuestItem > 0) {
+								delitem 7511, 30;//Rune of Darkness
+								delitem 7563, 30;//Bloody Rune
+								delitem 523, 30;//Holy Water
+							}
+						}
+						else {
+							mes "[Alsvid]";
+							mes "You do not yet know how to move Onward to the New World.";
+							close2;
+							cutin "bu_oliver1",255;
+							end;
+						}
+						cutin "",255;
+						end;
+					case 5:
+						switch(select("Tripatriate Union's Feud:Finding a Fairy:Report From the New World:Cat Hand New World Access:Next")) {
+							case 1:
+								if (checkquest(8210)== 2) {
+									mes "[Alsvid]";
+									mes "You've already done your best to end the Tripatriate Union's Feud.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+								if (checkquest(8210)== -1) {
+									if ($QuestLevel > 0) {
+										if (BaseLevel < 70) {
+											mes "[Alsvid]";
+											mes "A base level of at least ^ff330070^000000 is";
+											mes "required to complete this quest.";
+											close2;
+											cutin "bu_oliver1",255;
+											end;
+										}
+									}
+									if ($QuestItem > 0) {
+										if(countitem(7262)<1 || countitem(7521)<1 || countitem(7031)<1 || countitem(1024)<1){
+											mes "[Alsvid]";
+											mes "You are missing items";
+											mes "necessarily for completing";
+											mes "this quest.";
+											next;
+											mes "[Alsvid]";
+											mes "You need:";
+											mes "^CE00001 Folding Fan of Ghost Car";
+											mes "^CE00001 Flame Stone";
+											mes "^CE00001 Old Frying Pan";
+											mes "^CE00001 Squid Ink";
+											close2;
+											cutin "bu_oliver1",255;
+											end;
+										}
+									}
+									if (.@QuickQ < 1) {
+										mes "[Alsvid]";
+										mes "The United Research Official recognized adventurers as helping to study the gap left by Satan Morocc and requested their service to organize a meeting.";
+										next;
+										mes "[Alsvid]";
+										mes "The adventurers job seemed simple; invite Ryosen, of Rune-Midgarts, Hue, of the Schwartzvalf Republic, and Hansenne, or the Arunafeltz Staes.";
+										next;
+										mes "[Alsvid]";
+										mes "The mission proved much more difficult, with the three researchers finidng one another dreadfully rude and incompetent.";
+										next;
+										mes "[Alsvid]";
+										mes "Once the meeting was arranged, trouble broke out when some food was ruined. Blame was falsely placed on Hansenne who took it without complaint.";
+										next;
+										mes "[Alsvid]";
+										mes "Hansenne later told adventurers that Ryosen brought the food to share, and was upset to see it ruined. Hansenne also suggested that adventurer help smooth over their troubles.";
+										next;
+										mes "[Alsvid]";
+										mes "After speaking with each of the researchers, adventurers found that they were willing to work together.";
+										next;
+										mes "[Alsvid]";
+										mes "With tensions brought to an all time low, Ryosen asked the adventurer to tell the Official to organize another meeting.";
+										next;
+									}
+									mes "[Alsvid]";
+									mes "You've done your best to end the Tripatriate Union's Feud.";
+									close2;
+									setquest 8210;
+									completequest 8210;
+									set ep13_1_rhea,100;
+									if ($QuestXP > 0) {
+										getexp 80000,3000;
+									}
+									if ($QuestItem > 0) {
+										delitem 7262, 300;//Folding Fan of Ghost Cat
+										delitem 7521, 1;//Flame Stone
+										delitem 7031, 1;//Old Frying Pan
+										delitem 1024, 1;//Squid Ink
+									}
+								}
+								else {
+									mes "Aldsvid]";
+									mes "You are not yet able to move Onward to the New World.";
+									close2;
+									cutin "bu_oliver1",255;
+								}
+								cutin "",255;
+								end;
+							case 2://Report
+								if (checkquest(3094) == 2) {
+									mes "[Alsvid]";
+									mes "You've already successfully delievered the Report From the New World.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+								if (checkquest (3094)== -1 && checkquest(8210)== 2 || checkquest(3094) == -1 && ep13_start > 99) {
+									if ($QuestLevel > 0) {
+										if (BaseLevel < 70) {
+											mes "[Alsvid]";
+											mes "A base level of at least ^ff330070^000000 is";
+											mes "required to complete this quest.";
+											close2;
+											cutin "bu_oliver1",255;
+											end;
+										}
+									}
+									if ($QuestItem > 0) {
+									}
+									if (.@QuickQ < 1) {
+										mes "[Alsvid]";
+										mes "For all their efforts, seasoned adventurers of the New World gained the respect of Staff Officer Abidal, and with that, Hibba Agip's trust.";
+										next;
+										mes "[Alsvid]";
+										mes "Adventurers were sent to deliver a report to representatives of one country, while Agip's men delivered the same report to the other two country's representatives.";
+										next;
+										mes "[Alsvid]";
+										mes "At the deimensional gate, Agip's men were ambushed and the report partially destroyed, while the rest was lost.";
+										next;
+										mes "[Alsvid]";
+										mes "Adventurers reported to Expedition Scouts at various locations in the New World to revoer the 70% of the report that Agip couldn't rewrite himself.";
+										next;
+										mes "[Alsvid]";
+										mes "With the report reassembled, the adventurers delievered the report to all three countries on their own.";
+										next;
+										mes "[Alsvid]";
+										mes "Each country's representative comments on the late arrival of the document, but compliment Agip's excellent work.";
+										next;
+									}
+									mes "[Alsvid]";
+									mes "You've successfully delivered the Report From the New World.";
+									close2;
+									setquest 3094;
+									completequest 3094;
+									set ep13_1_edq,14;
+									if ($QuestXP > 0) {
+										getexp 2500000,0;
+									}
+									if ($QuestItem > 0) {
+									}
+								}
+								else {
+									mes "Aldsvid]";
+									mes "You have not adusted to the New Surroundings, do not have a positive Attitude to the New World, have not done your best to end the Tripatriate Union's Feud, or do not know what happened while Pursuing Rayan Moore.";
+									close2;
+									cutin "bu_oliver1",255;
+								}
+								cutin "",255;
+								end;
+							case 3://Finding
+								if (checkquest(2158)== 2 && checkquest(2159)== 2) {
+									mes "[Alsvid]";
+									mes "You've already proven that Finding a Fairy is easy.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+								if (checkquest(2158)== -1 || checkquest(2159)== -1) {
+									if ($QuestLevel > 0) {
+										if (BaseLevel < 70) {
+											mes "[Alsvid]";
+											mes "A base level of at least ^ff330070^000000 is";
+											mes "required to complete this quest.";
+											close2;
+											cutin "bu_oliver1",255;
+											end;
+										}
+									}
+									if ($QuestItem > 0) {
+									}
+									if (.@QuickQ < 1) {
+										mes "[Alsvid]";
+										mes "Adventurers discovered a small fairy in Splendide Field.";
+										next;
+										mes "[Alsvid]";
+										mes "Adventurers discovered a large tree-like man in Manuk Field.";
+										next;
+									}
+									mes "[Alsvid]";
+									mes "Finding a Fairy has proven to be easy for you.";
+									close2;
+									setquest 2158;
+									completequest 2158;
+									setquest 2159;
+									completequest 2159;
+									if ($QuestXP > 0) {
+										getexp 180000,0;
+									}
+									if ($QuestItem > 0) {
+									}
+								}
+								else {
+								}
+								cutin "",255;
+								end;
+							case 4://Cat Hand
+								if (ep13_start == 100) {
+									mes "[Alsvid]";
+									mes "You are already Geck's personal slav... sponsor- and you alreadt have Cat Hand New World Access.";
+									close2;
+									cutin "bu_oliver1",255;
+									end;
+								}
+								if (ep13_start != 100) {
+									if ($QuestLevel > 0) {
+										if (BaseLevel < 70) {
+											mes "[Alsvid]";
+											mes "A base level of at least ^ff330070^000000 is";
+											mes "required to complete this quest.";
+											close2;
+											cutin "bu_oliver1",255;
+											end;
+										}
+									}
+									if ($QuestItem > 0) {
+										if (Zeny < 50000) {
+											mes "[Alsvid]";
+											mes "You are missing items";
+											mes "necessarily for completing";
+											mes "this quest.";
+											next;
+											mes "[Alsvid]";
+											mes "You need:";
+											mes "^FFCE0050000 Zeny^000000";
+											close2;
+											cutin "bu_oliver1",255;
+											end;
+										}
+									}
+									if (.@QuickQ < 1) {
+										mes "[Alsvid]";
+										mes "Cat Hand Agents in the Eden Group Headquarters took notice of the lack of Kafra Staff in the Ash Vacuum.";
+										next;
+										mes "[Alsvid]";
+										mes "While the Cats had not't felt welcome in Midgard, they felt confident in their ability to gain ground in the New World.";
+										next;
+										mes "[Alsvid]";
+										mes "With an adventurer sponsoring their efforts, the Cats offered quick access to the Ash Vacuum.";
+										next;	
+									}
+									mes "[Alsvid]";
+									mes "You are now Geck's personal slav... sponsor- and you have Cat Hand New World Access.";
+									close2;
+									set ep13_start, 100;
+									if ($QuestXP > 0) {
+									}
+									if ($QuestItem > 0) {
+										set Zeny,Zeny-50000;
+									}
+								}
+								else {
+								}
+								cutin "",255;
+								end;
+							case 5:
+								switch(select("Ring of the Wise King:Two Tribes:Guardian of Yggdrasil:Sapha's Visit:Doha's Secret Orders:Frede's Request")) {
+									case 1:
+										if (checkquest(8253)== 2) {
+											mes "[Alsvid]";
+											mes "You are already in posession of the Ring of the Wise King.";
+											close2;
+											cutin "bu_oliver1",255;
+											end;
+										}
+										if (checkquest(8253)== -1 && ep13_start > 99 || checkquest(8253)== -1 && checkquest(10078) == 2){
+											if ($QuestLevel > 0) {
+												if (BaseLevel < 70) {
+													mes "[Alsvid]";
+													mes "A base level of at least ^ff330070^000000 is";
+													mes "required to complete this quest.";
+													close2;
+													cutin "bu_oliver1",255;
+													end;
+												}
+											}
+											if ($QuestItem > 0) {
+											}
+											if (.@QuickQ < 1) {
+												mes "[Alsvid]";
+												mes "Mechanic Dorance, a member of the Triple Alliance Research Group, mentioned the Ring of the Wise King, commenting that it would be useful";
+												next;
+												mes "[Alsvid]";
+												mes "in the New World, as it would allow them to communicate with the neighboring people.";
+												next;
+												mes "[Alsvid]";
+												mes "To further their efforts, Dorance, asked adventurers to meet with the Arunafeltz Linguist in the camp Headquarters.";
+												next;
+												mes "[Alsvid]";
+												mes "The Linguist was confident in his ability to make progress if he had a written sample of the languages of neighboring peoples.";
+												next;
+												mes "[Alsvid]";
+												mes "After speaking with the two species, Adventurers reported back to the Linguist who struggles to make any sense of the language.";
+												next;
+												mes "[Alsvid]";
+												mes "The Linguist encouraged adventurers to meet with a Magician. The Magician mentioned crystals with the ability to record audio, buried by the expedition crew.";
+												next;
+												mes "[Alsvid]";
+												mes "After digging up the crystals, and returning them to the Magician, the Linguist made proress to the point of not being able to record it properly.";
+												next;
+												mes "[Alsvid]";
+												mes "The Magician's solution to recording all the new information was to recover a sample of an unidentified ore from Manuk Fields.";
+												next;
+												mes "[Alsvid]";
+												mes "With the gem, Dorance was able to create a device to decode and translate the language instantly, allowing adventurers to speak with the New World's races.";
+												next;
+											}
+											mes "[Alsvid]";
+											mes "You are now in posession of the Ring of the Wise King.";
+											close2;
+											setquest 8253;
+											completequest 8253;
+											set ep13_2_rhea,100;
+											getitem 2782,1;//Ring of the Wise Ancient King
+											if ($QuestXP > 0) {
+												getexp 300000,7500;
+											}
+											if ($QuestItem > 0) {
+											}
+										}
+										else {
+											mes "[Alsvid]";
+											mes "You have not yet moved Onward to the New World or become Geck's slav... sponsor.";
+										}
+										cutin "",255;
+										end;
+									case 2://Two Tribes
+										if (checkquest(7071)== 2) {
+											mes "[Alsvid]";
+											mes "You already know the tale of Two Tribes.";
+											close2;
+											cutin "bu_oliver1",255;
+											end;
+										}
+										if (checkquest(8253) == 2 && checkquest(7071)== -1){
+											if ($QuestLevel > 0) {
+												if (BaseLevel < 70) {
+													mes "[Alsvid]";
+													mes "A base level of at least ^ff330070^000000 is";
+													mes "required to complete this quest.";
+													close2;
+													cutin "bu_oliver1",255;
+													end;
+												}
+											}
+											if ($QuestItem > 0) {
+												if (countitem(607) < 3) {
+													mes "[Alsvid]";
+													mes "You are missing items";
+													mes "necessarily for completing";
+													mes "this quest.";
+													next;
+													mes "[Alsvid]";
+													mes "You need:";
+													mes "^CE00003 Yggdrasil Berry";
+													close2;
+													cutin "bu_oliver1",255;
+												}
+											}
+											if (.@QuickQ < 1) {
+												mes "[Alsvid]";
+												mes "In Splendide, home of the Laphines (Fairies), adventurers bumped into Arc, a fairy concerned over his missing friend, Terra.";
+												next;
+												mes "[Alsvid]";
+												mes "Arc sent the adventurers to investigate the fields surrounding Splendide in search for Terra, using her mark (knotted plants) to track her.";
+												next;
+												mes "[Alsvid]";
+												mes "Terra's marks were scarce and led adventurers to the sight of a skirmish, and eventually a cave beneath a large tree.";
+												next;
+												mes "[Alsvid]";
+												mes "Adventurers didn't fnd Terra beneath the Yggdrasil tree, but they did find a petrified Sapha (Giant).";
+												next;
+												mes "[Alsvid]";
+												mes "Back in Splendide, Arc explained that Terra returned wounded, but ran off with some bradium before he could stop her.";
+												next;
+												mes "[Alsvid]";
+												mes "Beneath the Yggrasil tree, bradum ore was found scattered around the Sapha, but no sign of Terra.";
+												next;
+												mes "[Alsvid]";
+												mes "Adventurers thought best to try their luck in Manuk next. Luck was on their side as villagers confirmed a captured Laphne existed in the village.";
+												next;
+												mes "[Alsvid]";
+												mes "Snorren, the prison guard confired the existence of a wounder Laphine but wasn't sure how to cure her afflictions.";
+												next;
+												mes "[Alsvid]";
+												mes "Arc gave adventurers Yggdrasil Berries to cure the Laphine. Once treated, adventurers were asked to interpret for the Sapha.";
+												next;
+												mes "[Alsvid]";
+												mes "The Laphine, Terra, regaled the adventurer and Sapha with the details of her encounter with Ogen, a missing Sapha and friend of Snorren.";
+												next;
+												mes "[Alsvid]";
+												mes "Bringing proof of Terra's story, the Sapha released Terra and thanked the Adventurer.";
+												next;
+												mes "[Alsvid]";
+												mes "Back in Splendide, Terra explans how she and Ogen had fought until they fell into the cave beneath the Yggdrasil Tree.";
+												next;
+												mes "[Alsvid]";
+												mes "When they woke in the cave, they were surrounded, and though they couldn't understand one another, they agreed to a truce until they could escape.";
+												next;
+												mes "[Alsvid]";
+												mes "When it became apparent that they couldn't escape, Ogen shielded Terra from the onslaught, sacraficing himself.";
+												next;
+												mes "[Alsvid]";
+												mes "In an attempt to save Ogen, she brought what Bradium she could from Splendide. When it fell short of reviving Ogen, she sought more from Manuk.";
+												next;
+											}
+											mes "[Alsvid]";
+											mes "You now know the tale of Two Tribes.";
+											close2;
+											setquest 7071;
+											completequest 7071;
+											set ep13_mdrama,27;
+											if ($QuestXP > 0) {
+												getexp 120000,0;
+											}
+											if ($QuestItem > 0) {
+												delitem 607,3;//Yggrasil Berry
+											}
+										}
+										else {
+											mes "[Alsvid]";
+											mes "You are not yet in posession of the Ring of the Wise King.";
+											close2;
+											cutin "bu_oliver1",255;
+											end;
+										}
+										cutin "",255;
+										end;
+									case 3://Guardian of Yggdrasil
+										if (ins_nyd > 130) {
+											mes "[Alsvid]";
+											mes "You've already defeated the Guardian of Yggdrasil's shadow.";
+											close2;
+											cutin "bu_oliver1",255;
+											end;
+										}
+										if (checkquest(8210) == 2 && ep13_mdrama > 5 && ins_nyd < 131){
+											if ($QuestLevel > 0) {
+												if (BaseLevel < 70) {
+													mes "[Alsvid]";
+													mes "A base level of at least ^ff330070^000000 is";
+													mes "required to complete this quest.";
+													close2;
+													cutin "bu_oliver1",255;
+													end;
+												}
+											}
+											if ($QuestItem > 0) {
+											}
+											if (.@QuickQ < 1) {
+												mes "[Alsvid]";
+												mes "Uncovered beneath the roots of the World Tree, Yggdrasil, adventurers found a gate which would not open.";
+												next;
+												mes "[Alsvid]";
+												mes "Commander Agip sent adventurers to the Historian, Magniffer, and in turn, his assistant, Naomi in the Prontera Library.";
+												next;
+												mes "[Alsvid]";
+												mes "After a brief history lesson, adventurers were sent to improve relations with ether the Laphine or the Sapha-";
+												next;
+												mes "[Alsvid]";
+												mes "Were their tribe of choosing not to help the humans, adventurers were to claim that they would merely ask the other tribe for help.";
+												next;
+												mes "[Alsvid]";
+												mes "Either way, the tribe leader gave in to the adventurers request and helped them to investigate beyond the gate in order to establish contact with the tree's guardian.";
+												next;
+												mes "[Alsvid]";
+												mes "Beyond the gate, in Nidhoggur's Nest, parties of adventurers made their way to the murdered High Priest of the Laphine tribe, who warned of the Guardian's absence.";
+												next;
+												mes "[Alsvid]";
+												mes "In it's nest, remained only it's shadow, which was now causing the tree to perish. Adventurers were able to hold the shadow off for a time, buying the Laphine some time.";
+												next;
+											}
+											mes "[Alsvid]";
+											mes "You've defeated the Guardian of Yggdrasil's shadow.";
+											close2;
+											set ins_nyd,131;
+											if ($QuestXP > 0) {
+												getexp 150000,0;
+											}
+											if ($QuestItem > 0) {
+											}
+										}
+										else {
+											mes "[Alsvid]";
+											mes "You have not yet moved Onward to the New World or have not uncovered Nidhoggur's Nest.";
+											close2;
+											cutin "bu_oliver1",255;
+										}
+										cutin "",255;
+										end;
+									case 4://Sapha's Visit
+										if (checkquest(7184)== 2) {
+											mes "[Alsvid]";
+											mes "You already have access to El Dicastes.";
+											close2;
+											cutin "bu_oliver1",255;
+											end;
+										}
+										if (checkquest(8253) == 2 && checkquest(7184) == -1){
+											if ($QuestLevel > 0) {
+												if (BaseLevel < 70) {
+													mes "[Alsvid]";
+													mes "A base level of at least ^ff330070^000000 is";
+													mes "required to complete this quest.";
+													close2;
+													cutin "bu_oliver1",255;
+													end;
+												}
+											}
+											if ($QuestItem > 0) {
+											}
+											if (.@QuickQ < 1) {
+												mes "[Alsvid]";
+												mes "Adventurers overheard members at the Midgard Camp discussing an upcoming visit by a Sapha.";
+												next;
+												mes "[Alsvid]";
+												mes "Adventurers who had previously made themselves known in the New World were invited by Vyhannus (Sapha) to visit the Sapha capital city of El Dicastes.";
+												next;
+												mes "[Alsvid]";
+												mes "From Manuk, adventurers took the tunnel from Manuk to El Dcastes where they registered as adventurers and gained equal treatment among the Sapha.";
+												next;
+												mes "[Alsvid]";
+												mes "For their convenience, adventurers were given a 'Light of El Dicastes,' allowing them to teleport to the city at any time.";
+												next;
+											}
+											mes "[Alsvid]";
+											mes "The Sapha's Visit has allowed you access to El Dicastes.";
+											close2;
+											setquest 7184;
+											completequest 7184;
+											set ep13_3_invite, 6;
+											getitem 2844,1; //El_Dicastes_Light
+											if ($QuestXP > 0) {
+											}
+											if ($QuestItem > 0) {
+											}
+										}
+										else {
+											mes "[Alsvid]";
+											mes "You are not yet in posession of the Ring of the Wise King.";
+											end;
+										}
+										cutin "",255;
+										end;
+									case 5://Doha's Secret Orders
+										if (checkquest(7203)== 2) {
+											mes "[Alsvid]";
+											mes "You have already completed Doha's Secret Orders.";
+											close2;
+											cutin "bu_oliver1",255;
+											end;
+										}
+										if (checkquest(7184) == 2 && checkquest(7203) == -1){
+											if ($QuestLevel > 0) {
+												if (BaseLevel < 70) {
+													mes "[Alsvid]";
+													mes "A	 base level of at least ^ff330070^000000 is";
+													mes "required to complete this quest.";
+													close2;
+													cutin "bu_oliver1",255;
+													end;
+												}
+											}
+											if ($QuestItem > 0) {
+											}
+											if (.@QuickQ < 1) {
+												mes "[Alsvid]";
+												mes "With adventurers having access to El Dicastes, Doha issues a secret order to investigate the attacker who destroyed the Alliance's report.";
+												next;
+												mes "[Alsvid]";
+												mes "After speaking with some Sapha and a Cat Hand Merchant, adventurers narrowed the suspect down to a human with cat features.";
+												next;
+												mes "[Alsvid]";
+												mes "Further investigating led adventurers to investigate near the gap. This led to the discovery of some interesting remnants.";
+												next;
+												mes "[Alsvid]";
+												mes "Shay, a barkeeper in El Dicastes, suggests trying to meet with Ahat, a minister in Diel. During the meeting with Ahat, they attempted to hypnotize adventurers into becoming a servant.";
+												next;
+												mes "[Alsvid]";
+												mes "Assisting Ahat, was Cheshire, a human with a cat's ears adn tail. Cheshire was the man responsible for destroying the earlier report.";
+												next;
+												mes "[Alsvid]";
+												mes "Pretending to be Ahat's servant gave adventurers an idea of Ahat's motives which became clearer after speaking with Diel Jarute, HesLanta.";
+												next;
+												mes "[Alsvid]";
+												mes "HesLanta was convinced that Ahat was the perfect Sapha on paper but held concern on the powers he held. It was also determined that Cheshire was being controlled by Ahat.";
+												next;
+												mes "[Alsvid]";
+												mes "Everything done by Ahat was in an effort to conceal his sudden appearance near the dimensional gap, and to destroy the reports about Satan Morroc.";
+												next;
+											}
+											mes "[Alsvid]";
+											mes "The have completed Doha's Secret Orders.";
+											close2;
+											setquest 7203;
+											completequest 7203;
+											set ep13_3_secret, 23;
+											if ($QuestXP > 0) {
+											}
+											if ($QuestItem > 0) {
+											}
+										}
+										else {
+											mes "[Alsvid]";
+											mes "The Sapha's Visit has not yet allowed you access to El Dicastes.";
+											close2;
+											cutin "bu_oliver1",255;
+											end;
+										}
+										cutin "",255;
+										end;
+									case 6://Frede's Request
+										if (checkquest(11176)== 2) {
+											mes "[Alsvid]";
+											mes "You have already completed Frede's Request.";
+											close2;
+											cutin "bu_oliver1",255;
+											end;
+										}
+										if (checkquest(7184) == 2 && checkquest(7203) == 2 && checkquest(11176) == -1){
+											if ($QuestLevel > 0) {
+												if (BaseLevel < 70) {
+													mes "[Alsvid]";
+													mes "A base level of at least ^ff330070^000000 is";
+													mes "required to complete this quest.";
+													close2;
+													cutin "bu_oliver1",255;
+													end;
+												}
+											}
+											if ($QuestItem > 0) {
+												if (countitem(6319) < 30) {
+													mes "[Alsvid]";
+													mes "You are missing items";
+													mes "necessarily for completing";
+													mes "this quest.";
+													next;
+													mes "[Alsvid]";
+													mes "You need:";
+													mes "^CE000030 Small Bradium";
+													close2;
+													cutin "bu_oliver1",255;
+													end;
+												}
+											}
+											if (.@QuickQ < 1) {
+												mes "[Alsvid]";
+												mes "Frede, a wounded Sapha in El Dicastes requested assistance from adventurers to bring his miner frineds Bradium.";
+												next;
+												mes "[Alsvid]";
+												mes "After refining and delivering the bradium, Frede thanked them, as Sapha die without regular Bradium injections.";
+												next;
+											}
+											mes "[Alsvid]";
+											mes "The have completed Frede's Request.";
+											close2;
+											setquest 11176;
+											completequest 11176;
+											set ep13_3_bra, 9;
+											if ($QuestXP > 0) {
+											}
+											if ($QuestItem > 0) {
+												delitem 6319,30;//Small Bradium
+											}
+										}
+										else {
+											mes "[Alsvid]";
+											mes "The Sapha's Visit has not yet allowed you access to El Dicastes or you have not completed Doha's Secret Orders.";
+											close2;
+											cutin "bu_oliver1",255;
+											end;
+										}
+										cutin "",255;
+										end;
+								}
+						}
+				}
+		}
+	case 4:
+		mes "[Alsvid]";
+		mes "Welcome to Edit Mode.";
+		mes "Here you may edit what";
+		mes "features the NPC uses.";
+		next;
+		if (select("Edit:Tutorial") == 2) {
+			mes "[Alsvid]";
+			mes "You may edit the NPC";
+			mes "at any time with the";
+			mes "command '@set' followed";
+			mes "by the variable and value";
+			mes "that corresponds.";
+			next;
+			mes "[Alsvid]";
+			mes "For example, changing the";
+			mes "requirements for players to";
+			mes "skip quests can be done with";
+			mes "the command, '@set $QuestGM 1'.";
+			next;
+			mes "[Alsvid]";
+			mes "For each vairable or 'toggle,'";
+			mes "it is active when it is set";
+			mes "to any number greater than 0.";
+			mes "The variables are as follows.";
+			next;
+			mes "[Alsvid]";
+			mes "GM Req - $QuestGM";
+			mes "XP Toggle - $QuestXP";
+			mes "Item Req - $QuestItem";
+			mes "Level Req - $QuestLevel";
+			next;
+			mes "[Alsvid]";
+			mes "If you find the @set command";
+			mes "tricky, you may also use the";
+			mes "built in control panel to ";
+			mes "toggle features and requirements.";
+			next;
+			mes "[Alsvid]";
+			mes "If this is your first time";
+			mes "using the NPC, you will need";
+			mes "to configure it using the";
+			mes "control panel.";
+			next;
+		}
+		mes "[Alsvid]";
+		mes "Which toggle would you";
+		mes "like to switch?";
+		next;
+		while (1) {
+			set .@loop,1;
+			while (.@loop) {
+				switch(select("GM Req:XP Toggle:Item Req:Level Req:Cancel")) {
+					case 1:
+						if ($QuestGM < 1) {
+							mes "[Alsvid]";
+							mes "Currently only GM accounts";
+							mes "may access this NPCs features";
+							mes "Would you like to toggle this";
+							mes "to allow players to access the";
+							mes "Quest Skipping feature?";
+							next;
+							if (select("No:Yes") == 1) {
+								next;
+								mes "[Alsvid]";
+								mes "You may also toggle the";
+								mes "GM level requirement to";
+								mes "access the Edit Mode.";
+								mes "Would you like to do this?";
+								next;
+								if (select("No:Yes") == 1) {
+									break;
+								}
+								mes "[Alsvid]";
+								mes "Currently only GM accounts";
+								mes "with a minimum GM level of ^ff3300" + $QuestGMR  + "^000000";
+								mes "may access Edit Mode.";
+								mes "Are you sure you want to";
+								mes "change this value?";
+								next;
+								if (select("No:Yes") == 1) {
+									break;
+								}
+								mes "[Alsvid]";
+								mes "Please select a new value";
+								input $QuestGMR;
+								if ($QuestGMR > 5) {
+									set $QuestGMR,$QuestGMR;
+								}
+								else if ($QuestGMR < 6) {
+									set $QuestGMR,6;
+								}
+								mes "New value set to ^ff3300" + $QuestGMR + "^000000.";
+								break;
+							}
+							mes "[Alsvid]";
+							mes "Players may now access the";	
+							mes "Quest Skipping feature of";
+							mes "this NPC.";
+							set $QuestGM,1;
+						}
+						else {
+							mes "[Alsvid]";
+							mes "Currently, all accounts";
+							mes "may access this NPCs features";
+							mes "Would you like to toggle this";
+							mes "so only GM accounts may access";
+							mes "the Quest Skipping feature?";
+							next;
+							if (select("No:Yes") == 1) {
+								next;
+								mes "[Alsvid]";
+								mes "You may also toggle the";
+								mes "GM level requirement to";
+								mes "access the Edit Mode.";
+								mes "Would you like to do this?";
+								next;
+								if (select("No:Yes") == 1) {
+									break;
+								}
+								mes "[Alsvid]";
+								mes "Currently only GM accounts";
+								mes "with a minimum GM level of ^ff3300" + $QuestGMR  + "^000000";
+								mes "may access Edit Mode.";
+								mes "Are you sure you want to";
+								mes "change this value?";
+								next;
+								if (select("No:Yes") == 1) {
+									break;
+								}
+								mes "[Alsvid]";
+								mes "Please select a new value";
+								input $QuestGMR;
+								if ($QuestGMR > 5) {
+									set $QuestGMR,$QuestGMR;
+								}
+								else if ($QuestGMR < 6) {
+									set $QuestGMR,6;
+								}
+								mes "New value set to ^ff3300" + $QuestGMR + "^000000.";
+								break;
+							}
+							mes "[Alsvid]";
+							mes "Only GMs may now access the";	
+							mes "Quest Skipping feature of";
+							mes "this NPC.";
+							set $QuestGM,0;
+						}
+						next;
+						mes "[Alsvid]";
+						mes "You may also toggle the";
+						mes "GM level requirement to";
+						mes "access the Edit Mode.";
+						mes "Would you like to do this?";
+						next;
+						if (select("No:Yes") == 1) {
+							break;
+						}
+						mes "[Alsvid]";
+						mes "Currently only GM accounts";
+						mes "with a minimum GM level of ^ff3300" + $QuestGMR  + "^000000";
+						mes "may access Edit Mode.";
+						mes "Are you sure you want to";
+						mes "change this value?";
+						next;
+						if (select("No:Yes") == 1) {
+							break;
+						}
+						mes "[Alsvid]";
+						mes "Please select a new value";
+						input $QuestGMR;
+						if ($QuestGMR > 5) {
+							set $QuestGMR,$QuestGMR;
+						}
+						else if ($QuestGMR < 6) {
+							set $QuestGMR,6;
+						}
+						mes "New value set to ^ff3300" + $QuestGMR + "^000000.";
+						next;
+						break;
+					case 2:
+						if ($QuestXP < 1) {
+							mes "[Alsvid]";
+							mes "Currently, XP Rewards is off.";
+							mes "Would you like to toggle this";
+							mes "to allow accounts to access the";
+							mes "XP rewards for quests?";
+							next;
+							if (select("No:Yes") == 1) {
+								break;;
+							}
+							mes "[Alsvid]";
+							mes "Accounts will now access the";	
+							mes "XP Rewards when completing";
+							mes "quests with this NPC.";
+							set $QuestXP,1;
+							next;
+							break;
+						}
+						else {
+							mes "[Alsvid]";
+							mes "Currently XP Rewards is on.";
+							mes "Would you like to toggle this";
+							mes "so accounts do not gain any";
+							mes "XP when completing quests?";
+							next;
+							if (select("No:Yes") == 1) {
+								break;
+							}
+							mes "[Alsvid]";
+							mes "Accounts will not gain the";	
+							mes "XP Rewards when completing";
+							mes "quests with this NPC.";
+							set $QuestXP,0;
+							next;
+							break;
+						}
+					case 3:
+						if ($QuestItem < 1) {
+							mes "[Alsvid]";
+							mes "Currently, Item Rquirements";
+							mes "is toggled off. Would you like";
+							mes "to toggle this so accounts";
+							mes "must have the required items";
+							mes "to complete quests?";
+							next;
+							if (select("No:Yes") == 1) {
+								break;
+							}
+							mes "[Alsvid]";
+							mes "Accounts must now have all";
+							mes "required items to use the";
+							mes "Quest Skipping feature of";
+							mes "this NPC.";
+							set $QuestItem,1;
+							next;
+							break;
+						}
+						else {
+							mes "[Alsvid]";
+							mes "Currently, Item Rquirements";
+							mes "is toggled on. Would you like";
+							mes "to toggle this so accounts";
+							mes "do not require relevant items";
+							mes "to complete quests?";
+							next;
+							if (select("No:Yes") == 1) {
+								break;
+							}
+							mes "[Alsvid]";
+							mes "Accounts no longer require";
+							mes "relevant items to use the";
+							mes "Quest Skipping feature of";
+							mes "this NPC.";
+							set $QuestItem,0;
+							next;
+							break;
+						}
+					case 4:
+						if ($QuestLevel < 1) {
+							mes "[Alsvid]";
+							mes "Currently, Level Rquirements";
+							mes "is toggled off. Would you like";
+							mes "to toggle this so accounts";
+							mes "must have the required level";
+							mes "to complete quests?";
+							next;
+							if (select("No:Yes") == 1) {
+								break;
+							}
+							mes "[Alsvid]";
+							mes "Accounts must now meet level";
+							mes "requirements to use the";
+							mes "Quest Skipping feature of";
+							mes "this NPC.";
+							set $QuestLevel,1;
+							next;
+							break;
+						}
+						else {
+							mes "[Alsvid]";
+							mes "Currently, Level Rquirements";
+							mes "is toggled on. Would you like";
+							mes "to toggle this so accounts";
+							mes "do not require relevant levels";
+							mes "to complete quests?";
+							next;
+							if (select("No:Yes") == 1) {
+								break;
+							}
+							mes "[Alsvid]";
+							mes "Accounts no longer require";
+							mes "relevant levels to use the";
+							mes "Quest Skipping feature of";
+							mes "this NPC.";
+							set $QuestLevel,0;
+							next;
+							break;
+						}
+					case 5:
+						end;
+				}
+			}
+		}
+}
+OnInit:
+if ($QuestGMR < 6) {
+	set $QuestGMR,6;
+}
+if ($QuestGM < 1) {
+	set $QuestGM,1;
+}
+end;
+}

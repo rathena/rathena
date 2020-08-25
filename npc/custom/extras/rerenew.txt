@@ -1,0 +1,26 @@
+-	script	175Exp	-1,{
+//OnInit:
+OnNPCKillEvent:
+	//if(BaseLevel >= 90 && BaseLevel <= 175) { // && getmonsterinfo(killedrid,1) > 120) {
+	//	BaseExp = BaseExp + (NextBaseExp/10);
+	//	JobExp = JobExp + (NextBaseExp/10);
+	//} else 
+	if(BaseLevel > 175 && getmonsterinfo(killedrid,1) > 120) {
+		BaseExp = BaseExp + (NextBaseExp/BaseLevel);
+		JobExp = JobExp + (NextBaseExp/BaseLevel);
+	} else {
+		//if (BaseLevel > 100){	BaseExp = 12 * BaseExp;	JobExp = 12 * JobExp;
+		//} else if (BaseLevel > 90){ BaseExp = 11 * BaseExp;	JobExp = 11 * JobExp;
+		//} else if (BaseLevel > 80){	BaseExp = 10 * BaseExp;	JobExp = 10 * JobExp;
+		//} else if (BaseLevel > 70){	BaseExp = 9 * BaseExp;	JobExp = 9 * JobExp;
+		//} else if (BaseLevel > 60){	BaseExp = 8 * BaseExp;	JobExp = 8 * JobExp;
+		//} else if (BaseLevel > 50){	BaseExp = 7 * BaseExp;	JobExp = 7 * JobExp;
+		//} else if (BaseLevel > 40){	BaseExp = 6 * BaseExp;	JobExp = 6 * JobExp;
+		//} else if (BaseLevel > 30){	BaseExp = 5 * BaseExp;	JobExp = 5 * JobExp;
+		//} else if (BaseLevel > 20){	BaseExp = 4 * BaseExp;	JobExp = 4 * JobExp;
+		//} else if (BaseLevel > 10){	BaseExp = 3 * BaseExp;	JobExp = 3 * JobExp;
+		//} else {	BaseExp = 2 * BaseExp;	JobExp = 2 * JobExp; }
+	}
+end;
+
+}

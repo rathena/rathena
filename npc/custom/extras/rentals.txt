@@ -1,0 +1,40 @@
+alberta,185,146,5	script	Rental Services	646,{
+
+sName$ = "[^FF0000Rental Services^000000]";
+sChar$ = "^0000FF"+strcharinfo(0) +"^000000";
+
+mes sName$;
+if( Class == Job_Novice )
+	mes "Oi, "+sChar$+"! Go away, I can't help you.";
+else{
+	mes "Hey there, "+ sChar$ +". Need a mount?";
+	next;
+	if( select("Yeah,I need one.:I'm Sorry, No.") == 1 ){
+		mes sName$;
+		mes "Okay, give me a second: I'll try to get your mount here!";
+		next;
+		mes sName$;
+		if( !checkfalcon() && getskilllv("HT_FALCON") ) goto L_falcon;
+		else if( !checkcart() && getskilllv("MC_PUSHCART") ) goto L_cart;
+		else if( !checkriding() && getskilllv("KN_RIDING") ) goto L_ride;
+		else atcommand "@newmount";
+		mes sName$;
+		mes "Here you go, "+sChar$+"! Have a nice day.";
+	}
+	L_falcon:
+	setfalcon;
+	mes "Here you go, "+sChar$+": take this falcon. Have a great day!";
+	close;
+
+	L_cart:
+	setcart;
+	mes "Here you go, "+sChar$+": good luck with your sales!";
+	close;
+
+	L_ride:
+	setriding;
+	mes "Here, take this mount: I think it suits your job the best, "+sChar$+"!";
+	close;
+}
+close;
+}

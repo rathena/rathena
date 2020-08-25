@@ -16,16 +16,13 @@
 //============================================================
 
 -	script	FloatingRates	-1,{
-OnInit:
+//OnInit:
 //add any other HOURS
 OnHour00:
-OnHour06:
-OnHour12:
-OnHour18:
 //-------------------
-	set $@brate,rand(100,150);
-	set $@jrate,rand(100,150);
-	set $@drate,rand(100,150);
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
 	//Base exp
 	setbattleflag("base_exp_rate",$@brate);
 	//Job exp
@@ -38,5 +35,467 @@ OnHour18:
 	//we don't change card drops rate, because these values won't change them anyway
 	
 	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour01:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour02:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour03:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour04:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour05:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour06:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour07:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour08:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour09:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour10:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour11:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour12:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour13:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour14:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour15:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour16:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour17:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour18:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour19:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour20:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour21:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour22:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
+	end;
+OnHour23:
+//-------------------
+	set $@brate,rand(100,500);
+	set $@jrate,rand(100,500);
+	set $@drate,rand(100,500);
+	//Base exp
+	setbattleflag("base_exp_rate",$@brate);
+	//Job exp
+	setbattleflag("job_exp_rate",$@jrate);
+	//Drops
+	setbattleflag("item_rate_common",$@drate);
+	setbattleflag("item_rate_heal",$@drate);
+	setbattleflag("item_rate_use",$@drate);
+	setbattleflag("item_rate_equip",$@drate,true); // Apply new rates to configs set above
+	//we don't change card drops rate, because these values won't change them anyway
+	
+	announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x 1."+($@drate-100)+"x",bc_all,0xFF6060;
+
+	//announce "Current rates are: 1."+($@brate-100)+"x 1."+($@jrate-100)+"x",bc_all,0xFF6060;
 	end;
 }

@@ -266,7 +266,8 @@ int map_freeblock_unlock (void)
 // Called each 1s
 TIMER_FUNC(map_freeblock_timer){
 	if (block_free_lock > 0) {
-		ShowError("map_freeblock_timer: block_free_lock(%d) is invalid.\n", block_free_lock);
+		//eduardo
+		/*if (battle_config.etc_log) */ShowError("map_freeblock_timer: block_free_lock(%d) is invalid.\n", block_free_lock);
 		block_free_lock = 1;
 		map_freeblock_unlock();
 	}

@@ -1919,6 +1919,16 @@ void pc_reg_received(struct map_session_data *sd)
 	// pet
 	if (sd->status.pet_id > 0)
 		intif_request_petdata(sd->status.account_id, sd->status.char_id, sd->status.pet_id);
+	if (sd->partners_bl.size() > 0){
+		for (int i=0; i<sd->partners_bl.size(); i++){
+			struct mob_data *scmd = BL_CAST(BL_MOB, map_id2bl(sd->partners_blid[i]));
+			if (scmd) {
+				if (scmd->pd){
+					ShowMessage("\n mdpd %d %d %d \n", scmd->bl.id, scmd->charid, scmd->petid);
+				}
+			}
+		}
+	}
 
 	//eduardo
 	if (battle_config.mvp_raid_mode){

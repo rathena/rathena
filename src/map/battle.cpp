@@ -289,6 +289,7 @@ void battle_damage(struct block_list *src, struct block_list *target, int64 dama
 		if (damage && (attack_type&BF_NORMAL)) // Monsters differentiate whether they have been attacked by a skill or a normal attack
 			md->norm_attacked_id = md->attacked_id;
 	}
+	
 	map_freeblock_unlock();
 }
 
@@ -323,6 +324,7 @@ TIMER_FUNC(battle_delay_damage_sub){
 				//Deal damage
 				battle_damage(src, target, dat->damage, dat->delay, dat->skill_lv, dat->skill_id, dat->dmg_lv, dat->attack_type, dat->additional_effects, tick, dat->isspdamage);
 			} else if( !src && dat->skill_id == CR_REFLECTSHIELD ) { // it was monster reflected damage, and the monster died, we pass the damage to the character as expected
+				
 				map_freeblock_lock();
 				status_fix_damage(target, target, dat->damage, dat->delay, dat->skill_id);
 				map_freeblock_unlock();
@@ -7583,6 +7585,7 @@ int battle_damage_area(struct block_list *bl, va_list ap) {
 			status_fix_damage(src,bl,damage,0,LG_REFLECTDAMAGE);
 		clif_damage(bl,bl,tick,amotion,dmotion,damage,1,DMG_ENDURE,0,false);
 		skill_additional_effect(src, bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
+	
 		map_freeblock_unlock();
 	}
 

@@ -1,0 +1,695 @@
+//===== rAthena Script =======================================
+//= Costume Enchant - idRO Klasik Style
+//===== Description: =========================================
+//= 3 NPCs
+//= 1. To exchange listed costumes to Enchant Stone Box
+//=    There are 4 NPCs for Upper, Middle, Lower, and Garment
+//= 2. To enchant listed costumes using selected Enchant Stones
+//=    There are 4 NPCs for Upper, Middle, Lower, and Garment
+//= 3. A NPC to exchange Enchant stone to Enchant Stone Box
+//=    consumes its stone and 2,000,000,000 Zeny
+//= Lite English version
+//= - Translated dialog to English
+//= - Some items are not present in rAthena, I won't provide
+//===== Changelogs: ==========================================
+//= 1.0.0 First English Version. [Cydh]
+//= 1.0.1 Changed delitem to delequip for equipped costume [Cydh]
+//=       Moved enchant success rate to variable
+//= 1.0.2 Removed `pcblockskill` command. [Cydh]
+//============================================================
+-	script	cCostumeEnchant#Exchanger	-1,{
+	.@loc$ = charat(strnpcinfo(2),3);
+	.@this$ = ".data"+.@loc$+"";
+	.@npcname$ = strnpcinfo(1);
+
+	mes "["+.@npcname$+"]";
+	mes "Hi "+strcharinfo(0)+", I'm "+.@npcname$;
+	next;
+	mes "["+.@npcname$+"]";
+	mes "I can exchange "+getd(.@this$+"locname$")+"";
+	mes "that you have with a";
+	mes ""+getd(.@this$+"stonebox_name$")+".";
+	next;
+	mes "["+.@npcname$+"]";
+	mes "Please choose the costume";
+	mes "that you want to exchange.";
+	next;
+	.@s = select(getd(.@this$+"costumemenu$"));
+	.@i = (.@s-1) * 2;
+	.@item$ = getd(.@this$+"costumes$["+.@i+"]");
+	.@itemID = atoi(.@item$);
+	next;
+	mes "["+.@npcname$+"]";
+	mes "Selected "+getd(.@this$+"costumes$["+(.@i+1)+"]")+"";
+	mes "exchange now?";
+	next;
+	if (select("Yes","No") == 1) {
+		next;
+		mes "["+.@npcname$+"]";
+		if (countitem(.@itemID) - isequipped(.@itemID) < 1) {
+			mes "Do you really have";
+			mes "the costume in inventory?";
+			close;
+		}
+		mes "Here the stone box I promised";
+		delitem .@itemID,1;
+		getitem getd(.@this$+"stonebox_id"),getd(.@this$+"stonebox_amount");
+		close;
+	}
+	next;
+	mes "["+.@npcname$+"]";
+	mes "Well";
+	mes "See you later";
+	close;
+
+	OnInit:
+		.@hiddenname$ = strnpcinfo(2);
+		if (.@hiddenname$ == "Exchanger")
+			end;
+		.@loc$ = charat(.@hiddenname$,3);
+
+		/**
+		* Upper costumes
+		**/
+		if (.@loc$ == "0") {
+			.@locname$ = "Costume Upper";
+			// Costumes
+			setarray .@costumes$[0],"20375","C Ignis Cap"
+								,"32027","C Rune Helm"
+								,"32026","C Sword Master Crown"
+								,"32062","C Helm Of Angel"
+								,"19550","C Blush"
+								,"5942","I Loves Games Hat"
+								,"31396","Sorcerer Hood"
+								,"31332","Costume Khalitzburg Helm"
+								,"20148","C Noble Hat"
+								,"19546","C Valkyrie Helm";
+			// Stone Box & amount
+			.@stone_id = 14629;
+			.@stone_amount = 1;
+			.@stone_box$ = "Upper Costume Enchant Box";
+		}
+		/**
+		* Middle costumes
+		**/
+		else if (.@loc$ == "1") {
+			.@locname$ = "Costume Middle";
+			// Costumes
+			setarray .@costumes$[0],"20270","C Gryphon Wing Ears"
+								,"5977","Costume Blank Eyes"
+								,"19621","C Ear Of Devils Wing"
+								,"19781","C Angel Wing Ears"
+								,"31313","Costume Fallen Angel Wing Ear"
+								,"5933","Costume Crow Tengu Mask"
+								,"20325","C Little Mermaid";
+			// Stone Box & amount
+			.@stone_id = 14681;
+			.@stone_amount = 1;
+			.@stone_box$ = "Middle Costume Enchant Box";
+		}
+		/**
+		* Lowe costumes
+		**/
+		else if (.@loc$ == "2") {
+			.@locname$ = "Costume Lower";
+			// Costumes
+			setarray .@costumes$[0],"31300","C Warm Cat Muffler"
+								,"5914","C Flutter Butterfly"
+								,"31330","C Fallen Angel Valletta"
+								,"20440","Costume Tone of Gold"
+								,"19805","Costume Taboo Cursed Scroll";
+			// Stone Box & amount
+			.@stone_id = 14695;
+			.@stone_amount = 1;
+			.@stone_box$ = "Lowe Costume Enchant Box";
+		}
+		/**
+		* Garment costumes
+		**/
+		else if (.@loc$ == "3") {
+			.@locname$ = "Costume Garment";
+			// Costumes
+			setarray .@costumes$[0],"20706","C Amistr Bag"
+								,"20500","C Archangel Wing"
+								,"20751","Costume Fallen Angel Wing"
+								,"32052","C Independence Wing"
+								,"20746","Costume Rudra Wing"
+								,"20862","C. Tas Mudik Gravindo";
+			// Stone Box & amount
+			.@stone_id = 22826;
+			.@stone_amount = 1;
+			.@stone_box$ = "Garment Costume Enchant Box";
+		}
+
+		.@this$ = ".data"+.@loc$+"";
+		setd(.@this$+"locname$",.@locname$);
+		setd(.@this$+"stonebox_id",.@stone_id);
+		setd(.@this$+"stonebox_amount",.@stone_amount);
+		setd(.@this$+"stonebox_name$",.@stone_box$);
+		.@costumemenu$ = ""; for (.@i = 0; .@i < getarraysize(.@costumes$); .@i+=2) { .@costumemenu$ = .@costumemenu$+""+.@costumes$[.@i+1]+":"; setd(.@this$+"costumes$["+(.@i)+"]",.@costumes$[.@i]); setd(.@this$+"costumes$["+(.@i+1)+"]",.@costumes$[(.@i+1)]); }
+		setd(.@this$+"costumemenu$",.@costumemenu$);
+		end;
+}
+
+// - The NPC will enchants costume on inventory, so it's
+//   impossible to keep the current costume info, cannot
+//   make multiple enchants.
+// - For multiple enchant slots, read the documentation
+//   below
+-	script	cCostumeEnchant#Enchanter	-1,{
+	.@loc$ = charat(strnpcinfo(2),3);
+	.@this$ = ".data"+.@loc$+"";
+	.@npcname$ = strnpcinfo(1);
+	.@locname$ = getd(.@this$+"locname$");
+	.@slot$ = charat(strnpcinfo(2),5);
+
+	mes "["+.@npcname$+"]";
+	mes "Hi "+strcharinfo(0)+", I'm "+.@npcname$;
+	next;
+	mes "["+.@npcname$+"]";
+	mes "I have ability to maximize";
+	mes "your "+.@locname$+" Costume.";
+	next;
+	mes "["+.@npcname$+"]";
+	mes "I need a costume "+.@locname$+" and "+.@locname$+" enchant stone";
+	mes "to begin the process";
+	next;
+	mes "["+.@npcname$+"]";
+	mes "You need to know that my ability";
+	mes "only for "+.@locname$+" costume";
+	mes "that you have in inventory.";
+	next;
+	mes "["+.@npcname$+"]";
+	mes "That's why, in this process";
+	mes "also affected to similar";
+	mes "costumes in your inventory.";
+	mes "So, just place ^0000CCONE COSTUME^000000";
+	mes "that you want to enchant";
+	mes "in your inventory";
+	next;
+	mes "["+.@npcname$+"]";
+	mes "I don't take the responsibility";
+	mes " if you put more many costumes";
+	mes "in your inventory.";
+	next;
+	mes "["+.@npcname$+"]";
+	mes "Now, choose the stone";
+	mes "that you have";
+	next;
+	.@sel = select(getd(.@this$+"groupmenu$")) - 1;
+	.@sel = .@sel*2;
+	.@groupID$ = getd(.@this$+"group$["+.@sel+"]");
+	.@groupName$ = getd(.@this$+"group$["+(.@sel+1)+"]");
+
+	// Stone selection
+	next;
+	mes "["+.@npcname$+"]";
+	mes "Choose the "+.@groupName$+" stone that you have";
+	next;
+	.@grouparr$ = .@this$+"stones_"+.@groupID$+"$";
+	.@stonemenu$ = "";
+	for (.@i = 0; .@i < getarraysize(getd(""+.@grouparr$+"")); .@i+=2) {
+		.@stonemenu$ = .@stonemenu$+"[^0000CC"+countitem(atoi(getd(""+.@grouparr$+"["+(.@i)+"]")))+"^000000] "+getd(""+.@grouparr$+"["+(.@i+1)+"]")+":";
+	}
+	.@sel = select(.@stonemenu$) - 1;
+	.@i = .@sel * 2;
+	.@stoneID = atoi(getd(""+.@grouparr$+"["+(.@i)+"]"));
+	.@stoneName$ = getd(""+.@grouparr$+"["+(.@i+1)+"]");
+	.@cosarr$ = .@this$+"costumes$";
+	setarray .@slot[0],0,0,0,0;
+	.@refine = 0;
+	disable_items;
+	if (.@slot$ == "") {
+		// Costume selection
+		next;
+		mes "["+.@npcname$+"]";
+		mes "Choose the costume that";
+		mes "will be enchanted using "+.@stoneName$+"";
+		.@costumemenu$ = "";
+		for (.@i = 0; .@i < getarraysize(getd(.@cosarr$)); .@i+=2) {
+			.@temp = atoi(getd(.@cosarr$+"["+(.@i)+"]"));
+			.@costumemenu$ = .@costumemenu$+""+getd(.@cosarr$+"["+(.@i+1)+"]")+" ("+(countitem(.@temp)-isequipped(.@temp))+"):";
+		}
+		.@sel = select(.@costumemenu$) - 1;
+		.@i = .@sel * 2;
+		.@costumeID = atoi(getd(.@cosarr$+"["+.@i+"]"));
+		.@costumeName$ = getd(.@cosarr$+"["+(.@i+1)+"]");
+		if ((countitem(.@costumeID) - isequipped(.@costumeID)) < 1 || countitem(.@stoneID) < 1) {
+			next;
+			mes "["+.@npcname$+"]";
+			mes "I said, you need bring";
+			mes "the costume and stone needed";
+			mes "for this process.";
+			close;
+		}
+	}
+	else {
+		// Check equipped costume. Additional feature by me of course, Cydh!
+		.@eqiLoc = getd(.@this$+"eqiLoc");
+		.@costumeID = getequipid(.@eqiLoc);
+		if (.@costumeID == -1 || countitem(.@stoneID) < 1) {
+			next;
+			mes "["+.@npcname$+"]";
+			mes "You have to wear the "+.@locname$+" costume";
+			mes "dan bring the stone needed";
+			close;
+		}
+		.@n = getarraysize(getd(.@cosarr$))/2;
+		.@size = .@n/2;
+		for (.@i = 0; .@i < .@n; .@i+=2) {
+			if (.@costumeID == atoi(getd(.@cosarr$+"["+.@i+"]")))
+				break;
+		}
+		if (.@i == .@size) {
+			next;
+			mes "["+.@npcname$+"]";
+			mes "I don't recognized";
+			mes "the costume you wear";
+			close;
+		}
+		.@slot[0] = getequipcardid(.@eqiLoc,0);
+		.@slot[1] = getequipcardid(.@eqiLoc,1);
+		.@slot[2] = getequipcardid(.@eqiLoc,2);
+		.@slot[3] = getequipcardid(.@eqiLoc,3);
+		.@refine = getequiprefinerycnt(.@eqiLoc);
+	}
+	next;
+	mes "["+.@npcname$+"]";
+	mes "^ff0000- Important -^000000 before";
+	mes "enchanting this costume";
+	next;
+	mes "["+.@npcname$+"]";
+	mes "^ff0000If the costume had been enchanted";
+	mes "with other stone and this process";
+	mes "is success, the previous stone";
+	mes "will be replaced with this";
+	mes "new stone effect^000000";
+	next;
+	mes "["+.@npcname$+"]";
+	mes "Continue?";
+	next;
+	if (select("Of course!","I doubt now") == 2) {
+		next;
+		mes "["+.@npcname$+"]";
+		mes "OK, let's us meet again.";
+		mes "See you.";
+		close;
+	}
+	next;
+	mes "["+.@npcname$+"]";
+	mes "I will enchant "+.@costumeName$+"";
+	mes "with a "+.@stoneName$+"";
+	next;
+	specialeffect2 EF_REPAIRWEAPON;
+	progressbar "ffffff",3;
+	if (countitem(.@costumeID) > 0 && countitem(.@stoneID) > 0 && (.@slot$ == "" || getequipid(.@eqiLoc) != -1)) {
+		delitem .@stoneID,1;
+		if (rand(100) < getd(.@this$+"rate")) {
+			if (.@slot$ == "") {
+				.@slot[3] = .@stoneID;
+				delitem .@costumeID,1;
+			}
+			else {
+				.@slot[atoi(.@slot$)] = .@stoneID;
+				delequip .@eqiLoc;
+			}
+			specialeffect2 EF_PHARMACY_OK;
+			mes "["+.@npcname$+"]";
+			mes "Great! It's done";
+			getitem2 .@costumeID,1,1,.@refine,0,.@slot[0],.@slot[1],.@slot[2],.@slot[3];
+			close;
+		}
+		specialeffect2 EF_PHARMACY_FAIL;
+		mes "["+.@npcname$+"]";
+		mes "Oopps, I failed. Sorry";
+	}
+	close;
+
+	OnInit:
+		.@hiddenname$ = strnpcinfo(2);
+		if (.@hiddenname$ == "Enchanter")
+			end;
+		.@loc$ = charat(.@hiddenname$,3);
+		/**
+		* Stone groups
+		**/
+		setarray .@group$[0],"str","STR Stone"
+							,"agi","AGI Stone"
+							,"int","INT Stone"
+							,"vit","VIT Stone"
+							,"dex","DEX Stone"
+							,"luk","LUK Stone"
+							,"atk","ATK Stone"
+							,"matk","MATK Stone"
+							,"hp","HP Stone"
+							,"sp","SP Stone";
+		/**
+		* Upper costumes
+		**/
+		if (.@loc$ == "0") {
+			.@locname$ = "Upper";
+			.@eqiLoc = EQI_COSTUME_HEAD_TOP;
+			.@rate = 50; // Rate 1-100
+			// Costumes
+			setarray .@costumes$[0],"5376","Costume Flywing Evil Wing"
+								,"20079","C Flapping Golden Angelwing"
+								,"20242","Costume Snownow Hat"
+								,"19589","C. Black Flying Angel"
+								,"31149","Costume Nydhog Wig"
+								,"18510","C Blood Angel Hairband"
+								,"20099","C Flying Ljosalfar"
+								,"31062","Costume Eleanor Wig"
+								,"20450","C Gram Peony"
+								,"20273","Costume Soft Sheep Hat"
+								,"19559","C B Dragon Hat"
+								,"31139","C. White Rabbit Ear"
+								,"31329","Costume Alice Wig";
+			// Stones
+			setarray .@stone_str$[0],"6636","STR1 Stone","25416","STR2 Stone","25417","STR3 Stone";
+			setarray .@stone_agi$[0],"6638","AGI1 Stone","25418","AGI2 Stone","25419","AGI3 Stone";
+			setarray .@stone_int$[0],"6637","INT1 Stone","25434","INT2 Stone","25435","INT3 Stone";
+			setarray .@stone_vit$[0],"6640","VIT1 Stone","25436","VIT2 Stone","25437","VIT3 Stone";
+			setarray .@stone_dex$[0],"6639","DEX1 Stone","25445","DEX2 Stone","25446","DEX3Stone";
+			setarray .@stone_luk$[0],"6641","LUK1 Stone","25447","LUK2 Stone","25448","LUK3 Stone";
+			setarray .@stone_atk$[0],"6943","ATK1 Stone","25449","ATK2 Stone","25450","ATK3 Stone";
+			setarray .@stone_matk$[0],"6944","MATK1 Stone","25451","MATK2 Stone","25452","MATK3 Stone";
+			setarray .@stone_hp$[0],"25453","HP1 Stone","25454","HP2 Stone","25438","HP3 Stone";
+			setarray .@stone_sp$[0],"25439","SP1 Stone","25440","SP2 Stone","25420","SP3 Stone";
+		}
+		/**
+		* Middle costumes
+		**/
+		else if (.@loc$ == "1") {
+			.@locname$ = "Middle";
+			.@eqiLoc = EQI_COSTUME_HEAD_MID;
+			.@rate = 50; // Rate 1-100
+			// Costumes
+			setarray .@costumes$[0],"5376","Costume Black Cat"
+								,"19611","Costume Peco Ears"
+								,"18511","C Blood Angel Wing Ear"
+								,"20010","Costume Rainbow Wing Ears"
+								,"31380","C Crow"
+								,"18914","Costume Servant Devilring"
+								,"20325","C Little Mermaid"
+								,"20492","C. Whistle"
+								,"20440","Costume Tone of Gold Orb"
+								,"19805","Costume Taboo Cursed Scroll"
+								,"20405","Costume Eremes Scarf"
+								,"31178","Costume Flame Muffler";
+			// Stones
+			setarray .@stone_str$[0],"6945","STR1 Stone","25241","STR2 Stone","25242","STR3 Stone";
+			setarray .@stone_agi$[0],"6947","AGI1 Stone","25243","AGI2 Stone","25244","AGI3 Stone";
+			setarray .@stone_int$[0],"6946","INT1 Stone","25348","INT2 Stone","25349","INT3 Stone";
+			setarray .@stone_vit$[0],"6949","VIT1 Stone","25350","VIT2 Stone","25351","VIT3 Stone";
+			setarray .@stone_dex$[0],"6948","DEX1 Stone","25352","DEX2 Stone","25353","DEX3Stone";
+			setarray .@stone_luk$[0],"6950","LUK1 Stone","25354","LUK2 Stone","25355","LUK3 Stone";
+			setarray .@stone_atk$[0],"6642","ATK1 Stone","25356","ATK2 Stone","25409","ATK3 Stone";
+			setarray .@stone_matk$[0],"6643","MATK1 Stone","25410","MATK2 Stone","25411","MATK3 Stone";
+			setarray .@stone_hp$[0],"6743","HP1 Stone","25412","HP2 Stone","25413","HP3 Stone";
+			setarray .@stone_sp$[0],"6744","SP1 Stone","25414","SP2 Stone","25415","SP3 Stone";
+
+		}
+		/**
+		* Lower costumes
+		**/
+		else if (.@loc$ == "2") {
+			.@locname$ = "Lower";
+			.@eqiLoc = EQI_COSTUME_HEAD_LOW;
+			.@rate = 50; // Rate 1-100
+			// Costumes
+			setarray .@costumes$[0],"20285","C Blossom Fluttering"
+								,"20132","C Subject Aura"
+								,"20344","C Happy Balloon"
+								,"19173","Costume Floating Ice"
+								,"31299","C. White Rabbit"
+								,"20240","C Gift Of Snow"
+								,"31186","Costume Black Cat"
+								,"19139","Costume Unidentified Flying Orb"
+								,"31300","C Warm Cat Muffler"
+								,"5914","C Flutter Butterfly"
+								,"31330","C Fallen Angel Valletta"
+								,"20255","Costume Love Cheeks";
+			// Stones
+			setarray .@stone_str$[0],"25022","STR1 Stone","25023","STR2 Stone","25024","STR3 Stone";
+			setarray .@stone_agi$[0],"25025","AGI1 Stone","25026","AGI2 Stone","25027","AGI3 Stone";
+			setarray .@stone_int$[0],"25028","INT1 Stone","25029","INT2 Stone","25030","INT3 Stone";
+			setarray .@stone_vit$[0],"25031","VIT1 Stone","25032","VIT2 Stone","25033","VIT3 Stone";
+			setarray .@stone_dex$[0],"25034","DEX1 Stone","25035","DEX2 Stone","25036","DEX3 Stone";
+			setarray .@stone_luk$[0],"25037","LUK1 Stone","25189","LUK2 Stone","25190","LUK3 Stone";
+			setarray .@stone_atk$[0],"25191","ATK1 Stone","25192","ATK2 Stone","25193","ATK3 Stone";
+			setarray .@stone_matk$[0],"25194","MATK1 Stone","25195","MATK2 Stone","25196","MATK3 Stone";
+			setarray .@stone_hp$[0],"6951","HP1 Stone","25197","HP2 Stone","25198","HP3 Stone";
+			setarray .@stone_sp$[0],"25345","SP1 Stone","25346","SP2 Stone","25347","SP3 Stone";
+		}
+		/**
+		* Garment costumes
+		**/
+		else if (.@loc$ == "3") {
+			.@locname$ = "Garment";
+			.@eqiLoc = EQI_COSTUME_GARMENT;
+			.@rate = 50; // Rate 1-100
+			// Costumes
+			setarray .@costumes$[0],"20761","C Wing of Happiness"
+								,"20762","C Great Devil Wing"
+								,"20510","C Sword Wing"
+								,"20839","C Light Darkness Wing"
+								,"20509","C Wings Of Uriel"
+								,"20516","C Wings of Michael"
+								,"20727","C Golden Archangel Wing"
+								,"20500","C Archangel Wing"
+								,"20751","Costume Fallen Angel Wing"
+								,"20746","Costume Rudra Wing";
+			// Additional ASPD Stone
+			setarray .@group$[getarraysize(.@group$)],"aspd","ASPD Stone";
+			// Stones
+			setarray .@stone_str$[0],"25321","STR1 Stone","25322","STR2 Stone","25323","STR3 Stone";
+			setarray .@stone_agi$[0],"25324","AGI1 Stone","25325","AGI2 Stone","25326","AGI3 Stone";
+			setarray .@stone_int$[0],"25327","INT1 Stone","25328","INT2 Stone","25329","INT3 Stone";
+			setarray .@stone_vit$[0],"25330","VIT1 Stone","25331","VIT2 Stone","25332","VIT3 Stone";
+			setarray .@stone_dex$[0],"25333","DEX1 Stone","25334","DEX2 Stone","25335","DEX3 Stone";
+			setarray .@stone_luk$[0],"25336","LUK1 Stone","25337","LUK2 Stone","25338","LUK3 Stone";
+			setarray .@stone_atk$[0],"25465","ATK1 Stone","25466","ATK2 Stone","25467","ATK3 Stone";
+			setarray .@stone_matk$[0],"25468","MATK1 Stone","25469","MATK2 Stone","25470","MATK3 Stone";
+			setarray .@stone_hp$[0],"25471","HP1 Stone","25472","HP2 Stone","25473","HP3 Stone";
+			setarray .@stone_sp$[0],"25474","SP1 Stone","25020","SP2 Stone","25021","SP3 Stone";
+			setarray .@stone_aspd$[0],"6908","ASPD Stone";
+		}
+
+		/**
+		* DO NOT CHANGE THIS CODE BELOW IF YOU KNOW WHAT YOU ARE DOING
+		* This is my style to load on init instead recall and redefining in every NPC is being used
+		**/
+		.@this$ = ".data"+.@loc$+"";
+		setd(.@this$+"locname$",.@locname$);
+		setd(.@this$+"eqiLoc",.@eqiLoc);
+		setd(.@this$+"rate",.@rate);
+		.@groupmenu$ = ""; for (.@i = 0; .@i < getarraysize(.@group$); .@i+=2) { .@groupmenu$ = .@groupmenu$+""+.@group$[.@i+1]+":"; setd(.@this$+"group$["+(.@i)+"]",.@group$[.@i]); setd(.@this$+"group$["+(.@i+1)+"]",.@group$[.@i+1]); }
+		setd(.@this$+"groupmenu$",.@groupmenu$);
+		for (.@i = 0; .@i < getarraysize(.@costumes$); .@i+=2) { setd(.@this$+"costumes$["+(.@i)+"]",.@costumes$[.@i]); setd(.@this$+"costumes$["+(.@i+1)+"]",.@costumes$[.@i+1]); }
+		for (.@i = 0; .@i < getarraysize(.@stone_str$); .@i+=2) { setd(.@this$+"stones_str$["+(.@i)+"]",.@stone_str$[.@i]); setd(.@this$+"stones_str$["+(.@i+1)+"]",.@stone_str$[.@i+1]); }
+		for (.@i = 0; .@i < getarraysize(.@stone_agi$); .@i+=2) { setd(.@this$+"stones_agi$["+(.@i)+"]",.@stone_agi$[.@i]); setd(.@this$+"stones_agi$["+(.@i+1)+"]",.@stone_agi$[.@i+1]); }
+		for (.@i = 0; .@i < getarraysize(.@stone_vit$); .@i+=2) { setd(.@this$+"stones_vit$["+(.@i)+"]",.@stone_vit$[.@i]); setd(.@this$+"stones_vit$["+(.@i+1)+"]",.@stone_vit$[.@i+1]); }
+		for (.@i = 0; .@i < getarraysize(.@stone_int$); .@i+=2) { setd(.@this$+"stones_int$["+(.@i)+"]",.@stone_int$[.@i]); setd(.@this$+"stones_int$["+(.@i+1)+"]",.@stone_int$[.@i+1]); }
+		for (.@i = 0; .@i < getarraysize(.@stone_dex$); .@i+=2) { setd(.@this$+"stones_dex$["+(.@i)+"]",.@stone_dex$[.@i]); setd(.@this$+"stones_dex$["+(.@i+1)+"]",.@stone_dex$[.@i+1]); }
+		for (.@i = 0; .@i < getarraysize(.@stone_luk$); .@i+=2) { setd(.@this$+"stones_luk$["+(.@i)+"]",.@stone_luk$[.@i]); setd(.@this$+"stones_luk$["+(.@i+1)+"]",.@stone_luk$[.@i+1]); }
+		for (.@i = 0; .@i < getarraysize(.@stone_atk$); .@i+=2) { setd(.@this$+"stones_atk$["+(.@i)+"]",.@stone_atk$[.@i]); setd(.@this$+"stones_atk$["+(.@i+1)+"]",.@stone_atk$[.@i+1]); }
+		for (.@i = 0; .@i < getarraysize(.@stone_matk$); .@i+=2) { setd(.@this$+"stones_matk$["+(.@i)+"]",.@stone_matk$[.@i]); setd(.@this$+"stones_matk$["+(.@i+1)+"]",.@stone_matk$[.@i+1]); }
+		for (.@i = 0; .@i < getarraysize(.@stone_hp$); .@i+=2) { setd(.@this$+"stones_hp$["+(.@i)+"]",.@stone_hp$[.@i]); setd(.@this$+"stones_hp$["+(.@i+1)+"]",.@stone_hp$[.@i+1]); }
+		for (.@i = 0; .@i < getarraysize(.@stone_sp$); .@i+=2) { setd(.@this$+"stones_sp$["+(.@i)+"]",.@stone_sp$[.@i]); setd(.@this$+"stones_sp$["+(.@i+1)+"]",.@stone_sp$[.@i+1]); }
+		for (.@i = 0; .@i < getarraysize(.@stone_aspd$); .@i+=2) { setd(.@this$+"stones_aspd$["+(.@i)+"]",.@stone_aspd$[.@i]); setd(.@this$+"stones_aspd$["+(.@i+1)+"]",.@stone_aspd$[.@i+1]); }
+		end;
+}
+
+prontera,140,328,3	script	Enchant Stone Exchanger	4_M_BARD,{
+	mes "[Stone Exchanger]";
+	mes "Hi "+strcharinfo(0)+", I'm NPC Enchant Stone Exchanger";
+	next;
+	mes "[Stone Exchanger]";
+	mes "I can echange the stone";
+	mes "that you have to an";
+	mes "Enchantment Box";
+	next;
+	mes "[Stone Exchanger]";
+	mes "I need 2 Billion Zeny";
+	mes "as fee for this process.";
+	mes "Good?";
+	next;
+	mes "[Stone Exchanger]";
+	mes "You see, it's not a cheap";
+	mes "price for doing this";
+	next;
+	mes "[Stone Exchanger]";
+	mes "Choose the costume stone category";
+	mes "you want to exchange";
+	next;
+	.@stoneLoc = select(.locmenu$)-1;
+	.@stoneLocID$ = .stoneLoc$[.@stoneLoc*2];
+	next;
+	mes "[Stone Exchanger]";
+	mes "Choose the stone type you have";
+	next;
+	.@stoneType = select(getd("."+.@stoneLocID$+"_menu$"))-1;
+	.@stoneTypeID$ = getd(".stoneType_"+.@stoneLocID$+"$["+(.@stoneType*2)+"]");
+	next;
+	mes "[Stone Exchanger]";
+	mes "Choose the stone you have";
+	next;
+	.@stonemenu$ = "";
+	.@stonearr$ = ".stone_"+.@stoneLocID$+"_"+.@stoneTypeID$+"$";
+	for (.@i = 0; .@i < getarraysize(getd(.@stonearr$)); .@i+=2) {
+		.@stonemenu$ = .@stonemenu$+""+getd(.@stonearr$+"["+(.@i+1)+"]")+" ("+countitem(atoi(getd(.@stonearr$+"["+(.@i)+"]")))+"):");
+	}
+	.@stoneSel = select(.@stonemenu$)-1;
+	.@stoneSelID$ = getd(.@stonearr$+"["+(.@stoneSel*2)+"]");
+	.@stoneID = atoi(.@stoneSelID$);
+	next;
+	mes "[Stone Exchanger]";
+	mes "Continue this exchange";
+	mes "process?";
+	next;
+	if (select("Yes","Uhhhh...") == 2) {
+		next;
+		mes "[Stone Exchanger]";
+		mes "Well, it's OK";
+		close;
+	}
+	next;
+	if (Zeny < .ReqZeny || countitem(.@stoneID) < 1) {
+		mes "[Stone Exchanger]";
+		mes "I said, this process is expensive";
+		close;
+	}
+	// Well, since I don't have much zeny to test, this part is custom LOL
+	delitem .@stoneID,1;
+	Zeny -= .ReqZeny;
+	getitem getd(".stonebox_"+.@stoneLocID$+"_id"),getd(".stonebox_"+.@stoneLocID$+"_amount");
+	mes "[Stone Exchanger]";
+	mes "Here is the stone box. Good luck";
+	close;
+
+	OnInit:
+		// Zeny requirement
+		.ReqZeny = 2000000000;
+		/**
+		* Locations
+		**/
+		setarray .stoneLoc$[0],"upper","Upper Stone"
+							,"middle","Middle Stone"
+							,"lower","Lower Stone"
+							,"garment","Garment Stone";
+		// Creating selections
+		.locmenu$ = "";
+		for (.@i = 0; .@i < getarraysize(.stoneLoc$); .@i+=2) {
+			.locmenu$ = .locmenu$+""+.stoneLoc$[.@i+1]+":";
+		}
+		/**
+		* Stone Boxes
+		**/
+		.stonebox_upper_id = 14629; .stonebox_upper_amount = 1; .stonebox_upper_name$ = "Upper Costume Enchant Box";
+		.stonebox_middle_id = 14681; .stonebox_middle_amount = 1; .stonebox_middle_name$ = "Middle Costume Enchant Box";
+		.stonebox_lower_id = 14695; .stonebox_lower_amount = 1; .stonebox_lower_name$ = "Lower Costume Enchant Box";
+		.stonebox_garment_id = 22826; .stonebox_garment_amount = 1; .stonebox_garment_name$ = "Garment Costume Enchant Box";
+
+		/**
+		* Stone Types, location based
+		**/
+		setarray .stoneType_upper$[0],"str","STR Stone"
+							,"agi","AGI Stone"
+							,"int","INT Stone"
+							,"vit","VIT Stone"
+							,"dex","DEX Stone"
+							,"luk","LUK Stone"
+							,"atk","ATK Stone"
+							,"matk","MATK Stone"
+							,"hp","HP Stone"
+							,"sp","SP Stone";
+		.@size = getarraysize(.stoneType_upper$);
+		// Simply copy becuase same
+		copyarray .stoneType_middle$[0],.stoneType_upper$[0],.@size;
+		copyarray .stoneType_lower$[0],.stoneType_upper$[0],.@size;
+		copyarray .stoneType_garment$[0],.stoneType_upper$[0],.@size;
+		// Type selections
+		.upper_menu$ = "";
+		for (.@i = 0; .@i < getarraysize(.stoneType_upper$); .@i+=2) {
+			.upper_menu$ = .upper_menu$+""+.stoneType_upper$[.@i+1]+":";
+		}
+		.middle_menu$ = .upper_menu$;
+		.lower_menu$ = .upper_menu$;
+
+		// Additional ASPD Stone for garment
+		setarray .stoneType_garment$[.@size],"aspd","ASPD Stone";
+		.garment_menu$ = "";
+		for (.@i = 0; .@i < getarraysize(.stoneType_garment$); .@i+=2) {
+			.garment_menu$ = .garment_menu$+""+.stoneType_garment$[.@i+1]+":";
+		}
+
+		// Upper Stones
+		setarray .stone_upper_str$[0],"6636","STR1 Stone","25416","STR2 Stone","25417","STR3 Stone";
+		setarray .stone_upper_agi$[0],"6638","AGI1 Stone","25418","AGI2 Stone","25419","AGI3 Stone";
+		setarray .stone_upper_int$[0],"6637","INT1 Stone","25434","INT2 Stone","25435","INT3 Stone";
+		setarray .stone_upper_vit$[0],"6640","VIT1 Stone","25436","VIT2 Stone","25437","VIT3 Stone";
+		setarray .stone_upper_dex$[0],"6639","DEX1 Stone","25445","DEX2 Stone","25446","DEX3Stone";
+		setarray .stone_upper_luk$[0],"6641","LUK1 Stone","25447","LUK2 Stone","25448","LUK3 Stone";
+		setarray .stone_upper_atk$[0],"6943","ATK1 Stone","25449","ATK2 Stone","25450","ATK3 Stone";
+		setarray .stone_upper_matk$[0],"6944","MATK1 Stone","25451","MATK2 Stone","25452","MATK3 Stone";
+		setarray .stone_upper_hp$[0],"25453","HP1 Stone","25454","HP2 Stone","25438","HP3 Stone";
+		setarray .stone_upper_sp$[0],"25439","SP1 Stone","25440","SP2 Stone","25420","SP3 Stone";
+		// Middle Stones
+		setarray .stone_middle_str$[0],"6945","STR1 Stone","25241","STR2 Stone","25242","STR3 Stone";
+		setarray .stone_middle_agi$[0],"6947","AGI1 Stone","25243","AGI2 Stone","25244","AGI3 Stone";
+		setarray .stone_middle_int$[0],"6946","INT1 Stone","25348","INT2 Stone","25349","INT3 Stone";
+		setarray .stone_middle_vit$[0],"6949","VIT1 Stone","25350","VIT2 Stone","25351","VIT3 Stone";
+		setarray .stone_middle_dex$[0],"6948","DEX1 Stone","25352","DEX2 Stone","25353","DEX3Stone";
+		setarray .stone_middle_luk$[0],"6950","LUK1 Stone","25354","LUK2 Stone","25355","LUK3 Stone";
+		setarray .stone_middle_atk$[0],"6642","ATK1 Stone","25356","ATK2 Stone","25409","ATK3 Stone";
+		setarray .stone_middle_matk$[0],"6643","MATK1 Stone","25410","MATK2 Stone","25411","MATK3 Stone";
+		setarray .stone_middle_hp$[0],"6743","HP1 Stone","25412","HP2 Stone","25413","HP3 Stone";
+		setarray .stone_middle_sp$[0],"6744","SP1 Stone","25414","SP2 Stone","25415","SP3 Stone";
+		// Lower Stones
+		setarray .stone_lower_str$[0],"25022","STR1 Stone","25023","STR2 Stone","25024","STR3 Stone";
+		setarray .stone_lower_agi$[0],"25025","AGI1 Stone","25026","AGI2 Stone","25027","AGI3 Stone";
+		setarray .stone_lower_int$[0],"25028","INT1 Stone","25029","INT2 Stone","25030","INT3 Stone";
+		setarray .stone_lower_vit$[0],"25031","VIT1 Stone","25032","VIT2 Stone","25033","VIT3 Stone";
+		setarray .stone_lower_dex$[0],"25034","DEX1 Stone","25035","DEX2 Stone","25036","DEX3 Stone";
+		setarray .stone_lower_luk$[0],"25037","LUK1 Stone","25189","LUK2 Stone","25190","LUK3 Stone";
+		setarray .stone_lower_atk$[0],"25191","ATK1 Stone","25192","ATK2 Stone","25193","ATK3 Stone";
+		setarray .stone_lower_matk$[0],"25194","MATK1 Stone","25195","MATK2 Stone","25196","MATK3 Stone";
+		setarray .stone_lower_hp$[0],"6951","HP1 Stone","25197","HP2 Stone","25198","HP3 Stone";
+		setarray .stone_lower_sp$[0],"25345","SP1 Stone","25346","SP2 Stone","25347","SP3 Stone";
+		// Garment Stones
+		setarray .stone_garment_str$[0],"25321","STR1 Stone","25322","STR2 Stone","25323","STR3 Stone";
+		setarray .stone_garment_agi$[0],"25324","AGI1 Stone","25325","AGI2 Stone","25326","AGI3 Stone";
+		setarray .stone_garment_int$[0],"25327","INT1 Stone","25328","INT2 Stone","25329","INT3 Stone";
+		setarray .stone_garment_vit$[0],"25330","VIT1 Stone","25331","VIT2 Stone","25332","VIT3 Stone";
+		setarray .stone_garment_dex$[0],"25333","DEX1 Stone","25334","DEX2 Stone","25335","DEX3 Stone";
+		setarray .stone_garment_luk$[0],"25336","LUK1 Stone","25337","LUK2 Stone","25338","LUK3 Stone";
+		setarray .stone_garment_atk$[0],"25465","ATK1 Stone","25466","ATK2 Stone","25467","ATK3 Stone";
+		setarray .stone_garment_matk$[0],"25468","MATK1 Stone","25469","MATK2 Stone","25470","MATK3 Stone";
+		setarray .stone_garment_hp$[0],"25471","HP1 Stone","25472","HP2 Stone","25473","HP3 Stone";
+		setarray .stone_garment_sp$[0],"25474","SP1 Stone","25020","SP2 Stone","25021","SP3 Stone";
+		setarray .stone_garment_aspd$[0],"6908","ASPD Stone";
+
+		end;
+}
+
+// <name>#<enc><loc>
+// loc: Group location. 0:Upper, 1:Middle, 2:Lower, 3:Garment
+prontera,112,311,5	duplicate(cCostumeEnchant#Exchanger)	Garment Exchanger#exc3	4_M_BARD
+prontera,112,315,5	duplicate(cCostumeEnchant#Exchanger)	Lower Exchanger#exc2	4_M_BARD
+prontera,112,319,5	duplicate(cCostumeEnchant#Exchanger)	Middle Exchanger#exc1	4_M_BARD
+prontera,112,323,5	duplicate(cCostumeEnchant#Exchanger)	Upper Exchanger#exc0	4_M_BARD
+
+// <name>#<enc><loc>{-<slot>}
+// loc: Group location. 0:Upper, 1:Middle, 2:Lower, 3:Garment
+// slot: If  empty, the enchant stone will be in last slot (3). If defined 0-3, costume must be equipped!
+// These NPCs only enchants in single slot, is the last slot. Equipping is not needed, but
+// on success the costume will lose previous stats
+prontera,118,328,3	duplicate(cCostumeEnchant#Enchanter)	Upper Enchanter#enc0	4_M_ROKI
+prontera,122,328,3	duplicate(cCostumeEnchant#Enchanter)	Middle Enchanter#enc1	4_M_ROKI
+prontera,126,328,3	duplicate(cCostumeEnchant#Enchanter)	Lower Enchanter#enc2	4_M_ROKI
+prontera,130,328,3	duplicate(cCostumeEnchant#Enchanter)	Garment Enchanter#enc3	4_M_ROKI
+
+// Uncomment these NPCs so the Garment Costumes can be enchanted in slot 0-3
+//prontera,124,317,3	duplicate(cCostumeEnchant#Enchanter)	Garment Enchanter 1#enc3-0	4_M_ROKI
+//prontera,128,317,3	duplicate(cCostumeEnchant#Enchanter)	Garment Enchanter 2#enc3-1	4_M_ROKI
+//prontera,132,317,3	duplicate(cCostumeEnchant#Enchanter)	Garment Enchanter 3#enc3-2	4_M_ROKI

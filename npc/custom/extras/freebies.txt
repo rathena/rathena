@@ -1,0 +1,121 @@
+//============================================================
+//===== Panda's Script ======================================= 
+//= Novice Enchantress NCP
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena
+//===== Description: ========================================= 
+//= NPC to instantly level anyone when they have the required item
+//===== Changelog: ================================= 
+//= v1.0 - Initial Release
+//============================================================
+prontera,165,163,3	script	Novice Enchantress	521,{
+
+cutin "shaloshi04.bmp",2;
+
+if( Class != 0 ){ mes "[ ^FF0000Novice Enchantress^000000 ]"; mes "You are UGLY!"; mes "I only talk to cute little novices!"; close2; cutin "",255; }
+if(#instantlimit >= .limit){ mes "[ ^FF0000Novice Enchantress^000000 ]"; mes "You have used up all your instant level chances."; close2; cutin "",255; }
+if(.free == 1){ goto FreeUse;}
+if(countitem(.itemreq) < 1){
+	mes "[ ^FF0000Novice Enchantress^000000 ]";
+	mes "Do you wish to level up instantly?";
+	mes "Do you want to purchase our ^FF0000Level Ticket^000000?";
+	next;
+	mes "[ ^FF0000Novice Enchantress^000000 ]";
+	mes "One ticket costs "+.price.+" "+.points$+" Points.";
+	mes "Proceed with purchase?";
+	menu "Yes",-;
+		if(#KPoints < 150){ mes "You don't have enough "+.points$+" Points."; close2; cutin "",255; end;}
+	next;
+	mes "[ ^FF0000Novice Enchantress^000000 ]";
+	mes "Perfect!";
+	mes "Here you are!";
+	mes "Thank you for your purchase.";
+	set #KPoints,#KPoints - .price; //set the variable of the points you are using here
+	getitem .itemreq,.itemamt;
+	close2;
+	cutin "",255;
+	end;
+}
+
+mes "[ ^FF0000Novice Enchantress^000000 ]";
+mes "Welcome to ^FF0000KaitusRO^000000";
+mes "I am here to assist you.";
+mes "Choose your class and join the adventure.";
+next;
+	.@i = select( .Menu$ ) - 1;
+	if( select( "Change to "+jobname( .JobList[.@i] )+"?:Cancel" ) == 1 ){
+		jobchange .JobList[.@i];
+		BaseLevel = .BaseLevel;
+		JobLevel = .JobLevel;
+		resetskill;
+		resetstatus;
+		set SkillPoint, 107; //How many skill points do you want your players to have
+		mes "[ ^FF0000Novice Enchantress^000000 ]";
+		mes "Thank you for purchasing our Level Ticket.";
+		mes "Talk to me again to change your class.";
+		delitem .itemreq,.itemamt;
+		if(.limit > 0){
+			set #instantlimit,#instantlimit++;
+			}
+		close2;
+		cutin "",255;
+	}
+cutin "",255;
+end;
+
+OnInit:
+setarray .JobList[0],7,8,9,10,11,12,14,15,16,17,18,19,20; // class that player can choose from, refer to @jobchange in-game for the numbers
+.BaseLevel = 99; //max base level of your server
+.JobLevel = 50; //max job level of your server
+.itemreq = 30027; //item needed to do job change
+.itemamt = 1; //how many items needed to do job change
+.price = 150; //set how much you want the item required to cost for players to buy
+.points$ = "Kaitus"; //name of the points you want to be charged to the player
+.free = 0; //change this to 1 for free usage + no limit of usage
+.limit = 0; //set this to how many times player can job change;
+
+.@size = getarraysize( .JobList );
+for( .@i = 0; .@i < .@size; .@i++ )
+	.Menu$ = .Menu$ + jobname( .JobList[.@i] )+":";
+
+	reload:
+	delwaitingroom;
+	waitingroom "Want Instant Level?",0; //Change these to change the displays ontop of your npc
+	sleep2 3000;
+	delwaitingroom;
+	waitingroom "Grab our Level Tickets!",0;
+	sleep2 3000;
+	delwaitingroom;
+	waitingroom "Purchase them now!",0;
+	sleep2 3000;
+	goto reload;
+	
+end;
+
+FreeUse:
+
+mes "[ ^FF0000Novice Enchantress^000000 ]";
+mes "Welcome to ^FF0000KaitusRO^000000";
+mes "I am here to assist you.";
+mes "Choose your class and join the adventure.";
+next;
+	.@i = select( .Menu$ ) - 1;
+	if( select( "Change to "+jobname( .JobList[.@i] )+"?:Cancel" ) == 1 ){
+		jobchange .JobList[.@i];
+		BaseLevel = .BaseLevel;
+		JobLevel = .JobLevel;
+		resetskill;
+		resetstatus;
+		set SkillPoint, 107; //How many skill points do you want your players to have
+		mes "[ ^FF0000Novice Enchantress^000000 ]";
+		mes "Now scram, you ugly piece of meatbag!";
+		warp "prontera",0,0; //Uncomment this to not send your players randomly around the map xD
+		close2;
+		cutin "",255;
+	}
+cutin "",255;
+end;
+
+}

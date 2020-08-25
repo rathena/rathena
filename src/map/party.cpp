@@ -1340,6 +1340,7 @@ int party_foreachsamemap2(int (*func)(struct block_list*,va_list),struct mob_dat
 	struct map_session_data *sd;
 
 	sd = map_id2sd(md->master_id);
+	if (!sd) return 0;
 
 	// nullpo_ret(sd);
 

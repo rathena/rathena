@@ -1,0 +1,65 @@
+//===== rAthena Script =======================================
+//= Crimson Eater
+//===== By: ==================================================
+//= Enkimaru
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Trades items for Crimson Wespons.
+//===== Additional Comments: =================================
+//= 1.0 Initial script.
+//============================================================
+
+prontera,163,186,4	script	Crimson Eater	4_TACNU,{
+	set .refineN,8; //Refine level of the Crimson Weapon
+	
+	setarray .crimsonId[0],28604,18130,28705,13327,28007,1839,1498,16040,13127,13454,1443,2009,28106,2025,21015,1939,1995;
+	set .@qtTotal, 0;
+	set .itemPrize1, 6230; //
+	set .itemPrize2, 6234;
+	set .prizeChoice, 0;
+	mes "[Crimson Eater]";
+	mes "Hello, "+strcharinfo(0)+"!";
+	mes "I devour ^FF0000Crimson Weapons^000000,";
+	mes "but only the ones refined at +"+.refineN+".";
+	mes "I'll give you ^0000FF"+getitemname(.itemPrize1)+"^000000 or ^0000FF"+getitemname(.itemPrize2)+"^000000 for each!";
+	next;
+	switch(select(" > Ok!: > No, thanks!")) {
+	case 1:
+		setarray .qtdCrimson[0],0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0;
+		for(set .@i,0; .@i<getarraysize(.crimsonId[0]); set .@i,.@i+1){
+			set .qtdCrimson[.@i],countitem2(.crimsonId[.@i], 1,.refineN,0, 0,0,0,0 );
+			set .@qtTotal,.@qtTotal+.qtdCrimson[.@i];
+		}
+			mes "You have ("+.@qtTotal+") ^FF0000Crimson Weapon(s)^000000 refined at +"+.refineN+"." ;
+			if(.@qtTotal >0){
+				mes "Wish to trade them for :";
+				next;
+				switch(select(" > ("+.@qtTotal+") "+getitemname(.itemPrize1)+": > ("+.@qtTotal+") "+getitemname(.itemPrize2)+": > Cancel")) {
+				
+				case 1:
+					set .prizeChoice,.itemPrize1;
+					goto OnGivePrize;
+				case 2:
+					set .prizeChoice,.itemPrize2;
+					goto OnGivePrize;
+				case 3:
+					mes "Ok :/";
+					close;
+				}
+			}
+	case 2:
+		close;
+	}
+OnGivePrize:
+	for(set .@x,0; .@x<getarraysize(.crimsonId[0]); set .@x,.@x+1){
+			if(.qtdCrimson[.@x] > 0) {
+				delitem2 .crimsonId[.@x],.qtdCrimson[.@x],1,.refineN,0, 0,0,0,0;
+			}
+	}
+	getitem .prizeChoice, .@qtTotal;
+close;
+
+}

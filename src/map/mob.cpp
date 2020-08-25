@@ -1647,16 +1647,13 @@ int mob_unlocktarget(struct mob_data *md, t_tick tick)
 	case MSS_IDLE:
 		// Idle skill.
 		//eduardo
-		// if (md->special_state.clone == 1){
-		// 	if (rnd()%10>5){
-
-		// 	}
-		// } else {
+		if (md->special_state.clone == 1){
+			if (!(++md->ud.walk_count%(IDLE_SKILL_INTERVAL*3)) && mobskill_use(md, tick, -1))
+				break;
+		} else {
 			if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) && mobskill_use(md, tick, -1))
 				break;
-		// }
-		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) && mobskill_use(md, tick, -1))
-			break;
+		}
 		//Random walk.
 		if (!md->master_id &&
 			DIFF_TICK(md->next_walktime, tick) <= 0 &&
@@ -2949,7 +2946,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		md->status.hp = 0;
 	}
 
-	map_freeblock_unlock();
+	map_freeblock_lock();
 
 	memset(pt,0,sizeof(pt));
 
@@ -3194,6 +3191,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				}
 				if(zeny) // zeny from mobs [Valaris]
 					pc_getzeny(tmpsd[i], zeny, LOG_TYPE_PICKDROP_MONSTER, NULL);
+
+				//eduardo
+				pc_getcash(tmpsd[i], 0, rnd()%10+1, LOG_TYPE_COMMAND);
 			}
 
 			if( md->db->mexp )
@@ -4381,8 +4381,105 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 			//Targetted skill
 			switch (skill_target) {
 				case MST_RANDOM: //Pick a random enemy within skill range.
-					bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),
-						skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv, true));
+					//eduardo
+					if (md->special_state.clone == 1) {
+						bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), 9);	//9 is default(?)
+
+						if (skill_get_inf(ms[i].skill_id)&INF_ATTACK_SKILL) { //Pick a random enemy within skill range.
+							bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),
+								skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv, true));
+						}
+						else if (skill_get_inf(ms[i].skill_id)&INF_SUPPORT_SKILL) {
+							if (teammates_bl.size()) {
+								int jmlP = teammates_bl.size();
+								int val__;
+								if (jmlP == 1) val__ = 0;
+								else val__ = rnd_value(0, jmlP - 1);
+								int prob_ = rnd_value(0, 10);
+								if (prob_ < 3) {
+									bl = map_id2bl(md->master_id);
+								}
+								else if (prob_>2 && prob_<8) {
+									if (teammates_bl.size() == 1) {
+										bl = map_id2bl(teammates_bl[0]);
+										if (!bl) bl = fbl ? fbl : (fmd ? &fmd->bl : &md->bl);
+									}
+									else if (teammates_bl.size() > 1) {
+										bl = map_id2bl(teammates_bl[val__]);
+									}
+									if (!bl) continue;
+								}
+								else {
+									bl = &md->bl;
+								}
+							}
+						}
+						else if (skill_get_inf(ms[i].skill_id)&INF_SELF_SKILL) {
+							bl = &md->bl;
+
+							if (skill_get_name(ms[i].skill_id) == "SA_ABRACADABRA") {
+								int jmlP = teammates.size() - 1;
+								int val__;
+								if (jmlP == 1) val__ = 0;
+								else val__ = rnd_value(0, jmlP - 1);
+								int prob_ = rnd_value(0, 10);
+
+								if (prob_ < 4) {
+									bl = map_id2bl(md->master_id);
+								}
+								else if (prob_>3 && prob_<7) {
+									if (teammates.size() == 1) {
+										bl = &md->bl;
+									}
+									else if (teammates.size() > 1) {
+										bl = map_id2bl(teammates_bl[val__]);
+										for (int i = 0; i<teammates.size(); i++) {
+										}
+									}
+								}
+								else {
+									if (!bl) bl = &md->bl;
+								}
+							}
+							if (!bl) { continue; }
+						}
+						else if (skill_get_inf(ms[i].skill_id)&INF_GROUND_SKILL) {
+							bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),
+								skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv, true));
+						}
+						else if (skill_get_inf(ms[i].skill_id)&INF_TRAP_SKILL) {
+							bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),
+								skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv, true));
+						}
+						else {}
+
+						/*//just some more...
+						if (skill_get_name(ms[i].skill_id) == "GN_SLINGITEM") {
+							if (rnd() % 4 < 2) {
+								bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), 11);
+							}
+							else {
+								int jmlP = teammates.size() - 1;
+								int val__;
+								if (jmlP == 1) val__ = 0;	else val__ = rnd_value(0, jmlP - 1);
+								int prob_ = rnd_value(0, 10);
+								if (prob_ < 3) { bl = map_id2bl(md->master_id); }
+								else if (prob_>2 && prob_<8) {
+									if (teammates.size() == 1) {
+										bl = map_id2bl(teammates_bl[0]);
+										if (!bl) bl = fbl ? fbl : (fmd ? &fmd->bl : &md->bl);
+									}
+									else if (teammates.size() > 1) { bl = map_id2bl(teammates_bl[val__]); }
+									if (!bl) continue;
+								}
+								else { bl = &md->bl; }
+							}
+						}*/
+					}
+					else {
+						bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),
+							skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv, true));
+					}
 					break;
 				case MST_TARGET:
 					bl = map_id2bl(md->target_id);
@@ -5446,7 +5543,8 @@ int mob_clone_spawn2(struct map_session_data *sd, int16 m, int16 x, int16 y, con
 						){
 							ms[i].delay = 100;
 							ms[i].permillage = 4000;
-						} else if (
+						} 
+						/*else if (
 						strcmp(skill_get_name(skill_id),"GN_SLINGITEM")==0
 						){
 							ms[i].target = MST_RANDOM; //eduardo // MST_MASTER
@@ -5455,7 +5553,7 @@ int mob_clone_spawn2(struct map_session_data *sd, int16 m, int16 x, int16 y, con
 							ms[i].state = MSS_ANYTARGET;
 							// ms[i].target = MST_TARGET;
 							ms[i].cond1 = MSC_ALWAYS;
-						}
+						}*/
 						if (battle_config.etc_log) ShowMessage(" self");					
 					} else if (inf&INF_SUPPORT_SKILL){	
 						ms[i].target = MST_FRIEND; //eduardo // MST_MASTER
@@ -5603,7 +5701,7 @@ int mob_clone_spawn2(struct map_session_data *sd, int16 m, int16 x, int16 y, con
 			}
 
 			int i = extra;
-			if (strcmp(db->klase.c_str(), "AM")==0){	
+			/*if (strcmp(db->klase.c_str(), "AM")==0){	
 				uint16 skill_id = GN_SLINGITEM_RANGEMELEEATK;
 				memset (&ms[i], 0, sizeof(struct mob_skill));
 				ms[i].skill_id = skill_id;
@@ -5624,7 +5722,7 @@ int mob_clone_spawn2(struct map_session_data *sd, int16 m, int16 x, int16 y, con
 				j++;
 				db->maxskill++;// = ++i;
 				extra = db->maxskill;
-			}
+			}*/
 
 			for (i=0,j = MAX_SKILL_TREE-1;j>=0 && i< MAX_MOBSKILL ;j--) {
 				uint16 skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].skill_id;
@@ -5653,7 +5751,7 @@ int mob_clone_spawn2(struct map_session_data *sd, int16 m, int16 x, int16 y, con
 						skill_id == SC_FEINTBOMB || skill_id == BD_LULLABY || skill_id == BD_RICHMANKIM  || skill_id == BD_ETERNALCHAOS || skill_id == BD_DRUMBATTLEFIELD || skill_id == BD_RINGNIBELUNGEN || skill_id == BD_ROKISWEIL || skill_id == BD_INTOABYSS || skill_id == BD_SIEGFRIED
 						|| skill_id == MO_CHAINCOMBO || skill_id ==MO_COMBOFINISH || skill_id ==MO_FINGEROFFENSIVE || skill_id ==MO_EXPLOSIONSPIRITS
 						|| skill_id == GS_GLITTERING || skill_id == HT_POWER || skill_id ==KN_ONEHAND || skill_id ==BS_ADRENALINE2 || skill_id ==AM_BERSERKPITCHER
-						|| skill_id == GN_SLINGITEM_RANGEMELEEATK || skill_id == AM_CALLHOMUN || skill_id == SO_EL_CONTROL || skill_id == SO_EL_CURE
+						/*|| skill_id == GN_SLINGITEM_RANGEMELEEATK*/ || skill_id == AM_CALLHOMUN || skill_id == SO_EL_CONTROL || skill_id == SO_EL_CURE
 						|| skill_id == GC_CROSSRIPPERSLASHER || skill_id == GC_CROSSIMPACT || skill_id == GC_ROLLINGCUTTER || skill_id == GC_WEAPONCRUSH
 						|| skill_id == GC_VENOMIMPRESS || skill_id == GC_POISONSMOKE || skill_id == SO_SPELLFIST || skill_id == LG_HESPERUSLIT
 						|| skill_id == HT_CLAYMORETRAP || skill_id == WS_CARTTERMINATION || skill_id == KO_MUCHANAGE || skill_id == RL_FLICKER || skill_id == RL_B_TRAP || skill_id == KO_HAPPOKUNAI
@@ -5712,14 +5810,14 @@ int mob_clone_spawn2(struct map_session_data *sd, int16 m, int16 x, int16 y, con
 					){
 						ms[i].permillage = 1000;
 						ms[i].delay = 10000;	
-					} else if (
+					} 
+					/*else if (
 						strcmp(skill_get_name(skill_id),"GN_SLINGITEM_RANGEMELEEATK")==0
 					){
 						ms[i].permillage = 3000;
 						ms[i].delay = 1000;	
 						ms[i].cond1 = MSS_BERSERK;
-					}
-					//ST_FULLSTRIP
+					}*/
 					if (battle_config.etc_log) ShowMessage("\n %d attack: %s d:%d p:%d", ms[i].skill_id, skill_get_name(skill_id), ms[i].delay, ms[i].permillage);
 				} else if(inf&INF_GROUND_SKILL) {		
 					if (skill_get_inf2(skill_id, INF2_ISTRAP)) { //Traps!
@@ -5858,7 +5956,8 @@ int mob_clone_spawn2(struct map_session_data *sd, int16 m, int16 x, int16 y, con
 					){
 						ms[i].delay = 100;
 						ms[i].permillage = 3000;
-					} else if (
+					} 
+					/*else if (
 					strcmp(skill_get_name(skill_id),"GN_SLINGITEM")==0
 					){
 						ms[i].target = MST_RANDOM; //eduardo // MST_MASTER
@@ -5867,7 +5966,7 @@ int mob_clone_spawn2(struct map_session_data *sd, int16 m, int16 x, int16 y, con
 						ms[i].state = MSS_ANYTARGET;
 						// ms[i].target = MST_TARGET;
 						ms[i].cond1 = MSC_ALWAYS;
-					}
+					}*/
 
 					if (battle_config.etc_log) ShowMessage("\n %d self: %s d:%d p:%d", ms[i].skill_id, skill_get_name(skill_id), ms[i].delay, ms[i].permillage);
 				} else if (inf&INF_SUPPORT_SKILL) {		
@@ -6093,7 +6192,8 @@ int mob_clone_spawn2(struct map_session_data *sd, int16 m, int16 x, int16 y, con
 						){
 							ms[i].delay = 100;
 							ms[i].permillage = 4000;
-						} else if (
+						} 
+						/*else if (
 						strcmp(skill_get_name(skill_id),"GN_SLINGITEM")==0
 						){
 							ms[i].target = MST_RANDOM; //eduardo // MST_MASTER
@@ -6102,7 +6202,7 @@ int mob_clone_spawn2(struct map_session_data *sd, int16 m, int16 x, int16 y, con
 							ms[i].state = MSS_ANYTARGET;
 							// ms[i].target = MST_TARGET;
 							ms[i].cond1 = MSC_ALWAYS;
-						}
+						}*/
 						if (battle_config.etc_log) ShowMessage(" self");					
 					} else if (inf&INF_SUPPORT_SKILL){	
 						ms[i].target = MST_FRIEND; //eduardo // MST_MASTER
@@ -6398,7 +6498,8 @@ int mob_clone_spawn2(struct map_session_data *sd, int16 m, int16 x, int16 y, con
 					){
 						ms[i].delay = 100;
 						ms[i].permillage = 4000;
-					} else if (
+					} 
+					/*else if (
 					strcmp(skill_get_name(skill_id),"GN_SLINGITEM")==0
 					){
 						ms[i].target = MST_RANDOM; //eduardo // MST_MASTER
@@ -6406,7 +6507,7 @@ int mob_clone_spawn2(struct map_session_data *sd, int16 m, int16 x, int16 y, con
 						ms[i].permillage = 250;
 						ms[i].state = MSS_ANYTARGET;
 						ms[i].cond1 = MSC_ALWAYS;
-					}
+					}*/
 
 					if (battle_config.etc_log) ShowMessage("\n skill self: %s d:%d p:%d", skill_get_name(skill_id), ms[i].delay, ms[i].permillage);
 				} else if (inf&INF_SUPPORT_SKILL) {		

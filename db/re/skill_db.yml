@@ -8578,6 +8578,13 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+#eduardo
+    Unit:
+      Id: EternalChaos
+      Layout: 5
+      Interval: 10000
+      Flag:
+        NoOverlap: true
   - Id: 309
     Name: BD_DRUMBATTLEFIELD
     Description: Battle Theme
@@ -8610,6 +8617,13 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+#eduardo
+    Unit:
+      Id: Drumbattlefield
+      Layout: 5
+      Interval: 10000
+      Flag:
+        NoOverlap: true
   - Id: 310
     Name: BD_RINGNIBELUNGEN
     Description: Harmonic Lick
@@ -8642,6 +8656,10 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+#eduardo
+    Unit:
+      Id: Ringnibelungen
+      Layout: 4
   - Id: 311
     Name: BD_ROKISWEIL
     Description: Classical Pluck
@@ -8664,6 +8682,13 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+#eduardo
+    Unit:
+      Id: Rokisweil
+      Layout: 5
+      Interval: 10000
+      Flag:
+        NoOverlap: true
   - Id: 312
     Name: BD_INTOABYSS
     Description: Power Chord
@@ -8686,6 +8711,10 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+#eduardo
+    Unit:
+      Id: IntoAbyss
+      Layout: 4
   - Id: 313
     Name: BD_SIEGFRIED
     Description: Acoustic Rhythm
@@ -8718,6 +8747,13 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+#eduardo
+    Unit:
+      Id: Siegfried
+      Layout: 4
+      Interval: 10000
+      Flag:
+        NoOverlap: true
   - Id: 315
     Name: BA_MUSICALLESSON
     Description: Music Lessons
@@ -8777,6 +8813,14 @@ Body:
           Amount: 47
       Weapon:
         Musical: true
+#eduardo
+    Unit:
+      Id: Dissonance
+      Layout: 3
+      Target: Enemy
+      Interval: 10000
+      Flag:
+        NoOverlap: true
   - Id: 318
     Name: BA_FROSTJOKER
     Description: Unbarring Octave
@@ -8846,6 +8890,10 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+#eduardo
+    Unit:
+      Id: Whistle
+      Layout: 3
   - Id: 320
     Name: BA_ASSASSINCROSS
     Description: Impressive Riff
@@ -8888,6 +8936,10 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+#eduardo
+    Unit:
+      Id: AssassinCross
+      Layout: 3
   - Id: 321
     Name: BA_POEMBRAGI
     Description: Magic Strings
@@ -8930,6 +8982,13 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+#eduardo
+    Unit:
+      Id: PoemBragi
+      Layout: 3
+      Interval: 10000
+      Flag:
+        NoOverlap: true
   - Id: 322
     Name: BA_APPLEIDUN
     Description: Song of Lutie
@@ -8972,6 +9031,13 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+#eduardo
+    Unit:
+      Id: AppleIdun
+      Layout: 3
+      Interval: 10000
+      Flag:
+        NoOverlap: true
   - Id: 323
     Name: DC_DANCINGLESSON
     Description: Dance Lessons
@@ -9098,6 +9164,13 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+#eduardo
+    Unit:
+      Id: Humming
+      Layout: 3
+      Interval: 10000
+      Flag:
+        NoOverlap: true
   - Id: 328
     Name: DC_DONTFORGETME
     Description: Slow Grace
@@ -9140,6 +9213,13 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+#eduardo
+    Unit:
+      Id: DontForgetMe
+      Layout: 3
+      Interval: 10000
+      Flag:
+        NoOverlap: true
   - Id: 329
     Name: DC_FORTUNEKISS
     Description: Lady Luck
@@ -9182,6 +9262,13 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+#eduardo
+    Unit:
+      Id: Fortunekiss
+      Layout: 3
+      Interval: 10000
+      Flag:
+        NoOverlap: true
   - Id: 330
     Name: DC_SERVICEFORYOU
     Description: Gypsy's Kiss
@@ -9224,6 +9311,13 @@ Body:
       Weapon:
         Musical: true
         Whip: true
+#eduardo
+    Unit:
+      Id: Serviceforyou
+      Layout: 3
+      Interval: 10000
+      Flag:
+        NoOverlap: true
   - Id: 331
     Name: NPC_RANDOMMOVE
     Description: Random Move
@@ -28156,6 +28250,15 @@ Body:
       ItemCost:
         - Item: MenEater_Plant_Bottle
           Amount: 1
+#eduardo
+    Unit:
+      Id: Hells_Plant
+      Range: 1
+      Interval: 1000
+      Target: Enemy
+      Flag:
+        NoReiteration: true
+        RemovedByFireRain: true
   - Id: 2491
     Name: GN_HELLS_PLANT_ATK
     Description: Hell's Plant Attack
@@ -28224,6 +28327,10 @@ Body:
       ItemCost:
         - Item: Mandragora_Flowerpot
           Amount: 1
+#eduardo
+    Unit:
+      Id: Howling_of_mandragora
+      Layout: 5
   - Id: 2493 # Removed on kRO
     Name: GN_SLINGITEM
     Description: Sling Item

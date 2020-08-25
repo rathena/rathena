@@ -11712,14 +11712,15 @@ BUILDIN_FUNC(sc_start)
 		case 2:
 			val2 = script_getnum(st,5);
 			status_change_start(bl, bl, type, rate, val1, val2, 0, val4, tick, flag);
-			if (sd) ShowMessage("\n itsuka %d \n", sd->status.name);
-			/*if (sd) if (sd->partners_blid!=NULL) if (sd->partners_blid.size() > 0)
-			for (int i = 0; i < sd->partners_blid.size(); i++) {
-				struct block_list *bl;
-				bl = map_id2bl(sd->partners_blid[i]);
-				if (!bl) return 0;
-				status_change_start(bl, bl, type, rate, val1, val2, 0, val4, tick, flag);
-			}*/
+			if (sd) if (strlen(sd->status.name) < NAME_LENGTH + 1) if (sd->partners_blid.size() > 0) {
+				ShowMessage("\n itsuka %s \n", sd->status.name);
+				for (int i = 0; i < sd->partners_blid.size(); i++) {
+					struct block_list *bl;
+					bl = map_id2bl(sd->partners_blid[i]);
+					if (!bl) return 0;
+					status_change_start(bl, bl, type, rate, val1, val2, 0, val4, tick, flag);
+				}
+			}
 			break;
 		case 4:
 			val2 = script_getnum(st,5);
