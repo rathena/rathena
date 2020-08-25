@@ -130,4 +130,5 @@ Thumbs.db
 
 # eduardo
 /npc/custom/
-/npc/scripts_custom.conf
+/npc/custom/etc
+#/npc/scripts_custom.conf
