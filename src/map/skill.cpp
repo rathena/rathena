@@ -11954,7 +11954,7 @@ TIMER_FUNC(skill_castend_id){
 		else
 			skill_castend_damage_id(src,target,ud->skill_id,ud->skill_lv,tick,flag);
 
-		if( sd && sd->skill_keep_using.skill_id > 0 && sd->skill_keep_using.skill_id == ud->skill_id ){
+		if( sd && sd->skill_keep_using.skill_id > 0 && sd->skill_keep_using.skill_id == ud->skill_id && !skill_isNotOk(ud->skill_id, sd) && skill_check_condition_castbegin(sd, ud->skill_id, ud->skill_lv) ){
 			sd->skill_keep_using.tid = add_timer( sd->ud.canact_tick + 100, skill_keep_using, sd->bl.id, 0 );
 		}
 
@@ -12036,8 +12036,10 @@ TIMER_FUNC(skill_castend_id){
 		sd->skillitem = sd->skillitemlv = sd->skillitem_keep_requirement = 0;
 		if (sd->skill_keep_using.skill_id > 0) {
 			sd->skill_keep_using.skill_id = 0;
-			delete_timer(sd->skill_keep_using.tid, skill_keep_using);
-			sd->skill_keep_using.tid = INVALID_TIMER;
+			if (sd->skill_keep_using.tid != INVALID_TIMER) {
+				delete_timer(sd->skill_keep_using.tid, skill_keep_using);
+				sd->skill_keep_using.tid = INVALID_TIMER;
+			}
 		}
 	} else if (md)
 		md->skill_idx = -1;
