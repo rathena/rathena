@@ -114,7 +114,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			if (!inNode["Body"].IsDefined())
 				continue;
 
-			if( !askConfirmation( "Found the file \"%s\", which requires migration to sql.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
+			if( !askConfirmation( "Found the file \"%s\", which can be converted to sql.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
 				continue;
 			}
 

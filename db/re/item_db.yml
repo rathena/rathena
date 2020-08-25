@@ -179823,6 +179823,3522 @@ Body:
     Weight: 30
     Script: |
       sc_start SC_ADD_MATK_DAMAGE,500000,15;
+  - Id: 100128
+    AegisName: Noblesses_Refine_Ticket
+    Name: Noblesses Refine Ticket
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /*upgradeui 100128;*/
+  - Id: 100129
+    AegisName: Imperial_Refine_Ticket
+    Name: Imperial Refine Ticket
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 125
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /*upgradeui 100129;*/
+  - Id: 100130
+    AegisName: Grace_Refine_Ticket
+    Name: Grace Refine Ticket
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 150
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /*upgradeui 100130;*/
+  - Id: 100131
+    AegisName: Imperial_P_Mo_Garment
+    Name: Imperial Physical Modification Permit (Garment)
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 125
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /*upgradeui 100131;*/
+  - Id: 100132
+    AegisName: Imperial_M_Mo_Garment
+    Name: Imperial Magical Modification Permit (Garment)
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 125
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /*upgradeui 100132;*/
+  - Id: 100133
+    AegisName: Grace_P_Mo_Garment
+    Name: Grace Physical Modification Permit (Garment)
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 150
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /*upgradeui 100133;*/
+  - Id: 100134
+    AegisName: Grace_M_Mo_Garment
+    Name: Grace Magical Modification Permit (Garment)
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 150
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /*upgradeui 100134;*/
+  - Id: 100135
+    AegisName: Imperial_P_Mo_Armor
+    Name: Imperial Physical Modification Permit (Armor)
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 125
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /*upgradeui 100135;*/
+  - Id: 100136
+    AegisName: Imperial_M_Mo_Armor
+    Name: Imperial Magical Modification Permit (Armor)
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 125
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /*upgradeui 100136;*/
+  - Id: 100137
+    AegisName: Grace_P_Mo_Armor
+    Name: Grace Physical Modification Permit (Armor)
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 150
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /*upgradeui 100137;*/
+  - Id: 100138
+    AegisName: Grace_M_Mo_Armor
+    Name: Grace Magical Modification Permit (Armor)
+    Type: Delayconsume
+    Buy: 20
+    EquipLevelMin: 150
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      /*upgradeui 100138;*/
+  - Id: 450018
+    AegisName: Noblesse_Breath_Armor
+    Name: Noblesse Breath Armor
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Knight: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMaxHPrate,5; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus bMaxHPrate,5;
+  - Id: 450019
+    AegisName: Noblesse_Knight_Armor
+    Name: Noblesse Knight Armor
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Knight: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus bCritAtkRate,5;
+  - Id: 450020
+    AegisName: Noblesse_Spear_Armor
+    Name: Noblesse Spear Armor
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus bLongAtkRate,5;
+  - Id: 450021
+    AegisName: Noblesse_Genesis_Armor
+    Name: Noblesse Genesis Armor
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Holy,5; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Holy,5;
+  - Id: 450022
+    AegisName: Noblesse_Sharp_Suit
+    Name: Noblesse Sharp Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Hunter: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus bLongAtkRate,5;
+  - Id: 450023
+    AegisName: Noblesse_Aimed_suit
+    Name: Noblesse Aimed suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Hunter: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus bLongAtkRate,5;
+  - Id: 450024
+    AegisName: Noblesse_Severe_Suit
+    Name: Noblesse Severe Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus bLongAtkRate,5;
+  - Id: 450025
+    AegisName: Noblesse_Reverb_Suit
+    Name: Noblesse Reverb Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Neutral,5; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Neutral,5;
+  - Id: 450026
+    AegisName: Noblesse_Adora_Robe
+    Name: Noblesse Adora Robe
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Holy,5; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Holy,5;
+  - Id: 450027
+    AegisName: Noblesse_Duple_Robe
+    Name: Noblesse Duple Robe
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus bCritAtkRate,5;
+  - Id: 450028
+    AegisName: Noblesse_Tornado_Armor
+    Name: Noblesse Tornado Armor
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Blacksmith: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus2 bAddSize,Size_All,5;
+  - Id: 450029
+    AegisName: Noblesse_Vulcan_Armor
+    Name: Noblesse Vulcan Armor
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Blacksmith: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus bLongAtkRate,5;
+  - Id: 450030
+    AegisName: Noblesse_Cart_Cannon_Suit
+    Name: Noblesse Cart Cannon Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus bLongAtkRate,5;
+  - Id: 450031
+    AegisName: Noblesse_Cart_Tornado_Suit
+    Name: Noblesse Cart Tornado Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus2 bAddSize,Size_All,5;
+  - Id: 450032
+    AegisName: Noblesse_Rolling_Suit
+    Name: Noblesse Rolling Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus bLongAtkRate,5;
+  - Id: 450033
+    AegisName: Noblesse_Assassin_Suit
+    Name: Noblesse Assassin Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus bCritAtkRate,5;
+  - Id: 450034
+    AegisName: Noblesse_Fatal_Suit
+    Name: Noblesse Fatal Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus2 bAddSize,Size_All,5;
+  - Id: 450035
+    AegisName: Noblesse_Stalker_Suit
+    Name: Noblesse Stalker Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Fire,5;
+  - Id: 450036
+    AegisName: Noblesse_Picky_Robe
+    Name: Noblesse Picky Robe
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Summoner: true
+    Classes:
+      Normal: true
+      Upper: true
+      Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus bLongAtkRate,5;
+  - Id: 450037
+    AegisName: Noblesse_Catnip_Robe
+    Name: Noblesse Catnip Robe
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Summoner: true
+    Classes:
+      Normal: true
+      Upper: true
+      Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Neutral,5;
+  - Id: 450038
+    AegisName: Noblesse_Trip_Suit
+    Name: Noblesse Trip Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus2 bAddClass,Class_All,5; if(.@r>=9) bonus bLongAtkRate,5;
+  - Id: 450039
+    AegisName: Noblesse_Fire_Rain_Suit
+    Name: Noblesse Fire Rain Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus2 bAddClass,Class_All,5; if(.@r>=9) bonus bLongAtkRate,5;
+  - Id: 450040
+    AegisName: Noblesse_Crimson_Robe
+    Name: Noblesse Crimson Robe
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Fire,5;
+  - Id: 450041
+    AegisName: Noblesse_Frost_Robe
+    Name: Noblesse Frost Robe
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Water,5;
+  - Id: 450042
+    AegisName: Noblesse_Psychic_Robe
+    Name: Noblesse Psychic Robe
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Neutral,5;
+  - Id: 450043
+    AegisName: Noblesse_Dust_Robe
+    Name: Noblesse Dust Robe
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Water,5;
+  - Id: 450044
+    AegisName: Noblesse_Sun_Suit
+    Name: Noblesse Sun Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      StarGladiator: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus2 bAddClass,Class_All,5;
+  - Id: 450045
+    AegisName: Noblesse_Moon_Suit
+    Name: Noblesse Moon Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      StarGladiator: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus2 bAddSize,Size_All,5; if(.@r>=9) bonus2 bAddClass,Class_All,5;
+  - Id: 450046
+    AegisName: Noblesse_Ninja_Suit
+    Name: Noblesse Ninja Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      KagerouOboro: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_All,5;
+  - Id: 450047
+    AegisName: Noblesse_Kunai_Suit
+    Name: Noblesse Kunai Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      KagerouOboro: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus2 bAddClass,Class_All,5; if(.@r>=9) bonus bLongAtkRate,5;
+  - Id: 450048
+    AegisName: Noblesse_Eswhoo_Robe
+    Name: Noblesse Eswhoo Robe
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      SoulLinker: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,5; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,5;
+  - Id: 450049
+    AegisName: Noblesse_Explosion_Robe
+    Name: Noblesse Explosion Robe
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      SoulLinker: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,5; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,5;
+  - Id: 450050
+    AegisName: Noblesse_Knuckle_Suit
+    Name: Noblesse Knuckle Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bMaxSPrate,10; if(.@r>=9) bonus2 bAddSize,Size_All,5;
+  - Id: 450051
+    AegisName: Noblesse_Tiger_Suit
+    Name: Noblesse Tiger Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMaxSPrate,5; if(.@r>=7) bonus bMaxHPrate,3; if(.@r>=9) bonus bMaxHPrate,3;
+  - Id: 450052
+    AegisName: Imperial_Breath_Armor
+    Name: Imperial Breath Armor
+    Type: Armor
+    Buy: 20
+    Defense: 120
+    Slots: 1
+    Jobs:
+      Knight: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMaxHPrate,7; if(.@r>=7) bonus bVariableCastrate,-15; if(.@r>=9) bonus bMaxHPrate,7;
+  - Id: 450053
+    AegisName: Imperial_Knight_Armor
+    Name: Imperial Knight Armor
+    Type: Armor
+    Buy: 20
+    Defense: 120
+    Slots: 1
+    Jobs:
+      Knight: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus bCritAtkRate,7;
+  - Id: 450054
+    AegisName: Imperial_Spear_Armor
+    Name: Imperial Spear Armor
+    Type: Armor
+    Buy: 20
+    Defense: 120
+    Slots: 1
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus bLongAtkRate,7;
+  - Id: 450055
+    AegisName: Imperial_Genesis_Armor
+    Name: Imperial Genesis Armor
+    Type: Armor
+    Buy: 20
+    Defense: 120
+    Slots: 1
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Holy,7; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Holy,7;
+  - Id: 450056
+    AegisName: Imperial_Sharp_Suit
+    Name: Imperial Sharp Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Hunter: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus bLongAtkRate,7;
+  - Id: 450057
+    AegisName: Imperial_Aimed_Suit
+    Name: Imperial Aimed Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Hunter: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus bLongAtkRate,7;
+  - Id: 450058
+    AegisName: Imperial_Severe_Suit
+    Name: Imperial Severe Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bVariableCastrate,-15; if(.@r>=9) bonus bLongAtkRate,7;
+  - Id: 450059
+    AegisName: Imperial_Reverb_Suit
+    Name: Imperial Reverb Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Neutral,7; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Neutral,7;
+  - Id: 450060
+    AegisName: Imperial_Adora_Robe
+    Name: Imperial Adora Robe
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Holy,7; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Holy,7;
+  - Id: 450061
+    AegisName: Imperial_Duple_Robe
+    Name: Imperial Duple Robe
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus bCritAtkRate,7;
+  - Id: 450062
+    AegisName: Imperial_Knuckle_Suit
+    Name: Imperial Knuckle Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bMaxSPrate,15; if(.@r>=9) bonus2 bAddSize,Size_All,7;
+  - Id: 450063
+    AegisName: Imperial_Tiger_Suit
+    Name: Imperial Tiger Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMaxSPrate,7; if(.@r>=7) bonus bMaxHPrate,4; if(.@r>=9) bonus bMaxHPrate,4;
+  - Id: 450064
+    AegisName: Imperial_Tornado_Armor
+    Name: Imperial Tornado Armor
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Blacksmith: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus2 bAddSize,Size_All,7;
+  - Id: 450065
+    AegisName: Imperial_Vulcan_Armor
+    Name: Imperial Vulcan Armor
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Blacksmith: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus bLongAtkRate,7;
+  - Id: 450066
+    AegisName: Imperial_Cart_Cannon_Suit
+    Name: Imperial Cart Cannon Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bVariableCastrate,-15; if(.@r>=9) bonus bLongAtkRate,7;
+  - Id: 450067
+    AegisName: Imperial_Cart_Tornado_Suit
+    Name: Imperial Cart Tornado Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus2 bAddSize,Size_All,7;
+  - Id: 450068
+    AegisName: Imperial_Rolling_Suit
+    Name: Imperial Rolling Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus bLongAtkRate,7;
+  - Id: 450069
+    AegisName: Imperial_Assassin_Suit
+    Name: Imperial Assassin Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus bCritAtkRate,7;
+  - Id: 450070
+    AegisName: Imperial_Fatal_Suit
+    Name: Imperial Fatal Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus2 bAddSize,Size_All,7;
+  - Id: 450071
+    AegisName: Imperial_Stalker_Suit
+    Name: Imperial Stalker Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Fire,7;
+  - Id: 450072
+    AegisName: Imperial_Picky_Robe
+    Name: Imperial Picky Robe
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Summoner: true
+    Classes:
+      Normal: true
+      Upper: true
+      Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bVariableCastrate,-15; if(.@r>=9) bonus bLongAtkRate,7;
+  - Id: 450073
+    AegisName: Imperial_Catnip_Robe
+    Name: Imperial Catnip Robe
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Summoner: true
+    Classes:
+      Normal: true
+      Upper: true
+      Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus bVariableCastrate,-15; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Neutral,7;
+  - Id: 450074
+    AegisName: Imperial_Trip_Suit
+    Name: Imperial Trip Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus2 bAddClass,Class_All,7; if(.@r>=9) bonus bLongAtkRate,7;
+  - Id: 450075
+    AegisName: Imperial_Fire_Rain_Suit
+    Name: Imperial Fire Rain Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus2 bAddClass,Class_All,7; if(.@r>=9) bonus bLongAtkRate,7;
+  - Id: 450076
+    AegisName: Imperial_Crimson_Robe
+    Name: Imperial Crimson Robe
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus bVariableCastrate,-15; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Fire,7;
+  - Id: 450077
+    AegisName: Imperial_Frost_Robe
+    Name: Imperial Frost Robe
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus bVariableCastrate,-15; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Water,7;
+  - Id: 450078
+    AegisName: Imperial_Psychic_Robe
+    Name: Imperial Psychic Robe
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus bVariableCastrate,-15; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Neutral,7;
+  - Id: 450079
+    AegisName: Imperial_Dust_Robe
+    Name: Imperial Dust Robe
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus bVariableCastrate,-15; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Water,7;
+  - Id: 450080
+    AegisName: Imperial_Sun_Suit
+    Name: Imperial Sun Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      StarGladiator: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus2 bAddClass,Class_All,7;
+  - Id: 450081
+    AegisName: Imperial_Moon_Suit
+    Name: Imperial Moon Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      StarGladiator: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus2 bAddSize,Size_All,7; if(.@r>=9) bonus2 bAddClass,Class_All,7;
+  - Id: 450082
+    AegisName: Imperial_Ninja_Suit
+    Name: Imperial Ninja Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      KagerouOboro: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus bVariableCastrate,-15; if(.@r>=9) bonus2 bMagicAtkEle,Ele_All,7;
+  - Id: 450083
+    AegisName: Imperial_Kunai_Suit
+    Name: Imperial Kunai Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      KagerouOboro: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus2 bAddClass,Class_All,7; if(.@r>=9) bonus bLongAtkRate,7;
+  - Id: 450084
+    AegisName: Imperial_Eswhoo_Robe
+    Name: Imperial Eswhoo Robe
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      SoulLinker: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,7; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,7;
+  - Id: 450085
+    AegisName: Imperial_Explosion_Robe
+    Name: Imperial Explosion Robe
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      SoulLinker: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,7; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,7;
+  - Id: 450086
+    AegisName: Grace_Breath_Armor
+    Name: Grace Breath Armor
+    Type: Armor
+    Buy: 20
+    Defense: 130
+    Slots: 1
+    Jobs:
+      Knight: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMaxHPrate,10; if(.@r>=7) bonus bVariableCastrate,-20; if(.@r>=9) bonus bMaxHPrate,10;
+  - Id: 450087
+    AegisName: Grace_Knight_Armor
+    Name: Grace Knight Armor
+    Type: Armor
+    Buy: 20
+    Defense: 130
+    Slots: 1
+    Jobs:
+      Knight: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus bCritAtkRate,10;
+  - Id: 450088
+    AegisName: Grace_Spear_Armor
+    Name: Grace Spear Armor
+    Type: Armor
+    Buy: 20
+    Defense: 130
+    Slots: 1
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus bLongAtkRate,10;
+  - Id: 450089
+    AegisName: Grace_Genesis_Armor
+    Name: Grace Genesis Armor
+    Type: Armor
+    Buy: 20
+    Defense: 130
+    Slots: 1
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Holy,10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Holy,10;
+  - Id: 450090
+    AegisName: Grace_Sharp_Suit
+    Name: Grace Sharp Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Hunter: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus bLongAtkRate,10;
+  - Id: 450091
+    AegisName: Grace_Aimed_Suit
+    Name: Grace Aimed Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Hunter: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus bLongAtkRate,10;
+  - Id: 450092
+    AegisName: Grace_Severe_Suit
+    Name: Grace Severe Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bVariableCastrate,-20; if(.@r>=9) bonus bLongAtkRate,10;
+  - Id: 450093
+    AegisName: Grace_Reverb_Suit
+    Name: Grace Reverb Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Neutral,10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Neutral,10;
+  - Id: 450094
+    AegisName: Grace_Adora_Robe
+    Name: Grace Adora Robe
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Holy,10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Holy,10;
+  - Id: 450095
+    AegisName: Grace_Duple_Robe
+    Name: Grace Duple Robe
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus bCritAtkRate,10;
+  - Id: 450096
+    AegisName: Grace_Knuckle_Suit
+    Name: Grace Knuckle Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bMaxSPrate,20; if(.@r>=9) bonus2 bAddSize,Size_All,10;
+  - Id: 450097
+    AegisName: Grace_Tiger_Suit
+    Name: Grace Tiger Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMaxSPrate,10; if(.@r>=7) bonus bMaxHPrate,5; if(.@r>=9) bonus bMaxHPrate,5;
+  - Id: 450098
+    AegisName: Grace_Tornado_Armor
+    Name: Grace Tornado Armor
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Blacksmith: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus2 bAddSize,Size_All,10;
+  - Id: 450099
+    AegisName: Grace_Vulcan_Armor
+    Name: Grace Vulcan Armor
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Blacksmith: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus bLongAtkRate,10;
+  - Id: 450100
+    AegisName: Grace_Cart_Cannon_Suit
+    Name: Grace Cart Cannon Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bVariableCastrate,-20; if(.@r>=9) bonus bLongAtkRate,10;
+  - Id: 450101
+    AegisName: Grace_Cart_Tornado_Suit
+    Name: Grace Cart Tornado Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus2 bAddSize,Size_All,10;
+  - Id: 450102
+    AegisName: Grace_Rolling_Suit
+    Name: Grace Rolling Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus bLongAtkRate,10;
+  - Id: 450103
+    AegisName: Grace_Assassin_Suit
+    Name: Grace Assassin Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus bCritAtkRate,10;
+  - Id: 450104
+    AegisName: Grace_Fatal_Suit
+    Name: Grace Fatal Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus2 bAddSize,Size_All,10;
+  - Id: 450105
+    AegisName: Grace_Stalker_Suit
+    Name: Grace Stalker Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Fire,10;
+  - Id: 450106
+    AegisName: Grace_Picky_Robe
+    Name: Grace Picky Robe
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Summoner: true
+    Classes:
+      Normal: true
+      Upper: true
+      Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bVariableCastrate,-20; if(.@r>=9) bonus bLongAtkRate,10;
+  - Id: 450107
+    AegisName: Grace_Catnip_Robe
+    Name: Grace Catnip Robe
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Summoner: true
+    Classes:
+      Normal: true
+      Upper: true
+      Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus bVariableCastrate,-20; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Neutral,10;
+  - Id: 450108
+    AegisName: Grace_Trip_Suit
+    Name: Grace Trip Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus2 bAddClass,Class_All,10; if(.@r>=9) bonus bLongAtkRate,10;
+  - Id: 450109
+    AegisName: Grace_Fire_Rain_Suit
+    Name: Grace Fire Rain Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus2 bAddClass,Class_All,10; if(.@r>=9) bonus bLongAtkRate,10;
+  - Id: 450110
+    AegisName: Grace_Crimson_Robe
+    Name: Grace Crimson Robe
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus bVariableCastrate,-20; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Fire,10;
+  - Id: 450111
+    AegisName: Grace_Frost_Robe
+    Name: Grace Frost Robe
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus bVariableCastrate,-20; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Water,10;
+  - Id: 450112
+    AegisName: Grace_Psychic_Robe
+    Name: Grace Psychic Robe
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus bVariableCastrate,-20; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Neutral,10;
+  - Id: 450113
+    AegisName: Grace_Dust_Robe
+    Name: Grace Dust Robe
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus bVariableCastrate,-20; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Water,10;
+  - Id: 450114
+    AegisName: Grace_Sun_Suit
+    Name: Grace Sun Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      StarGladiator: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus2 bAddClass,Class_All,10;
+  - Id: 450115
+    AegisName: Grace_Moon_Suit
+    Name: Grace Moon Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      StarGladiator: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus2 bAddSize,Size_All,10; if(.@r>=9) bonus2 bAddClass,Class_All,10;
+  - Id: 450116
+    AegisName: Grace_Ninja_Suit
+    Name: Grace Ninja Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      KagerouOboro: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus bVariableCastrate,-20; if(.@r>=9) bonus2 bMagicAtkEle,Ele_All,10;
+  - Id: 450117
+    AegisName: Grace_Kunai_Suit
+    Name: Grace Kunai Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      KagerouOboro: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus2 bAddClass,Class_All,10; if(.@r>=9) bonus bLongAtkRate,10;
+  - Id: 450118
+    AegisName: Grace_Eswhoo_Robe
+    Name: Grace Eswhoo Robe
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      SoulLinker: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,10;
+  - Id: 450119
+    AegisName: Grace_Explosion_Robe
+    Name: Grace Explosion Robe
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      SoulLinker: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus2 bMagicAtkEle,Ele_Dark,10; if(.@r>=9) bonus2 bMagicAtkEle,Ele_Dark,10;
+  - Id: 450121
+    AegisName: Noblesse_Super_Novice_Suit
+    Name: Noblesse Super Novice Suit
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus bMaxHPrate,5;
+  - Id: 450122
+    AegisName: Noblesse_Super_Novice_Robe
+    Name: Noblesse Super Novice Robe
+    Type: Armor
+    Buy: 20
+    Defense: 70
+    Slots: 1
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus bMaxHPrate,5;
+  - Id: 450123
+    AegisName: Imperial_Super_Novice_Suit
+    Name: Imperial Super Novice Suit
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus bMaxHPrate,7;
+  - Id: 450124
+    AegisName: Imperial_Super_Novice_Robe
+    Name: Imperial Super Novice Robe
+    Type: Armor
+    Buy: 20
+    Defense: 90
+    Slots: 1
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,75; if(.@r>=7) bonus bAspdRate,5; if(.@r>=9) bonus bMaxHPrate,7;
+  - Id: 450125
+    AegisName: Grace_Super_Novice_Suit
+    Name: Grace Super Novice Suit
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus bMaxHPrate,10;
+  - Id: 450126
+    AegisName: Grace_Super_Novice_Robe
+    Name: Grace Super Novice Robe
+    Type: Armor
+    Buy: 20
+    Defense: 100
+    Slots: 1
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus bMaxHPrate,10;
+  - Id: 470016
+    AegisName: Noblesse_Attack_Boots
+    Name: Noblesse Attack Boots
+    Type: Armor
+    Defense: 20
+    Slots: 1
+    Locations:
+      Shoes: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,10; bonus bHit,10; if (.@r>=7) bonus bFixedCast,-500; if (.@r>=9) bonus bLongAtkRate,5;
+  - Id: 470017
+    AegisName: Noblesse_Magic_Boots
+    Name: Noblesse Magic Boots
+    Type: Armor
+    Defense: 20
+    Slots: 1
+    Locations:
+      Shoes: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,10; bonus bFlee,10; if (.@r>=7) bonus bFixedCast,-500; if (.@r>=9) bonus2 bMagicAtkEle,Ele_All,5;
+  - Id: 470018
+    AegisName: Imperial_Attack_Boots
+    Name: Imperial Attack Boots
+    Type: Armor
+    Defense: 25
+    Slots: 1
+    Locations:
+      Shoes: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,15; bonus bHit,15; if (.@r>=7) bonus bFixedCast,-500; if (.@r>=9) bonus bLongAtkRate,7;
+  - Id: 470019
+    AegisName: Imperial_Magic_Boots
+    Name: Imperial Magic Boots
+    Type: Armor
+    Defense: 25
+    Slots: 1
+    Locations:
+      Shoes: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,15; bonus bFlee,15; if (.@r>=7) bonus bFixedCast,-500; if (.@r>=9) bonus2 bMagicAtkEle,Ele_All,7;
+  - Id: 470020
+    AegisName: Grace_Attack_Boots
+    Name: Grace Attack Boots
+    Type: Armor
+    Defense: 30
+    Slots: 1
+    Locations:
+      Shoes: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bBaseAtk,20; bonus bHit,20; if (.@r>=7) bonus bFixedCast,-500; if (.@r>=9) bonus bLongAtkRate,10;
+  - Id: 470021
+    AegisName: Grace_Magic_Boots
+    Name: Grace Magic Boots
+    Type: Armor
+    Defense: 30
+    Slots: 1
+    Locations:
+      Shoes: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bMatk,20; bonus bFlee,20; if (.@r>=7) bonus bFixedCast,-500; if (.@r>=9) bonus2 bMagicAtkEle,Ele_All,10;
+  - Id: 480012
+    AegisName: Noblesse_Attack_Manteau
+    Name: Noblesse Attack Manteau
+    Type: Armor
+    Defense: 20
+    Slots: 1
+    Locations:
+      Garment: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bAspdRate,3; if (.@r>=7) bonus bDelayrate,-5; if (.@r>=9) bonus2 bAddSize,Size_All,5;
+  - Id: 480014
+    AegisName: Noblesse_Magic_Manteau
+    Name: Noblesse Magic Manteau
+    Type: Armor
+    Defense: 20
+    Slots: 1
+    Locations:
+      Garment: true
+    EquipLevelMin: 100
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bVariableCastrate,-5; if (.@r>=7) bonus bDelayrate,-5; if (.@r>=9) bonus2 bMagicAtkEle,Ele_All,5;
+  - Id: 480016
+    AegisName: Imperial_Attack_Manteau
+    Name: Imperial Attack Manteau
+    Type: Armor
+    Defense: 25
+    Slots: 1
+    Locations:
+      Garment: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bAspdRate,5; if (.@r>=7) bonus bDelayrate,-5; if (.@r>=9) bonus2 bAddSize,Size_All,7;
+  - Id: 480017
+    AegisName: Imperial_Magic_Manteau
+    Name: Imperial Magic Manteau
+    Type: Armor
+    Defense: 25
+    Slots: 1
+    Locations:
+      Garment: true
+    EquipLevelMin: 125
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bVariableCastrate,-7; if (.@r>=7) bonus bDelayrate,-5; if (.@r>=9) bonus2 bMagicAtkEle,Ele_All,7;
+  - Id: 480018
+    AegisName: Grace_Attack_Manteau
+    Name: Grace Attack Manteau
+    Type: Armor
+    Defense: 30
+    Slots: 1
+    Locations:
+      Garment: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bAspdRate,7; if (.@r>=7) bonus bDelayrate,-5; if (.@r>=9) bonus2 bAddSize,Size_All,10;
+  - Id: 480019
+    AegisName: Grace_Magic_Manteau
+    Name: Grace Magic Manteau
+    Type: Armor
+    Defense: 30
+    Slots: 1
+    Locations:
+      Garment: true
+    EquipLevelMin: 150
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine(); bonus bVariableCastrate,-10; if (.@r>=7) bonus bDelayrate,-5; if (.@r>=9) bonus2 bMagicAtkEle,Ele_All,10;
+  - Id: 490014
+    AegisName: Noblesse_Attack_Ring
+    Name: Noblesse Attack Ring
+    Type: Armor
+    Defense: 5
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bAspdRate,3; bonus bVariableCastrate,-5; bonus bCritAtkRate,5;
+  - Id: 490015
+    AegisName: Noblesse_Magic_Ring
+    Name: Noblesse Magic Ring
+    Type: Armor
+    Defense: 5
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bAspdRate,3; bonus bVariableCastrate,-5; bonus2 bMagicAddEle,Ele_All,5;
+  - Id: 490017
+    AegisName: Imperial_Attack_Ring
+    Name: Imperial Attack Ring
+    Type: Armor
+    Weight: 50
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 125
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bAspdRate,5; bonus bVariableCastrate,-7; bonus bCritAtkRate,7;
+  - Id: 490018
+    AegisName: Imperial_Magic_Ring
+    Name: Imperial Magic Ring
+    Type: Armor
+    Weight: 50
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 125
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bAspdRate,5; bonus bVariableCastrate,-7; bonus2 bMagicAddEle,Ele_All,7;
+  - Id: 490019
+    AegisName: Grace_Attack_Ring
+    Name: Grace Attack Ring
+    Type: Armor
+    Weight: 50
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 150
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bAspdRate,7; bonus bVariableCastrate,-10; bonus bCritAtkRate,10;
+  - Id: 490020
+    AegisName: Grace_Magic_Ring
+    Name: Grace Magic Ring
+    Type: Armor
+    Weight: 50
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 150
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bAspdRate,7; bonus bVariableCastrate,-10; bonus2 bMagicAddEle,Ele_All,10;
   - Id: 1100003
     AegisName: Concentrated_R_P
     Name: Concentrated Red Potion
