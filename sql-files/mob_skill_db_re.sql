@@ -11910,6 +11910,8 @@ REPLACE INTO `mob_skill_db_re` VALUES (3125,'STEP@SM_BASH','attack',5,5,1000,0,5
 REPLACE INTO `mob_skill_db_re` VALUES (3126,'ROCK_STEP@BS_HAMMERFALL','attack',110,5,1000,1000,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (3127,'KICK_STEP@ASC_BREAKER','attack',379,5,1000,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (3128,'KICK_AND_KICK@NPC_STUNATTACK','attack',179,3,500,1000,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3161,'BOMB@NPC_SELFDESTRUCTION','idle',173,1,10000,3000,0,'no','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3161,'BOMB@NPC_SELFDESTRUCTION','attack',173,1,10000,3000,5000,'no','self','myhpltmaxrate','99',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (3253,'SYS_MSG@AL_HEAL','attack',28,11,5000,500,5000,'yes','friend','friendhpltmaxrate','50',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (3253,'SYS_MSG@AL_HEAL','chase',28,11,5000,500,5000,'yes','friend','friendhpltmaxrate','50',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (3253,'SYS_MSG@AL_HEAL','idle',28,11,5000,500,5000,'yes','friend','friendhpltmaxrate','50',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
