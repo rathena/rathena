@@ -249,12 +249,12 @@ Body:
       Map: 1@uns
       X: 145
       Y: 35
-#  - Id: 30
-#    Name: Charleston in Distress
-#    Enter:
-#      Map: 1@mcd
-#      X: 127
-#      Y: 282
+  - Id: 30
+    Name: Charleston in Distress
+    Enter:
+      Map: 1@mcd
+      X: 127
+      Y: 282
   - Id: 31
     Name: Ritual of Blessing
     Enter:
