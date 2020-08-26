@@ -16156,7 +16156,7 @@ void clif_parse_Mail_return(int fd, struct map_session_data *sd){
 /// 0a04 <index>.W <amount>.W (CZ_REQ_ADD_ITEM_TO_MAIL)
 void clif_parse_Mail_setattach(int fd, struct map_session_data *sd){
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-	int idx = RFIFOW(fd,info->pos[0]);
+	uint16 idx = RFIFOW(fd,info->pos[0]);
 #if PACKETVER < 20150513
 	int amount = RFIFOL(fd,info->pos[1]);
 #else
@@ -16166,7 +16166,10 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd){
 
 	if( !chrif_isconnected() )
 		return;
-	if (idx < 0 || amount < 0 || idx >= MAX_INVENTORY)
+	if (amount < 0 || server_index(idx) >= MAX_INVENTORY)
+		return;
+
+	if (sd->inventory_data[server_index(idx)] == nullptr)
 		return;
 
 	flag = mail_setitem(sd, idx, amount);
