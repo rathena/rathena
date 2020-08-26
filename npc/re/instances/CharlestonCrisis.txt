@@ -2174,22 +2174,18 @@ OnInstanceInit:
 	cloakonnpc instance_npcname("8gate#1");
 	disablenpc instance_npcname("9gate#1");
 
-	// Note: the monster is supposed to after 2min (+ [0-1]min), like permanent monster
-	monster 'map_name$,0,0,"--ja--", 3125,100, instance_npcname("Charleston Assistant#1") + "::OnMyMobDead1";	// STEP
-	monster 'map_name$,0,0,"--ja--", 3128,20, instance_npcname("Charleston Assistant#1") + "::OnMyMobDead2";	// KICK_AND_KICK
-	initnpctimer;
+	// workaround for permanent monsters
+	.@event$ = instance_npcname("Charleston Assistant#1") + "::OnMyMobDead";
+	monster 'map_name$,0,0,"--ja--", 3125,100, .@event$;	// STEP
+	monster 'map_name$,0,0,"--ja--", 3128,20, .@event$;		// KICK_AND_KICK
 	end;
 
-OnTimer120000:	// temporary fix to re-spawn the monsters
-	.@count1 = mobcount('map_name$, instance_npcname("Charleston Assistant#1") + "::OnMyMobDead1");
-	.@count2 = mobcount('map_name$, instance_npcname("Charleston Assistant#1") + "::OnMyMobDead2");
-	if (.@count1 < 100)
-		monster 'map_name$,0,0,"--ja--", 3125,(100 - .@count1), instance_npcname("Charleston Assistant#1") + "::OnMyMobDead1";	// STEP
-	if (.@count2 < 20)
-		monster 'map_name$,0,0,"--ja--", 3125,(20 - .@count2), instance_npcname("Charleston Assistant#1") + "::OnMyMobDead2";	// KICK_AND_KICK
-	initnpctimer;
-	end;
-OnMyMobDead1:
-OnMyMobDead2:
+OnMyMobDead:
+	if (!playerattached())	// shouldn't happen
+		end;
+	.@time = 120000 + rand(60000);
+	.@mob_id = killedrid;
+	sleep .@time;
+	monster 'map_name$,0,0,"--ja--", .@mob_id,1, instance_npcname("Charleston Assistant#1") + "::OnMyMobDead";
 	end;
 }
