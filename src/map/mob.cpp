@@ -2231,13 +2231,6 @@ TIMER_FUNC(mob_timer_delete){
 		//for Alchemist CANNIBALIZE [Lupus]
 		md->deletetimer = INVALID_TIMER;
 
-		if (md->special_state.ai == AI_GUILD) {
-			map_session_data *sd = map_id2sd(md->master_id);
-
-			if (sd && sd->guild)
-				sd->guild->chargeshout_flag.active = false;
-		}
-
 		unit_free(bl, CLR_TELEPORT);
 	}
 	return 0;
@@ -3062,13 +3055,6 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	 **/
 	if( md->can_summon )
 		mob_deleteslave(md);
-
-	if (md->special_state.ai == AI_GUILD) {
-		map_session_data *sd = map_id2sd(md->master_id);
-
-		if (sd && sd->guild)
-			sd->guild->chargeshout_flag.active = false;
-	}
 
 	map_freeblock_unlock();
 

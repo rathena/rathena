@@ -690,11 +690,7 @@ struct guild {
 	/* Used by char-server to save events for guilds */
 	unsigned short save_flag;
 
-	struct s_chargeshout_flag {
-		bool active;
-		uint16 m;
-		int16 x, y;
-	} chargeshout_flag;
+	int32 chargeshout_flag_id;
 };
 
 struct guild_castle {

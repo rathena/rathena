@@ -9451,10 +9451,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, sd->guild->name, MOBID_GUILD_SKILL_FLAG, nullptr, SZ_SMALL, AI_GUILD);
 
 			if (md) {
-				sd->guild->chargeshout_flag.active = true;
-				sd->guild->chargeshout_flag.m = src->m;
-				sd->guild->chargeshout_flag.x = src->x;
-				sd->guild->chargeshout_flag.y = src->y;
+				sd->guild->chargeshout_flag_id = md->bl.id;
 				md->master_id = src->id;
 
 				if (md->deletetimer != INVALID_TIMER)
@@ -9465,8 +9462,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case GD_CHARGESHOUT_BEATING:
-		if (sd && sd->guild && sd->guild->chargeshout_flag.active) {
-			if (pc_setpos(sd, map_id2index(sd->guild->chargeshout_flag.m), sd->guild->chargeshout_flag.x, sd->guild->chargeshout_flag.y, CLR_RESPAWN) != SETPOS_OK)
+		if (sd && sd->guild && map_blid_exists(sd->guild->chargeshout_flag_id)) {
+			block_list *mob_bl = map_id2bl(sd->guild->chargeshout_flag_id);
+
+			if (pc_setpos(sd, map_id2index(mob_bl->m), mob_bl->x, mob_bl->y, CLR_RESPAWN) != SETPOS_OK)
 				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 			else
 				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);

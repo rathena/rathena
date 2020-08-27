@@ -8237,7 +8237,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			if (t_bl->type == BL_MOB && flag & BCT_ENEMY) {
 				mob_data *md = BL_CAST(BL_MOB, t_bl);
 
-				if (md && (md->guardian_data || md->special_state.ai == AI_GUILD))
+				if (md->guardian_data || md->special_state.ai == AI_GUILD)
 					return 0; //pet may not attack Guardians/Emperium
 			}
 			break;
