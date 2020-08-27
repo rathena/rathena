@@ -2230,7 +2230,6 @@ TIMER_FUNC(mob_timer_delete){
 		}
 		//for Alchemist CANNIBALIZE [Lupus]
 		md->deletetimer = INVALID_TIMER;
-
 		unit_free(bl, CLR_TELEPORT);
 	}
 	return 0;
