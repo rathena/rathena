@@ -276,3 +276,28 @@ Body:
 #    AdditionalMaps:
 #      1@sthc: true
 #      1@sthd: true
+  - Id: 34
+    Name: Heart Hunter War Base 1
+    Enter:
+      Map: 1@swat
+      X: 35
+      Y: 65
+  - Id: 35
+    Name: Heart Hunter War Base 2
+    Enter:
+      Map: 1@swat
+      X: 73
+      Y: 118
+# There is officially only one (buggy) instance 'Werner Laboratory central room'
+  - Id: 36
+    Name: Werner Laboratory central room#1
+    Enter:
+      Map: 1@slw
+      X: 187
+      Y: 24
+  - Id: 37
+    Name: Werner Laboratory central room#2
+    Enter:
+      Map: 1@slw
+      X: 187
+      Y: 24

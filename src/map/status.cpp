@@ -1393,6 +1393,11 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_USE_SKILL_SP_SPA] = EFST_USE_SKILL_SP_SPA;
 	StatusIconChangeTable[SC_USE_SKILL_SP_SHA] = EFST_USE_SKILL_SP_SHA;
 
+	// ep16.2
+	StatusIconChangeTable[SC_EP16_2_BUFF_SS] = EFST_EP16_2_BUFF_SS;
+	StatusIconChangeTable[SC_EP16_2_BUFF_SC] = EFST_EP16_2_BUFF_SC;
+	StatusIconChangeTable[SC_EP16_2_BUFF_AC] = EFST_EP16_2_BUFF_AC;
+
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] |= SCB_ASPD;
@@ -1568,6 +1573,11 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_ANCILLA] |= SCB_REGEN;
 	StatusChangeFlagTable[SC_ENSEMBLEFATIGUE] |= SCB_SPEED|SCB_ASPD;
 	StatusChangeFlagTable[SC_MISTY_FROST] |= SCB_NONE;
+
+	// ep16.2
+	StatusChangeFlagTable[SC_EP16_2_BUFF_SS] |= SCB_ASPD;
+	StatusChangeFlagTable[SC_EP16_2_BUFF_SC] |= SCB_CRI;
+	StatusChangeFlagTable[SC_EP16_2_BUFF_AC] |= SCB_NONE;
 
 #ifdef RENEWAL
 	// renewal EDP increases your weapon atk
@@ -6779,6 +6789,8 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 
 	if (sc->data[SC_INCCRI])
 		critical += sc->data[SC_INCCRI]->val2;
+	if (sc->data[SC_EP16_2_BUFF_SC])
+		critical += 300;// crit +30
 	if (sc->data[SC_CRIFOOD])
 		critical += sc->data[SC_CRIFOOD]->val1;
 	if (sc->data[SC_EXPLOSIONSPIRITS])
@@ -7654,6 +7666,8 @@ static short status_calc_fix_aspd(struct block_list *bl, struct status_change *s
 		aspd -= 10 * sc->data[SC_SOULSHADOW]->val2;
 	if (sc->data[SC_HEAT_BARREL])
 		aspd -= sc->data[SC_HEAT_BARREL]->val1 * 10;
+	if (sc->data[SC_EP16_2_BUFF_SS])
+		aspd -= 100; // +10 ASPD
 
 	return cap_value(aspd, 0, 2000); // Will be recap for proper bl anyway
 }
@@ -15052,6 +15066,9 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_REUSE_LIMIT_LUXANIMA:
 			case SC_LUXANIMA:
 			case SC_SOULENERGY:
+			case SC_EP16_2_BUFF_SS:
+			case SC_EP16_2_BUFF_SC:
+			case SC_EP16_2_BUFF_AC:
 			// Clans
 			case SC_CLAN_INFO:
 			case SC_SWORDCLAN:

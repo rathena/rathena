@@ -1590,6 +1590,9 @@
 	export_constant(SC_LUXANIMA);
 	export_constant(SC_REUSE_LIMIT_LUXANIMA);
 	export_constant(SC_ENSEMBLEFATIGUE);
+	export_constant(SC_EP16_2_BUFF_SS);
+	export_constant(SC_EP16_2_BUFF_SC);
+	export_constant(SC_EP16_2_BUFF_AC);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
