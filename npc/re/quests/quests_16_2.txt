@@ -3989,45 +3989,147 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 				mes "Are you ready?";
 				mes "Shall we go to the waiting room now?";
 				next;
-				if (select( "Go to the waiting room", "Don't go to the waiting room." ) == 1) {
+				switch( select( "Go to the waiting room", "Don't go to the waiting room." ) ) {
+				case 1:
+					if (BaseJob != Job_Priest) {
+						mes "[USU commander Elena]";
+						mes "In the waiting room, there is ^0000CDIvan, the person in charge of entrance in arena^000000.";
+						mes "Enter the arena according to the order in reference to Ivan's guide.";
+						next;
+						mes "[USU commander Elena]";
+						mes "You have two minutes. If you defeat me during two minutes, you win.";
+						next;
+						mes "[USU commander Elena]";
+						mes "If you want to surrender during the fight, tell ^0000CDSorita^000000 beside Ivan.";
+						mes "Then you're going to be told off.";
+						setquest 16011;// Arena entrance
+						close2;
+						warp "rebel_in",184,28;
+						end;
+					}
 					mes "[USU commander Elena]";
-					mes "In the waiting room, there is ^0000CDIvan, the person in charge of entrance in arena^000000.";
-					mes "Enter the arena according to the order in reference to Ivan's guide.";
+					mes "Hmm... By the way, are you really going to fight me?";
+					mes "I am an expert in killing people. And fighting is not your main occupation. You cannot beat me.";
+					next;
+					if (select( "But I will fight.", "I agree with you. I give up." ) == 2) {
+						cutin "162elena_02.bmp",2;
+						mes "[USU commander Elena]";
+						mes "Good. Knowing one's limit is wise.";
+						close3;
+					}
+					mes "[USU commander Elena]";
+					mes "You're a cleric. Fighting is not your duty. I'm sure your companion also knows that.";
 					next;
 					mes "[USU commander Elena]";
-					mes "You have two minutes. If you defeat me during two minutes, you win.";
+					mes "Besides, you're just an adventurer. You have no business with us and those guys either. I'm afraid you might get hurt.";
+					next;
+					if (select( "No, I will fight.", "...I think you're right. I give up." ) == 2) {
+						cutin "162elena_02.bmp",2;
+						mes "[USU commander Elena]";
+						mes "You're wise. You don't have to get hurt yourself being nosy.";
+						close3;
+					}
+					mes "[USU commander Elena]";
+					mes "You must a fool who doesn't know what's going on.";
+					mes "Do you think I'm kidding? Or your life is too heavy and you'd like to put everything down?";
 					next;
 					mes "[USU commander Elena]";
-					mes "If you want to surrender during the fight, tell ^0000CDSorita^000000 beside Ivan.";
-					mes "Then you're going to be told off.";
-					setquest 16011;// Arena entrance
-					close2;
-					warp "rebel_in",184,28;
-					end;
-				}
-				mes "[USU commander Elena]";
-				mes "Aren't you going to fight me?";
-				mes "Haven't you come here to ask for the cooperation between the Secret Wings and Rebellion?";
-				next;
-				mes "[USU commander Elena]";
-				mes "Will you give up the fight?";
-				next;
-				if (select( "Give up the fight.", "Do not give up the fight." ) == 2) {
+					mes "This is the final warning. You stay out of this.";
+					mes "Tell the guy downstairs that you had no choice because I intimidated you.";
+					next;
+					if (select( "This is my problem too.", "Since I don't want to die, I give up." ) == 2) {
+						cutin "162elena_02.bmp",2;
+						mes "[USU commander Elena]";
+						mes "You're wise. Life is important, especially when it's mine.";
+						close3;
+					}
 					mes "[USU commander Elena]";
-					mes "Good. I will wait for you.";
-					mes "Tell me when you feel like fighting.";
+					mes "...Why is this your problem?";
+					mes "That talkative guy is a stooge of the President. But you're an adventurer who can just leave.";
+					next;
+					if (select( "This is the problem of those who trust me.", "I guess I'd better go." ) == 2) {
+						cutin "162elena_02.bmp",2;
+						mes "[USU commander Elena]";
+						mes "You're wise. Enjoy your adventure in a safer place.";
+						close3;
+					}
+					cutin "162elena_02.bmp",2;
+					mes "[USU commander Elena]";
+					mes "Well, well, well.";
+					mes "Haha, you are so obstinate.";
+					mes "I like your spirit. You said you need a cooperation? Why not? I agree.";
+					next;
+					cutin "",255;
+					mes "[" + strcharinfo(0) + "]";
+					mes "Oh... Pardon?!";
+					next;
+					cutin "162elena_01.bmp",2;
+					mes "[USU commander Elena]";
+					mes "You said you needed my approval to persuade us. So I approve it.";
+					mes "I like spunky fellows. It's fun to fight with them.";
+					next;
+					mes "[USU commander Elena]";
+					mes "Ah, don't misunderstand it. I'm not saying I will fight you. I'm saying that I will be on your side.";
+					mes "I didn't mean to fight you anyway.";
+					next;
+					mes "[USU commander Elena]";
+					mes "I don't mess with clerics. I don't feel good after fighting them.";
+					npctalk "Elena Bolkova: My mom told me I shouldn't beat a cleric.", "Elena Bolkova#16.2rm"; // 116
+					next;
+					mes "[USU commander Elena]";
+					mes "So I'll support the cooperation with the Secret Wings. Do you need my signature?";
+					next;
+					cutin "",255;
+					mes "[" + strcharinfo(0) + "]";
+					mes "No, you don't have to. Please show your opinion in front of others next time.";
+					next;
+					cutin "162elena_01.bmp",2;
+					mes "[USU commander Elena]";
+					mes "No problem.";
+					mes "Since you are our cooperator now, go around and see if there is anyone who has any problem.";
+					next;
+					mes "[USU commander Elena]";
+					mes "Who knows? If you keep helping them, they might have good feeling about you.";
+					next;
+					mes "[USU commander Elena]";
+					mes "While we never forget the blood that we must take a revenge for, we do not forget the gratitude either.";
+					mes "If you help them, they will give you a token proving your honor.";
+					next;
+					mes "[USU commander Elena]";
+					mes "Just like the one I'm giving you now.";
+					mes "If you want to know what this is for, ask the stubborn guy named 'Strasse' below the stairs.";
+					erasequest 16060;	// Fighting is the language of warmonger
+					erasequest 16061;	// Fair and equitable result
+					setquest 16010;// Battle in great condition
+					completequest 14602;// Hunter on second floor
+					getitem 25155,10;	// Swz_Honor_Token
+					close3;
+				case 2:
+					mes "[USU commander Elena]";
+					mes "Aren't you going to fight me?";
+					mes "Haven't you come here to ask for the cooperation between the Secret Wings and Rebellion?";
+					next;
+					mes "[USU commander Elena]";
+					mes "Will you give up the fight?";
+					next;
+					if (select( "Give up the fight.", "Do not give up the fight." ) == 2) {
+						mes "[USU commander Elena]";
+						mes "Good. I will wait for you.";
+						mes "Tell me when you feel like fighting.";
+						close3;
+					}
+					emotion ET_THINK;
+					mes "[USU commander Elena]";
+					mes "...... Hmm.";
+					next;
+					mes "[USU commander Elena]";
+					mes "A coward who's scared at me won't be helpful for the Rebellion at all.";
+					mes "Get lost.";
+					erasequest 16060;	// Fighting is the language of warmonger
+					erasequest 16061;	// Fair and equitable result
 					close3;
 				}
-				emotion ET_THINK;
-				mes "[USU commander Elena]";
-				mes "...... Hmm.";
-				next;
-				mes "[USU commander Elena]";
-				mes "A coward who's scared at me won't be helpful for the Rebellion at all.";
-				mes "Get lost.";
-				erasequest 16060;	// Fighting is the language of warmonger
-				erasequest 16061;	// Fair and equitable result
-				close3;
+				end;
 			case 1:
 			case 2:
 				if (isbegin_quest(16061) != 2) {
@@ -4140,8 +4242,14 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 	}
 	cutin "162elena_01.bmp",2;
 	mes "[USU commander Elena]";
-	mes "Hi. What is it now?";
-	mes "A fight? Welcome!";
+	if (BaseJob == Job_Priest) {
+		mes "Hi. What is it now?";
+		mes "Have you met our members?";
+	}
+	else {
+		mes "Hi. What is it now?";
+		mes "A fight? Welcome!";
+	}
 	next;
 
 	switch( isbegin_quest(16009) ) {
@@ -4180,8 +4288,14 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 		case 1:
 			mes "[USU commander Elena]";
 			mes "...... Hmm.";
-			mes "No. Not now.";
-			mes "I would like to fight you when you are in the top condition. Come back tomorrow.";
+			if (BaseJob == Job_Priest) {
+				mes "Are you sure you have to fight me now?";
+				mes "If you really think so, come back tomorrow. I called it a day now.";
+			}
+			else {
+				mes "No. Not now.";
+				mes "I would like to fight you when you are in the top condition. Come back tomorrow.";
+			}
 			close3;
 		case 2:
 			erasequest 16010;// Battle in great condition
@@ -4189,10 +4303,35 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 		}
 		switch( isbegin_quest(16009) ) {
 		case 0:
-			cutin "162elena_02.bmp",2;
+			if (BaseJob != Job_Priest) {
+				cutin "162elena_02.bmp",2;
+				mes "[USU commander Elena]";
+				mes "Oh, great!";
+				mes "Tell me when you are fully ready. I will go to the waiting room.";
+				setquest 16009;// Fighting is the language of warmonger
+				setquest 16061;	// Fair and equitable result
+				close3;
+			}
+			cutin "162elena_01.bmp",2;
 			mes "[USU commander Elena]";
-			mes "Oh, great!";
-			mes "Tell me when you are fully ready. I will go to the waiting room.";
+			mes "Hmm...?";
+			mes "I told you. I don't fight clerics.";
+			next;
+			cutin "",255;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I would like to fight you! Please allow me!";
+			next;
+			cutin "162elena_01.bmp",2;
+			mes "[USU commander Elena]";
+			mes "Oh, every time I beat the hell out of a cleric, I become quite unlucky on that day. It's true.";
+			mes "So I'd rather not fight a cleric...";
+			next;
+			mes "[USU commander Elena]";
+			mes "............";
+			next;
+			mes "[USU commander Elena]";
+			mes "...Huh, look at your eyes. I have no choice but to fight you.";
+			mes "But I will ^0000CDgo very easy on^000000 you. Don't make drama after you defeat me.";
 			setquest 16009;// Fighting is the language of warmonger
 			setquest 16061;	// Fair and equitable result
 			close3;
@@ -4230,13 +4369,22 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "Will you give up the fight?";
 			next;
 			if (select( "Give up the fight.", "Do not give up the fight." ) == 2) {
+				if (BaseJob != Job_Priest) {
+					mes "[USU commander Elena]";
+					mes "Great, I will be waiting.";
+					mes "I enjoy fighting you.";
+					close3;
+				}
 				mes "[USU commander Elena]";
-				mes "Great, I will be waiting.";
-				mes "I enjoy fighting you.";
+				mes "As I told you, you don't have to do this... You're so persistent.";
+				mes "Well, I remember I told you that I like it.";
 				close3;
 			}
 			mes "[USU commander Elena]";
-			mes "...You made me expect it. And what are you doing now?";
+			if (BaseJob != Job_Priest)
+				mes "...You made me expect it. And what are you doing now?";
+			else
+				mes "Good idea. You'll be quite sad if you are beat up without having done anything wrong. Won't you?";
 			erasequest 16009;// Fighting is the language of warmonger
 			erasequest 16061;	// Fair and equitable result
 			close3;
@@ -4244,12 +4392,19 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 		case 2:
 			if (isbegin_quest(16061) != 2) {
 				mes "[USU commander Elena]";
-				mes "...Hmm. You're not in a top condition?";
-				mes "If you want to do this again, welcome.";
+				if (BaseJob == Job_Priest)
+					mes "Don't you think you've had enough of it by now? If you want to quit, tell me any time.";
+				else {
+					mes "...Hmm. You're not in a top condition?";
+					mes "If you want to do this again, welcome.";
+				}
 				next;
 				if (select( "Enter the waiting room.", "Do not enter the waiting room." ) == 1) {
 					mes "[USU commander Elena]";
-					mes "I like it.";
+					if (BaseJob == Job_Priest)
+						mes "Ho, you have the guts.";
+					else
+						mes "I like it.";
 					mes "Ivan will guide you inside.";
 					mes "If you want to surrender, tell Sorita.";
 					mes "Let's do it!";
@@ -4258,37 +4413,62 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 					end;
 				}
 				mes "[USU commander Elena]";
-				mes "You're not in a top condition?";
-				mes "Take care of yourself.";
+				if (BaseJob == Job_Priest) {
+					mes "You're not in a top condition? Go inside and take some rest.";
+					mes "Shall we stop?";
+				}
+				else {
+					mes "You're not in a top condition?";
+					mes "Take care of yourself.";
+				}
 				next;
 				mes "[USU commander Elena]";
 				mes "Don't make me feel sorry for you.";
 				next;
 				if (select( "Give up the fight.", "Do not give up the fight." ) == 2) {
 					mes "[USU commander Elena]";
-					mes "Great, I will be waiting.";
-					mes "I enjoy fighting you.";
+					if (BaseJob == Job_Priest)
+						mes "Hey, you don't have to do this...";
+					else {
+						mes "Great, I will be waiting.";
+						mes "I enjoy fighting you.";
+					}
 					close3;
 				}
 				mes "[USU commander Elena]";
-				mes "...We have no choice. Come back later.";
+				if (BaseJob == Job_Priest)
+					mes "Right. Let's stop the fight.";
+				else
+					mes "...We have no choice. Come back later.";
 				erasequest 16009;// Fighting is the language of warmonger
 				erasequest 16011;// Arena entrance
 				erasequest 16061;	// Fair and equitable result
 				close3;
 			}
-			cutin "162elena_02.bmp",2;
-			emotion ET_DELIGHT;
-			mes "[USU commander Elena]";
-			mes "Hahaha, great fight!";
-			mes "What a pity. I wanted to win today...";
-			next;
-			mes "[USU commander Elena]";
-			mes "I'm glad that you are becoming stronger.";
-			mes "I can see the result of steady training.";
-			next;
-			mes "[USU commander Elena]";
-			mes "Come back. I can fight you everyday.";
+			if (BaseJob == Job_Priest) {
+				cutin "162elena_01.bmp",2;
+				mes "[USU commander Elena]";
+				mes "I told you that I'd ^0000CDgo easy on you^000000. Although won the fight, you didn't actually win it. Got it?";
+				next;
+				emotion ET_DELIGHT;
+				mes "[USU commander Elena]";
+				mes "...Being mean is not my character. This is why I don't want to be entangled with clerics...";
+				mes "Hey, pronounce the benediction for me before leaving.";
+			}
+			else {
+				cutin "162elena_02.bmp",2;
+				emotion ET_DELIGHT;
+				mes "[USU commander Elena]";
+				mes "Hahaha, great fight!";
+				mes "What a pity. I wanted to win today...";
+				next;
+				mes "[USU commander Elena]";
+				mes "I'm glad that you are becoming stronger.";
+				mes "I can see the result of steady training.";
+				next;
+				mes "[USU commander Elena]";
+				mes "Come back. I can fight you everyday.";
+			}
 			erasequest 16009;// Fighting is the language of warmonger// Fighting is the language of warmonger
 			erasequest 16011;// Arena entrance
 			erasequest 16061;	// Fair and equitable result
@@ -4693,8 +4873,8 @@ OnInit:
 OnEvent:
 	if (.event_start == 0) {
 		.event_start = 1;
+		cloakoffnpc "#job_rmA";
 		warpwaitingpc "rebel_in",201,19;
-		donpcevent "Milo River#16.2rmA::OnStart";
 	}
 	end;
 OnStart:
@@ -4710,7 +4890,32 @@ OnTimer3000:
 	end;
 }
 
-// rebel_in,200,19,0	script	#job_rmA	HIDDEN_WARP_NPC,12,12,{		// officially trigger 'Milo River#16.2rmA' OnStart
+rebel_in,200,19,0	script	#job_rmA	HIDDEN_WARP_NPC,12,12,{
+	end;
+OnTouch:
+	cloakonnpc "#job_rmA";
+	donpcevent "Milo River#16.2rmA::OnStart";
+	.base_job = BaseJob;
+	end;
+OnStart:
+	monster "rebel_in",201,19, "Elena Bolkova",3630,1, "#job_rmA::OnMobDead";	// EP16_2_E_BOLKOBA
+	if (.base_job == Job_Priest)
+		setunitdata $@mobid[0], UMOB_HP, 19000;
+	else
+		setunitdata $@mobid[0], UMOB_HP, 1100000;
+	end;
+OnMobDead:
+	stopnpctimer;
+	completequest 16061;	// Fair and equitable result
+	npctalk "Milo River: " + strcharinfo(0) + ", you win! You can go out and magnify yourself. You are moving to the lobby in three seconds.";
+	donpcevent "Ivan Ivanov#16.2rm::OnStart";
+	enablenpc "Naga#16.2rmA";
+	end;
+OnInit:
+	cloakonnpc "#job_rmA";
+	end;
+}
+
 rebel_in,204,19,3	script	Milo River#16.2rmA	4_M_GUNSLINGER2,{
 	end;
 OnStart:
@@ -4739,7 +4944,7 @@ OnTimer15000:
 	end;
 OnTimer16000:
 	npctalk "Milo River: Let the match begin!";
-	monster "rebel_in",201,19, "Elena Bolkova",3630,1, "Milo River#16.2rmA::OnMobDead";	// EP16_2_E_BOLKOBA
+	donpcevent "#job_rmA::OnStart";
 	end;
 OnTimer18000:
 	npctalk "Milo River: Sometimes she doesn't fight so hard according to her mood. Just hope that she is feeling good today.";
@@ -4764,16 +4969,9 @@ OnTimer135000:
 	end;
 OnTimer136000:
 	stopnpctimer;
-	killmonster "rebel_in", "Milo River#16.2rmA::OnMobDead";
+	killmonster "rebel_in", "#job_rmA::OnMobDead";
 	npctalk "Milo River: The fight is over. Due to the timeout, our commander wins. We will move to the lobby in three seconds.";
 	donpcevent "Ivan Ivanov#16.2rm::OnStart";
-	end;
-OnMobDead:
-	stopnpctimer;
-	completequest 16061;	// Fair and equitable result
-	npctalk "Milo River: " + strcharinfo(0) + ", you win! You can go out and magnify yourself. You are moving to the lobby in three seconds.";
-	donpcevent "Ivan Ivanov#16.2rm::OnStart";
-	enablenpc "Naga#16.2rmA";
 	end;
 }
 
@@ -8931,28 +9129,13 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 		mes "You must have other things to do, come back tomorrow.";
 		close;
 	case 2:
-		mes "[Detached Force commander Ericsson]";
-		mes "Will you stop by Einbroch again and offer flowers?";
-		next;
-		if (select( "I will help you.", "Sorry, I'm busy." ) == 2) {
-			mes "[Detached Force commander Ericsson]";
-			mes "Is that so.";
-			mes "I'm sorry. It's not fun anyway.";
-			next;
-			mes "[Detached Force commander Ericsson]";
-			mes "I hope you can stop by later when you have time.";
-			close;
-		}
-		mes "[Detached Force commander Ericsson]";
-		mes "There is a tree on the south side from the Einbroch observatory. You will find a ^0000CDflower girl^000000 nearby.";
-		mes "Thank you very much.";
 		erasequest 16049;// Quiet dawn
-		setquest 16050;// Tribute hour
-		close;
+		break;
 	}
 	switch( isbegin_quest(16050) ) {
 	case 0:// first time
-		if (isbegin_quest(16045) == 0) {
+		switch( isbegin_quest(16045) ) {
+		case 0:
 			mes "[Detached Force commander Ericsson]";
 			mes "...?";
 			mes "You...";
@@ -8990,8 +9173,21 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 			mes "I will count on you. Come back and report, I mean... tell me.";
 			setquest 16045;// Veteran's small memorial service
 			close;
+		case 1:
+			mes "[Detached Force commander Ericsson]";
+			mes "Buy a Bunch Of Flowers from ^0000CDflower girl^000000 and lay it beneath the tree.";
+			mes "If you go south from the Einbroch observatory, you will find it.";
+			close;
+		case 2:
+			break;
 		}
-		if (isbegin_quest(16048) == 1) {
+		switch( isbegin_quest(16048) ) {
+		case 0:
+			mes "[Detached Force commander Ericsson]";
+			mes "Buy a Bunch Of Flowers from ^0000CDflower girl^000000 and lay it beneath the tree.";
+			mes "If you go south from the Einbroch observatory, you will find it.";
+			close;
+		case 1:
 			mes "[Detached Force commander Ericsson]";
 			mes "Oh, it's you.";
 			next;
@@ -8999,27 +9195,32 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 			mes "I've spoken with Lucy.";
 			next;
 			mes "[Detached Force commander Ericsson]";
-			mes "Fine. Are you alright?";
+			mes "Good. How was her health?";
 			next;
-			if (select( "I'm fine.", "She was talking about you." ) == 1) {
+			if (select( "She was fine.", "She was talking about you." ) == 1) {
 				mes "[Detached Force commander Ericsson]";
-				mes "Is that so. Did she say anything? If she did, I would ask to keep it a secret from the twins.";
+				mes "Really? That's good. Didn't she say anything else to you?";
+				mes "Great. Please don't tell about it anyone else except Lebedev twins.";
 				next;
+				mes "[Detached Force commander Ericsson]";
+				mes "They used to help me for this. But I cannot request them now.";
 			}
-			mes "[Detached Force commander Ericsson]";
-			mes "What are you talking about?";
-			next;
-			mes "I told Lucy's story.";
-			next;
-			mes "[Detached Force commander Ericsson]";
-			mes "... I've always misunderstood.";
-			mes "Anyway, keep the story a secret from the others Rebellion, especially from the Lebedev twins.";
-			next;
-			mes "[Detached Force commander Ericsson]";
-			mes "If only she was alive...";
-			next;
-			mes "[Detached Force commander Ericsson]";
-			mes "No, I shouldn't think like that.";
+			else {
+				mes "[Detached Force commander Ericsson]";
+				mes "I see. What did she say?";
+				next;
+				mes "You told him what you heard from Lucy.";
+				next;
+				mes "[Detached Force commander Ericsson]";
+				mes "...Perhaps there must have been a huge misunderstanding.";
+				mes "Please don't tell about it anyone else in the Rebellion, except Lebedev twins.";
+				next;
+				mes "[Detached Force commander Ericsson]";
+				mes "If only she was alive...";
+				next;
+				mes "[Detached Force commander Ericsson]";
+				mes "No, I shouldn't think like that.";
+			}
 			next;
 			mes "[Detached Force commander Ericsson]";
 			mes "Thank you for going.";
@@ -9027,13 +9228,31 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 			completequest 16048;// Traces of old story
 			setquest 16049;// Quiet dawn
 			getitem 25155,10;// Swz_Honor_Token
+			getexp 200000,200000;
+			close;
+		case 2:	// daily
+			break;
+		}
+		// fall through
+	case 1:// daily
+		mes "[Detached Force commander Ericsson]";
+		mes "Will you stop by Einbroch again and offer flowers?";
+		next;
+		if (select( "I will help you.", "Sorry, I'm busy." ) == 2) {
+			mes "[Detached Force commander Ericsson]";
+			mes "Is that so.";
+			mes "I'm sorry. It's not fun anyway.";
+			next;
+			mes "[Detached Force commander Ericsson]";
+			mes "I hope you can stop by later when you have time.";
 			close;
 		}
 		mes "[Detached Force commander Ericsson]";
-		mes "Buy a Bunch Of Flowers from ^0000CDflower girl^000000 and lay it beneath the tree.";
-		mes "If you go south from the Einbroch observatory, you will find it.";
+		mes "There is a tree on the south side from the Einbroch observatory. You will find a ^0000CDflower girl^000000 nearby.";
+		mes "Thank you very much.";
+		if (isbegin_quest(16050) == 0)
+			setquest 16050;// Tribute hour
 		close;
-	case 1:// daily
 	case 2:
 		if (isbegin_quest(16053) == 1) {
 			mes "I've been to Einbroch.";
@@ -9045,6 +9264,7 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 			erasequest 16050;// Tribute hour
 			setquest 16049;// Quiet dawn
 			getitem 25155,3;// Swz_Honor_Token
+			getexp 170000,200000;
 			close;
 		}
 		mes "[Detached Force commander Ericsson]";
@@ -9114,19 +9334,43 @@ einbroch,167,160,3	script	Flower Girl#16.2rm	1_M_SIZ,{
 		if (isbegin_quest(16046) == 1) {
 			erasequest 16046;// DIY obtaining bouquet materials
 			setquest 16047;// Quiet memorial ceremony
-			getexp 1200000,1200000;
 		}
-		else {
+		else if (isbegin_quest(16051) == 1) {
 			erasequest 16051;// DIY obtaining bouquet materials
 			setquest 16052;// Quiet memorial ceremony
 		}
 		close;
 	}
 	if (isbegin_quest(16047) == 1 || isbegin_quest(16052) == 1) {
+		if (countitem(25152) < 1) {
+			mes "[Flower Girl]";
+			mes "Hello, welcome back. Which flower do you need?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Could you make me a Bunch Of Flowers with carnations?";
+			next;
+			mes "[Flower Girl]";
+			mes "Oops... As you know, I still don't have enough paper to wrap the flower.";
+			mes "If you bring me ^0000CDthree smooth paper^000000, I will make it for you.";
+			next;
+			if (select( "Hand over the slick paper.", "Do not give the paper." ) == 2) {
+				mes "[Flower Girl]";
+				mes "Oops! Sorry. A Bunch Of Flowers... Don't you need it?";
+				close;
+			}
+			if (countitem(7111) < 3) {
+				mes "[Flower Girl]";
+				mes "Sorry. If I don't have enough smooth paper, I cannot make a Bunch Of Flowers...";
+				close;
+			}
+			mes "[Flower Girl]";
+			mes "Here, this bouquet is beautiful.";
+			delitem 7111,3;// Smooth_Paper
+			getitem 25152,1;// Cherish_Bouquet
+			close;
+		}
 		mes "[Flower Girl]";
 		mes "Flower quickly wither, but they are beautiful when they bloom.";
-		if (countitem(25152) < 1)
-			getitem 25152,1;// Cherish_Bouquet
 		close;
 	}
 	if (isbegin_quest(16050) == 1) {
@@ -9144,7 +9388,8 @@ einbroch,167,160,3	script	Flower Girl#16.2rm	1_M_SIZ,{
 		close;
 	}
 	mes "[Flower Girl]";
-	mes "Buy flowers, you can buy from me!";
+	mes "Flowers, buy some flowers.";
+	mes "Phew... The air is so hazy that the flowers wither quickly...";
 	close;
 
 OnInit:
@@ -9156,17 +9401,23 @@ OnInit:
 
 einbroch,162,153,3	script	Huge Tree#16.2rm	4_BULLETIN_BOARD2,{
 	if (isbegin_quest(16047) == 1) {
+		if (countitem(25152) < 1) {
+			mes "You searched through your back.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Where did I put the flower...?";
+			mes "It's not there. Maybe I should buy another one...";
+			close;
+		}
 		mes "[Strange Voice]";
 		mes "There is a small sign in front of the tree.";
 		mes " ";
 		mes " - Here lies a kind " + (Sex ? "boy" : "girl") + " -";
-		if (countitem(25152) < 1)	// custom check
-			close;
 		mes " ";
 		mes "Should I put the bouquet down?";
 		next;
 		if (select( "Put the bouquet down.", "Don't put the bouquet down." ) == 2) {
-			mes "Stop trying to drop the flowers and check again that everything is right.";
+			mes "Before laying the flower, you checked whether that tree was the right one.";
 			close;
 		}
 		mes "I put down the Cherished Bouquet and took a moment of silence.";
@@ -9175,7 +9426,6 @@ einbroch,162,153,3	script	Huge Tree#16.2rm	4_BULLETIN_BOARD2,{
 		mes "Who's there?";
 		next;
 		mes "Beside the tree, a small grandmother held out her hand.";
-		cloakoffnpc "Grandma Lucy#16.2rm", getcharid(0);
 		next;
 		mes "[Grandma]";
 		mes "Do you... know who it is? did you know Irene??";
@@ -9186,41 +9436,119 @@ einbroch,162,153,3	script	Huge Tree#16.2rm	4_BULLETIN_BOARD2,{
 		next;
 		mes "[Grandma]";
 		mes "A favor? Adler's and that?";
-		mes "I'm Irene's grandmother who fell asleep here. My name is Luck.";
+		mes "I'm Irene's grandmother who fell asleep here. My name is Lucy.";
 		next;
-		mes "[Lucy Grandma]";
+		mes "[Grandma Lucy]";
 		mes "At this time of year, Adler is the children who come to me always at this time of year, but this year I will not be able to candles.";
 		next;
 		if (select( "Goodbye.", "Report on Commander Ericsson and Mrs. Irene." ) == 1) {
-			mes "[Lucy Grandma]";
-			mes "Stop trying to drop the flowers and check again that everything is right.";
-			close2;
-			cloakonnpc "Grandma Lucy#16.2rm", getcharid(0);
-			end;
+			mes "[Grandma Lucy]";
+			mes "Bye. Thank you for coming all the way to this countryside.";
+			next;
+			mes "[Grandma Lucy]";
+			mes "Irene will thank you. Bye...";
+			erasequest 16047;// Quiet memorial ceremony
+			setquest 16048;// Traces of old story
+			delitem 25152,1;// Cherish_Bouquet
+			close;
 		}
-		mes "[Lucy Grandma]";
-		mes "I believe it! That you had difficulties in reaching a city where young people cannot see!";
+		mes "[" + strcharinfo(0) + "]";
+		mes "How did commander Adler know Irene?";
 		next;
-		mes "[Lucy Grandma]";
-		mes "I'm very thankful. Be alright...";
+		mes "[Grandma Lucy]";
+		mes "Commander?";
+		mes "...So it was true. Mr. Adler was a soldier with high position after all.";
+		next;
+		mes "[Grandma Lucy]";
+		mes "Although it's a long story to tell a stranger, I will tell you. And you've been sent by Mr. Adler..";
+		next;
+		mes "[Grandma Lucy]";
+		mes "I've been living in Einbech with Irene for a long time.";
+		mes "Irene's mom and dad left the house seeking a better job. It's been more than 10 years since we lost contact.";
+		next;
+		mes "[Grandma Lucy]";
+		mes "As you know, there are many accidents in Einbech.";
+		mes "There were only old people left in the village. So it must have been boring for Irene. But she didn't want to move to another village because she believed that her parents would come back one day.";
+		next;
+		mes "[Grandma Lucy]";
+		mes "And... About this time that year, it was when the mine was not closed yet. I heard a rumor that there were bad guys called rebel forces deep inside the mine.";
+		next;
+		mes "[Grandma Lucy]";
+		mes "She would go to the mine every day to sell some food. And on that day, I told her not to go there.";
+		mes "But she said it would be okay and went to the mine...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "(Grandma Lucy started to shed tears and you handed her your handkerchief)";
+		next;
+		mes "[Grandma Lucy]";
+		mes "Thank you... There was an accident on that day... One of the tunnels was collapsed and some people never came back.";
+		mes "Irene was one of them...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You must have been devastated...";
+		next;
+		mes "[Grandma Lucy]";
+		mes "Although they said it was an accident, there was a rumor.";
+		mes "People told me that there were bad guys hiding in the mine and soldiers came to get them.";
+		next;
+		mes "[Grandma Lucy]";
+		mes "But it was not important to me at all.";
+		mes "I just felt devastated to lose my son, daughter-in-law and granddaughter. I was absent-minded and did not find any reason to live on...";
+		next;
+		mes "[Grandma Lucy]";
+		mes "That's when Mr. Adler visited me.";
+		mes "I was so surprised when he knocked the door of my house...He came in and bowed down to me all of a sudden.";
+		next;
+		mes "[Grandma Lucy]";
+		mes "I was surprised again and asked him why. Then he told me about Irene.";
+		next;
+		mes "[Grandma Lucy]";
+		mes "He said that Irene's death was his fault and apologized knocking his head on the floor...";
+		mes "I didn't know what was going on and just told him to stop it.";
+		next;
+		mes "[Grandma Lucy]";
+		mes "He didn't tell me a detailed story. He left the house and came back later. Then he would send flowers and money to me.";
+		next;
+		mes "[Grandma Lucy]";
+		mes "Thanks to his support, I recovered myself. Then I moved to Einbroche and planted this tree to remember Irene.";
+		next;
+		mes "[Grandma Lucy]";
+		mes "Every time he gave me flowers or money, I always refused. But he insisted to give them to me...";
+		mes "I wondered why he was doing this. Nevertheless, he was a high-ranking soldier...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes ".........";
+		mes "Thank you very much for telling me the hard story.";
+		next;
+		mes "[Grandma Lucy]";
+		mes "Welcome. Thanks to you, I heard the story about Mr. Adler. It makes me feel much better now.";
+		next;
+		mes "[Grandma Lucy]";
+		mes "Thank you. If you don't mind, please stop by my house occasionally and talk to this old woman...";
 		erasequest 16047;// Quiet memorial ceremony
 		setquest 16048;// Traces of old story
 		delitem 25152,1;// Cherish_Bouquet
-		close2;
-		cloakonnpc "Grandma Lucy#16.2rm", getcharid(0);
-		end;
+		close;
 	}
 	if (isbegin_quest(16052) == 1) {
-		if (countitem(25152) < 1) {	// custom text
-			mes "[Huge Tree]";
-			mes "There is a small sign in front of the tree.";
-			mes "- Here lies a kind girl -";
+		if (countitem(25152) < 1) {
+			mes "You searched through your back.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Where did I put the flower...?";
+			mes "It's not there. Maybe I should buy another one...";
 			close;
 		}
-		mes "Drop the bouquet and place it on the floor.";
+		mes "You dedicated the Bunch Of Flowers and paid a silent tribute briefly.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Calm down, Mrs. Irene...";
+		mes "Rest in peace, Irene...";
+		next;
+		mes "[Grandma Lucy]";
+		mes "Traveler. You came again. Thank you.";
+		mes "If you see Mr. Adler, please send him my gratitude.";
+		next;
+		mes "Just then, you met grandma Lucy near the tree and said hello to her.";
 		erasequest 16052;// Quiet memorial ceremony
 		setquest 16053;// Ongoing old story
 		delitem 25152,1;// Cherish_Bouquet
@@ -9232,12 +9560,10 @@ einbroch,162,153,3	script	Huge Tree#16.2rm	4_BULLETIN_BOARD2,{
 	close;
 
 OnInit:
-	questinfo( QTYPE_QUEST,QMARK_YELLOW, " isbegin_quest(16047) == 1 " );
-	questinfo( QTYPE_QUEST,QMARK_YELLOW, " isbegin_quest(16052) == 1 " );
+	questinfo( QTYPE_QUEST,QMARK_YELLOW, " isbegin_quest(16047) == 1 && countitem(25152) > 0 " );
+	questinfo( QTYPE_QUEST,QMARK_YELLOW, " isbegin_quest(16052) == 1 && countitem(25152) > 0 " );
 	end;
 }
-
-einbroch,159,153,6	duplicate(dummy_cloaked_npc)	Grandma Lucy#16.2rm	8_F_GRANDMOTHER
 
 
 // Daily Quest - Mason Bender Business
