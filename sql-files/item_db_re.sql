@@ -13756,7 +13756,6 @@ REPLACE INTO `item_db_re` VALUES (100138,'Grace_M_Mo_Armor','Grace Magical Modif
 #REPLACE INTO `item_db_re` VALUES (400020,'C_BeachBall','Costume Beachball',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1918,NULL,NULL,NULL);
 #REPLACE INTO `item_db_re` VALUES (440000,'C_SharkHead','Costume Shark Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,5120,NULL,'1',0,1919,NULL,NULL,NULL);
 #REPLACE INTO `item_db_re` VALUES (440002,'C_Happy_Cat_TW','Costume Happy Cat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,7168,NULL,'1',0,1980,NULL,NULL,NULL);
-#REPLACE INTO `item_db_re` VALUES (400020,'C_BeachBall','Costume Beachball',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1918,NULL,NULL,NULL);
 # New Armor
 REPLACE INTO `item_db_re` VALUES (450018,'Noblesse_Breath_Armor','Noblesse Breath Armor',4,20,NULL,0,NULL,100,NULL,1,0x00000080,56,2,16,NULL,'100',1,NULL,'.@r = getrefine(); bonus bMaxHPrate,5; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus bMaxHPrate,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (450019,'Noblesse_Knight_Armor','Noblesse Knight Armor',4,20,NULL,0,NULL,100,NULL,1,0x00000080,56,2,16,NULL,'100',1,NULL,'.@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus bCritAtkRate,5;',NULL,NULL);

@@ -13724,7 +13724,6 @@
 //400020,C_BeachBall,Costume Beachball,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1918,{},{},{}
 //440000,C_SharkHead,Costume Shark Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,5120,,1,0,1919,{},{},{}
 //440002,C_Happy_Cat_TW,Costume Happy Cat,4,0,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,0,1980,{},{},{}
-//400020,C_BeachBall,Costume Beachball,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1918,{},{},{}
 // New Armor
 450018,Noblesse_Breath_Armor,Noblesse Breath Armor,4,20,,0,,100,,1,0x00000080,56,2,16,,100,1,,{ .@r = getrefine(); bonus bMaxHPrate,5; if(.@r>=7) bonus bVariableCastrate,-10; if(.@r>=9) bonus bMaxHPrate,5; },{},{}
 450019,Noblesse_Knight_Armor,Noblesse Knight Armor,4,20,,0,,100,,1,0x00000080,56,2,16,,100,1,,{ .@r = getrefine(); bonus bBaseAtk,50; if(.@r>=7) bonus bAspdRate,3; if(.@r>=9) bonus bCritAtkRate,5; },{},{}
