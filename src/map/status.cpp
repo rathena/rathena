@@ -15066,6 +15066,9 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_REUSE_LIMIT_LUXANIMA:
 			case SC_LUXANIMA:
 			case SC_SOULENERGY:
+			case SC_EP16_2_BUFF_SS:
+			case SC_EP16_2_BUFF_SC:
+			case SC_EP16_2_BUFF_AC:
 			// Clans
 			case SC_CLAN_INFO:
 			case SC_SWORDCLAN:
