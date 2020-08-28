@@ -661,19 +661,19 @@
 5965:29167,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bHit,(.@r/3)*5; }
 5965:29168,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bFlee,(.@r/3)*5; }
 5965:29169,{ bonus bMdef,20; }
-5965:29170,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2)*1; }
-5965:29171,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2)*1; }
-5965:29172,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2)*1; }
-5965:29173,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2)*1; }
-5965:29174,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2)*1; }
-5965:29175,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2)*1; }
-5965:29438,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2)*1; }
-5965:29439,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2)*1; }
-5965:29440,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2)*1; }
-5965:29441,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2)*1; }
-5965:29442,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2)*1; }
-5965:29443,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2)*1; }
-5965:29444,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2)*1; }
+5965:29170,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2); }
+5965:29171,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2); }
+5965:29172,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2); }
+5965:29173,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2); }
+5965:29174,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2); }
+5965:29175,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2); }
+5965:29438,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2); }
+5965:29439,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2); }
+5965:29440,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2); }
+5965:29441,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2); }
+5965:29442,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2); }
+5965:29443,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2); }
+5965:29444,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2); }
 5965:32203,{ bonus bAspdRate,10; bonus2 bAddClass,Class_All,10; bonus2 bMagicAddClass,Class_All,10; bonus2 bIgnoreDefRaceRate,RC_All,30; bonus2 bIgnoreMdefRaceRate,RC_All,30; }
 5965:4970,{ bonus2 bAddEle,Ele_Fire,10; }
 5965:4971,{ bonus2 bAddEle,Ele_Water,10; }
