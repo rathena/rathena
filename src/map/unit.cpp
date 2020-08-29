@@ -363,30 +363,16 @@ int unit_walktoxy_ontouch(struct block_list *bl, va_list ap)
  * @param data: Data used in timer calls
  * @return 0 or unit_walktoxy_sub() or unit_walktoxy()
  */
-static TIMER_FUNC(unit_walktoxy_timer){
-	int i;
-	int x,y,dx,dy;
-	unsigned char icewall_walk_block;
-	struct block_list *bl;
-	struct unit_data *ud;
-	TBL_PC *sd=NULL;
-	TBL_MOB *md=NULL;
-	TBL_NPC *nd=NULL;
+static TIMER_FUNC(unit_walktoxy_timer)
+{
+	block_list *bl = map_id2bl(id);
 
-	bl = map_id2bl(id);
-
-	if(bl == NULL)
+	if(bl == nullptr)
 		return 0;
+	
+	unit_data *ud = unit_bl2ud(bl);
 
-	switch(bl->type) { // svoid useless cast, we can only be 1 type
-		case BL_PC: sd = BL_CAST(BL_PC, bl); break;
-		case BL_MOB: md = BL_CAST(BL_MOB, bl); break;
-		case BL_NPC: nd = BL_CAST(BL_NPC, bl); break;
-	}
-
-	ud = unit_bl2ud(bl);
-
-	if(ud == NULL)
+	if(ud == nullptr)
 		return 0;
 
 	if(ud->walktimer != tid) {
@@ -396,7 +382,7 @@ static TIMER_FUNC(unit_walktoxy_timer){
 
 	ud->walktimer = INVALID_TIMER;
 
-	if (bl->prev == NULL)
+	if (bl->prev == nullptr)
 		return 0; // Stop moved because it is missing from the block_list
 
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
@@ -405,22 +391,34 @@ static TIMER_FUNC(unit_walktoxy_timer){
 	if(ud->walkpath.path[ud->walkpath.path_pos]>=DIR_MAX)
 		return 1;
 
-	x = bl->x;
-	y = bl->y;
+	int x = bl->x;
+	int y = bl->y;
 
 	enum directions dir = ud->walkpath.path[ud->walkpath.path_pos];
 	ud->dir = dir;
 
-	dx = dirx[dir];
-	dy = diry[dir];
+	int dx = dirx[dir];
+	int dy = diry[dir];
+
+	TBL_PC *sd = nullptr;
+	TBL_MOB *md = nullptr;
+	TBL_NPC *nd = nullptr;
+
+	switch(bl->type) { // avoid useless cast, we can only be 1 type
+		case BL_PC: sd = BL_CAST(BL_PC, bl); break;
+		case BL_MOB: md = BL_CAST(BL_MOB, bl); break;
+		case BL_NPC: nd = BL_CAST(BL_NPC, bl); break;
+	}
 
 	// Get icewall walk block depending on Status Immune mode (players can't be trapped)
-	if(md && status_has_mode(&md->status,MD_STATUS_IMMUNE))
-		icewall_walk_block = battle_config.boss_icewall_walk_block;
-	else if(md)
-		icewall_walk_block = battle_config.mob_icewall_walk_block;
-	else
-		icewall_walk_block = 0;
+	unsigned char icewall_walk_block = 0;
+
+	if(md != nullptr) {
+		if (status_has_mode(&md->status,MD_STATUS_IMMUNE))
+			icewall_walk_block = battle_config.boss_icewall_walk_block;
+		else
+			icewall_walk_block = battle_config.mob_icewall_walk_block;		
+	}
 
 	//Monsters will walk into an icewall from the west and south if they already started walking
 	if(map_getcell(bl->m,x+dx,y+dy,CELL_CHKNOPASS) 
@@ -556,6 +554,8 @@ static TIMER_FUNC(unit_walktoxy_timer){
 
 	if(tid == INVALID_TIMER) // A directly invoked timer is from battle_stop_walking, therefore the rest is irrelevant.
 		return 0;
+
+	int i;
 
 	//If stepaction is set then we remembered a client request that should be executed on the next step
 	if (ud->stepaction && ud->target_to) {
