@@ -699,23 +699,17 @@ TIMER_FUNC(unit_delay_walktobl_timer){
  */
 int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 {
-	struct unit_data* ud = NULL;
-	struct status_change* sc = NULL;
-	struct walkpath_data wpd;
-	TBL_PC *sd = NULL;
-
 	nullpo_ret(bl);
 
-	ud = unit_bl2ud(bl);
+	unit_data* ud = unit_bl2ud(bl);
 
-	if (ud == NULL)
+	if (ud == nullptr)
 		return 0;
-
-	if (bl->type == BL_PC)
-		sd = BL_CAST(BL_PC, bl);
 
 	if ((flag&8) && !map_closest_freecell(bl->m, &x, &y, BL_CHAR|BL_NPC, 1)) //This might change x and y
 		return 0;
+
+	walkpath_data wpd = { 0 };
 
 	if (!path_search(&wpd, bl->m, bl->x, bl->y, x, y, flag&1, CELL_CHKNOPASS)) // Count walk path cells
 		return 0;
@@ -747,7 +741,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 	ud->to_y = y;
 	unit_stop_attack(bl); //Sets target to 0
 
-	sc = status_get_sc(bl);
+	status_change* sc = status_get_sc(bl);
 	if (sc && sc->data[SC_CONFUSION]) // Randomize the target position
 		map_random_dir(bl, &ud->to_x, &ud->to_y);
 
@@ -757,6 +751,11 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 		ud->state.change_walk_target = 1;
 		return 1;
 	}
+
+	TBL_PC *sd = nullptr;
+
+	if (bl->type == BL_PC)
+		sd = BL_CAST(BL_PC, bl);
 
 	// Start timer to recall summon
 	if (sd && sd->md)
@@ -821,15 +820,12 @@ static TIMER_FUNC(unit_walktobl_sub){
  */
 int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, unsigned char flag)
 {
-	struct unit_data *ud = NULL;
-	struct status_change *sc = NULL;
-
 	nullpo_ret(bl);
 	nullpo_ret(tbl);
 
-	ud = unit_bl2ud(bl);
+	unit_data *ud  = unit_bl2ud(bl);
 
-	if(ud == NULL)
+	if(ud == nullptr)
 		return 0;
 
 	if (!status_bl_has_mode(bl,MD_CANMOVE))
@@ -853,7 +849,7 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, unsi
 	ud->state.attack_continue = flag&2?1:0; // Chase to attack.
 	unit_stop_attack(bl); //Sets target to 0
 
-	sc = status_get_sc(bl);
+	status_change *sc = status_get_sc(bl);
 	if (sc && sc->data[SC_CONFUSION]) // Randomize the target position
 		map_random_dir(bl, &ud->to_x, &ud->to_y);
 
