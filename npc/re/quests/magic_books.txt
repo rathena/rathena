@@ -290,7 +290,7 @@ geffen_in,175,112,4	script	Lea	2_F_MAGICMASTER,{
 			close;
 		case 2:
 			mes "[Lea]";
-			mes "Ah, so you want the Intermediate Magic Books. If you pay a ^4d4fffloan deposit of 100,000z^000000, we will lend you an Intermediate Magic Books.";
+			mes "Ah, so you want the Intermediate Magic Books. If you pay a ^4d4dffloan deposit of 100,000z^000000, we will lend you an Intermediate Magic Books.";
 			next;
 			mes "[Lea]";
 			mes "What kind of Magic Book do you want?";
@@ -318,12 +318,12 @@ geffen_in,175,112,4	script	Lea	2_F_MAGICMASTER,{
 				getitem .@Books[.@i-1],1; //WL_MB_SG, WL_MB_LOV, WL_MB_MS
 				close;
 			}
-			mes "The ^4d4fffloan deposit is 100,000z^000000. The deposit has adjusted as the Magic Book has changed.";
+			mes "The ^4d4dffloan deposit is 100,000z^000000. The deposit has adjusted as the Magic Book has changed.";
 			close;
 		case 3:
 			mes "[Lea]";
 			mes "Oh, do you want the Superior Magic Books? The policy has been changed to accept loan deposits unconditionally, instead of the existing demanding loan conditions.";
-			mes "The Superior Magic Book ^4d4fffloan deposit is 500,000z^000000.";
+			mes "The Superior Magic Book ^4d4dffloan deposit is 500,000z^000000.";
 			next;
 			mes "[Lea]";
 			mes "What kind of Magic Book do you want?";
@@ -351,7 +351,7 @@ geffen_in,175,112,4	script	Lea	2_F_MAGICMASTER,{
 				getitem .@Books[.@i-1],1; //WL_MB_DL, WL_MB_JF, WL_MB_ES, WL_MB_CR, WL_MB_CL
 				close;
 			}
-			mes "The ^4d4fffloan deposit is 500,000z^000000. The deposit has adjusted as the Magic Book has changed.";
+			mes "The ^4d4dffloan deposit is 500,000z^000000. The deposit has adjusted as the Magic Book has changed.";
 			close;
 		case 4:
 			if ((BaseLevel > 139) && (mac_book < 1) && ((getskilllv(2217) > 0) || (getskilllv(2213) > 0))) {
@@ -513,7 +513,7 @@ mid_camp,255,244,4	script	Galfos	4_M_JOB_WIZARD,{
 		next;
 		set .@i, select("I've discovered everything about Comet.:I've mastered the zenith of Tetra Vortex.");
 		mes "[Galfos]";
-		if ((.@i == 1 && countitem(6195)) || (.@i == 2 && countitem(6196))) {
+		if ((.@i == 1 && countitem(100073)) || (.@i == 2 && countitem(100074))) {
 			mes "Are you kidding me? You already have the book!";
 			close;
 		}
@@ -524,7 +524,7 @@ mid_camp,255,244,4	script	Galfos	4_M_JOB_WIZARD,{
 			mes "There's one problem, though: I'm so broke that I don't even have enough money to buy the tools to make the book.";
 			next;
 			mes "[Galfos]";
-			mes "I need at least ^0000aa1,000,000 zeny^000000 to buy all the necessary tools. Do you have the money?";
+			mes "I need at least ^0000aa500,000 zeny^000000 to buy all the necessary tools. Do you have the money?";
 			next;
 			if(select("Wh-what? No!:Sure.") == 1) {
 				mes "[Galfos]";
@@ -532,14 +532,14 @@ mid_camp,255,244,4	script	Galfos	4_M_JOB_WIZARD,{
 				close;
 			}
 			mes "[Galfos]";
-			if (Zeny >= 1000000) {
+			if (Zeny >= 500000) {
 				mes "Alright then, let's get started!";
 				next;
 				specialeffect2 EF_DISPELL;
 				progressbar "ffff00",4;
 				specialeffect2 EF_LORD;
-				set Zeny, Zeny - 1000000;
-				getitem 6194+.@i,1; //Magic_Book_CM, Magic_Book_TV
+				set Zeny, Zeny - 500000;
+				getitem 100072+.@i,1; //WL_MB_CM, WL_MB_TV
 				mes "[Galfos]";
 				mes "Man, I almost lost my control to the incredible magic energy! Here's your Magic Book.";
 				next;
