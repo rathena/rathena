@@ -45,6 +45,9 @@
 const short dirx[DIR_MAX]={0,-1,-1,-1,0,1,1,1}; ///lookup to know where will move to x according dir
 const short diry[DIR_MAX]={1,1,0,-1,-1,-1,0,1}; ///lookup to know where will move to y according dir
 
+
+#define CLIENT_COMPLEX_PATH_LIMIT 14
+
 //early declaration
 static TIMER_FUNC(unit_attack_timer);
 static TIMER_FUNC(unit_walktoxy_timer);
@@ -89,12 +92,23 @@ int unit_walktoxy_sub(struct block_list *bl)
 	if( !path_search(&wpd,bl->m,bl->x,bl->y,ud->to_x,ud->to_y,ud->state.walk_easy,CELL_CHKNOPASS) )
 		return 0;
 
+	if (!path_search_long(NULL, bl->m, bl->x, bl->y, ud->to_x, ud->to_y, CELL_CHKNOPASS) // Check if there is an obstacle between
+		&& wpd.path_len > CLIENT_COMPLEX_PATH_LIMIT	// Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
+		&& (bl->type != BL_NPC)) // If type is a NPC, please disregard.
+	{
+		if (bl->type == BL_MOB) {
+			ud->to_x = bl->x;
+			ud->to_y = bl->y;
+			for (i = 0; i < CLIENT_COMPLEX_PATH_LIMIT-1; i++) { ud->to_x = ud->to_x + dirx[wpd.path[i]];
+			ud->to_y = ud->to_y + diry[wpd.path[i]];
+			}
+
+		}
+			//return 0; // prevent monsters jumping through walls, client can't display
 #ifdef OFFICIAL_WALKPATH
-	if( !path_search_long(NULL, bl->m, bl->x, bl->y, ud->to_x, ud->to_y, CELL_CHKNOPASS) // Check if there is an obstacle between
-		&& wpd.path_len > 14	// Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
-		&& (bl->type != BL_NPC) ) // If type is a NPC, please disregard.
-			return 0;
+		return 0;
 #endif
+	}
 
 	memcpy(&ud->walkpath,&wpd,sizeof(wpd));
 
@@ -717,13 +731,24 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 	if (!path_search(&wpd, bl->m, bl->x, bl->y, x, y, flag&1, CELL_CHKNOPASS)) // Count walk path cells
 		return 0;
 
-#ifdef OFFICIAL_WALKPATH
-	if( !path_search_long(NULL, bl->m, bl->x, bl->y, x, y, CELL_CHKNOPASS) // Check if there is an obstacle between
-		&& wpd.path_len > 14	// Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
-		&& (bl->type != BL_NPC) ) // If type is a NPC, please disregard.
-			return 0;
-#endif
+	if (!path_search_long(NULL, bl->m, bl->x, bl->y, x, y, CELL_CHKNOPASS) // Check if there is an obstacle between
+		&& wpd.path_len > CLIENT_COMPLEX_PATH_LIMIT	// Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
+		&& (bl->type != BL_NPC)) // If type is a NPC, please disregard.
+	{
+			if (bl->type == BL_MOB) if (bl->type == BL_MOB) {
+				x = bl->x;
+				y = bl->y;
+				for (int i = 0; i < CLIENT_COMPLEX_PATH_LIMIT - 1; i++) {
+					x = x + dirx[wpd.path[i]];
+					y = y + diry[wpd.path[i]];
+				}
+			}
 
+			//return 0; // prevent monsters jumping through walls, client can't display
+#ifdef OFFICIAL_WALKPATH
+		return 0;
+#endif
+	}
 	if ((wpd.path_len > battle_config.max_walk_path) && (bl->type != BL_NPC))
 		return 0;
 
@@ -2540,12 +2565,15 @@ bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, 
 	if (!path_search(&wpd,bl->m,bl->x,bl->y,tbl->x-dx,tbl->y-dy,easy,CELL_CHKNOREACH))
 		return false;
 
+	if (!path_search_long(NULL, bl->m, bl->x, bl->y, tbl->x - dx, tbl->y - dy, CELL_CHKNOPASS) // Check if there is an obstacle between
+		&& wpd.path_len > CLIENT_COMPLEX_PATH_LIMIT	// Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
+		&& (bl->type != BL_NPC)) // If type is a NPC, please disregard.
+	{
+		//if (bl->type == BL_MOB) return false;
 #ifdef OFFICIAL_WALKPATH
-	if( !path_search_long(NULL, bl->m, bl->x, bl->y, tbl->x-dx, tbl->y-dy, CELL_CHKNOPASS) // Check if there is an obstacle between
-	  && wpd.path_len > 14	// Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
-	  && (bl->type != BL_NPC) ) // If type is a NPC, please disregard.
 		return false;
 #endif
+	}
 
 	return true;
 }
@@ -2669,6 +2697,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 #ifdef OFFICIAL_WALKPATH
 	   || !path_search_long(NULL, src->m, src->x, src->y, target->x, target->y, CELL_CHKWALL)
 #endif
+	   || ((src->type==BL_MOB) && !path_search_long(NULL, src->m, src->x, src->y, target->x, target->y, CELL_CHKWALL))
 	   || (sd && !pc_can_attack(sd, target->id)) )
 		return 0; // Can't attack under these conditions
 
