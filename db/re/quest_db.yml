@@ -2466,6 +2466,29 @@ Body:
     Title: Mad Love for Wife(5)
   - Id: 5468
     Title: Mad Love for Wife(6)
+  - Id: 5727
+    Title: Suddenly in charge
+    TimeLimit: 4h
+  - Id: 5728
+    Title: Headache
+  - Id: 5729
+    Title: To Einbech
+  - Id: 5730
+    Title: Things that can destroy the device
+  - Id: 5731
+    Title: Clana Namieri
+  - Id: 5732
+    Title: To Lighthalzen
+  - Id: 5733
+    Title: Clana Namieri
+  - Id: 5734
+    Title: Core materials are always a problem
+  - Id: 5735
+    Title: To Yuno
+  - Id: 5736
+    Title: To Einbroch
+  - Id: 5737
+    Title: Clana Namieri
   - Id: 6000
     Title: Job Change to Taekwon
   - Id: 6001
@@ -4255,6 +4278,81 @@ Body:
     Title: EMT
   - Id: 7723
     Title: The potential within
+  - Id: 7731
+    Title: Secret Action
+  - Id: 7732
+    Title: Searching the suspect
+  - Id: 7733
+    Title: Pursuit!
+  - Id: 7734
+    Title: Arrest
+  - Id: 7735
+    Title: Secret Action 2
+  - Id: 7736
+    Title: Small differences between sightseeing and secret bussiness
+  - Id: 7737
+    Title: Together with Rebel
+  - Id: 7738
+    Title: Next operation plan
+  - Id: 7739
+    Title: Find Star of Blessing!
+  - Id: 7740
+    Title: Star of Blessing obtained
+  - Id: 7741
+    Title: Let's return
+  - Id: 7742
+    Title: Sweeping the remnants
+    Targets:
+      - Mob: EP16_2_MM_CUTIE
+        Count: 1
+  - Id: 7743
+    Title: Sweeping the remnants (Standby)
+    TimeLimit: 4h
+  - Id: 7744
+    Title: Hiding Researcher
+  - Id: 7745
+    Title: Hiding Researcher (Standby)
+    TimeLimit: 4h
+  - Id: 7746
+    Title: A pair of old rings
+  - Id: 7747
+    Title: Locket Pendant
+  - Id: 7748
+    Title: Wooden Rosary
+  - Id: 7749
+    Title: Bow Thimble Decoration
+  - Id: 7750
+    Title: Assassin Dagger with Glyph
+  - Id: 7751
+    Title: Portable Sewing Kit
+  - Id: 7752
+    Title: Well hidden
+  - Id: 7753
+    Title: Well hidden
+  - Id: 7754
+    Title: Well hidden
+  - Id: 7755
+    Title: Well hidden
+  - Id: 7756
+    Title: Well hidden
+  - Id: 7757
+    Title: Well hidden
+  - Id: 7758
+    Title: Well hidden
+  - Id: 7759
+    Title: Well hidden
+  - Id: 7760
+    Title: Well hidden
+  - Id: 7761
+    Title: Make Chimeras rest in peace
+    Targets:
+      - Mob: EP16_2_HUMAN_KIMERA
+        Count: 10
+      - Mob: EP16_2_MATTER_KIMERA
+        Count: 10
+  - Id: 7762
+    Title: Make Chimeras rest in peace (Standby)
+    TimeLimit: 4h
   - Id: 7790
     Title: Rock Ridge, Land of Opportunities
   - Id: 7791
@@ -6349,6 +6447,64 @@ Body:
         Rate: 5000
   - Id: 11445
     Title: Vigilante Corp
+  - Id: 11454
+    Title: Doubt
+  - Id: 11455
+    Title: Doubt
+  - Id: 11456
+    Title: Doubt
+  - Id: 11457
+    Title: Doubt
+  - Id: 11458
+    Title: Doubt
+  - Id: 11459
+    Title: Doubt
+  - Id: 11460
+    Title: Doubt
+  - Id: 11461
+    Title: Doubt
+  - Id: 11462
+    Title: Doubt
+  - Id: 11463
+    Title: You said the party is ready?
+  - Id: 11464
+    Title: You said the party is ready?
+  - Id: 11465
+    Title: Dien's High Class Tea
+    Targets:
+      - Mob: EP16_2_H_HUNTER_EV
+        Count: 1
+    Drops:
+      - Mob: EP16_2_H_HUNTER_EV
+        Item: High_Class_Tea
+        Rate: 10000
+  - Id: 11466
+    Title: Dien's High Class Tea
+    TimeLimit: 4h
+  - Id: 11467
+    Title: Ridsh's Old Letter
+    Targets:
+      - Mob: EP16_2_H_HUNTER_V
+        Count: 1
+    Drops:
+      - Mob: EP16_2_H_HUNTER_V
+        Item: Old_Letter
+        Rate: 5000
+  - Id: 11468
+    Title: Ridsh's Old Letter
+    TimeLimit: 4h
+  - Id: 11469
+    Title: Cotness's Shiny Ring
+    Targets:
+      - Mob: EP16_2_H_HUNTER_MD
+        Count: 5
+    Drops:
+      - Mob: EP16_2_H_HUNTER_MD
+        Item: Very_Shining_Ring
+        Rate: 5000
+  - Id: 11470
+    Title: Cotness's Shiny Ring
+    TimeLimit: 4h
   - Id: 12000
     Title: An old friend
   - Id: 12001
@@ -7194,8 +7350,17 @@ Body:
     TimeLimit: +23h
   - Id: 12363
     Title: ?????? ?? ??
+  - Id: 12368
+    Title: Operate the old robot
   - Id: 12369
     Title: Secret Business Relation
+  - Id: 12374
+    Title: Heart Hunter Base occupation
+  - Id: 12375
+    Title: Base maintenance
+    TimeLimit: 4h
+  - Id: 12376
+    Title: First transaction
   - Id: 12381
     Title: New Continent's Food Supplier
   - Id: 12382
@@ -8274,6 +8439,86 @@ Body:
   - Id: 14592
     Title: Resting Time
     TimeLimit: 4h
+  - Id: 14595
+    Title: To Einbech train station
+  - Id: 14596
+    Title: Follow the trails
+  - Id: 14597
+    Title: Corner of Einbech
+  - Id: 14598
+    Title: Invisible entrance
+  - Id: 14599
+    Title: A glass of tea gratitude
+  - Id: 14600
+    Title: Gentleman on second floor
+  - Id: 14601
+    Title: Ladies on second floor
+  - Id: 14602
+    Title: Hunter on second floor
+  - Id: 14603
+    Title: Pipe repair materials
+    Targets:
+      - Mob: WASTE_STOVE
+        Count: 10
+  - Id: 14604
+    Title: National Fuel Solar Fuel
+    Targets:
+      - Mob: WASTE_STOVE
+        Count: 10
+  - Id: 14605
+    Title: Sparkling things
+    Targets:
+      - Mob: OBSIDIAN
+        Count: 5
+      - Mob: MINERAL
+        Count: 5
+  - Id: 14606
+    Title: Pipe repair materials
+    Targets:
+      - Mob: WASTE_STOVE
+        Count: 10
+  - Id: 14607
+    Title: National Fuel Solar Fuel
+    Targets:
+      - Mob: WASTE_STOVE
+        Count: 10
+  - Id: 14608
+    Title: Sparkling things
+    Targets:
+      - Mob: OBSIDIAN
+        Count: 5
+      - Mob: MINERAL
+        Count: 5
+  - Id: 14609
+    Title: Quiet time
+    TimeLimit: 4h
+  - Id: 14610
+    Title: Gun recycling
+    Targets:
+      - Mob: EP16_2_BROKEN_GUN
+        Count: 5
+    Drops:
+      - Mob: EP16_2_BROKEN_GUN
+        Item: Broken_Gun_Wreck
+        Rate: 5000
+  - Id: 14611
+    Title: Gun recycling
+    Targets:
+      - Mob: EP16_2_BROKEN_GUN
+        Count: 5
+    Drops:
+      - Mob: EP16_2_BROKEN_GUN
+        Item: Broken_Gun_Wreck
+        Rate: 5000
+  - Id: 14612
+    Title: Time for repair
+    TimeLimit: 4h
+  - Id: 14613
+    Title: Erst on second floor
+  - Id: 14614
+    Title: Convince the leaders
+  - Id: 14615
+    Title: Between negotiation and deception
   - Id: 14672
     Title: Preparing for the Firework Festival
     Targets:
@@ -8361,111 +8606,126 @@ Body:
   - Id: 16008
     Title: Quiz time!
   - Id: 16009
-    Title: Quiz time!
+    Title: Fighting is the language of warmonger
   - Id: 16010
-    Title: Daewoon's Test
+    Title: Battle in great condition
+    TimeLimit: 4h
   - Id: 16011
-    Title: Sir Jore's Test
+    Title: Arena entrance
   - Id: 16012
-    Title: Sir Jore's Materials
+    Title: Troublesome twin
   - Id: 16013
-    Title: The Stone of Sage
+    Title: "Testimony: Chef's story"
   - Id: 16014
-    Title: The Stone of Sage
+    Title: "Testimony: Sniper's story"
   - Id: 16015
-    Title: Lady Jesqurienne
+    Title: The cause of failure is a careless attempt
   - Id: 16016
-    Title: Jesquerinne's Quiz Challenge
+    Title: Borrowing wisdom of the experts
   - Id: 16017
-    Title: Failed Quiz Challenge
+    Title: Twin's sincere confession
   - Id: 16018
-    Title: Quiz Challenge Triumph
+    Title: Encourage instead of punishment
   - Id: 16019
-    Title: Search for Dearles
+    Title: Elena Volkova's Solution
   - Id: 16020
-    Title: Dearles' Test
+    Title: Daily babysitting
+    TimeLimit: 4h
   - Id: 16021
-    Title: Test of Appreciation
+    Title: "Service: Book lending agent"
   - Id: 16022
-    Title: Dearles' Test Part Two
+    Title: "Service: Book lending agent"
   - Id: 16023
-    Title: Rhythm Test Passed
+    Title: "Service: Book lending agent"
   - Id: 16024
-    Title: Find Bakerlan
+    Title: "Service: Loaned book delivery"
   - Id: 16025
-    Title: Bakerlan's delivery
+    Title: "Service: Exploring the Mine Dungeon"
+    Targets:
+      - Mob: PITMAN
+        Count: 30
   - Id: 16026
-    Title: Mahatra's delivery
+    Title: "Service: Exploring the Mine Dungeon"
+    Targets:
+      - Mob: NOXIOUS
+        Count: 20
+      - Mob: VENOMOUS
+        Count: 20
   - Id: 16027
-    Title: Bakerlan's Receipt
+    Title: "Service: Cookies delivery"
   - Id: 16028
-    Title: Find Seylin
+    Title: "Service: Cookies delivery"
   - Id: 16029
-    Title: Vigorgra Medicine
+    Title: "Service: Cookies delivery"
   - Id: 16030
-    Title: Vigorgra Ingredients
+    Title: "Service: Cookies delivery"
   - Id: 16031
-    Title: Vigorgra Ingredients
+    Title: "Service: Cookies delivery"
   - Id: 16032
-    Title: Seylin's Request
+    Title: Hospitality to senior
   - Id: 16033
-    Title: Back to Seylin
+    Title: Bring dessert and listen the story
   - Id: 16034
-    Title: Back to Mahatra
+    Title: Sweet cookies once a day
+    TimeLimit: 4h
   - Id: 16035
-    Title: Report to Bakerlan
+    Title: "Delivery: Explosive revolver materials"
   - Id: 16036
-    Title: The last Crumb
+    Title: Expert's keen eye
   - Id: 16037
-    Title: Finding Engel Howard
+    Title: Material collection once a day
+    TimeLimit: 4h
   - Id: 16038
-    Title: Liana's Letter
+    Title: Collect 2 Oridecons
   - Id: 16039
-    Title: Combining the Starlight
+    Title: Collect 2 Eluniums
   - Id: 16040
-    Title: Letter to Engel's Family
+    Title: Collect 5 Irons
   - Id: 16041
-    Title: Talk to Liana
+    Title: "Investigation: Capture strolling cat operation"
   - Id: 16042
-    Title: Sobbing Starlight Progress
+    Title: Charity temporarily stays
+    TimeLimit: 4h
   - Id: 16043
-    Title: Restored Sobbing Starlight
+    Title: "Investigation: Capture someone's craving operation"
   - Id: 16044
-    Title: Combining the Starlight
+    Title: In charge of Charity
   - Id: 16045
-    Title: Starlight message
+    Title: Veteran's small memorial service
   - Id: 16046
-    Title: The man in Umbala
+    Title: DIY obtaining bouquet materials
   - Id: 16047
-    Title: Into the Tree
+    Title: Quiet memorial ceremony
   - Id: 16048
-    Title: Ancient Papers
+    Title: Traces of old story
   - Id: 16049
-    Title: Record of Ancient Language
+    Title: Quiet dawn
+    TimeLimit: 4h
   - Id: 16050
-    Title: The Fastidious Old Man
+    Title: Tribute hour
   - Id: 16051
-    Title: Blurry Vision
+    Title: DIY obtaining bouquet materials
   - Id: 16052
-    Title: Translating the Document
+    Title: Quiet memorial ceremony
   - Id: 16053
-    Title: Translated Ancient Language
+    Title: Ongoing old story
   - Id: 16054
-    Title: Where the rejected live
+    Title: Differentiated advertising strategy
   - Id: 16055
-    Title: Misfortunate of Niflheim
+    Title: "Advertising: Dou you want a clean city?"
   - Id: 16056
-    Title: Removed Curse
+    Title: "Advertising: Then blow it all away!"
   - Id: 16057
-    Title: Meeting the witch
+    Title: "Advertising: Suitable revenge for old age!"
   - Id: 16058
-    Title: Wing Of Crow
+    Title: Slow advertising effect
+    TimeLimit: 4h
   - Id: 16059
-    Title: Wing Of Crow
+    Title: Differentiated advertising strategy
   - Id: 16060
-    Title: Misfortunate of Niflheim
+    Title: Fighting is the language of warmonger
   - Id: 16061
-    Title: Bard in Niflheim
+    Title: Fair and equitable result
   - Id: 16062
     Title: Gen of Niflheim
   - Id: 16063
