@@ -1,0 +1,34 @@
+// MySQL Login Server
+login_server_ip: database
+login_server_id: root
+login_server_pw: secret
+login_server_db: ragnarok
+
+// MySQL IP Ban Server
+ipban_db_ip: database
+ipban_db_id: root
+ipban_db_pw: secret
+ipban_db_db: ragnarok
+
+// MySQL Character Server
+char_server_ip: database
+char_server_id: root
+char_server_pw: secret
+char_server_db: ragnarok
+
+// MySQL Map Server
+map_server_ip: database
+map_server_id: root
+map_server_pw: secret
+map_server_db: ragnarok
+
+// MySQL Log Database
+log_db_ip: database
+log_db_id: root
+log_db_pw: secret
+log_db_db: ragnarok
+log_login_db: loginlog
+
+// Other Settings
+use_sql_db: yes
+party_share_level: 50
