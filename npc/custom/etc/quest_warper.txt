@@ -1964,9 +1964,9 @@ function	script	QWS_Iarray	{
 	setarray @pImenuitems$[@Ii], "[100+] Heart Hunter War Base";
 	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
-	setarray @pImap$[@Ii], "alberta";
-	setarray @pIXcoords[@Ii], 32;
-	setarray @pIYcoords[@Ii], 240;
+	setarray @pImap$[@Ii], "ein_fild04";
+	setarray @pIXcoords[@Ii], 279;
+	setarray @pIYcoords[@Ii], 334;
 
 	QWS_Make_Instance_Menu 11;
 //----------------[100+] Infinite Space:
@@ -1991,9 +1991,9 @@ function	script	QWS_Iarray	{
 	setarray @pImenuitems$[@Ii], "[100+] Werner's Laboratory";
 	setarray @pIprice[@Ii], $QW_IW_PRICE;
 
-	setarray @pImap$[@Ii], "alberta";
-	setarray @pIXcoords[@Ii], 32;
-	setarray @pIYcoords[@Ii], 240;
+	setarray @pImap$[@Ii], "slabw01";
+	setarray @pIXcoords[@Ii], 240;
+	setarray @pIYcoords[@Ii], 88;
 
 	QWS_Make_Instance_Menu 14;
 //----------------[110+] Cor Mission:
@@ -2466,10 +2466,10 @@ bif_fild01,156,338,6	script	Warpra#instance_7	113,{ callfunc "QWS_Instance_Warpr
 dali,93,148,6	script	Warpra#instance_8	113,{ callfunc "QWS_Instance_Warpra",8,"Geffen Magic Tournament"; close; }
 dali,132,115,6	script	Warpra#instance_9	113,{ callfunc "QWS_Instance_Warpra",9,"Sara's Memory"; close; }
 ma_dun01,147,15,6	script	Warpra#instance_10	113,{ callfunc "QWS_Instance_Warpra",10,"Bangungot Hospital"; close; }
-// alberta,32,240,4	script	Warpra#instance_11	113,{ callfunc "QWS_Instance_Warpra",11,"Heart Hunter War Base"; close; } // TODO: Add Terra Gloria EP
+ein_fild04,288,332,4	script	Warpra#instance_11	113,{ callfunc "QWS_Instance_Warpra",11,"Heart Hunter War Base"; close; }
 cmd_fild07,57,274,5	script	Warpra#instance_12	113,{ callfunc "QWS_Instance_Warpra",12,"Infinite Space"; close; }
 prt_lib_q,85,87,6	script	Warpra#instance_13	113,{ callfunc "QWS_Instance_Warpra",13,"Room of Consciousness"; close; }
-// alberta,32,240,4	script	Warpra#instance_14	113,{ callfunc "QWS_Instance_Warpra",14,"Werner's Laboratory"; close; } // TODO: Add Terra Gloria EP
+slabw01,243,96,6	script	Warpra#instance_14	113,{ callfunc "QWS_Instance_Warpra",14,"Werner's Laboratory"; close; }
 // alberta,32,240,4	script	Warpra#instance_15	113,{ callfunc "QWS_Instance_Warpra",15,"Cor Mission"; close; } // TODO: Add Illusion EP
 // alberta,32,240,4	script	Warpra#instance_16	113,{ callfunc "QWS_Instance_Warpra",16,"OS Mission"; close; } // TODO: Add Illusion EP
 dali02,46,135,4	script	Warpra#instance_17	113,{ callfunc "QWS_Instance_Warpra",17,"Ghost Palace"; close; }
