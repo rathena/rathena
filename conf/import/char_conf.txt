@@ -3,6 +3,7 @@ passwd: RwpLUppCAgMvvfpe
 server_name: Renova
 wisp_server_name: Renova
 login_ip: login
+char_ip: 128.199.8.214
 autosave_time: 60
 start_items: 1201,1,2:2301,1,16:7060,100,0
 start_items_doram: 1681,1,2:2301,1,16:7060,100,0

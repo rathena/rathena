@@ -1,3 +1,4 @@
 userid: renova
 passwd: RwpLUppCAgMvvfpe
 char_ip: char
+map_ip: 128.199.8.214
