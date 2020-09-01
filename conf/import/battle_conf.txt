@@ -1,68 +1,33 @@
-//---
-// Valid range of dyes and styles on the client.
+// client.conf
 min_hair_style: 0
-max_hair_style: 27
+max_hair_style: 100
 min_hair_color: 0
-max_hair_color: 8
+max_hair_color: 127
 min_cloth_color: 0
-max_cloth_color: 4
+max_cloth_color: 700
 min_body_style: 0
 max_body_style: 1
-
-// Show rAthena version to users when the login?
 display_version: no
-
-// Show the MVP EXP reward message for clients 2013-12-23cRagexe and newer? (Note 1)
-// kRO removed the packet and this re-enables the message.
-// Official: Disabled.
 mvp_exp_reward_message: yes
 
-//---
-// The rate the common items are dropped (Items that are in the ETC tab, besides card)
+// drops.conf
 item_rate_common: 1000
-
-// The rate healing items are dropped (items that restore HP or SP)
 item_rate_heal: 1000
-
-// The rate at which usable items (in the item tab) other then healing items are dropped.
 item_rate_use: 1000
-
-// The rate at which equipment is dropped.
 item_rate_equip: 1000
-
-// The rate at which cards are dropped
 item_rate_card: 1000
-
-// The rate adjustment for the MVP items that the MVP gets directly in their inventory
-// Mode: 0 - official order, 1 - random order, 2 - all items
 item_rate_mvp: 1000
-
-// Rate adjustment for Treasure Box drops (these override all other modifiers)
 item_rate_treasure: 1000
-
-// The rate of monsters dropping ores by the skill Ore Discovery (Default is 100)
 finding_ore_rate: 1000
 
-//---
-// Rate at which exp. is given. (Note 2)
+// exp.conf
 base_exp_rate: 1000
-
-// Rate at which job exp. is given. (Note 2)
 job_exp_rate: 1000
-
-// Turn this on to allow a player to level up more than once from a kill. (Note 1)
 multi_level_up: yes
-
-// MVP bonus exp rate. (Note 2)
 mvp_exp_rate: 1000
-
-// Rate of base/job exp given by NPCs. (Note 2)
 quest_exp_rate: 1000
-
-// When a player dies, how should we penalize them?
 death_penalty_type: 0
 
-//---
-// Atcommand suggestions (Note 1)
-// If one type incomplete atcommand, it will suggest the complete ones.
+// feature.conf
 feature.atcommand_suggestions: on
+feature.warp_suggestions: on
