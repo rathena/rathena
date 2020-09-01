@@ -932,6 +932,11 @@ enum sc_type : int16 {
 	SC_MISTY_FROST,
 	SC_MAGIC_POISON,
 
+	// ep16.2
+	SC_EP16_2_BUFF_SS,
+	SC_EP16_2_BUFF_SC,
+	SC_EP16_2_BUFF_AC,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif

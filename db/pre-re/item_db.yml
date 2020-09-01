@@ -18547,8 +18547,6 @@ Body:
       Sage: true
       SoulLinker: true
       Wizard: true
-    Classes:
-      Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 70

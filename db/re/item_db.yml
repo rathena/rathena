@@ -18439,7 +18439,7 @@ Body:
     EquipLevelMin: 30
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus bDef,2+3*(.@r>5)+2*(.@r>8);
+      .@r = getrefine(); bonus bDef,2+3*(.@r>5)+5*(.@r>8);
   - Id: 1724
     AegisName: Dragon_Wing
     Name: Dragon Wing
@@ -18923,7 +18923,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddRace,RC_DemiHuman,55; bonus2 bAddRace,RC_Player_Human,55; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,20; bonus2 bIgnoreDefRaceRate,RC_Player_Human,20; .@r = getrefine(); bonus bCritAtkRate,.@r * 2; bonus bUnbreakableWeapon; if(.@r>5) { bonus2 bAddRace,RC_DemiHuman,pow(min(14,.@r)-4,2); bonus2 bAddRace,RC_Player_Human,pow(min(14,.@r)-4,2); bonus2 bIgnoreDefRaceRate,RC_DemiHuman,5; bonus2 bIgnoreDefRaceRate,RC_Player_Human,5; } if(.@r>8) bonus2 bSkillAtk,"AC_DOUBLE",20;
+      bonus2 bAddRace,RC_DemiHuman,55; bonus2 bAddRace,RC_Player_Human,55; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,20; bonus2 bIgnoreDefRaceRate,RC_Player_Human,20; .@r = getrefine(); bonus bCritAtkRate,min(10,.@r)*2; bonus bUnbreakableWeapon; if(.@r>5) { bonus2 bAddRace,RC_DemiHuman,pow(min(14,.@r)-4,2); bonus2 bAddRace,RC_Player_Human,pow(min(14,.@r)-4,2); bonus2 bIgnoreDefRaceRate,RC_DemiHuman,5; bonus2 bIgnoreDefRaceRate,RC_Player_Human,5; } if(.@r>8) bonus2 bSkillAtk,"AC_DOUBLE",20;
   - Id: 1744
     AegisName: Bow_Of_Evil
     Name: Bow Of Evil
@@ -23980,9 +23980,6 @@ Body:
       Sage: true
       SoulLinker: true
       Wizard: true
-    Classes:
-      Upper: true
-      Third_Upper: true
     Locations:
       Left_Hand: true
     EquipLevelMin: 70
@@ -49155,133 +49152,133 @@ Body:
     Script: |
       setarray .@skills$, "AL_HEAL", "PR_SANCTUARY", "AM_POTIONPITCHER", "AB_HIGHNESSHEAL", "AB_CHEAL"; for( .@i = 0; .@i < getarraysize(.@skills$); .@i++ ){ bonus2 bSkillHeal2,.@skills$[.@i],1; } /* TODO: Depending on some recovery items HP recovery amount + 1% */
   - Id: 4970
-    AegisName: Fire_Property_Reactor
+    AegisName: Reactor_P_FIRE
     Name: Fire Property Reactor
     Type: Card
     Script: |
       bonus bDefEle,Ele_Fire;
   - Id: 4971
-    AegisName: Water_Property_Reactor
+    AegisName: Reactor_P_WATER
     Name: Water Property Reactor
     Type: Card
     Script: |
       bonus bDefEle,Ele_Water;
   - Id: 4972
-    AegisName: Earth_Property_Reactor
+    AegisName: Reactor_P_GROUND
     Name: Earth Property Reactor
     Type: Card
     Script: |
       bonus bDefEle,Ele_Earth;
   - Id: 4973
-    AegisName: Wind_Property_Reactor
+    AegisName: Reactor_P_WIND
     Name: Wind Property Reactor
     Type: Card
     Script: |
       bonus bDefEle,Ele_Wind;
   - Id: 4974
-    AegisName: Fire_Resistance_Reactor
+    AegisName: Reactor_T_FIRE
     Name: Fire Resistance Reactor
     Type: Card
     Script: |
       bonus2 bSubEle,Ele_Fire,25; bonus2 bSubEle,Ele_Water,-25;
   - Id: 4975
-    AegisName: Water_Resistance_Reactor
+    AegisName: Reactor_T_WATER
     Name: Water Resistance Reactor
     Type: Card
     Script: |
       bonus2 bSubEle,Ele_Water,25; bonus2 bSubEle,Ele_Wind,-25;
   - Id: 4976
-    AegisName: Earth_Resistance_Reactor
+    AegisName: Reactor_T_GROUND
     Name: Earth Resistance Reactor
     Type: Card
     Script: |
       bonus2 bSubEle,Ele_Earth,25; bonus2 bSubEle,Ele_Fire,-25;
   - Id: 4977
-    AegisName: Wind_Resistance_Reactor
+    AegisName: Reactor_T_WIND
     Name: Wind Resistance Reactor
     Type: Card
     Script: |
       bonus2 bSubEle,Ele_Wind,25; bonus2 bSubEle,Ele_Earth,-25;
   - Id: 4978
-    AegisName: Recovery_Reactor_101
+    AegisName: Reactor_Cure_101
     Name: Recovery Reactor 101
     Type: Card
     Script: |
       if (getrefine()>=7) bonus2 bHPRegenRate,100,5000; else bonus2 bHPRegenRate,50,5000;
   - Id: 4979
-    AegisName: Recovery_Reactor_102
+    AegisName: Reactor_Cure_102
     Name: Recovery Reactor 102
     Type: Card
     Script: |
       if (getrefine()>=7) bonus2 bSPRegenRate,5,5000; else bonus2 bHPRegenRate,3,5000;
   - Id: 4980
-    AegisName: Recovery_Reactor_201
+    AegisName: Reactor_Cure_201
     Name: Recovery Reactor 201
     Type: Card
     Script: |
       if (getrefine()>=7) bonus bHPrecovRate,100; else bonus bHPrecovRate,50;
   - Id: 4981
-    AegisName: Recovery_Reactor_202
+    AegisName: Reactor_Cure_202
     Name: Recovery Reactor 202
     Type: Card
     Script: |
       if (getrefine()>=7) bonus bSPrecovRate,100; else bonus bSPrecovRate,50;
   - Id: 4982
-    AegisName: STR_Supplement_Reactor
+    AegisName: Reactor_A_STR
     Name: STR Supplement Reactor
     Type: Card
     Script: |
       if (getrefine()>=7) { .@bonus = 10; } bonus bBaseAtk,.@bonus + 5*(readparam(bStr)/10);
   - Id: 4983
-    AegisName: INT_Supplement_Reactor
+    AegisName: Reactor_A_INT
     Name: INT Supplement Reactor
     Type: Card
     Script: |
       if (getrefine()>=7) { .@bonus = 10; } bonus bMatk,.@bonus + 5*(readparam(bInt)/10);
   - Id: 4984
-    AegisName: DEF_Supplement_Reactor
+    AegisName: Reactor_A_DEF
     Name: DEF SupplementReactor
     Type: Card
     Script: |
       bonus bDef,100;
   - Id: 4985
-    AegisName: PD_Supplement_Reactor
+    AegisName: Reactor_A_AVOI
     Name: PD Supplement Reactor
     Type: Card
     Script: |
       bonus bFlee2,3;
   - Id: 4986
-    AegisName: Attack_Supplement_Reactor
+    AegisName: Reactor_A_ATK
     Name: Attack Supplement Reactor
     Type: Card
     Script: |
       bonus bBaseAtk,20;
   - Id: 4987
-    AegisName: Magic_Supplement_Reactor
+    AegisName: Reactor_A_MATK
     Name: Magic Supplement Reactor
     Type: Card
     Script: |
       bonus bMatk,20;
   - Id: 4988
-    AegisName: HP_Supplement_Reactor
+    AegisName: Reactor_A_MHP
     Name: HP Supplement Reactor
     Type: Card
     Script: |
       bonus bMaxHPrate,5;
   - Id: 4989
-    AegisName: SP_Supplement_Reactor
+    AegisName: Reactor_A_MSP
     Name: SP Supplement Reactor
     Type: Card
     Script: |
       bonus bMaxSPrate,3;
   - Id: 4990
-    AegisName: Frozen_Supplement_Reactor
+    AegisName: Reactor_A_FROZ
     Name: Frozen Supplement Reactor
     Type: Card
     Script: |
       bonus2 bResEff,Eff_Freeze,10000;
   - Id: 4991
-    AegisName: ASPD_Supplement_Reactor
+    AegisName: Reactor_A_ASPD
     Name: ASPD Supplement Reactor
     Type: Card
     Script: |
@@ -63528,6 +63525,19 @@ Body:
     View: 931
     Script: |
       bonus bStr,1; autobonus "{ bonus bAtkEle,Ele_Fire; }",50,60000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; /* Unknow rate and specialeffect */
+  - Id: 5965
+    AegisName: _Riot_Chip
+    Name: Riot Chip
+    Type: Armor
+    Weight: 300
+    Slots: 1
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 100
+    Refineable: true
+    View: 1201
+    Script: |
+      bonus bFixedCastrate,-50; .@r = getrefine(); bonus2 bAddClass,Class_All,.@r; bonus2 bMagicAddClass,Class_All,.@r;
   - Id: 5966
     AegisName: KarduiEar
     Name: KarduiEar
@@ -71878,7 +71888,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6919
-    AegisName: Honor_Proof
+    AegisName: TokenOfHonor
     Name: Honor Token
     Type: Etc
     Buy: 10
@@ -72301,7 +72311,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 6961
-    AegisName: Huge_Metal_Scrap
+    AegisName: LargeScrap
     Name: Huge Metal Scrap
     Type: Etc
     Buy: 10
@@ -72309,7 +72319,7 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 6962
-    AegisName: Old_Fuel
+    AegisName: OldTank
     Name: Old Fuel
     Type: Etc
     Buy: 10
@@ -72329,112 +72339,112 @@ Body:
     Buy: 10
     Weight: 100
   - Id: 6965
-    AegisName: Fire_Property_Reactor_Blueprint
+    AegisName: Reactor_P_FIRE_
     Name: Fire Property Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6966
-    AegisName: Water_Property_Reactor_Blueprint
+    AegisName: Reactor_P_WATER_
     Name: Water Property Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6967
-    AegisName: Earth_Property_Reactor_Blueprint
+    AegisName: Reactor_P_GROUND_
     Name: Earth Property Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6968
-    AegisName: Wind_Property_Reactor_Blueprint
+    AegisName: Reactor_P_WIND_
     Name: Wind Property Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6969
-    AegisName: Fire_Res_Reactor_Blueprint
+    AegisName: Reactor_T_FIRE_
     Name: Fire Resistance Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6970
-    AegisName: Water_Res_Reactor_Blueprint
+    AegisName: Reactor_T_WATER_
     Name: Water Resistance Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6971
-    AegisName: Earth_Res_Reactor_Blueprint
+    AegisName: Reactor_T_GROUND_
     Name: Earth Resistance Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6972
-    AegisName: Wind_Res_Reactor_Blueprint
+    AegisName: Reactor_T_WIND_
     Name: Wind Resistance Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6973
-    AegisName: Recovery101_Reactor_Blueprint
+    AegisName: Reactor_Cure_101_
     Name: Recovery101 Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6974
-    AegisName: Recovery102_Reactor_Blueprint
+    AegisName: Reactor_Cure_102_
     Name: Recovery102 Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6975
-    AegisName: Recovery201_Reactor_Blueprint
+    AegisName: Reactor_Cure_201_
     Name: Recovery201 Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6976
-    AegisName: Recovery202_Reactor_Blueprint
+    AegisName: Reactor_Cure_202_
     Name: Recovery202 Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6977
-    AegisName: STR_Reactor_Blueprint
+    AegisName: Reactor_A_STR_
     Name: STR Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6978
-    AegisName: INT_Reactor_Blueprint
+    AegisName: Reactor_A_INT_
     Name: INT Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6979
-    AegisName: DEF_Reactor_Blueprint
+    AegisName: Reactor_A_DEF_
     Name: DEF Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6980
-    AegisName: PD_Reactor_Blueprint
+    AegisName: Reactor_A_AVOI_
     Name: Perfect Dodge Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6981
-    AegisName: ATK_Reactor_Blueprint
+    AegisName: Reactor_A_ATK_
     Name: Attack Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6982
-    AegisName: MATK_Reactor_Blueprint
+    AegisName: Reactor_A_MATK_
     Name: Magical Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6983
-    AegisName: HP_Reactor_Blueprint
+    AegisName: Reactor_A_MHP_
     Name: HP Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6984
-    AegisName: SP_Reactor_Blueprint
+    AegisName: Reactor_A_MSP_
     Name: SP Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6985
-    AegisName: Frozen_Reactor_Blueprint
+    AegisName: Reactor_A_FROZ_
     Name: Frozen Reactor Blueprint
     Type: Etc
     Weight: 10
   - Id: 6986
-    AegisName: ASPD_Reactor_Blueprint
+    AegisName: Reactor_A_ASPD_
     Name: ASPD Reactor Blueprint
     Type: Etc
     Weight: 10
@@ -98021,7 +98031,7 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"GS_DESPERADO",20; bonus2 bSkillAtk,"RL_FALLEN_ANGEL",20;
+      bonus2 bSkillAtk,"GS_DESPERADO",20; bonus2 bAddEff,Eff_Burning,200;
   - Id: 13122
     AegisName: ALTAIR_ARES
     Name: Altair & Ares
@@ -98040,7 +98050,7 @@ Body:
     EquipLevelMin: 140
     Refineable: true
     Script: |
-      bonus bHit,5; bonus bDelayrate,10; bonus bLongAtkRate,30;
+      bonus bHit,5; bonus bAspdRate,10; bonus bLongAtkRate,30;
   - Id: 13124
     AegisName: ALTAIR_ARES_
     Name: Altair & Ares
@@ -98060,7 +98070,7 @@ Body:
     EquipLevelMin: 140
     Refineable: true
     Script: |
-      bonus bHit,5; bonus bDelayrate,10; bonus bLongAtkRate,30;
+      bonus bHit,5; bonus bAspdRate,10; bonus bLongAtkRate,30;
   - Id: 13125
     AegisName: Metal_Revolver
     Name: Metal Revolver
@@ -98088,7 +98098,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bBaseAtk,getrefine(); bonus bLongAtkRate,1; if (BaseLevel >= 20 && BaseLevel <= 120) { bonus bBaseAtk,3*(BaseLevel/10); }
+      .@r = getrefine(); bonus bBaseAtk,3*.@r; bonus bLongAtkRate,1; if (BaseLevel >= 20) { bonus bBaseAtk,3*(min(BaseLevel,120)/10); }
   - Id: 13126
     AegisName: Infinity_Pistol
     Name: Infinity Pistol
@@ -98134,7 +98144,7 @@ Body:
     EquipLevelMin: 70
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);
+      .@r = getrefine(); bonus bBaseAtk,(.@r<=15?pow(.@r,2):225); if(BaseLevel>=70){ bonus bBaseAtk,(BaseLevel/10)*5; }
   - Id: 13128
     AegisName: Revolver_of_Vicious_Mind
     Name: Revolver of Vicious Mind
@@ -98842,7 +98852,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddRace,RC_DemiHuman,35; bonus2 bAddRace,RC_Player_Human,35; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,20; bonus2 bIgnoreDefRaceRate,RC_Player_Human,20; bonus2 bSkillAtk,"GS_TRIPLEACTION",30; bonus bUnbreakableWeapon; .@r = getrefine(); if(.@r>5) { bonus2 bAddRace,RC_DemiHuman,pow(min(.@r,10)-4,2); bonus2 bAddRace,RC_Player_Human,pow(min(.@r,10)-4,2); bonus2 bIgnoreDefRaceRate,RC_DemiHuman,5; bonus2 bIgnoreDefRaceRate,RC_Player_Human,5; } if(.@r>8) { bonus2 bAddClass,Class_All,.@r; }
+      bonus2 bAddRace,RC_DemiHuman,35; bonus2 bAddRace,RC_Player_Human,35; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,20; bonus2 bIgnoreDefRaceRate,RC_Player_Human,20; bonus2 bSkillAtk,"GS_TRIPLEACTION",30; bonus bUnbreakableWeapon; .@r = getrefine(); if(.@r>5) { bonus2 bAddRace,RC_DemiHuman,pow(min(.@r,14)-4,2); bonus2 bAddRace,RC_Player_Human,pow(min(.@r,14)-4,2); bonus2 bIgnoreDefRaceRate,RC_DemiHuman,5; bonus2 bIgnoreDefRaceRate,RC_Player_Human,5; } if(.@r>8) { bonus2 bAddClass,Class_All,.@r; }
   - Id: 13178
     AegisName: Krieger_Shotgun1
     Name: Glorious Shotgun
@@ -98869,7 +98879,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddRace,RC_DemiHuman,55; bonus2 bAddRace,RC_Player_Human,55; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,20; bonus2 bIgnoreDefRaceRate,RC_Player_Human,20; bonus bSplashRange,1; bonus2 bSkillAtk,"GS_TRIPLEACTION",30; bonus bUnbreakableWeapon; .@r = getrefine(); if(.@r>5) { bonus2 bAddRace,RC_DemiHuman,pow(min(.@r,10)-4,2); bonus2 bAddRace,RC_Player_Human,pow(min(.@r,10)-4,2); bonus2 bIgnoreDefRaceRate,RC_DemiHuman,5; bonus2 bIgnoreDefRaceRate,RC_Player_Human,5; } if(.@r>8) { bonus2 bSkillAtk,"GS_SPREADATTACK",.@r * 2; bonus3 bAddEffOnSkill,"GS_SPREADATTACK",Eff_Stun,2000; }
+      bonus2 bAddRace,RC_DemiHuman,55; bonus2 bAddRace,RC_Player_Human,55; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,20; bonus2 bIgnoreDefRaceRate,RC_Player_Human,20; bonus bSplashRange,1; bonus2 bSkillAtk,"GS_TRIPLEACTION",30; bonus bUnbreakableWeapon; .@r = getrefine(); if(.@r>5) { bonus2 bAddRace,RC_DemiHuman,pow(min(.@r,14)-4,2); bonus2 bAddRace,RC_Player_Human,pow(min(.@r,14)-4,2); bonus2 bIgnoreDefRaceRate,RC_DemiHuman,5; bonus2 bIgnoreDefRaceRate,RC_Player_Human,5; } if(.@r>8) { bonus2 bSkillAtk,"GS_SPREADATTACK",.@r * 2; bonus3 bAddEffOnSkill,"GS_SPREADATTACK",Eff_Stun,2000; }
   - Id: 13179
     AegisName: Krieger_Launcher1
     Name: Glorious Grenade Launcher
@@ -98896,7 +98906,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddRace,RC_DemiHuman,35; bonus2 bAddRace,RC_Player_Human,35; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,20; bonus2 bIgnoreDefRaceRate,RC_Player_Human,20; bonus2 bSkillAtk,"GS_TRIPLEACTION",30; bonus bUnbreakableWeapon; .@r = getrefine(); if(.@r>5) { bonus2 bAddRace,RC_DemiHuman,pow(min(.@r,10)-4,2); bonus2 bAddRace,RC_Player_Human,pow(min(.@r,10)-4,2); bonus2 bIgnoreDefRaceRate,RC_DemiHuman,5; bonus2 bIgnoreDefRaceRate,RC_Player_Human,5; } if(.@r>8) { bonus2 bSkillAtk,"GS_GROUNDDRIFT",.@r * 2; bonus3 bAddEffOnSkill,"GS_SPREADATTACK",Eff_Stun,2000; autobonus "{ bonus bAspdRate,20; }",200,20000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }"; }
+      bonus2 bAddRace,RC_DemiHuman,35; bonus2 bAddRace,RC_Player_Human,35; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,20; bonus2 bIgnoreDefRaceRate,RC_Player_Human,20; bonus2 bSkillAtk,"GS_TRIPLEACTION",30; bonus bUnbreakableWeapon; .@r = getrefine(); if(.@r>5) { bonus2 bAddRace,RC_DemiHuman,pow(min(.@r,14)-4,2); bonus2 bAddRace,RC_Player_Human,pow(min(.@r,14)-4,2); bonus2 bIgnoreDefRaceRate,RC_DemiHuman,5; bonus2 bIgnoreDefRaceRate,RC_Player_Human,5; } if(.@r>8) { bonus2 bSkillAtk,"GS_GROUNDDRIFT",.@r * 2; bonus3 bAddEffOnSkill,"GS_SPREADATTACK",Eff_Stun,2000; autobonus "{ bonus bAspdRate,20; }",200,20000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }"; }
   - Id: 13180
     AegisName: Novice_Rifle
     Name: Novice Rifle
@@ -98914,7 +98924,7 @@ Body:
     Locations:
       Right_Hand: true
       Left_Hand: true
-    WeaponLevel: 4
+    WeaponLevel: 1
     EquipLevelMin: 1
   - Id: 13181
     AegisName: Novice_Shotgun
@@ -98932,7 +98942,7 @@ Body:
     Locations:
       Right_Hand: true
       Left_Hand: true
-    WeaponLevel: 4
+    WeaponLevel: 1
     EquipLevelMin: 1
   - Id: 13182
     AegisName: Novice_Gatling
@@ -98950,7 +98960,7 @@ Body:
     Locations:
       Right_Hand: true
       Left_Hand: true
-    WeaponLevel: 4
+    WeaponLevel: 1
     EquipLevelMin: 1
   - Id: 13183
     AegisName: Novice_Grenade_Launcher
@@ -98968,7 +98978,7 @@ Body:
     Locations:
       Right_Hand: true
       Left_Hand: true
-    WeaponLevel: 4
+    WeaponLevel: 1
     EquipLevelMin: 1
   - Id: 13184
     AegisName: TE_Woe_Rifle
@@ -98996,7 +99006,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddRace,RC_Player_Human,40; bonus2 bAddEff,Eff_Silence,3000;
+      bonus2 bAddRace,RC_Player_Human,40; bonus2 bAddEff,Eff_Silence,1000;
   - Id: 13185
     AegisName: TE_Woe_Gatling
     Name: TE Woe Gatling
@@ -99023,7 +99033,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddRace,RC_Player_Human,40; bonus2 bAddEff,Eff_Stun,3000;
+      bonus2 bAddRace,RC_Player_Human,40; bonus2 bAddEff,Eff_Stun,1000;
   - Id: 13186
     AegisName: TE_Woe_Shotgun
     Name: TE Woe Shotgun
@@ -99050,7 +99060,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddRace,RC_Player_Human,40; bonus2 bAddEff,Eff_Poison,3000;
+      bonus2 bAddRace,RC_Player_Human,40; bonus2 bAddEff,Eff_Poison,1000;
   - Id: 13187
     AegisName: TE_Woe_Grenade
     Name: TE Woe Grenade
@@ -99077,7 +99087,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddRace,RC_Player_Human,40; bonus2 bAddEff,Eff_Blind,3000;
+      bonus2 bAddRace,RC_Player_Human,40; bonus2 bAddEff,Eff_Blind,1000;
   - Id: 13189
     AegisName: COLORSCOPE
     Name: Color Scope
@@ -99117,7 +99127,7 @@ Body:
     EquipLevelMin: 140
     Refineable: true
     Script: |
-      bonus bHit,10; bonus bCriticalRate,15; bonus4 bAutoSpell,"AL_DECAGI",1,500,1;
+      bonus bHit,10; bonus bCriticalRate,15; bonus4 bAutoSpell,"AL_DECAGI",1,30,1;
   - Id: 13192
     AegisName: DEATHFIRE
     Name: Death Fire
@@ -99196,7 +99206,7 @@ Body:
     EquipLevelMin: 140
     Refineable: true
     Script: |
-      bonus bHit,10; bonus bCriticalRate,15; bonus4 bAutoSpell,"AL_DECAGI",1,10,1;
+      bonus bHit,10; bonus bCriticalRate,15; bonus4 bAutoSpell,"AL_DECAGI",1,30,1;
   - Id: 13196
     AegisName: P_BREAKER_
     Name: Peace Breaker
@@ -102715,7 +102725,7 @@ Body:
     Script: |
       .@r = getrefine(); .@def = -50; .@mdef = -10; bonus3 bAutoSpell,"WZ_FROSTNOVA",5,100; if (.@r >= 7) { .@crit = 30; .@mdef += 10; if (.@r >= 10) { bonus bAspd,1; .@crit += 20; .@def += 50; } bonus bCritical,.@crit; } bonus bDef,.@def; bonus bMdef,.@mdef;
   - Id: 13462
-    AegisName: Sealed_Maximum_Sword
+    AegisName: Sealed_Max_Sword
     Name: Sealed Maximum Sword
     Type: Weapon
     SubType: 1hSword
@@ -123949,7 +123959,7 @@ Body:
     Script: |
       bonus bAspdRate,3; bonus bCastrate,-3; bonus bDelayrate,-3; if(getrefine() > 6) { bonus bAspdRate,2; bonus bCastrate,-2; bonus bDelayrate,-2; }
   - Id: 15163
-    AegisName: Fictitious_Robe
+    AegisName: Agenda_Robe
     Name: Agenda Robe
     Type: Armor
     Buy: 20
@@ -159484,7 +159494,7 @@ Body:
     Buy: 10
     Weight: 10
     Script: |
-      if (strcharinfo(3) == "slabw01") { bonus_script "{ bonus bAspd,10; }",10; }
+      if (strcharinfo(3) == "slabw01") { sc_start SC_EP16_2_BUFF_SS,10000,0; }
   - Id: 23077
     AegisName: Build_Up_Potion_SC
     Name: Build Up Potion SC
@@ -159492,7 +159502,7 @@ Body:
     Buy: 10
     Weight: 10
     Script: |
-      if (strcharinfo(3) == "slabw01") { bonus_script "{ bonus bCritical,30; }",10; }
+      if (strcharinfo(3) == "slabw01") { sc_start SC_EP16_2_BUFF_SC,10000,0; }
   - Id: 23078
     AegisName: Build_Up_Potion_AC
     Name: Build Up Potion AC
@@ -159500,7 +159510,7 @@ Body:
     Buy: 10
     Weight: 10
     Script: |
-      if (strcharinfo(3) == "slabw01") { bonus_script "{ bonus bVariableCastrate,-80; }",10; }
+      if (strcharinfo(3) == "slabw01") { sc_start SC_EP16_2_BUFF_AC,10000,0; }
   - Id: 23080
     AegisName: Cursed_Crystal
     Name: Cursed Crystal
@@ -164993,7 +165003,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25151
-    AegisName: Rachel's_Revolver
+    AegisName: Rachels_Revolver
     Name: Rachel's Revolver
     Type: Etc
     Trade:
@@ -165006,7 +165016,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25152
-    AegisName: Cherished_Bouquet
+    AegisName: Cherish_Bouquet
     Name: Cherished Bouquet
     Type: Etc
     Trade:
@@ -165032,12 +165042,12 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25154
-    AegisName: Antique_Gunpowder
+    AegisName: Antique_Powder
     Name: Antique Gunpowder
     Type: Etc
     Weight: 10
   - Id: 25155
-    AegisName: Schwartz's_Honor_Token
+    AegisName: Swz_Honor_Token
     Name: Schwarz's Honor Token
     Type: Etc
     Trade:
@@ -165050,7 +165060,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25156
-    AegisName: Piece_of_Chimera
+    AegisName: Piece_Of_Chimera
     Name: Piece of Chimera
     Type: Etc
     Weight: 10
@@ -165070,7 +165080,7 @@ Body:
     Type: Etc
     Weight: 10
   - Id: 25160
-    AegisName: Borrowed_Book
+    AegisName: Borrow_Book
     Name: Borrowed Book
     Type: Etc
     Trade:
@@ -165083,7 +165093,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25161
-    AegisName: Delicious_Handmade_Cookie
+    AegisName: Handmade_cookie2
     Name: Delicious Handmade Cookie
     Type: Etc
     Trade:
@@ -165096,7 +165106,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25162
-    AegisName: Crispy_Anchovy
+    AegisName: Anchovy_cookie
     Name: Crispy Anchovy
     Type: Etc
     Trade:
@@ -165109,7 +165119,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25163
-    AegisName: Arms_Shop_Ad
+    AegisName: Arms_Shop_AD
     Name: Arms Shop Ad
     Type: Etc
     Trade:
@@ -165241,7 +165251,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25180
-    AegisName: Old_Rings
+    AegisName: Old_Couple_Ring
     Name: Old Rings
     Type: Etc
     Trade:
@@ -165267,7 +165277,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25182
-    AegisName: Assassin's_Mark_Dagger
+    AegisName: Assassin_PT_Dagger
     Name: Assassin's Mark Dagger
     Type: Etc
     Trade:
@@ -165280,7 +165290,7 @@ Body:
       NoMail: true
       NoAuction: true
   - Id: 25183
-    AegisName: Decorated_Archer's_Thimble
+    AegisName: Deco_Thimble_Archer
     Name: Decorated Archer's Thimble
     Type: Etc
     Trade:
@@ -169115,7 +169125,7 @@ Body:
     Script: |
       bonus bDex,2; bonus bSplashRange,1; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player_Human,30; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player_Human,10; autobonus "{ bonus bBaseAtk,80; bonus2 bHPLossRate,100,1000; }",30,6000,BF_WEAPON,"{ specialeffect2 EF_BASH3D; }"; bonus bUnbreakableWeapon;
   - Id: 28223
-    AegisName: Finisher
+    AegisName: Just_Finish
     Name: Finisher
     Type: Weapon
     SubType: Rifle
@@ -169135,7 +169145,7 @@ Body:
     Script: |
       .@r = getrefine(); bonus bLongAtkRate,15; if (.@r >= 7) { bonus2 bSkillAtk,"RL_AM_BLAST",30; bonus2 bSkillAtk,"RL_MASS_SPIRAL",30; if (.@r >= 9) { bonus2 bSkillCooldown,"RL_AM_BLAST",-1000; } }
   - Id: 28224
-    AegisName: Dustfire
+    AegisName: Dust_Fire
     Name: Dustfire
     Type: Weapon
     SubType: Shotgun
@@ -169175,7 +169185,7 @@ Body:
     Script: |
       bonus bLongAtkRate,15; if (.@r >= 7) { bonus2 bSkillAtk,"RL_FIRE_RAIN",30; if (.@r >= 9) { bonus2 bSkillCooldown,"RL_FIRE_RAIN",-1000; } }
   - Id: 28226
-    AegisName: Avenger
+    AegisName: Revenger
     Name: Avenger
     Type: Weapon
     SubType: Grenade
@@ -169864,6 +169874,32 @@ Body:
     EquipLevelMin: 90
     Script: |
       bonus bMdef,3; bonus bHit,10;
+  - Id: 28370
+    AegisName: Broken_Chip_Green
+    Name: Broken Chip (Green)
+    Type: Armor
+    Weight: 100
+    Defense: 1
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+      Left_Accessory: true
+    EquipLevelMin: 100
+    Script: |
+      bonus2 bAddClass,Class_All,5; bonus bDelayrate,-5;
+  - Id: 28371
+    AegisName: Broken_Chip_Red
+    Name: Broken Chip (Red)
+    Type: Armor
+    Weight: 100
+    Defense: 1
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+      Left_Accessory: true
+    EquipLevelMin: 100
+    Script: |
+      bonus2 bMagicAddClass,Class_All,5; bonus bVariableCastrate,-10;
   - Id: 28372
     AegisName: Imperial_Ring
     Name: Imperial Ring
@@ -170320,7 +170356,7 @@ Body:
     Script: |
       bonus2 bVariableCastrate,"SU_PICKYPECK",-50; bonus2 bSkillAtk,"SU_PICKYPECK",(readparam(bDex)/2)+(20 * getskilllv("SU_PICKYPECK")); /* Need to confirm damage formula */
   - Id: 28425
-    AegisName: Mercenary_Ring_Type_A
+    AegisName: Mercenary_Ring_A
     Name: Mercenary Ring Type A
     Type: Armor
     Buy: 20
@@ -170332,7 +170368,7 @@ Body:
     Script: |
       bonus bVit,3; if (BaseClass == Job_Gunslinger || BaseJob == Job_Novice || BaseJob == Job_SuperNovice || BaseClass == Job_Ninja || BaseClass == Job_Taekwon) { bonus bMaxHP,1000; bonus bMaxSP,200; }
   - Id: 28426
-    AegisName: Mercenary_Ring_Type_B
+    AegisName: Mercenary_Ring_B
     Name: Mercenary Ring Type B
     Type: Armor
     Buy: 20
@@ -172315,7 +172351,7 @@ Body:
     Script: |
       bonus bLongAtkDef,5; .@r = getrefine(); if(.@r>=5) { bonus bLongAtkDef,5; } if(.@r>=7) { bonus bLongAtkDef,10; } if(.@r>=9) { bonus bLongAtkDef,15; }
   - Id: 28913
-    AegisName: Ultralight_Magic_Shield
+    AegisName: Ultra_Light_MShield
     Name: Ultralight Magic Shield
     Type: Armor
     Weight: 100
@@ -173392,6 +173428,66 @@ Body:
     Type: Card
     Script: |
       /* todo */
+  - Id: 29166
+    AegisName: A-Tolerance
+    Name: A-Tolerance
+    Type: Card
+    Script: |
+      bonus2 bSubClass,Class_All,1; .@r = getrefine(); bonus2 bSubRace,RC_DemiHuman,.@r/3; bonus2 bSubRace,RC_Formless,.@r/3;
+  - Id: 29167
+    AegisName: A-Hit
+    Name: A-Hit
+    Type: Card
+    Script: |
+      bonus bHit,20; .@r = getrefine(); if(.@r>=7){ bonus bHit,10; } if(.@r>=8){ bonus bHit,10; } if(.@r>=9){ bonus bHit,10; }
+  - Id: 29168
+    AegisName: A-Flee
+    Name: A-Flee
+    Type: Card
+    Script: |
+      bonus bFlee,20; .@r = getrefine(); if(.@r>=7){ bonus bFlee,10; } if(.@r>=8){ bonus bFlee,10; } if(.@r>=9){ bonus bFlee,10; }
+  - Id: 29169
+    AegisName: A-Mdef
+    Name: A-Mdef
+    Type: Card
+    Script: |
+      bonus bMdef,2; .@r = getrefine(); if(.@r>=6){ bonus bMdef,4; } if(.@r>=8){ bonus bMdef,8; }
+  - Id: 29170
+    AegisName: S-Atk
+    Name: S-Atk
+    Type: Card
+    Script: |
+      bonus bBaseAtk,50; .@r = getrefine(); .@c = 100; .@t = 3000; if(.@r>=8){ .@t += 1000; } if(.@r>=9){ .@c += 100; .@t += 1000; } autobonus2 "{ bonus bBaseAtk,150; }",.@c,.@t;
+  - Id: 29171
+    AegisName: S-Matk
+    Name: S-Matk
+    Type: Card
+    Script: |
+      bonus bMatk,100; .@r = getrefine(); .@c = 100; .@t = 3000; if(.@r>=8){ .@t += 1000; } if(.@r>=9){ .@c += 100; .@t += 1000; } autobonus2 "{ bonus bMatk,150; }",.@c,.@t,BF_MAGIC;
+  - Id: 29172
+    AegisName: S-Avoid
+    Name: S-Avoid
+    Type: Card
+    Script: |
+      bonus bFlee2,5; .@r = getrefine(); .@c = 100; .@t = 3000; if(.@r>=8){ .@t += 1000; } if(.@r>=9){ .@c += 100; .@t += 1000; } autobonus2 "{ bonus bFlee2,100; }",.@c,.@t;
+  - Id: 29173
+    AegisName: S-MaxHP
+    Name: S-MaxHP
+    Type: Card
+    Script: |
+      bonus bMaxHP,2500; .@r = getrefine(); .@c = 100; .@t = 3000; if(.@r>=8){ .@t += 1000; } if(.@r>=9){ .@c += 100; .@t += 1000; } autobonus2 "{ bonus bMaxHP,7500; }",.@c,.@t;
+  - Id: 29174
+    AegisName: S-Quick
+    Name: S-Quick
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-10; .@r = getrefine(); .@c = 100; .@t = 3000; if(.@r>=8){ .@t += 1000; } if(.@r>=9){ .@c += 100; .@t += 1000; } autobonus2 "{ bonus bVariableCastrate,-100; bonus bDelayrate,-100; }",.@c,.@t,BF_MAGIC;
+  - Id: 29175
+    AegisName: S-Cri
+    Name: S-Cri
+    Type: Card
+    Script: |
+      bonus bCritical,10; .@r = getrefine(); .@c = 100; .@t = 3000; if(.@r>=8){ .@t += 1000; } if(.@r>=9){ .@c += 100; .@t += 1000; } autobonus2 "{ bonus bCritical,100; }",.@c,.@t;
   - Id: 29224
     AegisName: WhiteBody_Effect
     Name: White Body Effect
@@ -173702,6 +173798,48 @@ Body:
     Type: Card
     Script: |
       skill "TF_DOUBLE",3; bonus bDoubleRate,15;
+  - Id: 29438
+    AegisName: Z-Knockback
+    Name: Z-Knockback
+    Type: Card
+    Script: |
+      bonus bNoKnockback;
+  - Id: 29439
+    AegisName: Z-Immortal
+    Name: Z-Immortal
+    Type: Card
+    Script: |
+      bonus bUnbreakableHelm; /* fix me */
+  - Id: 29440
+    AegisName: Z-Killgain
+    Name: Z-Killgain
+    Type: Card
+    Script: |
+      bonus bSPGainValue,2; .@r = getrefine(); if(.@r>=7){ bonus bSPGainValue,3; } if(.@r>=8){ bonus bSPGainValue,5; } if(.@r>=9){ bonus bSPGainValue,10; }
+  - Id: 29441
+    AegisName: Z-Reincarnation
+    Name: Z-Reincarnation
+    Type: Card
+    Script: |
+      bonus bRestartFullRecover;
+  - Id: 29442
+    AegisName: Z-NoDispell
+    Name: Z-NoDispell
+    Type: Card
+    Script: |
+      bonus bNoCastCancel2;
+  - Id: 29443
+    AegisName: Z-Clairvoyance
+    Name: Z-Clairvoyance
+    Type: Card
+    Script: |
+      bonus bIntravision;
+  - Id: 29444
+    AegisName: Z-Cast_Fixed
+    Name: Z-Cast Fixed
+    Type: Card
+    Script: |
+      bonus bFixedCastrate,-50;
   - Id: 29579
     AegisName: Racing_SG_1
     Name: Racing (Star Gladiator) 1Lv
@@ -179366,7 +179504,7 @@ Body:
       Left_Accessory: true
     EquipLevelMin: 100
     Script: |
-      bonus2 bAddClass,Class_All,5; bonus bMatkRate,5; bonus bAspdRate,5; /* Combo with Riot Chip not implemented yet. */
+      bonus2 bAddClass,Class_All,5; bonus bMatkRate,5; bonus bAspdRate,5;
   - Id: 32204
     AegisName: Immortal_Dog_Tag
     Name: Immortal Dog Tag

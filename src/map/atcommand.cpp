@@ -8753,12 +8753,33 @@ ACMD_FUNC(request)
 }
 
 /*==========================================
- * Feel (SG save map) Reset [HiddenDragon]
+ * Feel (SG designated maps) Reset [HiddenDragon]
  *------------------------------------------*/
 ACMD_FUNC(feelreset)
 {
+	if ((sd->class_&MAPID_UPPERMASK) != MAPID_STAR_GLADIATOR) {
+		clif_displaymessage(sd->fd,msg_txt(sd,35));	// You can't use this command with this class.
+		return -1;
+	}
+
 	pc_resetfeel(sd);
 	clif_displaymessage(fd, msg_txt(sd,1324)); // Reset 'Feeling' maps.
+
+	return 0;
+}
+
+/*==========================================
+ * Hate (SG designated monsters) Reset
+ *------------------------------------------*/
+ACMD_FUNC(hatereset)
+{
+	if ((sd->class_&MAPID_UPPERMASK) != MAPID_STAR_GLADIATOR) {
+		clif_displaymessage(sd->fd,msg_txt(sd,35));	// You can't use this command with this class.
+		return -1;
+	}
+
+	pc_resethate(sd);
+	clif_displaymessage(fd, msg_txt(sd,1515)); // Reset 'Hatred' monsters.
 
 	return 0;
 }
@@ -10523,6 +10544,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(homshuffle),
 		ACMD_DEF(showmobs),
 		ACMD_DEF(feelreset),
+		ACMD_DEF(hatereset),
 		ACMD_DEF(auction),
 		ACMD_DEF(mail),
 		ACMD_DEF2("noks", ksprotection),

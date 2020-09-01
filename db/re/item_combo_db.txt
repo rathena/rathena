@@ -763,8 +763,50 @@
 5917:1525,{ bonus bLongAtkDef,10; }
 5920:18542,{ bonus bHealPower,2*getequiprefinerycnt(EQI_HEAD_TOP); }
 5933:19112,{ bonus2 bAddSize,Size_All,1; bonus bLongAtkRate,1; if(readparam(bStr)>=108) { bonus2 bAddSize,Size_All,2; bonus bLongAtkRate,1; } if(readparam(bStr)>=120) { bonus2 bAddSize,Size_All,3; bonus bLongAtkRate,1; } }
+5965:28370,{ bonus bDelayrate,-15; }
+5965:28371,{ bonus bVariableCastrate,-20; }
+5965:29166,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus2 bSubRace,RC_DemiHuman,.@r; bonus2 bSubRace,RC_Formless,.@r; }
+5965:29167,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bHit,(.@r/3)*5; }
+5965:29168,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bFlee,(.@r/3)*5; }
+5965:29169,{ bonus bMdef,20; }
+5965:29170,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2); }
+5965:29171,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2); }
+5965:29172,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2); }
+5965:29173,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2); }
+5965:29174,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2); }
+5965:29175,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bAspdRate,(.@r/2); }
+5965:29438,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2); }
+5965:29439,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2); }
+5965:29440,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2); }
+5965:29441,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2); }
+5965:29442,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2); }
+5965:29443,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2); }
+5965:29444,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxHPrate,(.@r/2); }
+5965:32203,{ bonus bAspdRate,10; bonus2 bAddClass,Class_All,10; bonus2 bMagicAddClass,Class_All,10; bonus2 bIgnoreDefRaceRate,RC_All,30; bonus2 bIgnoreMdefRaceRate,RC_All,30; }
+5965:4970,{ bonus2 bAddEle,Ele_Fire,10; }
+5965:4971,{ bonus2 bAddEle,Ele_Water,10; }
+5965:4972,{ bonus2 bAddEle,Ele_Earth,10; }
+5965:4973,{ bonus2 bAddEle,Ele_Wind,10; }
+5965:4974,{ bonus2 bSubEle,Ele_Fire,25; }
+5965:4975,{ bonus2 bSubEle,Ele_Water,25; }
+5965:4976,{ bonus2 bSubEle,Ele_Earth,25; }
+5965:4977,{ bonus2 bSubEle,Ele_Wind,25; }
+5965:4978,{ bonus2 bHPRegenRate,1500,5000; }
+5965:4979,{ bonus2 bSPRegenRate,25,5000; }
+5965:4980,{ bonus bHPrecovRate,350; }
+5965:4981,{ bonus bSPrecovRate,50; }
+5965:4982,{ bonus2 bAddClass,Class_All,3; }
+5965:4983,{ bonus2 bMagicAddClass,Class_All,3; }
+5965:4984,{ bonus bDef,500; }
+5965:4985,{ bonus bFlee2,2; }
+5965:4986,{ bonus bBaseAtk,15; }
+5965:4987,{ bonus bMatk,15; }
+5965:4988,{ bonus bMaxHP,7500; }
+5965:4989,{ bonus bMaxSP,150; }
+5965:4990,{ bonus bMaxHP,1000; }
+5965:4991,{ bonus bAspd,1; }
 5967:28321,{ bonus2 bSubSkill,"HT_BLITZBEAT",200; }
-5918:19306,{ .@aspd = 1; .@crit_dmg = 2 + 2 * (readparam(bDex) / 10); .@sub_demi = 2; .@luk = readparam(bLuk); if (.@luk > 107) { .@aspd += 1; .@crit_dmg += 2; .@sub_demi += 2; } if (.@luk > 119) { .@aspd += 2; .@crit_dmg += 4; .@sub_demi += 4; bonus bSplashRange,1; } bonus bAspd,.@aspd; bonus bCritAtkRate,.@crit_dmg; bonus2 bSubRace,RC_DemiHuman,.@sub_demi; bonus2 bSubSkill,"NPC_CRITICALSLASH",100; }
+5918:19306,{ .@aspd = 1; .@crit_dmg = 2 + 2 * (readparam(bDex) / 10); .@sub_player = 2; .@luk = readparam(bLuk); if (.@luk > 107) { .@aspd += 1; .@crit_dmg += 2; .@sub_player += 2; } if (.@luk > 119) { .@aspd += 2; .@crit_dmg += 4; .@sub_player += 4; bonus bSplashRange,1; } bonus bAspd,.@aspd; bonus bCritAtkRate,.@crit_dmg; bonus2 bSubRace,RC_Player_Human,.@sub_player; bonus2 bSubSkill,"NPC_CRITICALSLASH",100; }
 //9024:18832,{ bonus3 bAutoSpell,"BS_ADRENALINE",2,(GetPetRelationship >= 3)?15:10; }
 1298:4317,{ bonus bCritAtkRate,5; }
 1298:4521,{ bonus bCritAtkRate,5; }
