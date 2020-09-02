@@ -190,7 +190,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 		}
 
 		if( achievement->condition ){
-			aFree( achievement->condition );
+			script_free_code( achievement->condition );
 			achievement->condition = nullptr;
 		}
 
@@ -294,7 +294,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 			}
 
 			if( achievement->rewards.script ){
-				aFree( achievement->rewards.script );
+				script_free_code( achievement->rewards.script );
 				achievement->rewards.script = nullptr;
 			}
 
