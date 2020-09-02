@@ -15306,10 +15306,12 @@ Body:
     DamageFlags:
       Splash: true
       SplashSplit: true
+      IgnoreDefense: true
     Flags:
       IsNpc: true
       TargetTrap: true
       ShowScale: true
+      IgnoreLandProtector: true
     Hit: Multi_Hit
     HitCount: 1
     SplashArea:
@@ -15333,6 +15335,34 @@ Body:
         Area: 11
       - Level: 10
         Area: 13
+    Duration1: 910
+    Unit:
+      Id: Earthquake
+      Range:
+        - Level: 1
+          Size: 5
+        - Level: 2
+          Size: 7
+        - Level: 3
+          Size: 9
+        - Level: 4
+          Size: 11
+        - Level: 5
+          Size: 13
+        - Level: 6
+          Size: 5
+        - Level: 7
+          Size: 7
+        - Level: 8
+          Size: 9
+        - Level: 9
+          Size: 11
+        - Level: 10
+          Size: 13
+      Interval: 300
+      Target: Enemy
+      Flag:
+        PathCheck: true
   - Id: 654
     Name: NPC_FIREBREATH
     Description: Fire Breath
@@ -27433,6 +27463,7 @@ Body:
     HitCount: 1
     Requires:
       SpCost: 40
+      State: Cart
   - Id: 2552
     Name: RL_RICHS_COIN
     Description: Rich's Coin

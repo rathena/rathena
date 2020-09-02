@@ -653,11 +653,11 @@ void storage_guild_log( struct map_session_data* sd, struct item* item, int16 am
 		StringBuf_Printf(&buf, ", `option_val%d`", i);
 		StringBuf_Printf(&buf, ", `option_parm%d`", i);
 	}
-	StringBuf_Printf(&buf, ") VALUES(NOW(),'%u','%u', '%s', '%d', '%d','%d','%d','%d','%" PRIu64 "','%d'",
+	StringBuf_Printf(&buf, ") VALUES(NOW(),'%u','%u', '%s', '%u', '%d','%d','%d','%d','%" PRIu64 "','%d'",
 		sd->status.guild_id, sd->status.char_id, sd->status.name, item->nameid, amount, item->identify, item->refine,item->attribute, item->unique_id, item->bound);
 
 	for (i = 0; i < MAX_SLOTS; i++)
-		StringBuf_Printf(&buf, ",'%d'", item->card[i]);
+		StringBuf_Printf(&buf, ",'%u'", item->card[i]);
 	for (i = 0; i < MAX_ITEM_RDM_OPT; i++)
 		StringBuf_Printf(&buf, ",'%d','%d','%d'", item->option[i].id, item->option[i].value, item->option[i].param);
 	StringBuf_Printf(&buf, ")");
@@ -707,7 +707,7 @@ enum e_guild_storage_log storage_guild_log_read_sub( struct map_session_data* sd
 	SqlStmt_BindColumn(stmt, 3, SQLDT_SHORT,     &entry.amount,           0, NULL, NULL);
 
 	// Item data
-	SqlStmt_BindColumn(stmt, 4, SQLDT_USHORT,    &entry.item.nameid,      0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 4, SQLDT_UINT,      &entry.item.nameid,      0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 5, SQLDT_CHAR,      &entry.item.identify,    0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 6, SQLDT_CHAR,      &entry.item.refine,      0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 7, SQLDT_CHAR,      &entry.item.attribute,   0, NULL, NULL);
@@ -715,7 +715,7 @@ enum e_guild_storage_log storage_guild_log_read_sub( struct map_session_data* sd
 	SqlStmt_BindColumn(stmt, 9, SQLDT_UINT,      &entry.item.bound,       0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 10, SQLDT_UINT64,    &entry.item.unique_id,   0, NULL, NULL);
 	for( j = 0; j < MAX_SLOTS; ++j )
-		SqlStmt_BindColumn(stmt, 11+j, SQLDT_USHORT, &entry.item.card[j], 0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 11+j, SQLDT_UINT, &entry.item.card[j], 0, NULL, NULL);
 	for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
 		SqlStmt_BindColumn(stmt, 11+MAX_SLOTS+j*3, SQLDT_SHORT, &entry.item.option[j].id, 0, NULL, NULL);
 		SqlStmt_BindColumn(stmt, 11+MAX_SLOTS+j*3+1, SQLDT_SHORT, &entry.item.option[j].value, 0, NULL, NULL);
@@ -844,7 +844,7 @@ bool storage_guild_additem2(struct s_storage* stor, struct item* item, int amoun
 				// Set the amount, make it fit with max amount
 				amount = min(amount, ((id->stack.guildstorage) ? id->stack.amount : MAX_AMOUNT) - stor->u.items_guild[i].amount);
 				if (amount != item->amount)
-					ShowWarning("storage_guild_additem2: Stack limit reached! Altered amount of item \"" CL_WHITE "%s" CL_RESET "\" (%d). '" CL_WHITE "%d" CL_RESET "' -> '" CL_WHITE"%d" CL_RESET "'.\n", id->name, id->nameid, item->amount, amount);
+					ShowWarning("storage_guild_additem2: Stack limit reached! Altered amount of item \"" CL_WHITE "%s" CL_RESET "\" (%u). '" CL_WHITE "%d" CL_RESET "' -> '" CL_WHITE"%d" CL_RESET "'.\n", id->name, id->nameid, item->amount, amount);
 				stor->u.items_guild[i].amount += amount;
 				stor->dirty = true;
 				return true;

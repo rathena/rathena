@@ -760,7 +760,8 @@ job3_war01,29,25,0	script	Ebein#WRR	437,{
 job3_war01,29,25,5	script	The chamber of magic#1	437,{
 	end;
 OnInit:
-	disablenpc "The chamber of magic#1";
+	//disablenpc  "The chamber of magic#1";
+	hideonnpc "The chamber of magic#1";
 	waitingroom "The chamber of magic",20,"The chamber of magic#1::OnStartArena",1;
 	enablewaitingroomevent;
 	end;

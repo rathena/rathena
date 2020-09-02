@@ -1420,7 +1420,7 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 						rx = (bl->x - x0);
 						ry = (bl->y - y0);
 						//Do not hit source cell
-						if (rx == 0 && ry == 0)
+						if (battle_config.skill_eightpath_same_cell == 0 && rx == 0 && ry == 0)
 							continue;
 						//This turns it so that the area that is hit is always with positive rx and ry
 						rx *= dx;
@@ -1456,7 +1456,7 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 						rx = (bl->x - x0);
 						ry = (bl->y - y0);
 						//Do not hit source cell
-						if (rx == 0 && ry == 0)
+						if (battle_config.skill_eightpath_same_cell == 0 && rx == 0 && ry == 0)
 							continue;
 						//This turns it so that the area that is hit is always with positive rx and ry
 						rx *= dx;

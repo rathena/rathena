@@ -1208,7 +1208,7 @@ hugel,62,69,1	script	Eckar Erenes#double	798,{
 			close;
 		}
 	}
-	if (!$@mon_time_2_2) {
+	if ($@mon_time_2_2 == 1) {
 		mes "[Eckar Erenes]";
 		mes "Right now, a Monster Race";
 		mes "is in progress. It's too late to place a wager, but if you'd like";

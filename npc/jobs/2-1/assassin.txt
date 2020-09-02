@@ -1102,7 +1102,8 @@ in_moc_16,21,165,2	script	Standby Room#ASNTEST	725,{
 	end;
 
 OnInit:
-	disablenpc "Standby Room#ASNTEST";
+	//disablenpc "Standby Room#ASNTEST";
+	hideonnpc "Standby Room#ASNTEST";
 	waitingroom "Standby Room",10,"Standby Room#ASNTEST::OnStartArena",1;
 	enablewaitingroomevent;
 	end;
