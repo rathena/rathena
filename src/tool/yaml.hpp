@@ -72,8 +72,8 @@ YAML::Node inNode;
 YAML::Emitter body;
 
 // Constants for conversion
-std::unordered_map<uint16, std::string> aegis_itemnames;
-std::unordered_map<uint16, uint16> aegis_itemviewid;
+std::unordered_map<t_itemid, std::string> aegis_itemnames;
+std::unordered_map<t_itemid, t_itemid> aegis_itemviewid;
 std::unordered_map<uint16, std::string> aegis_mobnames;
 std::unordered_map<uint16, std::string> aegis_skillnames;
 std::unordered_map<const char *, int64> constants;
@@ -399,23 +399,25 @@ static bool parse_item_constants(const char *path) {
 			++p;
 		}
 
+		t_itemid item_id = strtoul(str[0], nullptr, 10);
+
 		if (p == NULL)
 		{
-			ShowError("itemdb_readdb: Insufficient columns in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+			ShowError("itemdb_readdb: Insufficient columns in line %d of \"%s\" (item with id %u), skipping.\n", lines, path, item_id);
 			continue;
 		}
 
 		// Script
 		if (*p != '{')
 		{
-			ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+			ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %u), skipping.\n", lines, path, item_id);
 			continue;
 		}
 		str[19] = p + 1;
 		p = strstr(p + 1, "},");
 		if (p == NULL)
 		{
-			ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+			ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %u), skipping.\n", lines, path, item_id);
 			continue;
 		}
 		*p = '\0';
@@ -424,14 +426,14 @@ static bool parse_item_constants(const char *path) {
 		// OnEquip_Script
 		if (*p != '{')
 		{
-			ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+			ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %u), skipping.\n", lines, path, item_id);
 			continue;
 		}
 		str[20] = p + 1;
 		p = strstr(p + 1, "},");
 		if (p == NULL)
 		{
-			ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+			ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %u), skipping.\n", lines, path, item_id);
 			continue;
 		}
 		*p = '\0';
@@ -440,7 +442,7 @@ static bool parse_item_constants(const char *path) {
 		// OnUnequip_Script (last column)
 		if (*p != '{')
 		{
-			ShowError("itemdb_readdb: Invalid format (OnUnequip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+			ShowError("itemdb_readdb: Invalid format (OnUnequip_Script column) in line %d of \"%s\" (item with id %u), skipping.\n", lines, path, item_id);
 			continue;
 		}
 		str[21] = p;
@@ -460,20 +462,20 @@ static bool parse_item_constants(const char *path) {
 			}
 
 			if (lcurly != rcurly) {
-				ShowError("itemdb_readdb: Mismatching curly braces in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
+				ShowError("itemdb_readdb: Mismatching curly braces in line %d of \"%s\" (item with id %u), skipping.\n", lines, path, item_id);
 				continue;
 			}
 		}
 		str[21] = str[21] + 1;  //skip the first left curly
 		*p = '\0';              //null the last right curly
 
-		uint16 item_id = atoi(str[0]);
+		t_itemid view_id = strtoul(str[18], nullptr, 10);
 		char *name = trim(str[1]);
 
 		aegis_itemnames[item_id] = std::string(name);
 
-		if (atoi(str[14]) & (EQP_HELM | EQP_COSTUME_HELM) && util::umap_find(aegis_itemviewid, (uint16)atoi(str[18])) == nullptr)
-			aegis_itemviewid[atoi(str[18])] = item_id;
+		if (atoi(str[14]) & (EQP_HELM | EQP_COSTUME_HELM) && util::umap_find(aegis_itemviewid, view_id) == nullptr)
+			aegis_itemviewid[view_id] = item_id;
 
 		count++;
 	}
