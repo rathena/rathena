@@ -9293,8 +9293,9 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	}
 
 	if( (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR && (b_class&MAPID_UPPERMASK) != MAPID_STAR_GLADIATOR) {
-		/* going off star glad lineage, reset feel to not store no-longer-used vars in the database */
+		/* going off star glad lineage, reset feel and hate to not store no-longer-used vars in the database */
 		pc_resetfeel(sd);
+		pc_resethate(sd);
 	}
 
 	// Reset body style to 0 before changing job to avoid
