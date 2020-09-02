@@ -1420,7 +1420,7 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 						rx = (bl->x - x0);
 						ry = (bl->y - y0);
 						//Do not hit source cell
-						if (rx == 0 && ry == 0)
+						if (battle_config.skill_eightpath_same_cell == 0 && rx == 0 && ry == 0)
 							continue;
 						//This turns it so that the area that is hit is always with positive rx and ry
 						rx *= dx;
@@ -1456,7 +1456,7 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 						rx = (bl->x - x0);
 						ry = (bl->y - y0);
 						//Do not hit source cell
-						if (rx == 0 && ry == 0)
+						if (battle_config.skill_eightpath_same_cell == 0 && rx == 0 && ry == 0)
 							continue;
 						//This turns it so that the area that is hit is always with positive rx and ry
 						rx *= dx;
@@ -2663,7 +2663,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 	}
 	// npcs with trigger area are grouped
 	// 0 < npc_num_warp < npc_num_area < npc_num
-	if (xs < 0 && ys < 0)
+	if (xs < 0 || ys < 0)
 		mapdata->npc[ mapdata->npc_num ] = nd;
 	else {
 		switch (nd->subtype) {
@@ -3649,6 +3649,7 @@ void map_flags_init(void){
 
 		mapdata->flag.clear();
 		mapdata->flag.reserve(MF_MAX); // Reserve the bucket size
+		mapdata->drop_list.clear();
 		args.flag_val = 100;
 
 		// additional mapflag data

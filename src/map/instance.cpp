@@ -980,7 +980,8 @@ e_instance_enter instance_enter(struct map_session_data *sd, int instance_id, co
 	if (instance_id <= 0) // Default party checks will be used
 		mode = IM_PARTY;
 	else {
-		idata = util::umap_find(instances, instance_id);
+		if (!(idata = util::umap_find(instances, instance_id)))
+			return IE_NOINSTANCE;
 		mode = idata->mode;
 	}
 
