@@ -9437,6 +9437,7 @@ Returns battle group ID on success. Returns 0 on failure.
 
 Adds an attached player or <char id> if specified to an existing battleground group. The player will also be warped
 to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
+Note: The map need the mapflag MF_BATTLEGROUND otherwise the player is removed from the Battleground team.
 
 Returns true on success. Returns false on failure.
 
@@ -9484,6 +9485,7 @@ to their save point if the map had MF_NOSAVE.
 
 Similar to the 'warp' command.
 Places all members of <Battle Group> at the specified map and coordinates.
+Note: The map need the mapflag MF_BATTLEGROUND otherwise the players are removed from the Battleground team.
 
 Example:
 	//place the battle group one for Tierra Gorge at starting position.
@@ -9566,8 +9568,8 @@ Example:
 Retrieves data related to given Battle Group. Type can be one of the following:
 
 	0 - Amount of players currently belonging to the group.
-	1 - Store GID of players in <Battle Group> in a temporary global array $@arenamembers
-		and returns amount of players currently belonging to the group.
+	1 - Store GID of players in <Battle Group> in a temporary global array $@arenamembers,
+		stores and also returns the amount of players currently belonging to the group in $@arenamemberscount.
 
 ---------------------------------------
 
