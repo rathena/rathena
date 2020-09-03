@@ -1,0 +1,52 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ renova ]
+  pull_request:
+    branches: [ renova ]
+
+env:
+  DB_ROOT: root
+  DB_HOST: 127.0.0.1
+  DB_NAME: ragnarok
+  DB_USER: ragnarok
+  DB_PASS: ragnarok
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Find and replace database host
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: "database"
+          replace: "127.0.0.1"
+          include:  "conf/import-tmpl/inter_conf.txt"
+      - name: Find and replace character server IP
+        uses: jacobtomlinson/gha-find-replace@master
+        with:
+          find: "char_ip: char"
+          replace: "char_ip: 127.0.0.1"
+          include: "conf/import-tmpl/map_conf.txt"
+      - name: Start MySQL
+        run: | 
+          sudo systemctl start mysql.service
+          mysql -h 127.0.0.1 --port 3306 -u root -proot -e "SET PASSWORD FOR root@localhost=PASSWORD('');"
+      - name: Import SQL
+        run: ./tools/ci/sql.sh
+      - name: Configure rAthena
+        run: ./configure --enable-prere=no --enable-vip=no --enable-buildbot=yes
+      - name: Copy NPCs
+        run: ./tools/ci/npc.sh
+      - name: Clean
+        run: make clean
+      - name: Make rAthena
+        run: make all
+      - name: Test Login Server
+        run: ./login-server --run-once
+      - name: Test Character Server
+        run: ./char-server --run-once
+      - name: Test Map Server
+        run: ./map-server --run-once
