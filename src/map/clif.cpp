@@ -10697,6 +10697,41 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		// Notify everyone that this char logged in [Skotlex].
 		map_foreachpc(clif_friendslist_toggle_sub, sd->status.account_id, sd->status.char_id, 1);
 
+		#if PACKETVER >= 20070918
+				clif_partyinvitationstate(sd);
+				clif_equipcheckbox(sd);
+		#endif
+		#if PACKETVER >= 20141008
+				if( battle_config.pet_autofeed_always ){
+					// Always send ON or OFF
+					if( sd->pd && battle_config.feature_pet_autofeed ){
+						clif_configuration( sd, CONFIG_PET_AUTOFEED, sd->pd->pet.autofeed );
+					}else{
+						clif_configuration( sd, CONFIG_PET_AUTOFEED, false );
+					}
+				}else{
+					// Only send when enabled
+					if( sd->pd && battle_config.feature_pet_autofeed && sd->pd->pet.autofeed ){
+						clif_configuration( sd, CONFIG_PET_AUTOFEED, true );
+					}
+				}
+		#endif
+		#if PACKETVER >= 20170920
+				if( battle_config.homunculus_autofeed_always ){
+					// Always send ON or OFF
+					if( sd->hd && battle_config.feature_homunculus_autofeed ){
+						clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, sd->hd->homunculus.autofeed );
+					}else{
+						clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, false );
+					}
+				}else{
+					// Only send when enabled
+					if( sd->hd && battle_config.feature_homunculus_autofeed && sd->hd->homunculus.autofeed ){
+						clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, true );
+					}
+				}
+		#endif
+
 		if (!sd->state.autotrade) { // Don't trigger NPC event or opening vending/buyingstore will be failed
 			//Login Event
 			npc_script_event(sd, NPCE_LOGIN);
@@ -10720,40 +10755,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	}
 
 	if( sd->state.changemap ) {// restore information that gets lost on map-change
-#if PACKETVER >= 20070918
-		clif_partyinvitationstate(sd);
-		clif_equipcheckbox(sd);
-#endif
-#if PACKETVER >= 20141008
-		if( battle_config.pet_autofeed_always ){
-			// Always send ON or OFF
-			if( sd->pd && battle_config.feature_pet_autofeed ){
-				clif_configuration( sd, CONFIG_PET_AUTOFEED, sd->pd->pet.autofeed );
-			}else{
-				clif_configuration( sd, CONFIG_PET_AUTOFEED, false );
-			}
-		}else{
-			// Only send when enabled
-			if( sd->pd && battle_config.feature_pet_autofeed && sd->pd->pet.autofeed ){
-				clif_configuration( sd, CONFIG_PET_AUTOFEED, true );
-			}
-		}
-#endif
-#if PACKETVER >= 20170920
-		if( battle_config.homunculus_autofeed_always ){
-			// Always send ON or OFF
-			if( sd->hd && battle_config.feature_homunculus_autofeed ){
-				clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, sd->hd->homunculus.autofeed );
-			}else{
-				clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, false );
-			}
-		}else{
-			// Only send when enabled
-			if( sd->hd && battle_config.feature_homunculus_autofeed && sd->hd->homunculus.autofeed ){
-				clif_configuration( sd, CONFIG_HOMUNCULUS_AUTOFEED, true );
-			}
-		}
-#endif
 
 		if (sd->guild && battle_config.guild_notice_changemap == 1){
 			clif_guild_notice(sd); // Displays after VIP
