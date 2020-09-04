@@ -1484,4 +1484,4 @@
 22238:840001,{ bonus bDex,10; bonus bLongAtkRate,5; }
 22238:830002,{ bonus bDex,10; bonus bLongAtkRate,5; }
 22238:820001,{ bonus bDex,10; bonus bLongAtkRate,5; }
-28763:510022,{ .@r = getequiprefinerycnt(EQI_HAND_R) + getequiprefinerycnt(EQI_HAND_L); bonus bBaseAtk,15*(.@r/3); bonus bAtkRate,3*(.@r/5); if (.@r>=14){ bonus2 bSkillAtk,"KO_JYUMONJIKIRI",30; bonus2 bSkillCooldown,"KO_JYUMONJIKIRI",-2000; } if (.@r>=16){ skill "OB_ZANGETSU",getskilllv("KG_KAGEHUMI"); skill "KG_KAGEHUMI",getskilllv("OB_ZANGETSU"); } if (.@r>=18){ bonus2 bAddEle,Ele_All,15; } if (.@r>=20){ bonus2 bSkillAtk,"KO_JYUMONJIKIRI",25; }
+28763:510022,{ .@r = getequiprefinerycnt(EQI_HAND_R) + getequiprefinerycnt(EQI_HAND_L); bonus bBaseAtk,15*(.@r/3); bonus bAtkRate,3*(.@r/5); if (.@r>=14){ bonus2 bSkillAtk,"KO_JYUMONJIKIRI",30; bonus2 bSkillCooldown,"KO_JYUMONJIKIRI",-2000; } if (.@r>=16){ skill "OB_ZANGETSU",getskilllv("KG_KAGEHUMI"); skill "KG_KAGEHUMI",getskilllv("OB_ZANGETSU"); } if (.@r>=18){ bonus2 bAddEle,Ele_All,15; } if (.@r>=20){ bonus2 bSkillAtk,"KO_JYUMONJIKIRI",25; } }
