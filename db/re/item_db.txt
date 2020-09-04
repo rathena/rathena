@@ -7633,16 +7633,16 @@
 13419,Holy_Saber,Holy saber,5,20,,0,160,,1,0,0x000654E2,63,2,2,3,0,0,2,{ bonus2 bAddEle,Ele_Undead,40; bonus2 bMagicAddEle,Ele_Undead,40; },{},{}
 13420,Honglyun's_Sword,Honglyun's Sword,5,20,,1200,160,,1,1,0x000654E2,63,2,2,4,70,1,2,{ bonus bAtkEle,Ele_Fire; bonus bStr,2; bonus bInt,2; bonus3 bAutoSpell,"WZ_METEOR",1,5; },{},{}
 13421,Ruber,Ruber,5,20,,1500,170,,1,1,0x000444A2,18,2,2,3,50,1,2,{ autobonus "{ bonus2 bSkillAtk,\"KN_BOWLINGBASH\",20; bonus2 bSkillAtk,\"SM_BASH\",20; }",5,15000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; },{},{}
-13422,Flamberge_C,Flamberge,5,0,,0,185,,1,0,0x00004080,63,2,2,3,1,0,2,{ bonus bUnbreakableWeapon; bonus2 bAddSize,Size_All,40; },{},{}
+13422,Flamberge_C,Flamberge,5,0,,0,185,,1,0,0x00004080,63,2,2,3,1,0,2,{ bonus2 bAddSize,Size_All,40; },{},{}
 13423,P_Sabre1,Eden Sabre I,5,0,,0,147,,1,0,0x000654E2,63,2,2,2,26,0,2,{},{},{}
 13424,P_Sabre2,Eden Sabre II,5,0,,0,170,,1,0,0x000654E2,63,2,2,2,40,0,2,{},{},{}
 13425,Tourist_Sword,Tourist Sword,5,0,,500,61,,1,0,0x000654E3,63,2,2,1,1,0,2,{ bonus bStr,1; bonus bDex,1; },{},{}
-13426,F_Cutlas_C,Cutlus,5,2,,0,185,,1,0,0x000654E2,63,2,2,4,0,0,2,{ bonus bStr,2; },{},{}
-13427,F_Solar_Sword_C,Solar Sword,5,2,,0,120,,1,0,0x000654E2,63,2,2,4,0,0,2,{ bonus bAtkEle,Ele_Fire; },{},{}
+13426,F_Cutlas_C,Cutlus,5,2,,0,185,,1,0,0x000654E2,63,2,2,4,0,0,2,{ skill "SM_BASH",5; bonus bStr,2; bonus bDef,1; },{},{}
+13427,F_Solar_Sword_C,Solar Sword,5,2,,0,120,,1,0,0x000654E2,63,2,2,4,0,0,2,{ bonus bAtkEle,Ele_Fire; bonus bHPDrainValue,1; bonus2 bSPLossRate,15,10000; },{},{}
 13428,Priest_Sword,Priest Sword,5,20,,1200,170,,1,3,0x000654E2,63,2,2,4,50,1,2,{},{},{}
-13429,E_Cutlas_C,Cutlus,5,2,,0,185,,1,0,0x000654E2,63,2,2,4,0,0,2,{ bonus bStr,2; },{},{}
+13429,E_Cutlas_C,Cutlus,5,2,,0,185,,1,0,0x000654E2,63,2,2,4,0,0,2,{ skill "SM_BASH",5; bonus bStr,2; bonus bDef,1; },{},{}
 13430,E_Solar_Sword_C,Solar Sword,5,2,,0,120,,1,0,0x000654E2,63,2,2,4,0,0,2,{ bonus bAtkEle,Ele_Fire; },{},{}
-13431,Chrome_Sword,Chrome Sword,5,20,,2200,180,,1,0,0x000444A2,18,2,2,3,110,1,2,{ bonus bAgi,1; bonus bMaxHPrate,-5; },{},{}
+13431,Chrome_Sword,Chrome Sword,5,20,,2200,180,,1,0,0x000444A2,18,2,2,3,110,1,2,{ bonus bAgi,1; bonus bMaxHPrate,-5; bonus bUnbreakableWeapon; },{},{}
 13432,Adventure_Sword,Adventure Sword,5,0,,0,80,,1,0,0x00004082,63,2,2,1,1,0,2,{},{},{}
 13433,Academy_Sword,Academy Sword,5,0,,1200,120,,1,1,0x00004082,63,2,2,1,1,1,2,{},{},{}
 13434,P_Saber3,Eden Saber III,5,0,,0,185,,1,0,0x000654E2,63,2,2,3,60,0,2,{},{},{}
