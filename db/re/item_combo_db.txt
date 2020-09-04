@@ -15,8 +15,8 @@
 1285:2892,{ bonus bCritical,4; bonus bCritAtkRate,40; bonus bMaxHPRate,-10; }
 1287:15123,{ if (getequiprefinerycnt(EQI_HAND_R) >= 7) { autobonus "{ bonus bIgnoreDefClass,Class_Normal; }",1000,3000,BF_SHORT|BF_NORMAL; } /* Confirm: Success rate */ }
 1326:22133,{ bonus bBaseAtk,40; .@eq = getequiprefinerycnt(EQI_SHOES); .@weapon = getequiprefinerycnt(EQI_HAND_R); if (.@eq >= 7 && .@weapon >= 7) { bonus2 bSkillAtk,"NC_AXEBOOMERANG",15; } if ((.@eq + .@weapon) >= 18) { bonus2 bAddClass,Class_All,10; if ((.@eq + .@weapon) >= 22) { bonus bLongAtkRate,10; } } }
-13473:4263,{ bonus bAspdRate,10; bonus2 bAddClass,Class_All,20; autobonus3 "bonus bFlee2,100;",1,3000,"ASC_BREAKER"; }
-13485:22171,{ bonus bDex,20; autobonus "bonus bLongAtkRate,10;",30,7000; }
+13473:4263,{ bonus bAspdRate,10; bonus2 bAddClass,Class_All,20; autobonus3 "{ bonus bFlee2,100; }",1,3000,"ASC_BREAKER"; }
+13485:22171,{ bonus bDex,20; autobonus "{ bonus bLongAtkRate,10; }",30,7000; }
 1387:19021,{ bonus2 bSkillAtk,"WS_CARTTERMINATION",15+(getequiprefinerycnt(EQI_HAND_R))*5; }
 1407:5782,{ bonus2 bAddClass,Class_All,3; }
 1408:5782,{ bonus2 bAddClass,Class_All,3; }
