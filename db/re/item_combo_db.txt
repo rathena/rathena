@@ -1439,8 +1439,8 @@
 32222:15096,{ .@r = getequiprefinerycnt(EQI_ARMOR); bonus bAllStats,2*.@r; bonus3 bAddEff,Eff_Stun,.@r*50,ATF_SHORT; bonus3 bAddEff,Eff_Curse,.@r*50,ATF_SHORT; bonus3 bAddEff,Eff_Poison,.@r*50,ATF_SHORT; bonus3 bAddEff,Eff_Silence,.@r*50,ATF_SHORT; /* Unknow rates */ }
 32238:32239,{ bonus bVariableCastrate,-10; bonus bMatkRate,10; }
 1336:15388:15389,{ .@r = getequiprefinerycnt(EQI_HAND_R) + getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_GARMENT); bonus bBaseAtk,30; autobonus "{ bonus bLongAtkRate,10; }",10,10000,BF_WEAPON; if(.@r >= 30){ bonus2 bAddRace,RC_Undead,20; bonus2 bAddRace,RC_Angel,20; } }
-22171:18164,{ autobonus "{ bonus bDex,20; bonus bLongAtkRate,20; }",30,7000,BF_WEAPON; }
-22171:18170,{ autobonus "{ bonus bDex,20; bonus bLongAtkRate,15; }",30,7000,BF_WEAPON; }
+//22171:18164,{ autobonus "{ bonus bDex,20; bonus bLongAtkRate,20; }",30,7000,BF_WEAPON; }
+//22171:18170,{ autobonus "{ bonus bDex,20; bonus bLongAtkRate,15; }",30,7000,BF_WEAPON; }
 22171:2048,{ autobonus "{ bonus bInt,20; bonus bMatkRate,15; }",30,7000,BF_MAGIC; }
 22171:610003,{ autobonus "{ bonus bStr,20; bonus bAtkRate,15; }",30,7000,BF_WEAPON; }
 22171:700003,{ autobonus "{ bonus bDex,20; bonus bLongAtkRate,20; }",30,7000,BF_WEAPON; }
