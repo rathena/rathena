@@ -9321,7 +9321,7 @@ void clif_GM_kick(struct map_session_data *sd, struct map_session_data *tsd)
 	if (sd == NULL)
 		tsd->state.keepshop = true;
 
-	if (fd > 0)
+	if (session_isValid(fd))
 		clif_authfail_fd(fd, 15);
 	else
 		map_quit(tsd);

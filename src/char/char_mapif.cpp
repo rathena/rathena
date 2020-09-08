@@ -72,7 +72,7 @@ int chmapif_sendallwos(int sfd, unsigned char *buf, unsigned int len){
  * @return : the number of map-serv the packet was sent to (O|1)
  */
 int chmapif_send(int fd, unsigned char *buf, unsigned int len){
-	if (fd >= 0) {
+	if (session_isValid(fd)) {
 		int i;
 		ARR_FIND( 0, ARRAYLENGTH(map_server), i, fd == map_server[i].fd );
 		if( i < ARRAYLENGTH(map_server) )
@@ -212,7 +212,7 @@ void chmapif_send_maps(int fd, int map_id, int count, unsigned char *mapbuf) {
 
 	// Transmitting the maps of the other map-servers to the new map-server
 	for (x = 0; x < ARRAYLENGTH(map_server); x++) {
-		if (map_server[x].fd > 0 && x != map_id) {
+		if (session_isValid(map_server[x].fd) && x != map_id) {
 			uint16 i, j;
 
 			WFIFOHEAD(fd,10 +4*map_server[x].map.size());
