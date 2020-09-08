@@ -882,7 +882,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		if (i < 0 || !cd->last_point.map) {
 			unsigned short j;
 			//First check that there's actually a map server online.
-			ARR_FIND( 0, ARRAYLENGTH(map_server), j, session_isValid(map_server[j].fd) && !map_server[j].empty() );
+			ARR_FIND( 0, ARRAYLENGTH(map_server), j, session_isValid(map_server[j].fd) && !map_server[j].map.empty() );
 			if (j == ARRAYLENGTH(map_server)) {
 				ShowInfo("Connection Closed. No map servers available.\n");
 				chclif_send_auth_result(fd,1); // 01 = Server closed
