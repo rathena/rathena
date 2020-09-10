@@ -151,7 +151,7 @@ static bool upgrade_achievement_db(std::string file) {
 			body << YAML::Key << "Rewards";
 			body << YAML::BeginMap;
 			if (input["Reward"]["ItemID"].IsDefined())
-				body << YAML::Key << "Item" << YAML::Value << *util::umap_find(aegis_itemnames, input["Reward"]["ItemID"].as<uint16>());
+				body << YAML::Key << "Item" << YAML::Value << *util::umap_find(aegis_itemnames, input["Reward"]["ItemID"].as<t_itemid>());
 			if (input["Reward"]["Amount"].IsDefined() && input["Reward"]["Amount"].as<uint16>() > 1)
 				body << YAML::Key << "Amount" << YAML::Value << input["Reward"]["Amount"];
 			if (input["Reward"]["Script"].IsDefined())
