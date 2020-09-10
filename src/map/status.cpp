@@ -9199,6 +9199,19 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		}
 	}
 
+	// Statuses from Merchant family skills that can be blocked while using Madogear; see pc.cpp::pc_setoption for cancellation
+	if (sc->option & OPTION_MADOGEAR) {
+		for (const auto &madosc : mado_statuses) {
+			if (type != madosc)
+				continue;
+
+			uint16 skill_id = status_sc2skill(type);
+
+			if (skill_id > 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO))
+				return 0;
+		}
+	}
+
 	// Adjust tick according to status resistances
 	if( !(flag&(SCSTART_NOAVOID|SCSTART_LOADED)) ) {
 		duration = status_get_sc_def(src, bl, type, rate, duration, flag);
@@ -9207,25 +9220,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	int tick = (int)duration;
-
-	switch (type) { // Statuses from Merchant/Blacksmith/Whitesmith skills that can be blocked while using Mado Gear; see pc.cpp::pc_setoption for cancellation
-		case SC_LOUD:
-		case SC_CARTBOOST:
-		case SC_MELTDOWN:
-		case SC_ADRENALINE:
-		case SC_ADRENALINE2:
-		case SC_WEAPONPERFECTION:
-		case SC_MAXIMIZEPOWER:
-		case SC_OVERTHRUST:
-		case SC_MAXOVERTHRUST:
-			if (sc->option&OPTION_MADOGEAR) {
-				int skill_id = status_sc2skill(type);
-
-				if (skill_id >= 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO))
-					return 0;
-			}
-			break;
-	}
 
 	sd = BL_CAST(BL_PC, bl);
 	vd = status_get_viewdata(bl);
