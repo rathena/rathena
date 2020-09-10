@@ -5134,7 +5134,7 @@
 	export_constant(IG_BS_ITEM_M_S_5);
 	export_constant(IG_BS_SHA_M_S_9);
 	export_constant(IG_BS_SHA_M_S_10);
-	export_constant(IG_IG_BS_SHA_M_S_11);
+	export_constant(IG_BS_SHA_M_S_11);
 	export_constant(IG_BS_SHA_M_S_21);
 	export_constant(IG_BS_SHA_M_S_22);
 	export_constant(IG_BS_SHA_M_S_3);
