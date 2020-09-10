@@ -21582,7 +21582,7 @@ bool clif_synthesisui_open(struct map_session_data *sd, t_itemid itemid) {
 
 	PACKET_ZC_LAPINEDDUKDDAK_OPEN p;
 
-	p.packetType = ZC_LAPINE_SYNTHESIS_OPEN;
+	p.packetType = HEADER_ZC_LAPINEDDUKDDAK_OPEN;
 	p.itemId = client_nameid(itemid);
 
 	clif_send(&p, sizeof(p), &sd->bl, SELF);
@@ -21606,7 +21606,7 @@ void clif_synthesisui_result(struct map_session_data *sd, e_item_synthesis_resul
 
 	PACKET_ZC_LAPINEDDUKDDAK_RESULT p;
 
-	p.packetType = ZC_LAPINE_SYNTHESIS_RESULT;
+	p.packetType = HEADER_ZC_LAPINEDDUKDDAK_RESULT;
 	p.result = result;
 
 	clif_send(&p, sizeof(p), &sd->bl, SELF);
@@ -21715,7 +21715,7 @@ bool clif_lapine_upgrade_open(struct map_session_data *sd, t_itemid itemid) {
 
 	PACKET_ZC_LAPINEUPGRADE_OPEN p;
 
-	p.packetType = ZC_LAPINE_UPGRADE_OPEN;
+	p.packetType = HEADER_ZC_LAPINEUPGRADE_OPEN;
 	p.itemId = client_nameid(itemid);
 
 	clif_send(&p, sizeof(p), &sd->bl, SELF);
@@ -21739,7 +21739,7 @@ void clif_lapine_upgrade_result(struct map_session_data *sd, e_item_upgrade_resu
 
 	PACKET_ZC_LAPINEUPGRADE_RESULT p;
 
-	p.packetType = ZC_LAPINE_UPGRADE_RESULT;
+	p.packetType = HEADER_ZC_LAPINEUPGRADE_RESULT;
 	p.result = result;
 
 	clif_send(&p, sizeof(p), &sd->bl, SELF);
