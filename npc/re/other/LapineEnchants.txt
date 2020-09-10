@@ -924,12 +924,12 @@ function	script	F_Lapine_Gray_Charcoal_Melee	{
 	else if (.@r < 110) { set getarg(0), RDMOPT_DAMAGE_SIZE_PERFECT; set getarg(1), 1; }
 	else if (.@r < 120) { set getarg(0), RDMOPT_VAR_PLUSASPD; set getarg(1), 1; }
 	else if (.@r < 130) { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(5,10); }
-	else if (.@r < 140) { set getarg(0), RDMOPT_BODY_ATTR_WATER; set getarg(1), 1; }
-	else if (.@r < 150) { set getarg(0), RDMOPT_BODY_ATTR_GROUND; set getarg(1), 1; }
-	else if (.@r < 160) { set getarg(0), RDMOPT_BODY_ATTR_FIRE; set getarg(1), 1; }
-	else if (.@r < 170) { set getarg(0), RDMOPT_BODY_ATTR_WIND; set getarg(1), 1; }
-	else if (.@r < 180) { set getarg(0), RDMOPT_BODY_ATTR_SAINT; set getarg(1), 1; }
-	else if (.@r < 190) { set getarg(0), RDMOPT_BODY_ATTR_DARKNESS; set getarg(1), 1; }
+	else if (.@r < 140) { set getarg(0), RDMOPT_DAMAGE_ATTR_WATER; set getarg(1), 1; }
+	else if (.@r < 150) { set getarg(0), RDMOPT_DAMAGE_ATTR_GROUND; set getarg(1), 1; }
+	else if (.@r < 160) { set getarg(0), RDMOPT_DAMAGE_ATTR_FIRE; set getarg(1), 1; }
+	else if (.@r < 170) { set getarg(0), RDMOPT_DAMAGE_ATTR_WIND; set getarg(1), 1; }
+	else if (.@r < 180) { set getarg(0), RDMOPT_DAMAGE_ATTR_SAINT; set getarg(1), 1; }
+	else if (.@r < 190) { set getarg(0), RDMOPT_DAMAGE_ATTR_DARKNESS; set getarg(1), 1; }
 
 	.@r = rand(150); //! TODO: Official Rates info
 		 if (.@r < 10)  { set getarg(2), RDMOPT_RACE_DAMAGE_NOTHING; set getarg(3), rand(1,20); }
