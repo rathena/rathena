@@ -24,14 +24,14 @@ struct s_item_synthesis_list {
 };
 
 struct s_item_synthesis_source {
-	uint32 nameid;
+	t_itemid nameid;
 	uint16 amount;
 
 	s_item_synthesis_source();
 };
 
 struct s_item_synthesis_db {
-	uint32 id;
+	t_itemid id;
 	uint16 source_needed;
 	std::vector<s_item_synthesis_source> sources;
 	script_code *reward;
@@ -41,12 +41,12 @@ struct s_item_synthesis_db {
 	s_item_synthesis_db();
 	~s_item_synthesis_db();
 
-	bool sourceExists(uint32 source_id);
+	bool sourceExists(t_itemid source_id);
 	bool checkRequirement(map_session_data *sd, const std::vector<s_item_synthesis_list> items);
 	bool deleteRequirement(map_session_data *sd, const std::vector<s_item_synthesis_list> items);
 };
 
-class ItemSynthesisDatabase : public TypesafeYamlDatabase<uint32, s_item_synthesis_db> {
+class ItemSynthesisDatabase : public TypesafeYamlDatabase<t_itemid, s_item_synthesis_db> {
 
 public:
 	ItemSynthesisDatabase() : TypesafeYamlDatabase("ITEM_SYNTHESIS_DB", 1) {
@@ -59,8 +59,8 @@ public:
 
 extern ItemSynthesisDatabase item_synthesis_db;
 
-bool item_synthesis_open(map_session_data *sd, unsigned int itemid);
-e_item_synthesis_result item_synthesis_submit(map_session_data *sd, unsigned int itemid, const std::vector<s_item_synthesis_list> items);
+bool item_synthesis_open(map_session_data *sd, t_itemid itemid);
+e_item_synthesis_result item_synthesis_submit(map_session_data *sd, t_itemid itemid, const std::vector<s_item_synthesis_list> items);
 
 void item_synthesis_read_db(void);
 void item_synthesis_db_reload(void);

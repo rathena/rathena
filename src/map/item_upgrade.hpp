@@ -17,7 +17,7 @@
 #include "script.hpp"
 
 struct s_item_upgrade_db {
-	uint32 id;
+	t_itemid id;
 	std::vector<uint32> targets;
 	script_code *result;
 	uint16 source_refine_min;
@@ -29,12 +29,12 @@ struct s_item_upgrade_db {
 	s_item_upgrade_db();
 	~s_item_upgrade_db();
 
-	bool targetExists(uint32 target_id);
+	bool targetExists(t_itemid target_id);
 	bool checkRequirement(item *it, item_data *id);
 	void setPlayerInfo(map_session_data *sd, uint16 target_index, item *it);
 };
 
-class ItemUpgradeDatabase : public TypesafeYamlDatabase<uint32, s_item_upgrade_db> {
+class ItemUpgradeDatabase : public TypesafeYamlDatabase<t_itemid, s_item_upgrade_db> {
 
 public:
 	ItemUpgradeDatabase() : TypesafeYamlDatabase("ITEM_UPGRADE_DB", 1) {
@@ -47,8 +47,8 @@ public:
 
 extern ItemUpgradeDatabase item_upgrade_db;
 
-bool item_upgrade_open(map_session_data *sd, unsigned int itemid);
-e_item_upgrade_result item_upgrade_submit(map_session_data *sd, unsigned int source_itemid, uint16 target_index);
+bool item_upgrade_open(map_session_data *sd, t_itemid itemid);
+e_item_upgrade_result item_upgrade_submit(map_session_data *sd, t_itemid source_itemid, uint16 target_index);
 
 void item_upgrade_read_db(void);
 void item_upgrade_db_reload(void);

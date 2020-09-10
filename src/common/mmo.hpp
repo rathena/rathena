@@ -52,6 +52,9 @@
 		#define MAX_CHARS 9
 	#endif
 #endif
+
+typedef uint32 t_itemid;
+
 /** Number of slots carded equipment can have. Never set to less than 4 as they are also used to keep the data of forged items/equipment. [Skotlex]
 * Note: The client seems unable to receive data for more than 4 slots due to all related packets having a fixed size. */
 #define MAX_SLOTS 4
@@ -90,8 +93,8 @@
 
 #define MAX_STATUS_TYPE 5
 
-#define WEDDING_RING_M 2634
-#define WEDDING_RING_F 2635
+const t_itemid WEDDING_RING_M = 2634;
+const t_itemid WEDDING_RING_F = 2635;
 
 //For character names, title names, guilds, maps, etc.
 //Includes null-terminator as it is the length of the array.
@@ -248,13 +251,13 @@ struct achievement {
 
 struct item {
 	int id;
-	unsigned short nameid;
+	t_itemid nameid;
 	short amount;
 	unsigned int equip; // location(s) where item is equipped (using enum equip_pos for bitmasking)
 	char identify;
 	char refine;
 	char attribute;
-	unsigned short card[MAX_SLOTS];
+	t_itemid card[MAX_SLOTS];
 	struct s_item_randomoption option[MAX_ITEM_RDM_OPT];		// max of 5 random options can be supported.
 	unsigned int expire_time;
 	char favorite, bound;
@@ -298,8 +301,9 @@ struct point {
 };
 
 struct startitem {
-	unsigned short nameid, amount;
-	short pos;
+	t_itemid nameid;
+	unsigned short amount;
+	uint32 pos;
 };
 
 enum e_skill_flag
@@ -404,8 +408,8 @@ struct s_pet {
 	int pet_id;
 	short class_;
 	short level;
-	unsigned short egg_id;//pet egg id
-	unsigned short equip;//pet equip name_id
+	t_itemid egg_id;//pet egg id
+	t_itemid equip;//pet equip name_id
 	short intimate;//pet friendly
 	short hungry;//pet hungry
 	char name[NAME_LENGTH];
@@ -488,7 +492,7 @@ struct mmo_charstatus {
 	uint32 mother;
 	uint32 child;
 
-	unsigned int base_exp,job_exp;
+	t_exp base_exp,job_exp;
 	int zeny;
 
 	short class_; ///< Player's JobID
@@ -632,7 +636,7 @@ struct map_session_data;
 struct guild_member {
 	uint32 account_id, char_id;
 	short hair,hair_color,gender,class_,lv;
-	uint64 exp;
+	t_exp exp;
 	short online,position;
 	char name[NAME_LENGTH];
 	struct map_session_data *sd;
@@ -667,8 +671,8 @@ struct Channel;
 struct guild {
 	int guild_id;
 	short guild_lv, connect_member, max_member, average_lv;
-	uint64 exp;
-	unsigned int next_exp;
+	t_exp exp;
+	t_exp next_exp;
 	int skill_point;
 	char name[NAME_LENGTH],master[NAME_LENGTH];
 	struct guild_member member[MAX_GUILD];

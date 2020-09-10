@@ -538,8 +538,8 @@ int bg_team_leave(struct map_session_data *sd, bool quit, bool deserter)
 			auto member = bgteam->members.begin();
 
 			while (member != bgteam->members.end()) {
-				if (member->sd == sd && member->entry_point.map != 0) {
-					if (!map_getmapflag(map_mapindex2mapid(member->entry_point.map), MF_NOSAVE))
+				if (member->sd == sd) {
+					if (member->entry_point.map != 0 && !map_getmapflag(map_mapindex2mapid(member->entry_point.map), MF_NOSAVE))
 						pc_setpos(sd, member->entry_point.map, member->entry_point.x, member->entry_point.y, CLR_TELEPORT);
 					else
 						pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT); // Warp to save point if the entry map has no save flag.
@@ -878,7 +878,7 @@ bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map
 	nullpo_retr(false, sd);
 
 	for (const auto &job : bg->job_restrictions) { // Check class requirement
-		if (sd->class_ == job) {
+		if (sd->status.class_ == job) {
 			clif_bg_queue_apply_result(BG_APPLY_PLAYER_CLASS, name, sd);
 			return false;
 		}

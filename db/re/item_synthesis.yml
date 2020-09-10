@@ -818,9 +818,9 @@ Body:
         getitem(19245,1); // chance to become Crimson Booster
     } else {
         // Magical Booster Enchant (19241)
-        callfunc("F_Lapine_Magical_Booster_Enchant", .@opts[0], .@vals[0]);
+        callfunc("F_Lapine_Magical_Booster_Enchant", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
         .@params[0] = 0;
-        getitem3(19241,1,1,0,0,0,0,0,0,.@opts,.@vals,@params);
+        getitem3(19241,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
     }
 - Id: 23311 # 마법고양이손
   SourceItem:

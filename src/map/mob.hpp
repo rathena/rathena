@@ -94,7 +94,7 @@ enum MobDamageLogFlag
 	MDLF_SELF
 };
 
-enum size {
+enum e_size : uint8 {
 	SZ_SMALL = 0,
 	SZ_MEDIUM,
 	SZ_BIG,
@@ -155,7 +155,7 @@ struct s_mob_lootitem {
 
 /// Struct for monster's drop item
 struct s_mob_drop {
-	unsigned short nameid;
+	t_itemid nameid;
 	int p;
 	uint8 randomopt_group;
 	unsigned steal_protected : 1;

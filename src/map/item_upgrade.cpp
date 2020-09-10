@@ -22,12 +22,12 @@ const std::string ItemUpgradeDatabase::getDefaultLocation() {
 }
 
 /**
-* Reads and parses an entry from the item_upgrade file.
-* @param node: YAML node containing the entry.
-* @return count of successfully parsed rows
-*/
+ * Reads and parses an entry from the item_upgrade file.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
 uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
-	uint32 id;
+	t_itemid id;
 
 	if (!this->asUInt32(node, "Id", id))
 		return 0;
@@ -62,14 +62,14 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (exists && this->nodeExists(node, "ClearTargetItem")) {
-		ShowNotice("item_upgrade: Cleared all items in TargetItem. Upgrade ID: %d\n", id);
+		ShowNotice("item_upgrade: Cleared all items in TargetItem. Upgrade ID: %u\n", id);
 		if (!entry->targets.empty())
 			entry->targets.clear();
 	}
 
 	if (this->nodeExists(node, "TargetItem")) {
 		const YAML::Node& targetNode = node["TargetItem"];
-		unsigned int itemid;
+		t_itemid itemid;
 
 		for (const YAML::Node &target : targetNode) {
 			if (!this->asUInt32(target, "Item", itemid))
@@ -82,7 +82,7 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 
 			if (exists && this->nodeExists(target, "Remove")) {
 				entry->targets.erase(std::remove_if(entry->targets.begin(), entry->targets.end(), [&itemid](const unsigned int &x) { return x == itemid; }));
-				ShowNotice("item_upgrade: Removed '%d' from TargetItem. Upgrade ID: %d\n", itemid, id);
+				ShowNotice("item_upgrade: Removed '%u' from TargetItem. Upgrade ID: %u\n", itemid, id);
 				continue;
 			}
 
@@ -116,13 +116,13 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 	return 1;
 }
 
-/*
-* Attempt to open upgrade UI for a player
-* @param sd Open UI for this player
-* @param itemid ID of upgrade UI
-* @return True on succes, false on failure
-*/
-bool item_upgrade_open(map_session_data *sd, unsigned int itemid) {
+/**
+ * Attempt to open upgrade UI for a player
+ * @param sd: Open UI for this player
+ * @param itemid: ID of upgrade UI
+ * @return True on succes, false on failure
+ */
+bool item_upgrade_open(map_session_data *sd, t_itemid itemid) {
 	nullpo_retr(false, sd);
 
 	if (pc_cant_act2(sd) || (sd)->chatID)
@@ -132,13 +132,6 @@ bool item_upgrade_open(map_session_data *sd, unsigned int itemid) {
 		clif_msg(sd, ITEM_CANT_OBTAIN_WEIGHT);
 		return false;
 	}
-
-#ifndef ITEMID_INT32_SUPPORTED
-	if (itemid >= UINT16_MAX) {
-		ShowError("item_upgrade_open: ID '%u' is not supported by your system. Max ID is %hu.\n", itemid, UINT16_MAX);
-		return false;
-	}
-#endif
 
 	if (!item_upgrade_db.exists(itemid))
 		return false;
@@ -151,14 +144,14 @@ bool item_upgrade_open(map_session_data *sd, unsigned int itemid) {
 	return true;
 }
 
-/*
-* Process selected item from player's input
-* @param sd Player
-* @param source_itemid Item ID of source item to open Upgrade UI
-* @param target_index Index of target item in player's inventory
-* @return LAPINE_UPRAGDE_SUCCESS on success. @see e_item_upgrade_result
-*/
-e_item_upgrade_result item_upgrade_submit(map_session_data *sd, unsigned int source_itemid, uint16 target_index) {
+/**
+ * Process selected item from player's input
+ * @param sd: Player
+ * @param source_itemid: Item ID of source item to open Upgrade UI
+ * @param target_index: Index of target item in player's inventory
+ * @return LAPINE_UPRAGDE_SUCCESS on success. @see e_item_upgrade_result
+ */
+e_item_upgrade_result item_upgrade_submit(map_session_data *sd, t_itemid source_itemid, uint16 target_index) {
 	nullpo_retr(LAPINE_UPRAGDE_FAILURE, sd);
 
 	if (!sd->state.lapine_ui || source_itemid != sd->last_lapine_box) {
@@ -192,16 +185,16 @@ e_item_upgrade_result item_upgrade_submit(map_session_data *sd, unsigned int sou
 }
 
 /**
-* Loads lapine upgrade database
-*/
+ * Loads lapine upgrade database
+ */
 void item_upgrade_read_db(void)
 {
 	item_upgrade_db.load();
 }
 
 /**
-* Reloads the lapine upgrade database
-*/
+ * Reloads the lapine upgrade database
+ */
 void item_upgrade_db_reload(void)
 {
 	do_final_item_upgrade();
@@ -209,23 +202,23 @@ void item_upgrade_db_reload(void)
 }
 
 /**
-* Initializes the lapine upgrade database
-*/
+ * Initializes the lapine upgrade database
+ */
 void do_init_item_upgrade(void)
 {
 	item_upgrade_db.load();
 }
 
 /**
-* Finalizes the lapine upgrade database
-*/
+ * Finalizes the lapine upgrade database
+ */
 void do_final_item_upgrade(void) {
 	item_upgrade_db.clear();
 }
 
 /**
-* Constructor
-*/
+ * Constructor
+ */
 s_item_upgrade_db::s_item_upgrade_db()
 	: targets()
 	, result(nullptr)
@@ -237,8 +230,8 @@ s_item_upgrade_db::s_item_upgrade_db()
 {}
 
 /**
-* Destructor
-*/
+ * Destructor
+ */
 s_item_upgrade_db::~s_item_upgrade_db()
 {
 	if (this->result) {
@@ -247,12 +240,12 @@ s_item_upgrade_db::~s_item_upgrade_db()
 	}
 }
 
-/*
-* Check if submitted target item is valid
-* @param target_id Item ID of target item
-* @return True if exist, false if not
-*/
-bool s_item_upgrade_db::targetExists(uint32 target_id)
+/**
+ * Check if submitted target item is valid
+ * @param target_id: Item ID of target item
+ * @return True if exist, false if not
+ */
+bool s_item_upgrade_db::targetExists(t_itemid target_id)
 {
 	if (this->targets.empty())
 		return false;
@@ -260,12 +253,12 @@ bool s_item_upgrade_db::targetExists(uint32 target_id)
 	return (target != this->targets.end());
 }
 
-/*
-* Check if the target item is valid
-* @param it Target item
-* @param id Item data
-* @return True if valid, false if invalid
-*/
+/**
+ * Check if the target item is valid
+ * @param it: Target item
+ * @param id: Item data
+ * @return True if valid, false if invalid
+ */
 bool s_item_upgrade_db::checkRequirement(item *it, item_data *id)
 {
 	if (this->source_refine_min > it->refine)
@@ -294,12 +287,12 @@ bool s_item_upgrade_db::checkRequirement(item *it, item_data *id)
 	return true;
 }
 
-/*
-* Set variables for player on success upgrade process
-* @param sd Player
-* @param target_index Index of player's inventory items as upgrade target
-* @param it Latest item data
-*/
+/**
+ * Set variables for player on success upgrade process
+ * @param sd: Player
+ * @param target_index: Index of player's inventory items as upgrade target
+ * @param it: Latest item data
+ */
 void s_item_upgrade_db::setPlayerInfo(map_session_data * sd, uint16 target_index, item *it)
 {
 	pc_setreg(sd, add_str("@last_lapine_id"), it->nameid);

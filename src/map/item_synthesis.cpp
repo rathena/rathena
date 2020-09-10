@@ -22,12 +22,12 @@ const std::string ItemSynthesisDatabase::getDefaultLocation() {
 }
 
 /**
-* Reads and parses an entry from the item_synthesis file.
-* @param node: YAML node containing the entry.
-* @return count of successfully parsed rows
-*/
+ * Reads and parses an entry from the item_synthesis file.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
 uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
-	uint32 id;
+	t_itemid id;
 
 	if (!this->asUInt32(node, "Id", id))
 		return 0;
@@ -83,7 +83,7 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 
 			if (exists && this->nodeExists(source, "Remove")) {
 				entry->sources.erase(std::remove_if(entry->sources.begin(), entry->sources.end(), [&source_item](const s_item_synthesis_source &x) { return x.nameid == source_item.nameid; }));
-				ShowNotice("item_synthesis: Removed '%d' from SourceItem. Synthesis ID: %d\n", source_item.nameid, id);
+				ShowNotice("item_synthesis: Removed '%u' from SourceItem. Synthesis ID: %u\n", source_item.nameid, id);
 				continue;
 			}
 
@@ -94,9 +94,7 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 				entry->sources.begin(), entry->sources.end(), [&source_item](s_item_synthesis_source &x)
 			{
 				if (x.nameid == source_item.nameid) {
-					printf("changed %d from %d", x.nameid, x.amount);
 					x.amount = source_item.amount;
-					printf(" to %d\n", x.amount);
 					return true;
 				}
 				return false;
@@ -130,13 +128,13 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 	return 1;
 }
 
-/*
-* Attempt to open synthesis UI for a player
-* @param sd Open UI for this player
-* @param itemid ID of synthesis UI
-* @return True on succes, false on failure
-*/
-bool item_synthesis_open(map_session_data *sd, unsigned int itemid) {
+/**
+ * Attempt to open synthesis UI for a player
+ * @param sd: Open UI for this player
+ * @param itemid: ID of synthesis UI
+ * @return True on succes, false on failure
+ */
+bool item_synthesis_open(map_session_data *sd, t_itemid itemid) {
 	nullpo_retr(false, sd);
 
 	if (pc_cant_act2(sd) || (sd)->chatID)
@@ -146,13 +144,6 @@ bool item_synthesis_open(map_session_data *sd, unsigned int itemid) {
 		clif_msg(sd, ITEM_CANT_OBTAIN_WEIGHT);
 		return false;
 	}
-
-#ifndef ITEMID_INT32_SUPPORTED
-	if (itemid >= UINT16_MAX) {
-		ShowError("item_synthesis_open: ID '%u' is not supported by your system. Max ID is %hu.\n", itemid, UINT16_MAX);
-		return false;
-	}
-#endif
 
 	if (!item_synthesis_db.exists(itemid))
 		return false;
@@ -165,14 +156,14 @@ bool item_synthesis_open(map_session_data *sd, unsigned int itemid) {
 	return true;
 }
 
-/*
-* Process synthesis input from player
-* @param sd Player who request
-* @param itemid ID of synthesis UI
-* @param items Item list sent by player
-* @return SYNTHESIS_SUCCESS on success. @see e_item_synthesis_result
-*/
-e_item_synthesis_result item_synthesis_submit(map_session_data *sd, unsigned int itemid, const std::vector<s_item_synthesis_list> items) {
+/**
+ * Process synthesis input from player
+ * @param sd: Player who request
+ * @param itemid: ID of synthesis UI
+ * @param items: Item list sent by player
+ * @return SYNTHESIS_SUCCESS on success. @see e_item_synthesis_result
+ */
+e_item_synthesis_result item_synthesis_submit(map_session_data *sd, t_itemid itemid, const std::vector<s_item_synthesis_list> items) {
 	nullpo_retr(SYNTHESIS_INVALID_ITEM, sd);
 
 	if (!sd->state.lapine_ui || itemid != sd->last_lapine_box) {
@@ -196,16 +187,16 @@ e_item_synthesis_result item_synthesis_submit(map_session_data *sd, unsigned int
 }
 
 /**
-* Loads lapine synthesis database
-*/
+ * Loads lapine synthesis database
+ */
 void item_synthesis_read_db(void)
 {
 	item_synthesis_db.load();
 }
 
 /**
-* Reloads the lapine synthesis database
-*/
+ * Reloads the lapine synthesis database
+ */
 void item_synthesis_db_reload(void)
 {
 	do_final_item_synthesis();
@@ -213,23 +204,23 @@ void item_synthesis_db_reload(void)
 }
 
 /**
-* Initializes the lapine synthesis database
-*/
+ * Initializes the lapine synthesis database
+ */
 void do_init_item_synthesis(void)
 {
 	item_synthesis_db.load();
 }
 
 /**
-* Finalizes the lapine synthesis database
-*/
+ * Finalizes the lapine synthesis database
+ */
 void do_final_item_synthesis(void) {
 	item_synthesis_db.clear();
 }
 
 /**
-* Constructor
-*/
+ * Constructor
+ */
 s_item_synthesis_db::s_item_synthesis_db()
 	: source_needed(1)
 	, sources()
@@ -239,8 +230,8 @@ s_item_synthesis_db::s_item_synthesis_db()
 {}
 
 /**
-* Destructor
-*/
+ * Destructor
+ */
 s_item_synthesis_db::~s_item_synthesis_db()
 {
 	if (this->reward) {
@@ -249,12 +240,12 @@ s_item_synthesis_db::~s_item_synthesis_db()
 	}
 }
 
-/*
-* Check if the source for synthesis item is exists
-* @param source_id Item ID of source item
-* @return true if source exists, false if doesn't
-*/
-bool s_item_synthesis_db::sourceExists(uint32 source_id)
+/**
+ * Check if the source for synthesis item is exists
+ * @param source_id: Item ID of source item
+ * @return true if source exists, false if doesn't
+ */
+bool s_item_synthesis_db::sourceExists(t_itemid source_id)
 {
 	if (this->sources.empty())
 		return false;
@@ -265,19 +256,19 @@ bool s_item_synthesis_db::sourceExists(uint32 source_id)
 	return (source != this->sources.end());
 }
 
-/*
-* Check all submitted items are valid
-* @param sd Player
-* @param items Submitted items by player
-* @return True if all items are valid
-*/
+/**
+ * Check all submitted items are valid
+ * @param sd: Player
+ * @param items: Submitted items by player
+ * @return True if all items are valid
+ */
 bool s_item_synthesis_db::checkRequirement(map_session_data *sd, const std::vector<s_item_synthesis_list> items)
 {
 	if (items.empty() || items.size() != this->source_needed)
 		return false;
 
-	item *item = NULL;
-	item_data *id = NULL;
+	item *item = nullptr;
+	item_data *id = nullptr;
 	std::vector<int> indexes(this->source_needed);
 
 	for (auto &it : items) {
@@ -308,12 +299,12 @@ bool s_item_synthesis_db::checkRequirement(map_session_data *sd, const std::vect
 	return true;
 }
 
-/*
-* Delete all submitted items for synthesis
-* @param sd Player
-* @param items Submitted items by player
-* @return True if all items are deleted
-*/
+/**
+ * Delete all submitted items for synthesis
+ * @param sd: Player
+ * @param items: Submitted items by player
+ * @return True if all items are deleted
+ */
 bool s_item_synthesis_db::deleteRequirement(map_session_data *sd, const std::vector<s_item_synthesis_list> items)
 {
 	if (items.empty() || items.size() != this->source_needed)
@@ -330,10 +321,10 @@ bool s_item_synthesis_db::deleteRequirement(map_session_data *sd, const std::vec
 	return true;
 }
 
-/*
-* Synthesis items constructor.
-* Set default amount to 1
-*/
+/**
+ * Synthesis items constructor.
+ * Set default amount to 1
+ */
 s_item_synthesis_source::s_item_synthesis_source()
 	: amount(1)
 {
