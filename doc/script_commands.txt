@@ -5676,6 +5676,20 @@ Used in reset NPC's (duh!)
 
 ---------------------------------------
 
+*resetfeel({<char_id>});
+
+This command will reset the Star Gladiator's designated maps on the invoking character.
+Only works on Star Gladiator and Star Emperor classes.
+
+---------------------------------------
+
+*resethate({<char_id>});
+
+This command will reset the Star Gladiator's designated monsters on the invoking character.
+Only works on Star Gladiator and Star Emperor classes.
+
+---------------------------------------
+
 *sc_start <effect type>,<ticks>,<value 1>{,<rate>,<flag>{,<GID>}};
 *sc_start2 <effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>{,<GID>}};
 *sc_start4 <effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>{,<GID>}};
@@ -9378,6 +9392,7 @@ QMARK_PURPLE - Purple Marker
 Adds the first waiting player from the chat room of the given NPC to an existing battleground group.
 The player will also be warped to the default spawn point of the battle group or to the specified coordinates
 <x> and <y> on the given <map>.
+Note: The map need the mapflag MF_BATTLEGROUND otherwise the player is removed from the Battleground team.
 
 ---------------------------------------
 
@@ -9423,6 +9438,7 @@ Returns battle group ID on success. Returns 0 on failure.
 
 Adds an attached player or <char id> if specified to an existing battleground group. The player will also be warped
 to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
+Note: The map need the mapflag MF_BATTLEGROUND otherwise the player is removed from the Battleground team.
 
 Returns true on success. Returns false on failure.
 
@@ -9552,8 +9568,8 @@ Example:
 Retrieves data related to given Battle Group. Type can be one of the following:
 
 	0 - Amount of players currently belonging to the group.
-	1 - Store GID of players in <Battle Group> in a temporary global array $@arenamembers
-		and returns amount of players currently belonging to the group.
+	1 - Store GID of players in <Battle Group> in a temporary global array $@arenamembers,
+		stores and also returns the amount of players currently belonging to the group in $@arenamemberscount.
 
 ---------------------------------------
 

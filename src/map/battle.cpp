@@ -1283,10 +1283,12 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	if ((sce = sc->data[SC_PARRYING]) && flag&BF_WEAPON && skill_id != WS_CARTTERMINATION && rnd() % 100 < sce->val2) {
 		clif_skill_nodamage(target, target, LK_PARRYING, sce->val1, 1);
 
-		unit_data *ud = unit_bl2ud(target);
+		if (skill_id == LK_PARRYING) {
+			unit_data *ud = unit_bl2ud(target);
 
-		if (ud) // Delay the next attack
-			ud->attackabletime = gettick() + skill_get_time2(LK_PARRYING, sce->val1);
+			if (ud != nullptr) // Delay the next attack
+				ud->attackabletime = gettick() + status_get_adelay(target);
+		}
 		return false;
 	}
 
@@ -3333,25 +3335,24 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 				if (index >= 0 &&
 					sd->inventory_data[index] &&
 					sd->inventory_data[index]->type == IT_WEAPON)
-					wd->equipAtk += sd->inventory_data[index]->weight/20; // weight from spear is treated as equipment ATK on official [helvetica]
+					wd->equipAtk += sd->inventory_data[index]->weight*7/100; // weight from spear is treated as equipment ATK on official [helvetica]
 
 				battle_calc_damage_parts(wd, src, target, skill_id, skill_lv);
 				wd->masteryAtk = 0; // weapon mastery is ignored for spiral
+				
+				switch (tstatus->size) { //Size-fix. Is this modified by weapon perfection?
+					case SZ_SMALL: //Small: 115%
+						ATK_RATE(wd->damage, wd->damage2, 115);
+						RE_ALLATK_RATE(wd, 115);
+						break;
+					//case SZ_MEDIUM: //Medium: 100%
+					case SZ_BIG: //Large: 85%
+						ATK_RATE(wd->damage, wd->damage2, 85);
+						RE_ALLATK_RATE(wd, 85);
+						break;
+				}
 			} else {
 				wd->damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, 0); //Monsters have no weight and use ATK instead
-			}
-
-			switch (tstatus->size) { //Size-fix. Is this modified by weapon perfection?
-				// !TODO: Confirm new size modifiers
-				case SZ_SMALL: //Small: 125%
-					ATK_RATE(wd->damage, wd->damage2, 125);
-					RE_ALLATK_RATE(wd, 125);
-					break;
-				//case SZ_MEDIUM: //Medium: 100%
-				case SZ_BIG: //Large: 75%
-					ATK_RATE(wd->damage, wd->damage2, 75);
-					RE_ALLATK_RATE(wd, 75);
-					break;
 			}
 #else
 		case NJ_ISSEN:
@@ -7304,8 +7305,12 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 				return 0;
 	}
 
-	if (ssc && (ssc->data[SC_REF_T_POTION] || ssc->data[SC_HELLS_PLANT]))
-		return 0;
+	if (ssc) {
+		if (ssc->data[SC_HELLS_PLANT])
+			return 0;
+		if (ssc->data[SC_REF_T_POTION])
+			return 1; // Returns 1 damage
+	}
 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
 		if ( (skill_get_inf2(skill_id, INF2_ISTRAP) || !status_reflect) && sd && sd->bonus.short_weapon_damage_return ) {

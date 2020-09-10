@@ -1,0 +1,21 @@
+//===== rAthena Script ======================================= 
+//= Einbroch Warp Script
+//===== Description: =========================================
+//= Warp Points for Einbroch
+//===== Changelogs: ==========================================
+//= 1.0 Some warps have been changed in renewal ep16.2 [Capuche]
+//============================================================
+
+ein_in01,274,246,0	script	#ep162_warp01	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (terra_gloria_main == 18 || terra_gloria_main == 22) {
+		cutin "ep16_tes01.bmp",0;
+		mes "[Tess]";
+		mes "Welcome. Please come in.";
+		close2;
+	}
+	warp "ein_in01",273,276;
+	end;
+}
+ein_in01,273,273,0	warp	roomB_roomBGate	1,1,ein_in01,274,243

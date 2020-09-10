@@ -920,6 +920,14 @@ Resets stats (@streset), skills (@skreset), or both (@reset).
 @feelreset
 
 Resets a Star Gladiator's marked maps.
+Only works on Star Gladiator and Star Emperor classes.
+
+---------------------------------------
+
+@hatereset
+
+Resets a Star Gladiator's marked monsters.
+Only works on Star Gladiator and Star Emperor classes.
 
 ---------------------------------------
 
