@@ -533,7 +533,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 		if (atoi(str[11]) != 0)
 			body << YAML::Key << "ClothColor" << YAML::Value << atoi(str[11]);
 
-		if (atoi(str[5]) != 0) {
+		if (strtoul(str[5], nullptr, 10) != 0) {
 			t_itemid weapon_item_id = strtoul( str[5], nullptr, 10 );
 			std::string *weapon_item_name = util::umap_find(aegis_itemnames, weapon_item_id);
 
@@ -545,7 +545,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 			body << YAML::Key << "Weapon" << YAML::Value << *weapon_item_name;
 		}
 
-		if (atoi(str[6]) != 0) {
+		if (strtoul(str[6], nullptr, 10) != 0) {
 			t_itemid shield_item_id = strtoul( str[6], nullptr, 10 );
 			std::string *shield_item_name = util::umap_find(aegis_itemnames, shield_item_id);
 
@@ -557,51 +557,51 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 			body << YAML::Key << "Shield" << YAML::Value << *shield_item_name;
 		}
 
-		if (atoi(str[7]) != 0) {
-			uint16 *headtop_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[7]));
+		if (strtoul(str[7], nullptr, 10) != 0) {
+			t_itemid *headtop_item_id = util::umap_find(aegis_itemviewid, (t_itemid)strtoul(str[7], nullptr, 10));
 
 			if (headtop_item_id == nullptr) {
-				ShowError("Item ID for view ID %hu (head top) is not known.\n", atoi(str[7]));
+				ShowError("Item ID for view ID %u (head top) is not known.\n", strtoul(str[7], nullptr, 10));
 				return false;
 			}
 
-			std::string *headtop_item_name = util::umap_find(aegis_itemnames, (t_itemid)*headtop_item_id);
+			std::string *headtop_item_name = util::umap_find(aegis_itemnames, *headtop_item_id);
 
 			if (headtop_item_name == nullptr) {
-				ShowError("Item name for item ID %hu (head top) is not known.\n", *headtop_item_id);
+				ShowError("Item name for item ID %u (head top) is not known.\n", *headtop_item_id);
 				return false;
 			}
 
 			body << YAML::Key << "HeadTop" << YAML::Value << *headtop_item_name;
 		}
 
-		if (atoi(str[8]) != 0) {
-			uint16 *headmid_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[8]));
+		if (strtoul(str[8], nullptr, 10) != 0) {
+			t_itemid *headmid_item_id = util::umap_find(aegis_itemviewid, (t_itemid)strtoul(str[8], nullptr, 10));
 
 			if (headmid_item_id == nullptr) {
-				ShowError("Item ID for view ID %hu (head mid) is not known.\n", atoi(str[8]));
+				ShowError("Item ID for view ID %u (head mid) is not known.\n", strtoul(str[8], nullptr, 10));
 				return false;
 			}
 
-			std::string *headmid_item_name = util::umap_find(aegis_itemnames, (t_itemid)*headmid_item_id);
+			std::string *headmid_item_name = util::umap_find(aegis_itemnames, *headmid_item_id);
 
 			if (headmid_item_name == nullptr) {
-				ShowError("Item name for item ID %hu (head mid) is not known.\n", *headmid_item_id);
+				ShowError("Item name for item ID %u (head mid) is not known.\n", *headmid_item_id);
 				return false;
 			}
 
 			body << YAML::Key << "HeadMid" << YAML::Value << *headmid_item_name;
 		}
 
-		if (atoi(str[9]) != 0) {
-			uint16 *headlow_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[9]));
+		if (strtoul(str[9], nullptr, 10) != 0) {
+			t_itemid *headlow_item_id = util::umap_find(aegis_itemviewid, (t_itemid)strtoul(str[9], nullptr, 10));
 
 			if (headlow_item_id == nullptr) {
-				ShowError("Item ID for view ID %hu (head low) is not known.\n", atoi(str[9]));
+				ShowError("Item ID for view ID %hu (head low) is not known.\n", strtoul(str[9], nullptr, 10));
 				return false;
 			}
 
-			std::string *headlow_item_name = util::umap_find(aegis_itemnames, (t_itemid)*headlow_item_id);
+			std::string *headlow_item_name = util::umap_find(aegis_itemnames, *headlow_item_id);
 
 			if (headlow_item_name == nullptr) {
 				ShowError("Item name for item ID %hu (head low) is not known.\n", *headlow_item_id);
