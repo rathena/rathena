@@ -752,7 +752,7 @@ enum e_random_item_group {
 	IG_BS_ITEM_M_S_5,
 	IG_BS_SHA_M_S_9,
 	IG_BS_SHA_M_S_10,
-	IG_IG_BS_SHA_M_S_11,
+	IG_BS_SHA_M_S_11,
 	IG_BS_SHA_M_S_21,
 	IG_BS_SHA_M_S_22,
 	IG_BS_SHA_M_S_3,
