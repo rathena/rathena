@@ -16,7 +16,7 @@
 1287:15123,{ if (getequiprefinerycnt(EQI_HAND_R) >= 7) { autobonus "{ bonus bIgnoreDefClass,Class_Normal; }",1000,3000,BF_SHORT|BF_NORMAL; } /* Confirm: Success rate */ }
 1326:22133,{ bonus bBaseAtk,40; .@eq = getequiprefinerycnt(EQI_SHOES); .@weapon = getequiprefinerycnt(EQI_HAND_R); if (.@eq >= 7 && .@weapon >= 7) { bonus2 bSkillAtk,"NC_AXEBOOMERANG",15; } if ((.@eq + .@weapon) >= 18) { bonus2 bAddClass,Class_All,10; if ((.@eq + .@weapon) >= 22) { bonus bLongAtkRate,10; } } }
 13473:4263,{ bonus bAspdRate,10; bonus2 bAddClass,Class_All,20; autobonus3 "{ bonus bFlee2,100; }",1,3000,"ASC_BREAKER"; }
-13485:22171,{ bonus bDex,20; autobonus "{ bonus bLongAtkRate,10; }",30,7000; }
+13485:22171,{ autobonus "{ bonus bDex,20; bonus bLongAtkRate,10; }",30,7000,BF_WEAPON; }
 1387:19021,{ bonus2 bSkillAtk,"WS_CARTTERMINATION",15+(getequiprefinerycnt(EQI_HAND_R))*5; }
 1407:5782,{ bonus2 bAddClass,Class_All,3; }
 1408:5782,{ bonus2 bAddClass,Class_All,3; }
@@ -1442,46 +1442,46 @@
 //22171:18164,{ autobonus "{ bonus bDex,20; bonus bLongAtkRate,20; }",30,7000,BF_WEAPON; } /*Not had item in item_db yet*/
 //22171:18170,{ autobonus "{ bonus bDex,20; bonus bLongAtkRate,15; }",30,7000,BF_WEAPON; } /*Not had item in item_db yet*/
 //22171:2048,{ autobonus "{ bonus bInt,20; bonus bMatkRate,15; }",30,7000,BF_MAGIC; } /*Not had item in item_db yet*/
-22171:610003,{ autobonus "{ bonus bStr,20; bonus bAtkRate,15; }",30,7000,BF_WEAPON; }
+22171:610003,{ autobonus "{ bonus bStr,20; bonus2 bAddClass,Class_All,15; }",30,7000,BF_WEAPON; }
 22171:700003,{ autobonus "{ bonus bDex,20; bonus bLongAtkRate,20; }",30,7000,BF_WEAPON; }
-22171:510006,{ autobonus "{ bonus bStr,20; bonus bAtkRate,15; }",30,7000,BF_WEAPON; }
-22171:560002,{ autobonus "{ bonus bStr,20; bonus bAtkRate,15; }",30,7000,BF_WEAPON; }
+22171:510006,{ autobonus "{ bonus bStr,20; bonus2 bAddClass,Class_All,15; }",30,7000,BF_WEAPON; }
+22171:560002,{ autobonus "{ bonus bStr,20; bonus2 bAddClass,Class_All,15; }",30,7000,BF_WEAPON; }
 22171:590003,{ autobonus "{ bonus bInt,20; bonus bMatkRate,15; }",30,7000,BF_MAGIC; }
 22171:640004,{ autobonus "{ bonus bInt,20; bonus bMatkRate,15; }",30,7000,BF_MAGIC; }
 22171:550007,{ autobonus "{ bonus bInt,20; bonus bMatkRate,15; }",30,7000,BF_MAGIC; }
-//22238:600009,{ bonus bStr,10; bonus bAtkRate,7; } /*Not had item in item_db yet*/
+//22238:600009,{ bonus bStr,10; bonus2 bAddClass,Class_All,7; } /*Not had item in item_db yet*/
 //22238:21058,{ bonus bVit,10; bonus bLongAtkRate,5; } /*Not had item in item_db yet*/
 //22238:610008,{ bonus bAgi,10; bonus bShortAtkRate,7; } /*Not had item in item_db yet*/
-//22238:610009,{ bonus bStr,10; bonus bAtkRate,7; } /*Not had item in item_db yet*/
+//22238:610009,{ bonus bStr,10; bonus2 bAddClass,Class_All,7; } /*Not had item in item_db yet*/
 //22238:500013,{ bonus bDex,10; bonus bLongAtkRate,5; } /*Not had item in item_db yet*/
 //22238:500014,{ bonus bVit,10; bonus bShortAtkRate,5; } /*Not had item in item_db yet*/
 //22238:700013,{ bonus bDex,10; bonus bLongAtkRate,5; } /*Not had item in item_db yet*/
 //22238:570009,{ bonus bInt,10; bonus bMatkRate,7; } /*Not had item in item_db yet*/
 //22238:580009,{ bonus bInt,10; bonus bMatkRate,7; } /*Not had item in item_db yet*/
-//22238:620004,{ bonus bStr,10; bonus bAtkRate,7; } /*Not had item in item_db yet*/
+//22238:620004,{ bonus bStr,10; bonus2 bAddClass,Class_All,7; } /*Not had item in item_db yet*/
 //22238:510019,{ bonus bInt,10; bonus bMatkRate,7; } /*Not had item in item_db yet*/
-//22238:510020,{ bonus bStr,10; bonus bAtkRate,7; } /*Not had item in item_db yet*/
+//22238:510020,{ bonus bStr,10; bonus2 bAddClass,Class_All,7; } /*Not had item in item_db yet*/
 //22238:590011,{ bonus bStr,10; bonus bLongAtkRate,5; } /*Not had item in item_db yet*/
-//22238:700018,{ bonus bDex,10; bonus bAtkRate,7; } /*Not had item in item_db yet*/
-//22238:700019,{ bonus bDex,10; bonus bAtkRate,7; } /*Not had item in item_db yet*/
+//22238:700018,{ bonus bDex,10; bonus2 bAddClass,Class_All,7; } /*Not had item in item_db yet*/
+//22238:700019,{ bonus bDex,10; bonus2 bAddClass,Class_All,7; } /*Not had item in item_db yet*/
 //22238:550012,{ bonus bInt,10; bonus bMatkRate,7; } /*Not had item in item_db yet*/
 //22238:550013,{ bonus bInt,10; bonus bMatkRate,7; } /*Not had item in item_db yet*/
-//22238:560008,{ bonus bStr,10; bonus bAtkRate,7; } /*Not had item in item_db yet*/
-//22238:560009,{ bonus bVit,10; bonus bAtkRate,7; } /*Not had item in item_db yet*/
-//22238:530006,{ bonus bStr,10; bonus bAtkRate,7; } /*Not had item in item_db yet*/
+//22238:560008,{ bonus bStr,10; bonus2 bAddClass,Class_All,7; } /*Not had item in item_db yet*/
+//22238:560009,{ bonus bVit,10; bonus2 bAddClass,Class_All,7; } /*Not had item in item_db yet*/
+//22238:530006,{ bonus bStr,10; bonus2 bAddClass,Class_All,7; } /*Not had item in item_db yet*/
 //22238:500017,{ bonus bInt,10; bonus bMatkRate,7; } /*Not had item in item_db yet*/
 //22238:640011,{ bonus bInt,10; bonus bMatkRate,7; } /*Not had item in item_db yet*/
 //22238:640012,{ bonus bInt,10; bonus bMatkRate,7; } /*Not had item in item_db yet*/
 //22238:540011,{ bonus bInt,10; bonus bMatkRate,7; } /*Not had item in item_db yet*/
 //22238:590012,{ bonus bInt,10; bonus bMatkRate,7; } /*Not had item in item_db yet*/
-//22238:550014,{ bonus bLuk,10; bonus bAtkRate,7; bonus bMatkRate,7; } /*Not had item in item_db yet*/
-//22238:510022:28763,{ bonus bDex,10; bonus bAtkRate,7; } /*Not had item in item_db yet*/
+//22238:550014,{ bonus bLuk,10; bonus2 bAddClass,Class_All,7; bonus bMatkRate,7; } /*Not had item in item_db yet*/
+//22238:510022:28763,{ bonus bDex,10; bonus2 bAddClass,Class_All,7; } /*Not had item in item_db yet*/
 //22238:650004,{ bonus bStr,10; bonus bLongAtkRate,5; } /*Not had item in item_db yet*/
-//22238:540010,{ bonus bStr,10; bonus bAtkRate,7; } /*Not had item in item_db yet*/
+//22238:540010,{ bonus bStr,10; bonus2 bAddClass,Class_All,7; } /*Not had item in item_db yet*/
 //22238:550015,{ bonus bInt,10; bonus bMatkRate,7; } /*Not had item in item_db yet*/
-//22238:800002,{ bonus bDex,10; bonus bAtkRate,7; } /*Not had item in item_db yet*/
+//22238:800002,{ bonus bDex,10; bonus2 bAddClass,Class_All,7; } /*Not had item in item_db yet*/
 //22238:810001,{ bonus bInt,10; bonus2 bMagicAddEle,Ele_Ghost,5; } /*Not had item in item_db yet*/
 //22238:840001,{ bonus bDex,10; bonus bLongAtkRate,5; } /*Not had item in item_db yet*/
 //22238:830002,{ bonus bDex,10; bonus bLongAtkRate,5; } /*Not had item in item_db yet*/
 //22238:820001,{ bonus bDex,10; bonus bLongAtkRate,5; } /*Not had item in item_db yet*/
-28763:510022,{ .@r = getequiprefinerycnt(EQI_HAND_R) + getequiprefinerycnt(EQI_HAND_L); bonus bBaseAtk,15*(.@r/3); bonus bAtkRate,3*(.@r/5); if (.@r>=14){ bonus2 bSkillAtk,"KO_JYUMONJIKIRI",30; bonus2 bSkillCooldown,"KO_JYUMONJIKIRI",-2000; } if (.@r>=16){ skill "OB_ZANGETSU",getskilllv("KG_KAGEHUMI"); skill "KG_KAGEHUMI",getskilllv("OB_ZANGETSU"); } if (.@r>=18){ bonus2 bAddEle,Ele_All,15; } if (.@r>=20){ bonus2 bSkillAtk,"KO_JYUMONJIKIRI",25; } }
+28763:510022,{ .@r = getequiprefinerycnt(EQI_HAND_R) + getequiprefinerycnt(EQI_HAND_L); bonus bBaseAtk,15*(.@r/3); bonus2 bAddClass,Class_All,3*(.@r/5); if (.@r>=14){ bonus2 bSkillAtk,"KO_JYUMONJIKIRI",30; bonus2 bSkillCooldown,"KO_JYUMONJIKIRI",-2000; } if (.@r>=16){ skill "OB_ZANGETSU",getskilllv("KG_KAGEHUMI"); skill "KG_KAGEHUMI",getskilllv("OB_ZANGETSU"); } if (.@r>=18){ bonus2 bAddEle,Ele_All,15; } if (.@r>=20){ bonus2 bSkillAtk,"KO_JYUMONJIKIRI",25; } }
