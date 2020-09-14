@@ -27,12 +27,19 @@ const std::string ItemUpgradeDatabase::getDefaultLocation() {
  * @return count of successfully parsed rows
  */
 uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
-	t_itemid id;
+	std::string upgrade_item_name;
 
-	if (!this->asUInt32(node, "Id", id))
+	if (!this->asString(node, "Item", upgrade_item_name))
 		return 0;
 
-	std::shared_ptr<s_item_upgrade_db> entry = this->find(id);
+	item_data *item = itemdb_search_aegisname(upgrade_item_name.c_str());
+
+	if (item == nullptr) {
+		this->invalidWarning(node["Item"], "Item name for Upgrade Box %s does not exist.\n", upgrade_item_name.c_str());
+		return 0;
+	}
+
+	std::shared_ptr<s_item_upgrade_db> entry = this->find(item->nameid);
 	bool exists = entry != nullptr;
 
 	if (!exists) {
@@ -40,7 +47,7 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		entry = std::make_shared<s_item_upgrade_db>();
-		entry->id = id;
+		entry->id = item->nameid;
 	}
 
 	if (this->nodeExists(node, "Result")) {
@@ -50,8 +57,8 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Result", script_str))
 			return 0;
 
-		if (!(code = parse_script(script_str.c_str(), this->getCurrentFile().c_str(), id, SCRIPT_IGNORE_EXTERNAL_BRACKETS))) {
-			this->invalidWarning(node["Result"], "Invalid item script for 'Result'.\n");
+		if (!(code = parse_script(script_str.c_str(), this->getCurrentFile().c_str(), item->nameid, SCRIPT_IGNORE_EXTERNAL_BRACKETS))) {
+			this->invalidWarning(node["Result"], "Invalid Result item script.\n");
 			return 0;
 		}
 
@@ -62,27 +69,31 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (exists && this->nodeExists(node, "ClearTargetItem")) {
-		ShowNotice("item_upgrade: Cleared all items in TargetItem. Upgrade ID: %u\n", id);
+		ShowNotice("item_upgrade: Cleared all items in TargetItem. Upgrade: %s (%u)\n", item->name, item->nameid);
 		if (!entry->targets.empty())
 			entry->targets.clear();
 	}
 
 	if (this->nodeExists(node, "TargetItem")) {
 		const YAML::Node& targetNode = node["TargetItem"];
-		t_itemid itemid;
+		std::string target_item_name;
 
 		for (const YAML::Node &target : targetNode) {
-			if (!this->asUInt32(target, "Item", itemid))
+			if (!this->asString(target, "Item", target_item_name))
 				continue;
 
-			/*if (!itemdb_exists(itemid)) {
-				this->invalidWarning(target, "Unknown item with ID %u.\n", itemid);
+			item_data *target_item = itemdb_search_aegisname(target_item_name.c_str());
+
+			if (target_item == nullptr) {
+				this->invalidWarning(node["TargetItem"], "Target item name %s does not exist, skipping.\n", target_item_name.c_str());
 				continue;
-			}*/
+			}
+
+			t_itemid itemid = target_item->nameid;
 
 			if (exists && this->nodeExists(target, "Remove")) {
-				entry->targets.erase(std::remove_if(entry->targets.begin(), entry->targets.end(), [&itemid](const unsigned int &x) { return x == itemid; }));
-				ShowNotice("item_upgrade: Removed '%u' from TargetItem. Upgrade ID: %u\n", itemid, id);
+				entry->targets.erase(std::remove_if(entry->targets.begin(), entry->targets.end(), [&itemid](const t_itemid &x) { return x == itemid; }));
+				ShowNotice("item_upgrade: Removed %s (%u) from TargetItem. Upgrade: %s (%u)\n", target_item->name, itemid, item->name, item->nameid);
 				continue;
 			}
 
@@ -111,7 +122,7 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (!exists)
-		this->put(id, entry);
+		this->put(item->nameid, entry);
 
 	return 1;
 }

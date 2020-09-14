@@ -1,20 +1,37 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2020 rAthena Development Team
+#   https:#rathena.org - https:#github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http:#www.gnu.org/licenses/>.
+#
 ###########################################################################
-# 
 # Item Upgrade Database
+###########################################################################
 #
-# This feature need a sync client file: LapineUpgradeBox.lub
+# Item Upgrade Settings
 #
 ###########################################################################
-# - Id:                   # (int) Item ID of upgrade box
-#   NeedRefineMin:        # (int) Minimum refine level needed for target item (default: 0)
-#   NeedRefineMax:        # (int) Maximum refine level needed for target item (default: MAX_REFINE)
-#   NeedOptionNumMin:     # (int) Minimum random option that target item has (default: 0)
-#   NotSocketEnchantItem: # (bool) Target item must not has enchant stone (default: true)
-#   TargetItem:           # List of possible item to be upgraded
-#     - Item:             # (int) Target's Item ID
-#       Remove:           # (optional, any) Remove this item from the list while importing
-#   Result:               # (string) Script on upgrade success
-#   ClearTargetItem:      # (optional, any) Can be used to clear TargetItem list while importing
+# - Item                  # Item name of Upgrade Box
+#   NeedRefineMin         # Minimum refine level needed for target item (Default: 0)
+#   NeedRefineMax         # Maximum refine level needed for target item (Default: MAX_REFINE)
+#   NeedOptionNumMin      # Minimum random option that target item has (Default: 0)
+#   NotSocketEnchantItem  # Target item must not have enchant stone (Default: true)
+#   TargetItem            # List of possible item to be upgraded
+#     - Item              # Target item name
+#       Remove            # Remove this item from the list while importing (Default: false) (optional)
+#   Result                # Script executed on successful upgrade
+#   ClearTargetItem       # Used to clear TargetItem list while importing (Default: false) (optional)
 ###########################################################################
 
 Header:
@@ -22,2267 +39,2267 @@ Header:
   Version: 1
 
 Body:
-- Id: 100023 # Ancient_Hero_Bravery, 영웅의 무기
-  TargetItem:
-  - Item: 18164 #Royal_Bow_K
-  - Item: 18170 #Narcis_Bow
-  - Item: 26118 #Shadow_Staff_K
-  - Item: 1847 #Iron_Nail_K
-  - Item: 28744 #Magic_Sword
-  - Item: 13485 #Sword_Of_Bluefire
-  - Item: 28130 #Avenger
-  - Item: 2048 #Iron_Staff
-  - Item: 21038 #Oriental_Sword
-  - Item: 32018 #Undine_Spear_K
-  - Item: 28630 #Demon_Hunting_Bible_K
-  - Item: 28039 #Shiver_Katar_K
-  - Item: 28631 #OneSkyOneSun
-  - Item: 26154 #SoulWeight
-  - Item: 26155 #MeawFoxtail
-  - Item: 32302 #Crimson_Rose
-  - Item: 28255 #Master_Soul_Rifle
-  - Item: 28256 #Demon_S_Shot
-  - Item: 28257 #Golden_L_Launcher
-  - Item: 28258 #The_Black_Gatling
-  - Item: 28763 #Sharp_Wind_Sword
-  - Item: 28764 #Fog_Dew_Sword
-  - Item: 13345 #Humma_Clear
-  - Item: 600004 #Dragonic_Slayer
-  - Item: 500003 #Light_Blade
-  - Item: 500004 #Slate_Sword
-  - Item: 570002 #Trumpet_Shell_K
-  - Item: 580002 #Barb_Wire_K
-  - Item: 590002 #Meteor_Striker
-  Result: |
-    callfunc("F_Lapine_Ancient_Hero_Bravery", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 100025 # Ancient_Hero_Wisdom, 영웅의 무기
-  TargetItem:
-  - Item: 18164 #Royal_Bow_K
-  - Item: 18170 #Narcis_Bow
-  - Item: 26118 #Shadow_Staff_K
-  - Item: 1847 #Iron_Nail_K
-  - Item: 28744 #Magic_Sword
-  - Item: 13485 #Sword_Of_Bluefire
-  - Item: 28130 #Avenger
-  - Item: 2048 #Iron_Staff
-  - Item: 21038 #Oriental_Sword
-  - Item: 32018 #Undine_Spear_K
-  - Item: 28630 #Demon_Hunting_Bible_K
-  - Item: 28039 #Shiver_Katar_K
-  - Item: 28631 #OneSkyOneSun
-  - Item: 26154 #SoulWeight
-  - Item: 26155 #MeawFoxtail
-  - Item: 32302 #Crimson_Rose
-  - Item: 28255 #Master_Soul_Rifle
-  - Item: 28256 #Demon_S_Shot
-  - Item: 28257 #Golden_L_Launcher
-  - Item: 28258 #The_Black_Gatling
-  - Item: 28763 #Sharp_Wind_Sword
-  - Item: 28764 #Fog_Dew_Sword
-  - Item: 13345 #Humma_Clear
-  - Item: 600004 #Dragonic_Slayer
-  - Item: 500003 #Light_Blade
-  - Item: 500004 #Slate_Sword
-  - Item: 570002 #Trumpet_Shell_K
-  - Item: 580002 #Barb_Wire_K
-  - Item: 590002 #Meteor_Striker
-  Result: |
-    callfunc("F_Lapine_Ancient_Hero_Wisdom", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 100003 # ILL_Piece_A, 4레벨 일루전 무기
-  TargetItem:
-  - Item: 28762 #Bazerald_IL
-  - Item: 28254 #Butcher_IL
-  - Item: 32301 #Gold_Lux_IL
-  - Item: 28022 #등뒤를베는자_IL
-  - Item: 1326 #워액스_IL
-  - Item: 13469 #무형검_IL
-  - Item: 16065 #아이언드라이버_IL
-  - Item: 32005 #폴액스_IL
-  - Item: 28612 #묵시록_IL
-  - Item: 18149 #발리스타_IL
-  - Item: 13338 #풍마_편익_IL
-  - Item: 2039 #위자드리스태프_IL
-  - Item: 16063 #롱메이스_IL
-  - Item: 13337 #풍마_난설_IL
-  - Item: 1846 #연격의투갑_IL
-  - Item: 26007 #요괴의창_IL
-  - Item: 26109 #스태프오브오르도_IL
-  - Item: 28725 #월광검_IL
-  - Item: 18174 #Hunter_Bow_IL
-  - Item: 28626 #Tablet_IL
-  - Item: 28244 #Gate_KeeperDD_IL
-  - Item: 28745 #Counter_Dagger_IL
-  - Item: 2051 #Survival_Staff_IL
-  - Item: 21050 #Taegoolyeon_IL
-  Result: |
-    callfunc("F_Lapine_ILL_Piece_A", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 100004 # ILL_Piece_B, 4레벨 일루전 무기
-  TargetItem:
-  - Item: 28762 #Bazerald_IL
-  - Item: 28254 #Butcher_IL
-  - Item: 32301 #Gold_Lux_IL
-  - Item: 28022 #등뒤를베는자_IL
-  - Item: 1326 #워액스_IL
-  - Item: 13469 #무형검_IL
-  - Item: 16065 #아이언드라이버_IL
-  - Item: 32005 #폴액스_IL
-  - Item: 28612 #묵시록_IL
-  - Item: 18149 #발리스타_IL
-  - Item: 13338 #풍마_편익_IL
-  - Item: 2039 #위자드리스태프_IL
-  - Item: 16063 #롱메이스_IL
-  - Item: 13337 #풍마_난설_IL
-  - Item: 1846 #연격의투갑_IL
-  - Item: 26007 #요괴의창_IL
-  - Item: 26109 #스태프오브오르도_IL
-  - Item: 28725 #월광검_IL
-  - Item: 18174 #Hunter_Bow_IL
-  - Item: 28626 #Tablet_IL
-  - Item: 28244 #Gate_KeeperDD_IL
-  - Item: 28745 #Counter_Dagger_IL
-  - Item: 2051 #Survival_Staff_IL
-  - Item: 21050 #Taegoolyeon_IL
-  Result: |
-    callfunc("F_Lapine_ILL_Piece_B", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 9550 # Gemstone_Of_Time, 시간의 갑옷 6종
-  TargetItem:
-  - Item: 15278 #Overwhelm_Str_Armor
-  - Item: 15279 #Overwhelm_Int_Armor
-  - Item: 15347 #Overwhelm_Vit_Armor
-  - Item: 15354 #Overwhelm_Dex_Armor
-  - Item: 15353 #Overwhelm_Agi_Armor
-  - Item: 15346 #Overwhelm_Luk_Armor
-  Result: |
-    callfunc("F_Lapine_Gemstone_Of_Time", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 9551 # Time_Unseal_Key, 시간의 망토 6종
-  TargetItem:
-  - Item: 20963 #Temporal_M_Str
-  - Item: 20964 #Temporal_M_Agi
-  - Item: 20965 #Temporal_M_Vit
-  - Item: 20966 #Temporal_M_Int
-  - Item: 20967 #Temporal_M_Dex
-  - Item: 20968 #Temporal_M_Luk
-  Result: |
-    callfunc("F_Lapine_Time_Unseal_Key", .@opts[0], .@vals[0]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23815 # Magma_Essence, 라바 레더 갑옷 장비
-  NeedOptionNumMin: 2
-  TargetItem:
-  - Item: 15378 #Lava_Leather_Armor
-  - Item: 15379 #Lava_Leather_Suits
-  - Item: 15380 #Lava_Leather_Robe
-  Result: |
-    callfunc("F_Lapine_Magma_Essence", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2], .@opts[3]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23776 # EP17_1_SPC05, OS무기
-  TargetItem:
-  - Item: 13493 #Cannon_Rapier_OS
-  - Item: 21047 #Beam_Claymore_OS
-  - Item: 26151 #Rutilus_Stick_OS
-  - Item: 28629 #Circuit_Board_OS
-  - Item: 28136 #Blasti_OS
-  - Item: 16088 #Saphir_Hall_OS
-  - Item: 18178 #Virtual_Bow_OS
-  - Item: 18179 #MH_P89_OS
-  - Item: 28038 #Meuchler_OS
-  - Item: 1862 #Burning_Knuckle_OS
-  - Item: 28253 #HR_S55_OS
-  - Item: 28755 #Kuroiro_OS
-  - Item: 18180 #AC_B44_OS
-  - Item: 32019 #Boost_Lance_OS
-  - Item: 16089 #Ultio_Spes_OS
-  - Item: 26164 #ElectricFox_OS
-  Result: |
-    callfunc("F_Lapine_EP17_1_SPC05", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23777 # EP17_1_SPC06, OS무기
-  TargetItem:
-  - Item: 13493 #Cannon_Rapier_OS
-  - Item: 21047 #Beam_Claymore_OS
-  - Item: 26151 #Rutilus_Stick_OS
-  - Item: 28629 #Circuit_Board_OS
-  - Item: 28136 #Blasti_OS
-  - Item: 16088 #Saphir_Hall_OS
-  - Item: 18178 #Virtual_Bow_OS
-  - Item: 18179 #MH_P89_OS
-  - Item: 28038 #Meuchler_OS
-  - Item: 1862 #Burning_Knuckle_OS
-  - Item: 28253 #HR_S55_OS
-  - Item: 28755 #Kuroiro_OS
-  - Item: 18180 #AC_B44_OS
-  - Item: 32019 #Boost_Lance_OS
-  - Item: 16089 #Ultio_Spes_OS
-  - Item: 26164 #ElectricFox_OS
-  Result: |
-    callfunc("F_Lapine_EP17_1_SPC06", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23778 # EP17_1_SPC07, OS무기
-  TargetItem:
-  - Item: 13493 #Cannon_Rapier_OS
-  - Item: 21047 #Beam_Claymore_OS
-  - Item: 26151 #Rutilus_Stick_OS
-  - Item: 28629 #Circuit_Board_OS
-  - Item: 28136 #Blasti_OS
-  - Item: 16088 #Saphir_Hall_OS
-  - Item: 18178 #Virtual_Bow_OS
-  - Item: 18179 #MH_P89_OS
-  - Item: 28038 #Meuchler_OS
-  - Item: 1862 #Burning_Knuckle_OS
-  - Item: 28253 #HR_S55_OS
-  - Item: 28755 #Kuroiro_OS
-  - Item: 18180 #AC_B44_OS
-  - Item: 32019 #Boost_Lance_OS
-  - Item: 16089 #Ultio_Spes_OS
-  - Item: 26164 #ElectricFox_OS
-  Result: |
-    callfunc("F_Lapine_EP17_1_SPC07", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23779 # EP17_1_SPC08, OS무기
-  TargetItem:
-  - Item: 13493 #Cannon_Rapier_OS
-  - Item: 21047 #Beam_Claymore_OS
-  - Item: 26151 #Rutilus_Stick_OS
-  - Item: 28629 #Circuit_Board_OS
-  - Item: 28136 #Blasti_OS
-  - Item: 16088 #Saphir_Hall_OS
-  - Item: 18178 #Virtual_Bow_OS
-  - Item: 18179 #MH_P89_OS
-  - Item: 28038 #Meuchler_OS
-  - Item: 1862 #Burning_Knuckle_OS
-  - Item: 28253 #HR_S55_OS
-  - Item: 28755 #Kuroiro_OS
-  - Item: 18180 #AC_B44_OS
-  - Item: 32019 #Boost_Lance_OS
-  - Item: 16089 #Ultio_Spes_OS
-  - Item: 26164 #ElectricFox_OS
-  Result: |
-    callfunc("F_Lapine_EP17_1_SPC08", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23780 # EP17_1_SPC09, OS무기
-  TargetItem:
-  - Item: 13493 #Cannon_Rapier_OS
-  - Item: 21047 #Beam_Claymore_OS
-  - Item: 26151 #Rutilus_Stick_OS
-  - Item: 28629 #Circuit_Board_OS
-  - Item: 28136 #Blasti_OS
-  - Item: 16088 #Saphir_Hall_OS
-  - Item: 18178 #Virtual_Bow_OS
-  - Item: 18179 #MH_P89_OS
-  - Item: 28038 #Meuchler_OS
-  - Item: 1862 #Burning_Knuckle_OS
-  - Item: 28253 #HR_S55_OS
-  - Item: 28755 #Kuroiro_OS
-  - Item: 18180 #AC_B44_OS
-  - Item: 32019 #Boost_Lance_OS
-  - Item: 16089 #Ultio_Spes_OS
-  - Item: 26164 #ElectricFox_OS
-  Result: |
-    callfunc("F_Lapine_EP17_1_SPC09", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23781 # EP17_1_SPC10, OS무기
-  TargetItem:
-  - Item: 13493 #Cannon_Rapier_OS
-  - Item: 21047 #Beam_Claymore_OS
-  - Item: 26151 #Rutilus_Stick_OS
-  - Item: 28629 #Circuit_Board_OS
-  - Item: 28136 #Blasti_OS
-  - Item: 16088 #Saphir_Hall_OS
-  - Item: 18178 #Virtual_Bow_OS
-  - Item: 18179 #MH_P89_OS
-  - Item: 28038 #Meuchler_OS
-  - Item: 1862 #Burning_Knuckle_OS
-  - Item: 28253 #HR_S55_OS
-  - Item: 28755 #Kuroiro_OS
-  - Item: 18180 #AC_B44_OS
-  - Item: 32019 #Boost_Lance_OS
-  - Item: 16089 #Ultio_Spes_OS
-  - Item: 26164 #ElectricFox_OS
-  Result: |
-    callfunc("F_Lapine_EP17_1_SPC10", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23706 # Charleston_Parts_W, 찰스턴 업그레이드 부품(물리)
-  TargetItem:
-  - Item: 1549 #파일벙커
-  - Item: 16030 #파일벙커S
-  - Item: 16032 #파일벙커T
-  - Item: 16031 #파일벙커P
-  - Item: 16033 #로봇의기계팔
-  - Item: 28101 #토네이도액스
-  - Item: 21011 #기간트블레이드
-  Result: |
-    callfunc("F_Lapine_Charleston_Parts_W", .@opts[0], .@vals[0]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23707 # Charleston_Parts_R, 찰스턴 업그레이드 부품(원거리)
-  TargetItem:
-  - Item: 1549 #파일벙커
-  - Item: 16030 #파일벙커S
-  - Item: 16032 #파일벙커T
-  - Item: 16031 #파일벙커P
-  - Item: 16033 #로봇의기계팔
-  - Item: 28101 #토네이도액스
-  - Item: 21011 #기간트블레이드
-  Result: |
-    callfunc("F_Lapine_Charleston_Parts_R", .@opts[0], .@vals[0]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23678 # Gray_Charcoal_Range, 타노스 원거리 무기
-  TargetItem:
-  - Item: 18119 #타노스의활
-  - Item: 1933 #타노스의바이올린
-  - Item: 1988 #타노스의윕소드
-  - Item: 13441 #타노스의검
-  - Item: 21009 #타노스의대검
-  - Item: 1438 #타노스의창
-  - Item: 1496 #타노스의양손창
-  - Item: 28000 #타노스의카타르
-  - Item: 1836 #타노스의너클
-  - Item: 16028 #타노스의망치
-  - Item: 28100 #타노스의도끼
-  Result: |
-    callfunc("F_Lapine_Gray_Charcoal_Range", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23677 # Gray_Charcoal_Magic, 타노스 마법 무기
-  TargetItem:
-  - Item: 2023 #타노스의양손지팡이
-  - Item: 1669 #타노스의지팡이
-  - Item: 13093 #타노스의단검
-  - Item: 13441 #타노스의검
-  - Item: 1933 #타노스의바이올린
-  - Item: 1988 #타노스의윕소드
-  Result: |
-    callfunc("F_Lapine_Gray_Charcoal_Magic", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23676 # Gray_Charcoal_Melee, 타노스 근거리 무기
-  TargetItem:
-  - Item: 1988 #타노스의윕소드
-  - Item: 13441 #타노스의검
-  - Item: 21009 #타노스의대검
-  - Item: 1438 #타노스의창
-  - Item: 1496 #타노스의양손창
-  - Item: 13093 #타노스의단검
-  - Item: 28000 #타노스의카타르
-  - Item: 1836 #타노스의너클
-  - Item: 16028 #타노스의망치
-  - Item: 28100 #타노스의도끼
-  - Item: 1933 #타노스의바이올린
-  Result: |
-    callfunc("F_Lapine_Gray_Charcoal_Melee", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23679 # Geffen_Magic_Scroll2, 게펜 마법 대회 액세서리 (accessory)
-  TargetItem:
-  - Item: 2963 #신체강화반지
-  - Item: 2964 #마력증폭반지
-  Result: |
-    callfunc("F_Lapine_Geffen_Magic_Scroll2", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23675 # Geffen_Magic_Scroll, 게펜 마법 대회 갑옷 (armor)
-  TargetItem:
-  - Item: 15074 #게펜매직로브
-  - Item: 15073 #안티매직슈츠
-  Result: |
-    callfunc("F_Lapine_Geffen_Magic_Scroll", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23546 # Cursed_Blood, 피빛의 기사의 방패
-  TargetItem:
-  - Item: 28945 #Bloody_Knight_Shield_
-  Result: |
-    callfunc("F_Lapine_Cursed_Blood", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23547 # Gold_Statue, 정화된 기사의 방패
-  TargetItem:
-  - Item: 28946 #Bloody_Knight_Shield__
-  Result: |
-    callfunc("F_Lapine_Gold_Statue", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23436 # Shadow_Refine_Hammer, 쉐도우 아이템
-  NotSocketEnchantItem: false
-  TargetItem:
-  - Item: 24000 #T힘1아머쉐도우
-  - Item: 24001 #T덱스1웨폰쉐도우
-  - Item: 24002 #T럭1쉴드쉐도우
-  - Item: 24003 #T어질1슈즈쉐도우
-  - Item: 24004 #T바이탈1악세R쉐도우
-  - Item: 24005 #T인트1악세L쉐도우
-  - Item: 24006 #T힘2아머쉐도우
-  - Item: 24007 #T덱스2웨폰쉐도우
-  - Item: 24008 #T럭2쉴드쉐도우
-  - Item: 24009 #T어질2슈즈쉐도우
-  - Item: 24010 #T바이탈2악세R쉐도우
-  - Item: 24011 #T인트2악세L쉐도우
-  - Item: 24012 #프로모션웨폰S
-  - Item: 24013 #프로모션아머S
-  - Item: 24014 #프로모션슈즈S
-  - Item: 24015 #프로모션쉴드S
-  - Item: 24016 #프로모션이어링S
-  - Item: 24017 #프로모션펜던트S
-  - Item: 24018 #피지컬이어링S
-  - Item: 24019 #피지컬웨폰S
-  - Item: 24020 #피지컬펜던트S
-  - Item: 24021 #매지컬이어링S
-  - Item: 24022 #매지컬웨폰S
-  - Item: 24023 #매지컬펜던트S
-  - Item: 24024 #브리즈아머S
-  - Item: 24025 #챔피언슈즈S
-  - Item: 24026 #아테나쉴드S
-  - Item: 24027 #이뮨드아머S
-  - Item: 24028 #하드아머S
-  - Item: 24029 #에이션트아머S
-  - Item: 24030 #크리티컬아머S
-  - Item: 24031 #킹버드웨폰S
-  - Item: 24032 #크리히트웨폰S
-  - Item: 24033 #힐링웨폰S
-  - Item: 24034 #럭키웨폰S
-  - Item: 24035 #파워이어링S
-  - Item: 24036 #인트펜던트S
-  - Item: 24037 #덱스터러스아머S
-  - Item: 24038 #바이탈슈즈S
-  - Item: 24039 #어틀레틱쉴드S
-  - Item: 24040 #럭키아머S
-  - Item: 24041 #파워펜던트S
-  - Item: 24042 #인트이어링S
-  - Item: 24043 #덱스터러스웨폰S
-  - Item: 24044 #바이탈쉴드S
-  - Item: 24045 #어틀레틱슈즈S
-  - Item: 24046 #레지스트스펠파워펜던트S
-  - Item: 24047 #래피드펜던트S
-  - Item: 24048 #캐스터펜던트S
-  - Item: 24049 #하드이어링S
-  - Item: 24050 #와이즈이어링S
-  - Item: 24051 #아테나이어링S
-  - Item: 24052 #크레이니얼쉴드S
-  - Item: 24053 #세이프가드쉴드S
-  - Item: 24054 #브루털쉴드S
-  - Item: 24055 #가간츄어쉴드S
-  - Item: 24056 #호머즈쉴드S
-  - Item: 24057 #드라군쉴드S
-  - Item: 24058 #사타닉쉴드S
-  - Item: 24059 #프레임가드쉴드S
-  - Item: 24060 #레퀴엠쉴드S
-  - Item: 24061 #카디쉴드S
-  - Item: 24062 #블러디슈즈S
-  - Item: 24063 #리버레이션슈즈S
-  - Item: 24064 #케미컬슈즈S
-  - Item: 24065 #클래머러스슈즈S
-  - Item: 24066 #인섹티사이드슈즈S
-  - Item: 24067 #피셔슈즈S
-  - Item: 24068 #세라핌슈즈S
-  - Item: 24069 #비홀더슈즈S
-  - Item: 24070 #디바인슈즈S
-  - Item: 24071 #드라군슈즈S
-  - Item: 24072 #빅아머S
-  - Item: 24073 #미디움아머S
-  - Item: 24074 #스몰아머S
-  - Item: 24075 #빅웨폰S
-  - Item: 24076 #미디움웨폰S
-  - Item: 24077 #스몰웨폰S
-  - Item: 24078 #스피리츄얼웨폰S
-  - Item: 24079 #스피리츄얼이어링S
-  - Item: 24080 #스피리츄얼펜던트S
-  - Item: 24081 #매리셔스아머S
-  - Item: 24082 #매리셔스슈즈S
-  - Item: 24083 #매리셔스쉴드S
-  - Item: 24084 #젬스톤아머S
-  - Item: 24085 #젬스톤슈즈S
-  - Item: 24086 #젬스톤쉴드S
-  - Item: 24087 #젬스톤웨폰S
-  - Item: 24088 #젬스톤이어링S
-  - Item: 24089 #젬스톤펜던트S
-  - Item: 24090 #스테빌리티쉴드S
-  - Item: 24091 #플라스터러즈아머S
-  - Item: 24092 #플라스터러즈슈즈S
-  - Item: 24093 #인솜니악아머S
-  - Item: 24094 #인솜니악슈즈S
-  - Item: 24095 #피어리스아머S
-  - Item: 24096 #피어리스슈즈S
-  - Item: 24097 #애듀레이트아머S
-  - Item: 24098 #애듀레이트슈즈S
-  - Item: 24099 #언프리징웨폰S
-  - Item: 24100 #언프리징이어링S
-  - Item: 24101 #언프리징펜던트S
-  - Item: 24102 #바이탈리티이어링S
-  - Item: 24103 #바이탈리티펜던트S
-  - Item: 24104 #뉴트럴웨폰S
-  - Item: 24105 #뉴트럴이어링S
-  - Item: 24106 #뉴트럴펜던트S
-  - Item: 24107 #언커즈이어링S
-  - Item: 24108 #언커즈펜던트S
-  - Item: 24109 #캐스터이어링S
-  - Item: 24110 #캐스터웨폰S
-  - Item: 24111 #스펠플로우슈즈S
-  - Item: 24112 #스펠플로우아머S
-  - Item: 24113 #스펠플로우쉴드S
-  - Item: 24114 #그리드아머S
-  - Item: 24115 #그리드슈즈S
-  - Item: 24116 #그리드쉴드S
-  - Item: 24117 #그리드웨폰S
-  - Item: 24118 #그리드이어링S
-  - Item: 24119 #그리드펜던트S
-  - Item: 24120 #힐아머S
-  - Item: 24121 #힐슈즈S
-  - Item: 24122 #힐쉴드S
-  - Item: 24123 #힐웨폰S
-  - Item: 24124 #힐이어링S
-  - Item: 24125 #힐펜던트S
-  - Item: 24126 #하이딩아머S
-  - Item: 24127 #하이딩슈즈S
-  - Item: 24128 #하이딩쉴드S
-  - Item: 24129 #하이딩웨폰S
-  - Item: 24130 #하이딩이어링S
-  - Item: 24131 #하이딩펜던트S
-  - Item: 24132 #클로킹아머S
-  - Item: 24133 #클로킹슈즈S
-  - Item: 24134 #클로킹쉴드S
-  - Item: 24135 #클로킹웨폰S
-  - Item: 24136 #클로킹이어링S
-  - Item: 24137 #클로킹펜던트S
-  - Item: 24138 #텔레포트아머S
-  - Item: 24139 #텔레포트슈즈S
-  - Item: 24140 #텔레포트쉴드S
-  - Item: 24141 #텔레포트웨폰S
-  - Item: 24142 #텔레포트이어링S
-  - Item: 24143 #텔레포트펜던트S
-  - Item: 24144 #스틸아머S
-  - Item: 24145 #스틸슈즈S
-  - Item: 24146 #스틸쉴드S
-  - Item: 24147 #스틸웨폰S
-  - Item: 24148 #스틸이어링S
-  - Item: 24149 #스틸펜던트S
-  - Item: 24150 #인피니티이어링S
-  - Item: 24151 #인피니티펜던트S
-  - Item: 24152 #솔리드웨폰S
-  - Item: 24153 #솔리드이어링S
-  - Item: 24154 #임모털아머S
-  - Item: 24155 #임모털펜던트S
-  - Item: 24156 #액서큐서너웨폰S
-  - Item: 24157 #엑소시스트웨폰S
-  - Item: 24158 #헌팅웨폰S
-  - Item: 24159 #인섹트넷웨폰S
-  - Item: 24160 #피싱웨폰S
-  - Item: 24161 #드래곤킬러웨폰S
-  - Item: 24162 #커럽트웨폰S
-  - Item: 24163 #바이브레이션웨폰S
-  - Item: 24164 #홀리워터웨폰S
-  - Item: 24165 #시저스웨폰S
-  - Item: 24166 #페니트레이션이어링S
-  - Item: 24167 #페니트레이션펜던트S
-  - Item: 24168 #템페스트이어링S
-  - Item: 24169 #템페스트펜던트S
-  - Item: 24170 #매직액서큐서너웨폰S
-  - Item: 24171 #매직엑소시스트웨폰S
-  - Item: 24172 #매직헌팅웨폰S
-  - Item: 24173 #매직인섹트넷웨폰S
-  - Item: 24174 #매직피싱웨폰S
-  - Item: 24175 #매직드래곤킬러웨폰S
-  - Item: 24176 #매직커럽트웨폰S
-  - Item: 24177 #매직바이브레이션웨폰S
-  - Item: 24178 #매직홀리워터웨폰S
-  - Item: 24179 #매직시저스웨폰S
-  - Item: 24180 #베어러즈아머S
-  - Item: 24181 #베어러즈슈즈S
-  - Item: 24182 #베어러즈쉴드S
-  - Item: 24183 #베어러즈웨폰S
-  - Item: 24184 #베어러즈이어링S
-  - Item: 24185 #베어러즈펜던트S
-  - Item: 24186 #베이시스아머S
-  - Item: 24187 #핼로우드아머S
-  - Item: 24188 #사하릭아머S
-  - Item: 24189 #언더니스아머S
-  - Item: 24190 #플레임아머S
-  - Item: 24191 #윈디아머S
-  - Item: 24192 #인베넘아머S
-  - Item: 24193 #댐드아머S
-  - Item: 24194 #가이스트아머S
-  - Item: 24195 #디바인아머S
-  - Item: 24196 #헤이스티슈즈S
-  - Item: 24197 #헤이스티아머S
-  - Item: 24198 #베이시스쉴드S
-  - Item: 24199 #핼로우드쉴드S
-  - Item: 24200 #사하릭쉴드S
-  - Item: 24201 #언더니스쉴드S
-  - Item: 24202 #플레임쉴드S
-  - Item: 24203 #윈디쉴드S
-  - Item: 24204 #인베넘쉴드S
-  - Item: 24205 #댐드쉴드S
-  - Item: 24206 #가이스트쉴드S
-  - Item: 24207 #디바인쉴드S
-  - Item: 24208 #익스퍼트슈즈S
-  - Item: 24209 #익스퍼트쉴드S
-  - Item: 24210 #비기너슈즈S
-  - Item: 24211 #비기너쉴드S
-  - Item: 24212 #루키슈즈S
-  - Item: 24213 #루키쉴드S
-  - Item: 24214 #어드벤스드슈즈S
-  - Item: 24215 #어드벤스드쉴드S
-  - Item: 24216 #어택아머S
-  - Item: 24217 #블리츠이어링S
-  - Item: 24218 #블리츠펜던트S
-  - Item: 24219 #콜드볼트아머S
-  - Item: 24220 #화이어볼트아머S
-  - Item: 24221 #라이트닝볼트아머S
-  - Item: 24222 #어스스파이크아머S
-  - Item: 24223 #인핸스포스웨폰S
-  - Item: 24224 #포스웨폰S
-  - Item: 24225 #포스이어링S
-  - Item: 24226 #포스펜던트S
-  - Item: 24227 #인핸스스피릿웨폰S
-  - Item: 24228 #스피릿웨폰S
-  - Item: 24229 #스피릿이어링S
-  - Item: 24230 #스피릿펜던트S
-  - Item: 24231 #블리츠슈즈S
-  - Item: 24232 #블리츠쉴드S
-  - Item: 24233 #익시드웨폰S
-  - Item: 24234 #타이탄이어링S
-  - Item: 24235 #타이탄펜던트S
-  - Item: 24236 #보운드이어링S
-  - Item: 24237 #보운드펜던트S
-  - Item: 24238 #기간틱이어링S
-  - Item: 24239 #기간틱펜던트S
-  - Item: 24240 #캐스터슈즈S
-  - Item: 24241 #캐스터쉴드S
-  - Item: 24242 #캐스터아머S
-  - Item: 24243 #리로드슈즈S
-  - Item: 24244 #리로드쉴드S
-  - Item: 24245 #리로드아머S
-  - Item: 24246 #소드맨이어링S
-  - Item: 24247 #머천트이어링S
-  - Item: 24248 #어콜라이트이어링S
-  - Item: 24249 #매지션이어링S
-  - Item: 24250 #소드맨펜던트S
-  - Item: 24251 #머천트펜던트S
-  - Item: 24252 #어콜라이트펜던트S
-  - Item: 24253 #씨프펜던트S
-  - Item: 24254 #매지션펜던트S
-  - Item: 24255 #아처펜던트S
-  - Item: 24256 #나이트슈즈S
-  - Item: 24257 #크루세이더슈즈S
-  - Item: 24258 #블랙스미스슈즈S
-  - Item: 24259 #알케미스트슈즈S
-  - Item: 24260 #프리스트슈즈S
-  - Item: 24261 #몽크슈즈S
-  - Item: 24262 #어쌔신슈즈S
-  - Item: 24263 #로그슈즈S
-  - Item: 24264 #위저드슈즈S
-  - Item: 24265 #세이지슈즈S
-  - Item: 24266 #헌터슈즈S
-  - Item: 24267 #바드슈즈S
-  - Item: 24268 #댄서슈즈S
-  - Item: 24269 #나이트아머S
-  - Item: 24270 #크루세이더아머S
-  - Item: 24271 #블랙스미스아머S
-  - Item: 24272 #알케미스트아머S
-  - Item: 24273 #프리스트아머S
-  - Item: 24274 #몽크아머S
-  - Item: 24275 #어쌔신아머S
-  - Item: 24276 #로그아머S
-  - Item: 24277 #위저드아머S
-  - Item: 24278 #세이지아머S
-  - Item: 24279 #헌터아머S
-  - Item: 24280 #바드아머S
-  - Item: 24281 #댄서아머S
-  - Item: 24282 #슈퍼노비스웨폰S
-  - Item: 24283 #건슬링거웨폰S
-  - Item: 24284 #태권웨폰S
-  - Item: 24285 #닌자웨폰S
-  - Item: 24286 #도람매지컬웨폰S
-  - Item: 24287 #도람피지컬웨폰S
-  - Item: 24288 #룬나이트웨폰S
-  - Item: 24289 #로얄가드웨폰S
-  - Item: 24290 #미케닉웨폰S
-  - Item: 24291 #제네릭웨폰S
-  - Item: 24292 #아크비숍웨폰S
-  - Item: 24293 #수라웨폰S
-  - Item: 24294 #길로틴크로스웨폰S
-  - Item: 24295 #쉐도우체이서웨폰S
-  - Item: 24296 #워록웨폰S
-  - Item: 24297 #소서러웨폰S
-  - Item: 24298 #레인져웨폰S
-  - Item: 24299 #민스트럴웨폰S
-  - Item: 24300 #원더러웨폰S
-  - Item: 24301 #룬나이트쉴드S
-  - Item: 24302 #로얄가드쉴드S
-  - Item: 24303 #미케닉쉴드S
-  - Item: 24304 #제네릭쉴드S
-  - Item: 24305 #아크비숍쉴드S
-  - Item: 24306 #수라쉴드S
-  - Item: 24307 #길로틴크로스쉴드S
-  - Item: 24308 #쉐도우체이서쉴드S
-  - Item: 24309 #워록쉴드S
-  - Item: 24310 #소서러쉴드S
-  - Item: 24311 #레인져쉴드S
-  - Item: 24312 #민스트럴쉴드S
-  - Item: 24313 #원더러쉴드S
-  - Item: 24314 #닌자쉴드S
-  - Item: 24315 #태권쉴드S
-  - Item: 24316 #도람피지컬쉴드S
-  - Item: 24317 #도람매지컬쉴드S
-  - Item: 24318 #슈퍼노비스쉴드S
-  - Item: 24319 #건슬링거쉴드S
-  - Item: 24320 #헤이스티슈즈S2
-  - Item: 24321 #베어러즈펜던트S2
-  - Item: 24322 #젬스톤이어링S2
-  - Item: 24323 #스펠플로우쉴드S2
-  - Item: 24324 #스피리츄얼웨폰S2
-  - Item: 24325 #매리셔스아머S2
-  - Item: 24326 #사이그룬아머S
-  - Item: 24327 #사이그룬쉴드S
-  - Item: 24328 #포스액서듀얼웨폰S2
-  - Item: 24329 #스피릿매직듀얼웨폰S2
-  - Item: 24330 #캐스터아머S2
-  - Item: 24331 #리로드아머S2
-  - Item: 24332 #크리티컬쉴드S
-  - Item: 24333 #크리티컬슈즈S
-  - Item: 24334 #매직컴포즈아머S
-  - Item: 24335 #젬스톤웨폰S2
-  - Item: 24336 #젬스톤쉴드S2
-  - Item: 24337 #베어러즈아머S2
-  - Item: 24338 #베어러즈슈즈S2
-  - Item: 24339 #올마이티이어링S
-  - Item: 24340 #올마이티펜던트S
-  - Item: 24341 #올레이스슈즈S
-  - Item: 24342 #올레이스쉴드S
-  - Item: 24343 #블리츠웨폰S
-  - Item: 24344 #블리츠아머S
-  - Item: 24345 #템페스트쉴드S
-  - Item: 24346 #템페스트슈즈S
-  - Item: 24347 #매직액서홀리아머S
-  - Item: 24348 #매직엑소커럽트아머S
-  - Item: 24349 #매직드래곤바이브아머S
-  - Item: 24350 #매직시저스헌팅아머S
-  - Item: 24351 #매직피싱인섹트아머S
-  - Item: 24352 #플라스터러즈아머S2
-  - Item: 24353 #인솜니악슈즈S2
-  - Item: 24354 #피어리스아머S2
-  - Item: 24355 #애듀레이트슈즈S2
-  - Item: 24356 #언프리징웨폰S2
-  - Item: 24357 #바이탈리티이어링S2
-  - Item: 24358 #뉴트럴웨폰S2
-  - Item: 24359 #언커즈펜던트S2
-  - Item: 24360 #텐션웨폰S
-  - Item: 24361 #텐션이어링S
-  - Item: 24362 #텐션펜던트S
-  - Item: 24363 #엘레강트웨폰S
-  - Item: 24364 #엘레강트이어링S
-  - Item: 24365 #엘레강트펜던트S
-  - Item: 24366 #힐링쉴드S
-  - Item: 24367 #힐링슈즈S
-  - Item: 24368 #리스토어이어링S
-  - Item: 24369 #리스토어펜던트S
-  - Item: 24370 #모탈블로우웨폰S
-  - Item: 24371 #모탈블로우이어링S
-  - Item: 24372 #모탈블로우펜던트S
-  - Item: 24373 #페니트레이션슈즈S
-  - Item: 24374 #페니트레이션쉴드S
-  - Item: 24375 #액서홀리아머S
-  - Item: 24376 #엑소커럽트아머S
-  - Item: 24377 #드래곤바이브아머S
-  - Item: 24378 #시저스헌팅아머S
-  - Item: 24379 #피싱인섹트아머S
-  - Item: 24380 #Sentimental_Weapone_S
-  - Item: 24381 #Sentimental_Earring_S
-  - Item: 24382 #Sentimental_Pendant_S
-  - Item: 24383 #Enchanting_Weapone_S
-  - Item: 24384 #Enchanting_Earring_S
-  - Item: 24385 #Enchanting_Pendant_S
-  - Item: 24386 #S_Infinity_Weapon
-  - Item: 24393 #S_Physical_Shoes
-  - Item: 24394 #S_Physical_Shield
-  - Item: 24395 #S_Physical_Armor
-  - Item: 24396 #S_Magical_Shoes
-  - Item: 24397 #S_Magical_Shield
-  - Item: 24398 #S_Magical_Armor
-  - Item: 24399 #S_ImmunedAthena_Shield
-  - Item: 24400 #S_HardChamption_Shoes
-  - Item: 24401 #S_KingbirdAncient_Armor
-  - Item: 15280 #S_CriticalHit_Armor
-  - Item: 28391 #씨프이어링S
-  - Item: 28392 #아처이어링S
-  - Item: 24402 #S_Rebellion_Armor
-  - Item: 24403 #S_Kagerou_Armor
-  - Item: 24404 #S_Oboro_Armor
-  - Item: 24405 #S_Rebellion_Shoes
-  - Item: 24406 #S_Kagerou_Shoes
-  - Item: 24407 #S_Oboro_Shoes
-  - Item: 24408 #S_DoramPhysical_Armor
-  - Item: 24409 #S_DoramPhysical_Shoes
-  - Item: 24410 #S_DoramMagical_Armor
-  - Item: 24411 #S_DoramMagical_Shoes
-  - Item: 24412 #S_Star_Emperor_Armor
-  - Item: 24413 #S_Star_Emperor_Shoes
-  - Item: 24414 #S_Soul_Reaper_Armor
-  - Item: 24415 #S_Soul_Reaper_Shoes
-  - Item: 24423 #S_Tempest_Weapon
-  - Item: 24424 #S_Tempest_Armor
-  - Item: 24425 #S_PerfectSize_Weapon
-  - Item: 24426 #S_PerfectSize_Armor
-  - Item: 24427 #S_M_Exo_Co_Weapon
-  - Item: 24428 #S_M_Viv_Dr_Weapon
-  - Item: 24429 #S_M_Sci_Hu_Weapon
-  - Item: 24430 #S_M_Fis_In_Weapon
-  - Item: 24431 #S_M_Exe_Ho_Weapon
-  - Item: 24432 #S_Penetration_Weapon
-  - Item: 24433 #S_Penetration_Armor
-  - Item: 24434 #S_Exe_Ho_Weapon
-  - Item: 24435 #S_Fis_In_Weapon
-  - Item: 24436 #S_Sci_Hu_Weapon
-  - Item: 24437 #S_Viv_Dr_Weapon
-  - Item: 24438 #S_Exo_Co_Weapon
-  - Item: 24439 #S_Hasty_Weapon
-  - Item: 24440 #S_Sonic_Armor
-  - Item: 24441 #S_Sonic_Shield
-  - Item: 24442 #S_Sonic_Shoes
-  - Item: 24443 #S_Ignition_Weapon
-  - Item: 24444 #S_Ignition_Pendant
-  - Item: 24445 #S_Ignition_Earing
-  - Item: 24446 #S_W_Breath_Armor
-  - Item: 24447 #S_W_Breath_Shield
-  - Item: 24448 #S_W_Breath_Shoes
-  - Item: 24449 #S_F_Breath_Weapon
-  - Item: 24450 #S_F_Breath_Pendant
-  - Item: 24451 #S_F_Breath_Earing
-  - Item: 24452 #S_Cluster_Armor
-  - Item: 24453 #S_Cluster_Shield
-  - Item: 24454 #S_Cluster_Shoes
-  - Item: 24455 #S_Aimed_Weapon
-  - Item: 24456 #S_Aimed_Pendant
-  - Item: 24457 #S_Aimed_Earing
-  - Item: 24458 #S_Arrow_Armor
-  - Item: 24459 #S_Arrow_Shield
-  - Item: 24460 #S_Arrow_Shoes
-  - Item: 24461 #S_Shooting_Weapon
-  - Item: 24462 #S_Shooting_Pendant
-  - Item: 24463 #S_Shooting_Earing
-  - Item: 24464 #S_Tornado_Armor
-  - Item: 24465 #S_Tornado_Shield
-  - Item: 24466 #S_Tornado_Shoes
-  - Item: 24467 #S_Boomerang_Weapon
-  - Item: 24468 #S_Boomerang_Pendant
-  - Item: 24469 #S_Boomerang_Earing
-  - Item: 24470 #S_Vulcan_Armor
-  - Item: 24471 #S_Vulcan_Shield
-  - Item: 24472 #S_Vulcan_Shoes
-  - Item: 24473 #S_Arms_Weapon
-  - Item: 24474 #S_Arms_Pendant
-  - Item: 24475 #S_Arms_Earing
-  Result: |
-    callfunc("F_Lapine_Shadow_Refine_Hammer", .@refine);
-    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
-- Id: 23926 # Shadow_9_Refine_Hammer, 쉐도우 아이템
-  NotSocketEnchantItem: false
-  TargetItem:
-  - Item: 24000 #T힘1아머쉐도우
-  - Item: 24001 #T덱스1웨폰쉐도우
-  - Item: 24002 #T럭1쉴드쉐도우
-  - Item: 24003 #T어질1슈즈쉐도우
-  - Item: 24004 #T바이탈1악세R쉐도우
-  - Item: 24005 #T인트1악세L쉐도우
-  - Item: 24006 #T힘2아머쉐도우
-  - Item: 24007 #T덱스2웨폰쉐도우
-  - Item: 24008 #T럭2쉴드쉐도우
-  - Item: 24009 #T어질2슈즈쉐도우
-  - Item: 24010 #T바이탈2악세R쉐도우
-  - Item: 24011 #T인트2악세L쉐도우
-  - Item: 24012 #프로모션웨폰S
-  - Item: 24013 #프로모션아머S
-  - Item: 24014 #프로모션슈즈S
-  - Item: 24015 #프로모션쉴드S
-  - Item: 24016 #프로모션이어링S
-  - Item: 24017 #프로모션펜던트S
-  - Item: 24018 #피지컬이어링S
-  - Item: 24019 #피지컬웨폰S
-  - Item: 24020 #피지컬펜던트S
-  - Item: 24021 #매지컬이어링S
-  - Item: 24022 #매지컬웨폰S
-  - Item: 24023 #매지컬펜던트S
-  - Item: 24024 #브리즈아머S
-  - Item: 24025 #챔피언슈즈S
-  - Item: 24026 #아테나쉴드S
-  - Item: 24027 #이뮨드아머S
-  - Item: 24028 #하드아머S
-  - Item: 24029 #에이션트아머S
-  - Item: 24030 #크리티컬아머S
-  - Item: 24031 #킹버드웨폰S
-  - Item: 24032 #크리히트웨폰S
-  - Item: 24033 #힐링웨폰S
-  - Item: 24034 #럭키웨폰S
-  - Item: 24035 #파워이어링S
-  - Item: 24036 #인트펜던트S
-  - Item: 24037 #덱스터러스아머S
-  - Item: 24038 #바이탈슈즈S
-  - Item: 24039 #어틀레틱쉴드S
-  - Item: 24040 #럭키아머S
-  - Item: 24041 #파워펜던트S
-  - Item: 24042 #인트이어링S
-  - Item: 24043 #덱스터러스웨폰S
-  - Item: 24044 #바이탈쉴드S
-  - Item: 24045 #어틀레틱슈즈S
-  - Item: 24046 #레지스트스펠파워펜던트S
-  - Item: 24047 #래피드펜던트S
-  - Item: 24048 #캐스터펜던트S
-  - Item: 24049 #하드이어링S
-  - Item: 24050 #와이즈이어링S
-  - Item: 24051 #아테나이어링S
-  - Item: 24052 #크레이니얼쉴드S
-  - Item: 24053 #세이프가드쉴드S
-  - Item: 24054 #브루털쉴드S
-  - Item: 24055 #가간츄어쉴드S
-  - Item: 24056 #호머즈쉴드S
-  - Item: 24057 #드라군쉴드S
-  - Item: 24058 #사타닉쉴드S
-  - Item: 24059 #프레임가드쉴드S
-  - Item: 24060 #레퀴엠쉴드S
-  - Item: 24061 #카디쉴드S
-  - Item: 24062 #블러디슈즈S
-  - Item: 24063 #리버레이션슈즈S
-  - Item: 24064 #케미컬슈즈S
-  - Item: 24065 #클래머러스슈즈S
-  - Item: 24066 #인섹티사이드슈즈S
-  - Item: 24067 #피셔슈즈S
-  - Item: 24068 #세라핌슈즈S
-  - Item: 24069 #비홀더슈즈S
-  - Item: 24070 #디바인슈즈S
-  - Item: 24071 #드라군슈즈S
-  - Item: 24072 #빅아머S
-  - Item: 24073 #미디움아머S
-  - Item: 24074 #스몰아머S
-  - Item: 24075 #빅웨폰S
-  - Item: 24076 #미디움웨폰S
-  - Item: 24077 #스몰웨폰S
-  - Item: 24078 #스피리츄얼웨폰S
-  - Item: 24079 #스피리츄얼이어링S
-  - Item: 24080 #스피리츄얼펜던트S
-  - Item: 24081 #매리셔스아머S
-  - Item: 24082 #매리셔스슈즈S
-  - Item: 24083 #매리셔스쉴드S
-  - Item: 24084 #젬스톤아머S
-  - Item: 24085 #젬스톤슈즈S
-  - Item: 24086 #젬스톤쉴드S
-  - Item: 24087 #젬스톤웨폰S
-  - Item: 24088 #젬스톤이어링S
-  - Item: 24089 #젬스톤펜던트S
-  - Item: 24090 #스테빌리티쉴드S
-  - Item: 24091 #플라스터러즈아머S
-  - Item: 24092 #플라스터러즈슈즈S
-  - Item: 24093 #인솜니악아머S
-  - Item: 24094 #인솜니악슈즈S
-  - Item: 24095 #피어리스아머S
-  - Item: 24096 #피어리스슈즈S
-  - Item: 24097 #애듀레이트아머S
-  - Item: 24098 #애듀레이트슈즈S
-  - Item: 24099 #언프리징웨폰S
-  - Item: 24100 #언프리징이어링S
-  - Item: 24101 #언프리징펜던트S
-  - Item: 24102 #바이탈리티이어링S
-  - Item: 24103 #바이탈리티펜던트S
-  - Item: 24104 #뉴트럴웨폰S
-  - Item: 24105 #뉴트럴이어링S
-  - Item: 24106 #뉴트럴펜던트S
-  - Item: 24107 #언커즈이어링S
-  - Item: 24108 #언커즈펜던트S
-  - Item: 24109 #캐스터이어링S
-  - Item: 24110 #캐스터웨폰S
-  - Item: 24111 #스펠플로우슈즈S
-  - Item: 24112 #스펠플로우아머S
-  - Item: 24113 #스펠플로우쉴드S
-  - Item: 24114 #그리드아머S
-  - Item: 24115 #그리드슈즈S
-  - Item: 24116 #그리드쉴드S
-  - Item: 24117 #그리드웨폰S
-  - Item: 24118 #그리드이어링S
-  - Item: 24119 #그리드펜던트S
-  - Item: 24120 #힐아머S
-  - Item: 24121 #힐슈즈S
-  - Item: 24122 #힐쉴드S
-  - Item: 24123 #힐웨폰S
-  - Item: 24124 #힐이어링S
-  - Item: 24125 #힐펜던트S
-  - Item: 24126 #하이딩아머S
-  - Item: 24127 #하이딩슈즈S
-  - Item: 24128 #하이딩쉴드S
-  - Item: 24129 #하이딩웨폰S
-  - Item: 24130 #하이딩이어링S
-  - Item: 24131 #하이딩펜던트S
-  - Item: 24132 #클로킹아머S
-  - Item: 24133 #클로킹슈즈S
-  - Item: 24134 #클로킹쉴드S
-  - Item: 24135 #클로킹웨폰S
-  - Item: 24136 #클로킹이어링S
-  - Item: 24137 #클로킹펜던트S
-  - Item: 24138 #텔레포트아머S
-  - Item: 24139 #텔레포트슈즈S
-  - Item: 24140 #텔레포트쉴드S
-  - Item: 24141 #텔레포트웨폰S
-  - Item: 24142 #텔레포트이어링S
-  - Item: 24143 #텔레포트펜던트S
-  - Item: 24144 #스틸아머S
-  - Item: 24145 #스틸슈즈S
-  - Item: 24146 #스틸쉴드S
-  - Item: 24147 #스틸웨폰S
-  - Item: 24148 #스틸이어링S
-  - Item: 24149 #스틸펜던트S
-  - Item: 24150 #인피니티이어링S
-  - Item: 24151 #인피니티펜던트S
-  - Item: 24152 #솔리드웨폰S
-  - Item: 24153 #솔리드이어링S
-  - Item: 24154 #임모털아머S
-  - Item: 24155 #임모털펜던트S
-  - Item: 24156 #액서큐서너웨폰S
-  - Item: 24157 #엑소시스트웨폰S
-  - Item: 24158 #헌팅웨폰S
-  - Item: 24159 #인섹트넷웨폰S
-  - Item: 24160 #피싱웨폰S
-  - Item: 24161 #드래곤킬러웨폰S
-  - Item: 24162 #커럽트웨폰S
-  - Item: 24163 #바이브레이션웨폰S
-  - Item: 24164 #홀리워터웨폰S
-  - Item: 24165 #시저스웨폰S
-  - Item: 24166 #페니트레이션이어링S
-  - Item: 24167 #페니트레이션펜던트S
-  - Item: 24168 #템페스트이어링S
-  - Item: 24169 #템페스트펜던트S
-  - Item: 24170 #매직액서큐서너웨폰S
-  - Item: 24171 #매직엑소시스트웨폰S
-  - Item: 24172 #매직헌팅웨폰S
-  - Item: 24173 #매직인섹트넷웨폰S
-  - Item: 24174 #매직피싱웨폰S
-  - Item: 24175 #매직드래곤킬러웨폰S
-  - Item: 24176 #매직커럽트웨폰S
-  - Item: 24177 #매직바이브레이션웨폰S
-  - Item: 24178 #매직홀리워터웨폰S
-  - Item: 24179 #매직시저스웨폰S
-  - Item: 24180 #베어러즈아머S
-  - Item: 24181 #베어러즈슈즈S
-  - Item: 24182 #베어러즈쉴드S
-  - Item: 24183 #베어러즈웨폰S
-  - Item: 24184 #베어러즈이어링S
-  - Item: 24185 #베어러즈펜던트S
-  - Item: 24186 #베이시스아머S
-  - Item: 24187 #핼로우드아머S
-  - Item: 24188 #사하릭아머S
-  - Item: 24189 #언더니스아머S
-  - Item: 24190 #플레임아머S
-  - Item: 24191 #윈디아머S
-  - Item: 24192 #인베넘아머S
-  - Item: 24193 #댐드아머S
-  - Item: 24194 #가이스트아머S
-  - Item: 24195 #디바인아머S
-  - Item: 24196 #헤이스티슈즈S
-  - Item: 24197 #헤이스티아머S
-  - Item: 24198 #베이시스쉴드S
-  - Item: 24199 #핼로우드쉴드S
-  - Item: 24200 #사하릭쉴드S
-  - Item: 24201 #언더니스쉴드S
-  - Item: 24202 #플레임쉴드S
-  - Item: 24203 #윈디쉴드S
-  - Item: 24204 #인베넘쉴드S
-  - Item: 24205 #댐드쉴드S
-  - Item: 24206 #가이스트쉴드S
-  - Item: 24207 #디바인쉴드S
-  - Item: 24208 #익스퍼트슈즈S
-  - Item: 24209 #익스퍼트쉴드S
-  - Item: 24210 #비기너슈즈S
-  - Item: 24211 #비기너쉴드S
-  - Item: 24212 #루키슈즈S
-  - Item: 24213 #루키쉴드S
-  - Item: 24214 #어드벤스드슈즈S
-  - Item: 24215 #어드벤스드쉴드S
-  - Item: 24216 #어택아머S
-  - Item: 24217 #블리츠이어링S
-  - Item: 24218 #블리츠펜던트S
-  - Item: 24219 #콜드볼트아머S
-  - Item: 24220 #화이어볼트아머S
-  - Item: 24221 #라이트닝볼트아머S
-  - Item: 24222 #어스스파이크아머S
-  - Item: 24223 #인핸스포스웨폰S
-  - Item: 24224 #포스웨폰S
-  - Item: 24225 #포스이어링S
-  - Item: 24226 #포스펜던트S
-  - Item: 24227 #인핸스스피릿웨폰S
-  - Item: 24228 #스피릿웨폰S
-  - Item: 24229 #스피릿이어링S
-  - Item: 24230 #스피릿펜던트S
-  - Item: 24231 #블리츠슈즈S
-  - Item: 24232 #블리츠쉴드S
-  - Item: 24233 #익시드웨폰S
-  - Item: 24234 #타이탄이어링S
-  - Item: 24235 #타이탄펜던트S
-  - Item: 24236 #보운드이어링S
-  - Item: 24237 #보운드펜던트S
-  - Item: 24238 #기간틱이어링S
-  - Item: 24239 #기간틱펜던트S
-  - Item: 24240 #캐스터슈즈S
-  - Item: 24241 #캐스터쉴드S
-  - Item: 24242 #캐스터아머S
-  - Item: 24243 #리로드슈즈S
-  - Item: 24244 #리로드쉴드S
-  - Item: 24245 #리로드아머S
-  - Item: 24246 #소드맨이어링S
-  - Item: 24247 #머천트이어링S
-  - Item: 24248 #어콜라이트이어링S
-  - Item: 24249 #매지션이어링S
-  - Item: 24250 #소드맨펜던트S
-  - Item: 24251 #머천트펜던트S
-  - Item: 24252 #어콜라이트펜던트S
-  - Item: 24253 #씨프펜던트S
-  - Item: 24254 #매지션펜던트S
-  - Item: 24255 #아처펜던트S
-  - Item: 24256 #나이트슈즈S
-  - Item: 24257 #크루세이더슈즈S
-  - Item: 24258 #블랙스미스슈즈S
-  - Item: 24259 #알케미스트슈즈S
-  - Item: 24260 #프리스트슈즈S
-  - Item: 24261 #몽크슈즈S
-  - Item: 24262 #어쌔신슈즈S
-  - Item: 24263 #로그슈즈S
-  - Item: 24264 #위저드슈즈S
-  - Item: 24265 #세이지슈즈S
-  - Item: 24266 #헌터슈즈S
-  - Item: 24267 #바드슈즈S
-  - Item: 24268 #댄서슈즈S
-  - Item: 24269 #나이트아머S
-  - Item: 24270 #크루세이더아머S
-  - Item: 24271 #블랙스미스아머S
-  - Item: 24272 #알케미스트아머S
-  - Item: 24273 #프리스트아머S
-  - Item: 24274 #몽크아머S
-  - Item: 24275 #어쌔신아머S
-  - Item: 24276 #로그아머S
-  - Item: 24277 #위저드아머S
-  - Item: 24278 #세이지아머S
-  - Item: 24279 #헌터아머S
-  - Item: 24280 #바드아머S
-  - Item: 24281 #댄서아머S
-  - Item: 24282 #슈퍼노비스웨폰S
-  - Item: 24283 #건슬링거웨폰S
-  - Item: 24284 #태권웨폰S
-  - Item: 24285 #닌자웨폰S
-  - Item: 24286 #도람매지컬웨폰S
-  - Item: 24287 #도람피지컬웨폰S
-  - Item: 24288 #룬나이트웨폰S
-  - Item: 24289 #로얄가드웨폰S
-  - Item: 24290 #미케닉웨폰S
-  - Item: 24291 #제네릭웨폰S
-  - Item: 24292 #아크비숍웨폰S
-  - Item: 24293 #수라웨폰S
-  - Item: 24294 #길로틴크로스웨폰S
-  - Item: 24295 #쉐도우체이서웨폰S
-  - Item: 24296 #워록웨폰S
-  - Item: 24297 #소서러웨폰S
-  - Item: 24298 #레인져웨폰S
-  - Item: 24299 #민스트럴웨폰S
-  - Item: 24300 #원더러웨폰S
-  - Item: 24301 #룬나이트쉴드S
-  - Item: 24302 #로얄가드쉴드S
-  - Item: 24303 #미케닉쉴드S
-  - Item: 24304 #제네릭쉴드S
-  - Item: 24305 #아크비숍쉴드S
-  - Item: 24306 #수라쉴드S
-  - Item: 24307 #길로틴크로스쉴드S
-  - Item: 24308 #쉐도우체이서쉴드S
-  - Item: 24309 #워록쉴드S
-  - Item: 24310 #소서러쉴드S
-  - Item: 24311 #레인져쉴드S
-  - Item: 24312 #민스트럴쉴드S
-  - Item: 24313 #원더러쉴드S
-  - Item: 24314 #닌자쉴드S
-  - Item: 24315 #태권쉴드S
-  - Item: 24316 #도람피지컬쉴드S
-  - Item: 24317 #도람매지컬쉴드S
-  - Item: 24318 #슈퍼노비스쉴드S
-  - Item: 24319 #건슬링거쉴드S
-  - Item: 24320 #헤이스티슈즈S2
-  - Item: 24321 #베어러즈펜던트S2
-  - Item: 24322 #젬스톤이어링S2
-  - Item: 24323 #스펠플로우쉴드S2
-  - Item: 24324 #스피리츄얼웨폰S2
-  - Item: 24325 #매리셔스아머S2
-  - Item: 24326 #사이그룬아머S
-  - Item: 24327 #사이그룬쉴드S
-  - Item: 24328 #포스액서듀얼웨폰S2
-  - Item: 24329 #스피릿매직듀얼웨폰S2
-  - Item: 24330 #캐스터아머S2
-  - Item: 24331 #리로드아머S2
-  - Item: 24332 #크리티컬쉴드S
-  - Item: 24333 #크리티컬슈즈S
-  - Item: 24334 #매직컴포즈아머S
-  - Item: 24335 #젬스톤웨폰S2
-  - Item: 24336 #젬스톤쉴드S2
-  - Item: 24337 #베어러즈아머S2
-  - Item: 24338 #베어러즈슈즈S2
-  - Item: 24339 #올마이티이어링S
-  - Item: 24340 #올마이티펜던트S
-  - Item: 24341 #올레이스슈즈S
-  - Item: 24342 #올레이스쉴드S
-  - Item: 24343 #블리츠웨폰S
-  - Item: 24344 #블리츠아머S
-  - Item: 24345 #템페스트쉴드S
-  - Item: 24346 #템페스트슈즈S
-  - Item: 24347 #매직액서홀리아머S
-  - Item: 24348 #매직엑소커럽트아머S
-  - Item: 24349 #매직드래곤바이브아머S
-  - Item: 24350 #매직시저스헌팅아머S
-  - Item: 24351 #매직피싱인섹트아머S
-  - Item: 24352 #플라스터러즈아머S2
-  - Item: 24353 #인솜니악슈즈S2
-  - Item: 24354 #피어리스아머S2
-  - Item: 24355 #애듀레이트슈즈S2
-  - Item: 24356 #언프리징웨폰S2
-  - Item: 24357 #바이탈리티이어링S2
-  - Item: 24358 #뉴트럴웨폰S2
-  - Item: 24359 #언커즈펜던트S2
-  - Item: 24360 #텐션웨폰S
-  - Item: 24361 #텐션이어링S
-  - Item: 24362 #텐션펜던트S
-  - Item: 24363 #엘레강트웨폰S
-  - Item: 24364 #엘레강트이어링S
-  - Item: 24365 #엘레강트펜던트S
-  - Item: 24366 #힐링쉴드S
-  - Item: 24367 #힐링슈즈S
-  - Item: 24368 #리스토어이어링S
-  - Item: 24369 #리스토어펜던트S
-  - Item: 24370 #모탈블로우웨폰S
-  - Item: 24371 #모탈블로우이어링S
-  - Item: 24372 #모탈블로우펜던트S
-  - Item: 24373 #페니트레이션슈즈S
-  - Item: 24374 #페니트레이션쉴드S
-  - Item: 24375 #액서홀리아머S
-  - Item: 24376 #엑소커럽트아머S
-  - Item: 24377 #드래곤바이브아머S
-  - Item: 24378 #시저스헌팅아머S
-  - Item: 24379 #피싱인섹트아머S
-  - Item: 24380 #Sentimental_Weapone_S
-  - Item: 24381 #Sentimental_Earring_S
-  - Item: 24382 #Sentimental_Pendant_S
-  - Item: 24383 #Enchanting_Weapone_S
-  - Item: 24384 #Enchanting_Earring_S
-  - Item: 24385 #Enchanting_Pendant_S
-  - Item: 24386 #S_Infinity_Weapon
-  - Item: 24393 #S_Physical_Shoes
-  - Item: 24394 #S_Physical_Shield
-  - Item: 24395 #S_Physical_Armor
-  - Item: 24396 #S_Magical_Shoes
-  - Item: 24397 #S_Magical_Shield
-  - Item: 24398 #S_Magical_Armor
-  - Item: 24399 #S_ImmunedAthena_Shield
-  - Item: 24400 #S_HardChamption_Shoes
-  - Item: 24401 #S_KingbirdAncient_Armor
-  - Item: 15280 #S_CriticalHit_Armor
-  - Item: 28391 #씨프이어링S
-  - Item: 28392 #아처이어링S
-  - Item: 24402 #S_Rebellion_Armor
-  - Item: 24403 #S_Kagerou_Armor
-  - Item: 24404 #S_Oboro_Armor
-  - Item: 24405 #S_Rebellion_Shoes
-  - Item: 24406 #S_Kagerou_Shoes
-  - Item: 24407 #S_Oboro_Shoes
-  - Item: 24408 #S_DoramPhysical_Armor
-  - Item: 24409 #S_DoramPhysical_Shoes
-  - Item: 24410 #S_DoramMagical_Armor
-  - Item: 24411 #S_DoramMagical_Shoes
-  - Item: 24412 #S_Star_Emperor_Armor
-  - Item: 24413 #S_Star_Emperor_Shoes
-  - Item: 24414 #S_Soul_Reaper_Armor
-  - Item: 24415 #S_Soul_Reaper_Shoes
-  - Item: 24423 #S_Tempest_Weapon
-  - Item: 24424 #S_Tempest_Armor
-  - Item: 24425 #S_PerfectSize_Weapon
-  - Item: 24426 #S_PerfectSize_Armor
-  - Item: 24427 #S_M_Exo_Co_Weapon
-  - Item: 24428 #S_M_Viv_Dr_Weapon
-  - Item: 24429 #S_M_Sci_Hu_Weapon
-  - Item: 24430 #S_M_Fis_In_Weapon
-  - Item: 24431 #S_M_Exe_Ho_Weapon
-  - Item: 24432 #S_Penetration_Weapon
-  - Item: 24433 #S_Penetration_Armor
-  - Item: 24434 #S_Exe_Ho_Weapon
-  - Item: 24435 #S_Fis_In_Weapon
-  - Item: 24436 #S_Sci_Hu_Weapon
-  - Item: 24437 #S_Viv_Dr_Weapon
-  - Item: 24438 #S_Exo_Co_Weapon
-  - Item: 24439 #S_Hasty_Weapon
-  - Item: 24440 #S_Sonic_Armor
-  - Item: 24441 #S_Sonic_Shield
-  - Item: 24442 #S_Sonic_Shoes
-  - Item: 24443 #S_Ignition_Weapon
-  - Item: 24444 #S_Ignition_Pendant
-  - Item: 24445 #S_Ignition_Earing
-  - Item: 24446 #S_W_Breath_Armor
-  - Item: 24447 #S_W_Breath_Shield
-  - Item: 24448 #S_W_Breath_Shoes
-  - Item: 24449 #S_F_Breath_Weapon
-  - Item: 24450 #S_F_Breath_Pendant
-  - Item: 24451 #S_F_Breath_Earing
-  - Item: 24452 #S_Cluster_Armor
-  - Item: 24453 #S_Cluster_Shield
-  - Item: 24454 #S_Cluster_Shoes
-  - Item: 24455 #S_Aimed_Weapon
-  - Item: 24456 #S_Aimed_Pendant
-  - Item: 24457 #S_Aimed_Earing
-  - Item: 24458 #S_Arrow_Armor
-  - Item: 24459 #S_Arrow_Shield
-  - Item: 24460 #S_Arrow_Shoes
-  - Item: 24461 #S_Shooting_Weapon
-  - Item: 24462 #S_Shooting_Pendant
-  - Item: 24463 #S_Shooting_Earing
-  - Item: 24464 #S_Tornado_Armor
-  - Item: 24465 #S_Tornado_Shield
-  - Item: 24466 #S_Tornado_Shoes
-  - Item: 24467 #S_Boomerang_Weapon
-  - Item: 24468 #S_Boomerang_Pendant
-  - Item: 24469 #S_Boomerang_Earing
-  - Item: 24470 #S_Vulcan_Armor
-  - Item: 24471 #S_Vulcan_Shield
-  - Item: 24472 #S_Vulcan_Shoes
-  - Item: 24473 #S_Arms_Weapon
-  - Item: 24474 #S_Arms_Pendant
-  - Item: 24475 #S_Arms_Earing
-  Result: |
-    callfunc("F_Lapine_Shadow_9_Refine_Hammer", .@refine);
-    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
-- Id: 23311 # 마법고양이손, 새끼 고양이 헤드드레스 (rdata.grf)
-  TargetItem:
-  - Item: 19242 #고양이레이스머리띠K
-  Result: |
-    callfunc("F_Lapine_Magic_Cat_Hand", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
-- Id: 23289 # 사탕축복스크롤_물리, 사탕 주머니 가방(물리) (rdata.grf)
-  TargetItem:
-  - Item: 20842 #안토니오가방_물리
-  Result: |
-    callfunc("F_Lapine_Candy_Pouch_Blessing_Scroll_W", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23290 # 사탕축복스크롤_원거리, 사탕 주머니 가방(원거리) (rdata.grf)
-  TargetItem:
-  - Item: 20843 #안토니오가방_원거리
-  Result: |
-    callfunc("F_Lapine_Candy_Pouch_Blessing_Scroll_R", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23291 # 사탕축복스크롤_마법, 사탕 주머니 가방(마법) (rdata.grf)
-  TargetItem:
-  - Item: 20844 #안토니오가방_마법
-  Result: |
-    callfunc("F_Lapine_Candy_Pouch_Blessing_Scroll_M", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23100 # 건슬링거두루마리, 늘어진 건슬링거 (rdata.grf)
-  TargetItem:
-  - Item: 19157 #늘어진건슬링거
-  Result: |
-    callfunc("F_Lapine_Grown_Gunslinger", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23229 # 타락천사날개초기화권, 타락천사의 날개 (rdata.grf)
-  TargetItem:
-  - Item: 20835 #K타락천사의날개
-  - Item: 2589 #타락천사의날개
-  Result: |
-    if (@last_lapine_card1) {
-        getitem(@last_lapine_card1,1);
-    }
-    getitem2(@last_lapine_id,1,1,0,0,0,0,0,0);
-- Id: 23175 # 제복수선키트, 카프라 제복 (rdata.grf)
-  TargetItem:
-  - Item: 15186 #카프라제복
-  Result: |
-    callfunc("F_Lapine_Uniform_Repair_Kits", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
-- Id: 23720 # Shadow_Random_Mix, "+7 쉐도우 아이템"
-  NeedRefineMin: 7
-  NotSocketEnchantItem: false
-  TargetItem:
-  - Item: 24000 #T힘1아머쉐도우
-  - Item: 24001 #T덱스1웨폰쉐도우
-  - Item: 24002 #T럭1쉴드쉐도우
-  - Item: 24003 #T어질1슈즈쉐도우
-  - Item: 24004 #T바이탈1악세R쉐도우
-  - Item: 24005 #T인트1악세L쉐도우
-  - Item: 24006 #T힘2아머쉐도우
-  - Item: 24007 #T덱스2웨폰쉐도우
-  - Item: 24008 #T럭2쉴드쉐도우
-  - Item: 24009 #T어질2슈즈쉐도우
-  - Item: 24010 #T바이탈2악세R쉐도우
-  - Item: 24011 #T인트2악세L쉐도우
-  - Item: 24012 #프로모션웨폰S
-  - Item: 24013 #프로모션아머S
-  - Item: 24014 #프로모션슈즈S
-  - Item: 24015 #프로모션쉴드S
-  - Item: 24016 #프로모션이어링S
-  - Item: 24017 #프로모션펜던트S
-  - Item: 24018 #피지컬이어링S
-  - Item: 24019 #피지컬웨폰S
-  - Item: 24020 #피지컬펜던트S
-  - Item: 24021 #매지컬이어링S
-  - Item: 24022 #매지컬웨폰S
-  - Item: 24023 #매지컬펜던트S
-  - Item: 24024 #브리즈아머S
-  - Item: 24025 #챔피언슈즈S
-  - Item: 24026 #아테나쉴드S
-  - Item: 24027 #이뮨드아머S
-  - Item: 24028 #하드아머S
-  - Item: 24029 #에이션트아머S
-  - Item: 24030 #크리티컬아머S
-  - Item: 24031 #킹버드웨폰S
-  - Item: 24032 #크리히트웨폰S
-  - Item: 24033 #힐링웨폰S
-  - Item: 24034 #럭키웨폰S
-  - Item: 24035 #파워이어링S
-  - Item: 24036 #인트펜던트S
-  - Item: 24037 #덱스터러스아머S
-  - Item: 24038 #바이탈슈즈S
-  - Item: 24039 #어틀레틱쉴드S
-  - Item: 24040 #럭키아머S
-  - Item: 24041 #파워펜던트S
-  - Item: 24042 #인트이어링S
-  - Item: 24043 #덱스터러스웨폰S
-  - Item: 24044 #바이탈쉴드S
-  - Item: 24045 #어틀레틱슈즈S
-  - Item: 24046 #레지스트스펠파워펜던트S
-  - Item: 24047 #래피드펜던트S
-  - Item: 24048 #캐스터펜던트S
-  - Item: 24049 #하드이어링S
-  - Item: 24050 #와이즈이어링S
-  - Item: 24051 #아테나이어링S
-  - Item: 24052 #크레이니얼쉴드S
-  - Item: 24053 #세이프가드쉴드S
-  - Item: 24054 #브루털쉴드S
-  - Item: 24055 #가간츄어쉴드S
-  - Item: 24056 #호머즈쉴드S
-  - Item: 24057 #드라군쉴드S
-  - Item: 24058 #사타닉쉴드S
-  - Item: 24059 #프레임가드쉴드S
-  - Item: 24060 #레퀴엠쉴드S
-  - Item: 24061 #카디쉴드S
-  - Item: 24062 #블러디슈즈S
-  - Item: 24063 #리버레이션슈즈S
-  - Item: 24064 #케미컬슈즈S
-  - Item: 24065 #클래머러스슈즈S
-  - Item: 24066 #인섹티사이드슈즈S
-  - Item: 24067 #피셔슈즈S
-  - Item: 24068 #세라핌슈즈S
-  - Item: 24069 #비홀더슈즈S
-  - Item: 24070 #디바인슈즈S
-  - Item: 24071 #드라군슈즈S
-  - Item: 24072 #빅아머S
-  - Item: 24073 #미디움아머S
-  - Item: 24074 #스몰아머S
-  - Item: 24075 #빅웨폰S
-  - Item: 24076 #미디움웨폰S
-  - Item: 24077 #스몰웨폰S
-  - Item: 24078 #스피리츄얼웨폰S
-  - Item: 24079 #스피리츄얼이어링S
-  - Item: 24080 #스피리츄얼펜던트S
-  - Item: 24081 #매리셔스아머S
-  - Item: 24082 #매리셔스슈즈S
-  - Item: 24083 #매리셔스쉴드S
-  - Item: 24084 #젬스톤아머S
-  - Item: 24085 #젬스톤슈즈S
-  - Item: 24086 #젬스톤쉴드S
-  - Item: 24087 #젬스톤웨폰S
-  - Item: 24088 #젬스톤이어링S
-  - Item: 24089 #젬스톤펜던트S
-  - Item: 24090 #스테빌리티쉴드S
-  - Item: 24091 #플라스터러즈아머S
-  - Item: 24092 #플라스터러즈슈즈S
-  - Item: 24093 #인솜니악아머S
-  - Item: 24094 #인솜니악슈즈S
-  - Item: 24095 #피어리스아머S
-  - Item: 24096 #피어리스슈즈S
-  - Item: 24097 #애듀레이트아머S
-  - Item: 24098 #애듀레이트슈즈S
-  - Item: 24099 #언프리징웨폰S
-  - Item: 24100 #언프리징이어링S
-  - Item: 24101 #언프리징펜던트S
-  - Item: 24102 #바이탈리티이어링S
-  - Item: 24103 #바이탈리티펜던트S
-  - Item: 24104 #뉴트럴웨폰S
-  - Item: 24105 #뉴트럴이어링S
-  - Item: 24106 #뉴트럴펜던트S
-  - Item: 24107 #언커즈이어링S
-  - Item: 24108 #언커즈펜던트S
-  - Item: 24109 #캐스터이어링S
-  - Item: 24110 #캐스터웨폰S
-  - Item: 24111 #스펠플로우슈즈S
-  - Item: 24112 #스펠플로우아머S
-  - Item: 24113 #스펠플로우쉴드S
-  - Item: 24114 #그리드아머S
-  - Item: 24115 #그리드슈즈S
-  - Item: 24116 #그리드쉴드S
-  - Item: 24117 #그리드웨폰S
-  - Item: 24118 #그리드이어링S
-  - Item: 24119 #그리드펜던트S
-  - Item: 24120 #힐아머S
-  - Item: 24121 #힐슈즈S
-  - Item: 24122 #힐쉴드S
-  - Item: 24123 #힐웨폰S
-  - Item: 24124 #힐이어링S
-  - Item: 24125 #힐펜던트S
-  - Item: 24126 #하이딩아머S
-  - Item: 24127 #하이딩슈즈S
-  - Item: 24128 #하이딩쉴드S
-  - Item: 24129 #하이딩웨폰S
-  - Item: 24130 #하이딩이어링S
-  - Item: 24131 #하이딩펜던트S
-  - Item: 24132 #클로킹아머S
-  - Item: 24133 #클로킹슈즈S
-  - Item: 24134 #클로킹쉴드S
-  - Item: 24135 #클로킹웨폰S
-  - Item: 24136 #클로킹이어링S
-  - Item: 24137 #클로킹펜던트S
-  - Item: 24138 #텔레포트아머S
-  - Item: 24139 #텔레포트슈즈S
-  - Item: 24140 #텔레포트쉴드S
-  - Item: 24141 #텔레포트웨폰S
-  - Item: 24142 #텔레포트이어링S
-  - Item: 24143 #텔레포트펜던트S
-  - Item: 24144 #스틸아머S
-  - Item: 24145 #스틸슈즈S
-  - Item: 24146 #스틸쉴드S
-  - Item: 24147 #스틸웨폰S
-  - Item: 24148 #스틸이어링S
-  - Item: 24149 #스틸펜던트S
-  - Item: 24150 #인피니티이어링S
-  - Item: 24151 #인피니티펜던트S
-  - Item: 24152 #솔리드웨폰S
-  - Item: 24153 #솔리드이어링S
-  - Item: 24154 #임모털아머S
-  - Item: 24155 #임모털펜던트S
-  - Item: 24156 #액서큐서너웨폰S
-  - Item: 24157 #엑소시스트웨폰S
-  - Item: 24158 #헌팅웨폰S
-  - Item: 24159 #인섹트넷웨폰S
-  - Item: 24160 #피싱웨폰S
-  - Item: 24161 #드래곤킬러웨폰S
-  - Item: 24162 #커럽트웨폰S
-  - Item: 24163 #바이브레이션웨폰S
-  - Item: 24164 #홀리워터웨폰S
-  - Item: 24165 #시저스웨폰S
-  - Item: 24166 #페니트레이션이어링S
-  - Item: 24167 #페니트레이션펜던트S
-  - Item: 24168 #템페스트이어링S
-  - Item: 24169 #템페스트펜던트S
-  - Item: 24170 #매직액서큐서너웨폰S
-  - Item: 24171 #매직엑소시스트웨폰S
-  - Item: 24172 #매직헌팅웨폰S
-  - Item: 24173 #매직인섹트넷웨폰S
-  - Item: 24174 #매직피싱웨폰S
-  - Item: 24175 #매직드래곤킬러웨폰S
-  - Item: 24176 #매직커럽트웨폰S
-  - Item: 24177 #매직바이브레이션웨폰S
-  - Item: 24178 #매직홀리워터웨폰S
-  - Item: 24179 #매직시저스웨폰S
-  - Item: 24180 #베어러즈아머S
-  - Item: 24181 #베어러즈슈즈S
-  - Item: 24182 #베어러즈쉴드S
-  - Item: 24183 #베어러즈웨폰S
-  - Item: 24184 #베어러즈이어링S
-  - Item: 24185 #베어러즈펜던트S
-  - Item: 24186 #베이시스아머S
-  - Item: 24187 #핼로우드아머S
-  - Item: 24188 #사하릭아머S
-  - Item: 24189 #언더니스아머S
-  - Item: 24190 #플레임아머S
-  - Item: 24191 #윈디아머S
-  - Item: 24192 #인베넘아머S
-  - Item: 24193 #댐드아머S
-  - Item: 24194 #가이스트아머S
-  - Item: 24195 #디바인아머S
-  - Item: 24196 #헤이스티슈즈S
-  - Item: 24197 #헤이스티아머S
-  - Item: 24198 #베이시스쉴드S
-  - Item: 24199 #핼로우드쉴드S
-  - Item: 24200 #사하릭쉴드S
-  - Item: 24201 #언더니스쉴드S
-  - Item: 24202 #플레임쉴드S
-  - Item: 24203 #윈디쉴드S
-  - Item: 24204 #인베넘쉴드S
-  - Item: 24205 #댐드쉴드S
-  - Item: 24206 #가이스트쉴드S
-  - Item: 24207 #디바인쉴드S
-  - Item: 24208 #익스퍼트슈즈S
-  - Item: 24209 #익스퍼트쉴드S
-  - Item: 24210 #비기너슈즈S
-  - Item: 24211 #비기너쉴드S
-  - Item: 24212 #루키슈즈S
-  - Item: 24213 #루키쉴드S
-  - Item: 24214 #어드벤스드슈즈S
-  - Item: 24215 #어드벤스드쉴드S
-  - Item: 24216 #어택아머S
-  - Item: 24217 #블리츠이어링S
-  - Item: 24218 #블리츠펜던트S
-  - Item: 24219 #콜드볼트아머S
-  - Item: 24220 #화이어볼트아머S
-  - Item: 24221 #라이트닝볼트아머S
-  - Item: 24222 #어스스파이크아머S
-  - Item: 24223 #인핸스포스웨폰S
-  - Item: 24224 #포스웨폰S
-  - Item: 24225 #포스이어링S
-  - Item: 24226 #포스펜던트S
-  - Item: 24227 #인핸스스피릿웨폰S
-  - Item: 24228 #스피릿웨폰S
-  - Item: 24229 #스피릿이어링S
-  - Item: 24230 #스피릿펜던트S
-  - Item: 24231 #블리츠슈즈S
-  - Item: 24232 #블리츠쉴드S
-  - Item: 24233 #익시드웨폰S
-  - Item: 24234 #타이탄이어링S
-  - Item: 24235 #타이탄펜던트S
-  - Item: 24236 #보운드이어링S
-  - Item: 24237 #보운드펜던트S
-  - Item: 24238 #기간틱이어링S
-  - Item: 24239 #기간틱펜던트S
-  - Item: 24240 #캐스터슈즈S
-  - Item: 24241 #캐스터쉴드S
-  - Item: 24242 #캐스터아머S
-  - Item: 24243 #리로드슈즈S
-  - Item: 24244 #리로드쉴드S
-  - Item: 24245 #리로드아머S
-  - Item: 24320 #헤이스티슈즈S2
-  - Item: 24321 #베어러즈펜던트S2
-  - Item: 24322 #젬스톤이어링S2
-  - Item: 24323 #스펠플로우쉴드S2
-  - Item: 24324 #스피리츄얼웨폰S2
-  - Item: 24325 #매리셔스아머S2
-  - Item: 24326 #사이그룬아머S
-  - Item: 24327 #사이그룬쉴드S
-  - Item: 24328 #포스액서듀얼웨폰S2
-  - Item: 24329 #스피릿매직듀얼웨폰S2
-  - Item: 24330 #캐스터아머S2
-  - Item: 24331 #리로드아머S2
-  - Item: 24332 #크리티컬쉴드S
-  - Item: 24333 #크리티컬슈즈S
-  - Item: 24334 #매직컴포즈아머S
-  - Item: 24335 #젬스톤웨폰S2
-  - Item: 24336 #젬스톤쉴드S2
-  - Item: 24337 #베어러즈아머S2
-  - Item: 24338 #베어러즈슈즈S2
-  - Item: 24339 #올마이티이어링S
-  - Item: 24340 #올마이티펜던트S
-  - Item: 24341 #올레이스슈즈S
-  - Item: 24342 #올레이스쉴드S
-  - Item: 24343 #블리츠웨폰S
-  - Item: 24344 #블리츠아머S
-  - Item: 24345 #템페스트쉴드S
-  - Item: 24346 #템페스트슈즈S
-  - Item: 24347 #매직액서홀리아머S
-  - Item: 24348 #매직엑소커럽트아머S
-  - Item: 24349 #매직드래곤바이브아머S
-  - Item: 24350 #매직시저스헌팅아머S
-  - Item: 24351 #매직피싱인섹트아머S
-  - Item: 24352 #플라스터러즈아머S2
-  - Item: 24353 #인솜니악슈즈S2
-  - Item: 24354 #피어리스아머S2
-  - Item: 24355 #애듀레이트슈즈S2
-  - Item: 24356 #언프리징웨폰S2
-  - Item: 24357 #바이탈리티이어링S2
-  - Item: 24358 #뉴트럴웨폰S2
-  - Item: 24359 #언커즈펜던트S2
-  - Item: 24360 #텐션웨폰S
-  - Item: 24361 #텐션이어링S
-  - Item: 24362 #텐션펜던트S
-  - Item: 24363 #엘레강트웨폰S
-  - Item: 24364 #엘레강트이어링S
-  - Item: 24365 #엘레강트펜던트S
-  - Item: 24366 #힐링쉴드S
-  - Item: 24367 #힐링슈즈S
-  - Item: 24368 #리스토어이어링S
-  - Item: 24369 #리스토어펜던트S
-  - Item: 24370 #모탈블로우웨폰S
-  - Item: 24371 #모탈블로우이어링S
-  - Item: 24372 #모탈블로우펜던트S
-  - Item: 24373 #페니트레이션슈즈S
-  - Item: 24374 #페니트레이션쉴드S
-  - Item: 24375 #액서홀리아머S
-  - Item: 24376 #엑소커럽트아머S
-  - Item: 24377 #드래곤바이브아머S
-  - Item: 24378 #시저스헌팅아머S
-  - Item: 24379 #피싱인섹트아머S
-  - Item: 24380 #Sentimental_Weapone_S
-  - Item: 24381 #Sentimental_Earring_S
-  - Item: 24382 #Sentimental_Pendant_S
-  - Item: 24383 #Enchanting_Weapone_S
-  - Item: 24384 #Enchanting_Earring_S
-  - Item: 24385 #Enchanting_Pendant_S
-  - Item: 24386 #S_Infinity_Weapon
-  - Item: 24393 #S_Physical_Shoes
-  - Item: 24394 #S_Physical_Shield
-  - Item: 24395 #S_Physical_Armor
-  - Item: 24396 #S_Magical_Shoes
-  - Item: 24397 #S_Magical_Shield
-  - Item: 24398 #S_Magical_Armor
-  - Item: 24399 #S_ImmunedAthena_Shield
-  - Item: 24400 #S_HardChamption_Shoes
-  - Item: 24401 #S_KingbirdAncient_Armor
-  - Item: 15280 #S_CriticalHit_Armor
-  - Item: 24423 #S_Tempest_Weapon
-  - Item: 24424 #S_Tempest_Armor
-  - Item: 24425 #S_PerfectSize_Weapon
-  - Item: 24426 #S_PerfectSize_Armor
-  - Item: 24427 #S_M_Exo_Co_Weapon
-  - Item: 24428 #S_M_Viv_Dr_Weapon
-  - Item: 24429 #S_M_Sci_Hu_Weapon
-  - Item: 24430 #S_M_Fis_In_Weapon
-  - Item: 24431 #S_M_Exe_Ho_Weapon
-  - Item: 24432 #S_Penetration_Weapon
-  - Item: 24433 #S_Penetration_Armor
-  - Item: 24434 #S_Exe_Ho_Weapon
-  - Item: 24435 #S_Fis_In_Weapon
-  - Item: 24436 #S_Sci_Hu_Weapon
-  - Item: 24437 #S_Viv_Dr_Weapon
-  - Item: 24438 #S_Exo_Co_Weapon
-  - Item: 24439 #S_Hasty_Weapon
-  - Item: 24440 #S_Sonic_Armor
-  - Item: 24441 #S_Sonic_Shield
-  - Item: 24442 #S_Sonic_Shoes
-  - Item: 24443 #S_Ignition_Weapon
-  - Item: 24444 #S_Ignition_Pendant
-  - Item: 24445 #S_Ignition_Earing
-  - Item: 24446 #S_W_Breath_Armor
-  - Item: 24447 #S_W_Breath_Shield
-  - Item: 24448 #S_W_Breath_Shoes
-  - Item: 24449 #S_F_Breath_Weapon
-  - Item: 24450 #S_F_Breath_Pendant
-  - Item: 24451 #S_F_Breath_Earing
-  - Item: 24452 #S_Cluster_Armor
-  - Item: 24453 #S_Cluster_Shield
-  - Item: 24454 #S_Cluster_Shoes
-  - Item: 24455 #S_Aimed_Weapon
-  - Item: 24456 #S_Aimed_Pendant
-  - Item: 24457 #S_Aimed_Earing
-  - Item: 24458 #S_Arrow_Armor
-  - Item: 24459 #S_Arrow_Shield
-  - Item: 24460 #S_Arrow_Shoes
-  - Item: 24461 #S_Shooting_Weapon
-  - Item: 24462 #S_Shooting_Pendant
-  - Item: 24463 #S_Shooting_Earing
-  - Item: 24464 #S_Tornado_Armor
-  - Item: 24465 #S_Tornado_Shield
-  - Item: 24466 #S_Tornado_Shoes
-  - Item: 24467 #S_Boomerang_Weapon
-  - Item: 24468 #S_Boomerang_Pendant
-  - Item: 24469 #S_Boomerang_Earing
-  - Item: 24470 #S_Vulcan_Armor
-  - Item: 24471 #S_Vulcan_Shield
-  - Item: 24472 #S_Vulcan_Shoes
-  - Item: 24473 #S_Arms_Weapon
-  - Item: 24474 #S_Arms_Pendant
-  - Item: 24475 #S_Arms_Earing
-  Result: |
-    callfunc("F_Lapine_Shadow_Random_Mix", .@opts[0], .@vals[0]);
-    .@params[0] = 0;
-    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 100043 # Boost_Up_1, 부스터 방어구
-  NotSocketEnchantItem: false
-  TargetItem:
-  - Item: 450001 #Atker_Plate
-  - Item: 480000 #Atker_Manteau
-  - Item: 470000 #Atker_Greave
-  - Item: 450004 #Ran_Suits
-  - Item: 480003 #Ran_Manteau
-  - Item: 470003 #Ran_Boots
-  - Item: 450002 #Ele_Robe
-  - Item: 480001 #Ele_Muffler
-  - Item: 470001 #Ele_Shoes
-  - Item: 450003 #Defn_Robe
-  - Item: 480002 #Defn_Muffler
-  - Item: 470002 #Defn_Shoes
-  Result: |
-    callfunc("F_Lapine_Boost_Up_1", .@refine);
-    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
-- Id: 100044 # Boost_Up_2, 부스팅 무기
-  NotSocketEnchantItem: false
-  TargetItem:
-  - Item: 600001 #Boost_TH_Sword
-  - Item: 610000 #Boost_Katar
-  - Item: 590000 #Boost_Hall
-  - Item: 640000 #Boost_Staff
-  - Item: 700001 #Boost_Bow
-  - Item: 530000 #Boost_Spear
-  - Item: 500001 #Boost_Sword
-  - Item: 510001 #Boost_Dagger
-  - Item: 540000 #Boost_Spl_Book
-  - Item: 570000 #Boost_Guitar
-  - Item: 560000 #Boost_Knuckle
-  - Item: 580000 #Boost_Whip
-  - Item: 510002 #Boost_Nindo
-  - Item: 830000 #Boost_Gatling
-  - Item: 520000 #Boost_Axe
-  - Item: 540001 #Boost_Text
-  - Item: 550001 #Boost_Soul_Rod
-  - Item: 550002 #Boost_Foxtail
-  Result: |
-    callfunc("F_Lapine_Boost_Up_2", .@refine);
-    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
-- Id: 9523 # Metal_Rifine_Ticket, 메탈 무기
-  NotSocketEnchantItem: false
-  TargetItem:
-  - Item: 1296 #메탈카타르
-  - Item: 1398 #메탈투핸드액스
-  - Item: 1493 #메탈랜스
-  - Item: 1588 #메탈북
-  - Item: 2018 #메탈스태프
-  - Item: 13079 #메탈대거
-  - Item: 16023 #메탈메이스
-  - Item: 18116 #메탈보우
-  - Item: 21005 #메탈투핸드소드
-  - Item: 13125 #메탈리볼버
-  - Item: 13322 #메탈풍마수리검
-  - Item: 26111 #메탈강아지풀
-  Result: |
-    callfunc("F_Lapine_Metal_Rifine_Ticket", .@refine);
-    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
-#- Id: 100128 # Noblesse_Rifine_Ticket, 노블레스 아이템
-#  TargetItem:
-#  - Item: 450018 # Noblesse_Breath_Armor
-#  - Item: 450019 # Noblesse_Knight_Armor
-#  - Item: 450020 # Noblesse_Spear_Armor
-#  - Item: 450021 # Noblesse_Genesis_Armor
-#  - Item: 450022 # Noblesse_Sharp_Suit
-#  - Item: 450023 # Noblesse_Aim_Suit
-#  - Item: 450024 # Noblesse_Severe_Suit
-#  - Item: 450025 # Noblesse_Reverb_Suit
-#  - Item: 450026 # Noblesse_Adora_Robe
-#  - Item: 450027 # Noblesse_Duple_Robe
-#  - Item: 450028 # Noblesse_Tonado_Armor
-#  - Item: 450029 # Noblesse_Vulcan_Armor
-#  - Item: 450030 # Noblesse_Kart_Suit
-#  - Item: 450031 # Noblesse_Kart_Suit2
-#  - Item: 450032 # Noblesse_Rolling_Suit
-#  - Item: 450033 # Noblesse_Assasin_Suit
-#  - Item: 450034 # Noblesse_Fatal_Suit
-#  - Item: 450035 # Noblesse_Stalker_Suit
-#  - Item: 450036 # Noblesse_Picky_Robe
-#  - Item: 450037 # Noblesse_Carrot_Robe
-#  - Item: 450038 # Noblesse_Trip_Suit
-#  - Item: 450039 # Noblesse_Firerain_Suit
-#  - Item: 450040 # Noblesse_Crimson_Robe
-#  - Item: 450041 # Noblesse_Frost_Robe
-#  - Item: 450042 # Noblesse_Psychic_Robe
-#  - Item: 450043 # Noblesse_Dust_Robe
-#  - Item: 450044 # Noblesse_Sun_Suit
-#  - Item: 450045 # Noblesse_Moon_Suit
-#  - Item: 450046 # Noblesse_Ninja_Suit
-#  - Item: 450047 # Noblesse_Kunai_Suit
-#  - Item: 450048 # Noblesse_Swhoo_Robe
-#  - Item: 450049 # Noblesse_Explosion_Robe
-#  - Item: 450050 # Noblesse_Knuckle_Suit
-#  - Item: 450051 # Noblesse_Tiger_Suit
-#  - Item: 450121 # Noblesse_Snovice_Suit
-#  - Item: 450122 # Noblesse_Snovice_Robe
-#  - Item: 470016 # Noblesse_Attack_Boots
-#  - Item: 470017 # Noblesse_Magic_Boots
-#  - Item: 480012 # Noblesse_Attack_Manteau
-#  - Item: 480014 # Noblesse_Magic_Manteau
-#  Result: |
-#    callfunc("F_Lapine_Noblesse_Refine_Ticket", .@refine);
-#    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
-#- Id: 100129 # Imperial_Rifine_Ticket, 임페리얼 아이템
-#  TargetItem:
-#  - Item: 450052 # Imperial_Breath_Armor
-#  - Item: 450053 # Imperial_Knight_Armor
-#  - Item: 450054 # Imperial_Spear_Armor
-#  - Item: 450055 # Imperial_Genesis_Armor
-#  - Item: 450056 # Imperial_Sharp_Suit
-#  - Item: 450057 # Imperial_Aim_Suit
-#  - Item: 450058 # Imperial_Severe_Suit
-#  - Item: 450059 # Imperial_Reverb_Suit
-#  - Item: 450060 # Imperial_Adora_Robe
-#  - Item: 450061 # Imperial_Duple_Robe
-#  - Item: 450064 # Imperial_Tonado_Armor
-#  - Item: 450065 # Imperial_Vulcan_Armor
-#  - Item: 450066 # Imperial_Kart_Suit
-#  - Item: 450067 # Imperial_Kart_Suit2
-#  - Item: 450068 # Imperial_Rolling_Suit
-#  - Item: 450069 # Imperial_Assasin_Suit
-#  - Item: 450070 # Imperial_Fatal_Suit
-#  - Item: 450071 # Imperial_Stalker_Suit
-#  - Item: 450072 # Imperial_Picky_Robe
-#  - Item: 450073 # Imperial_Carrot_Robe
-#  - Item: 450074 # Imperial_Trip_Suit
-#  - Item: 450075 # Imperial_Firerain_Suit
-#  - Item: 450076 # Imperial_Crimson_Robe
-#  - Item: 450077 # Imperial_Frost_Robe
-#  - Item: 450078 # Imperial_Psychic_Robe
-#  - Item: 450079 # Imperial_Dust_Robe
-#  - Item: 450080 # Imperial_Sun_Suit
-#  - Item: 450081 # Imperial_Moon_Suit
-#  - Item: 450082 # Imperial_Ninja_Suit
-#  - Item: 450083 # Imperial_Kunai_Suit
-#  - Item: 450084 # Imperial_Swhoo_Robe
-#  - Item: 450085 # Imperial_Explosion_Robe
-#  - Item: 450062 # Imperial_Knuckle_Suit
-#  - Item: 450063 # Imperial_Tiger_Suit
-#  - Item: 450123 # Imperial_Snovice_Suit
-#  - Item: 450124 # Imperial_Snovice_Robe
-#  - Item: 470018 # Imperial_Attack_Boots
-#  - Item: 470019 # Imperial_Magic_Boots
-#  - Item: 480016 # Imperial_Attack_Manteau
-#  - Item: 480017 # Imperial_Magic_Manteau
-#  Result: |
-#    callfunc("F_Lapine_Imperial_Refine_Ticket", .@refine);
-#    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
-#- Id: 100130 # Grace_Rifine_Ticket, 그레이스 아이템
-#  TargetItem:
-#  - Item: 450086 # Grace_Breath_Armor
-#  - Item: 450087 # Grace_Knight_Armor
-#  - Item: 450088 # Grace_Spear_Armor
-#  - Item: 450089 # Grace_Genesis_Armor
-#  - Item: 450090 # Grace_Sharp_Suit
-#  - Item: 450091 # Grace_Aim_Suit
-#  - Item: 450092 # Grace_Severe_Suit
-#  - Item: 450093 # Grace_Reverb_Suit
-#  - Item: 450094 # Grace_Adora_Robe
-#  - Item: 450095 # Grace_Duple_Robe
-#  - Item: 450098 # Grace_Tonado_Armor
-#  - Item: 450099 # Grace_Vulcan_Armor
-#  - Item: 450100 # Grace_Kart_Suit
-#  - Item: 450101 # Grace_Kart_Suit2
-#  - Item: 450102 # Grace_Rolling_Suit
-#  - Item: 450103 # Grace_Assasin_Suit
-#  - Item: 450104 # Grace_Fatal_Suit
-#  - Item: 450105 # Grace_Stalker_Suit
-#  - Item: 450106 # Grace_Picky_Robe
-#  - Item: 450107 # Grace_Carrot_Robe
-#  - Item: 450108 # Grace_Trip_Suit
-#  - Item: 450109 # Grace_Firerain_Suit
-#  - Item: 450110 # Grace_Crimson_Robe
-#  - Item: 450111 # Grace_Frost_Robe
-#  - Item: 450112 # Grace_Psychic_Robe
-#  - Item: 450113 # Grace_Dust_Robe
-#  - Item: 450114 # Grace_Sun_Suit
-#  - Item: 450115 # Grace_Moon_Suit
-#  - Item: 450116 # Grace_Ninja_Suit
-#  - Item: 450117 # Grace_Kunai_Suit
-#  - Item: 450118 # Grace_Swhoo_Robe
-#  - Item: 450119 # Grace_Explosion_Robe
-#  - Item: 450096 # Grace_Knuckle_Suit
-#  - Item: 450097 # Grace_Tiger_Suit
-#  - Item: 450125 # Grace_Snovice_Suit
-#  - Item: 450126 # Grace_Snovice_Robe
-#  - Item: 470020 # Grace_Attack_Boots
-#  - Item: 470021 # Grace_Magic_Boots
-#  - Item: 480018 # Grace_Attack_Manteau
-#  - Item: 480019 # Grace_Magic_Manteau
-#  Result: |
-#    callfunc("F_Lapine_Grace_Refine_Ticket", .@refine);
-#    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
-#- Id: 100131 # Imperial_Convert1, 임페리얼 망토
-#  TargetItem:
-#  - Item: 480016 # Imperial_Attack_Manteau
-#  - Item: 480017 # Imperial_Magic_Manteau
-#  Result: |
-#    callfunc("F_Lapine_Imperial_Convert1", .@opts[0], .@vals[0]);
-#    .@params[0] = 0;
-#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-#- Id: 100132 # Imperial_Convert2, 임페리얼 망토
-#  TargetItem:
-#  - Item: 480016 # Imperial_Attack_Manteau
-#  - Item: 480017 # Imperial_Magic_Manteau
-#  Result: |
-#    callfunc("F_Lapine_Imperial_Convert2", .@opts[0], .@vals[0]);
-#    .@params[0] = 0;
-#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-#- Id: 100135 # Imperial_Convert3, 임페리얼 갑옷
-#  TargetItem:
-#  - Item: 450052 # Imperial_Breath_Armor
-#  - Item: 450053 # Imperial_Knight_Armor
-#  - Item: 450054 # Imperial_Spear_Armor
-#  - Item: 450055 # Imperial_Genesis_Armor
-#  - Item: 450056 # Imperial_Sharp_Suit
-#  - Item: 450057 # Imperial_Aim_Suit
-#  - Item: 450058 # Imperial_Severe_Suit
-#  - Item: 450059 # Imperial_Reverb_Suit
-#  - Item: 450060 # Imperial_Adora_Robe
-#  - Item: 450061 # Imperial_Duple_Robe
-#  - Item: 450064 # Imperial_Tonado_Armor
-#  - Item: 450065 # Imperial_Vulcan_Armor
-#  - Item: 450066 # Imperial_Kart_Suit
-#  - Item: 450067 # Imperial_Kart_Suit2
-#  - Item: 450068 # Imperial_Rolling_Suit
-#  - Item: 450069 # Imperial_Assasin_Suit
-#  - Item: 450070 # Imperial_Fatal_Suit
-#  - Item: 450071 # Imperial_Stalker_Suit
-#  - Item: 450072 # Imperial_Picky_Robe
-#  - Item: 450073 # Imperial_Carrot_Robe
-#  - Item: 450074 # Imperial_Trip_Suit
-#  - Item: 450075 # Imperial_Firerain_Suit
-#  - Item: 450076 # Imperial_Crimson_Robe
-#  - Item: 450077 # Imperial_Frost_Robe
-#  - Item: 450078 # Imperial_Psychic_Robe
-#  - Item: 450079 # Imperial_Dust_Robe
-#  - Item: 450080 # Imperial_Sun_Suit
-#  - Item: 450081 # Imperial_Moon_Suit
-#  - Item: 450082 # Imperial_Ninja_Suit
-#  - Item: 450083 # Imperial_Kunai_Suit
-#  - Item: 450084 # Imperial_Swhoo_Robe
-#  - Item: 450085 # Imperial_Explosion_Robe
-#  - Item: 450062 # Imperial_Knuckle_Suit
-#  - Item: 450063 # Imperial_Tiger_Suit
-#  - Item: 450123 # Imperial_Snovice_Suit
-#  - Item: 450124 # Imperial_Snovice_Robe
-#  Result: |
-#    callfunc("F_Lapine_Imperial_Convert3", .@opts[0], .@vals[0]);
-#    .@params[0] = 0;
-#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-#- Id: 100136 # Imperial_Convert4, 임페리얼 갑옷
-#  TargetItem:
-#  - Item: 450052 # Imperial_Breath_Armor
-#  - Item: 450053 # Imperial_Knight_Armor
-#  - Item: 450054 # Imperial_Spear_Armor
-#  - Item: 450055 # Imperial_Genesis_Armor
-#  - Item: 450056 # Imperial_Sharp_Suit
-#  - Item: 450057 # Imperial_Aim_Suit
-#  - Item: 450058 # Imperial_Severe_Suit
-#  - Item: 450059 # Imperial_Reverb_Suit
-#  - Item: 450060 # Imperial_Adora_Robe
-#  - Item: 450061 # Imperial_Duple_Robe
-#  - Item: 450064 # Imperial_Tonado_Armor
-#  - Item: 450065 # Imperial_Vulcan_Armor
-#  - Item: 450066 # Imperial_Kart_Suit
-#  - Item: 450067 # Imperial_Kart_Suit2
-#  - Item: 450068 # Imperial_Rolling_Suit
-#  - Item: 450069 # Imperial_Assasin_Suit
-#  - Item: 450070 # Imperial_Fatal_Suit
-#  - Item: 450071 # Imperial_Stalker_Suit
-#  - Item: 450072 # Imperial_Picky_Robe
-#  - Item: 450073 # Imperial_Carrot_Robe
-#  - Item: 450074 # Imperial_Trip_Suit
-#  - Item: 450075 # Imperial_Firerain_Suit
-#  - Item: 450076 # Imperial_Crimson_Robe
-#  - Item: 450077 # Imperial_Frost_Robe
-#  - Item: 450078 # Imperial_Psychic_Robe
-#  - Item: 450079 # Imperial_Dust_Robe
-#  - Item: 450080 # Imperial_Sun_Suit
-#  - Item: 450081 # Imperial_Moon_Suit
-#  - Item: 450082 # Imperial_Ninja_Suit
-#  - Item: 450083 # Imperial_Kunai_Suit
-#  - Item: 450084 # Imperial_Swhoo_Robe
-#  - Item: 450085 # Imperial_Explosion_Robe
-#  - Item: 450062 # Imperial_Knuckle_Suit
-#  - Item: 450063 # Imperial_Tiger_Suit
-#  - Item: 450123 # Imperial_Snovice_Suit
-#  - Item: 450124 # Imperial_Snovice_Robe
-#  Result: |
-#    callfunc("F_Lapine_Imperial_Convert4", .@opts[0], .@vals[0]);
-#    .@params[0] = 0;
-#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-#- Id: 100133 # Grace_Convert1, 그레이스 망토
-#  TargetItem:
-#  - Item: 480018 # Grace_Attack_Manteau
-#  - Item: 480019 # Grace_Magic_Manteau
-#  Result: |
-#    callfunc("F_Lapine_Grace_Convert1", .@opts[0], .@vals[0]);
-#    .@params[0] = 0;
-#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-#- Id: 100134 # Grace_Convert2, 그레이스 망토
-#  TargetItem:
-#  - Item: 480018 # Grace_Attack_Manteau
-#  - Item: 480019 # Grace_Magic_Manteau
-#  Result: |
-#    callfunc("F_Lapine_Grace_Convert2", .@opts[0], .@vals[0]);
-#    .@params[0] = 0;
-#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-#- Id: 100137 # Grace_Convert3, 그레이스 갑옷
-#  TargetItem:
-#  - Item: 450086 # Grace_Breath_Armor
-#  - Item: 450087 # Grace_Knight_Armor
-#  - Item: 450088 # Grace_Spear_Armor
-#  - Item: 450089 # Grace_Genesis_Armor
-#  - Item: 450090 # Grace_Sharp_Suit
-#  - Item: 450091 # Grace_Aim_Suit
-#  - Item: 450092 # Grace_Severe_Suit
-#  - Item: 450093 # Grace_Reverb_Suit
-#  - Item: 450094 # Grace_Adora_Robe
-#  - Item: 450095 # Grace_Duple_Robe
-#  - Item: 450098 # Grace_Tonado_Armor
-#  - Item: 450099 # Grace_Vulcan_Armor
-#  - Item: 450100 # Grace_Kart_Suit
-#  - Item: 450101 # Grace_Kart_Suit2
-#  - Item: 450102 # Grace_Rolling_Suit
-#  - Item: 450103 # Grace_Assasin_Suit
-#  - Item: 450104 # Grace_Fatal_Suit
-#  - Item: 450105 # Grace_Stalker_Suit
-#  - Item: 450106 # Grace_Picky_Robe
-#  - Item: 450107 # Grace_Carrot_Robe
-#  - Item: 450108 # Grace_Trip_Suit
-#  - Item: 450109 # Grace_Firerain_Suit
-#  - Item: 450110 # Grace_Crimson_Robe
-#  - Item: 450111 # Grace_Frost_Robe
-#  - Item: 450112 # Grace_Psychic_Robe
-#  - Item: 450113 # Grace_Dust_Robe
-#  - Item: 450114 # Grace_Sun_Suit
-#  - Item: 450115 # Grace_Moon_Suit
-#  - Item: 450116 # Grace_Ninja_Suit
-#  - Item: 450117 # Grace_Kunai_Suit
-#  - Item: 450118 # Grace_Swhoo_Robe
-#  - Item: 450119 # Grace_Explosion_Robe
-#  - Item: 450096 # Grace_Knuckle_Suit
-#  - Item: 450097 # Grace_Tiger_Suit
-#  - Item: 450125 # Grace_Snovice_Suit
-#  - Item: 450126 # Grace_Snovice_Robe
-#  Result: |
-#    callfunc("F_Lapine_Grace_Convert3", .@opts[0], .@vals[0]);
-#    .@params[0] = 0;
-#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-#- Id: 100138 # Grace_Convert4, 그레이스 갑옷
-#  TargetItem:
-#  - Item: 450086 # Grace_Breath_Armor
-#  - Item: 450087 # Grace_Knight_Armor
-#  - Item: 450088 # Grace_Spear_Armor
-#  - Item: 450089 # Grace_Genesis_Armor
-#  - Item: 450090 # Grace_Sharp_Suit
-#  - Item: 450091 # Grace_Aim_Suit
-#  - Item: 450092 # Grace_Severe_Suit
-#  - Item: 450093 # Grace_Reverb_Suit
-#  - Item: 450094 # Grace_Adora_Robe
-#  - Item: 450095 # Grace_Duple_Robe
-#  - Item: 450098 # Grace_Tonado_Armor
-#  - Item: 450099 # Grace_Vulcan_Armor
-#  - Item: 450100 # Grace_Kart_Suit
-#  - Item: 450101 # Grace_Kart_Suit2
-#  - Item: 450102 # Grace_Rolling_Suit
-#  - Item: 450103 # Grace_Assasin_Suit
-#  - Item: 450104 # Grace_Fatal_Suit
-#  - Item: 450105 # Grace_Stalker_Suit
-#  - Item: 450106 # Grace_Picky_Robe
-#  - Item: 450107 # Grace_Carrot_Robe
-#  - Item: 450108 # Grace_Trip_Suit
-#  - Item: 450109 # Grace_Firerain_Suit
-#  - Item: 450110 # Grace_Crimson_Robe
-#  - Item: 450111 # Grace_Frost_Robe
-#  - Item: 450112 # Grace_Psychic_Robe
-#  - Item: 450113 # Grace_Dust_Robe
-#  - Item: 450114 # Grace_Sun_Suit
-#  - Item: 450115 # Grace_Moon_Suit
-#  - Item: 450116 # Grace_Ninja_Suit
-#  - Item: 450117 # Grace_Kunai_Suit
-#  - Item: 450118 # Grace_Swhoo_Robe
-#  - Item: 450119 # Grace_Explosion_Robe
-#  - Item: 450096 # Grace_Knuckle_Suit
-#  - Item: 450097 # Grace_Tiger_Suit
-#  - Item: 450125 # Grace_Snovice_Suit
-#  - Item: 450126 # Grace_Snovice_Robe
-#  Result: |
-#    callfunc("F_Lapine_Grace_Convert4", .@opts[0], .@vals[0]);
-#    .@params[0] = 0;
-#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-#- Id: 9514 # Ein_Ddbox, 물리 개조 시스템
-#  TargetItem:
-#  - Item: 21054 # Ein_BHSWORD
-#  - Item: 2058 # Ein_BHSTAFF
-#  - Item: 13346 # Ein_BHHuuma
-#  - Item: 28045 # Ein_BHKATAR
-#  - Item: 28140 # Ein_BHAXE
-#  - Item: 18190 # Ein_BHBOW
-#  - Item: 1867 # Ein_1HKNUCK
-#  - Item: 16099 # Ein_1HHAMMER
-#  - Item: 26162 # Ein_1HWAND
-#  - Item: 26215 # Ein_1HWHIP
-#  - Item: 28635 # Ein_1HBOOK
-#  - Item: 28771 # Ein_1HDAGGER
-#  - Item: 28772 # Ein_1HMAGGER
-#  - Item: 32026 # Ein_1HSPEAR
-#  - Item: 32110 # Ein_1HLUTE
-#  - Item: 32352 # Ein_1HSWORD
-#  - Item: 32303 # Ein_1HGUN
-#  - Item: 550006 # Ein_1H_Foxtail
-#  Result: |
-#    // TODO
-#    callfunc("F_Lapine_Ein_Ddbox", .@opts[0], .@vals[0]);
-#    .@params[0] = 0;
-#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-#- Id: 9529 # Ein_Ddbox2, 마법 개조 시스템
-#  TargetItem:
-#  - Item: 21054 # Ein_BHSWORD
-#  - Item: 2058 # Ein_BHSTAFF
-#  - Item: 13346 # Ein_BHHuuma
-#  - Item: 28045 # Ein_BHKATAR
-#  - Item: 28140 # Ein_BHAXE
-#  - Item: 18190 # Ein_BHBOW
-#  - Item: 1867 # Ein_1HKNUCK
-#  - Item: 16099 # Ein_1HHAMMER
-#  - Item: 26162 # Ein_1HWAND
-#  - Item: 26215 # Ein_1HWHIP
-#  - Item: 28635 # Ein_1HBOOK
-#  - Item: 28771 # Ein_1HDAGGER
-#  - Item: 28772 # Ein_1HMAGGER
-#  - Item: 32026 # Ein_1HSPEAR
-#  - Item: 32110 # Ein_1HLUTE
-#  - Item: 32352 # Ein_1HSWORD
-#  - Item: 32303 # Ein_1HGUN
-#  - Item: 550006 # Ein_1H_Foxtail
-#  Result: |
-#    // TODO
-#    callfunc("F_Lapine_Ein_Ddbox2", .@opts[0], .@vals[0]);
-#    .@params[0] = 0;
-#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-#- Id: 23981 # Abyss_Ddbox, 소용돌이 치는 용의 힘
-#  TargetItem:
-#  - Item: 15391 # DragonA_Red
-#  - Item: 15392 # DragonA_Green
-#  - Item: 15393 # DragonA_Gold
-#  - Item: 15394 # DragonA_Purple
-#  - Item: 15395 # DragonA_Blue
-#  - Item: 15396 # DragonA_Silver
-#  Result: |
-#    // TODO
-#    callfunc("F_Lapine_Abyss_Ddbox", .@opts[0], .@vals[0]);
-#    .@params[0] = 0;
-#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-#- Id: 100142 # Abyss_Ddbox2, 안정된 용의 힘
-#  TargetItem:
-#  - Item: 15391 # DragonA_Red
-#  - Item: 15392 # DragonA_Green
-#  - Item: 15393 # DragonA_Gold
-#  - Item: 15394 # DragonA_Purple
-#  - Item: 15395 # DragonA_Blue
-#  - Item: 15396 # DragonA_Silver
-#  Result: |
-#    // TODO
-#    callfunc("F_Lapine_Abyss_Ddbox2", .@opts[0], .@vals[0]);
-#    .@params[0] = 0;
-#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-#- Id: 100144 # Abyss_Ddbox3, 불타는 용의 힘
-#  TargetItem:
-#  - Item: 20946 # Drag_Manteau
-#  Result: |
-#    // TODO
-#    callfunc("F_Lapine_Abyss_Ddbox3", .@opts[0], .@vals[0]);
-#    .@params[0] = 0;
-#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-#- Id: 100145 # Abyss_Ddbox4, 뜨거운 용의 힘
-#  TargetItem:
-#  - Item: 22208 # Dragon_Boots
-#  Result: |
-#    // TODO
-#    callfunc("F_Lapine_Abyss_Ddbox4", .@opts[0], .@vals[0]);
-#    .@params[0] = 0;
-#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Ancient_Hero_Bravery
+    TargetItem:
+      - Item: Royal_Bow_K
+      - Item: Narcis_Bow
+      - Item: Shadow_Staff_K
+      - Item: Iron_Nail_K
+      - Item: Magic_Sword
+      - Item: Sword_Of_Bluefire
+      - Item: Avenger
+      - Item: Iron_Staff
+      - Item: Oriental_Sword
+      - Item: Undine_Spear_K
+      - Item: Demon_Hunting_Bible_K
+      - Item: Shiver_Katar_K
+      - Item: OneSkyOneSun
+      - Item: SoulWeight
+      - Item: MeawFoxtail
+      - Item: Crimson_Rose
+      - Item: Master_Soul_Rifle
+      - Item: Demon_S_Shot
+      - Item: Golden_L_Launcher
+      - Item: The_Black_Gatling
+      - Item: Sharp_Wind_Sword
+      - Item: Fog_Dew_Sword
+      - Item: Humma_Clear
+      - Item: Dragonic_Slayer
+      - Item: Light_Blade
+      - Item: Slate_Sword
+      - Item: Trumpet_Shell_K
+      - Item: Barb_Wire_K
+      - Item: Meteor_Striker
+    Result: |
+      callfunc("F_Lapine_Ancient_Hero_Bravery", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Ancient_Hero_Wisdom
+    TargetItem:
+      - Item: Royal_Bow_K
+      - Item: Narcis_Bow
+      - Item: Shadow_Staff_K
+      - Item: Iron_Nail_K
+      - Item: Magic_Sword
+      - Item: Sword_Of_Bluefire
+      - Item: Avenger
+      - Item: Iron_Staff
+      - Item: Oriental_Sword
+      - Item: Undine_Spear_K
+      - Item: Demon_Hunting_Bible_K
+      - Item: Shiver_Katar_K
+      - Item: OneSkyOneSun
+      - Item: SoulWeight
+      - Item: MeawFoxtail
+      - Item: Crimson_Rose
+      - Item: Master_Soul_Rifle
+      - Item: Demon_S_Shot
+      - Item: Golden_L_Launcher
+      - Item: The_Black_Gatling
+      - Item: Sharp_Wind_Sword
+      - Item: Fog_Dew_Sword
+      - Item: Humma_Clear
+      - Item: Dragonic_Slayer
+      - Item: Light_Blade
+      - Item: Slate_Sword
+      - Item: Trumpet_Shell_K
+      - Item: Barb_Wire_K
+      - Item: Meteor_Striker
+    Result: |
+      callfunc("F_Lapine_Ancient_Hero_Wisdom", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: ILL_Piece_A
+    TargetItem:
+      - Item: Illusion_Bazerald
+      - Item: Illusion_Butcher
+      - Item: Illusion_Gold_Lux
+      - Item: Illusion_Infiltrator
+      - Item: Illusion_War_Axe
+      - Item: Illusion_Immaterial_Sword
+      - Item: Illusion_Iron_Driver
+      - Item: Illusion_Pole_Axe
+      - Item: Illusion_Apocalypse
+      - Item: Illusion_Ballista
+      - Item: Illusion_Wing_Shuriken
+      - Item: Illusion_Wizardry_Staff
+      - Item: Illusion_Long_Mace
+      - Item: Illusion_Huuma_Fluttering_Snow
+      - Item: Illusion_Combo_Battle_Glove
+      - Item: Illusion_Spectral_Spear
+      - Item: Illusion_Staff_of_Bordeaux
+      - Item: Illusion_Moonlight_Dagger
+      - Item: Illusion_Hunter_Bow
+      - Item: Illusion_Tablet
+      - Item: Illusion_Gate_Keeper_DD
+      - Item: Illusion_Counter_Dagger
+      - Item: Illusion_Survivor's_Staff
+      - Item: Illusion_Tae_Goo_Lyeon
+    Result: |
+      callfunc("F_Lapine_ILL_Piece_A", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: ILL_Piece_B
+    TargetItem:
+      - Item: Illusion_Bazerald
+      - Item: Illusion_Butcher
+      - Item: Illusion_Gold_Lux
+      - Item: Illusion_Infiltrator
+      - Item: Illusion_War_Axe
+      - Item: Illusion_Immaterial_Sword
+      - Item: Illusion_Iron_Driver
+      - Item: Illusion_Pole_Axe
+      - Item: Illusion_Apocalypse
+      - Item: Illusion_Ballista
+      - Item: Illusion_Wing_Shuriken
+      - Item: Illusion_Wizardry_Staff
+      - Item: Illusion_Long_Mace
+      - Item: Illusion_Huuma_Fluttering_Snow
+      - Item: Illusion_Combo_Battle_Glove
+      - Item: Illusion_Spectral_Spear
+      - Item: Illusion_Staff_of_Bordeaux
+      - Item: Illusion_Moonlight_Dagger
+      - Item: Illusion_Hunter_Bow
+      - Item: Illusion_Tablet
+      - Item: Illusion_Gate_Keeper_DD
+      - Item: Illusion_Counter_Dagger
+      - Item: Illusion_Survivor's_Staff
+      - Item: Illusion_Tae_Goo_Lyeon
+    Result: |
+      callfunc("F_Lapine_ILL_Piece_B", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Gemstone_Of_Time
+    TargetItem:
+      - Item: Overwhelm_Str_Armor
+      - Item: Overwhelm_Int_Armor
+      - Item: Overwhelm_Vit_Armor
+      - Item: Overwhelm_Dex_Armor
+      - Item: Overwhelm_Agi_Armor
+      - Item: Overwhelm_Luk_Armor
+    Result: |
+      callfunc("F_Lapine_Gemstone_Of_Time", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Time_Unseal_Key
+    TargetItem:
+      - Item: Temporal_M_Str
+      - Item: Temporal_M_Agi
+      - Item: Temporal_M_Vit
+      - Item: Temporal_M_Int
+      - Item: Temporal_M_Dex
+      - Item: Temporal_M_Luk
+    Result: |
+      callfunc("F_Lapine_Time_Unseal_Key", .@opts[0], .@vals[0]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Magma_Essence
+    NeedOptionNumMin: 2
+    TargetItem:
+      - Item: Lava_Leather_Armor
+      - Item: Lava_Leather_Suit
+      - Item: Lava_Leather_Robe
+    Result: |
+      callfunc("F_Lapine_Magma_Essence", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2], .@opts[3]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: EP17_1_SPC05
+    TargetItem:
+      - Item: Cannon_Rapier-OS
+      - Item: Beam_Claymor-OS
+      - Item: Rutilus_Stick-OS
+      - Item: Circuit_Board-OS
+      - Item: Blasti-OS
+      - Item: Sapphire_Mace-OS
+      - Item: Virtual_Bow-OS
+      - Item: MH-P89-OS
+      - Item: Meuchler-OS
+      - Item: Burning_Knuckle-OS
+      - Item: HR-S55-OS
+      - Item: Kuroiro-OS
+      - Item: AC-B44-OS
+      - Item: Boost_Lance-OS
+      - Item: Ultio-OS
+      - Item: Electric_Fox-OS_
+    Result: |
+      callfunc("F_Lapine_EP17_1_SPC05", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: EP17_1_SPC06
+    TargetItem:
+      - Item: Cannon_Rapier-OS
+      - Item: Beam_Claymor-OS
+      - Item: Rutilus_Stick-OS
+      - Item: Circuit_Board-OS
+      - Item: Blasti-OS
+      - Item: Sapphire_Mace-OS
+      - Item: Virtual_Bow-OS
+      - Item: MH-P89-OS
+      - Item: Meuchler-OS
+      - Item: Burning_Knuckle-OS
+      - Item: HR-S55-OS
+      - Item: Kuroiro-OS
+      - Item: AC-B44-OS
+      - Item: Boost_Lance-OS
+      - Item: Ultio-OS
+      - Item: Electric_Fox-OS_
+    Result: |
+      callfunc("F_Lapine_EP17_1_SPC06", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: EP17_1_SPC07
+    TargetItem:
+      - Item: Cannon_Rapier-OS
+      - Item: Beam_Claymor-OS
+      - Item: Rutilus_Stick-OS
+      - Item: Circuit_Board-OS
+      - Item: Blasti-OS
+      - Item: Sapphire_Mace-OS
+      - Item: Virtual_Bow-OS
+      - Item: MH-P89-OS
+      - Item: Meuchler-OS
+      - Item: Burning_Knuckle-OS
+      - Item: HR-S55-OS
+      - Item: Kuroiro-OS
+      - Item: AC-B44-OS
+      - Item: Boost_Lance-OS
+      - Item: Ultio-OS
+      - Item: Electric_Fox-OS_
+    Result: |
+      callfunc("F_Lapine_EP17_1_SPC07", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: EP17_1_SPC08
+    TargetItem:
+      - Item: Cannon_Rapier-OS
+      - Item: Beam_Claymor-OS
+      - Item: Rutilus_Stick-OS
+      - Item: Circuit_Board-OS
+      - Item: Blasti-OS
+      - Item: Sapphire_Mace-OS
+      - Item: Virtual_Bow-OS
+      - Item: MH-P89-OS
+      - Item: Meuchler-OS
+      - Item: Burning_Knuckle-OS
+      - Item: HR-S55-OS
+      - Item: Kuroiro-OS
+      - Item: AC-B44-OS
+      - Item: Boost_Lance-OS
+      - Item: Ultio-OS
+      - Item: Electric_Fox-OS_
+    Result: |
+      callfunc("F_Lapine_EP17_1_SPC08", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: EP17_1_SPC09
+    TargetItem:
+      - Item: Cannon_Rapier-OS
+      - Item: Beam_Claymor-OS
+      - Item: Rutilus_Stick-OS
+      - Item: Circuit_Board-OS
+      - Item: Blasti-OS
+      - Item: Sapphire_Mace-OS
+      - Item: Virtual_Bow-OS
+      - Item: MH-P89-OS
+      - Item: Meuchler-OS
+      - Item: Burning_Knuckle-OS
+      - Item: HR-S55-OS
+      - Item: Kuroiro-OS
+      - Item: AC-B44-OS
+      - Item: Boost_Lance-OS
+      - Item: Ultio-OS
+      - Item: Electric_Fox-OS_
+    Result: |
+      callfunc("F_Lapine_EP17_1_SPC09", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: EP17_1_SPC10
+    TargetItem:
+      - Item: Cannon_Rapier-OS
+      - Item: Beam_Claymor-OS
+      - Item: Rutilus_Stick-OS
+      - Item: Circuit_Board-OS
+      - Item: Blasti-OS
+      - Item: Sapphire_Mace-OS
+      - Item: Virtual_Bow-OS
+      - Item: MH-P89-OS
+      - Item: Meuchler-OS
+      - Item: Burning_Knuckle-OS
+      - Item: HR-S55-OS
+      - Item: Kuroiro-OS
+      - Item: AC-B44-OS
+      - Item: Boost_Lance-OS
+      - Item: Ultio-OS
+      - Item: Electric_Fox-OS_
+    Result: |
+      callfunc("F_Lapine_EP17_1_SPC10", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Charleston_Parts_W
+    TargetItem:
+      - Item: Pilebuncker
+      - Item: Pilebuncker_S
+      - Item: Pilebuncker_T
+      - Item: Pilebuncker_P
+      - Item: Robot's_Arm
+      - Item: Tornado_Axe
+      - Item: Giant_Blade
+    Result: |
+      callfunc("F_Lapine_Charleston_Parts_W", .@opts[0], .@vals[0]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Charleston_Parts_R
+    TargetItem:
+      - Item: Pilebuncker
+      - Item: Pilebuncker_S
+      - Item: Pilebuncker_T
+      - Item: Pilebuncker_P
+      - Item: Robot's_Arm
+      - Item: Tornado_Axe
+      - Item: Giant_Blade
+    Result: |
+      callfunc("F_Lapine_Charleston_Parts_R", .@opts[0], .@vals[0]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Gray_Charcoal_Range
+    TargetItem:
+      - Item: Thanos_Bow
+      - Item: Thanos_Violin
+      - Item: Thanos_Whip
+      - Item: Thanos_Sword
+      - Item: Thanos_Great_Sword
+      - Item: Thanos_Spear
+      - Item: Thanos_Long_Spear
+      - Item: Thanos_Katar
+      - Item: Thanos_Knuckle
+      - Item: Thanos_Hammer
+      - Item: Thanos_Axe
+    Result: |
+      callfunc("F_Lapine_Gray_Charcoal_Range", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Gray_Charcoal_Magic
+    TargetItem:
+      - Item: Thanos_Rod
+      - Item: Thanos_Staff
+      - Item: Thanos_Dagger
+      - Item: Thanos_Sword
+      - Item: Thanos_Violin
+      - Item: Thanos_Whip
+    Result: |
+      callfunc("F_Lapine_Gray_Charcoal_Magic", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Gray_Charcoal_Melee
+    TargetItem:
+      - Item: Thanos_Bow
+      - Item: Thanos_Violin
+      - Item: Thanos_Whip
+      - Item: Thanos_Sword
+      - Item: Thanos_Great_Sword
+      - Item: Thanos_Spear
+      - Item: Thanos_Long_Spear
+      - Item: Thanos_Katar
+      - Item: Thanos_Knuckle
+      - Item: Thanos_Hammer
+      - Item: Thanos_Axe
+    Result: |
+      callfunc("F_Lapine_Gray_Charcoal_Melee", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Geffen_Magic_Scroll2
+    TargetItem:
+      - Item: Body_Power_Up_Ring
+      - Item: Ring_Of_Spell_Explosion
+    Result: |
+      callfunc("F_Lapine_Geffen_Magic_Scroll2", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Geffen_Magic_Scroll
+    TargetItem:
+      - Item: Geffen_Mage_Robe
+      - Item: Anti_Magic_Suit
+    Result: |
+      callfunc("F_Lapine_Geffen_Magic_Scroll", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Cursed_Blood
+    TargetItem:
+      - Item: Bloody_Knight_Shield_
+    Result: |
+      callfunc("F_Lapine_Cursed_Blood", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Gold_Statue
+    TargetItem:
+      - Item: Bloody_Knight_Shield__
+    Result: |
+      callfunc("F_Lapine_Gold_Statue", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Shadow_Refine_Hammer
+    NotSocketEnchantItem: false
+    TargetItem:
+      - Item: T1_Shadow_Armor
+      - Item: T1_Shadow_Weapon
+      - Item: T1_Shadow_Shield
+      - Item: T1_Shadow_Shoes
+      - Item: T1_Shadow_R_Accessory
+      - Item: T1_Shadow_L_Accessory
+      - Item: T2_Shadow_Armor
+      - Item: T2_Shadow_Weapon
+      - Item: T2_Shadow_Shield
+      - Item: T2_Shadow_Shoes
+      - Item: T2_Shadow_R_Accessory
+      - Item: T2_Shadow_L_Accessory
+      - Item: S_Promotion_Weapon
+      - Item: S_Promotion_Armor
+      - Item: S_Promotion_Shoes
+      - Item: S_Promotion_Shield
+      - Item: S_Promotion_Earring
+      - Item: S_Promotion_Pendant
+      - Item: S_Physical_Earring
+      - Item: S_Physical_Weapon
+      - Item: S_Physical_Pendant
+      - Item: S_Magical_Earring
+      - Item: S_Magical_Weapon
+      - Item: S_Magical_Pendant
+      - Item: S_Breezy_Armor
+      - Item: S_Champion_Shoes
+      - Item: S_Athena_Shield
+      - Item: S_Immune_Armor
+      - Item: S_Hard_Armor
+      - Item: S_Ancient_Armor
+      - Item: S_Critical_Armor
+      - Item: S_Kingbird_Weapon
+      - Item: S_Cri_Hit_Weapon
+      - Item: S_Healing_Weapon
+      - Item: S_Lucky_Weapon
+      - Item: S_Power_Earring
+      - Item: S_Int_Pendant
+      - Item: S_Dexterous_Armor
+      - Item: S_Vital_Shoes
+      - Item: S_Athletic_Shield
+      - Item: S_Lucky_Armor
+      - Item: S_Power_Pendant
+      - Item: S_Int_Earring
+      - Item: S_Dexterous_Weapon
+      - Item: S_Vital_Shield
+      - Item: S_Athletic_Shoes
+      - Item: S_Resist_Spell_Pendant
+      - Item: S_Rapid_Pendant
+      - Item: S_Caster_Pendant
+      - Item: S_Hard_Earring
+      - Item: S_Wise_Earring
+      - Item: S_Athena_Earring
+      - Item: S_Cranial_Shield
+      - Item: S_Safeguard_Shield
+      - Item: S_Brutal_Shield
+      - Item: S_Gargantua_Shield
+      - Item: S_Homers_Shield
+      - Item: S_Dragoon_Shield
+      - Item: S_Satanic_Shield
+      - Item: S_Flameguard_Shield
+      - Item: S_Requiem_Shield
+      - Item: S_Cadi_Shield
+      - Item: S_Bloody_Shoes
+      - Item: S_Liberation_Shoes
+      - Item: S_Chemical_Shoes
+      - Item: S_Clamorous_Shoes
+      - Item: S_Insecticide_Shoes
+      - Item: S_Fisher_Shoes
+      - Item: S_Seraphim_Shoes
+      - Item: S_Beholder_Shoes
+      - Item: S_Divine_Shoes
+      - Item: S_Dragoon_Shoes
+      - Item: S_Big_Armor
+      - Item: S_Medium_Armor
+      - Item: S_Small_Armor
+      - Item: S_Big_Weapon
+      - Item: S_Medium_Weapon
+      - Item: S_Small_Weapon
+      - Item: S_Spiritual_Weapon
+      - Item: S_Spiritual_Earring
+      - Item: S_Spiritual_Pendent
+      - Item: S_Malicious_Armor
+      - Item: S_Malicious_Shoes
+      - Item: S_Malicious_Shield
+      - Item: S_Gemstone_Armor
+      - Item: S_Gemstone_Shoes
+      - Item: S_Gemstone_Shield
+      - Item: S_Gemstone_Weapon
+      - Item: S_Gemstone_Earring
+      - Item: S_Gemstone_Pendent
+      - Item: S_Stability_Shield
+      - Item: S_Plasterer's_Armor
+      - Item: S_Plasterer's_Shoes
+      - Item: S_Insomniac_Armor
+      - Item: S_Insomniac_Shoes
+      - Item: S_Peerless_Armor
+      - Item: S_Peerless_Shoes
+      - Item: S_Adurate_Armor
+      - Item: S_Adurate_Shoes
+      - Item: Unfreez_Weapon_S
+      - Item: Unfreeze_Earing_S
+      - Item: Unfreeze_Pendent_S
+      - Item: Vitality_Earing_S
+      - Item: Vitality_Pendant_S
+      - Item: S_Neutral_Weapon
+      - Item: S_Neutral_Earring
+      - Item: S_Neutral_Pendent
+      - Item: S_Curse_Lift_Earring
+      - Item: S_Curse_Lift_Pendent
+      - Item: S_Caster_earring
+      - Item: S_Caster_Weapon
+      - Item: S_Spell_Flow_Shoes
+      - Item: S_Spell_Flow_Armor
+      - Item: S_Spell_Flow_Shield
+      - Item: S_Greed_Armor
+      - Item: S_Greed_Shoes
+      - Item: S_Greed_Shield
+      - Item: S_Greed_Weapon
+      - Item: S_Greed_Earring
+      - Item: S_Greed_Pendant
+      - Item: S_Heal_Armor
+      - Item: S_Heal_Shoes
+      - Item: S_Heal_Shield
+      - Item: S_Heal_Weapon
+      - Item: S_Heal_Earring
+      - Item: S_Heal_Pendant
+      - Item: S_Hiding_Armor
+      - Item: S_Hiding_Shoes
+      - Item: S_Hiding_Shield
+      - Item: S_Hiding_Weapon
+      - Item: S_Hiding_Earring
+      - Item: S_Hiding_Pendant
+      - Item: S_Cloaking_Armor
+      - Item: S_Cloaking_Shoes
+      - Item: S_Cloaking_Shield
+      - Item: S_Cloaking_Weapon
+      - Item: S_Cloaking_Earring
+      - Item: S_Cloaking_Pendant
+      - Item: S_Teleport_Armor
+      - Item: S_Teleport_Shoes
+      - Item: S_Teleport_Shield
+      - Item: S_Teleport_Weapon
+      - Item: S_Teleport_Earring
+      - Item: S_Teleport_Pendant
+      - Item: S_Steal_Armor
+      - Item: S_Steal_Shoes
+      - Item: S_Steal_Shield
+      - Item: S_Steal_Weapon
+      - Item: S_Steal_Earring
+      - Item: S_Steal_Pendant
+      - Item: S_Infinity_Earring
+      - Item: S_Infinity_Pendant
+      - Item: S_Solid_Weapon
+      - Item: S_Solid_Earring
+      - Item: S_Immortal_Armor
+      - Item: S_Immortal_Pendant
+      - Item: S_Executioner_Weapon
+      - Item: S_Exorcist_Weapon
+      - Item: S_Hunting_Weapon
+      - Item: S_Insect_Net_Weapon
+      - Item: S_Fishing_Weapon
+      - Item: S_Dragon_Killer_Weapon
+      - Item: S_Corrupt_Weapon
+      - Item: S_Vibration_Weapon
+      - Item: S_Holy_Water_Weapon
+      - Item: S_Scissors_Weapon
+      - Item: S_Penetration_Earring
+      - Item: S_Penetration_Pendent
+      - Item: S_Tempest_Earring
+      - Item: S_Tempest_Pendent
+      - Item: S_M_Executioner_Weapon
+      - Item: S_M_Exorcist_Weapon
+      - Item: S_M_Hunting_Weapon
+      - Item: S_M_Insect_Net_Weapon
+      - Item: S_M_Fishing_Weapon
+      - Item: S_M_Dragon_K_Weapon
+      - Item: S_M_Corrupt_Weapon
+      - Item: S_M_Vibration_Weapon
+      - Item: S_M_Holy_Water_Weapon
+      - Item: S_M_Scissors_Weapon
+      - Item: S_Bearers_Armor
+      - Item: S_Bearers_Shoes
+      - Item: S_Bearers_Shield
+      - Item: S_Bearers_Weapon
+      - Item: S_Bearers_Earring
+      - Item: S_Bearers_Pendent
+      - Item: S_Basis_Armor
+      - Item: S_Hallowed_Armor
+      - Item: S_Saharic_Armor
+      - Item: S_Underneath_Armor
+      - Item: S_Flam_Armor
+      - Item: S_Windy_Armor
+      - Item: S_Envenom_Armor
+      - Item: S_Damned_Armor
+      - Item: S_Geist_Armor
+      - Item: S_Divine_Armor
+      - Item: S_Hasty_Shoes
+      - Item: S_Hasty_Armor
+      - Item: S_Basis_Shield
+      - Item: S_Hallowed_Shield
+      - Item: S_Saharic_Shield
+      - Item: S_Underneath_Shield
+      - Item: S_Flam_Shield
+      - Item: S_Windy_Shield
+      - Item: S_Envenom_Shield
+      - Item: S_Damned_Shield
+      - Item: S_Geist_Shield
+      - Item: S_Divine_Shield
+      - Item: S_Expert_Shoes
+      - Item: S_Expert_Shield
+      - Item: S_Beginner_Shoes
+      - Item: S_Beginner_Shield
+      - Item: S_Rookie_Shoes
+      - Item: S_Rookie_Shield
+      - Item: S_Advanced_Shoes
+      - Item: S_Advanced_Shield
+      - Item: S_Attack_Armor
+      - Item: S_Blitz_Earring
+      - Item: S_Blitz_Pendent
+      - Item: S_ColdBolt_Armor
+      - Item: S_FireBolt_Armor
+      - Item: S_LightingBolt_Armor
+      - Item: S_EarthSpike_Armor
+      - Item: S_Enhance_Force_Weapon
+      - Item: S_Force_Weapon
+      - Item: S_Force_Earring
+      - Item: S_Force_Pendant
+      - Item: S_Enhance_Spirit_Weapon
+      - Item: S_Spirit_Weapon
+      - Item: S_Spirit_Earring
+      - Item: S_Spirit_Pendant
+      - Item: S_Blitz_Shoes
+      - Item: S_Blitz_Shield
+      - Item: S_Exceed_Weapon
+      - Item: S_Titan_Earring
+      - Item: S_Titan_Pendant
+      - Item: S_Boned_Earring
+      - Item: S_Boned_Pendant
+      - Item: S_Gigantic_Earring
+      - Item: S_Gigantic_Pendant
+      - Item: S_Caster_Shoes
+      - Item: S_Caster_Shield
+      - Item: S_Caster_Armor
+      - Item: S_Reload_Shoes
+      - Item: S_Reload_Shield
+      - Item: S_Reload_Armor
+      - Item: S_Swordman_Earring
+      - Item: S_Merchant_Earring
+      - Item: S_Acolyte_Earring
+      - Item: S_Magician_Earring
+      - Item: S_Swordman_Pendant
+      - Item: S_Merchant_Pendant
+      - Item: S_Acolyte_Pendant
+      - Item: S_Thief_Pendant
+      - Item: S_Magician_Pendant
+      - Item: S_Archer_Pendant
+      - Item: S_Knight_Shoes
+      - Item: S_Crusader_Shoes
+      - Item: S_Blacksmith_Shoes
+      - Item: S_Alchemist_Shoes
+      - Item: S_Priest_Shoes
+      - Item: S_Monk_Shoes
+      - Item: S_Assassin_Shoes
+      - Item: S_Rogue_Shoes
+      - Item: S_Wizard_Shoes
+      - Item: S_Sage_Shoes
+      - Item: S_Hunter_Shoes
+      - Item: S_Bard_Shoes
+      - Item: S_Dancer_Shoes
+      - Item: S_Knight_Armor
+      - Item: S_Crusader_Armor
+      - Item: S_Blacksmith_Armor
+      - Item: S_Alchemist_Armor
+      - Item: S_Priest_Armor
+      - Item: S_Monk_Armor
+      - Item: S_Assassin_Armor
+      - Item: S_Rogue_Armor
+      - Item: S_Wizard_Armor
+      - Item: S_Sage_Armor
+      - Item: S_Hunter_Armor
+      - Item: S_Bard_Armor
+      - Item: S_Dancer_Armor
+      - Item: S_Super_Novice_Weapon
+      - Item: S_Gunslinger_Weapon
+      - Item: S_Taekwondo_Weapon
+      - Item: S_Ninja_Weapon
+      - Item: S_DoramMagical_Weapon
+      - Item: S_DoramPhysical_Weapon
+      - Item: S_Rune_Knight_Weapon
+      - Item: S_Royal_Guard_Weapon
+      - Item: S_Mechanic_Weapon
+      - Item: S_Genetic_Weapon
+      - Item: S_Arcbishop_Weapon
+      - Item: S_Sura_Weapon
+      - Item: S_Guillotine_Cross_Weapon
+      - Item: S_Shadow_Chaser_Weapon
+      - Item: S_Warlock_Weapon
+      - Item: S_Sorcerer_Weapon
+      - Item: S_Ranger_Weapon
+      - Item: S_Minstrel_Weapon
+      - Item: S_Wanderer_Weapon
+      - Item: S_Rune_Knight_Shield
+      - Item: S_Royal_Guard_Shield
+      - Item: S_Mechanic_Shield
+      - Item: S_Genetic_Shield
+      - Item: S_Archbishop_Shield
+      - Item: S_Sura_Shield
+      - Item: S_Guillotine_Cross_Shield
+      - Item: S_Shadow_Chaser_Shield
+      - Item: S_Warlock_Shield
+      - Item: S_Sorcerer_Shield
+      - Item: S_Ranger_Shield
+      - Item: S_Minstrel_Shield
+      - Item: S_Wanderer_Shield
+      - Item: S_Ninja_Shield
+      - Item: S_Taekwon_Shield
+      - Item: S_DoramPhysical_Shield
+      - Item: S_DoramMagical_Shield
+      - Item: S_Super_Novice_Shield
+      - Item: S_Gunslinger_Shield
+      - Item: S_Hasty_Shoes_II
+      - Item: S_Bearer's_Pendant_II
+      - Item: S_Gemstone_Earring_II
+      - Item: S_Spellflow_Shield_II
+      - Item: S_Spiritual_Weapon_II
+      - Item: S_Malicious_Armor_II
+      - Item: S_Sigrun_Armor
+      - Item: S_Sigrun_Shield
+      - Item: S_Force_Executioner_Weapon
+      - Item: S_Spirit_Magic_Executioner_Weapon
+      - Item: S_Caster_Armor_II
+      - Item: S_Reload_Armor_II
+      - Item: S_Critical_Shield
+      - Item: S_Critical_Shoes
+      - Item: S_Magic_Compose_Armor
+      - Item: S_Gemstone_Weapon_II
+      - Item: S_Gemstone_Shield_II
+      - Item: S_Bearer's_Armor_II
+      - Item: S_Bearer's_Shoes_II
+      - Item: S_Almighty_Earring
+      - Item: S_Almighty_Pendant
+      - Item: S_All_Race_Shoes
+      - Item: S_All_Race_Shield
+      - Item: S_Blitz_Weapon
+      - Item: S_Blitz_Armor
+      - Item: S_Tempest_Shield
+      - Item: S_Tempest_Shoes
+      - Item: S_Magic_Executioner_Holy_Water_Armor
+      - Item: S_Magic_Exorcist_Corrupted_Armor
+      - Item: S_Magic_Vibration_Dragon_Killer_Armor
+      - Item: S_Magic_Scissor_Hunting_Armor
+      - Item: S_Magic_Fishing_Insect_Net_Armor
+      - Item: S_Plasterer's_Armor_II
+      - Item: S_Insomniac_Shoes_II
+      - Item: S_Peerless_Armor_II
+      - Item: S_Adulate_Shoes_II
+      - Item: S_Unfreezing_Weapon_II
+      - Item: S_Vitality_Earring_II
+      - Item: S_Neutral_Weapon_II
+      - Item: S_Uncursed_Pendant_II
+      - Item: S_Tension_Weapon
+      - Item: S_Tension_Earring
+      - Item: S_Tension_Pendant
+      - Item: S_Elegant_Weapon
+      - Item: S_Elegant_Earring
+      - Item: S_Elegant_Pendant
+      - Item: S_Healing_Shield
+      - Item: S_Healing_Shoes
+      - Item: S_Restore_Earring
+      - Item: S_Restore_Pendant
+      - Item: S_Mortal_Blow_Weapon
+      - Item: S_Mortal_Blow_Earring
+      - Item: S_Mortal_Blow_Pendant
+      - Item: S_Penetration_Shoes
+      - Item: S_Penetration_Shield
+      - Item: S_Executioner_Holy_Water_Armor
+      - Item: S_Exorcist_Corrupted_Armor
+      - Item: S_Vibration_Dragon_Killer_Armor
+      - Item: S_Scissor_Hunting_Armor
+      - Item: S_Fishing_Insect_Net_Armor
+      - Item: S_Sentimental_Weapon
+      - Item: S_Sentimental_Earring
+      - Item: S_Sentimental_Pendant
+      - Item: S_Enchanting_Weapon
+      - Item: S_Enchanting_Earring
+      - Item: S_Enchanting_Pendant
+      - Item: S_Infinity_Weapon
+      - Item: S_Physical_Shoes
+      - Item: S_Physical_Shield
+      - Item: S_Physical_Armor
+      - Item: S_Magical_Shoes
+      - Item: S_Magical_Shield
+      - Item: S_Magical_Armor
+      - Item: S_Immune_Athena_Shield
+      - Item: S_Hard_Champion_Shoes
+      - Item: S_Kingbird_Ancient_Armor
+      - Item: S_Cri_Hit_Armor
+      - Item: S_Thief_Earring
+      - Item: S_Archer_Earring
+      - Item: S_Rebellion_Armor
+      - Item: S_Kagerou_Armor
+      - Item: S_Oboro_Armor
+      - Item: S_Rebellion_Shoes
+      - Item: S_Kagerou_Shoes
+      - Item: S_Oboro_Shoes
+      - Item: S_DoramPhysical_Armor
+      - Item: S_DoramPhysical_Shoes
+      - Item: S_DoramMagical_Armor
+      - Item: S_DoramMagical_Shoes
+      - Item: S_Star_Emperor_Armor
+      - Item: S_Star_Emperor_Shoes
+      - Item: S_Soul_Reaper_Armor
+      - Item: S_Soul_Reaper_Shoes
+      - Item: S_Tempest_Weapon
+      - Item: S_Tempest_Armor
+      - Item: S_Perfect_Size_Weapon
+      - Item: S_Perfect_Size_Armor
+      - Item: S_M_Exo_Co_Weapon
+      - Item: S_M_Viv_Dr_Weapon
+      - Item: S_M_Sci_Hu_Weapon
+      - Item: S_M_Fis_In_Weapon
+      - Item: S_M_Exe_Ho_Weapon
+      - Item: S_Penetration_Weapon
+      - Item: S_Penetration_Armor
+      - Item: S_Exe_Ho_Weapon
+      - Item: S_Fis_In_Weapon
+      - Item: S_Sci_Hu_Weapon
+      - Item: S_Viv_Dr_Weapon
+      - Item: S_Exo_Co_Weapon
+      - Item: S_Hasty_Weapon
+      - Item: S_Sonic_Armor
+      - Item: S_Sonic_Shield
+      - Item: S_Sonic_Shoes
+      - Item: S_Ignition_Weapon
+      - Item: S_Ignition_Pendant
+      - Item: S_Ignition_Earing
+      - Item: S_W_Breath_Armor
+      - Item: S_W_Breath_Shield
+      - Item: S_W_Breath_Shoes
+      - Item: S_F_Breath_Weapon
+      - Item: S_F_Breath_Pendant
+      - Item: S_F_Breath_Earing
+      - Item: S_Cluster_Armor
+      - Item: S_Cluster_Shield
+      - Item: S_Cluster_Shoes
+      - Item: S_Aimed_Weapon
+      - Item: S_Aimed_Pendant
+      - Item: S_Aimed_Earing
+      - Item: S_Arrow_Armor
+      - Item: S_Arrow_Shield
+      - Item: S_Arrow_Shoes
+      - Item: S_Shooting_Weapon
+      - Item: S_Shooting_Pendant
+      - Item: S_Shooting_Earing
+      - Item: S_Tornado_Armor
+      - Item: S_Tornado_Shield
+      - Item: S_Tornado_Shoes
+      - Item: S_Boomerang_Weapon
+      - Item: S_Boomerang_Pendant
+      - Item: S_Boomerang_Earing
+      - Item: S_Vulcan_Armor
+      - Item: S_Vulcan_Shield
+      - Item: S_Vulcan_Shoes
+      - Item: S_Arms_Weapon
+      - Item: S_Arms_Pendant
+      - Item: S_Arms_Earing
+    Result: |
+      callfunc("F_Lapine_Shadow_Refine_Hammer", .@refine);
+      getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
+  - Item: Shadow_9_Refine_Hammer
+    NotSocketEnchantItem: false
+    TargetItem:
+      - Item: T1_Shadow_Armor
+      - Item: T1_Shadow_Weapon
+      - Item: T1_Shadow_Shield
+      - Item: T1_Shadow_Shoes
+      - Item: T1_Shadow_R_Accessory
+      - Item: T1_Shadow_L_Accessory
+      - Item: T2_Shadow_Armor
+      - Item: T2_Shadow_Weapon
+      - Item: T2_Shadow_Shield
+      - Item: T2_Shadow_Shoes
+      - Item: T2_Shadow_R_Accessory
+      - Item: T2_Shadow_L_Accessory
+      - Item: S_Promotion_Weapon
+      - Item: S_Promotion_Armor
+      - Item: S_Promotion_Shoes
+      - Item: S_Promotion_Shield
+      - Item: S_Promotion_Earring
+      - Item: S_Promotion_Pendant
+      - Item: S_Physical_Earring
+      - Item: S_Physical_Weapon
+      - Item: S_Physical_Pendant
+      - Item: S_Magical_Earring
+      - Item: S_Magical_Weapon
+      - Item: S_Magical_Pendant
+      - Item: S_Breezy_Armor
+      - Item: S_Champion_Shoes
+      - Item: S_Athena_Shield
+      - Item: S_Immune_Armor
+      - Item: S_Hard_Armor
+      - Item: S_Ancient_Armor
+      - Item: S_Critical_Armor
+      - Item: S_Kingbird_Weapon
+      - Item: S_Cri_Hit_Weapon
+      - Item: S_Healing_Weapon
+      - Item: S_Lucky_Weapon
+      - Item: S_Power_Earring
+      - Item: S_Int_Pendant
+      - Item: S_Dexterous_Armor
+      - Item: S_Vital_Shoes
+      - Item: S_Athletic_Shield
+      - Item: S_Lucky_Armor
+      - Item: S_Power_Pendant
+      - Item: S_Int_Earring
+      - Item: S_Dexterous_Weapon
+      - Item: S_Vital_Shield
+      - Item: S_Athletic_Shoes
+      - Item: S_Resist_Spell_Pendant
+      - Item: S_Rapid_Pendant
+      - Item: S_Caster_Pendant
+      - Item: S_Hard_Earring
+      - Item: S_Wise_Earring
+      - Item: S_Athena_Earring
+      - Item: S_Cranial_Shield
+      - Item: S_Safeguard_Shield
+      - Item: S_Brutal_Shield
+      - Item: S_Gargantua_Shield
+      - Item: S_Homers_Shield
+      - Item: S_Dragoon_Shield
+      - Item: S_Satanic_Shield
+      - Item: S_Flameguard_Shield
+      - Item: S_Requiem_Shield
+      - Item: S_Cadi_Shield
+      - Item: S_Bloody_Shoes
+      - Item: S_Liberation_Shoes
+      - Item: S_Chemical_Shoes
+      - Item: S_Clamorous_Shoes
+      - Item: S_Insecticide_Shoes
+      - Item: S_Fisher_Shoes
+      - Item: S_Seraphim_Shoes
+      - Item: S_Beholder_Shoes
+      - Item: S_Divine_Shoes
+      - Item: S_Dragoon_Shoes
+      - Item: S_Big_Armor
+      - Item: S_Medium_Armor
+      - Item: S_Small_Armor
+      - Item: S_Big_Weapon
+      - Item: S_Medium_Weapon
+      - Item: S_Small_Weapon
+      - Item: S_Spiritual_Weapon
+      - Item: S_Spiritual_Earring
+      - Item: S_Spiritual_Pendent
+      - Item: S_Malicious_Armor
+      - Item: S_Malicious_Shoes
+      - Item: S_Malicious_Shield
+      - Item: S_Gemstone_Armor
+      - Item: S_Gemstone_Shoes
+      - Item: S_Gemstone_Shield
+      - Item: S_Gemstone_Weapon
+      - Item: S_Gemstone_Earring
+      - Item: S_Gemstone_Pendent
+      - Item: S_Stability_Shield
+      - Item: S_Plasterer's_Armor
+      - Item: S_Plasterer's_Shoes
+      - Item: S_Insomniac_Armor
+      - Item: S_Insomniac_Shoes
+      - Item: S_Peerless_Armor
+      - Item: S_Peerless_Shoes
+      - Item: S_Adurate_Armor
+      - Item: S_Adurate_Shoes
+      - Item: Unfreez_Weapon_S
+      - Item: Unfreeze_Earing_S
+      - Item: Unfreeze_Pendent_S
+      - Item: Vitality_Earing_S
+      - Item: Vitality_Pendant_S
+      - Item: S_Neutral_Weapon
+      - Item: S_Neutral_Earring
+      - Item: S_Neutral_Pendent
+      - Item: S_Curse_Lift_Earring
+      - Item: S_Curse_Lift_Pendent
+      - Item: S_Caster_earring
+      - Item: S_Caster_Weapon
+      - Item: S_Spell_Flow_Shoes
+      - Item: S_Spell_Flow_Armor
+      - Item: S_Spell_Flow_Shield
+      - Item: S_Greed_Armor
+      - Item: S_Greed_Shoes
+      - Item: S_Greed_Shield
+      - Item: S_Greed_Weapon
+      - Item: S_Greed_Earring
+      - Item: S_Greed_Pendant
+      - Item: S_Heal_Armor
+      - Item: S_Heal_Shoes
+      - Item: S_Heal_Shield
+      - Item: S_Heal_Weapon
+      - Item: S_Heal_Earring
+      - Item: S_Heal_Pendant
+      - Item: S_Hiding_Armor
+      - Item: S_Hiding_Shoes
+      - Item: S_Hiding_Shield
+      - Item: S_Hiding_Weapon
+      - Item: S_Hiding_Earring
+      - Item: S_Hiding_Pendant
+      - Item: S_Cloaking_Armor
+      - Item: S_Cloaking_Shoes
+      - Item: S_Cloaking_Shield
+      - Item: S_Cloaking_Weapon
+      - Item: S_Cloaking_Earring
+      - Item: S_Cloaking_Pendant
+      - Item: S_Teleport_Armor
+      - Item: S_Teleport_Shoes
+      - Item: S_Teleport_Shield
+      - Item: S_Teleport_Weapon
+      - Item: S_Teleport_Earring
+      - Item: S_Teleport_Pendant
+      - Item: S_Steal_Armor
+      - Item: S_Steal_Shoes
+      - Item: S_Steal_Shield
+      - Item: S_Steal_Weapon
+      - Item: S_Steal_Earring
+      - Item: S_Steal_Pendant
+      - Item: S_Infinity_Earring
+      - Item: S_Infinity_Pendant
+      - Item: S_Solid_Weapon
+      - Item: S_Solid_Earring
+      - Item: S_Immortal_Armor
+      - Item: S_Immortal_Pendant
+      - Item: S_Executioner_Weapon
+      - Item: S_Exorcist_Weapon
+      - Item: S_Hunting_Weapon
+      - Item: S_Insect_Net_Weapon
+      - Item: S_Fishing_Weapon
+      - Item: S_Dragon_Killer_Weapon
+      - Item: S_Corrupt_Weapon
+      - Item: S_Vibration_Weapon
+      - Item: S_Holy_Water_Weapon
+      - Item: S_Scissors_Weapon
+      - Item: S_Penetration_Earring
+      - Item: S_Penetration_Pendent
+      - Item: S_Tempest_Earring
+      - Item: S_Tempest_Pendent
+      - Item: S_M_Executioner_Weapon
+      - Item: S_M_Exorcist_Weapon
+      - Item: S_M_Hunting_Weapon
+      - Item: S_M_Insect_Net_Weapon
+      - Item: S_M_Fishing_Weapon
+      - Item: S_M_Dragon_K_Weapon
+      - Item: S_M_Corrupt_Weapon
+      - Item: S_M_Vibration_Weapon
+      - Item: S_M_Holy_Water_Weapon
+      - Item: S_M_Scissors_Weapon
+      - Item: S_Bearers_Armor
+      - Item: S_Bearers_Shoes
+      - Item: S_Bearers_Shield
+      - Item: S_Bearers_Weapon
+      - Item: S_Bearers_Earring
+      - Item: S_Bearers_Pendent
+      - Item: S_Basis_Armor
+      - Item: S_Hallowed_Armor
+      - Item: S_Saharic_Armor
+      - Item: S_Underneath_Armor
+      - Item: S_Flam_Armor
+      - Item: S_Windy_Armor
+      - Item: S_Envenom_Armor
+      - Item: S_Damned_Armor
+      - Item: S_Geist_Armor
+      - Item: S_Divine_Armor
+      - Item: S_Hasty_Shoes
+      - Item: S_Hasty_Armor
+      - Item: S_Basis_Shield
+      - Item: S_Hallowed_Shield
+      - Item: S_Saharic_Shield
+      - Item: S_Underneath_Shield
+      - Item: S_Flam_Shield
+      - Item: S_Windy_Shield
+      - Item: S_Envenom_Shield
+      - Item: S_Damned_Shield
+      - Item: S_Geist_Shield
+      - Item: S_Divine_Shield
+      - Item: S_Expert_Shoes
+      - Item: S_Expert_Shield
+      - Item: S_Beginner_Shoes
+      - Item: S_Beginner_Shield
+      - Item: S_Rookie_Shoes
+      - Item: S_Rookie_Shield
+      - Item: S_Advanced_Shoes
+      - Item: S_Advanced_Shield
+      - Item: S_Attack_Armor
+      - Item: S_Blitz_Earring
+      - Item: S_Blitz_Pendent
+      - Item: S_ColdBolt_Armor
+      - Item: S_FireBolt_Armor
+      - Item: S_LightingBolt_Armor
+      - Item: S_EarthSpike_Armor
+      - Item: S_Enhance_Force_Weapon
+      - Item: S_Force_Weapon
+      - Item: S_Force_Earring
+      - Item: S_Force_Pendant
+      - Item: S_Enhance_Spirit_Weapon
+      - Item: S_Spirit_Weapon
+      - Item: S_Spirit_Earring
+      - Item: S_Spirit_Pendant
+      - Item: S_Blitz_Shoes
+      - Item: S_Blitz_Shield
+      - Item: S_Exceed_Weapon
+      - Item: S_Titan_Earring
+      - Item: S_Titan_Pendant
+      - Item: S_Boned_Earring
+      - Item: S_Boned_Pendant
+      - Item: S_Gigantic_Earring
+      - Item: S_Gigantic_Pendant
+      - Item: S_Caster_Shoes
+      - Item: S_Caster_Shield
+      - Item: S_Caster_Armor
+      - Item: S_Reload_Shoes
+      - Item: S_Reload_Shield
+      - Item: S_Reload_Armor
+      - Item: S_Swordman_Earring
+      - Item: S_Merchant_Earring
+      - Item: S_Acolyte_Earring
+      - Item: S_Magician_Earring
+      - Item: S_Swordman_Pendant
+      - Item: S_Merchant_Pendant
+      - Item: S_Acolyte_Pendant
+      - Item: S_Thief_Pendant
+      - Item: S_Magician_Pendant
+      - Item: S_Archer_Pendant
+      - Item: S_Knight_Shoes
+      - Item: S_Crusader_Shoes
+      - Item: S_Blacksmith_Shoes
+      - Item: S_Alchemist_Shoes
+      - Item: S_Priest_Shoes
+      - Item: S_Monk_Shoes
+      - Item: S_Assassin_Shoes
+      - Item: S_Rogue_Shoes
+      - Item: S_Wizard_Shoes
+      - Item: S_Sage_Shoes
+      - Item: S_Hunter_Shoes
+      - Item: S_Bard_Shoes
+      - Item: S_Dancer_Shoes
+      - Item: S_Knight_Armor
+      - Item: S_Crusader_Armor
+      - Item: S_Blacksmith_Armor
+      - Item: S_Alchemist_Armor
+      - Item: S_Priest_Armor
+      - Item: S_Monk_Armor
+      - Item: S_Assassin_Armor
+      - Item: S_Rogue_Armor
+      - Item: S_Wizard_Armor
+      - Item: S_Sage_Armor
+      - Item: S_Hunter_Armor
+      - Item: S_Bard_Armor
+      - Item: S_Dancer_Armor
+      - Item: S_Super_Novice_Weapon
+      - Item: S_Gunslinger_Weapon
+      - Item: S_Taekwondo_Weapon
+      - Item: S_Ninja_Weapon
+      - Item: S_DoramMagical_Weapon
+      - Item: S_DoramPhysical_Weapon
+      - Item: S_Rune_Knight_Weapon
+      - Item: S_Royal_Guard_Weapon
+      - Item: S_Mechanic_Weapon
+      - Item: S_Genetic_Weapon
+      - Item: S_Arcbishop_Weapon
+      - Item: S_Sura_Weapon
+      - Item: S_Guillotine_Cross_Weapon
+      - Item: S_Shadow_Chaser_Weapon
+      - Item: S_Warlock_Weapon
+      - Item: S_Sorcerer_Weapon
+      - Item: S_Ranger_Weapon
+      - Item: S_Minstrel_Weapon
+      - Item: S_Wanderer_Weapon
+      - Item: S_Rune_Knight_Shield
+      - Item: S_Royal_Guard_Shield
+      - Item: S_Mechanic_Shield
+      - Item: S_Genetic_Shield
+      - Item: S_Archbishop_Shield
+      - Item: S_Sura_Shield
+      - Item: S_Guillotine_Cross_Shield
+      - Item: S_Shadow_Chaser_Shield
+      - Item: S_Warlock_Shield
+      - Item: S_Sorcerer_Shield
+      - Item: S_Ranger_Shield
+      - Item: S_Minstrel_Shield
+      - Item: S_Wanderer_Shield
+      - Item: S_Ninja_Shield
+      - Item: S_Taekwon_Shield
+      - Item: S_DoramPhysical_Shield
+      - Item: S_DoramMagical_Shield
+      - Item: S_Super_Novice_Shield
+      - Item: S_Gunslinger_Shield
+      - Item: S_Hasty_Shoes_II
+      - Item: S_Bearer's_Pendant_II
+      - Item: S_Gemstone_Earring_II
+      - Item: S_Spellflow_Shield_II
+      - Item: S_Spiritual_Weapon_II
+      - Item: S_Malicious_Armor_II
+      - Item: S_Sigrun_Armor
+      - Item: S_Sigrun_Shield
+      - Item: S_Force_Executioner_Weapon
+      - Item: S_Spirit_Magic_Executioner_Weapon
+      - Item: S_Caster_Armor_II
+      - Item: S_Reload_Armor_II
+      - Item: S_Critical_Shield
+      - Item: S_Critical_Shoes
+      - Item: S_Magic_Compose_Armor
+      - Item: S_Gemstone_Weapon_II
+      - Item: S_Gemstone_Shield_II
+      - Item: S_Bearer's_Armor_II
+      - Item: S_Bearer's_Shoes_II
+      - Item: S_Almighty_Earring
+      - Item: S_Almighty_Pendant
+      - Item: S_All_Race_Shoes
+      - Item: S_All_Race_Shield
+      - Item: S_Blitz_Weapon
+      - Item: S_Blitz_Armor
+      - Item: S_Tempest_Shield
+      - Item: S_Tempest_Shoes
+      - Item: S_Magic_Executioner_Holy_Water_Armor
+      - Item: S_Magic_Exorcist_Corrupted_Armor
+      - Item: S_Magic_Vibration_Dragon_Killer_Armor
+      - Item: S_Magic_Scissor_Hunting_Armor
+      - Item: S_Magic_Fishing_Insect_Net_Armor
+      - Item: S_Plasterer's_Armor_II
+      - Item: S_Insomniac_Shoes_II
+      - Item: S_Peerless_Armor_II
+      - Item: S_Adulate_Shoes_II
+      - Item: S_Unfreezing_Weapon_II
+      - Item: S_Vitality_Earring_II
+      - Item: S_Neutral_Weapon_II
+      - Item: S_Uncursed_Pendant_II
+      - Item: S_Tension_Weapon
+      - Item: S_Tension_Earring
+      - Item: S_Tension_Pendant
+      - Item: S_Elegant_Weapon
+      - Item: S_Elegant_Earring
+      - Item: S_Elegant_Pendant
+      - Item: S_Healing_Shield
+      - Item: S_Healing_Shoes
+      - Item: S_Restore_Earring
+      - Item: S_Restore_Pendant
+      - Item: S_Mortal_Blow_Weapon
+      - Item: S_Mortal_Blow_Earring
+      - Item: S_Mortal_Blow_Pendant
+      - Item: S_Penetration_Shoes
+      - Item: S_Penetration_Shield
+      - Item: S_Executioner_Holy_Water_Armor
+      - Item: S_Exorcist_Corrupted_Armor
+      - Item: S_Vibration_Dragon_Killer_Armor
+      - Item: S_Scissor_Hunting_Armor
+      - Item: S_Fishing_Insect_Net_Armor
+      - Item: S_Sentimental_Weapon
+      - Item: S_Sentimental_Earring
+      - Item: S_Sentimental_Pendant
+      - Item: S_Enchanting_Weapon
+      - Item: S_Enchanting_Earring
+      - Item: S_Enchanting_Pendant
+      - Item: S_Infinity_Weapon
+      - Item: S_Physical_Shoes
+      - Item: S_Physical_Shield
+      - Item: S_Physical_Armor
+      - Item: S_Magical_Shoes
+      - Item: S_Magical_Shield
+      - Item: S_Magical_Armor
+      - Item: S_Immune_Athena_Shield
+      - Item: S_Hard_Champion_Shoes
+      - Item: S_Kingbird_Ancient_Armor
+      - Item: S_Cri_Hit_Armor
+      - Item: S_Thief_Earring
+      - Item: S_Archer_Earring
+      - Item: S_Rebellion_Armor
+      - Item: S_Kagerou_Armor
+      - Item: S_Oboro_Armor
+      - Item: S_Rebellion_Shoes
+      - Item: S_Kagerou_Shoes
+      - Item: S_Oboro_Shoes
+      - Item: S_DoramPhysical_Armor
+      - Item: S_DoramPhysical_Shoes
+      - Item: S_DoramMagical_Armor
+      - Item: S_DoramMagical_Shoes
+      - Item: S_Star_Emperor_Armor
+      - Item: S_Star_Emperor_Shoes
+      - Item: S_Soul_Reaper_Armor
+      - Item: S_Soul_Reaper_Shoes
+      - Item: S_Tempest_Weapon
+      - Item: S_Tempest_Armor
+      - Item: S_Perfect_Size_Weapon
+      - Item: S_Perfect_Size_Armor
+      - Item: S_M_Exo_Co_Weapon
+      - Item: S_M_Viv_Dr_Weapon
+      - Item: S_M_Sci_Hu_Weapon
+      - Item: S_M_Fis_In_Weapon
+      - Item: S_M_Exe_Ho_Weapon
+      - Item: S_Penetration_Weapon
+      - Item: S_Penetration_Armor
+      - Item: S_Exe_Ho_Weapon
+      - Item: S_Fis_In_Weapon
+      - Item: S_Sci_Hu_Weapon
+      - Item: S_Viv_Dr_Weapon
+      - Item: S_Exo_Co_Weapon
+      - Item: S_Hasty_Weapon
+      - Item: S_Sonic_Armor
+      - Item: S_Sonic_Shield
+      - Item: S_Sonic_Shoes
+      - Item: S_Ignition_Weapon
+      - Item: S_Ignition_Pendant
+      - Item: S_Ignition_Earing
+      - Item: S_W_Breath_Armor
+      - Item: S_W_Breath_Shield
+      - Item: S_W_Breath_Shoes
+      - Item: S_F_Breath_Weapon
+      - Item: S_F_Breath_Pendant
+      - Item: S_F_Breath_Earing
+      - Item: S_Cluster_Armor
+      - Item: S_Cluster_Shield
+      - Item: S_Cluster_Shoes
+      - Item: S_Aimed_Weapon
+      - Item: S_Aimed_Pendant
+      - Item: S_Aimed_Earing
+      - Item: S_Arrow_Armor
+      - Item: S_Arrow_Shield
+      - Item: S_Arrow_Shoes
+      - Item: S_Shooting_Weapon
+      - Item: S_Shooting_Pendant
+      - Item: S_Shooting_Earing
+      - Item: S_Tornado_Armor
+      - Item: S_Tornado_Shield
+      - Item: S_Tornado_Shoes
+      - Item: S_Boomerang_Weapon
+      - Item: S_Boomerang_Pendant
+      - Item: S_Boomerang_Earing
+      - Item: S_Vulcan_Armor
+      - Item: S_Vulcan_Shield
+      - Item: S_Vulcan_Shoes
+      - Item: S_Arms_Weapon
+      - Item: S_Arms_Pendant
+      - Item: S_Arms_Earing
+    Result: |
+      callfunc("F_Lapine_Shadow_9_Refine_Hammer", .@refine);
+      getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
+  - Item: Magic_Cat_hand_Scroll
+    TargetItem:
+      - Item: Neko_Headress
+    Result: |
+      callfunc("F_Lapine_Magic_Cat_Hand", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
+  - Item: Candy_Pouch_Blessing_Scroll_Melee
+    TargetItem:
+      - Item: Bag_Of_Antonio_P
+    Result: |
+      callfunc("F_Lapine_Candy_Pouch_Blessing_Scroll_W", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Candy_Pouch_Blessing_Scroll_Range
+    TargetItem:
+      - Item: Bag_Of_Antonio_S
+    Result: |
+      callfunc("F_Lapine_Candy_Pouch_Blessing_Scroll_R", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Candy_Pouch_Blessing_Scroll_Magic
+    TargetItem:
+      - Item: Bag_Of_Antonio_
+    Result: |
+      callfunc("F_Lapine_Candy_Pouch_Blessing_Scroll_M", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Drooping_Gunslinger_Scroll
+    TargetItem:
+      - Item: Drooping_Rebellion_
+    Result: |
+      callfunc("F_Lapine_Grown_Gunslinger", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Scroll_of_Fallen_Angel_Wings
+    TargetItem:
+      - Item: Fallen_Angel_Wings_
+      - Item: Fallen_Angel_Wing
+    Result: |
+      if (@last_lapine_card1) {
+          getitem(@last_lapine_card1,1);
+      }
+      getitem2(@last_lapine_id,1,1,0,0,0,0,0,0);
+  - Item: Uniform_Repair_Kit
+    TargetItem:
+      - Item: Kafra_Uniform
+    Result: |
+      callfunc("F_Lapine_Uniform_Repair_Kits", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
+  - Item: Shadow_Random_Mix
+    NeedRefineMin: 7
+    NotSocketEnchantItem: false
+    TargetItem:
+      - Item: T1_Shadow_Armor
+      - Item: T1_Shadow_Weapon
+      - Item: T1_Shadow_Shield
+      - Item: T1_Shadow_Shoes
+      - Item: T1_Shadow_R_Accessory
+      - Item: T1_Shadow_L_Accessory
+      - Item: T2_Shadow_Armor
+      - Item: T2_Shadow_Weapon
+      - Item: T2_Shadow_Shield
+      - Item: T2_Shadow_Shoes
+      - Item: T2_Shadow_R_Accessory
+      - Item: T2_Shadow_L_Accessory
+      - Item: S_Promotion_Weapon
+      - Item: S_Promotion_Armor
+      - Item: S_Promotion_Shoes
+      - Item: S_Promotion_Shield
+      - Item: S_Promotion_Earring
+      - Item: S_Promotion_Pendant
+      - Item: S_Physical_Earring
+      - Item: S_Physical_Weapon
+      - Item: S_Physical_Pendant
+      - Item: S_Magical_Earring
+      - Item: S_Magical_Weapon
+      - Item: S_Magical_Pendant
+      - Item: S_Breezy_Armor
+      - Item: S_Champion_Shoes
+      - Item: S_Athena_Shield
+      - Item: S_Immune_Armor
+      - Item: S_Hard_Armor
+      - Item: S_Ancient_Armor
+      - Item: S_Critical_Armor
+      - Item: S_Kingbird_Weapon
+      - Item: S_Cri_Hit_Weapon
+      - Item: S_Healing_Weapon
+      - Item: S_Lucky_Weapon
+      - Item: S_Power_Earring
+      - Item: S_Int_Pendant
+      - Item: S_Dexterous_Armor
+      - Item: S_Vital_Shoes
+      - Item: S_Athletic_Shield
+      - Item: S_Lucky_Armor
+      - Item: S_Power_Pendant
+      - Item: S_Int_Earring
+      - Item: S_Dexterous_Weapon
+      - Item: S_Vital_Shield
+      - Item: S_Athletic_Shoes
+      - Item: S_Resist_Spell_Pendant
+      - Item: S_Rapid_Pendant
+      - Item: S_Caster_Pendant
+      - Item: S_Hard_Earring
+      - Item: S_Wise_Earring
+      - Item: S_Athena_Earring
+      - Item: S_Cranial_Shield
+      - Item: S_Safeguard_Shield
+      - Item: S_Brutal_Shield
+      - Item: S_Gargantua_Shield
+      - Item: S_Homers_Shield
+      - Item: S_Dragoon_Shield
+      - Item: S_Satanic_Shield
+      - Item: S_Flameguard_Shield
+      - Item: S_Requiem_Shield
+      - Item: S_Cadi_Shield
+      - Item: S_Bloody_Shoes
+      - Item: S_Liberation_Shoes
+      - Item: S_Chemical_Shoes
+      - Item: S_Clamorous_Shoes
+      - Item: S_Insecticide_Shoes
+      - Item: S_Fisher_Shoes
+      - Item: S_Seraphim_Shoes
+      - Item: S_Beholder_Shoes
+      - Item: S_Divine_Shoes
+      - Item: S_Dragoon_Shoes
+      - Item: S_Big_Armor
+      - Item: S_Medium_Armor
+      - Item: S_Small_Armor
+      - Item: S_Big_Weapon
+      - Item: S_Medium_Weapon
+      - Item: S_Small_Weapon
+      - Item: S_Spiritual_Weapon
+      - Item: S_Spiritual_Earring
+      - Item: S_Spiritual_Pendent
+      - Item: S_Malicious_Armor
+      - Item: S_Malicious_Shoes
+      - Item: S_Malicious_Shield
+      - Item: S_Gemstone_Armor
+      - Item: S_Gemstone_Shoes
+      - Item: S_Gemstone_Shield
+      - Item: S_Gemstone_Weapon
+      - Item: S_Gemstone_Earring
+      - Item: S_Gemstone_Pendent
+      - Item: S_Stability_Shield
+      - Item: S_Plasterer's_Armor
+      - Item: S_Plasterer's_Shoes
+      - Item: S_Insomniac_Armor
+      - Item: S_Insomniac_Shoes
+      - Item: S_Peerless_Armor
+      - Item: S_Peerless_Shoes
+      - Item: S_Adurate_Armor
+      - Item: S_Adurate_Shoes
+      - Item: Unfreez_Weapon_S
+      - Item: Unfreeze_Earing_S
+      - Item: Unfreeze_Pendent_S
+      - Item: Vitality_Earing_S
+      - Item: Vitality_Pendant_S
+      - Item: S_Neutral_Weapon
+      - Item: S_Neutral_Earring
+      - Item: S_Neutral_Pendent
+      - Item: S_Curse_Lift_Earring
+      - Item: S_Curse_Lift_Pendent
+      - Item: S_Caster_earring
+      - Item: S_Caster_Weapon
+      - Item: S_Spell_Flow_Shoes
+      - Item: S_Spell_Flow_Armor
+      - Item: S_Spell_Flow_Shield
+      - Item: S_Greed_Armor
+      - Item: S_Greed_Shoes
+      - Item: S_Greed_Shield
+      - Item: S_Greed_Weapon
+      - Item: S_Greed_Earring
+      - Item: S_Greed_Pendant
+      - Item: S_Heal_Armor
+      - Item: S_Heal_Shoes
+      - Item: S_Heal_Shield
+      - Item: S_Heal_Weapon
+      - Item: S_Heal_Earring
+      - Item: S_Heal_Pendant
+      - Item: S_Hiding_Armor
+      - Item: S_Hiding_Shoes
+      - Item: S_Hiding_Shield
+      - Item: S_Hiding_Weapon
+      - Item: S_Hiding_Earring
+      - Item: S_Hiding_Pendant
+      - Item: S_Cloaking_Armor
+      - Item: S_Cloaking_Shoes
+      - Item: S_Cloaking_Shield
+      - Item: S_Cloaking_Weapon
+      - Item: S_Cloaking_Earring
+      - Item: S_Cloaking_Pendant
+      - Item: S_Teleport_Armor
+      - Item: S_Teleport_Shoes
+      - Item: S_Teleport_Shield
+      - Item: S_Teleport_Weapon
+      - Item: S_Teleport_Earring
+      - Item: S_Teleport_Pendant
+      - Item: S_Steal_Armor
+      - Item: S_Steal_Shoes
+      - Item: S_Steal_Shield
+      - Item: S_Steal_Weapon
+      - Item: S_Steal_Earring
+      - Item: S_Steal_Pendant
+      - Item: S_Infinity_Earring
+      - Item: S_Infinity_Pendant
+      - Item: S_Solid_Weapon
+      - Item: S_Solid_Earring
+      - Item: S_Immortal_Armor
+      - Item: S_Immortal_Pendant
+      - Item: S_Executioner_Weapon
+      - Item: S_Exorcist_Weapon
+      - Item: S_Hunting_Weapon
+      - Item: S_Insect_Net_Weapon
+      - Item: S_Fishing_Weapon
+      - Item: S_Dragon_Killer_Weapon
+      - Item: S_Corrupt_Weapon
+      - Item: S_Vibration_Weapon
+      - Item: S_Holy_Water_Weapon
+      - Item: S_Scissors_Weapon
+      - Item: S_Penetration_Earring
+      - Item: S_Penetration_Pendent
+      - Item: S_Tempest_Earring
+      - Item: S_Tempest_Pendent
+      - Item: S_M_Executioner_Weapon
+      - Item: S_M_Exorcist_Weapon
+      - Item: S_M_Hunting_Weapon
+      - Item: S_M_Insect_Net_Weapon
+      - Item: S_M_Fishing_Weapon
+      - Item: S_M_Dragon_K_Weapon
+      - Item: S_M_Corrupt_Weapon
+      - Item: S_M_Vibration_Weapon
+      - Item: S_M_Holy_Water_Weapon
+      - Item: S_M_Scissors_Weapon
+      - Item: S_Bearers_Armor
+      - Item: S_Bearers_Shoes
+      - Item: S_Bearers_Shield
+      - Item: S_Bearers_Weapon
+      - Item: S_Bearers_Earring
+      - Item: S_Bearers_Pendent
+      - Item: S_Basis_Armor
+      - Item: S_Hallowed_Armor
+      - Item: S_Saharic_Armor
+      - Item: S_Underneath_Armor
+      - Item: S_Flam_Armor
+      - Item: S_Windy_Armor
+      - Item: S_Envenom_Armor
+      - Item: S_Damned_Armor
+      - Item: S_Geist_Armor
+      - Item: S_Divine_Armor
+      - Item: S_Hasty_Shoes
+      - Item: S_Hasty_Armor
+      - Item: S_Basis_Shield
+      - Item: S_Hallowed_Shield
+      - Item: S_Saharic_Shield
+      - Item: S_Underneath_Shield
+      - Item: S_Flam_Shield
+      - Item: S_Windy_Shield
+      - Item: S_Envenom_Shield
+      - Item: S_Damned_Shield
+      - Item: S_Geist_Shield
+      - Item: S_Divine_Shield
+      - Item: S_Expert_Shoes
+      - Item: S_Expert_Shield
+      - Item: S_Beginner_Shoes
+      - Item: S_Beginner_Shield
+      - Item: S_Rookie_Shoes
+      - Item: S_Rookie_Shield
+      - Item: S_Advanced_Shoes
+      - Item: S_Advanced_Shield
+      - Item: S_Attack_Armor
+      - Item: S_Blitz_Earring
+      - Item: S_Blitz_Pendent
+      - Item: S_ColdBolt_Armor
+      - Item: S_FireBolt_Armor
+      - Item: S_LightingBolt_Armor
+      - Item: S_EarthSpike_Armor
+      - Item: S_Enhance_Force_Weapon
+      - Item: S_Force_Weapon
+      - Item: S_Force_Earring
+      - Item: S_Force_Pendant
+      - Item: S_Enhance_Spirit_Weapon
+      - Item: S_Spirit_Weapon
+      - Item: S_Spirit_Earring
+      - Item: S_Spirit_Pendant
+      - Item: S_Blitz_Shoes
+      - Item: S_Blitz_Shield
+      - Item: S_Exceed_Weapon
+      - Item: S_Titan_Earring
+      - Item: S_Titan_Pendant
+      - Item: S_Boned_Earring
+      - Item: S_Boned_Pendant
+      - Item: S_Gigantic_Earring
+      - Item: S_Gigantic_Pendant
+      - Item: S_Caster_Shoes
+      - Item: S_Caster_Shield
+      - Item: S_Caster_Armor
+      - Item: S_Reload_Shoes
+      - Item: S_Reload_Shield
+      - Item: S_Reload_Armor
+      - Item: S_Hasty_Shoes_II
+      - Item: S_Bearer's_Pendant_II
+      - Item: S_Gemstone_Earring_II
+      - Item: S_Spellflow_Shield_II
+      - Item: S_Spiritual_Weapon_II
+      - Item: S_Malicious_Armor_II
+      - Item: S_Sigrun_Armor
+      - Item: S_Sigrun_Shield
+      - Item: S_Force_Executioner_Weapon
+      - Item: S_Spirit_Magic_Executioner_Weapon
+      - Item: S_Caster_Armor_II
+      - Item: S_Reload_Armor_II
+      - Item: S_Critical_Shield
+      - Item: S_Critical_Shoes
+      - Item: S_Magic_Compose_Armor
+      - Item: S_Gemstone_Weapon_II
+      - Item: S_Gemstone_Shield_II
+      - Item: S_Bearer's_Armor_II
+      - Item: S_Bearer's_Shoes_II
+      - Item: S_Almighty_Earring
+      - Item: S_Almighty_Pendant
+      - Item: S_All_Race_Shoes
+      - Item: S_All_Race_Shield
+      - Item: S_Blitz_Weapon
+      - Item: S_Blitz_Armor
+      - Item: S_Tempest_Shield
+      - Item: S_Tempest_Shoes
+      - Item: S_Magic_Executioner_Holy_Water_Armor
+      - Item: S_Magic_Exorcist_Corrupted_Armor
+      - Item: S_Magic_Vibration_Dragon_Killer_Armor
+      - Item: S_Magic_Scissor_Hunting_Armor
+      - Item: S_Magic_Fishing_Insect_Net_Armor
+      - Item: S_Plasterer's_Armor_II
+      - Item: S_Insomniac_Shoes_II
+      - Item: S_Peerless_Armor_II
+      - Item: S_Adulate_Shoes_II
+      - Item: S_Unfreezing_Weapon_II
+      - Item: S_Vitality_Earring_II
+      - Item: S_Neutral_Weapon_II
+      - Item: S_Uncursed_Pendant_II
+      - Item: S_Tension_Weapon
+      - Item: S_Tension_Earring
+      - Item: S_Tension_Pendant
+      - Item: S_Elegant_Weapon
+      - Item: S_Elegant_Earring
+      - Item: S_Elegant_Pendant
+      - Item: S_Healing_Shield
+      - Item: S_Healing_Shoes
+      - Item: S_Restore_Earring
+      - Item: S_Restore_Pendant
+      - Item: S_Mortal_Blow_Weapon
+      - Item: S_Mortal_Blow_Earring
+      - Item: S_Mortal_Blow_Pendant
+      - Item: S_Penetration_Shoes
+      - Item: S_Penetration_Shield
+      - Item: S_Executioner_Holy_Water_Armor
+      - Item: S_Exorcist_Corrupted_Armor
+      - Item: S_Vibration_Dragon_Killer_Armor
+      - Item: S_Scissor_Hunting_Armor
+      - Item: S_Fishing_Insect_Net_Armor
+      - Item: S_Sentimental_Weapon
+      - Item: S_Sentimental_Earring
+      - Item: S_Sentimental_Pendant
+      - Item: S_Enchanting_Weapon
+      - Item: S_Enchanting_Earring
+      - Item: S_Enchanting_Pendant
+      - Item: S_Infinity_Weapon
+      - Item: S_Physical_Shoes
+      - Item: S_Physical_Shield
+      - Item: S_Physical_Armor
+      - Item: S_Magical_Shoes
+      - Item: S_Magical_Shield
+      - Item: S_Magical_Armor
+      - Item: S_Immune_Athena_Shield
+      - Item: S_Hard_Champion_Shoes
+      - Item: S_Kingbird_Ancient_Armor
+      - Item: S_Cri_Hit_Armor
+      - Item: S_Tempest_Weapon
+      - Item: S_Tempest_Armor
+      - Item: S_Perfect_Size_Weapon
+      - Item: S_Perfect_Size_Armor
+      - Item: S_M_Exo_Co_Weapon
+      - Item: S_M_Viv_Dr_Weapon
+      - Item: S_M_Sci_Hu_Weapon
+      - Item: S_M_Fis_In_Weapon
+      - Item: S_M_Exe_Ho_Weapon
+      - Item: S_Penetration_Weapon
+      - Item: S_Penetration_Armor
+      - Item: S_Exe_Ho_Weapon
+      - Item: S_Fis_In_Weapon
+      - Item: S_Sci_Hu_Weapon
+      - Item: S_Viv_Dr_Weapon
+      - Item: S_Exo_Co_Weapon
+      - Item: S_Hasty_Weapon
+      - Item: S_Sonic_Armor
+      - Item: S_Sonic_Shield
+      - Item: S_Sonic_Shoes
+      - Item: S_Ignition_Weapon
+      - Item: S_Ignition_Pendant
+      - Item: S_Ignition_Earing
+      - Item: S_W_Breath_Armor
+      - Item: S_W_Breath_Shield
+      - Item: S_W_Breath_Shoes
+      - Item: S_F_Breath_Weapon
+      - Item: S_F_Breath_Pendant
+      - Item: S_F_Breath_Earing
+      - Item: S_Cluster_Armor
+      - Item: S_Cluster_Shield
+      - Item: S_Cluster_Shoes
+      - Item: S_Aimed_Weapon
+      - Item: S_Aimed_Pendant
+      - Item: S_Aimed_Earing
+      - Item: S_Arrow_Armor
+      - Item: S_Arrow_Shield
+      - Item: S_Arrow_Shoes
+      - Item: S_Shooting_Weapon
+      - Item: S_Shooting_Pendant
+      - Item: S_Shooting_Earing
+      - Item: S_Tornado_Armor
+      - Item: S_Tornado_Shield
+      - Item: S_Tornado_Shoes
+      - Item: S_Boomerang_Weapon
+      - Item: S_Boomerang_Pendant
+      - Item: S_Boomerang_Earing
+      - Item: S_Vulcan_Armor
+      - Item: S_Vulcan_Shield
+      - Item: S_Vulcan_Shoes
+      - Item: S_Arms_Weapon
+      - Item: S_Arms_Pendant
+      - Item: S_Arms_Earing
+    Result: |
+      callfunc("F_Lapine_Shadow_Random_Mix", .@opts[0], .@vals[0]);
+      .@params[0] = 0;
+      getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  - Item: Boost_Up_1
+    NotSocketEnchantItem: false
+    TargetItem:
+      - Item: Attacker_Booster_Plate_
+      - Item: Attacker_Booster_Manteau_
+      - Item: Attacker_Booster_Greaves_
+      - Item: Ranger_Booster_Suits_
+      - Item: Ranger_Booster_Manteau_
+      - Item: Ranger_Booster_Boots_
+      - Item: Elemental_Booster_Robe_
+      - Item: Elemental_Booster_Muffler_
+      - Item: Elemental_Booster_Shoes_
+      - Item: Defender_Booster_Robe_
+      - Item: Defender_Booster_Muffler_
+      - Item: Defender_Booster_Shoes_
+    Result: |
+      callfunc("F_Lapine_Boost_Up_1", .@refine);
+      getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
+  - Item: Boost_Up_2
+    NotSocketEnchantItem: false
+    TargetItem:
+      - Item: Boost_TH_Sword
+      - Item: Boost_Katar
+      - Item: Boost_Mace
+      - Item: Boost_Staff
+      - Item: Boost_Bow
+      - Item: Boost_Spear
+      - Item: Boost_Sword
+      - Item: Boost_Dagger
+      - Item: Boost_Spellbook
+      - Item: Boost_Guitar
+      - Item: Boost_Knuckles
+      - Item: Boost_Whip
+      - Item: Boost_Nindo
+      - Item: Boost_Gatling
+      - Item: Boost_Axe
+      - Item: Boost_Book
+      - Item: Boost_Rod
+      - Item: Boost_Foxtail
+    Result: |
+      callfunc("F_Lapine_Boost_Up_2", .@refine);
+      getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
+  - Item: Metal_Smelting_Ticket
+    NotSocketEnchantItem: false
+    TargetItem:
+      - Item: Metal_Katar
+      - Item: Metal_Two_Handed_Axe
+      - Item: Metal_Lance
+      - Item: Metal_Book
+      - Item: Metal_Staff
+      - Item: Metal_Dagger
+      - Item: Metal_Mace
+      - Item: Metal_Bow
+      - Item: Metal_Two_Hand_Sword
+      - Item: Metal_Revolver
+      - Item: Huuma_Metal_Shuriken
+      - Item: Metal_Foxtail
+    Result: |
+      callfunc("F_Lapine_Metal_Rifine_Ticket", .@refine);
+      getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
+  #- Item: Noblesse_Rifine_Ticket
+  #  TargetItem:
+    #  - Item: Noblesse_Breath_Armor
+    #  - Item: Noblesse_Knight_Armor
+    #  - Item: Noblesse_Spear_Armor
+    #  - Item: Noblesse_Genesis_Armor
+    #  - Item: Noblesse_Sharp_Suit
+    #  - Item: Noblesse_Aim_Suit
+    #  - Item: Noblesse_Severe_Suit
+    #  - Item: Noblesse_Reverb_Suit
+    #  - Item: Noblesse_Adora_Robe
+    #  - Item: Noblesse_Duple_Robe
+    #  - Item: Noblesse_Tonado_Armor
+    #  - Item: Noblesse_Vulcan_Armor
+    #  - Item: Noblesse_Kart_Suit
+    #  - Item: Noblesse_Kart_Suit2
+    #  - Item: Noblesse_Rolling_Suit
+    #  - Item: Noblesse_Assasin_Suit
+    #  - Item: Noblesse_Fatal_Suit
+    #  - Item: Noblesse_Stalker_Suit
+    #  - Item: Noblesse_Picky_Robe
+    #  - Item: Noblesse_Carrot_Robe
+    #  - Item: Noblesse_Trip_Suit
+    #  - Item: Noblesse_Firerain_Suit
+    #  - Item: Noblesse_Crimson_Robe
+    #  - Item: Noblesse_Frost_Robe
+    #  - Item: Noblesse_Psychic_Robe
+    #  - Item: Noblesse_Dust_Robe
+    #  - Item: Noblesse_Sun_Suit
+    #  - Item: Noblesse_Moon_Suit
+    #  - Item: Noblesse_Ninja_Suit
+    #  - Item: Noblesse_Kunai_Suit
+    #  - Item: Noblesse_Swhoo_Robe
+    #  - Item: Noblesse_Explosion_Robe
+    #  - Item: Noblesse_Knuckle_Suit
+    #  - Item: Noblesse_Tiger_Suit
+    #  - Item: Noblesse_Snovice_Suit
+    #  - Item: Noblesse_Snovice_Robe
+    #  - Item: Noblesse_Attack_Boots
+    #  - Item: Noblesse_Magic_Boots
+    #  - Item: Noblesse_Attack_Manteau
+    #  - Item: Noblesse_Magic_Manteau
+  #  Result: |
+  #    callfunc("F_Lapine_Noblesse_Refine_Ticket", .@refine);
+  #    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
+  #- Item: Imperial_Rifine_Ticket
+  #  TargetItem:
+    #  - Item: Imperial_Breath_Armor
+    #  - Item: Imperial_Knight_Armor
+    #  - Item: Imperial_Spear_Armor
+    #  - Item: Imperial_Genesis_Armor
+    #  - Item: Imperial_Sharp_Suit
+    #  - Item: Imperial_Aim_Suit
+    #  - Item: Imperial_Severe_Suit
+    #  - Item: Imperial_Reverb_Suit
+    #  - Item: Imperial_Adora_Robe
+    #  - Item: Imperial_Duple_Robe
+    #  - Item: Imperial_Tonado_Armor
+    #  - Item: Imperial_Vulcan_Armor
+    #  - Item: Imperial_Kart_Suit
+    #  - Item: Imperial_Kart_Suit2
+    #  - Item: Imperial_Rolling_Suit
+    #  - Item: Imperial_Assasin_Suit
+    #  - Item: Imperial_Fatal_Suit
+    #  - Item: Imperial_Stalker_Suit
+    #  - Item: Imperial_Picky_Robe
+    #  - Item: Imperial_Carrot_Robe
+    #  - Item: Imperial_Trip_Suit
+    #  - Item: Imperial_Firerain_Suit
+    #  - Item: Imperial_Crimson_Robe
+    #  - Item: Imperial_Frost_Robe
+    #  - Item: Imperial_Psychic_Robe
+    #  - Item: Imperial_Dust_Robe
+    #  - Item: Imperial_Sun_Suit
+    #  - Item: Imperial_Moon_Suit
+    #  - Item: Imperial_Ninja_Suit
+    #  - Item: Imperial_Kunai_Suit
+    #  - Item: Imperial_Swhoo_Robe
+    #  - Item: Imperial_Explosion_Robe
+    #  - Item: Imperial_Knuckle_Suit
+    #  - Item: Imperial_Tiger_Suit
+    #  - Item: Imperial_Snovice_Suit
+    #  - Item: Imperial_Snovice_Robe
+    #  - Item: Imperial_Attack_Boots
+    #  - Item: Imperial_Magic_Boots
+    #  - Item: Imperial_Attack_Manteau
+    #  - Item: Imperial_Magic_Manteau
+  #  Result: |
+  #    callfunc("F_Lapine_Imperial_Refine_Ticket", .@refine);
+  #    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
+  #- Item: Grace_Rifine_Ticket
+  #  TargetItem:
+    #  - Item: Grace_Breath_Armor
+    #  - Item: Grace_Knight_Armor
+    #  - Item: Grace_Spear_Armor
+    #  - Item: Grace_Genesis_Armor
+    #  - Item: Grace_Sharp_Suit
+    #  - Item: Grace_Aim_Suit
+    #  - Item: Grace_Severe_Suit
+    #  - Item: Grace_Reverb_Suit
+    #  - Item: Grace_Adora_Robe
+    #  - Item: Grace_Duple_Robe
+    #  - Item: Grace_Tonado_Armor
+    #  - Item: Grace_Vulcan_Armor
+    #  - Item: Grace_Kart_Suit
+    #  - Item: Grace_Kart_Suit2
+    #  - Item: Grace_Rolling_Suit
+    #  - Item: Grace_Assasin_Suit
+    #  - Item: Grace_Fatal_Suit
+    #  - Item: Grace_Stalker_Suit
+    #  - Item: Grace_Picky_Robe
+    #  - Item: Grace_Carrot_Robe
+    #  - Item: Grace_Trip_Suit
+    #  - Item: Grace_Firerain_Suit
+    #  - Item: Grace_Crimson_Robe
+    #  - Item: Grace_Frost_Robe
+    #  - Item: Grace_Psychic_Robe
+    #  - Item: Grace_Dust_Robe
+    #  - Item: Grace_Sun_Suit
+    #  - Item: Grace_Moon_Suit
+    #  - Item: Grace_Ninja_Suit
+    #  - Item: Grace_Kunai_Suit
+    #  - Item: Grace_Swhoo_Robe
+    #  - Item: Grace_Explosion_Robe
+    #  - Item: Grace_Knuckle_Suit
+    #  - Item: Grace_Tiger_Suit
+    #  - Item: Grace_Snovice_Suit
+    #  - Item: Grace_Snovice_Robe
+    #  - Item: Grace_Attack_Boots
+    #  - Item: Grace_Magic_Boots
+    #  - Item: Grace_Attack_Manteau
+    #  - Item: Grace_Magic_Manteau
+  #  Result: |
+  #    callfunc("F_Lapine_Grace_Refine_Ticket", .@refine);
+  #    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
+  #- Item: Imperial_Convert1
+  #  TargetItem:
+    #  - Item: Imperial_Attack_Manteau
+    #  - Item: Imperial_Magic_Manteau
+  #  Result: |
+  #    callfunc("F_Lapine_Imperial_Convert1", .@opts[0], .@vals[0]);
+  #    .@params[0] = 0;
+  #    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  #- Item: Imperial_Convert2
+  #  TargetItem:
+    #  - Item: Imperial_Attack_Manteau
+    #  - Item: Imperial_Magic_Manteau
+  #  Result: |
+  #    callfunc("F_Lapine_Imperial_Convert2", .@opts[0], .@vals[0]);
+  #    .@params[0] = 0;
+  #    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  #- Item: Imperial_Convert3
+  #  TargetItem:
+    #  - Item: Imperial_Breath_Armor
+    #  - Item: Imperial_Knight_Armor
+    #  - Item: Imperial_Spear_Armor
+    #  - Item: Imperial_Genesis_Armor
+    #  - Item: Imperial_Sharp_Suit
+    #  - Item: Imperial_Aim_Suit
+    #  - Item: Imperial_Severe_Suit
+    #  - Item: Imperial_Reverb_Suit
+    #  - Item: Imperial_Adora_Robe
+    #  - Item: Imperial_Duple_Robe
+    #  - Item: Imperial_Tonado_Armor
+    #  - Item: Imperial_Vulcan_Armor
+    #  - Item: Imperial_Kart_Suit
+    #  - Item: Imperial_Kart_Suit2
+    #  - Item: Imperial_Rolling_Suit
+    #  - Item: Imperial_Assasin_Suit
+    #  - Item: Imperial_Fatal_Suit
+    #  - Item: Imperial_Stalker_Suit
+    #  - Item: Imperial_Picky_Robe
+    #  - Item: Imperial_Carrot_Robe
+    #  - Item: Imperial_Trip_Suit
+    #  - Item: Imperial_Firerain_Suit
+    #  - Item: Imperial_Crimson_Robe
+    #  - Item: Imperial_Frost_Robe
+    #  - Item: Imperial_Psychic_Robe
+    #  - Item: Imperial_Dust_Robe
+    #  - Item: Imperial_Sun_Suit
+    #  - Item: Imperial_Moon_Suit
+    #  - Item: Imperial_Ninja_Suit
+    #  - Item: Imperial_Kunai_Suit
+    #  - Item: Imperial_Swhoo_Robe
+    #  - Item: Imperial_Explosion_Robe
+    #  - Item: Imperial_Knuckle_Suit
+    #  - Item: Imperial_Tiger_Suit
+    #  - Item: Imperial_Snovice_Suit
+    #  - Item: Imperial_Snovice_Robe
+  #  Result: |
+  #    callfunc("F_Lapine_Imperial_Convert3", .@opts[0], .@vals[0]);
+  #    .@params[0] = 0;
+  #    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  #- Item: Imperial_Convert4
+  #  TargetItem:
+    #  - Item: Imperial_Breath_Armor
+    #  - Item: Imperial_Knight_Armor
+    #  - Item: Imperial_Spear_Armor
+    #  - Item: Imperial_Genesis_Armor
+    #  - Item: Imperial_Sharp_Suit
+    #  - Item: Imperial_Aim_Suit
+    #  - Item: Imperial_Severe_Suit
+    #  - Item: Imperial_Reverb_Suit
+    #  - Item: Imperial_Adora_Robe
+    #  - Item: Imperial_Duple_Robe
+    #  - Item: Imperial_Tonado_Armor
+    #  - Item: Imperial_Vulcan_Armor
+    #  - Item: Imperial_Kart_Suit
+    #  - Item: Imperial_Kart_Suit2
+    #  - Item: Imperial_Rolling_Suit
+    #  - Item: Imperial_Assasin_Suit
+    #  - Item: Imperial_Fatal_Suit
+    #  - Item: Imperial_Stalker_Suit
+    #  - Item: Imperial_Picky_Robe
+    #  - Item: Imperial_Carrot_Robe
+    #  - Item: Imperial_Trip_Suit
+    #  - Item: Imperial_Firerain_Suit
+    #  - Item: Imperial_Crimson_Robe
+    #  - Item: Imperial_Frost_Robe
+    #  - Item: Imperial_Psychic_Robe
+    #  - Item: Imperial_Dust_Robe
+    #  - Item: Imperial_Sun_Suit
+    #  - Item: Imperial_Moon_Suit
+    #  - Item: Imperial_Ninja_Suit
+    #  - Item: Imperial_Kunai_Suit
+    #  - Item: Imperial_Swhoo_Robe
+    #  - Item: Imperial_Explosion_Robe
+    #  - Item: Imperial_Knuckle_Suit
+    #  - Item: Imperial_Tiger_Suit
+    #  - Item: Imperial_Snovice_Suit
+    #  - Item: Imperial_Snovice_Robe
+  #  Result: |
+  #    callfunc("F_Lapine_Imperial_Convert4", .@opts[0], .@vals[0]);
+  #    .@params[0] = 0;
+  #    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  #- Item: Grace_Convert1
+  #  TargetItem:
+    #  - Item: Grace_Attack_Manteau
+    #  - Item: Grace_Magic_Manteau
+  #  Result: |
+  #    callfunc("F_Lapine_Grace_Convert1", .@opts[0], .@vals[0]);
+  #    .@params[0] = 0;
+  #    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  #- Item: Grace_Convert2
+  #  TargetItem:
+    #  - Item: Grace_Attack_Manteau
+    #  - Item: Grace_Magic_Manteau
+  #  Result: |
+  #    callfunc("F_Lapine_Grace_Convert2", .@opts[0], .@vals[0]);
+  #    .@params[0] = 0;
+  #    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  #- Item: Grace_Convert3
+  #  TargetItem:
+    #  - Item: Grace_Breath_Armor
+    #  - Item: Grace_Knight_Armor
+    #  - Item: Grace_Spear_Armor
+    #  - Item: Grace_Genesis_Armor
+    #  - Item: Grace_Sharp_Suit
+    #  - Item: Grace_Aim_Suit
+    #  - Item: Grace_Severe_Suit
+    #  - Item: Grace_Reverb_Suit
+    #  - Item: Grace_Adora_Robe
+    #  - Item: Grace_Duple_Robe
+    #  - Item: Grace_Tonado_Armor
+    #  - Item: Grace_Vulcan_Armor
+    #  - Item: Grace_Kart_Suit
+    #  - Item: Grace_Kart_Suit2
+    #  - Item: Grace_Rolling_Suit
+    #  - Item: Grace_Assasin_Suit
+    #  - Item: Grace_Fatal_Suit
+    #  - Item: Grace_Stalker_Suit
+    #  - Item: Grace_Picky_Robe
+    #  - Item: Grace_Carrot_Robe
+    #  - Item: Grace_Trip_Suit
+    #  - Item: Grace_Firerain_Suit
+    #  - Item: Grace_Crimson_Robe
+    #  - Item: Grace_Frost_Robe
+    #  - Item: Grace_Psychic_Robe
+    #  - Item: Grace_Dust_Robe
+    #  - Item: Grace_Sun_Suit
+    #  - Item: Grace_Moon_Suit
+    #  - Item: Grace_Ninja_Suit
+    #  - Item: Grace_Kunai_Suit
+    #  - Item: Grace_Swhoo_Robe
+    #  - Item: Grace_Explosion_Robe
+    #  - Item: Grace_Knuckle_Suit
+    #  - Item: Grace_Tiger_Suit
+    #  - Item: Grace_Snovice_Suit
+    #  - Item: Grace_Snovice_Robe
+  #  Result: |
+  #    callfunc("F_Lapine_Grace_Convert3", .@opts[0], .@vals[0]);
+  #    .@params[0] = 0;
+  #    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  #- Item: Grace_Convert4
+  #  TargetItem:
+    #  - Item: Grace_Breath_Armor
+    #  - Item: Grace_Knight_Armor
+    #  - Item: Grace_Spear_Armor
+    #  - Item: Grace_Genesis_Armor
+    #  - Item: Grace_Sharp_Suit
+    #  - Item: Grace_Aim_Suit
+    #  - Item: Grace_Severe_Suit
+    #  - Item: Grace_Reverb_Suit
+    #  - Item: Grace_Adora_Robe
+    #  - Item: Grace_Duple_Robe
+    #  - Item: Grace_Tonado_Armor
+    #  - Item: Grace_Vulcan_Armor
+    #  - Item: Grace_Kart_Suit
+    #  - Item: Grace_Kart_Suit2
+    #  - Item: Grace_Rolling_Suit
+    #  - Item: Grace_Assasin_Suit
+    #  - Item: Grace_Fatal_Suit
+    #  - Item: Grace_Stalker_Suit
+    #  - Item: Grace_Picky_Robe
+    #  - Item: Grace_Carrot_Robe
+    #  - Item: Grace_Trip_Suit
+    #  - Item: Grace_Firerain_Suit
+    #  - Item: Grace_Crimson_Robe
+    #  - Item: Grace_Frost_Robe
+    #  - Item: Grace_Psychic_Robe
+    #  - Item: Grace_Dust_Robe
+    #  - Item: Grace_Sun_Suit
+    #  - Item: Grace_Moon_Suit
+    #  - Item: Grace_Ninja_Suit
+    #  - Item: Grace_Kunai_Suit
+    #  - Item: Grace_Swhoo_Robe
+    #  - Item: Grace_Explosion_Robe
+    #  - Item: Grace_Knuckle_Suit
+    #  - Item: Grace_Tiger_Suit
+    #  - Item: Grace_Snovice_Suit
+    #  - Item: Grace_Snovice_Robe
+  #  Result: |
+  #    callfunc("F_Lapine_Grace_Convert4", .@opts[0], .@vals[0]);
+  #    .@params[0] = 0;
+  #    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  #- Item: Ein_Ddbox
+  #  TargetItem:
+    #  - Item: Ein_BHSWORD
+    #  - Item: Ein_BHSTAFF
+    #  - Item: Ein_BHHuuma
+    #  - Item: Ein_BHKATAR
+    #  - Item: Ein_BHAXE
+    #  - Item: Ein_BHBOW
+    #  - Item: Ein_1HKNUCK
+    #  - Item: Ein_1HHAMMER
+    #  - Item: Ein_1HWAND
+    #  - Item: Ein_1HWHIP
+    #  - Item: Ein_1HBOOK
+    #  - Item: Ein_1HDAGGER
+    #  - Item: Ein_1HMAGGER
+    #  - Item: Ein_1HSPEAR
+    #  - Item: Ein_1HLUTE
+    #  - Item: Ein_1HSWORD
+    #  - Item: Ein_1HGUN
+    #  - Item: Ein_1H_Foxtail
+  #  Result: |
+  #    # TODO
+  #    callfunc("F_Lapine_Ein_Ddbox", .@opts[0], .@vals[0]);
+  #    .@params[0] = 0;
+  #    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  #- Item: Ein_Ddbox2
+  #  TargetItem:
+    #  - Item: Ein_BHSWORD
+    #  - Item: Ein_BHSTAFF
+    #  - Item: Ein_BHHuuma
+    #  - Item: Ein_BHKATAR
+    #  - Item: Ein_BHAXE
+    #  - Item: Ein_BHBOW
+    #  - Item: Ein_1HKNUCK
+    #  - Item: Ein_1HHAMMER
+    #  - Item: Ein_1HWAND
+    #  - Item: Ein_1HWHIP
+    #  - Item: Ein_1HBOOK
+    #  - Item: Ein_1HDAGGER
+    #  - Item: Ein_1HMAGGER
+    #  - Item: Ein_1HSPEAR
+    #  - Item: Ein_1HLUTE
+    #  - Item: Ein_1HSWORD
+    #  - Item: Ein_1HGUN
+    #  - Item: Ein_1H_Foxtail
+  #  Result: |
+  #    # TODO
+  #    callfunc("F_Lapine_Ein_Ddbox2", .@opts[0], .@vals[0]);
+  #    .@params[0] = 0;
+  #    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  #- Item: Abyss_Ddbox
+  #  TargetItem:
+    #  - Item: DragonA_Red
+    #  - Item: DragonA_Green
+    #  - Item: DragonA_Gold
+    #  - Item: DragonA_Purple
+    #  - Item: DragonA_Blue
+    #  - Item: DragonA_Silver
+  #  Result: |
+  #    # TODO
+  #    callfunc("F_Lapine_Abyss_Ddbox", .@opts[0], .@vals[0]);
+  #    .@params[0] = 0;
+  #    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  #- Item: Abyss_Ddbox2
+  #  TargetItem:
+    #  - Item: DragonA_Red
+    #  - Item: DragonA_Green
+    #  - Item: DragonA_Gold
+    #  - Item: DragonA_Purple
+    #  - Item: DragonA_Blue
+    #  - Item: DragonA_Silver
+  #  Result: |
+  #    # TODO
+  #    callfunc("F_Lapine_Abyss_Ddbox2", .@opts[0], .@vals[0]);
+  #    .@params[0] = 0;
+  #    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  #- Item: Abyss_Ddbox3
+  #  TargetItem:
+    #  - Item: Drag_Manteau
+  #  Result: |
+  #    # TODO
+  #    callfunc("F_Lapine_Abyss_Ddbox3", .@opts[0], .@vals[0]);
+  #    .@params[0] = 0;
+  #    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+  #- Item: Abyss_Ddbox4
+  #  TargetItem:
+    #  - Item: Dragon_Boots
+  #  Result: |
+  #    # TODO
+  #    callfunc("F_Lapine_Abyss_Ddbox4", .@opts[0], .@vals[0]);
+  #    .@params[0] = 0;
+  #    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);

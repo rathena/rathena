@@ -27,12 +27,19 @@ const std::string ItemSynthesisDatabase::getDefaultLocation() {
  * @return count of successfully parsed rows
  */
 uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
-	t_itemid id;
+	std::string synthesis_item_name;
 
-	if (!this->asUInt32(node, "Id", id))
+	if (!this->asString(node, "Item", synthesis_item_name))
 		return 0;
 
-	std::shared_ptr<s_item_synthesis_db> entry = this->find(id);
+	item_data *item = itemdb_search_aegisname(synthesis_item_name.c_str());
+
+	if (item == nullptr) {
+		this->invalidWarning(node["Item"], "Item name for Synthesis Box %s does not exist.\n", synthesis_item_name.c_str());
+		return 0;
+	}
+
+	std::shared_ptr<s_item_synthesis_db> entry = this->find(item->nameid);
 	bool exists = entry != nullptr;
 
 	if (!exists) {
@@ -40,7 +47,7 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		entry = std::make_shared<s_item_synthesis_db>();
-		entry->id = id;
+		entry->id = item->nameid;
 	}
 
 	if (this->nodeExists(node, "SourceNeeded")) {
@@ -59,7 +66,7 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (exists && this->nodeExists(node, "ClearSourceItem")) {
-		ShowNotice("item_synthesis: Cleared all items in SourceItem. Synthesis ID: %d\n", id);
+		ShowNotice("item_synthesis: Cleared all items in SourceItem. Synthesis: %s (%u)\n", item->name, item->nameid);
 		if (!entry->sources.empty())
 			entry->sources.clear();
 	}
@@ -71,19 +78,25 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 			entry->sources.reserve(entry->source_needed);
 
 		for (const YAML::Node &source : sourceNode) {
+			std::string source_item_name;
+
+			if (!this->asString(source, "Item", source_item_name))
+				continue;
+
+			item_data *source_it = itemdb_search_aegisname(source_item_name.c_str());
+
+			if (source_it == nullptr) {
+				this->invalidWarning(node["SourceItem"], "Source item name %s does not exist, skipping.\n", source_item_name.c_str());
+				continue;
+			}
+
 			s_item_synthesis_source source_item = {};
 
-			if (!this->asUInt32(source, "Item", source_item.nameid))
-				continue;
-
-			/*if (!itemdb_exists(source_item.nameid)) {
-				this->invalidWarning(sourceNode, "Unknown item with ID %u.\n", source_item.nameid);
-				continue;
-			}*/
+			source_item.nameid = source_it->nameid;
 
 			if (exists && this->nodeExists(source, "Remove")) {
 				entry->sources.erase(std::remove_if(entry->sources.begin(), entry->sources.end(), [&source_item](const s_item_synthesis_source &x) { return x.nameid == source_item.nameid; }));
-				ShowNotice("item_synthesis: Removed '%u' from SourceItem. Synthesis ID: %u\n", source_item.nameid, id);
+				ShowNotice("item_synthesis: Removed %s (%u) from SourceItem. Synthesis: %s (%u)\n", source_it->name, source_item.nameid, item->name, item->nameid);
 				continue;
 			}
 
@@ -111,8 +124,8 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Reward", script_str))
 			return 0;
 
-		if (!(code = parse_script(script_str.c_str(), this->getCurrentFile().c_str(), id, SCRIPT_IGNORE_EXTERNAL_BRACKETS))) {
-			this->invalidWarning(node["Reward"], "Invalid item script for 'Reward'.\n");
+		if (!(code = parse_script(script_str.c_str(), this->getCurrentFile().c_str(), item->nameid, SCRIPT_IGNORE_EXTERNAL_BRACKETS))) {
+			this->invalidWarning(node["Reward"], "Invalid Reward item script.\n");
 			return 0;
 		}
 
@@ -123,7 +136,7 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (!exists)
-		this->put(id, entry);
+		this->put(item->nameid, entry);
 
 	return 1;
 }

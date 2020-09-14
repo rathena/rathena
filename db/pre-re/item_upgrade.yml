@@ -1,20 +1,37 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2020 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
 ###########################################################################
-# 
 # Item Upgrade Database
+###########################################################################
 #
-# This feature need a sync client file: LapineUpgradeBox.lub
+# Item Upgrade Settings
 #
 ###########################################################################
-# - Id:                   # (int) Item ID of upgrade box
-#   NeedRefineMin:        # (int) Minimum refine level needed for target item (default: 0)
-#   NeedRefineMax:        # (int) Maximum refine level needed for target item (default: MAX_REFINE)
-#   NeedOptionNumMin:     # (int) Minimum random option that target item has (default: 0)
-#   NotSocketEnchantItem: # (bool) Target item must not has enchant stone (default: true)
-#   TargetItem:           # List of possible item to be upgraded
-#     - Item:             # (int) Target's Item ID
-#       Remove:           # (optional, any) Remove this item from the list while importing
-#   Result:               # (string) Script on upgrade success
-#   ClearTargetItem:      # (optional, any) Can be used to clear TargetItem list while importing
+# - Item                  # Item name of Upgrade Box
+#   NeedRefineMin         # Minimum refine level needed for target item (Default: 0)
+#   NeedRefineMax         # Maximum refine level needed for target item (Default: MAX_REFINE)
+#   NeedOptionNumMin      # Minimum random option that target item has (Default: 0)
+#   NotSocketEnchantItem  # Target item must not have enchant stone (Default: true)
+#   TargetItem            # List of possible item to be upgraded
+#     - Item              # Target item name
+#       Remove            # Remove this item from the list while importing (Default: false) (optional)
+#   Result                # Script executed on successful upgrade
+#   ClearTargetItem       # Used to clear TargetItem list while importing (Default: false) (optional)
 ###########################################################################
 
 Header:

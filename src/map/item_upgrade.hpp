@@ -18,7 +18,7 @@
 
 struct s_item_upgrade_db {
 	t_itemid id;
-	std::vector<uint32> targets;
+	std::vector<t_itemid> targets;
 	script_code *result;
 	uint16 source_refine_min;
 	uint16 source_refine_max;

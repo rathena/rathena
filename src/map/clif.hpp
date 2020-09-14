@@ -1166,7 +1166,7 @@ void clif_pet_evolution_result( struct map_session_data* sd, e_pet_evolution_res
 
 void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16 skill_lv, int target_id );
 
-bool clif_synthesisui_open(struct map_session_data *sd, unsigned int itemid);
-bool clif_lapine_upgrade_open(struct map_session_data *sd, unsigned int itemid);
+bool clif_synthesisui_open(struct map_session_data *sd, t_itemid itemid);
+bool clif_lapine_upgrade_open(struct map_session_data *sd, t_itemid itemid);
 
 #endif /* CLIF_HPP */
