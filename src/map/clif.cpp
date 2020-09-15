@@ -20395,7 +20395,7 @@ void clif_parse_merge_item_cancel(int fd, struct map_session_data* sd) {
  * type: ITEMOBTAIN_TYPE_BOXITEM & ITEMOBTAIN_TYPE_MONSTER_ITEM "[playername] ... [sourcename] ... [itemname]" -> MsgStringTable[1629]
  * type: ITEMOBTAIN_TYPE_NPC "[playername] ... [itemname]" -> MsgStringTable[1870]
  **/
-void clif_broadcast_obtain_special_item( const char *char_name, t_itemid nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type ){
+void clif_broadcast_obtain_special_item( const char *char_name, t_itemid nameid, t_itemid container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type ){
 	char name[NAME_LENGTH];
 
 	if( battle_config.broadcast_hide_name ){
