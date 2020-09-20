@@ -7692,7 +7692,7 @@
 13495,Honglyun's_Sword__,Honglyun's Sword,5,1,,0,160,,1,2,0x00040000,56,2,2,4,70,1,2,{ .@r = getrefine(); bonus bBaseAtk,10*(.@r/2); bonus bLongAtkRate,4*(.@r/3); if(.@r>=7){ bonus2 bSkillUseSPrate,"GN_CARTCANNON",10; } if(.@r>=9){ bonus2 bSkillAtk,"GN_CARTCANNON",15; } },{},{}
 13497,Edge_,Edge,5,1,,1200,60,,1,1,0x000654E2,63,2,2,4,60,1,2,{ bonus bHit,-40; bonus3 bAddEffOnSkill,"RG_RAID",Eff_Bleeding,100; bonus2 bSkillAtk,"RG_RAID",50; .@s = getskilllv("SM_SWORD"); bonus bHit,3*.@s; bonus2 bAddClass,Class_All,2; .@r = getrefine(); if(.@r>=9){ bonus bHit,2*.@s; bonus2 bAddClass,Class_All,2; } },{},{}
 13498,Nagan_,Nagan,5,1,,500,120,,1,1,0x000654E2,63,2,2,4,60,1,2,{ .@b = readparam(bStr); bonus bCritical,1*(.@b/10); bonus bCritAtkRate,2; skill "TF_DOUBLE",5; .@r = getrefine(); if(.@r>=1){ bonus bCritAtkRate,1*(.@b/10); } },{},{}
-13499,Kradenets,Kradenets,5,1,,1500,180:160,,1,1,0x000654E2,56,2,2,4,130,1,2,{ .@r = getrefine(); .@rate = 1+.@r; bonus3 bAutoSpellWhenHit,"SO_PSYCHIC_WAVE",3,.@rate; if(.@r>=10){ bonus bFixedCastrate,-70; } },{},{}
+13499,Kladenets,Kladenets,5,1,,1500,180:160,,1,1,0x000654E2,56,2,2,4,130,1,2,{ .@r = getrefine(); .@rate = 1+.@r; bonus3 bAutoSpellWhenHit,"SO_PSYCHIC_WAVE",3,.@rate; if(.@r>=10){ bonus bFixedCastrate,-70; } },{},{}
 13500,Insurance60_Package,Life Insurrance Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14500,10; },{},{}
 13501,Assorted_Scroll_Box,Experience Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 13502,Drooping_Kitty_Box,Refined Drooping Cat Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ rentitem 5279,604800; },{},{}
