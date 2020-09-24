@@ -878,7 +878,7 @@ int char_mmo_gender( const struct char_session_data *sd, const struct mmo_charst
 				ARR_FIND( 0, fd_max, i, session[i] && ( sd = (struct char_session_data*)session[i]->session_data ) && sd->account_id == p->account_id );
 
 				if( i >= fd_max ){
-					ShowWarning( "Session '%c' for character '%s' (CID: %d, AID: %d), defaulting to male...\n", sex, p->name, p->char_id, p->account_id );
+					ShowWarning( "Session was not found for character '%s' (CID: %d, AID: %d), defaulting gender to male...\n", p->name, p->char_id, p->account_id );
 					return SEX_MALE;
 				}
 			}
