@@ -491,7 +491,7 @@ glast_01,184,283,4	script	Dark magic master#pa082	1_F_01,{
 	specialeffect2 EF_REPAIRWEAPON;
 	mes "[Hugin's Magician]";
 	mes "Trying for " + .@string$;
-	getitem2 .@equip_id,1,1,.@equip_refine,0,0,0,.@card[2],.@card[3];
+	getitem2 .@equip_id,1,1,.@equip_refine,0,.@card[0],0,.@card[2],.@card[3];
 	close;
 }
 
