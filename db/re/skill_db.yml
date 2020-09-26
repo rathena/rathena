@@ -19125,9 +19125,17 @@ Body:
         Time: 1000
       - Level: 5
         Time: 500
-    Cooldown: 700
-      - Level: 5
+    Cooldown:
+      - Level: 1
+        Time: 550
+      - Level: 2
         Time: 500
+      - Level: 3
+        Time: 450
+      - Level: 4
+        Time: 400
+      - Level: 5
+        Time: 350
     FixedCastTime: -1
     CastDelayFlags:
       IgnoreStatus: true
