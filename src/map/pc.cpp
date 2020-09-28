@@ -9567,9 +9567,6 @@ void pc_setoption(struct map_session_data *sd,int type, int subtype)
 		}
 		pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
 
-		if (skill_id > 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO))
-			status_change_end(&sd->bl,statuses[i],INVALID_TIMER);
-
 		pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
 		sc_start(&sd->bl, &sd->bl, SC_MADOGEAR, 100, static_cast<int>(subtype), INFINITE_TICK);
 	} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
