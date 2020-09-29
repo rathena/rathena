@@ -15883,6 +15883,9 @@ void clif_Mail_read( struct map_session_data *sd, int mail_id ){
 				mailitem->bindOnEquip = item->bound ? 2 : data->flag.bindOnEquip ? 1 : 0;
 				clif_addcards( &mailitem->slot, item );
 				clif_add_random_options( mailitem->optionData, item );
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+				mailitem->enchantgrade = 0;
+#endif
 
 				offset += sizeof( struct mail_item );
 				count++;

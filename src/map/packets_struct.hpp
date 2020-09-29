@@ -303,7 +303,11 @@ enum packet_headers {
 #endif // PACKETVER >= 20141022
 	/* Rodex */
 	rodexicon = 0x09E7,
+#if PACKETVER_MAIN_NUM >= 20191030 || PACKETVER_RE_NUM >= 20191030 || PACKETVER_ZERO_NUM >= 20191106
+	rodexread = 0x0B63,
+#else
 	rodexread = 0x09EB,
+#endif
 	rodexwriteresult = 0x09ED,
 	rodexnextpage = 0x09F0,
 	rodexgetzeny = 0x09F2,
@@ -1586,6 +1590,9 @@ struct mail_item {
 	uint16 viewSprite;
 	uint16 bindOnEquip;
 	struct ItemOptions optionData[MAX_ITEM_OPTIONS];
+#if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	uint8 enchantgrade;
+#endif
 } __attribute__((packed));
 
 struct PACKET_CZ_REQ_OPEN_WRITE_MAIL {

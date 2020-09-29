@@ -2257,7 +2257,7 @@
 	parseable_packet(0x09E8,11,clif_parse_Mail_refreshinbox,2,3); // CZ_OPEN_MAILBOX
 	parseable_packet(0x09E9,2,clif_parse_dull,0); // CZ_CLOSE_MAILBOX
 	parseable_packet(0x09EA,11,clif_parse_Mail_read,2,3); // CZ_REQ_READ_MAIL
-	packet(0x09EB,-1); // ZC_ACK_READ_MAIL
+	packet(rodexread,-1); // ZC_ACK_READ_MAIL
 	parseable_packet(0x09EC,-1,clif_parse_Mail_send,2,4,28,52,60,62,64); // CZ_REQ_WRITE_MAIL
 	packet(0x09ED,3); // ZC_ACK_WRITE_MAIL
 	parseable_packet(0x09EE,11,clif_parse_Mail_refreshinbox,2,3); // CZ_REQ_NEXT_MAIL_LIST
