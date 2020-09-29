@@ -1641,7 +1641,7 @@ S_CheckFull:
 
 Example 2: callsub used repeatedly, with different arguments
 // notice how the Zeny check/delete is reused, instead of copy-pasting for every warp
-	switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Beacon Island, Pharos") {
+	switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Beacon Island, Pharos")) {
 		case 1:	callsub S_DunWarp,"hu_fild05",192,207;
 		case 2:	callsub S_DunWarp,"ama_in02",119,181;
 		case 3:	callsub S_DunWarp,"moc_fild20",164,145;
@@ -2861,8 +2861,7 @@ number.
 This is the only function around where a parameter may be either a string or a
 number! If it's a number, it means that only the items with that item ID number
 will be counted. If it is a string, it is assumed to mean the 'english name'
-field from the item database. If you give it an empty string, or something that
-isn't found from the item database, it will count items number '512' (apples).
+field from the item database.
 
 ---------------------------------------
 
@@ -2910,6 +2909,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_option_id5[]        - fifth array of random option IDs
 @inventorylist_option_value5[]     - fifth array of random option values
 @inventorylist_option_parameter5[] - fifth array of random option parameters
+@inventorylist_tradable            - Returns if an item is tradable or not (Pass item_trade.txt, bound, and rental restrictions).
 
 This could be handy to save/restore a character's inventory, since no other
 command returns such a complete set of data, and could also be the only way to
@@ -3426,7 +3426,7 @@ recalculating guardians' HP.
 This function returns the level of the skill <skill id> of the guild <guild id>.
 If the guild does not have that skill, 0 is returned.
 If the guild does not exist, -1 is returned.
-Refer to 'db/(pre-)re/skill_db.txt' for the full list of skills. (GD_* are guild skills)
+Refer to 'db/(pre-)re/skill_db.yml' for the full list of skills. (GD_* are guild skills)
 
 ---------------------------------------
 
@@ -3459,7 +3459,7 @@ mes "You have " + getMapGuildUsers("prontera",getcharid(2)) + " guild members in
 
 This function returns the level of the specified skill that the invoking
 character has. If they don't have the skill, 0 will be returned. The full list
-of character skills is available in 'db/(pre-)re/skill_db.txt'.
+of character skills is available in 'db/(pre-)re/skill_db.yml'.
 
 There are two main uses for this function, it can check whether the character
 has a skill or not, and it can tell you if the level is high enough.
@@ -4798,8 +4798,9 @@ for special cases such as removing a status change or resetting a variable or st
 of the player.
 
 This command can not be used to rent stackable items. Rental items cannot be
-dropped, traded, sold to NPCs, or placed in guild storage. (i.e. trade mask 75)
+dropped, traded, or placed in guild storage. (i.e. trade mask 67)
 Note: 'delitem' in an NPC script can still remove rental items.
+Note: 'countitem' will not count any item with a rental timer. Use 'rentalcountitem' instead.
 
 ---------------------------------------
 
@@ -5030,20 +5031,47 @@ If player is not in a guild or storage is open, 'guildstoragecountitem2' will re
 
 ---------------------------------------
 
+*rentalcountitem(<item id>{,<accountID>})
+*rentalcountitem("<item name>"{,<accountID>})
+
+This function will return the number of rental items for the specified item ID that the
+invoking character has in the inventory.
+
+---------------------------------------
+
+*rentalcountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*rentalcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*rentalcountitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+*rentalcountitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+
+Expanded version of 'rentalcountitem' function, used for created/carded/forged items.
+
+This function will return the number of rental items for the specified item ID and
+other parameters that the invoking character has in the inventory.
+See 'getitem2' for an explanation of the expanded parameters.
+
+'rentalcountitem3' is advance version of 'rentalcountitem2' that also use Item Random Option as criteria.
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomValueArray> : Array variable of item random option's value.
+<RandomParamArray> : Array variable of item random option's param.
+
+---------------------------------------
+
 *countbound({<bound type>{,<char_id>}})
 
-This function will return the number of bounded items in the character's
-inventory, and sets an array @bound_items[] containing all item IDs of the
-counted items. If a bound type is specified, only those items will be counted.
+This function will return the number of different bounded items in the character's
+inventory, and sets the arrays @bound_items[] and @bound_amount[] containing all item IDs of the
+counted items and their respective amount. If a bound type is specified, only those items will be counted.
 
 For a list of bound types see 'getitembound'.
 
 Example:
-	mes "You currently have " + countbound() + " bounded items.";
+	.@total_type = countbound();
+	mes "You currently have " + .@total_type + " different type of bounded items.";
 	next;
 	mes "The list of bounded items include:";
-	for(.@i = 0; .@i < getarraysize(@bound_items); .@i++)
-		mes getitemname(@bound_items[.@i]);
+	for(.@i = 0; .@i < .@total_type; .@i++)
+		mes "x" + @bound_amount[.@i] + " " + getitemname(@bound_items[.@i]);
 	close;
 
 ---------------------------------------
@@ -5583,7 +5611,7 @@ levels. This refers to the invoking character and will only work if the invoking
 character is a member of a guild AND its guild master, otherwise no failure
 message will be given and no error will occur, but nothing will happen - same
 about the guild skill trying to exceed the possible maximum. The full list of
-guild skills is available in 'db/(pre-)re/skill_db.txt', these are all the GD_ skills at
+guild skills is available in 'db/(pre-)re/skill_db.yml', these are all the GD_ skills at
 the end.
 
 // This would give your character's guild one level of Approval (GD_APPROVAL ID
@@ -5645,6 +5673,20 @@ the 'quest_skill_learn' option is set in there, the points in the quest skills
 will also count towards the total.
 
 Used in reset NPC's (duh!)
+
+---------------------------------------
+
+*resetfeel({<char_id>});
+
+This command will reset the Star Gladiator's designated maps on the invoking character.
+Only works on Star Gladiator and Star Emperor classes.
+
+---------------------------------------
+
+*resethate({<char_id>});
+
+This command will reset the Star Gladiator's designated monsters on the invoking character.
+Only works on Star Gladiator and Star Emperor classes.
 
 ---------------------------------------
 
@@ -5779,9 +5821,9 @@ Increase AGI Lv 5, and display appropriate effects.
 *npcskilleffect <skill id>,<number>,<x>,<y>;
 *npcskilleffect "<skill name>",<number>,<x>,<y>;
 
-This command behaves identically to 'skilleffect', however, the effect will not
-be centered on the invoking character's sprite, nor on the NPC sprite, if any,
-but will be centered at map coordinates given on the same map as the invoking
+This command behaves identically to 'skilleffect', however, ground type skill
+effects will be centered at the map coordinates given on the same map as the
+attached character and all other skill types will be centered on the attached
 character.
 
 ---------------------------------------
@@ -5970,7 +6012,7 @@ These commands will give the invoking character a specified skill. This is also
 used for item scripts.
 
 Level is obvious. Skill id is the ID number of the skill in question as per
-'db/(pre-)re/skill_db.txt'. It is not known for certain whether this can be used to give
+'db/(pre-)re/skill_db.yml'. It is not known for certain whether this can be used to give
 a character a monster's skill, but you're welcome to try with the numbers given
 in 'db/(pre-)re/mob_skill_db.txt'.
 
@@ -6596,13 +6638,14 @@ Returns true if the command was executed on the other NPC successfully, false if
 
 ---------------------------------------
 
-*npctalk "<message>"{,"<NPC name>","<flag>"};
+*npctalk "<message>"{,"<NPC name>",<flag>{,<color>}};
 
 This command will display a message as if the NPC object running it was a player
 talking - that is, above their head and in the chat window.
 The display name of the NPC won't get appended in front of the message.
 If the <NPC name> option is given and not empty, then that NPC will display the message,
-else the attached NPC will display the message.
+else the attached NPC will display the message,
+the color format is in RGB (0xRRGGBB). The color is White by default.
 
 Target for <flag>:
 - bc_all  : Broadcast message is sent server-wide (only in the chat window).
@@ -6833,9 +6876,6 @@ above the head of the currently attached (or given) NPC. Once the
 given amount of seconds passes, the script resumes. The color format
 is in RGB (RRGGBB). The color is currently ignored by the client and
 appears always green.
-
-Note: If a player is attached to the NPC, they are detached from the NPC
-as soon as the progress bar activates.
 
 ---------------------------------------
 //
@@ -7948,6 +7988,20 @@ Returns "Unknown" if unit is not found.
 
 ---------------------------------------
 
+*setunittitle <GID>,<title>;
+
+Apply a <title> to the given <GID>.
+
+Note: This only works on non-player types. It also will only work on mobs if battle_config.show_mob_info is not enabled.
+
+---------------------------------------
+
+*getunittitle <GID>;
+
+Returns the title of the given <GID>.
+
+---------------------------------------
+
 *getunitdata <GID>,<arrayname>;
 *setunitdata <GID>,<parameter>,<new value>;
 
@@ -8014,6 +8068,7 @@ Parameters (indexes) for monsters are:
 	UMOB_TARGETID
 	UMOB_ROBE
 	UMOB_BODY2
+	UMOB_GROUP_ID
 
 -----
 
@@ -8058,6 +8113,7 @@ Parameter (indexes) for homunculi are:
 	UHOM_ADELAY
 	UHOM_DMOTION
 	UHOM_TARGETID
+	UHOM_GROUP_ID
 
 -----
 
@@ -8099,6 +8155,7 @@ Parameter (indexes) for pets are:
 	UPET_AMOTION
 	UPET_ADELAY
 	UPET_DMOTION
+	UPET_GROUP_ID
 
 -----
 
@@ -8140,6 +8197,7 @@ Parameter (indexes) for mercenaries are:
 	UMER_ADELAY
 	UMER_DMOTION
 	UMER_TARGETID
+	UMER_GROUP_ID
 
 -----
 
@@ -8183,6 +8241,7 @@ Parameter (indexes) for elementals are:
 	UELE_ADELAY
 	UELE_DMOTION
 	UELE_TARGETID
+	UELE_GROUP_ID
 
 -----
 
@@ -8232,6 +8291,7 @@ Parameter (indexes) for NPCs are:
 	UNPC_ROBE
 	UNPC_BODY2
 	UNPC_DEADSIT
+	UNPC_GROUP_ID
 
 *Notes:
 		- *_SIZE: small (0); medium (1); large (2)
@@ -8501,6 +8561,8 @@ Valid types are:
 		if = 10000, then this item is sold in NPC shops only
 	4 - sex; 5 - equip; 6 - weight; 7 - atk; 8 - def; 9 - range;
 	10 - slot; 11 - look; 12 - elv; 13 - wlv; 14 - view id
+	15 - eLVMax
+	16 - matk if RENEWAL is defined
 
 Example:
 	setiteminfo 7049,6,9990; // Stone now weighs 999.0
@@ -9330,6 +9392,7 @@ QMARK_PURPLE - Purple Marker
 Adds the first waiting player from the chat room of the given NPC to an existing battleground group.
 The player will also be warped to the default spawn point of the battle group or to the specified coordinates
 <x> and <y> on the given <map>.
+Note: The map need the mapflag MF_BATTLEGROUND otherwise the player is removed from the Battleground team.
 
 ---------------------------------------
 
@@ -9375,6 +9438,7 @@ Returns battle group ID on success. Returns 0 on failure.
 
 Adds an attached player or <char id> if specified to an existing battleground group. The player will also be warped
 to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
+Note: The map need the mapflag MF_BATTLEGROUND otherwise the player is removed from the Battleground team.
 
 Returns true on success. Returns false on failure.
 
@@ -9392,19 +9456,19 @@ Example:
 
 ---------------------------------------
 
-*bg_reserve("<battleground_name>");
+*bg_reserve("<battleground_map_name>"{,<ended>});
 
-Reserves a slot for the given Battleground for the Battleground UI System.
+Reserves a Battleground map for the Battleground UI System. When a map is booked it prevents another similar
+queue from being created and will allow players to join an active Battlegrounds event.
 
-Note: 'bg_reserve' and 'bg_unbook' prevent the Battlegrounds queue from joining players in an active Battleground.
+If <ended> is true, then the Battleground is marked as over to prevent new players from joining. This state is meant
+for the period where players can get their Badges.
 
 ---------------------------------------
 
-*bg_unbook("<battleground_name>");
+*bg_unbook("<battleground_map_name>");
 
-Removes a spot for the given Battleground for the Battleground UI System.
-
-Note: 'bg_reserve' and 'bg_unbook' prevent the Battlegrounds queue from joining players in an active Battleground.
+Removes a Battleground map for the Battleground UI System. When a map is unbooked it allows a queue to be created.
 
 ---------------------------------------
 
@@ -9504,8 +9568,8 @@ Example:
 Retrieves data related to given Battle Group. Type can be one of the following:
 
 	0 - Amount of players currently belonging to the group.
-	1 - Store GID of players in <Battle Group> in a temporary global array $@arenamembers
-		and returns amount of players currently belonging to the group.
+	1 - Store GID of players in <Battle Group> in a temporary global array $@arenamembers,
+		stores and also returns the amount of players currently belonging to the group in $@arenamemberscount.
 
 ---------------------------------------
 
@@ -9701,7 +9765,7 @@ when pet performance is activated.
 
 This will make the pet use a specified support skill on the owner whenever the
 HP and SP are below the given percent values, with a specified delay time
-between activations. The skill numbers are as per 'db/(pre-)re/skill_db.txt'.
+between activations. The skill numbers are as per 'db/(pre-)re/skill_db.yml'.
 
 It's not quite certain who's stats will be used for the skills cast, the
 character's or the pets. Probably, Skotlex can answer that question.
