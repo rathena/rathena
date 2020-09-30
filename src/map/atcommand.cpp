@@ -1559,9 +1559,9 @@ ACMD_FUNC(baselevelup)
 		status_calc_pc(sd, SCO_FORCE);
 		status_percent_heal(&sd->bl, 100, 100);
 		clif_misceffect(&sd->bl, 0);
-		for (uint16 i = 1; i <= (sd->status.base_level - level); i++) {
-			achievement_update_objective(sd, AG_GOAL_LEVEL, 1, level + i);
-			achievement_update_objective(sd, AG_GOAL_STATUS, 2, level + i, sd->status.class_);
+		for (uint16 i = sd->status.base_level - level; i <= sd->status.base_level; i++) {
+			achievement_update_objective(sd, AG_GOAL_LEVEL, 1, i);
+			achievement_update_objective(sd, AG_GOAL_STATUS, 2, i, sd->status.class_);
 		}
 		clif_displaymessage(fd, msg_txt(sd,21)); // Base level raised.
 	} else {
@@ -1624,8 +1624,8 @@ ACMD_FUNC(joblevelup)
 		sd->status.job_level += (unsigned int)level;
 		sd->status.skill_point += level;
 		clif_misceffect(&sd->bl, 1);
-		for (uint16 i = 1; i <= (sd->status.job_level - level); i++)
-			achievement_update_objective(sd, AG_GOAL_LEVEL, 1, level + i);
+		for (uint16 i = sd->status.job_level - level; i <= sd->status.job_level; i++)
+			achievement_update_objective(sd, AG_GOAL_LEVEL, 1, i);
 		clif_displaymessage(fd, msg_txt(sd,24)); // Job level raised.
 	} else {
 		if (sd->status.job_level == 1) {

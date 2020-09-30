@@ -7095,9 +7095,9 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 		party_send_levelup(sd);
 
 	pc_baselevelchanged(sd);
-	for (uint16 i = 1; i <= (sd->status.base_level - base_level); i++) {
-		achievement_update_objective(sd, AG_GOAL_LEVEL, 1, base_level + i);
-		achievement_update_objective(sd, AG_GOAL_STATUS, 2, base_level + i, sd->status.class_);
+	for (; base_level <= sd->status.base_level; base_level++) {
+		achievement_update_objective(sd, AG_GOAL_LEVEL, 1, base_level);
+		achievement_update_objective(sd, AG_GOAL_STATUS, 2, base_level, sd->status.class_);
 	}
 	return 1;
 }
@@ -7148,8 +7148,8 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 		clif_status_change(&sd->bl, EFST_DEVIL1, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
 
 	npc_script_event(sd, NPCE_JOBLVUP);
-	for (uint16 i = 1; i <= (sd->status.job_level); i++)
-		achievement_update_objective(sd, AG_GOAL_LEVEL, 1, job_level + 1);
+	for (; job_level <= sd->status.job_level; job_level++)
+		achievement_update_objective(sd, AG_GOAL_LEVEL, 1, job_level);
 
 	pc_show_questinfo(sd);
 	return 1;
