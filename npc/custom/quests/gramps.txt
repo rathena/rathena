@@ -260,7 +260,7 @@ OnInit:
 	setarray .Gramps_MapWarp$, "epay_dun00l", "egef_dun03m", "eabyss_03h";
 	setarray .Gramps_MapX, 22, 138, 115;
 	setarray .Gramps_MapY, 181, 117, 28;
-	setarray .Gramps_Turn, 60507, 1622, 60508, 1617, 60468, 1505, 60580, 1668, 60541, 1986, 60583, 2132;
+	setarray .Gramps_Turn, 60611, 1884, 60838, 1375, 60490, 1736, 60454, 1374, 60546, 1833, 60859, 2363;
 	setarray .monster_id,  1193,  1106,  1410,  1417,  1370,  1374,  2083,  2084,  1778,
 			 1777,  1752,  1753,  2085,  2086,  1402,  1403,  1504,  1505,  1713,  1716,
 			 1614,  1615,  1714,  1717,  1657,  1654,  1652,  1655,  1656,  1653,  1316,
@@ -313,17 +313,17 @@ eabyss_03h,113,26,3	duplicate(Return to Eden#template)	Return to Eden#abyss_03h	
 //==================================================
 // 70 ~ 100
 //==================================================
-epay_dun00l,0,0,0,0	monster	Teddy Bear	1622,50,0,0,0
-epay_dun00l,0,0,0,0	monster	Waste Stove	1617,50,0,0,0
+epay_dun00l,0,0,0,0	monster	Mavka	1884,50,0,0,0
+epay_dun00l,0,0,0,0	monster	The Paper	1375,50,0,0,0
 
 //==================================================
 // 101 ~ 125
 //==================================================
-egef_dun03m,0,0,0,0	monster	Loli Ruri	1505,50,0,0,0
-egef_dun03m,0,0,0,0	monster	Archdam	1668,50,0,0,0
+egef_dun03m,0,0,0,0	monster	Aliot	1736,50,0,0,0
+egef_dun03m,0,0,0,0	monster	Incubus	1374,50,0,0,0
 
 //==================================================
 // 126 ~ 150
 //==================================================
-eabyss_03h,0,0,0,0	monster	Tatacho	1986,50,0,0,0
-eabyss_03h,0,0,0,0	monster	Pom Spider	2132,50,0,0,0
+eabyss_03h,0,0,0,0	monster	Kasa	1833,50,0,0,0
+eabyss_03h,0,0,0,0	monster	Menblatt	2363,50,0,0,0
