@@ -19125,7 +19125,7 @@ Body:
         Time: 1000
       - Level: 5
         Time: 500
-    Cooldown:
+    Cooldown: # !TODO: Confirm cast delay and cooldown
       - Level: 1
         Time: 550
       - Level: 2
@@ -19522,7 +19522,7 @@ Body:
     HitCount: 1
     Element: Weapon
     AfterCastActDelay: 300
-    Cooldown:
+    Cooldown: # !TODO: Confirm cast delay and cooldown
       - Level: 1
         Time: 600
       - Level: 2
@@ -22989,26 +22989,38 @@ Body:
     MaxLevel: 5
     Type: Weapon
     TargetType: Attack
-    Range: 11
+    DamageFlags:
+      Critical: true
+    Range: 7
     Hit: Multi_Hit
     HitCount: 1
     Element: Weapon
-    SplashArea: 1
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
     ActiveInstance: 11
     Cooldown: 2000
     FixedCastTime: -1
     Requires:
       SpCost:
         - Level: 1
-          Amount: 12
+          Amount: 30
         - Level: 2
-          Amount: 16
+          Amount: 35
         - Level: 3
-          Amount: 20
+          Amount: 40
         - Level: 4
-          Amount: 24
+          Amount: 45
         - Level: 5
-          Amount: 28
+          Amount: 50
       Weapon:
         1hSpear: true
         2hSpear: true
@@ -23107,7 +23119,7 @@ Body:
       State: Shield
   - Id: 2311
     Name: LG_REFLECTDAMAGE
-    Description: Reflect Damage
+    Description: Reflect Damage Reduction
     MaxLevel: 5
     TargetType: Self
     DamageFlags:
@@ -23270,13 +23282,14 @@ Body:
     Description: Over Brand
     MaxLevel: 5
     Type: Weapon
-    TargetType: Ground
+    TargetType: Self
     DamageFlags:
       Splash: true
     Range: 2
     Hit: Single
     HitCount: 1
     Element: Weapon
+    SplashArea: 3
     CastCancel: true
     CastTime: 500
     AfterCastActDelay: 2000
@@ -23426,7 +23439,7 @@ Body:
     Description: Ray of Genesis
     MaxLevel: 10
     Type: Magic
-    TargetType: Ground
+    TargetType: Self
     DamageFlags:
       Splash: true
     Range: 1
@@ -23463,46 +23476,25 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 45
+          Amount: 30
         - Level: 2
-          Amount: 50
+          Amount: 40
         - Level: 3
-          Amount: 55
+          Amount: 50
         - Level: 4
           Amount: 60
         - Level: 5
-          Amount: 65
-        - Level: 6
           Amount: 70
-        - Level: 7
-          Amount: 75
-        - Level: 8
-          Amount: 80
-        - Level: 9
-          Amount: 85
-        - Level: 10
-          Amount: 90
-      HpRateCost:
-        - Level: 1
-          Amount: -3
-        - Level: 2
-          Amount: -3
-        - Level: 3
-          Amount: -6
-        - Level: 4
-          Amount: -6
-        - Level: 5
-          Amount: -9
         - Level: 6
-          Amount: -9
+          Amount: 80
         - Level: 7
-          Amount: -12
+          Amount: 90
         - Level: 8
-          Amount: -12
+          Amount: 100
         - Level: 9
-          Amount: -15
+          Amount: 110
         - Level: 10
-          Amount: -15
+          Amount: 120
   - Id: 2322
     Name: LG_PIETY
     Description: Piety
@@ -23565,7 +23557,7 @@ Body:
       TargetHidden: true
     Hit: Multi_Hit
     HitCount: -5
-    Element: Earth
+    Element: Weapon
     SplashArea:
       - Level: 1
         Area: 1
@@ -23632,7 +23624,6 @@ Body:
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 3000
-    Cooldown: 20000
     FixedCastTime: -1
     Requires:
       SpCost:
@@ -23708,17 +23699,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
-    Knockback:
-      - Level: 1
-        Amount: 3
-      - Level: 2
-        Amount: 4
-      - Level: 3
-        Amount: 5
-      - Level: 4
-        Amount: 6
-      - Level: 5
-        Amount: 7
+    SplashArea: 3
     CopyFlags:
       Skill:
         Reproduce: true
@@ -23735,6 +23716,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
+    SplashArea: 3
     CopyFlags:
       Skill:
         Reproduce: true

@@ -7101,8 +7101,6 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 		def += (5 + sc->data[SC_BANDING]->val1) * sc->data[SC_BANDING]->val2 / 10;
 	if( sc->data[SC_ECHOSONG] )
 		def += sc->data[SC_ECHOSONG]->val3;
-	if( sc->data[SC_EARTHDRIVE] )
-		def -= def * 25 / 100;
 	if( sc->data[SC_CAMOUFLAGE] )
 		def -= def * 5 * sc->data[SC_CAMOUFLAGE]->val3 / 100;
 	if( sc->data[SC_SOLID_SKIN_OPTION] )
@@ -7596,8 +7594,6 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 			bonus += sc->data[SC_DANCEWITHWUG]->val3;
 		if (sc->data[SC_GLOOMYDAY])
 			bonus -= sc->data[SC_GLOOMYDAY]->val3;
-		if (sc->data[SC_EARTHDRIVE])
-			bonus -= 25;
 		if (sc->data[SC_GT_CHANGE])
 			bonus += sc->data[SC_GT_CHANGE]->val3;
 		if (sc->data[SC_MELON_BOMB])
@@ -7801,8 +7797,6 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		aspd_rate -= sc->data[SC_DANCEWITHWUG]->val3 * 10;
 	if( sc->data[SC_GLOOMYDAY] )
 		aspd_rate += sc->data[SC_GLOOMYDAY]->val3 * 10;
-	if( sc->data[SC_EARTHDRIVE] )
-		aspd_rate += 250;
 	if( sc->data[SC_GT_CHANGE] )
 		aspd_rate -= sc->data[SC_GT_CHANGE]->val3 * 10;
 	if( sc->data[SC_MELON_BOMB] )
