@@ -2631,7 +2631,6 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 #ifdef RENEWAL
 			case ASC_BREAKER:
 #endif
-			case LG_CANNONSPEAR:
 			case GC_CROSSIMPACT:
 				cri /= 2;
 				break;
@@ -4335,7 +4334,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case LG_BANISHINGPOINT:
-			skillratio += -100 + (80 * skill_lv) + ((sd) ? pc_checkskill(sd,SM_BASH) * 30 : 0);
+			skillratio += -100 + (50 * skill_lv) + ((sd) ? pc_checkskill(sd,SM_BASH) * 30 : 0);
 			RE_LVL_DMOD(100);
 			break;
 		case LG_SHIELDPRESS:
@@ -4370,7 +4369,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio = 0; // Prevent damage since level 2 is MATK. [Aleos]
 			break;
 		case LG_MOONSLASHER:
-			skillratio += -100 + 120 * skill_lv + ((sd) ? pc_checkskill(sd,LG_OVERBRAND) * 160 : 0);
+			skillratio += -100 + 120 * skill_lv + ((sd) ? pc_checkskill(sd,LG_OVERBRAND) * 80 : 0);
 			RE_LVL_DMOD(100);
 			break;
 		case LG_OVERBRAND:
@@ -4387,16 +4386,18 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case LG_EARTHDRIVE:
 			if (sd) {
 				short index = sd->equip_index[EQI_HAND_L];
-				skillratio += -100 + status_get_str(src) + status_get_vit(src) + 380 * skill_lv;
+
+				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
+					skillratio += -100 + (skill_lv + 1) * sd->inventory_data[index]->weight / 10;
 			}
 			RE_LVL_DMOD(100);
 			break;
 		case LG_HESPERUSLIT:
 			if (sc) {
 				if (sc->data[SC_INSPIRATION])
-					skillratio += 450 * skill_lv;
+					skillratio += 1100;
 				if (sc->data[SC_BANDING]) {
-					skillratio += -100 + 300 * skill_lv + 200 * sc->data[SC_BANDING]->val2;
+					skillratio += -100 + 120 * skill_lv + 200 * sc->data[SC_BANDING]->val2;
 					if (sc->data[SC_BANDING]->val2 > 5)
 						skillratio = skillratio * 150 / 100;
 				}
@@ -6524,9 +6525,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100); // ! TODO: Confirm new formula
 						break;
 					case LG_RAYOFGENESIS:
-						skillratio += -100 + status_get_int(src) + 230 * skill_lv;
+						skillratio += -100 + 200 * skill_lv;
 						if(sc && sc->data[SC_INSPIRATION])
-							skillratio += 300 * skill_lv;
+							skillratio += 1400;
 						RE_LVL_DMOD(100);
 						break;
 					case LG_SHIELDSPELL: // [(Casters Base Level x 4) + (Shield MDEF x 100) + (Casters INT x 2)] %

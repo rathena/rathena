@@ -1784,9 +1784,20 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				break;
 		}
 		break;
+	case LG_MOONSLASHER:
+		rate = 32 + 8 * skill_lv;
+		if( rnd()%100 < rate && dstsd ) // Uses skill_addtimerskill to avoid damage and setsit packet overlaping. Officially clif_setsit is received about 500 ms after damage packet.
+			skill_addtimerskill(src,tick+500,bl->id,0,0,skill_id,skill_lv,BF_WEAPON,0);
+		else if( dstmd )
+			sc_start(src,bl,SC_STOP,100,skill_lv,skill_get_time(skill_id,skill_lv) + 1000 * (rnd()%3));
+		break;
 	case LG_RAYOFGENESIS:	// 50% chance to cause Blind on Undead and Demon monsters.
 		if ( battle_check_undead(status_get_race(bl), status_get_element(bl)) || status_get_race(bl) == RC_DEMON )
 			sc_start(src,bl, SC_BLIND, 50, skill_lv, skill_get_time(skill_id,skill_lv));
+		break;
+	case LG_EARTHDRIVE:
+		skill_break_equip(src,src, EQP_SHIELD, 100 * skill_lv, BCT_SELF);
+		sc_start(src,bl, SC_EARTHDRIVE, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case LG_HESPERUSLIT:
 		if( sc && sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 3 )
@@ -3213,6 +3224,11 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 
 	// Blown-specific handling
 	switch( skill_id ) {
+		case LG_OVERBRAND_BRANDISH:
+			// Give knockback damage bonus only hits the wall. (bugreport:9096)
+			if (skill_blown(dsrc,target,blewcount,dir,(enum e_skill_blown)(BLOWN_NO_KNOCKBACK_MAP|BLOWN_MD_KNOCKBACK_IMMUNE|BLOWN_TARGET_NO_KNOCKBACK|BLOWN_TARGET_BASILICA)) < blewcount)
+				skill_addtimerskill(src, tick + status_get_amotion(src), target->id, 0, 0, LG_OVERBRAND_PLUSATK, skill_lv, BF_WEAPON, flag|SD_ANIMATION);
+			break;
 		case SR_KNUCKLEARROW:
 			// Ignore knockback damage bonus if in WOE (player cannot be knocked in WOE)
 			// Boss & Immune Knockback stay in place and don't get bonus damage
@@ -4304,6 +4320,7 @@ static TIMER_FUNC(skill_timerskill){
 				case NPC_REVERBERATION_ATK:
 					skill_castend_damage_id(src,target,skl->skill_id,skl->skill_lv,tick,skl->flag|SD_LEVEL|SD_ANIMATION);
 					break;
+				case LG_MOONSLASHER:
 				case SR_WINDMILL:
 					if( target->type == BL_PC ) {
 						struct map_session_data *tsd = NULL;
