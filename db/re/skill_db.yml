@@ -19514,15 +19514,7 @@ Body:
     HitCount: 1
     Element: Weapon
     AfterCastActDelay: 300
-    Cooldown:
-      - Level: 1
-        Time: 600
-      - Level: 2
-        Time: 500
-      - Level: 3
-        Time: 400
-      - Level: 4
-        Time: 300
+    Cooldown: 500
       - Level: 5
         Time: 200
     FixedCastTime: -1
