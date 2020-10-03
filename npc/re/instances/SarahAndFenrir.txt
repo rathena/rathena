@@ -346,7 +346,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 
 			delequip .@part;
 			.@r = rand(.@bonus_size);
-			.@card[.@slot-1] = .@bonus[.@i];
+			.@card[.@slot-1] = .@bonus[.@r];
 			specialeffect2 EF_ANGEL2;
 			getitem2 .@sarah_item_id,1,1,0,0,.@card[0],.@card[1],.@card[2],.@card[3];
 			mes "[Chief Assistant]";
