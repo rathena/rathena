@@ -866,12 +866,23 @@ int char_mmo_gender( const struct char_session_data *sd, const struct mmo_charst
 		case 'F':
 			return SEX_FEMALE;
 #else
-		case 'M':
-		case 'F':
-			// No matter what the database says, always return the account gender
-			return sd->sex;
+		// No matter what the database says, always return the account gender
+		// Per character gender is not supported before 2014-10-16
 #endif
 		default:
+			// There are calls to this function that do not contain the session
+			if( sd == nullptr ){
+				int i;
+
+				// Find player session
+				ARR_FIND( 0, fd_max, i, session[i] && ( sd = (struct char_session_data*)session[i]->session_data ) && sd->account_id == p->account_id );
+
+				if( i >= fd_max ){
+					ShowWarning( "Session was not found for character '%s' (CID: %d, AID: %d), defaulting gender to male...\n", p->name, p->char_id, p->account_id );
+					return SEX_MALE;
+				}
+			}
+
 			ShowWarning( "Found unknown gender '%c' for character '%s' (CID: %d, AID: %d), returning account gender...\n", sex, p->name, p->char_id, p->account_id );
 			return sd->sex;
 	}

@@ -7050,6 +7050,8 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 	if (!next || sd->status.base_exp < next || pc_is_maxbaselv(sd))
 		return 0;
 
+	uint32 base_level = sd->status.base_level;
+
 	do {
 		sd->status.base_exp -= next;
 		//Kyoki pointed out that the max overcarry exp is the exp needed for the previous level -1. [Skotlex]
@@ -7093,8 +7095,10 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 		party_send_levelup(sd);
 
 	pc_baselevelchanged(sd);
-	achievement_update_objective(sd, AG_GOAL_LEVEL, 1, sd->status.base_level);
-	achievement_update_objective(sd, AG_GOAL_STATUS, 2, sd->status.base_level, sd->status.class_);
+	for (; base_level <= sd->status.base_level; base_level++) {
+		achievement_update_objective(sd, AG_GOAL_LEVEL, 1, base_level);
+		achievement_update_objective(sd, AG_GOAL_STATUS, 2, base_level, sd->status.class_);
+	}
 	return 1;
 }
 
@@ -7116,6 +7120,8 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 	nullpo_ret(sd);
 	if(!next || sd->status.job_exp < next || pc_is_maxjoblv(sd))
 		return 0;
+
+	uint32 job_level = sd->status.job_level;
 
 	do {
 		sd->status.job_exp -= next;
@@ -7142,7 +7148,8 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 		clif_status_change(&sd->bl, EFST_DEVIL1, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
 
 	npc_script_event(sd, NPCE_JOBLVUP);
-	achievement_update_objective(sd, AG_GOAL_LEVEL, 1, sd->status.job_level);
+	for (; job_level <= sd->status.job_level; job_level++)
+		achievement_update_objective(sd, AG_GOAL_LEVEL, 1, job_level);
 
 	pc_show_questinfo(sd);
 	return 1;
@@ -9560,14 +9567,12 @@ void pc_setoption(struct map_session_data *sd,int type)
 	}
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC ) {
 		if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
-			static const sc_type statuses [] = { SC_MAXIMIZEPOWER, SC_OVERTHRUST, SC_WEAPONPERFECTION, SC_ADRENALINE, SC_CARTBOOST, SC_MELTDOWN, SC_MAXOVERTHRUST };
-
 			status_calc_pc(sd,SCO_NONE);
-			for (uint8 i = 0; i < ARRAYLENGTH(statuses); i++) {
-				int skill_id = status_sc2skill(statuses[i]);
+			for (const auto &sc : mado_statuses) {
+				uint16 skill_id = status_sc2skill(sc);
 
 				if (skill_id > 0 && !skill_get_inf2(skill_id, INF2_ALLOWONMADO))
-					status_change_end(&sd->bl,statuses[i],INVALID_TIMER);
+					status_change_end(&sd->bl,sc,INVALID_TIMER);
 			}
 			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
 

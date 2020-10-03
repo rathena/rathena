@@ -4,6 +4,8 @@
 #ifndef STATUS_HPP
 #define STATUS_HPP
 
+#include <vector>
+
 #include "../common/database.hpp"
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
@@ -2601,6 +2603,19 @@ struct status_change {
 #endif
 	unsigned char bs_counter; // Blood Sucker counter
 	struct status_change_entry *data[SC_MAX];
+};
+
+/// Statuses that are cancelled/disabled while on Madogear
+static const std::vector<sc_type> mado_statuses = {
+	SC_LOUD,
+	SC_CARTBOOST,
+	SC_MELTDOWN,
+	SC_ADRENALINE,
+	SC_ADRENALINE2,
+	SC_WEAPONPERFECTION,
+	SC_MAXIMIZEPOWER,
+	SC_OVERTHRUST,
+	SC_MAXOVERTHRUST
 };
 
 // for looking up associated data
