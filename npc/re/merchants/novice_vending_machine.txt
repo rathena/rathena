@@ -18,7 +18,7 @@
 	switch( select( "Manual", "Trade " + .@storage_ticket_name$, "Trade Novice equipments" ) ) {
 	case 1:
 		mes "[Exchange " + .@storage_ticket_name$ + "]";
-		mes "4 " + .@storage_ticket_name$ + " can be exchanged into 1 Free Ticket for Warp, Airship or the Cart Service, or 15 Free Ticket for Peco Ride, 1 Novice Fly Wing, 5 Novice Butterfly Wing, 30 Novice Potion.";
+		mes "4 " + .@storage_ticket_name$ + " can be exchanged into 1 Free Ticket for Warp, Airship or the Cart Service, or 1 Free Ticket for Peco Ride, 15 Novice Fly Wing, 5 Novice Butterfly Wing, 30 Novice Potion.";
 		next;
 		mes "[Trade Novice Gears]";
 		mes "Armor, Hood, Sandals, Main Gauche and Guard for Novice from Criatura Academy can be exchanged into 4 " + .@storage_ticket_name$ + ".";
