@@ -1647,9 +1647,9 @@ Body:
       - Item: WaterFieldEffect_Bottom
       - Item: ExplodingEffect_Middle
       - Item: WhiteBodyEffect_Middle
-      - Item: Steal_Stone_Bottom
-      - Item: Teleport_Stone_Bottom
-      - Item: Heal_Stone_Bottom
+      - Item: Steal_Stone
+      - Item: Teleport_Stone
+      - Item: Heal_Stone
       - Item: SuraStone_Top
       - Item: SuraStone_Middle
       - Item: SuraStone_Bottom
