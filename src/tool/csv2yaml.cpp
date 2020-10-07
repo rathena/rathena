@@ -17,6 +17,7 @@
 	#include <stdio.h>
 #endif
 
+#include <math.h>
 #include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
