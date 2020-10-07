@@ -6687,7 +6687,7 @@ ACMD_FUNC(sound)
  *------------------------------------------*/
 ACMD_FUNC(mobsearch)
 {
-	char *mob_name = "";
+	char mob_name[100];
 	int mob_id;
 	int number = 0;
 	struct s_mapiterator* it;
@@ -6707,8 +6707,8 @@ ACMD_FUNC(mobsearch)
 		return -1;
 	}
 
-	mob_name = const_cast<char *>(mob_db.find(mob_id)->jname.c_str());	// --ja--
-//	mob_name = const_cast<char *>(mob_db.find(mob_id)->name.c_str());	// --en--
+	strcpy(mob_name, mob_db.find(mob_id)->jname.c_str());	// --ja--
+//	strcpy(mob_name, mob_db.find(mob_id)->name.c_str());	// --en--
 
 	snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1220), mob_name, mapindex_id2name(sd->mapindex)); // Mob Search... %s %s
 	clif_displaymessage(fd, atcmd_output);
@@ -7483,7 +7483,7 @@ ACMD_FUNC(mobinfo)
 *------------------------------------------*/
 ACMD_FUNC(showmobs)
 {
-	char *mob_name = "";
+	char mob_name[100];
 	int mob_id;
 	int number = 0;
 	struct s_mapiterator* it;
@@ -7509,8 +7509,8 @@ ACMD_FUNC(showmobs)
 	}
 
 	if(mob_id == atoi(mob_name) && !mob->jname.empty())
-		mob_name = const_cast<char *>(mob->jname.c_str());    // --ja--
-		//mob_name = const_cast<char *>(mob->name.c_str());    // --en--
+		strcpy(mob_name, mob->jname.c_str());    // --ja--
+		//strcpy(mob_name, mob->name.c_str());    // --en--
 
 	snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1252), // Mob Search... %s %s
 		mob_name, mapindex_id2name(sd->mapindex));

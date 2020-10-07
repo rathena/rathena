@@ -8336,13 +8336,13 @@ int status_get_emblem_id(struct block_list *bl)
  */
 std::vector<e_race2> status_get_race2(struct block_list *bl)
 {
-	nullpo_retr(std::vector<e_race2>(RC2_NONE),bl);
+	nullpo_retr(std::vector<e_race2>(),bl);
 
 	if (bl->type == BL_MOB)
 		return ((struct mob_data *)bl)->db->race2;
 	if (bl->type == BL_PET)
 		return ((struct pet_data *)bl)->db->race2;
-	return std::vector<e_race2>(RC2_NONE);
+	return std::vector<e_race2>();
 }
 
 /**
@@ -9158,7 +9158,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Uncomment to prevent status adding hp to gvg mob (like bloodylust=hp*3 etc...
 //	if (bl->type == BL_MOB)
-//		if (status_get_race2(bl) == RC2_GVG && status_sc2scb_flag(type)&SCB_MAXHP) return 0;
+//		if (util::vector_exists(status_get_race2(bl), RC2_GVG) && status_sc2scb_flag(type)&SCB_MAXHP) return 0;
 
 	if( sc->data[SC_REFRESH] ) {
 		if( type >= SC_COMMON_MIN && type <= SC_COMMON_MAX) // Confirmed.
