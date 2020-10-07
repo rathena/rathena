@@ -1379,7 +1379,7 @@ void run_tomb(struct map_session_data* sd, struct npc_data* nd)
 	strftime(time, sizeof(time), "%H:%M", localtime(&nd->u.tomb.kill_time));
 
 	// TODO: Find exact color?
-	snprintf(buffer, sizeof(buffer), msg_txt(sd,657), nd->u.tomb.md->db->name);
+	snprintf(buffer, sizeof(buffer), msg_txt(sd,657), nd->u.tomb.md->db->name.c_str());
 	clif_scriptmes(sd, nd->bl.id, buffer);
 
 	clif_scriptmes(sd, nd->bl.id, msg_txt(sd,658));
