@@ -4529,7 +4529,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 			} else {
 				util::vector_erase_if_exists(mob->race2, static_cast<e_race2>(constant));
 
-				if (constant == RC2_GUARDIAN || RC2_BATTLEFIELD)
+				if (constant == RC2_GUARDIAN || constant == RC2_BATTLEFIELD)
 					mob->status.class_ = CLASS_NORMAL;
 			}
 		}
@@ -4545,12 +4545,12 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(ele_constant.c_str(), &constant)) {
-			this->invalidWarning(node["Element"], "Unknown monster element %s, defaulting to ELE_NEUTRAL.\n");
+			this->invalidWarning(node["Element"], "Unknown monster element %s, defaulting to ELE_NEUTRAL.\n", ele.c_str());
 			constant = ELE_NEUTRAL;
 		}
 
 		if (!CHK_ELEMENT(constant)) {
-			this->invalidWarning(node["Element"], "Invalid monster element %s, defaulting to ELE_NEUTRAL.\n");
+			this->invalidWarning(node["Element"], "Invalid monster element %s, defaulting to ELE_NEUTRAL.\n", ele.c_str());
 			constant = ELE_NEUTRAL;
 		}
 
@@ -4816,7 +4816,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		uint16 i = 0;
 
 		for (const YAML::Node &dropit : dropNode) {
-			if (i == MAX_MOB_DROP) {
+			if (i >= MAX_MOB_DROP) {
 				this->invalidWarning(dropit, "Maximum of %d monster drops met, skipping.\n", MAX_MOB_DROP);
 				continue;
 			}
@@ -5081,7 +5081,7 @@ static bool mob_read_sqldb_sub(char **str) {
 			mvpdrops["Rate"] = strtoul(str[index], nullptr, 10);
 		if (strcmp(str[++index], "None") != 0)
 			mvpdrops["RandomOptionGroup"] = str[index];
-		if (strtoul(str[++index], nullptr, 10) >= 0)
+		if (strtol(str[++index], nullptr, 10) >= 0)
 			mvpdrops["Index"] = strtoul(str[index], nullptr, 10);
 		node["MvpDrops"][i] = mvpdrops;
 	}
@@ -5097,7 +5097,7 @@ static bool mob_read_sqldb_sub(char **str) {
 			drops["StealProtected"] = strtoul(str[index], nullptr, 10);
 		if (strcmp(str[++index], "None") != 0)
 			drops["RandomOptionGroup"] = str[index];
-		if (strtoul(str[++index], nullptr, 10) >= 0)
+		if (strtol(str[++index], nullptr, 10) >= 0)
 			drops["Index"] = strtoul(str[index], nullptr, 10);
 		node["Drops"] = drops;
 	}
@@ -5674,7 +5674,7 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 
 	if (skill->skill.size() >= MAX_MOBSKILL) {
 		if (mob_id != last_mob_id) {
-			ShowError("mob_parse_row_mobskilldb: Too many skills for monster %d[%s]\n", mob_id, mob->sprite);
+			ShowError("mob_parse_row_mobskilldb: Too many skills for monster %d[%s]\n", mob_id, mob->sprite.c_str());
 			last_mob_id = mob_id;
 		}
 		return false;
@@ -5698,7 +5698,7 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 		if (mob_id < 0)
 			ShowError("mob_parse_row_mobskilldb: Invalid Skill ID (%d) for all mobs\n", j);
 		else
-			ShowError("mob_parse_row_mobskilldb: Invalid Skill ID (%d) for mob %d (%s)\n", j, mob_id, mob->sprite);
+			ShowError("mob_parse_row_mobskilldb: Invalid Skill ID (%d) for mob %d (%s)\n", j, mob_id, mob->sprite.c_str());
 		return false;
 	}
 	ms->skill_id = j;
@@ -5743,13 +5743,13 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 		{
 			ShowWarning("mob_parse_row_mobskilldb: Wrong mob skill target for ground skill %d (%s) for %s.\n",
 				ms->skill_id, skill_get_name(ms->skill_id),
-				mob_id < 0 ? "all mobs" : mob->sprite);
+				mob_id < 0 ? "all mobs" : mob->sprite.c_str());
 			ms->target = MST_TARGET;
 		}
 	} else if (ms->target > MST_MASTER) {
 		ShowWarning("mob_parse_row_mobskilldb: Wrong mob skill target 'around' for non-ground skill %d (%s) for %s.\n",
 			ms->skill_id, skill_get_name(ms->skill_id),
-			mob_id < 0 ? "all mobs" : mob->sprite);
+			mob_id < 0 ? "all mobs" : mob->sprite.c_str());
 		ms->target = MST_TARGET;
 	}
 
@@ -5958,7 +5958,7 @@ static void mob_drop_ratio_adjust(void){
 
 				// Item is not known anymore(should never happen)
 				if( !id ){
-					ShowWarning( "Monster \"%s\"(id:%hu) is dropping an unknown item(id: %u)\n", mob->name, mob_id, nameid );
+					ShowWarning( "Monster \"%s\"(id:%hu) is dropping an unknown item(id: %u)\n", mob->name.c_str(), mob_id, nameid );
 					mob->mvpitem[j].nameid = 0;
 					mob->mvpitem[j].p = 0;
 					continue;
@@ -5988,7 +5988,7 @@ static void mob_drop_ratio_adjust(void){
 
 			// Item is not known anymore(should never happen)
 			if( !id ){
-				ShowWarning( "Monster \"%s\"(id:%hu) is dropping an unknown item(id: %u)\n", mob->name, mob_id, nameid );
+				ShowWarning( "Monster \"%s\"(id:%hu) is dropping an unknown item(id: %u)\n", mob->name.c_str(), mob_id, nameid );
 				mob->dropitem[j].nameid = 0;
 				mob->dropitem[j].p = 0;
 				continue;
@@ -6090,14 +6090,14 @@ static void mob_skill_db_set_single_sub(s_mob_db *mob, struct s_mob_skill_db *sk
 	nullpo_retv(mob);
 	nullpo_retv(skill);
 
-	uint16 i = 0;
+	size_t i = 0;
 
 	for (i = 0; mob->skill.size() < MAX_MOBSKILL && i < skill->skill.size(); i++) {
 		mob->skill.push_back(skill->skill[i]);
 	}
 
 	if (i < skill->skill.size())
-		ShowWarning("Monster '%s' (%d, src:%d) reaches max skill limit %d. Ignores '%d' skills left.\n", mob->sprite, mob->vd.class_, skill->mob_id, MAX_MOBSKILL, skill->skill.size() - i);
+		ShowWarning("Monster '%s' (%d, src:%d) reaches max skill limit %d. Ignores '%zu' skills left.\n", mob->sprite.c_str(), mob->vd.class_, skill->mob_id, MAX_MOBSKILL, skill->skill.size() - i);
 }
 
 /**
