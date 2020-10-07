@@ -290,16 +290,6 @@ enum e_race : int8{
 	RC_MAX //auto upd enum for array size
 };
 
-enum e_classAE : int8{
-	CLASS_NONE = -1, //don't give us bonus
-	CLASS_NORMAL = 0,
-	CLASS_BOSS,
-	CLASS_GUARDIAN,
-	CLASS_BATTLEFIELD,
-	CLASS_ALL,
-	CLASS_MAX //auto upd enum for array len
-};
-
 enum e_race2 : uint8{
 	RC2_NONE = 0,
 	RC2_GOBLIN,

@@ -2852,9 +2852,9 @@ ACMD_FUNC(makeegg) {
 	if (pet != nullptr) {
 		sd->catch_target_class = pet->class_;
 
-		struct mob_db* mdb = mob_db(pet->class_);
+		std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
 
-		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname);
+		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname.c_str());
 	} else {
 		clif_displaymessage(fd, msg_txt(sd,180)); // The monster/egg name/id doesn't exist.
 		return -1;
@@ -6687,7 +6687,7 @@ ACMD_FUNC(sound)
  *------------------------------------------*/
 ACMD_FUNC(mobsearch)
 {
-	char mob_name[100];
+	char *mob_name = "";
 	int mob_id;
 	int number = 0;
 	struct s_mapiterator* it;
@@ -6706,8 +6706,9 @@ ACMD_FUNC(mobsearch)
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
 	}
-	strcpy(mob_name,mob_db(mob_id)->jname);	// --ja--
-//	strcpy(mob_name,mob_db(mob_id)->name);	// --en--
+
+	mob_name = const_cast<char *>(mob_db.find(mob_id)->jname.c_str());	// --ja--
+//	mob_name = const_cast<char *>(mob_db.find(mob_id)->name.c_str());	// --en--
 
 	snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1220), mob_name, mapindex_id2name(sd->mapindex)); // Mob Search... %s %s
 	clif_displaymessage(fd, atcmd_output);
@@ -7337,7 +7338,6 @@ ACMD_FUNC(mobinfo)
 	unsigned char melement[ELE_ALL][8] = { "Neutral", "Water", "Earth", "Fire", "Wind", "Poison", "Holy", "Dark", "Ghost", "Undead" };
 	char atcmd_output2[CHAT_SIZE_MAX];
 	struct item_data *item_data;
-	struct mob_db *mob;
 	uint16 mob_ids[MAX_SEARCH];
 	int count;
 	int i, k;
@@ -7370,7 +7370,8 @@ ACMD_FUNC(mobinfo)
 	}
 	for (k = 0; k < count; k++) {
 		unsigned int j,base_exp,job_exp;
-		mob = mob_db(mob_ids[k]);
+		std::shared_ptr<s_mob_db> mob = mob_db.find(mob_ids[k]);
+
 		base_exp = mob->base_exp;
 		job_exp = mob->job_exp;
 
@@ -7386,9 +7387,9 @@ ACMD_FUNC(mobinfo)
 #endif
 		// stats
 		if (mob->mexp)
-			sprintf(atcmd_output, msg_txt(sd,1240), mob->name, mob->jname, mob->sprite, mob->vd.class_); // MVP Monster: '%s'/'%s'/'%s' (%d)
+			sprintf(atcmd_output, msg_txt(sd,1240), mob->name.c_str(), mob->jname.c_str(), mob->sprite, mob->vd.class_); // MVP Monster: '%s'/'%s'/'%s' (%d)
 		else
-			sprintf(atcmd_output, msg_txt(sd,1241), mob->name, mob->jname, mob->sprite, mob->vd.class_); // Monster: '%s'/'%s'/'%s' (%d)
+			sprintf(atcmd_output, msg_txt(sd,1241), mob->name.c_str(), mob->jname.c_str(), mob->sprite, mob->vd.class_); // Monster: '%s'/'%s'/'%s' (%d)
 		clif_displaymessage(fd, atcmd_output);
 		sprintf(atcmd_output, msg_txt(sd,1242), mob->lv, mob->status.max_hp, base_exp, job_exp, MOB_HIT(mob), MOB_FLEE(mob)); //  Lv:%d  HP:%d  Base EXP:%u  Job EXP:%u  HIT:%d  FLEE:%d
 		clif_displaymessage(fd, atcmd_output);
@@ -7482,7 +7483,7 @@ ACMD_FUNC(mobinfo)
 *------------------------------------------*/
 ACMD_FUNC(showmobs)
 {
-	char mob_name[100];
+	char *mob_name = "";
 	int mob_id;
 	int number = 0;
 	struct s_mapiterator* it;
@@ -7500,14 +7501,16 @@ ACMD_FUNC(showmobs)
 		return 0;
 	}
 
-	if(status_has_mode(&mob_db(mob_id)->status,MD_STATUS_IMMUNE) && !pc_has_permission(sd, PC_PERM_SHOW_BOSS)){	// If player group does not have access to boss mobs.
+	std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
+
+	if(status_has_mode(&mob->status,MD_STATUSIMMUNE) && !pc_has_permission(sd, PC_PERM_SHOW_BOSS)){	// If player group does not have access to boss mobs.
 		clif_displaymessage(fd, msg_txt(sd,1251)); // Can't show boss mobs!
 		return 0;
 	}
 
-	if(mob_id == atoi(mob_name) && mob_db(mob_id)->jname[0])
-		strcpy(mob_name,mob_db(mob_id)->jname);    // --ja--
-		//strcpy(mob_name,mob_db(mob_id)->name);    // --en--
+	if(mob_id == atoi(mob_name) && !mob->jname.empty())
+		mob_name = const_cast<char *>(mob->jname.c_str());    // --ja--
+		//mob_name = const_cast<char *>(mob->name.c_str());    // --en--
 
 	snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1252), // Mob Search... %s %s
 		mob_name, mapindex_id2name(sd->mapindex));
@@ -7950,14 +7953,15 @@ ACMD_FUNC(whodrops)
 			for (j=0; j < MAX_SEARCH && item_data->mob[j].chance > 0; j++)
 			{
 				int dropchance = item_data->mob[j].chance;
+				std::shared_ptr<s_mob_db> mob = mob_db.find(item_data->mob[j].id);
 
 #ifdef RENEWAL_DROP
 				if( battle_config.atcommand_mobinfo_type )
-					dropchance = dropchance * pc_level_penalty_mod(mob_db(item_data->mob[j].id)->lv - sd->status.base_level, mob_db(item_data->mob[j].id)->status.class_, mob_db(item_data->mob[j].id)->status.mode, 2) / 100;
+					dropchance = dropchance * pc_level_penalty_mod(mob->lv - sd->status.base_level, mob->status.class_, mob->status.mode, 2) / 100;
 #endif
 				if (pc_isvip(sd)) // Display item rate increase for VIP
 					dropchance += (dropchance * battle_config.vip_drop_increase) / 100;
-				sprintf(atcmd_output, "- %s (%d): %02.02f%%", mob_db(item_data->mob[j].id)->jname, item_data->mob[j].id, dropchance/100.);
+				sprintf(atcmd_output, "- %s (%d): %02.02f%%", mob->jname.c_str(), item_data->mob[j].id, dropchance/100.);
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}
@@ -7998,9 +8002,8 @@ ACMD_FUNC(whereis)
 
 	for (int i = 0; i < count; i++) {
 		uint16 mob_id = mob_ids[i];
-		struct mob_db * mob = mob_db(mob_id);
 
-		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1289), mob->jname); // %s spawns in:
+		snprintf(atcmd_output, sizeof atcmd_output, msg_txt(sd,1289), mob_db.find(mob_id)->jname.c_str()); // %s spawns in:
 		clif_displaymessage(fd, atcmd_output);
 		
 		const std::vector<spawn_info> spawns = mob_get_spawns(mob_id);

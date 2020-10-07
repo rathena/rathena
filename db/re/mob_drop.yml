@@ -1,0 +1,579 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2020 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Monster Database
+###########################################################################
+#
+# Monster Settings
+#
+###########################################################################
+# - Id                      Monster ID.
+#   AegisName               Server name to reference the monster in scripts and lookups, should use no spaces.
+#   Name                    Name in English.
+#   JapaneseName            Name in Japanese.
+#   Level                   Level. (Default: 1)
+#   Hp                      Total HP. (Default: 1)
+#   Sp                      Total SP. (Default: 1)
+#   BaseExp                 Base experience gained. (Default: 0)
+#   JobExp                  Job experience gained. (Default: 0)
+#   MvpExp                  MVP experience gained. (Default: 0)
+#   Attack                  Minimum attack in pre-renewal and base attack in renewal. (Default: 0)
+#   Attack2                 Maximum attack in pre-renewal and base magic attack in renewal. (Default: 0)
+#   Defense                 Physical defense of the monster, reduces melee and ranged physical attack/skill damage. (Default: 0)
+#   MagicDefense            Magic defense of the monster, reduces magical skill damage. (Default: 0)
+#   Str                     Strength which affects attack. (Default: 1)
+#   Agi                     Agility which affects flee. (Default: 1)
+#   Vit                     Vitality which affects defense. (Default: 1)
+#   Int                     Intelligence which affects magic attack. (Default: 1)
+#   Dex                     Dexterity which affects hit rate. (Default: 1)
+#   Luk                     Luck which affects perfect dodge/lucky flee/lerfect flee/lucky dodge rate. (Default: 1)
+#   AttackRange             Attack range. (Default: 0)
+#   SkillRange              Skill cast range. (Default: 0)
+#   ChaseRange              Chase range. (Default: 0)
+#   Size                    Size. (Default: Small)
+#   Race                    Race. (Default: Formless)
+#   RaceGroups:             List of secondary groups the monster may be part of. (Optional)
+#     <group>: <value>      Group to toggle.
+#   Element                 Element. (Default: Neutral)
+#   ElementLevel            Level of element. (Default: 1)
+#   WalkSpeed               Walk speed. (Default: 0)
+#   AttackDelay             Attack speed. (Default: 0)
+#   AttackMotion            Attack animation speed. (Default: 0)
+#   DamageMotion            Damage animation speed. (Default: 0)
+#   Ai                      Aegis monster type AI behavior. (Default: 06)
+#   Class                   Aegis monster class. (Default: Normal)
+#   Attribute               Aegis monster attribute. (Default: 0)
+#   Modes:                  List of unique behavior not defined by AI, Class, or Attribute. (Optional)
+#     <mode>: <value>       Mode to toggle.
+#   MvpDrops:               List of possible MVP prize items. (Optional)
+#     - Item                Item name.
+#       Rate                Drop rate of item. (Default: 1)
+#       RandomOptionGroup   Random Option Group applied to item on drop. (Default: None)
+#       Index               Index used for overwriting item. (Optional)
+#   Drops:                  List of possible normal item drops. (Optional)
+#     - Item                Item name.
+#       Rate                Drop rate of item. (Default: 1)
+#       StealProtected      If the item is shielded from TF_STEAL. (Default: false)
+#       RandomOptionGroup   Random Option Group applied to item on drop. (Default: None)
+#       Index               Index used for overwriting item. (Optional)
+###########################################################################
+
+Header:
+  Type: MOB_DB
+  Version: 1
+
+Body:
+  - Id: 1030
+    Drops:
+      - Item: Crimson_Lance
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1063
+    Drops:
+      - Item: Sword_
+        Rate: 100
+        RandomOptionGroup: None
+  - Id: 1102
+    Drops:
+      - Item: Crimson_One-Handed_Staff
+        Rate: 50
+        RandomOptionGroup: None
+  - Id: 1106
+    Drops:
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1117
+    Drops:
+      - Item: Crimson_Bible
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1135
+    Drops:
+      - Item: Crimson_Two-Handed_Axe
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1143
+    Drops:
+      - Item: Crimson_Mace
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1154
+    Drops:
+      - Item: Crimson_Saber
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1155
+    Drops:
+      - Item: Crimson_Mace
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1204
+    Drops:
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Saber
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1205
+    Drops:
+      - Item: Crimson_Saber
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1215
+    Drops:
+      - Item: Crimson_Spear
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1219
+    Drops:
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1257
+    Drops:
+      - Item: Crimson_Katar
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1259
+    Drops:
+      - Item: Crimson_Lance
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1290
+    Drops:
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1295
+    Drops:
+      - Item: Crimson_Bow
+        Rate: 50
+        RandomOptionGroup: None
+  - Id: 1296
+    Drops:
+      - Item: Crimson_Mace
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1301
+    Drops:
+      - Item: Crimson_Mace
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1302
+    Drops:
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1303
+    Drops:
+      - Item: Crimson_Two-Handed_Staff
+        Rate: 50
+        RandomOptionGroup: None
+  - Id: 1310
+    Drops:
+      - Item: Crimson_Two-Handed_Axe
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1316
+    Drops:
+      - Item: Crimson_Mace
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1320
+    Drops:
+      - Item: Crimson_Lance
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Two-Handed_Staff
+        Rate: 50
+        RandomOptionGroup: None
+  - Id: 1386
+    Drops:
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1390
+    Drops:
+      - Item: Crimson_Violin
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1404
+    Drops:
+      - Item: Crimson_Violin
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1405
+    Drops:
+      - Item: Crimson_Huuma_Shuriken
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1408
+    Drops:
+      - Item: Crimson_Knuckles
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1413
+    Drops:
+      - Item: Crimson_Whip
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1416
+    Drops:
+      - Item: Crimson_Violin
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Whip
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1517
+    Drops:
+      - Item: Crimson_Mace
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1584
+    Drops:
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1613
+    Drops:
+      - Item: Crimson_Revolver
+        Rate: 50
+        RandomOptionGroup: None
+  - Id: 1619
+    Drops:
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1628
+    Drops:
+      - Item: Crimson_Revolver
+        Rate: 50
+        RandomOptionGroup: None
+  - Id: 1631
+    Drops:
+      - Item: Crimson_Knuckles
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1652
+    Drops:
+      - Item: Crimson_Saber
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1653
+    Drops:
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1654
+    Drops:
+      - Item: Crimson_Saber
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Two-Handed_Axe
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1655
+    Drops:
+      - Item: Crimson_Knuckles
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Mace
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1656
+    Drops:
+      - Item: Crimson_Violin
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Bow
+        Rate: 50
+        RandomOptionGroup: None
+  - Id: 1657
+    Drops:
+      - Item: Crimson_One-Handed_Staff
+        Rate: 50
+        RandomOptionGroup: None
+  - Id: 1658
+    Drops:
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 500
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1702
+    Drops:
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1703
+    Drops:
+      - Item: Crimson_Violin
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1736
+    Drops:
+      - Item: Crimson_Knuckles
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1829
+    Drops:
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 1830
+    Drops:
+      - Item: Crimson_Bow
+        Rate: 50
+        RandomOptionGroup: None
+  - Id: 1993
+    Drops:
+      - Item: Crimson_Spear
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2041
+    Drops:
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Saber
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2071
+    Drops:
+      - Item: Crimson_Katar
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2072
+    Drops:
+      - Item: Crimson_Knuckles
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2199
+    Drops:
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2353
+    Drops:
+      - Item: Crimson_Two-Handed_Axe
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2362
+    Drops:
+      - Item: Crimson_Bible
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2617
+    Drops:
+      - Item: Crimson_Violin
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Whip
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2621
+    Drops:
+      - Item: Crimson_Violin
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2622
+    Drops:
+      - Item: Crimson_Violin
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2623
+    Drops:
+      - Item: Crimson_Violin
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2639
+    Drops:
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2641
+    Drops:
+      - Item: Crimson_Spear
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2647
+    Drops:
+      - Item: Crimson_Mace
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2650
+    Drops:
+      - Item: Crimson_Violin
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2655
+    Drops:
+      - Item: Crimson_Dagger
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2656
+    Drops:
+      - Item: Crimson_Dagger
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2658
+    Drops:
+      - Item: Crimson_Dagger
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2659
+    Drops:
+      - Item: Crimson_Dagger
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2684
+    Drops:
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2685
+    Drops:
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2686
+    Drops:
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2692
+    Drops:
+      - Item: Crimson_One-Handed_Staff
+        Rate: 250
+        RandomOptionGroup: None
+  - Id: 2700
+    Drops:
+      - Item: Crimson_Dagger
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2714
+    Drops:
+      - Item: Crimson_Mace
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2715
+    Drops:
+      - Item: Crimson_Mace
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2719
+    Drops:
+      - Item: Crimson_Saber
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Dagger
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2721
+    Drops:
+      - Item: Crimson_Lance
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Two-Handed_Staff
+        Rate: 250
+        RandomOptionGroup: None
+  - Id: 2745
+    Drops:
+      - Item: Crimson_Revolver
+        Rate: 250
+        RandomOptionGroup: None
+  - Id: 2746
+    Drops:
+      - Item: Crimson_Violin
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2755
+    Drops:
+      - Item: Crimson_Revolver
+        Rate: 250
+        RandomOptionGroup: None
+  - Id: 2756
+    Drops:
+      - Item: Crimson_Revolver
+        Rate: 250
+        RandomOptionGroup: None
+  - Id: 2761
+    Drops:
+      - Item: Crimson_Mace
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2767
+    Drops:
+      - Item: Crimson_Two-Handed_Axe
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2770
+    Drops:
+      - Item: Sword_
+        Rate: 500
+        RandomOptionGroup: None
+  - Id: 2771
+    Drops:
+      - Item: Sword_
+        Rate: 500
+        RandomOptionGroup: None
+  - Id: 2778
+    Drops:
+      - Item: Crimson_Mace
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2792
+    Drops:
+      - Item: Crimson_Katar
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2821
+    Drops:
+      - Item: Crimson_Two-Handed_Staff
+        Rate: 250
+        RandomOptionGroup: None
+  - Id: 2838
+    Drops:
+      - Item: Crimson_Bible
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2883
+    Drops:
+      - Item: Crimson_Knuckles
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+  - Id: 2885
+    Drops:
+      - Item: Crimson_One-Handed_Staff
+        Rate: 250
+        RandomOptionGroup: None
+  - Id: 2904
+    Drops:
+      - Item: Crimson_Lance
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
