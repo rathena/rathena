@@ -126,7 +126,8 @@ std::unordered_map<const char*, int64> constants;
 
 // Forward declaration of constant loading functions
 static bool parse_item_constants( const char* path );
-static bool parse_mob_constants( char* split[], int columns, int current );
+static bool parse_mob_constants_txt( char* split[], int columns, int current );
+static bool parse_mob_constants_yml(std::string path, std::string filename);
 static bool parse_skill_constants_txt( char* split[], int columns, int current );
 static bool parse_skill_constants_yml(std::string path, std::string filename);
 
@@ -304,8 +305,13 @@ int do_init( int argc, char** argv ){
 	// Loads required conversion constants
 	parse_item_constants( ( path_db_mode + "/item_db.txt" ).c_str() );
 	parse_item_constants( ( path_db_import + "/item_db.txt" ).c_str() );
-	sv_readdb( path_db_mode.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false );
-	sv_readdb( path_db_import.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false );
+	if (fileExists(path_db + "/" + "mob_db.yml")) {
+		parse_mob_constants_yml(path_db_mode, "mob_db.yml");
+		parse_mob_constants_yml(path_db_import + "/", "mob_db.yml");
+	} else {
+		sv_readdb(path_db_mode.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants_txt, false);
+		sv_readdb(path_db_import.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants_txt, false);
+	}
 	if (fileExists(path_db + "/" + "skill_db.yml")) {
 		parse_skill_constants_yml(path_db_mode, "skill_db.yml");
 		parse_skill_constants_yml(path_db_import + "/", "skill_db.yml");
@@ -577,11 +583,34 @@ static bool parse_item_constants( const char* path ){
 	return true;
 }
 
-static bool parse_mob_constants( char* split[], int columns, int current ){
+static bool parse_mob_constants_txt( char* split[], int columns, int current ){
 	uint16 mob_id = atoi( split[0] );
 	char* name = trim( split[1] );
 
 	aegis_mobnames[mob_id] = std::string( name );
+
+	return true;
+}
+
+static bool parse_mob_constants_yml(std::string path, std::string filename) {
+	YAML::Node rootNode;
+
+	try {
+		rootNode = YAML::LoadFile(path + filename);
+	} catch (YAML::Exception &e) {
+		ShowError("Failed to read file from '" CL_WHITE "%s%s" CL_RESET "'.\n", path.c_str(), filename.c_str());
+		ShowError("%s (Line %d: Column %d)\n", e.msg.c_str(), e.mark.line, e.mark.column);
+		return false;
+	}
+
+	uint64 count = 0;
+
+	for (const YAML::Node &body : rootNode["Body"]) {
+		aegis_mobnames[body["Id"].as<uint16>()] = body["AegisName"].as<std::string>();
+		count++;
+	}
+
+	ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s%s" CL_RESET "'" CL_CLL "\n", count, path.c_str(), filename.c_str());
 
 	return true;
 }
