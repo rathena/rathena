@@ -2876,7 +2876,7 @@ REPLACE INTO `item_db` VALUES (5660,'Gryphon_Hat','Gryphon Hat',4,20,NULL,400,NU
 #REPLACE INTO `item_db` VALUES (5661,'Red_Pirate_Bandana','Red Pirate Banada',4,0,NULL,0,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,10,1,592,'bonus bStr,1; bonus bDex,1; bonus bAspdRate,2; bonus bCastRate,-2; bonus3 bAutoSpell,"MO_EXTREMITYFIST",1,30;',NULL,NULL);
 #REPLACE INTO `item_db` VALUES (5662,'Libra_Crown','Libra Crown',4,10,NULL,300,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,593,'bonus bDex,3;',NULL,NULL);
 #REPLACE INTO `item_db` VALUES (5663,'Libra_Diadem','Libra Diadem',4,10,NULL,300,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,1,1,594,'bonus bDex,3;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (5664,'Filir_Wing','Filir\'s Pinions',4,20,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,7,2,512,NULL,70,1,595,'bonus bAspdRate,2; bonus bCastRate,-2;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5664,'Filir_Wing','Filir\'s Pinions',4,20,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,7,2,512,NULL,70,0,595,'bonus bAspdRate,2; bonus bCastRate,-2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5665,'Shaman_Hat','Shaman Hat',4,20,NULL,400,NULL,1,NULL,1,0xFFFFFFFF,7,2,256,NULL,1,1,596,'bonus2 bSubEle,Ele_Neutral,3; bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Earth,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Wind,3; bonus2 bSubEle,Ele_Poison,3; bonus2 bSubEle,Ele_Holy,3; bonus2 bSubEle,Ele_Dark,3; bonus2 bSubEle,Ele_Ghost,3; bonus2 bSubEle,Ele_Undead,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5666,'Golden_Crown','Golden Crown',4,20,NULL,500,NULL,8,NULL,1,0xFFFFFFFF,7,2,256,NULL,1,1,597,'bonus bInt,1; bonus bDex,1; bonus bLuk,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5667,'Skull_Hood','Skull Hood',4,20,NULL,100,NULL,1,NULL,1,0xFFFFFFFF,7,2,768,NULL,30,1,598,NULL,NULL,NULL);
