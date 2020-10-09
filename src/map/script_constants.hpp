@@ -6252,6 +6252,8 @@
 	export_constant_npc(JT_4_4JOB_PHANTOMBOOK1);
 	export_constant_npc(JT_4_4JOB_PHANTOMBOOK2);
 	export_constant_npc(JT_4_4JOB_PHANTOMBOOK3);
+	export_constant_npc(JT_4_VENDING_MACHINE2);
+	export_constant_npc(JT_4_4JOB_MAURA);
 	export_constant_npc(JT_NEW_NPC_3RD_END);
 	#undef export_constant_npc
 
