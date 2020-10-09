@@ -3515,7 +3515,6 @@
 	export_constant(EFST_FLOWER_LEAF4);
 	export_constant(EFST_MISTY_FROST);
 	export_constant(EFST_MAGIC_POISON);
-	export_constant(EFST_KAUTE);
 	export_constant(EFST_JPNONLY_TACTICS);
 	export_constant(EFST_MADOGEAR);
 	export_constant(EFST_DEADLY_DEFEASANCE);
