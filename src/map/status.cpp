@@ -11564,8 +11564,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 5000; // [GodLesZ] tick time
 			break;
 		case SC_MAGNETICFIELD:
-			val3 = tick / 1000;
 			tick_time = 1000; // [GodLesZ] tick time
+			val4 = tick / tick_time;
 			break;
 		case SC_INSPIRATION:
 			val2 = (sd?sd->status.job_level:50);
@@ -14510,14 +14510,17 @@ TIMER_FUNC(status_change_timer){
 		break;
 
 	case SC_MAGNETICFIELD:
-		if (--(sce->val3) >= 0) {
+		if (--(sce->val4) >= 0) {
 			struct block_list *src = map_id2bl(sce->val2);
 
 			if (!src || (src && (status_isdead(src) || src->m != bl->m)))
 				break;
+			map_freeblock_lock();
 			if (!status_charge(bl, 0, 50))
 				status_zap(bl, 0, status->sp);
-			sc_timer_next(1000 + tick);
+			if (sc->data[type])
+				sc_timer_next(1000 + tick);
+			map_freeblock_unlock();
 			return 0;
 		}
 		break;
