@@ -220,7 +220,7 @@
 	packet(0x0133,-1);
 	parseable_packet(0x0134,-1,clif_parse_PurchaseReq,2,4,8);
 	packet(0x0135,7);
-	packet(0x0136,-1);
+	packet(openvendingType,-1);
 	packet(0x0137,6);
 	packet(0x0138,3);
 	packet(0x0139,16);
@@ -2257,7 +2257,7 @@
 	parseable_packet(0x09E8,11,clif_parse_Mail_refreshinbox,2,3); // CZ_OPEN_MAILBOX
 	parseable_packet(0x09E9,2,clif_parse_dull,0); // CZ_CLOSE_MAILBOX
 	parseable_packet(0x09EA,11,clif_parse_Mail_read,2,3); // CZ_REQ_READ_MAIL
-	packet(0x09EB,-1); // ZC_ACK_READ_MAIL
+	packet(rodexread,-1); // ZC_ACK_READ_MAIL
 	parseable_packet(0x09EC,-1,clif_parse_Mail_send,2,4,28,52,60,62,64); // CZ_REQ_WRITE_MAIL
 	packet(0x09ED,3); // ZC_ACK_WRITE_MAIL
 	parseable_packet(0x09EE,11,clif_parse_Mail_refreshinbox,2,3); // CZ_REQ_NEXT_MAIL_LIST
@@ -2271,7 +2271,7 @@
 	packet(0x09F6,11); // ZC_ACK_DELETE_MAIL
 	parseable_packet(0x0A03,2,clif_parse_Mail_cancelwrite,0); // CZ_REQ_CANCEL_WRITE_MAIL
 	parseable_packet(0x0A04,6,clif_parse_Mail_setattach,2,4); // CZ_REQ_ADD_ITEM_TO_MAIL
-	packet(0x0A05,53); // ZC_ACK_ADD_ITEM_TO_MAIL
+	packet( rodexadditem, sizeof( struct PACKET_ZC_ADD_ITEM_TO_MAIL ) ); // ZC_ACK_ADD_ITEM_TO_MAIL
 	parseable_packet(0x0A06,6,clif_parse_Mail_winopen,2,4); // CZ_REQ_REMOVE_ITEM_MAIL
 	packet(0x0A07,9); // ZC_ACK_REMOVE_ITEM_MAIL
 	parseable_packet(0x0A08,26,clif_parse_Mail_beginwrite,0); // CZ_REQ_OPEN_WRITE_MAIL

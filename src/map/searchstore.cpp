@@ -400,7 +400,7 @@ void searchstore_clearremote(struct map_session_data* sd)
  * @param card : card in the item
  * @param refine : refine of the item
  */
-bool searchstore_result(struct map_session_data* sd, int store_id, uint32 account_id, const char* store_name, t_itemid nameid, unsigned short amount, unsigned int price, const t_itemid* card, unsigned char refine)
+bool searchstore_result(struct map_session_data* sd, int store_id, uint32 account_id, const char* store_name, t_itemid nameid, unsigned short amount, unsigned int price, const t_itemid* card, unsigned char refine, uint8 enchantgrade)
 {
 	struct s_search_store_info_item* ssitem;
 
@@ -416,6 +416,7 @@ bool searchstore_result(struct map_session_data* sd, int store_id, uint32 accoun
 	ssitem->price = price;
 	memcpy(ssitem->card, card, sizeof(ssitem->card));
 	ssitem->refine = refine;
+	ssitem->enchantgrade = enchantgrade;
 
 	return true;
 }
