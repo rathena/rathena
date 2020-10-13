@@ -8806,7 +8806,7 @@ void clif_guild_emblem_area(struct block_list* bl)
 	//      (emblem in the flag npcs and emblem over the head in agit maps) [FlavioJS]
 	PACKET_ZC_CHANGE_GUILD p{};
 
-	p.packetType = changeGuildEmblem;
+	p.packetType = HEADER_ZC_CHANGE_GUILD;
 	p.guild_id = status_get_guild_id(bl);
 	p.emblem_id = status_get_emblem_id(bl);
 
