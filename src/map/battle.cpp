@@ -1066,11 +1066,11 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	int flag = d->flag;
 
 	// SC Types that must be first because they may or may not block damage
-	if ((sce = sc->data[SC_KYRIE]) && damage > 0) {
+	if ((sce = sc->data[SC_KYRIE]) && *damage > 0) {
 		sce->val2 -= static_cast<int>(cap_value(*damage, INT_MIN, INT_MAX));
 		if (flag & BF_WEAPON || skill_id == TF_THROWSTONE) {
 			if (sce->val2 >= 0)
-				damage = 0;
+				*damage = 0;
 			else
 				*damage = -sce->val2;
 		}
@@ -1078,48 +1078,48 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			status_change_end(target, SC_KYRIE, INVALID_TIMER);
 	}
 
-	if ((sce = sc->data[SC_P_ALTER]) && damage > 0) {
+	if ((sce = sc->data[SC_P_ALTER]) && *damage > 0) {
 		clif_specialeffect(target, EF_GUARD, AREA);
 		sce->val3 -= static_cast<int>(cap_value(*damage, INT_MIN, INT_MAX));
 		if (sce->val3 >= 0)
-			damage = 0;
+			*damage = 0;
 		else
 			*damage = -sce->val3;
 		if (sce->val3 <= 0)
 			status_change_end(target, SC_P_ALTER, INVALID_TIMER);
 	}
 
-	if ((sce = sc->data[SC_TUNAPARTY]) && damage > 0) {
+	if ((sce = sc->data[SC_TUNAPARTY]) && *damage > 0) {
 		sce->val2 -= static_cast<int>(cap_value(*damage, INT_MIN, INT_MAX));
 		if (sce->val2 >= 0)
-			damage = 0;
+			*damage = 0;
 		else
 			*damage = -sce->val2;
 		if (sce->val2 <= 0)
 			status_change_end(target, SC_TUNAPARTY, INVALID_TIMER);
 	}
 
-	if ((sce = sc->data[SC_DIMENSION1]) && damage > 0) {
+	if ((sce = sc->data[SC_DIMENSION1]) && *damage > 0) {
 		sce->val2 -= static_cast<int>(cap_value(*damage, INT_MIN, INT_MAX));
 		if (sce->val2 >= 0)
-			damage = 0;
+			*damage = 0;
 		else
 			*damage = -sce->val2;
 		if (sce->val2 <= 0)
 			status_change_end(target, SC_DIMENSION1, INVALID_TIMER);
 	}
 
-	if ((sce = sc->data[SC_DIMENSION2]) && damage > 0) {
+	if ((sce = sc->data[SC_DIMENSION2]) && *damage > 0) {
 		sce->val2 -= static_cast<int>(cap_value(*damage, INT_MIN, INT_MAX));
 		if (sce->val2 >= 0)
-			damage = 0;
+			*damage = 0;
 		else
 			*damage = -sce->val2;
 		if (sce->val2 <= 0)
 			status_change_end(target, SC_DIMENSION2, INVALID_TIMER);
 	}
 
-	if (damage == 0)
+	if (*damage == 0)
 		return false;
 
 	// ATK_BLOCK Type
@@ -1198,7 +1198,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 		return false;
 	}
 
-	if ((sce = sc->data[SC_MILLENNIUMSHIELD]) && sce->val2 > 0 && damage > 0) {
+	if ((sce = sc->data[SC_MILLENNIUMSHIELD]) && sce->val2 > 0 && *damage > 0) {
 		sce->val3 -= static_cast<int>(cap_value(*damage, INT_MIN, INT_MAX)); // absorb damage
 		d->dmg_lv = ATK_BLOCK;
 		if (sce->val3 <= 0) { // Shield Down
