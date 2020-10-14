@@ -12608,9 +12608,9 @@
 28342,Critical_Anklet,Critical Anklet,4,0,,200,,3,,1,0xFFFFFFFF,63,2,136,,50,0,,{ bonus bCritical,5; bonus bMdef,3; },{},{}
 28352,Vesper_Gear_01,Vesper Gear 01,4,20,,100,,1,,1,0xFFFFFFFF,63,2,136,,90,0,0,{ bonus bMdef,3; bonus bMatkRate,5; },{},{}
 28353,Vesper_Gear_02,Vesper Gear 02,4,20,,100,,1,,1,0xFFFFFFFF,63,2,136,,90,0,0,{ bonus bMdef,3; bonus2 bAddClass,Class_All,5; },{},{}
-28354,City_Map,City Map,4,0,,100,,0,,1,0xFFFFFFFF,63,2,136,,1,0,0,{ skill "AL_INCAGI",3; },{},{}
-28355,Shining_Holy_Water_,Shining Holy Water,4,0,,100,,0,,1,0xFFFFFFFF,63,2,136,,1,0,0,{ bonus2 bHPRegenRate,100,10000; bonus2 bSPRegenRate,5,10000; bonus2 bAddDefMonster,3445,20; bonus2 bAddDefMonster,3446,20; bonus2 bAddDefMonster,3447,20; bonus2 bAddDefMonster,3448,20; bonus2 bAddDefMonster,3449,20; bonus2 bAddDefMonster,3450,20; bonus2 bAddDefMonster,3451,20; bonus2 bAddDefMonster,3452,20; },{},{}
-28356,Prontera_Badge,Prontera Badge,4,0,,100,,0,,0,0xFFFFFFFF,63,2,136,,1,0,0,{ skill "ALL_PRONTERA_RECALL",2; },{},{}
+28354,DowntownMap_,City Map,4,0,,100,,0,,1,0xFFFFFFFF,63,2,136,,1,0,0,{ skill "AL_INCAGI",3; },{},{}
+28355,ShiningHolyWater_,Shining Holy Water,4,0,,100,,0,,1,0xFFFFFFFF,63,2,136,,1,0,0,{ bonus2 bHPRegenRate,100,10000; bonus2 bSPRegenRate,5,10000; bonus2 bAddDefMonster,3445,20; bonus2 bAddDefMonster,3446,20; bonus2 bAddDefMonster,3447,20; bonus2 bAddDefMonster,3448,20; bonus2 bAddDefMonster,3449,20; bonus2 bAddDefMonster,3450,20; bonus2 bAddDefMonster,3451,20; bonus2 bAddDefMonster,3452,20; },{},{}
+28356,BadgeOfProntera_,Prontera Badge,4,0,,100,,0,,0,0xFFFFFFFF,63,2,136,,1,0,0,{ skill "ALL_PRONTERA_RECALL",2; },{},{}
 28357,Vesper_Gear_03,Vesper Gear 03,4,20,,100,,1,,1,0xFFFFFFFF,63,2,136,,90,0,0,{ bonus bMdef,3; bonus bFlee,10; },{},{}
 28358,Cursed_Lucky_Clover,Cursed Lucky Clover,4,0,,100,,,,1,0xFFFFFFFF,63,2,136,,100,0,,{ bonus bLuk,2; bonus bFlee,3; bonus2 bAddEff2,Eff_Curse,5; },{},{ sc_end SC_CLOAKING; /*FIXME: Because the combo has Cloaking skill*/ }
 28359,Vesper_Gear_04,Vesper Gear 04,4,20,,100,,1,,1,0xFFFFFFFF,63,2,136,,90,0,0,{ bonus bMdef,3; bonus bHit,10; },{},{}
