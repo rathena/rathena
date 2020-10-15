@@ -1058,7 +1058,7 @@ static void battle_absorb_damage(struct block_list *bl, struct Damage *d) {
  * @param skill_lv: Skill level
  * @return True: Damage inflicted, False: Missed
  **/
-bool battle_status_block_damage(struct block_list *src, struct block_list *target, struct status_change *sc, struct Damage *d, int64 *damage, uint16 skill_id, uint16 skill_lv) {
+bool battle_status_block_damage(struct block_list *src, struct block_list *target, struct status_change *sc, struct Damage *d, int64 &damage, uint16 skill_id, uint16 skill_lv) {
 	if (!src || !target || !sc || !d)
 		return true;
 
@@ -1066,60 +1066,60 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 	int flag = d->flag;
 
 	// SC Types that must be first because they may or may not block damage
-	if ((sce = sc->data[SC_KYRIE]) && *damage > 0) {
-		sce->val2 -= static_cast<int>(cap_value(*damage, INT_MIN, INT_MAX));
+	if ((sce = sc->data[SC_KYRIE]) && damage > 0) {
+		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
 		if (flag & BF_WEAPON || skill_id == TF_THROWSTONE) {
 			if (sce->val2 >= 0)
-				*damage = 0;
+				damage = 0;
 			else
-				*damage = -sce->val2;
+				damage = -sce->val2;
 		}
 		if ((--sce->val3) <= 0 || (sce->val2 <= 0) || skill_id == AL_HOLYLIGHT)
 			status_change_end(target, SC_KYRIE, INVALID_TIMER);
 	}
 
-	if ((sce = sc->data[SC_P_ALTER]) && *damage > 0) {
+	if ((sce = sc->data[SC_P_ALTER]) && damage > 0) {
 		clif_specialeffect(target, EF_GUARD, AREA);
-		sce->val3 -= static_cast<int>(cap_value(*damage, INT_MIN, INT_MAX));
+		sce->val3 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
 		if (sce->val3 >= 0)
-			*damage = 0;
+			damage = 0;
 		else
-			*damage = -sce->val3;
+			damage = -sce->val3;
 		if (sce->val3 <= 0)
 			status_change_end(target, SC_P_ALTER, INVALID_TIMER);
 	}
 
-	if ((sce = sc->data[SC_TUNAPARTY]) && *damage > 0) {
-		sce->val2 -= static_cast<int>(cap_value(*damage, INT_MIN, INT_MAX));
+	if ((sce = sc->data[SC_TUNAPARTY]) && damage > 0) {
+		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
 		if (sce->val2 >= 0)
-			*damage = 0;
+			damage = 0;
 		else
-			*damage = -sce->val2;
+			damage = -sce->val2;
 		if (sce->val2 <= 0)
 			status_change_end(target, SC_TUNAPARTY, INVALID_TIMER);
 	}
 
-	if ((sce = sc->data[SC_DIMENSION1]) && *damage > 0) {
-		sce->val2 -= static_cast<int>(cap_value(*damage, INT_MIN, INT_MAX));
+	if ((sce = sc->data[SC_DIMENSION1]) && damage > 0) {
+		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
 		if (sce->val2 >= 0)
-			*damage = 0;
+			damage = 0;
 		else
-			*damage = -sce->val2;
+			damage = -sce->val2;
 		if (sce->val2 <= 0)
 			status_change_end(target, SC_DIMENSION1, INVALID_TIMER);
 	}
 
-	if ((sce = sc->data[SC_DIMENSION2]) && *damage > 0) {
-		sce->val2 -= static_cast<int>(cap_value(*damage, INT_MIN, INT_MAX));
+	if ((sce = sc->data[SC_DIMENSION2]) && damage > 0) {
+		sce->val2 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
 		if (sce->val2 >= 0)
-			*damage = 0;
+			damage = 0;
 		else
-			*damage = -sce->val2;
+			damage = -sce->val2;
 		if (sce->val2 <= 0)
 			status_change_end(target, SC_DIMENSION2, INVALID_TIMER);
 	}
 
-	if (*damage == 0)
+	if (damage == 0)
 		return false;
 
 	// ATK_BLOCK Type
@@ -1136,8 +1136,8 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 					break;
 				}
 #ifdef RENEWAL
-				if (group->val3 - *damage > 0)
-					group->val3 -= static_cast<int>(cap_value(*damage, INT_MIN, INT_MAX));
+				if (group->val3 - damage > 0)
+					group->val3 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
 				else
 					skill_delunitgroup(group);
 #endif
@@ -1147,8 +1147,8 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 					skill_delunitgroup(group);
 					break;
 				}
-				if (group->val3 - *damage > 0)
-					group->val3 -= static_cast<int>(cap_value(*damage, INT_MIN, INT_MAX));
+				if (group->val3 - damage > 0)
+					group->val3 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
 				else
 					skill_delunitgroup(group);
 				break;
@@ -1183,7 +1183,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			(skill_id == 0 && (status_get_status_data(src))->rhw.ele == ELE_GHOST))
 		{
 			if (skill_id == WL_SOULEXPANSION)
-				*damage <<= 1; // If used against a player in White Imprison, the skill deals double damage.
+				damage <<= 1; // If used against a player in White Imprison, the skill deals double damage.
 			status_change_end(target, SC_WHITEIMPRISON, INVALID_TIMER); // Those skills do damage and removes effect
 		} else {
 			d->dmg_lv = ATK_BLOCK;
@@ -1198,8 +1198,8 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 		return false;
 	}
 
-	if ((sce = sc->data[SC_MILLENNIUMSHIELD]) && sce->val2 > 0 && *damage > 0) {
-		sce->val3 -= static_cast<int>(cap_value(*damage, INT_MIN, INT_MAX)); // absorb damage
+	if ((sce = sc->data[SC_MILLENNIUMSHIELD]) && sce->val2 > 0 && damage > 0) {
+		sce->val3 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX)); // absorb damage
 		d->dmg_lv = ATK_BLOCK;
 		if (sce->val3 <= 0) { // Shield Down
 			sce->val2--;
@@ -1406,7 +1406,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		return damage;
 
 	if( sc && sc->count ) {
-		if (!battle_status_block_damage(src, bl, sc, d, &damage, skill_id, skill_lv)) // Statuses that reduce damage to 0.
+		if (!battle_status_block_damage(src, bl, sc, d, damage, skill_id, skill_lv)) // Statuses that reduce damage to 0.
 			return 0;
 
 		// Damage increasing effects
@@ -5283,7 +5283,7 @@ static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,s
 		struct status_change *sc = status_get_sc(target);
 		int64 damage_dummy = 1;
 
-		if (sc && !battle_status_block_damage(src, target, sc, wd, &damage_dummy, skill_id, skill_lv)) { // Statuses that reduce damage to 0.
+		if (sc && !battle_status_block_damage(src, target, sc, wd, damage_dummy, skill_id, skill_lv)) { // Statuses that reduce damage to 0.
 			wd->damage = wd->damage2 = 0;
 			return;
 		}
