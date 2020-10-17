@@ -168,7 +168,7 @@ OnPCLogoutEvent:
 	end;
 
 OnInit:
-	setarray .base_level[0],145,175;
+	setarray .base_level[0],145,200;
 	setarray .map$[0],"1@sthb", "1@sthd", "1@sthc";
 	set .map_size, getarraysize( .map$ );
 	set .min_party_member, 1;

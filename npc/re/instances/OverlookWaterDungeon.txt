@@ -56,7 +56,7 @@ OnInit:
 	.owdX = 168;
 	.owdY = 168;
 	.owdDelay = 72000; // 20 hour delay
-	setarray .level[0],30,175;
+	setarray .level[0],30,200;
 	end;
 }
 

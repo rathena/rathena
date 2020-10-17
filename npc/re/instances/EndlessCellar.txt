@@ -154,7 +154,7 @@ OnPCLogoutEvent:
 	end;
 
 OnInit:
-	setarray .base_level[0],50,175;
+	setarray .base_level[0],50,200;
 	setarray .time_limit[0],14400,300;
 	setarray .map$[0],"1@new","2@new","3@new","4@new","5@new";
 	set .map_size, getarraysize( .map$ );

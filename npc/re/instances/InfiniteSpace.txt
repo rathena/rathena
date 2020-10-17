@@ -163,7 +163,7 @@ OnStart:
 close;
 
 OnInit:
-	setarray .base_level[0],100,175;
+	setarray .base_level[0],100,200;
 	setarray .map$[0],"1@infi";
 	set .map_size, getarraysize( .map$ );
 	set .min_party_member, 1;
