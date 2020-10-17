@@ -765,7 +765,7 @@
 4658	//N_Verit_Card
 //--- 2015 / 7 / 9 - ����������
 11600	//Shining_Holy_Water
-22847	//Prontera_Medal
+22847	//BadgeOfProntera
 22848	//Prison_Key
 22849	//Prontera_Time_Crystal
 6921	//Dehumidifiers
