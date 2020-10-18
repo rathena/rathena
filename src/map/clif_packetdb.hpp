@@ -1114,7 +1114,7 @@
 	packet(0x02d4,29);
 	packet(0x02d5,2);
 	parseable_packet(0x02d6,6,clif_parse_ViewPlayerEquip,2);
-	packet(0x02d7,-1);
+	packet( viewequipackType, -1 );
 	parseable_packet(0x02d8,10,clif_parse_configuration,2,6);
 	packet(0x02d9,10);
 	packet(0x02da,3);
@@ -1823,7 +1823,6 @@
 	packet(0x0856,-1);
 	packet(0x0857,-1);
 	packet(0x0858,-1);
-	packet(0x0859,-1);
 	ack_packet(ZC_WEAR_EQUIP_ACK,0x08d0,9,2,4,6,8);
 #endif
 
@@ -2093,7 +2092,6 @@
 	packet(0x0994,-1); //cart itemlist equip
 	packet(0x0995,-1); //store itemlist normal
 	packet(0x0996,-1); //store itemlist equip
-	packet(0x0997,-1); //ZC_EQUIPWIN_MICROSCOPE_V5
 	parseable_packet(0x0998,8,clif_parse_EquipItem,2,4); // CZ_REQ_WEAR_EQUIP_V5
 	ack_packet(ZC_WEAR_EQUIP_ACK,0x0999,11,2,4,8,10); // cz_wear_equipv5
 	packet(0x099a,9); // take_off_equipv5
@@ -2245,7 +2243,6 @@
 	packet(0x0A0D,-1); // ZC_INVENTORY_ITEMLIST_EQUIP_V6
 	packet(0x0A0F,-1); // ZC_CART_ITEMLIST_EQUIP_V6
 	packet(0x0A10,-1); // ZC_STORE_ITEMLIST_EQUIP_V6
-	packet(0x0A2D,-1); // ZC_EQUIPWIN_MICROSCOPE_V6
 #endif
 
 // 2015-05-13aRagexe
