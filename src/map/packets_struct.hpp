@@ -2196,11 +2196,14 @@ struct PACKET_ZC_ADD_ITEM_TO_CART {
 #endif
 	uint8 identified;
 	uint8 damaged;
+#if !( PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724 )
 	uint8 refine;
+#endif
 	struct EQUIPSLOTINFO slot;
 #if PACKETVER >= 20150226
 	struct ItemOptions option_data[MAX_ITEM_OPTIONS];
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	uint8 refine;
 	uint8 enchantgrade;
 #endif
 #endif
@@ -2545,11 +2548,14 @@ struct PACKET_ZC_PC_PURCHASE_MYITEMLIST_sub {
 #endif
 	uint8 identified;
 	uint8 damaged;
+#if !( PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724 )
 	uint8 refine;
+#endif
 	struct EQUIPSLOTINFO slot;
 #if PACKETVER >= 20150226
 	struct ItemOptions option_data[MAX_ITEM_OPTIONS];
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
+	uint8 refine;
 	uint8 enchantgrade;
 #endif
 #endif
