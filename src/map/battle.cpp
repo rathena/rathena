@@ -1053,12 +1053,12 @@ static void battle_absorb_damage(struct block_list *bl, struct Damage *d) {
  * @param target: Target of attack
  * @param sc: Status Change data
  * @param d: Damage data
- * @param damage: Damage received
+ * @param damage: Damage received as a reference
  * @param skill_id: Skill ID
  * @param skill_lv: Skill level
  * @return True: Damage inflicted, False: Missed
  **/
-bool battle_status_block_damage(struct block_list *src, struct block_list *target, struct status_change *sc, struct Damage *d, int64 damage, uint16 skill_id, uint16 skill_lv) {
+bool battle_status_block_damage(struct block_list *src, struct block_list *target, struct status_change *sc, struct Damage *d, int64 &damage, uint16 skill_id, uint16 skill_lv) {
 	if (!src || !target || !sc || !d)
 		return true;
 
@@ -5281,8 +5281,9 @@ static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,s
 
 	if (attack_hits && target->type == BL_MOB) {
 		struct status_change *sc = status_get_sc(target);
+		int64 damage_dummy = 1;
 
-		if (sc && !battle_status_block_damage(src, target, sc, wd, 1, skill_id, skill_lv)) { // Statuses that reduce damage to 0.
+		if (sc && !battle_status_block_damage(src, target, sc, wd, damage_dummy, skill_id, skill_lv)) { // Statuses that reduce damage to 0.
 			wd->damage = wd->damage2 = 0;
 			return;
 		}
