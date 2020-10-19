@@ -771,7 +771,7 @@ enum e_delay_consume : uint8 {
 
 /// Item combo struct
 struct s_item_combo {
-	std::vector<uint32> nameid;
+	std::vector<t_itemid> nameid;
 	script_code *script;
 	uint32 id;
 
@@ -941,7 +941,7 @@ struct s_random_opt_group {
 	uint16 total;
 };
 
-class ItemDatabase : public TypesafeCachedYamlDatabase<uint32, item_data> {
+class ItemDatabase : public TypesafeCachedYamlDatabase<t_itemid, item_data> {
 public:
 	ItemDatabase() : TypesafeCachedYamlDatabase("ITEM_DB", 1) {
 

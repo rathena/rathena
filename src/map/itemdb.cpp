@@ -1642,7 +1642,7 @@ static bool itemdb_read_noequip(char* str[], int columns, int current) {
 /**
  * @return: amount of retrieved entries.
  **/
-static int itemdb_combo_split_atoi (char *str, uint32 *val) {
+static int itemdb_combo_split_atoi (char *str, t_itemid *val) {
 	int i;
 
 	for (i=0; i<MAX_ITEMS_PER_COMBO; i++) {
@@ -1722,7 +1722,7 @@ static void itemdb_read_combos(const char* basedir, bool silent) {
 			ShowError("itemdb_read_combos(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
 			continue;
 		} else {
-			uint32 items[MAX_ITEMS_PER_COMBO];
+			t_itemid items[MAX_ITEMS_PER_COMBO];
 			int v = 0, retcount = 0;
 
 			if((retcount = itemdb_combo_split_atoi(str[0], items)) < 2) {
@@ -1732,7 +1732,7 @@ static void itemdb_read_combos(const char* basedir, bool silent) {
 			/* validate */
 			for(v = 0; v < retcount; v++) {
 				if( !itemdb_exists(items[v]) ) {
-					ShowError("itemdb_read_combos: line %d of \"%s\" contains unknown item ID %d, skipping.\n", lines, path,items[v]);
+					ShowError("itemdb_read_combos: line %d of \"%s\" contains unknown item ID %" PRIu32 ", skipping.\n", lines, path,items[v]);
 					break;
 				}
 			}
