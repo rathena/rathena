@@ -208,7 +208,7 @@ static bool itemdb_read_db(const char *file);
 
 // Constants for conversion
 std::unordered_map<t_itemid, std::string> aegis_itemnames;
-std::unordered_map<uint16, uint16> aegis_itemviewid;
+std::unordered_map<t_itemid, t_itemid> aegis_itemviewid;
 std::unordered_map<uint16, std::string> aegis_mobnames;
 std::unordered_map<uint16, std::string> aegis_skillnames;
 std::unordered_map<const char*, int64> constants;
@@ -670,7 +670,7 @@ static bool parse_item_constants_txt( const char* path ){
 
 		aegis_itemnames[item_id] = std::string(name);
 
-		if (atoi(str[14]) & (EQP_HELM | EQP_COSTUME_HELM) && util::umap_find(aegis_itemviewid, (uint16)atoi(str[18])) == nullptr)
+		if (atoi(str[14]) & (EQP_HELM | EQP_COSTUME_HELM) && util::umap_find(aegis_itemviewid, (t_itemid)atoi(str[18])) == nullptr)
 			aegis_itemviewid[atoi(str[18])] = item_id;
 
 		count++;
@@ -697,7 +697,7 @@ static bool parse_item_constants_yml(std::string path, std::string filename) {
 	uint64 count = 0;
 
 	for (const YAML::Node &body : rootNode["Body"]) {
-		uint16 item_id = body["Id"].as<uint16>();
+		t_itemid item_id = body["Id"].as<t_itemid>();
 
 		aegis_itemnames[item_id] = body["Name"].as<std::string>();
 
@@ -715,8 +715,8 @@ static bool parse_item_constants_yml(std::string path, std::string filename) {
 						constant |= eqpit.second;
 				}
 
-				if (constant > 0 && constant & (EQP_HELM | EQP_COSTUME_HELM) && body["View"].IsDefined() && util::umap_find(aegis_itemviewid, body["View"].as<uint16>()) == nullptr)
-					aegis_itemviewid[body["View"].as<uint16>()] = item_id;
+				if (constant > 0 && constant & (EQP_HELM | EQP_COSTUME_HELM) && body["View"].IsDefined() && util::umap_find(aegis_itemviewid, body["View"].as<t_itemid>()) == nullptr)
+					aegis_itemviewid[body["View"].as<t_itemid>()] = item_id;
 			}
 		}
 		count++;
@@ -1248,7 +1248,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 		}
 
 		if (atoi(str[7]) != 0) {
-			uint16 *headtop_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[7]));
+			t_itemid *headtop_item_id = util::umap_find(aegis_itemviewid, (t_itemid)atoi(str[7]));
 
 			if (headtop_item_id == nullptr) {
 				ShowError("Item ID for view ID %hu (head top) is not known.\n", atoi(str[7]));
@@ -1266,7 +1266,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 		}
 
 		if (atoi(str[8]) != 0) {
-			uint16 *headmid_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[8]));
+			t_itemid *headmid_item_id = util::umap_find(aegis_itemviewid, (t_itemid)atoi(str[8]));
 
 			if (headmid_item_id == nullptr) {
 				ShowError("Item ID for view ID %hu (head mid) is not known.\n", atoi(str[8]));
@@ -1284,7 +1284,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 		}
 
 		if (atoi(str[9]) != 0) {
-			uint16 *headlow_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[9]));
+			t_itemid *headlow_item_id = util::umap_find(aegis_itemviewid, (t_itemid)atoi(str[9]));
 
 			if (headlow_item_id == nullptr) {
 				ShowError("Item ID for view ID %hu (head low) is not known.\n", atoi(str[9]));
