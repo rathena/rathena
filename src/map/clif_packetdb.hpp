@@ -70,13 +70,13 @@
 	packet( HEADER_ZC_ITEM_ENTRY, sizeof( struct PACKET_ZC_ITEM_ENTRY ) );
 	packet(0x009e,17);
 	parseable_packet(0x009f,6,clif_parse_TakeItem,2);
-	packet(0x00a0,23);
+	packet( additemType, sizeof( struct packet_additem ) );
 	packet(0x00a1,6);
 	parseable_packet(0x00a2,6,clif_parse_DropItem,2,4);
-	packet(0x00a3,-1);
-	packet(0x00a4,-1);
-	packet(0x00a5,-1);
-	packet(0x00a6,-1);
+	packet( inventorylistnormalType, -1 );
+	packet( inventorylistequipType, -1 );
+	packet( storageListNormalType, -1 );
+	packet( storageListEquipType, -1 );
 	parseable_packet(0x00a7,8,clif_parse_UseItem,2,4);
 	packet( useItemAckType, sizeof( struct PACKET_ZC_USE_ITEM_ACK ) );
 	parseable_packet(0x00a9,6,clif_parse_EquipItem,2,4);
@@ -143,7 +143,7 @@
 	parseable_packet(0x00e6,3,clif_parse_TradeAck,2);
 	packet(0x00e7,3);
 	parseable_packet(0x00e8,8,clif_parse_TradeAddItem,2,4);
-	packet(0x00e9,19);
+	packet( tradeaddType, sizeof( struct PACKET_ZC_ADD_EXCHANGE_ITEM ) );
 	packet(0x00ea,5);
 	parseable_packet(0x00eb,2,clif_parse_TradeOk,0);
 	packet(0x00ec,3);
@@ -200,8 +200,8 @@
 	packet(0x011f,16);
 	packet(0x0120,6);
 	packet(0x0121,14);
-	packet(0x0122,-1);
-	packet(0x0123,-1);
+	packet( cartlistequipType, -1 );
+	packet( cartlistnormalType, -1 );
 	packet( cartaddType, sizeof( struct PACKET_ZC_ADD_ITEM_TO_CART ) );
 	packet(0x0125,8);
 	parseable_packet(0x0126,8,clif_parse_PutItemToCart,2,4);
@@ -217,7 +217,7 @@
 	parseable_packet(0x0130,6,clif_parse_VendingListReq,2);
 	packet(0x0131,86);
 	packet(0x0132,6);
-	packet(0x0133,-1);
+	packet( vendinglistType, -1 );
 	parseable_packet(0x0134,-1,clif_parse_PurchaseReq,2,4,8);
 	packet(0x0135,7);
 	packet(openvendingType,-1);
@@ -401,8 +401,6 @@
 	packet(0x01eb,10);
 	packet(0x01ec,26);
 	parseable_packet(0x01ed,2,clif_parse_NoviceExplosionSpirits,0);
-	packet(0x01ee,-1);
-	packet(0x01ef,-1);
 	packet(0x01f0,-1);
 	packet(0x01f1,-1);
 	packet(0x01f2,20);
@@ -995,12 +993,8 @@
 	parseable_packet(0x0292,2,clif_parse_AutoRevive,0);
 	packet(0x0293,70);
 	packet(0x0294,10);
-	packet(0x0295,-1);
-	packet(0x0296,-1);
-	packet(0x0297,-1);
 	packet( HEADER_ZC_CASH_TIME_COUNTER, sizeof( struct PACKET_ZC_CASH_TIME_COUNTER ) );
 	packet( HEADER_ZC_CASH_ITEM_DELETE, sizeof( struct PACKET_ZC_CASH_ITEM_DELETE ) );
-	packet(0x029a,27);
 	packet(0x029c,66);
 	packet(0x029d,-1);
 	packet(0x029e,11);
@@ -1107,11 +1101,7 @@
 	packet(0x02cd,26);
 	packet(0x02ce,10);
 	parseable_packet(0x02cf,6,clif_parse_MemorialDungeonCommand,2);
-	packet(0x02d0,-1);
-	packet(0x02d1,-1);
-	packet(0x02d2,-1);
 	ack_packet(ZC_NOTIFY_BIND_ON_EQUIP,0x02d3,4,2);
-	packet(0x02d4,29);
 	packet(0x02d5,2);
 	parseable_packet(0x02d6,6,clif_parse_ViewPlayerEquip,2);
 	packet( viewequipackType, -1 );
@@ -1163,9 +1153,6 @@
 // 2008-01-02aSakexe
 #if PACKETVER >= 20080102
 	parseable_packet(0x01df,6,clif_parse_GMReqAccountName,2);
-	packet(0x02e8,-1);
-	packet(0x02e9,-1);
-	packet(0x02ea,-1);
 	packet(0x02eb,13);
 	packet(0x02ec,67);
 	packet(0x02ed,59);
@@ -1622,7 +1609,6 @@
 
 // 2009-12-15aRagexeRE
 #if PACKETVER >= 20091215
-	packet(0x0800,-1);
 	//packet(0x0801,-1);
 #endif
 
@@ -1667,11 +1653,6 @@
 // 2010-02-09aRagexeRE
 #if PACKETVER >= 20100209
 	//packet(0x07F0,6);
-#endif
-
-// 2010-02-23aRagexeRE
-#if PACKETVER >= 20100223
-	packet(0x080F,20);
 #endif
 
 // 2010-03-03aRagexeRE
@@ -1744,7 +1725,7 @@
 	//packet(0x0825,-1);
 	//packet(0x0826,4);
 	parseable_packet(0x0835,-1,clif_parse_SearchStoreInfo,2,4,5,9,13,14,15);
-	packet(0x0836,-1);
+	packet( HEADER_ZC_SEARCH_STORE_INFO_ACK, -1 );
 	packet(0x0837,3);
 	//packet(0x0838,3);
 #endif
@@ -2085,13 +2066,6 @@
 	packet(0x0979,50); //ackworldinfo
 	ack_packet(ZC_PERSONAL_INFOMATION,0x097b,16,2,4,8,12,16,17,21,25); //Still need further information
 	//ack_packet(ZC_PERSONAL_INFOMATION_CHN,0x0981,12,2,4,6,8,12,13,15,17,10); // Disabled until further information is found.
-	packet(0x0990,31); //additem
-	packet(0x0991,-1); //inv itemlist normal
-	packet(0x0992,-1); //inv itemlist equip
-	packet(0x0993,-1); //cart itemlist normal
-	packet(0x0994,-1); //cart itemlist equip
-	packet(0x0995,-1); //store itemlist normal
-	packet(0x0996,-1); //store itemlist equip
 	parseable_packet(0x0998,8,clif_parse_EquipItem,2,4); // CZ_REQ_WEAR_EQUIP_V5
 	ack_packet(ZC_WEAR_EQUIP_ACK,0x0999,11,2,4,8,10); // cz_wear_equipv5
 	packet(0x099a,9); // take_off_equipv5
@@ -2236,15 +2210,6 @@
 	packet(0x09FF,-1); // ZC_NOTIFY_STANDENTRY11
 #endif
 
-// 2015-02-25aRagexeRE
-#if PACKETVER >= 20150225
-	packet(0x0A09,45); // ZC_ADD_EXCHANGE_ITEM3
-	packet(0x0A0C,56); // ZC_ITEM_PICKUP_ACK_V6
-	packet(0x0A0D,-1); // ZC_INVENTORY_ITEMLIST_EQUIP_V6
-	packet(0x0A0F,-1); // ZC_CART_ITEMLIST_EQUIP_V6
-	packet(0x0A10,-1); // ZC_STORE_ITEMLIST_EQUIP_V6
-#endif
-
 // 2015-05-13aRagexe
 #if PACKETVER >= 20150513
 	// New Packets
@@ -2330,11 +2295,6 @@
 // 2016-06-22aRagexeRE
 #if PACKETVER >= 20160622
 	packet(0x0A84,94);
-#endif
-
-// 2016-09-21bRagexeRE
-#if PACKETVER >= 20160921
-	packet(0x0A37,59);
 #endif
 
 // 2016-10-26bRagexeRE
