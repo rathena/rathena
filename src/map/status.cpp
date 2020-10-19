@@ -4262,8 +4262,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	// Base batk value is set in status_calc_misc
 #ifndef RENEWAL
 	// !FIXME: Weapon-type bonus (Why is the weapon_atk bonus applied to base attack?)
-	if (sd->status.weapon < MAX_WEAPON_TYPE && sd->weapon_atk[sd->status.weapon])
-		base_status->batk += sd->weapon_atk[sd->status.weapon];
+	if (sd->status.weapon < MAX_WEAPON_TYPE && sd->indexed_bonus.weapon_atk[sd->status.weapon])
+		base_status->batk += sd->indexed_bonus.weapon_atk[sd->status.weapon];
 	// Absolute modifiers from passive skills
 	if((skill=pc_checkskill(sd,BS_HILTBINDING))>0)
 		base_status->batk += 4;
@@ -4554,11 +4554,11 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->indexed_bonus.subele[ELE_FIRE] += i;
 			sd->indexed_bonus.subele[ELE_WIND] += i;
 #ifndef RENEWAL
-			sd->subele[ELE_POISON] += i;
-			sd->subele[ELE_HOLY] += i;
-			sd->subele[ELE_DARK] += i;
-			sd->subele[ELE_GHOST] += i;
-			sd->subele[ELE_UNDEAD] += i;
+			sd->indexed_bonus.subele[ELE_POISON] += i;
+			sd->indexed_bonus.subele[ELE_HOLY] += i;
+			sd->indexed_bonus.subele[ELE_DARK] += i;
+			sd->indexed_bonus.subele[ELE_GHOST] += i;
+			sd->indexed_bonus.subele[ELE_UNDEAD] += i;
 #endif
 		}
 #ifdef RENEWAL
