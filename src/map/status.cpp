@@ -14482,8 +14482,8 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_OVERHEAT_LIMITPOINT:
 		if (--(sce->val1) >= 0) { // Cooling
-			int16 limit[] = { 150, 200, 280, 360, 450 };
-			uint16 skill_lv = (sd ? cap_value(pc_checkskill(sd, NC_MAINFRAME), 0, 4) : 0);
+			static std::vector<int16> limit = { 150, 200, 280, 360, 450 };
+			uint16 skill_lv = (sd ? cap_value(pc_checkskill(sd, NC_MAINFRAME), 0, limit.size()-1) : 0);
 
 			if (sc && sc->data[SC_OVERHEAT])
 				status_change_end(bl,SC_OVERHEAT,INVALID_TIMER);
