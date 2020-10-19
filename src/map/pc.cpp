@@ -11503,14 +11503,14 @@ bool pc_setstand(struct map_session_data *sd, bool force){
  * @param heat: Amount of Heat to adjust
  **/
 void pc_overheat(struct map_session_data *sd, int16 heat) {
-	struct status_change_entry *sce = NULL;
-	int16 limit[] = { 150, 200, 280, 360, 450 };
-	uint16 skill_lv;
-
 	nullpo_retv(sd);
 
-	skill_lv = cap_value(pc_checkskill(sd, NC_MAINFRAME), 0, 4);
-	if ((sce = sd->sc.data[SC_OVERHEAT_LIMITPOINT])) {
+	status_change_entry *sce = sd->sc.data[SC_OVERHEAT_LIMITPOINT];
+
+	if (sce) {
+		static std::vector<int16> limit = { 150, 200, 280, 360, 450 };
+		uint16 skill_lv = cap_value(pc_checkskill(sd, NC_MAINFRAME), 0, limit.size()-1);
+
 		sce->val1 += heat;
 		sce->val1 = cap_value(sce->val1, 0, 1000);
 		if (sd->sc.data[SC_OVERHEAT])

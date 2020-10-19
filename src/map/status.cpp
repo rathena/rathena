@@ -14440,8 +14440,8 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_OVERHEAT_LIMITPOINT:
 		if (--(sce->val1) >= 0) { // Cooling
-			int16 limit[] = { 150, 200, 280, 360, 450 };
-			uint16 skill_lv = (sd ? pc_checkskill(sd, NC_MAINFRAME) : 0);
+			static std::vector<int16> limit = { 150, 200, 280, 360, 450 };
+			uint16 skill_lv = (sd ? cap_value(pc_checkskill(sd, NC_MAINFRAME), 0, limit.size()-1) : 0);
 
 			if (sc && sc->data[SC_OVERHEAT])
 				status_change_end(bl,SC_OVERHEAT,INVALID_TIMER);
@@ -14453,7 +14453,7 @@ TIMER_FUNC(status_change_timer){
 		break;
 
 	case SC_OVERHEAT: {
-			int damage = status->max_hp / 100; // Suggestion 1% each second
+			uint32 damage = status->max_hp / 100; // Suggestion 1% each second
 
 			if (damage >= status->hp)
 				damage = status->hp - 1; // Do not kill, just keep you with 1 hp minimum
