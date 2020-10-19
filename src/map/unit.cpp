@@ -3407,11 +3407,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			sd->qi_count = 0;
 
 #if PACKETVER >= 20150513
-			if( sd->hatEffectCount > 0 ){
-				aFree(sd->hatEffectIDs);
-				sd->hatEffectIDs = NULL;
-				sd->hatEffectCount = 0;
-			}
+			sd->hatEffects.clear();
 #endif
 
 			if (sd->achievement_data.achievements)

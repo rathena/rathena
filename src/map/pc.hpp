@@ -781,8 +781,7 @@ struct map_session_data {
 	short setlook_head_top, setlook_head_mid, setlook_head_bottom, setlook_robe; ///< Stores 'setlook' script command values.
 
 #if PACKETVER >= 20150513
-	uint32* hatEffectIDs;
-	uint8 hatEffectCount;
+	std::vector<int16> hatEffects;
 #endif
 
 	struct{
