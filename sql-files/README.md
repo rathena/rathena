@@ -9,14 +9,19 @@ The files in this directory are basic SQL table building scripts. The contained 
 For a new install, the following needs to be imported into the 'ragnarok' schema:
 Note: The schema name is defined in `conf/inter_athena.conf::map_server_db`.
 
-* item_cash_db.sql - Used for client's cash shop.
-* item_cash_db2.sql - Used for client's cash shop (import).
 * main.sql - Contains tables for normal server usage.
 * roulette_default_data.sql - Contains data for the client's roulette game.
+
+For a new install, the following needs to be imported into the 'log' schema:
+Note: The schema name is defined in `conf/inter_athena.conf::log_db_db`.
+
+* logs.sql - Contains tables for logging of server events.
 
 If your server is setup to read SQL database data, import the following:
 Note: If `conf/inter_athena.conf::use_sql_db` is set to yes continue with these imports else these can be skipped. Not all files have to be imported, only the ones that apply to the same mode as the server being ran.
 
+* item_cash_db.sql - Used for client's cash shop.
+* item_cash_db2.sql - Used for client's cash shop (import).
 * item_db.sql - Contains __pre-renewal__ item data.
 * item_db2.sql - Contains __pre-renewal__ item data (import).
 * item_db_re.sql - Contains __renewal__ item data.
@@ -30,11 +35,6 @@ Note: If `conf/inter_athena.conf::use_sql_db` is set to yes continue with these 
 * mob_skill_db_re.sql - Contains __renewal__ mob skill data.
 * mob_skill_db2_re.sql - Contains __renewal__ mob skill data (import).
 
-For a new install, the following needs to be imported into the 'log' schema:
-Note: The schema name is defined in `conf/inter_athena.conf::log_db_db`.
-
-* logs.sql - Contains tables for logging of server events.
-
 ### Updates
 ---
 Over the course of time new features and optimizations will take place. This may require SQL changes to happen. In the `upgrades` folder will be upgrade files with an attached date.
@@ -42,7 +42,7 @@ These imports only have to executed if an update has occurred after the initial 
 
 ### Compatibility
 ---
-The `compatiblity` folder contains SQL views which are used with helping control panels or websites grab prevelent data for a table that may have changed structure.
+The `compatibility` folder contains SQL views which are used with helping control panels or websites grab prevalent data for a table that may have changed structure.
 
 These are optional imports but website data such as item databases will not work properly when using the new YAML format without these views:
 

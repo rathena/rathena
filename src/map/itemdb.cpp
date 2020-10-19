@@ -1029,6 +1029,10 @@ ItemDatabase item_db;
 s_item_combo *itemdb_combo_exists(uint32 combo_id) {
 	auto item = util::map_find(itemdb_combo, combo_id);
 
+	if( item == nullptr ){
+		return nullptr;
+	}
+
 	return item.get();
 }
 
