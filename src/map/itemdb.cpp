@@ -1100,9 +1100,16 @@ int16 itemdb_group_item_exists_pc(struct map_session_data *sd, unsigned short gr
 static struct item_data* itemdb_searchname1(const char *str, bool aegis_only)
 {
 	for (const auto &it : item_db) {
-		if (aegis_only && strcmpi(it.second->name.c_str(), str) == 0)
+		// Absolute priority to Aegis code name.
+		if (strcmpi(it.second->name.c_str(), str) == 0)
 			return it.second.get();
-		else if (!aegis_only && strcmpi(it.second->ename.c_str(), str) == 0)
+
+		// If only Aegis name is allowed, continue with the next entry
+		if (aegis_only)
+			continue;
+
+		//Second priority to Client displayed name.
+		if (strcmpi(it.second->ename.c_str(), str) == 0)
 			return it.second.get();
 	}
 
