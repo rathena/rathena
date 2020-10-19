@@ -291,6 +291,9 @@ void YamlDatabase::invalidWarning( const YAML::Node &node, const char* fmt, ... 
 
 	va_start(ap, fmt);
 
+	// Remove any remaining garbage of a previous loading line
+	ShowMessage( CL_CLL );
+	// Print the actual error
 	_vShowMessage( MSG_ERROR, fmt, ap );
 
 	va_end(ap);
