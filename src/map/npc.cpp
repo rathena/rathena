@@ -1142,8 +1142,8 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y, st
 		if (npc_ontouch_event(sd, nd) > 0 && npc_ontouch2_event(sd, nd) > 0) { // failed to run OnTouch event, so just click the npc
 			if (!util::vector_exists(sd->areanpc, nd->bl.id))
 				sd->areanpc.push_back(nd->bl.id);
-
-			npc_click(sd, nd);
+			if (sd->npc_id == 0)
+				npc_click(sd, nd);
 		}
 		break;
 	}

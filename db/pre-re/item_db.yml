@@ -43542,7 +43542,6 @@ Body:
     Locations:
       Head_Mid: true
     EquipLevelMin: 70
-    Refineable: true
     View: 595
     Script: |
       bonus bAspdRate,2; bonus bCastRate,-2;
