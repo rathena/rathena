@@ -98,7 +98,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 #endif
 		}
 
-		const std::string to = path + (rename.size() > 0 ? rename : name) + ".sql";
+		const std::string to = "sql-files/" + (rename.size() > 0 ? rename : name) + ".sql";
 
 		if( fileExists( from ) ){
 			inNode.reset();
