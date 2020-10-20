@@ -308,7 +308,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			if (!this->asBool(jobNode, jobName.c_str(), active))
 				return 0;
 
-			itemdb_jobid2mapid(item->class_base, static_cast<e_mapid>(1 << constant), active);
+			itemdb_jobid2mapid(item->class_base, static_cast<e_mapid>(constant), active);
 		}
 	} else {
 		if (!exists) {
@@ -1334,10 +1334,21 @@ static void itemdb_jobid2mapid(uint64 bclass[3], e_mapid jobmask, bool active)
 	uint64 temp_mask[3] = { 0 };
 
 	if (jobmask != MAPID_ALL) {
-		// Needs to be shifted by 1ULL, because Novice is 0
-		temp_mask[0] |= (jobmask & MAPID_BASEMASK) << 1ULL;
-		temp_mask[1] |= (jobmask & JOBL_2_1) << 1ULL;
-		temp_mask[2] |= (jobmask & JOBL_2_2) << 1ULL;
+		// Calculate the required bit to set
+		uint64 job = 1ULL << ( jobmask & MAPID_BASEMASK );
+
+		// Basejob
+		temp_mask[0] |= job;
+
+		// 2-1
+		if( ( jobmask & JOBL_2_1 ) != 0 ){
+			temp_mask[1] |= job;
+		}
+
+		// 2-2
+		if( ( jobmask & JOBL_2_2 ) != 0 ){
+			temp_mask[2] |= job;
+		}
 	} else {
 		temp_mask[0] = temp_mask[1] = temp_mask[2] = MAPID_ALL;
 	}

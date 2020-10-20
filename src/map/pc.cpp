@@ -1270,7 +1270,30 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 
 	return false; // Job Change Fail
 }
- 
+
+static bool pc_job_can_use_item( struct map_session_data* sd, struct item_data* item ){
+	nullpo_retr( false, sd );
+	nullpo_retr( false, item );
+
+	// Calculate the required bit to check
+	uint64 job = 1ULL << ( sd->class_ & MAPID_BASEMASK );
+
+	size_t index;
+
+	// 2-1
+	if( ( sd->class_ & JOBL_2_1 ) != 0 ){
+		index = 1;
+	// 2-2
+	}else if( ( sd->class_ & JOBL_2_2 ) != 0 ){
+		index = 2;
+	// Basejob
+	}else{
+		index = 0;
+	}
+
+	return ( item->class_base[index] & job ) != 0;
+}
+
 /*==========================================
  * Check if player can use/equip selected item. Used by pc_isUseitem and pc_isequip
    Returns:
@@ -1428,7 +1451,7 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 	}
 
 	//Not equipable by class. [Skotlex]
-	if (!(1ULL << (sd->class_&MAPID_BASEMASK)&item->class_base[(sd->class_&JOBL_2_1) ? 1 : ((sd->class_&JOBL_2_2) ? 2 : 0)]))
+	if (!pc_job_can_use_item(sd,item))
 		return ITEM_EQUIP_ACK_FAIL;
 
 	if (!pc_isItemClass(sd, item))
@@ -5400,10 +5423,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		return false;
 
 	//Not equipable by class. [Skotlex]
-	if (!(
-		(1ULL<<(sd->class_&MAPID_BASEMASK)) &
-		(item->class_base[sd->class_&JOBL_2_1?1:(sd->class_&JOBL_2_2?2:0)])
-	))
+	if (!pc_job_can_use_item(sd,item))
 		return false;
 	
 	if (sd->sc.count && (
