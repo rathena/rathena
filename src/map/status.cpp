@@ -4022,31 +4022,38 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		}
 	}
 
-	// We've got combos to process and check
-	if( sd->combos.count ) {
-		for (i = 0; i < sd->combos.count; i++) {
-			uint8 j = 0;
-			bool no_run = false;
-			struct item_combo *combo = NULL;
+	// Process and check item combos
+	if (!sd->combos.empty()) {
+		for (const auto &combo : sd->combos) {
+			s_item_combo *item_combo;
 
 			current_equip_item_index = -1;
-			current_equip_combo_pos = sd->combos.pos[i];
+			current_equip_combo_pos = combo->pos;
 
-			if (!sd->combos.bonus[i] || !(combo = itemdb_combo_exists(sd->combos.id[i])))
+			if (combo->bonus == nullptr || !(item_combo = itemdb_combo_exists(combo->id)))
 				continue;
+
+			bool no_run = false;
+			size_t j = 0;
+
 			// Check combo items
-			while (j < combo->count) {
-				struct item_data *id = itemdb_exists(combo->nameid[j]);
+			while (j < item_combo->nameid.size()) {
+				item_data *id = itemdb_exists(item_combo->nameid[j]);
+
 				// Don't run the script if at least one of combo's pair has restriction
 				if (id && !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(id, sd->bl.m)) {
 					no_run = true;
 					break;
 				}
+
 				j++;
 			}
+
 			if (no_run)
 				continue;
-			run_script(sd->combos.bonus[i],0,sd->bl.id,0);
+
+			run_script(combo->bonus, 0, sd->bl.id, 0);
+
 			if (!calculating) // Abort, run_script retriggered this
 				return 1;
 		}

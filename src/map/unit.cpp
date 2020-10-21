@@ -3378,12 +3378,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->npc_id = 0;
 			}
 
-			if( sd->combos.count ) {
-				aFree(sd->combos.bonus);
-				aFree(sd->combos.id);
-				aFree(sd->combos.pos);
-				sd->combos.count = 0;
-			}
+			sd->combos.clear();
 
 			if( sd->sc_display_count ) { /* [Ind] */
 				for( i = 0; i < sd->sc_display_count; i++ )
