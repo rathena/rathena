@@ -215,7 +215,6 @@ std::unordered_map<const char*, int64> constants;
 
 // Forward declaration of constant loading functions
 static bool parse_item_constants_txt( const char* path );
-static bool parse_item_constants_yml(std::string path, std::string filename);
 static bool parse_mob_constants( char* split[], int columns, int current );
 static bool parse_skill_constants_txt( char* split[], int columns, int current );
 static bool parse_skill_constants_yml(std::string path, std::string filename);
@@ -410,9 +409,8 @@ int do_init( int argc, char** argv ){
 	const std::string path_db_import = path_db + "/" + DBIMPORT + "/";
 
 	// Loads required conversion constants
-	if (fileExists(path_db + "/" + "item_db.yml")) {
-		parse_item_constants_yml(path_db_mode, "item_db.yml");
-		parse_item_constants_yml(path_db_import, "item_db.yml");
+	if (fileExists(item_db.getDefaultLocation())) {
+		item_db.load();
 	} else {
 		parse_item_constants_txt( ( path_db_mode + "item_db.txt" ).c_str() );
 		parse_item_constants_txt( ( path_db_import + "item_db.txt" ).c_str() );
@@ -683,49 +681,63 @@ static bool parse_item_constants_txt( const char* path ){
 	return true;
 }
 
-static bool parse_item_constants_yml(std::string path, std::string filename) {
-	YAML::Node rootNode;
+const std::string ItemDatabase::getDefaultLocation(){
+	return std::string( db_path ) + "/item_db.yml";
+}
 
-	try {
-		rootNode = YAML::LoadFile(path + filename);
-	} catch (YAML::Exception &e) {
-		ShowError("Failed to read file from '" CL_WHITE "%s%s" CL_RESET "'.\n", path.c_str(), filename.c_str());
-		ShowError("%s (Line %d: Column %d)\n", e.msg.c_str(), e.mark.line, e.mark.column);
-		return false;
+uint64 ItemDatabase::parseBodyNode(const YAML::Node& node) {
+	t_itemid nameid;
+
+	if (!this->asUInt32(node, "Id", nameid))
+		return 0;
+
+	if (this->nodeExists(node, "AegisName")) {
+		std::string name;
+
+		if (!this->asString(node, "AegisName", name))
+			return 0;
+
+		aegis_itemnames[nameid] = name;
 	}
 
-	uint64 count = 0;
+	if (this->nodeExists(node, "View")) {
+		uint32 look;
 
-	for (const YAML::Node &body : rootNode["Body"]) {
-		t_itemid item_id = body["Id"].as<t_itemid>();
+		if (!this->asUInt32(node, "View", look))
+			return 0;
 
-		aegis_itemnames[item_id] = body["Name"].as<std::string>();
+		if( look > 0 ){
+			if (this->nodeExists(node, "Locations")) {
+				const YAML::Node& locationNode = node["Locations"];
 
-		if (body["Location"].IsDefined()) {
-			for (const auto &locit : body["Location"]) {
-				std::string equipName = locit.first.as<std::string>();
+				static std::vector<std::string> locations = {
+					"Head_Low",
+					"Head_Mid",
+					"Head_Top",
+					"Costume_Head_Low",
+					"Costume_Head_Mid",
+					"Costume_Head_Top"
+				};
 
-				if (body["Location"][equipName].IsDefined() && !body["Location"][equipName].as<bool>())
-					continue;
+				for( std::string& location : locations ){
+					if (this->nodeExists(locationNode, location)) {
+						bool active;
 
-				int64 constant = 0;
+						if (!this->asBool(locationNode, location, active))
+							return 0;
 
-				for (const auto &eqpit : um_equipnames) {
-					if (eqpit.first.compare(equipName) == 0)
-						constant |= eqpit.second;
+						aegis_itemviewid[look] = nameid;
+						break;
+					}
 				}
-
-				if (constant > 0 && constant & (EQP_HELM | EQP_COSTUME_HELM) && body["View"].IsDefined() && util::umap_find(aegis_itemviewid, body["View"].as<t_itemid>()) == nullptr)
-					aegis_itemviewid[body["View"].as<t_itemid>()] = item_id;
 			}
 		}
-		count++;
 	}
 
-	ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s%s" CL_RESET "'" CL_CLL "\n", count, path.c_str(), filename.c_str());
-
-	return true;
+	return 1;
 }
+
+ItemDatabase item_db;
 
 static bool parse_mob_constants( char* split[], int columns, int current ){
 	uint16 mob_id = atoi( split[0] );

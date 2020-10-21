@@ -1,5 +1,5 @@
 
-COMMON_OBJ = minicore.o malloc.o showmsg.o strlib.o utils.o des.o grfio.o
+COMMON_OBJ = minicore.o malloc.o showmsg.o strlib.o utils.o des.o grfio.o database.o
 COMMON_DIR_OBJ = $(COMMON_OBJ:%=../common/obj/%)
 COMMON_H = $(shell ls ../common/*.hpp)
 COMMON_INCLUDE = -I../common/
@@ -20,12 +20,14 @@ MAPCACHE_OBJ = obj_all/mapcache.o
 
 CSV2YAML_OBJ = obj_all/csv2yaml.o
 
+YAML2SQL_OBJ = obj_all/yaml2sql.o
+
 @SET_MAKE@
 
 #####################################################################
-.PHONY : all mapcache csv2yaml clean help
+.PHONY : all mapcache csv2yaml yaml2sql clean help
 
-all: mapcache csv2yaml
+all: mapcache csv2yaml yaml2sql
 
 mapcache: obj_all $(MAPCACHE_OBJ) $(COMMON_DIR_OBJ) $(LIBCONFIG_OBJ)
 	@echo "	LD	$@"
@@ -35,6 +37,10 @@ csv2yaml: obj_all $(CSV2YAML_OBJ) $(COMMON_DIR_OBJ) $(YAML_CPP_AR)
 	@echo "	LD	$@"
 	@@CXX@ @LDFLAGS@ -o ../../csv2yaml@EXEEXT@ $(CSV2YAML_OBJ) $(COMMON_DIR_OBJ) $(YAML_CPP_AR) @LIBS@
 
+yaml2sql: obj_all $(YAML2SQL_OBJ) $(COMMON_DIR_OBJ) $(YAML_CPP_AR)
+	@echo "	LD	$@"
+	@@CXX@ @LDFLAGS@ -o ../../yaml2SQL@EXEEXT@ $(YAML2SQL_OBJ) $(COMMON_DIR_OBJ) $(YAML_CPP_AR) @LIBS@
+
 clean:
 	@echo "	CLEAN	tool"
 	@rm -rf obj_all/*.o ../../mapcache@EXEEXT@
@@ -43,6 +49,7 @@ help:
 	@echo "possible targets are 'mapcache' 'all' 'clean' 'help'"
 	@echo "'mapcache'  - mapcache generator"
 	@echo "'csv2yaml'  - csv2yaml converter"
+	@echo "'yaml2SQL'  - yaml2sql converter"
 	@echo "'all'       - builds all above targets"
 	@echo "'clean'     - cleans builds and objects"
 	@echo "'help'      - outputs this message"
