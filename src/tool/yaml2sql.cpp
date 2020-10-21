@@ -78,29 +78,16 @@ void prepareHeader(std::ofstream &file, const std::string& name) {
 }
 
 template<typename Func>
-bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda ){
+bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, const std::string& to, const std::string& table, Func lambda ){
 	for( const std::string& path : paths ){
 		const std::string name_ext = name + ".yml";
 		const std::string from = path + name_ext;
-		std::string rename = "";
-
-		if (path.find("import") == std::string::npos) {
-#ifdef RENEWAL
-			rename = "item_db_re";
-#else
-			rename = "item_db";
-#endif
-		} else {
-#ifdef RENEWAL
-			rename = "item_db2_re";
-#else
-			rename = "item_db2";
-#endif
-		}
-
-		const std::string to = "sql-files/" + (rename.size() > 0 ? rename : name) + ".sql";
 
 		if( fileExists( from ) ){
+			if( !askConfirmation( "Found the file \"%s\", which can be converted to sql.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
+				continue;
+			}
+
 			inNode.reset();
 
 			try {
@@ -113,10 +100,6 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 
 			if (!inNode["Body"].IsDefined())
 				continue;
-
-			if( !askConfirmation( "Found the file \"%s\", which can be converted to sql.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
-				continue;
-			}
 
 			if (fileExists(to)) {
 				if (!askConfirmation("The file \"%s\" already exists.\nDo you want to replace it? (Y/N)\n", to.c_str())) {
@@ -131,9 +114,9 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 				return false;
 			}
 
-			prepareHeader(out, (rename.size() > 0 ? rename : name));
+			prepareHeader(out, table);
 
-			if( !lambda( path, name_ext, (rename.size() > 0 ? rename : name) ) ){
+			if( !lambda( path, name_ext, table ) ){
 				out.close();
 				return false;
 			}
@@ -149,14 +132,28 @@ int do_init( int argc, char** argv ){
 	const std::string path_db = std::string( db_path );
 	const std::string path_db_mode = path_db + "/" + DBPATH;
 	const std::string path_db_import = path_db + "/" + DBIMPORT + "/";
-
-	std::vector<std::string> root_paths = {
-		path_db,
-		path_db_mode,
-		path_db_import
+#ifdef RENEWAL
+	const std::string item_table_name = "item_db_re";
+	const std::string item_import_table_name = "item_db2_re";
+#else
+	const std::string item_table_name = "item_db";
+	const std::string item_import_table_name = "item_db2";
+#endif
+	std::vector<std::string> item_table_suffixes = {
+		"usable",
+		"equip",
+		"etc"
 	};
 
-	if (!process("ITEM_DB", 1, root_paths, "item_db", [](const std::string& path, const std::string& name_ext, const std::string &table) -> bool {
+	for( const std::string& suffix : item_table_suffixes ){
+		if (!process("ITEM_DB", 1, { path_db_mode }, "item_db_" + suffix, "sql-files/" + item_table_name + "_" + suffix + ".sql", item_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {
+			return item_db_yaml2sql(path + name_ext, table);
+		})) {
+			return 0;
+		}
+	}
+
+	if (!process("ITEM_DB", 1, { path_db_import }, "item_db", "sql-files/" + item_import_table_name + ".sql", item_import_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {
 		return item_db_yaml2sql(path + name_ext, table);
 	})) {
 		return 0;
@@ -554,7 +551,7 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 		entries++;
 	}
 
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
+	ShowStatus("Done converting '" CL_WHITE "%d" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return true;
 }
