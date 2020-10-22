@@ -2657,7 +2657,7 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 	amotion = job_info[classidx].aspd_base[sd->weapontype1]; // Single weapon
 	if (sd->status.shield)
 		amotion += job_info[classidx].aspd_base[MAX_WEAPON_TYPE];
-	else if (sd->weapontype2 && sd->equip_index[EQI_HAND_R] != sd->equip_index[EQI_HAND_L])
+	else if (sd->weapontype2 != W_FIST && sd->equip_index[EQI_HAND_R] != sd->equip_index[EQI_HAND_L])
 		amotion += job_info[classidx].aspd_base[sd->weapontype2] / 4; // Dual-wield
 
 	switch(sd->status.weapon) {
@@ -13106,7 +13106,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			}
 			if (begin_spurt && sce->val1 >= 7 &&
 				DIFF_TICK(gettick(), starttick) <= 1000 &&
-				(!sd || (sd->weapontype1 == 0 && sd->weapontype2 == 0))
+				(!sd || (sd->weapontype1 == W_FIST && sd->weapontype2 == W_FIST))
 			)
 				sc_start(bl,bl,SC_SPURT,100,sce->val1,skill_get_time2(status_sc2skill(type), sce->val1));
 		}
