@@ -1663,9 +1663,8 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	// Initialize BG queue
 	sd->bg_queue_id = 0;
 
-#if PACKETVER >= 20150513
-	sd->hatEffectIDs = NULL;
-	sd->hatEffectCount = 0;
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	sd->hatEffects = {};
 #endif
 
 	sd->catch_target_class = PET_CATCH_FAIL;

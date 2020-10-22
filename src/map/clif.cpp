@@ -80,6 +80,9 @@ static struct eri *delay_clearunit_ers;
 
 struct s_packet_db packet_db[MAX_PACKET_DB + 1];
 int packet_db_ack[MAX_ACK_FUNC + 1];
+// Reuseable global packet buffer to prevent too many allocations
+// Take socket.cpp::socket_max_client_packet into consideration
+static int8 packet_buffer[UINT16_MAX];
 unsigned long color_table[COLOR_MAX];
 
 #include "clif_obfuscation.hpp"
@@ -20553,9 +20556,7 @@ void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x,
 /// Send hat effects to the client (ZC_HAT_EFFECT).
 /// 0A3B <Length>.W <AID>.L <Status>.B { <HatEffectId>.W }
 void clif_hat_effects( struct map_session_data* sd, struct block_list* bl, enum send_target target ){
-#if PACKETVER >= 20150513
-	unsigned char* buf;
-	int len,i;
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
 	struct map_session_data *tsd;
 	struct block_list* tbl;
 
@@ -20567,39 +20568,40 @@ void clif_hat_effects( struct map_session_data* sd, struct block_list* bl, enum 
 		tbl = bl;
 	}
 
-	if( !tsd->hatEffectCount )
+	nullpo_retv( tsd );
+
+	if( tsd->hatEffects.empty() ){
 		return;
-
-	len = 9 + tsd->hatEffectCount * 2;
-
-	buf = (unsigned char*)aMalloc( len );
-
-	WBUFW(buf,0) = 0xa3b;
-	WBUFW(buf,2) = len;
-	WBUFL(buf,4) = tsd->bl.id;
-	WBUFB(buf,8) = 1;
-
-	for( i = 0; i < tsd->hatEffectCount; i++ ){
-		WBUFW(buf,9+i*2) = tsd->hatEffectIDs[i];
 	}
 
-	clif_send(buf, len,tbl,target);
+	struct PACKET_ZC_HAT_EFFECT* p = (struct PACKET_ZC_HAT_EFFECT*)packet_buffer;
 
-	aFree(buf);
+	p->packetType = HEADER_ZC_HAT_EFFECT;
+	p->packetLength = (int16)( sizeof( struct PACKET_ZC_HAT_EFFECT ) + sizeof( int16 ) * tsd->hatEffects.size() );
+	p->aid = tsd->bl.id;
+	p->status = 1;
+
+	for( size_t i = 0; i < tsd->hatEffects.size(); i++ ){
+		p->effects[i] = tsd->hatEffects[i];
+	}
+
+	clif_send( p, p->packetLength, tbl, target );
 #endif
 }
 
 void clif_hat_effect_single( struct map_session_data* sd, uint16 effectId, bool enable ){
-#if PACKETVER >= 20150513
-	unsigned char buf[13];
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	nullpo_retv( sd );
 
-	WBUFW(buf,0) = 0xa3b;
-	WBUFW(buf,2) = 13;
-	WBUFL(buf,4) = sd->bl.id;
-	WBUFB(buf,8) = enable;
-	WBUFL(buf,9) = effectId;
+	struct PACKET_ZC_HAT_EFFECT* p = (struct PACKET_ZC_HAT_EFFECT*)packet_buffer;
 
-	clif_send(buf,13,&sd->bl,AREA);
+	p->packetType = HEADER_ZC_HAT_EFFECT;
+	p->packetLength = (int16)( sizeof( struct PACKET_ZC_HAT_EFFECT ) + sizeof( int16 ) );
+	p->aid = sd->bl.id;
+	p->status = enable;
+	p->effects[0] = effectId;
+
+	clif_send( p, p->packetLength, &sd->bl, AREA );
 #endif
 }
 

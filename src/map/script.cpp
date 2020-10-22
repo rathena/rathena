@@ -23191,47 +23191,34 @@ BUILDIN_FUNC(recalculatestat) {
 }
 
 BUILDIN_FUNC(hateffect){
-#if PACKETVER >= 20150513
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
 	struct map_session_data* sd;
-	bool enable;
-	int i, effectID;
 
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_FAILURE;
 
-	effectID = script_getnum(st,2);
-	enable = script_getnum(st,3) ? true : false;
+	int16 effectID = script_getnum(st,2);
+	bool enable = script_getnum(st,3) ? true : false;
 
 	if( effectID <= HAT_EF_MIN || effectID >= HAT_EF_MAX ){
 		ShowError( "buildin_hateffect: unsupported hat effect id %d\n", effectID );
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	ARR_FIND( 0, sd->hatEffectCount, i, sd->hatEffectIDs[i] == effectID );
+	auto it = util::vector_get( sd->hatEffects, effectID );
 
 	if( enable ){
-		if( i < sd->hatEffectCount ){
+		if( it != sd->hatEffects.end() ){
 			return SCRIPT_CMD_SUCCESS;
 		}
 
-		RECREATE(sd->hatEffectIDs,uint32,sd->hatEffectCount+1);
-		sd->hatEffectIDs[sd->hatEffectCount] = effectID;
-		sd->hatEffectCount++;
+		sd->hatEffects.push_back( effectID );
 	}else{
-		if( i == sd->hatEffectCount ){
+		if( it == sd->hatEffects.end() ){
 			return SCRIPT_CMD_SUCCESS;
 		}
 
-		for( ; i < sd->hatEffectCount - 1; i++ ){
-			sd->hatEffectIDs[i] = sd->hatEffectIDs[i+1];
-		}
-
-		sd->hatEffectCount--;
-
-		if( !sd->hatEffectCount ){
-			aFree(sd->hatEffectIDs);
-			sd->hatEffectIDs = NULL;
-		}
+		util::vector_erase_if_exists( sd->hatEffects, effectID );
 	}
 
 	if( !sd->state.connect_new ){
