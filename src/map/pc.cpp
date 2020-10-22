@@ -1438,7 +1438,7 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 				return ITEM_EQUIP_ACK_OK; //Can equip all helms
 
 			if (sd->status.base_level > 96 && item->equip & EQP_ARMS && item->type == IT_WEAPON && item->wlv == 4)
-				switch(item->look) { //In weapons, the look determines type of weapon.
+				switch(item->subtype) { //In weapons, the look determines type of weapon.
 					case W_DAGGER: //All level 4 - Daggers
 					case W_1HSWORD: //All level 4 - 1H Swords
 					case W_1HAXE: //All level 4 - 1H Axes
@@ -10851,7 +10851,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	// On weapon change (right and left hand)
 	if ((pos & EQP_ARMS) && sd->inventory_data[n]->type == IT_WEAPON) {
 		if (battle_config.ammo_unequip && !(flag & 4)) {
-			switch (sd->inventory_data[n]->look) {
+			switch (sd->inventory_data[n]->subtype) {
 				case W_BOW:
 				case W_MUSICAL:
 				case W_WHIP:

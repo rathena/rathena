@@ -16631,7 +16631,7 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 			clif_messagecolor(&sd->bl,color_table[COLOR_RED],e_msg,false,SELF);
 			return false;
 		}
-		if (!(require.ammo&1<<sd->inventory_data[i]->look)) { //Ammo type check. Send the "wrong weapon type" message
+		if (!(require.ammo&1<<sd->inventory_data[i]->subtype)) { //Ammo type check. Send the "wrong weapon type" message
 			//which is the closest we have to wrong ammo type. [Skotlex]
 			clif_arrow_fail(sd,0); //Haplo suggested we just send the equip-arrows message instead. [Skotlex]
 			//clif_skill_fail(sd,skill_id,USESKILL_FAIL_THIS_WEAPON,0);
