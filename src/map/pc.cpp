@@ -1030,7 +1030,7 @@ void pc_calcweapontype(struct map_session_data *sd)
 		return;
 	}
 	// dual-wield
-	sd->status.weapon = 0;
+	sd->status.weapon = W_FIST;
 	switch (sd->weapontype1){
 	case W_DAGGER:
 		switch (sd->weapontype2) {
@@ -1086,14 +1086,14 @@ void pc_setequipindex(struct map_session_data *sd)
 				if (sd->inventory_data[i])
 					sd->weapontype1 = sd->inventory_data[i]->subtype;
 				else
-					sd->weapontype1 = 0;
+					sd->weapontype1 = W_FIST;
 			}
 
 			if( sd->inventory.u.items_inventory[i].equip & EQP_HAND_L ) {
 				if( sd->inventory_data[i] && sd->inventory_data[i]->type == IT_WEAPON )
 					sd->weapontype2 = sd->inventory_data[i]->subtype;
 				else
-					sd->weapontype2 = 0;
+					sd->weapontype2 = W_FIST;
 			}
 		}
 		if (sd->inventory.u.items_inventory[i].equipSwitch) {
@@ -10590,26 +10590,26 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 
 	if(pos & EQP_HAND_R) {
 		if(id)
-			sd->weapontype1 = id->look;
+			sd->weapontype1 = id->subtype;
 		else
-			sd->weapontype1 = 0;
+			sd->weapontype1 = W_FIST;
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
 	}
 	if(pos & EQP_HAND_L) {
 		if(id) {
 			if(id->type == IT_WEAPON) {
-				sd->status.shield = 0;
-				sd->weapontype2 = id->look;
+				sd->status.shield = W_FIST;
+				sd->weapontype2 = id->subtype;
 			}
 			else
 			if(id->type == IT_ARMOR) {
 				sd->status.shield = id->look;
-				sd->weapontype2 = 0;
+				sd->weapontype2 = W_FIST;
 			}
 		}
 		else
-			sd->status.shield = sd->weapontype2 = 0;
+			sd->status.shield = sd->weapontype2 = W_FIST;
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
 	}
@@ -10620,23 +10620,23 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		short idx = sd->equip_index[EQI_AMMO];
 
 		if (idx >= 0) {
-			switch (sd->inventory_data[idx]->look) {
+			switch (sd->inventory_data[idx]->subtype) {
 				case AMMO_ARROW:
-					if (id->look != W_BOW && id->look != W_MUSICAL && id->look != W_WHIP)
+					if (id->subtype != W_BOW && id->subtype != W_MUSICAL && id->subtype != W_WHIP)
 						pc_unequipitem(sd, idx, 2 | 4);
 					break;
 				case AMMO_BULLET:
 				case AMMO_SHELL:
-					if (id->look != W_REVOLVER && id->look != W_RIFLE && id->look != W_GATLING && id->look != W_SHOTGUN
+					if (id->subtype != W_REVOLVER && id->subtype != W_RIFLE && id->subtype != W_GATLING && id->subtype != W_SHOTGUN
 #ifdef RENEWAL
-						&& id->look != W_GRENADE
+						&& id->subtype != W_GRENADE
 #endif
 						)
 						pc_unequipitem(sd, idx, 2 | 4);
 					break;
 #ifndef RENEWAL
 				case AMMO_GRENADE:
-					if (id->look != W_GRENADE)
+					if (id->subtype != W_GRENADE)
 						pc_unequipitem(sd, idx, 2 | 4);
 					break;
 #endif
@@ -10836,7 +10836,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		if (sd->status.shield && battle_getcurrentskill(&sd->bl) == LG_SHIELDSPELL)
 			unit_skillcastcancel(&sd->bl, 0); // Cancel Shield Spell if player swaps shields.
 
-		sd->status.shield = sd->weapontype2 = 0;
+		sd->status.shield = sd->weapontype2 = W_FIST;
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
 	}

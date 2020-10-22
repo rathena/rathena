@@ -16157,7 +16157,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			}
 			break;
 		case KO_JYUMONJIKIRI:
-			if (sd->weapontype1 && (sd->weapontype2 || sd->status.shield))
+			if (sd->weapontype1 != W_FIST && (sd->weapontype2 != W_FIST || sd->status.shield != W_FIST))
 				return true;
 			else {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
