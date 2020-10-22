@@ -16647,6 +16647,7 @@ void clif_parse_Auction_buysell(int fd, struct map_session_data* sd)
 ///
 
 void clif_cashshop_open( struct map_session_data* sd, int tab ){
+#if PACKETVER_MAIN_NUM >= 20101123 || PACKETVER_RE_NUM >= 20120328 || defined(PACKETVER_ZERO)
 	nullpo_retv( sd );
 
 	struct PACKET_ZC_SE_CASHSHOP_OPEN p;
@@ -16659,9 +16660,11 @@ void clif_cashshop_open( struct map_session_data* sd, int tab ){
 #endif
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+#endif
 }
 
 void clif_parse_cashshop_open_request( int fd, struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20101123 || PACKETVER_RE_NUM >= 20120328 || defined(PACKETVER_ZERO)
 	nullpo_retv( sd );
 
 	int tab = 0;
@@ -16676,12 +16679,15 @@ void clif_parse_cashshop_open_request( int fd, struct map_session_data* sd ){
 	sd->npc_shopid = -1; // Set npc_shopid when using cash shop from "cash shop" button [Aelys|Susu] bugreport:96
 
 	clif_cashshop_open( sd, tab );
+#endif
 }
 
 void clif_parse_cashshop_close( int fd, struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20101123 || PACKETVER_RE_NUM >= 20120328 || defined(PACKETVER_ZERO)
 	sd->state.cashshop_open = false;
 	sd->npc_shopid = 0; // Reset npc_shopid when using cash shop from "cash shop" button [Aelys|Susu] bugreport:96
 	// No need to do anything here
+#endif
 }
 
 //0846 <tabid>.W (CZ_REQ_SE_CASH_TAB_CODE))
