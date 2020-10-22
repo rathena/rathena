@@ -3030,6 +3030,23 @@ static void pc_bonus_addvanish(std::vector<s_vanish_bonus> &bonus, int16 rate, i
 	bonus.push_back(entry);
 }
 
+/**
+ * Checks if a bonus is restricted from a map
+ * @param sd: Player data
+ * @return True if the item bonus is granted or false otherwise
+ */
+static bool pc_bonus_restricted(map_session_data *sd) {
+	nullpo_retr(false, sd);
+
+	// Bonus doesn't apply on restricted maps
+	if (!battle_config.allow_equip_restricted_item &&
+		(itemdb_isNoEquip(sd->inventory_data[current_equip_item_index], sd->bl.m) ||
+		 itemdb_isNoEquip(sd->inventory_data[pc_checkequip(sd, current_equip_combo_pos)], sd->bl.m))
+		)
+		return false;
+	return true;
+}
+
 /*==========================================
  * Add a bonus(type) to player sd
  * format: bonus bBonusName,val;
@@ -3052,6 +3069,8 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 		case SP_INT:
 		case SP_DEX:
 		case SP_LUK:
+			if (!pc_bonus_restricted(sd))
+				break;
 			if(sd->state.lr_flag != 2)
 				sd->indexed_bonus.param_bonus[type-SP_STR]+=val;
 			break;
@@ -3104,12 +3123,11 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			break;
 		case SP_MDEF1:
 			if(sd->state.lr_flag != 2) {
+				if (!pc_bonus_restricted(sd))
+					break;
+
 				bonus = status->mdef + val;
-#ifdef RENEWAL
-				status->mdef = cap_value(bonus, SHRT_MIN, SHRT_MAX);
-#else
-				status->mdef = cap_value(bonus, CHAR_MIN, CHAR_MAX);
-#endif
+				status->mdef = cap_value(bonus, DEFTYPE_MIN, DEFTYPE_MAX);
 				if( sd->state.lr_flag == 3 ) {//Shield, used for royal guard
 					sd->bonus.shieldmdef += bonus;
 				}
@@ -3181,12 +3199,12 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 				status->def_ele=val;
 			break;
 		case SP_MAXHP:
-			if(sd->state.lr_flag == 2)
+			if(sd->state.lr_flag == 2 || !pc_bonus_restricted(sd))
 				break;
 			sd->bonus.hp += val;
 			break;
 		case SP_MAXSP:
-			if(sd->state.lr_flag == 2)
+			if(sd->state.lr_flag == 2 || !pc_bonus_restricted(sd))
 				break;
 			sd->bonus.sp += val;
 			break;
