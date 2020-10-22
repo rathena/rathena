@@ -11534,7 +11534,7 @@ void pc_overheat(struct map_session_data *sd, int16 heat) {
 
 	if (sce) {
 		static std::vector<int16> limit = { 150, 200, 280, 360, 450 };
-		uint16 skill_lv = cap_value(pc_checkskill(sd, NC_MAINFRAME), 0, limit.size()-1);
+		uint16 skill_lv = cap_value(pc_checkskill(sd, NC_MAINFRAME), 0, (uint16)(limit.size()-1));
 
 		sce->val1 += heat;
 		sce->val1 = cap_value(sce->val1, 0, 1000);
