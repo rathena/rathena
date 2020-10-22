@@ -656,17 +656,17 @@
 //-- Cure Free <-- GN_S_PHARMACY Lv1, Quality Potion Book, 20 Green Herb, 1 Fruit Of Mastela, 5 Panacea, 1 Leaf Of Yggdrasil, 10 Empty Cylinder
 263,12475,29,2497,1,6285,0,511,20,522,1,525,5,610,1,1092,10
 //-- Golden X <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 10 Yggdrasilberry, 5 Gold
-//264,100231,29,2497,1,1092,10,607,10,969,5
+264,100231,29,2497,1,1092,10,607,10,969,5
 //-- Red Herb Activator <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 45 Red Herb, 5 Yggdrasil Seed
-//265,100232,29,2497,1,1092,10,507,45,608,5
+265,100232,29,2497,1,1092,10,507,45,608,5
 //-- Blue Herb Activator <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 15 Blue Herb, 5 Yggdrasil Seed
-//266,100233,29,2497,1,1092,10,510,15,608,5
-//-- Concentrated Red Syrup Potion <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 10 Empty Potion Bottle, 15 Red Syrup
-//267,1100003,29,2497,1,1092,10,1093,10,11621,15
-//-- Concentrated Blue Syrup Potion <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 10 Empty Potion Bottle, 15 Blue Syrup
-//268,1100004,29,2497,1,1092,10,1093,10,11624,15
-//-- Concentrated Golden Syrup Potion <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 10 Empty Potion Bottle, 15 White Syrup, 10 Yellow Syrup
-//269,1100005,29,2497,1,1092,10,1093,10,11623,15,11622,10
+266,100233,29,2497,1,1092,10,510,15,608,5
+//-- Concentrated Red Syrup Potion <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 5 Empty Potion Bottle, 15 Red Syrup
+267,1100003,29,2497,1,1092,10,1093,5,11621,15
+//-- Concentrated Blue Syrup Potion <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 5 Empty Potion Bottle, 15 Blue Syrup
+268,1100004,29,2497,1,1092,10,1093,5,11624,15
+//-- Concentrated Golden Syrup Potion <-- GN_S_PHARMACY Lvl, 10 Empty Testtube, 5 Empty Potion Bottle, 10 White Syrup, 10 Yellow Syrup
+269,1100005,29,2497,1,1092,10,1093,5,11623,10,11622,10
 //===============================================
 
 //--------------------LEVEL 30-----------

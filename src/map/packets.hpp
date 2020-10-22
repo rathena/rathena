@@ -22,22 +22,23 @@
 #endif
 #define MAX_ACHIEVEMENT_DB MAX_ACHIEVEMENT_OBJECTIVES
 
-#define DEFINE_PACKET_HEADER(name, id) const uint16 HEADER_##name = id;
+#define DEFINE_PACKET_HEADER(name, id) const int16 HEADER_##name = id;
 
 #include "packets_struct.hpp"
-
-#undef MAX_ITEM_OPTIONS
-#undef UNAVAILABLE_STRUCT
-#undef MAX_ITEMLIST
-#undef MAX_ACHIEVEMENT_DB
-#undef MAX_PACKET_POS
-
-#undef DEFINE_PACKET_HEADER
 
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( push, 1 )
 #endif
+
+struct PACKET_CZ_REQ_MAKINGARROW{
+	int16 packetType;
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 itemId;
+#else
+	uint16 itemId;
+#endif
+} __attribute__((packed));
 
 struct PACKET_CZ_SE_PC_BUY_CASHITEM_LIST_sub{
 	uint32 itemId;
@@ -62,7 +63,7 @@ struct PACKET_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO{
 #else
 	uint16 itemId;
 #endif
-};
+} __attribute__((packed));
 
 struct PACKET_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO{
 	int16 packetType;
@@ -73,7 +74,7 @@ struct PACKET_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO{
 	uint16 itemId;
 #endif
 	uint32 price;
-};
+} __attribute__((packed));
 
 struct PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM{
 	int16 packetType;
@@ -90,7 +91,7 @@ struct PACKET_CZ_REQ_APPLY_BARGAIN_SALE_ITEM{
 #else
 	uint8 hours;
 #endif
-};
+} __attribute__((packed));
 
 struct PACKET_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM{
 	int16 packetType;
@@ -100,7 +101,7 @@ struct PACKET_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM{
 #else
 	uint16 itemId;
 #endif
-};
+} __attribute__((packed));
 
 struct PACKET_ZC_NOTIFY_BARGAIN_SALE_SELLING{
 	int16 packetType;
@@ -110,7 +111,7 @@ struct PACKET_ZC_NOTIFY_BARGAIN_SALE_SELLING{
 	uint16 itemId;
 #endif
 	uint32 remainingTime;
-};
+} __attribute__((packed));
 
 struct PACKET_ZC_NOTIFY_BARGAIN_SALE_CLOSE{
 	int16 packetType;
@@ -119,7 +120,7 @@ struct PACKET_ZC_NOTIFY_BARGAIN_SALE_CLOSE{
 #else
 	uint16 itemId;
 #endif
-};
+} __attribute__((packed));
 
 struct PACKET_ZC_ACK_COUNT_BARGAIN_SALE_ITEM{
 	int16 packetType;
@@ -129,7 +130,7 @@ struct PACKET_ZC_ACK_COUNT_BARGAIN_SALE_ITEM{
 	uint16 itemId;
 #endif
 	uint32 amount;
-};
+} __attribute__((packed));
 
 struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub{
 	uint32 id;
@@ -148,7 +149,7 @@ struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub{
 	char name[NAME_LENGTH];
 	char time[NAME_LENGTH];
 	uint8 attribute;
-};
+} __attribute__((packed));
 
 struct PACKET_ZC_ACK_GUILDSTORAGE_LOG{
 	int16 packetType;
@@ -156,22 +157,77 @@ struct PACKET_ZC_ACK_GUILDSTORAGE_LOG{
 	uint16 result;
 	uint16 amount;
 	struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub items[];
-};
+} __attribute__((packed));
+
+struct PACKET_CZ_GUILD_EMBLEM_CHANGE2 {
+	int16 packetType;
+	uint32 guild_id;
+	uint32 version;
+} __attribute__((packed));
+
+struct PACKET_ZC_CHANGE_GUILD {
+	int16 packetType;
+#if PACKETVER < 20190724
+	uint32 aid;
+	uint32 guild_id;
+	uint16 emblem_id;
+#else
+	uint32 guild_id;
+	uint32 emblem_id;
+	uint32 unknown;
+#endif
+} __attribute__((packed));
 
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
 #endif
 
-const uint16 HEADER_CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO = 0x9ac;
-const uint16 HEADER_ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO = 0x9ad;
-const uint16 HEADER_CZ_REQ_APPLY_BARGAIN_SALE_ITEM = 0x9ae;
-const uint16 HEADER_CZ_REQ_REMOVE_BARGAIN_SALE_ITEM = 0x9b0;
-const uint16 HEADER_ZC_NOTIFY_BARGAIN_SALE_SELLING = 0x9b2;
-const uint16 HEADER_ZC_NOTIFY_BARGAIN_SALE_CLOSE = 0x9b3;
-const uint16 HEADER_ZC_ACK_COUNT_BARGAIN_SALE_ITEM = 0x9c4;
-const uint16 HEADER_PACKET_ZC_ACK_GUILDSTORAGE_LOG = 0x9da;
-const uint16 HEADER_CZ_REQ_APPLY_BARGAIN_SALE_ITEM2 = 0xa3d;
+DEFINE_PACKET_HEADER(ZC_ITEM_ENTRY, 0x9d)
+DEFINE_PACKET_HEADER(ZC_MVP_GETTING_ITEM, 0x10a)
+DEFINE_PACKET_HEADER(ZC_ACK_TOUSESKILL, 0x110)
+DEFINE_PACKET_HEADER(CZ_REQMAKINGITEM, 0x18e)
+DEFINE_PACKET_HEADER(ZC_ACK_REQMAKINGITEM, 0x18f)
+DEFINE_PACKET_HEADER(CZ_REQ_MAKINGARROW, 0x1ae)
+DEFINE_PACKET_HEADER(CZ_REQ_ITEMREPAIR, 0x1fd)
+#if PACKETVER >= 20190724
+	DEFINE_PACKET_HEADER(ZC_CHANGE_GUILD, 0x0b47)
+#else
+	DEFINE_PACKET_HEADER(ZC_CHANGE_GUILD, 0x1b4)
+#endif
+DEFINE_PACKET_HEADER(ZC_ACK_WEAPONREFINE, 0x223)
+DEFINE_PACKET_HEADER(CZ_REQ_MAKINGITEM, 0x25b)
+DEFINE_PACKET_HEADER(ZC_CASH_TIME_COUNTER, 0x298)
+DEFINE_PACKET_HEADER(ZC_CASH_ITEM_DELETE, 0x299)
+DEFINE_PACKET_HEADER(ZC_ITEM_PICKUP_PARTY, 0x2b8)
+DEFINE_PACKET_HEADER(ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER, 0x824)
+DEFINE_PACKET_HEADER(CZ_SSILIST_ITEM_CLICK, 0x83c)
+DEFINE_PACKET_HEADER(CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO, 0x9ac)
+DEFINE_PACKET_HEADER(ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO, 0x9ad)
+DEFINE_PACKET_HEADER(CZ_REQ_APPLY_BARGAIN_SALE_ITEM, 0x9ae)
+DEFINE_PACKET_HEADER(CZ_REQ_REMOVE_BARGAIN_SALE_ITEM, 0x9b0)
+DEFINE_PACKET_HEADER(ZC_NOTIFY_BARGAIN_SALE_SELLING, 0x9b2)
+DEFINE_PACKET_HEADER(ZC_NOTIFY_BARGAIN_SALE_CLOSE, 0x9b3)
+DEFINE_PACKET_HEADER(ZC_ACK_COUNT_BARGAIN_SALE_ITEM, 0x9c4)
+DEFINE_PACKET_HEADER(ZC_ACK_GUILDSTORAGE_LOG, 0x9da)
+DEFINE_PACKET_HEADER(CZ_NPC_MARKET_PURCHASE, 0x9d6)
+DEFINE_PACKET_HEADER(CZ_REQ_APPLY_BARGAIN_SALE_ITEM2, 0xa3d)
+DEFINE_PACKET_HEADER(CZ_GUILD_EMBLEM_CHANGE2, 0x0b46)
+
+const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
+const int16 MAX_INVENTORY_ITEM_PACKET_EQUIP = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_equip ) - ( sizeof( struct EQUIPITEM_INFO ) * MAX_ITEMLIST ) ) ) / sizeof( struct EQUIPITEM_INFO ) );
+
+const int16 MAX_STORAGE_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct ZC_STORE_ITEMLIST_NORMAL ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
+const int16 MAX_STORAGE_ITEM_PACKET_EQUIP = ( ( INT16_MAX - ( sizeof( struct ZC_STORE_ITEMLIST_EQUIP ) - ( sizeof( struct EQUIPITEM_INFO ) * MAX_ITEMLIST ) ) ) / sizeof( struct EQUIPITEM_INFO ) );
+
+const int16 MAX_GUILD_STORAGE_LOG_PACKET = ( ( INT16_MAX - sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG ) ) / sizeof( struct PACKET_ZC_ACK_GUILDSTORAGE_LOG_sub ) );
+
+#undef MAX_ITEM_OPTIONS
+#undef UNAVAILABLE_STRUCT
+#undef MAX_ITEMLIST
+#undef MAX_ACHIEVEMENT_DB
+#undef MAX_PACKET_POS
+#undef DEFINE_PACKET_HEADER
 
 #pragma warning( pop )
 

@@ -87,7 +87,7 @@ struct mob_chat *mob_chat(short id) {
 //Dynamic item drop ratio database for per-item drop ratio modifiers overriding global drop ratios.
 #define MAX_ITEMRATIO_MOBS 10
 struct s_mob_item_drop_ratio {
-	unsigned short nameid;
+	t_itemid nameid;
 	int drop_ratio;
 	unsigned short mob_id[MAX_ITEMRATIO_MOBS];
 };
@@ -1009,7 +1009,7 @@ int mob_linksearch(struct block_list *bl,va_list ap)
 	target = va_arg(ap, struct block_list *);
 	tick=va_arg(ap, t_tick);
 
-	if (md->mob_id == mob_id && DIFF_TICK(md->last_linktime, tick) < MIN_MOBLINKTIME
+	if (md->mob_id == mob_id && status_has_mode(&md->status,MD_ASSIST) && DIFF_TICK(md->last_linktime, tick) < MIN_MOBLINKTIME
 		&& !md->target_id)
 	{
 		md->last_linktime = tick;
@@ -1437,34 +1437,36 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,t_tick tick)
 
 	if(status_has_mode(&md->status,MD_CANMOVE))
 	{	//If the mob can move, follow around. [Check by Skotlex]
-		int old_dist;
+		int old_dist = md->master_dist;
 
 		// Distance with between slave and master is measured.
-		old_dist=md->master_dist;
-		md->master_dist=distance_bl(&md->bl, bl);
+		md->master_dist = distance_bl(&md->bl, bl);
 
-		// Since the master was in near immediately before, teleport is carried out and it pursues.
-		if(bl->m != md->bl.m ||
-			(old_dist<10 && md->master_dist>18) ||
-			md->master_dist > MAX_MINCHASE
-		){
-			md->master_dist = 0;
-			unit_warp(&md->bl,bl->m,bl->x,bl->y,CLR_TELEPORT);
-			return 1;
+		if (battle_config.slave_stick_with_master) {
+			// Since the master was in near immediately before, teleport is carried out and it pursues.
+			if (bl->m != md->bl.m || (old_dist < 10 && md->master_dist > 18) || md->master_dist > MAX_MINCHASE) {
+				md->master_dist = 0;
+				unit_warp(&md->bl, bl->m, bl->x, bl->y, CLR_TELEPORT);
+				return 1;
+			}
 		}
 
 		if(md->target_id) //Slave is busy with a target.
 			return 0;
 
 		// Approach master if within view range, chase back to Master's area also if standing on top of the master.
-		if((md->master_dist>MOB_SLAVEDISTANCE || md->master_dist == 0) &&
-			unit_can_move(&md->bl))
-		{
-			short x = bl->x, y = bl->y;
-			mob_stop_attack(md);
-			if(map_search_freecell(&md->bl, bl->m, &x, &y, MOB_SLAVEDISTANCE, MOB_SLAVEDISTANCE, 1)
-				&& unit_walktoxy(&md->bl, x, y, 0))
-				return 1;
+		if ((md->master_dist > MOB_SLAVEDISTANCE || md->master_dist == 0) && unit_can_move(&md->bl)) {
+			int16 x = bl->x, y = bl->y;
+
+			if (map_search_freecell(&md->bl, bl->m, &x, &y, MOB_SLAVEDISTANCE, MOB_SLAVEDISTANCE, 1)) {
+				if (unit_walktoxy(&md->bl, x, y, 0) == 0) { // Slave is too far from master (outside of battle_config.max_walk_path range), stay put
+					mob_stop_walking(md, USW_FIXPOS);
+					return 0; // Fail here so target will be picked back up when in range
+				} else { // Slave will walk back to master if in range
+					mob_stop_attack(md);
+					return 1;
+				}
+			}
 		}
 	} else if (bl->m != md->bl.m && map_flag_gvg2(md->bl.m)) {
 		//Delete the summoned mob if it's in a gvg ground and the master is elsewhere. [Skotlex]
@@ -1803,9 +1805,14 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		md->attacked_id = md->norm_attacked_id = 0;
 	}
 
+	bool slave_lost_target = false;
+
 	// Processing of slave monster
-	if (md->master_id > 0 && mob_ai_sub_hard_slavemob(md, tick))
-		return true;
+	if (md->master_id > 0) {
+		if (mob_ai_sub_hard_slavemob(md, tick) == 1)
+			return true;
+		slave_lost_target = true;
+	}
 
 	// Scan area for targets
 	if (!tbl && can_move && mode&MD_LOOTER && md->lootitems && DIFF_TICK(tick, md->ud.canact_tick) > 0 &&
@@ -1814,7 +1821,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		map_foreachinshootrange (mob_ai_sub_hard_lootsearch, &md->bl, view_range, BL_ITEM, md, &tbl);
 	}
 
-	if ((!tbl && mode&MD_AGGRESSIVE) || md->state.skillstate == MSS_FOLLOW)
+	if ((mode&MD_AGGRESSIVE && (!tbl || slave_lost_target)) || md->state.skillstate == MSS_FOLLOW)
 	{
 		map_foreachinallrange (mob_ai_sub_hard_activesearch, &md->bl, view_range, DEFAULT_ENEMY_TYPE(md), md, &tbl, mode);
 	}
@@ -2426,6 +2433,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 	if( md->special_state.ai == AI_SPHERE ) {//LOne WOlf explained that ANYONE can trigger the marine countdown skill. [Skotlex]
 		md->state.alchemist = 1;
 		mobskill_use(md, gettick(), MSC_ALCHEMIST);
+		unit_escape(&md->bl, src, 7, 2);
 	}
 }
 
@@ -2711,7 +2719,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		dlist->item = NULL;
 
 		for (i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
-			if (md->db->dropitem[i].nameid <= 0)
+			if (md->db->dropitem[i].nameid == 0)
 				continue;
 			if ( !(it = itemdb_exists(md->db->dropitem[i].nameid)) )
 				continue;
@@ -2748,8 +2756,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					drop_rate = (int)(drop_rate*1.25);
 
 				// Add class and race specific bonuses
-				drop_rate_bonus += sd->dropaddclass[md->status.class_] + sd->dropaddclass[CLASS_ALL];
-				drop_rate_bonus += sd->dropaddrace[md->status.race] + sd->dropaddrace[RC_ALL];
+				drop_rate_bonus += sd->indexed_bonus.dropaddclass[md->status.class_] + sd->indexed_bonus.dropaddclass[CLASS_ALL];
+				drop_rate_bonus += sd->indexed_bonus.dropaddrace[md->status.race] + sd->indexed_bonus.dropaddrace[RC_ALL];
 
 				// Increase drop rate if user has SC_ITEMBOOST
 				if (sd->sc.data[SC_ITEMBOOST])
@@ -2786,7 +2794,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			//A Rare Drop Global Announce by Lupus
 			if( mvp_sd && drop_rate <= battle_config.rare_drop_announce ) {
 				char message[128];
-				sprintf (message, msg_txt(NULL,541), mvp_sd->status.name, md->name, it->jname, (float)drop_rate/100);
+				sprintf (message, msg_txt(NULL,541), mvp_sd->status.name, md->name, it->ename.c_str(), (float)drop_rate/100);
 				//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
 				intif_broadcast(message,strlen(message)+1,BC_DEFAULT);
 			}
@@ -2806,7 +2814,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		if(sd) {
 			// process script-granted extra drop bonuses
-			uint16 dropid = 0;
+			t_itemid dropid = 0;
 
 			for (const auto &it : sd->add_drop) {
 				struct s_mob_drop mobdrop;
@@ -2869,7 +2877,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	}
 
 	if(mvp_sd && md->db->mexp > 0 && !md->special_state.ai) {
-		unsigned int log_mvp[2] = {0};
+		t_itemid log_mvp_nameid = 0;
+		t_exp log_mvp_exp = 0;
 		unsigned int mexp;
 		struct item item;
 		double exp;
@@ -2888,7 +2897,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		clif_mvp_effect(mvp_sd);
 		clif_mvp_exp(mvp_sd,mexp);
 		pc_gainexp(mvp_sd, &md->bl, mexp,0, 0);
-		log_mvp[1] = mexp;
+		log_mvp_exp = mexp;
 
 		if( !(map_getmapflag(m, MF_NOMVPLOOT) || type&1) ) {
 			//Order might be random depending on item_drop_mvp_mode config setting
@@ -2919,7 +2928,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			for(i = 0; i < MAX_MVP_DROP_TOTAL; i++) {
 				struct item_data *i_data;
 
-				if(mdrop[i].nameid <= 0 || !(i_data = itemdb_exists(mdrop[i].nameid)))
+				if(mdrop[i].nameid == 0 || !(i_data = itemdb_exists(mdrop[i].nameid)))
 					continue;
 
 				temp = mdrop[i].p;
@@ -2934,12 +2943,12 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				item.nameid=mdrop[i].nameid;
 				item.identify= itemdb_isidentified(item.nameid);
 				clif_mvp_item(mvp_sd,item.nameid);
-				log_mvp[0] = item.nameid;
+				log_mvp_nameid = item.nameid;
 
 				//A Rare MVP Drop Global Announce by Lupus
 				if(temp<=battle_config.rare_drop_announce) {
 					char message[128];
-					sprintf (message, msg_txt(NULL,541), mvp_sd->status.name, md->name, i_data->jname, temp/100.);
+					sprintf (message, msg_txt(NULL,541), mvp_sd->status.name, md->name, i_data->ename.c_str(), temp/100.);
 					//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
 					intif_broadcast(message,strlen(message)+1,BC_DEFAULT);
 				}
@@ -2963,7 +2972,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 		}
 
-		log_mvpdrop(mvp_sd, md->mob_id, log_mvp);
+		log_mvpdrop(mvp_sd, md->mob_id, log_mvp_nameid, log_mvp_exp);
 	}
 
 	if (type&2 && !sd && md->mob_id == MOBID_EMPERIUM)
@@ -3002,12 +3011,16 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 
 			if (sd->status.party_id)
-				map_foreachinallrange(quest_update_objective_sub, &md->bl, AREA_SIZE, BL_PC, sd->status.party_id, md->mob_id);
+				map_foreachinallrange(quest_update_objective_sub, &md->bl, AREA_SIZE, BL_PC, sd->status.party_id, md->mob_id, md->level, status->race, status->size, status->def_ele);
 			else if (sd->avail_quests)
-				quest_update_objective(sd, md->mob_id);
+				quest_update_objective(sd, md->mob_id, md->level, static_cast<e_race>(status->race), static_cast<e_size>(status->size), static_cast<e_element>(status->def_ele));
 
-			if (achievement_db.mobexists(md->mob_id))
-				achievement_update_objective(sd, AG_BATTLE, 1, md->mob_id);
+			if (achievement_db.mobexists(md->mob_id)) {
+				if (battle_config.achievement_mob_share > 0 && sd->status.party_id > 0)
+					map_foreachinallrange(achievement_update_objective_sub, &md->bl, AREA_SIZE, BL_PC, sd->status.party_id, md->mob_id);
+				else
+					achievement_update_objective(sd, AG_BATTLE, 1, md->mob_id);
+			}
 
 			// The master or Mercenary can increase the kill count
 			if (sd->md && src && (src->type == BL_PC || src->type == BL_MER) && mob_db(md->mob_id)->lv > sd->status.base_level / 2)
@@ -4099,9 +4112,9 @@ static unsigned int mob_drop_adjust(int baserate, int rate_adjust, unsigned shor
  * @param mob_id ID of the monster
  * @param rate_adjust pointer to store ratio if found
  */
-static void item_dropratio_adjust(unsigned short nameid, int mob_id, int *rate_adjust)
+static void item_dropratio_adjust(t_itemid nameid, int mob_id, int *rate_adjust)
 {
-	struct s_mob_item_drop_ratio *item_ratio = (struct s_mob_item_drop_ratio *)idb_get(mob_item_drop_ratio, nameid);
+	struct s_mob_item_drop_ratio *item_ratio = (struct s_mob_item_drop_ratio *)uidb_get(mob_item_drop_ratio, nameid);
 	if( item_ratio) {
 		if( item_ratio->mob_id[0] ) { // only for listed mobs
 			int i;
@@ -4257,7 +4270,7 @@ static bool mob_parse_dbrow(char** str)
 
 	// MVP Drops: MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per
 	for(i = 0; i < MAX_MVP_DROP; i++) {
-		entry.mvpitem[i].nameid = atoi(str[31+i*2]);
+		entry.mvpitem[i].nameid = strtoul(str[31+i*2], nullptr, 10);
 
 		if( entry.mvpitem[i].nameid ){
 			if( itemdb_search(entry.mvpitem[i].nameid) ){
@@ -4276,7 +4289,7 @@ static bool mob_parse_dbrow(char** str)
 	for(i = 0; i < MAX_MOB_DROP; i++) {
 		int k = 31 + MAX_MVP_DROP*2 + i*2;
 
-		entry.dropitem[i].nameid = atoi(str[k]);
+		entry.dropitem[i].nameid = strtoul(str[k], nullptr, 10);
 
 		if( entry.dropitem[i].nameid ){
 			if( itemdb_search( entry.dropitem[i].nameid ) ){
@@ -4517,7 +4530,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Weapon", weapon))
 			return 0;
 
-		struct item_data *item = itemdb_searchname(weapon.c_str());
+		struct item_data *item = itemdb_search_aegisname(weapon.c_str());
 
 		if (item == nullptr) {
 			this->invalidWarning(node["Weapon"], "Weapon %s is not a valid item.\n", weapon.c_str());
@@ -4538,7 +4551,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Shield", shield))
 			return 0;
 
-		struct item_data *item = itemdb_searchname(shield.c_str());
+		struct item_data *item = itemdb_search_aegisname(shield.c_str());
 
 		if (item == nullptr) {
 			this->invalidWarning(node["Shield"], "Shield %s is not a valid item.\n", shield.c_str());
@@ -4561,7 +4574,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 		struct item_data *item;
 
-		if ((item = itemdb_searchname(head.c_str())) == nullptr) {
+		if ((item = itemdb_search_aegisname(head.c_str())) == nullptr) {
 			this->invalidWarning(node["HeadTop"], "HeadTop %s is not a valid item.\n", head.c_str());
 			return 0;
 		}
@@ -4580,7 +4593,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "HeadMid", head))
 			return 0;
 
-		struct item_data *item = itemdb_searchname(head.c_str());
+		struct item_data *item = itemdb_search_aegisname(head.c_str());
 
 		if (item == nullptr) {
 			this->invalidWarning(node["HeadMid"], "HeadMid %s is not a valid item.\n", head.c_str());
@@ -4601,7 +4614,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "HeadLow", head))
 			return 0;
 
-		struct item_data *item = itemdb_searchname(head.c_str());
+		struct item_data *item = itemdb_search_aegisname(head.c_str());
 
 		if (item == nullptr) {
 			this->invalidWarning(node["HeadLow"], "HeadLow %s is not a valid item.\n", head.c_str());
@@ -4624,7 +4637,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "PetEquip", equipment))
 			return 0;
 
-		struct item_data *item = itemdb_searchname(equipment.c_str());
+		struct item_data *item = itemdb_search_aegisname(equipment.c_str());
 
 		if (item == nullptr) {
 			this->invalidWarning(node["PetEquip"], "PetEquip %s is not a valid item.\n", equipment.c_str());
@@ -5140,19 +5153,19 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
  */
 static bool mob_readdb_itemratio(char* str[], int columns, int current)
 {
-	unsigned short nameid;
+	t_itemid nameid;
 	int ratio, i;
 	struct s_mob_item_drop_ratio *item_ratio;
-	nameid = atoi(str[0]);
+	nameid = strtoul(str[0], nullptr, 10);
 
 	if (itemdb_exists(nameid) == NULL) {
-		ShowWarning("mob_readdb_itemratio: Invalid item id %hu.\n", nameid);
+		ShowWarning("mob_readdb_itemratio: Invalid item id %u.\n", nameid);
 		return false;
 	}
 
 	ratio = atoi(str[1]);
 
-	if (!(item_ratio = (struct s_mob_item_drop_ratio *)idb_get(mob_item_drop_ratio,nameid)))
+	if (!(item_ratio = (struct s_mob_item_drop_ratio *)uidb_get(mob_item_drop_ratio,nameid)))
 		CREATE(item_ratio, struct s_mob_item_drop_ratio, 1);
 
 	item_ratio->drop_ratio = ratio;
@@ -5160,14 +5173,14 @@ static bool mob_readdb_itemratio(char* str[], int columns, int current)
 	for (i = 0; i < columns-2; i++) {
 		uint16 mob_id = atoi(str[i+2]);
 		if (mob_db(mob_id) == NULL)
-			ShowError("mob_readdb_itemratio: Invalid monster with ID %hu (Item:%hu Col:%d).\n", mob_id, nameid, columns);
+			ShowError("mob_readdb_itemratio: Invalid monster with ID %hu (Item:%u Col:%d).\n", mob_id, nameid, columns);
 		else
 			item_ratio->mob_id[i] = atoi(str[i+2]);
 	}
 
 	if (!item_ratio->nameid) {
 		item_ratio->nameid = nameid;
-		idb_put(mob_item_drop_ratio, nameid, item_ratio);
+		uidb_put(mob_item_drop_ratio, nameid, item_ratio);
 	}
 
 	return true;
@@ -5178,7 +5191,8 @@ static bool mob_readdb_itemratio(char* str[], int columns, int current)
  * @author [Cydh]
  **/
 static bool mob_readdb_drop(char* str[], int columns, int current) {
-	unsigned short mobid, nameid;
+	unsigned short mobid;
+	t_itemid nameid;
 	int rate, i, size, flag = 0;
 	struct mob_db *mob;
 	struct s_mob_drop *drop;
@@ -5189,7 +5203,7 @@ static bool mob_readdb_drop(char* str[], int columns, int current) {
 		return false;
 	}
 
-	nameid = atoi(str[1]);
+	nameid = strtoul(str[1], nullptr, 10);
 	if (itemdb_exists(nameid) == NULL) {
 		ShowWarning("mob_readdb_drop: Invalid item ID %s.\n", str[1]);
 		return false;
@@ -5209,7 +5223,7 @@ static bool mob_readdb_drop(char* str[], int columns, int current) {
 		for (i = 0; i < size; i++) {
 			if (drop[i].nameid == nameid) {
 				memset(&drop[i], 0, sizeof(struct s_mob_drop));
-				ShowInfo("mob_readdb_drop: Removed item '%hu' from monster '%hu'.\n", nameid, mobid);
+				ShowInfo("mob_readdb_drop: Removed item '%u' from monster '%hu'.\n", nameid, mobid);
 				return true;
 			}
 		}
@@ -5219,7 +5233,7 @@ static bool mob_readdb_drop(char* str[], int columns, int current) {
 		if (i == size) { // Item is not dropped at all (search all item slots)
 			ARR_FIND(0, size, i, drop[i].nameid == 0);
 			if (i == size) { // No empty slots
-				ShowError("mob_readdb_drop: Cannot add item '%hu' to monster '%hu'. Max drop reached (%d).\n", nameid, mobid, size);
+				ShowError("mob_readdb_drop: Cannot add item '%u' to monster '%hu'. Max drop reached (%d).\n", nameid, mobid, size);
 				return true;
 			}
 		}
@@ -5267,7 +5281,7 @@ static void mob_drop_ratio_adjust(void){
 	for( auto &pair : mob_db_data ){
 		struct mob_db *mob;
 		struct item_data *id;
-		unsigned short nameid;
+		t_itemid nameid;
 		int j, rate, rate_adjust = 0, mob_id;
 
 		mob_id = pair.first;
@@ -5299,7 +5313,7 @@ static void mob_drop_ratio_adjust(void){
 
 				// Item is not known anymore(should never happen)
 				if( !id ){
-					ShowWarning( "Monster \"%s\"(id:%hu) is dropping an unknown item(id: %d)\n", mob->name, mob_id, nameid );
+					ShowWarning( "Monster \"%s\"(id:%hu) is dropping an unknown item(id: %u)\n", mob->name, mob_id, nameid );
 					mob->mvpitem[j].nameid = 0;
 					mob->mvpitem[j].p = 0;
 					continue;
@@ -5329,7 +5343,7 @@ static void mob_drop_ratio_adjust(void){
 
 			// Item is not known anymore(should never happen)
 			if( !id ){
-				ShowWarning( "Monster \"%s\"(id:%hu) is dropping an unknown item(id: %d)\n", mob->name, mob_id, nameid );
+				ShowWarning( "Monster \"%s\"(id:%hu) is dropping an unknown item(id: %u)\n", mob->name, mob_id, nameid );
 				mob->dropitem[j].nameid = 0;
 				mob->dropitem[j].p = 0;
 				continue;
@@ -5599,7 +5613,7 @@ void mob_db_load(bool is_reload){
 		item_drop_ers = ers_new(sizeof(struct item_drop),"mob.cpp::item_drop_ers",ERS_OPT_CLEAN);
 		item_drop_list_ers = ers_new(sizeof(struct item_drop_list),"mob.cpp::item_drop_list_ers",ERS_OPT_NONE);
 	}
-	mob_item_drop_ratio = idb_alloc(DB_OPT_BASE);
+	mob_item_drop_ratio = uidb_alloc(DB_OPT_BASE);
 	mob_skill_db = idb_alloc(DB_OPT_BASE);
 	mob_summon_db = idb_alloc(DB_OPT_BASE);
 	mob_load();

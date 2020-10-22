@@ -1,0 +1,30 @@
+//===== rAthena Script ======================================= 
+//= Einbech Warp Script
+//===== Description: =========================================
+//= Warp Points for Einbech
+//===== Changelogs: ==========================================
+//= 1.0 Added warps for ep16.2 [Capuche]
+//============================================================
+
+// rebel_in entrance
+einbech,215,84,0	script	nemi	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (terra_gloria_main < 14) {
+		mes "You only see a cold and hard wall.";
+		close;
+	}
+	warp "rebel_in",21,41;
+	end;
+}
+
+// Clana Nemieri
+rebel_in,34,43,0	warp2	#negoin02	5,2,rebel_in,21,41
+rebel_in,18,43,0	warp2	einbech_south	1,1,einbech,215,80
+
+// (Commander Room)
+rebel_in,88,80,0	warp2	#162gmroom2_1	1,1,rebel_in,209,82
+rebel_in,209,77,0	warp2	#162gmroom2_2	1,1,rebel_in,87,75
+
+// (Ladies Room)
+rebel_in,155,84,0	warp2	#162gmroom2_3	1,1,rebel_in,119,41
