@@ -494,10 +494,10 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asBool(node, "Refineable", refine))
 			return 0;
 
-		item->flag.no_refine = refine;
+		item->flag.no_refine = !refine;
 	} else {
 		if (!exists)
-			item->flag.no_refine = false;
+			item->flag.no_refine = true;
 	}
 
 	if (this->nodeExists(node, "View")) {
