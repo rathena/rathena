@@ -1364,8 +1364,16 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 		return ITEM_EQUIP_ACK_FAILLEVEL;
 	if(item->elvmax && sd->status.base_level > (unsigned int)item->elvmax)
 		return ITEM_EQUIP_ACK_FAILLEVEL;
-	if(item->sex != SEX_BOTH && sd->status.sex != item->sex)
-		return ITEM_EQUIP_ACK_FAIL;
+	if( item->sex != SEX_BOTH && sd->status.sex != item->sex ){
+		if( battle_config.ignore_items_gender ){
+			// Bard/Dancer and Kagerou/Oboro always check the gender, regardless of the config
+			if( ( sd->class_ & MAPID_BARDDANCER ) == MAPID_BARDDANCER || ( sd->class_ & MAPID_KAGEROUOBORO ) == MAPID_KAGEROUOBORO ){
+				return ITEM_EQUIP_ACK_FAIL;
+			}
+		}else{
+			return ITEM_EQUIP_ACK_FAIL;
+		}
+	}
 
 	//fail to equip if item is restricted
 	if (!battle_config.allow_equip_restricted_item && itemdb_isNoEquip(item, sd->bl.m))
