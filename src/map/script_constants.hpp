@@ -260,9 +260,11 @@
 	export_constant2("EAJ_BLACKSMITH",MAPID_BLACKSMITH);
 	export_constant2("EAJ_ASSASSIN",MAPID_ASSASSIN);
 	export_constant2("EAJ_STAR_GLADIATOR",MAPID_STAR_GLADIATOR);
+	export_constant2("EAJ_STARGLADIATOR",MAPID_STAR_GLADIATOR);
 	export_constant2("EAJ_REBELLION",MAPID_REBELLION);
 	export_constant2("EAJ_KAGEROUOBORO",MAPID_KAGEROUOBORO);
 	export_constant2("EAJ_DEATH_KNIGHT",MAPID_DEATH_KNIGHT);
+	export_constant2("EAJ_DEATHKNIGHT",MAPID_DEATH_KNIGHT);
 
 	export_constant2("EAJ_CRUSADER",MAPID_CRUSADER);
 	export_constant2("EAJ_SAGE",MAPID_SAGE);
@@ -271,7 +273,9 @@
 	export_constant2("EAJ_ALCHEMIST",MAPID_ALCHEMIST);
 	export_constant2("EAJ_ROGUE",MAPID_ROGUE);
 	export_constant2("EAJ_SOUL_LINKER",MAPID_SOUL_LINKER);
+	export_constant2("EAJ_SOULLINKER",MAPID_SOUL_LINKER);
 	export_constant2("EAJ_DARK_COLLECTOR",MAPID_DARK_COLLECTOR);
+	export_constant2("EAJ_DARKCOLLECTOR",MAPID_DARK_COLLECTOR);
 
 	export_constant2("EAJ_NOVICE_HIGH",MAPID_NOVICE_HIGH);
 	export_constant2("EAJ_SWORDMAN_HIGH",MAPID_SWORDMAN_HIGH);
@@ -378,6 +382,7 @@
 	export_constant2("EAJ_BABY_SOUL_REAPER",MAPID_BABY_SOUL_REAPER);
 
 	export_constant2("EAJ_SUPER_NOVICE",MAPID_SUPER_NOVICE);
+	export_constant2("EAJ_SUPERNOVICE",MAPID_SUPER_NOVICE);
 	export_constant2("EAJ_SUPER_BABY",MAPID_SUPER_BABY);
 	export_constant2("EAJ_SUPER_NOVICE_E",MAPID_SUPER_NOVICE_E);
 	export_constant2("EAJ_SUPER_BABY_E",MAPID_SUPER_BABY_E);
@@ -387,6 +392,7 @@
 	/* sex */
 	export_constant(SEX_FEMALE);
 	export_constant(SEX_MALE);
+	export_constant(SEX_BOTH);
 
 	/* broadcasts */
 	export_constant(BC_ALL);
@@ -806,6 +812,13 @@
 	export_constant(EQP_SHADOW_ACC_L);
 	export_constant(EQP_ACC_RL);
 	export_constant(EQP_SHADOW_ACC_RL);
+
+	export_constant2("EQP_Right_Hand", EQP_HAND_R);
+	export_constant2("EQP_Left_Hand", EQP_HAND_L);
+	export_constant2("EQP_Right_Accessory", EQP_ACC_R);
+	export_constant2("EQP_Left_Accessory", EQP_ACC_L);
+	export_constant2("EQP_Shadow_Right_Accessory", EQP_SHADOW_ACC_R);
+	export_constant2("EQP_Shadow_Left_Accessory", EQP_SHADOW_ACC_L);
 
 	/* looks */
 	export_constant(LOOK_BASE);
@@ -4049,15 +4062,27 @@
 	export_constant(MAX_WEAPON_TYPE_ALL);
 
 	/* ammunition types */
-	export_constant(A_ARROW);
-	export_constant(A_DAGGER);
-	export_constant(A_BULLET);
-	export_constant(A_SHELL);
-	export_constant(A_GRENADE);
-	export_constant(A_SHURIKEN);
-	export_constant(A_KUNAI);
-	export_constant(A_CANNONBALL);
-	export_constant(A_THROWWEAPON);
+	/* Send deprecation notice and temporarily replace with new constant value. */
+	export_deprecated_constant3("A_ARROW", AMMO_ARROW, "AMMO_ARROW");
+	export_deprecated_constant3("A_DAGGER", AMMO_DAGGER, "AMMO_DAGGER");
+	export_deprecated_constant3("A_BULLET", AMMO_BULLET, "AMMO_BULLET");
+	export_deprecated_constant3("A_SHELL", AMMO_SHELL, "AMMO_SHELL");
+	export_deprecated_constant3("A_GRENADE", AMMO_GRENADE, "AMMO_GRENADE");
+	export_deprecated_constant3("A_SHURIKEN", AMMO_SHURIKEN, "AMMO_SHURIKEN");
+	export_deprecated_constant3("A_KUNAI", AMMO_KUNAI, "AMMO_KUNAI");
+	export_deprecated_constant3("A_CANNONBALL", AMMO_CANNONBALL, "AMMO_CANNONBALL");
+	export_deprecated_constant3("A_THROWWEAPON", AMMO_THROWWEAPON, "AMMO_THROWWEAPON");
+
+	export_constant(AMMO_ARROW);
+	export_constant(AMMO_DAGGER);
+	export_constant(AMMO_BULLET);
+	export_constant(AMMO_SHELL);
+	export_constant(AMMO_GRENADE);
+	export_constant(AMMO_SHURIKEN);
+	export_constant(AMMO_KUNAI);
+	export_constant(AMMO_CANNONBALL);
+	export_constant(AMMO_THROWWEAPON);
+	export_constant(MAX_AMMO_TYPE);
 
 	/* monsterinfo types */
 	export_constant(MOB_NAME);
@@ -7936,6 +7961,24 @@
 	export_constant(BG_INFO_MAX_LEVEL);
 	export_constant(BG_INFO_MAPS);
 	export_constant(BG_INFO_DESERTER_TIME);
+
+	/* item job classes */
+	export_constant(ITEMJ_NORMAL);
+	export_constant(ITEMJ_UPPER);
+	export_constant(ITEMJ_BABY);
+	export_constant(ITEMJ_THIRD);
+	export_constant(ITEMJ_THIRD_UPPER);
+	export_constant(ITEMJ_THIRD_BABY);
+
+	/* item drop effects */
+	export_constant(DROPEFFECT_NONE);
+	export_constant(DROPEFFECT_CLIENT);
+	export_constant(DROPEFFECT_WHITE_PILLAR);
+	export_constant(DROPEFFECT_BLUE_PILLAR);
+	export_constant(DROPEFFECT_YELLOW_PILLAR);
+	export_constant(DROPEFFECT_PURPLE_PILLAR);
+	export_constant(DROPEFFECT_ORANGE_PILLAR);
+	export_constant(DROPEFFECT_MAX);
 
 	#undef export_constant
 	#undef export_constant2

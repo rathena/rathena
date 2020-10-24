@@ -80,6 +80,9 @@ static struct eri *delay_clearunit_ers;
 
 struct s_packet_db packet_db[MAX_PACKET_DB + 1];
 int packet_db_ack[MAX_ACK_FUNC + 1];
+// Reuseable global packet buffer to prevent too many allocations
+// Take socket.cpp::socket_max_client_packet into consideration
+static int8 packet_buffer[UINT16_MAX];
 unsigned long color_table[COLOR_MAX];
 
 #include "clif_obfuscation.hpp"
@@ -2643,7 +2646,7 @@ static void clif_addcards( struct EQUIPSLOTINFO* buf, struct item* item ){
 	int i = 0, j;
 
 	// Client only receives four cards.. so randomly send them a set of cards. [Skotlex]
-	if( MAX_SLOTS > 4 && ( j = itemdb_slot( item->nameid ) ) > 4 ){
+	if( MAX_SLOTS > 4 && ( j = itemdb_slots( item->nameid ) ) > 4 ){
 		i = rnd() % ( j - 3 ); //eg: 6 slots, possible i values: 0->3, 1->4, 2->5 => i = rnd()%3;
 	}
 
@@ -6767,8 +6770,8 @@ void clif_use_card(struct map_session_data *sd,int idx)
 		if(sd->inventory_data[i]->type == IT_ARMOR && (ep & EQP_ACC) && ((ep & EQP_ACC) != EQP_ACC) && ((sd->inventory_data[i]->equip & EQP_ACC) != (ep & EQP_ACC)) ) // specific accessory-card can only be inserted to specific accessory.
 			continue;
 
-		ARR_FIND( 0, sd->inventory_data[i]->slot, j, sd->inventory.u.items_inventory[i].card[j] == 0 );
-		if( j == sd->inventory_data[i]->slot )	// No room
+		ARR_FIND( 0, sd->inventory_data[i]->slots, j, sd->inventory.u.items_inventory[i].card[j] == 0 );
+		if( j == sd->inventory_data[i]->slots )	// No room
 			continue;
 
 		if( sd->inventory.u.items_inventory[i].equip > 0 )	// Do not check items that are already equipped
@@ -6965,7 +6968,7 @@ void clif_item_refine_list( struct map_session_data *sd ){
 
 	int count = 0;
 	for( int i = 0; i < MAX_INVENTORY; i++ ){
-		unsigned char wlv;
+		uint16 wlv;
 
 		if( sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].refine < skill_lv &&
 			sd->inventory.u.items_inventory[i].identify && ( wlv = itemdb_wlv(sd->inventory.u.items_inventory[i].nameid ) ) >= 1 &&
@@ -16538,7 +16541,7 @@ void clif_parse_Auction_register(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	safestrncpy(auction.item_name, item->jname, sizeof(auction.item_name));
+	safestrncpy(auction.item_name, item->ename.c_str(), sizeof(auction.item_name));
 	auction.type = item->type;
 	memcpy(&auction.item, &sd->inventory.u.items_inventory[sd->auction.index], sizeof(struct item));
 	auction.item.amount = 1;
@@ -16647,6 +16650,7 @@ void clif_parse_Auction_buysell(int fd, struct map_session_data* sd)
 ///
 
 void clif_cashshop_open( struct map_session_data* sd, int tab ){
+#if PACKETVER_MAIN_NUM >= 20101123 || PACKETVER_RE_NUM >= 20120328 || defined(PACKETVER_ZERO)
 	nullpo_retv( sd );
 
 	struct PACKET_ZC_SE_CASHSHOP_OPEN p;
@@ -16659,9 +16663,11 @@ void clif_cashshop_open( struct map_session_data* sd, int tab ){
 #endif
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
+#endif
 }
 
 void clif_parse_cashshop_open_request( int fd, struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20101123 || PACKETVER_RE_NUM >= 20120328 || defined(PACKETVER_ZERO)
 	nullpo_retv( sd );
 
 	int tab = 0;
@@ -16676,12 +16682,15 @@ void clif_parse_cashshop_open_request( int fd, struct map_session_data* sd ){
 	sd->npc_shopid = -1; // Set npc_shopid when using cash shop from "cash shop" button [Aelys|Susu] bugreport:96
 
 	clif_cashshop_open( sd, tab );
+#endif
 }
 
 void clif_parse_cashshop_close( int fd, struct map_session_data* sd ){
+#if PACKETVER_MAIN_NUM >= 20101123 || PACKETVER_RE_NUM >= 20120328 || defined(PACKETVER_ZERO)
 	sd->state.cashshop_open = false;
 	sd->npc_shopid = 0; // Reset npc_shopid when using cash shop from "cash shop" button [Aelys|Susu] bugreport:96
 	// No need to do anything here
+#endif
 }
 
 //0846 <tabid>.W (CZ_REQ_SE_CASH_TAB_CODE))
@@ -20547,9 +20556,7 @@ void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x,
 /// Send hat effects to the client (ZC_HAT_EFFECT).
 /// 0A3B <Length>.W <AID>.L <Status>.B { <HatEffectId>.W }
 void clif_hat_effects( struct map_session_data* sd, struct block_list* bl, enum send_target target ){
-#if PACKETVER >= 20150513
-	unsigned char* buf;
-	int len,i;
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
 	struct map_session_data *tsd;
 	struct block_list* tbl;
 
@@ -20561,39 +20568,40 @@ void clif_hat_effects( struct map_session_data* sd, struct block_list* bl, enum 
 		tbl = bl;
 	}
 
-	if( !tsd->hatEffectCount )
+	nullpo_retv( tsd );
+
+	if( tsd->hatEffects.empty() ){
 		return;
-
-	len = 9 + tsd->hatEffectCount * 2;
-
-	buf = (unsigned char*)aMalloc( len );
-
-	WBUFW(buf,0) = 0xa3b;
-	WBUFW(buf,2) = len;
-	WBUFL(buf,4) = tsd->bl.id;
-	WBUFB(buf,8) = 1;
-
-	for( i = 0; i < tsd->hatEffectCount; i++ ){
-		WBUFW(buf,9+i*2) = tsd->hatEffectIDs[i];
 	}
 
-	clif_send(buf, len,tbl,target);
+	struct PACKET_ZC_HAT_EFFECT* p = (struct PACKET_ZC_HAT_EFFECT*)packet_buffer;
 
-	aFree(buf);
+	p->packetType = HEADER_ZC_HAT_EFFECT;
+	p->packetLength = (int16)( sizeof( struct PACKET_ZC_HAT_EFFECT ) + sizeof( int16 ) * tsd->hatEffects.size() );
+	p->aid = tsd->bl.id;
+	p->status = 1;
+
+	for( size_t i = 0; i < tsd->hatEffects.size(); i++ ){
+		p->effects[i] = tsd->hatEffects[i];
+	}
+
+	clif_send( p, p->packetLength, tbl, target );
 #endif
 }
 
 void clif_hat_effect_single( struct map_session_data* sd, uint16 effectId, bool enable ){
-#if PACKETVER >= 20150513
-	unsigned char buf[13];
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	nullpo_retv( sd );
 
-	WBUFW(buf,0) = 0xa3b;
-	WBUFW(buf,2) = 13;
-	WBUFL(buf,4) = sd->bl.id;
-	WBUFB(buf,8) = enable;
-	WBUFL(buf,9) = effectId;
+	struct PACKET_ZC_HAT_EFFECT* p = (struct PACKET_ZC_HAT_EFFECT*)packet_buffer;
 
-	clif_send(buf,13,&sd->bl,AREA);
+	p->packetType = HEADER_ZC_HAT_EFFECT;
+	p->packetLength = (int16)( sizeof( struct PACKET_ZC_HAT_EFFECT ) + sizeof( int16 ) );
+	p->aid = sd->bl.id;
+	p->status = enable;
+	p->effects[0] = effectId;
+
+	clif_send( p, p->packetLength, &sd->bl, AREA );
 #endif
 }
 
