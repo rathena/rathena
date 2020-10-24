@@ -48307,6 +48307,7 @@ Body:
       Third: true
       Third_Upper: true
       Third_Baby: true
+    Gender: Female
     Locations:
       Head_Top: true
     EquipLevelMin: 100
