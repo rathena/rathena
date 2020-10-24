@@ -31519,7 +31519,7 @@ Body:
     Script: |
       sc_start SC_LIFEINSURANCE,3600000,0;
   - Id: 14505
-    AegisName: Dungeon_1_hour_Ticket
+    AegisName: Dun_1HR_Voucher
     Name: Dungeon 1 Hour Ticket
     Type: Usable
     Buy: 20
