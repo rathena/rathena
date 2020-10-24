@@ -4036,3 +4036,11 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`location_right_hand`,`script`) VALUES (31021,'Dancing_Marionette_Card','Dancing Marionette Card','Card',20,10,true,'bonus bAspdRate,10; bonus2 bAddClass,Class_All,-3;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`location_shoes`,`script`) VALUES (31022,'Abandoned_Teddy_Bear_Card','Abandoned Teddy Bear Card','Card',20,10,true,'bonus bMaxSPRate,20; bonus2 bAddEff2,Eff_Curse,20;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`location_right_hand`,`script`) VALUES (31023,'Celine_Kimi_Card','Celine Kimi Card','Card',20,10,true,'bonus bMatkRate,10; bonus5 bAutoSpell,"NPC_CRITICALWOUND",3,5+(10*(getrefine()/3)),BF_MAGIC,1;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`location_right_hand`,`flag_buyingstore`,`script`) VALUES (31024,'As_Bdy_Knight_Card','Immortal Cursed Knight Card','Card',20,10,true,true,'bonus2 bAddClass,Class_All,10;
+bonus5 bAutoSpell,"RK_IGNITIONBREAK",5,20,BF_WEAPON,1;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`location_right_hand`,`flag_buyingstore`,`script`) VALUES (31025,'As_Wind_Ghost_Card','Immortal Wind Ghost Card','Card',20,10,true,true,'bonus bMatkRate,10;
+bonus5 bAutoSpell,"SO_CLOUD_KILL",5,10,BF_MAGIC,1;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`location_shoes`,`flag_buyingstore`,`script`) VALUES (31026,'As_Ragged_Golem_Card','Stephane Jack Earnest Wolf Card','Card',20,10,true,true,'bonus5 bAutoSpellWhenHit,"SO_FIREWALK",5,35,BF_WEAPON,0;
+bonus5 bAutoSpellWhenHit,"SO_ELECTRICWALK",5,80,BF_MAGIC,0;
+autobonus "{ bonus bFlee,200; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_TEIHIT1; }";
+autobonus "{ bonus bSpeedRate,25; }",25,10000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }";');
