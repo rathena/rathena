@@ -22,9 +22,15 @@ Note: If `conf/inter_athena.conf::use_sql_db` is set to yes continue with these 
 
 * item_cash_db.sql - Used for client's cash shop.
 * item_cash_db2.sql - Used for client's cash shop (import).
-* item_db.sql - Contains __pre-renewal__ item data.
+* item_db.sql - Contains __pre-renewal__ item data table structure.
+* item_db_equip.sql - Contains __pre-renewal__ equipment item data.
+* item_db_etc.sql - Contains __pre-renewal__ etcetera item data.
 * item_db2.sql - Contains __pre-renewal__ item data (import).
-* item_db_re.sql - Contains __renewal__ item data.
+* item_db_re.sql - Contains __renewal__ item data table structure.
+* item_db_re_equip.sql - Contains __renewal__ equipment item data.
+* item_db_re_etc.sql - Contains __renewal__ etcetera item data.
+* item_db_re_usable.sql - Contains __renewal__ usable item data.
+* item_db_usable.sql - Contains __pre-renewal__ usable item data.
 * item_db2_re.sql - Contains __renewal__ item data (import).
 * mob_db.sql - Contains __pre-renewal__ mob data.
 * mob_db2.sql - Contains __pre-renewal__ mob data (import).
