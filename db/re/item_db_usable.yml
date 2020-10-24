@@ -31536,7 +31536,7 @@ Body:
     Script: |
       warp "dali02",117,69; 
   - Id: 14506
-    AegisName: Dungeon_1_hour_Ticket_
+    AegisName: Dun_Voucher
     Name: Dungeon 1 Hour Ticket
     Type: Usable
     Buy: 20
@@ -42940,7 +42940,7 @@ Body:
     Script: |
       getitem 22902,11; bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",1800;
   - Id: 17569
-    AegisName: Dungeon_1_hour_Ticket_Box
+    AegisName: Dun_Voucher_Box1
     Name: Sky Fortress Ticket 1 Hour Box
     Type: Usable
     Buy: 20
