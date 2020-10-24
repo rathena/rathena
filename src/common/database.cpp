@@ -95,6 +95,7 @@ bool YamlDatabase::load(const std::string& path) {
 	YAML::Node rootNode;
 
 	try {
+		ShowStatus( "Loading '" CL_WHITE "%s" CL_RESET "'..." CL_CLL "\r", path.c_str() );
 		rootNode = YAML::LoadFile(path);
 	}
 	catch(YAML::Exception &e) {
