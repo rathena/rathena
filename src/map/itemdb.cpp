@@ -420,7 +420,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 	} else {
 		if (!exists) {
 			if (itemdb_isequip2(item.get())) {
-				this->invalidWarning(node["Locations"], "Invalid item equip location as it has no equip location, defaulting to IT_ETC.\n");
+				this->invalidWarning(node, "Invalid item equip location as it has no equip location, defaulting to IT_ETC.\n");
 				item->type = IT_ETC;
 			} else
 				item->equip = 0;
