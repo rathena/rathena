@@ -1944,23 +1944,23 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	node["Type"] = str[++index];
 	if (!str[++index].empty())
 		node["SubType"] = str[index];
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		node["Buy"] = std::stoi(str[index]);
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		node["Sell"] = std::stoi(str[index]);
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		node["Weight"] = std::stoi(str[index]);
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		node["Attack"] = std::stoi(str[index]);
 #ifdef RENEWAL
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		node["MagicAttack"] = std::stoi(str[index]);
 #endif
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		node["Defense"] = std::stoi(str[index]);
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		node["Range"] = std::stoi(str[index]);
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		node["Slots"] = std::stoi(str[index]);
 
 	YAML::Node jobs;
@@ -2100,34 +2100,34 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 		locations["Shadow_Left_Accessory"] = std::stoi(str[index]) ? "true" : "false";
 	node["Locations"] = locations;
 
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		node["WeaponLevel"] = std::stoi(str[index]);
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		node["EquipLevelMin"] = std::stoi(str[index]);
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		node["EquipLevelMax"] = std::stoi(str[index]);
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		node["Refineable"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		node["View"] = std::stoi(str[index]);
 	if (!str[++index].empty())
 		node["AliasName"] = str[index];
 
 	YAML::Node flags;
 
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		flags["BuyingStore"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		flags["DeadBranch"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		flags["Container"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		flags["UniqueId"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		flags["BindOnEquip"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		flags["DropAnnounce"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		flags["NoConsume"] = true;
 	if (!str[++index].empty())
 		flags["DropEffect"] = str[index];
@@ -2135,7 +2135,7 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 
 	YAML::Node delay;
 
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		delay["Duration"] = std::stoi(str[index]);
 	if (!str[++index].empty())
 		delay["Status"] = str[index];
@@ -2143,47 +2143,47 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 
 	YAML::Node stack;
 
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		stack["Amount"] = std::stoi(str[index]);
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		stack["Inventory"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		stack["Cart"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		stack["Storage"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		stack["GuildStorage"] = true;
 	node["Stack"] = stack;
 
 	YAML::Node nouse;
 
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		nouse["Override"] = std::stoi(str[index]);
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		nouse["Sitting"] = true;
 	node["NoUse"] = nouse;
 
 	YAML::Node trade;
 
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		trade["Override"] = std::stoi(str[index]);
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		trade["NoDrop"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		trade["NoTrade"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		trade["TradePartner"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		trade["NoSell"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		trade["NoCart"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		trade["NoStorage"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		trade["NoGuildStorage"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		trade["NoMail"] = true;
-	if (!str[++index].empty() && std::stoi(str[index]) != 0)
+	if (!str[++index].empty())
 		trade["NoAuction"] = true;
 	node["Trade"] = trade;
 
@@ -2217,7 +2217,7 @@ static int itemdb_read_sqldb(void) {
 		uint64 total_rows = Sql_NumRows(mmysql_handle), rows = 0, count = 0;
 
 		// process rows one by one
-		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {// wrap the result into a TXT-compatible format
+		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
 			ShowStatus( "Loading [%" PRIu64 "/%" PRIu64 "] rows from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++rows, total_rows, item_db_name[fi] );
 
 			std::vector<std::string> data = {};
