@@ -478,6 +478,7 @@ enum unitdata_mobtypes {
 	UMOB_TARGETID,
 	UMOB_ROBE,
 	UMOB_BODY2,
+	UMOB_GROUP_ID,
 };
 
 enum unitdata_homuntypes {
@@ -521,6 +522,7 @@ enum unitdata_homuntypes {
 	UHOM_ADELAY,
 	UHOM_DMOTION,
 	UHOM_TARGETID,
+	UHOM_GROUP_ID,
 };
 
 enum unitdata_pettypes {
@@ -561,6 +563,7 @@ enum unitdata_pettypes {
 	UPET_AMOTION,
 	UPET_ADELAY,
 	UPET_DMOTION,
+	UPET_GROUP_ID,
 };
 
 enum unitdata_merctypes {
@@ -601,6 +604,7 @@ enum unitdata_merctypes {
 	UMER_ADELAY,
 	UMER_DMOTION,
 	UMER_TARGETID,
+	UMER_GROUP_ID,
 };
 
 enum unitdata_elemtypes {
@@ -643,6 +647,7 @@ enum unitdata_elemtypes {
 	UELE_ADELAY,
 	UELE_DMOTION,
 	UELE_TARGETID,
+	UELE_GROUP_ID,
 };
 
 enum unitdata_npctypes {
@@ -691,6 +696,7 @@ enum unitdata_npctypes {
 	UNPC_ROBE,
 	UNPC_BODY2,
 	UNPC_DEADSIT,
+	UNPC_GROUP_ID,
 };
 
 enum navigation_service {
@@ -1836,7 +1842,7 @@ enum e_special_effects {
 	EF_MAX
 };
 
-enum e_hat_effects {
+enum e_hat_effects : int16{
 	HAT_EF_MIN = 0,
 	HAT_EF_BLOSSOM_FLUTTERING,
 	HAT_EF_MERMAID_LONGING,
@@ -1973,6 +1979,18 @@ enum e_hat_effects {
 	HAT_EF_C_SUDDEN_WEALTH_TW,
 	HAT_EF_C_ROMANCE_ROSE_TW,
 	HAT_EF_C_DISAPEAR_TIME_TW,
+	HAT_EF_2020RTC_01,
+	HAT_EF_2020RTC_02,
+	HAT_EF_2020RTC_03,
+	HAT_EF_C_2020RTC_IMP_TW,
+	HAT_EF_SUBJECT_AURA_BLACK,
+	HAT_EF_2020RTC_EFFECT_01,
+	HAT_EF_2020RTC_EFFECT_02,
+	HAT_EF_2020RTC_EFFECT_03,
+	HAT_EF_99LV_STAR_E_MBLUE,
+	HAT_EF_160LV_STAR_E_MBLUE,
+	HAT_EF_99LV_SOUL_R_GRAY,
+	HAT_EF_160LV_SOUL_R_GRAY,
 	HAT_EF_MAX
 };
 

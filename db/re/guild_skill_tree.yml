@@ -121,3 +121,12 @@ Body:
 
   - Id: GD_GUILD_STORAGE
     MaxLevel: 5
+    Required:
+    - Id: GD_EMERGENCYCALL
+      Level: 1
+    - Id: GD_EXTENSION
+      Level: 10
+    - Id: GD_SOULCOLD
+      Level: 1
+    - Id: GD_HAWKEYES
+      Level: 1

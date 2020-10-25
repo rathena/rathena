@@ -296,7 +296,7 @@ clicking) will cause a shop window to come up. No code whatsoever runs in shop
 NPCs and you can't change the prices otherwise than by editing the script
 itself.
 
-The Item ID is the number of item in the 'item_db.txt' database. If Price is set
+The Item ID is the number of item in the 'db/item_db.yml' database. If Price is set
 to -1, the 'buy price' given in the item database will be used. Otherwise, the
 price you gave will be used for this item, which is how you create differing
 prices for items in different shops.
@@ -1641,7 +1641,7 @@ S_CheckFull:
 
 Example 2: callsub used repeatedly, with different arguments
 // notice how the Zeny check/delete is reused, instead of copy-pasting for every warp
-	switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Beacon Island, Pharos") {
+	switch(select("Abyss Lake:Amatsu Dungeon:Anthell:Ayothaya Dungeon:Beacon Island, Pharos")) {
 		case 1:	callsub S_DunWarp,"hu_fild05",192,207;
 		case 2:	callsub S_DunWarp,"ama_in02",119,181;
 		case 3:	callsub S_DunWarp,"moc_fild20",164,145;
@@ -1901,7 +1901,7 @@ Example 3:
 Example 4:
 
 	mes "[Quest Person]";
-	if (countitem(512) < 1) {  // 512 is the item ID for Apple, found in item_db
+	if (countitem(512) < 1) {  // 512 is the item ID for Apple, found in db/item_db.yml
 		mes "Can you please bring me an apple?";
 		close;
 	}
@@ -2861,8 +2861,7 @@ number.
 This is the only function around where a parameter may be either a string or a
 number! If it's a number, it means that only the items with that item ID number
 will be counted. If it is a string, it is assumed to mean the 'english name'
-field from the item database. If you give it an empty string, or something that
-isn't found from the item database, it will count items number '512' (apples).
+field from the item database.
 
 ---------------------------------------
 
@@ -4597,7 +4596,7 @@ online, items will be created in their inventory instead. If they are not
 online, nothing will happen.
 
 In the first and most commonly used version of this command, items are
-referred to by their database ID number found inside 'db/(pre-)re/item_db.txt'.
+referred to by their database ID number found inside 'db/item_db.yml'.
 
 	getitem 502,10 // The person will receive 10 apples
 	getitem 617,1  // The person will receive 1 Old Violet Box
@@ -4903,7 +4902,7 @@ the results array is limited to 10 items.
 *delitem "<item name>",<amount>{,<account ID>};
 
 This command will remove a specified amount of items from the invoking/target character.
-Like all the item commands, it uses the item ID found inside 'db/(pre-)re/item_db.txt'.
+Like all the item commands, it uses the item ID found inside 'db/item_db.yml'.
 
     delitem 502,10; // The person will lose 10 apples
     delitem 617,1;  // The person will lose 1 Old Violet Box
@@ -5060,18 +5059,19 @@ See 'getitem2' for an explanation of the expanded parameters.
 
 *countbound({<bound type>{,<char_id>}})
 
-This function will return the number of bounded items in the character's
-inventory, and sets an array @bound_items[] containing all item IDs of the
-counted items. If a bound type is specified, only those items will be counted.
+This function will return the number of different bounded items in the character's
+inventory, and sets the arrays @bound_items[] and @bound_amount[] containing all item IDs of the
+counted items and their respective amount. If a bound type is specified, only those items will be counted.
 
 For a list of bound types see 'getitembound'.
 
 Example:
-	mes "You currently have " + countbound() + " bounded items.";
+	.@total_type = countbound();
+	mes "You currently have " + .@total_type + " different type of bounded items.";
 	next;
 	mes "The list of bounded items include:";
-	for(.@i = 0; .@i < getarraysize(@bound_items); .@i++)
-		mes getitemname(@bound_items[.@i]);
+	for(.@i = 0; .@i < .@total_type; .@i++)
+		mes "x" + @bound_amount[.@i] + " " + getitemname(@bound_items[.@i]);
 	close;
 
 ---------------------------------------
@@ -5239,7 +5239,7 @@ a rune and has the appropriate raw materials in their inventory.
 
 *successremovecards <equipment slot>;
 
-This command will remove all cards of the cards slots defined by item_db.txt
+This command will remove all cards of the cards slots defined in db/item_db.yml
 from the item found in the specified equipment slot of the invoking character,
 create new card items and give them to the character.
 If any cards were removed in this manner, it will also show a success effect.
@@ -5676,6 +5676,20 @@ Used in reset NPC's (duh!)
 
 ---------------------------------------
 
+*resetfeel({<char_id>});
+
+This command will reset the Star Gladiator's designated maps on the invoking character.
+Only works on Star Gladiator and Star Emperor classes.
+
+---------------------------------------
+
+*resethate({<char_id>});
+
+This command will reset the Star Gladiator's designated monsters on the invoking character.
+Only works on Star Gladiator and Star Emperor classes.
+
+---------------------------------------
+
 *sc_start <effect type>,<ticks>,<value 1>{,<rate>,<flag>{,<GID>}};
 *sc_start2 <effect type>,<ticks>,<value 1>,<value 2>{,<rate>,<flag>{,<GID>}};
 *sc_start4 <effect type>,<ticks>,<value 1>,<value 2>,<value 3>,<value 4>{,<rate>,<flag>{,<GID>}};
@@ -5807,9 +5821,9 @@ Increase AGI Lv 5, and display appropriate effects.
 *npcskilleffect <skill id>,<number>,<x>,<y>;
 *npcskilleffect "<skill name>",<number>,<x>,<y>;
 
-This command behaves identically to 'skilleffect', however, the effect will not
-be centered on the invoking character's sprite, nor on the NPC sprite, if any,
-but will be centered at map coordinates given on the same map as the invoking
+This command behaves identically to 'skilleffect', however, ground type skill
+effects will be centered at the map coordinates given on the same map as the
+attached character and all other skill types will be centered on the attached
 character.
 
 ---------------------------------------
@@ -6862,9 +6876,6 @@ above the head of the currently attached (or given) NPC. Once the
 given amount of seconds passes, the script resumes. The color format
 is in RGB (RRGGBB). The color is currently ignored by the client and
 appears always green.
-
-Note: If a player is attached to the NPC, they are detached from the NPC
-as soon as the progress bar activates.
 
 ---------------------------------------
 //
@@ -7977,6 +7988,20 @@ Returns "Unknown" if unit is not found.
 
 ---------------------------------------
 
+*setunittitle <GID>,<title>;
+
+Apply a <title> to the given <GID>.
+
+Note: This only works on non-player types. It also will only work on mobs if battle_config.show_mob_info is not enabled.
+
+---------------------------------------
+
+*getunittitle <GID>;
+
+Returns the title of the given <GID>.
+
+---------------------------------------
+
 *getunitdata <GID>,<arrayname>;
 *setunitdata <GID>,<parameter>,<new value>;
 
@@ -8043,6 +8068,7 @@ Parameters (indexes) for monsters are:
 	UMOB_TARGETID
 	UMOB_ROBE
 	UMOB_BODY2
+	UMOB_GROUP_ID
 
 -----
 
@@ -8087,6 +8113,7 @@ Parameter (indexes) for homunculi are:
 	UHOM_ADELAY
 	UHOM_DMOTION
 	UHOM_TARGETID
+	UHOM_GROUP_ID
 
 -----
 
@@ -8128,6 +8155,7 @@ Parameter (indexes) for pets are:
 	UPET_AMOTION
 	UPET_ADELAY
 	UPET_DMOTION
+	UPET_GROUP_ID
 
 -----
 
@@ -8169,6 +8197,7 @@ Parameter (indexes) for mercenaries are:
 	UMER_ADELAY
 	UMER_DMOTION
 	UMER_TARGETID
+	UMER_GROUP_ID
 
 -----
 
@@ -8212,6 +8241,7 @@ Parameter (indexes) for elementals are:
 	UELE_ADELAY
 	UELE_DMOTION
 	UELE_TARGETID
+	UELE_GROUP_ID
 
 -----
 
@@ -8261,6 +8291,7 @@ Parameter (indexes) for NPCs are:
 	UNPC_ROBE
 	UNPC_BODY2
 	UNPC_DEADSIT
+	UNPC_GROUP_ID
 
 *Notes:
 		- *_SIZE: small (0); medium (1); large (2)
@@ -8530,6 +8561,8 @@ Valid types are:
 		if = 10000, then this item is sold in NPC shops only
 	4 - sex; 5 - equip; 6 - weight; 7 - atk; 8 - def; 9 - range;
 	10 - slot; 11 - look; 12 - elv; 13 - wlv; 14 - view id
+	15 - eLVMax
+	16 - matk if RENEWAL is defined
 
 Example:
 	setiteminfo 7049,6,9990; // Stone now weighs 999.0
@@ -9359,6 +9392,7 @@ QMARK_PURPLE - Purple Marker
 Adds the first waiting player from the chat room of the given NPC to an existing battleground group.
 The player will also be warped to the default spawn point of the battle group or to the specified coordinates
 <x> and <y> on the given <map>.
+Note: The map need the mapflag MF_BATTLEGROUND otherwise the player is removed from the Battleground team.
 
 ---------------------------------------
 
@@ -9404,6 +9438,7 @@ Returns battle group ID on success. Returns 0 on failure.
 
 Adds an attached player or <char id> if specified to an existing battleground group. The player will also be warped
 to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
+Note: The map need the mapflag MF_BATTLEGROUND otherwise the player is removed from the Battleground team.
 
 Returns true on success. Returns false on failure.
 
@@ -9533,8 +9568,8 @@ Example:
 Retrieves data related to given Battle Group. Type can be one of the following:
 
 	0 - Amount of players currently belonging to the group.
-	1 - Store GID of players in <Battle Group> in a temporary global array $@arenamembers
-		and returns amount of players currently belonging to the group.
+	1 - Store GID of players in <Battle Group> in a temporary global array $@arenamembers,
+		stores and also returns the amount of players currently belonging to the group in $@arenamemberscount.
 
 ---------------------------------------
 

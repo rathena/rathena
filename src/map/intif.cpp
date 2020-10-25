@@ -39,7 +39,7 @@ static const int packet_len_table[] = {
 	 0, 0, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
 	39,-1,15,15, 15+NAME_LENGTH,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
-	-1, 0, 0,18,  0, 0, 0, 0, -1,75,-1,11, 11,-1, 38, 0, //0x3840
+	-1,10, 0,18,  0, 0, 0, 0, -1,75,-1,11, 11,-1, 38, 0, //0x3840
 	-1,-1, 7, 7,  7,11, 8,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus] itembound[Akinari]
 	-1, 7,-1, 7, 14, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish] / Achievements [Aleos]
 	-1, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0, -1, 3,  3, 0, //0x3870  Mercenaries [Zephyrus] / Elemental [pakpil]
@@ -95,24 +95,24 @@ struct map_session_data *inter_search_sd(uint32 account_id, uint32 char_id)
  * @param pet_name
  * @return 
  */
-int intif_create_pet(uint32 account_id,uint32 char_id,short pet_class,short pet_lv, unsigned short pet_egg_id, unsigned short pet_equip,short intimate,short hungry,char rename_flag,char incubate,char *pet_name)
+int intif_create_pet(uint32 account_id,uint32 char_id,short pet_class,short pet_lv, t_itemid pet_egg_id, t_itemid pet_equip,short intimate,short hungry,char rename_flag,char incubate,char *pet_name)
 {
 	if (CheckForCharServer())
 		return 0;
-	WFIFOHEAD(inter_fd, 24 + NAME_LENGTH);
-	WFIFOW(inter_fd,0) = 0x3080;
-	WFIFOL(inter_fd,2) = account_id;
-	WFIFOL(inter_fd,6) = char_id;
-	WFIFOW(inter_fd,10) = pet_class;
-	WFIFOW(inter_fd,12) = pet_lv;
-	WFIFOW(inter_fd,14) = pet_egg_id;
-	WFIFOW(inter_fd,16) = pet_equip;
-	WFIFOW(inter_fd,18) = intimate;
-	WFIFOW(inter_fd,20) = hungry;
-	WFIFOB(inter_fd,22) = rename_flag;
-	WFIFOB(inter_fd,23) = incubate;
-	memcpy(WFIFOP(inter_fd,24),pet_name,NAME_LENGTH);
-	WFIFOSET(inter_fd,24+NAME_LENGTH);
+	WFIFOHEAD(inter_fd, 28 + NAME_LENGTH);
+	WFIFOW(inter_fd, 0) = 0x3080;
+	WFIFOL(inter_fd, 2) = account_id;
+	WFIFOL(inter_fd, 6) = char_id;
+	WFIFOW(inter_fd, 10) = pet_class;
+	WFIFOW(inter_fd, 12) = pet_lv;
+	WFIFOL(inter_fd, 14) = pet_egg_id;
+	WFIFOL(inter_fd, 18) = pet_equip;
+	WFIFOW(inter_fd, 22) = intimate;
+	WFIFOW(inter_fd, 24) = hungry;
+	WFIFOB(inter_fd, 26) = rename_flag;
+	WFIFOB(inter_fd, 27) = incubate;
+	memcpy(WFIFOP(inter_fd, 28), pet_name, NAME_LENGTH);
+	WFIFOSET(inter_fd, 28 + NAME_LENGTH);
 
 	return 1;
 }
@@ -1132,6 +1132,21 @@ int intif_guild_emblem(int guild_id,int len,const char *data)
 	return 1;
 }
 
+int intif_guild_emblem_version(int guild_id, int emblem_id)
+{
+	if (CheckForCharServer())
+		return 0;
+	if (guild_id <= 0)
+		return 0;
+	WFIFOHEAD(inter_fd, 10);
+	WFIFOW(inter_fd, 0) = 0x3042;
+	WFIFOL(inter_fd, 2) = guild_id;
+	WFIFOL(inter_fd, 6) = emblem_id;
+	WFIFOSET(inter_fd, 10);
+
+	return 1;
+}
+
 /**
  * Requests guild castles data from char-server.
  * @param num Number of castles, size of castle_ids array.
@@ -1818,6 +1833,12 @@ int intif_parse_GuildEmblem(int fd)
 	return 1;
 }
 
+int intif_parse_GuildEmblemVersionChanged(int fd)
+{
+	guild_emblem_changed(0, RFIFOL(fd, 2), RFIFOL(fd, 6), nullptr); // Doesn't need emblem length and data
+	return 1;
+}
+
 /**
  * ACK guild message
  * @param fd : char-serv link
@@ -2264,8 +2285,8 @@ int intif_achievement_reward(struct map_session_data *sd, struct s_achievement_d
 	WFIFOW(inter_fd, 0) = 0x3064;
 	WFIFOL(inter_fd, 2) = sd->status.char_id;
 	WFIFOL(inter_fd, 6) = adb->achievement_id;
-	WFIFOW(inter_fd, 10) = adb->rewards.nameid;
-	WFIFOL(inter_fd, 12) = adb->rewards.amount;
+	WFIFOL(inter_fd, 10) = adb->rewards.nameid;
+	WFIFOW(inter_fd, 14) = adb->rewards.amount;
 	safestrncpy(WFIFOCP(inter_fd, 16), sd->status.name, NAME_LENGTH);
 	safestrncpy(WFIFOCP(inter_fd, 16+NAME_LENGTH), adb->name.c_str(), ACHIEVEMENT_NAME_LENGTH);
 	WFIFOSET(inter_fd, 16+NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH);
@@ -3229,14 +3250,14 @@ void intif_parse_MessageToFD(int fd) {
 
 /**
  * Request to send broadcast item to all servers
- * ZI 3009 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.?B
+ * ZI 3009 <cmd>.W <len>.W <nameid>.N <source>.W <type>.B <name>.?B
  * @param sd Player who obtain the item
  * @param nameid Obtained item
  * @param sourceid Source of item, another item ID or monster ID
  * @param type Obtain type @see enum BROADCASTING_SPECIAL_ITEM_OBTAIN
  * @return
  **/
-int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned short nameid, unsigned int sourceid, unsigned char type) {
+int intif_broadcast_obtain_special_item(struct map_session_data *sd, t_itemid nameid, t_itemid sourceid, unsigned char type) {
 	nullpo_retr(0, sd);
 
 	// Should not be here!
@@ -3254,13 +3275,13 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned sh
 	if (other_mapserver_count < 1)
 		return 0;
 
-	WFIFOHEAD(inter_fd, 9 + NAME_LENGTH);
+	WFIFOHEAD(inter_fd, 11 + NAME_LENGTH);
 	WFIFOW(inter_fd, 0) = 0x3009;
-	WFIFOW(inter_fd, 2) = 9 + NAME_LENGTH;
-	WFIFOW(inter_fd, 4) = nameid;
-	WFIFOW(inter_fd, 6) = sourceid;
-	WFIFOB(inter_fd, 8) = type;
-	safestrncpy(WFIFOCP(inter_fd, 9), sd->status.name, NAME_LENGTH);
+	WFIFOW(inter_fd, 2) = 11 + NAME_LENGTH;
+	WFIFOL(inter_fd, 4) = nameid;
+	WFIFOW(inter_fd, 8) = sourceid;
+	WFIFOB(inter_fd, 10) = type;
+	safestrncpy(WFIFOCP(inter_fd, 11), sd->status.name, NAME_LENGTH);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
 
 	return 1;
@@ -3269,13 +3290,13 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned sh
 /**
  * Request to send broadcast item to all servers.
  * TODO: Confirm the usage. Maybe on getitem-like command?
- * ZI 3009 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.24B <npcname>.24B
+ * ZI 3009 <cmd>.W <len>.W <nameid>.N <source>.W <type>.B <name>.24B <npcname>.24B
  * @param sd Player who obtain the item
  * @param nameid Obtained item
  * @param srcname Source name
  * @return
  **/
-int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid) {
+int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, t_itemid nameid) {
 	nullpo_retr(0, sd);
 
 	// Send local
@@ -3287,13 +3308,13 @@ int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigne
 	if (other_mapserver_count < 1)
 		return 0;
 
-	WFIFOHEAD(inter_fd, 9 + NAME_LENGTH*2);
+	WFIFOHEAD(inter_fd, 11 + NAME_LENGTH*2);
 	WFIFOW(inter_fd, 0) = 0x3009;
-	WFIFOW(inter_fd, 2) = 9 + NAME_LENGTH*2;
-	WFIFOW(inter_fd, 4) = nameid;
-	WFIFOW(inter_fd, 6) = 0;
-	WFIFOB(inter_fd, 8) = ITEMOBTAIN_TYPE_NPC;
-	safestrncpy(WFIFOCP(inter_fd, 9), sd->status.name, NAME_LENGTH);
+	WFIFOW(inter_fd, 2) = 11 + NAME_LENGTH*2;
+	WFIFOL(inter_fd, 4) = nameid;
+	WFIFOW(inter_fd, 8) = 0;
+	WFIFOB(inter_fd, 10) = ITEMOBTAIN_TYPE_NPC;
+	safestrncpy(WFIFOCP(inter_fd, 11), sd->status.name, NAME_LENGTH);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
 
 	return 1;
@@ -3301,18 +3322,18 @@ int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigne
 
 /**
  * Received broadcast item and broadcast on local map.
- * IZ 3809 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.24B <srcname>.24B
+ * IZ 3809 <cmd>.W <len>.W <nameid>.L <source>.W <type>.B <name>.24B <srcname>.24B
  * @param fd
  **/
 void intif_parse_broadcast_obtain_special_item(int fd) {
-	int type = RFIFOB(fd, 8);
+	int type = RFIFOB(fd, 10);
 	char name[NAME_LENGTH];
 
-	safestrncpy(name, RFIFOCP(fd, 9), NAME_LENGTH);
+	safestrncpy(name, RFIFOCP(fd, 11), NAME_LENGTH);
 	if (type == ITEMOBTAIN_TYPE_NPC)
-		safestrncpy(name, RFIFOCP(fd, 9 + NAME_LENGTH), NAME_LENGTH);
+		safestrncpy(name, RFIFOCP(fd, 11 + NAME_LENGTH), NAME_LENGTH);
 
-	clif_broadcast_obtain_special_item(name, RFIFOW(fd, 4), RFIFOW(fd, 6), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
+	clif_broadcast_obtain_special_item(name, RFIFOL(fd, 4), RFIFOW(fd, 8), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
 }
 
 /*==========================================
@@ -3762,6 +3783,7 @@ int intif_parse(int fd)
 	case 0x383e:	intif_parse_GuildNotice(fd); break;
 	case 0x383f:	intif_parse_GuildEmblem(fd); break;
 	case 0x3840:	intif_parse_GuildCastleDataLoad(fd); break;
+	case 0x3841:	intif_parse_GuildEmblemVersionChanged(fd); break;
 	case 0x3843:	intif_parse_GuildMasterChanged(fd); break;
 
 	// Mail System
