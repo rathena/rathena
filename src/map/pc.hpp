@@ -263,11 +263,6 @@ struct s_combos {
 	script_code *bonus;
 	uint32 id;
 	uint32 pos;
-
-	~s_combos() {
-		if (this->bonus)
-			script_free_code(this->bonus);
-	}
 };
 
 struct map_session_data {
