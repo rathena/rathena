@@ -266,7 +266,7 @@ struct item {
 };
 
 //Equip position constants
-enum equip_pos {
+enum equip_pos : uint32 {
 	EQP_HEAD_LOW         = 0x000001,
 	EQP_HEAD_MID         = 0x000200, // 512
 	EQP_HEAD_TOP         = 0x000100, // 256
@@ -972,9 +972,10 @@ enum e_job {
 	JOB_MAX,
 };
 
-enum e_sex {
+enum e_sex : uint8 {
 	SEX_FEMALE = 0,
 	SEX_MALE,
+	SEX_BOTH,
 	SEX_SERVER
 };
 
