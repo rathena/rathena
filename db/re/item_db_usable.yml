@@ -45253,15 +45253,15 @@ Body:
     Script: |
       bonus_script "{ bonus2 bSPDrainRate,50,5; }",300;
   - Id: 22847
-    AegisName: Prontera_Medal
-    Name: Prontera Medal
+    AegisName: BadgeOfProntera
+    Name: Prontera Badge
     Type: Usable
     Buy: 10
     Weight: 10
     Flags:
       BuyingStore: true
     Script: |
-      warp "prontera",159,192; /*No coord info*/
+      warp "prontera",159,192;
   - Id: 22848
     AegisName: Prison_Key
     Name: Prison Key
