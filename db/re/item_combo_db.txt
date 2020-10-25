@@ -1442,6 +1442,8 @@
 28907:2998,{ bonus bSpeedRate,25; }
 28908:2998,{ bonus bDelayrate,-10; }
 28909:2998,{ bonus bUseSPrate,-10; bonus bMaxSPrate,10; }
+31024:31026,{ bonus bAspd,1; }
+31025:31026,{ bonus bVariableCastrate,-10; }
 32228:15388:15389,{ bonus bBaseAtk,25; bonus bHit,10; }
 32229:15388:15389,{ bonus bMatk,25; bonus bVariableCastrate,-8; }
 32230:15388:15389,{ bonus bCritAtkRate,7; bonus2 bAddClass,Class_All,5; }
