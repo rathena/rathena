@@ -1,5 +1,5 @@
 #
-# Table structure for table `item_db`
+# Table data for table `item_db`
 #
 
 REPLACE INTO `item_db` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`) VALUES (670,'Gold_Coin_Moneybag','Bag of Gold Coins','Etc',100000,400);

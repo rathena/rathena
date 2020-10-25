@@ -1952,10 +1952,6 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 		node["Weight"] = std::stoi(str[index]);
 	if (!str[++index].empty())
 		node["Attack"] = std::stoi(str[index]);
-#ifdef RENEWAL
-	if (!str[++index].empty())
-		node["MagicAttack"] = std::stoi(str[index]);
-#endif
 	if (!str[++index].empty())
 		node["Defense"] = std::stoi(str[index]);
 	if (!str[++index].empty())
@@ -1985,10 +1981,6 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 		jobs["Gunslinger"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
 		jobs["Hunter"] = std::stoi(str[index]) ? "true" : "false";
-#ifdef RENEWAL
-	if (!str[++index].empty())
-		jobs["KagerouOboro"] = std::stoi(str[index]) ? "true" : "false";
-#endif
 	if (!str[++index].empty())
 		jobs["Knight"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
@@ -2003,10 +1995,6 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 		jobs["Novice"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
 		jobs["Priest"] = std::stoi(str[index]) ? "true" : "false";
-#ifdef RENEWAL
-	if (!str[++index].empty())
-		jobs["Rebellion"] = std::stoi(str[index]) ? "true" : "false";
-#endif
 	if (!str[++index].empty())
 		jobs["Rogue"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
@@ -2015,10 +2003,6 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 		jobs["SoulLinker"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
 		jobs["StarGladiator"] = std::stoi(str[index]) ? "true" : "false";
-#ifdef RENEWAL
-	if (!str[++index].empty())
-		jobs["Summoner"] = std::stoi(str[index]) ? "true" : "false";
-#endif
 	if (!str[++index].empty())
 		jobs["SuperNovice"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
@@ -2029,7 +2013,6 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 		jobs["Thief"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
 		jobs["Wizard"] = std::stoi(str[index]) ? "true" : "false";
-	node["Jobs"] = jobs;
 
 	YAML::Node classes;
 
@@ -2041,15 +2024,6 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 		classes["Upper"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
 		classes["Baby"] = std::stoi(str[index]) ? "true" : "false";
-#ifdef RENEWAL
-	if (!str[++index].empty())
-		classes["Third"] = std::stoi(str[index]) ? "true" : "false";
-	if (!str[++index].empty())
-		classes["Third_Upper"] = std::stoi(str[index]) ? "true" : "false";
-	if (!str[++index].empty())
-		classes["Third_Baby"] = std::stoi(str[index]) ? "true" : "false";
-#endif
-	node["Classes"] = classes;
 
 	if (!str[++index].empty())
 		node["Gender"] = str[index];
@@ -2194,6 +2168,26 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty())
 		node["UnEquipScript"] = str[index];
 
+#ifdef RENEWAL
+	if (!str[++index].empty())
+		node["MagicAttack"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		classes["Third"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		classes["Third_Upper"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		classes["Third_Baby"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["KagerouOboro"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Rebellion"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Summoner"] = std::stoi(str[index]) ? "true" : "false";
+#endif
+
+	node["Classes"] = classes;
+	node["Jobs"] = jobs;
+
 	return item_db.parseBodyNode(node) > 0;
 }
 
@@ -2208,7 +2202,20 @@ static int itemdb_read_sqldb(void) {
 
 	for( uint8 fi = 0; fi < ARRAYLENGTH(item_db_name); ++fi ) {
 		// retrieve all rows from the item database
-		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `id`,`name_aegis`,`name_english`,`type`,`subtype`,`price_buy`,`price_sell`,`weight`,`attack`,`magic_attack`,`defense`,`range`,`slots`,`job_all`,`job_acolyte`,`job_alchemist`,`job_archer`,`job_assassin`,`job_barddancer`,`job_blacksmith`,`job_crusader`,`job_gunslinger`,`job_hunter`,`job_kagerouoboro`,`job_knight`,`job_mage`,`job_merchant`,`job_monk`,`job_ninja`,`job_novice`,`job_priest`,`job_rebellion`,`job_rogue`,`job_sage`,`job_soullinker`,`job_stargladiator`,`job_summoner`,`job_supernovice`,`job_swordman`,`job_taekwon`,`job_thief`,`job_wizard`,`class_all`,`class_normal`,`class_upper`,`class_baby`,`class_third`,`class_third_upper`,`class_third_baby`,`gender`,`location_head_top`,`location_head_mid`,`location_head_low`,`location_armor`,`location_right_hand`,`location_left_hand`,`location_garment`,`location_shoes`,`location_right_accessory`,`location_left_accessory`,`location_costume_head_top`,`location_costume_head_mid`,`location_costume_head_low`,`location_costume_garment`,`location_ammo`,`location_shadow_armor`,`location_shadow_weapon`,`location_shadow_shield`,`location_shadow_shoes`,`location_shadow_right_accessory`,`location_shadow_left_accessory`,`weapon_level`,`equip_level_min`,`equip_level_max`,`refineable`,`view`,`alias_name`,`flag_buyingstore`,`flag_deadbranch`,`flag_container`,`flag_uniqueid`,`flag_bindonequip`,`flag_dropannounce`,`flag_noconsume`,`flag_dropeffect`,`delay_duration`,`delay_status`,`stack_amount`,`stack_inventory`,`stack_cart`,`stack_storage`,`stack_guildstorage`,`nouse_override`,`nouse_sitting`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_tradepartner`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`,`equip_script`,`unequip_script` FROM `%s`", item_db_name[fi]) ) {
+		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `id`,`name_aegis`,`name_english`,`type`,`subtype`,`price_buy`,`price_sell`,`weight`,`attack`,`defense`,`range`,`slots`,"
+			"`job_all`,`job_acolyte`,`job_alchemist`,`job_archer`,`job_assassin`,`job_barddancer`,`job_blacksmith`,`job_crusader`,`job_gunslinger`,`job_hunter`,`job_knight`,`job_mage`,`job_merchant`,"
+			"`job_monk`,`job_ninja`,`job_novice`,`job_priest`,`job_rogue`,`job_sage`,`job_soullinker`,`job_stargladiator`,`job_supernovice`,`job_swordman`,`job_taekwon`,`job_thief`,`job_wizard`,"
+			"`class_all`,`class_normal`,`class_upper`,`class_baby`,`gender`,"
+			"`location_head_top`,`location_head_mid`,`location_head_low`,`location_armor`,`location_right_hand`,`location_left_hand`,`location_garment`,`location_shoes`,`location_right_accessory`,`location_left_accessory`,"
+			"`location_costume_head_top`,`location_costume_head_mid`,`location_costume_head_low`,`location_costume_garment`,`location_ammo`,`location_shadow_armor`,`location_shadow_weapon`,`location_shadow_shield`,`location_shadow_shoes`,`location_shadow_right_accessory`,`location_shadow_left_accessory`,"
+			"`weapon_level`,`equip_level_min`,`equip_level_max`,`refineable`,`view`,`alias_name`,"
+			"`flag_buyingstore`,`flag_deadbranch`,`flag_container`,`flag_uniqueid`,`flag_bindonequip`,`flag_dropannounce`,`flag_noconsume`,`flag_dropeffect`,"
+			"`delay_duration`,`delay_status`,`stack_amount`,`stack_inventory`,`stack_cart`,`stack_storage`,`stack_guildstorage`,`nouse_override`,`nouse_sitting`,"
+			"`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_tradepartner`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`,`equip_script`,`unequip_script`"
+#ifdef RENEWAL
+			",`magic_attack`,`class_third`,`class_third_upper`,`class_third_baby`,`job_kagerouoboro`,`job_rebellion`,`job_summoner`"
+#endif
+			" FROM `%s`", item_db_name[fi]) ) {
 			Sql_ShowDebug(mmysql_handle);
 			continue;
 		}

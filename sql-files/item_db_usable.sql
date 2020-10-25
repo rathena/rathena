@@ -1,5 +1,5 @@
 #
-# Table structure for table `item_db`
+# Table data for table `item_db`
 #
 
 REPLACE INTO `item_db` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (501,'Red_Potion','Red Potion','Healing',50,70,'itemheal rand(45,65),0;');

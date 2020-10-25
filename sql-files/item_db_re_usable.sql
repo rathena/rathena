@@ -1,5 +1,5 @@
 #
-# Table structure for table `item_db_re`
+# Table data for table `item_db_re`
 #
 
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (500,'Choko_Gangjeong','Choko Gangjeong','Healing',10,'percentheal 10,10;');

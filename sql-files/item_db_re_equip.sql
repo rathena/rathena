@@ -1,5 +1,5 @@
 #
-# Table structure for table `item_db_re`
+# Table data for table `item_db_re`
 #
 
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`subtype`,`price_buy`,`weight`,`attack`,`range`,`slots`,`job_alchemist`,`job_assassin`,`job_blacksmith`,`job_crusader`,`job_knight`,`job_merchant`,`job_novice`,`job_rogue`,`job_supernovice`,`job_swordman`,`job_thief`,`location_right_hand`,`weapon_level`,`equip_level_min`,`refineable`) VALUES (1101,'Sword','Sword','Weapon','1hSword',100,500,25,1,3,true,true,true,true,true,true,true,true,true,true,true,true,1,2,true);
