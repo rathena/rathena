@@ -236,6 +236,12 @@ std::string string_escape(const std::string &s) {
 	escaped.reserve(n * 2);
 
 	for (size_t i = 0; i < n; ++i) {
+		if (s[i] == '\r')
+			continue;
+		if (s[i] == '\n' && (i + 1) < n) {
+			escaped += "\\n";
+			continue;
+		}
 		if (s[i] == '\\' || s[i] == '\'')
 			escaped += '\\';
 		escaped += s[i];
