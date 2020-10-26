@@ -113,7 +113,7 @@ enum packet_headers {
 	authokType = 0x73,
 #elif PACKETVER < 20141022
 	authokType = 0x2eb,
-// Some clients smaller than 20160330 cant be tested [4144]
+	// Some clients smaller than 20160330 cant be tested [4144]
 #elif PACKETVER < 20160330
 	authokType = 0xa18,
 #else
@@ -267,9 +267,9 @@ enum packet_headers {
 	viewequipackType = 0xa2d,
 #elif PACKETVER >= 20120925
 	viewequipackType = 0x997,
-// [4144] not supported due other packets/structs not updated
-//#elif (PACKETVER_MAIN_NUM >= 20111207) || (PACKETVER_RE_NUM >= 20111122)
-//	viewequipackType = 0x906,
+	// [4144] not supported due other packets/structs not updated
+	//#elif (PACKETVER_MAIN_NUM >= 20111207) || (PACKETVER_RE_NUM >= 20111122)
+	//	viewequipackType = 0x906,
 #elif PACKETVER >= 20101124
 	viewequipackType = 0x859,
 #else
@@ -405,11 +405,6 @@ enum packet_headers {
 #else
 	guildLeave = 0x15a,
 #endif
-#if PACKETVER >= 20190724
-	changeGuildEmblem = 0xb47,
-#else
-	changeGuildEmblem = 0x1b4,
-#endif
 };
 
 #if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
@@ -520,7 +515,7 @@ struct packet_authok {
 #if PACKETVER >= 20080102
 	int16 font;
 #endif
-// Some clients smaller than 20160330 cant be tested [4144]
+	// Some clients smaller than 20160330 cant be tested [4144]
 #if PACKETVER >= 20141022 && PACKETVER < 20160330
 	uint8 sex;
 #endif
@@ -730,7 +725,7 @@ struct packet_spawn_unit {
 #if PACKETVER >= 20150513
 	int16 body;
 #endif
-/* Might be earlier, this is when the named item bug began */
+	/* Might be earlier, this is when the named item bug began */
 #if PACKETVER >= 20131223
 	char name[NAME_LENGTH];
 #endif
@@ -804,7 +799,7 @@ struct packet_unit_walking {
 #if PACKETVER >= 20150513
 	uint16 body;
 #endif
-/* Might be earlier, this is when the named item bug began */
+	/* Might be earlier, this is when the named item bug began */
 #if PACKETVER >= 20131223
 	char name[NAME_LENGTH];
 #endif
@@ -876,7 +871,7 @@ struct packet_idle_unit {
 #if PACKETVER >= 20150513
 	uint16 body;
 #endif
-/* Might be earlier, this is when the named item bug began */
+	/* Might be earlier, this is when the named item bug began */
 #if PACKETVER >= 20131223
 	char name[NAME_LENGTH];
 #endif
@@ -920,18 +915,18 @@ struct packet_maptypeproperty2 {
 	int16 PacketType;
 	int16 type;
 	struct {
-		uint32 party             : 1;  // Show attack cursor on non-party members (PvP)
-		uint32 guild             : 1;  // Show attack cursor on non-guild members (GvG)
-		uint32 siege             : 1;  // Show emblem over characters' heads when in GvG (WoE castle)
-		uint32 mineffect         : 1;  // Automatically enable /mineffect
-		uint32 nolockon          : 1;  // TODO: What does this do? (shows attack cursor on non-party members)
-		uint32 countpk           : 1;  /// Show the PvP counter
-		uint32 nopartyformation  : 1;  /// Prevent party creation/modification
-		uint32 bg                : 1;  // TODO: What does this do? Probably related to Battlegrounds, but I'm not sure on the effect
-		uint32 nocostume         : 1;  /// Does not show costume sprite.
-		uint32 usecart           : 1;  /// Allow opening cart inventory
+		uint32 party : 1;  // Show attack cursor on non-party members (PvP)
+		uint32 guild : 1;  // Show attack cursor on non-guild members (GvG)
+		uint32 siege : 1;  // Show emblem over characters' heads when in GvG (WoE castle)
+		uint32 mineffect : 1;  // Automatically enable /mineffect
+		uint32 nolockon : 1;  // TODO: What does this do? (shows attack cursor on non-party members)
+		uint32 countpk : 1;  /// Show the PvP counter
+		uint32 nopartyformation : 1;  /// Prevent party creation/modification
+		uint32 bg : 1;  // TODO: What does this do? Probably related to Battlegrounds, but I'm not sure on the effect
+		uint32 nocostume : 1;  /// Does not show costume sprite.
+		uint32 usecart : 1;  /// Allow opening cart inventory
 		uint32 summonstarmiracle : 1;  // TODO: What does this do? Related to Taekwon Masters, but I have no idea.
-		uint32 SpareBits         : 21; /// Currently ignored, reserved for future updates
+		uint32 SpareBits : 21; /// Currently ignored, reserved for future updates
 	} flag;
 } __attribute__((packed));
 
@@ -2569,7 +2564,7 @@ struct PACKET_ZC_PC_PURCHASE_ITEMLIST_FROMMC_sub {
 #if PACKETVER >= 20150226
 	struct ItemOptions option_data[MAX_ITEM_OPTIONS];
 #endif
-// [4144] date 20160921 not confirmed. Can be bigger or smaller
+	// [4144] date 20160921 not confirmed. Can be bigger or smaller
 #if PACKETVER >= 20160921
 	uint32 location;
 	uint16 viewSprite;
@@ -3764,7 +3759,7 @@ struct PACKET_ZC_SE_CASHSHOP_OPEN {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_SE_CASHSHOP_OPEN, 0x0b6e);
 // for ragexeRE in some version this packet unused [4144]
-#elif PACKETVER_MAIN_NUM >= 20101123 || PACKETVER_RE_NUM >= 20120328 || PACKETVER_ZERO_NUM >= defined(PACKETVER_ZERO)
+#elif PACKETVER_MAIN_NUM >= 20101123 || PACKETVER_RE_NUM >= 20120328 || defined(PACKETVER_ZERO)
 struct PACKET_ZC_SE_CASHSHOP_OPEN {
 	int16 packetType;
 	uint32 cashPoints;
@@ -3875,26 +3870,59 @@ struct PACKET_ZC_AUTORUN_SKILL {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_AUTORUN_SKILL, 0x0147);
 
-struct PACKET_CZ_GUILD_EMBLEM_CHANGE2 {
+#if PACKETVER_MAIN_NUM >= 20170726 || PACKETVER_RE_NUM >= 20170621 || defined(PACKETVER_ZERO)
+struct PACKET_ZC_LAPINEUPGRADE_OPEN {
 	int16 packetType;
-	uint32 guild_id;
-	uint32 version;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(CZ_GUILD_EMBLEM_CHANGE2, 0x0b46);
-
-struct PACKET_ZC_CHANGE_GUILD {
-	int16 packetType;
-#if PACKETVER < 20190724
-	uint32 aid;
-	uint32 guild_id;
-	uint16 emblem_id;
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 itemId;
 #else
-	uint32 guild_id;
-	uint32 emblem_id;
-	uint32 unknown;
+	uint16 itemId;
 #endif
 } __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_CHANGE_GUILD, 0x0b47);
+DEFINE_PACKET_HEADER(ZC_LAPINEUPGRADE_OPEN, 0x0ab4);
+
+struct PACKET_ZC_LAPINEUPGRADE_RESULT {
+	int16 packetType;
+	uint16 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_LAPINEUPGRADE_RESULT, 0x0ab7);
+#endif  // PACKETVER_MAIN_NUM >= 20170726 || PACKETVER_RE_NUM >= 20170621 || defined(PACKETVER_ZERO)
+
+#if PACKETVER_MAIN_NUM >= 20170111 || PACKETVER_RE_NUM >= 20170111 || defined(PACKETVER_ZERO)
+struct PACKET_CZ_LAPINEUPGRADE_CLOSE {
+	int16 packetType;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_LAPINEUPGRADE_CLOSE, 0x0ab5);
+
+struct PACKET_CZ_LAPINEUPGRADE_MAKE_ITEM {
+	int16 packetType;
+#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
+	uint32 itemId;
+#else
+	uint16 itemId;
+#endif
+	uint16 index;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_LAPINEUPGRADE_MAKE_ITEM, 0x0ab6);
+#endif  // PACKETVER_MAIN_NUM >= 20170111 || PACKETVER_RE_NUM >= 20170111 || defined(PACKETVER_ZERO)
+
+#if PACKETVER_MAIN_NUM >= 20120503 || PACKETVER_RE_NUM >= 20120502 || defined(PACKETVER_ZERO)
+struct PACKET_ZC_PERSONAL_INFOMATION_SUB {
+	int8 type;
+	int32 exp;
+	int32 death;
+	int32 drop;
+} __attribute__((packed));
+struct PACKET_ZC_PERSONAL_INFOMATION {
+	int16 packetType;
+	int16 length;
+	int32 total_exp;
+	int32 total_death;
+	int32 total_drop;
+	struct PACKET_ZC_PERSONAL_INFOMATION_SUB details[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_PERSONAL_INFOMATION, 0x097b);
+#endif  // PACKETVER_MAIN_NUM >= 20120503 || PACKETVER_RE_NUM >= 20120502 || defined(PACKETVER_ZERO)
 
 #if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #pragma pack(pop)
