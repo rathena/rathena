@@ -400,29 +400,29 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	int dx = dirx[dir];
 	int dy = diry[dir];
 
-	TBL_PC *sd = nullptr;
-	TBL_MOB *md = nullptr;
-	TBL_NPC *nd = nullptr;
-
-	switch(bl->type) { // avoid useless cast, we can only be 1 type
-		case BL_PC: sd = BL_CAST(BL_PC, bl); break;
-		case BL_MOB: md = BL_CAST(BL_MOB, bl); break;
-		case BL_NPC: nd = BL_CAST(BL_NPC, bl); break;
-	}
+	map_session_data *sd = nullptr;
+	mob_data *md = nullptr;
+	npc_data *nd = nullptr;
 
 	// Get icewall walk block depending on Status Immune mode (players can't be trapped)
 	unsigned char icewall_walk_block = 0;
 
-	if(md != nullptr) {
-		if (status_has_mode(&md->status,MD_STATUS_IMMUNE))
-			icewall_walk_block = battle_config.boss_icewall_walk_block;
-		else
-			icewall_walk_block = battle_config.mob_icewall_walk_block;		
+	switch(bl->type) { // avoid useless cast, we can only be 1 type
+		case BL_PC: sd = BL_CAST(BL_PC, bl); break;
+		case BL_MOB:
+			md = BL_CAST(BL_MOB, bl);
+
+			if (status_has_mode(&md->status,MD_STATUS_IMMUNE))
+				icewall_walk_block = battle_config.boss_icewall_walk_block;
+			else
+				icewall_walk_block = battle_config.mob_icewall_walk_block;
+			break;
+		case BL_NPC: nd = BL_CAST(BL_NPC, bl); break;
 	}
 
 	//Monsters will walk into an icewall from the west and south if they already started walking
 	if(map_getcell(bl->m,x+dx,y+dy,CELL_CHKNOPASS) 
-		&& (icewall_walk_block == 0 || !map_getcell(bl->m,x+dx,y+dy,CELL_CHKICEWALL) || dx < 0 || dy < 0))
+		&& (icewall_walk_block == 0 || dx < 0 || dy < 0 || !map_getcell(bl->m,x+dx,y+dy,CELL_CHKICEWALL)))
 		return unit_walktoxy_sub(bl);
 
 	//Monsters can only leave icewalls to the west and south
@@ -555,7 +555,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	if(tid == INVALID_TIMER) // A directly invoked timer is from battle_stop_walking, therefore the rest is irrelevant.
 		return 0;
 
-	int i;
+	int speed;
 
 	//If stepaction is set then we remembered a client request that should be executed on the next step
 	if (ud->stepaction && ud->target_to) {
@@ -566,10 +566,10 @@ static TIMER_FUNC(unit_walktoxy_timer)
 		}
 		//Delay stepactions by half a step (so they are executed at full step)
 		if( direction_diagonal( ud->walkpath.path[ud->walkpath.path_pos] ) )
-			i = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST/2;
+			speed = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST/2;
 		else
-			i = status_get_speed(bl)/2;
-		ud->steptimer = add_timer(tick+i, unit_step_timer, bl->id, 0);
+			speed = status_get_speed(bl)/2;
+		ud->steptimer = add_timer(tick+speed, unit_step_timer, bl->id, 0);
 	}
 
 	if(ud->state.change_walk_target) {
@@ -584,14 +584,14 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	ud->walkpath.path_pos++;
 
 	if(ud->walkpath.path_pos >= ud->walkpath.path_len)
-		i = -1;
+		speed = -1;
 	else if( direction_diagonal( ud->walkpath.path[ud->walkpath.path_pos] ) )
-		i = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST;
+		speed = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST;
 	else
-		i = status_get_speed(bl);
+		speed = status_get_speed(bl);
 
-	if(i > 0) {
-		ud->walktimer = add_timer(tick+i,unit_walktoxy_timer,id,i);
+	if(speed > 0) {
+		ud->walktimer = add_timer(tick+speed,unit_walktoxy_timer,id,speed);
 		if( md && DIFF_TICK(tick,md->dmgtick) < 3000 ) // Not required not damaged recently
 			clif_move(ud);
 	} else if(ud->state.running) { // Keep trying to run.
@@ -714,14 +714,19 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 	if (!path_search(&wpd, bl->m, bl->x, bl->y, x, y, flag&1, CELL_CHKNOPASS)) // Count walk path cells
 		return 0;
 
-	if (bl->type != BL_NPC &&
-		( wpd.path_len > battle_config.max_walk_path ||
-#ifdef OFFICIAL_WALKPATH
-		( wpd.path_len > 14 // Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
-		&& !path_search_long(nullptr, bl->m, bl->x, bl->y, x, y, CELL_CHKNOPASS) ) // Check if there is an obstacle between
-#endif
-		))
+	// NPCs do not need to fulfill the following checks
+	if( bl->type != BL_NPC ){
+		if( wpd.path_len > battle_config.max_walk_path ){
 			return 0;
+		}
+
+#ifdef OFFICIAL_WALKPATH
+		// Official number of walkable cells is 14 if and only if there is an obstacle between.
+		if( wpd.path_len > 14 && !path_search_long( nullptr, bl->m, bl->x, bl->y, x, y, CELL_CHKNOPASS ) ){
+			return 0;
+		}
+#endif
+	}
 
 	if (flag&4) {
 		unit_unattackable(bl);
@@ -752,20 +757,19 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 		return 1;
 	}
 
-	TBL_PC *sd = nullptr;
-
-	if (bl->type == BL_PC)
-		sd = BL_CAST(BL_PC, bl);
+	TBL_PC *sd = BL_CAST(BL_PC, bl);
 
 	// Start timer to recall summon
-	if (sd && sd->md)
-		unit_check_start_teleport_timer(&sd->md->bl);
-	if (sd && sd->ed)
-		unit_check_start_teleport_timer(&sd->ed->bl);
-	if (sd && sd->hd)
-		unit_check_start_teleport_timer(&sd->hd->bl);
-	if (sd && sd->pd)
-		unit_check_start_teleport_timer(&sd->pd->bl);
+	if( sd != nullptr ){
+		if (sd->md != nullptr)
+			unit_check_start_teleport_timer(&sd->md->bl);
+		if (sd->ed != nullptr)
+			unit_check_start_teleport_timer(&sd->ed->bl);
+		if (sd->hd != nullptr)
+			unit_check_start_teleport_timer(&sd->hd->bl);
+		if (sd->pd != nullptr)
+			unit_check_start_teleport_timer(&sd->pd->bl);
+	}
 
 	return unit_walktoxy_sub(bl);
 }
