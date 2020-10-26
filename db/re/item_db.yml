@@ -23318,7 +23318,7 @@ Body:
   - Id: 2046
     AegisName: Novice_Warlock's_Staff
     Name: Novice Warlock's Staff
-    Type: Healing
+    Type: Weapon
     Attack: 70
     MagicAttack: 170
     Range: 1
