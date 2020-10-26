@@ -1159,6 +1159,9 @@ Body:
         Rate: 200
       - Item: Posionous_Canine
         Rate: 9000
+      - Item: Crimson_Lance
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Scale_Of_Snakes
         Rate: 1500
       - Item: Scales_Shell
@@ -2651,6 +2654,8 @@ Body:
         Rate: 1000
       - Item: Pierrot_Nose
         Rate: 4
+      - Item: Sword_
+        Rate: 100
       - Item: Wing_Of_Fly
         Rate: 500
       - Item: Carrot
@@ -4369,6 +4374,8 @@ Body:
         Rate: 4850
       - Item: Star_Sparkling
         Rate: 3
+      - Item: Crimson_One-Handed_Staff
+        Rate: 50
       - Item: Star_Crumb
         Rate: 30
       - Item: Old_Magic_Book
@@ -4553,6 +4560,9 @@ Body:
       - Item: Durga
       - Item: Oridecon_Stone
         Rate: 53
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Desert_Wolf_Card
         StealProtected: true
   - Id: 1107
@@ -5068,6 +5078,9 @@ Body:
       - Item: Bone_Wand
       - Item: Ragamuffin_Cape
         Rate: 2
+      - Item: Crimson_Bible
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Leaf_Of_Yggdrasil
         Rate: 200
       - Item: Cookbook07
@@ -5904,6 +5917,9 @@ Body:
         Rate: 5335
       - Item: Zargon
         Rate: 200
+      - Item: Crimson_Two-Handed_Axe
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Buckler_
         Rate: 3
       - Item: Yellow_Herb
@@ -6267,6 +6283,9 @@ Body:
       - Item: Brooch
       - Item: Fire_Scroll_3_5
         Rate: 100
+      - Item: Crimson_Mace
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Chrystal_Pumps
       - Item: Marionette_Doll
         Rate: 3
@@ -6779,6 +6798,12 @@ Body:
         Rate: 2500
       - Item: Elunium_Stone
         Rate: 20
+      - Item: Crimson_Saber
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Undershirt
         Rate: 100
       - Item: Pasana_Card
@@ -6821,6 +6846,9 @@ Body:
         Rate: 140
       - Item: White_Herb
         Rate: 1000
+      - Item: Crimson_Mace
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Petti_Tail
         Rate: 40
       - Item: Aloebera
@@ -8714,6 +8742,15 @@ Body:
       - Item: Loki's_Whispers
       - Item: Biotite
         Rate: 1500
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Saber
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Runstone_Mystic
         Rate: 300
       - Item: Oridecon
@@ -8757,6 +8794,12 @@ Body:
         Rate: 50
       - Item: Muscovite
         Rate: 1500
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Saber
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Steel
         Rate: 120
       - Item: Oridecon
@@ -8802,6 +8845,9 @@ Body:
         Rate: 80
       - Item: Scimiter_
         Rate: 60
+      - Item: Crimson_Saber
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Steel
         Rate: 120
       - Item: Oridecon
@@ -9217,6 +9263,9 @@ Body:
         Rate: 115
       - Item: Great_Nature
         Rate: 5
+      - Item: Crimson_Spear
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Seed_Of_Yggdrasil
         Rate: 45
       - Item: Stem_Worm_Card
@@ -9304,6 +9353,9 @@ Body:
       - Item: Clothes_Of_The_Lord
       - Item: Battle_Hook
         Rate: 25
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Elunium
         Rate: 369
       - Item: Ebone_Armor
@@ -10659,6 +10711,9 @@ Body:
         Rate: 2
       - Item: Prohibition_Red_Candle
         Rate: 2
+      - Item: Crimson_Katar
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Injustice_Card
         StealProtected: true
   - Id: 1258
@@ -10745,6 +10800,9 @@ Body:
         Rate: 5335
       - Item: Soft_Feather
         Rate: 120
+      - Item: Crimson_Lance
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Pole_Axe
       - Item: Oridecon
         Rate: 185
@@ -12069,6 +12127,9 @@ Body:
         Rate: 160
       - Item: Yellow_Herb
         Rate: 800
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Gladius
         Rate: 80
       - Item: Sandstorm
@@ -12300,6 +12361,8 @@ Body:
         Rate: 3500
       - Item: Soft_Feather
         Rate: 2500
+      - Item: Crimson_Bow
+        Rate: 50
       - Item: Staff_Of_Soul
       - Item: Walking_Stick
         Rate: 2
@@ -12347,6 +12410,9 @@ Body:
         Rate: 6305
       - Item: Zargon
         Rate: 1200
+      - Item: Crimson_Mace
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Mighty_Staff
         Rate: 2
       - Item: Panacea
@@ -12577,6 +12643,9 @@ Body:
         Rate: 4550
       - Item: Elunium_Stone
         Rate: 250
+      - Item: Crimson_Mace
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Gold
         Rate: 5
       - Item: Spirit_Chain
@@ -12628,6 +12697,9 @@ Body:
         Rate: 120
       - Item: White_Herb
         Rate: 1550
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Dark_Illusion_Card
         StealProtected: true
   - Id: 1303
@@ -12668,6 +12740,8 @@ Body:
         Rate: 1200
       - Item: Fruit_Of_Mastela
         Rate: 12
+      - Item: Crimson_Two-Handed_Staff
+        Rate: 50
       - Item: Leaf_Of_Yggdrasil
         Rate: 15
       - Item: Scarlet_Jewel
@@ -12987,6 +13061,9 @@ Body:
     Drops:
       - Item: Nose_Ring
         Rate: 4413
+      - Item: Crimson_Two-Handed_Axe
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Beef_Head_Meat
         Rate: 300
       - Item: Oridecon
@@ -13277,6 +13354,9 @@ Body:
         Rate: 1240
       - Item: Honey
         Rate: 850
+      - Item: Crimson_Mace
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Solider_Card
         StealProtected: true
   - Id: 1317
@@ -13455,6 +13535,11 @@ Body:
       - Item: Wind_Scroll_1_5
         Rate: 100
       - Item: Crystal_Mirror
+      - Item: Crimson_Lance
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Two-Handed_Staff
+        Rate: 50
       - Item: Magician_Hat
       - Item: Owl_Duke_Card
         StealProtected: true
@@ -15787,6 +15872,9 @@ Body:
         Rate: 2500
       - Item: Oridecon_Stone
         Rate: 300
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Hypnotist's_Staff_
         Rate: 5
       - Item: Fine_Sand
@@ -15979,6 +16067,9 @@ Body:
         Rate: 1400
       - Item: Water_Of_Darkness
         Rate: 1000
+      - Item: Crimson_Violin
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Violy_Card
         StealProtected: true
   - Id: 1391
@@ -16535,6 +16626,9 @@ Body:
         Rate: 10
       - Item: Hakujin
         Rate: 5
+      - Item: Crimson_Violin
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Miyabi_Ningyo_Card
         StealProtected: true
   - Id: 1405
@@ -16573,6 +16667,9 @@ Body:
         Rate: 3500
       - Item: Broken_Wine_Vessel
         Rate: 5500
+      - Item: Crimson_Huuma_Shuriken
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Fruit_Of_Mastela
         Rate: 150
       - Item: Huuma_Giant_Wheel_
@@ -16669,6 +16766,9 @@ Body:
         Rate: 1200
       - Item: Powder_Of_Butterfly
         Rate: 5500
+      - Item: Crimson_Knuckles
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Lariat
       - Item: Blood_Butterfly_Card
         StealProtected: true
@@ -16849,6 +16949,9 @@ Body:
         Rate: 4800
       - Item: Mandragora_Flowerpot
         Rate: 800
+      - Item: Crimson_Whip
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Strawberry
         Rate: 1000
       - Item: Wild_Ginseng_Card
@@ -16936,6 +17039,12 @@ Body:
         Rate: 1380
       - Item: Oridecon
         Rate: 10
+      - Item: Crimson_Violin
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Whip
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Holy_Scroll_1_5
         Rate: 100
       - Item: Oriental_Lute
@@ -20158,6 +20267,9 @@ Body:
         Rate: 4500
       - Item: Little_Blacky_Ghost
         Rate: 400
+      - Item: Crimson_Mace
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Spike
       - Item: Li_Me_Mang_Ryang_Card
         StealProtected: true
@@ -22096,6 +22208,9 @@ Body:
         Rate: 4850
       - Item: Broken_Armor_Piece
         Rate: 3000
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Bastard_Sword_
         Rate: 8
       - Item: Chain_Mail_
@@ -23046,6 +23161,8 @@ Body:
         Rate: 1000
       - Item: Screw
         Rate: 200
+      - Item: Crimson_Revolver
+        Rate: 50
       - Item: Jubilee
         Rate: 5000
       - Item: Metaling_Card
@@ -23315,6 +23432,9 @@ Body:
     Drops:
       - Item: Jubilee
         Rate: 5000
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Insect_Feeler
         Rate: 1000
       - Item: Single_Cell
@@ -23694,6 +23814,8 @@ Body:
         Rate: 5000
       - Item: Super_Novice_Hat_
         Rate: 50
+      - Item: Crimson_Revolver
+        Rate: 50
       - Item: Mole_Card
         StealProtected: true
   - Id: 1629
@@ -23824,6 +23946,9 @@ Body:
         Rate: 4200
       - Item: Stuffed_Doll
         Rate: 100
+      - Item: Crimson_Knuckles
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Honey
         Rate: 500
       - Item: Hair_Protector
@@ -25134,6 +25259,9 @@ Body:
       - Item: Crystal_Jewel__
         Rate: 2000
     Drops:
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 500
+        RandomOptionGroup: Crimson_Weapon
       - Item: Gift_Box
         Rate: 5000
       - Item: Old_Blue_Box
@@ -26913,6 +27041,9 @@ Body:
         Rate: 1000
       - Item: Manteau_
         Rate: 5
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Cursed_Seal
         Rate: 50
       - Item: Retribution_Card
@@ -26958,6 +27089,9 @@ Body:
         Rate: 1000
       - Item: Harp_
         Rate: 50
+      - Item: Crimson_Violin
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Cursed_Seal
         Rate: 50
       - Item: Solace_Card
@@ -28248,6 +28382,9 @@ Body:
         Rate: 10
       - Item: Smoke_Powder
         Rate: 200
+      - Item: Crimson_Knuckles
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Elunium
         Rate: 10
       - Item: Curved_Sword
@@ -31524,6 +31661,9 @@ Body:
         Rate: 3000
       - Item: Doom_Slayer
         Rate: 30
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Zweihander
       - Item: Platinum_Shield
         Rate: 10
@@ -31568,6 +31708,8 @@ Body:
         Rate: 3000
       - Item: Luna_Bow
         Rate: 30
+      - Item: Crimson_Bow
+        Rate: 50
       - Item: Sniping_Suit
         Rate: 20
       - Item: Orleans_Glove
@@ -37254,6 +37396,9 @@ Body:
         Rate: 3500
       - Item: Shining_Scales
         Rate: 2000
+      - Item: Crimson_Spear
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Naga_Card
         StealProtected: true
   - Id: 1994
@@ -39386,6 +39531,9 @@ Body:
         Rate: 1000
       - Item: Inverse_Scale
       - Item: Plate_Armor_
+      - Item: Crimson_Katar
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Headless_Mule_Card
         StealProtected: true
   - Id: 2072
@@ -39426,6 +39574,9 @@ Body:
         Rate: 1000
       - Item: Oridecon_Stone
         Rate: 40
+      - Item: Crimson_Knuckles
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Jaguar_Card
         StealProtected: true
   - Id: 2073
@@ -44056,6 +44207,9 @@ Body:
       - Item: Tatters_Clothes
         Rate: 500
       - Item: Twilight_Desert
+      - Item: Crimson_Dagger
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Siorava_Card
         StealProtected: true
   - Id: 2200
@@ -49102,6 +49256,9 @@ Body:
         Rate: 10
       - Item: Beef_Head_Meat
         Rate: 100
+      - Item: Crimson_Two-Handed_Axe
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Lemon
         Rate: 300
       - Item: N_Minorous_Card
@@ -49486,6 +49643,9 @@ Body:
         Rate: 3800
       - Item: Old_Card_Album
         Rate: 400
+      - Item: Crimson_Bible
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Yggdrasilberry
         Rate: 3000
       - Item: N_Amon_Ra_Card
@@ -55207,6 +55367,12 @@ Body:
         Rate: 1380
       - Item: Oridecon
         Rate: 10
+      - Item: Crimson_Violin
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Whip
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Holy_Scroll_1_5
         Rate: 100
       - Item: Oriental_Lute
@@ -55382,6 +55548,9 @@ Body:
         Rate: 1400
       - Item: Water_Of_Darkness
         Rate: 1000
+      - Item: Crimson_Violin
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Violy_Card
         StealProtected: true
   - Id: 2622
@@ -55426,6 +55595,9 @@ Body:
         Rate: 1400
       - Item: Water_Of_Darkness
         Rate: 1000
+      - Item: Crimson_Violin
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Violy_Card
         StealProtected: true
   - Id: 2623
@@ -55470,6 +55642,9 @@ Body:
         Rate: 1400
       - Item: Water_Of_Darkness
         Rate: 1000
+      - Item: Crimson_Violin
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Violy_Card
         StealProtected: true
   - Id: 2624
@@ -56176,6 +56351,9 @@ Body:
         Rate: 4850
       - Item: Broken_Armor_Piece
         Rate: 3000
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Bastard_Sword_
         Rate: 8
       - Item: Chain_Mail_
@@ -56269,6 +56447,9 @@ Body:
         Rate: 115
       - Item: Great_Nature
         Rate: 5
+      - Item: Crimson_Spear
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Seed_Of_Yggdrasil
         Rate: 45
       - Item: Stem_Worm_Card
@@ -56543,6 +56724,9 @@ Body:
         Rate: 1240
       - Item: Honey
         Rate: 850
+      - Item: Crimson_Mace
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Solider_Card
         StealProtected: true
   - Id: 2648
@@ -56675,6 +56859,9 @@ Body:
         Rate: 1000
       - Item: Harp_
         Rate: 50
+      - Item: Crimson_Violin
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Cursed_Seal
         Rate: 50
       - Item: Solace_Card
@@ -56899,6 +57086,9 @@ Body:
         Rate: 2500
       - Item: Oridecon_Stone
         Rate: 300
+      - Item: Crimson_Dagger
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Hypnotist's_Staff_
         Rate: 5
       - Item: Fine_Sand
@@ -56943,6 +57133,9 @@ Body:
         Rate: 2500
       - Item: Oridecon_Stone
         Rate: 300
+      - Item: Crimson_Dagger
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Hypnotist's_Staff_
         Rate: 5
       - Item: Fine_Sand
@@ -57033,6 +57226,9 @@ Body:
         Rate: 160
       - Item: Sg_White_Potion_Box
         Rate: 800
+      - Item: Crimson_Dagger
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Velum_Claymore
         Rate: 80
       - Item: Sandstorm
@@ -57076,6 +57272,9 @@ Body:
         Rate: 160
       - Item: Sg_White_Potion_Box
         Rate: 800
+      - Item: Crimson_Dagger
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Velum_Claymore
         Rate: 80
       - Item: Sandstorm
@@ -58193,6 +58392,9 @@ Body:
         Rate: 1000
       - Item: Manteau_
         Rate: 5
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Cursed_Seal
         Rate: 50
       - Item: Retribution_Card
@@ -58237,6 +58439,9 @@ Body:
         Rate: 1000
       - Item: Manteau_
         Rate: 5
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Cursed_Seal
         Rate: 50
       - Item: Retribution_Card
@@ -58281,6 +58486,9 @@ Body:
         Rate: 1000
       - Item: Manteau_
         Rate: 5
+      - Item: Crimson_Two-Handed_Sword
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Cursed_Seal
         Rate: 50
       - Item: Retribution_Card
@@ -58544,6 +58752,8 @@ Body:
       - Item: Goast_Chill
         Rate: 1000
       - Item: Staff_Of_Wing
+      - Item: Crimson_One-Handed_Staff
+        Rate: 250
       - Item: Lab_Staff_Record
         Rate: 5
       - Item: Silk_Robe_
@@ -58895,6 +59105,9 @@ Body:
     Drops:
       - Item: Jubilee
         Rate: 5000
+      - Item: Crimson_Dagger
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Insect_Feeler
         Rate: 1000
       - Item: Single_Cell
@@ -59534,6 +59747,9 @@ Body:
         Rate: 140
       - Item: White_Herb
         Rate: 1000
+      - Item: Crimson_Mace
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Petti_Tail
         Rate: 40
       - Item: Aloebera
@@ -59578,6 +59794,9 @@ Body:
         Rate: 140
       - Item: White_Herb
         Rate: 1000
+      - Item: Crimson_Mace
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Petti_Tail
         Rate: 40
       - Item: Aloebera
@@ -59753,6 +59972,12 @@ Body:
         Rate: 2500
       - Item: Elunium_Stone
         Rate: 20
+      - Item: Crimson_Saber
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Dagger
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Undershirt
         Rate: 100
       - Item: Pasana_Card
@@ -59839,6 +60064,11 @@ Body:
       - Item: Wind_Scroll_1_5
         Rate: 100
       - Item: Crystal_Mirror
+      - Item: Crimson_Lance
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
+      - Item: Crimson_Two-Handed_Staff
+        Rate: 250
       - Item: Magician_Hat
       - Item: Owl_Duke_Card
         StealProtected: true
@@ -60844,6 +61074,8 @@ Body:
         Rate: 5000
       - Item: Super_Novice_Hat_
         Rate: 50
+      - Item: Crimson_Revolver
+        Rate: 250
       - Item: Mole_Card
         StealProtected: true
   - Id: 2746
@@ -60890,6 +61122,9 @@ Body:
         Rate: 10
       - Item: Hakujin
         Rate: 5
+      - Item: Crimson_Violin
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Miyabi_Ningyo_Card
         StealProtected: true
   - Id: 2747
@@ -61289,6 +61524,8 @@ Body:
         Rate: 1000
       - Item: Screw
         Rate: 200
+      - Item: Crimson_Revolver
+        Rate: 250
       - Item: Jubilee
         Rate: 5000
       - Item: Metaling_Card
@@ -61333,6 +61570,8 @@ Body:
         Rate: 1000
       - Item: Screw
         Rate: 200
+      - Item: Crimson_Revolver
+        Rate: 250
       - Item: Jubilee
         Rate: 5000
       - Item: Metaling_Card
@@ -61555,6 +61794,9 @@ Body:
       - Item: Brooch
       - Item: Fire_Scroll_3_5
         Rate: 100
+      - Item: Crimson_Mace
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Chrystal_Pumps
       - Item: Marionette_Doll
         Rate: 3
@@ -61823,6 +62065,9 @@ Body:
     Drops:
       - Item: Nose_Ring
         Rate: 4413
+      - Item: Crimson_Two-Handed_Axe
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Beef_Head_Meat
         Rate: 300
       - Item: Oridecon
@@ -61953,6 +62198,8 @@ Body:
         Rate: 1000
       - Item: Pierrot_Nose
         Rate: 1100
+      - Item: Sword_
+        Rate: 500
       - Item: Wing_Of_Fly
         Rate: 2500
       - Item: Carrot
@@ -61995,6 +62242,8 @@ Body:
         Rate: 1000
       - Item: Pierrot_Nose
         Rate: 4
+      - Item: Sword_
+        Rate: 500
       - Item: Wing_Of_Fly
         Rate: 2500
       - Item: Carrot
@@ -62309,6 +62558,9 @@ Body:
         Rate: 4500
       - Item: Little_Blacky_Ghost
         Rate: 400
+      - Item: Crimson_Mace
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Spike
       - Item: Li_Me_Mang_Ryang_Card
         StealProtected: true
@@ -62850,6 +63102,9 @@ Body:
         Rate: 2
       - Item: Prohibition_Red_Candle
         Rate: 2
+      - Item: Crimson_Katar
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Injustice_Card
         StealProtected: true
   - Id: 2793
@@ -64137,6 +64392,8 @@ Body:
         Rate: 1200
       - Item: Fruit_Of_Mastela
         Rate: 12
+      - Item: Crimson_Two-Handed_Staff
+        Rate: 250
       - Item: Sg_Violet_Potion_Box
         Rate: 15
       - Item: Scarlet_Jewel
@@ -64897,6 +65154,9 @@ Body:
       - Item: Bone_Wand
       - Item: Ragamuffin_Cape
         Rate: 2
+      - Item: Crimson_Bible
+        Rate: 50
+        RandomOptionGroup: Crimson_Weapon
       - Item: Leaf_Of_Yggdrasil
         Rate: 200
       - Item: Cookbook07
@@ -66928,6 +67188,9 @@ Body:
         Rate: 1200
       - Item: Powder_Of_Butterfly
         Rate: 5500
+      - Item: Crimson_Knuckles
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Lariat
       - Item: Blood_Butterfly_Card
         StealProtected: true
@@ -67011,6 +67274,8 @@ Body:
         Rate: 4850
       - Item: Star_Sparkling
         Rate: 3
+      - Item: Crimson_One-Handed_Staff
+        Rate: 250
       - Item: Star_Crumb
         Rate: 30
       - Item: Old_Magic_Book
@@ -67854,6 +68119,9 @@ Body:
         Rate: 200
       - Item: Posionous_Canine
         Rate: 9000
+      - Item: Crimson_Lance
+        Rate: 250
+        RandomOptionGroup: Crimson_Weapon
       - Item: Scale_Of_Snakes
         Rate: 1500
       - Item: Scales_Shell
