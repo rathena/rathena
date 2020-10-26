@@ -38745,7 +38745,7 @@ Body:
 #     }
   - Id: 1000092
     AegisName: ELYUMINA_RADAR
-    Name: Elyumina Radar    # !todo check english name
+    Name: Elyumina Radar
     Type: Etc
     Weight: 10
     Trade:
@@ -38759,7 +38759,7 @@ Body:
       NoAuction: true
   - Id: 1000093
     AegisName: PITAYA_TAIL_R
-    Name: Red pitaya tail    # !todo check english name
+    Name: Red Pitaya Tail
     Type: Etc
     Weight: 10
     Trade:
@@ -38773,7 +38773,7 @@ Body:
       NoAuction: true
   - Id: 1000094
     AegisName: PITAYA_TAIL_Y
-    Name: Yellow pitaya tail    # !todo check english name
+    Name: Yellow Pitaya Tail
     Type: Etc
     Weight: 10
     Trade:
@@ -38787,7 +38787,7 @@ Body:
       NoAuction: true
   - Id: 1000095
     AegisName: PITAYA_TAIL_B
-    Name: Blue pitaya tail    # !todo check english name
+    Name: Blue Pitaya Tail
     Type: Etc
     Weight: 10
     Trade:
@@ -38801,7 +38801,7 @@ Body:
       NoAuction: true
   - Id: 1000096
     AegisName: PITAYA_TAIL_G
-    Name: Green pitaya tail    # !todo check english name
+    Name: Green Pitaya Tail
     Type: Etc
     Weight: 10
     Trade:
@@ -38815,7 +38815,7 @@ Body:
       NoAuction: true
   - Id: 1000097
     AegisName: PITAYA_TAIL_P
-    Name: Purple pitaya tail    # !todo check english name
+    Name: Purple Pitaya Tail
     Type: Etc
     Weight: 10
     Trade:
@@ -38829,7 +38829,7 @@ Body:
       NoAuction: true
   - Id: 1000098
     AegisName: PITAYA_TAIL_BOSS
-    Name: Boss Pitaya Tail    # !todo check english name
+    Name: Boss Pitaya Tail
     Type: Etc
     Weight: 10
     Trade:
@@ -38843,7 +38843,7 @@ Body:
       NoAuction: true
   - Id: 1000099
     AegisName: GARDENERS_COOKIE
-    Name: Gardener's Cookies    # !todo check english name
+    Name: Gardener's Cookie
     Type: Etc
     Weight: 10
     Trade:
@@ -38857,7 +38857,7 @@ Body:
       NoAuction: true
   - Id: 1000100
     AegisName: FREEZING_TRAP
-    Name: Freezing trap    # !todo check english name
+    Name: Freezing Trap
     Type: Etc
     Weight: 10
     Trade:
@@ -38872,7 +38872,7 @@ Body:
       NoAuction: true
   - Id: 1000101
     AegisName: AUTODOLL_PARTS
-    Name: Auto doll parts    # !todo check english name
+    Name: Autodoll Parts
     Type: Etc
     Weight: 10
     Trade:
@@ -38887,7 +38887,7 @@ Body:
       NoAuction: true
   - Id: 1000102
     AegisName: EMERGENCY_KEY
-    Name: Emergency key    # !todo check english name
+    Name: Emergency Key
     Type: Etc
     Weight: 10
     Trade:
@@ -38902,7 +38902,7 @@ Body:
       NoAuction: true
   - Id: 1000103
     AegisName: aegis_1000103
-    Name: Varmeal Ticket
+    Name: Barmeal Ticket
     Type: Etc
     Flags:
       BuyingStore: true
@@ -39071,7 +39071,7 @@ Body:
     Weight: 10
   - Id: 1000135
     AegisName: aegis_1000135
-    Name: Automatic Modification Module (Above All)
+    Name: Automatic Module (Above All)
     Type: Etc
     Weight: 10
   - Id: 1000136
@@ -39411,7 +39411,7 @@ Body:
     Weight: 10
   - Id: 1000225
     AegisName: aegis_1000225
-    Name: Potato chips
+    Name: Potato Chips
     Type: Etc
     Weight: 10
   - Id: 1000226
@@ -39434,7 +39434,7 @@ Body:
     Weight: 10
   - Id: 1000231
     AegisName: Broken_AutoDoll_Parts
-    Name: Parts of a broken automatic doll
+    Name: Parts of Broken Automatic Doll
     Type: Etc
     Trade:
       Override: 100
@@ -39447,7 +39447,7 @@ Body:
       NoAuction: true
   - Id: 1000232
     AegisName: Autodoll_Communicator
-    Name: Communication chip of automatic doll
+    Name: Communication Chip of Automatic Doll
     Type: Etc
     Trade:
       Override: 100
@@ -39458,4 +39458,3 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-

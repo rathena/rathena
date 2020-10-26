@@ -1519,7 +1519,7 @@
 28763:510022,{ .@r = getequiprefinerycnt(EQI_HAND_R) + getequiprefinerycnt(EQI_HAND_L); bonus bBaseAtk,15*(.@r/3); bonus2 bAddClass,Class_All,3*(.@r/5); if (.@r>=14){ bonus2 bSkillAtk,"KO_JYUMONJIKIRI",30; bonus2 bSkillCooldown,"KO_JYUMONJIKIRI",-2000; } if (.@r>=16){ skill "OB_ZANGETSU",getskilllv("KG_KAGEHUMI"); skill "KG_KAGEHUMI",getskilllv("OB_ZANGETSU"); } if (.@r>=18){ bonus2 bAddEle,Ele_All,15; } if (.@r>=20){ bonus2 bSkillAtk,"KO_JYUMONJIKIRI",25; } }
 400044:16089,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bMagicAtkEle,Ele_Holy,5; bonus bVariableCastrate,-3*(.@r/2);  }
 400044:26151,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,30; bonus2 bSkillAtk,"SP_SPA",4*(.@r/2); bonus2 bSkillAtk,"SP_SWHOO",4*(.@r/2);  }
-400044:26164,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillCooldown,"SU_CN_METEOR",-1000; bonus2 bSkillAtk,"SU_CN_METEOR",4*(.@r/2);  }
+//400044:26164,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillCooldown,"SU_CN_METEOR",-1000; bonus2 bSkillAtk,"SU_CN_METEOR",4*(.@r/2);  }
 450127:480020,{ bonus bBaseAtk,50;  }
 450127:480021,{ bonus bDelayrate,-10;  }
 450128:480020,{ bonus bAspdRate,10;  }
