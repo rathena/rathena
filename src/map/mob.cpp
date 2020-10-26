@@ -2756,8 +2756,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					drop_rate = (int)(drop_rate*1.25);
 
 				// Add class and race specific bonuses
-				drop_rate_bonus += sd->dropaddclass[md->status.class_] + sd->dropaddclass[CLASS_ALL];
-				drop_rate_bonus += sd->dropaddrace[md->status.race] + sd->dropaddrace[RC_ALL];
+				drop_rate_bonus += sd->indexed_bonus.dropaddclass[md->status.class_] + sd->indexed_bonus.dropaddclass[CLASS_ALL];
+				drop_rate_bonus += sd->indexed_bonus.dropaddrace[md->status.race] + sd->indexed_bonus.dropaddrace[RC_ALL];
 
 				// Increase drop rate if user has SC_ITEMBOOST
 				if (sd->sc.data[SC_ITEMBOOST])
