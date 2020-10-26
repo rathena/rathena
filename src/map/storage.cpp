@@ -771,7 +771,7 @@ bool storage_guild_additem(struct map_session_data* sd, struct s_storage* stor, 
 
 	id = itemdb_search(item_data->nameid);
 
-	if( id->stack.guildstorage && amount > id->stack.amount ) // item stack limitation
+	if( id->stack.guild_storage && amount > id->stack.amount ) // item stack limitation
 		return false;
 
 	if (!itemdb_canguildstore(item_data, pc_get_group_level(sd)) || item_data->expire_time) { // Check if item is storable. [Skotlex]
@@ -787,7 +787,7 @@ bool storage_guild_additem(struct map_session_data* sd, struct s_storage* stor, 
 	if(itemdb_isstackable2(id)) { //Stackable
 		for(i = 0; i < stor->max_amount; i++) {
 			if(compare_item(&stor->u.items_guild[i], item_data)) {
-				if( amount > MAX_AMOUNT - stor->u.items_guild[i].amount || ( id->stack.guildstorage && amount > id->stack.amount - stor->u.items_guild[i].amount ) )
+				if( amount > MAX_AMOUNT - stor->u.items_guild[i].amount || ( id->stack.guild_storage && amount > id->stack.amount - stor->u.items_guild[i].amount ) )
 					return false;
 
 				stor->u.items_guild[i].amount += amount;
@@ -842,9 +842,9 @@ bool storage_guild_additem2(struct s_storage* stor, struct item* item, int amoun
 		for (i = 0; i < stor->max_amount; i++) {
 			if (compare_item(&stor->u.items_guild[i], item)) {
 				// Set the amount, make it fit with max amount
-				amount = min(amount, ((id->stack.guildstorage) ? id->stack.amount : MAX_AMOUNT) - stor->u.items_guild[i].amount);
+				amount = min(amount, ((id->stack.guild_storage) ? id->stack.amount : MAX_AMOUNT) - stor->u.items_guild[i].amount);
 				if (amount != item->amount)
-					ShowWarning("storage_guild_additem2: Stack limit reached! Altered amount of item \"" CL_WHITE "%s" CL_RESET "\" (%u). '" CL_WHITE "%d" CL_RESET "' -> '" CL_WHITE"%d" CL_RESET "'.\n", id->name, id->nameid, item->amount, amount);
+					ShowWarning("storage_guild_additem2: Stack limit reached! Altered amount of item \"" CL_WHITE "%s" CL_RESET "\" (%u). '" CL_WHITE "%d" CL_RESET "' -> '" CL_WHITE"%d" CL_RESET "'.\n", id->name.c_str(), id->nameid, item->amount, amount);
 				stor->u.items_guild[i].amount += amount;
 				stor->dirty = true;
 				return true;

@@ -2483,7 +2483,6 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	const char *p,*tmpp;
 	int i;
 	struct script_code* code = NULL;
-	static bool first=true;
 	char end;
 	bool unresolved_names = false;
 
@@ -2495,12 +2494,6 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 		return NULL;// empty script
 
 	memset(&syntax,0,sizeof(syntax));
-	if(first){
-		add_buildin_func();
-		read_constdb();
-		script_hardcoded_constants();
-		first=false;
-	}
 
 	script_buf=(unsigned char *)aMalloc(SCRIPT_BLOCK_SIZE*sizeof(unsigned char));
 	script_pos=0;
@@ -4841,6 +4834,9 @@ void do_init_script(void) {
 	next_id = 0;
 
 	mapreg_init();
+	add_buildin_func();
+	read_constdb();
+	script_hardcoded_constants();
 }
 
 void script_reload(void) {
@@ -8959,7 +8955,7 @@ BUILDIN_FUNC(getequipname)
 
 	item = sd->inventory_data[i];
 	if( item != 0 )
-		script_pushstrcopy(st,item->jname);
+		script_pushstrcopy(st,item->ename.c_str());
 	else
 		script_pushconststr(st,"");
 
@@ -13319,7 +13315,7 @@ BUILDIN_FUNC(getequipcardcnt)
 	}
 
 	count = 0;
-	for( j = 0; j < sd->inventory_data[i]->slot; j++ )
+	for( j = 0; j < sd->inventory_data[i]->slots; j++ )
 		if( sd->inventory.u.items_inventory[i].card[j] && itemdb_type(sd->inventory.u.items_inventory[i].card[j]) == IT_CARD )
 			count++;
 
@@ -13351,7 +13347,7 @@ BUILDIN_FUNC(successremovecards) {
 	if(itemdb_isspecial(sd->inventory.u.items_inventory[i].card[0]))
 		return SCRIPT_CMD_SUCCESS;
 
-	for( c = sd->inventory_data[i]->slot - 1; c >= 0; --c ) {
+	for( c = sd->inventory_data[i]->slots - 1; c >= 0; --c ) {
 		if( sd->inventory.u.items_inventory[i].card[c] && itemdb_type(sd->inventory.u.items_inventory[i].card[c]) == IT_CARD ) {// extract this card from the item
 			unsigned char flag = 0;
 			struct item item_tmp;
@@ -13368,7 +13364,7 @@ BUILDIN_FUNC(successremovecards) {
 	}
 
 	if(cardflag == 1) {//if card was remove remplace item with no card
-		unsigned char flag = 0, j;
+		unsigned char flag = 0;
 		struct item item_tmp;
 		memset(&item_tmp,0,sizeof(item_tmp));
 
@@ -13379,10 +13375,10 @@ BUILDIN_FUNC(successremovecards) {
 		item_tmp.expire_time = sd->inventory.u.items_inventory[i].expire_time;
 		item_tmp.bound       = sd->inventory.u.items_inventory[i].bound;
 
-		for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
+		for (int j = sd->inventory_data[i]->slots; j < MAX_SLOTS; j++)
 			item_tmp.card[j]=sd->inventory.u.items_inventory[i].card[j];
 		
-		for (j = 0; j < MAX_ITEM_RDM_OPT; j++){
+		for (int j = 0; j < MAX_ITEM_RDM_OPT; j++){
 			item_tmp.option[j].id=sd->inventory.u.items_inventory[i].option[j].id;
 			item_tmp.option[j].value=sd->inventory.u.items_inventory[i].option[j].value;
 			item_tmp.option[j].param=sd->inventory.u.items_inventory[i].option[j].param;
@@ -13427,7 +13423,7 @@ BUILDIN_FUNC(failedremovecards) {
 	if(itemdb_isspecial(sd->inventory.u.items_inventory[i].card[0]))
 		return SCRIPT_CMD_SUCCESS;
 
-	for( c = sd->inventory_data[i]->slot - 1; c >= 0; --c ) {
+	for( c = sd->inventory_data[i]->slots - 1; c >= 0; --c ) {
 		if( sd->inventory.u.items_inventory[i].card[c] && itemdb_type(sd->inventory.u.items_inventory[i].card[c]) == IT_CARD ) {
 			cardflag = 1;
 
@@ -13452,7 +13448,7 @@ BUILDIN_FUNC(failedremovecards) {
 		if(typefail == 0 || typefail == 2){	// destroy the item
 			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 		}else if(typefail == 1){ // destroy the card
-			unsigned char flag = 0, j;
+			unsigned char flag = 0;
 			struct item item_tmp;
 
 			memset(&item_tmp,0,sizeof(item_tmp));
@@ -13464,10 +13460,10 @@ BUILDIN_FUNC(failedremovecards) {
 			item_tmp.expire_time = sd->inventory.u.items_inventory[i].expire_time;
 			item_tmp.bound       = sd->inventory.u.items_inventory[i].bound;
 
-			for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
+			for (int j = sd->inventory_data[i]->slots; j < MAX_SLOTS; j++)
 				item_tmp.card[j]=sd->inventory.u.items_inventory[i].card[j];
 			
-			for (j = 0; j < MAX_ITEM_RDM_OPT; j++){
+			for (int j = 0; j < MAX_ITEM_RDM_OPT; j++){
 				item_tmp.option[j].id=sd->inventory.u.items_inventory[i].option[j].id;
 				item_tmp.option[j].value=sd->inventory.u.items_inventory[i].option[j].value;
 				item_tmp.option[j].param=sd->inventory.u.items_inventory[i].option[j].param;
@@ -13913,7 +13909,7 @@ BUILDIN_FUNC(getitemname)
 	}
 	item_name=(char *)aMalloc(ITEM_NAME_LENGTH*sizeof(char));
 
-	memcpy(item_name, i_data->jname, ITEM_NAME_LENGTH);
+	memcpy(item_name, i_data->ename.c_str(), ITEM_NAME_LENGTH);
 	script_pushstr(st,item_name);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -13930,7 +13926,7 @@ BUILDIN_FUNC(getitemslots)
 	i_data = itemdb_exists(item_id);
 
 	if (i_data)
-		script_pushint(st,i_data->slot);
+		script_pushint(st,i_data->slots);
 	else
 		script_pushint(st,-1);
 	return SCRIPT_CMD_SUCCESS;
@@ -15115,7 +15111,7 @@ BUILDIN_FUNC(checkequipedcard)
 			if(sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].amount && sd->inventory_data[i]){
 				if (itemdb_isspecial(sd->inventory.u.items_inventory[i].card[0]))
 					continue;
-				for(n=0;n<sd->inventory_data[i]->slot;n++){
+				for(n=0;n<sd->inventory_data[i]->slots;n++){
 					if(sd->inventory.u.items_inventory[i].card[n] == c) {
 						script_pushint(st,1);
 						return SCRIPT_CMD_SUCCESS;
@@ -15667,7 +15663,7 @@ BUILDIN_FUNC(isequippedcnt)
 			} else { //Count cards.
 				if (itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
 					continue; //No cards
-				for (short k = 0; k < sd->inventory_data[index]->slot; k++) {
+				for (short k = 0; k < sd->inventory_data[index]->slots; k++) {
 					if (sd->inventory.u.items_inventory[index].card[k] == id)
 						ret++; //[Lupus]
 				}
@@ -15723,11 +15719,11 @@ BUILDIN_FUNC(isequipped)
 				break;
 			} else { //Cards
 				short k;
-				if (sd->inventory_data[index]->slot == 0 ||
+				if (sd->inventory_data[index]->slots == 0 ||
 					itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
 					continue;
 
-				for (k = 0; k < sd->inventory_data[index]->slot; k++)
+				for (k = 0; k < sd->inventory_data[index]->slots; k++)
 				{	//New hash system which should support up to 4 slots on any equipment. [Skotlex]
 					unsigned int hash = 0;
 					if (sd->inventory.u.items_inventory[index].card[k] != id)
@@ -15797,7 +15793,7 @@ BUILDIN_FUNC(cardscnt)
 		} else {
 			if (itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
 				continue;
-			for(k=0; k<sd->inventory_data[index]->slot; k++) {
+			for(k=0; k<sd->inventory_data[index]->slots; k++) {
 				if (sd->inventory.u.items_inventory[index].card[k] == id)
 					ret++;
 			}
@@ -23196,47 +23192,34 @@ BUILDIN_FUNC(recalculatestat) {
 }
 
 BUILDIN_FUNC(hateffect){
-#if PACKETVER >= 20150513
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
 	struct map_session_data* sd;
-	bool enable;
-	int i, effectID;
 
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_FAILURE;
 
-	effectID = script_getnum(st,2);
-	enable = script_getnum(st,3) ? true : false;
+	int16 effectID = script_getnum(st,2);
+	bool enable = script_getnum(st,3) ? true : false;
 
 	if( effectID <= HAT_EF_MIN || effectID >= HAT_EF_MAX ){
 		ShowError( "buildin_hateffect: unsupported hat effect id %d\n", effectID );
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	ARR_FIND( 0, sd->hatEffectCount, i, sd->hatEffectIDs[i] == effectID );
+	auto it = util::vector_get( sd->hatEffects, effectID );
 
 	if( enable ){
-		if( i < sd->hatEffectCount ){
+		if( it != sd->hatEffects.end() ){
 			return SCRIPT_CMD_SUCCESS;
 		}
 
-		RECREATE(sd->hatEffectIDs,uint32,sd->hatEffectCount+1);
-		sd->hatEffectIDs[sd->hatEffectCount] = effectID;
-		sd->hatEffectCount++;
+		sd->hatEffects.push_back( effectID );
 	}else{
-		if( i == sd->hatEffectCount ){
+		if( it == sd->hatEffects.end() ){
 			return SCRIPT_CMD_SUCCESS;
 		}
 
-		for( ; i < sd->hatEffectCount - 1; i++ ){
-			sd->hatEffectIDs[i] = sd->hatEffectIDs[i+1];
-		}
-
-		sd->hatEffectCount--;
-
-		if( !sd->hatEffectCount ){
-			aFree(sd->hatEffectIDs);
-			sd->hatEffectIDs = NULL;
-		}
+		util::vector_erase_if_exists( sd->hatEffects, effectID );
 	}
 
 	if( !sd->state.connect_new ){

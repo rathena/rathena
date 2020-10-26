@@ -258,6 +258,13 @@ struct s_regen {
 	int tick;
 };
 
+/// Item combo struct
+struct s_combos {
+	script_code *bonus;
+	uint32 id;
+	uint32 pos;
+};
+
 struct map_session_data {
 	struct block_list bl;
 	struct unit_data ud;
@@ -422,45 +429,47 @@ struct map_session_data {
 	struct weapon_data right_weapon, left_weapon;
 
 	// here start arrays to be globally zeroed at the beginning of status_calc_pc()
-	int param_bonus[6],param_equip[6]; //Stores card/equipment bonuses.
-	int subele[ELE_MAX];
-	int subele_script[ELE_MAX];
-	int subdefele[ELE_MAX];
-	int subrace[RC_MAX];
-	int subclass[CLASS_MAX];
-	int subrace2[RC2_MAX];
-	int subsize[SZ_MAX];
-	short coma_class[CLASS_MAX];
-	short coma_race[RC_MAX];
-	short weapon_coma_ele[ELE_MAX];
-	short weapon_coma_race[RC_MAX];
-	short weapon_coma_class[CLASS_MAX];
-	int weapon_atk[16];
-	int weapon_damage_rate[16];
-	int arrow_addele[ELE_MAX];
-	int arrow_addrace[RC_MAX];
-	int arrow_addclass[CLASS_MAX];
-	int arrow_addsize[SZ_MAX];
-	int magic_addele[ELE_MAX];
-	int magic_addele_script[ELE_MAX];
-	int magic_addrace[RC_MAX];
-	int magic_addclass[CLASS_MAX];
-	int magic_addsize[SZ_MAX];
-	int magic_atk_ele[ELE_MAX];
-	int magic_subsize[SZ_MAX];
-	int critaddrace[RC_MAX];
-	int expaddrace[RC_MAX];
-	int expaddclass[CLASS_MAX];
-	int ignore_mdef_by_race[RC_MAX];
-	int ignore_mdef_by_class[CLASS_MAX];
-	int ignore_def_by_race[RC_MAX];
-	int ignore_def_by_class[CLASS_MAX];
-	short sp_gain_race[RC_MAX];
-	int magic_addrace2[RC2_MAX];
-	int ignore_mdef_by_race2[RC2_MAX];
-	int dropaddrace[RC_MAX];
-	int dropaddclass[CLASS_MAX];
-	int magic_subdefele[ELE_MAX];
+	struct s_indexed_bonus {
+		int param_bonus[6], param_equip[6]; //Stores card/equipment bonuses.
+		int subele[ELE_MAX];
+		int subele_script[ELE_MAX];
+		int subdefele[ELE_MAX];
+		int subrace[RC_MAX];
+		int subclass[CLASS_MAX];
+		int subrace2[RC2_MAX];
+		int subsize[SZ_MAX];
+		short coma_class[CLASS_MAX];
+		short coma_race[RC_MAX];
+		short weapon_coma_ele[ELE_MAX];
+		short weapon_coma_race[RC_MAX];
+		short weapon_coma_class[CLASS_MAX];
+		int weapon_atk[16];
+		int weapon_damage_rate[16];
+		int arrow_addele[ELE_MAX];
+		int arrow_addrace[RC_MAX];
+		int arrow_addclass[CLASS_MAX];
+		int arrow_addsize[SZ_MAX];
+		int magic_addele[ELE_MAX];
+		int magic_addele_script[ELE_MAX];
+		int magic_addrace[RC_MAX];
+		int magic_addclass[CLASS_MAX];
+		int magic_addsize[SZ_MAX];
+		int magic_atk_ele[ELE_MAX];
+		int magic_subsize[SZ_MAX];
+		int critaddrace[RC_MAX];
+		int expaddrace[RC_MAX];
+		int expaddclass[CLASS_MAX];
+		int ignore_mdef_by_race[RC_MAX];
+		int ignore_mdef_by_class[CLASS_MAX];
+		int ignore_def_by_race[RC_MAX];
+		int ignore_def_by_class[CLASS_MAX];
+		short sp_gain_race[RC_MAX];
+		int magic_addrace2[RC2_MAX];
+		int ignore_mdef_by_race2[RC2_MAX];
+		int dropaddrace[RC_MAX];
+		int dropaddclass[CLASS_MAX];
+		int magic_subdefele[ELE_MAX];
+	} indexed_bonus;
 	// zeroed arrays end here.
 
 	std::vector<s_autospell> autospell, autospell2, autospell3;
@@ -697,12 +706,7 @@ struct map_session_data {
 	enum npc_timeout_type npc_idle_type;
 #endif
 
-	struct s_combos {
-		struct script_code **bonus;/* the script */
-		unsigned short *id;/* array of combo ids */
-		unsigned int *pos;/* array of positions*/
-		unsigned char count;
-	} combos;
+	std::vector<std::shared_ptr<s_combos>> combos;
 
 	/**
 	 * Guarantees your friend request is legit (for bugreport:4629)
@@ -778,9 +782,8 @@ struct map_session_data {
 
 	short setlook_head_top, setlook_head_mid, setlook_head_bottom, setlook_robe; ///< Stores 'setlook' script command values.
 
-#if PACKETVER >= 20150513
-	uint32* hatEffectIDs;
-	uint8 hatEffectCount;
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	std::vector<int16> hatEffects;
 #endif
 
 	struct{
@@ -802,7 +805,7 @@ extern struct eri *str_reg_ers;
 /* Global Expiration Timer ID */
 extern int pc_expiration_tid;
 
-enum weapon_type {
+enum weapon_type : uint8 {
 	W_FIST,	//Bare hands
 	W_DAGGER,	//1
 	W_1HSWORD,	//2
@@ -840,16 +843,18 @@ enum weapon_type {
 
 #define WEAPON_TYPE_ALL ((1<<MAX_WEAPON_TYPE)-1)
 
-enum ammo_type {
-	A_ARROW = 1,
-	A_DAGGER,   //2
-	A_BULLET,   //3
-	A_SHELL,    //4
-	A_GRENADE,  //5
-	A_SHURIKEN, //6
-	A_KUNAI,     //7
-	A_CANNONBALL,	//8
-	A_THROWWEAPON	//9
+enum e_ammo_type : uint8 {
+	AMMO_NONE = 0,
+	AMMO_ARROW,
+	AMMO_DAGGER,
+	AMMO_BULLET,
+	AMMO_SHELL,
+	AMMO_GRENADE,
+	AMMO_SHURIKEN,
+	AMMO_KUNAI,
+	AMMO_CANNONBALL,
+	AMMO_THROWWEAPON,
+	MAX_AMMO_TYPE
 };
 
 enum idletime_option {
