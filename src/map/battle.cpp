@@ -9014,17 +9014,6 @@ static const struct _battle_data {
 	{ "homunculus_starving_delay",          &battle_config.homunculus_starving_delay,       20000,  0,      INT_MAX,        },
 	{ "drop_connection_on_quit",            &battle_config.drop_connection_on_quit,         0,      0,      1,              },
 
-	/**
-	* Extended Vending system [Lilith]
-	**/
-	{ "extended_vending",					&battle_config.extended_vending,				1,		0,		1,				},
-	{ "show_broadcas_info",					&battle_config.show_broadcas_info,				1,		0,		1,				},
-	{ "show_item_vending",					&battle_config.show_item_vending,				1,		0,		1,				},
-	{ "ex_vending_info",					&battle_config.ex_vending_info,					1,		0,		1,				},
-	{ "ex_vending_report",					&battle_config.ex_vending_report,				1,		0,		1,				}, // [Easycore]
-	{ "item_zeny",							&battle_config.item_zeny,						0,		0,		INT32_MAX,		},
-	{ "item_cash",							&battle_config.item_cash,						0,		0,		INT32_MAX,		},
-
 #include "../custom/battle_config_init.inc"
 };
 

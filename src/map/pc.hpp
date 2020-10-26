@@ -778,12 +778,6 @@ struct map_session_data {
 		t_tick tick;
 	} roulette;
 
-	/**
-	* Extended Vending system [Lilith]
-	**/
-	unsigned short vend_loot;
-	int vend_lvl;
-
 	int instance_id;
 	e_instance_mode instance_mode; ///< Mode of instance player last leaves from (used for instance destruction button)
 

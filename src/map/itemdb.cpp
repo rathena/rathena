@@ -30,7 +30,6 @@ static DBMap *itemdb_randomopt; /// Random option DB
 static DBMap *itemdb_randomopt_group; /// Random option group DB
 
 struct s_roulette_db rd;
-struct s_item_vend item_vend[MAX_INVENTORY]; /// Technoken
 
 static void itemdb_jobid2mapid(uint64 bclass[3], e_mapid jobmask, bool active);
 static char itemdb_gendercheck(struct item_data *id);
@@ -1913,33 +1912,6 @@ static void itemdb_roulette_free(void) {
 	}
 }
 
-/**
-* Extended Vending system [Lilith]
-**/
-static bool itemdb_read_vending(char* fields[], int columns, int current)
-{
-	struct item_data* id;
-	unsigned short nameid;
-
-	nameid = atoi(fields[0]);
-
-	if ((id = itemdb_exists(nameid)) == NULL)
-	{
-		ShowWarning("itemdb_read_vending: Invalid item id %hu.\n", nameid);
-		return false;
-	}
-
-	if (id->type == IT_ARMOR || id->type == IT_WEAPON || id->type == IT_SHADOWGEAR)
-	{
-		ShowWarning("itemdb_read_vending: item id %hu cannot be equipment or weapon.\n", nameid);
-		return false;
-	}
-
-	item_vend[current].itemid = nameid;
-
-	return true;
-}
-
 /*======================================
  * Applies gender restrictions according to settings. [Skotlex]
  *======================================*/
@@ -2530,7 +2502,6 @@ static void itemdb_read(void) {
 		sv_readdb(dbsubpath1, "item_findingore.txt",	',', 2, 10, -1, &itemdb_read_group, i > 0);
 		sv_readdb(dbsubpath2, "item_giftbox.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
 		sv_readdb(dbsubpath2, "item_misc.txt",			',', 2, 10, -1, &itemdb_read_group, i > 0);
-		sv_readdb(dbsubpath1, "item_vending.txt",		',', 1, 1, ARRAYLENGTH(item_vend), &itemdb_read_vending, i); // Extended Vending system [Lilith]
 #ifdef RENEWAL
 		sv_readdb(dbsubpath2, "item_package.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
 #endif
@@ -2618,7 +2589,6 @@ void itemdb_reload(void) {
 	itemdb_group->clear(itemdb_group, itemdb_group_free);
 	itemdb_randomopt->clear(itemdb_randomopt, itemdb_randomopt_free);
 	itemdb_randomopt_group->clear(itemdb_randomopt_group, itemdb_randomopt_group_free);
-	memset(item_vend, 0, sizeof(item_vend)); // Extended Vending system [Lilith]
 
 	if (battle_config.feature_roulette)
 	// read new data

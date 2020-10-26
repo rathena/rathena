@@ -7307,13 +7307,6 @@ void clif_openvendingreq(struct map_session_data* sd, int num)
 
 	nullpo_retv(sd);
 
-	// Vending shouldn't open if vend_loot is 0 and extended vending is enabled [Easycore]
-	ShowWarning("vend loot = %d\n", sd->vend_loot);
-	if (battle_config.extended_vending && sd->vend_loot == 0) {
-		sd->state.prevend = 0;
-		return;
-	}
-
 	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0x12d));
 	WFIFOW(fd,0) = 0x12d;
@@ -13056,9 +13049,6 @@ void clif_parse_SelectArrow(int fd,struct map_session_data *sd) {
 		case NC_MAGICDECOY:
 			skill_magicdecoy(sd,p->itemId);
 			break;
-		case MC_VENDING:
-			skill_vending(sd,p->itemId);
-			break;
 	}
 
 	clif_menuskill_clear(sd);
@@ -13734,18 +13724,11 @@ void clif_parse_PurchaseReq2(int fd, struct map_session_data* sd){
 ///     0 = canceled
 ///     1 = open
 void clif_parse_OpenVending(int fd, struct map_session_data* sd){
-	struct item_data *item = itemdb_exists(sd->vend_loot);
 	int cmd = RFIFOW(fd,0);
 	struct s_packet_db* info = &packet_db[cmd];
 	short len = (short)RFIFOW(fd,info->pos[0]);
 	const char* message = RFIFOCP(fd,info->pos[1]);
 	const uint8* data = (uint8*)RFIFOP(fd,info->pos[3]);
-	char out_msg[1024];
-
-	if (battle_config.extended_vending && battle_config.show_item_vending && sd->vend_loot) {
-		memset(out_msg, '\0', sizeof(out_msg));
-		strcat(strcat(strcat(strcat(out_msg, "["), item->jname), "] "), message);
-	}
 
 	if(cmd == 0x12f){ // (CZ_REQ_OPENSTORE)
 		len -= 84;
@@ -13775,10 +13758,7 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd){
 	if( message[0] == '\0' ) // invalid input
 		return;
 
-	if (battle_config.extended_vending && battle_config.show_item_vending && sd->vend_loot)
-		vending_openvending(sd, out_msg, data, len/8, NULL);
-	else
-		vending_openvending(sd, message, data, len/8, NULL);
+	vending_openvending(sd, message, data, len/8, NULL);
 }
 
 
@@ -20623,51 +20603,6 @@ void clif_hat_effect_single( struct map_session_data* sd, uint16 effectId, bool 
 
 	clif_send( p, p->packetLength, &sd->bl, AREA );
 #endif
-}
-
-/**
-* Extended Vending system [Lilith]
-**/
-int clif_vend(struct map_session_data *sd, int skill_lv) {
-
-	struct item_data *item;
-	int c, i, d = 0;
-	int fd;
-
-	nullpo_ret(sd);
-
-	fd = sd->fd;
-	WFIFOHEAD(fd, 8 * 8 + 8);
-	WFIFOW(fd, 0) = 0x1ad;
-	if (battle_config.item_zeny) {
-		WFIFOW(fd, d * 2 + 4) = ITEMID_ZENY;
-		d++;
-
-	}
-	if (battle_config.item_cash) {
-		WFIFOW(fd, d * 2 + 4) = ITEMID_CASH;
-		d++;
-	}
-	for (c = d, i = 0; i < ARRAYLENGTH(item_vend); i++) {
-		if ((item = itemdb_exists(item_vend[i].itemid)) != NULL &&
-			item->nameid != ITEMID_ZENY && item->nameid != ITEMID_CASH) {
-			WFIFOW(fd, c * 2 + 4) = item->nameid;
-			c++;
-
-		}
-	}
-	if (c > 0) {
-		sd->menuskill_id = MC_VENDING;
-		sd->menuskill_val = skill_lv;
-		WFIFOW(fd, 2) = c * 2 + 4;
-		WFIFOSET(fd, WFIFOW(fd, 2));
-	}
-	else {
-		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
-		return 0;
-	}
-
-	return 1;
 }
 
 /// Notify the client that a sale has started
