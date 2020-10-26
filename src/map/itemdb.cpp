@@ -307,7 +307,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 			bool active;
 
-			if (!this->asBool(jobNode, jobName.c_str(), active))
+			if (!this->asBool(jobNode, jobName, active))
 				return 0;
 
 			itemdb_jobid2mapid(item->class_base, static_cast<e_mapid>(constant), active);
@@ -353,7 +353,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 			bool active;
 
-			if (!this->asBool(classNode, className.c_str(), active))
+			if (!this->asBool(classNode, className, active))
 				return 0;
 
 			if (active)
@@ -404,7 +404,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 			bool active;
 
-			if (!this->asBool(locationNode, equipName.c_str(), active))
+			if (!this->asBool(locationNode, equipName, active))
 				return 0;
 
 			if (active) {
@@ -1584,7 +1584,7 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	// Check if the item can be found by id
 	if( ( entry.nameid = strtoul(str[1], nullptr, 10) ) == 0 || !itemdb_exists( entry.nameid ) ){
 		// Otherwise look it up by name
-		struct item_data *id = itemdb_searchname(str[1]);
+		struct item_data *id = itemdb_search_aegisname(str[1]);
 
 		if( id ){
 			// Found the item with a name lookup
@@ -1934,267 +1934,259 @@ static char itemdb_gendercheck(struct item_data *id)
  * @param str: Array of parsed SQL data
  * @return True on success or false otherwise
  */
-static bool itemdb_read_sqldb_sub(char **str) {
+static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	YAML::Node node;
-	int index = -1;
+	int32 index = -1;
 
-	node["Id"] = strtoul(str[++index], nullptr, 10);
+	node["Id"] = std::stoul(str[++index], nullptr, 10);
 	node["AegisName"] = str[++index];
 	node["Name"] = str[++index];
 	node["Type"] = str[++index];
-	if (*str[++index])
+	if (!str[++index].empty())
 		node["SubType"] = str[index];
-	if (atoi(str[++index]) != 0)
-		node["Buy"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		node["Sell"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		node["Weight"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		node["Attack"] = atoi(str[index]);
-#ifdef RENEWAL
-	if (atoi(str[++index]) != 0)
-		node["MagicAttack"] = atoi(str[index]);
-#endif
-	if (atoi(str[++index]) != 0)
-		node["Defense"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		node["Range"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		node["Slots"] = atoi(str[index]);
+	if (!str[++index].empty())
+		node["Buy"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Sell"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Weight"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Attack"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Defense"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Range"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Slots"] = std::stoi(str[index]);
 
 	YAML::Node jobs;
 
-	if (atoi(str[++index]) != 0)
-		jobs["All"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Acolyte"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Alchemist"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Archer"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Assassin"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["BardDancer"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Blacksmith"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Crusader"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Gunslinger"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Hunter"] = atoi(str[index]);
-#ifdef RENEWAL
-	if (atoi(str[++index]) != 0)
-		jobs["KagerouOboro"] = atoi(str[index]);
-#endif
-	if (atoi(str[++index]) != 0)
-		jobs["Knight"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Mage"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Merchant"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Monk"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Ninja"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Novice"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Priest"] = atoi(str[index]);
-#ifdef RENEWAL
-	if (atoi(str[++index]) != 0)
-		jobs["Rebellion"] = atoi(str[index]);
-#endif
-	if (atoi(str[++index]) != 0)
-		jobs["Rogue"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Sage"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["SoulLinker"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["StarGladiator"] = atoi(str[index]);
-#ifdef RENEWAL
-	if (atoi(str[++index]) != 0)
-		jobs["Summoner"] = atoi(str[index]);
-#endif
-	if (atoi(str[++index]) != 0)
-		jobs["SuperNovice"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Swordman"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Taekwon"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Thief"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		jobs["Wizard"] = atoi(str[index]);
-	node["Jobs"] = jobs;
+	if (!str[++index].empty())
+		jobs["All"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Acolyte"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Alchemist"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Archer"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Assassin"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["BardDancer"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Blacksmith"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Crusader"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Gunslinger"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Hunter"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Knight"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Mage"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Merchant"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Monk"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Ninja"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Novice"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Priest"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Rogue"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Sage"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["SoulLinker"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["StarGladiator"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["SuperNovice"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Swordman"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Taekwon"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Thief"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Wizard"] = std::stoi(str[index]) ? "true" : "false";
 
 	YAML::Node classes;
 
-	if (atoi(str[++index]) != 0)
-		classes["All"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		classes["Normal"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		classes["Upper"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		classes["Baby"] = atoi(str[index]);
-#ifdef RENEWAL
-	if (atoi(str[++index]) != 0)
-		classes["Third"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		classes["Third_Upper"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		classes["Third_Baby"] = atoi(str[index]);
-#endif
-	node["Classes"] = classes;
+	if (!str[++index].empty())
+		classes["All"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		classes["Normal"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		classes["Upper"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		classes["Baby"] = std::stoi(str[index]) ? "true" : "false";
 
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		node["Gender"] = str[index];
 
 	YAML::Node locations;
 
-	if (atoi(str[++index]) != 0)
-		locations["All"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Head_Top"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Head_Mid"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Head_Low"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Armor"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Left_Hand"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Right_Hand"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Garment"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Shoes"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Right_Accessory"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Left_Accessory"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Costume_Head_Top"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Costume_Head_Mid"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Costume_Head_Low"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Costume_Garment"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Ammo"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Shadow_Armor"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Shadow_Weapon"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Shadow_Shield"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Shadow_Shoes"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Shadow_Right_Accessory"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		locations["Shadow_Left_Accessory"] = atoi(str[index]);
+	if (!str[++index].empty())
+		locations["Head_Top"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Head_Mid"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Head_Low"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Armor"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Right_Hand"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Left_Hand"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Garment"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Shoes"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Right_Accessory"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Left_Accessory"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Costume_Head_Top"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Costume_Head_Mid"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Costume_Head_Low"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Costume_Garment"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Ammo"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Shadow_Armor"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Shadow_Weapon"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Shadow_Shield"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Shadow_Shoes"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Shadow_Right_Accessory"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		locations["Shadow_Left_Accessory"] = std::stoi(str[index]) ? "true" : "false";
 	node["Locations"] = locations;
 
-	if (atoi(str[++index]) != 0)
-		node["WeaponLevel"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		node["EquipLevelMin"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
-		node["EquipLevelMax"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
+		node["WeaponLevel"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["EquipLevelMin"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["EquipLevelMax"] = std::stoi(str[index]);
+	if (!str[++index].empty())
 		node["Refineable"] = true;
-	if (atoi(str[++index]) != 0)
-		node["View"] = atoi(str[index]);
-	if (*str[++index])
+	if (!str[++index].empty())
+		node["View"] = std::stoi(str[index]);
+	if (!str[++index].empty())
 		node["AliasName"] = str[index];
 
 	YAML::Node flags;
 
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		flags["BuyingStore"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		flags["DeadBranch"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		flags["Container"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		flags["UniqueId"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		flags["BindOnEquip"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		flags["DropAnnounce"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		flags["NoConsume"] = true;
-	if (*str[++index])
+	if (!str[++index].empty())
 		flags["DropEffect"] = str[index];
 	node["Flags"] = flags;
 
 	YAML::Node delay;
 
-	if (atoi(str[++index]) != 0)
-		delay["Duration"] = atoi(str[index]);
-	if (*str[++index])
+	if (!str[++index].empty())
+		delay["Duration"] = std::stoi(str[index]);
+	if (!str[++index].empty())
 		delay["Status"] = str[index];
 	node["Delay"] = delay;
 
 	YAML::Node stack;
 
-	if (atoi(str[++index]) != 0)
-		stack["Amount"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
+		stack["Amount"] = std::stoi(str[index]);
+	if (!str[++index].empty())
 		stack["Inventory"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		stack["Cart"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		stack["Storage"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		stack["GuildStorage"] = true;
 	node["Stack"] = stack;
 
 	YAML::Node nouse;
 
-	if (atoi(str[++index]) != 0)
-		nouse["Override"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
+		nouse["Override"] = std::stoi(str[index]);
+	if (!str[++index].empty())
 		nouse["Sitting"] = true;
 	node["NoUse"] = nouse;
 
 	YAML::Node trade;
 
-	if (atoi(str[++index]) != 0)
-		trade["Override"] = atoi(str[index]);
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
+		trade["Override"] = std::stoi(str[index]);
+	if (!str[++index].empty())
 		trade["NoDrop"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		trade["NoTrade"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		trade["TradePartner"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		trade["NoSell"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		trade["NoCart"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		trade["NoStorage"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		trade["NoGuildStorage"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		trade["NoMail"] = true;
-	if (atoi(str[++index]) != 0)
+	if (!str[++index].empty())
 		trade["NoAuction"] = true;
 	node["Trade"] = trade;
 
-	if (*str[++index])
+	if (!str[++index].empty())
 		node["Script"] = str[index];
-	if (*str[++index])
+	if (!str[++index].empty())
 		node["EquipScript"] = str[index];
-	if (*str[++index])
+	if (!str[++index].empty())
 		node["UnEquipScript"] = str[index];
+
+#ifdef RENEWAL
+	if (!str[++index].empty())
+		node["MagicAttack"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		classes["Third"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		classes["Third_Upper"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		classes["Third_Baby"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["KagerouOboro"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Rebellion"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		jobs["Summoner"] = std::stoi(str[index]) ? "true" : "false";
+#endif
+
+	node["Classes"] = classes;
+	node["Jobs"] = jobs;
 
 	return item_db.parseBodyNode(node) > 0;
 }
@@ -2207,35 +2199,46 @@ static int itemdb_read_sqldb(void) {
 		item_table,
 		item2_table
 	};
-	int fi;
 
-	for( fi = 0; fi < ARRAYLENGTH(item_db_name); ++fi ) {
-		uint32 count = 0;
-
+	for( uint8 fi = 0; fi < ARRAYLENGTH(item_db_name); ++fi ) {
 		// retrieve all rows from the item database
-		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", item_db_name[fi]) ) {
+		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `id`,`name_aegis`,`name_english`,`type`,`subtype`,`price_buy`,`price_sell`,`weight`,`attack`,`defense`,`range`,`slots`,"
+			"`job_all`,`job_acolyte`,`job_alchemist`,`job_archer`,`job_assassin`,`job_barddancer`,`job_blacksmith`,`job_crusader`,`job_gunslinger`,`job_hunter`,`job_knight`,`job_mage`,`job_merchant`,"
+			"`job_monk`,`job_ninja`,`job_novice`,`job_priest`,`job_rogue`,`job_sage`,`job_soullinker`,`job_stargladiator`,`job_supernovice`,`job_swordman`,`job_taekwon`,`job_thief`,`job_wizard`,"
+			"`class_all`,`class_normal`,`class_upper`,`class_baby`,`gender`,"
+			"`location_head_top`,`location_head_mid`,`location_head_low`,`location_armor`,`location_right_hand`,`location_left_hand`,`location_garment`,`location_shoes`,`location_right_accessory`,`location_left_accessory`,"
+			"`location_costume_head_top`,`location_costume_head_mid`,`location_costume_head_low`,`location_costume_garment`,`location_ammo`,`location_shadow_armor`,`location_shadow_weapon`,`location_shadow_shield`,`location_shadow_shoes`,`location_shadow_right_accessory`,`location_shadow_left_accessory`,"
+			"`weapon_level`,`equip_level_min`,`equip_level_max`,`refineable`,`view`,`alias_name`,"
+			"`flag_buyingstore`,`flag_deadbranch`,`flag_container`,`flag_uniqueid`,`flag_bindonequip`,`flag_dropannounce`,`flag_noconsume`,`flag_dropeffect`,"
+			"`delay_duration`,`delay_status`,`stack_amount`,`stack_inventory`,`stack_cart`,`stack_storage`,`stack_guildstorage`,`nouse_override`,`nouse_sitting`,"
+			"`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_tradepartner`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`,`equip_script`,`unequip_script`"
+#ifdef RENEWAL
+			",`magic_attack`,`class_third`,`class_third_upper`,`class_third_baby`,`job_kagerouoboro`,`job_rebellion`,`job_summoner`"
+#endif
+			" FROM `%s`", item_db_name[fi]) ) {
 			Sql_ShowDebug(mmysql_handle);
 			continue;
 		}
 
-		// process rows one by one
-		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {// wrap the result into a TXT-compatible format
-			char dummy[256] = "";
-#ifdef RENEWAL
-			char *str[52];
-			uint16 total_columns = 52;
-#else
-			char *str[51];
-			uint16 total_columns = 51;
-#endif
+		uint32 total_columns = Sql_NumColumns(mmysql_handle);
+		uint64 total_rows = Sql_NumRows(mmysql_handle), rows = 0, count = 0;
 
-			for( uint16 i = 0; i < total_columns; ++i ) {
-				Sql_GetData(mmysql_handle, i, &str[i], nullptr);
-				if( str[i] == nullptr )
-					str[i] = dummy; // get rid of NULL columns
+		// process rows one by one
+		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
+			ShowStatus( "Loading [%" PRIu64 "/%" PRIu64 "] rows from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++rows, total_rows, item_db_name[fi] );
+
+			std::vector<std::string> data = {};
+
+			for( uint32 i = 0; i < total_columns; ++i ) {
+				char *str;
+
+				Sql_GetData(mmysql_handle, i, &str, nullptr);
+				if( str == nullptr )
+					str = ""; // get rid of NULL columns
+				data.push_back(str);
 			}
 
-			if (!itemdb_read_sqldb_sub(str))
+			if (!itemdb_read_sqldb_sub(data))
 				continue;
 			++count;
 		}
@@ -2243,7 +2246,7 @@ static int itemdb_read_sqldb(void) {
 		// free the query result
 		Sql_FreeResult(mmysql_handle);
 
-		ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, item_db_name[fi]);
+		ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, item_db_name[fi]);
 	}
 
 	return 0;

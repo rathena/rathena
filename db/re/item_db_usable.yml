@@ -31519,7 +31519,7 @@ Body:
     Script: |
       sc_start SC_LIFEINSURANCE,3600000,0;
   - Id: 14505
-    AegisName: Dungeon_1_hour_Ticket
+    AegisName: Dun_1HR_Voucher
     Name: Dungeon 1 Hour Ticket
     Type: Usable
     Buy: 20
@@ -31534,10 +31534,10 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      warp "1@sthb",0,0; /*No map+coord info*/
+      warp "dali02",117,69; 
   - Id: 14506
-    AegisName: Dungeon_Ticket
-    Name: Dungeon Ticket
+    AegisName: Dun_Voucher
+    Name: Dungeon 1 Hour Ticket
     Type: Usable
     Buy: 20
     Trade:
@@ -31551,7 +31551,8 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      warp "1@sthc",0,0; /*No map+coord info*/
+      select("Invasion of Air Stronghold - Lv. 145 or higher");
+      warp "dali02",117,69;
   - Id: 14508
     AegisName: Zeny_Scroll
     Name: Zeny Pet Egg Scroll
@@ -42939,8 +42940,8 @@ Body:
     Script: |
       getitem 22902,11; bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",1800;
   - Id: 17569
-    AegisName: Dungeon_1_hour_Ticket_Box
-    Name: Dungeon 1 Hour Ticket Box
+    AegisName: Dun_Voucher_Box1
+    Name: Sky Fortress Ticket 1 Hour Box
     Type: Usable
     Buy: 20
     Weight: 10

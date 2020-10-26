@@ -1,119 +1,6 @@
 #
-# Table structure for table `item_db_re`
+# Table data for table `item_db_re`
 #
-
-DROP TABLE IF EXISTS `item_db_re`;
-CREATE TABLE `item_db_re` (
-  `id` int(10) unsigned NOT NULL DEFAULT '0',
-  `name_aegis` varchar(50) NOT NULL DEFAULT '',
-  `name_english` varchar(50) NOT NULL DEFAULT '',
-  `type` varchar(20) DEFAULT NULL,
-  `subtype` varchar(20) DEFAULT NULL,
-  `price_buy` mediumint(8) unsigned DEFAULT NULL,
-  `price_sell` mediumint(8) unsigned DEFAULT NULL,
-  `weight` smallint(5) unsigned DEFAULT NULL,
-  `attack` smallint(5) unsigned DEFAULT NULL,
-  `magic_attack` smallint(5) unsigned DEFAULT NULL,
-  `defense` smallint(5) unsigned DEFAULT NULL,
-  `range` tinyint(2) unsigned DEFAULT NULL,
-  `slots` tinyint(2) unsigned DEFAULT NULL,
-  `job_all` tinyint(1) unsigned DEFAULT NULL,
-  `job_acolyte` tinyint(1) unsigned DEFAULT NULL,
-  `job_alchemist` tinyint(1) unsigned DEFAULT NULL,
-  `job_archer` tinyint(1) unsigned DEFAULT NULL,
-  `job_assassin` tinyint(1) unsigned DEFAULT NULL,
-  `job_barddancer` tinyint(1) unsigned DEFAULT NULL,
-  `job_blacksmith` tinyint(1) unsigned DEFAULT NULL,
-  `job_crusader` tinyint(1) unsigned DEFAULT NULL,
-  `job_gunslinger` tinyint(1) unsigned DEFAULT NULL,
-  `job_hunter` tinyint(1) unsigned DEFAULT NULL,
-  `job_kagerouoboro` tinyint(1) unsigned DEFAULT NULL,
-  `job_knight` tinyint(1) unsigned DEFAULT NULL,
-  `job_mage` tinyint(1) unsigned DEFAULT NULL,
-  `job_merchant` tinyint(1) unsigned DEFAULT NULL,
-  `job_monk` tinyint(1) unsigned DEFAULT NULL,
-  `job_ninja` tinyint(1) unsigned DEFAULT NULL,
-  `job_novice` tinyint(1) unsigned DEFAULT NULL,
-  `job_priest` tinyint(1) unsigned DEFAULT NULL,
-  `job_rebellion` tinyint(1) unsigned DEFAULT NULL,
-  `job_rogue` tinyint(1) unsigned DEFAULT NULL,
-  `job_sage` tinyint(1) unsigned DEFAULT NULL,
-  `job_soullinker` tinyint(1) unsigned DEFAULT NULL,
-  `job_stargladiator` tinyint(1) unsigned DEFAULT NULL,
-  `job_summoner` tinyint(1) unsigned DEFAULT NULL,
-  `job_supernovice` tinyint(1) unsigned DEFAULT NULL,
-  `job_swordman` tinyint(1) unsigned DEFAULT NULL,
-  `job_taekwon` tinyint(1) unsigned DEFAULT NULL,
-  `job_thief` tinyint(1) unsigned DEFAULT NULL,
-  `job_wizard` tinyint(1) unsigned DEFAULT NULL,
-  `class_all` tinyint(1) unsigned DEFAULT NULL,
-  `class_normal` tinyint(1) unsigned DEFAULT NULL,
-  `class_upper` tinyint(1) unsigned DEFAULT NULL,
-  `class_baby` tinyint(1) unsigned DEFAULT NULL,
-  `class_third` tinyint(1) unsigned DEFAULT NULL,
-  `class_third_upper` tinyint(1) unsigned DEFAULT NULL,
-  `class_third_baby` tinyint(1) unsigned DEFAULT NULL,
-  `gender` varchar(10) DEFAULT NULL,
-  `location_head_top` tinyint(1) unsigned DEFAULT NULL,
-  `location_head_mid` tinyint(1) unsigned DEFAULT NULL,
-  `location_head_low` tinyint(1) unsigned DEFAULT NULL,
-  `location_armor` tinyint(1) unsigned DEFAULT NULL,
-  `location_right_hand` tinyint(1) unsigned DEFAULT NULL,
-  `location_left_hand` tinyint(1) unsigned DEFAULT NULL,
-  `location_garment` tinyint(1) unsigned DEFAULT NULL,
-  `location_shoes` tinyint(1) unsigned DEFAULT NULL,
-  `location_right_accessory` tinyint(1) unsigned DEFAULT NULL,
-  `location_left_accessory` tinyint(1) unsigned DEFAULT NULL,
-  `location_costume_head_top` tinyint(1) unsigned DEFAULT NULL,
-  `location_costume_head_mid` tinyint(1) unsigned DEFAULT NULL,
-  `location_costume_head_low` tinyint(1) unsigned DEFAULT NULL,
-  `location_costume_garment` tinyint(1) unsigned DEFAULT NULL,
-  `location_ammo` tinyint(1) unsigned DEFAULT NULL,
-  `location_shadow_armor` tinyint(1) unsigned DEFAULT NULL,
-  `location_shadow_weapon` tinyint(1) unsigned DEFAULT NULL,
-  `location_shadow_shield` tinyint(1) unsigned DEFAULT NULL,
-  `location_shadow_shoes` tinyint(1) unsigned DEFAULT NULL,
-  `location_shadow_right_accessory` tinyint(1) unsigned DEFAULT NULL,
-  `location_shadow_left_accessory` tinyint(1) unsigned DEFAULT NULL,
-  `weapon_level` tinyint(1) unsigned DEFAULT NULL,
-  `equip_level_min` tinyint(3) unsigned DEFAULT NULL,
-  `equip_level_max` tinyint(3) unsigned DEFAULT NULL,
-  `refineable` tinyint(1) unsigned DEFAULT NULL,
-  `view` smallint(5) unsigned DEFAULT NULL,
-  `alias_name` varchar(50) DEFAULT NULL,
-  `flag_buyingstore` tinyint(1) unsigned DEFAULT NULL,
-  `flag_deadbranch` tinyint(1) unsigned DEFAULT NULL,
-  `flag_container` tinyint(1) unsigned DEFAULT NULL,
-  `flag_uniqueid` tinyint(1) unsigned DEFAULT NULL,
-  `flag_bindonequip` tinyint(1) unsigned DEFAULT NULL,
-  `flag_dropannounce` tinyint(1) unsigned DEFAULT NULL,
-  `flag_noconsume` tinyint(1) unsigned DEFAULT NULL,
-  `flag_dropeffect` varchar(20) DEFAULT NULL,
-  `delay_duration` bigint(20) unsigned DEFAULT NULL,
-  `delay_status` varchar(30) DEFAULT NULL,
-  `stack_amount` smallint(5) unsigned DEFAULT NULL,
-  `stack_inventory` tinyint(1) unsigned DEFAULT NULL,
-  `stack_cart` tinyint(1) unsigned DEFAULT NULL,
-  `stack_storage` tinyint(1) unsigned DEFAULT NULL,
-  `stack_guildstorage` tinyint(1) unsigned DEFAULT NULL,
-  `nouse_override` smallint(5) unsigned DEFAULT NULL,
-  `nouse_sitting` tinyint(1) unsigned DEFAULT NULL,
-  `trade_override` smallint(5) unsigned DEFAULT NULL,
-  `trade_nodrop` tinyint(1) unsigned DEFAULT NULL,
-  `trade_notrade` tinyint(1) unsigned DEFAULT NULL,
-  `trade_tradepartner` tinyint(1) unsigned DEFAULT NULL,
-  `trade_nosell` tinyint(1) unsigned DEFAULT NULL,
-  `trade_nocart` tinyint(1) unsigned DEFAULT NULL,
-  `trade_nostorage` tinyint(1) unsigned DEFAULT NULL,
-  `trade_noguildstorage` tinyint(1) unsigned DEFAULT NULL,
-  `trade_nomail` tinyint(1) unsigned DEFAULT NULL,
-  `trade_noauction` tinyint(1) unsigned DEFAULT NULL,
-  `script` text,
-  `equip_script` text,
-  `unequip_script` text,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `UniqueAegisName` (`name_aegis`)
-) ENGINE=MyISAM;
 
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (500,'Choko_Gangjeong','Choko Gangjeong','Healing',10,'percentheal 10,10;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (501,'Red_Potion','Red Potion','Healing',10,70,'itemheal rand(45,65),0;');
@@ -2274,8 +2161,8 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_uniqueid`,`script`) VALUES (14498,'Pisces_Crown_Box','Pisces Crown Box','Cash',20,10,true,'getitem 5515,1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_uniqueid`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14499,'Peacock_Feather_Box','Peacock Feather Box','Cash',20,10,true,100,true,true,true,true,true,true,true,'getitem 5519,1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14500,'Insurance60','Life Insurrance Certificate','Usable',20,10,100,true,true,true,true,true,true,true,'sc_start SC_LIFEINSURANCE,3600000,0;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14505,'Dungeon_1_hour_Ticket','Dungeon 1 Hour Ticket','Usable',20,100,true,true,true,true,true,true,true,true,'warp "1@sthb",0,0; /*No map+coord info*/');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14506,'Dungeon_Ticket','Dungeon Ticket','Usable',20,100,true,true,true,true,true,true,true,true,'warp "1@sthc",0,0; /*No map+coord info*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14505,'Dun_1HR_Voucher','Dungeon 1 Hour Ticket','Usable',20,100,true,true,true,true,true,true,true,true,'warp "dali02",117,69;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14506,'Dun_Voucher','Dungeon 1 Hour Ticket','Usable',20,100,true,true,true,true,true,true,true,true,'select("Invasion of Air Stronghold - Lv. 145 or higher");\nwarp "dali02",117,69;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14508,'Zeny_Scroll','Zeny Pet Egg Scroll','Usable',10,100,true,true,true,true,true,true,true,'Zeny += rand(1000,77777);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14509,'Light_Center_Pot','Light Concentration Potion','Usable',800,20,100,true,true,true,true,true,true,true,'sc_start SC_ASPDPOTION0,1800000,4;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`job_alchemist`,`job_archer`,`job_assassin`,`job_blacksmith`,`job_crusader`,`job_gunslinger`,`job_hunter`,`job_kagerouoboro`,`job_knight`,`job_mage`,`job_merchant`,`job_monk`,`job_ninja`,`job_novice`,`job_rebellion`,`job_rogue`,`job_sage`,`job_soullinker`,`job_stargladiator`,`job_summoner`,`job_supernovice`,`job_swordman`,`job_taekwon`,`job_thief`,`job_wizard`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14510,'Light_Awakening_Pot','Light Awakening Potion','Usable',1500,20,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,40,100,true,true,true,true,true,true,true,'sc_start SC_ASPDPOTION1,1800000,6;');
@@ -3095,7 +2982,7 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`flag_container`,`script`) VALUES (17552,'Garnet_Lucky_Scroll','Garnet Lucky Egg','Cash',10,true,'getgroupitem(IG_Garnet_Lucky_Scroll);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17567,'Event_Almighty_Box__','Event Almighty Box','Cash',20,10,100,true,true,true,true,true,true,true,'getitem 22902,1; bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",1800;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17568,'Event_Almighty_Box_100_','Event Almighty Box(100)','Cash',20,10,100,true,true,true,true,true,true,true,'getitem 22902,11; bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",1800;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17569,'Dungeon_1_hour_Ticket_Box','Dungeon 1 Hour Ticket Box','Usable',20,10,100,true,true,true,true,true,true,true,'getitem 14505,1;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17569,'Dun_Voucher_Box1','Sky Fortress Ticket 1 Hour Box','Usable',20,10,100,true,true,true,true,true,true,true,'getitem 14505,1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`flag_container`,`script`) VALUES (17572,'Erzulie_Lucky_Scroll','Erzulie Lucky Egg','Cash',10,true,'getgroupitem(IG_Erzulie_Lucky_Scroll);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`flag_container`,`script`) VALUES (17584,'Venus_Lucky_Scroll','Venus Lucky Egg','Cash',10,true,'getgroupitem(IG_Venus_Lucky_Scroll);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`flag_container`,`script`) VALUES (17588,'Amora_Lucky_Scroll','Amora Lucky Egg','Cash',10,true,'getgroupitem(IG_Amora_Lucky_Scroll);');
