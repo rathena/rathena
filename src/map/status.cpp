@@ -2657,7 +2657,7 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 	amotion = job_info[classidx].aspd_base[sd->weapontype1]; // Single weapon
 	if (sd->status.shield)
 		amotion += job_info[classidx].aspd_base[MAX_WEAPON_TYPE];
-	else if (sd->weapontype2 && sd->equip_index[EQI_HAND_R] != sd->equip_index[EQI_HAND_L])
+	else if (sd->weapontype2 != W_FIST && sd->equip_index[EQI_HAND_R] != sd->equip_index[EQI_HAND_L])
 		amotion += job_info[classidx].aspd_base[sd->weapontype2] / 4; // Dual-wield
 
 	switch(sd->status.weapon) {
@@ -4022,31 +4022,38 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		}
 	}
 
-	// We've got combos to process and check
-	if( sd->combos.count ) {
-		for (i = 0; i < sd->combos.count; i++) {
-			uint8 j = 0;
-			bool no_run = false;
-			struct item_combo *combo = NULL;
+	// Process and check item combos
+	if (!sd->combos.empty()) {
+		for (const auto &combo : sd->combos) {
+			s_item_combo *item_combo;
 
 			current_equip_item_index = -1;
-			current_equip_combo_pos = sd->combos.pos[i];
+			current_equip_combo_pos = combo->pos;
 
-			if (!sd->combos.bonus[i] || !(combo = itemdb_combo_exists(sd->combos.id[i])))
+			if (combo->bonus == nullptr || !(item_combo = itemdb_combo_exists(combo->id)))
 				continue;
+
+			bool no_run = false;
+			size_t j = 0;
+
 			// Check combo items
-			while (j < combo->count) {
-				struct item_data *id = itemdb_exists(combo->nameid[j]);
+			while (j < item_combo->nameid.size()) {
+				item_data *id = itemdb_exists(item_combo->nameid[j]);
+
 				// Don't run the script if at least one of combo's pair has restriction
 				if (id && !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(id, sd->bl.m)) {
 					no_run = true;
 					break;
 				}
+
 				j++;
 			}
+
 			if (no_run)
 				continue;
-			run_script(sd->combos.bonus[i],0,sd->bl.id,0);
+
+			run_script(combo->bonus, 0, sd->bl.id, 0);
+
 			if (!calculating) // Abort, run_script retriggered this
 				return 1;
 		}
@@ -13099,7 +13106,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			}
 			if (begin_spurt && sce->val1 >= 7 &&
 				DIFF_TICK(gettick(), starttick) <= 1000 &&
-				(!sd || (sd->weapontype1 == 0 && sd->weapontype2 == 0))
+				(!sd || (sd->weapontype1 == W_FIST && sd->weapontype2 == W_FIST))
 			)
 				sc_start(bl,bl,SC_SPURT,100,sce->val1,skill_get_time2(status_sc2skill(type), sce->val1));
 		}
@@ -14441,7 +14448,7 @@ TIMER_FUNC(status_change_timer){
 	case SC_OVERHEAT_LIMITPOINT:
 		if (--(sce->val1) >= 0) { // Cooling
 			static std::vector<int16> limit = { 150, 200, 280, 360, 450 };
-			uint16 skill_lv = (sd ? cap_value(pc_checkskill(sd, NC_MAINFRAME), 0, limit.size()-1) : 0);
+			uint16 skill_lv = (sd ? cap_value(pc_checkskill(sd, NC_MAINFRAME), 0, (uint16)(limit.size()-1)) : 0);
 
 			if (sc && sc->data[SC_OVERHEAT])
 				status_change_end(bl,SC_OVERHEAT,INVALID_TIMER);

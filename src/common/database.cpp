@@ -95,6 +95,7 @@ bool YamlDatabase::load(const std::string& path) {
 	YAML::Node rootNode;
 
 	try {
+		ShowStatus( "Loading '" CL_WHITE "%s" CL_RESET "'..." CL_CLL "\r", path.c_str() );
 		rootNode = YAML::LoadFile(path);
 	}
 	catch(YAML::Exception &e) {
@@ -291,6 +292,9 @@ void YamlDatabase::invalidWarning( const YAML::Node &node, const char* fmt, ... 
 
 	va_start(ap, fmt);
 
+	// Remove any remaining garbage of a previous loading line
+	ShowMessage( CL_CLL );
+	// Print the actual error
 	_vShowMessage( MSG_ERROR, fmt, ap );
 
 	va_end(ap);

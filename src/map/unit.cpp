@@ -3378,12 +3378,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->npc_id = 0;
 			}
 
-			if( sd->combos.count ) {
-				aFree(sd->combos.bonus);
-				aFree(sd->combos.id);
-				aFree(sd->combos.pos);
-				sd->combos.count = 0;
-			}
+			sd->combos.clear();
 
 			if( sd->sc_display_count ) { /* [Ind] */
 				for( i = 0; i < sd->sc_display_count; i++ )
@@ -3406,12 +3401,8 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			}
 			sd->qi_count = 0;
 
-#if PACKETVER >= 20150513
-			if( sd->hatEffectCount > 0 ){
-				aFree(sd->hatEffectIDs);
-				sd->hatEffectIDs = NULL;
-				sd->hatEffectCount = 0;
-			}
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+			sd->hatEffects.clear();
 #endif
 
 			if (sd->achievement_data.achievements)

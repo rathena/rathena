@@ -159,7 +159,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\common\database.cpp" />
     <ClCompile Include="csv2yaml.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\common\database.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

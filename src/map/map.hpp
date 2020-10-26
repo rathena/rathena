@@ -73,6 +73,7 @@ void map_msg_reload(void);
 #define MAPID_BASEMASK 0x00ff
 #define MAPID_UPPERMASK 0x0fff
 #define MAPID_THIRDMASK (JOBL_THIRD|MAPID_UPPERMASK)
+#define MAPID_ALL 0xffff
 
 //First Jobs
 //Note the oddity of the novice:
