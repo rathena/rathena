@@ -17062,6 +17062,7 @@ Body:
       Third: true
       Third_Upper: true
       Third_Baby: true
+    Gender: Male
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -18107,6 +18108,7 @@ Body:
       Third: true
       Third_Upper: true
       Third_Baby: true
+    Gender: Female
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -97098,7 +97100,7 @@ Body:
     AegisName: Black_Circle
     Name: Black Circle
     Type: Weapon
-    SubType: Whip
+    SubType: Musical
     Weight: 1200
     Attack: 100
     MagicAttack: 190
