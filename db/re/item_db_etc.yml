@@ -24644,7 +24644,7 @@ Body:
       BuyingStore: true
   - Id: 7324
     AegisName: aegis_7324
-    Name: Deep Sea Kraken's Bridge    # !todo check english name
+    Name: Deep Sea Kraken's Leg
     Type: Etc
     Weight: 10
     Flags:
@@ -34001,42 +34001,42 @@ Body:
       autobonus "{ bonus bLuk,50; bonus2 bMagicAtkEle,Ele_All,10; bonus2 bHPLossRate,300,1000; }",20,10000,BF_MAGIC; /* unknown rate */
   - Id: 25892
     AegisName: aegis_25892
-    Name: Deep sea shells    # !todo check english name
+    Name: Deep Sea Shell
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25893
     AegisName: aegis_25893
-    Name: Tail of deep sea fish    # !todo check english name
+    Name: Deep Sea Fish's Tail
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25894
     AegisName: aegis_25894
-    Name: Corrupt deep sea fish    # !todo check english name
+    Name: Rotten Deep Sea Fish
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25895
     AegisName: aegis_25895
-    Name: Deep sea starfish    # !todo check english name
+    Name: Deep Sea Starfish
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25896
     AegisName: aegis_25896
-    Name: Deep sea crab    # !todo check english name
+    Name: Deep Sea Crab
     Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
   - Id: 25897
     AegisName: aegis_25897
-    Name: Deep Sea Witch's Crown    # !todo check english name
+    Name: Deep Sea Witch's Crown
     Type: Etc
     Weight: 10
     Flags:
@@ -34057,7 +34057,7 @@ Body:
       NoAuction: true
   - Id: 25899
     AegisName: aegis_25899
-    Name: Abyssal Essence    # !todo check english name
+    Name: Abyssal Essence
     Type: Etc
     Weight: 10
     Flags:
@@ -37550,10 +37550,8 @@ Body:
       bonus2 bAddEle,Ele_Water,5;
       if (.@r>=7) {
          bonus2 bAddEle,Ele_Water,5;
-         bonus2 bAddRace,RC_Fish,5;
       }
       if (.@r>=9) {
-         bonus2 bAddEle,Ele_Water,5;
          bonus2 bAddRace,RC_Fish,5;
       }
   - Id: 300143

@@ -100940,7 +100940,7 @@ Body:
          bonus bDef,50;
       }
       if (.@r>=9) {
-         autobonus2 "{ bonus2 bSubEle,Ele_Water,15; }",1,5000,BF_WEAPON;
+         autobonus2 "{ bonus2 bSubEle,Ele_Water,15; }",1,5000,BF_MAGIC|BF_WEAPON;
       }
   - Id: 450146
     AegisName: aegis_450146
