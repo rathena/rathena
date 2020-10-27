@@ -4936,173 +4936,175 @@ MobDatabase mob_db;
  * @param str: Array of parsed SQL data
  * @return True on success or false otherwise
  */
-static bool mob_read_sqldb_sub(char **str) {
+static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 	YAML::Node node;
 	int32 index = -1;
 
-	node["Id"] = strtoul(str[++index], nullptr, 10);
+	node["Id"] = std::stoul(str[++index]);
 	node["AegisName"] = str[++index];
 	node["Name"] = str[++index];
-	if (*str[++index])
+	if (!str[++index].empty())
 		node["JapaneseName"] = str[index];
-	if (strtoul(str[++index], nullptr, 10) > 1)
-		node["Level"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) > 1)
-		node["Hp"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) > 1)
-		node["Sp"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		node["BaseExp"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		node["JobExp"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		node["MvpExp"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		node["Attack"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		node["Attack2"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		node["Defense"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		node["MagicDefense"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) > 1)
-		node["Str"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) > 1)
-		node["Agi"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) > 1)
-		node["Vit"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) > 1)
-		node["Int"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) > 1)
-		node["Dex"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) > 1)
-		node["Luk"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		node["AttackRange"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		node["SkillRange"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		node["ChaseRange"] = strtoul(str[index], nullptr, 10);
-	if (strcmp(str[++index], "Small") != 0)
+	if (!str[++index].empty() && std::stoi(str[index]) > 1)
+		node["Level"] = std::stoi(str[index]);
+	if (!str[++index].empty() && std::stoul(str[index]) > 1)
+		node["Hp"] = std::stoul(str[index]);
+	if (!str[++index].empty() && std::stoul(str[index]) > 1)
+		node["Sp"] = std::stoul(str[index]);
+	if (!str[++index].empty())
+		node["BaseExp"] = std::stoul(str[index]);
+	if (!str[++index].empty())
+		node["JobExp"] = std::stoul(str[index]);
+	if (!str[++index].empty())
+		node["MvpExp"] = std::stoul(str[index]);
+	if (!str[++index].empty())
+		node["Attack"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Attack2"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["Defense"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["MagicDefense"] = std::stoi(str[index]);
+	if (!str[++index].empty() && std::stoi(str[index]) > 1)
+		node["Str"] = std::stoi(str[index]);
+	if (!str[++index].empty() && std::stoi(str[index]) > 1)
+		node["Agi"] = std::stoi(str[index]);
+	if (!str[++index].empty() && std::stoi(str[index]) > 1)
+		node["Vit"] = std::stoi(str[index]);
+	if (!str[++index].empty() && std::stoi(str[index]) > 1)
+		node["Int"] = std::stoi(str[index]);
+	if (!str[++index].empty() && std::stoi(str[index]) > 1)
+		node["Dex"] = std::stoi(str[index]);
+	if (!str[++index].empty() && std::stoi(str[index]) > 1)
+		node["Luk"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["AttackRange"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["SkillRange"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["ChaseRange"] = std::stoi(str[index]);
+	if (!str[++index].empty() && strcmp(str[index].c_str(), "Small") != 0)
 		node["Size"] = str[index];
-	if (strcmp(str[++index], "Formless") != 0)
+	if (!str[++index].empty() && strcmp(str[index].c_str(), "Formless") != 0)
 		node["Race"] = str[index];
 
 	for (uint16 i = 1; i < RC2_MAX; i++) {
-		if (strtoul(str[i + index + 1], nullptr, 10) != 0)
-			node["RaceGroups"][script_get_constant_str("RC2_", i)] = true;
-		else
-			node["RaceGroups"][script_get_constant_str("RC2_", i)] = false;
+		if (!str[i + index].empty())
+			node["RaceGroups"][script_get_constant_str("RC2_", i) + 4] = std::stoi(str[i + index]) ? "true" : "false";
 	}
 
 	index += RC2_MAX - 1;
 
-	if (strcmp(str[++index], "Neutral") != 0)
-		node["Element"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) > 1)
-		node["ElementLevel"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		node["WalkSpeed"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		node["AttackDelay"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		node["AttackMotion"] = strtoul(str[index], nullptr, 10);
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		node["DamageMotion"] = strtoul(str[index], nullptr, 10);
-	if (strcmp(str[++index], "06") != 0)
+	if (!str[++index].empty() && strcmp(str[index].c_str(), "Neutral") != 0)
+		node["Element"] = str[index];
+	if (!str[++index].empty() && std::stoi(str[index]) > 1)
+		node["ElementLevel"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["WalkSpeed"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["AttackDelay"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["AttackMotion"] = std::stoi(str[index]);
+	if (!str[++index].empty())
+		node["DamageMotion"] = std::stoi(str[index]);
+	if (!str[++index].empty() && strcmp(str[index].c_str(), "06") != 0)
 		node["Ai"] = str[index];
-	if (strcmp(str[++index], "Normal") != 0)
+	if (!str[++index].empty() && strcmp(str[index].c_str(), "Normal") != 0)
 		node["Class"] = str[index];
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		node["Attribute"] = strtoul(str[index], nullptr, 10);
+	if (!str[++index].empty())
+		node["Attribute"] = std::stoi(str[index]);
 
 	YAML::Node modes;
 
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["CanMove"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["Looter"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["Aggressive"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["Assist"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["CastSensorIdle"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["NoRandomWalk"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["NoCast"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["CanAttack"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["CastSensorChase"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["ChangeChase"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["Angry"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["ChangeTargetMelee"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["ChangeTargetChase"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["TargetWeak"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["RandomTarget"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["IgnoreMelee"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["IgnoreMagic"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["IgnoreRanged"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["Mvp"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["IgnoreMisc"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["KnockBackImmune"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["TeleportBlock"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["FixedItemDrop"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["Detector"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["StatusImmune"] = true;
-	if (strtoul(str[++index], nullptr, 10) != 0)
-		modes["SkillImmune"] = true;
+	if (!str[++index].empty())
+		modes["CanMove"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["Looter"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["Aggressive"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["Assist"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["CastSensorIdle"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["NoRandomWalk"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["NoCast"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["CanAttack"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["CastSensorChase"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["ChangeChase"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["Angry"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["ChangeTargetMelee"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["ChangeTargetChase"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["TargetWeak"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["RandomTarget"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["IgnoreMelee"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["IgnoreMagic"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["IgnoreRanged"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["Mvp"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["IgnoreMisc"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["KnockBackImmune"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["TeleportBlock"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["FixedItemDrop"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["Detector"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["StatusImmune"] = std::stoi(str[index]) ? "true" : "false";
+	if (!str[++index].empty())
+		modes["SkillImmune"] = std::stoi(str[index]) ? "true" : "false";
 	node["Modes"] = modes;
 
-	for (uint16 i = 0; i < MAX_MVP_DROP; i++) {
+	for (uint8 i = 0; i < MAX_MVP_DROP; i++) {
 		YAML::Node mvpdrops;
 
-		if (*str[++index])
+		if (!str[++index].empty())
 			mvpdrops["Item"] = str[index];
-		if (strtoul(str[++index], nullptr, 10) != 0)
-			mvpdrops["Rate"] = strtoul(str[index], nullptr, 10);
-		if (strcmp(str[++index], "None") != 0)
+		if (!str[++index].empty())
+			mvpdrops["Rate"] = std::stoi(str[index]);
+		if (!str[++index].empty() && strcmp(str[index].c_str(), "None") != 0)
 			mvpdrops["RandomOptionGroup"] = str[index];
-		if (strtol(str[++index], nullptr, 10) >= 0)
-			mvpdrops["Index"] = strtoul(str[index], nullptr, 10);
-		node["MvpDrops"][i] = mvpdrops;
+		if (!str[++index].empty() && std::stoi(str[index]) >= 0)
+			mvpdrops["Index"] = std::stoi(str[index]);
+
+		if (!mvpdrops.IsNull())
+			node["MvpDrops"][i] = mvpdrops;
 	}
 
-	for (uint16 i = 0; i < MAX_MOB_DROP; i++) {
+	for (uint8 i = 0; i < MAX_MOB_DROP; i++) {
 		YAML::Node drops;
 
-		if (*str[++index])
+		if (!str[++index].empty())
 			drops["Item"] = str[index];
-		if (strtoul(str[++index], nullptr, 10) != 0)
-			drops["Rate"] = strtoul(str[index], nullptr, 10);
-		if (strtoul(str[++index], nullptr, 10) != 0)
-			drops["StealProtected"] = strtoul(str[index], nullptr, 10);
-		if (strcmp(str[++index], "None") != 0)
+		if (!str[++index].empty())
+			drops["Rate"] = std::stoi(str[index]);
+		if (!str[++index].empty())
+			drops["StealProtected"] = std::stoi(str[index]) ? "true" : "false";
+		if (!str[++index].empty() && strcmp(str[index].c_str(), "None") != 0)
 			drops["RandomOptionGroup"] = str[index];
-		if (strtol(str[++index], nullptr, 10) >= 0)
-			drops["Index"] = strtoul(str[index], nullptr, 10);
-		node["Drops"] = drops;
+		if (!str[++index].empty() && std::stoi(str[index]) >= 0)
+			drops["Index"] = std::stoi(str[index]);
+
+		if (!drops.IsNull())
+			node["Drops"][i] = drops;
 	}
 
-	return true;
+	return mob_db.parseBodyNode(node) > 0;
 }
 
 /**
@@ -5112,31 +5114,42 @@ static int mob_read_sqldb(void)
 {
 	const char* mob_db_name[] = {
 		mob_table,
-		mob2_table };
-	int fi;
+		mob2_table
+	};
 
-	for( fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi ) {
-		uint32 count = 0;
-
+	for( uint8 fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi ) {
 		// retrieve all rows from the mob database
-		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", mob_db_name[fi]) ) {
+		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `id`,`name_aegis`,`name_english`,`name_japanese`,`level`,`hp`,`sp`,`base_exp`,`job_exp`,`mvp_exp`,`attack`,`attack2`,`defense`,`magic_defense`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`attack_range`,`skill_range`,`chase_range`,`size`,`race`,"
+			"`racegroup_goblin`,`racegroup_kobold`,`racegroup_orc`,`racegroup_golem`,`racegroup_guardian`,`racegroup_ninja`,`racegroup_gvg`,`racegroup_battlefield`,`racegroup_treasure`,`racegroup_biolab`,`racegroup_manuk`,`racegroup_splendide`,`racegroup_scaraba`,`racegroup_ogh_atk_def`,`racegroup_ogh_hidden`,`racegroup_bio5_swordman_thief`,`racegroup_bio5_acolyte_merchant`,`racegroup_bio5_mage_archer`,`racegroup_bio5_mvp`,`racegroup_clocktower`,`racegroup_thanatos`,`racegroup_faceworm`,`racegroup_hearthunter`,`racegroup_rockridge`,`racegroup_werner_lab`,"
+			"`element`,`element_level`,`walk_speed`,`attack_delay`,`attack_motion`,`damage_motion`,`ai`,`class`,`attribute`,"
+			"`mode_canmove`,`mode_looter`,`mode_aggressive`,`mode_assist`,`mode_castsensoridle`,`mode_norandomwalk`,`mode_nocast`,`mode_canattack`,`mode_castsensorchase`,`mode_changechase`,`mode_angry`,`mode_changetargetmelee`,`mode_changetargetchase`,`mode_targetweak`,`mode_randomtarget`,`mode_ignoremelee`,`mode_ignoremagic`,`mode_ignoreranged`,`mode_mvp`,`mode_ignoremisc`,`mode_knockbackimmune`,`mode_teleportblock`,`mode_fixeditemdrop`,`mode_detector`,`mode_statusimmune`,`mode_skillimmune`,"
+			"`mvpdrop1_item`,`mvpdrop1_rate`,`mvpdrop1_option`,`mvpdrop1_index`,`mvpdrop2_item`,`mvpdrop2_rate`,`mvpdrop2_option`,`mvpdrop2_index`,`mvpdrop3_item`,`mvpdrop3_rate`,`mvpdrop3_option`,`mvpdrop3_index`,"
+			"`drop1_item`,`drop1_rate`,`drop1_nosteal`,`drop1_option`,`drop1_index`,`drop2_item`,`drop2_rate`,`drop2_nosteal`,`drop2_option`,`drop2_index`,`drop3_item`,`drop3_rate`,`drop3_nosteal`,`drop3_option`,`drop3_index`,`drop4_item`,`drop4_rate`,`drop4_nosteal`,`drop4_option`,`drop4_index`,`drop5_item`,`drop5_rate`,`drop5_nosteal`,`drop5_option`,`drop5_index`,`drop6_item`,`drop6_rate`,`drop6_nosteal`,`drop6_option`,`drop6_index`,`drop7_item`,`drop7_rate`,`drop7_nosteal`,`drop7_option`,`drop7_index`,`drop8_item`,`drop8_rate`,`drop8_nosteal`,`drop8_option`,`drop8_index`,`drop9_item`,`drop9_rate`,`drop9_nosteal`,`drop9_option`,`drop9_index`,`drop10_item`,`drop10_rate`,`drop10_nosteal`,`drop10_option`,`drop10_index`"
+			" FROM `%s`", mob_db_name[fi]) ) {
 			Sql_ShowDebug(mmysql_handle);
 			continue;
 		}
 
+		uint32 total_columns = Sql_NumColumns(mmysql_handle);
+		uint64 total_rows = Sql_NumRows(mmysql_handle), rows = 0, count = 0;
+
 		// process rows one by one
 		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {
-			char dummy[1024] = "";
-			char *str[31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP];
-			uint16 total_columns = 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP;
+			ShowStatus("Loading [%" PRIu64 "/%" PRIu64 "] rows from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++rows, total_rows, mob_db_name[fi]);
 
-			for (uint16 i = 0; i < total_columns; i++) {
-				Sql_GetData(mmysql_handle, i, &str[i], nullptr);
-				if (str[i] == nullptr)
-					str[i] = dummy; // get rid of NULL columns
+			std::vector<std::string> data = {};
+
+			for (uint32 i = 0; i < total_columns; i++) {
+				char *str;
+
+				Sql_GetData(mmysql_handle, i, &str, nullptr);
+				if (str == nullptr)
+					data.push_back("");
+				else
+					data.push_back(str);
 			}
 
-			if (!mob_read_sqldb_sub(str))
+			if (!mob_read_sqldb_sub(data))
 				continue;
 
 			count++;
@@ -5145,7 +5158,7 @@ static int mob_read_sqldb(void)
 		// free the query result
 		Sql_FreeResult(mmysql_handle);
 
-		ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_db_name[fi]);
+		ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_db_name[fi]);
 	}
 	return 0;
 }
