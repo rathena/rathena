@@ -16221,6 +16221,41 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bBaseAtk,4*.@r; bonus bLongAtkRate,10; if (.@r >= 9) bonus2 bSkillAtk,"SR_KNUCKLEARROW",40; if (.@r >= 11) bonus bDelayrate,-7;
+  - Id: 1867
+    AegisName: aegis_1867
+    Name: Safety Knuckle
+    Type: Weapon
+    SubType: Knuckle
+    Weight: 1800
+    Attack: 210
+    Range: 1
+    Slots: 2
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,10;
+      bonus2 bSkillAtk,"SR_KNUCKLEARROW",10;
+      if (.@r>=7) {
+         bonus bAspdRate,15;
+         bonus bBaseAtk,40;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SR_KNUCKLEARROW",15;
+         autobonus "{ bonus2 bAddSize,Size_All,15; }",1,10000,BF_WEAPON;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-20;
+      }
   - Id: 1900
     AegisName: Violin_of_Vicious_Mind
     Name: Violin of Vicious Mind
@@ -54967,6 +55002,39 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bLongAtkRate,2*(.@r/3); bonus bBaseAtk,10*(.@r/2); if (.@r >= 7) { bonus2 bSkillAtk,"KO_HUUMARANKA",30; if (.@r >= 9) { bonus2 bSkillCooldown,"KO_HUUMARANKA",-1000; if (.@r >= 11) { bonus2 bAddEle,Ele_Fire,15; bonus2 bAddEle,Ele_Dark,15; bonus2 bAddRace,RC_Undead,30; bonus2 bAddRace,RC_Demon,30; } } }
+  - Id: 13346
+    AegisName: aegis_13346
+    Name: Grinder Huuma Shuriken
+    Type: Weapon
+    SubType: Huuma
+    Weight: 1800
+    Attack: 280
+    Range: 1
+    Slots: 2
+    Jobs:
+      Ninja: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,15;
+      bonus bUnbreakableWeapon;
+      bonus2 bSkillAtk,"KO_HUUMARANKA",15;
+      if (.@r>=7) {
+         bonus bVariableCastrate,-15;
+         bonus bBaseAtk,60;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KO_HUUMARANKA",20;
+         autobonus "{ bonus2 bAddSize,Size_All,20; }",1,10000,BF_WEAPON;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-20;
+         bonus2 bSkillCooldown,"KO_HUUMARANKA",-1000;
+      }
   - Id: 13400
     AegisName: Cutlas_
     Name: Cutlus
@@ -59853,6 +59921,282 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bHealPower,5; bonus bDelayrate,-10; bonus bMaxHPrate,5; if (.@r>=7) { bonus bMaxHPrate,5; bonus bHealPower,5; } if (.@r>=8) { bonus bMaxHPrate,5; bonus bHealPower,10; bonus bUseSPrate,-10; bonus2 bResEff,Eff_Sleep,10000; } if (.@r>=9) { bonus bMaxHPrate,5; bonus bHealPower,10; }
+  - Id: 15391
+    AegisName: aegis_15391
+    Name: Red Dragon Plate
+    Type: Armor
+    Weight: 1200
+    Defense: 110
+    Slots: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,15;
+      bonus bMaxSPrate,10;
+      bonus bStr,12;
+      bonus2 bAddClass,Class_All,2*(.@r/2);
+      bonus2 bAddRace,RC_Dragon,7*(.@r/3);
+      if (.@r>=11) {
+         bonus bFixedCast,-200;
+         bonus2 bAddSize,Size_Medium,10;
+         bonus2 bAddSize,Size_Large,10;
+      }
+  - Id: 15392
+    AegisName: aegis_15392
+    Name: Green Dragon Plate
+    Type: Armor
+    Weight: 1200
+    Defense: 110
+    Slots: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      bonus bAgi,12;
+      bonus bLongAtkRate,2*(.@r/2);
+      bonus2 bAddRace,RC_Dragon,7*(.@r/3);
+      if (.@r>=11) {
+         bonus bFixedCast,-200;
+         bonus2 bAddSize,Size_Medium,10;
+         bonus2 bAddSize,Size_Large,10;
+      }
+  - Id: 15393
+    AegisName: aegis_15393
+    Name: Gold Dragon Plate
+    Type: Armor
+    Weight: 1200
+    Defense: 110
+    Slots: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,20;
+      bonus bMaxSPrate,5;
+      bonus bVit,12;
+      bonus bAspdRate,3*(.@r/2);
+      bonus bVariableCastrate,-3*(.@r/2);
+      bonus2 bAddRace,RC_Dragon,7*(.@r/3);
+      bonus2 bMagicAddRace,RC_Dragon,7*(.@r/3);
+      if (.@r>=11) {
+         bonus bFixedCast,-200;
+         bonus2 bAddSize,Size_Medium,6;
+         bonus2 bMagicAddSize,Size_Medium,6;
+         bonus2 bAddSize,Size_Large,6;
+         bonus2 bMagicAddSize,Size_Large,6;
+      }
+  - Id: 15394
+    AegisName: aegis_15394
+    Name: Purple Dragon Plate
+    Type: Armor
+    Weight: 1200
+    Defense: 110
+    Slots: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,15;
+      bonus bMaxSPrate,10;
+      bonus bDex,12;
+      bonus bAspdRate,4*(.@r/2);
+      bonus bVariableCastrate,-4*(.@r/2);
+      bonus2 bAddRace,RC_Dragon,8*(.@r/3);
+      bonus2 bMagicAddRace,RC_Dragon,8*(.@r/3);
+      if (.@r>=11) {
+         bonus bFixedCast,-200;
+         bonus2 bAddSize,Size_Medium,8;
+         bonus2 bMagicAddSize,Size_Medium,8;
+         bonus2 bAddSize,Size_Large,8;
+         bonus2 bMagicAddSize,Size_Large,8;
+      }
+  - Id: 15395
+    AegisName: aegis_15395
+    Name: Blue Dragon Plate
+    Type: Armor
+    Weight: 1200
+    Defense: 110
+    Slots: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,20;
+      bonus bInt,12;
+      bonus bMatkRate,2*(.@r/2);
+      bonus bHealPower,4*(.@r/2);
+      bonus2 bMagicAddRace,RC_Dragon,7*(.@r/3);
+      if (.@r>=11) {
+         bonus bFixedCast,-200;
+         bonus2 bMagicAddSize,Size_Medium,10;
+         bonus2 bMagicAddSize,Size_Large,10;
+      }
+  - Id: 15396
+    AegisName: aegis_15396
+    Name: Silver Dragon Plate
+    Type: Armor
+    Weight: 1200
+    Defense: 110
+    Slots: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,15;
+      bonus bMaxSPrate,15;
+      bonus bLuk,12;
+      bonus bCritAtkRate,4*(.@r/2);
+      bonus bCritical,2*(.@r/2);
+      bonus2 bAddRace,RC_Dragon,7*(.@r/3);
+      if (.@r>=11) {
+         bonus bFixedCast,-200;
+         bonus2 bAddSize,Size_Medium,10;
+         bonus2 bAddSize,Size_Large,10;
+      }
+  - Id: 15397
+    AegisName: aegis_15397
+    Name: STR Soutane
+    Type: Armor
+    Weight: 800
+    Defense: 100
+    Slots: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      bonus bAspdRate,10;
+      bonus2 bAddClass,Class_All,3*(.@r/2);
+      bonus bStr,5*(.@r/3);
+      bonus2 bAddRace,RC_Angel,8*(.@r/4);
+      bonus2 bAddRace,RC_Demon,8*(.@r/4);
+  - Id: 15398
+    AegisName: aegis_15398
+    Name: AGI Soutane
+    Type: Armor
+    Weight: 800
+    Defense: 100
+    Slots: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      bonus bAspdRate,10;
+      bonus bLongAtkRate,3*(.@r/2);
+      bonus bAgi,5*(.@r/3);
+      bonus2 bAddRace,RC_Angel,8*(.@r/4);
+      bonus2 bAddRace,RC_Demon,8*(.@r/4);
+  - Id: 15399
+    AegisName: aegis_15399
+    Name: VIT Soutane
+    Type: Armor
+    Weight: 800
+    Defense: 100
+    Slots: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,15;
+      bonus bMaxSPrate,5;
+      bonus bAspdRate,7;
+      bonus bVariableCastrate,-7;
+      bonus bMaxHPrate,2*(.@r/2);
+      bonus bVit,5*(.@r/3);
+      bonus2 bAddRace,RC_Angel,10*(.@r/4);
+      bonus2 bMagicAddRace,RC_Angel,10*(.@r/4);
+      bonus2 bAddRace,RC_Demon,10*(.@r/4);
+      bonus2 bMagicAddRace,RC_Demon,10*(.@r/4);
+  - Id: 15400
+    AegisName: aegis_15400
+    Name: DEX Soutane
+    Type: Armor
+    Weight: 800
+    Defense: 100
+    Slots: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      bonus bAspdRate,10;
+      bonus bVariableCastrate,-10;
+      bonus bMatkRate,(.@r/2);
+      bonus2 bAddClass,Class_All,(.@r/2);
+      bonus bDex,5*(.@r/3);
+      bonus2 bAddRace,RC_Angel,6*(.@r/4);
+      bonus2 bMagicAddRace,RC_Angel,6*(.@r/4);
+      bonus2 bAddRace,RC_Demon,6*(.@r/4);
+      bonus2 bMagicAddRace,RC_Demon,6*(.@r/4);
+  - Id: 15401
+    AegisName: aegis_15401
+    Name: INT Soutane
+    Type: Armor
+    Weight: 800
+    Defense: 100
+    Slots: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,15;
+      bonus bVariableCastrate,-10;
+      bonus bMatkRate,3*(.@r/2);
+      bonus bInt,5*(.@r/3);
+      bonus2 bMagicAddRace,RC_Angel,8*(.@r/4);
+      bonus2 bMagicAddRace,RC_Demon,8*(.@r/4);
+  - Id: 15402
+    AegisName: aegis_15402
+    Name: LUK Soutane
+    Type: Armor
+    Weight: 800
+    Defense: 100
+    Slots: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      bonus bAspdRate,10;
+      bonus bCritAtkRate,4*(.@r/2);
+      bonus bCritical,3*(.@r/2);
+      bonus bLuk,5*(.@r/3);
+      bonus2 bAddRace,RC_Angel,8*(.@r/4);
+      bonus2 bAddRace,RC_Demon,8*(.@r/4);
   - Id: 15405
     AegisName: Fafnir_Scale
     Name: Fafnir Scale
@@ -61365,6 +61709,44 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bUnbreakableWeapon; bonus bBaseAtk,4*.@r; bonus bVariableCastrate,-10; if (.@r>=9) { bonus2 bSkillAtk,"MO_FINGEROFFENSIVE",50; bonus2 bSkillAtk,"MO_INVESTIGATE",50; } if (.@r>=11) bonus2 bAddClass,Class_All,10;
+  - Id: 16099
+    AegisName: aegis_16099
+    Name: Rubber Hammer
+    Type: Weapon
+    SubType: Mace
+    Weight: 1900
+    Attack: 160
+    Range: 1
+    Slots: 2
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,180;
+      bonus bUnbreakableWeapon;
+      bonus bMatkRate,7;
+      bonus bHealPower,15;
+      bonus2 bSkillAtk,"AB_ADORAMUS",10;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Holy,7;
+         bonus bVariableCastrate,-10;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"AB_ADORAMUS",15;
+         autobonus "{ bonus2 bMagicAddSize,Size_All,15; }",1,5000,BF_MAGIC;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-20;
+      }
   - Id: 18100
     AegisName: Shooting_Star_C
     Name: Shooting Star
@@ -62466,6 +62848,41 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bLongAtkRate,10+.@r; if (.@r>=9) bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",30; if (.@r>=11) bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
+  - Id: 18190
+    AegisName: aegis_18190
+    Name: Bolt Shooter
+    Type: Weapon
+    SubType: Bow
+    Weight: 1700
+    Attack: 210
+    Range: 5
+    Slots: 2
+    Jobs:
+      Hunter: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,10;
+      bonus2 bSkillAtk,"RA_AIMEDBOLT",10;
+      if (.@r>=7) {
+         bonus bVariableCastrate,-10;
+         bonus bBaseAtk,60;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"RA_AIMEDBOLT",15;
+         autobonus "{ bonus2 bAddSize,Size_All,20; }",1,10000,BF_WEAPON;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-20;
+      }
   - Id: 18500
     AegisName: Cheer_Scarf6
     Name: Cheer Scarf6
@@ -80550,6 +80967,54 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bMaxHP,(300+(100*(.@r/2))); bonus bMaxHPRate,(2*(.@r/3)); if (.@r >= 7) { bonus2 bAddClass,Class_All,7; } if (.@r >= 9) { bonus bVariableCastrate,-10; }
+  - Id: 20946
+    AegisName: aegis_20946
+    Name: Dragon Scale Hood
+    Type: Armor
+    Weight: 500
+    Defense: 23
+    Slots: 1
+    Locations:
+      Garment: true
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,2;
+      bonus bDef,20;
+      bonus bHealPower2,15;
+      if (.@r>=7) {
+         bonus2 bSubRace,RC_Dragon,2;
+      }
+      if (.@r>=9) {
+         autobonus2 "{ bonus2 bHPRegenRate,2000,1000; }",1,3000,BF_MAGIC|BF_WEAPON;
+      }
+      if (.@r>=11) {
+         bonus2 bSubRace,RC_Dragon,3;
+      }
+  - Id: 20947
+    AegisName: aegis_20947
+    Name: Clergy's Manteau
+    Type: Armor
+    Weight: 450
+    Defense: 40
+    Slots: 1
+    Locations:
+      Garment: true
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxSPrate,5;
+      bonus bMdef,10;
+      bonus bVariableCastrate,-10;
+      bonus2 bMagicAddRace,RC_Angel,(.@r/2);
+      bonus2 bMagicAddRace,RC_Demon,(.@r/2);
+      bonus2 bSubRace,RC_Angel,(.@r/3);
+      bonus2 bSubRace,RC_Demon,(.@r/3);
+      if (.@r>=7) {
+         bonus bVariableCastrate,-10;
+      }
   - Id: 20948
     AegisName: Illusion_Morpheus's_Shawl
     Name: Illusion Morpheus's Shawl
@@ -81187,6 +81652,41 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bLongAtkRate,.@r; bonus2 bAddClass,Class_All,5; if (.@r>=9) { bonus2 bSkillAtk,"LK_SPIRALPIERCE",30; bonus2 bSkillAtk,"RK_SONICWAVE",30; } if (.@r>=11) { bonus2 bSkillCooldown,"RK_SONICWAVE",-1500; }
+  - Id: 21054
+    AegisName: aegis_21054
+    Name: Claw Sword
+    Type: Weapon
+    SubType: 2hSword
+    Weight: 3500
+    Attack: 300
+    Range: 1
+    Slots: 2
+    Jobs:
+      Knight: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,5;
+      bonus2 bAddClass,Class_All,15;
+      if (.@r>=7) {
+         bonus bCritAtkRate,25;
+         bonus bAspdRate,10;
+      }
+      if (.@r>=9) {
+         autobonus "{ bonus2 bAddSize,Size_All,20; }",1,5000,BF_WEAPON;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-20;
+         bonus bCritical,7;
+      }
   - Id: 21058
     AegisName: Up_Dragonic_Slayer
     Name: Patent Dragonic Slayer
@@ -82846,6 +83346,54 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bMdef,10; bonus bMaxHPrate,3; bonus bMaxSPrate,3; skill "AL_INCAGI",1; bonus2 bSkillAtk,"LG_BANISHINGPOINT",10*getskilllv("LG_CANNONSPEAR"); bonus2 bAddClass,Class_All,4*getskilllv("CR_DEVOTION"); if (getskilllv("LG_INSPIRATION")>=5) bonus2 bSkillCooldown,"LG_SHIELDSPELL",-2000; bonus2 bIgnoreDefClassRate,Class_All,20*getskilllv("LG_PINPOINTATTACK"); if (.@r>=5) { bonus bMaxSPrate,7; bonus bMaxHPrate,7; bonus bLongAtkRate,5; } if (.@r>=7) { bonus bMaxSPrate,10; bonus bMaxHPrate,10; bonus bLongAtkRate,5; }
+  - Id: 22208
+    AegisName: aegis_22208
+    Name: Dragon Scale Boots
+    Type: Armor
+    Weight: 600
+    Defense: 35
+    Slots: 1
+    Locations:
+      Shoes: true
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxSP,500;
+      bonus bAspdRate,7;
+      bonus bVariableCastrate,-7;
+      if (.@r>=7) {
+         bonus2 bSubRace,RC_Dragon,2;
+      }
+      if (.@r>=9) {
+         autobonus2 "{ bonus2 bSPRegenRate,500,1000; }",1,3000,BF_MAGIC|BF_WEAPON;
+      }
+      if (.@r>=11) {
+         bonus2 bSubRace,RC_Dragon,3;
+      }
+  - Id: 22209
+    AegisName: aegis_22209
+    Name: Clergy's Boots
+    Type: Armor
+    Weight: 400
+    Defense: 35
+    Slots: 1
+    Locations:
+      Shoes: true
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,5;
+      bonus bDef,30;
+      bonus bAspdRate,10;
+      bonus2 bAddRace,RC_Angel,(.@r/2);
+      bonus2 bAddRace,RC_Demon,(.@r/2);
+      bonus2 bSubRace,RC_Angel,(.@r/3);
+      bonus2 bSubRace,RC_Demon,(.@r/3);
+      if (.@r>=7) {
+         bonus bAspdRate,10;
+      }
   - Id: 22210
     AegisName: Fluffy_Fish_Shoes
     Name: Fluffy Fish Shoes
@@ -87986,6 +88534,45 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bMatk,4*.@r; bonus bUnbreakableWeapon; bonus2 bMagicAtkEle,Ele_Holy,5; if (.@r >= 9) { bonus2 bSkillAtk,"PR_MAGNUS",(.@r>=11) ? 50 : 30; bonus2 bSkillAtk,"AB_JUDEX",30; }
+  - Id: 26162
+    AegisName: aegis_26162
+    Name: Welding Wand
+    Type: Weapon
+    SubType: Staff
+    Weight: 1200
+    Attack: 160
+    Range: 1
+    Slots: 2
+    Jobs:
+      Mage: true
+      Sage: true
+      SoulLinker: true
+      Wizard: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,200;
+      bonus bUnbreakableWeapon;
+      bonus2 bMagicAtkEle,Ele_Neutral,7;
+      bonus2 bMagicAtkEle,Ele_Fire,7;
+      bonus2 bMagicAtkEle,Ele_Water,7;
+      if (.@r>=7) {
+         bonus bVariableCastrate,-10;
+         bonus bMatk,40;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Neutral,8;
+         bonus2 bMagicAtkEle,Ele_Fire,8;
+         bonus2 bMagicAtkEle,Ele_Water,8;
+         autobonus "{ bonus2 bMagicAddSize,Size_All,15; }",1,10000,BF_MAGIC;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-20;
+      }
   - Id: 26200
     AegisName: Hippie_Rope
     Name: Hippie Rope
@@ -88056,6 +88643,43 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bVariableCastrate,-10; bonus bLongAtkRate,.@r; if (.@r>=9) bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1000; if (.@r>=11) bonus2 bSkillUseSPrate,"WM_SEVERE_RAINSTORM",20;
+  - Id: 26215
+    AegisName: aegis_26215
+    Name: Safety Whip
+    Type: Weapon
+    SubType: Whip
+    Weight: 1400
+    Attack: 200
+    Range: 2
+    Slots: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,10;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10;
+      if (.@r>=7) {
+         bonus bVariableCastrate,-10;
+         bonus bBaseAtk,40;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+         autobonus "{ bonus2 bAddSize,Size_All,15; }",1,10000,BF_WEAPON;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-20;
+         bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
+      }
   - Id: 28000
     AegisName: Thanos_Katar
     Name: Thanos Katar
@@ -88371,6 +88995,41 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bCritAtkRate,5; bonus bBaseAtk,4*.@r; if (.@r>=9) bonus2 bAddSize,Size_All,15; if (.@r>=11) { bonus bUnbreakableWeapon; bonus2 bAddClass,Class_All,7; }
+  - Id: 28045
+    AegisName: aegis_28045
+    Name: Bolt Crusher
+    Type: Weapon
+    SubType: Katar
+    Weight: 2000
+    Attack: 300
+    Range: 1
+    Slots: 2
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,10;
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",10;
+      if (.@r>=7) {
+         bonus bAspdRate,10;
+         bonus bBaseAtk,60;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
+         autobonus "{ bonus2 bAddSize,Size_All,20; }",1,10000,BF_WEAPON;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-20;
+      }
   - Id: 28100
     AegisName: Thanos_Axe
     Name: Thanos Axe
@@ -88682,6 +89341,42 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bBaseAtk,4*.@r; bonus bUnbreakableWeapon; bonus2 bSubSize,Size_Small,10; bonus2 bSubSize,Size_Medium,10; if (.@r>=9) { bonus2 bSkillCooldown,"NC_AXETORNADO",-1000; bonus2 bSkillCooldown,"NC_MAGMA_ERUPTION",-1000; } if (.@r>=11) bonus2 bSkillAtk,"NC_AXETORNADO",15;
+  - Id: 28140
+    AegisName: aegis_28140
+    Name: Saw Axe
+    Type: Weapon
+    SubType: 1hAxe
+    Weight: 5000
+    Attack: 350
+    Range: 1
+    Slots: 2
+    Jobs:
+      Blacksmith: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,10;
+      bonus bUnbreakableWeapon;
+      bonus2 bSkillAtk,"NC_ARMSCANNON",10;
+      if (.@r>=7) {
+         bonus bVariableCastrate,-10;
+         bonus bBaseAtk,60;
+      }
+      if (.@r>=9) {
+         bonus bLongAtkRate,10;
+         autobonus "{ bonus2 bAddSize,Size_All,15; }",1,5000,BF_WEAPON;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-20;
+      }
   - Id: 28200
     AegisName: END_OF_HORIZO
     Name: End Of The Horizon
@@ -91335,6 +92030,42 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bMatk,4*.@r; if (.@r>=9) .@val = 30; if (.@r>=11) { bonus2 bSkillAtk,"WZ_EARTHSPIKE",50; bonus2 bSkillAtk,"WZ_HEAVENDRIVE",50; } bonus2 bSkillAtk,"MG_FIREBOLT",20+.@val; bonus2 bSkillAtk,"MG_COLDBOLT",20+.@val; bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",20+.@val;
+  - Id: 28635
+    AegisName: aegis_28635
+    Name: Safety Manual
+    Type: Weapon
+    SubType: Book
+    Weight: 700
+    Attack: 200
+    Range: 1
+    Slots: 2
+    Jobs:
+      StarGladiator: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,3;
+      bonus2 bAddClass,Class_All,10;
+      if (.@r>=7) {
+         bonus bAspdRate,10;
+         bonus bBaseAtk,40;
+      }
+      if (.@r>=9) {
+         autobonus "{ bonus2 bAddSize,Size_All,15; }",1,10000,BF_WEAPON;
+         bonus bCritAtkRate,15;
+      }
+      if (.@r>=11) {
+         bonus bCritAtkRate,15;
+         bonus bDelayrate,-20;
+      }
   - Id: 28700
     AegisName: Ru_Gold_Dagger
     Name: Ru Gold Dagger
@@ -91816,6 +92547,79 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bMatk,4*.@r; bonus bMatkRate,5; if (.@r>=9) { bonus2 bMagicAtkEle,Ele_Fire,15; bonus2 bMagicAtkEle,Ele_Wind,15; bonus2 bMagicAtkEle,Ele_Water,15; bonus2 bMagicAtkEle,Ele_Earth,15; } if (.@r>=11) autobonus "{ bonus bMatk,100; bonus2 bMagicAddSize,Size_All,30; }",50,10000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; /* Unknow Rates and Specialeffect */
+  - Id: 28771
+    AegisName: aegis_28771
+    Name: Metal Detector Mk47
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1000
+    Attack: 200
+    Range: 1
+    Slots: 2
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,10;
+      bonus2 bSkillAtk,"GC_CROSSIMPACT",10;
+      if (.@r>=7) {
+         bonus bAspdRate,10;
+         bonus bBaseAtk,40;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"GC_CROSSIMPACT",15;
+         autobonus "{ bonus2 bAddSize,Size_All,15; }",1,10000,BF_WEAPON;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-20;
+      }
+  - Id: 28772
+    AegisName: aegis_28772
+    Name: Jewel Detector Mk47
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1000
+    Attack: 190
+    MagicAttack: 180
+    Range: 1
+    Slots: 2
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,10;
+      bonus2 bMagicAtkEle,Ele_Neutral,7;
+      bonus2 bMagicAtkEle,Ele_Fire,7;
+      if (.@r>=7) {
+         bonus bAspdRate,10;
+         bonus bMatk,40;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Neutral,8;
+         bonus2 bMagicAtkEle,Ele_Fire,8;
+         autobonus "{ bonus2 bMagicAddSize,Size_All,15; }",1,10000,BF_WEAPON;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-20;
+      }
   - Id: 28900
     AegisName: Guardsmen's_Shield
     Name: Guardsmen's Shield
@@ -97488,6 +98292,41 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bDelayrate,-.@r; bonus2 bAddClass,Class_All,5; if (.@r>=9) bonus2 bSkillAtk,"LG_CANNONSPEAR",20; if (.@r>=11) bonus2 bSkillAtk,"LG_OVERBRAND",20;
+  - Id: 32026
+    AegisName: aegis_32026
+    Name: Blocking Spear
+    Type: Weapon
+    SubType: 1hSpear
+    Weight: 3000
+    Attack: 210
+    Range: 3
+    Slots: 2
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,10;
+      bonus2 bSkillAtk,"LG_BANISHINGPOINT",10;
+      if (.@r>=7) {
+         bonus bAspdRate,10;
+         bonus bBaseAtk,40;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"LG_BANISHINGPOINT",15;
+         autobonus "{ bonus2 bAddSize,Size_All,15; }",1,10000,BF_WEAPON;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-20;
+      }
   - Id: 32107
     AegisName: Black_Circle
     Name: Black Circle
@@ -97535,6 +98374,43 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bVariableCastrate,-10; bonus bLongAtkRate,.@r; if (.@r>=9) bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1000; if (.@r>=11) bonus2 bSkillUseSPrate,"WM_SEVERE_RAINSTORM",20;
+  - Id: 32110
+    AegisName: aegis_32110
+    Name: Safety Lute
+    Type: Weapon
+    SubType: Musical
+    Weight: 1400
+    Attack: 200
+    Range: 1
+    Slots: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,10;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10;
+      if (.@r>=7) {
+         bonus bVariableCastrate,-10;
+         bonus bBaseAtk,40;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+         autobonus "{ bonus2 bAddSize,Size_All,15; }",1,10000,BF_WEAPON;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-20;
+         bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
+      }
   - Id: 32203
     AegisName: Accelerator_Chip
     Name: Accelerator Chip
@@ -97780,6 +98656,56 @@ Body:
     EquipLevelMin: 100
     Script: |
       bonus bMdef,10; bonus2 bSubRace,RC_Player_Human,3;
+  - Id: 32248
+    AegisName: aegis_32248
+    Name: Safety Pendant R
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 170
+    Script: |
+      bonus bAspdRate,5;
+      bonus bAllStats,5;
+  - Id: 32249
+    AegisName: aegis_32249
+    Name: Safety Pendant B
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 170
+    Script: |
+      bonus bAllStats,5;
+      bonus bVariableCastrate,-5;
+  - Id: 32250
+    AegisName: aegis_32250
+    Name: Safety Epaulet R
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    EquipLevelMin: 170
+    Script: |
+      bonus2 bAddClass,Class_All,5;
+  - Id: 32251
+    AegisName: aegis_32251
+    Name: Safety Epaulet B
+    Type: Armor
+    Weight: 100
+    Defense: 10
+    Slots: 1
+    Locations:
+      Left_Accessory: true
+    EquipLevelMin: 170
+    Script: |
+      bonus bMatkRate,5;
   - Id: 32258
     AegisName: Ring_of_Jupiter
     Name: Ring of Jupiter
@@ -97861,6 +98787,38 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bBaseAtk,10*(.@r/2); bonus bAspdRate,3*(.@r/3); if (.@r >= 7) { bonus bAspd,1; bonus2 bAddClass,Class_All,5; if (.@r >= 9) { bonus bCritAtkRate,20; if (.@r >= 11) { autobonus3 "{ bonus bCritical,20; bonus bLongAtkRate,15; }",1000,60000,"RL_HEAT_BARREL"; } } }
+  - Id: 32303
+    AegisName: aegis_32303
+    Name: Bolt Revolver
+    Type: Weapon
+    SubType: Revolver
+    Weight: 1800
+    Attack: 200
+    Range: 7
+    Slots: 2
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,15;
+      bonus2 bSkillAtk,"RL_FIREDANCE",15;
+      if (.@r>=7) {
+         bonus bAspdRate,10;
+         bonus bBaseAtk,60;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"RL_FIREDANCE",20;
+         autobonus "{ bonus2 bAddSize,Size_All,20; }",1,10000,BF_WEAPON;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-20;
+      }
   - Id: 32350
     AegisName: Farthezan
     Name: Farthezan
@@ -97908,6 +98866,41 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus2 bSkillCooldown,"GN_SPORE_EXPLOSION",-1000; bonus bBaseAtk,4*.@r; if (.@r>=11) .@val = 50; else if (.@r>=9) .@val = 30; bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",.@val;
+  - Id: 32352
+    AegisName: aegis_32352
+    Name: Safety Saber
+    Type: Weapon
+    SubType: 1hSword
+    Weight: 2500
+    Attack: 200
+    Range: 1
+    Slots: 2
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,10;
+      bonus2 bSkillAtk,"GN_CARTCANNON",10;
+      if (.@r>=7) {
+         bonus bVariableCastrate,-10;
+         bonus bBaseAtk,40;
+      }
+      if (.@r>=9) {
+         bonus bLongAtkRate,7;
+         bonus2 bSkillAtk,"GN_CARTCANNON",15;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-20;
+      }
   - Id: 450018
     AegisName: Noblesse_Breath_Armor
     Name: Noblesse Breath Armor
@@ -101430,6 +102423,46 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bBaseAtk,.@r/2*10; bonus bMatk,.@r/2*10; bonus2 bSkillAtk,"AB_DUPLELIGHT",25*(.@r/3); bonus2 bSkillAtk,"AB_JUDEX",25*(.@r/3); if (.@r>=7){ bonus bAspdRate,10; bonus2 bMagicAtkEle,Ele_Holy,15; } if (.@r>=9){ bonus2 bSkillAtk,"AB_DUPLELIGHT",30; bonus2 bSkillAtk,"AB_JUDEX",30; } if (.@r>=11){ .@i = getskilllv("AB_JUDEX"); bonus3 bAutoSpell,"AB_JUDEX",(.@i > 5 ? .@i : 5),100; }
+  - Id: 550006
+    AegisName: aegis_550006
+    Name: Safety Foxtail
+    Type: Weapon
+    SubType: Staff
+    Weight: 1500
+    Attack: 300
+    Range: 1
+    Slots: 2
+    Jobs:
+      Summoner: true
+    Classes:
+      Normal: true
+      Upper: true
+      Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,350;
+      bonus bUnbreakableWeapon;
+      bonus bMatkRate,7;
+      bonus2 bAddClass,Class_All,7;
+      bonus2 bSkillAtk,"SU_CN_METEOR",15;
+      bonus2 bSkillAtk,"SU_PICKYPECK",15;
+      if (.@r>=7) {
+         bonus bAspdRate,10;
+         bonus bVariableCastrate,-10;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SU_CN_METEOR",20;
+         bonus2 bSkillAtk,"SU_PICKYPECK",20;
+         autobonus "{ bonus2 bAddSize,Size_All,10; bonus2 bMagicAddSize,Size_All,10; }",1,10000,BF_MAGIC;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-20;
+      }
   - Id: 550007
     AegisName: Freezing_Rod
     Name: Chilling Cane
@@ -102125,3 +103158,4 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bLongAtkRate,3*(.@r/2); bonus bBaseAtk,20*(.@r/3); if (.@r>=7){ bonus2 bSkillAtk,"RL_D_TAIL",15; bonus2 bSkillCooldown,"RL_D_TAIL",-1000; } if (.@r>=9){ bonus2 bSkillAtk,"RL_D_TAIL",20; } if (.@r>=11){ bonus2 bAddEle,Ele_All,15; }
+
