@@ -32004,6 +32004,7 @@ Body:
       Right_Accessory: true
       Left_Accessory: true
     EquipLevelMin: 1
+    EquipLevelMax: 12
     Trade:
       Override: 100
       NoDrop: true
@@ -32027,6 +32028,7 @@ Body:
       Right_Accessory: true
       Left_Accessory: true
     EquipLevelMin: 1
+    EquipLevelMax: 12
     Trade:
       Override: 100
       NoDrop: true
@@ -32050,6 +32052,7 @@ Body:
       Right_Accessory: true
       Left_Accessory: true
     EquipLevelMin: 1
+    EquipLevelMax: 12
     Trade:
       Override: 100
       NoDrop: true
@@ -32073,6 +32076,7 @@ Body:
       Right_Accessory: true
       Left_Accessory: true
     EquipLevelMin: 1
+    EquipLevelMax: 12
     Trade:
       Override: 100
       NoDrop: true
@@ -32096,6 +32100,7 @@ Body:
       Right_Accessory: true
       Left_Accessory: true
     EquipLevelMin: 1
+    EquipLevelMax: 12
     Trade:
       Override: 100
       NoDrop: true
@@ -32119,6 +32124,7 @@ Body:
       Right_Accessory: true
       Left_Accessory: true
     EquipLevelMin: 1
+    EquipLevelMax: 12
     Trade:
       Override: 100
       NoDrop: true
@@ -33107,6 +33113,7 @@ Body:
     Locations:
       Right_Accessory: true
       Left_Accessory: true
+    EquipLevelMax: 120
     Trade:
       Override: 100
       NoDrop: true
@@ -33779,6 +33786,7 @@ Body:
     Locations:
       Right_Accessory: true
       Left_Accessory: true
+    EquipLevelMax: 12
     Trade:
       Override: 100
       NoDrop: true
@@ -33801,6 +33809,7 @@ Body:
     Locations:
       Right_Accessory: true
       Left_Accessory: true
+    EquipLevelMax: 12
     Trade:
       Override: 100
       NoDrop: true
@@ -33823,6 +33832,7 @@ Body:
     Locations:
       Right_Accessory: true
       Left_Accessory: true
+    EquipLevelMax: 12
     Trade:
       Override: 100
       NoDrop: true
@@ -33941,6 +33951,7 @@ Body:
       Right_Accessory: true
       Left_Accessory: true
     EquipLevelMin: 1
+    EquipLevelMax: 100
     Trade:
       Override: 100
       NoDrop: true
@@ -58409,6 +58420,7 @@ Body:
     Locations:
       Armor: true
     EquipLevelMin: 1
+    EquipLevelMax: 100
     Refineable: true
     Trade:
       Override: 100
@@ -79278,6 +79290,7 @@ Body:
     Locations:
       Garment: true
     EquipLevelMin: 1
+    EquipLevelMax: 100
     Refineable: true
     Trade:
       Override: 100
@@ -81583,6 +81596,7 @@ Body:
     Locations:
       Shoes: true
     EquipLevelMin: 1
+    EquipLevelMax: 100
     Refineable: true
     Trade:
       Override: 100
