@@ -19181,17 +19181,6 @@ Body:
     Type: Etc
     Buy: 10
     Weight: 100
-  - Id: 6669
-    AegisName: Jade_Leaf
-    Name: Emerald Leaf
-    Type: Etc
-    Weight: 10
-  - Id: 6697
-    AegisName: Costumes_Exchange_Coupons
-    Name: Costumes Exchange Coupons
-    Type: Etc
-    Buy: 10
-    Weight: 10
   - Id: 6646
     AegisName: Poring_Badge
     Name: Poring Badge
@@ -19296,6 +19285,11 @@ Body:
     Trade:
       Override: 100
       NoDrop: true
+  - Id: 6669
+    AegisName: Jade_Leaf
+    Name: Emerald Leaf
+    Type: Etc
+    Weight: 10
   - Id: 6671
     AegisName: Geffen_Coin_Magic_Tournament
     Name: Geffen Coin Magic Tournament
@@ -19540,6 +19534,12 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 6697
+    AegisName: Costumes_Exchange_Coupons
+    Name: Costumes Exchange Coupons
+    Type: Etc
+    Buy: 10
+    Weight: 10
   - Id: 6698
     AegisName: Wooden_Axe
     Name: Wooden Axe

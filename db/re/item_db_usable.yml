@@ -3198,14 +3198,6 @@ Body:
       BuyingStore: true
     Script: |
       if(strcharinfo(3)=="prt_q") { bonus_script "{ bonus2 bSubSize,Size_All,10; }",600; sc_end SC_SILENCE; sc_end SC_POISON; sc_end SC_CURSE; heal 1000,0; }
-  - Id: 11602
-    AegisName: Catnip_Fruit
-    Name: Catnip Fruit
-    Type: Healing
-    Buy: 15
-    Weight: 1
-    Script: |
-      itemheal rand(10,40),0;
   - Id: 11601
     AegisName: Delicious_Anchovy
     Name: Delicious Anchovy
@@ -3214,6 +3206,14 @@ Body:
     Weight: 30
     Script: |
       itemheal rand(30,46),0;
+  - Id: 11602
+    AegisName: Catnip_Fruit
+    Name: Catnip Fruit
+    Type: Healing
+    Buy: 15
+    Weight: 1
+    Script: |
+      itemheal rand(10,40),0;
   - Id: 11605
     AegisName: Cookies_Bat
     Name: Cookie Bat
@@ -36977,14 +36977,6 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
-  - Id: 16659
-    AegisName: Zodiac_Diadem_Pack
-    Name: Zodiac Diadem Box
-    Type: Usable
-    Buy: 20
-    Weight: 1
-    Script: |
-      getitem callfunc("F_Rand",5545,5549,5569,5581,5589,5599,5663,5677,5740,5745,5512,5514),1;
   - Id: 16600
     AegisName: Spring_Flower_Scr_Tw
     Name: Spring Flower Scr Tw
@@ -37230,6 +37222,14 @@ Body:
       NoAuction: true
     Script: |
       getitem 12578,10;
+  - Id: 16659
+    AegisName: Zodiac_Diadem_Pack
+    Name: Zodiac Diadem Box
+    Type: Usable
+    Buy: 20
+    Weight: 1
+    Script: |
+      getitem callfunc("F_Rand",5545,5549,5569,5581,5589,5599,5663,5677,5740,5745,5512,5514),1;
   - Id: 16664
     AegisName: Leo_Scroll
     Name: Leo Scroll
@@ -40619,6 +40619,15 @@ Body:
       NoAuction: true
     Script: |
       getitem 5766,1;
+  - Id: 17242
+    AegisName: Immortal_Egg
+    Name: Immortal Egg
+    Type: Cash
+    Buy: 10
+    Weight: 10
+    EquipLevelMin: 1
+    Script: |
+      getgroupitem(IG_Immortal_Egg);
   - Id: 17244
     AegisName: Event_Almighty_Box
     Name: Event Almighty Box
@@ -40636,15 +40645,6 @@ Body:
       NoAuction: true
     Script: |
       getitem 12883,10;
-  - Id: 17242
-    AegisName: Immortal_Egg
-    Name: Immortal Egg
-    Type: Cash
-    Buy: 10
-    Weight: 10
-    EquipLevelMin: 1
-    Script: |
-      getgroupitem(IG_Immortal_Egg);
   - Id: 17245
     AegisName: Idn_Independ_Scroll
     Name: Idn Independ Scroll
@@ -41855,23 +41855,6 @@ Body:
       NoAuction: true
     Script: |
       getitem 12622,1;
-  - Id: 17443
-    AegisName: Reinforcement_Buckler_Box
-    Name: Reinforcement Buckler Box
-    Type: Cash
-    Buy: 10
-    Weight: 10
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      getitem 2150,1;
   - Id: 17442
     AegisName: Emperium_G_Box
     Name: Emperium G Box
@@ -41889,6 +41872,23 @@ Body:
       NoAuction: true
     Script: |
       getitem 6444,1;
+  - Id: 17443
+    AegisName: Reinforcement_Buckler_Box
+    Name: Reinforcement Buckler Box
+    Type: Cash
+    Buy: 10
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getitem 2150,1;
   - Id: 17447
     AegisName: Blessing_Midgard_Scroll
     Name: Blessing Midgard Lucky Egg
@@ -43154,6 +43154,14 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_Blessing_Scarlet_Scroll);
+  - Id: 22507
+    AegisName: ShabbyOldScroll
+    Name: Old Scroll
+    Type: Usable
+    Buy: 10
+    Weight: 10
+    Script: |
+      callfunc "F_22507";
   - Id: 22508
     AegisName: Para_Team_Mark_
     Name: Eden Group Mark
@@ -43174,14 +43182,6 @@ Body:
       NoAuction: true
     Script: |
       warp "moc_para01",171,115;
-  - Id: 22507
-    AegisName: ShabbyOldScroll
-    Name: Old Scroll
-    Type: Usable
-    Buy: 10
-    Weight: 10
-    Script: |
-      callfunc "F_22507";
   - Id: 22510
     AegisName: King_Wolf_Scroll
     Name: King Wolf Scroll
@@ -44185,14 +44185,6 @@ Body:
     Weight: 200
     Script: |
       percentheal 20,0;
-  - Id: 22659
-    AegisName: Pig_Steamed_Ribs
-    Name: Pig Steamed Ribs
-    Type: Healing
-    Buy: 20
-    Weight: 100
-    Script: |
-      bonus_script "{ bonus bAspdRate,5; bonus bUseSPrate,-2; }",180;
   - Id: 22658
     AegisName: Cow_Steamed_Ribs
     Name: Cow Steamed Ribs
@@ -44201,6 +44193,14 @@ Body:
     Weight: 100
     Script: |
       bonus_script "{ bonus bVariableCastrate,5; bonus bUseSPrate,-3; }",180;
+  - Id: 22659
+    AegisName: Pig_Steamed_Ribs
+    Name: Pig Steamed Ribs
+    Type: Healing
+    Buy: 20
+    Weight: 100
+    Script: |
+      bonus_script "{ bonus bAspdRate,5; bonus bUseSPrate,-2; }",180;
   - Id: 22669
     AegisName: HALLOWEEN_G_BOX
     Name: Halloween Box
@@ -44286,13 +44286,6 @@ Body:
       NoAuction: true
     Script: |
       /*1 Potion Box*/
-  - Id: 22676
-    AegisName: Hangul_Day_Event_Box
-    Name: Hangul Day Event Box
-    Type: Usable
-    Buy: 20
-    Script: |
-      getitem 22675,10; getitem 607,9;
   - Id: 22675
     AegisName: Mysterious_Scroll
     Name: Mysterious Scroll
@@ -44301,6 +44294,13 @@ Body:
     Weight: 10
     Script: |
       sc_start SC_INTFOOD,3600000,30;
+  - Id: 22676
+    AegisName: Hangul_Day_Event_Box
+    Name: Hangul Day Event Box
+    Type: Usable
+    Buy: 20
+    Script: |
+      getitem 22675,10; getitem 607,9;
   - Id: 22679
     AegisName: Chest_Of_Death
     Name: Death's Chest
@@ -44991,21 +44991,6 @@ Body:
       NoAuction: true
     Script: |
       getitem 547,1; getitem 12017,10; getitem 678,12; /*No Info*/
-  - Id: 22979
-    AegisName: C_Battle_Gum_2
-    Name: "[Sale] Battle Manual and Bubble Gum"
-    Type: Usable
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      sc_start SC_EXPBOOST,1800000,50; sc_start SC_ITEMBOOST,1800000,100;
   - Id: 22808
     AegisName: Special_Gift_Box
     Name: Special Gift Box
@@ -45806,6 +45791,21 @@ Body:
     EquipLevelMin: 1
     Script: |
       getgroupitem(IG_Enchant_Stone_Box7);
+  - Id: 22979
+    AegisName: C_Battle_Gum_2
+    Name: "[Sale] Battle Manual and Bubble Gum"
+    Type: Usable
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      sc_start SC_EXPBOOST,1800000,50; sc_start SC_ITEMBOOST,1800000,100;
   - Id: 22984
     AegisName: Kahluna_Milk
     Name: Kahluna Milk
@@ -46082,6 +46082,13 @@ Body:
       NoAuction: true
     Script: |
       callfunc "F_CashStore";
+  - Id: 23187
+    AegisName: Sap_Liquid
+    Name: Sap Liquid
+    Type: Usable
+    Buy: 10
+    Script: |
+      pet 1180;
   - Id: 23188
     AegisName: Unprocessed_Parts
     Name: Unprocessed Parts
@@ -46096,13 +46103,6 @@ Body:
     Buy: 10
     Script: |
       pet 1622;
-  - Id: 23187
-    AegisName: Sap_Liquid
-    Name: Sap Liquid
-    Type: Usable
-    Buy: 10
-    Script: |
-      pet 1180;
   - Id: 23191
     AegisName: Varetyr_Spear_Scroll_1_5
     Name: Level 5 Varetyr Spear
