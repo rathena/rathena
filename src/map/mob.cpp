@@ -30,6 +30,7 @@
 #include "guild.hpp"
 #include "homunculus.hpp"
 #include "intif.hpp"
+#include "itemdb.hpp"
 #include "log.hpp"
 #include "map.hpp"
 #include "mercenary.hpp"
@@ -2098,19 +2099,51 @@ static TIMER_FUNC(mob_ai_hard){
 
 /**
  * Set random option for item when dropped from monster
- * @param itm Item data
- * @param mobdrop Drop data
+ * @param item: Item data
+ * @param mobdrop: Drop data
  * @author [Cydh]
  **/
-void mob_setdropitem_option(struct item *itm, struct s_mob_drop *mobdrop) {
-	struct s_random_opt_group *g = NULL;
-	if (!itm || !mobdrop || mobdrop->randomopt_group == RDMOPTG_None)
+void mob_setdropitem_option(item *item, s_mob_drop *mobdrop) {
+	if (!item || !mobdrop)
 		return;
-	if ((g = itemdb_randomopt_group_exists(mobdrop->randomopt_group)) && g->total) {
-		int r = rnd()%g->total;
-		if (&g->entries[r]) {
-			memcpy(&itm->option, &g->entries[r], sizeof(itm->option));
-			return;
+
+	std::shared_ptr<s_random_opt_group> group = random_option_group.find(mobdrop->randomopt_group);
+
+	if (group) {
+		// Apply Must options
+		for (size_t i = 0; i < group->slot.size(); i++) {
+			std::vector<std::shared_ptr<s_random_opt_group_entry>> options = group->slot[static_cast<uint16>(i)];
+			int32 r = 100 * options.size() + rnd() % options.size(), idx = 0; // !TODO: Config the '100' to keep from getting stuck in a loop?
+
+			while (r > 0 && rnd() % 10000 >= options[idx]->chance) {
+				idx = (idx + 1) % options.size();
+				--r;
+			}
+
+			item->option[i].id = options[idx]->id;
+			item->option[i].value = rnd_value(options[idx]->min_value, options[idx]->max_value);
+			item->option[i].param = options[idx]->param;
+		}
+
+		// Apply Random options (if available)
+		if (group->max_random > 0) {
+			std::vector<std::shared_ptr<s_random_opt_group_entry>> options = group->random_option;
+
+			for (size_t i = 0; i < group->max_random; i++) {
+				int32 idx = rnd() % options.size();
+
+				if (rnd() % 10000 < options[idx]->chance) {
+					for (uint8 j = 0; j < MAX_ITEM_RDM_OPT; j++) {
+						if (item->option[j].id > 0)
+							continue;
+
+						item->option[j].id = options[idx]->id;
+						item->option[j].value = rnd_value(options[idx]->min_value, options[idx]->max_value);
+						item->option[j].param = options[idx]->param;
+						break;
+					}
+				}
+			}
 		}
 	}
 }
@@ -2723,7 +2756,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				continue;
 			if ( !(it = itemdb_exists(md->db->dropitem[i].nameid)) )
 				continue;
-			drop_rate = md->db->dropitem[i].p;
+			drop_rate = md->db->dropitem[i].rate;
 			if (drop_rate <= 0) {
 				if (battle_config.drop_rate0item)
 					continue;
@@ -2800,7 +2833,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			}
 			// Announce first, or else ditem will be freed. [Lance]
 			// By popular demand, use base drop rate for autoloot code. [Skotlex]
-			mob_item_drop(md, dlist, ditem, 0, battle_config.autoloot_adjust ? drop_rate : md->db->dropitem[i].p, homkillonly);
+			mob_item_drop(md, dlist, ditem, 0, battle_config.autoloot_adjust ? drop_rate : md->db->dropitem[i].rate, homkillonly);
 		}
 
 		// Ore Discovery [Celest]
@@ -2931,7 +2964,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				if(mdrop[i].nameid == 0 || !(i_data = itemdb_exists(mdrop[i].nameid)))
 					continue;
 
-				temp = mdrop[i].p;
+				temp = mdrop[i].rate;
 				if (temp != 10000) {
 					if(temp <= 0 && !battle_config.drop_rate0item)
 						temp = 1;
@@ -4274,7 +4307,7 @@ static bool mob_parse_dbrow(char** str)
 
 		if( entry.mvpitem[i].nameid ){
 			if( itemdb_search(entry.mvpitem[i].nameid) ){
-				entry.mvpitem[i].p = atoi(str[32+i*2]);
+				entry.mvpitem[i].rate = atoi(str[32+i*2]);
 				continue;
 			}else{
 				ShowWarning( "Monster \"%s\"(id: %d) is dropping an unknown item \"%s\"(MVP-Drop %d)\n", entry.name, mob_id, str[31+i*2], ( i / 2 ) + 1 );
@@ -4283,7 +4316,7 @@ static bool mob_parse_dbrow(char** str)
 
 		// Delete the item
 		entry.mvpitem[i].nameid = 0;
-		entry.mvpitem[i].p = 0;
+		entry.mvpitem[i].rate = 0;
 	}
 
 	for(i = 0; i < MAX_MOB_DROP; i++) {
@@ -4293,7 +4326,7 @@ static bool mob_parse_dbrow(char** str)
 
 		if( entry.dropitem[i].nameid ){
 			if( itemdb_search( entry.dropitem[i].nameid ) ){
-				entry.dropitem[i].p = atoi(str[k+1]);
+				entry.dropitem[i].rate = atoi(str[k+1]);
 				continue;
 			}else{
 				ShowWarning( "Monster \"%s\"(id: %d) is dropping an unknown item \"%s\"(Drop %d)\n", entry.name, mob_id, str[k], ( i / 2 ) + 1 );
@@ -4302,7 +4335,7 @@ static bool mob_parse_dbrow(char** str)
 
 		// Delete the item
 		entry.dropitem[i].nameid = 0;
-		entry.dropitem[i].p = 0;
+		entry.dropitem[i].rate = 0;
 	}
 
 	db = mob_db(mob_id);
@@ -5239,25 +5272,18 @@ static bool mob_readdb_drop(char* str[], int columns, int current) {
 		}
 
 		drop[i].nameid = nameid;
-		drop[i].p = rate;
-		drop[i].steal_protected = (flag) ? 1 : 0;
+		drop[i].rate = rate;
+		drop[i].steal_protected = (flag) ? true : false;
 		drop[i].randomopt_group = 0;
 
 		if (columns > 3) {
-			int64 randomopt_group_tmp = -1;
-			int randomopt_group = -1;
+			uint16 randomopt_group;
 
-			if (!script_get_constant(trim(str[3]), &randomopt_group_tmp)) {
+			if (!random_option_group.option_get_id(trim(str[3]), &randomopt_group)) {
 				ShowError("mob_readdb_drop: Invalid 'randopt_groupid' '%s' for monster '%hu'.\n", str[3], mobid);
 				return false;
 			}
-			randomopt_group = static_cast<int>(randomopt_group_tmp);
-			if (randomopt_group == RDMOPTG_None)
-				return true;
-			if (!itemdb_randomopt_group_exists(randomopt_group)) {
-				ShowError("mob_readdb_drop: 'randopt_groupid' '%s' cannot be found in DB for monster '%hu'.\n", str[3], mobid);
-				return false;
-			}
+
 			drop[i].randomopt_group = randomopt_group;
 		}
 	}
@@ -5293,7 +5319,7 @@ static void mob_drop_ratio_adjust(void){
 
 		for( j = 0; j < MAX_MVP_DROP_TOTAL; j++ ){
 			nameid = mob->mvpitem[j].nameid;
-			rate = mob->mvpitem[j].p;
+			rate = mob->mvpitem[j].rate;
 
 			if( nameid == 0 || rate == 0 ){
 				continue;
@@ -5313,9 +5339,9 @@ static void mob_drop_ratio_adjust(void){
 
 				// Item is not known anymore(should never happen)
 				if( !id ){
-					ShowWarning( "Monster \"%s\"(id:%hu) is dropping an unknown item(id: %u)\n", mob->name, mob_id, nameid );
+					ShowWarning( "Monster \"%s\"(id:%u) is dropping an unknown item(id: %u)\n", mob->name, mob_id, nameid );
 					mob->mvpitem[j].nameid = 0;
-					mob->mvpitem[j].p = 0;
+					mob->mvpitem[j].rate = 0;
 					continue;
 				}
 
@@ -5325,7 +5351,7 @@ static void mob_drop_ratio_adjust(void){
 				}
 			}
 
-			mob->mvpitem[j].p = rate;
+			mob->mvpitem[j].rate = rate;
 		}
 
 		for( j = 0; j < MAX_MOB_DROP_TOTAL; j++ ){
@@ -5333,7 +5359,7 @@ static void mob_drop_ratio_adjust(void){
 			bool is_treasurechest;
 
 			nameid = mob->dropitem[j].nameid;
-			rate = mob->dropitem[j].p;
+			rate = mob->dropitem[j].rate;
 
 			if( nameid == 0 || rate == 0 ){
 				continue;
@@ -5345,7 +5371,7 @@ static void mob_drop_ratio_adjust(void){
 			if( !id ){
 				ShowWarning( "Monster \"%s\"(id:%hu) is dropping an unknown item(id: %u)\n", mob->name, mob_id, nameid );
 				mob->dropitem[j].nameid = 0;
-				mob->dropitem[j].p = 0;
+				mob->dropitem[j].rate = 0;
 				continue;
 			}
 
@@ -5427,7 +5453,7 @@ static void mob_drop_ratio_adjust(void){
 				}
 			}
 
-			mob->dropitem[j].p = rate;
+			mob->dropitem[j].rate = rate;
 		}
 	}
 
@@ -5639,7 +5665,7 @@ void mob_reload_itemmob_data(void) {
 			id = itemdb_search(pair.second.dropitem[d].nameid);
 
 			for (k = 0; k < MAX_SEARCH; k++) {
-				if (id->mob[k].chance <= pair.second.dropitem[d].p)
+				if (id->mob[k].chance <= pair.second.dropitem[d].rate)
 					break;
 			}
 
@@ -5648,7 +5674,7 @@ void mob_reload_itemmob_data(void) {
 
 			if (id->mob[k].id != pair.first)
 				memmove(&id->mob[k+1], &id->mob[k], (MAX_SEARCH-k-1)*sizeof(id->mob[0]));
-			id->mob[k].chance = pair.second.dropitem[d].p;
+			id->mob[k].chance = pair.second.dropitem[d].rate;
 			id->mob[k].id = pair.first;
 		}
 	}
