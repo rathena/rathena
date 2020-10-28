@@ -16221,6 +16221,38 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bBaseAtk,4*.@r; bonus bLongAtkRate,10; if (.@r >= 9) bonus2 bSkillAtk,"SR_KNUCKLEARROW",40; if (.@r >= 11) bonus bDelayrate,-7;
+  - Id: 1870
+    AegisName: aegis_1870
+    Name: Royal Knuckle
+    Type: Weapon
+    SubType: Knuckle
+    Weight: 1500
+    Attack: 190
+    Range: 1
+    Slots: 2
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,15;
+      bonus bBaseAtk,4*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",20;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+         bonus2 bSkillCooldown,"SR_RAMPAGEBLASTER",-1000;
+      }
   - Id: 1900
     AegisName: Violin_of_Vicious_Mind
     Name: Violin of Vicious Mind
@@ -54967,6 +54999,35 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bLongAtkRate,2*(.@r/3); bonus bBaseAtk,10*(.@r/2); if (.@r >= 7) { bonus2 bSkillAtk,"KO_HUUMARANKA",30; if (.@r >= 9) { bonus2 bSkillCooldown,"KO_HUUMARANKA",-1000; if (.@r >= 11) { bonus2 bAddEle,Ele_Fire,15; bonus2 bAddEle,Ele_Dark,15; bonus2 bAddRace,RC_Undead,30; bonus2 bAddRace,RC_Demon,30; } } }
+  - Id: 13347
+    AegisName: aegis_13347
+    Name: Royal Huuma Shuriken
+    Type: Weapon
+    SubType: Huuma
+    Weight: 1500
+    Attack: 240
+    Range: 1
+    Slots: 2
+    Jobs:
+      Ninja: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,15;
+      bonus bUnbreakableWeapon;
+      bonus bBaseAtk,4*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KO_JYUMONJIKIRI",20;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+         bonus2 bSkillCooldown,"KO_JYUMONJIKIRI",-2000;
+      }
   - Id: 13400
     AegisName: Cutlas_
     Name: Cutlus
@@ -62496,6 +62557,39 @@ Body:
       if (.@r>=11) {
          bonus2 bAddRace,RC_Undead,20;
          bonus2 bAddRace,RC_Angel,20;
+      }
+  - Id: 18198
+    AegisName: aegis_18198
+    Name: Royal Knight Archer Bow
+    Type: Weapon
+    SubType: Bow
+    Weight: 1700
+    Attack: 190
+    Range: 5
+    Slots: 2
+    Jobs:
+      Hunter: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,15;
+      bonus bBaseAtk,4*.@r;
+      if (.@r>=9) {
+         bonus bDelayrate,-12;
+         bonus2 bSkillAtk,"RA_AIMEDBOLT",25;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+         bonus2 bSkillCooldown,"RA_AIMEDBOLT",-1000;
       }
   - Id: 18500
     AegisName: Cheer_Scarf6
@@ -88775,6 +88869,41 @@ Body:
          bonus2 bMagicAddRace,RC_Undead,20;
          bonus2 bMagicAddRace,RC_Angel,20;
       }
+  - Id: 26172
+    AegisName: aegis_26172
+    Name: Royal Foxtail
+    Type: Weapon
+    SubType: Staff
+    Weight: 1200
+    Attack: 275
+    Range: 1
+    Slots: 2
+    Jobs:
+      Summoner: true
+    Classes:
+      Normal: true
+      Upper: true
+      Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      bonus bMatk,350;
+      bonus bUnbreakableWeapon;
+      bonus bMatk,4*.@r;
+      bonus bBaseAtk,4*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SU_CN_METEOR",20;
+         bonus2 bSkillAtk,"SU_PICKYPECK",20;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+      }
   - Id: 26200
     AegisName: Hippie_Rope
     Name: Hippie Rope
@@ -98934,6 +99063,35 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bBaseAtk,10*(.@r/2); bonus bAspdRate,3*(.@r/3); if (.@r >= 7) { bonus bAspd,1; bonus2 bAddClass,Class_All,5; if (.@r >= 9) { bonus bCritAtkRate,20; if (.@r >= 11) { autobonus3 "{ bonus bCritical,20; bonus bLongAtkRate,15; }",1000,60000,"RL_HEAT_BARREL"; } } }
+  - Id: 32304
+    AegisName: aegis_32304
+    Name: Royal Revolver
+    Type: Weapon
+    SubType: Revolver
+    Weight: 700
+    Attack: 150
+    Range: 7
+    Slots: 2
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,15;
+      bonus bBaseAtk,4*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"RL_FIREDANCE",20;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+         bonus2 bSkillCooldown,"RL_HEAT_BARREL",-5000;
+      }
   - Id: 32350
     AegisName: Farthezan
     Name: Farthezan
@@ -103331,4 +103489,5 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bLongAtkRate,3*(.@r/2); bonus bBaseAtk,20*(.@r/3); if (.@r>=7){ bonus2 bSkillAtk,"RL_D_TAIL",15; bonus2 bSkillCooldown,"RL_D_TAIL",-1000; } if (.@r>=9){ bonus2 bSkillAtk,"RL_D_TAIL",20; } if (.@r>=11){ bonus2 bAddEle,Ele_All,15; }
+
 
