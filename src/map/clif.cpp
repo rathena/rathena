@@ -2122,13 +2122,13 @@ void clif_buylist( struct map_session_data *sd, struct npc_data *nd ){
 		return;
 	}
 
-	uint16 len = sizeof( struct PACKET_ZC_PC_PURCHASE_ITEMLIST ) + nd->u.shop.count * sizeof( struct PACKET_ZC_PC_PURCHASE_ITEMLIST_sub );
+	uint16 len = sizeof( struct PACKET_ZC_PC_PURCHASE_ITEMLIST ) + nd->u.shop.shop_item.size() * sizeof( struct PACKET_ZC_PC_PURCHASE_ITEMLIST_sub );
 	WFIFOHEAD( fd, len );
 	struct PACKET_ZC_PC_PURCHASE_ITEMLIST *p = (struct PACKET_ZC_PC_PURCHASE_ITEMLIST *)WFIFOP( fd, 0 );
 	p->packetType = 0xc6;
 
 	int count = 0;
-	for( int i = 0, discount = npc_shop_discount( nd ); i < nd->u.shop.count; i++ ){
+	for( int i = 0, discount = npc_shop_discount( nd ); i < nd->u.shop.shop_item.size(); i++ ){
 		int val = nd->u.shop.shop_item[i].value;
 
 		p->items[count].price = val;
@@ -2204,12 +2204,12 @@ void clif_npc_market_open(struct map_session_data *sd, struct npc_data *nd) {
 
 	int fd = sd->fd;
 
-	WFIFOHEAD( fd, sizeof( struct PACKET_ZC_NPC_MARKET_OPEN ) + nd->u.shop.count * sizeof( struct PACKET_ZC_NPC_MARKET_OPEN_sub ) );
+	WFIFOHEAD( fd, sizeof( struct PACKET_ZC_NPC_MARKET_OPEN ) + nd->u.shop.shop_item.size() * sizeof( struct PACKET_ZC_NPC_MARKET_OPEN_sub ) );
 	struct PACKET_ZC_NPC_MARKET_OPEN *p = (struct PACKET_ZC_NPC_MARKET_OPEN *)WFIFOP( fd, 0 );
 	p->packetType = HEADER_ZC_NPC_MARKET_OPEN;
 
 	int count = 0;
-	for( int i = 0; i < nd->u.shop.count; i++ ){
+	for( int i = 0; i < nd->u.shop.shop_item.size(); i++ ){
 		struct npc_item_list *item = &nd->u.shop.shop_item[i];
 
 		if( !item->nameid ){
@@ -2273,10 +2273,10 @@ void clif_npc_market_purchase_ack(struct map_session_data *sd, uint8 res, uint8 
 
 	if( p->result ){
 		for( int i = 0, j; i < n; i++ ){
-			ARR_FIND( 0, nd->u.shop.count, j, list[i].nameid == nd->u.shop.shop_item[j].nameid );
+			ARR_FIND( 0, nd->u.shop.shop_item.size(), j, list[i].nameid == nd->u.shop.shop_item[j].nameid );
 
 			// Not found
-			if( j == nd->u.shop.count ){
+			if( j == nd->u.shop.shop_item.size() ){
 				continue;
 			}
 
@@ -16782,7 +16782,7 @@ void clif_cashshop_show( struct map_session_data *sd, struct npc_data *nd ){
 
 	npc_shop_currency_type( sd, nd, cost, true );
 
-	uint16 len = sizeof( struct PACKET_ZC_PC_CASH_POINT_ITEMLIST ) + nd->u.shop.count * sizeof( struct PACKET_ZC_PC_CASH_POINT_ITEMLIST_sub );
+	uint16 len = sizeof( struct PACKET_ZC_PC_CASH_POINT_ITEMLIST ) + nd->u.shop.shop_item.size() * sizeof( struct PACKET_ZC_PC_CASH_POINT_ITEMLIST_sub );
 	WFIFOHEAD( fd, len );
 	struct PACKET_ZC_PC_CASH_POINT_ITEMLIST* p = (struct PACKET_ZC_PC_CASH_POINT_ITEMLIST *)WFIFOP( fd, 0 );
 
@@ -16793,7 +16793,7 @@ void clif_cashshop_show( struct map_session_data *sd, struct npc_data *nd ){
 	p->kafraPoints = cost[1];
 #endif
 
-	for( int i = 0; i < nd->u.shop.count; i++ ) {
+	for( int i = 0; i < nd->u.shop.shop_item.size(); i++ ) {
 		struct item_data* id = itemdb_search( nd->u.shop.shop_item[i].nameid );
 
 		p->items[i].price = nd->u.shop.shop_item[i].value;

@@ -10,6 +10,8 @@
 #include "status.hpp" // struct status_change
 #include "unit.hpp" // struct unit_data
 
+#include <vector>
+
 struct block_list;
 struct npc_data;
 struct view_data;
@@ -77,7 +79,7 @@ struct npc_data {
 	enum npc_subtype subtype;
 	bool trigger_on_hidden;
 	int src_id;
-	union {
+	struct {
 		struct {
 			struct script_code *script;
 			short xs,ys; // OnTouch area radius
@@ -90,8 +92,7 @@ struct npc_data {
 			struct npc_label_list *label_list;
 		} scr;
 		struct {
-			struct npc_item_list *shop_item;
-			uint16 count;
+			std::vector<npc_item_list> shop_item;
 			t_itemid itemshop_nameid; // Item Shop cost item ID
 			char pointshop_str[32]; // Point Shop cost variable name
 			bool discount;

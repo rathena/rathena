@@ -17099,12 +17099,12 @@ BUILDIN_FUNC(callshop)
 	else if (nd->subtype == NPCTYPE_MARKETSHOP) {
 		unsigned short i;
 
-		for (i = 0; i < nd->u.shop.count; i++) {
+		for (i = 0; i < nd->u.shop.shop_item.size(); i++) {
 			if (nd->u.shop.shop_item[i].qty)
 				break;
 		}
 
-		if (i == nd->u.shop.count) {
+		if (i == nd->u.shop.shop_item.size()) {
 			clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 534), false, SELF);
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -17147,19 +17147,20 @@ BUILDIN_FUNC(npcshopitem)
 	amount = (script_lastdata(st)-2)/offs;
 
 	// generate new shop item list
-	RECREATE(nd->u.shop.shop_item, struct npc_item_list, amount);
+	nd->u.shop.shop_item.clear();
 	for (n = 0, i = 3; n < amount; n++, i+=offs) {
-		nd->u.shop.shop_item[n].nameid = script_getnum(st,i);
-		nd->u.shop.shop_item[n].value = script_getnum(st,i+1);
+		npc_item_list insert_shop_item = {};
+		insert_shop_item.nameid = script_getnum(st,i);
+		insert_shop_item.value = script_getnum(st,i+1);
 #if PACKETVER >= 20131223
 		if (nd->subtype == NPCTYPE_MARKETSHOP) {
-			nd->u.shop.shop_item[n].qty = script_getnum(st,i+2);
-			nd->u.shop.shop_item[n].flag = 1;
-			npc_market_tosql(nd->exname, &nd->u.shop.shop_item[n]);
+			insert_shop_item.qty = script_getnum(st,i+2);
+			insert_shop_item.flag = 1;
+			npc_market_tosql(nd->exname, &insert_shop_item);
 		}
 #endif
+		nd->u.shop.shop_item.push_back(insert_shop_item);
 	}
-	nd->u.shop.count = n;
 
 	script_pushint(st,1);
 	return SCRIPT_CMD_SUCCESS;
@@ -17190,12 +17191,12 @@ BUILDIN_FUNC(npcshopadditem)
 			uint16 j;
 
 			// Check existing entries
-			ARR_FIND(0, nd->u.shop.count, j, nd->u.shop.shop_item[j].nameid == nameid);
-			if (j == nd->u.shop.count) {
-				RECREATE(nd->u.shop.shop_item, struct npc_item_list, nd->u.shop.count+1);
-				j = nd->u.shop.count;
-				nd->u.shop.shop_item[j].flag = 1;
-				nd->u.shop.count++;
+			ARR_FIND(0, nd->u.shop.shop_item.size(), j, nd->u.shop.shop_item[j].nameid == nameid);
+			if (j == nd->u.shop.shop_item.size()) {
+				npc_item_list insert_shop_item = {};
+				insert_shop_item.flag = 1;
+				nd->u.shop.shop_item.push_back(insert_shop_item);
+				j = nd->u.shop.shop_item.size();
 			}
 
 			nd->u.shop.shop_item[j].nameid = nameid;
@@ -17210,13 +17211,14 @@ BUILDIN_FUNC(npcshopadditem)
 #endif
 
 	// append new items to existing shop item list
-	RECREATE(nd->u.shop.shop_item, struct npc_item_list, nd->u.shop.count+amount);
-	for (n = nd->u.shop.count, i = 3; n < nd->u.shop.count+amount; n++, i+=offs)
+	int size = nd->u.shop.shop_item.size();
+	for (n = size, i = 3; n < size + amount; n++, i += offs)
 	{
-		nd->u.shop.shop_item[n].nameid = script_getnum(st,i);
-		nd->u.shop.shop_item[n].value = script_getnum(st,i+1);
+		npc_item_list insert_shop_item = {};
+		insert_shop_item.nameid = script_getnum(st,i);
+		insert_shop_item.value = script_getnum(st,i+1);
+		nd->u.shop.shop_item.push_back(insert_shop_item);
 	}
-	nd->u.shop.count = n;
 
 	script_pushint(st,1);
 	return SCRIPT_CMD_SUCCESS;
@@ -17235,7 +17237,7 @@ BUILDIN_FUNC(npcshopdelitem)
 	}
 
 	amount = script_lastdata(st)-2;
-	size = nd->u.shop.count;
+	size = nd->u.shop.shop_item.size();
 
 	// remove specified items from the shop item list
 	for( i = 3; i < 3 + amount; i++ ) {
@@ -17243,8 +17245,8 @@ BUILDIN_FUNC(npcshopdelitem)
 
 		ARR_FIND( 0, size, n, nd->u.shop.shop_item[n].nameid == nameid );
 		if( n < size ) {
-			if (n+1 != size)
-				memmove(&nd->u.shop.shop_item[n], &nd->u.shop.shop_item[n+1], sizeof(nd->u.shop.shop_item[0])*(size-n));
+			if (n + 1 != size)
+				nd->u.shop.shop_item.erase(nd->u.shop.shop_item.begin() + n);
 #if PACKETVER >= 20131223
 			if (nd->subtype == NPCTYPE_MARKETSHOP)
 				npc_market_delfromsql_(nd->exname, nameid, false);
@@ -17252,9 +17254,6 @@ BUILDIN_FUNC(npcshopdelitem)
 			size--;
 		}
 	}
-
-	RECREATE(nd->u.shop.shop_item, struct npc_item_list, size);
-	nd->u.shop.count = size;
 
 	script_pushint(st,1);
 	return SCRIPT_CMD_SUCCESS;
@@ -22698,13 +22697,13 @@ BUILDIN_FUNC(npcshopupdate) {
 		return SCRIPT_CMD_FAILURE;
 	}
 	
-	if (!nd->u.shop.count) {
+	if (!nd->u.shop.shop_item.size()) {
 		ShowError("buildin_npcshopupdate: Attempt to update empty shop from '%s'.\n", nd->exname);
 		script_pushint(st,0);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	for (i = 0; i < nd->u.shop.count; i++) {
+	for (i = 0; i < nd->u.shop.shop_item.size(); i++) {
 		if (nd->u.shop.shop_item[i].nameid == nameid) {
 
 			if (price != 0)
