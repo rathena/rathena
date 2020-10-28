@@ -966,6 +966,7 @@ extern RandomOptionDatabase random_option_db;
 class RandomOptionGroupDatabase : public TypesafeYamlDatabase<uint16, s_random_opt_group> {
 public:
 	RandomOptionGroupDatabase() : TypesafeYamlDatabase("RANDOM_OPTION_GROUP", 1) {
+
 	}
 
 	const std::string getDefaultLocation();
@@ -981,6 +982,7 @@ extern RandomOptionGroupDatabase random_option_group;
 class ItemDatabase : public TypesafeCachedYamlDatabase<t_itemid, item_data> {
 public:
 	ItemDatabase() : TypesafeCachedYamlDatabase("ITEM_DB", 1) {
+
 	}
 
 	const std::string getDefaultLocation();
