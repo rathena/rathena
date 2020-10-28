@@ -89439,7 +89439,7 @@ Body:
     Script: |
       bonus bMdef,3; bonus2 bAddClass,Class_All,5;
   - Id: 28354
-    AegisName: City_Map
+    AegisName: DowntownMap_
     Name: City Map
     Type: Armor
     Weight: 100
@@ -89449,9 +89449,9 @@ Body:
       Left_Accessory: true
     EquipLevelMin: 1
     Script: |
-      /* todo */
+      skill "AL_INCAGI",3;
   - Id: 28355
-    AegisName: Shining_Holy_Water_
+    AegisName: ShiningHolyWater_
     Name: Shining Holy Water
     Type: Armor
     Weight: 100
@@ -89461,9 +89461,18 @@ Body:
       Left_Accessory: true
     EquipLevelMin: 1
     Script: |
-      /* todo */
+      bonus2 bHPRegenRate,100,10000;
+      bonus2 bSPRegenRate,5,10000;
+      bonus2 bAddDefMonster,3445,20;
+      bonus2 bAddDefMonster,3446,20;
+      bonus2 bAddDefMonster,3447,20;
+      bonus2 bAddDefMonster,3448,20;
+      bonus2 bAddDefMonster,3449,20;
+      bonus2 bAddDefMonster,3450,20;
+      bonus2 bAddDefMonster,3451,20;
+      bonus2 bAddDefMonster,3452,20;
   - Id: 28356
-    AegisName: Prontera_Badge
+    AegisName: BadgeOfProntera_
     Name: Prontera Badge
     Type: Armor
     Weight: 100
@@ -89471,8 +89480,10 @@ Body:
       Right_Accessory: true
       Left_Accessory: true
     EquipLevelMin: 1
+    Delay:
+      Duration: 900000
     Script: |
-      /*warp "prontera",159,192;  15 mins cooldown */
+      skill "ALL_PRONTERA_RECALL",2;
   - Id: 28357
     AegisName: Vesper_Gear_03
     Name: Vesper Gear 03
