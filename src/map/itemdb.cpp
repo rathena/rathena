@@ -2811,6 +2811,8 @@ void do_final_itemdb(void) {
 	item_db.clear();
 	itemdb_combo.clear();
 	itemdb_group->destroy(itemdb_group, itemdb_group_free);
+	random_option_db.clear();
+	random_option_group.clear();
 	if (battle_config.feature_roulette)
 		itemdb_roulette_free();
 }
