@@ -1048,6 +1048,7 @@ Body:
     Weight: 50
     Flags:
       BuyingStore: true
+      DeadBranch: true
     Script: |
       monster "this",-1,-1,"--ja--",-1-MOBG_Branch_Of_Dead_Tree,1,"";
   - Id: 605
@@ -83435,6 +83436,8 @@ Body:
     Type: Usable
     Buy: 1000
     Weight: 200
+    Flags:
+      DeadBranch: true
     Script: |
       getrandgroupitem(IG_GiftBoxChina,1);
   - Id: 12024
@@ -84214,6 +84217,7 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
+      DeadBranch: true
     Script: |
       monster "this",-1,-1,"--ja--",-1-MOBG_Bloody_Dead_Branch,1,"";
   - Id: 12104
@@ -84274,6 +84278,7 @@ Body:
     Weight: 200
     Flags:
       BuyingStore: true
+      DeadBranch: true
     Script: |
       monster "this",-1,-1,"--ja--",-1-MOBG_Poring_Box,1,"";
   - Id: 12110
