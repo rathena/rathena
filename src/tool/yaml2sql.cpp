@@ -703,9 +703,7 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 				constant.erase(0, 4);
 
 				if (appendEntry(racegroups[name2Upper(constant)], value)) {
-					for (char &c : constant)
-						c = std::tolower(c);
-
+					std::transform(constant.begin(), constant.end(), constant.begin(), ::tolower);
 					column.append("`racegroup_" + constant + "`,");
 				}
 			}
