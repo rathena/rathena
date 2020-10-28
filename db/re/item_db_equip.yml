@@ -97919,6 +97919,56 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus2 bSkillCooldown,"GN_SPORE_EXPLOSION",-1000; bonus bBaseAtk,4*.@r; if (.@r>=11) .@val = 50; else if (.@r>=9) .@val = 30; bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",.@val;
+  - Id: 400053
+    AegisName: aegis_400053
+    Name: Illusion Morrigane's Helm
+    Type: Armor
+    View: 257
+    Weight: 500
+    Defense: 15
+    Slots: 1
+    Jobs:
+      All: true
+      Novice: false
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,5;
+      bonus bStr,5;
+      if (.@r>=7) {
+         bonus bBaseAtk,50;
+      }
+      if (.@r>=9) {
+         bonus bAspdRate,10;
+      }
+  - Id: 400054
+    AegisName: aegis_400054
+    Name: Great Magician's Ceremonial Crown
+    Type: Armor
+    View: 1811
+    Weight: 100
+    Slots: 1
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,20*(.@r/2);
+      if (.@r>=7) {
+         bonus bVariableCastrate,-15;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_All,15;
+      }
+      if (.@r>=11) {
+         bonus bFixedCast,-200;
+         bonus2 bMagicAddSize,Size_Small,15;
+         bonus2 bMagicAddSize,Size_Medium,15;
+      }
   - Id: 450018
     AegisName: Noblesse_Breath_Armor
     Name: Noblesse Breath Armor
@@ -100846,6 +100896,87 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine(); bonus bMatk,100; if(.@r>=7) bonus bAspdRate,7; if(.@r>=9) bonus bMaxHPrate,10;
+  - Id: 450144
+    AegisName: aegis_450144
+    Name: Illusion Saint Robe
+    Type: Armor
+    Weight: 600
+    Defense: 60
+    Slots: 1
+    Jobs:
+      Acolyte: true
+      Alchemist: true
+      Blacksmith: true
+      Merchant: true
+      Monk: true
+      Priest: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 120
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      bonus bMdef,10;
+      if (.@r>=9) {
+         bonus2 bSubRace,RC_Fish,15;
+      }
+      if (.@r>=11) {
+         bonus2 bIgnoreDefRaceRate,RC_Fish,20;
+      }
+  - Id: 450145
+    AegisName: aegis_450145
+    Name: Illusion Saphien's Armor of Ocean
+    Type: Armor
+    Weight: 2200
+    Defense: 50
+    Slots: 1
+    Jobs:
+      Alchemist: true
+      Blacksmith: true
+      Crusader: true
+      Knight: true
+      Merchant: true
+      Swordman: true
+    Locations:
+      Armor: true
+    EquipLevelMin: 120
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,10;
+      bonus bMaxHP,125*.@r;
+      if (.@r>=7) {
+         bonus bDef,50;
+      }
+      if (.@r>=9) {
+         autobonus2 "{ bonus2 bSubEle,Ele_Water,15; }",1,5000,BF_MAGIC|BF_WEAPON;
+      }
+  - Id: 450146
+    AegisName: aegis_450146
+    Name: Illusion Chain Mail
+    Type: Armor
+    Weight: 3300
+    Defense: 70
+    Slots: 1
+    Locations:
+      Armor: true
+    EquipLevelMin: 120
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+      bonus bBaseAtk,4*.@r;
+      bonus2 bAddEle,Ele_Fire,4*(.@r/3);
+      bonus2 bAddEle,Ele_Water,4*(.@r/3);
+      if (.@r>=9) {
+         bonus2 bAddClass,Class_All,10;
+      }
+      if (.@r>=11) {
+         bonus bAspdRate,10;
+      }
   - Id: 470016
     AegisName: Noblesse_Attack_Boots
     Name: Noblesse Attack Boots
@@ -101098,6 +101229,36 @@ Body:
       NoAuction: true
     Script: |
       .@r = getrefine(); bonus bVariableCastrate,-10; if (.@r>=7) bonus bDelayrate,-5; if (.@r>=9) bonus2 bMagicAtkEle,Ele_All,10;
+  - Id: 480054
+    AegisName: aegis_480054
+    Name: Illusion Morrigane's Manteau
+    Type: Armor
+    Weight: 600
+    Defense: 12
+    Slots: 1
+    Jobs:
+      All: true
+      Novice: false
+    Locations:
+      Garment: true
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLuk,5;
+      bonus bFlee,20;
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_Fish,5;
+         bonus2 bAddRace,RC_Insect,5;
+         bonus2 bAddRace,RC_Demon,5;
+         bonus2 bAddRace,RC_DemiHuman,5;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Fish,10;
+         bonus2 bAddRace,RC_Insect,10;
+         bonus2 bAddRace,RC_Demon,10;
+         bonus2 bAddRace,RC_DemiHuman,10;
+      }
   - Id: 490014
     AegisName: Noblesse_Attack_Ring
     Name: Noblesse Attack Ring
@@ -101218,6 +101379,36 @@ Body:
       NoAuction: true
     Script: |
       bonus bAspdRate,7; bonus bVariableCastrate,-10; bonus2 bMagicAddEle,Ele_All,10;
+  - Id: 490069
+    AegisName: aegis_490069
+    Name: Illusion Morrigane's Belt
+    Type: Armor
+    Weight: 200
+    Slots: 1
+    Jobs:
+      All: true
+      Novice: false
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 130
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus bStr,3;
+  - Id: 490070
+    AegisName: aegis_490070
+    Name: Illusion Morrigane's Pendant
+    Type: Armor
+    Weight: 200
+    Slots: 1
+    Jobs:
+      All: true
+      Novice: false
+    Locations:
+      Left_Accessory: true
+    EquipLevelMin: 130
+    Script: |
+      bonus bCritical,5;
+      bonus bBaseAtk,20;
   - Id: 500013
     AegisName: Up_Sword_Of_Bluefire
     Name: Patent Red Lotus Sword
@@ -101620,6 +101811,44 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bBaseAtk,15*(.@r/2); bonus2 bSkillAtk,"SR_TIGERCANNON",4*(.@r/3); if (.@r>=7){ bonus2 bSkillAtk,"SR_TIGERCANNON",15; bonus2 bSkillAtk,"SR_HELLGATE",20; } if (.@r>=9){ bonus2 bSkillCooldown,"SR_TIGERCANNON",-1000; } if (.@r>=11){ bonus bMaxHPrate,10; bonus2 bSkillAtk,"SR_HELLGATE",15; }
+  - Id: 570008
+    AegisName: aegis_570008
+    Name: Illusion Electric Guitar
+    Type: Weapon
+    SubType: Musical
+    Weight: 1800
+    Attack: 170
+    MagicAttack: 180
+    Range: 1
+    Slots: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 120
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,3*(.@r/2);
+      bonus bMatk,6*(.@r/2);
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Neutral,10;
+         bonus2 bSkillUseSPrate,"WM_SEVERE_RAINSTORM",10;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+         bonus2 bSkillAtk,"WM_REVERBERATION",15;
+      }
+      if (.@r>=11) {
+         bonus2 bMagicAtkEle,Ele_Water,10;
+         bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1000;
+      }
   - Id: 570009
     AegisName: Up_Trumpet_Shell_K
     Name: Patent Trumpet Shell
@@ -101644,6 +101873,44 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bMatk,.@r/2*15; bonus2 bMagicAtkEle,Ele_All,.@r/3*4; if (.@r>=7){ bonus2 bSkillAtk,"WM_REVERBERATION",10; bonus2 bSkillAtk,"WM_METALICSOUND",10; } if (.@r>=9){ bonus2 bSkillFixedCast,WM_REVERBERATION,-500; } if (.@r>=11){ bonus bMatkRate,7; bonus2 bSkillAtk,"WM_REVERBERATION",15; bonus2 bSkillAtk,"WM_METALICSOUND",15; }
+  - Id: 580008
+    AegisName: aegis_580008
+    Name: Illusion Electric Eel
+    Type: Weapon
+    SubType: Whip
+    Weight: 1800
+    Attack: 170
+    MagicAttack: 180
+    Range: 2
+    Slots: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 120
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,3*(.@r/2);
+      bonus bMatk,6*(.@r/2);
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Neutral,10;
+         bonus2 bSkillUseSPrate,"WM_SEVERE_RAINSTORM",10;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+         bonus2 bSkillAtk,"WM_REVERBERATION",15;
+      }
+      if (.@r>=11) {
+         bonus2 bMagicAtkEle,Ele_Water,10;
+         bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1000;
+      }
   - Id: 580009
     AegisName: Up_Barb_Wire_K
     Name: Patent Barbed Wire Whip
@@ -101760,6 +102027,42 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); .@i = max(2,getskilllv("RK_SONICWAVE")); bonus bBaseAtk,.@r/2*15; bonus2 bSkillAtk,"RK_SONICWAVE",.@r/3*10; if (.@r>=7){ bonus bUnbreakableWeapon; bonus bAspdRate,10; } if (.@r>=9){ bonus5 bAutoSpell,"RK_SONICWAVE",.@i,20,BF_SHORT,1; } if (.@r>=11){ bonus bCritical,15; bonus bCritAtkRate,15; }
+  - Id: 600011
+    AegisName: aegis_600011
+    Name: Illusion Death Guidance
+    Type: Weapon
+    SubType: 2hSword
+    Weight: 2000
+    Attack: 240
+    Range: 1
+    Slots: 2
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      Upper: true
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 120
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,4*.@r;
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"RK_STORMBLAST",20;
+      }
+      if (.@r>=9) {
+         autobonus "{ bonus2 bHPRegenRate,getrefine()*50,1000; }",30,4000,BF_WEAPON;
+      }
+      if (.@r>=11) {
+         bonus bCritAtkRate,15;
+         bonus bCritical,15;
+      }
   - Id: 610003
     AegisName: Blade_Katar
     Name: Blade Katar
@@ -101829,6 +102132,36 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bBaseAtk,.@r/2*15; bonus bAspdRate,(.@r*2/3); if (.@r>=7){ bonus2 bSkillAtk,"GC_ROLLINGCUTTER",25; bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",25; } if (.@r>=9){ bonus bDelayRate,-12; } if (.@r>=11){ bonus bShortAtkRate,10; bonus bLongAtkRate,10; }
+  - Id: 610012
+    AegisName: aegis_610012
+    Name: Illusion Katar of Frozen Icicle
+    Type: Weapon
+    SubType: Katar
+    Weight: 1200
+    Attack: 220
+    Range: 1
+    Slots: 2
+    Jobs:
+      Assassin: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 120
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,5*.@r;
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"GC_CROSSIMPACT",20;
+      }
+      if (.@r>=9) {
+         bonus bAspdRate,10;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Insect,10;
+         bonus2 bAddEle,Ele_Fire,10;
+         bonus bCritical,15;
+      }
   - Id: 620004
     AegisName: Up_Avenger
     Name: Patent Avenger
@@ -101852,6 +102185,80 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bUnbreakableWeapon; bonus bBaseAtk,.@r/2*15; bonus2 bSkillAtk,"NC_AXETORNADO",10*(.@r/3); if (.@r>=7){ bonus2 bSkillAtk,"NC_AXEBOOMERANG",40; bonus2 bSkillCooldown,"NC_AXEBOOMERANG",-1000; } if (.@r>=9){ bonus2 bAddSize,Size_All,15; } if (.@r>=11){ bonus2 bSubEle,Ele_All,20; }
+  - Id: 630006
+    AegisName: aegis_630006
+    Name: Illusion Brionac
+    Type: Weapon
+    SubType: 2hSpear
+    Weight: 3000
+    Attack: 210
+    Range: 3
+    Slots: 2
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 120
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,10;
+      bonus2 bSkillAtk,"LG_OVERBRAND",5*(.@r/2);
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"LG_OVERBRAND",20;
+      }
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_Medium,15;
+         bonus2 bAddSize,Size_Large,15;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Fish,30;
+         bonus2 bAddRace,RC_Demon,30;
+      }
+  - Id: 630007
+    AegisName: aegis_630007
+    Name: Illusion Zephyrus
+    Type: Weapon
+    SubType: 2hSpear
+    Weight: 3300
+    Attack: 250
+    Range: 3
+    Slots: 2
+    Jobs:
+      Crusader: true
+      Knight: true
+      Swordman: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 120
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,4*.@r;
+      bonus bLongAtkRate,3*(.@r/2);
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"LK_SPIRALPIERCE",20;
+      }
+      if (.@r>=9) {
+         bonus bLongAtkRate,5;
+      }
+      if (.@r>=11) {
+         bonus2 bAddSize,Size_Medium,10;
+         bonus2 bAddSize,Size_Large,10;
+         bonus bHit,10;
+      }
   - Id: 640004
     AegisName: Blue_Crystal_Staff
     Name: Blue Crystal Staff
@@ -102136,3 +102543,4 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bLongAtkRate,3*(.@r/2); bonus bBaseAtk,20*(.@r/3); if (.@r>=7){ bonus2 bSkillAtk,"RL_D_TAIL",15; bonus2 bSkillCooldown,"RL_D_TAIL",-1000; } if (.@r>=9){ bonus2 bSkillAtk,"RL_D_TAIL",20; } if (.@r>=11){ bonus2 bAddEle,Ele_All,15; }
+

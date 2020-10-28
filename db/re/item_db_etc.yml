@@ -24642,6 +24642,13 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 7324
+    AegisName: aegis_7324
+    Name: Deep Sea Kraken's Leg
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 7325
     AegisName: Tube
     Name: Flexible Tube
@@ -33992,6 +33999,69 @@ Body:
     Weight: 10
     Script: |
       autobonus "{ bonus bLuk,50; bonus2 bMagicAtkEle,Ele_All,10; bonus2 bHPLossRate,300,1000; }",20,10000,BF_MAGIC; /* unknown rate */
+  - Id: 25892
+    AegisName: aegis_25892
+    Name: Deep Sea Shell
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25893
+    AegisName: aegis_25893
+    Name: Deep Sea Fish's Tail
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25894
+    AegisName: aegis_25894
+    Name: Rotten Deep Sea Fish
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25895
+    AegisName: aegis_25895
+    Name: Deep Sea Starfish
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25896
+    AegisName: aegis_25896
+    Name: Deep Sea Crab
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25897
+    AegisName: aegis_25897
+    Name: Deep Sea Witch's Crown
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25898
+    AegisName: Siroods_Fish_Rod
+    Name: Searud's Fishing Rod    # !todo check english name
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 25899
+    AegisName: aegis_25899
+    Name: Abyssal Essence
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 27012
     AegisName: Kick_Step_Card
     Name: Kick Step Card
@@ -37441,3 +37511,146 @@ Body:
       bonus5 bAutoSpellWhenHit,"SO_ELECTRICWALK",5,80,BF_MAGIC,0;
       autobonus "{ bonus bFlee,200; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_TEIHIT1; }";
       autobonus "{ bonus bSpeedRate,25; }",25,10000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }";
+  - Id: 300140
+    AegisName: aegis_300140
+    Name: Deep Sea Sropho Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_Wind,3;
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Wind,2;
+      }
+      if (.@r>=11) {
+         bonus2 bMagicAtkEle,Ele_Wind,5;
+      }
+  - Id: 300141
+    AegisName: aegis_300141
+    Name: Deep Sea Obeaune Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+      Left_Accessory: true
+    Script: |
+      bonus bMatk,30;
+  - Id: 300142
+    AegisName: aegis_300142
+    Name: Deep Sea Deviace Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddRace,RC_Fish,5;
+      bonus2 bAddEle,Ele_Water,5;
+      if (.@r>=7) {
+         bonus2 bAddEle,Ele_Water,5;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Fish,5;
+      }
+  - Id: 300143
+    AegisName: aegis_300143
+    Name: Deep Sea Marse Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Hand: true
+    Script: |
+      bonus2 bSubEle,Ele_Earth,15;
+      bonus2 bSubRace,RC_Insect,15;
+  - Id: 300144
+    AegisName: aegis_300144
+    Name: Deep Sea Merman Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Script: |
+      bonus bBaseAtk,4*(readparam(bStr)/15);
+  - Id: 300145
+    AegisName: aegis_300145
+    Name: Deep Sea Witch Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Fire,100;
+      bonus2 bMagicAtkEle,Ele_Dark,100;
+      bonus2 bSubEle,Ele_All,-30;
+  - Id: 300146
+    AegisName: aegis_300146
+    Name: Deep Sea Sedora Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Script: |
+      bonus2 bCriticalAddRace,RC_Fish,30;
+  - Id: 300147
+    AegisName: aegis_300147
+    Name: Deep Sea Swordfish Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Mid: true
+      Head_Low: true
+    Script: |
+      bonus2 bSubEle,Ele_Water,10;
+      if (getrefine()>=9) {
+         bonus2 bMagicAddEle,Ele_Water,10;
+      }
+  - Id: 300148
+    AegisName: aegis_300148
+    Name: Deep Sea Strouf Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Script: |
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,5;
+      if (getrefine()>=9) {
+         bonus2 bMagicAddEle,Ele_Water,5;
+         bonus2 bAddEle,Ele_Water,5;
+      }
+  - Id: 300149
+    AegisName: aegis_300149
+    Name: Deep Sea Phen Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,15;
+      bonus2 bMagicAtkEle,Ele_Wind,3*getrefine();
+  - Id: 300150
+    AegisName: aegis_300150
+    Name: Deep Sea King Dramoh Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Mid: true
+      Head_Low: true
+    Script: |
+      bonus bMaxHPrate,-5;
+      bonus2 bAddClass,Class_All,(getrefine()/3);
+  - Id: 300151
+    AegisName: aegis_300151
+    Name: Deep Sea Kraken Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Script: |
+      bonus bLongAtkRate,25;
+      bonus bPerfectHitRate,5;
+
