@@ -2482,7 +2482,7 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (entry->min_value > entry->max_value) {
-				this->invalidWarning(optionNode["MaxValue"], "MinValue %s is greater than MaxValue %s, setting MaxValue to MinValue + 1.\n", entry->min_value, entry->max_value);
+				this->invalidWarning(optionNode["MaxValue"], "MinValue %d is greater than MaxValue %d, setting MaxValue to MinValue + 1.\n", entry->min_value, entry->max_value);
 				entry->max_value = entry->min_value + 1;
 			}
 
@@ -2593,7 +2593,7 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 			if (entry->min_value > entry->max_value) {
-				this->invalidWarning(randomNode["MaxValue"], "MinValue %s is greater than MaxValue %s, setting MaxValue to MinValue + 1.\n", entry->min_value, entry->max_value);
+				this->invalidWarning(randomNode["MaxValue"], "MinValue %d is greater than MaxValue %d, setting MaxValue to MinValue + 1.\n", entry->min_value, entry->max_value);
 				entry->max_value = entry->min_value + 1;
 			}
 
