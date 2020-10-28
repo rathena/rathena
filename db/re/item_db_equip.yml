@@ -19847,7 +19847,7 @@ Body:
     Name: Shell Of Resistance
     Type: Armor
     Buy: 20
-    Defense: 9
+    Defense: 140
     Locations:
       Left_Hand: true
     View: 2
@@ -19938,7 +19938,7 @@ Body:
     AegisName: Cracked_Buckler
     Name: Cracked Buckler
     Type: Armor
-    Defense: 5
+    Defense: 55
     Locations:
       Left_Hand: true
     View: 2
@@ -19958,7 +19958,7 @@ Body:
     AegisName: Valkyrja's_Shield_C
     Name: Neo Valkyrja's Shield
     Type: Armor
-    Defense: 5
+    Defense: 110
     Jobs:
       All: true
       Novice: false
@@ -20999,7 +20999,6 @@ Body:
     Type: Armor
     Buy: 1
     Weight: 10
-    Defense: 10000
     Locations:
       Left_Hand: true
     EquipLevelMin: 1
@@ -21114,7 +21113,7 @@ Body:
     Type: Armor
     Buy: 500
     Weight: 100
-    Defense: 1
+    Defense: 2
     Locations:
       Head_Top: true
     View: 9
@@ -21124,7 +21123,7 @@ Body:
     Type: Armor
     Buy: 400
     Weight: 100
-    Defense: 1
+    Defense: 2
     Locations:
       Head_Top: true
     Refineable: true
@@ -21144,7 +21143,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 2
+    Defense: 3
     Locations:
       Head_Top: true
     Refineable: true
@@ -21155,7 +21154,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 2
+    Defense: 3
     Locations:
       Head_Top: true
     Refineable: true
@@ -21168,7 +21167,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 2
+    Defense: 4
     Locations:
       Head_Top: true
     Refineable: true
@@ -21255,7 +21254,7 @@ Body:
     Type: Armor
     Buy: 4500
     Weight: 300
-    Defense: 3
+    Defense: 5
     Jobs:
       All: true
       Novice: false
@@ -21270,7 +21269,7 @@ Body:
     Type: Armor
     Buy: 4500
     Weight: 300
-    Defense: 3
+    Defense: 5
     Slots: 1
     Jobs:
       All: true
@@ -21541,7 +21540,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 1
+    Defense: 2
     Locations:
       Head_Top: true
     Refineable: true
@@ -21655,7 +21654,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 900
-    Defense: 5
+    Defense: 9
     Jobs:
       All: true
       Novice: false
@@ -21877,7 +21876,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 1
+    Defense: 2
     Locations:
       Head_Top: true
     Refineable: true
@@ -21888,7 +21887,7 @@ Body:
     Type: Armor
     Buy: 28000
     Weight: 100
-    Defense: 1
+    Defense: 2
     Jobs:
       All: true
       Novice: false
@@ -22152,7 +22151,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 1
+    Defense: 2
     Locations:
       Head_Top: true
     View: 66
@@ -22304,7 +22303,7 @@ Body:
     Type: Armor
     Buy: 3000
     Weight: 100
-    Defense: 1
+    Defense: 2
     Locations:
       Head_Top: true
     View: 77
@@ -23084,7 +23083,7 @@ Body:
     Type: Armor
     Buy: 89000
     Weight: 500
-    Defense: 4
+    Defense: 32
     Slots: 1
     Jobs:
       Novice: true
@@ -23956,7 +23955,7 @@ Body:
     Name: Spiritual Tunic
     Type: Armor
     Buy: 20
-    Defense: 10
+    Defense: 38
     Locations:
       Armor: true
     Trade:
@@ -23976,7 +23975,7 @@ Body:
     Name: Recuperative Armor
     Type: Armor
     Buy: 20
-    Defense: 12
+    Defense: 67
     Locations:
       Armor: true
     Trade:
@@ -24147,7 +24146,7 @@ Body:
     AegisName: Old_Pant
     Name: Old Green Pantie
     Type: Armor
-    Defense: 10
+    Defense: 60
     Locations:
       Armor: true
     Trade:
@@ -24234,6 +24233,7 @@ Body:
     Name: Glorious Mass-Production Suit
     Type: Armor
     Buy: 20
+    Defense: 10
     Jobs:
       All: true
       Novice: false
@@ -24258,7 +24258,7 @@ Body:
     Type: Armor
     Buy: 10
     Weight: 900
-    Defense: 2
+    Defense: 10
     Jobs:
       All: true
       Novice: false
@@ -24272,7 +24272,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 750
-    Defense: 42
+    Defense: 5
     Slots: 1
     Jobs:
       Hunter: true
@@ -24451,7 +24451,7 @@ Body:
     Type: Armor
     Buy: 8500
     Weight: 600
-    Defense: 4
+    Defense: 10
     Jobs:
       All: true
       Novice: false
@@ -24493,7 +24493,7 @@ Body:
     Type: Armor
     Buy: 54000
     Weight: 750
-    Defense: 15
+    Defense: 27
     Slots: 1
     Jobs:
       Crusader: true
@@ -24508,7 +24508,7 @@ Body:
     Type: Armor
     Buy: 34000
     Weight: 350
-    Defense: 6
+    Defense: 22
     Jobs:
       Crusader: true
       Knight: true
@@ -24543,7 +24543,7 @@ Body:
     Type: Armor
     Buy: 34000
     Weight: 300
-    Defense: 3
+    Defense: 9
     Slots: 1
     Jobs:
       All: true
@@ -24786,7 +24786,7 @@ Body:
     Name: Freyja Boots
     Type: Armor
     Weight: 300
-    Defense: 10
+    Defense: 22
     Jobs:
       All: true
       Novice: false
@@ -25059,7 +25059,7 @@ Body:
     Name: Refresh Shoes
     Type: Armor
     Buy: 20
-    Defense: 9
+    Defense: 20
     Locations:
       Shoes: true
     Trade:
@@ -25119,7 +25119,7 @@ Body:
     AegisName: Boots_Perforated
     Name: Red Stocking Boots
     Type: Armor
-    Defense: 7
+    Defense: 18
     Locations:
       Shoes: true
     Trade:
@@ -26345,7 +26345,7 @@ Body:
     Type: Armor
     Buy: 5000
     Weight: 700
-    Defense: 1
+    Defense: 13
     Jobs:
       All: true
       Novice: false
@@ -26519,7 +26519,7 @@ Body:
     Type: Armor
     Buy: 10000
     Weight: 400
-    Defense: 5
+    Defense: 6
     Slots: 1
     Jobs:
       Novice: true
@@ -26790,7 +26790,7 @@ Body:
     Name: Cloak Of Survival
     Type: Armor
     Buy: 1
-    Defense: 5
+    Defense: 17
     Jobs:
       Mage: true
       Sage: true
@@ -26989,7 +26989,7 @@ Body:
     Name: Sylphid Manteau
     Type: Armor
     Buy: 20
-    Defense: 9
+    Defense: 33
     Locations:
       Garment: true
     Trade:
@@ -27068,7 +27068,7 @@ Body:
     AegisName: Cheap_Running_Shirts
     Name: Cheap Undershirt
     Type: Armor
-    Defense: 8
+    Defense: 11
     Locations:
       Garment: true
     Refineable: true
@@ -27088,7 +27088,7 @@ Body:
     AegisName: Muffler_C
     Name: Neo Muffler
     Type: Armor
-    Defense: 5
+    Defense: 22
     Jobs:
       All: true
       Novice: false
@@ -27258,7 +27258,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 400
-    Defense: 4
     Locations:
       Garment: true
     EquipLevelMin: 20
@@ -27270,7 +27269,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 400
-    Defense: 4
     Locations:
       Garment: true
     EquipLevelMin: 20
@@ -27282,7 +27280,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 400
-    Defense: 4
     Locations:
       Garment: true
     EquipLevelMin: 20
@@ -27294,7 +27291,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 400
-    Defense: 4
     Locations:
       Garment: true
     EquipLevelMin: 20
@@ -28122,7 +28118,6 @@ Body:
     Type: Armor
     Buy: 75000
     Weight: 100
-    Defense: 5
     Jobs:
       All: true
       Novice: false
@@ -28981,6 +28976,7 @@ Body:
     Name: Woman Glory
     Type: Armor
     Weight: 500
+    Defense: 1
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -29336,7 +29332,6 @@ Body:
     Name: Steel Flower
     Type: Armor
     Buy: 1
-    Defense: 1
     Jobs:
       All: true
       Novice: false
@@ -29764,7 +29759,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 4
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -29968,6 +29962,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 200
+    Defense: 1
     Jobs:
       Mage: true
       Sage: true
@@ -30348,7 +30343,6 @@ Body:
     AegisName: Directive_A
     Name: Directive
     Type: Armor
-    Defense: 1
     Jobs:
       Novice: true
       SuperNovice: true
@@ -30369,7 +30363,6 @@ Body:
     AegisName: Directive_B
     Name: Directive
     Type: Armor
-    Defense: 1
     Jobs:
       Novice: true
       SuperNovice: true
@@ -34015,7 +34008,6 @@ Body:
     Type: Armor
     Buy: 75000
     Weight: 100
-    Defense: 10
     Slots: 1
     Jobs:
       All: true
@@ -36073,7 +36065,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 1
     Locations:
       Head_Mid: true
     View: 184
@@ -37481,7 +37472,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 500
-    Defense: 2
+    Defense: 4
     Locations:
       Head_Top: true
     EquipLevelMin: 50
@@ -37507,7 +37498,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 20
-    Defense: 3
+    Defense: 5
     Slots: 1
     Locations:
       Head_Top: true
@@ -37617,7 +37608,7 @@ Body:
     Type: Armor
     Buy: 10
     Weight: 100
-    Defense: 1
+    Defense: 3
     Locations:
       Head_Top: true
     Refineable: true
@@ -37629,7 +37620,7 @@ Body:
     Name: Baseball Cap
     Type: Armor
     Weight: 200
-    Defense: 3
+    Defense: 5
     Locations:
       Head_Top: true
     Refineable: true
@@ -37759,7 +37750,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 300
-    Defense: 2
     Jobs:
       All: true
       Novice: false
@@ -38423,7 +38413,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 300
-    Defense: 1
+    Defense: 2
     Locations:
       Head_Top: true
     EquipLevelMin: 20
@@ -38550,7 +38540,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 500
-    Defense: 2
+    Defense: 4
     Locations:
       Head_Top: true
     Refineable: true
@@ -38609,7 +38599,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 500
-    Defense: 4
+    Defense: 8
     Locations:
       Head_Top: true
     Refineable: true
@@ -38671,7 +38661,7 @@ Body:
     Name: Sakkat
     Type: Armor
     Buy: 1
-    Defense: 10
+    Defense: 14
     Locations:
       Head_Top: true
     View: 67
@@ -38849,7 +38839,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 1
+    Defense: 2
     Jobs:
       All: true
       Novice: false
@@ -39551,7 +39541,6 @@ Body:
     Name: Poring Party Hat
     Type: Armor
     Buy: 20
-    Defense: 2
     Locations:
       Head_Top: true
     Refineable: true
@@ -40419,7 +40408,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 200
-    Defense: 5
+    Defense: 53
     Locations:
       Head_Top: true
     Refineable: true
@@ -41170,7 +41159,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 1
     Locations:
       Head_Low: true
     View: 414
@@ -41840,7 +41828,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 500
-    Defense: 3
+    Defense: 4
     Slots: 1
     Locations:
       Head_Top: true
@@ -41972,7 +41960,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 1
+    Defense: 3
     Locations:
       Head_Low: true
     EquipLevelMin: 90
@@ -41994,7 +41982,6 @@ Body:
     Name: Rainbow Scarf
     Type: Armor
     Buy: 20
-    Defense: 1
     Locations:
       Head_Low: true
     EquipLevelMin: 90
@@ -42016,7 +42003,6 @@ Body:
     Name: Zaha Doll Hat
     Type: Armor
     Buy: 20
-    Defense: 1
     Slots: 1
     Jobs:
       All: true
@@ -42327,7 +42313,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 500
-    Defense: 4
+    Defense: 8
     Locations:
       Head_Top: true
     View: 482
@@ -42419,7 +42405,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 800
-    Defense: 3
+    Defense: 6
     Locations:
       Head_Top: true
     Refineable: true
@@ -42430,7 +42416,7 @@ Body:
     AegisName: Boy's_Cap_I
     Name: Student Cap
     Type: Armor
-    Defense: 5
+    Defense: 10
     Jobs:
       All: true
       Novice: false
@@ -42454,7 +42440,7 @@ Body:
     AegisName: Ulle_Cap_I
     Name: Ulle's Cap
     Type: Armor
-    Defense: 3
+    Defense: 12
     Jobs:
       All: true
       Novice: false
@@ -42478,7 +42464,7 @@ Body:
     AegisName: Spinx_Helm_I
     Name: Sphinx Hat
     Type: Armor
-    Defense: 5
+    Defense: 10
     Jobs:
       Crusader: true
       Knight: true
@@ -42505,7 +42491,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 6
+    Defense: 5
     Slots: 1
     Locations:
       Head_Top: true
@@ -42522,7 +42508,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 300
-    Defense: 3
+    Defense: 6
     Locations:
       Head_Top: true
     EquipLevelMin: 50
@@ -42697,7 +42683,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 500
-    Defense: 3
+    Defense: 6
     Locations:
       Head_Top: true
     Refineable: true
@@ -42844,7 +42830,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 800
-    Defense: 5
+    Defense: 10
     Locations:
       Head_Top: true
     EquipLevelMin: 50
@@ -43011,7 +42997,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 600
-    Defense: 6
+    Defense: 12
     Slots: 1
     Locations:
       Head_Mid: true
@@ -43074,7 +43060,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 800
-    Defense: 3
+    Defense: 6
     Slots: 1
     Locations:
       Head_Top: true
@@ -43270,7 +43256,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 400
-    Defense: 3
+    Defense: 6
     Slots: 1
     Locations:
       Head_Top: true
@@ -43371,7 +43357,7 @@ Body:
     Name: Holy Egg Hat
     Type: Armor
     Buy: 20
-    Defense: 1
+    Defense: 4
     Locations:
       Head_Top: true
     Refineable: true
@@ -43389,7 +43375,7 @@ Body:
     AegisName: Fest_Lord_Circlet
     Name: Festival Grand Circlet
     Type: Armor
-    Defense: 8
+    Defense: 10
     Locations:
       Head_Top: true
     View: 93
@@ -43399,7 +43385,7 @@ Body:
     AegisName: Fest_Bunny_Band
     Name: Festival Bunny Band
     Type: Armor
-    Defense: 7
+    Defense: 14
     Locations:
       Head_Top: true
     View: 15
@@ -43443,7 +43429,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 500
-    Defense: 3
+    Defense: 5
     Locations:
       Head_Low: true
       Head_Mid: true
@@ -43497,7 +43483,7 @@ Body:
     AegisName: Piece_Of_White_Cloth_E
     Name: Piece Of White Cloth
     Type: Armor
-    Defense: 1
+    Defense: 5
     Locations:
       Head_Top: true
     Refineable: true
@@ -43510,7 +43496,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 3000
-    Defense: 3
+    Defense: 6
     Locations:
       Head_Top: true
     EquipLevelMin: 75
@@ -43608,7 +43594,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 300
-    Defense: 1
+    Defense: 5
     Slots: 1
     Locations:
       Head_Top: true
@@ -43626,7 +43612,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 1000
-    Defense: 1
+    Defense: 4
     Locations:
       Head_Mid: true
       Head_Top: true
@@ -43640,7 +43626,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 300
-    Defense: 6
+    Defense: 3
     Slots: 1
     Locations:
       Head_Top: true
@@ -43674,7 +43660,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 1
+    Defense: 2
     Locations:
       Head_Top: true
     Refineable: true
@@ -43687,7 +43673,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 1
+    Defense: 2
     Slots: 1
     Locations:
       Head_Top: true
@@ -43705,7 +43691,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 1
+    Defense: 6
     Slots: 1
     Locations:
       Head_Top: true
@@ -43879,7 +43865,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 400
-    Defense: 1
+    Defense: 5
     Slots: 1
     Locations:
       Head_Mid: true
@@ -43898,7 +43884,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 1
+    Defense: 5
     Slots: 1
     Locations:
       Head_Top: true
@@ -43912,7 +43898,7 @@ Body:
     Name: Mosquito Coil
     Type: Armor
     Weight: 100
-    Defense: 1
+    Defense: 5
     Locations:
       Head_Top: true
     EquipLevelMin: 1
@@ -43961,7 +43947,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 200
-    Defense: 1
+    Defense: 5
     Locations:
       Head_Top: true
     Refineable: true
@@ -44010,7 +43996,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 200
-    Defense: 1
+    Defense: 10
     Slots: 1
     Locations:
       Head_Mid: true
@@ -45069,7 +45055,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 400
-    Defense: 1
+    Defense: 5
     Slots: 1
     Locations:
       Head_Top: true
@@ -45105,7 +45091,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 1
+    Defense: 10
     Slots: 1
     Locations:
       Head_Mid: true
@@ -45395,7 +45381,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 3
+    Defense: 2
     Locations:
       Head_Top: true
     EquipLevelMin: 1
@@ -45463,7 +45449,6 @@ Body:
     AegisName: No_Fear_Underware
     Name: No Fear Underwear
     Type: Armor
-    Defense: 10
     Locations:
       Head_Top: true
     EquipLevelMin: 20
@@ -46488,7 +46473,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 12
+    Defense: 6
     Jobs:
       Assassin: true
     Classes:
@@ -46545,7 +46530,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 12
+    Defense: 17
     Slots: 1
     Jobs:
       Crusader: true
@@ -46575,7 +46560,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 17
+    Defense: 12
     Slots: 1
     Jobs:
       BardDancer: true
@@ -46768,7 +46753,6 @@ Body:
     Name: Gold Angel Sculpture
     Type: Armor
     Buy: 100
-    Defense: 2
     Locations:
       Head_Top: true
     EquipLevelMin: 70
@@ -47261,7 +47245,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 5
+    Defense: 10
     Locations:
       Head_Top: true
     Refineable: true
@@ -47273,7 +47257,7 @@ Body:
     Name: Upgraded Elephant Hat
     Type: Armor
     Weight: 500
-    Defense: 3
+    Defense: 6
     Slots: 1
     Locations:
       Head_Top: true
@@ -47285,7 +47269,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 2
+    Defense: 4
     Locations:
       Head_Top: true
     Refineable: true
@@ -47306,7 +47290,7 @@ Body:
     Name: Victorious Coronet
     Type: Armor
     Weight: 150
-    Defense: 1
+    Defense: 2
     Locations:
       Head_Top: true
     EquipLevelMin: 70
@@ -47328,7 +47312,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 300
-    Defense: 5
+    Defense: 9
     Locations:
       Head_Top: true
     View: 67
@@ -47347,7 +47331,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 1
+    Defense: 2
     Jobs:
       All: true
       Novice: false
@@ -47414,7 +47398,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 3
+    Defense: 5
     Jobs:
       All: true
       Novice: false
@@ -47431,7 +47415,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 5
     Locations:
       Head_Low: true
     View: 25
@@ -47521,7 +47504,7 @@ Body:
     Name: Valentine Pledge
     Type: Armor
     Buy: 20
-    Defense: 3
+    Defense: 6
     Locations:
       Right_Accessory: true
       Left_Accessory: true
@@ -47964,6 +47947,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 500
+    Defense: 7
     Locations:
       Head_Top: true
     EquipLevelMin: 40
@@ -62735,7 +62719,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 2
     Slots: 1
     Locations:
       Head_Mid: true
@@ -62749,7 +62732,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 2
     Slots: 1
     Locations:
       Head_Mid: true
@@ -62763,7 +62745,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 2
     Slots: 1
     Locations:
       Head_Mid: true
@@ -62896,7 +62877,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 2
     Locations:
       Head_Low: true
     EquipLevelMin: 1
@@ -64019,7 +63999,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 4
     Locations:
       Head_Low: true
     EquipLevelMin: 30
@@ -65711,7 +65690,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 800
-    Defense: 5
+    Defense: 10
     Slots: 1
     Locations:
       Head_Top: true
@@ -67373,6 +67352,7 @@ Body:
     Type: Armor
     Buy: 10
     Weight: 10
+    Defense: 1
     Locations:
       Head_Low: true
     EquipLevelMin: 1
@@ -67386,6 +67366,7 @@ Body:
     Type: Armor
     Buy: 10
     Weight: 10
+    Defense: 1
     Locations:
       Head_Low: true
     EquipLevelMin: 1
@@ -69496,7 +69477,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 200
-    Defense: 1
     Slots: 1
     Locations:
       Head_Top: true
@@ -69731,7 +69711,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 100
-    Defense: 1
     Slots: 1
     Locations:
       Head_Mid: true
@@ -70227,7 +70206,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 200
-    Defense: 1
+    Defense: 4
     Slots: 1
     Jobs:
       Acolyte: true
@@ -71733,7 +71712,6 @@ Body:
     Type: Armor
     Buy: 10
     Weight: 100
-    Defense: 1
     Locations:
       Costume_Head_Top: true
     EquipLevelMin: 1
@@ -71929,7 +71907,6 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 400
-    Defense: 1
     Locations:
       Costume_Head_Top: true
     EquipLevelMin: 1
@@ -82286,7 +82263,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 600
-    Defense: 25
+    Defense: 20
     Jobs:
       KagerouOboro: true
       Rebellion: true
@@ -82350,7 +82327,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 600
-    Defense: 25
+    Defense: 20
     Jobs:
       KagerouOboro: true
       Rebellion: true
@@ -82383,7 +82360,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 600
-    Defense: 25
+    Defense: 20
     Slots: 1
     Jobs:
       KagerouOboro: true
@@ -82451,7 +82428,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 600
-    Defense: 25
+    Defense: 20
     Slots: 1
     Jobs:
       KagerouOboro: true
@@ -82700,7 +82677,7 @@ Body:
     Name: Beginner's Boots
     Type: Armor
     Buy: 20
-    Defense: 10
+    Defense: 15
     Slots: 1
     Locations:
       Shoes: true
@@ -82825,7 +82802,7 @@ Body:
     Type: Armor
     Buy: 20
     Weight: 600
-    Defense: 50
+    Defense: 40
     Slots: 1
     Locations:
       Shoes: true
@@ -90099,6 +90076,7 @@ Body:
     Name: Vigilante Badge
     Type: Armor
     Weight: 200
+    Defense: 2
     Jobs:
       Rogue: true
     Classes:
@@ -90116,6 +90094,7 @@ Body:
     Name: Hippie Feather
     Type: Armor
     Weight: 200
+    Defense: 2
     Jobs:
       BardDancer: true
     Classes:
@@ -90673,7 +90652,6 @@ Body:
     Name: Royal Guardian Ring
     Type: Armor
     Weight: 10
-    Defense: 1
     Slots: 1
     Locations:
       Right_Accessory: true
@@ -101145,6 +101123,7 @@ Body:
     Name: Imperial Attack Ring
     Type: Armor
     Weight: 50
+    Defense: 8
     Slots: 1
     Locations:
       Right_Accessory: true
@@ -101165,6 +101144,7 @@ Body:
     Name: Imperial Magic Ring
     Type: Armor
     Weight: 50
+    Defense: 8
     Slots: 1
     Locations:
       Right_Accessory: true
@@ -101185,6 +101165,7 @@ Body:
     Name: Grace Attack Ring
     Type: Armor
     Weight: 50
+    Defense: 10
     Slots: 1
     Locations:
       Right_Accessory: true
@@ -101205,6 +101186,7 @@ Body:
     Name: Grace Magic Ring
     Type: Armor
     Weight: 50
+    Defense: 10
     Slots: 1
     Locations:
       Right_Accessory: true
