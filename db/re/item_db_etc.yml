@@ -22178,6 +22178,10 @@ Body:
     Type: Etc
     Buy: 10
     Weight: 100
+  - Id: 7000
+    AegisName: aegis_7000
+    Name: Event Stone Coin    # !todo check english name
+    Type: Etc
   - Id: 7001
     AegisName: Mould_Powder
     Name: Mould Powder
@@ -33999,6 +34003,140 @@ Body:
     Weight: 10
     Script: |
       autobonus "{ bonus bLuk,50; bonus2 bMagicAtkEle,Ele_All,10; bonus2 bHPLossRate,300,1000; }",20,10000,BF_MAGIC; /* unknown rate */
+  - Id: 25759
+    AegisName: aegis_25759
+    Name: Green Dragon Orb
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25760
+    AegisName: aegis_25760
+    Name: Blue Dragon Orb
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25761
+    AegisName: aegis_25761
+    Name: Red Dragon Orb
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25762
+    AegisName: aegis_25762
+    Name: Gold Dragon Orb
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25763
+    AegisName: aegis_25763
+    Name: Purple Dragon Orb
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25764
+    AegisName: aegis_25764
+    Name: Silver Dragon Orb
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25765
+    AegisName: aegis_25765
+    Name: Large Dragon Bone
+    Type: Etc
+    Weight: 200
+    Flags:
+      BuyingStore: true
+  - Id: 25766
+    AegisName: aegis_25766
+    Name: Small Dragon Bone
+    Type: Etc
+    Weight: 100
+    Flags:
+      BuyingStore: true
+  - Id: 25767
+    AegisName: aegis_25767
+    Name: Angel's Dream
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25768
+    AegisName: aegis_25768
+    Name: Valkyrie Ingrid's Armor Fragment
+    Type: Etc
+    Weight: 30
+  - Id: 25769
+    AegisName: aegis_25769
+    Name: Valkyrie Reginleif's Armor Fragment
+    Type: Etc
+    Weight: 30
+  - Id: 25770
+    AegisName: aegis_25770
+    Name: Valkyrie Reginleif's Armor
+    Type: Etc
+    Weight: 100
+  - Id: 25771
+    AegisName: aegis_25771
+    Name: Valkyrie Ingrid's Armor
+    Type: Etc
+    Weight: 100
+  - Id: 25809
+    AegisName: aegis_25809
+    Name: Redium
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 25810
+    AegisName: aegis_25810
+    Name: Rindium
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 25811
+    AegisName: aegis_25811
+    Name: Odium
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 25812
+    AegisName: aegis_25812
+    Name: Purdium
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 25813
+    AegisName: aegis_25813
+    Name: Whidium
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 25814
+    AegisName: aegis_25814
+    Name: Dynite
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25815
+    AegisName: Ein_SOLIDDUST
+    Name: Hardened Dust
+    Type: Etc
+  - Id: 25816
+    AegisName: Ein_RUSTHELM
+    Name: Broken Trap
+    Type: Etc
+    Weight: 10
+  - Id: 25817
+    AegisName: aegis_25817
+    Name: Bizarre Stone Carvings
+    Type: Etc
+    Weight: 50
   - Id: 25864
     AegisName: aegis_25864
     Name: Sealed Temporal Circlet
@@ -37783,6 +37921,292 @@ Body:
       bonus5 bAutoSpellWhenHit,"SO_ELECTRICWALK",5,80,BF_MAGIC,0;
       autobonus "{ bonus bFlee,200; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_TEIHIT1; }";
       autobonus "{ bonus bSpeedRate,25; }",25,10000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }";
+  - Id: 300001
+    AegisName: aegis_300001
+    Name: Poisonous Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus2 bAddEle,Ele_Poison,25;
+  - Id: 300002
+    AegisName: aegis_300002
+    Name: Toxious Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus bLongAtkDef,5;
+      bonus bMaxHPrate,10;
+  - Id: 300003
+    AegisName: aegis_300003
+    Name: White Porcellio Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus bBaseAtk,20;
+  - Id: 300004
+    AegisName: aegis_300004
+    Name: Neo Mineral Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus bDef,30;
+  - Id: 300005
+    AegisName: aegis_300005
+    Name: Abyssman Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus bMaxHP,10;
+      bonus2 bSkillAtk,"SO_EARTHGRAVE",10;
+  - Id: 300006
+    AegisName: aegis_300006
+    Name: Jewelry Ant Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus5 bAutoSpell,"SO_PSYCHIC_WAVE",1,100,BF_WEAPON,1;
+  - Id: 300007
+    AegisName: aegis_300007
+    Name: Jeweled Ungoliant Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus2 bAddEle,Ele_Fire,40;
+      bonus2 bAddEle,Ele_Water,40;
+      bonus2 bAddRace,RC_Formless,40;
+      bonus2 bAddRace,RC_Plant,40;
+  - Id: 300008
+    AegisName: aegis_300008
+    Name: Angelgolt Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus2 bMagicAddRace,RC_Demon,10;
+  - Id: 300009
+    AegisName: aegis_300009
+    Name: Spectrum Plasma Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      if (getiteminfo(getequipid(EQI_HAND_R),11) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R),11) == W_2HSTAFF) {
+         bonus2 bMagicAtkEle,Ele_Ghost,10;
+      }
+      if (.@r>=10) {
+         bonus2 bMagicAtkEle,Ele_Ghost,10;
+      }
+      if (.@r>=14) {
+         bonus2 bMagicAtkEle,Ele_Ghost,10;
+      }
+  - Id: 300010
+    AegisName: aegis_300010
+    Name: Arch Plasma Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      if (getiteminfo(getequipid(EQI_HAND_R),11) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R),11) == W_2HSTAFF) {
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+      }
+      if (.@r>=10) {
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+      }
+      if (.@r>=14) {
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+      }
+  - Id: 300011
+    AegisName: aegis_300011
+    Name: Holy Frus Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HAND_R);
+      if (getiteminfo(getequipid(EQI_HAND_R),11) == W_STAFF || getiteminfo(getequipid(EQI_HAND_R),11) == W_2HSTAFF) {
+         bonus2 bMagicAtkEle,Ele_Holy,10;
+      }
+      if (.@r>=10) {
+         bonus2 bMagicAtkEle,Ele_Holy,10;
+      }
+      if (.@r>=14) {
+         bonus2 bMagicAtkEle,Ele_Holy,10;
+      }
+  - Id: 300012
+    AegisName: aegis_300012
+    Name: Holy Skogul Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      .@r = getrefine();
+      bonus bHealPower,5;
+      if (.@r>=7) {
+         bonus bHealPower,3;
+      }
+      if (.@r>=9) {
+         bonus bHealPower,2;
+      }
+  - Id: 300013
+    AegisName: aegis_300013
+    Name: Reginleif Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus bUnbreakableArmor;
+      bonus2 bAddClass,Class_All,30;
+      bonus bMaxHPrate,-15;
+  - Id: 300014
+    AegisName: aegis_300014
+    Name: Ingrid Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus bUnbreakableArmor;
+      bonus2 bAddClass,Class_All,-15;
+      bonus bMaxHPrate,40;
+      bonus2 bHPLossRate,1000,4000;
+    UnEquipScript: |
+      heal -10000,0;
+  - Id: 300015
+    AegisName: aegis_300015
+    Name: Purple Ferus Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Mid: true
+      Head_Low: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus2 bAddClass,Class_All,3;
+      bonus bMaxHPrate,-5;
+      bonus bMaxSPrate,-5;
+      bonus2 bAddClass,Class_All,(getrefine()/4);
+  - Id: 300016
+    AegisName: aegis_300016
+    Name: Treasure Mimic Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus bCritical,5;
+      bonus bFlee,30;
+  - Id: 300017
+    AegisName: aegis_300017
+    Name: Black Acidus Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus2 bAddEle,Ele_Dark,25;
+  - Id: 300018
+    AegisName: aegis_300018
+    Name: Silver Acidus Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus2 bAddEle,Ele_Holy,25;
+  - Id: 300019
+    AegisName: aegis_300019
+    Name: Bone Ferus Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus2 bAddRace,RC_Dragon,5;
+  - Id: 300020
+    AegisName: aegis_300020
+    Name: Bone Acidus Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus2 bAddRace,RC_Brute,5;
+  - Id: 300021
+    AegisName: aegis_300021
+    Name: Bone Detardeurus Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+    Script: |
+      bonus2 bAddRace,RC_Undead,40;
+      bonus2 bAddRace,RC_Dragon,40;
+      bonus2 bAddEle,Ele_Ghost,40;
+      bonus2 bAddEle,Ele_Undead,40;
   - Id: 300127
     AegisName: aegis_300127
     Name: Wolf Card
@@ -37956,8 +38380,63 @@ Body:
     Script: |
       bonus bLongAtkRate,25;
       bonus bPerfectHitRate,5;
+  - Id: 310076
+    AegisName: aegis_310076
+    Name: STR Blessing
+    Type: Card
+    Script: |
+      bonus bStr,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus2 bAddClass,Class_All,10;
+  - Id: 310077
+    AegisName: aegis_310077
+    Name: AGI Blessing
+    Type: Card
+    Script: |
+      bonus bAgi,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus bLongAtkRate,10;
+  - Id: 310078
+    AegisName: aegis_310078
+    Name: VIT Blessing
+    Type: Card
+    Script: |
+      bonus bVit,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+  - Id: 310079
+    AegisName: aegis_310079
+    Name: DEX Blessing
+    Type: Card
+    Script: |
+      bonus bDex,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus bAspdRate,10;
+      bonus bVariableCastrate,-10;
+  - Id: 310080
+    AegisName: aegis_310080
+    Name: INT Blessing
+    Type: Card
+    Script: |
+      bonus bInt,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus bMatkRate,10;
+  - Id: 310081
+    AegisName: aegis_310081
+    Name: LUK Blessing
+    Type: Card
+    Script: |
+      bonus bLuk,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus bCritAtkRate,15;
   - Id: 1000235
     AegisName: aegis_1000235
     Name: Great Hunter's Mark    # !todo check english name
     Type: Etc
-
