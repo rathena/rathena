@@ -3967,7 +3967,7 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`location_cos
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`location_costume_head_Mid`,`view`) VALUES (19624,'C_Round_Eyes','Costume Blank Eyes','Armor',true,185);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`location_costume_head_top`,`view`) VALUES (19625,'C_Bunny_Band','Costume Bunny Band','Armor',true,15);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`location_costume_head_top`,`equip_level_min`,`view`) VALUES (19627,'C_Satellite_Hairband','Costume Satellite Hairband','Armor',true,1,266);
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`location_costume_head_top`,`equip_level_min`,`view`) VALUES (19628,'C_Headset','Costume Headset','Armor',true,1,97);
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`location_costume_head_top`,`equip_level_min`,`view`) VALUES (19628,'C_Headset','Costume Headset','Armor',true,20,87);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`location_costume_head_top`,`equip_level_min`,`view`) VALUES (19629,'C_Tiara','Costume Tiara','Armor',20,true,1,19);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`location_costume_head_top`,`equip_level_min`,`view`) VALUES (19630,'C_Crown','Costume Crown','Armor',10,true,1,45);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`location_costume_head_top`,`equip_level_min`,`view`) VALUES (19631,'C_Poring_Fedora_Hat','Costume Poring Fedora Hat','Armor',true,1,919);

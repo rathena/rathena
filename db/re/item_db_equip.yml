@@ -73344,10 +73344,10 @@ Body:
     AegisName: C_Headset
     Name: Costume Headset
     Type: Armor
+    View: 87
     Locations:
       Costume_Head_Top: true
-    EquipLevelMin: 1
-    View: 97
+    EquipLevelMin: 20
   - Id: 19629
     AegisName: C_Tiara
     Name: Costume Tiara
