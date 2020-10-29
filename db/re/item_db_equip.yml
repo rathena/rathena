@@ -16221,6 +16221,38 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bBaseAtk,4*.@r; bonus bLongAtkRate,10; if (.@r >= 9) bonus2 bSkillAtk,"SR_KNUCKLEARROW",40; if (.@r >= 11) bonus bDelayrate,-7;
+  - Id: 1870
+    AegisName: aegis_1870
+    Name: Royal Knuckle
+    Type: Weapon
+    SubType: Knuckle
+    Weight: 1500
+    Attack: 190
+    Range: 1
+    Slots: 2
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,15;
+      bonus bBaseAtk,4*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",20;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+         bonus2 bSkillCooldown,"SR_RAMPAGEBLASTER",-1000;
+      }
   - Id: 1900
     AegisName: Violin_of_Vicious_Mind
     Name: Violin of Vicious Mind
@@ -54967,6 +54999,35 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bLongAtkRate,2*(.@r/3); bonus bBaseAtk,10*(.@r/2); if (.@r >= 7) { bonus2 bSkillAtk,"KO_HUUMARANKA",30; if (.@r >= 9) { bonus2 bSkillCooldown,"KO_HUUMARANKA",-1000; if (.@r >= 11) { bonus2 bAddEle,Ele_Fire,15; bonus2 bAddEle,Ele_Dark,15; bonus2 bAddRace,RC_Undead,30; bonus2 bAddRace,RC_Demon,30; } } }
+  - Id: 13347
+    AegisName: aegis_13347
+    Name: Royal Huuma Shuriken
+    Type: Weapon
+    SubType: Huuma
+    Weight: 1500
+    Attack: 240
+    Range: 1
+    Slots: 2
+    Jobs:
+      Ninja: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,15;
+      bonus bUnbreakableWeapon;
+      bonus bBaseAtk,4*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KO_JYUMONJIKIRI",20;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+         bonus2 bSkillCooldown,"KO_JYUMONJIKIRI",-2000;
+      }
   - Id: 13400
     AegisName: Cutlas_
     Name: Cutlus
@@ -62466,6 +62527,70 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bLongAtkRate,10+.@r; if (.@r>=9) bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",30; if (.@r>=11) bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
+  - Id: 18191
+    AegisName: aegis_18191
+    Name: Royal Knight Bow
+    Type: Weapon
+    SubType: Bow
+    Weight: 1500
+    Attack: 180
+    Range: 5
+    Slots: 2
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,15;
+      bonus bBaseAtk,4*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SC_TRIANGLESHOT",20;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+      }
+  - Id: 18198
+    AegisName: aegis_18198
+    Name: Royal Knight Archer Bow
+    Type: Weapon
+    SubType: Bow
+    Weight: 1700
+    Attack: 190
+    Range: 5
+    Slots: 2
+    Jobs:
+      Hunter: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,15;
+      bonus bBaseAtk,4*.@r;
+      if (.@r>=9) {
+         bonus bDelayrate,-12;
+         bonus2 bSkillAtk,"RA_AIMEDBOLT",25;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+         bonus2 bSkillCooldown,"RA_AIMEDBOLT",-1000;
+      }
   - Id: 18500
     AegisName: Cheer_Scarf6
     Name: Cheer Scarf6
@@ -70783,6 +70908,664 @@ Body:
       hateffect(HAT_EF_RESONATETAEGO,true);
     UnEquipScript: |
       hateffect(HAT_EF_RESONATETAEGO,false);
+  - Id: 19472
+    AegisName: aegis_19472
+    Name: Circlet of Costume Time    # !todo check english name
+    Type: Armor
+    View: 1891
+    Locations:
+      Costume_Head_Top: true
+  - Id: 19474
+    AegisName: S_Circlet_Of_Time_RK
+    Name: Temporal Circlet (Rune Knight)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Knight: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHP,250*(.@r/2);
+      bonus bMaxSPrate,2*(.@r/3);
+      bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",15*(.@r/3);
+      bonus2 bSkillAtk,"RK_DRAGONBREATH",15*(.@r/3);
+      bonus bLongAtkRate,5*(.@r/4);
+      if (.@r>=11) {
+         bonus bDelayrate,-5;
+      }
+  - Id: 19475
+    AegisName: S_Circlet_Of_Time_LG
+    Name: Temporal Circlet (Royal Guard)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bAspdRate,2*(.@r/3);
+      bonus2 bSkillAtk,"LG_BANISHINGPOINT",15*(.@r/3);
+      bonus2 bSkillAtk,"LG_CANNONSPEAR",15*(.@r/3);
+      bonus bLongAtkRate,5*(.@r/4);
+      if (.@r>=11) {
+         bonus2 bAddClass,Class_All,5;
+      }
+  - Id: 19476
+    AegisName: S_Circlet_Of_Time_NC
+    Name: Temporal Circlet (Mechanic)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Blacksmith: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bAspdRate,2*(.@r/3);
+      bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",10*(.@r/3);
+      bonus2 bSkillAtk,"NC_ARMSCANNON",10*(.@r/3);
+      bonus bLongAtkRate,5*(.@r/4);
+      if (.@r>=11) {
+         bonus bDelayrate,-5;
+      }
+  - Id: 19477
+    AegisName: S_Circlet_Of_Time_GN
+    Name: Temporal Circlet (Genetic)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bAspdRate,2*(.@r/3);
+      bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",20*(.@r/3);
+      bonus2 bSkillAtk,"GN_CART_TORNADO",20*(.@r/3);
+      bonus2 bAddSize,Size_All,2*(.@r/4);
+      if (.@r>=11) {
+         bonus bDelayrate,-5;
+      }
+  - Id: 19478
+    AegisName: S_Circlet_Of_Time_GC
+    Name: Temporal Circlet (Guillotine Cross)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bAspdRate,2*(.@r/3);
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",20*(.@r/3);
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",20*(.@r/3);
+      bonus2 bAddClass,Class_All,2*(.@r/4);
+      if (.@r>=11) {
+         bonus bDelayrate,-5;
+      }
+  - Id: 19479
+    AegisName: S_Circlet_Of_Time_SC
+    Name: Temporal Circlet (Shadow Chaser)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bAspdRate,2*(.@r/3);
+      bonus2 bSkillAtk,"SC_FATALMENACE",30*(.@r/3);
+      bonus2 bSkillAtk,"SC_FEINTBOMB",30*(.@r/3);
+      bonus2 bAddClass,Class_All,2*(.@r/4);
+      if (.@r>=11) {
+         bonus bDelayrate,-5;
+      }
+  - Id: 19480
+    AegisName: S_Circlet_Of_Time_AB
+    Name: Temporal Circlet (Archbishop)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,15*(.@r/2);
+      bonus bVariableCastrate,-3*(.@r/3);
+      bonus2 bSkillAtk,"AB_ADORAMUS",20*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Holy,7*(.@r/4);
+      if (.@r>=11) {
+         bonus bMatkRate,5;
+      }
+  - Id: 19481
+    AegisName: S_Circlet_Of_Time_SR
+    Name: Temporal Circlet (Sura)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bMaxHPrate,2*(.@r/3);
+      bonus2 bSkillAtk,"SR_KNUCKLEARROW",10*(.@r/3);
+      bonus2 bSkillAtk,"SR_TIGERCANNON",10*(.@r/3);
+      bonus bLongAtkRate,5*(.@r/4);
+      if (.@r>=11) {
+         bonus2 bAddClass,Class_All,5;
+      }
+  - Id: 19482
+    AegisName: S_Circlet_Of_Time_WL
+    Name: Temporal Circlet (Warlock)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,15*(.@r/2);
+      bonus bVariableCastrate,-3*(.@r/3);
+      bonus2 bSkillAtk,"WL_CHAINLIGHTNING",20*(.@r/3);
+      bonus2 bSkillAtk,"WL_JACKFROST",20*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Wind,5*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Water,5*(.@r/4);
+      if (.@r>=11) {
+         bonus bMatkRate,5;
+      }
+  - Id: 19483
+    AegisName: S_Circlet_Of_Time_SO
+    Name: Temporal Circlet (Sorcerer)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,15*(.@r/2);
+      bonus bVariableCastrate,-3*(.@r/3);
+      bonus2 bSkillAtk,"SO_DIAMONDDUST",20*(.@r/3);
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",20*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Neutral,5*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Water,5*(.@r/4);
+      if (.@r>=11) {
+         bonus bMatkRate,5;
+      }
+  - Id: 19484
+    AegisName: S_Circlet_Of_Time_RA
+    Name: Temporal Circlet (Ranger)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Hunter: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bCritAtkRate,5*(.@r/3);
+      bonus2 bSkillAtk,"RA_ARROWSTORM",20*(.@r/3);
+      bonus2 bSkillAtk,"RA_AIMEDBOLT",20*(.@r/3);
+      bonus bLongAtkRate,5*(.@r/4);
+      if (.@r>=11) {
+         bonus2 bSkillCooldown,"RA_ARROWSTORM",-1000;
+      }
+  - Id: 19485
+    AegisName: S_Circlet_Of_Time_WM
+    Name: Temporal Circlet (Wanderer & Minstrel)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,15*(.@r/2);
+      bonus bVariableCastrate,-5*(.@r/3);
+      bonus2 bSkillAtk,"WM_METALICSOUND",20*(.@r/3);
+      bonus2 bSkillAtk,"WM_REVERBERATION",20*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
+      if (.@r>=11) {
+         bonus bMatkRate,5;
+      }
+  - Id: 19486
+    AegisName: S_Circlet_Of_Time_SJ
+    Name: Temporal Circlet (Star Emperor)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      StarGladiator: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15*(.@r/2);
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",30*(.@r/3);
+      bonus2 bAddSize,Size_All,2*(.@r/4);
+      if (.@r>=11) {
+         bonus2 bAddClass,Class_All,5;
+      }
+  - Id: 19487
+    AegisName: S_Circlet_Of_Time_SP
+    Name: Temporal Circlet (Soul Reaper)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      SoulLinker: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,15*(.@r/2);
+      bonus bVariableCastrate,-5*(.@r/3);
+      bonus2 bSkillAtk,"SP_CURSEEXPLOSION",20*(.@r/3);
+      bonus2 bSkillAtk,"SP_SWHOO",20*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Dark,7*(.@r/4);
+      if (.@r>=11) {
+         bonus bMatkRate,5;
+      }
+  - Id: 19488
+    AegisName: S_Circlet_Of_Time_RL
+    Name: Temporal Circlet (Rebellion)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Rebellion: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bAspdRate,2*(.@r/3);
+      bonus2 bSkillAtk,"RL_BANISHING_BUSTER",20*(.@r/3);
+      bonus2 bSkillAtk,"RL_R_TRIP",20*(.@r/3);
+      bonus bLongAtkRate,5*(.@r/4);
+      if (.@r>=11) {
+         bonus bDelayrate,-5;
+      }
+  - Id: 19489
+    AegisName: S_Circlet_Of_Time_OB
+    Name: Temporal Circlet (Oboro)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      KagerouOboro: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,15*(.@r/2);
+      bonus bAspdRate,2*(.@r/3);
+      bonus2 bSkillAtk,"NJ_HYOUSENSOU",30*(.@r/3);
+      bonus2 bSkillAtk,"NJ_HUUJIN",30*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Wind,5*(.@r/4);
+      bonus2 bMagicAtkEle,Ele_Water,5*(.@r/4);
+      if (.@r>=11) {
+         bonus bMatkRate,5;
+      }
+  - Id: 19490
+    AegisName: S_Circlet_Of_Time_KG
+    Name: Temporal Circlet (Kagerou)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      KagerouOboro: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bAspdRate,2*(.@r/3);
+      bonus2 bSkillAtk,"KO_BAKURETSU",20*(.@r/3);
+      bonus2 bSkillAtk,"KO_JYUMONJIKIRI",20*(.@r/3);
+      bonus2 bAddSize,Size_All,2*(.@r/4);
+      if (.@r>=11) {
+         bonus2 bAddClass,Class_All,5;
+      }
+  - Id: 19491
+    AegisName: S_Circlet_Of_Time_NV
+    Name: Temporal Circlet (Super Novice)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,10*(.@r/2);
+      bonus bBaseAtk,10*(.@r/2);
+      bonus bAspdRate,4*(.@r/3);
+      bonus bVariableCastrate,-4*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_All,5*(.@r/4);
+      bonus bCritAtkRate,5*(.@r/4);
+      if (.@r>=11) {
+         bonus bDelayrate,-5;
+      }
+  - Id: 19492
+    AegisName: S_Circlet_Of_Time_SU
+    Name: Temporal Circlet (Summoner)
+    Type: Armor
+    View: 1892
+    Defense: 10
+    Slots: 1
+    Jobs:
+      Summoner: true
+    Classes:
+      Normal: true
+      Upper: true
+      Baby: true
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 170
+    Refineable: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,15*(.@r/2);
+      bonus bAspdRate,2*(.@r/3);
+      bonus2 bSkillAtk,"SU_CN_METEOR",20*(.@r/3);
+      bonus2 bSkillAtk,"SU_PICKYPECK",20*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Neutral,7*(.@r/4);
+      if (.@r>=11) {
+         bonus bDelayrate,-5;
+      }
   - Id: 19500
     AegisName: T_Mr_Smile
     Name: T Mr Smile
@@ -81187,6 +81970,39 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bLongAtkRate,.@r; bonus2 bAddClass,Class_All,5; if (.@r>=9) { bonus2 bSkillAtk,"LK_SPIRALPIERCE",30; bonus2 bSkillAtk,"RK_SONICWAVE",30; } if (.@r>=11) { bonus2 bSkillCooldown,"RK_SONICWAVE",-1500; }
+  - Id: 21055
+    AegisName: aegis_21055
+    Name: Guardian Knight Claymore
+    Type: Weapon
+    SubType: 2hSword
+    Weight: 4000
+    Attack: 280
+    Range: 1
+    Slots: 2
+    Jobs:
+      Knight: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,5;
+      bonus bBaseAtk,4*.@r;
+      if (.@r>=9) {
+         bonus bCritAtkRate,25;
+         bonus bCritical,5;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+         bonus bUnbreakableWeapon;
+      }
   - Id: 21058
     AegisName: Up_Dragonic_Slayer
     Name: Patent Dragonic Slayer
@@ -87986,6 +88802,108 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bMatk,4*.@r; bonus bUnbreakableWeapon; bonus2 bMagicAtkEle,Ele_Holy,5; if (.@r >= 9) { bonus2 bSkillAtk,"PR_MAGNUS",(.@r>=11) ? 50 : 30; bonus2 bSkillAtk,"AB_JUDEX",30; }
+  - Id: 26165
+    AegisName: aegis_26165
+    Name: Royal Cleric Staff
+    Type: Weapon
+    SubType: Staff
+    Weight: 1000
+    Attack: 100
+    Range: 1
+    Slots: 2
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      bonus bMatk,170;
+      bonus bUnbreakableWeapon;
+      bonus bMatk,4*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"AB_ADORAMUS",20;
+      }
+      if (.@r>=11) {
+         bonus2 bMagicAddRace,RC_Undead,20;
+         bonus2 bMagicAddRace,RC_Angel,20;
+      }
+  - Id: 26166
+    AegisName: aegis_26166
+    Name: Royal Magician Wand
+    Type: Weapon
+    SubType: Staff
+    Weight: 800
+    Attack: 80
+    Range: 1
+    Slots: 2
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_Fire,5;
+      bonus bMatk,180;
+      bonus bUnbreakableWeapon;
+      bonus bMatk,4*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"WL_HELLINFERNO",20;
+         bonus2 bSkillAtk,"WL_CRIMSONROCK",20;
+      }
+      if (.@r>=11) {
+         bonus2 bMagicAddRace,RC_Undead,20;
+         bonus2 bMagicAddRace,RC_Angel,20;
+      }
+  - Id: 26172
+    AegisName: aegis_26172
+    Name: Royal Foxtail
+    Type: Weapon
+    SubType: Staff
+    Weight: 1200
+    Attack: 275
+    Range: 1
+    Slots: 2
+    Jobs:
+      Summoner: true
+    Classes:
+      Normal: true
+      Upper: true
+      Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      bonus bMatk,350;
+      bonus bUnbreakableWeapon;
+      bonus bMatk,4*.@r;
+      bonus bBaseAtk,4*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SU_CN_METEOR",20;
+         bonus2 bSkillAtk,"SU_PICKYPECK",20;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+      }
   - Id: 26200
     AegisName: Hippie_Rope
     Name: Hippie Rope
@@ -88056,6 +88974,43 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bVariableCastrate,-10; bonus bLongAtkRate,.@r; if (.@r>=9) bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1000; if (.@r>=11) bonus2 bSkillUseSPrate,"WM_SEVERE_RAINSTORM",20;
+  - Id: 26216
+    AegisName: aegis_26216
+    Name: Royal Whip
+    Type: Weapon
+    SubType: Whip
+    Weight: 1000
+    Attack: 100
+    Range: 2
+    Slots: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Gender: Female
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_Neutral,10;
+      bonus bMatk,180;
+      bonus bUnbreakableWeapon;
+      bonus bMatk,4*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillCooldown,"WM_METALICSOUND",-1000;
+         bonus2 bSkillAtk,"WM_METALICSOUND",20;
+         bonus2 bSkillAtk,"WM_REVERBERATION",20;
+      }
+      if (.@r>=11) {
+         bonus2 bMagicAddRace,RC_Undead,20;
+         bonus2 bMagicAddRace,RC_Angel,20;
+         bonus2 bSkillCooldown,"WM_METALICSOUND",-1000;
+      }
   - Id: 28000
     AegisName: Thanos_Katar
     Name: Thanos Katar
@@ -88371,6 +89326,38 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bCritAtkRate,5; bonus bBaseAtk,4*.@r; if (.@r>=9) bonus2 bAddSize,Size_All,15; if (.@r>=11) { bonus bUnbreakableWeapon; bonus2 bAddClass,Class_All,7; }
+  - Id: 28046
+    AegisName: aegis_28046
+    Name: Royal Katar
+    Type: Weapon
+    SubType: Katar
+    Weight: 1500
+    Attack: 200
+    Range: 1
+    Slots: 2
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,5;
+      bonus bBaseAtk,5*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",20;
+         bonus2 bSkillAtk,"GC_ROLLINGCUTTER",20;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+      }
   - Id: 28100
     AegisName: Thanos_Axe
     Name: Thanos Axe
@@ -88682,6 +89669,44 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bBaseAtk,4*.@r; bonus bUnbreakableWeapon; bonus2 bSubSize,Size_Small,10; bonus2 bSubSize,Size_Medium,10; if (.@r>=9) { bonus2 bSkillCooldown,"NC_AXETORNADO",-1000; bonus2 bSkillCooldown,"NC_MAGMA_ERUPTION",-1000; } if (.@r>=11) bonus2 bSkillAtk,"NC_AXETORNADO",15;
+  - Id: 28141
+    AegisName: aegis_28141
+    Name: Guardian Knight Battle Axe
+    Type: Weapon
+    SubType: 1hAxe
+    Weight: 5000
+    Attack: 270
+    Range: 1
+    Slots: 2
+    Jobs:
+      Blacksmith: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubSize,Size_Medium,10;
+      bonus2 bMagicSubSize,Size_Medium,10;
+      bonus2 bSubSize,Size_Large,10;
+      bonus2 bMagicSubSize,Size_Large,10;
+      bonus2 bAddClass,Class_All,5;
+      bonus bUnbreakableWeapon;
+      bonus bLongAtkRate,.@r;
+      if (.@r>=9) {
+         bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;
+         bonus2 bSkillAtk,"NC_AXETORNADO",20;
+         bonus2 bSkillAtk,"NC_MAGMA_ERUPTION",20;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+      }
   - Id: 28200
     AegisName: END_OF_HORIZO
     Name: End Of The Horizon
@@ -91346,6 +92371,41 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bMatk,4*.@r; if (.@r>=9) .@val = 30; if (.@r>=11) { bonus2 bSkillAtk,"WZ_EARTHSPIKE",50; bonus2 bSkillAtk,"WZ_HEAVENDRIVE",50; } bonus2 bSkillAtk,"MG_FIREBOLT",20+.@val; bonus2 bSkillAtk,"MG_COLDBOLT",20+.@val; bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",20+.@val;
+  - Id: 28636
+    AegisName: aegis_28636
+    Name: Royal Sage Book
+    Type: Weapon
+    SubType: Book
+    Weight: 1000
+    Attack: 90
+    Range: 1
+    Slots: 2
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_Wind,5;
+      bonus2 bMagicAtkEle,Ele_Water,5;
+      bonus bMatk,170;
+      bonus bUnbreakableWeapon;
+      bonus bMatk,4*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SO_DIAMONDDUST",20;
+         bonus2 bSkillAtk,"SO_VARETYR_SPEAR",20;
+      }
+      if (.@r>=11) {
+         bonus2 bMagicAddRace,RC_Undead,20;
+         bonus2 bMagicAddRace,RC_Angel,20;
+      }
   - Id: 28700
     AegisName: Ru_Gold_Dagger
     Name: Ru Gold Dagger
@@ -91827,6 +92887,81 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bMatk,4*.@r; bonus bMatkRate,5; if (.@r>=9) { bonus2 bMagicAtkEle,Ele_Fire,15; bonus2 bMagicAtkEle,Ele_Wind,15; bonus2 bMagicAtkEle,Ele_Water,15; bonus2 bMagicAtkEle,Ele_Earth,15; } if (.@r>=11) autobonus "{ bonus bMatk,100; bonus2 bMagicAddSize,Size_All,30; }",50,10000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; /* Unknow Rates and Specialeffect */
+  - Id: 28774
+    AegisName: aegis_28774
+    Name: Royal Gladius (R)
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 200
+    Range: 1
+    Slots: 2
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      bonus2 bAddClass,Class_All,5;
+  - Id: 28775
+    AegisName: aegis_28775
+    Name: Royal Gladius (L)
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1000
+    Attack: 100
+    Range: 1
+    Slots: 3
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+  - Id: 28776
+    AegisName: aegis_28776
+    Name: Royal Magician Dagger
+    Type: Weapon
+    SubType: Dagger
+    Weight: 1500
+    Attack: 200
+    Range: 1
+    Slots: 2
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      bonus bMatk,170;
+      bonus bMatk,4*.@r;
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Neutral,15;
+         bonus2 bMagicAtkEle,Ele_Fire,15;
+      }
+      if (.@r>=11) {
+         bonus2 bMagicAddRace,RC_Undead,20;
+         bonus2 bMagicAddRace,RC_Angel,20;
+      }
   - Id: 28900
     AegisName: Guardsmen's_Shield
     Name: Guardsmen's Shield
@@ -97499,6 +98634,36 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bDelayrate,-.@r; bonus2 bAddClass,Class_All,5; if (.@r>=9) bonus2 bSkillAtk,"LG_CANNONSPEAR",20; if (.@r>=11) bonus2 bSkillAtk,"LG_OVERBRAND",20;
+  - Id: 32027
+    AegisName: aegis_32027
+    Name: Guardian Knight Spear
+    Type: Weapon
+    SubType: 1hSpear
+    Weight: 4000
+    Attack: 205
+    Range: 3
+    Slots: 2
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"LG_BANISHINGPOINT",20;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+      }
   - Id: 32107
     AegisName: Black_Circle
     Name: Black Circle
@@ -97546,6 +98711,43 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bVariableCastrate,-10; bonus bLongAtkRate,.@r; if (.@r>=9) bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1000; if (.@r>=11) bonus2 bSkillUseSPrate,"WM_SEVERE_RAINSTORM",20;
+  - Id: 32111
+    AegisName: aegis_32111
+    Name: Royal Chello
+    Type: Weapon
+    SubType: Musical
+    Weight: 1000
+    Attack: 90
+    Range: 1
+    Slots: 2
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Gender: Male
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_Neutral,10;
+      bonus bMatk,180;
+      bonus bUnbreakableWeapon;
+      bonus bMatk,4*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillCooldown,"WM_METALICSOUND",-1000;
+         bonus2 bSkillAtk,"WM_METALICSOUND",20;
+         bonus2 bSkillAtk,"WM_REVERBERATION",20;
+      }
+      if (.@r>=11) {
+         bonus2 bMagicAddRace,RC_Undead,20;
+         bonus2 bMagicAddRace,RC_Angel,20;
+         bonus2 bSkillCooldown,"WM_METALICSOUND",-1000;
+      }
   - Id: 32203
     AegisName: Accelerator_Chip
     Name: Accelerator Chip
@@ -97872,6 +99074,35 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bBaseAtk,10*(.@r/2); bonus bAspdRate,3*(.@r/3); if (.@r >= 7) { bonus bAspd,1; bonus2 bAddClass,Class_All,5; if (.@r >= 9) { bonus bCritAtkRate,20; if (.@r >= 11) { autobonus3 "{ bonus bCritical,20; bonus bLongAtkRate,15; }",1000,60000,"RL_HEAT_BARREL"; } } }
+  - Id: 32304
+    AegisName: aegis_32304
+    Name: Royal Revolver
+    Type: Weapon
+    SubType: Revolver
+    Weight: 700
+    Attack: 150
+    Range: 7
+    Slots: 2
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,15;
+      bonus bBaseAtk,4*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"RL_FIREDANCE",20;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+         bonus2 bSkillCooldown,"RL_HEAT_BARREL",-5000;
+      }
   - Id: 32350
     AegisName: Farthezan
     Name: Farthezan
@@ -97919,6 +99150,139 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus2 bSkillCooldown,"GN_SPORE_EXPLOSION",-1000; bonus bBaseAtk,4*.@r; if (.@r>=11) .@val = 50; else if (.@r>=9) .@val = 30; bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",.@val;
+  - Id: 32353
+    AegisName: aegis_32353
+    Name: Guardian Knight Jewel Sword
+    Type: Weapon
+    SubType: 1hSword
+    Weight: 4000
+    Attack: 130
+    MagicAttack: 180
+    Range: 1
+    Slots: 2
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,.@r;
+      bonus2 bSkillAtk,"CR_GRANDCROSS",2*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"LG_SHIELDPRESS",20;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bMagicAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+         bonus2 bMagicAddRace,RC_Angel,20;
+      }
+  - Id: 32401
+    AegisName: aegis_32401
+    Name: Royal Pillar
+    Type: Weapon
+    SubType: Mace
+    Weight: 5000
+    Attack: 220
+    Range: 1
+    Slots: 2
+    Jobs:
+      Blacksmith: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,5;
+      bonus bUnbreakableWeapon;
+      bonus bLongAtkRate,.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",20;
+         bonus2 bSkillAtk,"NC_ARMSCANNON",20;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+      }
+  - Id: 32402
+    AegisName: aegis_32402
+    Name: Royal Syringe
+    Type: Weapon
+    SubType: Mace
+    Weight: 1500
+    Attack: 210
+    Range: 1
+    Slots: 2
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,5;
+      bonus bUnbreakableWeapon;
+      bonus bLongAtkRate,.@r;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"GN_CARTCANNON",20;
+         bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",20;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+      }
+  - Id: 32403
+    AegisName: aegis_32403
+    Name: Royal Alchemy Staff
+    Type: Weapon
+    SubType: Mace
+    Weight: 1500
+    Attack: 200
+    Range: 1
+    Slots: 2
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 170
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,5;
+      bonus bUnbreakableWeapon;
+      bonus bBaseAtk,4*.@r;
+      if (.@r>=9) {
+         bonus2 bSkillCooldown,"GN_CRAZYWEED",-1000;
+         bonus2 bSkillAtk,"GN_CRAZYWEED",30;
+      }
+      if (.@r>=11) {
+         bonus2 bAddRace,RC_Undead,20;
+         bonus2 bAddRace,RC_Angel,20;
+      }
   - Id: 400045
     AegisName: aegis_400045
     Name: Pierced apple    # !todo check english name
@@ -102583,4 +103947,3 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bLongAtkRate,3*(.@r/2); bonus bBaseAtk,20*(.@r/3); if (.@r>=7){ bonus2 bSkillAtk,"RL_D_TAIL",15; bonus2 bSkillCooldown,"RL_D_TAIL",-1000; } if (.@r>=9){ bonus2 bSkillAtk,"RL_D_TAIL",20; } if (.@r>=11){ bonus2 bAddEle,Ele_All,15; }
-

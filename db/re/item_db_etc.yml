@@ -33999,6 +33999,33 @@ Body:
     Weight: 10
     Script: |
       autobonus "{ bonus bLuk,50; bonus2 bMagicAtkEle,Ele_All,10; bonus2 bHPLossRate,300,1000; }",20,10000,BF_MAGIC; /* unknown rate */
+  - Id: 25864
+    AegisName: aegis_25864
+    Name: Sealed Temporal Circlet
+    Type: Etc
+    Weight: 100
+    Flags:
+      BuyingStore: true
+  - Id: 25865
+    AegisName: aegis_25865
+    Name: Temperal Gemstone
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25866
+    AegisName: aegis_25866
+    Name: Temporal Spell
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 25867
+    AegisName: aegis_25867
+    Name: Temporal Fragment
+    Type: Etc
+    Flags:
+      BuyingStore: true
   - Id: 25892
     AegisName: aegis_25892
     Name: Deep Sea Shell
@@ -35862,6 +35889,89 @@ Body:
       Right_Accessory: true
     Script: |
       bonus bAspd,1;
+  - Id: 27381
+    AegisName: aegis_27381
+    Name: Himmelmez's Phantom Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Neutral,100;
+      bonus2 bMagicAtkEle,Ele_Holy,100;
+      bonus2 bSubEle,Ele_All,-30;
+  - Id: 27382
+    AegisName: aegis_27382
+    Name: Prime Corruption Root Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Script: |
+      bonus bMatk,30;
+      bonus bBaseAtk,30;
+  - Id: 27383
+    AegisName: aegis_27383
+    Name: Amdarais's Phantom Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Script: |
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,5;
+  - Id: 27384
+    AegisName: aegis_27384
+    Name: Mutated White Knight Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Script: |
+      bonus bMatk,15;
+      bonus2 bMagicAddSize,Size_Medium,20;
+      bonus2 bMagicAddSize,Size_Large,20;
+  - Id: 27385
+    AegisName: aegis_27385
+    Name: Mutated Khalitzburg Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Hand: true
+    Script: |
+      bonus bMdef,10;
+      bonus2 bSubSize,Size_Medium,25;
+      bonus2 bMagicSubSize,Size_Medium,25;
+      bonus2 bSubSize,Size_Large,25;
+      bonus2 bMagicSubSize,Size_Large,25;
+  - Id: 27386
+    AegisName: aegis_27386
+    Name: Cursed Raydric Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Script: |
+      bonus2 bAddRace,RC_Undead,5;
+  - Id: 27387
+    AegisName: aegis_27387
+    Name: Cursed Raydric Archer Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Script: |
+      bonus2 bAddRace,RC_Demon,5;
+  - Id: 27388
+    AegisName: aegis_27388
+    Name: Cursed Servant Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+      Left_Accessory: true
+    Script: |
+      bonus bHPrecovRate,30;
   - Id: 29000
     AegisName: Rune_of_Intellect_Lv_1
     Name: Rune of Intellect Lv 1
@@ -37288,6 +37398,168 @@ Body:
     Name: Alphoccio's Memory
     Type: Card
     Buy: 20
+  - Id: 29672
+    AegisName: aegis_29672
+    Name: Temporal Jewel (STR) Lv 1
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bBaseAtk,2*(.@r/2);
+      bonus bHit,3*(.@r/2);
+      bonus2 bAddClass,Class_All,(.@r/5);
+  - Id: 29673
+    AegisName: aegis_29673
+    Name: Temporal Jewel (STR) Lv 2
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bBaseAtk,4*(.@r/2);
+      bonus bHit,5*(.@r/2);
+      bonus2 bAddClass,Class_All,2*(.@r/5);
+  - Id: 29674
+    AegisName: aegis_29674
+    Name: Temporal Jewel (STR) Lv 3
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bBaseAtk,7*(.@r/2);
+      bonus bHit,7*(.@r/2);
+      bonus2 bAddClass,Class_All,3*(.@r/5);
+  - Id: 29675
+    AegisName: aegis_29675
+    Name: Temporal Jewel (AGI) Lv 1
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bAspdRate,(.@r/2);
+      bonus bFlee,4*(.@r/2);
+      bonus bAspd,(.@r/5);
+  - Id: 29676
+    AegisName: aegis_29676
+    Name: Temporal Jewel (AGI) Lv 2
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bAspdRate,3*(.@r/2);
+      bonus bFlee,5*(.@r/2);
+      bonus bAspd,(.@r/5);
+  - Id: 29677
+    AegisName: aegis_29677
+    Name: Temporal Jewel (AGI) Lv 3
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bAspdRate,5*(.@r/2);
+      bonus bFlee,7*(.@r/2);
+      bonus bAspd,(.@r/5);
+  - Id: 29678
+    AegisName: aegis_29678
+    Name: Temporal Jewel (VIT) Lv 1
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bDef,5*(.@r/2);
+      bonus bMaxHP,200*(.@r/2);
+      bonus bMaxHPrate,(.@r/5);
+  - Id: 29679
+    AegisName: aegis_29679
+    Name: Temporal Jewel (VIT) Lv 2
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bDef,7*(.@r/2);
+      bonus bMaxHP,300*(.@r/2);
+      bonus bMaxHPrate,2*(.@r/5);
+  - Id: 29680
+    AegisName: aegis_29680
+    Name: Temporal Jewel (VIT) Lv 3
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bDef,10*(.@r/2);
+      bonus bMaxHP,500*(.@r/2);
+      bonus bMaxHPrate,3*(.@r/5);
+  - Id: 29681
+    AegisName: aegis_29681
+    Name: Temporal Jewel (INT) Lv 1
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bHealPower,(.@r/2);
+      bonus bMatk,2*(.@r/2);
+      bonus bMatkRate,(.@r/5);
+  - Id: 29682
+    AegisName: aegis_29682
+    Name: Temporal Jewel (INT) Lv 2
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bHealPower,3*(.@r/2);
+      bonus bMatk,4*(.@r/2);
+      bonus bMatkRate,2*(.@r/5);
+  - Id: 29683
+    AegisName: aegis_29683
+    Name: Temporal Jewel (INT) Lv 3
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bHealPower,5*(.@r/2);
+      bonus bMatk,7*(.@r/2);
+      bonus bMatkRate,3*(.@r/5);
+  - Id: 29684
+    AegisName: aegis_29684
+    Name: Temporal Jewel (DEX) Lv 1
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bWeaponDamageRate,W_BOW,(.@r/2);
+      bonus bHit,2*(.@r/2);
+      bonus2 bAddClass,Class_All,(.@r/5);
+  - Id: 29685
+    AegisName: aegis_29685
+    Name: Temporal Jewel (DEX) Lv 2
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bWeaponDamageRate,W_BOW,2*(.@r/2);
+      bonus bHit,5*(.@r/2);
+      bonus2 bAddClass,Class_All,2*(.@r/5);
+  - Id: 29686
+    AegisName: aegis_29686
+    Name: Temporal Jewel (DEX) Lv 3
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus2 bWeaponDamageRate,W_BOW,3*(.@r/2);
+      bonus bHit,7*(.@r/2);
+      bonus2 bAddClass,Class_All,3*(.@r/5);
+  - Id: 29687
+    AegisName: aegis_29687
+    Name: Temporal Jewel (LUK) Lv 1
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bCritAtkRate,3*(.@r/2);
+      bonus bCritical,(.@r/2);
+      bonus2 bAddClass,Class_All,(.@r/5);
+  - Id: 29688
+    AegisName: aegis_29688
+    Name: Temporal Jewel (LUK) Lv 2
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bCritAtkRate,6*(.@r/2);
+      bonus bCritical,2*(.@r/2);
+      bonus2 bAddClass,Class_All,2*(.@r/5);
+  - Id: 29689
+    AegisName: aegis_29689
+    Name: Temporal Jewel (LUK) Lv 3
+    Type: Card
+    Script: |
+      .@r = getequiprefinerycnt(EQI_HEAD_TOP);
+      bonus bCritAtkRate,9*(.@r/2);
+      bonus bCritical,3*(.@r/2);
+      bonus2 bAddClass,Class_All,3*(.@r/5);
   - Id: 31006
     AegisName: LoVA_Hades_Card
     Name: LoVA Hades Card
@@ -37688,3 +37960,4 @@ Body:
     AegisName: aegis_1000235
     Name: Great Hunter's Mark    # !todo check english name
     Type: Etc
+
