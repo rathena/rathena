@@ -38207,62 +38207,6 @@ Body:
       bonus2 bAddRace,RC_Dragon,40;
       bonus2 bAddEle,Ele_Ghost,40;
       bonus2 bAddEle,Ele_Undead,40;
-  - Id: 310076
-    AegisName: aegis_310076
-    Name: STR Blessing
-    Type: Card
-    Script: |
-      bonus bStr,10;
-      bonus bMdef,3;
-      bonus bDef,25;
-      bonus2 bAddClass,Class_All,10;
-  - Id: 310077
-    AegisName: aegis_310077
-    Name: AGI Blessing
-    Type: Card
-    Script: |
-      bonus bAgi,10;
-      bonus bMdef,3;
-      bonus bDef,25;
-      bonus bLongAtkRate,10;
-  - Id: 310078
-    AegisName: aegis_310078
-    Name: VIT Blessing
-    Type: Card
-    Script: |
-      bonus bVit,10;
-      bonus bMdef,3;
-      bonus bDef,25;
-      bonus bMaxHPrate,10;
-      bonus bMaxSPrate,10;
-  - Id: 310079
-    AegisName: aegis_310079
-    Name: DEX Blessing
-    Type: Card
-    Script: |
-      bonus bDex,10;
-      bonus bMdef,3;
-      bonus bDef,25;
-      bonus bAspdRate,10;
-      bonus bVariableCastrate,-10;
-  - Id: 310080
-    AegisName: aegis_310080
-    Name: INT Blessing
-    Type: Card
-    Script: |
-      bonus bInt,10;
-      bonus bMdef,3;
-      bonus bDef,25;
-      bonus bMatkRate,10;
-  - Id: 310081
-    AegisName: aegis_310081
-    Name: LUK Blessing
-    Type: Card
-    Script: |
-      bonus bLuk,10;
-      bonus bMdef,3;
-      bonus bDef,25;
-      bonus bCritAtkRate,15;
   - Id: 300127
     AegisName: aegis_300127
     Name: Wolf Card
@@ -38436,8 +38380,63 @@ Body:
     Script: |
       bonus bLongAtkRate,25;
       bonus bPerfectHitRate,5;
+  - Id: 310076
+    AegisName: aegis_310076
+    Name: STR Blessing
+    Type: Card
+    Script: |
+      bonus bStr,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus2 bAddClass,Class_All,10;
+  - Id: 310077
+    AegisName: aegis_310077
+    Name: AGI Blessing
+    Type: Card
+    Script: |
+      bonus bAgi,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus bLongAtkRate,10;
+  - Id: 310078
+    AegisName: aegis_310078
+    Name: VIT Blessing
+    Type: Card
+    Script: |
+      bonus bVit,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+  - Id: 310079
+    AegisName: aegis_310079
+    Name: DEX Blessing
+    Type: Card
+    Script: |
+      bonus bDex,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus bAspdRate,10;
+      bonus bVariableCastrate,-10;
+  - Id: 310080
+    AegisName: aegis_310080
+    Name: INT Blessing
+    Type: Card
+    Script: |
+      bonus bInt,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus bMatkRate,10;
+  - Id: 310081
+    AegisName: aegis_310081
+    Name: LUK Blessing
+    Type: Card
+    Script: |
+      bonus bLuk,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus bCritAtkRate,15;
   - Id: 1000235
     AegisName: aegis_1000235
     Name: Great Hunter's Mark    # !todo check english name
     Type: Etc
-
