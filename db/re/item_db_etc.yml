@@ -38207,239 +38207,6 @@ Body:
       bonus2 bAddRace,RC_Dragon,40;
       bonus2 bAddEle,Ele_Ghost,40;
       bonus2 bAddEle,Ele_Undead,40;
-  - Id: 300127
-    AegisName: aegis_300127
-    Name: Wolf Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Right_Hand: true
-  - Id: 300128
-    AegisName: aegis_300128
-    Name: Wolf Lugenburg Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Right_Hand: true
-    Script: |
-      bonus2 bAddRace,RC_Insect,15;
-      bonus2 bMagicAddRace,RC_Insect,15;
-  - Id: 300129
-    AegisName: aegis_300129
-    Name: Poe Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Right_Hand: true
-  - Id: 300130
-    AegisName: aegis_300130
-    Name: Poe Richard Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Right_Hand: true
-  - Id: 300140
-    AegisName: aegis_300140
-    Name: Deep Sea Sropho Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Right_Hand: true
-    Script: |
-      .@r = getrefine();
-      bonus2 bMagicAtkEle,Ele_Wind,3;
-      if (.@r>=9) {
-         bonus2 bMagicAtkEle,Ele_Wind,2;
-      }
-      if (.@r>=11) {
-         bonus2 bMagicAtkEle,Ele_Wind,5;
-      }
-  - Id: 300141
-    AegisName: aegis_300141
-    Name: Deep Sea Obeaune Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Right_Accessory: true
-      Left_Accessory: true
-    Script: |
-      bonus bMatk,30;
-  - Id: 300142
-    AegisName: aegis_300142
-    Name: Deep Sea Deviace Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Right_Hand: true
-    Script: |
-      .@r = getrefine();
-      bonus2 bAddRace,RC_Fish,5;
-      bonus2 bAddEle,Ele_Water,5;
-      if (.@r>=7) {
-         bonus2 bAddEle,Ele_Water,5;
-      }
-      if (.@r>=9) {
-         bonus2 bAddRace,RC_Fish,5;
-      }
-  - Id: 300143
-    AegisName: aegis_300143
-    Name: Deep Sea Marse Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Left_Hand: true
-    Script: |
-      bonus2 bSubEle,Ele_Earth,15;
-      bonus2 bSubRace,RC_Insect,15;
-  - Id: 300144
-    AegisName: aegis_300144
-    Name: Deep Sea Merman Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Shoes: true
-    Script: |
-      bonus bBaseAtk,4*(readparam(bStr)/15);
-  - Id: 300145
-    AegisName: aegis_300145
-    Name: Deep Sea Witch Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Garment: true
-    Script: |
-      bonus2 bMagicAtkEle,Ele_Fire,100;
-      bonus2 bMagicAtkEle,Ele_Dark,100;
-      bonus2 bSubEle,Ele_All,-30;
-  - Id: 300146
-    AegisName: aegis_300146
-    Name: Deep Sea Sedora Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Right_Hand: true
-    Script: |
-      bonus2 bCriticalAddRace,RC_Fish,30;
-  - Id: 300147
-    AegisName: aegis_300147
-    Name: Deep Sea Swordfish Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Head_Top: true
-      Head_Mid: true
-      Head_Low: true
-    Script: |
-      bonus2 bSubEle,Ele_Water,10;
-      if (getrefine()>=9) {
-         bonus2 bMagicAddEle,Ele_Water,10;
-      }
-  - Id: 300148
-    AegisName: aegis_300148
-    Name: Deep Sea Strouf Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Armor: true
-    Script: |
-      bonus bMaxHPrate,10;
-      bonus bMaxSPrate,5;
-      if (getrefine()>=9) {
-         bonus2 bMagicAddEle,Ele_Water,5;
-         bonus2 bAddEle,Ele_Water,5;
-      }
-  - Id: 300149
-    AegisName: aegis_300149
-    Name: Deep Sea Phen Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Garment: true
-    Script: |
-      bonus2 bSubEle,Ele_Neutral,15;
-      bonus2 bMagicAtkEle,Ele_Wind,3*getrefine();
-  - Id: 300150
-    AegisName: aegis_300150
-    Name: Deep Sea King Dramoh Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Head_Top: true
-      Head_Mid: true
-      Head_Low: true
-    Script: |
-      bonus bMaxHPrate,-5;
-      bonus2 bAddClass,Class_All,(getrefine()/3);
-  - Id: 300151
-    AegisName: aegis_300151
-    Name: Deep Sea Kraken Card
-    Type: Card
-    Weight: 10
-    Locations:
-      Right_Hand: true
-    Script: |
-      bonus bLongAtkRate,25;
-      bonus bPerfectHitRate,5;
-  - Id: 310076
-    AegisName: aegis_310076
-    Name: STR Blessing
-    Type: Card
-    Script: |
-      bonus bStr,10;
-      bonus bMdef,3;
-      bonus bDef,25;
-      bonus2 bAddClass,Class_All,10;
-  - Id: 310077
-    AegisName: aegis_310077
-    Name: AGI Blessing
-    Type: Card
-    Script: |
-      bonus bAgi,10;
-      bonus bMdef,3;
-      bonus bDef,25;
-      bonus bLongAtkRate,10;
-  - Id: 310078
-    AegisName: aegis_310078
-    Name: VIT Blessing
-    Type: Card
-    Script: |
-      bonus bVit,10;
-      bonus bMdef,3;
-      bonus bDef,25;
-      bonus bMaxHPrate,10;
-      bonus bMaxSPrate,10;
-  - Id: 310079
-    AegisName: aegis_310079
-    Name: DEX Blessing
-    Type: Card
-    Script: |
-      bonus bDex,10;
-      bonus bMdef,3;
-      bonus bDef,25;
-      bonus bAspdRate,10;
-      bonus bVariableCastrate,-10;
-  - Id: 310080
-    AegisName: aegis_310080
-    Name: INT Blessing
-    Type: Card
-    Script: |
-      bonus bInt,10;
-      bonus bMdef,3;
-      bonus bDef,25;
-      bonus bMatkRate,10;
-  - Id: 310081
-    AegisName: aegis_310081
-    Name: LUK Blessing
-    Type: Card
-    Script: |
-      bonus bLuk,10;
-      bonus bMdef,3;
-      bonus bDef,25;
-      bonus bCritAtkRate,15;
-  - Id: 1000235
-    AegisName: aegis_1000235
-    Name: Great Hunter's Mark    # !todo check english name
-    Type: Etc
   - Id: 300076
     AegisName: aegis_300076
     Name: Broken Security Beta Card
@@ -38537,8 +38304,8 @@ Body:
     Script: |
       if (getiteminfo(getequipid(EQI_HAND_R),11) == W_1HSPEAR || getiteminfo(getequipid(EQI_HAND_R),11) == W_2HSPEAR) {
          bonus bLongAtkRate,10;
-         bonus bLongAtkRate,2*(getrefine()/2);
       }
+      bonus bLongAtkRate,2*(getrefine()/2);
   - Id: 300083
     AegisName: aegis_300083
     Name: Dried Rafflesia Card
@@ -38593,8 +38360,8 @@ Body:
       .@r = getrefine();
       if (getiteminfo(getequipid(EQI_HAND_R),11) == W_2HSWORD) {
          bonus bShortAtkRate,10;
-         bonus bShortAtkRate,.@r;
       }
+      bonus bShortAtkRate,.@r;
       if (.@r>=11) {
          bonus bUnbreakableWeapon;
       }
@@ -38627,10 +38394,10 @@ Body:
       if (getiteminfo(getequipid(EQI_HAND_R),11) == W_BOOK) {
          bonus2 bAddClass,Class_All,5;
          bonus bHit,20;
-         bonus bShortAtkRate,.@r;
-         bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15*.@r;
-         bonus2 bSkillAtk,"SJ_FULLMOONKICK",15*.@r;
       }
+      bonus bShortAtkRate,.@r;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15*.@r;
+      bonus2 bSkillAtk,"SJ_FULLMOONKICK",15*.@r;
   - Id: 300089
     AegisName: aegis_300089
     Name: Verporta Card
@@ -38716,8 +38483,8 @@ Body:
     Script: |
       if (getiteminfo(getequipid(EQI_HAND_R),11) == W_2HSWORD) {
          bonus bCritAtkRate,20;
-         bonus bCritAtkRate,2*(getrefine()/2);
       }
+      bonus bCritAtkRate,2*(getrefine()/2);
   - Id: 300095
     AegisName: aegis_300095
     Name: Papila Cae Card
@@ -39206,4 +38973,236 @@ Body:
       bonus bMaxHPrate,10;
       bonus2 bSkillAtk,"SU_CN_METEOR",10;
       bonus2 bSkillAtk,"SU_PICKYPECK",10;
-
+  - Id: 300127
+    AegisName: aegis_300127
+    Name: Wolf Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+  - Id: 300128
+    AegisName: aegis_300128
+    Name: Wolf Lugenburg Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Script: |
+      bonus2 bAddRace,RC_Insect,15;
+      bonus2 bMagicAddRace,RC_Insect,15;
+  - Id: 300129
+    AegisName: aegis_300129
+    Name: Poe Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+  - Id: 300130
+    AegisName: aegis_300130
+    Name: Poe Richard Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+  - Id: 300140
+    AegisName: aegis_300140
+    Name: Deep Sea Sropho Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_Wind,3;
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Wind,2;
+      }
+      if (.@r>=11) {
+         bonus2 bMagicAtkEle,Ele_Wind,5;
+      }
+  - Id: 300141
+    AegisName: aegis_300141
+    Name: Deep Sea Obeaune Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+      Left_Accessory: true
+    Script: |
+      bonus bMatk,30;
+  - Id: 300142
+    AegisName: aegis_300142
+    Name: Deep Sea Deviace Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddRace,RC_Fish,5;
+      bonus2 bAddEle,Ele_Water,5;
+      if (.@r>=7) {
+         bonus2 bAddEle,Ele_Water,5;
+      }
+      if (.@r>=9) {
+         bonus2 bAddRace,RC_Fish,5;
+      }
+  - Id: 300143
+    AegisName: aegis_300143
+    Name: Deep Sea Marse Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Hand: true
+    Script: |
+      bonus2 bSubEle,Ele_Earth,15;
+      bonus2 bSubRace,RC_Insect,15;
+  - Id: 300144
+    AegisName: aegis_300144
+    Name: Deep Sea Merman Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Script: |
+      bonus bBaseAtk,4*(readparam(bStr)/15);
+  - Id: 300145
+    AegisName: aegis_300145
+    Name: Deep Sea Witch Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Fire,100;
+      bonus2 bMagicAtkEle,Ele_Dark,100;
+      bonus2 bSubEle,Ele_All,-30;
+  - Id: 300146
+    AegisName: aegis_300146
+    Name: Deep Sea Sedora Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Script: |
+      bonus2 bCriticalAddRace,RC_Fish,30;
+  - Id: 300147
+    AegisName: aegis_300147
+    Name: Deep Sea Swordfish Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Mid: true
+      Head_Low: true
+    Script: |
+      bonus2 bSubEle,Ele_Water,10;
+      if (getrefine()>=9) {
+         bonus2 bMagicAddEle,Ele_Water,10;
+      }
+  - Id: 300148
+    AegisName: aegis_300148
+    Name: Deep Sea Strouf Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Script: |
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,5;
+      if (getrefine()>=9) {
+         bonus2 bMagicAddEle,Ele_Water,5;
+         bonus2 bAddEle,Ele_Water,5;
+      }
+  - Id: 300149
+    AegisName: aegis_300149
+    Name: Deep Sea Phen Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,15;
+      bonus2 bMagicAtkEle,Ele_Wind,3*getrefine();
+  - Id: 300150
+    AegisName: aegis_300150
+    Name: Deep Sea King Dramoh Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Top: true
+      Head_Mid: true
+      Head_Low: true
+    Script: |
+      bonus bMaxHPrate,-5;
+      bonus2 bAddClass,Class_All,(getrefine()/3);
+  - Id: 300151
+    AegisName: aegis_300151
+    Name: Deep Sea Kraken Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Script: |
+      bonus bLongAtkRate,25;
+      bonus bPerfectHitRate,5;
+  - Id: 310076
+    AegisName: aegis_310076
+    Name: STR Blessing
+    Type: Card
+    Script: |
+      bonus bStr,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus2 bAddClass,Class_All,10;
+  - Id: 310077
+    AegisName: aegis_310077
+    Name: AGI Blessing
+    Type: Card
+    Script: |
+      bonus bAgi,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus bLongAtkRate,10;
+  - Id: 310078
+    AegisName: aegis_310078
+    Name: VIT Blessing
+    Type: Card
+    Script: |
+      bonus bVit,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus bMaxHPrate,10;
+      bonus bMaxSPrate,10;
+  - Id: 310079
+    AegisName: aegis_310079
+    Name: DEX Blessing
+    Type: Card
+    Script: |
+      bonus bDex,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus bAspdRate,10;
+      bonus bVariableCastrate,-10;
+  - Id: 310080
+    AegisName: aegis_310080
+    Name: INT Blessing
+    Type: Card
+    Script: |
+      bonus bInt,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus bMatkRate,10;
+  - Id: 310081
+    AegisName: aegis_310081
+    Name: LUK Blessing
+    Type: Card
+    Script: |
+      bonus bLuk,10;
+      bonus bMdef,3;
+      bonus bDef,25;
+      bonus bCritAtkRate,15;
+  - Id: 1000235
+    AegisName: aegis_1000235
+    Name: Great Hunter's Mark    # !todo check english name
+    Type: Etc
