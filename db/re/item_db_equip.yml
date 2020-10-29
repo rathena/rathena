@@ -86867,10 +86867,11 @@ Body:
     Type: Shadowgear
     Locations:
       Shadow_Left_Accessory: true
-    EquipLevelMin: 1
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus2 bSkillAtk,"AL_HOLYLIGHT",20+(5*.@r);
+      .@r = getrefine();
+      bonus bMaxHP,.@r*10;
+      bonus2 bSkillAtk,"AL_HOLYLIGHT",50+(.@r*10);
   - Id: 24253
     AegisName: S_Thief_Pendant
     Name: Thief Shadow Pendant
@@ -88977,20 +88978,18 @@ Body:
     Type: Shadowgear
     Locations:
       Shadow_Weapon: true
-    EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreDefClassRate,Class_Normal,5+(getrefine()/2);
+      bonus2 bIgnoreMdefClassRate,Class_Normal,5+(getrefine()/2);
   - Id: 24424
     AegisName: S_Tempest_Armor
     Name: Tempest Shadow Armor
     Type: Shadowgear
     Locations:
       Shadow_Armor: true
-    EquipLevelMin: 1
     Refineable: true
     Script: |
-      bonus2 bIgnoreDefClassRate,Class_Normal,5+(getrefine()/2);
+      bonus2 bIgnoreMdefClassRate,Class_Normal,5+(getrefine()/2);
   - Id: 26007
     AegisName: Illusion_Spectral_Spear
     Name: Illusion Spectral Spear
