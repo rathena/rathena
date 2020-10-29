@@ -534,14 +534,14 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 	if (this->nodeExists(node, "Flags")) {
 		const YAML::Node &flagNode = node["Flags"];
 
-		if (this->nodeExists(flagNode, "Buyingstore")) {
+		if (this->nodeExists(flagNode, "BuyingStore")) {
 			bool active;
 
-			if (!this->asBool(flagNode, "Buyingstore", active))
+			if (!this->asBool(flagNode, "BuyingStore", active))
 				return 0;
 
 			if (!itemdb_isstackable2(item.get()) && active) {
-				this->invalidWarning(flagNode["Buyingstore"], "Non-stackable item cannot be enabled for buying store.\n");
+				this->invalidWarning(flagNode["BuyingStore"], "Non-stackable item cannot be enabled for buying store.\n");
 				active = false;
 			}
 
