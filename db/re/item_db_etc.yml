@@ -37511,6 +37511,37 @@ Body:
       bonus5 bAutoSpellWhenHit,"SO_ELECTRICWALK",5,80,BF_MAGIC,0;
       autobonus "{ bonus bFlee,200; }",30,10000,BF_WEAPON,"{ specialeffect2 EF_TEIHIT1; }";
       autobonus "{ bonus bSpeedRate,25; }",25,10000,BF_MAGIC,"{ specialeffect2 EF_POTION_BERSERK; }";
+  - Id: 300127
+    AegisName: aegis_300127
+    Name: Wolf Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+  - Id: 300128
+    AegisName: aegis_300128
+    Name: Wolf Lugenburg Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Script: |
+      bonus2 bAddRace,RC_Insect,15;
+      bonus2 bMagicAddRace,RC_Insect,15;
+  - Id: 300129
+    AegisName: aegis_300129
+    Name: Poe Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+  - Id: 300130
+    AegisName: aegis_300130
+    Name: Poe Richard Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
   - Id: 300140
     AegisName: aegis_300140
     Name: Deep Sea Sropho Card
@@ -37653,4 +37684,7 @@ Body:
     Script: |
       bonus bLongAtkRate,25;
       bonus bPerfectHitRate,5;
-
+  - Id: 1000235
+    AegisName: aegis_1000235
+    Name: Great Hunter's Mark    # !todo check english name
+    Type: Etc

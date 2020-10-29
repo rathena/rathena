@@ -97919,6 +97919,46 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus2 bSkillCooldown,"GN_SPORE_EXPLOSION",-1000; bonus bBaseAtk,4*.@r; if (.@r>=11) .@val = 50; else if (.@r>=9) .@val = 30; bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",.@val;
+  - Id: 400045
+    AegisName: aegis_400045
+    Name: Pierced apple    # !todo check english name
+    Type: Armor
+    View: 1952
+    Locations:
+      Head_Top: true
+    Refineable: true
+  - Id: 400046
+    AegisName: aegis_400046
+    Name: Costume pierced apple    # !todo check english name
+    Type: Armor
+    View: 1952
+    Locations:
+      Costume_Head_Top: true
+  - Id: 400049
+    AegisName: aegis_400049
+    Name: Stripe Hat
+    Type: Armor
+    View: 1728
+    Weight: 100
+    Slots: 1
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,20*(.@r/2);
+      if (.@r>=7) {
+         bonus bVariableCastrate,-15;
+      }
+      if (.@r>=9) {
+         bonus bLongAtkRate,15;
+      }
+      if (.@r>=11) {
+         bonus bFixedCast,-200;
+         bonus2 bAddSize,Size_Small,15;
+         bonus2 bAddSize,Size_Medium,15;
+      }
   - Id: 400053
     AegisName: aegis_400053
     Name: Illusion Morrigane's Helm
