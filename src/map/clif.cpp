@@ -2122,19 +2122,19 @@ void clif_buylist( struct map_session_data *sd, struct npc_data *nd ){
 		return;
 	}
 
-	uint16 len = sizeof( struct PACKET_ZC_PC_PURCHASE_ITEMLIST ) + nd->u.shop.count * sizeof( struct PACKET_ZC_PC_PURCHASE_ITEMLIST_sub );
+	uint16 len = sizeof( struct PACKET_ZC_PC_PURCHASE_ITEMLIST ) + nd->u.shop.shop_item.size() * sizeof( struct PACKET_ZC_PC_PURCHASE_ITEMLIST_sub );
 	WFIFOHEAD( fd, len );
 	struct PACKET_ZC_PC_PURCHASE_ITEMLIST *p = (struct PACKET_ZC_PC_PURCHASE_ITEMLIST *)WFIFOP( fd, 0 );
 	p->packetType = 0xc6;
 
-	int count = 0;
-	for( int i = 0, discount = npc_shop_discount( nd ); i < nd->u.shop.count; i++ ){
-		int val = nd->u.shop.shop_item[i].value;
+	int count = 0, discount = npc_shop_discount( nd );
+	for (auto x : nd->u.shop.shop_item) {
+		int val = x.value;
 
 		p->items[count].price = val;
 		p->items[count].discountPrice = ( discount ) ? pc_modifybuyvalue( sd, val ) : val;
-		p->items[count].itemType = itemtype( nd->u.shop.shop_item[i].nameid );
-		p->items[count].itemId = client_nameid( nd->u.shop.shop_item[i].nameid );
+		p->items[count].itemType = itemtype( x.nameid );
+		p->items[count].itemId = client_nameid( x.nameid );
 		count++;
 	}
 
@@ -2204,28 +2204,26 @@ void clif_npc_market_open(struct map_session_data *sd, struct npc_data *nd) {
 
 	int fd = sd->fd;
 
-	WFIFOHEAD( fd, sizeof( struct PACKET_ZC_NPC_MARKET_OPEN ) + nd->u.shop.count * sizeof( struct PACKET_ZC_NPC_MARKET_OPEN_sub ) );
+	WFIFOHEAD( fd, sizeof( struct PACKET_ZC_NPC_MARKET_OPEN ) + nd->u.shop.shop_item.size() * sizeof( struct PACKET_ZC_NPC_MARKET_OPEN_sub ) );
 	struct PACKET_ZC_NPC_MARKET_OPEN *p = (struct PACKET_ZC_NPC_MARKET_OPEN *)WFIFOP( fd, 0 );
 	p->packetType = HEADER_ZC_NPC_MARKET_OPEN;
 
 	int count = 0;
-	for( int i = 0; i < nd->u.shop.count; i++ ){
-		struct npc_item_list *item = &nd->u.shop.shop_item[i];
-
-		if( !item->nameid ){
+	for( auto item : nd->u.shop.shop_item) {
+		if( !item.nameid ){
 			continue;
 		}
 
-		struct item_data *id = itemdb_exists( item->nameid );
+		struct item_data *id = itemdb_exists( item.nameid );
 
 		if( !id ){
 			continue;
 		}
 
-		p->list[count].nameid = client_nameid( item->nameid );
-		p->list[count].type = itemtype( item->nameid );
-		p->list[count].price = item->value;
-		p->list[count].qty = item->qty;
+		p->list[count].nameid = client_nameid( item.nameid );
+		p->list[count].type = itemtype( item.nameid );
+		p->list[count].price = item.value;
+		p->list[count].qty = item.qty;
 		p->list[count].weight = id->weight;
 		count++;
 	}
@@ -2272,17 +2270,23 @@ void clif_npc_market_purchase_ack(struct map_session_data *sd, uint8 res, uint8 
 	int count = 0;
 
 	if( p->result ){
-		for( int i = 0, j; i < n; i++ ){
-			ARR_FIND( 0, nd->u.shop.count, j, list[i].nameid == nd->u.shop.shop_item[j].nameid );
-
+		for( int i = 0; i < n; i++ ){
+			struct npc_item_list foundItem = {};
+			for (auto x : nd->u.shop.shop_item) {
+				if (list[i].nameid == x.nameid) {
+					foundItem = x;
+					break;
+				}
+			}
+			
 			// Not found
-			if( j == nd->u.shop.count ){
+			if( !foundItem.nameid ){
 				continue;
 			}
 
 			p->list[count].ITID = client_nameid( list[i].nameid );
 			p->list[count].qty = list[i].qty;
-			p->list[count].price = nd->u.shop.shop_item[j].value;
+			p->list[count].price = foundItem.value;
 			count++;
 		}
 	}
@@ -16782,7 +16786,7 @@ void clif_cashshop_show( struct map_session_data *sd, struct npc_data *nd ){
 
 	npc_shop_currency_type( sd, nd, cost, true );
 
-	uint16 len = sizeof( struct PACKET_ZC_PC_CASH_POINT_ITEMLIST ) + nd->u.shop.count * sizeof( struct PACKET_ZC_PC_CASH_POINT_ITEMLIST_sub );
+	uint16 len = sizeof( struct PACKET_ZC_PC_CASH_POINT_ITEMLIST ) + nd->u.shop.shop_item.size() * sizeof( struct PACKET_ZC_PC_CASH_POINT_ITEMLIST_sub );
 	WFIFOHEAD( fd, len );
 	struct PACKET_ZC_PC_CASH_POINT_ITEMLIST* p = (struct PACKET_ZC_PC_CASH_POINT_ITEMLIST *)WFIFOP( fd, 0 );
 
@@ -16792,14 +16796,19 @@ void clif_cashshop_show( struct map_session_data *sd, struct npc_data *nd ){
 #if PACKETVER >= 20070711
 	p->kafraPoints = cost[1];
 #endif
+	int count = 0;
+	for( auto x : nd->u.shop.shop_item ) {
+		struct item_data *id = itemdb_exists( x.nameid );
 
-	for( int i = 0; i < nd->u.shop.count; i++ ) {
-		struct item_data* id = itemdb_search( nd->u.shop.shop_item[i].nameid );
+		if( !id ){
+			continue;
+		}
 
-		p->items[i].price = nd->u.shop.shop_item[i].value;
-		p->items[i].discountPrice = nd->u.shop.shop_item[i].value; // Discount Price
-		p->items[i].itemType = itemtype( id->nameid );
-		p->items[i].itemId = client_nameid( id->nameid );
+		p->items[count].price = x.value;
+		p->items[count].discountPrice = x.value; // Discount Price
+		p->items[count].itemType = itemtype( id->nameid );
+		p->items[count].itemId = client_nameid( id->nameid );
+		count++;
 	}
 
 	WFIFOSET( fd, len );

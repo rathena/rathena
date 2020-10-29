@@ -1432,14 +1432,16 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 		case NPCTYPE_MARKETSHOP:
 #if PACKETVER >= 20131223
 			 {
-				unsigned short i;
+				bool found = false;
 
-				for (i = 0; i < nd->u.shop.count; i++) {
-					if (nd->u.shop.shop_item[i].qty)
+				for (auto x : nd->u.shop.shop_item) {
+					if (x.qty) {
+						found = true;
 						break;
+					}
 				}
-
-				if (i == nd->u.shop.count) {
+				
+				if (!found) {
 					clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 534), false, SELF);
 					return false;
 				}
@@ -1674,7 +1676,7 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
  */
 int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub* item_list)
 {
-	int i, j, amount, new_, w, vt;
+	int i, amount, new_, w, vt;
 	t_itemid nameid;
 	struct npc_data *nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
 	enum e_CASHSHOP_ACK res;
@@ -1699,11 +1701,19 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, str
 		if( !id || amount <= 0 )
 			return ERROR_TYPE_ITEM_ID;
 
-		ARR_FIND(0,nd->u.shop.count,j,nd->u.shop.shop_item[j].nameid == nameid || itemdb_viewid(nd->u.shop.shop_item[j].nameid) == nameid);
-		if( j == nd->u.shop.count || nd->u.shop.shop_item[j].value <= 0 )
+		struct npc_item_list foundItem = {};
+
+		for (auto x : nd->u.shop.shop_item) {
+			if (x.nameid == nameid || itemdb_viewid(x.nameid) == nameid) {
+				foundItem = x;
+				break;
+			}
+		}
+
+		if( !foundItem.nameid || foundItem.value <= 0 )
 			return ERROR_TYPE_ITEM_ID;
 
-		nameid = item_list[i].itemId = nd->u.shop.shop_item[j].nameid; //item_avail replacement
+		nameid = item_list[i].itemId = foundItem.nameid; //item_avail replacement
 
 		if( !itemdb_isstackable2(id) && amount > 1 )
 		{
@@ -1724,7 +1734,7 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, str
 				return ERROR_TYPE_INVENTORY_WEIGHT;
 		}
 
-		vt += nd->u.shop.shop_item[j].value * amount;
+		vt += foundItem.value * amount;
 		w += itemdb_weight(nameid) * amount;
 	}
 
@@ -1756,7 +1766,7 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, str
 			if ((itemdb_search(nameid))->flag.guid)
 				get_amt = 1;
 
-			for (j = 0; j < amount; j += get_amt)
+			for (int j = 0; j < amount; j += get_amt)
 				pc_additem(sd,&item_tmp,get_amt,LOG_TYPE_NPC);
 		}
 	}
@@ -1837,7 +1847,7 @@ int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, i
 {
 	struct npc_data *nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
 	struct item_data *item;
-	int i, price, w;
+	int price, w;
 	enum e_CASHSHOP_ACK res;
 
 	if( amount <= 0 )
@@ -1855,13 +1865,20 @@ int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, i
 	if( (item = itemdb_exists(nameid)) == NULL )
 		return ERROR_TYPE_ITEM_ID; // Invalid Item
 
-	ARR_FIND(0, nd->u.shop.count, i, nd->u.shop.shop_item[i].nameid == nameid || itemdb_viewid(nd->u.shop.shop_item[i].nameid) == nameid);
-	if( i == nd->u.shop.count )
+	struct npc_item_list foundItem = {};
+	for (auto x : nd->u.shop.shop_item) {
+		if (x.nameid == nameid || itemdb_viewid(x.nameid) == nameid) {
+			foundItem = x;
+			break;
+		}
+	}
+
+	if( !foundItem.nameid )
 		return ERROR_TYPE_ITEM_ID;
-	if( nd->u.shop.shop_item[i].value <= 0 )
+	if( foundItem.value <= 0 )
 		return ERROR_TYPE_ITEM_ID;
 
-	nameid = nd->u.shop.shop_item[i].nameid; //item_avail replacement
+	nameid = foundItem.nameid; //item_avail replacement
 
 	if(!itemdb_isstackable2(item) && amount > 1)
 	{
@@ -1884,15 +1901,15 @@ int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, i
 	if( w + sd->weight > sd->max_weight )
 		return ERROR_TYPE_INVENTORY_WEIGHT;
 
-	if( (double)nd->u.shop.shop_item[i].value * amount > INT_MAX )
+	if( (double)foundItem.value * amount > INT_MAX )
 	{
 		ShowWarning("npc_cashshop_buy: Item '%s' (%u) price overflow attempt!\n", item->name.c_str(), nameid);
 		ShowDebug("(NPC:'%s' (%s,%d,%d), player:'%s' (%d/%d), value:%d, amount:%d)\n",
-					nd->exname, map_mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y, sd->status.name, sd->status.account_id, sd->status.char_id, nd->u.shop.shop_item[i].value, amount);
+					nd->exname, map_mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y, sd->status.name, sd->status.account_id, sd->status.char_id, foundItem.value, amount);
 		return ERROR_TYPE_ITEM_ID;
 	}
 
-	price = nd->u.shop.shop_item[i].value * amount;
+	price = foundItem.value * amount;
 	if( points > price )
 		points = price;
 
@@ -1954,10 +1971,9 @@ static int npc_buylist_sub(struct map_session_data* sd, uint16 n, struct s_npc_b
  */
 uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list) {
 	struct npc_data* nd;
-	struct npc_item_list *shop = NULL;
+	std::vector<struct npc_item_list> shop;
 	double z;
-	int i,j,k,w,skill,new_;
-	uint8 market_index[MAX_INVENTORY];
+	int i,k,w,skill,new_;
 
 	nullpo_retr(3, sd);
 	nullpo_retr(3, item_list);
@@ -1976,34 +1992,29 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 
 	shop = nd->u.shop.shop_item;
 
-	memset(market_index, 0, sizeof(market_index));
 	// process entries in buy list, one by one
 	for( i = 0; i < n; ++i ) {
 		t_itemid nameid;
 		unsigned short amount;
 		int value;
 		item_data *id;
+		struct npc_item_list foundItem = {};
 
-		// find this entry in the shop's sell list
-		ARR_FIND( 0, nd->u.shop.count, j,
-			item_list[i].nameid == shop[j].nameid || //Normal items
-			item_list[i].nameid == itemdb_viewid(shop[j].nameid) //item_avail replacement
-		);
+		for (auto x : nd->u.shop.shop_item) {
+			if (item_list[i].nameid == foundItem.nameid || //Normal items
+				item_list[i].nameid == itemdb_viewid(foundItem.nameid) //item_avail replacement
+			) {
+				foundItem = x;
+				break;
+			}
+		}
 
-		if( j == nd->u.shop.count )
+		if( !foundItem.nameid )
 			return 3; // no such item in shop
 
-#if PACKETVER >= 20131223
-		if (nd->subtype == NPCTYPE_MARKETSHOP) {
-			if (item_list[i].qty > shop[j].qty)
-				return 3;
-			market_index[i] = j;
-		}
-#endif
-
 		amount = item_list[i].qty;
-		nameid = item_list[i].nameid = shop[j].nameid; //item_avail replacement
-		value = shop[j].value;
+		nameid = item_list[i].nameid = foundItem.nameid; //item_avail replacement
+		value = foundItem.value;
 		id = itemdb_exists(nameid);
 
 		if( !id )
@@ -2057,11 +2068,15 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 
 #if PACKETVER >= 20131223
 		if (nd->subtype == NPCTYPE_MARKETSHOP) {
-			j = market_index[i];
-			if (amount > shop[j].qty)
-				return 1;
-			shop[j].qty -= amount;
-			npc_market_tosql(nd->exname, &shop[j]);
+			for (auto &x : nd->u.shop.shop_item) {
+				if (x.nameid == nameid) {
+					if (amount > x.qty)
+						return 1;
+					x.qty -= amount;
+					npc_market_tosql(nd->exname, &x);
+					break;
+				}
+			}
 		}
 #endif
 
@@ -2403,7 +2418,7 @@ int npc_unload(struct npc_data* nd, bool single) {
 		map_remove_questinfo(nd->bl.m, nd);
 
 	if( (nd->subtype == NPCTYPE_SHOP || nd->subtype == NPCTYPE_CASHSHOP || nd->subtype == NPCTYPE_ITEMSHOP || nd->subtype == NPCTYPE_POINTSHOP || nd->subtype == NPCTYPE_MARKETSHOP) && nd->src_id == 0) //src check for duplicate shops [Orcao]
-		aFree(nd->u.shop.shop_item);
+		nd->u.shop.shop_item.clear();
 	else if( nd->subtype == NPCTYPE_SCRIPT ) {
 		struct s_mapiterator* iter;
 		struct block_list* bl;
@@ -2963,7 +2978,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	}
 	
 	nd = npc_create_npc(m, x, y);
-	nd->u.shop.count = 0;
+	nd->u.shop.shop_item.clear();
 	while ( p ) {
 		t_itemid nameid2;
 		unsigned short qty = 0;
@@ -3020,32 +3035,36 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			id->maxchance = -1; // -1 would show that the item's sold in NPC Shop
 		
 #if PACKETVER >= 20131223
-		if (nd->u.shop.count && type == NPCTYPE_MARKETSHOP) {
-			uint16 i;
-			// Duplicate entry? Replace the value
-			ARR_FIND(0, nd->u.shop.count, i, nd->u.shop.shop_item[i].nameid == nameid);
-			if (i != nd->u.shop.count) {
-				nd->u.shop.shop_item[i].qty = qty;
-				nd->u.shop.shop_item[i].value = value;
-				p = strchr(p+1,',');
-				continue;
+		if (nd->u.shop.shop_item.size() && type == NPCTYPE_MARKETSHOP) {
+			bool found = false;
+			for (auto &x : nd->u.shop.shop_item) {
+				if (x.nameid == nameid) {
+					x.qty = qty;
+					x.value = value;
+					p = strchr(p+1,',');
+					found = true;
+					break;
+				}
 			}
+
+			if (found)
+				continue;
 		}
 #endif
 
-		RECREATE(nd->u.shop.shop_item, struct npc_item_list,nd->u.shop.count+1);
-
-		nd->u.shop.shop_item[nd->u.shop.count].nameid = nameid2;
-		nd->u.shop.shop_item[nd->u.shop.count].value = value;
+		struct npc_item_list insertItem = {};
+		insertItem.nameid = nameid2;
+		insertItem.value = value;
 #if PACKETVER >= 20131223
-		nd->u.shop.shop_item[nd->u.shop.count].flag = 0;
+		insertItem.flag = 0;
 		if (type == NPCTYPE_MARKETSHOP )
-			nd->u.shop.shop_item[nd->u.shop.count].qty = qty;
+			insertItem.qty = qty;
 #endif
-		nd->u.shop.count++;
+		nd->u.shop.shop_item.push_back(insertItem);
 		p = strchr(p+1,',');
 	}
-	if( nd->u.shop.count == 0 ) {
+
+	if( nd->u.shop.shop_item.size() == 0 ) {
 		ShowWarning("npc_parse_shop: Ignoring empty shop in file '%s', line '%d'.\n", filepath, strline(buffer,start-buffer));
 		aFree(nd);
 		return strchr(start,'\n');// continue
@@ -3070,11 +3089,9 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	nd->subtype = type;
 #if PACKETVER >= 20131223
 	// Insert market data to table
-	if (nd->subtype == NPCTYPE_MARKETSHOP) {
-		uint16 i;
-		for (i = 0; i < nd->u.shop.count; i++)
-			npc_market_tosql(nd->exname, &nd->u.shop.shop_item[i]);
-	}
+	if (nd->subtype == NPCTYPE_MARKETSHOP)
+	for (auto x : nd->u.shop.shop_item)
+		npc_market_tosql(nd->exname, &x);
 #endif
 	if( m >= 0 )
 	{// normal shop npc
@@ -3454,7 +3471,6 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 			safestrncpy( nd->u.shop.pointshop_str, dnd->u.shop.pointshop_str, strlen( dnd->u.shop.pointshop_str ) );
 			nd->u.shop.itemshop_nameid = dnd->u.shop.itemshop_nameid;
 			nd->u.shop.shop_item = dnd->u.shop.shop_item;
-			nd->u.shop.count = dnd->u.shop.count;
 			nd->u.shop.discount =  dnd->u.shop.discount;
 			break;
 
@@ -3671,7 +3687,7 @@ static int npc_market_checkall_sub(DBKey key, DBData *data, va_list ap) {
 		npc_market_clearfromsql(market->exname);
 		return 1;
 	}
-	else if (nd->subtype != NPCTYPE_MARKETSHOP || !nd->u.shop.shop_item || !nd->u.shop.count ) {
+	else if (nd->subtype != NPCTYPE_MARKETSHOP || !nd->u.shop.shop_item.size()) {
 		ShowError("npc_market_checkall_sub: NPC '%s' is not proper for market, removing...\n", nd->exname);
 		npc_market_clearfromsql(nd->exname);
 		return 1;
@@ -3682,7 +3698,6 @@ static int npc_market_checkall_sub(DBKey key, DBData *data, va_list ap) {
 
 	for (i = 0; i < market->count; i++) {
 		struct npc_item_list *list = &market->list[i];
-		uint16 j;
 
 		if (!list->nameid || !itemdb_exists(list->nameid)) {
 			ShowError("npc_market_checkall_sub: NPC '%s' sells invalid item '%u', deleting...\n", nd->exname, list->nameid);
@@ -3691,23 +3706,24 @@ static int npc_market_checkall_sub(DBKey key, DBData *data, va_list ap) {
 		}
 
 		// Reloading stock from `market` table
-		ARR_FIND(0, nd->u.shop.count, j, nd->u.shop.shop_item[j].nameid == list->nameid);
-		if (j != nd->u.shop.count) {
-			nd->u.shop.shop_item[j].value = list->value;
-			nd->u.shop.shop_item[j].qty = list->qty;
-			nd->u.shop.shop_item[j].flag = list->flag;
-			npc_market_tosql(nd->exname, &nd->u.shop.shop_item[j]);
-			continue;
+		for (auto &x : nd->u.shop.shop_item) {
+			if (x.nameid == list->nameid) {
+				x.value = list->value;
+				x.qty = list->qty;
+				x.flag = list->flag;
+				npc_market_tosql(nd->exname, &x);
+				continue;
+			}
 		}
-
+		
 		if (list->flag&1) { // Item added by npcshopitem/npcshopadditem, add new entry
-			RECREATE(nd->u.shop.shop_item, struct npc_item_list, nd->u.shop.count+1);
-			nd->u.shop.shop_item[j].nameid = list->nameid;
-			nd->u.shop.shop_item[j].value = list->value;
-			nd->u.shop.shop_item[j].qty = list->qty;
-			nd->u.shop.shop_item[j].flag = list->flag;
-			nd->u.shop.count++;
-			npc_market_tosql(nd->exname, &nd->u.shop.shop_item[j]);
+			struct npc_item_list insertItem = {};
+			insertItem.nameid = list->nameid;
+			insertItem.value = list->value;
+			insertItem.qty = list->qty;
+			insertItem.flag = list->flag;
+			nd->u.shop.shop_item.push_back(insertItem);
+			npc_market_tosql(nd->exname, &insertItem);
 		}
 		else { // Removing "out-of-date" entry
 			ShowError("npc_market_checkall_sub: NPC '%s' does not sell item %u (qty %hu), deleting...\n", nd->exname, list->nameid, list->qty);
