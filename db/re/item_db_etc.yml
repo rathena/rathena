@@ -39202,10 +39202,6 @@ Body:
       bonus bMdef,3;
       bonus bDef,25;
       bonus bCritAtkRate,15;
-  - Id: 1000235
-    AegisName: aegis_1000235
-    Name: Great Hunter's Mark    # !todo check english name
-    Type: Etc
   - Id: 310082
     AegisName: aegis_310082
     Name: Automatic Modification Orb(Defense)
@@ -40498,16 +40494,16 @@ Body:
 #      }
 #      if (.@r>=11) {
 #      }
-# - Id: 310179
-#   AegisName: aegis_310179
-#   Name: Automatic Modification Orb(Reflection Reject)
-#   Type: Card
-#   Script: |
-#     .@r = getrefine();
-#     if (.@r>=9) {
-#     }
-#     if (.@r>=11) {
-#     }
+#  - Id: 310179
+#    AegisName: aegis_310179
+#    Name: Automatic Modification Orb(Reflection Reject)
+#    Type: Card
+#    Script: |
+#      .@r = getrefine();
+#      if (.@r>=9) {
+#      }
+#      if (.@r>=11) {
+#      }
   - Id: 1000092
     AegisName: ELYUMINA_RADAR
     Name: Elyumina Radar
@@ -41223,3 +41219,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1000235
+    AegisName: aegis_1000235
+    Name: Great Hunter's Mark    # !todo check english name
+    Type: Etc

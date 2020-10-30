@@ -100290,6 +100290,31 @@ Body:
          bonus2 bAddRace,RC_Undead,20;
          bonus2 bAddRace,RC_Angel,20;
       }
+  - Id: 400044
+    AegisName: aegis_400044
+    Name: Phantom Cap
+    Type: Armor
+    View: 1899
+    Weight: 100
+    Slots: 1
+    Locations:
+      Head_Top: true
+    EquipLevelMin: 130
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,20*(.@r/2);
+      if (.@r>=7) {
+         bonus bVariableCastrate,-15;
+      }
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_All,15;
+      }
+      if (.@r>=11) {
+         bonus bFixedCast,-200;
+         bonus2 bMagicAddSize,Size_Small,15;
+         bonus2 bMagicAddSize,Size_Medium,15;
+      }
   - Id: 400045
     AegisName: aegis_400045
     Name: Pierced apple    # !todo check english name
@@ -100360,31 +100385,6 @@ Body:
     Name: Great Magician's Ceremonial Crown
     Type: Armor
     View: 1811
-    Weight: 100
-    Slots: 1
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 130
-    Refineable: true
-    Script: |
-      .@r = getrefine();
-      bonus bMatk,20*(.@r/2);
-      if (.@r>=7) {
-         bonus bVariableCastrate,-15;
-      }
-      if (.@r>=9) {
-         bonus2 bMagicAtkEle,Ele_All,15;
-      }
-      if (.@r>=11) {
-         bonus bFixedCast,-200;
-         bonus2 bMagicAddSize,Size_Small,15;
-         bonus2 bMagicAddSize,Size_Medium,15;
-      }
-  - Id: 400044
-    AegisName: aegis_400044
-    Name: Phantom Cap
-    Type: Armor
-    View: 1899
     Weight: 100
     Slots: 1
     Locations:
@@ -103971,6 +103971,36 @@ Body:
     Script: |
       bonus bMatkRate,5;
       bonus bMaxSPrate,5;
+  - Id: 490069
+    AegisName: aegis_490069
+    Name: Illusion Morrigane's Belt
+    Type: Armor
+    Weight: 200
+    Slots: 1
+    Jobs:
+      All: true
+      Novice: false
+    Locations:
+      Right_Accessory: true
+    EquipLevelMin: 130
+    Script: |
+      bonus bMaxHPrate,5;
+      bonus bStr,3;
+  - Id: 490070
+    AegisName: aegis_490070
+    Name: Illusion Morrigane's Pendant
+    Type: Armor
+    Weight: 200
+    Slots: 1
+    Jobs:
+      All: true
+      Novice: false
+    Locations:
+      Left_Accessory: true
+    EquipLevelMin: 130
+    Script: |
+      bonus bCritical,5;
+      bonus bBaseAtk,20;
   - Id: 500007
     AegisName: aegis_500007
     Name: Hypocrisy Machine
@@ -104036,36 +104066,6 @@ Body:
       if (.@r>=11) {
          bonus2 bSkillAtk,"GN_CART_TORNADO",25;
       }
-  - Id: 490069
-    AegisName: aegis_490069
-    Name: Illusion Morrigane's Belt
-    Type: Armor
-    Weight: 200
-    Slots: 1
-    Jobs:
-      All: true
-      Novice: false
-    Locations:
-      Right_Accessory: true
-    EquipLevelMin: 130
-    Script: |
-      bonus bMaxHPrate,5;
-      bonus bStr,3;
-  - Id: 490070
-    AegisName: aegis_490070
-    Name: Illusion Morrigane's Pendant
-    Type: Armor
-    Weight: 200
-    Slots: 1
-    Jobs:
-      All: true
-      Novice: false
-    Locations:
-      Left_Accessory: true
-    EquipLevelMin: 130
-    Script: |
-      bonus bCritical,5;
-      bonus bBaseAtk,20;
   - Id: 500013
     AegisName: Up_Sword_Of_Bluefire
     Name: Patent Red Lotus Sword
@@ -104434,7 +104434,7 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine();
-      autobonus "{ bonus2 bSubClass,Class_Normal,15;bonus2 bSPRegenRate,300,1000; }",1,5000,BF_WEAPON|BF_MAGIC;
+      autobonus "{ bonus2 bSubClass,Class_Normal,15; bonus2 bSPRegenRate,300,1000; }",1,5000,BF_WEAPON|BF_MAGIC;
       bonus bVariableCastrate,-3*(.@r/3);
       bonus bMatk,6*(.@r/3);
       if (.@r>=7) {
@@ -104614,7 +104614,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bUnbreakableWeapon;
-      autobonus "{ bonus2 bSubClass,Class_Normal,15;bonus2 bSPRegenRate,300,1000; }",1,5000,BF_MAGIC;
+      autobonus "{ bonus2 bSubClass,Class_Normal,15; bonus2 bSPRegenRate,300,1000; }",1,5000,BF_MAGIC;
       bonus bVariableCastrate,-3*(.@r/3);
       bonus bMatk,6*(.@r/3);
       if (.@r>=7) {
