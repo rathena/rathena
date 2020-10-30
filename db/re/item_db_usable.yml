@@ -31534,7 +31534,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      warp "dali02",117,69; 
+      warp "dali02",117,69;
   - Id: 14506
     AegisName: Dun_Voucher
     Name: Dungeon 1 Hour Ticket
