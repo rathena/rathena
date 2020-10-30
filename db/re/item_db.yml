@@ -92554,6 +92554,8 @@ Body:
     AegisName: C_Wing_Of_Fly
     Name: Infinite Flywing
     Type: Usable
+    Flags:
+      NoConsume: true
     Trade:
       Override: 100
       NoDrop: true
