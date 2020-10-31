@@ -296,7 +296,7 @@ clicking) will cause a shop window to come up. No code whatsoever runs in shop
 NPCs and you can't change the prices otherwise than by editing the script
 itself.
 
-The Item ID is the number of item in the 'item_db.txt' database. If Price is set
+The Item ID is the number of item in the 'db/item_db.yml' database. If Price is set
 to -1, the 'buy price' given in the item database will be used. Otherwise, the
 price you gave will be used for this item, which is how you create differing
 prices for items in different shops.
@@ -1901,7 +1901,7 @@ Example 3:
 Example 4:
 
 	mes "[Quest Person]";
-	if (countitem(512) < 1) {  // 512 is the item ID for Apple, found in item_db
+	if (countitem(512) < 1) {  // 512 is the item ID for Apple, found in db/item_db.yml
 		mes "Can you please bring me an apple?";
 		close;
 	}
@@ -4596,7 +4596,7 @@ online, items will be created in their inventory instead. If they are not
 online, nothing will happen.
 
 In the first and most commonly used version of this command, items are
-referred to by their database ID number found inside 'db/(pre-)re/item_db.txt'.
+referred to by their database ID number found inside 'db/item_db.yml'.
 
 	getitem 502,10 // The person will receive 10 apples
 	getitem 617,1  // The person will receive 1 Old Violet Box
@@ -4902,7 +4902,7 @@ the results array is limited to 10 items.
 *delitem "<item name>",<amount>{,<account ID>};
 
 This command will remove a specified amount of items from the invoking/target character.
-Like all the item commands, it uses the item ID found inside 'db/(pre-)re/item_db.txt'.
+Like all the item commands, it uses the item ID found inside 'db/item_db.yml'.
 
     delitem 502,10; // The person will lose 10 apples
     delitem 617,1;  // The person will lose 1 Old Violet Box
@@ -5239,7 +5239,7 @@ a rune and has the appropriate raw materials in their inventory.
 
 *successremovecards <equipment slot>;
 
-This command will remove all cards of the cards slots defined by item_db.txt
+This command will remove all cards of the cards slots defined in db/item_db.yml
 from the item found in the specified equipment slot of the invoking character,
 create new card items and give them to the character.
 If any cards were removed in this manner, it will also show a success effect.

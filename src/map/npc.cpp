@@ -1614,7 +1614,7 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 
 					memset(output, '\0', sizeof(output));
 
-					sprintf(output, msg_txt(sd, 712), id->jname, id->nameid); // You do not have enough %s (%u).
+					sprintf(output, msg_txt(sd, 712), id->ename.c_str(), id->nameid); // You do not have enough %s (%u).
 					clif_messagecolor(&sd->bl, color_table[COLOR_RED], output, false, SELF);
 					return ERROR_TYPE_PURCHASE_FAIL;
 				}
@@ -1797,7 +1797,7 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 
 					memset(output, '\0', sizeof(output));
 
-					sprintf(output, msg_txt(sd, 714), id->jname, id->nameid); // Item Shop List: %s (%u)
+					sprintf(output, msg_txt(sd, 714), id->ename.c_str(), id->nameid); // Item Shop List: %s (%u)
 					clif_broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE,SELF);
 				}
 
@@ -1886,7 +1886,7 @@ int npc_cashshop_buy(struct map_session_data *sd, t_itemid nameid, int amount, i
 
 	if( (double)nd->u.shop.shop_item[i].value * amount > INT_MAX )
 	{
-		ShowWarning("npc_cashshop_buy: Item '%s' (%u) price overflow attempt!\n", item->name, nameid);
+		ShowWarning("npc_cashshop_buy: Item '%s' (%u) price overflow attempt!\n", item->name.c_str(), nameid);
 		ShowDebug("(NPC:'%s' (%s,%d,%d), player:'%s' (%d/%d), value:%d, amount:%d)\n",
 					nd->exname, map_mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y, sd->status.name, sd->status.account_id, sd->status.char_id, nd->u.shop.shop_item[i].value, amount);
 		return ERROR_TYPE_ITEM_ID;
@@ -3004,15 +3004,15 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		}
 		if (value == 0 && (type == NPCTYPE_SHOP || type == NPCTYPE_MARKETSHOP)) { // NPC selling items for free!
 			ShowWarning("npc_parse_shop: Item %s [%u] is being sold for FREE in file '%s', line '%d'.\n",
-				id->name, nameid2, filepath, strline(buffer,start-buffer));
+				id->name.c_str(), nameid2, filepath, strline(buffer,start-buffer));
 		}
 		if( type == NPCTYPE_SHOP && value*0.75 < id->value_sell*1.24 ) { // Exploit possible: you can buy and sell back with profit
 			ShowWarning("npc_parse_shop: Item %s [%u] discounted buying price (%d->%d) is less than overcharged selling price (%d->%d) at file '%s', line '%d'.\n",
-				id->name, nameid2, value, (int)(value*0.75), id->value_sell, (int)(id->value_sell*1.24), filepath, strline(buffer,start-buffer));
+				id->name.c_str(), nameid2, value, (int)(value*0.75), id->value_sell, (int)(id->value_sell*1.24), filepath, strline(buffer,start-buffer));
 		}
 		if (type == NPCTYPE_MARKETSHOP && (!qty || qty > UINT16_MAX)) {
 			ShowWarning("npc_parse_shop: Item %s [%u] is stocked with invalid value %d, changed to 1. File '%s', line '%d'.\n",
-				id->name, nameid2, qty, filepath, strline(buffer,start-buffer));
+				id->name.c_str(), nameid2, qty, filepath, strline(buffer,start-buffer));
 			qty = 1;
 		}
 		//for logs filters, atcommands and iteminfo script command

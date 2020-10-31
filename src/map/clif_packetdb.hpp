@@ -2248,10 +2248,12 @@
 	packet(0x0A2D,-1); // ZC_EQUIPWIN_MICROSCOPE_V6
 #endif
 
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	packet( HEADER_ZC_HAT_EFFECT, -1 );
+#endif
+
 // 2015-05-13aRagexe
 #if PACKETVER >= 20150513
-	// New Packets
-	packet(0xA3B,-1); // ZC_HAT_EFFECT
 	// RODEX Mail system
 	packet(0x09E7,3); // ZC_NOTIFY_UNREADMAIL
 	parseable_packet(0x09E8,11,clif_parse_Mail_refreshinbox,2,3); // CZ_OPEN_MAILBOX
