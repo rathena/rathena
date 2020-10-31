@@ -19225,18 +19225,54 @@ Body:
     AegisName: Needle_And_Thread
     Name: Needle And Thread
     Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6655
     AegisName: Firm_Pumpkin
     Name: Firm Pumpkin
     Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6656
     AegisName: Goast_Free_Charm
     Name: Goast Free Charm
     Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6657
     AegisName: Memory_Of_Jack
     Name: Memory Of Jack
     Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6658
     AegisName: Halloween_Coin
     Name: Halloween Coin
@@ -19246,6 +19282,9 @@ Body:
     Name: RWC Inicializer
     Type: Etc
     Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
   - Id: 6669
     AegisName: Jade_Leaf
     Name: Emerald Leaf
@@ -19256,466 +19295,251 @@ Body:
     Name: Geffen Coin Magic Tournament
     Type: Etc
     Buy: 10
+    Flags:
+      BuyingStore: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6672
     AegisName: Shard_of_Gray
     Name: Shard of Gray
     Type: Etc
     Buy: 10
+    Flags:
+      BuyingStore: true
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6673
     AegisName: Bossnia_Tickets
     Name: Bossnia Tickets
     Type: Etc
     Buy: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6674
     AegisName: GM_Coin
     Name: GM Coin
     Type: Etc
     Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6681
     AegisName: XMAS_Cookie
     Name: Christmas Cookie
     Type: Etc
     Buy: 20
     Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6682
     AegisName: Bag_Of_Selling_Goods
     Name: Bag Of Selling Goods
     Type: Etc
     Buy: 20
     Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6683
     AegisName: Dried_Flower
     Name: Dried Flower
     Type: Etc
     Buy: 10
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 6684
     AegisName: TokenOfHero
     Name: Token Of Hero
     Type: Etc
     Buy: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6685
     AegisName: Morocc_Certification
     Name: Morocc Certification
     Type: Etc
     Buy: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6686
     AegisName: Brick
     Name: Brick
     Type: Etc
     Buy: 10
     Weight: 2000
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6687
     AegisName: Rope__
     Name: Rope
     Type: Etc
     Buy: 10
     Weight: 2000
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6688
     AegisName: Wood_
     Name: Wood
     Type: Etc
     Buy: 10
     Weight: 2000
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6689
     AegisName: BurningSkin
     Name: Burning Bug Skin
     Type: Etc
     Buy: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6690
     AegisName: YummyStem
     Name: Yummy Stem
     Type: Etc
     Buy: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 6691
     AegisName: BurningFeather
     Name: Burning Feather
     Type: Etc
     Buy: 10
+    Flags:
+      BuyingStore: true
   - Id: 6692
     AegisName: PatrolLog
     Name: Patrol Log
     Type: Etc
     Buy: 10
     Weight: 1
+    Flags:
+      BuyingStore: true
   - Id: 6693
     AegisName: Stone_Of_Blessing
     Name: Stone Of Blessing
     Type: Etc
     Buy: 10
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 6694
     AegisName: Monster_Blood
     Name: Monster Blood
     Type: Etc
     Buy: 10
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 6695
     AegisName: ToothOfFlameGolem
     Name: Golem's Fiery Stone Tooth
     Type: Etc
     Buy: 10
     Weight: 100
+    Flags:
+      BuyingStore: true
   - Id: 6696
     AegisName: ToothOfFlameFrilldora
     Name: Frilldora's Fiery Nape
     Type: Etc
     Buy: 10
     Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 6697
     AegisName: Costumes_Exchange_Coupons
     Name: Costumes Exchange Coupons
     Type: Etc
     Buy: 10
     Weight: 10
-  - Id: 6646
-    AegisName: Poring_Badge
-    Name: Poring Badge
-    Type: Etc
-  - Id: 6648
-    AegisName: Shabby_Crown
-    Name: Old Crown
-    Type: Etc
-    Buy: 10
-    Weight: 10
-  - Id: 6649
-    AegisName: Broken_Horn
-    Name: Broken Horn
-    Type: Etc
-    Buy: 10
-    Weight: 10
-  - Id: 6650
-    AegisName: Shabby_Ring
-    Name: Old Ring
-    Type: Etc
-    Buy: 10
-    Weight: 10
-  - Id: 6651
-    AegisName: Rusty_Bracelet
-    Name: Rusty Bracalet
-    Type: Etc
-    Buy: 10
-    Weight: 10
-  - Id: 6652
-    AegisName: Old_Photo_Album
-    Name: Old Photo Album
-    Type: Etc
-    Buy: 10
-    Weight: 10
-  - Id: 6653
-    AegisName: Shabby_Pill
-    Name: Old Pill
-    Type: Etc
-    Buy: 10
-    Weight: 10
-  - Id: 6654
-    AegisName: Needle_And_Thread
-    Name: Needle And Thread
-    Type: Etc
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6655
-    AegisName: Firm_Pumpkin
-    Name: Firm Pumpkin
-    Type: Etc
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6656
-    AegisName: Goast_Free_Charm
-    Name: Goast Free Charm
-    Type: Etc
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6657
-    AegisName: Memory_Of_Jack
-    Name: Memory Of Jack
-    Type: Etc
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6658
-    AegisName: Halloween_Coin
-    Name: Halloween Coin
-    Type: Etc
-  - Id: 6665
-    AegisName: RWC_Inicializer
-    Name: RWC Inicializer
-    Type: Etc
-    Weight: 10
-    Trade:
-      Override: 100
-      NoDrop: true
-  - Id: 6671
-    AegisName: Geffen_Coin_Magic_Tournament
-    Name: Geffen Coin Magic Tournament
-    Type: Etc
-    Buy: 10
-    Flags:
-      BuyingStore: true
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6672
-    AegisName: Shard_of_Gray
-    Name: Shard of Gray
-    Type: Etc
-    Buy: 10
-    Flags:
-      BuyingStore: true
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6673
-    AegisName: Bossnia_Tickets
-    Name: Bossnia Tickets
-    Type: Etc
-    Buy: 10
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6674
-    AegisName: GM_Coin
-    Name: GM Coin
-    Type: Etc
-    Weight: 10
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6681
-    AegisName: XMAS_Cookie
-    Name: Christmas Cookie
-    Type: Etc
-    Buy: 20
-    Weight: 10
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6682
-    AegisName: Bag_Of_Selling_Goods
-    Name: Bag Of Selling Goods
-    Type: Etc
-    Buy: 20
-    Weight: 10
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6683
-    AegisName: Dried_Flower
-    Name: Dried Flower
-    Type: Etc
-    Buy: 10
-    Weight: 10
-    Flags:
-      BuyingStore: true
-  - Id: 6684
-    AegisName: TokenOfHero
-    Name: Token Of Hero
-    Type: Etc
-    Buy: 10
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6685
-    AegisName: Morocc_Certification
-    Name: Morocc Certification
-    Type: Etc
-    Buy: 10
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6686
-    AegisName: Brick
-    Name: Brick
-    Type: Etc
-    Buy: 10
-    Weight: 2000
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6687
-    AegisName: Rope__
-    Name: Rope
-    Type: Etc
-    Buy: 10
-    Weight: 2000
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6688
-    AegisName: Wood_
-    Name: Wood
-    Type: Etc
-    Buy: 10
-    Weight: 2000
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6689
-    AegisName: BurningSkin
-    Name: Burning Bug Skin
-    Type: Etc
-    Buy: 10
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6690
-    AegisName: YummyStem
-    Name: Yummy Stem
-    Type: Etc
-    Buy: 10
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-  - Id: 6691
-    AegisName: BurningFeather
-    Name: Burning Feather
-    Type: Etc
-    Buy: 10
-    Flags:
-      BuyingStore: true
-  - Id: 6692
-    AegisName: PatrolLog
-    Name: Patrol Log
-    Type: Etc
-    Buy: 10
-    Weight: 1
-    Flags:
-      BuyingStore: true
-  - Id: 6693
-    AegisName: Stone_Of_Blessing
-    Name: Stone Of Blessing
-    Type: Etc
-    Buy: 10
-    Weight: 10
-    Flags:
-      BuyingStore: true
-  - Id: 6694
-    AegisName: Monster_Blood
-    Name: Monster Blood
-    Type: Etc
-    Buy: 10
-    Weight: 10
-    Flags:
-      BuyingStore: true
-  - Id: 6695
-    AegisName: ToothOfFlameGolem
-    Name: Golem's Fiery Stone Tooth
-    Type: Etc
-    Buy: 10
-    Weight: 100
-    Flags:
-      BuyingStore: true
-  - Id: 6696
-    AegisName: ToothOfFlameFrilldora
-    Name: Frilldora's Fiery Nape
-    Type: Etc
-    Buy: 10
-    Weight: 10
-    Flags:
-      BuyingStore: true
   - Id: 6698
     AegisName: Wooden_Axe
     Name: Wooden Axe
