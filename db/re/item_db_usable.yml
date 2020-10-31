@@ -37011,6 +37011,8 @@ Body:
     Type: Usable
     Buy: 20
     Weight: 10
+    Flags:
+      UniqueId: true
   - Id: 16601
     AegisName: Blue_Arara_Hat_Box
     Name: Blue Arara Hat Box
