@@ -1044,6 +1044,7 @@ Body:
       NoDrop: true
       NoTrade: true
       NoCart: true
+      NoStorage: false
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
