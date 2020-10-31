@@ -19181,17 +19181,6 @@ Body:
     Type: Etc
     Buy: 10
     Weight: 100
-  - Id: 6669
-    AegisName: Jade_Leaf
-    Name: Emerald Leaf
-    Type: Etc
-    Weight: 10
-  - Id: 6697
-    AegisName: Costumes_Exchange_Coupons
-    Name: Costumes Exchange Coupons
-    Type: Etc
-    Buy: 10
-    Weight: 10
   - Id: 6646
     AegisName: Poring_Badge
     Name: Poring Badge
@@ -19296,6 +19285,11 @@ Body:
     Trade:
       Override: 100
       NoDrop: true
+  - Id: 6669
+    AegisName: Jade_Leaf
+    Name: Emerald Leaf
+    Type: Etc
+    Weight: 10
   - Id: 6671
     AegisName: Geffen_Coin_Magic_Tournament
     Name: Geffen Coin Magic Tournament
@@ -19540,6 +19534,12 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 6697
+    AegisName: Costumes_Exchange_Coupons
+    Name: Costumes Exchange Coupons
+    Type: Etc
+    Buy: 10
+    Weight: 10
   - Id: 6698
     AegisName: Wooden_Axe
     Name: Wooden Axe
@@ -32383,111 +32383,93 @@ Body:
       bonus bVariableCastrate,-15; /*Item removed on 2014-12-17*/
   - Id: 25000
     AegisName: SPdrainStone_Top
-    Name: SP Absorption Stone (Upper)
+    Name: SP Absorption Stone(Upper)
     Type: Etc
-    Buy: 10
     Weight: 100
   - Id: 25001
     AegisName: DEFStone_Middle
     Name: Def Stone(Middle)
-    Type: Card
-    Buy: 10
+    Type: Etc
     Weight: 100
   - Id: 25002
     AegisName: ChangeLUK_Middle
     Name: LUK Exchange Stone(Middle)
     Type: Etc
-    Buy: 10
     Weight: 100
   - Id: 25003
     AegisName: ChangeSTR_Middle
     Name: STR Exchange Stone(Middle)
     Type: Etc
-    Buy: 10
     Weight: 100
   - Id: 25004
     AegisName: ChangeAGI_Middle
     Name: AGI Exchange Stone(Middle)
     Type: Etc
-    Buy: 10
     Weight: 100
   - Id: 25005
     AegisName: ChangeINT_Middle
     Name: INT Exchange Stone(Middle)
     Type: Etc
-    Buy: 10
     Weight: 100
   - Id: 25006
     AegisName: ChangeVIT_Middle
     Name: VIT Exchange Stone(Middle)
     Type: Etc
-    Buy: 10
     Weight: 100
   - Id: 25007
     AegisName: ChangeDEX_Middle
     Name: DEX Exchange Stone(Middle)
     Type: Etc
-    Buy: 10
     Weight: 100
   - Id: 25008
     AegisName: ChangeVIT_Bottom
     Name: VIT Exchange Stone(Lower)
     Type: Etc
-    Buy: 10
     Weight: 100
   - Id: 25009
     AegisName: ChangeAGI_Bottom
     Name: AGI Exchange Stone(Lower)
     Type: Etc
-    Buy: 10
     Weight: 100
   - Id: 25010
     AegisName: ChangeDEX_Bottom
     Name: DEX Exchange Stone(Lower)
     Type: Etc
-    Buy: 10
     Weight: 100
   - Id: 25011
     AegisName: ChangeLUK_Bottom
     Name: LUK Exchange Stone(Lower)
     Type: Etc
-    Buy: 10
     Weight: 100
   - Id: 25012
     AegisName: ChangeSTR_Bottom
     Name: STR Exchange Stone(Lower)
     Type: Etc
-    Buy: 10
     Weight: 100
   - Id: 25013
     AegisName: ChangeINT_Bottom
     Name: INT Exchange Stone(Lower)
     Type: Etc
-    Buy: 10
     Weight: 100
   - Id: 25014
     AegisName: MDEFStone_Bottom
     Name: Mdef Stone(Lower)
-    Type: Card
-    Buy: 10
+    Type: Etc
     Weight: 100
   - Id: 25015
     AegisName: EXPStone_Bottom
     Name: EXP Stone(Lower)
-    Type: Card
-    Buy: 10
+    Type: Etc
     Weight: 100
   - Id: 25016
     AegisName: ATKStone_Bottom
-    Name: ATK Stone (Lower)
+    Name: ATK Stone(Lower)
     Type: Etc
-    Buy: 10
     Weight: 100
   - Id: 25017
     AegisName: MATKStone_Bottom
-    Name: MATK Stone (Lower)
+    Name: MATK Stone(Lower)
     Type: Etc
-    Buy: 10
     Weight: 100
   - Id: 25043
     AegisName: Thorny_Vine_Flute
@@ -32716,7 +32698,7 @@ Body:
     Weight: 100
   - Id: 25137
     AegisName: GreenFloor_Bottom
-    Name: Green Floor Effect (Lower)
+    Name: Green Floor (Bottom)
     Type: Etc
     Buy: 20
     Weight: 100
@@ -32728,7 +32710,7 @@ Body:
     Weight: 100
   - Id: 25139
     AegisName: Identify_Stone
-    Name: Identify Stone (Lower)
+    Name: Identify Stone (Bottom)
     Type: Etc
     Buy: 20
     Weight: 100
@@ -33053,7 +33035,7 @@ Body:
     Weight: 100
   - Id: 25174
     AegisName: CastingStone_Bottom
-    Name: Variable Casting Stone (Lower)
+    Name: Variable Casting Stone (Bottom)
     Type: Etc
     Buy: 20
     Weight: 100
@@ -33180,13 +33162,37 @@ Body:
     Weight: 1200
   - Id: 25205
     AegisName: ShrinkEffect_Bottom
-    Name: Shrink Effect (Lower)
+    Name: Shrink Effect (Bottom)
     Type: Etc
     Buy: 20
     Weight: 100
   - Id: 25206
     AegisName: ElectricEffect_Top
     Name: Electric Effect (Upper)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25207
+    AegisName: SPAbsorb_Stone_Top
+    Name: SPAbsorb Stone (Upper)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25208
+    AegisName: SPAbsorb_Stone_Robe
+    Name: SPAbsorb Stone (Garment)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25209
+    AegisName: HPAbsorb_Stone_Robe
+    Name: HPAbsorb Stone (Garment)
+    Type: Etc
+    Buy: 20
+    Weight: 100
+  - Id: 25210
+    AegisName: HPAbsorb_Stone_Top
+    Name: HPAbsorb Stone (Upper)
     Type: Etc
     Buy: 20
     Weight: 100
@@ -33210,7 +33216,7 @@ Body:
     Weight: 100
   - Id: 25225
     AegisName: ExplodingEffect_Middle
-    Name: Crimson Wave Effect (Middle)
+    Name: Exploding Effect (Middle)
     Type: Etc
     Buy: 20
     Weight: 100
@@ -33222,19 +33228,19 @@ Body:
     Weight: 100
   - Id: 25227
     AegisName: Heal_Stone
-    Name: Heal Stone (Lower)
+    Name: Heal Stone (Bottom)
     Type: Etc
     Buy: 20
     Weight: 100
   - Id: 25228
     AegisName: Teleport_Stone
-    Name: Teleport Stone (Lower)
+    Name: Teleport Stone (Bottom)
     Type: Etc
     Buy: 20
     Weight: 100
   - Id: 25229
     AegisName: Steal_Stone
-    Name: Steal Stone (Lower)
+    Name: Steal Stone (Bottom)
     Type: Etc
     Buy: 20
     Weight: 100
@@ -33357,6 +33363,12 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 25259
+    AegisName: Recruitment_Leaflet
+    Name: Recruitment Leaflet
+    Type: Etc
+    Buy: 778
+    Weight: 10
   - Id: 25260
     AegisName: Fragment_of_Purple_Ore
     Name: Fragment of Purple Ore
@@ -33370,6 +33382,41 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 25261
+    AegisName: Torn_Paper_
+    Name: Torn Paper
+    Type: Etc
+    Weight: 10
+  - Id: 25262
+    AegisName: Well-dried_Clover
+    Name: Well-dried Clover
+    Type: Etc
+    Weight: 10
+  - Id: 25263
+    AegisName: Short_Bat_Hair
+    Name: Short Bat Hair
+    Type: Etc
+    Weight: 10
+  - Id: 25264
+    AegisName: Cluster_of_Nightmares
+    Name: Cluster of Nightmares
+    Type: Etc
+    Weight: 10
+  - Id: 25265
+    AegisName: Shining_Spore
+    Name: Shining Spore
+    Type: Etc
+    Weight: 10
+  - Id: 25266
+    AegisName: Dried_Leaf_Of_Ygg
+    Name: Dried Yggdrasil Leaf
+    Type: Etc
+    Weight: 10
+  - Id: 25267
+    AegisName: Suspicious_Pentacle
+    Name: Suspicious Pentacle
+    Type: Etc
+    Weight: 10
   - Id: 25271
     AegisName: Illusion_Stone
     Name: Illusion Stone
@@ -33446,6 +33493,26 @@ Body:
     AegisName: Sweets_Festival_Coin
     Name: Sweets Festival Coin
     Type: Etc
+  - Id: 25297
+    AegisName: Frozen_Stone_Fragment
+    Name: Frozen Stone Fragment
+    Type: Etc
+    Weight: 1
+  - Id: 25298
+    AegisName: Spirit_Jewel
+    Name: Spirit Jewel
+    Type: Etc
+    Weight: 1
+  - Id: 25299
+    AegisName: Snowball
+    Name: Snowball
+    Type: Etc
+    Weight: 1
+  - Id: 25300
+    AegisName: Ktullanux_Eye
+    Name: Ktullanux Eye
+    Type: Etc
+    Weight: 1
   - Id: 25302
     AegisName: DoubleAttack_Stone
     Name: Double Attack Stone (Garment)
@@ -33466,7 +33533,7 @@ Body:
     Weight: 100
   - Id: 25305
     AegisName: Critical_Stone_Bottom
-    Name: Critical Stone (Lower)
+    Name: Critical Stone (Bottom)
     Type: Etc
     Buy: 20
     Weight: 100
@@ -33476,6 +33543,21 @@ Body:
     Type: Etc
     Buy: 20
     Weight: 100
+  - Id: 25311
+    AegisName: Piece_of_Black_Horn
+    Name: Piece of Black Horn
+    Type: Etc
+    Weight: 1
+  - Id: 25312
+    AegisName: Fine_Old_Doll
+    Name: Fine Old Doll
+    Type: Etc
+    Weight: 1
+  - Id: 25313
+    AegisName: Old_Shell
+    Name: Old Shell
+    Type: Etc
+    Weight: 1
   - Id: 25375
     AegisName: Powerful_Soul_Essence
     Name: Powerful Soul Essence
@@ -33498,7 +33580,7 @@ Body:
     Buy: 20
     Weight: 100
   - Id: 25411
-    AegisName: SuraStone_Lower
+    AegisName: SuraStone_Bottom
     Name: Champion Stone (Lower)
     Type: Etc
     Buy: 20
@@ -33522,7 +33604,7 @@ Body:
     Buy: 20
     Weight: 100
   - Id: 25415
-    AegisName: RangerStone_Lower
+    AegisName: RangerStone_Bottom
     Name: Sniper Stone (Lower)
     Type: Etc
     Buy: 20
@@ -33546,7 +33628,7 @@ Body:
     Buy: 20
     Weight: 100
   - Id: 25419
-    AegisName: SorcererStone_Lower
+    AegisName: SorcererStone_Bottom
     Name: Scholar Stone (Lower)
     Type: Etc
     Buy: 20
@@ -33570,7 +33652,7 @@ Body:
     Buy: 20
     Weight: 100
   - Id: 25447
-    AegisName: RuneknightStone_Lower
+    AegisName: RuneknightStone_Bottom
     Name: Lord Knight Stone (Lower)
     Type: Etc
     Buy: 20
@@ -33600,7 +33682,7 @@ Body:
     Buy: 20
     Weight: 100
   - Id: 25452
-    AegisName: GeneticStone_Lower
+    AegisName: GeneticStone_Bottom
     Name: Creator Stone (Lower)
     Type: Etc
     Buy: 20
@@ -33618,7 +33700,7 @@ Body:
     Buy: 20
     Weight: 100
   - Id: 25455
-    AegisName: WarlockStone_Lower
+    AegisName: WarlockStone_Bottom
     Name: High Wizard Stone (Lower)
     Type: Etc
     Buy: 20
@@ -33650,13 +33732,13 @@ Body:
     Buy: 20
     Weight: 100
   - Id: 25491
-    AegisName: ShadowchaserStone_Middle
+    AegisName: ShadowchaseStone_Middle
     Name: Stalker Stone (Middle)
     Type: Etc
     Buy: 20
     Weight: 100
   - Id: 25492
-    AegisName: ShadowchaserStone_Lower
+    AegisName: ShadowchaseStone_Bottom
     Name: Stalker Stone (Lower)
     Type: Etc
     Buy: 20
@@ -33680,7 +33762,7 @@ Body:
     Buy: 20
     Weight: 100
   - Id: 25496
-    AegisName: MechanicStone_Lower
+    AegisName: MechanicStone_Bottom
     Name: Mastersmith Stone (Lower)
     Type: Etc
     Buy: 20
@@ -33704,7 +33786,7 @@ Body:
     Buy: 20
     Weight: 100
   - Id: 25500
-    AegisName: WanderMinstrelStone_Lower
+    AegisName: WanderMinstrelStone_Bottom
     Name: Clown Gypsy Stone (Lower)
     Type: Etc
     Buy: 20
@@ -33715,6 +33797,21 @@ Body:
     Type: Etc
     Buy: 20
     Weight: 100
+  - Id: 25508
+    AegisName: Token_of_OrcGeneral
+    Name: Orc Warlord Token
+    Type: Etc
+    Weight: 1
+  - Id: 25622
+    AegisName: White_Snake_Tear
+    Name: White Snake's Tear
+    Type: Etc
+    Weight: 1
+  - Id: 25629
+    AegisName: Konts_Letter
+    Name: Knotted Letter
+    Type: Etc
+    Weight: 1
   - Id: 25670
     AegisName: M_M_Defense
     Name: Modification Module (Defense)
@@ -34003,6 +34100,76 @@ Body:
     Weight: 10
     Script: |
       autobonus "{ bonus bLuk,50; bonus2 bMagicAtkEle,Ele_All,10; bonus2 bHPLossRate,300,1000; }",20,10000,BF_MAGIC; /* unknown rate */
+  - Id: 25706
+    AegisName: HighpriestStone_Top
+    Name: High Priest Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 25707
+    AegisName: HighpriestStone_Middle
+    Name: High Priest Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 25708
+    AegisName: HighpriestStone_Bottom
+    Name: High Priest Stone (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 25709
+    AegisName: ArchbishopStone_Robe
+    Name: Archbishop Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 25710
+    AegisName: PaladinStone_Top
+    Name: Paladin Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 25711
+    AegisName: PaladinStone_Middle
+    Name: Paladin Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 25712
+    AegisName: PaladinStone_Bottom
+    Name: Paladin Stone (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 25713
+    AegisName: RoyalguardStone_Robe
+    Name: Royal Guard Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 25714
+    AegisName: AssacrossStone_Top
+    Name: Assassin Cross Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 25715
+    AegisName: AssacrossStone_Middle
+    Name: Assassin Cross Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 25716
+    AegisName: AssacrossStone_Bottom
+    Name: Assassin Cross Stone (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 25717
+    AegisName: GuillcrossStone_Robe
+    Name: Assassin Cross Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 25729
+    AegisName: Shadowdecon
+    Name: Shadowdecon
+    Type: Etc
+    Weight: 20
+  - Id: 25731
+    AegisName: Zelunium
+    Name: Zelunium
+    Type: Etc
+    Weight: 20
   - Id: 25759
     AegisName: aegis_25759
     Name: Green Dragon Orb
@@ -34086,6 +34253,66 @@ Body:
     Name: Valkyrie Ingrid's Armor
     Type: Etc
     Weight: 100
+  - Id: 25797
+    AegisName: SuraStone_Robe2
+    Name: Sura Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 25798
+    AegisName: SuraStone_Bottom2
+    Name: Sura Stone II (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 25799
+    AegisName: SuraStone_Middle2
+    Name: Sura Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 25800
+    AegisName: SuraStone_Top2
+    Name: Sura Stone II (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 25801
+    AegisName: SorcererStone_Robe2
+    Name: Sorcerer Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 25802
+    AegisName: SorcererStone_Bottom2
+    Name: Sorcerer Stone II (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 25803
+    AegisName: SorcererStone_Middle2
+    Name: Sorcerer Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 25804
+    AegisName: SorcererStone_Top2
+    Name: Sorcerer Stone II (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 25805
+    AegisName: ShadowchaserStone_Robe2
+    Name: Shadow Chaser Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 25806
+    AegisName: ShadowchasStone_Bottom2
+    Name: Shadow Chaser Stone II (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 25807
+    AegisName: ShadowchasStone_Middle2
+    Name: Shadow Chaser Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 25808
+    AegisName: ShadowchaserStone_Top2
+    Name: Shadow Chaser Stone II (Upper)
+    Type: Etc
+    Weight: 100
   - Id: 25809
     AegisName: aegis_25809
     Name: Redium
@@ -34137,6 +34364,111 @@ Body:
     Name: Bizarre Stone Carvings
     Type: Etc
     Weight: 50
+  - Id: 25842
+    AegisName: SoulReaperStone_Robe
+    Name: Soul Reaper Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 25843
+    AegisName: SoulLinkerStone_Top
+    Name: Soul Linker Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 25844
+    AegisName: SoulLinkerStone_Middle
+    Name: Soul Linker Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 25845
+    AegisName: SoulLinkerStone_Bottom
+    Name: Soul Linker Stone (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 25846
+    AegisName: StarGladiatorStone_Top
+    Name: Star Gladiator Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 25847
+    AegisName: StarGladiatorStone_Middle
+    Name: Star Gladiator Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 25848
+    AegisName: StarGladiatorStone_Bottom
+    Name: Star Gladiator Stone (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 25849
+    AegisName: StarEmperorStone_Garment
+    Name: Star Emperor Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 25850
+    AegisName: NinjaStone_Top
+    Name: Ninja Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 25851
+    AegisName: NinjaStone_Middle
+    Name: Ninja Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 25852
+    AegisName: NinjaStone_Bottom
+    Name: Ninja Stone (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 25853
+    AegisName: KagerouStone_Robe
+    Name: Kagerou Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 25854
+    AegisName: OboroStone_Robe
+    Name: Oboro Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 25855
+    AegisName: GunslingerStone_Top
+    Name: Gunslinger Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 25856
+    AegisName: GunslingerStone_Middle
+    Name: Gunslinger Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 25857
+    AegisName: GunslingerStone_Bottom
+    Name: Gunslinger Stone (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 25858
+    AegisName: GunslingerStone_Robe
+    Name: Gunslinger Stone (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 25859
+    AegisName: DoramStone_Top
+    Name: Doram Stone (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 25860
+    AegisName: DoramStone_Middle
+    Name: Doram Stone (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 25861
+    AegisName: DoramStone_Bottom
+    Name: Doram Stone (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 25862
+    AegisName: DoramStone_Robe
+    Name: Doram Stone (Garment)
+    Type: Etc
+    Weight: 100
   - Id: 25864
     AegisName: aegis_25864
     Name: Sealed Temporal Circlet
@@ -36334,7 +36666,9 @@ Body:
     Name: Twinkle Effect
     Type: Card
     Script: |
-      /* todo */
+      hateffect HAT_EF_LJOSALFAR,true;
+    UnEquipScript: |
+      hateffect HAT_EF_LJOSALFAR,false;
   - Id: 29046
     AegisName: Greed
     Name: Greed
@@ -37007,19 +37341,25 @@ Body:
     Name: Blue Aura Effect
     Type: Card
     Script: |
-      /* todo */
+      hateffect HAT_EF_GUMGANG,true;
+    UnEquipScript: |
+      hateffect HAT_EF_GUMGANG,false;
   - Id: 29161
     AegisName: Pink_Glow_Effect
     Name: Pink Glow Effect
     Type: Card
     Script: |
-      /* todo */
+      hateffect HAT_EF_CHERRYBLOSSOM,true;
+    UnEquipScript: |
+      hateffect HAT_EF_CHERRYBLOSSOM,false;
   - Id: 29162
     AegisName: Shadow_Effect
     Name: Shadow Effect
     Type: Card
     Script: |
-      /* todo */
+      hateffect HAT_EF_KAGEMUSYA,true;
+    UnEquipScript: |
+      hateffect HAT_EF_KAGEMUSYA,false;
   - Id: 29166
     AegisName: A-Tolerance
     Name: A-Tolerance
@@ -37094,9 +37434,9 @@ Body:
     Name: White Body Effect
     Type: Card
     Script: |
-      hateffect HAT_EF_WHITEBODY,true;
+      hateffect HAT_EF_WHITEBODY2,true;
     UnEquipScript: |
-      hateffect HAT_EF_WHITEBODY,false;
+      hateffect HAT_EF_WHITEBODY2,false;
   - Id: 29225
     AegisName: WaterField_Effect
     Name: Water Field Effect
@@ -37399,6 +37739,84 @@ Body:
     Type: Card
     Script: |
       skill "TF_DOUBLE",3; bonus bDoubleRate,15;
+  - Id: 29423
+    AegisName: SuraStone_Top_
+    Name: Champion Stone (Upper)
+    Type: Card
+    Script: |
+      bonus bBaseAtk,getskilllv("MO_IRONHAND")*2;
+  - Id: 29424
+    AegisName: SuraStone_Middle_
+    Name: Champion Stone (Middle)
+    Type: Card
+    Script: |
+      bonus bHit,getskilllv("MO_DODGE")*2;
+  - Id: 29425
+    AegisName: SuraStone_Bottom_
+    Name: Champion Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"MO_CHAINCOMBO",20;
+  - Id: 29426
+    AegisName: SuraStone_Robe_
+    Name: SuraStone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15;
+  - Id: 29427
+    AegisName: SuraStone_Robe2_
+    Name: Sura Stone II (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SR_KNUCKLEARROW",15;
+  - Id: 29428
+    AegisName: RangerStone_Top_
+    Name: Sniper Stone (Upper)
+    Type: Card
+    Script: |
+      bonus bBaseAtk,getskilllv("HT_STEELCROW")*2;
+  - Id: 29429
+    AegisName: RangerStone_Middle_
+    Name: Sniper Stone (Middle)
+    Type: Card
+    Script: |
+      bonus2 bSkillFixedCast,"SN_SHARPSHOOTING",-500;
+  - Id: 29430
+    AegisName: RangerStone_Bottom_
+    Name: Sniper Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"AC_SHOWER",20;
+  - Id: 29431
+    AegisName: RangerStone_Robe_
+    Name: RangerStone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"RA_ARROWSTORM",10;
+  - Id: 29432
+    AegisName: SorcererStone_Top_
+    Name: Professor Stone (Upper)
+    Type: Card
+    Script: |
+      bonus bAspdRate,getskilllv("SA_ADVANCEDBOOK");
+  - Id: 29433
+    AegisName: SorcererStone_Middle_
+    Name: Professor Stone (Middle)
+    Type: Card
+    Script: |
+      bonus2 bSkillFixedCast,"PF_DOUBLECASTING",-400;
+  - Id: 29434
+    AegisName: SorcererStone_Bottom_
+    Name: Professor Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"MG_FIREBOLT",20; bonus2 bSkillAtk,"MG_COLDBOLT",20; bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",20;
+  - Id: 29435
+    AegisName: SorcererStone_Robe_
+    Name: SorcererStone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",10;
   - Id: 29438
     AegisName: Z-Knockback
     Name: Z-Knockback
@@ -37441,6 +37859,222 @@ Body:
     Type: Card
     Script: |
       bonus bFixedCastrate,-50;
+  - Id: 29460
+    AegisName: RuneknightStone_Top_
+    Name: Lord Knight Stone (Top)
+    Type: Card
+    Script: |
+      bonus bBaseAtk,getskilllv("KN_SPEARMASTERY")*2;
+  - Id: 29461
+    AegisName: RuneknightStone_Middle_
+    Name: Lord Knight Stone (Middle)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"LK_SPIRALPIERCE",15;
+  - Id: 29462
+    AegisName: RuneknightStone_Bottom_
+    Name: Lord Knight Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus bAspdRate,getskilllv("KN_CAVALIERMASTERY");
+  - Id: 29463
+    AegisName: RuneknightStone_Robe_
+    Name: Rune Knight Stone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"RK_DRAGONBREATH",10; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",10;
+  - Id: 29464
+    AegisName: GeneticStone_Top_
+    Name: Creator Stone (Top)
+    Type: Card
+    Script: |
+      bonus bBaseAtk,getskilllv("AM_LEARNINGPOTION")*2;
+  - Id: 29465
+    AegisName: GeneticStone_Middle_
+    Name: Creator Stone (Middle)
+    Type: Card
+    Script: |
+      bonus bHealPower,getskilllv("AM_POTIONPITCHER")*2;
+  - Id: 29466
+    AegisName: GeneticStone_Bottom_
+    Name: Creator Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"AM_ACIDTERROR",20;
+  - Id: 29467
+    AegisName: GeneticStone_Robe_
+    Name: Genetic Stone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"GN_CARTCANNON",10;
+  - Id: 29468
+    AegisName: WarlockStone_Top_
+    Name: High Wizard Stone (Top)
+    Type: Card
+    Script: |
+      bonus bMatkRate,getskilllv("HW_MAGICPOWER")*2;
+  - Id: 29469
+    AegisName: WarlockStone_Middle_
+    Name: High Wizard Stone (Middle)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"WZ_METEOR",20;
+  - Id: 29470
+    AegisName: WarlockStone_Bottom_
+    Name: High Wizard Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"WZ_FIREPILLAR",20;
+  - Id: 29471
+    AegisName: WarlockStone_Robe_
+    Name: Warlock Stone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",10;
+  - Id: 29477
+    AegisName: ShadowchaserStone_Top_
+    Name: Stalker Stone (Upper)
+    Type: Card
+    Script: |
+      bonus bBaseAtk,getskilllv("RG_PLAGIARISM")*2;
+  - Id: 29478
+    AegisName: ShadowchaseStone_Middle_
+    Name: Stalker Stone (Middle)
+    Type: Card
+    Script: |
+      bonus bHit,getskilllv("AC_VULTURE")*2;
+  - Id: 29479
+    AegisName: ShadowchaseStone_Bottom_
+    Name: Stalker Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"RG_RAID",20;
+  - Id: 29480
+    AegisName: ShadowchaserStone_Robe_
+    Name: Shadow Chaser Stone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SC_TRIANGLESHOT",15;
+  - Id: 29481
+    AegisName: MechanicStone_Top_
+    Name: Whitesmith Stone (Upper)
+    Type: Card
+    Script: |
+      bonus bBaseAtk,getskilllv("BS_WEAPONRESEARCH")*2;
+  - Id: 29482
+    AegisName: MechanicStone_Middle_
+    Name: Whitesmith Stone (Middle)
+    Type: Card
+    Script: |
+      bonus bHit,getskilllv("BS_SKINTEMPER")*3;
+  - Id: 29483
+    AegisName: MechanicStone_Bottom_
+    Name: Whitesmith Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"WS_CARTTERMINATION",20;
+  - Id: 29484
+    AegisName: MechanicStone_Robe_
+    Name: Mechanic Stone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"NC_AXETORNADO",15;
+  - Id: 29485
+    AegisName: WanderMinstrelStone_Top_
+    Name: Clown Gypsy Stone (Upper)
+    Type: Card
+    Script: |
+      if (Sex == SEX_FEMALE) bonus bBaseAtk,getskilllv("DC_DANCINGLESSON")*2; else bonus bBaseAtk,getskilllv("BA_MUSICALLESSON")*2;
+  - Id: 29486
+    AegisName: WanderMinstrelStone_Middle_
+    Name: Clown Gypsy Stone (Middle)
+    Type: Card
+    Script: |
+      if (Sex == SEX_FEMALE) bonus2 bSkillAtk,"DC_THROWARROW",20; else bonus2 bSkillAtk,"BA_MUSICALSTRIKE",20;
+  - Id: 29487
+    AegisName: WanderMinstrelStone_Bottom_
+    Name: Clown Gypsy Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"CG_ARROWVULCAN",20;
+  - Id: 29488
+    AegisName: WanderMinstrelStone_Robe_
+    Name: Wanderer Minstrel Stone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+  - Id: 29513
+    AegisName: HighpriestStone_Top_
+    Name: High Priest Stone (Upper)
+    Type: Card
+    Script: |
+      bonus bHealPower,getskilllv("HP_MEDITATIO");
+  - Id: 29514
+    AegisName: HighpriestStone_Middle_
+    Name: High Priest Stone (Middle)
+    Type: Card
+    Script: |
+      bonus bCritAtkRate,getskilllv("PR_MACEMASTERY")*2;
+  - Id: 29515
+    AegisName: HighpriestStone_Bottom_
+    Name: High Priest Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"PR_MAGNUS",20;
+  - Id: 29516
+    AegisName: ArchbishopStone_Robe_
+    Name: Archbishop Stone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"AB_ADORAMUS",15;
+  - Id: 29517
+    AegisName: PaladinStone_Top_
+    Name: Paladin Stone (Upper)
+    Type: Card
+    Script: |
+      bonus bMaxHPrate,getskilllv("CR_TRUST")/2;
+  - Id: 29518
+    AegisName: PaladinStone_Middle_
+    Name: Paladin Stone (Middle)
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,getskilllv("KN_SPEARMASTERY")/2;
+  - Id: 29519
+    AegisName: PaladinStone_Bottom_
+    Name: Paladin Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"CR_HOLYCROSS",20;
+  - Id: 29520
+    AegisName: RoyalguardStone_Robe_
+    Name: Royal Guard Stone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"LG_BANISHINGPOINT",15;
+  - Id: 29521
+    AegisName: AssacrossStone_Top_
+    Name: Assassin Cross Stone (Upper)
+    Type: Card
+    Script: |
+      bonus bBaseAtk,getskilllv("AS_KATAR")*2;
+  - Id: 29522
+    AegisName: AssacrossStone_Middle_
+    Name: Assassin Cross Stone (Middle)
+    Type: Card
+    Script: |
+      bonus bBaseAtk,getskilllv("AS_LEFT")*2;
+  - Id: 29523
+    AegisName: AssacrossStone_Bottom_
+    Name: Assassin Cross Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"AS_SONICBLOW",20;
+  - Id: 29524
+    AegisName: GuillcrossStone_Robe_
+    Name: Assassin Cross Stone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
   - Id: 29579
     AegisName: Racing_SG_1
     Name: Racing (Star Gladiator) 1Lv
@@ -37536,6 +38170,198 @@ Body:
     Name: Alphoccio's Memory
     Type: Card
     Buy: 20
+  - Id: 29611
+    AegisName: SuraStone_Bottom2_
+    Name: Sura Stone II (Bottom)
+    Type: Card
+    Script: |
+      bonus bBaseAtk,getskilllv("AL_DP")*2;
+  - Id: 29612
+    AegisName: SuraStone_Middle2_
+    Name: Sura Stone II (Middle)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"MO_COMBOFINISH",15;
+  - Id: 29613
+    AegisName: SuraStone_Top2_
+    Name: Sura Stone II (Upper)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"CH_CHAINCRUSH",15;
+  - Id: 29614
+    AegisName: SorcererStone_Robe2_
+    Name: Sorcerer Stone II (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SO_DIAMONDDUST",15;
+  - Id: 29615
+    AegisName: SorcererStone_Bottom2_
+    Name: Sorcerer Stone II (Bottom)
+    Type: Card
+    Script: |
+      bonus bMatk,getskilllv("SA_AUTOSPELL")*2;
+  - Id: 29616
+    AegisName: SorcererStone_Middle2_
+    Name: Sorcerer Stone II (Middle)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"MG_FIREBOLT",20; bonus2 bSkillAtk,"MG_COLDBOLT",20; bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",20;
+  - Id: 29617
+    AegisName: SorcererStone_Top2_
+    Name: Sorcerer Stone II (Upper)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"WZ_EARTHSPIKE",20; bonus2 bSkillAtk,"WZ_HEAVENDRIVE",20;
+  - Id: 29618
+    AegisName: ShadowchaserStone_Robe2_
+    Name: Shadow Chaser Stone II (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SC_FATALMENACE",15;
+  - Id: 29619
+    AegisName: ShadowchasStone_Bottom2_
+    Name: Shadow Chaser Stone II (Bottom)
+    Type: Card
+    Script: |
+      bonus bHit,getskilllv("TF_MISS");
+  - Id: 29620
+    AegisName: ShadowchasStone_Middle2_
+    Name: Shadow Chaser Stone II (Middle)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"RG_BACKSTAP",15;
+  - Id: 29621
+    AegisName: ShadowchaserStone_Top2_
+    Name: Shadow Chaser Stone II (Upper)
+    Type: Card
+    Script: |
+      bonus bBaseAtk,getskilllv("RG_SNATCHER")*2;
+  - Id: 29651
+    AegisName: SoulLinkerStone_Top_
+    Name: Soul Linker Stone (Upper)
+    Type: Card
+    Script: |
+      bonus bMatk,getskilllv("TK_SPTIME")*2;
+  - Id: 29652
+    AegisName: SoulLinkerStone_Middle_
+    Name: Soul Linker Stone (Middle)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SL_SMA",20;
+  - Id: 29653
+    AegisName: SoulLinkerStone_Bottom_
+    Name: Soul Linker Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-getskilllv("SL_KAAHI")*2;
+  - Id: 29654
+    AegisName: SoulReaperStone_Robe_
+    Name: Soul Reaper Stone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SP_SWHOO",20;
+  - Id: 29655
+    AegisName: StarGladiatorStone_Top_
+    Name: Star Gladiator Stone (Upper)
+    Type: Card
+    Script: |
+      bonus bBaseAtk,getskilllv("TK_HPTIME")*2;
+  - Id: 29656
+    AegisName: StarGladiatorStone_Middle_
+    Name: Star Gladiator Stone (Middle)
+    Type: Card
+    Script: |
+      bonus2 bFixedCastrate,"SG_FEEL",-50;
+  - Id: 29657
+    AegisName: StarGladiatorStone_Bottom_
+    Name: Star Gladiator Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus bAspdRate,getskilllv("SG_KNOWLEDGE");
+  - Id: 29658
+    AegisName: StarEmperorStone_Garment_
+    Name: Star Emperor Stone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR",20; bonus2 bSkillAtk,"SJ_SOLARBURST",20; bonus2 bSkillAtk,"SJ_FULLMOONKICK",20;
+  - Id: 29659
+    AegisName: NinjaStone_Top_
+    Name: Ninja Stone (Upper)
+    Type: Card
+    Script: |
+      bonus bBaseAtk,getskilllv("NJ_NINPOU")*2; bonus bMatk,getskilllv("NJ_NINPOU")*2;
+  - Id: 29660
+    AegisName: NinjaStone_Middle_
+    Name: Ninja Stone (Middle)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"NJ_HUUMA",20;
+  - Id: 29661
+    AegisName: NinjaStone_Bottom_
+    Name: Ninja Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"NJ_BAKUENRYU",20; bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",20; bonus2 bSkillAtk,"NJ_KAMAITACHI",20;
+  - Id: 29662
+    AegisName: KagerouStone_Robe_
+    Name: Kagerou Stone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"KO_HUUMARANKA",25;
+  - Id: 29663
+    AegisName: OboroStone_Robe_
+    Name: Oboro Stone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"NJ_KOUENKA",20;
+  - Id: 29664
+    AegisName: GunslingerStone_Top_
+    Name: Gunslinger Stone (Upper)
+    Type: Card
+    Script: |
+      bonus bBaseAtk,getskilllv("GS_SNAKEEYE")*2;
+  - Id: 29665
+    AegisName: GunslingerStone_Middle_
+    Name: Gunslinger Stone (Middle)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"GS_DESPERADO",20;
+  - Id: 29666
+    AegisName: GunslingerStone_Bottom_
+    Name: Gunslinger Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,getskilllv("GS_CHAINACTION")/2;
+  - Id: 29667
+    AegisName: GunslingerStone_Robe_
+    Name: Gunslinger Stone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",20; bonus2 bSkillAtk,"RL_R_TRIP",20;
+  - Id: 29668
+    AegisName: DoramStone_Top_
+    Name: Doram Stone (Upper)
+    Type: Card
+    Script: |
+      .@lv = getskilllv("SU_SCRATCH"); bonus bBaseAtk,.@lv; bonus bMatk,.@lv;
+  - Id: 29669
+    AegisName: DoramStone_Middle_
+    Name: Doram Stone (Middle)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",20;
+  - Id: 29670
+    AegisName: DoramStone_Bottom_
+    Name: Doram Stone (Bottom)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SU_SV_STEMSPEAR",20;
+  - Id: 29671
+    AegisName: DoramStone_Robe_
+    Name: Doram Stone (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"SU_PICKYPECK",20; bonus2 bSkillAtk,"SU_CN_METEOR",20;
   - Id: 29672
     AegisName: aegis_29672
     Name: Temporal Jewel (STR) Lv 1
@@ -39146,6 +39972,78 @@ Body:
     Script: |
       bonus bLongAtkRate,25;
       bonus bPerfectHitRate,5;
+  - Id: 310000
+    AegisName: Ranger_Top2
+    Name: Sniper Stone II (Top)
+    Type: Card
+    Script: |
+      bonus bAspdRate,getskilllv("SN_WINDWALK")/2;
+  - Id: 310001
+    AegisName: Ranger_Middle2
+    Name: Sniper Stone II (Middle)
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,getskilllv("HT_BEASTBANE")*2;
+  - Id: 310002
+    AegisName: Ranger_Bottom2
+    Name: Sniper Stone II (Bottom)
+    Type: Card
+    Script: |
+      bonus bBaseAtk,getskilllv("SN_SIGHT")*2;
+  - Id: 310003
+    AegisName: Ranger_Robe2
+    Name: Ranger Stone II (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"RA_AIMEDBOLT",15;
+  - Id: 310004
+    AegisName: Mechanic_Top2
+    Name: Whitesmith Stone II (Top)
+    Type: Card
+    Script: |
+      bonus2 bSkillCooldown,"NC_AXEBOOMERANG",getskilllv("BS_OVERTHRUST")*-100;
+  - Id: 310005
+    AegisName: Mechanic_Middle2
+    Name: Whitesmith Stone II (Middle)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"WS_CARTTERMINATION",15;
+  - Id: 310006
+    AegisName: Mechanic_Bottom2
+    Name: Whitesmith Stone II (Bottom)
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,getskilllv("BS_MAXIMIZE");
+  - Id: 310007
+    AegisName: Mechanic_Robe2
+    Name: Mechanic Stone II (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"NC_ARMSCANNON",15;
+  - Id: 310008
+    AegisName: Highpriest_Top2
+    Name: High Priest Stone II (Top)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"PR_MAGNUS",15;
+  - Id: 310009
+    AegisName: Highpriest_Middle2
+    Name: High Priest Stone II (Middle)
+    Type: Card
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Holy,getskilllv("HP_ASSUMPTIO");
+  - Id: 310010
+    AegisName: Highpriest_Bottom2
+    Name: High Priest Stone II (Bottom)
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,getskilllv("PR_KYRIE")/2*-1;
+  - Id: 310011
+    AegisName: Archbishop_Robe2
+    Name: Archbishop Stone II (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"AB_JUDEX",15;
   - Id: 310076
     AegisName: aegis_310076
     Name: STR Blessing
@@ -39202,6 +40100,198 @@ Body:
       bonus bMdef,3;
       bonus bDef,25;
       bonus bCritAtkRate,15;
+  - Id: 310180
+    AegisName: Warlock_Robe2
+    Name: Warlock Stone II (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"WL_COMET",15;
+  - Id: 310181
+    AegisName: Warlock_Top2
+    Name: High Wizard Stone II (Upper)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"WZ_METEOR",20;
+  - Id: 310182
+    AegisName: Warlock_Middle2
+    Name: High Wizard Stone II (Middle)
+    Type: Card
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Neutral,getskilllv("HW_GRAVITATION")*2;
+  - Id: 310183
+    AegisName: Warlock_Bottom2
+    Name: High Wizard Stone II (Lower)
+    Type: Card
+    Script: |
+      bonus bMatk,getskilllv("HW_SOULDRAIN")*2;
+  - Id: 310184
+    AegisName: RoyalGuard_Robe2
+    Name: Royal Guard Stone II (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"LG_RAYOFGENESIS",15;
+  - Id: 310185
+    AegisName: RoyalGuard_Bottom2
+    Name: Paladin Stone II (Lower)
+    Type: Card
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Holy,getskilllv("CR_GRANDCROSS");
+  - Id: 310186
+    AegisName: RoyalGuard_Middle2
+    Name: Paladin Stone II (Middle)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"PA_PRESSURE",20;
+  - Id: 310187
+    AegisName: RoyalGuard_Top2
+    Name: Paladin Stone II (Upper)
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,getskilllv("CR_TRUST")*-1;
+  - Id: 310188
+    AegisName: GuillotineCross_Robe2
+    Name: Guillotine Cross Stone II (Garment)
+    Type: Card
+    Script: |
+      bonus bCritAtkRate,15; if (getskilllv("AS_KATAR") >= 10) { skill "TF_DOUBLE",3; bonus bDoubleRate,15; }
+  - Id: 310189
+    AegisName: GuillotineCross_Bottom2
+    Name: Assassin Cross Stone II (Lower)
+    Type: Card
+    Script: |
+      bonus2 bAddSize,Size_All,getskilllv("ASC_KATAR")*2;
+  - Id: 310190
+    AegisName: GuillotineCross_Middle2
+    Name: Assassin Cross Stone II (Middle)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"AS_SONICBLOW",20;
+  - Id: 310191
+    AegisName: GuillotineCross_Top2
+    Name: Assassin Cross Stone II (Upper)
+    Type: Card
+    Script: |
+      bonus bDelayrate,getskilllv("ASC_BREAKER")*-1;
+  - Id: 1000008
+    AegisName: RangerStone_II_Top
+    Name: Sniper Stone II (Top)
+    Type: Etc
+    Weight: 100
+  - Id: 1000009
+    AegisName: RangerStone_II_Middle
+    Name: Sniper Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000010
+    AegisName: RangerStone_II_Bottom
+    Name: Sniper Stone II (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 1000011
+    AegisName: RangerStone_II_Garment
+    Name: Ranger Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1000012
+    AegisName: MechanicStone_II_Top
+    Name: Whitesmith Stone II (Top)
+    Type: Etc
+    Weight: 100
+  - Id: 1000013
+    AegisName: MechanicStone_II_Middle
+    Name: Whitesmith Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000014
+    AegisName: MechanicStone_II_Bottom
+    Name: Whitesmith Stone II (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 1000015
+    AegisName: MechanicStone_II_Garment
+    Name: Mechanic Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1000016
+    AegisName: HighpriestStone_II_Top
+    Name: High Priest Stone II (Top)
+    Type: Etc
+    Weight: 100
+  - Id: 1000017
+    AegisName: HighpriestStone_II_Middle
+    Name: High Priest Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000018
+    AegisName: HighpriestStone_II_Bottom
+    Name: High Priest Stone II (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 1000019
+    AegisName: ArchbishopStone_II_Garment
+    Name: Archbishop Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1000213
+    AegisName: WarlockStone_Robe2
+    Name: Warlock Stone II (Garment)
+    Type: Card
+    Weight: 100
+  - Id: 1000214
+    AegisName: WarlockStone_Top2
+    Name: High Wizard Stone II (Upper)
+    Type: Card
+    Weight: 100
+  - Id: 1000215
+    AegisName: WarlockStone_Middle2
+    Name: High Wizard Stone II (Middle)
+    Type: Card
+    Weight: 100
+  - Id: 1000216
+    AegisName: WarlockStone_Bottom2
+    Name: High Wizard Stone II (Lower)
+    Type: Card
+    Weight: 100
+  - Id: 1000217
+    AegisName: RoyalGuardStone_Robe2
+    Name: Royal Guard Stone II (Garment)
+    Type: Card
+    Weight: 100
+  - Id: 1000218
+    AegisName: RoyalGuardStone_Top2
+    Name: Paladin Stone II (Upper)
+    Type: Card
+    Weight: 100
+  - Id: 1000219
+    AegisName: RoyalGuardStone_Middle2
+    Name: Paladin Stone II (Middle)
+    Type: Card
+    Weight: 100
+  - Id: 1000220
+    AegisName: RoyalGuardStone_Bottom2
+    Name: Paladin Stone II (Lower)
+    Type: Card
+    Weight: 100
+  - Id: 1000221
+    AegisName: GuillotineCrossStone_Robe2
+    Name: Guillotine Cross Stone II (Garment)
+    Type: Card
+    Weight: 100
+  - Id: 1000222
+    AegisName: GuillotineCrossStone_Top2
+    Name: Assassin Cross Stone II (Upper)
+    Type: Card
+    Weight: 100
+  - Id: 1000223
+    AegisName: GuillotineCrossStone_Middle2
+    Name: Assassin Cross Stone II (Middle)
+    Type: Card
+    Weight: 100
+  - Id: 1000224
+    AegisName: GuillotineCrossStone_Bottom2
+    Name: Assassin Cross Stone II (Lower)
+    Type: Card
+    Weight: 100
   - Id: 1000235
     AegisName: aegis_1000235
     Name: Great Hunter's Mark    # !todo check english name
