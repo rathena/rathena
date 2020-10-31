@@ -16824,7 +16824,7 @@ Body:
     Classes:
       Upper: true
       Third_Upper: true
-    Gender: Male
+    Gender: Both
     Locations:
       Right_Hand: true
     WeaponLevel: 4
