@@ -101624,17 +101624,17 @@ Body:
          bonus2 bAddRace,RC_Angel,20;
       }
   - Id: 400020
-  - Id: 400044
     AegisName: C_BeachBall
-    AegisName: aegis_400044
     Name: Costume Beachball
-    Name: Phantom Cap
-    Type: Armor
     Type: Armor
     Locations:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 1918
+  - Id: 400044
+    AegisName: aegis_400044
+    Name: Phantom Cap
+    Type: Armor
     View: 1899
     Weight: 100
     Slots: 1
