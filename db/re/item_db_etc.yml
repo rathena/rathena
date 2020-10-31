@@ -40100,198 +40100,6 @@ Body:
       bonus bMdef,3;
       bonus bDef,25;
       bonus bCritAtkRate,15;
-  - Id: 310180
-    AegisName: Warlock_Robe2
-    Name: Warlock Stone II (Garment)
-    Type: Card
-    Script: |
-      bonus2 bSkillAtk,"WL_COMET",15;
-  - Id: 310181
-    AegisName: Warlock_Top2
-    Name: High Wizard Stone II (Upper)
-    Type: Card
-    Script: |
-      bonus2 bSkillAtk,"WZ_METEOR",20;
-  - Id: 310182
-    AegisName: Warlock_Middle2
-    Name: High Wizard Stone II (Middle)
-    Type: Card
-    Script: |
-      bonus2 bMagicAtkEle,Ele_Neutral,getskilllv("HW_GRAVITATION")*2;
-  - Id: 310183
-    AegisName: Warlock_Bottom2
-    Name: High Wizard Stone II (Lower)
-    Type: Card
-    Script: |
-      bonus bMatk,getskilllv("HW_SOULDRAIN")*2;
-  - Id: 310184
-    AegisName: RoyalGuard_Robe2
-    Name: Royal Guard Stone II (Garment)
-    Type: Card
-    Script: |
-      bonus2 bSkillAtk,"LG_RAYOFGENESIS",15;
-  - Id: 310185
-    AegisName: RoyalGuard_Bottom2
-    Name: Paladin Stone II (Lower)
-    Type: Card
-    Script: |
-      bonus2 bMagicAtkEle,Ele_Holy,getskilllv("CR_GRANDCROSS");
-  - Id: 310186
-    AegisName: RoyalGuard_Middle2
-    Name: Paladin Stone II (Middle)
-    Type: Card
-    Script: |
-      bonus2 bSkillAtk,"PA_PRESSURE",20;
-  - Id: 310187
-    AegisName: RoyalGuard_Top2
-    Name: Paladin Stone II (Upper)
-    Type: Card
-    Script: |
-      bonus bVariableCastrate,getskilllv("CR_TRUST")*-1;
-  - Id: 310188
-    AegisName: GuillotineCross_Robe2
-    Name: Guillotine Cross Stone II (Garment)
-    Type: Card
-    Script: |
-      bonus bCritAtkRate,15; if (getskilllv("AS_KATAR") >= 10) { skill "TF_DOUBLE",3; bonus bDoubleRate,15; }
-  - Id: 310189
-    AegisName: GuillotineCross_Bottom2
-    Name: Assassin Cross Stone II (Lower)
-    Type: Card
-    Script: |
-      bonus2 bAddSize,Size_All,getskilllv("ASC_KATAR")*2;
-  - Id: 310190
-    AegisName: GuillotineCross_Middle2
-    Name: Assassin Cross Stone II (Middle)
-    Type: Card
-    Script: |
-      bonus2 bSkillAtk,"AS_SONICBLOW",20;
-  - Id: 310191
-    AegisName: GuillotineCross_Top2
-    Name: Assassin Cross Stone II (Upper)
-    Type: Card
-    Script: |
-      bonus bDelayrate,getskilllv("ASC_BREAKER")*-1;
-  - Id: 1000008
-    AegisName: RangerStone_II_Top
-    Name: Sniper Stone II (Top)
-    Type: Etc
-    Weight: 100
-  - Id: 1000009
-    AegisName: RangerStone_II_Middle
-    Name: Sniper Stone II (Middle)
-    Type: Etc
-    Weight: 100
-  - Id: 1000010
-    AegisName: RangerStone_II_Bottom
-    Name: Sniper Stone II (Bottom)
-    Type: Etc
-    Weight: 100
-  - Id: 1000011
-    AegisName: RangerStone_II_Garment
-    Name: Ranger Stone II (Garment)
-    Type: Etc
-    Weight: 100
-  - Id: 1000012
-    AegisName: MechanicStone_II_Top
-    Name: Whitesmith Stone II (Top)
-    Type: Etc
-    Weight: 100
-  - Id: 1000013
-    AegisName: MechanicStone_II_Middle
-    Name: Whitesmith Stone II (Middle)
-    Type: Etc
-    Weight: 100
-  - Id: 1000014
-    AegisName: MechanicStone_II_Bottom
-    Name: Whitesmith Stone II (Bottom)
-    Type: Etc
-    Weight: 100
-  - Id: 1000015
-    AegisName: MechanicStone_II_Garment
-    Name: Mechanic Stone II (Garment)
-    Type: Etc
-    Weight: 100
-  - Id: 1000016
-    AegisName: HighpriestStone_II_Top
-    Name: High Priest Stone II (Top)
-    Type: Etc
-    Weight: 100
-  - Id: 1000017
-    AegisName: HighpriestStone_II_Middle
-    Name: High Priest Stone II (Middle)
-    Type: Etc
-    Weight: 100
-  - Id: 1000018
-    AegisName: HighpriestStone_II_Bottom
-    Name: High Priest Stone II (Bottom)
-    Type: Etc
-    Weight: 100
-  - Id: 1000019
-    AegisName: ArchbishopStone_II_Garment
-    Name: Archbishop Stone II (Garment)
-    Type: Etc
-    Weight: 100
-  - Id: 1000213
-    AegisName: WarlockStone_Robe2
-    Name: Warlock Stone II (Garment)
-    Type: Card
-    Weight: 100
-  - Id: 1000214
-    AegisName: WarlockStone_Top2
-    Name: High Wizard Stone II (Upper)
-    Type: Card
-    Weight: 100
-  - Id: 1000215
-    AegisName: WarlockStone_Middle2
-    Name: High Wizard Stone II (Middle)
-    Type: Card
-    Weight: 100
-  - Id: 1000216
-    AegisName: WarlockStone_Bottom2
-    Name: High Wizard Stone II (Lower)
-    Type: Card
-    Weight: 100
-  - Id: 1000217
-    AegisName: RoyalGuardStone_Robe2
-    Name: Royal Guard Stone II (Garment)
-    Type: Card
-    Weight: 100
-  - Id: 1000218
-    AegisName: RoyalGuardStone_Top2
-    Name: Paladin Stone II (Upper)
-    Type: Card
-    Weight: 100
-  - Id: 1000219
-    AegisName: RoyalGuardStone_Middle2
-    Name: Paladin Stone II (Middle)
-    Type: Card
-    Weight: 100
-  - Id: 1000220
-    AegisName: RoyalGuardStone_Bottom2
-    Name: Paladin Stone II (Lower)
-    Type: Card
-    Weight: 100
-  - Id: 1000221
-    AegisName: GuillotineCrossStone_Robe2
-    Name: Guillotine Cross Stone II (Garment)
-    Type: Card
-    Weight: 100
-  - Id: 1000222
-    AegisName: GuillotineCrossStone_Top2
-    Name: Assassin Cross Stone II (Upper)
-    Type: Card
-    Weight: 100
-  - Id: 1000223
-    AegisName: GuillotineCrossStone_Middle2
-    Name: Assassin Cross Stone II (Middle)
-    Type: Card
-    Weight: 100
-  - Id: 1000224
-    AegisName: GuillotineCrossStone_Bottom2
-    Name: Assassin Cross Stone II (Lower)
-    Type: Card
-    Weight: 100
   - Id: 310082
     AegisName: aegis_310082
     Name: Automatic Modification Orb(Defense)
@@ -41594,6 +41402,138 @@ Body:
 #      }
 #      if (.@r>=11) {
 #      }
+  - Id: 310180
+    AegisName: Warlock_Robe2
+    Name: Warlock Stone II (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"WL_COMET",15;
+  - Id: 310181
+    AegisName: Warlock_Top2
+    Name: High Wizard Stone II (Upper)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"WZ_METEOR",20;
+  - Id: 310182
+    AegisName: Warlock_Middle2
+    Name: High Wizard Stone II (Middle)
+    Type: Card
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Neutral,getskilllv("HW_GRAVITATION")*2;
+  - Id: 310183
+    AegisName: Warlock_Bottom2
+    Name: High Wizard Stone II (Lower)
+    Type: Card
+    Script: |
+      bonus bMatk,getskilllv("HW_SOULDRAIN")*2;
+  - Id: 310184
+    AegisName: RoyalGuard_Robe2
+    Name: Royal Guard Stone II (Garment)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"LG_RAYOFGENESIS",15;
+  - Id: 310185
+    AegisName: RoyalGuard_Bottom2
+    Name: Paladin Stone II (Lower)
+    Type: Card
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Holy,getskilllv("CR_GRANDCROSS");
+  - Id: 310186
+    AegisName: RoyalGuard_Middle2
+    Name: Paladin Stone II (Middle)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"PA_PRESSURE",20;
+  - Id: 310187
+    AegisName: RoyalGuard_Top2
+    Name: Paladin Stone II (Upper)
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,getskilllv("CR_TRUST")*-1;
+  - Id: 310188
+    AegisName: GuillotineCross_Robe2
+    Name: Guillotine Cross Stone II (Garment)
+    Type: Card
+    Script: |
+      bonus bCritAtkRate,15; if (getskilllv("AS_KATAR") >= 10) { skill "TF_DOUBLE",3; bonus bDoubleRate,15; }
+  - Id: 310189
+    AegisName: GuillotineCross_Bottom2
+    Name: Assassin Cross Stone II (Lower)
+    Type: Card
+    Script: |
+      bonus2 bAddSize,Size_All,getskilllv("ASC_KATAR")*2;
+  - Id: 310190
+    AegisName: GuillotineCross_Middle2
+    Name: Assassin Cross Stone II (Middle)
+    Type: Card
+    Script: |
+      bonus2 bSkillAtk,"AS_SONICBLOW",20;
+  - Id: 310191
+    AegisName: GuillotineCross_Top2
+    Name: Assassin Cross Stone II (Upper)
+    Type: Card
+    Script: |
+      bonus bDelayrate,getskilllv("ASC_BREAKER")*-1;
+  - Id: 1000008
+    AegisName: RangerStone_II_Top
+    Name: Sniper Stone II (Top)
+    Type: Etc
+    Weight: 100
+  - Id: 1000009
+    AegisName: RangerStone_II_Middle
+    Name: Sniper Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000010
+    AegisName: RangerStone_II_Bottom
+    Name: Sniper Stone II (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 1000011
+    AegisName: RangerStone_II_Garment
+    Name: Ranger Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1000012
+    AegisName: MechanicStone_II_Top
+    Name: Whitesmith Stone II (Top)
+    Type: Etc
+    Weight: 100
+  - Id: 1000013
+    AegisName: MechanicStone_II_Middle
+    Name: Whitesmith Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000014
+    AegisName: MechanicStone_II_Bottom
+    Name: Whitesmith Stone II (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 1000015
+    AegisName: MechanicStone_II_Garment
+    Name: Mechanic Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1000016
+    AegisName: HighpriestStone_II_Top
+    Name: High Priest Stone II (Top)
+    Type: Etc
+    Weight: 100
+  - Id: 1000017
+    AegisName: HighpriestStone_II_Middle
+    Name: High Priest Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000018
+    AegisName: HighpriestStone_II_Bottom
+    Name: High Priest Stone II (Bottom)
+    Type: Etc
+    Weight: 100
+  - Id: 1000019
+    AegisName: ArchbishopStone_II_Garment
+    Name: Archbishop Stone II (Garment)
+    Type: Etc
+    Weight: 100
   - Id: 1000092
     AegisName: ELYUMINA_RADAR
     Name: Elyumina Radar
@@ -42260,6 +42200,66 @@ Body:
     Name: Automatic Modification Module(Reflection Reject)
     Type: Etc
     Weight: 10
+  - Id: 1000213
+    AegisName: WarlockStone_Robe2
+    Name: Warlock Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1000214
+    AegisName: WarlockStone_Top2
+    Name: High Wizard Stone II (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000215
+    AegisName: WarlockStone_Middle2
+    Name: High Wizard Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000216
+    AegisName: WarlockStone_Bottom2
+    Name: High Wizard Stone II (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000217
+    AegisName: RoyalGuardStone_Robe2
+    Name: Royal Guard Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1000218
+    AegisName: RoyalGuardStone_Top2
+    Name: Paladin Stone II (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000219
+    AegisName: RoyalGuardStone_Middle2
+    Name: Paladin Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000220
+    AegisName: RoyalGuardStone_Bottom2
+    Name: Paladin Stone II (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1000221
+    AegisName: GuillotineCrossStone_Robe2
+    Name: Guillotine Cross Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1000222
+    AegisName: GuillotineCrossStone_Top2
+    Name: Assassin Cross Stone II (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1000223
+    AegisName: GuillotineCrossStone_Middle2
+    Name: Assassin Cross Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1000224
+    AegisName: GuillotineCrossStone_Bottom2
+    Name: Assassin Cross Stone II (Lower)
+    Type: Etc
+    Weight: 100
   - Id: 1000225
     AegisName: aegis_1000225
     Name: Potato Chips

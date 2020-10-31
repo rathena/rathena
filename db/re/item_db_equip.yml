@@ -105966,30 +105966,6 @@ Body:
     Refineable: true
     Script: |
       bonus bUnbreakableWeapon; bonus2 bAddClass,Class_All,5; .@r = getrefine(); bonus bBaseAtk,.@r*3; bonus bBaseAtk,min(BaseLevel,180)/15*3; if (.@r>=7) bonus bBaseAtk,getskilllv("BS_WEAPONRESEARCH")*3; if (.@r>=9) bonus2 bAddSize,Size_All,15;
-  - Id: 530000
-    AegisName: Boost_Spear
-    Name: Booster Spear
-    Type: Weapon
-    SubType: 2hSword
-    Attack: 160
-    MagicAttack: 160
-    Range: 3
-    Slots: 2
-    Jobs:
-      Crusader: true
-      Knight: true
-    Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
-    Locations:
-      Right_Hand: true
-      Left_Hand: true
-    WeaponLevel: 4
-    EquipLevelMin: 100
-    Refineable: true
-    Script: |
-      bonus bMatkRate,3; bonus2 bAddClass,Class_All,3; bonus2 bMagicAtkEle,Ele_Holy,3; .@r = getrefine(); if (.@r) { bonus bBaseAtk,.@r*2; bonus bMatk,.@r*2; } .@i = min(BaseLevel,180)/15*3; bonus bBaseAtk,.@i; bonus bMatk,.@i; if (.@r>=7) {  bonus2 bMagicAtkEle,Ele_Holy,getskilllv("CR_TRUST"); } if (.@r>=9) { bonus bLongAtkRate,10; }
   - Id: 520002
     AegisName: aegis_520002
     Name: Pride Steel
@@ -106024,6 +106000,30 @@ Body:
       if (.@r>=11) {
          bonus2 bSkillAtk,"NC_AXEBOOMERANG",25;
       }
+  - Id: 530000
+    AegisName: Boost_Spear
+    Name: Booster Spear
+    Type: Weapon
+    SubType: 2hSword
+    Attack: 160
+    MagicAttack: 160
+    Range: 3
+    Slots: 2
+    Jobs:
+      Crusader: true
+      Knight: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Right_Hand: true
+      Left_Hand: true
+    WeaponLevel: 4
+    EquipLevelMin: 100
+    Refineable: true
+    Script: |
+      bonus bMatkRate,3; bonus2 bAddClass,Class_All,3; bonus2 bMagicAtkEle,Ele_Holy,3; .@r = getrefine(); if (.@r) { bonus bBaseAtk,.@r*2; bonus bMatk,.@r*2; } .@i = min(BaseLevel,180)/15*3; bonus bBaseAtk,.@i; bonus bMatk,.@i; if (.@r>=7) {  bonus2 bMagicAtkEle,Ele_Holy,getskilllv("CR_TRUST"); } if (.@r>=9) { bonus bLongAtkRate,10; }
   - Id: 530002
     AegisName: aegis_530002
     Name: Gluttony Stick
