@@ -60452,32 +60452,6 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus bNoKnockback; bonus bUnbreakableArmor; bonus bDefEle,Ele_Water; if (.@r>8) .@a = 40; else if (.@r>6) .@a = 25; else if (.@r>=5) .@a = 10; bonus2 bAddEle,Ele_Fire,.@a; bonus2 bAddEle,Ele_Water,.@a; bonus2 bMagicAddEle,Ele_Fire,.@a; bonus2 bMagicAddEle,Ele_Water,.@a; bonus2 bAddRace,RC_Demihuman,.@a; bonus2 bAddRace,RC_Formless,.@a; bonus2 bMagicAddRace,RC_Demihuman,.@a; bonus2 bMagicAddRace,RC_Formless,.@a; bonus2 bAddRace,RC_Player_Human,.@a; bonus2 bMagicAddRace,RC_Player_Human,.@a;
-  - Id: 15388
-    AegisName: King_Schmidt_Suit
-    Name: King Schmidt's Suit
-    Type: Armor
-    Weight: 900
-    Defense: 150
-    Slots: 1
-    Locations:
-      Armor: true
-    EquipLevelMin: 130
-    Refineable: true
-    Script: |
-      .@r = getrefine(); bonus2 bAddSize,Size_Medium,10; bonus2 bAddSize,Size_Large,10; bonus2 bMagicAddSize,Size_Medium,10; bonus2 bMagicAddSize,Size_Large,10; if(.@r > 6){ bonus2 bAddEle,Ele_Fire,10; bonus2 bAddEle,Ele_Dark,10; bonus2 bMagicAddEle,Ele_Fire,10; bonus2 bMagicAddEle,Ele_Dark,10; } if(.@r > 8){ bonus2 bSubRace,RC_Dragon,15; bonus2 bSubRace,RC_Formless,15; } if(.@r > 10){ bonus2 bSubSize,Size_Medium,10; bonus2 bSubSize,Size_Large,10; }
-  - Id: 15389
-    AegisName: King_Schmidt_Manteau
-    Name: King Schmidt's Manteau
-    Type: Armor
-    Weight: 600
-    Defense: 70
-    Slots: 1
-    Locations:
-      Garment: true
-    EquipLevelMin: 130
-    Refineable: true
-    Script: |
-      .@r = getrefine(); bonus2 bAddEle,Ele_Fire,(.@r/3)*2; bonus2 bAddEle,Ele_Dark,(.@r/3)*2; bonus2 bMagicAddEle,Ele_Fire,(.@r/3)*2; bonus2 bMagicAddEle,Ele_Dark,(.@r/3)*2; if(.@r > 6){ bonus2 bSubRace,RC_Dragon,5; bonus2 bSubRace,RC_Formless,5; } if(.@r > 10){ bonus2 bAddRace,RC_Dragon,15; bonus2 bAddRace,RC_Formless,15; bonus2 bMagicAddRace,RC_Dragon,15; bonus2 bMagicAddRace,RC_Formless,15; }
   - Id: 16000
     AegisName: Erde
     Name: Erde
@@ -71036,18 +71010,6 @@ Body:
     View: 4
     Script: |
       bonus bMatkRate,1; bonus bMatk,(2*getrefine());
-  - Id: 19246
-    AegisName: Royal_Guard_Necklace
-    Name: Royal Guard Necklace
-    Type: Armor
-    Buy: 20
-    Weight: 300
-    Locations:
-      Head_Low: true
-    EquipLevelMin: 80
-    View: 1629
-    Script: |
-      bonus bAspd,1;
   - Id: 19266
     AegisName: Survive_Circlet_
     Name: Survivor's Circlet
@@ -71544,18 +71506,6 @@ Body:
     View: 1117
     Script: |
       .@r = getrefine(); .@a = 5*(getskilllv("AB_LAUDAAGNUS")+getskilllv("AB_LAUDARAMUS")); .@dmg = 20; .@aspd = 10; bonus bMdef,15; bonus2 bSkillUseSP,"AB_JUDEX",15; bonus2 bSkillUseSP,"AB_ADORAMUS",15; bonus2 bVariableCastrate,"AB_JUDEX",-5*getskilllv("AB_ORATIO"); bonus2 bVariableCastrate,"AB_ADORAMUS",-5*getskilllv("AB_ORATIO"); if (getskilllv("AB_CLEARANCE") >= 5) { bonus2 bMagicAddClass,Class_Boss,25; } bonus2 bMagicAddEle,Ele_Undead,.@a; bonus2 bMagicAddEle,Ele_Ghost,.@a; bonus2 bMagicAddEle,Ele_Earth,.@a; bonus2 bMagicAddEle,Ele_Neutral,.@a; bonus2 bMagicAddRace,RC_DemiHuman,2*.@r; bonus2 bMagicAddRace,RC_Player_Human,2*.@r; if (.@r >= 7) { .@dmg += 30; .@aspd += 5; if (.@r >= 9) { .@dmg += 50; .@aspd += 5; if (.@r >= 10) { bonus bNoGemStone; } } } bonus bAspdRate,.@aspd; bonus2 bSkillAtk,"AB_JUDEX",.@dmg; bonus2 bSkillAtk,"AB_ADORAMUS",.@dmg;
-  - Id: 19433
-    AegisName: C_Resonate_Taego
-    Name: Costume Resonate Taego
-    Type: Armor
-    Locations:
-      Costume_Head_Low: true
-    EquipLevelMin: 1
-    View: 1823
-    Script: |
-      hateffect(HAT_EF_RESONATETAEGO,true);
-    UnEquipScript: |
-      hateffect(HAT_EF_RESONATETAEGO,false);
   - Id: 19472
     AegisName: aegis_19472
     Name: Circlet of Costume Time    # !todo check english name
@@ -74057,14 +74007,6 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 318
-  - Id: 19694
-    AegisName: C_Vane_Hairpin
-    Name: Costume Vane Hairpin
-    Type: Armor
-    Buy: 20
-    Locations:
-      Costume_Head_Top: true
-    View: 313
   - Id: 19696
     AegisName: C_Friend_Mochiring_Hat
     Name: Costume Friend Mochiring Hat
@@ -76215,6 +76157,14 @@ Body:
       Costume_Head_Low: true
     EquipLevelMin: 1
     View: 1189
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 19997
     AegisName: C_Bomb_Hat
     Name: Costume Bomb Hat
@@ -76231,25 +76181,6 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 1192
-  - Id: 19996
-    AegisName: Horse_King
-    Name: Horse King
-    Type: Armor
-    Buy: 10
-    Locations:
-      Costume_Head_Top: true
-      Costume_Head_Mid: true
-      Costume_Head_Low: true
-    EquipLevelMin: 1
-    View: 1189
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
   - Id: 19999
     AegisName: C_Mouse_Hat1
     Name: Costume Mouse Hat 1
@@ -92199,6 +92130,14 @@ Body:
       Right_Accessory: true
       Left_Accessory: true
     EquipLevelMin: 145
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       skill "AL_HEAL",1;
   - Id: 28311
@@ -92211,6 +92150,14 @@ Body:
       Right_Accessory: true
       Left_Accessory: true
     EquipLevelMin: 145
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
     Script: |
       skill "AL_TELEPORT",1;
   - Id: 28315
@@ -92263,46 +92210,6 @@ Body:
     EquipLevelMin: 1
     Script: |
       bonus2 bAddClass,Class_All,1;
-  - Id: 28310
-    AegisName: Earring_Of_Sarah_L
-    Name: Sarah's Left Earring
-    Type: Armor
-    Buy: 10
-    Weight: 100
-    Locations:
-      Right_Accessory: true
-      Left_Accessory: true
-    EquipLevelMin: 145
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      skill "AL_HEAL",1;
-  - Id: 28311
-    AegisName: Earring_Of_Sarah_R
-    Name: Sarah's Right Earring
-    Type: Armor
-    Buy: 10
-    Weight: 100
-    Locations:
-      Right_Accessory: true
-      Left_Accessory: true
-    EquipLevelMin: 145
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      skill "AL_TELEPORT",1;
   - Id: 28320
     AegisName: Assassin's_Despair
     Name: Assassin's Despair
@@ -97966,14 +97873,6 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 1412
-  - Id: 31372
-    AegisName: C_Binit_Doll_Hat
-    Name: "Costume: Binit Doll"
-    Type: Armor
-    Locations:
-      Costume_Head_Top: true
-    EquipLevelMin: 1
-    View: 358
   - Id: 31374
     AegisName: C_Explosion_gum
     Name: C Explosion gum

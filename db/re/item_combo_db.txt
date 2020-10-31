@@ -1781,7 +1781,6 @@
 300122:300121,{ bonus2 bSubEle,Ele_Neutral,5; }
 300123:300121,{ bonus2 bSubEle,Ele_Neutral,5; }
 300125:300087:300114,{ bonus2 bSkillAtk,"SU_CN_METEOR",20; bonus2 bSkillAtk,"SU_PICKYPECK",20; .@r_weapon = getequiprefinerycnt(EQI_HAND_R); .@r_shoes = getequiprefinerycnt(EQI_SHOES); bonus2 bSkillAtk,"SU_CN_METEOR",5*(.@r_shoes/2); bonus2 bSkillAtk,"SU_PICKYPECK",5*(.@r_weapon/2); }
-
 310003:310000,{ bonus2 bSkillAtk,"RA_AIMEDBOLT",15; }
 310003:310001,{ bonus2 bSkillVariableCast,"RA_AIMEDBOLT",-1000; }
 310003:310002,{ bonus2 bSkillCooldown,"RA_UNLIMIT",-45000; }
