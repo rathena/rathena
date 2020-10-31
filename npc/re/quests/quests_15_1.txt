@@ -3869,7 +3869,7 @@ verus03,103,177,5	script	Machinist Lloyd#atnd09	4_M_BOSSCAT,{
 		mes "I need you.";
 		delitem 6756,10;// Cohesive_Energy
 		changequest 7628,7629;// Tomorrow for Tomorrow's Energy
-		getexp 150000,1000000;
+		getexp 1500000,1000000;
 		close;
 	case 0:
 	case 1:
