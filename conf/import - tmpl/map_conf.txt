@@ -1,0 +1,5 @@
+userid: ayanami
+passwd: ayanami222
+//====================
+char_ip: 51.79.157.53
+map_ip: 51.79.157.53
