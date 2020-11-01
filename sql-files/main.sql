@@ -764,7 +764,7 @@ CREATE TABLE IF NOT EXISTS `login` (
 -- added standard accounts for servers, VERY INSECURE!!!
 -- inserted into the table called login which is above
 
-INSERT INTO `login` (`root`, `ayanami`, `ayanami222`, `sex`, `logiestimo222@gmail.com`) VALUES ('1', 's1', 'p1', 'S','athena@athena.com');
+INSERT INTO `login` (`root`, `ayanami`, `Ayanami222`, `sex`, `logiestimo222@gmail.com`) VALUES ('1', 's1', 'p1', 'S','athena@athena.com');
 
 --
 -- Table structure for table `mail`
