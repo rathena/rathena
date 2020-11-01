@@ -764,7 +764,8 @@ CREATE TABLE IF NOT EXISTS `login` (
 -- added standard accounts for servers, VERY INSECURE!!!
 -- inserted into the table called login which is above
 
-INSERT INTO `login` (`root`, `ayanami`, `Ayanami222`, `sex`, `logiestimo222@gmail.com`) VALUES ('1', 's1', 'p1', 'S','athena@athena.com');
+INSERT INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`) VALUES ('1', 'cloudro', 'Ayanami222', 'S','athena@athena.com');(password A)
+INSERT INTO `login` (`account_id`, `userid`, `user_pass`, `sex`, `email`, `group_id`) VALUES ('2000000', 'Cloud', 'logiestimo222', 'M','a@a.com', '99');//your GM user
 
 --
 -- Table structure for table `mail`
