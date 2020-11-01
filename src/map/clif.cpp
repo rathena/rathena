@@ -1179,6 +1179,8 @@ static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target
 	safestrncpy(p.name, status_get_name( bl ), NAME_LENGTH);
 #endif
 
+	clif_send( &p, sizeof( p ), tbl, target );
+	// if disguised, send to self
 	if( disguised( bl ) ){
 #if PACKETVER >= 20091103
 		p.objecttype = pcdb_checkid( status_get_viewdata( bl )->class_ ) ? 0x0 : 0x5; //PC_TYPE : NPC_MOB_TYPE
@@ -1190,9 +1192,8 @@ static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target
 #else
 		p.GID = disguised_bl_id( bl->id );
 #endif
+		clif_send(&p, sizeof(p), bl, SELF);
 	}
-
-	clif_send( &p, sizeof( p ), tbl, target );
 }
 
 static void clif_spawn_unit( struct block_list *bl, enum send_target target ){
@@ -1417,6 +1418,7 @@ static void clif_set_unit_walking( struct block_list *bl, struct map_session_dat
 
 	clif_send( &p, sizeof(p), tsd ? &tsd->bl : bl, target );
 
+	// if disguised, send the info to self
 	if( disguised( bl ) ){
 #if PACKETVER >= 20091103
 		p.objecttype = pcdb_checkid( status_get_viewdata(bl)->class_ ) ? 0x0 : 0x5; //PC_TYPE : NPC_MOB_TYPE
