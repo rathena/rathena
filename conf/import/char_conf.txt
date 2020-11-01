@@ -1,0 +1,17 @@
+userid: ayanami
+passwd: Ayanami222
+//====================
+server_name: CloudRO
+wisp_server_name: ragnarok
+login_ip: 51.79.157.53
+char_ip: 51.79.157.53
+//====================// for renewal
+start_point: iz_int,97,90
+start_point_doram: iz_int,97,90// i set the doram to academy starting point cause the starting point of doram is not done yet
+//====================
+char_name_letters: abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890'space' <--------------for security purpose i dont require you to use other symbols otherwise you have different language
+char_del_delay: 0
+char_del_option: 1                                                                             
+char_del_restriction: 0
+//====================
+pincode_enabled: no// meh too much
