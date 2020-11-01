@@ -1,4 +1,4 @@
-userid: ayanami
+userid: cloudro
 passwd: Ayanami222
 //====================
 server_name: CloudRO

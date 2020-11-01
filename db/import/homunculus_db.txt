@@ -1,0 +1,20 @@
+// Homunculus Database
+//
+// Structure of Database:
+// Class,EvoClass,Name,FoodID,HungryDelay,BaseSize,EvoSize,Race,Element,bASPD,bHP,bSP,bSTR,bAGI,bVIT,bINT,bDEX,bLUK,gnHP,gxHP,gnSP,gxSP,gnSTR,gxSTR,gnAGI,gxAGI,gnVIT,gxVIT,gnINT,gxINT,gnDEX,gxDEX,gnLUK,gxLUK,enHP,exHP,enSP,exSP,enSTR,exSTR,enAGI,exAGI,enVIT,exVIT,enINT,exINT,enDEX,exDEX,enLUK,exLUK
+//
+// 01. Class        Homunculus ID.
+// 02. EvoClass     Homunculus ID of the evolved version.
+// 03. Name         Name of the homunculus.
+// 04. FoodID       Item ID of the homunuclus food.
+// 05. HungryDelay  Time interval in milliseconds after which the homunculus' hunger value is altered.
+// 06. BaseSize     Size of the base homunculus class (0 = small, 1 = normal, 2 = large).
+// 07. EvoSize      Size of the evolved homunculus class (0 = small, 1 = normal, 2 = large).
+// 08. Race         Race of the homunculus (0 = formless, 1 = undead, 2 = brute, 3 = plant, 4 = insect, 5 = fish, 6 = demon, 7 = demi-human, 8 = angel, 9 = dragon).
+// 09. Element      Element of the homunculus (0 = neutral, 1 = water, 2 = earth, 3 = fire, 4 = wind, 5 = poison, 6 = holy, 7 = dark, 8 = ghost, 9 = undead).
+//                  The element level is always 1.
+// ...
+//
+// Legend: b: base, gn: growth min, gx: growth max, en: evolution min, ex: evolution max
+// NOTE: Only the growth values are in a 1/10 scale, the other stats are 1/1 (eg: 5 gmAGI means 0.5 agi)
+

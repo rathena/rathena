@@ -1,0 +1,11 @@
+// Guild Castles Database
+//
+// Structure of Database:
+// CastleID,MapName,CastleName,OnGuildBreakEventName,Flag
+//
+// 01. CastleID                 Unique ID of the castle. Must remain unique across all map-servers.
+// 02. MapName                  Map name to be considered as the castle map.
+// 03. CastleName               Name of the castle (used by scripts and guardian name tags).
+// 04. OnGuildBreakEventName    NPC unique name to invoke ::OnGuildBreak on, when a occupied
+//                              castle is abandoned during guild break.
+// 05. Flag                     Switch flag (reserved as of athena-dev mod0796~0801, not used by server).

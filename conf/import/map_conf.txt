@@ -1,4 +1,4 @@
-userid: root
+userid: cloudro
 passwd: Ayanami222
 //====================
 char_ip: 51.79.157.53

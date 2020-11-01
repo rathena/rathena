@@ -1,0 +1,14 @@
+// Experience & Drop Rate Modifier Database
+//
+// Structure of Database:
+// Type,Class,Level difference,Rate
+//
+// TYPE:
+//   1=experience, 2=item drop
+// CLASS:
+//   0=Normal monsters, 1=Boss monsters, 2=Guardians
+//
+// Note: RENEWAL_DROP and/or RENEWAL_EXP must be enabled.
+
+// EXP modifiers due to level difference
+

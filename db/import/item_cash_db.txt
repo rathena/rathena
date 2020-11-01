@@ -1,0 +1,19 @@
+// Cash Shop Database
+// Contains the items sold in the ingame cash shop.
+//
+// Structure of Database:
+// Type,ItemID,Price
+//
+// Type:
+//    0: New
+//    1: Hot
+//    2: Limited
+//    3: Rental
+//    4: Gear
+//    5: Buff
+//    6: Heal
+//    7: Other
+//    8: Sale
+//
+// Price:
+//    Item cost, in cash points (#CASHPOINTS).

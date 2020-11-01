@@ -52,11 +52,11 @@ Thumbs.db
 /3rdparty/yaml-cpp/Makefile
 
 # /db/
-/db/import
+#/db/import
 
 # /conf/
 #/conf/import
-/conf/msg_conf/import
+#/conf/msg_conf/import
 
 # /lib
 /lib
