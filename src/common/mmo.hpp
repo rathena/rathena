@@ -22,7 +22,7 @@
 * Note that newer clients no longer save hotkeys in the registry! */
 #define HOTKEY_SAVING
 
-#if PACKETVER < 20090603
+#if PACKETVER < 20151029
 	// (27 = 9 skills x 3 bars)               (0x02b9,191)
 	#define MAX_HOTKEYS 27
 #elif PACKETVER < 20090617
