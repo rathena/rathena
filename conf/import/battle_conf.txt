@@ -1,19 +1,19 @@
-login_server_id: root
-login_server_pw: Ayanami222
-login_server_db: dbmain
+login_server_id: cloudro
+login_server_pw: ayanami222
+login_server_db: cloudro
 //====================
-ipban_db_id: root
-ipban_db_pw: Ayanami222
-ipban_db_db: dbmain
+ipban_db_id: cloudro
+ipban_db_pw: ayanami222
+ipban_db_db: cloudro
 //====================
-char_server_id: root
-char_server_pw: Ayanami222
-char_server_db: dbmain
+char_server_id: cloudro
+char_server_pw: ayanami222
+char_server_db: cloudro
 //====================
-map_server_id: root
-map_server_pw: Ayanami222
-map_server_db: dbmain
+map_server_id: cloudro
+map_server_pw: ayanami222
+map_server_db: cloudro
 //====================
-log_db_id: root
-log_db_pw: Ayanami222
-log_db_db: dbmain
+log_db_id: cloudro
+log_db_pw: ayanami222
+log_db_db: cloudro

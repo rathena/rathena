@@ -1,5 +1,5 @@
 userid: cloudro
-passwd: Ayanami222
+passwd: ayanami222
 //====================
 server_name: CloudRO
 wisp_server_name: ragnarok
