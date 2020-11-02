@@ -1835,4 +1835,18 @@
 700001:450004:470003:480003:490007,{ bonus bMaxHPrate,10; bonus bDelayrate,-15; bonus2 bSkillAtk,"RA_AIMEDBOLT",min(BaseLevel,180)/15*2; autobonus3 "{ bonus2 bSkillAtk,\"RA_AIMEDBOLT\",35; }",1000,60000,"SN_SIGHT"; }
 830000:450001:470000:480000:490004,{ bonus bBaseAtk,20; bonus2 bAddSize,Size_All,10; bonus2 bSkillAtk,"RL_R_TRIP",min(BaseLevel,180)/15; autobonus3 "{ bonus2 bSkillAtk,\"RL_R_TRIP\",20; }",1000,60000,"RL_RICHS_COIN"; }
 830000:450004:470003:480003:490007,{ bonus bBaseAtk,20; bonus2 bSkillCooldown,"RL_FIRE_RAIN",-1000; bonus2 bSkillAtk,"RL_FIRE_RAIN",min(BaseLevel,180)/15*2; autobonus3 "{ bonus2 bSkillAtk,\"RL_FIRE_RAIN\",35; }",1000,60000,"RL_RICHS_COIN"; }
-
+400044:16089,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bMagicAtkEle,Ele_Holy,5; bonus bVariableCastrate,-3*(.@r/2);  }
+400044:26151,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus bMatk,30; bonus2 bSkillAtk,"SP_SPA",4*(.@r/2); bonus2 bSkillAtk,"SP_SWHOO",4*(.@r/2);  }
+400044:26164,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillCooldown,"SU_CN_METEOR",-1000; bonus2 bSkillAtk,"SU_CN_METEOR",4*(.@r/2);  }
+450127:480020,{ bonus bBaseAtk,50;  }
+450127:480021,{ bonus bDelayrate,-10;  }
+450128:480020,{ bonus bAspdRate,10;  }
+450128:480021,{ bonus bMatk,50; }
+470022:450127,{ bonus2 bAddClass,Class_All,7;  }
+470022:450128,{ bonus bAspdRate,7;  }
+470023:450127,{ bonus bMaxSPrate,7;  }
+470023:450128,{ bonus bMatkRate,7;  }
+480020:470022,{ bonus bCritAtkRate,15;  }
+480020:470023,{ bonus bVariableCastrate,-15;  }
+480021:470022,{ bonus bLongAtkRate,7;  }
+480021:470023,{ bonus2 bMagicAtkEle,Ele_All,15;  }

@@ -40100,6 +40100,1308 @@ Body:
       bonus bMdef,3;
       bonus bDef,25;
       bonus bCritAtkRate,15;
+  - Id: 310082
+    AegisName: aegis_310082
+    Name: Automatic Modification Orb(Defense)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bDef,150;
+      if (.@r>=9) {
+         bonus bDef,75;
+      }
+      if (.@r>=11) {
+         bonus bDef,75;
+      }
+  - Id: 310083
+    AegisName: aegis_310083
+    Name: Automatic Modification Orb(Magic Defense)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,15;
+      if (.@r>=9) {
+         bonus bMdef,7;
+      }
+      if (.@r>=11) {
+         bonus bMdef,7;
+      }
+  - Id: 310084
+    AegisName: aegis_310084
+    Name: Automatic Modification Orb(VIT)
+    Type: Card
+    Script: |
+      bonus bMaxHPrate,1;
+      bonus bVit,3;
+  - Id: 310085
+    AegisName: aegis_310085
+    Name: Automatic Modification Orb(LUK)
+    Type: Card
+    Script: |
+      bonus bCritAtkRate,1;
+      bonus bLuk,3;
+  - Id: 310086
+    AegisName: aegis_310086
+    Name: Automatic Modification Orb(STR)
+    Type: Card
+    Script: |
+      bonus2 bAddClass,Class_All,2;
+      bonus bStr,3;
+  - Id: 310087
+    AegisName: aegis_310087
+    Name: Automatic Modification Orb(AGI)
+    Type: Card
+    Script: |
+      bonus bAspdRate,2;
+      bonus bAgi,3;
+  - Id: 310088
+    AegisName: aegis_310088
+    Name: Automatic Modification Orb(INT)
+    Type: Card
+    Script: |
+      bonus bMatkRate,2;
+      bonus bInt,3;
+  - Id: 310089
+    AegisName: aegis_310089
+    Name: Automatic Modification Orb(DEX)
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,2;
+      bonus bDex,3;
+  - Id: 310090
+    AegisName: aegis_310090
+    Name: Automatic Modification Orb(HP Recovery)
+    Type: Card
+    Script: |
+      bonus bHPrecovRate,30;
+  - Id: 310091
+    AegisName: aegis_310091
+    Name: Automatic Modification Orb(SP Recovery)
+    Type: Card
+    Script: |
+      bonus bSPrecovRate,30;
+  - Id: 310092
+    AegisName: aegis_310092
+    Name: Automatic Modification Orb(Spell)
+    Type: Card
+    Script: |
+      bonus bVariableCastrate,-10;
+      bonus bMatk,20;
+  - Id: 310093
+    AegisName: aegis_310093
+    Name: Automatic Modification Orb(Attack Speed)
+    Type: Card
+    Script: |
+      bonus bAspdRate,10;
+      bonus bBaseAtk,20;
+  - Id: 310094
+    AegisName: aegis_310094
+    Name: Automatic Modification Orb(Fatal)
+    Type: Card
+    Script: |
+      bonus bCritAtkRate,10;
+      bonus bCritical,10;
+  - Id: 310095
+    AegisName: aegis_310095
+    Name: Automatic Modification Orb(Expert Archer)
+    Type: Card
+    Script: |
+      bonus bLongAtkRate,10;
+      bonus bHit,10;
+  - Id: 310096
+    AegisName: aegis_310096
+    Name: Automatic Modification Orb(Vital)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,5;
+      bonus bMaxHP,1500;
+      if (.@r>=9) {
+         bonus bMaxHPrate,2;
+      }
+      if (.@r>=11) {
+         bonus bMaxHPrate,3;
+      }
+  - Id: 310097
+    AegisName: aegis_310097
+    Name: Automatic Modification Orb(Mental)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bMaxSPrate,5;
+      bonus bMaxSP,300;
+      if (.@r>=9) {
+         bonus bMaxSPrate,2;
+      }
+      if (.@r>=11) {
+         bonus bMaxSPrate,3;
+      }
+  - Id: 310098
+    AegisName: aegis_310098
+    Name: Automatic Modification Orb(Heal)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bHealPower,5;
+      if (.@r>=9) {
+         bonus bHealPower,5;
+      }
+      if (.@r>=11) {
+         bonus bHealPower,7;
+      }
+  - Id: 310099
+    AegisName: aegis_310099
+    Name: Automatic Modification Orb(Attack Power)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddClass,Class_All,5;
+      bonus bBaseAtk,75;
+      if (.@r>=9) {
+         bonus bShortAtkRate,2;
+      }
+      if (.@r>=11) {
+         bonus bShortAtkRate,3;
+      }
+  - Id: 310100
+    AegisName: aegis_310100
+    Name: Automatic Modification Orb(Magic Power)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      bonus bMatk,75;
+      if (.@r>=9) {
+         bonus bMatkRate,2;
+      }
+      if (.@r>=11) {
+         bonus bMatkRate,3;
+      }
+  - Id: 310101
+    AegisName: aegis_310101
+    Name: Automatic Modification Orb(Shooter)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,3;
+      if (.@r>=9) {
+         bonus bLongAtkRate,3;
+      }
+      if (.@r>=11) {
+         bonus bLongAtkRate,3;
+      }
+  - Id: 310102
+    AegisName: aegis_310102
+    Name: Automatic Modification Orb(Fast)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bAspd,1;
+      if (.@r>=9) {
+         bonus bAspdRate,5;
+      }
+      if (.@r>=11) {
+         bonus bAspdRate,5;
+      }
+  - Id: 310103
+    AegisName: aegis_310103
+    Name: Automatic Modification Orb(Caster)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,-5;
+      if (.@r>=9) {
+         bonus bVariableCastrate,-5;
+      }
+      if (.@r>=11) {
+         bonus bVariableCastrate,-5;
+      }
+  - Id: 310104
+    AegisName: aegis_310104
+    Name: Automatic Modification Orb(Critical)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,10;
+      if (.@r>=9) {
+         bonus bCritAtkRate,5;
+      }
+      if (.@r>=11) {
+         bonus bCritAtkRate,7;
+      }
+  - Id: 310105
+    AegisName: aegis_310105
+    Name: Automatic Modification Orb(Magical Force)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_All,2;
+      bonus bVariableCastrate,-10;
+      bonus bMatk,20;
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_All,1;
+      }
+      if (.@r>=11) {
+         bonus2 bMagicAtkEle,Ele_All,2;
+      }
+  - Id: 310106
+    AegisName: aegis_310106
+    Name: Automatic Modification Orb(Attacker Force)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddSize,Size_All,3;
+      bonus bShortAtkRate,10;
+      bonus bBaseAtk,20;
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,1;
+      }
+      if (.@r>=11) {
+         bonus2 bAddSize,Size_All,1;
+      }
+  - Id: 310107
+    AegisName: aegis_310107
+    Name: Automatic Modification Orb(Range Force)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddSize,Size_All,3;
+      bonus bLongAtkRate,10;
+      bonus bBaseAtk,20;
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,1;
+      }
+      if (.@r>=11) {
+         bonus2 bAddSize,Size_All,1;
+      }
+  - Id: 310108
+    AegisName: aegis_310108
+    Name: Automatic Modification Orb(Critical Force)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddSize,Size_All,3;
+      bonus bCritAtkRate,10;
+      bonus bCritical,5;
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,1;
+      }
+      if (.@r>=11) {
+         bonus2 bAddSize,Size_All,1;
+      }
+  - Id: 310109
+    AegisName: aegis_310109
+    Name: Automatic Modification Orb(Recovery Force)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bHealPower,5;
+      bonus bVariableCastrate,-10;
+      bonus bMatk,20;
+      if (.@r>=9) {
+         bonus bHealPower,5;
+      }
+      if (.@r>=11) {
+         bonus bHealPower,5;
+      }
+  - Id: 310110
+    AegisName: aegis_310110
+    Name: Automatic Modification Orb(After Skill Delay)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bDelayrate,-4;
+      if (.@r>=9) {
+         bonus bDelayrate,-6;
+      }
+      if (.@r>=11) {
+         bonus bDelayrate,-6;
+      }
+  - Id: 310111
+    AegisName: aegis_310111
+    Name: Automatic Modification Orb(Fixed Casting)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bFixedCast,-100;
+      if (.@r>=9) {
+         bonus bFixedCast,-200;
+      }
+      if (.@r>=11) {
+         bonus bFixedCast,-500;
+      }
+  - Id: 310112
+    AegisName: aegis_310112
+    Name: Automatic Modification Orb(Above All)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSubClass,Class_Normal,7;
+      bonus2 bSubClass,Class_Boss,7;
+      if (.@r>=9) {
+         bonus2 bSubSize,Size_All,7;
+         bonus2 bMagicSubSize,Size_All,7;
+      }
+      if (.@r>=11) {
+         bonus2 bSubRace,RC_All,7;
+         bonus2 bSubRace,RC_Player_Human,-7;
+         bonus2 bSubRace,RC_Player_Doram,-7;
+      }
+  - Id: 310113
+    AegisName: aegis_310113
+    Name: Automatic Modification Orb(Drain Life)
+    Type: Card
+    Script: |
+      bonus2 bHPDrainRate,20,3;
+  - Id: 310114
+    AegisName: aegis_310114
+    Name: Automatic Modification Orb(Drain Soul)
+    Type: Card
+    Script: |
+      bonus2 bSPDrainRate,10,2;
+  - Id: 310115
+    AegisName: aegis_310115
+    Name: Automatic Modification Orb(Magic Healing)
+    Type: Card
+    Script: |
+      autobonus "{ bonus2 bHPRegenRate,500,400; }",20,9200,BF_MAGIC;
+  - Id: 310116
+    AegisName: aegis_310116
+    Name: Automatic Modification Orb(Magic Soul)
+    Type: Card
+    Script: |
+      autobonus "{ bonus2 bSPRegenRate,120,400; }",10,9200,BF_MAGIC;
+  - Id: 310117
+    AegisName: aegis_310117
+    Name: Automatic Modification Orb(Power Force)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,3;
+      bonus2 bAddClass,Class_All,3;
+      if (.@r>=9) {
+         bonus bMatkRate,3;
+         bonus2 bAddClass,Class_All,3;
+      }
+      if (.@r>=11) {
+         bonus bMatkRate,4;
+         bonus2 bAddClass,Class_All,4;
+      }
+  - Id: 310118
+    AegisName: aegis_310118
+    Name: Automatic Modification Orb(Robust)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,5;
+      bonus bMaxSPrate,5;
+      bonus bMaxHP,2000;
+      bonus bMaxSP,300;
+      if (.@r>=9) {
+         bonus bMaxHPrate,2;
+         bonus bMaxSPrate,2;
+      }
+      if (.@r>=11) {
+         bonus bMaxHPrate,3;
+         bonus bMaxSPrate,3;
+      }
+  - Id: 310119
+    AegisName: aegis_310119
+    Name: Automatic Modification Orb(Powerful)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_All,5;
+      bonus bLongAtkRate,5;
+      bonus bShortAtkRate,5;
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_All,2;
+         bonus bLongAtkRate,2;
+         bonus bShortAtkRate,2;
+      }
+      if (.@r>=11) {
+         bonus2 bMagicAtkEle,Ele_All,3;
+         bonus bLongAtkRate,3;
+         bonus bShortAtkRate,3;
+      }
+  - Id: 310120
+    AegisName: aegis_310120
+    Name: Automatic Modification Orb(All Force)
+    Type: Card
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,5;
+      bonus bLongAtkRate,5;
+      bonus bShortAtkRate,5;
+  - Id: 310121
+    AegisName: aegis_310121
+    Name: Automatic Orb(Unlimited Vital)
+    Type: Card
+    Script: |
+      autobonus2 "{ bonus bVit,50; bonus2 bSPRegenRate,800,500; }",10,10000,BF_MAGIC|BF_WEAPON;
+  - Id: 310122
+    AegisName: aegis_310122
+    Name: Automatic Orb(Spell Buster)
+    Type: Card
+    Script: |
+      autobonus "{ bonus bMatkRate,25; bonus bInt,50; }",30,10000,BF_MAGIC;
+  - Id: 310123
+    AegisName: aegis_310123
+    Name: Automatic Orb(Firing Shot)
+    Type: Card
+    Script: |
+      autobonus "{ bonus bLongAtkRate,15; bonus bDex,50; }",30,10000,BF_WEAPON;
+  - Id: 310124
+    AegisName: aegis_310124
+    Name: Automatic Orb(Over Power)
+    Type: Card
+    Script: |
+      autobonus "{ bonus bShortAtkRate,10; bonus2 bAddClass,Class_All,15; bonus bStr,50; }",30,10000,BF_WEAPON;
+  - Id: 310125
+    AegisName: aegis_310125
+    Name: Automatic Orb(Fatal Flash)
+    Type: Card
+    Script: |
+      autobonus "{ bonus bCritAtkRate,15; bonus bAgi,50; }",30,10000,BF_WEAPON;
+  - Id: 310126
+    AegisName: aegis_310126
+    Name: Automatic Orb(Lucky Strike)
+    Type: Card
+    Script: |
+      autobonus "{ bonus2 bMagicAtkEle,Ele_All,15; bonus bLuk,50; }",30,10000,BF_MAGIC;
+  - Id: 310127
+    AegisName: aegis_310127
+    Name: Automatic Orb(Dragonic Breath)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"RK_DRAGONBREATH",15;
+      bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"RK_DRAGONBREATH",3;
+         bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"RK_DRAGONBREATH",7;
+         bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",7;
+      }
+  - Id: 310128
+    AegisName: aegis_310128
+    Name: Automatic Orb(Wave Break)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"RK_IGNITIONBREAK",15;
+      bonus2 bSkillAtk,"RK_SONICWAVE",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"RK_IGNITIONBREAK",3;
+         bonus2 bSkillAtk,"RK_SONICWAVE",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillCooldown,"RK_IGNITIONBREAK",-250;
+         bonus2 bSkillCooldown,"RK_SONICWAVE",-250;
+      }
+  - Id: 310129
+    AegisName: aegis_310129
+    Name: Automatic Orb(Hundred Spiral)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"LK_SPIRALPIERCE",15;
+      bonus2 bSkillAtk,"RK_HUNDREDSPEAR",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"LK_SPIRALPIERCE",3;
+         bonus2 bSkillAtk,"RK_HUNDREDSPEAR",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillCooldown,"RK_HUNDREDSPEAR",-250;
+         bonus2 bSkillAtk,"LK_SPIRALPIERCE",7;
+      }
+  - Id: 310130
+    AegisName: aegis_310130
+    Name: Automatic Orb(Drive Press)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"LG_EARTHDRIVE",15;
+      bonus2 bSkillAtk,"LG_SHIELDPRESS",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"LG_EARTHDRIVE",3;
+         bonus2 bSkillAtk,"LG_SHIELDPRESS",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"LG_EARTHDRIVE",7;
+         bonus2 bSkillAtk,"LG_SHIELDPRESS",7;
+      }
+  - Id: 310131
+    AegisName: aegis_310131
+    Name: Automatic Orb(Banishing Cannon)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"LG_BANISHINGPOINT",15;
+      bonus2 bSkillAtk,"LG_CANNONSPEAR",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"LG_BANISHINGPOINT",3;
+         bonus2 bSkillAtk,"LG_CANNONSPEAR",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"LG_BANISHINGPOINT",7;
+         bonus2 bSkillAtk,"LG_CANNONSPEAR",7;
+      }
+  - Id: 310132
+    AegisName: aegis_310132
+    Name: Automatic Orb(Genesis Pressure)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"LG_RAYOFGENESIS",15;
+      bonus2 bSkillAtk,"PA_PRESSURE",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"LG_RAYOFGENESIS",3;
+         bonus2 bSkillAtk,"PA_PRESSURE",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"LG_RAYOFGENESIS",7;
+         bonus2 bSkillAtk,"PA_PRESSURE",7;
+      }
+  - Id: 310133
+    AegisName: aegis_310133
+    Name: Automatic Orb(Boost Cannon)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",15;
+      bonus2 bSkillAtk,"NC_ARMSCANNON",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",3;
+         bonus2 bSkillAtk,"NC_ARMSCANNON",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",7;
+         bonus2 bSkillAtk,"NC_ARMSCANNON",7;
+      }
+  - Id: 310134
+    AegisName: aegis_310134
+    Name: Automatic Orb(Cold Flare)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"NC_FLAMELAUNCHER",15;
+      bonus2 bSkillAtk,"NC_COLDSLOWER",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"NC_FLAMELAUNCHER",3;
+         bonus2 bSkillAtk,"NC_COLDSLOWER",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"NC_FLAMELAUNCHER",7;
+         bonus2 bSkillAtk,"NC_COLDSLOWER",7;
+      }
+  - Id: 310135
+    AegisName: aegis_310135
+    Name: Automatic Orb(Tornado Swing)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"NC_AXETORNADO",15;
+      bonus2 bSkillAtk,"NC_POWERSWING",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"NC_AXETORNADO",3;
+         bonus2 bSkillAtk,"NC_POWERSWING",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"NC_AXETORNADO",7;
+         bonus2 bSkillAtk,"NC_POWERSWING",7;
+      }
+  - Id: 310136
+    AegisName: aegis_310136
+    Name: Automatic Orb(Cannon Tornado)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"GN_CART_TORNADO",15;
+      bonus2 bSkillAtk,"GN_CARTCANNON",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"GN_CART_TORNADO",3;
+         bonus2 bSkillAtk,"GN_CARTCANNON",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"GN_CART_TORNADO",7;
+         bonus2 bSkillAtk,"GN_CARTCANNON",7;
+      }
+  - Id: 310137
+    AegisName: aegis_310137
+    Name: Automatic Orb(Crazy Mandragora)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillCooldown,"GN_MANDRAGORA",-300;
+      bonus2 bSkillAtk,"GN_CRAZYWEED",15;
+      if (.@r>=9) {
+         bonus2 bSkillCooldown,"GN_MANDRAGORA",-300;
+         bonus2 bSkillAtk,"GN_CRAZYWEED",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillCooldown,"GN_MANDRAGORA",-400;
+         bonus2 bSkillAtk,"GN_CRAZYWEED",7;
+      }
+  - Id: 310138
+    AegisName: aegis_310138
+    Name: Automatic Orb(Acid Explosion)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",15;
+      bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",3;
+         bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",7;
+         bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",7;
+      }
+  - Id: 310139
+    AegisName: aegis_310139
+    Name: Automatic Orb(Sonic Impact)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"GC_CROSSIMPACT",15;
+      bonus2 bSkillAtk,"AS_SONICBLOW",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"GC_CROSSIMPACT",3;
+         bonus2 bSkillAtk,"AS_SONICBLOW",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"GC_CROSSIMPACT",7;
+         bonus2 bSkillAtk,"AS_SONICBLOW",7;
+      }
+  - Id: 310140
+    AegisName: aegis_310140
+    Name: Automatic Orb(Cutter Slasher)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",15;
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",3;
+         bonus2 bSkillAtk,"GC_ROLLINGCUTTER",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",7;
+         bonus2 bSkillAtk,"GC_ROLLINGCUTTER",7;
+      }
+  - Id: 310141
+    AegisName: aegis_310141
+    Name: Automatic Orb(Berserk Slash)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",15;
+      bonus2 bSkillAtk,"ASC_BREAKER",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"GC_COUNTERSLASH",3;
+         bonus2 bSkillAtk,"ASC_BREAKER",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"GC_COUNTERSLASH",7;
+         bonus2 bSkillAtk,"ASC_BREAKER",7;
+      }
+  - Id: 310142
+    AegisName: aegis_310142
+    Name: Automatic Orb(Fatal Raid)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SC_FATALMENACE",15;
+      bonus2 bSkillAtk,"RG_RAID",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SC_FATALMENACE",3;
+         bonus2 bSkillAtk,"RG_RAID",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"SC_FATALMENACE",7;
+         bonus2 bSkillAtk,"RG_RAID",7;
+      }
+  - Id: 310143
+    AegisName: aegis_310143
+    Name: Automatic Orb(Shadow Spell)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_All,15;
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_All,3;
+      }
+      if (.@r>=11) {
+         bonus2 bMagicAtkEle,Ele_All,7;
+      }
+  - Id: 310144
+    AegisName: aegis_310144
+    Name: Automatic Orb(Angle Shot)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,10;
+      bonus2 bSkillAtk,"SC_TRIANGLESHOT",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SC_TRIANGLESHOT",3;
+      }
+      if (.@r>=11) {
+         bonus bLongAtkRate,5;
+         bonus2 bSkillAtk,"SC_TRIANGLESHOT",7;
+      }
+  - Id: 310145
+    AegisName: aegis_310145
+    Name: Automatic Orb(Crimson Strain)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"WL_EARTHSTRAIN",15;
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"WL_EARTHSTRAIN",3;
+         bonus2 bSkillAtk,"WL_CRIMSONROCK",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"WL_EARTHSTRAIN",7;
+         bonus2 bSkillAtk,"WL_CRIMSONROCK",7;
+      }
+  - Id: 310146
+    AegisName: aegis_310146
+    Name: Automatic Orb(Jack Lightning)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"WL_CHAINLIGHTNING",15;
+      bonus2 bSkillAtk,"WL_JACKFROST",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"WL_CHAINLIGHTNING",3;
+         bonus2 bSkillAtk,"WL_JACKFROST",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"WL_CHAINLIGHTNING",7;
+         bonus2 bSkillAtk,"WL_JACKFROST",7;
+      }
+  - Id: 310147
+    AegisName: aegis_310147
+    Name: Automatic Orb(Comet Vortex)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"WL_TETRAVORTEX",15;
+      bonus2 bSkillAtk,"WL_COMET",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"WL_TETRAVORTEX",3;
+         bonus2 bSkillAtk,"WL_COMET",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"WL_TETRAVORTEX",7;
+         bonus2 bSkillAtk,"WL_COMET",7;
+      }
+  - Id: 310148
+    AegisName: aegis_310148
+    Name: Automatic Orb(Double Bolt)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",15;
+      bonus2 bSkillAtk,"MG_FIREBOLT",15;
+      bonus2 bSkillAtk,"MG_COLDBOLT",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",3;
+         bonus2 bSkillAtk,"MG_FIREBOLT",3;
+         bonus2 bSkillAtk,"MG_COLDBOLT",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",7;
+         bonus2 bSkillAtk,"MG_FIREBOLT",7;
+         bonus2 bSkillAtk,"MG_COLDBOLT",7;
+      }
+  - Id: 310149
+    AegisName: aegis_310149
+    Name: Automatic Orb(Warm Wave)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillCooldown,"SO_WARMER",-1000;
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15;
+      if (.@r>=9) {
+         bonus2 bSkillCooldown,"SO_WARMER",-2000;
+         bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillCooldown,"SO_WARMER",-4000;
+         bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",7;
+      }
+  - Id: 310150
+    AegisName: aegis_310150
+    Name: Automatic Orb(Diamond Grave)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SO_DIAMONDDUST",15;
+      bonus2 bSkillAtk,"SO_EARTHGRAVE",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SO_DIAMONDDUST",3;
+         bonus2 bSkillAtk,"SO_EARTHGRAVE",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"SO_DIAMONDDUST",7;
+         bonus2 bSkillAtk,"SO_EARTHGRAVE",7;
+      }
+  - Id: 310151
+    AegisName: aegis_310151
+    Name: Automatic Orb(Magnusmus)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"PR_MAGNUS",15;
+      bonus2 bSkillAtk,"AB_ADORAMUS",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"PR_MAGNUS",3;
+         bonus2 bSkillAtk,"AB_ADORAMUS",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"PR_MAGNUS",7;
+         bonus2 bSkillAtk,"AB_ADORAMUS",7;
+      }
+  - Id: 310152
+    AegisName: aegis_310152
+    Name: Automatic Orb(Holy Judex)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"AL_HOLYLIGHT",15;
+      bonus2 bSkillAtk,"AB_JUDEX",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"AL_HOLYLIGHT",3;
+         bonus2 bSkillAtk,"AB_JUDEX",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"AL_HOLYLIGHT",7;
+         bonus2 bSkillAtk,"AB_JUDEX",7;
+      }
+  - Id: 310153
+    AegisName: aegis_310153
+    Name: Automatic Orb(Duple Lica)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillCooldown,"HP_BASILICA",-2000;
+      bonus2 bSkillAtk,"AB_DUPLELIGHT",15;
+      if (.@r>=9) {
+         bonus2 bSkillCooldown,"HP_BASILICA",-3000;
+         bonus2 bSkillAtk,"AB_DUPLELIGHT",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillCooldown,"HP_BASILICA",-5000;
+         bonus2 bSkillAtk,"AB_DUPLELIGHT",7;
+      }
+  - Id: 310154
+    AegisName: aegis_310154
+    Name: Automatic Orb(Tiger Empire)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SR_FALLENEMPIRE",15;
+      bonus2 bSkillAtk,"SR_TIGERCANNON",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SR_FALLENEMPIRE",3;
+         bonus2 bSkillAtk,"SR_TIGERCANNON",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"SR_FALLENEMPIRE",7;
+         bonus2 bSkillAtk,"SR_TIGERCANNON",7;
+      }
+  - Id: 310155
+    AegisName: aegis_310155
+    Name: Automatic Orb(Rampage Arrow)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SR_KNUCKLEARROW",15;
+      bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SR_KNUCKLEARROW",3;
+         bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"SR_KNUCKLEARROW",7;
+         bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",7;
+      }
+  - Id: 310156
+    AegisName: aegis_310156
+    Name: Automatic Orb(Raging Combo)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"MO_COMBOFINISH",15;
+      bonus2 bSkillAtk,"CH_CHAINCRUSH",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"MO_COMBOFINISH",3;
+         bonus2 bSkillAtk,"CH_CHAINCRUSH",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"MO_COMBOFINISH",7;
+         bonus2 bSkillAtk,"CH_CHAINCRUSH",7;
+      }
+  - Id: 310157
+    AegisName: aegis_310157
+    Name: Automatic Orb(Cluster)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"RA_CLUSTERBOMB",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"RA_CLUSTERBOMB",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"RA_CLUSTERBOMB",7;
+      }
+  - Id: 310158
+    AegisName: aegis_310158
+    Name: Automatic Orb(Breeze Shooting)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus bCritAtkRate,10;
+      bonus2 bSkillAtk,"SN_SHARPSHOOTING",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SN_SHARPSHOOTING",3;
+      }
+      if (.@r>=11) {
+         bonus bCritAtkRate,5;
+         bonus2 bSkillAtk,"SN_SHARPSHOOTING",7;
+      }
+  - Id: 310159
+    AegisName: aegis_310159
+    Name: Automatic Orb(Aimed Storm)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"RA_ARROWSTORM",15;
+      bonus2 bSkillAtk,"RA_AIMEDBOLT",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"RA_ARROWSTORM",3;
+         bonus2 bSkillAtk,"RA_AIMEDBOLT",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"RA_ARROWSTORM",7;
+         bonus2 bSkillAtk,"RA_AIMEDBOLT",7;
+      }
+  - Id: 310160
+    AegisName: aegis_310160
+    Name: Automatic Orb(Metal Echo)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"WM_GREAT_ECHO",15;
+      bonus2 bSkillAtk,"WM_METALICSOUND",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"WM_GREAT_ECHO",3;
+         bonus2 bSkillAtk,"WM_METALICSOUND",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"WM_GREAT_ECHO",7;
+         bonus2 bSkillAtk,"WM_METALICSOUND",7;
+      }
+  - Id: 310161
+    AegisName: aegis_310161
+    Name: Automatic Orb(Reverberation)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"WM_REVERBERATION",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"WM_REVERBERATION",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"WM_REVERBERATION",7;
+      }
+  - Id: 310162
+    AegisName: aegis_310162
+    Name: Automatic Orb(Vulcan Severe)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15;
+      bonus2 bSkillAtk,"CG_ARROWVULCAN",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",3;
+         bonus2 bSkillAtk,"CG_ARROWVULCAN",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",7;
+         bonus2 bSkillAtk,"CG_ARROWVULCAN",7;
+      }
+  - Id: 310163
+    AegisName: aegis_310163
+    Name: Automatic Orb(Prominence Burst)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SJ_SOLARBURST",15;
+      bonus2 bSkillAtk,"SJ_PROMINENCEKICK",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SJ_SOLARBURST",3;
+         bonus2 bSkillAtk,"SJ_PROMINENCEKICK",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"SJ_SOLARBURST",7;
+         bonus2 bSkillAtk,"SJ_PROMINENCEKICK",7;
+      }
+  - Id: 310164
+    AegisName: aegis_310164
+    Name: Automatic Orb(Moon Kick)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SJ_FULLMOONKICK",15;
+      bonus2 bSkillAtk,"SJ_NEWMOONKICK",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SJ_FULLMOONKICK",3;
+         bonus2 bSkillAtk,"SJ_NEWMOONKICK",3;
+      }
+      if (.@r>=11) {
+         bonus bCritAtkRate,5;
+         bonus2 bSkillAtk,"SJ_FULLMOONKICK",7;
+         bonus2 bSkillAtk,"SJ_NEWMOONKICK",7;
+      }
+  - Id: 310165
+    AegisName: aegis_310165
+    Name: Automatic Orb(Flash Falling)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+      bonus2 bSkillAtk,"SJ_FLASHKICK",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",3;
+         bonus2 bSkillAtk,"SJ_FLASHKICK",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",7;
+         bonus2 bSkillAtk,"SJ_FLASHKICK",7;
+      }
+  - Id: 310166
+    AegisName: aegis_310166
+    Name: Automatic Orb(Eswhoo)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SL_SMA",15;
+      bonus2 bSkillAtk,"SP_SWHOO",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SL_SMA",3;
+         bonus2 bSkillAtk,"SP_SWHOO",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"SL_SMA",7;
+         bonus2 bSkillAtk,"SP_SWHOO",7;
+      }
+  - Id: 310167
+    AegisName: aegis_310167
+    Name: Automatic Orb(Espa)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SP_SPA",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"SP_SPA",7;
+      }
+  - Id: 310168
+    AegisName: aegis_310168
+    Name: Automatic Orb(Curse Explosion)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SP_CURSEEXPLOSION",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SP_CURSEEXPLOSION",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"SP_CURSEEXPLOSION",7;
+      }
+  - Id: 310169
+    AegisName: aegis_310169
+    Name: Automatic Orb(Des Hammer Dance)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"GS_DESPERADO",15;
+      bonus2 bSkillAtk,"RL_FIREDANCE",15;
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"GS_DESPERADO",3;
+         bonus2 bSkillAtk,"RL_FIREDANCE",3;
+         bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"GS_DESPERADO",7;
+         bonus2 bSkillAtk,"RL_FIREDANCE",7;
+         bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",7;
+      }
+  - Id: 310170
+    AegisName: aegis_310170
+    Name: Automatic Orb(Fire Howling Tail)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"RL_FIRE_RAIN",15;
+      bonus2 bSkillAtk,"RL_D_TAIL",15;
+      bonus2 bSkillAtk,"RL_H_MINE",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"RL_FIRE_RAIN",3;
+         bonus2 bSkillAtk,"RL_D_TAIL",3;
+         bonus2 bSkillAtk,"RL_H_MINE",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"RL_FIRE_RAIN",7;
+         bonus2 bSkillAtk,"RL_D_TAIL",7;
+         bonus2 bSkillAtk,"RL_H_MINE",7;
+      }
+  - Id: 310171
+    AegisName: aegis_310171
+    Name: Automatic Orb(Storm Buster Trip)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"RL_BANISHING_BUSTER",15;
+      bonus2 bSkillAtk,"RL_R_TRIP",15;
+      bonus2 bSkillAtk,"RL_S_STORM",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"RL_BANISHING_BUSTER",3;
+         bonus2 bSkillAtk,"RL_R_TRIP",3;
+         bonus2 bSkillAtk,"RL_S_STORM",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"RL_BANISHING_BUSTER",7;
+         bonus2 bSkillAtk,"RL_R_TRIP",7;
+         bonus2 bSkillAtk,"RL_S_STORM",7;
+      }
+  - Id: 310172
+    AegisName: aegis_310172
+    Name: Automatic Orb(Flame Ice Wind)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"NJ_KOUENKA",15;
+      bonus2 bSkillAtk,"NJ_HYOUSENSOU",15;
+      bonus2 bSkillAtk,"NJ_HUUJIN",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"NJ_KOUENKA",3;
+         bonus2 bSkillAtk,"NJ_HYOUSENSOU",3;
+         bonus2 bSkillAtk,"NJ_HUUJIN",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"NJ_KOUENKA",7;
+         bonus2 bSkillAtk,"NJ_HYOUSENSOU",7;
+         bonus2 bSkillAtk,"NJ_HUUJIN",7;
+      }
+  - Id: 310173
+    AegisName: aegis_310173
+    Name: Automatic Orb(Cross Slash)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"KO_JYUMONJIKIRI",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"KO_JYUMONJIKIRI",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"KO_JYUMONJIKIRI",7;
+      }
+  - Id: 310174
+    AegisName: aegis_310174
+    Name: Automatic Orb(Exploding Flake Wind)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"NJ_BAKUENRYU",15;
+      bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",15;
+      bonus2 bSkillAtk,"NJ_KAMAITACHI",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"NJ_BAKUENRYU",3;
+         bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",3;
+         bonus2 bSkillAtk,"NJ_KAMAITACHI",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"NJ_BAKUENRYU",7;
+         bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",7;
+         bonus2 bSkillAtk,"NJ_KAMAITACHI",7;
+      }
+  - Id: 310175
+    AegisName: aegis_310175
+    Name: Automatic Orb(Power of Sea)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillCooldown,"SU_SHRIMPARTY",-500;
+      bonus2 bSkillCooldown,"SU_TUNAPARTY",-500;
+      if (.@r>=9) {
+         bonus2 bSkillCooldown,"SU_SHRIMPARTY",-1000;
+         bonus2 bSkillCooldown,"SU_TUNAPARTY",-1000;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillCooldown,"SU_SHRIMPARTY",-1500;
+         bonus2 bSkillCooldown,"SU_TUNAPARTY",-1500;
+      }
+  - Id: 310176
+    AegisName: aegis_310176
+    Name: Automatic Orb(Power of Land)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SU_SV_STEMSPEAR",15;
+      bonus2 bSkillAtk,"SU_CN_METEOR",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SU_SV_STEMSPEAR",3;
+         bonus2 bSkillAtk,"SU_CN_METEOR",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"SU_SV_STEMSPEAR",7;
+         bonus2 bSkillAtk,"SU_CN_METEOR",7;
+      }
+  - Id: 310177
+    AegisName: aegis_310177
+    Name: Automatic Orb(Power of Life)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",15;
+      bonus2 bSkillAtk,"SU_PICKYPECK",15;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",3;
+         bonus2 bSkillAtk,"SU_PICKYPECK",3;
+      }
+      if (.@r>=11) {
+         bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",7;
+         bonus2 bSkillAtk,"SU_PICKYPECK",7;
+      }
+#  - Id: 310178
+#    AegisName: aegis_310178
+#    Name: Automatic Modification Orb(Mirror Counter)
+#    Type: Card
+#    Script: |
+#      .@r = getrefine();
+#      if (.@r>=9) {
+#      }
+#      if (.@r>=11) {
+#      }
+#  - Id: 310179
+#    AegisName: aegis_310179
+#    Name: Automatic Modification Orb(Reflection Reject)
+#    Type: Card
+#    Script: |
+#      .@r = getrefine();
+#      if (.@r>=9) {
+#      }
+#      if (.@r>=11) {
+#      }
   - Id: 310180
     AegisName: Warlock_Robe2
     Name: Warlock Stone II (Garment)
@@ -40232,66 +41534,781 @@ Body:
     Name: Archbishop Stone II (Garment)
     Type: Etc
     Weight: 100
+  - Id: 1000092
+    AegisName: ELYUMINA_RADAR
+    Name: Elyumina Radar
+    Type: Etc
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000093
+    AegisName: PITAYA_TAIL_R
+    Name: Red Pitaya Tail
+    Type: Etc
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000094
+    AegisName: PITAYA_TAIL_Y
+    Name: Yellow Pitaya Tail
+    Type: Etc
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000095
+    AegisName: PITAYA_TAIL_B
+    Name: Blue Pitaya Tail
+    Type: Etc
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000096
+    AegisName: PITAYA_TAIL_G
+    Name: Green Pitaya Tail
+    Type: Etc
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000097
+    AegisName: PITAYA_TAIL_P
+    Name: Purple Pitaya Tail
+    Type: Etc
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000098
+    AegisName: PITAYA_TAIL_BOSS
+    Name: Boss Pitaya Tail
+    Type: Etc
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000099
+    AegisName: GARDENERS_COOKIE
+    Name: Gardener's Cookie
+    Type: Etc
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000100
+    AegisName: FREEZING_TRAP
+    Name: Freezing Trap
+    Type: Etc
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000101
+    AegisName: AUTODOLL_PARTS
+    Name: Autodoll Parts
+    Type: Etc
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000102
+    AegisName: EMERGENCY_KEY
+    Name: Emergency Key
+    Type: Etc
+    Weight: 10
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000103
+    AegisName: aegis_1000103
+    Name: Barmeal Ticket
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1000104
+    AegisName: Magical_Igni_Stone
+    Name: Magical Soapstone
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000105
+    AegisName: aegis_1000105
+    Name: Automatic Modification Module(Defense)
+    Type: Etc
+    Weight: 10
+  - Id: 1000106
+    AegisName: aegis_1000106
+    Name: Automatic Modification Module(Magic Defense)
+    Type: Etc
+    Weight: 10
+  - Id: 1000107
+    AegisName: aegis_1000107
+    Name: Automatic Modification Module(VIT)
+    Type: Etc
+    Weight: 10
+  - Id: 1000108
+    AegisName: aegis_1000108
+    Name: Automatic Modification Module(LUK)
+    Type: Etc
+    Weight: 10
+  - Id: 1000109
+    AegisName: aegis_1000109
+    Name: Automatic Modification Module(STR)
+    Type: Etc
+    Weight: 10
+  - Id: 1000110
+    AegisName: aegis_1000110
+    Name: Automatic Modification Module(AGI)
+    Type: Etc
+    Weight: 10
+  - Id: 1000111
+    AegisName: aegis_1000111
+    Name: Automatic Modification Module(INT)
+    Type: Etc
+    Weight: 10
+  - Id: 1000112
+    AegisName: aegis_1000112
+    Name: Automatic Modification Module(DEX)
+    Type: Etc
+    Weight: 10
+  - Id: 1000113
+    AegisName: aegis_1000113
+    Name: Automatic Modification Module(HP Recovery)
+    Type: Etc
+    Weight: 10
+  - Id: 1000114
+    AegisName: aegis_1000114
+    Name: Automatic Modification Module(SP Recovery)
+    Type: Etc
+    Weight: 10
+  - Id: 1000115
+    AegisName: aegis_1000115
+    Name: Automatic Modification Module(Spell)
+    Type: Etc
+    Weight: 10
+  - Id: 1000116
+    AegisName: aegis_1000116
+    Name: Automatic Modification Module(Attack Speed)
+    Type: Etc
+    Weight: 10
+  - Id: 1000117
+    AegisName: aegis_1000117
+    Name: Automatic Modification Module(Fatal)
+    Type: Etc
+    Weight: 10
+  - Id: 1000118
+    AegisName: aegis_1000118
+    Name: Automatic Modification Module(Expert Archer)
+    Type: Etc
+    Weight: 10
+  - Id: 1000119
+    AegisName: aegis_1000119
+    Name: Automatic Modification Module(Vital)
+    Type: Etc
+    Weight: 10
+  - Id: 1000120
+    AegisName: aegis_1000120
+    Name: Automatic Modification Module(Mental)
+    Type: Etc
+    Weight: 10
+  - Id: 1000121
+    AegisName: aegis_1000121
+    Name: Automatic Modification Module(Heal)
+    Type: Etc
+    Weight: 10
+  - Id: 1000122
+    AegisName: aegis_1000122
+    Name: Automatic Modification Module(Attack Power)
+    Type: Etc
+    Weight: 10
+  - Id: 1000123
+    AegisName: aegis_1000123
+    Name: Automatic Modification Module(Magic Power)
+    Type: Etc
+    Weight: 10
+  - Id: 1000124
+    AegisName: aegis_1000124
+    Name: Automatic Modification Module(Shooter)
+    Type: Etc
+    Weight: 10
+  - Id: 1000125
+    AegisName: aegis_1000125
+    Name: Automatic Modification Module(Fast)
+    Type: Etc
+    Weight: 10
+  - Id: 1000126
+    AegisName: aegis_1000126
+    Name: Automatic Modification Module(Caster)
+    Type: Etc
+    Weight: 10
+  - Id: 1000127
+    AegisName: aegis_1000127
+    Name: Automatic Modification Module(Critical)
+    Type: Etc
+    Weight: 10
+  - Id: 1000128
+    AegisName: aegis_1000128
+    Name: Automatic Modification Module(Magical Force)
+    Type: Etc
+    Weight: 10
+  - Id: 1000129
+    AegisName: aegis_1000129
+    Name: Automatic Modification Module(Attacker Force)
+    Type: Etc
+    Weight: 10
+  - Id: 1000130
+    AegisName: aegis_1000130
+    Name: Automatic Modification Module(Range Force)
+    Type: Etc
+    Weight: 10
+  - Id: 1000131
+    AegisName: aegis_1000131
+    Name: Automatic Modification Module(Critical Force)
+    Type: Etc
+    Weight: 10
+  - Id: 1000132
+    AegisName: aegis_1000132
+    Name: Automatic Modification Module(Recovery Force)
+    Type: Etc
+    Weight: 10
+  - Id: 1000133
+    AegisName: aegis_1000133
+    Name: Automatic Modification Module(After Skill Delay)
+    Type: Etc
+    Weight: 10
+  - Id: 1000134
+    AegisName: aegis_1000134
+    Name: Automatic Modification Module(Above All)
+    Type: Etc
+    Weight: 10
+  - Id: 1000135
+    AegisName: aegis_1000135
+    Name: Automatic Module (Above All)
+    Type: Etc
+    Weight: 10
+  - Id: 1000136
+    AegisName: aegis_1000136
+    Name: Automatic Modification Module(Drain Life)
+    Type: Etc
+    Weight: 10
+  - Id: 1000137
+    AegisName: aegis_1000137
+    Name: Automatic Modification Module(Drain Soul)
+    Type: Etc
+    Weight: 10
+  - Id: 1000138
+    AegisName: aegis_1000138
+    Name: Automatic Modification Module(Magic Healing)
+    Type: Etc
+    Weight: 10
+  - Id: 1000139
+    AegisName: aegis_1000139
+    Name: Automatic Modification Module(Magic Soul)
+    Type: Etc
+    Weight: 10
+  - Id: 1000140
+    AegisName: aegis_1000140
+    Name: Automatic Modification Module(Power Force)
+    Type: Etc
+    Weight: 10
+  - Id: 1000141
+    AegisName: aegis_1000141
+    Name: Automatic Modification Module(Robust)
+    Type: Etc
+    Weight: 10
+  - Id: 1000142
+    AegisName: aegis_1000142
+    Name: Automatic Modification Module(Powerful)
+    Type: Etc
+    Weight: 10
+  - Id: 1000143
+    AegisName: aegis_1000143
+    Name: Automatic Modification Module(All Force)
+    Type: Etc
+    Weight: 10
+  - Id: 1000144
+    AegisName: aegis_1000144
+    Name: Automatic Module(Unlimited Vital)
+    Type: Etc
+    Weight: 10
+  - Id: 1000145
+    AegisName: aegis_1000145
+    Name: Automatic Module(Spell Buster)
+    Type: Etc
+    Weight: 10
+  - Id: 1000146
+    AegisName: aegis_1000146
+    Name: Automatic Module(Firing Shot)
+    Type: Etc
+    Weight: 10
+  - Id: 1000147
+    AegisName: aegis_1000147
+    Name: Automatic Module(Over Power)
+    Type: Etc
+    Weight: 10
+  - Id: 1000148
+    AegisName: aegis_1000148
+    Name: Automatic Module(Fatal Flash)
+    Type: Etc
+    Weight: 10
+  - Id: 1000149
+    AegisName: aegis_1000149
+    Name: Automatic Module(Lucky Strike)
+    Type: Etc
+    Weight: 10
+  - Id: 1000152
+    AegisName: aegis_1000152
+    Name: Automatic Module(Dragonic Breath)
+    Type: Etc
+    Weight: 10
+  - Id: 1000153
+    AegisName: aegis_1000153
+    Name: Automatic Module(Wave Break)
+    Type: Etc
+    Weight: 10
+  - Id: 1000154
+    AegisName: aegis_1000154
+    Name: Automatic Module(Hundred Spiral)
+    Type: Etc
+    Weight: 10
+  - Id: 1000155
+    AegisName: aegis_1000155
+    Name: Automatic Module(Drive Press)
+    Type: Etc
+    Weight: 10
+  - Id: 1000156
+    AegisName: aegis_1000156
+    Name: Automatic Module(Banishing Cannon)
+    Type: Etc
+    Weight: 10
+  - Id: 1000157
+    AegisName: aegis_1000157
+    Name: Automatic Module(Genesis Pressure)
+    Type: Etc
+    Weight: 10
+  - Id: 1000158
+    AegisName: aegis_1000158
+    Name: Automatic Module(Boost Cannon)
+    Type: Etc
+    Weight: 10
+  - Id: 1000159
+    AegisName: aegis_1000159
+    Name: Automatic Module(Cold Flare)
+    Type: Etc
+    Weight: 10
+  - Id: 1000160
+    AegisName: aegis_1000160
+    Name: Automatic Module(Tornado Swing)
+    Type: Etc
+    Weight: 10
+  - Id: 1000161
+    AegisName: aegis_1000161
+    Name: Automatic Module(Cannon Tornado)
+    Type: Etc
+    Weight: 10
+  - Id: 1000162
+    AegisName: aegis_1000162
+    Name: Automatic Module(Crazy Mandragora)
+    Type: Etc
+    Weight: 10
+  - Id: 1000163
+    AegisName: aegis_1000163
+    Name: Automatic Module(Acid Explosion)
+    Type: Etc
+    Weight: 10
+  - Id: 1000164
+    AegisName: aegis_1000164
+    Name: Automatic Module(Sonic Impact)
+    Type: Etc
+    Weight: 10
+  - Id: 1000165
+    AegisName: aegis_1000165
+    Name: Automatic Module(Cutter Slasher)
+    Type: Etc
+    Weight: 10
+  - Id: 1000166
+    AegisName: aegis_1000166
+    Name: Automatic Module(Berserk Slash)
+    Type: Etc
+    Weight: 10
+  - Id: 1000167
+    AegisName: aegis_1000167
+    Name: Automatic Module(Fatal Raid)
+    Type: Etc
+    Weight: 10
+  - Id: 1000168
+    AegisName: aegis_1000168
+    Name: Automatic Module(Shadow Spell)
+    Type: Etc
+    Weight: 10
+  - Id: 1000169
+    AegisName: aegis_1000169
+    Name: Automatic Module(Angle Shot)
+    Type: Etc
+    Weight: 10
+  - Id: 1000170
+    AegisName: aegis_1000170
+    Name: Automatic Module(Crimson Strain)
+    Type: Etc
+    Weight: 10
+  - Id: 1000171
+    AegisName: aegis_1000171
+    Name: Automatic Module(Jack Lightning)
+    Type: Etc
+    Weight: 10
+  - Id: 1000172
+    AegisName: aegis_1000172
+    Name: Automatic Module(Comet Vortex)
+    Type: Etc
+    Weight: 10
+  - Id: 1000173
+    AegisName: aegis_1000173
+    Name: Automatic Module(Double Bolt)
+    Type: Etc
+    Weight: 10
+  - Id: 1000174
+    AegisName: aegis_1000174
+    Name: Automatic Module(Warm Wave)
+    Type: Etc
+    Weight: 10
+  - Id: 1000175
+    AegisName: aegis_1000175
+    Name: Automatic Module(Diamond Grave)
+    Type: Etc
+    Weight: 10
+  - Id: 1000176
+    AegisName: aegis_1000176
+    Name: Automatic Module(Magnusmus)
+    Type: Etc
+    Weight: 10
+  - Id: 1000177
+    AegisName: aegis_1000177
+    Name: Automatic Module(Holy Judex)
+    Type: Etc
+    Weight: 10
+  - Id: 1000178
+    AegisName: aegis_1000178
+    Name: Automatic Module(Duple Lica)
+    Type: Etc
+    Weight: 10
+  - Id: 1000179
+    AegisName: aegis_1000179
+    Name: Automatic Module(Tiger Empire)
+    Type: Etc
+    Weight: 10
+  - Id: 1000180
+    AegisName: aegis_1000180
+    Name: Automatic Module(Rampage Arrow)
+    Type: Etc
+    Weight: 10
+  - Id: 1000181
+    AegisName: aegis_1000181
+    Name: Automatic Module(Raging Combo)
+    Type: Etc
+    Weight: 10
+  - Id: 1000182
+    AegisName: aegis_1000182
+    Name: Automatic Module(Cluster)
+    Type: Etc
+    Weight: 10
+  - Id: 1000183
+    AegisName: aegis_1000183
+    Name: Automatic Module(Breeze Shooting)
+    Type: Etc
+    Weight: 10
+  - Id: 1000184
+    AegisName: aegis_1000184
+    Name: Automatic Module(Aimed Storm)
+    Type: Etc
+    Weight: 10
+  - Id: 1000185
+    AegisName: aegis_1000185
+    Name: Automatic Module(Metal Echo)
+    Type: Etc
+    Weight: 10
+  - Id: 1000186
+    AegisName: aegis_1000186
+    Name: Automatic Module(Reverberation)
+    Type: Etc
+    Weight: 10
+  - Id: 1000187
+    AegisName: aegis_1000187
+    Name: Automatic Module(Vulcan Severe)
+    Type: Etc
+    Weight: 10
+  - Id: 1000188
+    AegisName: aegis_1000188
+    Name: Automatic Module(Prominence Burst)
+    Type: Etc
+    Weight: 10
+  - Id: 1000189
+    AegisName: aegis_1000189
+    Name: Automatic Module(Moon Kick)
+    Type: Etc
+    Weight: 10
+  - Id: 1000190
+    AegisName: aegis_1000190
+    Name: Automatic Module(Flash Falling)
+    Type: Etc
+    Weight: 10
+  - Id: 1000191
+    AegisName: aegis_1000191
+    Name: Automatic Module(Eswhoo)
+    Type: Etc
+    Weight: 10
+  - Id: 1000192
+    AegisName: aegis_1000192
+    Name: Automatic Module(Espa)
+    Type: Etc
+    Weight: 10
+  - Id: 1000193
+    AegisName: aegis_1000193
+    Name: Automatic Module(Curse Explosion)
+    Type: Etc
+    Weight: 10
+  - Id: 1000194
+    AegisName: aegis_1000194
+    Name: Automatic Module(Des Hammer Dance)
+    Type: Etc
+    Weight: 10
+  - Id: 1000195
+    AegisName: aegis_1000195
+    Name: Automatic Module(Fire Howling Tail)
+    Type: Etc
+    Weight: 10
+  - Id: 1000196
+    AegisName: aegis_1000196
+    Name: Automatic Module(Storm Buster Trip)
+    Type: Etc
+    Weight: 10
+  - Id: 1000197
+    AegisName: aegis_1000197
+    Name: Automatic Module(Flame Ice Wind)
+    Type: Etc
+    Weight: 10
+  - Id: 1000198
+    AegisName: aegis_1000198
+    Name: Automatic Module(Cross Slash)
+    Type: Etc
+    Weight: 10
+  - Id: 1000199
+    AegisName: aegis_1000199
+    Name: Automatic Module(Exploding Flake Wind)
+    Type: Etc
+    Weight: 10
+  - Id: 1000200
+    AegisName: aegis_1000200
+    Name: Automatic Module(Power of Sea)
+    Type: Etc
+    Weight: 10
+  - Id: 1000201
+    AegisName: aegis_1000201
+    Name: Automatic Module(Power of Land)
+    Type: Etc
+    Weight: 10
+  - Id: 1000202
+    AegisName: aegis_1000202
+    Name: Automatic Module(Power of Life)
+    Type: Etc
+    Weight: 10
+  - Id: 1000207
+    AegisName: aegis_1000207
+    Name: Automatic Modification Module(Mirror Counter)
+    Type: Etc
+    Weight: 10
+  - Id: 1000208
+    AegisName: aegis_1000208
+    Name: Automatic Modification Module(Reflection Reject)
+    Type: Etc
+    Weight: 10
   - Id: 1000213
     AegisName: WarlockStone_Robe2
     Name: Warlock Stone II (Garment)
-    Type: Card
+    Type: Etc
     Weight: 100
   - Id: 1000214
     AegisName: WarlockStone_Top2
     Name: High Wizard Stone II (Upper)
-    Type: Card
+    Type: Etc
     Weight: 100
   - Id: 1000215
     AegisName: WarlockStone_Middle2
     Name: High Wizard Stone II (Middle)
-    Type: Card
+    Type: Etc
     Weight: 100
   - Id: 1000216
     AegisName: WarlockStone_Bottom2
     Name: High Wizard Stone II (Lower)
-    Type: Card
+    Type: Etc
     Weight: 100
   - Id: 1000217
     AegisName: RoyalGuardStone_Robe2
     Name: Royal Guard Stone II (Garment)
-    Type: Card
+    Type: Etc
     Weight: 100
   - Id: 1000218
     AegisName: RoyalGuardStone_Top2
     Name: Paladin Stone II (Upper)
-    Type: Card
+    Type: Etc
     Weight: 100
   - Id: 1000219
     AegisName: RoyalGuardStone_Middle2
     Name: Paladin Stone II (Middle)
-    Type: Card
+    Type: Etc
     Weight: 100
   - Id: 1000220
     AegisName: RoyalGuardStone_Bottom2
     Name: Paladin Stone II (Lower)
-    Type: Card
+    Type: Etc
     Weight: 100
   - Id: 1000221
     AegisName: GuillotineCrossStone_Robe2
     Name: Guillotine Cross Stone II (Garment)
-    Type: Card
+    Type: Etc
     Weight: 100
   - Id: 1000222
     AegisName: GuillotineCrossStone_Top2
     Name: Assassin Cross Stone II (Upper)
-    Type: Card
+    Type: Etc
     Weight: 100
   - Id: 1000223
     AegisName: GuillotineCrossStone_Middle2
     Name: Assassin Cross Stone II (Middle)
-    Type: Card
+    Type: Etc
     Weight: 100
   - Id: 1000224
     AegisName: GuillotineCrossStone_Bottom2
     Name: Assassin Cross Stone II (Lower)
-    Type: Card
+    Type: Etc
     Weight: 100
+  - Id: 1000225
+    AegisName: aegis_1000225
+    Name: Potato Chips
+    Type: Etc
+    Weight: 10
+  - Id: 1000226
+    AegisName: Broken_Dollcore
+    Name: Core of a Broken Doll
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000227
+    AegisName: aegis_1000227
+    Name: Cloud Cotton
+    Type: Etc
+    Weight: 10
+  - Id: 1000231
+    AegisName: Broken_AutoDoll_Parts
+    Name: Parts of Broken Automatic Doll
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1000232
+    AegisName: Autodoll_Communicator
+    Name: Communication Chip of Automatic Doll
+    Type: Etc
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1000235
     AegisName: aegis_1000235
     Name: Great Hunter's Mark    # !todo check english name
