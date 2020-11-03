@@ -24,7 +24,7 @@
 ###########################################################################
 # - ExpGroup                 Experience group ID.
 #   Jobs:                    Jobs associate to experience group.
-#     Job: bool              Job associated to experience group.
+#     Job                    Job associated to experience group.
 #   MaxBaseLevel             Maximum base level. (Default: MAX_LEVEL)
 #   BaseExp:                 Base experience per level.
 #     - Level                Base level.

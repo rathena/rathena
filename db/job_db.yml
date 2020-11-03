@@ -28,7 +28,7 @@
 #   HPMultiplicator          Base HP rate numerator. (Default: 500)
 #   SPFactor                 Base SP factor. (Default: 100)
 #   BaseASPD:                Base ASPD for each weapon type. (Default: 2000)
-#     Weapon: Rate           Weapon type with associated ASPD.
+#     Weapon                 Weapon type with associated ASPD.
 #   BonusStats:              Job level bonus stats.
 #     - Level                Job level.
 #       Bonus                Bonus stat.
