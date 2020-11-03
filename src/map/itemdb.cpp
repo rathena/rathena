@@ -286,7 +286,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			if (!this->asBool(jobNode, "All", active))
 				return 0;
 
-			itemdb_jobid2mapid(item->class_base, static_cast<e_mapid>(MAPID_ALL), active);
+			itemdb_jobid2mapid(item->class_base, MAPID_ALL, active);
 		}
 
 		for (const auto &jobit : jobNode) {
@@ -301,7 +301,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 
 			if (!script_get_constant(jobName_constant.c_str(), &constant)) {
 				this->invalidWarning(jobNode[jobName], "Invalid item job %s, defaulting to All.\n", jobName.c_str());
-				itemdb_jobid2mapid(item->class_base, static_cast<e_mapid>(MAPID_ALL), true);
+				itemdb_jobid2mapid(item->class_base, MAPID_ALL, true);
 				break;
 			}
 
@@ -316,7 +316,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!exists) {
 			item->class_base[0] = item->class_base[1] = item->class_base[2] = 0;
 
-			itemdb_jobid2mapid(item->class_base, static_cast<e_mapid>(MAPID_ALL), true);
+			itemdb_jobid2mapid(item->class_base, MAPID_ALL, true);
 		}
 	}
 
