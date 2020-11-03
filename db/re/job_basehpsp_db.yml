@@ -2041,6 +2041,56 @@ Body:
         Hp: 18325
       - Level: 175
         Hp: 18500
+      - Level: 176
+        Hp: 18675
+      - Level: 177
+        Hp: 18850
+      - Level: 178
+        Hp: 19025
+      - Level: 179
+        Hp: 19200
+      - Level: 180
+        Hp: 19375
+      - Level: 181
+        Hp: 19550
+      - Level: 182
+        Hp: 19725
+      - Level: 183
+        Hp: 19900
+      - Level: 184
+        Hp: 20075
+      - Level: 185
+        Hp: 20250
+      - Level: 186
+        Hp: 20425
+      - Level: 187
+        Hp: 20600
+      - Level: 188
+        Hp: 20775
+      - Level: 189
+        Hp: 20950
+      - Level: 190
+        Hp: 21125
+      - Level: 191
+        Hp: 21300
+      - Level: 192
+        Hp: 21475
+      - Level: 193
+        Hp: 21650
+      - Level: 194
+        Hp: 21825
+      - Level: 195
+        Hp: 22000
+      - Level: 196
+        Hp: 22175
+      - Level: 197
+        Hp: 22350
+      - Level: 198
+        Hp: 22525
+      - Level: 199
+        Hp: 22700
+      - Level: 200
+        Hp: 22875
   - BaseGroup: 11
     Jobs:
       Priest: true
@@ -2405,6 +2455,56 @@ Body:
         Hp: 11460
       - Level: 175
         Hp: 11635
+      - Level: 176
+        Hp: 11810
+      - Level: 177
+        Hp: 11985
+      - Level: 178
+        Hp: 12160
+      - Level: 179
+        Hp: 12335
+      - Level: 180
+        Hp: 12510
+      - Level: 181
+        Hp: 12685
+      - Level: 182
+        Hp: 12860
+      - Level: 183
+        Hp: 13035
+      - Level: 184
+        Hp: 13210
+      - Level: 185
+        Hp: 13385
+      - Level: 186
+        Hp: 13560
+      - Level: 187
+        Hp: 13735
+      - Level: 188
+        Hp: 13910
+      - Level: 189
+        Hp: 14085
+      - Level: 190
+        Hp: 14260
+      - Level: 191
+        Hp: 14435
+      - Level: 192
+        Hp: 14610
+      - Level: 193
+        Hp: 14785
+      - Level: 194
+        Hp: 14960
+      - Level: 195
+        Hp: 15135
+      - Level: 196
+        Hp: 15310
+      - Level: 197
+        Hp: 15485
+      - Level: 198
+        Hp: 15660
+      - Level: 199
+        Hp: 15835
+      - Level: 200
+        Hp: 16010
   - BaseGroup: 13
     Jobs:
       Wizard: true
@@ -2769,6 +2869,56 @@ Body:
         Hp: 11075
       - Level: 175
         Hp: 11250
+      - Level: 176
+        Hp: 11425
+      - Level: 177
+        Hp: 11600
+      - Level: 178
+        Hp: 11775
+      - Level: 179
+        Hp: 11950
+      - Level: 180
+        Hp: 12125
+      - Level: 181
+        Hp: 12300
+      - Level: 182
+        Hp: 12475
+      - Level: 183
+        Hp: 12650
+      - Level: 184
+        Hp: 12825
+      - Level: 185
+        Hp: 13000
+      - Level: 186
+        Hp: 13175
+      - Level: 187
+        Hp: 13350
+      - Level: 188
+        Hp: 13525
+      - Level: 189
+        Hp: 13700
+      - Level: 190
+        Hp: 13875
+      - Level: 191
+        Hp: 14050
+      - Level: 192
+        Hp: 14225
+      - Level: 193
+        Hp: 14400
+      - Level: 194
+        Hp: 14575
+      - Level: 195
+        Hp: 14750
+      - Level: 196
+        Hp: 14925
+      - Level: 197
+        Hp: 15100
+      - Level: 198
+        Hp: 15275
+      - Level: 199
+        Hp: 15450
+      - Level: 200
+        Hp: 15625
   - BaseGroup: 15
     Jobs:
       Blacksmith: true
@@ -3136,6 +3286,56 @@ Body:
         Hp: 16450
       - Level: 175
         Hp: 16625
+      - Level: 176
+        Hp: 16800
+      - Level: 177
+        Hp: 16975
+      - Level: 178
+        Hp: 17150
+      - Level: 179
+        Hp: 17325
+      - Level: 180
+        Hp: 17500
+      - Level: 181
+        Hp: 17675
+      - Level: 182
+        Hp: 17850
+      - Level: 183
+        Hp: 18025
+      - Level: 184
+        Hp: 18200
+      - Level: 185
+        Hp: 18375
+      - Level: 186
+        Hp: 18550
+      - Level: 187
+        Hp: 18725
+      - Level: 188
+        Hp: 18900
+      - Level: 189
+        Hp: 19075
+      - Level: 190
+        Hp: 19250
+      - Level: 191
+        Hp: 19425
+      - Level: 192
+        Hp: 19600
+      - Level: 193
+        Hp: 19775
+      - Level: 194
+        Hp: 19950
+      - Level: 195
+        Hp: 20125
+      - Level: 196
+        Hp: 20300
+      - Level: 197
+        Hp: 20475
+      - Level: 198
+        Hp: 20650
+      - Level: 199
+        Hp: 20825
+      - Level: 200
+        Hp: 21000
   - BaseGroup: 17
     Jobs:
       Hunter: true
@@ -3503,6 +3703,56 @@ Body:
         Hp: 13785
       - Level: 175
         Hp: 13935
+      - Level: 176
+        Hp: 14085
+      - Level: 177
+        Hp: 14235
+      - Level: 178
+        Hp: 14385
+      - Level: 179
+        Hp: 14535
+      - Level: 180
+        Hp: 14685
+      - Level: 181
+        Hp: 14835
+      - Level: 182
+        Hp: 14985
+      - Level: 183
+        Hp: 15135
+      - Level: 184
+        Hp: 15285
+      - Level: 185
+        Hp: 15435
+      - Level: 186
+        Hp: 15585
+      - Level: 187
+        Hp: 15735
+      - Level: 188
+        Hp: 15885
+      - Level: 189
+        Hp: 16035
+      - Level: 190
+        Hp: 16185
+      - Level: 191
+        Hp: 16335
+      - Level: 192
+        Hp: 16485
+      - Level: 193
+        Hp: 16635
+      - Level: 194
+        Hp: 16785
+      - Level: 195
+        Hp: 16935
+      - Level: 196
+        Hp: 17085
+      - Level: 197
+        Hp: 17235
+      - Level: 198
+        Hp: 17385
+      - Level: 199
+        Hp: 17535
+      - Level: 200
+        Hp: 17685
   - BaseGroup: 19
     Jobs:
       Assassin: true
@@ -3867,6 +4117,56 @@ Body:
         Hp: 16825
       - Level: 175
         Hp: 16975
+      - Level: 176
+        Hp: 17125
+      - Level: 177
+        Hp: 17275
+      - Level: 178
+        Hp: 17425
+      - Level: 179
+        Hp: 17575
+      - Level: 180
+        Hp: 17725
+      - Level: 181
+        Hp: 17875
+      - Level: 182
+        Hp: 18025
+      - Level: 183
+        Hp: 18175
+      - Level: 184
+        Hp: 18325
+      - Level: 185
+        Hp: 18475
+      - Level: 186
+        Hp: 18625
+      - Level: 187
+        Hp: 18775
+      - Level: 188
+        Hp: 18925
+      - Level: 189
+        Hp: 19075
+      - Level: 190
+        Hp: 19225
+      - Level: 191
+        Hp: 19375
+      - Level: 192
+        Hp: 19525
+      - Level: 193
+        Hp: 19675
+      - Level: 194
+        Hp: 19825
+      - Level: 195
+        Hp: 19975
+      - Level: 196
+        Hp: 20125
+      - Level: 197
+        Hp: 20275
+      - Level: 198
+        Hp: 20425
+      - Level: 199
+        Hp: 20575
+      - Level: 200
+        Hp: 20725
   - BaseGroup: 21
     Jobs:
       Crusader: true
@@ -4237,6 +4537,56 @@ Body:
         Hp: 17205
       - Level: 175
         Hp: 17380
+      - Level: 176
+        Hp: 17555
+      - Level: 177
+        Hp: 17730
+      - Level: 178
+        Hp: 17905
+      - Level: 179
+        Hp: 18080
+      - Level: 180
+        Hp: 18255
+      - Level: 181
+        Hp: 18430
+      - Level: 182
+        Hp: 18605
+      - Level: 183
+        Hp: 18780
+      - Level: 184
+        Hp: 18955
+      - Level: 185
+        Hp: 19130
+      - Level: 186
+        Hp: 19305
+      - Level: 187
+        Hp: 19480
+      - Level: 188
+        Hp: 19655
+      - Level: 189
+        Hp: 19830
+      - Level: 190
+        Hp: 20005
+      - Level: 191
+        Hp: 20180
+      - Level: 192
+        Hp: 20355
+      - Level: 193
+        Hp: 20530
+      - Level: 194
+        Hp: 20705
+      - Level: 195
+        Hp: 20880
+      - Level: 196
+        Hp: 21055
+      - Level: 197
+        Hp: 21230
+      - Level: 198
+        Hp: 21405
+      - Level: 199
+        Hp: 21580
+      - Level: 200
+        Hp: 21755
   - BaseGroup: 23
     Jobs:
       Monk: true
@@ -4601,6 +4951,56 @@ Body:
         Hp: 14330
       - Level: 175
         Hp: 14485
+      - Level: 176
+        Hp: 14640
+      - Level: 177
+        Hp: 14795
+      - Level: 178
+        Hp: 14950
+      - Level: 179
+        Hp: 15105
+      - Level: 180
+        Hp: 15260
+      - Level: 181
+        Hp: 15415
+      - Level: 182
+        Hp: 15570
+      - Level: 183
+        Hp: 15725
+      - Level: 184
+        Hp: 15880
+      - Level: 185
+        Hp: 16035
+      - Level: 186
+        Hp: 16190
+      - Level: 187
+        Hp: 16345
+      - Level: 188
+        Hp: 16500
+      - Level: 189
+        Hp: 16655
+      - Level: 190
+        Hp: 16810
+      - Level: 191
+        Hp: 16965
+      - Level: 192
+        Hp: 17120
+      - Level: 193
+        Hp: 17275
+      - Level: 194
+        Hp: 17430
+      - Level: 195
+        Hp: 17585
+      - Level: 196
+        Hp: 17740
+      - Level: 197
+        Hp: 17895
+      - Level: 198
+        Hp: 18050
+      - Level: 199
+        Hp: 18205
+      - Level: 200
+        Hp: 18360
   - BaseGroup: 25
     Jobs:
       Sage: true
@@ -4965,6 +5365,56 @@ Body:
         Hp: 11700
       - Level: 175
         Hp: 11835
+      - Level: 176
+        Hp: 11970
+      - Level: 177
+        Hp: 12105
+      - Level: 178
+        Hp: 12240
+      - Level: 179
+        Hp: 12375
+      - Level: 180
+        Hp: 12510
+      - Level: 181
+        Hp: 12645
+      - Level: 182
+        Hp: 12780
+      - Level: 183
+        Hp: 12915
+      - Level: 184
+        Hp: 13050
+      - Level: 185
+        Hp: 13185
+      - Level: 186
+        Hp: 13320
+      - Level: 187
+        Hp: 13455
+      - Level: 188
+        Hp: 13590
+      - Level: 189
+        Hp: 13725
+      - Level: 190
+        Hp: 13860
+      - Level: 191
+        Hp: 13995
+      - Level: 192
+        Hp: 14130
+      - Level: 193
+        Hp: 14265
+      - Level: 194
+        Hp: 14400
+      - Level: 195
+        Hp: 14535
+      - Level: 196
+        Hp: 14670
+      - Level: 197
+        Hp: 14805
+      - Level: 198
+        Hp: 14940
+      - Level: 199
+        Hp: 15075
+      - Level: 200
+        Hp: 15210
   - BaseGroup: 27
     Jobs:
       Rogue: true
@@ -5329,6 +5779,56 @@ Body:
         Hp: 15705
       - Level: 175
         Hp: 15820
+      - Level: 176
+        Hp: 15935
+      - Level: 177
+        Hp: 16050
+      - Level: 178
+        Hp: 16165
+      - Level: 179
+        Hp: 16280
+      - Level: 180
+        Hp: 16395
+      - Level: 181
+        Hp: 16510
+      - Level: 182
+        Hp: 16625
+      - Level: 183
+        Hp: 16740
+      - Level: 184
+        Hp: 16855
+      - Level: 185
+        Hp: 16970
+      - Level: 186
+        Hp: 17085
+      - Level: 187
+        Hp: 17200
+      - Level: 188
+        Hp: 17315
+      - Level: 189
+        Hp: 17430
+      - Level: 190
+        Hp: 17545
+      - Level: 191
+        Hp: 17660
+      - Level: 192
+        Hp: 17775
+      - Level: 193
+        Hp: 17890
+      - Level: 194
+        Hp: 18005
+      - Level: 195
+        Hp: 18120
+      - Level: 196
+        Hp: 18235
+      - Level: 197
+        Hp: 18350
+      - Level: 198
+        Hp: 18465
+      - Level: 199
+        Hp: 18580
+      - Level: 200
+        Hp: 18695
   - BaseGroup: 29
     Jobs:
       Alchemist: true
@@ -5693,6 +6193,56 @@ Body:
         Hp: 12325
       - Level: 175
         Hp: 12500
+      - Level: 176
+        Hp: 12675
+      - Level: 177
+        Hp: 12850
+      - Level: 178
+        Hp: 13025
+      - Level: 179
+        Hp: 13200
+      - Level: 180
+        Hp: 13375
+      - Level: 181
+        Hp: 13550
+      - Level: 182
+        Hp: 13725
+      - Level: 183
+        Hp: 13900
+      - Level: 184
+        Hp: 14075
+      - Level: 185
+        Hp: 14250
+      - Level: 186
+        Hp: 14425
+      - Level: 187
+        Hp: 14600
+      - Level: 188
+        Hp: 14775
+      - Level: 189
+        Hp: 14950
+      - Level: 190
+        Hp: 15125
+      - Level: 191
+        Hp: 15300
+      - Level: 192
+        Hp: 15475
+      - Level: 193
+        Hp: 15650
+      - Level: 194
+        Hp: 15825
+      - Level: 195
+        Hp: 16000
+      - Level: 196
+        Hp: 16175
+      - Level: 197
+        Hp: 16350
+      - Level: 198
+        Hp: 16525
+      - Level: 199
+        Hp: 16700
+      - Level: 200
+        Hp: 16875
   - BaseGroup: 31
     Jobs:
       Bard: true
@@ -6057,6 +6607,56 @@ Body:
         Hp: 13780
       - Level: 175
         Hp: 13930
+      - Level: 176
+        Hp: 14080
+      - Level: 177
+        Hp: 14230
+      - Level: 178
+        Hp: 14380
+      - Level: 179
+        Hp: 14530
+      - Level: 180
+        Hp: 14680
+      - Level: 181
+        Hp: 14830
+      - Level: 182
+        Hp: 14980
+      - Level: 183
+        Hp: 15130
+      - Level: 184
+        Hp: 15280
+      - Level: 185
+        Hp: 15430
+      - Level: 186
+        Hp: 15580
+      - Level: 187
+        Hp: 15730
+      - Level: 188
+        Hp: 15880
+      - Level: 189
+        Hp: 16030
+      - Level: 190
+        Hp: 16180
+      - Level: 191
+        Hp: 16330
+      - Level: 192
+        Hp: 16480
+      - Level: 193
+        Hp: 16630
+      - Level: 194
+        Hp: 16780
+      - Level: 195
+        Hp: 16930
+      - Level: 196
+        Hp: 17080
+      - Level: 197
+        Hp: 17230
+      - Level: 198
+        Hp: 17380
+      - Level: 199
+        Hp: 17530
+      - Level: 200
+        Hp: 17680
   - BaseGroup: 33
     Jobs:
       Dancer: true
@@ -6421,6 +7021,56 @@ Body:
         Hp: 13780
       - Level: 175
         Hp: 13930
+      - Level: 176
+        Hp: 14080
+      - Level: 177
+        Hp: 14230
+      - Level: 178
+        Hp: 14380
+      - Level: 179
+        Hp: 14530
+      - Level: 180
+        Hp: 14680
+      - Level: 181
+        Hp: 14830
+      - Level: 182
+        Hp: 14980
+      - Level: 183
+        Hp: 15130
+      - Level: 184
+        Hp: 15280
+      - Level: 185
+        Hp: 15430
+      - Level: 186
+        Hp: 15580
+      - Level: 187
+        Hp: 15730
+      - Level: 188
+        Hp: 15880
+      - Level: 189
+        Hp: 16030
+      - Level: 190
+        Hp: 16180
+      - Level: 191
+        Hp: 16330
+      - Level: 192
+        Hp: 16480
+      - Level: 193
+        Hp: 16630
+      - Level: 194
+        Hp: 16780
+      - Level: 195
+        Hp: 16930
+      - Level: 196
+        Hp: 17080
+      - Level: 197
+        Hp: 17230
+      - Level: 198
+        Hp: 17380
+      - Level: 199
+        Hp: 17530
+      - Level: 200
+        Hp: 17680
   - BaseGroup: 35
     Jobs:
       Gunslinger: true
@@ -6781,6 +7431,56 @@ Body:
         Hp: 15751
       - Level: 175
         Hp: 15892
+      - Level: 176
+        Hp: 16033
+      - Level: 177
+        Hp: 16174
+      - Level: 178
+        Hp: 16315
+      - Level: 179
+        Hp: 16456
+      - Level: 180
+        Hp: 16597
+      - Level: 181
+        Hp: 16738
+      - Level: 182
+        Hp: 16879
+      - Level: 183
+        Hp: 17020
+      - Level: 184
+        Hp: 17161
+      - Level: 185
+        Hp: 17302
+      - Level: 186
+        Hp: 17443
+      - Level: 187
+        Hp: 17584
+      - Level: 188
+        Hp: 17725
+      - Level: 189
+        Hp: 17866
+      - Level: 190
+        Hp: 18007
+      - Level: 191
+        Hp: 18148
+      - Level: 192
+        Hp: 18289
+      - Level: 193
+        Hp: 18430
+      - Level: 194
+        Hp: 18571
+      - Level: 195
+        Hp: 18712
+      - Level: 196
+        Hp: 18853
+      - Level: 197
+        Hp: 18994
+      - Level: 198
+        Hp: 19135
+      - Level: 199
+        Hp: 19276
+      - Level: 200
+        Hp: 19417
   - BaseGroup: 37
     Jobs:
       Ninja: true
@@ -7141,6 +7841,56 @@ Body:
         Hp: 11175
       - Level: 175
         Hp: 11330
+      - Level: 176
+        Hp: 11485
+      - Level: 177
+        Hp: 11640
+      - Level: 178
+        Hp: 11795
+      - Level: 179
+        Hp: 11950
+      - Level: 180
+        Hp: 12105
+      - Level: 181
+        Hp: 12260
+      - Level: 182
+        Hp: 12415
+      - Level: 183
+        Hp: 12570
+      - Level: 184
+        Hp: 12725
+      - Level: 185
+        Hp: 12880
+      - Level: 186
+        Hp: 13035
+      - Level: 187
+        Hp: 13190
+      - Level: 188
+        Hp: 13345
+      - Level: 189
+        Hp: 13500
+      - Level: 190
+        Hp: 13655
+      - Level: 191
+        Hp: 13810
+      - Level: 192
+        Hp: 13965
+      - Level: 193
+        Hp: 14120
+      - Level: 194
+        Hp: 14275
+      - Level: 195
+        Hp: 14430
+      - Level: 196
+        Hp: 14585
+      - Level: 197
+        Hp: 14740
+      - Level: 198
+        Hp: 14895
+      - Level: 199
+        Hp: 15050
+      - Level: 200
+        Hp: 15205
   - BaseGroup: 39
     Jobs:
       Oboro: true
@@ -7299,6 +8049,56 @@ Body:
         Hp: 10875
       - Level: 175
         Hp: 11030
+      - Level: 176
+        Hp: 11185
+      - Level: 177
+        Hp: 11340
+      - Level: 178
+        Hp: 11495
+      - Level: 179
+        Hp: 11650
+      - Level: 180
+        Hp: 11805
+      - Level: 181
+        Hp: 11960
+      - Level: 182
+        Hp: 12115
+      - Level: 183
+        Hp: 12270
+      - Level: 184
+        Hp: 12425
+      - Level: 185
+        Hp: 12580
+      - Level: 186
+        Hp: 12735
+      - Level: 187
+        Hp: 12890
+      - Level: 188
+        Hp: 13045
+      - Level: 189
+        Hp: 13200
+      - Level: 190
+        Hp: 13355
+      - Level: 191
+        Hp: 13510
+      - Level: 192
+        Hp: 13665
+      - Level: 193
+        Hp: 13820
+      - Level: 194
+        Hp: 13975
+      - Level: 195
+        Hp: 14130
+      - Level: 196
+        Hp: 14285
+      - Level: 197
+        Hp: 14440
+      - Level: 198
+        Hp: 14595
+      - Level: 199
+        Hp: 14750
+      - Level: 200
+        Hp: 14905
   - BaseGroup: 40
     Jobs:
       Taekwon: true
@@ -8866,6 +9666,56 @@ Body:
         Hp: 17355
       - Level: 175
         Hp: 17547
+      - Level: 176
+        Hp: 17739
+      - Level: 177
+        Hp: 17931
+      - Level: 178
+        Hp: 18123
+      - Level: 179
+        Hp: 18315
+      - Level: 180
+        Hp: 18507
+      - Level: 181
+        Hp: 18699
+      - Level: 182
+        Hp: 18891
+      - Level: 183
+        Hp: 19083
+      - Level: 184
+        Hp: 19275
+      - Level: 185
+        Hp: 19467
+      - Level: 186
+        Hp: 19659
+      - Level: 187
+        Hp: 19851
+      - Level: 188
+        Hp: 20043
+      - Level: 189
+        Hp: 20235
+      - Level: 190
+        Hp: 20427
+      - Level: 191
+        Hp: 20619
+      - Level: 192
+        Hp: 20811
+      - Level: 193
+        Hp: 21003
+      - Level: 194
+        Hp: 21195
+      - Level: 195
+        Hp: 21387
+      - Level: 196
+        Hp: 21579
+      - Level: 197
+        Hp: 21771
+      - Level: 198
+        Hp: 21963
+      - Level: 199
+        Hp: 22155
+      - Level: 200
+        Hp: 22347
   - BaseGroup: 47
     Jobs:
       Novice: true
@@ -10668,6 +11518,56 @@ Body:
         Sp: 959
       - Level: 175
         Sp: 965
+      - Level: 176
+        Sp: 971
+      - Level: 177
+        Sp: 977
+      - Level: 178
+        Sp: 983
+      - Level: 179
+        Sp: 989
+      - Level: 180
+        Sp: 995
+      - Level: 181
+        Sp: 1001
+      - Level: 182
+        Sp: 1007
+      - Level: 183
+        Sp: 1013
+      - Level: 184
+        Sp: 1019
+      - Level: 185
+        Sp: 1025
+      - Level: 186
+        Sp: 1031
+      - Level: 187
+        Sp: 1037
+      - Level: 188
+        Sp: 1043
+      - Level: 189
+        Sp: 1049
+      - Level: 190
+        Sp: 1055
+      - Level: 191
+        Sp: 1061
+      - Level: 192
+        Sp: 1067
+      - Level: 193
+        Sp: 1073
+      - Level: 194
+        Sp: 1079
+      - Level: 195
+        Sp: 1085
+      - Level: 196
+        Sp: 1091
+      - Level: 197
+        Sp: 1097
+      - Level: 198
+        Sp: 1103
+      - Level: 199
+        Sp: 1109
+      - Level: 200
+        Sp: 1115
   - BaseGroup: 56
     Jobs:
       Priest: true
@@ -11032,6 +11932,56 @@ Body:
         Sp: 1629
       - Level: 175
         Sp: 1640
+      - Level: 176
+        Sp: 1651
+      - Level: 177
+        Sp: 1662
+      - Level: 178
+        Sp: 1673
+      - Level: 179
+        Sp: 1684
+      - Level: 180
+        Sp: 1695
+      - Level: 181
+        Sp: 1706
+      - Level: 182
+        Sp: 1717
+      - Level: 183
+        Sp: 1728
+      - Level: 184
+        Sp: 1739
+      - Level: 185
+        Sp: 1750
+      - Level: 186
+        Sp: 1761
+      - Level: 187
+        Sp: 1772
+      - Level: 188
+        Sp: 1783
+      - Level: 189
+        Sp: 1794
+      - Level: 190
+        Sp: 1805
+      - Level: 191
+        Sp: 1816
+      - Level: 192
+        Sp: 1827
+      - Level: 193
+        Sp: 1838
+      - Level: 194
+        Sp: 1849
+      - Level: 195
+        Sp: 1860
+      - Level: 196
+        Sp: 1871
+      - Level: 197
+        Sp: 1882
+      - Level: 198
+        Sp: 1893
+      - Level: 199
+        Sp: 1904
+      - Level: 200
+        Sp: 1915
   - BaseGroup: 58
     Jobs:
       Wizard: true
@@ -11396,6 +12346,56 @@ Body:
         Sp: 1603
       - Level: 175
         Sp: 1615
+      - Level: 176
+        Sp: 1627
+      - Level: 177
+        Sp: 1639
+      - Level: 178
+        Sp: 1651
+      - Level: 179
+        Sp: 1663
+      - Level: 180
+        Sp: 1675
+      - Level: 181
+        Sp: 1687
+      - Level: 182
+        Sp: 1699
+      - Level: 183
+        Sp: 1711
+      - Level: 184
+        Sp: 1723
+      - Level: 185
+        Sp: 1735
+      - Level: 186
+        Sp: 1747
+      - Level: 187
+        Sp: 1759
+      - Level: 188
+        Sp: 1771
+      - Level: 189
+        Sp: 1783
+      - Level: 190
+        Sp: 1795
+      - Level: 191
+        Sp: 1807
+      - Level: 192
+        Sp: 1819
+      - Level: 193
+        Sp: 1831
+      - Level: 194
+        Sp: 1843
+      - Level: 195
+        Sp: 1855
+      - Level: 196
+        Sp: 1867
+      - Level: 197
+        Sp: 1879
+      - Level: 198
+        Sp: 1891
+      - Level: 199
+        Sp: 1903
+      - Level: 200
+        Sp: 1915
   - BaseGroup: 60
     Jobs:
       Blacksmith: true
@@ -11763,6 +12763,56 @@ Body:
         Sp: 1313
       - Level: 175
         Sp: 1320
+      - Level: 176
+        Sp: 1327
+      - Level: 177
+        Sp: 1334
+      - Level: 178
+        Sp: 1341
+      - Level: 179
+        Sp: 1348
+      - Level: 180
+        Sp: 1355
+      - Level: 181
+        Sp: 1362
+      - Level: 182
+        Sp: 1369
+      - Level: 183
+        Sp: 1376
+      - Level: 184
+        Sp: 1383
+      - Level: 185
+        Sp: 1390
+      - Level: 186
+        Sp: 1397
+      - Level: 187
+        Sp: 1404
+      - Level: 188
+        Sp: 1411
+      - Level: 189
+        Sp: 1418
+      - Level: 190
+        Sp: 1425
+      - Level: 191
+        Sp: 1432
+      - Level: 192
+        Sp: 1439
+      - Level: 193
+        Sp: 1446
+      - Level: 194
+        Sp: 1453
+      - Level: 195
+        Sp: 1460
+      - Level: 196
+        Sp: 1467
+      - Level: 197
+        Sp: 1474
+      - Level: 198
+        Sp: 1481
+      - Level: 199
+        Sp: 1488
+      - Level: 200
+        Sp: 1495
   - BaseGroup: 62
     Jobs:
       Hunter: true
@@ -12130,6 +13180,56 @@ Body:
         Sp: 868
       - Level: 175
         Sp: 875
+      - Level: 176
+        Sp: 882
+      - Level: 177
+        Sp: 889
+      - Level: 178
+        Sp: 896
+      - Level: 179
+        Sp: 903
+      - Level: 180
+        Sp: 910
+      - Level: 181
+        Sp: 917
+      - Level: 182
+        Sp: 924
+      - Level: 183
+        Sp: 931
+      - Level: 184
+        Sp: 938
+      - Level: 185
+        Sp: 945
+      - Level: 186
+        Sp: 952
+      - Level: 187
+        Sp: 959
+      - Level: 188
+        Sp: 966
+      - Level: 189
+        Sp: 973
+      - Level: 190
+        Sp: 980
+      - Level: 191
+        Sp: 987
+      - Level: 192
+        Sp: 994
+      - Level: 193
+        Sp: 1001
+      - Level: 194
+        Sp: 1008
+      - Level: 195
+        Sp: 1015
+      - Level: 196
+        Sp: 1022
+      - Level: 197
+        Sp: 1029
+      - Level: 198
+        Sp: 1036
+      - Level: 199
+        Sp: 1043
+      - Level: 200
+        Sp: 1050
   - BaseGroup: 64
     Jobs:
       Assassin: true
@@ -12494,6 +13594,56 @@ Body:
         Sp: 888
       - Level: 175
         Sp: 895
+      - Level: 176
+        Sp: 902
+      - Level: 177
+        Sp: 909
+      - Level: 178
+        Sp: 916
+      - Level: 179
+        Sp: 923
+      - Level: 180
+        Sp: 930
+      - Level: 181
+        Sp: 937
+      - Level: 182
+        Sp: 944
+      - Level: 183
+        Sp: 951
+      - Level: 184
+        Sp: 958
+      - Level: 185
+        Sp: 965
+      - Level: 186
+        Sp: 972
+      - Level: 187
+        Sp: 979
+      - Level: 188
+        Sp: 986
+      - Level: 189
+        Sp: 993
+      - Level: 190
+        Sp: 1000
+      - Level: 191
+        Sp: 1007
+      - Level: 192
+        Sp: 1014
+      - Level: 193
+        Sp: 1021
+      - Level: 194
+        Sp: 1028
+      - Level: 195
+        Sp: 1035
+      - Level: 196
+        Sp: 1042
+      - Level: 197
+        Sp: 1049
+      - Level: 198
+        Sp: 1056
+      - Level: 199
+        Sp: 1063
+      - Level: 200
+        Sp: 1070
   - BaseGroup: 66
     Jobs:
       Crusader: true
@@ -12864,6 +14014,56 @@ Body:
         Sp: 1313
       - Level: 175
         Sp: 1320
+      - Level: 176
+        Sp: 1327
+      - Level: 177
+        Sp: 1334
+      - Level: 178
+        Sp: 1341
+      - Level: 179
+        Sp: 1348
+      - Level: 180
+        Sp: 1355
+      - Level: 181
+        Sp: 1362
+      - Level: 182
+        Sp: 1369
+      - Level: 183
+        Sp: 1376
+      - Level: 184
+        Sp: 1383
+      - Level: 185
+        Sp: 1390
+      - Level: 186
+        Sp: 1397
+      - Level: 187
+        Sp: 1404
+      - Level: 188
+        Sp: 1411
+      - Level: 189
+        Sp: 1418
+      - Level: 190
+        Sp: 1425
+      - Level: 191
+        Sp: 1432
+      - Level: 192
+        Sp: 1439
+      - Level: 193
+        Sp: 1446
+      - Level: 194
+        Sp: 1453
+      - Level: 195
+        Sp: 1460
+      - Level: 196
+        Sp: 1467
+      - Level: 197
+        Sp: 1474
+      - Level: 198
+        Sp: 1481
+      - Level: 199
+        Sp: 1488
+      - Level: 200
+        Sp: 1495
   - BaseGroup: 68
     Jobs:
       Monk: true
@@ -13228,6 +14428,56 @@ Body:
         Sp: 733
       - Level: 175
         Sp: 740
+      - Level: 176
+        Sp: 747
+      - Level: 177
+        Sp: 754
+      - Level: 178
+        Sp: 761
+      - Level: 179
+        Sp: 768
+      - Level: 180
+        Sp: 775
+      - Level: 181
+        Sp: 782
+      - Level: 182
+        Sp: 789
+      - Level: 183
+        Sp: 796
+      - Level: 184
+        Sp: 803
+      - Level: 185
+        Sp: 810
+      - Level: 186
+        Sp: 817
+      - Level: 187
+        Sp: 824
+      - Level: 188
+        Sp: 831
+      - Level: 189
+        Sp: 838
+      - Level: 190
+        Sp: 845
+      - Level: 191
+        Sp: 852
+      - Level: 192
+        Sp: 859
+      - Level: 193
+        Sp: 866
+      - Level: 194
+        Sp: 873
+      - Level: 195
+        Sp: 880
+      - Level: 196
+        Sp: 887
+      - Level: 197
+        Sp: 894
+      - Level: 198
+        Sp: 901
+      - Level: 199
+        Sp: 908
+      - Level: 200
+        Sp: 915
   - BaseGroup: 70
     Jobs:
       Sage: true
@@ -13592,6 +14842,56 @@ Body:
         Sp: 1603
       - Level: 175
         Sp: 1615
+      - Level: 176
+        Sp: 1627
+      - Level: 177
+        Sp: 1639
+      - Level: 178
+        Sp: 1651
+      - Level: 179
+        Sp: 1663
+      - Level: 180
+        Sp: 1675
+      - Level: 181
+        Sp: 1687
+      - Level: 182
+        Sp: 1699
+      - Level: 183
+        Sp: 1711
+      - Level: 184
+        Sp: 1723
+      - Level: 185
+        Sp: 1735
+      - Level: 186
+        Sp: 1747
+      - Level: 187
+        Sp: 1759
+      - Level: 188
+        Sp: 1771
+      - Level: 189
+        Sp: 1783
+      - Level: 190
+        Sp: 1795
+      - Level: 191
+        Sp: 1807
+      - Level: 192
+        Sp: 1819
+      - Level: 193
+        Sp: 1831
+      - Level: 194
+        Sp: 1843
+      - Level: 195
+        Sp: 1855
+      - Level: 196
+        Sp: 1867
+      - Level: 197
+        Sp: 1879
+      - Level: 198
+        Sp: 1891
+      - Level: 199
+        Sp: 1903
+      - Level: 200
+        Sp: 1915
   - BaseGroup: 72
     Jobs:
       Rogue: true
@@ -13956,6 +15256,56 @@ Body:
         Sp: 733
       - Level: 175
         Sp: 740
+      - Level: 176
+        Sp: 747
+      - Level: 177
+        Sp: 754
+      - Level: 178
+        Sp: 761
+      - Level: 179
+        Sp: 768
+      - Level: 180
+        Sp: 775
+      - Level: 181
+        Sp: 782
+      - Level: 182
+        Sp: 789
+      - Level: 183
+        Sp: 796
+      - Level: 184
+        Sp: 803
+      - Level: 185
+        Sp: 810
+      - Level: 186
+        Sp: 817
+      - Level: 187
+        Sp: 824
+      - Level: 188
+        Sp: 831
+      - Level: 189
+        Sp: 838
+      - Level: 190
+        Sp: 845
+      - Level: 191
+        Sp: 852
+      - Level: 192
+        Sp: 859
+      - Level: 193
+        Sp: 866
+      - Level: 194
+        Sp: 873
+      - Level: 195
+        Sp: 880
+      - Level: 196
+        Sp: 887
+      - Level: 197
+        Sp: 894
+      - Level: 198
+        Sp: 901
+      - Level: 199
+        Sp: 908
+      - Level: 200
+        Sp: 915
   - BaseGroup: 74
     Jobs:
       Alchemist: true
@@ -14320,6 +15670,56 @@ Body:
         Sp: 1603
       - Level: 175
         Sp: 1615
+      - Level: 176
+        Sp: 1627
+      - Level: 177
+        Sp: 1639
+      - Level: 178
+        Sp: 1651
+      - Level: 179
+        Sp: 1663
+      - Level: 180
+        Sp: 1675
+      - Level: 181
+        Sp: 1687
+      - Level: 182
+        Sp: 1699
+      - Level: 183
+        Sp: 1711
+      - Level: 184
+        Sp: 1723
+      - Level: 185
+        Sp: 1735
+      - Level: 186
+        Sp: 1747
+      - Level: 187
+        Sp: 1759
+      - Level: 188
+        Sp: 1771
+      - Level: 189
+        Sp: 1783
+      - Level: 190
+        Sp: 1795
+      - Level: 191
+        Sp: 1807
+      - Level: 192
+        Sp: 1819
+      - Level: 193
+        Sp: 1831
+      - Level: 194
+        Sp: 1843
+      - Level: 195
+        Sp: 1855
+      - Level: 196
+        Sp: 1867
+      - Level: 197
+        Sp: 1879
+      - Level: 198
+        Sp: 1891
+      - Level: 199
+        Sp: 1903
+      - Level: 200
+        Sp: 1915
   - BaseGroup: 76
     Jobs:
       Bard: true
@@ -14684,6 +16084,56 @@ Body:
         Sp: 933
       - Level: 175
         Sp: 940
+      - Level: 176
+        Sp: 947
+      - Level: 177
+        Sp: 954
+      - Level: 178
+        Sp: 961
+      - Level: 179
+        Sp: 968
+      - Level: 180
+        Sp: 975
+      - Level: 181
+        Sp: 982
+      - Level: 182
+        Sp: 989
+      - Level: 183
+        Sp: 996
+      - Level: 184
+        Sp: 1003
+      - Level: 185
+        Sp: 1010
+      - Level: 186
+        Sp: 1017
+      - Level: 187
+        Sp: 1024
+      - Level: 188
+        Sp: 1031
+      - Level: 189
+        Sp: 1038
+      - Level: 190
+        Sp: 1045
+      - Level: 191
+        Sp: 1052
+      - Level: 192
+        Sp: 1059
+      - Level: 193
+        Sp: 1066
+      - Level: 194
+        Sp: 1073
+      - Level: 195
+        Sp: 1080
+      - Level: 196
+        Sp: 1087
+      - Level: 197
+        Sp: 1094
+      - Level: 198
+        Sp: 1101
+      - Level: 199
+        Sp: 1108
+      - Level: 200
+        Sp: 1115
   - BaseGroup: 78
     Jobs:
       Dancer: true
@@ -15048,6 +16498,56 @@ Body:
         Sp: 933
       - Level: 175
         Sp: 940
+      - Level: 176
+        Sp: 947
+      - Level: 177
+        Sp: 954
+      - Level: 178
+        Sp: 961
+      - Level: 179
+        Sp: 968
+      - Level: 180
+        Sp: 975
+      - Level: 181
+        Sp: 982
+      - Level: 182
+        Sp: 989
+      - Level: 183
+        Sp: 996
+      - Level: 184
+        Sp: 1003
+      - Level: 185
+        Sp: 1010
+      - Level: 186
+        Sp: 1017
+      - Level: 187
+        Sp: 1024
+      - Level: 188
+        Sp: 1031
+      - Level: 189
+        Sp: 1038
+      - Level: 190
+        Sp: 1045
+      - Level: 191
+        Sp: 1052
+      - Level: 192
+        Sp: 1059
+      - Level: 193
+        Sp: 1066
+      - Level: 194
+        Sp: 1073
+      - Level: 195
+        Sp: 1080
+      - Level: 196
+        Sp: 1087
+      - Level: 197
+        Sp: 1094
+      - Level: 198
+        Sp: 1101
+      - Level: 199
+        Sp: 1108
+      - Level: 200
+        Sp: 1115
   - BaseGroup: 80
     Jobs:
       Gunslinger: true
@@ -15611,6 +17111,56 @@ Body:
         Sp: 1122
       - Level: 175
         Sp: 1130
+      - Level: 176
+        Sp: 1138
+      - Level: 177
+        Sp: 1146
+      - Level: 178
+        Sp: 1154
+      - Level: 179
+        Sp: 1162
+      - Level: 180
+        Sp: 1170
+      - Level: 181
+        Sp: 1178
+      - Level: 182
+        Sp: 1186
+      - Level: 183
+        Sp: 1194
+      - Level: 184
+        Sp: 1202
+      - Level: 185
+        Sp: 1210
+      - Level: 186
+        Sp: 1218
+      - Level: 187
+        Sp: 1226
+      - Level: 188
+        Sp: 1234
+      - Level: 189
+        Sp: 1242
+      - Level: 190
+        Sp: 1250
+      - Level: 191
+        Sp: 1258
+      - Level: 192
+        Sp: 1266
+      - Level: 193
+        Sp: 1274
+      - Level: 194
+        Sp: 1282
+      - Level: 195
+        Sp: 1290
+      - Level: 196
+        Sp: 1298
+      - Level: 197
+        Sp: 1306
+      - Level: 198
+        Sp: 1314
+      - Level: 199
+        Sp: 1322
+      - Level: 200
+        Sp: 1330
   - BaseGroup: 83
     Jobs:
       Oboro: true
@@ -15769,6 +17319,56 @@ Body:
         Sp: 1212
       - Level: 175
         Sp: 1220
+      - Level: 176
+        Sp: 1228
+      - Level: 177
+        Sp: 1236
+      - Level: 178
+        Sp: 1244
+      - Level: 179
+        Sp: 1252
+      - Level: 180
+        Sp: 1260
+      - Level: 181
+        Sp: 1268
+      - Level: 182
+        Sp: 1276
+      - Level: 183
+        Sp: 1284
+      - Level: 184
+        Sp: 1292
+      - Level: 185
+        Sp: 1300
+      - Level: 186
+        Sp: 1308
+      - Level: 187
+        Sp: 1316
+      - Level: 188
+        Sp: 1324
+      - Level: 189
+        Sp: 1332
+      - Level: 190
+        Sp: 1340
+      - Level: 191
+        Sp: 1348
+      - Level: 192
+        Sp: 1356
+      - Level: 193
+        Sp: 1364
+      - Level: 194
+        Sp: 1372
+      - Level: 195
+        Sp: 1380
+      - Level: 196
+        Sp: 1388
+      - Level: 197
+        Sp: 1396
+      - Level: 198
+        Sp: 1404
+      - Level: 199
+        Sp: 1412
+      - Level: 200
+        Sp: 1420
   - BaseGroup: 84
     Jobs:
       Taekwon: true
@@ -17336,3 +18936,53 @@ Body:
         Sp: 440
       - Level: 175
         Sp: 443
+      - Level: 176
+        Sp: 445
+      - Level: 177
+        Sp: 448
+      - Level: 178
+        Sp: 450
+      - Level: 179
+        Sp: 453
+      - Level: 180
+        Sp: 455
+      - Level: 181
+        Sp: 458
+      - Level: 182
+        Sp: 460
+      - Level: 183
+        Sp: 463
+      - Level: 184
+        Sp: 465
+      - Level: 185
+        Sp: 468
+      - Level: 186
+        Sp: 470
+      - Level: 187
+        Sp: 473
+      - Level: 188
+        Sp: 475
+      - Level: 189
+        Sp: 478
+      - Level: 190
+        Sp: 480
+      - Level: 191
+        Sp: 483
+      - Level: 192
+        Sp: 485
+      - Level: 193
+        Sp: 488
+      - Level: 194
+        Sp: 490
+      - Level: 195
+        Sp: 493
+      - Level: 196
+        Sp: 495
+      - Level: 197
+        Sp: 498
+      - Level: 198
+        Sp: 500
+      - Level: 199
+        Sp: 503
+      - Level: 200
+        Sp: 505

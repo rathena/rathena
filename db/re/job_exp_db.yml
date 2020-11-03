@@ -3162,7 +3162,7 @@ Body:
     Jobs:
       Summoner: true
       Baby_Summoner: true
-    MaxJobLevel: 70
+    MaxJobLevel: 60
     JobExp:
       - Level: 1
         Exp: 60
@@ -3283,24 +3283,4 @@ Body:
       - Level: 59
         Exp: 132528619
       - Level: 60
-        Exp: 319836691
-      - Level: 61
-        Exp: 367812195
-      - Level: 62
-        Exp: 422984024
-      - Level: 63
-        Exp: 486431628
-      - Level: 64
-        Exp: 559396372
-      - Level: 65
-        Exp: 632361116
-      - Level: 66
-        Exp: 705325860
-      - Level: 67
-        Exp: 778290604
-      - Level: 68
-        Exp: 851255348
-      - Level: 69
-        Exp: 924220092
-      - Level: 70
         Exp: 999999999

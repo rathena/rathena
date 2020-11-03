@@ -5681,6 +5681,16 @@ Body:
         Bonus: Vit
       - Level: 60
         Bonus: Str
+      - Level: 63
+        Bonus: Luk
+      - Level: 64
+        Bonus: Str
+      - Level: 67
+        Bonus: Str
+      - Level: 69
+        Bonus: Luk
+      - Level: 70
+        Bonus: Agi
   - Job: Warlock
     MaxWeight: 30000
     HpFactor: 55
@@ -5767,6 +5777,18 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Dex
+      - Level: 68
+        Bonus: Dex
+      - Level: 69
+        Bonus: Int
+      - Level: 70
+        Bonus: Agi
   - Job: Ranger
     MaxWeight: 32000
     HpFactor: 85
@@ -5851,6 +5873,18 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Agi
+      - Level: 63
+        Bonus: Dex
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Int
+      - Level: 66
+        Bonus: Agi
+      - Level: 69
+        Bonus: Agi
+      - Level: 70
+        Bonus: Dex
   - Job: Arch_Bishop
     MaxWeight: 30000
     HpFactor: 75
@@ -5939,6 +5973,14 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Agi
+      - Level: 64
+        Bonus: Dex
+      - Level: 66
+        Bonus: Str
+      - Level: 67
+        Bonus: Str
   - Job: Mechanic
     MaxWeight: 38000
     HpFactor: 90
@@ -6027,6 +6069,16 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Str
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Dex
+      - Level: 66
+        Bonus: Vit
+      - Level: 67
+        Bonus: Int
   - Job: Guillotine_Cross
     MaxWeight: 32000
     HpFactor: 110
@@ -6118,6 +6170,18 @@ Body:
         Bonus: Luk
       - Level: 60
         Bonus: Agi
+      - Level: 63
+        Bonus: Dex
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Int
+      - Level: 66
+        Bonus: Agi
+      - Level: 69
+        Bonus: Agi
+      - Level: 70
+        Bonus: Dex
   - Job: Rune_Knight_T
     MaxWeight: 35000
     HpFactor: 150
@@ -6209,6 +6273,16 @@ Body:
         Bonus: Vit
       - Level: 60
         Bonus: Str
+      - Level: 63
+        Bonus: Luk
+      - Level: 64
+        Bonus: Str
+      - Level: 67
+        Bonus: Str
+      - Level: 69
+        Bonus: Luk
+      - Level: 70
+        Bonus: Agi
   - Job: Warlock_T
     MaxWeight: 30000
     HpFactor: 55
@@ -6295,6 +6369,14 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Agi
+      - Level: 64
+        Bonus: Dex
+      - Level: 66
+        Bonus: Str
+      - Level: 67
+        Bonus: Str
   - Job: Ranger_T
     MaxWeight: 32000
     HpFactor: 85
@@ -6379,6 +6461,16 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Agi
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Dex
+      - Level: 66
+        Bonus: Vit
+      - Level: 67
+        Bonus: Int
   - Job: Arch_Bishop_T
     MaxWeight: 30000
     HpFactor: 75
@@ -6555,6 +6647,16 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Str
+      - Level: 63
+        Bonus: Int
+      - Level: 65
+        Bonus: Vit
+      - Level: 67
+        Bonus: Dex
+      - Level: 69
+        Bonus: Int
+      - Level: 70
+        Bonus: Int
   - Job: Guillotine_Cross_T
     MaxWeight: 32000
     HpFactor: 110
@@ -6646,6 +6748,18 @@ Body:
         Bonus: Luk
       - Level: 60
         Bonus: Agi
+      - Level: 63
+        Bonus: Dex
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Int
+      - Level: 66
+        Bonus: Agi
+      - Level: 69
+        Bonus: Agi
+      - Level: 70
+        Bonus: Dex
   - Job: Royal_Guard
     MaxWeight: 35000
     HpFactor: 110
@@ -6738,6 +6852,16 @@ Body:
         Bonus: Vit
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Dex
+      - Level: 66
+        Bonus: Vit
+      - Level: 67
+        Bonus: Int
   - Job: Sorcerer
     MaxWeight: 30000
     HpFactor: 75
@@ -6825,6 +6949,16 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Int
+      - Level: 65
+        Bonus: Vit
+      - Level: 67
+        Bonus: Dex
+      - Level: 69
+        Bonus: Int
+      - Level: 70
+        Bonus: Int
   - Job: Minstrel
     MaxWeight: 32000
     HpFactor: 75
@@ -6911,6 +7045,16 @@ Body:
         Bonus: Int
       - Level: 60
         Bonus: Dex
+      - Level: 63
+        Bonus: Int
+      - Level: 65
+        Bonus: Vit
+      - Level: 67
+        Bonus: Dex
+      - Level: 69
+        Bonus: Int
+      - Level: 70
+        Bonus: Int
   - Job: Wanderer
     MaxWeight: 32000
     HpFactor: 75
@@ -6997,6 +7141,18 @@ Body:
         Bonus: Agi
       - Level: 60
         Bonus: Dex
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Dex
+      - Level: 68
+        Bonus: Dex
+      - Level: 69
+        Bonus: Int
+      - Level: 70
+        Bonus: Agi
   - Job: Sura
     MaxWeight: 30000
     HpFactor: 90
@@ -7085,6 +7241,16 @@ Body:
         Bonus: Str
       - Level: 60
         Bonus: Int
+      - Level: 64
+        Bonus: Vit
+      - Level: 65
+        Bonus: Int
+      - Level: 66
+        Bonus: Str
+      - Level: 67
+        Bonus: Int
+      - Level: 68
+        Bonus: Dex
   - Job: Genetic
     MaxWeight: 32000
     HpFactor: 90
@@ -7173,6 +7339,16 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Int
+      - Level: 65
+        Bonus: Vit
+      - Level: 67
+        Bonus: Dex
+      - Level: 69
+        Bonus: Int
+      - Level: 70
+        Bonus: Int
   - Job: Shadow_Chaser
     MaxWeight: 28000
     HpFactor: 85
@@ -7258,6 +7434,18 @@ Body:
         Bonus: Str
       - Level: 60
         Bonus: Agi
+      - Level: 63
+        Bonus: Dex
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Int
+      - Level: 66
+        Bonus: Agi
+      - Level: 69
+        Bonus: Agi
+      - Level: 70
+        Bonus: Dex
   - Job: Royal_Guard_T
     MaxWeight: 35000
     HpFactor: 110
@@ -7350,6 +7538,14 @@ Body:
         Bonus: Vit
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Agi
+      - Level: 64
+        Bonus: Dex
+      - Level: 66
+        Bonus: Str
+      - Level: 67
+        Bonus: Str
   - Job: Sorcerer_T
     MaxWeight: 30000
     HpFactor: 75
@@ -7437,6 +7633,16 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Int
+      - Level: 65
+        Bonus: Vit
+      - Level: 67
+        Bonus: Dex
+      - Level: 69
+        Bonus: Int
+      - Level: 70
+        Bonus: Int
   - Job: Minstrel_T
     MaxWeight: 32000
     HpFactor: 75
@@ -7523,6 +7729,16 @@ Body:
         Bonus: Int
       - Level: 60
         Bonus: Dex
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Dex
+      - Level: 66
+        Bonus: Vit
+      - Level: 67
+        Bonus: Int
   - Job: Wanderer_T
     MaxWeight: 32000
     HpFactor: 75
@@ -7609,6 +7825,16 @@ Body:
         Bonus: Agi
       - Level: 60
         Bonus: Dex
+      - Level: 63
+        Bonus: Luk
+      - Level: 64
+        Bonus: Str
+      - Level: 67
+        Bonus: Str
+      - Level: 69
+        Bonus: Luk
+      - Level: 70
+        Bonus: Agi
   - Job: Sura_T
     MaxWeight: 30000
     HpFactor: 90
@@ -7785,6 +8011,18 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Dex
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Int
+      - Level: 66
+        Bonus: Agi
+      - Level: 69
+        Bonus: Agi
+      - Level: 70
+        Bonus: Dex
   - Job: Shadow_Chaser_T
     MaxWeight: 28000
     HpFactor: 85
@@ -7870,6 +8108,18 @@ Body:
         Bonus: Str
       - Level: 60
         Bonus: Agi
+      - Level: 63
+        Bonus: Dex
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Int
+      - Level: 66
+        Bonus: Agi
+      - Level: 69
+        Bonus: Agi
+      - Level: 70
+        Bonus: Dex
   - Job: Rune_Knight2
     MaxWeight: 35000
     HpFactor: 150
@@ -7961,6 +8211,16 @@ Body:
         Bonus: Vit
       - Level: 60
         Bonus: Str
+      - Level: 63
+        Bonus: Luk
+      - Level: 64
+        Bonus: Str
+      - Level: 67
+        Bonus: Str
+      - Level: 69
+        Bonus: Luk
+      - Level: 70
+        Bonus: Agi
   - Job: Rune_Knight_T2
     MaxWeight: 35000
     HpFactor: 150
@@ -8052,6 +8312,18 @@ Body:
         Bonus: Vit
       - Level: 60
         Bonus: Str
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Dex
+      - Level: 68
+        Bonus: Dex
+      - Level: 69
+        Bonus: Int
+      - Level: 70
+        Bonus: Agi
   - Job: Royal_Guard2
     MaxWeight: 35000
     HpFactor: 110
@@ -8144,6 +8416,18 @@ Body:
         Bonus: Vit
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Dex
+      - Level: 68
+        Bonus: Dex
+      - Level: 69
+        Bonus: Int
+      - Level: 70
+        Bonus: Agi
   - Job: Royal_Guard_T2
     MaxWeight: 35000
     HpFactor: 110
@@ -8236,6 +8520,16 @@ Body:
         Bonus: Vit
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Dex
+      - Level: 66
+        Bonus: Vit
+      - Level: 67
+        Bonus: Int
   - Job: Ranger2
     MaxWeight: 32000
     HpFactor: 85
@@ -8319,6 +8613,16 @@ Body:
       - Level: 59
         Bonus: Dex
       - Level: 60
+        Bonus: Agi
+      - Level: 63
+        Bonus: Luk
+      - Level: 64
+        Bonus: Str
+      - Level: 67
+        Bonus: Str
+      - Level: 69
+        Bonus: Luk
+      - Level: 70
         Bonus: Agi
   - Job: Ranger_T2
     MaxWeight: 32000
@@ -8404,6 +8708,18 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Agi
+      - Level: 63
+        Bonus: Dex
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Int
+      - Level: 66
+        Bonus: Agi
+      - Level: 69
+        Bonus: Agi
+      - Level: 70
+        Bonus: Dex
   - Job: Mechanic2
     MaxWeight: 38000
     HpFactor: 90
@@ -8492,6 +8808,16 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Str
+      - Level: 63
+        Bonus: Int
+      - Level: 65
+        Bonus: Vit
+      - Level: 67
+        Bonus: Dex
+      - Level: 69
+        Bonus: Int
+      - Level: 70
+        Bonus: Int
   - Job: Mechanic_T2
     MaxWeight: 38000
     HpFactor: 90
@@ -8580,6 +8906,16 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Str
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Dex
+      - Level: 66
+        Bonus: Vit
+      - Level: 67
+        Bonus: Int
   - Job: Baby_Rune_Knight
     MaxWeight: 28000
     HpFactor: 150
@@ -8671,6 +9007,18 @@ Body:
         Bonus: Vit
       - Level: 60
         Bonus: Str
+      - Level: 63
+        Bonus: Dex
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Int
+      - Level: 66
+        Bonus: Agi
+      - Level: 69
+        Bonus: Agi
+      - Level: 70
+        Bonus: Dex
   - Job: Baby_Warlock
     MaxWeight: 24000
     HpFactor: 55
@@ -8757,6 +9105,16 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Dex
+      - Level: 66
+        Bonus: Vit
+      - Level: 67
+        Bonus: Int
   - Job: Baby_Ranger
     MaxWeight: 27000
     HpFactor: 85
@@ -8840,6 +9198,18 @@ Body:
       - Level: 59
         Bonus: Dex
       - Level: 60
+        Bonus: Agi
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Dex
+      - Level: 68
+        Bonus: Dex
+      - Level: 69
+        Bonus: Int
+      - Level: 70
         Bonus: Agi
   - Job: Baby_Arch_Bishop
     MaxWeight: 26000
@@ -8929,6 +9299,16 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Dex
+      - Level: 66
+        Bonus: Vit
+      - Level: 67
+        Bonus: Int
   - Job: Baby_Mechanic
     MaxWeight: 30000
     HpFactor: 90
@@ -9017,6 +9397,16 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Str
+      - Level: 64
+        Bonus: Vit
+      - Level: 65
+        Bonus: Int
+      - Level: 66
+        Bonus: Str
+      - Level: 67
+        Bonus: Int
+      - Level: 68
+        Bonus: Dex
   - Job: Baby_Guillotine_Cross
     MaxWeight: 24000
     HpFactor: 110
@@ -9108,6 +9498,16 @@ Body:
         Bonus: Luk
       - Level: 60
         Bonus: Agi
+      - Level: 64
+        Bonus: Vit
+      - Level: 65
+        Bonus: Int
+      - Level: 66
+        Bonus: Str
+      - Level: 67
+        Bonus: Int
+      - Level: 68
+        Bonus: Dex
   - Job: Baby_Royal_Guard
     MaxWeight: 28000
     HpFactor: 110
@@ -9200,6 +9600,16 @@ Body:
         Bonus: Vit
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Luk
+      - Level: 64
+        Bonus: Str
+      - Level: 67
+        Bonus: Str
+      - Level: 69
+        Bonus: Luk
+      - Level: 70
+        Bonus: Agi
   - Job: Baby_Sorcerer
     MaxWeight: 24000
     HpFactor: 75
@@ -9287,6 +9697,14 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Agi
+      - Level: 64
+        Bonus: Dex
+      - Level: 66
+        Bonus: Str
+      - Level: 67
+        Bonus: Str
   - Job: Baby_Minstrel
     MaxWeight: 27000
     HpFactor: 75
@@ -9373,6 +9791,16 @@ Body:
         Bonus: Int
       - Level: 60
         Bonus: Dex
+      - Level: 63
+        Bonus: Luk
+      - Level: 64
+        Bonus: Str
+      - Level: 67
+        Bonus: Str
+      - Level: 69
+        Bonus: Luk
+      - Level: 70
+        Bonus: Agi
   - Job: Baby_Wanderer
     MaxWeight: 27000
     HpFactor: 75
@@ -9459,6 +9887,14 @@ Body:
         Bonus: Agi
       - Level: 60
         Bonus: Dex
+      - Level: 63
+        Bonus: Agi
+      - Level: 64
+        Bonus: Dex
+      - Level: 66
+        Bonus: Str
+      - Level: 67
+        Bonus: Str
   - Job: Baby_Sura
     MaxWeight: 26000
     HpFactor: 90
@@ -9547,6 +9983,18 @@ Body:
         Bonus: Str
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Dex
+      - Level: 68
+        Bonus: Dex
+      - Level: 69
+        Bonus: Int
+      - Level: 70
+        Bonus: Agi
   - Job: Baby_Genetic
     MaxWeight: 30000
     HpFactor: 90
@@ -9635,6 +10083,14 @@ Body:
         Bonus: Dex
       - Level: 60
         Bonus: Int
+      - Level: 63
+        Bonus: Agi
+      - Level: 64
+        Bonus: Dex
+      - Level: 66
+        Bonus: Str
+      - Level: 67
+        Bonus: Str
   - Job: Baby_Shadow_Chaser
     MaxWeight: 24000
     HpFactor: 85
@@ -9720,6 +10176,16 @@ Body:
         Bonus: Str
       - Level: 60
         Bonus: Agi
+      - Level: 63
+        Bonus: Int
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Dex
+      - Level: 66
+        Bonus: Vit
+      - Level: 67
+        Bonus: Int
   - Job: Baby_Rune_Knight2
     MaxWeight: 28000
     HpFactor: 150
@@ -9811,6 +10277,16 @@ Body:
         Bonus: Vit
       - Level: 60
         Bonus: Str
+      - Level: 64
+        Bonus: Vit
+      - Level: 65
+        Bonus: Int
+      - Level: 66
+        Bonus: Str
+      - Level: 67
+        Bonus: Int
+      - Level: 68
+        Bonus: Dex
   - Job: Baby_Royal_Guard2
     MaxWeight: 28000
     HpFactor: 110
@@ -10076,7 +10552,7 @@ Body:
       - Level: 60
         Bonus: Str
   - Job: Super_Novice_E
-    HPMultiplicator: 5000
+    HpMultiplicator: 5000
     SpFactor: 500
     BaseASPD:
       Fist: 40
@@ -10149,26 +10625,6 @@ Body:
         Bonus: Dex
       - Level: 49
         Bonus: Luk
-      - Level: 51
-        Bonus: Str
-      - Level: 52
-        Bonus: Agi
-      - Level: 54
-        Bonus: Vit
-      - Level: 56
-        Bonus: Int
-      - Level: 57
-        Bonus: Dex
-      - Level: 59
-        Bonus: Luk
-      - Level: 61
-        Bonus: Str
-      - Level: 62
-        Bonus: Agi
-      - Level: 63
-        Bonus: Int
-      - Level: 64
-        Bonus: Dex
   - Job: Super_Baby_E
     BaseASPD:
       Fist: 40
@@ -10241,26 +10697,6 @@ Body:
         Bonus: Dex
       - Level: 49
         Bonus: Luk
-      - Level: 51
-        Bonus: Str
-      - Level: 52
-        Bonus: Agi
-      - Level: 54
-        Bonus: Vit
-      - Level: 56
-        Bonus: Int
-      - Level: 57
-        Bonus: Dex
-      - Level: 59
-        Bonus: Luk
-      - Level: 61
-        Bonus: Str
-      - Level: 62
-        Bonus: Agi
-      - Level: 63
-        Bonus: Int
-      - Level: 64
-        Bonus: Dex
   - Job: Kagerou
     MaxWeight: 26000
     HpFactor: 75
@@ -10341,8 +10777,6 @@ Body:
         Bonus: Str
       - Level: 50
         Bonus: Dex
-      - Level: 59
-        Bonus: Str
   - Job: Oboro
     MaxWeight: 26000
     HpFactor: 75
@@ -10423,8 +10857,30 @@ Body:
         Bonus: Str
       - Level: 50
         Bonus: Dex
-      - Level: 59
-        Bonus: Str
+      - Level: 53
+        Bonus: Dex
+      - Level: 55
+        Bonus: Vit
+      - Level: 57
+        Bonus: Dex
+      - Level: 58
+        Bonus: Vit
+      - Level: 60
+        Bonus: Agi
+      - Level: 61
+        Bonus: Int
+      - Level: 63
+        Bonus: Agi
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Dex
+      - Level: 67
+        Bonus: Agi
+      - Level: 68
+        Bonus: Int
+      - Level: 69
+        Bonus: Dex
   - Job: Rebellion
     MaxWeight: 28000
     HpFactor: 90
@@ -10501,8 +10957,16 @@ Body:
         Bonus: Int
       - Level: 50
         Bonus: Str
-      - Level: 59
-        Bonus: Str
+      - Level: 51
+        Bonus: Agi
+      - Level: 52
+        Bonus: Luk
+      - Level: 54
+        Bonus: Int
+      - Level: 55
+        Bonus: Dex
+      - Level: 57
+        Bonus: Agi
   - Job: Summoner
     HpFactor: 70
     SpFactor: 500
@@ -10579,6 +11043,18 @@ Body:
         Bonus: Agi
       - Level: 50
         Bonus: Dex
+      - Level: 53
+        Bonus: Dex
+      - Level: 55
+        Bonus: Str
+      - Level: 56
+        Bonus: Dex
+      - Level: 57
+        Bonus: Dex
+      - Level: 59
+        Bonus: Vit
+      - Level: 60
+        Bonus: Str
   - Job: Baby_Summoner
     HpFactor: 100
     HpMultiplicator: 700
@@ -10796,8 +11272,30 @@ Body:
         Bonus: Str
       - Level: 50
         Bonus: Dex
-      - Level: 59
+      - Level: 53
         Bonus: Str
+      - Level: 54
+        Bonus: Str
+      - Level: 55
+        Bonus: Str
+      - Level: 56
+        Bonus: Str
+      - Level: 57
+        Bonus: Str
+      - Level: 58
+        Bonus: Str
+      - Level: 62
+        Bonus: Dex
+      - Level: 63
+        Bonus: Dex
+      - Level: 64
+        Bonus: Dex
+      - Level: 65
+        Bonus: Dex
+      - Level: 66
+        Bonus: Dex
+      - Level: 67
+        Bonus: Dex
   - Job: Baby_Oboro
     MaxWeight: 26000
     HpFactor: 75
@@ -10878,7 +11376,29 @@ Body:
         Bonus: Str
       - Level: 50
         Bonus: Dex
+      - Level: 53
+        Bonus: Str
+      - Level: 54
+        Bonus: Str
+      - Level: 55
+        Bonus: Str
+      - Level: 56
+        Bonus: Str
+      - Level: 57
+        Bonus: Str
+      - Level: 58
+        Bonus: Str
       - Level: 59
+        Bonus: Str
+      - Level: 60
+        Bonus: Str
+      - Level: 61
+        Bonus: Str
+      - Level: 62
+        Bonus: Str
+      - Level: 63
+        Bonus: Str
+      - Level: 64
         Bonus: Str
   - Job: Baby_Taekwon
     MaxWeight: 28000
@@ -11248,6 +11768,16 @@ Body:
         Bonus: Int
       - Level: 50
         Bonus: Str
+      - Level: 51
+        Bonus: Agi
+      - Level: 52
+        Bonus: Luk
+      - Level: 54
+        Bonus: Int
+      - Level: 55
+        Bonus: Dex
+      - Level: 57
+        Bonus: Agi
   - Job: Baby_Star_Gladiator2
     MaxWeight: 28000
     HpFactor: 90
@@ -11637,6 +12167,18 @@ Body:
         Bonus: Str
       - Level: 59
         Bonus: Agi
+      - Level: 63
+        Bonus: Dex
+      - Level: 64
+        Bonus: Int
+      - Level: 65
+        Bonus: Int
+      - Level: 66
+        Bonus: Agi
+      - Level: 69
+        Bonus: Agi
+      - Level: 70
+        Bonus: Dex
   - Job: Baby_Soul_Reaper
     MaxWeight: 24000
     HpFactor: 75
