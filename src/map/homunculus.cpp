@@ -715,7 +715,7 @@ void hom_gainexp(struct homun_data *hd,int exp)
 }
 
 /**
-* Increase homunculu sintimacy
+* Increase homunculus intimacy
 * @param hd
 * @param value Added intimacy
 * @return New intimacy value
@@ -734,7 +734,7 @@ int hom_increase_intimacy(struct homun_data * hd, unsigned int value)
 }
 
 /**
-* Decrease homunculu sintimacy
+* Decrease homunculus intimacy
 * @param hd
 * @param value Reduced intimacy
 * @return New intimacy value

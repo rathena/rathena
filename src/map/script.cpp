@@ -15098,6 +15098,24 @@ BUILDIN_FUNC(gethominfo)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(sethomintimacy)
+{
+	map_session_data *sd;
+	homun_data *hd;
+
+	if (!script_charid2sd(3, sd) || !(hd = sd->hd))
+		return SCRIPT_CMD_FAILURE;
+
+	int32 value = script_getnum(st, 2);
+
+	if (value > 0)
+		hom_increase_intimacy(hd, (uint32)value);
+	else
+		hom_decrease_intimacy(hd, (uint32)abs(value));
+	clif_send_homdata(sd, SP_INTIMATE, hd->homunculus.intimacy / 100);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /// Retrieves information about character's mercenary
 /// getmercinfo <type>[,<char id>];
 BUILDIN_FUNC(getmercinfo)

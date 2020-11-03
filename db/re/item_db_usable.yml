@@ -47625,6 +47625,13 @@ Body:
     EquipLevelMin: 1
     Script: |
       /*getgroupitem(IG_Costume_Enchant_Stone_Box21);*/
+  - Id: 100371
+    AegisName: aegis_100371
+    Name: Homunculus Nutritional Supplement
+    Type: Usable
+    Weight: 10
+    Script: |
+      sethomintimacy 100; // !TODO: Confirm increase amount
   - Id: 100402
     AegisName: Thousand_Sun_Cube
     Name: Thousand Sun Modification Cube
