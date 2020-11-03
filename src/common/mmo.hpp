@@ -12,7 +12,7 @@
 #include "db.hpp"
 #include "timer.hpp" // t_tick
 
-#ifndef PACKETVER 20130807
+#ifndef PACKETVER
 	#error Please define PACKETVER in src/config/packets.hpp
 #endif
 
