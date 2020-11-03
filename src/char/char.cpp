@@ -849,7 +849,7 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 /**
  * Returns the correct gender ID for the given character and enum value.
  *
- * If the per-character sex is defined but not supported by the current packetver, the database entries are corrected.
+ * If the per-character sex is defined but not supported by the current packetver, the account gender is returned.
  *
  * @param sd Character data, if available.
  * @param p  Character status.
@@ -883,7 +883,10 @@ int char_mmo_gender( const struct char_session_data *sd, const struct mmo_charst
 				}
 			}
 
+#if PACKETVER >= 20141016
 			ShowWarning( "Found unknown gender '%c' for character '%s' (CID: %d, AID: %d), returning account gender...\n", sex, p->name, p->char_id, p->account_id );
+#endif
+
 			return sd->sex;
 	}
 }
