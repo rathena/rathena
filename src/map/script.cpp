@@ -25266,6 +25266,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(recovery,"i???"),
 	BUILDIN_DEF(getpetinfo,"i?"),
 	BUILDIN_DEF(gethominfo,"i?"),
+	BUILDIN_DEF(sethomintimacy),
 	BUILDIN_DEF(getmercinfo,"i?"),
 	BUILDIN_DEF(checkequipedcard,"i"),
 	BUILDIN_DEF(jump_zero,"il"), //for future jA script compatibility
