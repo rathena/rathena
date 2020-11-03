@@ -2233,9 +2233,10 @@ static int itemdb_read_sqldb(void) {
 				char *str;
 
 				Sql_GetData(mmysql_handle, i, &str, nullptr);
-				if( str == nullptr )
-					str = ""; // get rid of NULL columns
-				data.push_back(str);
+				if (str == nullptr)
+					data.push_back("");
+				else
+					data.push_back(str);
 			}
 
 			if (!itemdb_read_sqldb_sub(data))
