@@ -27,7 +27,7 @@ struct skill_unit;
 struct skill_unit_group;
 struct status_change_entry;
 
-#define MAX_SKILL_PRODUCE_DB	281 /// Max Produce DB
+#define MAX_SKILL_PRODUCE_DB	282 /// Max Produce DB
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
 #define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
 #define MAX_ARROW_RESULT		5 /// Max Arrow results/created
