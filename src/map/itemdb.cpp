@@ -736,7 +736,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->stack.inventory = active;
 		} else {
 			if (!exists)
-				item->stack.inventory = true;
+				item->stack.inventory = false;
 		}
 
 		if (this->nodeExists(stackNode, "Cart")) {
@@ -748,7 +748,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->stack.cart = active;
 		} else {
 			if (!exists)
-				item->stack.cart = true;
+				item->stack.cart = false;
 		}
 
 		if (this->nodeExists(stackNode, "Storage")) {
@@ -760,7 +760,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->stack.storage = active;
 		} else {
 			if (!exists)
-				item->stack.storage = true;
+				item->stack.storage = false;
 		}
 
 		if (this->nodeExists(stackNode, "GuildStorage")) {
@@ -772,7 +772,7 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 			item->stack.guild_storage = active;
 		} else {
 			if (!exists)
-				item->stack.guild_storage = true;
+				item->stack.guild_storage = false;
 		}
 	} else {
 		if (!exists) {
@@ -2081,7 +2081,7 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty())
 		node["EquipLevelMax"] = std::stoi(str[index]);
 	if (!str[++index].empty())
-		node["Refineable"] = true;
+		node["Refineable"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
 		node["View"] = std::stoi(str[index]);
 	if (!str[++index].empty())
@@ -2090,19 +2090,19 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	YAML::Node flags;
 
 	if (!str[++index].empty())
-		flags["BuyingStore"] = true;
+		flags["BuyingStore"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		flags["DeadBranch"] = true;
+		flags["DeadBranch"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		flags["Container"] = true;
+		flags["Container"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		flags["UniqueId"] = true;
+		flags["UniqueId"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		flags["BindOnEquip"] = true;
+		flags["BindOnEquip"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		flags["DropAnnounce"] = true;
+		flags["DropAnnounce"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		flags["NoConsume"] = true;
+		flags["NoConsume"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
 		flags["DropEffect"] = str[index];
 	node["Flags"] = flags;
@@ -2120,13 +2120,13 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty())
 		stack["Amount"] = std::stoi(str[index]);
 	if (!str[++index].empty())
-		stack["Inventory"] = true;
+		stack["Inventory"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		stack["Cart"] = true;
+		stack["Cart"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		stack["Storage"] = true;
+		stack["Storage"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		stack["GuildStorage"] = true;
+		stack["GuildStorage"] = std::stoi(str[index]) ? "true" : "false";
 	node["Stack"] = stack;
 
 	YAML::Node nouse;
@@ -2134,7 +2134,7 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty())
 		nouse["Override"] = std::stoi(str[index]);
 	if (!str[++index].empty())
-		nouse["Sitting"] = true;
+		nouse["Sitting"] = std::stoi(str[index]) ? "true" : "false";
 	node["NoUse"] = nouse;
 
 	YAML::Node trade;
@@ -2142,23 +2142,23 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	if (!str[++index].empty())
 		trade["Override"] = std::stoi(str[index]);
 	if (!str[++index].empty())
-		trade["NoDrop"] = true;
+		trade["NoDrop"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		trade["NoTrade"] = true;
+		trade["NoTrade"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		trade["TradePartner"] = true;
+		trade["TradePartner"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		trade["NoSell"] = true;
+		trade["NoSell"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		trade["NoCart"] = true;
+		trade["NoCart"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		trade["NoStorage"] = true;
+		trade["NoStorage"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		trade["NoGuildStorage"] = true;
+		trade["NoGuildStorage"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		trade["NoMail"] = true;
+		trade["NoMail"] = std::stoi(str[index]) ? "true" : "false";
 	if (!str[++index].empty())
-		trade["NoAuction"] = true;
+		trade["NoAuction"] = std::stoi(str[index]) ? "true" : "false";
 	node["Trade"] = trade;
 
 	if (!str[++index].empty())
@@ -2233,9 +2233,10 @@ static int itemdb_read_sqldb(void) {
 				char *str;
 
 				Sql_GetData(mmysql_handle, i, &str, nullptr);
-				if( str == nullptr )
-					str = ""; // get rid of NULL columns
-				data.push_back(str);
+				if (str == nullptr)
+					data.push_back("");
+				else
+					data.push_back(str);
 			}
 
 			if (!itemdb_read_sqldb_sub(data))
