@@ -529,6 +529,7 @@ struct Battle_Config
 	int max_extended_parameter;
 	int max_summoner_parameter;
 	int max_third_aspd;
+	int max_summoner_aspd;
 	int vcast_stat_scale;
 
 	int mvp_tomb_enabled;
