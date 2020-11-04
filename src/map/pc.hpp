@@ -901,12 +901,13 @@ struct s_job_info {
 	std::vector<uint32> base_hp, base_sp; //Storage for the first calculation with hp/sp factor and multiplicator
 	int hp_factor, hp_multiplicator, sp_factor;
 	int max_weight_base;
-	std::vector<uint8> job_bonus;
+	std::vector<std::vector<uint8>> job_bonus;
 	std::vector<int16> aspd_base;
 	t_exp exp_table[2][MAX_LEVEL];
 	uint16 max_base_level, max_job_level;
 	struct s_params {
-		uint16 str, agi, vit, int_, dex, luk;
+		uint16 str, agi, vit, int_, dex, luk,
+			pow, sta, wis, spl, con, crt;
 	} max_param;
 	struct s_job_noenter_map {
 		uint32 zone;
@@ -931,7 +932,7 @@ public:
 	uint32 get_baseHp(uint16 job_id, uint32 level);
 	uint32 get_baseSp(uint16 job_id, uint32 level);
 	int32 get_maxWeight(uint16 job_id);
-	std::vector<uint8> get_jobBonus(uint16 job_id);
+	std::vector<std::vector<uint8>> get_jobBonus(uint16 job_id);
 };
 
 extern JobDatabase job_db;
@@ -1023,6 +1024,12 @@ enum e_params : uint8 {
 	PARAM_INT,
 	PARAM_DEX,
 	PARAM_LUK,
+	PARAM_POW,
+	PARAM_STA,
+	PARAM_WIS,
+	PARAM_SPL,
+	PARAM_CON,
+	PARAM_CRT,
 	PARAM_MAX
 };
 uint16 pc_maxparameter(struct map_session_data *sd, e_params param);

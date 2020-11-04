@@ -7527,10 +7527,10 @@ int32 JobDatabase::get_maxWeight(uint16 job_id) {
  * @param job_id: Player's job
  * @return Job Bonus array
  */
-std::vector<uint8> JobDatabase::get_jobBonus(uint16 job_id) {
+std::vector<std::vector<uint8>> JobDatabase::get_jobBonus(uint16 job_id) {
 	std::shared_ptr<s_job_info> job = job_db.find(job_id);
 
-	return job ? job->job_bonus : std::vector<uint8> (0);
+	return job ? job->job_bonus : std::vector<std::vector<uint8>> (0);
 }
 
 /// Returns the value of the specified stat.
@@ -7545,6 +7545,12 @@ static int pc_getstat(struct map_session_data* sd, int type)
 	case SP_INT: return sd->status.int_;
 	case SP_DEX: return sd->status.dex;
 	case SP_LUK: return sd->status.luk;
+	case SP_POW: return sd->status.pow;
+	case SP_STA: return sd->status.sta;
+	case SP_WIS: return sd->status.wis;
+	case SP_SPL: return sd->status.spl;
+	case SP_CON: return sd->status.con;
+	case SP_CRT: return sd->status.crt;
 	default:
 		return -1;
 	}
@@ -7563,6 +7569,12 @@ static int pc_setstat(struct map_session_data* sd, int type, int val)
 	case SP_INT: sd->status.int_ = val; break;
 	case SP_DEX: sd->status.dex = val; break;
 	case SP_LUK: sd->status.luk = val; break;
+	case SP_POW: sd->status.pow = val; break;
+	case SP_STA: sd->status.sta = val; break;
+	case SP_WIS: sd->status.wis = val; break;
+	case SP_SPL: sd->status.spl = val; break;
+	case SP_CON: sd->status.con = val; break;
+	case SP_CRT: sd->status.crt = val; break;
 	default:
 		return -1;
 	}
@@ -12163,21 +12175,150 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 				this->invalidWarning(levelNode["Level"], "Level must be between 1~MAX_LEVEL for %s.\n", job_name.c_str());
 				return 0;
 			}
-			
-			std::string stat;
 
-			if (!this->asString(levelNode, "Bonus", stat))
-				return 0;
+			if (this->nodeExists(levelNode, "Str")) {
+				bool active;
 
-			std::string stat_constant = "PARAM_" + stat;
-			int64 constant;
+				if (!this->asBool(levelNode, "Str", active))
+					return 0;
 
-			if (!script_get_constant(stat_constant.c_str(), &constant) || constant < PARAM_STR || constant > PARAM_LUK) {
-				this->invalidWarning(levelNode["Bonus"], "Invalid bonus stat %s specified for %s, skipping.\n", stat.c_str(), job_name.c_str());
-				continue;
+				job->job_bonus[level - 1].push_back(PARAM_STR);
+			} else {
+				if (!exists)
+					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_STR);
 			}
 
-			job->job_bonus[level - 1] = static_cast<unsigned char>(constant);
+			if (this->nodeExists(levelNode, "Agi")) {
+				bool active;
+
+				if (!this->asBool(levelNode, "Agi", active))
+					return 0;
+
+				job->job_bonus[level - 1].push_back(PARAM_AGI);
+			} else {
+				if (!exists)
+					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_AGI);
+			}
+
+			if (this->nodeExists(levelNode, "Vit")) {
+				bool active;
+
+				if (!this->asBool(levelNode, "Vit", active))
+					return 0;
+
+				job->job_bonus[level - 1].push_back(PARAM_VIT);
+			} else {
+				if (!exists)
+					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_VIT);
+			}
+
+			if (this->nodeExists(levelNode, "Int")) {
+				bool active;
+
+				if (!this->asBool(levelNode, "Int", active))
+					return 0;
+
+				job->job_bonus[level - 1].push_back(PARAM_INT);
+			} else {
+				if (!exists)
+					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_INT);
+			}
+
+			if (this->nodeExists(levelNode, "Dex")) {
+				bool active;
+
+				if (!this->asBool(levelNode, "Dex", active))
+					return 0;
+
+				job->job_bonus[level - 1].push_back(PARAM_DEX);
+			} else {
+				if (!exists)
+					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_DEX);
+			}
+
+			if (this->nodeExists(levelNode, "Luk")) {
+				bool active;
+
+				if (!this->asBool(levelNode, "Luk", active))
+					return 0;
+
+				job->job_bonus[level - 1].push_back(PARAM_LUK);
+			} else {
+				if (!exists)
+					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_LUK);
+			}
+
+			if (this->nodeExists(levelNode, "Pow")) {
+				bool active;
+
+				if (!this->asBool(levelNode, "Pow", active))
+					return 0;
+
+				job->job_bonus[level - 1].push_back(PARAM_POW);
+			} else {
+				if (!exists)
+					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_POW);
+			}
+
+			if (this->nodeExists(levelNode, "Sta")) {
+				bool active;
+
+				if (!this->asBool(levelNode, "Sta", active))
+					return 0;
+
+				job->job_bonus[level - 1].push_back(PARAM_STA);
+			} else {
+				if (!exists)
+					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_STA);
+			}
+
+			if (this->nodeExists(levelNode, "Wis")) {
+				bool active;
+
+				if (!this->asBool(levelNode, "Wis", active))
+					return 0;
+
+				job->job_bonus[level - 1].push_back(PARAM_WIS);
+			} else {
+				if (!exists)
+					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_WIS);
+			}
+
+			if (this->nodeExists(levelNode, "Spl")) {
+				bool active;
+
+				if (!this->asBool(levelNode, "Spl", active))
+					return 0;
+
+				job->job_bonus[level - 1].push_back(PARAM_SPL);
+			} else {
+				if (!exists)
+					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_SPL);
+			}
+
+			if (this->nodeExists(levelNode, "Con")) {
+				bool active;
+
+				if (!this->asBool(levelNode, "Con", active))
+					return 0;
+
+				job->job_bonus[level - 1].push_back(PARAM_CON);
+			} else {
+				if (!exists)
+					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_CON);
+			}
+
+			if (this->nodeExists(levelNode, "Crt")) {
+				bool active;
+
+				if (!this->asBool(levelNode, "Crt", active))
+					return 0;
+
+				job->job_bonus[level - 1].push_back(PARAM_CRT);
+			} else {
+				if (!exists)
+					util::vector_erase_if_exists(job->job_bonus[level - 1], PARAM_CRT);
+			}
 		}
 	}
 
@@ -12188,7 +12329,7 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			std::string stat = statit.first.as<std::string>(), stat_constant = "PARAM_" + stat;
 			int64 constant;
 
-			if (!script_get_constant(stat_constant.c_str(), &constant) || constant < PARAM_STR || constant > PARAM_LUK) {
+			if (!script_get_constant(stat_constant.c_str(), &constant) || constant < PARAM_STR || constant >= PARAM_MAX) {
 				this->invalidWarning(statNode["Bonus"], "Invalid max stat %s specified for %s, skipping.\n", stat.c_str(), job_name.c_str());
 				continue;
 			}
@@ -12198,18 +12339,30 @@ uint64 JobDatabase::parseBodyNode(const YAML::Node &node) {
 			if (!this->asInt16(statNode, stat.c_str(), max))
 				return 0;
 
-			if (stat.find("Str") != std::string::npos)
+			if (constant == PARAM_STR)
 				job->max_param.str = max;
-			else if (stat.find("Agi") != std::string::npos)
+			else if (constant == PARAM_AGI)
 				job->max_param.agi = max;
-			else if (stat.find("Vit") != std::string::npos)
+			else if (constant == PARAM_VIT)
 				job->max_param.vit = max;
-			else if (stat.find("Int") != std::string::npos)
+			else if (constant == PARAM_INT)
 				job->max_param.int_ = max;
-			else if (stat.find("Dex") != std::string::npos)
+			else if (constant == PARAM_DEX)
 				job->max_param.dex = max;
-			else if (stat.find("Luk") != std::string::npos)
+			else if (constant == PARAM_LUK)
 				job->max_param.luk = max;
+			else if (constant == PARAM_POW)
+				job->max_param.pow = max;
+			else if (constant == PARAM_STA)
+				job->max_param.sta = max;
+			else if (constant == PARAM_WIS)
+				job->max_param.wis = max;
+			else if (constant == PARAM_SPL)
+				job->max_param.spl = max;
+			else if (constant == PARAM_CON)
+				job->max_param.con = max;
+			else if (constant == PARAM_CRT)
+				job->max_param.crt = max;
 		}
 	}
 

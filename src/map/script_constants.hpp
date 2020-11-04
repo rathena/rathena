@@ -7988,6 +7988,12 @@
 	export_constant(PARAM_INT);
 	export_constant(PARAM_DEX);
 	export_constant(PARAM_LUK);
+	export_constant(PARAM_POW);
+	export_constant(PARAM_STA);
+	export_constant(PARAM_WIS);
+	export_constant(PARAM_SPL);
+	export_constant(PARAM_CON);
+	export_constant(PARAM_CRT);
 
 	#undef export_constant
 	#undef export_constant2

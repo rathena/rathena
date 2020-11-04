@@ -3552,7 +3552,7 @@ static bool pc_readdb_job1(char* fields[], int columns, int current) {
 			if (bonus != nullptr) {
 				body << YAML::BeginMap;
 				body << YAML::Key << "Level" << YAML::Value << i;
-				body << YAML::Key << "Bonus" << YAML::Value << name2Upper(bonus + 6);
+				body << YAML::Key << name2Upper(bonus + 6) << YAML::Value << "true";
 				body << YAML::EndMap;
 			}
 		}

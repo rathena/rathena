@@ -31,8 +31,19 @@
 #     Weapon                 Weapon type with associated ASPD.
 #   BonusStats:              Job level bonus stats.
 #     - Level                Job level.
-#       Bonus                Bonus stat.
-#   MaxStats:                Maximum stats applicable.
+#       Str                  If stength is increased.
+#       Agi                  If agility is increased.
+#       Vit                  If vitality is increased.
+#       Int                  If intelligence is increased.
+#       Dex                  If dexterity is increased.
+#       Luk                  If luck is increased.
+#       Pow                  If power is increased.
+#       Sta                  If stamina is increased.
+#       Wis                  If wisdom is increased.
+#       Spl                  If spell is increased.
+#       Con                  If concentration is increased.
+#       Crt                  If creative is increased.
+#   MaxStats:                Maximum stats applicable. (Default: battle_config::max_*_parameter)
 #     Str                    Strength.
 #     Agi                    Agility.
 #     Vit                    Vitality.
