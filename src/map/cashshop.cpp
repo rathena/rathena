@@ -21,10 +21,6 @@ struct sale_item_db sale_items;
 #endif
 bool cash_shop_defined = false;
 
-extern char item_cash_table[32];
-extern char item_cash2_table[32];
-extern char sales_table[32];
-
 /*
  * Reads one line from database and assigns it to RAM.
  * return
@@ -106,7 +102,7 @@ static void cashshop_read_db_txt( void ){
  * parses line and sends them to parse_dbrow.
  */
 static int cashshop_read_db_sql( void ){
-	const char* cash_db_name[] = { item_cash_table, item_cash2_table };
+	const char* cash_db_name[] = { mapserv_table(item_cash_db_table), mapserv_table(item_cash_db2_table) };
 	int fi;
 
 	for( fi = 0; fi < ARRAYLENGTH( cash_db_name ); ++fi ){
@@ -202,7 +198,7 @@ static bool sale_parse_dbrow( char* fields[], int columns, int current ){
 static void sale_read_db_sql( void ){
 	uint32 lines = 0, count = 0;
 
-	if( SQL_ERROR == Sql_Query( mmysql_handle, "SELECT `nameid`, UNIX_TIMESTAMP(`start`), UNIX_TIMESTAMP(`end`), `amount` FROM `%s` WHERE `end` > now()", sales_table ) ){
+	if( SQL_ERROR == Sql_Query( mmysql_handle, "SELECT `nameid`, UNIX_TIMESTAMP(`start`), UNIX_TIMESTAMP(`end`), `amount` FROM `%s` WHERE `end` > now()", mapserv_table(sales_table) ) ){
 		Sql_ShowDebug(mmysql_handle);
 		return;
 	}
@@ -223,7 +219,7 @@ static void sale_read_db_sql( void ){
 		}
 
 		if( !sale_parse_dbrow( str, 4, lines ) ){
-			ShowError( "sale_read_db_sql: Cannot process table '%s' at line '%d', skipping...\n", sales_table, lines );
+			ShowError( "sale_read_db_sql: Cannot process table '%s' at line '%d', skipping...\n", mapserv_table(sales_table), lines );
 			continue;
 		}
 
@@ -232,7 +228,7 @@ static void sale_read_db_sql( void ){
 
 	Sql_FreeResult(mmysql_handle);
 
-	ShowStatus( "Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, sales_table );
+	ShowStatus( "Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mapserv_table(sales_table) );
 }
 
 static TIMER_FUNC(sale_end_timer){
@@ -299,7 +295,7 @@ enum e_sale_add_result sale_add_item( t_itemid nameid, int32 count, time_t from,
 		return SALE_ADD_DUPLICATE;
 	}
 	
-	if( SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`nameid`,`start`,`end`,`amount`) VALUES ( '%u', FROM_UNIXTIME(%d), FROM_UNIXTIME(%d), '%d' )", sales_table, nameid, (uint32)from, (uint32)to, count) ){
+	if( SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`nameid`,`start`,`end`,`amount`) VALUES ( '%u', FROM_UNIXTIME(%d), FROM_UNIXTIME(%d), '%d' )", mapserv_table(sales_table), nameid, (uint32)from, (uint32)to, count) ){
 		Sql_ShowDebug(mmysql_handle);
 		return SALE_ADD_FAILED;
 	}
@@ -330,7 +326,7 @@ bool sale_remove_item( t_itemid nameid ){
 	}
 
 	// Delete it from the database
-	if( SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `nameid` = '%u'", sales_table, nameid ) ){
+	if( SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `nameid` = '%u'", mapserv_table(sales_table), nameid ) ){
 		Sql_ShowDebug(mmysql_handle);
 		return false;
 	}
@@ -431,17 +427,16 @@ static void cashshop_read_db( void ){
 	time_t now = time(NULL);
 #endif
 
-	if( db_use_sqldbs ){
+	if (mapserv_schema_config.db_use_sqldbs)
 		cashshop_read_db_sql();
-	} else {
+	else
 		cashshop_read_db_txt();
-	}
 
 #if PACKETVER_SUPPORTS_SALES
 	sale_read_db_sql();
 
 	// Clean outdated sales
-	if( SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `end` < FROM_UNIXTIME(%d)", sales_table, (uint32)now ) ){
+	if( SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `end` < FROM_UNIXTIME(%d)", mapserv_table(sales_table), (uint32)now ) ){
 		Sql_ShowDebug(mmysql_handle);
 	}
 
@@ -615,7 +610,7 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, s
 					if( new_amount == 0 ){
 						sale_remove_item(sale->nameid);
 					}else{
-						if( SQL_ERROR == Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = '%d' WHERE `nameid` = '%u'", sales_table, new_amount, nameid ) ){
+						if( SQL_ERROR == Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = '%d' WHERE `nameid` = '%u'", mapserv_table(sales_table), new_amount, nameid ) ){
 							Sql_ShowDebug(mmysql_handle);
 						}
 

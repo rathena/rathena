@@ -5,7 +5,6 @@
 #include "login.hpp"
 
 #include <stdlib.h>
-#include <string.h>
 #include <string>
 #include <unordered_map>
 
@@ -612,7 +611,7 @@ bool login_config_read(const char* cfgName, bool normal) {
 		}
 		else if (strcmpi(w1, "console_msg_log") == 0)
 			console_msg_log = atoi(w2);
-		else if  (strcmpi(w1, "console_log_filepath") == 0)
+		else if (strcmpi(w1, "console_log_filepath") == 0)
 			safestrncpy(console_log_filepath, w2, sizeof(console_log_filepath));
 		else if(!strcmpi(w1, "log_login"))
 			login_config.log_login = (bool)config_switch(w2);
@@ -769,8 +768,6 @@ void login_set_defaults() {
 }
 
 
-
-
 /// Constructor destructor and signal handlers
 
 /**
@@ -863,11 +860,14 @@ int do_init(int argc, char** argv) {
 
 	// initialize engine
 	accounts = account_db_sql();
+	accounts->init_conf(accounts);
 
 	// read login-server configuration
 	login_set_defaults();
 	logcnslif_get_options(argc,argv);
 
+	ipban_config_init();
+	loginlog_config_init();
 	login_config_read(login_config.loginconf_name, true);
 	msg_config_read(login_config.msgconf_name);
 	login_lan_config_read(login_config.lanconf_name);

@@ -13146,7 +13146,7 @@ BUILDIN_FUNC(agitend3)
  */
 BUILDIN_FUNC(agitcheck)
 {
-	script_pushint(st, agit_flag);
+	script_pushint(st, map_config.agit_flag);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -13156,7 +13156,7 @@ BUILDIN_FUNC(agitcheck)
  */
 BUILDIN_FUNC(agitcheck2)
 {
-	script_pushint(st, agit2_flag);
+	script_pushint(st, map_config.agit2_flag);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -13166,7 +13166,7 @@ BUILDIN_FUNC(agitcheck2)
  */
 BUILDIN_FUNC(agitcheck3)
 {
-	script_pushint(st, agit3_flag);
+	script_pushint(st, map_config.agit3_flag);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -14886,6 +14886,7 @@ BUILDIN_FUNC(dispbottom)
 		else
 			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], message, false, SELF);
 	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -15655,21 +15656,6 @@ BUILDIN_FUNC(summon)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * Checks whether it is daytime/nighttime
- *------------------------------------------*/
-BUILDIN_FUNC(isnight)
-{
-	script_pushint(st,(night_flag == 1));
-	return SCRIPT_CMD_SUCCESS;
-}
-
-BUILDIN_FUNC(isday)
-{
-	script_pushint(st,(night_flag == 0));
-	return SCRIPT_CMD_SUCCESS;
-}
-
 /*================================================
  * Check how many items/cards in the list are
  * equipped - used for 2/15's cards patch [celest]
@@ -15871,17 +15857,32 @@ BUILDIN_FUNC(getrefine)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/*==========================================
+* Checks whether it is daytime/nighttime
+*------------------------------------------*/
+BUILDIN_FUNC(isnight)
+{
+	script_pushint(st, (map_config.night_flag ? 1 : 0));
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(isday)
+{
+	script_pushint(st, (map_config.night_flag ? 1 : 0));
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*=======================================================
  * Day/Night controls
  *-------------------------------------------------------*/
 BUILDIN_FUNC(night)
 {
-	if (night_flag != 1) map_night_timer(night_timer_tid, 0, 0, 1);
+	if (!map_config.night_flag) map_night_timer(night_timer_tid, 0, 0, 1);
 	return SCRIPT_CMD_SUCCESS;
 }
 BUILDIN_FUNC(day)
 {
-	if (night_flag != 0) map_day_timer(day_timer_tid, 0, 0, 1);
+	if (map_config.night_flag) map_day_timer(day_timer_tid, 0, 0, 1);
 	return SCRIPT_CMD_SUCCESS;
 }
 

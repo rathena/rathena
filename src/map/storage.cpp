@@ -506,7 +506,7 @@ void storage_storageclose(struct map_session_data *sd)
 	nullpo_retv(sd);
 
 	if (sd->storage.dirty) {
-		if (save_settings&CHARSAVE_STORAGE)
+		if (map_config.save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 		else
 			storage_storagesave(sd);
@@ -530,7 +530,7 @@ void storage_storage_quit(struct map_session_data* sd, int flag)
 {
 	nullpo_retv(sd);
 
-	if (save_settings&CHARSAVE_STORAGE)
+	if (map_config.save_settings&CHARSAVE_STORAGE)
 		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 	else
 		storage_storagesave(sd);
@@ -645,7 +645,7 @@ void storage_guild_log( struct map_session_data* sd, struct item* item, int16 am
 	StringBuf buf;
 	StringBuf_Init(&buf);
 
-	StringBuf_Printf(&buf, "INSERT INTO `%s` (`time`, `guild_id`, `char_id`, `name`, `nameid`, `amount`, `identify`, `refine`, `attribute`, `unique_id`, `bound`", guild_storage_log_table);
+	StringBuf_Printf(&buf, "INSERT INTO `%s` (`time`, `guild_id`, `char_id`, `name`, `nameid`, `amount`, `identify`, `refine`, `attribute`, `unique_id`, `bound`", mapserv_table(guild_storage_log_table));
 	for (i = 0; i < MAX_SLOTS; ++i)
 		StringBuf_Printf(&buf, ", `card%d`", i);
 	for (i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
@@ -684,7 +684,7 @@ enum e_guild_storage_log storage_guild_log_read_sub( struct map_session_data* sd
 		StringBuf_Printf(&buf, ", `option_val%d`", j);
 		StringBuf_Printf(&buf, ", `option_parm%d`", j);
 	}
-	StringBuf_Printf(&buf, " FROM `%s` WHERE `guild_id`='%u'", guild_storage_log_table, sd->status.guild_id );
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `guild_id`='%u'", mapserv_table(guild_storage_log_table), sd->status.guild_id );
 	StringBuf_Printf(&buf, " ORDER BY `time` DESC LIMIT %u", max);
 
 	SqlStmt* stmt = SqlStmt_Malloc(mmysql_handle);
@@ -1095,7 +1095,7 @@ void storage_guild_storageclose(struct map_session_data* sd)
 
 	clif_storageclose(sd);
 	if (stor->status) {
-		if (save_settings&CHARSAVE_STORAGE)
+		if (map_config.save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART); //This one also saves the storage. [Skotlex]
 		else
 			storage_guild_storagesave(sd->status.account_id, sd->status.guild_id,0);
@@ -1121,7 +1121,7 @@ void storage_guild_storage_quit(struct map_session_data* sd, int flag)
 	if (flag) {	//Only during a guild break flag is 1 (don't save storage)
 		clif_storageclose(sd);
 
-		if (save_settings&CHARSAVE_STORAGE)
+		if (map_config.save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 
 		sd->state.storage_flag = 0;
@@ -1130,7 +1130,7 @@ void storage_guild_storage_quit(struct map_session_data* sd, int flag)
 	}
 
 	if (stor->status) {
-		if (save_settings&CHARSAVE_STORAGE)
+		if (map_config.save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 		else
 			storage_guild_storagesave(sd->status.account_id,sd->status.guild_id,1);
@@ -1224,7 +1224,7 @@ void storage_premiumStorage_close(struct map_session_data *sd) {
 	nullpo_retv(sd);
 
 	if (sd->premiumStorage.dirty) {
-		if (save_settings&CHARSAVE_STORAGE)
+		if (map_config.save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 		else
 			storage_premiumStorage_save(sd);
@@ -1245,7 +1245,7 @@ void storage_premiumStorage_close(struct map_session_data *sd) {
 void storage_premiumStorage_quit(struct map_session_data *sd) {
 	nullpo_retv(sd);
 
-	if (save_settings&CHARSAVE_STORAGE)
+	if (map_config.save_settings&CHARSAVE_STORAGE)
 		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 	else
 		storage_premiumStorage_save(sd);

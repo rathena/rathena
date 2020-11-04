@@ -35,7 +35,7 @@
 #include "int_quest.hpp"
 #include "int_storage.hpp"
 
-std::string cfgFile = "inter_athena.yml"; ///< Inter-Config file
+std::string cfgFile = "inter_server.yml"; ///< Inter-Config file
 InterServerDatabase interServerDb;
 
 #define WISDATA_TTL (60*1000)	//Wis data Time To Live (60 seconds)
@@ -44,13 +44,8 @@ InterServerDatabase interServerDb;
 
 Sql* sql_handle = NULL;	///Link to mysql db, connection FD
 
-int char_server_port = 3306;
-char char_server_ip[64] = "127.0.0.1";
-char char_server_id[32] = "ragnarok";
-char char_server_pw[32] = ""; // Allow user to send empty password (bugreport:7787)
-char char_server_db[32] = "ragnarok";
-char default_codepage[32] = ""; //Feature by irmin.
-unsigned int party_share_level = 10;
+struct Inter_Config inter_config;
+static void inter_config_init(void);
 
 /// Received packet Lengths from map-server
 int inter_recv_packet_length[] = {
@@ -453,7 +448,7 @@ void mapif_parse_accinfo(int fd) {
 	account_id = atoi(query);
 
 	if (account_id < START_ACCOUNT_NUM) {	// is string
-		if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`name`,`class`,`base_level`,`job_level`,`online` FROM `%s` WHERE `name` LIKE '%s' LIMIT 10", schema_config.char_db, query_esq)
+		if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`name`,`class`,`base_level`,`job_level`,`online` FROM `%s` WHERE `name` LIKE '%s' LIMIT 10", charserv_table(char_table), query_esq)
 				|| Sql_NumRows(sql_handle) == 0 ) {
 			if( Sql_NumRows(sql_handle) == 0 ) {
 				inter_to_fd(fd, u_fd, u_aid, (char *)msg_txt(212) ,query);
@@ -525,7 +520,7 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(223), logincount, lastlogin);
 	inter_to_fd(map_fd, u_fd, u_aid, (char *)msg_txt(224));
 
-	if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`, `name`, `char_num`, `class`, `base_level`, `job_level`, `online` FROM `%s` WHERE `account_id` = '%d' ORDER BY `char_num` LIMIT %d", schema_config.char_db, account_id, MAX_CHARS)
+	if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`, `name`, `char_num`, `class`, `base_level`, `job_level`, `online` FROM `%s` WHERE `account_id` = '%d' ORDER BY `char_num` LIMIT %d", charserv_table(char_table), account_id, MAX_CHARS)
 		|| Sql_NumRows(sql_handle) == 0 )
 	{
 		if( Sql_NumRows(sql_handle) == 0 )
@@ -579,36 +574,36 @@ void inter_savereg(uint32 account_id, uint32 char_id, const char *key, uint32 in
 	} else if ( key[0] == '#' ) { // local account reg
 		if( is_string ) {
 			if( string_value ) {
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%s')", schema_config.acc_reg_str_table, account_id, esc_key, index, esc_val) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%s')", schema_config.acc_reg_str_table.c_str(), account_id, esc_key, index, esc_val) )
 					Sql_ShowDebug(sql_handle);
 			} else {
-				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", schema_config.acc_reg_str_table, account_id, esc_key, index) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", schema_config.acc_reg_str_table.c_str(), account_id, esc_key, index) )
 					Sql_ShowDebug(sql_handle);
 			}
 		} else {
 			if( int_value ) {
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%" PRId64 "')", schema_config.acc_reg_num_table, account_id, esc_key, index, int_value) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%" PRId64 "')", schema_config.acc_reg_num_table.c_str(), account_id, esc_key, index, int_value) )
 					Sql_ShowDebug(sql_handle);
 			} else {
-				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", schema_config.acc_reg_num_table, account_id, esc_key, index) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", schema_config.acc_reg_num_table.c_str(), account_id, esc_key, index) )
 					Sql_ShowDebug(sql_handle);
 			}
 		}
 	} else { /* char reg */
 		if( is_string ) {
 			if( string_value ) {
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`char_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%s')", schema_config.char_reg_str_table, char_id, esc_key, index, esc_val) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`char_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%s')", schema_config.char_reg_str_table.c_str(), char_id, esc_key, index, esc_val) )
 					Sql_ShowDebug(sql_handle);
 			} else {
-				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", schema_config.char_reg_str_table, char_id, esc_key, index) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", schema_config.char_reg_str_table.c_str(), char_id, esc_key, index) )
 					Sql_ShowDebug(sql_handle);
 			}
 		} else {
 			if( int_value ) {
-				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`char_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%" PRId64 "')", schema_config.char_reg_num_table, char_id, esc_key, index, int_value) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`char_id`,`key`,`index`,`value`) VALUES ('%" PRIu32 "','%s','%" PRIu32 "','%" PRId64 "')", schema_config.char_reg_num_table.c_str(), char_id, esc_key, index, int_value) )
 					Sql_ShowDebug(sql_handle);
 			} else {
-				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", schema_config.char_reg_num_table, char_id, esc_key, index) )
+				if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%" PRIu32 "' AND `key` = '%s' AND `index` = '%" PRIu32 "' LIMIT 1", schema_config.char_reg_num_table.c_str(), char_id, esc_key, index) )
 					Sql_ShowDebug(sql_handle);
 			}
 		}
@@ -624,11 +619,11 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 
 	switch( type ) {
 		case 3: //char reg
-			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `char_id`='%" PRIu32 "'", schema_config.char_reg_str_table, char_id) )
+			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `char_id`='%" PRIu32 "'", charserv_table(char_reg_str_table), char_id) )
 				Sql_ShowDebug(sql_handle);
 			break;
 		case 2: //account reg
-			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%" PRIu32 "'", schema_config.acc_reg_str_table, account_id) )
+			if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%" PRIu32 "'", charserv_table(acc_reg_str_table), account_id) )
 				Sql_ShowDebug(sql_handle);
 			break;
 		case 1: //account2 reg
@@ -705,11 +700,11 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 
 	switch( type ) {
 		case 3: //char reg
-			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `char_id`='%" PRIu32 "'", schema_config.char_reg_num_table, char_id))
+			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `char_id`='%" PRIu32 "'", charserv_table(char_reg_num_table), char_id))
 				Sql_ShowDebug(sql_handle);
 			break;
 		case 2: //account reg
-			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%" PRIu32 "'", schema_config.acc_reg_num_table, account_id))
+			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `key`, `index`, `value` FROM `%s` WHERE `account_id`='%" PRIu32 "'", charserv_table(acc_reg_num_table), account_id))
 				Sql_ShowDebug(sql_handle);
 			break;
 #if 0 // This is already checked above.
@@ -782,6 +777,20 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 	return 1;
 }
 
+/**
+ * Set default hardcoded Inter-serv configurations
+ **/
+static void inter_config_init(void) {
+	inter_config.party_share_level = 10;
+
+	inter_config.char_server_port = 3306;
+	inter_config.char_server_ip = "127.0.0.1";
+	inter_config.char_server_id = "ragnarok";
+	inter_config.char_server_pw = "";
+	inter_config.char_server_db = "ragnarok";
+	inter_config.default_codepage = "";
+}
+
 /*==========================================
  * read config file
  *------------------------------------------*/
@@ -806,19 +815,19 @@ int inter_config_read(const char* cfgName)
 			continue;
 
 		if(!strcmpi(w1,"char_server_ip"))
-			safestrncpy(char_server_ip,w2,sizeof(char_server_ip));
+			inter_config.char_server_ip = w2;
 		else if(!strcmpi(w1,"char_server_port"))
-			char_server_port = atoi(w2);
+			inter_config.char_server_port = atoi(w2);
 		else if(!strcmpi(w1,"char_server_id"))
-			safestrncpy(char_server_id,w2,sizeof(char_server_id));
+			inter_config.char_server_id = w2;
 		else if(!strcmpi(w1,"char_server_pw"))
-			safestrncpy(char_server_pw,w2,sizeof(char_server_pw));
+			inter_config.char_server_pw = w2;
 		else if(!strcmpi(w1,"char_server_db"))
-			safestrncpy(char_server_db,w2,sizeof(char_server_db));
+			inter_config.char_server_db = w2;
 		else if(!strcmpi(w1,"default_codepage"))
-			safestrncpy(default_codepage,w2,sizeof(default_codepage));
+			inter_config.default_codepage = w2;
 		else if(!strcmpi(w1,"party_share_level"))
-			party_share_level = (unsigned int)atof(w2);
+			inter_config.party_share_level = (unsigned short)atof(w2);
 		else if(!strcmpi(w1,"log_inter"))
 			charserv_config.log_inter = atoi(w2);
 		else if(!strcmpi(w1,"inter_server_conf"))
@@ -845,7 +854,7 @@ int inter_log(const char* fmt, ...)
 	va_end(ap);
 
 	Sql_EscapeStringLen(sql_handle, esc_str, str, strnlen(str, sizeof(str)));
-	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `log`) VALUES (NOW(),  '%s')", schema_config.interlog_db, esc_str) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `log`) VALUES (NOW(),  '%s')", charserv_table(interlog_table), esc_str) )
 		Sql_ShowDebug(sql_handle);
 
 	return 0;
@@ -930,26 +939,30 @@ uint64 InterServerDatabase::parseBodyNode( const YAML::Node& node ){
 // initialize
 int inter_init_sql(const char *file)
 {
+	inter_config_init();
 	inter_config_read(file);
 
 	//DB connection initialized
 	sql_handle = Sql_Malloc();
 	ShowInfo("Connect Character DB server.... (Character Server)\n");
-	if( SQL_ERROR == Sql_Connect(sql_handle, char_server_id, char_server_pw, char_server_ip, (uint16)char_server_port, char_server_db) )
+	if( SQL_ERROR == Sql_Connect(sql_handle, inter_config.char_server_id.c_str(), inter_config.char_server_pw.c_str(), inter_config.char_server_ip.c_str(), inter_config.char_server_port, inter_config.char_server_db.c_str()) )
 	{
 		ShowError("Couldn't connect with username = '%s', password = '%s', host = '%s', port = '%d', database = '%s'\n",
-			char_server_id, char_server_pw, char_server_ip, char_server_port, char_server_db);
+			inter_config.char_server_id.c_str(), inter_config.char_server_pw.c_str(), inter_config.char_server_ip.c_str(), inter_config.char_server_port, inter_config.char_server_db.c_str());
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
 		exit(EXIT_FAILURE);
 	}
 
-	if( *default_codepage ) {
-		if( SQL_ERROR == Sql_SetEncoding(sql_handle, default_codepage) )
+	if( !inter_config.default_codepage.empty() ) {
+		if( SQL_ERROR == Sql_SetEncoding(sql_handle, inter_config.default_codepage.c_str()) )
 			Sql_ShowDebug(sql_handle);
 	}
 
+	ShowStatus("Character server connection: Database '" CL_WHITE "%s" CL_RESET "' at '" CL_WHITE "%s" CL_RESET "'\n", inter_config.char_server_db.c_str(), inter_config.char_server_ip.c_str());
+
 	wis_db = idb_alloc(DB_OPT_RELEASE_DATA);
+
 	interServerDb.load();
 	inter_guild_sql_init();
 	inter_storage_sql_init();
@@ -1176,7 +1189,7 @@ int mapif_parse_WisRequest(int fd)
 	safestrncpy(name, RFIFOCP(fd,8+NAME_LENGTH), NAME_LENGTH); //Received name may be too large and not contain \0! [Skotlex]
 
 	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `name` FROM `%s` WHERE `name`='%s'", schema_config.char_db, esc_name) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `name` FROM `%s` WHERE `name`='%s'", charserv_table(char_table), esc_name) )
 		Sql_ShowDebug(sql_handle);
 
 	// search if character exists before to ask all map-servers

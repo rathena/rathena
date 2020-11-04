@@ -1386,8 +1386,8 @@ void channel_read_config(void) {
 	config_t channels_conf;
 	config_setting_t *chan_setting = NULL;
 
-	if (conf_read_file(&channels_conf, channel_conf)) {
-		ShowError("Cannot read file '%s' for channel connfig.\n", channel_conf);
+	if (conf_read_file(&channels_conf, mapserv_file_config.channel.c_str())) {
+		ShowError("Cannot read file '%s' for channel connfig.\n", mapserv_file_config.channel.c_str());
 		return;
 	}
 
@@ -1477,7 +1477,7 @@ void channel_read_config(void) {
 			}
 		}
 
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' channels in '" CL_WHITE "%s" CL_RESET "'.\n", db_size(channel_db), channel_conf);
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' channels in '" CL_WHITE "%s" CL_RESET "'.\n", db_size(channel_db), mapserv_file_config.channel.c_str());
 		config_destroy(&channels_conf);
 	}
 }

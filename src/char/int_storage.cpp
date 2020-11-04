@@ -38,14 +38,14 @@ int inter_premiumStorage_getMax(uint8 id) {
  * @param id: Storage ID
  * @return Table name
  */
-const char *inter_premiumStorage_getTableName(uint8 id) {
+const std::string inter_premiumStorage_getTableName(uint8 id) {
 	std::shared_ptr<s_storage_table> storage = interServerDb.find( id );
 
 	if( storage != nullptr ){
 		return storage->table;
 	}
 
-	return schema_config.storage_db;
+	return charserv_table(storage_table);
 }
 
 /**
@@ -195,7 +195,7 @@ void inter_storage_sql_final(void)
  */
 bool mapif_load_guild_storage(int fd,uint32 account_id,int guild_id, char flag)
 {
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id` FROM `%s` WHERE `guild_id`='%d'", schema_config.guild_db, guild_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id` FROM `%s` WHERE `guild_id`='%d'", charserv_table(guild_table), guild_id) )
 		Sql_ShowDebug(sql_handle);
 	else if( Sql_NumRows(sql_handle) > 0 )
 	{// guild exists
@@ -259,7 +259,7 @@ bool mapif_parse_SaveGuildStorage(int fd)
 	}
 	else
 	{
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id` FROM `%s` WHERE `guild_id`='%d'", schema_config.guild_db, guild_id) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `guild_id` FROM `%s` WHERE `guild_id`='%d'", charserv_table(guild_table), guild_id) )
 			Sql_ShowDebug(sql_handle);
 		else if( Sql_NumRows(sql_handle) > 0 )
 		{// guild exists
@@ -342,7 +342,7 @@ bool mapif_parse_itembound_retrieve(int fd)
 		StringBuf_Printf(&buf, ", `option_val%d`", j);
 		StringBuf_Printf(&buf, ", `option_parm%d`", j);
 	}
-	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id`='%d' AND `bound` = %d", schema_config.inventory_db,char_id, BOUND_GUILD);
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id`='%d' AND `bound` = %d", charserv_table(inventory_table),char_id, BOUND_GUILD);
 
 	stmt = SqlStmt_Malloc(sql_handle);
 	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf)) ||
@@ -388,7 +388,7 @@ bool mapif_parse_itembound_retrieve(int fd)
 
 	// Delete bound items from player's inventory
 	StringBuf_Clear(&buf);
-	StringBuf_Printf(&buf, "DELETE FROM `%s` WHERE `char_id` = %d AND `bound` = %d",schema_config.inventory_db, char_id, BOUND_GUILD);
+	StringBuf_Printf(&buf, "DELETE FROM `%s` WHERE `char_id` = %d AND `bound` = %d", charserv_table(inventory_table), char_id, BOUND_GUILD);
 	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf)) ||
 		SQL_ERROR == SqlStmt_Execute(stmt) )
 	{
@@ -432,7 +432,7 @@ bool mapif_parse_itembound_retrieve(int fd)
 	if (j) {
 		StringBuf buf2;
 		StringBuf_Init(&buf2);
-		StringBuf_Printf(&buf2, "UPDATE `%s` SET %s WHERE `char_id`='%d'", schema_config.char_db, StringBuf_Value(&buf), char_id);
+		StringBuf_Printf(&buf2, "UPDATE `%s` SET %s WHERE `char_id`='%d'", charserv_table(char_table), StringBuf_Value(&buf), char_id);
 
 		if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf)) ||
 			SQL_ERROR == SqlStmt_Execute(stmt) )

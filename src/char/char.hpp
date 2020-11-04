@@ -4,6 +4,7 @@
 #ifndef CHAR_HPP
 #define CHAR_HPP
 
+#include <string>
 #include <vector>
 
 #include "../common/core.hpp" // CORE_ST_LAST
@@ -47,49 +48,63 @@ enum e_char_del_response {
 };
 
 struct Schema_Config {
-	int db_use_sqldbs;
-	char db_path[1024];
-	char char_db[DB_NAME_LEN];
-	char scdata_db[DB_NAME_LEN];
-	char skillcooldown_db[DB_NAME_LEN];
-	char cart_db[DB_NAME_LEN];
-	char inventory_db[DB_NAME_LEN];
-	char charlog_db[DB_NAME_LEN];
-	char storage_db[DB_NAME_LEN];
-	char interlog_db[DB_NAME_LEN];
-	char skill_db[DB_NAME_LEN];
-	char memo_db[DB_NAME_LEN];
-	char guild_db[DB_NAME_LEN];
-	char guild_alliance_db[DB_NAME_LEN];
-	char guild_castle_db[DB_NAME_LEN];
-	char guild_expulsion_db[DB_NAME_LEN];
-	char guild_member_db[DB_NAME_LEN];
-	char guild_position_db[DB_NAME_LEN];
-	char guild_skill_db[DB_NAME_LEN];
-	char guild_storage_db[DB_NAME_LEN];
-	char party_db[DB_NAME_LEN];
-	char pet_db[DB_NAME_LEN];
-	char mail_db[DB_NAME_LEN]; // MAIL SYSTEM
-	char mail_attachment_db[DB_NAME_LEN];
-	char auction_db[DB_NAME_LEN]; // Auctions System
-	char friend_db[DB_NAME_LEN];
-	char hotkey_db[DB_NAME_LEN];
-	char quest_db[DB_NAME_LEN];
-	char homunculus_db[DB_NAME_LEN];
-	char skill_homunculus_db[DB_NAME_LEN];
-	char mercenary_db[DB_NAME_LEN];
-	char mercenary_owner_db[DB_NAME_LEN];
-	char elemental_db[DB_NAME_LEN];
-	char bonus_script_db[DB_NAME_LEN];
-	char acc_reg_num_table[DB_NAME_LEN];
-	char acc_reg_str_table[DB_NAME_LEN];
-	char char_reg_str_table[DB_NAME_LEN];
-	char char_reg_num_table[DB_NAME_LEN];
-	char clan_table[DB_NAME_LEN];
-	char clan_alliance_table[DB_NAME_LEN];
-	char achievement_table[DB_NAME_LEN];
+	// Character related tables
+	std::string char_table;				///< Main Charachter table
+	std::string charlog_table;			///< Charlog table
+	std::string bonus_script_table;		///< Stored bonus_script table
+	std::string cart_table;				///< Cart inventory table
+	std::string inventory_table;		///< Inventory table
+	std::string storage_table;			///< Storage table
+	std::string memo_table;				///< Memo table
+	std::string scdata_table;			///< Stored SC table
+	std::string skill_table;			///< Skill table
+	std::string skillcooldown_table;	///< Skill Cooldown table
+	std::string friend_table;			///< Friend list table
+	std::string hotkey_table;			///< Hotkey list table
+	std::string quest_table;			///< Quest table
+	std::string pet_table;				///< Pet table
+	std::string elemental_table;		///< Elemental table
+	std::string party_table;			///< Party table
+	std::string auction_table;			///< Auction table
+	std::string achievement_table;		///< Achievement table
+
+	// Mail tables
+	std::string mail_table;				///< Mail table
+	std::string mail_attachment_table;	///< Mail Attachments table
+
+	// Homunculus tables
+	std::string homunculus_table;		///< Homunculus table
+	std::string homunculus_skill_table;	///< Homunculus skill table
+
+	// Mercenary Tables
+	std::string mercenary_table;		///< Mercenary table
+	std::string mercenary_owner_table;	///< Mercenary owner table
+
+	// Guild tables
+	std::string guild_table;			///< Guild table
+	std::string guild_alliance_table;	///< Guild alliance & enemy table
+	std::string guild_castle_table;		///< Castle table
+	std::string guild_expulsion_table;	///< Expulsion table
+	std::string guild_member_table;		///< Guild member table
+	std::string guild_position_table;	///< Guild member position table
+	std::string guild_skill_table;		///< Guild skill table
+	std::string guild_storage_table;	///< Guild storage table
+
+	// Clan tables
+	std::string clan_table;				///< Clan table
+	std::string clan_alliance_table;	///< Clan Alliance table
+
+	// Other
+	std::string acc_reg_num_table;		///< Account Registry (Number)
+	std::string acc_reg_str_table;		///< Account Registry (String)
+	std::string char_reg_num_table;		///< Character Registry (Number)
+	std::string char_reg_str_table;		///< Character Registry (String)
+	std::string interlog_table;			///< Inter log table
 };
-extern struct Schema_Config schema_config;
+
+extern struct Schema_Config schema_config; /// Inter/char-server tables
+/// Get inter/char-server table value. Table names @see Schema_Config
+#define charserv_table(table) ( schema_config.table.c_str() )
 
 #if PACKETVER_SUPPORTS_PINCODE
 /// Pincode system
@@ -190,6 +205,8 @@ struct CharServ_Config {
 	int mail_retrieve;
 
 	int allowed_job_flag;
+
+	std::string db_path;
 };
 extern struct CharServ_Config charserv_config;
 

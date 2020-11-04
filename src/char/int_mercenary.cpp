@@ -19,7 +19,7 @@ bool mercenary_owner_fromsql(uint32 char_id, struct mmo_charstatus *status)
 {
 	char* data;
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `merc_id`, `arch_calls`, `arch_faith`, `spear_calls`, `spear_faith`, `sword_calls`, `sword_faith` FROM `%s` WHERE `char_id` = '%d'", schema_config.mercenary_owner_db, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `merc_id`, `arch_calls`, `arch_faith`, `spear_calls`, `spear_faith`, `sword_calls`, `sword_faith` FROM `%s` WHERE `char_id` = '%d'", charserv_table(mercenary_owner_table), char_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -46,7 +46,7 @@ bool mercenary_owner_fromsql(uint32 char_id, struct mmo_charstatus *status)
 bool mercenary_owner_tosql(uint32 char_id, struct mmo_charstatus *status)
 {
 	if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`char_id`, `merc_id`, `arch_calls`, `arch_faith`, `spear_calls`, `spear_faith`, `sword_calls`, `sword_faith`) VALUES ('%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d')",
-		schema_config.mercenary_owner_db, char_id, status->mer_id, status->arch_calls, status->arch_faith, status->spear_calls, status->spear_faith, status->sword_calls, status->sword_faith) )
+		charserv_table(mercenary_owner_table), char_id, status->mer_id, status->arch_calls, status->arch_faith, status->spear_calls, status->spear_faith, status->sword_calls, status->sword_faith) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -57,10 +57,10 @@ bool mercenary_owner_tosql(uint32 char_id, struct mmo_charstatus *status)
 
 bool mercenary_owner_delete(uint32 char_id)
 {
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.mercenary_owner_db, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", charserv_table(mercenary_owner_table), char_id) )
 		Sql_ShowDebug(sql_handle);
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", schema_config.mercenary_db, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id` = '%d'", charserv_table(mercenary_table), char_id) )
 		Sql_ShowDebug(sql_handle);
 
 	return true;
@@ -74,7 +74,7 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 	{ // Create new DB entry
 		if( SQL_ERROR == Sql_Query(sql_handle,
 			"INSERT INTO `%s` (`char_id`,`class`,`hp`,`sp`,`kill_counter`,`life_time`) VALUES ('%d','%d','%u','%u','%u','%" PRtf "')",
-			schema_config.mercenary_db, merc->char_id, merc->class_, merc->hp, merc->sp, merc->kill_count, merc->life_time) )
+			charserv_table(mercenary_table), merc->char_id, merc->class_, merc->hp, merc->sp, merc->kill_count, merc->life_time) )
 		{
 			Sql_ShowDebug(sql_handle);
 			flag = false;
@@ -84,7 +84,7 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 	}
 	else if( SQL_ERROR == Sql_Query(sql_handle,
 		"UPDATE `%s` SET `char_id` = '%d', `class` = '%d', `hp` = '%u', `sp` = '%u', `kill_counter` = '%u', `life_time` = '%" PRtf "' WHERE `mer_id` = '%d'",
-		schema_config.mercenary_db, merc->char_id, merc->class_, merc->hp, merc->sp, merc->kill_count, merc->life_time, merc->mercenary_id) )
+		charserv_table(mercenary_table), merc->char_id, merc->class_, merc->hp, merc->sp, merc->kill_count, merc->life_time, merc->mercenary_id) )
 	{ // Update DB entry
 		Sql_ShowDebug(sql_handle);
 		flag = false;
@@ -101,7 +101,7 @@ bool mapif_mercenary_load(int merc_id, uint32 char_id, struct s_mercenary *merc)
 	merc->mercenary_id = merc_id;
 	merc->char_id = char_id;
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `class`, `hp`, `sp`, `kill_counter`, `life_time` FROM `%s` WHERE `mer_id` = '%d' AND `char_id` = '%d'", schema_config.mercenary_db, merc_id, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `class`, `hp`, `sp`, `kill_counter`, `life_time` FROM `%s` WHERE `mer_id` = '%d' AND `char_id` = '%d'", charserv_table(mercenary_table), merc_id, char_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -127,7 +127,7 @@ bool mapif_mercenary_load(int merc_id, uint32 char_id, struct s_mercenary *merc)
 
 bool mapif_mercenary_delete(int merc_id)
 {
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `mer_id` = '%d'", schema_config.mercenary_db, merc_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `mer_id` = '%d'", charserv_table(mercenary_table), merc_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return false;

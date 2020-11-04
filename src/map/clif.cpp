@@ -574,7 +574,7 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 				memcpy(WFIFOP(fd, 0), buf, len);
 				WFIFOSET(fd, len);
 			}
-			if (!enable_spy) //Skip unnecessary parsing. [Skotlex]
+			if (!map_config.enable_spy) //Skip unnecessary parsing. [Skotlex]
 				break;
 
 			iter = mapit_getallusers();
@@ -652,7 +652,7 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 					WFIFOSET(fd,len);
 				}
 			}
-			if (!enable_spy) //Skip unnecessary parsing. [Skotlex]
+			if (!map_config.enable_spy) //Skip unnecessary parsing. [Skotlex]
 				break;
 
 			iter = mapit_getallusers();
@@ -708,7 +708,7 @@ int clif_send(const void* buf, int len, struct block_list* bl, enum send_target 
 				WFIFOSET(fd,len);
 			}
 
-			if (!enable_spy) //Skip unnecessary parsing. [Skotlex]
+			if (!map_config.enable_spy) //Skip unnecessary parsing. [Skotlex]
 				break;
 
 			iter = mapit_getallusers();
@@ -10694,7 +10694,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		if(hom_is_active(sd->hd))
 			hom_init_timers(sd->hd);
 
-		if (night_flag && mapdata->flag[MF_NIGHTENABLED]) {
+		if (map_config.night_flag && mapdata->flag[MF_NIGHTENABLED]) {
 			sd->state.night = 1;
 			clif_status_load(&sd->bl, EFST_SKE, 1);
 		}
@@ -10772,7 +10772,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 				status_calc_bl(&sd->bl, SCB_FLEE); //Refresh flee penalty
 		}
 
-		if( night_flag && mapdata->flag[MF_NIGHTENABLED] )
+		if( map_config.night_flag && mapdata->flag[MF_NIGHTENABLED])
 		{	//Display night.
 			if( !sd->state.night )
 			{
@@ -11210,7 +11210,7 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd)
 		sprintf(gm_msg, "Hack on NameRequest: character '%s' (account: %d) requested the name of an invisible target (id: %d).\n", sd->status.name, sd->status.account_id, id);
 		ShowWarning(gm_msg);
 		// information is sent to all online GMs
-		intif_wis_message_to_gm(wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
+		intif_wis_message_to_gm(map_config.wisp_server_name, battle_config.hack_info_GM_level, gm_msg);
 		return;
 	}
 	*/
@@ -11652,7 +11652,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	// if player is autotrading
 	if (dstsd->state.autotrade == 1){
 		safesnprintf(output,sizeof(output),"%s is in autotrade mode and cannot receive whispered messages.", dstsd->status.name);
-		clif_wis_message(sd, wisp_server_name, output, strlen(output) + 1, 0);
+		clif_wis_message(sd, map_config.wisp_server_name, output, strlen(output) + 1, 0);
 		return;
 	}
 
@@ -14648,7 +14648,7 @@ void clif_parse_PMIgnore(int fd, struct map_session_data* sd)
 	type = RFIFOB(fd,info->pos[1]);
 
 	if( type == 0 ) { // Add name to ignore list (block)
-		if (strcmp(wisp_server_name, nick) == 0) {
+		if (strcmp(map_config.wisp_server_name, nick) == 0) {
 			clif_wisexin(sd, type, 1); // fail
 			return;
 		}

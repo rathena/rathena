@@ -35,7 +35,7 @@ int inter_pet_tosql(int pet_id, struct s_pet* p)
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` "
 			"(`class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incubate`,`autofeed`) "
 			"VALUES ('%d', '%s', '%d', '%d', '%d', '%u', '%u', '%d', '%d', '%d', '%d', '%d')",
-			schema_config.pet_db, p->class_, esc_name, p->account_id, p->char_id, p->level, p->egg_id,
+			charserv_table(pet_table), p->class_, esc_name, p->account_id, p->char_id, p->level, p->egg_id,
 			p->equip, p->intimate, p->hungry, p->rename_flag, p->incubate, p->autofeed) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -46,7 +46,7 @@ int inter_pet_tosql(int pet_id, struct s_pet* p)
 	else
 	{// Update pet.
 		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class`='%d',`name`='%s',`account_id`='%d',`char_id`='%d',`level`='%d',`egg_id`='%u',`equip`='%u',`intimate`='%d',`hungry`='%d',`rename_flag`='%d',`incubate`='%d',`autofeed`='%d' WHERE `pet_id`='%d'",
-			schema_config.pet_db, p->class_, esc_name, p->account_id, p->char_id, p->level, p->egg_id,
+			charserv_table(pet_table), p->class_, esc_name, p->account_id, p->char_id, p->level, p->egg_id,
 			p->equip, p->intimate, p->hungry, p->rename_flag, p->incubate, p->autofeed, p->pet_id) )
 		{
 			Sql_ShowDebug(sql_handle);
@@ -71,7 +71,7 @@ int inter_pet_fromsql(int pet_id, struct s_pet* p)
 
 	//`pet` (`pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incubate`,`autofeed`)
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incubate`,`autofeed` FROM `%s` WHERE `pet_id`='%d'", schema_config.pet_db, pet_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `pet_id`, `class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incubate`,`autofeed` FROM `%s` WHERE `pet_id`='%d'", charserv_table(pet_table), pet_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return 0;
@@ -118,7 +118,7 @@ void inter_pet_sql_final(void){
 int inter_pet_delete(int pet_id){
 	ShowInfo("delete pet request: %d...\n",pet_id);
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `pet_id`='%d'", schema_config.pet_db, pet_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `pet_id`='%d'", charserv_table(pet_table), pet_id) )
 		Sql_ShowDebug(sql_handle);
 	return 0;
 }

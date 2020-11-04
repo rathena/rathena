@@ -30,7 +30,7 @@ int mail_fromsql(uint32 char_id, struct mail_data* md)
 	md->full = false;
 
 	// First we prefill the msg ids
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id` FROM `%s` WHERE `dest_id`='%d' AND `status` < 3 ORDER BY `id` LIMIT %d", schema_config.mail_db, char_id, MAIL_MAX_INBOX + 1) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id` FROM `%s` WHERE `dest_id`='%d' AND `status` < 3 ORDER BY `id` LIMIT %d", charserv_table(mail_table), char_id, MAIL_MAX_INBOX + 1) ){
 		Sql_ShowDebug(sql_handle);
 		return 0;
 	}
@@ -59,7 +59,7 @@ int mail_fromsql(uint32 char_id, struct mail_data* md)
 
 		if( msg->status == MAIL_NEW )
 		{
-			if ( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", schema_config.mail_db, MAIL_UNREAD, msg->id) )
+			if ( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", charserv_table(mail_table), MAIL_UNREAD, msg->id) )
 				Sql_ShowDebug(sql_handle);
 
 			msg->status = MAIL_UNREAD;
@@ -84,7 +84,7 @@ int mail_savemessage(struct mail_message* msg)
 
 	// build message save query
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "INSERT INTO `%s` (`send_name`, `send_id`, `dest_name`, `dest_id`, `title`, `message`, `time`, `status`, `zeny`,`type`", schema_config.mail_db);
+	StringBuf_Printf(&buf, "INSERT INTO `%s` (`send_name`, `send_id`, `dest_name`, `dest_id`, `title`, `message`, `time`, `status`, `zeny`,`type`", charserv_table(mail_table));
 	StringBuf_Printf(&buf, ") VALUES (?, '%d', ?, '%d', ?, ?, '%lu', '%d', '%d', '%d'", msg->send_id, msg->dest_id, (unsigned long)msg->timestamp, msg->status, msg->zeny, msg->type);
 	StringBuf_AppendStr(&buf, ")");
 
@@ -106,7 +106,7 @@ int mail_savemessage(struct mail_message* msg)
 	SqlStmt_Free(stmt);
 	
 	StringBuf_Clear(&buf);
-	StringBuf_Printf(&buf,"INSERT INTO `%s` (`id`, `index`, `amount`, `nameid`, `refine`, `attribute`, `identify`, `unique_id`, `bound`", schema_config.mail_attachment_db);
+	StringBuf_Printf(&buf,"INSERT INTO `%s` (`id`, `index`, `amount`, `nameid`, `refine`, `attribute`, `identify`, `unique_id`, `bound`", charserv_table(mail_attachment_table));
 	for (j = 0; j < MAX_SLOTS; j++)
 		StringBuf_Printf(&buf, ", `card%d`", j);
 	for (j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
@@ -155,7 +155,7 @@ bool mail_loadmessage(int mail_id, struct mail_message* msg)
 	StringBuf buf;
 	char* data;
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id`,`send_name`,`send_id`,`dest_name`,`dest_id`,`title`,`message`,`time`,`status`,`zeny`,`type` FROM `%s` WHERE `id` = '%d'", schema_config.mail_db, mail_id )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id`,`send_name`,`send_id`,`dest_name`,`dest_id`,`title`,`message`,`time`,`status`,`zeny`,`type` FROM `%s` WHERE `id` = '%d'", charserv_table(mail_table), mail_id )
 	||  SQL_SUCCESS != Sql_NextRow(sql_handle) ){
 		Sql_ShowDebug(sql_handle);
 		Sql_FreeResult(sql_handle);
@@ -193,7 +193,7 @@ bool mail_loadmessage(int mail_id, struct mail_message* msg)
 		StringBuf_Printf(&buf, ", `option_val%d`", j);
 		StringBuf_Printf(&buf, ", `option_parm%d`", j);
 	}
-	StringBuf_Printf(&buf, " FROM `%s`", schema_config.mail_attachment_db);
+	StringBuf_Printf(&buf, " FROM `%s`", charserv_table(mail_attachment_table));
 	StringBuf_Printf(&buf, " WHERE `id` = '%d'", mail_id);
 	StringBuf_AppendStr(&buf, " ORDER BY `index` ASC");
 	StringBuf_Printf(&buf, " LIMIT %d", MAIL_MAX_ITEM);
@@ -250,7 +250,7 @@ int mail_timer_sub( int limit, enum mail_inbox_type type ){
 
 	memset(mails, 0, sizeof(mails));
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id`,`char_id`,`account_id` FROM `%s` `m` INNER JOIN `%s` `c` ON `c`.`char_id`=`m`.`dest_id` WHERE `type` = '%d' AND `time` <= UNIX_TIMESTAMP( NOW() - INTERVAL %d DAY ) ORDER BY `id` LIMIT %d", schema_config.mail_db, schema_config.char_db, type, limit, MAIL_MAX_INBOX + 1) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `id`,`char_id`,`account_id` FROM `%s` `m` INNER JOIN `%s` `c` ON `c`.`char_id`=`m`.`dest_id` WHERE `type` = '%d' AND `time` <= UNIX_TIMESTAMP( NOW() - INTERVAL %d DAY ) ORDER BY `id` LIMIT %d", charserv_table(mail_table), charserv_table(char_table), type, limit, MAIL_MAX_INBOX + 1) ){
 		Sql_ShowDebug(sql_handle);
 		return 0;
 	}
@@ -331,7 +331,7 @@ void mapif_parse_Mail_requestinbox(int fd)
 void mapif_parse_Mail_read(int fd)
 {
 	int mail_id = RFIFOL(fd,2);
-	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", schema_config.mail_db, MAIL_READ, mail_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `status` = '%d' WHERE `id` = '%d'", charserv_table(mail_table), MAIL_READ, mail_id) )
 		Sql_ShowDebug(sql_handle);
 }
 
@@ -339,7 +339,7 @@ void mapif_parse_Mail_read(int fd)
  * Client Attachment Request
  *------------------------------------------*/
 bool mail_DeleteAttach(int mail_id){
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_attachment_db, mail_id ) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", charserv_table(mail_attachment_table), mail_id ) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -366,7 +366,7 @@ void mapif_Mail_getattach(int fd, uint32 char_id, int mail_id, int type)
 
 	if( type & MAIL_ATT_ZENY ){
 		if( msg.zeny > 0 ){
-			if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `zeny` = 0 WHERE `id` = '%d'", schema_config.mail_db, mail_id ) ){
+			if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `zeny` = 0 WHERE `id` = '%d'", charserv_table(mail_table), mail_id ) ){
 				Sql_ShowDebug(sql_handle);
 				return;
 			}
@@ -424,8 +424,8 @@ void mapif_Mail_delete(int fd, uint32 char_id, int mail_id, bool deleted)
 	bool failed = false;
 
 	if( !deleted ){
-		if ( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_db, mail_id) ||
-			SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_attachment_db, mail_id) )
+		if ( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", charserv_table(mail_table), mail_id) ||
+			SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", charserv_table(mail_attachment_table), mail_id) )
 		{
 			Sql_ShowDebug(sql_handle);
 			failed = true;
@@ -481,8 +481,8 @@ void mapif_Mail_return(int fd, uint32 char_id, int mail_id)
 	{
 		if( msg.dest_id != char_id)
 			return;
-		else if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_db, mail_id)
-			|| SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_attachment_db, mail_id) )
+		else if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", charserv_table(mail_table), mail_id)
+			|| SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", charserv_table(mail_attachment_table), mail_id) )
 			Sql_ShowDebug(sql_handle);
 		// If it was not sent by the server, since we do not want to return mails to the server
 		else if( msg.send_id != 0 )
@@ -553,7 +553,7 @@ void mapif_parse_Mail_send(int fd)
 	memcpy(&msg, RFIFOP(fd,8), sizeof(struct mail_message));
 
 	if( msg.dest_id != 0 ){
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`, `name` FROM `%s` WHERE `char_id` = '%u'", schema_config.char_db, msg.dest_id) ){
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`, `name` FROM `%s` WHERE `char_id` = '%u'", charserv_table(char_table), msg.dest_id) ){
 			Sql_ShowDebug(sql_handle);
 			return;
 		}
@@ -573,7 +573,7 @@ void mapif_parse_Mail_send(int fd)
 
 	// Try to find the Dest Char by Name
 	Sql_EscapeStringLen(sql_handle, esc_name, msg.dest_name, strnlen(msg.dest_name, NAME_LENGTH));
-	if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`, `char_id` FROM `%s` WHERE `name` = '%s'", schema_config.char_db, esc_name) ){
+	if ( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`, `char_id` FROM `%s` WHERE `name` = '%s'", charserv_table(char_table), esc_name) ){
 		Sql_ShowDebug(sql_handle);
 	}else if ( SQL_SUCCESS == Sql_NextRow(sql_handle) ){
 #if PACKETVER < 20150513
@@ -653,7 +653,7 @@ void mapif_parse_Mail_receiver_check( int fd ){
 	// Try to find the Dest Char by Name
 	Sql_EscapeStringLen( sql_handle, esc_name, name, strnlen( name, NAME_LENGTH ) );
 
-	if( SQL_ERROR == Sql_Query( sql_handle, "SELECT `char_id`,`class`,`base_level` FROM `%s` WHERE `name` = '%s'", schema_config.char_db, esc_name ) ){
+	if( SQL_ERROR == Sql_Query( sql_handle, "SELECT `char_id`,`class`,`base_level` FROM `%s` WHERE `name` = '%s'", charserv_table(char_table), esc_name ) ){
 		Sql_ShowDebug(sql_handle);
 	}else if( SQL_SUCCESS == Sql_NextRow(sql_handle) ){
 		char *data;

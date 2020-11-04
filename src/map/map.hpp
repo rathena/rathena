@@ -16,7 +16,6 @@
 #include "../common/mmo.hpp"
 #include "../common/msg_conf.hpp"
 #include "../common/timer.hpp"
-#include "../config/core.hpp"
 
 #include "script.hpp"
 
@@ -56,6 +55,120 @@ void map_msg_reload(void);
 #define MAX_IGNORE_LIST 20 	// official is 14
 #define MAX_VENDING 12
 #define MAX_MAP_SIZE 512*512 	// Wasn't there something like this already? Can't find it.. [Shinryo]
+
+/// Type of 'save_settings'
+enum e_save_settings_type : uint16 {
+	CHARSAVE_NONE = 0x000, /// Never
+	CHARSAVE_TRADE = 0x001, /// After trading
+	CHARSAVE_VENDING = 0x002, /// After vending (open/transaction)
+	CHARSAVE_STORAGE = 0x004, /// After closing storage/guild storage.
+	CHARSAVE_PET = 0x008, /// After hatching/returning to egg a pet.
+	CHARSAVE_MAIL = 0x010, /// After successfully sending a mail with attachment
+	CHARSAVE_AUCTION = 0x020, /// After successfully submitting an item for auction
+	CHARSAVE_QUEST = 0x040, /// After successfully get/delete/complete a quest
+	CHARSAVE_BANK = 0x080, /// After every bank transaction (deposit/withdraw)
+	CHARSAVE_ATTENDANCE = 0x100, /// After every attendence reward
+	CHARSAVE_ALL = 0xFFF, /// Always
+};
+
+struct MapServer_Schema {
+	bool db_use_sqldbs;
+
+	std::string buyingstores_table;			///< Buyingstore table (buyer & autotrader)
+	std::string buyingstore_items_table;	///< Buyingstore items table (buyer & autotrader)
+	std::string guild_storage_log_table;	///< Guild Storage Log table
+	std::string item_cash_db_table;			///< Item cash table
+	std::string item_cash_db2_table;		///< Item cash table
+	std::string item_db_table;				///< Item DB table
+	std::string item_db2_table;				///< Item DB table
+	std::string item_db_re_table;			///< Item DB table
+	std::string mapreg_table;				///< Mapreg table, used in mapreg.cpp
+	std::string market_table;				///< Market table
+	std::string mob_db_table;				///< Mob DB table
+	std::string mob_db_re_table;			///< Mob DB table
+	std::string mob_db2_table;				///< Mob DB table
+	std::string mob_skill_db_table;			///< Mob Skill table
+	std::string mob_skill_db_re_table;		///< Mob Skill table
+	std::string mob_skill_db2_table;		///< Mob Skill table
+	std::string roulette_table;				///< Roulette table
+	std::string sales_table;				///< Sales table
+	std::string vendings_table;				///< Vending table (vendor & autotrader)
+	std::string vending_items_table;		///< Vending items table (vendor & autotrader)
+};
+extern struct MapServer_Schema mapserv_schema_config; /// map-server tables
+/// Get map-server table value. Table names @see MapServer_Schema
+#define mapserv_table(table) ( mapserv_schema_config.table.c_str() )
+
+struct MapServer_File {
+	std::string group;		///< Prefered file for groups.conf
+	std::string atcommand;	///< Prefered file for atcommand_athena.conf
+	std::string channel;	///< Prefered file for channels.conf
+	std::string motd;		///< Prefered file for MOTD
+};
+extern struct MapServer_File mapserv_file_config;
+/// Get file name
+#define mapserv_file(filename) ( mapserv_file_config.filename.c_str() )
+
+struct Map_Config {
+	// Map-server
+	uint16 map_server_port;
+	std::string map_server_ip;
+	std::string map_server_id;
+	std::string map_server_pw;
+	std::string map_server_db;
+	std::string default_codepage;
+
+	// Log Database
+	uint16 log_db_port;
+	std::string log_db_ip;
+	std::string log_db_id;
+	std::string log_db_pw;
+	std::string log_db_db;
+
+	char wisp_server_name[NAME_LENGTH]; // can be modified in char-server configuration file
+
+	uint32 autosave_interval;
+	uint32 minsave_interval;
+	e_save_settings_type save_settings;
+
+	bool agit_flag;
+	bool agit2_flag;
+	bool agit3_flag;
+	bool night_flag; // False = day, True = night [Yor]
+
+	bool console;
+	bool enable_spy; //To enable/disable @spy commands, which consume too much cpu time when sending packets. [Skotlex]
+	bool enable_grf;	//To enable/disable reading maps from GRF files, bypassing mapcache [blackhole89]
+
+	bool check_tables;
+};
+extern struct Map_Config map_config;
+
+/// Getter of map_server_port
+#define map_server_port()         ( map_config.map_server_port )
+/// Getter of map_server_ip Hostname
+#define map_server_ip()           ( map_config.map_server_ip.c_str() )
+/// Getter of map_server_id Username
+#define map_server_id()           ( map_config.map_server_id.c_str() )
+/// Getter of map_server_pw Password
+#define map_server_pw()           ( map_config.map_server_pw.c_str() )
+/// Getter of map_server_db Database
+#define map_server_db()           ( map_config.map_server_db.c_str() )
+/// Getter of map's default_codepage
+#define map_server_codepage()     ( map_config.default_codepage.c_str() )
+/// Get map's default_codepage length
+#define map_server_codepage_len() ( map_config.default_codepage.size() )
+
+/// Getter of log_db_port
+#define log_db_port() ( map_config.log_db_port )
+/// Getter of log_db_ip Hostname
+#define log_db_ip()   ( map_config.log_db_ip.c_str() )
+/// Getter of log_db_id Username
+#define log_db_id()   ( map_config.log_db_id.c_str() )
+/// Getter of log_db_pw Password
+#define log_db_pw()   ( map_config.log_db_pw.c_str() )
+/// Getter of log_db_db Database
+#define log_db_db()   ( map_config.log_db_db.c_str() )
 
 //The following system marks a different job ID system used by the map server,
 //which makes a lot more sense than the normal one. [Skotlex]
@@ -789,17 +902,8 @@ void map_setgatcell(int16 m, int16 x, int16 y, int gat);
 extern struct map_data map[];
 extern int map_num;
 
-extern int autosave_interval;
-extern int minsave_interval;
-extern int16 save_settings;
-extern int night_flag; // 0=day, 1=night [Yor]
-extern int enable_spy; //Determines if @spy commands are active.
-
 // Agit Flags
-extern bool agit_flag;
-extern bool agit2_flag;
-extern bool agit3_flag;
-#define is_agit_start() (agit_flag || agit2_flag || agit3_flag)
+#define is_agit_start() (map_config.agit_flag || map_config.agit2_flag || map_config.agit3_flag)
 
 /**
  * Specifies maps where players may hit each other
@@ -810,7 +914,7 @@ inline bool mapdata_flag_vs(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || ((agit_flag || agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]) || mapdata->flag[MF_BATTLEGROUND])
+	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || ((map_config.agit_flag || map_config.agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (map_config.agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]) || mapdata->flag[MF_BATTLEGROUND])
 		return true;
 
 	return false;
@@ -840,7 +944,7 @@ inline bool mapdata_flag_gvg(struct map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
-	if (mapdata->flag[MF_GVG] || ((agit_flag || agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]))
+	if (mapdata->flag[MF_GVG] || ((map_config.agit_flag || map_config.agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (map_config.agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]))
 		return true;
 
 	return false;
@@ -972,33 +1076,12 @@ inline bool map_flag_gvg2_no_te(int16 m) {
 	return mapdata_flag_gvg2_no_te(mapdata);
 }
 
-extern char motd_txt[];
-extern char charhelp_txt[];
-extern char channel_conf[];
-
-extern char wisp_server_name[];
-
 struct s_map_default {
 	char mapname[MAP_NAME_LENGTH];
 	unsigned short x;
 	unsigned short y;
 };
 extern struct s_map_default map_default;
-
-/// Type of 'save_settings'
-enum save_settings_type {
-	CHARSAVE_NONE		= 0x000, /// Never
-	CHARSAVE_TRADE		= 0x001, /// After trading
-	CHARSAVE_VENDING	= 0x002, /// After vending (open/transaction)
-	CHARSAVE_STORAGE	= 0x004, /// After closing storage/guild storage.
-	CHARSAVE_PET		= 0x008, /// After hatching/returning to egg a pet.
-	CHARSAVE_MAIL		= 0x010, /// After successfully sending a mail with attachment
-	CHARSAVE_AUCTION	= 0x020, /// After successfully submitting an item for auction
-	CHARSAVE_QUEST		= 0x040, /// After successfully get/delete/complete a quest
-	CHARSAVE_BANK		= 0x080, /// After every bank transaction (deposit/withdraw)
-	CHARSAVE_ATTENDANCE	= 0x100, /// After every attendence reward
-	CHARSAVE_ALL		= 0xFFF, /// Always
-};
 
 // users
 void map_setusers(int);
@@ -1177,25 +1260,9 @@ typedef struct elemental_data	TBL_ELEM;
 
 #include "../common/sql.hpp"
 
-extern int db_use_sqldbs;
-
 extern Sql* mmysql_handle;
 extern Sql* qsmysql_handle;
 extern Sql* logmysql_handle;
-
-extern char buyingstores_table[32];
-extern char buyingstore_items_table[32];
-extern char item_table[32];
-extern char item2_table[32];
-extern char mob_table[32];
-extern char mob2_table[32];
-extern char mob_skill_table[32];
-extern char mob_skill2_table[32];
-extern char vendings_table[32];
-extern char vending_items_table[32];
-extern char market_table[32];
-extern char roulette_table[32];
-extern char guild_storage_log_table[32];
 
 void do_shutdown(void);
 

@@ -3179,7 +3179,7 @@ ACMD_FUNC(night)
 {
 	nullpo_retr(-1, sd);
 
-	if (night_flag != 1) {
+	if (!map_config.night_flag) {
 		map_night_timer(night_timer_tid, 0, 0, 1);
 	} else {
 		clif_displaymessage(fd, msg_txt(sd,89)); // Night mode is already enabled.
@@ -3196,7 +3196,7 @@ ACMD_FUNC(day)
 {
 	nullpo_retr(-1, sd);
 
-	if (night_flag != 0) {
+	if (map_config.night_flag) {
 		map_day_timer(day_timer_tid, 0, 0, 1);
 	} else {
 		clif_displaymessage(fd, msg_txt(sd,90)); // Day mode is already enabled.
@@ -3608,13 +3608,13 @@ ACMD_FUNC(agitstart)
 {
 	nullpo_retr(-1, sd);
 
-	if( guild_agit_start() ){
-		clif_displaymessage(fd, msg_txt(sd,72)); // War of Emperium has been initiated.
+	if (guild_agit_start()) {
+		clif_displaymessage(fd, msg_txt(sd, 72)); // War of Emperium has been initiated.
 		return 0;
-	}else{
-		clif_displaymessage(fd, msg_txt(sd,73)); // War of Emperium is currently in progress.
-		return -1;
-	}
+	} else
+		clif_displaymessage(fd, msg_txt(sd, 73)); // War of Emperium is currently in progress.
+
+	return -1;
 }
 
 /**
@@ -3624,13 +3624,13 @@ ACMD_FUNC(agitstart2)
 {
 	nullpo_retr(-1, sd);
 
-	if( guild_agit2_start() ){
-		clif_displaymessage(fd, msg_txt(sd,403)); // "War of Emperium SE has been initiated."
+	if (guild_agit2_start()) {
+		clif_displaymessage(fd, msg_txt(sd, 403)); // "War of Emperium SE has been initiated."
 		return 0;
-	}else{
-		clif_displaymessage(fd, msg_txt(sd,404)); // "War of Emperium SE is currently in progress."
-		return -1;
-	}
+	} else
+		clif_displaymessage(fd, msg_txt(sd, 404)); // "War of Emperium SE is currently in progress."
+
+	return -1;
 }
 
 /**
@@ -3640,13 +3640,13 @@ ACMD_FUNC(agitstart3)
 {
 	nullpo_retr(-1, sd);
 
-	if( guild_agit3_start() ){
+	if (guild_agit3_start()) {
 		clif_displaymessage(fd, msg_txt(sd,749)); // "War of Emperium TE has been initiated."
-		return 0;
-	}else{
-		clif_displaymessage(fd, msg_txt(sd,750)); // "War of Emperium TE is currently in progress."
 		return -1;
-	}
+	} else
+		clif_displaymessage(fd, msg_txt(sd,750)); // "War of Emperium TE is currently in progress."
+
+	return 0;
 }
 
 /**
@@ -3656,13 +3656,13 @@ ACMD_FUNC(agitend)
 {
 	nullpo_retr(-1, sd);
 
-	if( guild_agit_end() ){
+	if (guild_agit_end()) {
 		clif_displaymessage(fd, msg_txt(sd,74)); // War of Emperium has been ended.
 		return 0;
-	}else{
+	} else
 		clif_displaymessage(fd, msg_txt(sd,75)); // War of Emperium is currently not in progress.
-		return -1;
-	}
+
+	return -1;
 }
 
 /**
@@ -3672,13 +3672,13 @@ ACMD_FUNC(agitend2)
 {
 	nullpo_retr(-1, sd);
 
-	if( guild_agit2_end() ){
+	if (guild_agit2_end()) {
 		clif_displaymessage(fd, msg_txt(sd,405)); // "War of Emperium SE has been ended."
 		return 0;
-	}else{
+	} else
 		clif_displaymessage(fd, msg_txt(sd,406)); // "War of Emperium SE is currently not in progress."
-		return -1;
-	}
+
+	return -1;
 }
 
 /**
@@ -3688,13 +3688,13 @@ ACMD_FUNC(agitend3)
 {
 	nullpo_retr(-1, sd);
 
-	if( guild_agit3_end() ){
-		clif_displaymessage(fd, msg_txt(sd,751));// War of Emperium TE has been ended.
+	if (guild_agit3_end()) {
+		clif_displaymessage(fd, msg_txt(sd,751)); // War of Emperium TE has been ended.
 		return 0;
-	}else{
-		clif_displaymessage(fd, msg_txt(sd,752));// War of Emperium TE is currently not in progress.
-		return -1;
-	}
+	} else
+		clif_displaymessage(fd, msg_txt(sd,752)); // War of Emperium TE is currently not in progress.
+
+	return -1;
 }
 
 /*==========================================
@@ -4487,7 +4487,7 @@ ACMD_FUNC(guildspy)
 	memset(guild_name, '\0', sizeof(guild_name));
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (!enable_spy)
+	if (!map_config.enable_spy)
 	{
 		clif_displaymessage(fd, msg_txt(sd,1125)); // The mapserver has spy command support disabled.
 		return -1;
@@ -4528,7 +4528,7 @@ ACMD_FUNC(partyspy)
 	memset(party_name, '\0', sizeof(party_name));
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (!enable_spy)
+	if (!map_config.enable_spy)
 	{
 		clif_displaymessage(fd, msg_txt(sd,1125)); // The mapserver has spy command support disabled.
 		return -1;
@@ -4566,7 +4566,7 @@ ACMD_FUNC(clanspy){
 	memset(clan_name, '\0', sizeof(clan_name));
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if( !enable_spy ){
+	if( !map_config.enable_spy ){
 		clif_displaymessage(fd, msg_txt(sd, 1125)); // The mapserver has spy command support disabled.
 		return -1;
 	}
@@ -4864,12 +4864,12 @@ ACMD_FUNC(servertime)
 	clif_displaymessage(fd, temp);
 
 	if (battle_config.night_duration == 0 && battle_config.day_duration == 0) {
-		if (night_flag == 0)
+		if (!map_config.night_flag)
 			clif_displaymessage(fd, msg_txt(sd,231)); // Game time: The game is in permanent daylight.
 		else
 			clif_displaymessage(fd, msg_txt(sd,232)); // Game time: The game is in permanent night.
 	} else if (battle_config.night_duration == 0)
-		if (night_flag == 1) { // we start with night
+		if (map_config.night_flag == 1) { // we start with night
 			if ((timer_data = get_timer(day_timer_tid)) != nullptr) {
 				sprintf(temp, msg_txt(sd,233), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in night for %s.
 				clif_displaymessage(fd, temp);
@@ -4879,7 +4879,7 @@ ACMD_FUNC(servertime)
 		} else
 			clif_displaymessage(fd, msg_txt(sd,231)); // Game time: The game is in permanent daylight.
 	else if (battle_config.day_duration == 0)
-		if (night_flag == 0) { // we start with day
+		if (map_config.night_flag == 0) { // we start with day
 			if ((timer_data = get_timer(night_timer_tid)) != nullptr) {
 				sprintf(temp, msg_txt(sd,235), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in daylight for %s.
 				clif_displaymessage(fd, temp);
@@ -4890,7 +4890,7 @@ ACMD_FUNC(servertime)
 			clif_displaymessage(fd, msg_txt(sd,232)); // Game time: The game is in permanent night.
 	else {
 		const struct TimerData * timer_data2;
-		if (night_flag == 0) {
+		if (!map_config.night_flag) {
 			timer_data = get_timer(night_timer_tid);
 			timer_data2 = get_timer(day_timer_tid);
 			sprintf(temp, msg_txt(sd,235), txt_time(DIFF_TICK(timer_data->tick,gettick())/1000)); // Game time: The game is in daylight for %s.
@@ -6112,11 +6112,11 @@ ACMD_FUNC(autotrade) {
 		sd->state.block_action |= PCBLOCK_IMMUNE;
 
 	if( sd->state.vending ){
-		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", vendings_table, sd->vender_id ) != SQL_SUCCESS ){
+		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", mapserv_table(vendings_table), sd->vender_id ) != SQL_SUCCESS ){
 			Sql_ShowDebug( mmysql_handle );
 		}
 	}else if( sd->state.buyingstore ){
-		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", buyingstores_table, sd->buyer_id ) != SQL_SUCCESS ){
+		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", mapserv_table(buyingstores_table), sd->buyer_id ) != SQL_SUCCESS ){
 			Sql_ShowDebug( mmysql_handle );
 		}
 	}
@@ -7275,7 +7275,7 @@ ACMD_FUNC(gmotd)
 {
 	FILE* fp;
 
-	if( ( fp = fopen(motd_txt, "r") ) != NULL )
+	if( ( fp = fopen(mapserv_file(motd), "r") ) != NULL )
 	{
 		char buf[CHAT_SIZE_MAX];
 		size_t len;

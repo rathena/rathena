@@ -676,6 +676,7 @@ int config_read_file(config_t *config, const char *filename)
   {
     config->error_text = __io_error;
     config->error_type = CONFIG_ERR_FILE_IO;
+    config->error_file = filename; // Put error filename here, for more info
     return(CONFIG_FALSE);
   }
 

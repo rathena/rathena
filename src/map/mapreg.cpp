@@ -20,9 +20,7 @@
 static struct eri *mapreg_ers;
 
 bool skip_insert = false;
-
-static char mapreg_table[32] = "mapreg";
-static bool mapreg_dirty = false; // Whether there are modified regs to be saved
+static bool mapreg_dirty = false;
 struct reg_db regs;
 
 #define MAPREG_AUTOSAVE_INTERVAL (300*1000)
@@ -87,7 +85,7 @@ bool mapreg_setreg(int64 uid, int64 val)
 			if (name[1] != '@' && !skip_insert) {// write new variable to database
 				char esc_name[32 * 2 + 1];
 				Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
-				if (SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`varname`,`index`,`value`) VALUES ('%s','%" PRIu32 "','%" PRId64 "')", mapreg_table, esc_name, i, val))
+				if (SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`varname`,`index`,`value`) VALUES ('%s','%" PRIu32 "','%" PRId64 "')", mapserv_table(mapreg_table), esc_name, i, val))
 					Sql_ShowDebug(mmysql_handle);
 			}
 			i64db_put(regs.vars, uid, m);
@@ -103,7 +101,7 @@ bool mapreg_setreg(int64 uid, int64 val)
 		if (name[1] != '@') {// Remove from database because it is unused.
 			char esc_name[32 * 2 + 1];
 			Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
-			if (SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `varname`='%s' AND `index`='%" PRIu32 "'", mapreg_table, esc_name, i))
+			if (SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `varname`='%s' AND `index`='%" PRIu32 "'", mapserv_table(mapreg_table), esc_name, i))
 				Sql_ShowDebug(mmysql_handle);
 		}
 	}
@@ -131,7 +129,7 @@ bool mapreg_setregstr(int64 uid, const char* str)
 		if (name[1] != '@') {
 			char esc_name[32 * 2 + 1];
 			Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
-			if (SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `varname`='%s' AND `index`='%" PRIu32 "'", mapreg_table, esc_name, i))
+			if (SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `varname`='%s' AND `index`='%" PRIu32 "'", mapserv_table(mapreg_table), esc_name, i))
 				Sql_ShowDebug(mmysql_handle);
 		}
 		if ((m = static_cast<mapreg_save *>(i64db_get(regs.vars, uid)))) {
@@ -165,7 +163,7 @@ bool mapreg_setregstr(int64 uid, const char* str)
 				char esc_str[255 * 2 + 1];
 				Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
 				Sql_EscapeStringLen(mmysql_handle, esc_str, str, strnlen(str, 255));
-				if (SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`varname`,`index`,`value`) VALUES ('%s','%" PRIu32 "','%s')", mapreg_table, esc_name, i, esc_str))
+				if (SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`varname`,`index`,`value`) VALUES ('%s','%" PRIu32 "','%s')", mapserv_table(mapreg_table), esc_name, i, esc_str))
 					Sql_ShowDebug(mmysql_handle);
 			}
 			i64db_put(regs.vars, uid, m);
@@ -192,7 +190,7 @@ static void script_load_mapreg(void)
 	char value[255+1];
 	uint32 length;
 
-	if ( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `varname`, `index`, `value` FROM `%s`", mapreg_table)
+	if ( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `varname`, `index`, `value` FROM `%s`", mapserv_table(mapreg_table))
 	  || SQL_ERROR == SqlStmt_Execute(stmt)
 	  ) {
 		SqlStmt_ShowDebug(stmt);
@@ -243,14 +241,14 @@ static void script_save_mapreg(void)
 				if (!m->is_string) {
 					char esc_name[32 * 2 + 1];
 					Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
-					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%" PRId64 "' WHERE `varname`='%s' AND `index`='%" PRIu32 "' LIMIT 1", mapreg_table, m->u.i, esc_name, i))
+					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%" PRId64 "' WHERE `varname`='%s' AND `index`='%" PRIu32 "' LIMIT 1", mapserv_table(mapreg_table), m->u.i, esc_name, i))
 						Sql_ShowDebug(mmysql_handle);
 				} else {
 					char esc_str[2 * 255 + 1];
 					char esc_name[32 * 2 + 1];
 					Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
 					Sql_EscapeStringLen(mmysql_handle, esc_str, m->u.str, safestrnlen(m->u.str, 255));
-					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%s' WHERE `varname`='%s' AND `index`='%" PRIu32 "' LIMIT 1", mapreg_table, esc_str, esc_name, i))
+					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%s' WHERE `varname`='%s' AND `index`='%" PRIu32 "' LIMIT 1", mapserv_table(mapreg_table), esc_str, esc_name, i))
 						Sql_ShowDebug(mmysql_handle);
 				}
 				m->save = false;
@@ -342,17 +340,4 @@ void mapreg_init(void)
 
 	add_timer_func_list(script_autosave_mapreg, "script_autosave_mapreg");
 	add_timer_interval(gettick() + MAPREG_AUTOSAVE_INTERVAL, script_autosave_mapreg, 0, 0, MAPREG_AUTOSAVE_INTERVAL);
-}
-
-/**
- * Loads the mapreg configuration file.
- */
-bool mapreg_config_read(const char* w1, const char* w2)
-{
-	if(!strcmpi(w1, "mapreg_table"))
-		safestrncpy(mapreg_table, w2, sizeof(mapreg_table));
-	else
-		return false;
-
-	return true;
 }

@@ -21,7 +21,7 @@
 static DBMap* clan_db; // int clan_id -> struct clan*
 
 int inter_clan_removemember_tosql(uint32 account_id, uint32 char_id){
-	if( SQL_ERROR == Sql_Query( sql_handle, "UPDATE `%s` SET `clan_id` = '0' WHERE `char_id` = '%d'", schema_config.char_db, char_id ) ){
+	if( SQL_ERROR == Sql_Query( sql_handle, "UPDATE `%s` SET `clan_id` = '0' WHERE `char_id` = '%d'", charserv_table(char_table), char_id ) ){
 		Sql_ShowDebug( sql_handle );
 		return 1;
 	}else{
@@ -44,7 +44,7 @@ struct clan* inter_clan_fromsql(int clan_id){
 		return clan;
 	}
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `name`, `master`, `mapname`, `max_member` FROM `%s` WHERE `clan_id`='%d'", schema_config.clan_table, clan_id) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `name`, `master`, `mapname`, `max_member` FROM `%s` WHERE `clan_id`='%d'", charserv_table(clan_table), clan_id) ){
 		Sql_ShowDebug(sql_handle);
 		return NULL;
 	}
@@ -71,7 +71,7 @@ struct clan* inter_clan_fromsql(int clan_id){
 		clan->max_member = MAX_CLAN;
 	}
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `opposition`,`alliance_id`,`name` FROM `%s` WHERE `clan_id`='%d'", schema_config.clan_alliance_table, clan_id) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `opposition`,`alliance_id`,`name` FROM `%s` WHERE `clan_id`='%d'", charserv_table(clan_alliance_table), clan_id) ){
 		Sql_ShowDebug(sql_handle);
 		aFree(clan);
 		return NULL;
@@ -209,7 +209,7 @@ int inter_clan_init(void){
 
 	clan_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
-	if( SQL_ERROR == Sql_Query( sql_handle, "SELECT `clan_id` FROM `%s`", schema_config.clan_table ) ){
+	if( SQL_ERROR == Sql_Query( sql_handle, "SELECT `clan_id` FROM `%s`", charserv_table(clan_table) ) ){
 		Sql_ShowDebug(sql_handle);
 		return 1;
 	}

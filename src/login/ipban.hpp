@@ -40,4 +40,6 @@ void ipban_init(void);
  */
 void ipban_final(void);
 
+void ipban_config_init(void);
+
 #endif /* IPBAN_HPP */

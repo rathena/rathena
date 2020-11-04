@@ -144,6 +144,9 @@ struct AccountDB {
 	/// @param self Database
 	/// @return Iterator
 	AccountDBIterator* (*iterator)(AccountDB* self);
+
+	void (*init_conf)(AccountDB* self);
+	bool (*check_tables)(AccountDB* self);
 };
 
 void mmo_send_global_accreg(AccountDB* self, int fd, uint32 account_id, uint32 char_id);

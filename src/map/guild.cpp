@@ -2228,11 +2228,11 @@ int guild_castledataloadack(int len, struct guild_castle *gc) {
  * Start WoE:FE and triggers all npc OnAgitStart
  */
 bool guild_agit_start(void){
-	if( agit_flag ){
+	if(map_config.agit_flag ){
 		return false;
 	}
 
-	agit_flag = true;
+	map_config.agit_flag = true;
 
 	npc_event_runall( script_config.agit_start_event_name );
 
@@ -2243,11 +2243,11 @@ bool guild_agit_start(void){
  * End WoE:FE and triggers all npc OnAgitEnd
  */
 bool guild_agit_end(void){
-	if( !agit_flag ){
+	if( !map_config.agit_flag ){
 		return false;
 	}
 
-	agit_flag = false;
+	map_config.agit_flag = false;
 
 	npc_event_runall( script_config.agit_end_event_name );
 
@@ -2258,11 +2258,11 @@ bool guild_agit_end(void){
  * Start WoE:SE and triggers all npc OnAgitStart2
  */
 bool guild_agit2_start(void){
-	if( agit2_flag ){
+	if(map_config.agit2_flag ){
 		return false;
 	}
 
-	agit2_flag = true;
+	map_config.agit2_flag = true;
 
 	npc_event_runall( script_config.agit_start2_event_name );
 
@@ -2273,11 +2273,11 @@ bool guild_agit2_start(void){
  * End WoE:SE and triggers all npc OnAgitEnd2
  */
 bool guild_agit2_end(void){
-	if( !agit2_flag ){
+	if( !map_config.agit2_flag ){
 		return false;
 	}
 
-	agit2_flag = false;
+	map_config.agit2_flag = false;
 
 	npc_event_runall( script_config.agit_end2_event_name );
 
@@ -2288,11 +2288,11 @@ bool guild_agit2_end(void){
  * Start WoE:TE and triggers all npc OnAgitStart3
  */
 bool guild_agit3_start(void){
-	if( agit3_flag ){
+	if(map_config.agit3_flag ){
 		return false;
 	}
 
-	agit3_flag = true;
+	map_config.agit3_flag = true;
 
 	npc_event_runall( script_config.agit_start3_event_name );
 
@@ -2303,11 +2303,11 @@ bool guild_agit3_start(void){
  * End WoE:TE and triggers all npc OnAgitEnd3
  */
 bool guild_agit3_end(void){
-	if( !agit3_flag ){
+	if( !map_config.agit3_flag ){
 		return false;
 	}
 
-	agit3_flag = false;
+	map_config.agit3_flag = false;
 
 	npc_event_runall( script_config.agit_end3_event_name );
 

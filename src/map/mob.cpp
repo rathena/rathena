@@ -4335,8 +4335,13 @@ static bool mob_readdb_sub(char* fields[], int columns, int current)
 static int mob_read_sqldb(void)
 {
 	const char* mob_db_name[] = {
-		mob_table,
-		mob2_table };
+#ifndef RENEWAL
+		mapserv_table(mob_db_table),
+#else
+		mapserv_table(mob_db_re_table),
+#endif
+		mapserv_table(mob_db2_table)
+	};
 	int fi;
 
 	for( fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi ) {
@@ -5063,8 +5068,13 @@ static void mob_readskilldb(const char* basedir, bool silent) {
 static int mob_read_sqlskilldb(void)
 {
 	const char* mob_skill_db_name[] = {
-		mob_skill_table,
-		mob_skill2_table };
+#ifndef RENEWAL
+		mapserv_table(mob_skill_db_table),
+#else
+		mapserv_table(mob_skill_db_re_table),
+#endif
+		mapserv_table(mob_skill_db2_table)
+	};
 	int fi;
 
 	if( battle_config.mob_skill_rate == 0 ) {
@@ -5539,7 +5549,7 @@ static void mob_load(void)
 	};
 
 	// First we parse all the possible monsters to add additional data in the second loop
-	if( db_use_sqldbs )
+	if( mapserv_schema_config.db_use_sqldbs )
 		mob_read_sqldb();
 	else {
 		for(int i = 0; i < ARRAYLENGTH(dbsubpath); i++){
@@ -5577,9 +5587,7 @@ static void mob_load(void)
 
 		sv_readdb(dbsubpath1, "mob_chat_db.txt", '#', 3, 3, -1, &mob_parse_row_chatdb, silent);
 
-		if( db_use_sqldbs && i == 0 )
-			mob_read_sqlskilldb();
-		else
+		if( mapserv_schema_config.db_use_sqldbs && i == 0 )
 			mob_readskilldb(dbsubpath2, silent);
 
 		sv_readdb(dbsubpath2, "mob_race2_db.txt", ',', 2, MAX_RACE2_MOBS, -1, &mob_readdb_race2, silent);

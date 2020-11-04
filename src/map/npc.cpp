@@ -3628,7 +3628,7 @@ int npc_instancedestroy(struct npc_data* nd)
 void npc_market_tosql(const char *exname, struct npc_item_list *list) {
 	SqlStmt* stmt = SqlStmt_Malloc(mmysql_handle);
 	if (SQL_ERROR == SqlStmt_Prepare(stmt, "REPLACE INTO `%s` (`name`,`nameid`,`price`,`amount`,`flag`) VALUES ('%s','%u','%d','%hu','%" PRIu8 "')",
-		market_table, exname, list->nameid, list->value, list->qty, list->flag) ||
+		mapserv_table(market_table), exname, list->nameid, list->value, list->qty, list->flag) ||
 		SQL_ERROR == SqlStmt_Execute(stmt))
 		SqlStmt_ShowDebug(stmt);
 	SqlStmt_Free(stmt);
@@ -3643,11 +3643,11 @@ void npc_market_tosql(const char *exname, struct npc_item_list *list) {
 void npc_market_delfromsql_(const char *exname, t_itemid nameid, bool clear) {
 	SqlStmt* stmt = SqlStmt_Malloc(mmysql_handle);
 	if (clear) {
-		if( SQL_ERROR == SqlStmt_Prepare(stmt, "DELETE FROM `%s` WHERE `name`='%s'", market_table, exname) ||
+		if( SQL_ERROR == SqlStmt_Prepare(stmt, "DELETE FROM `%s` WHERE `name`='%s'", mapserv_table(market_table), exname) ||
 			SQL_ERROR == SqlStmt_Execute(stmt))
 			SqlStmt_ShowDebug(stmt);
 	} else {
-		if (SQL_ERROR == SqlStmt_Prepare(stmt, "DELETE FROM `%s` WHERE `name`='%s' AND `nameid`='%u' LIMIT 1", market_table, exname, nameid) ||
+		if (SQL_ERROR == SqlStmt_Prepare(stmt, "DELETE FROM `%s` WHERE `name`='%s' AND `nameid`='%u' LIMIT 1", mapserv_table(market_table), exname, nameid) ||
 			SQL_ERROR == SqlStmt_Execute(stmt))
 			SqlStmt_ShowDebug(stmt);
 	}
@@ -3754,7 +3754,7 @@ static void npc_market_checkall(void) {
 static void npc_market_fromsql(void) {
 	uint32 count = 0;
 
-	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `name`,`nameid`,`price`,`amount`,`flag` FROM `%s` ORDER BY `name`", market_table)) {
+	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `name`,`nameid`,`price`,`amount`,`flag` FROM `%s` ORDER BY `name`", mapserv_table(market_table))) {
 		Sql_ShowDebug(mmysql_handle);
 		return;
 	}
@@ -3784,7 +3784,7 @@ static void npc_market_fromsql(void) {
 	}
 	Sql_FreeResult(mmysql_handle);
 
-	ShowStatus("Done loading '" CL_WHITE "%d" CL_RESET "' entries for '" CL_WHITE "%d" CL_RESET "' NPC Markets from '" CL_WHITE "%s" CL_RESET "' table.\n", count, db_size(NPCMarketDB), market_table);
+	ShowStatus("Done loading '" CL_WHITE "%d" CL_RESET "' entries for '" CL_WHITE "%d" CL_RESET "' NPC Markets from '" CL_WHITE "%s" CL_RESET "' table.\n", count, db_size(NPCMarketDB), mapserv_table(market_table));
 }
 #endif
 

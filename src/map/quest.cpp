@@ -538,7 +538,7 @@ int quest_add(struct map_session_data *sd, int quest_id)
 	clif_quest_add(sd, &sd->quest_log[n]);
 	clif_quest_update_objective(sd, &sd->quest_log[n]);
 
-	if( save_settings&CHARSAVE_QUEST )
+	if( map_config.save_settings&CHARSAVE_QUEST )
 		chrif_save(sd, CSAVE_NORMAL);
 
 	return 0;
@@ -588,7 +588,7 @@ int quest_change(struct map_session_data *sd, int qid1, int qid2)
 	clif_quest_add(sd, &sd->quest_log[i]);
 	clif_quest_update_objective(sd, &sd->quest_log[i]);
 
-	if( save_settings&CHARSAVE_QUEST )
+	if( map_config.save_settings&CHARSAVE_QUEST )
 		chrif_save(sd, CSAVE_NORMAL);
 
 	return 0;
@@ -627,7 +627,7 @@ int quest_delete(struct map_session_data *sd, int quest_id)
 
 	clif_quest_delete(sd, quest_id);
 
-	if( save_settings&CHARSAVE_QUEST )
+	if( map_config.save_settings&CHARSAVE_QUEST )
 		chrif_save(sd, CSAVE_NORMAL);
 
 	return 0;
@@ -786,7 +786,7 @@ int quest_update_status(struct map_session_data *sd, int quest_id, e_quest_state
 
 	clif_quest_delete(sd, quest_id);
 
-	if (save_settings&CHARSAVE_QUEST)
+	if( map_config.save_settings&CHARSAVE_QUEST )
 		chrif_save(sd, CSAVE_NORMAL);
 
 	return 0;
