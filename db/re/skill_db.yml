@@ -27470,6 +27470,8 @@ Body:
     TargetType: Support
     DamageFlags:
       NoDamage: true
+    Flags:
+      PartyOnly: true
     Range: 11
     Hit: Single
     HitCount: 1
