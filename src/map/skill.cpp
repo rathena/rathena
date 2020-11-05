@@ -1782,7 +1782,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		sc_start(src,bl,SC_OVERBRANDREADY,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 	case LG_RAYOFGENESIS:	// 50% chance to cause Blind on Undead and Demon monsters.
-		if ( battle_check_undead(status_get_race(bl), status_get_element(bl)) || status_get_race(bl) == RC_DEMON )
+		if ( battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race == RC_DEMON )
 			sc_start(src,bl, SC_BLIND, 50, skill_lv, skill_get_time(skill_id,skill_lv));
 		break;
 	case LG_HESPERUSLIT:
@@ -7007,6 +7007,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SC_DEADLYINFECT:
 	case LG_EXEEDBREAK:
 	case LG_PRESTIGE:
+	case LG_INSPIRATION:
 	case SR_CRESCENTELBOW:
 	case SR_LIGHTNINGWALK:
 	case GN_CARTBOOST:
@@ -10345,9 +10346,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 
-	case LG_INSPIRATION:
-		clif_skill_nodamage(bl,src,skill_id,skill_lv, sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
-		break;
 	case SR_CURSEDCIRCLE:
 		if( flag&1 ) {
 			if( status_get_class_(bl) == CLASS_BOSS )
@@ -15864,6 +15862,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				}
 			}
 			break;
+		case LG_RAYOFGENESIS:
 		case LG_BANDING:
 			if( sc && sc->data[SC_INSPIRATION] )
 				return true; // Don't check for partner.
@@ -15882,10 +15881,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				return false;
 			}
 			sd->spiritball_old = require.spiritball = sd->spiritball;
-			break;
-		case LG_RAYOFGENESIS:
-			if (sc && sc->data[SC_INSPIRATION])
-				return true; // Don't check for partner.
 			break;
 		case SR_FALLENEMPIRE:
 			if( !(sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_DRAGONCOMBO) )

@@ -6664,7 +6664,7 @@ static unsigned short status_calc_ematk(struct block_list *bl, struct status_cha
 	if (sc->data[SC__AUTOSHADOWSPELL])
 		matk += sc->data[SC__AUTOSHADOWSPELL]->val2;
 	if (sc->data[SC_INSPIRATION])
-		matk += 40 * sc->data[SC_INSPIRATION]->val2;
+		matk += sc->data[SC_INSPIRATION]->val2;
 
 	return (unsigned short)cap_value(matk,0,USHRT_MAX);
 }

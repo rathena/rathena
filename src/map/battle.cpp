@@ -6083,10 +6083,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		case NPC_EARTHQUAKE:
 			s_ele = ELE_NEUTRAL;
 			break;
-		case LG_RAYOFGENESIS:
-			if( sc && sc->data[SC_INSPIRATION] )
-				s_ele = ELE_NEUTRAL;
-			break;
 		case WL_HELLINFERNO:
 			if (mflag & 2) { // ELE_DARK
 				s_ele = ELE_DARK;
@@ -6117,6 +6113,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			break;
 		case AB_ADORAMUS:
 			if (sc && sc->data[SC_ANCILLA])
+				s_ele = ELE_NEUTRAL;
+			break;
+		case LG_RAYOFGENESIS:
+			if (sc && sc->data[SC_INSPIRATION])
 				s_ele = ELE_NEUTRAL;
 			break;
 	}
@@ -6498,7 +6498,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case LG_RAYOFGENESIS:
 						skillratio += -100 + 230 * skill_lv + sstatus->int_ / 6; // !TODO: What's the INT bonus?
-						if(sc && sc->data[SC_INSPIRATION])
+						if (sc && sc->data[SC_INSPIRATION])
 							skillratio += 70 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
