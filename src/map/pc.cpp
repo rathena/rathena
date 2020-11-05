@@ -13290,13 +13290,13 @@ void pc_show_questinfo(struct map_session_data *sd) {
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 	nullpo_retv(mapdata);
 
-	if (mapdata->qi_data.empty())
+	if (mapdata->qi_npc.empty())
 		return;
-	if (mapdata->qi_data.size() != sd->qi_count)
+	if (mapdata->qi_npc.size() != sd->qi_count)
 		return; // init was not called yet
 
-	for (int i = 0; i < mapdata->qi_data.size(); i++) {
-		struct npc_data *nd = map_id2nd(mapdata->qi_data[i]);
+	for (int i = 0; i < mapdata->qi_npc.size(); i++) {
+		struct npc_data *nd = map_id2nd(mapdata->qi_npc[i]);
 
 		if (!nd || nd->qi_data.empty())
 			continue;
@@ -13336,10 +13336,10 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 	nullpo_retv(mapdata);
 
-	if (mapdata->qi_data.empty())
+	if (mapdata->qi_npc.empty())
 		return;
 
-	CREATE(sd->qi_display, struct s_qi_display, (sd->qi_count = mapdata->qi_data.size()));
+	CREATE(sd->qi_display, struct s_qi_display, (sd->qi_count = mapdata->qi_npc.size()));
 #endif
 }
 

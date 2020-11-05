@@ -4347,14 +4347,14 @@ void map_remove_questinfo(int m, struct npc_data *nd) {
 			script_free_code(it.condition);
 	}
 
-	util::vector_erase_if_exists(mapdata->qi_data, nd->bl.id);
+	util::vector_erase_if_exists(mapdata->qi_npc, nd->bl.id);
 	nd->qi_data.clear();
 }
 
 static void map_free_questinfo(struct map_data *mapdata) {
 	nullpo_retv(mapdata);
 
-	for (const auto &it : mapdata->qi_data) {
+	for (const auto &it : mapdata->qi_npc) {
 		struct npc_data *nd = map_id2nd(it);
 
 		if (!nd || nd->qi_data.empty())
@@ -4367,7 +4367,7 @@ static void map_free_questinfo(struct map_data *mapdata) {
 		nd->qi_data.clear();
 	}
 
-	mapdata->qi_data.clear();
+	mapdata->qi_npc.clear();
 }
 
 /**

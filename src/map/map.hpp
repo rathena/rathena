@@ -758,7 +758,7 @@ struct map_data {
 	struct Channel *channel;
 
 	/* ShowEvent Data Cache */
-	std::vector<int> qi_data;
+	std::vector<int> qi_npc;
 
 	/* speeds up clif_updatestatus processing by causing hpmeter to run only when someone with the permission can view it */
 	unsigned short hpmeter_visible;

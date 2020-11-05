@@ -19759,8 +19759,8 @@ BUILDIN_FUNC(questinfo)
 
 	struct map_data *mapdata = map_getmapdata(nd->bl.m);
 
-	if (mapdata && !util::vector_exists(mapdata->qi_data, nd->bl.id))
-		mapdata->qi_data.push_back(nd->bl.id);
+	if (mapdata && !util::vector_exists(mapdata->qi_npc, nd->bl.id))
+		mapdata->qi_npc.push_back(nd->bl.id);
 
 	return SCRIPT_CMD_SUCCESS;
 }
