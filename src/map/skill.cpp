@@ -5897,13 +5897,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
-	case LG_SHIELDSPELL:
-		if (skill_lv == 1)
-			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		else if (skill_lv == 2)
-			skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
-
 	case SR_DRAGONCOMBO:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
@@ -7038,6 +7031,18 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SJ_BOOKOFDIMENSION:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
+		break;
+
+	case LG_SHIELDSPELL:
+		if (skill_lv == 1)
+			type = SC_SHIELDSPELL_HP;
+		else if (skill_lv == 2)
+			type = SC_SHIELDSPELL_SP;
+		else
+			type = SC_SHIELDSPELL_ATK;
+
+		clif_skill_nodamage(src, bl, skill_id, skill_lv,
+			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		break;
 
 	case SJ_GRAVITYCONTROL: {
@@ -10328,124 +10333,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		else
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-		break;
-
-	case LG_SHIELDSPELL:
-		if (sd) {
-			int opt = 0;
-			short index = sd->equip_index[EQI_HAND_L], shield_def = 0, shield_mdef = 0, shield_refine = 0;
-			struct item_data *shield_data = NULL;
-
-			if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
-				shield_data = sd->inventory_data[index];
-			if (!shield_data || shield_data->type != IT_ARMOR) // Group with 'skill_unconditional' gets these as default
-				shield_def = shield_mdef = shield_refine = 10;
-			else {
-				shield_def = shield_data->def;
-				shield_mdef = sd->bonus.shieldmdef;
-				shield_refine = sd->inventory.u.items_inventory[sd->equip_index[EQI_HAND_L]].refine;
-			}
-			if (flag&1) {
-				sc_start(src,bl,SC_SILENCE,100,skill_lv,shield_mdef * 30000);
-				break;
-			}
-
-			opt = rnd()%3 + 1; // Generates a number between 1 - 3. The number generated will determine which effect will be triggered.
-			switch(skill_lv) {
-				case 1: { // DEF Based
-						int splashrange = 0;
-
-#ifdef RENEWAL
-						if (shield_def >= 0 && shield_def <= 40)
-#else
-						if (shield_def >= 0 && shield_def <= 4)
-#endif
-							splashrange = 1;
-#ifdef RENEWAL
-						else if (shield_def >= 41 && shield_def <= 80)
-#else
-						else if (shield_def >= 5 && shield_def <= 9)
-#endif
-							splashrange = 2;
-						else
-							splashrange = 3;
-						switch(opt) {
-							case 1: // Splash AoE ATK
-								sc_start(src,bl,SC_SHIELDSPELL_DEF,100,opt,INFINITE_TICK);
-								clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skill_id,skill_lv,DMG_SINGLE);
-								map_foreachinrange(skill_area_sub,src,splashrange,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
-								status_change_end(bl,SC_SHIELDSPELL_DEF,INVALID_TIMER);
-								break;
-							case 2: // % Damage Reflecting Increase
-#ifdef RENEWAL
-								sc_start2(src,bl,SC_SHIELDSPELL_DEF,100,opt,shield_def / 10,shield_def * 1000);
-#else
-								sc_start2(src,bl,SC_SHIELDSPELL_DEF,100,opt,shield_def,shield_def * 1000 * 10);
-#endif
-								break;
-							case 3: // Equipment Attack Increase
-#ifdef RENEWAL
-								sc_start2(src,bl,SC_SHIELDSPELL_DEF,100,opt,shield_def,shield_def * 3000);
-#else
-								sc_start2(src,bl,SC_SHIELDSPELL_DEF,100,opt,shield_def * 10,shield_def * 3000 * 10);
-#endif
-								break;
-						}
-					}
-					break;
-
-				case 2: { // MDEF Based
-						int splashrange = 0;
-
-						if (shield_mdef >= 1 && shield_mdef <= 3)
-							splashrange = 1;
-						else if (shield_mdef >= 4 && shield_mdef <= 5)
-							splashrange = 2;
-						else
-							splashrange = 3;
-						switch(opt) {
-							case 1: // Splash AoE MATK
-								sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,INFINITE_TICK);
-								clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skill_id,skill_lv,DMG_SINGLE);
-								map_foreachinrange(skill_area_sub,src,splashrange,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
-								status_change_end(bl,SC_SHIELDSPELL_MDEF,INVALID_TIMER);
-								break;
-							case 2: // Splash AoE Lex Divina
-								sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,shield_mdef * 2000);
-								clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skill_id,skill_lv,DMG_SINGLE);
-								map_foreachinallrange(skill_area_sub,src,splashrange,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_nodamage_id);
-								break;
-							case 3: // Casts Magnificat.
-								if (sc_start(src,bl,SC_SHIELDSPELL_MDEF,100,opt,shield_mdef * 30000))
-									clif_skill_nodamage(src,bl,PR_MAGNIFICAT,skill_lv,
-									sc_start(src,bl,SC_MAGNIFICAT,100,1,shield_mdef * 30000));
-								break;
-						}
-					}
-					break;
-
-				case 3: // Refine Based
-					switch(opt) {
-						case 1: // Allows you to break armor at a 100% rate when you do damage.
-							sc_start(src,bl,SC_SHIELDSPELL_REF,100,opt,shield_refine * 30000);
-							break;
-						case 2: // Increases DEF and Status Effect resistance depending on Shield refine rate.
-#ifdef RENEWAL
-							sc_start4(src,bl,SC_SHIELDSPELL_REF,100,opt,shield_refine * 10 * status_get_lv(src) / 100,(shield_refine * 2) + (sstatus->luk / 10),0,shield_refine * 20000);
-#else
-							sc_start4(src,bl,SC_SHIELDSPELL_REF,100,opt,shield_refine,(shield_refine * 2) + (sstatus->luk / 10),0,shield_refine * 20000);
-#endif
-							break;
-						case 3: // Recovers HP depending on Shield refine rate.
-							sc_start(src,bl,SC_SHIELDSPELL_REF,100,opt,INFINITE_TICK); //HP Recovery.
-							status_heal(bl,sstatus->max_hp * ((status_get_lv(src) / 10) + (shield_refine + 1)) / 100,0,2);
-							status_change_end(bl,SC_SHIELDSPELL_REF,INVALID_TIMER);
-						break;
-					}
-				break;
-			}
-			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-		}
 		break;
 
 	case LG_PIETY:
@@ -15995,18 +15882,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				return false;
 			}
 			sd->spiritball_old = require.spiritball = sd->spiritball;
-			break;
-		case LG_SHIELDSPELL: {
-				short index = sd->equip_index[EQI_HAND_L];
-				struct item_data *shield_data = NULL;
-	
-				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
-					shield_data = sd->inventory_data[index];
-				if (!shield_data || shield_data->type != IT_ARMOR) { // Skill will first check if a shield is equipped. If none is found the skill will fail.
-					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-					break;
-				}
-			}
 			break;
 		case LG_RAYOFGENESIS:
 			if (sc && sc->data[SC_INSPIRATION])

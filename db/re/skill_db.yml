@@ -23198,37 +23198,10 @@ Body:
     Description: Shield Spell
     MaxLevel: 3
     TargetType: Self
-    DamageFlags:
-      Splash: true
-    Hit: Single
-    HitCount: 1
-    Element:
-      - Level: 1
-        Element: Neutral
-      - Level: 2
-        Element: Holy
-      - Level: 3
-        Element: Neutral
-    Knockback:
-      - Level: 1
-        Amount: 2
-      - Level: 2
-        Amount: 0
-      - Level: 3
-        Amount: 0
-    CopyFlags:
-      Skill:
-        Reproduce: true
     CastCancel: true
     CastTime: 1000
     AfterCastActDelay: 1000
-    Duration1:
-      - Level: 1
-        Time: 3000
-      - Level: 2
-        Time: 30000
-      - Level: 3
-        Time: 30000
+    Duration1: 90000
     Cooldown: 2000
     FixedCastTime: -1
     Requires:
