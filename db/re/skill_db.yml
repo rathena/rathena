@@ -23282,9 +23282,10 @@ Body:
     DamageFlags:
       Splash: true
     Range: 2
-    Hit: Single
-    HitCount: 1
+    Hit: Multi_Hit
+    HitCount: 3
     Element: Weapon
+    SplashArea: 3
     CastCancel: true
     AfterCastActDelay: 2000
     FixedCastTime: -1
@@ -23694,7 +23695,7 @@ Body:
         - Level: 5
           Amount: 120
   - Id: 2519
-    Name: LG_OVERBRAND_BRANDISH
+    Name: LG_OVERBRAND_BRANDISH # Removed on kRO
     Description: Overbrand Brandish
     MaxLevel: 5
     Type: Weapon
@@ -23710,7 +23711,7 @@ Body:
         Reproduce: true
     CastCancel: true
   - Id: 2520
-    Name: LG_OVERBRAND_PLUSATK
+    Name: LG_OVERBRAND_PLUSATK # Removed on kRO
     Description: Overbrand Plus Attack
     MaxLevel: 5
     Type: Weapon

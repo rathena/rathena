@@ -4391,13 +4391,6 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += ((sd) ? pc_checkskill(sd, CR_SPEARQUICKEN) * 50 : 0);
 			RE_LVL_DMOD(100);
 			break;
-		case LG_OVERBRAND_BRANDISH:
-			skillratio += -100 + 300 * skill_lv + ((sstatus->str + sstatus->dex) / 6); // !TOD: What's the STR/DEX bonus?
-			RE_LVL_DMOD(100);
-			break;
-		case LG_OVERBRAND_PLUSATK: // Only Piercing and Swing damage get RE_LVL_DMOD bonus damage
-			skillratio += -100 + 200 * skill_lv + rnd()%90 + 10;
-			break;
 		case LG_EARTHDRIVE:
 			skillratio += -100 + 380 * skill_lv + ((sstatus->str + sstatus->vit) / 6); // !TODO: What's the STR/VIT bonus?
 			RE_LVL_DMOD(100);

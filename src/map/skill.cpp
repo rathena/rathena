@@ -113,8 +113,6 @@ int firerain_unit_pos;
 int wallofthorn_unit_pos;
 
 struct s_skill_nounit_layout skill_nounit_layout[MAX_SKILL_UNIT_LAYOUT2];
-int overbrand_nounit_pos;
-int overbrand_brandish_nounit_pos;
 
 static char dir_ka = -1; // Holds temporary direction to the target for SR_KNUCKLEARROW
 
@@ -1150,11 +1148,6 @@ struct s_skill_unit_layout *skill_get_unit_layout(uint16 skill_id, uint16 skill_
 
 struct s_skill_nounit_layout* skill_get_nounit_layout(uint16 skill_id, uint16 skill_lv, struct block_list* src, int x, int y, int dir)
 {
-	if( skill_id == LG_OVERBRAND )
-		return &skill_nounit_layout[overbrand_nounit_pos + dir];
-	else if( skill_id == LG_OVERBRAND_BRANDISH )
-		return &skill_nounit_layout[overbrand_brandish_nounit_pos + dir];
-
 	ShowError("skill_get_nounit_layout: unknown no-unit layout for skill %d (level %d)\n", skill_id, skill_lv);
 	return &skill_nounit_layout[0];
 }
@@ -3540,12 +3533,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case LG_SHIELDPRESS:
 			dmg.dmotion = clif_skill_damage(dsrc, bl, tick, status_get_amotion(src), dmg.dmotion, damage, dmg.div_, skill_id, -1, DMG_SINGLE);
 			break;
-		case LG_OVERBRAND:
-		case LG_OVERBRAND_BRANDISH:
-			dmg.amotion = status_get_amotion(src) * 2;
-		case LG_OVERBRAND_PLUSATK:
-			dmg.dmotion = clif_skill_damage(dsrc,bl,tick,status_get_amotion(src),dmg.dmotion,damage,dmg.div_,skill_id,-1,DMG_SPLASH);
-			break;
 		case NPC_EARTHQUAKE:
 			dmg.dmotion = clif_skill_damage(src, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, -1, DMG_ENDURE);
 			break;
@@ -4374,15 +4361,6 @@ static TIMER_FUNC(skill_timerskill){
 				case WL_EARTHSTRAIN:
 					skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,(skl->type<<16)|skl->flag);
 					break;
-				case LG_OVERBRAND_BRANDISH: {
-						int i, dir = map_calc_dir(src,skl->x,skl->y);
-						int x = src->x, y = src->y;
-						struct s_skill_nounit_layout *layout = skill_get_nounit_layout(skl->skill_id,skl->skill_lv,src,x,y,dir);
-
-						for( i = 0; i < layout->count; i++ )
-							map_foreachincell(skill_area_sub,src->m,x+layout->dx[i],y+layout->dy[i],BL_CHAR,src,skl->skill_id,skl->skill_lv,tick,skl->flag|BCT_ENEMY|SD_ANIMATION|1,skill_castend_damage_id);
-					}
-					break;
 				case RL_FIRE_RAIN: {
 						int dummy = 1, i = skill_get_splash(skl->skill_id,skl->skill_lv);
 
@@ -4806,7 +4784,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case LG_SHIELDPRESS:
 	case LG_RAGEBURST:
 	case LG_HESPERUSLIT:
-	case LG_OVERBRAND_BRANDISH:
 	case SR_FALLENEMPIRE:
 	case SR_CRESCENTELBOW_AUTOSPELL:
 	case SR_GATEOFHELL:
@@ -5086,6 +5063,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case GC_ROLLINGCUTTER:
 	case GC_COUNTERSLASH:
 	case LG_CANNONSPEAR:
+	case LG_OVERBRAND:
 	case LG_MOONSLASHER:
 	case LG_RAYOFGENESIS:
 	case LG_EARTHDRIVE:
@@ -5924,17 +5902,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		else if (skill_lv == 2)
 			skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
-
-	case LG_OVERBRAND: {
-			int16 sx = src->x, sy = src->y;
-			int dir = map_calc_dir(src, sx, sy);
-			struct s_skill_nounit_layout *layout = skill_get_nounit_layout(skill_id, skill_lv, src, sx, sy, dir);
-
-			for (int i = 0; i < layout->count; i++)
-				map_foreachincell(skill_area_sub, src->m, sx + layout->dx[i], sy + layout->dy[i], BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_ANIMATION | 1, skill_castend_damage_id);
-			skill_addtimerskill(src, gettick() + status_get_amotion(src), 0, sx, sy, LG_OVERBRAND_BRANDISH, skill_lv, dir, flag);
-		}
 		break;
 
 	case SR_DRAGONCOMBO:
@@ -7475,6 +7442,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SR_RAMPAGEBLASTER:
 	case SR_HOWLINGOFLION:
 	case LG_CANNONSPEAR:
+	case LG_OVERBRAND:
 	case LG_RAYOFGENESIS:
 	case KO_HAPPOKUNAI:
 	case RL_FIREDANCE:
@@ -21298,7 +21266,6 @@ void skill_init_nounit_layout (void) {
 
 	memset(skill_nounit_layout,0,sizeof(skill_nounit_layout));
 
-	overbrand_nounit_pos = pos;
 	for( i = 0; i < 8; i++ ) {
 		if( i&1 ) {
 			skill_nounit_layout[pos].count = 33;
@@ -21366,7 +21333,6 @@ void skill_init_nounit_layout (void) {
 		pos++;
 	}
 
-	overbrand_brandish_nounit_pos = pos;
 	for( i = 0; i < 8; i++ ) {
 		if( i&1 ) {
 			skill_nounit_layout[pos].count = 74;
