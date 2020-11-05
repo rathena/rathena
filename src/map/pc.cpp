@@ -7545,12 +7545,14 @@ static int pc_getstat(struct map_session_data* sd, int type)
 	case SP_INT: return sd->status.int_;
 	case SP_DEX: return sd->status.dex;
 	case SP_LUK: return sd->status.luk;
+#ifdef RENEWAL
 	case SP_POW: return sd->status.pow;
 	case SP_STA: return sd->status.sta;
 	case SP_WIS: return sd->status.wis;
 	case SP_SPL: return sd->status.spl;
 	case SP_CON: return sd->status.con;
 	case SP_CRT: return sd->status.crt;
+#endif
 	default:
 		return -1;
 	}
@@ -7569,12 +7571,14 @@ static int pc_setstat(struct map_session_data* sd, int type, int val)
 	case SP_INT: sd->status.int_ = val; break;
 	case SP_DEX: sd->status.dex = val; break;
 	case SP_LUK: sd->status.luk = val; break;
+#ifdef RENEWAL
 	case SP_POW: sd->status.pow = val; break;
 	case SP_STA: sd->status.sta = val; break;
 	case SP_WIS: sd->status.wis = val; break;
 	case SP_SPL: sd->status.spl = val; break;
 	case SP_CON: sd->status.con = val; break;
 	case SP_CRT: sd->status.crt = val; break;
+#endif
 	default:
 		return -1;
 	}
