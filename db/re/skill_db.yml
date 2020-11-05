@@ -23905,6 +23905,7 @@ Body:
     Type: Weapon
     TargetType: Self
     DamageFlags:
+      NoDamage: true
       Splash: true
       IgnoreFlee: true
     Flags:

@@ -4784,6 +4784,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case LG_SHIELDPRESS:
 	case LG_RAGEBURST:
 	case LG_HESPERUSLIT:
+	case SR_DRAGONCOMBO:
 	case SR_FALLENEMPIRE:
 	case SR_CRESCENTELBOW_AUTOSPELL:
 	case SR_GATEOFHELL:
@@ -5897,10 +5898,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
-	case SR_DRAGONCOMBO:
-		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
-
 	case SR_KNUCKLEARROW:
 		// Holds current direction of bl/target to src/attacker before the src is moved to bl location
 		dir_ka = map_calc_dir(bl, src->x, src->y);
@@ -5946,17 +5943,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case SR_TIGERCANNON:
-		if (flag&1) {
-			if (skill_area_temp[1] != bl->id && skill_area_temp[3] == skill_id)
-				skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-		} else if (sd) {
-			skill_area_temp[1] = bl->id;
-			skill_area_temp[3] = skill_id;
-			if (sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE && !sc->data[SC_FLASHCOMBO])
-				flag |= 8; // Only apply Combo bonus when Tiger Cannon is not used through Flash Combo
-			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-		}
+		if (sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE && !sc->data[SC_FLASHCOMBO])
+			flag |= 8; // Only apply Combo bonus when Tiger Cannon is not used through Flash Combo
+		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 
 	case WM_REVERBERATION:
@@ -7443,8 +7432,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case RK_STORMBLAST:
 	case NC_AXETORNADO:
 	case GC_COUNTERSLASH:
-	case SR_TIGERCANNON:
 	case SR_SKYNETBLOW:
+	case SR_TIGERCANNON:
 	case SR_RAMPAGEBLASTER:
 	case SR_HOWLINGOFLION:
 	case LG_CANNONSPEAR:
