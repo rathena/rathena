@@ -110,7 +110,7 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 		mes "You don't believe in refine master Holink, meow?~";
 		close;
 	}
-	if (getequippercentrefinery(.@part, true) < 100) {
+	if (getequippercentrefinery(.@part, REFINE_COST_ENRICHED) < 100) {
 		mes "[Holink]";
 		mes "Meow!!";
 		if (.@type$ == "armor")
@@ -159,7 +159,7 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 		close;
 	}
 
-	if (getequippercentrefinery(.@part, true) > rand(100)) {
+	if (getequippercentrefinery(.@part, REFINE_COST_ENRICHED) > rand(100)) {
 		successrefitem .@part;
 		mes "[Holink]";
 		mes "Me~ Me~ Meow! Fun fun refining~";

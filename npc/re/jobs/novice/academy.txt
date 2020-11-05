@@ -12836,7 +12836,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 				mes "Cancel the refining.";
 				close;
 			}
-			if (getequippercentrefinery(.@part) < 100) {
+			if (getequippercentrefinery(.@part, REFINE_COST_NORMAL) < 100) {
 				mes "[Refining Machine Wagjak]";
 				mes "-Ddarritt!-";
 				mes "The user's confirmation required.";
@@ -12851,7 +12851,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 			// anti-hack
 			if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt))
 				close;
-			if (getequippercentrefinery(.@part) <= rand(100)) {
+			if (getequippercentrefinery(.@part, REFINE_COST_NORMAL) <= rand(100)) {
 				failedrefitem .@part;
 				mes "[Refining Machine Wagjak]";
 				mes "Result : Fail";
@@ -12889,7 +12889,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		mes "Refining has been cancelled as per the user's request.";
 		close;
 	}
-	if (getequippercentrefinery(.@part) < 100) {
+	if (getequippercentrefinery(.@part, REFINE_COST_NORMAL) < 100) {
 		mes "[Refining Machine Wagjak]";
 		mes "-Ddarritt!-";
 		mes "The user's confirmation required.";
@@ -12920,7 +12920,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		mes "You are short of refining price.";
 		close;
 	}
-	if (getequippercentrefinery(.@part) <= rand(100)) {
+	if (getequippercentrefinery(.@part, REFINE_COST_NORMAL) <= rand(100)) {
 		failedrefitem .@part;
 		mes "[Refining Machine Wagjak]";
 		mes "Result : Fail";

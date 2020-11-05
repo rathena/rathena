@@ -10232,6 +10232,33 @@ ACMD_FUNC(resurrect) {
 	return 0;
 }
 
+/**
+ * Opens the refineUI
+ * Usage: @refineui
+ */
+ACMD_FUNC(refineui)
+{
+	nullpo_retr(-1, sd);
+
+#if PACKETVER < 20161012
+	clif_displaymessage(fd, msg_txt(sd, 773)); // This command requires packet version 2016-10-12 or newer.
+	return -1;
+#else
+	if( !battle_config.feature_refineui ){
+		clif_displaymessage(fd, msg_txt(sd, 774)); // This command is disabled via configuration.
+		return -1;
+	}
+
+	if( sd->state.refineui_open ){
+		clif_displaymessage(fd, msg_txt(sd, 775)); // You have already opened the refine UI.
+		return -1;
+	}
+
+	clif_refineui_open(sd);
+	return 0;
+#endif
+}
+
 ACMD_FUNC(quest) {
 	uint8 i;
 	int quest_id = 0;
@@ -10596,6 +10623,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEFR(changedress, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(camerainfo, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(resurrect, ATCMD_NOCONSOLE),
+		ACMD_DEFR(refineui, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEF2("setquest", quest),
 		ACMD_DEF2("erasequest", quest),
 		ACMD_DEF2("completequest", quest),

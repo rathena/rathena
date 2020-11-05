@@ -2804,7 +2804,7 @@ Examples:
 
 ---------------------------------------
 
-*getequippercentrefinery(<equipment slot>{,<enriched>,<char_id>})
+*getequippercentrefinery(<equipment slot>,<type>{,<char_id>})
 
 This function calculates and returns the percent value chance to successfully
 refine the item found in the specified equipment slot of the invoking character
@@ -2812,8 +2812,9 @@ by +1. There is no actual formula, the success rate for a given weapon level of
 a certain refine level is found in the db/(pre-)re/refine_db.yml file. For a list of
 equipment slots see 'getequipid'.
 
-If enriched parameter is set to true, chance to successfully refine the item with
-enriched material is returned instead.
+For 'type'  values, see the valid types in 'getequiprefinecost' below.
+(As backward compatibility, if this value is unset, below +10 will use 
+REFINE_COST_NORMAL and above +10 is using REFINE_COST_OVER10).
 
 These values can be displayed for the player to see, or used to calculate the
 random change of a refine succeeding or failing and then going through with it
@@ -2832,13 +2833,16 @@ passed arguments <type> and <information>.
 
 Valid cost types are:
 
-REFINE_COST_NORMAL     - For normal refining
-REFINE_COST_OVER10     - For refining over +10
-REFINE_COST_HD         - For refining with HD ores
-REFINE_COST_ENRICHED   - For refining with enriched ores
-REFINE_COST_OVER10_HD  - For refining over +10 with HD ores
-REFINE_COST_HOLINK     - For refining at Holink in Malangdo
-REFINE_COST_WAGJAK     - For refining at Refining Machine Wagjak in the Novice Academy
+REFINE_COST_NORMAL         - For normal refining
+REFINE_COST_OVER10         - For refining over +10
+REFINE_COST_HD             - For refining with HD ores
+REFINE_COST_ENRICHED       - For refining with enriched ores
+REFINE_COST_OVER10_HD      - For refining over +10 with HD ores
+REFINE_COST_HOLINK         - For refining at Holink in Malangdo
+REFINE_COST_WAGJAK         - For refining at Refining Machine Wagjak in the Novice Academy
+REFINE_COST_BLESSED        - For refining using Blessed Ore
+REFINE_COST_EVT_ENRICHED   - For refining with enriched ores with event rates
+REFINE_COST_EVT_OVER10_HD  - For refining over +10 with HD ores with event rates
 
 This function will return required cost for refining based on <information> argument.
 
@@ -2848,7 +2852,37 @@ REFINE_ZENY_COST       - Zeny
 REFINE_MATERIAL_ID     - Material Item ID
 
 This function will return -1 on failure. The function fails if the cost type
-is invalid or if there is no item in the equipment slot. 
+is invalid or if there is no item in the equipment slot.
+
+---------------------------------------
+
+*getblacksmithblessing(<type>,<refine>{,<var>})
+
+Get info about 'Blacksmith Blessing' item used for specified <type> and
+<refine>. The info will be stored in .@refinebb array.
+
+    .@refinebb[0] = Item ID acknowledged as Blacksmith Blessing
+    .@refinebb[1] = Amount needed
+
+<type> is can be 0 for armor type, 1-4 for weapons level 1 to 4 or
+	REFINE_TYPE_ARMOR    = Armor
+	REFINE_TYPE_WEAPON1  = Weapon Lv 1
+	REFINE_TYPE_WEAPON2  = Weapon Lv 2
+	REFINE_TYPE_WEAPON3  = Weapon Lv 3
+	REFINE_TYPE_WEAPON4  = Weapon Lv 4
+	REFINE_TYPE_SHADOW   = Shadowgear
+	REFINE_TYPE_COSTUME  = Costume
+
+If <var> is specified, it will replaces .@refinebb as default array. This
+script also returns 1 on success and 0 on failure or no info.
+
+---------------------------------------
+
+*refineui({<char id>})
+
+Opens the refine UI for the attached player or the given character id.
+
+This feature requires 2016-10-12aRagexeRE or newer.
 
 ---------------------------------------
 
