@@ -19683,9 +19683,6 @@ BUILDIN_FUNC(questinfo)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	struct s_questinfo qi;
-	struct script_code *script = nullptr;
-	int color = QMARK_NONE;
 	int icon = script_getnum(st, 2);
 
 #if PACKETVER >= 20120410
@@ -19722,6 +19719,8 @@ BUILDIN_FUNC(questinfo)
 		icon = icon + 1;
 #endif
 
+	int color = QMARK_NONE;
+
 	if (script_hasdata(st, 3)) {
 		color = script_getnum(st, 3);
 		if (color < QMARK_NONE || color >= QMARK_MAX) {
@@ -19730,6 +19729,8 @@ BUILDIN_FUNC(questinfo)
 			color = QMARK_NONE;
 		}
 	}
+
+	struct script_code *script = nullptr;
 
 	if (script_hasdata(st, 4)) {
 		const char *str = script_getstr(st, 4);
@@ -19748,13 +19749,18 @@ BUILDIN_FUNC(questinfo)
 		}
 	}
 
-	qi.nd = nd;
+	struct s_questinfo qi;
+
 	qi.icon = static_cast<e_questinfo_types>(icon);
 	qi.color = static_cast<e_questinfo_markcolor>(color);
 	qi.condition = script;
 
+	nd->qi_data.push_back(qi);
+
 	struct map_data *mapdata = map_getmapdata(nd->bl.m);
-	mapdata->qi_data.push_back(qi);
+
+	if (mapdata && !util::vector_exists(mapdata->qi_data, nd->bl.id))
+		mapdata->qi_data.push_back(nd->bl.id);
 
 	return SCRIPT_CMD_SUCCESS;
 }

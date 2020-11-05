@@ -3399,7 +3399,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			if (sd->qi_display) {
 				aFree(sd->qi_display);
-				sd->qi_display = NULL;
+				sd->qi_display = nullptr;
 			}
 			sd->qi_count = 0;
 

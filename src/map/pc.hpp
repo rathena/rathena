@@ -265,6 +265,12 @@ struct s_combos {
 	uint32 pos;
 };
 
+struct s_qi_display {
+	bool is_active;
+	e_questinfo_types icon;
+	e_questinfo_markcolor color;
+};
+
 struct map_session_data {
 	struct block_list bl;
 	struct unit_data ud;
@@ -676,7 +682,7 @@ struct map_session_data {
 	std::vector<int> cloaked_npc;
 
 	/* ShowEvent Data Cache flags from map */
-	bool *qi_display;
+	struct s_qi_display *qi_display;
 	int qi_count;
 
 	// temporary debug [flaviojs]

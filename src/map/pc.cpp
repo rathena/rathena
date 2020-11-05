@@ -13252,27 +13252,30 @@ void pc_validate_skill(struct map_session_data *sd) {
  * @param show If show is true and qi_display is 0, set qi_display to 1 and show the event bubble.
  *             If show is false and qi_display is 1, set qi_display to 0 and hide the event bubble.
  **/
-static void pc_show_questinfo_sub(struct map_session_data *sd, bool *qi_display, struct s_questinfo *qi, bool show) {
+static void pc_show_questinfo_sub(struct map_session_data *sd, struct npc_data *nd, int i, struct s_questinfo *qi, bool show) {
 	if (show) {
 		// Check if need to be displayed
-		if ((*qi_display) != 1) {
-			(*qi_display) = 1;
-			clif_quest_show_event(sd, &qi->nd->bl, qi->icon, qi->color);
+		if (qi && (!sd->qi_display[i].is_active || qi->icon != sd->qi_display[i].icon || qi->color != sd->qi_display[i].color)) {
+			sd->qi_display[i].is_active = true;
+			sd->qi_display[i].icon = static_cast<e_questinfo_types>(qi->icon);
+			sd->qi_display[i].color = static_cast<e_questinfo_markcolor>(qi->color);
+			clif_quest_show_event(sd, &nd->bl, qi->icon, qi->color);
 		}
 	}
 	else {
 		// Check if need to be hide
-		if ((*qi_display) != 0) {
-			(*qi_display) = 0;
+		if (sd->qi_display[i].is_active) {
+			sd->qi_display[i].is_active = false;
+			sd->qi_display[i].icon = static_cast<e_questinfo_types>(QTYPE_NONE);
+			sd->qi_display[i].color = static_cast<e_questinfo_markcolor>(QMARK_NONE);
 #if PACKETVER >= 20120410
-			clif_quest_show_event(sd, &qi->nd->bl, QTYPE_NONE, QMARK_NONE);
+			clif_quest_show_event(sd, &nd->bl, QTYPE_NONE, QMARK_NONE);
 #else
-			clif_quest_show_event(sd, &qi->nd->bl, QTYPE_QUEST, QMARK_NONE);
+			clif_quest_show_event(sd, &nd->bl, QTYPE_QUEST, QMARK_NONE);
 #endif
 		}
 	}
 }
-
 /**
  * Show available NPC Quest / Event Icon Check [Kisuka]
  * @param sd Player
@@ -13292,23 +13295,23 @@ void pc_show_questinfo(struct map_session_data *sd) {
 	if (mapdata->qi_data.size() != sd->qi_count)
 		return; // init was not called yet
 
-	struct s_questinfo *qi = nullptr;
-	bool show;
-
 	for (int i = 0; i < mapdata->qi_data.size(); i++) {
-		qi = &mapdata->qi_data[i];
- 		if (!qi)
- 			continue;
+		struct npc_data *nd = map_id2nd(mapdata->qi_data[i]);
 
-		if (!qi->condition)
-			show = true;
-		else {
-			if (achievement_check_condition(qi->condition, sd))
+		if (!nd || nd->qi_data.empty())
+			continue;
+
+		bool show = false;
+
+		for (auto &qi : nd->qi_data) {
+			if (!qi.condition || achievement_check_condition(qi.condition, sd)) {
 				show = true;
-			else
-				show = false;
+				pc_show_questinfo_sub(sd, nd, i, &qi, true);
+				break;
+			}
 		}
-		pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, show);
+		if (show == false)
+			pc_show_questinfo_sub(sd, nd, i, nullptr, false);
 	}
 #endif
 }
@@ -13336,7 +13339,7 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 	if (mapdata->qi_data.empty())
 		return;
 
-	CREATE(sd->qi_display, bool, (sd->qi_count = mapdata->qi_data.size()));
+	CREATE(sd->qi_display, struct s_qi_display, (sd->qi_count = mapdata->qi_data.size()));
 #endif
 }
 
