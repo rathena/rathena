@@ -77,7 +77,7 @@ void map_msg_reload(void);
 //First Jobs
 //Note the oddity of the novice:
 //Super Novices are considered the 2-1 version of the novice! Novices are considered a first class type, too...
-enum e_mapid {
+enum e_mapid : uint64{
 //Novice And 1-1 Jobs
 	MAPID_NOVICE = 0x0,
 	MAPID_SWORDMAN,
@@ -219,6 +219,8 @@ enum e_mapid {
 	MAPID_BABY_GENETIC,
 	MAPID_BABY_SHADOW_CHASER,
 	MAPID_BABY_SOUL_REAPER,
+// Additional constants
+	MAPID_ALL = UINT64_MAX
 };
 
 //Max size for inputs to Graffiti, Talkie Box and Vending text prompts

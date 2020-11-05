@@ -451,7 +451,7 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 			if( itemdb_isspecial(it->card[0]) ) { // something, that is not a carded
 				continue;
 			}
-			slot = itemdb_slot(it->nameid);
+			slot = itemdb_slots(it->nameid);
 
 			for( c = 0; c < slot && it->card[c]; c ++ ) {
 				ARR_FIND( 0, s->card_count, cidx, s->cardlist[cidx].itemId == it->card[c] );
