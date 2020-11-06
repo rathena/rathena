@@ -3422,7 +3422,7 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 		std::vector<std::shared_ptr<s_random_opt_group_entry>> entries = {};
 
 		if (group != nullptr)
-			entries = group->slot[j];
+			entries = group->slots[j];
 
 		std::shared_ptr<s_random_opt_group_entry> entry;
 
@@ -3433,9 +3433,9 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 		entry->chance = 0;
 		entries.push_back(entry);
 		if (group == nullptr)
-			group_entry.slot[j] = entries;
+			group_entry.slots[j] = entries;
 		else
-			group->slot[j] = entries;
+			group->slots[j] = entries;
 		j++;
 	}
 
@@ -3460,8 +3460,8 @@ static bool itemdb_randomopt_group_yaml(void) {
 			body << YAML::Key << "Options";
 			body << YAML::BeginSeq;
 
-			for (size_t j = 0; j < it.second.slot.size(); j++) {
-				std::vector<std::shared_ptr<s_random_opt_group_entry>> options = it.second.slot.at(static_cast<uint16>(j));
+			for (size_t j = 0; j < it.second.slots.size(); j++) {
+				std::vector<std::shared_ptr<s_random_opt_group_entry>> options = it.second.slots.at(static_cast<uint16>(j));
 
 				for (const auto &opt_it : options) {
 					body << YAML::BeginMap;
