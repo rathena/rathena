@@ -2103,9 +2103,6 @@ static TIMER_FUNC(mob_ai_hard){
  * @param option: Options to assign
  */
 void mob_setitem_option(s_item_randomoption &item_option, const std::shared_ptr<s_random_opt_group_entry> &option) {
-	nullpo_retv(item_option);
-	nullpo_retv(option);
-
 	item_option.id = option->id;
 	item_option.value = rnd_value(option->min_value, option->max_value);
 	item_option.param = option->param;

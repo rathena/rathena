@@ -2406,7 +2406,7 @@ bool RandomOptionGroupDatabase::add_option(const YAML::Node &node, const bool ex
 		int16 value;
 
 		if (!this->asInt16(node, "MinValue", value))
-			return 0;
+			return false;
 
 		entry->min_value = value;
 	} else {
@@ -2418,7 +2418,7 @@ bool RandomOptionGroupDatabase::add_option(const YAML::Node &node, const bool ex
 		int16 value;
 
 		if (!this->asInt16(node, "MaxValue", value))
-			return 0;
+			return false;
 
 		entry->max_value = value;
 	} else {
@@ -2454,6 +2454,8 @@ bool RandomOptionGroupDatabase::add_option(const YAML::Node &node, const bool ex
 		if (!exists)
 			entry->chance = 0;
 	}
+
+	return true;
 }
 
 /**
