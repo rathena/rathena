@@ -2542,11 +2542,6 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (this->nodeExists(node, "Random")) {
 		for (const YAML::Node &randomNode : node["Random"]) {
-			if (randopt->slots.size() >= MAX_ITEM_RDM_OPT) {
-				this->invalidWarning(randomNode, "Reached maximum of %d Random option slots. Skipping the remaining slots...\n", MAX_ITEM_RDM_OPT);
-				break;
-			}
-
 			std::shared_ptr<s_random_opt_group_entry> entry;
 
 			if (this->add_option(randomNode, exists, randopt, 0, entry))

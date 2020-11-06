@@ -143,7 +143,7 @@ namespace rathena {
 
 		/**
 		 * Get a random value from the given vector
-		 * @param map: Unordered Map to search through
+		 * @param vec: Vector to search through
 		 * @return A random value by reference
 		*/
 		template <typename K> K &vector_random(std::vector<K> &vec) {
