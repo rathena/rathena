@@ -2098,6 +2098,20 @@ static TIMER_FUNC(mob_ai_hard){
 }
 
 /**
+ * Assign random option values to an item
+ * @param item_option: Random option on the item
+ * @param option: Options to assign
+ */
+void mob_setitem_option(s_item_randomoption &item_option, const std::shared_ptr<s_random_opt_group_entry> &option) {
+	nullpo_retv(item_option);
+	nullpo_retv(option);
+
+	item_option.id = option->id;
+	item_option.value = rnd_value(option->min_value, option->max_value);
+	item_option.param = option->param;
+}
+
+/**
  * Set random option for item when dropped from monster
  * @param item: Item data
  * @param mobdrop: Drop data
@@ -2109,40 +2123,39 @@ void mob_setdropitem_option(item *item, s_mob_drop *mobdrop) {
 
 	std::shared_ptr<s_random_opt_group> group = random_option_group.find(mobdrop->randomopt_group);
 
-	if (group) {
+	if (group != nullptr) {
 		// Apply Must options
-		for (size_t i = 0; i < group->slot.size(); i++) {
-			std::vector<std::shared_ptr<s_random_opt_group_entry>> options = group->slot[static_cast<uint16>(i)];
-			int32 r = 100 * options.size() + rnd() % options.size(), idx = 0; // !TODO: Config the '100' to keep from getting stuck in a loop?
+		for (size_t i = 0; i < group->slots.size(); i++) {
+			// Try to apply an entry
+			for (size_t j = 0, max = group->slots[static_cast<uint16>(i)].size() * 3; j < max; j++) {
+				std::shared_ptr<s_random_opt_group_entry> option = util::vector_random(group->slots[static_cast<uint16>(i)]);
 
-			while (r > 0 && rnd() % 10000 >= options[idx]->chance) {
-				idx = (idx + 1) % options.size();
-				--r;
+				if (rnd() % 10000 < option->chance) {
+					mob_setitem_option(item->option[i], option);
+					break;
+				}
 			}
 
-			item->option[i].id = options[idx]->id;
-			item->option[i].value = rnd_value(options[idx]->min_value, options[idx]->max_value);
-			item->option[i].param = options[idx]->param;
+			// If no entry was applied, assign one
+			if (item->option[i].id == 0) {
+				std::shared_ptr<s_random_opt_group_entry> option = util::vector_random(group->slots[static_cast<uint16>(i)]);
+
+				// Apply an entry without checking the chance
+				mob_setitem_option(item->option[i], option);
+			}
 		}
 
 		// Apply Random options (if available)
 		if (group->max_random > 0) {
-			std::vector<std::shared_ptr<s_random_opt_group_entry>> options = group->random_option;
+			for (size_t i = 0; i < min(group->max_random, MAX_ITEM_RDM_OPT); i++) {
+				// If item already has an option in this slot, skip it
+				if (item->option[i].id > 0)
+					continue;
 
-			for (size_t i = 0; i < group->max_random; i++) {
-				int32 idx = rnd() % options.size();
+				std::shared_ptr<s_random_opt_group_entry> option = util::vector_random(group->random_options);
 
-				if (rnd() % 10000 < options[idx]->chance) {
-					for (uint8 j = 0; j < MAX_ITEM_RDM_OPT; j++) {
-						if (item->option[j].id > 0)
-							continue;
-
-						item->option[j].id = options[idx]->id;
-						item->option[j].value = rnd_value(options[idx]->min_value, options[idx]->max_value);
-						item->option[j].param = options[idx]->param;
-						break;
-					}
-				}
+				if (rnd() % 10000 < option->chance)
+					mob_setitem_option(item->option[i], option);
 			}
 		}
 	}
@@ -5279,7 +5292,7 @@ static bool mob_readdb_drop(char* str[], int columns, int current) {
 		if (columns > 3) {
 			uint16 randomopt_group;
 
-			if (!random_option_group.option_get_id(trim(str[3]), &randomopt_group)) {
+			if (!random_option_group.option_get_id(trim(str[3]), randomopt_group)) {
 				ShowError("mob_readdb_drop: Invalid 'randopt_groupid' '%s' for monster '%hu'.\n", str[3], mobid);
 				return false;
 			}

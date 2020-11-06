@@ -46,9 +46,6 @@ Header:
   Version: 1
 
 Body:
-  - Id: 0
-    Group: None
-    Slots: # Empty
   - Id: 1
     Group: Group_1
     Slots:

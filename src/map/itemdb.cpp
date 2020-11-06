@@ -2304,7 +2304,7 @@ uint64 RandomOptionDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Option", name))
 			return 0;
 
-		if (random_option_db.option_search_name(name)) {
+		if (randopt->name.compare(name) != 0 && random_option_db.option_exists(name)) {
 			this->invalidWarning(node["Option"], "Found duplicate random option name for %s, skipping.\n", name.c_str());
 			return 0;
 		}
@@ -2339,7 +2339,7 @@ RandomOptionDatabase random_option_db;
  * @param name: Random option name
  * @return True on success or false on failure
  */
-bool RandomOptionDatabase::option_search_name(std::string name) {
+bool RandomOptionDatabase::option_exists(std::string name) {
 	for (const auto &opt : random_option_db) {
 		if (opt.second->name.compare(name) == 0)
 			return true;
@@ -2354,10 +2354,10 @@ bool RandomOptionDatabase::option_search_name(std::string name) {
  * @param id: Random option ID
  * @return True on success or false on failure
  */
-bool RandomOptionDatabase::option_get_id(std::string name, uint16 *id) {
+bool RandomOptionDatabase::option_get_id(std::string name, uint16 &id) {
 	for (const auto &opt : random_option_db) {
 		if (opt.second->name.compare(name) == 0) {
-			id[0] = opt.first;
+			id = opt.first;
 			return true;
 		}
 	}
@@ -2367,6 +2367,93 @@ bool RandomOptionDatabase::option_get_id(std::string name, uint16 *id) {
 
 const std::string RandomOptionGroupDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/item_randomopt_group.yml";
+}
+
+bool RandomOptionGroupDatabase::add_option(const YAML::Node &node, const bool exists, const std::shared_ptr<s_random_opt_group> &randopt, const uint16 slot, std::shared_ptr<s_random_opt_group_entry> &entry) {
+	uint16 option_id;
+
+	if (this->nodeExists(node, "Option")) {
+		std::string opt_name;
+
+		if (!this->asString(node, "Option", opt_name))
+			return false;
+
+		if (!random_option_db.option_get_id(opt_name, option_id)) {
+			this->invalidWarning(node["Option"], "Invalid Random Option name %s given.\n", opt_name.c_str());
+			return false;
+		}
+	} else {
+		this->invalidWarning(node, "Missing Option node.\n");
+		return false;
+	}
+
+	bool option_exists = false;
+
+	for (const auto &optionit : randopt->slots[slot - 1]) {
+		if (optionit->id == option_id) {
+			entry = optionit;
+			option_exists = true;
+			break;
+		}
+	}
+
+	if (!option_exists) {
+		entry = std::make_shared<s_random_opt_group_entry>();
+		entry->id = option_id;
+	}
+
+	if (this->nodeExists(node, "MinValue")) {
+		int16 value;
+
+		if (!this->asInt16(node, "MinValue", value))
+			return 0;
+
+		entry->min_value = value;
+	} else {
+		if (!exists)
+			entry->min_value = 0;
+	}
+
+	if (this->nodeExists(node, "MaxValue")) {
+		int16 value;
+
+		if (!this->asInt16(node, "MaxValue", value))
+			return 0;
+
+		entry->max_value = value;
+	} else {
+		if (!exists)
+			entry->max_value = 0;
+	}
+
+	if (entry->min_value > entry->max_value) {
+		this->invalidWarning(node["MaxValue"], "MinValue %d is greater than MaxValue %d, setting MaxValue to MinValue + 1.\n", entry->min_value, entry->max_value);
+		entry->max_value = entry->min_value + 1;
+	}
+
+	if (this->nodeExists(node, "Param")) {
+		int16 value;
+
+		if (!this->asInt16(node, "Param", value))
+			return false;
+
+		entry->param = static_cast<int8>(value);
+	} else {
+		if (!exists)
+			entry->param = 0;
+	}
+
+	if (this->nodeExists(node, "Chance")) {
+		uint16 chance;
+
+		if (!this->asUInt16Rate(node, "Chance", chance))
+			return false;
+
+		entry->chance = chance;
+	} else {
+		if (!exists)
+			entry->chance = 0;
+	}
 }
 
 /**
@@ -2397,7 +2484,7 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Group", name))
 			return 0;
 
-		if (random_option_group.option_search_name(name)) {
+		if (randopt->name.compare(name) != 0 && random_option_group.option_exists(name)) {
 			this->invalidWarning(node["Group"], "Found duplicate random option group name for %s, skipping.\n", name.c_str());
 			return 0;
 		}
@@ -2405,19 +2492,20 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const YAML::Node &node) {
 		randopt->name = name;
 	}
 
+
 	for (const YAML::Node &slotNode : node["Slots"]) {
-		if (randopt->slot.size() >= MAX_ITEM_RDM_OPT) {
-			this->invalidWarning(slotNode, "Reached maximum of %d Random Option group options.\n", MAX_ITEM_RDM_OPT);
+		if (randopt->slots.size() >= MAX_ITEM_RDM_OPT) {
+			this->invalidWarning(slotNode, "Reached maximum of %d Random Option group options. Skipping the remaining slots...\n", MAX_ITEM_RDM_OPT);
 			break;
 		}
 
-		int16 slot;
+		uint16 slot;
 
-		if (!this->asInt16(slotNode, "Slot", slot))
+		if (!this->asUInt16(slotNode, "Slot", slot))
 			return 0;
 
 		if (slot < 1 || slot > MAX_ITEM_RDM_OPT) {
-			this->invalidWarning(slotNode["Slot"], "Invalid Random Opton Slot number %d given, must be between 1~%d, skipping.\n", slot, MAX_ITEM_RDM_OPT);
+			this->invalidWarning(slotNode["Slot"], "Invalid Random Opton Slot number %hu given, must be between 1~%d, skipping.\n", slot, MAX_ITEM_RDM_OPT);
 			return 0;
 		}
 
@@ -2425,95 +2513,12 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const YAML::Node &node) {
 
 		for (const YAML::Node &optionNode : slotNode["Options"]) {
 			std::shared_ptr<s_random_opt_group_entry> entry;
-			uint16 option_id;
 
-			if (this->nodeExists(optionNode, "Option")) {
-				std::string opt_name;
-
-				if (!this->asString(optionNode, "Option", opt_name))
-					return 0;
-
-				if (!random_option_db.option_get_id(opt_name, &option_id)) {
-					this->invalidWarning(optionNode["Option"], "Invalid Random Option name %s given.\n", opt_name.c_str());
-					return 0;
-				}
-			} else {
-				this->invalidWarning(optionNode, "Missing Option node.\n");
-				continue;
-			}
-
-			bool option_exists = false;
-
-			for (const auto &optionit : randopt->slot[slot - 1]) {
-				if (optionit->id == option_id) {
-					entry = optionit;
-					option_exists = true;
-					break;
-				}
-			}
-
-			if (!option_exists) {
-				entry = std::make_shared<s_random_opt_group_entry>();
-				entry->id = option_id;
-			}
-
-			if (this->nodeExists(optionNode, "MinValue")) {
-				int16 value;
-
-				if (!this->asInt16(optionNode, "MinValue", value))
-					return 0;
-
-				entry->min_value = value;
-			} else {
-				if (!exists)
-					entry->min_value = 0;
-			}
-
-			if (this->nodeExists(optionNode, "MaxValue")) {
-				int16 value;
-
-				if (!this->asInt16(optionNode, "MaxValue", value))
-					return 0;
-
-				entry->max_value = value;
-			} else {
-				if (!exists)
-					entry->max_value = 0;
-			}
-
-			if (entry->min_value > entry->max_value) {
-				this->invalidWarning(optionNode["MaxValue"], "MinValue %d is greater than MaxValue %d, setting MaxValue to MinValue + 1.\n", entry->min_value, entry->max_value);
-				entry->max_value = entry->min_value + 1;
-			}
-
-			if (this->nodeExists(optionNode, "Param")) {
-				int16 value;
-
-				if (!this->asInt16(optionNode, "Param", value))
-					return 0;
-
-				entry->param = static_cast<int8>(value);
-			} else {
-				if (!exists)
-					entry->param = 0;
-			}
-
-			if (this->nodeExists(optionNode, "Chance")) {
-				uint16 chance;
-
-				if (!this->asUInt16Rate(optionNode, "Chance", chance))
-					return 0;
-
-				entry->chance = chance;
-			} else {
-				if (!exists)
-					entry->chance = 0;
-			}
-
-			entries.push_back(entry);
+			if (this->add_option(optionNode, exists, randopt, slot, entry))
+				entries.push_back(entry);
 		}
 
-		randopt->slot.insert({ slot - 1, entries });
+		randopt->slots.insert({ slot - 1, entries });
 	}
 
 	if (this->nodeExists(node, "MaxRandom")) {
@@ -2522,6 +2527,11 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "MaxRandom", max))
 			return 0;
 
+		if (max > MAX_ITEM_RDM_OPT) {
+			this->invalidWarning(node["MaxRandom"], "Exceeds the maximum of %d Random Option group options, capping to MAX_ITEM_RDM_OPT.\n", MAX_ITEM_RDM_OPT);
+			max = MAX_ITEM_RDM_OPT;
+		}
+
 		randopt->max_random = max;
 	} else {
 		if (!exists)
@@ -2529,99 +2539,16 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Random")) {
-		if (randopt->slot.size() >= MAX_ITEM_RDM_OPT) {
-			this->invalidWarning(node["Random"], "No Random options can be added because there are no Random Option slots available.\n", MAX_ITEM_RDM_OPT);
-			return 0;
-		}
-
 		for (const YAML::Node &randomNode : node["Random"]) {
+			if (randopt->slots.size() >= MAX_ITEM_RDM_OPT) {
+				this->invalidWarning(randomNode, "Reached maximum of %d Random option slots. Skipping the remaining slots...\n", MAX_ITEM_RDM_OPT);
+				break;
+			}
+
 			std::shared_ptr<s_random_opt_group_entry> entry;
-			uint16 option_id;
 
-			if (this->nodeExists(randomNode, "Option")) {
-				std::string opt_name;
-
-				if (!this->asString(randomNode, "Option", opt_name))
-					return 0;
-
-				if (!random_option_db.option_get_id(opt_name, &option_id)) {
-					this->invalidWarning(randomNode["Option"], "Invalid Random Option name %s given.\n", opt_name.c_str());
-					return 0;
-				}
-			} else {
-				this->invalidWarning(randomNode, "Missing Option node.\n");
-				continue;
-			}
-
-			bool option_exists = false;
-
-			for (const auto &optionit : randopt->random_option) {
-				if (optionit->id == option_id) {
-					entry = optionit;
-					option_exists = true;
-					break;
-				}
-			}
-
-			if (!option_exists) {
-				entry = std::make_shared<s_random_opt_group_entry>();
-				entry->id = option_id;
-			}
-
-			if (this->nodeExists(randomNode, "MinValue")) {
-				int16 value;
-
-				if (!this->asInt16(randomNode, "MinValue", value))
-					return 0;
-
-				entry->min_value = value;
-			} else {
-				if (!exists)
-					entry->min_value = 0;
-			}
-
-			if (this->nodeExists(randomNode, "MaxValue")) {
-				int16 value;
-
-				if (!this->asInt16(randomNode, "MaxValue", value))
-					return 0;
-
-				entry->max_value = value;
-			} else {
-				if (!exists)
-					entry->max_value = 0;
-			}
-
-			if (entry->min_value > entry->max_value) {
-				this->invalidWarning(randomNode["MaxValue"], "MinValue %d is greater than MaxValue %d, setting MaxValue to MinValue + 1.\n", entry->min_value, entry->max_value);
-				entry->max_value = entry->min_value + 1;
-			}
-
-			if (this->nodeExists(randomNode, "Param")) {
-				int16 value;
-
-				if (!this->asInt16(randomNode, "Param", value))
-					return 0;
-
-				entry->param = static_cast<int8>(value);
-			} else {
-				if (!exists)
-					entry->param = 0;
-			}
-
-			if (this->nodeExists(randomNode, "Chance")) {
-				uint16 chance;
-
-				if (!this->asUInt16Rate(randomNode, "Chance", chance))
-					return 0;
-
-				entry->chance = chance;
-			} else {
-				if (!exists)
-					entry->chance = 0;
-			}
-
-			randopt->random_option.push_back(entry);
+			if (this->add_option(randomNode, exists, randopt, 0, entry))
+				randopt->random_options.push_back(entry);
 		}
 	}
 
@@ -2638,7 +2565,7 @@ RandomOptionGroupDatabase random_option_group;
  * @param name: Random option name
  * @return True on success or false on failure
  */
-bool RandomOptionGroupDatabase::option_search_name(std::string name) {
+bool RandomOptionGroupDatabase::option_exists(std::string name) {
 	for (const auto &opt : random_option_group) {
 		if (opt.second->name.compare(name) == 0)
 			return true;
@@ -2653,10 +2580,10 @@ bool RandomOptionGroupDatabase::option_search_name(std::string name) {
  * @param id: Random option group ID
  * @return True on success or false on failure
  */
-bool RandomOptionGroupDatabase::option_get_id(std::string name, uint16 *id) {
+bool RandomOptionGroupDatabase::option_get_id(std::string name, uint16 &id) {
 	for (const auto &opt : random_option_group) {
 		if (opt.second->name.compare(name) == 0) {
-			id[0] = opt.first;
+			id = opt.first;
 			return true;
 		}
 	}

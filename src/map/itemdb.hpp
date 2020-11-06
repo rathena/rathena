@@ -942,9 +942,9 @@ struct s_random_opt_group_entry {
 struct s_random_opt_group {
 	uint16 id;
 	std::string name;
-	std::map<uint16, std::vector<std::shared_ptr<s_random_opt_group_entry>>> slot;
+	std::map<uint16, std::vector<std::shared_ptr<s_random_opt_group_entry>>> slots;
 	uint16 max_random;
-	std::vector<std::shared_ptr<s_random_opt_group_entry>> random_option;
+	std::vector<std::shared_ptr<s_random_opt_group_entry>> random_options;
 };
 
 class RandomOptionDatabase : public TypesafeYamlDatabase<uint16, s_random_opt_data> {
@@ -957,8 +957,8 @@ public:
 	uint64 parseBodyNode(const YAML::Node &node);
 
 	// Additional
-	bool option_search_name(std::string name);
-	bool option_get_id(std::string name, uint16 *id);
+	bool option_exists(std::string name);
+	bool option_get_id(std::string name, uint16 &id);
 };
 
 extern RandomOptionDatabase random_option_db;
@@ -973,8 +973,9 @@ public:
 	uint64 parseBodyNode(const YAML::Node &node);
 
 	// Additional
-	bool option_search_name(std::string name);
-	bool option_get_id(std::string name, uint16 *id);
+	bool RandomOptionGroupDatabase::add_option(const YAML::Node &node, const bool exists, const std::shared_ptr<s_random_opt_group> &randopt, const uint16 slot, std::shared_ptr<s_random_opt_group_entry> &entry);
+	bool option_exists(std::string name);
+	bool option_get_id(std::string name, uint16 &id);
 };
 
 extern RandomOptionGroupDatabase random_option_group;
