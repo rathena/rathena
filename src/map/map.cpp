@@ -4888,6 +4888,8 @@ void do_final(void){
 		ShowStatus("Cleaning up maps [%d/%d]: %s..." CL_CLL "\r", i++, map_num, mapdata->name);
 		map_foreachinmap(cleanup_sub, i, BL_ALL);
 		channel_delete(mapdata->channel,false);
+
+		map_free_questinfo(mapdata);
 	}
 	ShowStatus("Cleaned up %d maps." CL_CLL "\n", map_num);
 
@@ -4941,7 +4943,6 @@ void do_final(void){
 			for (int j=0; j<MAX_MOB_LIST_PER_MAP; j++)
 				if (mapdata->moblist[j]) aFree(mapdata->moblist[j]);
 		}
-		map_free_questinfo(mapdata);
 		mapdata->damage_adjust = {};
 	}
 

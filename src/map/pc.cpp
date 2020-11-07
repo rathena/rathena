@@ -13247,36 +13247,6 @@ void pc_validate_skill(struct map_session_data *sd) {
 }
 
 /**
- * Toggle to remember if the questinfo is displayed yet or not.
- * @param qi_display Display flag
- * @param show If show is true and qi_display is 0, set qi_display to 1 and show the event bubble.
- *             If show is false and qi_display is 1, set qi_display to 0 and hide the event bubble.
- **/
-static void pc_show_questinfo_sub(struct map_session_data *sd, struct npc_data *nd, int i, struct s_questinfo *qi, bool show) {
-	if (show) {
-		// Check if need to be displayed
-		if (qi && (!sd->qi_display[i].is_active || qi->icon != sd->qi_display[i].icon || qi->color != sd->qi_display[i].color)) {
-			sd->qi_display[i].is_active = true;
-			sd->qi_display[i].icon = static_cast<e_questinfo_types>(qi->icon);
-			sd->qi_display[i].color = static_cast<e_questinfo_markcolor>(qi->color);
-			clif_quest_show_event(sd, &nd->bl, qi->icon, qi->color);
-		}
-	}
-	else {
-		// Check if need to be hide
-		if (sd->qi_display[i].is_active) {
-			sd->qi_display[i].is_active = false;
-			sd->qi_display[i].icon = static_cast<e_questinfo_types>(QTYPE_NONE);
-			sd->qi_display[i].color = static_cast<e_questinfo_markcolor>(QMARK_NONE);
-#if PACKETVER >= 20120410
-			clif_quest_show_event(sd, &nd->bl, QTYPE_NONE, QMARK_NONE);
-#else
-			clif_quest_show_event(sd, &nd->bl, QTYPE_QUEST, QMARK_NONE);
-#endif
-		}
-	}
-}
-/**
  * Show available NPC Quest / Event Icon Check [Kisuka]
  * @param sd Player
  **/
@@ -13306,12 +13276,29 @@ void pc_show_questinfo(struct map_session_data *sd) {
 		for (auto &qi : nd->qi_data) {
 			if (!qi.condition || achievement_check_condition(qi.condition, sd)) {
 				show = true;
-				pc_show_questinfo_sub(sd, nd, i, &qi, true);
+				// Check if need to be displayed
+				if (!sd->qi_display[i].is_active || qi.icon != sd->qi_display[i].icon || qi.color != sd->qi_display[i].color) {
+					sd->qi_display[i].is_active = true;
+					sd->qi_display[i].icon = static_cast<e_questinfo_types>(qi.icon);
+					sd->qi_display[i].color = static_cast<e_questinfo_markcolor>(qi.color);
+					clif_quest_show_event(sd, &nd->bl, qi.icon, qi.color);
+				}
 				break;
 			}
 		}
-		if (show == false)
-			pc_show_questinfo_sub(sd, nd, i, nullptr, false);
+		if (show == false) {
+			// Check if need to be hide
+			if (sd->qi_display[i].is_active) {
+				sd->qi_display[i].is_active = false;
+				sd->qi_display[i].icon = static_cast<e_questinfo_types>(QTYPE_NONE);
+				sd->qi_display[i].color = static_cast<e_questinfo_markcolor>(QMARK_NONE);
+#if PACKETVER >= 20120410
+				clif_quest_show_event(sd, &nd->bl, QTYPE_NONE, QMARK_NONE);
+#else
+				clif_quest_show_event(sd, &nd->bl, QTYPE_QUEST, QMARK_NONE);
+#endif
+			}
+		}
 	}
 #endif
 }
