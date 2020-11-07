@@ -36896,21 +36896,21 @@ Body:
     View: 219
     Script: |
       bonus bSpeedRate,25;
-  - Id: 5151
-    AegisName: Headset_OST
-    Name: Note Headphones
-    Type: Armor
-    Buy: 20
-    Weight: 200
-    Defense: 4
-    Slots: 1
-    Locations:
-      Head_Mid: true
-      Head_Top: true
-    Refineable: true
-    View: 220
-    Script: |
-      bonus bMdef,3; bonus2 bResEff,Eff_Stun,1000; bonus2 bResEff,Eff_Freeze,1000;
+  # - Id: 5151
+  #   AegisName: Headset_OST
+  #   Name: Note Headphones
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 200
+  #   Defense: 4
+  #   Slots: 1
+  #   Locations:
+  #     Head_Mid: true
+  #     Head_Top: true
+  #   Refineable: true
+  #   View: 220
+  #   Script: |
+  #     bonus bMdef,3; bonus2 bResEff,Eff_Stun,1000; bonus2 bResEff,Eff_Freeze,1000;
   - Id: 5152
     AegisName: Chinese_Crown
     Name: Chinese Crown
@@ -37414,32 +37414,32 @@ Body:
     View: 217
     Script: |
       bonus bVit,1;
-  - Id: 5181
-    AegisName: Helm_Of_Darkness
-    Name: Helm of Darkness
-    Type: Armor
-    Buy: 20
-    Weight: 500
-    Defense: 3
-    Slots: 1
-    Jobs:
-      Alchemist: true
-      Assassin: true
-      Blacksmith: true
-      Crusader: true
-      Knight: true
-      Merchant: true
-      Rogue: true
-      Swordman: true
-      Thief: true
-    Locations:
-      Head_Mid: true
-      Head_Top: true
-    EquipLevelMin: 50
-    Refineable: true
-    View: 233
-    Script: |
-      bonus bStr,2;
+  # - Id: 5181
+  #   AegisName: Helm_Of_Darkness
+  #   Name: Helm of Darkness
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 500
+  #   Defense: 3
+  #   Slots: 1
+  #   Jobs:
+  #     Alchemist: true
+  #     Assassin: true
+  #     Blacksmith: true
+  #     Crusader: true
+  #     Knight: true
+  #     Merchant: true
+  #     Rogue: true
+  #     Swordman: true
+  #     Thief: true
+  #   Locations:
+  #     Head_Mid: true
+  #     Head_Top: true
+  #   EquipLevelMin: 50
+  #   Refineable: true
+  #   View: 233
+  #   Script: |
+  #     bonus bStr,2;
   - Id: 5182
     AegisName: Puppy_Hat
     Name: Puppy Hat
@@ -37790,25 +37790,25 @@ Body:
     View: 260
     Script: |
       bonus bLuk,1; bonus2 bSubEle,Ele_Holy,5;
-  - Id: 5208
-    AegisName: Rideword_Hat
-    Name: Rideword Hat
-    Type: Armor
-    Buy: 20
-    Weight: 300
-    Defense: 3
-    Slots: 1
-    Jobs:
-      All: true
-      Novice: false
-      SuperNovice: false
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 40
-    Refineable: true
-    View: 262
-    Script: |
-      bonus2 bHPDrainRate,50,8; bonus2 bSPDrainRate,10,4; bonus2 bHPLossRate,10,5000;
+  # - Id: 5208
+  #   AegisName: Rideword_Hat
+  #   Name: Rideword Hat
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 300
+  #   Defense: 3
+  #   Slots: 1
+  #   Jobs:
+  #     All: true
+  #     Novice: false
+  #     SuperNovice: false
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 40
+  #   Refineable: true
+  #   View: 262
+  #   Script: |
+  #     bonus2 bHPDrainRate,50,8; bonus2 bSPDrainRate,10,4; bonus2 bHPLossRate,10,5000;
   - Id: 5209
     AegisName: Yellow_Baseball_Cap
     Name: Love Dad Cap
@@ -37841,20 +37841,20 @@ Body:
       NoDrop: true
     Script: |
       bonus bVariableCastrate,-3; bonus bAspdRate,3; bonus bInt,1; bonus bAgi,1;
-  - Id: 5211
-    AegisName: Dress_Hat
-    Name: Dress Hat
-    Type: Armor
-    Weight: 200
-    Defense: 3
-    Slots: 1
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 20
-    Refineable: true
-    View: 265
-    Script: |
-      bonus bMdef,7; bonus bStr,1; bonus bInt,1; bonus2 bAddClass,Class_All,2; bonus bMatkRate,2; bonus bHealPower,5; if(getrefine()>=7) { bonus2 bAddClass,Class_All,1; bonus bMatkRate,1; bonus bHealPower,1; }
+  # - Id: 5211
+  #   AegisName: Dress_Hat
+  #   Name: Dress Hat
+  #   Type: Armor
+  #   Weight: 200
+  #   Defense: 3
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 20
+  #   Refineable: true
+  #   View: 265
+  #   Script: |
+  #     bonus bMdef,7; bonus bStr,1; bonus bInt,1; bonus2 bAddClass,Class_All,2; bonus bMatkRate,2; bonus bHealPower,5; if(getrefine()>=7) { bonus2 bAddClass,Class_All,1; bonus bMatkRate,1; bonus bHealPower,1; }
   - Id: 5212
     AegisName: Satellite_Hairband
     Name: Satellite Hairband
@@ -38883,22 +38883,22 @@ Body:
       bonus bSpeedRate,25; bonus bDef,4; skill "TF_HIDING",1;
     UnEquipScript: |
       sc_end SC_HIDING;
-  - Id: 5276
-    AegisName: Fantastic_Wig
-    Name: Fantastic Wig
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Defense: 1
-    Locations:
-      Head_Mid: true
-      Head_Top: true
-    Refineable: true
-    View: 308
-    Script: |
-      bonus bSpeedRate,25; bonus bDef,4; skill "TF_HIDING",1;
-    UnEquipScript: |
-      sc_end SC_HIDING;
+  # - Id: 5276
+  #   AegisName: Fantastic_Wig
+  #   Name: Fantastic Wig
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Defense: 1
+  #   Locations:
+  #     Head_Mid: true
+  #     Head_Top: true
+  #   Refineable: true
+  #   View: 308
+  #   Script: |
+  #     bonus bSpeedRate,25; bonus bDef,4; skill "TF_HIDING",1;
+  #   UnEquipScript: |
+  #     sc_end SC_HIDING;
   - Id: 5277
     AegisName: Yellow_Bandana
     Name: Yellow Bandana
@@ -38917,24 +38917,24 @@ Body:
     View: 309
     Script: |
       bonus bLuk,2; bonus bVit,2; bonus bLongAtkDef,10;
-  - Id: 5278
-    AegisName: Yellow_Ribbon
-    Name: Yellow Ribbon
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Defense: 2
-    Jobs:
-      All: true
-      Novice: false
-      SuperNovice: false
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 20
-    Refineable: true
-    View: 310
-    Script: |
-      bonus bLuk,2; bonus bVit,2; bonus bLongAtkDef,10;
+  # - Id: 5278
+  #   AegisName: Yellow_Ribbon
+  #   Name: Yellow Ribbon
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Defense: 2
+  #   Jobs:
+  #     All: true
+  #     Novice: false
+  #     SuperNovice: false
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 20
+  #   Refineable: true
+  #   View: 310
+  #   Script: |
+  #     bonus bLuk,2; bonus bVit,2; bonus bLongAtkDef,10;
   - Id: 5279
     AegisName: Drooping_Kitty_C
     Name: Refined Drooping Cat
@@ -39021,22 +39021,22 @@ Body:
       Head_Top: true
     Refineable: true
     View: 216
-  - Id: 5283
-    AegisName: Chick_Hat
-    Name: Chick Hat
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Defense: 2
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 10
-    View: 311
-    Trade:
-      Override: 100
-      NoDrop: true
-    Script: |
-      bonus bLuk,2; bonus bMaxHP,50; bonus bMaxSP,50; skill "TF_DOUBLE",2; bonus bDoubleRate,10; bonus2 bSubRace,RC_DemiHuman,3; bonus2 bSubRace,RC_Player_Human,3;
+  # - Id: 5283
+  #   AegisName: Chick_Hat
+  #   Name: Chick Hat
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Defense: 2
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 10
+  #   View: 311
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #   Script: |
+  #     bonus bLuk,2; bonus bMaxHP,50; bonus bMaxSP,50; skill "TF_DOUBLE",2; bonus bDoubleRate,10; bonus2 bSubRace,RC_DemiHuman,3; bonus2 bSubRace,RC_Player_Human,3;
   - Id: 5284
     AegisName: Water_Lily_Crown
     Name: Water Lily Crown
@@ -39365,17 +39365,17 @@ Body:
     View: 326
     Script: |
       bonus2 bResEff,Eff_Curse,700; bonus2 bResEff,Eff_Blind,10000;
-  - Id: 5305
-    AegisName: Pirate_Dagger
-    Name: Pirate Dagger
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Locations:
-      Head_Low: true
-    View: 327
-    Script: |
-      bonus bBaseAtk,5;
+  # - Id: 5305
+  #   AegisName: Pirate_Dagger
+  #   Name: Pirate Dagger
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Locations:
+  #     Head_Low: true
+  #   View: 327
+  #   Script: |
+  #     bonus bBaseAtk,5;
   - Id: 5306
     AegisName: Freyja_Crown
     Name: Freya's Crown
@@ -39478,20 +39478,20 @@ Body:
       bonus2 bSubEle,Ele_Dark,10; skill "MG_SIGHT",1;
     UnEquipScript: |
       sc_end SC_SIGHT;
-  - Id: 5311
-    AegisName: Large_Hibiscus
-    Name: Large Hisbiscus
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Defense: 2
-    Slots: 1
-    Locations:
-      Head_Top: true
-    Refineable: true
-    View: 333
-    Script: |
-      bonus bMdef,15;
+  # - Id: 5311
+  #   AegisName: Large_Hibiscus
+  #   Name: Large Hisbiscus
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Defense: 2
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   Refineable: true
+  #   View: 333
+  #   Script: |
+  #     bonus bMdef,15;
   - Id: 5312
     AegisName: Ayothaya_Hat
     Name: Ayothaya King's Hat
@@ -39527,53 +39527,53 @@ Body:
       NoDrop: true
     Script: |
       bonus bInt,1; bonus bMatkRate,3; bonus bVariableCastrate,-3;
-  - Id: 5314
-    AegisName: Hockey_Mask
-    Name: Hockey Mask
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Defense: 1
-    Locations:
-      Head_Low: true
-      Head_Mid: true
-    EquipLevelMin: 50
-    View: 336
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      bonus2 bAddRace,RC_DemiHuman,5; bonus2 bAddRace,RC_Player_Human,5;
-  - Id: 5315
-    AegisName: Observer
-    Name: Observer
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Defense: 2
-    Locations:
-      Head_Mid: true
-    EquipLevelMin: 35
-    View: 337
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      skill "WZ_ESTIMATION",1; /*Gold PC Room: bonus bAllStats,1;*/
+  # - Id: 5314
+  #   AegisName: Hockey_Mask
+  #   Name: Hockey Mask
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Defense: 1
+  #   Locations:
+  #     Head_Low: true
+  #     Head_Mid: true
+  #   EquipLevelMin: 50
+  #   View: 336
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #     NoTrade: true
+  #     NoSell: true
+  #     NoCart: true
+  #     NoStorage: true
+  #     NoGuildStorage: true
+  #     NoMail: true
+  #     NoAuction: true
+  #   Script: |
+  #     bonus2 bAddRace,RC_DemiHuman,5; bonus2 bAddRace,RC_Player_Human,5;
+  # - Id: 5315
+  #   AegisName: Observer
+  #   Name: Observer
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Defense: 2
+  #   Locations:
+  #     Head_Mid: true
+  #   EquipLevelMin: 35
+  #   View: 337
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #     NoTrade: true
+  #     NoSell: true
+  #     NoCart: true
+  #     NoStorage: true
+  #     NoGuildStorage: true
+  #     NoMail: true
+  #     NoAuction: true
+  #   Script: |
+  #     skill "WZ_ESTIMATION",1; /*Gold PC Room: bonus bAllStats,1;*/
   - Id: 5316
     AegisName: Umbrella_Hat
     Name: Umbrella Hat
@@ -39679,29 +39679,29 @@ Body:
     View: 342
     Script: |
       bonus2 bAddMonsterDropItem,518,300;
-  - Id: 5322
-    AegisName: Scarf
-    Name: Kerchief
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Defense: 4
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 24
-    Refineable: true
-    View: 343
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      bonus bMdef,2; bonus bFlee,5;
+  # - Id: 5322
+  #   AegisName: Scarf
+  #   Name: Kerchief
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Defense: 4
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 24
+  #   Refineable: true
+  #   View: 343
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #     NoTrade: true
+  #     NoSell: true
+  #     NoCart: true
+  #     NoGuildStorage: true
+  #     NoMail: true
+  #     NoAuction: true
+  #   Script: |
+      # bonus bMdef,2; bonus bFlee,5;
   - Id: 5323
     AegisName: Misstrance_Crown
     Name: Misstrance Crown
@@ -40311,28 +40311,28 @@ Body:
     View: 206
     Script: |
       bonus2 bSubRace,RC_Demon,5; bonus2 bAddRace,RC_Demon,5;
-  - Id: 5357
-    AegisName: Wings_Of_Victory
-    Name: Wings Of Victory
-    Type: Armor
-    Buy: 20
-    Weight: 200
-    Defense: 10
-    Locations:
-      Head_Mid: true
-      Head_Top: true
-    View: 365
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      bonus bMdef,10; bonus bUnbreakableHelm;
+  # - Id: 5357
+  #   AegisName: Wings_Of_Victory
+  #   Name: Wings Of Victory
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 200
+  #   Defense: 10
+  #   Locations:
+  #     Head_Mid: true
+  #     Head_Top: true
+  #   View: 365
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #     NoTrade: true
+  #     NoSell: true
+  #     NoCart: true
+  #     NoGuildStorage: true
+  #     NoMail: true
+  #     NoAuction: true
+  #   Script: |
+  #     bonus bMdef,10; bonus bUnbreakableHelm;
   - Id: 5358
     AegisName: Pecopeco_Wing_Ears
     Name: Peco Ears
@@ -40346,24 +40346,24 @@ Body:
     View: 366
     Script: |
       bonus bAgi,1; bonus bMdef,2; bonus bUnbreakableHelm;
-  - Id: 5359
-    AegisName: J_Captain_Hat
-    Name: Ship Captain Hat
-    Type: Armor
-    Buy: 20
-    Weight: 300
-    Defense: 3
-    Slots: 1
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 60
-    Refineable: true
-    View: 367
-    Trade:
-      Override: 100
-      NoDrop: true
-    Script: |
-      bonus bDex,1; bonus bMaxHP,100; bonus bLongAtkRate,7;
+  # - Id: 5359
+  #   AegisName: J_Captain_Hat
+  #   Name: Ship Captain Hat
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 300
+  #   Defense: 3
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 60
+  #   Refineable: true
+  #   View: 367
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #   Script: |
+  #     bonus bDex,1; bonus bMaxHP,100; bonus bLongAtkRate,7;
   - Id: 5360
     AegisName: Whikebain_Ears
     Name: Hyuke's Black Cat Ears
@@ -40381,34 +40381,34 @@ Body:
       NoDrop: true
     Script: |
       bonus bFlee,10; bonus bCritAtkRate,10; autobonus "{ bonus2 bIgnoreMdefClassRate,Class_Normal,100; bonus2 bIgnoreMdefClassRate,Class_Boss,100; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_STEAL; }";
-  - Id: 5361
-    AegisName: Gang_Scarf
-    Name: Gangster Scarf
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Locations:
-      Head_Low: true
-    View: 369
-    Trade:
-      Override: 100
-      NoDrop: true
-    Script: |
-      bonus bBaseAtk,5; if(BaseJob==Job_Rogue) skill "RG_GANGSTER",1;
-  - Id: 5362
-    AegisName: Ninja_Scroll
-    Name: Ninja Scroll
-    Type: Armor
-    Buy: 20
-    Weight: 200
-    Locations:
-      Head_Low: true
-    View: 370
-    Trade:
-      Override: 100
-      NoDrop: true
-    Script: |
-      bonus bMatkRate,1;
+  # - Id: 5361
+  #   AegisName: Gang_Scarf
+  #   Name: Gangster Scarf
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Locations:
+  #     Head_Low: true
+  #   View: 369
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #   Script: |
+  #     bonus bBaseAtk,5; if(BaseJob==Job_Rogue) skill "RG_GANGSTER",1;
+  # - Id: 5362
+  #   AegisName: Ninja_Scroll
+  #   Name: Ninja Scroll
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 200
+  #   Locations:
+  #     Head_Low: true
+  #   View: 370
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #   Script: |
+  #     bonus bMatkRate,1;
   - Id: 5363
     AegisName: Helm_Of_Abyss
     Name: Helm Of Abyss
@@ -40569,22 +40569,22 @@ Body:
     View: 377
     Script: |
       bonus bLuk,1; bonus bMaxSP,30;
-  - Id: 5372
-    AegisName: Drooping_White_Kitty
-    Name: Koneko Hat
-    Type: Armor
-    Buy: 20
-    Weight: 500
-    Defense: 3
-    Locations:
-      Head_Top: true
-    Refineable: true
-    View: 378
-    Trade:
-      Override: 100
-      NoDrop: true
-    Script: |
-      bonus bInt,1; bonus bDelayRate,-3; bonus bMatkRate,3; bonus bMaxSPrate,3; bonus bMdef,3;
+  # - Id: 5372
+  #   AegisName: Drooping_White_Kitty
+  #   Name: Koneko Hat
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 500
+  #   Defense: 3
+  #   Locations:
+  #     Head_Top: true
+  #   Refineable: true
+  #   View: 378
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #   Script: |
+  #     bonus bInt,1; bonus bDelayRate,-3; bonus bMatkRate,3; bonus bMaxSPrate,3; bonus bMdef,3;
   - Id: 5373
     AegisName: Darkness_Helm
     Name: Dark Randgris Helm
@@ -40648,17 +40648,17 @@ Body:
     View: 382
     Script: |
       bonus bMaxSP,120; bonus2 bAddEff2,Eff_Curse,10;
-  - Id: 5377
-    AegisName: Antique_Pipe
-    Name: Gentleman's Pipe
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Locations:
-      Head_Low: true
-    View: 383
-    Script: |
-      bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player_Human,2;
+  # - Id: 5377
+  #   AegisName: Antique_Pipe
+  #   Name: Gentleman's Pipe
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Locations:
+  #     Head_Low: true
+  #   View: 383
+  #   Script: |
+  #     bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player_Human,2;
   - Id: 5378
     AegisName: Rabbit_Ear_Hat
     Name: Bunny Top Hat
@@ -40674,20 +40674,20 @@ Body:
       NoDrop: true
     Script: |
       bonus bAgi,3; bonus3 bAutoSpellWhenHit,"AL_INCAGI",5,10;
-  - Id: 5379
-    AegisName: Balloon_Hat
-    Name: Tam
-    Type: Armor
-    Weight: 800
-    Defense: 5
-    Slots: 1
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 50
-    Refineable: true
-    View: 385
-    Script: |
-      bonus bMdef,2; bonus bMatkRate,2+(getrefine()/2);
+  # - Id: 5379
+  #   AegisName: Balloon_Hat
+  #   Name: Tam
+  #   Type: Armor
+  #   Weight: 800
+  #   Defense: 5
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 50
+  #   Refineable: true
+  #   View: 385
+  #   Script: |
+  #     bonus bMdef,2; bonus bMatkRate,2+(getrefine()/2);
   - Id: 5380
     AegisName: Fish_Head_Hat
     Name: Fish Head Hat
@@ -40819,35 +40819,35 @@ Body:
     View: 392
     Script: |
       bonus bMdef,5; bonus2 bAddEffWhenHit,Eff_Silence,1000; bonus2 bAddEffWhenHit,Eff_Poison,1000; bonus2 bAddEffWhenHit,Eff_Curse,1000; bonus2 bAddEffWhenHit,Eff_Blind,1000; bonus2 bAddEffWhenHit,Eff_Stone,1000; bonus2 bAddEffWhenHit,Eff_Freeze,1000; bonus2 bAddEffWhenHit,Eff_Stun,1000; bonus2 bAddEffWhenHit,Eff_Sleep,1000;
-  - Id: 5388
-    AegisName: Snake_Head
-    Name: Snake Head Hat
-    Type: Armor
-    Buy: 20
-    Weight: 200
-    Defense: 2
-    Slots: 1
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 30
-    Refineable: true
-    View: 393
-    Script: |
-      skill "TF_DOUBLE",5; bonus bDoubleRate,25;
-  - Id: 5389
-    AegisName: Angel_Spirit
-    Name: Angel Spirit
-    Type: Armor
-    Buy: 20
-    Weight: 200
-    Locations:
-      Head_Mid: true
-    View: 394
-    Trade:
-      Override: 100
-      NoDrop: true
-    Script: |
-      bonus bStr,2; bonus bHit,15;
+  # - Id: 5388
+  #   AegisName: Snake_Head
+  #   Name: Snake Head Hat
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 200
+  #   Defense: 2
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 30
+  #   Refineable: true
+  #   View: 393
+  #   Script: |
+  #     skill "TF_DOUBLE",5; bonus bDoubleRate,25;
+  # - Id: 5389
+  #   AegisName: Angel_Spirit
+  #   Name: Angel Spirit
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 200
+  #   Locations:
+  #     Head_Mid: true
+  #   View: 394
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #   Script: |
+  #     bonus bStr,2; bonus bHit,15;
   - Id: 5390
     AegisName: Santa_Hat_2
     Name: Frozen Twin Pompom
@@ -41041,19 +41041,19 @@ Body:
     View: 403
     Script: |
       bonus bLuk,1;
-  - Id: 5401
-    AegisName: Black_Glasses
-    Name: Black Frame Glasses
-    Type: Armor
-    Buy: 20
-    Weight: 200
-    Defense: 2
-    Locations:
-      Head_Mid: true
-    EquipLevelMin: 70
-    View: 404
-    Script: |
-      bonus bInt,1; bonus bMdef,2; bonus bUnbreakableHelm;
+  # - Id: 5401
+  #   AegisName: Black_Glasses
+  #   Name: Black Frame Glasses
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 200
+  #   Defense: 2
+  #   Locations:
+  #     Head_Mid: true
+  #   EquipLevelMin: 70
+  #   View: 404
+  #   Script: |
+  #     bonus bInt,1; bonus bMdef,2; bonus bUnbreakableHelm;
   - Id: 5402
     AegisName: Mischievous_Fairy
     Name: Mischievous Fairy
@@ -41355,48 +41355,48 @@ Body:
       NoDrop: true
     Script: |
       bonus bVit,1; bonus2 bSubRace,RC_Plant,5;
-  - Id: 5420
-    AegisName: Mask_Of_Ifrit
-    Name: Mask Of Ifrit
-    Type: Armor
-    Buy: 20
-    Weight: 800
-    Defense: 12
-    Slots: 1
-    Jobs:
-      All: true
-      Novice: false
-      SuperNovice: false
-    Locations:
-      Head_Low: true
-      Head_Mid: true
-      Head_Top: true
-    EquipLevelMin: 50
-    View: 421
-    Trade:
-      Override: 100
-      NoDrop: true
-    Script: |
-      bonus bStr,2; bonus bInt,2; bonus bMdef,5; bonus2 bSubEle,Ele_Fire,10; bonus2 bSubEle,Ele_Water,-10; bonus2 bAddEle,Ele_Fire,10; bonus2 bMagicAtkEle,Ele_Fire,10; bonus3 bAutoSpell,"WZ_METEOR",3,50;
-  - Id: 5421
-    AegisName: Ifrit's_Ear
-    Name: Ears Of Ifrit
-    Type: Armor
-    Buy: 20
-    Weight: 300
-    Jobs:
-      All: true
-      Novice: false
-      SuperNovice: false
-    Locations:
-      Head_Mid: true
-    EquipLevelMin: 50
-    View: 422
-    Trade:
-      Override: 100
-      NoDrop: true
-    Script: |
-      bonus bStr,1; bonus bInt,1; bonus bMdef,3; bonus2 bAddEle,Ele_Fire,3; bonus2 bSkillAtk,"SM_BASH",4; bonus2 bSkillAtk,"SM_MAGNUM",4; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Water,-3;
+  # - Id: 5420
+  #   AegisName: Mask_Of_Ifrit
+  #   Name: Mask Of Ifrit
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 800
+  #   Defense: 12
+  #   Slots: 1
+  #   Jobs:
+  #     All: true
+  #     Novice: false
+  #     SuperNovice: false
+  #   Locations:
+  #     Head_Low: true
+  #     Head_Mid: true
+  #     Head_Top: true
+  #   EquipLevelMin: 50
+  #   View: 421
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #   Script: |
+  #     bonus bStr,2; bonus bInt,2; bonus bMdef,5; bonus2 bSubEle,Ele_Fire,10; bonus2 bSubEle,Ele_Water,-10; bonus2 bAddEle,Ele_Fire,10; bonus2 bMagicAtkEle,Ele_Fire,10; bonus3 bAutoSpell,"WZ_METEOR",3,50;
+  # - Id: 5421
+  #   AegisName: Ifrit's_Ear
+  #   Name: Ears Of Ifrit
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 300
+  #   Jobs:
+  #     All: true
+  #     Novice: false
+  #     SuperNovice: false
+  #   Locations:
+  #     Head_Mid: true
+  #   EquipLevelMin: 50
+  #   View: 422
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #   Script: |
+  #     bonus bStr,1; bonus bInt,1; bonus bMdef,3; bonus2 bAddEle,Ele_Fire,3; bonus2 bSkillAtk,"SM_BASH",4; bonus2 bSkillAtk,"SM_MAGNUM",4; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Water,-3;
   - Id: 5422
     AegisName: Linguistic_Book_Cap
     Name: Linguistic Book Hat
@@ -42022,51 +42022,51 @@ Body:
       NoAuction: true
     Script: |
       bonus bDex,3; bonus2 bSubEle,Ele_Ghost,20;
-  - Id: 5462
-    AegisName: Spiked_Scarf
-    Name: Spiked Scarf
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Defense: 1
-    Locations:
-      Head_Low: true
-    EquipLevelMin: 90
-    View: 459
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      bonus bAtk,30; bonus bMaxHPrate,-2;
-  - Id: 5463
-    AegisName: Rainbow_Scarf
-    Name: Rainbow Scarf
-    Type: Armor
-    Buy: 20
-    Defense: 1
-    Locations:
-      Head_Low: true
-    EquipLevelMin: 90
-    View: 460
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      bonus bMatk,30; bonus bMaxSPrate,-2;
+  # - Id: 5462
+  #   AegisName: Spiked_Scarf
+  #   Name: Spiked Scarf
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Defense: 1
+  #   Locations:
+  #     Head_Low: true
+  #   EquipLevelMin: 90
+  #   View: 459
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #     NoTrade: true
+  #     NoSell: true
+  #     NoCart: true
+  #     NoStorage: true
+  #     NoGuildStorage: true
+  #     NoMail: true
+  #     NoAuction: true
+  #   Script: |
+  #     bonus bAtk,30; bonus bMaxHPrate,-2;
+  # - Id: 5463
+  #   AegisName: Rainbow_Scarf
+  #   Name: Rainbow Scarf
+  #   Type: Armor
+  #   Buy: 20
+  #   Defense: 1
+  #   Locations:
+  #     Head_Low: true
+  #   EquipLevelMin: 90
+  #   View: 460
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #     NoTrade: true
+  #     NoSell: true
+  #     NoCart: true
+  #     NoStorage: true
+  #     NoGuildStorage: true
+  #     NoMail: true
+  #     NoAuction: true
+  #   Script: |
+  #     bonus bMatk,30; bonus bMaxSPrate,-2;
   - Id: 5464
     AegisName: Zaha_Doll_Hat
     Name: Zaha Doll Hat
@@ -42087,54 +42087,54 @@ Body:
       NoDrop: true
     Script: |
       bonus bInt,3; bonus bMdef,9; bonus2 bMagicAddEle,Ele_Undead,10; .@r0 = getrefine(); autobonus "{ .@r = getrefine(); bonus2 bSPLossRate,10,1000; bonus bMatk,30*.@r; bonus bFixedCast,-80*.@r; }",3*.@r0,3000,BF_MAGIC,"{ active_transform 1518,3000; specialeffect2 EF_POTION_BERSERK; showscript \"Bacsojin Power !\"; }"; autobonus2 "{ .@r = getrefine(); bonus2 bSPLossRate,10,1000; bonus bMatk,30*.@r; bonus bFixedCast,-80*.@r; }",.@r0,3000,BF_MAGIC,"{ active_transform 1518,3000; specialeffect2 EF_POTION_BERSERK; showscript \"Bacsojin Power !\"; }";
-  - Id: 5465
-    AegisName: Celestial_Hat
-    Name: Hat Of Fortune
-    Type: Armor
-    Buy: 20
-    Weight: 500
-    Defense: 3
-    Slots: 1
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 40
-    Refineable: true
-    View: 462
-    Script: |
-      bonus bLuk,2; bonus bMdef,5; .@r = getrefine(); if(.@r>4) bonus bLuk,.@r-4;
-  - Id: 5466
-    AegisName: Wind_Milestone
-    Name: Wind Milestone
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Defense: 2
-    Slots: 1
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 30
-    Refineable: true
-    View: 463
-    Script: |
-      bonus bAgi,2; skill "AL_TELEPORT",1;
-  - Id: 5467
-    AegisName: Helm_Of_Dragoon
-    Name: Helm Of Dragon
-    Type: Armor
-    Buy: 20
-    Weight: 1000
-    Defense: 10
-    Slots: 1
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 1
-    Refineable: true
-    View: 464
-    Trade:
-      Override: 100
-      NoDrop: true
-    Script: |
-      bonus bStr,2; bonus bInt,2; bonus bDex,2; .@r = getrefine(); if(.@r>=7) bonus2 bExpAddRace,RC_Dragon,3; if(.@r>=9) bonus2 bExpAddRace,RC_Dragon,5; bonus3 bAutoSpell,"NPC_DRAGONFEAR",1,30;
+  # - Id: 5465
+  #   AegisName: Celestial_Hat
+  #   Name: Hat Of Fortune
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 500
+  #   Defense: 3
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 40
+  #   Refineable: true
+  #   View: 462
+  #   Script: |
+  #     bonus bLuk,2; bonus bMdef,5; .@r = getrefine(); if(.@r>4) bonus bLuk,.@r-4;
+  # - Id: 5466
+  #   AegisName: Wind_Milestone
+  #   Name: Wind Milestone
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Defense: 2
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 30
+  #   Refineable: true
+  #   View: 463
+  #   Script: |
+  #     bonus bAgi,2; skill "AL_TELEPORT",1;
+  # - Id: 5467
+  #   AegisName: Helm_Of_Dragoon
+  #   Name: Helm Of Dragon
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 1000
+  #   Defense: 10
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 1
+  #   Refineable: true
+  #   View: 464
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #   Script: |
+  #     bonus bStr,2; bonus bInt,2; bonus bDex,2; .@r = getrefine(); if(.@r>=7) bonus2 bExpAddRace,RC_Dragon,3; if(.@r>=9) bonus2 bExpAddRace,RC_Dragon,5; bonus3 bAutoSpell,"NPC_DRAGONFEAR",1,30;
   - Id: 5468
     AegisName: Parade_Cap
     Name: Parade Hat
@@ -42180,19 +42180,19 @@ Body:
     View: 467
     Script: |
       bonus bDex,1; bonus2 bResEff,Eff_Blind,10000;
-  - Id: 5471
-    AegisName: Hairband_Of_Reginleif
-    Name: Hairband Of Reginleif
-    Type: Armor
-    Buy: 20
-    Weight: 800
-    Defense: 2
-    Locations:
-      Head_Mid: true
-    EquipLevelMin: 50
-    View: 468
-    Script: |
-      bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Undead,3; bonus2 bSubEle,Ele_Ghost,3;
+  # - Id: 5471
+  #   AegisName: Hairband_Of_Reginleif
+  #   Name: Hairband Of Reginleif
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 800
+  #   Defense: 2
+  #   Locations:
+  #     Head_Mid: true
+  #   EquipLevelMin: 50
+  #   View: 468
+  #   Script: |
+  #     bonus2 bSubEle,Ele_Water,3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Undead,3; bonus2 bSubEle,Ele_Ghost,3;
   - Id: 5472
     AegisName: Red_White_Hat
     Name: Red Hat
@@ -42360,23 +42360,23 @@ Body:
       NoDrop: true
     Script: |
       bonus bStr,3;
-  - Id: 5483
-    AegisName: Odin_Mask
-    Name: Odin Mask
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Defense: 1
-    Locations:
-      Head_Low: true
-      Head_Mid: true
-    EquipLevelMin: 1
-    View: 480
-    Trade:
-      Override: 100
-      NoDrop: true
-    Script: |
-      bonus2 bSubClass,Class_Boss,2;
+  # - Id: 5483
+  #   AegisName: Odin_Mask
+  #   Name: Odin Mask
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Defense: 1
+  #   Locations:
+  #     Head_Low: true
+  #     Head_Mid: true
+  #   EquipLevelMin: 1
+  #   View: 480
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #   Script: |
+  #     bonus2 bSubClass,Class_Boss,2;
   - Id: 5484
     AegisName: Taiwan_Flag_Hat
     Name: Holidays Hat
@@ -42456,19 +42456,19 @@ Body:
     View: 484
     Script: |
       bonus bDex,2;
-  - Id: 5490
-    AegisName: Anubis_Helm
-    Name: Anubis Helm
-    Type: Armor
-    Buy: 20
-    Defense: 8
-    Locations:
-      Head_Mid: true
-      Head_Top: true
-    EquipLevelMin: 65
-    View: 485
-    Script: |
-      bonus bMdef,5; bonus2 bSubClass,Class_Boss,10; bonus bHealpower2,10; bonus bAddItemHealRate,10;
+  # - Id: 5490
+  #   AegisName: Anubis_Helm
+  #   Name: Anubis Helm
+  #   Type: Armor
+  #   Buy: 20
+  #   Defense: 8
+  #   Locations:
+  #     Head_Mid: true
+  #     Head_Top: true
+  #   EquipLevelMin: 65
+  #   View: 485
+  #   Script: |
+  #     bonus bMdef,5; bonus2 bSubClass,Class_Boss,10; bonus bHealpower2,10; bonus bAddItemHealRate,10;
   - Id: 5491
     AegisName: Hat_Of_Outlaw
     Name: Bandit Hat
@@ -42607,25 +42607,25 @@ Body:
       NoDrop: true
     Script: |
       bonus bStr,2; bonus bDex,2; bonus2 bAddRace,RC_Brute,10; bonus2 bAddRace,RC_Player_Doram,10; .@r = getrefine(); autobonus "{ bonus2 bSPLossRate,5,1000; bonus bBaseAtk,25*getrefine(); }",3*.@r,3000,BF_NORMAL,"{ active_transform 1115,3000; specialeffect2 EF_POTION_BERSERK; showscript \"Eddga Power !\"; }"; autobonus2 "{ bonus2 bSPLossRate,5,1000; bonus bBaseAtk,25*getrefine(); }",.@r,3000,BF_NORMAL,"{ active_transform 1115,3000; specialeffect2 EF_POTION_BERSERK; showscript \"Eddga Power !\"; }";
-  - Id: 5498
-    AegisName: Wondering_Wolf_Helm
-    Name: Wandering Wolf Helm
-    Type: Armor
-    Buy: 20
-    Weight: 600
-    Defense: 5
-    Slots: 1
-    Locations:
-      Head_Mid: true
-      Head_Top: true
-    EquipLevelMin: 1
-    Refineable: true
-    View: 490
-    Trade:
-      Override: 100
-      NoDrop: true
-    Script: |
-      bonus bAgi,5; bonus bFlee,10; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Brute,10; bonus2 bIgnoreDefRaceRate,RC_Player_Doram,10; if(getrefine()>=7){ bonus2 bAddEff,Eff_Bleeding,10; } if(getrefine()>=9){ bonus3 bAutoSpellWhenHit,"MC_LOUD",1,1; }
+  # - Id: 5498
+  #   AegisName: Wondering_Wolf_Helm
+  #   Name: Wandering Wolf Helm
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 600
+  #   Defense: 5
+  #   Slots: 1
+  #   Locations:
+  #     Head_Mid: true
+  #     Head_Top: true
+  #   EquipLevelMin: 1
+  #   Refineable: true
+  #   View: 490
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #   Script: |
+  #     bonus bAgi,5; bonus bFlee,10; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Brute,10; bonus2 bIgnoreDefRaceRate,RC_Player_Doram,10; if(getrefine()>=7){ bonus2 bAddEff,Eff_Bleeding,10; } if(getrefine()>=9){ bonus3 bAutoSpellWhenHit,"MC_LOUD",1,1; }
   - Id: 5499
     AegisName: Pizza_Hat
     Name: Pizza Hat
@@ -43512,28 +43512,28 @@ Body:
       NoDrop: true
     Script: |
       bonus bInt,1; bonus3 bAutoSpell,"WZ_FROSTNOVA",1,100;
-  - Id: 5557
-    AegisName: Wild_Rose_Hat
-    Name: Wild Rose Hat
-    Type: Armor
-    Buy: 20
-    Weight: 500
-    Defense: 6
-    Slots: 1
-    Jobs:
-      All: true
-      Novice: false
-      SuperNovice: false
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 20
-    Refineable: true
-    View: 541
-    Trade:
-      Override: 100
-      NoDrop: true
-    Script: |
-      bonus bAgi,3;
+  # - Id: 5557
+  #   AegisName: Wild_Rose_Hat
+  #   Name: Wild Rose Hat
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 500
+  #   Defense: 6
+  #   Slots: 1
+  #   Jobs:
+  #     All: true
+  #     Novice: false
+  #     SuperNovice: false
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 20
+  #   Refineable: true
+  #   View: 541
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #   Script: |
+  #     bonus bAgi,3;
   - Id: 5558
     AegisName: Saci_Hat
     Name: Luxury Hat
@@ -43599,35 +43599,35 @@ Body:
     View: 489
     Script: |
       bonus bMdef,10; bonus bVariableCastrate,-3; bonus bUseSPrate,-5;
-  - Id: 5563
-    AegisName: Dolor_Hat
-    Name: Dolor Hat
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Defense: 1
-    Slots: 1
-    Locations:
-      Head_Top: true
-    View: 547
-    Script: |
-      bonus3 bAutoSpell,"PR_LEXAETERNA",1,15;
-  - Id: 5564
-    AegisName: Crown_Of_Deceit
-    Name: Crown of Deceit
-    Type: Armor
-    Buy: 20
-    Weight: 300
-    Defense: 3
-    Slots: 1
-    Locations:
-      Head_Mid: true
-      Head_Top: true
-    EquipLevelMin: 85
-    Refineable: true
-    View: 544
-    Script: |
-      .@r = getrefine(); bonus bInt,4; bonus bMdef,10; bonus bVariableCastrate,-10; if(.@r==7||.@r==8){ bonus bDef,2; bonus bMatkRate,5; bonus bVariableCastrate,-5; } if(.@r>=9){ bonus bMdef,5; bonus bMatkRate,5; bonus bVariableCastrate,-5; bonus bDelayrate,-5; }
+  # - Id: 5563
+  #   AegisName: Dolor_Hat
+  #   Name: Dolor Hat
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Defense: 1
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   View: 547
+  #   Script: |
+  #     bonus3 bAutoSpell,"PR_LEXAETERNA",1,15;
+  # - Id: 5564
+  #   AegisName: Crown_Of_Deceit
+  #   Name: Crown of Deceit
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 300
+  #   Defense: 3
+  #   Slots: 1
+  #   Locations:
+  #     Head_Mid: true
+  #     Head_Top: true
+  #   EquipLevelMin: 85
+  #   Refineable: true
+  #   View: 544
+  #   Script: |
+  #     .@r = getrefine(); bonus bInt,4; bonus bMdef,10; bonus bVariableCastrate,-10; if(.@r==7||.@r==8){ bonus bDef,2; bonus bMatkRate,5; bonus bVariableCastrate,-5; } if(.@r>=9){ bonus bMdef,5; bonus bMatkRate,5; bonus bVariableCastrate,-5; bonus bDelayrate,-5; }
   - Id: 5565
     AegisName: Dragon_Arhat_Mask
     Name: Dragon Arhat Mask
@@ -43773,18 +43773,18 @@ Body:
       NoDrop: true
     Script: |
       bonus2 bAddMonsterDropItemGroup,IG_Jewel,100; bonus3 bAutoSpell,"MC_MAMMONITE",5,70;
-  - Id: 5574
-    AegisName: Pencil_In_Mouth
-    Name: Well-Chewed Pencil
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Locations:
-      Head_Low: true
-    EquipLevelMin: 10
-    View: 555
-    Script: |
-      bonus bHit,3;
+  # - Id: 5574
+  #   AegisName: Pencil_In_Mouth
+  #   Name: Well-Chewed Pencil
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Locations:
+  #     Head_Low: true
+  #   EquipLevelMin: 10
+  #   View: 555
+  #   Script: |
+  #     bonus bHit,3;
   - Id: 5575
     AegisName: Onigiri_Hat
     Name: Rice Ball Hat
@@ -44024,42 +44024,42 @@ Body:
     View: 417
     Script: |
       bonus bLuk,3; bonus bMdef,5; bonus bMaxHP,BaseLevel*2; bonus bMaxSP,50;
-  - Id: 5591
-    AegisName: Desert_Prince
-    Name: Desert Prince
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Defense: 3
-    Slots: 1
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 30
-    View: 567
-    Script: |
-      bonus bUnbreakableHelm;
-  - Id: 5592
-    AegisName: Sigrun's_Wing
-    Name: Sigrun's Wings
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Defense: 2
-    Locations:
-      Head_Mid: true
-    EquipLevelMin: 80
-    View: 568
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief||(BaseJob==Job_Taekwon&&Class!=Job_Soul_Linker)) bonus bAspd,1; else if(BaseClass==Job_Mage||BaseClass==Job_Acolyte||Class==Job_Ninja||Class==Job_Soul_Linker){ bonus bMatk,5; bonus bHealPower,2; } else if(BaseClass==Job_Archer||BaseClass==Job_Gunslinger) bonus bLongAtkRate,2; else if(BaseJob==Job_Novice||BaseJob==Job_SuperNovice) { bonus bMaxHP,120; bonus bMaxSP,60; }
+  # - Id: 5591
+  #   AegisName: Desert_Prince
+  #   Name: Desert Prince
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Defense: 3
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 30
+  #   View: 567
+  #   Script: |
+  #     bonus bUnbreakableHelm;
+  # - Id: 5592
+  #   AegisName: Sigrun's_Wing
+  #   Name: Sigrun's Wings
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Defense: 2
+  #   Locations:
+  #     Head_Mid: true
+  #   EquipLevelMin: 80
+  #   View: 568
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #     NoTrade: true
+  #     NoSell: true
+  #     NoCart: true
+  #     NoGuildStorage: true
+  #     NoMail: true
+  #     NoAuction: true
+  #   Script: |
+  #     if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief||(BaseJob==Job_Taekwon&&Class!=Job_Soul_Linker)) bonus bAspd,1; else if(BaseClass==Job_Mage||BaseClass==Job_Acolyte||Class==Job_Ninja||Class==Job_Soul_Linker){ bonus bMatk,5; bonus bHealPower,2; } else if(BaseClass==Job_Archer||BaseClass==Job_Gunslinger) bonus bLongAtkRate,2; else if(BaseJob==Job_Novice||BaseJob==Job_SuperNovice) { bonus bMaxHP,120; bonus bMaxSP,60; }
   - Id: 5593
     AegisName: K_Rabbit_Bonnet
     Name: Rabbit Bonnet
@@ -44767,19 +44767,19 @@ Body:
     View: 349
     Script: |
       bonus bLuk,1;
-  - Id: 5641
-    AegisName: F_Robo_Eye
-    Name: F Robo Eye
-    Type: Armor
-    Buy: 20
-    Weight: 200
-    Defense: 1
-    Locations:
-      Head_Mid: true
-    EquipLevelMin: 10
-    View: 345
-    Script: |
-      bonus bDex,1;
+  # - Id: 5641
+  #   AegisName: F_Robo_Eye
+  #   Name: F Robo Eye
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 200
+  #   Defense: 1
+  #   Locations:
+  #     Head_Mid: true
+  #   EquipLevelMin: 10
+  #   View: 345
+  #   Script: |
+  #     bonus bDex,1;
   - Id: 5642
     AegisName: F_Yellow_Wizardry_Hat
     Name: F Yellow Wizardry Hat
@@ -45342,18 +45342,18 @@ Body:
     View: 608
     Script: |
       bonus2 bAddRace,RC_Formless,10;
-  - Id: 5680
-    AegisName: Hawkeyes
-    Name: Hawkeyes
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Locations:
-      Head_Mid: true
-    EquipLevelMin: 10
-    View: 609
-    Script: |
-      bonus bHit,10; bonus bUnbreakableHelm;
+  # - Id: 5680
+  #   AegisName: Hawkeyes
+  #   Name: Hawkeyes
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Locations:
+  #     Head_Mid: true
+  #   EquipLevelMin: 10
+  #   View: 609
+  #   Script: |
+  #     bonus bHit,10; bonus bUnbreakableHelm;
   - Id: 5681
     AegisName: F_Ribbon_Green
     Name: Green Ribbon
@@ -46756,20 +46756,20 @@ Body:
     View: 549
     Script: |
       bonus3 bAutoSpell,"PR_GLORIA",3,((readparam(bAgi)>=80)?30:10);
-  - Id: 5765
-    AegisName: Black_Tail_Ribbon
-    Name: Black Tail Ribbon
-    Type: Armor
-    Buy: 20
-    Weight: 100
-    Slots: 1
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 10
-    Refineable: true
-    View: 642
-    Script: |
-      bonus bMdef,5; bonus bLongAtkDef,10; bonus2 bSubEle,Ele_Neutral,5;
+  # - Id: 5765
+  #   AegisName: Black_Tail_Ribbon
+  #   Name: Black Tail Ribbon
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 100
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 10
+  #   Refineable: true
+  #   View: 642
+  #   Script: |
+  #     bonus bMdef,5; bonus bLongAtkDef,10; bonus2 bSubEle,Ele_Neutral,5;
   - Id: 5766
     AegisName: Amistr_Cap
     Name: Amistr Cap
@@ -47301,17 +47301,17 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bExpAddClass,Class_All,40;
-  - Id: 5800
-    AegisName: Blush_Of_Groom
-    Name: Blush of Groom
-    Type: Armor
-    Buy: 20
-    Weight: 50
-    Locations:
-      Head_Mid: true
-    View: 125
-    Script: |
-      bonus2 bSubRace,RC_DemiHuman,3; bonus2 bSubRace,RC_Player_Human,3;
+  # - Id: 5800
+  #   AegisName: Blush_Of_Groom
+  #   Name: Blush of Groom
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 50
+  #   Locations:
+  #     Head_Mid: true
+  #   View: 125
+  #   Script: |
+  #     bonus2 bSubRace,RC_DemiHuman,3; bonus2 bSubRace,RC_Player_Human,3;
   - Id: 5801
     AegisName: Ribbon_Of_Bride
     Name: Red Tailed Ribbon
@@ -48452,229 +48452,229 @@ Body:
     View: 1109
     Script: |
       bonus bAllStats,1; bonus2 bAddClass,Class_All,2; bonus bMatkRate,2;
-  - Id: 5900
-    AegisName: Divine_Guard_Hat
-    Name: Divine Guard Hat
-    Type: Armor
-    Weight: 200
-    Defense: 10
-    Slots: 1
-    Jobs:
-      Crusader: true
-    Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 100
-    Refineable: true
-    View: 1121
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      .@r = getrefine(); bonus2 bSubSize,Size_All,5; if(.@r>=7) { .@level = getskilllv("AL_HEAL"); bonus3 bAutoSpellWhenHit,"AL_HEAL",(.@level ? .@level : 5),10; } if(.@r>=9) { bonus2 bSkillAtk,"LG_RAYOFGENESIS",20; }
-  - Id: 5901
-    AegisName: Focus_Beret
-    Name: Focus Beret
-    Type: Armor
-    Weight: 200
-    Defense: 10
-    Slots: 1
-    Jobs:
-      Monk: true
-    Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 100
-    Refineable: true
-    View: 1122
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      .@r = getrefine(); bonus4 bAutoSpellOnSkill,"SR_DRAGONCOMBO","SR_FALLENEMPIRE",max(getskilllv("SR_FALLENEMPIRE"),1),100; if(.@r>=7) { autobonus "{ bonus bAspd,2; }",30,5000,0,"{ specialeffect2 EF_ENHANCE; }"; } if(.@r>=9) { bonus2 bSkillAtk,"SR_FALLENEMPIRE",30; }
-  - Id: 5902
-    AegisName: Harvester_Hat
-    Name: Harvester Hat
-    Type: Armor
-    Weight: 200
-    Defense: 10
-    Slots: 1
-    Jobs:
-      Alchemist: true
-    Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 100
-    Refineable: true
-    View: 1123
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      .@r = getrefine(); bonus2 bAddMonsterDropItem,6211,100; bonus2 bAddMonsterDropItem,6212,100; if(.@r>=7) { bonus2 bAddMonsterDropItem,6210,50; } if(.@r>=9) { bonus2 bSkillAtk,"GN_CARTCANNON",15; }
-  - Id: 5903
-    AegisName: Deadman_Bandana
-    Name: Deadman Bandana
-    Type: Armor
-    Weight: 200
-    Defense: 15
-    Slots: 1
-    Jobs:
-      Mage: true
-      Sage: true
-      SoulLinker: true
-      Wizard: true
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 99
-    Refineable: true
-    View: 1124
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      .@r = getrefine(); .@rate = 1; bonus bCritical,.@r*2; bonus bFixedCastrate,-2; bonus3 bAutoSpellWhenHit,"SL_SWOO",getskilllv("SL_SWOO"),(.@rate*10); if (.@r>=7) { bonus bMatk,20; .@rate += 3; } if(.@r>=9) { bonus bVariableCastrate,-20; bonus2 bSkillUseSP,"SL_STUN",5; bonus2 bSkillUseSP,"SL_SMA",5; }
-  - Id: 5904
-    AegisName: Inconspicuous_Hat
-    Name: Inconspicuous Hat
-    Type: Armor
-    Weight: 200
-    Defense: 10
-    Slots: 1
-    Jobs:
-      Rogue: true
-    Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 100
-    Refineable: true
-    View: 1125
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      .@r = getrefine(); if (.@r>=9) { .@matk = 5; } bonus bMatkRate,(7+.@matk); if (.@r>=7) { bonus bMatk,(readparam(bInt)/5)*2; }
-  - Id: 5905
-    AegisName: Lyrica_Hat
-    Name: Lyrica Hat
-    Type: Armor
-    Weight: 200
-    Defense: 10
-    Slots: 1
-    Jobs:
-      BardDancer: true
-    Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 100
-    Refineable: true
-    View: 1126
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      .@r = getrefine(); bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15; if(.@r>=7) { bonus bFixedCastrate,4*(getskilllv("WM_LESSON")); } if(.@r>=9) { bonus2 bSkillUseSP,"WM_SEVERE_RAINSTORM",10; }
-  - Id: 5906
-    AegisName: Oni_Horns_
-    Name: Oni Horns
-    Type: Armor
-    Weight: 20
-    Defense: 10
-    Slots: 1
-    Jobs:
-      Assassin: true
-    Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 100
-    Refineable: true
-    View: 1127
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      bonus2 bSkillAtk,"GC_COUNTERSLASH",(10*getskilllv("GC_WEAPONBLOCKING")); .@r = getrefine(); if(.@r > 6){ bonus bAtk,20; bonus bHit,5; } if(.@r > 9){ bonus3 bAutoSpell,"GC_CROSSIMPACT",1,10; }
-  - Id: 5907
-    AegisName: Sea_Captain_Hat
-    Name: Sea Captain Hat
-    Type: Armor
-    Weight: 200
-    Defense: 20
-    Slots: 1
-    Jobs:
-      Blacksmith: true
-    Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 100
-    Refineable: true
-    View: 1128
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      bonus2 bSkillAtk,"NC_AXEBOOMERANG",20; .@dmg = 20; .@r = getrefine(); if (.@r>=7) { .@dmg += getskilllv("BS_WEAPONRESEARCH"); } if (.@r>=9) { .@dmg += getskilllv("NC_TRAININGAXE"); } bonus2 bSkillAtk,"NC_AXETORNADO",.@dmg;
+  # - Id: 5900
+  #   AegisName: Divine_Guard_Hat
+  #   Name: Divine Guard Hat
+  #   Type: Armor
+  #   Weight: 200
+  #   Defense: 10
+  #   Slots: 1
+  #   Jobs:
+  #     Crusader: true
+  #   Classes:
+  #     Third: true
+  #     Third_Upper: true
+  #     Third_Baby: true
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 100
+  #   Refineable: true
+  #   View: 1121
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #     NoTrade: true
+  #     NoCart: true
+  #     NoGuildStorage: true
+  #     NoMail: true
+  #     NoAuction: true
+  #   Script: |
+  #     .@r = getrefine(); bonus2 bSubSize,Size_All,5; if(.@r>=7) { .@level = getskilllv("AL_HEAL"); bonus3 bAutoSpellWhenHit,"AL_HEAL",(.@level ? .@level : 5),10; } if(.@r>=9) { bonus2 bSkillAtk,"LG_RAYOFGENESIS",20; }
+  # - Id: 5901
+  #   AegisName: Focus_Beret
+  #   Name: Focus Beret
+  #   Type: Armor
+  #   Weight: 200
+  #   Defense: 10
+  #   Slots: 1
+  #   Jobs:
+  #     Monk: true
+  #   Classes:
+  #     Third: true
+  #     Third_Upper: true
+  #     Third_Baby: true
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 100
+  #   Refineable: true
+  #   View: 1122
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #     NoTrade: true
+  #     NoCart: true
+  #     NoGuildStorage: true
+  #     NoMail: true
+  #     NoAuction: true
+  #   Script: |
+      # .@r = getrefine(); bonus4 bAutoSpellOnSkill,"SR_DRAGONCOMBO","SR_FALLENEMPIRE",max(getskilllv("SR_FALLENEMPIRE"),1),100; if(.@r>=7) { autobonus "{ bonus bAspd,2; }",30,5000,0,"{ specialeffect2 EF_ENHANCE; }"; } if(.@r>=9) { bonus2 bSkillAtk,"SR_FALLENEMPIRE",30; }
+  # - Id: 5902
+  #   AegisName: Harvester_Hat
+  #   Name: Harvester Hat
+  #   Type: Armor
+  #   Weight: 200
+  #   Defense: 10
+  #   Slots: 1
+  #   Jobs:
+  #     Alchemist: true
+  #   Classes:
+  #     Third: true
+  #     Third_Upper: true
+  #     Third_Baby: true
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 100
+  #   Refineable: true
+  #   View: 1123
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #     NoTrade: true
+  #     NoCart: true
+  #     NoGuildStorage: true
+  #     NoMail: true
+  #     NoAuction: true
+  #   Script: |
+  #     .@r = getrefine(); bonus2 bAddMonsterDropItem,6211,100; bonus2 bAddMonsterDropItem,6212,100; if(.@r>=7) { bonus2 bAddMonsterDropItem,6210,50; } if(.@r>=9) { bonus2 bSkillAtk,"GN_CARTCANNON",15; }
+  # - Id: 5903
+  #   AegisName: Deadman_Bandana
+  #   Name: Deadman Bandana
+  #   Type: Armor
+  #   Weight: 200
+  #   Defense: 15
+  #   Slots: 1
+  #   Jobs:
+  #     Mage: true
+  #     Sage: true
+  #     SoulLinker: true
+  #     Wizard: true
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 99
+  #   Refineable: true
+  #   View: 1124
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #     NoTrade: true
+  #     NoCart: true
+  #     NoGuildStorage: true
+  #     NoMail: true
+  #     NoAuction: true
+  #   Script: |
+  #     .@r = getrefine(); .@rate = 1; bonus bCritical,.@r*2; bonus bFixedCastrate,-2; bonus3 bAutoSpellWhenHit,"SL_SWOO",getskilllv("SL_SWOO"),(.@rate*10); if (.@r>=7) { bonus bMatk,20; .@rate += 3; } if(.@r>=9) { bonus bVariableCastrate,-20; bonus2 bSkillUseSP,"SL_STUN",5; bonus2 bSkillUseSP,"SL_SMA",5; }
+  # - Id: 5904
+  #   AegisName: Inconspicuous_Hat
+  #   Name: Inconspicuous Hat
+  #   Type: Armor
+  #   Weight: 200
+  #   Defense: 10
+  #   Slots: 1
+  #   Jobs:
+  #     Rogue: true
+  #   Classes:
+  #     Third: true
+  #     Third_Upper: true
+  #     Third_Baby: true
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 100
+  #   Refineable: true
+  #   View: 1125
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #     NoTrade: true
+  #     NoCart: true
+  #     NoGuildStorage: true
+  #     NoMail: true
+  #     NoAuction: true
+  #   Script: |
+  #     .@r = getrefine(); if (.@r>=9) { .@matk = 5; } bonus bMatkRate,(7+.@matk); if (.@r>=7) { bonus bMatk,(readparam(bInt)/5)*2; }
+  # - Id: 5905
+  #   AegisName: Lyrica_Hat
+  #   Name: Lyrica Hat
+  #   Type: Armor
+  #   Weight: 200
+  #   Defense: 10
+  #   Slots: 1
+  #   Jobs:
+  #     BardDancer: true
+  #   Classes:
+  #     Third: true
+  #     Third_Upper: true
+  #     Third_Baby: true
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 100
+  #   Refineable: true
+  #   View: 1126
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #     NoTrade: true
+  #     NoCart: true
+  #     NoGuildStorage: true
+  #     NoMail: true
+  #     NoAuction: true
+  #   Script: |
+  #     .@r = getrefine(); bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15; if(.@r>=7) { bonus bFixedCastrate,4*(getskilllv("WM_LESSON")); } if(.@r>=9) { bonus2 bSkillUseSP,"WM_SEVERE_RAINSTORM",10; }
+  # - Id: 5906
+  #   AegisName: Oni_Horns_
+  #   Name: Oni Horns
+  #   Type: Armor
+  #   Weight: 20
+  #   Defense: 10
+  #   Slots: 1
+  #   Jobs:
+  #     Assassin: true
+  #   Classes:
+  #     Third: true
+  #     Third_Upper: true
+  #     Third_Baby: true
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 100
+  #   Refineable: true
+  #   View: 1127
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #     NoTrade: true
+  #     NoCart: true
+  #     NoGuildStorage: true
+  #     NoMail: true
+  #     NoAuction: true
+  #   Script: |
+  #     bonus2 bSkillAtk,"GC_COUNTERSLASH",(10*getskilllv("GC_WEAPONBLOCKING")); .@r = getrefine(); if(.@r > 6){ bonus bAtk,20; bonus bHit,5; } if(.@r > 9){ bonus3 bAutoSpell,"GC_CROSSIMPACT",1,10; }
+  # - Id: 5907
+  #   AegisName: Sea_Captain_Hat
+  #   Name: Sea Captain Hat
+  #   Type: Armor
+  #   Weight: 200
+  #   Defense: 20
+  #   Slots: 1
+  #   Jobs:
+  #     Blacksmith: true
+  #   Classes:
+  #     Third: true
+  #     Third_Upper: true
+  #     Third_Baby: true
+  #   Locations:
+    #   Head_Top: true
+    # EquipLevelMin: 100
+    # Refineable: true
+    # View: 1128
+    # Trade:
+    #   Override: 100
+    #   NoDrop: true
+    #   NoTrade: true
+    #   NoCart: true
+    #   NoGuildStorage: true
+    #   NoMail: true
+    #   NoAuction: true
+    # Script: |
+    #   bonus2 bSkillAtk,"NC_AXEBOOMERANG",20; .@dmg = 20; .@r = getrefine(); if (.@r>=7) { .@dmg += getskilllv("BS_WEAPONRESEARCH"); } if (.@r>=9) { .@dmg += getskilllv("NC_TRAININGAXE"); } bonus2 bSkillAtk,"NC_AXETORNADO",.@dmg;
   - Id: 5909
     AegisName: C_Valkyrie_Circlet
     Name: C Valkyrie Circlet
@@ -63365,20 +63365,20 @@ Body:
     View: 571
     Script: |
       bonus bLuk,1; bonus bMaxSP,20;
-  - Id: 18522
-    AegisName: Evil_Marcher_Hat
-    Name: Evil Marcher Hat
-    Type: Armor
-    Buy: 20
-    Weight: 500
-    Defense: 10
-    Slots: 1
-    Locations:
-      Head_Top: true
-    Refineable: true
-    View: 687
-    Script: |
-      bonus bStr,2; bonus bMdef,1; .@r = getrefine(); if(.@r>=7) { bonus bCritAtkRate,10; }; bonus2 bAddClass,Class_All,(.@r>=9?7:2); if(.@r>=9) { bonus bLongAtkRate,5; };
+  # - Id: 18522
+  #   AegisName: Evil_Marcher_Hat
+  #   Name: Evil Marcher Hat
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 500
+  #   Defense: 10
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   Refineable: true
+  #   View: 687
+  #   Script: |
+  #     bonus bStr,2; bonus bMdef,1; .@r = getrefine(); if(.@r>=7) { bonus bCritAtkRate,10; }; bonus2 bAddClass,Class_All,(.@r>=9?7:2); if(.@r>=9) { bonus bLongAtkRate,5; };
   - Id: 18523
     AegisName: Super_Scell
     Name: Thunderstorm Cloud
@@ -63614,35 +63614,35 @@ Body:
     View: 712
     Script: |
       bonus bUnbreakableHelm; bonus bMdef,3; bonus2 bSubRace,RC_Angel,1; bonus2 bSubRace,RC_Demon,1; bonus3 bAddMonsterDropItem,12020,RC_Angel,400; bonus3 bAddMonsterDropItem,523,RC_Demon,400;
-  - Id: 18539
-    AegisName: Skull_Cap
-    Name: Skull Cap
-    Type: Armor
-    Buy: 40
-    Weight: 200
-    Defense: 5
-    Slots: 1
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 10
-    Refineable: true
-    View: 713
-    Script: |
-      bonus bMatkRate,2; .@r = getrefine(); if(.@r >= 5) { bonus bMatkRate,3; } if(.@r >= 7) { bonus bMatkRate,3; }
-  - Id: 18540
-    AegisName: Evil_Mask
-    Name: Evil Mask
-    Type: Armor
-    Buy: 20
-    Weight: 1000
-    Defense: 3
-    Locations:
-      Head_Low: true
-      Head_Mid: true
-    EquipLevelMin: 10
-    View: 714
-    Script: |
-      bonus2 bSPLossRate,1,2000; bonus bAspdRate,1;
+  # - Id: 18539
+  #   AegisName: Skull_Cap
+  #   Name: Skull Cap
+  #   Type: Armor
+  #   Buy: 40
+  #   Weight: 200
+  #   Defense: 5
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 10
+  #   Refineable: true
+  #   View: 713
+  #   Script: |
+  #     bonus bMatkRate,2; .@r = getrefine(); if(.@r >= 5) { bonus bMatkRate,3; } if(.@r >= 7) { bonus bMatkRate,3; }
+  # - Id: 18540
+  #   AegisName: Evil_Mask
+  #   Name: Evil Mask
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 1000
+  #   Defense: 3
+  #   Locations:
+  #     Head_Low: true
+  #     Head_Mid: true
+  #   EquipLevelMin: 10
+  #   View: 714
+  #   Script: |
+  #     bonus2 bSPLossRate,1,2000; bonus bAspdRate,1;
   - Id: 18541
     AegisName: Little_Feather_Hat
     Name: Little Feather Hat
@@ -63658,22 +63658,22 @@ Body:
     View: 715
     Script: |
       bonus bDex,2; bonus bCritAtkRate,10;
-  - Id: 18542
-    AegisName: Love_Guard
-    Name: Love Guard
-    Type: Armor
-    Buy: 20
-    Weight: 500
-    Defense: 10
-    Slots: 1
-    Locations:
-      Head_Mid: true
-      Head_Top: true
-    EquipLevelMin: 10
-    Refineable: true
-    View: 716
-    Script: |
-      bonus bHealPower2,5; bonus bAddItemHealRate,5; bonus bHealPower,(getrefine()>6)?5:2;
+  # - Id: 18542
+  #   AegisName: Love_Guard
+  #   Name: Love Guard
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 500
+  #   Defense: 10
+  #   Slots: 1
+  #   Locations:
+  #     Head_Mid: true
+  #     Head_Top: true
+  #   EquipLevelMin: 10
+  #   Refineable: true
+  #   View: 716
+  #   Script: |
+  #     bonus bHealPower2,5; bonus bAddItemHealRate,5; bonus bHealPower,(getrefine()>6)?5:2;
   - Id: 18543
     AegisName: Witchs_Hat
     Name: Witchs Hat
@@ -64468,23 +64468,23 @@ Body:
       NoDrop: true
     Script: |
       skill "WZ_HEAVENDRIVE",3;
-  - Id: 18597
-    AegisName: Mercury_Helm
-    Name: Mercury Riser
-    Type: Armor
-    Buy: 40
-    Weight: 200
-    Defense: 10
-    Slots: 1
-    Locations:
-      Head_Top: true
-    Refineable: true
-    View: 759
-    Trade:
-      Override: 100
-      NoDrop: true
-    Script: |
-      bonus2 bSubRace,RC_DemiHuman,10; bonus2 bAddRace,RC_DemiHuman,10; bonus bAspdRate,3; bonus bDelayrate,-3; .@r = getrefine(); if(.@r >= 7) { bonus bAspdRate,2; bonus bDelayrate,-2; } if(.@r >= 9) { bonus bAspdRate,2; bonus bDelayrate,-2; }
+  # - Id: 18597
+  #   AegisName: Mercury_Helm
+  #   Name: Mercury Riser
+  #   Type: Armor
+  #   Buy: 40
+  #   Weight: 200
+  #   Defense: 10
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   Refineable: true
+  #   View: 759
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #   Script: |
+  #     bonus2 bSubRace,RC_DemiHuman,10; bonus2 bAddRace,RC_DemiHuman,10; bonus bAspdRate,3; bonus bDelayrate,-3; .@r = getrefine(); if(.@r >= 7) { bonus bAspdRate,2; bonus bDelayrate,-2; } if(.@r >= 9) { bonus bAspdRate,2; bonus bDelayrate,-2; }
   - Id: 18598
     AegisName: Mini_Tree_J
     Name: Mini Tree J
@@ -65182,21 +65182,21 @@ Body:
     View: 798
     Script: |
       bonus bInt,1; bonus2 bAddRace,RC_DemiHuman,5; bonus2 bAddRace,RC_Player_Human,5;
-  - Id: 18646
-    AegisName: Cow_Hat
-    Name: Cow Hat
-    Type: Armor
-    Buy: 20
-    Weight: 300
-    Defense: 4
-    Slots: 1
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 1
-    Refineable: true
-    View: 799
-    Script: |
-      bonus bDex,2; bonus2 bAddMonsterDropItem,519,100;
+  # - Id: 18646
+  #   AegisName: Cow_Hat
+  #   Name: Cow Hat
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 300
+  #   Defense: 4
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 1
+  #   Refineable: true
+  #   View: 799
+  #   Script: |
+  #     bonus bDex,2; bonus2 bAddMonsterDropItem,519,100;
   - Id: 18647
     AegisName: Star_Eyepatch
     Name: Star Eyepatch
@@ -65245,19 +65245,19 @@ Body:
     View: 194
     Script: |
       bonus3 bAutoSpellWhenHit,"SM_ENDURE",1,10; bonus3 bAutoSpellWhenHit,"MO_CALLSPIRITS",5,10; bonus3 bAutoSpellWhenHit,"MO_EXPLOSIONSPIRITS",5,10; bonus3 bAutoSpell,"BS_MAXIMIZE",5,10; bonus3 bAutoSpell,"MC_LOUD",1,10; bonus3 bAutoSpell,"AC_CONCENTRATION",5,10; bonus3 bAutoSpell,"PR_GLORIA",3,10; autobonus "{ bonus bStr,3; bonus bAgi,3; }",10,5000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; showscript \"RWC 2011 Fighting!!\"; }"; autobonus "{ bonus bInt,3; bonus bLuk,3; }",5,5000,BF_MAGIC,"{ specialeffect2 EF_ENERGYCOAT; showscript \"RWC 2011 Fighting!!\"; }";
-  - Id: 18651
-    AegisName: Ignis_Cap
-    Name: Ignis Cap
-    Type: Armor
-    Buy: 20
-    Weight: 800
-    Defense: 8
-    Slots: 1
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 40
-    Refineable: true
-    View: 803
+  # - Id: 18651
+  #   AegisName: Ignis_Cap
+  #   Name: Ignis Cap
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 800
+  #   Defense: 8
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 40
+  #   Refineable: true
+  #   View: 803
   - Id: 18652
     AegisName: Vanargand_Helm
     Name: Vanargandr Helm
@@ -65455,22 +65455,22 @@ Body:
       Head_Low: true
     EquipLevelMin: 20
     View: 814
-  - Id: 18666
-    AegisName: CD_In_Mouth
-    Name: CD In Mouth
-    Type: Armor
-    Buy: 20
-    Weight: 200
-    Jobs:
-      All: true
-      Novice: false
-      SuperNovice: false
-    Locations:
-      Head_Low: true
-    EquipLevelMin: 20
-    View: 815
-    Script: |
-      bonus3 bAutoSpell,"MG_COLDBOLT",3,30; bonus3 bAutoSpell,"MG_SOULSTRIKE",3,30; bonus3 bAutoSpell,"WZ_EARTHSPIKE",3,30; bonus3 bAutoSpell,"MG_FIREBOLT",3,30; bonus3 bAutoSpell,"MG_LIGHTNINGBOLT",3,30;
+  # - Id: 18666
+  #   AegisName: CD_In_Mouth
+  #   Name: CD In Mouth
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 200
+  #   Jobs:
+  #     All: true
+  #     Novice: false
+  #     SuperNovice: false
+  #   Locations:
+  #     Head_Low: true
+  #   EquipLevelMin: 20
+  #   View: 815
+  #   Script: |
+  #     bonus3 bAutoSpell,"MG_COLDBOLT",3,30; bonus3 bAutoSpell,"MG_SOULSTRIKE",3,30; bonus3 bAutoSpell,"WZ_EARTHSPIKE",3,30; bonus3 bAutoSpell,"MG_FIREBOLT",3,30; bonus3 bAutoSpell,"MG_LIGHTNINGBOLT",3,30;
   - Id: 18667
     AegisName: Cat_Lace_Hairband
     Name: Cat Lace Hairband
@@ -65489,25 +65489,25 @@ Body:
     View: 816
     Script: |
       bonus bDex,3;
-  - Id: 18668
-    AegisName: Droopy_Turtle_Hat
-    Name: Droopy Turtle Hat
-    Type: Armor
-    Buy: 20
-    Weight: 300
-    Defense: 1
-    Slots: 1
-    Jobs:
-      All: true
-      Novice: false
-      SuperNovice: false
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 1
-    Refineable: true
-    View: 694
-    Script: |
-      skill "AL_DECAGI",3;
+  # - Id: 18668
+  #   AegisName: Droopy_Turtle_Hat
+  #   Name: Droopy Turtle Hat
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 300
+  #   Defense: 1
+  #   Slots: 1
+  #   Jobs:
+  #     All: true
+  #     Novice: false
+  #     SuperNovice: false
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 1
+  #   Refineable: true
+  #   View: 694
+  #   Script: |
+  #     skill "AL_DECAGI",3;
   - Id: 18669
     AegisName: Cowhide_Hat
     Name: Cowhide Hat
@@ -65864,25 +65864,25 @@ Body:
     View: 837
     Script: |
       bonus bDex,2; bonus bLuk,1;
-  - Id: 18693
-    AegisName: Sleeping_Kitty_Cat
-    Name: Sleeping Kitty Cat
-    Type: Armor
-    Buy: 20
-    Weight: 200
-    Defense: 4
-    Slots: 1
-    Jobs:
-      All: true
-      Novice: false
-      SuperNovice: false
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 20
-    Refineable: true
-    View: 838
-    Script: |
-      bonus2 bAddRace,RC_Brute,2; bonus2 bAddRace,RC_Player_Doram,2;
+  # - Id: 18693
+  #   AegisName: Sleeping_Kitty_Cat
+  #   Name: Sleeping Kitty Cat
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 200
+  #   Defense: 4
+  #   Slots: 1
+  #   Jobs:
+  #     All: true
+  #     Novice: false
+  #     SuperNovice: false
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 20
+  #   Refineable: true
+  #   View: 838
+  #   Script: |
+  #     bonus2 bAddRace,RC_Brute,2; bonus2 bAddRace,RC_Player_Doram,2;
   - Id: 18694
     AegisName: Red_Hood
     Name: Red Hood
@@ -66540,18 +66540,18 @@ Body:
     View: 888
     Script: |
       bonus bStr,2; bonus bMaxHP,100;
-  - Id: 18750
-    AegisName: Poker_Card_In_Mouth
-    Name: Poker Card In Mouth
-    Type: Armor
-    Buy: 20
-    Weight: 50
-    Locations:
-      Head_Low: true
-    EquipLevelMin: 10
-    View: 889
-    Script: |
-      bonus2 bAddRace,RC_DemiHuman,2; bonus2 bAddRace,RC_Player_Human,2;
+  # - Id: 18750
+  #   AegisName: Poker_Card_In_Mouth
+  #   Name: Poker Card In Mouth
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 50
+  #   Locations:
+  #     Head_Low: true
+  #   EquipLevelMin: 10
+  #   View: 889
+  #   Script: |
+  #     bonus2 bAddRace,RC_DemiHuman,2; bonus2 bAddRace,RC_Player_Human,2;
   - Id: 18752
     AegisName: Cursed_Book
     Name: Cursed Book
@@ -67099,17 +67099,17 @@ Body:
       Head_Top: true
     Refineable: true
     View: 900
-  - Id: 18791
-    AegisName: Shrine_Maiden_Hat
-    Name: Shrine Maiden Hat
-    Type: Armor
-    Buy: 20
-    Weight: 200
-    Defense: 30
-    Slots: 1
-    Locations:
-      Head_Top: true
-    View: 908
+  # - Id: 18791
+  #   AegisName: Shrine_Maiden_Hat
+  #   Name: Shrine Maiden Hat
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 200
+  #   Defense: 30
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   View: 908
   - Id: 18792
     AegisName: Idn_Sakkat
     Name: Indonesian Independence Sakkat
@@ -67127,27 +67127,27 @@ Body:
     View: 901
     Script: |
       bonus bVit,10; bonus2 bAddClass,Class_All,5; bonus bMatkRate,5; bonus2 bSubRace,RC_DemiHuman,10;
-  - Id: 18793
-    AegisName: Sorc_Night_Cap
-    Name: Sorcerer's Night Cap
-    Type: Armor
-    Buy: 20
-    Weight: 200
-    Defense: 25
-    Slots: 1
-    Jobs:
-      Sage: true
-    Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 100
-    Refineable: true
-    View: 911
-    Script: |
-      .@r = getrefine(); bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",50; bonus2 bSkillAtk,"MG_FIREBOLT",50; bonus2 bSkillAtk,"MG_COLDBOLT",50; bonus bMdef,10; if(.@r>6) bonus2 bSkillAtk,"SC_SPELLFIST",25; if(.@r>8) bonus bAspd,5;
+  # - Id: 18793
+  #   AegisName: Sorc_Night_Cap
+  #   Name: Sorcerer's Night Cap
+  #   Type: Armor
+  #   Buy: 20
+  #   Weight: 200
+  #   Defense: 25
+  #   Slots: 1
+  #   Jobs:
+  #     Sage: true
+  #   Classes:
+  #     Third: true
+  #     Third_Upper: true
+  #     Third_Baby: true
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 100
+  #   Refineable: true
+  #   View: 911
+  #   Script: |
+  #     .@r = getrefine(); bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",50; bonus2 bSkillAtk,"MG_FIREBOLT",50; bonus2 bSkillAtk,"MG_COLDBOLT",50; bonus bMdef,10; if(.@r>6) bonus2 bSkillAtk,"SC_SPELLFIST",25; if(.@r>8) bonus bAspd,5;
   - Id: 18796
     AegisName: RWC_Champ_Crown_QF
     Name: RWC Champ Crown Fourth Place
@@ -68032,19 +68032,19 @@ Body:
     View: 1003
     Script: |
       bonus3 bAutoSpellWhenHit,"SA_DELUGE",1,50; .@r = getrefine(); if (.@r > 3) bonus3 bAutoSpellWhenHit,"WZ_WATERBALL",.@r/3,50;
-  - Id: 18885
-    AegisName: Jejecap
-    Name: Jejecap
-    Type: Armor
-    Weight: 100
-    Defense: 8
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 70
-    Refineable: true
-    View: 1011
-    Script: |
-      bonus bStr,2; bonus bInt,3; bonus2 bSubRace,RC_DemiHuman,11; bonus2 bSubRace,RC_Player_Human,11; bonus2 bAddItemHealRate,522,70;
+  # - Id: 18885
+  #   AegisName: Jejecap
+  #   Name: Jejecap
+  #   Type: Armor
+  #   Weight: 100
+  #   Defense: 8
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 70
+  #   Refineable: true
+  #   View: 1011
+  #   Script: |
+  #     bonus bStr,2; bonus bInt,3; bonus2 bSubRace,RC_DemiHuman,11; bonus2 bSubRace,RC_Player_Human,11; bonus2 bAddItemHealRate,522,70;
   - Id: 18887
     AegisName: Aqua_Bunny_Band
     Name: Aqua Bunny Band
@@ -68394,20 +68394,20 @@ Body:
     View: 1069
     Script: |
       .@r = getrefine()/2; bonus bDex,2; bonus bMdef,7; bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",5+(5*.@r);
-  - Id: 18934
-    AegisName: Fox_Ears_Bell_Ribbon
-    Name: Fox Ears Bell Ribbon
-    Type: Armor
-    Weight: 400
-    Defense: 4
-    Slots: 1
-    Locations:
-      Head_Top: true
-    EquipLevelMin: 50
-    Refineable: true
-    View: 1070
-    Script: |
-      bonus bAgi,2; bonus bAspdRate,10; .@r = getrefine(); autobonus "{ bonus bCritical,100; bonus bLongAtkRate,5+max(0,getrefine()-6); }",50+(.@r*2),5000,BF_NORMAL,"{ active_transform 1150,5000; }";
+  # - Id: 18934
+  #   AegisName: Fox_Ears_Bell_Ribbon
+  #   Name: Fox Ears Bell Ribbon
+  #   Type: Armor
+  #   Weight: 400
+  #   Defense: 4
+  #   Slots: 1
+  #   Locations:
+  #     Head_Top: true
+  #   EquipLevelMin: 50
+  #   Refineable: true
+  #   View: 1070
+  #   Script: |
+  #     bonus bAgi,2; bonus bAspdRate,10; .@r = getrefine(); autobonus "{ bonus bCritical,100; bonus bLongAtkRate,5+max(0,getrefine()-6); }",50+(.@r*2),5000,BF_NORMAL,"{ active_transform 1150,5000; }";
   - Id: 18936
     AegisName: Golden_Fish
     Name: Golden Fish In Mouth
@@ -70931,14 +70931,14 @@ Body:
       Costume_Head_Mid: true
     EquipLevelMin: 1
     View: 1370
-  - Id: 19291
-    AegisName: C_Shiba_Inu
-    Name: Costume Shiba Inu
-    Type: Armor
-    Locations:
-      Costume_Head_Mid: true
-    EquipLevelMin: 1
-    View: 1669
+  # - Id: 19291
+  #   AegisName: C_Shiba_Inu
+  #   Name: Costume Shiba Inu
+  #   Type: Armor
+  #   Locations:
+  #     Costume_Head_Mid: true
+  #   EquipLevelMin: 1
+  #   View: 1669
   - Id: 19294
     AegisName: C_CatEars_Cyber_HeadP_R
     Name: Costume Cyber Cat Ear Headphones (Red)
@@ -77837,15 +77837,15 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 202
-  - Id: 20195
-    AegisName: C_Scratching_Cat
-    Name: Costume Scratching Cat
-    Type: Armor
-    Locations:
-      Costume_Head_Mid: true
-      Costume_Head_Low: true
-    EquipLevelMin: 1
-    View: 1292
+  # - Id: 20195
+  #   AegisName: C_Scratching_Cat
+  #   Name: Costume Scratching Cat
+  #   Type: Armor
+  #   Locations:
+  #     Costume_Head_Mid: true
+  #     Costume_Head_Low: true
+  #   EquipLevelMin: 1
+  #   View: 1292
   - Id: 20196
     AegisName: C_Leopard_Ear_Hat
     Name: Costume Leopard Ear Hat
@@ -96978,14 +96978,14 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 274
-  - Id: 31437
-    AegisName: C_Baby_Penguin
-    Name: C Baby Penguin
-    Type: Armor
-    Locations:
-      Costume_Head_Mid: true
-    EquipLevelMin: 1
-    View: 1705
+  # - Id: 31437
+  #   AegisName: C_Baby_Penguin
+  #   Name: C Baby Penguin
+  #   Type: Armor
+  #   Locations:
+  #     Costume_Head_Mid: true
+  #   EquipLevelMin: 1
+  #   View: 1705
   - Id: 31438
     AegisName: C_Fluffy_Angel_Cape
     Name: C Fluffy Angel Cape
@@ -97090,14 +97090,14 @@ Body:
       Costume_Head_Top: true
     EquipLevelMin: 1
     View: 1714
-  - Id: 31452
-    AegisName: C_White_Cat
-    Name: C White Cat
-    Type: Armor
-    Locations:
-      Costume_Head_Mid: true
-    EquipLevelMin: 1
-    View: 1715
+  # - Id: 31452
+  #   AegisName: C_White_Cat
+  #   Name: C White Cat
+  #   Type: Armor
+  #   Locations:
+  #     Costume_Head_Mid: true
+  #   EquipLevelMin: 1
+  #   View: 1715
   - Id: 31453
     AegisName: C_L_RibbonMuff_Black
     Name: C Large Ribbon Muffler Black
