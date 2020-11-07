@@ -4878,6 +4878,11 @@ void do_final(void){
 		map_quit(sd);
 	mapit_free(iter);
 
+	for (int i = 0; i < map_num; i++) {
+		struct map_data *mapdata = map_getmapdata(i);
+		map_free_questinfo(mapdata);
+	}
+
 	/* prepares npcs for a faster shutdown process */
 	do_clear_npc();
 
@@ -4888,8 +4893,6 @@ void do_final(void){
 		ShowStatus("Cleaning up maps [%d/%d]: %s..." CL_CLL "\r", i++, map_num, mapdata->name);
 		map_foreachinmap(cleanup_sub, i, BL_ALL);
 		channel_delete(mapdata->channel,false);
-
-		map_free_questinfo(mapdata);
 	}
 	ShowStatus("Cleaned up %d maps." CL_CLL "\n", map_num);
 
