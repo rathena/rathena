@@ -1740,23 +1740,23 @@ Body:
       BuyingStore: true
     Script: |
       percentheal 10,10;
-  - Id: 671
-    AegisName: Gold_Coin
-    Name: Gold Coin
-    Type: Usable
-    Buy: 10000
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoStorage: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      RouletteGold++;
+  # - Id: 671
+  #   AegisName: Gold_Coin
+  #   Name: Gold Coin
+  #   Type: Usable
+  #   Buy: 10000
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #     NoTrade: true
+  #     NoSell: true
+  #     NoCart: true
+  #     NoStorage: true
+  #     NoGuildStorage: true
+  #     NoMail: true
+  #     NoAuction: true
+  #   Script: |
+  #     RouletteGold++;
   - Id: 673
     AegisName: Copper_Coin
     Name: Bronze Coin
