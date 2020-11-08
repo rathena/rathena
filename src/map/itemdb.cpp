@@ -2387,20 +2387,8 @@ bool RandomOptionGroupDatabase::add_option(const YAML::Node &node, const bool ex
 		return false;
 	}
 
-	bool option_exists = false;
-
-	for (const auto &optionit : randopt->slots[slot - 1]) {
-		if (optionit->id == option_id) {
-			entry = optionit;
-			option_exists = true;
-			break;
-		}
-	}
-
-	if (!option_exists) {
-		entry = std::make_shared<s_random_opt_group_entry>();
-		entry->id = option_id;
-	}
+	entry = std::make_shared<s_random_opt_group_entry>();
+	entry->id = option_id;
 
 	if (this->nodeExists(node, "MinValue")) {
 		int16 value;
@@ -2473,7 +2461,7 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const YAML::Node &node) {
 	bool exists = randopt != nullptr;
 
 	if (!exists) {
-		if (!this->nodesExist(node, { "Group", "Slots" }))
+		if (!this->nodesExist(node, { "Group" }))
 			return 0;
 
 		randopt = std::make_shared<s_random_opt_group>();
@@ -2516,11 +2504,13 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const YAML::Node &node) {
 		for (const YAML::Node &optionNode : slotNode["Options"]) {
 			std::shared_ptr<s_random_opt_group_entry> entry;
 
-			if (this->add_option(optionNode, exists, randopt, slot, entry))
-				entries.push_back(entry);
+			if (!this->add_option(optionNode, exists, randopt, slot, entry))
+				return 0;
+
+			entries.push_back(entry);
 		}
 
-		randopt->slots.insert({ slot - 1, entries });
+		randopt->slots[slot - 1] = entries;
 	}
 
 	if (this->nodeExists(node, "MaxRandom")) {
@@ -2541,11 +2531,15 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Random")) {
+		randopt->random_options.clear();
+
 		for (const YAML::Node &randomNode : node["Random"]) {
 			std::shared_ptr<s_random_opt_group_entry> entry;
 
-			if (this->add_option(randomNode, exists, randopt, 0, entry))
-				randopt->random_options.push_back(entry);
+			if (!this->add_option(randomNode, exists, randopt, 0, entry))
+				return 0;
+
+			randopt->random_options.push_back(entry);
 		}
 	}
 

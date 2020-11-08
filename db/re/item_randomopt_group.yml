@@ -7386,3 +7386,71 @@ Body:
         MinValue: 1
         MaxValue: 2
         Chance: 37
+  - Id: 99
+    Group: None
+    MaxRandom: 1
+    Random:
+      - Option: RACE_IGNORE_DEF_PERCENT_PLANT
+        MinValue: 10
+        MaxValue: 50
+        Chance: 625
+      - Option: RACE_IGNORE_DEF_PERCENT_PLANT
+        MinValue: 10
+        MaxValue: 50
+        Chance: 625
+      - Option: VAR_AGIAMOUNT
+        MinValue: 1
+        MaxValue: 5
+        Chance: 625
+      - Option: VAR_AGIAMOUNT
+        MinValue: 1
+        MaxValue: 5
+        Chance: 625
+      - Option: VAR_DEXAMOUNT
+        MinValue: 1
+        MaxValue: 5
+        Chance: 625
+      - Option: VAR_DEXAMOUNT
+        MinValue: 1
+        MaxValue: 5
+        Chance: 625
+      - Option: VAR_HITSUCCESSVALUE
+        MinValue: 1
+        MaxValue: 5
+        Chance: 625
+      - Option: VAR_HITSUCCESSVALUE
+        MinValue: 1
+        MaxValue: 5
+        Chance: 625
+      - Option: VAR_INTAMOUNT
+        MinValue: 1
+        MaxValue: 5
+        Chance: 625
+      - Option: VAR_INTAMOUNT
+        MinValue: 1
+        MaxValue: 5
+        Chance: 625
+      - Option: VAR_LUKAMOUNT
+        MinValue: 1
+        MaxValue: 5
+        Chance: 625
+      - Option: VAR_LUKAMOUNT
+        MinValue: 1
+        MaxValue: 5
+        Chance: 625
+      - Option: VAR_STRAMOUNT
+        MinValue: 1
+        MaxValue: 5
+        Chance: 625
+      - Option: VAR_STRAMOUNT
+        MinValue: 1
+        MaxValue: 5
+        Chance: 625
+      - Option: VAR_VITAMOUNT
+        MinValue: 1
+        MaxValue: 5
+        Chance: 625
+      - Option: VAR_VITAMOUNT
+        MinValue: 1
+        MaxValue: 5
+        Chance: 625
