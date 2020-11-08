@@ -478,6 +478,13 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 				if (sc->data[SC_TELEKINESIS_INTENSE])
 					ratio += sc->data[SC_TELEKINESIS_INTENSE]->val3;
 				break;
+			case ELE_POISON:
+				if (tsc->data[SC_CLOUD_POISON])
+#ifdef RENEWAL
+					ratio += 5 * tsc->data[SC_CLOUD_POISON]->val1;
+#else
+					damage += (int64)(damage * 25 / 100);
+#endif
 		}
 	}
 
@@ -539,12 +546,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 					ratio += tsc->data[SC_VENOMIMPRESS]->val2;
 #else
 					damage += (int64)(damage * tsc->data[SC_VENOMIMPRESS]->val2 / 100);
-#endif
-                if (tsc->data[SC_CLOUD_POISON])
-#ifdef RENEWAL
-                    ratio += 5 * tsc->data[SC_CLOUD_POISON]->val1;
-#else
-                    damage += (int64)(damage * 25 / 100);
 #endif
 				break;
 			case ELE_WIND:
