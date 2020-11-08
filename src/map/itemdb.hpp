@@ -973,7 +973,7 @@ public:
 	uint64 parseBodyNode(const YAML::Node &node);
 
 	// Additional
-	bool add_option(const YAML::Node &node, const bool exists, const std::shared_ptr<s_random_opt_group> &randopt, const uint16 slot, std::shared_ptr<s_random_opt_group_entry> &entry);
+	bool add_option(const YAML::Node &node, std::shared_ptr<s_random_opt_group_entry> &entry);
 	bool option_exists(std::string name);
 	bool option_get_id(std::string name, uint16 &id);
 };

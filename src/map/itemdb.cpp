@@ -2369,7 +2369,7 @@ const std::string RandomOptionGroupDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/item_randomopt_group.yml";
 }
 
-bool RandomOptionGroupDatabase::add_option(const YAML::Node &node, const bool exists, const std::shared_ptr<s_random_opt_group> &randopt, const uint16 slot, std::shared_ptr<s_random_opt_group_entry> &entry) {
+bool RandomOptionGroupDatabase::add_option(const YAML::Node &node, std::shared_ptr<s_random_opt_group_entry> &entry) {
 	uint16 option_id;
 
 	if (this->nodeExists(node, "Option")) {
@@ -2398,8 +2398,7 @@ bool RandomOptionGroupDatabase::add_option(const YAML::Node &node, const bool ex
 
 		entry->min_value = value;
 	} else {
-		if (!exists)
-			entry->min_value = 0;
+		entry->min_value = 0;
 	}
 
 	if (this->nodeExists(node, "MaxValue")) {
@@ -2410,8 +2409,7 @@ bool RandomOptionGroupDatabase::add_option(const YAML::Node &node, const bool ex
 
 		entry->max_value = value;
 	} else {
-		if (!exists)
-			entry->max_value = 0;
+		entry->max_value = 0;
 	}
 
 	if (entry->min_value > entry->max_value) {
@@ -2427,8 +2425,7 @@ bool RandomOptionGroupDatabase::add_option(const YAML::Node &node, const bool ex
 
 		entry->param = static_cast<int8>(value);
 	} else {
-		if (!exists)
-			entry->param = 0;
+		entry->param = 0;
 	}
 
 	if (this->nodeExists(node, "Chance")) {
@@ -2439,8 +2436,7 @@ bool RandomOptionGroupDatabase::add_option(const YAML::Node &node, const bool ex
 
 		entry->chance = chance;
 	} else {
-		if (!exists)
-			entry->chance = 0;
+		entry->chance = 0;
 	}
 
 	return true;
@@ -2504,7 +2500,7 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const YAML::Node &node) {
 		for (const YAML::Node &optionNode : slotNode["Options"]) {
 			std::shared_ptr<s_random_opt_group_entry> entry;
 
-			if (!this->add_option(optionNode, exists, randopt, slot, entry))
+			if (!this->add_option(optionNode, entry))
 				return 0;
 
 			entries.push_back(entry);
@@ -2536,7 +2532,7 @@ uint64 RandomOptionGroupDatabase::parseBodyNode(const YAML::Node &node) {
 		for (const YAML::Node &randomNode : node["Random"]) {
 			std::shared_ptr<s_random_opt_group_entry> entry;
 
-			if (!this->add_option(randomNode, exists, randopt, 0, entry))
+			if (!this->add_option(randomNode, entry))
 				return 0;
 
 			randopt->random_options.push_back(entry);
