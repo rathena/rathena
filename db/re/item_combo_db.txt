@@ -1417,27 +1417,27 @@
 24437:24166:24167,{ bonus bBaseAtk,5; .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L);  if (.@r >= 25) { bonus2 bIgnoreDefRaceRate,RC_Formless,100; bonus2 bIgnoreDefRaceRate,RC_Dragon,100; } }
 24438:24166:24167,{ bonus bBaseAtk,5; .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L);  if (.@r >= 25) { bonus2 bIgnoreDefRaceRate,RC_Demon,100; bonus2 bIgnoreDefRaceRate,RC_Angel,100; } }
 24440:24441:24442,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES) + getequiprefinerycnt(EQI_SHADOW_ARMOR); bonus2 bSkillAtk,"RK_SONICWAVE",.@r; }
-24441:24288,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40+.@r; }
+24441:24288,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@r; }
 24443:24444:24445,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L); bonus2 bSkillAtk,"RK_IGNITIONBREAK",.@r; }
-24443:24301,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40+.@r; }
+24443:24301,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@r; }
 24447:24446:24448,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHOES); bonus bDelayrate,-(.@r/2); }
-24447:24288,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",@r; }
+24447:24288,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",.@r; }
 24449:24450:24451,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L); if (.@r>=2) { bonus bMaxHPrate,.@r/2; bonus bMaxSPrate,.@r/2; } }
-24449:24301,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_SHIELD); bonus2 bSkillAtk,"RK_DRAGONBREATH",@r; }
+24449:24301,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_SHIELD); bonus2 bSkillAtk,"RK_DRAGONBREATH",.@r; }
 24452:24453:24454,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHOES); bonus2 bSkillAtk,"RA_CLUSTERBOMB",.@r; }
-24452:24298,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40+.@r; }
+24452:24298,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@r; }
 24455:24456:24457,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L); bonus2 bSkillAtk,"RA_AIMEDBOLT",.@r; }
-24455:24311,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_SHIELD); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40+.@r; }
+24455:24311,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_SHIELD); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@r; }
 24459:24458:24460,{ .@r = getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_SHOES); bonus2 bSkillAtk,"RA_ARROWSTORM",.@r; }
-24459:24298,{ .@r = getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40+.@r; }
+24459:24298,{ .@r = getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@r; }
 24461:24462:24463,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L); bonus bCritAtkRate,.@r/2; }
-24461:24311,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_SHIELD); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40+.@r; }
+24461:24311,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_SHIELD); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@r; }
 24465:24464:24466,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHOES); bonus bDelayrate,-.@r; }
-24465:24290,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40+.@r; }
+24465:24290,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@r; }
 24467:24468:24469,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L); bonus2 bSkillAtk,"NC_AXEBOOMERANG",.@r; }
-24465:24290,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_SHIELD); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40+.@r; }
+24465:24290,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_SHIELD); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@r; }
 24471:24470:24472,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHOES); bonus2 bSkillAtk,"NC_VULCANARM",.@r; }
-24471:24290,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40+.@r; }
+24471:24290,{ .@r = getequiprefinerycnt(EQI_SHADOW_SHIELD) + getequiprefinerycnt(EQI_SHADOW_WEAPON); bonus2 bIgnoreDefRaceRate,RC_All,40+.@r; bonus2 bIgnoreDefRaceRate,RC_Player_Human,-40-.@r; }
 24473:24474:24475,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L); if (.@r>=2) bonus2 bSkillAtk,"NC_ARMSCANNON",.@r/2; }
 24473:24303,{ .@r = getequiprefinerycnt(EQI_SHADOW_WEAPON) + getequiprefinerycnt(EQI_SHADOW_SHIELD); if (.@r>=2) bonus2 bVariableCastrate,"NC_ARMSCANNON",.@r/2; }
 25069:25070:25071,{ bonus bDelayrate,-2; }
