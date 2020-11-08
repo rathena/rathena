@@ -6952,6 +6952,7 @@ Body:
     DamageFlags:
       NoDamage: true
     SplashArea: 1
+    Duration1: 1800000
     Requires:
       SpCost: 10
       ItemCost:

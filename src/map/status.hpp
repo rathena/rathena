@@ -944,6 +944,7 @@ enum sc_type : int16 {
 	SC_POISON_MIST,
 	SC_STONE_WALL,
 	SC_CLOUD_POISON,
+	SC_HOMUN_TIME,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled

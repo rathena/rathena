@@ -1610,6 +1610,7 @@
 	export_constant(SC_POISON_MIST);
 	export_constant(SC_STONE_WALL);
 	export_constant(SC_CLOUD_POISON);
+	export_constant(SC_HOMUN_TIME);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif

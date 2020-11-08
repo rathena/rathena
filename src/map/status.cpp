@@ -473,6 +473,9 @@ void initChangeTables(void)
 	set_sc( AM_CP_SHIELD		, SC_CP_SHIELD		, EFST_PROTECTSHIELD, SCB_NONE );
 	set_sc( AM_CP_ARMOR		, SC_CP_ARMOR		, EFST_PROTECTARMOR, SCB_NONE );
 	set_sc( AM_CP_HELM		, SC_CP_HELM		, EFST_PROTECTHELM, SCB_NONE );
+#ifdef RENEWAL
+	set_sc( AM_CALLHOMUN	, SC_HOMUN_TIME		, EFST_HOMUN_TIME, SCB_NONE );
+#endif
 	set_sc( CR_AUTOGUARD		, SC_AUTOGUARD		, EFST_AUTOGUARD		, SCB_NONE );
 	add_sc( CR_SHIELDCHARGE		, SC_STUN		);
 	set_sc( CR_REFLECTSHIELD	, SC_REFLECTSHIELD	, EFST_REFLECTSHIELD	, SCB_NONE );
@@ -2100,6 +2103,12 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 
 		return (int)(hp+sp);
 	}
+
+#ifdef RENEWAL
+	// Homunculus has been killed, remove the active status from the master
+	if (target->type == BL_HOM)
+		status_change_end(battle_get_master(target), SC_HOMUN_TIME, INVALID_TIMER);
+#endif
 
 	status_change_clear(target,0);
 
@@ -13546,6 +13555,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_SOULENERGY:
 			if (sd)
 				pc_delsoulball(sd, sd->soulball, false);
+			break;
+		case SC_HOMUN_TIME:
+			if (sd && sd->hd)
+				hom_vaporize(sd, HOM_ST_REST);
 			break;
 	}
 
