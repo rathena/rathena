@@ -7,7 +7,9 @@
 
 bool YamlDatabase::nodeExists( const YAML::Node& node, const std::string& name ){
 	try{
-		if( node[name] ){
+		const YAML::Node &subNode = node[name];
+
+		if( subNode.IsDefined() && !subNode.IsNull() ){
 			return true;
 		}else{
 			return false;

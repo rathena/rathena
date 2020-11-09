@@ -31611,6 +31611,31 @@ Body:
       IgnoreItemBonus: true
     Requires:
       SpCost: 1
+  - Id: 3042
+    Name: ALL_PRONTERA_RECALL
+    Description: Prontera Recall
+    MaxLevel: 2
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Hit: Single
+    HitCount: 1
+    Cooldown:
+      - Level: 1
+        Time: 1800000
+      - Level: 2
+        Time: 900000
+    FixedCastTime: 1000
+    CastTimeFlags:
+      IgnoreDex: true
+      IgnoreStatus: true
+      IgnoreItemBonus: true
+    CastDelayFlags:
+      IgnoreDex: true
+      IgnoreStatus: true
+      IgnoreItemBonus: true
+    Requires:
+      SpCost: 1
   - Id: 5001
     Name: GC_DARKCROW
     Description: Dark Claw
