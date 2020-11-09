@@ -90076,6 +90076,3680 @@ Body:
     Refineable: true
     Script: |
       bonus2 bSkillUseSPrate,"NC_ARMSCANNON",2; .@r = getrefine(); if (.@r >= 2) { bonus2 bSkillUseSPrate,"NC_ARMSCANNON",.@r/2*2; }
+  - Id: 24476
+    AegisName: S_Rampage_Armor
+    Name: Rampage Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",5+2*(getrefine()/2);
+
+  - Id: 24477
+    AegisName: S_Rampage_Shield
+    Name: Rampage Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus bLongAtkRate,10;
+      }
+      else if (.@r>=7) {
+         bonus bLongAtkRate,7;
+      }
+      else {
+         bonus bLongAtkRate,3;
+      }
+
+  - Id: 24478
+    AegisName: S_Rampage_Shoes
+    Name: Rampage Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillCooldown,"SR_RAMPAGEBLASTER",-200-100*(getrefine()/3);
+
+  - Id: 24479
+    AegisName: S_Skynetblow_Weapon
+    Name: Sky Blow Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bAddSize,Size_All,7;
+      }
+      else {
+         bonus2 bAddSize,Size_All,3;
+      }
+
+  - Id: 24480
+    AegisName: S_Skynetblow_Pendant
+    Name: Sky Blow Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"SR_SKYNETBLOW",5+2*(getrefine()/2);
+
+  - Id: 24481
+    AegisName: S_Skynetblow_Earing
+    Name: Sky Net Blow Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bAddClass,Class_All,2+(getrefine()/3);
+
+  - Id: 24482
+    AegisName: S_Knucklearrow_Armor
+    Name: Knuckle Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"SR_KNUCKLEARROW",5+2*(getrefine()/2);
+
+  - Id: 24483
+    AegisName: S_Knucklearrow_Shield
+    Name: Knuckle Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus bLongAtkRate,10;
+      }
+      else if (.@r>=7) {
+         bonus bLongAtkRate,7;
+      }
+      else {
+         bonus bLongAtkRate,3;
+      }
+
+  - Id: 24484
+    AegisName: S_Knucklearrow_Shoes
+    Name: Knuckle Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bAddSize,Size_All,3+2*(getrefine()/3);
+
+  - Id: 24485
+    AegisName: S_TigerCannon_Weapon
+    Name: Tiger Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bAddSize,Size_All,7;
+      }
+      else {
+         bonus2 bAddSize,Size_All,3;
+      }
+
+  - Id: 24486
+    AegisName: S_Tigercannon_Pendant
+    Name: Tiger Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"SR_TIGERCANNON",5+2*(getrefine()/2);
+
+  - Id: 24487
+    AegisName: S_Tigercannon_Earing
+    Name: Tiger Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillUseSPrate,"SR_TIGERCANNON",2+(getrefine()/2);
+
+  - Id: 24488
+    AegisName: S_Duplelight_Armor
+    Name: Duplex Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"AB_DUPLELIGHT",5+2*(getrefine()/2);
+
+  - Id: 24489
+    AegisName: S_Duplelight_Shield
+    Name: Duplex Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,5;
+         bonus2 bMagicAtkEle,Ele_Holy,5;
+      }
+      else if (.@r>=7) {
+         bonus2 bAddSize,Size_All,3;
+         bonus2 bMagicAtkEle,Ele_Holy,3;
+      }
+      else {
+         bonus2 bAddSize,Size_All,1;
+         bonus2 bMagicAtkEle,Ele_Holy,1;
+      }
+
+  - Id: 24490
+    AegisName: S_Duplelight_Shoes
+    Name: Duplex Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus bCritAtkRate,5+(getrefine()/2);
+
+  - Id: 24491
+    AegisName: S_Adoramus_Weapon
+    Name: Adora Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Holy,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Holy,6;
+      }
+      else {
+         bonus2 bMagicAtkEle,Ele_Holy,3;
+      }
+
+  - Id: 24492
+    AegisName: S_Adoramus_Pendant
+    Name: Adora Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"AB_ADORAMUS",5+2*(getrefine()/2);
+
+  - Id: 24493
+    AegisName: S_Adoramus_Earing
+    Name: Adora Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillUseSPrate,"AB_ADORAMUS",2+(getrefine()/2);
+
+  - Id: 24494
+    AegisName: S_Judex_Armor
+    Name: Judex Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"AB_JUDEX",5+2*(getrefine()/2);
+
+  - Id: 24495
+    AegisName: S_Judex_Shield
+    Name: Judex Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Holy,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Holy,6;
+      }
+      else {
+         bonus2 bMagicAtkEle,Ele_Holy,3;
+      }
+
+  - Id: 24496
+    AegisName: S_Judex_Shoes
+    Name: Judex Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bMagicAddSize,Size_All,3;
+
+  - Id: 24497
+    AegisName: S_Magnus_Weapon
+    Name: Magnus Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Holy,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Holy,6;
+      }
+      else {
+         bonus2 bMagicAtkEle,Ele_Holy,3;
+      }
+
+  - Id: 24498
+    AegisName: S_Magnus_Pendant
+    Name: Magnus Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"PR_MAGNUS",5+2*(getrefine()/2);
+
+  - Id: 24499
+    AegisName: S_Magnus_Earing
+    Name: Magnus Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillUseSPrate,"PR_MAGNUS",2+(getrefine()/2);
+
+  - Id: 24500
+    AegisName: S_Rainstorm_Armor
+    Name: Rainstorm Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",5+2*(getrefine()/2);
+
+  - Id: 24501
+    AegisName: S_Rainstorm_Shield
+    Name: Rainstorm Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus bLongAtkRate,10;
+      }
+      else if (.@r>=7) {
+         bonus bLongAtkRate,6;
+      }
+      else {
+         bonus bLongAtkRate,3;
+      }
+
+  - Id: 24502
+    AegisName: S_Rainstorm_Shoes
+    Name: Rainstorm Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillUseSPrate,"WM_SEVERE_RAINSTORM",2+(getrefine()/2);
+
+  - Id: 24503
+    AegisName: S_Arrowvulcan_Weapon
+    Name: Arrow Vulcan Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus bLongAtkRate,10;
+      }
+      else if (.@r>=7) {
+         bonus bLongAtkRate,6;
+      }
+      else {
+         bonus bLongAtkRate,3;
+      }
+
+  - Id: 24504
+    AegisName: S_Arrowvulcan_Pendant
+    Name: Arrow Vulcan Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"CG_ARROWVULCAN",5+2*(getrefine()/2);
+
+  - Id: 24505
+    AegisName: S_Arrowvulcan_Earing
+    Name: Arrow Vulcan Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillCooldown,"CG_ARROWVULCAN",-200-100*(getrefine()/3);
+
+  - Id: 24506
+    AegisName: S_Metalic_Armor
+    Name: Metallic Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"WM_METALICSOUND",5+2*(getrefine()/2);
+
+  - Id: 24507
+    AegisName: S_Metalic_Shield
+    Name: Metallic Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Neutral,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Neutral,6;
+      }
+      else {
+         bonus2 bMagicAtkEle,Ele_Neutral,3;
+      }
+
+  - Id: 24508
+    AegisName: S_Metalic_Shoes
+    Name: Metallic Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillUseSPrate,"WM_METALICSOUND",2+(getrefine()/2);
+
+  - Id: 24509
+    AegisName: S_Reverberation_Weapon
+    Name: Vibrating Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Neutral,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Neutral,6;
+      }
+      else {
+         bonus2 bMagicAtkEle,Ele_Neutral,3;
+      }
+
+  - Id: 24510
+    AegisName: S_Reverberation_Pendant
+    Name: Vibration Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"WM_REVERBERATION",5+2*(getrefine()/2);
+
+  - Id: 24511
+    AegisName: S_Reverberation_Earing
+    Name: Vibration Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillUseSPrate,"WM_REVERBERATION",2+(getrefine()/2);
+
+  - Id: 24512
+    AegisName: S_Jack_Armor
+    Name: Jack Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"WL_JACKFROST",5+2*getrefine();
+
+  - Id: 24513
+    AegisName: S_Jack_Shield
+    Name: Jack Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Water,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Water,6;
+      }
+      else {
+         bonus2 bMagicAtkEle,Ele_Water,3;
+      }
+
+  - Id: 24514
+    AegisName: S_Jack_Shoes
+    Name: Jack Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillCooldown,"WL_JACKFROST",-1000-100*(getrefine()/2);
+
+  - Id: 24515
+    AegisName: S_Strain_Weapon
+    Name: Strain Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Earth,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Earth,6;
+      }
+      else {
+         bonus2 bMagicAtkEle,Ele_Earth,3;
+      }
+
+  - Id: 24516
+    AegisName: S_Strain_Pendant
+    Name: Strain Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"WL_EARTHSTRAIN",5+2*getrefine();
+
+  - Id: 24517
+    AegisName: S_Strain_Earing
+    Name: Strain Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillCooldown,"WL_EARTHSTRAIN",-200-100*(getrefine()/3);
+
+  - Id: 24518
+    AegisName: S_Crimson_Armor
+    Name: Crimson Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"WL_CRIMSONROCK",5+2*getrefine();
+
+  - Id: 24519
+    AegisName: S_Crimson_Shield
+    Name: Crimson Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Fire,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Fire,6;
+      }
+      else {
+         bonus2 bMagicAtkEle,Ele_Fire,3;
+      }
+
+  - Id: 24520
+    AegisName: S_Crimson_Shoes
+    Name: Crimson Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillUseSPrate,"WL_CRIMSONROCK",4+(getrefine()/2);
+
+  - Id: 24521
+    AegisName: S_Chain_Weapon
+    Name: Chain Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Wind,6;
+      }
+      else {
+         bonus2 bMagicAtkEle,Ele_Wind,3;
+      }
+
+  - Id: 24522
+    AegisName: S_Chain_Pendant
+    Name: Chain Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"WL_CHAINLIGHTNING",5+2*getrefine();
+
+  - Id: 24523
+    AegisName: S_Chain_Earing
+    Name: Chain Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillUseSPrate,"WL_CHAINLIGHTNING",4+(getrefine()/2);
+
+  - Id: 24524
+    AegisName: S_Triangle_Armor
+    Name: Triangle Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"SC_TRIANGLESHOT",5+2*(getrefine()/2);
+
+  - Id: 24525
+    AegisName: S_Triangle_Shield
+    Name: Triangle Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus bLongAtkRate,10;
+      }
+      else if (.@r>=7) {
+         bonus bLongAtkRate,6;
+      }
+      else {
+         bonus bLongAtkRate,3;
+      }
+
+  - Id: 24526
+    AegisName: S_Triangle_Shoes
+    Name: Triangle Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillUseSPrate,"SC_TRIANGLESHOT",2+(getrefine()/2);
+
+  - Id: 24527
+    AegisName: S_Shadowspell_Weapon
+    Name: Shadowspell Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus3 bAutoSpell,"SO_PSYCHIC_WAVE",3,1+(.@r>=7?1:0)+(.@r>=9?2:0);
+
+  - Id: 24528
+    AegisName: S_Shadowspell_Pendant
+    Name: Shadowspell Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"WZ_METEOR",5+3*(getrefine()/2);
+
+  - Id: 24529
+    AegisName: S_Shadowspell_Earing
+    Name: Shadowspell Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_Neutral,2+2*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Fire,2+2*(.@r/3);
+
+  - Id: 24530
+    AegisName: S_Menace_Armor
+    Name: Menace Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"SC_FATALMENACE",5+2*(getrefine()/2);
+
+  - Id: 24531
+    AegisName: S_Menace_Shield
+    Name: Menace Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bAddSize,Size_All,6;
+      }
+      else {
+         bonus2 bAddSize,Size_All,3;
+      }
+
+  - Id: 24532
+    AegisName: S_Menace_Shoes
+    Name: Menace Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillUseSPrate,"SC_FATALMENACE",2+(getrefine()/2);
+
+  - Id: 24533
+    AegisName: S_Paint_Weapon
+    Name: Paint Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bAddSize,Size_All,6;
+      }
+      else {
+         bonus2 bAddSize,Size_All,3;
+      }
+
+  - Id: 24534
+    AegisName: S_Paint_Pendant
+    Name: Paint Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"SC_FEINTBOMB",5+2*(getrefine()/2);
+
+  - Id: 24535
+    AegisName: S_Paint_Earing
+    Name: Paint Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillCooldown,"SC_FEINTBOMB",-200-100*(getrefine()/3);
+
+  - Id: 24536
+    AegisName: S_Rolling_Armor
+    Name: Rolling Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"GC_ROLLINGCUTTER",5+2*(getrefine()/2);
+
+  - Id: 24537
+    AegisName: S_Rolling_Shield
+    Name: Rolling Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bAddSize,Size_All,6;
+      }
+      else {
+         bonus2 bAddSize,Size_All,3;
+      }
+
+  - Id: 24538
+    AegisName: S_Rolling_Shoes
+    Name: Rolling Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillUseSPrate,"GC_ROLLINGCUTTER",2+(getrefine()/2);
+
+  - Id: 24539
+    AegisName: S_Katar_Weapon
+    Name: Katar Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         autobonus "{ bonus2 bAddSize,Size_All,15; bonus bCritAtkRate,15; }",1,10000,BF_WEAPON;
+      }
+      else if (.@r>=7) {
+         autobonus "{ bonus2 bAddSize,Size_All,15; bonus bCritAtkRate,15; }",1,5000,BF_WEAPON;
+      }
+      else {
+         autobonus "{ bonus2 bAddSize,Size_All,10; bonus bCritAtkRate,10; }",1,5000,BF_WEAPON;
+      }
+
+  - Id: 24540
+    AegisName: S_Katar_Pendant
+    Name: Katar Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus bCritAtkRate,5+(getrefine()/2);
+
+  - Id: 24541
+    AegisName: S_Katar_Earing
+    Name: Katar Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bAddSize,Size_All,5+(getrefine()/2);
+
+  - Id: 24542
+    AegisName: S_Slash_Armor
+    Name: Slash Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",5+2*(getrefine()/2);
+
+  - Id: 24543
+    AegisName: S_Slash_Shield
+    Name: Slash Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bAddSize,Size_All,6;
+      }
+      else {
+         bonus2 bAddSize,Size_All,3;
+      }
+
+  - Id: 24544
+    AegisName: S_Slash_Shoes
+    Name: Slash Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillUseSPrate,"GC_COUNTERSLASH",2+(getrefine()/2);
+
+  - Id: 24545
+    AegisName: S_Ripper_Weapon
+    Name: Ripper Slasher Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus bLongAtkRate,10;
+      }
+      else if (.@r>=7) {
+         bonus bLongAtkRate,6;
+      }
+      else {
+         bonus bLongAtkRate,3;
+      }
+
+  - Id: 24546
+    AegisName: S_Ripper_Pendant
+    Name: Ripper Slasher Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",5+2*(getrefine()/2);
+
+  - Id: 24547
+    AegisName: S_Ripper_Earing
+    Name: Ripper Slasher Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bAddSize,Size_All,5+(getrefine()/2);
+
+  - Id: 24548
+    AegisName: S_Dust_Armor
+    Name: Dust Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"SO_DIAMONDDUST",5+2*getrefine();
+
+  - Id: 24549
+    AegisName: S_Dust_Shield
+    Name: Dust Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Water,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Water,6;
+      }
+      else {
+         bonus2 bMagicAtkEle,Ele_Water,3;
+      }
+
+  - Id: 24550
+    AegisName: S_Dust_Shoes
+    Name: Dust Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillUseSPrate,"SO_DIAMONDDUST",4+(getrefine()/2);
+
+  - Id: 24551
+    AegisName: S_Grave_Weapon
+    Name: Grave Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Earth,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Earth,6;
+      }
+      else {
+         bonus2 bMagicAtkEle,Ele_Earth,3;
+      }
+
+  - Id: 24552
+    AegisName: S_Grave_Pendant
+    Name: Grave Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"SO_EARTHGRAVE",5+2*getrefine();
+
+  - Id: 24553
+    AegisName: S_Grave_Earing
+    Name: Grave Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillCooldown,"SO_EARTHGRAVE",-200-100*(getrefine()/3);
+
+  - Id: 24554
+    AegisName: S_Psychic_Armor
+    Name: Psychic Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",5+2*getrefine();
+
+  - Id: 24555
+    AegisName: S_Psychic_Shield
+    Name: Psychic Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Neutral,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Neutral,6;
+      }
+      else {
+         bonus2 bMagicAtkEle,Ele_Neutral,3;
+      }
+
+  - Id: 24556
+    AegisName: S_Psychic_Shoes
+    Name: Psychic Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillUseSPrate,"SO_PSYCHIC_WAVE",4+(getrefine()/2);
+
+  - Id: 24557
+    AegisName: S_Varetyr_Weapon
+    Name: Varetyr Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Wind,6;
+      }
+      else {
+         bonus2 bMagicAtkEle,Ele_Wind,3;
+      }
+
+  - Id: 24558
+    AegisName: S_Varetyr_Pendant
+    Name: Varetyr Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"SO_VARETYR_SPEAR",5+2*getrefine();
+
+  - Id: 24559
+    AegisName: S_Varetyr_Earing
+    Name: Varetyr Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillUseSPrate,"SO_VARETYR_SPEAR",4+(getrefine()/2);
+
+  - Id: 24560
+    AegisName: S_Cart_Tornado_Armor
+    Name: Tornado Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"GN_CART_TORNADO",5+2*(getrefine()/2);
+
+  - Id: 24561
+    AegisName: S_Cart_Tornado_Shield
+    Name: Tornado Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bAddSize,Size_All,6;
+      }
+      else {
+         bonus2 bAddSize,Size_All,3;
+      }
+
+  - Id: 24562
+    AegisName: S_Cart_Tornado_Shoes
+    Name: Tornado Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillUseSPrate,"GN_CART_TORNADO",2+(getrefine()/2);
+
+  - Id: 24563
+    AegisName: S_Cannon_Cart_Weapon
+    Name: Cannon Cart Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus bLongAtkRate,10;
+      }
+      else if (.@r>=7) {
+         bonus bLongAtkRate,6;
+      }
+      else {
+         bonus bLongAtkRate,3;
+      }
+
+  - Id: 24564
+    AegisName: S_Cannon_Cart_Pendant
+    Name: Cannon Cart Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"GN_CARTCANNON",5+2*(getrefine()/2);
+
+  - Id: 24565
+    AegisName: S_Cannon_Cart_Earing
+    Name: Cannon Cart Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bAddSize,Size_All,5+(getrefine()/2);
+
+  - Id: 24566
+    AegisName: S_Spore_Bomb_Armor
+    Name: Spore Bomb Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",5+2*(getrefine()/2);
+
+  - Id: 24567
+    AegisName: S_Spore_Bomb_Shield
+    Name: Spore Bomb Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bAddSize,Size_All,6;
+      }
+      else {
+         bonus2 bAddSize,Size_All,3;
+      }
+
+  - Id: 24568
+    AegisName: S_Spore_Bomb_Shoes
+    Name: Spore Bomb Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillCooldown,"GN_SPORE_EXPLOSION",-200-100*(getrefine()/3);
+
+  - Id: 24569
+    AegisName: S_Crazy_Weapon
+    Name: Crazy Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bAddSize,Size_All,6;
+      }
+      else {
+         bonus2 bAddSize,Size_All,3;
+      }
+
+  - Id: 24570
+    AegisName: S_Crazy_Pendant
+    Name: Crazy Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"GN_CRAZYWEED",5+2*(getrefine()/2);
+
+  - Id: 24571
+    AegisName: S_Crazy_Earing
+    Name: Crazy Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillCooldown,"GN_CRAZYWEED",-200-100*(getrefine()/3);
+
+  - Id: 24572
+    AegisName: S_Brand_Armor
+    Name: Brand Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"LG_OVERBRAND",5;
+
+  - Id: 24573
+    AegisName: S_Brand_Shield
+    Name: Brand Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bAddSize,Size_All,6;
+      }
+      else {
+         bonus2 bAddSize,Size_All,3;
+      }
+
+  - Id: 24574
+    AegisName: S_Brand_Shoes
+    Name: Brand Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"LG_OVERBRAND",5;
+      bonus bDelayrate,-1*(getrefine()/3);
+
+  - Id: 24575
+    AegisName: S_Chain_Press_Weapon
+    Name: Chain Press Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bAddSize,Size_All,6;
+      }
+      else {
+         bonus2 bAddSize,Size_All,3;
+      }
+
+  - Id: 24576
+    AegisName: S_Chain_Press_Pendant
+    Name: Chain Press Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"LG_SHIELDPRESS",5;
+
+  - Id: 24577
+    AegisName: S_Chain_Press_Earing
+    Name: Chain Press Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"PA_SHIELDCHAIN",5;
+
+  - Id: 24578
+    AegisName: S_Banish_Cannon_Armor
+    Name: Banishing Cannon Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"LG_BANISHINGPOINT",5+2*(getrefine()/2);
+
+  - Id: 24579
+    AegisName: S_Banish_Cannon_Shield
+    Name: Banishing Cannon Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bAddSize,Size_All,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bAddSize,Size_All,6;
+      }
+      else {
+         bonus2 bAddSize,Size_All,3;
+      }
+
+  - Id: 24580
+    AegisName: S_Banish_Cannon_Shoes
+    Name: Banishing Cannon Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillCooldown,"LG_CANNONSPEAR",-200-100*(getrefine()/3);
+
+  - Id: 24581
+    AegisName: S_Genesis_Weapon
+    Name: Genesis Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Holy,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Holy,6;
+      }
+      else {
+         bonus2 bMagicAtkEle,Ele_Holy,3;
+      }
+
+  - Id: 24582
+    AegisName: S_Genesis_Pendant
+    Name: Genesis Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"LG_RAYOFGENESIS",5+2*(getrefine()/2);
+
+  - Id: 24583
+    AegisName: S_Genesis_Earing
+    Name: Genesis Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillCooldown,"LG_RAYOFGENESIS",-200-100*(getrefine()/3);
+
+  - Id: 24584
+    AegisName: S_Booster_Armor
+    Name: Booster Shadow Armor
+    Type: ShadowGear
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,100;
+      bonus bAspd,1;
+
+  - Id: 24585
+    AegisName: S_Booster_Shield
+    Name: Booster Shadow Shield
+    Type: ShadowGear
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,100;
+      bonus bVariableCastrate,-10;
+
+  - Id: 24586
+    AegisName: S_Booster_Shoes
+    Name: Booster Shadow Shoes
+    Type: ShadowGear
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,100;
+      bonus bAspdRate,7;
+
+  - Id: 24587
+    AegisName: S_Booster_Earing
+    Name: Booster Shadow Earring
+    Type: ShadowGear
+    MagicAttack: 15
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,100;
+
+  - Id: 24588
+    AegisName: S_Booster_Pandent
+    Name: Booster Shadow Pendant
+    Type: ShadowGear
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMaxHP,100;
+      bonus bBaseAtk,15;
+
+  - Id: 24589
+    AegisName: S_RK_B_Weapon
+    Name: Rune Knight's Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Knight: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+
+  - Id: 24590
+    AegisName: S_LG_B_Weapon
+    Name: Royal Guard's Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Crusader: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+
+  - Id: 24591
+    AegisName: S_NC_B_Weapon
+    Name: Mechanic's Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Blacksmith: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+
+  - Id: 24592
+    AegisName: S_GN_B_Weapon
+    Name: Genetic's Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Alchemist: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+
+  - Id: 24593
+    AegisName: S_GC_B_Weapon
+    Name: Guillotine Cross' Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Assassin: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+
+  - Id: 24594
+    AegisName: S_SC_B_Weapon
+    Name: Shadow Chaser's Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Rogue: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+
+  - Id: 24595
+    AegisName: S_WL_B_Weapon
+    Name: Warlock's Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Wizard: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+
+  - Id: 24596
+    AegisName: S_SO_B_Weapon
+    Name: Sorcerer's Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Sage: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+
+  - Id: 24597
+    AegisName: S_AB_B_Weapon
+    Name: Archbishop's Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Priest: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+
+  - Id: 24598
+    AegisName: S_SR_B_Weapon
+    Name: Sura's Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Monk: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+
+  - Id: 24599
+    AegisName: S_RA_B_Weapon
+    Name: Ranger's Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Hunter: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+
+  - Id: 24600
+    AegisName: S_WM_B_Weapon
+    Name: Minstrel&Wanderer's Booster Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      BardDancer: true
+    Classes:
+      Third: true
+      Third_Upper: true
+      Third_Baby: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 100
+    Trade:
+      Override: 100
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      bonus bMatk,10;
+      bonus bBaseAtk,10;
+
+  - Id: 24601
+    AegisName: S_Tail_Dragon_Weapon
+    Name: Tail Dragon Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus bLongAtkRate,10;
+      }
+      else if (.@r>=7) {
+         bonus bLongAtkRate,6;
+      }
+      else {
+         bonus bLongAtkRate,3;
+      }
+
+  - Id: 24602
+    AegisName: S_Tail_Dragon_Shield
+    Name: Tail Dragon Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"RL_D_TAIL",5+2*(getrefine()/2);
+
+  - Id: 24603
+    AegisName: S_Tail_Dragon_Armor
+    Name: Tail Dragon Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bAddSize,Size_All,5+(getrefine()/2);
+
+  - Id: 24604
+    AegisName: S_Flare_Dance_Earing
+    Name: Flare Dance Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,5;
+      if (.@r>=7) {
+         bonus bMaxHPrate,5;
+      }
+      if (.@r>=9) {
+         bonus bLongAtkRate,7;
+         bonus bMaxHP,2000;
+         bonus bMaxSP,200;
+      }
+
+  - Id: 24605
+    AegisName: S_Flare_Dance_Pendant
+    Name: Flare Dance Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"RL_FIREDANCE",5+2*(getrefine()/2);
+
+  - Id: 24606
+    AegisName: S_Flare_Dance_Shoes
+    Name: Flare Dance Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bAddSize,Size_All,5+(getrefine()/2);
+
+  - Id: 24607
+    AegisName: S_God_Hammer_Weapon
+    Name: God Hammer Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus bLongAtkRate,10;
+      }
+      else if (.@r>=7) {
+         bonus bLongAtkRate,6;
+      }
+      else {
+         bonus bLongAtkRate,3;
+      }
+
+  - Id: 24608
+    AegisName: S_God_Hammer_Shield
+    Name: God Hammer Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",5+2*(getrefine()/2);
+
+  - Id: 24609
+    AegisName: S_God_Hammer_Armor
+    Name: God Hammer Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bAddEle,Ele_All,5+(getrefine()/2);
+
+  - Id: 24610
+    AegisName: S_Shatter_Buster_Earing
+    Name: Shatter Buster Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxSPrate,5;
+      if (.@r>=7) {
+         bonus bLongAtkRate,7;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillUseSPrate,"RL_BANISHING_BUSTER",15;
+      }
+
+  - Id: 24611
+    AegisName: S_Shatter_B_Pendant
+    Name: Shatter Buster Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"RL_S_STORM",5+2*(getrefine()/2);
+
+  - Id: 24612
+    AegisName: S_Shatter_Buster_Shoes
+    Name: Shatter Buster Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"RL_BANISHING_BUSTER",5+2*(getrefine()/2);
+
+  - Id: 24613
+    AegisName: S_Trip_Weapon
+    Name: Trip Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,3;
+      if (.@r>=7) {
+         bonus bLongAtkRate,3;
+      }
+      if (.@r>=9) {
+         bonus bMaxHPrate,10;
+      }
+
+  - Id: 24614
+    AegisName: S_Trip_Shield
+    Name: Trip Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"RL_R_TRIP",5+2*(getrefine()/2);
+
+  - Id: 24615
+    AegisName: S_Trip_Armor
+    Name: Trip Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Gunslinger: true
+      Rebellion: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bAddSize,Size_All,5+(getrefine()/2);
+
+  - Id: 24616
+    AegisName: S_Super_Magic_Shield
+    Name: Super Magic Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      .@val = 5;
+      if (.@r>=7) {
+         .@val += 5;
+      }
+      if (.@r>=9) {
+         skill "WZ_WATERBALL",getskilllv("HW_GRAVITATION");
+      }
+      bonus2 bMagicAtkEle,Ele_Neutral,.@val;
+      bonus2 bMagicAtkEle,Ele_Fire,.@val;
+      bonus2 bMagicAtkEle,Ele_Earth,.@val;
+      bonus2 bMagicAtkEle,Ele_Water,.@val;
+      bonus2 bMagicAtkEle,Ele_Wind,.@val;
+
+  - Id: 24617
+    AegisName: S_Super_Magic_Armor
+    Name: Super Magic Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",10+4*(.@r/2);
+      bonus2 bSkillAtk,"MG_FIREBOLT",10+4*(.@r/2);
+      bonus2 bSkillAtk,"MG_COLDBOLT",10+4*(.@r/2);
+
+  - Id: 24618
+    AegisName: S_Super_Magic_Shoes
+    Name: Super Magic Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"WZ_VERMILION",10+4*(.@r/2);
+      bonus2 bSkillAtk,"WZ_HEAVENDRIVE",10+4*(.@r/2);
+      bonus2 bSkillAtk,"WZ_STORMGUST",10+4*(.@r/2);
+      bonus2 bSkillAtk,"WZ_METEOR",10+4*(.@r/2);
+
+  - Id: 24619
+    AegisName: S_Super_Power_Weapon
+    Name: Super Power Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,5;
+      bonus bShortAtkRate,5;
+      if (.@r>=7) {
+         bonus bLongAtkRate,5;
+         bonus bShortAtkRate,5;
+      }
+      if (.@r>=9) {
+         skill "BS_WEAPONRESEARCH",getskilllv("WS_MELTDOWN");
+      }
+
+  - Id: 24620
+    AegisName: S_Super_Power_Pendant
+    Name: Super Power Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"RG_RAID",10+4*(getrefine()/2);
+
+  - Id: 24621
+    AegisName: aegis_24621
+    Name: Super Power Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Novice: true
+      SuperNovice: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"CR_SHIELDBOOMERANG",10+4*(.@r/2);
+      bonus2 bSkillAtk,"PA_SHIELDCHAIN",10+4*(.@r/2);
+
+  - Id: 24622
+    AegisName: aegis_24622
+    Name: Kunai Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus bLongAtkRate,10;
+      }
+      else if (.@r>=7) {
+         bonus bLongAtkRate,6;
+      }
+      else {
+         bonus bLongAtkRate,3;
+      }
+
+  - Id: 24623
+    AegisName: aegis_24623
+    Name: Kunai Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bAddSize,Size_All,5+(getrefine()/2);
+
+  - Id: 24624
+    AegisName: aegis_24624
+    Name: Kunai Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"KO_BAKURETSU",5+2*(getrefine()/2);
+
+  - Id: 24625
+    AegisName: aegis_24625
+    Name: Cross Shuriken Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,3;
+      if (.@r>=7) {
+         bonus bLongAtkRate,3;
+      }
+      if (.@r>=9) {
+         bonus bUseSPrate,-10;
+      }
+
+  - Id: 24626
+    AegisName: aegis_24626
+    Name: Cross Shuriken Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"KO_HUUMARANKA",5+2*(getrefine()/2);
+
+  - Id: 24627
+    AegisName: aegis_24627
+    Name: Cross Shuriken Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"KO_JYUMONJIKIRI",5+2*(getrefine()/2);
+
+  - Id: 24628
+    AegisName: aegis_24628
+    Name: First Exploding Draft Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"NJ_BAKUENRYU",15;
+         bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",15;
+         bonus2 bSkillAtk,"NJ_KAMAITACHI",15;
+      }
+      else if (.@r>=7) {
+         bonus2 bSkillAtk,"NJ_BAKUENRYU",10;
+         bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",10;
+         bonus2 bSkillAtk,"NJ_KAMAITACHI",10;
+      }
+      else {
+         bonus2 bSkillAtk,"NJ_BAKUENRYU",5;
+         bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",5;
+         bonus2 bSkillAtk,"NJ_KAMAITACHI",5;
+      }
+
+  - Id: 24629
+    AegisName: aegis_24629
+    Name: First Exploding Draft Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"NJ_BAKUENRYU",5+2*(.@r/2);
+      bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",5+2*(.@r/2);
+      bonus2 bSkillAtk,"NJ_KAMAITACHI",5+2*(.@r/2);
+
+  - Id: 24630
+    AegisName: aegis_24630
+    Name: First Exploding Draft Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,5+(getrefine()/2);
+
+  - Id: 24631
+    AegisName: aegis_24631
+    Name: Wind Spear Petal Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"NJ_KOUENKA",10;
+         bonus2 bSkillAtk,"NJ_HYOUSENSOU",10;
+         bonus2 bSkillAtk,"NJ_HUUJIN",10;
+      }
+      else if (.@r>=7) {
+         bonus2 bSkillAtk,"NJ_KOUENKA",6;
+         bonus2 bSkillAtk,"NJ_HYOUSENSOU",6;
+         bonus2 bSkillAtk,"NJ_HUUJIN",6;
+      }
+      else {
+         bonus2 bSkillAtk,"NJ_KOUENKA",3;
+         bonus2 bSkillAtk,"NJ_HYOUSENSOU",3;
+         bonus2 bSkillAtk,"NJ_HUUJIN",3;
+      }
+
+  - Id: 24632
+    AegisName: aegis_24632
+    Name: Wind Spear Petal Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus bMaxSPrate,2+(getrefine()/2);
+
+  - Id: 24633
+    AegisName: aegis_24633
+    Name: Wind Spear Petal Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      KagerouOboro: true
+      Ninja: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bMagicAddSize,Size_All,5+(getrefine()/2);
+
+  - Id: 24634
+    AegisName: aegis_24634
+    Name: Picky Rush Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Summoner: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus bLongAtkRate,10;
+      }
+      else if (.@r>=7) {
+         bonus bLongAtkRate,6;
+      }
+      else {
+         bonus bLongAtkRate,3;
+      }
+
+  - Id: 24635
+    AegisName: aegis_24635
+    Name: Picky Rush Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Summoner: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bAddSize,Size_All,5+(getrefine()/2);
+
+  - Id: 24636
+    AegisName: aegis_24636
+    Name: Picky Rush Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Summoner: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"SU_PICKYPECK",5+(getrefine()/2);
+
+  - Id: 24637
+    AegisName: aegis_24637
+    Name: Savage Rabbit Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Summoner: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bLongAtkRate,5;
+      if (.@r>=7) {
+         bonus bLongAtkRate,5;
+      }
+      if (.@r>=9) {
+         bonus bUseSPrate,-10;
+      }
+
+  - Id: 24638
+    AegisName: aegis_24638
+    Name: Savage Rabbit Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Summoner: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",5;
+      bonus2 bSkillAtk,"SU_SVG_SPIRIT",3*(getrefine()/2);
+
+  - Id: 24639
+    AegisName: aegis_24639
+    Name: Savage Rabbit Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Summoner: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bAddSize,Size_All,5+(getrefine()/2);
+
+  - Id: 24640
+    AegisName: aegis_24640
+    Name: Catnip Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      Summoner: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SU_CN_METEOR",5;
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"SU_CN_METEOR",5;
+      }
+      if (.@r>=9) {
+         bonus bVariableCastrate,-5;
+      }
+
+  - Id: 24641
+    AegisName: aegis_24641
+    Name: Catnip Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      Summoner: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillCooldown,"SU_NYANGGRASS",-4000;
+      bonus2 bSkillAtk,"SU_CN_METEOR",3*(getrefine()/2);
+
+  - Id: 24642
+    AegisName: aegis_24642
+    Name: Catnip Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      Summoner: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bMagicAddSize,Size_All,5+(getrefine()/2);
+
+  - Id: 24643
+    AegisName: aegis_24643
+    Name: Silvervine Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      Summoner: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Ghost,10;
+         bonus2 bMagicAtkEle,Ele_Fire,10;
+         bonus2 bMagicAtkEle,Ele_Earth,10;
+         bonus2 bMagicAtkEle,Ele_Water,10;
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Ghost,6;
+         bonus2 bMagicAtkEle,Ele_Fire,6;
+         bonus2 bMagicAtkEle,Ele_Earth,6;
+         bonus2 bMagicAtkEle,Ele_Water,6;
+         bonus2 bMagicAtkEle,Ele_Wind,6;
+      }
+      else {
+         bonus2 bMagicAtkEle,Ele_Ghost,3;
+         bonus2 bMagicAtkEle,Ele_Fire,3;
+         bonus2 bMagicAtkEle,Ele_Earth,3;
+         bonus2 bMagicAtkEle,Ele_Water,3;
+         bonus2 bMagicAtkEle,Ele_Wind,3;
+      }
+
+  - Id: 24644
+    AegisName: aegis_24644
+    Name: Silvervine Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      Summoner: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus bVariableCastrate,-3-1*(getrefine()/2);
+
+  - Id: 24645
+    AegisName: aegis_24645
+    Name: Silvervine Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      Summoner: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,5+(getrefine()/2);
+
+  - Id: 24646
+    AegisName: aegis_24646
+    Name: Sunshine Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus bShortAtkRate,10;
+      }
+      else if (.@r>=7) {
+         bonus bShortAtkRate,6;
+      }
+      else {
+         bonus bShortAtkRate,3;
+      }
+
+  - Id: 24647
+    AegisName: aegis_24647
+    Name: Sunshine Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bAddSize,Size_All,5+(getrefine()/2);
+
+  - Id: 24648
+    AegisName: aegis_24648
+    Name: Sunshine Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"SJ_PROMINENCEKICK",5+2*(getrefine()/2);
+
+  - Id: 24649
+    AegisName: aegis_24649
+    Name: Moonlight Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bShortAtkRate,3;
+      if (.@r>=7) {
+         bonus bShortAtkRate,3;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillUseSPrate,"SJ_FULLMOONKICK",10;
+      }
+
+  - Id: 24650
+    AegisName: aegis_24650
+    Name: Moonlight Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bAddSize,Size_All,5+(getrefine()/2);
+
+  - Id: 24651
+    AegisName: aegis_24651
+    Name: Moonlight Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillAtk,"SJ_NEWMOONKICK",5+2*(getrefine()/2);
+
+  - Id: 24652
+    AegisName: aegis_24652
+    Name: Stardust Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SJ_FLASHKICK",10;
+      if (.@r>=7) {
+         bonus bAspdRate,5;
+      }
+      if (.@r>=9) {
+         bonus bAspdRate,5;
+      }
+
+  - Id: 24653
+    AegisName: aegis_24653
+    Name: Stardust Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus bAspd,1;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",3*(getrefine()/2);
+
+  - Id: 24654
+    AegisName: aegis_24654
+    Name: Stardust Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      StarGladiator: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bAddEle,Ele_All,5+(getrefine()/2);
+
+  - Id: 24655
+    AegisName: aegis_24655
+    Name: Es Shadow Weapon
+    Type: ShadowGear
+    Jobs:
+      SoulLinker: true
+    Locations:
+      Shadow_Weapon: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus bMaxSPrate,5;
+      if (.@r>=7) {
+         bonus2 bSkillAtk,"SL_SMA",10;
+      }
+      if (.@r>=9) {
+         bonus2 bSkillUseSPrate,"SP_SPA",10;
+      }
+
+  - Id: 24656
+    AegisName: aegis_24656
+    Name: Es Shadow Shield
+    Type: ShadowGear
+    Jobs:
+      SoulLinker: true
+    Locations:
+      Shadow_Shield: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bMagicAddSize,Size_All,5+2*(getrefine()/2);
+
+  - Id: 24657
+    AegisName: aegis_24657
+    Name: Es Shadow Armor
+    Type: ShadowGear
+    Jobs:
+      SoulLinker: true
+    Locations:
+      Shadow_Armor: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SL_SMA",10;
+      bonus2 bSkillAtk,"SP_SPA",(.@r/2);
+      bonus2 bSkillAtk,"SP_SWHOO",(.@r/2);
+
+  - Id: 24658
+    AegisName: aegis_24658
+    Name: Evil Curse Shadow Earring
+    Type: ShadowGear
+    Jobs:
+      SoulLinker: true
+    Locations:
+      Shadow_Right_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      if (.@r>=9) {
+         bonus2 bMagicAtkEle,Ele_Dark,10;
+      }
+      else if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Dark,6;
+      }
+      else {
+         bonus2 bMagicAtkEle,Ele_Dark,3;
+      }
+
+  - Id: 24659
+    AegisName: aegis_24659
+    Name: Evil Curse Shadow Pendant
+    Type: ShadowGear
+    Jobs:
+      SoulLinker: true
+    Locations:
+      Shadow_Left_Accessory: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Dark,5;
+      bonus2 bSkillAtk,"SP_CURSEEXPLOSION",3*(getrefine()/2);
+
+  - Id: 24660
+    AegisName: aegis_24660
+    Name: Evil Curse Shadow Shoes
+    Type: ShadowGear
+    Jobs:
+      SoulLinker: true
+    Locations:
+      Shadow_Shoes: true
+    EquipLevelMin: 99
+    Refineable: true
+    Script: |
+      bonus2 bSkillCooldown,"SP_SOULCURSE",-1000-100*(getrefine()/2);
+
+  - Id: 24661
+    AegisName: aegis_24661
+    Name: Full Penetration Earring Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Right_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bIgnoreDefRaceRate,RC_All,5+(.@r/2);
+      bonus2 bIgnoreDefRaceRate,RC_Player_Human,-5-1*(.@r/2);
+      bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-5-1*(.@r/2);
+      if (.@r>=10) {
+         bonus2 bAddRace,RC_All,3;
+         bonus2 bAddRace,RC_Player_Human,-3;
+         bonus2 bAddRace,RC_Player_Doram,-3;
+      }
+
+  - Id: 24662
+    AegisName: aegis_24662
+    Name: Full Penetration Pendant Shadow    # !todo check english name
+    Type: ShadowGear
+    Jobs:
+      All: true
+      Novice: false
+    Locations:
+      Shadow_Left_Accessory: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bIgnoreDefRaceRate,RC_All,5+(.@r/2);
+      bonus2 bIgnoreDefRaceRate,RC_Player_Human,-5-1*(.@r/2);
+      bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-5-1*(.@r/2);
+      if (.@r>=10) {
+         bonus2 bAddRace,RC_All,3;
+         bonus2 bAddRace,RC_Player_Human,-3;
+         bonus2 bAddRace,RC_Player_Doram,-3;
+      }
+
+  - Id: 24663
+    AegisName: aegis_24663
+    Name: Full Penetration Armor Shadow    # !todo check english name
+    Type: ShadowGear
+    Locations:
+      Shadow_Armor: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bIgnoreDefRaceRate,RC_All,5+(.@r/2);
+      bonus2 bIgnoreDefRaceRate,RC_Player_Human,-5-1*(.@r/2);
+      bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-5-1*(.@r/2);
+      if (.@r>=10) {
+         bonus2 bAddRace,RC_All,3;
+         bonus2 bAddRace,RC_Player_Human,-3;
+         bonus2 bAddRace,RC_Player_Doram,-3;
+      }
+
+  - Id: 24664
+    AegisName: aegis_24664
+    Name: Full Penetration Shoes Shadow    # !todo check english name
+    Type: ShadowGear
+    Jobs:
+      All: true
+      Novice: false
+    Locations:
+      Shadow_Shoes: true
+    Refineable: true
+    Script: |
+      .@r = getrefine();
+      bonus2 bIgnoreDefRaceRate,RC_All,5;
+      bonus2 bIgnoreDefRaceRate,RC_Player_Human,-5;
+      bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-5;
+      bonus2 bIgnoreDefRaceRate,RC_All,(.@r/2);
+      bonus2 bIgnoreDefRaceRate,RC_Player_Human,-1*(.@r/2);
+      bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-1*(.@r/2);
+      if (.@r>=10) {
+         bonus2 bAddRace,RC_All,3;
+         bonus2 bAddRace,RC_Player_Human,-3;
+         bonus2 bAddRace,RC_Player_Doram,-3;
+      }
+
   - Id: 26007
     AegisName: Illusion_Spectral_Spear
     Name: Illusion Spectral Spear
@@ -106387,10 +110061,6 @@ Body:
     Slots: 2
     Jobs:
       Summoner: true
-    Classes:
-      Normal: true
-      Upper: true
-      Baby: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
