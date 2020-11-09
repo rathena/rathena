@@ -64,3 +64,11 @@ The `tools` folder contains some simple adjustments if needed for an administrat
 * convert_engine_innodb.sql - Converts the SQL table engine setting to InnoDB.
 * convert_engine_myiasm.sql - Converts the SQL table engine setting to MyISAM.
 * convert_passwords.sql - Converts the login table's password value to MD5.
+
+Useful tools for converting custom SQL items to TXT and then YAML. Please adjust the `INTO OUTFILE` in the query to a desired location.
+To run these queries the user requires the [FILE](https://dev.mysql.com/doc/refman/8.0/en/privileges-provided.html#priv_file) permission. It's also required to either [set or disable](https://computingforgeeks.com/how-to-solve-mysql-server-is-running-with-the-secure-file-priv-error/) the `secure-file-priv`. 
+
+* item_db_re_to_txt.sql - Dumps the __renewal__ item data table to TXT format.
+* item_db_to_txt.sql - Dumps the __pre-renewal__ item data table to TXT format.
+* item_db2_re_to_txt.sql - Dumps the __renewal__ item data table (import) to TXT format.
+* item_db2_to_txt.sql - Dumps the __pre-renewal__ item data table (import) to TXT format.
