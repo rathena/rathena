@@ -2333,6 +2333,27 @@ uint64 RandomOptionDatabase::parseBodyNode(const YAML::Node &node) {
 	return 1;
 }
 
+void RandomOptionDatabase::loadingFinished(){
+	const char* prefix = "RDMOPT_";
+
+	for( const auto& pair : *this ){
+		std::string name = prefix + pair.second->name;
+		int64 constant;
+
+		// Check if it has already been set
+		if( script_get_constant( name.c_str(), &constant ) ){
+			// It is already the same
+			if( constant == pair.first ){
+				continue;
+			}else{
+				// Export it to the script engine -> will issue a warning
+			}
+		}
+
+		script_set_constant( name.c_str(), pair.first, false, false );
+	}
+}
+
 RandomOptionDatabase random_option_db;
 
 /**
