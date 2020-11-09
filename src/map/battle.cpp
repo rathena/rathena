@@ -3088,7 +3088,9 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 				break;
 		}
 
-		switch (skill_id) { // Skills forced to neutral element
+		// Forced to neutral skills [helvetica]
+		// Skills forced to neutral gain benefits from weapon element but final damage is considered "neutral" and resistances are applied again
+		switch (skill_id) {
 #ifdef RENEWAL
 			case MO_INVESTIGATE:
 			case CR_SHIELDBOOMERANG:
