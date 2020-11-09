@@ -120,6 +120,13 @@ std::unordered_map<t_itemid, s_item_stack_csv2yaml> item_stack;
 std::unordered_map<t_itemid, s_item_nouse_csv2yaml> item_nouse;
 std::unordered_map<t_itemid, s_item_trade_csv2yaml> item_trade;
 
+struct s_random_opt_group_csv : s_random_opt_group {
+	std::vector<uint16> rate;
+};
+
+std::unordered_map<uint16, std::string> rand_opt_db;
+std::unordered_map<uint16, s_random_opt_group_csv> rand_opt_group;
+
 static std::map<std::string, int> um_mapid2jobname {
 	{ "Novice", JOB_NOVICE }, // Novice and Super Novice share the same value
 	{ "SuperNovice", JOB_NOVICE },
@@ -216,6 +223,9 @@ static bool itemdb_read_stack(char* fields[], int columns, int current);
 static bool itemdb_read_nouse(char* fields[], int columns, int current);
 static bool itemdb_read_itemtrade(char* fields[], int columns, int current);
 static bool itemdb_read_db(const char *file);
+static bool itemdb_read_randomopt(const char* file);
+static bool itemdb_read_randomopt_group(char *str[], int columns, int current);
+static bool itemdb_randomopt_group_yaml(void);
 static bool pc_readdb_job2(char* fields[], int columns, int current);
 static bool pc_readdb_job_param(char* fields[], int columns, int current);
 static bool pc_readdb_job_exp(char* fields[], int columns, int current);
@@ -235,6 +245,7 @@ static bool parse_item_constants_txt( const char* path );
 static bool parse_mob_constants( char* split[], int columns, int current );
 static bool parse_skill_constants_txt( char* split[], int columns, int current );
 static bool parse_skill_constants_yml(std::string path, std::string filename);
+static void init_random_option_constants();
 
 bool fileExists( const std::string& path );
 bool askConfirmation( const char* fmt, ... );
@@ -460,6 +471,7 @@ int do_init( int argc, char** argv ){
 
 	// Load constants
 	#define export_constant_npc(a) export_constant(a)
+	init_random_option_constants();
 	#include "../map/script_constants.hpp"
 
 	std::vector<std::string> root_paths = {
@@ -540,6 +552,20 @@ int do_init( int argc, char** argv ){
 	item_txt_data(path_db_import, path_db_import);
 	if (!process("ITEM_DB", 1, { path_db_import }, "item_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return itemdb_read_db((path + name_ext).c_str());
+	})) {
+		return 0;
+	}
+
+	rand_opt_db.clear();
+	if (!process("RANDOM_OPTION_DB", 1, root_paths, "item_randomopt_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return itemdb_read_randomopt((path + name_ext).c_str());
+	})) {
+		return 0;
+	}
+
+	rand_opt_group.clear();
+	if (!process("RANDOM_OPTION_GROUP", 1, root_paths, "item_randomopt_group", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 5, 2 + 5 * MAX_ITEM_RDM_OPT, -1, &itemdb_read_randomopt_group, false) && itemdb_randomopt_group_yaml();
 	})) {
 		return 0;
 	}
@@ -3352,6 +3378,408 @@ static bool itemdb_read_db(const char* file) {
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' items in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file);
 
 	return true;
+}
+
+// Copied and adjusted from itemdb.cpp
+static bool itemdb_read_randomopt(const char* file) {
+	FILE* fp = fopen( file, "r" );
+
+	if( fp == nullptr ){
+		ShowError( "Can't read %s\n", file );
+		return 0;
+	}
+
+	uint32 lines = 0, count = 0;
+	char line[1024];
+	char path[256];
+
+	while (fgets(line, sizeof(line), fp)) {
+		char *str[2], *p;
+
+		lines++;
+
+		if (line[0] == '/' && line[1] == '/') // Ignore comments
+			continue;
+
+		memset(str, 0, sizeof(str));
+
+		p = trim(line);
+
+		if (*p == '\0')
+			continue;// empty line
+
+		if (!strchr(p, ','))
+		{
+			ShowError("itemdb_read_randomopt: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+
+		str[0] = p;
+		p = strchr(p, ',');
+		*p = '\0';
+		p++;
+
+		str[1] = p;
+
+		if (str[1][0] != '{') {
+			ShowError("itemdb_read_randomopt(#1): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+
+		/* no ending key anywhere (missing \}\) */
+		if (str[1][strlen(str[1]) - 1] != '}') {
+			ShowError("itemdb_read_randomopt(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		} else {
+			str[0] = trim(str[0]);
+
+			int64 id = constant_lookup_int(str[0]);
+
+			if (id == -100) {
+				ShowError("itemdb_read_randomopt: Unknown random option '%s' constant, skipping.\n", str[0]);
+				continue;
+			}
+
+			body << YAML::BeginMap;
+			body << YAML::Key << "Id" << YAML::Value << id;
+			body << YAML::Key << "Option" << YAML::Value << str[0] + 7;
+			body << YAML::Key << "Script" << YAML::Literal << str[1];
+			body << YAML::EndMap;
+
+			rand_opt_db.insert({ count, str[0] + 7 });
+		}
+		count++;
+	}
+
+	fclose(fp);
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, file);
+
+	return true;
+}
+
+// Copied and adjusted from itemdb.cpp
+static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
+	if ((columns - 2) % 3 != 0) {
+		ShowError("itemdb_read_randomopt_group: Invalid column entries '%d'.\n", columns);
+		return false;
+	}
+
+	uint16 id = static_cast<uint16>(rand_opt_group.size() + 1);
+	s_random_opt_group_csv *group = util::umap_find(rand_opt_group, id);
+	s_random_opt_group_csv group_entry;
+
+	if (group == nullptr)
+		group_entry.rate.push_back((uint16)strtoul(str[1], nullptr, 10));
+
+	for (int j = 0, k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k += 3) {
+		int32 randid_tmp = -1;
+
+		for (const auto &opt : rand_opt_db) {
+			if (opt.second.compare(str[k]) == 0) {
+				randid_tmp = opt.first;
+				break;
+			}
+		}
+
+		if (randid_tmp < 0) {
+			ShowError("itemdb_read_randomopt_group: Invalid random group id '%s' in column %d!\n", str[k], k + 1);
+			continue;
+		}
+
+		std::vector<std::shared_ptr<s_random_opt_group_entry>> entries = {};
+
+		if (group != nullptr)
+			entries = group->slots[j];
+
+		std::shared_ptr<s_random_opt_group_entry> entry;
+
+		entry->id = static_cast<uint16>(randid_tmp);
+		entry->min_value = (int16)strtoul(str[k + 1], nullptr, 10);
+		entry->max_value = 0;
+		entry->param = (int8)strtoul(str[k + 2], nullptr, 10);
+		entry->chance = 0;
+		entries.push_back(entry);
+		if (group == nullptr)
+			group_entry.slots[j] = entries;
+		else
+			group->slots[j] = entries;
+		j++;
+	}
+
+	if (group == nullptr)
+		rand_opt_group.insert({ id, group_entry });
+
+	return true;
+}
+
+static bool itemdb_randomopt_group_yaml(void) {
+	for (const auto &it : rand_opt_group) {
+		body << YAML::BeginMap;
+		body << YAML::Key << "Id" << YAML::Value << it.first;
+		body << YAML::Key << "Group" << YAML::Value << it.second.name;
+		body << YAML::Key << "Slots";
+		body << YAML::BeginSeq;
+
+		for (size_t i = 0; i < it.second.rate.size(); i++) {
+			body << YAML::BeginMap;
+			body << YAML::Key << "Slot" << YAML::Value << i + 1;
+
+			body << YAML::Key << "Options";
+			body << YAML::BeginSeq;
+
+			for (size_t j = 0; j < it.second.slots.size(); j++) {
+				std::vector<std::shared_ptr<s_random_opt_group_entry>> options = it.second.slots.at(static_cast<uint16>(j));
+
+				for (const auto &opt_it : options) {
+					body << YAML::BeginMap;
+
+					for (const auto &opt : rand_opt_db) {
+						if (opt.first == opt_it->id) {
+							body << YAML::Key << "Option" << YAML::Value << opt.second;
+							break;
+						}
+					}
+
+					if (opt_it->min_value != 0)
+						body << YAML::Key << "MinValue" << YAML::Value << opt_it->min_value;
+					if (opt_it->param != 0)
+						body << YAML::Key << "Param" << YAML::Value << opt_it->param;
+					body << YAML::Key << "Chance" << YAML::Value << it.second.rate[i];
+					body << YAML::EndMap;
+				}
+			}
+
+			body << YAML::EndSeq;
+			body << YAML::EndMap;
+		}
+
+		body << YAML::EndSeq;
+		body << YAML::EndMap;
+	}
+
+	return true;
+}
+
+// Initialize Random Option constants
+void init_random_option_constants() {
+	#define export_constant2(a, b) script_set_constant_(a, b, a, false, false)
+
+	export_constant2("RDMOPT_VAR_MAXHPAMOUNT", 1);
+	export_constant2("RDMOPT_VAR_MAXSPAMOUNT", 2);
+	export_constant2("RDMOPT_VAR_STRAMOUNT", 3);
+	export_constant2("RDMOPT_VAR_AGIAMOUNT", 4);
+	export_constant2("RDMOPT_VAR_VITAMOUNT", 5);
+	export_constant2("RDMOPT_VAR_INTAMOUNT", 6);
+	export_constant2("RDMOPT_VAR_DEXAMOUNT", 7);
+	export_constant2("RDMOPT_VAR_LUKAMOUNT", 8);
+	export_constant2("RDMOPT_VAR_MAXHPPERCENT", 9);
+	export_constant2("RDMOPT_VAR_MAXSPPERCENT", 10);
+	export_constant2("RDMOPT_VAR_HPACCELERATION", 11);
+	export_constant2("RDMOPT_VAR_SPACCELERATION", 12);
+	export_constant2("RDMOPT_VAR_ATKPERCENT", 13);
+	export_constant2("RDMOPT_VAR_MAGICATKPERCENT", 14);
+	export_constant2("RDMOPT_VAR_PLUSASPD", 15);
+	export_constant2("RDMOPT_VAR_PLUSASPDPERCENT", 16);
+	export_constant2("RDMOPT_VAR_ATTPOWER", 17);
+	export_constant2("RDMOPT_VAR_HITSUCCESSVALUE", 18);
+	export_constant2("RDMOPT_VAR_ATTMPOWER", 19);
+	export_constant2("RDMOPT_VAR_ITEMDEFPOWER", 20);
+	export_constant2("RDMOPT_VAR_MDEFPOWER", 21);
+	export_constant2("RDMOPT_VAR_AVOIDSUCCESSVALUE", 22);
+	export_constant2("RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE", 23);
+	export_constant2("RDMOPT_VAR_CRITICALSUCCESSVALUE", 24);
+	export_constant2("RDMOPT_ATTR_TOLERACE_NOTHING", 25);
+	export_constant2("RDMOPT_ATTR_TOLERACE_WATER", 26);
+	export_constant2("RDMOPT_ATTR_TOLERACE_GROUND", 27);
+	export_constant2("RDMOPT_ATTR_TOLERACE_FIRE", 28);
+	export_constant2("RDMOPT_ATTR_TOLERACE_WIND", 29);
+	export_constant2("RDMOPT_ATTR_TOLERACE_POISON", 30);
+	export_constant2("RDMOPT_ATTR_TOLERACE_SAINT", 31);
+	export_constant2("RDMOPT_ATTR_TOLERACE_DARKNESS", 32);
+	export_constant2("RDMOPT_ATTR_TOLERACE_TELEKINESIS", 33);
+	export_constant2("RDMOPT_ATTR_TOLERACE_UNDEAD", 34);
+	export_constant2("RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING", 35);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_NOTHING_USER", 36);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET", 37);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_WATER_USER", 38);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_WATER_TARGET", 39);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_GROUND_USER", 40);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET", 41);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_FIRE_USER", 42);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET", 43);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_WIND_USER", 44);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_WIND_TARGET", 45);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_POISON_USER", 46);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_POISON_TARGET", 47);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_SAINT_USER", 48);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET", 49);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_DARKNESS_USER", 50);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET", 51);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_USER", 52);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET", 53);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_UNDEAD_USER", 54);
+	export_constant2("RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET", 55);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_NOTHING_USER", 56);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET", 57);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_WATER_USER", 58);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET", 59);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_GROUND_USER", 60);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET", 61);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_FIRE_USER", 62);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_FIRE_TARGET", 63);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_WIND_USER", 64);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_WIND_TARGET", 65);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_POISON_USER", 66);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_POISON_TARGET", 67);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_SAINT_USER", 68);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_SAINT_TARGET", 69);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_DARKNESS_USER", 70);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET", 71);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_USER", 72);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET", 73);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_UNDEAD_USER", 74);
+	export_constant2("RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET", 75);
+	export_constant2("RDMOPT_BODY_ATTR_NOTHING", 76);
+	export_constant2("RDMOPT_BODY_ATTR_WATER", 77);
+	export_constant2("RDMOPT_BODY_ATTR_GROUND", 78);
+	export_constant2("RDMOPT_BODY_ATTR_FIRE", 79);
+	export_constant2("RDMOPT_BODY_ATTR_WIND", 80);
+	export_constant2("RDMOPT_BODY_ATTR_POISON", 81);
+	export_constant2("RDMOPT_BODY_ATTR_SAINT", 82);
+	export_constant2("RDMOPT_BODY_ATTR_DARKNESS", 83);
+	export_constant2("RDMOPT_BODY_ATTR_TELEKINESIS", 84);
+	export_constant2("RDMOPT_BODY_ATTR_UNDEAD", 85);
+	export_constant2("RDMOPT_RACE_TOLERACE_NOTHING", 87);
+	export_constant2("RDMOPT_RACE_TOLERACE_UNDEAD", 88);
+	export_constant2("RDMOPT_RACE_TOLERACE_ANIMAL", 89);
+	export_constant2("RDMOPT_RACE_TOLERACE_PLANT", 90);
+	export_constant2("RDMOPT_RACE_TOLERACE_INSECT", 91);
+	export_constant2("RDMOPT_RACE_TOLERACE_FISHS", 92);
+	export_constant2("RDMOPT_RACE_TOLERACE_DEVIL", 93);
+	export_constant2("RDMOPT_RACE_TOLERACE_HUMAN", 94);
+	export_constant2("RDMOPT_RACE_TOLERACE_ANGEL", 95);
+	export_constant2("RDMOPT_RACE_TOLERACE_DRAGON", 96);
+	export_constant2("RDMOPT_RACE_DAMAGE_NOTHING", 97);
+	export_constant2("RDMOPT_RACE_DAMAGE_UNDEAD", 98);
+	export_constant2("RDMOPT_RACE_DAMAGE_ANIMAL", 99);
+	export_constant2("RDMOPT_RACE_DAMAGE_PLANT", 100);
+	export_constant2("RDMOPT_RACE_DAMAGE_INSECT", 101);
+	export_constant2("RDMOPT_RACE_DAMAGE_FISHS", 102);
+	export_constant2("RDMOPT_RACE_DAMAGE_DEVIL", 103);
+	export_constant2("RDMOPT_RACE_DAMAGE_HUMAN", 104);
+	export_constant2("RDMOPT_RACE_DAMAGE_ANGEL", 105);
+	export_constant2("RDMOPT_RACE_DAMAGE_DRAGON", 106);
+	export_constant2("RDMOPT_RACE_MDAMAGE_NOTHING", 107);
+	export_constant2("RDMOPT_RACE_MDAMAGE_UNDEAD", 108);
+	export_constant2("RDMOPT_RACE_MDAMAGE_ANIMAL", 109);
+	export_constant2("RDMOPT_RACE_MDAMAGE_PLANT", 110);
+	export_constant2("RDMOPT_RACE_MDAMAGE_INSECT", 111);
+	export_constant2("RDMOPT_RACE_MDAMAGE_FISHS", 112);
+	export_constant2("RDMOPT_RACE_MDAMAGE_DEVIL", 113);
+	export_constant2("RDMOPT_RACE_MDAMAGE_HUMAN", 114);
+	export_constant2("RDMOPT_RACE_MDAMAGE_ANGEL", 115);
+	export_constant2("RDMOPT_RACE_MDAMAGE_DRAGON", 116);
+	export_constant2("RDMOPT_RACE_CRI_PERCENT_NOTHING", 117);
+	export_constant2("RDMOPT_RACE_CRI_PERCENT_UNDEAD", 118);
+	export_constant2("RDMOPT_RACE_CRI_PERCENT_ANIMAL", 119);
+	export_constant2("RDMOPT_RACE_CRI_PERCENT_PLANT", 120);
+	export_constant2("RDMOPT_RACE_CRI_PERCENT_INSECT", 121);
+	export_constant2("RDMOPT_RACE_CRI_PERCENT_FISHS", 122);
+	export_constant2("RDMOPT_RACE_CRI_PERCENT_DEVIL", 123);
+	export_constant2("RDMOPT_RACE_CRI_PERCENT_HUMAN", 124);
+	export_constant2("RDMOPT_RACE_CRI_PERCENT_ANGEL", 125);
+	export_constant2("RDMOPT_RACE_CRI_PERCENT_DRAGON", 126);
+	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_NOTHING", 127);
+	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_UNDEAD", 128);
+	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_ANIMAL", 129);
+	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_PLANT", 130);
+	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_INSECT", 131);
+	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_FISHS", 132);
+	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_DEVIL", 133);
+	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_HUMAN", 134);
+	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_ANGEL", 135);
+	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_DRAGON", 136);
+	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_NOTHING", 137);
+	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_UNDEAD", 138);
+	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_ANIMAL", 139);
+	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_PLANT", 140);
+	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_INSECT", 141);
+	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_FISHS", 142);
+	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_DEVIL", 143);
+	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_HUMAN", 144);
+	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_ANGEL", 145);
+	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_DRAGON", 146);
+	export_constant2("RDMOPT_CLASS_DAMAGE_NORMAL_TARGET", 147);
+	export_constant2("RDMOPT_CLASS_DAMAGE_BOSS_TARGET", 148);
+	export_constant2("RDMOPT_CLASS_DAMAGE_NORMAL_USER", 149);
+	export_constant2("RDMOPT_CLASS_DAMAGE_BOSS_USER", 150);
+	export_constant2("RDMOPT_CLASS_MDAMAGE_NORMAL", 151);
+	export_constant2("RDMOPT_CLASS_MDAMAGE_BOSS", 152);
+	export_constant2("RDMOPT_CLASS_IGNORE_DEF_PERCENT_NORMAL", 153);
+	export_constant2("RDMOPT_CLASS_IGNORE_DEF_PERCENT_BOSS", 154);
+	export_constant2("RDMOPT_CLASS_IGNORE_MDEF_PERCENT_NORMAL", 155);
+	export_constant2("RDMOPT_CLASS_IGNORE_MDEF_PERCENT_BOSS", 156);
+	export_constant2("RDMOPT_DAMAGE_SIZE_SMALL_TARGET", 157);
+	export_constant2("RDMOPT_DAMAGE_SIZE_MIDIUM_TARGET", 158);
+	export_constant2("RDMOPT_DAMAGE_SIZE_LARGE_TARGET", 159);
+	export_constant2("RDMOPT_DAMAGE_SIZE_SMALL_USER", 160);
+	export_constant2("RDMOPT_DAMAGE_SIZE_MIDIUM_USER", 161);
+	export_constant2("RDMOPT_DAMAGE_SIZE_LARGE_USER", 162);
+	export_constant2("RDMOPT_DAMAGE_SIZE_PERFECT", 163);
+	export_constant2("RDMOPT_DAMAGE_CRI_TARGET", 164);
+	export_constant2("RDMOPT_DAMAGE_CRI_USER", 165);
+	export_constant2("RDMOPT_RANGE_ATTACK_DAMAGE_TARGET", 166);
+	export_constant2("RDMOPT_RANGE_ATTACK_DAMAGE_USER", 167);
+	export_constant2("RDMOPT_HEAL_VALUE", 168);
+	export_constant2("RDMOPT_HEAL_MODIFY_PERCENT", 169);
+	export_constant2("RDMOPT_DEC_SPELL_CAST_TIME", 170);
+	export_constant2("RDMOPT_DEC_SPELL_DELAY_TIME", 171);
+	export_constant2("RDMOPT_DEC_SP_CONSUMPTION", 172);
+	export_constant2("RDMOPT_WEAPON_ATTR_NOTHING", 175);
+	export_constant2("RDMOPT_WEAPON_ATTR_WATER", 176);
+	export_constant2("RDMOPT_WEAPON_ATTR_GROUND", 177);
+	export_constant2("RDMOPT_WEAPON_ATTR_FIRE", 178);
+	export_constant2("RDMOPT_WEAPON_ATTR_WIND", 179);
+	export_constant2("RDMOPT_WEAPON_ATTR_POISON", 180);
+	export_constant2("RDMOPT_WEAPON_ATTR_SAINT", 181);
+	export_constant2("RDMOPT_WEAPON_ATTR_DARKNESS", 182);
+	export_constant2("RDMOPT_WEAPON_ATTR_TELEKINESIS", 183);
+	export_constant2("RDMOPT_WEAPON_ATTR_UNDEAD", 184);
+	export_constant2("RDMOPT_WEAPON_INDESTRUCTIBLE", 185);
+	export_constant2("RDMOPT_BODY_INDESTRUCTIBLE", 186);
+	export_constant2("RDMOPT_MDAMAGE_SIZE_SMALL_TARGET", 187);
+	export_constant2("RDMOPT_MDAMAGE_SIZE_MIDIUM_TARGET", 188);
+	export_constant2("RDMOPT_MDAMAGE_SIZE_LARGE_TARGET", 189);
+	export_constant2("RDMOPT_MDAMAGE_SIZE_SMALL_USER", 190);
+	export_constant2("RDMOPT_MDAMAGE_SIZE_MIDIUM_USER", 191);
+	export_constant2("RDMOPT_MDAMAGE_SIZE_LARGE_USER", 192);
+	export_constant2("RDMOPT_ATTR_TOLERACE_ALL", 193);
+	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_NOTHING", 194);
+	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_UNDEAD", 195);
+	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_ANIMAL", 196);
+	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_PLANT", 197);
+	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_INSECT", 198);
+	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_FISHS", 199);
+	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_DEVIL", 200);
+	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_HUMAN", 201);
+	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_ANGEL", 202);
+	export_constant2("RDMOPT_RACE_WEAPON_TOLERACE_DRAGON", 203);
+	export_constant2("RDMOPT_RACE_TOLERACE_PLAYER_HUMAN", 206);
+	export_constant2("RDMOPT_RACE_TOLERACE_PLAYER_DORAM", 207);
+	export_constant2("RDMOPT_RACE_DAMAGE_PLAYER_HUMAN", 208);
+	export_constant2("RDMOPT_RACE_DAMAGE_PLAYER_DORAM", 209);
+	export_constant2("RDMOPT_RACE_MDAMAGE_PLAYER_HUMAN", 210);
+	export_constant2("RDMOPT_RACE_MDAMAGE_PLAYER_DORAM", 211);
+	export_constant2("RDMOPT_RACE_CRI_PERCENT_PLAYER_HUMAN", 212);
+	export_constant2("RDMOPT_RACE_CRI_PERCENT_PLAYER_DORAM", 213);
+	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_PLAYER_HUMAN", 214);
+	export_constant2("RDMOPT_RACE_IGNORE_DEF_PERCENT_PLAYER_DORAM", 215);
+	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_PLAYER_HUMAN", 216);
+	export_constant2("RDMOPT_RACE_IGNORE_MDEF_PERCENT_PLAYER_DORAM", 217);
+	export_constant2("RDMOPT_MELEE_ATTACK_DAMAGE_TARGET", 219);
+	export_constant2("RDMOPT_MELEE_ATTACK_DAMAGE_USER", 220);
+
+	#undef export_constant2
 }
 
 // job_db.yml function

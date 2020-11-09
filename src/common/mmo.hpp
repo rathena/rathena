@@ -263,6 +263,7 @@ struct item {
 	char favorite, bound;
 	uint64 unique_id;
 	unsigned int equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
+	uint8 enchantgrade;
 };
 
 //Equip position constants
