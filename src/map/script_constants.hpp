@@ -7993,6 +7993,20 @@
 	export_constant(DROPEFFECT_ORANGE_PILLAR);
 	export_constant(DROPEFFECT_MAX);
 
+	/* stats */
+	export_constant(PARAM_STR);
+	export_constant(PARAM_AGI);
+	export_constant(PARAM_VIT);
+	export_constant(PARAM_INT);
+	export_constant(PARAM_DEX);
+	export_constant(PARAM_LUK);
+	export_constant(PARAM_POW);
+	export_constant(PARAM_STA);
+	export_constant(PARAM_WIS);
+	export_constant(PARAM_SPL);
+	export_constant(PARAM_CON);
+	export_constant(PARAM_CRT);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter
