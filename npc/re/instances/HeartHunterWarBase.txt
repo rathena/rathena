@@ -912,10 +912,8 @@ OnStart:
 	end;
 
 OnMobDead:
-	if (mobcount( 'map_swat$, instance_npcname("#hunter_instance_1_mob_3") + "::OnMobDead" ) < 1) {
-		'event = 4;
+	if (mobcount( 'map_swat$, instance_npcname("#hunter_instance_1_mob_3") + "::OnMobDead" ) < 1)
 		disablenpc instance_npcname("#hunter_instance_1_mob_3");
-	}
 	end;
 }
 
