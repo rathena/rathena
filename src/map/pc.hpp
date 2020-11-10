@@ -136,6 +136,23 @@ enum npc_timeout_type {
 	NPCT_WAIT  = 2,
 };
 
+/// Enum of Player's Parameter
+enum e_params {
+	PARAM_STR = 0,
+	PARAM_AGI,
+	PARAM_VIT,
+	PARAM_INT,
+	PARAM_DEX,
+	PARAM_LUK,
+	PARAM_POW,
+	PARAM_STA,
+	PARAM_WIS,
+	PARAM_SPL,
+	PARAM_CON,
+	PARAM_CRT,
+	PARAM_MAX
+};
+
 extern unsigned int equip_bitmask[EQI_MAX];
 
 #define equip_index_check(i) ( (i) >= EQI_ACC_L && (i) < EQI_MAX )
@@ -431,7 +448,7 @@ struct map_session_data {
 
 	// here start arrays to be globally zeroed at the beginning of status_calc_pc()
 	struct s_indexed_bonus {
-		int param_bonus[6], param_equip[6]; //Stores card/equipment bonuses.
+		int param_bonus[PARAM_MAX], param_equip[PARAM_MAX]; //Stores card/equipment bonuses.
 		int subele[ELE_MAX];
 		int subele_script[ELE_MAX];
 		int subdefele[ELE_MAX];
@@ -1016,22 +1033,6 @@ static inline bool pc_hasprogress(struct map_session_data *sd, enum e_wip_block 
 	return sd == NULL || (sd->state.workinprogress&progress) == progress;
 }
 
-/// Enum of Player's Parameter
-enum e_params : uint8 {
-	PARAM_STR = 1,
-	PARAM_AGI,
-	PARAM_VIT,
-	PARAM_INT,
-	PARAM_DEX,
-	PARAM_LUK,
-	PARAM_POW,
-	PARAM_STA,
-	PARAM_WIS,
-	PARAM_SPL,
-	PARAM_CON,
-	PARAM_CRT,
-	PARAM_MAX
-};
 uint16 pc_maxparameter(struct map_session_data *sd, e_params param);
 short pc_maxaspd(struct map_session_data *sd);
 

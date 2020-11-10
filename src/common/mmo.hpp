@@ -519,9 +519,7 @@ struct mmo_charstatus {
 	char name[NAME_LENGTH];
 	unsigned int base_level,job_level;
 	unsigned short str,agi,vit,int_,dex,luk;
-#ifdef RENEWAL
-	uint16 pow, sta, wis, spl, con, crt;
-#endif
+	unsigned short pow,sta,wis,spl,con,crt;
 	unsigned char slot,sex;
 
 	uint32 mapip;
