@@ -393,12 +393,33 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 			if (appendEntry(classes["Baby"], value))
 				column.append("`class_baby`,");
 #ifdef RENEWAL
-			if (appendEntry(classes["Third"], value))
+			if (classes["Third"].IsDefined()) {
+				std::string tmp_value = string_trim(classes["Third"].as<std::string>());
+				if (!appendEntry(classes["Third"], value)) {
+					value.append(tmp_value);
+					value.append(",");
+				}
+				if (!appendEntry(classes["Third_Upper"], value)) {
+					value.append(tmp_value);
+					value.append(",");
+				}
+				if (!appendEntry(classes["Third_Baby"], value)) {
+					value.append(tmp_value);
+					value.append(",");
+				}
 				column.append("`class_third`,");
-			if (appendEntry(classes["Third_Upper"], value))
 				column.append("`class_third_upper`,");
-			if (appendEntry(classes["Third_Baby"], value))
 				column.append("`class_third_baby`,");
+
+			}
+			else {
+				if (appendEntry(classes["Third"], value))
+					column.append("`class_third`,");
+				if (appendEntry(classes["Third_Upper"], value))
+					column.append("`class_third_upper`,");
+				if (appendEntry(classes["Third_Baby"], value))
+					column.append("`class_third_baby`,");
+			}
 #endif
 		}
 

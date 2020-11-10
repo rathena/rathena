@@ -7965,6 +7965,7 @@
 	export_constant(ITEMJ_THIRD);
 	export_constant(ITEMJ_THIRD_UPPER);
 	export_constant(ITEMJ_THIRD_BABY);
+	export_constant(ITEMJ_ALL_THIRD);
 
 	/* item drop effects */
 	export_constant(DROPEFFECT_NONE);

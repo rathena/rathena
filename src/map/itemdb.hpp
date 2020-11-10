@@ -225,6 +225,7 @@ enum e_item_job : uint16
 	ITEMJ_THIRD       = 0x08,
 	ITEMJ_THIRD_UPPER = 0x10,
 	ITEMJ_THIRD_BABY  = 0x20,
+	ITEMJ_ALL_THIRD   = 0x38,
 	ITEMJ_MAX         = 0xFF,
 
 #ifdef RENEWAL
