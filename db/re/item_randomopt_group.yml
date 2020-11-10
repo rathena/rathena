@@ -1108,7 +1108,7 @@ Body:
             MaxValue: 5
             Chance: 100
   - Id: 10
-    Group: AS_WEAPON_4 # Daggers, Books, Swords
+    Group: AS_WEAPON_4 # Daggers, Books, Huuma
     Slots:
       - Slot: 1
         Options:
@@ -1315,7 +1315,7 @@ Body:
             MaxValue: 5
             Chance: 100
   - Id: 11
-    Group: AS_WEAPON_5
+    Group: AS_WEAPON_5  # One-handed spear, Two-handed spear, Two-handed sword, Katar, Knuckle
     Slots:
       - Slot: 1
         Options:
