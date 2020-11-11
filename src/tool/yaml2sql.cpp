@@ -222,13 +222,13 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (!process("MOB_DB", 1, { path_db_mode }, "mob_db", "sql-files/" + mob_table_name + ".sql", mob_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
+	if (!process("MOB_DB", 1, { path_db_mode }, "mob_db", mob_table_name, mob_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
 		return mob_db_yaml2sql(path + name_ext, table);
 	})) {
 		return 0;
 	}
 
-	if (!process("MOB_DB", 1, { path_db_import }, "mob_db", "sql-files/" + mob_import_table_name + ".sql", mob_import_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
+	if (!process("MOB_DB", 1, { path_db_import }, "mob_db", mob_import_table_name, mob_import_table_name, [](const std::string &path, const std::string &name_ext, const std::string &table) -> bool {
 		return mob_db_yaml2sql(path + name_ext, table);
 	})) {
 		return 0;
