@@ -5786,23 +5786,23 @@ Body:
       NoAuction: true
     Script: |
       callfunc "F_CashReset";
-  - Id: 12214
-    AegisName: Convex_Mirror
-    Name: Convex Mirror
-    Type: Usable
-    Buy: 2
-    Weight: 10
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      sc_start SC_BOSSMAPINFO,600000,0;
+  # - Id: 12214
+  #   AegisName: Convex_Mirror
+  #   Name: Convex Mirror
+  #   Type: Usable
+  #   Buy: 2
+  #   Weight: 10
+  #   Trade:
+  #     Override: 100
+  #     NoDrop: true
+  #     NoTrade: true
+  #     NoSell: true
+  #     NoCart: true
+  #     NoGuildStorage: true
+  #     NoMail: true
+  #     NoAuction: true
+  #   Script: |
+  #     sc_start SC_BOSSMAPINFO,600000,0;
   - Id: 12215
     AegisName: Blessing_10_Scroll
     Name: LV10 Blessing Scroll
@@ -8243,14 +8243,14 @@ Body:
     AegisName: Spareribs_H
     Name: Thick Pork Belly
     Type: Usable
-  - Id: 12411
-    AegisName: HE_Battle_Manual
-    Name: HE Battle Manual
-    Type: Usable
-    Buy: 2
-    Weight: 10
-    Script: |
-      sc_start SC_EXPBOOST,900000,200;
+  # - Id: 12411
+  #   AegisName: HE_Battle_Manual
+  #   Name: HE Battle Manual
+  #   Type: Usable
+  #   Buy: 2
+  #   Weight: 10
+  #   Script: |
+  #     sc_start SC_EXPBOOST,900000,200;
   - Id: 12412
     AegisName: HE_Bubble_Gum
     Name: HE Bubble Gum
