@@ -1663,9 +1663,8 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	// Initialize BG queue
 	sd->bg_queue_id = 0;
 
-#if PACKETVER >= 20150513
-	sd->hatEffectIDs = NULL;
-	sd->hatEffectCount = 0;
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	sd->hatEffects = {};
 #endif
 
 	sd->catch_target_class = PET_CATCH_FAIL;
@@ -5836,7 +5835,7 @@ bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 ski
 	// Try dropping one item, in the order from first to last possible slot.
 	// Droprate is affected by the skill success rate.
 	for( i = 0; i < MAX_STEAL_DROP; i++ )
-		if( md->db->dropitem[i].nameid > 0 && !md->db->dropitem[i].steal_protected && itemdb_exists(md->db->dropitem[i].nameid) && rnd() % 10000 < md->db->dropitem[i].p
+		if( md->db->dropitem[i].nameid > 0 && !md->db->dropitem[i].steal_protected && itemdb_exists(md->db->dropitem[i].nameid) && rnd() % 10000 < md->db->dropitem[i].rate
 #ifndef RENEWAL
 		* rate/100.
 #endif
@@ -5868,11 +5867,11 @@ bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 ski
 	log_pick_mob(md, LOG_TYPE_STEAL, -1, &tmp_item);
 
 	//A Rare Steal Global Announce by Lupus
-	if(md->db->dropitem[i].p<=battle_config.rare_drop_announce) {
+	if(md->db->dropitem[i].rate <= battle_config.rare_drop_announce) {
 		struct item_data *i_data;
 		char message[128];
 		i_data = itemdb_search(itemid);
-		sprintf (message, msg_txt(sd,542), (sd->status.name[0])?sd->status.name :"GM", md->db->jname, i_data->ename.c_str(), (float)md->db->dropitem[i].p/100);
+		sprintf (message, msg_txt(sd,542), (sd->status.name[0])?sd->status.name :"GM", md->db->jname, i_data->ename.c_str(), (float)md->db->dropitem[i].rate / 100);
 		//MSG: "'%s' stole %s's %s (chance: %0.02f%%)"
 		intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
 	}
@@ -13132,7 +13131,8 @@ short pc_maxaspd(struct map_session_data *sd) {
 	nullpo_ret(sd);
 
 	return (( sd->class_&JOBL_THIRD) ? battle_config.max_third_aspd : (
-			((sd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO || (sd->class_&MAPID_UPPERMASK) == MAPID_REBELLION) ? battle_config.max_extended_aspd :
+			((sd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO || (sd->class_&MAPID_UPPERMASK) == MAPID_REBELLION) ? battle_config.max_extended_aspd : (
+			(sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? battle_config.max_summoner_aspd : 
 			battle_config.max_aspd ));
 }
 

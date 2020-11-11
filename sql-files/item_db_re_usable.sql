@@ -1,119 +1,6 @@
 #
-# Table structure for table `item_db_re`
+# Table data for table `item_db_re`
 #
-
-DROP TABLE IF EXISTS `item_db_re`;
-CREATE TABLE `item_db_re` (
-  `id` int(10) unsigned NOT NULL DEFAULT '0',
-  `name_aegis` varchar(50) NOT NULL DEFAULT '',
-  `name_english` varchar(50) NOT NULL DEFAULT '',
-  `type` varchar(20) DEFAULT NULL,
-  `subtype` varchar(20) DEFAULT NULL,
-  `price_buy` mediumint(8) unsigned DEFAULT NULL,
-  `price_sell` mediumint(8) unsigned DEFAULT NULL,
-  `weight` smallint(5) unsigned DEFAULT NULL,
-  `attack` smallint(5) unsigned DEFAULT NULL,
-  `magic_attack` smallint(5) unsigned DEFAULT NULL,
-  `defense` smallint(5) unsigned DEFAULT NULL,
-  `range` tinyint(2) unsigned DEFAULT NULL,
-  `slots` tinyint(2) unsigned DEFAULT NULL,
-  `job_all` tinyint(1) unsigned DEFAULT NULL,
-  `job_acolyte` tinyint(1) unsigned DEFAULT NULL,
-  `job_alchemist` tinyint(1) unsigned DEFAULT NULL,
-  `job_archer` tinyint(1) unsigned DEFAULT NULL,
-  `job_assassin` tinyint(1) unsigned DEFAULT NULL,
-  `job_barddancer` tinyint(1) unsigned DEFAULT NULL,
-  `job_blacksmith` tinyint(1) unsigned DEFAULT NULL,
-  `job_crusader` tinyint(1) unsigned DEFAULT NULL,
-  `job_gunslinger` tinyint(1) unsigned DEFAULT NULL,
-  `job_hunter` tinyint(1) unsigned DEFAULT NULL,
-  `job_kagerouoboro` tinyint(1) unsigned DEFAULT NULL,
-  `job_knight` tinyint(1) unsigned DEFAULT NULL,
-  `job_mage` tinyint(1) unsigned DEFAULT NULL,
-  `job_merchant` tinyint(1) unsigned DEFAULT NULL,
-  `job_monk` tinyint(1) unsigned DEFAULT NULL,
-  `job_ninja` tinyint(1) unsigned DEFAULT NULL,
-  `job_novice` tinyint(1) unsigned DEFAULT NULL,
-  `job_priest` tinyint(1) unsigned DEFAULT NULL,
-  `job_rebellion` tinyint(1) unsigned DEFAULT NULL,
-  `job_rogue` tinyint(1) unsigned DEFAULT NULL,
-  `job_sage` tinyint(1) unsigned DEFAULT NULL,
-  `job_soullinker` tinyint(1) unsigned DEFAULT NULL,
-  `job_stargladiator` tinyint(1) unsigned DEFAULT NULL,
-  `job_summoner` tinyint(1) unsigned DEFAULT NULL,
-  `job_supernovice` tinyint(1) unsigned DEFAULT NULL,
-  `job_swordman` tinyint(1) unsigned DEFAULT NULL,
-  `job_taekwon` tinyint(1) unsigned DEFAULT NULL,
-  `job_thief` tinyint(1) unsigned DEFAULT NULL,
-  `job_wizard` tinyint(1) unsigned DEFAULT NULL,
-  `class_all` tinyint(1) unsigned DEFAULT NULL,
-  `class_normal` tinyint(1) unsigned DEFAULT NULL,
-  `class_upper` tinyint(1) unsigned DEFAULT NULL,
-  `class_baby` tinyint(1) unsigned DEFAULT NULL,
-  `class_third` tinyint(1) unsigned DEFAULT NULL,
-  `class_third_upper` tinyint(1) unsigned DEFAULT NULL,
-  `class_third_baby` tinyint(1) unsigned DEFAULT NULL,
-  `gender` varchar(10) DEFAULT NULL,
-  `location_head_top` tinyint(1) unsigned DEFAULT NULL,
-  `location_head_mid` tinyint(1) unsigned DEFAULT NULL,
-  `location_head_low` tinyint(1) unsigned DEFAULT NULL,
-  `location_armor` tinyint(1) unsigned DEFAULT NULL,
-  `location_right_hand` tinyint(1) unsigned DEFAULT NULL,
-  `location_left_hand` tinyint(1) unsigned DEFAULT NULL,
-  `location_garment` tinyint(1) unsigned DEFAULT NULL,
-  `location_shoes` tinyint(1) unsigned DEFAULT NULL,
-  `location_right_accessory` tinyint(1) unsigned DEFAULT NULL,
-  `location_left_accessory` tinyint(1) unsigned DEFAULT NULL,
-  `location_costume_head_top` tinyint(1) unsigned DEFAULT NULL,
-  `location_costume_head_mid` tinyint(1) unsigned DEFAULT NULL,
-  `location_costume_head_low` tinyint(1) unsigned DEFAULT NULL,
-  `location_costume_garment` tinyint(1) unsigned DEFAULT NULL,
-  `location_ammo` tinyint(1) unsigned DEFAULT NULL,
-  `location_shadow_armor` tinyint(1) unsigned DEFAULT NULL,
-  `location_shadow_weapon` tinyint(1) unsigned DEFAULT NULL,
-  `location_shadow_shield` tinyint(1) unsigned DEFAULT NULL,
-  `location_shadow_shoes` tinyint(1) unsigned DEFAULT NULL,
-  `location_shadow_right_accessory` tinyint(1) unsigned DEFAULT NULL,
-  `location_shadow_left_accessory` tinyint(1) unsigned DEFAULT NULL,
-  `weapon_level` tinyint(1) unsigned DEFAULT NULL,
-  `equip_level_min` tinyint(3) unsigned DEFAULT NULL,
-  `equip_level_max` tinyint(3) unsigned DEFAULT NULL,
-  `refineable` tinyint(1) unsigned DEFAULT NULL,
-  `view` smallint(5) unsigned DEFAULT NULL,
-  `alias_name` varchar(50) DEFAULT NULL,
-  `flag_buyingstore` tinyint(1) unsigned DEFAULT NULL,
-  `flag_deadbranch` tinyint(1) unsigned DEFAULT NULL,
-  `flag_container` tinyint(1) unsigned DEFAULT NULL,
-  `flag_uniqueid` tinyint(1) unsigned DEFAULT NULL,
-  `flag_bindonequip` tinyint(1) unsigned DEFAULT NULL,
-  `flag_dropannounce` tinyint(1) unsigned DEFAULT NULL,
-  `flag_noconsume` tinyint(1) unsigned DEFAULT NULL,
-  `flag_dropeffect` varchar(20) DEFAULT NULL,
-  `delay_duration` bigint(20) unsigned DEFAULT NULL,
-  `delay_status` varchar(30) DEFAULT NULL,
-  `stack_amount` smallint(5) unsigned DEFAULT NULL,
-  `stack_inventory` tinyint(1) unsigned DEFAULT NULL,
-  `stack_cart` tinyint(1) unsigned DEFAULT NULL,
-  `stack_storage` tinyint(1) unsigned DEFAULT NULL,
-  `stack_guildstorage` tinyint(1) unsigned DEFAULT NULL,
-  `nouse_override` smallint(5) unsigned DEFAULT NULL,
-  `nouse_sitting` tinyint(1) unsigned DEFAULT NULL,
-  `trade_override` smallint(5) unsigned DEFAULT NULL,
-  `trade_nodrop` tinyint(1) unsigned DEFAULT NULL,
-  `trade_notrade` tinyint(1) unsigned DEFAULT NULL,
-  `trade_tradepartner` tinyint(1) unsigned DEFAULT NULL,
-  `trade_nosell` tinyint(1) unsigned DEFAULT NULL,
-  `trade_nocart` tinyint(1) unsigned DEFAULT NULL,
-  `trade_nostorage` tinyint(1) unsigned DEFAULT NULL,
-  `trade_noguildstorage` tinyint(1) unsigned DEFAULT NULL,
-  `trade_nomail` tinyint(1) unsigned DEFAULT NULL,
-  `trade_noauction` tinyint(1) unsigned DEFAULT NULL,
-  `script` text,
-  `equip_script` text,
-  `unequip_script` text,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `UniqueAegisName` (`name_aegis`)
-) ENGINE=MyISAM;
 
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (500,'Choko_Gangjeong','Choko Gangjeong','Healing',10,'percentheal 10,10;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (501,'Red_Potion','Red Potion','Healing',10,70,'itemheal rand(45,65),0;');
@@ -303,6 +190,10 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`trade_overri
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (6720,'Status_Reset_Coupon','Status Reset Coupon','Cash',10,1,100,true,true,true,true,true,true,true,true,'resetstatus;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (6721,'Status_Reset_Coupon_','Status Reset Coupon','Cash',10,1,100,true,true,true,true,true,true,true,true,'resetstatus;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`class_all`,`gender`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (7037,'Trade_Coupon','Coupon','Usable',100,false,'Female',100,true,true,true,true,true,true,true,'/*set pcroom,(gettimetick(2)+7200);*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (9510,'Costume_Enchant_Stone_Box17','Costume Enchant Stone Box17','Cash',10,'/*getgroupitem(IG_Costume_Enchant_Stone_Box17);*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (9523,'Metal_Smelting_Ticket','Metal Refining Ticket','Delayconsume',1,'/*upgradeui 9523;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (9550,'Gemstone_Of_Time','Gemstone of Time','Delayconsume',1,'/*upgradeui 9550;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (9551,'Time_Unseal_Key','Time Unseal Key','Delayconsume',1,'/*upgradeui 9551;*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (11500,'Light_Yellow_Pot','Light Yellow Potion','Healing',550,10,100,true,true,true,true,true,true,true,'itemheal rand(175,235),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (11501,'Light_White_Pot','Light White Potion','Healing',1200,10,100,true,true,true,true,true,true,true,'itemheal rand(325,405),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (11502,'Light_Blue_Pot','Light Blue Potion','Healing',5000,10,100,true,true,true,true,true,true,true,'itemheal 0,rand(40,60);');
@@ -395,8 +286,8 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`) VALUES (11598,'Bitter_Cacao_Bean','Bitter Cacao Bean','Healing',10);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`) VALUES (11599,'Superstar_Potion','Superstar Potion','Healing',10,10);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (11600,'Shining_Holy_Water','Shining Holy Water','Healing',10,15,true,'if(strcharinfo(3)=="prt_q") { bonus_script "{ bonus2 bSubSize,Size_All,10; }",600; sc_end SC_SILENCE; sc_end SC_POISON; sc_end SC_CURSE; heal 1000,0; }');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (11602,'Catnip_Fruit','Catnip Fruit','Healing',15,1,'itemheal rand(10,40),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (11601,'Delicious_Anchovy','Delicious Anchovy','Healing',20,30,'itemheal rand(30,46),0;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (11602,'Catnip_Fruit','Catnip Fruit','Healing',15,1,'itemheal rand(10,40),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (11605,'Cookies_Bat','Cookie Bat','Healing',50,'itemheal rand(50,100),0; /*TODO*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (11616,'Yummy_Meat','Delicious Meat','Healing',1400,50,'itemheal rand(100,150),0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`delay_duration`,`script`) VALUES (11621,'Red_Syrup','Red Syrup','Healing',800,7,60,1000,'itemheal 325,0;');
@@ -2274,8 +2165,8 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_uniqueid`,`script`) VALUES (14498,'Pisces_Crown_Box','Pisces Crown Box','Cash',20,10,true,'getitem 5515,1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_uniqueid`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14499,'Peacock_Feather_Box','Peacock Feather Box','Cash',20,10,true,100,true,true,true,true,true,true,true,'getitem 5519,1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14500,'Insurance60','Life Insurrance Certificate','Usable',20,10,100,true,true,true,true,true,true,true,'sc_start SC_LIFEINSURANCE,3600000,0;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14505,'Dungeon_1_hour_Ticket','Dungeon 1 Hour Ticket','Usable',20,100,true,true,true,true,true,true,true,true,'warp "1@sthb",0,0; /*No map+coord info*/');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14506,'Dungeon_Ticket','Dungeon Ticket','Usable',20,100,true,true,true,true,true,true,true,true,'warp "1@sthc",0,0; /*No map+coord info*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14505,'Dun_1HR_Voucher','Dungeon 1 Hour Ticket','Usable',20,100,true,true,true,true,true,true,true,true,'warp "dali02",117,69;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14506,'Dun_Voucher','Dungeon 1 Hour Ticket','Usable',20,100,true,true,true,true,true,true,true,true,'select("Invasion of Air Stronghold - Lv. 145 or higher");\nwarp "dali02",117,69;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14508,'Zeny_Scroll','Zeny Pet Egg Scroll','Usable',10,100,true,true,true,true,true,true,true,'Zeny += rand(1000,77777);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14509,'Light_Center_Pot','Light Concentration Potion','Usable',800,20,100,true,true,true,true,true,true,true,'sc_start SC_ASPDPOTION0,1800000,4;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`job_alchemist`,`job_archer`,`job_assassin`,`job_blacksmith`,`job_crusader`,`job_gunslinger`,`job_hunter`,`job_kagerouoboro`,`job_knight`,`job_mage`,`job_merchant`,`job_monk`,`job_ninja`,`job_novice`,`job_rebellion`,`job_rogue`,`job_sage`,`job_soullinker`,`job_stargladiator`,`job_summoner`,`job_supernovice`,`job_swordman`,`job_taekwon`,`job_thief`,`job_wizard`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (14510,'Light_Awakening_Pot','Light Awakening Potion','Usable',1500,20,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,40,100,true,true,true,true,true,true,true,'sc_start SC_ASPDPOTION1,1800000,6;');
@@ -2634,7 +2525,6 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (16589,'Thoughtful_Hat_Box_','Thoughtful Hat Box','Usable',20,1,'getitem callfunc("F_Rand",5336,5337,5338,5346,5339,5474),1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (16590,'Thoughtful_Hat_Box__','Thoughtful Hat Box','Usable',20,1,'getitem callfunc("F_Rand",5336,5337,5338,5346,5339,5474),1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`) VALUES (16598,'Activation_Potion_Box_II','Activation Potion Box II','Cash',10,10,100,true,true,true,true,true,true,true);
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (16659,'Zodiac_Diadem_Pack','Zodiac Diadem Box','Usable',20,1,'getitem callfunc("F_Rand",5545,5549,5569,5581,5589,5599,5663,5677,5740,5745,5512,5514),1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_uniqueid`) VALUES (16600,'Spring_Flower_Scr_Tw','Spring Flower Scr Tw','Usable',20,10,true);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_uniqueid`,`script`) VALUES (16601,'Blue_Arara_Hat_Box','Blue Arara Hat Box','Cash',20,10,true,'getitem 5778,1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_uniqueid`,`script`) VALUES (16602,'F_Blue_Arara_Hat_Box','F Blue Arara Hat Box','Cash',20,10,true,'getitem 5778,1;');
@@ -2656,6 +2546,7 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_uniqueid`) VALUES (16654,'Valiant_Will','Valiant Will','Usable',20,10,true);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (16655,'Rapid_Life_Potion_10_Box','Rapid Life Potion 10 Box','Cash',10,10,1,100,true,true,true,true,true,true,true,'getitem 12578,10;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (16658,'Rapid_Water_Box_10','Rapid Water Box(10)','Cash',10,10,100,true,true,true,true,true,true,true,'getitem 12578,10;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (16659,'Zodiac_Diadem_Pack','Zodiac Diadem Box','Usable',20,1,'getitem callfunc("F_Rand",5545,5549,5569,5581,5589,5599,5663,5677,5740,5745,5512,5514),1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_uniqueid`) VALUES (16664,'Leo_Scroll','Leo Scroll','Usable',20,10,true);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_uniqueid`) VALUES (16665,'Virgo_Scroll','Virgo Scroll','Usable',20,10,true);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_container`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (16666,'Magic_Candy_Box10','Magic Candy Box10','Usable',20,10,true,100,true,true,true,true,true,true,true,'getgroupitem(IG_Magic_Candy_Box10); /*getitem Magic_Candy,10;*/');
@@ -2932,8 +2823,8 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_container`,`script`) VALUES (17239,'Horned_Scroll','Horned Scroll','Usable',20,10,true,'getgroupitem(IG_Horned_Scroll);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_container`,`script`) VALUES (17240,'Mercury_Scroll','Mercury Scroll','Usable',20,10,true,'getgroupitem(IG_Mercury_Scroll);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`defense`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17241,'Amistr_Cap_Box','Amistir Cap Box','Usable',10,10,4,100,true,true,true,true,true,true,true,'getitem 5766,1;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17244,'Event_Almighty_Box','Event Almighty Box','Usable',10,10,100,true,true,true,true,true,true,true,'getitem 12883,10;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (17242,'Immortal_Egg','Immortal Egg','Cash',10,10,1,'getgroupitem(IG_Immortal_Egg);');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17244,'Event_Almighty_Box','Event Almighty Box','Usable',10,10,100,true,true,true,true,true,true,true,'getitem 12883,10;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`flag_uniqueid`) VALUES (17245,'Idn_Independ_Scroll','Idn Independ Scroll','Cash',20,true);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17246,'HD_Elunium_Box_30','HD Elunium Box(30)','Usable',10,10,100,true,true,true,true,true,true,true,'getitem 6241,30;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17247,'HD_Oridecon_Box_30','HD Oridecon Box(30)','Usable',10,10,100,true,true,true,true,true,true,true,'getitem 6240,30;');
@@ -3027,8 +2918,8 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`flag_container`,`script`) VALUES (17435,'Idn_Legend_Hero_Scroll','Legend Hero Lucky Egg','Cash',10,10,1,true,'getgroupitem(IG_Idn_Legend_Hero_Scroll);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17440,'Name_Change_Card_Box','Name Change Card Box','Cash',10,10,100,true,true,true,true,true,true,true,'getitem 12790,1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17441,'Halter_Lead_Box','Halter Lead Box','Cash',10,10,100,true,true,true,true,true,true,true,'getitem 12622,1;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17443,'Reinforcement_Buckler_Box','Reinforcement Buckler Box','Cash',10,10,100,true,true,true,true,true,true,true,'getitem 2150,1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17442,'Emperium_G_Box','Emperium G Box','Usable',20,10,100,true,true,true,true,true,true,true,'getitem 6444,1;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17443,'Reinforcement_Buckler_Box','Reinforcement Buckler Box','Cash',10,10,100,true,true,true,true,true,true,true,'getitem 2150,1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`equip_level_min`,`flag_container`,`script`) VALUES (17447,'Blessing_Midgard_Scroll','Blessing Midgard Lucky Egg','Cash',10,1,true,'getgroupitem(IG_Blessing_Midgard_Scroll);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17449,'Cookies_Bar_Set','Set Bar Cookies','Usable',10,10,100,true,true,true,true,true,true,true,'for (.@i = 14616; .@i <= 14621; .@i++) getitem .@i,1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17455,'Premium_Battle_Manual_Box','Premium Battle Manual Box','Cash',10,10,100,true,true,true,true,true,true,true,'getitem 22614,1;');
@@ -3095,7 +2986,7 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`flag_container`,`script`) VALUES (17552,'Garnet_Lucky_Scroll','Garnet Lucky Egg','Cash',10,true,'getgroupitem(IG_Garnet_Lucky_Scroll);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17567,'Event_Almighty_Box__','Event Almighty Box','Cash',20,10,100,true,true,true,true,true,true,true,'getitem 22902,1; bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",1800;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17568,'Event_Almighty_Box_100_','Event Almighty Box(100)','Cash',20,10,100,true,true,true,true,true,true,true,'getitem 22902,11; bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",1800;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17569,'Dungeon_1_hour_Ticket_Box','Dungeon 1 Hour Ticket Box','Usable',20,10,100,true,true,true,true,true,true,true,'getitem 14505,1;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17569,'Dun_Voucher_Box1','Sky Fortress Ticket 1 Hour Box','Usable',20,10,100,true,true,true,true,true,true,true,'getitem 14505,1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`flag_container`,`script`) VALUES (17572,'Erzulie_Lucky_Scroll','Erzulie Lucky Egg','Cash',10,true,'getgroupitem(IG_Erzulie_Lucky_Scroll);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`flag_container`,`script`) VALUES (17584,'Venus_Lucky_Scroll','Venus Lucky Egg','Cash',10,true,'getgroupitem(IG_Venus_Lucky_Scroll);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`flag_container`,`script`) VALUES (17588,'Amora_Lucky_Scroll','Amora Lucky Egg','Cash',10,true,'getgroupitem(IG_Amora_Lucky_Scroll);');
@@ -3111,8 +3002,8 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`fla
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`flag_container`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17674,'Rainbow_Lucky_Scroll','Splash Rainbow Lucky Egg','Cash',10,true,100,true,true,true,true,true,true,true,'getgroupitem(IG_Splash_Rainbow_Lucky_Scroll);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`flag_container`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17681,'Midgard_Lucky_Scroll','Midgard Lucky Scroll','Cash',10,true,100,true,true,true,true,true,true,true,'getgroupitem(IG_Midgard_Lucky_Scroll);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`flag_container`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (17692,'June_Lucky_Scroll','Blessing Scarlet Egg','Cash',10,true,100,true,true,true,true,true,true,true,'getgroupitem(IG_Blessing_Scarlet_Scroll);');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`flag_noconsume`,`delay_duration`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22508,'Para_Team_Mark_','Eden Group Mark','Usable',true,1200000,100,true,true,true,true,true,true,true,true,'warp "moc_para01",171,115;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (22507,'ShabbyOldScroll','Old Scroll','Usable',10,10,'callfunc "F_22507";');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`flag_noconsume`,`delay_duration`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22508,'Para_Team_Mark_','Eden Group Mark','Usable',true,1200000,100,true,true,true,true,true,true,true,true,'warp "moc_para01",171,115;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22510,'King_Wolf_Scroll','King Wolf Scroll','Usable',10,10,100,true,true,true,true,true,true,true,'/*TODO, confirm the rates*/ getitem callfunc("F_Rand",6635,19598,5658,6238,6239),1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22511,'Fenrir_Card__','Fenrir\'s Power Scroll','Usable',10,10,100,true,true,true,true,true,true,'bonus_script "{ bonus bMatk,25; bonus bFixedCastRate,-50; }",300,1025;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22513,'King_of_Gift_Box','King of Gift Box','Usable',10,100,100,true,true,true,true,true,true,true,'/*TODO, confirm the rates*/ getitem callfunc("F_Rand",12817,4403,14512),1;');
@@ -3126,6 +3017,7 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22526,'Level_Up_Box150','Level Up Box(150)','Cash',10,150,100,true,true,true,true,true,true,true,true,'getgroupitem(IG_Level_Up_Box150);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22527,'Level_Up_Box160','Level Up Box(160)','Cash',10,160,100,true,true,true,true,true,true,true,true,'getgroupitem(IG_Level_Up_Box160);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`class_all`,`gender`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22528,'Pet_Exchange_Ticket_Box','Pet Exchange Ticket Box','Cash',10,20,false,'Female',100,true,true,true,true,true,true,true,'/*TODO*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (22529,'Shadow_Exchange_Box','Shadow Exchange SynthesisBox','Delayconsume',10,'/*synthesisui 22529;*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (22530,'Christmas_Box','Christmas Box','Cash',10,200,1,'getgroupitem(IG_Christmas_Box);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (22531,'Special_Christmas_Box','Special Christmas Box','Cash',10,200,1,'getgroupitem(IG_Special_Christmas_Box);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (22532,'Santa_Gift','Santa Gift','Cash',10,200,1,'getgroupitem(IG_Santa_Gift);');
@@ -3194,16 +3086,16 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22652,'Briliant_Hat_Box','Brilliant Hat Box','Usable',10,200,100,true,true,true,true,true,true,true,'/* TODO */');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (22653,'Wet_Card_Album','Wet Card Album','Usable',10000,50,'/* TODO */');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (22657,'Honey_Songpyun_','Honey Songpyun','Healing',20,200,'percentheal 20,0;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (22659,'Pig_Steamed_Ribs','Pig Steamed Ribs','Healing',20,100,'bonus_script "{ bonus bAspdRate,5; bonus bUseSPrate,-2; }",180;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (22658,'Cow_Steamed_Ribs','Cow Steamed Ribs','Healing',20,100,'bonus_script "{ bonus bVariableCastrate,5; bonus bUseSPrate,-3; }",180;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (22659,'Pig_Steamed_Ribs','Pig Steamed Ribs','Healing',20,100,'bonus_script "{ bonus bAspdRate,5; bonus bUseSPrate,-2; }",180;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`flag_container`,`script`) VALUES (22669,'HALLOWEEN_G_BOX','Halloween Box','Usable',200,true,'getgroupitem(IG_HALLOWEEN_G_BOX);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (22670,'DARK_INVITATION','Invitation of Darkness','Usable',10,10,'.@r = rand(1,3); if(.@r==1){ specialeffect2 EF_DEVIL; warp "niflheim",193,186; }else if(.@r==2){ heal -500,-1000; sc_start SC_STUN,3000,0; }else{ specialeffect2 EF_DEVIL; warp "niflheim",347,255; }');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22671,'March_Gift_Box','March Gift Box','Usable',10,100,100,true,true,true,true,true,true,true,'/*2 Lucky Eggs*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22672,'April_Gift_Box','April Gift Box','Usable',10,100,100,true,true,true,true,true,true,true,'rentitem callfunc("F_Rand",2566,2856,2857,15023),1209600;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22673,'May_Gift_Box','May Gift Box','Usable',10,100,100,true,true,true,true,true,true,true,'getitem 22777,2;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22674,'June_Gift_Box','June Gift Box','Usable',10,100,100,true,true,true,true,true,true,true,'/*1 Potion Box*/');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`script`) VALUES (22676,'Hangul_Day_Event_Box','Hangul Day Event Box','Usable',20,'getitem 22675,10; getitem 607,9;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (22675,'Mysterious_Scroll','Mysterious Scroll','Usable',20,10,'sc_start SC_INTFOOD,3600000,30;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`script`) VALUES (22676,'Hangul_Day_Event_Box','Hangul Day Event Box','Usable',20,'getitem 22675,10; getitem 607,9;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`equip_level_min`,`flag_buyingstore`,`script`) VALUES (22679,'Chest_Of_Death','Death\'s Chest','Usable',170,true,'getitem rand(6814,6819),1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`flag_container`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22685,'Solo_Christmas_Gift','Single Union Christmas Gift','Usable',true,100,true,true,true,true,true,true,'getgroupitem(IG_Solo_Christmas_Gift);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (22686,'Solo_Cookie','Single Cookie','Healing',50,'percentheal 5,5;');
@@ -3265,7 +3157,6 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22782,'PC_Bang_Wooden_Box','PC Bang Wooden Box','Usable',10,200,1,100,true,true,true,true,true,true,true,'getitem 547,30; /*No Info*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22783,'PC_Bang_Golden_Box','PC Bang Golden Box','Usable',10,200,1,100,true,true,true,true,true,true,true,'getitem 547,1; getitem 985,10; /*No Info*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22784,'PC_Bang_Platinum_Box','PC Bang Platinum Box','Usable',10,200,1,100,true,true,true,true,true,true,true,'getitem 547,1; getitem 12017,10; getitem 678,12; /*No Info*/');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22979,'C_Battle_Gum_2','[Sale] Battle Manual and Bubble Gum','Usable',100,true,true,true,true,true,true,true,'sc_start SC_EXPBOOST,1800000,50; sc_start SC_ITEMBOOST,1800000,100;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`class_all`,`gender`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`) VALUES (22808,'Special_Gift_Box','Special Gift Box','Usable',10,100,false,'Female',100,true,true,true,true,true,true,true);
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22812,'Sealed_Dracula_Scroll','Sealed Dracula Scroll','Usable',10,10,1,100,true,true,true,true,true,true,true,'getitem callfunc("F_Rand",6228,6232,22813,19937,17314, 6635),1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22813,'Bearer\'s_Shadow_Box','Bearer\'s Shadow Box','Usable',10,10,1,100,true,true,true,true,true,true,true,'getitem callfunc("F_Rand",24180,24181,24182,24183,24184,24185),1;');
@@ -3282,7 +3173,7 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`class_all`,`gender`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22844,'Sealed_Dracula_Card_Album','Sealed Dracula Card Album','Usable',10,10,false,'Female',100,true,true,true,true,true,true,true,'/*No Info*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22845,'Sealed_Fortune_Egg','Sealed Fortune Egg','Usable',10,10,1,100,true,true,true,true,true,true,true,'getitem callfunc("F_Rand",4488,4497,4486,4480,4485,4539,4487,4494,4538,4489,4490,4482,4503,22846),1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22846,'Sealed_Dracula_Card_','Sealed Dracula Card','Usable',10,10,100,true,true,true,true,true,true,'bonus_script "{ bonus2 bSPDrainRate,50,5; }",300;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (22847,'Prontera_Medal','Prontera Medal','Usable',10,10,true,'warp "prontera",159,192; /*No coord info*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (22847,'BadgeOfProntera','Prontera Badge','Usable',10,10,true,'warp "prontera",159,192;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (22848,'Prison_Key','Prison Key','Usable',10,10,true,'warp "prt_prison",0,0; /*No coord info*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (22849,'Prontera_Time_Crystal','Prontera Time Crystal','Usable',10,10,true,'warp "prt_q",155,27;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22850,'January_Gift_Box_','January Gift Box','Usable',10,100,100,true,true,true,true,true,true,true,'rentitem 19052,604800;');
@@ -3297,7 +3188,7 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22859,'October_Gift_Box','October Gift Box','Usable',10,100,100,true,true,true,true,true,true,true,'getitem 12529,5;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22860,'November_Gift_Box','November Gift Box','Usable',10,100,100,true,true,true,true,true,true,true,'rentitem callfunc("F_Rand",2566,2856,2857,15023),1209600;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22861,'December_Gift_Box','December Gift Box','Usable',10,100,100,true,true,true,true,true,true,true,'getitem 22869,10;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (22868,'Enchant_Stone_Box5','Costume Enchantment Stone Box 5','Usable',20,10,1,'getgroupitem(IG_Enchant_Stone_Box5);');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (22868,'Enchant_Stone_Box5','Costume Enchantment Stone Box 5','Usable',20,10,1,'getgroupitem(IG_Costume_Enchant_Stone_Box5);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22869,'Lucky_Roulette_Tickets','Lucky Roulette Ticket','Usable',10,100,50,100,true,true,true,true,true,true,true,true,'RouletteBronze++;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22873,'Sealed_Beelzebub_Scroll_II','Sealed Beelzebub Scroll II','Usable',10,10,100,true,true,true,true,true,true,true,'getitem callfunc("F_Rand",22875,6238,6239,6228,6232,24231,24232,17474,6635),1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22874,'Sealed_Beelzebub_Card_Album','Sealed Beelzebub Card Album','Usable',10,50,100,true,true,true,true,true,true,true,'/*No Info*/');
@@ -3317,11 +3208,12 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`script`) VALUES (22899,'Parchment_City','Parchment City','Usable',20,'itemskill "AL_INCAGI",1; heal -15,0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22901,'Question_Old_Blue_Box','Mysterious Blue Box','Usable',20,100,true,true,true,true,true,true,true,'callfunc("F_Mysterious_box");');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22902,'Sealed_Card_Album_Scroll_II','Sealed Card Album Scroll II','Usable',20,10,100,true,true,true,true,true,true,true,'getitem callfunc("F_Rand",6238,6239,17474,22829,24243,24244,24245),1;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (22905,'Enchant_Stone_Box6','Costume Enchantment Stone Box 6','Usable',10,10,1,'getgroupitem(IG_Enchant_Stone_Box6);');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (22953,'Enchant_Stone_Box7','Costume Enchantment Stone Box 7','Usable',10,10,1,'getgroupitem(IG_Enchant_Stone_Box7);');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (22905,'Enchant_Stone_Box6','Costume Enchant Stone Box 6','Cash',10,10,1,'getgroupitem(IG_Costume_Enchant_Stone_Box6);');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (22953,'Enchant_Stone_Box7','Costume Enchant Stone Box 7','Cash',10,10,1,'getgroupitem(IG_Costume_Enchant_Stone_Box7);');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (22979,'C_Battle_Gum_2','[Sale] Battle Manual and Bubble Gum','Usable',100,true,true,true,true,true,true,true,'sc_start SC_EXPBOOST,1800000,50; sc_start SC_ITEMBOOST,1800000,100;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (22984,'Kahluna_Milk','Kahluna Milk','Healing',6,10,'sc_start SC_DORAM_BUF_01, 180000, 0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (22985,'Basil','Basil','Healing',10,10,'sc_start SC_DORAM_BUF_02, 180000, 0;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (23001,'Enchant_Stone_Box8','Costume Enchantment Stone Box 8','Usable',10,10,1,'getgroupitem(IG_Enchant_Stone_Box8);');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (23001,'Enchant_Stone_Box8','Costume Enchant Stone Box 8','Cash',10,10,1,'getgroupitem(IG_Costume_Enchant_Stone_Box8);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (23012,'S_Small_Mana_Potion','[Sale] Small Mana Potion','Usable',10,100,true,true,true,true,true,true,true,'bonus_script "bonus2 bRegenPercentSP,5,5000;",600,9; /* fix me: unknown flag and specialeffect ; disabled when LK_BERSERK */');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (23016,'Cursed_Fragment','Cursed Fragment','Usable',1,1,'callfunc("F_Cursed_Fragment");');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (23038,'S_Slim_White_Box','[Sale] Slim White Potion Box','Usable',100,true,true,true,true,true,true,true,'getitem 11573,200;');
@@ -3335,34 +3227,177 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (23077,'Build_Up_Potion_SC','Build Up Potion SC','Usable',10,10,'if (strcharinfo(3) == "slabw01") { sc_start SC_EP16_2_BUFF_SC,10000,0; }');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (23078,'Build_Up_Potion_AC','Build Up Potion AC','Usable',10,10,'if (strcharinfo(3) == "slabw01") { sc_start SC_EP16_2_BUFF_AC,10000,0; }');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (23080,'Cursed_Crystal','Cursed Crystal','Usable',1,500,'callfunc("F_Cursed_Crystal");');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (23086,'Enchant_Stone_Box10','Costume Enchantment Stone Box 10','Usable',10,10,1,'getgroupitem(IG_Enchant_Stone_Box10);');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (23086,'Enchant_Stone_Box10','Costume Enchant Stone Box 10','Cash',10,10,1,'getgroupitem(IG_Costume_Enchant_Stone_Box10);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (23087,'Small_Leather_Bag','Small Leather Bag','Usable',100,true,true,true,true,true,true,true,'getitem 25180,1; getitem 25181,1; getitem 25182,1; getitem 25183,1; getitem 25184,1; getitem 25185,1;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23100,'Drooping_Gunslinger_Scroll','Drooping Gunslinger Scroll','Delayconsume',10,'/*upgradeui 23100;*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (23123,'Bullet_Case_Flare','Flare Bullet Cartridge','Usable',10,250,'getitem 13228,500;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (23124,'Bullet_Case_Lighting','Lightning Bullet Cartridge','Usable',10,250,'getitem 13229,500;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (23125,'Bullet_Case_Ice','Ice Bullet Cartridge','Usable',10,250,'getitem 13230,500;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (23126,'Bullet_Case_Poison','Poison Bullet Cartridge','Usable',10,250,'getitem 13231,500;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (23127,'Bullet_Case_Blind','Blind Bullet Cartridge','Usable',10,250,'getitem 13232,500;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (23174,'Enchant_Stone_Box11','Costume Enchantment Stone Box 11','Usable',10,10,1,'getgroupitem(IG_Enchant_Stone_Box11);');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23151,'EnchantStone_Recipe','Enchant Stone Recipe','Delayconsume',10,'/*synthesisui 23151;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23152,'Collectibles_Box','Collectibles SynthesisBox','Delayconsume',10,'/*synthesisui 23152;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23153,'Pet_Egg_Box','Pet Egg SynthesisBox','Delayconsume',10,'/*synthesisui 23153;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23154,'Costume_Exchange_Box','Costume Exchange SynthesisBox','Delayconsume',10,'/*synthesisui 23154;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23170,'Fan_Modification_Kit','Fan Modification Kit','Delayconsume',10,'/*synthesisui 23170;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (23174,'Enchant_Stone_Box11','Costume Enchant Stone Box 11','Cash',10,10,1,'getgroupitem(IG_Costume_Enchant_Stone_Box11);');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23175,'Uniform_Repair_Kit','Uniform Repair Kit','Delayconsume',10,'/*upgradeui 23175;*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (23177,'Kafra_Card_','Kafra Card','Usable',2,10,100,true,true,true,true,true,true,true,'callfunc "F_CashStore";');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`script`) VALUES (23187,'Sap_Liquid','Sap Liquid','Usable',10,'pet 1180;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`script`) VALUES (23188,'Unprocessed_Parts','Unprocessed Parts','Usable',10,'pet 1632;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`script`) VALUES (23189,'Small_Needle_Kit','Small Needle Kit','Usable',10,'pet 1622;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`script`) VALUES (23187,'Sap_Liquid','Sap Liquid','Usable',10,'pet 1180;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (23191,'Varetyr_Spear_Scroll_1_5','Level 5 Varetyr Spear','Delayconsume',10,10,'itemskill "SO_VARETYR_SPEAR",5;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (23192,'Diamond_Dust_Scroll_1_5','Level 5 Diamond Dust','Delayconsume',10,10,'itemskill "SO_DIAMONDDUST",5;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (23193,'Crimson_Rock_Scroll_1_5','Level 5 Crimson Rock','Delayconsume',10,10,'itemskill "WL_CRIMSONROCK",5;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (23194,'Sienna_Execrate_Scroll_1_5','Level 5 Sienna Execrate','Delayconsume',10,10,'itemskill "WL_SIENNAEXECRATE",5,true;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`flag_container`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (23196,'Agust_Lucky_Scroll','Shining Blue Lucky Egg','Cash',10,10,1,true,100,true,true,true,true,true,true,true,'getgroupitem(IG_Agust_Lucky_Scroll);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`flag_buyingstore`,`script`) VALUES (23228,'Hazy_Mooncake','Hazy Mooncake','Healing',768,10,true,'/* unknown */');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23229,'Scroll_of_Fallen_Angel_Wings','Scroll of Fallen Angel Wings','Delayconsume',10,'/*upgradeui 23229;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23236,'Class_Shadow_Box_Weapon','Class Shadow Box (Weapon)','Delayconsume',10,'/*synthesisui 23236;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23237,'Class_Shadow_Box_Armor','Class Shadow Box (Armor)','Delayconsume',10,'/*synthesisui 23237;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23238,'Class_Shadow_Box_Shoes','Class Shadow Box (Shoes)','Delayconsume',10,'/*synthesisui 23238;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23239,'Class_Shadow_Box_Shield','Class Shadow Box (Shield)','Delayconsume',10,'/*synthesisui 23239;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23240,'Class_Shadow_Box_Pendant','Class Shadow Box (Pendant)','Delayconsume',10,'/*synthesisui 23240;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23241,'Class_Shadow_Box_Earring','Class Shadow Box (Earring)','Delayconsume',10,'/*synthesisui 23241;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23247,'StatusShadow_Mix','StatusShadow Mix','Delayconsume',10,'/*synthesisui 23247;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23248,'GemstoneShadow_Mix','GemstoneShadow Mix','Delayconsume',10,'/*synthesisui 23248;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23249,'BearersShadow_Mix','BearerShadow Mix','Delayconsume',10,'/*synthesisui 23249;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23250,'ComposeShadow_Mix','ComposerShadow Mix','Delayconsume',10,'/*synthesisui 23250;*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`script`) VALUES (23256,'Elixir_Bandages','Elixir Bandages','Usable',10,'pet 1041;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`job_blacksmith`,`class_third`,`class_third_upper`,`class_third_baby`,`equip_level_min`,`delay_duration`,`script`) VALUES (23277,'Mado_Box','Emergency Magic Gear','Usable',10000,3000,true,true,true,true,100,180000,'setmadogear 1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`equip_level_min`,`equip_level_max`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (23280,'N_Fly_Wing_','Novice Fly Wing','Delayconsume',10,1,98,100,true,true,true,true,true,true,true,'itemskill "AL_TELEPORT",1;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23281,'RaceShadow_Mix','RaceShadow Mix','Delayconsume',10,'/*synthesisui 23281;*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (23288,'Compressed_Wing_Of_Fly','Compressed Fly Wing','Delayconsume',1000,10,'itemskill "AL_TELEPORT",1;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (23299,'Enchant_Stone_Box12','Costume Enchantment Stone Box 12','Usable',10,10,1,'getgroupitem(IG_Enchant_Stone_Box12);');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23289,'Candy_Pouch_Blessing_Scroll_Melee','Candy Pouch Blessing Scroll(Physical)','Delayconsume',10,'/*upgradeui 23289;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23290,'Candy_Pouch_Blessing_Scroll_Range','Candy Pouch Blessing Scroll(Ranged)','Delayconsume',10,'/*upgradeui 23290;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23291,'Candy_Pouch_Blessing_Scroll_Magic','Candy Pouch Blessing Scroll(Magic)','Delayconsume',10,'/*upgradeui 23291;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (23299,'Enchant_Stone_Box12','Costume Enchant Stone Box 12','Cash',10,10,1,'getgroupitem(IG_Costume_Enchant_Stone_Box12);');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nosell`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (23307,'S_Shining_Def_Scroll','[Sale] Shining Defense Scroll','Usable',10,100,true,true,true,true,true,true,true,'bonus_script "{ bonus bDef,500; bonus bMdef,200; }",600; /* fix me: unknown flag and specialeffect */');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23308,'Magical_Booster_Amplifier','Magical Booster Amplifier','Delayconsume',10,'/*upgradeui 23308;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23311,'Magic_Cat_hand_Scroll','Magic Cat Hand Scroll','Delayconsume',10,'/*upgradeui 23311;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23324,'StabilityShadow_Mix','StabilityShadow Mix','Delayconsume',10,'/*synthesisui 23324;*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nocart`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (23340,'S_Megaphone','[Sale] Megaphone','Usable',10,100,true,true,true,true,true,true,'input .@megaphone$; announce strcharinfo(0) + ": " + .@megaphone$,bc_all,0xFF0000;');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (23524,'Enchant_Stone_Box13','Costume Enchantment Stone Box 13','Usable',10,10,1,'getgroupitem(IG_Enchant_Stone_Box13);');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (23629,'Enchant_Stone_Box14','Costume Enchantment Stone Box 14','Usable',10,10,1,'getgroupitem(IG_Enchant_Stone_Box14);');
-REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (23682,'Enchant_Stone_Box15','Costume Enchantment Stone Box 15','Usable',10,10,1,'getgroupitem(IG_Enchant_Stone_Box15);');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23436,'Shadow_Refine_Hammer','Shadow Refine Hammer','Delayconsume',10,'/*upgradeui 23436;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23474,'InfinityShadow_Mix','InfinityShadow Mix','Delayconsume',10,'/*synthesisui 23474;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (23524,'Enchant_Stone_Box13','Costume Enchant Stone Box 13','Cash',10,10,1,'getgroupitem(IG_Costume_Enchant_Stone_Box13);');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23545,'Silver_Statue','Silver Statue','Delayconsume',10,'/*synthesisui 23545;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23546,'Cursed_Blood','Cursed Blood','Delayconsume',10,'/*upgradeui 23546;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23547,'Gold_Statue','Gold Statue','Delayconsume',10,'/*upgradeui 23547;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (23629,'Enchant_Stone_Box14','Costume Enchant Stone Box 14','Cash',10,10,1,'getgroupitem(IG_Costume_Enchant_Stone_Box14);');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23665,'PhysicalMagical_Mix','PhysicalMagical Mix','Delayconsume',10,'/*synthesisui 23665;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23666,'ImmunedAthena_Mix','ImmunedAthena Mix','Delayconsume',10,'/*synthesisui 23666;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23667,'HardChamption_Mix','HardChampion Mix','Delayconsume',100,'/*synthesisui 23667;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23668,'KingbirdAncient_Mix','KingbirdAncient Mix','Delayconsume',10,'/*synthesisui 23668;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23669,'CriticalHit_Mix','CriticalHit Mix','Delayconsume',10,'/*synthesisui 23669;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23675,'Geffen_Magic_Scroll','Geffen Magic Armor Order Form','Delayconsume',100,'/*upgradeui 23675;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23676,'Gray_Charcoal_Melee','Grey Abrasive (physical)','Delayconsume',50,'/*upgradeui 23676;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23677,'Gray_Charcoal_Magic','Grey Abrasive (magical)','Delayconsume',50,'/*upgradeui 23677;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23678,'Gray_Charcoal_Range','Grey Abrasive (distance)','Delayconsume',50,'/*upgradeui 23678;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23679,'Geffen_Magic_Scroll2','Geffen Magic Accessory Order Form','Delayconsume',100,'/*upgradeui 23679;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (23682,'Enchant_Stone_Box15','Costume Enchant Stone Box 15','Cash',10,10,1,'getgroupitem(IG_Costume_Enchant_Stone_Box15);');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23706,'Charleston_Parts_W','Charleston Upgrade Parts (Physical)','Delayconsume',50,'/*upgradeui 23706;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23707,'Charleston_Parts_R','Charleston Upgrade Parts (Ranged)','Delayconsume',50,'/*upgradeui 23707;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23720,'Shadow_Random_Mix','Shadow Random Mix','Delayconsume',10,'/*upgradeui 23720;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23770,'Costume_Enchant_Stone_Box16','Costume Enchant Stone Box16','Cash',10,'/*getgroupitem(IG_Costume_Enchant_Stone_Box16);*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23776,'EP17_1_SPC05','Weapon Modifier (Physical)','Delayconsume',50,'/*upgradeui 23776;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23777,'EP17_1_SPC06','Advanced Weapon Modifier (Physical)','Delayconsume',50,'/*upgradeui 23777;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23778,'EP17_1_SPC07','Super Weapon Modifier (Physical)','Delayconsume',50,'/*upgradeui 23778;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23779,'EP17_1_SPC08','Weapon Modifier (Magic)','Delayconsume',50,'/*upgradeui 23779;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23780,'EP17_1_SPC09','Advanced Weapon Modifier (Magic)','Delayconsume',50,'/*upgradeui 23780;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23781,'EP17_1_SPC10','Super Weapon Modifier (Magic)','Delayconsume',50,'/*upgradeui 23781;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23815,'Magma_Essence','Lava Essence','Delayconsume',50,'/*upgradeui 23815;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23818,'Bs_Item_M_S_2','Giant Orc Helm Combination SynthesisBox','Delayconsume',10,'/*synthesisui 23818;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23819,'Bs_Item_M_S_8','Crimson Rose SynthesisBox','Delayconsume',10,'/*synthesisui 23819;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23820,'Bs_Item_M_S_10','Grand Peco Hairband SynthesisBox','Delayconsume',10,'/*synthesisui 23820;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23821,'Bs_Item_M_S_11','Moonflower Hair Hat SynthesisBox','Delayconsume',10,'/*synthesisui 23821;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23822,'Bs_Item_M_S_34','Wings of 8 Purgatories SynthesisBox','Delayconsume',10,'/*synthesisui 23822;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23823,'Bs_Item_M_S_41','Tare Neko Cru SynthesisBox','Delayconsume',10,'/*synthesisui 23823;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23824,'Bs_Item_M_S_42','Glory Soccer Ball Hat SynthesisBox','Delayconsume',10,'/*synthesisui 23824;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23825,'Bs_Item_M_S_43','Wicket marching Hat SynthesisBox','Delayconsume',10,'/*synthesisui 23825;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23826,'Bs_Item_M_S_44','Wandering Wolf Hat SynthesisBox','Delayconsume',10,'/*synthesisui 23826;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23827,'Bs_Sha_M_S_1','Status Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23827;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23828,'Bs_Sha_M_S_17','Elegant Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23828;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23829,'Bs_Sha_M_S_18','Tension Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23829;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23830,'Bs_Sha_M_S_19','Restore Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23830;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23831,'Bs_Sha_M_S_20','Healing Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23831;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23832,'Bs_Item_M_S_4','Amistr Cap SynthesisBox','Delayconsume',10,'/*synthesisui 23832;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23833,'Bs_Item_M_S_6','Tiger King Doll Hat SynthesisBox','Delayconsume',10,'/*synthesisui 23833;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23834,'Bs_Item_M_S_7','Bacsojin Doll SynthesisBox','Delayconsume',10,'/*synthesisui 23834;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23835,'Bs_Item_M_S_12','Candy Pouch Bag SynthesisBox','Delayconsume',10,'/*synthesisui 23835;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23836,'Bs_Item_M_S_13','Gold Fish Head Hat SynthesisBox','Delayconsume',10,'/*synthesisui 23836;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23837,'Bs_Item_M_S_15','Survival SynthesisBox','Delayconsume',10,'/*synthesisui 23837;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23838,'Bs_Item_M_S_28','Toy Sringe SynthesisBox','Delayconsume',10,'/*synthesisui 23838;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23839,'Bs_Item_M_S_29','Indigor Rear Ribbon SynthesisBox','Delayconsume',10,'/*synthesisui 23839;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23840,'Bs_Item_M_S_31','Magical Booster SynthesisBox','Delayconsume',10,'/*synthesisui 23840;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23841,'Bs_Item_M_S_32','Rosario\'s Necklace SynthesisBox','Delayconsume',10,'/*synthesisui 23841;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23842,'Bs_Item_M_S_33','Spirit Crown SynthesisBox','Delayconsume',10,'/*synthesisui 23842;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23843,'Bs_Item_M_S_36','Guard\'s Cap SynthesisBox','Delayconsume',10,'/*synthesisui 23843;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23844,'Bs_Item_M_S_37','Bandit\'s Hood SynthesisBox','Delayconsume',1,'/*synthesisui 23844;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23845,'Bs_Item_M_S_38','Angel\'s Blessing SynthesisBox','Delayconsume',10,'/*synthesisui 23845;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23846,'Bs_Item_M_S_39','Rabbit Magic Hat SynthesisBox','Delayconsume',10,'/*synthesisui 23846;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23847,'Bs_Item_M_S_40','Anubis Helm SynthesisBox','Delayconsume',10,'/*synthesisui 23847;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23848,'Bs_Item_M_S_45','Imp Hat SynthesisBox','Delayconsume',10,'/*synthesisui 23848;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23849,'Bs_Item_M_S_46','Red Marching Hat SynthesisBox','Delayconsume',10,'/*synthesisui 23849;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23850,'Bs_Item_M_S_47','Ifrit Mask SynthesisBox','Delayconsume',10,'/*synthesisui 23850;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23851,'Bs_Item_M_S_48','Incarnation Of Morocc Doll SynthesisBox','Delayconsume',10,'/*synthesisui 23851;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23852,'Bs_Item_M_S_49','Samambaia SynthesisBox','Delayconsume',10,'/*synthesisui 23852;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23853,'Bs_Item_M_S_50','Chick Hat SynthesisBox','Delayconsume',10,'/*synthesisui 23853;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23854,'Bs_Sha_M_S_2','Class Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23854;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23855,'Bs_Sha_M_S_5','Spell Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23855;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23856,'Bs_Sha_M_S_6','Size Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23856;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23857,'Bs_Sha_M_S_7','Race Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23857;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23858,'Bs_Sha_M_S_8','Stability Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23858;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23859,'Bs_Sha_M_S_13','Special Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23859;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23860,'Bs_Sha_M_S_15','Physical Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23860;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23861,'Bs_Sha_M_S_16','Magical Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23861;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23862,'Bs_Sha_M_S_23','EXP Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23862;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23863,'Bs_Item_M_S_5','Mad Bunny SynthesisBox','Delayconsume',10,'/*synthesisui 23863;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23864,'Bs_Item_M_S_9','Archangel\'s Wings SynthesisBox','Delayconsume',10,'/*synthesisui 23864;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23865,'Bs_Item_M_S_14','Smokie\'s Transformation Leaf SynthesisBox','Delayconsume',10,'/*synthesisui 23865;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23866,'Bs_Item_M_S_16','Ifrit\'s Ear SynthesisBox','Delayconsume',10,'/*synthesisui 23866;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23867,'Bs_Item_M_S_17','Heartwing Band SynthesisBox','Delayconsume',10,'/*synthesisui 23867;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23868,'Bs_Item_M_S_19','Sigrun\'s Wings SynthesisBox','Delayconsume',10,'/*synthesisui 23868;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23869,'Bs_Item_M_S_27','Cat Headdress SynthesisBox','Delayconsume',10,'/*synthesisui 23869;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23870,'Bs_Item_M_S_35','Noble Mask SynthesisBox','Delayconsume',10,'/*synthesisui 23870;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23871,'Bs_Sha_M_S_9','Gemstone Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23871;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23872,'Bs_Sha_M_S_10','Bearers Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23872;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23873,'Bs_Sha_M_S_11','Hasty Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23873;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23874,'Bs_Sha_M_S_21','Critical Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23874;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23875,'Bs_Sha_M_S_22','Mortal Blow Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23875;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23876,'Bs_Item_M_S_1','Fallen Angel Wings SynthesisBox','Delayconsume',10,'/*synthesisui 23876;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23877,'Bs_Item_M_S_3','Adventurer\'s Backpack SynthesisBox','Delayconsume',10,'/*synthesisui 23877;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23879,'Bs_Item_M_S_18','Spell Circuit SynthesisBox','Delayconsume',10,'/*synthesisui 23879;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23880,'Bs_Item_M_S_20','New Wave Sunglasses SynthesisBox','Delayconsume',10,'/*synthesisui 23880;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23881,'Bs_Item_M_S_21','Giant Snake Breath SynthesisBox','Delayconsume',10,'/*synthesisui 23881;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23882,'Bs_Item_M_S_22','Judge Hat SynthesisBox','Delayconsume',10,'/*synthesisui 23882;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23883,'Bs_Item_M_S_23','Dog Officer SynthesisBox','Delayconsume',10,'/*synthesisui 23883;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23884,'Bs_Item_M_S_24','Fancy Feather Hat SynthesisBox','Delayconsume',10,'/*synthesisui 23884;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23885,'Bs_Item_M_S_25','Amistr Beret SynthesisBox','Delayconsume',10,'/*synthesisui 23885;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23886,'Bs_Item_M_S_26','General Helm SynthesisBox','Delayconsume',10,'/*synthesisui 23886;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23887,'Bs_Item_M_S_30','Cursed Knight\'s Shield SynthesisBox','Delayconsume',10,'/*synthesisui 23887;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23888,'Bs_Sha_M_S_3','Penetration Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23888;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23889,'Bs_Sha_M_S_4','Tempest Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23889;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23890,'Bs_Sha_M_S_12','Blitz Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23890;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23891,'Bs_Sha_M_S_14','Reload Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23891;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23892,'Bs_Sha_M_S_24','Force and Spirit Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23892;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23893,'Bs_Sha_M_S_25','Infinity Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 23893;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23894,'Bs_Item_M_S_51','Wickebine\'s Black Cat\'s Ear SynthesisBox','Delayconsume',10,'/*synthesisui 23894;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23926,'Shadow_9_Refine_Hammer','Shadow 9 Refine Hammer','Delayconsume',10,'/*upgradeui 23926;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (23967,'EnchantStone_Recipe_9m','Enchant Stone Recipe 9m','Delayconsume',10,'/*synthesisui 23967;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (100000,'IDTest_Special','IDTest Special','Delayconsume',1,'/*synthesisui 100000;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`script`) VALUES (100003,'ILL_Piece_A','Red Phantom Resonance Stone','Delayconsume','/*upgradeui 100003;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`script`) VALUES (100004,'ILL_Piece_B','Azure Mirage Resonance Stone','Delayconsume','/*upgradeui 100004;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (100010,'PerfectSize_Mix','Perfect Size Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 100010;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (100011,'MagicPiercing_Mix','Magic Piercing Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 100011;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (100019,'Costume_Enchant_Stone_Box18','Costume Enchant Stone Box18','Cash',10,'/*getgroupitem(IG_Costume_Enchant_Stone_Box18);*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (100023,'Ancient_Hero_Bravery','Ancient Hero Bravery','Delayconsume',10,'/*upgradeui 100023;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (100025,'Ancient_Hero_Wisdom','Ancient Hero Wisdom','Delayconsume',10,'/*upgradeui 100025;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`script`) VALUES (100043,'Boost_Up_1','Booster Armor UpgradeBox','Delayconsume','/*upgradeui 100043;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`script`) VALUES (100044,'Boost_Up_2','Booster Weapon UpgradeBox','Delayconsume','/*upgradeui 100044;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (100052,'Enchant_Stone_Box19','Costume Enchantment Stone Box 19','Usable',10,10,1,'/*getgroupitem(IG_Costume_Enchant_Stone_Box19);*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (100053,'Piercing_Mix','Piercing Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 100053;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (100058,'Hasty_Mix','Hasty Shadow SynthesisBox','Delayconsume',10,'/*synthesisui 100058;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (100060,'EnchantStone_Recipe_4m','4m Enchant Stone Recipe SynthesisBox','Delayconsume',10,'/*synthesisui 100060;*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`flag_noconsume`,`script`) VALUES (100065,'WL_MB_SG','Spell Book (Storm Gust)','Delayconsume',true,'itemskill "WL_READING_SB_READING",1;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`flag_noconsume`,`script`) VALUES (100066,'WL_MB_LOV','Spell Book (Lord of Vermilion)','Delayconsume',true,'itemskill "WL_READING_SB_READING",2;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`flag_noconsume`,`script`) VALUES (100067,'WL_MB_MS','Spell Book (Meteor Storm)','Delayconsume',true,'itemskill "WL_READING_SB_READING",3;');
@@ -3384,9 +3419,11 @@ REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (100136,'Imperial_M_Mo_Armor','Imperial Magical Modification Permit (Armor)','Delayconsume',20,125,100,true,true,true,true,true,true,true,'/*upgradeui 100136;*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (100137,'Grace_P_Mo_Armor','Grace Physical Modification Permit (Armor)','Delayconsume',20,150,100,true,true,true,true,true,true,true,'/*upgradeui 100137;*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`equip_level_min`,`trade_override`,`trade_nodrop`,`trade_notrade`,`trade_nocart`,`trade_nostorage`,`trade_noguildstorage`,`trade_nomail`,`trade_noauction`,`script`) VALUES (100138,'Grace_M_Mo_Armor','Grace Magical Modification Permit (Armor)','Delayconsume',20,150,100,true,true,true,true,true,true,true,'/*upgradeui 100138;*/');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (100202,'Enchant_Stone_Box20','Costume Enchantment Stone Box 20','Usable',10,10,1,'/*getgroupitem(IG_Costume_Enchant_Stone_Box20);*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (100231,'Ref_T_Potion','Golden X','Healing',10,30,'sc_start SC_REF_T_POTION,30000,0;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (100232,'Add_Atk_Potion','Red Herb Activator','Healing',10,30,'sc_start SC_ADD_ATK_DAMAGE,500000,15;');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`script`) VALUES (100233,'Add_Matk_Potion','Blue Herb Activator','Healing',10,30,'sc_start SC_ADD_MATK_DAMAGE,500000,15;');
+REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`price_buy`,`weight`,`equip_level_min`,`script`) VALUES (100314,'Enchant_Stone_Box21','Costume Enchantment Stone Box 21','Usable',10,10,1,'/*getgroupitem(IG_Costume_Enchant_Stone_Box21);*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (100402,'Thousand_Sun_Cube','Thousand Sun Modification Cube','Delayconsume',10,'/*synthesisui 100402;*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (100403,'Spirit_Pendulum_Cube','Spirit Pendulum Modification Cube','Delayconsume',10,'/*synthesisui 100403;*/');
 REPLACE INTO `item_db_re` (`id`,`name_aegis`,`name_english`,`type`,`weight`,`script`) VALUES (100404,'Crimson_Rose_Cube','Crimson Rose Modification Cube','Delayconsume',10,'/*synthesisui 100404;*/');

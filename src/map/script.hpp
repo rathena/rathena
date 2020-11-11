@@ -1842,7 +1842,7 @@ enum e_special_effects {
 	EF_MAX
 };
 
-enum e_hat_effects {
+enum e_hat_effects : int16{
 	HAT_EF_MIN = 0,
 	HAT_EF_BLOSSOM_FLUTTERING,
 	HAT_EF_MERMAID_LONGING,

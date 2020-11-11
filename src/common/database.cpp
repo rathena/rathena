@@ -7,7 +7,9 @@
 
 bool YamlDatabase::nodeExists( const YAML::Node& node, const std::string& name ){
 	try{
-		if( node[name] ){
+		const YAML::Node &subNode = node[name];
+
+		if( subNode.IsDefined() && !subNode.IsNull() ){
 			return true;
 		}else{
 			return false;
@@ -95,6 +97,7 @@ bool YamlDatabase::load(const std::string& path) {
 	YAML::Node rootNode;
 
 	try {
+		ShowStatus( "Loading '" CL_WHITE "%s" CL_RESET "'..." CL_CLL "\r", path.c_str() );
 		rootNode = YAML::LoadFile(path);
 	}
 	catch(YAML::Exception &e) {

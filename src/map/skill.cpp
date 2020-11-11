@@ -859,6 +859,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 		case RETURN_TO_ELDICASTES:
 		case ALL_GUARDIAN_RECALL:
 		case ECLAGE_RECALL:
+		case ALL_PRONTERA_RECALL:
 			if(mapdata->flag[MF_NOWARP]) {
 				clif_skill_teleportmessage(sd,0);
 				return true;
@@ -1296,7 +1297,11 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			//"While the damage can be blocked by Pneuma, the chance to break armor remains", irowiki. [Cydh]
 			if (dmg_lv == ATK_BLOCK && skill_id == AM_ACIDTERROR) {
 				sc_start2(src,bl,SC_BLEEDING,(skill_lv*3),skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
+#ifdef RENEWAL
+				if (skill_break_equip(src,bl, EQP_ARMOR, (1000 * skill_lv + 500) - 1000, BCT_ENEMY))
+#else
 				if (skill_break_equip(src,bl, EQP_ARMOR, 100*skill_get_time(skill_id,skill_lv), BCT_ENEMY))
+#endif
 					clif_emotion(bl,ET_HUK);
 			}
 		}
@@ -3780,7 +3785,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			case GC_VENOMPRESSURE: {
 					struct status_change *ssc = status_get_sc(src);
 					if( ssc && ssc->data[SC_POISONINGWEAPON] && rnd()%100 < 70 + 5*skill_lv ) {
-						sc_start(src,bl,(enum sc_type)ssc->data[SC_POISONINGWEAPON]->val2,100,ssc->data[SC_POISONINGWEAPON]->val1,skill_get_time2(GC_POISONINGWEAPON, 1));
+						sc_start4(src, bl, (sc_type)ssc->data[SC_POISONINGWEAPON]->val2, 100, ssc->data[SC_POISONINGWEAPON]->val1, 0, 1, 0, skill_get_time2(GC_POISONINGWEAPON, 1));
 						status_change_end(src,SC_POISONINGWEAPON,INVALID_TIMER);
 						clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 					}
@@ -10741,6 +10746,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case RETURN_TO_ELDICASTES:
 	case ALL_GUARDIAN_RECALL:
 	case ECLAGE_RECALL:
+	case ALL_PRONTERA_RECALL:
 		if( sd )
 		{
 			short x=0, y=0; // Destiny position.
@@ -10762,6 +10768,17 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				x = 47;
 				y = 31;
 				mapindex  = mapindex_name2id(MAP_ECLAGE_IN);
+				break;
+			case ALL_PRONTERA_RECALL:
+				if(skill_lv == 1) {
+					x = 115;
+					y = 72;
+				}
+				else if(skill_lv == 2) {
+					x = 159;
+					y = 192;
+				}
+				mapindex  = mapindex_name2id(MAP_PRONTERA);
 				break;
 			}
 
@@ -17258,11 +17275,6 @@ int skill_castfix_sc(struct block_list *bl, double time, uint8 flag)
  */
 int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 skill_lv)
 {
-	struct status_change *sc = status_get_sc(bl);
-	struct map_session_data *sd = BL_CAST(BL_PC,bl);
-	int fixed = skill_get_fixed_cast(skill_id, skill_lv), fixcast_r = 0, varcast_r = 0, reduce_cast_rate = 0;
-	uint8 flag = skill_get_castnodex(skill_id);
-
 	nullpo_ret(bl);
 
 	if (time < 0)
@@ -17271,13 +17283,18 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 	if (bl->type == BL_MOB || bl->type == BL_NPC)
 		return (int)time;
 
-	if (fixed < 0) // no fixed cast time
-		fixed = 0;
-	else if (fixed == 0) {
-		fixed = (int)time * battle_config.default_fixed_castrate / 100; // fixed time
-		time = time * (100 - battle_config.default_fixed_castrate) / 100; // variable time
+	status_change *sc = status_get_sc(bl);
+	map_session_data *sd = BL_CAST(BL_PC, bl);
+	int fixed = skill_get_fixed_cast(skill_id, skill_lv), fixcast_r = 0, varcast_r = 0, reduce_cast_rate = 0;
+	uint8 flag = skill_get_castnodex(skill_id);
+
+	if (fixed < 0) {
+		if (battle_config.default_fixed_castrate > 0) {
+			fixed = (int)time * battle_config.default_fixed_castrate / 100; // fixed time
+			time = time * (100 - battle_config.default_fixed_castrate) / 100; // variable time
+		} else
+			fixed = 0;
 	}
-	// Else, use fixed cast time from database (when default_fixed_castrate is set to 0)
 
 	// Additive Variable Cast bonus adjustments by items
 	if (sd && !(flag&4)) {

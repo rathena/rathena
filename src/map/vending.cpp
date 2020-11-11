@@ -465,7 +465,7 @@ bool vending_searchall(struct map_session_data* sd, const struct s_search_store_
 			}
 		}
 
-		if( !searchstore_result(s->search_sd, sd->vender_id, sd->status.account_id, sd->message, it->nameid, sd->vending[i].amount, sd->vending[i].value, it->card, it->refine) ) { // result set full
+		if( !searchstore_result(s->search_sd, sd->vender_id, sd->status.account_id, sd->message, it->nameid, sd->vending[i].amount, sd->vending[i].value, it->card, it->refine, it->enchantgrade ) ) { // result set full
 			return false;
 		}
 	}

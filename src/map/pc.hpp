@@ -263,11 +263,6 @@ struct s_combos {
 	script_code *bonus;
 	uint32 id;
 	uint32 pos;
-
-	~s_combos() {
-		if (this->bonus)
-			script_free_code(this->bonus);
-	}
 };
 
 struct map_session_data {
@@ -788,9 +783,8 @@ struct map_session_data {
 
 	short setlook_head_top, setlook_head_mid, setlook_head_bottom, setlook_robe; ///< Stores 'setlook' script command values.
 
-#if PACKETVER >= 20150513
-	uint32* hatEffectIDs;
-	uint8 hatEffectCount;
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	std::vector<int16> hatEffects;
 #endif
 
 	struct{
