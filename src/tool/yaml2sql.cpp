@@ -132,10 +132,11 @@ void prepareHeader(std::ofstream &file, const std::string& name) {
 }
 
 template<typename Func>
-bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, const std::string& to, const std::string& table, Func lambda ){
+bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, const std::string& to_table, const std::string& table, Func lambda ){
 	for( const std::string& path : paths ){
 		const std::string name_ext = name + ".yml";
 		const std::string from = path + name_ext;
+		const std::string to = "sql-files/" + to_table + ".sql";
 
 		if( fileExists( from ) ){
 			if( !askConfirmation( "Found the file \"%s\", which can be converted to sql.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
@@ -168,7 +169,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 				return false;
 			}
 
-			prepareHeader(out, table);
+			prepareHeader(out, table.compare(to_table) == 0 ? table : to_table);
 
 			if( !lambda( path, name_ext, table ) ){
 				out.close();
@@ -208,14 +209,14 @@ int do_init( int argc, char** argv ){
 	#include "../map/script_constants.hpp"
 
 	for( const std::string& suffix : item_table_suffixes ){
-		if (!process("ITEM_DB", 1, { path_db_mode }, "item_db_" + suffix, "sql-files/" + item_table_name + "_" + suffix + ".sql", item_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {
+		if (!process("ITEM_DB", 1, { path_db_mode }, "item_db_" + suffix, item_table_name + "_" + suffix, item_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {
 			return item_db_yaml2sql(path + name_ext, table);
 		})) {
 			return 0;
 		}
 	}
 
-	if (!process("ITEM_DB", 1, { path_db_import }, "item_db", "sql-files/" + item_import_table_name + ".sql", item_import_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {
+	if (!process("ITEM_DB", 1, { path_db_import }, "item_db", item_import_table_name, item_import_table_name, [](const std::string& path, const std::string& name_ext, const std::string& table) -> bool {
 		return item_db_yaml2sql(path + name_ext, table);
 	})) {
 		return 0;

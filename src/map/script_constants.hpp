@@ -4590,10 +4590,6 @@
 	export_constant(MOBG_ClassChange);
 	export_constant(MOBG_Taekwon_Mission);
 
-	/* Item Random Option Group */
-	export_constant(RDMOPTG_None);
-	export_constant(RDMOPTG_Crimson_Weapon);
-
 	/* random option attributes */
 	export_constant(ROA_ID);
 	export_constant(ROA_VALUE);

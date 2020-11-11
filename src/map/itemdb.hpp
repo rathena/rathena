@@ -4,6 +4,7 @@
 #ifndef ITEMDB_HPP
 #define ITEMDB_HPP
 
+#include <map>
 #include <vector>
 
 #include "../common/database.hpp"
@@ -919,27 +920,66 @@ struct item_data
 // Struct for item random option [Secret]
 struct s_random_opt_data
 {
-	unsigned short id;
-	struct script_code *script;
-};
+	uint16 id;
+	std::string name;
+	script_code *script;
 
-/// Enum for Random Option Groups
-enum Random_Option_Group {
-	RDMOPTG_None = 0,
-	RDMOPTG_Crimson_Weapon,
+	~s_random_opt_data() {
+		if (script)
+			script_free_code(script);
+	}
 };
 
 /// Struct for random option group entry
 struct s_random_opt_group_entry {
-	struct s_item_randomoption option[MAX_ITEM_RDM_OPT];
+	uint16 id;
+	int16 min_value, max_value;
+	int8 param;
+	uint16 chance;
 };
 
 /// Struct for Random Option Group
 struct s_random_opt_group {
-	uint8 id;
-	struct s_random_opt_group_entry *entries;
-	uint16 total;
+	uint16 id;
+	std::string name;
+	std::map<uint16, std::vector<std::shared_ptr<s_random_opt_group_entry>>> slots;
+	uint16 max_random;
+	std::vector<std::shared_ptr<s_random_opt_group_entry>> random_options;
 };
+
+class RandomOptionDatabase : public TypesafeYamlDatabase<uint16, s_random_opt_data> {
+public:
+	RandomOptionDatabase() : TypesafeYamlDatabase("RANDOM_OPTION_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+	void loadingFinished();
+
+	// Additional
+	bool option_exists(std::string name);
+	bool option_get_id(std::string name, uint16 &id);
+};
+
+extern RandomOptionDatabase random_option_db;
+
+class RandomOptionGroupDatabase : public TypesafeYamlDatabase<uint16, s_random_opt_group> {
+public:
+	RandomOptionGroupDatabase() : TypesafeYamlDatabase("RANDOM_OPTION_GROUP", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+
+	// Additional
+	bool add_option(const YAML::Node &node, std::shared_ptr<s_random_opt_group_entry> &entry);
+	bool option_exists(std::string name);
+	bool option_get_id(std::string name, uint16 &id);
+};
+
+extern RandomOptionGroupDatabase random_option_group;
 
 class ItemDatabase : public TypesafeCachedYamlDatabase<t_itemid, item_data> {
 public:
@@ -1023,9 +1063,6 @@ int16 itemdb_group_item_exists_pc(struct map_session_data *sd, unsigned short gr
 char itemdb_pc_get_itemgroup(uint16 group_id, bool identify, struct map_session_data *sd);
 
 bool itemdb_parse_roulette_db(void);
-
-struct s_random_opt_data *itemdb_randomopt_exists(short id);
-struct s_random_opt_group *itemdb_randomopt_group_exists(int id);
 
 void itemdb_reload(void);
 
