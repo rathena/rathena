@@ -4204,7 +4204,7 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 				if (strtol(fields[k + 1], nullptr, 10) > 1)
 					body << YAML::Key << "Rate" << YAML::Value << fields[k + 1];
 
-				if (k == 55) // Cards are inherently protected
+				if (k == 51 || k == 53 || k == 55) // Slots 8, 9, and 10 are inherently protected
 					body << YAML::Key << "StealProtected" << YAML::Value << "true";
 				body << YAML::EndMap;
 			}

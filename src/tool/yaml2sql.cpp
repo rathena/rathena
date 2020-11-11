@@ -804,7 +804,7 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 			}
 		}
 
-		for (uint16 i = 0; i < MAX_MVP_DROP; i++) {
+		for (uint16 i = 0; i < MAX_MOB_DROP; i++) {
 			if (!input["Drops"].IsDefined())
 				continue;
 

@@ -4195,6 +4195,7 @@ Body:
         Rate: 3
       - Item: White_Wing_Suits
         Rate: 100
+        StealProtected: true
       - Item: Anubis_Card
         StealProtected: true
   - Id: 1099
@@ -5785,6 +5786,7 @@ Body:
         Rate: 2
       - Item: Ur_Plate
         Rate: 100
+        StealProtected: true
       - Item: Khalitzburg_Card
         StealProtected: true
   - Id: 1133
@@ -7244,6 +7246,7 @@ Body:
       - Item: Brigan
         Rate: 4850
       - Item: Peuz_Plate
+        StealProtected: true
       - Item: Daydric_Card
         StealProtected: true
   - Id: 1164
@@ -13718,6 +13721,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1325
     AegisName: TREASURE_BOX2
     Name: Treasure Chest
@@ -13748,6 +13752,7 @@ Body:
         Rate: 75
       - Item: Masamune
         Rate: 8
+        StealProtected: true
   - Id: 1326
     AegisName: TREASURE_BOX3
     Name: Treasure Chest
@@ -13778,6 +13783,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1327
     AegisName: TREASURE_BOX4
     Name: Treasure Chest
@@ -13808,6 +13814,7 @@ Body:
         Rate: 75
       - Item: Helm_Of_Sun
         Rate: 2
+        StealProtected: true
   - Id: 1328
     AegisName: TREASURE_BOX5
     Name: Treasure Chest
@@ -13838,6 +13845,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1329
     AegisName: TREASURE_BOX6
     Name: Treasure Chest
@@ -13868,6 +13876,7 @@ Body:
         Rate: 100
       - Item: Gemmed_Crown
         Rate: 9
+        StealProtected: true
   - Id: 1330
     AegisName: TREASURE_BOX7
     Name: Treasure Chest
@@ -13898,6 +13907,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1331
     AegisName: TREASURE_BOX8
     Name: Treasure Chest
@@ -13928,6 +13938,7 @@ Body:
         Rate: 125
       - Item: Earring_
         Rate: 9
+        StealProtected: true
   - Id: 1332
     AegisName: TREASURE_BOX9
     Name: Treasure Chest
@@ -13958,6 +13969,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1333
     AegisName: TREASURE_BOX10
     Name: Treasure Chest
@@ -13988,6 +14000,7 @@ Body:
         Rate: 150
       - Item: Necklace_
         Rate: 10
+        StealProtected: true
   - Id: 1334
     AegisName: TREASURE_BOX11
     Name: Treasure Chest
@@ -14018,6 +14031,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1335
     AegisName: TREASURE_BOX12
     Name: Treasure Chest
@@ -14048,6 +14062,7 @@ Body:
         Rate: 150
       - Item: Magestic_Goat
         Rate: 10
+        StealProtected: true
   - Id: 1336
     AegisName: TREASURE_BOX13
     Name: Treasure Chest
@@ -14078,6 +14093,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1337
     AegisName: TREASURE_BOX14
     Name: Treasure Chest
@@ -14108,6 +14124,7 @@ Body:
         Rate: 150
       - Item: Clothes_Of_The_Lord
         Rate: 10
+        StealProtected: true
   - Id: 1338
     AegisName: TREASURE_BOX15
     Name: Treasure Chest
@@ -14138,6 +14155,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1339
     AegisName: TREASURE_BOX16
     Name: Treasure Chest
@@ -14168,6 +14186,7 @@ Body:
         Rate: 167
       - Item: Holy_Robe
         Rate: 10
+        StealProtected: true
   - Id: 1340
     AegisName: TREASURE_BOX17
     Name: Treasure Chest
@@ -14198,6 +14217,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1341
     AegisName: TREASURE_BOX18
     Name: Treasure Chest
@@ -14228,6 +14248,7 @@ Body:
         Rate: 188
       - Item: Crown
         Rate: 12
+        StealProtected: true
   - Id: 1342
     AegisName: TREASURE_BOX19
     Name: Treasure Chest
@@ -14258,6 +14279,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1343
     AegisName: TREASURE_BOX20
     Name: Treasure Chest
@@ -14288,6 +14310,7 @@ Body:
         Rate: 188
       - Item: Loard_Circlet
         Rate: 19
+        StealProtected: true
   - Id: 1344
     AegisName: TREASURE_BOX21
     Name: Treasure Chest
@@ -14318,6 +14341,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1345
     AegisName: TREASURE_BOX22
     Name: Treasure Chest
@@ -14348,6 +14372,7 @@ Body:
         Rate: 69
       - Item: Ring_
         Rate: 20
+        StealProtected: true
   - Id: 1346
     AegisName: TREASURE_BOX23
     Name: Treasure Chest
@@ -14378,6 +14403,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1347
     AegisName: TREASURE_BOX24
     Name: Treasure Chest
@@ -14408,6 +14434,7 @@ Body:
         Rate: 50
       - Item: Helm_Of_Angel
         Rate: 24
+        StealProtected: true
   - Id: 1348
     AegisName: TREASURE_BOX25
     Name: Treasure Chest
@@ -14438,6 +14465,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1349
     AegisName: TREASURE_BOX26
     Name: Treasure Chest
@@ -14468,6 +14496,7 @@ Body:
         Rate: 46
       - Item: Elven_Ears
         Rate: 25
+        StealProtected: true
   - Id: 1350
     AegisName: TREASURE_BOX27
     Name: Treasure Chest
@@ -14498,6 +14527,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1351
     AegisName: TREASURE_BOX28
     Name: Treasure Chest
@@ -14528,6 +14558,7 @@ Body:
         Rate: 41
       - Item: Tiara
         Rate: 32
+        StealProtected: true
   - Id: 1352
     AegisName: TREASURE_BOX29
     Name: Treasure Chest
@@ -14558,6 +14589,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1353
     AegisName: TREASURE_BOX30
     Name: Treasure Chest
@@ -14588,6 +14620,7 @@ Body:
         Rate: 38
       - Item: Magician_Hat
         Rate: 34
+        StealProtected: true
   - Id: 1354
     AegisName: TREASURE_BOX31
     Name: Treasure Chest
@@ -14618,6 +14651,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1355
     AegisName: TREASURE_BOX32
     Name: Treasure Chest
@@ -14648,6 +14682,7 @@ Body:
         Rate: 250
       - Item: Plate_Armor_
         Rate: 35
+        StealProtected: true
   - Id: 1356
     AegisName: TREASURE_BOX33
     Name: Treasure Chest
@@ -14678,6 +14713,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1357
     AegisName: TREASURE_BOX34
     Name: Treasure Chest
@@ -14708,6 +14744,7 @@ Body:
         Rate: 273
       - Item: Sharp_Gear
         Rate: 38
+        StealProtected: true
   - Id: 1358
     AegisName: TREASURE_BOX35
     Name: Treasure Chest
@@ -14738,6 +14775,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1359
     AegisName: TREASURE_BOX36
     Name: Treasure Chest
@@ -14768,6 +14806,7 @@ Body:
         Rate: 60
       - Item: Bone_Helm
         Rate: 38
+        StealProtected: true
   - Id: 1360
     AegisName: TREASURE_BOX37
     Name: Treasure Chest
@@ -14798,6 +14837,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1361
     AegisName: TREASURE_BOX38
     Name: Treasure Chest
@@ -14828,6 +14868,7 @@ Body:
         Rate: 50
       - Item: Helm_
         Rate: 50
+        StealProtected: true
   - Id: 1362
     AegisName: TREASURE_BOX39
     Name: Treasure Chest
@@ -14858,6 +14899,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1363
     AegisName: TREASURE_BOX40
     Name: Treasure Chest
@@ -14888,6 +14930,7 @@ Body:
         Rate: 43
       - Item: Iron_Driver
         Rate: 38
+        StealProtected: true
   - Id: 1364
     AegisName: G_ASSULTER
     Name: Assaulter
@@ -19732,6 +19775,7 @@ Body:
         Rate: 300
       - Item: Sabah_Cloth
         Rate: 10
+        StealProtected: true
       - Item: Loli_Ruri_Card
         StealProtected: true
   - Id: 1506
@@ -24096,6 +24140,7 @@ Body:
         Rate: 100
       - Item: Unstable_Energy_Particle
         Rate: 1000
+        StealProtected: true
       - Item: Seyren_Card
         StealProtected: true
   - Id: 1635
@@ -24147,6 +24192,7 @@ Body:
         Rate: 100
       - Item: Unstable_Energy_Particle
         Rate: 1000
+        StealProtected: true
       - Item: Eremes_Card
         StealProtected: true
   - Id: 1636
@@ -24196,6 +24242,7 @@ Body:
         Rate: 10
       - Item: Unstable_Energy_Particle
         Rate: 1000
+        StealProtected: true
       - Item: Harword_Card
         StealProtected: true
   - Id: 1637
@@ -24246,6 +24293,7 @@ Body:
         Rate: 200
       - Item: Unstable_Energy_Particle
         Rate: 1000
+        StealProtected: true
       - Item: Magaleta_Card
         StealProtected: true
   - Id: 1638
@@ -24296,6 +24344,7 @@ Body:
         Rate: 200
       - Item: Unstable_Energy_Particle
         Rate: 1000
+        StealProtected: true
       - Item: Shecil_Card
         StealProtected: true
   - Id: 1639
@@ -24345,6 +24394,7 @@ Body:
         Rate: 20
       - Item: Unstable_Energy_Particle
         Rate: 1000
+        StealProtected: true
       - Item: Katrinn_Card
         StealProtected: true
   - Id: 1640
@@ -24931,6 +24981,7 @@ Body:
         Rate: 10000
       - Item: Glittering_Clothes
         Rate: 3500
+        StealProtected: true
       - Item: B_Katrinn_Card
         StealProtected: true
   - Id: 1652
@@ -24976,8 +25027,10 @@ Body:
       - Item: Plate_Armor_
       - Item: Silent_Energy_Particle
         Rate: 1000
+        StealProtected: true
       - Item: Weak_Energy_Particle
         Rate: 250
+        StealProtected: true
       - Item: Ygnizem_Card
         StealProtected: true
   - Id: 1653
@@ -25025,8 +25078,10 @@ Body:
         Rate: 10
       - Item: Silent_Energy_Particle
         Rate: 1000
+        StealProtected: true
       - Item: Weak_Energy_Particle
         Rate: 250
+        StealProtected: true
       - Item: Whikebain_Card
         StealProtected: true
   - Id: 1654
@@ -25073,8 +25128,10 @@ Body:
         Rate: 10
       - Item: Silent_Energy_Particle
         Rate: 1000
+        StealProtected: true
       - Item: Weak_Energy_Particle
         Rate: 250
+        StealProtected: true
       - Item: Armaia_Card
         StealProtected: true
   - Id: 1655
@@ -25121,8 +25178,10 @@ Body:
       - Item: Spike
       - Item: Silent_Energy_Particle
         Rate: 1000
+        StealProtected: true
       - Item: Weak_Energy_Particle
         Rate: 250
+        StealProtected: true
       - Item: Erend_Card
         StealProtected: true
   - Id: 1656
@@ -25173,8 +25232,10 @@ Body:
         Rate: 2
       - Item: Silent_Energy_Particle
         Rate: 1000
+        StealProtected: true
       - Item: Weak_Energy_Particle
         Rate: 250
+        StealProtected: true
       - Item: Kavac_Card
         StealProtected: true
   - Id: 1657
@@ -25225,8 +25286,10 @@ Body:
       - Item: Clip
       - Item: Silent_Energy_Particle
         Rate: 1000
+        StealProtected: true
       - Item: Weak_Energy_Particle
         Rate: 250
+        StealProtected: true
       - Item: Rawrel_Card
         StealProtected: true
   - Id: 1658
@@ -27557,6 +27620,7 @@ Body:
       - Item: Stone_Buckler
         Rate: 50
       - Item: White_Wing_Brooch
+        StealProtected: true
       - Item: Acidus_Card
         StealProtected: true
   - Id: 1714
@@ -27604,6 +27668,7 @@ Body:
       - Item: Magni_Cap
         Rate: 50
       - Item: Black_wing_Brooch
+        StealProtected: true
       - Item: Ferus_Card
         StealProtected: true
   - Id: 1715
@@ -27689,6 +27754,7 @@ Body:
       - Item: Dragonball_Blue
         Rate: 100
       - Item: White_Wing_Brooch
+        StealProtected: true
       - Item: Acidus__Card
         StealProtected: true
   - Id: 1717
@@ -28932,6 +28998,7 @@ Body:
       - Item: Blood_Tears
         Rate: 5
       - Item: Peuz_Seal
+        StealProtected: true
       - Item: Skogul_Card
         StealProtected: true
   - Id: 1753
@@ -33074,6 +33141,7 @@ Body:
       - Item: Carnium
       - Item: Nab_Ring
         Rate: 100
+        StealProtected: true
       - Item: Ragged_Zombie_Card
         StealProtected: true
   - Id: 1866
@@ -35437,6 +35505,7 @@ Body:
         Rate: 150
       - Item: Wild_Beast_Claw
         Rate: 150
+        StealProtected: true
   - Id: 1939
     AegisName: TREASURE_BOX42
     Name: Treasure Chest
@@ -35467,6 +35536,7 @@ Body:
         Rate: 150
       - Item: Inverse_Scale
         Rate: 150
+        StealProtected: true
   - Id: 1940
     AegisName: TREASURE_BOX43
     Name: Treasure Chest
@@ -35497,6 +35567,7 @@ Body:
         Rate: 150
       - Item: Blood_Tears
         Rate: 150
+        StealProtected: true
   - Id: 1941
     AegisName: TREASURE_BOX44
     Name: Treasure Chest
@@ -35527,6 +35598,7 @@ Body:
         Rate: 150
       - Item: Divine_Cross
         Rate: 50
+        StealProtected: true
   - Id: 1942
     AegisName: TREASURE_BOX45
     Name: Treasure Chest
@@ -35557,6 +35629,7 @@ Body:
         Rate: 150
       - Item: Icicle_Fist
         Rate: 150
+        StealProtected: true
   - Id: 1943
     AegisName: TREASURE_BOX46
     Name: Treasure Chest
@@ -35587,6 +35660,7 @@ Body:
         Rate: 150
       - Item: Combo_Battle_Glove
         Rate: 150
+        StealProtected: true
   - Id: 1944
     AegisName: TREASURE_BOX47
     Name: Treasure Chest
@@ -35617,6 +35691,7 @@ Body:
         Rate: 150
       - Item: Ulfhedinn
         Rate: 50
+        StealProtected: true
   - Id: 1945
     AegisName: TREASURE_BOX48
     Name: Treasure Chest
@@ -35647,6 +35722,7 @@ Body:
         Rate: 150
       - Item: Seismic_Fist
         Rate: 150
+        StealProtected: true
   - Id: 1946
     AegisName: TREASURE_BOX49
     Name: Treasure Chest
@@ -35677,6 +35753,7 @@ Body:
         Rate: 150
       - Item: Mithril_Magic_Cape
         Rate: 50
+        StealProtected: true
   - Id: 1947
     AegisName: PIAMETTE_
     Name: Piamette
@@ -37463,6 +37540,7 @@ Body:
       - Item: Solid_Shell
         Rate: 3000
       - Item: Black_Wing_Suits
+        StealProtected: true
       - Item: Luciola_Vespa_Card
         StealProtected: true
   - Id: 1995
@@ -38626,6 +38704,7 @@ Body:
         Rate: 10
       - Item: Chocolate_Drink
         Rate: 10
+        StealProtected: true
   - Id: 2026
     AegisName: DANDELION_
     Name: Runaway Dandelion Member
@@ -43133,6 +43212,7 @@ Body:
         Rate: 20
       - Item: Low_Coin_Pocket
         Rate: 2
+        StealProtected: true
   - Id: 2175
     AegisName: MD_MARSE
     Name: Deep Sea Marse
@@ -43179,6 +43259,7 @@ Body:
         Rate: 150
       - Item: Low_Coin_Pocket
         Rate: 2
+        StealProtected: true
   - Id: 2176
     AegisName: MD_CRAB
     Name: Deep Sea Crab
@@ -43223,6 +43304,7 @@ Body:
         Rate: 19
       - Item: Low_Coin_Pocket
         Rate: 2
+        StealProtected: true
   - Id: 2177
     AegisName: MD_CORNUTUS
     Name: Deep Sea Cornutus
@@ -43270,6 +43352,7 @@ Body:
         Rate: 500
       - Item: Low_Coin_Pocket
         Rate: 3
+        StealProtected: true
   - Id: 2178
     AegisName: MD_SHELLFISH
     Name: Deep Sea Shellfish
@@ -43317,6 +43400,7 @@ Body:
         Rate: 9
       - Item: Low_Coin_Pocket
         Rate: 2
+        StealProtected: true
   - Id: 2179
     AegisName: MD_KUKRE
     Name: Deep Sea Kukre
@@ -43363,6 +43447,7 @@ Body:
         Rate: 10
       - Item: Low_Coin_Pocket
         Rate: 2
+        StealProtected: true
   - Id: 2180
     AegisName: MD_STROUF
     Name: Deep Sea Strouf
@@ -43408,6 +43493,7 @@ Body:
         Rate: 750
       - Item: Mid_Coin_Pocket
         Rate: 3
+        StealProtected: true
   - Id: 2181
     AegisName: MD_SWORD_FISH
     Name: Deep Sea Sword Fish
@@ -43454,6 +43540,7 @@ Body:
         Rate: 300
       - Item: Mid_Coin_Pocket
         Rate: 3
+        StealProtected: true
   - Id: 2182
     AegisName: MD_MARC
     Name: Deep Sea Marc
@@ -43500,6 +43587,7 @@ Body:
         Rate: 350
       - Item: Old_Coin_Pocket
         Rate: 3
+        StealProtected: true
   - Id: 2183
     AegisName: MD_ANOLIAN
     Name: Deep Sea Anolian
@@ -43546,6 +43634,7 @@ Body:
         Rate: 67
       - Item: Mid_Coin_Pocket
         Rate: 3
+        StealProtected: true
   - Id: 2184
     AegisName: MD_OBEAUNE
     Name: Deep Sea Obeaune
@@ -43592,6 +43681,7 @@ Body:
         Rate: 15
       - Item: Mid_Coin_Pocket
         Rate: 3
+        StealProtected: true
   - Id: 2185
     AegisName: MD_KAPHA
     Name: Deep Sea Kapha
@@ -43637,6 +43727,7 @@ Body:
         Rate: 3
       - Item: Old_Coin_Pocket
         Rate: 3
+        StealProtected: true
   - Id: 2186
     AegisName: COELACANTH_N_E
     Name: Coelacanth
@@ -43684,6 +43775,7 @@ Body:
         Rate: 2000
       - Item: Low_Coin_Pocket
         Rate: 2000
+        StealProtected: true
   - Id: 2187
     AegisName: COELACANTH_N_A
     Name: Gloomy Coelacanth
@@ -43732,6 +43824,7 @@ Body:
         Rate: 5000
       - Item: Low_Coin_Pocket
         Rate: 5000
+        StealProtected: true
       - Item: Black_Coelacanth_Card
         StealProtected: true
   - Id: 2188
@@ -43782,6 +43875,7 @@ Body:
         Rate: 5000
       - Item: Low_Coin_Pocket
         Rate: 5000
+        StealProtected: true
       - Item: Odd_Coelacanth_Card
         StealProtected: true
   - Id: 2189
@@ -43831,6 +43925,7 @@ Body:
         Rate: 5000
       - Item: Low_Coin_Pocket
         Rate: 5000
+        StealProtected: true
       - Item: Mutant_Coelacanth_Card
         StealProtected: true
   - Id: 2190
@@ -43881,6 +43976,7 @@ Body:
         Rate: 5000
       - Item: Low_Coin_Pocket
         Rate: 5000
+        StealProtected: true
       - Item: Cruel_Coelacanth_Card
         StealProtected: true
   - Id: 2191
@@ -43941,6 +44037,7 @@ Body:
       - Item: Tentacle
         Rate: 2500
       - Item: Low_Coin_Pocket
+        StealProtected: true
       - Item: Mini_Octopus_Card
         StealProtected: true
   - Id: 2193
@@ -43982,6 +44079,7 @@ Body:
       - Item: Sticky_Mucus
         Rate: 2500
       - Item: Low_Coin_Pocket
+        StealProtected: true
   - Id: 2194
     AegisName: MD_GIANT_OCTOPUS
     Name: Giant Octopus
@@ -44025,6 +44123,7 @@ Body:
         Rate: 2000
       - Item: Low_Coin_Pocket
         Rate: 2000
+        StealProtected: true
       - Item: Giant_Octopus_Card
         StealProtected: true
   - Id: 2195
@@ -46040,6 +46139,7 @@ Body:
         Rate: 2000
       - Item: Gold
         Rate: 10
+        StealProtected: true
   - Id: 2249
     AegisName: PYURIEL
     Name: Angry Student Pyuriel
@@ -47375,6 +47475,7 @@ Body:
         Rate: 2000
       - Item: Mental_Destroyer
         Rate: 10
+        StealProtected: true
   - Id: 2289
     AegisName: E_FABRE
     Name: Fabre
@@ -52085,6 +52186,7 @@ Body:
         Rate: 400
       - Item: Yggdrasilberry
         Rate: 500
+        StealProtected: true
   - Id: 2453
     AegisName: TREASURE_BOX_TE_1
     Name: Treasure Chest
@@ -52113,6 +52215,7 @@ Body:
         Rate: 400
       - Item: Castle_Treasure_Box
         Rate: 500
+        StealProtected: true
   - Id: 2454
     AegisName: TREASURE_BOX_TE_2
     Name: Treasure Chest
@@ -52141,6 +52244,7 @@ Body:
         Rate: 400
       - Item: Castle_Treasure_Box
         Rate: 500
+        StealProtected: true
   - Id: 2455
     AegisName: TREASURE_BOX_TE_3
     Name: Treasure Chest
@@ -52169,6 +52273,7 @@ Body:
         Rate: 400
       - Item: Castle_Treasure_Box
         Rate: 500
+        StealProtected: true
   - Id: 2456
     AegisName: TREASURE_BOX_TE_4
     Name: Treasure Chest
@@ -52197,6 +52302,7 @@ Body:
         Rate: 400
       - Item: Castle_Treasure_Box
         Rate: 500
+        StealProtected: true
   - Id: 2457
     AegisName: TREASURE_BOX_TE_5
     Name: Treasure Chest
@@ -52225,6 +52331,7 @@ Body:
         Rate: 400
       - Item: Castle_Treasure_Box
         Rate: 500
+        StealProtected: true
   - Id: 2458
     AegisName: TREASURE_BOX_TE_6
     Name: Treasure Chest
@@ -52253,6 +52360,7 @@ Body:
         Rate: 400
       - Item: Castle_Treasure_Box
         Rate: 500
+        StealProtected: true
   - Id: 2459
     AegisName: TREASURE_BOX_TE_7
     Name: Treasure Chest
@@ -52281,6 +52389,7 @@ Body:
         Rate: 400
       - Item: Castle_Treasure_Box
         Rate: 500
+        StealProtected: true
   - Id: 2460
     AegisName: TREASURE_BOX_TE_8
     Name: Treasure Chest
@@ -52309,6 +52418,7 @@ Body:
         Rate: 400
       - Item: Castle_Treasure_Box
         Rate: 500
+        StealProtected: true
   - Id: 2461
     AegisName: TREASURE_BOX_TE_9
     Name: Treasure Chest
@@ -52337,6 +52447,7 @@ Body:
         Rate: 400
       - Item: Castle_Treasure_Box
         Rate: 500
+        StealProtected: true
   - Id: 2462
     AegisName: TREASURE_BOX_TE_10
     Name: Treasure Chest
@@ -52365,6 +52476,7 @@ Body:
         Rate: 400
       - Item: Castle_Treasure_Box
         Rate: 500
+        StealProtected: true
   - Id: 2464
     AegisName: MG_ZOMBIE
     Name: Corrupted Steward
@@ -53317,8 +53429,10 @@ Body:
         Rate: 10
       - Item: Fluorescent_Liquid
         Rate: 1000
+        StealProtected: true
       - Item: Karvodailnirol
         Rate: 100
+        StealProtected: true
       - Item: Faceworm_Card
         StealProtected: true
   - Id: 2529
@@ -53367,6 +53481,7 @@ Body:
         Rate: 100
       - Item: Broken_Horn
         Rate: 5000
+        StealProtected: true
       - Item: Faceworm_Queen_Card
         StealProtected: true
   - Id: 2530
@@ -53443,6 +53558,7 @@ Body:
         Rate: 5000
       - Item: Fluorescent_Liquid
         Rate: 1000
+        StealProtected: true
   - Id: 2532
     AegisName: FACEWORM_QUEEN_R
     Name: Red Faceworm Queen
@@ -53490,6 +53606,7 @@ Body:
         Rate: 100
       - Item: Broken_Horn
         Rate: 5000
+        StealProtected: true
   - Id: 2533
     AegisName: FACEWORM_QUEEN_G
     Name: Green Faceworm Queen
@@ -53794,8 +53911,10 @@ Body:
         Rate: 1750
       - Item: Solid_Shell
         Rate: 400
+        StealProtected: true
       - Item: Sticky_Mucus
         Rate: 1500
+        StealProtected: true
       - Item: Faceworm_Larva_Card
         StealProtected: true
   - Id: 2542
@@ -53844,6 +53963,7 @@ Body:
         Rate: 100
       - Item: Cookbook10
       - Item: Fantastic_Cooking_Kits
+        StealProtected: true
       - Item: Irene_High_Elder_Card
         StealProtected: true
   - Id: 2543
@@ -53891,6 +54011,7 @@ Body:
       - Item: Dex_Dish04
         Rate: 533
       - Item: Cookbook08
+        StealProtected: true
       - Item: Payon_Soldier_Card
         StealProtected: true
   - Id: 2544
@@ -53938,6 +54059,7 @@ Body:
       - Item: Imperial_Cooking_Kits
         Rate: 133
       - Item: Cookbook09
+        StealProtected: true
       - Item: Payon_Soldier_Card
         StealProtected: true
   - Id: 2545
@@ -53988,6 +54110,7 @@ Body:
         Rate: 600
       - Item: Outdoor_Cooking_Kits
         Rate: 333
+        StealProtected: true
   - Id: 2546
     AegisName: GUARDDOG2
     Name: 2nd Guard Dog
@@ -54033,6 +54156,7 @@ Body:
         Rate: 466
       - Item: Indoor_Cooking_Kits
         Rate: 200
+        StealProtected: true
   - Id: 2549
     AegisName: GEFFEN_MAGE_1
     Name: Arhi
@@ -72866,6 +72990,7 @@ Body:
         Rate: 200
       - Item: Garlet
         Rate: 200
+        StealProtected: true
   - Id: 3176
     AegisName: E1_GREMLIN
     Name: Gremlin
@@ -73113,6 +73238,7 @@ Body:
         Rate: 3000
       - Item: Dex_Dish07
         Rate: 3000
+        StealProtected: true
       - Item: Captain_Felock_Card
         StealProtected: true
   - Id: 3190
@@ -73638,8 +73764,10 @@ Body:
         Rate: 500
       - Item: C_Silent_Executor
         Rate: 50
+        StealProtected: true
       - Item: C_Circlet_Of_Bone
         Rate: 50
+        StealProtected: true
       - Item: V_B_Eremes_Card
         StealProtected: true
   - Id: 3209
@@ -73684,8 +73812,10 @@ Body:
         Rate: 500
       - Item: Acolyte_Soul
         Rate: 500
+        StealProtected: true
       - Item: C_Mitra
         Rate: 50
+        StealProtected: true
       - Item: V_B_Magaleta_Card
         StealProtected: true
   - Id: 3210
@@ -73730,8 +73860,10 @@ Body:
         Rate: 500
       - Item: Mage_Soul
         Rate: 500
+        StealProtected: true
       - Item: C_Magic_Stone_Hat
         Rate: 50
+        StealProtected: true
       - Item: V_B_Katrinn_Card
         StealProtected: true
   - Id: 3211
@@ -73776,8 +73908,10 @@ Body:
         Rate: 500
       - Item: Archer_Soul
         Rate: 500
+        StealProtected: true
       - Item: C_Camouflage_RabbitHood
         Rate: 50
+        StealProtected: true
       - Item: V_B_Shecil_Card
         StealProtected: true
   - Id: 3212
@@ -73824,8 +73958,10 @@ Body:
         Rate: 500
       - Item: C_Driver_Band_R
         Rate: 50
+        StealProtected: true
       - Item: C_Driver_Band_Y
         Rate: 50
+        StealProtected: true
       - Item: V_B_Harword_Card
         StealProtected: true
   - Id: 3213
@@ -73870,8 +74006,10 @@ Body:
         Rate: 500
       - Item: Swordman_Soul
         Rate: 500
+        StealProtected: true
       - Item: C_Rune_Circlet
         Rate: 50
+        StealProtected: true
       - Item: V_B_Seyren_Card
         StealProtected: true
   - Id: 3214
@@ -75727,6 +75865,7 @@ Body:
     Drops:
       - Item: Dehumidifiers
         Rate: 2000
+        StealProtected: true
       - Item: Frozen_Wolf_Card
         StealProtected: true
   - Id: 3443
@@ -75761,6 +75900,7 @@ Body:
     Drops:
       - Item: Sandpaper
         Rate: 2000
+        StealProtected: true
       - Item: Taffy_Card
         StealProtected: true
   - Id: 3444
@@ -75795,6 +75935,7 @@ Body:
     Drops:
       - Item: Red_Eye
         Rate: 2000
+        StealProtected: true
       - Item: Watcher_Card
         StealProtected: true
   - Id: 3445
@@ -76999,6 +77140,7 @@ Body:
         Rate: 10
       - Item: Sealed_Magic_Sword
         Rate: 10
+        StealProtected: true
       - Item: Heart_Hunter_Evil_Card
         StealProtected: true
   - Id: 3629
@@ -77104,6 +77246,7 @@ Body:
         Rate: 80
       - Item: Build_Up_Potion_SS
         Rate: 200
+        StealProtected: true
       - Item: Humanoid_Chimera_Card
         StealProtected: true
   - Id: 3632
@@ -77151,6 +77294,7 @@ Body:
         Rate: 80
       - Item: Build_Up_Potion_SS
         Rate: 200
+        StealProtected: true
       - Item: Material_Chimera_Card
         StealProtected: true
   - Id: 3633
@@ -77338,8 +77482,10 @@ Body:
         Rate: 2500
       - Item: Brigan
         Rate: 1000
+        StealProtected: true
       - Item: Vigilante_Bow
         Rate: 50
+        StealProtected: true
       - Item: Shotgun_Buffalo_Bandit_Card
         StealProtected: true
   - Id: 3737
@@ -77382,8 +77528,10 @@ Body:
         Rate: 500
       - Item: Monokage
         Rate: 50
+        StealProtected: true
       - Item: Huuma_Shuriken_of_Dancing_Petals
         Rate: 50
+        StealProtected: true
       - Item: Revolver_Buffalo_Bandit_Card
         StealProtected: true
   - Id: 3738
@@ -77424,8 +77572,10 @@ Body:
         Rate: 1000
       - Item: Well_Baked_Cookie
         Rate: 200
+        StealProtected: true
       - Item: Elemental_Origin
         Rate: 50
+        StealProtected: true
       - Item: Scimitar_Buffalo_Bandit_Card
         StealProtected: true
   - Id: 3739
@@ -77470,8 +77620,10 @@ Body:
         Rate: 1500
       - Item: Animal_Blood
         Rate: 500
+        StealProtected: true
       - Item: Ulfhedinn
         Rate: 50
+        StealProtected: true
       - Item: Coyote_Card
         StealProtected: true
   - Id: 3740
@@ -77519,8 +77671,10 @@ Body:
         Rate: 30
       - Item: Oridecon_Stone
         Rate: 10
+        StealProtected: true
       - Item: Elunium_Stone
         Rate: 10
+        StealProtected: true
       - Item: Gaster_Card
         StealProtected: true
   - Id: 3741
@@ -77726,8 +77880,10 @@ Body:
         Rate: 100
       - Item: Vigilante_Bow
         Rate: 100
+        StealProtected: true
       - Item: Hippie_Rope
         Rate: 50
+        StealProtected: true
       - Item: Elite_Shotgun_Buffalo_Bandit_Card
         StealProtected: true
   - Id: 3748
@@ -77768,8 +77924,10 @@ Body:
         Rate: 2000
       - Item: Huuma_Shuriken_of_Dancing_Petals
         Rate: 250
+        StealProtected: true
       - Item: Monokage
         Rate: 100
+        StealProtected: true
       - Item: Elite_Revolver_Buffalo_Bandit_Card
         StealProtected: true
   - Id: 3749
@@ -77814,8 +77972,10 @@ Body:
         Rate: 30
       - Item: Roasted_Beef
         Rate: 30
+        StealProtected: true
       - Item: Mine_Worker's_Pickaxe
         Rate: 10
+        StealProtected: true
       - Item: Elite_Scimitar_Buffalo_Bandit_Card
         StealProtected: true
   - Id: 3787
@@ -77856,8 +78016,10 @@ Body:
         Rate: 1500
       - Item: Solid_Shell
         Rate: 150
+        StealProtected: true
       - Item: Hippie_Guitar
         Rate: 50
+        StealProtected: true
       - Item: Marsh_Arclouse_Card
         StealProtected: true
   - Id: 3788
@@ -77896,8 +78058,10 @@ Body:
         Rate: 500
       - Item: Monster's_Feed
         Rate: 150
+        StealProtected: true
       - Item: Hippie_Rope
         Rate: 10
+        StealProtected: true
       - Item: Brown_Rat_Card
         StealProtected: true
   - Id: 3790

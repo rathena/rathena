@@ -3174,6 +3174,7 @@ Body:
         Rate: 50
       - Item: Centimental_Flower
         Rate: 2
+        StealProtected: true
   - Id: 1079
     AegisName: BLUE_PLANT
     Name: Blue Plant
@@ -3213,6 +3214,7 @@ Body:
         Rate: 1000
       - Item: Centimental_Leaf
         Rate: 2
+        StealProtected: true
   - Id: 1080
     AegisName: GREEN_PLANT
     Name: Green Plant
@@ -3252,6 +3254,7 @@ Body:
         Rate: 50
       - Item: Centimental_Leaf
         Rate: 2
+        StealProtected: true
   - Id: 1081
     AegisName: YELLOW_PLANT
     Name: Yellow Plant
@@ -3291,6 +3294,7 @@ Body:
         Rate: 500
       - Item: Centimental_Flower
         Rate: 2
+        StealProtected: true
   - Id: 1082
     AegisName: WHITE_PLANT
     Name: White Plant
@@ -3330,6 +3334,7 @@ Body:
         Rate: 50
       - Item: Centimental_Flower
         Rate: 2
+        StealProtected: true
   - Id: 1083
     AegisName: SHINING_PLANT
     Name: Shining Plant
@@ -3369,6 +3374,7 @@ Body:
       - Item: Yggdrasilberry
         Rate: 50
       - Item: Emperium
+        StealProtected: true
   - Id: 1084
     AegisName: BLACK_MUSHROOM
     Name: Black Mushroom
@@ -3408,6 +3414,7 @@ Body:
         Rate: 5500
       - Item: Poison_Spore
         Rate: 5500
+        StealProtected: true
   - Id: 1085
     AegisName: RED_MUSHROOM
     Name: Red Mushroom
@@ -3447,6 +3454,7 @@ Body:
         Rate: 5500
       - Item: Poison_Spore
         Rate: 5500
+        StealProtected: true
   - Id: 1086
     AegisName: GOLDEN_BUG
     Name: Golden Thief Bug
@@ -13270,6 +13278,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1325
     AegisName: TREASURE_BOX2
     Name: Treasure Chest
@@ -13300,6 +13309,7 @@ Body:
         Rate: 75
       - Item: Masamune
         Rate: 8
+        StealProtected: true
   - Id: 1326
     AegisName: TREASURE_BOX3
     Name: Treasure Chest
@@ -13330,6 +13340,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1327
     AegisName: TREASURE_BOX4
     Name: Treasure Chest
@@ -13360,6 +13371,7 @@ Body:
         Rate: 75
       - Item: Helm_Of_Sun
         Rate: 2
+        StealProtected: true
   - Id: 1328
     AegisName: TREASURE_BOX5
     Name: Treasure Chest
@@ -13390,6 +13402,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1329
     AegisName: TREASURE_BOX6
     Name: Treasure Chest
@@ -13420,6 +13433,7 @@ Body:
         Rate: 100
       - Item: Gemmed_Crown
         Rate: 9
+        StealProtected: true
   - Id: 1330
     AegisName: TREASURE_BOX7
     Name: Treasure Chest
@@ -13450,6 +13464,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1331
     AegisName: TREASURE_BOX8
     Name: Treasure Chest
@@ -13480,6 +13495,7 @@ Body:
         Rate: 125
       - Item: Earring_
         Rate: 9
+        StealProtected: true
   - Id: 1332
     AegisName: TREASURE_BOX9
     Name: Treasure Chest
@@ -13510,6 +13526,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1333
     AegisName: TREASURE_BOX10
     Name: Treasure Chest
@@ -13540,6 +13557,7 @@ Body:
         Rate: 150
       - Item: Necklace_
         Rate: 10
+        StealProtected: true
   - Id: 1334
     AegisName: TREASURE_BOX11
     Name: Treasure Chest
@@ -13570,6 +13588,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1335
     AegisName: TREASURE_BOX12
     Name: Treasure Chest
@@ -13600,6 +13619,7 @@ Body:
         Rate: 150
       - Item: Magestic_Goat
         Rate: 10
+        StealProtected: true
   - Id: 1336
     AegisName: TREASURE_BOX13
     Name: Treasure Chest
@@ -13630,6 +13650,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1337
     AegisName: TREASURE_BOX14
     Name: Treasure Chest
@@ -13660,6 +13681,7 @@ Body:
         Rate: 150
       - Item: Clothes_Of_The_Lord
         Rate: 10
+        StealProtected: true
   - Id: 1338
     AegisName: TREASURE_BOX15
     Name: Treasure Chest
@@ -13690,6 +13712,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1339
     AegisName: TREASURE_BOX16
     Name: Treasure Chest
@@ -13720,6 +13743,7 @@ Body:
         Rate: 167
       - Item: Holy_Robe
         Rate: 10
+        StealProtected: true
   - Id: 1340
     AegisName: TREASURE_BOX17
     Name: Treasure Chest
@@ -13750,6 +13774,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1341
     AegisName: TREASURE_BOX18
     Name: Treasure Chest
@@ -13780,6 +13805,7 @@ Body:
         Rate: 188
       - Item: Crown
         Rate: 12
+        StealProtected: true
   - Id: 1342
     AegisName: TREASURE_BOX19
     Name: Treasure Chest
@@ -13810,6 +13836,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1343
     AegisName: TREASURE_BOX20
     Name: Treasure Chest
@@ -13840,6 +13867,7 @@ Body:
         Rate: 188
       - Item: Loard_Circlet
         Rate: 19
+        StealProtected: true
   - Id: 1344
     AegisName: TREASURE_BOX21
     Name: Treasure Chest
@@ -13870,6 +13898,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1345
     AegisName: TREASURE_BOX22
     Name: Treasure Chest
@@ -13900,6 +13929,7 @@ Body:
         Rate: 69
       - Item: Ring_
         Rate: 20
+        StealProtected: true
   - Id: 1346
     AegisName: TREASURE_BOX23
     Name: Treasure Chest
@@ -13930,6 +13960,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1347
     AegisName: TREASURE_BOX24
     Name: Treasure Chest
@@ -13960,6 +13991,7 @@ Body:
         Rate: 50
       - Item: Helm_Of_Angel
         Rate: 24
+        StealProtected: true
   - Id: 1348
     AegisName: TREASURE_BOX25
     Name: Treasure Chest
@@ -13990,6 +14022,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1349
     AegisName: TREASURE_BOX26
     Name: Treasure Chest
@@ -14020,6 +14053,7 @@ Body:
         Rate: 46
       - Item: Elven_Ears
         Rate: 25
+        StealProtected: true
   - Id: 1350
     AegisName: TREASURE_BOX27
     Name: Treasure Chest
@@ -14050,6 +14084,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1351
     AegisName: TREASURE_BOX28
     Name: Treasure Chest
@@ -14080,6 +14115,7 @@ Body:
         Rate: 41
       - Item: Tiara
         Rate: 32
+        StealProtected: true
   - Id: 1352
     AegisName: TREASURE_BOX29
     Name: Treasure Chest
@@ -14110,6 +14146,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1353
     AegisName: TREASURE_BOX30
     Name: Treasure Chest
@@ -14140,6 +14177,7 @@ Body:
         Rate: 38
       - Item: Magician_Hat
         Rate: 34
+        StealProtected: true
   - Id: 1354
     AegisName: TREASURE_BOX31
     Name: Treasure Chest
@@ -14170,6 +14208,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1355
     AegisName: TREASURE_BOX32
     Name: Treasure Chest
@@ -14200,6 +14239,7 @@ Body:
         Rate: 250
       - Item: Plate_Armor_
         Rate: 35
+        StealProtected: true
   - Id: 1356
     AegisName: TREASURE_BOX33
     Name: Treasure Chest
@@ -14230,6 +14270,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1357
     AegisName: TREASURE_BOX34
     Name: Treasure Chest
@@ -14260,6 +14301,7 @@ Body:
         Rate: 273
       - Item: Sharp_Gear
         Rate: 38
+        StealProtected: true
   - Id: 1358
     AegisName: TREASURE_BOX35
     Name: Treasure Chest
@@ -14290,6 +14332,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1359
     AegisName: TREASURE_BOX36
     Name: Treasure Chest
@@ -14320,6 +14363,7 @@ Body:
         Rate: 60
       - Item: Bone_Helm
         Rate: 38
+        StealProtected: true
   - Id: 1360
     AegisName: TREASURE_BOX37
     Name: Treasure Chest
@@ -14350,6 +14394,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1361
     AegisName: TREASURE_BOX38
     Name: Treasure Chest
@@ -14380,6 +14425,7 @@ Body:
         Rate: 50
       - Item: Helm_
         Rate: 50
+        StealProtected: true
   - Id: 1362
     AegisName: TREASURE_BOX39
     Name: Treasure Chest
@@ -14410,6 +14456,7 @@ Body:
         Rate: 800
       - Item: Old_Card_Album
         Rate: 1000
+        StealProtected: true
   - Id: 1363
     AegisName: TREASURE_BOX40
     Name: Treasure Chest
@@ -14440,6 +14487,7 @@ Body:
         Rate: 43
       - Item: Iron_Driver
         Rate: 38
+        StealProtected: true
   - Id: 1364
     AegisName: G_ASSULTER
     Name: Assaulter
@@ -15763,6 +15811,7 @@ Body:
         Rate: 5000
       - Item: Yggdrasilberry
         Rate: 200
+        StealProtected: true
   - Id: 1396
     AegisName: CRYSTAL_2
     Name: Earth Crystal
@@ -15796,6 +15845,7 @@ Body:
         Rate: 5000
       - Item: Seed_Of_Yggdrasil
         Rate: 250
+        StealProtected: true
   - Id: 1397
     AegisName: CRYSTAL_3
     Name: Fire Crystal
@@ -15829,6 +15879,7 @@ Body:
         Rate: 5000
       - Item: Branch_Of_Dead_Tree
         Rate: 300
+        StealProtected: true
   - Id: 1398
     AegisName: CRYSTAL_4
     Name: Water Crystal
@@ -15862,6 +15913,7 @@ Body:
         Rate: 5000
       - Item: Old_Blue_Box
         Rate: 100
+        StealProtected: true
   - Id: 1399
     AegisName: EVENT_BAPHO
     Name: Baphomet
@@ -15917,6 +15969,7 @@ Body:
         Rate: 1720
       - Item: Magestic_Goat
         Rate: 1550
+        StealProtected: true
   - Id: 1400
     AegisName: KARAKASA
     Name: Karakasa
@@ -18995,6 +19048,7 @@ Body:
         Rate: 10000
       - Item: Holy_Guard
         Rate: 4500
+        StealProtected: true
   - Id: 1503
     AegisName: GIBBET
     Name: Gibbet
@@ -19698,6 +19752,7 @@ Body:
       - Item: Crystal_Mirror
         Rate: 500
       - Item: Tiara
+        StealProtected: true
   - Id: 1519
     AegisName: CHUNG_E
     Name: Green Maiden
@@ -19743,6 +19798,7 @@ Body:
         Rate: 50
       - Item: Hair_Protector
         Rate: 2
+        StealProtected: true
   - Id: 1520
     AegisName: BOILED_RICE
     Name: Boiled Rice
@@ -22325,6 +22381,7 @@ Body:
         Rate: 5000
       - Item: Handsei
         Rate: 100
+        StealProtected: true
   - Id: 1610
     AegisName: A_MUNAK
     Name: Munak
@@ -22357,6 +22414,7 @@ Body:
         Rate: 100
       - Item: Speed_Up_Potion
         Rate: 100
+        StealProtected: true
   - Id: 1611
     AegisName: A_BON_GUN
     Name: Bongun
@@ -22390,6 +22448,7 @@ Body:
         Rate: 100
       - Item: Speed_Up_Potion
         Rate: 100
+        StealProtected: true
   - Id: 1612
     AegisName: A_HYEGUN
     Name: Yao Jun
@@ -22426,6 +22485,7 @@ Body:
         Rate: 100
       - Item: Speed_Up_Potion
         Rate: 100
+        StealProtected: true
   - Id: 1613
     AegisName: METALING
     Name: Metaling
@@ -23631,6 +23691,7 @@ Body:
     Drops:
       - Item: Old_Violet_Box
         Rate: 10
+        StealProtected: true
   - Id: 1641
     AegisName: G_EREMES
     Name: Assassin Cross Eremes
@@ -23664,6 +23725,7 @@ Body:
     Drops:
       - Item: Old_Violet_Box
         Rate: 10
+        StealProtected: true
   - Id: 1642
     AegisName: G_HARWORD
     Name: Whitesmith Howard
@@ -23698,6 +23760,7 @@ Body:
     Drops:
       - Item: Old_Violet_Box
         Rate: 10
+        StealProtected: true
   - Id: 1643
     AegisName: G_MAGALETA
     Name: High Priest Margaretha
@@ -23731,6 +23794,7 @@ Body:
     Drops:
       - Item: Old_Violet_Box
         Rate: 10
+        StealProtected: true
   - Id: 1644
     AegisName: G_SHECIL
     Name: Sniper Cecil
@@ -23764,6 +23828,7 @@ Body:
     Drops:
       - Item: Old_Violet_Box
         Rate: 10
+        StealProtected: true
   - Id: 1645
     AegisName: G_KATRINN
     Name: High Wizard Kathryne
@@ -23797,6 +23862,7 @@ Body:
     Drops:
       - Item: Old_Violet_Box
         Rate: 10
+        StealProtected: true
   - Id: 1646
     AegisName: B_SEYREN
     Name: Lord Knight Seyren
@@ -29653,6 +29719,7 @@ Body:
         Rate: 7000
       - Item: Anti_Spell_Bead
         Rate: 10000
+        StealProtected: true
   - Id: 1796
     AegisName: AUNOE
     Name: Aunoe
@@ -31221,6 +31288,7 @@ Body:
         Rate: 3000
       - Item: New_Year_Rice_Cake_2
         Rate: 3000
+        StealProtected: true
   - Id: 1841
     AegisName: G_SNAKE_
     Name: Snake Lord's Minion
@@ -31393,6 +31461,7 @@ Body:
         Rate: 2500
       - Item: Green_Ale_US
         Rate: 2500
+        StealProtected: true
   - Id: 1846
     AegisName: DREAMMETAL
     Name: Dream Metal
@@ -34401,6 +34470,7 @@ Body:
         Rate: 150
       - Item: Wild_Beast_Claw
         Rate: 150
+        StealProtected: true
   - Id: 1939
     AegisName: TREASURE_BOX42
     Name: Treasure Chest
@@ -34431,6 +34501,7 @@ Body:
         Rate: 150
       - Item: Inverse_Scale
         Rate: 150
+        StealProtected: true
   - Id: 1940
     AegisName: TREASURE_BOX43
     Name: Treasure Chest
@@ -34461,6 +34532,7 @@ Body:
         Rate: 150
       - Item: Blood_Tears
         Rate: 150
+        StealProtected: true
   - Id: 1941
     AegisName: TREASURE_BOX44
     Name: Treasure Chest
@@ -34491,6 +34563,7 @@ Body:
         Rate: 150
       - Item: Divine_Cross
         Rate: 50
+        StealProtected: true
   - Id: 1942
     AegisName: TREASURE_BOX45
     Name: Treasure Chest
@@ -34521,6 +34594,7 @@ Body:
         Rate: 150
       - Item: Icicle_Fist
         Rate: 150
+        StealProtected: true
   - Id: 1943
     AegisName: TREASURE_BOX46
     Name: Treasure Chest
@@ -34551,6 +34625,7 @@ Body:
         Rate: 150
       - Item: Combo_Battle_Glove
         Rate: 150
+        StealProtected: true
   - Id: 1944
     AegisName: TREASURE_BOX47
     Name: Treasure Chest
@@ -34581,6 +34656,7 @@ Body:
         Rate: 150
       - Item: Ulfhedinn
         Rate: 50
+        StealProtected: true
   - Id: 1945
     AegisName: TREASURE_BOX48
     Name: Treasure Chest
@@ -34611,6 +34687,7 @@ Body:
         Rate: 150
       - Item: Seismic_Fist
         Rate: 150
+        StealProtected: true
   - Id: 1946
     AegisName: TREASURE_BOX49
     Name: Treasure Chest
@@ -34641,6 +34718,7 @@ Body:
         Rate: 150
       - Item: Mithril_Magic_Cape
         Rate: 50
+        StealProtected: true
   - Id: 1947
     AegisName: PIAMETTE_
     Name: Piamette
@@ -34781,6 +34859,7 @@ Body:
         Rate: 5000
       - Item: Yggdrasilberry
         Rate: 200
+        StealProtected: true
   - Id: 1952
     AegisName: CRYSTAL_7
     Name: Crystal
@@ -34812,6 +34891,7 @@ Body:
         Rate: 5000
       - Item: Seed_Of_Yggdrasil
         Rate: 250
+        StealProtected: true
   - Id: 1953
     AegisName: CRYSTAL_8
     Name: Crystal
@@ -34843,6 +34923,7 @@ Body:
         Rate: 5000
       - Item: Branch_Of_Dead_Tree
         Rate: 300
+        StealProtected: true
   - Id: 1954
     AegisName: CRYSTAL_9
     Name: Crystal
@@ -34874,6 +34955,7 @@ Body:
         Rate: 5000
       - Item: Old_Blue_Box
         Rate: 100
+        StealProtected: true
   - Id: 1955
     AegisName: TREASURE_BOX_I
     Name: Treasure Chest
@@ -35648,6 +35730,7 @@ Body:
         Rate: 2
       - Item: Emperium
         Rate: 2
+        StealProtected: true
   - Id: 1977
     AegisName: HEAVY_METALING
     Name: Heavy Metaling
@@ -35736,6 +35819,7 @@ Body:
         Rate: 5
       - Item: Life_Link
       - Item: Cardo
+        StealProtected: true
   - Id: 1979
     AegisName: ZAKUDAM
     Name: Zakudam

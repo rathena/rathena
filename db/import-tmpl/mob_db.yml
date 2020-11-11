@@ -309,6 +309,7 @@ Header:
 #        Rate: 100
 #      - Item: Bow_Of_Rudra
 #        Rate: 50
+#        StealProtected: true
 #  - Id: 1904
 #    AegisName: SENTRY
 #    Name: Sentry
@@ -510,6 +511,7 @@ Header:
 #        Rate: 15
 #      - Item: RicePouch
 #        Rate: 1500
+#        StealProtected: true
 #      - Item: Martin_Card
 #        StealProtected: true
 #  - Id: 1175
@@ -597,6 +599,7 @@ Header:
 #        Rate: 95
 #      - Item: RicePouch
 #        Rate: 1500
+#        StealProtected: true
 #      - Item: Cramp_Card
 #        StealProtected: true
 
@@ -798,6 +801,7 @@ Header:
 #        Rate: 1000
 #      - Item: Xmas_Gift
 #        Rate: 1250
+#        StealProtected: true
 #  - Id: 1245
 #    AegisName: GOBLINE_XMAS
 #    Name: Christmas Goblin
@@ -843,6 +847,7 @@ Header:
 #        Rate: 1000
 #      - Item: Xmas_Gift
 #        Rate: 1250
+#        StealProtected: true
 #  - Id: 1246
 #    AegisName: COOKIE_XMAS
 #    Name: Christmas Cookie
@@ -887,6 +892,7 @@ Header:
 #        Rate: 1000
 #      - Item: Xmas_Gift
 #        Rate: 1250
+#        StealProtected: true
 #  - Id: 1247
 #    AegisName: ANTONIO
 #    Name: Antonio
