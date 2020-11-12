@@ -66823,6 +66823,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    View: 225
     Script: |
       bonus bAllStats,1;
       bonus bAspd,1;
@@ -101791,6 +101792,7 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    View: 1   # unknown view
     Script: |
       .@r = getrefine();
       bonus2 bSubSize,Size_All,2*(.@r/3);
@@ -108637,14 +108639,6 @@ Body:
          autobonus "{ bonus2 bHPRegenRate,300,1000; }",40,4000,BF_MAGIC;
          autobonus "{ bonus2 bSPRegenRate,70,1000; }",40,4000,BF_MAGIC;
       }
-
-  - Id: 400016
-    AegisName: aegis_400016
-    Name: Turkey hat    # !todo check english name
-    Type: Armor
-    Locations:
-      Head_Top: true
-    Refineable: true
 
   - Id: 400020
     AegisName: C_BeachBall
