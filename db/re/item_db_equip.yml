@@ -90156,7 +90156,7 @@ Body:
          bonus2 bAddSize,Size_All,10;
       }
       else if (.@r>=7) {
-         bonus2 bAddSize,Size_All,7;
+         bonus2 bAddSize,Size_All,6;
       }
       else {
          bonus2 bAddSize,Size_All,3;
@@ -90233,7 +90233,7 @@ Body:
          bonus bLongAtkRate,10;
       }
       else if (.@r>=7) {
-         bonus bLongAtkRate,7;
+         bonus bLongAtkRate,6;
       }
       else {
          bonus bLongAtkRate,3;
@@ -90276,7 +90276,7 @@ Body:
          bonus2 bAddSize,Size_All,10;
       }
       else if (.@r>=7) {
-         bonus2 bAddSize,Size_All,7;
+         bonus2 bAddSize,Size_All,6;
       }
       else {
          bonus2 bAddSize,Size_All,3;
@@ -90497,7 +90497,7 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bMagicAddSize,Size_All,3;
+      bonus2 bMagicAddSize,Size_All,3+2*(getrefine()/3);
 
   - Id: 24497
     AegisName: S_Magnus_Weapon
@@ -92008,7 +92008,7 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"LG_OVERBRAND",5;
+      bonus2 bSkillAtk,"LG_OVERBRAND",5+2*(getrefine()/2);
 
   - Id: 24573
     AegisName: S_Brand_Shield
@@ -92095,7 +92095,7 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"LG_SHIELDPRESS",5;
+      bonus2 bSkillAtk,"LG_SHIELDPRESS",5+2*(getrefine()/2);
 
   - Id: 24577
     AegisName: S_Chain_Press_Earing
@@ -92112,7 +92112,7 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"PA_SHIELDCHAIN",5;
+      bonus2 bSkillAtk,"PA_SHIELDCHAIN",5+2*(getrefine()/2);
 
   - Id: 24578
     AegisName: S_Banish_Cannon_Armor
@@ -92129,7 +92129,8 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      bonus2 bSkillAtk,"LG_BANISHINGPOINT",5+2*(getrefine()/2);
+      bonus2 bSkillAtk,"LG_BANISHINGPOINT",5;
+      bonus2 bSkillAtk,"LG_CANNONSPEAR",2*(getrefine()/2);
 
   - Id: 24579
     AegisName: S_Banish_Cannon_Shield
