@@ -60,12 +60,12 @@
 #   Attribute               Aegis monster attribute. (Default: 0)
 #   Modes:                  List of unique behavior not defined by AI, Class, or Attribute. (Optional)
 #     <mode>: <value>       Mode to toggle.
-#   MvpDrops:               List of possible MVP prize items. (Optional)
+#   MvpDrops:               List of possible MVP prize items. Max of MAX_MVP_DROP. (Optional)
 #     - Item                Item name.
 #       Rate                Drop rate of item. (Default: 1)
 #       RandomOptionGroup   Random Option Group applied to item on drop. (Default: None)
 #       Index               Index used for overwriting item. (Optional)
-#   Drops:                  List of possible normal item drops. (Optional)
+#   Drops:                  List of possible normal item drops. Max of MAX_MOB_DROP. (Optional)
 #     - Item                Item name.
 #       Rate                Drop rate of item. (Default: 1)
 #       StealProtected      If the item is shielded from TF_STEAL. (Default: false)
