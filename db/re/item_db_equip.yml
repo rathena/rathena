@@ -116401,6 +116401,7 @@ Body:
       Swordman: true
     Locations:
       Right_Hand: true
+    WeaponLevel: 1
     Refineable: true
     # Flags:
       # BuyingStore: true
@@ -118683,6 +118684,7 @@ Body:
     Locations:
       Right_Hand: true
       Left_Hand: true
+    WeaponLevel: 1
     # Flags:
       # BuyingStore: true
     Script: |
@@ -119617,6 +119619,7 @@ Body:
     Locations:
       Right_Hand: true
       Left_Hand: true
+    WeaponLevel: 1
     # Flags:
       # BuyingStore: true
     Script: |
@@ -120040,6 +120043,7 @@ Body:
     Locations:
       Right_Hand: true
       Left_Hand: true
+    WeaponLevel: 1
     # Flags:
       # BuyingStore: true
     Script: |
