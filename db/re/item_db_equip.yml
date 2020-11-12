@@ -60785,32 +60785,6 @@ Body:
     Refineable: true
     Script: |
       .@r = getrefine(); bonus2 bAddEle,Ele_Fire,(.@r/3)*2; bonus2 bAddEle,Ele_Dark,(.@r/3)*2; bonus2 bMagicAddEle,Ele_Fire,(.@r/3)*2; bonus2 bMagicAddEle,Ele_Dark,(.@r/3)*2; if(.@r > 6){ bonus2 bSubRace,RC_Dragon,5; bonus2 bSubRace,RC_Formless,5; } if(.@r > 10){ bonus2 bAddRace,RC_Dragon,15; bonus2 bAddRace,RC_Formless,15; bonus2 bMagicAddRace,RC_Dragon,15; bonus2 bMagicAddRace,RC_Formless,15; }
-  - Id: 15388
-    AegisName: King_Schmidt_Suit
-    Name: King Schmidt's Suit
-    Type: Armor
-    Weight: 900
-    Defense: 150
-    Slots: 1
-    Locations:
-      Armor: true
-    EquipLevelMin: 130
-    Refineable: true
-    Script: |
-      .@r = getrefine(); bonus2 bAddSize,Size_Medium,10; bonus2 bAddSize,Size_Large,10; bonus2 bMagicAddSize,Size_Medium,10; bonus2 bMagicAddSize,Size_Large,10; if(.@r > 6){ bonus2 bAddEle,Ele_Fire,10; bonus2 bAddEle,Ele_Dark,10; bonus2 bMagicAddEle,Ele_Fire,10; bonus2 bMagicAddEle,Ele_Dark,10; } if(.@r > 8){ bonus2 bSubRace,RC_Dragon,15; bonus2 bSubRace,RC_Formless,15; } if(.@r > 10){ bonus2 bSubSize,Size_Medium,10; bonus2 bSubSize,Size_Large,10; }
-  - Id: 15389
-    AegisName: King_Schmidt_Manteau
-    Name: King Schmidt's Manteau
-    Type: Armor
-    Weight: 600
-    Defense: 70
-    Slots: 1
-    Locations:
-      Garment: true
-    EquipLevelMin: 130
-    Refineable: true
-    Script: |
-      .@r = getrefine(); bonus2 bAddEle,Ele_Fire,(.@r/3)*2; bonus2 bAddEle,Ele_Dark,(.@r/3)*2; bonus2 bMagicAddEle,Ele_Fire,(.@r/3)*2; bonus2 bMagicAddEle,Ele_Dark,(.@r/3)*2; if(.@r > 6){ bonus2 bSubRace,RC_Dragon,5; bonus2 bSubRace,RC_Formless,5; } if(.@r > 10){ bonus2 bAddRace,RC_Dragon,15; bonus2 bAddRace,RC_Formless,15; bonus2 bMagicAddRace,RC_Dragon,15; bonus2 bMagicAddRace,RC_Formless,15; }
   - Id: 15390
     AegisName: aegis_15390
     Name: Regia Hunting Mail
@@ -72409,21 +72383,6 @@ Body:
   - Id: 19238
     AegisName: PoringTownOnion
     Name: Poring Village Leek
-  - Id: 19246
-    AegisName: Royal_Guard_Necklace
-    Name: Royal Guard Necklace
-    Type: Armor
-    Buy: 20
-    Weight: 300
-    Locations:
-      Head_Low: true
-    EquipLevelMin: 80
-    View: 1629
-    Script: |
-      bonus bAspd,1;
-  - Id: 19247
-    AegisName: Illusion_Fancy_Flower
-    Name: Illusion Fancy Flower
     Type: Armor
     View: 824
     Buy: 20
@@ -72525,6 +72484,18 @@ Body:
     Locations:
       Head_Mid: true
 
+  - Id: 19246
+    AegisName: Royal_Guard_Necklace
+    Name: Royal Guard Necklace
+    Type: Armor
+    Buy: 20
+    Weight: 300
+    Locations:
+      Head_Low: true
+    EquipLevelMin: 80
+    View: 1629
+    Script: |
+      bonus bAspd,1;
   - Id: 19247
     AegisName: Illusion_Fancy_Flower
     Name: Illusion Fancy Flower
@@ -73450,18 +73421,6 @@ Body:
       Head_Low: true
     EquipLevelMin: 170
 
-  - Id: 19433
-    AegisName: C_Resonate_Taego
-    Name: Costume Resonate Taego
-    Type: Armor
-    Locations:
-      Costume_Head_Low: true
-    EquipLevelMin: 1
-    View: 1823
-    Script: |
-      hateffect(HAT_EF_RESONATETAEGO,true);
-    UnEquipScript: |
-      hateffect(HAT_EF_RESONATETAEGO,false);
   - Id: 19451
     AegisName: Heavenly_Order
     Name: Heavenly Order

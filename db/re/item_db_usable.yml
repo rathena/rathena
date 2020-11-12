@@ -45841,21 +45841,6 @@ Body:
       NoAuction: true
     Script: |
       sc_start SC_EXPBOOST,1800000,50; sc_start SC_ITEMBOOST,1800000,100;
-  - Id: 22979
-    AegisName: C_Battle_Gum_2
-    Name: "[Sale] Battle Manual and Bubble Gum"
-    Type: Usable
-    Trade:
-      Override: 100
-      NoDrop: true
-      NoTrade: true
-      NoSell: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
-    Script: |
-      sc_start SC_EXPBOOST,1800000,50; sc_start SC_ITEMBOOST,1800000,100;
   - Id: 22984
     AegisName: Kahluna_Milk
     Name: Kahluna Milk
