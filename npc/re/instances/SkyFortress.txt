@@ -7,8 +7,6 @@
 //= 1.0 First version. [Capuche]
 //============================================================
 
--	script	dummy_sth	-1,{ end; }
-
 prt_q,249,82,2	script	Han#a1	8W_SOLDIER,{
 	mes "[Han]";
 	mes "There must be a ton of monsters";
@@ -63,7 +61,7 @@ prt_q,252,79,4	script	Doek#a1	8W_SOLDIER,{
 }
 
 prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
-	if (!checkweight(1001,2)) {	// asking for 2 free slots
+	if (!checkweight(2104,2)) {
 		mes "- It's full of items";
 		mes "so you can't proceed to conversation. -";
 		close;
@@ -433,7 +431,7 @@ OnInit:
 }
 
 dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
-	if (!checkweight(1001,2)) {
+	if (!checkweight(2104,2)) {
 		mes "- It's full of items";
 		mes "so you can't proceed to conversation. -";
 		close;
@@ -643,7 +641,7 @@ OnTimer7000:
 	end;
 }
 
-1@sthb,64,67,4	duplicate(dummy_sth)	Stefan.J.E.Wolf#sthd_02	4_AS_RAGGED_GOLEM
+1@sthb,64,67,4	duplicate(dummy_npc)	Stefan.J.E.Wolf#sthd_02	4_AS_RAGGED_GOLEM
 
 1@sthb,56,71,0	script	#sthd_event_1	HIDDEN_WARP_NPC,8,8,{
 	end;
@@ -827,11 +825,11 @@ OnTouch:
 	end;
 }
 
+
 // Shuffle warp room
 1@sthb,68,80,0	script	#sthd_key_control	HIDDEN_WARP_NPC,{
 	end;
 OnShuffle:
-	// Officially the randomization doesn't cover all possibilities (found 6 set)
 	switch( rand(6) ) {
 	case 0:
 		// 'warp_list[ <from room X> ] = <to room Y>;
@@ -1101,24 +1099,44 @@ OnTouch:
 		mes "- don't seem to be able to open the box. -";
 		close;
 	}
-	if (checkweight(1001,1) == 0) {
+	if (checkweight(5128,1) == 0) {
 		mes "- It's full of items -";
 		mes "- so you can't open the box. -";
 		close;
 	}
 	donpcevent instance_npcname( strnpcinfo(0) ) + "::OnBar";
 	sleep2 3000;
-	specialeffect EF_ENHANCE;
-	mes "- In that treasure box, -";
-	if (rand(100) < 50) {// Inaccurate / maybe more rewards
-		getitem 985,1;
-		mes "- you've found the Elunium. -";
-	}
-	else {
-		getitem 984,1;
-		mes "- you've found the Oridecon. -";
-	}
 	disablenpc instance_npcname( strnpcinfo(0) );
+	mes "- In that treasure box, -";
+	.@r = rand(100);
+	if (.@r < 32) {
+		.@item_id = 985;	// Oridecon
+		specialeffect EF_ENHANCE;
+	}
+	else if (.@r < 64) {
+		.@item_id = 984;	// Elunium
+		specialeffect EF_ENHANCE;
+	}
+	else if (.@r < 84) {
+		.@item_id = 608;	// Seed_Of_Yggdrasil
+		specialeffect EF_ENHANCE;
+	}
+	else if (.@r < 94) {
+		.@item_id = 607;	// Yggdrasilberry
+		specialeffect EF_ENHANCE;
+	}
+	else if (.@r < 99) {
+		.@item_id = 616;	// Old_Card_Album
+		specialeffect EF_ENHANCE;
+	}
+	else if (.@r  == 99) {
+		.@item_id = 12246;	// Magic_Card_Album
+		specialeffect EF_GUMGANG2;
+		specialeffect EF_VOLCANO;
+		specialeffect EF_PNEUMA;
+	}
+	getitem .@item_id, 1;
+	mes "- you've found the " + getitemname(.@item_id) + ". -";
 	close;
 OnBar:
 	progressbar_npc "000000",3;
@@ -1144,7 +1162,7 @@ OnBar:
 		mes "- don't seem to be able to open the box. -";
 		close;
 	}
-	if (checkweight(1001,1) == 0) {
+	if (checkweight(2655,1) == 0) {
 		mes "- It's full of items -";
 		mes "- so you can't open the box. -";
 		close;
@@ -1287,18 +1305,16 @@ OnWindDead:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_5");
-	// todo some monsters seem to spawn in area on official
 	monster 'sthb_map$,61,84,"Immortal Fortress Legionnaire",3477,1;	// AS_IMMORTAL_CORPS
 	monster 'sthb_map$,51,87,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,37,81,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,41,85,"Immortal Zombie Assault",3479,1;			// AS_ZOMBIE_MASTER
 	monster 'sthb_map$,41,49,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,52,50,"Immortal Zombie Assault",3479,1;
-	monster 'sthb_map$,36,58,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
-	monster 'sthb_map$,36,60,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,82,50,"Immortal Cursed Zombie",3480,1;
-	if (rand(100) < 20)	// ~ 15-25%
-		monster 'sthb_map$,80,49,"Sky Fortress Key Keeper",3478,1;
+	monster 'sthb_map$,82,50,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
+	areamonster 'sthb_map$,34,57,38,61,"Immortal Cursed Zombie",3480,2;
+	if (rand(100) < 20)
+		monster 'sthb_map$,80,49,"Sky Fortress Key Keeper",3478,1;		// AS_ZOMBIE_SLAUGHTER
 	end;
 }
 	
@@ -1314,10 +1330,8 @@ OnTouch:
 	monster 'sthb_map$,83,71,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,79,96,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,69,95,"Immortal Zombie Assault",3479,1;
-	monster 'sthb_map$,84,95,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
-	monster 'sthb_map$,83,94,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,84,86,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,82,85,"Immortal Cursed Zombie",3480,1;
+	areamonster 'sthb_map$,82,92,86,96,"Immortal Cursed Zombie",3480,2;			// AS_CURSED_SOLDIER
+	areamonster 'sthb_map$,83,84,87,88,"Immortal Cursed Zombie",3480,2;
 	if (rand(100) < 20)
 		monster 'sthb_map$,73,96,"Sky Fortress Key Keeper",3478,1;
 	end;
@@ -1335,10 +1349,8 @@ OnTouch:
 	monster 'sthb_map$,27,69,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,26,55,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,32,41,"Immortal Zombie Assault",3479,1;
-	monster 'sthb_map$,29,68,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
-	monster 'sthb_map$,29,67,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,27,42,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,26,43,"Immortal Cursed Zombie",3480,1;
+	areamonster 'sthb_map$,27,65,31,69,"Immortal Cursed Zombie",3480,2;			// AS_CURSED_SOLDIER
+	areamonster 'sthb_map$,25,41,29,45,"Immortal Cursed Zombie",3480,2;
 	if (rand(100) < 20)
 		monster 'sthb_map$,27,54,"Sky Fortress Key Keeper",3478,1;
 	end;
@@ -1356,10 +1368,8 @@ OnTouch:
 	monster 'sthb_map$,59,40,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,92,45,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,95,57,"Immortal Zombie Assault",3479,1;
-	monster 'sthb_map$,94,39,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
-	monster 'sthb_map$,90,42,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,90,40,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,93,39,"Immortal Cursed Zombie",3480,1;
+	areamonster 'sthb_map$,92,37,96,41,"Immortal Cursed Zombie",3480,2;			// AS_CURSED_SOLDIER
+	areamonster 'sthb_map$,87,39,91,43,"Immortal Cursed Zombie",3480,2;
 	if (rand(100) < 20)
 		monster 'sthb_map$,75,40,"Sky Fortress Key Keeper",3478,1;
 	end;
@@ -1376,9 +1386,8 @@ OnTouch:
 	monster 'sthb_map$,209,38,"Immortal Zombie Assault",3479,1;			// AS_ZOMBIE_MASTER
 	monster 'sthb_map$,161,39,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,150,36,"Immortal Zombie Assault",3479,1;
-	monster 'sthb_map$,171,37,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
-	monster 'sthb_map$,171,36,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,144,38,"Immortal Cursed Zombie",3480,1;
+	monster 'sthb_map$,144,38,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
+	areamonster 'sthb_map$,169,34,173,38,"Immortal Cursed Zombie",3480,2;
 	if (rand(100) < 20)
 		monster 'sthb_map$,163,38,"Sky Fortress Key Keeper",3478,1;
 	end;
@@ -1396,10 +1405,8 @@ OnTouch:
 	monster 'sthb_map$,144,78,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,165,95,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,173,92,"Immortal Zombie Assault",3479,1;
-	monster 'sthb_map$,156,91,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
-	monster 'sthb_map$,155,92,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,144,93,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,143,94,"Immortal Cursed Zombie",3480,1;
+	areamonster 'sthb_map$,154,90,158,94,"Immortal Cursed Zombie",3480,2;			// AS_CURSED_SOLDIER
+	areamonster 'sthb_map$,141,92,145,96,"Immortal Cursed Zombie",3480,2;
 	if (rand(100) < 20)
 		monster 'sthb_map$,154,96,"Sky Fortress Key Keeper",3478,1;
 	end;
@@ -1417,10 +1424,8 @@ OnTouch:
 	monster 'sthb_map$,199,70,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,195,48,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,185,47,"Immortal Zombie Assault",3479,1;
-	monster 'sthb_map$,197,61,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
-	monster 'sthb_map$,198,62,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,200,46,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,199,48,"Immortal Cursed Zombie",3480,1;
+	areamonster 'sthb_map$,196,60,200,64,"Immortal Cursed Zombie",3480,2;			// AS_CURSED_SOLDIER
+	areamonster 'sthb_map$,198,45,202,49,"Immortal Cursed Zombie",3480,2;
 	if (rand(100) < 20)
 		monster 'sthb_map$,202,56,"Sky Fortress Key Keeper",3478,1;
 	end;
@@ -1438,10 +1443,8 @@ OnTouch:
 	monster 'sthb_map$,154,73,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,159,84,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,171,82,"Immortal Zombie Assault",3479,1;
-	monster 'sthb_map$,153,84,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
-	monster 'sthb_map$,153,84,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,155,78,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,155,76,"Immortal Cursed Zombie",3480,1;
+	areamonster 'sthb_map$,151,82,155,86,"Immortal Cursed Zombie",3480,2;			// AS_CURSED_SOLDIER
+	areamonster 'sthb_map$,153,75,157,79,"Immortal Cursed Zombie",3480,2;
 	if (rand(100) < 20)
 		monster 'sthb_map$,156,46,"Sky Fortress Key Keeper",3478,1;
 	end;
@@ -1454,7 +1457,7 @@ OnTouch:
 OnTouch:
 	disablenpc instance_npcname("#Stefan_Action2");
 	setpcblock PCBLOCK_NPC, true;
-	sleep2 2000;
+	sleep2 1000;
 	cutin "stephan_j_e_w.bmp",2;
 	npctalk "Stefan: ~Grunts~", instance_npcname("Stefan.J.E.Wolf#sthd_03");
 	sleep2 2000;
@@ -1467,10 +1470,9 @@ OnTouch:
 	sleep2 2000;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : that Golem's trace!";
 	sleep2 2000;
+	setpcblock PCBLOCK_NPC, false;
 	mapannounce 'sthb_map$, "Stefan Jack Earnest Wolf: Holy fortress...Intruders...How wicked...Stop them...", bc_map,0xEBFF;
 	cutin "",255;
-	sleep2 2000;
-	setpcblock PCBLOCK_NPC, false;
 	specialeffect2 EF_LOCKON;
 	disablenpc instance_npcname("Stefan.J.E.Wolf#sthd_03");
 	enablenpc instance_npcname("#Stefan for display3");
@@ -1478,11 +1480,11 @@ OnTouch:
 	end;
 }
 
-1@sthb,207,83,8	duplicate(dummy_sth)	Stefan.J.E.Wolf#sthd_03	4_AS_RAGGED_GOLEM
+1@sthb,207,83,8	duplicate(dummy_npc)	Stefan.J.E.Wolf#sthd_03	4_AS_RAGGED_GOLEM
 
 
 // Final step
-1@sthd,103,115,6	duplicate(dummy_sth)	Stefan.J.E.Wolf#sthd_04	4_AS_RAGGED_GOLEM
+1@sthd,103,115,6	duplicate(dummy_npc)	Stefan.J.E.Wolf#sthd_04	4_AS_RAGGED_GOLEM
 
 1@sthd,103,115,0	script	#Stefan for display3	HIDDEN_WARP_NPC,10,10,{
 	end;
@@ -1507,138 +1509,407 @@ OnTouch:
 	sleep2 2000;
 	mapannounce 'sthd_map$, "Stefan Jack Earnest Wolf: Soldiers...Bijou's...fortress...Cut them all...I'll step up...I'll kill them...all...", bc_map,0xEBFF;
 	sleep2 2000;
-	setpcblock PCBLOCK_NPC, false;
 	cutin "",255;
 	specialeffect EF_LOCKON;
+	sleep2 2000;
+	setpcblock PCBLOCK_NPC, false;
 	disablenpc .@stephan$;
-	enablenpc instance_npcname("#stefan_boss_event");
-	monster 'sthd_map$,103,115,"Stefan.J.E.Wolf",3473,1, instance_npcname("#stefan_boss_event") + "::OnBossDead";		// AS_RAGGED_GOLEM
-	'boss_id = $@mobid[0];
-	donpcevent instance_npcname("#stefan_boss_status") + "::OnStart";
-	donpcevent instance_npcname("#stefan_boss_zombie") + "::OnStart";
+	donpcevent instance_npcname("#Last_Boss") + "::OnStart";
+	areamonster 'sthd_map$,84,76,124,116,"Zombie Soldier of Bijou",3476,10, instance_npcname("#Stefan for display3") + "::OnMobDead";	// AS_ZOMBIE
 	initnpctimer;
-	end;
-OnTimer3000:
-	donpcevent instance_npcname("#stefan_boss_talk") + "::OnTalk";
 	end;
 OnTimer30000:
 	stopnpctimer;
-	donpcevent instance_npcname("#stefan_boss_cursed") + "::OnStart";
+	mapannounce 'sthd_map$, "Stefan Jack Earnest Wolf: Cursed soldiers...Come...Bring it on...", bc_map,0xEBFF;
+	monster 'sthd_map$,0,0,"Cursed Soldier of Bijou",3485,5, instance_npcname("#Stefan for display3") + "::OnMobDead";	// AS_D_CURSED_SOLDIER
 	end;
 OnStop:
+	killmonster 'sthd_map$, instance_npcname("#Stefan for display3") + "::OnMobDead";
 	stopnpctimer;
+	end;
+OnMobDead:
 	end;
 }
 
-1@sthd,1,1,0	script	#stefan_boss_zombie	HIDDEN_WARP_NPC,{
+1@sthd,96,127,0	script	#Last_Boss	HIDDEN_WARP_NPC,{
 	end;
 OnStart:
-	enablenpc instance_npcname("#stefan_boss_zombie");
-	monster 'sthd_map$,0,0,"Zombie Soldier of Bijou",3476,10, instance_npcname("#stefan_boss_zombie") + "::OnMobDead";	// AS_ZOMBIE
-	end;
-OnMobDead:
+	monster 'sthd_map$,103,115,"Stefan.J.E.Wolf",3473,1, instance_npcname("#Last_Boss") + "::OnBossDead";		// AS_RAGGED_GOLEM
+	'boss_id = $@mobid[0];
 	initnpctimer;
+	end;
+OnBossDead:
 	end;
 OnTimer1000:
-	stopnpctimer;
-	.@count = mobcount( 'sthd_map$, instance_npcname("#stefan_boss_zombie") + "::OnMobDead" );
-	if (.@count <= 7)
-		monster 'sthd_map$,0,0,"Zombie Soldier of Bijou",3476,(10-.@count), instance_npcname("#stefan_boss_zombie") + "::OnMobDead";	// AS_ZOMBIE
-	end;
-OnStop:
-	stopnpctimer;
-	disablenpc instance_npcname("#stefan_boss_zombie");
-	killmonster 'sthd_map$, instance_npcname("#stefan_boss_zombie") + "::OnMobDead";
-	end;
-}
-
-1@sthd,1,1,0	script	#stefan_boss_cursed	HIDDEN_WARP_NPC,{
-	end;
-OnStart:
-	mapannounce 'sthd_map$, "Stefan Jack Earnest Wolf: Cursed soldiers...Come...Bring it on...", bc_map,0xEBFF;
-	monster 'sthd_map$,0,0,"Cursed Soldier of Bijou",3485,5, instance_npcname("#stefan_boss_cursed") + "::OnMobDead";	// AS_D_CURSED_SOLDIER
-	end;
-OnStart2:
-	killmonster 'sthd_map$, instance_npcname("#stefan_boss_cursed") + "::OnMobDead";
-	monster 'sthd_map$,0,0,"Cursed Soldier of Bijou",3485,10, instance_npcname("#stefan_boss_cursed") + "::OnMobDead";	// AS_D_CURSED_SOLDIER
-	end;
-OnMobDead:
-	end;
-OnStop:
-	disablenpc instance_npcname("#stefan_boss_cursed");
-	killmonster 'sthd_map$, instance_npcname("#stefan_boss_cursed") + "::OnMobDead";
-	end;
-}
-
-1@sthd,1,1,0	script	#stefan_boss_status	HIDDEN_WARP_NPC,{
-	end;
-OnStart:
-	enablenpc instance_npcname("#stefan_boss_status");
-	initnpctimer;
-	end;
-OnTimer5000:	// ~5s - some announce can be skipped
+	if ('boss_id < 1 || mobcount( 'sthd_map$, instance_npcname("#Last_Boss") + "::OnBossDead" ) < 1) {
+		'boss_id = 0;
+		'pantheon_event[0] = 1;
+		'pantheon_event[1] = 1;
+		donpcevent instance_npcname("#Last_Boss") + "::OnLastWord";
+		donpcevent instance_npcname("#Last_Boss_Monster") + "::OnReset";
+		donpcevent instance_npcname("#Last_Boss2_Monster") + "::OnReset";
+		donpcevent instance_npcname("#Stefan for display3") + "::OnStop";
+		donpcevent instance_npcname("Sky Fortress Escape Warp#end_warp") + "::OnEnable";
+		stopnpctimer;
+		end;
+	}
 	getunitdata 'boss_id, .@data;
 	.@hp = .@data[UMOB_HP];
 
-	if (.@hp > 6000000 && .@hp < 13000000 && 'status_event == 0) {// announce non-spammed
-		'status_event = 1;
-		mapannounce 'sthd_map$, "Stefan Jack Earnest Wolf: Strong...Adventurer... ~Growls~ My... soliders... Get out...", bc_map,0xEBFF;
+	if (.@hp > 6000000 && .@hp < 14000000) {
+		if ('pantheon_event[0] == 0) {
+			'pantheon_event[0] = 1;
+			donpcevent instance_npcname("#Last_Boss2_Monster") + "::OnStart";
+			mapannounce 'sthd_map$, "Stefan Jack Earnest Wolf: Strong...Adventurer... ~Growls~ My... soliders... Get out...", bc_map,0xEBFF;
+		}
 	}
-	else if (.@hp > 5000000 && .@hp <= 6000000) {// announce spammed
-		'status_event = 0;
+	else if (.@hp > 5000000 && .@hp < 6000001)
 		mapannounce 'sthd_map$, "Stefan Jack Earnest Wolf: I'll destroy you...I'll be smashing you...Come, the Cursed Soldiers...Ground-shaking...", bc_map,0xEBFF;
+	else if (.@hp < 5000001) {
+		if ('pantheon_event[1] == 0) {
+			'pantheon_event[1] = 1;
+			donpcevent instance_npcname("#Last_Boss2_Monster") + "::OnReset";
+			donpcevent instance_npcname("#Last_Boss_Monster") + "::OnStart";
+		}
+		.@bomb[0] = rand(1,7);
+		.@bomb[1] = rand(1,7);
+		.@bomb[2] = rand(1,8);
+		.@bomb[3] = rand(1,7);
+		.@bomb[4] = rand(1,8);
+		.@bomb[5] = rand(1,7);
+
+		if (.@bomb[0] == 1) {
+			.@pant[0] = 1;
+			if (.@bomb[3] == 1) setarray .@pant[1],8,23;
+			else if (.@bomb[3] == 2) setarray .@pant[1],9,21;
+			else if (.@bomb[3] == 3) setarray .@pant[1],10,24;
+			else if (.@bomb[3] == 4) setarray .@pant[1],11;
+			else if (.@bomb[3] == 5) setarray .@pant[1],12;
+			else if (.@bomb[3] == 6) setarray .@pant[1],13;
+			else if (.@bomb[3] == 7) setarray .@pant[1],14,27;
+		}
+		else if (.@bomb[0] == 2) {
+			.@pant[0] = 2;
+			if (.@bomb[3] == 1) setarray .@pant[1],8,23;
+			else if (.@bomb[3] == 2) setarray .@pant[1],9,1;
+			else if (.@bomb[3] == 3) setarray .@pant[1],10,21;
+			else if (.@bomb[3] == 4) setarray .@pant[1],11,24;
+			else if (.@bomb[3] == 5) setarray .@pant[1],12,27;
+			else if (.@bomb[3] == 6) setarray .@pant[1],13;
+			else if (.@bomb[3] == 7) setarray .@pant[1],14;
+		}
+		else if (.@bomb[0] == 3) {
+			.@pant[0] = 3;
+			if (.@bomb[3] == 1) setarray .@pant[1],8,23;
+			else if (.@bomb[3] == 2) setarray .@pant[1],9,24;
+			else if (.@bomb[3] == 3) setarray .@pant[1],10,1;
+			else if (.@bomb[3] == 4) setarray .@pant[1],11,21;
+			else if (.@bomb[3] == 5) setarray .@pant[1],12,27;
+			else if (.@bomb[3] == 6) setarray .@pant[1],13;
+			else if (.@bomb[3] == 7) setarray .@pant[1],14;
+		}
+		else if (.@bomb[0] == 4) {
+			.@pant[0] = 4;
+			if (.@bomb[3] == 1) setarray .@pant[1],8,23;
+			else if (.@bomb[3] == 2) setarray .@pant[1],9,24;
+			else if (.@bomb[3] == 3) setarray .@pant[1],10;
+			else if (.@bomb[3] == 4) setarray .@pant[1],11,1;
+			else if (.@bomb[3] == 5) setarray .@pant[1],12,21;
+			else if (.@bomb[3] == 6) setarray .@pant[1],13,27;
+			else if (.@bomb[3] == 7) setarray .@pant[1],14;
+		}
+		else if (.@bomb[0] == 5) {
+			.@pant[0] = 5;
+			if (.@bomb[3] == 1) setarray .@pant[1],8,23;
+			else if (.@bomb[3] == 2) setarray .@pant[1],9,24;
+			else if (.@bomb[3] == 3) setarray .@pant[1],10;
+			else if (.@bomb[3] == 4) setarray .@pant[1],11,27;
+			else if (.@bomb[3] == 5) setarray .@pant[1],12,1;
+			else if (.@bomb[3] == 6) setarray .@pant[1],13,21;
+			else if (.@bomb[3] == 7) setarray .@pant[1],14;
+		}
+		else if (.@bomb[0] == 6) {
+			setarray .@pant[0],6,26;
+			if (.@bomb[3] == 1) setarray .@pant[2],8,23;
+			else if (.@bomb[3] == 2) setarray .@pant[2],9,24;
+			else if (.@bomb[3] == 3) setarray .@pant[2],10;
+			else if (.@bomb[3] == 4) setarray .@pant[2],11,27;
+			else if (.@bomb[3] == 5) setarray .@pant[2],12;
+			else if (.@bomb[3] == 6) setarray .@pant[2],13,1;
+			else if (.@bomb[3] == 7) setarray .@pant[2],14,21;
+		}
+		else if (.@bomb[0] == 7) {
+			.@pant[0] = 7;
+			if (.@bomb[3] == 1) setarray .@pant[1],8,23;
+			else if (.@bomb[3] == 2) setarray .@pant[1],9,21;
+			else if (.@bomb[3] == 3) setarray .@pant[1],10,24;
+			else if (.@bomb[3] == 4) setarray .@pant[1],11;
+			else if (.@bomb[3] == 5) setarray .@pant[1],12,27;
+			else if (.@bomb[3] == 6) setarray .@pant[1],13;
+			else if (.@bomb[3] == 7) setarray .@pant[1],14,1;
+		}
+		.@s = getarraysize(.@pant);
+
+		if (.@bomb[1] == 1) {
+			setarray .@pant[.@s],8,23;
+			.@s += 2;
+			if (.@bomb[4] == 1) setarray .@pant[.@s],15,5;
+			else if (.@bomb[4] == 2) setarray .@pant[.@s],16,25;
+			else if (.@bomb[4] == 3) setarray .@pant[.@s],17;
+			else if (.@bomb[4] == 4) setarray .@pant[.@s],18;
+			else if (.@bomb[4] == 5) setarray .@pant[.@s],19;
+			else if (.@bomb[4] == 6) setarray .@pant[.@s],20;
+			else if (.@bomb[4] == 7) setarray .@pant[.@s],21;
+			else if (.@bomb[4] == 8) setarray .@pant[.@s],22;
+		}
+		else if (.@bomb[1] == 2) {
+			setarray .@pant[.@s],9,24;
+			.@s += 2;
+			if (.@bomb[4] == 1) setarray .@pant[.@s],15;
+			else if (.@bomb[4] == 2) setarray .@pant[.@s],16,5;
+			else if (.@bomb[4] == 3) setarray .@pant[.@s],17,25;
+			else if (.@bomb[4] == 4) setarray .@pant[.@s],18;
+			else if (.@bomb[4] == 5) setarray .@pant[.@s],19;
+			else if (.@bomb[4] == 6) setarray .@pant[.@s],20;
+			else if (.@bomb[4] == 7) setarray .@pant[.@s],21;
+			else if (.@bomb[4] == 8) setarray .@pant[.@s],22;
+		}
+		else if (.@bomb[1] == 3) {
+			.@pant[.@s] = 10;
+			.@s++;
+			if (.@bomb[4] == 1) setarray .@pant[.@s],15;
+			else if (.@bomb[4] == 2) setarray .@pant[.@s],16;
+			else if (.@bomb[4] == 3) setarray .@pant[.@s],17,5;
+			else if (.@bomb[4] == 4) setarray .@pant[.@s],18,25;
+			else if (.@bomb[4] == 5) setarray .@pant[.@s],19;
+			else if (.@bomb[4] == 6) setarray .@pant[.@s],20;
+			else if (.@bomb[4] == 7) setarray .@pant[.@s],21;
+			else if (.@bomb[4] == 8) setarray .@pant[.@s],22;
+		}
+		else if (.@bomb[1] == 4) {
+			.@pant[.@s] = 11;
+			.@s++;
+			if (.@bomb[4] == 1) setarray .@pant[.@s],15;
+			else if (.@bomb[4] == 2) setarray .@pant[.@s],16;
+			else if (.@bomb[4] == 3) setarray .@pant[.@s],17;
+			else if (.@bomb[4] == 4) setarray .@pant[.@s],18,5;
+			else if (.@bomb[4] == 5) setarray .@pant[.@s],19,25;
+			else if (.@bomb[4] == 6) setarray .@pant[.@s],20;
+			else if (.@bomb[4] == 7) setarray .@pant[.@s],21;
+			else if (.@bomb[4] == 8) setarray .@pant[.@s],22;
+		}
+		else if (.@bomb[1] == 5) {
+			.@pant[.@s] = 12;
+			.@s++;
+			if (.@bomb[4] == 1) setarray .@pant[.@s],15;
+			else if (.@bomb[4] == 2) setarray .@pant[.@s],16;
+			else if (.@bomb[4] == 3) setarray .@pant[.@s],17;
+			else if (.@bomb[4] == 4) setarray .@pant[.@s],18;
+			else if (.@bomb[4] == 5) setarray .@pant[.@s],19,5;
+			else if (.@bomb[4] == 6) setarray .@pant[.@s],20,25;
+			else if (.@bomb[4] == 7) setarray .@pant[.@s],21;
+			else if (.@bomb[4] == 8) setarray .@pant[.@s],22;
+		}
+		else if (.@bomb[1] == 6) {
+			.@pant[.@s] = 13;
+			.@s++;
+			if (.@bomb[4] == 1) setarray .@pant[.@s],15;
+			else if (.@bomb[4] == 2) setarray .@pant[.@s],16;
+			else if (.@bomb[4] == 3) setarray .@pant[.@s],17;
+			else if (.@bomb[4] == 4) setarray .@pant[.@s],18;
+			else if (.@bomb[4] == 5) setarray .@pant[.@s],19;
+			else if (.@bomb[4] == 6) setarray .@pant[.@s],20,5;
+			else if (.@bomb[4] == 7) setarray .@pant[.@s],21,25;
+			else if (.@bomb[4] == 8) setarray .@pant[.@s],22;
+		}
+		else if (.@bomb[1] == 7) {
+			.@pant[.@s] = 14;
+			.@s++;
+			if (.@bomb[4] == 1) setarray .@pant[.@s],15;
+			else if (.@bomb[4] == 2) setarray .@pant[.@s],16;
+			else if (.@bomb[4] == 3) setarray .@pant[.@s],17;
+			else if (.@bomb[4] == 4) setarray .@pant[.@s],18;
+			else if (.@bomb[4] == 5) setarray .@pant[.@s],19;
+			else if (.@bomb[4] == 6) setarray .@pant[.@s],20;
+			else if (.@bomb[4] == 7) setarray .@pant[.@s],21,5;
+			else if (.@bomb[4] == 8) setarray .@pant[.@s],22,25;
+		}
+
+		if (.@bomb[2] == 1) {
+			.@pant[.@s] = 15;
+			.@s++;
+			if (.@bomb[5] == 1) setarray .@pant[.@s],1,22;
+			else if (.@bomb[5] == 2) setarray .@pant[.@s],2,23;
+			else if (.@bomb[5] == 3) setarray .@pant[.@s],3,26;
+			else if (.@bomb[5] == 4) setarray .@pant[.@s],4;
+			else if (.@bomb[5] == 5) setarray .@pant[.@s],5;
+			else if (.@bomb[5] == 6) setarray .@pant[.@s],6;
+			else if (.@bomb[5] == 7) setarray .@pant[.@s],7;
+		}
+		else if (.@bomb[2] == 2) {
+			.@pant[.@s] = 16;
+			.@s++;
+			if (.@bomb[5] == 1) setarray .@pant[.@s],1;
+			else if (.@bomb[5] == 2) setarray .@pant[.@s],2,22;
+			else if (.@bomb[5] == 3) setarray .@pant[.@s],3,23;
+			else if (.@bomb[5] == 4) setarray .@pant[.@s],4,26;
+			else if (.@bomb[5] == 5) setarray .@pant[.@s],5;
+			else if (.@bomb[5] == 6) setarray .@pant[.@s],6;
+			else if (.@bomb[5] == 7) setarray .@pant[.@s],7;
+		}
+		else if (.@bomb[2] == 3) {
+			setarray .@pant[.@s],17,25;
+			.@s += 2;
+			if (.@bomb[5] == 1) setarray .@pant[.@s],1;
+			else if (.@bomb[5] == 2) setarray .@pant[.@s],2;
+			else if (.@bomb[5] == 3) setarray .@pant[.@s],3,22;
+			else if (.@bomb[5] == 4) setarray .@pant[.@s],4,23;
+			else if (.@bomb[5] == 5) setarray .@pant[.@s],5,26;
+			else if (.@bomb[5] == 6) setarray .@pant[.@s],6;
+			else if (.@bomb[5] == 7) setarray .@pant[.@s],7;
+		}
+		else if (.@bomb[2] == 4) {
+			.@pant[.@s] = 18;
+			.@s++;
+			if (.@bomb[5] == 1) setarray .@pant[.@s],1;
+			else if (.@bomb[5] == 2) setarray .@pant[.@s],2;
+			else if (.@bomb[5] == 3) setarray .@pant[.@s],3;
+			else if (.@bomb[5] == 4) setarray .@pant[.@s],4,22;
+			else if (.@bomb[5] == 5) setarray .@pant[.@s],5,23;
+			else if (.@bomb[5] == 6) setarray .@pant[.@s],6,26;
+			else if (.@bomb[5] == 7) setarray .@pant[.@s],7;
+		}
+		else if (.@bomb[2] == 5) {
+			setarray .@pant[.@s],19,27;
+			.@s += 2;
+			if (.@bomb[5] == 1) setarray .@pant[.@s],1;
+			else if (.@bomb[5] == 2) setarray .@pant[.@s],2;
+			else if (.@bomb[5] == 3) setarray .@pant[.@s],3;
+			else if (.@bomb[5] == 4) setarray .@pant[.@s],4;
+			else if (.@bomb[5] == 5) setarray .@pant[.@s],5,22;
+			else if (.@bomb[5] == 6) setarray .@pant[.@s],6,23;
+			else if (.@bomb[5] == 7) setarray .@pant[.@s],7,26;
+		}
+		else if (.@bomb[2] == 6) {
+			.@pant[.@s] = 20;
+			.@s++;
+			if (.@bomb[5] == 1) setarray .@pant[.@s],1,26;
+			else if (.@bomb[5] == 2) setarray .@pant[.@s],2;
+			else if (.@bomb[5] == 3) setarray .@pant[.@s],3;
+			else if (.@bomb[5] == 4) setarray .@pant[.@s],4;
+			else if (.@bomb[5] == 5) setarray .@pant[.@s],5;
+			else if (.@bomb[5] == 6) setarray .@pant[.@s],6,22;
+			else if (.@bomb[5] == 7) setarray .@pant[.@s],7,23;
+		}
+		else if (.@bomb[2] == 7) {
+			.@pant[.@s] = 21;
+			.@s++;
+			if (.@bomb[5] == 1) setarray .@pant[.@s],1,23;
+			else if (.@bomb[5] == 2) setarray .@pant[.@s],2;
+			else if (.@bomb[5] == 3) setarray .@pant[.@s],3,26;
+			else if (.@bomb[5] == 4) setarray .@pant[.@s],4;
+			else if (.@bomb[5] == 5) setarray .@pant[.@s],5;
+			else if (.@bomb[5] == 6) setarray .@pant[.@s],6;
+			else if (.@bomb[5] == 7) setarray .@pant[.@s],7,22;
+		}
+		else if (.@bomb[2] == 8) {
+			.@pant[.@s] = 22;
+			.@s++;
+			if (.@bomb[5] == 1) setarray .@pant[.@s],1;
+			else if (.@bomb[5] == 2) setarray .@pant[.@s],2,23;
+			else if (.@bomb[5] == 3) setarray .@pant[.@s],3,26;
+			else if (.@bomb[5] == 4) setarray .@pant[.@s],4;
+			else if (.@bomb[5] == 5) setarray .@pant[.@s],5;
+			else if (.@bomb[5] == 6) setarray .@pant[.@s],6;
+			else if (.@bomb[5] == 7) setarray .@pant[.@s],7;
+		}
+		.@s = getarraysize(.@pant);
+		for ( .@i = 0; .@i < .@s; ++.@i )
+			donpcevent instance_npcname("#pantheon_damage" + .@pant[.@i]) + "::OnEvent";
 	}
-	else if (.@hp <= 5000000) {
-		'status_event = 0;
-		donpcevent instance_npcname("#stefan_boss_zombie") + "::OnStop";
-		donpcevent instance_npcname("#stefan_boss_status") + "::OnStop";
-		donpcevent instance_npcname("#stefan_boss_cursed") + "::OnStart2";
-		donpcevent instance_npcname("#pantheon_damage_main") + "::OnStart";
+	end;
+OnTimer1500:
+	.@r = rand(1,30);
+	if (.@r == 1)
+		unittalk 'boss_id, "Wolf: Don't get away... Come closer... I'll kill you...";
+	else if (.@r < 11)
+		unittalk 'boss_id, "Stefan: ~Groans~ ~Growls~";
+	else if (.@r == 20)
+		unittalk 'boss_id, "Jack: I'm hurt... I'm scared... I take courage... I hit you...";
+	else if (.@r == 30)
+		unittalk 'boss_id, "Earnest: I'm angry... It's noisy... I'll wipe them all up...";
+	end;
+OnTimer3000:
+OnTimer4500:
+	if ('boss_id < 1 || mobcount( 'sthd_map$, instance_npcname("#Last_Boss") + "::OnBossDead" ) < 1) {
+		'boss_id = 0;
+		'pantheon_event[0] = 1;
+		'pantheon_event[1] = 1;
+		donpcevent instance_npcname("#Last_Boss") + "::OnLastWord";
+		donpcevent instance_npcname("#Last_Boss_Monster") + "::OnReset";
+		donpcevent instance_npcname("#Last_Boss2_Monster") + "::OnReset";
+		donpcevent instance_npcname("#Stefan for display3") + "::OnStop";
+		donpcevent instance_npcname("Sky Fortress Escape Warp#end_warp") + "::OnEnable";
+		stopnpctimer;
 		end;
 	}
+	end;
+OnTimer6000:
 	initnpctimer;
 	end;
-OnStop:
-	stopnpctimer;
-	disablenpc instance_npcname("#stefan_boss_status");
+OnLastWord:
+	mapannounce 'sthd_map$, "Stefan Jack Earnest Wolf: Dead...I was...But...I won't be dead...", bc_map,0xEBFF;
+	sleep 3000;
+	mapannounce 'sthd_map$, "Stefan Jack Earnest Wolf: Comes back...the power of Bijou...Eternal body...Again...", bc_map,0xEBFF;
 	end;
 }
 
-1@sthd,1,1,0	script	#pantheon_damage_main	HIDDEN_WARP_NPC,{
+// hp > 6000000 && hp < 14000000
+1@sthd,99,128,0	script	#Last_Boss2_Monster	HIDDEN_WARP_NPC,{
 	end;
 OnStart:
-	for ( .@i = 0; .@i < 25; .@i++ )
-		'npc_index[.@i] = .@i + 1;
-	donpcevent instance_npcname("#pantheon_damage_main") + "::OnEvent";
-	end;
-OnEvent:
-	if ('boss_id < 1 || unitexists('boss_id) == false) {
-		stopnpctimer;
-		end;
-	}
-	getunitdata 'boss_id, .@data;
-	if (.@data[UMOB_HP] > 5000000) {
-		stopnpctimer;
-		donpcevent instance_npcname("#stefan_boss_status") + "::OnStart";
-		end;
-	}
-	for ( .@i = 0; .@i < 5; .@i++ ) {// 5 earthquakes
-		.@size = 25 - .@i;
-		.@r = rand(.@size);
-		.@npc_num = 'npc_index[.@r];
-		donpcevent instance_npcname("#pantheon_damage" + .@npc_num) + "::OnEvent";
-		'npc_index[.@r] = 'npc_index[ .@size-1 ];
-		'npc_index[ .@size-1 ] = .@npc_num;
-	}
+OnTimer10000:
 	initnpctimer;
 	end;
-OnTimer6000:
-	donpcevent instance_npcname("#pantheon_damage_main") + "::OnEvent";
+OnTimer1000:
+	if (mobcount( 'sthd_map$, instance_npcname("#Last_Boss2_Monster") + "::OnMobDead" ) < 8)
+		areamonster 'sthd_map$,89,81,119,111,"Zombie Soldier of Bijou",3476,3, instance_npcname("#Last_Boss2_Monster") + "::OnMobDead";	// AS_ZOMBIE
+	end;
+OnReset:
+	killmonster 'sthd_map$, instance_npcname("#Last_Boss2_Monster") + "::OnMobDead";
+	stopnpctimer;
+	end;
+OnMobDead:
+	end;
+}
+
+// hp < 5000001
+1@sthd,99,127,0	script	#Last_Boss_Monster	HIDDEN_WARP_NPC,{
+	end;
+OnStart:
+OnTimer10000:
+	initnpctimer;
+	end;
+OnReset:
+	killmonster 'sthd_map$, instance_npcname("#Last_Boss_Monster") + "::OnMobDead";
+	stopnpctimer;
+	end;
+OnTimer1000:
+OnTimer8000:
+OnTimer16000:
+OnTimer24000:
+OnTimer32000:
+	areamonster 'sthd_map$,84,76,124,116,"Cursed Soldier of Bijou",3485,2, instance_npcname("#Last_Boss_Monster") + "::OnMobDead";	// AS_D_CURSED_SOLDIER
+	end;
+OnTimer33000:
+	stopnpctimer;
+	end;
+OnMobDead:
 	end;
 }
 
 // Kill the player
-1@sthd,94,119,0	script	#pantheon_damage1	HIDDEN_WARP_NPC,4,4,{
+1@sthd,94,119,0	script	#pantheon_damage1	HIDDEN_WARP_NPC,6,5,{
 	end;
 OnTouch:
 	unitkill getcharid(3);
@@ -1657,82 +1928,34 @@ OnTimer2000:
 	stopnpctimer;
 	end;
 }
-1@sthd,96,109,0	duplicate(#pantheon_damage1)	#pantheon_damage2	HIDDEN_WARP_NPC,4,4
-1@sthd,104,110,0	duplicate(#pantheon_damage1)	#pantheon_damage3	HIDDEN_WARP_NPC,4,4
-1@sthd,110,110,0	duplicate(#pantheon_damage1)	#pantheon_damage4	HIDDEN_WARP_NPC,4,4
-1@sthd,113,117,0	duplicate(#pantheon_damage1)	#pantheon_damage5	HIDDEN_WARP_NPC,4,4
-1@sthd,112,103,0	duplicate(#pantheon_damage1)	#pantheon_damage6	HIDDEN_WARP_NPC,4,4
-1@sthd,104,103,0	duplicate(#pantheon_damage1)	#pantheon_damage7	HIDDEN_WARP_NPC,4,4
-1@sthd,97,103,0	duplicate(#pantheon_damage1)	#pantheon_damage8	HIDDEN_WARP_NPC,4,4
-1@sthd,92,97,0	duplicate(#pantheon_damage1)	#pantheon_damage9	HIDDEN_WARP_NPC,4,4
-1@sthd,99,95,0	duplicate(#pantheon_damage1)	#pantheon_damage10	HIDDEN_WARP_NPC,4,4
-1@sthd,108,95,0	duplicate(#pantheon_damage1)	#pantheon_damage11	HIDDEN_WARP_NPC,4,4
-1@sthd,116,95,0	duplicate(#pantheon_damage1)	#pantheon_damage12	HIDDEN_WARP_NPC,4,4
-1@sthd,112,87,0	duplicate(#pantheon_damage1)	#pantheon_damage13	HIDDEN_WARP_NPC,4,4
-1@sthd,104,88,0	duplicate(#pantheon_damage1)	#pantheon_damage14	HIDDEN_WARP_NPC,4,4
-1@sthd,95,87,0	duplicate(#pantheon_damage1)	#pantheon_damage15	HIDDEN_WARP_NPC,4,4
-1@sthd,96,78,0	duplicate(#pantheon_damage1)	#pantheon_damage16	HIDDEN_WARP_NPC,4,4
-1@sthd,94,72,0	duplicate(#pantheon_damage1)	#pantheon_damage17	HIDDEN_WARP_NPC,4,4
-1@sthd,104,81,0	duplicate(#pantheon_damage1)	#pantheon_damage18	HIDDEN_WARP_NPC,4,4
-1@sthd,111,81,0	duplicate(#pantheon_damage1)	#pantheon_damage19	HIDDEN_WARP_NPC,4,4
-1@sthd,114,72,0	duplicate(#pantheon_damage1)	#pantheon_damage20	HIDDEN_WARP_NPC,4,4
-1@sthd,100,71,0	duplicate(#pantheon_damage1)	#pantheon_damage21	HIDDEN_WARP_NPC,4,4
-1@sthd,91,101,0	duplicate(#pantheon_damage1)	#pantheon_damage22	HIDDEN_WARP_NPC,4,4
-1@sthd,117,101,0	duplicate(#pantheon_damage1)	#pantheon_damage23	HIDDEN_WARP_NPC,4,4
-1@sthd,117,90,0	duplicate(#pantheon_damage1)	#pantheon_damage24	HIDDEN_WARP_NPC,4,4
-1@sthd,90,90,0	duplicate(#pantheon_damage1)	#pantheon_damage25	HIDDEN_WARP_NPC,4,4
-// officials
-// 1@sthd,100,71,0	duplicate(#pantheon_damage1)	#pantheon_damage23	HIDDEN_WARP_NPC,4,4
-// 1@sthd,91,101,0	duplicate(#pantheon_damage1)	#pantheon_damage24	HIDDEN_WARP_NPC,4,4
-// 1@sthd,117,101,0	duplicate(#pantheon_damage1)	#pantheon_damage25	HIDDEN_WARP_NPC,4,4
-// 1@sthd,117,90,0	duplicate(#pantheon_damage1)	#pantheon_damage26	HIDDEN_WARP_NPC,4,4
-// 1@sthd,90,90,0	duplicate(#pantheon_damage1)	#pantheon_damage27	HIDDEN_WARP_NPC,4,4
+1@sthd,96,109,0	duplicate(#pantheon_damage1)	#pantheon_damage2	HIDDEN_WARP_NPC,6,5
+1@sthd,104,110,0	duplicate(#pantheon_damage1)	#pantheon_damage3	HIDDEN_WARP_NPC,6,5
+1@sthd,110,110,0	duplicate(#pantheon_damage1)	#pantheon_damage4	HIDDEN_WARP_NPC,6,5
+1@sthd,113,117,0	duplicate(#pantheon_damage1)	#pantheon_damage5	HIDDEN_WARP_NPC,6,5
+1@sthd,112,103,0	duplicate(#pantheon_damage1)	#pantheon_damage6	HIDDEN_WARP_NPC,6,5
+1@sthd,104,103,0	duplicate(#pantheon_damage1)	#pantheon_damage7	HIDDEN_WARP_NPC,6,5
+1@sthd,97,103,0	duplicate(#pantheon_damage1)	#pantheon_damage8	HIDDEN_WARP_NPC,6,5
+1@sthd,92,97,0	duplicate(#pantheon_damage1)	#pantheon_damage9	HIDDEN_WARP_NPC,6,5
+1@sthd,99,95,0	duplicate(#pantheon_damage1)	#pantheon_damage10	HIDDEN_WARP_NPC,6,5
+1@sthd,108,95,0	duplicate(#pantheon_damage1)	#pantheon_damage11	HIDDEN_WARP_NPC,6,5
+1@sthd,116,95,0	duplicate(#pantheon_damage1)	#pantheon_damage12	HIDDEN_WARP_NPC,6,5
+1@sthd,112,87,0	duplicate(#pantheon_damage1)	#pantheon_damage13	HIDDEN_WARP_NPC,6,5
+1@sthd,104,88,0	duplicate(#pantheon_damage1)	#pantheon_damage14	HIDDEN_WARP_NPC,6,5
+1@sthd,95,87,0	duplicate(#pantheon_damage1)	#pantheon_damage15	HIDDEN_WARP_NPC,6,5
+1@sthd,96,78,0	duplicate(#pantheon_damage1)	#pantheon_damage16	HIDDEN_WARP_NPC,6,5
+1@sthd,94,72,0	duplicate(#pantheon_damage1)	#pantheon_damage17	HIDDEN_WARP_NPC,6,5
+1@sthd,104,81,0	duplicate(#pantheon_damage1)	#pantheon_damage18	HIDDEN_WARP_NPC,6,5
+1@sthd,111,81,0	duplicate(#pantheon_damage1)	#pantheon_damage19	HIDDEN_WARP_NPC,6,5
+1@sthd,114,72,0	duplicate(#pantheon_damage1)	#pantheon_damage20	HIDDEN_WARP_NPC,6,5
+1@sthd,126,96,0	duplicate(#pantheon_damage1)	#pantheon_damage21	HIDDEN_WARP_NPC,6,6
+1@sthd,81,96,0	duplicate(#pantheon_damage1)	#pantheon_damage22	HIDDEN_WARP_NPC,6,6
+1@sthd,100,71,0	duplicate(#pantheon_damage1)	#pantheon_damage23	HIDDEN_WARP_NPC,6,6
+1@sthd,91,101,0	duplicate(#pantheon_damage1)	#pantheon_damage24	HIDDEN_WARP_NPC,6,6
+1@sthd,117,101,0	duplicate(#pantheon_damage1)	#pantheon_damage25	HIDDEN_WARP_NPC,6,6
+1@sthd,117,90,0	duplicate(#pantheon_damage1)	#pantheon_damage26	HIDDEN_WARP_NPC,6,6
+1@sthd,90,90,0	duplicate(#pantheon_damage1)	#pantheon_damage27	HIDDEN_WARP_NPC,6,6
 
-1@sthd,1,1,0	script	#stefan_boss_event	HIDDEN_WARP_NPC,{
-	end;
-OnBossDead:
-	if (mobcount( 'sthd_map$, instance_npcname("#stefan_boss_event") + "::OnBossDead" ) < 1) {
-		donpcevent instance_npcname("#Stefan for display3") + "::OnStop";
-		donpcevent instance_npcname("#stefan_boss_zombie") + "::OnStop";
-		donpcevent instance_npcname("#stefan_boss_cursed") + "::OnStop";
-		donpcevent instance_npcname("#stefan_boss_talk") + "::OnStop";
-		donpcevent instance_npcname("#stefan_boss_status") + "::OnStop";
-		mapannounce 'sthd_map$, "Stefan Jack Earnest Wolf: Dead...I was...But...I won't be dead...", bc_map,0xEBFF;
-		initnpctimer;
-	}
-	end;
-OnTimer3000:
-	stopnpctimer;
-	mapannounce 'sthd_map$, "Stefan Jack Earnest Wolf: Comes back...the power of Bijou...Eternal body...Again...", bc_map,0xEBFF;
-	donpcevent instance_npcname("Sky Fortress Escape Warp") + "::OnEnable";
-	disablenpc instance_npcname("#stefan_boss_event");
-	end;
-}
-
-1@sthd,1,1,0	script	#stefan_boss_talk	HIDDEN_WARP_NPC,{
-	end;
-OnTalk:
-	enablenpc instance_npcname("#stefan_boss_talk");
-	initnpctimer;
-	end;
-OnTimer6000:
-	.@r = rand(100);
-	if (.@r < 10)
-		unittalk 'boss_id, "Jack: I'm hurt...I'm scared...I take courage...I hit you...";
-	else if (.@r < 20)
-		unittalk 'boss_id, "Wolf: Don't get away...Come closer...I'll kill you...";
-	else if (.@r < 30)
-		unittalk 'boss_id, "Earnest: I'm angry...It's noisy...I'll wipe them all up...";
-	else
-		unittalk 'boss_id, "Stefan: ~Groans~ ~Growls~";
-	end;
-OnStop:
-	stopnpctimer;
-	disablenpc instance_npcname("#stefan_boss_talk");
-	end;
-}
-
-1@sthd,104,96,4	script	Sky Fortress Escape Warp	1_SHADOW_NPC,{
+1@sthd,104,96,4	script	Sky Fortress Escape Warp#end_warp	1_SHADOW_NPC,{
 	if (select( "Do not go outside of the Sky Fortress.", "Go outside of the Sky Fortress." ) == 1) {
 		mes "- The warp is emanating bright lights. -";
 		close;
@@ -1749,15 +1972,21 @@ OnStop:
 
 OnEnable:
 	initnpctimer;
-	enablenpc instance_npcname("Sky Fortress Escape Warp");
+	enablenpc instance_npcname("Sky Fortress Escape Warp#end_warp");
+	end;
+OnTimer2000:
+	specialeffect EF_ENHANCE;
 	end;
 OnTimer3000:
-	specialeffect EF_ENHANCE;
 	initnpctimer;
 	end;
 
 OnInstanceInit:
 	'status_event = 0;
+	'boss_id = 0;
+	'pantheon_event[0] = 0;
+	'pantheon_event[1] = 0;
+
 	'sthb_map$ = instance_mapname("1@sthb");
 	'sthc_map$ = instance_mapname("1@sthc");
 	'sthd_map$ = instance_mapname("1@sthd");
@@ -1797,13 +2026,15 @@ OnInstanceInit:
 
 	disablenpc instance_npcname("#Stefan_Action2");
 	disablenpc instance_npcname("Stefan.J.E.Wolf#sthd_03");
+
+	// Boss room
 	disablenpc instance_npcname("#Stefan for display3");
 	disablenpc instance_npcname("Stefan.J.E.Wolf#sthd_04");
-	disablenpc instance_npcname("#stefan_boss_event");
-	disablenpc instance_npcname("#stefan_boss_talk");
-	disablenpc instance_npcname("#stefan_boss_status");
-	disablenpc instance_npcname("Sky Fortress Escape Warp");
-	for ( .@i = 1; .@i <= 25; .@i++ )
+	disablenpc instance_npcname("#Last_Boss");
+	disablenpc instance_npcname("#Last_Boss2_Monster");
+	disablenpc instance_npcname("#Last_Boss_Monster");
+	disablenpc instance_npcname("Sky Fortress Escape Warp#end_warp");
+	for ( .@i = 1; .@i <= 27; .@i++ )
 		cloakonnpc instance_npcname("#pantheon_damage" + .@i);
 	end;
 }
