@@ -3,7 +3,7 @@
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20180831
+//= 20201115
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -1124,6 +1124,24 @@ URLs
 Similarly, you can create links to websites that launch in a new window:
 
 	<URL>Display Name<INFO>http://www.example.com/</INFO></URL>";
+
+Quests
+------
+You can link to a quest:
+
+	<QUEST>Quest<INFO>1</INFO></QUEST>
+
+Message
+-------
+You can show a message from the msgstringtable:
+
+	<MSG>1</MSG>
+
+Tips
+----
+You can show a tip box:
+
+	<TIPBOX>Show Tip<INFO>1</INFO></TIPBOX>
 
 ---------------------------------------
 
