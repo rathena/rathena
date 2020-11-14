@@ -9,11 +9,13 @@
 
 #include "../common/database.hpp"
 #include "../common/timer.hpp"
+#include "../config/core.hpp"
 
 #include "clif.hpp" //
 #include "map.hpp" // struct block_list
 #include "status.hpp" // struct status_change
 #include "unit.hpp" // struct unit_data
+#include "navi.hpp" // navi stuff
 
 struct block_list;
 struct npc_data;
@@ -217,6 +219,14 @@ struct npc_data {
 		t_tick timeout;
 		unsigned long color;
 	} progressbar;
+
+#ifdef GENERATE_NAVI
+	struct {
+		int id;
+		struct navi_pos pos;
+		struct navi_pos warp_dest; // only set for warps
+	} navi;
+#endif
 };
 
 struct eri;
