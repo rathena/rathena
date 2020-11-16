@@ -131,7 +131,7 @@ OnInit:
 		Castle("schg_cas04", "Manager#schg_cas04::OnAgitEnd2", "Steward#sc04::OnStartArena", "sch_gld",137,90);
 		Castle("schg_cas05", "Manager#schg_cas05::OnAgitEnd2", "Steward#sc05::OnStartArena", "sch_gld",71,315);
 
-	if (checkre(RENEWAL)) {
+	if (checkre(0)) {
 		Region("Prontera (TE)");
 			Castle("te_prtcas01", "Manager_TE#Gaebolg::OnAgitEnd3",	"Manager_TE#Gaebolg::OnAgitBreak",	"te_prt_gld",134,65);
 			Castle("te_prtcas02", "Manager_TE#Richard::OnAgitEnd3",	"Manager_TE#Richard::OnAgitBreak",	"te_prt_gld",240,128);
