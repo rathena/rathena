@@ -3092,7 +3092,7 @@ static bool itemdb_read_db(const char* file) {
 			constant = constant_lookup( subtype, "AMMO_" );
 
 			if( constant == nullptr ){
-				ShowError( "itemdb_read_db: Unknown weapon type %d for item %u, skipping.\n", subtype, nameid );
+				ShowError( "itemdb_read_db: Unknown ammo type %d for item %u, skipping.\n", subtype, nameid );
 				continue;
 			}
 
