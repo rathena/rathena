@@ -19,38 +19,38 @@
 prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 	disable_items;
 	if (checkweight(1201,1) == 0) {
-		mes "You are carrying too many items, please reduce it and come back again!";
+		mes "เจ้าแบกของมามากเกิน, กรุณาไปลดของก่อนแล้วค่อยกลับมาใหม่!";
 		close;
 	}
 	if (MaxWeight - Weight < 10000) {
-		mes "You are over the weight limit, please reduce it and come back again!";
+		mes "กระเป๋าเจ้ามีน้ำหนักเกิน, กรุณาไปลดน้ำหนักก่อนแล้วค่อยกลับมาใหม่!";
 		close;
 	}
 	mes "[Devil Enchant Master]";
-	mes "Yes?";
-	mes "You are looking for me?";
+	mes "เอ๊ะ ?";
+	mes "เจ้ามองเห็นข้าหรอ ?";
 	next;
-	switch(select("This is the first time seeing you!:I heard that you are the best!:Please initialize the enchant.")) {
+	switch(select("นี้เป็นครั้งแรกเลยที่เห็นเจ้า!:ข้าอยากออฟอาวุธ!:โปรดลบออฟด้วย.")) {
 	case 1:
 		mes "[Devil Enchant Master]";
-		mes "Ha ha ha~ Of course, I am not the kind of person that simply deals with people.";
+		mes "555~ แน่นอน, ข้าไม่ใช่คนประเภทที่จะปรากฎตัวออกมาบ่อยนักหรอก.";
 		next;
 		mes "[Devil Enchant Master]";
-		mes "Including you! Even if you offer me plenty of money, I will not simply enchant for you!!";
+		mes "สำหรับเจ้าที่เห็นข้า! ถ้าเจ้าทำข้อตกลงกับข้า, ข้าจะออฟของให้เจ้า!!";
 		next;
 		mes "[Devil Enchant Master]";
-		mes "Have you seen my title? Very few people have this title for a reason!";
+		mes "เจ้าเห็นฉายาของข้าไหม ? มีไม่กี่คนหรอกที่มีฉายานี้!";
 		next;
 		mes "[Devil Enchant Master]";
-		mes "I will only enchant if you bring an ^0000ffEnchant Book^000000 along!";
+		mes "ข้าจะออฟได้ก็ต่อเมื่อเจ้ามี ^0000ffEnchant Book^000000 มาด้วย!";
 		next;
 		mes "[Devil Enchant Master]";
-		mes "Else, I will not enchant for you....";
+		mes "ไม่งั้น, ข้าไม่สามารถออฟของให้เจ้าได้....";
 		close;
 	case 2:
 		if (!countitem(6484)) {
 			mes "[Devil Enchant Master]";
-			mes "Are you listening to me? I will only do for you if you bring the Enchant Book!";
+			mes "เจ้าได้ยินที่ข้าบอกไหม ? ข้าจะออฟได้ก็ต่อเมื่อเจ้ามี Enchant Book!";
 			close;
 		}
 		set .@select,1;
@@ -58,14 +58,14 @@ prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 	case 3:
 		mes "[Devil Enchant Master]";
 		if (Zeny < 100000) {
-			mes "Initializing will cost 100,000 zeny. It seems you do not have enough zeny...";
+			mes "ค่าลบออฟ 100,000 zeny. ดูเหมือนว่าเจ้ามีเงินไม่พอ...";
 			close;
 		}
-		mes "Initializing will cost 100,000 zeny and confirming whether the weapon is enchanted!";
+		mes "ค่าลบออฟ 100,000 zeny และอาวุธที่เจ้าต้องการจะลบออฟ!";
 		next;
-		if (select("Let me think about it.:Initialize it now!") == 1) {
+		if (select("ขอคิดดูก่อน.:ลบเลย!") == 1) {
 			mes "[Devil Enchant Master]";
-			mes "Come back after you have confirmed!";
+			mes "กลับมาใหม่เมื่อเจ้าแน่ใจ!";
 			close;
 		}
 		set .@select,2;
@@ -75,33 +75,33 @@ prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 
 	mes "[Devil Enchant Master]";
 	if (!getequipisequiped(.@part)) {
-		mes "Are you trying to remove the enchanted equipment?";
+		mes "เจ้าใส่อาวุธมาหรือเปล่า ?";
 		close;
 	}
 	setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	// if (!getequipisequiped(.@part)) {
-	// 	mes "It is dangerous to remove equipment during enchant process!";
+	// 	mes "มันอันตรายถ้าเจ้าเอาอาวุธออกขณะกำลังออฟ!";
 	// 	close;
 	// }
 	set .@equip_id, getequipid(.@part);
 	.@equip_refine = getequiprefinerycnt(.@part);
 	set .@item$, "|1292|1394|1491|1585|2015|13071|13115|16019|18112|21000|";
 	if (!compare(.@item$,"|"+.@equip_id+"|")) {
-		mes "I don't want to touch your equipment now!";
+		mes "ข้าไม่อยากออฟอาวุธอันนี้!";
 		close;
 	}
 
 	if (.@select == 1) {
 		if (!countitem(6484)) {
-			mes "Are you listening to me? I will only do for you if you bring the Enchant Book!";
+			mes "เจ้าได้ยินที่ข้าบอกไหม ? ข้าจะออฟได้ก็ต่อเมื่อเจ้ามี Enchant Book!";
 			close;
 		}
-		mes "Which type of effect do you want to enchant?";
+		mes "เลือกค่าที่ต้องการออฟ ?";
 		next;
-		switch(select("Let me think about it.:Physical Series:Magical Series")) {
+		switch(select("ขอคิดดูก่อน.:Physical Series:Magical Series")) {
 		case 1:
 			mes "[Devil Enchant Master]";
-			mes "Come back again after you change your mind!";
+			mes "กลับมาใหม่เมื่อเจ้าแน่ใจ!";
 			close;
 		case 2:
 			set .@enc_type,1;
@@ -112,19 +112,19 @@ prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 		}
 		mes "[Devil Enchant Master]";
 		if (.@equip_card[3]) {
-			mes "This equipment has been enchanted! You need to initialize first before you want to enchant it again.";
+			mes "อาวุธนี้มีออฟอยู่แล้ว! เจ้าต้องลบออฟออกก่อนที่จะออฟอีกครั้ง.";
 			close;
 		}
-		mes "The enchant process might fail, and ^ff0000it will reduce partial refine level^000000, but the slotted card and weapon will not be broken! Are you sure you want to continue?";
+		mes "ถ้าออฟล้มเหลว, ^ff0000มันจะลดค่าตีบวกลง^000000, แต่ช่องใส่การ์ดและอาวุธจะไม่หายไป! อยากทำต่ออยู่ไหม ?";
 		next;
-		if (select("Next time!:Start now!") == 1) {
+		if (select("โอกาสหน้าล่ะกัน!:เริ่มเลย!") == 1) {
 			mes "[Devil Enchant Master]";
-			mes "Come back again after you have decided!";
+			mes "กลับมาใหม่เมื่อเจ้าแน่ใจ!";
 			close;
 		}
 		if (.@equip_card[3]) {
 			mes "[Devil Enchant Master]";
-			mes "It seems there's a problem, let me take a look.";
+			mes "มันจะเป็นปัญหาน่ะ, ถ้าอาวุธนี้มีออฟอยู่แล้ว.";
 			close;
 		}
 
@@ -206,26 +206,26 @@ prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 			else set .@enchant,0;
 		} else {
 			mes "[Devil Enchant Master]";
-			mes "Hmm! This item is having a problem, please check it again!";
+			mes "หืม! อาวุธนี้มีปัญหา, กรุณาตรวจดูใหม่!";
 			close;
 		}
 		mes "[Devil Enchant Master]";
 		if (.@equip_card[3]) {
-			mes "This item has been enchanted!";
+			mes "อาวุธนี้มีออฟอยู่แล้ว!";
 			close;
 		}
 		if (!countitem(6484)) {
-			mes "Are you listening to me? I will only do for you if you bring the Enchant Book!";
+			mes "เจ้าได้ยินที่ข้าบอกไหม ? ข้าจะออฟได้ก็ต่อเมื่อเจ้ามี Enchant Book!";
 			close;
 		}
 		if (.@enchant == 0) {
 			specialeffect EF_SHIELDCHARGE;
-			mes "Oh! Unbelievable!! It failed!! Please come again!";
+			mes "โอ้! ไม่น่าเชื่อ!! มันล้มเหลว!! โปรดกลับมาใหม่!";
 			set .@lost_refine, rand(0,.@equip_refine);
 			set .@equip_refine, .@equip_refine - .@lost_refine;
 		} else {
 			specialeffect EF_REPAIRWEAPON;
-			mes "The slot ^9900004^000000 has been enchanted!";
+			mes "ช่องที่ ^9900004^000000 ได้ออฟแล้ว!";
 		}
 		delitem 6484,1; //Enchant_Book
 
@@ -242,24 +242,24 @@ prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 		if (.@lost_refine) {
 			next;
 			mes "[Devil Enchant Master]";
-			mes "The failure has reduced the refine by "+callfunc("F_InsertPlural",.@lost_refine,"level")+"! Don't be depressed!";
+			mes "เมื่อล้มเหลวมันจะลดค่าตีบวกลง "+callfunc("F_InsertPlural",.@lost_refine,"level")+"! อย่าน้อยใจเลย!";
 		}
 		close;
 	} else if (.@select == 2) {
 		if (Zeny < 100000) {
-			mes "You need to bring some money to initialize!!";
+			mes "เจ้าต้องมีเงินเพื่อลบออฟ!!";
 			close;
 		}
 		if (callfunc("F_IsCharm",.@equip_card[3]) == false) {
-			mes "This item is not enchanted!";
+			mes "ของนี้ลบออฟไม่ได้!";
 			close;
 		}
 		if (!getequipisequiped(.@part)) {
-			mes "Are you unequipping now?";
+			mes "เจ้าไม่ได้ใส่อาวุธมา ?";
 			close;
 		}
 		specialeffect EF_REPAIRWEAPON;
-		mes "I initialized the enchant effects.";
+		mes "ข้าลบออฟให้แล้ว.";
 		set Zeny, Zeny - 100000;
 
 		// anti-hack
@@ -274,7 +274,7 @@ prt_in,28,73,3	script	Devil Enchant Master#prq	63,{
 
 		close;
 	} else {
-		mes "It seems you have chosen the wrong job??";
+		mes "เจ้ามาผิดที่แล้ว??";
 		close;
 	}
 }

@@ -14,11 +14,11 @@
 malangdo,221,174,6	script	Holink#mal_cash	559,{
 	disable_items;
 	mes "[Holink]";
-	mes "I am the meow~ Blacksmith Holink~";
-	mes "Master of refining, Holink~";
-	mes "I am the special cat Holink who learned from Morocc~";
-	mes "My daughter is so proud of me, Holink~";
-	mes "What should Holink~ refine today?";
+	mes "เมี๊ยว ข้าคือช่างตีบวก Holink~";
+	mes "ปรมาจารย์แห่งการตีบวก, Holink~";
+	mes "ข้าเป็นแมวพิเศษที่ได้ร่ำเรียนจาก Morroc, Holink~";
+	mes "ลูกสาวของข้าเป็นคนที่น่าภาคภูมิใจมาก, Holink~";
+	mes "เจ้าจะตีบวกอะไรในวันนี้ ? Holink~";
 	next;
 
 	setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
@@ -30,43 +30,43 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 		mes "[Holink]";
 		switch(.@part) {
 		case EQI_HEAD_TOP:
-			mes "My teacher Aragam said meow~";
-			mes "There's no cure for stupidity...";
+			mes "เมี๊ยว อาจารย์ของข้า Aragam เคยบอกว่า~";
+			mes "ไม่มียารักษาสำหรับโรคโง่...";
 			break;
 		case EQI_ARMOR:
-			mes "There's nothing to see here, meow!!";
+			mes "ไม่เห็นมีอะไรเลย, เมี๊ยว!!";
 			break;
 		case EQI_HAND_L:
-			mes "Meow? What do you want me to do with this left hand...?";
+			mes "เมี๊ยว? เจ้าต้องการให้ข้าทำอะไรกับมือซ้าย...?";
 			break;
 		case EQI_HAND_R:
-			mes "Meow? What do you want me to do with this right hand...?";
+			mes "เมี๊ยว? เจ้าต้องการให้ข้าทำอะไรกับมือขวา...?";
 			break;
 		case EQI_GARMENT:
-			mes "Meow? You don't have anything on.";
+			mes "เมี๊ยว? เจ้ามาตัวเปล่านิ.";
 			break;
 		case EQI_SHOES:
-			mes "Kyang~! Do not mess with my sensitive olfactory, meow~.";
+			mes "คิย๊า~! อย่ายุ่งกับจมูกที่อ่อนไหวง่ายของข้า, เมี๊ยว~.";
 			break;
 		case EQI_ACC_L:
 		case EQI_ACC_R:
-			mes "Meow? Where is the accessory?";
+			mes "เมี๊ยว? ไหนละประดับ ?";
 			break;
 		case EQI_HEAD_MID:
 		case EQI_HEAD_LOW:
-			mes "Meow? You talking about the other head parts, meow?~";
+			mes "เมี๊ยว? เจ้าอยากจะคุยเกี่ยวกับหมวกส่วนอื่นๆ, เมี๊ยว?~";
 			break;
 		}
 		close;
 	}
 	if (!getequipisenableref(.@part)) {
 		mes "[Holink]";
-		mes "Even Aragam can't refine such a thing, meow.";
+		mes "ให้อาจารย์ Aragam มาตีก็ตีบวกไม่ได้, เมี๊ยว.";
 		close;
 	}
 	if (getequiprefinerycnt(.@part) >= 10) {
 		mes "[Holink]";
-		mes "Meow~ Perfect refining. Did Aragam do this, meow?~";
+		mes "เมี๊ยว~ ค่าตีบวกสูงสุดแล้ว. อาจารย์ Aragam ทำให้หรอ, เมี๊ยว?~";
 		close;
 	}
 	mes "[Holink]";
@@ -80,69 +80,69 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	default:
 	case 0: // Armor
 		.@type$ = "armor";
-		mes "You have chosen an armor, meow~";
+		mes "เจ้าเลือกชุดเกราะ, เมี๊ยว~";
 		break;
 	case 1: // Level 1 Weapon
 		.@type$ = "weapon";
-		mes "A level 1 weapon...?";
+		mes "อาวุธเลเวล 1...?";
 		break;
 	case 2: // Level 2 Weapon
 		.@type$ = "weapon";
-		mes "Meow, a level 2 weapon...?";
+		mes "เมี๊ยว, อาวุธเลเวล 2...?";
 		break;
 	case 3: // Level 3 Weapon
 		.@type$ = "weapon";
-		mes "Meow Meow~~ A level 3 weapon~~";
+		mes "เมี๊ยว เมี๊ยว~~ อาวุธเลเวล 3~~";
 		break;
 	case 4: // Level 4 Weapon
 		.@type$ = "weapon";
-		mes "Me-Meow!... A level 4 weapon...!";
-		mes "I've only seen it twice while";
-		mes "learning from Aragam... Me-Meow!!";
+		mes "มะ-เมี๊ยว!... อาวุธเลเวล 4...!";
+		mes "ข้าเคยเห็นมันมาก่อนและ";
+		mes "ได้เรียนมันมาจากอาจารย์ Aragam แล้ว... มะ-เมี๊ยว!!";
 		break;
 	}
-	mes "You need ^ff9999"+getitemname(.@material)+"^000000 and ^ff9999"+.@price+"^000000 Zeny for this refine, meow~";
-	mes "Want to continue, meow?~";
+	mes "เจ้าต้องมี ^ff9999"+getitemname(.@material)+"^000000 และ ^ff9999"+.@price+"^000000 Zeny เป็นค่าบริการ, เมี๊ยว~";
+	mes "จะทำต่อไหม, เมี๊ยว?~";
 	next;
-	if(select("Yes!!:No!!") == 2) {
+	if(select("ใช่!!:ไม่!!") == 2) {
 		mes "[Holink]";
-		mes "Kyack!!";
-		mes "You don't believe in refine master Holink, meow?~";
+		mes "คิย๊า!!";
+		mes "เจ้าไม่เชื่อมั่นในตัวของ Holink หรอ, เมี๊ยว?~";
 		close;
 	}
-	if (getequippercentrefinery(.@part, true) < 100) {
+	if (getequippercentrefinery(.@part, REFINE_COST_ENRICHED) < 100) {
 		mes "[Holink]";
 		mes "Meow!!";
 		if (.@type$ == "armor")
-			mes "This armor was already refined so many times, meow.";
+			mes "เกราะนี้ถูกตีบวกมาหลายครั้งแล้ว, เมี๊ยว.";
 		else {
-			mes "Danger. Danger~";
-			mes "This weapon was refined a lot, meow~";
+			mes "อันตราย. อันตราย~";
+			mes "อาวุธนี้ถูกตีบวกมาเยอะมาก, เมี๊ยว~";
 			next;
 			mes "[Holink]";
 		}
-		mes "You might break it if you continue";
-		mes "to try refining this item further, meow.";
+		mes "มันจะแตกได้ถ้าเจ้าจะทำต่อ";
+		mes "ลองตีใหม่ครั้งหน้าไหม, เมี๊ยว.";
 		next;
 		mes "[Holink]";
-		mes "Once the "+.@type$+" is broken, you can";
-		mes "never use it again, meow. Not to mention... all current";
-		mes "^ff0000cards and enchantments will vanish for sure^000000.";
-		mes "You still want to try, meow~?";
+		mes "ถ้า "+.@type$+" นี้แตก, เจ้าจะไม่สามารถ";
+		mes "ใช้มันได้อีกเลย, เมี๊ยว. ทั้งปัจจุบัน... และอนาคต";
+		mes "^ff0000การ์ดและออฟชั่นจะหายไปด้วยแน่นอน^000000.";
+		mes "เจ้ายังอยากทำต่อไหม, เมี๊ยว~?";
 		next;
-		if(select("Yes, I do!!:Forget about it!!") == 2) {
+		if(select("ใช่, อยากทำ!!:ลืมมันไปซะ!!") == 2) {
 			mes "[Holink]";
-			mes "Meow! Wise choice, meow.";
-			mes "But!!";
-			mes "I am not happy to see you doubting the refine master Holink, meow~";
+			mes "เมี๊ยว! เลือกได้ดี, เมี๊ยว.";
+			mes "แต่!!";
+			mes "ข้าไม่พอใจนักที่เจ้าไม่เชื่อฝีมือข้า Holink, เมี๊ยว~";
 			close;
 		}
 	}
 	if (countitem(.@material) == 0 || Zeny < .@price) {
 		mes "[Holink]";
-		mes "You don't have the ingredients.";
-		mes "You need ^ff9999"+getitemname(.@material)+"^000000 and ^ff9999"+.@price+"^000000 Zeny, meow~";
-		mes "Go get it, meow~";
+		mes "เจ้ามีของไม่ครบ.";
+		mes "เจ้าต้องมี ^ff9999"+getitemname(.@material)+"^000000 และ ^ff9999"+.@price+"^000000 Zeny, เมี๊ยว~";
+		mes "ไปเอามันมา, เมี๊ยว~";
 		close;
 	}
 	delitem .@material,1;
@@ -153,28 +153,28 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 		callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
 		mes "[Holink]";
 		emotion ET_FRET;
-		mes "Wait a second...";
-		mes "Do you think I'm stupid?!";
-		mes "You switched the item while I wasn't looking! Get out of here!";
+		mes "รอสักครู่...";
+		mes "เจ้าคิดว่าข้าโง่หรอ?!";
+		mes "เจ้าแอบสลับของตอนที่ข้าไม่เห็น! ไปให้พ้นซะ!";
 		close;
 	}
 
-	if (getequippercentrefinery(.@part, true) > rand(100)) {
+	if (getequippercentrefinery(.@part, REFINE_COST_ENRICHED) > rand(100)) {
 		successrefitem .@part;
 		mes "[Holink]";
-		mes "Me~ Me~ Meow! Fun fun refining~";
+		mes "มะ~ มะ~ เมี๊ยว! ตีบวกสนุกจังเลย~";
 		next;
 		emotion ET_CHUP;
 		mes "[Holink]";
-		mes "Perfect!! Perfect, meow!!";
-		mes "I am the disciple of the refining wizard Aragam~";
+		mes "ยอดเยี่ยม!! ยอดเยี่ยม, เมี๊ยว!!";
+		mes "ข้าคือลูกศิษย์ของ Aragam~";
 		mes "Holink!!";
-		mes "Another day of successful refining, meow!!";
+		mes "วันอื่นข้าก็ตีสำเร็จได้, เมี๊ยว!!";
 		close;
 	}
 	failedrefitem .@part;
 	mes "[Holink]";
-	mes "Meo~ Meow~ Kyaaak!!";
+	mes "มาว~ เมี๊ยว~ คิย๊า!!";
 	next;
 	switch(rand(1,5)) {
 		case 1: emotion ET_CRY; break;
@@ -184,17 +184,17 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 		case 5: emotion ET_BIGTHROB; break;
 	}
 	mes "[Holink]";
-	mes "Meow!! Aaaaakk~~!!!!";
-	mes "Kyaaak!! I have failed, meow!!";
+	mes "เมี๊ยว!! อ๊ากกกกก~~!!!!";
+	mes "คิย๊า!! ข้าทำพลาด, เมี๊ยว!!";
 	next;
 	mes "[Holink]";
 	mes "......";
 	mes "......";
-	mes "All~ Everything~ Broken, meow...";
+	mes "ทั้งหมด~ มัน~ แตกแล้ว, เมี๊ยว...";
 	next;
 	mes "[Holink]";
-	mes "Meow.... Master Aragam once said,";
-	mes "learn from your failures...";
-	mes "Human, this one failure will be the beginning of your success in the future.";
+	mes "เมี๊ยว.... อาจารย์ Aragam เคยบอกว่า,";
+	mes "จงเรียนรู้จากความผิดพลาด...";
+	mes "เจ้ามนุษย์, ความผิดพลาดในครั้งนี้จะเป็นความสำเร็จในครั้งหน้า.";
 	close;
 }

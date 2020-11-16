@@ -8,27 +8,27 @@
 har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
 	disable_items;
 	mes "[Contraband Processor]";
-	mes "Have you tried to buy some contraband items with Rock Ridge Coins? I can make your contraband items better.";
+	mes "เจ้าได้ลองซื้อไอเท็มต้องห้ามด้วย Rock Ridge Coins หรือยัง ? ข้าทำให้ไอเท็มต้องห้ามของเจ้าแหล่มขึ้นได้น่ะ.";
 	next;
-	.@reset = select( "Make them better? How?", "Enchant contraband items.", "Reset contraband item Enchantment level." ) - 2;
+	.@reset = select( "ทำให้ดีขึ้น ? วิธีไหน ?", "ออฟไอเท็มต้องห้าม.", "ลบออฟไอเท็มต้องห้าม." ) - 2;
 	if (.@reset == -1) {
 		mes "[Contraband Processor]";
-		mes "Ah, have we met before? I meet so many people every day that I can't remember all of their faces. Let me catch you up to speed.";
+		mes "อ่า, เราเคยเจอกันมาก่อนไหม ? ข้าเจอผู้คนมากมายทุกวัน นั่นทำให้ข้าจดจำใบหน้าใครไม่ได้เลย. เจ้าทักข้าก่อนได้ทันที.";
 		next;
 		mes "[Contraband Processor]";
-		mes "I can enchant the equipment that you can buy with Rock Ridge Coins, for up to 3 sockets for Armor and Garments and up to 2 sockets for Accessories.";
+		mes "ข้าสามารถออฟของสวมใส่ที่เจ้าซื้อด้วย Rock Ridge Coins ได้, 3 ช่องสำหรับชุดเกราะและผ้าคลุมและ 2 ช่องสำหรับประดับ.";
 		next;
 		mes "[Contraband Processor]";
-		mes "I charge 2 Rock Ridge Coins per socket for both enchanting and resetting.";
+		mes "ข้าใช้ 2 Rock Ridge Coins ต่อหนึ่งช่องสำหรับออฟและลบออฟ.";
 		next;
 		mes "[Contraband Processor]";
-		mes "Oh, and note that these contraband items are prone to destruction, especially when they are reset.";
+		mes "โอ้, และจำเอาไว้ด้วยว่าไอเท็มต้องห้ามมีโอกาสเสียหาย, โดยเฉพาะอย่างยิ่งตอนที่ลบออฟ.";
 		close;
 	}
-	switch( select( "Cancel", "Armor", "Garment", "Accessory (Right Slot)" ) ) {
+	switch( select( "ยกเลิก", "ชุดเกราะ", "ผ้าคลุม", "ประดับ (มือขวา)" ) ) {
 	case 1:
 		mes "[Contraband Processor]";
-		mes "You're silly.";
+		mes "เจ้ามันโง่.";
 		close;
 	case 2:
 		.@part = EQI_ARMOR;
@@ -57,11 +57,11 @@ har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
 		break;
 	case -1:
 		mes "[Contraband Processor]";
-		mes "Why are you wasting my time? Go wear your equipment first.";
+		mes "ทำไมข้าต้องมาเสียเวลาไปกับเจ้า ? ไปสวมใส่ของมาก่อน.";
 		close;
 	default:
 		mes "[Contraband Processor]";
-		mes "I don't handle items like this.";
+		mes "ข้าทำไอเท็มชิ้นนี้ไม่ได้.";
 		close;
 	}
 	.@refine = getequiprefinerycnt(.@part);
@@ -69,21 +69,21 @@ har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
 	copyarray .@tmp_card[0], .@card[0], 4;
 	if ((.@card[1] && callfunc("F_IsCharm",.@card[1]) == false) || (.@card[2] && callfunc("F_IsCharm",.@card[2]) == false) || (.@card[3] && callfunc("F_IsCharm",.@card[3]) == false)) {// armor enchant system custom check
 		mes "[Contraband Processor]";
-		mes "Something wrong happened.";
+		mes "มีบางสิ่งผิดพลาดเกิดขึ้น.";
 		close;
 	}
 	switch( .@reset ) {
 	case TRUE:
 		if (.@card[3] == 0) {
 			mes "[Contraband Processor]";
-			mes "It's not enchanted. What do you expect me to reset?";
+			mes "มันไม่เคยออฟมาก่อน. เจ้าจะให้ข้าลบอะไร ?";
 			close;
 		}
 		mes "[Contraband Processor]";
-		mes "Oh, do you really want to reset it? As I told you before, contraband Vigilante Badges are prone to destruction.";
-		if (select( "I'll come back later.", "Let's do it." ) == 1) {
+		mes "โอ้, เจ้าพร้อมที่จะลบมันหรือยัง ? ข้าจะบอกกับเจ้าก่อน, ว่าของมีโอกาสถูกทำลาย.";
+		if (select( "ข้าจะกลับมาใหม่.", "ทำมันเลย." ) == 1) {
 			mes "[Contraband Processor]";
-			mes "Alright, come back if you change your mind.";
+			mes "เข้าใจแล้ว, กลับมาถ้าเจ้าเปลี่ยนใจ.";
 			close;
 		}
 		if (.@part == EQI_ACC_R)
@@ -98,7 +98,7 @@ har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
 		case EQI_GARMENT:
 			if (.@card[1] > 0) {
 				mes "[Contraband Processor]";
-				mes "This has been enchanted to the maximum limit. Maybe you should reset it.";
+				mes "ไอเท็มได้ถูกออฟเต็มทุกช่องแล้ว. เจ้าควรที่จะลบมันก่อน.";
 				close;
 			}
 			if (.@card[3] == 0)
@@ -161,7 +161,7 @@ har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
 		case EQI_ACC_R:
 			if (.@card[2] > 0) {
 				mes "[Contraband Processor]";
-				mes "This has been enchanted to the maximum limit. Maybe you should reset it.";
+				mes "ไอเท็มได้ถูกออฟเต็มทุกช่องแล้ว. เจ้าควรที่จะลบมันก่อน.";
 				close;
 			}
 			if (.@card[3] == 0)
@@ -194,7 +194,7 @@ har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
 			break;
 		default:
 			mes "[Contraband Processor]";
-			mes "Something wrong happened.";
+			mes "มีบางสิ่งผิดพลาดเกิดขึ้น.";
 			close;
 		}
 		.@card[ .@enchant_slot ] = .@enchant_list[ rand( getarraysize(.@enchant_list) ) ];	// unknown rates
@@ -202,7 +202,7 @@ har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
 	}
 	if (countitem(25250) < 2) {
 		mes "[Contraband Processor]";
-		mes "I charge 2 Rock Ridge Coins for this service. Bring them to me.";
+		mes "ข้าใช้ 2 Rock Ridge Coins เป็นค่าบริการ. นำมันมาให้ข้าด้วย.";
 		close;
 	}
 	delitem 25250,2;// Rock_Ridge_Coin
@@ -215,111 +215,111 @@ har_in01,17,74,7	script	Contraband Processor#pa	4_DR_SOLDIER,{
 	if (rand(100) < .@chance_of_breaking_on_reset) {
 		specialeffect2 EF_LORD;
 		mes "[Contraband Processor]";
-		mes "Ah, that didn't turn out well.";
-		mes "Well, just my luck.";
+		mes "อ่า, มันไม่ได้แย่เท่าไร.";
+		mes "เยี่ยม, โชคดีของข้า.";
 		close;
 	}
 	specialeffect2 EF_REPAIRWEAPON;
 	getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
 	mes "[Contraband Processor]";
-	mes "Done. Check it out.";
+	mes "เรียบร้อย. ลองตรวจสอบดู.";
 	close;
 }
 
 
 har_in01,24,69,3	script	Affable Lady#rockridge0	1_F_MERCHANT_02,{
 	mes "[Affable Lady]";
-	mes "You're an adventurer. I like people like you who have passion.";
-	mes "So, are you here because of ^0000CDit^000000?";
+	mes "เจ้าเป็นนักผจญภัยหรอ. ข้าชอบคนที่น่าหลงใหลแบบเจ้า.";
+	mes "ดังนั้น, เจ้ามาที่นี้เพราะ ^0000CDมัน^000000 สินะ ?";
 	next;
-	if (select( "Because of what?", "I am." ) == 1) {
+	if (select( "เพราะอะไรนะ ?", "ใช่แล้ว." ) == 1) {
 		mes "[Affable Lady]";
-		mes "Hmpf, don't act like you don't know. I'm talking about the special equipment you can buy in Rock Ridge.";
+		mes "หืม, อาการเหมือนเจ้าจะไม่รู้. ข้าจะบอกให้ที่นี้มีของสวมใส่ที่พิเศษที่เจ้าหาซื้อได้ใน Rock Ridge.";
 		next;
 		mes "[Affable Lady]";
-		mes "The armor dealer brings in new stock every Friday, and it's sold almost as soon as it's in, every time.";
+		mes "ร้านขายชุดเกราะจะมีของใหม่ๆลงทุกวันศุกร์, และมันก็ถูกขายออกจนหมด, ทุกครั้ง.";
 		close;
 	}
 	mes "[Affable Lady]";
-	mes "*Chuckle* Which one do you want: one for your ^0000CDshoulders^000000, ^0000CDneck, or chest^000000?";
+	mes "*หึหึ* เจ้าต้องการแบบไหน: แบบที่ใส่กับ ^0000CDไหล่^000000, ^0000CDคอ, หรืออก^000000 ของเจ้า ?";
 	next;
-	switch( select( "Um, anything.", "For my shoulders", "For my neck or chest" ) ) {
+	switch( select( "อืม, ไม่อ่ะ.", "สำหรับไหล่ของข้า", "สำหรับคอหรืออกของข้า" ) ) {
 	case 1:
 		mes "[Affable Lady]";
-		mes "*Chuckle* Sure, young people always look good, no matter what they wear.";
-		mes "But if you want something special, go check the armor shop.";
+		mes "*หึหึ* แน่ใจ, คนหนุ่มสาวมักจะดูดี, ไม่ว่าจะสวมใส่อะไรก็ตาม.";
+		mes "แต่ถ้าเจ้าต้องการของที่พิเศษ, ไปดูได้ที่ร้านขายชุดเกราะ.";
 		close;
 	case 2:
 		mes "[Affable Lady]";
-		mes "Pick one you like, and I'll tell you about it.";
-		mes "All the equipment is ^0000CD3,000,000 Zeny^000000 regardless of its type.";
+		mes "เลือกของที่เจ้าชอบ, แล้วข้าจะบอกเจ้าเกี่ยวกับมัน.";
+		mes "ของทุกชิ้นราคา ^0000CD3,000,000 Zeny^000000 เท่ากันหมด.";
 		next;
 		.@cost = 3000000;
 		setarray .@item_id[0],20820,20821,20822;
 		setarray .@item_name$[0], "Elemental Cape", "Golden Scarf", "Mine Worker Backpack";
-		.@s = select( "Elemental Cape", "Golden Scarf", "Mine Worker Backpack", "I have no idea what you're talking about." ) - 1;
+		.@s = select( "Elemental Cape", "Golden Scarf", "Mine Worker Backpack", "ข้าไม่รู้ว่าเจ้ากำลังพูดถึงอะไร." ) - 1;
 		break;
 	case 3:
 		mes "[Affable Lady]";
-		mes "Pick one you like, and I'll tell you about it.";
-		mes "All the equipment is ^0000CD1,500,000 Zeny^000000 regardless of its type.";
+		mes "เลือกของที่เจ้าชอบ, แล้วข้าจะบอกเจ้าเกี่ยวกับมัน.";
+		mes "ของทุกชิ้นราคา ^0000CD1,500,000 Zeny^000000 เท่ากันหมด.";
 		next;
 		.@cost = 1500000;
 		setarray .@item_id[0],28441,28442;
 		setarray .@item_name$[0], "Vigilante Badge", "Hippie Feather";
-		.@s = select( "Vigilante Badge", "Hippie Feather", "I have no idea what you're talking about." ) - 1;
+		.@s = select( "Vigilante Badge", "Hippie Feather", "ข้าไม่รู้ว่าเจ้ากำลังพูดถึงอะไร." ) - 1;
 		break;
 	}
 	if (.@item_id[.@s] == 0) {
 		mes "[Affable Lady]";
-		mes "Oops, I guess you're too innocent to hear what I just said.";
-		mes "You should forget it, for your own good.";
+		mes "อุปส์, ข้าเดาว่าเจ้าแกล้งไม่ได้ยินสิ่งที่ข้าพูด.";
+		mes "เจ้าควรที่จะลืมมันเสีย, เพื่อผลดีต่อตัวเจ้าเอง.";
 		close;
 	}
 	mes "[Affable Lady]";
-	mes "Ah, you're interested in the";
+	mes "อ่า, เจ้าสนใจใน";
 	mes "[<ITEM>" + .@item_name$[.@s] + "<INFO>" + .@item_id[.@s] + "</INFO></ITEM>].";
-	mes "Click the name for the detailed description.";
-	mes "As I told you, it's ^0000CD3,000,000 Zeny^000000. Do you want to buy it?";
+	mes "กดที่ชื่อมันจะแสดงรายละเอียดออกมาให้.";
+	mes "ข้าจะบอกเจ้าอีก, ว่ามันราคา ^0000CD3,000,000 Zeny^000000. เจ้าต้องการซื้อมันไหม ?";
 	next;
-	if (select( "Yes.", "No." ) == 2) {
+	if (select( "ใช่.", "ไม่." ) == 2) {
 		mes "[Affable Lady]";
-		mes "Huh. So I wasted my breath on someone who doesn't want to buy.";
-		mes "Each and every piece of this equipment has a story to tell, and it might hold a grudge if you don't take it with you.";
+		mes "หะ. ข้าพ่นลมหายใจไปเปล่าประโยชน์กับคนที่ไม่ซื้อของ.";
+		mes "ของสวมใส่ทุกชิ้นที่นี้มันมีเรื่องราว, และมันคงเสียใจถ้าเจ้าไม่ได้เอามันไปด้วย.";
 		next;
 		mes "[Affable Lady]";
-		mes "I suggest you don't tell anyone else about it,";
-		mes "and promise me you'll be back. I'll keep the equipment for you.";
+		mes "ข้าแนะนำเจ้าว่าอย่าไปบอกใครเกี่ยวกับมัน,";
+		mes "และสัญญากับข้าว่าเจ้าจะกลับมา. ข้าจะเก็บของไว้ให้เจ้า.";
 		close;
 	}
 	if (Zeny < .@cost) {
 		mes "[Affable Lady]";
-		mes "Uh-oh, you don't have enough money to buy this.";
-		mes "Why don't you come back later? I'll always be here.";
+		mes "โอ้-ไม่, เจ้ามีเงินไม่พอที่จะซื้อมัน.";
+		mes "ทำไมเจ้าไม่กลับมาภายหลัง ? ข้าอยู่ตรงนี้ตลอด.";
 		close;
 	}
 	mes "[Affable Lady]";
-	mes "Sure. Here's your " + .@item_name$[.@s] + ".";
+	mes "แน่ใจ. เจ้าต้องการ " + .@item_name$[.@s] + ".";
 	Zeny = Zeny - .@cost;
 	getitem .@item_id[.@s],1;
 	next;
 	mes "[Affable Lady]";
-	mes "People often let their preconceived notions fool them. Most people don't think an old woman like me would sell such special items.";
-	mes "Come back if you want more equipment. I'll always be here. *Chuckle*";
+	mes "ผู้คนส่วนมากมักจะปล่อยให้ความคิดหลอกพวกเขา. ใครจะไปคิดว่าหญิงแก่อย่างข้าจะขายของที่พิเศษแบบนี้.";
+	mes "กลับมาถ้าเจ้าต้องการเพิ่ม. ข้าอยู่ตรงนี้ตลอด. *หึหึ*";
 	close;
 }
 
 har_in01,34,81,5	script	Howard#rr	4_M_TATIO,{
 	mes "[Howard]";
-	mes "Hello. How may I help you today?";
+	mes "หวัดดี. วันนี้มีอะไรให้ข้าช่วยไหม ?";
 	next;
 	mes "[Howard]";
-	mes "Ah, you have the coins.";
-	mes "Thank you for helping Rock Ridge.";
-	mes "Take a look around and see if there's something you want.";
+	mes "อ่า, เจ้ามีเหรียญ.";
+	mes "ขอบคุณที่ช่วย Rock Ridge ไว้.";
+	mes "ลองมองดูรอบๆอาจมีสิ่งที่เจ้าสนใจก็ได้.";
 	next;
 	mes "[Howard]";
-	mes "What would you like to have?";
+	mes "เจ้าชอบของชิ้นไหน ?";
 	next;
 	setarray .@data$[0],
 		 24, 15176, "Vigilante Suit",	// <cost>, <item ID>, <item name>
@@ -340,23 +340,23 @@ har_in01,34,81,5	script	Howard#rr	4_M_TATIO,{
 	.@s = ( select(.@menu$) - 1 ) * 3;
 
 	mes "[Howard]";
-	mes "<ITEM>" + .@data$[.@s+2] + "<INFO>" + .@data$[.@s+1] + "</INFO></ITEM>, got it.";
-	mes "That'll be " + .@data$[.@s] + " Rock Ridge Coins.";
-	mes "Are you certain you want this item?";
+	mes "<ITEM>" + .@data$[.@s+2] + "<INFO>" + .@data$[.@s+1] + "</INFO></ITEM>, ชิ้นนี้.";
+	mes "มันใช้ " + .@data$[.@s] + " Rock Ridge Coins.";
+	mes "เจ้าแน่ใจไหมว่าต้องการของชิ้นนี้ ?";
 	next;
-	if (select( "Yes.", "No." ) == 2) {
+	if (select( "ใช่.", "ไม่." ) == 2) {
 		mes "[Howard]";
-		mes "If you have made up your mind, then please talk to me again.";
+		mes "ถ้าเจ้าเปลี่ยนใจ, ให้กลับมาคุยกับข้าอีกครั้ง.";
 		close;
 	}
 	if (countitem(25250) < atoi(.@data$[.@s])) {
 		mes "[Howard]";
-		mes "You don't have enough coins.";
-		mes "Please bring more.";
+		mes "เจ้ามีเหรียญไม่พอ.";
+		mes "ไปนำมันมามากกว่านี้.";
 		close;
 	}
 	mes "[Howard]";
-	mes "There you go. Enjoy!";
+	mes "เอามันไปได้เลย!";
 	delitem 25250, atoi(.@data$[.@s]);// Rock Ridge Coin
 	getitem atoi(.@data$[.@s+1]),1;
 	close;
@@ -369,57 +369,57 @@ har_in01,34,81,5	script	Howard#rr	4_M_TATIO,{
 
 har_in01,19,86,4	script	Weapon Dealer#rockridge	1_F_02,{
 	mes "[Weapon Dealer]";
-	mes "I carry shotguns, revolvers, and bullets.";
-	mes "Tell me what kind of item you want, and I'll show you a list.";
+	mes "ข้าพก shotguns, revolvers, และ bullets ติดตัวมา.";
+	mes "บอกข้าถึงสิ่งที่เจ้าต้องการ, แล้วข้าจะโชว์ให้เจ้าดู.";
 	next;
-	switch( select( "Shotguns", "Revolvers", "Bullets", "Sell items.", "Cancel." ) ) {
+	switch( select( "Shotguns", "Revolvers", "Bullets", "ขายของ.", "ยกเลิก." ) ) {
 	case 1:
 		mes "[Weapon Dealer]";
-		mes "You want to browse shotguns? I see.";
-		mes "Let me show you some good models.";
+		mes "เจ้าต้องการดู shotguns ? ข้าเข้าใจแล้ว.";
+		mes "ข้าจะโชว์ของดีให้ดู.";
 		close2;
 		callshop "shotguns_rockridge", 1;
 		end;
 	case 2:
 		mes "[Weapon Dealer]";
-		mes "You want to browse revolvers? I see.";
-		mes "I've just brought in a few good models.";
+		mes "เจ้าต้องการดู revolvers ? ข้าเข้าใจแล้ว.";
+		mes "ข้าเพิ่งรับของดีๆมาสองสามชิ้น.";
 		close2;
 		callshop "revolvers_rockridge", 1;
 		end;
 	case 3:
 		mes "[Weapon Dealer]";
-		mes "You want bullets, I see.";
-		mes "All my bullets are of the finest quality.";
+		mes "เจ้าต้องการ bullets, ข้าเข้าใจแล้ว.";
+		mes "ลูกกระสุนทั้งหมดของข้าคัดมาแล้วทั้งนั้น.";
 		close2;
 		callshop "bullets_rockridge", 1;
 		end;
 	case 4:
 		mes "[Weapon Dealer]";
-		mes "Sure, if you have things I can sell.";
-		mes "Show me what you've got.";
+		mes "แน่นอน, ถ้าเจ้ามีของที่ข้าขายได้.";
+		mes "โชว์ให้ข้าดูว่าเจ้ามีอะไรบ้าง.";
 		close2;
 		callshop "armor_rockridge", 2;
 		end;
 	case 5:
 		mes "[Weapon Dealer]";
-		mes "Come again.";
+		mes "กลับมาอีกครั้ง.";
 		close;
 	}
 }
 
 har_in01,16,86,4	script	Armor Dealer#rockridge0	1_M_04,{
 	mes "[Armor Dealer]";
-	mes "Hello. Welcome to the Rock Ridge Armor Shop.";
-	mes "Today,Sombreros, Indian Headbands, and Cowboy Hatsare in stock.";
+	mes "หวัดดี. ยินดีต้อนรับสู่ร้านชุดเกราะ Rock Ridge.";
+	mes "วันนี้,Sombreros, Indian Headbands, และ Cowboy Hatsare ยังมีอยู่ในสต๊อก.";
 	next;
 	mes "[Armor Dealer]";
-	mes "Armor is bulkier than weapons, so I can only have a set number of products delivered every week.";
-	mes "I'll show you the list of available items. ^0000CDIf it's blank, then everything's sold out^000000.";
+	mes "เกราะมีค่ามากกว่าอาวุธ, ดังนั้นข้าจึงกำหนดของที่จะขายในทุกสัปดาห์.";
+	mes "ข้าจะโชว์ของที่มี. ^0000CDถ้ามันว่างเปล่า, แปลว่าของขายออกไปหมดแล้ว^000000.";
 	next;
 	mes "[Armor Dealer]";
-	mes "And for that same reason, I can't give ^0000CDspecial discounts^000000.";
-	mes "But ^0000CDall my products are hard to find elsewhere^000000. Why don't you take a look at them?";
+	mes "และด้วยเหตุผลเดียวกัน, ข้าไม่สามารถ ^0000CDลดราคาให้ได้^000000.";
+	mes "แต่ ^0000CDสินค้าทั้งหมดของข้าไม่สามารถหาได้ที่อื่น^000000. ทำไมเจ้าไม่ลองดูสักหน่อย ?";
 	close2;
 	callshop "armor_rockridge", 1;
 	end;

@@ -36,29 +36,29 @@ prt_in,253,168,4	script	Alora	862,{
 	setarray .@hg_7[1], 2256, 5217;
 
 	mes "[Alora]";
-	mes "Hello, I can change your headgear's color if you bring me a Mysterious Dyestuff.";
+	mes "สวัสดีฉันสามารถเปลี่ยนสีหมวกของคุณได้ถ้าคุณเอาสีย้อมลึกลับ(Mysterious Dyestuff) มาให้ฉัน";
 	next;
 	mes "[Alora]";
-	mes "Do you have a headgear that you would like to dye?";
+	mes "คุณมีหมวกที่คุณต้องการจะย้อมไหม";
 	next;
 	for(set .@i,1; .@i < getarraysize(.@hgn$); set .@i,.@i+1) {
 		if(.@i == 1)    set .@menu$, .@hgn$[.@i];
 		else            set .@menu$, .@menu$ +":"+ .@hgn$[.@i];
 	}
-	set .@menu$, .@menu$ +":Cancel";
+	set .@menu$, .@menu$ +":ยกเลิก";
 	set .@t, select(.@menu$);
 	if(.@t == getarraysize(.@hgn$)) {
 		mes "[Alora]";
-		mes "Have a good journey adventurer!";
-		mes "If you ever are curious to try a new color on your Kafra headgear or the ones you found on your adventures please come to me!";
+		mes "มีนักผจญภัยการเดินทางที่ดี!";
+		mes "ถ้าคุณอยากรู้อยากเห็นลองสีใหม่บนหมวก Kafra ของคุณหรือสิ่งที่คุณพบในการผจญภัยของคุณโปรดมาหาฉัน!";
 		close;
 	}
 	mes "[Alora]";
-	mes "Okay, what color do you want to change it to?";
+	mes "โอเคคุณต้องการเปลี่ยนเป็นสีอะไร?";
 	next;
 	for(set .@i,1; .@i < getarraysize(getd(".@hg_"+.@t+"")); set .@i,.@i+1) {
 		if(.@i == 1 && .@t != 5)
-			set .@menu$, "Normal";
+			set .@menu$, "ปกติ";
 		else if(.@i == 1 && .@t == 5)
 			set .@menu$, getitemname(getd(".@hg_"+.@t+"["+.@i+"]"));
 		else {
@@ -66,52 +66,53 @@ prt_in,253,168,4	script	Alora	862,{
 			set .@menu$, .@menu$ +":"+ .@colour$;
 		}
 	}
-	set .@menu$, .@menu$ +":Cancel";
+	set .@menu$, .@menu$ +":ยกเลิก";
 	set .@c, select(.@menu$);
 	if(.@c == getarraysize(getd(".@hg_"+.@t+""))) {
 		mes "[Alora]";
-		mes "Oh, okay no problem!";
+		mes "โอ้โอเคไม่มีปัญหา!";
 		close;
 	}
 	set .@dyHG, getd(".@hg_"+.@t+"["+.@c+"]");
 	mes "[Alora]";
-	mes "Oh I'm so excited aren't you?";
-	mes "And just to be sure, what color is the "+ .@hgn$[.@t] +" you want me to use?";
+	mes "โอ้ฉันตื่นเต้นมากใช่มั้ย";
+	mes "และเพื่อให้แน่ใจว่าสีอะไรคือ " + .@hgn$[.@t] + " คุณต้องการให้ฉันใช้?";
 	next;
 	mes "[Alora]";
-	mes "Please understand that I'm going to use the ^FF00001st "+ .@hgn$[.@t] +" of that color in your inventory!^000000";
+	//mes "Please understand that I'm going to use the ^FF00001st "+ .@hgn$[.@t] +" of that color in your inventory!^000000";
+	mes "โปรดเข้าใจว่าฉันจะใช้ ^FF00001" + .@hgn$[.@t] + " ของสีนั้นในกระเป๋าของคุณ!^000000";
 	next;
 	mes "[Alora]";
-	mes "Any upgrades and cards will be dissolved by the mysterious dye, so be sure you are ok with having a ^0000FF+0 "+ getitemname(.@dyHG) +" without any cards.^000000";
+	mes "การอัพเกรดและการ์ดใดๆ จะถูกละลายโดยสีย้อมลึกลับดังนั้นโปรดแน่ใจว่าคุณมี ^0000FF+0 " + getitemname(.@dyHG) + " โดยไม่ต้องใช้การ์ดใดๆ^000000";
 	next;
 	mes "["+ strcharinfo(0) +"]";
-	mes "Ok, thanks for the warning, I think I'll give you my";
+	mes "โอเคขอบคุณสำหรับคำเตือนฉันคิดว่าฉันจะให้คุณ";
 	next;
-	set .@menu$, "Nevermind";
+	set .@menu$, "ไม่เป็นไร";
 	for(set .@i,1; .@i < getarraysize(getd(".@hg_"+.@t+"")); set .@i,.@i+1) {
-		if(.@i == 1)    set .@menu$, .@menu$ +":Normal "+ getitemname(getd(".@hg_"+.@t+"["+.@i+"]"));
+		if(.@i == 1)    set .@menu$, .@menu$ +":ปกติ "+ getitemname(getd(".@hg_"+.@t+"["+.@i+"]"));
 		else            set .@menu$, .@menu$ +":"+ getitemname(getd(".@hg_"+.@t+"["+.@i+"]"));
 	}
 	set .@mine, select(.@menu$) - 1;
 	if(!.@mine) {
 		mes "[Alora]";
-		mes "It's best to be very sure, have a safe journey.";
+		mes "เป็นการดีที่สุดที่จะมั่นใจมากๆ ขอให้มีการเดินทางที่ปลอดภัย";
 		close;
 	}
 	set .@myHG, getd(".@hg_"+.@t+"["+.@mine+"]");
 	if(.@dyHG == .@myHG) {
 		mes "[Alora]";
-		mes "Woah what happened?";
+		mes "ว้าวเกิดอะไรขึ้น?";
 		close;
 	}
 	if(!countitem(.@dyeID) || !countitem(.@myHG)) {
 		mes "[Alora]";
-		mes "Oh my, you seem to be missing something.";
+		mes "โอ้ฉันดูเหมือนว่าคุณจะหายไปบางสิ่งบางอย่าง";
 		close;
 	}
 	mes "[Alora]";
-	mes "Looks great doesn't it?!";
-	mes "I hope you'll come back to dye more pretty headgears!";
+	mes "ดูดีไม่ได้เหรอ?!";
+	mes "ฉันหวังว่าคุณจะกลับมาย้อมหมวกสวยๆ !";
 	delitem .@dyeID,1; // Dyestuff
 	delitem .@myHG,1;  // Your headgear
 	getitem .@dyHG,1;  // Dyed headgear

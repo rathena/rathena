@@ -15,33 +15,33 @@
 // Costume exchange
 mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 	if (checkweight(1301,1) == 0) {
-		mes "- Please stop here!! -";
-		mes "- You have carried too much items, -";
-		mes "- Therefore unable receive any item again, -";
-		mes "- Please reduce your weight, -";
-		mes "- And come back again later! -";
+		mes "- โปรดหยุดก่อน!! -";
+		mes "- เจ้าแบกของมามากเกิน, -";
+		mes "- มันเป็นไปไม่ได้ที่เจ้าจะรับของได้อีก, -";
+		mes "- กรุณาไปลดน้ำหนักลงก่อน, -";
+		mes "- แล้วค่อยกลับมาใหม่! -";
 		close;
 	}
 	disable_items;
 	mes "[Designer Heidam]";
-	mes "I am Designer Heidam, who has all kinds of cool costumes in the World.";
-	mes "If you have any Kitcoins with you, come look for Designer Heidam!";
+	mes "ข้าคือ Designer Heidam, ใครกันที่มีชุดเจ๋งๆทุกแบบในโลก.";
+	mes "ถ้าเจ้ามี Kitcoins อยู่กับตัว, ให้มองหา Designer Heidam!";
 	next;
-	if (select( "Exchange costume for random enchant box", "Continue conversation" ) == 2) {
+	if (select( "เอาชุดคอสตูมมาแลกกับกล่องสุ่มออฟ", "สนทนาต่อ" ) == 2) {
 		mes "[Designer Heidam]";
-		mes "Though I look out of shape right now, I used to be a well known fashion model and designer!";
+		mes "แม้ว่าตอนนี้ข้าอาจจะดูผอมบาง, แต่ข้าก็เคยเดินแบบและเป็นนักออกแบบที่มีชื่อเสียง!";
 		next;
 		mes "[Designer Heidam]";
-		mes "Don't pity me! I am well aware of my looks, but I like who I am inside.";
+		mes "อย่าเวทนาข้าเลย! ข้าเข้าใจในตัวข้าดี, ข้าชอบให้คนดูที่ข้างในข้ามากกว่า.";
 		close;
 	}
 	mes "[" + strcharinfo(0) + "]";
-	mes "This item is useless to me! Do you have anything else?";
+	mes "ของพวกนี้ไร้ประโยชน์ต่อข้า! เจ้ามีของอีกหรือไม่ ?";
 	next;
 	mes "[Designer Heidam]";
-	mes "Oh, then I can exchange it for a box of costume enchantment items.";
+	mes "โอ้, หลังจากข้าแลกมันกับกล่องสุ่มออฟคอสตูมนะ.";
 	next;
-	mes "- Rummaging -";
+	mes "- ทำการคุ้ยหา -";
 	next;
 	// ===================================================================
 	// =================== Costume Enchant Stone Box 4 ===================
@@ -466,36 +466,36 @@ mal_in01,20,124,5	script	Designer Heidam#eventhat	4_CAT_SAILOR5,{
 				if (countitem(.@id) < 1)
 					continue;
 				mes "[Designer Heidam]";
-				mes "I see that you have a ^3131FF" + getitemname(.@id) + "^000000. Do you want to exchange this with a costume enchantment box?";
+				mes "ข้าเห็นว่าเจ้ามี ^3131FF" + getitemname(.@id) + "^000000. เจ้าต้องการแลกมันกับกล่องออฟคอสตูมหรือไม่ ?";
 				next;
-				switch( select( "Exchange", "Look for something else", "Stop Exchanging" ) ) {
+				switch( select( "แลกเปลี่ยน", "มองหาของชิ้นอื่น", "หยุดแลกของ" ) ) {
 				case 1:
 					mes "[Designer Heidam]";
 					if (countitem(.@id) < 1)
-						mes "Oh~ Something suddenly disappeared...";
+						mes "โอ้~ ของมันหายไป...";
 					else {
-						mes "Exchange Completed.";
+						mes "แลกเปลี่ยนสำเร็จ.";
 						delitem .@id, 1;
 						getitem .@box_list[.@i], 1;
 					}
-					mes "Let me check you for another item to exchange...";
+					mes "ให้ข้าตรวจดูของชิ้นอื่น...";
 					next;
 					break;
 				case 2:
 					break;
 				case 3:
 					mes "[Designer Heidam]";
-					mes "Meow? Where are you going?";
+					mes "เมี๊ยว ? เจ้าจะไปไหน ?";
 					close;
 				}
 			}
 		}
 		mes "[Designer Heidam]";
-		mes "Guess that is all.";
+		mes "เดาว่าหมดแล้ว.";
 		next;
-		if (select( "Look more", "Quit" ) == 2) {
+		if (select( "ดูเพิ่มเติม", "ออก" ) == 2) {
 			mes "[Designer Heidam]";
-			mes "Bye~";
+			mes "บาย~";
 			close;
 		}
 	}
@@ -507,29 +507,29 @@ malangdo,115,154,3	script	Fashion Stone#stone	4_BULLETIN_BOARD2,{ end; }
 mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 	disable_items;
 	mes "[Aver De Dosh]";
-	mes "Welcome to Fashion Stone!!";
+	mes "ยินดีต้อนรับสู่ Fashion Stone!!";
 	next;
 	mes "[Aver De Dosh]";
-	mes "We take various costume items.";
+	mes "เราทำความหลากหลายให้กับชุดคอสตูม.";
 	next;
 	mes "[Aver De Dosh]";
-	mes "If you want cool styling for your costume Hat, please come to me 'Aver De Dosh'!";
-	mes "Don't forget to bring ^ff0000your own costume Hat and costume stones^000000~";
+	mes "ถ้าเจ้าต้องการให้หมวกคอสตูมของเจ้ามีสไตล์สุดเจ๋ง, ให้มาหาข้า 'Aver De Dosh'!";
+	mes "อย่าลืมนำ ^ff0000หมวกคอสตูมของเจ้าและหินออฟคอสตูม^000000 มาด้วย~";
 	next;
-	if (select( "Apply ability.", "End Conversation." ) == 2) {
+	if (select( "เพิ่มความสามารถ.", "จบบทสนทนา." ) == 2) {
 		mes "[Aver De Dosh]";
-		mes "Please check our other upgrading services~";
+		mes "โปรดตรวจสอบบริการอัพเกรดอื่น ๆ ของเรา~";
 		close;
 	}
 	if (checkweight(1119,3) == 0) {
 		mes "[Aver De Dosh]";
-		mes "Kiaaaaach!!!";
-		mes "I hate bulging bags!";
-		mes "No matter how cool your hat looks, that fat bag of yours is a fashion terror you know!";
+		mes "คิย๊าาาาาาา!!!";
+		mes "ข้าเกลียดพวกกระเป๋าพอง!";
+		mes "ไม่ว่าเจ้าจะมีหมวกดูดีแค่ไหน, แต่กระเป๋าอ้วนๆของเจ้าคือความอัปยศของแฟชั่น เจ้ารู้ไหม!";
 		next;
 		mes "[Aver De Dosh]";
-		mes "It seems you have too many items on you.";
-		mes "Come back after clearing some inventory spaces.";
+		mes "มันดูเหมือนว่าเจ้าใส่ของมาเยอะเกิน.";
+		mes "กลับมาใหม่หลังจากเคลียร์ช่องว่างในกระเป๋า.";
 		close;
 	}
 	.@eq_top = getequipid(EQI_COSTUME_HEAD_TOP);
@@ -538,8 +538,8 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 
 	if (.@eq_top == -1 && .@eq_mid == -1 && .@eq_low == -1) {
 		mes "[Aver De Dosh]";
-		mes "You must wear item you want to add ability.";
-		mes "Then, I will be able to help you out.";
+		mes "เจ้าต้องสวมของที่เจ้าต้องการออฟมาด้วย.";
+		mes "จากนั้น, ข้าถึงจะช่วยเจ้าได้.";
 		close;
 	}
 	if (.@eq_top > -1) {
@@ -883,8 +883,8 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 			break;
 		default:
 			mes "[Aver De Dosh]";
-			mes "Well...";
-			mes "This hat is currently not available for upgrade.";
+			mes "เยี่ยม...";
+			mes "หมวกนี้ไม่สามารถอัพเกรดได้ในขณะนี้.";
 			close;
 		}
 		break;
@@ -989,8 +989,8 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 			break;
 		default:
 			mes "[Aver De Dosh]";
-			mes "Well...";
-			mes "This hat is currently not available for upgrade.";
+			mes "เยี่ยม...";
+			mes "หมวกนี้ไม่สามารถอัพเกรดได้ในขณะนี้.";
 			close;
 		}
 		break;
@@ -1122,14 +1122,14 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 			break;
 		default:
 			mes "[Aver De Dosh]";
-			mes "Well...";
-			mes "This hat is currently not available for upgrade.";
+			mes "เยี่ยม...";
+			mes "หมวกนี้ไม่สามารถอัพเกรดได้ในขณะนี้.";
 			close;
 		}
 		break;
 
 	default:
-		mes "An unknown error has occurred.";
+		mes "เกิดข้อผิดพลาดที่ไม่รู้จัก.";
 		close;
 	}
 
@@ -1138,13 +1138,13 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 	setarray .@card[0], getequipcardid(.@part, 0), getequipcardid(.@part, 1), getequipcardid(.@part, 2), getequipcardid(.@part, 3);
 
 	mes "[Aver De Dosh]";
-	mes "Wow~ This ^0000FF" + getitemname(.@equip_id) + "^000000!!! looks great on you!!";
-	mes "What kind of stone do you want to use for the upgrade?";
+	mes "ว้าว~ ^0000FF" + getitemname(.@equip_id) + "^000000!!! มันดูเหมาะกับเจ้าดี!!";
+	mes "เจ้าต้องการใช้หินอะไรในการอัพเกรด ?";
 	next;
 	if (.@part == EQI_COSTUME_HEAD_TOP)
-		.@slot = select( "Upper", "Middle", "Lower", "Cancel" ) - 1;	// the slot enchanted changes according to the location
+		.@slot = select( "ข้างบน", "ตรงกลาง", "ข้างล่าง", "ยกเลิก" ) - 1;	// the slot enchanted changes according to the location
 	else if (.@part == EQI_COSTUME_HEAD_MID)
-		.@slot = select( "", "Middle", "Lower", "Cancel" ) - 1;
+		.@slot = select( "", "ตรงกลาง", "ข้างล่าง", "ยกเลิก" ) - 1;
 	else if (.@part == EQI_COSTUME_HEAD_LOW)
 		.@slot = 2;
 
@@ -1152,7 +1152,7 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 	case 0:
 		if (!(.@location & 1024)) {
 			mes "[Aver De Dosh]";
-			mes "The costume can't be enhanced at this location.";	// custom
+			mes "คอสตูมนี้ไม่สามารถออฟได้ที่นี่.";	// custom
 			close;
 		}
 		setarray .@stone_id[0],
@@ -1181,7 +1181,7 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 	case 1:
 		if (!(.@location & 2048)) {
 			mes "[Aver De Dosh]";
-			mes "The costume can't be enhanced at this location.";	// custom
+			mes "คอสตูมนี้ไม่สามารถออฟได้ที่นี่.";	// custom
 			close;
 		}
 		setarray .@stone_id[0],
@@ -1214,7 +1214,7 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 	case 2:
 		if (!(.@location & 4096)) {
 			mes "[Aver De Dosh]";
-			mes "The costume can't be enhanced at this location.";	// custom
+			mes "คอสตูมนี้ไม่สามารถออฟได้ที่นี่.";	// custom
 			close;
 		}
 		setarray .@stone_id[0],
@@ -1249,7 +1249,7 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 		break;
 	default:
 		mes "[Aver De Dosh]";
-		mes "Please check our other upgrading services~";
+		mes "โปรดตรวจสอบบริการอัพเกรดอื่นๆของเรา~";
 		close;
 	}
 	.@size = getarraysize(.@stone_id);
@@ -1261,19 +1261,19 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 
 	if (getequipid(.@part) < 0 || countitem(.@stone) < 1) {
 		mes "[Aver De Dosh]";
-		mes "Hmm? Think you are lack of ingredients.";
-		mes "You must have both costume item and ability stone for this upgrading work.";
+		mes "หืม? คิดว่าเจ้ามีของไม่ครบ.";
+		mes "เจ้าต้องมีทั้งชุดคอสตูมและหินออฟเพื่อที่จะอัพเกรดได้.";
 		close;
 	}
-	mes "^FF0000   !!! Caution !!!^000000";
-	mes "^FF0000This upgrade can be failed.^000000";
-	mes "^FF0000If the item already has extra ability,^000000";
-	mes "^FF0000we will reset item's ability.^000000";
-	mes "^FF0000Are you sure about upgrading this item?^000000";
+	mes "^FF0000   !!! คำเตือน !!!^000000";
+	mes "^FF0000การอัพเกรดสามารถล้มเหลวได้.^000000";
+	mes "^FF0000ถ้าของชิ้นนั้นมีออฟอยู่แล้ว,^000000";
+	mes "^FF0000เราจะลบออฟของชิ้นนั้นออก.^000000";
+	mes "^FF0000เจ้าแน่ใจที่จะอัพเกรดไหม ?^000000";
 	next;
-	if (select( "Yes.", "No." ) == 2) {
+	if (select( "ใช่.", "ไม่." ) == 2) {
 		mes "[Aver De Dosh]";
-		mes "Please check our other upgrading services~";
+		mes "โปรดตรวจสอบบริการอัพเกรดอื่นๆของเรา~";
 		close;
 	}
 	delitem .@stone, 1;
@@ -1285,15 +1285,15 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 	delequip .@part;
 	if (rand(1,100) < 51) {
 		mes "[Aver De Dosh]";
-		mes "Wow... Elegance!!";
-		mes "This is perfect... Wow!";
+		mes "ว้าว... งดงามมาก!!";
+		mes "มันสมบูรณ์แบบ... ว้าว!";
 		.@card[.@slot] = .@enchant;
 	}
 	else {
 		mes "[Aver De Dosh]";
-		mes "History is known for its failure...";
-		mes "History of Fashion also is...";
-		mes "Sorry...to disappoint you..~ LoL.";
+		mes "ประวัติศาสตร์เป็นที่รู้จักเพราะความล้มเหลว...";
+		mes "ประวัติความเป็นมาของแฟชั่นยังเป็น...";
+		mes "ขอโทษด้วย...ที่ทำให้ผิดหวัง..~ LoL.";
 		.@card[.@slot] = 0;
 	}
 	getitem2 .@equip_id,1,1,.@equip_refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
@@ -1304,33 +1304,33 @@ mal_in01,22,113,3	script	Aver De Dosh#cos_ect	4_WHITETIGER,{
 mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
 	disable_items;
 	mes "[Lace La Zard]";
-	mes "Welcome to Fashion Stone!!";
-	mes "My name is Lace La Zard who will make your 'Power Shoulder' dream come true.";
+	mes "ยินดีต้อนรับสู่ Fashion Stone!!";
+	mes "ข้ามีชื่อว่า Lace La Zard ใครกันที่จะทำให้ 'Power Shoulder' ในฝันของเจ้าเป็นจริง.";
 	next;
 	mes "[Lace La Zard]";
-	mes "Bring your ^ff0000Costume Garment^000000 and ^ff0000Garment Stone^000000, I will complete the perfect upgrade for you.!";
-	mes "I found this formula while working on my own humble body upgrading!";
+	mes "นำ ^ff0000Costume Garment^000000 และ ^ff0000Garment Stone^000000 มา, แล้วข้าจะทำการอัพเกรดที่สุดยอดให้แก่เจ้า.!";
+	mes "ข้าค้นพบสูตรนี้โดยบังเอิญในขณะที่กำลังทำงาน!";
 	next;
-	if (select( "Apply ability.", "End Conversation." ) == 2) {
+	if (select( "เพิ่มความสามารถ.", "จบบทสนทนา." ) == 2) {
 		mes "[Lace La Zard]";
-		mes "Yes? Your want to look more?";
+		mes "ใช่? เจ้าดูดีอยู่แล้ว ?";
 		close;
 	}
 	if (checkweight(1119,3) == 0) {
 		mes "[Lace La Zard]";
-		mes "Well... Your shoulder doesn't look possilbe for any more upgrade...!";
-		mes "Don't be cruel to your shoulder!";
+		mes "เยี่ยม... ไหล่ของเจ้าดูไม่เหมาะที่จะอัพเกรด...!";
+		mes "อย่าทรมานไหล่ของเจ้าเลย!";
 		next;
-		mes "It seems you have too many items on you.";
-		mes "Come back after clearing some inventory spaces.";
+		mes "มันดูเหมือนว่าเจ้าใส่ของมาเยอะเกิน.";
+		mes "กลับมาใหม่หลังจากเคลียร์ช่องว่างในกระเป๋า.";
 		close;
 	}
 	.@part = EQI_COSTUME_GARMENT;
 	.@equip_id = getequipid(.@part);
 	if (.@equip_id == -1) {
 		mes "[Lace La Zard]";
-		mes "Put the garment on your shoulder.";
-		mes "I need to have a look at it to check for upgrading posibility..";
+		mes "ใส่ผ้าคลุมบนไหล่ของเจ้า.";
+		mes "ข้าต้องตรวจสอบดูว่ามันสามารถอัพเกรดได้ไหม..";
 		close;
 	}
 
@@ -1355,7 +1355,7 @@ mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
 		break;
 	default:
 		mes "[Lace La Zard]";
-		mes "I need to have a look at it to check for upgrading posibility..";// custom
+		mes "ข้าต้องตรวจสอบดูว่ามันสามารถอัพเกรดได้ไหม..";// custom
 		close;
 	}
 
@@ -1363,8 +1363,8 @@ mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
 	setarray .@card[0], getequipcardid(.@part, 0), getequipcardid(.@part, 1), getequipcardid(.@part, 2), getequipcardid(.@part, 3);
 
 	mes "[Lace La Zard]";
-	mes "Wow ^0000FF" + getitemname(.@equip_id) + "^000000!!! You got some sense there, aren't you?";
-	mes "Great!! I'm fully ready for this upgrade!!";
+	mes "ว้าว ^0000FF" + getitemname(.@equip_id) + "^000000!!! ของเจ้าดูดีทีเดียว, เจ้าคิดงั้นไหม ?";
+	mes "เยี่ยม!! ข้าพร้อมที่จะอัพเกรดแล้ว!!";
 	next;
 	setarray .@data$[0],
 		6908, 4807, "ASPD+1 only",	// ASPDStone_Robe	Atk_Speed1
@@ -1387,24 +1387,24 @@ mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
 	.@s = (select(.@menu$) - 1) * 3;
 	if (.@s == .@size) {
 		mes "[Lace La Zard]";
-		mes "Yes? Your want to look more?";
+		mes "ใช่? เจ้าดูดีอยู่แล้ว?";
 		close;
 	}
 	.@id = atoi(.@data$[.@s]);
 	.@enchant = atoi(.@data$[.@s+1]);
 	if (getequipid(.@part) < 0 || countitem(.@id) < 1) {
 		mes "[Lace La Zard]";
-		mes "You must have both costume item and ability stone for this upgrading work.";
+		mes "เจ้าต้องมีทั้งชุดคอสตูมและหินออฟเพื่อที่จะอัพเกรดได้.";
 		close;
 	}
-	mes "^FF0000   !!! Caution !!!^000000";
-	mes "^ff0000This upgrade can be failed.^000000";
-	mes "^ff0000If the item already has extra ability, we will reset item's ability and give " + .@data$[.@s+2] + ".^000000";
-	mes "^ff0000Are you sure about upgrading this item?^000000";
+	mes "^FF0000   !!! คำเตือน !!!^000000";
+	mes "^ff0000การอัพเกรดนี้สามารถล้มเหลวได้.^000000";
+	mes "^ff0000ถ้าของชิ้นนี้มีออฟอยู่แล้ว, เราจะลบออฟของชิ้นนั้นออกและให้ " + .@data$[.@s+2] + ".^000000";
+	mes "^ff0000เจ้าแน่ใจที่จะอัพเกรดของชิ้นนี้ ?^000000";
 	next;
-	if (select( "Yes.", "No." ) == 2) {
+	if (select( "ใช่.", "ไม่." ) == 2) {
 		mes "[Lace La Zard]";
-		mes "Yes? Your want to look more?";
+		mes "ใช่? เจ้าดูดีอยู่แล้ว?";
 		close;
 	}
 
@@ -1416,14 +1416,14 @@ mal_in01,20,107,3	script	Lace La Zard#cos_ect	4_FROG,{
 	delequip .@part;
 	if (rand(100) < 50) {
 		mes "[Lace La Zard]";
-		mes "Beautiful!!";
-		mes "Did I really made this myself!!!!";
+		mes "สวยพี่สวย!!";
+		mes "ชิ้นนี้ข้าทำเอง!!!!";
 		.@card[0] = .@enchant;
 	}
 	else {
 		mes "[Lace La Zard]";
-		mes "Oh no!";
-		mes "Crash!!!!! I cannot show this failure to the World!!!";
+		mes "โอ้ ม่าย!";
+		mes "แตก!!!!! ข้าไม่อยากโชว์ความล้มเหลวให้โลกเห็น!!!";
 		.@card[0] = 0;
 	}
 	getitem2 .@equip_id,1,1,.@equip_refine,0,.@card[0],.@card[1],.@card[2],.@card[3];

@@ -14,18 +14,18 @@
 
 y_airport,143,43,5	script	Airport Staff#y_air1a::y_airport1	90,{
 	mes "[Airport Staff]";
-	mes "Welcome to Juno Airport where we offer domestic flights to Einbroch, Lighthalzen and Hugel,";
-	mes "and international flights to Izlude and Rachel.";
-	mes "How may I be of service?";
+	mes "ยินดีต้อนรับสู่สนามบิน Juno เราให้บริการเที่ยวบินภายในประเทศไปยัง Einbroch, Lighthalzen และ Hugel";
+	mes "และเที่ยวบินระหว่างประเทศไปยัง Izlude และ Rachel";
+	mes "ข้าจะให้บริการได้อย่างไร?";
 	next;
-	if (select("Board the Airship.:Cancel.") == 1) {
+	if (select("ขึ้นเรือเหาะ:ยกเลิก") == 1) {
 		mes "[Airport Staff]";
-		mes "The boarding fee for all";
-		mes "flights is 1,200 zeny. If you";
-		mes "use a Free Ticket for Airship,";
-		mes "the boarding fee will be waived.So would you like to depart?";
+		mes "ค่าธรรมเนียมการขึ้นเรือเหาะ";
+		mes "สำหรับทุกเที่ยวบินคือ 1,200 zeny";
+		mes "หากท่านใช้ตั๋วฟรีสำหรับเรือเหาะ";
+		mes "ค่าธรรมเนียมการขึ้นเรือเหาะจะถูกยกเลิก ดังนั้นท่านต้องการออกเดินทาง?";
 		next;
-		if (select("Yes:No") == 1) {
+		if (select("ใช่:ไม่") == 1) {
 			if (countitem(7311) > 0) {
 				delitem 7311,1; //Free_Flying_Ship_Ticket
 				warp "y_airport",148,51;
@@ -37,15 +37,15 @@ y_airport,143,43,5	script	Airport Staff#y_air1a::y_airport1	90,{
 				end;
 			}
 			mes "[Airport Staff]";
-			mes "I'm sorry, but you don't";
-			mes "have 1,200 zeny to pay";
-			mes "for the boarding fee.";
+			mes "ขออภัย แต่ท่าน";
+			mes "ไม่มีเงิน 1,200 zeny เพื่อ";
+			mes "ชำระค่าธรรมเนียมการขึ้นเครื่อง";
 			close;
 		}
 	}
 	mes "[Airport Staff]";
-	mes "Thank you and";
-	mes "have a nice day.";
+	mes "ขอบคุณ และ";
+	mes "ขอให้มีความสุข";
 	close;
 }
 
@@ -54,27 +54,27 @@ y_airport,126,43,5	duplicate(y_airport1)	Airport Staff#y_air1c	90
 
 y_airport,143,49,3	script	Arrival Staff#y_air2a::y_airport2	90,{
 	mes "[Airport Staff]";
-	mes "Welcome to Juno Airport. If you've just arrived from your";
-	mes "flight, let me guide you to the main terminal. Otherwise, please";
-	mes "board the departing Airship to reach your intended destination.";
+	mes "ยินดีต้อนรับสู่สนามบิน Juno หากท่านเพิ่งมาจาก";
+	mes "เที่ยวบินของท่าน ให้ข้าแนะนำท่านไปยังอาคารผู้โดยสารหลัก";
+	mes "มิฉะนั้น โปรดขึ้นเรือเหาะเพื่อออกเดินทางไปยังจุดหมายที่ท่านต้องการ";
 	next;
-	if (select("Exit to main terminal:Cancel") == 1) {
+	if (select("ออกไปยังสถานีหลัก:ยกเลิก") == 1) {
 		mes "[Airport Staff]";
-		mes "Once you're in the main terminal, you must pay the fee once again";
-		mes "to board a departing Airship. You should only exit if your intended";
-		mes "destination is Juno. Proceed to";
-		mes "exit to the main terminal?";
+		mes "เมื่อท่านอยู่ในอาคารผู้โดยสารหลัก ท่านจะต้องจ่าย";
+		mes "ค่าธรรมเนียมอีกครั้งเพื่อขึ้นเรือเหาะ ท่านควรออกจากที่นี้";
+		mes "หากเมือง Juno เป็นจุดหมายปลายทาง";
+		mes "ที่ท่านต้องการ ท่านต้องการออกไปยังสถานีหลัก?";
 		next;
-		if (select("Yes:No") == 1) {
+		if (select("ใช่:ไม่") == 1) {
 			warp "y_airport",142,40;
 			end;
 		}
 	}
 	mes "[Airport Staff]";
-	mes "Alright, thank you";
-	mes "for your patronage";
-	mes "and I hope you have";
-	mes "a pleasant flight~";
+	mes "เอาล่ะ ขอบคุณ";
+	mes "สำหรับการอุปถัมภ์ของท่าน";
+	mes "และข้าหวังว่า ท่าน";
+	mes "จะมีเที่ยวบินที่ถูกใจ~";
 	close;
 }
 
@@ -83,79 +83,79 @@ y_airport,158,50,3	duplicate(y_airport2)	Arrival Staff#y_air2c	90
 
 y_airport,145,63,5	script	Domestic Boarding	91,{
 	mes "[Boarding Staff]";
-	mes "Would you like to board the";
-	mes "Airship that flies to Einbroch,";
-	mes "Lighthalzen and Hugel? If so,";
-	mes "please let me guide you to that";
-	mes "Airship's boarding area.";
+	mes "ท่านต้องการขึ้นเรือเหาะ";
+	mes "เพื่อบินไป Einbroch,";
+	mes "Lighthalzen และ Hugel?";
+	mes "ถ้าเป็นเช่นนั้น โปรดให้ข้า";
+	mes "แนะนำท่านไปยังพื้นที่ขึ้นเรือเหาะ";
 	next;
-	if (select("Yes:No") == 1) {
+	if (select("ใช่:ไม่") == 1) {
 		warp "yuno",59,244;
 		end;
 	}
 	mes "[Boarding Staff]";
-	mes "Very well, then.";
-	mes "Thank you for your";
-	mes "patronage, and I hope";
-	mes "you enjoy your travels~";
+	mes "ดีมาก ขอบคุณ";
+	mes "สำหรับการอุปถัมภ์";
+	mes "และข้าหวังว่า ท่าน";
+	mes "จะสนุกกับการเดินทาง~";
 	close;
 }
 
 y_airport,140,63,5	script	International Boarding	91,{
 	mes "[Boarding Staff]";
-	mes "Would you like to board";
-	mes "the Airship which flies to";
-	mes "Juno, Izlude and Rachel?";
-	mes "If so, let me guide";
-	mes "you to the boarding area.";
+	mes "ท่านต้องการขึ้นเรือเหาะ";
+	mes "ที่บินไป Juno, Izlude";
+	mes "และ Rachel? ถ้าอย่างนั้น";
+	mes "ข้าจะแนะนำท่าน";
+	mes "ไปยังพื้นที่ขึ้นเครื่อง";
 	next;
-	if (select("Yes:No") == 1) {
+	if (select("ใช่:ไม่") == 1) {
 		warp "yuno",47,244;
 		end;
 	}
 	mes "[Boarding Staff]";
-	mes "Alright, then.";
-	mes "Thank you for flying";
-	mes "with us, and I hope you";
-	mes "enjoy your travels on our";
-	mes "state of the art Airships.";
+	mes "เอาล่ะ ขอบคุณ";
+	mes "สำหรับการบินกับเรา";
+	mes "และข้าหวังว่า ท่านจะ";
+	mes "สนุกกับการเดินกับเรา";
+	mes "ในเรือบินที่ทันสมัยของเรา";
 	close;
 }
 
 yuno,14,262,5	script	Airship Staff#yuno01	91,{
 	mes "[Airship Staff]";
-	mes "Welcome to Juno Airport.";
-	mes "Please use this door to";
-	mes "board the Airship that will";
-	mes "be flying all the way to Izlude";
-	mes "in the Rune-Midgarts Kingdom,";
-	mes "and to Rachel in the Arunafeltz";
-	mes "Republic.";
+	mes "ยินดีต้อนรับสู่";
+	mes "สนามบิน Juno";
+	mes "โปรดใช้ประตูนี้เพื่อขึ้นเรือเหาะ";
+	mes "ที่จะบินไปยัง Izlude ใน";
+	mes "ราชอาณาจักร Rune-Midgarts";
+	mes "และไปยัง Rachel ใน";
+	mes "สาธารณรัฐ Arunafeltz";
 	next;
 	mes "[Airship Staff]";
-	mes "Otherwise, if Juno is";
-	mes "your intended destination,";
-	mes "please head down the stairs";
-	mes "and ask the Arrival Staff to lead";
-	mes "you to the main terminal. Thank";
-	mes "you, and enjoy your travels.";
+	mes "มิฉะนั้น ถ้า Juno เป็น";
+	mes "จุดหมายที่ท่านต้องการ";
+	mes "โปรดมุ่งหน้าลงบันได และ";
+	mes "ขอให้พนักงาน นำท่านไปที่";
+	mes "อาคารผู้โดยสารหลัก";
+	mes "ขอบคุณ และขอให้สนุกกับการเดินทาง";
 	close;
 }
 
 yuno,88,263,3	script	Airship Staff#yuno02	91,{
 	mes "[Airship Staff]";
-	mes "Welcome to Juno Airport.";
-	mes "Please use this door to";
-	mes "board the Airship which stops";
-	mes "over Einbroch, Lighthalzen and";
-	mes "Hugel in the Schwarzwald Republic.";
+	mes "ยินดีต้อนรับสู่สนามบิน Juno";
+	mes "โปรดใช้ประตูนี้เพื่อขึ้นเรือเหาะ";
+	mes "ซึ่งจอดอยู่เหนือ Einbroch,";
+	mes "Lighthalzen และ Hugel";
+	mes "ในสาธารณรัฐ Schwarzwald";
 	next;
 	mes "[Airship Staff]";
-	mes "Otherwise, if Juno is";
-	mes "your intended destination,";
-	mes "please head down the stairs";
-	mes "and ask the Arrival Staff to lead";
-	mes "you to the main terminal. Thank";
-	mes "you, and enjoy your travels.";
+	mes "มิฉะนั้น ถ้า Juno เป็น";
+	mes "จุดหมายที่ท่านต้องการ";
+	mes "โปรดมุ่งหน้าลงบันได และ";
+	mes "ขอให้พนักงาน นำท่านไปที่";
+	mes "อาคารผู้โดยสารหลัก";
+	mes "ขอบคุณ และขอให้สนุกกับการเดินทาง";
 	close;
 }

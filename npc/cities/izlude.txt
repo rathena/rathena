@@ -36,18 +36,17 @@
 //============================================================
 -	script	::Sailor_izlude	-1,{
 	mes "[Sailor]";
-	mes "Hey everybody!";
-	mes "Attention, attention!";
-	mes "Come and ride the wind";
-	mes "on a fascinating Ship!";
-	mes "Hurry, hurry!";
+	mes "สวัสดีทุกคน!";
+	mes "ความสนใจความสนใจ!";
+	mes "มาปั่นลมบนเรือที่น่าหลงใหล!";
+	mes "เร็วเข้า!";
 	next;
-	switch(select("Byalan Island -> 150 Zeny.:Alberta Marina  -> 500 Zeny.:Cancel.")) {
+	switch(select("Byalan Island -> 150 Zeny.:Alberta Marina  -> 500 Zeny.:ยกเลิก")) {
 	case 1:
 		if (Zeny < 150) {
 			mes "[Sailor]";
 			mes "150 Zeny!";
-			mes "Only 150 Zeny to ride!";
+			mes "เพียง 150 Zeny ที่จะขี่!";
 			close;
 		}
 		set Zeny, Zeny - 150;
@@ -57,7 +56,7 @@
 		if (Zeny < 500) {
 			mes "[Sailor]";
 			mes "500 Zeny!";
-			mes "Only 500 Zeny to ride!";
+			mes "เพียง 150 Zeny ที่จะขี่!";
 			close;
 		}
 		set Zeny, Zeny - 500;
@@ -70,25 +69,25 @@
 
 -	script	::Bonne_izlude	-1,{
 	mes "[Bonne]";
-	mes "Greetings!";
-	mes "Izlude welcomes you.";
+	mes "ทักทาย!";
+	mes "อิซลูดยินดีต้อนรับทุกท่าน";
 	next;
 	mes "[Bonne]";
-	mes "Izlude is the satellite city of Prontera, capital of the Rune-Midgarts kingdom.";
+	mes "อิซลูดเป็นเมืองบริวารของพรอนเทราซึ่งเป็นเมืองหลวงของอาณาจักร Rune-Midgarts";
 	next;
 	mes "[Bonne]";
-	mes "Izlude is key to our kingdom because of the Swordsman Association located here, as well as the fact that Izlude is in charge of protecting the Rune-Midgarts coastline.";
+	mes "อิซลูดเป็นกุญแจสำคัญในอาณาจักรของเราเนื่องจากสมาคมนักดาบตั้งอยู่ที่นี่เช่นเดียวกับความจริงที่ว่าอิซลูดรับผิดชอบในการปกป้องแนวชายฝั่ง Rune-Midgarts";
 	next;
 	mes "[Bonne]";
-	mes "I know, this bridge might look weak and fragile, but it is actually state of the art, built with the most sophisticated technology.";
+	mes "ฉันรู้ว่าสะพานนี้อาจดูอ่อนแอและบอบบาง แต่จริงๆแล้วมันเป็นศิลปะที่ล้ำสมัยสร้างขึ้นด้วยเทคโนโลยีที่ซับซ้อนที่สุด";
 	next;
 	mes "[Bonne]";
-	mes "No matter how strong storms may be, or how many people may stand on it, this bridge will NEEEEVER collapse.";
+	mes "ไม่ว่าพายุจะพัดแรงแค่ไหนหรืออาจมีคนยืนอยู่บนสะพานสักกี่คนสะพานนี้ NEEEEVER จะถล่มลงมา";
 	next;
 	mes "[Bonne]";
-	mes "Please enjoy";
-	mes "your visit";
-	mes "here in Izlude.";
+	mes "โปรดเพลิดเพลิน";
+	mes "การเยี่ยมชมของคุณ";
+	mes "ที่นี่ใน Izlude";
 	close;
 }
 
@@ -96,29 +95,29 @@
 	mes "[Charfri]";
 	switch(rand(2)) {
 	case 1:
-		mes "Some people may think Izlude is just a satellite city of Prontera, and not really that important...";
+		mes "บางคนอาจคิดว่าอิซลูดเป็นเพียงเมืองบริวารของพรอนเทราและไม่ได้สำคัญขนาดนั้น...";
 		next;
 		mes "[Charfri]";
-		mes "But Izlude is a beautiful town right next to the ocean, as well as beautiful Byalan Island.";
+		mes "แต่อิซลูดเป็นเมืองที่สวยงามติดทะเลและเกาะ Byalan ที่สวยงาม";
 		next;
 		mes "[Charfri]";
-		mes "You'll have to board on a ship at the port to get to Byalan Island. There are dangerous dungeons on that island, so don't go snooping around just anywhere.";
+		mes "คุณจะต้องขึ้นเรือที่ท่าเรือเพื่อไปที่เกาะ Byalan มีดันเจี้ยนอันตรายบนเกาะนั้นดังนั้นอย่าไปสอดแนมที่ไหนก็ได้";
 		close;
 	default:
-		mes "Though it is very beautiful, Byalan Island has a mysterious dungeon that extends deep under the sea.";
+		mes "แม้ว่าจะสวยงามมาก แต่เกาะ Byalan ก็มีคุกใต้ดินลึกลับที่ยื่นออกไปใต้ทะเล";
 		next;
 		mes "[Charfri]";
-		mes "People who've actually been there have said that if you go deep enough, the dungeon actually descends underwater.";
+		mes "คนที่เคยอยู่ที่นั่นบอกว่าถ้าคุณไปลึกพอดันเจี้ยนก็จะลงไปใต้น้ำจริงๆ";
 		next;
 		mes "[Charfri]";
-		mes "Surprisingly, once you're underwater, you can breathe just like a fish. Maybe some kind of supernatural force is in effect.";
+		mes "น่าแปลกที่เมื่อคุณอยู่ใต้น้ำคุณสามารถหายใจได้เหมือนปลาบางทีอาจมีพลังเหนือธรรมชาติบางอย่างที่ส่งผล";
 		next;
 		mes "[Charfri]";
-		mes "Ah...";
-		mes "The people who've seen the underwater view say it is so fantastic that they've kept dreaming of it ever since.";
+		mes "อา ... ";
+		mes "คนที่เคยเห็นวิวใต้น้ำบอกว่ามันยอดเยี่ยมมากจนพวกเขาเฝ้าฝันถึงมันมาตลอด";
 		next;
 		mes "[Charfri]";
-		mes "But unfortunately, the monsters are too strong for ordinary people to merely go sight seeing there. Still, just once, I'd like to go down there...";
+		mes "แต่น่าเสียดายที่สัตว์ประหลาดนั้นแข็งแกร่งเกินกว่าที่คนธรรมดาจะมองเห็นที่นั่นได้ยังไงก็แค่ครั้งเดียวฉันก็อยากจะลงไปที่นั่น...";
 		close;
 	}
 }
@@ -127,22 +126,22 @@
 	mes "[Cuskoal]";
 	switch(rand(2)) {
 	case 1:
-		mes "The Arena here is THE place for capable young people from all over the Rune-Midgarts Kingdom to challenge themselves and test their skills.";
+		mes "สนามประลองที่นี่เป็นสถานที่สำหรับเยาวชนที่มีความสามารถจากทั่วทุกมุมอาณาจักร Rune-Midgarts เพื่อท้าทายตัวเองและทดสอบทักษะของพวกเขา";
 		next;
 		mes "[Cuskoal]";
-		mes "You can battle with monsters of differing levels. So, the number of stages you survive will be a testament to your battle prowess.";
+		mes "คุณสามารถต่อสู้กับมอนสเตอร์ที่มีเลเวลต่างกันได้ดังนั้นจำนวนด่านที่คุณรอดจะเป็นเครื่องพิสูจน์ถึงความกล้าหาญในการต่อสู้ของคุณ";
 		next;
 		mes "[Cuskoal]";
-		mes "So, whaddya say?";
+		mes "งั้น whaddya ว่ามั้ย";
 		close;
 	default:
-		mes "The pubs in Prontera are always full of people from local areas and from out-of-town. It can get pretty busy.";
+		mes "ผับในพรอนเทรามักจะเต็มไปด้วยผู้คนจากพื้นที่ในท้องถิ่นและจากนอกเมืองมันอาจจะค่อนข้างพลุกพล่าน";
 		next;
 		mes "[Cuskoal]";
-		mes "It's a pretty good place to stop by for general information and to listen to rumors.";
+		mes "เป็นสถานที่ที่ดีในการแวะมาหาข้อมูลทั่วไปและฟังข่าวลือ";
 		next;
 		mes "[Cuskoal]";
-		mes "So if you listen carefully, you just might get lucky and learn some very useful information for yourself.";
+		mes "ถ้าคุณตั้งใจฟังคุณอาจจะโชคดีและได้เรียนรู้ข้อมูลที่เป็นประโยชน์สำหรับตัวคุณเอง";
 		close;
 	}
 }
@@ -151,71 +150,71 @@
 	mes "[Dega]";
 	switch(rand(3)) {
 	case 1:
-		mes "Mt. Mjornir, located north of Prontera, is a tough";
-		mes "and steep climb.";
+		mes "Mt. Mjornir ตั้งอยู่ทางเหนือของ Prontera ยากมาก";
+		mes "และปีนสูงชัน";
 		next;
 		mes "[Dega]";
-		mes "Aside from the dangers of the mountain itself, insanely vicious insects live there too. I mean, they'll just attack you for no reason.";
+		mes "นอกจากอันตรายจากภูเขาแล้วยังมีแมลงที่ดุร้ายอย่างบ้าคลั่งอาศัยอยู่ที่นั่นด้วยฉันหมายถึงพวกมันจะโจมตีคุณโดยไม่มีเหตุผล";
 		next;
 		mes "[Dega]";
-		mes "If you ever want to visit somewhere past Mt. Mjolnir, then you prepare yourself for the challenge.  Or you could walk around it.";
+		mes "ถ้าคุณอยากไปที่ไหนสักแห่งที่ผ่านภูเขา Mjolnir คุณก็เตรียมตัวให้พร้อมสำหรับความท้าทายนี้หรือคุณอาจจะเดินไปรอบ ๆ ก็ได้";
 		close;
 	case 2:
-		mes "Some monsters in the world have the unique ability to sense mystical energy, and can detect Magic spells before they are cast.";
+		mes "สัตว์ประหลาดบางตัวในโลกนี้มีความสามารถพิเศษในการรับรู้ถึงพลังลึกลับและสามารถตรวจจับเวทย์มนต์ได้ก่อนที่มันจะถูกร่าย";
 		next;
 		mes "[Dega]";
-		mes "Golem of the desert is one of them. Don't underestimate it due to its sluggishness...";
+		mes "โกเลมแห่งทะเลทรายเป็นหนึ่งในนั้นอย่าประมาทเพราะความเฉื่อยชา ... ";
 		next;
 		mes "[Dega]";
-		mes "If you try to cast magic near it, it will notice and saunter over to smash you. So you better watch out for Golem.";
+		mes "ถ้าคุณพยายามร่ายเวทย์เข้าไปใกล้ ๆ มันจะสังเกตเห็นและพุ่งเข้ามาเพื่อทุบคุณดังนั้นคุณควรระวัง Golem ให้ดีกว่า";
 		close;
 	default:
-		mes "There's a very delightful place where you can find every";
-		mes "type of Poring.";
+		mes "มีสถานที่ที่น่ายินดีมากที่คุณสามารถพบได้ทุกที่";
+		mes "ประเภทของ Poring.";
 		next;
 		mes "[Dega]";
-		mes "It's somewhere near the bridge connecting the forest and the desert, on the way to the city of Payon which is Southeast from here.";
+		mes "อยู่ใกล้สะพานที่เชื่อมระหว่างป่ากับทะเลทรายระหว่างทางไปเมือง Payon ซึ่งอยู่ทางตะวันออกเฉียงใต้จากที่นี่";
 		next;
 		mes "[Dega]";
-		mes "There are not only pink Porings but also Drops, which can be found at the desert, and the green Poporing.";
+		mes "ไม่เพียง แต่มี Porings สีชมพูเท่านั้น แต่ยังมี Drops ซึ่งสามารถพบได้ในทะเลทรายและ Poporing สีเขียว";
 		next;
 		mes "[Dega]";
-		mes "But be careful, before you realize it, you may come face to face with Ghostring, a deadly Poring that floats around in the air like a ghost.";
+		mes "แต่ระวังก่อนที่คุณจะรู้ตัวคุณอาจเผชิญหน้ากับ Ghostring Poring ตัวร้ายที่ลอยไปมาในอากาศเหมือนผี";
 		next;
 		mes "[Dega]";
-		mes "Well, of course, they are all very cute, but Ghostring is an EXCEPTION. It is very very dangerous.";
+		mes "แน่นอนว่าพวกมันทุกคนน่ารักมาก แต่ Ghostring เป็นข้อยกเว้นมันอันตรายมาก";
 		next;
 		mes "[Dega]";
-		mes "If you are lucky enough, you might even bump into Angeling, the Poring with Angel wings.";
+		mes "ถ้าคุณโชคดีคุณอาจจะชนกับ Angeling, Poring with Angel Wings";
 		next;
 		while(1) {
-			switch(select("Ghostring?:Angeling?:End Conversation.")) {
+			switch(select("Ghostring?:Angeling?:จบการสนทนา")) {
 			case 1:
 				mes "[Dega]";
-				mes "Ghostring is a grayish Poring that floats around in the air like a ghost. Just like other ghosts, physical attacks can't do any damage to it.";
+				mes "Ghostring คือ Poring สีเทาที่ลอยไปมาในอากาศเหมือนผีเช่นเดียวกับผีอื่น ๆ การโจมตีทางกายภาพไม่สามารถสร้างความเสียหายใด ๆ กับมันได้";
 				next;
 				mes "[Dega]";
-				mes "Those whose main attack methods are physical like Swordman and Archer might have to run for their lives when facing Ghostrings.";
+				mes "ผู้ที่มีวิธีการโจมตีหลักทางกายภาพเช่น Swordman และ Archer อาจต้องวิ่งหนีเอาชีวิตรอดเมื่อเผชิญหน้ากับ Ghostrings";
 				next;
 				mes "[Dega]";
-				mes "But don't leave just yet~! There is great news for people with those jobs. Making a weapon of some elemental property is the key.";
+				mes "แต่อย่าเพิ่งออกไปนะ ~! มีข่าวดีสำหรับคนที่มีงานเหล่านั้นการสร้างอาวุธที่มีคุณสมบัติเป็นองค์ประกอบบางอย่างเป็นกุญแจสำคัญ";
 				next;
 				mes "[Dega]";
-				mes "This way, even a Swordman or an Archer can inflict damage, the way Magic does, on Ghostrings.";
+				mes "วิธีนี้แม้แต่ Swordman หรือ Archer ก็สามารถสร้างความเสียหายได้แบบที่ Magic ทำกับ Ghostrings";
 				next;
 				break;
 			case 2:
 				mes "[Dega]";
-				mes "Angelings are immune to Magic attacks. If people who can only attack with Magic face an Angeling, then it's time for";
-				mes "them to run.";
+				mes "Angelings มีภูมิคุ้มกันต่อการโจมตีด้วยเวทย์มนต์ถ้าคนที่โจมตีได้เฉพาะ Magic ต้องเจอกับ Angeling ก็ถึงเวลา";
+				mes "ให้วิ่ง";
 				next;
 				mes "[Dega]";
-				mes "If you've got an extra knife or sword, you could give it a shot. But it will be very difficult alone, don't you think?";
+				mes "ถ้าคุณมีมีดหรือดาบพิเศษคุณสามารถยิงมันได้ แต่ลำพังมันจะยากมากคุณไม่คิดเหรอ?";
 				next;
 				break;
 			case 3:
 				mes "[Dega]";
-				mes "Good Luck~";
+				mes "ขอให้โชคดี~";
 				close;
 			}
 		}
@@ -225,236 +224,225 @@
 -	script	::Kylick_izlude	-1,{
 	if (!checkre(0) && rand(2)) {
 		mes "[Kylick]";
-		mes "I was thinking, even though the people of Izlude live so close to the ocean...";
+		mes "ฉันกำลังคิดอยู่แม้ว่าผู้คนใน Izlude จะอาศัยอยู่ใกล้กับมหาสมุทรมากแค่ไหน ... ";
 		next;
 		mes "[Kylick]";
-		mes "There are other cultures that have completely developed by living off of the sea. Of course, I'm talking about Amatsu.";
+		mes "มีวัฒนธรรมอื่น ๆ ที่พัฒนาไปอย่างสมบูรณ์โดยอาศัยอยู่นอกทะเลแน่นอนฉันกำลังพูดถึงอามัตสึ";
 		next;
 		mes "[Kylick]";
-		mes "I hear the cuisine there is really good! Although the idea of eating raw fish is new to me, I would love to go there, and try it just once!";
+		mes "ฉันได้ยินมาว่าอาหารที่นั่นอร่อยมาก! แม้ว่าความคิดเรื่องการกินปลาดิบจะเป็นเรื่องใหม่สำหรับฉัน แต่ฉันก็ชอบที่จะไปที่นั่นและลองดูสักครั้ง!";
 		close;
 	} else {
 		mes "[Kylick]";
-		mes "Don't you think Binoculars";
-		mes "are really COOL?! You can";
-		mes "see all sorts of places...!";
+		mes "คุณไม่คิดว่ากล้องส่องทางไกลมันเจ๋งจริงเหรอ! คุณสามารถดูสถานที่ได้ทุกประเภท ... !";
 		next;
 		mes "[Kylick]";
-		mes "Here in Izlude, we are responsible for maintaining peace not only on land but also at sea. That's why this city has a huge telescope.";
+		mes "ที่นี่ใน Izlude เรามีหน้าที่ดูแลความสงบสุขไม่เพียง แต่บนบก แต่ยังอยู่ในทะเลด้วยนั่นเป็นเหตุผลที่เมืองนี้มีกล้องโทรทรรศน์ขนาดใหญ่";
 		next;
 		mes "[Kylick]";
-		mes "This telescope constantly watches over the sea, so that we can prevent any serious trouble from happening. You know...";
+		mes "กล้องโทรทรรศน์นี้เฝ้ามองทะเลตลอดเวลาเพื่อที่เราจะได้ป้องกันไม่ให้เกิดปัญหาร้ายแรงขึ้นคุณก็รู้ ... ";
 		next;
 		mes "[Kylick]";
-		mes "An ounce of";
-		mes "prevention is worth";
-		mes "a pound of cure";
-		mes "after all, right?";
+		mes "การป้องกันหนึ่งออนซ์ก็คุ้มค่ากับการรักษาหนึ่งปอนด์ใช่ไหม";
 		close;
 	}
 }
 
 -	script	::Red_izlude	-1,{
 	mes "[Red]";
-	mes "The only skill that's needed for a Swordman is ^FF2400Bash^000000! Bash, Bash and ONLY ^FF2400Bash^000000! No need to waste time and effort for smaller skills! Everything else is for cowards and wusses!";
+	mes "ทักษะเดียวที่จำเป็นสำหรับ Swordman คือ ^FF2400Bash^000000! Bash, Bash และเท่านั้น ^FF2400Bash^000000! ไม่ต้องเสียเวลาและความพยายามเพื่อทักษะที่เล็กกว่านี้ทุกอย่างมีไว้สำหรับคนขี้ขลาดและ wusses!";
 	next;
 	mes "[Cebalis]";
-	mes "What are you talking about!? The ideal Swordman resolutely stands alone, surrounded by countless enemies and smashing them all with one awesome attack.";
+	mes "คุณกำลังพูดถึงอะไร!? Swordman ในอุดมคติยืนอยู่คนเดียวอย่างแน่วแน่รายล้อมไปด้วยศัตรูนับไม่ถ้วนและทุบพวกเขาทั้งหมดด้วยการโจมตีที่น่ากลัวเพียงครั้งเดียว";
 	next;
 	mes "[Cebalis]";
 	mes "^EE0000MAGNUM BREAK!^000000";
-	mes "That's right, Magnum Break";
-	mes "is the skill that does";
-	mes "the job right~!!";
+	mes "ถูกต้อง Magnum Break เป็นทักษะที่ทำงานได้ดี~!!";
 	next;
 	mes "[Cebalis]";
-	mes "Well... Sometimes the explosive damage might accidentally hit some wandering monsters, and those guys end up coming after you, but that's a risk a Swordman should be willing to take!!";
+	mes "อืม...บางครั้งความเสียหายจากการระเบิดอาจโดนมอนสเตอร์บางตัวที่หลงทางโดยไม่ได้ตั้งใจและพวกนั้นก็ตามมาตามคุณ แต่นั่นเป็นความเสี่ยงที่ Swordman ควรเต็มใจรับ !!";
 	next;
 	mes "[Red]";
-	mes "That's exactly why you're dumb, you idiot! And what's this about the 'the ideal Swordman?' I still remember the last time you used Magnum Break...";
+	mes "นั่นเป็นเหตุผลว่าทำไมคุณถึงโง่คุณงี่เง่า! แล้วนี่คือ 'นักดาบในอุดมคติ?' ฉันยังจำครั้งสุดท้ายที่คุณใช้ Magnum Break ได้...";
 	next;
 	mes "[Red]";
-	mes "You ended up running away from all those monsters you hit with that stupid skill! Weakling! All those Porings around you got hit and they all tried to kill you. ";
+	mes "จบลงด้วยการวิ่งหนีมอนสเตอร์ทั้งหมดที่คุณตีด้วยทักษะโง่ ๆ นั่น! อ่อนแอ! Porings ทั้งหมดรอบตัวคุณถูกโจมตีและพวกเขาทั้งหมดพยายามที่จะฆ่าคุณ";
 	next;
 	mes "[Cebalis]";
-	mes "Hmpf. As I recall, you were running away too, apparently too busy to use your precious Bash. In any case, Magnum Break is THE skill for a Swordman~!!";
+	mes "Hmpf อย่างที่ฉันจำได้ว่าคุณก็วิ่งหนีเหมือนกันดูเหมือนจะยุ่งเกินกว่าจะใช้ Bash อันมีค่าของคุณไม่ว่าในกรณีใด Magnum Break เป็นทักษะของ Swordman~!!";
 	next;
 	mes "[Cebalis]";
-	mes "Something simplistic like Bash";
-	mes "is just one of the little steps towards Magnum Break.";
+	mes "บางสิ่งที่เรียบง่ายเช่น Bash เป็นเพียงหนึ่งในก้าวเล็ก ๆ น้อย ๆ สู่ Magnum Break";
 	next;
 	mes "[Red]";
-	mes "Oh man~";
-	mes "Hey, I know you just";
-	mes "heard everything.";
-	mes "So what do you think?";
+	mes "โอ้มนุษย์~";
+	mes "เฮ้ฉันรู้ว่าคุณได้ยินทุกอย่าง";
+	mes "แล้วคุณล่ะคิดว่ายังไง?";
 	next;
 	mes "[Red]";
-	mes "Which one do you think is better? The critical damage skill, ^FF2400Bash^000000, or the Splash damage skill, ^EE0000Magnum Break^000000?";
+	mes "คุณคิดว่าอันไหนดีกว่ากันสกิลความเสียหายคริติคอล ^FF2400Bash^000000 หรือสกิล Splash damage ^EE0000Magnum Break^000000";
 	next;
 	if (select("Bash:Magnum Break") == 1)  {
 		if (BaseClass == Job_Swordman) {
 			mes "[Red]";
-			mes "Hahahaha!!! I knew you'd see things my way!! You ARE a great guy!! Undoubtedly, only ^FF2400Bash^000000 suits a Swordman. Please tell that to this BONEHEAD over here~ Hahaha!";
+			mes "ฮ่าฮ่าฮ่า !!! ฉันรู้ว่าคุณจะเห็นสิ่งต่างๆในแบบของฉัน!! คุณเป็นคนที่ยอดเยี่ยม!! ไม่ต้องสงสัยเลยว่ามีเพียง ^FF2400Bash^000000 เท่านั้นที่เหมาะกับ Swordman โปรดบอกกับ BONEHEAD ตรงนี้ด้วย~ฮ่าๆๆ!";
 			next;
 			mes "[Red]";
-			mes "Hmm, let me give you a bit of advice. After you achieve level 5 'Bash', the amount of SP consumed by the skill increases greatly, so watch out for your SP.";
+			mes "อืมขอคำแนะนำหน่อยนะหลังจากที่คุณบรรลุระดับ 5 'Bash' จำนวน SP ที่ใช้โดยทักษะจะเพิ่มขึ้นอย่างมากดังนั้นระวัง SP ของคุณด้วย";
 			close;
 		}
 		mes "[Red]";
-		mes "Hahahaha!! See!? Someone who pursues a different job agrees with me~! You really are a great guy! Hahaha!! Undoubtedly, only ^FF2400Bash^000000 suits a Swordman. Please tell that to this NIMROD over here~ Hahaha!";
+		mes "ฮ่า ๆ ๆ !! ดูสิ!? คนที่ทำงานอื่นเห็นด้วยกับฉัน~! คุณเป็นผู้ชายที่ยอดเยี่ยมจริงๆฮ่าๆๆ!! ไม่ต้องสงสัยเลยว่ามีเพียง ^FF2400Bash^000000 เท่านั้นที่เหมาะกับ Swordman โปรดบอก NIMROD ตรงนี้ด้วย~ฮ่าๆๆ!";
 		close;
 	}
 	if (BaseClass == Job_Swordman) {
 		mes "[Cebalis]";
-		mes "Alright!! ^EE0000Magnum Break^000000 is the BEST!! Now you're talking~!! You know the stuff~ HaHaHa!";
+		mes "เอาล่ะ!! ^EE0000Magnum Break^000000 ดีที่สุด!! ตอนนี้คุณกำลังพูด~!! คุณรู้เรื่อง~ฮ่าๆๆ!";
 		next;
 		mes "[Cebalis]";
-		mes "You wanna know some useful information? Okay, okay lemme tell ya! Magnum Break has Fire Property.";
+		mes "อยากทราบข้อมูลที่เป็นประโยชน์บ้างโอเคโอเคบอกหน่อยนะแม็กนั่มเบรคมีไฟ";
 		next;
 		mes "[Cebalis]";
-		mes "So it won't be too effective against monsters with the Water property, but this is THE skill to use against Undead and Earth property monsters!";
+		mes "ดังนั้นมันจะไม่ได้ผลมากเกินไปกับมอนสเตอร์ที่มีคุณสมบัติ Water แต่นี่คือทักษะที่จะใช้กับมอนสเตอร์ที่มีคุณสมบัติของ Undead และ Earth!";
 		next;
 		mes "[Cebalis]";
-		mes "And most importantly, look around before you use it. Otherwise you'll be in BIG trouble~ ";
+		mes "และที่สำคัญที่สุดควรมองไปรอบ ๆ ก่อนใช้ไม่เช่นนั้นคุณจะต้องเจอกับปัญหาใหญ่ ~";
 		close;
 	}
 	mes "[Cebalis]";
-	mes "Right?! ^EE0000Magnum Break^000000 is THE BEST!!! You know what you're talking about, eh? I don't know why this jerkface is being sooooo stubborn.";
+	mes "ใช่มั้ย! ^EE0000Magnum Break^000000 ดีที่สุด!!! คุณรู้ว่าคุณกำลังพูดถึงอะไรใช่ไหมฉันไม่รู้ว่าทำไมหน้ากระตุกนี้ถึงดื้อขนาดนี้";
 	close;
 }
 
 -	script	::Cebalis_izlude	-1,{
 	mes "[Red]";
-	mes "The only skill that's needed for a Swordman is ^FF2400Bash^000000! Bash, Bash and ONLY ^FF2400Bash^000000! No need to waste time and effort on smaller skills~~ Everything else is for cowards and wusses!";
+	mes "ทักษะเดียวที่จำเป็นสำหรับ Swordman คือ ^FF2400Bash^000000! Bash, Bash และเท่านั้น ^FF2400Bash^000000! ไม่ต้องเสียเวลาและความพยายามไปกับทักษะที่เล็กกว่า ~~ อย่างอื่นมีไว้เพื่อคนขี้ขลาดและ wusses!";
 	next;
 	mes "[Cebalis]";
-	mes "What are you talking about!? The ideal Swordman resolutely stands alone, surrounded by countless foes, smashing them all with one awesome attack...";
+	mes "คุณกำลังพูดถึงอะไร!? Swordman ในอุดมคติยืนอยู่คนเดียวอย่างแน่วแน่ล้อมรอบด้วยศัตรูนับไม่ถ้วนทุบพวกเขาทั้งหมดด้วยการโจมตีที่น่ากลัวเพียงครั้งเดียว...";
 	next;
 	mes "[Cebalis]";
 	mes "^EE0000MAGNUM BREAK!^000000";
-	mes "That's right, Magnum Break";
-	mes "is the perfect";
-	mes "Swordman skill.";
+	mes "ถูกต้อง Magnum Break สมบูรณ์แบบที่สุด";
+	mes "สกิลนักดาบ";
 	next;
 	mes "[Cebalis]";
-	mes "Well...";
-	mes "Sometimes the explosion accidentally hits some monsters that are just wandering around.";
+	mes "อืม...";
+	mes "บางครั้งการระเบิดก็โดนมอนสเตอร์บางตัวที่หลงทางโดยไม่ได้ตั้งใจ";
 	next;
 	mes "[Cebalis]";
-	mes "Then they all end up coming after you, but that's a risk a true Swordman should be willing to take.";
+	mes "จากนั้นพวกเขาทั้งหมดก็ตามคุณมา แต่นั่นเป็นความเสี่ยงที่นักดาบที่แท้จริงควรเต็มใจรับ";
 	next;
 	mes "[Red]";
-	mes "That's exactly why you're dumb, you idiot! And what was that about the 'ideal Swordman?' You remember the last time you used Magnum Break?!";
+	mes "นั่นเป็นเหตุผลว่าทำไมคุณถึงโง่คุณงี่เง่า! แล้ว 'นักดาบในอุดมคติล่ะ?' คุณจำครั้งสุดท้ายที่คุณใช้ Magnum Break ได้หรือไม่! ";
 	next;
 	mes "[Red]";
-	mes "You had to run away from all those Porings hit by that stupid skill! You weakling! All those Porings that you hit tried to kill you! ";
+	mes "คุณต้องหนีจาก Porings ทั้งหมดที่โดนสกิลโง่ ๆ นั่น! คุณอ่อนแอ! Porings ทั้งหมดที่คุณโดนพยายามจะฆ่าคุณ!";
 	next;
 	mes "[Cebalis]";
-	mes "Oh shut up. And those were Poporings. As I recall, you were running away too, apparently too busy to use your precious Bash.";
+	mes "โอ้หุบปากและนั่นคือ Poporings อย่างที่ฉันจำได้ว่าคุณกำลังวิ่งหนีเกินไปดูเหมือนจะยุ่งเกินไปที่จะใช้ Bash อันมีค่าของคุณ";
 	next;
 	mes "[Cebalis]";
-	mes "In any case, Magnum Break is THE skill for a Swordman~!! Something simplistic like Bash is just one of those little steps towards Magnum Break.";
+	mes "ไม่ว่าในกรณีใด Magnum Break ก็เป็นทักษะของ Swordman~!! บางสิ่งที่เรียบง่ายเช่น Bash เป็นเพียงหนึ่งในขั้นตอนเล็ก ๆ น้อย ๆ ที่จะไปสู่ ??Magnum Break";
 	next;
 	mes "[Red]";
-	mes "Oh man~";
-	mes "Hey, I know you";
-	mes "heard everything.";
-	mes "So what do you think?";
+	mes "โอ้มนุษย์~";
+	mes "เฮ้ฉันรู้ว่าคุณได้ยินทุกอย่าง";
+	mes "แล้วคุณล่ะคิดว่ายังไง?";
 	next;
 	mes "[Red]";
-	mes "Which one do you think is better? The critical damage skill, ^FF2400Bash^000000, or the Splash damage skill, ^EE0000Magnum Break^000000?";
+	mes "คุณคิดว่าอันไหนดีกว่ากันสกิลความเสียหายคริติคอล ^FF2400Bash^000000 หรือสกิล Splash damage ^EE0000Magnum Break^000000";
 	next;
 	if (select("Bash:Magnum Break") == 1) {
 		if (BaseClass == Job_Swordman) {
 			mes "[Red]";
-			mes "Hahahaha!!! I knew you'd see things my way!! You ARE a great guy!! Without a doubt, only ^FF2400Bash^000000 suits a Swordman. Please tell that to FUNBOY over here!! Hahaha.";
+			mes "ฮ่าๆๆๆ!!! ฉันรู้ว่าคุณจะเห็นสิ่งต่างๆในแบบของฉัน!! คุณเป็นผู้ชายที่ยอดเยี่ยม!! ไม่ต้องสงสัยเลยมีเพียง ^FF2400Bash^000000 เท่านั้นที่เหมาะกับ Swordman โปรดบอกกับ FUNBOY ที่นี่!!ฮ่าๆๆ";
 			next;
 			mes "[Red]";
-			mes "Hmm, let me give you a bit of advice. After you achieve level 5 Bash, the amount of SP consumed by the skill increases greatly, so watch out for your SP.";
+			mes "อืมขอคำแนะนำหน่อยนะหลังจากที่คุณบรรลุระดับ 5 Bash จำนวน SP ที่ใช้โดยทักษะจะเพิ่มขึ้นอย่างมากดังนั้นระวัง SP ของคุณด้วย";
 			close;
 		}
 		mes "[Red]";
-		mes "Hahahaha!!";
-		mes "See!? Someone who pursues a different job agrees with me~! You really are a great guy! Hahaha!!";
+		mes "ฮ่าฮ่าฮ่า!!";
+		mes "ดูสิ!? คนที่หางานอื่นเห็นด้วยกับฉัน~! คุณเป็นผู้ชายที่ยอดเยี่ยมจริงๆฮ่าๆๆ!!";
 		next;
 		mes "[Red]";
-		mes "Without a doubt, only ^FF2400Bash^000000 suits a Swordman. Please tell that to this MORON over here!! Hahaha~";
+		mes "ไม่ต้องสงสัยเลยมีเพียง ^FF2400Bash^000000 เท่านั้นที่เหมาะกับ Swordman โปรดบอก MORON คนนี้ตรงนี้!!ฮ่าๆๆ~";
 		close;
 	}
 	if (BaseClass == Job_Swordman) {
 		mes "[Cebalis]";
-		mes " Alright!! ^EE0000Magnum Break^000000 is the BEST!! Now you're talking~!! You know your stuff, kid. HaHaHa~!";
+		mes "เอาล่ะ!! ^EE0000Magnum Break^000000 ดีที่สุด!! ตอนนี้คุณกำลังพูดอยู่~!! รู้เรื่องของคุณเด็กๆ ฮ่าๆๆ~!";
 		next;
 		mes "[Cebalis]";
-		mes "You wanna know some useful information? Okay, okay lemme tell ya! The explosion from 'Magnum Break' has the Fire Property.";
+		mes "อยากทราบข้อมูลที่เป็นประโยชน์บ้างโอเคโอเคบอกหน่อยนะ! การระเบิดจาก 'Magnum Break' มีคุณสมบัติของไฟ";
 		next;
 		mes "[Cebalis]";
-		mes "So it won't be very effective against Water property monsters, but this is THE skill to use against Undead and Earth property monsters.!";
+		mes "ดังนั้นมันจะไม่มีผลกับมอนสเตอร์ธาตุน้ำมากนัก แต่นี่คือทักษะที่จะใช้กับมอนสเตอร์ที่มีคุณสมบัติของ Undead และ Earth!";
 		next;
 		mes "[Cebalis]";
-		mes "And most importantly, look around before you use it. Otherwise you'll be in BIG trouble~ ";
+		mes "และที่สำคัญที่สุดควรมองไปรอบ ๆ ก่อนใช้ไม่เช่นนั้นคุณจะต้องเจอกับปัญหาใหญ่~";
 		close;
 	}
 	mes "[Cebalis]";
-	mes "I'm right, aren't I?! ^EE0000Magnum Break^000000 is THE BEST!!! You know what you're talking about, eh? I don't know why this LARDFACE is sooooo stubborn.";
+	mes "ฉันพูดถูกไม่ใช่เหรอ! ^EE0000Magnum Break^000000 ที่ดีที่สุดคือ!!! รู้ไหมว่าคุณกำลังพูดถึงอะไรใช่ไหมฉันไม่รู้ว่าทำไม LARDFACE ถึงดื้อขนาดนี้";
 	close;
 }
 
 -	script	::Soldier_izlude	-1,{
 	mes "[Soldier]";
-	mes "HeHeHeHe..HaHaHaHa ";
-	mes "Huh? Why am I so happy?";
-	mes "You wanna know?";
+	mes "เฮเฮเฮเฮ..ฮาฮาฮา";
+	mes "หือทำไมฉันมีความสุขจัง";
+	mes "อยากรู้ไหม";
 	next;
-	if (select("Sure, why?:Not really, I don't care.") == 1) {
+	if (select("แน่นอนทำไม?:ไม่จริงฉันไม่สนใจ") == 1) {
 		mes "[Soldier]";
-		mes "Ah~~ There's not much for us to do these days. You see, Merchants buy items dropped by monsters. But you knew that, right? ";
+		mes "อ่า~~ วันนี้พวกเราทำอะไรไม่ได้มากนักเห็นมั้ยพ่อค้าซื้อไอเทมที่ดรอปจากมอนสเตอร์ แต่คุณรู้ใช่มั้ย?";
 		next;
 		if (select("Of course:Eh? Really?") == 1) {
 			mes "[Soldier]";
-			mes "HaHa~ In fact, that was actually part of our job. But there were more and more hunters who came to us in order to get paid and it became too much to handle.";
+			mes "ฮ่าฮ่า~ อันที่จริงนั่นเป็นส่วนหนึ่งของงานของเรา แต่มีนักล่าจำนวนมากมาหาเราเพื่อที่จะได้รับเงินและมันก็มากเกินกว่าที่จะจัดการได้";
 			next;
 			mes "[Soldier]";
-			mes "We had to work overtime every day. Ah, it was a nightmare...! Anyway, the government eventually made a wise decision in creating the Registration System.";
+			mes "เราต้องทำงานล่วงเวลาทุกวันอ่ามันเป็นฝันร้าย ... ! อย่างไรก็ตามในที่สุดรัฐบาลก็ตัดสินใจอย่างชาญฉลาดในการสร้างระบบการลงทะเบียน";
 			next;
 			mes "[Soldier]";
-			mes "The Office of Prize Compensation only pays those who have the Registration. Of course, you'd have to be a merchant and stay in the same place all day long.";
+			mes "สำนักงานชดเชยรางวัลจะจ่ายเฉพาะผู้ที่มีทะเบียนเท่านั้นแน่นอนคุณต้องเป็นพ่อค้าและอยู่ที่เดิมตลอดทั้งวัน";
 			next;
 			mes "[Soldier]";
-			mes "The Office gives away the registration to any merchant who fulfills those requirements. So nowadays, the hunters sell their goods to the registered merchants.";
+			mes "สำนักงานให้การลงทะเบียนแก่ผู้ค้าที่ปฏิบัติตามข้อกำหนดเหล่านั้นดังนั้นปัจจุบันนักล่าจึงขายสินค้าของตนให้กับพ่อค้าที่ลงทะเบียน";
 			next;
 			mes "[Soldier]";
-			mes "So nowadays, the hunters sell their goods to the registered merchants.  Not too many people come to us for that anymore.";
+			mes "ทุกวันนี้นักล่าขายสินค้าของตนให้กับพ่อค้าที่ลงทะเบียนแล้วไม่ค่อยมีใครมาหาเราอีกต่อไป";
 			next;
 			mes "[Soldier]";
-			mes "I mean we are still busy, but that's nothing compared to how it was before. People who have felt suffering know how to appreciate even the slightest comfort.";
+			mes "ฉันหมายความว่าเรายังคงยุ่งอยู่ แต่ก็ไม่มีอะไรเทียบได้กับเมื่อก่อนคนที่เคยรู้สึกทุกข์รู้วิธีที่จะชื่นชมความสะดวกสบายแม้เพียงเล็กน้อย";
 			close;
 		}
 		mes "[Soldier]";
-		mes "What?! What do you mean you didn't know?! Well, you know you can get items by killing monsters. If you bring and sell those to a merchant, you can make some money. ";
+		mes "อะไรนะ! คุณหมายความว่ายังไงที่คุณไม่รู้?! คุณรู้ว่าคุณสามารถหาไอเทมได้จากการฆ่ามอนสเตอร์หากคุณนำไอเทมเหล่านั้นไปขายให้กับพ่อค้าคุณสามารถหาเงินได้";
 		next;
 		mes "[Soldier]";
-		mes "HaHa, in fact, that used to be part of our job. But there were more and more hunters who come in order to get paid, so it became too much to handle.";
+		mes "ฮ่าฮ่าอันที่จริงมันเคยเป็นส่วนหนึ่งของงานของเรา แต่มีนักล่าจำนวนมากขึ้นเรื่อย ๆ ที่มาเพื่อที่จะได้รับค่าจ้างดังนั้นมันจึงมากเกินกว่าที่จะจัดการได้";
 		next;
 		mes "[Soldier]";
-		mes "We had to work overtime every day. Ah, it was a nightmare...! Anyway, the government eventually made a wise decision in creating the Registration System.";
+		mes "เราต้องทำงานล่วงเวลาทุกวันอ่ามันเป็นฝันร้าย ... ! อย่างไรก็ตามในที่สุดรัฐบาลก็ตัดสินใจอย่างชาญฉลาดในการสร้างระบบการลงทะเบียน";
 		next;
 		mes "[Soldier]";
-		mes "The Office of Prize Compensation only pays those who have the Registration. Of course, you'd have to be a merchant and stay in the same place all day long.";
+		mes "สำนักงานชดเชยรางวัลจะจ่ายเฉพาะผู้ที่มีทะเบียนเท่านั้นแน่นอนคุณต้องเป็นพ่อค้าและอยู่ที่เดิมตลอดทั้งวัน";
 		next;
 		mes "[Soldier]";
-		mes "The Office gives away the registration to any merchant who fulfills those requirements. So nowadays, the hunters sell their goods to the registered merchants.";
+		mes "สำนักงานให้การลงทะเบียนแก่ผู้ค้าที่ปฏิบัติตามข้อกำหนดเหล่านั้นดังนั้นปัจจุบันนักล่าจึงขายสินค้าของตนให้กับพ่อค้าที่ลงทะเบียน";
 		next;
 		mes "[Soldier]";
-		mes "So nowadays, the hunters sell their goods to the registered merchants.  Not too many people come to us for that anymore.";
+		mes "ทุกวันนี้นักล่าขายสินค้าของตนให้กับพ่อค้าที่ลงทะเบียนแล้วไม่ค่อยมีใครมาหาเราอีกต่อไป";
 		next;
 		mes "[Soldier]";
-		mes "I mean we are still busy, but that's nothing compared to how it was before. People who have felt suffering know how to appreciate even the slightest comfort.";
+		mes "ฉันหมายความว่าเรายังคงยุ่งอยู่ แต่ก็ไม่มีอะไรเทียบได้กับเมื่อก่อนคนที่เคยรู้สึกทุกข์รู้วิธีที่จะชื่นชมความสะดวกสบายแม้เพียงเล็กน้อย";
 		close;
 	}
 	mes "[Soldier]";
-	mes "Okay Good Bye~~";
+	mes "โอเคบ๊ายบาย~~";
 	close;
 }
 
@@ -462,41 +450,40 @@
 //============================================================
 izlude_in,125,164,2	script	Aaron#izlude	65,{
 	mes "[Aaron]";
-	mes "Don't you think Strong VIT and training in a unique breathing method which enables quick HP recovery are the greatest advantages for a Swordman?";
+	mes "คุณไม่คิดว่า Strong VIT และการฝึกด้วยวิธีการหายใจที่ไม่เหมือนใครซึ่งทำให้ฟื้นฟู HP ได้รวดเร็วเป็นข้อดีที่สุดสำหรับ Swordman หรือไม่";
 	next;
 	mes "[Aaron]";
-	mes "If you train your skills very hard, you can even see your HP recovering. The amount";
-	mes "recovered depends";
-	mes "vitality, or VIT.";
+	mes "ถ้าคุณฝึกฝนทักษะของคุณอย่างหนักคุณจะเห็น HP ของคุณฟื้นตัวได้ด้วยซ้ำ";
+	mes "จำนวนที่ฟื้นตัวขึ้นอยู่กับความมีชีวิตชีวาหรือ VIT";
 	next;
 	mes "[Aaron]";
-	mes "So if you invest more of your stats in VIT, you'll recover more HP overall when resting.";
+	mes "ดังนั้นหากคุณลงทุนกับสถิติของคุณใน VIT มากขึ้นคุณจะฟื้น HP โดยรวมได้มากขึ้นเมื่อพักผ่อน";
 	next;
 	mes "[Aaron]";
-	mes "But of course, it'd be good to have high Attack, wouldn't it? You can either acquire a good weapon or bring up your STR to support you Attack.";
+	mes "แต่แน่นอนว่ามันจะเป็นการดีที่จะมีพลังโจมตีสูงใช่ไหมคุณสามารถหาอาวุธดีๆหรือนำ STR มาสนับสนุนการโจมตีของคุณก็ได้";
 	next;
 	mes "[Aaron]";
-	mes "You know you'll need some strength anyway to swing good weapons easily, anyway.";
+	mes "คุณรู้ว่าคุณจะต้องมีพละกำลังพอสมควรถึงจะแกว่งอาวุธดีๆได้อย่างง่ายดาย";
 	next;
 	mes "[Aaron]";
-	mes "Another important thing is how accurate you can hit your opponents. DEX is the key here. If you train DEX, then the gap between the MIN and MAX damage will also decrease.";
+	mes "สิ่งที่สำคัญอีกอย่างคือคุณสามารถตีคู่ต่อสู้ได้แม่นยำเพียงใด DEX คือกุญแจสำคัญที่นี่หากคุณฝึก DEX ช่องว่างระหว่างความเสียหายขั้นต่ำและสูงสุดก็จะลดลงด้วย";
 	next;
 	mes "[Aaron]";
-	mes "Hm...";
-	mes "Are you bored by all this talk? Or do you want me to go on?";
+	mes "หืม...";
+	mes "คุณเบื่อกับคำพูดทั้งหมดนี้หรือไม่หรือคุณต้องการให้ฉันพูดต่อ";
 	next;
-	if (select("Tell me more please.:End conversation.") == 1) {
+	if (select("โปรดบอกฉันเพิ่มเติม:จบการสนทนา") == 1) {
 		mes "[Aaron]";
-		mes "Hmm...";
-		mes "In that case, I'll explain about the other attributes to you briefly. In order to attack and evade quickly, you've gotta pay attention to AGI. ";
+		mes "หืม...";
+		mes "ในกรณีนี้ฉันจะอธิบายเกี่ยวกับคุณสมบัติอื่น ๆ ให้คุณฟังสั้น ๆ เพื่อที่จะโจมตีและหลบหลีกอย่างรวดเร็วคุณต้องใส่ใจกับ AGI";
 		next;
 		mes "[Aaron]";
-		mes "In case you want to make more critical hits, it's a good idea to invest in LUK. INT also increases Max SP, which is needed to use various skills... But it's really up to you.";
+		mes "ในกรณีที่คุณต้องการสร้างคริติคอลมากขึ้นคุณควรลงทุนใน LUK INT ยังเพิ่ม Max SP ซึ่งจำเป็นในการใช้ทักษะต่างๆ ... แต่มันขึ้นอยู่กับคุณจริงๆ";
 		close;
 	}
 	mes "[Aaron]";
-	mes "Okay then,";
-	mes "train hard~~";
+	mes "เอาล่ะ";
+	mes "ฝึกหนัก~~";
 	close;
 }
 
@@ -504,10 +491,10 @@ izlude_in,125,164,2	script	Aaron#izlude	65,{
 //============================================================
 izlu2dun,108,27,0	script	Sailor#2izlude	100,{
 	mes "[Sailor]";
-	mes "Wanna";
-	mes "head back?";
+	mes "อยาก";
+	mes "กลับหัว?";
 	next;
-	if (select("Yeah, I'm tired to death.:Nope, I love this place!") == 1) {
+	if (select("ใช่ฉันเหนื่อยแทบตาย:ไม่ฉันรักที่นี่!") == 1) {
 		if(checkre(0))
 			warp "izlude",197,210;
 		else

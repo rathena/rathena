@@ -16,82 +16,79 @@ payon_in02,64,71,4	script	Archer Guildsman#archer	85,{
 	if (Upper == 1) {
 		if (Class == Job_Novice_High && (ADVJOB == Job_Sniper || ADVJOB == Job_Clown || ADVJOB == Job_Gypsy)) {
 			mes "[Archer Guildsman]";
-			mes "Hey, I know you.";
-			mes "You took this test";
-			mes "before, didn't you?";
+			mes "เฮ้ฉันรู้จักคุณแล้ว";
+			mes "คุณได้ทำการทดสอบนี้มาก่อนใช่มั้ย";
 			next;
 			mes "[Archer Guildsman]";
-			mes "Ah, you must have been";
-			mes "to Valhalla and been reborn.";
-			mes "Wow, that's so impressive!";
+			mes "อาเจ้าต้องไปที่ Valhalla แล้วเกิดใหม่";
+			mes "ว้าวมันช่างน่าประทับใจเหลือเกิน!";
 			next;
 			if (!callfunc("F_CanChangeJob")) {
 				mes "[Archer Guildsman]";
-				mes "Err...";
-				mes "You'd better learn all the Basic Skills first before you can become an Archer.";
+				mes "เอ่อ ... ";
+				mes "คุณควรที่จะเรียนรู้ทักษะพื้นฐานทั้งหมดก่อนที่คุณจะกลายเป็นนักธนู";
 				next;
 				mes "[Archer Guildsman]";
-				mes "Alright, see you later.";
+				mes "เอาล่ะมาพบกันใหม่ในภายหลัง";
 				close;
 			}
 			mes "[Archer Guildsman]";
-			mes "Well then. I don't";
-			mes "need to say anything else.";
-			mes "I know you'll make a great Archer...";
+			mes "ถ้างั้นข้าไม่ต้องพูดอะไรอีก";
+			mes "ฉันรู้ว่าคุณจะสร้างนักธนูที่ยิ่งใหญ่ ... ";
 			next;
 			skill "NV_TRICKDEAD",0,SKILL_PERM;
 			jobchange Job_Archer_high;
 			skill "AC_MAKINGARROW",1,SKILL_PERM;
 			skill "AC_CHARGEARROW",1,SKILL_PERM;
 			mes "[Archer Guildsman]";
-			mes "Although there's no special";
-			mes "reward for you this time, I hope you understand. Take care of yourself.";
+			mes "ถึงจะไม่มีอะไรพิเศษ";
+			mes "รางวัลสำหรับคุณในครั้งนี้ฉันหวังว่าคุณจะเข้าใจดูแลตัวเอง";
 			close;
 		}else{
 			mes "[Archer Guildsman]";
-			mes "Oh...?";
-			mes "Hey, what are";
-			mes "you doing here...?";
+			mes "โอ้ ... ?";
+			mes "เฮ้อะไรนะ";
+			mes "คุณมาที่นี่... ?";
 			next;
 			mes "[Archer Guildsman]";
-			mes "I can tell that you're not cut out to be an Archer. It sort of feels like you're meant to do";
-			mes "something else...";
+			mes "ฉันบอกได้เลยว่าคุณไม่ได้เป็น Archer มันรู้สึกเหมือนกับว่าคุณตั้งใจจะทำ";
+			mes "อย่างอื่น ... ";
 			close;
 		}
 	}
 	mes "[Archer Guildsman]";
-	mes "Nice to meet you. How may I help you?";
+	mes "ดีใจที่ได้พบคุณฉันจะช่วยคุณได้อย่างไร";
 	next;
-	switch(select("I want to be an Archer.:I need the requirements, please.:Nothing, thanks.")) {
+	switch(select("ฉันต้องการเป็นนักยิงธนู:ฉันต้องการข้อกำหนดโปรด:ไม่มีอะไรขอบคุณ")) {
 	case 1:
 		mes "[Archer Guildsman]";
 		if(BaseJob != Job_Novice) {
 			if(BaseJob == Job_Archer)
-				mes "Haha, you are kidding me...";
+				mes "ฮ่าฮ่าเจ้าล้อเล่นข้า... ";
 			else {
-				mes "I feel sorry but only Novices can change their job.";
-				mes "You already have your own decent job, don't you?";
+				mes "ข้ารู้สึกเสียใจ แต่มีเพียงสามเณรเท่านั้นที่สามารถเปลี่ยนอาชีพ";
+				mes "เจ้ามีงานที่ดีของเจ้าแล้วใช่ไหม?";
 			}
 			close;
 		}else{
-			mes "You are... "+strcharinfo(0)+", right?";
+			mes "คุณคือ... " + strcharinfo(0) + ", จริงไหม?";
 			next;
 			if (!callfunc("F_CanChangeJob")) {
 				mes "[Archer Guildsman]";
-				mes "Well, you're not at the right skill level.";
-				mes "Your job level must be at least ^4A4AFF10^000000 and your Basic Skill level should reach ^4A4AFFlevel 9";
+				mes "คุณไม่ได้อยู่ในระดับทักษะที่เหมาะสม";
+				mes "Job Level ของคุณต้องมีอย่างน้อย ^4A4AFF10^000000 และระดับทักษะพื้นฐานของคุณควรจะถึงระดับ ^4A4AFFlevel 9";
 				next;
 				mes "[Archer Guildsman]";
-				mes "Because an Archer needs extremely high concentration, so we do not accept those who have little patience.";
+				mes "เพราะอาร์เชอร์ต้องการสมาธิสูงมากดังนั้นเราจึงไม่ยอมรับคนที่มีความอดทนน้อย";
 				close;
 			}
 			mes "[Archer Guildsman]";
-			mes "Your Basic Skill is now enough..";
-			mes "....Hm~~ so you are now ready to be an Archer. I will take the step right away.";
+			mes "ทักษะพื้นฐานของคุณก็เพียงพอแล้ว .. ";
+			mes ".... อืม ~~ ดังนั้นตอนนี้คุณก็พร้อมที่จะเป็นนักธนูแล้วฉันจะก้าวไปทันที";
 			next;
 			mes "[Archer Guildsman]";
-			mes "Congratulations! You are now an Archer! Also, we hope that you actively participate in many programs for the revival of the Archer Guild.";
-			mes "Ah, items have arrived from the Production Department. Here, take these! These are all yours!";
+			mes "ขอแสดงความยินดีด้วยตอนนี้คุณเป็นนักยิงธนู! นอกจากนี้เราหวังว่าคุณจะเข้าร่วมในหลาย ๆ โปรแกรมเพื่อการฟื้นฟูของ Archer Guild";
+			mes "อ่าไอเท็มมาจากฝ่ายผลิตแล้วเอานี่ไปนี่เป็นของคุณทั้งหมด!";
 			callfunc "Job_Change",Job_Archer;
 			getitem 1742,1;	// N_Composite_Bow
 			getitem 12004,1;	// Arrow_Container
@@ -99,31 +96,31 @@ payon_in02,64,71,4	script	Archer Guildsman#archer	85,{
 			getitem 12008,1;	// Fire_Arrow_Container
 			next;
 			mes "[Archer Guildsman]";
-			mes "Having a bow and arrows, now you became a real Archer.";
-			mes "If you open the arrow container, there are arrows in it and then you can equip them.";
-			mes "Well, I expect to hear better news from you. It's time to say goodbye.";
+			mes "มีธนูและลูกธนูตอนนี้เจ้ากลายเป็นนักธนูที่แท้จริง";
+			mes "ถ้าคุณเปิดที่เก็บลูกศรมันจะมีลูกธนูอยู่ข้างในแล้วเจ้าจะสามารถจัดให้มันได้";
+			mes "ดีฉันคาดหวังว่าจะได้ยินข่าวที่ดีขึ้นจากคุณถึงเวลาที่ต้องกล่าวคำอำลา";
 			mes "Bye.";
 			close;
 		}
 	case 2:
 		mes "[Archer Guildsman]";
-		mes "An Archer has skills using a bow and has various talents.";
-		mes "The greatest ability of an Archer is attacking enemies from a long distance.";
+		mes "นักธนูมีทักษะในการใช้ธนูและมีความสามารถที่หลากหลาย";
+		mes "ความสามารถที่ยอดเยี่ยมที่สุดของนักธนูคือการโจมตีศัตรูจากระยะไกล";
 		next;
 		mes "[Archer Guildsman]";
-		mes "Although an Archer has weaker HP, he or she can shoot enemies at a long range,";
-		mes "so an Archer is safer in a real battle.";
+		mes "ถึงแม้ว่า Archer จะอ่อนแอกว่า HP แต่เขาหรือเธอสามารถยิงศัตรูได้ในระยะยาว";
+		mes "ดังนั้น Archer จึงปลอดภัยกว่าในการต่อสู้ที่แท้จริง";
 		next;
 		mes "[Archer Guildsman]";
-		mes "Although an Archer in Ragnarok has lower HP, he or she has high accuracy and attack rate so that the archer can kill monsters before they get close to an Archer.";
+		mes "ถึงแม้ว่า Archer ใน Ragnarok จะมีค่า HP ที่ต่ำกว่า แต่เขาหรือเธอมีความแม่นยำและอัตราการโจมตีที่สูงเพื่อที่นักธนูจะสามารถฆ่าสัตว์ประหลาดได้ก่อนที่พวกเขาจะเข้าใกล้ Archer";
 		next;
 		mes "[Archer Guildsman]";
-		mes "^8C2121An Archer can change jobs to a Hunter.^000000";
-		mes "^8C2121Other than Hunter, if you are a man, you can change your job to Bard and if you are a woman, you can change your job to Dancer.^000000";
+		mes "^8C2121นักธนูสามารถเปลี่ยนอาชีพเป็น Hunter^000000";
+		mes "^8C2121นอกจาก Hunter ถ้าคุณเป็นผู้ชายคุณสามารถเปลี่ยนอาชีพของคุณเป็น Bard และถ้าคุณเป็นผู้หญิงคุณสามารถเปลี่ยนอาชีพของคุณเป็น Dancer ได้^000000";
 		close;
 	case 3:
 		mes "[Archer Guildsman]";
-		mes "If you have any questions, feel free to come and ask me.";
+		mes "หากคุณมีคำถามใดๆ อย่าลังเลที่จะมาและถามฉัน";
 		close;
 	}
 }

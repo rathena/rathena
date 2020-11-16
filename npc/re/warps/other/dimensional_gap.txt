@@ -7,9 +7,9 @@
 //============================================================
 
 mid_camp,210,292,4	script	Transport Device#01	10007,{
-	mes "Do you wish to enter the Dimensional Gap?";
+	mes "คุณต้องการที่จะเข้าสู่มิติของช่องว่างหรือไม่?";
 	next;
-	switch(select("Yes:No")) {
+	switch(select("ใช่:ไม่")) {
 	case 1:
 		close2;
 		warp "dali",141,82;
@@ -20,9 +20,9 @@ mid_camp,210,292,4	script	Transport Device#01	10007,{
 }
 
 moc_fild22b,222,200,4	script	Transport Device#02	10007,{
-	mes "Do you wish to enter the Dimensional Gap?";
+	mes "คุณต้องการที่จะเข้าสู่มิติของช่องว่างหรือไม่?";
 	next;
-	switch(select("Yes:No")) {
+	switch(select("ใช่:ไม่")) {
 	case 1:
 		close2;
 		warp "dali",119,56;
@@ -33,9 +33,9 @@ moc_fild22b,222,200,4	script	Transport Device#02	10007,{
 }
 
 bif_fild01,318,159,4	script	Transport Device#03	10007,{
-	mes "Do you wish to enter the Dimensional Gap?";
+	mes "คุณต้องการที่จะเข้าสู่มิติของช่องว่างหรือไม่?";
 	next;
-	switch(select("Yes:No")) {
+	switch(select("ใช่:ไม่")) {
 	case 1:
 		close2;
 		warp "dali",43,92;
@@ -46,9 +46,9 @@ bif_fild01,318,159,4	script	Transport Device#03	10007,{
 }
 
 dic_fild02,241,31,4	script	Transport Device#04	10007,{
-	mes "Do you wish to enter the Dimensional Gap?";
+	mes "คุณต้องการที่จะเข้าสู่มิติของช่องว่างหรือไม่?";
 	next;
-	switch(select("Yes:No")) {
+	switch(select("ใช่:ไม่")) {
 	case 1:
 		close2;
 		warp "dali",41,134;

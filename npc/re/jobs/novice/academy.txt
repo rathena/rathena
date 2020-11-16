@@ -2,6 +2,7 @@
 //= Criatura Academy
 //===== By: ====================================================================
 //= Kisuka (1.0)
+//= แปลไทยโดย Playragnarok 1.0
 //===== Current Version: =======================================================
 //= 2.0.0
 //===== File Encoding ==========================================================
@@ -24,14 +25,14 @@ OnTouch:
 	if (getd(".start" + strnpcinfo(1)) == 0) {
 		setd ".start" + strnpcinfo(1), 1;
 		initnpctimer;
-		mapannounce strnpcinfo(4), "[Tip] You can move to the desired point by clicking the ground with the left mouse button.", bc_map,0xFF0000;
+		mapannounce strnpcinfo(4), "[เคล็ดลับ] คุณสามารถเลื่อนไปยังจุดที่ต้องการได้โดยคลิกที่พื้นด้วยปุ่มซ้ายของเมาส์", bc_map,0xFF0000;
 	}
 	end;
 OnTimer9000:
-	mapannounce strnpcinfo(4), "[Tip] While holding down the right mouse button, drag to rotate the screen.", bc_map,0xFF0000;
+	mapannounce strnpcinfo(4), "[เคล็ดลับ] ในขณะที่กดปุ่มเมาส์ขวาค้างไว้ให้ลากเพื่อหมุนหน้าจอ", bc_map,0xFF0000;
 	end;
 OnTimer18000:
-	mapannounce strnpcinfo(4), "[Tip] You can leave through the bluish warp gate.", bc_map,0xFF0000;
+	mapannounce strnpcinfo(4), "[เคล็ดลับ] คุณสามารถออกจากพื้นที่ได้ด้วยการ วาร์ป", bc_map,0xFF0000;
 	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
 	end;
 OnTimer21000:
@@ -41,7 +42,7 @@ OnTimer24000:
 	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
 	end;
 OnTimer27000:
-	mapannounce strnpcinfo(4), "[Tip] Leave this area to continue.", bc_map,0xFF0000;
+	mapannounce strnpcinfo(4), "[เคล็ดลับ] ออกจากที่นี้ เพื่อไปต่อ", bc_map,0xFF0000;
 	stopnpctimer;
 	setd ".start" + strnpcinfo(1), 0;
 	end;
@@ -64,15 +65,15 @@ iz_int04,51,30,0	duplicate(iz_int#intro_evt02)	iz_int04#intro_evt02	HIDDEN_WARP_
 
 //== Wounded Swordsman (iz_int) =================================
 iz_int,56,32,3	script	Wounded Swordsman#intro_npc01_iz_int	4_TOWER_01,5,5,{
-	npctalk "Oh...", "", bc_self;
+	npctalk "โอ...", "", bc_self;
 	cloakonnpc strnpcinfo(0), getcharid(0);
 	cloakoffnpc "Wounded Swordsman#intro_npc02_" + strnpcinfo(4), getcharid(0);
 	end;
 
 OnTouch:
-	npctalk "Urgh... please... help me...", "", bc_self;
+	npctalk "ได้โปรด ... ช่วยฉันด้วย ...", "", bc_self;
 	sleep2 500;
-	npctalk "In order to talk with me.. click my body..", "", bc_self;
+	npctalk "เพื่อคุยกับฉัน .. กดที่ตัวของฉัน..", "", bc_self;
 	end;
 
 OnInit:
@@ -87,32 +88,32 @@ iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsm
 iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	4_TOWER_02,{
 	if (isbegin_quest(21001) == 0) {
 		mes "[Wounded]";
-		mes "Wow! Thanks a lot!";
-		mes "I don't know how this happened to our ship";
-		mes "but we should go to see the captain.";
+		mes "ว้าว! ขอบใจมากนะ!";
+		mes "ฉันไม่รู้ว่าสิ่งนี้เกิดขึ้นกับเรือของเราได้อย่างไร";
+		mes "แต่พวกเราควรไปหากัปตัน";
 		next;
 		mes "[Wounded]";
-		mes "... ohh, it seems my body is too injured.";
-		mes "Maybe you can go without me?";
+		mes "... โอ้ว, ดูเหมือนว่าร่างกายของฉันได้รับบาดเจ็บเกินไป";
+		mes "เจ้าอาจจะต้องไปโดยไม่มีข้า?";
 		setquest 21001;
 		next;
 		cutin "tutorial02",4;
 		mes "^4d4dff!- Information -!^000000";
-		mes "NPC Quest Received.";
+		mes "รับ NPC Quest";
 	}
 	else {
 		mes "[Wounded]";
-		mes "Luckily the water has not entered the ship.";
-		mes "I will wait here, you should go see the captain.";
+		mes "โชคดีที่น้ำไม่เข้ามาในเรือ";
+		mes "ข้าจะรอตรงนี้ เจ้าควรไปหากัปตัน";
 		next;
 		mes "[Wounded]";
-		mes "I'm fine! I'm fine!";
-		mes "Don't worry about me, you should really go to the captain!";
+		mes "สบาย! ฉันเอาอยู่!";
+		mes "ไม่ต้องห่วงเกี่ยวกับฉัน เจ้าควรรีบไปหากัปตัน ตอนนี้!";
 		next;
 		mes "^4d4dff!- Information -!^000000";
 	}
-	mes "^4d4dffQuestinfo Shortcut is Alt + U^000000";
-	mes "You can check your quest status there anytime.";
+	mes "^4d4dffQuestinfo กด Alt + U^000000";
+	mes "เจ้าสามารถดูภารกิจได้ตลอด";
 	close2;
 	cutin "",255;
 	end;
@@ -133,36 +134,36 @@ int_land,78,103,5	script	Captain Carocc#intro_npc03	4_M_REINDEER,{
 	switch( isbegin_quest(21008) ) {
 	case 0:
 		mes "[Captain Carocc]";
-		mes "There are still people in the cabins?!";
-		mes "At least you are safe.";
-		mes "Are you alright?";
+		mes "ยังมีผู้คนในห้องโดยสารเรือ?!";
+		mes "อย่างน้อยคุณก็ปลอดภัย";
+		mes "คุณไม่เป็นอะไรใช่ไหม?";
 		next;
-		if (select("I'm alright, but others need help.", "I think I am the last?") == 1) {
+		if (select("ฉันปลอดภัยดี แต่มีคนต้องช่วยเหลือ", "ฉันคิดว่า ฉันคนสุดท้าย?") == 1) {
 			mes "[Captain Carocc]";
-			mes "There are more people left?";
-			mes "I will send a rescue team to them.";
-			mes "Thank you for your report.";
+			mes "ยังมีคนอื่นอีกไหม?";
+			mes "ฉันจะส่งทีมช่วยเหลือไปหาพวกเขา";
+			mes "ขอบคุณสำหรับรายงานของคุณ";
 		} else {
 			mes "[Captain Carocc]";
-			mes "Alright, that's good.";
-			mes "The storm came unexpectedly but I never thought it would hit us that hard.";
+			mes "เอาล่ะ เป็นสิ่งที่ดี";
+			mes "พายุมาโดยไม่คาดคิด แต่ฉันไม่เคยคิดเลยว่ามันจะกระทบเราอย่างหนัก";
 		}
 		next;
 		mes "[Captain Carocc]";
-		mes "At least most people made it to safety.";
+		mes "อย่างน้อยคนส่วนใหญ่ก็ปลอดภัย";
 		next;
 		mes "[Captain Carocc]";
-		mes "Look at the trees there, ^4d4dfffollow them to the southwest^000000 to find a new ship.";
-		mes "The ship will take you to ^4d4dffIzlude^000000, our original destination.";
+		mes "มองดูต้นไม้เหล่านั้น ^4d4dffตามหา southwest^000000 เพื่อหาเรือใหม่";
+		mes "เรือจะมารับคุณ ^4d4dffIzlude^000000, ไปยังเส้นทางเดิมของเรา";
 		next;
 		mes "[Captain Carocc]";
-		mes "Ah! Speaking of it, those ^4d4dffPorings^000000 on this island drop several materials we could use for repairs.";
+		mes "อ้ะ! พูดถึงว่า ^4d4dffPorings^000000 บนเกาะแห่งนี้มีวัสดุหลายอย่างที่เราสามารถใช้ซ่อมแซมได้";
 		next;
 		mes "[Captain Carocc]";
-		mes "^4d4dffKill the Porings and bring 2 Lumbers to the southern crew^000000.";
+		mes "^4d4dffฆ่า Porings และเก็บ 2 Lumbers นำไปให้ลูกเรือ^000000.";
 		next;
 		mes "[Captain Carocc]";
-		mes "It is a hard task, but you look tough enough.";
+		mes "มันเป็นงานที่ยาก แต่คุณดูแข็งแกร่งพอ";
 		specialeffect2 EF_HEAL2;
 		heal 9999,0;
 		skilleffect 34,0;
@@ -176,26 +177,26 @@ int_land,78,103,5	script	Captain Carocc#intro_npc03	4_M_REINDEER,{
 		setquest 21008;
 		next;
 		mes "[Captain Carocc]";
-		mes "Speaking of Porings, you have to equip your gears.";
-		mes "You should have a ^4d4dffweapon and an armor^000000 equipped.";
+		mes "เมื่อพูดถึง Porings คุณต้องเตรียมอุปกรณ์ของคุณ";
+		mes "คุณควรมี ^4d4dffอาวุธ และเกราะ^000000 สวมใส่";
 		next;
 		cutin "tutorial03",4;
-		mes "!- Information -!";
-		mes "^4d4dffYou can equip gear or use items by simply double clicking them.";
-		mes "The item window can be opened by pressing Alt + E or using the menu button.^000000";
+		mes "!- ข้อมูล -!";
+		mes "^4d4dffคุณสามารถสวมใส่อุปกรณ์หรือใช้ไอเท็มเพียงแค่คลิกสองครั้ง";
+		mes "หน้าต่างไอเทมสามารถเปิดได้โดยกด Alt + E หรือใช้ปุ่มเมนู^000000";
 		next;
-		mes "!- Information -!";
-		mes "^4d4dffEquipped Items can be seen by pressing Alt + Q.";
-		mes "Either double click or drag & drop to equip or unequip them.^000000";
+		mes "!- ข้อมูล -!";
+		mes "^4d4dffหน้าต่างสวมใส่เปิดได้เพียงกด Alt + Q";
+		mes "ให้ดับเบิลคลิกหรือลากและวางเพื่อติดตั้งหรือถอดอุปกรณ์^000000";
 		next;
 		cutin "",255;
 		mes "[Captain Carlock]";
-		mes "Did you check all your equipment?";
-		mes "^4d4dffSkill distribution^000000 should be done.";
+		mes "คุณตรวจสอบอุปกรณ์ทั้งหมดของคุณแล้วยัง?";
+		mes "^4d4dffSkill เบื้องต้น^000000 ควรเรียบร้อย";
 		next;
 		mes "[Captain Carlock]";
-		mes "For a smooth battle, you have to distribute your abilities properly.";
-		mes "^4d4dffIf you want to increase your strength, you need to raise Str^000000. ^4d4dffIf you want to increase your hit, you must raise Dex^000000.";
+		mes "สำหรับการต่อสู้ที่ราบรื่นคุณต้องกระจายความสามารถของคุณอย่างเหมาะสม";
+		mes "^4d4dffถ้าคุณต้องการเพิ่มความแข็งแกร่งของคุณคุณต้องเพิ่ม Str^000000. ^4d4dffหากคุณต้องการเพิ่มการโจมตีของคุณคุณต้องเพิ่ม Dex^000000.";
 		break;
 	case 1:
 		mes "[Captain Carocc]";
@@ -205,29 +206,29 @@ int_land,78,103,5	script	Captain Carocc#intro_npc03	4_M_REINDEER,{
 		sc_start SC_BLESSING,240000,10;
 		skilleffect 29,0;
 		sc_start SC_INCREASEAGI,240000,10;
-		mes "^4d4dffThe Ship^000000 is anchored in the southwest. It will take you to Izlude.";
-		mes "Don't forget to ^4d4dffget some Lumber^000000 for the ship.";
+		mes "^4d4dffเรือ^000000 จอดทอดสมออยู่ทางทิศตะวันตกเฉียงใต้ มันจะพาเจ้าไปที่ Izlude";
+		mes "อย่าลืม ^4d4dffรับไม้บางส่วน^000000สำหรับเรือ";
 		next;
 		mes "[Captain Carocc]";
-		mes "Don't forget to raise your ^4d4dffskills^000000.";
+		mes "อย่าลืมที่จะยกระดับของเจ้า ^4d4dffทักษะ^000000.";
 		break;
 	case 2:
 		mes "[Captain Carocc]";
-		mes "Everything is ready to sail over to Izlude.";
-		mes "The ship is located at the south-western part of the island.";
+		mes "ทุกอย่างพร้อมที่จะแล่นเรือไปยัง Izlude";
+		mes "เรือตั้งอยู่ที่ส่วนตะวันตกเฉียงใต้ของเกาะ";
 		close;
 	}
 	next;
 	mes "! - Information -!";
-	mes "^4d4dffYou get a stats bonus for every level you raise.";
-	mes "The status window can be opened and closed with the shortcut Alt + A^000000.";
+	mes "^4d4dffเจ้าจะได้รับโบนัสสถิติสำหรับทุกด่านที่เจ้ายกระดับ";
+	mes "หน้าต่างสถานะสามารถเปิดและปิดได้ด้วยทางลัด Alt + A^000000.";
 	next;
 	mes "! - Information -!";
-	mes "^4d4dffPlease properly allocate the stats you need to battle^000000.";
+	mes "^4d4dffโปรดจัดสรรสถิติที่เจ้าต้องการในการต่อสู้อย่างถูกต้อง^000000.";
 	next;
 	mes "[Captain Carocc]";
-	mes "Kill Porings and bring the Lumber to the crew.";
-	mes "Good luck!";
+	mes "กำจัด Porings และนำไม้มาให้ลูกเรือ";
+	mes "โชคดี!";
 	close;
 
 OnInit:
@@ -250,43 +251,43 @@ int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
 		next;
 		cutin "fly_trock.bmp",2;
 		mes "[Captain Carocc]";
-		mes "Had a good dream?";
-		mes "Soon, we will get to Izlude. And you can talk to other people like you just talked to me.";
+		mes "ฝันดีมั้ย";
+		mes "ในไม่ช้าเราจะไปถึง Izlude และคุณสามารถพูดคุยกับคนอื่นเช่นคุณเพิ่งพูดคุยกับฉัน";
 		next;
 		mes "[Captain Carocc]";
-		mes "I think that guy over there lost his memory. I gave him a new name.";
+		mes "ฉันคิดว่าหมอนั่นเสียความทรงจำไปแล้ว ฉันตั้งชื่อใหม่ให้เขา";
 		mes "Lumin.";
 		next;
 		mes "[Captain Carocc]";
-		mes "Many youngsters visit the ^4d4dffRune-Midgarts Kingdom^000000 to chase their dreams.";
-		mes "Izlude is a satellite city of Prontera, the capital of the Rune-Midgarts Kingdom.";
+		mes "เด็กๆ หลายคนไปเยี่ยมชม ^4d4dffอาณาจักร Rune-Midgarts^000000เพื่อไล่ล่าความฝันของพวกเขา";
+		mes "Izlude เป็นเมืองดาวเทียมของ Prontera ซึ่งเป็นเมืองหลวงของอาณาจักร Rune-Midgarts";
 		next;
 		mes "[Captain Carocc]";
-		mes "Izlude always welcomes young adventurers like you who have just started their journey through the world.";
-		mes "You are one of them, of course.";
+		mes "Izlude ยินดีต้อนรับนักผจญภัยรุ่นใหม่เช่นคุณที่เพิ่งเริ่มต้นการเดินทางไปทั่วโลก";
+		mes "คุณเป็นหนึ่งในนั้นแน่นอน";
 		next;
 		mes "[Captain Carocc]";
-		mes "I would like to tell you more stories, but it's time to get ready for arrival.";
-		mes "There is an academy in Izlude for newcomers like yourself.";
+		mes "ฉันอยากจะเล่าเรื่องให้คุณฟังมากขึ้น แต่ถึงเวลาเตรียมตัวให้พร้อมแล้ว";
+		mes "มีสถานศึกษาใน Izlude สำหรับผู้มาใหม่อย่างคุณ";
 		next;
 		mes "[Captain Carocc]";
-		mes "Let me give you more details later. See you back at the harbor deck.";
+		mes "ฉันจะให้รายละเอียดเพิ่มเติมในภายหลัง พบกันที่ดาดฟ้าเรือ";
 		next;
 		mes "[Captain Carocc]";
-		mes "To get off this ship, you should enter the ^4d4dffShining Portal^000000 over there.";
-		mes "All transportation is made through the portals.";
+		mes "ในการลงเรือลำนี้คุณควรเข้าสู่ ^4d4dffส่องแสงพอร์ทัล^000000 ตรงนั้น.";
+		mes "การขนส่งทั้งหมดทำผ่านพอร์ทัล";
 		setquest 7471;
 		completequest 7471;
 		next;
 		cutin "nov_lumin01.bmp", 0;
 		mes "[Lumin]";
-		mes "Yes.";
+		mes "ใช่.";
 		next;
 		cloakonnpc strnpcinfo(0), getcharid(0);
 		cutin "fly_trock.bmp",2;
 		mes "[Captain Carocc]";
-		mes "Oh boy.";
-		mes "What a cute reaction.";
+		mes "โอ้เด็ก.";
+		mes "ปฏิกิริยาที่น่ารัก";
 		close2;
 		cutin "",255;
 		end;
@@ -295,28 +296,28 @@ int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
 	mes "[Lumin]";
 	mes ".....";
 	next;
-	select("Should I introduce myself?", "My name is ~!");
+	select("ฉันควรแนะนำตัวเองเหรอ?", "ฉันชื่อ ~!");
 	mes "[" + strcharinfo(0) + "]";
-	mes "I am " + strcharinfo(0) + "!";
+	mes "ฉันชื่อ " + strcharinfo(0) + "!";
 	next;
 	mes "[Lu]";
 	mes ".....";
 	next;
 	mes "[Lu]";
 	mes ".....";
-	mes "....So?";
+	mes "....ดังนั้น?";
 	next;
 	cloakonnpc strnpcinfo(0), getcharid(0);
-	mes "- Lu just walked away with a cynical look on his face.";
+	mes "- ลูเดินออกไปพร้อมกับมองดูเหยียดหยามบนใบหน้าของเขา";
 	next;
 	cutin "fly_trock.bmp",2;
 	mes "[Captain Carocc]";
-	mes "Looks like... he has a shy personality.";
-	mes "When you go to Izlude, will you check on him?";
+	mes "ดูเหมือนว่า ... เขามีบุคลิกขี้อาย";
+	mes "เมื่อคุณไปที่ Izlude คุณจะตรวจสอบเขาหรือไม่?";
 	next;
 	mes "[Captain Carocc]";
-	mes "From now on I'll be sailing the ship around the island.";
-	mes "Let's go, shall we?";
+	mes "จากนี้ไปฉันจะล่องเรือรอบเกาะ";
+	mes "ไปกันเถอะ";
 	close2;
 	cutin "",255;
 	end;
@@ -334,42 +335,41 @@ int_land,58,69,5	script	Sailor#intro_npc04	4W_SAILOR,{
 	if (isbegin_quest(21008) == 1) {
 		if (countitem(6008) < 2) {
 			mes "[Sailor]";
-			mes "These Porings stole my materials to repair the ship. Can you help me to get them back?";
-			mes "There are plenty of Porings on this island.";
+			mes "Porings เหล่านี้ขโมยวัสดุของฉันเพื่อซ่อมแซมเรือ คุณช่วยฉันเอาคืนได้ไหม";
+			mes "บนเกาะนี้มี Porings มากมาย";
 			next;
 			mes "[Sailor]";
-			mes "I would really appreciate it if you help me.";
-			mes "I am not allowed to set foot on this island.";
-			mes "That's why I ask for your help~";
-			close;
+			mes "ฉันจะขอบคุณถ้าคุณช่วยฉัน";
+			mes "ฉันไม่ได้รับอนุญาตให้เดินบนเกาะนี้";
+			mes "นั่นเป็นเหตุผลที่ฉันขอความช่วยเหลือจากคุณ ~";
 		}
 		mes "[Sailor]";
-		mes "Unbelievable, perfect! Any chance you want to join my crew?";
-		mes "Enough talking!!";
-		mes "Come on, we're ready to set sail!";
-		mes "Thank you so much!";
+		mes "ไม่น่าเชื่อสมบูรณ์แบบ! โอกาสใดที่คุณต้องการเข้าร่วมทีมของฉัน?";
+		mes "พอพูดได้ !!";
+		mes "มาเลยพวกเราพร้อมที่จะออกเดินทางแล้ว!";
+		mes "ขอบคุณมาก!";
 		next;
 		mes "[Sailor]";
-		mes "If you want to sail with us to Izlude, jump on board!";
+		mes "หากคุณต้องการล่องเรือไปยัง Izlude ให้กระโดดขึ้นเครื่อง!";
 		delitem 6008,2;
 		getexp 100,100;
 		getitem 611,5;
 		completequest 21008;
 		next;
 		mes "[Sailor]";
-		mes "Oh, and take these ^4d4dffMagnifiers^000000.";
-		mes "When you hunt monsters you can find ^4d4dffunidentified items^000000.";
+		mes "โอ้และรับสิ่งเหล่านี้ ^4d4dffMagnifiers^000000.";
+		mes "เมื่อคุณล่าสัตว์ประหลาดคุณสามารถค้นหา ^4d4dffรายการไม่ปรากฏหลักฐาน^000000.";
 		next;
 		mes "[Sailor]";
-		mes "Using a Magnifier will identify the item.";
+		mes "การใช้แว่นขยายจะระบุรายการ";
 		next;
 		mes "[Sailor]";
-		mes "Maybe you already have some unidentified items from your fights with those Porings?";
+		mes "บางทีคุณอาจมีสิ่งของที่ไม่ปรากฏหลักฐานบางอย่างจากการต่อสู้กับ Porings เหล่านั้น";
 		close;
 	}
 	mes "[Sailor]";
-	mes "The ship is heading to Izlude soon~!";
-	mes "I'll let you know when we set sail~!";
+	mes "เรือกำลังมุ่งหน้าไปยัง Izlude เร็ว ๆ นี้ ~!";
+	mes "ฉันจะบอกให้คุณรู้เมื่อเราออกเรือ ~!";
 	close;
 
 OnInit:
@@ -390,380 +390,380 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 		if (isbegin_quest(4269) == 2) {
 			if (isbegin_quest(7471) == 2 || isbegin_quest(7472) > 0) {
 				mes "[Carocc]";
-				mes "Oh, "+strcharinfo(0)+"!";
-				mes "Why are you here at the wharf?";
-				mes "I guess you are doing well at the academy.";
+				mes "โอ้," + strcharinfo(0) + "!";
+				mes "ทำไมคุณถึงมาถึงท่าเรือนี้";
+				mes "ฉันคิดว่าคุณทำได้ดีที่สถาบัน";
 				next;
 				mes "[Carocc]";
-				mes "I'm going to be docking and reparing the ship here for a while.";
-				mes "I will be taking the same route I tried before.";
+				mes "ข้าจะต้องขึ้นฝั่งและซ่อมเรือที่นี่อีกซักพัก";
+				mes "ข้าจะต้องใช้เส้นทางเดียวกับที่ข้าเคยลองมาก่อน";
 			} else {
 				mes "[Carocc]";
-				mes "Hmm? You must be a student of the Criatura Academy?";
-				mes "Were you on my ship?";
-				mes "Hmm I can't remember.";
+				mes "อืมคุณต้องเป็นนักเรียนของ Criatura Academy หรือเปล่า";
+				mes "คุณอยู่บนเรือของฉันหรือไม่";
+				mes "อืมข้าจำไม่ได้";
 				next;
 				mes "[Carocc]";
-				mes "Well, anything is fine.";
-				mes "Shall I go easy on you since you said you were a student of the Academy?";
-				mes "I am still the captain of the ship, regardless.";
+				mes "เอาล่ะทุกอย่างเรียบร้อย";
+				mes "ฉันจะไปง่าย ๆ กับเจ้าตั้งแต่เจ้าบอกว่าเจ้าเป็นนักเรียนของสถาบันเหรอ?";
+				mes "ข้ายังเป็นกัปตันเรืออยู่ไม่ว่าจะทำอะไร";
 			}
 			next;
 			mes "[Carocc]";
-			mes "I plan on taking off as soon as the repairs are complete.";
-			mes "The route will open with ^4d4dffPharos Lighthouse^000000 by then.";
+			mes "ฉันวางแผนจะลงสนามทันทีที่การซ่อมแซมเสร็จสิ้น";
+			mes "เส้นทางจะเปิดด้วย ^4d4dff Pharos Lighthouse ^000000 ในตอนนั้น";
 		} else {
 			if (isbegin_quest(7471) == 2) {
 				if (!isbegin_quest(7472)) {
 					mes "[Carocc]";
-					mes "This is Izlude.";
-					mes "The best city for you to take wings to your dreams.";
+					mes "นี่คือ Izlude";
+					mes "เมืองที่ดีที่สุดสำหรับคุณที่จะพาปีกไปสู่ความฝันของคุณ";
 					next;
 					mes "[Carocc]";
-					mes "Although I don't have any particular feelings for you,";
-					mes "I've seen a lot of young people like you, while operating the ship.";
+					mes "ถึงแม้ว่าฉันจะไม่มีความรู้สึกเป็นพิเศษสำหรับคุณ";
+					mes "ฉันเห็นคนหนุ่มสาวมากมายเช่นคุณในขณะที่ปฏิบัติการทางเรือ";
 					next;
 					mes "[Carocc]";
-					mes "There were those among them who succeeded and failed and went back after being unable to adjust.";
-					mes "I want you to have a successful start with this place.";
+					mes "มีคนในหมู่พวกเขาที่ประสบความสำเร็จและล้มเหลวและกลับไปหลังจากที่ไม่สามารถปรับตัวได้";
+					mes "ฉันต้องการให้คุณประสบความสำเร็จในการเริ่มต้นที่นี่";
 					next;
 					mes "[Carocc]";
-					mes "Did you know this?";
-					mes "Izlude has a new Institute for budding adventurers like you!";
+					mes "เจ้ารู้เรื่องนี้หรือไม่?";
+					mes "Izlude มีสถาบันใหม่สำหรับนักผจญภัยรุ่นใหม่เช่นคุณ!";
 					next;
-					select("You mean the Academy?");
+					select ("คุณหมายถึงสถาบันการศึกษาหรือไม่");
 					mes "[Carocc]";
-					mes "Yes! It's called the ^4d4dffRoyal Criatura Academy^000000.";
-					mes "Founded by the Rune-Midgarts lineage to help out new adventurers.";
-					next;
-					mes "[Carocc]";
-					mes "A friend of mine works there, so I'll give you the introduction to him.";
-					mes "He could make a lot of things easier for you.";
+					mes "ใช่! มันถูกเรียกว่า ^4d4dff Royal Criatura Academy ^000000";
+					mes "ก่อตั้งขึ้นโดยเชื้อสาย Rune-Midgarts เพื่อช่วยเหลือนักผจญภัยใหม่";
 					next;
 					mes "[Carocc]";
-					mes "He usually talks to new adventurers near the entrance of the academy.";
-					mes "Go and meet him there.";
+					mes "เพื่อนของฉันทำงานที่นั่นดังนั้นฉันจะให้คุณแนะนำเขา";
+					mes "เขาสามารถทำสิ่งต่าง ๆ ให้คุณได้ง่ายขึ้น";
+					next;
+					mes "[Carocc]";
+					mes "เขามักจะพูดคุยกับนักผจญภัยใหม่ใกล้กับทางเข้าโรงเรียน";
+					mes "ไปพบเขาที่นั่น";
 					next;
 					if (!isbegin_quest(7473)) {
 						mes "[Carocc]";
-						mes "His name is ^4d4dffHun^000000";
-						mes "I will mark his spot on the map so go to see him.";
+						mes "เขาชื่อ ^4d4dff Hun ^000000";
+						mes "ฉันจะทำเครื่องหมายจุดของเขาบนแผนที่เพื่อไปหาเขา";
 						setquest 7472;
 						viewpoint 1,122,207,0,0x4d4dff;
 						next;
-						mes "!- Information -!";
-						mes "The ^4d4dffMini map can be seen on the right top of the screen.";
-						mes "You can zoom in with +, zoom out with -. The waypoint from the NPC will be marked on it. ^000000";
+						mes "!- ข้อมูล -!";
+						mes "^4d4dff Mini แผนที่สามารถเห็นได้ที่ด้านบนขวาของหน้าจอ";
+						mes "คุณสามารถซูมด้วย +, ย่อด้วย -. จุดอ้างอิงจาก NPC จะถูกทำเครื่องหมายไว้ ^000000";
 						next;
 						cutin "tutorial02.bmp", 4;
-						mes "!- Information -!";
-						mes "Received a Quest from ^4d4dffCaptain Carocc.";
-						mes "The quest content can be checked from the quest window.";
+						mes "!- ข้อมูล -!";
+						mes "ได้รับภารกิจจาก ^4d4dff Captain Carocc";
+						mes "เนื้อหาเควสสามารถตรวจสอบได้จากหน้าต่างเควส";
 						next;
-						mes "!- Information -!";
-						mes "Quest window can be opened by pressing ^4d4dffAlt + u^000000 keys together.";
+						mes "!- ข้อมูล -!";
+						mes "หน้าต่าง Quest สามารถเปิดได้โดยการกด ^4d4dff Alt + u ^000000 คีย์ด้วยกัน";
 						next;
 						cutin "", 255;
 						mes "[Carocc]";
-						mes "If you need more help with the map, press <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> here";
-						mes "Yes, the part that says 'Hun'.";
+						mes "หากคุณต้องการความช่วยเหลือเพิ่มเติมเกี่ยวกับแผนที่ให้กด <NAVI> [Hun] <INFO> izlude, 122,207</INFO> </NAVI> ที่นี่";
+						mes "ใช่ส่วนที่บอกว่า 'Hun'";
 						next;
-						mes "!- Information -!";
-						mes "^4d4dffThe icon during talk <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> means a link to navigation directions.";
+						mes "!- ข้อมูล -!";
+						mes "^4d4dffThe ไอคอนระหว่างการพูดคุย <NAVI> [Hun] <INFO> izlude, 122,207</INFO> </NAVI> หมายถึงลิงก์ไปยังทิศทางการนำทาง";
 						cutin "navi01.bmp", 4;
 						next;
-						mes "!- Information -!";
-						mes "If you press info after selecting a task in the objectives^4d4dff,";
-						mes "an arrow pointing to the location of the objective will pop up along with the navigation help.";
+						mes "!- ข้อมูล -!";
+						mes "ถ้าคุณกดข้อมูลหลังจากเลือกงานในวัตถุประสงค์ ^4d4dff,";
+						mes "ลูกศรที่ชี้ไปยังตำแหน่งของวัตถุประสงค์จะปรากฏขึ้นพร้อมกับตัวช่วยนำทาง";
 						cutin "navi02.bmp", 4;
 						next;
 						cutin "", 255;
 						mes "[Carocc]";
-						mes "Anyway, my friend will help you register with the academy";
-						mes "I hope it can help you for your future.";
+						mes "อย่างไรก็ตามเพื่อนของฉันจะช่วยให้คุณลงทะเบียนกับสถาบันการศึกษา";
+						mes "ฉันหวังว่ามันจะช่วยคุณได้ในอนาคต";
 						close;
 					} else {
-						select("I know who you're talking about.");
+						select("ฉันรู้ว่าคุณกำลังพูดถึงใคร");
 						mes "[Carocc]";
-						mes "Then there's no worry.";
-						mes "He'll introduce you to the academy.";
+						mes "งั้นก็ไม่ต้องกังวล";
+						mes "เขาจะแนะนำคุณให้รู้จักกับสถาบันการศึกษา";
 						next;
 						mes "[Carocc]";
-						mes "OK. I will show you the direction. You try it again.";
-						mes "By the way, did I tell you his name? His name is ^4d4dffHun^000000";
+						mes "ตกลงฉันจะแสดงให้คุณเห็นทิศทางคุณลองอีกครั้ง";
+						mes "ข้าบอกชื่อเขามาแล้วหรือยังชื่อของเขาคือ ^4d4dffHun ^000000";
 						viewpoint 1,122,207,1,0x4d4dff;
 						next;
-						mes "!- Information -!";
-						mes "^4d4dff Mini map can be seen on the right top of the screen.";
-						mes "You can zoom in with +, zoom out with -. The waypoint from the NPC will be marked on it. ^000000";
+						mes "!- ข้อมูล -!";
+						mes "^4d4dff แผนที่ขนาดเล็กสามารถเห็นได้ที่ด้านบนขวาของหน้าจอ";
+						mes "คุณสามารถซูมด้วย +, ย่อด้วย -. จุดอ้างอิงจาก NPC จะถูกทำเครื่องหมายไว้ ^000000";
 						next;
 						mes "[Carocc]";
-						mes "If you need more help with the map, press <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> here";
-						mes "Yes, the part that says [Hun].";
+						mes "หากคุณต้องการความช่วยเหลือเพิ่มเติมเกี่ยวกับแผนที่ให้กด <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> ที่นี่";
+						mes "ใช่แล้วส่วนที่บอกว่า [Hun]";
 						next;
-						mes "!- Information -!";
-						mes "^4d4dff the icon during talk <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> means";
-						mes "a link to navigation directions.";
+						mes "!- ข้อมูล -!";
+						mes "^4d4dff ไอคอนในระหว่างการพูดคุย <NAVI>[Hun]<INFO>izlude,212,207</INFO></NAVI> หมายความว่า";
+						mes "ลิงก์ไปยังเส้นทางการนำทาง";
 						cutin "navi01.bmp", 4;
 						next;
-						mes "!- Information -!";
-						mes "If you press info after selecting a task in the objectives^4d4dff,";
-						mes "an arrow pointing to the location of the objective will pop up along with navigation help";
+						mes "!- ข้อมูล -!";
+						mes "ถ้าคุณกดข้อมูลหลังจากเลือกงานในวัตถุประสงค์ ^4d4dff,";
+						mes "ลูกศรที่ชี้ไปยังตำแหน่งของวัตถุประสงค์จะปรากฏขึ้นพร้อมกับความช่วยเหลือการนำทาง";
 						cutin "navi02.bmp", 4;
 						next;
 						cutin "", 255;
 						mes "[Carocc]";
-						mes "Anyway, my friend will help you register with the academy";
-						mes "I hope it will help you out in your journey";
+						mes "อย่างไรก็ตามเพื่อนของฉันจะช่วยให้คุณลงทะเบียนกับสถาบันการศึกษา";
+						mes "ฉันหวังว่ามันจะช่วยคุณในการเดินทาง";
 						close;
 					}
 				} else if (isbegin_quest(7472) == 1) {
 					mes "[Carocc]";
-					mes "If you want, you can step forward to the world right away.";
-					mes "However, I recommend you visit the Academy first.";
+					mes "ถ้าคุณต้องการคุณสามารถก้าวไปข้างหน้าสู่โลกได้ทันที";
+					mes "อย่างไรก็ตามฉันแนะนำให้คุณไปที่ Academy ก่อน";
 					next;
 					mes "[Carocc]";
-					mes "The world is a lonely place to be alone.";
-					mes "The Academy has people you can make as lifetime companions.";
+					mes "โลกนี้เป็นสถานที่โดดเดี่ยวสำหรับการอยู่คนเดียว";
+					mes "The Academy มีคนที่คุณสามารถเป็นเพื่อนตลอดชีวิต";
 					next;
 					mes "[Carocc]";
-					mes "My friend Hun will be around the academy entrance.";
-					mes "If you don't know the way I'll point it out to you again.";
+					mes "เพื่อนของฉัน Hun จะอยู่แถวทางเข้าโรงเรียน";
+					mes "ถ้าเจ้าไม่รู้วิธีที่ฉันจะชี้ให้คุณเห็นอีกครั้ง";
 					viewpoint 1,122,207,0,0x4d4dff;
 					next;
 					mes "[Carocc]";
-					mes "If you need more help with the map, press <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> here";
-					mes "Yes, the part that says ''Hun''.";
+					mes "หากคุณต้องการความช่วยเหลือเพิ่มเติมเกี่ยวกับแผนที่ให้กด <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> ที่นี่";
+					mes "ใช่ส่วนที่บอกว่า '' Hun ''";
 					next;
-					mes "!- Information -!";
-					mes "^4d4dff the icon during talk <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> means";
-					mes "a link to navigation directions.";
+					mes "! - ข้อมูล -!";
+					mes "^4d4dff ไอคอนในระหว่างการพูดคุย <NAVI>[Hun]<INFO>izlude,212,207</INFO></NAVI> หมายความว่า";
+					mes "ลิงก์ไปยังเส้นทางการนำทาง";
 					cutin "navi01.bmp", 4;
 					next;
-					mes "!- Information -!";
-					mes "If you press info after selecting a task in the objectives^4d4dff,";
-					mes "an arrow pointing to the location of the objective will pop up along with navigation help.";
+					mes "! - ข้อมูล -!";
+					mes "ถ้าคุณกดข้อมูลหลังจากเลือกงานในวัตถุประสงค์ ^4d4dff,";
+					mes "ลูกศรที่ชี้ไปยังตำแหน่งของวัตถุประสงค์จะปรากฏขึ้นพร้อมกับความช่วยเหลือในการนำทาง";
 					cutin "navi02.bmp", 4;
 					next;
 					cutin "", 255;
 					mes "[Carocc]";
-					mes "Anyway, my friend will help you register with the academy.";
-					mes "I hope it will help you out in your journey.";
+					mes "อย่างไรก็ตามเพื่อนของฉันจะช่วยให้คุณลงทะเบียนกับสถาบันการศึกษา";
+					mes "ฉันหวังว่ามันจะช่วยคุณในการเดินทาง";
 					close;
 				} else {
 					mes "[Carocc]";
-					mes "Oh, " + strcharinfo(0) + "!";
-					mes "Still being dilligent?";
-					mes "I've been busy, also.";
-					mes "I was reparing the ship.";
+					mes "โอ้," + strcharinfo(0) + "!";
+					mes "ยังคงขยันอยู่หรือเปล่า?";
+					mes "ข้ายุ่งอยู่เหมือนกัน";
+					mes "ฉันได้รับเรือคืน";
 					next;
 					mes "[Carocc]";
-					mes "I'll be taking off as soon as the repairs are complete.";
-					mes "At that time, the sailing route to ^4d4dffPharos lighthouse ^000000will be opened.";
-					mes "Be excited for it.";
+					mes "ฉันจะลงไปทันทีที่การซ่อมแซมเสร็จสิ้น";
+					mes "ในเวลานั้นเส้นทางเดินเรือไปยังประภาคาร ^4d4dffPharos lighthouse ^000000 จะถูกเปิด";
+					mes "จงตื่นเต้นกับมัน";
 				}
 			} else {
 				if (!isbegin_quest(7472)) {
 					mes "[Carocc]";
-					mes "Hello?";
-					mes "Is it your first time on Izlude?";
+					mes "สวัสดี?";
+					mes "นี่เป็นครั้งแรกของคุณที่ Izlude หรือเปล่า?";
 					next;
-					switch(select("Hello?", "Let me get on the ship!", "I don't know what to do.")) {
+					switch(select("สวัสดี? "," ให้ฉันขึ้นเรือ! "," ฉันไม่รู้จะทำยังไงดี")) {
 					case 1:
 						mes "[Carocc]";
-						mes "You look strong and able!";
-						mes "I like able people like you!";
-						mes "Always be healthy and strong as you are now.";
+						mes "เจ้าดูแข็งแกร่งและมีความสามารถ!";
+						mes "ฉันชอบคนที่มีความสามารถเช่นคุณ!";
+						mes "จงแข็งแรงและเข้มแข็งอยู่เสมอเหมือนตอนนี้";
 						break;
 					case 2:
 						mes "[Carocc]";
-						mes "I usually travel to ^4d4dffPharos Lighthouse^000000.";
-						mes "But I'm resting up due to some problems.";
+						mes "ฉันมักจะเดินทางไปยังประภาคาร ^4d4dff Pharos Lighthouse ^000000";
+						mes "แต่ข้าต้องพักเพราะปัญหาบางอย่าง";
 						next;
 						mes "[Carocc]";
-						mes "If it's Alberta or Byalan Island, talk to the next sailor.";
+						mes "ถ้าเป็น Alberta หรือ Byalan Island ให้คุยกับกะลาสีคนต่อไป";
 						break;
 					case 3:
 						mes "[Carocc]";
-						mes "Hmm? You said you didn't know what to do.";
-						mes "Since you're at Izlude, why don't you visit ^4d4dffCriatura Academy^000000?";
+						mes "อืมเจ้าบอกว่าไม่รู้จะทำอะไร";
+						mes "เมื่อเจ้าอยู่ที่ Izlude ทำไมเจ้าไม่ไป ^4d4dff Criatura Academy ^000000?";
 						next;
 						mes "[Carocc]";
-						mes "Izlude has the Institute for budding adventurers like you";
-						mes "A friend of mine works there, so I'll give you the introduction to him.";
+						mes "Izlude มีสถาบันสำหรับนักผจญภัยที่มีฝีมือเหมือนคุณ";
+						mes "เพื่อนของฉันทำงานที่นั่นดังนั้นฉันจะให้คุณแนะนำเขา";
 						next;
 						mes "[Carocc]";
-						mes "He ususally talks to new adventurers near the entrance of an academy.";
-						mes "Go and meet him personally.";
+						mes "เขามักจะพูดคุยกับนักผจญภัยใหม่ใกล้กับทางเข้าโรงเรียน";
+						mes "ไปพบเขาเป็นการส่วนตัว";
 						next;
 						if (!isbegin_quest(7473)) {
 							mes "[Carocc]";
-							mes "His name is ^4d4dffHun^000000";
-							mes "I will mark his location on the map so go to see him.";
+							mes "เขาชื่อ ^4d4dffHun ^000000";
+							mes "ฉันจะทำเครื่องหมายตำแหน่งของเขาบนแผนที่ดังนั้นไปหาเขา";
 							setquest 7472;
 							viewpoint 1,122,207,0,0x4d4dff;
 							next;
-							mes "!- Information -!";
-							mes "^4d4dff Mini map can be seen on the right top of the screen.";
-							mes "You can zoom in with +, zoom out with -. The waypoint from the NPC will be marked on it. ^000000";
+							mes "!- ข้อมูล -!";
+							mes "^4d4dff แผนที่ขนาดเล็กสามารถเห็นได้ที่ด้านบนขวาของหน้าจอ";
+							mes "คุณสามารถซูมด้วย +, ย่อด้วย -. จุดอ้างอิงจาก NPC จะถูกทำเครื่องหมายไว้ ^000000";
 							next;
-							mes "!- Information -!";
-							mes "Received a Quest from ^4d4dffCaptain Carocc.";
-							mes "Contents of your Quest can be monitored on the Quest information window.";
+							mes "!- ข้อมูล -!";
+							mes "ได้รับ Quest จาก ^4d4dffCaptain Carocc.";
+							mes "เนื้อหาของภารกิจของคุณสามารถตรวจสอบได้ในหน้าต่างข้อมูล Quest";
 							next;
-							mes "!- Information -!";
-							mes "Quest window can be opened by pressing the ^4d4dffAlt + u^000000 key.";
+							mes "!- ข้อมูล -!";
+							mes "สามารถเปิดหน้าต่าง Quest ได้โดยกดปุ่ม ^4d4dffAlt + u ^000000";
 							next;
 							mes "[Carocc]";
-							mes "If you need more help with the map, press <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> here";
-							mes "Yes, the part that says [Hun].";
+							mes "หากคุณต้องการความช่วยเหลือเพิ่มเติมเกี่ยวกับแผนที่ให้กด<NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> ที่นี่";
+							mes "ใช่แล้วส่วนที่บอกว่า [Hun]";
 							next;
-							mes "!- Information -!";
-							mes "^4d4dff the icon during talk <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> means";
-							mes "a link to navigation directions.";
+							mes "!- ข้อมูล -!";
+							mes "^4d4dff ไอคอนในระหว่างการพูดคุย <NAVI>[Hun]<INFO>izlude,212,207</INFO></NAVI> หมายความว่า";
+							mes "ลิงก์ไปยังเส้นทางการนำทาง";
 							cutin "navi01.bmp", 4;
 							next;
-							mes "!- Information -!";
-							mes "If you press info after selecting a task in the objectives^4d4dff,";
-							mes "an arrow pointing to the location of the objective will pop up along with navigation help";
+							mes "!- ข้อมูล -!";
+							mes "ถ้าคุณกดข้อมูลหลังจากเลือกงานในวัตถุประสงค์ ^4d4dff,";
+							mes "ลูกศรที่ชี้ไปยังตำแหน่งของวัตถุประสงค์จะปรากฏขึ้นพร้อมกับความช่วยเหลือการนำทาง";
 							cutin "navi02.bmp", 4;
 							next;
 							cutin "", 255;
 							mes "[Carocc]";
-							mes "Anyway, my friend will help you register with the academy";
-							mes "I hope it will help you out in your journey";
+							mes "อย่างไรก็ตามเพื่อนของฉันจะช่วยให้คุณลงทะเบียนกับสถาบันการศึกษา";
+							mes "ฉันหวังว่ามันจะช่วยคุณในการเดินทาง";
 							close;
 						} else {
-							select("I know who you're talking about.");
+							select("ฉันรู้ว่าคุณกำลังพูดถึงใคร");
 							mes "[Carocc]";
-							mes "Then there's no worry.";
-							mes "He'll introduce you to the academy.";
+							mes "งั้นก็ไม่ต้องกังวล";
+							mes "เขาจะแนะนำคุณให้รู้จักกับสถาบันการศึกษา";
 							next;
 							mes "[Carocc]";
-							mes "OK. I will show you the direction. You try it again.";
-							mes "By the way, did I tell you his name? His name is ^4d4dffHun^000000";
+							mes "ตกลงฉันจะแสดงให้คุณเห็นทิศทางคุณลองอีกครั้ง";
+							mes "ข้าบอกชื่อเขามาแล้วหรือยังชื่อของเขาคือ ^4d4dffHun ^000000";
 							viewpoint 1,122,207,1,0x4d4dff;
 							next;
-							mes "!- Information -!";
-							mes "^4d4dff Mini map can be seen on the right top of the screen.";
-							mes "You can zoom in with +, zoom out with -. The waypoint from the NPC will be marked on it. ^000000";
+							mes "!- ข้อมูล -!";
+							mes "^4d4dff แผนที่ขนาดเล็กสามารถเห็นได้ที่ด้านบนขวาของหน้าจอ";
+							mes "คุณสามารถซูมด้วย +, ย่อด้วย -. จุดอ้างอิงจาก NPC จะถูกทำเครื่องหมายไว้ ^000000";
 							next;
 							mes "[Carocc]";
-							mes "If you need more help with the map, press <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> here";
-							mes "Yes, the part that says [Hun].";
+							mes "หากคุณต้องการความช่วยเหลือเพิ่มเติมเกี่ยวกับแผนที่ให้กด <NAVI>[Hun]<INFO>izlude,122,207</INFO> </NAVI> ที่นี่";
+							mes "ใช่แล้วส่วนที่บอกว่า [Hun]";
 							next;
-							mes "!- Information -!";
-							mes "^4d4dff the icon during talk <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> means";
-							mes "a link to navigation directions.";
+							mes "!- ข้อมูล -!";
+							mes "^4d4dff ไอคอนในระหว่างการพูดคุย <NAVI>[Hun]<INFO>izlude,,212,207</INFO> </NAVI> หมายความว่า";
+							mes "ลิงก์ไปยังเส้นทางการนำทาง";
 							cutin "navi01.bmp", 4;
 							next;
-							mes "!- Information -!";
-							mes "If you press info after selecting a task in the objectives^4d4dff,";
-							mes "an arrow pointing to the location of the objective will pop up along with navigation help";
+							mes "!- ข้อมูล -!";
+							mes "ถ้าคุณกดข้อมูลหลังจากเลือกงานในวัตถุประสงค์ ^4d4dff,";
+							mes "ลูกศรที่ชี้ไปยังตำแหน่งของวัตถุประสงค์จะปรากฏขึ้นพร้อมกับความช่วยเหลือการนำทาง";
 							cutin "navi02.bmp", 4;
 							next;
 							cutin "", 255;
 							mes "[Carocc]";
-							mes "Anyway, my friend will help you register with the academy";
-							mes "I hope it will help you out in your journey";
+							mes "อย่างไรก็ตามเพื่อนของฉันจะช่วยให้คุณลงทะเบียนกับสถาบันการศึกษา";
+							mes "ฉันหวังว่ามันจะช่วยคุณในการเดินทาง";
 							close;
 						}
 					}
 				} else if (isbegin_quest(7472) == 1) {
 					mes "[Carocc]";
-					mes "Ah, it's you.";
-					mes "This guy has also decided to register at Criatura Academy.";
-					mes "This might be a good destiny for you. Hope you and him can be good friends.";
+					mes "อาเจ้าเป็นคนเจ้า";
+					mes "เจ้าคนนี้ได้ตัดสินใจลงทะเบียนที่ Criatura Academy ด้วย";
+					mes "นี่อาจเป็นโชคชะตาที่ดีสำหรับคุณหวังว่าคุณและเขาจะเป็นเพื่อนที่ดีได้";
 					next;
 					cutin "nov_lumin01.bmp", 0;
 					mes "[Lumin]";
-					mes ".........";
+					mes "......... ";
 					next;
 					cutin "", 255;
 					mes "[Carocc]";
-					mes "If you want, you can step forward to the world right away.";
-					mes "However, I recommend you visit the Academy first.";
+					mes "ถ้าคุณต้องการคุณสามารถก้าวไปข้างหน้าสู่โลกได้ทันที";
+					mes "อย่างไรก็ตามฉันแนะนำให้คุณไปที่ Academy ก่อน";
 					next;
 					mes "[Carocc]";
-					mes "The world is a lonely place to be alone.";
-					mes "The Academy has people you could make into lifetime companions.";
+					mes "โลกนี้เป็นสถานที่โดดเดี่ยวสำหรับการอยู่คนเดียว";
+					mes "The Academy มีคนที่คุณสามารถเป็นเพื่อนตลอดชีวิต";
 					next;
 					mes "[Carocc]";
-					mes "My friend <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> will be around the academy entrance.";
-					mes "If you don't know the way I'll point it out to you again.";
+					mes "เพื่อนของฉัน <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> จะอยู่บริเวณทางเข้าโรงเรียน";
+					mes "ถ้าเจ้าไม่รู้วิธีที่ฉันจะชี้ให้คุณเห็นอีกครั้ง";
 					viewpoint 1,122,207,1,0x4d4dff;
 					next;
 					mes "[Carocc]";
-					mes "then, Good luck!";
+					mes "ถ้าอย่างนั้นขอให้โชคดี!";
 					close;
 				} else {
 					mes "[Carocc]";
-					mes "Oh, We meet again.";
-					mes "Do you by any chance need a ship?";
-					mes "I usually travel to the port in Paros.";
-					mes "If you need to go to Paros later, come see me.";
+					mes "โอ้เราพบกันใหม่";
+					mes "คุณต้องการเรือโดยบังเอิญหรือไม่?";
+					mes "ฉันมักจะเดินทางไปที่ท่าเรือใน Paros";
+					mes "ถ้าเจ้าต้องไปที่ Paros ในภายหลังมาพบฉัน";
 				}
 			}
 		}
 	} else {
 		if (isbegin_quest(7471) == 2 || isbegin_quest(7472) > 0) {
 			mes "[Carocc]";
-			mes "It's been a while!";
-			mes "Looking at your expression, you must be doing well.";
+			mes "ไม่นานมานี้!";
+			mes "เมื่อมองที่การแสดงออกของคุณคุณต้องทำได้ดี";
 			next;
-			switch(select("Take me to Pharos Lighthouse", "To Alberta", "Talk")) {
+			switch(select("พาฉันไปที่ Pharos Lighthouse","ไป Alberta","คุย")) {
 			case 1:
 				mes "[Carocc]";
-				mes "Do you want to go to Pharos Lighthouse on the southern coast of Morocc?";
-				mes "The fee is 2800 zeny. I have a crew that needs payment so this fee is non-negotiable.";
+				mes "คุณต้องการไปที่ Pharos Lighthouse บนชายฝั่งทางใต้ของโมร็อกโกหรือไม่?";
+				mes "ค่านี้อยู่ที่ 2800 zeny ฉันมีทีมที่ต้องจ่ายเงินดังนั้นค่านี้ไม่สามารถต่อรองได้";
 				next;
-				if (select("To Pharos Lighthouse!", "Cancel") == 1) {
+				if (select("ไป Pharos Lighthouse!", "ยกเลิก") == 1) {
 					if (Zeny > 2799) {
 						mes "[Carocc]";
-						mes "Let us travel with the wing in our hair.";
+						mes "ให้เราเดินทางด้วยปีกที่มีผมของเรา";
 						Zeny -= 2800;
 						close2;
 						warp "cmd_fild07", 92, 129;
 						end;
 					} else {
 						mes "[Carocc]";
-						mes "Sorry but you are short of the boarding fee.";
-						mes "I need 2800z to operate.";
+						mes "ขออภัย แต่คุณเสียค่าธรรมเนียมในการขึ้นเครื่อง";
+						mes "ฉันต้องการ 2800z เพื่อใช้งาน";
 					}
 				} else {
 					mes "[Carocc]";
-					mes "OK.";
-					mes "Do you know this, by the way?";
-					mes "^4d4dffThere's a Rogue hideout at Pharos Lighthouse^000000.";
-					mes "You already knew this?";
+					mes "ตกลง";
+					mes "เจ้ารู้เรื่องนี้หรือยัง?";
+					mes "^4d4dff มีที่ซ่อนตัวอยู่ที่ Pharos Lighthouse ^000000.";
+					mes "เจ้ารู้เรื่องนี้แล้วหรือ";
 				}
 				break;
 			case 2:
 				mes "[Carocc]";
-				mes "I thought you knew that I only go to Pharos?";
-				mes "Ask the sailor over there, he's the one that goes there frequently.";
+				mes "ฉันคิดว่าคุณรู้ว่าฉันไปที่ Pharos เท่านั้น";
+				mes "ถามกะลาสีที่นั่นเขาเป็นคนที่ไปที่นั่นบ่อยๆ";
 				next;
 				mes "[Carocc]";
-				mes "There are plenty of other ships that travel to Alberta and Byalan Islands.";
+				mes "มีเรือลำอื่น ๆ มากมายที่เดินทางไปยังอัลเบอร์ตาและหมู่เกาะ Byalan";
 				break;
 			case 3:
 				mes "[Carocc]";
-				mes "Hmm. I'm content with the well being of you and other adventurers who passed me by.";
+				mes "อืมฉันพอใจกับความเป็นอยู่ที่ดีของคุณและนักผจญภัยคนอื่น ๆ ที่ผ่านฉันมา";
 				next;
 				mes "[Carocc]";
-				mes "Lumin must be doing well too.";
-				mes "I wonder why you feel like my own child even though we've only met from the sea.";
+				mes "Lumin ต้องทำดีเช่นกัน";
+				mes "ข้าสงสัยว่าทำไมท่านถึงรู้สึกเหมือนเป็นลูกของตัวเองถึงแม้ว่าเราจะได้พบกับทะเลเท่านั้น";
 				break;
 			}
 		} else {
 			mes "[Carocc]";
-			mes "I am Carocc, the caption of this ship.";
-			mes "Do you need a ship?";
+			mes "ข้าชื่อ Carocc, คำบรรยายของเรือลำนี้";
+			mes "คุณต้องการเรือไหม";
 			next;
-			if (select("Pharos Lighthouse - 2800z", "Don't need it.") == 1) {
+			if (select("Pharos Lighthouse - 2800z", "ไม่ต้องการ") == 1) {
 				if (Zeny > 2799) {
 					mes "[Carocc]";
-					mes "Let us travel with the wind in our hair.";
+					mes "ให้เราเดินทางไปกับสายลมในเส้นผมของเรา";
 					Zeny -= 2800;
 					close2;
 					cutin "", 255;
@@ -771,12 +771,12 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 					end;
 				} else {
 					mes "[Carocc]";
-					mes "Sorry but you are short of the boarding fee.";
-					mes "I need 2800z to operate.";
+					mes "ขออภัย แต่คุณเสียค่าธรรมเนียมในการขึ้นเครื่อง";
+					mes "ฉันต้องการ 2800z เพื่อใช้งาน";
 				}
 			} else {
 				mes "[Carocc]";
-				mes "Then use it next time.";
+				mes "จากนั้นใช้ในครั้งต่อไป";
 			}
 		}
 	}
@@ -806,206 +806,206 @@ izlude_d,198,213,3	duplicate(Captain Carocc#iz)	Captain Carocc#iz_d	4_M_REINDEER
 // -----------------------------------------------------------------------------
 izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 	if (!checkweight(1304,3)) {
-		mes "Quest cannot be continued due to the overfilled inventory.";
-		mes "Continue the quest after organizing the inventory.";
+		mes "Quest ไม่สามารถดำเนินการต่อเนื่องจากสินค้าคงคลังล้น";
+		mes "ทำเควสต่อไปหลังจากจัดการสินค้าคงคลัง";
 		close;
 	}
 	viewpoint 2,122,207,1,0xFFFFFF;
 	if (Class == Job_Novice && BaseLevel < 15) {
 		if (isbegin_quest(7472) == 1) {
 			mes "[Hun]";
-			mes "Oh.. you must be the adventurer Carocc was talking about.";
-			mes "I don't know where your homeland is but Midgard is a good place to start your life's journey.";
+			mes "โอ้ .. คุณต้องเป็นนักผจญภัยที่ Carocc กำลังพูดถึง";
+			mes "ข้าไม่รู้ว่าบ้านเกิดของคุณอยู่ที่ไหน แต่ Midgard เป็นสถานที่ที่ดีในการเริ่มต้นการเดินทางในชีวิตของคุณ";
 			next;
 			mes "[Hun]";
-			mes "It's a good sight to see new adventurers start their journey.";
-			mes "You must be tired. Need a drink?";
+			mes "มันเป็นภาพที่ดีที่จะเห็นนักผจญภัยใหม่เริ่มการเดินทาง";
+			mes "เจ้าต้องเหนื่อยต้องดื่ม?";
 			completequest 7472;
 			getexp 200,0;
 			setquest 7473;
 			getitem 531,1;// Apple_Juice
 			next;
 			mes "[Hun]";
-			mes "You can open the Item window by clicking on the 'item' icon on top left portion of the screen.";
+			mes "คุณสามารถเปิดหน้าต่างรายการโดยคลิกที่ไอคอน 'รายการ' ที่ด้านซ้ายบนของหน้าจอ";
 			next;
 			mes "[Hun]";
-			mes "The items are automatically catagorized by 'consumables' 'equipment' 'etcetera' and 'personal' suitable for each use.";
-			mes "It will do the automatic sorting per indiviaul useage to";
+			mes "รายการจะถูกจัดหมวดหมู่โดยอัตโนมัติโดย 'อุปกรณ์สิ้นเปลือง' 'อุปกรณ์' 'etcetera' และ 'ส่วนบุคคล' ที่เหมาะสมสำหรับการใช้งานแต่ละครั้ง";
+			mes "มันจะทำการเรียงลำดับอัตโนมัติตามการใช้งาน indiviaul เป็น";
 			next;
 			mes "[Hun]";
-			mes "Either ^4d4dffdouble click on the item^000000 you intend to use";
-			mes "or drag it onto^4d4dff the equipment window and use it^000000";
+			mes "E ^^4d4dffdouble คลิกที่รายการ ^000000 ที่คุณตั้งใจจะใช้";
+			mes "หรือลากมันไปที่ ^4d4dff หน้าต่างอุปกรณ์และใช้มัน ^000000";
 			next;
 			cutin "tutorial03.bmp", 4;
-			mes "!- Information -!";
-			mes "^4d4dffItems can be used or equipped with simply double-clicking.";
-			mes "Item window can be opened with shortcut key Alt+E";
+			mes "!- ข้อมูล -!";
+			mes "^4d4dffItems สามารถใช้หรือติดตั้งเพียงแค่ดับเบิลคลิก";
+			mes "หน้าต่างรายการสามารถเปิดได้ด้วยปุ่มทางลัด Alt + E";
 			next;
-			mes "!- Information -!";
-			mes "^4d4dff Equipped items can be checked with Alt+ Q";
-			mes "Items can also be dragged onto the location where you wish to equip it.";
+			mes "!- ข้อมูล -!";
+			mes "^4d4dff รายการที่ติดตั้งสามารถตรวจสอบได้ด้วย Alt + Q";
+			mes "สามารถลากไอเท็มไปยังตำแหน่งที่คุณต้องการติดตั้ง";
 			next;
 			cutin "", 255;
 			mes "[Hun]";
-			mes "For detailed info on individual items^4d4dff, right click ^000000on that item.";
-			mes "You can check the detailed info on the item.";
+			mes "สำหรับข้อมูลโดยละเอียดเกี่ยวกับแต่ละรายการ ^4d4dff ให้คลิกขวา ^000000 ในรายการนั้น";
+			mes "คุณสามารถตรวจสอบข้อมูลรายละเอียดของสินค้า";
 			next;
 			cutin "tutorial04.bmp", 4;
-			mes "!- Information -!";
-			mes "^4d4dffRight-clicking on the item icon^4d4dff  brings up detailed info on the item.";
+			mes "!- ข้อมูล -!";
+			mes "^4d4dff คลิกขวาที่ไอคอนไอเท็ม ^4d4dff แสดงรายละเอียดข้อมูลของรายการ";
 			next;
-			mes "!- Information -!";
-			mes "^4d4dffWhen you select other players, you can trade, party up with them with the community window that pops up.";
+			mes "!- ข้อมูล -!";
+			mes "^4d4dff เมื่อคุณเลือกผู้เล่นอื่นคุณสามารถค้าขายปาร์ตี้กับพวกเขาด้วยหน้าต่างชุมชนที่โผล่ขึ้นมา";
 			next;
 			cutin "", 255;
 			mes "[Hun]";
-			mes "Ok now ^4d4dffdrink the apple juice that I gave you^000000.";
+			mes "โอเคตอนนี้ ^4d4dff ดื่มน้ำแอปเปิ้ลที่ฉันให้คุณ ^000000";
 			close;
 		} else {
 			if (!isbegin_quest(7473)) {
 				mes "[Hun]";
-				mes "Hey there.";
-				mes "Rest up for a bit.";
+				mes "นี่ไง";
+				mes "พักสักหน่อย";
 				next;
 				mes "[Hun]";
-				mes "It's joyous to see new adventurers starting out.";
-				mes "You want something to drink while you are resting?";
+				mes "ดีใจมากที่ได้เห็นนักผจญภัยใหม่เริ่มต้น";
+				mes "คุณต้องการที่จะดื่มในขณะที่กำลังพักผ่อน";
 				setquest 7473;
 				getitem 531,1;// Apple_Juice
 				next;
 				mes "[Hun]";
-				mes "Right clicking on the item icon ^4d4dffon the basic item window at the upper left corner brings up the detailed info on the item";
+				mes "คลิกขวาที่ไอเท็ม ^4d4dffon จากหน้าต่างไอเท็มพื้นฐานที่มุมซ้ายบนจะแสดงรายละเอียดของไอเท็ม";
 				next;
 				mes "[Hun]";
-				mes "The items are automatically catagorized by 'consumables' 'equipment' 'etcetera' and 'personal' suitable for each use.";
-				mes "It will do the automatic sorting per indiviaul useage to";
+				mes "รายการจะถูกจัดหมวดหมู่โดยอัตโนมัติโดย 'อุปกรณ์สิ้นเปลือง' 'อุปกรณ์' 'etcetera' และ 'ส่วนบุคคล' ที่เหมาะสมสำหรับการใช้งานแต่ละครั้ง";
+				mes "มันจะทำการเรียงลำดับอัตโนมัติตามการใช้งาน indiviaul เป็น";
 				next;
 				mes "[Hun]";
-				mes "Either ^4d4dffdouble click on the item^000000 you intend to use";
-				mes "or drag it onto^4d4dff the equipment window and use it^000000";
+				mes "E ^^4d4dffdouble คลิกที่รายการ ^000000 ที่คุณตั้งใจจะใช้";
+				mes "หรือลากมันไปที่ ^4d4dff หน้าต่างอุปกรณ์และใช้มัน ^000000";
 				next;
 				mes "[Hun]";
-				mes "For detailed info on individual items^4d4dff, right-click ^000000on the item.";
-				mes "You can check the detailed info on the item.";
+				mes "สำหรับข้อมูลโดยละเอียดเกี่ยวกับแต่ละรายการ ^4d4dff ให้คลิกขวาที่ ^000000 ในรายการ";
+				mes "คุณสามารถตรวจสอบข้อมูลรายละเอียดของสินค้า";
 				next;
 				cutin "tutorial04.bmp", 3;
-				mes "!- Information -!";
-				mes "Right clicking on the item icon ^4d4dffbrings up the detailed info on the item";
+				mes "!- ข้อมูล -!";
+				mes "คลิกขวาที่ไอเท็ม ^4d4dffbrings รายละเอียดของไอเท็ม";
 				next;
-				mes "!- Information -!";
-				mes "When you select on other players^4d4dff you can trade, party up with them with the community window that pops up.";
+				mes "!- ข้อมูล -!";
+				mes "เมื่อคุณเลือกผู้เล่นคนอื่น ^4d4dff คุณสามารถแลกเปลี่ยนปาร์ตี้กับพวกเขาด้วยหน้าต่างชุมชนที่โผล่ขึ้นมา";
 				next;
 				cutin "", 255;
 				mes "[Hun]";
-				mes "Ok now ^4d4dffdrink the apple juice that I gave you^000000.";
+				mes "โอเคตอนนี้ ^4d4dff ดื่มน้ำแอปเปิ้ลที่ฉันให้คุณ ^000000";
 				close;
 			} else if (isbegin_quest(7473) == 1) {
 				if (countitem(531) > 0) {
 					mes "[Hun]";
-					mes "Consume the apple juice that I gave you in your inventory.";
-					mes "Then we'll talk.";
+					mes "กินน้ำแอปเปิ้ลที่ฉันให้คุณในคลังของคุณ";
+					mes "งั้นเราจะคุยกัน";
 					close;
 				} else {
 					if (isbegin_quest(4269) > 0) {
 						mes "[Hun]";
-						mes "How's the taste?";
-						mes "Pretty good-taste of sweet and sour, right? It might not be much but it also has healing properties.";
+						mes "รสชาติเป็นอย่างไร";
+						mes "รสชาติที่ดีของหวานและเปรี้ยวใช่มั้ยมันอาจจะไม่มากนัก แต่มันก็มีคุณสมบัติในการรักษา";
 						next;
 						mes "[Hun]";
-						mes "I want to give you more but that was the last of it";
-						mes "Anyways here's some potions. They'll come in handy when you start fighting.";
+						mes "ฉันต้องการให้คุณมากกว่านี้ แต่นั่นเป็นครั้งสุดท้าย";
+						mes "เอาล่ะยานี่มันจะมีประโยชน์เมื่อคุณเริ่มต่อสู้";
 						completequest 7473;
 						getitem 569,30;// Novice_Potion
 						getexp 200,0;
 						next;
 						mes "[Hun]";
-						mes "Criatura Academy is a good place to build up experience for the future.";
-						mes "And I'm not just saying this because I work here.";
+						mes "Criatura Academy เป็นสถานที่ที่ดีในการสร้างประสบการณ์สำหรับอนาคต";
+						mes "และฉันไม่ได้แค่พูดอย่างนี้เพราะฉันทำงานที่นี่";
 						next;
 						mes "[Hun]";
-						mes "I'm for real... haha";
+						mes "ฉันเป็นของจริง ... ฮ่าฮ่า";
 						close;
 					} else {
 						mes "[Hun]";
-						mes "How's the taste?";
-						mes "Pretty good-taste of sweet and sour, right? It might not be much but it also has healing properties.";
+						mes "รสชาติเป็นอย่างไร";
+						mes "รสชาติที่ดีของหวานและเปรี้ยวใช่มั้ยมันอาจจะไม่มากนัก แต่มันก็มีคุณสมบัติในการรักษา";
 						next;
 						mes "[Hun]";
-						mes "I want to give you more but that was the last of it";
-						mes "Anyways here's some potions. They'll come in handy when you start fighting.";
+						mes "ฉันต้องการให้คุณมากกว่านี้ แต่นั่นเป็นครั้งสุดท้าย";
+						mes "เอาล่ะยานี่มันจะมีประโยชน์เมื่อคุณเริ่มต่อสู้";
 						completequest 7473;
 						getitem 569,30;// Novice_Potion
 						getexp 200,0;
 						next;
 						mes "[Hun]";
-						mes "What do you plan to do from now on?";
-						mes "Have you found a place to stay?";
+						mes "เจ้าวางแผนจะทำอะไรต่อจากนี้";
+						mes "คุณพบที่พักหรือไม่";
 						next;
-						switch(select("I need help with that", "Anything will do really.", "Don't worry.")) {
+						switch(select("ฉันต้องการความช่วยเหลือในเรื่องนี้ "," ทุกอย่างจะทำได้จริง ๆ "," ไม่ต้องกังวล")) {
 						case 1:
 							mes "[Hun]";
-							mes "But still, though.";
-							mes "It's tough to be out alone in a new place.";
-							mes "That's why Criatura Academy is there.";
+							mes "แต่ถึงกระนั้น";
+							mes "มันยากที่จะออกไปคนเดียวในสถานที่ใหม่";
+							mes "นั่นเป็นสาเหตุที่ Criatura Academy อยู่ที่นั่น";
 							next;
 							mes "[Hun]";
-							mes "Carocc sent you to me probably for the same reason.";
-							mes "Even though I'm just a work-hand here, I could show you around.";
+							mes "Carocc ส่งเจ้ามาหาข้าด้วยเหตุผลเดียวกัน";
+							mes "แม้ว่าข้าจะเป็นเพียงแค่งานฝีมือ แต่ข้าสามารถแสดงให้ท่านเห็นรอบ ๆ ได้";
 							next;
 							mes "[Hun]";
-							mes "If you follow this road up to north, you can see";
-							mes "<NAVI>[the Academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
-							mes "Anybody can enroll, so take advantage of it.";
+							mes "ถ้าคุณไปตามถนนสายนี้ขึ้นไปทางเหนือคุณจะเห็น";
+							mes "<NAVI>[Academy building]<INFO>iz_ac01,100,39</INFO></NAVI>";
+							mes "ใคร ๆ ก็สามารถลงทะเบียนได้ดังนั้นจงใช้ประโยชน์จากมัน";
 							next;
 							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 							mes "[Information Staff]";
-							mes "Sorry to interrupt.";
-							mes "But ^4d4dffif you need location info, please ask me.^000000";
+							mes "ขออภัยที่จะขัดจังหวะ";
+							mes "แต่ ^4d4dffif คุณต้องการข้อมูลตำแหน่งโปรดถามฉัน ^000000";
 							next;
 							mes "[Information Staff]";
-							mes "Hun's information has limits";
+							mes "ข้อมูลของ Hun มีข้อ จำกัด ";
 							close;
 						case 2:
 							mes "[Hun]";
-							mes "How optimistic of you.";
-							mes "If you need help, feel free to visit Criatura Academy any time.";
+							mes "คุณเป็นคนมองโลกในแง่ดีอย่างไร";
+							mes "ถ้าคุณต้องการความช่วยเหลืออย่าลังเลที่จะเยี่ยมชม Criatura Academy ได้ตลอดเวลา";
 							next;
 							mes "[Hun]";
-							mes "There's no requirement or payment to enroll so it would be a great help to you.";
-							mes "When you go through this way to the north, you'll find";
-							mes "<NAVI>[the academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
+							mes "ไม่มีข้อกำหนดหรือการจ่ายเงินเพื่อลงทะเบียนดังนั้นมันจะช่วยคุณได้มาก";
+							mes "เมื่อคุณผ่านทางนี้ไปทางเหนือคุณจะพบ";
+							mes "<NAVI>[Academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
 							next;
 							mes "[Hun]";
-							mes "If there are more adventurers like you, the future will be brighter.";
+							mes "ถ้ามีนักผจญภัยเหมือนเจ้ามากขึ้นอนาคตจะสดใส";
 							mes "Hahahaha.";
 							next;
 							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 							mes "[Information Staff]";
-							mes "Sorry to interrupt.";
-							mes "But ^4d4dffif you need location info, please ask me.^000000";
+							mes "ขออภัยที่จะขัดจังหวะ";
+							mes "แต่ ^4d4dffif คุณต้องการข้อมูลตำแหน่งโปรดถามฉัน ^000000";
 							next;
 							mes "[Information Staff]";
-							mes "Hun's information has limits";
+							mes "ข้อมูลของ Hun มีข้อ จำกัด ";
 							close;
 						case 3:
 							mes "[Hun]";
-							mes "You already have a plan laid out?";
-							mes "Well prepared.";
-							mes "But just in case, if you are curious about the Criatura Academy, make a visit.";
+							mes "เจ้ามีแผนแล้วหรือยัง?";
+							mes "เตรียมพร้อมไว้ดี";
+							mes "แต่ในกรณีถ้าคุณอยากรู้เกี่ยวกับสถาบัน Criatura ให้เยี่ยมชม";
 							next;
 							mes "[Hun]";
-							mes "When you go through this way to the north, you'll find";
-							mes "<NAVI>[the academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
-							mes "What is well, is well- isn't it?";
+							mes "เมื่อคุณผ่านทางนี้ไปทางเหนือคุณจะพบ";
+							mes "<NAVI>[Academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
+							mes "อะไรดี, ดี - ไม่มัน";
 							next;
 							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 							mes "[Information Staff]";
-							mes "You are correct.";
-							mes "Preperation is the key.";
-							mes "But ^4d4dffif you need location info, please ask me.^000000";
+							mes "คุณพูดถูก";
+							mes "Preperation เป็นกุญแจ";
+							mes "แต่ ^4d4dffif คุณต้องการข้อมูลตำแหน่งโปรดถามฉัน ^000000";
 							next;
 							mes "[Information Staff]";
-							mes "Hun's information has limits.";
+							mes "ข้อมูลของ Hun มีข้อ จำกัด ";
 							close;
 						}
 					}
@@ -1013,94 +1013,94 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 			} else {
 				if (!isbegin_quest(4269)) {
 					mes "[Hun]";
-					mes "It's you..";
-					mes "What do you plan to do from now on?";
-					mes "Have you found a place to stay?";
+					mes "มันคือคุณ .. ";
+					mes "เจ้าวางแผนจะทำอะไรต่อจากนี้";
+					mes "คุณพบที่พักหรือไม่";
 					next;
-					switch(select("I need help with that", "Anything will do really.", "Don't worry.")) {
+					switch(select("ฉันต้องการความช่วยเหลือในเรื่องนี้ "," ทุกอย่างจะทำได้จริงๆ "," ไม่ต้องกังวล")) {
 					case 1:
 						mes "[Hun]";
-						mes "But still, though.";
-						mes "It's tough to be out alone in a new place.";
-						mes "That's why Criatura Academy is there.";
+						mes "แต่ถึงกระนั้น";
+						mes "มันยากที่จะออกไปคนเดียวในสถานที่ใหม่";
+						mes "นั่นเป็นสาเหตุที่ Criatura Academy อยู่ที่นั่น";
 						next;
 						mes "[Hun]";
-						mes "Carocc sent you to me probably for the same reason.";
-						mes "Even though I'm just a work-hand here, I could show you around.";
+						mes "Carocc ส่งเจ้ามาหาข้าด้วยเหตุผลเดียวกัน";
+						mes "แม้ว่าข้าจะเป็นเพียงแค่งานฝีมือ แต่ข้าสามารถแสดงให้ท่านเห็นรอบ ๆ ได้";
 						next;
 						mes "[Hun]";
-						mes "If you follow this road up to north, you can see";
-						mes "<NAVI>[the Academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
-						mes "Anybody can enroll, so take advantage of it.";
+						mes "ถ้าคุณไปตามถนนสายนี้ขึ้นไปทางเหนือคุณจะเห็น";
+						mes "<NAVI>[Academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
+						mes "ใคร ๆ ก็สามารถลงทะเบียนได้ดังนั้นจงใช้ประโยชน์จากมัน";
 						next;
 						emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 						mes "[Information Staff]";
-						mes "Sorry to interrupt.";
-						mes "But ^4d4dffif you need location info, please ask me.^000000";
+						mes "ขออภัยที่จะขัดจังหวะ";
+						mes "แต่ ^4d4dffif คุณต้องการข้อมูลตำแหน่งโปรดถามฉัน ^000000";
 						next;
 						mes "[Information Staff]";
-						mes "Hun's information has limits";
+						mes "ข้อมูลของ Hun มีข้อ จำกัด ";
 						close;
 					case 2:
 						mes "[Hun]";
-						mes "How optimistic of you.";
-						mes "If you need help, feel free to visit Criatura Academy any time.";
+						mes "คุณเป็นคนมองโลกในแง่ดีอย่างไร";
+						mes "ถ้าคุณต้องการความช่วยเหลืออย่าลังเลที่จะเยี่ยมชม Criatura Academy ได้ตลอดเวลา";
 						next;
 						mes "[Hun]";
-						mes "There's no requirement or payment to enroll so it would be a great help to you.";
-						mes "When you go through this way to the north, you'll find";
-						mes "<NAVI>[the academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
+						mes "ไม่มีข้อกำหนดหรือการจ่ายเงินเพื่อลงทะเบียนดังนั้นมันจะช่วยคุณได้มาก";
+						mes "เมื่อคุณผ่านทางนี้ไปทางเหนือคุณจะพบ";
+						mes "<NAVI>[Academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
 						next;
 						mes "[Hun]";
-						mes "If there are more adventurers like you, the future will be brighter.";
+						mes "ถ้ามีนักผจญภัยเหมือนเจ้ามากขึ้นอนาคตจะสดใส";
 						mes "Hahahaha.";
 						next;
 						emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 						mes "[Information Staff]";
-						mes "Sorry to interrupt.";
-						mes "But ^4d4dffif you need location info, please ask me.^000000";
+						mes "ขออภัยที่จะขัดจังหวะ";
+						mes "แต่ ^4d4dffif คุณต้องการข้อมูลตำแหน่งโปรดถามฉัน ^000000";
 						next;
 						mes "[Information Staff]";
-						mes "Hun's information has limits";
+						mes "ข้อมูลของ Hun มีข้อ จำกัด ";
 						close;
 					case 3:
 						mes "[Hun]";
-						mes "You already have a plan laid out?";
-						mes "Well prepared.";
-						mes "But just in case, if you are curious about the Criatura Academy, make a visit.";
+						mes "เจ้ามีแผนแล้วหรือยัง?";
+						mes "เตรียมพร้อมไว้ดี";
+						mes "แต่ในกรณีถ้าคุณอยากรู้เกี่ยวกับสถาบัน Criatura ให้เยี่ยมชม";
 						next;
 						mes "[Hun]";
-						mes "When you go through this way to the north, you'll find";
-						mes "<NAVI>[the academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
-						mes "What is well, is well- isn't it?";
+						mes "เมื่อคุณผ่านทางนี้ไปทางเหนือคุณจะพบ";
+						mes "<NAVI>[Academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
+						mes "อะไรดี, ดี - ไม่มัน";
 						next;
 						emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 						mes "[Information Staff]";
-						mes "You are correct.";
-						mes "Preperation is the key.";
-						mes "But ^4d4dffif you need location info, please ask me.^000000";
+						mes "คุณพูดถูก";
+						mes "Preperation เป็นกุญแจ";
+						mes "แต่ ^4d4dffif คุณต้องการข้อมูลตำแหน่งโปรดถามฉัน ^000000";
 						next;
 						mes "[Information Staff]";
-						mes "Hun's information has limits.";
+						mes "ข้อมูลของ Hun มีข้อ จำกัด ";
 						close;
 					}
 				} else {
 					mes "[Hun]";
-					mes "Criatura Academy is a good place to build up experience for the future.";
-					mes "I'm not saying this just because I work here.";
+					mes "Criatura Academy เป็นสถานที่ที่ดีในการสร้างประสบการณ์สำหรับอนาคต";
+					mes "ฉันไม่ได้พูดแบบนี้เพราะฉันทำงานที่นี่";
 					next;
 					mes "[Hun]";
-					mes "For real... hahahaha";
+					mes "ของจริง ... ฮ่าฮ่าฮ่าฮ่า";
 					close;
 				}
 			}
 		}
 	} else {
 		mes "[Hun]";
-		mes "The Royal Criatura Academy was founded to help budding adventurers on their initial journey.";
+		mes "The Royal Criatura Academy ก่อตั้งขึ้นเพื่อช่วยเหลือนักเดินทางผจญภัยในการเดินทางครั้งแรก";
 		next;
 		mes "[Hun]";
-		mes "Although I'm but a work-hand here, it makes me happy to see students graduate here and become fine members of society.";
+		mes "แม้ว่าฉันจะเป็นเพียงงานที่ทำมันก็ทำให้ฉันมีความสุขที่ได้เห็นนักเรียนที่จบการศึกษาที่นี่และกลายเป็นสมาชิกที่ดีของสังคม";
 		close;
 	}
 
@@ -1126,139 +1126,139 @@ izlude_d,122,207,3	duplicate(Criatura Academy Staff#0)	Criatura Academy Staff#d	
 // -----------------------------------------------------------------------------
 izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 	if (!checkweight(1304,3)) {
-		mes "Quest cannot be continued due to the invenory being full.";
-		mes "Please try it again after re-organizing your items.";
+		mes "Quest ไม่สามารถดำเนินการต่อเนื่องเนื่องจากคลังโฆษณาเต็ม"; 
+		mes "โปรดลองอีกครั้งหลังจากจัดระเบียบรายการของคุณใหม่";
 		close;
 	}
 
 	if (BaseLevel < 15 && !isbegin_quest(7474)) {
 		mes "[Information Staff]";
-		mes "Hi, how are you?";
-		mes "I am in charge of navigation directions for Izlude's key locations";
-		mes "I wish to propose a simple game along with the navigation, would that be ok?";
+		mes "สวัสดีคุณเป็นอย่างไรบ้าง";
+		mes "ฉันเป็นผู้ควบคุมทิศทางการนำทางสำหรับสถานที่สำคัญของ Izlude";
+		mes "ฉันต้องการเสนอเกมง่ายๆพร้อมกับการนำทางมันจะโอเคไหม";
 		next;
-		if (select("Sure, let's play!", "I already know them all.") == 1) {
+		if (select("แน่นอนว่ามาเล่นกันเถอะ! "," ฉันรู้จักพวกเขามาทั้งหมด") == 1) {
 			mes "[Information Staff]";
-			mes "First of all, how to check the mini-map.";
-			mes "You can check your location through the mini-map at the top right of the screen";
+			mes "ก่อนอื่น, วิธีตรวจสอบแผนที่ย่อ";
+			mes "คุณสามารถตรวจสอบตำแหน่งของคุณผ่านแผนที่ขนาดเล็กที่มุมขวาบนของหน้าจอ";
 			next;
 			mes "[Information Staff]";
-			mes "If you receive information on a town or a city, a waypoint ^4d4dff+^000000 can be marked on the map.";
+			mes "ถ้าคุณได้รับข้อมูลเกี่ยวกับเมืองหรือเมือง waypoint ^4d4dff + ^000000 สามารถทำเครื่องหมายบนแผนที่ได้";
 			next;
 			mes "[Information Staff]";
-			mes "Press ^4d4dff[Ctrl] and [ ~ ] on your keyboard and you can see the world map^000000.";
+			mes "กด ^4d4dff [Ctrl] และ [~] บนแป้นพิมพ์ของคุณและคุณสามารถดูแผนที่โลก ^000000 ได้";
 			next;
 			mes "[Information Staff]";
-			mes "Through the ^4d4dffworld map you can check the location of you, your party members and the level of monsters in the area.^000000";
+			mes "ผ่านแผนที่โลก ^4d4dff คุณสามารถตรวจสอบตำแหน่งของคุณสมาชิกปาร์ตี้และระดับของสัตว์ประหลาดในพื้นที่ ^000000";
 			next;
 			mes "[Information Staff]";
-			mes "This is useful info to remember.";
-			mes "Now then, should we play a simple game?";
+			mes "นี่เป็นข้อมูลที่มีประโยชน์ที่ควรจดจำ";
+			mes "ถ้างั้นเราควรจะเล่นเกมง่าย ๆ หรือไม่?";
 			next;
 			mes "[Information Staff]";
-			mes "I will ^4d4dffmark three specific locations on the mini-map.^000000";
-			mes "Please ^4d4dffvisit those locations ^000000using the waypoints as reference.";
+			mes "ฉันจะ ^4d4dff ทำเครื่องหมายสามตำแหน่งเฉพาะบนแผนที่ขนาดเล็ก ^000000";
+			mes "ได้โปรด ^4d4dff เยี่ยมชมที่ตั้งเหล่านั้น ^000000 โดยใช้จุดอ้างอิงเป็นจุดอ้างอิง";
 			next;
 			mes "[Information Staff]";
-			mes "Think of it as a treasure hunt and go.";
-			mes "I've hidden some useful items there.";
+			mes "คิดว่ามันเป็นนักล่าสมบัติและไป";
+			mes "ข้าได้ซ่อนของมีประโยชน์บางอย่างไว้ที่นั่น";
 			viewpoint 1,179,75,1,0xCCFFFF;
 			viewpoint 1,45,94,2,0x00FF00;
 			viewpoint 1,207,167,3,0xFFEB46;
 			setquest 7474;
 			next;
 			mes "[Information Staff]";
-			mes "Vist me again after going by all three locations.";
-			mes "I will check up on it.";
+			mes "ไปหาฉันอีกครั้งหลังจากไปตามสถานที่ทั้งสามแห่ง";
+			mes "ข้าจะตรวจมัน";
 			next;
 			mes "[Information Staff]";
-			mes "Ah, there' somebody who started out right before you!";
-			mes "If you don't hurry that person will take all the items!";
-			mes "So, run!";
+			mes "อา, มีบางคนที่เริ่มต้นตรงหน้าคุณ!";
+			mes "ถ้าเจ้าไม่รีบคนนั้นจะเอาของทั้งหมด!";
+			mes "งั้นรีบเลย!";
 			npcskill "AL_INCAGI", 10, 10, 10;
 			close;
 		}
 		mes "[Information Staff]";
-		mes "Do you need information on all the locations of Izlude?";
-		mes "By clicking on the introduced ^B9062F[base camp name]^000000, I will offer you guidance so follow the ^B9062FRed Arrows^000000.";
+		mes "คุณต้องการข้อมูลเกี่ยวกับที่ตั้งทั้งหมดของ Izlude หรือไม่";
+		mes "โดยการคลิกที่ ^B9062F [ชื่อค่ายหลัก] ^000000 ฉันจะให้คำแนะนำแก่คุณดังนั้นให้ทำตาม ^B9062FRed Arrows ^000000";
 		next;
 		while(1) {
-			switch(select("[ Main facilities ]", "[ Guide & Helper ]", "Mini map marking removal", "End Conversation")) {
+			switch(select("[ สิ่งอำนวยความสะดวกหลัก] "," [ไกด์ & ช่วยเหลือ] "," การลบเครื่องหมายมินิแผนที่ "," สิ้นสุดการสนทนา")) {
 			case 1:
 				while (1) {
-					switch(select("[ Criatura Academy ]", "[ Wharf ]", "[ Airship (International) ]", "[ Arena ]", "[ Shop ]", "[ Swordman Guild ]", "[ Enchant Association ]", "[ Blacksmith's Workshop ]", "Go back to the previous menu")) {
+					switch(select("[ Criatura Academy] "," [Wharf] "," [Airship (นานาชาติ)] "," [Arena] "," [ร้านค้า] "," [ สมาคมSwordman ] "," [Enchant Association] "," [เวิร์กช็อปของช่างเหล็ก ] "," กลับไปที่เมนูก่อนหน้า")) {
 					case 1:
 						mes "[Information Staff]";
-						mes "If you are the first time adventurer,";
+						mes "ถ้าคุณเป็นนักผจญภัยครั้งแรก";
 						mes "<NAVI>[Criatura Academy]<INFO>iz_ac01,100,39,</INFO></NAVI>";
-						mes "can offer a lot of info and help.";
-						mes "Do you need additonal directions?";
+						mes "สามารถให้ข้อมูลและความช่วยเหลือได้มากมาย";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 128, 260, 0, 0xFFD269;
 						next;
 						continue;
 					case 2:
 						mes "[Information Staff]";
-						mes "Through the <NAVI>[Wharf]<INFO>izlude,197,205,</INFO></NAVI> in the north east,";
-						mes "^8B4513Alberta^000000 or ^8B4513the Byalan Island^000000 can be visted.";
-						mes "you can go.";
+						mes "ผ่าน <NAVI>[Wharf]<INFO>izlude,197,205,</INFO></NAVI> ทางตะวันออกเฉียงเหนือ";
+						mes "^8B4513Alberta ^000000 หรือ ^8B4513เกาะ Byalan ^000000 สามารถดูได้";
+						mes "คุณไปได้";
 						next;
 						mes "[Information Staff]";
-						mes "Byalan Island is the scary place with ^8B4513Izlude dungeon^000000 in it.";
-						mes "Do you need additional directions?";
+						mes "เกาะ Byalan เป็นสถานที่ที่น่ากลัวด้วย ^8B4513Izlude dungeon ^000000 ในนั้น";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 197, 205, 1, 0xFFFF00;
 						next;
 						continue;
 					case 3:
 						mes "[Information Staff]";
-						mes "To the southeast, the <NAVI>[Airship]<INFO>izlude,206,75,</INFO></NAVI>";
-						mes "will be connected with the Capital of the republic of Schwarzwald -^8B4513 Juno^000000, and";
-						mes "The capital of the Arunapeltsdom -^8B4513 Rachel ^000000.";
-						mes "Do you need additional directions?";
+						mes "ไปทางทิศตะวันออกเฉียงใต้ <NAVI>[Airship]<INFO>izlude,206,75,</INFO></NAVI>";
+						mes "จะเชื่อมต่อกับเมืองหลวงของสาธารณรัฐ Schwarzwald - ^8B4513 Juno ^000000 และ";
+						mes "เมืองหลวงของ Arunapeltsdom - ^8B4513 Rachel ^000000.";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 210, 73, 2, 0xFF0A82;
 						next;
 						continue;
 					case 4:
 						mes "[Information Staff]";
-						mes "The <NAVI>[Arena]<INFO>izlude,213,161,</INFO></NAVI> located in the east";
-						mes "is for testing your battle ability.";
-						mes "It's an excellent place.";
-						mes "I will mark the location on the mini map.";
-						mes "Do you need additional directions?";
+						mes "<NAVI>[Arena]<INFO>izlude,213,161,</INFO></NAVI> ตั้งอยู่ทางตะวันออก";
+						mes "สำหรับการทดสอบความสามารถในการต่อสู้ของคุณ";
+						mes "มันเป็นสถานที่ที่ยอดเยี่ยม";
+						mes "ฉันจะทำเครื่องหมายตำแหน่งบนแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 213, 161, 3, 0xFFFF54;
 						next;
 						continue;
 					case 5:
 						mes "[Information Staff]";
-						mes "I will mark the location of the";
+						mes "ฉันจะทำเครื่องหมายที่ตั้งของ";
 						mes "<NAVI>[Shop]<INFO>izlude,110,182,</INFO></NAVI>";
-						mes "on the mini map.";
-						mes "Do you need additional directions?";
+						mes "บนแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 108, 179, 4, 0xFFAAFF;
 						next;
 						continue;
 					case 6:
 						mes "[Information Staff]";
-						mes "<NAVI>[Swordman guild]<INFO>izlude,51,172,</INFO></NAVI> is the place to manage the job transfer to a swordman.";
-						mes "I will mark the location of the swordman guild on the mini map.";
-						mes "Do you need additional directions?";
+						mes "<NAVI>[ สมาคม Swordman ]<INFO>izlude,51,172,</INFO></NAVI> เป็นสถานที่จัดการอาชีพให้กับนักดาบ";
+						mes "ฉันจะทำเครื่องหมายที่ตั้งของสมาคมนักดาบในแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 52, 172, 5, 0xFFDA70;
 						next;
 						continue;
 					case 7:
 						mes "[Information Staff]";
-						mes "I will mark the location of the";
+						mes "ฉันจะทำเครื่องหมายที่ตั้งของ";
 						mes "<NAVI>[Enchant Association]<INFO>izlude,97,125,</INFO></NAVI>";
-						mes "on the mini map.";
-						mes "Do you need additional directions?";
+						mes "บนแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 97, 125, 6, 0xFFDA70;
 						next;
 						continue;
 					case 8:
 						mes "[Information Staff]";
-						mes "I will mark the location of the";
+						mes "ฉันจะทำเครื่องหมายที่ตั้งของ";
 						mes "<NAVI>[Blacksmith's Workshop]<INFO>izlude,153,126,</INFO></NAVI>";
-						mes "on the mini map.";
-						mes "Do you need additional directions?";
+						mes "บนแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 153, 126, 7, 0xFFAAFF;
 						next;
 						continue;
@@ -1270,57 +1270,57 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 				break;
 			case 2:
 				while (1) {
-					switch(select("[ Eden Group Teleporter ]", "[ Kafra Employee ]", "[ Mesmerizer ]", "[ Wedding Secretary ]", "[ Mercenary Guild Official ]", "[ Taming Merchant ]", "Go back to the previous menu")) {
+					switch(select("[ Eden Group Teleporter ]", "[ Kafra Employee ]", "[ Mesmerizer ]", "[ Wedding Secretary ]", "[ Mercenary Guild Official ]", "[ Taming Merchant ]", "กลับไปที่เมนูก่อนหน้า")) {
 					case 1:
 						mes "[Information Staff]";
-						mes "For now, I will mark the location of the";
+						mes "สำหรับตอนนี้ฉันจะทำเครื่องหมายตำแหน่งของ";
 						mes "<NAVI>[Eden Group Teleporter]<INFO>izlude,131,148,</INFO></NAVI>";
-						mes "on the mini map.";
-						mes "Do you need additional directions?";
+						mes "บนแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 131, 148, 8, 0xFF0A82;
 						next;
 						continue;
 					case 2:
 						mes "[Information Staff]";
-						mes "I will mark the location of the";
+						mes "ฉันจะทำเครื่องหมายที่ตั้งของ";
 						mes "<NAVI>[Kafra Employee]<INFO>izlude,128,148,</INFO></NAVI>";
-						mes "on the mini map.";
-						mes "Do you need additional directions?";
+						mes "บนแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 128, 148, 9, 0xFFFF54;
 						next;
 						continue;
 					case 3:
 						mes "[Information Staff]";
-						mes "I will mark the location of the";
+						mes "ฉันจะทำเครื่องหมายที่ตั้งของ";
 						mes "<NAVI>[Mesmerizer]<INFO>izlude,124,127,</INFO></NAVI>";
-						mes "on the mini map.";
-						mes "Do you need additional directions?";
+						mes "บนแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 125, 127, 10, 0xFF0064;
 						next;
 						continue;
 					case 4:
 						mes "[Information Staff]";
-						mes "If you want to visit ^8B4513Jawaii^000000 - the resort place for a couple,";
-						mes "talk to the <NAVI>[Wedding Secretary]<INFO>izlude,180,224,</INFO></NAVI>.";
-						mes "Just ask the question about it.";
-						mes "Do you need additional directions?";
+						mes "ถ้าคุณต้องการเยี่ยมชม ^8B4513Jawaii ^000000 - สถานที่ตากอากาศสำหรับคู่รัก";
+						mes "คุยกับ <NAVI>[Wedding Secretary]<INFO>izlude,180,224,</INFO></NAVI>.";
+						mes "แค่ถามคำถามเกี่ยวกับมัน";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 180, 224, 11, 0xFFFF00;
 						next;
 						continue;
 					case 5:
 						mes "[Information Staff]";
-						mes "If you need to know about the Mercenary Guild, go west and speak to the";
+						mes "ถ้าคุณจำเป็นต้องรู้เกี่ยวกับ Mercenary Guild ไปทางตะวันตกและพูดกับ";
 						mes "<NAVI>[Mercenary Guild Official]<INFO>izlude,47,170,</INFO></NAVI>.";
-						mes "Do you need additional directions?";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 47, 170, 12, 0xFFDA70;
 						next;
 						continue;
 					case 6:
 						mes "[Information Staff]";
-						mes "I will mark the location of the";
+						mes "ฉันจะทำเครื่องหมายที่ตั้งของ";
 						mes "<NAVI>[Taming Merchant]<INFO>izlude,118,163,</INFO></NAVI>";
-						mes "on the mini map.";
-						mes "Do you need additional directions?";
+						mes "บนแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 118, 163, 13, 0xFF0064;
 						next;
 						continue;
@@ -1332,8 +1332,8 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 				break;
 			case 3:
 				mes "[Information Staff]";
-				mes "I will erase the marks.";
-				mes "Do you need additional directions?";
+				mes "ฉันจะลบเครื่องหมาย";
+				mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 				viewpoint 2, 197, 205, 1, 0xFF0000;
 				viewpoint 2, 210, 73, 2, 0xFF0000;
 				viewpoint 2, 213, 161, 3, 0xFF0000;
@@ -1351,73 +1351,72 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 				break;
 			case 4:
 				mes "[Information Staff]";
-				mes "Have a wonderful adventure.";
-				mes "Good bye~~!";
+				mes "มีการผจญภัยที่วิเศษ";
+				mes "ลาก่อน ~~!";
 				close;
 			}
 		}
 	} else if (isbegin_quest(7474) == 1) {
 		if ((isbegin_quest(7475) + isbegin_quest(7476) + isbegin_quest(7477)) > 2) {
 			mes "[Information Staff]";
-			mes "What's with the long face?";
-			mes "It looks like you found all the locations I marked.";
+			mes "มีหน้ายาวอะไร";
+			mes "ดูเหมือนว่าคุณจะพบสถานที่ทั้งหมดที่ฉันทำเครื่องหมายไว้";
 			next;
 			mes "[Lumin]";
 			mes "Turtle...";
 			cutin "nov_lumin01.bmp", 2;
 			next;
-			select("What'd you call me?");
+			select("คุณเรียกฉันว่าอะไร");
 			mes "[Lumin]";
-			mes "Because you are too slow.";
-			mes "Yes, it is. I have been waiting for you for what seems like forever.";
+			mes "เพราะเจ้าช้าเกินไป";
+			mes "ใช่แล้วฉันกำลังรอเจ้าเพื่อสิ่งที่ดูเหมือนจะเป็นอยู่ตลอดไป";
 			next;
 			mes "[Lumin]";
-			mes ".......Shall I share with you?";
+			mes "....... ฉันจะแบ่งปันกับคุณหรือเปล่า";
 			cutin "nov_lumin03.bmp", 2;
 			next;
-			if (select("I don't need your sympathy.", "!!!!!") == 1) {
+			if (select("ฉันไม่ต้องการความเห็นอกเห็นใจของคุณ", "!!!!!") == 1) {
 				mes "[Lumin]";
-				mes "Is that so?";
-				mes "Captain always told me to help the poor people.";
-				mes "But you get rid of my chance to help.";
+				mes "เป็นอย่างนั้นเหรอ?";
+				mes "กัปตันบอกให้ข้าช่วยคนจนเสมอ";
+				mes "แต่เจ้ากำจัดโอกาสของข้าที่จะช่วย";
 				cutin "nov_lumin02.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "Ahhh. Irritating.";
+				mes "Ahhh. ระคายเคือง";
 				next;
 			} else {
 				mes "[Lumin]";
-				mes "Well, now we can divide 7 to 3?";
-				mes "I am OK with 6 to 4.";
+				mes "เอาล่ะตอนนี้เราสามารถแบ่ง 7 ถึง 3 ได้?";
+				mes "ฉันโอเคกับ 6 ถึง 4";
 				cutin "nov_lumin02.bmp", 2;
 				next;
 				mes "[" + strcharinfo(0) + "]";
-				mes "This guy...";
+				mes "เจ้านี่ ... ";
 				next;
 			}
 			cutin "", 255;
 			mes "[Information Staff]";
-			mes "Ahhh, you two calm down.";
-			mes "Lumin took them all.";
-			mes ""+ strcharinfo(0) + " I will give you one set separately.";
-			next;
+			mes "Ahhh เจ้าสองคนใจเย็น ๆ ";
+			mes "Lumin รับพวกมันทั้งหมด";
+			mes "" + strcharinfo(0);
 			mes "[Information Staff]";
-			mes "Think of the reason, it was my fault to leave one person's but sent both of you.";
+			mes "คิดถึงเหตุผลมันเป็นความผิดของฉันที่จะทิ้งคนหนึ่ง แต่ส่งคุณทั้งคู่";
 			next;
 			cutin "nov_lumin03.bmp", 2;
 			mes "[Lumin]";
-			mes "Simple and fair decision.";
-			mes "OK. Now I am going.";
-			mes "See you again, my friend.";
+			mes "การตัดสินใจที่เรียบง่ายและยุติธรรม";
+			mes "ตกลงตอนนี้ฉันจะไปแล้ว";
+			mes "แล้วพบกันอีกนะเพื่อนของข้า";
 			next;
 			cutin "", 255;
 			mes "[Information Staff]";
-			mes "Aren't you two friends?";
-			mes "You guys both seemed friendly enough right?";
+			mes "คุณไม่ใช่เพื่อนสองคนเหรอ?";
+			mes "พวกคุณทั้งคู่ดูเป็นมิตรพอใช่มั้ย";
 			next;
 			mes "[Information Staff]";
-			mes "Well, this is my present for you.";
-			mes "Hope it will be useful.";
+			mes "นี่คือของขวัญของฉันสำหรับเจ้า";
+			mes "หวังว่ามันจะมีประโยชน์";
 			completequest 7474;
 			erasequest 7475;
 			erasequest 7476;
@@ -1428,13 +1427,13 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 			getitem 569,20;// Novice_Potion
 			next;
 			mes "[Information Staff]";
-			mes "Have a wonderful journey.";
+			mes "ขอให้มีการเดินทางที่วิเศษ";
 			close;
 		} else {
 			mes "[Information Staff]";
-			mes "You have not found the treasure I hid.";
-			mes "Here are the locations again.";
-			mes "Hurry up!";
+			mes "เจ้าไม่พบสมบัติที่ข้าซ่อนไว้";
+			mes "ที่นี่เป็นที่ตั้งอีกครั้ง";
+			mes "เร็วเข้า!";
 			viewpoint 1,179,75,1,0xccffff;
 			viewpoint 1,45,94,2,0x00ff00;
 			viewpoint 1,207,167,3,0xFFEB46;
@@ -1442,89 +1441,89 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 		}
 	} else {
 		mes "[Information Staff]";
-		mes "This is Izlude - the satellite city of Prontera.";
-		mes "Do you need directions?";
+		mes "นี่คือ Izlude - เมืองดาวเทียมของ Prontera";
+		mes "คุณต้องการเส้นทางหรือไม่";
 		next;
 		mes "[Information Staff]";
-		mes "If you click on the ^B9062F[area name]^000000, I can ^B9062Fnavigate^000000 a path for you to follow.";
+		mes "ถ้าคุณคลิกที่ ^B9062F [ชื่อพื้นที่] ^000000 ฉันสามารถ ^B9062F นำทางได้ ^000000 เส้นทางสำหรับคุณที่จะติดตาม";
 		next;
 		while(1) {
-			switch(select("[ Main facilities ]", "[ Guide & Helper ]", "Mini map marking removal", "End Conversation")) {
+			switch(select("[ สิ่งอำนวยความสะดวกหลัก] "," [ ไกด์ & ช่วยเหลือ] "," การลบเครื่องหมายมินิแผนที่ "," สิ้นสุดการสนทนา")) {
 			case 1:
 				while (1) {
-					switch(select("[ Criatura Academy ]:[ Wharf ]:[ Airship (International) ]:[ Arena ]:[ Shop ]:[ Swordman Guild ]:[ Enchant Association ]:[ Blacksmith's Workshop ]:Go back to the previous menu")) {
+					switch(select("[ Criatura Academy ]:[ Wharf ]:[ Airship (International) ]:[ Arena ]:[ Shop ]:[ สมาคม Swordman ]:[ Enchant Association ]:[ Blacksmith's Workshop ]:กลับไปที่เมนูก่อนหน้า")) {
 					case 1:
 						mes "[Information Staff]";
-						mes "If you are the first time adventurer,";
+						mes "ถ้าคุณเป็นนักผจญภัยครั้งแรก";
 						mes "<NAVI>[Criatura Academy]<INFO>iz_ac01,100,39,</INFO></NAVI>";
-						mes "can offer a lot of info and help.";
-						mes "Do you need additonal directions?";
+						mes "สามารถให้ข้อมูลและความช่วยเหลือได้มากมาย"; 
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 128, 260, 0, 0xFFD269;
 						next;
 						continue;
 					case 2:
 						mes "[Information Staff]";
-						mes "Through the <NAVI>[Wharf]<INFO>izlude,197,205,</INFO></NAVI> in the north east,";
-						mes "^8B4513Alberta^000000 or ^8B4513the Byalan Island^000000 can be visted.";
-						mes "you can go.";
+						mes "ผ่าน <NAVI>[Wharf]<INFO>izlude,197,205,</INFO></NAVI> ทางตะวันออกเฉียงเหนือ";
+						mes "^8B4513Alberta ^000000 หรือ ^8B4513 เกาะ Byalan ^000000 สามารถดูได้";
+						mes "คุณไปได้";
 						next;
 						mes "[Information Staff]";
-						mes "Byalan Island is the scary place with ^8B4513Izlude dungeon^000000 in it.";
-						mes "Do you need additional directions?";
+						mes "เกาะ Byalan เป็นสถานที่ที่น่ากลัวด้วย ^8B4513Izlude dungeon ^000000 ในนั้น";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 197, 205, 1, 0xFFFF00;
 						next;
 						continue;
 					case 3:
 						mes "[Information Staff]";
-						mes "To the southeast, the <NAVI>[Airship]<INFO>izlude,206,75,</INFO></NAVI>";
-						mes "will be connected with the Capital of the republic of Schwarzwald -^8B4513 Juno^000000, and";
-						mes "The capital of the Arunapeltsdom -^8B4513 Rachel ^000000.";
-						mes "Do you need additional directions?";
+						mes "ไปทางทิศตะวันออกเฉียงใต้ <NAVI>[Airship]<INFO>izlude,206,75,</INFO></NAVI>";
+						mes "จะเชื่อมต่อกับเมืองหลวงของสาธารณรัฐ Schwarzwald - ^8B4513 Juno ^000000 และ";
+						mes "เมืองหลวงของ Arunapeltsdom - ^8B4513 Rachel ^000000.";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 210, 73, 2, 0xFF0A82;
 						next;
 						continue;
 					case 4:
 						mes "[Information Staff]";
-						mes "The <NAVI>[Arena]<INFO>izlude,213,161,</INFO></NAVI> located in the east";
-						mes "is for testing your battle ability.";
-						mes "It's an excellent place.";
-						mes "I will mark the location on the mini map.";
-						mes "Do you need additional directions?";
+						mes "<NAVI>[Arena]<INFO>izlude,213,161,</INFO></NAVI> ตั้งอยู่ทางตะวันออก";
+						mes "สำหรับการทดสอบความสามารถในการต่อสู้ของคุณ";
+						mes "มันเป็นสถานที่ที่ยอดเยี่ยม";
+						mes "ฉันจะทำเครื่องหมายตำแหน่งบนแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 213, 161, 3, 0xFFFF54;
 						next;
 						continue;
 					case 5:
 						mes "[Information Staff]";
-						mes "I will mark the location of the";
+						mes "ฉันจะทำเครื่องหมายที่ตั้งของ";
 						mes "<NAVI>[Shop]<INFO>izlude,110,182,</INFO></NAVI>";
-						mes "on the mini map.";
-						mes "Do you need additional directions?";
+						mes "บนแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 108, 179, 4, 0xFFAAFF;
 						next;
 						continue;
 					case 6:
 						mes "[Information Staff]";
-						mes "<NAVI>[Swordman guild]<INFO>izlude,51,172,</INFO></NAVI> is the place to manage the job transfer to a swordman.";
-						mes "I will mark the location of the swordman guild on the mini map.";
-						mes "Do you need additional directions?";
+						mes "<NAVI>[ สมาคม Swordman ]<INFO>izlude,51,172,</INFO></NAVI> เป็นสถานที่จัดการอาชีพให้กับนักดาบ";
+						mes "ฉันจะทำเครื่องหมายที่ตั้งของสมาคมนักดาบในแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 52, 172, 5, 0xFFDA70;
 						next;
 						continue;
 					case 7:
 						mes "[Information Staff]";
-						mes "I will mark the location of the";
+						mes "ฉันจะทำเครื่องหมายที่ตั้งของ";
 						mes "<NAVI>[Enchant Association]<INFO>izlude,97,125,</INFO></NAVI>";
-						mes "on the mini map.";
-						mes "Do you need additional directions?";
+						mes "บนแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 97, 125, 6, 0xFFDA70;
 						next;
 						continue;
 					case 8:
 						mes "[Information Staff]";
-						mes "I will mark the location of the";
+						mes "ฉันจะทำเครื่องหมายที่ตั้งของ";
 						mes "<NAVI>[Blacksmith's Workshop]<INFO>izlude,153,126,</INFO></NAVI>";
-						mes "on the mini map.";
-						mes "Do you need additional directions?";
+						mes "บนแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 153, 126, 7, 0xFFAAFF;
 						next;
 						continue;
@@ -1539,54 +1538,54 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 					switch(select("[ Eden Group Teleporter ]:[ Kafra Employee ]:[ Mesmerizer ]:[ Wedding Secretary ]:[ Mercenary Guild Official ]:[ Taming Merchant ]:Go back to the previous menu")) {
 					case 1:
 						mes "[Information Staff]";
-						mes "For now, I will mark the location of the";
+						mes "สำหรับตอนนี้ฉันจะทำเครื่องหมายตำแหน่งของ";
 						mes "<NAVI>[Eden Group Teleporter]<INFO>izlude,131,148,</INFO></NAVI>";
-						mes "on the mini map.";
-						mes "Do you need additional directions?";
+						mes "บนแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 131, 148, 8, 0xFF0A82;
 						next;
 						continue;
 					case 2:
 						mes "[Information Staff]";
-						mes "I will mark the location of the";
+						mes "ฉันจะทำเครื่องหมายที่ตั้งของ";
 						mes "<NAVI>[Kafra Employee]<INFO>izlude,128,148,</INFO></NAVI>";
-						mes "on the mini map.";
-						mes "Do you need additional directions?";
+						mes "บนแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 128, 148, 9, 0xFFFF54;
 						next;
 						continue;
 					case 3:
 						mes "[Information Staff]";
-						mes "I will mark the location of the";
+						mes "ฉันจะทำเครื่องหมายที่ตั้งของ";
 						mes "<NAVI>[Mesmerizer]<INFO>izlude,124,127,</INFO></NAVI>";
-						mes "on the mini map.";
-						mes "Do you need additional directions?";
+						mes "บนแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 125, 127, 10, 0xFF0064;
 						next;
 						continue;
 					case 4:
 						mes "[Information Staff]";
-						mes "If you want to visit ^8B4513Jawaii^000000 - the resort place for a couple,";
-						mes "talk to the <NAVI>[Wedding Secretary]<INFO>izlude,180,224,</INFO></NAVI>.";
-						mes "Just ask the question about it.";
-						mes "Do you need additional directions?";
+						mes "ถ้าคุณต้องการเยี่ยมชม ^8B4513Jawaii ^000000 - สถานที่ตากอากาศสำหรับคู่รัก";
+						mes "คุยกับ <NAVI>[Wedding Secretary]<INFO>izlude,180,224,</INFO></NAVI>.";
+						mes "แค่ถามคำถามเกี่ยวกับมัน";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 180, 224, 11, 0xFFFF00;
 						next;
 						continue;
 					case 5:
 						mes "[Information Staff]";
-						mes "If you need to know about the Mercenary Guild, go west and speak to the";
+						mes "ถ้าคุณจำเป็นต้องรู้เกี่ยวกับ Mercenary Guild ไปทางตะวันตกและพูดกับ";
 						mes "<NAVI>[Mercenary Guild Official]<INFO>izlude,47,170,</INFO></NAVI>.";
-						mes "Do you need additional directions?";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 47, 170, 12, 0xFFDA70;
 						next;
 						continue;
 					case 6:
 						mes "[Information Staff]";
-						mes "I will mark the location of the";
+						mes "ฉันจะทำเครื่องหมายที่ตั้งของ";
 						mes "<NAVI>[Taming Merchant]<INFO>izlude,118,163,</INFO></NAVI>";
-						mes "on the mini map.";
-						mes "Do you need additional directions?";
+						mes "บนแผนที่ขนาดเล็ก";
+						mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 						viewpoint 1, 118, 163, 13, 0xFF0064;
 						next;
 						continue;
@@ -1598,8 +1597,8 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 				break;
 			case 3:
 				mes "[Information Staff]";
-				mes "I will erase the marks.";
-				mes "Do you need additional directions?";
+				mes "ฉันจะลบเครื่องหมาย";
+				mes "คุณต้องการคำแนะนำเพิ่มเติมหรือไม่";
 				viewpoint 2, 197, 205, 1, 0xFF0000;
 				viewpoint 2, 210, 73, 2, 0xFF0000;
 				viewpoint 2, 213, 161, 3, 0xFF0000;
@@ -1617,8 +1616,8 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 				break;
 			case 4:
 				mes "[Information Staff]";
-				mes "Have a wonderful adventure.";
-				mes "Good bye~~!";
+				mes "มีการผจญภัยที่วิเศษ";
+				mes "ลาก่อน ~~!";
 				close;
 			}
 		}
@@ -1641,30 +1640,30 @@ izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 	.@total = isbegin_quest(7475) + isbegin_quest(7476) + isbegin_quest(7477);
 	if (isbegin_quest(7474) == 1) {
 		if (!isbegin_quest(7475)) {
-			mes "==== Airship Information====";
+			mes "==== ข้อมูลเรือบิน ====";
 			mes "Izlude - Juno - Rachel";
-			mes "Travellers bound for either the ^4d4dffSchwarzwalt Republic^000000 or ^4d4dffArunafeltz^000000 may board the airship here.";
+			mes "นักท่องเที่ยวต้องเดินทางไปที่ ^4d4dffSchwarzwalt Republic ^000000 หรือ ^4d4dff Arunafeltz ^000000 อาจขึ้นเรือบินที่นี่";
 			next;
 			if (.@total == 1) {
-				mes "Except the signboard of the free airship, nothing can be found.";
+				mes "ยกเว้นป้ายของเรือเหาะอิสระไม่พบอะไรเลย";
 				next;
-				select("Where's the hidden treasure?");
+				select("สมบัติที่ซ่อนอยู่ที่ไหน");
 				mes "[Lumin]";
 				mes "Yo.";
-				mes "Sorry pal I got here first.";
-				mes "Should've used a Fly wing like I did.";
+				mes "ขอโทษเพื่อนฉันมาที่นี่ก่อน";
+				mes "ควรใช้ Fly wing เหมือนที่ข้าเคยทำ";
 				cutin "nov_lumin01.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "Why do these wings teleport?";
-				mes "I guess because they're from Creamy monsters...";
+				mes "ทำไมเทเลพอร์ตปีกนี้";
+				mes "ข้าเดาว่าเพราะพวกมันมาจากอสุรกาย Creamy ... ";
 				next;
 				mes "[Lumin]";
-				mes "As the captain said, seeing is believing. The world is full of mysteries.";
+				mes "อย่างที่กัปตันพูดการเห็นกำลังเชื่อโลกนี้เต็มไปด้วยความลึกลับ";
 				next;
 				cutin "", 255;
-				mes "Seems like Lumin beat you again.";
-				mes "Better get to the next location before Lumin does.";
+				mes "ดูเหมือน Lumin จะเอาชนะเจ้าอีกครั้ง";
+				mes "ไปยังตำแหน่งต่อไปให้ดีกว่านี้ก่อนที่ Lumin จะทำได้";
 				setquest 7475;
 				viewpoint 2,179,75,1,0xFF0000;
 				close;
@@ -1677,85 +1676,84 @@ izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 				mes "Muahahahaha.";
 				cutin "nov_lumin03.bmp", 2;
 				next;
-				if (select("Are you kidding me?!", "Where's the treasure?") == 1) {
+				if (select("คุณล้อเล่นฉันเหรอ! "," สมบัติอยู่ไหน?") == 1) {
 					mes "[Lumin]";
-					mes "No...";
-					mes "Meeting three times in one day must be destiny.";
-					mes "You and I can be friends.";
+					mes "ไม่ ... ";
+					mes "การพบกันสามครั้งในหนึ่งวันจะต้องเป็นชะตากรรม";
+					mes "คุณและฉันสามารถเป็นเพื่อนได้";
 					cutin "nov_lumin05.bmp", 2;
 					next;
-					select("Or Frenemies!");
+					select("หรือ Frenemies!");
 					mes "[Lumin]";
-					mes "Frene-what? Oh well I'm done with the mission.";
-					mes "Take care.";
+					mes "Frene อะไรนะอืมฉันทำได้ดีกับภารกิจ";
+					mes "ระวัง";
 					cutin "nov_lumin02.bmp", 2;
 					next;
 					cutin "", 255;
 					mes "[" + strcharinfo(0) + "]";
-					mes "Are you even listening to me?!";
+					mes "คุณกำลังฟังฉันอยู่เหรอ!";
 					setquest 7475;
 					viewpoint 2,179,75,1,0xFF0000;
 					next;
-					mes "^4d4dff...I have to report the result to the Information Staff...^000000.";
+					mes "^4d4dff... ฉันต้องรายงานผลให้ Information Staff...^000000.";
 					close;
 				}
 				mes "[Lumin]";
-				mes "Ooo Butterfly Wings.";
-				mes "If I hand it over to you, you'll just waste 'em so I'll just keep them.";
+				mes "Ooo Butterfly Wings";
+				mes "ถ้าฉันมอบมันให้กับคุณคุณก็จะเสีย 'em ดังนั้นฉันจะเก็บมันไว้";
 				cutin "nov_lumin01.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "Come on this is just friendly competition.";
+				mes "มานี่เป็นแค่การแข่งขันที่เป็นมิตร";
 				cutin "nov_lumin05.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "I am doing this for you to make you stronger.";
-				mes "Now, so long.";
+				mes "ฉันกำลังทำสิ่งนี้เพื่อคุณที่จะทำให้คุณแข็งแกร่งขึ้น";
+				mes "ตอนนี้มานานแล้ว";
 				cutin "nov_lumin03.bmp", 2;
 				next;
 				cutin "", 255;
-				mes "^4d4dff...I have to report the result to the Information staff...^000000.";
+				mes "^4d4dff... ฉันต้องรายงานผลให้ Information Staff...^000000.";
 				setquest 7475;
 				viewpoint 2,179,75,1,0xFF0000;
 				close;
 			} else {
-				mes "Except for the signboard of the free airship, nothing particular was found.";
+				mes "ยกเว้นป้ายของเรือเหาะเสรีไม่พบสิ่งใดเป็นพิเศษ";
 				next;
-				select("Why is there nothing here?");
+				select("ทำไมที่นี่ไม่มีอะไรเลยเหรอ? ");
 				mes "[Lumin]";
-				mes "Of course.";
-				mes "I already packed it in my bag.";
-				mes "There were Butterfly Wings here.";
+				mes "แน่นอน";
+				mes "ฉันเก็บมันไว้ในกระเป๋าแล้ว";
+				mes "มีปีกผีเสื้ออยู่ที่นี่";
 				cutin "nov_lumin01.bmp", 2;
 				next;
-				select("So can I have some?");
+				select ("ฉันจะมีได้บ้าง");
 				mes "[Lumin]";
-				mes "That's not fair, I was here first so they're mine.";
-				mes "You better get to the next stop faster if you want the prize.";
+				mes "มันไม่ยุติธรรมเลยฉันมาที่นี่ก่อนดังนั้นพวกเขาจึงเป็นของฉัน";
+				mes "คุณควรไปที่จุดต่อไปให้เร็วขึ้นถ้าคุณต้องการรางวัล";
 				cutin "nov_lumin02.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "Well, then.....";
+				mes "ถ้างั้นก็ ..... ";
 				cutin "nov_lumin03.bmp", 2;
 				next;
 				cutin "", 255;
-				mes "Lumin disappeared with his long hair in the air.";
+				mes "Lumin หายไปกับผมยาวของเขาในอากาศ";
 				mes "......";
 				setquest 7475;
 				viewpoint 2,179,75,1,0xFF0000;
 				close;
 			}
 		} else {
-			mes "==== Airship Information ====";
+			mes "==== ข้อมูลเรือบิน ====";
 			mes "Izlude - Juno - Rachel";
-			mes "Travellers bound for either the ^4d4dffSchwarzwalt Republic^000000 or ^4d4dffArunafeltz^000000 may board the airship here.";
-			close;
+			mes "นักท่องเที่ยวต้องเดินทางไปที่ ^4d4dffSchwarzwalt Republic ^000000 หรือ ^4d4dffArunafeltz ^000000 อาจขึ้นเรือบินที่นี่";
+close;
 		}
 	} else {
-		mes "==== Airship Information ====";
+		mes "==== ข้อมูลเรือบิน ====";
 		mes "Izlude - Juno - Rachel";
-		mes "Travellers bound for either the ^4d4dffSchwarzwalt Republic^000000 or ^4d4dffArunafeltz^000000 may board the airship here.";
-		close;
+		mes "นักท่องเที่ยวต้องเดินทางไปที่ ^4d4dffSchwarzwalt Republic ^000000 หรือ ^4d4dffArunafeltz ^000000 อาจขึ้นเรือบินที่นี่";close;
 	}
 
 OnInit:
@@ -1780,29 +1778,29 @@ izlude,207,167,3	script	Arena#iz	4_BULLETIN_BOARD2,3,3,{
 	if (isbegin_quest(7474) == 1) {
 		if (!isbegin_quest(7476)) {
 			mes "== Challenge! Arena! ==";
-			mes "Breath taking battle with monsters!";
-			mes "Where is your limit?";
-			mes "PvE party with your comrad!";
-			mes "All these at Arena!!";
+			mes "หายใจสู้กับสัตว์ประหลาด!";
+			mes "ขีด จำกัด ของคุณอยู่ที่ไหน";
+			mes "PvE party with comrad ของคุณ!";
+			mes "สิ่งเหล่านี้ทั้งหมดใน Arena !!";
 			next;
 			if (.@total == 1) {
-				mes "Except for the Arena promtional board, nothing can be found here.";
+				mes "ยกเว้นบอร์ดโปรโมต Arena ก็ไม่พบอะไรที่นี่";
 				next;
-				select("Nothing again?");
+				select("ไม่มีอะไรอีกแล้ว?");
 				mes "[Lumin]";
-				mes "Hmmm. Its not nothing....";
-				mes "There were potions here...";
-				mes "I was tired of waiting for you so I took it too.";
+				mes "Hmmm. มันไม่ใช่อะไรเลย .... ";
+				mes "มียาอยู่ที่นี่ ... ";
+				mes "ฉันเหนื่อยกับการรอคุณอยู่ดังนั้นฉันก็รับไปด้วย";
 				cutin "nov_lumin01.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "But why does this potion never make me full?";
-				mes "*gulp*";
-				mes "Oh well looks like it's all gone.";
+				mes "แต่ทำไมยานี้ถึงไม่ทำให้ฉันอิ่ม";
+				mes "* gulp *";
+				mes "โอ้ดูเหมือนว่ามันจะหายไปหมดแล้ว";
 				next;
 				cutin "", 255;
-				mes "Lumin beat you again.";
-				mes "Better beat him to the last spot.";
+				mes "Lumin เอาชนะเจ้าอีกครั้ง";
+				mes "ดีกว่าเอาชนะเขาไปยังจุดสุดท้าย";
 				setquest 7476;
 				viewpoint 2,207,167,3,0xFF0000;
 				close;
@@ -1815,88 +1813,88 @@ izlude,207,167,3	script	Arena#iz	4_BULLETIN_BOARD2,3,3,{
 				mes "Muahahaha.";
 				cutin "nov_lumin03.bmp", 2;
 				next;
-				switch(select("Are you kidding me?!", "Where's the treasure?") == 1) {
+				switch(select("คุณล้อเล่นฉันเหรอ! "," สมบัติอยู่ไหน?") == 1) {
 					mes "[Lumin]";
-					mes "No...";
-					mes "Meeting three times in one day must be destiny.";
-					mes "You and I can be friends.";
+					mes "ไม่ ... ";
+					mes "การพบกันสามครั้งในหนึ่งวันจะต้องเป็นชะตากรรม";
+					mes "คุณและฉันสามารถเป็นเพื่อนได้";
 					cutin "nov_lumin05.bmp", 2;
 					next;
-					select("Or Frenemies!");
+					select("หรือ Frenemies!");
 					mes "[Lumin]";
-					mes "Frene-what? Oh well I'm done with the mission.";
-					mes "Take care.";
+					mes "Frene อะไรนะอืมฉันทำได้ดีกับภารกิจ";
+					mes "ระวัง";
 					cutin "nov_lumin02.bmp", 2;
 					next;
 					cutin "", 255;
 					mes "[" + strcharinfo(0) + "]";
-					mes "Are you even listening to me?!";
+					mes "คุณกำลังฟังฉันอยู่เหรอ!";
 					setquest 7476;
 					viewpoint 2,207,167,3,0xFF0000;
 					next;
-					mes "^4d4dff...I have to report the result to the Information Staff...^000000.";
+					mes "^4d4dff... ฉันต้องรายงานผลให้ Information Staff...^000000.";
 					close;
 				}
 				mes "[Lumin]";
 				mes "Red potions.";
-				mes "If I hand it over to you, you'll just waste 'em so I'll just keep them.";
+				mes "ถ้าฉันมอบมันให้กับคุณคุณก็จะเสีย 'em ดังนั้นฉันจะเก็บมันไว้";
 				cutin "nov_lumin01.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "Come on this is just friendly competition.";
+				mes "มานี่เป็นแค่การแข่งขันที่เป็นมิตร";
 				cutin "nov_lumin05.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "I am doing this for you to make you stronger.";
-				mes "Now, so long.";
+				mes "ฉันกำลังทำสิ่งนี้เพื่อคุณที่จะทำให้คุณแข็งแกร่งขึ้น";
+				mes "ตอนนี้มานานแล้ว";
 				cutin "nov_lumin03.bmp", 2;
 				next;
 				cutin "", 255;
-				mes "^4d4dff...I have to report of the result to Information staff...^000000.";
+				mes "^4d4dff... ฉันต้องรายงานผลให้ Information Staff...^000000.";
 				setquest 7476;
 				viewpoint 2,207,167,3,0xFF0000;
 				close;
 			} else {
-				mes "Except for the Arena promotion signboard, nothing can be found.";
+				mes "ยกเว้นป้ายโปรโมชัน Arena จะไม่พบสิ่งใดเลย";
 				next;
-				select("Why is there nothing?");
+				select("ทำไมไม่มีอะไร");
 				mes "[Lumin]";
-				mes "Of course.";
-				mes "I already packed it.";
-				mes "There were Red Potion hidden here.";
+				mes "แน่นอน";
+				mes "ฉันเก็บมันไว้เรียบร้อยแล้ว";
+				mes "มียาสีแดงซ่อนอยู่ที่นี่";
 				cutin "nov_lumin01.bmp", 2;
 				next;
-				select("So can I have some?");
+				select ("ฉันจะมีได้บ้าง");
 				mes "[Lumin]";
-				mes "That's not fair, I was here first so they're mine.";
-				mes "You better get to the next stop faster if you want the prize.";
+				mes "มันไม่ยุติธรรมเลยฉันมาที่นี่ก่อนดังนั้นพวกเขาจึงเป็นของฉัน";
+				mes "คุณควรไปที่จุดต่อไปให้เร็วขึ้นถ้าคุณต้องการรางวัล";
 				cutin "nov_lumin02.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "Well, then.....";
+				mes "ถ้างั้นก็ ..... ";
 				cutin "nov_lumin03.bmp", 2;
 				next;
 				cutin "", 255;
-				mes "Lumin disappeared with his long hair in the air.";
-				mes "This guy...";
+				mes "Lumin หายไปกับผมยาวของเขาในอากาศ";
+				mes "เจ้านี่ ... ";
 				setquest 7476;
 				viewpoint 2,207,167,3,0xFF0000;
 				close;
 			}
 		} else {
 			mes "== Challenge! Arena! ==";
-			mes "Breath taking battle with monsters!";
-			mes "Where is your limit?";
-			mes "PvE party with your comrad!";
-			mes "All these at Arena!!";
+			mes "หายใจสู้กับสัตว์ประหลาด!";
+			mes "ขีด จำกัด ของคุณอยู่ที่ไหน";
+			mes "PvE party with comrad ของคุณ!";
+			mes "สิ่งเหล่านี้ทั้งหมดใน Arena !!";
 			close;
 		}
 	} else {
 		mes "== Challenge! Arena! ==";
-		mes "Breath taking battle with monsters!";
-		mes "Where is your limit?";
-		mes "PvE party with your comrad!";
-		mes "All these at Arena!!";
+		mes "หายใจสู้กับสัตว์ประหลาด!";
+		mes "ขีด จำกัด ของคุณอยู่ที่ไหน";
+		mes "PvE party with comrad ของคุณ!";
+		mes "สิ่งเหล่านี้ทั้งหมดใน Arena !!";
 		close;
 	}
 
@@ -1921,36 +1919,36 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 	.@total = isbegin_quest(7475) + isbegin_quest(7476) + isbegin_quest(7477);
 	if (isbegin_quest(7474) == 1) {
 		if (!isbegin_quest(7477)) {
-			mes "==== Information ====";
-			mes "Prontera Field.";
-			mes "The city of Prontera is located to the north.";
+			mes "==== ข้อมูล ====";
+			mes "Prontera Field";
+			mes "เมืองพรอนเทราตั้งอยู่ทางเหนือ";
 			next;
 			if (.@total == 1) {
-				mes "Except for the simple signboard, nothing can be found here.";
+				mes "ยกเว้นป้ายเรียบง่ายไม่มีสิ่งใดพบได้ที่นี่";
 				next;
-				select("Where's the treasure?");
+				select("สมบัติอยู่ที่ไหน");
 				mes "[Lumin]";
 				mes "Yo.";
-				mes "Sorry but I am quicker than you.";
-				mes "There were Fly Wings here..";
+				mes "ขอโทษ แต่ฉันเร็วกว่าคุณ";
+				mes "มี Fly Wings ที่นี่ .. ";
 				cutin "nov_lumin01.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "In fact, I don't like Fly's wings.";
-				mes "Flies are so dirty.";
+				mes "ที่จริงแล้วฉันไม่ชอบปีกของ Fly";
+				mes "แมลงวันสกปรกมาก";
 				cutin "nov_lumin02.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "By the way, why is one of the convenient transportations fly wing shaped?";
-				mes "Perhaps you know?";
+				mes "อย่างไรก็ตามทำไมการเดินทางที่สะดวกจึงมีรูปร่างเหมือนปีก";
+				mes "บางทีคุณอาจรู้";
 				next;
 				mes "[Lumin]";
-				mes "...you don't know.";
+				mes "... คุณไม่รู้";
 				cutin "nov_lumin01.bmp", 2;
 				next;
 				cutin "", 255;
-				mes "Defeated by Lumin again.";
-				mes "Keep calm and find the next location.";
+				mes "แพ้ Lumin อีกครั้ง";
+				mes "รักษาความสงบและค้นหาตำแหน่งต่อไป";
 				setquest 7477;
 				viewpoint 2,45,94,2,0xFF0000;
 				close;
@@ -1963,82 +1961,82 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 				mes "...Hello";
 				cutin "nov_lumin03.bmp", 2;
 				next;
-				if (select("Are you kidding me?!", "Where's the treasure?") == 1) {
+				if (select("คุณล้อเล่นฉันเหรอ! "," สมบัติอยู่ไหน?") == 1) {
 					mes "[Lumin]";
-					mes "No...";
-					mes "Meeting three times in one day must be destiny.";
-					mes "You and I can be friends.";
+					mes "ไม่ ... ";
+					mes "การพบกันสามครั้งในหนึ่งวันจะต้องเป็นชะตากรรม";
+					mes "คุณและฉันสามารถเป็นเพื่อนได้";
 					cutin "nov_lumin05.bmp", 2;
 					next;
-					select("Or Frenemies!");
+					select("หรือ Frenemies!");
 					mes "[Lumin]";
-					mes "Frene-what? Oh well I'm done with the mission.";
-					mes "Take care.";
+					mes "Frene อะไรนะอืมฉันทำได้ดีกับภารกิจ";
+					mes "ระวัง";
 					cutin "nov_lumin02.bmp", 2;
 					next;
 					cutin "", 255;
 					mes "[" + strcharinfo(0) + "]";
-					mes "Are you even listening to me?!";
+					mes "คุณกำลังฟังฉันอยู่เหรอ!";
 					setquest 7477;
 					viewpoint 2,45,94,2,0xFF0000;
 					next;
-					mes "^4d4dff...I have to report the result to the Information Staff...^000000.";
+					mes "^4d4dff... ฉันต้องรายงานผลให้ Information Staff...^000000.";
 					close;
 				}
 				mes "[Lumin]";
 				mes "Fly Wings.";
-				mes "If I hand them over to you, you'll just waste 'em so I think I'll keep them.";
+				mes "ถ้าฉันส่งพวกเขามาให้คุณคุณจะเสียเปล่าเลยฉันคิดว่าฉันจะเก็บมันไว้";
 				cutin "nov_lumin01.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "Come on this is just friendly competition.";
+				mes "มานี่เป็นแค่การแข่งขันที่เป็นมิตร";
 				cutin "nov_lumin05.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "I am doing this for you to make you stronger.";
-				mes "Now, so long.";
+				mes "ฉันกำลังทำสิ่งนี้เพื่อคุณที่จะทำให้คุณแข็งแกร่งขึ้น";
+				mes "ตอนนี้มานานแล้ว";
 				cutin "nov_lumin03.bmp", 2;
 				next;
 				cutin "", 255;
-				mes "^4d4dff...I have to report of the result to Information staff...^000000.";
+				mes "^4d4dff... ฉันต้องรายงานผลให้ Information Staff...^000000.";
 				setquest 7477;
 				viewpoint 2,45,94,2,0xFF0000;
 				close;
 			} else {
-				mes "Except for the simple signboard, nothing can be found.";
+				mes "ยกเว้นป้ายเรียบง่ายไม่พบอะไรเลย";
 				next;
-				select("Why is there nothing?");
+				select("ทำไมไม่มีอะไร");
 				mes "[Lumin]";
-				mes "Of course.";
-				mes "Fly's wings were here so I already packed them in my bag.";
+				mes "แน่นอน";
+				mes "ปีกของ Fly อยู่ที่นี่ดังนั้นฉันจึงบรรจุมันไว้ในกระเป๋าของฉัน";
 				cutin "nov_lumin01.bmp", 2;
 				next;
-				select("So can I have some?");
+				select("ฉันจะมีได้บ้าง");
 				mes "[Lumin]";
-				mes "That's not fair, I was here first so they're mine.";
-				mes "You better get to the next stop faster if you want the prize.";
+				mes "มันไม่ยุติธรรมเลยฉันมาที่นี่ก่อนดังนั้นพวกเขาจึงเป็นของฉัน";
+				mes "คุณควรไปที่จุดต่อไปให้เร็วขึ้นถ้าคุณต้องการรางวัล";
 				cutin "nov_lumin03.bmp", 2;
 				next;
 				mes "[Lumin]";
-				mes "Well, then.....";
+				mes "ถ้างั้นก็ ..... ";
 				next;
 				cutin "", 255;
-				mes "Lumin disappeared with his long hair in the air.";
-				mes "This guy....";
+				mes "Lumin หายไปกับผมยาวของเขาในอากาศ";
+				mes "เจ้านี่ .... ";
 				setquest 7477;
 				viewpoint 2,45,94,2,0xFF0000;
 				close;
 			}
 		} else {
-			mes "==== Information ====";
-			mes "Prontera Field.";
-			mes "The city of Prontera is located to the north.";
+			mes "==== ข้อมูล ====";
+			mes "Prontera Field";
+			mes "เมืองพรอนเทราตั้งอยู่ทางเหนือ";
 			close;
 		}
 	} else {
-		mes "==== Information ====";
-		mes "Prontera Field.";
-		mes "The city of Prontera is located to the north.";
+		mes "==== ข้อมูล ====";
+		mes "Prontera Field";
+		mes "เมืองพรอนเทราตั้งอยู่ทางเหนือ";
 		close;
 	}
 
@@ -2062,144 +2060,144 @@ izlude_d,45,94,3	duplicate(Bulletin Board#iz)	Bulletin Board#iz_d	4_BULLETIN_BOA
 // -----------------------------------------------------------------------------
 iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 	if (!checkweight(1304,3)) {
-		mes "Quest cannot be continued due to the overfilled inventory.";
-		mes "Please try it again after organizing the items.";
+		mes "Quest ไม่สามารถดำเนินการต่อเนื่องจากสินค้าคงคลังล้น";
+		mes "โปรดลองอีกครั้งหลังจากจัดการรายการ";
 		close;
 	}
 	mes "[Therapist]";
 	if (isbegin_quest(4269) == 2) {
-		mes "Are you a student?";
-		mes "Do you have any problem in your body?";
+		mes "คุณเป็นนักเรียนเหรอ?";
+		mes "คุณมีปัญหาอะไรในร่างกายบ้างไหม";
 		next;
-		.@menu$ = "Help me!:Teach me the First Aid Skill:^ff0000Red Herb Quest^000000:Save Location";
+		.@menu$ = "ช่วยฉันด้วย!:สอนทักษะปฐมพยาบาลให้ฉัน:^ff0000 Red Herb Quest ^000000:บันทึกตำแหน่ง";
 	} else {
-		mes "This is the dispensary of the Royal Criatura Academy.";
-		mes "How can I help you?";
+		mes "นี่คือโอสถของ Royal Criatura Academy";
+		mes "ฉันจะช่วยคุณได้อย่างไร";
 		next;
-		.@menu$ = "Help me!:First Aid Skill::I want to rest.";
+		.@menu$ = "ช่วยด้วย!:ทักษะการปฐมพยาบาล::ฉันต้องการพักผ่อน";
 	}
 	switch(select(.@menu$)) {
 	case 1:
 		if (BaseLevel <= 20) {
 			mes "[Therapist]";
-			mes "Are you injured?";
-			mes "Even the emergency treatment didn't work for you?";
+			mes "คุณบาดเจ็บหรือเปล่า?";
+			mes "แม้แต่การรักษาฉุกเฉินก็ไม่ได้ผลสำหรับคุณ";
 			next;
 			npcskill "AL_HEAL", 3, 50, 60;
 			percentheal 0,50;
 			mes "[Therapist]";
-			mes "Is that good enough?";
-			mes "Have you recovered?";
-			mes "If you are sane, go to bed and rest before you go.";
+			mes "ดีพอแล้ว";
+			mes "เจ้ากลับมาแล้วเหรอ?";
+			mes "ถ้าเจ้ามีสติให้นอนก่อนนอน";
 			close;
 		} else {
 			mes "[Therapist]";
-			mes "I feel sorry for you but...";
-			mes "I can only give my free healing service to those under base level 20.";
-			mes "You don't look like you're going to die anyways.";
+			mes "ข้ารู้สึกเสียใจแทน แต่ ... ";
+			mes "ฉันสามารถให้บริการรักษาฟรีแก่ผู้ที่อยู่ในระดับฐาน 20 เท่านั้น";
+			mes "เจ้าดูเหมือนว่าเจ้าจะไม่ตาย";
 			next;
 			mes "[Therapist]";
-			mes "Just take a rest here until you've recovered.";
-			mes "There are lots of vacant beds!";
+			mes "พักที่นี่จนกว่าเจ้าจะหาย";
+			mes "มีเตียงว่างมากมาย!";
 			close;
 		}
 		break;
 	case 2:
 		if (getskilllv("NV_FIRSTAID")) {
 			mes "[Therapist]";
-			mes "You already know about First Aid.";
-			mes "We both are busy. Don't bother me.";
+			mes "เจ้ารู้จัก [First Aid] แล้ว";
+			mes "พวกเราทั้งคู่ยุ่ง, อย่ารบกวนฉัน";
 			close;
 		} else {
 			mes "[Therapist]";
-			mes "You are commendable!";
-			mes "First Aid is a skill that transfers SP to HP during emergency situations.";
+			mes "เจ้าน่ายกย่อง!";
+			mes "First Aid เป็นทักษะที่โอน SP ไปยัง HP ในสถานการณ์ฉุกเฉิน";
 			next;
 			mes "[Therapist]";
-			mes "Recovery ratio is very minimal...";
-			mes "It can help you avoid dying but won't give you much HP.";
+			mes "อัตราส่วนการกู้คืนน้อยมาก ... ";
+			mes "มันสามารถช่วยคุณหลีกเลี่ยงการตาย แต่จะไม่ให้ HP มากนัก";
 			specialeffect2 EF_BEGINSPELL6;
 			specialeffect2 EF_SPELLBREAKER;
 			next;
 			mes "[Therapist]";
-			mes "Press ^4d4dffALT + S^000000 to open your Skill window to see your skills.";
+			mes "กด ^4d4dffALT + S ^000000 เพื่อเปิดหน้าต่าง Skill ของคุณเพื่อดูทักษะของคุณ";
 			skill "NV_FIRSTAID", 1, 0;
 			skill_nov = 3;
 			getexp 1000,40;
 			next;
 			mes "[Therapist]";
-			mes "If you press ^4d4dffF12^000000...";
-			mes "The shortcut window will open up with nine small compartments to register your skills to.";
+			mes "ถ้าคุณกด ^4d4dffF12 ^000000 ... ";
+			mes "หน้าต่างทางลัดจะเปิดขึ้นพร้อมช่องเล็ก ๆ เก้าช่องเพื่อลงทะเบียนทักษะของคุณไปยัง";
 			next;
 			mes "[Therapist]";
-			mes "Dragging the right hand corner at the shortcut window, you can open up more skill shortcut pages.";
+			mes "การลากมุมขวาที่หน้าต่างทางลัดคุณสามารถเปิดหน้าทางลัดทักษะเพิ่มเติมได้";
 			next;
 			mes "[Therapist]";
-			mes "It is a simple use.. ^4d4dffEach slot responds to individual keys from F1 to F9^000000.";
-			mes "Needed skills or items can be immediately used after registering on the corresponding slots.";
+			mes "มันใช้ง่าย .. ^4d4dff แต่ละช่องตอบสนองต่อแต่ละคีย์จาก F1 ถึง F9 ^000000";
+			mes "ทักษะหรือไอเท็มที่จำเป็นสามารถใช้ได้ทันทีหลังจากลงทะเบียนในช่องที่เกี่ยวข้อง";
 			next;
 			cutin "tutorial05.bmp", 4;
-			mes "!- Information -!";
-			mes "You can register needed items or skills at ^4d4dffshortcut slots by dragging the icons.";
+			mes "!- ข้อมูล -!";
+			mes "คุณสามารถลงทะเบียนรายการหรือทักษะที่จำเป็นได้ที่ ^4d4dffshortcut slot โดยการลากไอคอน";
 			next;
-			mes "!- Information -!";
-			mes "^4d4dff The registered items and equipment at^4d4dff the slots can be immediately used or armed by pressing the reponding F1 - F9 keys.";
+			mes "!- ข้อมูล -!";
+			mes "^4d4dff รายการและอุปกรณ์ที่ลงทะเบียนที่ ^4d4dff ช่องสามารถใช้งานหรือติดอาวุธได้ทันทีโดยการกดแป้น F1 - F9 ที่ปรับสภาพใหม่";
 			next;
-			mes "!- Information -!";
-			mes "By setting the ^4d4dffshortcut keys as you want, you can use the responding shortcut key.";
+			mes "!- ข้อมูล -!";
+			mes "โดยการตั้งค่าปุ่ม ^4d4dffshortcut ตามที่คุณต้องการคุณสามารถใช้ปุ่มทางลัดในการตอบสนอง";
 			next;
-			mes "!- Information -!";
-			mes "^4d4dffyou may register the frequently using items and skills, and use them at your convenience.";
+			mes "!- ข้อมูล -!";
+			mes "^4d4dffyou อาจทำการลงทะเบียนรายการที่ใช้บ่อยๆและทักษะและใช้มันตามความสะดวกของคุณ";
 			cutin "", 255;
 			next;
 			mes "[Therapist]";
-			mes "Now open the skill window and register [First Aid] as shortcut key, then use it.";
-			mes "You will find it is more covenient to use this way.";
+			mes "ตอนนี้เปิดหน้าต่างทักษะแล้วลงทะเบียน [First Aid] เป็นปุ่มทางลัดจากนั้นใช้มัน";
+			mes "เจ้าจะพบว่ามันเป็นพันธสัญญาที่จะใช้วิธีนี้มากกว่านี้";
 			close;
 		}
 	case 3:
 		if (!isbegin_quest(7478)) {
 			mes "[Therapist]";
-			mes "Have you investigated the growing plants in the field?";
-			mes "^4d4dff Red Plant, Blue Plant, Green Plant, White Plant^000000etc..";
+			mes "เจ้าสำรวจพืชที่ปลูกในทุ่งหรือยัง?";
+			mes "^4d4dff Red Plant, Blue Plant, Green Plant, White Plant ^000000etc .. ";
 			next;
 			mes "[Therapist]";
-			mes "You can get different colored herbs from the various plants.";
-			mes "Processing herbs turns to be a various useful potions.";
+			mes "คุณสามารถรับสมุนไพรหลากสีจากพืชหลากหลายชนิด";
+			mes "สมุนไพรแปรรูปกลายเป็นยาที่มีประโยชน์มากมาย";
 			next;
 			mes "[Therapist]";
-			mes "Now, shall we collect the Red Herb with your hands?";
+			mes "ทีนี้เราจะเก็บสมุนไพรแดงด้วยมือของคุณเหรอ?";
 			next;
 			mes "[Therapist]";
-			mes "A ^4d4dffRed Plant is growing near the academy building.^000000.";
-			mes "I secretly planted it for today.";
-			mes "Go and get ^4d4dff1 Red Herb^000000.";
+			mes "^4d4dffRed Plant กำลังเติบโตใกล้กับอาคารเรียน ^000000";
+			mes "ฉันปลูกมันไว้อย่างลับๆเพื่อวันนี้";
+			mes "ไปแล้วรับ ^4d4dff1 Red Herb ^000000";
 			setquest 7478;
 			close;
 		} else if (isbegin_quest(7478) == 1) {
 			if (countitem(507) > 0) {
 				mes "[Therapist]";
-				mes "You got it.";
-				mes "^4d4dffYou could eat this herb and get the benefit of it immediately but it will be more efficient if you make it into a potion.^000000.";
+				mes "เจ้าเข้าใจแล้ว";
+				mes "^4d4dff คุณสามารถกินสมุนไพรนี้และได้รับประโยชน์จากมันทันที แต่มันจะมีประสิทธิภาพมากขึ้นถ้าคุณทำให้มันกลายเป็นมื้อ ^000000";
 				next;
 				mes "[Therapist]";
-				mes "Herbs vary their virtues according to their color.";
-				mes "^4d4dffGreen Herbs^000000 detox you.";
-				mes "^4d4dffBlue Herbs^000000 recover your SP.";
+				mes "สมุนไพรต่างกันไปตามคุณสมบัติของสี";
+				mes "^4d4dff Green Herbs ^000000 ล้างพิษคุณ";
+				mes "^4d4dff Blue Herbs ^000000 กู้ SP ของคุณ";
 				next;
 				mes "[Therapist]";
-				mes "Any other?";
-				mes "Well, HP is recovering like this red herb.";
-				mes "This like this... Make a nectar and put it into a bottle....";
+				mes "มีอะไรอีกไหม?";
+				mes "เอ่อ HP กำลังฟื้นตัวเหมือนสมุนไพรสีแดงนี้";
+				mes "แบบนี้ ... ทำน้ำหวานและใส่ลงในขวด .... ";
 				next;
 				mes "[Therapist]";
-				mes "This becomes the recovering potion possible to take anywhere, anytime.";
-				mes "I will give it to you as souvenir.";
-				mes "And also give you the recipe to make potions easily.";
+				mes "มันจะกลายเป็นยาที่สามารถนำกลับมาใช้ได้ทุกที่ทุกเวลา";
+				mes "ฉันจะให้เป็นของขวัญแก่เจ้า";
+				mes "และมอบสูตรให้คุณปรุงยาได้อย่างง่ายดาย";
 				next;
 				mes "[Therapist]";
-				mes "This is the book for the simple combination of potion use.";
-				mes "You can make it easily by ^4d4dffusing the combination kit or cooking tool^000000.";
+				mes "นี่เป็นหนังสือสำหรับการผสมยาอย่างง่าย ๆ ";
+				mes "คุณสามารถทำให้มันง่ายดายโดย ^4d4dff โดยใช้ชุดค่าผสมหรือเครื่องมือทำอาหาร ^000000";
 				completequest 7478;
 				getexp 2000,50;
 				getitem 569,30;// Novice_Potion
@@ -2209,48 +2207,48 @@ iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 				getitem 512,1;// Apple
 				next;
 				mes "[Therapist]";
-				mes "Not only potions but also other easily attainable things can be turned to various tools. Please make use of them.";
+				mes "ไม่เพียง แต่ยาเท่านั้น แต่ยังสามารถเปลี่ยนเป็นเครื่องมือต่าง ๆ ได้อย่างง่ายดายโปรดใช้ประโยชน์จากมันด้วย";
 				next;
 				mes "[Therapist]";
-				mes "For your trial to make it, I gave you a Red Herb and one Apple,";
-				mes "How about making it with the combination kit?";
+				mes "สำหรับการทดลองของคุณเพื่อทำมันฉันให้ Red Herb และ Apple หนึ่งอันแก่เจ้า";
+				mes "แล้วจะทำยังไงกับชุด kit?";
 				next;
 				mes "[Therapist]";
-				mes "Read the combination kit by ^4d4dffright-clicking^000000, and ^4d4dffclick the book shaped icon^000000 which will open up the explanation window.";
+				mes "อ่านชุดรวมโดย ^4d4dff คลิกขวา ^000000 และ ^4d4dff คลิกที่ไอคอนรูปหนังสือ ^000000 ซึ่งจะเปิดหน้าต่างคำอธิบาย";
 				close;
 			} else {
 				mes "[Therapist]";
-				mes "Why don't you learn about the virtues of herbs?";
-				mes "Bring one Red Herb by beating the growing Red Herb near the academy building.";
+				mes "ทำไมเจ้าไม่เรียนเกี่ยวกับสรรพคุณของสมุนไพร";
+				mes "นำสมุนไพรสีแดงหนึ่งอันมาทุบตีสมุนไพรสีแดงที่กำลังเติบโตใกล้กับอาคารเรียน";
 				next;
 				mes "[Therapist]";
-				mes "You can find it near the entrance of the academy.";
+				mes "คุณจะพบมันใกล้กับทางเข้าของโรงเรียน";
 				close;
 			}
 		} else {
 			mes "[Therapist]";
-			mes "I already let you know about the basic medical botany.";
-			mes "By the way, there is something called a ^4d4dffShining Plant^000000 here on Midgard.";
+			mes "ฉันแจ้งให้คุณทราบเกี่ยวกับพฤกษศาสตร์การแพทย์ขั้นพื้นฐาน";
+			mes "ยังไงก็ตามมีบางสิ่งที่เรียกว่า ^4d4dff Shining Plant ^000000 ที่นี่บน Midgard";
 			next;
 			mes "[Therapist]";
-			mes "Nobody knows which herb comes out from this plant.";
-			mes "Once I got the fruit of Yggdrasil.";
+			mes "ไม่มีใครรู้ว่าสมุนไพรตัวไหนที่ออกมาจากพืชชนิดนี้";
+			mes "เมื่อข้าได้ผลของ Yggdrasil แล้ว";
 			next;
 			mes "[Therapist]";
-			mes "And, in the Alberta merchant guild, there is an old man making potions.";
-			mes "You can ask him for help.";
+			mes "และในสมาคมพ่อค้าพ่อค้าอัลเบอร์ตาก็มีชายชราคนหนึ่งกำลังปรุงยา";
+			mes "คุณสามารถขอความช่วยเหลือจากเขาได้";
 			next;
 			mes "[Therapist]";
-			mes "^4d4dffAlchemist^000000 or ^4d4dffBiochemist^000000 or the higher class job ^4d4dffGeneticist^000000 are all good at creating potions.";
+			mes "^4d4dff Alchemist ^000000 หรือ ^4d4dff Biochemist ^000000 หรืองานระดับที่สูงขึ้น ^4d4dffGeneticist ^000000 ล้วนดีสำหรับการสร้าง potions";
 			next;
 			mes "[Therapist]";
-			mes "If you want to have a well-made potion, it may be a good idea to ask for a specialist.";
+			mes "ถ้าคุณอยากได้ยาที่ปรุงมาอย่างดีมันอาจเป็นความคิดที่ดีที่จะถามผู้เชี่ยวชาญ";
 			close;
 		}
 	case 4:
 		mes "[Therapist]";
-		mes "I see...";
-		mes "For emergency situations, in case you've fainted and want to be brought back here, I will save your current location.";
+		mes "ฉันเห็น ... ";
+		mes "สำหรับสถานการณ์ฉุกเฉินในกรณีที่คุณหมดสติและต้องการกลับมาที่นี่ฉันจะบันทึกตำแหน่งปัจจุบันของคุณ";
 		savepoint "iz_ac01",45,46,1,1;
 		close;
 	}
@@ -2299,8 +2297,8 @@ izlude_d,141,251,0	duplicate(Cultivated Red Plant#0)	Cultivated Red Plant#d	1078
 // -----------------------------------------------------------------------------
 izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 	if (!checkweight(1304,3)) {
-		mes "Your inventory is too full so you can't continue this quest.";
-		mes "Please try it again after organizing the items.";
+		mes "คลังของคุณเต็มเกินไปดังนั้นคุณไม่สามารถทำภารกิจต่อไปได้";
+		mes "โปรดลองอีกครั้งหลังจากจัดการรายการไอเท็ม";
 		close;
 	}
 	if (isbegin_quest(7478) == 1 && !isbegin_quest(7479)) {
@@ -2309,76 +2307,76 @@ izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 		emotion ET_SURPRISE, playerattached();
 		emotion ET_SMILE;
 		mes "[Lumin]";
-		mes "Hey there Turtle";
-		mes "You are really slow.";
-		mes "This Red Plant is no longer useful for you.";
+		mes "เฮ้นั่นเต่า";
+		mes "เจ้าช้าจริงๆ";
+		mes "ต้นแดงนี้ไม่มีประโยชน์สำหรับคุณอีกต่อไป";
 		cutin "nov_lumin01.bmp", 2;
 		next;
-		if (select("What are you talking about?", "Who're you?") == 1) {
+		if (select("คุณกำลังพูดเรื่องอะไร "," คุณเป็นใคร") == 1) {
 			mes "[Lumin]";
-			mes "You heard me.";
-			mes "Aren't you here to collect the Red Plant for the Academy Therapist.";
+			mes "คุณได้ยินฉัน";
+			mes "เจ้าไม่ได้มาที่นี่เพื่อรวบรวมพืชสีแดงให้กับนักบำบัดของสถาบัน";
 			next;
 			mes "[Lumin]";
-			mes "But, But something weird just happened.";
-			mes "It happened right before my eyes.";
+			mes "แต่ แต่มีบางสิ่งแปลก ๆ เกิดขึ้น";
+			mes "มันเกิดขึ้นต่อหน้าต่อตาข้า";
 			next;
 		} else {
 			if (isbegin_quest(7472) > 0 || isbegin_quest(7474) > 1) {
 				mes "[Lumin]";
-				mes "Did you lose your memory?";
-				mes "If the captain hears about it, he'll cry.";
-				mes "It is still ok as long as I remember you.";
+				mes "คุณสูญเสียความทรงจำของคุณหรือไม่";
+				mes "ถ้ากัปตันได้ยินเรื่องนี้เขาจะร้องไห้";
+				mes "มันก็ยังโอเคตราบเท่าที่ข้าจำเจ้าได้";
 				cutin "nov_lumin02.bmp", 2;
 				next;
 			} else {
 				mes "[Lumin]";
 				mes "Lumin.";
-				mes ".......";
-				mes "How about being happy?";
+				mes "....... ";
+				mes "แล้วจะมีความสุขได้อย่างไร";
 				cutin "nov_lumin04.bmp", 2;
 				next;
 			}
 		}
 		mes "[Lumin]";
-		mes "Anyway, let me explain it to you, I have just cut all the leaves of this Red Plant.";
-		mes "You can't collect the Red Plant anymore.";
+		mes "เอาเถอะให้ฉันอธิบายให้เจ้าฟังฉันเพิ่งตัดใบทั้งหมดของต้นแดงนี้";
+		mes "คุณไม่สามารถรวบรวม Red Plant ได้อีกต่อไป";
 		cutin "nov_lumin02.bmp", 2;
 		next;
-		select("Ok so give me a ^ff0000Red Herb^000000");
+		select("เอาล่ะให้ฉัน ^ff0000Red Herb^000000");
 		mes "[Lumin]";
-		mes "OK... then...";
-		mes "I don't even need it anyways. I already know all about basic medical botany.";
+		mes "ตกลง ... แล้ว ... ";
+		mes "ข้าไม่ต้องการมันอีกแล้วข้ารู้เรื่องพฤกษศาสตร์การแพทย์ขั้นพื้นฐานอยู่แล้ว";
 		cutin "nov_lumin03.bmp", 2;
 		next;
-		select("Then, why did you do it?");
+		select("แล้วทำไมคุณถึงทำเช่นนั้น");
 		mes "[Lumin]";
-		mes "I didn't do it!";
-		mes "I was just standing here.";
+		mes "ฉันไม่ได้ทำ!";
+		mes "ฉันเพิ่งมายืนอยู่ที่นี่";
 		cutin "nov_lumin05.bmp", 2;
 		next;
 		mes "[Lumin]";
-		mes "Here take this Red Herb.";
+		mes "เอา Red Herb นี่มา";
 		cutin "nov_lumin01.bmp", 2;
 		setquest 7479;
 		completequest 7479;
 		getitem 507,1;// Red_Herb
 		next;
 		mes "[Lumin]";
-		mes "Ah... see it's growing back.";
+		mes "อ่า ... ดูสิมันกำลังเพิ่มมากขึ้น";
 		enablenpc "Cultivated Red Plant#"+strnpcinfo(2);
 		close2;
 	} else {
 		if (Class == Job_Novice) {
 			if (isbegin_quest(7478) == 1) {
 				mes "[Lumin]";
-				mes "I guess you should go back to the Therapist.";
-				mes "He's probably waiting for you..";
+				mes "ข้าคิดว่าเจ้าควรกลับไปหา Therapist";
+				mes "เขาอาจจะรอเจ้าอยู่ .. ";
 				cutin "nov_lumin01.bmp", 2;
 				close2;
 			} else {
-				mes "He seems to think of something deeply.";
-				mes "Disregard it.";
+				mes "ดูเหมือนเขาจะคิดอะไรบางอย่างที่ลึกซึ้ง";
+				mes "ไม่ต้องสนใจมัน";
 				close;
 			}
 		} else {
@@ -2386,7 +2384,7 @@ izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 				mes "[Criatura Student]";
 				mes ".......";
 				next;
-				mes "This student looks familiar...";
+				mes "นักเรียนคนนี้ดูคุ้นเคย ... ";
 				close;
 			} else {
 				mes "[Criatura Student]";
@@ -2594,38 +2592,38 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 
 	if (isbegin_quest(4269) == 2) {
 		mes "[Receptionist]";
-		mes "Hello, " + strcharinfo(0) +".";
-		mes "How are you today?";
-		mes "I am in charge guiding you here in the Academy.";
+		mes "สวัสดี," + strcharinfo(0) + ".";
+		mes "วันนี้คุณเป็นอย่างไรบ้าง";
+		mes "ข้ามีหน้าที่นำทางท่านที่นี่ในสถาบัน";
 	} else {
 		mes "[Receptionist]";
-		mes "Welcome to our Academy. I am in charge with the guide and registration for Novice education courses.";
+		mes "ยินดีต้อนรับสู่สถาบันการศึกษาของเรา ฉันมีหน้าที่ดูแลมัคคุเทศก์และลงทะเบียนสำหรับหลักสูตรการศึกษาสามเณร";
 	}
 	next;
 	while(1) {
 		mes "[Receptionist]";
-		mes "What can I do for you?";
+		mes "ฉันจะทำอะไรให้คุณได้บ้าง";
 		next;
 		if (isbegin_quest(4269) == 2)
-			.@menu$ = ":What's inside and outside the Academy.:Trainer location guide.:End Coversation.";
+			.@menu$ = ":มีอะไรทั้งในและนอกสถานศึกษา:คู่มือแนะนำสถานที่กรอง:จบบทสนทนา";
 		else
-			.@menu$ = "Register for the Academy:Explanation about the Academy:Location for trainers:Coversation finished";
+			.@menu$ = "ลงทะเบียนสำหรับสถาบันการศึกษา:คำอธิบายเกี่ยวกับสถาบันการศึกษา:สถานที่สำหรับผู้ฝึกอบรม:การสนทนาเสร็จสิ้น";
 		switch(select(.@menu$)) {
 		case 1:
 			if (Class == Job_Novice) {
 				if (!checkweight(1301,10)) {
-					mes "- As you are overloaded with too many items, quest can't be continued.-";
+					mes "- เมื่อเจ้าเต็มไปด้วยไอเท็มมากเกินไปเควสต์จะไม่สามารถทำต่อได้ -";
 					close;
 				}
 				mes "[Receptionist]";
-				mes "Let me see... Your name is... " + strcharinfo(0) + ".";
-				mes "I will make a new registration for you.";
-				mes "You can choose the course freely and each course has individual features.";
+				mes "ให้ฉันดูหน่อย ... ชื่อของคุณคือ ... " + strcharinfo(0) + ".";
+				mes "ฉันจะทำการสมัครใหม่ให้คุณ";
+				mes "คุณสามารถเลือกหลักสูตรได้อย่างอิสระและแต่ละหลักสูตรมีคุณสมบัติส่วนบุคคล";
 				next;
 				mes "[Receptionist]";
-				mes "And this is the the basic equipment for the educational course.";
-				mes "Please make a good use of it.";
-				mes "Be careful with it as it won't be provided again.";
+				mes "และนี่เป็นอุปกรณ์พื้นฐานสำหรับหลักสูตรการศึกษา";
+				mes "ได้โปรดใช้มันให้เป็นประโยชน์";
+				mes "ระวังให้ดีเพราะมันจะไม่ได้รับอีกครั้ง";
 				setquest 4269;
 				completequest 4269;
 				getitem 2352,1;// Novice_Plate
@@ -2639,56 +2637,56 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 				getitem 569,300;// Novice_Potion
 				next;
 				mes "[Receptionist]";
-				mes "It is your first step to be an adventurer that you have made a visit to us.";
+				mes "มันเป็นขั้นตอนแรกของคุณในการเป็นนักผจญภัยที่คุณได้มาเยี่ยมพวกเรา";
 				getexp 100,100;
 				next;
 				mes "[Receptionist]";
-				mes "On our next meeting, I anticipate you will grow up a bit more.";
+				mes "ในการประชุมครั้งต่อไปของข้าข้าคาดว่าเจ้าจะโตขึ้นอีกหน่อย";
 				//ConsumeSpecialItem Inspector_Certificate_
 				close;
 			} else {
 				mes "[Receptionist]";
-				mes "One who is not a Novice can't attend the educational course.";
+				mes "ผู้ที่ไม่ใช่สามเณรไม่สามารถเข้าร่วมหลักสูตรการศึกษาได้";
 				next;
 				mes "[Receptionist]";
-				mes "However, a part of the educational course except the character cultivation can be freely attended. So, you may look around the Academy and neighboring places.";
+				mes "อย่างไรก็ตามเป็นส่วนหนึ่งของหลักสูตรการศึกษายกเว้นการฝึกฝนตัวละครสามารถเข้าร่วมได้อย่างอิสระดังนั้นคุณอาจมองไปรอบ ๆ สถานศึกษาและสถานที่ใกล้เคียง";
 				close;
 			}
 		case 2:
-			switch(select("What's on the 1st floor", "What's on the 2nd floor", "Explanation about towns", "End Conversation")) {
+			switch(select("มีอะไรอยู่บนชั้น 1 "," มีอะไรอยู่บนชั้น 2 "," คำอธิบายเกี่ยวกับเมือง "," สิ้นสุดการสนทนา")) {
 			case 1:
 				mes "[Receptionist]";
-				mes "The first floor is equipped with instructors that give you lessons on how the world works here in Midgard.";
+				mes "ชั้นแรกมีผู้สอนที่ให้คุณเรียนรู้ว่าโลกทำงานอย่างไรใน Midgard";
 				next;
 				mes "[Receptionist]";
-				mes "First of all, at the dispensary, you can learn how to recover your physical strength and learn a skill to heal your HP";
+				mes "ก่อนอื่น, ที่ร้านขายยา, คุณสามารถเรียนรู้วิธีการกู้คืนความแข็งแกร่งทางกายภาพของคุณและเรียนรู้ทักษะในการรักษา HP ของคุณ";
 				next;
 				mes "[Receptionist]";
-				mes "At the armory, you can get simple training about battling monsters in Midgard.";
+				mes "ที่คลังอาวุธคุณจะได้รับการฝึกฝนอย่างง่าย ๆ เกี่ยวกับการต่อสู้กับสัตว์ประหลาดใน Midgard";
 				next;
 				mes "[Receptionist]";
-				mes "At the cafeteria, you can practice cooking and and will learn its many benefits.";
+				mes "ที่โรงอาหารคุณสามารถฝึกทำอาหารและจะได้เรียนรู้ประโยชน์มากมาย";
 				next;
 				break;
 			case 2:
 				mes "[Receptionist]";
-				mes "At the 2nd floor, there are trainers that will teach you about the different job classes in the world.";
+				mes "ที่ชั้น 2 มีผู้ฝึกสอนที่จะสอนคุณเกี่ยวกับชั้นเรียนที่แตกต่างกันในโลก";
 				next;
 				mes "[Receptionist]";
-				mes "Listen to the trainers and decide for yourself which job suits your personal style.";
+				mes "ฟังผู้ฝึกสอนและตัดสินใจด้วยตัวเองว่างานไหนเหมาะกับสไตล์ของคุณ";
 				next;
 				break;
 			case 3:
 				mes "[Receptionist]";
-				mes "This town is called 'Izlude' the satellite and port city of the Capital City of the Rune-Midgarts Kingdom Prontera.";
+				mes "เมืองนี้เรียกว่า 'Izlude' ดาวเทียมและท่าเรือเมืองของเมืองหลวงของ Rune-Midgarts Kingdom Prontera";
 				next;
 				mes "[Receptionist]";
-				mes "This town was re-organized to suit the education of Novices.";
+				mes "เมืองนี้ถูกจัดระเบียบใหม่เพื่อให้เหมาะกับการศึกษาของสามเณร";
 				next;
 				break;
 			case 4:
 				mes "[Receptionist]";
-				mes "Please find me, if you need anything else.";
+				mes "ได้โปรดพบข้าด้วยถ้าเจ้าต้องการสิ่งอื่น";
 				//if (Class == Job_Novice)
 					//ConsumeSpecialItem Inspector_Certificate_
 				close;
@@ -2696,10 +2694,10 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 			break;
 		case 3:
 			while(1) {
-				switch(select("Game Mechanic Tutorial Instructors", "1st job trainers", "Return to the previous menu", "End Conversation")) {
+				switch(select("Game Tutorialic Tutorial Instructors "," ผู้ฝึกสอนคนที่ 1 "," กลับไปที่เมนูก่อนหน้า "," จบการสนทนา")) {
 				case 1:
 					mes "[Receptionist]";
-					mes "Left-Click your mouse on the name of the trainer you are looking for and I will give guide you to them.";
+					mes "คลิกซ้ายที่เมาส์บนชื่อเทรนเนอร์ที่คุณกำลังมองหาและฉันจะให้คำแนะนำแก่พวกเขา";
 					next;
 					mes "<NAVI>[Therapist]<INFO>iz_ac01,59,43</INFO></NAVI>, status recovery trainer";
 					mes "<NAVI>[Subino]<INFO>iz_ac01,59,83</INFO></NAVI>, battle trainer";
@@ -2710,25 +2708,25 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 					mes "<NAVI>[Cream Puff]<INFO>iz_ac02,143,55</INFO></NAVI>, Class Aptitude Test.";
 					next;
 					mes "[Receptionist]";
-					mes "Is that helpful?";
+					mes "มีประโยชน์ไหม?";
 					next;
-					if (select("Just a moment.", "I have to leave.") == 1) {
+					if (select("เดี๋ยวก่อน "," ฉันต้องจากไปแล้ว") == 1) {
 						continue;
 					} else {
 						if (Class == Job_Novice) {
 							mes "[Receptionist]";
-							mes "I believe you'll become nicer on our next meeting. Try your best~~~";
+							mes "ฉันเชื่อว่าคุณจะดีกว่าในการประชุมครั้งต่อไปลองดีที่สุด ~~~";
 							//ConsumeSpecialItem Inspector_Certificate_
 							close;
 						} else {
 							mes "[Receptionist]";
-							mes "Please find me, if you need anything else.";
+							mes "ได้โปรดพบข้าด้วยถ้าเจ้าต้องการสิ่งอื่น";
 							close;
 						}
 					}
 				case 2:
 					mes "[Receptionist]";
-					mes "Left-Click your mouse on the name of the trainer you are looking for and I will give guide you to them.";
+					mes "คลิกซ้ายที่เมาส์บนชื่อเทรนเนอร์ที่คุณกำลังมองหาและฉันจะให้คำแนะนำแก่พวกเขา";
 					next;
 					mes "Swordman Instructor <NAVI>[Adric]<INFO>iz_ac02,62,51</INFO></NAVI>";
 					mes "Acolyte Instructor <NAVI>[Alice]<INFO>iz_ac02,156,169</INFO></NAVI>";
@@ -2741,19 +2739,19 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 					mes "Taekwon Instructor <NAVI>[Arang]<INFO>iz_ac02,70,85</INFO></NAVI>";
 					next;
 					mes "[Receptionist]";
-					mes "Is that helpful?";
+					mes "มีประโยชน์ไหม?";
 					next;
-					if (select("Just a moment.", "I have to leave.") == 1) {
+					if (select("เดี๋ยวก่อน:ฉันต้องจากไป") == 1) {
 						continue;
 					} else {
 						if (Class == Job_Novice) {
 							mes "[Receptionist]";
-							mes "I believe you'll become nicer on our next meeting. Try your best~~~";
+							mes "ฉันเชื่อว่าคุณจะดีกว่าในการประชุมครั้งต่อไปลองดีที่สุด ~~~";
 							//ConsumeSpecialItem Inspector_Certificate_
 							close;
 						} else {
 							mes "[Receptionist]";
-							mes "Please find me, if you need anything else.";
+							mes "ได้โปรดพบข้าด้วยถ้าเจ้าต้องการสิ่งอื่น";
 							close;
 						}
 					}
@@ -2761,7 +2759,7 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 					break;
 				case 4:
 					mes "[Receptionist]";
-					mes "Please find me, if you need anything else.";
+					mes "ได้โปรดพบข้าด้วยถ้าเจ้าต้องการสิ่งอื่น";
 					// if (Class == Job_Novice)
 						//ConsumeSpecialItem Inspector_Certificate_
 					close;
@@ -2771,7 +2769,7 @@ iz_ac01,100,39,5	script	Academy Receptionist#1	4_F_01,{
 			break;
 		case 4:
 			mes "[Receptionist]";
-			mes "Please find me, if you need anything else.";
+			mes "ได้โปรดพบข้าด้วยถ้าเจ้าต้องการสิ่งอื่น";
 			// if (Class == Job_Novice)
 				//ConsumeSpecialItem Inspector_Certificate_
 			close;
@@ -3434,37 +3432,37 @@ iz_ac01_d,36,52,3	duplicate(Odd Novice#ac)	Odd Novice#ac_d	4_M_SIT_NOVICE
 // -----------------------------------------------------------------------------
 izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 	if (!checkweight(1301,3)) {
-		mes "- Quest cannot be continued due to your overfilled inventory. -";
+		mes "- เควสต์ไม่สามารถดำเนินการต่อเนื่องจากพื้นที่โฆษณาที่เติมจนเต็มของคุณ -";
 		close;
 	}
 
 	if (Class == Job_Novice) {
 		if (!isbegin_quest(1237)) {
 			mes "[Shop Helper Leonie]";
-			mes "How are you doing with your basic studies?";
-			mes "You need to learn about the shop information.";
+			mes "คุณจะทำอย่างไรกับการศึกษาขั้นพื้นฐานของคุณ";
+			mes "คุณต้องเรียนรู้เกี่ยวกับข้อมูลร้านค้า";
 			next;
-			if (select("I'm doing fine myself!", "Ok I'll listen!") == 1) {
+			if (select("ฉันทำดีเอง!", "โอเคฉันจะฟัง!") == 1) {
 				mes "[Shop Helper Leonie]";
-				mes "If you listen carefully, I will give you a souvenir.";
+				mes "ถ้าเจ้าตั้งใจฟังฉันจะให้ของที่ระลึกแก่เจ้า";
 				close;
 			}
 			mes "[Shop Helper Leonie]";
-			mes "Wise choise.";
-			mes "Midgard has many shops and many variety of currencies.";
-			mes "So you need to listen to me well to use them accordingly.";
+			mes "ทางเลือกที่ฉลาด"; 
+			mes "Midgard มีร้านค้ามากมายและสกุลเงินที่หลากหลาย"; 
+			mes "ดังนั้นคุณต้องฟังฉันให้ดีเพื่อใช้มันให้เหมาะสม";
 			setquest 1237;
 			close;
 		}
 		if (!isbegin_quest(1238)) {
 			mes "[Shop Helper Leonie]";
-			mes "Let's start.";
+			mes "เริ่มกันเลย";
 		} else if (isbegin_quest(1238) == 1) {
 			if (countitem(501) > 0) {
 				mes "[Shop Helper Leonie]";
-				mes "Ok 1 ^0000ffRed Potion^000000.";
-				mes "For now on you can use them at a field in a dungeon.";
-				mes "As a reward I'll give you a couple of ^ff0000Fly Wing^000000s.";
+				mes "ตกลง 1 ^0000ffRed Potion ^000000.";
+				mes "สำหรับตอนนี้คุณสามารถใช้พวกมันในสนามในคุกใต้ดินได้";
+				mes "เพื่อเป็นรางวัลฉันจะมอบ ^ff0000Fly Wing ^000000 สองสามอันให้คุณ";
 				completequest 1238;
 				setquest 1239;
 				getitem 12323,50;// N_Fly_Wing
@@ -3472,44 +3470,44 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 				close;
 			}
 			mes "[Shop Helper Leonie]";
-			mes "Go to the shop and buy one ^0000ffRed Potion^000000 and bring it back.";
-			mes "You have that much money, right?";
+			mes "ไปที่ร้านแล้วซื้อ  1 ^0000ffRed Potion^000000 แล้วนำกลับมา";
+			mes "เจ้ามีเงินมากขนาดนั้นใช่ไหม?";
 			next;
 			mes "[Shop Helper Leonie]";
-			mes "If not, go hunt monsters in the vicnity and then when you sell their loot you should make enough money.";
+			mes "ถ้าไม่, ไปล่าสัตว์ประหลาดในสุสานและจากนั้นเมื่อคุณขายของขวัญของพวกเขาคุณควรทำเงินให้เพียงพอ";
 			next;
-			if (select("I will do it.", "Question about the shop.") == 1) {
+			if (select("ฉันจะทำมัน "," คำถามเกี่ยวกับร้านค้า") == 1) {
 				mes "[Shop Helper Leonie]";
-				mes "Let's go into the next lesson.";
-				mes "Hurry back.";
+				mes "ลองเข้าไปดูบทเรียนต่อไป";
+				mes "รีบกลับมา";
 				close;
 			}
 			mes "[Shop Helper Leonie]";
 		} else {
 			if (!isbegin_quest(1240)) {
 				mes "[Shop Helper Leonie]";
-				mes "We'll do the next lesson.";
-				mes "In your future travels.";
-				mes "You will acquire many items in your inventory.";
+				mes "เราจะทำบทเรียนต่อไป";
+				mes "ในการเดินทางในอนาคตของคุณ";
+				mes "คุณจะได้รับหลายรายการในคลังของคุณ";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "Among those items, there will be ones that you can't drop or trade, these are for quests. These are important items but often times you will also find them to be a burden.";
+				mes "ในบรรดาไอเทมเหล่านั้นมันจะมีของที่เจ้าไม่สามารถทิ้งหรือแลกเป็นของสำหรับเควสได้มันเป็นของสำคัญ แต่บ่อยครั้งที่เจ้าจะพบว่ามันเป็นภาระ";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "In those times, sell what you can to shops in order to decrease your inventory.";
-				mes "I'll give you an example.";
-				mes "Go to a shop to unload it.";
+				mes "ในครั้งนั้นขายสิ่งที่คุณสามารถทำได้กับร้านค้าเพื่อลดสินค้าคงคลังของคุณ";
+				mes "ฉันจะยกตัวอย่างให้คุณ";
+				mes "ไปที่ร้านเพื่อทำการขนถ่าย";
 				next;
-				switch(select("I don't want to do it.", "I will do it.", "Question about the shop.")) {
+				switch(select("ฉันไม่ต้องการทำ "," ฉันจะทำ "," คำถามเกี่ยวกับร้านค้า")) {
 					case 1:
 						mes "[Shop Helper Leonie]";
-						mes "Stingy person!";
+						mes "คนตระหนี่!";
 						close;
 					case 2:
 						mes "[Shop Helper Leonie]";
-						mes "About shop variety.";
-						mes "You can buy these items everywhere in the world.";
-						mes "Go sell one ^ff0000Poor Can^000000 that I gave you to the shop.";
+						mes "เกี่ยวกับความหลากหลายของร้าน";
+						mes "คุณสามารถซื้อสิ่งของเหล่านี้ได้ทุกที่ในโลก";
+						mes "ไปขายหนึ่ง ^ff0000Poor Can ^000000 ที่ฉันมอบให้คุณที่ร้าน";
 						completequest 1239;
 						setquest 1240;
 						getitem 6426,1;// Bad_Can
@@ -3521,23 +3519,23 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 			} else if (isbegin_quest(1240) == 1) {
 				if (!countitem(6426)) {
 					mes "[Shop Helper Leonie]";
-					mes "You went and sold the ^ff0000Poor Can^000000.";
-					mes "Good work, here's the reward for it.";
-					mes "The things I haven't told you, you will learn throughout your travels.";
+					mes "คุณไปขาย ^ff0000Poor Can ^000000 แล้ว";
+					mes "ทำได้ดีนี่เป็นรางวัลสำหรับมัน";
+					mes "สิ่งที่ฉันไม่ได้บอกคุณคุณจะได้เรียนรู้ตลอดการเดินทางของคุณ";
 					completequest 1240;
 					getitem 12324,10;// N_Butterfly_Wing
 					getexp 1000,50;
 					close;
 				}
 				mes "[Shop Helper Leonie]";
-				mes "You are now in trial period.";
-				mes "Go sell the Poor Can and come back after selling it.";
+				mes "ตอนนี้คุณอยู่ในช่วงทดลองใช้";
+				mes "ไปขาย Poor Can แล้วกลับมาหลังจากขายมัน";
 				next;
-				if (select("I will do it.", "Question about the shop.") == 1) {
+				if (select("ฉันจะทำมัน", "คำถามเกี่ยวกับร้านค้า") == 1) {
 					mes "[Shop Helper Leonie]";
-					mes "About shop variety.";
-					mes "You can buy these items everywhere in the world.";
-					mes "Go sell one ^ff0000Poor Can^000000 that I gave you to the shop.";
+					mes "เกี่ยวกับความหลากหลายของร้าน";
+					mes "คุณสามารถซื้อสิ่งของเหล่านี้ได้ทุกที่ในโลก";
+					mes "ไปขายหนึ่ง ^ff0000Poor Can ^000000 ที่ฉันมอบให้คุณที่ร้าน";
 					close;
 				}
 				mes "[Shop Helper Leonie]";
@@ -3546,12 +3544,12 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 	}
 	if (Class != Job_Novice || isbegin_quest(1240) == 2) {
 		mes "[Shop Helper Leonie]";
-		mes "Anything else?";
+		mes "มีอะไรอีกไหม?";
 		next;
-		if (select("No", "Yes, there are lot.") == 1) {
+		if (select("ไม่", "ใช่มีจำนวนมาก") == 1) {
 			mes "[Shop Helper Leonie]";
 			mes "Goodbye.";
-			mes "The things I haven't told you, you will learn throughout your travels.";
+			mes "สิ่งที่ฉันไม่ได้บอกคุณคุณจะได้เรียนรู้ตลอดการเดินทางของคุณ";
 			close;
 		}
 		mes "[Shop Helper Leonie]";
@@ -3559,20 +3557,20 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 	while(1) {
 		mes "What would you like to know?";
 		next;
-		set .@menu$,"Shop types:Currency types:Cash Shop:"+(Class == Job_Novice && !isbegin_quest(1238)?"Experience training.":"No, I know enough.");
+		set .@menu$,"ประเภทร้านค้า: ประเภทสกุลเงิน: ร้านเงินสด:"+(Class == Job_Novice && !isbegin_quest(1238)?"การฝึกฝนประสบการณ์ ":" ไม่ฉันรู้พอแล้ว");
 		switch(select(.@menu$)) {
 			case 1:
 				mes "[Shop Helper Leonie]";
-				mes "You can buy weapons and armor at various armory merchants in each town.";
+				mes "คุณสามารถซื้ออาวุธและชุดเกราะได้จากพ่อค้าอาวุธต่าง ๆ ในแต่ละเมือง";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "Healing potions and movement consummables can be found at Tool Shops.";
+				mes "ยารักษาและอุปกรณ์การเคลื่อนไหวสามารถพบได้ที่ร้านเครื่องมือ";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "You'll also find merchants selling items for refining.";
+				mes "คุณจะพบพ่อค้าที่ขายสินค้าเพื่อทำการกลั่น";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "So when you go into a town, try figuring out what shops there are for your benefit.";
+				mes "ดังนั้นเมื่อคุณเข้าไปในเมืองลองค้นหาร้านค้าที่มีอยู่เพื่อผลประโยชน์ของคุณ";
 				if (isbegin_quest(1237) == 1)
 					completequest 1237;
 				next;
@@ -3580,14 +3578,14 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 				break;
 			case 2:
 				mes "[Shop Helper Leonie]";
-				mes "Kafras and most NPC merchants use ^ff0000Zeny^000000 but Malangdo and some of the Ash Vacuum worlds use different types of currency.";
+				mes "Kafras และพ่อค้า NPC ส่วนใหญ่ใช้ ^ff0000Zeny ^000000 แต่ Malangdo และโลกแห่ง Ash Vacuum บางแห่งใช้สกุลเงินประเภทต่าง ๆ ";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "They are ^ff0000Silvervine Fruit^000000, ^ff0000Splendide Coins^000000, they can be bought at Cash Shop or acquired through quests. The fruits and coins that are collected this way.";
+				mes "พวกเขาคือ ^ff0000Silvervine Fruit ^000000, ^ff0000Splendide Coin ^000000 พวกเขาสามารถหาซื้อได้ที่ Cash Shop หรือได้มาจาก quests ผลไม้และเหรียญที่รวบรวมมาด้วยวิธีนี้";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "They can be exchanged with unique equipments or gears.";
-				mes "So, if you have plans to venture out to these areas, be sure to collect them.";
+				mes "พวกมันสามารถแลกเปลี่ยนกับอุปกรณ์หรือเกียร์พิเศษ";
+				mes "ดังนั้นถ้าคุณวางแผนที่จะออกไปหาพื้นที่เหล่านี้อย่าลืมรวบรวมพวกมันด้วย";
 				if (isbegin_quest(1237) == 1)
 					completequest 1237;
 				next;
@@ -3595,10 +3593,10 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 				break;
 			case 3:
 				mes "[Shop Helper Leonie]";
-				mes "The icon on the right side called Cash Shop, if you click on it, whether you're in a town, dungeon, or field, you can still buy items anywhere you want.";
+				mes "ไอคอนทางด้านขวาเรียกว่า Cash Shop ถ้าคุณคลิกที่ไอคอนไม่ว่าคุณจะอยู่ในเมืองดันเจี้ยนหรือทุ่งนาคุณยังสามารถซื้อสินค้าได้ทุกที่";
 				next;
 				mes "[Shop Helper Leonie]";
-				mes "The cash you need to buy the items can be charged on the website.";
+				mes "เงินสดที่คุณต้องซื้อก็สามารถเรียกเก็บเงินได้จากเว็บไซต์";
 				if (isbegin_quest(1237) == 1)
 					completequest 1237;
 				next;
@@ -3607,30 +3605,30 @@ izlude,115,181,5	script	Shop Helper#iz	4_F_KHELLISIA,{
 			case 4:
 				if (Class == Job_Novice && !isbegin_quest(1238)) {
 					mes "[Shop Helper Leonie]";
-					mes "Let's do a simple tutorial.";
-					mes "Go to the shop and buy one ^0000ffRed Potion^000000 and bring it back.";
-					mes "You have that much money, right?";
+					mes "ลองทำแบบฝึกหัดง่ายๆ";
+					mes "ไปที่ร้านแล้วซื้อ 1 ^0000ffRed Potion^000000 แล้วนำกลับมา";
+					mes "เจ้ามีเงินมากขนาดนั้นใช่ไหม?";
 					next;
 					mes "[Shop Helper Leonie]";
-					mes "If not, go hunt monsters in the vicnity and then when you sell their loot you should make enough money.";
+					mes "ถ้าไม่, ไปล่าสัตว์ประหลาดในสุสานและจากนั้นเมื่อคุณขายของขวัญของพวกเขาคุณควรทำเงินให้เพียงพอ";
 					next;
-					if (select("That's too tedious.", "I will do it.") == 1) {
+					if (select("มันน่าเบื่อเกินไป "," ฉันจะทำ") == 1) {
 						mes "[Shop Helper Leonie]";
-						mes "Are you that lazy?";
-						mes "I am watching!";
+						mes "เจ้าเกียจคร้านเหรอ?";
+						mes "ฉันกำลังดูอยู่!";
 						close;
 					}
 					mes "[Shop Helper Leonie]";
-					mes "Let's go into the next lesson.";
-					mes "Hurry back.";
+					mes "ลองเข้าไปดูบทเรียนต่อไป";
+					mes "รีบกลับมา";
 					if (isbegin_quest(1237) == 1)
 						completequest 1237;
 					setquest 1238;
 					close;
 				}
 				mes "[Shop Helper Leonie]";
-				mes "That's a relief that you know enough.";
-				mes "If you have more questions, please ask me again.";
+				mes "นั่นเป็นความโล่งใจที่เจ้าพอรู้";
+				mes "หากคุณมีคำถามเพิ่มเติมกรุณาถามฉันอีกครั้ง";
 				close;
 		}
 	}
@@ -4247,11 +4245,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients- ^0000cd1 Clover, 1 Green Herb, 1 Red Herb^000000.";
 				next;
-				cutin "ท็ณชฦฝฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Dacquoise]";
 				mes "Clover and the Red Herb are dropped by Lunatic or Fabre monsters wandering everywhere on the field outside Izlude.";
 				next;
-				cutin "ฦฤบ๊ธฃฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Eclaire]";
 				mes "Green Herbs are dropped by Fabres.";
 				next;
@@ -4273,11 +4271,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are ^0000cd1 Apple & 2 Carrots^000000.";
 				next;
-				cutin "ฦ๗ธตฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Dacquoise]";
 				mes "Apples are dropped by Porings bouncing around the field outside of Izlude.";
 				next;
-				cutin "ท็ณชฦฝฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Eclaire]";
 				mes "Carrots are given by Lunatics.";
 				next;
@@ -4299,15 +4297,15 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are ^0000cd1 Jellopy, 1 Fluff, 1 Feather^000000.";
 				next;
-				cutin "ฦ๗ธตฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Dacquoise]";
 				mes "Jellopy are dropped by Porings bouncing around the field of Izlude.";
 				next;
-				cutin "ฦฤบ๊ธฃฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Eclaire]";
 				mes "Fluff can be received from Fabre or Lunatic.";
 				next;
-				cutin "ท็ณชฦฝฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Mille Feuille]";
 				mes "Feathers are dropped by Lunatics or Fabres.";
 				next;
@@ -4329,11 +4327,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are-^0000cd 1 Apple & 1 Clover^000000.";
 				next;
-				cutin "ฦ๗ธตฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Dacquoise]";
 				mes "Apple can be found in Porings in the field outside of Izlude.";
 				next;
-				cutin "ท็ณชฦฝฤซตๅ.bmp", 3;
+				cutin "??????mp", 3;
 				mes "[Eclaire]";
 				mes "Clovers are dropped by Lunatics or Fabre in the field outside Izlude.";
 				next;
@@ -12836,7 +12834,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 				mes "Cancel the refining.";
 				close;
 			}
-			if (getequippercentrefinery(.@part) < 100) {
+			if (getequippercentrefinery(.@part, REFINE_COST_NORMAL) < 100) {
 				mes "[Refining Machine Wagjak]";
 				mes "-Ddarritt!-";
 				mes "The user's confirmation required.";
@@ -12851,7 +12849,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 			// anti-hack
 			if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt))
 				close;
-			if (getequippercentrefinery(.@part) <= rand(100)) {
+			if (getequippercentrefinery(.@part, REFINE_COST_NORMAL) <= rand(100)) {
 				failedrefitem .@part;
 				mes "[Refining Machine Wagjak]";
 				mes "Result : Fail";
@@ -12889,7 +12887,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		mes "Refining has been cancelled as per the user's request.";
 		close;
 	}
-	if (getequippercentrefinery(.@part) < 100) {
+	if (getequippercentrefinery(.@part, REFINE_COST_NORMAL) < 100) {
 		mes "[Refining Machine Wagjak]";
 		mes "-Ddarritt!-";
 		mes "The user's confirmation required.";
@@ -12920,7 +12918,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		mes "You are short of refining price.";
 		close;
 	}
-	if (getequippercentrefinery(.@part) <= rand(100)) {
+	if (getequippercentrefinery(.@part, REFINE_COST_NORMAL) <= rand(100)) {
 		failedrefitem .@part;
 		mes "[Refining Machine Wagjak]";
 		mes "Result : Fail";

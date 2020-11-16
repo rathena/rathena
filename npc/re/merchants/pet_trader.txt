@@ -10,17 +10,17 @@
 prontera,210,209,5	script	Pet Trader#1	4_M_JPNOJI,{
 	disable_items;
 	mes "[Pet Trader]";
-	mes "Making a living through business ain't easy.";
-	mes "I get real bad motion sickness, yet today I got caught up in a storm on my way here.";
+	mes "การเลี้ยงชีพด้วยธุรกิจไม่ใช่เรื่องง่าย.";
+	mes "ข้ารู้สึกแย่อารมณ์เหมือนคนป่วย, วันนี้ข้าถูกขังอยู่ในพายุระหว่างการเดินทาง.";
 	next;
 	mes "[Pet Trader]";
-	mes "It was such a horrible experience. Thanks to that, I don't feel so good. Ughh...";
+	mes "มันช่างเป็นประสบการณ์ที่น่ากลัว. ขอบคุณที่, ข้ารู้สึกไม่ดีเลย. อุ๊บบบ...";
 	next;
 	mes "[Pet Trader]";
-	mes "Anyway, did you come here looking for a Cute Pet?";
-	mes "You've brought a ticket with you, right?";
+	mes "อย่างไรก็ตาม, เจ้ามาที่นี่เพื่อมองหาสัตว์เลี้ยงแสนน่ารักใช่หรือเปล่า ?";
+	mes "เจ้าได้นำตั๋วมาด้วยไหม ?";
 	next;
-	switch (select("Examine your tickets:Cancel")) {
+	switch (select("ตรวจสอบตั๋ว:ยกเลิก")) {
 	case 1:
 		setarray .@tickets,
 			6116, //Succu_Pet_Coupon
@@ -131,35 +131,35 @@ prontera,210,209,5	script	Pet Trader#1	4_M_JPNOJI,{
 
 		if (.@count == 0) {
 			mes "[Pet Trader]";
-			mes "I don't think you've got the stuff I want.";
+			mes "ข้าคิดว่าเจ้าไม่มีสิ่งที่ข้าต้องการมาด้วย.";
 			close;
 		}
 
 		mes "[Pet Trader]";
-		mes "Which ticket do you want to exchange?";
+		mes "ตั๋วอันไหนที่เจ้าต้องการแลกเปลี่ยน ?";
 		next;
 		.@index = .@ticketIndices[select(.@menu$) - 1];
 
 		mes "[Pet Trader]";
-		mes "Great!";
+		mes "เยี่ยม!";
 		mes "^0000FF"+ getitemname(.@eggs[.@index]) +"^000000";
-		mes "Are you sure you want this pet?";
+		mes "เจ้าแน่ใจนะว่าต้องการสัตว์เลี้ยงตัวนี้ ?";
 		next;
-		if (select("Yes:No") == 2) close;
+		if (select("ใช่:ไม่") == 2) close;
 		if (!checkweight(.@eggs[.@index], 1)) {
-			mes "You're carrying too much stuff!";
-			mes "Come back when you've made some space.";
+			mes "เจ้าแบกของมามากเกินไป!";
+			mes "กลับมาใหม่เมื่อมีช่องว่างในกระเป๋า.";
 			close;
 		}
 
 		mes "[Pet Trader]";
-		mes "Here's your pet~";
+		mes "นี่คือสัตว์เลี้ยงของเจ้า~";
 		delitem .@tickets[.@index], 1;
 		getitem .@eggs[.@index], 1;
 		close;
 	case 2:
 		mes "[Pet Trader]";
-		mes "So you want hear about the land across the sea, but I ain't feeling so well today.";
+		mes "งั้นเจ้าต้องการได้ยินเกี่ยวกับดินแดนทางฝั่งทะเล, แต่วันนี้ข้ารู้สึกไม่ค่อยดี.";
 		close;
 	}
 	end;

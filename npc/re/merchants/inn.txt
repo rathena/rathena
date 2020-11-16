@@ -17,28 +17,28 @@
 //============================================================
 bra_in01,27,24,3	script	Hotel Keeper#bra1	478,{
 	mes "[Hotel Keeper]";
-	mes "Welcome to the beautiful Brasilis Hotel.";
+	mes "ยินดีต้อนรับสู่โรงแรม Brasilis ที่สวยงาม";
 	next;
-	switch(select("Save:Rest -5000 zeny")) {
+	switch(select("เซฟ:นอนพัก -5000 zeny")) {
 	case 1:
 		mes "[Hotel Keeper]";
-		mes "Do you want to save here at the Brasilis Hotel?";
+		mes "คุณต้องการบันทึกที่นี่ที่ Brasilis Hotel หรือไม่";
 		next;
-		switch(select("No thank you.:Absolutely.")) {
+		switch(select("ไม่ขอบใจนะ:แน่นอน")) {
 		case 1:
 			mes "[Hotel Keeper]";
-			mes "Ok then, enjoy your stay.";
+			mes "โอเคสนุกไปกับการพัก";
 			close;
 		case 2:
 			mes "[Hotel Keeper]";
-			mes "Your respawn has been saved here at the hotel. I hope that you enjoy your stay here in Brasilis.";
+			mes "การตอบกลับของคุณได้รับการบันทึกที่นี่ที่โรงแรมฉันหวังว่าคุณจะสนุกกับการพักที่นี่ใน Brasilis";
 			savepoint "bra_in01",144,69,1,1;
 			close;
 		}
 	case 2:
 		if (Zeny > 4999) {
 			mes "[Hotel Keeper]";
-			mes "I will show you a great room.";
+			mes "ฉันจะแสดงให้คุณเห็นห้องที่ดี";
 			close2;
 			set Zeny, Zeny-5000;
 			percentheal 100,100;
@@ -47,7 +47,7 @@ bra_in01,27,24,3	script	Hotel Keeper#bra1	478,{
 		}
 		else {
 			mes "[Hotel Keeper]";
-			mes "I'm sorry, but the service charge is 5,000 zeny per night.";
+			mes "ฉันขอโทษ แต่ค่าบริการ 5,000 zeny ต่อคืน";
 			close;
 		}
 	}
