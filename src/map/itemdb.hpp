@@ -989,6 +989,7 @@ public:
 
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
+	void loadingFinished();
 };
 
 extern ItemDatabase item_db;
