@@ -57,7 +57,6 @@
 #   DamageMotion            Damage animation speed. (Default: 0)
 #   Ai                      Aegis monster type AI behavior. (Default: 06)
 #   Class                   Aegis monster class. (Default: Normal)
-#   Attribute               Aegis monster attribute. (Default: 0)
 #   Modes:                  List of unique behavior not defined by AI, Class, or Attribute. (Optional)
 #     <mode>: <value>       Mode to toggle.
 #   MvpDrops:               List of possible MVP prize items. Max of MAX_MVP_DROP. (Optional)
@@ -1518,7 +1517,8 @@ Body:
     DamageMotion: 384
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Blue_Box
         Rate: 4000
@@ -1574,7 +1574,8 @@ Body:
     DamageMotion: 576
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 2000
@@ -1860,7 +1861,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Cardinal_Jewel_
         Rate: 1500
@@ -2463,7 +2465,8 @@ Body:
     DamageMotion: 300
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Rough_Wind
         Rate: 1500
@@ -3274,7 +3277,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Red_Herb
         Rate: 5500
@@ -3314,7 +3321,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Blue_Herb
         Rate: 5500
@@ -3354,7 +3365,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Green_Herb
         Rate: 7000
@@ -3394,7 +3409,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Yellow_Herb
         Rate: 5500
@@ -3434,7 +3453,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: White_Herb
         Rate: 5500
@@ -3475,7 +3498,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Blue_Herb
         Rate: 5500
@@ -3514,7 +3541,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Alchol
         Rate: 50
@@ -3554,7 +3585,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Alchol
         Rate: 50
@@ -3604,7 +3639,8 @@ Body:
     DamageMotion: 480
     Ai: 07
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Gold_Ring
         Rate: 2000
@@ -3658,7 +3694,8 @@ Body:
     DamageMotion: 648
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Red_Jewel
         Rate: 2000
@@ -4833,7 +4870,8 @@ Body:
     DamageMotion: 360
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: White_Potion
         Rate: 5000
@@ -4975,7 +5013,8 @@ Body:
     DamageMotion: 432
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Tiger's_Skin
         Rate: 5000
@@ -6461,7 +6500,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Crystal_Jewel
         Rate: 2000
@@ -6611,7 +6651,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Fox_Tail
         Rate: 5000
@@ -6936,7 +6977,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -7036,7 +7078,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Frozen_Heart
         Rate: 500
@@ -7852,7 +7895,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Mushroom_Of_Thief_1
         Rate: 1500
@@ -8138,7 +8185,8 @@ Body:
     DamageMotion: 360
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Voucher_Of_Orcish_Hero
         Rate: 5500
@@ -10222,7 +10270,11 @@ Body:
     AttackMotion: 720
     DamageMotion: 432
     Ai: 01
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Santa's_Hat_
         Rate: 1000
@@ -10411,7 +10463,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Skyblue_Jewel
         Rate: 4500
@@ -10467,7 +10520,8 @@ Body:
     DamageMotion: 336
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Fang_Of_Garm
         Rate: 1000
@@ -11390,7 +11444,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Skull
         Rate: 6000
@@ -11935,8 +11990,6 @@ Body:
     ChaseRange: 16
     Size: Large
     Race: Demihuman
-    RaceGroups:
-      Guardian: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 265
@@ -11944,13 +11997,15 @@ Body:
     AttackMotion: 1200
     DamageMotion: 384
     Ai: 10
-    Class: Boss
+    Class: Guardian
     Modes:
       CanMove: true
       CastSensorChase: true
       Angry: true
       ChangeChase: true
       ChangeTargetMelee: true
+      Detector: true
+      KnockBackImmune: true
   - Id: 1286
     AegisName: KNIGHT_GUARDIAN
     Name: Knight Guardian
@@ -11973,8 +12028,6 @@ Body:
     ChaseRange: 16
     Size: Large
     Race: Demihuman
-    RaceGroups:
-      Guardian: true
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 275
@@ -11982,13 +12035,15 @@ Body:
     AttackMotion: 1200
     DamageMotion: 384
     Ai: 10
-    Class: Boss
+    Class: Guardian
     Modes:
       CanMove: true
       CastSensorChase: true
       Angry: true
       ChangeChase: true
       ChangeTargetMelee: true
+      Detector: true
+      KnockBackImmune: true
   - Id: 1287
     AegisName: SOLDIER_GUARDIAN
     Name: Soldier Guardian
@@ -12010,8 +12065,6 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demihuman
-    RaceGroups:
-      Guardian: true
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 265
@@ -12019,7 +12072,10 @@ Body:
     AttackMotion: 288
     DamageMotion: 384
     Ai: 05
-    Class: Boss
+    Class: Guardian
+    Modes:
+      Detector: true
+      KnockBackImmune: true
   - Id: 1288
     AegisName: EMPELIUM
     Name: Emperium
@@ -12049,7 +12105,11 @@ Body:
     DamageMotion: 384
     Ai: 06
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 1289
     AegisName: MAYA_PUPLE
     Name: Maya Purple
@@ -13158,7 +13218,8 @@ Body:
     DamageMotion: 500
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Turtle_Shell
         Rate: 5500
@@ -15346,7 +15407,8 @@ Body:
     DamageMotion: 360
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -16050,7 +16112,8 @@ Body:
     DamageMotion: 576
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -16274,7 +16337,11 @@ Body:
     WalkSpeed: 190
     Ai: 25
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Piece_Of_Cake
         Rate: 3800
@@ -16306,7 +16373,11 @@ Body:
     WalkSpeed: 190
     Ai: 25
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Piece_Of_Cake
         Rate: 3800
@@ -16338,7 +16409,11 @@ Body:
     WalkSpeed: 190
     Ai: 25
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Piece_Of_Cake
         Rate: 3800
@@ -16370,7 +16445,11 @@ Body:
     WalkSpeed: 190
     Ai: 25
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Piece_Of_Cake
         Rate: 3800
@@ -16417,7 +16496,8 @@ Body:
     DamageMotion: 576
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -17172,7 +17252,8 @@ Body:
     DamageMotion: 420
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -19243,7 +19324,8 @@ Body:
     DamageMotion: 576
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -19612,7 +19694,8 @@ Body:
     DamageMotion: 480
     Ai: 04
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Sword_Of_Grave_Keeper
         Rate: 1000
@@ -20040,7 +20123,8 @@ Body:
     DamageMotion: 480
     Ai: 10
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -22196,7 +22280,8 @@ Body:
     DamageMotion: 144
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Oridecon
         Rate: 6000
@@ -22528,7 +22613,8 @@ Body:
     DamageMotion: 336
     Ai: 01
     Class: Guardian
-    Attribute: 32
+    Modes:
+      KnockBackImmune: true
     Drops:
       - Item: Orange_Potion
         Rate: 2000
@@ -22598,9 +22684,9 @@ Body:
     DamageMotion: 384
     Ai: 17
     Class: Guardian
-    Attribute: 32
     Modes:
       Aggressive: true
+      KnockBackImmune: true
     Drops:
       - Item: Orange_Potion
         Rate: 2000
@@ -23049,7 +23135,8 @@ Body:
     DamageMotion: 504
     Ai: 02
     Class: Guardian
-    Attribute: 32
+    Modes:
+      KnockBackImmune: true
     Drops:
       - Item: Lucky_Candy
         Rate: 500
@@ -23663,7 +23750,8 @@ Body:
     DamageMotion: 240
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -23937,7 +24025,8 @@ Body:
     DamageMotion: 480
     Ai: 04
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -24662,7 +24751,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -24720,7 +24810,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -24779,7 +24870,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -24838,7 +24930,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -24897,7 +24990,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -24956,7 +25050,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -25326,7 +25421,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -26380,7 +26476,8 @@ Body:
     DamageMotion: 432
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -26525,7 +26622,8 @@ Body:
     DamageMotion: 360
     Ai: 10
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -26598,7 +26696,11 @@ Body:
     AttackMotion: 552
     DamageMotion: 511
     Ai: 02
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: New_Year_Rice_Cake
         Rate: 5000
@@ -27398,7 +27500,8 @@ Body:
     DamageMotion: 504
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -27872,7 +27975,8 @@ Body:
     DamageMotion: 360
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -28348,7 +28452,8 @@ Body:
     DamageMotion: 432
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -28896,7 +29001,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 1751
     AegisName: RANDGRIS
     Name: Valkyrie Randgris
@@ -28928,7 +29037,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -29467,10 +29577,10 @@ Body:
     DamageMotion: 384
     Ai: 17
     Class: Guardian
-    Attribute: 32
     Modes:
       Aggressive: true
       ChangeChase: true
+      KnockBackImmune: true
     MvpDrops:
       - Item: Jellopy
         Rate: 5000
@@ -29505,10 +29615,10 @@ Body:
     DamageMotion: 384
     Ai: 17
     Class: Guardian
-    Attribute: 32
     Modes:
       Aggressive: true
       ChangeChase: true
+      KnockBackImmune: true
     MvpDrops:
       - Item: Jellopy
         Rate: 5000
@@ -29547,7 +29657,8 @@ Body:
     DamageMotion: 576
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -30049,7 +30160,8 @@ Body:
     DamageMotion: 216
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -30320,7 +30432,8 @@ Body:
     DamageMotion: 240
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -30551,7 +30664,11 @@ Body:
     AttackMotion: 96
     DamageMotion: 96
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Small_Horn_Of_Devil
         Rate: 5000
@@ -30762,7 +30879,11 @@ Body:
     Element: Neutral
     ElementLevel: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Gem_Of_Ruin
         Rate: 10000
@@ -30874,7 +30995,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Evil_Mind
         Rate: 300
@@ -31188,7 +31310,11 @@ Body:
     AttackMotion: 960
     DamageMotion: 480
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Pumpkin_Bucket
         Rate: 5000
@@ -31304,7 +31430,11 @@ Body:
     AttackDelay: 1320
     DamageMotion: 300
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 1816
     AegisName: EVENT_GOURD
     Name: Gourd
@@ -31324,7 +31454,11 @@ Body:
     AttackMotion: 96
     DamageMotion: 96
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Apple
         Rate: 10000
@@ -31875,7 +32009,8 @@ Body:
     DamageMotion: 360
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Blue_Box
         Rate: 5500
@@ -32204,7 +32339,12 @@ Body:
     DamageMotion: 384
     Ai: 17
     Class: Guardian
-    Attribute: 55
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
     Drops:
       - Item: Leaf_Of_Yggdrasil
         Rate: 3000
@@ -33390,7 +33530,8 @@ Body:
     DamageMotion: 360
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -33502,7 +33643,8 @@ Body:
     DamageMotion: 432
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -33589,7 +33731,8 @@ Body:
     DamageMotion: 360
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Helm_Of_Sun
         Rate: 10000
@@ -33610,7 +33753,11 @@ Body:
     WalkSpeed: 190
     Ai: 25
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: GOLD_ID4
         Rate: 10
@@ -33639,7 +33786,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Love_Flower
         Rate: 3000
@@ -33943,7 +34094,8 @@ Body:
     DamageMotion: 432
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -34386,7 +34538,8 @@ Body:
     DamageMotion: 288
     Ai: 05
     Class: Guardian
-    Attribute: 32
+    Modes:
+      KnockBackImmune: true
   - Id: 1900
     AegisName: BOW_GUARDIAN_
     Name: Archer Guardian
@@ -34415,7 +34568,8 @@ Body:
     DamageMotion: 288
     Ai: 05
     Class: Guardian
-    Attribute: 32
+    Modes:
+      KnockBackImmune: true
   - Id: 1901
     AegisName: E_CONDOR
     Name: Condor
@@ -34546,8 +34700,6 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Formless
-    RaceGroups:
-      Battlefield: true
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 300
@@ -34555,8 +34707,14 @@ Body:
     AttackMotion: 288
     DamageMotion: 384
     Ai: 06
-    Class: Boss
-    Attribute: 23
+    Class: Guardian
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      Detector: true
+      KnockBackImmune: true
   - Id: 1907
     AegisName: S_EMPEL_1
     Name: Guardian Stone
@@ -34610,8 +34768,6 @@ Body:
     MagicDefense: 99
     Size: Large
     Race: Formless
-    RaceGroups:
-      Battlefield: true
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 300
@@ -34619,8 +34775,14 @@ Body:
     AttackMotion: 288
     DamageMotion: 384
     Ai: 06
-    Class: Boss
-    Attribute: 23
+    Class: Guardian
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      Detector: true
+      KnockBackImmune: true
   - Id: 1910
     AegisName: OBJ_B
     Name: Food Depot
@@ -34632,8 +34794,6 @@ Body:
     MagicDefense: 99
     Size: Large
     Race: Formless
-    RaceGroups:
-      Battlefield: true
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 300
@@ -34641,8 +34801,14 @@ Body:
     AttackMotion: 288
     DamageMotion: 384
     Ai: 06
-    Class: Boss
-    Attribute: 23
+    Class: Guardian
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      Detector: true
+      KnockBackImmune: true
   - Id: 1911
     AegisName: OBJ_NEUTRAL
     Name: Neutrality Flag
@@ -34654,8 +34820,6 @@ Body:
     MagicDefense: 99
     Size: Large
     Race: Formless
-    RaceGroups:
-      Battlefield: true
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 300
@@ -34663,8 +34827,14 @@ Body:
     AttackMotion: 288
     DamageMotion: 384
     Ai: 06
-    Class: Boss
-    Attribute: 23
+    Class: Guardian
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      Detector: true
+      KnockBackImmune: true
   - Id: 1912
     AegisName: OBJ_FLAG_A
     Name: Lion Flag
@@ -34676,8 +34846,6 @@ Body:
     MagicDefense: 99
     Size: Large
     Race: Formless
-    RaceGroups:
-      Battlefield: true
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 300
@@ -34685,8 +34853,14 @@ Body:
     AttackMotion: 288
     DamageMotion: 384
     Ai: 06
-    Class: Boss
-    Attribute: 23
+    Class: Guardian
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      Detector: true
+      KnockBackImmune: true
   - Id: 1913
     AegisName: OBJ_FLAG_B
     Name: Eagle Flag
@@ -34698,8 +34872,6 @@ Body:
     MagicDefense: 99
     Size: Large
     Race: Formless
-    RaceGroups:
-      Battlefield: true
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 300
@@ -34707,8 +34879,14 @@ Body:
     AttackMotion: 288
     DamageMotion: 384
     Ai: 06
-    Class: Boss
-    Attribute: 23
+    Class: Guardian
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      Detector: true
+      KnockBackImmune: true
   - Id: 1914
     AegisName: OBJ_A2
     Name: Blue Crystal
@@ -34720,8 +34898,6 @@ Body:
     MagicDefense: 99
     Size: Large
     Race: Formless
-    RaceGroups:
-      Battlefield: true
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 300
@@ -34729,8 +34905,14 @@ Body:
     AttackMotion: 288
     DamageMotion: 384
     Ai: 06
-    Class: Boss
-    Attribute: 23
+    Class: Guardian
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      Detector: true
+      KnockBackImmune: true
   - Id: 1915
     AegisName: OBJ_B2
     Name: Pink Crystal
@@ -34742,8 +34924,6 @@ Body:
     MagicDefense: 99
     Size: Large
     Race: Formless
-    RaceGroups:
-      Battlefield: true
     Element: Neutral
     ElementLevel: 1
     WalkSpeed: 300
@@ -34751,8 +34931,14 @@ Body:
     AttackMotion: 288
     DamageMotion: 384
     Ai: 06
-    Class: Boss
-    Attribute: 23
+    Class: Guardian
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      Detector: true
+      KnockBackImmune: true
   - Id: 1916
     AegisName: MOROCC
     Name: Satan Morocc
@@ -34825,7 +35011,8 @@ Body:
     DamageMotion: 432
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -35350,7 +35537,12 @@ Body:
     DamageMotion: 576
     Ai: 01
     Class: Guardian
-    Attribute: 55
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
     Drops:
       - Item: Crystal_Key
         Rate: 9000
@@ -35403,7 +35595,12 @@ Body:
     DamageMotion: 576
     Ai: 06
     Class: Guardian
-    Attribute: 55
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
   - Id: 1935
     AegisName: RED_FLOWER
     Name: Red Flower
@@ -35425,7 +35622,12 @@ Body:
     DamageMotion: 576
     Ai: 06
     Class: Guardian
-    Attribute: 55
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
   - Id: 1936
     AegisName: YELL_FLOWER
     Name: Yellow Flower
@@ -35447,7 +35649,12 @@ Body:
     DamageMotion: 576
     Ai: 06
     Class: Guardian
-    Attribute: 55
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
   - Id: 1937
     AegisName: CONSTANT_
     Name: Constant
@@ -35878,7 +36085,11 @@ Body:
     WalkSpeed: 190
     Ai: 25
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Piece_Of_Cake
         Rate: 3800
@@ -35910,7 +36121,11 @@ Body:
     WalkSpeed: 190
     Ai: 25
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Piece_Of_Cake
         Rate: 3800
@@ -35942,7 +36157,11 @@ Body:
     WalkSpeed: 190
     Ai: 25
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Piece_Of_Cake
         Rate: 3800
@@ -35974,7 +36193,11 @@ Body:
     WalkSpeed: 190
     Ai: 25
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Piece_Of_Cake
         Rate: 3800
@@ -36955,7 +37178,8 @@ Body:
     DamageMotion: 300
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Pickaxe
         Rate: 10000
@@ -38551,7 +38775,8 @@ Body:
     DamageMotion: 864
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Dark_Red_Scale
         Rate: 5000
@@ -39321,7 +39546,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Skull
         Rate: 6000
@@ -39468,7 +39694,8 @@ Body:
     DamageMotion: 576
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -39787,7 +40014,8 @@ Body:
     DamageMotion: 540
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Nipper
         Rate: 5000
@@ -39957,8 +40185,6 @@ Body:
     ChaseRange: 12
     Size: Small
     Race: Plant
-    RaceGroups:
-      Guardian: true
     Element: Water
     ElementLevel: 2
     WalkSpeed: 1000
@@ -39966,6 +40192,7 @@ Body:
     AttackMotion: 432
     DamageMotion: 600
     Ai: 06
+    Class: Guardian
   - Id: 2082
     AegisName: G_PIRANHA
     Name: Piranha
@@ -40213,7 +40440,8 @@ Body:
     DamageMotion: 360
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Card_Album
         Rate: 5500
@@ -40506,7 +40734,8 @@ Body:
     DamageMotion: 648
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Red_Jewel
         Rate: 2000
@@ -40562,7 +40791,8 @@ Body:
     DamageMotion: 432
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Tiger_Footskin
         Rate: 5000
@@ -40618,7 +40848,8 @@ Body:
     DamageMotion: 384
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Blue_Box
         Rate: 2000
@@ -40674,7 +40905,8 @@ Body:
     DamageMotion: 576
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -40730,7 +40962,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Cardinal_Jewel
         Rate: 1500
@@ -40784,7 +41017,8 @@ Body:
     DamageMotion: 300
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Rough_Wind
         Rate: 1500
@@ -40840,7 +41074,8 @@ Body:
     DamageMotion: 576
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 2000
@@ -40897,7 +41132,8 @@ Body:
     DamageMotion: 360
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -40977,7 +41213,8 @@ Body:
     DamageMotion: 216
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -41034,7 +41271,8 @@ Body:
     DamageMotion: 420
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -41090,7 +41328,8 @@ Body:
     DamageMotion: 500
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Turtle_Shell
         Rate: 5500
@@ -41146,7 +41385,8 @@ Body:
     DamageMotion: 432
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -41203,7 +41443,8 @@ Body:
     DamageMotion: 360
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -41259,7 +41500,8 @@ Body:
     DamageMotion: 576
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -41316,7 +41558,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -41372,7 +41615,8 @@ Body:
     DamageMotion: 360
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -41429,7 +41673,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -41485,7 +41730,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -41539,7 +41785,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -41737,7 +41984,8 @@ Body:
     AttackMotion: 648
     DamageMotion: 576
     Ai: 21
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 2500
@@ -41903,7 +42151,11 @@ Body:
     AttackMotion: 192
     DamageMotion: 576
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 2136
     AegisName: LITTLE_FATUM
     Name: Little Fatum
@@ -42000,7 +42252,11 @@ Body:
     DamageMotion: 1248
     Ai: 25
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 2139
     AegisName: NYDHOG_MEMORY1_2
     Name: Nydhoggur Memory
@@ -42018,7 +42274,11 @@ Body:
     DamageMotion: 1248
     Ai: 25
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 2140
     AegisName: NYDHOG_MEMORY2_1
     Name: Nydhoggur Memory
@@ -42036,7 +42296,11 @@ Body:
     DamageMotion: 1248
     Ai: 25
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 2141
     AegisName: NYDHOG_MEMORY2_2
     Name: Nydhoggur Memory
@@ -42054,7 +42318,11 @@ Body:
     DamageMotion: 1248
     Ai: 25
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 2142
     AegisName: NYDHOG_MEMORY3_1
     Name: Nydhoggur Memory
@@ -42072,7 +42340,11 @@ Body:
     DamageMotion: 1248
     Ai: 25
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 2143
     AegisName: NYDHOG_MEMORY3_2
     Name: Nydhoggur Memory
@@ -42090,7 +42362,11 @@ Body:
     DamageMotion: 1248
     Ai: 25
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 2144
     AegisName: G_ANTLER_SCARABA
     Name: Antler Scaraba
@@ -42277,7 +42553,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Ripe_Watermelon
         Rate: 5000
@@ -42532,7 +42812,8 @@ Body:
     DamageMotion: 360
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -42887,7 +43168,8 @@ Body:
     DamageMotion: 576
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Card_Album
         Rate: 5500
@@ -43336,7 +43618,8 @@ Body:
     DamageMotion: 480
     Ai: 20
     Class: Boss
-    Attribute: 2
+    Modes:
+      IgnoreMagic: true
     Drops:
       - Item: Crystal_Blue
         Rate: 23
@@ -43384,7 +43667,9 @@ Body:
     DamageMotion: 384
     Ai: 20
     Class: Boss
-    Attribute: 5
+    Modes:
+      IgnoreMelee: true
+      IgnoreRanged: true
     Drops:
       - Item: Clam_Shell
         Rate: 2750
@@ -43525,7 +43810,9 @@ Body:
     DamageMotion: 384
     Ai: 20
     Class: Boss
-    Attribute: 5
+    Modes:
+      IgnoreMelee: true
+      IgnoreRanged: true
     Drops:
       - Item: Mistic_Frozen
         Rate: 5
@@ -43619,7 +43906,8 @@ Body:
     DamageMotion: 864
     Ai: 20
     Class: Boss
-    Attribute: 2
+    Modes:
+      IgnoreMagic: true
     Drops:
       - Item: Anolian_Skin
         Rate: 2425
@@ -43999,7 +44287,11 @@ Body:
     DamageMotion: 360
     Ai: 10
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 2192
     AegisName: MD_OCTOPUS
     Name: Octopus
@@ -44415,7 +44707,8 @@ Body:
     DamageMotion: 576
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -45565,7 +45858,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -45623,7 +45917,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -45681,7 +45976,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -45740,7 +46036,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -45798,7 +46095,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -45856,7 +46154,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 5500
@@ -45914,7 +46213,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: High_Weapon_Box
         Rate: 9000
@@ -46121,7 +46421,11 @@ Body:
     AttackMotion: 672
     DamageMotion: 480
     Ai: 02
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Blue_Card_C
         Rate: 2000
@@ -46172,7 +46476,8 @@ Body:
     DamageMotion: 360
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Magic_Card_Album
         Rate: 5000
@@ -46273,7 +46578,8 @@ Body:
     DamageMotion: 432
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Magic_Card_Album
         Rate: 5000
@@ -46374,7 +46680,8 @@ Body:
     DamageMotion: 432
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Magic_Card_Album
         Rate: 5000
@@ -46476,7 +46783,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Magic_Card_Album
         Rate: 5000
@@ -48308,7 +48616,12 @@ Body:
     DamageMotion: 360
     Ai: 06
     Class: Guardian
-    Attribute: 55
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
   - Id: 2319
     AegisName: BUWAYA
     Name: Buwaya
@@ -48340,7 +48653,8 @@ Body:
     DamageMotion: 360
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -48601,7 +48915,12 @@ Body:
     WalkSpeed: 2000
     Ai: 06
     Class: Guardian
-    Attribute: 55
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
     Drops:
       - Item: Bangungot_Doll
         Rate: 4000
@@ -48638,7 +48957,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 2329
     AegisName: BUWAYA_EGG
     Name: Buwaya's Egg
@@ -48710,8 +49033,11 @@ Body:
     AttackMotion: 720
     DamageMotion: 360
     Ai: 10
-    Attribute: 23
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
   - Id: 2332
     AegisName: BUWAYA_GHOST
@@ -48764,7 +49090,12 @@ Body:
     DamageMotion: 1
     Ai: 06
     Class: Guardian
-    Attribute: 55
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
   - Id: 2334
     AegisName: G_WAKWAK
     Name: Wakwak
@@ -48882,8 +49213,11 @@ Body:
     WalkSpeed: 2000
     AttackMotion: 1000
     Ai: 10
-    Attribute: 23
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
   - Id: 2338
     AegisName: MD_MANANANGGAL
@@ -49006,7 +49340,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Magic_Card_Album
         Rate: 5000
@@ -49070,8 +49405,11 @@ Body:
     WalkSpeed: 2000
     AttackMotion: 1000
     Ai: 10
-    Attribute: 23
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
   - Id: 2344
     AegisName: MER_WISH_MAIDEN
@@ -49739,7 +50077,8 @@ Body:
     DamageMotion: 480
     Ai: 10
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 5500
@@ -50161,7 +50500,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 2373
     AegisName: ROCK
     Name: Rock
@@ -50183,7 +50526,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 2374
     AegisName: THICKET
     Name: Thicket
@@ -50205,7 +50552,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 2375
     AegisName: MOROCC_4_142
     Name: Incarnation of Morocc
@@ -50338,8 +50689,11 @@ Body:
     AttackMotion: 576
     DamageMotion: 420
     Ai: 01
-    Attribute: 23
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
     Drops:
       - Item: Stolen_Cookie
@@ -50373,8 +50727,11 @@ Body:
     AttackMotion: 576
     DamageMotion: 420
     Ai: 01
-    Attribute: 23
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
     Drops:
       - Item: Stolen_Cookie
@@ -50687,9 +51044,10 @@ Body:
     DamageMotion: 1000
     Ai: 06
     Class: Guardian
-    Attribute: 104
     Modes:
       NoRandomWalk: true
+      TeleportBlock: true
+      KnockBackImmune: true
       Mvp: true
   - Id: 2409
     AegisName: DUMMY_50
@@ -50706,9 +51064,10 @@ Body:
     DamageMotion: 1000
     Ai: 06
     Class: Guardian
-    Attribute: 104
     Modes:
       NoRandomWalk: true
+      TeleportBlock: true
+      KnockBackImmune: true
       Mvp: true
   - Id: 2410
     AegisName: DUMMY_100
@@ -50725,9 +51084,10 @@ Body:
     DamageMotion: 1000
     Ai: 06
     Class: Guardian
-    Attribute: 104
     Modes:
       NoRandomWalk: true
+      TeleportBlock: true
+      KnockBackImmune: true
       Mvp: true
   - Id: 2411
     AegisName: DUMMY_150
@@ -50744,9 +51104,10 @@ Body:
     DamageMotion: 1000
     Ai: 06
     Class: Guardian
-    Attribute: 104
     Modes:
       NoRandomWalk: true
+      TeleportBlock: true
+      KnockBackImmune: true
       Mvp: true
   - Id: 2413
     AegisName: DUMMY_10_FIRE
@@ -50761,9 +51122,10 @@ Body:
     DamageMotion: 1000
     Ai: 06
     Class: Guardian
-    Attribute: 104
     Modes:
       NoRandomWalk: true
+      TeleportBlock: true
+      KnockBackImmune: true
       Mvp: true
   - Id: 2415
     AegisName: L_SEYREN
@@ -51741,7 +52103,6 @@ Body:
     DamageMotion: 288
     Ai: 04
     Class: Boss
-    Attribute: 8
     Modes:
       CastSensorChase: true
       CastSensorIdle: true
@@ -51793,7 +52154,6 @@ Body:
     DamageMotion: 288
     Ai: 04
     Class: Boss
-    Attribute: 8
     Modes:
       CastSensorChase: true
       CastSensorIdle: true
@@ -51843,7 +52203,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Rouge
         Rate: 3000
@@ -51882,7 +52243,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Rouge
         Rate: 3000
@@ -51921,7 +52283,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Rouge
         Rate: 3000
@@ -51960,7 +52323,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Rouge
         Rate: 3000
@@ -51999,7 +52363,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Rouge
         Rate: 3000
@@ -52038,7 +52403,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Rouge
         Rate: 3000
@@ -52077,7 +52443,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Rouge
         Rate: 3000
@@ -52109,7 +52476,11 @@ Body:
     AttackMotion: 864
     DamageMotion: 288
     Ai: 01
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Payroll_Of_Kafra
         Rate: 5000
@@ -52146,7 +52517,11 @@ Body:
     AttackMotion: 864
     DamageMotion: 288
     Ai: 01
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: Small_Wooden_Chest
         Rate: 5000
@@ -52978,7 +53353,8 @@ Body:
     DamageMotion: 480
     Ai: 10
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Old_Card_Album
         Rate: 5000
@@ -53026,7 +53402,8 @@ Body:
     DamageMotion: 432
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Old_Card_Album
         Rate: 5000
@@ -53286,7 +53663,8 @@ Body:
     DamageMotion: 576
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Yggdrasilberry
         Rate: 2000
@@ -53468,7 +53846,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 2500
@@ -53517,7 +53896,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: FaceWorm_Leg
         Rate: 10
@@ -53550,9 +53930,9 @@ Body:
     AttackDelay: 384
     DamageMotion: 480
     Ai: 10
-    Attribute: 32
     Modes:
       Detector: true
+      KnockBackImmune: true
     Drops:
       - Item: Sticky_Mucus
         Rate: 5000
@@ -53593,7 +53973,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Magic_Card_Album
         Rate: 2500
@@ -53641,7 +54022,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 2500
@@ -53688,7 +54070,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 2500
@@ -53735,7 +54118,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 2500
@@ -53774,9 +54158,13 @@ Body:
     WalkSpeed: 2000
     AttackMotion: 100
     Ai: 10
-    Attribute: 55
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
+      KnockBackImmune: true
   - Id: 2537
     AegisName: HIDDEN_MOB4
     Name: Monster 4
@@ -53803,7 +54191,12 @@ Body:
     WalkSpeed: 2000
     AttackMotion: 100
     Ai: 10
-    Attribute: 55
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
   - Id: 2539
     AegisName: HIDDEN_MOB5
     Name: Monster 5
@@ -53830,9 +54223,13 @@ Body:
     WalkSpeed: 2000
     AttackMotion: 500
     Ai: 10
-    Attribute: 55
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
+      KnockBackImmune: true
   - Id: 2540
     AegisName: FACEWORM_EGG
     Name: Faceworm Egg
@@ -53860,9 +54257,13 @@ Body:
     WalkSpeed: 150
     AttackDelay: 24
     Ai: 06
-    Attribute: 55
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
+      KnockBackImmune: true
     Drops:
       - Item: Piece_Of_Egg_Shell
         Rate: 5000
@@ -69685,7 +70086,6 @@ Body:
     DamageMotion: 350
     Ai: 10
     Class: Boss
-    Attribute: 8
     Modes:
       CanMove: true
       Mvp: true
@@ -69719,8 +70119,11 @@ Body:
     AttackMotion: 1000
     Ai: 06
     Class: Battlefield
-    Attribute: 23
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
   - Id: 2948
     AegisName: CURSED_SOLDIER
@@ -70178,8 +70581,11 @@ Body:
     AttackMotion: 1000
     Ai: 06
     Class: Battlefield
-    Attribute: 23
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       Detector: true
   - Id: 2961
     AegisName: E_TORTUROUS_REDEEMER
@@ -70287,7 +70693,12 @@ Body:
     DamageMotion: 432
     Ai: 01
     Class: Boss
-    Attribute: 31
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      Mvp: true
     Drops:
       - Item: Red_Socks_With_Holes
         Rate: 2000
@@ -70628,7 +71039,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Card_Album
         Rate: 10000
@@ -70741,7 +71153,6 @@ Body:
     DamageMotion: 288
     Ai: 10
     Class: Boss
-    Attribute: 8
     Modes:
       CanMove: true
       Mvp: true
@@ -70781,7 +71192,8 @@ Body:
     DamageMotion: 288
     Ai: 10
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Yggdrasilberry
         Rate: 2000
@@ -71015,7 +71427,11 @@ Body:
     DamageMotion: 440
     Ai: 06
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 3008
     AegisName: EP14_MORS_HIDDEN
     Name: Morocc Hidden
@@ -71629,7 +72045,11 @@ Body:
     AttackMotion: 912
     DamageMotion: 288
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 3027
     AegisName: FULBUK
     Name: Fire Bug
@@ -71689,7 +72109,11 @@ Body:
     AttackMotion: 912
     DamageMotion: 288
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
     Drops:
       - Item: YummyStem
         Rate: 1000
@@ -71765,9 +72189,12 @@ Body:
     WalkSpeed: 2000
     Ai: 06
     Class: Boss
-    Attribute: 23
     Modes:
       Aggressive: true
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 3039
     AegisName: B_MOROCC_1
     Name: Blazing Morocc Reincarnation
@@ -71881,7 +72308,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 3069
     AegisName: PERE1
     Name: Ferre
@@ -72085,7 +72516,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Pendant_Of_Harmony
         Rate: 400
@@ -72132,7 +72564,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Needle_Of_Alarm
         Rate: 3000
@@ -72178,7 +72611,8 @@ Body:
     DamageMotion: 768
     Ai: 06
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Brinaranea_Card
         StealProtected: true
@@ -72210,7 +72644,8 @@ Body:
     DamageMotion: 336
     Ai: 06
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Muspellskoll_Card
         StealProtected: true
@@ -72242,7 +72677,8 @@ Body:
     DamageMotion: 500
     Ai: 06
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Despair_God_Morocc_Card
         StealProtected: true
@@ -72266,7 +72702,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 3102
     AegisName: MM_MANA_RED
     Name: Mana of Life
@@ -72287,7 +72727,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 3103
     AegisName: MM_MANA_YELLOW
     Name: Mana of Earth
@@ -72308,7 +72752,11 @@ Body:
     AttackMotion: 1
     DamageMotion: 1
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 3108
     AegisName: JITTERBUG1
     Name: Jitterbug1
@@ -72901,9 +73349,13 @@ Body:
     AttackMotion: 2112
     DamageMotion: 768
     Ai: 06
-    Attribute: 55
     Modes:
       NoRandomWalk: true
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
   - Id: 3161
     AegisName: BOMB
     Name: Bomb
@@ -73220,7 +73672,8 @@ Body:
     DamageMotion: 300
     Ai: 01
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Felock_Armor
         Rate: 100
@@ -73269,10 +73722,15 @@ Body:
     AttackMotion: 500
     Ai: 10
     Class: Battlefield
-    Attribute: 127
     Modes:
       NoRandomWalk: true
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      TeleportBlock: true
       Detector: true
+      KnockBackImmune: true
       Mvp: true
     Drops:
       - Item: Robe_Of_Sarah
@@ -73308,7 +73766,10 @@ Body:
     DamageMotion: 600
     Ai: 04
     Class: Boss
-    Attribute: 13
+    Modes:
+      IgnoreMelee: true
+      IgnoreRanged: true
+      Mvp: true
     Drops:
       - Item: Robe_Of_Sarah
         Rate: 100
@@ -73342,7 +73803,9 @@ Body:
     DamageMotion: 600
     Ai: 04
     Class: Boss
-    Attribute: 10
+    Modes:
+      IgnoreMagic: true
+      Mvp: true
     Drops:
       - Item: Robe_Of_Sarah
         Rate: 100
@@ -73376,7 +73839,8 @@ Body:
     DamageMotion: 600
     Ai: 04
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Gigantes_Card
         StealProtected: true
@@ -73408,7 +73872,10 @@ Body:
     DamageMotion: 500
     Ai: 04
     Class: Boss
-    Attribute: 13
+    Modes:
+      IgnoreMelee: true
+      IgnoreRanged: true
+      Mvp: true
     Drops:
       - Item: Gigantes_Card
         StealProtected: true
@@ -73440,7 +73907,9 @@ Body:
     DamageMotion: 500
     Ai: 04
     Class: Boss
-    Attribute: 10
+    Modes:
+      IgnoreMagic: true
+      Mvp: true
     Drops:
       - Item: Gigantes_Card
         StealProtected: true
@@ -73471,7 +73940,8 @@ Body:
     DamageMotion: 500
     Ai: 04
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Fragments_Of_Gigan
         Rate: 10000
@@ -73547,9 +74017,9 @@ Body:
     AttackMotion: 624
     DamageMotion: 360
     Ai: 07
-    Attribute: 32
     Modes:
       Aggressive: true
+      KnockBackImmune: true
     Drops:
       - Item: Rotten_Meat
         Rate: 1500
@@ -73587,7 +74057,8 @@ Body:
     AttackMotion: 1080
     DamageMotion: 240
     Ai: 21
-    Attribute: 32
+    Modes:
+      KnockBackImmune: true
     Drops:
       - Item: Brigan
         Rate: 2425
@@ -73630,7 +74101,8 @@ Body:
     AttackMotion: 672
     DamageMotion: 360
     Ai: 21
-    Attribute: 32
+    Modes:
+      KnockBackImmune: true
     Drops:
       - Item: Brigan
         Rate: 2668
@@ -73663,7 +74135,12 @@ Body:
     WalkSpeed: 100
     Ai: 25
     Class: Guardian
-    Attribute: 55
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
     Drops:
       - Item: ORGANIC_PUMPKIN
         Rate: 5000
@@ -73701,7 +74178,12 @@ Body:
     WalkSpeed: 200
     Ai: 25
     Class: Guardian
-    Attribute: 55
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
+      KnockBackImmune: true
     Drops:
       - Item: INORGANIC_PUMPKIN
         Rate: 5000
@@ -74230,7 +74712,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Cursed_Fragment
         Rate: 3000
@@ -74280,7 +74763,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Cursed_Fragment
         Rate: 3000
@@ -74331,7 +74815,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Cursed_Fragment
         Rate: 3000
@@ -74382,7 +74867,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Cursed_Crystal
         Rate: 3000
@@ -74433,7 +74919,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Cursed_Fragment
         Rate: 3000
@@ -74483,7 +74970,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Cursed_Crystal
         Rate: 3000
@@ -75100,7 +75588,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Cursed_Crystal
         Rate: 3000
@@ -75150,7 +75639,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Cursed_Fragment
         Rate: 3000
@@ -75200,7 +75690,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Cursed_Fragment
         Rate: 3000
@@ -75250,7 +75741,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Cursed_Fragment
         Rate: 3000
@@ -75300,7 +75792,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Cursed_Fragment
         Rate: 3000
@@ -75350,7 +75843,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Cursed_Fragment
         Rate: 3000
@@ -75400,7 +75894,8 @@ Body:
     DamageMotion: 288
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Cursed_Fragment
         Rate: 3000
@@ -75591,9 +76086,11 @@ Body:
     AttackMotion: 500
     DamageMotion: 400
     Ai: 10
-    Attribute: 7
     Modes:
       CanMove: true
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreRanged: true
     Drops:
       - Item: Burnt_Parts
         Rate: 1000
@@ -75719,7 +76216,11 @@ Body:
     DamageMotion: 550
     Ai: 01
     Class: Battlefield
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 3254
     AegisName: T_W_O
     Name: T_W_O
@@ -75748,7 +76249,6 @@ Body:
     DamageMotion: 350
     Ai: 10
     Class: Boss
-    Attribute: 8
     Modes:
       CanMove: true
       Mvp: true
@@ -76235,7 +76735,11 @@ Body:
     ElementLevel: 1
     WalkSpeed: 2000
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 3487
     AegisName: IMMORTAL_CORPS1
     Name: Butcher Soldier
@@ -76856,7 +77360,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Blue_Box
         Rate: 5000
@@ -76947,7 +77452,11 @@ Body:
     DamageMotion: 1
     Ai: 06
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 3624
     AegisName: EP16_2_MM_U_ENERGY_G
     Name: Plasma G
@@ -76970,7 +77479,11 @@ Body:
     DamageMotion: 1
     Ai: 06
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 3625
     AegisName: EP16_2_MM_U_ENERGY_B
     Name: Plasma B
@@ -76993,7 +77506,11 @@ Body:
     DamageMotion: 1
     Ai: 06
     Class: Boss
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 3626
     AegisName: EP16_2_H_HUNTER_V
     Name: Upgraded Heart Hunter
@@ -77115,7 +77632,8 @@ Body:
     DamageMotion: 480
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Blue_Box
         Rate: 5000
@@ -77327,7 +77845,8 @@ Body:
     DamageMotion: 360
     Ai: 21
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Magic_Card_Album
         Rate: 5000
@@ -77708,7 +78227,8 @@ Body:
     AttackDelay: 768
     Ai: 04
     Class: Boss
-    Attribute: 8
+    Modes:
+      Mvp: true
     Drops:
       - Item: Mechaspider_Card
         StealProtected: true
@@ -77730,7 +78250,11 @@ Body:
     ElementLevel: 1
     WalkSpeed: 2000
     Ai: 06
-    Attribute: 23
+    Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
   - Id: 3743
     AegisName: SEAANEMONE
     Name: Sea Anemone
@@ -77750,8 +78274,11 @@ Body:
     ElementLevel: 1
     WalkSpeed: 2000
     Ai: 06
-    Attribute: 23
     Modes:
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true
       SkillImmune: true
   - Id: 3744
     AegisName: G_COWRAIDERS1

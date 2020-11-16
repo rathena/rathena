@@ -3728,10 +3728,10 @@
 	export_constant(RC2_KOBOLD);
 	export_constant(RC2_ORC);
 	export_constant(RC2_GOLEM);
-	export_constant(RC2_GUARDIAN);
+	export_deprecated_constant(RC2_GUARDIAN);
 	export_constant(RC2_NINJA);
 	export_constant(RC2_GVG);
-	export_constant(RC2_BATTLEFIELD);
+	export_deprecated_constant(RC2_BATTLEFIELD);
 	export_constant(RC2_TREASURE);
 	export_constant(RC2_BIOLAB);
 	export_constant(RC2_MANUK);

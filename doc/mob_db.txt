@@ -206,11 +206,7 @@ Class: Aegis Monster Class Type behavior. Full explanation can be found in 'doc/
 
 ---------------------------------------
 
-Attribute: Aegis Monster Attr behavior. Full explanation can be found in 'doc/mob_db_mode_list.txt'.
-
----------------------------------------
-
-Modes: Behaviour that isn't defined by AI, Class, or Attribute of the monster. Full explanation can be found in 'doc/mob_db_mode_list.txt'.
+Modes: Behaviour that isn't defined by AI or Class of the monster. Full explanation can be found in 'doc/mob_db_mode_list.txt'.
 
 ---------------------------------------
 

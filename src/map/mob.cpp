@@ -4462,9 +4462,6 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asUInt16(node, "SkillRange", range))
 			return 0;
 
-		if (battle_config.view_range_rate != 100)
-			range = cap_value(range, 1, range * battle_config.view_range_rate / 100);
-
 		mob->range2 = range;
 	} else {
 		if (!exists)
@@ -4476,12 +4473,6 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 
 		if (!this->asUInt16(node, "ChaseRange", range))
 			return 0;
-
-		if (battle_config.chase_range_rate != 100)
-			range = cap_value(range, mob->range2, range * battle_config.chase_range_rate / 100);
-
-		// Tests showed that chase range is effectively 2 cells larger than expected [Playtester]
-		range += 2;
 
 		mob->range3 = range;
 	} else {
@@ -4561,20 +4552,10 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 			if (!this->asBool(raceNode, raceName, active))
 				return 0;
 
-			if (active) {
+			if (active)
 				mob->race2.push_back(static_cast<e_race2>(constant));
-
-				// Apply Aegis Class
-				if (constant == RC2_GUARDIAN)
-					mob->status.class_ = CLASS_GUARDIAN;
-				else if (constant == RC2_BATTLEFIELD)
-					mob->status.class_ = CLASS_BATTLEFIELD;
-			} else {
+			else
 				util::vector_erase_if_exists(mob->race2, static_cast<e_race2>(constant));
-
-				if (constant == RC2_GUARDIAN || constant == RC2_BATTLEFIELD)
-					mob->status.class_ = CLASS_NORMAL;
-			}
 		}
 	}
 
@@ -4681,19 +4662,19 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		int64 constant;
 
 		if (!script_get_constant(ai_constant.c_str(), &constant)) {
-			this->invalidWarning(node["AI"], "Unknown monster AI %s, defaulting to MONSTER_TYPE_06.\n", ai.c_str());
+			this->invalidWarning(node["Ai"], "Unknown monster AI %s, defaulting to MONSTER_TYPE_06.\n", ai.c_str());
 			constant = MONSTER_TYPE_06;
 		}
 
-		//if (constant < MONSTER_TYPE_01 || constant == 14 || constant == 15 || constant == 16 || constant == 18 || constant == 22 || constant == 23 ||constant > MONSTER_TYPE_27) {
-		//	this->invalidWarning(node["AI"], "Invalid monster AI %s, defaulting to MONSTER_TYPE_06.\n", ai.c_str());
-		//	constant = MONSTER_TYPE_06;
-		//}
+		if (constant < MONSTER_TYPE_01 || constant > MONSTER_TYPE_27) {
+			this->invalidWarning(node["Ai"], "Invalid monster AI %s, defaulting to MONSTER_TYPE_06.\n", ai.c_str());
+			constant = MONSTER_TYPE_06;
+		}
 
 		mob->status.mode = static_cast<e_mode>(constant);
 	} else {
 		if (!exists)
-			mob->status.mode = static_cast<e_mode>(MONSTER_TYPE_01);
+			mob->status.mode = static_cast<e_mode>(MONSTER_TYPE_06);
 	}
 
 	if (this->nodeExists(node, "Class")) {
@@ -4710,66 +4691,15 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 			constant = CLASS_NORMAL;
 		}
 
-		if (constant < CLASS_NORMAL || constant == 3 || constant > CLASS_EVENT) {
+		if (constant < CLASS_NORMAL || constant > CLASS_EVENT) {
 			this->invalidWarning(node["Class"], "Invalid monster class %s, defaulting to CLASS_NORMAL.\n", class_.c_str());
 			constant = CLASS_NORMAL;
 		}
 
-		// Reset the modes on import
-		if (mob->status.class_ != CLASS_NORMAL)
-			mob->status.mode = static_cast<e_mode>(mob->status.mode & ~(MD_DETECTOR | MD_STATUSIMMUNE | MD_KNOCKBACKIMMUNE | MD_SKILLIMMUNE | MD_FIXEDITEMDROP));
-
 		mob->status.class_ = static_cast<uint8>(constant);
-
-		switch (constant) {
-			case CLASS_BOSS:
-				mob->status.mode = static_cast<e_mode>(mob->status.mode | (MD_DETECTOR | MD_STATUSIMMUNE | MD_KNOCKBACKIMMUNE));
-				break;
-			case CLASS_GUARDIAN:
-				mob->status.mode = static_cast<e_mode>(mob->status.mode | MD_STATUSIMMUNE);
-				break;
-			case CLASS_BATTLEFIELD:
-				mob->status.mode = static_cast<e_mode>(mob->status.mode | (MD_STATUSIMMUNE | MD_SKILLIMMUNE));
-				break;
-			case CLASS_EVENT:
-				mob->status.mode = static_cast<e_mode>(mob->status.mode | MD_FIXEDITEMDROP);
-				break;
-		}
 	} else {
 		if (!exists)
 			mob->status.class_ = CLASS_NORMAL;
-	}
-
-	if (this->nodeExists(node, "Attribute")) {
-		uint16 attr;
-
-		if (!this->asUInt16(node, "Attribute", attr))
-			return 0;
-
-		if (attr < 0 || attr > 127) {
-			this->invalidWarning(node["Attribute"], "Invalid monster attribute %d, skipping.\n", attr);
-			return 0;
-		}
-
-		// Reset the modes on import
-		mob->status.mode = static_cast<e_mode>(mob->status.mode & ~(MD_IGNOREMELEE | MD_IGNOREMAGIC | MD_IGNORERANGED | MD_MVP | MD_IGNOREMISC | MD_KNOCKBACKIMMUNE | MD_TELEPORTBLOCK));
-
-		if (attr > 0) {
-			if (attr & 1)
-				mob->status.mode = static_cast<e_mode>(mob->status.mode | MD_IGNOREMELEE);
-			if (attr & 2)
-				mob->status.mode = static_cast<e_mode>(mob->status.mode | MD_IGNOREMAGIC);
-			if (attr & 4)
-				mob->status.mode = static_cast<e_mode>(mob->status.mode | MD_IGNORERANGED);
-			if (attr & 8)
-				mob->status.mode = static_cast<e_mode>(mob->status.mode | MD_MVP);
-			if (attr & 16)
-				mob->status.mode = static_cast<e_mode>(mob->status.mode | MD_IGNOREMISC);
-			if (attr & 32)
-				mob->status.mode = static_cast<e_mode>(mob->status.mode | MD_KNOCKBACKIMMUNE);
-			if (attr & 64)
-				mob->status.mode = static_cast<e_mode>(mob->status.mode | MD_TELEPORTBLOCK);
-		}
 	}
 
 	if (this->nodeExists(node, "Modes")) {
@@ -4784,7 +4714,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 				continue;
 			}
 
-			if (constant <= MD_NONE || constant == 256 || constant == 8388608 || constant > MD_SKILLIMMUNE) {
+			if (constant <= MD_NONE || constant > MD_SKILLIMMUNE) {
 				this->invalidWarning(modeNode[modeName], "Invalid monster mode %s, skipping.\n", modeName.c_str());
 				continue;
 			}
@@ -4927,44 +4857,72 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 	}
 
-	// Final adjustments
-	//
-	// If the attack animation is longer than the delay, the client crops the attack animation!
-	// On aegis there is no real visible effect of having a recharge-time less than amotion anyway.
-	mob->status.adelay = max(mob->status.adelay, mob->status.amotion);
-	mob->status.aspd_rate = 1000;
-
-	if (!battle_config.monster_active_enable)
-		mob->status.mode = static_cast<enum e_mode>(mob->status.mode & ~MD_AGGRESSIVE);
-
-	// Fill in remaining status data by using a dummy monster.
-	mob_data data;
-
-	data.bl.type = BL_MOB;
-	data.level = mob->lv;
-	memcpy(&data.status, &mob->status, sizeof(status_data));
-	status_calc_misc(&data.bl, &mob->status, mob->lv);
-
-	// Now that we know if it is a MVP or not, apply battle_config modifiers [Skotlex]
-	double maxhp = (double)mob->status.max_hp;
-
-	if (mob->status.mode & MD_MVP) { // MVP
-		if (battle_config.mvp_hp_rate != 100)
-			maxhp = maxhp * (double)battle_config.mvp_hp_rate / 100.;
-	} else { // Normal mob
-		if (battle_config.monster_hp_rate != 100)
-			maxhp = maxhp * (double)battle_config.monster_hp_rate / 100.;
-	}
-
-	mob->status.max_hp = cap_value(static_cast<uint32>(maxhp), 1, UINT32_MAX);
-	mob->status.max_sp = cap_value(mob->status.max_sp, 1, UINT32_MAX);
-	mob->status.hp = mob->status.max_hp;
-	mob->status.sp = mob->status.max_sp;
-
 	if (!exists)
 		this->put(mob_id, mob);
 
 	return true;
+}
+
+void MobDatabase::loadingFinished() {
+	for (auto &mobdata : *this) {
+		std::shared_ptr<s_mob_db> mob = mobdata.second;
+
+		switch (mob->status.class_) {
+			case CLASS_BOSS:
+				mob->status.mode = static_cast<e_mode>(mob->status.mode | (MD_DETECTOR | MD_STATUSIMMUNE | MD_KNOCKBACKIMMUNE));
+				break;
+			case CLASS_GUARDIAN:
+				mob->status.mode = static_cast<e_mode>(mob->status.mode | MD_STATUSIMMUNE);
+				break;
+			case CLASS_BATTLEFIELD:
+				mob->status.mode = static_cast<e_mode>(mob->status.mode | (MD_STATUSIMMUNE | MD_SKILLIMMUNE));
+				break;
+			case CLASS_EVENT:
+				mob->status.mode = static_cast<e_mode>(mob->status.mode | MD_FIXEDITEMDROP);
+				break;
+		}
+
+		if (battle_config.view_range_rate != 100)
+			mob->range2 = cap_value(mob->range2, 1, mob->range2 * battle_config.view_range_rate / 100);
+
+		if (battle_config.chase_range_rate != 100)
+			mob->range3 = cap_value(mob->range3, mob->range2, mob->range3 * battle_config.chase_range_rate / 100);
+
+		// Tests showed that chase range is effectively 2 cells larger than expected [Playtester]
+		mob->range3 += 2;
+
+		// If the attack animation is longer than the delay, the client crops the attack animation!
+		// On aegis there is no real visible effect of having a recharge-time less than amotion anyway.
+		mob->status.adelay = max(mob->status.adelay, mob->status.amotion);
+		mob->status.aspd_rate = 1000;
+
+		if (!battle_config.monster_active_enable)
+			mob->status.mode = static_cast<enum e_mode>(mob->status.mode & ~MD_AGGRESSIVE);
+
+		// Fill in remaining status data by using a dummy monster.
+		mob_data data;
+
+		data.bl.type = BL_MOB;
+		data.level = mob->lv;
+		memcpy(&data.status, &mob->status, sizeof(status_data));
+		status_calc_misc(&data.bl, &mob->status, mob->lv);
+
+		// Now that we know if it is a MVP or not, apply battle_config modifiers [Skotlex]
+		double maxhp = (double)mob->status.max_hp;
+
+		if (mob->status.mode & MD_MVP) { // MVP
+			if (battle_config.mvp_hp_rate != 100)
+				maxhp = maxhp * (double)battle_config.mvp_hp_rate / 100.;
+		} else { // Normal mob
+			if (battle_config.monster_hp_rate != 100)
+				maxhp = maxhp * (double)battle_config.monster_hp_rate / 100.;
+		}
+
+		mob->status.max_hp = cap_value(static_cast<uint32>(maxhp), 1, UINT32_MAX);
+		mob->status.max_sp = cap_value(mob->status.max_sp, 1, UINT32_MAX);
+		mob->status.hp = mob->status.max_hp;
+		mob->status.sp = mob->status.max_sp;
+	}
 }
 
 MobDatabase mob_db;
@@ -5049,8 +5007,6 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 		node["Ai"] = str[index];
 	if (!str[++index].empty() && strcmp(str[index].c_str(), "Normal") != 0)
 		node["Class"] = str[index];
-	if (!str[++index].empty())
-		node["Attribute"] = std::stoi(str[index]);
 
 	YAML::Node modes;
 
@@ -5159,7 +5115,7 @@ static int mob_read_sqldb(void)
 		// retrieve all rows from the mob database
 		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `id`,`name_aegis`,`name_english`,`name_japanese`,`level`,`hp`,`sp`,`base_exp`,`job_exp`,`mvp_exp`,`attack`,`attack2`,`defense`,`magic_defense`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`attack_range`,`skill_range`,`chase_range`,`size`,`race`,"
 			"`racegroup_goblin`,`racegroup_kobold`,`racegroup_orc`,`racegroup_golem`,`racegroup_guardian`,`racegroup_ninja`,`racegroup_gvg`,`racegroup_battlefield`,`racegroup_treasure`,`racegroup_biolab`,`racegroup_manuk`,`racegroup_splendide`,`racegroup_scaraba`,`racegroup_ogh_atk_def`,`racegroup_ogh_hidden`,`racegroup_bio5_swordman_thief`,`racegroup_bio5_acolyte_merchant`,`racegroup_bio5_mage_archer`,`racegroup_bio5_mvp`,`racegroup_clocktower`,`racegroup_thanatos`,`racegroup_faceworm`,`racegroup_hearthunter`,`racegroup_rockridge`,`racegroup_werner_lab`,"
-			"`element`,`element_level`,`walk_speed`,`attack_delay`,`attack_motion`,`damage_motion`,`ai`,`class`,`attribute`,"
+			"`element`,`element_level`,`walk_speed`,`attack_delay`,`attack_motion`,`damage_motion`,`ai`,`class`,"
 			"`mode_canmove`,`mode_looter`,`mode_aggressive`,`mode_assist`,`mode_castsensoridle`,`mode_norandomwalk`,`mode_nocast`,`mode_canattack`,`mode_castsensorchase`,`mode_changechase`,`mode_angry`,`mode_changetargetmelee`,`mode_changetargetchase`,`mode_targetweak`,`mode_randomtarget`,`mode_ignoremelee`,`mode_ignoremagic`,`mode_ignoreranged`,`mode_mvp`,`mode_ignoremisc`,`mode_knockbackimmune`,`mode_teleportblock`,`mode_fixeditemdrop`,`mode_detector`,`mode_statusimmune`,`mode_skillimmune`,"
 			"`mvpdrop1_item`,`mvpdrop1_rate`,`mvpdrop1_option`,`mvpdrop1_index`,`mvpdrop2_item`,`mvpdrop2_rate`,`mvpdrop2_option`,`mvpdrop2_index`,`mvpdrop3_item`,`mvpdrop3_rate`,`mvpdrop3_option`,`mvpdrop3_index`,"
 			"`drop1_item`,`drop1_rate`,`drop1_nosteal`,`drop1_option`,`drop1_index`,`drop2_item`,`drop2_rate`,`drop2_nosteal`,`drop2_option`,`drop2_index`,`drop3_item`,`drop3_rate`,`drop3_nosteal`,`drop3_option`,`drop3_index`,`drop4_item`,`drop4_rate`,`drop4_nosteal`,`drop4_option`,`drop4_index`,`drop5_item`,`drop5_rate`,`drop5_nosteal`,`drop5_option`,`drop5_index`,`drop6_item`,`drop6_rate`,`drop6_nosteal`,`drop6_option`,`drop6_index`,`drop7_item`,`drop7_rate`,`drop7_nosteal`,`drop7_option`,`drop7_index`,`drop8_item`,`drop8_rate`,`drop8_nosteal`,`drop8_option`,`drop8_index`,`drop9_item`,`drop9_rate`,`drop9_nosteal`,`drop9_option`,`drop9_index`,`drop10_item`,`drop10_rate`,`drop10_nosteal`,`drop10_option`,`drop10_index`"

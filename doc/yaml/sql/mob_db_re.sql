@@ -62,7 +62,6 @@ CREATE TABLE `mob_db_re` (
   `damage_motion` smallint(6) unsigned DEFAULT NULL,
   `ai` varchar(2) DEFAULT NULL,
   `class` varchar(50) DEFAULT NULL,
-  `attribute` tinyint(2) unsigned DEFAULT NULL,
   `mode_canmove` tinyint(1) unsigned DEFAULT NULL,
   `mode_looter` tinyint(1) unsigned DEFAULT NULL,
   `mode_aggressive` tinyint(1) unsigned DEFAULT NULL,

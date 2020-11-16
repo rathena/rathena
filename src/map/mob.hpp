@@ -228,6 +228,7 @@ public:
 
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node &node);
+	void loadingFinished();
 };
 
 extern MobDatabase mob_db;

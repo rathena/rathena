@@ -726,8 +726,6 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 			column.append("`ai`,");
 		if (appendEntry(input["Class"], value, true))
 			column.append("`class`,");
-		if (appendEntry(input["Attribute"], value))
-			column.append("`attribute`,");
 
 		const YAML::Node &modes = input["Modes"];
 

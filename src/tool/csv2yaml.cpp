@@ -842,6 +842,8 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node& node) {
 	return 1;
 }
 
+void MobDatabase::loadingFinished() {};
+
 MobDatabase mob_db;
 
 static bool parse_skill_constants_txt( char* split[], int columns, int current ){
@@ -3957,11 +3959,22 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 	if (fields[23])
 		body << YAML::Key << "Race" << YAML::Value << name2Upper(constant_lookup(strtol(fields[23], nullptr, 10), "RC_") + 3);
 
+	std::string class_ = "Normal";
+
 	for (const auto &race2 : mob_race2) {
 		bool header = false;
 
 		for (const auto &mobit : race2.second) {
 			if (mobit == mob_id) {
+				// These two races are now Class types
+				if (race2.first == RC2_GUARDIAN) {
+					class_ = "Guardian";
+					continue;
+				} else if (race2.first == RC2_BATTLEFIELD) {
+					class_ = "Battlefield";
+					continue;
+				}
+
 				if (!header) {
 					body << YAML::Key << "RaceGroups";
 					body << YAML::BeginMap;
@@ -3992,13 +4005,12 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 
 	if (fields[25]) {
 		uint32 mode = static_cast<e_mode>(strtoul(fields[25], nullptr, 0));
-		uint16 attr = 0;
-		std::string class_ = "Normal", ai = "06";
+		std::string ai = "06";
 
 		if ((mode & 0xC000000) == 0xC000000) {
 			mode &= ~0xC000000;
 			class_ = "Battlefield";
-		} else if ((mode & 0x6200000) == 0x6200000) {
+		} else if (class_.compare("Normal") == 0 && (mode & 0x6200000) == 0x6200000) { // Check for normal because class would have been changed above in RaceGroups
 			mode &= ~0x6200000;
 			class_ = "Boss";
 		} else if ((mode & 0x4000000) == 0x4000000) {
@@ -4007,35 +4019,6 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 		} else if ((mode & 0x1000000) == 0x1000000) {
 			mode &= ~0x1000000;
 			class_ = "Event";
-		}
-
-		if (mode & 0x10000) {
-			mode &= ~0x10000;
-			attr |= 1;
-		}
-		if (mode & 0x20000) {
-			mode &= ~0x20000;
-			attr |= 2;
-		}
-		if (mode & 0x40000) {
-			mode &= ~0x40000;
-			attr |= 4;
-		}
-		if (mode & 0x80000) {
-			mode &= ~0x80000;
-			attr |= 8;
-		}
-		if (mode & 0x100000) {
-			mode &= ~0x100000;
-			attr |= 16;
-		}
-		if (mode & 0x200000) {
-			mode &= ~0x200000;
-			attr |= 32;
-		}
-		if (mode & 0x400000) {
-			mode &= ~0x400000;
-			attr |= 64;
 		}
 
 		if ((mode & MONSTER_TYPE_26) == MONSTER_TYPE_26) {
@@ -4095,8 +4078,6 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 		body << YAML::Key << "Ai" << YAML::Value << ai;
 		if (class_.compare("Normal") != 0)
 			body << YAML::Key << "Class" << YAML::Value << class_;
-		if (attr > 0)
-			body << YAML::Key << "Attribute" << YAML::Value << attr;
 
 		if (mode > 0) {
 			body << YAML::Key << "Modes";
@@ -4151,7 +4132,7 @@ static bool mob_readdb_sub(char *fields[], int columns, int current) {
 				body << YAML::Key << "StatusImmune" << YAML::Value << "true";
 			if (mode & 0x8000000)
 				body << YAML::Key << "SkillImmune" << YAML::Value << "true";
-			if (attr & 8)
+			if (mode & 0x80000)
 				body << YAML::Key << "Mvp" << YAML::Value << "true";
 			body << YAML::EndMap;
 		}
