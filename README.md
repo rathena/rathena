@@ -49,3 +49,5 @@ Copyright (c) rAthena Development Team - Licensed under [GNU General Public Lice
   * [Azael Dev](https://github.com/Azael-Dev)
   * [Playragnarok](https://github.com/Playragnarok)
   * [SamMeePay](https://github.com/sammeepay)
+  * [DurexzOfficial](https://github.com/zdurexz)
+  * [Joam](https://github.com/attackjom)
