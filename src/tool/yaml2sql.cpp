@@ -393,8 +393,8 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 			if (appendEntry(classes["Baby"], value))
 				column.append("`class_baby`,");
 #ifdef RENEWAL
-			if (classes["Third"].IsDefined()) {
-				std::string tmp_value = string_trim(classes["Third"].as<std::string>());
+			if (classes["All_Third"].IsDefined()) {
+				std::string tmp_value = string_trim(classes["All_Third"].as<std::string>());
 				if (!appendEntry(classes["Third"], value)) {
 					value.append(tmp_value);
 					value.append(",");
@@ -437,18 +437,50 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`location_head_low`,");
 			if (appendEntry(locations["Armor"], value))
 				column.append("`location_armor`,");
-			if (appendEntry(locations["Left_Hand"], value))
+			if (locations["Both_Hand"].IsDefined()) {
+				std::string tmp_value = string_trim(locations["Both_Hand"].as<std::string>());
+				if (!appendEntry(locations["Left_Hand"], value)) {
+					value.append(tmp_value);
+					value.append(",");
+				}
+				if (!appendEntry(locations["Right_Hand"], value)) {
+					value.append(tmp_value);
+					value.append(",");
+				}
 				column.append("`location_left_hand`,");
-			if (appendEntry(locations["Right_Hand"], value))
 				column.append("`location_right_hand`,");
+
+			}
+			else {
+				if (appendEntry(locations["Left_Hand"], value))
+					column.append("`location_left_hand`,");
+				if (appendEntry(locations["Right_Hand"], value))
+					column.append("`location_right_hand`,");
+			}
 			if (appendEntry(locations["Garment"], value))
 				column.append("`location_garment`,");
 			if (appendEntry(locations["Shoes"], value))
 				column.append("`location_shoes`,");
-			if (appendEntry(locations["Right_Accessory"], value))
+			if (locations["Both_Accessory"].IsDefined()) {
+				std::string tmp_value = string_trim(locations["Both_Accessory"].as<std::string>());
+				if (!appendEntry(locations["Right_Accessory"], value)) {
+					value.append(tmp_value);
+					value.append(",");
+				}
+				if (!appendEntry(locations["Left_Accessory"], value)) {
+					value.append(tmp_value);
+					value.append(",");
+				}
 				column.append("`location_right_accessory`,");
-			if (appendEntry(locations["Left_Accessory"], value))
 				column.append("`location_left_accessory`,");
+
+			}
+			else {
+				if (appendEntry(locations["Right_Accessory"], value))
+					column.append("`location_right_accessory`,");
+				if (appendEntry(locations["Left_Accessory"], value))
+					column.append("`location_left_accessory`,");
+			}
 			if (appendEntry(locations["Costume_Head_Top"], value))
 				column.append("`location_costume_head_top`,");
 			if (appendEntry(locations["Costume_Head_Mid"], value))

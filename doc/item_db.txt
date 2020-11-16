@@ -191,6 +191,9 @@ Shadow_Shoes           - Shadow Shoes
 Shadow_Right_Accessory - Shadow Accessory Right (Earring)
 Shadow_Left_Accessory  - Shadow Accessory Left (Pendant)
 
+Both_Hand              - Right_Hand + Left_Hand
+Both_Accessory         - Right_Accessory + Left_Accessory
+
 ---------------------------------------
 
 WeaponLevel: Weapon level. Used for refinement.

@@ -813,8 +813,10 @@
 	export_constant(EQP_ACC_RL);
 	export_constant(EQP_SHADOW_ACC_RL);
 
+	export_constant2("EQP_Both_Hand", (EQP_HAND_R|EQP_HAND_L));
 	export_constant2("EQP_Right_Hand", EQP_HAND_R);
 	export_constant2("EQP_Left_Hand", EQP_HAND_L);
+	export_constant2("EQP_Both_Accessory", EQP_ACC_RL);
 	export_constant2("EQP_Right_Accessory", EQP_ACC_R);
 	export_constant2("EQP_Left_Accessory", EQP_ACC_L);
 	export_constant2("EQP_Shadow_Right_Accessory", EQP_SHADOW_ACC_R);
