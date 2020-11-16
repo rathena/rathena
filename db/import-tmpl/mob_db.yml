@@ -57,7 +57,6 @@
 #   DamageMotion            Damage animation speed. (Default: 0)
 #   Ai                      Aegis monster type AI behavior. (Default: 06)
 #   Class                   Aegis monster class. (Default: Normal)
-#   Attribute               Aegis monster attribute. (Default: 0)
 #   Modes:                  List of unique behavior not defined by AI, Class, or Attribute. (Optional)
 #     <mode>: <value>       Mode to toggle.
 #   MvpDrops:               List of possible MVP prize items. Max of MAX_MVP_DROP. (Optional)
