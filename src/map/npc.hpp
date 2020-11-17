@@ -1263,7 +1263,7 @@ int npc_get_new_npc_id(void);
 
 int npc_addsrcfile(const char* name, bool loadscript);
 void npc_delsrcfile(const char* name);
-int npc_parsesrcfile(const char* filepath, bool runOnInit);
+int npc_parsesrcfile(const char* filepath);
 void do_clear_npc(void);
 void do_final_npc(void);
 void do_init_npc(void);
@@ -1274,6 +1274,7 @@ int npc_event_do_id(const char* name, int rid);
 int npc_event_doall(const char* name);
 void npc_event_runall( const char* eventname );
 int npc_event_doall_id(const char* name, int rid);
+int npc_event_doall_path(const char* event_name, const char* path);
 
 int npc_timerevent_start(struct npc_data* nd, int rid);
 int npc_timerevent_stop(struct npc_data* nd);
