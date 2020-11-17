@@ -7389,8 +7389,10 @@ ACMD_FUNC(mobinfo)
 		}
 #ifdef RENEWAL_EXP
 		if( battle_config.atcommand_mobinfo_type ) {
-			base_exp = base_exp * pc_level_penalty_mod(mob->lv - sd->status.base_level, mob->status.class_, mob->status.mode, 1) / 100;
-			job_exp = job_exp * pc_level_penalty_mod(mob->lv - sd->status.base_level, mob->status.class_, mob->status.mode, 1) / 100;
+			int penalty = pc_level_penalty_mod( sd, PENALTY_EXP, mob );
+
+			base_exp = base_exp * penalty / 100;
+			job_exp = job_exp * penalty / 100;
 		}
 #endif
 		// stats
@@ -7415,6 +7417,10 @@ ACMD_FUNC(mobinfo)
 		clif_displaymessage(fd, msg_txt(sd,1245)); //  Drops:
 		strcpy(atcmd_output, " ");
 		j = 0;
+#ifdef RENEWAL_DROP
+		int penalty = pc_level_penalty_mod( sd, PENALTY_DROP, mob );
+#endif
+
 		for (i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
 			int droprate;
 			if (mob->dropitem[i].nameid == 0 || mob->dropitem[i].rate < 1 || (item_data = itemdb_exists(mob->dropitem[i].nameid)) == NULL)
@@ -7423,7 +7429,7 @@ ACMD_FUNC(mobinfo)
 
 #ifdef RENEWAL_DROP
 			if( battle_config.atcommand_mobinfo_type ) {
-				droprate = droprate * pc_level_penalty_mod(mob->lv - sd->status.base_level, mob->status.class_, mob->status.mode, 2) / 100;
+				droprate = droprate * penalty / 100;
 				if (droprate <= 0 && !battle_config.drop_rate0item)
 					droprate = 1;
 			}
@@ -7962,7 +7968,7 @@ ACMD_FUNC(whodrops)
 
 #ifdef RENEWAL_DROP
 				if( battle_config.atcommand_mobinfo_type )
-					dropchance = dropchance * pc_level_penalty_mod(mob_db(item_data->mob[j].id)->lv - sd->status.base_level, mob_db(item_data->mob[j].id)->status.class_, mob_db(item_data->mob[j].id)->status.mode, 2) / 100;
+					dropchance = dropchance * pc_level_penalty_mod( sd, PENALTY_DROP, mob_db( item_data->mob[j].id ) ) / 100;
 #endif
 				if (pc_isvip(sd)) // Display item rate increase for VIP
 					dropchance += (dropchance * battle_config.vip_drop_increase) / 100;
