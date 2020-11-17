@@ -3172,15 +3172,15 @@ static bool itemdb_read_db(const char* file) {
 				body << YAML::Key << "Classes";
 				body << YAML::BeginMap;
 				if ((ITEMJ_THIRD & temp_class) && (ITEMJ_THIRD_UPPER & temp_class) && (ITEMJ_THIRD_BABY & temp_class)) {
-					temp_class &= ~(ITEMJ_THIRD|ITEMJ_THIRD_UPPER|ITEMJ_THIRD_BABY);
+					temp_class &= ~ITEMJ_ALL_THIRD;
 					body << YAML::Key << "All_Third" << YAML::Value << "true";
 				}
 				if ((ITEMJ_UPPER & temp_class) && (ITEMJ_THIRD_UPPER & temp_class)) {
-					temp_class &= ~(ITEMJ_UPPER|ITEMJ_THIRD_UPPER);
+					temp_class &= ~ITEMJ_ALL_UPPER;
 					body << YAML::Key << "All_Upper" << YAML::Value << "true";
 				}
 				if ((ITEMJ_BABY & temp_class) && (ITEMJ_THIRD_BABY & temp_class)) {
-					temp_class &= ~(ITEMJ_BABY|ITEMJ_THIRD_BABY);
+					temp_class &= ~ITEMJ_ALL_BABY;
 					body << YAML::Key << "All_Baby" << YAML::Value << "true";
 				}
 				for (int32 i = ITEMJ_NONE; i <= ITEMJ_THIRD_BABY; i++) {
