@@ -15,6 +15,12 @@
 
 struct guardian_data;
 
+//This is the distance at which @autoloot works,
+//if the item drops farther from the player than this,
+//it will not be autolooted. [Skotlex]
+//Note: The range is unlimited unless this define is set.
+//#define AUTOLOOT_DISTANCE AREA_SIZE
+
 //The number of drops all mobs have and the max drop-slot that the steal skill will attempt to steal from.
 #define MAX_MOB_DROP 10
 #define MAX_MVP_DROP 3
@@ -94,7 +100,7 @@ enum MobDamageLogFlag
 	MDLF_SELF
 };
 
-enum size {
+enum e_size : uint8 {
 	SZ_SMALL = 0,
 	SZ_MEDIUM,
 	SZ_BIG,
@@ -155,10 +161,10 @@ struct s_mob_lootitem {
 
 /// Struct for monster's drop item
 struct s_mob_drop {
-	unsigned short nameid;
-	int p;
-	uint8 randomopt_group;
-	unsigned steal_protected : 1;
+	t_itemid nameid;
+	uint32 rate;
+	uint16 randomopt_group;
+	bool steal_protected;
 };
 
 struct mob_db {

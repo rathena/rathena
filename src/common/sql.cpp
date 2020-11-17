@@ -93,6 +93,14 @@ Sql* Sql_Malloc(void)
 }
 
 
+/**
+ * Retrieves the last error number.
+ * @param self : sql handle
+ * @return last error number
+ */
+unsigned int Sql_GetError( Sql* self ){
+	return mysql_errno( &self->handle );
+}
 
 static int Sql_P_Keepalive(Sql* self);
 
