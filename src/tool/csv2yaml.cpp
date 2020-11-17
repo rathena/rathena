@@ -763,6 +763,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node& node) {
 	return 1;
 }
 
+void ItemDatabase::loadingFinished(){
+}
+
 ItemDatabase item_db;
 
 static bool parse_mob_constants( char* split[], int columns, int current ){
