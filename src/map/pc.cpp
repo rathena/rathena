@@ -1317,7 +1317,7 @@ static bool pc_isItemClass (struct map_session_data *sd, struct item_data* item)
 			break;
 		//don't need to decide specific rules for third-classes?
 		//items for third classes can be used for all third classes
-		if (item->class_upper&ITEMJ_ALL_THIRD && sd->class_&JOBL_THIRD)
+		if (item->class_upper&(ITEMJ_THIRD|ITEMJ_THIRD_UPPER|ITEMJ_THIRD_BABY) && sd->class_&JOBL_THIRD)
 			break;
 #else
 		//trans. classes (exl. third-trans.)

@@ -384,41 +384,64 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 		const YAML::Node &classes = input["Classes"];
 
 		if (classes) {
+			std::string str_all_upper;
+			std::string str_all_baby;
+
+			if (classes["All_Upper"].IsDefined())
+				str_all_upper = string_trim(classes["All_Upper"].as<std::string>());
+			if (classes["All_Baby"].IsDefined())
+				str_all_baby = string_trim(classes["All_Baby"].as<std::string>());
+
 			if (appendEntry(classes["All"], value))
 				column.append("`class_all`,");
 			if (appendEntry(classes["Normal"], value))
 				column.append("`class_normal`,");
 			if (appendEntry(classes["Upper"], value))
 				column.append("`class_upper`,");
+			else if (!str_all_upper.empty()) {
+				value.append(str_all_upper);
+				value.append(",");
+				column.append("`class_upper`,");
+			}
 			if (appendEntry(classes["Baby"], value))
 				column.append("`class_baby`,");
-#ifdef RENEWAL
-			if (classes["All_Third"].IsDefined()) {
-				std::string tmp_value = string_trim(classes["All_Third"].as<std::string>());
-				if (!appendEntry(classes["Third"], value)) {
-					value.append(tmp_value);
-					value.append(",");
-				}
-				if (!appendEntry(classes["Third_Upper"], value)) {
-					value.append(tmp_value);
-					value.append(",");
-				}
-				if (!appendEntry(classes["Third_Baby"], value)) {
-					value.append(tmp_value);
-					value.append(",");
-				}
-				column.append("`class_third`,");
-				column.append("`class_third_upper`,");
-				column.append("`class_third_baby`,");
-
+			else if (!str_all_baby.empty()) {
+				value.append(str_all_baby);
+				value.append(",");
+				column.append("`class_baby`,");
 			}
-			else {
-				if (appendEntry(classes["Third"], value))
-					column.append("`class_third`,");
-				if (appendEntry(classes["Third_Upper"], value))
-					column.append("`class_third_upper`,");
-				if (appendEntry(classes["Third_Baby"], value))
-					column.append("`class_third_baby`,");
+#ifdef RENEWAL
+			std::string str_all_third;
+
+			if (classes["All_Third"].IsDefined())
+				str_all_third = string_trim(classes["All_Third"].as<std::string>());
+
+			if (appendEntry(classes["Third"], value))
+				column.append("`class_third`,");
+			else if (!str_all_third.empty()) {
+				value.append(str_all_third);
+				value.append(",");
+				column.append("`class_third`,");
+			}
+			if (appendEntry(classes["Third_Upper"], value))
+				column.append("`class_third_upper`,");
+			else if (!str_all_upper.empty() || !str_all_third.empty()) {
+				if (!str_all_upper.empty())
+					value.append(str_all_upper);
+				else
+					value.append(str_all_third);
+				value.append(",");
+				column.append("`class_third_upper`,");
+			}
+			if (appendEntry(classes["Third_Baby"], value))
+				column.append("`class_third_baby`,");
+			else if (!str_all_baby.empty() || !str_all_third.empty()) {
+				if (!str_all_baby.empty())
+					value.append(str_all_baby);
+				else
+					value.append(str_all_third);
+				value.append(",");
+				column.append("`class_third_baby`,");
 			}
 #endif
 		}
