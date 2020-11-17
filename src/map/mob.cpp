@@ -4666,7 +4666,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 			constant = MONSTER_TYPE_06;
 		}
 
-		if (constant < MONSTER_TYPE_01 || constant > MONSTER_TYPE_27) {
+		if (constant < MD_NONE || constant > MD_MASK) {
 			this->invalidWarning(node["Ai"], "Invalid monster AI %s, defaulting to MONSTER_TYPE_06.\n", ai.c_str());
 			constant = MONSTER_TYPE_06;
 		}
@@ -4714,7 +4714,7 @@ uint64 MobDatabase::parseBodyNode(const YAML::Node &node) {
 				continue;
 			}
 
-			if (constant <= MD_NONE || constant > MD_SKILLIMMUNE) {
+			if (constant < MD_NONE || constant > MD_SKILLIMMUNE) {
 				this->invalidWarning(modeNode[modeName], "Invalid monster mode %s, skipping.\n", modeName.c_str());
 				continue;
 			}
