@@ -11929,7 +11929,8 @@
 3450,BIJOU@NPC_SUMMONSLAVE,any,196,2,1000,2000,30000,yes,self,slavele,0,3449,,,,,,
 3450,BIJOU@NPC_SUMMONSLAVE,any,196,1,1000,2000,30000,yes,self,slavele,1,3449,,,,,,
 3450,BIJOU@MG_FROSTDIVER,anytarget,15,9,1000,100,10000,yes,target,always,,,,,,,,
-// 3450,BIJOU@MO_BODYRELOCATION,chase,264,1,1000,0,20000,yes,target,always,,,,,,,,// never seen on Sakray [akaineko]
+// never seen on Sakray [akaineko]
+// 3450,BIJOU@MO_BODYRELOCATION,chase,264,1,1000,0,20000,yes,target,always,,,,,,,,
 3450,BIJOU@WZ_FROSTNOVA,attack,88,10,5000,7000,30000,no,self,always,,,,,,,,
 3450,BIJOU@NPC_CALLSLAVE,any,352,1,1000,0,30000,yes,self,always,,,,,,,,
 3450,BIJOU@NPC_PULSESTRIKE,attack,661,1,500,1000,30000,no,self,always,,,,,,,,
@@ -11946,15 +11947,23 @@
 3452,ZOMBIE_GUARD@NPC_POISONATTACK,attack,188,3,500,800,5000,yes,target,always,,,,,,,,
 3452,ZOMBIE_GUARD@NPC_BLOODDRAIN,attack,199,1,500,0,5000,yes,target,always,,,,,,,,
 
-//3473,AS_RAGGED_GOLEM@SO_ELECTRICWALK,attack,2444,5,2000,0,5000,yes,self,always,,,,,,,,// officially 744 NPC_ELECTRICWALK
-//3473,AS_RAGGED_GOLEM@SO_FIREWALK,attack,2443,5,2000,0,5000,yes,self,always,,,,,,,,// officially 745 NPC_FIREWALK
-//3473,AS_RAGGED_GOLEM@GC_HALLUCINATIONWALK,anytarget,2035,5,10000,800,500000,yes,self,always,,,,,,,,// officially 743 NPC_HALLUCINATIONWALK
-//3474,AS_BLOODY_KNIGHT@RK_PHANTOMTHRUST,attack,2020,5,2000,1000,5000,no,target,always,,,,,,,,// officially 741 NPC_PHANTOMTHRUST
-//3474,AS_BLOODY_KNIGHT@RK_IGNITIONBREAK@,attack,2006,5,1000,3000,5000,no,self,always,,,,,,,,// officially 740 NPC_IGNITIONBREAK
+// officially 744 NPC_ELECTRICWALK
+//3473,AS_RAGGED_GOLEM@SO_ELECTRICWALK,attack,2444,5,2000,0,5000,yes,self,always,,,,,,,,
+// officially 745 NPC_FIREWALK
+//3473,AS_RAGGED_GOLEM@SO_FIREWALK,attack,2443,5,2000,0,5000,yes,self,always,,,,,,,,
+// officially 743 NPC_HALLUCINATIONWALK
+//3473,AS_RAGGED_GOLEM@GC_HALLUCINATIONWALK,anytarget,2035,5,10000,800,500000,yes,self,always,,,,,,,,
+// officially 741 NPC_PHANTOMTHRUST
+//3474,AS_BLOODY_KNIGHT@RK_PHANTOMTHRUST,attack,2020,5,2000,1000,5000,no,target,always,,,,,,,,
+// officially 740 NPC_IGNITIONBREAK
+//3474,AS_BLOODY_KNIGHT@RK_IGNITIONBREAK@,attack,2006,5,1000,3000,5000,no,self,always,,,,,,,,
 //3475,AS_WIND_GHOST@HT_SHOCKWAVE,attack,118,5,500,0,300000,yes,target,always,,,,,,,,
-//3475,AS_WIND_GHOST@SO_CLOUD_KILL,chase,2450,5,10000,0,5000,yes,target,always,,,,,,,,// officially 739 NPC_CLOUD_KILL
-//3475,AS_WIND_GHOST@SO_CLOUD_KILL,attack,2450,5,2000,0,5000,yes,target,always,,,,,,,,// officially 739 NPC_CLOUD_KILL
-//3475,AS_WIND_GHOST@SO_POISON_BUSTER,attack,2448,2,1000,1000,5000,no,target,always,,,,,,,,// officially 742 NPC_POISON_BUSTER
+// officially 739 NPC_CLOUD_KILL
+//3475,AS_WIND_GHOST@SO_CLOUD_KILL,chase,2450,5,10000,0,5000,yes,target,always,,,,,,,,
+// officially 739 NPC_CLOUD_KILL
+//3475,AS_WIND_GHOST@SO_CLOUD_KILL,attack,2450,5,2000,0,5000,yes,target,always,,,,,,,,
+// officially 742 NPC_POISON_BUSTER
+//3475,AS_WIND_GHOST@SO_POISON_BUSTER,attack,2448,2,1000,1000,5000,no,target,always,,,,,,,,
 //3476,AS_ZOMBIE@NPC_POISON,attack,176,1,500,800,5000,no,target,always,,,,,,,,
 //3476,AS_ZOMBIE@NPC_UNDEADATTACK,attack,347,1,2000,0,5000,yes,target,always,,,,,,,,
 //3478,AS_ZOMBIE_SLAUGHTER@NPC_BLINDATTACK,attack,177,5,500,0,5000,yes,target,always,,,,,,,,
@@ -11982,8 +11991,10 @@
 3487,IMMORTAL_CORPS1@NPC_CRITICALWOUND,attack,673,1,500,500,5000,yes,target,always,,,,,,,,
 3487,IMMORTAL_CORPS1@NPC_COMBOATTACK,attack,171,5,3000,500,5000,yes,target,always,,,,,,,6,
 3487,IMMORTAL_CORPS1@AM_ACIDTERROR,chase,230,5,1000,2000,60000,yes,target,always,,,,,,,,
-// 3487,IMMORTAL_CORPS1@NPC_INVISIBLE,attack,353,1,5000,0,50000,no,self,myhpltmaxrate,70,,,,,,,// never seen on Sakray [akaineko]
-// 3487,IMMORTAL_CORPS1@NPC_AGIUP,attack,350,3,10000,0,50000,no,self,myhpltmaxrate,50,,,,,,,// never seen on Sakray [akaineko]
+// never seen on Sakray [akaineko]
+// 3487,IMMORTAL_CORPS1@NPC_INVISIBLE,attack,353,1,5000,0,50000,no,self,myhpltmaxrate,70,,,,,,,
+// never seen on Sakray [akaineko]
+// 3487,IMMORTAL_CORPS1@NPC_AGIUP,attack,350,3,10000,0,50000,no,self,myhpltmaxrate,50,,,,,,,
 3488,IMMORTAL_CORPS2@NPC_BLINDATTACK,attack,177,5,3000,500,5000,yes,target,always,,,,,,,,
 3488,IMMORTAL_CORPS2@NPC_SILENCEATTACK,attack,178,5,3000,500,5000,yes,target,always,,,,,,,,
 3488,IMMORTAL_CORPS2@NPC_CURSEATTACK,attack,181,5,3500,500,5000,yes,target,always,,,,,,,,
@@ -12006,7 +12017,8 @@
 3490,IMMORTAL_CO_CMDER@NPC_CALLSLAVE,any,352,1,1000,0,30000,yes,self,always,,,,,,,,
 3490,IMMORTAL_CO_CMDER@MG_SIGHT,idle,10,1,500,100,10000,yes,self,always,,,,,,,,
 3490,IMMORTAL_CO_CMDER@MG_SIGHT,chase,10,1,500,100,10000,yes,self,always,,,,,,,,
-3490,IMMORTAL_CO_CMDER@AB_CHEAL,any,2043,5,3000,0,5000,yes,self,friendhpltmaxrate,80,,,,,,,// officially 729 NPC_CHEAL
+// officially 729 NPC_CHEAL
+3490,IMMORTAL_CO_CMDER@AB_CHEAL,any,2043,5,3000,0,5000,yes,self,friendhpltmaxrate,80,,,,,,,
 3490,IMMORTAL_CO_CMDER@NPC_BLOODDRAIN,attack,199,1,3000,0,4000,no,target,always,,,,,,,2,
 3490,IMMORTAL_CO_CMDER@NPC_HELLJUDGEMENT,attack,662,3,1000,2000,30000,yes,self,myhpltmaxrate,50,,,,,,7,
 3490,IMMORTAL_CO_CMDER@NPC_ALLHEAL,attack,687,9,500,2000,100000,yes,self,myhpltmaxrate,15,,,,,,52,
