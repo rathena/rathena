@@ -10250,11 +10250,6 @@ static int pc_checkcombo(struct map_session_data *sd, item_data *data) {
 
 		combo_idx.reserve(nb_itemCombo);
 
-		// Zero out temporary combo array
-		for (auto &tmp_combo : combo_idx) {
-			tmp_combo = {};
-		}
-
 		for (j = 0; j < nb_itemCombo; j++) {
 			t_itemid id = item_combo->nameid[j];
 			bool found = false;
