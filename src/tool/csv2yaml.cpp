@@ -763,6 +763,9 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node& node) {
 	return 1;
 }
 
+void ItemDatabase::loadingFinished(){
+}
+
 ItemDatabase item_db;
 
 static bool parse_mob_constants( char* split[], int columns, int current ){
@@ -3071,11 +3074,33 @@ static bool itemdb_read_db(const char* file) {
 
 		int type = atoi(str[3]), subtype = atoi(str[18]);
 
-		body << YAML::Key << "Type" << YAML::Value << name2Upper(constant_lookup(type, "IT_") + 3);
-		if (type == IT_WEAPON && subtype)
-			body << YAML::Key << "SubType" << YAML::Value << name2Upper(constant_lookup(subtype, "W_") + 2);
-		else if (type == IT_AMMO && subtype)
-			body << YAML::Key << "SubType" << YAML::Value << name2Upper(constant_lookup(subtype, "AMMO_") + 5);
+		const char* constant = constant_lookup( type, "IT_" );
+
+		if( constant == nullptr ){
+			ShowError( "itemdb_read_db: Unknown item type %d for item %u, skipping.\n", type, nameid );
+			continue;
+		}
+
+		body << YAML::Key << "Type" << YAML::Value << name2Upper( constant + 3 );
+		if( type == IT_WEAPON && subtype ){
+			constant = constant_lookup( subtype, "W_" );
+
+			if( constant == nullptr ){
+				ShowError( "itemdb_read_db: Unknown weapon type %d for item %u, skipping.\n", subtype, nameid );
+				continue;
+			}
+
+			body << YAML::Key << "SubType" << YAML::Value << name2Upper( constant + 2 );
+		}else if( type == IT_AMMO && subtype ){
+			constant = constant_lookup( subtype, "AMMO_" );
+
+			if( constant == nullptr ){
+				ShowError( "itemdb_read_db: Unknown ammo type %d for item %u, skipping.\n", subtype, nameid );
+				continue;
+			}
+
+			body << YAML::Key << "SubType" << YAML::Value << name2Upper(constant + 5);
+		}
 
 		if (atoi(str[4]) > 0)
 			body << YAML::Key << "Buy" << YAML::Value << atoi(str[4]);
