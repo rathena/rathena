@@ -1019,6 +1019,23 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 	return 1;
 }
 
+void ItemDatabase::loadingFinished(){
+	if( !this->exists( ITEMID_DUMMY ) ){
+		// Create dummy item
+		std::shared_ptr<item_data> dummy_item = std::make_shared<item_data>();
+
+		dummy_item->nameid = ITEMID_DUMMY;
+		dummy_item->weight = 1;
+		dummy_item->value_sell = 1;
+		dummy_item->type = IT_ETC;
+		dummy_item->name = "UNKNOWN_ITEM";
+		dummy_item->ename = "Unknown Item";
+		dummy_item->view_id = UNKNOWN_ITEM_ID;
+
+		item_db.put( ITEMID_DUMMY, dummy_item );
+	}
+}
+
 ItemDatabase item_db;
 
 /**
@@ -1337,17 +1354,15 @@ static void itemdb_jobid2mapid(uint64 bclass[3], e_mapid jobmask, bool active)
 		// Calculate the required bit to set
 		uint64 job = 1ULL << ( jobmask & MAPID_BASEMASK );
 
-		// Basejob
-		temp_mask[0] |= job;
-
 		// 2-1
 		if( ( jobmask & JOBL_2_1 ) != 0 ){
 			temp_mask[1] |= job;
-		}
-
 		// 2-2
-		if( ( jobmask & JOBL_2_2 ) != 0 ){
+		}else if( ( jobmask & JOBL_2_2 ) != 0 ){
 			temp_mask[2] |= job;
+		// Basejob
+		}else{
+			temp_mask[0] |= job;
 		}
 	} else {
 		temp_mask[0] = temp_mask[1] = temp_mask[2] = MAPID_ALL;
@@ -1362,23 +1377,6 @@ static void itemdb_jobid2mapid(uint64 bclass[3], e_mapid jobmask, bool active)
 		else
 			bclass[i] &= ~temp_mask[i];
 	}
-}
-
-/**
- * Create dummy item_data
- */
-static void itemdb_create_dummy(void) {
-	std::shared_ptr<item_data> dummy_item;
-
-	dummy_item = std::make_shared<item_data>();
-	dummy_item->nameid = ITEMID_DUMMY;
-	dummy_item->weight = 1;
-	dummy_item->value_sell = 1;
-	dummy_item->type = IT_ETC;
-	dummy_item->name = "UNKNOWN_ITEM";
-	dummy_item->ename = "Unknown Item";
-	dummy_item->view_id = UNKNOWN_ITEM_ID;
-	item_db.put(ITEMID_DUMMY, dummy_item);
 }
 
 /*==========================================
@@ -2758,7 +2756,6 @@ void do_final_itemdb(void) {
 */
 void do_init_itemdb(void) {
 	itemdb_group = uidb_alloc(DB_OPT_BASE);
-	itemdb_create_dummy();
 	itemdb_read();
 
 	if (battle_config.feature_roulette)
