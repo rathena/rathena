@@ -36,6 +36,16 @@ const std::string ItemDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/item_db.yml";
 }
 
+static inline uint8 itemdb_set_refine_type(int type, int wlv, int loc) {
+	if (type == IT_WEAPON)
+		return (enum refine_type)wlv;
+	if (type == IT_ARMOR)
+		return (loc&EQP_COSTUME) ? REFINE_TYPE_COSTUME : REFINE_TYPE_ARMOR;
+	if (type == IT_SHADOWGEAR)
+		return (loc == EQP_SHADOW_WEAPON) ? REFINE_TYPE_SHADOW_WEAPON : REFINE_TYPE_SHADOW;
+	return REFINE_TYPE_MAX;
+}
+
 /**
  * Reads and parses an entry from the item_db.
  * @param node: YAML node containing the entry.
@@ -1012,6 +1022,8 @@ uint64 ItemDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!exists)
 			item->unequip_script = nullptr;
 	}
+
+	item->refine_type = itemdb_set_refine_type(item->type, item->wlv, item->equip);
 
 	if (!exists)
 		this->put(nameid, item);

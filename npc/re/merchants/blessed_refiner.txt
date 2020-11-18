@@ -17,55 +17,55 @@
 -	script	::BlacksmithDister	-1,{
 	disable_items;
 	mes "[Blacksmith Dister]";
-	mes "ในสังคมที่มีการแข่งขันที่สูง, เพื่อความอยู่รอด!";
-	mes "ข้าขอเสนอการตีบวกในระดับที่ +6 ~ 12.";
+	mes "๏ฟฝ๏ฟฝัง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝีก๏ฟฝ๏ฟฝ๏ฟฝ่งขัน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝูง, ๏ฟฝ๏ฟฝ๏ฟฝอค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝอด!";
+	mes "๏ฟฝ๏ฟฝาข๏ฟฝ๏ฟฝสนอก๏ฟฝรตีบวก๏ฟฝ๏ฟฝะดับ๏ฟฝ๏ฟฝ๏ฟฝ +6 ~ 12.";
 	next;
 	mes "[Blacksmith Dister]";
-	mes "ข้าต้องการแค่ ^ff9999Blessed Oridecon^000000 สำหรับบวกอาวุธ, และ ^ff9999Blessed Elunium^000000 สำหรับบวกชุดเกราะ.";
-	mes "ถ้าการบวกล้มเหลว ^FF0000ของจะไม่สูญหายและค่าตีบวกก็คงเดิม^000000.";
+	mes "๏ฟฝ๏ฟฝาต๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ^ff9999Blessed Oridecon^000000 ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝวก๏ฟฝ๏ฟฝ๏ฟฝุธ, ๏ฟฝ๏ฟฝ๏ฟฝ ^ff9999Blessed Elunium^000000 ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝับ๏ฟฝวก๏ฟฝุด๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ.";
+	mes "๏ฟฝ๏ฟฝาก๏ฟฝรบวก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ^FF0000๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝูญ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝะค๏ฟฝาตีบวก๏ฟฝ็คง๏ฟฝ๏ฟฝ๏ฟฝ^000000.";
 	next;
 	mes "[Blacksmith Dister]";
-	mes "ว่าไงละ ? เจ้าอยากจะตีบวกไหม ?";
+	mes "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ? ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาก๏ฟฝะตีบวก๏ฟฝ๏ฟฝ๏ฟฝ ?";
 	next;
 	setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
 	for(set .@i,1; .@i<=10; set .@i,.@i+1)
-		set .@menu$, .@menu$ + ( getequipisequiped(.@indices[.@i]) ? getequipname(.@indices[.@i]) : F_getpositionname(.@indices[.@i]) +"-[ไม่ได้สวมใส่]" ) +":";
+		set .@menu$, .@menu$ + ( getequipisequiped(.@indices[.@i]) ? getequipname(.@indices[.@i]) : F_getpositionname(.@indices[.@i]) +"-[๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ]" ) +":";
 	set .@part, .@indices[ select(.@menu$) ];
 	if (!getequipisequiped(.@part)) {
 		mes "[Blacksmith Dister]";
 		switch(.@part) {
 		case EQI_HEAD_TOP:
-			mes "ข้าเป็น blacksmith, ไม่ใช่ช่างทำผม.";
+			mes "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ blacksmith, ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาง๏ฟฝำผ๏ฟฝ.";
 			break;
 		case EQI_ARMOR:
-			mes "ค้อนในมือข้า, อาจทำให้เจ้าเป็นดาวบนฟ้าก็ได้.";
+			mes "๏ฟฝ๏ฟฝอน๏ฟฝ๏ฟฝ๏ฟฝอข๏ฟฝ๏ฟฝ, ๏ฟฝาจ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ็นด๏ฟฝวบ๏ฟฝ๏ฟฝ๏ฟฝาก๏ฟฝ๏ฟฝ๏ฟฝ.";
 			break;
 		case EQI_HAND_L:
 		case EQI_HAND_R:
-			mes "มันไม่ใช่งานที่ข้าถนัด.";
+			mes "๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาถ๏ฟฝัด.";
 			break;
 		case EQI_GARMENT:
-			mes "เอาไอเท็มมาข้าอยากจะตีบวก!";
+			mes "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาข๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาก๏ฟฝะตีบวก!";
 			break;
 		case EQI_SHOES:
-			mes "เจ้าได้กลิ่นอะไรไหม ?";
+			mes "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ?";
 			break;
 		case EQI_ACC_L:
 		case EQI_ACC_R:
-			mes "ประดับอยู่ไหน ?";
+			mes "๏ฟฝ๏ฟฝะดับ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝหน ?";
 			break;
 		case EQI_HEAD_MID:
-			mes "เจ้าอยากให้ข้าบวกอะไร ?";
+			mes "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาบวก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ?";
 			break;
 		case EQI_HEAD_LOW:
-			mes "หือ ? เจ้าต้องการให้ข้าทำอะไร ?";
+			mes "๏ฟฝ๏ฟฝ๏ฟฝ ? ๏ฟฝ๏ฟฝาต๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ?";
 			break;
 		}
 		close;
 	}
 	if (!getequipisenableref(.@part)) {
 		mes "[Blacksmith Dister]";
-		mes "ไอเท็มนี้มันบวกไม่ได้.";
+		mes "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัน๏ฟฝวก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ.";
 		close;
 	}
 	.@equip_id = getequipid(.@part);
@@ -74,7 +74,7 @@
 
 	if (.@equip_refine < 6 || .@equip_refine > 12) {
 		mes "[Blacksmith Dister]";
-		mes "ของสวมใส่นี้มีค่าบวกที่ "+.@equip_refine+". ข้าบวกเฉพาะ +6 ถึง +12 เท่านั้น!";
+		mes "๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝีค๏ฟฝาบวก๏ฟฝ๏ฟฝ๏ฟฝ "+.@equip_refine+". ๏ฟฝ๏ฟฝาบวกเฉพ๏ฟฝ๏ฟฝ +6 ๏ฟฝึง +12 ๏ฟฝ๏ฟฝาน๏ฟฝ๏ฟฝ!";
 		close;
 	}
 	set .@equip_lv, getequipweaponlv(.@part);
@@ -100,31 +100,31 @@
 	}
 	set .@ore$,"^ff9999Blessed "+.@type$+" Ore^000000";
 	mes "[Blacksmith Dister]";
-	mes "ของที่จะบวกคือ "+.@type$+" มีค่าตีบวกอยู่ที่ "+.@equip_refine+". ในการตีบวก, ข้าต้องการ "+.@ore$+" และ "+callfunc("F_InsertComma",.@price)+" zeny เป็นค่าบริการ.";
-	mes "เจ้าจะทำต่อไหม ?";
+	mes "๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝะบวก๏ฟฝ๏ฟฝ๏ฟฝ "+.@type$+" ๏ฟฝีค๏ฟฝาตีบวก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ "+.@equip_refine+". ในก๏ฟฝรตีบวก, ๏ฟฝ๏ฟฝาต๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ "+.@ore$+" ๏ฟฝ๏ฟฝ๏ฟฝ "+callfunc("F_InsertComma",.@price)+" zeny ๏ฟฝ็นค๏ฟฝาบ๏ฟฝิก๏ฟฝ๏ฟฝ.";
+	mes "๏ฟฝ๏ฟฝาจะทำต๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ?";
 	next;
-	if(select("ใช่:ไม่") == 2) {
+	if(select("๏ฟฝ๏ฟฝ:๏ฟฝ๏ฟฝ๏ฟฝ") == 2) {
 		mes "[Blacksmith Dister]";
-		mes "ข้าไม่ค่อยมีเวลาว่างนัก, อย่ามาทำเป็นเล่นตลกกับข้า!";
+		mes "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาง๏ฟฝัก, ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ่นตลก๏ฟฝับ๏ฟฝ๏ฟฝ๏ฟฝ!";
 		close;
 	}
 	if (getequippercentrefinery(.@part, REFINE_COST_BLESSED) < 100) {
 		mes "[Blacksmith Dister]";
-		mes "ของที่จะบวกคือ "+.@type$+" ได้ถูกตีบวกมาหลายครั้งแล้ว.แม้ว่ามันจะไม่ล้มเหลว, แต่แร่ "+.@ore$+" ก็จะหายไป!";
+		mes "๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝะบวก๏ฟฝ๏ฟฝ๏ฟฝ "+.@type$+" ๏ฟฝ๏ฟฝูก๏ฟฝีบวก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝยค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ.๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ, ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ "+.@ore$+" ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ!";
 		next;
 		mes "[Blacksmith Dister]";
-		mes "แน่นอน, ว่าเจ้าจะไม่ได้เงินคืนหรอกน่ะ! ยังอยากจะทำต่อไหม ?";
+		mes "๏ฟฝ๏ฟฝอน, ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝาจ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝิน๏ฟฝืน๏ฟฝ๏ฟฝอก๏ฟฝ๏ฟฝ๏ฟฝ! ๏ฟฝัง๏ฟฝ๏ฟฝาก๏ฟฝะทำต๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ ?";
 		next;
-		if(select("ใช่:ไม่") == 2) {
+		if(select("๏ฟฝ๏ฟฝ:๏ฟฝ๏ฟฝ๏ฟฝ") == 2) {
 			mes "[Blacksmith Dister]";
-			mes "ก็ดี. เพราะข้าคงเสียใจแย่ถ้ามันบวกล้มเหลว.";
+			mes "๏ฟฝ๏ฟฝ๏ฟฝ. ๏ฟฝ๏ฟฝ๏ฟฝะข๏ฟฝาค๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝัน๏ฟฝวก๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ.";
 			close;
 		}
 	}
 	if (countitem(.@material) == 0 || Zeny < .@price) {
 		mes "[Blacksmith Dister]";
-		mes "มีของไม่พอ.";
-		mes "ในการบวก "+((.@equip_lv)?"ที่ระดับ "+.@equip_lv+" weapon":"armor")+", ข้าต้องการ "+.@ore$+" และ "+callfunc("F_InsertComma",.@price)+" zeny เป็นค่าบริการ.";
+		mes "๏ฟฝีของ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ.";
+		mes "ในก๏ฟฝรบวก "+((.@equip_lv)?"๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝะดับ "+.@equip_lv+" weapon":"armor")+", ๏ฟฝ๏ฟฝาต๏ฟฝอง๏ฟฝ๏ฟฝ๏ฟฝ "+.@ore$+" ๏ฟฝ๏ฟฝ๏ฟฝ "+callfunc("F_InsertComma",.@price)+" zeny ๏ฟฝ็นค๏ฟฝาบ๏ฟฝิก๏ฟฝ๏ฟฝ.";
 		close;
 	}
 	delitem .@material,1;
@@ -135,16 +135,16 @@
 		close;
 
 	mes "[Blacksmith Dister]";
-	mes "ก๊อง! ก๊อง! ก๊อง!";
+	mes "Tac! Tac! Tac!";
 	if (getequippercentrefinery(.@part, REFINE_COST_BLESSED) > rand(100)) {
 		specialeffect EF_BLESSING;
 		successrefitem .@part;
 		next;
 		mes "[Blacksmith Dister]";
-		mes "ฮ่าฮ่าฮาฮาฮาฮา!!!";
+		mes "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ!!!";
 		next;
 		mes "[Blacksmith Dister]";
-		mes "มันประสบความสำเร็จล่ะ~ ฮ่าฮา!";
+		mes "๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝสบ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ~ ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ!";
 		close;
 	}
 	specialeffect EF_CURSEATTACK;
@@ -152,13 +152,13 @@
 	next;
 	emotion (!rand(5))?ET_ANGER:ET_HUK;
 	mes "[Blacksmith Dister]";
-	mes "โอ้ ม่ายน่าาาาา!!!!";
+	mes "๏ฟฝ๏ฟฝ๏ฟฝ ๏ฟฝ๏ฟฝ๏ฟฝยน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ!!!!";
 	next;
 	mes "[Blacksmith Dister]";
-	mes "พลังที่สิงสถิตใน "+.@ore$+" มันมีไม่พอ...";
+	mes "๏ฟฝ๏ฟฝัง๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝิงสถิต๏ฟฝ "+.@ore$+" ๏ฟฝัน๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ...";
 	next;
 	mes "[Blacksmith Dister]";
-	mes "ข้าอารมณ์บ่จอยทุกครั้งที่ล้มเหลว!!";
+	mes "๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝยทุก๏ฟฝ๏ฟฝ๏ฟฝ้งท๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ๏ฟฝ!!";
 	close;
 }
 prt_in,52,56,3	duplicate(BlacksmithDister)	Blacksmith Dister#prt	826

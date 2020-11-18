@@ -29,37 +29,187 @@ Armor:
     - Type: REFINE_COST_ENRICHED
       Price: 2000
       Material: 7619
+    - Type: REFINE_COST_EVT_ENRICHED
+      Price: 2000
+      Material: 7619
+      RefineUI: false
   Rates:
+    - Level: 1
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 2
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 3
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 4
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
     - Level: 5
-      NormalChance: 60
-      EnrichedChance: 90
-      EventNormalChance: 60
-      EventEnrichedChance: 95
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 60
+      - Type: REFINE_COST_ENRICHED
+        Rate: 90
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 95
     - Level: 6
-      NormalChance: 40
-      EnrichedChance: 70
-      EventNormalChance: 40
-      EventEnrichedChance: 80
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 40
+      - Type: REFINE_COST_ENRICHED
+        Rate: 70
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 80
     - Level: 7
-      NormalChance: 40
-      EnrichedChance: 70
-      EventNormalChance: 40
-      EventEnrichedChance: 80
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 40
+      - Type: REFINE_COST_ENRICHED
+        Rate: 70
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 80
     - Level: 8
-      NormalChance: 20
-      EnrichedChance: 40
-      EventNormalChance: 20
-      EventEnrichedChance: 50
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 20
+      - Type: REFINE_COST_ENRICHED
+        Rate: 40
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 50
     - Level: 9
-      NormalChance: 20
-      EnrichedChance: 40
-      EventNormalChance: 20
-      EventEnrichedChance: 50
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 20
+      - Type: REFINE_COST_ENRICHED
+        Rate: 40
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 50
     - Level: 10
-      NormalChance: 9
-      EnrichedChance: 20
-      EventNormalChance: 9
-      EventEnrichedChance: 35
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 9
+      - Type: REFINE_COST_ENRICHED
+        Rate: 20
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 35
+Costume:
+  StatsPerLevel: 66
+  RandomBonusStartLevel: 0
+  RandomBonusValue: 0
+  Costs:
+    - Type: REFINE_COST_NORMAL
+      Price: 2000
+      Material: 985
+    - Type: REFINE_COST_ENRICHED
+      Price: 2000
+      Material: 7619
+    - Type: REFINE_COST_EVT_ENRICHED
+      Price: 2000
+      Material: 7619
+      RefineUI: false
+  Rates:
+    - Level: 1
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 2
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 3
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 4
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 5
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 60
+      - Type: REFINE_COST_ENRICHED
+        Rate: 90
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 95
+    - Level: 6
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 40
+      - Type: REFINE_COST_ENRICHED
+        Rate: 70
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 80
+    - Level: 7
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 40
+      - Type: REFINE_COST_ENRICHED
+        Rate: 70
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 80
+    - Level: 8
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 20
+      - Type: REFINE_COST_ENRICHED
+        Rate: 40
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 50
+    - Level: 9
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 20
+      - Type: REFINE_COST_ENRICHED
+        Rate: 40
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 50
+    - Level: 10
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 9
+      - Type: REFINE_COST_ENRICHED
+        Rate: 20
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 35
 WeaponLv1:
   StatsPerLevel: 200
   RandomBonusStartLevel: 8
@@ -71,22 +221,91 @@ WeaponLv1:
     - Type: REFINE_COST_ENRICHED
       Price: 2000
       Material: 7620
+    - Type: REFINE_COST_EVT_ENRICHED
+      Price: 2000
+      Material: 7620
+      RefineUI: false
   Rates:
+    - Level: 1
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 2
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 3
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 4
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 5
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 6
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 7
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
     - Level: 8
-      NormalChance: 60
-      EnrichedChance: 90
-      EventNormalChance: 60
-      EventEnrichedChance: 95
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 60
+      - Type: REFINE_COST_ENRICHED
+        Rate: 90
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 95
     - Level: 9
-      NormalChance: 40
-      EnrichedChance: 70
-      EventNormalChance: 40
-      EventEnrichedChance: 85
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 40
+      - Type: REFINE_COST_ENRICHED
+        Rate: 70
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 85
     - Level: 10
-      NormalChance: 19
-      EnrichedChance: 30
-      EventNormalChance: 19
-      EventEnrichedChance: 55
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 19
+      - Type: REFINE_COST_ENRICHED
+        Rate: 30
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 55
 WeaponLv2:
   StatsPerLevel: 300
   RandomBonusStartLevel: 7
@@ -98,27 +317,91 @@ WeaponLv2:
     - Type: REFINE_COST_ENRICHED
       Price: 2000
       Material: 7620
+    - Type: REFINE_COST_EVT_ENRICHED
+      Price: 2000
+      Material: 7620
+      RefineUI: false
   Rates:
+    - Level: 1
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 2
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 3
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 4
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 5
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 6
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
     - Level: 7
-      NormalChance: 60
-      EnrichedChance: 90
-      EventNormalChance: 60
-      EventEnrichedChance: 95
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 60
+      - Type: REFINE_COST_ENRICHED
+        Rate: 90
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 95
     - Level: 8
-      NormalChance: 40
-      EnrichedChance: 70
-      EventNormalChance: 40
-      EventEnrichedChance: 85
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 40
+      - Type: REFINE_COST_ENRICHED
+        Rate: 70
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 85
     - Level: 9
-      NormalChance: 20
-      EnrichedChance: 40
-      EventNormalChance: 20
-      EventEnrichedChance: 60
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 20
+      - Type: REFINE_COST_ENRICHED
+        Rate: 40
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 60
     - Level: 10
-      NormalChance: 19
-      EnrichedChance: 30
-      EventNormalChance: 19
-      EventEnrichedChance: 45
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 19
+      - Type: REFINE_COST_ENRICHED
+        Rate: 30
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 45
 WeaponLv3:
   StatsPerLevel: 500
   RandomBonusStartLevel: 6
@@ -130,32 +413,91 @@ WeaponLv3:
     - Type: REFINE_COST_ENRICHED
       Price: 2000
       Material: 7620
+    - Type: REFINE_COST_EVT_ENRICHED
+      Price: 2000
+      Material: 7620
+      RefineUI: false
   Rates:
+    - Level: 1
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 2
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 3
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 4
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 5
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
     - Level: 6
-      NormalChance: 60
-      EnrichedChance: 90
-      EventNormalChance: 60
-      EventEnrichedChance: 95
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 60
+      - Type: REFINE_COST_ENRICHED
+        Rate: 90
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 95
     - Level: 7
-      NormalChance: 50
-      EnrichedChance: 80
-      EventNormalChance: 50
-      EventEnrichedChance: 90
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 50
+      - Type: REFINE_COST_ENRICHED
+        Rate: 80
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 90
     - Level: 8
-      NormalChance: 20
-      EnrichedChance: 40
-      EventNormalChance: 20
-      EventEnrichedChance: 70
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 20
+      - Type: REFINE_COST_ENRICHED
+        Rate: 40
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 70
     - Level: 9
-      NormalChance: 20
-      EnrichedChance: 40
-      EventNormalChance: 20
-      EventEnrichedChance: 60
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 20
+      - Type: REFINE_COST_ENRICHED
+        Rate: 40
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 60
     - Level: 10
-      NormalChance: 19
-      EnrichedChance: 30
-      EventNormalChance: 19
-      EventEnrichedChance: 45
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 19
+      - Type: REFINE_COST_ENRICHED
+        Rate: 30
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 45
 WeaponLv4:
   StatsPerLevel: 700
   RandomBonusStartLevel: 5
@@ -167,69 +509,305 @@ WeaponLv4:
     - Type: REFINE_COST_ENRICHED
       Price: 2000
       Material: 7620
+    - Type: REFINE_COST_EVT_ENRICHED
+      Price: 2000
+      Material: 7620
+      RefineUI: false
   Rates:
+    - Level: 1
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 2
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 3
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 4
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
     - Level: 5
-      NormalChance: 60
-      EnrichedChance: 90
-      EventNormalChance: 60
-      EventEnrichedChance: 95
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 60
+      - Type: REFINE_COST_ENRICHED
+        Rate: 90
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 95
     - Level: 6
-      NormalChance: 40
-      EnrichedChance: 70
-      EventNormalChance: 40
-      EventEnrichedChance: 80
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 40
+      - Type: REFINE_COST_ENRICHED
+        Rate: 70
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 80
     - Level: 7
-      NormalChance: 40
-      EnrichedChance: 70
-      EventNormalChance: 40
-      EventEnrichedChance: 80
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 40
+      - Type: REFINE_COST_ENRICHED
+        Rate: 70
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 80
     - Level: 8
-      NormalChance: 20
-      EnrichedChance: 40
-      EventNormalChance: 20
-      EventEnrichedChance: 60
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 20
+      - Type: REFINE_COST_ENRICHED
+        Rate: 40
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 60
     - Level: 9
-      NormalChance: 20
-      EnrichedChance: 40
-      EventNormalChance: 20
-      EventEnrichedChance: 50
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 20
+      - Type: REFINE_COST_ENRICHED
+        Rate: 40
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 50
     - Level: 10
-      NormalChance: 9
-      EnrichedChance: 20
-      EventNormalChance: 9
-      EventEnrichedChance: 35
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 9
+      - Type: REFINE_COST_ENRICHED
+        Rate: 20
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 35
 Shadow:
   StatsPerLevel: 0
   RandomBonusStartLevel: 0
   RandomBonusValue: 0
+  Costs:
+    - Type: REFINE_COST_NORMAL
+      Price: 20000
+      Material: 985
+      RefineUI: true
+    - Type: REFINE_COST_HD
+      Price: 20000
+      Material: 6241
+      RefineUI: true
+      OnFail:
+        Break: 0
+        DownRefine: 100
+        DownRefineNum: 1
+    - Type: REFINE_COST_ENRICHED
+      Price: 20000
+      Material: 7619
+      RefineUI: true
+    # 'Event' rates
+    - Type: REFINE_COST_EVT_ENRICHED
+      Price: 20000
+      Material: 7619
+      RefineUI: false
   Rates:
+    - Level: 1
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 2
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 3
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 4
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
     - Level: 5
-      NormalChance: 60
-      EnrichedChance: 90
-      EventNormalChance: 60
-      EventEnrichedChance: 95
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 60
+      - Type: REFINE_COST_ENRICHED
+        Rate: 90
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 95
     - Level: 6
-      NormalChance: 40
-      EnrichedChance: 70
-      EventNormalChance: 40
-      EventEnrichedChance: 80
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 40
+      - Type: REFINE_COST_ENRICHED
+        Rate: 70
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 80
     - Level: 7
-      NormalChance: 40
-      EnrichedChance: 70
-      EventNormalChance: 40
-      EventEnrichedChance: 80
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 40
+      - Type: REFINE_COST_ENRICHED
+        Rate: 70
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 80
     - Level: 8
-      NormalChance: 20
-      EnrichedChance: 40
-      EventNormalChance: 20
-      EventEnrichedChance: 50
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 20
+      - Type: REFINE_COST_ENRICHED
+        Rate: 40
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 50
     - Level: 9
-      NormalChance: 20
-      EnrichedChance: 40
-      EventNormalChance: 20
-      EventEnrichedChance: 50
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 20
+      - Type: REFINE_COST_ENRICHED
+        Rate: 40
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 50
     - Level: 10
-      NormalChance: 9
-      EnrichedChance: 20
-      EventNormalChance: 9
-      EventEnrichedChance: 35
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 9
+      - Type: REFINE_COST_ENRICHED
+        Rate: 20
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 35
+ShadowWeapon:
+  StatsPerLevel: 0
+  RandomBonusStartLevel: 0
+  RandomBonusValue: 0
+  Costs:
+    - Type: REFINE_COST_NORMAL
+      Price: 20000
+      Material: 984
+    - Type: REFINE_COST_HD
+      Price: 20000
+      Material: 6240
+      OnFail:
+        Break: 0
+        DownRefine: 100
+        DownRefineNum: 1
+    - Type: REFINE_COST_ENRICHED
+      Price: 2000
+      Material: 7620
+    # 'Event' rates
+    - Type: REFINE_COST_EVT_ENRICHED
+      Price: 2000
+      Material: 7620
+      RefineUI: false
+  Rates:
+    - Level: 1
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 2
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 3
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 4
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 100
+      - Type: REFINE_COST_ENRICHED
+        Rate: 100
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 100
+    - Level: 5
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 60
+      - Type: REFINE_COST_ENRICHED
+        Rate: 90
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 95
+    - Level: 6
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 40
+      - Type: REFINE_COST_ENRICHED
+        Rate: 70
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 80
+    - Level: 7
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 40
+      - Type: REFINE_COST_ENRICHED
+        Rate: 70
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 80
+    - Level: 8
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 20
+      - Type: REFINE_COST_HD
+        Rate: 20
+      - Type: REFINE_COST_ENRICHED
+        Rate: 40
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 60
+    - Level: 9
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 20
+      - Type: REFINE_COST_HD
+        Rate: 20
+      - Type: REFINE_COST_ENRICHED
+        Rate: 40
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 50
+    - Level: 10
+      Chances:
+      - Type: REFINE_COST_NORMAL
+        Rate: 9
+      - Type: REFINE_COST_HD
+        Rate: 9
+      - Type: REFINE_COST_ENRICHED
+        Rate: 20
+      - Type: REFINE_COST_EVT_ENRICHED
+        Rate: 35

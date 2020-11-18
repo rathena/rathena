@@ -912,6 +912,7 @@ struct item_data
 
 		this->combos.clear();
 	}
+	uint8 refine_type; /// pre-defined refine type, depreciate wlv for refine_info[] lookup. REFINE_TYPE_MAX for not IT_WEAPON, IT_ARMOR, or IT_SHADOWGEAR
 
 	bool isStackable();
 	int inventorySlotNeeded(int quantity);

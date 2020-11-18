@@ -560,9 +560,20 @@ lhz_in02,282,20,7	script	Fulerr	869,{
 //= .@safe to the max safe refine in refine_db.txt as well.
 //============================================================
 function	script	refinemain	{
-	disable_items;
 	.@npc_name$ = getarg(0);
 	.@features = getarg(1);
+
+	if( getbattleflag( "feature.refineui" ) == 3 ){
+		mes "["+ .@npc_name$ +"]";
+		mes "I've spent a long time refining powerful weapons.";
+		mes "You are in the presence of 장춰탕넨 [Zhang Zhuangtan]"; // TODO: find a valid translation
+		mes "Do you want to strengthen your equipment?";
+		close2;
+		refineui();
+		end;
+	}
+
+	disable_items;
 	mes "["+ .@npc_name$ +"]";
 	mes "I'm the Armsmith.";
 	mes "I can refine all kinds of weapons, armor and equipment, so let me";
@@ -647,7 +658,7 @@ function	script	refinemain	{
 			mes "rush. Take your time.";
 			close;
 		}
-		if(getequippercentrefinery(.@part) < 100) {
+		if(getequippercentrefinery(.@part, REFINE_COST_NORMAL) < 100) {
 			mes "["+ .@npc_name$ +"]";
 			mes "Oh no! If I continue to";
 			mes "refine this, there's a risk it could";
@@ -698,7 +709,7 @@ function	script	refinemain	{
 			close;
 		}
 
-		if(getequippercentrefinery(.@part) <= rand(100)) {
+		if(getequippercentrefinery(.@part, REFINE_COST_NORMAL) <= rand(100)) {
 			failedrefitem .@part;
 			mes "["+ .@npc_name$ +"]";
 			emotion (!rand(5))?ET_MONEY:ET_HUK;
@@ -811,7 +822,7 @@ function	script	refinemain	{
 		}
 		// anti-hack
 		if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) ||
-				callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt) || (.@menu2 == 1 && getequippercentrefinery(.@part) < 100)) {
+				callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt) || (.@menu2 == 1 && getequippercentrefinery(.@part, REFINE_COST_NORMAL) < 100)) {
 			mes "["+ .@npc_name$ +"]";
 			mes "Clang... No, but did you imagine I could be so stupid?!";
 			mes "You changed it...";
@@ -819,7 +830,7 @@ function	script	refinemain	{
 			close;
 		} 
 		mes "Clang, clang!!!";
-		if(.@menu2 == 2 && getequippercentrefinery(.@part) <= rand(100)) {
+		if(.@menu2 == 2 && getequippercentrefinery(.@part, REFINE_COST_NORMAL) <= rand(100)) {
 			failedrefitem .@part;
 			emotion ET_HUK;
 			mes "["+ .@npc_name$ +"]";
