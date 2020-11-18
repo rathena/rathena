@@ -1354,17 +1354,15 @@ static void itemdb_jobid2mapid(uint64 bclass[3], e_mapid jobmask, bool active)
 		// Calculate the required bit to set
 		uint64 job = 1ULL << ( jobmask & MAPID_BASEMASK );
 
-		// Basejob
-		temp_mask[0] |= job;
-
 		// 2-1
 		if( ( jobmask & JOBL_2_1 ) != 0 ){
 			temp_mask[1] |= job;
-		}
-
 		// 2-2
-		if( ( jobmask & JOBL_2_2 ) != 0 ){
+		}else if( ( jobmask & JOBL_2_2 ) != 0 ){
 			temp_mask[2] |= job;
+		// Basejob
+		}else{
+			temp_mask[0] |= job;
 		}
 	} else {
 		temp_mask[0] = temp_mask[1] = temp_mask[2] = MAPID_ALL;
