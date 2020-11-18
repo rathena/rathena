@@ -7974,6 +7974,8 @@
 	export_constant(DROPEFFECT_YELLOW_PILLAR);
 	export_constant(DROPEFFECT_PURPLE_PILLAR);
 	export_constant(DROPEFFECT_ORANGE_PILLAR);
+	export_constant2("DROPEFFECT_GREEN_PILLAR", DROPEFFECT_ORANGE_PILLAR);
+	export_constant(DROPEFFECT_RED_PILLAR);
 	export_constant(DROPEFFECT_MAX);
 
 	#undef export_constant
