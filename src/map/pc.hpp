@@ -897,7 +897,7 @@ enum item_check {
 	ITMCHK_ALL       = ITMCHK_INVENTORY|ITMCHK_CART|ITMCHK_STORAGE,
 };
 
-enum e_penalty_type{
+enum e_penalty_type : uint16{
 	PENALTY_NONE,
 	PENALTY_EXP,
 	PENALTY_DROP,
@@ -911,7 +911,7 @@ struct s_penalty{
 	uint16 rate[MAX_LEVEL * 2 - 1];
 };
 
-class PenaltyDatabase : public TypesafeYamlDatabase<e_penalty_type, s_penalty> {
+class PenaltyDatabase : public TypesafeYamlDatabase<uint16, s_penalty> {
 public:
 	PenaltyDatabase() : TypesafeYamlDatabase( "PENALTY_DB", 1 ){
 
