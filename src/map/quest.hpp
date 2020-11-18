@@ -33,6 +33,8 @@ struct s_quest_objective {
 	e_race race;
 	e_size size;
 	e_element element;
+	std::string location;
+	std::string map_name;
 };
 
 struct s_quest_db {

@@ -17164,7 +17164,7 @@ static void clif_quest_len(int def_len, int info_len, int avail_quests, int *lim
 	(*len_out) = ((*limit_out) * info_len) + def_len;
 }
 
-std::string clif_mobtype_name(e_race race, e_size size, e_element element) {
+std::string clif_mobtype_name(e_race race, e_size size, e_element element, std::string map_name) {
 	std::string race_name, size_name, ele_name;
 
 	switch(race) {
@@ -17202,7 +17202,8 @@ std::string clif_mobtype_name(e_race race, e_size size, e_element element) {
 		case ELE_ALL:		ele_name = ""; break;
 		default:			ele_name = "unknown"; break;
 	}
-	return (race_name + (race_name.size() && size_name.size() ? ", " + size_name : size_name) + ((race_name.size() || size_name.size()) && ele_name.size() ? ", " + ele_name : ele_name));
+	
+	return ((map_name.size() && map_name.size() ? map_name + " ": map_name) + race_name + (race_name.size() && size_name.size() ? ", " + size_name : size_name) + ((race_name.size() || size_name.size()) && ele_name.size() ? ", " + ele_name : ele_name));
 }
 
 /// Sends list of all quest states
@@ -17257,6 +17258,7 @@ void clif_quest_send_list(struct map_session_data *sd)
 				e_race race = qi->objectives[j]->race;
 				e_size size = qi->objectives[j]->size;
 				e_element element = qi->objectives[j]->element;
+				std::string map_name = qi->objectives[j]->map_name;
 
 #if PACKETVER >= 20150513
 				WFIFOL(fd, offset) = sd->quest_log[i].quest_id * 1000 + j;
@@ -17279,7 +17281,7 @@ void clif_quest_send_list(struct map_session_data *sd)
 				if (mob && qi->objectives[j]->mob_id > 0)
 					safestrncpy((char *)WFIFOP(fd,offset), mob->jname, NAME_LENGTH);
 				else
-					safestrncpy((char *)WFIFOP(fd,offset), clif_mobtype_name(race, size, element).c_str(), NAME_LENGTH);
+					safestrncpy((char *)WFIFOP(fd,offset), clif_mobtype_name(race, size, element, map_name).c_str(), NAME_LENGTH);
 				offset += NAME_LENGTH;
 			}
 		}
@@ -17337,7 +17339,7 @@ void clif_quest_send_mission(struct map_session_data *sd)
 			if (mob && qi->objectives[j]->mob_id > 0)
 				safestrncpy(WFIFOCP(fd, i*104+28+j*30), mob->jname, NAME_LENGTH);
 			else
-				safestrncpy(WFIFOCP(fd, i*104+28+j*30), clif_mobtype_name(qi->objectives[j]->race, qi->objectives[j]->size, qi->objectives[j]->element).c_str(), NAME_LENGTH);
+				safestrncpy(WFIFOCP(fd, i*104+28+j*30), clif_mobtype_name(qi->objectives[j]->race, qi->objectives[j]->size, qi->objectives[j]->element, qi->objectives[j]->map_name).c_str(), NAME_LENGTH);
 		}
 	}
 
@@ -17377,6 +17379,7 @@ void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 		e_race race = qi->objectives[i]->race;
 		e_size size = qi->objectives[i]->size;
 		e_element element = qi->objectives[i]->element;
+		std::string map_name = qi->objectives[i]->map_name;
 
 #if PACKETVER >= 20150513
 		WFIFOL(fd, offset) = qd->quest_id * 1000 + i;
@@ -17397,7 +17400,7 @@ void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 		if (mob && qi->objectives[i]->mob_id > 0)
 			safestrncpy((char *)WFIFOP(fd,offset), mob->jname, NAME_LENGTH);
 		else
-			safestrncpy((char *)WFIFOP(fd,offset), clif_mobtype_name(race, size, element).c_str(), NAME_LENGTH);
+			safestrncpy((char *)WFIFOP(fd,offset), clif_mobtype_name(race, size, element, map_name).c_str(), NAME_LENGTH);
 		offset += NAME_LENGTH;
 	}
 

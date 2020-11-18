@@ -163,7 +163,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 
 				if (!this->nodeExists(targetNode, "Mob") && !this->nodeExists(targetNode, "MinLevel") && !this->nodeExists(targetNode, "MaxLevel") &&
-						!this->nodeExists(targetNode, "Race") && !this->nodeExists(targetNode, "Size") && !this->nodeExists(targetNode, "Element")) {
+						!this->nodeExists(targetNode, "Race") && !this->nodeExists(targetNode, "Size") && !this->nodeExists(targetNode, "Element") && !this->nodeExists(targetNode, "MapName")) {
 					this->invalidWarning(targetNode, "Targets is missing required field, skipping.\n");
 					return 0;
 				}
@@ -176,6 +176,8 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				target->race = RC_ALL;
 				target->size = SZ_ALL;
 				target->element = ELE_ALL;
+				target->location = "";
+				target->map_name = "";
 			}
 
 			if (!this->nodeExists(targetNode, "Mob")) {
@@ -266,6 +268,38 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 					}
 
 					target->element = static_cast<e_element>(constant);
+				}
+
+				if (this->nodeExists(targetNode, "Location")) {
+					std::string location;
+
+					if (!this->asString(targetNode, "Location", location))
+						return 0;
+
+					unsigned short mapindex;
+					int16 m = -1;
+					mapindex = mapindex_name2idx(location.c_str(), nullptr);
+					if (mapindex)
+						m = map_mapindex2mapid(mapindex);
+
+					if (m < 0) {
+						this->invalidWarning(targetNode["Location"], "Map \"%s\" not found.\n", location.c_str());
+						return 0;
+					}
+
+					target->location = location;
+				}
+
+				if (this->nodeExists(targetNode, "MapName")) {
+					std::string map_name;
+
+					if (target->location == "")
+						return 0;
+
+					if (!this->asString(targetNode, "MapName", map_name))
+						return 0;
+
+					target->map_name = map_name;
 				}
 
 				// if max_level is set, min_level is 1
@@ -693,10 +727,10 @@ void quest_update_objective(struct map_session_data *sd, int mob_id, int mob_lev
 
 		// Process quest objectives
 		for (int j = 0; j < qi->objectives.size(); j++) {
-			uint8 objective_check = 0; // Must pass all 5 checks
+			uint8 objective_check = 0; // Must pass all 6 checks
 
 			if (qi->objectives[j]->mob_id == mob_id)
-				objective_check = 5;
+				objective_check = 6;
 			else if (qi->objectives[j]->mob_id == 0) {
 				if (qi->objectives[j]->min_level == 0 || qi->objectives[j]->min_level <= mob_level)
 					objective_check++;
@@ -708,9 +742,11 @@ void quest_update_objective(struct map_session_data *sd, int mob_id, int mob_lev
 					objective_check++;
 				if (qi->objectives[j]->element == ELE_ALL || qi->objectives[j]->element == mob_element)
 					objective_check++;
+				if (qi->objectives[j]->location == "" || qi->objectives[j]->location == mapindex_id2name(sd->mapindex))
+					objective_check++;
 			}
 
-			if (objective_check == 5 && sd->quest_log[i].count[j] < qi->objectives[j]->count)  {
+			if (objective_check == 6 && sd->quest_log[i].count[j] < qi->objectives[j]->count)  {
 				sd->quest_log[i].count[j]++;
 				sd->save_quest = true;
 				clif_quest_update_objective(sd, &sd->quest_log[i]);
