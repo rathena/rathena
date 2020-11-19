@@ -384,21 +384,65 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 		const YAML::Node &classes = input["Classes"];
 
 		if (classes) {
+			std::string str_all_upper;
+			std::string str_all_baby;
+
+			if (classes["All_Upper"].IsDefined())
+				str_all_upper = string_trim(classes["All_Upper"].as<std::string>());
+			if (classes["All_Baby"].IsDefined())
+				str_all_baby = string_trim(classes["All_Baby"].as<std::string>());
+
 			if (appendEntry(classes["All"], value))
 				column.append("`class_all`,");
 			if (appendEntry(classes["Normal"], value))
 				column.append("`class_normal`,");
 			if (appendEntry(classes["Upper"], value))
 				column.append("`class_upper`,");
+			else if (!str_all_upper.empty()) {
+				value.append(str_all_upper);
+				value.append(",");
+				column.append("`class_upper`,");
+			}
 			if (appendEntry(classes["Baby"], value))
 				column.append("`class_baby`,");
+			else if (!str_all_baby.empty()) {
+				value.append(str_all_baby);
+				value.append(",");
+				column.append("`class_baby`,");
+			}
 #ifdef RENEWAL
+			std::string str_all_third;
+
+			if (classes["All_Third"].IsDefined())
+				str_all_third = string_trim(classes["All_Third"].as<std::string>());
+
 			if (appendEntry(classes["Third"], value))
 				column.append("`class_third`,");
+			else if (!str_all_third.empty()) {
+				value.append(str_all_third);
+				value.append(",");
+				column.append("`class_third`,");
+			}
 			if (appendEntry(classes["Third_Upper"], value))
 				column.append("`class_third_upper`,");
+			else if (!str_all_upper.empty() || !str_all_third.empty()) {
+				if (!str_all_upper.empty())
+					value.append(str_all_upper);
+				else
+					value.append(str_all_third);
+				value.append(",");
+				column.append("`class_third_upper`,");
+			}
 			if (appendEntry(classes["Third_Baby"], value))
 				column.append("`class_third_baby`,");
+			else if (!str_all_baby.empty() || !str_all_third.empty()) {
+				if (!str_all_baby.empty())
+					value.append(str_all_baby);
+				else
+					value.append(str_all_third);
+				value.append(",");
+				column.append("`class_third_baby`,");
+			}
 #endif
 		}
 
@@ -416,18 +460,50 @@ static bool item_db_yaml2sql(const std::string &file, const std::string &table) 
 				column.append("`location_head_low`,");
 			if (appendEntry(locations["Armor"], value))
 				column.append("`location_armor`,");
-			if (appendEntry(locations["Left_Hand"], value))
+			if (locations["Both_Hand"].IsDefined()) {
+				std::string tmp_value = string_trim(locations["Both_Hand"].as<std::string>());
+				if (!appendEntry(locations["Left_Hand"], value)) {
+					value.append(tmp_value);
+					value.append(",");
+				}
+				if (!appendEntry(locations["Right_Hand"], value)) {
+					value.append(tmp_value);
+					value.append(",");
+				}
 				column.append("`location_left_hand`,");
-			if (appendEntry(locations["Right_Hand"], value))
 				column.append("`location_right_hand`,");
+
+			}
+			else {
+				if (appendEntry(locations["Left_Hand"], value))
+					column.append("`location_left_hand`,");
+				if (appendEntry(locations["Right_Hand"], value))
+					column.append("`location_right_hand`,");
+			}
 			if (appendEntry(locations["Garment"], value))
 				column.append("`location_garment`,");
 			if (appendEntry(locations["Shoes"], value))
 				column.append("`location_shoes`,");
-			if (appendEntry(locations["Right_Accessory"], value))
+			if (locations["Both_Accessory"].IsDefined()) {
+				std::string tmp_value = string_trim(locations["Both_Accessory"].as<std::string>());
+				if (!appendEntry(locations["Right_Accessory"], value)) {
+					value.append(tmp_value);
+					value.append(",");
+				}
+				if (!appendEntry(locations["Left_Accessory"], value)) {
+					value.append(tmp_value);
+					value.append(",");
+				}
 				column.append("`location_right_accessory`,");
-			if (appendEntry(locations["Left_Accessory"], value))
 				column.append("`location_left_accessory`,");
+
+			}
+			else {
+				if (appendEntry(locations["Right_Accessory"], value))
+					column.append("`location_right_accessory`,");
+				if (appendEntry(locations["Left_Accessory"], value))
+					column.append("`location_left_accessory`,");
+			}
 			if (appendEntry(locations["Costume_Head_Top"], value))
 				column.append("`location_costume_head_top`,");
 			if (appendEntry(locations["Costume_Head_Mid"], value))

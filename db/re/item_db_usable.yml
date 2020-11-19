@@ -8051,9 +8051,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Flags:
       BuyingStore: true
     Script: |
@@ -8067,9 +8065,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Flags:
       BuyingStore: true
     Script: |
@@ -8083,9 +8079,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Flags:
       BuyingStore: true
     Script: |
@@ -11833,9 +11827,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Flags:
       BuyingStore: true
     Script: |
@@ -11849,9 +11841,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Flags:
       BuyingStore: true
     Script: |
@@ -11865,9 +11855,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Flags:
       BuyingStore: true
     Script: |
@@ -11881,9 +11869,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Flags:
       BuyingStore: true
     Script: |
@@ -11897,9 +11883,7 @@ Body:
     Jobs:
       Knight: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Flags:
       BuyingStore: true
     Script: |
@@ -43543,9 +43527,7 @@ Body:
     Buy: 2
     Weight: 10
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     Delay:
       Duration: 5000
       Status: Reuse_Limit_Luxanima
@@ -46342,9 +46324,7 @@ Body:
     Jobs:
       Blacksmith: true
     Classes:
-      Third: true
-      Third_Upper: true
-      Third_Baby: true
+      All_Third: true
     EquipLevelMin: 100
     Delay:
       Duration: 180000
