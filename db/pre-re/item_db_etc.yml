@@ -2794,8 +2794,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -2855,8 +2854,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -2868,8 +2866,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -2929,8 +2926,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -2942,8 +2938,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -2967,8 +2962,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -3018,8 +3012,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -3069,8 +3062,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -3122,8 +3114,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -3159,8 +3150,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -3186,8 +3176,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -3319,8 +3308,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -3428,8 +3416,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -3477,8 +3464,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -3502,8 +3488,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -3563,8 +3548,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -3652,8 +3636,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -3677,8 +3660,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -3798,8 +3780,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -4243,8 +4224,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -4306,8 +4286,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -4319,8 +4298,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -4370,8 +4348,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -4407,8 +4384,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -4432,8 +4408,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -4693,8 +4668,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -4846,8 +4820,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -4885,8 +4858,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -4922,8 +4894,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -4961,8 +4932,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5072,8 +5042,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5123,8 +5092,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5160,8 +5128,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5197,8 +5164,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5246,8 +5212,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5309,8 +5274,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5346,8 +5310,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5359,8 +5322,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5386,8 +5348,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5411,8 +5372,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5472,8 +5432,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5485,8 +5444,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5656,8 +5614,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5705,8 +5662,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5784,8 +5740,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5811,8 +5766,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5824,8 +5778,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -5913,8 +5866,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -6040,8 +5992,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -6053,8 +6004,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -6178,8 +6128,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -6191,8 +6140,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -6528,8 +6476,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -6589,8 +6536,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -6602,8 +6548,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -6655,8 +6600,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -6818,8 +6762,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -6857,8 +6800,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -6870,8 +6812,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -6883,8 +6824,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -6960,8 +6900,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -6973,8 +6912,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -7244,8 +7182,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -7333,8 +7270,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -7346,8 +7282,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -7397,8 +7332,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -7422,8 +7356,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -7717,8 +7650,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -7730,8 +7662,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -7755,8 +7686,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -7816,8 +7746,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -7829,8 +7758,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -7902,8 +7830,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -7939,8 +7866,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -7978,8 +7904,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
@@ -7991,8 +7916,7 @@ Body:
     Buy: 20
     Weight: 10
     Locations:
-      Right_Accessory: true
-      Left_Accessory: true
+      Both_Accessory: true
     Flags:
       BuyingStore: true
     Script: |
