@@ -6893,7 +6893,7 @@ Body:
     EquipLevelMin: 160
     Refineable: true
     Script: |
-      bonus bAtk,pow(min(getrefine(),15),2);
+      bonus bBaseAtk,pow(min(getrefine(),15),2);
   - Id: 1401
     AegisName: Javelin
     Name: Javelin
@@ -7966,7 +7966,7 @@ Body:
     EquipLevelMin: 160
     Refineable: true
     Script: |
-      bonus bAtk,pow(min(getrefine(),15),2);
+      bonus bBaseAtk,pow(min(getrefine(),15),2);
   - Id: 1451
     AegisName: Guisarme
     Name: Guisarme
@@ -14909,7 +14909,7 @@ Body:
     EquipLevelMin: 160
     Refineable: true
     Script: |
-      bonus bAtk,pow(min(getrefine(),15),2);
+      bonus bBaseAtk,pow(min(getrefine(),15),2);
   - Id: 1801
     AegisName: Waghnakh
     Name: Waghnak
@@ -16059,7 +16059,7 @@ Body:
     EquipLevelMin: 160
     Refineable: true
     Script: |
-      bonus bAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2)/2;
+      bonus bBaseAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2)/2;
   - Id: 1901
     AegisName: Violin
     Name: Violin
@@ -17945,7 +17945,7 @@ Body:
     EquipLevelMin: 160
     Refineable: true
     Script: |
-      bonus bAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2)/2;
+      bonus bBaseAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2)/2;
   - Id: 1997
     AegisName: Unity_Whip
     Name: Unity Whip
@@ -27509,7 +27509,7 @@ Body:
       Override: 100
       NoDrop: true
     Script: |
-      bonus bAllStats,1; bonus bAtk,readparam(bStr)/20; bonus bMatk,readparam(bInt)/20; bonus2 bSubEle,Ele_Neutral,readparam(bVit)/20; bonus bLongAtkRate,readparam(bDex)/20; bonus bCritAtkRate,readparam(bLuk)/20;
+      bonus bAllStats,1; bonus bBaseAtk,readparam(bStr)/20; bonus bMatk,readparam(bInt)/20; bonus2 bSubEle,Ele_Neutral,readparam(bVit)/20; bonus bLongAtkRate,readparam(bDex)/20; bonus bCritAtkRate,readparam(bLuk)/20;
   - Id: 2590
     AegisName: Buwaya_Cloth
     Name: Buwaya Sack Cloth
@@ -41212,7 +41212,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bAtk,30; bonus bMaxHPrate,-2;
+      bonus bBaseAtk,30; bonus bMaxHPrate,-2;
   - Id: 5463
     AegisName: Rainbow_Scarf
     Name: Rainbow Scarf
@@ -42888,7 +42888,7 @@ Body:
       Override: 100
       NoDrop: true
     Script: |
-      bonus bAgi,2; bonus bFlee,10; if(getrefine()>6) { bonus bHit,5; bonus bAtk,30; }
+      bonus bAgi,2; bonus bFlee,10; if(getrefine()>6) { bonus bHit,5; bonus bBaseAtk,30; }
   - Id: 5571
     AegisName: Rasta_Wig
     Name: Rasta Wig
@@ -44476,7 +44476,7 @@ Body:
     Refineable: true
     View: 606
     Script: |
-      bonus bDex,2; if (getrefine()>6) { bonus bDex,1; bonus bAtk,5; }
+      bonus bDex,2; if (getrefine()>6) { bonus bDex,1; bonus bBaseAtk,5; }
   - Id: 5678
     AegisName: Notation_Hairband
     Name: Notation Hairband
@@ -47757,7 +47757,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bSkillAtk,"GC_COUNTERSLASH",(10*getskilllv("GC_WEAPONBLOCKING")); .@r = getrefine(); if(.@r > 6){ bonus bAtk,20; bonus bHit,5; } if(.@r > 9){ bonus3 bAutoSpell,"GC_CROSSIMPACT",1,10; }
+      bonus2 bSkillAtk,"GC_COUNTERSLASH",(10*getskilllv("GC_WEAPONBLOCKING")); .@r = getrefine(); if(.@r > 6){ bonus bBaseAtk,20; bonus bHit,5; } if(.@r > 9){ bonus3 bAutoSpell,"GC_CROSSIMPACT",1,10; }
   - Id: 5907
     AegisName: Sea_Captain_Hat
     Name: Sea Captain Hat
@@ -52396,7 +52396,7 @@ Body:
     EquipLevelMin: 160
     Refineable: true
     Script: |
-      bonus bAtk,pow(min(getrefine(),15),2);
+      bonus bBaseAtk,pow(min(getrefine(),15),2);
   - Id: 13129
     AegisName: Unity_Revolver
     Name: Unity Revolver
@@ -54071,7 +54071,7 @@ Body:
     EquipLevelMin: 160
     Refineable: true
     Script: |
-      bonus bAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2)/2; bonus bUnbreakableWeapon;
+      bonus bBaseAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2)/2; bonus bUnbreakableWeapon;
   - Id: 13329
     AegisName: Unity_Huuma_Shuriken
     Name: Unity Huuma Shuriken
@@ -55901,7 +55901,7 @@ Body:
     EquipLevelMin: 160
     Refineable: true
     Script: |
-      bonus bAtk,pow(min(getrefine(),15),2);
+      bonus bBaseAtk,pow(min(getrefine(),15),2);
   - Id: 13456
     AegisName: Unity_Sword
     Name: Unity Sword
@@ -60875,7 +60875,7 @@ Body:
     EquipLevelMin: 160
     Refineable: true
     Script: |
-      bonus bAtk,pow(min(getrefine(),15),2); bonus bUnbreakableWeapon;
+      bonus bBaseAtk,pow(min(getrefine(),15),2); bonus bUnbreakableWeapon;
   - Id: 16043
     AegisName: Meteor_Strike
     Name: Meteor Strike
@@ -61849,7 +61849,7 @@ Body:
     EquipLevelMin: 160
     Refineable: true
     Script: |
-      bonus bAtk,pow(min(getrefine(),15),2);
+      bonus bBaseAtk,pow(min(getrefine(),15),2);
   - Id: 18122
     AegisName: Gigantic_Bow
     Name: Giant Bow
@@ -68292,7 +68292,7 @@ Body:
     Refineable: true
     View: 1104
     Script: |
-      .@r = getrefine(); bonus2 bAddClass,Class_All,2; bonus bMatkRate,2; if(readparam(bStr) >= 90){ bonus bAtk,15; if(.@r >= 9) bonus bAtk,15; } if(readparam(bInt) >= 90){ bonus bMatk,15; if(.@r >= 9) bonus bMatk,15; } if(readparam(bVit) >= 90){ bonus bMaxHP,500; if(.@r >= 9) bonus bMaxHP,500; } if(readparam(bAgi) >= 90){ bonus bAspdRate,2; if(.@r >= 9) bonus bAspdRate,3; } if(readparam(bDex) >= 90){ bonus bLongAtkRate,3; if(.@r >= 9) bonus bLongAtkRate,3; } if(readparam(bLuk) >= 90){ bonus bCritical,5; if(.@r >= 9) bonus bCritical,5; }
+      .@r = getrefine(); bonus2 bAddClass,Class_All,2; bonus bMatkRate,2; if(readparam(bStr) >= 90){ bonus bBaseAtk,15; if(.@r >= 9) bonus bBaseAtk,15; } if(readparam(bInt) >= 90){ bonus bMatk,15; if(.@r >= 9) bonus bMatk,15; } if(readparam(bVit) >= 90){ bonus bMaxHP,500; if(.@r >= 9) bonus bMaxHP,500; } if(readparam(bAgi) >= 90){ bonus bAspdRate,2; if(.@r >= 9) bonus bAspdRate,3; } if(readparam(bDex) >= 90){ bonus bLongAtkRate,3; if(.@r >= 9) bonus bLongAtkRate,3; } if(readparam(bLuk) >= 90){ bonus bCritical,5; if(.@r >= 9) bonus bCritical,5; }
   - Id: 18970
     AegisName: Magical_Moon_Cat
     Name: Magical Moon Cat
@@ -70018,7 +70018,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      autobonus "{ bonus bBaseAtk,15; }",70,5000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; autobonus "{ bonus bMatk,15; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_SPELLBREAKER; }"; .@r = getrefine(); if(.@r >= 7){ bonus bAtk,10; bonus bMatk,10; if(.@r >= 9){ bonus bAllStats,1; if(.@r >= 12){ bonus2 bRegenPercentSP,1,10000; } } }
+      autobonus "{ bonus bBaseAtk,15; }",70,5000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; autobonus "{ bonus bMatk,15; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_SPELLBREAKER; }"; .@r = getrefine(); if(.@r >= 7){ bonus bBaseAtk,10; bonus bMatk,10; if(.@r >= 9){ bonus bAllStats,1; if(.@r >= 12){ bonus2 bRegenPercentSP,1,10000; } } }
   - Id: 19165
     AegisName: Para_Team_Hat160
     Name: Awakened Eden Group Hat II
@@ -70040,7 +70040,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      autobonus "{ bonus bBaseAtk,30; }",70,5000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; autobonus "{ bonus bMatk,30; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_SPELLBREAKER; }"; .@r = getrefine(); if(.@r >= 7){ bonus bAtk,15; bonus bMatk,15; if(.@r >= 9){ bonus bAllStats,2; if(.@r >= 12){ bonus2 bRegenPercentHP,2,10000; bonus2 bRegenPercentSP,1,10000; } } }
+      autobonus "{ bonus bBaseAtk,30; }",70,5000,BF_WEAPON,"{ specialeffect2 EF_ENHANCE; }"; autobonus "{ bonus bMatk,30; }",50,5000,BF_MAGIC,"{ specialeffect2 EF_SPELLBREAKER; }"; .@r = getrefine(); if(.@r >= 7){ bonus bBaseAtk,15; bonus bMatk,15; if(.@r >= 9){ bonus bAllStats,2; if(.@r >= 12){ bonus2 bRegenPercentHP,2,10000; bonus2 bRegenPercentSP,1,10000; } } }
   - Id: 19166
     AegisName: RO_Celebration_Hat
     Name: RO Celebration Hat
@@ -83615,7 +83615,7 @@ Body:
     EquipLevelMin: 130
     Refineable: true
     Script: |
-      bonus bUnbreakableWeapon; bonus bAspdRate,-5; bonus bCritAtkRate,getrefine(); if(readparam(bStr)<=110){ bonus bAtk,-250; }
+      bonus bUnbreakableWeapon; bonus bAspdRate,-5; bonus bCritAtkRate,getrefine(); if(readparam(bStr)<=110){ bonus bBaseAtk,-250; }
   - Id: 21012
     AegisName: Some_Wizard_MagicSword
     Name: Some Wizard MagicSword
@@ -83724,7 +83724,7 @@ Body:
     EquipLevelMin: 160
     Refineable: true
     Script: |
-      bonus bAtk,pow(min(getrefine(),15),2);
+      bonus bBaseAtk,pow(min(getrefine(),15),2);
   - Id: 21018
     AegisName: Lindy_Hop
     Name: Lindy Hop
@@ -84186,7 +84186,7 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus bMaxHP,300+(100*(.@r/3)); bonus bMaxSP,30+(10*(.@r/3)); bonus bAtk,7*(.@r/3); if(readparam(bStr)>=120) bonus bAtk,50;
+      .@r = getrefine(); bonus bMaxHP,300+(100*(.@r/3)); bonus bMaxSP,30+(10*(.@r/3)); bonus bBaseAtk,7*(.@r/3); if(readparam(bStr)>=120) bonus bBaseAtk,50;
   - Id: 22001
     AegisName: Temporal_Int_Boots
     Name: Temporal Boots Of Intelligence
@@ -84355,7 +84355,7 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus bMaxHP,300+(100*(.@r/3)); bonus bMaxSP,30+(10*(.@r/3)); bonus bAtk,7*(.@r/3); if(readparam(bStr)>=120) bonus bAtk,50;
+      .@r = getrefine(); bonus bMaxHP,300+(100*(.@r/3)); bonus bMaxSP,30+(10*(.@r/3)); bonus bBaseAtk,7*(.@r/3); if(readparam(bStr)>=120) bonus bBaseAtk,50;
   - Id: 22007
     AegisName: Temporal_Vit_Boots_
     Name: Temporal Boots Of Vitality
@@ -85354,7 +85354,7 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus bMaxHP,300+(100*(.@r/3)); bonus bMaxSP,30+(10*(.@r/3)); bonus bAtk,7*(.@r/3); if(readparam(bStr)>=120) bonus bBaseAtk,50;
+      .@r = getrefine(); bonus bMaxHP,300+(100*(.@r/3)); bonus bMaxSP,30+(10*(.@r/3)); bonus bBaseAtk,7*(.@r/3); if(readparam(bStr)>=120) bonus bBaseAtk,50;
   - Id: 22108
     AegisName: Modified_Int_Boots
     Name: Modified Int Boots
@@ -85451,7 +85451,7 @@ Body:
     EquipLevelMin: 99
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus bMaxHP,300+(100*(.@r/3)); bonus bMaxSP,30+(10*(.@r/3)); bonus bAtk,7*(.@r/3); if(readparam(bStr)>=120) bonus bBaseAtk,50;
+      .@r = getrefine(); bonus bMaxHP,300+(100*(.@r/3)); bonus bMaxSP,30+(10*(.@r/3)); bonus bBaseAtk,7*(.@r/3); if(readparam(bStr)>=120) bonus bBaseAtk,50;
   - Id: 22114
     AegisName: Modified_Int_Boots_
     Name: Modified Int Boots
@@ -96154,7 +96154,7 @@ Body:
     EquipLevelMin: 160
     Refineable: true
     Script: |
-      bonus bAtk,pow(min(getrefine(),15),2);
+      bonus bBaseAtk,pow(min(getrefine(),15),2);
   - Id: 28010
     AegisName: Juliette_D._Rachel
     Name: Juliette D. Rachel
@@ -96724,7 +96724,7 @@ Body:
     EquipLevelMin: 160
     Refineable: true
     Script: |
-      bonus bAtk,pow(min(getrefine(),15),2); bonus bUnbreakableWeapon;
+      bonus bBaseAtk,pow(min(getrefine(),15),2); bonus bUnbreakableWeapon;
   - Id: 28110
     AegisName: Unity_Two-Handed_Axe
     Name: Unity Two-Handed Axe
@@ -98011,7 +98011,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bExpAddRace,RC_All,5; .@lvl = min(BaseLevel/5,10); bonus bAtk,2*.@lvl; bonus bMatk,2*.@lvl; bonus bMaxHP,10*.@lvl; bonus bMaxSP,5*.@lvl;
+      bonus2 bExpAddRace,RC_All,5; .@lvl = min(BaseLevel/5,10); bonus bBaseAtk,2*.@lvl; bonus bMatk,2*.@lvl; bonus bMaxHP,10*.@lvl; bonus bMaxSP,5*.@lvl;
   - Id: 28377
     AegisName: Magical_Ring
     Name: Magical Ring
@@ -99886,7 +99886,7 @@ Body:
     EquipLevelMin: 160
     Refineable: true
     Script: |
-      bonus bAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2); bonus bUnbreakableWeapon;
+      bonus bBaseAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2); bonus bUnbreakableWeapon;
   - Id: 28606
     AegisName: Unity_Bible
     Name: Unity Bible
@@ -100536,7 +100536,7 @@ Body:
     EquipLevelMin: 160
     Refineable: true
     Script: |
-      bonus bAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2)/2;
+      bonus bBaseAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2)/2;
   - Id: 28714
     AegisName: Toughen_Metal_Dagger
     Name: Enhanced Metal Dagger

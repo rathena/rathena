@@ -10334,7 +10334,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      .@r = getrefine(); if(.@r>6){ .@b+=10; if(.@r>8).@b+=15; } bonus bAtk,10+.@b;
+      .@r = getrefine(); if(.@r>6){ .@b+=10; if(.@r>8).@b+=15; } bonus bBaseAtk,10+.@b;
   - Id: 4644
     AegisName: Min_Vocal_Card
     Name: Infinite Vocal Card
@@ -10556,7 +10556,7 @@ Body:
     Locations:
       Garment: true
     Script: |
-      bonus bAtk,25-5*min(readParam(bStr)/10,5); bonus bMatk,25-5*min(readParam(bInt)/10,5); bonus bAspdRate,10-2*min(readParam(bAgi)/10,5); bonus bMaxHP,1000-200*min(readParam(bVit)/10,5); bonus bLongAtkRate,5-1*min(readParam(bDex)/10,5); bonus bCritAtkRate,10-2*min(readParam(bLuk)/10,5);
+      bonus bBaseAtk,25-5*min(readParam(bStr)/10,5); bonus bMatk,25-5*min(readParam(bInt)/10,5); bonus bAspdRate,10-2*min(readParam(bAgi)/10,5); bonus bMaxHP,1000-200*min(readParam(bVit)/10,5); bonus bLongAtkRate,5-1*min(readParam(bDex)/10,5); bonus bCritAtkRate,10-2*min(readParam(bLuk)/10,5);
   - Id: 4663
     AegisName: Leaf_Lunatic_Card
     Name: Leaf Lunatic Card
@@ -10586,7 +10586,7 @@ Body:
     Locations:
       Right_Hand: true
     Script: |
-      bonus bAtk,5;
+      bonus bBaseAtk,5;
   - Id: 4666
     AegisName: Sweet_Roda_Frog_Card
     Name: Sweet Roda Frog Card
@@ -13104,13 +13104,13 @@ Body:
     Name: Cancer
     Type: Card
     Script: |
-      bonus bAtk,3;
+      bonus bBaseAtk,3;
   - Id: 4963
     AegisName: Taurus
     Name: Taurus
     Type: Card
     Script: |
-      bonus bAtk,4; bonus bHit,1;
+      bonus bBaseAtk,4; bonus bHit,1;
   - Id: 4964
     AegisName: Capricorn
     Name: Capricorn
@@ -35067,7 +35067,7 @@ Body:
     Locations:
       Right_Hand: true
     Script: |
-      .@atk = 5; .@r = getrefine(); if(getiteminfo(getequipid(EQI_HAND_R),11) == W_SPEAR && .@r >= 10){ .@atk += 20; if(.@r >= 14){ .@atk += 20; } } bonus bAtk,.@atk; bonus bMatk,.@atk;
+      .@atk = 5; .@r = getrefine(); if(getiteminfo(getequipid(EQI_HAND_R),11) == W_SPEAR && .@r >= 10){ .@atk += 20; if(.@r >= 14){ .@atk += 20; } } bonus bBaseAtk,.@atk; bonus bMatk,.@atk;
   - Id: 27170
     AegisName: Shotgun_Buffalo_Bandit_Card
     Name: Shotgun Buffalo Bandit Card
@@ -35197,7 +35197,7 @@ Body:
     Locations:
       Right_Hand: true
     Script: |
-      bonus bAtk,30; .@r = getrefine(); bonus2 bSkillAtk,"RL_AM_BLAST",.@r >= 10 ? 60 : 30; bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",.@r >= 10 ? 60 : 30;
+      bonus bBaseAtk,30; .@r = getrefine(); bonus2 bSkillAtk,"RL_AM_BLAST",.@r >= 10 ? 60 : 30; bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",.@r >= 10 ? 60 : 30;
   - Id: 27183
     AegisName: Gigantes_Card
     Name: Gigantes Card
@@ -35207,7 +35207,7 @@ Body:
     Locations:
       Left_Accessory: true
     Script: |
-      bonus bAtk,20; if(readparam(bStr) >= 120) { bonus bAtk,20; bonus bAspdRate,3; }
+      bonus bBaseAtk,20; if(readparam(bStr) >= 120) { bonus bBaseAtk,20; bonus bAspdRate,3; }
   - Id: 27184
     AegisName: Knight_Sakray_Card
     Name: Knight Sakray Card
@@ -35217,7 +35217,7 @@ Body:
     Locations:
       Right_Hand: true
     Script: |
-      bonus bAtk,20; bonus2 bAddRace,RC_Demon,30; bonus2 bAddRace,RC_Undead,30;
+      bonus bBaseAtk,20; bonus2 bAddRace,RC_Demon,30; bonus2 bAddRace,RC_Undead,30;
   - Id: 27196
     AegisName: Nihil_M_Heine_Card
     Name: Nihil M. Heine Card
@@ -35571,7 +35571,7 @@ Body:
     Locations:
       Shoes: true
     Script: |
-      bonus bAtk,15; bonus bMatk,15; bonus bMaxHP,500; bonus bHit,15; bonus bFlee,15;
+      bonus bBaseAtk,15; bonus bMatk,15; bonus bMaxHP,500; bonus bHit,15; bonus bFlee,15;
   - Id: 27250
     AegisName: Dio_Anemos_Card
     Name: Dio Anemos Card
@@ -37267,14 +37267,14 @@ Body:
     Type: Card
     Buy: 10
     Script: |
-      bonus bAtk,20; bonus bHit,2; bonus bMaxHP,300;
+      bonus bBaseAtk,20; bonus bHit,2; bonus bMaxHP,300;
   - Id: 29122
     AegisName: Goddess_of_Justice_S
     Name: Goddess of Justice S
     Type: Card
     Buy: 10
     Script: |
-      bonus bAtk,40; bonus bHit,4; bonus bMaxHP,600;
+      bonus bBaseAtk,40; bonus bHit,4; bonus bMaxHP,600;
   - Id: 29123
     AegisName: Goddess_of_Mercy_A
     Name: Goddess of Mercy A
@@ -39116,7 +39116,7 @@ Body:
     Locations:
       Shoes: true
     Script: |
-      bonus2 bHPRegenRate,BaseLevel,10000; if(getrefine()>=7) { bonus bAtk,6*(readparam(bStr)/60); bonus bMaxHPrate,readparam(bStr)/60; }
+      bonus2 bHPRegenRate,BaseLevel,10000; if(getrefine()>=7) { bonus bBaseAtk,6*(readparam(bStr)/60); bonus bMaxHPrate,readparam(bStr)/60; }
   - Id: 31009
     AegisName: LoVA_Realization_Lulu_Card
     Name: LoVA Realization Lulu Card
@@ -39126,7 +39126,7 @@ Body:
     Locations:
       Shoes: true
     Script: |
-      bonus2 bHPRegenRate,BaseLevel,10000; if(getrefine()>=7) { bonus bAtk,6*(readparam(bStr)/20); bonus bMaxHPrate,readparam(bStr)/20; }
+      bonus2 bHPRegenRate,BaseLevel,10000; if(getrefine()>=7) { bonus bBaseAtk,6*(readparam(bStr)/20); bonus bMaxHPrate,readparam(bStr)/20; }
   - Id: 31010
     AegisName: LoVA_Kima_Card
     Name: LoVA Kima Card
