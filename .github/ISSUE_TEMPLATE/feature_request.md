@@ -1,10 +1,9 @@
 <!-- NOTE: Anything within these brackets will be hidden on the preview of the Feature Request. -->
 
-**Is your request related to a problem?**
+**Is your request related to a missing feature?**
 
 <!--
-  Provide a clear and concise description of what the problem is.
-  Ex. I have an issue when [...]
+  Provide a clear and concise description of what the feature pertains to.
 -->
 
 **Describe the solution you'd like**
