@@ -4752,6 +4752,9 @@ ACMD_FUNC(loadnpc)
 
 	npc_read_event_script();
 
+	ShowStatus( "NPC file '" CL_WHITE "%s" CL_RESET "' was reloaded.\n", message );
+	npc_event_doall_path( script_config.init_event_name, message );
+
 	clif_displaymessage(fd, msg_txt(sd,262)); // Script loaded.
 	return 0;
 }
@@ -4796,6 +4799,9 @@ ACMD_FUNC(reloadnpcfile) {
 	}
 
 	npc_read_event_script();
+
+	ShowStatus( "NPC file '" CL_WHITE "%s" CL_RESET "' was reloaded.\n", message );
+	npc_event_doall_path( script_config.init_event_name, message );
 
 	clif_displaymessage(fd, msg_txt(sd,262)); // Script loaded.
 	return 0;
@@ -7411,9 +7417,9 @@ ACMD_FUNC(mobinfo)
 		j = 0;
 		for (i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
 			int droprate;
-			if (mob->dropitem[i].nameid == 0 || mob->dropitem[i].p < 1 || (item_data = itemdb_exists(mob->dropitem[i].nameid)) == NULL)
+			if (mob->dropitem[i].nameid == 0 || mob->dropitem[i].rate < 1 || (item_data = itemdb_exists(mob->dropitem[i].nameid)) == NULL)
 				continue;
-			droprate = mob->dropitem[i].p;
+			droprate = mob->dropitem[i].rate;
 
 #ifdef RENEWAL_DROP
 			if( battle_config.atcommand_mobinfo_type ) {
@@ -7450,7 +7456,7 @@ ACMD_FUNC(mobinfo)
 				if (mob->mvpitem[i].nameid == 0 || (item_data = itemdb_exists(mob->mvpitem[i].nameid)) == NULL)
 					continue;
 				//Because if there are 3 MVP drops at 50%, the first has a chance of 50%, the second 25% and the third 12.5%
-				mvppercent = (float)mob->mvpitem[i].p * mvpremain / 10000.0f;
+				mvppercent = (float)mob->mvpitem[i].rate * mvpremain / 10000.0f;
 				if(battle_config.item_drop_mvp_mode == 0) {
 					mvpremain -= mvppercent;
 				}
