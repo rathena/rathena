@@ -756,7 +756,7 @@ enum e_item_drop_effect : uint16 {
 	DROPEFFECT_NONE = 0,
 	DROPEFFECT_CLIENT,
 #if PACKETVER < 20200304
-	DROPEFFECT_WHITE_PILLAR = 2,
+	DROPEFFECT_WHITE_PILLAR,
 #else
 	DROPEFFECT_WHITE_PILLAR = 1,	// White pillar was removed from 2020-03-04+
 #endif
