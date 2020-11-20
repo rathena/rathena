@@ -7969,13 +7969,17 @@
 	/* item drop effects */
 	export_constant(DROPEFFECT_NONE);
 	export_constant(DROPEFFECT_CLIENT);
+#if PACKETVER < 20200304
 	export_constant(DROPEFFECT_WHITE_PILLAR);
+#endif
 	export_constant(DROPEFFECT_BLUE_PILLAR);
 	export_constant(DROPEFFECT_YELLOW_PILLAR);
 	export_constant(DROPEFFECT_PURPLE_PILLAR);
 	export_constant(DROPEFFECT_ORANGE_PILLAR);
 	export_constant2("DROPEFFECT_GREEN_PILLAR", DROPEFFECT_ORANGE_PILLAR);
+#if PACKETVER >= 20200304
 	export_constant(DROPEFFECT_RED_PILLAR);
+#endif
 	export_constant(DROPEFFECT_MAX);
 
 	#undef export_constant
