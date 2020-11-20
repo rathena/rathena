@@ -3171,6 +3171,18 @@ static bool itemdb_read_db(const char* file) {
 			} else {
 				body << YAML::Key << "Classes";
 				body << YAML::BeginMap;
+				if ((ITEMJ_THIRD & temp_class) && (ITEMJ_THIRD_UPPER & temp_class) && (ITEMJ_THIRD_BABY & temp_class)) {
+					temp_class &= ~ITEMJ_ALL_THIRD;
+					body << YAML::Key << "All_Third" << YAML::Value << "true";
+				}
+				if ((ITEMJ_UPPER & temp_class) && (ITEMJ_THIRD_UPPER & temp_class)) {
+					temp_class &= ~ITEMJ_ALL_UPPER;
+					body << YAML::Key << "All_Upper" << YAML::Value << "true";
+				}
+				if ((ITEMJ_BABY & temp_class) && (ITEMJ_THIRD_BABY & temp_class)) {
+					temp_class &= ~ITEMJ_ALL_BABY;
+					body << YAML::Key << "All_Baby" << YAML::Value << "true";
+				}
 				for (int32 i = ITEMJ_NONE; i <= ITEMJ_THIRD_BABY; i++) {
 					if (i & temp_class) {
 						const char* class_ = constant_lookup(i, "ITEMJ_");
@@ -3199,6 +3211,14 @@ static bool itemdb_read_db(const char* file) {
 
 			body << YAML::Key << "Locations";
 			body << YAML::BeginMap;
+			if ((EQP_HAND_R & temp_loc) && (EQP_HAND_L & temp_loc)) {
+				temp_loc &= ~EQP_ARMS;
+				body << YAML::Key << "Both_Hand" << YAML::Value << "true";
+			}
+			if ((EQP_ACC_R & temp_loc) && (EQP_ACC_L & temp_loc)) {
+				temp_loc &= ~EQP_ACC_RL;
+				body << YAML::Key << "Both_Accessory" << YAML::Value << "true";
+			}
 			for (const auto &it : um_equipnames) {
 				if (it.second & temp_loc)
 					body << YAML::Key << it.first << YAML::Value << "true";
