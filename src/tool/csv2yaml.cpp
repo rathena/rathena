@@ -231,7 +231,6 @@ std::unordered_map<const char*, int64> constants;
 static bool parse_item_constants_txt( const char* path );
 static bool parse_mob_constants( char* split[], int columns, int current );
 static bool parse_skill_constants_txt( char* split[], int columns, int current );
-static bool parse_skill_constants_yml(std::string path, std::string filename);
 static void init_random_option_constants();
 
 bool fileExists( const std::string& path );
@@ -432,9 +431,8 @@ int do_init( int argc, char** argv ){
 	}
 	sv_readdb( path_db_mode.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false );
 	sv_readdb( path_db_import.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false );
-	if (fileExists(path_db + "/" + "skill_db.yml")) {
-		parse_skill_constants_yml(path_db_mode, "skill_db.yml");
-		parse_skill_constants_yml(path_db_import + "/", "skill_db.yml");
+	if (fileExists(skill_db.getDefaultLocation())) {
+		skill_db.load();
 	} else {
 		sv_readdb(path_db_mode.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants_txt, false);
 		sv_readdb(path_db_import.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants_txt, false);
@@ -806,28 +804,33 @@ static bool parse_skill_constants_txt( char* split[], int columns, int current )
 	return true;
 }
 
-static bool parse_skill_constants_yml(std::string path, std::string filename) {
-	YAML::Node rootNode;
-
-	try {
-		rootNode = YAML::LoadFile(path + filename);
-	} catch (YAML::Exception &e) {
-		ShowError("Failed to read file from '" CL_WHITE "%s%s" CL_RESET "'.\n", path.c_str(), filename.c_str());
-		ShowError("%s (Line %d: Column %d)\n", e.msg.c_str(), e.mark.line, e.mark.column);
-		return false;
-	}
-
-	uint64 count = 0;
-
-	for (const YAML::Node &body : rootNode["Body"]) {
-		aegis_skillnames[body["Id"].as<uint16>()] = body["Name"].as<std::string>();
-		count++;
-	}
-
-	ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s%s" CL_RESET "'" CL_CLL "\n", count, path.c_str(), filename.c_str());
-
-	return true;
+const std::string SkillDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/skill_db.yml";
 }
+
+uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
+	t_itemid nameid;
+
+	if (!this->asUInt32(node, "Id", nameid))
+		return 0;
+
+	if (this->nodeExists(node, "Name")) {
+		std::string name;
+
+		if (!this->asString(node, "Name", name))
+			return 0;
+
+		aegis_skillnames[nameid] = name;
+	}
+
+	return 1;
+}
+
+void SkillDatabase::clear() {
+	TypesafeCachedYamlDatabase::clear();
+}
+
+SkillDatabase skill_db;
 
 /**
  * Split the string with ':' as separator and put each value for a skilllv
