@@ -2865,7 +2865,6 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 		item.delay_consume = true;
 	if (flag & 64)
 		item.dropEffect = DROPEFFECT_CLIENT;
-#if PACKETVER < 20200304
 	else if (flag & 128)
 		item.dropEffect = DROPEFFECT_WHITE_PILLAR;
 #endif
