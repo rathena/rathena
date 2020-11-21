@@ -1,3 +1,12 @@
+---
+name: Bug report
+about: Create a report to help us improve
+title: ''
+labels: type:bug
+assignees: ''
+
+---
+
 <!-- NOTE: Anything within these brackets will be hidden on the preview of the Issue. -->
 
 * **rAthena Hash**: 

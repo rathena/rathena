@@ -1,3 +1,12 @@
+---
+name: Feature request
+about: Suggest an idea for this project
+title: ''
+labels: type:enhancement
+assignees: ''
+
+---
+
 <!-- NOTE: Anything within these brackets will be hidden on the preview of the Feature Request. -->
 
 **Is your request related to a missing feature?**
