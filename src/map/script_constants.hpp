@@ -7970,7 +7970,6 @@
 	export_constant(DROPEFFECT_NONE);
 	export_constant(DROPEFFECT_CLIENT);
 	export_constant(DROPEFFECT_WHITE_PILLAR);
-#endif
 	export_constant(DROPEFFECT_BLUE_PILLAR);
 	export_constant(DROPEFFECT_YELLOW_PILLAR);
 	export_constant(DROPEFFECT_PURPLE_PILLAR);
