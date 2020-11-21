@@ -2875,10 +2875,6 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 		item.dropEffect = DROPEFFECT_PURPLE_PILLAR;
 	else if (flag & 2048)
 		item.dropEffect = DROPEFFECT_ORANGE_PILLAR;
-#if PACKETVER >= 20200304
-	else if (flag & 4096)
-		item.dropEffect = DROPEFFECT_RED_PILLAR;
-#endif
 
 	item_flag.insert({ strtoul(fields[0], nullptr, 10), item });
 	return true;
