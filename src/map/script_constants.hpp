@@ -7975,7 +7975,6 @@
 	export_constant(DROPEFFECT_PURPLE_PILLAR);
 	export_constant(DROPEFFECT_ORANGE_PILLAR);
 	export_constant(DROPEFFECT_GREEN_PILLAR);
-#if PACKETVER >= 20200304
 	export_constant(DROPEFFECT_RED_PILLAR);
 #endif
 	export_constant(DROPEFFECT_MAX);
