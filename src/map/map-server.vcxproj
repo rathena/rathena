@@ -330,7 +330,7 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_exp.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_exp.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_noenter_map.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_noenter_map.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_param_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_param_db.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\level_penalty.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\level_penalty.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\level_penalty.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\level_penalty.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\magicmushroom_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\magicmushroom_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\map_cache.dat" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\map_cache.dat')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\map_index.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\map_index.txt')" />
