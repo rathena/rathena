@@ -7981,6 +7981,12 @@
 	export_constant(DROPEFFECT_ORANGE_PILLAR);
 	export_constant(DROPEFFECT_MAX);
 
+	/* penalty types */
+	export_constant(PENALTY_EXP);
+	export_constant(PENALTY_DROP);
+	export_constant(PENALTY_MVP_EXP);
+	export_constant(PENALTY_MVP_DROP);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter
