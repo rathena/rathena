@@ -1169,7 +1169,7 @@ static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target
 		p.maxHP = -1;
 		p.HP = -1;
 	}
-	p.isBoss = ( bl->type == BL_MOB && ( ( ( TBL_MOB *)bl )->db->mexp > 0 ) ) ? 1 : 0;
+	p.isBoss = ( bl->type == BL_MOB ) ? ( (mob_data*)bl )->get_bosstype() : BOSSTYPE_NONE;
 #endif
 #if PACKETVER >= 20150513
 	p.body = vd->body_style;
@@ -1304,7 +1304,7 @@ static void clif_spawn_unit( struct block_list *bl, enum send_target target ){
 		p.HP = -1;
 	}
 
-	p.isBoss = ( bl->type == BL_MOB && ( ( ( TBL_MOB *)bl)->db->mexp > 0 ) ) ? 1 : 0;
+	p.isBoss = ( bl->type == BL_MOB ) ? ( (mob_data*)bl )->get_bosstype() : BOSSTYPE_NONE;
 #endif
 #if PACKETVER >= 20150513
 	p.body = vd->body_style;
@@ -1406,7 +1406,7 @@ static void clif_set_unit_walking( struct block_list *bl, struct map_session_dat
 		p.HP = -1;
 	}
 
-	p.isBoss = ( bl->type == BL_MOB && (((TBL_MOB*)bl)->db->mexp > 0) ) ? 1 : 0;
+	p.isBoss = ( bl->type == BL_MOB ) ? ( (mob_data*)bl )->get_bosstype() : BOSSTYPE_NONE;
 #endif
 #if PACKETVER >= 20150513
 	p.body = vd->body_style;
@@ -8381,7 +8381,7 @@ void clif_mvp_item( struct map_session_data *sd, t_itemid nameid ){
 
 /// MVP EXP reward message (ZC_MVP_GETTING_SPECIAL_EXP).
 /// 010b <exp>.L
-void clif_mvp_exp(struct map_session_data *sd, unsigned int exp) {
+void clif_mvp_exp(struct map_session_data *sd, t_exp exp) {
 #if PACKETVER >= 20131223		// Kro remove this packet [Napster]
 	if (battle_config.mvp_exp_reward_message) {
 		char e_msg[CHAT_SIZE_MAX];
@@ -8396,7 +8396,7 @@ void clif_mvp_exp(struct map_session_data *sd, unsigned int exp) {
 	fd = sd->fd;
 	WFIFOHEAD(fd, packet_len(0x10b));
 	WFIFOW(fd,0) = 0x10b;
-	WFIFOL(fd,2) = min(exp, (unsigned int)INT32_MAX);
+	WFIFOL(fd,2) = (uint32)min( exp, MAX_EXP );
 	WFIFOSET(fd, packet_len(0x10b));
 #endif
 }
