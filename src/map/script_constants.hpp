@@ -7969,7 +7969,6 @@
 	/* item drop effects */
 	export_constant(DROPEFFECT_NONE);
 	export_constant(DROPEFFECT_CLIENT);
-#if PACKETVER < 20200304
 	export_constant(DROPEFFECT_WHITE_PILLAR);
 #endif
 	export_constant(DROPEFFECT_BLUE_PILLAR);
