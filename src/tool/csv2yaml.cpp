@@ -2867,7 +2867,6 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 		item.dropEffect = DROPEFFECT_CLIENT;
 	else if (flag & 128)
 		item.dropEffect = DROPEFFECT_WHITE_PILLAR;
-#endif
 	else if (flag & 256)
 		item.dropEffect = DROPEFFECT_BLUE_PILLAR;
 	else if (flag & 512)
