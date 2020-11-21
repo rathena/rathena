@@ -769,7 +769,17 @@ enum e_item_drop_effect : uint16 {
 #if PACKETVER >= 20200304
 	DROPEFFECT_RED_PILLAR,
 #endif
-	DROPEFFECT_MAX
+	DROPEFFECT_MAX,
+#if PACKETVER >= 20200304
+	// White was removed in 2020-03-04
+	DROPEFFECT_WHITE_PILLAR,
+	// Orange was replaced by green in 2020-03-04
+	DROPEFFECT_ORANGE_PILLAR,
+#else
+	// Not supported before 2020-03-04
+	DROPEFFECT_GREEN_PILLAR,
+	DROPEFFECT_RED_PILLAR,
+#endif
 };
 
 /// Enum for items with delayed consumption
