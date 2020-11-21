@@ -67,9 +67,6 @@ static inline bool pc_attendance_rewarded_today( struct map_session_data* sd );
 #define PVP_CALCRANK_INTERVAL 1000	// PVP calculation interval
 
 static unsigned int statp[MAX_LEVEL+1];
-#if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-static unsigned int level_penalty[3][CLASS_MAX][MAX_LEVEL*2+1];
-#endif
 
 // h-files are for declarations, not for implementations... [Shinomori]
 struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
@@ -266,6 +263,105 @@ uint64 AttendanceDatabase::parseBodyNode(const YAML::Node &node){
 }
 
 AttendanceDatabase attendance_db;
+
+const std::string PenaltyDatabase::getDefaultLocation(){
+	return std::string( db_path ) + "/level_penalty.yml";
+}
+
+uint64 PenaltyDatabase::parseBodyNode( const YAML::Node& node ){
+	std::string type_constant;
+
+	if( !this->asString( node, "Type", type_constant ) ){
+		return 0;
+	}
+
+	int64 constant_value;
+
+	if( !script_get_constant( ( "PENALTY_" + type_constant ).c_str(), &constant_value ) ){
+		this->invalidWarning( node["Type"], "Unknown penalty type \"%s\".\n", type_constant.c_str() );
+		return 0;
+	}
+
+	if( constant_value < PENALTY_NONE || constant_value > PENALTY_MAX ){
+		this->invalidWarning( node["Type"], "Invalid penalty type \"%s\".\n", type_constant.c_str() );
+		return 0;
+	}
+
+	e_penalty_type type = static_cast<e_penalty_type>( constant_value );
+
+	std::shared_ptr<s_penalty> penalty = this->find( type );
+	bool exists = penalty != nullptr;
+
+	if( !exists ){
+		penalty = std::make_shared<s_penalty>();
+		penalty->type = type;
+
+		for( int i = 0, max = ARRAYLENGTH( penalty->rate ); i < max; i++ ){
+			penalty->rate[i] = UINT16_MAX;
+		}
+	}
+
+	if( this->nodeExists( node, "LevelDifferences" ) ){
+		for( const YAML::Node& levelNode : node["LevelDifferences"] ){
+			if( !this->nodesExist( levelNode, { "Difference", "Rate" } ) ){
+				return 0;
+			}
+
+			int32 difference;
+
+			if( !this->asInt32( levelNode, "Difference", difference ) ){
+				return 0;
+			}
+
+			if( std::abs( difference ) > MAX_LEVEL ){
+				this->invalidWarning( levelNode["Difference"], "Level difference %d is bigger than maximum level %d.\n", difference, MAX_LEVEL );
+				return 0;
+			}
+
+			uint16 rate;
+
+			if( !this->asUInt16Rate( levelNode, "Rate", rate ) ){
+				return 0;
+			}
+
+			penalty->rate[difference + MAX_LEVEL - 1] = rate;
+		}
+	}
+
+	if( !exists ){
+		this->put( type, penalty );
+	}
+
+	return 1;
+}
+
+void PenaltyDatabase::loadingFinished(){
+	for( const auto& pair : *this ){
+		for( int i = MAX_LEVEL - 1, max = ARRAYLENGTH( pair.second->rate ), last_rate = 100; i < max; i++ ){
+			uint16 rate = pair.second->rate[i];
+
+			// Check if it has been defined
+			if( rate == UINT16_MAX ){
+				pair.second->rate[i] = last_rate;
+			}else{
+				last_rate = rate;
+			}
+		}
+
+		for( int i = MAX_LEVEL - 1, last_rate = 100; i >= 0; i-- ){
+			uint16 rate = pair.second->rate[i];
+
+			// Check if it has been defined
+			if( rate == UINT16_MAX ){
+				pair.second->rate[i] = last_rate;
+			}else{
+				last_rate = rate;
+			}
+		}
+	}
+}
+
+PenaltyDatabase penalty_db;
 
 #define MOTD_LINE_SIZE 128
 static char motd_text[MOTD_LINE_SIZE][CHAT_SIZE_MAX]; // Message of the day buffer [Valaris]
@@ -11727,20 +11823,36 @@ void pc_delspiritcharm(struct map_session_data *sd, int count, int type)
  * @param type: 1 - EXP, 2 - Item Drop
  * @return Penalty rate
  */
-int pc_level_penalty_mod(int level_diff, uint32 mob_class, enum e_mode mode, int type)
-{
-	int rate = 100;
+uint16 pc_level_penalty_mod( struct map_session_data* sd, e_penalty_type type, struct mob_db* mob, mob_data* md ){
+	// No player was attached, we don't use any modifier (100 = rates are not touched)
+	if( sd == nullptr ){
+		return 100;
+	}
 
-	if (type == 2 && (mode&MD_FIXED_ITEMDROP))
-		return rate;
+	int monster_level;
 
-	if (level_diff < 0)
-		level_diff = MAX_LEVEL + (~level_diff + 1);
+	if( md != nullptr ){
+		monster_level = md->level;
+		mob = md->db;
+	}else if( mob != nullptr ){
+		monster_level = mob->lv;
+	}else{
+		return 100;
+	}
 
-	if ((rate = level_penalty[type][mob_class][level_diff]) > 0) // Monster class found, return rate
-		return rate;
+	if( ( type == PENALTY_DROP || type == PENALTY_MVP_DROP ) && status_has_mode( &mob->status, MD_FIXED_ITEMDROP )  ){
+		return 100;
+	}
 
-	return 100; // Penalty not found, return default
+	int level_difference = monster_level - sd->status.base_level;
+
+	std::shared_ptr<s_penalty> penalty = penalty_db.find( type );
+
+	if( penalty != nullptr ){
+		return penalty->rate[ level_difference + MAX_LEVEL - 1 ];
+	}else{
+		return 100;
+	}
 }
 #endif
 
@@ -11897,35 +12009,6 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 	}
 	return true;
 }
-#if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-static bool pc_readdb_levelpenalty(char* fields[], int columns, int current)
-{
-	int type, class_, diff;
-
-	type = atoi(fields[0]); //1=experience, 2=item drop
-	class_ = atoi(fields[1]);
-	diff = atoi(fields[2]);
-
-	if( type != 1 && type != 2 ){
-		ShowWarning("pc_readdb_levelpenalty: Invalid type %d specified.\n", type);
-		return false;
-	}
-
-	if( !CHK_CLASS(class_) ){
-		ShowWarning("pc_readdb_levelpenalty: Invalid class %d specified.\n", class_);
-		return false;
-	}
-
-	diff = min(diff, MAX_LEVEL);
-
-	if( diff < 0 )
-		diff = min(MAX_LEVEL + ( ~(diff) + 1 ), MAX_LEVEL*2);
-
-	level_penalty[type][class_][diff] = atoi(fields[3]);
-
-	return true;
-}
-#endif
 
 /** [Cydh]
 * Calculates base hp of player. Reference: http://irowiki.org/wiki/Max_HP
@@ -12303,22 +12386,7 @@ void pc_readdb(void) {
 	memset(job_info,0,sizeof(job_info)); // job_info table
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-	sv_readdb(db_path, DBPATH "level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 0);
-	sv_readdb(db_path, DBIMPORT"/level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 1);
-	for( k=1; k < 3; k++ ){ // fill in the blanks
-		int j;
-		for( j = 0; j < CLASS_ALL; j++ ){
-			int tmp = 0;
-			for( i = 0; i < MAX_LEVEL*2; i++ ){
-				if( i == MAX_LEVEL+1 )
-					tmp = level_penalty[k][j][0];// reset
-				if( level_penalty[k][j][i] > 0 )
-					tmp = level_penalty[k][j][i];
-				else
-					level_penalty[k][j][i] = tmp;
-			}
-		}
-	}
+	penalty_db.load();
 #endif
 
 	 // reset then read statspoint
@@ -13576,6 +13644,7 @@ void do_final_pc(void) {
 	ers_destroy(str_reg_ers);
 
 	attendance_db.clear();
+	penalty_db.clear();
 }
 
 void do_init_pc(void) {
