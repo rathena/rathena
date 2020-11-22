@@ -2926,7 +2926,7 @@ int map_removemobs_sub(struct block_list *bl, va_list ap)
 	if( !battle_config.mob_remove_damaged && md->status.hp < md->status.max_hp )
 		return 0;
 	// is a mvp
-	if( md->db->mexp > 0 )
+	if( md->get_bosstype() == BOSSTYPE_MVP )
 		return 0;
 
 	unit_free(&md->bl,CLR_OUTSIGHT);
