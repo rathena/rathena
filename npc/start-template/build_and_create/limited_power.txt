@@ -1,0 +1,193 @@
+prontera,153,303,3	script	 #LimitedPower	530,{
+	mes "สถานะ Limited Power ของคุณ";
+	if(lp1) mes "- โจมตีกระจาย 1 ช่อง";
+	if(lp2) mes "- ตัวเราไม่กระเด็น";
+	if(lp3) mes "- ใช้สกิลไม่ต้องมี Gem Stone";
+	if(lp4) mes "- โดนตีไม่ชะงัก";
+	if(lp5) mes "- ไม่ต้องใช้น้ำมัน Mado Gear";
+	if(lp6) mes "- มองเห็นศัตรูที่หายตัวทะลุทุกอย่าง";
+	if(lp7) mes "- Drop x2 ไม่ทับกับอันอื่น";
+	if(lp8) mes "- มีโอกาส 1% ทำลายอาวุธศัตรู";
+	if(lp9) mes "- มีโอกาส 1% ทำลายเกราะศัตรู";
+	if(lp10) mes "- อุปกรณ์ทุกชิ้นไม่ถูกทำลาย";
+	if(lp11) mes "- อุปกรณ์ทุกชิ้นไม่ถูกถอด";
+	if(lp12) mes "- โจมตีแรงขึ้นตาม Def ศัตรู";
+	if(lp13) mes "- มีโอกาส 1% ที่จะเกิด Bleeding กับศัตรู";
+	if(lp14) mes "- มีโอกาส 1% ที่จะเกิด Blind กับศัตรู";
+	if(lp15) mes "- มีโอกาส 1% ที่จะเกิด Burning กับศัตรู";
+	if(lp16) mes "- มีโอกาส 1% ที่จะเกิด Confusion กับศัตรู";
+	if(lp17) mes "- มีโอกาส 1% ที่จะเกิด Crystalize กับศัตรู";
+	if(lp18) mes "- มีโอกาส 1% ที่จะเกิด Curse กับศัตรู";
+	if(lp19) mes "- มีโอกาส 1% ที่จะเกิด Deadly Poison กับศัตรู";
+	if(lp20) mes "- มีโอกาส 1% ที่จะเกิด Fear กับศัตรู";
+	if(lp21) mes "- มีโอกาส 1% ที่จะเกิด Freeze กับศัตรู";
+	if(lp22) mes "- มีโอกาส 1% ที่จะเกิด Poison กับศัตรู";
+	if(lp23) mes "- มีโอกาส 1% ที่จะเกิด Silence กับศัตรู";
+	if(lp24) mes "- มีโอกาส 1% ที่จะเกิด Sleep กับศัตรู";
+	if(lp25) mes "- มีโอกาส 1% ที่จะเกิด Stone กับศัตรู";
+	if(lp26) mes "- มีโอกาส 1% ที่จะเกิด Stun กับศัตรู";
+	next;
+	.@sum_lp = 1;
+	if(lp)
+	.@sum_lp = lp;
+	.@sum_trade_amount = .trade_amount * .@sum_lp;
+	.@sum_cash_req = .cash_req;
+	if(lp)
+	.@sum_cash_req = .cash_req * lp;
+	.@sum_zeny_req = .zeny_req;
+	if(lp)
+	.@sum_zeny_req = .zeny_req * lp;
+	mes "ต้องการ " + .@sum_trade_amount + " " + getitemname(.trade_id);
+	mes "กับ " + .@sum_zeny_req + "z หรือ " + .@sum_cash_req + " Cash";
+	mes "และ Lv.175, Job Lv.60";
+	mes "เพื่อเลือก ^238dd9Limited Power^000000";
+	next;
+	
+	
+	
+	if(countitem(.trade_id) < .@sum_trade_amount)
+	{
+		mes "ต้องการ " + .@sum_trade_amount + " " + getitemname(.trade_id);
+		close;
+	}
+	
+	if(BaseLevel < 175 || JobLevel < 60){
+		mes "ต้องการ Lv.175, Job Lv.60";
+		close;
+	}
+	menu "สอบถามเพิ่มเติม",L_Info,"Cash",L_Cash,"Zeny",L_Zeny;
+	
+	L_Info:
+	mes "การเพิ่ม Limited Power สามารถทำได้เรื่อย ๆ จนกว่าจะครบ";
+	mes "====";
+	mes "หลังจากเพิ่ม Limited Power แล้ว จะส่งผลดังนี้";
+	mes "- กลายเป็น Novice";
+	mes "- Lv. เหลือ 1";
+	mes "- Job Lv. เหลือ 1";
+	mes "- Status Point เหลือ 48";
+	mes "- Skill Point เหลือ 0";
+	mes "- Reset Status";
+	mes "- Reset Skill";
+	mes "- ลบบัฟทั้งหมด";
+	mes "- เลเวลยากขึ้นเรื่อย ๆ ตามจำนวน Limited Power";
+	close;
+	
+	L_Cash:
+	.@currency = 1;
+	.@sum_cash_req = .cash_req;
+	if(lp)
+	.@sum_cash_req = .cash_req * lp;
+	if(#CASHPOINTS < .@sum_cash_req){
+		mes "ต้องการ " + .@sum_cash_req + " Cash";
+		close;	
+	}
+	goto L_Menu;
+	
+	L_Zeny:
+	.@currency = 2;
+	.@sum_zeny_req = .zeny_req;
+	if(lp)
+	.@sum_zeny_req = .zeny_req * lp;
+	if(Zeny < .@sum_zeny_req){
+		mes "ต้องการ " + .@sum_zeny_req + "z";
+		close;
+	}
+	goto L_Menu;
+	
+	L_Menu:
+	mes "เลือก ^238dd9Limited Power^000000";
+	next;
+	menu "โจมตีกระจาย 1 ช่อง",L_1
+	,"ตัวเราไม่กระเด็น",L_2
+	,"ใช้สกิลไม่ต้องมี Gem Stone",L_3
+	,"โดนตีไม่ชะงัก",L_4
+	,"ไม่ต้องใช้น้ำมัน Mado Gear",L_5
+	,"มองเห็นศัตรูที่หายตัวทะลุทุกอย่าง",L_6
+	,"Drop x2 ไม่ทับกับอันอื่น",L_7
+	,"มีโอกาส 1% ทำลายอาวุธศัตรู",L_8
+	,"มีโอกาส 1% ทำลายเกราะศัตรู",L_9
+	,"อุปกรณ์ทุกชิ้นไม่ถูกทำลาย",L_10
+	,"อุปกรณ์ทุกชิ้นไม่ถูกถอด",L_11
+	,"โจมตีแรงขึ้นตาม Def ศัตรู",L_12
+	,"มีโอกาส 1% ที่จะเกิด Bleeding กับศัตรู",L_13
+	,"มีโอกาส 1% ที่จะเกิด Blind กับศัตรู",L_14
+	,"มีโอกาส 1% ที่จะเกิด Burning กับศัตรู",L_15
+	,"มีโอกาส 1% ที่จะเกิด Confusion กับศัตรู",L_16
+	,"มีโอกาส 1% ที่จะเกิด Crystalize กับศัตรู",L_17
+	,"มีโอกาส 1% ที่จะเกิด Curse กับศัตรู",L_18
+	,"มีโอกาส 1% ที่จะเกิด Deadly Poison กับศัตรู",L_19
+	,"มีโอกาส 1% ที่จะเกิด Fear กับศัตรู",L_20
+	,"มีโอกาส 1% ที่จะเกิด Freeze กับศัตรู",L_21
+	,"มีโอกาส 1% ที่จะเกิด Poison กับศัตรู",L_22
+	,"มีโอกาส 1% ที่จะเกิด Silence กับศัตรู",L_23
+	,"มีโอกาส 1% ที่จะเกิด Sleep กับศัตรู",L_24
+	,"มีโอกาส 1% ที่จะเกิด Stone กับศัตรู",L_25
+	,"มีโอกาส 1% ที่จะเกิด Stun กับศัตรู",L_26;
+	
+	L_1: .@limited_power = 1; goto L_Trade;
+	L_2: .@limited_power = 2; goto L_Trade;
+	L_3: .@limited_power = 3; goto L_Trade;
+	L_4: .@limited_power = 4; goto L_Trade;
+	L_5: .@limited_power = 5; goto L_Trade;
+	L_6: .@limited_power = 6; goto L_Trade;
+	L_7: .@limited_power = 7; goto L_Trade;
+	L_8: .@limited_power = 8; goto L_Trade;
+	L_9: .@limited_power = 9; goto L_Trade;
+	L_10: .@limited_power = 10; goto L_Trade;
+	L_11: .@limited_power = 11; goto L_Trade;
+	L_12: .@limited_power = 12; goto L_Trade;
+	L_13: .@limited_power = 13; goto L_Trade;
+	L_14: .@limited_power = 14; goto L_Trade;
+	L_15: .@limited_power = 15; goto L_Trade;
+	L_16: .@limited_power = 16; goto L_Trade;
+	L_17: .@limited_power = 17; goto L_Trade;
+	L_18: .@limited_power = 18; goto L_Trade;
+	L_19: .@limited_power = 19; goto L_Trade;
+	L_20: .@limited_power = 20; goto L_Trade;
+	L_21: .@limited_power = 21; goto L_Trade;
+	L_22: .@limited_power = 22; goto L_Trade;
+	L_23: .@limited_power = 23; goto L_Trade;
+	L_24: .@limited_power = 24; goto L_Trade;
+	L_25: .@limited_power = 25; goto L_Trade;
+	L_26: .@limited_power = 26; goto L_Trade;
+	
+	L_Trade:
+	//Check is bought
+	if(getd("lp" + .@limited_power) > 0){
+		mes "มี Limited Power นี้แล้ว";
+		close;
+	}
+	if(.@currency == 1)
+	#CASHPOINTS -= .@sum_cash_req;
+	else if(.@currency == 2)
+	Zeny -= .@sum_zeny_req;
+	
+	delitem .trade_id,.@sum_trade_amount;
+	
+	//Give power!
+	set getd("lp" + .@limited_power),1;
+	
+	//Increase -EXP% multiplier
+	lp++;
+	
+	jobchange 0;
+	atcommand "@lvup -999";
+	atcommand "@joblvup -999";
+	atcommand "@reset";
+	atcommand "@stpoint -999999";
+	atcommand "@stpoint 48";
+	atcommand "@skpoint -999999";
+	sc_end sc_all;
+	
+	callfunc("LimitedPower");
+	
+	mes "เรียบร้อยแล้ว!";
+	end;
+
+OnInit:
+	.cash_req = 20;
+	.zeny_req = 4000000;
+	.trade_id = 39999;
+	.trade_amount = 5;
+	end;
+}

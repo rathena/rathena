@@ -1,0 +1,86 @@
+-	script	FreebiesController	-1,{
+	.@npcName$ = "[แจกของชดเชย, แจกของวันพิเศษ]";
+	
+	mes .@npcName$;
+	
+	if(getgmlevel())
+	menu "เข้าสู่ NPC ปกติ",-,"ล้างค่า",L_Reset;
+
+	next;
+	menu "ชดเชย เกมค้าง",L_Give01;
+
+	L_Give01:
+	.@index = 1;
+	.@sumFreebiesCountMax = 30;
+	.@info$ = "แจก 10,000,000 Zeny";
+	goto L_Do;
+
+	L_Do:
+	if(getd("$freebies" + .@index + "Count") >= .@sumFreebiesCountMax){
+		mes .@npcName$;
+		mes "^ff0000--สิทธิเต็มแล้ว--^000000";
+		close;
+	}
+	
+	for (.@i = 0; .@i < getarraysize(getd("$freebies" + .@index + "IP$")); .@i++){
+		if(getcharip() == getd("$freebies" + .@index + "IP$[" + .@i + "]")){
+			mes .@npcName$;
+			mes "^db1555* IP เดิมรับซ้ำไม่ได้^000000";
+			close;
+		}
+	}
+	
+	if(getd("#freebies" + .@index))
+	{
+		mes .@npcName$;
+		mes "^db1555* 1 ID รับได้ 1 ครั้ง^000000";
+		close;
+	}
+	
+	callfunc("InventorySlotCheck");
+	
+	mes .@npcName$;
+	mes .@info$;
+	mes "^db1555* IP เดิมรับซ้ำไม่ได้^000000";
+	mes "^db1555* 1 ID รับได้ 1 ครั้ง^000000";
+	mes "มีคนรับไปแล้ว: " + getd("$freebies" + .@index + "Count") + "/" + .@sumFreebiesCountMax + " สิทธิ";
+	next;
+	menu "รับ",-;
+	
+	if(getd("$freebies" + .@index + "Count") >= .@sumFreebiesCountMax){
+		mes .@npcName$;
+		mes "^ff0000--สิทธิเต็มแล้ว คุณกดยืนยันช้าไป--^000000";
+		close;
+	}
+	
+	mes .@npcName$;
+	mes "ยินดีด้วยนะ ขอให้สนุกกับ Start - Template - RO";
+	set getd("#freebies" + .@index),1;
+	set getd("$freebies" + .@index + "Count"),getd("$freebies" + .@index + "Count") + 1;
+	set getd("$freebies" + .@index + "IP$[" + getarraysize(getd("$freebies" + .@index + "IP$")) + "]"),getcharip();
+	
+	if(.@index == 1)
+		callfunc("AddZeny",10000000);
+	
+	specialeffect2 400;
+	
+	close;
+
+	L_Reset:
+	input .@index;
+	
+	query_sql("DELETE FROM `mapreg` WHERE `varname` = '$freebies" + .@index + "IP$'");
+	query_sql("DELETE FROM `mapreg` WHERE `varname` = '$freebies" + .@index + "Count'");
+	query_sql("DELETE FROM `acc_reg_num` WHERE `key` = '#freebies" + .@index + "'");
+	
+	clear;
+	mes .@npcName$;
+	mes "ล้างค่า เรียบร้อยแล้ว";
+	close;
+	
+OnInit:
+	waitingroom "แจกของชดเชย, แจกของวันพิเศษ",0;
+	end;
+}
+
+prontera,148,168,5	duplicate(FreebiesController)	 ::FreebiesController#1	488

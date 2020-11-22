@@ -1,0 +1,114 @@
+-	shop	burnCardShop	-1,501:1000000
+
+-	script	BurnCard	-1,{
+	.@Delay = 30;
+	
+	if (@BCD > gettimetick(2)){
+		dispbottom "โปรดรอ 30 วินาที";
+		end;
+	}
+	
+	mes "ต้องการย่อย Card หรือไม่? \n1 ใบได้ " + ((1 + #card_to_cash_tier) * .multiplier) + " Cash";
+	next;
+	menu "ย่อย",-,"Upgrade Cash ที่จะได้รับ",L_Upgrade,"ย่อยทั้งหมด",L_AllIn;
+	callshop "burnCardShop",2;
+	npcshopattach "burnCardShop";
+	end;
+	
+	L_AllIn:
+	getinventorylist;
+	if(@inventorylist_count > 0){
+		freeloop(1);
+		
+		for (.@i = @inventorylist_count - 1; .@i >= 0; .@i--){
+			if(@inventorylist_fav[.@i])
+			continue;
+			
+			.@item_id = @inventorylist_id[.@i];
+			
+			//dispbottom "One Click Sell >> .@item_id: " + .@item_id;
+			
+			if(getiteminfo(.@item_id,2) != 6 && !compare(getitemname(.@item_id),"Card"))
+			continue;
+			
+			.@sell_amount = @inventorylist_amount[.@i];
+			
+			if(#card_to_cash_tier)
+			.@multiplier = ((1 + #card_to_cash_tier) * .multiplier);
+			else
+			.@multiplier = 1 * .multiplier;
+			.@finalize = (.@sell_amount * .@multiplier);
+			.@sum_earning_cash += .@finalize;
+			callfunc("AddCash",.@finalize,1);
+			
+			delitem .@item_id,.@sell_amount;
+		}
+
+		freeloop(0);
+	}
+	
+	if (.@Delay)
+	@BCD = gettimetick(2) + .@Delay;
+
+	mes "คุณได้รับ " + .@sum_earning_cash + " Cash";
+	specialeffect2 49;
+	close;
+
+OnSellItem:
+	for (.@i = 0; .@i < getarraysize(@sold_nameid); .@i++){
+		if (@sold_quantity[.@i] <= 0)
+		end;
+		if(getiteminfo(@sold_nameid[.@i],2) == 6 && compare(getitemname(@sold_nameid[.@i]),"Card") ){
+			delitem @sold_nameid[.@i],@sold_quantity[.@i];
+			.@burn_amount += @sold_quantity[.@i];
+		}
+	}
+	deletearray @sold_quantity,getarraysize(@sold_quantity);
+	deletearray @sold_nameid,getarraysize(@sold_nameid);
+	
+	if(#card_to_cash_tier)
+	.@multiplier = ((1 + #card_to_cash_tier) * .multiplier);
+	else
+	.@multiplier = 1 * .multiplier;
+	.@finalize = (.@burn_amount * .@multiplier);
+	callfunc("AddCash",.@finalize);
+	mes "คุณได้รับ " + .@finalize + " Cash";
+	specialeffect2 49;
+	close;
+	
+	L_Upgrade:
+	if(#card_to_cash_tier >= getarraysize(.zeny_price)){
+		mes "คุณ Upgrade ถึงขั้นสูงสุดแล้ว";
+		close;	
+	}
+	mes "*ใช้ร่วมกันทั้ง ID";
+	.@next = 2;
+	if(#card_to_cash_tier)
+	.@next = (2 + #card_to_cash_tier);
+	mes "Upgrade เพื่อรับ " + .@next + " Cash ตอนแลก Card";
+	mes "Zeny ที่ต้องการ: " + .zeny_price[#card_to_cash_tier] + "z";
+	next;
+	menu "ยกเลิก",L_Cancel,"Upgrade",-;
+	
+	callfunc("IsZenyEnough",.zeny_price[#card_to_cash_tier],"",1);
+	
+	#card_to_cash_tier++;
+	
+	mes "ขณะนี้การย่อย Card 1 ใบได้ " + (1 + #card_to_cash_tier) + " Cash";
+	
+	announce strcharinfo(0) + " ได้ Upgrade การแลก Card เป็น Lv." + #card_to_cash_tier + "!!",bc_all,0xadc6ff;
+	close;
+	
+	L_Cancel:
+	end;
+	
+OnInit:
+	waitingroom "แลก Card เป็น Cash",0;
+	
+	setarray .zeny_price[0],10000,100000,1000000,10000000,100000000,1000000000;
+	
+	.multiplier = 1;
+	
+	end;
+}
+prontera,163,167,3	duplicate(BurnCard)	 แลก Card เป็น Cash	10306

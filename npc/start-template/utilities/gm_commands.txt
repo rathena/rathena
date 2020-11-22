@@ -1,0 +1,22 @@
+-	script	GMCommands	-1,{
+OnInit:
+	bindatcmd "job2",strnpcinfo(3) + "::OnJob2",99,99;
+	end;
+	
+//o คำสั่ง @job2 <job_id>
+//o ตัวอย่าง @job2 4060
+//o ตัวอย่าง #job2 Prayuth 4060
+//o ใช้สำหรับเปลี่ยนอาชีพแล้วเพิ่ม Lv, Job Lv, Stat, Skill เต็ม เพื่อความรวดเร็วในการทดสอบ
+OnJob2:
+	.@job_id = .@atcmd_parameters$[0];
+	
+	atcommand "@job " + .@job_id;
+	atcommand "@lvup 999";
+	atcommand "@joblvup 999";
+	atcommand "@statall";
+	atcommand "@skillall";
+	callfunc("F_GetPlatinumSkills");
+	StatusPoint = 0;
+	percentheal 100,100;
+	end;
+}

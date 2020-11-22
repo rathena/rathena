@@ -1,0 +1,77 @@
+prontera,163,127,3	script	แลก Cash เป็น Pet	564,{
+	
+	//Test Pet is available
+	/*.@test = 0;
+	while(.@test < getarraysize(.all_pet)-1){
+		.@rand_card = .all_pet[.@test];
+		
+		if(!checkweight(.@rand_card,1))
+		break;
+		
+		.@test++;
+		
+		if(getiteminfo(.@rand_card,2) == 7){
+			dispbottom "Egg Item ID: " + .@rand_card;
+			atcommand "@makeegg " + .@rand_card;
+		}
+	}*/
+	//End Test
+	
+	.@cash_price = 5;
+	menu "แลก 1 อัน",L_Once,"ใส่จำนวน",L_Input,"แลกทั้งหมด",L_AllIn;
+	
+	L_Once:
+	.@i = 1;
+	goto L_Loop;
+
+	L_Input:
+	input .@i;
+	goto L_Loop;
+	
+	L_AllIn:
+	.@i = 999999;
+	.@all_in = 1;
+	goto L_Loop;
+	
+	L_Loop:
+	getinventorylist;
+	.@inventory_count = @inventorylist_count;
+	
+	.@sum_cash = #CASHPOINTS;
+	
+	.@max_rand = .@sum_cash / .@cash_price;
+	
+	if(.@i > .@max_rand)
+	.@i = .@max_rand;
+
+	if(.@inventory_count + .@i > 100 && .@all_in)
+	.@i = 100 - .@inventory_count;
+
+	if(.@inventory_count + .@i > 100){
+		mes "คุณต้องการสุ่ม " + .@i + " ครั้ง";
+		mes "แต่ช่องว่าง ภายในกระเป๋าของคุณไม่เพียงพอ โปรดทำช่องว่างเพิ่ม " + .@i + " ช่อง";
+		close;
+	}
+	
+	while(.@i > 0 && #CASHPOINTS >= .@cash_price){
+		.@rand_card = .all_pet[rand(0,getarraysize(.all_pet)-1)];
+		
+		if(!checkweight(.@rand_card,1))
+		break;
+		
+		.@i--;
+		
+		#CASHPOINTS -= .@cash_price;
+		
+		if(getiteminfo(.@rand_card,2) == 7)
+		atcommand "@makeegg " + .@rand_card;
+		else
+		getitem .@rand_card,1;
+	}
+	end;
+	
+OnInit:
+	setarray .all_pet[0],9001,9002,9003,9004,9005,9006,9007,9008,9009,9010,9011,9012,9013,9014,9015,9016,9017,9018,9019,9020,9021,9022,9023,9024,9025,9026,9027,9028,9029,9030,9031,9032,9033,9034,9035,9036,9037,9038,9039,9040,9041,9042,9043,9044,9045,9046,9047,9048,9049,9050,9051,9052,9053,9054,9055,9056,9057,9058,9059,9061,9062,9069,9070,9071,9087,9088,9089,9090,9091,9092,9093,9094,9095,9096,9097,9098,9099,9100,9102,9105,9106,9107,9108,9109,9112,9118,9119,9120,10001,10002,10003,10004,10005,10006,10007,10008,10009,10010,10011,10012,10013,10014,10015,10016,10017,10018,10019,10020,10021,10022,10023,10024,10025,10026,10027,10028,10029,10030,10031,10032,10033,10034,10035,10036,10037,10038,10039,10040,10041,10042;
+	waitingroom "5 Cash เป็น Pet",0;
+	end;
+}

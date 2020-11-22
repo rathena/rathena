@@ -1,0 +1,12 @@
+prontera,155,175,5	script	 #Re_Disguise	10005,6,6,{
+	end;
+	
+OnTouch:
+	callfunc("Re_Mon_Mon");
+	end;
+	end;
+	
+OnInit:
+	hideonnpc strnpcinfo(0);
+	end;
+}

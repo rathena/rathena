@@ -1,0 +1,87 @@
+prontera,163,203,5	script	Zeny แลก Item	562,{
+	if(#is_zeny_to_item_using){
+		mes "*ใช้ร่วมกันทั้ง ID";
+		mes "Item ที่คุณเลือก: " + getitemname(#target_zeny_to_item);
+		callsub L_CurrentInfo;
+		next;
+		goto L_DoProcess;
+	}
+	else{
+		#is_zeny_to_item_using = 0;
+		#zeny_to_item_price = 1000000;
+		#zeny_to_item_chance = 1;
+		
+		mes "*ใช้ร่วมกันทั้ง ID";
+		mes "โปรดระบุเลข Item ที่ต้องการ";
+		mes "ประเภทที่ระบุได้คือ Card, Equipment";
+		mes "^eb4034*เมื่อระบุแล้ว จะไม่สามารถเปลี่ยนได้ จนกว่าจะได้รับของ^000000";
+		callsub L_CurrentInfo;
+		mes "---";
+		mes "เลข Item ให้เดินไปดู ทางซ้ายน้ำพุ Prontera";
+		
+		
+		next;
+		menu "ไม่ทำอะไร",L_Cancel,"เลือกของและจับรางวัล",L_Input;
+	}
+
+	L_Input:
+	input .@input;
+	
+	.@item_type = getiteminfo(.@input,2);
+	if(.@item_type == 4 || .@item_type == 5 || .@item_type == 6 || .@item_type == 12)
+	#target_zeny_to_item = .@input;
+	else
+	goto L_Cancel;
+	
+	
+
+	L_DoProcess:
+	if(!checkweight(#target_zeny_to_item,1))
+	goto L_Cancel;
+
+	callfunc("InventorySlotCheck");
+
+	callfunc("IsZenyEnough",#zeny_to_item_price,"",1);
+	
+	.@sum = rand(1,100);
+	
+	if(.@sum <= #zeny_to_item_chance){
+		getitem #target_zeny_to_item,1;
+		mes "ยินดีด้วย! คุณได้รับ Item ที่เลือกแล้ว";
+		
+		announce strcharinfo(0) + " ได้รับ " + getitemname(#target_zeny_to_item) + " ด้วยโอกาส " + #zeny_to_item_chance + "%!!",bc_all,0xebadff;
+		
+		#target_zeny_to_item = 0;
+		#is_zeny_to_item_using = 0;
+		#zeny_to_item_price = 0;
+		#zeny_to_item_chance = 0;
+
+		close;
+	}
+	else{
+		#zeny_to_item_price -= 10000;
+		#zeny_to_item_chance++;
+		#is_zeny_to_item_using = 1;
+		
+		clear;
+		
+		mes "ไม่สำเร็จ โปรดลองใหม่ภายหน้า";
+		callsub L_CurrentInfo;
+		close;
+	}
+	end;
+	
+	L_CurrentInfo:
+	mes "---";
+	mes "Zeny ที่ต้องการ: " + #zeny_to_item_price + "z";
+	mes "โอกาสสำเร็จ: " + #zeny_to_item_chance + "%";
+	return;
+	
+	L_Cancel:
+	mes "-ปิดระบบเรียบร้อยแล้ว-";
+	close;
+	
+OnInit:
+	waitingroom "Zeny แลก Item",0;
+	end;
+}

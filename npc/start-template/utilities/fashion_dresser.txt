@@ -1,0 +1,181 @@
+-	script	FashionSlot1	-1,{
+	.@sum = 0;
+	menu "เริ่มแต่งตัว",L_Menu,"ล้างค่าที่ 1",L_Reset;
+	
+	L_Menu:
+	mes "ค่าขณะนี้: "+.@sum;
+	mes "หากเลือกใส่ค่าเอง ให้ใส่ค่า 1-1881 เพื่อแต่งตัว";
+	mes " ";
+	mes "เมื่อชอบใจแล้วให้กดบันทึก";
+	menu "ต่อไป",L_Next,"ก่อนหน้า",L_Previous,"ใส่ค่าเอง",L_Input,"บันทึก",L_Save;
+	
+	L_Next:
+	.@sum++;
+	if(.@sum>=1881)
+	.@sum = 1;
+	clear;
+	goto L_Change;
+	
+	L_Previous:
+	.@sum--;
+	if(.@sum<=0)
+	.@sum = 1881;
+	clear;
+	goto L_Change;
+	
+	L_Input:
+	input .@i;
+	.@sum = .@i;
+	if(.@sum>=1881)
+	.@sum = 1;
+	if(.@sum<=0)
+	.@sum = 1881;
+	clear;
+	goto L_Change;
+	
+	L_Save:
+	dressSlot1 = .@sum;
+	changelook LOOK_HEAD_TOP,dressSlot1;
+	setlook LOOK_HEAD_TOP,dressSlot1;
+	end;
+	
+	L_Reset:
+	dressSlot1 = 0;
+	changelook LOOK_HEAD_TOP,dressSlot1;
+	setlook LOOK_HEAD_TOP,dressSlot1;
+	end;
+	
+	L_Change:
+	changelook LOOK_HEAD_TOP,.@sum;
+	goto L_Menu;
+	
+OnInit:
+	waitingroom "กำหนด แฟชั่น ค่าที่ 1",0;
+	end;
+}
+-	script	FashionSlot2	-1,{
+	.@sum = 0;
+	menu "เริ่มแต่งตัว",L_Menu,"ล้างค่าที่ 2",L_Reset;
+	
+	L_Menu:
+	mes "ค่าขณะนี้: "+.@sum;
+	mes "หากเลือกใส่ค่าเอง ให้ใส่ค่า 1-1881 เพื่อแต่งตัว";
+	mes " ";
+	mes "เมื่อชอบใจแล้วให้กดบันทึก";
+	menu "ต่อไป",L_Next,"ก่อนหน้า",L_Previous,"ใส่ค่าเอง",L_Input,"บันทึก",L_Save;
+	
+	L_Next:
+	.@sum++;
+	if(.@sum>=1881)
+	.@sum = 1;
+	clear;
+	goto L_Change;
+	
+	L_Previous:
+	.@sum--;
+	if(.@sum<=0)
+	.@sum = 1881;
+	clear;
+	goto L_Change;
+	
+	L_Input:
+	input .@i;
+	.@sum = .@i;
+	if(.@sum>=1881)
+	.@sum = 1;
+	if(.@sum<=0)
+	.@sum = 1881;
+	clear;
+	goto L_Change;
+	
+	L_Save:
+	dressSlot2 = .@sum;
+	changelook LOOK_HEAD_MID,dressSlot2;
+	setlook LOOK_HEAD_MID,dressSlot2;
+	end;
+	
+	L_Reset:
+	dressSlot2 = 0;
+	changelook LOOK_HEAD_MID,dressSlot2;
+	setlook LOOK_HEAD_MID,dressSlot2;
+	end;
+	
+	L_Change:
+	changelook LOOK_HEAD_MID,.@sum;
+	goto L_Menu;
+	
+OnInit:
+	waitingroom "กำหนด แฟชั่น ค่าที่ 2",0;
+	end;
+}
+-	script	FashionSlot3	-1,{
+	.@sum = 0;
+	menu "เริ่มแต่งตัว",L_Menu,"ล้างค่าที่ 3",L_Reset;
+	
+	L_Menu:
+	mes "ค่าขณะนี้: "+.@sum;
+	mes "หากเลือกใส่ค่าเอง ให้ใส่ค่า 1-1881 เพื่อแต่งตัว";
+	mes " ";
+	mes "เมื่อชอบใจแล้วให้กดบันทึก";
+	menu "ต่อไป",L_Next,"ก่อนหน้า",L_Previous,"ใส่ค่าเอง",L_Input,"บันทึก",L_Save;
+	
+	L_Next:
+	.@sum++;
+	if(.@sum>=1881)
+	.@sum = 1;
+	clear;
+	goto L_Change;
+	
+	L_Previous:
+	.@sum--;
+	if(.@sum<=0)
+	.@sum = 1881;
+	clear;
+	goto L_Change;
+	
+	L_Input:
+	input .@i;
+	.@sum = .@i;
+	if(.@sum>=1881)
+	.@sum = 1;
+	if(.@sum<=0)
+	.@sum = 1881;
+	clear;
+	goto L_Change;
+	
+	L_Save:
+	dressSlot3 = .@sum;
+	changelook LOOK_HEAD_BOTTOM,dressSlot3;
+	setlook LOOK_HEAD_BOTTOM,dressSlot3;
+	end;
+	
+	L_Reset:
+	dressSlot3 = 0;
+	changelook LOOK_HEAD_BOTTOM,dressSlot3;
+	setlook LOOK_HEAD_BOTTOM,dressSlot3;
+	end;
+	
+	L_Change:
+	changelook LOOK_HEAD_BOTTOM,.@sum;
+	goto L_Menu;
+	
+OnInit:
+	waitingroom "กำหนด แฟชั่น ค่าที่ 3",0;
+	end;
+}
+-	script	FashionZoneOfficer	-1,{
+	mes "ต้องการเข้าไปในโซน แฟชั่น?";
+	menu "แน่นอน",-;
+	warp "prt_in",43,106;
+	end;
+
+OnInit:
+	waitingroom "โซนแฟชั่น",0;
+	end;
+}
+
+prontera,163,168,4	duplicate(FashionZoneOfficer)	 ::FashionZoneOfficer#1	758
+
+prt_in,38,108,5	duplicate(FashionSlot1)	 ::FashionSlot1#1	763
+prt_in,38,104,4	duplicate(FashionSlot2)	 ::FashionSlot2#1	757
+prt_in,35,115,5	duplicate(FashionSlot3)	 ::FashionSlot3#1	759

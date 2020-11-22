@@ -1,0 +1,258 @@
+prontera,211,264,4	script	เครื่องขุดเหมือง	564,{
+	.@npcName$ = "[เครื่องขุดเหมือง]";
+	
+	if(getgmlevel())
+	menu "เข้าสู่ NPC ปกติ",-,"เพิ่มรอบขุด",L_Add,"ล้างค่า",L_Reset;
+
+	callfunc("InventorySlotCheck",.@npcName$);
+
+	mes .@npcName$;
+	mes "ต้องการจะทำอะไรโปรดเลือกเมนูได้เลย";
+	next;
+	menu "อัพเกรดเครื่องขุดเหมือง",-,"รับของ",L_Get,"สอบถาม",L_Info;
+	
+	if(#miningLv >= 16){
+		mes .@npcName$;
+		mes "เครื่องขุดเหมือง Lv สูงสุดแล้ว";
+		close;
+	}
+	if(!#miningLv){
+		mes .@npcName$;
+		mes "คุณยังไม่มีเครื่องขุดเหมือง จะซื้อเลยหรือไม่?";
+		mes "ราคา: 100 Cash";
+		
+		callfunc("MyCash",0);
+		
+		next;
+		menu "ซื้อ",-,"ยังไม่ซื้อ",L_Cancel;
+		
+		callfunc("IsCashEnough",100,.@npcName$,1);
+
+		#miningLv = 1;
+		#miningCount = $miningCount;
+		
+		mes .@npcName$;
+		mes "คุณได้ซื้อเครื่องขุดเหมืองแล้วเรียบร้อย";
+		mes "Lv เครื่องขุดเหมืองขณะนี้: "+#miningLv;
+		
+		callfunc("MyCash",0);
+		
+		close;
+	}
+	else{
+		mes .@npcName$;
+		mes "คุณมีเครื่องขุดเหมือง Lv "+#miningLv+" แล้ว จะอัพเกรดหรือไม่?";
+		mes "ราคา: " + (#miningLv * 100) + " Cash";
+		
+		callfunc("MyCash",0);
+		
+		next;
+		menu "อัพเกรด",-,"ยังไม่อัพเกรด",L_Cancel;
+		
+		callfunc("IsCashEnough",#miningLv * 100,.@npcName$,1);
+
+		#miningLv++;
+		
+		mes .@npcName$;
+		mes "คุณได้อัพเกรดเครื่องขุดเหมือง แล้วเรียบร้อย";
+		mes "Lv เครื่องขุดเหมืองขณะนี้: " + #miningLv;
+		
+		callfunc("MyCash",0);
+		
+		close;
+	}
+	L_Get:
+	if(#miningLv){
+		if($miningCount == #miningCount){
+			mes .@npcName$;
+			mes "โปรดรอทุก ๆ ต้นชั่วโมง";
+			close;
+		}
+		
+		mes .@npcName$;
+		mes "เครื่องขุดเหมืองทำงานไป: " + ($miningCount - #miningCount) + " รอบ";
+		mes "Lv เครื่องขุดเหมืองขณะนี้: " + #miningLv;
+		
+		.@item01Id = 1010;
+		.@item02Id = 1011;
+		.@item03Id = 984;
+		.@item04Id = 985;
+		.@item01Count = 0;
+		.@item02Count = 0;
+		.@item03Count = 0;
+		.@item04Count = 0;
+		.@item01Rate = 0;
+		.@item02Rate = 0;
+		.@item03Rate = 0;
+		.@item04Rate = 0;
+		
+		if(#miningLv >= 1)
+		.@item01Rate = 50;
+		if(#miningLv >= 2)
+		.@item02Rate = 40;
+		if(#miningLv >= 3)
+		.@item03Rate = 30;
+		if(#miningLv >= 4)
+		.@item04Rate = 20;
+		
+		if(#miningLv >= 5)
+		.@item01Rate = 60;
+		if(#miningLv >= 6)
+		.@item02Rate = 50;
+		if(#miningLv >= 7)
+		.@item03Rate = 40;
+		if(#miningLv >= 8)
+		.@item04Rate = 30;
+		
+		if(#miningLv >= 9)
+		.@item01Rate = 70;
+		if(#miningLv >= 10)
+		.@item02Rate = 60;
+		if(#miningLv >= 11)
+		.@item03Rate = 50;
+		if(#miningLv >= 12)
+		.@item04Rate = 40;
+		
+		if(#miningLv >= 13)
+		.@item01Rate = 80;
+		if(#miningLv >= 14)
+		.@item02Rate = 70;
+		if(#miningLv >= 15)
+		.@item03Rate = 60;
+		if(#miningLv >= 16)
+		.@item04Rate = 50;
+
+		.@loopCount = ($miningCount - #miningCount);
+		
+		freeloop(1);
+		while(.@loopCount > 0){
+			.@loopCount--;
+			
+			if(.@item01Rate > 0 && rand(1,100) <= .@item01Rate)
+			.@item01Count++;
+			
+			if(.@item02Rate > 0 && rand(1,100) <= .@item02Rate)
+			.@item02Count++;
+			
+			if(.@item03Rate > 0 && rand(1,100) <= .@item03Rate)
+			.@item03Count++;
+			
+			if(.@item04Rate > 0 && rand(1,100) <= .@item04Rate)
+			.@item04Count++;
+			
+		}
+		freeloop(0);
+		
+		if(.@item01Count > 0)
+		getitem .@item01Id,.@item01Count;
+	
+		if(.@item02Count > 0)
+		getitem .@item02Id,.@item02Count;
+	
+		if(.@item03Count > 0)
+		getitem .@item03Id,.@item03Count;
+	
+		if(.@item04Count > 0)
+		getitem .@item04Id,.@item04Count;
+	
+		mes "ได้รับ " + .@item01Count + " " + getitemname(.@item01Id);
+		mes "ได้รับ " + .@item02Count + " " + getitemname(.@item02Id);
+		mes "ได้รับ " + .@item03Count + " " + getitemname(.@item03Id);
+		mes "ได้รับ " + .@item04Count + " " + getitemname(.@item04Id);
+		
+		#miningCount = 	$miningCount;
+		
+		close;
+	}
+	else{
+		mes .@npcName$;
+		mes "คุณยังไม่มีเครื่องขุดเหมือง";
+		close;
+	}
+	L_Info:
+	mes .@npcName$;
+	mes "เครื่องขุดเหมืองนี้ จะนำแร่มาจากเหมืองอีกที ผ่านวาร์ปของเหล่า Acolyte";
+	next;
+	mes .@npcName$;
+	mes "^08bad6*สามารถซื้อเครื่องขุดเหมืองได้ ID ล่ะ 1 เครื่อง^000000";
+	mes " ";
+	mes "Lv เครื่องขุดเหมืองขณะนี้: " + #miningLv;
+	mes " ";
+	mes "^d63e08-Lv 1^000000";
+	mes "โอกาส ^005e0350%^000000 ได้ 1 ^c80cccPharcon^000000 ทุก ๆ ต้นชั่วโมง";
+	mes "^d63e08-Lv 2^000000";
+	mes "โอกาส ^005e0340%^000000 ได้ 1 ^c80cccEmveretarcon^000000 ทุก ๆ ต้นชั่วโมง";
+	mes "^d63e08-Lv 3^000000";
+	mes "โอกาส ^005e0330%^000000 ได้ 1 ^c80cccOridecon^000000 ทุก ๆ ต้นชั่วโมง";
+	mes "^d63e08-Lv 4^000000";
+	mes "โอกาส ^005e0320%^000000 ได้ 1 ^c80cccElunium^000000 ทุก ๆ ต้นชั่วโมง";
+	mes "^d63e08-Lv 5^000000";
+	mes "เพิ่มโอกาสเป็น ^005e0360%^000000 ได้ 1 ^c80cccPharcon^000000 ทุก ๆ ต้นชั่วโมง";
+	mes "^d63e08-Lv 6^000000";
+	mes "เพิ่มโอกาสเป็น ^005e0350%^000000 ได้ 1 ^c80cccEmveretarcon^000000 ทุก ๆ ต้นชั่วโมง";
+	mes "^d63e08-Lv 7^000000";
+	mes "เพิ่มโอกาสเป็น ^005e0340%^000000 ได้ 1 ^c80cccOridecon^000000 ทุก ๆ ต้นชั่วโมง";
+	mes "^d63e08-Lv 8^000000";
+	mes "เพิ่มโอกาสเป็น ^005e0330%^000000 ได้ 1 ^c80cccElunium^000000 ทุก ๆ ต้นชั่วโมง";
+	mes "^d63e08-Lv 9^000000";
+	mes "เพิ่มโอกาสเป็น ^005e0370%^000000 ได้ 1 ^c80cccPharcon^000000 ทุก ๆ ต้นชั่วโมง";
+	mes "^d63e08-Lv 10^000000";
+	mes "เพิ่มโอกาสเป็น ^005e0360%^000000 ได้ 1 ^c80cccEmveretarcon^000000 ทุก ๆ ต้นชั่วโมง";
+	mes "^d63e08-Lv 11^000000";
+	mes "เพิ่มโอกาสเป็น ^005e0350%^000000 ได้ 1 ^c80cccOridecon^000000 ทุก ๆ ต้นชั่วโมง";
+	mes "^d63e08-Lv 12^000000";
+	mes "เพิ่มโอกาสเป็น ^005e0340%^000000 ได้ 1 ^c80cccElunium^000000 ทุก ๆ ต้นชั่วโมง";
+	mes "^d63e08-Lv 13^000000";
+	mes "เพิ่มโอกาสเป็น ^005e0380%^000000 ได้ 1 ^c80cccPharcon^000000 ทุก ๆ ต้นชั่วโมง";
+	mes "^d63e08-Lv 14^000000";
+	mes "เพิ่มโอกาสเป็น ^005e0370%^000000 ได้ 1 ^c80cccEmveretarcon^000000 ทุก ๆ ต้นชั่วโมง";
+	mes "^d63e08-Lv 15^000000";
+	mes "เพิ่มโอกาสเป็น ^005e0360%^000000 ได้ 1 ^c80cccOridecon^000000 ทุก ๆ ต้นชั่วโมง";
+	mes "^d63e08-Lv 16^000000";
+	mes "เพิ่มโอกาสเป็น ^005e0350%^000000 ได้ 1 ^c80cccElunium^000000 ทุก ๆ ต้นชั่วโมง";
+	close;
+	
+	L_Cancel:
+	mes .@npcName$;
+	mes "ยกเลิกเรียบร้อยแล้ว";
+	close;
+	
+OnClock0000:
+OnClock0100:
+OnClock0200:
+OnClock0300:
+OnClock0400:
+OnClock0500:
+OnClock0600:
+OnClock0700:
+OnClock0800:
+OnClock0900:
+OnClock1000:
+OnClock1100:
+OnClock1200:
+OnClock1300:
+OnClock1400:
+OnClock1500:
+OnClock1600:
+OnClock1700:
+OnClock1800:
+OnClock1900:
+OnClock2000:
+OnClock2100:
+OnClock2200:
+OnClock2300:
+	L_Add:
+	$miningCount++;
+	
+	specialeffect 36;
+	
+	end; 
+	
+	L_Reset:
+	$miningCount = 0;
+	end;
+	
+OnInit:
+	waitingroom "ปั้ม แร่ตีบวก",0;
+	end;
+}
