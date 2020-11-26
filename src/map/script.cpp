@@ -11896,6 +11896,13 @@ BUILDIN_FUNC(debugmes)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC( errormes ){
+	ShowError( "%s\n", script_getstr( st, 2 ) );
+	script_reportsrc( st );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  *------------------------------------------*/
 BUILDIN_FUNC(catchpet)
@@ -25127,6 +25134,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getstatus, "i??"),
 	BUILDIN_DEF(getscrate,"ii?"),
 	BUILDIN_DEF(debugmes,"s"),
+	BUILDIN_DEF(errormes,"s"),
 	BUILDIN_DEF2(catchpet,"pet","i"),
 	BUILDIN_DEF2(birthpet,"bpet",""),
 	BUILDIN_DEF(catchpet,"i"),
