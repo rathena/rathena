@@ -7511,10 +7511,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if (sd) {
 				// Remove old shields if any exist.
 				pc_delspiritball(sd, sd->spiritball, 0);
-				for (i = 0; i < 2; i++) {
-					pc_addspiritball(sd, skill_get_time2(SJ_BOOKOFDIMENSION, 1), 2);
-					sc_start2(src, bl, static_cast<sc_type>(SC_DIMENSION1 + i), 100, skill_lv, status_get_max_sp(src), skill_get_time2(SJ_BOOKOFDIMENSION, 1));
-				}
+				sc_start2(src, bl, SC_DIMENSION1, 100, skill_lv, status_get_max_sp(src), skill_get_time2(SJ_BOOKOFDIMENSION, 1));
+				sc_start2(src, bl, SC_DIMENSION2, 100, skill_lv, status_get_max_sp(src), skill_get_time2(SJ_BOOKOFDIMENSION, 1));
 			}
 			status_change_end(src, SC_DIMENSION, INVALID_TIMER);
 		}
