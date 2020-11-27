@@ -7552,11 +7552,21 @@ Example:
 
 *debugmes "<message>";
 
-This command will send the message to the server console (map-server window). It
+This command will send a debug message to the server console (map-server window). It
 will not be displayed anywhere else.
 
     // Displays "NAME has clicked me!" in the map-server window.
     debugmes strcharinfo(0) + " has clicked me!";
+
+---------------------------------------
+
+*errormes "<message>";
+
+This command will send an error message to the server console (map-server window). It
+will not be displayed anywhere else.
+
+    // Displays "NAME has clicked me!" in the map-server window.
+    errormes strcharinfo(0) + " has clicked me!";
 
 ---------------------------------------
 
