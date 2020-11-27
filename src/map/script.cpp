@@ -11901,6 +11901,13 @@ BUILDIN_FUNC(debugmes)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC( errormes ){
+	ShowError( "%s\n", script_getstr( st, 2 ) );
+	script_reportsrc( st );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  *------------------------------------------*/
 BUILDIN_FUNC(catchpet)
@@ -23184,6 +23191,9 @@ BUILDIN_FUNC(minmax){
 					value = func( value, get_val2_num( st, reference_uid( id, start ), reference_getref( data ) ) );
 				}
 			}
+			else {
+				value = func( value, 0 );
+			}
 		}else{
 			ShowError( "buildin_%s: not a supported data type!\n", functionname );
 			script_reportdata( data );
@@ -25129,6 +25139,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getstatus, "i??"),
 	BUILDIN_DEF(getscrate,"ii?"),
 	BUILDIN_DEF(debugmes,"s"),
+	BUILDIN_DEF(errormes,"s"),
 	BUILDIN_DEF2(catchpet,"pet","i"),
 	BUILDIN_DEF2(birthpet,"bpet",""),
 	BUILDIN_DEF(catchpet,"i"),
