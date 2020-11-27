@@ -813,10 +813,12 @@
 	export_constant(EQP_ACC_RL);
 	export_constant(EQP_SHADOW_ACC_RL);
 
+	export_constant2("EQP_Both_Hand", EQP_ARMS);
 	export_constant2("EQP_Right_Hand", EQP_HAND_R);
 	export_constant2("EQP_Left_Hand", EQP_HAND_L);
 	export_constant2("EQP_Right_Accessory", EQP_ACC_R);
 	export_constant2("EQP_Left_Accessory", EQP_ACC_L);
+	export_constant2("EQP_Both_Accessory", EQP_ACC_RL);
 	export_constant2("EQP_Shadow_Right_Accessory", EQP_SHADOW_ACC_R);
 	export_constant2("EQP_Shadow_Left_Accessory", EQP_SHADOW_ACC_L);
 
@@ -4564,10 +4566,6 @@
 	export_constant(MOBG_ClassChange);
 	export_constant(MOBG_Taekwon_Mission);
 
-	/* Item Random Option Group */
-	export_constant(RDMOPTG_None);
-	export_constant(RDMOPTG_Crimson_Weapon);
-
 	/* random option attributes */
 	export_constant(ROA_ID);
 	export_constant(ROA_VALUE);
@@ -7969,6 +7967,9 @@
 	export_constant(ITEMJ_THIRD);
 	export_constant(ITEMJ_THIRD_UPPER);
 	export_constant(ITEMJ_THIRD_BABY);
+	export_constant(ITEMJ_ALL_UPPER);
+	export_constant(ITEMJ_ALL_BABY);
+	export_constant(ITEMJ_ALL_THIRD);
 
 	/* item drop effects */
 	export_constant(DROPEFFECT_NONE);
@@ -7978,7 +7979,15 @@
 	export_constant(DROPEFFECT_YELLOW_PILLAR);
 	export_constant(DROPEFFECT_PURPLE_PILLAR);
 	export_constant(DROPEFFECT_ORANGE_PILLAR);
+	export_constant(DROPEFFECT_GREEN_PILLAR);
+	export_constant(DROPEFFECT_RED_PILLAR);
 	export_constant(DROPEFFECT_MAX);
+
+	/* penalty types */
+	export_constant(PENALTY_EXP);
+	export_constant(PENALTY_DROP);
+	export_constant(PENALTY_MVP_EXP);
+	export_constant(PENALTY_MVP_DROP);
 
 	#undef export_constant
 	#undef export_constant2

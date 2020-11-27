@@ -7,7 +7,9 @@
 
 bool YamlDatabase::nodeExists( const YAML::Node& node, const std::string& name ){
 	try{
-		if( node[name] ){
+		const YAML::Node &subNode = node[name];
+
+		if( subNode.IsDefined() && !subNode.IsNull() ){
 			return true;
 		}else{
 			return false;
@@ -82,7 +84,11 @@ bool YamlDatabase::verifyCompatibility( const YAML::Node& rootNode ){
 }
 
 bool YamlDatabase::load(){
-	return this->load( this->getDefaultLocation() );
+	bool ret = this->load( this->getDefaultLocation() );
+
+	this->loadingFinished();
+
+	return ret;
 }
 
 bool YamlDatabase::reload(){
@@ -125,8 +131,6 @@ bool YamlDatabase::load(const std::string& path) {
 	this->parse( rootNode );
 
 	this->parseImports( rootNode );
-
-	this->loadingFinished();
 
 	return true;
 }

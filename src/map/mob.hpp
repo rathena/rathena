@@ -129,6 +129,12 @@ enum e_random_monster_flags {
 	RMF_ALL				= 0xFF, ///< Apply all flags
 };
 
+enum e_mob_bosstype : uint8{
+	BOSSTYPE_NONE,
+	BOSSTYPE_MINIBOSS,
+	BOSSTYPE_MVP
+};
+
 struct mob_skill {
 	enum MobSkillState state;
 	uint16 skill_id,skill_lv;
@@ -162,9 +168,9 @@ struct s_mob_lootitem {
 /// Struct for monster's drop item
 struct s_mob_drop {
 	t_itemid nameid;
-	int p;
-	uint8 randomopt_group;
-	unsigned steal_protected : 1;
+	uint32 rate;
+	uint16 randomopt_group;
+	bool steal_protected;
 };
 
 struct mob_db {
@@ -180,6 +186,8 @@ struct mob_db {
 	unsigned int option;
 	int maxskill;
 	struct mob_skill skill[MAX_MOBSKILL];
+
+	e_mob_bosstype get_bosstype();
 };
 
 struct mob_data {
@@ -248,6 +256,8 @@ struct mob_data {
 	 * MvP Tombstone NPC ID
 	 **/
 	int tomb_nid;
+
+	e_mob_bosstype get_bosstype();
 };
 
 class MobAvailDatabase : public YamlDatabase {

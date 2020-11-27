@@ -4127,15 +4127,15 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			continue;
 		
 		if (sd->inventory_data[index]) {
-			int j;
-			struct s_random_opt_data *data;
-			for (j = 0; j < MAX_ITEM_RDM_OPT; j++) {
+			for (uint8 j = 0; j < MAX_ITEM_RDM_OPT; j++) {
 				short opt_id = sd->inventory.u.items_inventory[index].option[j].id;
 
 				if (!opt_id)
 					continue;
 				current_equip_opt_index = j;
-				data = itemdb_randomopt_exists(opt_id);
+
+				std::shared_ptr<s_random_opt_data> data = random_option_db.find(opt_id);
+
 				if (!data || !data->script)
 					continue;
 				if (!pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(sd->inventory_data[index], sd->bl.m))
