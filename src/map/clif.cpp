@@ -19297,6 +19297,7 @@ static void clif_loadConfirm( struct map_session_data *sd ){
 
 	clif_send( &p, sizeof(p), &sd->bl, SELF );
 
+	status_change_end(&sd->bl, SC_BLOCKING_PLAY, INVALID_TIMER);
 	if (sd->instance_id > 0)
 		instance_reqinfo(sd, sd->instance_id);
 	if (sd->status.party_id > 0)
@@ -19308,10 +19309,13 @@ static void clif_loadConfirm( struct map_session_data *sd ){
 #endif
 }
 
-/// unknown usage (CZ_BLOCKING_PLAY_CANCEL)
-/// 0447
+/// Enable playing abilities of a player if map is done loading.
+/// 0447 (CZ_BLOCKING_PLAY_CANCEL)
 void clif_parse_blocking_playcancel( int fd, struct map_session_data *sd ){
-	clif_loadConfirm( sd );
+	nullpo_retv(sd);
+
+	if (sd->state.warping == 0)
+		clif_loadConfirm(sd);
 }
 
 /// req world info (CZ_CLIENT_VERSION)

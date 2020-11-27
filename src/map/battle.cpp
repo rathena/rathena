@@ -8983,6 +8983,7 @@ static const struct _battle_data {
 	{ "homunculus_starving_rate",           &battle_config.homunculus_starving_rate,        10,     0,      100,            },
 	{ "homunculus_starving_delay",          &battle_config.homunculus_starving_delay,       20000,  0,      INT_MAX,        },
 	{ "drop_connection_on_quit",            &battle_config.drop_connection_on_quit,         0,      0,      1,              },
+	{ "blocking_play_delay",                &battle_config.blocking_play_delay,             20000,  0,      INT_MAX,        },
 
 #include "../custom/battle_config_init.inc"
 };

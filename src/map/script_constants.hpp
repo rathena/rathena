@@ -1608,6 +1608,7 @@
 	export_constant(SC_EP16_2_BUFF_SS);
 	export_constant(SC_EP16_2_BUFF_SC);
 	export_constant(SC_EP16_2_BUFF_AC);
+	export_constant(SC_BLOCKING_PLAY);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
