@@ -12085,6 +12085,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 4 + 2 * val1; // ASPD Increase
 			tick = INFINITE_TICK;
 			break;
+		case SC_DIMENSION1:
+		case SC_DIMENSION2:
+			if (sd)
+				pc_addspiritball(sd, skill_get_time2(SJ_BOOKOFDIMENSION, 1), 2);
+			break;
 		case SC_UNIVERSESTANCE:
 			val2 = 2 + val1; // All Stats Increase
 			tick = INFINITE_TICK;
@@ -13567,6 +13572,11 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_CROSSBOWCLAN:
 		case SC_JUMPINGCLAN:
 			status_change_end(bl,SC_CLAN_INFO,INVALID_TIMER);
+			break;
+		case SC_DIMENSION1:
+		case SC_DIMENSION2:
+			if (sd)
+				pc_delspiritball(sd, 1, 0);
 			break;
 		case SC_SOULENERGY:
 			if (sd)
