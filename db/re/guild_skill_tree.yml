@@ -130,3 +130,23 @@ Body:
       Level: 1
     - Id: GD_HAWKEYES
       Level: 1
+
+  - Id: GD_CHARGESHOUT_FLAG
+    MaxLevel: 1
+    Required:
+    - Id: GD_EMERGENCYCALL
+      Level: 1
+
+  - Id: GD_CHARGESHOUT_BEATING
+    MaxLevel: 1
+    Required:
+    - Id: GD_CHARGESHOUT_FLAG
+      Level: 1
+
+  - Id: GD_EMERGENCY_MOVE
+    MaxLevel: 1
+    Required:
+    - Id: GD_LEADERSHIP
+      Level: 1
+    - Id: GD_GLORYWOUNDS
+      Level: 1
