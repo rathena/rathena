@@ -11812,8 +11812,16 @@ TIMER_FUNC(skill_castend_id){
 		//These should become skill_castend_pos
 		switch (ud->skill_id) {
 			case WE_CALLPARTNER:
-				if (sd)
-					clif_callpartner(sd);
+				if (sd) {
+					struct map_session_data *p_sd = pc_get_partner(sd);
+					if (!p_sd || p_sd->state.autotrade) {
+						fail = true;
+						break;
+					} else {
+						clif_callpartner(*sd,*p_sd);
+					}
+				}
+				break;
 			case WE_CALLPARENT:
 				if (sd) {
 					struct map_session_data *f_sd = pc_get_father(sd);
@@ -11823,6 +11831,7 @@ TIMER_FUNC(skill_castend_id){
 						break;
 					}
 				}
+				break;
 			case WE_CALLBABY:
 				if (sd) {
 					struct map_session_data *c_sd = pc_get_child(sd);
@@ -11831,6 +11840,7 @@ TIMER_FUNC(skill_castend_id){
 						break;
 					}
 				}
+				break;
 			case AM_RESURRECTHOMUN:
 			case PF_SPIDERWEB:
 				{
