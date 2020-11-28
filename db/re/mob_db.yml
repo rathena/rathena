@@ -63245,6 +63245,100 @@ Body:
         Rate: 5335
       - Item: Leaf_Cat_Card
         StealProtected: true
+  - Id: 2782
+    AegisName: C4_L_WHIKEBAIN
+    Name: Furious Wickebine Tres
+    Level: 98
+    Hp: 58560
+    BaseExp: 4350
+    JobExp: 18405
+    Attack: 654
+    Attack2: 216
+    Defense: 125
+    MagicDefense: 72
+    Str: 125
+    Agi: 130
+    Vit: 75
+    Int: 46
+    Dex: 93
+    Luk: 60
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Poison
+    ElementLevel: 3
+    WalkSpeed: 130
+    AttackDelay: 500
+    AttackMotion: 400
+    DamageMotion: 288
+    Ai: 04
+    Drops:
+      - Item: Lab_Staff_Record
+        Rate: 10000
+      - Item: Armlet_Of_Prisoner
+        Rate: 10000
+      - Item: Poison_Knife
+        Rate: 500
+      - Item: Bazerald
+        Rate: 25
+      - Item: Thief_Clothes
+        Rate: 2500
+      - Item: Thief_Clothes_
+        Rate: 25
+        StealProtected: true
+      - Item: Old_Blue_Box
+        Rate: 10
+        StealProtected: true
+  - Id: 2783
+    AegisName: C5_L_EREMES
+    Name: Elusive Eremes
+    Level: 98
+    Hp: 45145
+    BaseExp: 7875
+    JobExp: 11130
+    Attack: 886
+    Attack2: 153
+    Defense: 109
+    MagicDefense: 10
+    Str: 130
+    Agi: 78
+    Vit: 53
+    Int: 60
+    Dex: 114
+    Luk: 68
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Poison
+    ElementLevel: 4
+    WalkSpeed: 160
+    AttackDelay: 432
+    AttackMotion: 400
+    DamageMotion: 288
+    Ai: 09
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Armlet_Of_Prisoner
+        Rate: 10000
+      - Item: Lab_Staff_Record
+        Rate: 10000
+      - Item: Infiltrator
+        Rate: 500
+      - Item: Cakram
+        Rate: 25
+      - Item: Ninja_Suit
+        Rate: 2500
+      - Item: Ninja_Suit_
+        Rate: 25
+        StealProtected: true
+      - Item: Old_Blue_Box
+        Rate: 10
+        StealProtected: true
   - Id: 2784
     AegisName: C1_KOBOLD_ARCHER
     Name: Swift Kobold Archer

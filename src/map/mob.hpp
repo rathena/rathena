@@ -126,6 +126,12 @@ enum e_random_monster_flags {
 	RMF_ALL				= 0xFF, ///< Apply all flags
 };
 
+enum e_mob_bosstype : uint8{
+	BOSSTYPE_NONE,
+	BOSSTYPE_MINIBOSS,
+	BOSSTYPE_MVP
+};
+
 /// Monster Aegis AI types
 enum e_aiAE : uint16 {
 	MONSTER_TYPE_01 = 0x81,
@@ -218,6 +224,8 @@ struct s_mob_db {
 	view_data vd;
 	uint32 option;
 	std::vector<std::shared_ptr<s_mob_skill>> skill;
+
+	e_mob_bosstype get_bosstype();
 };
 
 class MobDatabase : public TypesafeCachedYamlDatabase <uint32, s_mob_db> {
@@ -299,6 +307,8 @@ struct mob_data {
 	 * MvP Tombstone NPC ID
 	 **/
 	int tomb_nid;
+
+	e_mob_bosstype get_bosstype();
 };
 
 class MobAvailDatabase : public YamlDatabase {
