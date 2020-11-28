@@ -37093,12 +37093,10 @@ Body:
     SplashArea: 15
     CastCancel: true
     Duration1: 180000
-    Duration2: 300000
+    Cooldown: 180000
     CastTimeFlags:
       IgnoreDex: true
       IgnoreStatus: true
-    Requires:
-      SpCost: 1
   - Id: 10011
     Name: GD_REGENERATION
     Description: Regeneration
@@ -37112,12 +37110,10 @@ Body:
     SplashArea: 15
     CastCancel: true
     Duration1: 60000
-    Duration2: 300000
+    Cooldown: 180000
     CastTimeFlags:
       IgnoreDex: true
       IgnoreStatus: true
-    Requires:
-      SpCost: 1
   - Id: 10012
     Name: GD_RESTORE
     Description: Restoration
@@ -37130,13 +37126,11 @@ Body:
       IsGuild: true
     SplashArea: 15
     CastCancel: true
-    Duration2: 300000
-    FixedCastTime: 10000
+    Cooldown: 180000
+    FixedCastTime: 1000
     CastTimeFlags:
       IgnoreStatus: true
       IgnoreItemBonus: true
-    Requires:
-      SpCost: 1
   - Id: 10013
     Name: GD_EMERGENCYCALL
     Description: Urgent Call
@@ -37149,14 +37143,12 @@ Body:
       IsGuild: true
       IgnoreKagehumi: true
     CastCancel: true
-    Duration2: 300000
+    Cooldown: 300000
     FixedCastTime: 5000
     CastTimeFlags:
       IgnoreDex: true
       IgnoreStatus: true
       IgnoreItemBonus: true
-    Requires:
-      SpCost: 1
   - Id: 10014
     Name: GD_DEVELOPMENT
     Description: Permanent Development
@@ -37175,13 +37167,49 @@ Body:
       IsGuild: true
       IgnoreKagehumi: true
     CastCancel: true
-    Duration2: 300000
+    Cooldown: 300000
     FixedCastTime: 5000
-    Requires:
-      SpCost: 1
   - Id: 10016
     Name: GD_GUILD_STORAGE
     Description: Guild Storage Expansion
     MaxLevel: 5
     Flags:
       IsGuild: true
+  - Id: 10017
+    Name: GD_CHARGESHOUT_FLAG
+    Description: Charge Shout Flag
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsGuild: true
+    CastCancel: true
+    Duration1: 300000
+    Cooldown: 60000
+    FixedCastTime: 1000
+  - Id: 10018
+    Name: GD_CHARGESHOUT_BEATING
+    Description: Charge Shout Beating
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Flags:
+      IsGuild: true
+    CastCancel: true
+    Cooldown: 60000
+    FixedCastTime: 1000
+  - Id: 10019
+    Name: GD_EMERGENCY_MOVE
+    Description: Emergency Move
+    MaxLevel: 1
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Flags:
+      IsGuild: true
+    SplashArea: 15
+    Duration1: 10000
+    Cooldown: 600000

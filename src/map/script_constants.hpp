@@ -1608,6 +1608,7 @@
 	export_constant(SC_EP16_2_BUFF_SS);
 	export_constant(SC_EP16_2_BUFF_SC);
 	export_constant(SC_EP16_2_BUFF_AC);
+	export_constant(SC_EMERGENCY_MOVE);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -3774,6 +3775,7 @@
 	export_constant(AI_ZANZOU);
 	export_constant(AI_LEGION);
 	export_constant(AI_FAW);
+	export_constant(AI_GUILD);
 
 	/* battle flags */
 	export_constant(BF_NONE);
