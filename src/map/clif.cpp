@@ -14873,7 +14873,7 @@ int clif_friendslist_toggle_sub(struct map_session_data *sd,va_list ap)
 void clif_friendslist_send(struct map_session_data *sd)
 {
 	int i = 0, n, fd = sd->fd;
-#if PACKETVER >= 20180221 && PACKETVER_RE_NUM < 20200902
+#if PACKETVER >= 20180221 && !(PACKETVER_RE_NUM >= 20200902)
 	const int size = 8;
 #else
 	const int size = 8 + NAME_LENGTH;
