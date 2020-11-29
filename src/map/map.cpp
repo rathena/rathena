@@ -3559,7 +3559,7 @@ int map_readfromcache(struct map_data *m, char *buffer, char *decode_buffer)
 		info = (struct map_cache_map_info *)p;
 
 		// name exists in maps_athena.conf but not in map_cache.dat
-		if (info->name != nullptr && info->name[0] == '\0')
+		if (info->name == nullptr || info->name[0] == '\0')
 			continue;
 		if( strcmp(m->name, info->name) == 0 )
 			break; // Map found
