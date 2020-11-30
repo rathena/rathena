@@ -2669,7 +2669,8 @@ static uint8 clif_add_random_options( struct ItemOptions buf[MAX_ITEM_RDM_OPT], 
 
 	uint8 count = 0;
 
-	for( int i = 0; i < MAX_ITEM_RDM_OPT; i++ ){
+	int i;
+	for( i = 0; i < MAX_ITEM_RDM_OPT; i++ ){
 		if( it->option[i].id ){
 			buf[i].index = it->option[i].id;	// OptIndex
 			buf[i].value = it->option[i].value;	// Value
