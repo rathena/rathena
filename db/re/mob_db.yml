@@ -78725,3 +78725,26 @@ Body:
         Rate: 800
       - Item: Orange_Juice
         Rate: 20
+  - Id: 20269
+    AegisName: GUILD_SKILL_FLAG
+    Name: Guild Skill Flag
+    Level: 90
+    Hp: 30
+    Agi: 17
+    Int: 80
+    Dex: 126
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 1288
+    AttackMotion: 288
+    DamageMotion: 384
+    Ai: 06
+    Modes:
+      NoRandomWalk: true
