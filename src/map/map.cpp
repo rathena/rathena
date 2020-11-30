@@ -2094,6 +2094,7 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_GLORYWOUNDS, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_SOULCOLD, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_HAWKEYES, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_EMERGENCY_MOVE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_CHASEWALK2, INVALID_TIMER);
 		if(sd->sc.data[SC_PROVOKE] && sd->sc.data[SC_PROVOKE]->timer == INVALID_TIMER)
 			status_change_end(&sd->bl, SC_PROVOKE, INVALID_TIMER); //Infinite provoke ends on logout
@@ -3566,6 +3567,9 @@ int map_readfromcache(struct map_data *m, char *buffer, char *decode_buffer)
 	for(i = 0; i < header->map_count; i++) {
 		info = (struct map_cache_map_info *)p;
 
+		// name exists in maps_athena.conf but not in map_cache.dat
+		if (info->name == nullptr || info->name[0] == '\0')
+			continue;
 		if( strcmp(m->name, info->name) == 0 )
 			break; // Map found
 
