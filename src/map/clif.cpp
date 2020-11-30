@@ -1527,11 +1527,11 @@ static void clif_spiritcharm_single(int fd, struct map_session_data *sd)
 /// 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
 static void clif_soulball_single(int fd, struct map_session_data *sd)
 {
-	WFIFOHEAD(fd, packet_len(0x1d0));
-	WFIFOW(fd,0)=0x1d0;
+	WFIFOHEAD(fd, packet_len(soulball));
+	WFIFOW(fd,0)=soulball;
 	WFIFOL(fd,2)=sd->bl.id;
 	WFIFOW(fd,6)=sd->soulball;
-	WFIFOSET(fd, packet_len(0x1d0));
+	WFIFOSET(fd, packet_len(soulball));
 }
 
 
@@ -4704,10 +4704,10 @@ void clif_soulball(struct map_session_data *sd)
 
 	nullpo_retv(sd);
 
-	WBUFW(buf,0)=0x1d0;
+	WBUFW(buf,0)=soulball;
 	WBUFL(buf,2)=sd->bl.id;
 	WBUFW(buf,6)=sd->soulball;
-	clif_send(buf,packet_len(0x1d0),&sd->bl,AREA);
+	clif_send(buf,packet_len(soulball),&sd->bl,AREA);
 	return;
 }
 

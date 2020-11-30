@@ -371,7 +371,7 @@
 	packet(0x01cd,30);
 	parseable_packet(0x01ce,6,clif_parse_AutoSpell,2);
 	packet(0x01cf,28);
-	packet(0x01d0,8);
+	packet( soulball ,8);
 	packet(0x01d1,14);
 	packet(0x01d2,10);
 	packet(0x01d3,35);

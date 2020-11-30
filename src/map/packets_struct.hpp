@@ -435,6 +435,11 @@ enum packet_headers {
 #else
 	guildLeave = 0x15a,
 #endif
+#if PACKETVER_RE_NUM >= 20200724
+	soulball = 0xb73,
+#else
+	soulball = 0x1d0,
+#endif
 };
 
 #if !defined(sun) && (!defined(__NETBSD__) || __NetBSD_Version__ >= 600000000) // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
