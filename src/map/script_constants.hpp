@@ -7631,6 +7631,7 @@
 	export_constant(NK_IGNOREDEFENSE);
 	export_constant(NK_IGNOREFLEE);
 	export_constant(NK_IGNOREDEFCARD);
+	export_constant(NK_IGNORELONGCARD);
 	export_constant(NK_CRITICAL);
 
 	/* skill inf */
