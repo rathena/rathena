@@ -249,42 +249,42 @@ OnCalculate:
 		// All funds per realm are summed.
 		set .@funds[.@i], getd("$fund_"+.@cas$[.@i]+"01")+getd("$fund_"+.@cas$[.@i]+"02")+getd("$fund_"+.@cas$[.@i]+"03")+getd("$fund_"+.@cas$[.@i]+"04")+getd("$fund_"+.@cas$[.@i]+"05")+getd("$fund_"+.@cas$[.@i]+"_extra");
 
-		// 70,000,000z opens Hall of Abyss and F2.
-		if (.@funds[.@i] >= 7000) {
+		// 7,000,000z opens Hall of Abyss and F2.
+		if (.@funds[.@i] >= 700) {
 			setd "$"+.@cas$[.@i]+"_invest_result",3;
-			set .@total_7000,1;
+			set .@total_700,1;
 		}
-		// 20,000,000z opens F2 and a chance for Hall of Abyss.
-		else if (.@funds[.@i] >= 2000) {
+		// 2,000,000z opens F2 and a chance for Hall of Abyss.
+		else if (.@funds[.@i] >= 200) {
 			setd "$"+.@cas$[.@i]+"_invest_result",2;
-			set .@total_2000,1;
+			set .@total_200,1;
 		}
 		// Anything below that opens nothing.
 		else
 			setd "$"+.@cas$[.@i]+"_invest_result",1;
 	}
-	// No further actions if 20,000,000z isn't reached.
-	if (!.@total_2000)
+	// No further actions if 2,000,000z isn't reached.
+	if (!.@total_200)
 		end;
-	// No further actions if any realm hits 70,000,000z.
-	if (.@total_7000) {
+	// No further actions if any realm hits 7,000,000z.
+	if (.@total_700) {
 		set $2011_agit_invest,4;
 		end;
 	}
-	// Otherwise, highest investment above 20,000,000z opens Hall of Abyss.
+	// Otherwise, highest investment above 2,000,000z opens Hall of Abyss.
 	set .@max, .@funds[0];
 	for(set .@i,1; .@i<4; set .@i,.@i+1) {
 		if (.@funds[.@i] > .@max) {
 			set .@max, .@funds[.@i];
 			set .@ele, .@i;
 			deletearray .@rand$[0], getarraysize(.@rand$);
-		} else if (.@funds[.@i] == .@max && .@funds[.@i] >= 2000) {
+		} else if (.@funds[.@i] == .@max && .@funds[.@i] >= 200) {
 			if (!getarraysize(.@rand$))
 				set .@rand$[0], .@cas$[.@ele];
 			set .@rand$[getarraysize(.@rand$)], .@cas$[.@i];
 		}
 	}
-	if (.@max < 2000)
+	if (.@max < 200)
 		end;
 	if (getarraysize(.@rand$)) {
 
