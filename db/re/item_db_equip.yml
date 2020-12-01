@@ -60976,14 +60976,16 @@ Body:
     Slots: 1
     Jobs:
       Acolyte: true
-      Archer: true
+      Alchemist: true
       Blacksmith: true
       Crusader: true
+      Knight: true
+      Merchant: true
+      Monk: true
       Novice: true
+      Priest: true
       SuperNovice: true
-      StarGladiator: true
-      Thief: true
-      Wizard: true
+      Swordman: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
