@@ -10243,12 +10243,12 @@ static int pc_checkcombo(struct map_session_data *sd, item_data *data) {
 		struct s_itemchk {
 			int idx;
 			t_itemid nameid, card[MAX_SLOTS];
+
+			s_itemchk() : idx(0), nameid(0), card() {};
 		};
-		std::vector<s_itemchk> combo_idx;
+		std::vector<s_itemchk> combo_idx(nb_itemCombo);
 		size_t j;
 		unsigned int pos = 0;
-
-		combo_idx.reserve(nb_itemCombo);
 
 		for (j = 0; j < nb_itemCombo; j++) {
 			t_itemid id = item_combo->nameid[j];
