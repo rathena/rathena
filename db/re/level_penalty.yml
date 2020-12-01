@@ -36,7 +36,7 @@ Body:
   - Type: Exp
     LevelDifferences:
       - Difference: 16
-        Rate: 40
+        Rate: 90
       - Difference: 15
         Rate: 115
       - Difference: 14
@@ -48,52 +48,44 @@ Body:
       - Difference: 11
         Rate: 135
       - Difference: 10
-        Rate: 140
+        Rate: 150
       - Difference: 9
-        Rate: 135
+        Rate: 145
       - Difference: 8
-        Rate: 130
+        Rate: 140
       - Difference: 7
-        Rate: 125
+        Rate: 135
       - Difference: 6
-        Rate: 120
+        Rate: 130
       - Difference: 5
-        Rate: 115
+        Rate: 125
       - Difference: 4
-        Rate: 110
+        Rate: 120
       - Difference: 3
-        Rate: 105
-      - Difference: -6
-        Rate: 95
-      - Difference: -11
-        Rate: 90
-      - Difference: -16
-        Rate: 85
-      - Difference: -21
-        Rate: 60
-      - Difference: -26
-        Rate: 35
-      - Difference: -31
-        Rate: 10
-  - Type: Drop
-    LevelDifferences:
-      - Difference: 16
-        Rate: 50
-      - Difference: 13
-        Rate: 60
-      - Difference: 10
-        Rate: 70
-      - Difference: 7
-        Rate: 80
-      - Difference: 4
-        Rate: 90
-      - Difference: -4
-        Rate: 90
-      - Difference: -7
-        Rate: 80
-      - Difference: -10
-        Rate: 70
-      - Difference: -13
-        Rate: 60
-      - Difference: -16
-        Rate: 50
+        Rate: 115
+      - Difference: 0
+        Rate: 110
+      - Difference: -1
+        Rate: 100
+#   - Type: Drop
+#     LevelDifferences:
+#       - Difference: 16
+#         Rate: 50
+#       - Difference: 13
+#         Rate: 60
+#       - Difference: 10
+#         Rate: 70
+#       - Difference: 7
+#         Rate: 80
+#       - Difference: 4
+#         Rate: 90
+#       - Difference: -4
+#         Rate: 90
+#       - Difference: -7
+#         Rate: 80
+#       - Difference: -10
+#         Rate: 70
+#       - Difference: -13
+#         Rate: 60
+#       - Difference: -16
+#         Rate: 50
