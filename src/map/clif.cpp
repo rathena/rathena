@@ -14873,10 +14873,10 @@ int clif_friendslist_toggle_sub(struct map_session_data *sd,va_list ap)
 void clif_friendslist_send(struct map_session_data *sd)
 {
 	int i = 0, n, fd = sd->fd;
-#if PACKETVER >= 20180221
-	const int size = 8;
-#else
+#if PACKETVER < 20180221 || PACKETVER_RE_NUM >= 20200902
 	const int size = 8 + NAME_LENGTH;
+#else
+	const int size = 8;
 #endif
 
 	// Send friends list
@@ -14885,7 +14885,7 @@ void clif_friendslist_send(struct map_session_data *sd)
 	for(i = 0; i < MAX_FRIENDS && sd->status.friends[i].char_id; i++) {
 		WFIFOL(fd, 4 + size * i + 0) = sd->status.friends[i].account_id;
 		WFIFOL(fd, 4 + size * i + 4) = sd->status.friends[i].char_id;
-#if PACKETVER < 20180221
+#if PACKETVER < 20180221 || PACKETVER_RE_NUM >= 20200902
 		safestrncpy(WFIFOCP(fd, 4 + size * i + 8), sd->status.friends[i].name, NAME_LENGTH);
 #endif
 	}
