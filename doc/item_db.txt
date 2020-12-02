@@ -155,6 +155,9 @@ Baby        - Baby classes (no Third-Baby classes).
 Third       - Third classes (no Transcedent-Third or Third-Baby classes).
 Third_Upper - Transcedent-Third classes.
 Third_Baby  - Third-Baby classes.
+All_Upper   - All Transcedent classes
+All_Baby    - All baby classes
+All_Third   - Applies to all Third classes.
 
 ---------------------------------------
 
@@ -189,6 +192,9 @@ Shadow_Shield          - Shadow Shield
 Shadow_Shoes           - Shadow Shoes
 Shadow_Right_Accessory - Shadow Accessory Right (Earring)
 Shadow_Left_Accessory  - Shadow Accessory Left (Pendant)
+
+Both_Hand              - Right_Hand + Left_Hand
+Both_Accessory         - Right_Accessory + Left_Accessory
 
 ---------------------------------------
 

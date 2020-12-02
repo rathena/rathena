@@ -3,7 +3,7 @@
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20180831
+//= 20201115
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -1124,6 +1124,24 @@ URLs
 Similarly, you can create links to websites that launch in a new window:
 
 	<URL>Display Name<INFO>http://www.example.com/</INFO></URL>";
+
+Quests
+------
+You can link to a quest:
+
+	<QUEST>Quest<INFO>1</INFO></QUEST>
+
+Message
+-------
+You can show a message from the msgstringtable:
+
+	<MSG>1</MSG>
+
+Tips
+----
+You can show a tip box:
+
+	<TIPBOX>Show Tip<INFO>1</INFO></TIPBOX>
 
 ---------------------------------------
 
@@ -3944,8 +3962,8 @@ more:
 Checks if a renewal feature is enabled or not in renewal.hpp, and returns 1 if
 enabled and 0 for disabled.
 
-The renewal feature to check is determined by type.
- 0 - RENEWAL (game renewal server mode)
+The renewal feature to check is determined by the number <type>.
+ 0 - RENEWAL enabled (game renewal server mode)
  1 - RENEWAL_CAST (renewal cast time)
  2 - RENEWAL_DROP (renewal drop rate algorithms)
  3 - RENEWAL_EXP (renewal exp rate algorithms)
@@ -7534,11 +7552,21 @@ Example:
 
 *debugmes "<message>";
 
-This command will send the message to the server console (map-server window). It
+This command will send a debug message to the server console (map-server window). It
 will not be displayed anywhere else.
 
     // Displays "NAME has clicked me!" in the map-server window.
     debugmes strcharinfo(0) + " has clicked me!";
+
+---------------------------------------
+
+*errormes "<message>";
+
+This command will send an error message to the server console (map-server window). It
+will not be displayed anywhere else.
+
+    // Displays "NAME has clicked me!" in the map-server window.
+    errormes strcharinfo(0) + " has clicked me!";
 
 ---------------------------------------
 
@@ -8309,6 +8337,7 @@ Parameter (indexes) for NPCs are:
 		- *_ADELAY: see doc/mob_db.txt
 		- *_DMOTION: see doc/mob_db.txt
 		- *_BODY2: enable (1) the alternate display, or disable (0)
+		- *_TARGETID: when set to 0 the unit will release the target and stop attacking
 
 		- UMOB_AI: none (0); attack (1); marine sphere (2); flora (3); zanzou (4); legion (5); faw (6)
 		- UMOB_SCOPTION: see the 'Variables' section at the top of this document
