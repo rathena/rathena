@@ -178,42 +178,6 @@ struct PACKET_ZC_CHANGE_GUILD {
 #endif
 } __attribute__((packed));
 
-#if PACKETVER_MAIN_NUM >= 20170726 || PACKETVER_RE_NUM >= 20170621 || defined(PACKETVER_ZERO)
-struct PACKET_ZC_LAPINEUPGRADE_OPEN {
-	int16 packetType;
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
-	uint32 itemId;
-#else
-	uint16 itemId;
-#endif
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_LAPINEUPGRADE_OPEN, 0x0ab4);
-
-struct PACKET_ZC_LAPINEUPGRADE_RESULT {
-	int16 packetType;
-	uint16 result;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_LAPINEUPGRADE_RESULT, 0x0ab7);
-#endif  // PACKETVER_MAIN_NUM >= 20170726 || PACKETVER_RE_NUM >= 20170621 || defined(PACKETVER_ZERO)
-
-#if PACKETVER_MAIN_NUM >= 20170111 || PACKETVER_RE_NUM >= 20170111 || defined(PACKETVER_ZERO)
-struct PACKET_CZ_LAPINEUPGRADE_CLOSE {
-	int16 packetType;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(CZ_LAPINEUPGRADE_CLOSE, 0x0ab5);
-
-struct PACKET_CZ_LAPINEUPGRADE_MAKE_ITEM {
-	int16 packetType;
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
-	uint32 itemId;
-#else
-	uint16 itemId;
-#endif
-	uint16 index;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(CZ_LAPINEUPGRADE_MAKE_ITEM, 0x0ab6);
-#endif  // PACKETVER_MAIN_NUM >= 20170111 || PACKETVER_RE_NUM >= 20170111 || defined(PACKETVER_ZERO)
-
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

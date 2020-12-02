@@ -279,7 +279,7 @@ bool s_item_upgrade_db::checkRequirement(item *it, item_data *id)
 		return false;
 
 	if (this->not_socket_enchant) {
-		for (int i = id->slot; i < MAX_SLOTS; i++) {
+		for (int i = id->slots; i < MAX_SLOTS; i++) {
 			if (it->card[i])
 				return false;
 		}
