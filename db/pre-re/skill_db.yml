@@ -16336,6 +16336,18 @@ Body:
     MaxLevel: 1
     Flags:
       ShowScale: true
+  - Id: 721
+    Name: NPC_WIDEWEB
+    Description: Wide Web
+    MaxLevel: 1
+  - Id: 722
+    Name: NPC_WIDESUCK
+    Description: Wide Suck
+    MaxLevel: 1
+  - Id: 724
+    Name: NPC_FIRESTORM
+    Description: Fire Storm
+    MaxLevel: 3
   - Id: 725
     Name: NPC_REVERBERATION
     Description: Reverberation 2
