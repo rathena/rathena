@@ -371,7 +371,7 @@
 	packet(0x01cd,30);
 	parseable_packet(0x01ce,6,clif_parse_AutoSpell,2);
 	packet(0x01cf,28);
-	packet( soulball ,8);
+	packet(0x01d0,8);
 	packet(0x01d1,14);
 	packet(0x01d2,10);
 	packet(0x01d3,35);
@@ -2420,6 +2420,10 @@
 
 #if PACKETVER >= 20191224
 	parseable_packet( HEADER_CZ_SE_CASHSHOP_OPEN2, sizeof( struct PACKET_CZ_SE_CASHSHOP_OPEN2 ), clif_parse_cashshop_open_request, 0 );
+#endif
+
+#if PACKETVER_RE_NUM >= 20200724
+	packet(0x0b73,8);
 #endif
 
 #endif /* CLIF_PACKETDB_HPP */
