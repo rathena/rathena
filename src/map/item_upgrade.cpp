@@ -69,7 +69,7 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (exists && this->nodeExists(node, "ClearTargetItem")) {
-		ShowNotice("item_upgrade: Cleared all items in TargetItem. Upgrade: %s (%u)\n", item->name, item->nameid);
+		ShowNotice("item_upgrade: Cleared all items in TargetItem. Upgrade: %s (%u)\n", item->name.c_str(), item->nameid);
 		if (!entry->targets.empty())
 			entry->targets.clear();
 	}
@@ -93,7 +93,7 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 
 			if (exists && this->nodeExists(target, "Remove")) {
 				entry->targets.erase(std::remove_if(entry->targets.begin(), entry->targets.end(), [&itemid](const t_itemid &x) { return x == itemid; }));
-				ShowNotice("item_upgrade: Removed %s (%u) from TargetItem. Upgrade: %s (%u)\n", target_item->name, itemid, item->name, item->nameid);
+				ShowNotice("item_upgrade: Removed %s (%u) from TargetItem. Upgrade: %s (%u)\n", target_item->name.c_str(), itemid, item->name.c_str(), item->nameid);
 				continue;
 			}
 

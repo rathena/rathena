@@ -66,7 +66,7 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (exists && this->nodeExists(node, "ClearSourceItem")) {
-		ShowNotice("item_synthesis: Cleared all items in SourceItem. Synthesis: %s (%u)\n", item->name, item->nameid);
+		ShowNotice("item_synthesis: Cleared all items in SourceItem. Synthesis: %s (%u)\n", item->name.c_str(), item->nameid);
 		if (!entry->sources.empty())
 			entry->sources.clear();
 	}
@@ -96,7 +96,7 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 
 			if (exists && this->nodeExists(source, "Remove")) {
 				entry->sources.erase(std::remove_if(entry->sources.begin(), entry->sources.end(), [&source_item](const s_item_synthesis_source &x) { return x.nameid == source_item.nameid; }));
-				ShowNotice("item_synthesis: Removed %s (%u) from SourceItem. Synthesis: %s (%u)\n", source_it->name, source_item.nameid, item->name, item->nameid);
+				ShowNotice("item_synthesis: Removed %s (%u) from SourceItem. Synthesis: %s (%u)\n", source_it->name.c_str(), source_item.nameid, item->name.c_str(), item->nameid);
 				continue;
 			}
 
