@@ -2279,8 +2279,6 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
-    DamageFlags:
-      Splash: true
     Flags:
       TargetTrap: true
     Range: -2
@@ -2288,7 +2286,7 @@ Body:
     HitCount: 2
     Element: Weapon
     SplashArea: 2
-    Knockback: 1
+    Knockback: 5
     CopyFlags:
       Skill:
         Plagiarism: true
