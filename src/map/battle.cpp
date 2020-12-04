@@ -5656,8 +5656,12 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				break;
 #ifdef RENEWAL
 			case KN_BOWLINGBASH:
-				if (skill_id == KN_BOWLINGBASH && sd && sd->status.weapon == W_2HSWORD)
-					wd.div_ = cap_value(wd.miscflag, 2, 4);
+				if (sd && sd->status.weapon == W_2HSWORD) {
+					if (wd.miscflag >= 2 && wd.miscflag <= 3)
+						wd.div_ = 3;
+					else if (wd.miscflag >= 4)
+						wd.div_ = 4;
+				}
 				break;
 #endif
 			case KN_AUTOCOUNTER:

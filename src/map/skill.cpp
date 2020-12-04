@@ -5194,6 +5194,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				status_change_end(src, SC_USE_SKILL_SP_SPA, INVALID_TIMER);
 
 			switch ( skill_id ) {
+#ifdef RENEWAL
+				case KN_BOWLINGBASH:
+					flag |= SD_LEVEL;
+					break;
+#endif
 				case LG_EARTHDRIVE:
 				case GN_CARTCANNON:
 				case SU_SCRATCH:
