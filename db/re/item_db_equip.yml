@@ -60502,7 +60502,7 @@ Body:
       Override: 100
       NoDrop: true
     Script: |
-      bonus bUnbreakableWeapon; .@r = getrefine(); bonus bBaseAtk,(.@r/30)*30; if(.@r>=9){ .@i = 1; bonus3 bAutoSpellWhenHit,"BS_WEAPONPERFECT",1,10; } if(.@r>=6){ .@rate = 5*(.@i+1); bonus2 bAddClass,Class_All,5; }
+      .@r = getrefine(); bonus bBaseAtk,(.@r/3)*30; if(.@r>=9){ bonus3 bAutoSpell,"BS_WEAPONPERFECT",1,10; } if(.@r>=6){ bonus2 bAddClass,Class_All,5; }
   - Id: 16027
     AegisName: Hammer_Of_Evil_Slayer
     Name: Evil Slayer Destroyer Hammer
