@@ -61387,7 +61387,6 @@ Body:
       Both_Hand: true
     WeaponLevel: 4
     EquipLevelMin: 1
-    Refineable: true
     Trade:
       Override: 100
       NoDrop: true
@@ -61413,7 +61412,6 @@ Body:
       BardDancer: true
       Hunter: true
       Rogue: true
-      Thief: true
     Locations:
       Both_Hand: true
     WeaponLevel: 4
