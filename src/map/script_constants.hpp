@@ -762,6 +762,7 @@
 	export_constant2("bMagicSubSize",SP_MAGIC_SUBSIZE);
 	export_constant2("bCritDefRate",SP_CRIT_DEF_RATE);
 	export_constant2("bMagicSubDefEle", SP_MAGIC_SUBDEF_ELE);
+	export_constant2("bReduceDamageReturn",SP_REDUCE_DAMAGE_RETURN);
 
 	/* equip indices */
 	export_constant(EQI_COMPOUND_ON);
