@@ -96,8 +96,6 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 			mes "[Hugin]";
 			mes "Have we met before? No way. It's my first time seeing you. What do you want?";
 		}
-		if (isbegin_quest(12318) == 0)
-			setquest 12318;// Corrupted Soul Hunt
 		switch( select( .@menu$, .@menu_hard$, "Enter Old Glast Heim", "Cancel" ) ) {
 		case 1:
 			.@instance_id = instance_create(.@md_name$);
@@ -168,6 +166,10 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 			case IE_OK:
 				mapannounce "glast_01", "" + getpartyname( getcharid(1) ) + " party member " + strcharinfo(0) + " enters the " + .@md_name$ + ".", bc_map,0x00FF99;
 				setquest 12317;// Trace of Time Travel
+				if (isbegin_quest(12336) == 0)
+					setquest 12336;// Corrupted Soul Hunt (Hard)
+				if (isbegin_quest(12318) == 0)
+					setquest 12318;// Corrupted Soul Hunt
 				// warp "1@gl_k",150,20;
 				end;
 			}
@@ -185,8 +187,6 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 		close;
 	case 2:
 		mes "^0000ffAll traces of access to Old Glast Heim have been removed. Now you can talk with Hugin again.^000000";
-		if (isbegin_quest(12318) == 0)
-			setquest 12318;// Corrupted Soul Hunt
 		erasequest 12317;
 		close;
 	}
@@ -896,14 +896,25 @@ OnTimer5000:
 1@gl_k,156,258,3	script	Varmundt#2	4_M_BARMUND,{
 	cutin "gl_barmund1",2;
 	mes "[Varmundt]";
-	if (checkquest(12318,HUNTING) != 2) {
-		mes "I guess this is it. Is it impossible to stop the time traveler's will?!";
-		mes "A portal seems to have appeared to the north.";
-		close3;
+	if ('hardMode == 1) {
+		if (checkquest(12336,HUNTING) != 2) {
+			mes "I guess this is it. Is it impossible to stop the time traveler's will?!";
+			mes "A portal seems to have appeared to the north.";
+			close3;
+		}
+		erasequest 12336;
+		if (isbegin_quest(12337) == 0)
+			setquest 12337;// Amdarais Hunt (Hard)
+	} else {
+		if (checkquest(12318,HUNTING) != 2) {
+			mes "I guess this is it. Is it impossible to stop the time traveler's will?!";
+			mes "A portal seems to have appeared to the north.";
+			close3;
+		}
+		erasequest 12318;
+		if (isbegin_quest(12319) == 0)
+			setquest 12319;// Amdarais Hunt
 	}
-	erasequest 12318;
-	if (isbegin_quest(12319) == 0)
-		setquest 12319;// Amdarais Hunt
 	if (isbegin_quest(12320) == 0) {
 		setquest 12320;// Time Traveler
 		completequest 12320;
@@ -1639,11 +1650,14 @@ OnTimer10000:
 
 
 2@gl_k,158,241,1	script	Hugin#21	4_M_SAGE_C,{
-	if (checkquest(12319,HUNTING) == 2) {// note: complete hunting 'Corrupted Soul Hunt' prerequis
+	if (checkquest(12319,HUNTING) == 2 || checkquest(12337,HUNTING) == 2) {// note: complete hunting 'Corrupted Soul Hunt' prerequis
 		mes "[Hugin]";
 		mes "Hm, you are very well. First of all, let me give you some loot from Amdarais.";
-		erasequest 12319;
 		setquest 12322;// Space Distortion
+		if ('hardMode == 1)
+			erasequest 12337;
+		else
+			erasequest 12319;
 		if (isbegin_quest(12321) == 0) {
 			setquest 12321;// Time Conqueror
 			completequest 12321;

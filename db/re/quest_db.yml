@@ -7321,6 +7321,16 @@ Body:
     TimeLimit: +23h
   - Id: 12335
     Title: Space Distortion
+  - Id: 12336
+    Title: Corrupted Soul Hunt
+    Targets:
+      - Mob: MG_CORRUPTION_ROOT_H
+        Count: 1
+  - Id: 12337
+    Title: Amdarais Hunt
+    Targets:
+      - Mob: MG_AMDARAIS_H
+        Count: 1
   - Id: 12338
     Title: Time Traveler
   - Id: 12339
