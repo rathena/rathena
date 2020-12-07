@@ -1000,7 +1000,10 @@ OnTimer38000:
 	end;
 OnStart:
 	enablenpc instance_npcname("#ghmemorialmob04");
-	monster 'map_name$[0],150,259,"Corrupted Soul",2475+'mobOffset,1, instance_npcname("#ghmemorialmob04") + "::OnMyMobDead";// MG_CORRUPTION_ROOT
+	if ('hardMode == 1)
+		monster 'map_name$[0],150,259,"Realized Corrupted Soul",3151,1, instance_npcname("#ghmemorialmob04") + "::OnMyMobDead";// MG_CORRUPTION_ROOT_H
+	else
+		monster 'map_name$[0],150,259,"Corrupted Soul",2475,1, instance_npcname("#ghmemorialmob04") + "::OnMyMobDead";// MG_CORRUPTION_ROOT
 	unittalk $@mobid[0],"Grrrrrrhh~~~";
 	end;
 OnMyMobDead:
@@ -1504,7 +1507,10 @@ OnTimer80000:
 	end;
 OnStart:
 	enablenpc instance_npcname("#ghmemorialmob07");
-	monster 'map_name$[1],158,255,"Amdarais",2476+'mobOffset,1,instance_npcname("#ghmemorialmob07") + "::OnMyMobDead";// MG_AMDARAIS
+	if ('hardMode == 1)
+		monster 'map_name$[1],158,255,"Realized Amdarais",3150,1,instance_npcname("#ghmemorialmob07") + "::OnMyMobDead";// MG_AMDARAIS_H
+	else
+		monster 'map_name$[1],158,255,"Amdarais",2476,1,instance_npcname("#ghmemorialmob07") + "::OnMyMobDead";// MG_AMDARAIS
 	'boss_id = $@mobid[0];
 	unittalk 'boss_id, "Run away... run away from me...";
 	initnpctimer;
