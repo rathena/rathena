@@ -7346,7 +7346,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	}
 
 	if (sd && sd->bonus.reduce_damage_return != 0) {
-		rdamage -= damage * sd->bonus.reduce_damage_return / 100;
+		rdamage -= rdamage * sd->bonus.reduce_damage_return / 100;
 		if (rdamage < 1)
 			rdamage = 1;
 	}
