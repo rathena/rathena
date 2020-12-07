@@ -60502,7 +60502,7 @@ Body:
       Override: 100
       NoDrop: true
     Script: |
-      bonus bUnbreakableWeapon; .@r = getrefine(); bonus bBaseAtk,(.@r/30)*30; if(.@r>=9){ .@i = 1; bonus3 bAutoSpellWhenHit,"BS_WEAPONPERFECT",1,10; } if(.@r>=6){ .@rate = 5*(.@i+1); bonus2 bAddClass,Class_All,5; }
+      .@r = getrefine(); bonus bBaseAtk,(.@r/3)*30; if(.@r>=9){ bonus2 bAddClass,Class_All,5; bonus3 bAutoSpell,"BS_WEAPONPERFECT",1,10; } if(.@r>=6){ bonus2 bAddClass,Class_All,5; }
   - Id: 16027
     AegisName: Hammer_Of_Evil_Slayer
     Name: Evil Slayer Destroyer Hammer
@@ -60976,14 +60976,16 @@ Body:
     Slots: 1
     Jobs:
       Acolyte: true
-      Archer: true
+      Alchemist: true
       Blacksmith: true
       Crusader: true
+      Knight: true
+      Merchant: true
+      Monk: true
       Novice: true
+      Priest: true
       SuperNovice: true
-      StarGladiator: true
-      Thief: true
-      Wizard: true
+      Swordman: true
     Locations:
       Right_Hand: true
     WeaponLevel: 3
@@ -61109,7 +61111,10 @@ Body:
     EquipLevelMin: 120
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus bAspd,(.@r/2); bonus2 bSkillAtk,"AB_DUPLELIGHT",(3*.@r);
+      .@r = getrefine();
+      bonus bAspd,(.@r/2);
+      bonus2 bSkillAtk,"AB_DUPLELIGHT",(3*.@r);
+      bonus bUnbreakableWeapon;
   - Id: 16075
     AegisName: Rebeginer_NC_Mace
     Name: Beginner Mechanic's Mace
@@ -61218,7 +61223,18 @@ Body:
     EquipLevelMin: 130
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus bMatkRate,3; if (.@r >= 7) { bonus bAspdRate,7; if (.@r >= 9) { bonus2 bSkillAtk,"AB_ADORAMUS",20; if (.@r >= 11) { bonus2 bMagicAtkEle,Ele_Holy,15; } } }
+      .@r = getrefine();
+      bonus bMatkRate,3;
+      bonus bUnbreakableWeapon;
+      if (.@r >= 7) {
+        bonus bAspdRate,7;
+        if (.@r >= 9) {
+            bonus2 bSkillAtk,"AB_ADORAMUS",20;
+            if (.@r >= 11) {
+                bonus2 bMagicAtkEle,Ele_Holy,15;
+            }
+        }
+      }
   - Id: 16092
     AegisName: Engine_Pilebuncker
     Name: Engine Pilebuncker
