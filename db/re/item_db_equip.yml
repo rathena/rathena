@@ -61544,7 +61544,12 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bUnbreakableWeapon; bonus bLuk,3; bonus bCritAtkRate,50; if(BaseLevel>99) { bonus bLongAtkRate,20; }
+      bonus bUnbreakableWeapon;
+      bonus bLuk,3;
+      bonus bCritAtkRate,50;
+      if(BaseLevel>99) {
+         bonus bLongAtkRate,20;
+      }
   - Id: 18108
     AegisName: Brindle_Eel
     Name: Zebra Eel
@@ -61570,7 +61575,12 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bUnbreakableWeapon; bonus bAgi,3; autobonus "{ bonus bAspd,2; }",10,5000,BF_WEAPON,"{ specialeffect2 EF_HASTEUP; }"; if(BaseLevel>99) { bonus bLongAtkRate,20; }
+      bonus bUnbreakableWeapon;
+      bonus bAgi,3;
+      autobonus "{ bonus bAspd,2; }",10,5000,BF_WEAPON,"{ specialeffect2 EF_HASTEUP; }";
+      if(BaseLevel>99) {
+         bonus bLongAtkRate,20;
+      }
   - Id: 18109
     AegisName: Catapult
     Name: Thief Crossbow
