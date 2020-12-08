@@ -76,41 +76,58 @@
 		"|4305|4148|4318|4121|4365"+  //Turtle_General_Card, Pharaoh_Card, Knight_Windstorm_Card, Phreeoni_Card, B_Katrinn_Card
 		"|4363|4324|4361|4330|4342|"; //B_Magaleta_Card, Garm_Card, B_Harword_Card, Dark_Snake_Lord_Card, Rsx_0806_Card
 
-	// Official "Richard" script uses a hardcoded list including every possible item.
-	//if (!getequipisequiped(.@equip_num)) {
-	//	mes "[Richard]";
-	//	mes "I'm sorry. We don't provide that equipment yet.";
-	//	close;
-	//}
-
-	mes "[Richard]";
-	mes "Which number socket do you want to separate the card? From the left socket, they are sorted 1,2,3,4.";
-	next;
-	set .@menu$,"";
-	for ( .@i = 0; .@i < MAX_SLOTS; .@i++ ) {
-		if (.@equip_card[.@i] && callfunc("F_IsCharm",.@equip_card[.@i]) == false) // Armor Enchant System
-			.@menu$ = .@menu$ + "Socket " + (.@i+1) + " - " + getitemname(.@equip_card[.@i])+":";
-		else {
-			.@menu$ = .@menu$ + "^777777Socket " + (.@i+1) + " - No card^000000:";
+	if (.@Jeremy) {
+		for ( .@i = 0; .@i < MAX_SLOTS; .@i++ ) {
+			if (callfunc("F_IsCharm",.@equip_card[.@i]) == true)
+				.@equip_card[.@i] = 0;// Armor Enchant System
 		}
-	}
-	set .@i, select("Stop the work:"+.@menu$);
-	switch(.@i) {
-	case 1:
-		mes .@n$;
-		mes "Whenever you need to work, please come to me.";
-		close;
-	default:
-		set .@slot, .@i-2;
-		if (.@equip_card[.@slot] == 0 || callfunc("F_IsCharm",.@equip_card[.@slot]) == true) {
+		if (!getarraysize(.@equip_card)) {
 			mes .@n$;
-			mes "This socket is not equipped with any card. Why don't you check again?";
+			mes "The card is not equipped. Do you want to check again?";
 			close;
 		}
-		break;
+		if ((.@equip_card[0] && compare(.@mvp_list$,"|"+.@equip_card[0]+"|")) ||
+			(.@equip_card[1] && compare(.@mvp_list$,"|"+.@equip_card[1]+"|")) ||
+			(.@equip_card[2] && compare(.@mvp_list$,"|"+.@equip_card[2]+"|")) ||
+			(.@equip_card[3] && compare(.@mvp_list$,"|"+.@equip_card[3]+"|")))
+			set .@boss_chk,1;
+	} else {
+		// Official "Richard" script uses a hardcoded list including every possible item.
+		//if (!getequipisequiped(.@equip_num)) {
+		//	mes "[Richard]";
+		//	mes "I'm sorry. We don't provide that equipment yet.";
+		//	close;
+		//}
+
+		mes "[Richard]";
+		mes "Which number socket do you want to separate the card? From the left socket, they are sorted 1,2,3,4.";
+		next;
+		set .@menu$,"";
+		for ( .@i = 0; .@i < MAX_SLOTS; .@i++ ) {
+			if (.@equip_card[.@i] && callfunc("F_IsCharm",.@equip_card[.@i]) == false) // Armor Enchant System
+				.@menu$ = .@menu$ + "Socket " + (.@i+1) + " - " + getitemname(.@equip_card[.@i])+":";
+			else {
+				.@menu$ = .@menu$ + "^777777Socket " + (.@i+1) + " - No card^000000:";
+			}
+		}
+		set .@i, select("Stop the work:"+.@menu$);
+		switch(.@i) {
+		case 1:
+			mes .@n$;
+			mes "Whenever you need to work, please come to me.";
+			close;
+		default:
+			set .@slot, .@i-2;
+			if (.@equip_card[.@slot] == 0 || callfunc("F_IsCharm",.@equip_card[.@slot]) == true) {
+				mes .@n$;
+				mes "This socket is not equipped with any card. Why don't you check again?";
+				close;
+			}
+			break;
+		}
+		if (compare(.@mvp_list$,"|"+.@equip_card[.@slot]+"|"))
+			set .@boss_chk,1;
 	}
-	if (compare(.@mvp_list$,"|"+.@equip_card[.@slot]+"|"))
-		set .@boss_chk,1;
 	
 	set .@equip_id, getequipid(.@equip_num);
 	set .@equip_refine, getequiprefinerycnt(.@equip_num);
