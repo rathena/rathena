@@ -24,30 +24,20 @@
 		mes "Can't continue because you have too many heavy objects. Let's try to continue after reducing the weight.";
 		close;
 	}
-	if (strnpcinfo(1) == "Jeremy") {
-		set .@Jeremy,1;
-		set .@n$, "[Jeremy]";
-		setarray .@equip_name$[0],  "Armor",  "Shoes",  "Garment", "Upper Hat";
-		setarray .@equip_slot[0], EQI_ARMOR,EQI_SHOES,EQI_GARMENT,EQI_HEAD_TOP;
+	set .@Jeremy,0;
+	set .@n$, "[Richard]";
+	setarray .@equip_name$[0], "Left hand", "Right hand", "Armor",  "Shoes",  "Garment", "Upper Hat", "Middle Hat", "Left Accessory", "Right Accessory";
+	setarray .@equip_slot[0],   EQI_HAND_L, EQI_HAND_R, EQI_ARMOR, EQI_SHOES, EQI_GARMENT, EQI_HEAD_TOP, EQI_HEAD_MID, EQI_ACC_L, EQI_ACC_R;
 
-		mes .@n$;
-		mes "Long time no see~";
-		mes "I have learned a new skill that separates cards from Armor, Shoes, Garment and Headgear. Do you want to try it?";
-	} else {
-		set .@Jeremy,0;
-		set .@n$, "[Richard]";
-		setarray .@equip_name$[0], "Left hand", "Right hand";
-		setarray .@equip_slot[0],   EQI_HAND_L,   EQI_HAND_R;
-
-		mes .@n$;
-		mes "Silly Jeremy does not want to touch weapons and shields because of picking several cards that might be damaged. That is why I prepared a card separaion skill for weapons and shields...";
-	}
+	mes .@n$;
+	mes "Jeremy quit his job to travel!! So now I will provide card seperation service for both weapons and armors.";
+	next;
+	
+	mes .@n$;
+	mes "Generally the fee is 100,000 Zeny. During the card separation, you can use ^990000special items that raise the success rate of card seperation^000000. We don't charge additional zeny for this.";
 	next;
 	mes .@n$;
-	mes "Generally the fee is 1,000,000 Zeny. During the card separation, you can use ^990000special items that reduce the rate of destroying equipment or cards^000000. We don't charge additional zeny for this.";
-	next;
-	mes .@n$;
-	mes "There is a possibility of destroying them even using a special item. Also, ^ff0000the refine level might be lost^000000. Do you have any equipment to separate?";
+	mes "In any process, your equipment or card will never be destroyed. It's just about difference of success rate.";
 	next;
 
 	for(set .@i,0; .@i<getarraysize(.@equip_slot); set .@i,.@i+1) {
@@ -57,49 +47,17 @@
 			set .@menu$, .@menu$+"^999999"+.@equip_name$[.@i]+" (empty)^000000:";
 	}
 
-	set .@i, select("Stop the work:"+((.@Jeremy)?"How is it possible?":"")+":"+.@menu$);
+	set .@i, select("Stop the work:"+.@menu$);
 	switch(.@i) {
 	case 1:
 		mes .@n$;
 		mes "Whenever you need the work, visit me here.";
 		close;
 	case 2:
-		mes .@n$;
-		mes "You wonder what is so special. Well, I hate to give only a guide, so let me tell you the story...";
-		next;
-		mes "^000099Jeremy is stretching his shoulders and hands. He might be waiting for someone to talk with him.^000000";
-		next;
-		mes .@n$;
-		mes "Do you know that Malangdo's specialty is canned food?";
-		next;
-		select("I knew that well. Is it that limited?");
-		mes .@n$;
-		mes "Hehe... Everyone loves it. But there were some problems before.";
-		next;
-		select("Problems? Is there any faulty fish?");
-		mes .@n$;
-		mes "No, the fish does not have any problem. The problem is lots of fish oil produced after processing. That is such an industrial waste.";
-		next;
-		mes .@n$;
-		mes "However, after a revitalizing refining process, this fish oil became valuable to use for old equipment care and industrial lubricant.";
-		next;
-		mes .@n$;
-		mes "In addition, this oil is so useful to separate relics from equipped weapons that we can't buy Premium Lubricant and Ordinary Lubricant with Zeny.";
-		next;
-		mes .@n$;
-		mes "Well, don't worry about money. Surely the Premium Lubricant is expensive. If you pay some zeny, I can give you cheaper lubricant.";
-		next;
-		mes .@n$;
-		mes "I'm not sure about the quality of success. Anyway, this is so cheap, right?";
-		close;
-	default:
 		set .@equip_num, .@equip_slot[.@i-3];
 		if (!getequipisequiped(.@equip_num)) {
 			mes .@n$;
-			if (.@Jeremy)
-				mes "In this part, there is nothing?";
-			else
-				mes "There is nothing on that part?";
+			mes "There is nothing on that part?";
 			close;
 		}
 		break;
@@ -170,79 +128,74 @@
 		if (compare(.@mvp_list$,"|"+.@equip_card[.@slot]+"|"))
 			set .@boss_chk,1;
 	}
+	
+	set .@equip_id, getequipid(.@equip_num);
+	set .@equip_refine, getequiprefinerycnt(.@equip_num);
+	set .@card, .@equip_card[.@slot];
+	set .@check_equip_card[.@slot],0;
+	set .@equip_id, getequipid(.@equip_num);
+	
 	if (.@boss_chk == 0) {
 		mes .@n$;
-		if (.@Jeremy)
-			mes "Except cards, ^ff0000all enchanted effects will disappear.^000000 If you agree to this, please choose the work type:";
-		else
-			mes "Please choose the working fee.";
+		mes "Please choose the working fee.";
 		next;
 		set .@menu$,
 			"Next time...:"+
-			((Zeny >= 1000000)?"Use 1,000,000z (Do not use special item):":"^999999Use 1,000,000z (Insufficient)^000000:")+
-			((countitem(6441))?"Use Premium Lubricant:":"^999999Premium Lubricant (Insufficient)^000000:")+
-			((countitem(6440))?"Use Ordinary Lubricant":"^999999Ordinary Lubricant (Insufficient)^000000");
+			((Zeny >= 100000)?"Use 100,000z (Do not use special item):":"^999999Use 100,000z (Insufficient)^000000:")+
+			((countitem(25239))?"Use New Advanced Lubricant:":"^999999New Advanced Lubricant (Insufficient)^000000:")+
+			((countitem(25238))?"Use New Normal Lubricant":"^999999New Normal Lubricant (Insufficient)^000000");
 		switch(select(.@menu$)) {
 		case 1:
 			mes .@n$;
 			mes "Whenever you need the work, visit me here.";
 			close;
 		case 2:
-			if (Zeny < 1000000) {
+			if (Zeny < 100000) {
 				mes .@n$;
 				mes "You don't have enough zeny. Please come back with enough fees.";
 				close;
 			}
 			mes .@n$;
-			mes "This is pretty old equipment. There is a high rate of destroying the cards or equipment during the work. Are you sure you want to continue?";
+			mes "The rate for process by zeny is 2%. Your equipment or card will be preserved even if it fails.";
 			next;
 			if(select("Next time...:Continue") == 1) {
 				mes .@n$;
 				mes "Whenever you need the work, visit me here.";
 				close;
 			}
-			set .@sf_c_num,150;
-			set .@sf_r_num,150;
-			set .@sf_w_num,150;
-			set Zeny, Zeny - 1000000;
+			goto ZEN;
 			break;
 		case 3:
-			if (countitem(6441) == 0) {
+			if (countitem(25239) == 0) {
 				mes .@n$;
-				mes "You don't have Premium Lubricant.";
+				mes "You don't have New Advanced Lubricant.";
 				close;
 			}
 			mes .@n$;
-			mes "If you use the Premium Lubricant, the rate of destruction will be decreased highly, but I can't give you a 100% guarantee. Are you sure you want to continue?";
+			mes "The rate for process by New Advanced Lubricant is 20%. Your equipment or card will be preserved even if it fails.";
 			next;
 			if(select("Next time...:Continue") == 1) {
 				mes .@n$;
 				mes "Whenever you need the work, visit me here.";
 				close;
 			}
-			set .@sf_c_num,75;
-			set .@sf_r_num,75;
-			set .@sf_w_num,75;
-			delitem 6441,1; //High_RankLubricant
+			goto Advanced;
 			break;
 		case 4:
-			if (countitem(6440) == 0) {
+			if (countitem(25238) == 0) {
 				mes .@n$;
-				mes "You don't have Ordinary Lubricant.";
+				mes "You don't have New Normal Lubricant.";
 				close;
 			}
 			mes .@n$;
-			mes "If you use the Ordinary Lubricant, the rate of destruction will be decreased highly, but I can't give you a 100% guarantee. Are you sure you want to continue?";
+			mes "The rate for process by New Normal Lubricant is 10%. Your equipment or card will be preserved even if it fails.";
 			next;
 			if(select("Next time...:Continue") == 1) {
 				mes .@n$;
 				mes "Whenever you need the work, visit me here.";
 				close;
 			}
-			set .@sf_c_num,75;
-			set .@sf_r_num,150;
-			set .@sf_w_num,150;
-			delitem 6440,1; //General_Lubricant
+			goto Normal;
 			break;
 		}
 	} else if (.@boss_chk == 1) {
@@ -263,13 +216,8 @@
 			break;
 		}
 		mes .@n$;
-		if (.@Jeremy) {
-			mes "Except cards, ^ff0000all enchanted effects will disappear.^000000 If you agree to this, please choose the work type:";
-			set .@menu$,"Alright, let's do it!";
-		} else {
-			mes "May I continue?";
+		mes "May I continue?";
 			set .@menu$,"I got it. Just do it quickly!";
-		}
 		next;
 		switch(select("Next time...:"+.@menu$)) {
 		case 1:
@@ -277,91 +225,117 @@
 			mes "Whenever you need the work, visit me here.";
 			close;
 		case 2:
-			set .@sf_c_num,60;
-			set .@sf_r_num,60;
-			set .@sf_w_num,60;
-			delitem 6443,1; //Sillit_Pong_Bottle
+			goto Sillit;
 			break;
 		}
 	}
 
-	set .@equip_id, getequipid(.@equip_num);
-	set .@equip_refine, getequiprefinerycnt(.@equip_num);
 
-	// anti-hack
-	if (callfunc("F_IsEquipCardHack", .@equip_num, .@check_equip_card[0], .@check_equip_card[1], .@check_equip_card[2], .@check_equip_card[3]))
-		close;
-
-	delequip .@equip_num;
-
-	// Chance of retaining refine level.
-	if (rand(1,.@sf_r_num) >= 61)
-		set .@equip_refine,0;
-
-	if (.@Jeremy) {
-		// Chance of retaining equipment.
-		if (rand(1,.@sf_w_num) < 61) {
-			set .@equip_safe,1;
-			getitem2 .@equip_id,1,1,.@equip_refine,0,0,0,0,0;
-		}
-
-		// Chance of retaining cards.
-		for(set .@i,0; .@i<4; set .@i,.@i+1) {
-			if (.@equip_card[.@i]) {
-				if (rand(1,.@sf_c_num) < 61)
-					getitem .@equip_card[.@i],1;
-				else
-					set .@card_break,1;
-			}
-		}
-	} else {
-		set .@card, .@equip_card[.@slot];
-		set .@check_equip_card[.@slot],0;
-
-		// Chance of retaining equipment (all enchantments are preserved).
-		if (rand(1,.@sf_w_num) < 61) {
-			set .@equip_safe,1;
-			getitem2 .@equip_id,1,1,.@equip_refine,0,.@check_equip_card[0],.@check_equip_card[1],.@check_equip_card[2],.@check_equip_card[3];
-		}
-
-		// Chance of retaining card.
-		if (rand(1,.@sf_c_num) < 61)
+ZEN:
+	set .@next,50;
+	set .@by,1;
+	set Zeny, Zeny - 100000;
+	
+	if(.@by == 1) {
+		if (rand(1,.@next) < 2) {
+			specialeffect2 EF_MAXPOWER;		
+			delequip .@equip_num;
 			getitem .@card,1;
-		else
-			set .@card_break,1;
+			if(.@equip_OptID[0] > 0||.@equip_OptID[1] > 0||.@equip_OptID[2] > 0||.@equip_OptID[3] > 0||.@equip_OptID[4] > 0)
+				getitem3 .@equip_id,1,1,.@equip_refine,0,.@check_equip_card[0],.@check_equip_card[1],.@check_equip_card[2],.@check_equip_card[3],.@equip_OptID,.@equip_OptVal,.@equip_OptParam;
+			else
+				getitem2 .@equip_id,1,1,.@equip_refine,0,.@check_equip_card[0],.@check_equip_card[1],.@check_equip_card[2],.@check_equip_card[3];
+			goto Finish;
+		} else {
+			specialeffect2 155;
+			mes .@n$;
+			mes "Card separation has failed, but crack has not occured.";
+			mes "^ff0000Will you try again?^000000";
+			next;
+			if(select("Again!!!:Stop it.") == 2) {
+				mes .@n$;
+				mes "Whenever you need the work, visit me here.";
+			close;
+			}
+		goto ZEN;
+		}
+	} 
+
+Advanced:
+	set .@next,5;
+	set .@by,2;
+	delitem 25239,1; //High_RankLubricant
+
+	if(.@by == 2) {
+		if (rand(1,.@next) < 2) {
+			specialeffect2 EF_MAXPOWER;		
+			delequip .@equip_num;
+			getitem .@card,1;
+			if(.@equip_OptID[0] > 0||.@equip_OptID[1] > 0||.@equip_OptID[2] > 0||.@equip_OptID[3] > 0||.@equip_OptID[4] > 0)
+				getitem3 .@equip_id,1,1,.@equip_refine,0,.@check_equip_card[0],.@check_equip_card[1],.@check_equip_card[2],.@check_equip_card[3],.@equip_OptID,.@equip_OptVal,.@equip_OptParam;
+			else
+				getitem2 .@equip_id,1,1,.@equip_refine,0,.@check_equip_card[0],.@check_equip_card[1],.@check_equip_card[2],.@check_equip_card[3];
+			goto Finish;
+		} else {
+			specialeffect2 155;
+			mes .@n$;
+			mes "Card separation has failed, but crack has not occured.";
+			mes "^ff0000Will you try again?^000000";
+			next;
+			if(select("Again!!!:Stop it.") == 2) {
+				mes .@n$;
+				mes "Whenever you need the work, visit me here.";
+			close;
+			}
+		goto Advanced;
+		}
 	}
 
-	// Display corresponding effect.
-	if (!.@equip_safe && .@card_break)
-		specialeffect2 EF_LORD;
-	else if (.@equip_safe && .@card_break)
-		specialeffect2 EF_SUI_EXPLOSION;
-	else if (!.@equip_safe && !.@card_break)
-		specialeffect2 EF_FIREPILLAR;
+Normal:
+	set .@next,10;
+	set .@by,3;
+	delitem 25238,1; //General_Lubricant
+	
+	if(.@by == 3) {
+		if (rand(1,.@next) < 2) {
+			specialeffect2 EF_MAXPOWER;		
+			delequip .@equip_num;
+			getitem .@card,1;
+			if(.@equip_OptID[0] > 0||.@equip_OptID[1] > 0||.@equip_OptID[2] > 0||.@equip_OptID[3] > 0||.@equip_OptID[4] > 0)
+				getitem3 .@equip_id,1,1,.@equip_refine,0,.@check_equip_card[0],.@check_equip_card[1],.@check_equip_card[2],.@check_equip_card[3],.@equip_OptID,.@equip_OptVal,.@equip_OptParam;
+			else
+				getitem2 .@equip_id,1,1,.@equip_refine,0,.@check_equip_card[0],.@check_equip_card[1],.@check_equip_card[2],.@check_equip_card[3];
+			goto Finish;
+		} else {
+			specialeffect2 155;
+			mes .@n$;
+			mes "Card separation has failed, but crack has not occured.";
+			mes "^ff0000Will you try again?^000000";
+			next;
+			if(select("Again!!!:Stop it.") == 2) {
+				mes .@n$;
+				mes "Whenever you need the work, visit me here.";
+			close;
+			}
+		goto Normal;
+		}
+	}
+
+Sillit:
+	delitem 6443,1; //Sillit_Pong_Bottle
+
+	specialeffect2 EF_MAXPOWER;		
+	delequip .@equip_num;
+	getitem .@card,1;
+	if(.@equip_OptID[0] > 0||.@equip_OptID[1] > 0||.@equip_OptID[2] > 0||.@equip_OptID[3] > 0||.@equip_OptID[4] > 0)
+		getitem3 .@equip_id,1,1,.@equip_refine,0,.@check_equip_card[0],.@check_equip_card[1],.@check_equip_card[2],.@check_equip_card[3],.@equip_OptID,.@equip_OptVal,.@equip_OptParam;
 	else
-		specialeffect2 EF_MAXPOWER;
+		getitem2 .@equip_id,1,1,.@equip_refine,0,.@check_equip_card[0],.@check_equip_card[1],.@check_equip_card[2],.@check_equip_card[3];
+	goto Finish;
 
-	// Output results.
-	mes "-- Result of Card Separation --";
-	if (.@equip_safe) {
-		mes "Crack has not occured during the card separation process.";
-		mes "^0000FFEquipment separation is normal.^000000";
-	} else {
-		mes "Crack has occured during the card separation process.";
-		mes "Equipment has been damaged. ^ff0000Unrecoverable.^000000";
-	}
-	mes "-------------------";
-	if (!.@card_break) {
-		mes "Erosion of surface has not occured during the card separation process.";
-		mes "^0000ffCard separation has succeeded.^000000";
-	} else {
-		mes "Erosion of surface has occured during the card separation process.";
-		mes "Card has been damaged. ^ff0000Unrecoverable.^000000";
-	}
-	next;
+Finish:	
 	mes .@n$;
-	mes "That is all for the results of the card separation. Please come again.";
+	mes "Card has been seperated successfully!!!";
 	close;
 }
-malangdo,215,166,4	duplicate(CardSeparation_mal)	Jeremy#pa0829	553	// Armors :: mal_yong
-malangdo,208,166,6	duplicate(CardSeparation_mal)	Richard#pa0829	559	// Weapons :: soc_weapon
+malangdo,220,160,6	duplicate(CardSeparation_mal)	Richard#pa0829	559	// Weapons :: soc_weapon
