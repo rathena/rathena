@@ -61542,7 +61542,12 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bUnbreakableWeapon; bonus bLuk,3; bonus bCritAtkRate,50; if(BaseLevel>99) { bonus bLongAtkRate,10; }
+      bonus bUnbreakableWeapon;
+      bonus bLuk,3;
+      bonus bCritAtkRate,50;
+      if(BaseLevel>99) {
+         bonus bLongAtkRate,20;
+      }
   - Id: 18108
     AegisName: Brindle_Eel
     Name: Zebra Eel
@@ -61568,7 +61573,12 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus bUnbreakableWeapon; bonus bAgi,3; autobonus "{ bonus bAspd,2; }",10,7000,BF_WEAPON,"{ specialeffect2 EF_HASTEUP; }"; if(BaseLevel>99) { bonus bLongAtkRate,10; }
+      bonus bUnbreakableWeapon;
+      bonus bAgi,3;
+      autobonus "{ bonus bAspd,2; }",10,5000,BF_WEAPON,"{ specialeffect2 EF_HASTEUP; }";
+      if(BaseLevel>99) {
+         bonus bLongAtkRate,20;
+      }
   - Id: 18109
     AegisName: Catapult
     Name: Thief Crossbow
@@ -61589,7 +61599,9 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus2 bSkillAtk,"SC_TRIANGLESHOT",(.@r*2); bonus2 bSkillUseSP,"SC_TRIANGLESHOT",(.@r*2);
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SC_TRIANGLESHOT",(.@r*2);
+      bonus2 bSkillUseSP,"SC_TRIANGLESHOT",-(.@r*2);
   - Id: 18110
     AegisName: Big_CrossBow
     Name: Giant Crossbow
