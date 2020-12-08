@@ -61599,7 +61599,9 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus2 bSkillAtk,"SC_TRIANGLESHOT",(.@r*2); bonus2 bSkillUseSP,"SC_TRIANGLESHOT",(.@r*2);
+      .@r = getrefine();
+      bonus2 bSkillAtk,"SC_TRIANGLESHOT",(.@r*2);
+      bonus2 bSkillUseSP,"SC_TRIANGLESHOT",-(.@r*2);
   - Id: 18110
     AegisName: Big_CrossBow
     Name: Giant Crossbow
