@@ -1,0 +1,182 @@
+//===== rAthena Script =======================================
+//= Geffen Magic Tournament Enchanter
+//===== By: ==================================================
+//= NotKappa#2400 - https://rathena.org/board/profile/18391-notkappa/
+//===== Current Version: =====================================
+//= 1.0 (Initial release)
+//===== Additional Comments: =================================
+// - Modified for use in ChocobotRO
+//============================================================
+
+dali,91,146,4	script	Geffen Enchanter	4_F_03,{
+	disable_command;
+	disable_items;
+	.@npc$ = "[ ^0000FFGeffen Enchanter^000000 ]";
+	mes .@npc$,
+		"What would you like to enchant?";
+	next;
+	switch(select("Cancel","Enchant Magic Armor","Enchant Magic Accessory")){
+		case 1:
+			mes .@npc$,
+				"Please drop by anytime.";
+			close;
+		break;
+
+		case 2:// Enchant Magic Armor
+			set .@part,EQI_ARMOR; // Save equip location
+			mes .@npc$;
+			.@itemEqId = getequipid(.@part);
+			if(!.@itemEqId) {
+				mes "I don't see anything, please make sure you've equipped the item.";
+				close;
+			}
+			switch(.@itemEqId) {
+				case 15073: // Anti-Magic Suit
+				case 15074: // Geffen Magic Robe
+				break;
+
+				default:
+				mes "I don't see anything, please make sure you've equipped the item.";
+				close;
+			}
+
+			set .@ropt1,getequiprandomoption(.@part,0,ROA_ID);
+			set .@ropt2,getequiprandomoption(.@part,1,ROA_ID);
+			.@str$ = "";
+			if(.@ropt1 || .@ropt2) {
+				.@str$ += " is already enchanted.";
+			}
+			mes "<ITEM>" + getitemname(.@itemEqId) + "<INFO>" + .@itemEqId + "</INFO></ITEM>" + .@str$ + " It will cost you " + .cost + " <ITEM>Geffen Magic Tournament Coin<INFO>6671</INFO></ITEM> to try enchants. Do you want to continue?";
+			next;
+			if(select("No","Continue") == 1){
+				mes .@npc$,
+					"Please drop by anytime.";
+				close;
+			}
+
+			if(.cost > countitem(.itemId)){
+				mes .@npc$,
+					"You're missing " + (.cost - countitem(.itemId)),
+					"<ITEM>Geffen Magic Tournament Coin<INFO>6671</INFO></ITEM>.";
+				close;
+			}
+
+			delitem .itemId,.cost;
+			.@opt1rand = rand(getarraysize(.RandOpt1_Armor)-1);
+			.@opt2rand = rand(getarraysize(.RandOpt2_Armor)-1);
+			.@Opt1 = .RandOpt1_Armor[.@opt1rand];
+			.@Opt2 = .RandOpt2_Armor[.@opt2rand];
+			.@Opt1_V = rand(.RandOpt1_Armor_minV[.@opt1rand],.RandOpt1_Armor_maxV[.@opt1rand]);
+			.@Opt2_V = rand(.RandOpt2_Armor_minV[.@opt2rand],.RandOpt2_Armor_maxV[.@opt2rand]);
+			setrandomoption(.@part,0,.@Opt1,.@Opt1_V,0);
+			setrandomoption(.@part,1,.@Opt2,.@Opt2_V,0);
+			specialeffect2 1031;
+			mes .@npc$,
+				"There you are, come back any time and try your luck again!";
+			close;
+		break;
+
+		case 3:
+			.@part = select("Left Accessory","Right Accessory") - 1;
+			mes .@npc$;
+			.@itemEqId = getequipid(.@part);
+			if(!.@itemEqId) {
+				mes "I don't see anything, please make sure you've equipped the item.";
+				close;
+			}
+			switch(.@itemEqId) {
+				case 2963: // Physical Enchancer Ring
+				case 2964: // Magic Intensifier Ring
+				break;
+
+				default:
+				mes "I don't see anything, please make sure you've equipped the item.";
+				close;
+			}
+
+			set .@ropt1,getequiprandomoption(.@part,0,ROA_ID);
+			set .@ropt2,getequiprandomoption(.@part,1,ROA_ID);
+			.@str$ = "";
+			if(.@ropt1 || .@ropt2) {
+				.@str$ += " is already enchanted.";
+			}
+			mes "<ITEM>" + getitemname(.@itemEqId) + "<INFO>" + .@itemEqId + "</INFO></ITEM>" + .@str$ + " It will cost you " + .cost + " <ITEM>Geffen Magic Tournament Coin<INFO>6671</INFO></ITEM> to try enchants. Do you want to continue?";
+			next;
+			if(select("No","Continue") == 1){
+				mes .@npc$,
+					"Please drop by anytime.";
+				close;
+			}
+
+			if(.cost > countitem(.itemId)){
+				mes .@npc$,
+					"You're missing " + (.cost - countitem(.itemId)),
+					"<ITEM>Geffen Magic Tournament Coin<INFO>6671</INFO></ITEM>.";
+				close;
+			}
+
+			delitem .itemId,.cost;
+			.@opt1rand = rand(getarraysize(.RandOpt_Accessory)-1);
+			.@opt2rand = rand(getarraysize(.RandOpt_Accessory)-1);
+			.@Opt1 = .RandOpt_Accessory[.@opt1rand];
+			.@Opt2 = .RandOpt_Accessory[.@opt2rand];
+			.@Opt1_V = rand(.RandOpt_Accessory_minV[.@opt1rand],.RandOpt_Accessory_maxV[.@opt1rand]);
+			.@Opt2_V = rand(.RandOpt_Accessory_minV[.@opt2rand],.RandOpt_Accessory_maxV[.@opt2rand]);
+			setrandomoption(.@part,0,.@Opt1,.@Opt1_V,0);
+			setrandomoption(.@part,1,.@Opt2,.@Opt2_V,0);
+			specialeffect2 1031;
+			mes .@npc$,
+				"There you are, come back any time and try your luck again!";
+			close;
+		break;
+		}
+end;
+OnInit:
+	.cost = 65;
+	.itemId = 6671;
+
+setarray .RandOpt1_Armor[0],RDMOPT_VAR_STRAMOUNT, 			// str 1 ~ 4
+							RDMOPT_VAR_AGIAMOUNT,			// agi 1 ~ 4
+							RDMOPT_VAR_VITAMOUNT,			// vit 1 ~ 4
+							RDMOPT_VAR_INTAMOUNT,			// int 1 ~ 4
+							RDMOPT_VAR_DEXAMOUNT,			// dex 1 ~ 4
+							RDMOPT_VAR_LUKAMOUNT,			// luk 1 ~ 4
+							RDMOPT_VAR_MAXHPPERCENT,		// MAX HP 3% ~ 5%
+							RDMOPT_VAR_MAXSPPERCENT;		// MAX SP 3% ~ 5%
+setarray .RandOpt1_Armor_minV[0],1,1,1,1,1,1,3,3;
+setarray .RandOpt1_Armor_maxV[0],4,4,4,4,4,4,5,5;
+
+setarray .RandOpt2_Armor[0],RDMOPT_VAR_HPACCELERATION, 		// 50% ~ 100%
+							RDMOPT_VAR_SPACCELERATION,		// 50% ~ 100%
+							RDMOPT_VAR_HITSUCCESSVALUE,		// Hit 15 ~ 30
+							RDMOPT_VAR_AVOIDSUCCESSVALUE,	// Flee 15 ~ 30
+							RDMOPT_VAR_ITEMDEFPOWER,		// Def 20 ~ 60
+							RDMOPT_VAR_MDEFPOWER,			// Magic Def 5 ~ 10
+							RDMOPT_HEAL_VALUE,				// Heal Power 5% ~ 10%
+							RDMOPT_HEAL_MODIFY_PERCENT,		// Healing Received	5% ~ 10%
+							RDMOPT_DEC_SPELL_CAST_TIME,		// Variable Cast Reduction	5% ~ 10%
+							RDMOPT_BODY_INDESTRUCTIBLE,		// Unbreakable Armor
+							RDMOPT_BODY_ATTR_WATER,			// Water Property
+							RDMOPT_BODY_ATTR_FIRE,			// Fire Property
+							RDMOPT_BODY_ATTR_GROUND,		// Earth Property
+							RDMOPT_BODY_ATTR_WIND;			// Wind Property
+setarray .RandOpt2_Armor_minV[0],50,50,15,15,20,5,5,5,5,0,0,0,0,0;
+setarray .RandOpt2_Armor_maxV[0],100,100,30,30,60,10,10,10,10,0,0,0,0,0;
+
+setarray .RandOpt_Accessory[0],	RDMOPT_VAR_PLUSASPDPERCENT,			// ASPD 3% ~ 5%
+								RDMOPT_DEC_SPELL_CAST_TIME,			// Variable Cast Reduction	5% ~ 7%
+								RDMOPT_DAMAGE_CRI_TARGET,			// Critical Damage	5% ~ 8%
+								RDMOPT_ATTR_TOLERACE_WATER,			// Water Resistance	3% ~ 5%
+								RDMOPT_ATTR_TOLERACE_GROUND,		// Earth Resistance	3% ~ 5%
+								RDMOPT_ATTR_TOLERACE_FIRE,			// Fire Resistance	3% ~ 5%
+								RDMOPT_ATTR_TOLERACE_WIND,			// Wind  Resistance	3% ~ 5%
+								RDMOPT_ATTR_TOLERACE_ALLBUTNOTHING,	// All Elements Except Neutral Resistance 1% ~ 3%
+								RDMOPT_DEC_SP_CONSUMPTION,			// Decreases SP consumption	3% ~ 5%
+								RDMOPT_VAR_MAXHPPERCENT,			// Max HP 1% ~ 3%
+								RDMOPT_VAR_MAXSPPERCENT,			// Max SP 1% ~ 3%
+								RDMOPT_VAR_ATKPERCENT,				// Attack 1% ~ 3%
+								RDMOPT_VAR_MAGICATKPERCENT;			// Magic Attack 1% ~ 3%
+setarray .RandOpt_Accessory_minV[0],3,5,5,3,3,3,3,1,3,1,1,1,1;
+setarray .RandOpt_Accessory_maxV[0],5,7,8,5,5,5,5,3,5,3,3,3,3;
+end;
+}
