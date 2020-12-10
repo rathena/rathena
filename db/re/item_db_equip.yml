@@ -61811,7 +61811,9 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bAddRace,RC_Player_Human,40; bonus2 bAddEff,Eff_Curse,3000;
+      bonus2 bAddRace,RC_Player_Human,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
+      bonus2 bAddEff,Eff_Curse,1000;
   - Id: 18119
     AegisName: Thanos_Bow
     Name: Thanos Bow
@@ -62067,7 +62069,6 @@ Body:
       BardDancer: true
       Hunter: true
       Rogue: true
-      Thief: true
     Locations:
       Both_Hand: true
     WeaponLevel: 3
@@ -62342,7 +62343,13 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Script: |
-      .@r = getrefine(); if (.@r>=2) bonus bBaseAtk,.@r/2*10; if (.@r>=3) bonus2 bSkillAtk,"RA_ARROWSTORM",.@r/3*12; if (.@r>=9) bonus bAspdRate,10; if (.@r>=11) bonus bLongAtkRate,5;
+      .@r = getrefine();
+      bonus bBaseAtk,.@r/2*10;
+      bonus2 bSkillAtk,"RA_ARROWSTORM",.@r/3*12;
+      if (.@r>=9)
+         bonus bAspdRate,10;
+      if (.@r>=11) 
+         bonus bLongAtkRate,5;
   - Id: 18165
     AegisName: Rebeginer_RN_Bow
     Name: Beginner Ranger's Bow
@@ -62428,9 +62435,16 @@ Body:
     Locations:
       Both_Hand: true
     WeaponLevel: 4
+    EquipLevelMin: 100
     Refineable: true
     Script: |
-      .@r = getrefine(); if (.@r>=2) bonus bBaseAtk,.@r/2*10; if (.@r>=3) bonus bLongAtkRate,.@r/3*4; if (.@r>=9) bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",.@r/3*10; if (.@r>=11) bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
+      .@r = getrefine();
+      bonus bBaseAtk,.@r/2*10;
+      bonus bLongAtkRate,.@r/3*4;
+      if (.@r>=9)
+         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10;
+      if (.@r>=11)
+         bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
   - Id: 18174
     AegisName: Illusion_Hunter_Bow
     Name: Illusion Hunter Bow
@@ -101292,7 +101306,13 @@ Body:
     Refineable: true
     View: 1
     Script: |
-      .@r = getrefine(); bonus bFlee,5+(.@r*3); bonus bFlee2,1+(.@r*2); if (.@r > 10) { bonus bMaxHPrate,10; bonus bMaxSPrate,10; }
+      .@r = getrefine();
+      bonus bFlee,5;
+      bonus bFlee2,1+(.@r/3*2);
+      if (.@r >= 10) {
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
+      }
   - Id: 28904
     AegisName: Unity_Guard
     Name: Unity Guard
