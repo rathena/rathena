@@ -61812,6 +61812,7 @@ Body:
       NoAuction: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,40;
+      bonus2 bAddRace,RC_Player_Doram,40;
       bonus2 bAddEff,Eff_Curse,1000;
   - Id: 18119
     AegisName: Thanos_Bow
