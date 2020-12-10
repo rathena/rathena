@@ -5169,6 +5169,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			if ((skill_id == SP_SHA || skill_id == SP_SWHOO) && !battle_config.allow_es_magic_pc && bl->type != BL_MOB)
 				break;
 
+#ifdef RENEWAL
+			if (skill_id == KN_BOWLINGBASH)
+				sflag &= ~4; // Always trigger knockback
+#endif
+
 			heal = (int)skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, sflag);
 			if( skill_id == NPC_VAMPIRE_GIFT && heal > 0 ) {
 				clif_skill_nodamage(NULL, src, AL_HEAL, heal, 1);
@@ -5196,7 +5201,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			switch ( skill_id ) {
 #ifdef RENEWAL
 				case KN_BOWLINGBASH:
-					flag |= SD_LEVEL;
+					flag |= SD_LEVEL; // Get area count
 					break;
 #endif
 				case LG_EARTHDRIVE:
