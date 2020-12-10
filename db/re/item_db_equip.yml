@@ -101310,7 +101310,8 @@ Body:
       bonus bFlee,5;
       bonus bFlee2,1+(.@r/3*2);
       if (.@r >= 10) {
-         bonus bMaxHPrate,10; bonus bMaxSPrate,10;
+         bonus bMaxHPrate,10;
+         bonus bMaxSPrate,10;
       }
   - Id: 28904
     AegisName: Unity_Guard
