@@ -1115,7 +1115,7 @@ void party_exp_share(struct party_data* p, struct block_list* src, unsigned int 
 #ifdef RENEWAL_EXP
 		uint32 base_gained = base_exp, job_gained = job_exp;
 		if (base_exp || job_exp) {
-			int rate = pc_level_penalty_mod(md->level - sd[i]->status.base_level, md->db->status.class_, md->db->status.mode, 1);
+			int rate = pc_level_penalty_mod( sd[i], PENALTY_EXP, nullptr, md );
 			if (rate != 100) {
 				if (base_exp)
 					base_gained = (unsigned int)cap_value(apply_rate(base_exp, rate), 1, UINT_MAX);

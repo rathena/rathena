@@ -7552,11 +7552,21 @@ Example:
 
 *debugmes "<message>";
 
-This command will send the message to the server console (map-server window). It
+This command will send a debug message to the server console (map-server window). It
 will not be displayed anywhere else.
 
     // Displays "NAME has clicked me!" in the map-server window.
     debugmes strcharinfo(0) + " has clicked me!";
+
+---------------------------------------
+
+*errormes "<message>";
+
+This command will send an error message to the server console (map-server window). It
+will not be displayed anywhere else.
+
+    // Displays "NAME has clicked me!" in the map-server window.
+    errormes strcharinfo(0) + " has clicked me!";
 
 ---------------------------------------
 
@@ -8327,6 +8337,7 @@ Parameter (indexes) for NPCs are:
 		- *_ADELAY: see doc/mob_db.txt
 		- *_DMOTION: see doc/mob_db.txt
 		- *_BODY2: enable (1) the alternate display, or disable (0)
+		- *_TARGETID: when set to 0 the unit will release the target and stop attacking
 
 		- UMOB_AI: none (0); attack (1); marine sphere (2); flora (3); zanzou (4); legion (5); faw (6)
 		- UMOB_SCOPTION: see the 'Variables' section at the top of this document
