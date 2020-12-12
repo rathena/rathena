@@ -6388,7 +6388,7 @@ void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, e
 		return;
 
 	int lp = (type&BC_COLOR_MASK) ? 4 : 0;
-	std::unique_ptr<unsigned char> buf(new unsigned char[4+lp+len]);
+	std::unique_ptr<unsigned char[]> buf(new unsigned char[4+lp+len]);
 
 	WBUFW(buf.get(),0) = 0x9a;
 	WBUFW(buf.get(),2) = 4 + lp + len;
@@ -6418,7 +6418,7 @@ void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_ta
 		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%" PRIuPTR ").\n", message, len);
 		len = CHAT_SIZE_MAX;
 	}
-	std::unique_ptr<char> buf(new char[8+len]);
+	std::unique_ptr<char[]> buf(new char[8+len]);
 
 	WBUFW(buf.get(),0)=0x8d;
 	WBUFW(buf.get(),2)=static_cast<uint16>(len+8);
@@ -6437,7 +6437,7 @@ void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned l
 	if (len < 2)
 		return;
 
-	std::unique_ptr<unsigned char> buf(new unsigned char[16+len]);
+	std::unique_ptr<unsigned char[]> buf(new unsigned char[16+len]);
 
 	WBUFW(buf.get(),0)  = 0x1c3;
 	WBUFW(buf.get(),2)  = len + 16;
