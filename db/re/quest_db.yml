@@ -11801,6 +11801,71 @@ Body:
         Count: 400
   - Id: 62837
     Title: Gramps GM Notice
+  - Id: 62838
+    Title: Bounty Board True Kathryne Keyron
+    Targets:
+      - Mob: V_KATRINN
+        Count: 150
+  - Id: 62839
+    Title: Bounty Board True Margaretha Sorin
+    Targets:
+      - Mob: V_MAGALETA
+        Count: 150
+  - Id: 62840
+    Title: Bounty Board True Cecil Damon
+    Targets:
+      - Mob: V_SHECIL
+        Count: 150
+  - Id: 62841
+    Title: Bounty Board True Eremes Guile
+    Targets:
+      - Mob: V_EREMES
+        Count: 150
+  - Id: 62842
+    Title: Bounty Board True Seyren Windsor
+    Targets:
+      - Mob: V_SEYREN
+        Count: 150
+  - Id: 62843
+    Title: Bounty Board True Howard Alt-Eisen
+    Targets:
+      - Mob: V_HARWORD
+        Count: 150
+  - Id: 62844
+    Title: Bounty Board True Trentini
+    Targets:
+      - Mob: V_TRENTINI
+        Count: 150
+  - Id: 62845
+    Title: Bounty Board True Celia Alde
+    Targets:
+      - Mob: V_CELIA
+        Count: 150
+  - Id: 62846
+    Title: Bounty Board True Alphoccio
+    Targets:
+      - Mob: V_ALPHOCCIO
+        Count: 150
+  - Id: 62847
+    Title: Bounty Board True Gertie
+    Targets:
+      - Mob: V_GERTIE
+        Count: 150
+  - Id: 62848
+    Title: Bounty Board True Chen Lio
+    Targets:
+      - Mob: V_CHEN
+        Count: 150
+  - Id: 62849
+    Title: Bounty Board True Flamel Emure
+    Targets:
+      - Mob: V_FLAMEL
+        Count: 150
+  - Id: 62850
+    Title: Bounty Board True Randel Lawrence
+    Targets:
+      - Mob: V_RANDEL
+        Count: 150
   - Id: 62890
     Title: Bounty Board Cursed Box
     Targets:

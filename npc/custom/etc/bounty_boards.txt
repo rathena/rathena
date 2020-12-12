@@ -29,7 +29,7 @@ function	script	F_Bounty_Board	{
 				mes "You are ready to collect your bounty.";
 				mes "Which bounty do you want to collect?";
 				next;
-				switch(select("Collect 1 bounty", "Collect ALL bounties", "I want to QUIT hunting", "cancel")){
+				switch(select("Collect 1 bounty", "Collect ALL bounties", "I want to QUIT hunting", "Cancel")){
 					case 1: goto L_BountyOne;
 					case 2: goto L_BountyAll;
 					case 3: goto L_BountyDel;
@@ -93,7 +93,7 @@ function	script	F_Bounty_Board	{
 		mes "You are ready to collect your bounty.";
 		mes "Which bounty do you want to collect?";
 		next;
-		switch(select("Collect 1 bounty", "Collect ALL bounties", "cancel")){
+		switch(select("Collect 1 bounty", "Collect ALL bounties", "Cancel")){
 			case 1: goto L_BountyOne;
 			case 2: goto L_BountyAll;
 			case 3: close;
@@ -491,7 +491,7 @@ lighthalzen,190,161,3	script	Bounty Board 121-175#lz3	837,{
 }
 
 lighthalzen,188,162,3	script	Bounty Board 141+#lz4	837,{
-	callfunc "F_Bounty_Board", 141, 0, 1, 4,
+	callfunc "F_Bounty_Board", 141, 0, 10, 3,
 		1639,	62761,	1516950,	1997550,	// KATRINN
 		1637,	62762,	1736100,	1738912,	// MAGALETA
 		1638,	62763,	1863225,	1861312,	// SHECIL
@@ -505,6 +505,24 @@ lighthalzen,188,162,3	script	Bounty Board 141+#lz4	837,{
 		2224,	62771,	2889450,	2228625,	// CHEN
 		2222,	62772,	2969550,	2596500,	// FLAMEL
 		2221,	62773,	3641175,	2706075;	// RANDEL
+	end;
+}
+
+lighthalzen,186,164,3	script	Bounty Board 160+#lz5	837,{
+	callfunc "F_Bounty_Board", 160, 0, 10, 3,
+		3210,	62838,	9000000,	4500000,	// KATHRYNE KEYRON
+		3209,	62839,	12000000,	6000000,	// MARGARETHA SORIN
+		3211,	62840,	10500000,	5250000,	// CECIL DAMON
+		3208,	62841,	10500000,	5250000,	// EREMES GUILE
+		3213,	62842,	15000000,	7500000,	// SEYREN WINDSOR
+		3212,	62843,	15000000,	7500000,	// HARWORD ALT-EISEN
+		3232,	62844,	9000000,	4500000,	// TRENTINI
+		3228,	62845,	13500000,	6750000,	// CELIA ALDE
+		3231,	62846,	9000000,	4500000,	// ALPHOCCIO
+		3230,	62847,	10500000,	5250000,	// GERTIE
+		3229,	62848,	10500000,	5250000,	// CHEN LIO
+		3227,	62849,	12000000,	6000000,	// FLAMEL EMURE
+		3226,	62850,	15000000,	7500000;	// RANDEL LAWRENCE
 	end;
 }
 
