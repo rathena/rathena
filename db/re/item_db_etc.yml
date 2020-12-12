@@ -42113,26 +42113,30 @@ Body:
          bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",7;
          bonus2 bSkillAtk,"SU_PICKYPECK",7;
       }
-#  - Id: 310178
-#    AegisName: aegis_310178
-#    Name: Automatic Modification Orb(Mirror Counter)
-#    Type: Card
-#    Script: |
-#      .@r = getrefine();
-#      if (.@r>=9) {
-#      }
-#      if (.@r>=11) {
-#      }
-#  - Id: 310179
-#    AegisName: aegis_310179
-#    Name: Automatic Modification Orb(Reflection Reject)
-#    Type: Card
-#    Script: |
-#      .@r = getrefine();
-#      if (.@r>=9) {
-#      }
-#      if (.@r>=11) {
-#      }
+  - Id: 310178
+    AegisName: aegis_310178
+    Name: Automatic Modification Orb(Mirror Counter)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      if (.@r>=11)
+         bonus bReduceDamageReturn,7;
+      else if (.@r>=9)
+         bonus bReduceDamageReturn,4;
+      else
+         bonus bReduceDamageReturn,2;
+  - Id: 310179
+    AegisName: aegis_310179
+    Name: Automatic Modification Orb(Reflection Reject)
+    Type: Card
+    Script: |
+      .@r = getrefine();
+      if (.@r>=11)
+         bonus bReduceDamageReturn,9;
+      else if (.@r>=9)
+         bonus bReduceDamageReturn,5;
+      else
+         bonus bReduceDamageReturn,3;
   - Id: 310180
     AegisName: Warlock_Robe2
     Name: Warlock Stone II (Garment)
