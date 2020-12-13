@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
-//= 1.7
+//= 1.8
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Additional Comments: =================================
@@ -14,25 +14,26 @@
 //= 1.5 Implemented the town invasion. [MasterOfMuppets]
 //= 1.6 Official kRO 10.1 spawns [Playtester]
 //= 1.7 Updated to Renewal Spawns [Kisuka]
+//= 1.8 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================
 // niflheim - Niflheim, Realm of the Dead
 //==================================================
-niflheim,0,0	monster	Lude	1509,20,5000
-niflheim,0,0	monster	Quve	1508,20,5000
-niflheim,0,0	monster	Gibbet	1503,10,5000
-niflheim,0,0	monster	Heirozoist	1510,10,5000
-niflheim,0,0	monster	Dullahan	1504,5,5000
+niflheim,0,0	monster	Lude	1509,35,5000
+niflheim,0,0	monster	Quve	1508,35,5000
+niflheim,0,0	monster	Gibbet	1503,17,5000
+niflheim,0,0	monster	Heirozoist	1510,17,5000
+niflheim,0,0	monster	Dullahan	1504,8,5000
 
 //==================================================
 // nif_fild01 - Skellington, a Solitary Village in Niflheim
 //==================================================
-nif_fild01,0,0	monster	Disguise	1506,50,5000
-nif_fild01,0,0	monster	Quve	1508,30,5000
-nif_fild01,0,0	monster	Dullahan	1504,20,5000
-nif_fild01,0,0	monster	Gibbet	1503,10,5000
-nif_fild01,0,0	monster	Heirozoist	1510,10,5000
+nif_fild01,0,0	monster	Disguise	1506,56,5000
+nif_fild01,0,0	monster	Quve	1508,33,5000
+nif_fild01,0,0	monster	Dullahan	1504,22,5000
+nif_fild01,0,0	monster	Gibbet	1503,11,5000
+nif_fild01,0,0	monster	Heirozoist	1510,11,5000
 
 //==================================================
 // nif_fild02 - Vally of Gyoll

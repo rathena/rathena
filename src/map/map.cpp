@@ -489,8 +489,6 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_WARM]->val4), bl->m, x1-x0, y1-y0);
 				if (sc->data[SC_BANDING])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_BANDING]->val4), bl->m, x1-x0, y1-y0);
-				if (sc->data[SC_HELLS_PLANT])
-					skill_unit_move_unit_group(skill_id2group(sc->data[SC_HELLS_PLANT]->val4), bl->m, x1-x0, y1-y0);
 
 				if (sc->data[SC_NEUTRALBARRIER_MASTER])
 					skill_unit_move_unit_group(skill_id2group(sc->data[SC_NEUTRALBARRIER_MASTER]->val2), bl->m, x1-x0, y1-y0);
@@ -1422,7 +1420,7 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 						rx = (bl->x - x0);
 						ry = (bl->y - y0);
 						//Do not hit source cell
-						if (rx == 0 && ry == 0)
+						if (battle_config.skill_eightpath_same_cell == 0 && rx == 0 && ry == 0)
 							continue;
 						//This turns it so that the area that is hit is always with positive rx and ry
 						rx *= dx;
@@ -1458,7 +1456,7 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 						rx = (bl->x - x0);
 						ry = (bl->y - y0);
 						//Do not hit source cell
-						if (rx == 0 && ry == 0)
+						if (battle_config.skill_eightpath_same_cell == 0 && rx == 0 && ry == 0)
 							continue;
 						//This turns it so that the area that is hit is always with positive rx and ry
 						rx *= dx;
@@ -1843,7 +1841,7 @@ int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, i
 
 	nullpo_ret(item);
 
-	if (!(flags&4) && battle_config.item_onfloor && (itemdb_traderight(item->nameid)&1))
+	if (!(flags&4) && battle_config.item_onfloor && (itemdb_traderight(item->nameid).trade))
 		return 0; //can't be dropped
 
 	if (!map_searchrandfreecell(m,&x,&y,flags&2?1:0))
@@ -2088,6 +2086,7 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_GLORYWOUNDS, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_SOULCOLD, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_HAWKEYES, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_EMERGENCY_MOVE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_CHASEWALK2, INVALID_TIMER);
 		if(sd->sc.data[SC_PROVOKE] && sd->sc.data[SC_PROVOKE]->timer == INVALID_TIMER)
 			status_change_end(&sd->bl, SC_PROVOKE, INVALID_TIMER); //Infinite provoke ends on logout
@@ -2665,7 +2664,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 	}
 	// npcs with trigger area are grouped
 	// 0 < npc_num_warp < npc_num_area < npc_num
-	if (xs < 0 && ys < 0)
+	if (xs < 0 || ys < 0)
 		mapdata->npc[ mapdata->npc_num ] = nd;
 	else {
 		switch (nd->subtype) {
@@ -2928,7 +2927,7 @@ int map_removemobs_sub(struct block_list *bl, va_list ap)
 	if( !battle_config.mob_remove_damaged && md->status.hp < md->status.max_hp )
 		return 0;
 	// is a mvp
-	if( md->db->mexp > 0 )
+	if( md->get_bosstype() == BOSSTYPE_MVP )
 		return 0;
 
 	unit_free(&md->bl,CLR_OUTSIGHT);
@@ -3560,6 +3559,9 @@ int map_readfromcache(struct map_data *m, char *buffer, char *decode_buffer)
 	for(i = 0; i < header->map_count; i++) {
 		info = (struct map_cache_map_info *)p;
 
+		// name exists in maps_athena.conf but not in map_cache.dat
+		if (info->name == nullptr || info->name[0] == '\0')
+			continue;
 		if( strcmp(m->name, info->name) == 0 )
 			break; // Map found
 
@@ -3651,6 +3653,7 @@ void map_flags_init(void){
 
 		mapdata->flag.clear();
 		mapdata->flag.reserve(MF_MAX); // Reserve the bucket size
+		mapdata->drop_list.clear();
 		args.flag_val = 100;
 
 		// additional mapflag data

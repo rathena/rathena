@@ -377,7 +377,7 @@ mal_in01,160,34,4	script	Missing, the Cleaner	545,{
 		set in_canal_n,1;
 		close;
 	}
-	if (countitem(6436) == 0) {
+	if (rentalcountitem(6436) == 0) {
 		mes "[Missing, the Cleaner]";
 		mes "You don't look like you have Seagod Protection. I can't open door at the moment!";
 		close;

@@ -26,7 +26,7 @@ struct party_data {
 	struct party party;
 	struct party_member_data data[MAX_PARTY];
 	uint8 itemc; //For item distribution, position of last picker in party
-	unsigned short instance_id;
+	int instance_id;
 	struct {
 		unsigned monk : 1; //There's at least one monk in party?
 		unsigned sg : 1;	//There's at least one Star Gladiator in party?

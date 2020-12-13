@@ -51,7 +51,7 @@ struct eventlist {
 //Guild EXP cache
 struct guild_expcache {
 	int guild_id, account_id, char_id;
-	uint64 exp;
+	t_exp exp;
 };
 static struct eri *expcache_ers; //For handling of guild exp payment.
 
@@ -402,10 +402,7 @@ int guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap) {
 		return 0;
 	}
 
-	if (g->member[i].exp > UINT64_MAX - c->exp)
-		g->member[i].exp = UINT64_MAX;
-	else
-		g->member[i].exp+= c->exp;
+	g->member[i].exp = util::safe_addition_cap(g->member[i].exp, c->exp, MAX_GUILD_EXP);
 
 	intif_guild_change_memberinfo(g->guild_id,c->account_id,c->char_id,
 		GMI_EXP,&g->member[i].exp,sizeof(g->member[i].exp));
@@ -609,10 +606,12 @@ int guild_recv_info(struct guild *sg) {
 		//Perform the check on the user because the first load
 		guild_check_member(sg);
 		if ((sd = map_nick2sd(sg->master,false)) != NULL) {
+#ifndef RENEWAL
 			//If the guild master is online the first time the guild_info is received,
 			//that means he was the first to join, so apply guild skill blocking here.
 			if( battle_config.guild_skill_relog_delay )
 				guild_block_skill(sd, battle_config.guild_skill_relog_delay);
+#endif
 
 			//Also set the guild master flag.
 			sd->guild = g;
@@ -673,7 +672,7 @@ int guild_recv_info(struct guild *sg) {
 			clif_guild_notice(sd);
 			sd->guild_emblem_id = g->emblem_id;
 		}
-		if (g->instance_id != 0)
+		if (g->instance_id > 0)
 			instance_reqinfo(sd, g->instance_id);
 	}
 
@@ -807,9 +806,11 @@ void guild_member_joined(struct map_session_data *sd) {
 	}
 	if (strcmp(sd->status.name,g->master) == 0) {	// set the Guild Master flag
 		sd->state.gmaster_flag = 1;
+#ifndef RENEWAL
 		// prevent Guild Skills from being used directly after relog
 		if( battle_config.guild_skill_relog_delay )
 			guild_block_skill(sd, battle_config.guild_skill_relog_delay);
+#endif
 	}
 	i = guild_getindex(g, sd->status.account_id, sd->status.char_id);
 	if (i == -1)
@@ -818,7 +819,7 @@ void guild_member_joined(struct map_session_data *sd) {
 		g->member[i].sd = sd;
 		sd->guild = g;
 
-		if (g->instance_id != 0)
+		if (g->instance_id > 0)
 			instance_reqinfo(sd, g->instance_id);
 		if( channel_config.ally_tmpl.name[0] && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
 			channel_gjoin(sd,3);
@@ -870,7 +871,7 @@ int guild_member_added(int guild_id,uint32 account_id,uint32 char_id,int flag) {
 	//Next line commented because it do nothing, look at guild_recv_info [LuzZza]
 	//clif_charnameupdate(sd); //Update display name [Skotlex]
 
-	if (g->instance_id != 0)
+	if (g->instance_id > 0)
 		instance_reqinfo(sd, g->instance_id);
 
 	return 0;
@@ -1005,6 +1006,7 @@ int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int f
 		status_change_end(&sd->bl,SC_GLORYWOUNDS,INVALID_TIMER);
 		status_change_end(&sd->bl,SC_SOULCOLD,INVALID_TIMER);
 		status_change_end(&sd->bl,SC_HAWKEYES,INVALID_TIMER);
+		status_change_end(&sd->bl,SC_EMERGENCY_MOVE,INVALID_TIMER);
 		//@TODO: Send emblem update to self and people around
 	}
 	return 0;
@@ -1263,19 +1265,46 @@ int guild_notice_changed(int guild_id,const char *mes1,const char *mes2) {
 }
 
 /*====================================================
+ * Check condition for changing guild emblem
+ *---------------------------------------------------*/
+bool guild_check_emblem_change_condition(map_session_data *sd)
+{
+	nullpo_ret(sd);
+	guild* g = sd->guild;
+
+	if (battle_config.require_glory_guild && g != nullptr && guild_checkskill(g, GD_GLORYGUILD) > 0) {
+		clif_skill_fail(sd, GD_GLORYGUILD, USESKILL_FAIL_LEVEL, 0);
+		return false;
+	}
+
+	return true;
+}
+
+/*====================================================
  * Change guild emblem
  *---------------------------------------------------*/
 int guild_change_emblem(struct map_session_data *sd,int len,const char *data) {
-	struct guild *g;
 	nullpo_ret(sd);
 
-	if (battle_config.require_glory_guild &&
-		!((g = sd->guild) && guild_checkskill(g, GD_GLORYGUILD)>0)) {
-		clif_skill_fail(sd,GD_GLORYGUILD,USESKILL_FAIL_LEVEL,0);
+	if (!guild_check_emblem_change_condition(sd)) {
 		return 0;
 	}
 
 	return intif_guild_emblem(sd->status.guild_id,len,data);
+}
+
+/*====================================================
+ * Change guild emblem version
+ *---------------------------------------------------*/
+int guild_change_emblem_version(map_session_data* sd, int version)
+{
+	nullpo_ret(sd);
+
+	if (!guild_check_emblem_change_condition(sd)) {
+		return 0;
+	}
+
+	return intif_guild_emblem_version(sd->status.guild_id, version);
 }
 
 /*====================================================
@@ -1288,7 +1317,8 @@ int guild_emblem_changed(int len,int guild_id,int emblem_id,const char *data) {
 	if(g==NULL)
 		return 0;
 
-	memcpy(g->emblem_data,data,len);
+	if (data != nullptr)
+		memcpy(g->emblem_data,data,len);
 	g->emblem_len=len;
 	g->emblem_id=emblem_id;
 
@@ -1356,7 +1386,7 @@ static DBData create_expcache(DBKey key, va_list args) {
 /*====================================================
  * Return taxed experience from player sd to guild
  *---------------------------------------------------*/
-unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp) {
+t_exp guild_payexp(struct map_session_data *sd,t_exp exp) {
 	struct guild *g;
 	struct guild_expcache *c;
 	int per;
@@ -1377,11 +1407,7 @@ unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp) {
 	//Otherwise tax everything.
 
 	c = (struct guild_expcache *)db_data2ptr(guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd));
-
-	if (c->exp > UINT64_MAX - exp)
-		c->exp = UINT64_MAX;
-	else
-		c->exp += exp;
+	c->exp = util::safe_addition_cap(c->exp, exp, MAX_GUILD_EXP);
 
 	return exp;
 }
@@ -1391,7 +1417,7 @@ unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp) {
  * Add this experience to guild exp
  * [Celest]
  *---------------------------------------------------*/
-int guild_getexp(struct map_session_data *sd,int exp) {
+t_exp guild_getexp(struct map_session_data *sd,t_exp exp) {
 	struct guild_expcache *c;
 	nullpo_ret(sd);
 
@@ -1399,10 +1425,8 @@ int guild_getexp(struct map_session_data *sd,int exp) {
 		return 0;
 
 	c = (struct guild_expcache *)db_data2ptr(guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd));
-	if (c->exp > UINT64_MAX - exp)
-		c->exp = UINT64_MAX;
-	else
-		c->exp += exp;
+	c->exp = util::safe_addition_cap(c->exp, exp, MAX_GUILD_EXP);
+
 	return exp;
 }
 
@@ -1863,6 +1887,7 @@ int guild_broken(int guild_id,int flag) {
 			status_change_end(&sd->bl,SC_GLORYWOUNDS,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_SOULCOLD,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_HAWKEYES,INVALID_TIMER);
+			status_change_end(&sd->bl,SC_EMERGENCY_MOVE,INVALID_TIMER);
 		}
 	}
 
@@ -1947,8 +1972,10 @@ int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id, time_t tim
 		g->member[0].sd->state.gmaster_flag = 1;
 		clif_name_area(&g->member[0].sd->bl);
 		//Block his skills to prevent abuse.
+#ifndef RENEWAL
 		if (battle_config.guild_skill_relog_delay)
 			guild_block_skill(g->member[0].sd, battle_config.guild_skill_relog_delay);
+#endif
 	}
 
 	// announce the change to all guild members

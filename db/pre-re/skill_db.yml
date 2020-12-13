@@ -55,7 +55,7 @@
 #   NoNearNPC:                Determines if the skill can be used near a NPC. (Optional)
 #     AdditionalRange         Number of cells from an NPC where the skill can be cast. (Optional)
 #     Type:                   Type of NPC.
-#   CastCancel                Cancel cast when hit. (Default: true)
+#   CastCancel                Cancel cast when hit. (Default: false)
 #   CastDefenseReduction      Defense reduction rate during skill cast. (Default: 0)
 #   CastTime:                 Time to cast the skill in milliseconds. (Default: 0)
 #     - Level                 Skill level.
@@ -15306,9 +15306,12 @@ Body:
     DamageFlags:
       Splash: true
       SplashSplit: true
+      IgnoreDefense: true
     Flags:
       IsNpc: true
       TargetTrap: true
+      ShowScale: true
+      IgnoreLandProtector: true
     Hit: Multi_Hit
     HitCount: 1
     SplashArea:
@@ -15332,6 +15335,34 @@ Body:
         Area: 11
       - Level: 10
         Area: 13
+    Duration1: 910
+    Unit:
+      Id: Earthquake
+      Range:
+        - Level: 1
+          Size: 5
+        - Level: 2
+          Size: 7
+        - Level: 3
+          Size: 9
+        - Level: 4
+          Size: 11
+        - Level: 5
+          Size: 13
+        - Level: 6
+          Size: 5
+        - Level: 7
+          Size: 7
+        - Level: 8
+          Size: 9
+        - Level: 9
+          Size: 11
+        - Level: 10
+          Size: 13
+      Interval: 300
+      Target: Enemy
+      Flag:
+        PathCheck: true
   - Id: 654
     Name: NPC_FIREBREATH
     Description: Fire Breath
@@ -15414,6 +15445,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15460,6 +15492,7 @@ Body:
     Flags:
       IsNpc: true
       TargetTrap: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea: 7
@@ -15475,6 +15508,7 @@ Body:
     Flags:
       IsNpc: true
       TargetTrap: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea: 14
@@ -15489,6 +15523,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15513,6 +15548,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15537,6 +15573,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15561,6 +15598,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15585,6 +15623,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15609,6 +15648,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15634,6 +15674,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     Element: Fire
@@ -15652,6 +15693,7 @@ Body:
       IgnoreDefCard: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Range: 7
     Hit: Single
     HitCount: 1
@@ -15748,6 +15790,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15864,6 +15907,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15888,6 +15932,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15912,6 +15957,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -15945,6 +15991,7 @@ Body:
       Splash: true
     Flags:
       IsNpc: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     SplashArea:
@@ -16224,6 +16271,7 @@ Body:
     Flags:
       IsNpc: true
       IgnoreLandProtector: true
+      ShowScale: true
     Hit: Single
     HitCount: 1
     Element: Poison
@@ -16240,6 +16288,8 @@ Body:
     Name: NPC_COMET
     Description: Comet 2
     MaxLevel: 1
+    Flags:
+      ShowScale: true
   - Id: 716
     Name: NPC_MAXPAIN
     Description: Max Pain
@@ -16271,6 +16321,8 @@ Body:
     Name: NPC_JACKFROST
     Description: Jack Frost 2
     MaxLevel: 1
+    Flags:
+      ShowScale: true
   - Id: 725
     Name: NPC_REVERBERATION
     Description: Reverberation 2
@@ -16283,6 +16335,7 @@ Body:
       IsNpc: true
       IsTrap: true
       DisableNearNpc: true
+      ShowScale: true
     Range: 1
     Hit: Single
     HitCount: 1
@@ -16323,6 +16376,8 @@ Body:
     Name: NPC_LEX_AETERNA
     Description: Lex Aeterna 2
     MaxLevel: 1
+    Flags:
+      ShowScale: true
   - Id: 728
     Name: NPC_ARROWSTORM
     Description: NPC Arrow Storm
@@ -27408,6 +27463,7 @@ Body:
     HitCount: 1
     Requires:
       SpCost: 40
+      State: Cart
   - Id: 2552
     Name: RL_RICHS_COIN
     Description: Rich's Coin
@@ -33615,9 +33671,3 @@ Body:
       IgnoreKagehumi: true
     CastCancel: true
     Duration2: 300000
-  - Id: 10016
-    Name: GD_GUILD_STORAGE
-    Description: Guild Storage Expansion
-    MaxLevel: 5
-    Flags:
-      IsGuild: true

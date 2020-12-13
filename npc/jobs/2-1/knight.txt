@@ -1227,7 +1227,8 @@ job_knt,89,106,4	script	Windsor Benedict#knt	733,{
 	end;
 
 OnInit:
-	disablenpc "Windsor Benedict#knt";
+	//disablenpc  "Windsor Benedict#knt";
+	hideonnpc "Windsor Benedict#knt";
 	waitingroom "Waiting Room",20,"Windsor Benedict#knt::OnStartArena",1;
 	enablewaitingroomevent;
 	end;
