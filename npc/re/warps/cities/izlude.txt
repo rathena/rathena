@@ -15,6 +15,7 @@
 //= 1.6 Added new warps. [Streusel]
 //= 1.7 Updated to match the official scripts. [Euphy]
 //= 1.8 Added Izlude & Prontera Field 8 duplicates. [Euphy]
+//= 1.9 Fix & Added Criatura Academy warps for new Criatura. [Renzadic]
 //============================================================
 
 //= Izlude City ==============================================
@@ -115,10 +116,10 @@ int_land04,49,57,0	duplicate(#intro_to_izlude)	#intro_to_izlude_d	WARPNPC,2,2
 izlude,125,257,0	warp	#to_ac01	2,2,iz_ac01,99,29
 izlude,130,257,0	warp	#to_ac02	2,2,iz_ac01,99,29
 iz_ac01,100,24,0	warp	#to_ac01-1	2,2,izlude,127,253
-iz_ac01,78,25,0	warp	#to_ac2f01	2,2,iz_ac02,104,27
-iz_ac01,122,25,0	warp	#to_ac2f02	2,2,iz_ac02,104,27
-iz_ac02,94,27,0	warp	#to_ac1f01	2,2,iz_ac01,78,28
-iz_ac02,113,27,0	warp	#to_ac1f02	2,2,iz_ac01,122,28
+iz_ac01,78,25,0	warp	#to_ac2f01	2,2,iz_ac02,207,27
+iz_ac01,122,25,0	warp	#to_ac2f02	2,2,iz_ac02,207,27
+iz_ac02,198,27,0	warp	#to_ac1f01	2,2,iz_ac01,78,28
+iz_ac02,217,27,0	warp	#to_ac1f02	2,2,iz_ac01,122,28
 new_1-3,96,176,0	warp	#to_ac01-2	1,1,iz_ac01,49,73
 
 //= Izlude Academy Duplicates ================================
@@ -134,19 +135,155 @@ iz_ac01_a,100,24,0	warp	#to_ac01-1_a	2,2,izlude_a,127,253
 iz_ac01_b,100,24,0	warp	#to_bc01-1_b	2,2,izlude_b,127,253
 iz_ac01_c,100,24,0	warp	#to_cc01-1_c	2,2,izlude_c,127,253
 iz_ac01_d,100,24,0	warp	#to_dc01-1_d	2,2,izlude_d,127,253
-iz_ac01_a,78,25,0	warp	#to_ac2f01_a	2,2,iz_ac02_a,104,27
-iz_ac01_b,78,25,0	warp	#to_bc2f01_b	2,2,iz_ac02_b,104,27
-iz_ac01_c,78,25,0	warp	#to_cc2f01_c	2,2,iz_ac02_c,104,27
-iz_ac01_d,78,25,0	warp	#to_dc2f01_d	2,2,iz_ac02_d,104,27
-iz_ac01_a,122,25,0	warp	#to_ac2f02_a	2,2,iz_ac02_a,104,27
-iz_ac01_b,122,25,0	warp	#to_bc2f02_b	2,2,iz_ac02_b,104,27
-iz_ac01_c,122,25,0	warp	#to_cc2f02_c	2,2,iz_ac02_c,104,27
-iz_ac01_d,122,25,0	warp	#to_dc2f02_d	2,2,iz_ac02_d,104,27
-iz_ac02_a,94,27,0	warp	#to_ac1f01_a	2,2,iz_ac01_a,78,28
-iz_ac02_b,94,27,0	warp	#to_bc1f01_b	2,2,iz_ac01_b,78,28
-iz_ac02_c,94,27,0	warp	#to_cc1f01_c	2,2,iz_ac01_c,78,28
-iz_ac02_d,94,27,0	warp	#to_dc1f01_d	2,2,iz_ac01_d,78,28
-iz_ac02_a,113,27,0	warp	#to_ac1f02_a	2,2,iz_ac01_a,122,28
-iz_ac02_b,113,27,0	warp	#to_bc1f02_b	2,2,iz_ac01_b,122,28
-iz_ac02_c,113,27,0	warp	#to_cc1f02_c	2,2,iz_ac01_c,122,28
-iz_ac02_d,113,27,0	warp	#to_dc1f02_d	2,2,iz_ac01_d,122,28
+iz_ac01_a,78,25,0	warp	#to_ac2f01_a	2,2,iz_ac02_a,207,27
+iz_ac01_b,78,25,0	warp	#to_bc2f01_b	2,2,iz_ac02_b,207,27
+iz_ac01_c,78,25,0	warp	#to_cc2f01_c	2,2,iz_ac02_c,207,27
+iz_ac01_d,78,25,0	warp	#to_dc2f01_d	2,2,iz_ac02_d,207,27
+iz_ac01_a,122,25,0	warp	#to_ac2f02_a	2,2,iz_ac02_a,207,27
+iz_ac01_b,122,25,0	warp	#to_bc2f02_b	2,2,iz_ac02_b,207,27
+iz_ac01_c,122,25,0	warp	#to_cc2f02_c	2,2,iz_ac02_c,207,27
+iz_ac01_d,122,25,0	warp	#to_dc2f02_d	2,2,iz_ac02_d,207,27
+iz_ac02_a,198,27,0	warp	#to_ac1f01_a	2,2,iz_ac01_a,78,28
+iz_ac02_b,198,27,0	warp	#to_bc1f01_b	2,2,iz_ac01_b,78,28
+iz_ac02_c,198,27,0	warp	#to_cc1f01_c	2,2,iz_ac01_c,78,28
+iz_ac02_d,198,27,0	warp	#to_dc1f01_d	2,2,iz_ac01_d,78,28
+iz_ac02_a,217,27,0	warp	#to_ac1f02_a	2,2,iz_ac01_a,122,28
+iz_ac02_b,217,27,0	warp	#to_bc1f02_b	2,2,iz_ac01_b,122,28
+iz_ac02_c,217,27,0	warp	#to_cc1f02_c	2,2,iz_ac01_c,122,28
+iz_ac02_d,217,27,0	warp	#to_dc1f02_d	2,2,iz_ac01_d,122,28
+
+//= Izlude Academy Floor 2 Warps and Duplicates =================
+//= Fixed By Renzadic 12/12/20 ==================================
+
+//= Izlude Academy Floor 2 Bard ================================= 
+iz_ac02,221,44,0	warp	#fixbyrenzadic	2,2,iz_ac02,128,48
+iz_ac02_a,221,44,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,128,48
+iz_ac02_b,221,44,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,128,48
+iz_ac02_c,221,44,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,128,48
+iz_ac02_d,221,44,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,128,48
+//= Bard Return Hallway =========================================
+iz_ac02,124,47,0	warp	#fixbyrenzadic	2,2,iz_ac02,218,44
+iz_ac02_a,124,47,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,218,44
+iz_ac02_b,124,47,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,218,44
+iz_ac02_c,124,47,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,218,44
+iz_ac02_d,124,47,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,218,44
+//= Izlude Academy Floor 2 Gunslinger ===========================
+iz_ac02,221,60,0	warp	#fixbyrenzadic	2,2,iz_ac02,128,77
+iz_ac02_a,221,60,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,128,77
+iz_ac02_b,221,60,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,128,77
+iz_ac02_c,221,60,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,128,77
+iz_ac02_d,221,60,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,128,77
+//= Gunslinger Return Hallway ===================================
+iz_ac02,124,77,0	warp	#fixbyrenzadic	2,2,iz_ac02,217,60
+iz_ac02_a,124,77,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,217,60
+iz_ac02_b,124,77,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,217,60
+iz_ac02_c,124,77,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,217,60
+iz_ac02_d,124,77,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,217,60
+//= Izlude Academy Floor 2 Mage ================================
+iz_ac02,221,75,0	warp	#fixbyrenzadic	2,2,iz_ac02,128,107
+iz_ac02_a,221,75,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,128,107
+iz_ac02_b,221,75,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,128,107
+iz_ac02_c,221,75,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,128,107
+iz_ac02_d,221,75,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,128,107
+//= Mage Return Hallway =========================================
+iz_ac02,124,107,0	warp	#fixbyrenzadic	2,2,iz_ac02,216,75
+iz_ac02_a,124,107,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,216,75
+iz_ac02_b,123,107,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,216,75
+iz_ac02_c,124,107,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,216,75
+iz_ac02_d,124,107,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,216,75
+//= Izlude Academy Floor 2 Ninja ================================
+iz_ac02,221,91,0	warp	#fixbyrenzadic	2,2,iz_ac02,128,136
+iz_ac02_a,221,91,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,128,136
+iz_ac02_b,221,91,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,128,136
+iz_ac02_c,221,91,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,128,136
+iz_ac02_d,221,91,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,128,136
+//= Ninja Return Hallway ========================================
+iz_ac02,124,137,0	warp	#fixbyrenzadic	2,2,iz_ac02,216,91
+iz_ac02_a,124,137,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,216,91
+iz_ac02_b,124,137,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,216,91
+iz_ac02_c,124,137,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,216,91
+iz_ac02_d,124,137,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,216,91
+//= Izlude Academy Floor 2 Acolyte  =============================
+iz_ac02,221,107,0	warp	#fixbyrenzadic	2,2,iz_ac02,127,167
+iz_ac02_a,221,107,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,127,167
+iz_ac02_b,221,107,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,127,167
+iz_ac02_c,221,107,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,127,167
+iz_ac02_d,221,107,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,127,167
+//= Acolyte Return Hallway ======================================
+iz_ac02,124,167,0	warp	#fixbyrenzadic	2,2,iz_ac02,216,107
+iz_ac02_a,124,167,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,216,107
+iz_ac02_b,124,167,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,216,107
+iz_ac02_c,124,167,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,216,107
+iz_ac02_d,124,167,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,216,107
+//= Izlude Academy Floor 2 Principle ============================
+iz_ac02,207,121,0	warp	#fixbyrenzadic	2,2,iz_ac02,103,182
+iz_ac02_a,207,121,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,103,185
+iz_ac02_b,207,121,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,103,185
+iz_ac02_c,207,121,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,103,185
+iz_ac02_d,207,121,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,103,185
+//= Principle Return Hallway ====================================
+iz_ac02,103,182,0	warp	#fixbyrenzadic	2,2,iz_ac02,207,118
+iz_ac02_a,103,182,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,207,118
+iz_ac02_b,103,182,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,207,118
+iz_ac02_c,103,182,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,207,118
+iz_ac02_d,103,182,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,207,118
+//= Izlude Academy Floor 2 Merchant =============================
+iz_ac02,194,107,0	warp	#fixbyrenzadic	2,2,iz_ac02,80,167
+iz_ac02_a,194,107,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,80,167
+iz_ac02_b,194,107,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,80,167
+iz_ac02_c,194,107,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,80,167
+iz_ac02_d,194,107,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,80,167
+//= Merchant Return Hallway =====================================
+iz_ac02,83,167,0	warp	#fixbyrenzadic	2,2,iz_ac02,197,107
+iz_ac02_a,83,167,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,197,107
+iz_ac02_b,83,167,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,197,107
+iz_ac02_c,83,167,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,197,107
+iz_ac02_d,83,167,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,197,107
+//= Izlude Academy Floor 2 Assassin =============================
+iz_ac02,194,92,0	warp	#fixbyrenzadic	2,2,iz_ac02,77,137
+iz_ac02_a,194,92,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,77,137
+iz_ac02_b,194,92,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,77,137
+iz_ac02_c,194,92,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,77,137
+iz_ac02_d,194,92,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,77,137
+//= Assasin Return Hallway ======================================
+iz_ac02,83,137,0	warp	#fixbyrenzadic	2,2,iz_ac02,197,92
+iz_ac02_a,83,137,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,197,92
+iz_ac02_b,83,137,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,197,92
+iz_ac02_c,83,137,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,197,92
+iz_ac02_d,83,137,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,197,92
+//= Izlude Academy Floor 2 Archer ===============================
+iz_ac02,194,75,0	warp	#fixbyrenzadic	2,2,iz_ac02,80,107
+iz_ac02_a,194,75,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,80,107
+iz_ac02_b,194,75,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,80,107
+iz_ac02_c,194,75,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,80,107
+iz_ac02_d,194,75,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,80,107
+//= Archer Return Hallway =======================================
+iz_ac02,84,107,0	warp	#fixbyrenzadic	2,2,iz_ac02,197,75
+iz_ac02_a,84,107,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,197,75
+iz_ac02_b,84,107,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,197,75
+iz_ac02_c,84,107,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,197,75
+iz_ac02_d,84,107,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,197,75
+//= Izlude Academy Floor 2 Taekwondo ============================
+iz_ac02,194,59,0	warp	#fixbyrenzadic	2,2,iz_ac02,80,76
+iz_ac02_a,194,59,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,80,76
+iz_ac02_b,194,59,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,80,76
+iz_ac02_c,194,59,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,80,76
+iz_ac02_d,194,59,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,80,76
+//= Taekwon Return Hallway ======================================
+iz_ac02,83,76,0	warp	#fixbyrenzadic	2,2,iz_ac02,197,75
+iz_ac02_a,83,76,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,197,59
+iz_ac02_b,83,76,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,197,59
+iz_ac02_c,83,76,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,197,59
+iz_ac02_d,83,76,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,197,59
+//= Izlude Academy Floor 2 Swordsman ============================
+iz_ac02,194,43,0	warp	#fixbyrenzadic	2,2,iz_ac02,80,47
+iz_ac02_a,194,43,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,80,47
+iz_ac02_b,194,43,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,80,47
+iz_ac02_c,194,43,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,80,47
+iz_ac02_d,194,43,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,80,47
+//= Swordsman Return Hallway ====================================
+iz_ac02,83,47,0	warp	#fixbyrenzadic	2,2,iz_ac02,197,75
+iz_ac02_a,83,47,0	warp	#fixbyrenzadic1	2,2,iz_ac02_a,197,43
+iz_ac02_b,83,47,0	warp	#fixbyrenzadic2	2,2,iz_ac02_b,197,43
+iz_ac02_c,83,47,0	warp	#fixbyrenzadic3	2,2,iz_ac02_c,197,43
+iz_ac02_d,83,47,0	warp	#fixbyrenzadic4	2,2,iz_ac02_d,197,43
