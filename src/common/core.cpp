@@ -26,6 +26,7 @@
 #include "mmo.hpp"
 #include "showmsg.hpp"
 #include "strlib.hpp"
+#include "future.hpp"
 
 #ifndef DEPRECATED_COMPILER_SUPPORT
 	#if defined( _MSC_VER ) && _MSC_VER < 1900
@@ -380,6 +381,7 @@ int main (int argc, char **argv)
 	while (runflag != CORE_ST_STOP) { 
 		t_tick next = do_timer(gettick_nocache());
 		do_sockets(next);
+		do_future();
 	}
 
 	do_final();

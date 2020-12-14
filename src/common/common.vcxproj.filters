@@ -83,6 +83,12 @@
     <ClInclude Include="utilities.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="jobqueue.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="future.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cli.cpp">
@@ -149,6 +155,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="utilities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="future.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

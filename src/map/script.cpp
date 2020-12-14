@@ -61,6 +61,7 @@
 #include "pet.hpp"
 #include "quest.hpp"
 #include "storage.hpp"
+#include "asyncquery.hpp"
 
 using namespace rathena;
 
@@ -4480,6 +4481,8 @@ void run_script_main(struct script_state *st)
 		st->sleep.charid = sd?sd->status.char_id:0;
 		st->sleep.timer = add_timer(gettick() + st->sleep.tick, run_script_timer, st->sleep.charid, (intptr_t)st);
 		linkdb_insert(&sleep_db, (void *)__64BPRTSIZE(st->oid), st);
+	} else if (st->asyncSleep) {
+		script_detach_state(st, false);
 	} else if(st->state != END && st->rid) {
 		//Resume later (st is already attached to player).
 		if(st->bk_st) {
@@ -17465,6 +17468,133 @@ BUILDIN_FUNC(query_logsql) {
 	return buildin_query_sql_sub(st, logmysql_handle);
 }
 
+std::map<int, DBResultData*> query_sql_db;
+
+static int buildin_query_sql_aysnc_sub(struct script_state* st, dbType type)
+{
+	if (!st->asyncSleep) {
+		const char* query = script_getstr(st, 2);
+		if (script_hasdata(st, 3)) {
+			st->state = RERUNLINE;
+			st->asyncSleep = true;
+			addDBJob(
+				type,
+				query,
+				[st](FutureData result_data) {
+					query_sql_db[st->id] = (DBResultData*)result_data;
+					run_script_main(st);
+				}
+			);
+		}
+		else
+			addDBJob(type, query);
+	}
+	else {
+		DBResultData result_data(query_sql_db[st->id]);
+		delete query_sql_db[st->id];
+		query_sql_db.erase(st->id);
+
+		size_t i, j;
+		TBL_PC* sd = NULL;
+		struct script_data* data;
+		const char* name;
+		unsigned int max_rows = SCRIPT_MAX_ARRAYSIZE; // maximum number of rows
+		size_t num_vars;
+		size_t num_cols;
+
+		st->asyncSleep = false;
+		st->state = RUN;
+
+		// check target variables
+		for (i = 3; script_hasdata(st, (int)i); ++i) {
+			data = script_getdata(st, i);
+			if (data_isreference(data)) { // it's a variable
+				name = reference_getname(data);
+				if (not_server_variable(*name) && sd == NULL) { // requires a player
+					if (!script_rid2sd(sd)) { // no player attached
+						script_reportdata(data);
+						st->state = END;
+						query_sql_db.erase(st->id);
+						return SCRIPT_CMD_FAILURE;
+					}
+				}
+			}
+			else {
+				ShowError("script:query_sql_async: not a variable\n");
+				script_reportdata(data);
+				st->state = END;
+				query_sql_db.erase(st->id);
+				return SCRIPT_CMD_FAILURE;
+			}
+		}
+		num_vars = i - 3;
+
+		if (SQL_ERROR == result_data.sql_result_value) {
+			script_pushint(st, -1);
+			query_sql_db.erase(st->id);
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		if (result_data.RowNum == 0) { // No data received
+			script_pushint(st, 0);
+			query_sql_db.erase(st->id);
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		// Count the number of columns to store
+		num_cols = result_data.ColumnNum;
+		if (num_vars < num_cols) {
+			ShowWarning("script:query_sql_async: Too many columns, discarding last %u columns.\n", (unsigned int)(num_cols - num_vars));
+			script_reportsrc(st);
+		}
+		else if (num_vars > num_cols) {
+			ShowWarning("script:query_sql_async: Too many variables (%u extra).\n", (unsigned int)(num_vars - num_cols));
+			script_reportsrc(st);
+		}
+
+		// Store data
+		for (i = 0; i < max_rows && i < result_data.RowNum; ++i) {
+			for (j = 0; j < num_vars; ++j) {
+				const char* str = NULL;
+
+				if (j < num_cols)
+					str = result_data.GetData(i, j);
+
+				data = script_getdata(st, j + 3);
+				name = reference_getname(data);
+
+				if (is_string_variable(name))
+					setd_sub_str(st, sd, name, i, str ? str : "", reference_getref(data));
+				else
+					setd_sub_num(st, sd, name, i, str ? strtoll(str, nullptr, 10) : 0, reference_getref(data));
+			}
+		}
+		if (i == max_rows && max_rows < result_data.RowNum) {
+			ShowWarning("script:query_sql_async: Only %d/%u rows have been stored.\n", max_rows, (unsigned int)result_data.RowNum);
+			script_reportsrc(st);
+		}
+
+		script_pushint(st, i);
+		query_sql_db.erase(st->id);
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(query_sql_async) {
+	return buildin_query_sql_aysnc_sub(st, dbType::MAIN_DB);
+}
+
+BUILDIN_FUNC(query_logsql_async) {
+	if( !log_config.sql_logs ) {// logmysql_handle == NULL
+		ShowWarning("buildin_query_logsql_async: SQL logs are disabled, query '%s' will not be executed.\n", script_getstr(st,2));
+		script_pushint(st,-1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	return buildin_query_sql_aysnc_sub(st, dbType::LOG_DB);
+}
+
 //Allows escaping of a given string.
 BUILDIN_FUNC(escape_sql)
 {
@@ -26409,6 +26539,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(axtoi,"s"),
 	BUILDIN_DEF(query_sql,"s*"),
 	BUILDIN_DEF(query_logsql,"s*"),
+	BUILDIN_DEF(query_sql_async,"s*"),
+	BUILDIN_DEF(query_logsql_async,"s*"),
 	BUILDIN_DEF(escape_sql,"v"),
 	BUILDIN_DEF(atoi,"s"),
 	BUILDIN_DEF(strtol,"si"),

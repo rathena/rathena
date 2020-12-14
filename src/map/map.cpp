@@ -49,6 +49,7 @@
 #include "quest.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
+#include "asyncquery.hpp"
 
 using namespace rathena;
 
@@ -4920,6 +4921,7 @@ void do_final(void){
 	iwall_db->destroy(iwall_db, NULL);
 	regen_db->destroy(regen_db, NULL);
 
+	asyncquery_final();
 	map_sql_close();
 
 	ShowStatus("Finished.\n");
@@ -5173,7 +5175,7 @@ int do_init(int argc, char *argv[])
 	map_sql_init();
 	if (log_config.sql_logs)
 		log_sql_init();
-
+	asyncquery_init();
 	mapindex_init();
 	if(enable_grf)
 		grfio_init(GRF_PATH_FILENAME);
