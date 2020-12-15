@@ -5078,9 +5078,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case MC_CARTREVOLUTION:
 	case NPC_SPLASHATTACK:
 		flag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
-#ifdef RENEWAL
-	case KN_BOWLINGBASH:
-#endif
 	case AS_SPLASHER:
 	case HT_BLITZBEAT:
 	case AC_SHOWER:
@@ -5169,11 +5166,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			if ((skill_id == SP_SHA || skill_id == SP_SWHOO) && !battle_config.allow_es_magic_pc && bl->type != BL_MOB)
 				break;
 
-#ifdef RENEWAL
-			if (skill_id == KN_BOWLINGBASH)
-				sflag &= ~4; // Always trigger knockback
-#endif
-
 			heal = (int)skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, sflag);
 			if( skill_id == NPC_VAMPIRE_GIFT && heal > 0 ) {
 				clif_skill_nodamage(NULL, src, AL_HEAL, heal, 1);
@@ -5199,11 +5191,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				status_change_end(src, SC_USE_SKILL_SP_SPA, INVALID_TIMER);
 
 			switch ( skill_id ) {
-#ifdef RENEWAL
-				case KN_BOWLINGBASH:
-					flag |= SD_LEVEL; // Get area count
-					break;
-#endif
 				case LG_EARTHDRIVE:
 				case GN_CARTCANNON:
 				case SU_SCRATCH:
@@ -5285,7 +5272,18 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 
-#ifndef RENEWAL
+#ifdef RENEWAL
+	case KN_BOWLINGBASH:
+		if (flag & 1) {
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, (skill_area_temp[0]) > 0 ? SD_ANIMATION | skill_area_temp[0] : skill_area_temp[0]);
+			skill_blown(src, bl, skill_get_blewcount(skill_id, skill_lv), -1, BLOWN_NONE);
+			skill_area_temp[0] = 0;
+		} else {
+			skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+		}
+		break;
+#else
 	case KN_BOWLINGBASH:
 #endif
 	case MS_BOWLINGBASH:
