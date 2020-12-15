@@ -9227,12 +9227,12 @@ void clif_wedding_effect(struct block_list *bl)
 /// 01e6 <partner name>.24B
 void clif_callpartner(struct map_session_data& sd, struct map_session_data& p_sd)
 {
-	unsigned char buf[26]={0};
-	WBUFW(buf,0) = 0x1e6;
-	const char *p = p_sd.status.name;
-	safestrncpy(WBUFCP(buf,2), p, NAME_LENGTH);
+	PACKET_ZC_COUPLENAME p = { 0 };
 
-	clif_send(buf, packet_len(0x1e6), &sd.bl, AREA);
+	p.packetType = HEADER_ZC_COUPLENAME;
+	safestrncpy(p.name, p_sd.status.name, NAME_LENGTH);
+
+	clif_send(&p, sizeof(p), &sd.bl, AREA);
 }
 
 

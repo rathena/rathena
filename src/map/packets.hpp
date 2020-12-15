@@ -178,6 +178,11 @@ struct PACKET_ZC_CHANGE_GUILD {
 #endif
 } __attribute__((packed));
 
+struct PACKET_ZC_COUPLENAME {
+	int16 packetType;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -222,6 +227,7 @@ DEFINE_PACKET_HEADER(ZC_ACK_GUILDSTORAGE_LOG, 0x9da)
 DEFINE_PACKET_HEADER(CZ_NPC_MARKET_PURCHASE, 0x9d6)
 DEFINE_PACKET_HEADER(CZ_REQ_APPLY_BARGAIN_SALE_ITEM2, 0xa3d)
 DEFINE_PACKET_HEADER(CZ_GUILD_EMBLEM_CHANGE2, 0x0b46)
+DEFINE_PACKET_HEADER(ZC_COUPLENAME, 0x1e6);
 
 const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
 const int16 MAX_INVENTORY_ITEM_PACKET_EQUIP = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_equip ) - ( sizeof( struct EQUIPITEM_INFO ) * MAX_ITEMLIST ) ) ) / sizeof( struct EQUIPITEM_INFO ) );
