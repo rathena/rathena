@@ -519,7 +519,7 @@ struct map_session_data {
 		int get_zeny_rate;
 		int get_zeny_num; //Added Get Zeny Rate [Skotlex]
 		int double_add_rate;
-		int short_weapon_damage_return,long_weapon_damage_return;
+		int short_weapon_damage_return,long_weapon_damage_return,reduce_damage_return;
 		int magic_damage_return; // AppleGirl Was Here
 		int break_weapon_rate,break_armor_rate;
 		int crit_atk_rate;
