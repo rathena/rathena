@@ -2074,7 +2074,7 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 		return 0;
 	}
 
-	if (md->ud.walktimer == INVALID_TIMER && status_has_mode(&md->status,MD_CANMOVE) && unit_can_move(&md->bl)) {
+	if (md->ud.walktimer == INVALID_TIMER) {
 		// Because it is not unset when the mob finishes walking.
 		md->state.skillstate = MSS_IDLE;
 		if (md->idle_event[0] && npc_event_do_id( md->idle_event, md->bl.id ) > 0) {

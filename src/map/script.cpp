@@ -7884,7 +7884,7 @@ BUILDIN_FUNC(makeitem) {
 		else{
 			ShowError( "buildin_makeitem: Unknown item %s\n", name );
 			return SCRIPT_CMD_FAILURE;
-	}
+		}
 	}
 	else {
 		int32 val = script_getnum( st, 2 );
@@ -7915,14 +7915,14 @@ BUILDIN_FUNC(makeitem) {
 	} else
 		m = map_mapname2mapid(mapname);
 
-		memset(&item_tmp,0,sizeof(item_tmp));
-		item_tmp.nameid = nameid;
+	memset(&item_tmp,0,sizeof(item_tmp));
+	item_tmp.nameid = nameid;
 	if (!flag)
-			item_tmp.identify = 1;
-		else
-			item_tmp.identify = itemdb_isidentified(nameid);
+		item_tmp.identify = 1;
+	else
+		item_tmp.identify = itemdb_isidentified(nameid);
 
-		map_addflooritem(&item_tmp,amount,m,x,y,0,0,0,4,0);
+	map_addflooritem(&item_tmp,amount,m,x,y,0,0,0,4,0);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -7951,7 +7951,7 @@ BUILDIN_FUNC(makeitem2) {
 		}else{
 			ShowError( "buildin_%s: Unknown item %s\n", funcname, name );
 			return SCRIPT_CMD_FAILURE;
-	}
+		}
 	}else{
 		nameid = (t_itemid)script_getnum( st, 2 );
 
@@ -23323,7 +23323,7 @@ BUILDIN_FUNC(hateffect){
 		}
 
 		util::vector_erase_if_exists( sd->hatEffects, effectID );
-		}
+	}
 
 	if( !sd->state.connect_new ){
 		clif_hat_effect_single( sd, effectID, enable );
@@ -25634,6 +25634,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(achievementcomplete,"i?"),
 	BUILDIN_DEF(achievementexists,"i?"),
 	BUILDIN_DEF(achievementupdate,"iii?"),
+
 
 	BUILDIN_DEF(getequiprefinecost,"iii?"),
 	BUILDIN_DEF2(round, "round", "ii"),

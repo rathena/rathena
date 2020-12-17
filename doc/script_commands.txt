@@ -248,7 +248,7 @@ it's facing 5.)
 Sprite ID is the sprite number or constant used to display this particular NPC.
 You may also use a monster's ID instead to display a monster sprite for this NPC.
 It is possible to use a job sprite as well, but you must first define it as a
-monster sprite in 'mob_avail.txt', a full description on how to do this is not
+monster sprite in 'mob_avail.yml', a full description on how to do this is not
 in the scope of this manual.
 A '-1' Sprite ID will make the NPC invisible (and unclickable).
 A '111' Sprite ID will make an NPC which does not have a sprite, but is still
@@ -4727,7 +4727,7 @@ eggs, and may hatch from either, although, I'm not sure what kind of a mess will
 this really cause.
 
 'getitem3' is advance version of 'getitem2' that also use Item Random Option as additional values.
-<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
 
@@ -4769,7 +4769,7 @@ some cases cannot be traded or stored.
 For a list of bound types see 'getitembound'.
 
 'getitembound3' is advance version of 'getitembound2' that also use Item Random Option as additional values.
-<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
 
@@ -4835,7 +4835,7 @@ in <time> seconds and be automatically deleted. See 'rentitem' for further detai
 See 'getitem2' for an explanation of the expanded parameters.
 
 'rentitem3' is advance version of 'rentitem2' that also use Item Random Option as additional values.
-<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
 
@@ -4874,7 +4874,7 @@ further details.
 See 'getitem2' for an explanation of the expanded parameters.
 
 'makeitem3' is advance version of 'makeitem2' that also use Item Random Option as additional values.
-<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
 
@@ -4960,7 +4960,7 @@ This command will remove a specified amount of items from the invoking/target ch
 See 'getitem2' for an explanation of the expanded parameters.
 
 'delitem3' is advance version of 'delitem2' that also use Item Random Option as criteria.
-<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
 
@@ -5030,7 +5030,7 @@ other parameters that the invoking character has in the inventory.
 See 'getitem2' for an explanation of the expanded parameters.
 
 'countitem3' is advance version of 'countitem2' that also use Item Random Option as criteria.
-<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
 
@@ -5071,7 +5071,7 @@ other parameters that the invoking character has in the inventory.
 See 'getitem2' for an explanation of the expanded parameters.
 
 'rentalcountitem3' is advance version of 'rentalcountitem2' that also use Item Random Option as criteria.
-<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.yml
 <RandomValueArray> : Array variable of item random option's value.
 <RandomParamArray> : Array variable of item random option's param.
 
@@ -7544,7 +7544,7 @@ unnerving.
 Only a few NPC sprites have walking animations, and those that do, do not get
 the animation invoked when moving the NPC, due to the problem in the NPC walking
 code, which looks a bit silly. You might have better success by defining a job-
-sprite based sprite id in 'db/mob_avail.txt' with this.
+sprite based sprite id in 'db/mob_avail.yml' with this.
 
 ---------------------------------------
 
@@ -7989,8 +7989,8 @@ Cast time is the amount of seconds to add or remove from the skill. Use a positi
 add and negative value to subtract. Using 0 or no value will use the default skill cast time.
 For the position, the x and y are given in the UnitSkillUsePos.
 
-<cancel> define if the cast can be interrupted when hit (true/false).
-By default <cancel> parameter take the value defined in skill_db.txt
+<cancel> defines if the cast can be interrupted when hit (true/false).
+CastCancel from skill_db.yml is the default value of <cancel>.
 
 If <Line_ID> is defined (positive number, default 0) the monster will say the message from 'Line_ID'
 in mob_chat_db.txt when casting the skill.
