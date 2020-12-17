@@ -3,15 +3,15 @@
 //===== Description: =========================================
 //= [Walkthrough Conversion]
 //= Wave Mode Forest and Sky Instances
-//=   Officially monsters can use their skills
-//	  (NPC_SUMMONSLAVE, at least). NPC_EMOTION and
-//	  NPC_EMOTION_ON have been blocked since it disrupts the
-//	  walk system of the instance on rAthena.
+//- Officially monsters can use their skills
+//  (NPC_SUMMONSLAVE, at least). NPC_EMOTION and
+//  NPC_EMOTION_ON have been blocked since it disrupts the
+//  walk system of the instance on rAthena.
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
 //============================================================
 
-// Simple function to move the monster when idle. Can be improved.
+// Simple function to move the monster when idle.
 // Move the monster to the next coordinates + end the script on successful; kill the monster + return on failure
 // callfunc( "F_mobidle", <npc name + idle label>, <size coord>, <defined x array>, <x shift>,  <defined y array>, <defined spot-spot distance array> );
 function	script	F_mobidle	{
@@ -34,8 +34,7 @@ function	script	F_mobidle	{
 	if (.@dist_min <= 1) {
 		.@index++;
 		if (.@index >= .@size) {
-			mobchat( .@game_id, 0, 0xFF0000, "" + rid2name(.@game_id) + " : Arrival!" );	// ZC_NPC_CHAT
-			unitskilluseid .@game_id,301,1,.@game_id,1,false;	// SA_INSTANTDEATH
+			unitskilluseid .@game_id,301,1,.@game_id,1,false,41;	// SA_INSTANTDEATH
 			return;
 		}
 	}
@@ -192,8 +191,8 @@ morocc,168,271,4	duplicate(Zonda Rep#pron)	Zonda Rep#mor	4_F_ZONDAGIRL
 1@def01,50,21,0	script	#wave_mode_forest_entrance	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
-	initnpctimer;
 	disablenpc instance_npcname("#wave_mode_forest_entrance");
+	initnpctimer;
 	end;
 OnTimer2000:
 	mapannounce 'map_def01$, "We would like to thank all loyal customers of the Cool Event Corporation.", bc_map;
@@ -468,7 +467,7 @@ OnSpawn:
 	case 69:
 		'mob_id = 2594;	// G_SNOWIER
 		break;
-	case 0:
+	default:
 		'mob_id = 2730;	// C2_NOVUS
 		break;
 	}
@@ -504,7 +503,7 @@ S_Spawn:
 	monster 'map_def01$,.@x,74, "Invader!", 'mob_id,1;
 	.@gid = $@mobid[0];
 	setunitdata .@gid, UMOB_MODE, ( MD_CANMOVE|MD_NORANDOM_WALK );
-	unitignorecellstack .@gid;
+	setunitdata .@gid, UMOB_IGNORE_CELL_STACK_LIMIT, true;
 	mob_setidleevent .@gid, 'npc_name$ + "::OnIdle" + getarg(0);
 	end;
 
@@ -587,6 +586,7 @@ OnTouch:
 	else if ('status_instance == 0) {
 		'status_instance = 1;
 		initnpctimer;
+		disablenpc instance_npcname("#wave_mode_sky_entrance");
 	}
 	else if ('status_instance == 2) {
 		if (wave_mode_map$ == "")
@@ -679,10 +679,10 @@ OnStop:
 1@def02,1,1,0	script	#wave_mode_sky_mercenary	-1,{
 	end;
 OnStart:
-	monster 'map_def02$,29,35, "Mercenary", 3086,1, "",0,AI_SPECIAL;	// WA_MERCENARY
+	monster 'map_def02$,29,35, "Mercenary", 3086,1, "",0,AI_WAVEMODE;	// WA_MERCENARY
 	.@gid = $@mobid[0];
 	emotion ET_SURPRISE, .@gid;
-	unitignorecellstack .@gid;
+	setunitdata .@gid, UMOB_IGNORE_CELL_STACK_LIMIT, true;
 	mob_setidleevent .@gid, 'npc_name_mercenary$ + "::OnIdle";
 	sleep 45000;
 	if (unitexists(.@gid))
@@ -739,7 +739,7 @@ S_Spawn:
 		setunitdata $@mobid[0], UMOB_MODE, ( MD_CANMOVE|MD_NORANDOM_WALK|MD_AGGRESSIVE|MD_CANATTACK );
 	.@gid = $@mobid[0];
 	emotion ET_SURPRISE, .@gid;
-	unitignorecellstack .@gid;
+	setunitdata .@gid, UMOB_IGNORE_CELL_STACK_LIMIT, true;
 	mob_setidleevent .@gid, 'npc_name_mob$ + "::OnIdle";
 	end;
 
@@ -763,7 +763,7 @@ OnFail:
 
 	mapannounce 'map_def02$, "You have failed the <Wave mode - Sky> challenge.", bc_map;
 	'status_instance = 2;
-	hideoffnpc instance_npcname("#wave_mode_sky_entrance");
+	enablenpc instance_npcname("#wave_mode_sky_entrance");
 	initnpctimer;
 	end;
 OnTimer1000:
@@ -784,7 +784,6 @@ OnInstanceInit:
 	'npc_name_treasure$ = instance_npcname("#wave_mode_sky_treasure");
 	'npc_name_mercenary$ = instance_npcname("#wave_mode_sky_mercenary");
 
-	hideonnpc instance_npcname("#wave_mode_sky_entrance");
 	disablenpc instance_npcname("#wave_mode_sky_out");
 
 	setarray 'x_mob[0], 48, 38, 30, 30, 29, 38, 47, 51, 50, 42, 33, 29;

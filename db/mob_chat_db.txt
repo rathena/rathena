@@ -43,4 +43,5 @@
 38#0xFF0000#Discard your life and stay confined here.  You will yearn for freedom in captivity !!
 39#0xFF0000#How much will the outside world change if you stay here in solitude for one thousand years?
 40#0xFF0000#Yes! Yearn for your freedom from this confined place, your captivity here will be permanent !!
+41#0xFF0000#Arrival!
 

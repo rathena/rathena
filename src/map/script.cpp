@@ -17937,6 +17937,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMOB_ROBE, md->vd->robe);
 			getunitdata_sub(UMOB_BODY2, md->vd->body_style);
 			getunitdata_sub(UMOB_GROUP_ID, md->ud.group_id);
+			getunitdata_sub(UMOB_IGNORE_CELL_STACK_LIMIT, md->ud.state.ignore_cell_stack_limit);
 			break;
 
 		case BL_HOM:
@@ -18341,6 +18342,7 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_ROBE: clif_changelook(bl, LOOK_ROBE, (unsigned short)value); break;
 			case UMOB_BODY2: clif_changelook(bl, LOOK_BODY2, (unsigned short)value); break;
 			case UMOB_GROUP_ID: md->ud.group_id = value; unit_refresh(bl); break;
+			case UMOB_IGNORE_CELL_STACK_LIMIT: md->ud.state.ignore_cell_stack_limit = value > 0; break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MOB.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -19057,8 +19059,8 @@ BUILDIN_FUNC(unitemote)
 
 /// Makes the unit cast the skill on the target or self if no target is specified.
 ///
-/// unitskilluseid <unit_id>,<skill_id>,<skill_lv>{,<target_id>,<casttime>,<cancel>};
-/// unitskilluseid <unit_id>,"<skill name>",<skill_lv>{,<target_id>,<casttime>,<cancel>};
+/// unitskilluseid <unit_id>,<skill_id>,<skill_lv>{,<target_id>,<casttime>,<cancel>,<Line_ID>};
+/// unitskilluseid <unit_id>,"<skill name>",<skill_lv>{,<target_id>,<casttime>,<cancel>,<Line_ID>};
 BUILDIN_FUNC(unitskilluseid)
 {
 	int unit_id, target_id, casttime;
@@ -19085,8 +19087,18 @@ BUILDIN_FUNC(unitskilluseid)
 	target_id = ( script_hasdata(st,5) ? script_getnum(st,5) : unit_id );
 	casttime = ( script_hasdata(st,6) ? script_getnum(st,6) : 0 );
 	bool cancel = ( script_hasdata(st,7) ? script_getnum(st,7) > 0 : skill_get_castcancel(skill_id) );
-	
+	int msg_id = (script_hasdata(st, 8) ? script_getnum(st, 8) : 0);
+
 	if(script_rid2bl(2,bl)){
+		if (msg_id > 0) {
+			if (bl->type != BL_MOB) {
+				ShowError("buildin_unitskilluseid: Msg can only be used for monster.\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			TBL_MOB* md = map_id2md(bl->id);
+			if (md)
+				mob_chat_display_message(md, static_cast<int16>(msg_id));
+		}
 		if (bl->type == BL_NPC) {
 			if (!((TBL_NPC*)bl)->status.hp)
 				status_calc_npc(((TBL_NPC*)bl), SCO_FIRST);
@@ -19101,8 +19113,8 @@ BUILDIN_FUNC(unitskilluseid)
 
 /// Makes the unit cast the skill on the target position.
 ///
-/// unitskillusepos <unit_id>,<skill_id>,<skill_lv>,<target_x>,<target_y>{,<casttime>,<cancel>};
-/// unitskillusepos <unit_id>,"<skill name>",<skill_lv>,<target_x>,<target_y>{,<casttime>,<cancel>};
+/// unitskillusepos <unit_id>,<skill_id>,<skill_lv>,<target_x>,<target_y>{,<casttime>,<cancel>,<Line_ID>};
+/// unitskillusepos <unit_id>,"<skill name>",<skill_lv>,<target_x>,<target_y>{,<casttime>,<cancel>,<Line_ID>};
 BUILDIN_FUNC(unitskillusepos)
 {
 	int skill_x, skill_y, casttime;
@@ -19129,8 +19141,18 @@ BUILDIN_FUNC(unitskillusepos)
 	skill_y  = script_getnum(st,6);
 	casttime = ( script_hasdata(st,7) ? script_getnum(st,7) : 0 );
 	bool cancel = ( script_hasdata(st,8) ? script_getnum(st,8) > 0 : skill_get_castcancel(skill_id) );
+	int msg_id = (script_hasdata(st, 9) ? script_getnum(st, 9) : 0);
 
 	if(script_rid2bl(2,bl)){
+		if (msg_id > 0) {
+			if (bl->type != BL_MOB) {
+				ShowError("buildin_unitskilluseid: Msg can only be used for monster.\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			TBL_MOB* md = map_id2md(bl->id);
+			if (md)
+				mob_chat_display_message(md, static_cast<int16>(msg_id));
+		}
 		if (bl->type == BL_NPC) {
 			if (!((TBL_NPC*)bl)->status.hp)
 				status_calc_npc(((TBL_NPC*)bl), SCO_FIRST);
@@ -24951,59 +24973,6 @@ BUILDIN_FUNC(mob_setidleevent){
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * unitignorecellstack <unit game ID>{,<flag>};
- *------------------------------------------*/
-BUILDIN_FUNC(unitignorecellstack)
-{
-	struct block_list *bl = NULL;
-
-	if (script_getnum(st, 2))
-		bl = map_id2bl(script_getnum(st,2));
-	else
-		bl = map_id2bl(st->rid);
-
-	if (bl) {
-		struct unit_data *ud = unit_bl2ud(bl);
-		bool ignore = script_hasdata(st, 3) ? (script_getnum(st, 3) != 0) : true;
-
-		if (ud)
-			ud->state.ignore_cell_stack_limit = ignore;
-	}
-
-	return SCRIPT_CMD_SUCCESS;
-}
-
-BUILDIN_FUNC(mobchat)
-{
-	struct block_list* bl;
-
-	if (!script_rid2bl(2,bl) || bl->type != BL_MOB)
-		return SCRIPT_CMD_SUCCESS;
-
-	short msg_id = script_getnum(st, 3);
-	if (msg_id < 0)
-		return SCRIPT_CMD_SUCCESS;
-
-	if (msg_id == 0) {
-		if (!script_hasdata(st, 4) || !script_hasdata(st, 5))
-			return SCRIPT_CMD_SUCCESS;
-
-		const char *message;
-		int color = script_getnum(st,4);
-		message = script_getstr(st,5);
-
-		clif_messagecolor(bl, color, message, true, AREA_CHAT_WOC);
-		return SCRIPT_CMD_SUCCESS;
-	}
-
-	TBL_MOB* md = map_id2md(bl->id);
-	if (md)
-		mob_chat_display_message(md, msg_id);
-
-	return SCRIPT_CMD_SUCCESS;
-}
-
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -25452,8 +25421,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitstopwalk,"i?"),
 	BUILDIN_DEF(unittalk,"is?"),
 	BUILDIN_DEF_DEPRECATED(unitemote,"ii","20170811"),
-	BUILDIN_DEF(unitskilluseid,"ivi???"), // originally by Qamera [Celest]
-	BUILDIN_DEF(unitskillusepos,"iviii??"), // [Celest]
+	BUILDIN_DEF(unitskilluseid,"ivi????"), // originally by Qamera [Celest]
+	BUILDIN_DEF(unitskillusepos,"iviii???"), // [Celest]
 // <--- [zBuffer] List of unit control commands
 	BUILDIN_DEF(sleep,"i"),
 	BUILDIN_DEF(sleep2,"i"),
@@ -25690,8 +25659,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(rentalcountitem, "rentalcountitem3", "viiiiiiirrr?"),
 
 	BUILDIN_DEF(mob_setidleevent, "is"),
-	BUILDIN_DEF(mobchat, "ii??"),
-	BUILDIN_DEF(unitignorecellstack,"i?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
