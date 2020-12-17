@@ -116469,7 +116469,15 @@ Body:
     EquipLevelMin: 100
     Refineable: true
     Script: |
-      .@r = getrefine(); bonus bBaseAtk,.@r/2*10; bonus bAspdRate,(.@r*2/3); if (.@r>=2) { bonus2 bSkillAtk,"GC_ROLLINGCUTTER",20; } if (.@r>=11) { bonus bDelayRate,-7; }
+      .@r = getrefine();
+      bonus bBaseAtk,.@r/2*10;
+      bonus bAspdRate,.@r/3*2;
+      if (.@r>=9) {
+         bonus2 bSkillAtk,"GC_ROLLINGCUTTER",20;
+      }
+      if (.@r>=11) {
+         bonus bDelayRate,-7;
+      }
   - Id: 610006
     AegisName: aegis_610006
     Name: Avaritia Metal
