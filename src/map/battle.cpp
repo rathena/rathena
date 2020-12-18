@@ -2110,7 +2110,6 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
 			default:
 				base_stat = status->str;
 				break;
-				break;
 		}
 
 		float variance = 5.0f * wa->atk * wa->wlv / 100.0f;
