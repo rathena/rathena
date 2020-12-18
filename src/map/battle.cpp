@@ -2095,7 +2095,6 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
 
 	if (sd->equip_index[type] >= 0 && sd->inventory_data[sd->equip_index[type]]) {
 		short base_stat;
-		bool ranged = false;
 
 		switch (sd->status.weapon) {
 			case W_BOW:
@@ -2106,14 +2105,13 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
 			case W_GATLING:
 			case W_SHOTGUN:
 			case W_GRENADE:
-				ranged = true;
+				base_stat = status->dex;
+				break;
+			default:
+				base_stat = status->str;
+				break;
 				break;
 		}
-
-		if (ranged)
-			base_stat = status->dex;
-		else
-			base_stat = status->str;
 
 		float variance = 5.0f * wa->atk * wa->wlv / 100.0f;
 		float base_stat_bonus = wa->atk * base_stat / 200.0f;
