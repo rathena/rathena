@@ -2093,7 +2093,7 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
 	bool weapon_perfection = false;
 	struct status_change *sc = status_get_sc(src);
 
-	if (sd->equip_index[type] >= 0 && sd->inventory_data[sd->equip_index[type]]) {
+	if (sd && sd->equip_index[type] >= 0 && sd->inventory_data[sd->equip_index[type]]) {
 		short base_stat;
 
 		switch (sd->status.weapon) {
@@ -2105,7 +2105,10 @@ static int battle_calc_base_weapon_attack(struct block_list *src, struct status_
 			case W_GATLING:
 			case W_SHOTGUN:
 			case W_GRENADE:
-				base_stat = status->dex;
+				if (pc_checkskill(sd, SU_SOULATTACK) > 0)
+					base_stat = status->str;
+				else
+					base_stat = status->dex;
 				break;
 			default:
 				base_stat = status->str;
