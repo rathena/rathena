@@ -6428,7 +6428,7 @@ void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_ta
 	int16 len = (int16)( strlen( message ) + 1 );
 
 	if( len > CHAT_SIZE_MAX ) {
-		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%" PRIuPTR ").\n", message, len);
+		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%" PRId16 ").\n", message, len);
 		len = CHAT_SIZE_MAX;
 	}
 
