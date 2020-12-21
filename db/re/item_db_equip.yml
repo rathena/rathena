@@ -83797,6 +83797,7 @@ Body:
     Refineable: true
     Script: |
       bonus bAtk,pow(min(getrefine(),15),2);
+      bonus bMatk,pow(min(getrefine(),15),2);
   - Id: 21018
     AegisName: Lindy_Hop
     Name: Lindy Hop
