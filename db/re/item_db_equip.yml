@@ -83444,10 +83444,13 @@ Body:
     Refineable: true
     Script: |
       bonus2 bAddRace,RC_Player_Human,80;
+      bonus2 bAddRace,RC_Player_Doram,80;
       bonus2 bIgnoreDefRaceRate,RC_Player_Human,30;
+      bonus2 bIgnoreDefRaceRate,RC_Player_Doram,30;
       .@r = getrefine();
       if(.@r>=6) {
          bonus2 bAddRace,RC_Player_Human,40;
+         bonus2 bAddRace,RC_Player_Doram,40;
       }
       if(.@r>=9) {
          bonus bShortWeaponDamageReturn,20;
